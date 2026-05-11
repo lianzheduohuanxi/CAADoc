@@ -1,0 +1,267 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="fr">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>mkmk</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>mkmk</h3>
+      <p><em>CAA V5 code builder</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3>Purpose</h3>
+<p>The <b>mkmk</b> command builds sources written in C, C++, Express, Fortran,
+JAVA.</p>
+<p>If you use another language, please contact Dassault Systèmes for the
+integration of your language in the CAA Workbench product.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3>Default Usage</h3>
+<p>Run without any option, mkmk by default executes the four following phases:</p>
+<ul>
+  <li>&quot;ID card compilation&quot;: processes the [container] framework ID
+    card</li>
+  <li>&quot;header list generation&quot;: produces the list of headers made
+    public by the [container] framework. Corresponding file is <i>&lt;fw_name&gt;/various/$MkmkOS_VAR/Public&lt;fw_name&gt;.lh</i></li>
+  <li>&quot;Imakefile.mk checking&quot;: the Imakefile.mk&nbsp; are checked and
+    update module if necessary. For updating, see -u, -g or -dev options.</li>
+  <li>The build itself. When processing a shared library, mkmk splits the phase
+    in two, in order to successfully build a series of them:
+    <ul>
+      <li>forced standalone generation of the (shared) library, even when
+        symbols are missing</li>
+      <li class="2ul1n-BulletList">generation of the shared library (not OK if
+        symbols are missing).</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Usage">Usage</a></h3>
+<p><code>mkmk -h</code></p>
+<blockquote>
+  <p>to consult the usage of the command</p>
+</blockquote>
+<p><code>mkmk [-showcmd] [-jobs &lt;nbproc&gt;] [-noci | -idcard] [-u | -nomk]
+[-w | -g | -dev] [-mkdataonly] [-nobuild] [-bsc] [-a | &lt;FW1&gt;
+[&lt;FW2&gt;...] | &lt;Mod&gt; [&lt;Mod2&gt;...] | &lt;Fw/Mod&gt;] | -lFW
+/path/FWlst [-lMod /path/Modlst] ]</code></p>
+<h5 class="0BodySide">internal usage</h5>
+<p><code>-jobs &lt;nbproc&gt;</code></p>
+<blockquote>
+  <p>Multiprocessing mode. nbproc is the maximum number of parallel tasks mkmk
+  forks</p>
+</blockquote>
+<p><code>-showcmd</code></p>
+<blockquote>
+  <p>Prints command lines before to executing them.</p>
+</blockquote>
+<p><code>-noci</code></p>
+<blockquote>
+  <p>Does not intend to recompile the (embedding) framework identity card. This
+  is not the default.</p>
+</blockquote>
+<p><code>-idcard</code></p>
+<blockquote>
+  <p>Intend to recompile only the (embedding) framework identity card. No module
+  are built. This is not the default.</p>
+</blockquote>
+<p><a name="-u"><code>-u</code></a></p>
+<blockquote>
+  <p>Forces the update of the build time data.</p>
+</blockquote>
+<p><code>-w</code></p>
+<blockquote>
+  <p>Compilations with warning messages.</p>
+</blockquote>
+<p><code>-g</code></p>
+<blockquote>
+  <p>Compilations in debug mode.</p>
+  <p>Please note that with Windows, mkmk forces the usage of the release version of the Visual C++ runtime library instead of the debug version. This allows you to load in the same process CAA code built in debug mode using mkmk and V5 products code built in release mode. Third party dlls used in mkmk build should conform to the same logic: 
+<ul>
+<li>Either use the release version of such libraries, even in debug sessions.</li>
+<li>Or use a debug version linked against non debug versions of Visual C++ runtime libraries.</li>
+</p>
+</blockquote>
+<p><code>-dev</code></p>
+<blockquote>
+  <p>Disables the optimized mode at compile-time.</p>
+</blockquote>
+<p><code>-nomk</code></p>
+<blockquote>
+  <p>Deactivates the Build Time update.&nbsp;</p>
+</blockquote>
+<p><code>-mkdataonly</code></p>
+<blockquote>
+  <p>Only regenerates the Build Time data.</p>
+</blockquote>
+<p><code>-nobuild</code></p>
+<blockquote>
+  <p>Does not start the build. Useful when coupled with option -u. mkmk then
+  only regenerates the Build Time data.</p>
+</blockquote>
+<p>To specify what target to process:</p>
+<p><code>[nothing]</code></p>
+<blockquote>
+  <p>when in a module directory, mkmk processes current module</p>
+</blockquote>
+<p><code>-a</code></p>
+<blockquote>
+  <p>mkmk processes data under current position in the file system:</p>
+</blockquote>
+<blockquote>
+  <ul>
+    <li>when in a work space root directory: every framework (and embedded
+      modules).</li>
+    <li>when in a framework directory: every module in current framework.</li>
+  </ul>
+</blockquote>
+<p><code>&lt;FW1&gt; [&lt;FW2&gt;...]</code></p>
+<blockquote>
+  <p>all the modules in the (list of) framework(s),</p>
+</blockquote>
+<p><code>-lFW /path/FWlst</code></p>
+<blockquote>
+  <p>all the modules in the specified list of framework(s).</p>
+</blockquote>
+<p><code>-lMod /path/Modlst</code></p>
+<blockquote>
+  <p>all the modules in the specified list of module(s), which belong to the
+  current framework.</p>
+</blockquote>
+<p><code>&lt;Mod&gt; [&lt;Mod&gt;...]</code></p>
+<blockquote>
+  <p>all the modules in the list, which belong to current framework.</p>
+</blockquote>
+<p>The table hereunder gives you a view on what could be used:</p>
+<table border="1" cellpadding="4" cellspacing="1" width="613">
+  <tr>
+    <td valign="top" width="24%">
+      <p align="right"><strong>Current working<br>
+      directory</strong></p>
+      <p><strong>Parameters on the command line</strong></td>
+    <td valign="top" width="25%">
+      <p><strong>If you're in the workspace root directory</strong></td>
+    <td valign="top" width="25%">
+      <p><strong>If you're in the directory of framework FW1:<br>
+      WS/FW1</strong></td>
+    <td valign="top" width="25%">
+      <p><strong>If you're in the directory of module Mod1:<br>
+      WS/FW1/Mod1</strong></td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">-lFW fwlst</td>
+    <td valign="top" width="25%">FWs: the fwlst list
+      <p>Mods: all the modules of the Frameworks</td>
+    <td valign="top" width="25%">FWs: the fwlst list
+      <p>Mods: all the modules of the Frameworks</td>
+    <td valign="top" width="25%">FWs: the fwlst list
+      <p>Mods: all the modules of the Frameworks</td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">-lMod modlst</td>
+    <td valign="top" width="25%" bgcolor="#FD8282"><b>ERROR: at least one
+      framework must be specified</b></td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: the modlst list</td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: the modlst list</td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">-a</td>
+    <td valign="top" width="25%">FWs: all FW
+      <p>Mods: all modules of all FW</td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: all modules belonging to this current FW</td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: all modules belonging to this current FW</td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">FW1 FW2</td>
+    <td valign="top" width="25%">FWs: FW1, FW2
+      <p>Mods: all modules belonging to FW1 or FW2</td>
+    <td valign="top" width="25%" bgcolor="#FD8282"><b>ERROR: FW1 and FW2 will be
+      considered like modules of the current FW</b></td>
+    <td valign="top" width="25%" bgcolor="#FD8282"><b>ERROR: FW1 and FW2 will be
+      considered like modules of the current FW</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">Mod1 Mod2</td>
+    <td valign="top" width="25%" bgcolor="#FD8282"><b>ERROR: Mod1 and Mod2 will
+      be considered like frameworks of the current WS</b></td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods:Mod1, Mod2</td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: Mod1, Mod2</td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">FW1/Mod1 FW2/Mod2</td>
+    <td valign="top" width="25%">FWs: FW1, FW2
+      <p>Mods: Mod1, Mod2</td>
+    <td valign="top" width="25%">FWs: <b>current FW</b>, FW1, FW2
+      <p>Mods: Mod1, Mod2</td>
+    <td valign="top" width="25%">FWs: <b>current FW</b>, FW1, FW2
+      <p>Mods: Mod1, Mod2</td>
+  </tr>
+  <tr>
+    <td valign="top" width="24%">{nothing}</td>
+    <td valign="top" width="25%" bgcolor="#FD8282"><b>ERROR: at least one
+      framework must be specified</b></td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: all modules.</td>
+    <td valign="top" width="25%">FWs: current FW
+      <p>Mods: current module.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3>Examples</h3>
+<p><b>Beginners</b>: if you are not (yet) familiar with the make principles, we
+recommend you to use:</p>
+<p><code>mkmk</code></p>
+<blockquote>
+  <p>1. The list of header files exported by the framework is updated.</p>
+  <p>2. The identity card of the framework is updated if needed.</p>
+  <p>3. The Build Time Data&nbsp; is updated if needed.</p>
+  <p>4. The dependencies between derived objects and source objects are
+  recomputed.</p>
+  <p>5. The derived objects which set of dependencies changed, or for which at
+  least one prerequisite changed, are rebuilt.</p>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

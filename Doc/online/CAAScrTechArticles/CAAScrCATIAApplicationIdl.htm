@@ -1,0 +1,84 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Application</title>
+</head>
+
+<body>
+
+<pre>#include "CATIAV5Level.h"
+
+#ifndef CATIAApplication_IDL
+#define CATIAApplication_IDL
+/*IDLREP*/
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U3
+ */
+// COPYRIGHT DASSAULT SYSTEMES 1997
+
+#include "CATIABase.idl"
+
+interface CATIASystemService;
+interface CATIADocument;
+interface CATIADocuments;
+interface CATIAWindows;
+interface CATIAWindow;
+interface CATIAPrinters;
+interface CATIAPrinter;
+interface CATIAMail;
+interface CATIAFileSystem;
+interface CATIASendToService;
+
+#ifdef CATIAV5R5
+interface CATIABatch;
+#endif
+
+/**
+ * Represents the current application and its frame window.
+ * The application is the root object for all the other objects you can use
+ * and access from scripts. It directly aggregates:
+ * &lt;ul&gt;
+ * &lt;li&gt;The document collection represented by the @href CATIADocuments object.
+ * This collection contains all the documents currently opened by the
+ * application
+ * &lt;li&gt;The window collection represented by the @href CATIAWindows object.
+ * This collection contains all the windows currently opened by the
+ * application, each window displaying one of the documents contained in
+ * the document collection
+ * &lt;li&gt;The @href CATIASystemService object, providing information about
+ * the system environment.
+ * &lt;/ul&gt;
+ * &lt;p&gt;
+ * The active document and the active window are two key objects for the
+ * application you can access using the @href #ActiveDocument
+ * and @href #ActiveWindow properties respectively.
+ * The active window is the window the end user is
+ * currently working in, and the active document is the document displayed
+ * in this active window and that the end user is being editing.
+ * This document sets its workshop, that is the available menus and
+ * toolbars that make it possible to edit it, according to its type.
+ * &lt;p&gt;
+ * When you create or use macros for in-process access, the application
+ * is always referred to as &lt;tt&gt;CATIA&lt;/tt&gt;.
+ */
+interface CATIAApplication : CATIABase
+{
+  ...
+};
+
+// Interface name : CATIAApplication
+#pragma ID CATIAApplication "DCE:7d2c8116-dc44-0000-0280030ba6000000"
+#pragma DUAL CATIAApplication
+
+// VB object name : Application
+#pragma ID Application "DCE:7d2c82c4-bc64-0000-0280030ba6000000"
+#pragma ALIAS CATIAApplication Application
+
+#endif</pre>
+</body>
+</html>

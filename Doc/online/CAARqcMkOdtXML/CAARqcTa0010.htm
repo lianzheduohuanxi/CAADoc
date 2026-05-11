@@ -1,0 +1,241 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Modify the Replay Maximum Elapsed Time</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Modify the Replay Maximum Elapsed Time</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows you how to modify the maximum replay 
+		elapsed time using an XML tag or an environment variable, or disable the 
+		elapsed time control.</p>
+		<ul>
+			<li><a href="#MaxTime">Test Object Replay Maximum Elapsed Time</a></li>
+			<li><a href="#NewTime">Setting a New Replay Maximum Elapsed Time</a>
+			<ul>
+				<li><a href="#NewTimeXML">Using the MaxTime XML Tag</a></li>
+				<li><a href="#NewTimeEV">Using the ODT_MAX_TIME Environment Variable</a></li>
+			</ul>
+			</li>
+			<li><a href="#NOMaxTime">Disabling the Elapsed Time Control</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="MaxTime"></a>Test Object Replay Maximum Elapsed Time</h2>
+<p>mkodt controls the replay elapsed time of each test object. By default, the maximum 
+elapsed time assigned to the replay of any test object is five minutes. If some 
+of your test objects need more than five minutes to run, you can manage this maximum 
+elapsed time in two ways:</p>
+<ol>
+	<li>Set a new value for the maximum elapsed time using an XML tag or an environment 
+		variable.</li>
+	<li>Disable the elapsed time control.</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="NewTime"></a>Setting a New Replay Maximum Elapsed Time</h2>
+<p>You can set a new replay maximum elapsed time thanks to the <code>MaxTime</code> 
+XML tag or the <code>ODT_MAX_TIME</code> environment variable.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="NewTimeXML"></a>Using the MaxTime XML Tag</h3>
+<p>This tag resets the replay maximum elapsed time for the current test object [<a href="#References">1</a>], 
+the test object command trace is as follows:</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+   <strong> &lt;MaxTime value=&quot;10&quot; /&gt;</strong>
+    ...
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAASysMaxTime&quot; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>The replay is killed after ten minutes.</p>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Important</span>:
+		<ul>
+			<li>The replay maximum elapsed time you can set using the <code>MaxTime</code> 
+				tag is 60 minutes.</li>
+			<li>The new value for the replay maximum elapsed time is valid only 
+				for the test object for which the tag is used.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="NewTimeEV"></a>Using the ODT_MAX_TIME Environment Variable</h3>
+<p>Using the <code>ODT_MAX_TIME</code> environment variable [<a href="#References">2</a>] 
+sets the replay maximum elapsed time for all the test objects run afterwards. This 
+overwrites a possible value set using the <kbd>MaxTime</kbd> tag in a test object 
+XML file.</p>
+<p>Assume the CAASysMaxTime test object needs five minutes and 21 seconds to run. 
+If you leave the default value for the replay maximum elapsed time, the test object 
+command trace is as follows:</p>
+<pre class="code">E:\MyWorkspace&gt;mkodt -s CAASysMaxTime
+## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B216
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [CAASystem.tst CAASysMaxTime] (1 / 1)
+<strong>## ++ ERROR : CAASysMaxTime =&gt; process killed in max_time.
+</strong><strong>elapsed_time: 05 min 00 sec</strong>
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 1 KO.</pre>
+<p>The replay is killed after five minutes.</p>
+<p>Thanks to the the <code>ODT_MAX_TIME</code> environment variable, you can increase 
+this value.</p>
+<pre class="code">E:\MyWorkspace&gt;set ODT_MAX_TIME=10
+E:\MyWorkspace&gt;mkodt -s CAASysMaxTime
+## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B216
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [CAASystem.tst CAASysMaxTime] (1 / 1)
+<strong>max_time: 10 min.
+elapsed_time: 05 min 21 sec
+</strong>## ++ CAASysMaxTime : Test execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.
+</pre>
+<p>The test object runs up to its completion thanks to the new value of 10 minutes 
+set for the replay maximum elapsed time.</p>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Important</span>:
+		<ul>
+			<li>The replay maximum elapsed time you can set using the <code>ODT_MAX_TIME</code> 
+				environment variable has no limit.</li>
+			<li>The new value for the replay maximum elapsed time is valid for the 
+				whole mkodt run after the value is set.</li>
+			<li>This value overwrites possible values set using the <code>MaxTime</code> 
+				tag in a given test object XML file. </li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="NOMaxTime"></a>Disabling the Elapsed Time Control</h2>
+<p>You can disable the elapsed time control. In this case, no elapsed time limit 
+is set to any test objects during this mkodt run.</p>
+<p>This is possible thanks to the <code>-NOMaxTime</code> option of the mkodt command 
+[<a href="#References">3</a>].</p>
+<p>With the example of a test object needing five minutes and 21 seconds as above, 
+to run the following example:</p>
+<pre class="code">E:\MyWorkspace&gt;mkodt -s CAASysMaxTime <strong>-NOMaxTime</strong>
+<strong>## mode NO MAX_TIME</strong>
+## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B216
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [CAASystem.tst CAASysMaxTime] (1 / 1)
+<strong>elapsed_time: 05 min 21 sec</strong>
+## ++ CAASysMaxTime : Test execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.
+</pre>
+<p>The usage of the <code>-NOMaxTime</code> option is shown at the top of the traces, 
+and the lengthy test object is replayed up to its end.</p>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Important</span>:
+		<ul>
+			<li>The replay maximum elapsed time control is disabled for the mkodt 
+				run for which you use the <code>-NOMaxTime</code> option, that is, 
+				for all the test objects involved in this run.</li>
+			<li>No replay maximum elapsed time is set when using the <code>-NOMaxTime</code> 
+				option. This means that if one of the test object loops, it will 
+				loop indefinitely unless you kill the execution.</li>
+			<li>If the <code>ODT_MAX_TIME</code> environment variable is set prior 
+				to running the mkodt command with the <code>-NOMaxTime</code> option, 
+				the environment variable is ignored during this mkodt run, but the 
+				value remains valid for subsequent mkodt runs.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The replay maximum elapsed time is set by default to five minutes. You can reset 
+for a given test object in its XML file using the <code>MaxTime</code> tag to up 
+to 60 minutes. You can also set it using the <code>ODT_MAX_TIME</code> environment 
+variable to the value you want for all the test objects replayed by the mkodt command. 
+This value overwrites possible values set using the <code>MaxTime</code> tag in 
+a given test object XML file. You can also disable the elapsed time control thanks 
+to the mkodt <code>-NOMaxTime</code> option. </p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0003.htm">XML Tag Reference</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAARqcQr0001.htm">mkodt</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

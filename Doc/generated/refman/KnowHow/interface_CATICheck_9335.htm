@@ -1,0 +1,387 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowHow Interface CATICheck</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowHow.htm" href="../KnowHow.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowHow";	}
+		function getCurrentObjectName() { 
+ 	return "CATICheck"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>KnowHow Interface CATICheck</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICheck_9335','CATICheck','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICheck</b>
+</p>
+<p>
+<b><i> Interface dedicated to defining the basic possibilities of an expert check.</i></b><br>
+
+
+ <br><b>Role</b> : the goal of an expert check is to check a condition over a kind of objects
+ (for instance that all the holes of a part have a diameter of at least
+ 15mm, or that no two holes have the same diameter).
+ <br>
+ The second example would have been made with the following check:
+ <br>
+ Check.1
+ <dl>
+ <dt>Variables <dd> "H1:SimpleHole; H2:Simplehole"
+ <dt>Body      <dd> "H1.Diameter != H2.Diameter"
+ </dl>
+
+ <br>
+ All the possible t-uples (H1, H2) (for H1, H2 any SimpleHoles) are evaluated by the check.
+ If the condition is true for all of them, then the check is correct. If at least one of them makes
+ the condition false, then the check is false.
+
+ <br>
+ If the check is false, then a corrective action can be done with a correction function. This
+ function is applied on each t-uple failing the condition of the check, when the user decides to
+ (manually) or automatically.
+
+ <br>
+ If the check is false, the user also can do nothing and simply justify the falseness of the check
+ with a comment. Then the check is considered as true.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#ApplyCorrect()"><b>ApplyCorrect</b></a>()
+<dd>  Triggers the application of the correction function of the check on the t-uples failing the condition.
+ <dt> o 
+    <a href="#ApplyHighlight()"><b>ApplyHighlight</b></a>()
+<dd>  Highlights each object of the t-uples failing the condition.
+ <dt> o 
+    <a href="#GetAutomaticCorrect()"><b>GetAutomaticCorrect</b></a>()
+<dd>  Gets the correction function triggering mode.
+ <dt> o 
+    <a href="#GetCorrectFunction()"><b>GetCorrectFunction</b></a>()
+<dd>  Gets the VB script executed as a correction function.
+ <dt> o 
+    <a href="#GetCorrectFunctionComment()"><b>GetCorrectFunctionComment</b></a>()
+<dd>  Gets the comment of the correction function.
+ <dt> o 
+    <a href="#GetCorrectFunctionType()"><b>GetCorrectFunctionType</b></a>()
+<dd>  Gets the correction function type.
+ <dt> o 
+    <a href="#GetHelp()"><b>GetHelp</b></a>()
+<dd>  Gets the help string.
+ <dt> o 
+    <a href="#GetJustification()"><b>GetJustification</b></a>()
+<dd>  Gets the justification string.
+ <dt> o 
+    <a href="#GetStatus()"><b>GetStatus</b></a>()
+<dd>  Gets the validity of the check.
+ <dt> o 
+    <a href="#SetAutomaticCorrect(boolean)"><b>SetAutomaticCorrect</b></a>(boolean)
+<dd>  Sets the correction function to be triggered automatically or not.
+ <dt> o 
+    <a href="#SetCorrectFunction(CATUnicodeString)"><b>SetCorrectFunction</b></a>(CATUnicodeString)
+<dd>  Sets the script executed as a correction function.
+ <dt> o 
+    <a href="#SetCorrectFunctionComment(CATUnicodeString)"><b>SetCorrectFunctionComment</b></a>(CATUnicodeString)
+<dd>  Sets the comment of the correction function.
+ <dt> o 
+    <a href="#SetCorrectFunctionType(CATExpertReportEnum::CorrectingFunctionTypeEnum)"><b>SetCorrectFunctionType</b></a>(CATExpertReportEnum::CorrectingFunctionTypeEnum)
+<dd>  Sets the correction function type.
+ <dt> o 
+    <a href="#SetHelp(CATUnicodeString)"><b>SetHelp</b></a>(CATUnicodeString)
+<dd>  Sets the help string.
+ <dt> o 
+    <a href="#SetJustification(CATUnicodeString)"><b>SetJustification</b></a>(CATUnicodeString)
+<dd>  Sets the justification string.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="ApplyCorrect"></a><a name="ApplyCorrect()"></a> <dt> o <b>ApplyCorrect</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>ApplyCorrect</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Triggers the application of the correction function of the check on the t-uples failing the condition.
+</dl>
+<a name="ApplyHighlight"></a><a name="ApplyHighlight()"></a> <dt> o <b>ApplyHighlight</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>ApplyHighlight</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Highlights each object of the t-uples failing the condition.
+</dl>
+<a name="GetAutomaticCorrect"></a><a name="GetAutomaticCorrect()"></a> <dt> o <b>GetAutomaticCorrect</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('boolean','boolean')</script>  <b>GetAutomaticCorrect</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the correction function triggering mode.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  true or false.
+</dl>
+</dl>
+<a name="GetCorrectFunction"></a><a name="GetCorrectFunction()"></a> <dt> o <b>GetCorrectFunction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetCorrectFunction</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the VB script executed as a correction function.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Script of the correction function
+</dl>
+</dl>
+<a name="GetCorrectFunctionComment"></a><a name="GetCorrectFunctionComment()"></a> <dt> o <b>GetCorrectFunctionComment</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetCorrectFunctionComment</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the comment of the correction function.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  the comment.
+</dl>
+</dl>
+<a name="GetCorrectFunctionType"></a><a name="GetCorrectFunctionType()"></a> <dt> o <b>GetCorrectFunctionType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATExpertReportEnum::CorrectingFunctionTypeEnum','CATExpertReportEnum::CorrectingFunctionTypeEnum')</script>  <b>GetCorrectFunctionType</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the correction function type.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Type of correction function (
+<script type="text/javascript"> activateLinkAnchor('CATExpertReportEnum','CorrectingFunctionTypeEnum','CATExpertReportEnum.CorrectingFunctionTypeEnum') </script> ).
+</dl>
+</dl>
+<a name="GetHelp"></a><a name="GetHelp()"></a> <dt> o <b>GetHelp</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetHelp</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the help string.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  the help string.
+</dl>
+</dl>
+<a name="GetJustification"></a><a name="GetJustification()"></a> <dt> o <b>GetJustification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetJustification</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the justification string.
+
+ The justification string is a comment explainig why a false check (i.e.
+ at least one t-uple fails the condition) can be considered as true.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  the justification string.
+</dl>
+</dl>
+<a name="GetStatus"></a><a name="GetStatus()"></a> <dt> o <b>GetStatus</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATExpertReportEnum::ValidityTypeEnum','CATExpertReportEnum::ValidityTypeEnum')</script>  <b>GetStatus</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the validity of the check.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  the validity.
+</dl>
+</dl>
+<a name="SetAutomaticCorrect"></a><a name="SetAutomaticCorrect(boolean)"></a> <dt> o <b>SetAutomaticCorrect</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAutomaticCorrect</b>(<td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIsAutomatic</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the correction function to be triggered automatically or not.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIsAutomatic</tt>
+   <dd> true or false.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCorrectFunction"></a><a name="SetCorrectFunction(CATUnicodeString)"></a> <dt> o <b>SetCorrectFunction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCorrectFunction</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script> <td><tt>iScript</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the script executed as a correction function.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iScript</tt>
+   <dd> VB script to be executed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCorrectFunctionComment"></a><a name="SetCorrectFunctionComment(CATUnicodeString)"></a> <dt> o <b>SetCorrectFunctionComment</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCorrectFunctionComment</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script> <td><tt>iComment</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the comment of the correction function.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iComment</tt>
+   <dd> the comment.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCorrectFunctionType"></a><a name="SetCorrectFunctionType(CATExpertReportEnum::CorrectingFunctionTypeEnum)"></a> <dt> o <b>SetCorrectFunctionType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCorrectFunctionType</b>(<td><script type="text/javascript"> activateLink('CATExpertReportEnum::CorrectingFunctionTypeEnum','CATExpertReportEnum::CorrectingFunctionTypeEnum')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the correction function type.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Type of correction function (</dd>
+<script type="text/javascript"> activateLinkAnchor('CATExpertReportEnum','CorrectingFunctionTypeEnum','CATExpertReportEnum.CorrectingFunctionTypeEnum') </script> ).
+</dl>
+</dl>
+</dl>
+<a name="SetHelp"></a><a name="SetHelp(CATUnicodeString)"></a> <dt> o <b>SetHelp</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetHelp</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script> <td><tt>iHelp</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the help string.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iHelp</tt>
+   <dd> the help string.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetJustification"></a><a name="SetJustification(CATUnicodeString)"></a> <dt> o <b>SetJustification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetJustification</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script> <td><tt>iJustification</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the justification string.
+
+ The justification string is a comment explainig why a false check (i.e.
+ at least one t-uple fails the condition) can be considered as true.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iJustification</tt>
+   <dd> the justification string.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICheck.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATKWERule</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

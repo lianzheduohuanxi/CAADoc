@@ -1,0 +1,557 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Instantiating a Component</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating and Instantiating a Component</h3>
+      <em>Implementing CATICreateInstance and using CATInstantiateComponent</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and instantiate a CAA V5 component.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysComponent Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysComponent Do</a></li>
+            <li><a href="#How">How to Launch CAASysComponent</a></li>
+            <li><a href="#Where">Where to Find the CAASysComponent Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a CAA V5 component that
+isolates you implementation from client applications and how client application
+can instantiate it. The component represents an object with two facets, each of
+them being supported using an interface:</p>
+<ol>
+  <li>The first facet is described in ths article. It is the ability for the
+    component to be instantiated by client applications thanks to implementing
+    the <i>CATICreateInstance</i> interface and its single method <code>CreateInstance</code>
+    in a code extension. Client application instantiate the component using the <code>CATInstantiateComponent</code>
+    global function.</li>
+  <li>The second facet is the ability to print a message on the screen thanks to
+    an interface created for the use case and named <i>CAAISysMyInterface</i>.
+    You could easily find other facets in the industrial domains you deal with
+    to create a more realistic component that implements a lot more interfaces.
+    creating this interface and its implementation is not described. You can
+    refer to other articles dealing with this topic [<a href="#References">1</a>]
+    [<a href="#References">2</a>].</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysComponent Use Case</h3>
+<p>CAASysComponent is a use case of the CAASystem.edu framework that illustrates
+the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysComponent Do</h4>
+<p>This use case shows a template of the code to write to create a basic
+component and to enable client applications to instantiate it, retrieve a
+pointer to an interface this component implements, use this pointer to call
+methods, and navigate among the other possible interfaces the component
+implements.</p>
+<p><img border="0" src="images/CAASysOMSimpleCmp.gif" width="488" height="298"></p>
+<p>This component is made of the <i>CAASysComponent</i> main class, and of the <i>CAAESysCreateInstanceForComponent</i>
+extension class. <i>CAAESysCreateInstanceForComponent</i> implements the<i>
+CATICreateInstance</i> interface to enable the component creation. It is also
+made of the <i>CAAESysMyInterfaceForComponent</i> class that implements the <i>CAAISysMyInterface</i>
+interface. Other interfaces could be implemented to replace the latter and make
+a more realistic component, but have uselessly complicated the use case.</p>
+<p>A main program instantiates the component and retrieves a pointer to this <i>CAAISysMyInterface</i>
+interface to show what the client should do.</p>
+<p><b>Note</b>: Extension links are shown as dashed arrows. Other links are
+shown as usual.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysComponent</h4>
+<p>You first need to build CAASysComponent. To do this, you will need to set up
+the build time environment, then compile the four CAASysComponent*.m modules
+along with their prerequisites as described in [<a href="#References">5</a>].
+Launch CAASysComponentCreate itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysComponent Code</h4>
+<p>The CAASysComponent.m use case is made of four modules:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysComponent*.m</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysComponent*.m</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ol>
+  <li>CAASysComponentImpl.m that contains the component main class and the
+    extension class that implements CATICreateInstance</li>
+  <li>CAASysComponentCreate.m that contains the main program that instantiates
+    the component</li>
+  <li>CAASysComponentInt.m that contains the <i>CAAISysMyInterface</i>&nbsp;
+    interface and its TIE, the interface header being located in the
+    PublicInterfaces directory of the CAASystem.edu framework</li>
+  <li>CAASysComponentExt that contains the extension class that implements <i>CAAISysMyInterface</i></li>
+</ol>
+<p>The first two modules are described in this article. The two others are not
+described. Refer to their source code.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a component such as <i>CAASysComponent</i>, there are nine main
+steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the <i>CAASysComponent</i> component main class
+      header file</td>
+    <td valign="top">CAASysComponent.m\LocalInterfaces\CAASysComponent.h</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the <i>CAASysComponent</i> component main class
+      source file</td>
+    <td valign="top">CAASysComponent.m\src\CAASysComponent.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the <i>CAAESysCreateInstanceForComponent</i>
+      extension class header file</td>
+    <td valign="top">CAASysComponent.m\LocaInterfaces\CAAESysCreateInstanceForComponent.h</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create the <i>CAAESysCreateInstanceForComponent</i>
+      extension class source file</td>
+    <td valign="top">CAASysComponent.m\src\CAAESysCreateInstanceForComponent.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Update the interface dictionary</td>
+    <td valign="top">CAASystem.edu.dico file in CNext\code\dictionary</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Instantiate and use the component</td>
+    <td valign="top">CAASysComponent.m\src\CAASysMain.cpp</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the CAASysComponent Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+class  CAASysComponent : public CATBaseUnknown
+{
+  // Used in conjunction with CATImplementClass in the .cpp file
+  <b>CATDeclareClass</b>;
+
+  public:
+
+    CAASysComponent();
+    virtual ~CAASysComponent();
+
+  private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAASysComponent(const CAASysComponent &amp;iObjectToCopy);
+
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAASysComponent &amp; operator = (const CAASysComponent &amp;iObjectToCopy);
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASys</i><i>Component</i> class C++-derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAASys</i><i>Component</i>
+belongs to a component. Note that the copy constructor is set as private. The
+class has a constructor and a destructor only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating the CAASysComponent Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysComponent.h&quot;
+
+//C++ standard library
+#include &quot;iostream.h&quot;
+
+//------------------------------------------------------------------------------------
+
+// To declare that the class is a component main class 
+<b>CATImplementClass(CAASysComponent, Implementation, CATBaseUnknown, CATNull);</b>
+
+//------------------------------------------------------------------------------------
+
+CAASysComponent::CAASysComponent() 
+{
+  cout &lt;&lt; &quot;CAASysComponent::CAASysComponent&quot; &lt;&lt; endl;
+}
+
+CAASysComponent::~CAASysComponent()
+{
+  cout &lt;&lt; &quot;CAASysComponent::~CAASysComponent&quot; &lt;&lt; endl;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that the <i>CAASysComponent</i>
+class is a component main class thanks the <code>Implementation</code> keyword,
+and OM-derives [<a href="#References">6</a>] from <i>CATBaseUnknown</i>. Any
+component main class declared as an <code>Implementation</code> must C++-derive
+and OM-derive from the same class, that must either be <i>CATBaseUnknown</i> or
+another component main class. The component main class doesn't implement any
+interface, but it could.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the CAAESysCreateInstanceForComponent Extension
+Class Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+class CAAESysCreateInstanceForComponent : public CATBaseUnknown
+{
+  // Used in conjunction with CATImplementClass in the .cpp file
+  <b>CATDeclareClass</b>;
+
+  public:
+
+    CAAESysCreateInstanceForComponent();
+    virtual ~CAAESysCreateInstanceForComponent();
+
+    // CATICreateInstance 
+    // -------------------
+
+    virtual HRESULT __stdcall CreateInstance(void **oppv);
+
+  private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAESysCreateInstanceForComponent(const CAAESysCreateInstanceForComponent &amp;iObjectToCopy);
+
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAESysCreateInstanceForComponent &amp; operator = (const CAAESysCreateInstanceForComponent &amp;iObjectToCopy);
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForComponent</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAESysCreateInstanceForComponent</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the <code>CreateInstance</code> method which is the only method of the <i>CATICreateInstance</i>
+interface. Note that the copy constructor and the assignment operator are set as
+private. This is very important for extensions. Since extensions must never be
+directly instantiated by client applications, this prevents the compiler from
+creating the copy constructor and the assignment operator as public without you
+know. They are not implemented in the source file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the CAAESysComponent Extension Class Source
+File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//Local Framework
+#include &quot;CAAESysCreateInstanceForComponent.h&quot;
+
+//C++ standard library
+#include &quot;iostream.h&quot;
+
+// The class to create
+#include &quot;CAASysComponent.h&quot;
+
+// System Framework
+#include &lt;CATErrorDef.h&gt;
+
+//-----------------------------------------------------------------------------------
+// To create the TIE object
+#include &quot;TIE_CATICreateInstance.h&quot;
+TIE_CATICreateInstance(CAAESysCreateInstanceForComponent);
+
+// To declare that the class is a Code extension of CAASysComponent
+//
+<b>CATImplementClass(CAAESysCreateInstanceForComponent, CodeExtension, CATBaseUnknown, CAASysComponent);
+</b>// 
+// To declare that CAAESysCreateInstanceForComponent implements CATICreateInstance, insert 
+// the following line in the interface dictionary:
+//
+//    CAASysComponent CATICreateInstance  libCAASysComponentImpl
+//
+//------------------------------------------------------------------------------------
+
+CAAESysCreateInstanceForComponent::CAAESysCreateInstanceForComponent() 
+{
+  cout &lt;&lt; &quot;CAAESysCreateInstanceForComponent::CAAESysCreateInstanceForComponent&quot; &lt;&lt; endl;
+}
+
+//------------------------------------------------------------------------------------
+
+CAAESysCreateInstanceForComponent::~CAAESysCreateInstanceForComponent()
+{
+  cout &lt;&lt; &quot;CAAESysCreateInstanceForComponent::~CAAESysCreateInstanceForComponent&quot; &lt;&lt; endl;
+}
+
+//------------------------------------------------------------------------------------
+
+HRESULT __stdcall CAAESysCreateInstanceForComponent::CreateInstance(void ** oppv)
+{
+   CAASysComponent * pt = new CAASysComponent();
+   if (NULL == pt) return(E_OUTOFMEMORY);
+
+   *oppv = (void *)pt;
+
+   return(S_OK);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForComponent</i> class states that it implements
+the <i>CATICreatInstance</i> interface thanks to the <code>TIE_CATICreateInsatnce</code>
+macro. This extension class is dedicated to this component, and the <code>CATImplementClass</code>
+macro declares that the <i>CAAESysCreateInstanceFor</i><i>Component</i> class is
+code extension class, thanks to the <code>CodeExtension</code> keyword, and that
+it extends the component whose main class is <i>CAASys</i><i>Component</i>. The
+third parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and
+is unused for extensions. The <code>CreateInstance</code> method instantiates
+the <i>CAASys</i><i>Component</i> component main class. This method is called by
+the <code>CATInstantiateComponent</code> global function that is used by client
+applications to instantiate the component [<a href="#References">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Updating the Interface Dictionary</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAASysComponent CATICreateInstance  libCAASysComponentImpl
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary declares that the <i>CAASysComponent</i> component
+implements the <i>CAATICreateInstance</i> interface and that the code to load
+into memory to use these interfaces is located in the libCAASysComponentImpl.m
+shared library or DLL. Note that the component main class name is used to refer
+to the component in the interface dictionary, and never the extension class
+names. Note also that the shared library or DLL to associate with the
+component/interface pair is the one that contains the code created by the call
+to the TIE macro (This is generally the same library than the one that contains
+the interface implementation code, since the TIE macro is usually included in
+the extension class source file.) This is because when a client asks a component
+for an interface pointer, the TIE class is instantiated first, and it either
+retrieves the existing instance of the appropriate extension class, or otherwise
+instantiates it.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Instantiating and Using the Component</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// System Framework
+#include &quot;CATErrorDef.h&quot;              // For the FAILED macro
+#include &quot;CATInstantiateComponent.h&quot;  // For the global function to create the component
+#include &quot;CAAISysMyInterface.h&quot;       // an interface implemented by the component
+
+// C++ standard library    
+#include &lt;iostream.h&gt;     // To display traces
+
+int main()
+{
+
+  cout &lt;&lt; &quot;The CAASysComponentCreate Sample begins .....&quot;&lt;&lt; endl;
+
+ 
+  // -------------------------------------------------------------------------------
+  // Creates the component and retrieves a CAAISysMyInterface interface pointer
+  // -------------------------------------------------------------------------------
+
+  CAAISysMyInterface * piSysMyInterfaceOnComponent = NULL; 
+  HRESULT rc = <b>::CATInstantiateComponent</b>( &quot;CAASysComponent&quot;,  
+                                         IID_CAAISysMyInterface,
+                                         (void**)&amp;piSysMyInterfaceOnComponent);   
+                                          
+  if ( FAILED (rc) )
+  {
+       cout &lt;&lt; &quot; Problem in the component Creation&quot;&lt;&lt; endl;
+       return 1 ;
+  }
+
+  //-----------------------------------------------------------------------
+  //The component is created, and we can use the returned interface pointer 
+  //-----------------------------------------------------------------------
+  piSysMyInterfaceOnComponent-&gt;Print();
+
+  //-----------------------------
+  // Pointer no any longer needed
+  //-----------------------------
+  piSysMyInterfaceOnComponent-&gt;Release();
+  piSysMyInterfaceOnComponent = NULL;
+
+
+  cout &lt;&lt; endl &lt;&lt; &quot;The CAASysComponentCreate Sample is finished.&quot;&lt;&lt; endl &lt;&lt; endl ;
+
+  return 0 ;
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysComponent</i> component is instantiated using the <code>CATInstantiateComponent</code>
+global function to which the following parameters should be passed:</p>
+<table>
+  <tr>
+    <td><code>CAASysComponent</code></td>
+    <td>The component identifier that is also the component main class name</td>
+  </tr>
+  <tr>
+    <td><code>IID_CAAISysMyInterface</code></td>
+    <td>The IID of the interface with which the client application wants to
+      handle the component and to which a pointer is asked</td>
+  </tr>
+  <tr>
+    <td><code>piSysMyInterfaceOnComponent</code></td>
+    <td>The pointer to that interface</td>
+  </tr>
+</table>
+<p>Once the component is instantiated and handled using a pointer to the
+requested interface, the client application can go on using the component. No
+link is necessary between the client application and the component code. <code>CATInstantiateComponent</code>
+and the implemented interfaces isolates these two codes and are used as a
+contract between them to ensure that they will go on running as planned, and
+that modification to the component's code will not affect the client application
+and will ensure run time compatibility.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a factory for a component. The main class
+declares the component inheritance and must C++-derive and OM-derive from <i>CATBaseUnknown</i>
+or from another component main class. The extension class that implement the <i>CAATICreateInstance</i>
+interface must C++-derive from <i>CATBaseUnknown</i>, while OM-inheritance makes
+no sense for it. The interface dictionary declares the correspondence between
+the component, the interfaces it implements, and the shared library or DLL to
+load for each interface. <code>CATInstantiateComponent</code> is used to
+instantiate the component and returns a pointer to the interface requested by
+the client application.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysSampleOMCreatingCmpFact.htm">Creating a Component Factory</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAASysSampleOMUsingCmp.htm">Using Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,721 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 6.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Working with a Product's Publications</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Working with a Product's Publications</H3>
+        <P><EM>Using the CATIPrdObjectPublisher Interface</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents&nbsp; the CAAPstPrdObjectPublisher use case 
+        which illustrates how to work with a product's publications.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstPrdObjectPublisher Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstPrdObjectPublisher Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstPrdObjectPublisher</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstPrdObjectPublisher 
+                Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the <i>CATIPrdObjectPublisher</i> interface, the publications of a product and 
+its components can be accessed and modified.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstPrdObjectPublisher Use Case</H3>
+<P>CAAPstPrdObjectPublisher is a use case of the CAAProductStructure.edu 
+framework that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstPrdObjectPublisher Do</H4>
+<P>The goal of CAAPstPrdObjectPublisher is to demonstrate the 
+<i>CATIPrdObjectPublisher</i> interface. It performs the following steps:</P>
+<UL>
+    <LI>Loads a  Product document</LI>
+    <LI>Displays the publications of the Root Product and its components</LI>
+    <LI>Remove a publication and add new one</LI>
+    <LI>Redisplay the modified publications</LI>
+    <LI>Save the modified document in a new file</LI>
+</UL>
+<P>Below&nbsp; is the  Product document that will be loaded in the use case. 
+It can be found in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstPrdObjectPublisher.CATProduct</TT></P>
+<P>
+<img border="0" src="images/CAAPstPrdObjectPublisher01.jpg" width="630" height="497"></P>
+<P>The CAAPstPrdObjectPublisher product consists of a single part, 
+CAAPstPrdObjectPublisher_Part.1 which publishes four of its faces:</P>
+<UL>
+    <LI>Green</LI>
+    <LI>Yellow</LI>
+    <LI>Red</LI>
+    <LI>Orange</LI>
+</UL>
+<P>The product CAAPstPrdObjectPublisher<I> </I>has two publications:</P>
+<UL>
+    <LI>GreenPart (republication of CAAPstPrdObjectPublisher_Part.1<I> </I>Green 
+    publication)</LI>
+    <LI>BlueProd (direct publication of the Blue face of
+    CAAPstPrdObjectPublisher_Part.1)</LI>
+</UL>
+<P>The code in the use case displays all the publications, modifies it and 
+displays it again. It produces the output below with
+CAAPstPrdObjectPublisher.CATProduct<I>
+</I>as input.<I> </I>There are three 
+distinct sections in the output:</P>
+<OL>
+    <LI>The first section in <FONT color="#008000">green</FONT>, lists the 
+    unmodified publications</LI>
+    <LI>The second section in <FONT color="#FF0000">red</FONT>, details the 
+    modifications that have been carried out</LI>
+    <LI>The last section in <FONT color="#0000FF">blue</FONT>, displays the 
+    modified publications</LI>
+</OL>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE><FONT color="#008000">Publications of CAAPstPrdObjectPublisher:
+  Publication 1: GreenPart
+    is finally published as GreenPart
+    is a subpublication of Green
+  Publication 2: BlueProd
+    is finally published as BlueProd
+    is published as BlueProd
+
+Publications of CAAPstPrdObjectPublisher_Part:
+  Publication 1: Green
+    is finally published as Green
+    is published as Green
+  Publication 2: Yellow
+    is finally published as Yellow
+    is published as Yellow
+  Publication 3: Red
+    is finally published as Red
+    is published as Red
+  Publication 4: Orange
+    is finally published as Orange
+    is published as Orange
+</FONT>
+<FONT color="#FF0000">&gt;&gt; deleted publication GreenPart
+&gt;&gt; unvaluated publication Green
+&gt;&gt; deleted publication Green
+
+&gt;&gt; created new publication OrangeProd
+&gt;&gt; valuated publication OrangeProd
+</FONT>
+<FONT color="#0000FF">Publications of CAAPstPrdObjectPublisher:
+  Publication 1: BlueProd
+    is finally published as BlueProd
+    is published as BlueProd
+  Publication 2: OrangeProd
+    is finally published as OrangeProd
+    is published as OrangeProd
+
+Publications of CAAPstPrdObjectPublisher_Part:
+  Publication 1: Yellow
+    is finally published as Yellow
+    is published as Yellow
+  Publication 2: Red
+    is finally published as Red
+    is published as Red
+  Publication 3: Orange
+    is finally published as Orange
+    is published as Orange</FONT></PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The modified product is also saved in a new document showing 
+that:</P>
+<UL>
+    <LI>
+    <P align="left">a publication has been removed both at the product level 
+    (GreenPart) and at the part level (Green)</LI>
+    <LI>
+    <P align="left">a new publication has been added at the product level 
+    (OrangeProd).</LI>
+</UL>
+<P align="left">
+<img border="0" src="images/CAAPstPrdObjectPublisher02.jpg" width="630" height="497"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstPrdObjectPublisher</H4>
+<P>To launch CAAPstPrdObjectPublisher:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment and build the 
+    CAAPstPrdObjectPublisher.m module <TT>(see <a href="#[2]">[2]</a></TT>)</LI>
+    <LI>Execute the following command:<BR>
+    <BR>
+    <TT>mkrun -c &quot;CAAPstPrdObjectPublisher <B><I>input pubToDelete pubToPublish 
+    outputDir</I></B>&quot;</TT></LI>
+</OL>
+<BLOCKQUOTE>
+    <UL>
+        <LI><TT><B><I>input:</I></B></TT> path to the supplied document <I>
+        InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstPrdObjectPublisher.CATProduct</TT></LI>
+        <LI><TT><B><I>pubToDelete</I></B></TT>: a publication to be deleted. It 
+        must exist at the product level and is a subpublication. The only valid 
+        choice for this argument is GreenPart.</LI>
+        <LI><TT><B><I>pubToPublish</I></B></TT>: a publication to be published 
+        at the product level. It must exist at the part level. The valid choices 
+        for this argument are: Yellow, Red and Orange.</LI>
+        <LI><TT><B><I>outpuDir</I></B></TT>: path of the output directory where 
+        the modified document will be stored. This document's name will be 
+        prepended with &quot;New&quot;. Please note that the directory must be with a / on 
+        Unix or a \ on Windows.</LI>
+    </UL>
+</BLOCKQUOTE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstPrdObjectPublisher Code</H4>
+<P>CAAPstPrdObjectPublisher code is located in the CAAPstPrdObjectPublisher.m 
+module of the CAAProductStructure.edu framework.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><B><A name="Step"><SPAN style="font-weight: 400">
+<FONT face="Arial" size="3"></FONT></SPAN></A><FONT face="Arial">
+<SPAN style="font-weight: 400">Step-by-Step</SPAN></FONT></B></H3>
+<P>There are six logical steps in <I>CAAPstPrdObjectPublisher</I>:</P>
+<OL>
+    <LI><A href="#Loading CATProduct Document">Loading  a Product Document</A></LI>
+    <LI><A href="#Retrieving the Documents Root Product">Retrieving the 
+    Document's Root Product</A></LI>
+    <LI><A href="#Retrieving the Root Products Components">Retrieving the Root 
+    Product Components</A></LI>
+    <LI>
+    <A href="#Displaying the Publications of the Root Product and its Components">
+    Displaying the Publications of the Root Product and its Components</A></LI>
+    <LI><A href="#Displaying the Publications of a Product">Displaying the 
+    Publications of a Product</A></LI>
+    <LI><A href="#Modifying a Products Publications">Modifying a Product's 
+    Publications</A></LI>
+    <LI><A href="#Saving the Modified Document in a New File">Saving the 
+    Modified Document in a New File </A></LI>
+    <LI><B><SPAN style="font-weight: 400"><A href="#Closing the Session">Closing 
+    the Session</A></SPAN></B></LI>
+</OL>
+<P>We will now detail each of those sections:</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Loading CATProduct Document">Loading  a Product Document</A></H4>
+<P>Generally, the first thing that is necessary in a batch program is the 
+creation of a new session. This is done using the <CODE>Create_Session</CODE> 
+global function. It is important not to forget to delete the session when the 
+program exits. Once the session is created, a CATProduct document can be loaded 
+with <TT>CATDocumentServices::Open</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>	CATSession *pSession = NULL;
+	rc = ::Create_Session(&quot;CAA_PrdObjectPub_Session&quot;, pSession);
+...
+	//----------------------------------------------------------------------
+	// Opening an existing document with full path specified 
+	//----------------------------------------------------------------------
+	CATDocument *pDoc = NULL;
+	rc = CATDocumentServices::Open(inputDoc, pDoc);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Retrieving the Documents Root Product">Retrieving the Document's 
+Root Product</A></H4>
+<P>In order to work with a product structure within the  Product document, it 
+is necessary to access the <B>root product</B>. This is done using the <CODE>
+GiveDocRoots</CODE> method of <I>CATIDocRoots</I> which returns a list of all of 
+the roots within the document, the first one being the root product we are 
+looking for.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Search for the document's root product
+        //----------------------------------------------------------------------
+        CATIDocRoots* piDocRootsOnDoc = NULL;
+        rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,
+                                  (void**) &amp;piDocRootsOnDoc);
+...
+        CATListValCATBaseUnknown_var* pRootProducts = 
+                piDocRootsOnDoc-&gt;GiveDocRoots();
+        CATIProduct_var spRootProduct = NULL_var;
+
+        if (NULL != pRootProducts &amp;&amp; pRootProducts-&gt;Size() &gt; 0) { 
+                spRootProduct = (*pRootProducts)[1];
+...
+        } else {
+                cout &lt;&lt; &quot;Failed to get Root Product&quot; &lt;&lt; endl;
+                return 5;
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Retrieving the Root Products Components">Retrieving the Root 
+Product's Components</A></H4>
+<P>Now that we have the root product, it is necessary to get its <i>CATIProduct</i> 
+handle in order to access to its components.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Get CATIProduct handle on the root product.
+        //----------------------------------------------------------------------
+        CATIProduct *piProductOnRoot = NULL;
+        if (NULL_var != spRootProduct)
+                rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                                   (void**) &amp;piProductOnRoot);
+...
+
+        //----------------------------------------------------------------------
+        // Get the root product's children
+        //----------------------------------------------------------------------
+        CATListValCATBaseUnknown_var *pChildren = NULL;
+        pChildren = piProductOnRoot-&gt;GetAllChildren();
+        int childCount = (pChildren == NULL ? 0 : pChildren-&gt;Size());</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4>
+<A name="Displaying the Publications of the Root Product and its Components">
+Displaying the Publications of the Root Product and its Components</A></H4>
+<P>Now that we have the <i>CATIProduct</i> handle on the root product and its 
+components, we can display all the publications</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Displaying the publications of the root product and its components
+        //----------------------------------------------------------------------
+        rc = PrintPublications(piProductOnRoot);
+        if (0 != rc) return rc;
+        for (int i = 1; i &lt;= childCount; i++) {
+                rc = <A href="#PrintPublications">PrintPublications</A>((CATIProduct_var) (*pChildren)[i]);
+                if (0 != rc) return rc;
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<H4><A name="Displaying the Publications of a Product">Displaying the 
+Publications of a Product</A></H4>
+<P>The goal of the <TT>PrintPublications</TT> function is to display a product's 
+publications. Using the <i>CATIPrdObjectPublisher</i> interface, it does the 
+following tasks:</P>
+<UL>
+    <LI>retrieve the list of all the publications with <B>ListPublications</B><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>static int <A name="PrintPublications"><tt>PrintPublications</tt></A>(CATIProduct *ipiProduct)
+{
+        int rc;
+        CATIPrdObjectPublisher *piPublisher = NULL;
+
+        if (NULL == ipiProduct) return 0;
+                rc = ipiProduct-&gt;QueryInterface(IID_CATIPrdObjectPublisher,
+                                                (void **) &amp;piPublisher);
+...
+        CATUnicodeString productName = ipiProduct-&gt;GetPartNumber();
+        cout &lt;&lt; endl &lt;&lt; &quot;Publications of &quot; &lt;&lt; productName &lt;&lt; &quot;:&quot; &lt;&lt; endl;
+
+        //
+        // Retrieve the list of the publications of the current product.
+        //
+        CATListValCATUnicodeString *pPubList = NULL;
+        int pubCount = piPublisher-&gt;<B>ListPublications</B>(pPubList);
+        if (0 == pubCount || NULL == pPubList) {
+                pubCount = 0;
+                cout &lt;&lt; &quot; none&quot; &lt;&lt; endl;
+        }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>get the final publication object with <TT><B>GetFinalObject</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        for (int i = 1; i &lt;= pubCount; i++) {
+
+                //
+                // Print the publication name
+                //
+                CATUnicodeString&amp; pubName = (*pPubList)[i];
+                cout &lt;&lt; &quot; Publication &quot; &lt;&lt; i &lt;&lt; &quot;: &quot;
+                     &lt;&lt; pubName.ConvertToChar() &lt;&lt; endl;
+        
+                //
+                // Retrieve the final publication object pointed to by
+                // this publication name. 
+                //
+                CATBaseUnknown *pPubObject = 
+                        piPublisher-&gt;<B>GetFinalObject</B>(pubName);
+                if (NULL == pPubObject) {
+                        cout &lt;&lt; &quot;Failed to get publication object of &quot; 
+                             &lt;&lt; pubName &lt;&lt; endl;
+                        return 10;
+                }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>retrieve the list of publications referencing a given publication with
+    <TT><B>IsFinallyPublished</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+                //
+                // List publications pointing to other sub publications
+                //
+                CATListValCATBaseUnknown_var *pSubPubrList = NULL;
+                CATListValCATUnicodeString *pSubPubNameList = NULL;
+                rc = piPublisher-&gt;<B>IsFinallyPublished</B>(pPubObject, pSubPubrList,
+                                                     pSubPubNameList);
+
+                if (rc &amp;&amp; NULL != pSubPubrList &amp;&amp; NULL != pSubPubNameList &amp;&amp;
+                    pSubPubrList-&gt;Size() &gt; 0 &amp;&amp; pSubPubNameList-&gt;Size() &gt; 0) {
+                        cout &lt;&lt; &quot; is finally published as&quot;;
+                        for (int i = 1; i &lt;= pSubPubNameList-&gt;Size(); i++)
+                                cout &lt;&lt; &quot; &quot; &lt;&lt; (*pSubPubNameList)[i];
+                        cout &lt;&lt; endl;
+                }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>retrieve the list of an object's publications with <TT><B>IsPublished</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+                //
+                // List publications directly on the geometry
+                //
+                CATListValCATUnicodeString *pNameList = NULL;
+                rc = piPublisher-&gt;<B>IsPublished</B>(pPubObject, pNameList);
+                if (rc &amp;&amp; NULL != pNameList &amp;&amp; pNameList-&gt;Size() &gt; 0) {
+                        cout &lt;&lt; &quot; is published as&quot;;
+                        for (int i = 1; i &lt;= pNameList-&gt;Size(); i++)
+                                cout &lt;&lt; &quot; &quot; &lt;&lt; (*pNameList)[i];
+                        cout &lt;&lt; endl;
+                }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>get the direct publication object with <TT><B>GetDirectObject</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+                //
+                // Get the direct publication object
+                //
+                CATBaseUnknown *pSubPubr = NULL;
+                CATUnicodeString subPubName;
+                rc = piPublisher-&gt;<B>GetDirectObject</B>(pubName, pSubPubr, subPubName);
+                if (2 == rc &amp;&amp; NULL != pSubPubr) {
+                        cout &lt;&lt; &quot; is a subpublication of &quot;
+                             &lt;&lt; subPubName.ConvertToChar() &lt;&lt; endl;
+                }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Modifying a Products Publications">Modifying a Product's 
+Publications</A></H4>
+<P>The <i> <TT>CATIPrdObjectPublisher</TT></i> interface also provides means to modify a 
+product's publications as demonstrated by the <TT>ModifyPublication</TT> 
+function.</P>
+<P>This function takes three inputs:</P>
+<OL>
+    <LI>The product whose publications are to be modified</LI>
+    <LI>A publication name to be removed. This publication must however be a 
+    subpublication.</LI>
+    <LI>A publication name to be published</LI>
+</OL>
+<P>and executes the following steps:</P>
+<UL>
+    <LI>retrieves the <i>CATIPrdObjectPublisher</i> interface<TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>static int ModifyPublications(CATIProduct *ipiProduct,
+                              const char *ipubToDelete,
+                              const char *isubPubToPublish)
+{
+        int rc;
+        CATBaseUnknown *pSubPubr = NULL;
+        CATUnicodeString subPubName;
+        CATIPrdObjectPublisher *piPublisher = NULL;
+
+        if (NULL == ipiProduct || NULL == ipubToDelete || 
+            NULL == isubPubToPublish)
+                return 0;
+        //
+        // Get CATIPrdObjectPublisher on product and subpublisher
+        //
+        rc = ipiProduct-&gt;QueryInterface(IID_CATIPrdObjectPublisher,
+                                        (void **) &amp;piPublisher);
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>verifies that the publication to be deleted is a subpublication with <TT>
+    <B>GetDirectObject</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        rc = piPublisher-&gt;<B>GetDirectObject</B>(ipubToDelete, pSubPubr, subPubName);
+        if (2 != rc || NULL == pSubPubr) {
+                cout &lt;&lt; ipubToDelete &lt;&lt; &quot; is not a subpublication&quot; &lt;&lt; endl;
+                return 0;
+        }
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>retrieves the <i>CATIPrdObjectPublisher</i> interface of the 
+    subpublisher<TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        CATIPrdObjectPublisher *piSubPublisher = NULL;
+        rc = pSubPubr-&gt;QueryInterface(IID_CATIPrdObjectPublisher,
+                                      (void **) &amp;piSubPublisher);
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>removes the publication at the product level with <TT><B>Unpublish</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        //
+        // Unpublish product publicattion
+        // also unvaluate and unpublish corresponding subpublication
+        //
+        cout &lt;&lt; endl;
+        rc = piPublisher-&gt;<B>Unpublish</B>(ipubToDelete);
+        cout &lt;&lt; (rc ? &quot;&gt;&gt; unpublished&quot; : &quot;&gt;&gt; failed to unpublish&quot;)
+             &lt;&lt; &quot; publication &quot;&lt;&lt; ipubToDelete &lt;&lt; endl;
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>also unvaluates and unpublishes it at the subpublication level with <TT>
+    <B>Unvaluate</B></TT> and <TT><B>Unpublish</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        rc = piSubPublisher-&gt;<B>Unvaluate</B>(subPubName);
+        cout &lt;&lt; (rc ? &quot;&gt;&gt; unvaluated&quot; : &quot;&gt;&gt; failed to unvaluate&quot;)
+             &lt;&lt; &quot; subpublication &quot; &lt;&lt; subPubName &lt;&lt; endl;
+
+        rc = piSubPublisher-&gt;<B>Unpublish</B>(subPubName);
+        cout &lt;&lt; (rc ? &quot;&gt;&gt; unpublished&quot; : &quot;&gt;&gt; failed to unpublish&quot;)
+             &lt;&lt; &quot; subpublication &quot; &lt;&lt; subPubName &lt;&lt; endl;
+
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>fetches the subpublication of given name with <TT><B>GetFinalObject</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        //
+        // Create a new publication at the root product level and valuate it
+        //
+        cout &lt;&lt; endl;
+        CATBaseUnknown *pPubObject = NULL;
+        pPubObject = piSubPublisher-&gt;<B>GetFinalObject</B>(isubPubToPublish);
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>creates a new publication with the same name appended with &quot;Prod&quot; and 
+    using <TT><B>Publish</B></TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        CATUnicodeString newPubName(isubPubToPublish);
+        newPubName += &quot;Prod&quot;;
+        rc = piPublisher-&gt;<B>Publish</B>(newPubName);
+        cout &lt;&lt; (rc ? &quot;&gt;&gt; created&quot; : &quot;&gt;&gt; failed to create&quot;)
+             &lt;&lt; &quot; new publication &quot; &lt;&lt; newPubName &lt;&lt; endl;
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>valuates it with the subpublication object and using <TT><B>Valuate</B></TT>
+    <TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE>...
+        rc = piPublisher-&gt;<B>Valuate</B>(newPubName, pPubObject);
+        cout &lt;&lt; (rc ? &quot;&gt;&gt; valuated&quot; : &quot;&gt;&gt; failed to valuate&quot;) 
+             &lt;&lt; &quot; publication &quot; &lt;&lt; newPubName &lt;&lt; endl;
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Saving the Modified Document in a New File">Saving the Modified 
+Document in a New File</A></H4>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+        //----------------------------------------------------------------------
+        // Save modified document
+        //----------------------------------------------------------------------
+        char docDir[CATMaxPathSize];
+        char docName[CATMaxPathSize];
+        CATSplitPath(inputDoc, docDir, docName);
+        CATUnicodeString newDoc = CATUnicodeString(outputDir) + &quot;New&quot; + docName;
+        rc = CATDocumentServices::SaveAs(*pDoc, newDoc);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="Closing the Session">Closing the Session</A></B></P>
+<P>Before terminating the use case, we need to remove the document from the 
+session before closing it.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+        //----------------------------------------------------------------------
+        // Remove opened document from session
+        //----------------------------------------------------------------------
+        rc = CATDocumentServices::Remove (*pDoc);
+...
+        //----------------------------------------------------------------------
+        //Delete the session 
+        //----------------------------------------------------------------------
+        rc = ::Delete_Session(&quot;CAA_PrdProp_Session&quot;);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to retrieve a product publications and how 
+to modify it:</P>
+<UL>
+    <LI>Load a  Product document with <TT>CATDocumentServices::Open</TT></LI>
+    <LI>Retrieve the root product of the document with <TT>
+    CATIDocRoots::GiveDocRoots</TT> </LI>
+    <LI>Retrieve the components of the root product with <TT>
+    CATIProduct::GetAllChildrenList</TT></LI>
+    <LI>Access to a component's publications with <TT>
+    CATIPrdObjectPublisher::ListPublications</TT>, <TT>GetFinalObject</TT>, <TT>
+    GetDirectObject</TT>, <TT>IsPublished</TT> and <TT>IsFinallyPublished</TT></LI>
+    <LI>Modify a component's publications with <TT>
+    CATIPrdObjectPublisher::Publish</TT>, <TT>Valuate</TT>, <TT>Unpublish</TT> 
+    and <TT>Unvaluate</TT></LI>
+    <LI>Save a document in a new file with <TT>CATDocumentServices::SaveAs</TT></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1.1</span></STRONG><b><span style="font-weight: 400"> [Aug 2004]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document revised</span></b></TD>
+    </tr>
+    <TR>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1</span></STRONG><b><span style="font-weight: 400"> [Sep 2003]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document created</span></b></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2003, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>
+

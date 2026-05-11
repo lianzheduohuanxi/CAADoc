@@ -1,0 +1,353 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Creating Custom Reports</title>
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Lifecycle Applications</h1>
+     </td>
+     <td valign="top">
+     <h2>Engineering Change Management</h2>
+     </td>
+     <td align="right" valign="top" rowspan="2">
+     <h3><a name="Top"></a>Creating Custom Reports</h3>
+     <p><i>Defining scenario-specific reports using reporting APIs</i></td>
+   </tr>
+   <tr>
+     <td colspan="2" class="use">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="Abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article shows how to create a custom report based on specific 
+     scenarios using CAA-exposed APIs.</p>
+     <ul>
+       <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+       <li><a href="#UseCase"><b>The CAAENOVIReportServicesUEImpl Use Case</b></a>
+       </li>
+       <ul>
+         <li><a href="#What">What Does CAAENOVIReportServicesUEImpl Do</a></li>
+         <li><a href="#How">How to Launch CAAENOVIReportServicesUEImpl</a></li>
+         <li><a href="#Where">Where to Find the CAAENOVIReportServicesUEImpl 
+         Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><b>Step-by-Step</b></a></li>
+       <li><a href="#InShort"><b>In Short</b></a></li>
+       <li><a href="#References"><b>References</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case demonstrates how to create custom reports by implementing <i>
+ ENOVIReportServices</i> interface and using <i>ENOVReportUtilities</i>. 
+ Reporting utilities allow you to register your own class as a reporting source 
+ for the Send To-&gt;Reporter capabilities and to add objects you want to report to 
+ into a publish stream that can then be either made available via an XML file or 
+ shown in a browser as an HTML document after being formatted via XSL.</p>
+ <p><img border="0" src="images/CAAEviImage003.jpg" width="886" height="722"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAENOVIReportServicesUEImpl Use Case</h3>
+ <p>CAAENOVIReportServicesUEImpl&nbsp; is a use case of the 
+ CAAReportSolutionServer.edu framework that illustrates 
+ ENOVReportingSolutionServer framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAENOVIReportServicesUEImpl Do</h4>
+ <p>This use case demonstrates how to create custom reports by implementing <i>
+ ENOVIReportServices</i> interface and using <i>ENOVReportUtilities</i>. 
+ Reporting utilities allow you to register your own class as a reporting source 
+ for the Send To-&gt;Reporter capabilities and to add objects you want to report to 
+ into a publish stream that can then be either made available via an XML file or 
+ shown in a browser as an HTML document after being formatted via XSL.</p>
+ <p>Processing performed by the <i>CAAENOVIReportServicesUEImpl</i> to generate 
+ a report can be generally described as:</p>
+ <ul>
+   <li>Using CAA APIs to define the scope of the report (which objects need to 
+   be described in the report)</li>
+   <li>Generate a report on each of these objects and place it into the 
+   reporting stream</li>
+ </ul>
+ <p>After XML stream for the report is generated, reporting infrastructure will 
+ allow the user to apply a proper layout based on the formatter selected in the 
+ UI of Send To-&gt;Reporting Editor command. </p>
+ <p>Reporting views and XSLs that can be applied to each report are specified 
+ based on the object type in the <i>ReportSettings.xml</i> file.</p>
+ <p>This allows users to be able to build a report based on any data available 
+ via CAA-exposed APIs and then format it based on their requirements by 
+ executing following steps: </p>
+ <ul>
+   <li>Application data retrieval – collect data to be added to the report using 
+   CAA APIs – specific to the data user wants to add to the report</li>
+   <li>Creating a report stream – using reporting CAA APIs to generate a report 
+   on each of the application objects and organizing them into hierarchy based 
+   on the user requirements (if per-object reporting utilities do not provide 
+   sufficient flexibility for the report required by the customer-for example, 
+   to generate a report on a non-ENOVIA object - this report can be written out 
+   using lower-level <i>ENOVPublishObjectNode</i> APIs )</li>
+   <li>Formatting the report – recommended way to convert an XML file into HTML 
+   is by applying a custom-build XSL – even though customer is also provided 
+   with an opportunity to create a C++ program that will generate HTML from XML</li>
+ </ul>
+ <p>More detailed description for each of these steps will be provided in the 
+ Step-by-step section.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAENOVIReportServicesUEImpl</h4>
+ <p>To launch CAAENOVIReportServicesUEImpl, you will need to execute the 
+ following steps:</p>
+ <ul>
+   <li>Set up the build time environment</li>
+   <li>Compile CAAENOVIReportServicesUEImpl along with its prerequisites</li>
+   <li>Set up the run time environment</li>
+   <li>Modify dictionary file declaring an implementation for <i>
+   ENOVIReportServices</i> implementation for ENOVIA_ECO to point to the new 
+   library</li>
+   <li>Launch ENOVIA LCA, create an ECO with child action(s) and attachments for 
+   these action(s)</li>
+   <li>Invoke <i>Send To-&gt;Reporting Editor</i> menu on this ECO and generate a 
+   report</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4>
+ <!---------------------------------comment------------------------------------->
+ <a name="Where"></a>Where to Find the CAAENOVIReportServicesUEImpl Code</h4>
+ <p>The CAAENOVIReportServicesUEImpl use case is made of one source and one 
+ header file located in the CAAENOVIReportServicesUEImpl.m module of the 
+ CAAReportSolutionServer.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAAReportSolutionServer.edu\CAAENOVIReportServicesUEImpl.m\</code></td>
+   </tr>
+   <tr style="mso-yfti-irow: 1; mso-yfti-lastrow: yes">
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAAReportSolutionServer.edu/CAAENOVIReportServicesUEImpl.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are eight logical steps in CAAENOVIReportServicesUEImpl:</p>
+ <ol>
+   <li><a href="#Step1">Selecting View Type</a></li>
+   <li><a href="#Step2">Creating an ENOVPublihStream for the Report and an 
+   ENOVPublishObjectNode to Contain the ECO Report</a></li>
+   <li><a href="#Step3">Generating a Report for ECO Object</a></li>
+   <li><a href="#Step4">Retrieving Actions Pointed by this ECO</a></li>
+   <li><a href="#Step5">Adding Child Actions into the Report</a></li>
+   <li><a href="#Step6">Getting Attachments for Child Actions</a></li>
+   <li><a href="#Step7">Adding Attachments to the Report</a></li>
+   <li><a href="#Step8">Retrieving Report Stream</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Selecting View Type</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  cout &lt;&lt; &quot;Report type is &quot; &lt;&lt; iViewName.ConvertToChar();
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>View type is a parameter passes into the implementation based on the 
+ selection made by the user in the <i>Send To-&gt;Reporting Editor</i> dialog. All 
+ view types available for selection are registered in a <i>ReportSettings.xml</i> 
+ file based on the object type. Inside the implementation, code can check the 
+ view type and determine the set of objects to be added to this report based on 
+ the type (in case when multiple different report types are available for the 
+ object type). In this sample, only one report type is provided so it is not 
+ controlled by view type.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating an ENOVPublishStream for the Report and an 
+ ENOVPublishObjectNode to Contain the ECO Report</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  ENOVPublishStream* pubStream = new ENOVPublishStream();
+...
+  ENOVPublishObjectNode * rootNode = new ENOVPublishObjectNode(pubStream) ;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The code above creates a <i>ENOVPublishStream</i> to contain the report, and 
+ a dedicated report node to contain an object report later to be filled in by an 
+ ECO report (see next section). The parameter passed into <i>
+ ENOVPublishObjectNode</i> is a parent node for the node being constructed. In 
+ this case, the stream itself is used as a parent because we are creating a 
+ top-level node. This parent parameter can be used to control the structure of 
+ the report as will be shown later</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Generating a Report for ECO Object</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  ENOVReportUtilities::GetData(&quot;one level&quot;,currentObject, rootNode, printedObjects);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>CAA-exposed API <i>ENOVReportUtilities::GetData</i><i>(</i><i>)</i> allows 
+ generation of a basic report for an object. The data for the object added will 
+ be generated using the BROWSE mask. Please see documentation for this API for 
+ details. In this case, we will generate a basic one-level report on our ECO, 
+ and we are going to place it into <i>rootNode</i> we have created above. Last 
+ parameter allows tracking of the objects being added to the report. </p>
+ <p align="right" style="text-align: right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Retrieving Actions Pointed by this ECO</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  rc = curAction-&gt;GetMyPointedActions(childActions);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Inside custom implementation of the reports, any available CAA APIs can be 
+ used to collect objects that need to be added to the report. In this case, we 
+ are getting all child actions of this ECO to be added to the report.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Adding Child Actions into the Report</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+ for(int i=1; i&lt;=childActions.Size(); i++) {
+   CATIVpmAFLAction_var childAction=childActions[i];
+   ...
+   ENOVPublishObjectNode * curActionNode = new ENOVPublishObjectNode(rootNode) ;
+   rc = ENOVReportUtilities::GetData(&quot;one level&quot;,(CATIVpmFactoryObject_var)childAction,curActionNode, printedObjects);
+ ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>For each child action, we are creating an <code>ENOVPublishObjectNode</code> 
+ to contain a report. Please note that when we are creating this node, we use a
+ <code>rootNode</code> as a parent which will result in adding action reports 
+ under an EC report. Action report is then generated into this node by using
+ <code>ENOVReportUtilities::GetData</code> as described earlier.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Getting Attachments for Child Actions</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  childAction-&gt;GetAllAttachements(attachments);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>For this particular report example, we are going to retrieve all attachments 
+ from these actions to be added to the report. It can be done using existing 
+ CAA-exposed APIs.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Adding Attachments to the Report</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+   for(int j =1; j &lt;= attachments.Size(); j++) {
+     ...
+     ENOVPublishObjectNode * curAttachmentNode = new ENOVPublishObjectNode(curActionNode);
+     rc = ENOVReportUtilities::GetData(&quot;one level&quot;,(CATIVpmFactoryObject_var)curAttachment,curAttachmentNode, printedObjects);
+     ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>For each attachment, we are creating an <code>ENOVPublishObjectNode</code> 
+ to contain a report. Please note that when we are creating this node, we use a
+ <code>curActionNode</code> as a parent which will result in adding attachment 
+ report under an EC report. As the result, we are going to have a three-level 
+ report hierarchy: ECO-&gt;Actions-&gt;Attachments. Attachment report is then 
+ generated into this node by using <code>ENOVReportUtilities::GetData</code> as 
+ described earlier.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step8"></a>Retrieving Report Stream</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+   const char* tempStream = NULL;
+   tempLength=0;
+   int ReturnCode = pubStream-&gt;GetStream(tempStream,tempLength);
+   oLengthContent=tempLength-1;  // -1 because of /0 at the end of the stream
+   oStream = new char[oLengthContent];
+   memcpy((char*)oStream,tempStream,oLengthContent);
+ ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>After report structure is being created as <i>ENOVPublishStream</i>, the 
+ data then has to be converted into a byte array as described above.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The main purpose of this use case is to explain how customers can create 
+ specific reports based on their requirements. Customers have a capability to 
+ control both content of the report by retrieving objects to be.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <h3>
+ <!---------------------------------comment------------------------------------->
+ <a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <b>1</b> [Jun 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

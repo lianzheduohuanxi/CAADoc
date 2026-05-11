@@ -1,0 +1,665 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+    <title>Generating a Catalog of User Defined NC Operations</title>
+</head>
+<body>
+    <table class="DocHeader">
+        <tr>
+            <td class="DocHeader1">
+                <h1>
+                    <a name="Top"></a>Generating a feature catalog of User Defined NC Operations</h1>
+            </td>
+        </tr>
+        <tr>
+            <td class="use">
+                Use Case
+            </td>
+        </tr>
+    </table>
+    <!-- ------------------------------comment---------------------------------- -->
+    <table class="abstract">
+        <tr>
+            <td>
+                <h2>
+                    Abstract</h2>
+                <p>
+                    This article discusses the CAAMfgGenerateUserActivityCatalog use case and explains
+                    how to generate and upgrade a feature catalog of User Defined Machining Operations
+                    with the OSM language.</p>
+                <ul>
+                    <li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+                    <li><a href="#UseCase">The CAAMfgGenerateUserActivityCatalog Use Case</a>
+                        <ul>
+                            <li><a href="#What">What Does CAAMfgGenerateUserActivityCatalog Do</a></li>
+                            <li><a href="#How">How to Launch CAAMfgGenerateUserActivityCatalog</a></li>
+                            <li><a href="#Where">Where to Find the CAAMfgGenerateUserActivityCatalog Code</a></li>
+                        </ul>
+                        <li><a href="#Step">Step-by-Step</a></li>
+                        <li><a href="#InShort">In Short</a></li>
+                        <li><a href="#References">References</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h2>
+        <a name="Learn"></a>What You Will Learn With This Use Case</h2>
+    <p>
+        This use case is intended to help you to generate a new catalog of User Defined
+        Operation with the OSM language. This involves the following:</p>
+    <ul>
+        <li>Creating a new Library of Activities.</li>
+        <li>Add a new Startup in this library.</li>
+        <li>Add Strategy and Feedrate parameters on this Startup.</li>
+    </ul>
+    <p>
+        This use case also shows how to upgrade an existing catalog of User Defined Operation.</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h2>
+        <a name="UseCase"></a>The CAAMfgGenerateUserActivityCatalog Use Case</h2>
+    <p>
+        CAAMfgGenerateUserActivityCatalog is a use case of the CAAManufacturingItf.edu framework
+        that illustrates how to generate a new catalog of User Defined operations and how
+        to upgrade it. The generation of feature catalog is based on the OSM language. Please
+        refer to the technicle articles to know more on how to generate the CATFct file
+        with the command-line tool CATFctEditorAssistant [<a href="#References">1</a>] and
+        how to use the OSM language [<a href="#References">2</a>].</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="What"></a>What Does CAAMfgGenerateUserActivityCatalog Do</h3>
+    <p>
+        CAAMfgGenerateUserActivityCatalog enables the customer to generate a new activities
+        catalog containing a new startup deriving from User Defined Operation. This startup
+        is named &quot;UserActivity&quot;. The User Defined Operation use a &quot;CATIMfgMachiningFeature&quot;
+        machining feature which is a standard machining feature defined in the Manufacturing.feat
+        catalog.
+        <br>
+        At the end, this startup has:</p>
+    <ul>
+        <li>five strategy parameters - &quot;Offset&quot;, &quot;NbOfCuts&quot;, &quot;CAAToolAngle&quot;,
+            &quot;CAAApproachDistance&quot; and &quot;AdditionalParam&quot;</li>
+        <li>two feedrate parameters - &quot;MFG_FEED_PLUNGE&quot;, &quot;MFG_FEED_RETRACT&quot;
+        </li>
+        <li>one spindle parameter - &quot;MFG_SPINDLE_FINISH&quot;</li>
+    </ul>
+    <p>
+        The generation of this catalog is done in three steps. In initialization step, step0,
+        an empty catalog is created along with a default osm file.</p>
+    <ol>
+        <li>In <b>step1</b>, the UserActivity startup is created with new strategy parameters</li>
+        <li>In <b>step2</b>, a additional strategy parameter (&quot;AdditionalParam&quot;) is
+            added to illustrate how to upgrade an existing activities catalog </li>
+        <li>In <b>step3</b>, new feedrate and spindle parameters are added</li>
+    </ol>
+    <p>
+        The same catalog is upgraded at each step but different osm files are used. This
+        is a facility to better illustrate this use case but one single osm file can be
+        used and modified to upgrade the catalog.</p>
+    <p>
+        The generated catalog is named CAAMfgUserActivityCatalog.CATFct, the osm files are
+        named CAAMfgUserActivityCatalog_step1.osm, CAAMfgUserActivityCatalog_step2.osm and
+        CAAMfgUserActivityCatalog_step3.osm</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="How"></a>How to Launch CAAMfgGenerateUserActivityCatalog</h3>
+    <p>
+        To launch CAAMfgGenerateUserActivityCatalog, you will need to set up the runtime
+        environment and then execute the CATfctEditorAssistant tool as indicated.</p>
+    <table class="code" id="table1">
+        <tr>
+            <td>
+                <pre>$ mkrun -c sh
+$ cd <i>your_workspace_root</i>
+$ # Make sure that no previous catalog exists in the runtime view, including in the concatenation
+$ rm <i>OS_directory</i>//resources/graphic/CAAMfgUserActivityCatalog.CATfct
+ 
+$ # Create empty catalog in the runtime view and empty osm (the absolute path for the catalog is MANDATORY)
+$ <b>CATfctEditorAssistant -create-new-catalog -catalog-name CAAMfgUserActivityCatalog.CATfct
+    -with-client-id CAAMfgUserActivityId -using-template delmia</b>
+
+$ # Upgrade the empty catalog with the osm
+$ # Note that the upgraded catalog will be output in the current directory
+$ <b>CATfctEditorAssistant -update-catalog -catalog-name CAAMfgUserActivityCatalog.CATfct
+    -with-client-id CAAMfgUserActivityId -with-osm CAAMfgUserActivityCatalog.osm</b>
+ 
+$ # Remove the empty osm
+$ rm <i>your_workspace_root/</i>empty.osm
+ 
+$ # the mkrun shell
+$ exit </pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        To have more explanation on the usage of the CATFctEditorAssistant tool, please
+        refer to the Creating Startups in Catalogs use case [<a href="#References">3</a>].</p>
+    <h3>
+        <a name="Where"></a>Where to Find the CAAMfgGenerateUserActivityCatalog Code</h3>
+    <p>
+        The CAAMfgUserActivityCatalog.osm file is located in the InputData directory of
+        the CAAManufacturingItf.edu framework:</p>
+    <p>
+        <code>InstallRootDirectory/CAAManufacturingItf.edu/InputData</code></p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h2>
+        <a name="Step"></a>Step-by-Step</h2>
+    <p>
+        There are five logical steps in CAAMfgGenerateUserActivityCatalog for the creation
+        of a new activities catalog:</p>
+    <ol>
+        <li><a href="#Step1">Creating a new activities catalog </a></li>
+        <li><a href="#Step2">Creating a startup in this catalog</a></li>
+        <li><a href="#Step3">Adding strategy parameters to the startup</a></li>
+        <li><a href="#Step4">Upgrading the activities catalog</a></li>
+        <li><a href="#Step5">Adding feedrate and spindle parameters to the startup</a></li>
+    </ol>
+    <h3>
+        <a name="Step1"></a>Creating a new activities catalog</h3>
+    <p>
+        To create a catalog, run the CATfctEditorAssistant with the <b>-create-new-catalog</b>
+        option and the <b>-using-template</b> option. This option with the &quot;delmia&quot;
+        argument allows to create a specific &quot;process&quot; container named <i>SPPLibCont</i>
+        that will contain the activities startup.</p>
+    <ol>
+    </ol>
+    <table class="code">
+        <tr>
+            <td>
+                <pre>CATfctEditorAssistant -create-new-catalog -catalog-name CAAMfgUserActivityCatalog.CATfct -with-client-id CAAMfgUserActivityId -using-template delmia</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        Once the above command has been executed, you will find two new files:</p>
+    <ol>
+        <li>CAAMfgUserActivityCatalog.CATfct </li>
+        <li>CAAMfgUserActivityCatalog.osm </li>
+    </ol>
+    <p>
+        Both files represent the same version of an empty catalog with a root container.
+        The only difference is that the <code>.osm</code> file is readable while the <code>.CATfct</code>
+        catalog is not:</p>
+    <table class="code" id="table2">
+        <tr>
+            <td>
+                <pre>/**
+ * Copyright Dassault Systemes 2006
+ * delmia.osm catalog skeleton
+ * use this skeleton to create Machining catalog
+ */
+document `CAAMfgUserActivityCatalog.CATfct` {
+  container SPPLibCont #root #isa(SPPLibCont) {
+    // insert here your startups
+  }
+}</pre>
+            </td>
+        </tr>
+    </table>
+    <ol>
+    </ol>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step2"></a>Creating a startup in this Catalog</h3>
+    <p>
+        To define the startup of a new User Defined Operation, the new startup must derive
+        from the startup &quot;MfgUserDefinedMO&quot; which is defined in the ManufacturingActivities.feat
+        catalog. In the new catalog, we create a new startup of type &quot;UserActivity&quot;.
+    </p>
+    <p>
+        This is done with the following lines in CAAMfgUserActivityCatalog_step1.osm:</p>
+    <table class="code" id="table3">
+        <tr>
+            <td>
+                <pre>document `CAAMfgUserActivityCatalog.CATfct` {
+  container SPPLibCont #root #isa(SPPLibCont) {
+  	// User Startup deriving from MfgUserDefinedMO
+<b>feature UserActivitySU</b> <b>MfgUserDefinedMO@`ManufacturingActivities.feat` #startup
+    #isa(UserActivity)</b> {
+	...
+	}
+}
+</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        In this use case, the Operation we want to define, uses a regular Machining Feature
+        defined by an interface <code>CATIMfgMachiningFeature</code>. But you can define
+        your own Machining Feature by generating a new <code>*.CATFct</code> Catalog the
+        same way it is done in this article and associate to it your own interface. The
+        only specific point is that your feature startup has to derive from the &quot;MachiningFeature&quot;
+        startup which is defined in Manufacturing.feat catalog and the root container is
+        a standard CATFeatCont container so the -template option is not required.</p>
+    <table class="code">
+        <tr>
+            <td>
+                <pre>...
+	// User Startup deriving from MfgUserDefinedMO
+	feature UserActivitySU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivity) {
+		AuthorizedItems=<b>["CATIMfgMachiningFeature"]</b>
+				
+		<b>synchronize</b>()
+	}
+...
+</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        Note that the &quot;AuthorizedItems&quot; attribute holds a list of string so that
+        it is possible to add several type of features.</p>
+    <p>
+        The call to the <code>synchronize</code> method is necessary to be sure that any
+        modification on the mother startup MfgUserDefinedMO is propagated on the new startup.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step3"></a>Adding Strategy Parameters to the startup</h3>
+    <p>
+        Then we add four new strategy parameters &quot;Offset&quot;, &quot;NbOfCuts&quot;,
+        &quot;CAAToolAngle&quot;and &quot;CAAApproachDistance&quot; to the startup. Those
+        four parameters will be accessible in the strategy tabpage of the User Defined Operation
+        edition panel.</p>
+    <table class="code">
+        <tr>
+            <td>
+                <pre>
+...
+	// User Startup deriving from MfgUserDefinedMO
+	feature UserActivitySU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivity) {
+		AuthorizedItems=["CATIMfgMachiningFeature"]
+				
+		synchronize()
+ 
+		// Step 1 : Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+		<b>this->StrategyParameters->AddStrategyParameter(Offset,LENGTH,0.0)</b>	
+		this-&gt;StrategyParameters-&gt;AddStrategyParameter(NbOfCuts,Integer,1)	
+		this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)	
+		this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,0.02)	
+ 	}
+...
+</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        The <font face="Courier New" size="2">AddStrategyParameter</font>is a method to
+        be called on the StrategyParameters feature that creates a new literal feature and
+        adds it to the strategy block of parameters. It takes 3 input arguments:</p>
+    <ul>
+        <li>a <b>name</b> : this is the name of the attribute that will contain the strategy
+            parameter to be created</li>
+        <li>a <b>dimension</b> : this is the dimension of the parameter to be created.</li>
+        <li>a <b>value</b>: this is the default value that the parameter will hold once it is
+            created</li>
+    </ul>
+    <p>
+        &nbsp;</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step4"></a>Upgrading the activities catalog</h3>
+    <p>
+        Now that the OSM file has been updated with the required startup and attributes,
+        you can use CATfctEditorAssistant to create the corresponding catalog. This is done
+        by upgrading the empty catalog created <a href="#Step2">previously</a>. This catalog
+        must be in the runtime view.</p>
+    <table class="code" id="table5">
+        <tr>
+            <td>
+                <pre>CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CAAMfgUserActivityId -with-osm CAAMfgUserActivityCatalog.osm</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        Keep in mind that CATfctEditorAssitant will look up the catalog in the run-time
+        view but will output to the location specified on the command-linee.</p>
+    <p>
+        Note that the catalog can be upgraded as many times as necessary using the same
+        methodology. First you modify the osm file then you launch the CATFctEditorAssistant
+        with the appropriate arguments. For instance, adding another strategy parameter
+        will be done this way:</p>
+    <p>
+        Add the following lines in the osm file</p>
+    <table class="code">
+        <tr>
+            <td>
+                <pre>
+...
+		// Step 2 : Create an additional strategy parameter
+		<b>this-&gt;StrategyParameters-&gt;AddStrategyParameter(AdditionalParam,Real,5.5)</b>
+...</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        Run the CATFctEditorAssistant with these arguments:</p>
+    <table class="code" id="table6">
+        <tr>
+            <td>
+                <pre>CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CAAMfgUserActivityId -with-osm CAAMfgUserActivityCatalog.osm</pre>
+            </td>
+        </tr>
+    </table>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+    <h3>
+        <a name="Step5"></a>Adding Feedrate and Spindle Parameters to the startup</h3>
+    <h4>
+        Creation of Feedrate Parameters</h4>
+    <p>
+        The <code>AddFeedrateParameter</code> is a method to be called on the FeedrateParameters
+        feature that adds an existing feedrate parameter to the feedrate block of parameters.
+        It takes 2 input arguments:</p>
+    <ul>
+        <li>a <b>name</b> : this is the name of the attribute that will contain the feedrate
+            parameter. It has to be chosen among a list of <a href="#Feedrate Reference">predefined
+                strings</a>.</li>
+        <li>a <b>MfgFeedrateParameter</b> feature instance: this feature must have been previously
+            instanciated in the osm file using the feature statement of the osm language.
+            <br>
+            &nbsp; </li>
+    </ul>
+    <table class="code" id="table4">
+        <tr>
+            <td>
+                <pre>document `CAAMfgUserActivityCatalog.CATfct` {
+  container SPPLibCont #root #isa(SPPLibCont) {  
+	...	
+<b>// Create a "retract" MfgFeedrateParameter feature MyRetractFeedrate MfgFeedrateParameter@`Manufacturing.feat`
+    { Value = new_literal(LINEARFEEDRATE,800.) Mode = new_literal(Boolean,FALSE) } </b>...
+ 
+	// User Startup deriving from MfgUserDefinedMO
+	feature UserActivitySU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivity) {
+		...
+		// Step 3 : Create additional feedrate parameters
+		<b>this->FeedrateParameters->AddFeedrateParameter(MFG_FEED_RETRACT,MyRetractFeedrate)</b>	
+	}
+...
+</pre>
+            </td>
+        </tr>
+    </table>
+    <p>
+        A MfgFeedrateParameter feature has two attributes:</p>
+    <ul>
+        <li><b>Value</b>: contains the literal feature that holds the value and unit of the
+            Feedrate parameter</li>
+        <li><b>Mode</b>: this is an optional attribute that contains a Boolean to specify if
+            the rapid mode is available on this feedrate parameter</li>
+    </ul>
+    <p>
+        The Value attribute must contain a literal feature with a predefined dimension supported
+        by the feedrate parameter. This literal is created with the global method <font face="Courier New"
+            size="2">new_literal</font>which takes two input parameters:</p>
+    <ul>
+        <li>a <b>dimension</b> : this is the dimension of the literal to be created. It can
+            be LINEARFEEDRATE or ANGULARFEEDRATE </li>
+        <li>a <b>value</b>: this is the default value that the literal will hold once it is
+            created</li>
+    </ul>
+    <h4>
+        Creation of Spindle Parameters</h4>
+    <p>
+        A Spindle parameter can be created using the same method <code>AddFeedrateParameter</code>.
+        In this case the feature to be added must be an instance of a <b>MfgSpindleParameter</b>
+        feature.</p>
+    <p>
+        A MfgSpindleParameter feature has one attribute:</p>
+    <ul>
+        <li><b>Value</b>: contains the literal feature that holds the value and unit of the
+            Spindle parameter</li>
+    </ul>
+    <p>
+        The Value attribute must contain a literal feature with a predefined dimension supported
+        by the spindle parameter. This literal is created with the global method <font face="Courier New"
+            size="2">new_literal</font>which takes two input parameters:</p>
+    <ul>
+        <li>a <b>dimension</b> : this is the dimension of the literal to be created. It can
+            be LINEARSPINDLESPEED or ANGULARSPINDLESPEED </li>
+        <li>a <b>value</b>: this is the default value that the literal will hold once it is
+            created</li>
+    </ul>
+    <table class="code" id="table7">
+        <tr>
+            <td>
+                <pre>document `CAAMfgUserActivityCatalog.CATfct` {
+  container SPPLibCont #root #isa(SPPLibCont) {
+  
+	// Create a "Plunge" MfgFeedrateParameter
+	feature MyPlungeFeedrate MfgFeedrateParameter@`Manufacturing.feat` {
+		Value = new_literal(LINEARFEEDRATE,750.)
+	}
+	
+	// Create a "retract" MfgFeedrateParameter
+	feature MyRetractFeedrate MfgFeedrateParameter@`Manufacturing.feat` {
+		Value = new_literal(LINEARFEEDRATE,800.)
+		Mode  = new_literal(Boolean,FALSE)
+	}
+		
+	// Create a "finishing" MfgSpindleParameter
+	<b>feature MyFinishingSpindle MfgSpindleParameter@`Manufacturing.feat` { Value = new_literal(ANGULARSPINDLESPEED,20.)
+        }</b>
+ 
+	// User Startup deriving from MfgUserDefinedMO
+	feature UserActivitySU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivity) {
+		
+		...
+		// Step 3 : Create additional feedrate parameters
+		this->FeedrateParameters->AddFeedrateParameter(MFG_FEED_PLUNGE,MyPlungeFeedrate)	
+		this->FeedrateParameters->AddFeedrateParameter(MFG_FEED_RETRACT,MyRetractFeedrate)	
+		<b>this->FeedrateParameters->AddFeedrateParameter(MFG_SPINDLE_FINISH,MyFinishingSpindle)</b>	
+	}
+...
+</pre>
+            </td>
+        </tr>
+    </table>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Feedrate Reference"></a>Feedrate and Spindle Reference</h3>
+    <h4>
+        Magnitudes</h4>
+    <p>
+        Here are the possible dimensions allowed according to the type of parameter.</p>
+    <table border="1" width="50%" id="table9">
+        <tr>
+            <td width="99" align="center">
+                &nbsp;
+            </td>
+            <td align="center" style="width: 210px">
+                <b>MfgFeedrateParameter</b>
+            </td>
+            <td align="center" style="width: 215px">
+                <b>MfgSpindleParameter</b>
+            </td>
+        </tr>
+        <tr>
+            <td width="99">
+                <b>Linear</b>
+            </td>
+            <td align="center" style="width: 210px">
+                LINEARFEEDRATE<br>
+                mm / min
+            </td>
+            <td align="center" style="width: 215px">
+                LINEARSPINDLESPEED<br>
+                mm / min
+            </td>
+        </tr>
+        <tr>
+            <td width="99">
+                <b>Angular</b>
+            </td>
+            <td align="center" style="width: 210px">
+                <p align="center">
+                    ANGULARFEEDRATE&nbsp;
+                    <br>
+                min / turn
+            </td>
+            <td align="center" style="width: 215px">
+                <p align="center">
+                    ANGULARSPINDLESPEED
+                    <br>
+                turn / min
+            </td>
+        </tr>
+    </table>
+    Note that the unit of feedrate parameters respectively of spindle parameters can
+    be changed by the user and that any change is applied to all the feedrate parameters
+    respectively to all spindle parameters.
+    <h4>
+        Predefined names</h4>
+    <p>
+        Here are the allowed names for the attributes that can contain new feedrate and
+        spindle parameters.</p>
+    <table border="1" width="52%" id="table8">
+        <tr>
+            <td width="200" align="center">
+                <b>Feedrate parameter</b>
+            </td>
+            <td width="194" align="center">
+                <b>Spindle parameter</b>
+            </td>
+            <td align="center">
+                <b>Specific Lathe parameter</b>
+            </td>
+        </tr>
+        <tr>
+            <td width="200">
+                MFG_FEED_PLUNGE MFG_FEED_APP MFG_FEED_MACH MFG_FEED_FINISH MFG_FEED_RETRACT MFG_LOCALFEED
+                MFG_CHAMFER_FEED
+            </td>
+            <td width="194">
+                MFG_SPINDLE_MACH MFG_SPINDLE_FINISH MFG_LOW_SPINDLE MFG_CHAMFER_SPINDLE
+            </td>
+            <td>
+                MFG_LATHE_MACH_FEED MFG_LATHE_RAPID_FEED MFG_LATHE_LIGHT_FEED
+            </td>
+        </tr>
+    </table>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h2>
+        <a name="InShort"></a>In Short</h2>
+    <p>
+        This article provides an example on how to generate and upgrade a catalog of User
+        Defined Machining Operations thanks to the osm language.</p>
+    <p>
+        In this example we generate a catalog named &quot;UserActivityCatalog.CATfct&quot;
+        that contains one startup of a User Defined Operation with the CATFctEditorAssistant
+        on line tool. The late type of this operation is &quot;UserActivity&quot;. It derives
+        from the late type &quot;MfgUserDefinedMO&quot; as every user defined operation
+        should do. The &quot;MfgUserDefinedMO&quot; is a standard user defined operation.
+        The corresponding startup of this operation is defined in the ManufacturingActivities.feat
+        catalog.</p>
+    <p>
+        For this user defined activity we authorized a &quot;CATIMfgMachiningFeature&quot;
+        machining feature, which is a standard machining feature defined in the Manufacturing.feat
+        catalog.</p>
+    <p>
+        We also add several strategy, feedrate and spindle parameters on this startup in
+        several steps to illustrate the upgrade mechanism.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="References"></a>References</h3>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                [1]
+            </td>
+            <td>
+                <a href="../CAADocUseCases/CAADocRunSample.htm">Building
+                    and Launching a CAA V5 Use Case</a>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                [2]
+            </td>
+            <td>
+                <a href="../CAAOsmUseCases/CAAOsmAppliCont.htm">
+                    Creating Features in an Applicative Container</a>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">
+                [<a href="#Top">Top</a>]
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="History"></a>History</h3>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                Version: <strong>1</strong> [Apr 2001]
+            </td>
+            <td valign="top">
+                Document created
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                Version: <strong>2</strong> [Mar 2004]
+            </td>
+            <td valign="top">
+                Document modification
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                Version: <strong>3</strong> [May 2007]
+            </td>
+            <td valign="top">
+                Add information on catalog upgrade
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">
+                [<a href="#Top">Top</a>]
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                Version: <strong>3</strong> [Jun 2012]
+            </td>
+            <td valign="top">
+                Migration to OSM
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">
+                [<a href="#Top">Top</a>]
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <p>
+        <i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+    <p>
+        &nbsp;</p>
+</body>
+</html>

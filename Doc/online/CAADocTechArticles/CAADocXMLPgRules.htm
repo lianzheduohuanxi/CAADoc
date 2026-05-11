@@ -1,0 +1,1120 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAA V5 XML Coding Rules and Tips</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>CAA V5 XML Coding Rules</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js">
+</script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 XML Coding Rules</h3>
+      <em>Rules, hints and tips to write XML code</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you several mandatory rules related to the use of
+      XML code, including but not restricted to XML Schema and XML documents.
+      The goal of these rules is to help choosing the best alternative design
+      choice when dealing with XML, and therefore have a consistent and easy to
+      maintain set of XML documents. This article also provides some tips to
+      make your XML code easier to use with third party software, such as data
+      exchange software.</p>
+      <ul>
+        <li><a href="#MandatoryRulesForXMLSchema">General Mandatory Rules</a>
+        <li><a href="#MandatoryRulesForXMLSchema">Mandatory Rules for XML Schema</a>
+        <li><a href="#MandatoryRulesForXMLSchema">Mandatory Rules for XML </a><a href="#MandatoryRulesForXMLSchema">Instances</a>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="GeneralMandatoryRules"></a>General Mandatory Rules</h3>
+<p>These rules are:
+<ul>
+  <li><a href="#alwaysDefineEncoding">Always define the encoding of XML
+    documents, and use UTF-8 encoding</a></li>
+  <li><a href="#useXMLSchemaInsteadOfDTD">Use XML Schema instead of DTD to
+    validate XML documents</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="alwaysDefineEncoding"></a>Always define the encoding of XML
+document, and use UTF-8 encoding</h4>
+<p>XML documents should be easy to exchange across various OS systems and
+countries. Therefore, it is required that no XML instance should be written or
+generated using an encoding that may no be available on another system.</p>
+<p>For example, using is a sentence in French language is to be found in an XML
+instance, it must not be encoded in iso-8859-1 (one byte for each character of
+western European languages) because such encoding may not be available on a
+system in an Asian country. Moreover, since XML document content can be
+multi-lingual (like mixing German and Japanese language), so the encoding must
+include all possible language combinations. UTF-8 is one of the possible
+encoding format for the UNICODE character set.&nbsp;</p>
+<p>Always use UTF-8 for XML documents, and therefore always begin your XML
+documents (including XML Schema) with the following line:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#008080">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>It is possible to use UTF-16 as an alternative encoding format, but this
+encoding less commonly used and it tends to lead to larger files than UTF-8.</p>
+<p>Do not begin any XML document with the following processing instruction:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#FF0000">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- DO NOT USE THIS XML SAMPLE IN YOUR CODE !! --&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>because there would be no way to tell what is the document encoding.&nbsp;</p>
+<h4><a name="useXMLSchemaInsteadOfDTD"></a>Use XML Schema instead of DTD to
+validate XML documents</h4>
+<p>The valid set of elements, attributes, text, etc. entities in an XML
+document, and their allowed sequences or nesting can be defined either by a DTD
+(Document Type Definition), or by an XML Schema.</p>
+<p>XML Schema can specify any document structure which can be specified by a
+DTD, and much more : for example an XML Schema can be used to defined allowed
+data types in an XML document. XML Schema mappings with most languages are being
+specified.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="MandatoryRulesForXMLSchema"></a>Mandatory Rules for XML Schema</h3>
+<p>These rules are:
+<ul>
+  <li><a href="#useXMLstandards">Use standard XML Schema, such as XML Schema
+    Recommendation 1.0</a></li>
+  <li><a href="#useNamespaces">Use namespaces</a></li>
+  <li><a href="#useSimpleTypesFromList">Use simple datatypes from the allowed
+    list</a></li>
+  <li><a href="#alwaysDefineType">Always define elements through a type</a></li>
+  <li><a href="#UseElementsInsteadOfAttributes">Use elements instead of
+    attributes</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="useXMLstandards"></a>Use standard XML Schema, such as XML Schema
+Recommendation 1.0</h4>
+<p>Public XML declarations must rely on standards. For XML Schema, use at least
+the &quot;XML Schema Recommendation 1.0&quot;, 2 May 2001, from the World Wide
+Web consortium (http://www.w3.org). Previous versions of XML Schema (24 October
+2001 and 7 July 2001 versions) are non-final versions which should no longer be
+used.&nbsp;</p>
+<p>For example, don't use:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#FF0000">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;xsd:schema xmlns:xsd=&quot;http://www.w3.org/2000/10/XMLSchema&quot;&gt;
+
+&lt;!-- DO NOT USE THIS XML SAMPLE IN YOUR CODE !! --&gt;</font><font color="#FF0000">
+
+&lt;xsd:complexType name=&quot;shippingDateType&quot;&gt;
+  &lt;xsd:sequence&gt;
+    &lt;!-- the xsd:year and xsd:month datatypes are deprecated --&gt;
+    &lt;xsd:element name=&quot;year&quot; type=&quot;xsd:year&quot;/&gt;
+    &lt;xsd:element name=&quot;month&quot; type=&quot;xsd:month&quot;/&gt;
+  &lt;/xsd:sequence&gt;
+&lt;/xsd:complexType&gt;
+
+&lt;/xsd:schema&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>Instead, the same XML type should be declared using the following standard
+syntax:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#008080">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</font><font color="#0000ff">
+&lt;</font><font color="#800000">xsd:schema</font><font color="#ff0000"> xmlns:xsd</font><font color="#0000ff">=&quot;</font>http://www.w3.org/2001/XMLSchema<font color="#0000ff">&quot;&gt;
+
+&lt;</font><font color="#800000">xsd:complexType</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>shippingDate<font color="#0000ff">&quot;&gt;
+  &lt;</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+    &lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>year<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:gYear<font color="#0000ff">&quot;/&gt;
+    &lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>month<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:gYearMonth<font color="#0000ff">&quot;/&gt;
+  &lt;/</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+&lt;/</font><font color="#800000">xsd:complexType</font><font color="#0000ff">&gt;
+
+&lt;/</font><font color="#800000">xsd:schema</font><font color="#0000ff">&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Note that not only the namespace for XML Schema elements changed
+from <code>http://www.w3.org/2000/10/XMLSchema</code><font color="#0000ff"></font>
+to <code>http://www.w3.org/2001/XMLSchema</code><font color="#0000ff"></font>,
+but also some datatypes, like <code>xsd:month</code> and <code>xsd:year</code>
+have been renamed into <code>xsd:gYearMonth</code> and <code>xsd:gYear</code>
+using the XML Schema Recommendation 1.0 (the 'g' prefix stands for the 'g' of
+'G'regorian calendar).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="useNamespaces"></a>Use namespaces</h4>
+<p>Public XML Schema must have a namespace: do not use no-namespace
+schemas.&nbsp;</p>
+<p>See [<a href="#refXMLSchemaBestPratices">3</a>] for more in-depth discussions
+related to the use of Namespaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="useSimpleTypesFromList"></a>Use simple datatypes from the allowed
+list</h4>
+<p>The datatypes used in XML Schema declarations must comply to the chosen XML
+Schema standard (see [2]) and must be selected in the following list of
+supported datatypes.&nbsp;Forbidden types are based on redundancy or lack of
+simple mapping to C++ or Java.&nbsp;</p>
+<table border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; mso-border-top-alt: .75pt; mso-border-left-alt: 1.5pt; mso-border-bottom-alt: .75pt; mso-border-right-alt: 1.5pt; mso-border-color-alt: black; mso-border-style-alt: solid; mso-padding-alt: 0in 5.4pt 0in 5.4pt; border-style: none; border-width: medium">
+  <tr>
+    <td valign="top" style="background-color: #FFFFCA; background-repeat: repeat; background-attachment: scroll; mso-shading: white; mso-pattern: gray-30 yellow; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top: .75pt solid black; border-bottom: .75pt solid black; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background-position: 0%" height="14" width="145">
+      <p class="MsoNormal">Datatype<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="background-color: #FFFFCA; background-repeat: repeat; background-attachment: scroll; mso-shading: white; mso-pattern: gray-30 yellow; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top: .75pt solid black; border-bottom: .75pt solid black; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background-position: 0%" height="14" width="145">Description</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; background-color: #FFFFCA; background-repeat: repeat; background-attachment: scroll; mso-shading: white; mso-pattern: gray-30 yellow; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top: .75pt solid black; border-bottom: .75pt solid black; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background-position: 0%" height="14" width="59">
+      <p class="MsoNormal">Supported<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; background-color: #FFFFCA; background-repeat: repeat; background-attachment: scroll; mso-shading: white; mso-pattern: gray-30 yellow; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top: .75pt solid black; border-bottom: .75pt solid black; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background-position: 0%" height="14" width="636">
+      <p class="MsoNormal">Comment<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">string</span><o:p></span></b></pre>
+    </td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">A
+      sequence of zero or more Unicode characters that are allowed in an XML
+      document; essentially the only forbidden characters are most of the C0
+      controls, surrogates, and the byte-order mark<br>
+      &nbsp;</td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Special characters must be escaped.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"><b><span style="font-family:&quot;Courier New&quot;">normalizedString</span></b></td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">A
+      string that does not contain any tabs, carriage returns, or linefeeds<br>
+      &nbsp;</td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59"></td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"><b>token<br>
+      &nbsp;</b></td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">A
+      string with no leading or trailing white space, no tabs, no linefeeds, and
+      not more than one consecutive space</td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59"></td>
+    <td valign="top" style="mso-border-top-alt: solid black .75pt; mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">boolean</span><o:p>
+</o:p>
+</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">float</span><o:p>
+</o:p>
+</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">double</span><o:p>
+</o:p>
+</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">decimal</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Common programming languages do not support arbitrary
+      precision decimal numbers.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:
+  windowtext">duration</span><o:p>
+</o:p>
+</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Partially<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Lose of precision may occur; Year and Month component
+      cannot be supported.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;">
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Cannot be represented by any of the intrinsic types
+      in common programming languages. <o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family: Courier New">base64Binary</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">Base64
+      encoding uses an algorithm based on 65 ASCII characters chosen for their
+      ability to pass through almost all gateways, mail relays, and terminal
+      servers intact, as well as their existence with the same code points in
+      ASCII, EBCDIC, and most other common character sets<br>
+      &nbsp;</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Both Base64 and hex encoding are supported, but are
+      not encouraged for performances reasons. Binary data should rather be
+      referred to through XLinks or unparsed entities.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"><b><span style="font-family:&quot;Courier New&quot;">
+      </o:p>hexBinary</span></b></td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">Hexadecimal
+      binary encodes each byte of the input as two hexadecimal digits</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">Yes</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">anyURI</span><o:p>
+</o:p>
+</span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">ID</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="636">
+      <p class="MsoNormal"><o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">IDREF</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="30" width="636">
+      <p class="MsoNormal"><o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">ENTITY</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">NOTATION</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">QName</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">language</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">IDREFS</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">See IDREF.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">ENTITIES</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">NMTOKEN</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">NMTOKENS</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">Name</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">NCName</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">integer</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Common programming languages do not support integer
+      numbers of arbitrary size.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">nonPositiveInteger</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Common programming languages do not support integer
+      numbers of arbitrary size.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">negativeInteger</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="636">
+      <p class="MsoNormal">Common programming languages do not support integer
+      numbers of arbitrary size.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">long</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Many programming languages do not support integer
+      values that exceed the range of a 32-bit signed integer. <o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">int</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">short</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">byte</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">nonNegativeInteger</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Common programming languages do not support integer
+      numbers of arbitrary size.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:
+  windowtext">unsignedLong</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Many programming languages do not support integer
+      values that exceed the range of a 32-bit signed integer.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">unsignedInt</span><o:p>
+</o:p>
+</span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Many programming languages do not support integer
+      values that exceed the range of a 32-bit signed integer.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">unsignedShort</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:
+  windowtext">unsignedByte</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">positiveInteger</span><o:p>
+</o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Common programming languages do not support integer
+      numbers of arbitrary size.<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;">dateTime<o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">time</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">date</span><o:p>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145">
+      <pre><b>gDay
+gMonth</b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="59">Yes</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="636"></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color: windowtext">gYear</span>
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145">A
+      given year</td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145">
+      <pre><b><span style="font-family:&quot;Courier New&quot;"><span style="color: windowtext">gY</span><span style="color:windowtext">ear</span><o:p>Month
+gMonthDay
+</o:p></span></b></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="59">
+      <p class="MsoNormal">Yes<o:p>
+      </o:p>
+      </p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="15" width="636">
+      <p class="MsoNormal">&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145">
+      <pre><span style="color:windowtext">century
+month
+year
+timeDuration<b>
+</b></span><span style="font-family:&quot;Courier New&quot;"><span style="color:windowtext">recurringDuration</span><o:p></span></pre>
+    </td>
+    <td valign="top" style="border-left: 1.5pt solid black; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="145"></td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: .75pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="59">
+      <p class="MsoNormal">No</p>
+    </td>
+    <td valign="top" style="mso-border-left-alt: solid black .75pt; border-left-style: none; border-left-width: medium; border-right: 1.5pt solid black; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" height="14" width="636">
+      <p class="MsoNormal">Deprecated&nbsp;<o:p>
+      </o:p>
+      </p>
+    </td>
+  </tr>
+</table>
+<p align="left">The XML Schema Recommendation 1.0 standard does not specifically
+addresses how to define array datatypes. Arrays used outside the scope of SOAP
+and WSDL can be represented by nested <code>&lt;sequence&gt;</code> constructs,
+otherwise the SOAP and WSDL definitions for arrays should be used.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="alwaysDefineType"></a>Always define elements through a type</h4>
+<p>All elements having a complex type must be defined through a type. For
+example, do <b>not</b> use the following declaration:
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#FF0000">&lt;!-- DO NOT USE THIS XML SAMPLE IN YOUR CODE !! --&gt;
+&lt;xsd:element name=&quot;shippingDate&quot;&gt;
+  &lt;xsd:complexType&gt;
+    &lt;xsd:sequence&gt;
+      &lt;xsd:element name=&quot;year&quot; type=&quot;xsd:gYear&quot;/&gt;
+      &lt;xsd:element name=&quot;month&quot; type=&quot;xsd:gYearMonth&quot;/&gt;
+    &lt;/xsd:sequence&gt;
+  &lt;/xsd:complexType&gt;
+&lt;/xsd:element&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;But use instead the following one:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:element </font><font color="#ff0000">name</font><font color="#0000ff">=&quot;</font>shippingDate<font color="#0000ff">&quot; </font><font color="#FF0000">type</font><font color="#0000ff">=&quot;</font>shippingDateType<font color="#0000ff">&quot;&gt;
+&lt;</font><font color="#800000">xsd:complexType </font><font color="#FF0000">name</font><font color="#0000ff">=&quot;</font>shippingDateType<font color="#0000ff">&quot;</font><font color="#0000ff">&gt;
+</font><font color="#0000ff">    &lt;</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+      &lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>year<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:gYear<font color="#0000ff">&quot;/&gt;
+      &lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>month<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:gYearMonth<font color="#0000ff">&quot;/&gt;
+    &lt;/</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+</font><font color="#0000ff">&lt;/</font><font color="#800000">xsd:complexType</font><font color="#0000ff">&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>Indeed, types are more re-usable than element definitions.</p>
+<p>For example, if the structure is intended to be used as an element in
+instance documents, and it’s required that sometimes it be nillable and other
+times not, then it must be defined it as a type. Indeed the following syntax is
+not supported by XML Schema:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#FF0000">      &lt;!-- DO NOT USE THIS XML SAMPLE IN YOUR CODE !! --&gt;
+      &lt;xsd:element ref=&quot;shippingDate&quot; nillable=&quot;true&quot;&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>while the following is supported:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#0000ff">      &lt;</font><font color="#800000">xsd:element </font><font color="#ff0000">name</font><font color="#0000ff">=&quot;</font>sendingDate<font color="#0000ff">&quot; </font><font color="#ff0000">type</font><font color="#0000ff">=&quot;</font>shippingDateType<font color="#0000ff">&quot; </font><font color="#FF0000">nillable</font><font color="#0000ff">=&quot;</font>true<font color="#0000ff">&quot;&gt;
+      &lt;</font><font color="#800000">xsd:element </font><font color="#ff0000">name</font><font color="#0000ff">=&quot;</font>receiptData<font color="#0000ff">&quot; </font><font color="#ff0000">type</font><font color="#0000ff">=&quot;</font>shippingDateType<font color="#0000ff">&quot;&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="UseElementsInsteadOfAttributes"></a>Use elements instead of
+attributes</h4>
+<p>When defining attributes on a container datatype (in the Object-Oriented
+sense), two main XML Schema patterns may be used:&nbsp;</p>
+<ol>
+  <li>Defining an actual XML attribute</li>
+  <li>Defining a typed element</li>
+</ol>
+<p>The &quot;default CAA&quot; choice&nbsp; for attribute definition in XML
+Schemas is the later choice: &quot;define typed elements&quot; instead actual
+attributes. There are at least two reasons for this rule: first, arbitrary text
+values cannot be stored in attributes of string type (line breaks in
+particular); second, using elements over attributes is a SOAP rule. See the SOAP
+chapter in [<a href="#refDonBox">4</a>] for more in-depth references about
+&quot;elements over attributes&quot;.&nbsp; For example, the following
+declaration is not the preferred one for a public CAA schema:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#FF0000">&lt;!-- DO NOT USE THIS XML SAMPLE IN YOUR CODE !! --&gt;
+&lt;xsd:complexType name=&quot;ecType&quot;&gt;
+  &lt;xsd:attribute name=&quot;effectivity&quot; type=&quot;xsd:date&quot;/&gt;
+&lt;/xsd:complexType&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>while this declaration does declare attributes in the preferred CAA way:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:complexType</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>ecType2<font color="#0000ff">&quot;&gt;
+</font>  <font color="#0000ff">&lt;</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+</font>    <font color="#0000ff">&lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>effectivity<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:date<font color="#0000ff">&quot;/&gt;
+</font>  <font color="#0000ff">&lt;/</font><font color="#800000">xsd:sequence</font><font color="#0000ff">&gt;
+&lt;/</font><font color="#800000">xsd:complexType</font><font color="#0000ff">&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>Please note that:</p>
+<ol>
+  <li>The two above declarations will not lead to the same XML document
+    instances: the structure is completely different.</li>
+  <li>Defining actual attributes on elements is not forbidden by CAA rules nor
+    enforced by CAA code checking tools. In some situations, such as defining a
+    schema for legacy XML data for which only a DTD, or no DTD, was provided,
+    defining an XML Schema with attributes is the only solution unless the
+    legacy XML data makes no use of attributes, of if the value of such
+    attributes is not relevant to the applications.&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="MandatoryRulesForXMLSchema"></a>Mandatory Rules for XML Instances</h3>
+<p>We call XML Instances any XML document have all its elements defined in a XML
+Schema. These rules are:
+<ul>
+  <li><a href="#setTheSchema">Always set the associated XML Schema</a></li>
+  <li><a href="#useLineBreaks">Layout XML property files to allow the use
+    of&nbsp; text editors</a></li>
+</ul>
+<h4><a name="setTheSchema"></a>Always set the associated XML Schema</h4>
+<p>The XML Schema associated to XML instance documents must be declared, even if
+the documents are to be processed by non-validating XML processors.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="useLineBreaks"></a>Layout XML property files to allow the use
+of&nbsp; text editors</h4>
+<p>XML property files are a particular set of XML instances documents which can
+be used by end-users to customize their applications. Most end-users do not have
+an XML editors, so a special care must be taken for such files to allow easy
+editing:</p>
+<ul>
+  <li>Do not generate or deliver XML properties with line having more than 80
+    characters per line.</li>
+  <li>Allow line breaks in the value of string elements that will not be
+    interpreted as such, and give a generic convention for actual line breaks
+    (if it makes sense), such as <code>\n</code>.</li>
+  <li>If the XML property files are mono-language (or if there is a distinct
+    property file per language), then do not use UTF-8 or UTF-16 encoding. Use
+    instead the most common encoding for each language. For example, use
+    iso-8859-1 for English, French and German.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="refXMLSchemaPart1"></a>[1]</td>
+    <td>&quot;XML Schema Part 1: Structures&quot;, 2 May 2001, on the Internet
+      at <a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-1/');return false;">http://www.w3.org/TR/xmlschema-1/</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="refXMLSchemaPart2"></a>[2]</td>
+    <td>&quot;XML Schema Part 2: Datatypes&quot;, 2 May 2001, on the Internet at
+      <a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/');return false;">http://www.w3.org/TR/xmlschema-2/</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="refXMLSchemaBestPratices"></a>[3]</td>
+    <td>&quot;XML Schemas: Best Practices&quot;, 16 August 2001 or more recent
+      update, on the Internet at <a href="#" onclick="javascript:CAAlinkUrl('http://www.xfront.com/BestPracticesHomepage.html');return false;">http://www.xfront.com/BestPracticesHomepage.html</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="refDonBox"></a>[4]</td>
+    <td>&quot;Essential XML - Beyond Markup&quot;, Don Box, Aaron Skonnard, and
+      Jon Lam. Addison Wesley, 2000</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

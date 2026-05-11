@@ -1,0 +1,440 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating Analysis Features - Part 1</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td valign="top">
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating Analysis Features - Part 1</h3>
+     <p><em>Customize an analysis document for Aerodynamic data</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article accompanies the
+     <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+     Analysis New FeatureOverview</a> technical article.</p>
+     <p>This use case explains how to instantiate the <b>Aero-dynamic Set 
+     Startup </b>inside an analysis document and implement all required 
+     interfaces in order to integrate it inside the analysis infrastructure and 
+     display its content as an image. After the <a href="CAAAniCatalog.htm">
+     CAAAniCatalog</a> generation, this use case will focus on the 
+     implementation of an analysis transition. This step will customize the 
+     analysis document for Aero-dynamic data scenario. All the files and 
+     physical data that are included in this scenario are dummy data.</p>
+     <ul>
+       <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+       <li><a href="#AboutTransition"><strong>About Analysis Transition</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAAAniAeroDTransition Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAAAniAeroDTransition Do</a></li>
+         <li><a href="#How">How to Launch CAAAniAeroDTransition</a></li>
+         <li><a href="#Where">Where to Find the CAAAniAeroDTransition Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to help you to customize an analysis document. For 
+ this, we will put in place all the necessary data useful for the scenario: </p>
+ <ul>
+   <li>Define an analysis transition for user interface customization.</li>
+   <li>Attach the feature catalog to the document.</li>
+   <li>Create a new analysis case.</li>
+   <li>Instanciate the <b>Aero-Dynamic Set</b><b> Feature inside the analysis 
+   document </b>that will manage aerodynamic data.</li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="AboutTransition"></a>About Analysis Workbench Transition.</h3>
+ <p>A transition is an interface that allow to customize an analysis document. 
+ It can be seen as a document startup (conception model) that allow you to 
+ create all prerequisite data for a given scenario. By default, without any 
+ transition, the analysis document specification tree will look like the
+ <a href="#FigdocV">following figure</a>.</p>
+ <p>This transition is automatically called by a Workbench's initialization as 
+ the &quot;<a href="#FigCase">New Analysis Case&quot;</a> window. For this, the workbench 
+ needs to be built on the basic one provided by Analysis Infrastructure called 
+ CATISamWorkshop. The <b>&quot;CATISamAnalysisTransition&quot;</b> interface is the 
+ appropriate interface for this customization. Each Workbench's may decide the 
+ kind of transition that it may allow, if a new Workbench needs to be created, 
+ refer to</p>
+ <p>After implementing this transition, the user interface will follow the next 
+ steps:</p>
+ <table border="2" width="100%">
+   <tr>
+     <td align="center"><a name="FigCase"></a>
+     <img border="0" src="../CAAAniTechArticles/images/NewFeat1.jpg" width="229" height="166"></td>
+     <td>Selected Line correspond to the implementation of a new transition done 
+     in sample. The transition is define by it's name as defined in the 
+     implementation.<p>Note that if your workbench allows only on transition, 
+     this user interaction will not be displayed and the transition will be run 
+     automatically.</td>
+   </tr>
+   <tr>
+     <td align="center"><a name="FigdocV"></a>
+     <img border="0" src="images/TreeTransition0.jpg" width="207" height="129"></td>
+     <td>This is the specification tree of an Analysis Document if no transition 
+     is implemented.</td>
+   </tr>
+   <tr>
+     <td align="center">
+     <img border="0" src="images/TreeTransition.jpg" width="246" height="181"></td>
+     <td>This is the specification tree of an Analysis Document after executing 
+     the Transition of the sample. It creates a new case and the Aero Dynamic 
+     Solution Set.</td>
+   </tr>
+ </table>
+ <p>Note: A transition is not limited to interactive use. If you need to use 
+ them in batch mode, use the <code>CATSamTransitionSetup</code> method that will 
+ build the associated object to the transition and run it on a document. For 
+ this, you can write some code that will look like:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+#include &quot;CATSamTransitionSetup.h&quot;
+  
+CATDocument *pDoc; // Pointer on the document to be customized.
+rc = ::CATSamTransitionSetup (pDoc,&quot;AeroDynamic&quot;);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">The method have two input arguments:</p>
+ <ul>
+   <li>
+   <p align="left">A pointer to the document to be customized</li>
+   <li>
+   <p align="left">The name of the transition to be selected.</li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAAniAeroDTransition Use Case</h3>
+ <p>CAAAniAeroDTransition is a use case of the CAAAnalysisInterfaces.edu 
+ framework that illustrates the CATIA Analysis infrastructure frameworks 
+ capabilities.</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAAniAeroDTransition Do</h4>
+ <p>The goal of this use case is to implement the transition that will produce 
+ the images seen previously.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAAniAeroDTransition</h4>
+ <p>Compile the code, use the mkcreateruntimeview command in order to setup 
+ properly the environment. The module generated is a Shared Library. All this 
+ module have to be compiled in order to be taken into account for CATIA 
+ Interactive applications. This will customize the user interface of Analysis 
+ Workbenches by adding an Aero Dynamic line in the <a href="#FigCase">&quot;New 
+ Analysis Case</a>&quot; window. You can also enter an Analysis Workbench by creating 
+ a new Analysis Document, the same window will appear. For additional 
+ information's, refer to [<a href="#References">5</a>].</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAAniAeroDTransition Code</h4>
+ <p>The CAAAniAeroDTransition use case is located in the CAAAniAeroDTransition.m 
+ module of the CAAAnalysisInterfaces.edu framework:</p>
+ <table width="100%">
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniAeroDTransition.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed. Only the cpp file CAAAniAeroDynamicTransition and its 
+ associated include are necessary.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>Implement a Transition needs to perform the following steps: </p>
+ <ul>
+   <li><a href="#NewImpl">Defining a New Implementation</a></li>
+   <li><a href="#LoadCatalog">Loading the Catalog</a></li>
+   <li><a href="#Factory">Retrieving in the Document the Analysis Factory and 
+   Analysis Manager</a></li>
+   <li><a href="#NewCase">Creating a New Case</a></li>
+   <li><a href="#CreatingSet">Creating the AeroDynamicSet Instance</a></li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="NewImpl"></a>Defining a New Implementation</h4>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+CATImplementClass(CAAAniAeroDynamicTransition,CodeExtension,CATBaseUnknown,<b>AeroDynamic</b>);
+  
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;<b>TIE_CATISamAnalysisTransition.h</b>&quot;
+TIE_CATISamAnalysisTransition( CAAAniAeroDynamicTransition);
+
+//-----------------------------------------------------------------------------
+// Implements CATISamAnalysisTransition::ExecuteTransition
+//-----------------------------------------------------------------------------
+HRESULT <b>CAAAniAeroDynamicTransition::ExecuteTransition</b> (const CATDocument* iDocument)
+{
+  ...
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Associated to this setup of code must be defined inside the Object Modeler 
+ Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file defined in 
+ CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This definition line 
+ associates the <b><i>AeroDynamic</i></b> implementation of <b><i>
+ CATISamAnalysisTransition</i></b> interface inside the shared library <b><i>
+ libCAAAniAeroDTransition</i></b></p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>AeroDynamic  CATISamAnalysisTransition  libCAAAniAeroDTransition</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Only one method needs to be implemented <code><b>ExecuteTransition</b>.
+ </code>This method has as an input a pointer to the current CATAnalysis 
+ document defined as a CATDocument*.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="LoadCatalog"></a>Loading the Catalog</h4>
+ <p>The catalog defining the startup must be loaded in memory in order to create 
+ the feature instance. This catalog is stored in a path that should point to a 
+ resources/graphic directory.</p>
+ <ul>
+   <li>For NT, the &quot;storageName&quot; would be &quot;currentWS\\intel_a\\resources\\graphic\\CAAAniCatalog.CATfct&quot;.</li>
+   <li>For UNIX, the &quot;storageName&quot; would be &quot;currentWS/aix_a/resources/graphic/CAAAniCatalog.CATfct&quot;.</li>
+ </ul>
+ <p>From the pointer to the CATDocument, we have to retrieve the Analysis 
+ Container that allow to load the applicative catalog by using the <code>
+ AccessCatalog</code> of the <code>CATCatalogFactoryServices</code> include of 
+ services. </p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>  ...
+//===================================================================================
+// Looking for Analysis Container
+CATISamAccess_var spAccess((CATBaseUnknown*)iDocument);
+CATIContainer* piCont = NULL;
+spAccess-&gt;GetSpecContainer(piCont);
+if (NULL == piCont) return (hr);
+//===================================================================================
+// Load the Feature Catalog for Startup On the CATIContainer
+CATICatalog * pcatalog = NULL;
+CATUnicodeString CataName (&quot;CAAAniCatalog.CATfct&quot;);
+CATUnicodeString CataId   (&quot;CAAAniCatalog&quot;);
+
+AccessCatalog(&amp;CataName,&amp;CataId,piCont,&amp;pcatalog);
+if (pcatalog)   pcatalog   -&gt; Release();
+pcatalog = NULL;
+
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Factory"></a>Retrieving in the Document the Analysis Factory and 
+ Analysis Manager</h4>
+ <p>The factory is useful for the feature creation. (Creation of the Case and 
+ Aero Dynamic Set). The Analysis Manager allows to retrieve the Finite element 
+ Model (Analysis Model) in order to associate the Case to this feature.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+//===================================================================================
+// Looking for CATISamAnalysisContainer Manager's adhesion
+CATISamAnalysisContainer_var spAnalysisCont(piCont);
+if(NULL_var == spAnalysisCont) return (hr);
+CATISamAnalysisManager_var spManager = NULL_var;
+hr = spAnalysisCont-&gt;GetAnalysisManager(spManager);
+//===================================================================================
+// Looking for CATISamAnalysisModelFactory  adhesion for st creation
+CATISamAnalysisModelFactory_var spFactory = piCont;
+piCont -&gt; Release (); piCont = NULL;	
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="NewCase"></a>Creating a New Case</h4>
+ <p>The output set may be created in a case. For this, use the <code>
+ CreateAnalysisCase</code> method of the <code>CATISamAnalysisModelFactory</code> 
+ interface. This method will take as input argument the name of the case and 
+ return a pointer on a <code>CATISamAnalysisCase</code>. The case is associated 
+ to an analysis model by using the <code>SetWorkingModel</code> of the <code>
+ CATISamAnalysisCase</code>. To customize the case, the <code>SetSolver</code> 
+ method is used.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// Create a new case
+//================================================================
+CATUnicodeString caseName(&quot;Aero Case&quot;);
+CATISamAnalysisCase* piCase = spFactory-&gt;CreateAnalysisCase(caseName);
+if(NULL == piCase) return E_FAIL;
+// Attach the Case under the FEM Model
+
+CATISpecObject* piFEMModel = NULL;
+hr = spManager-&gt;GetCurrentModel(piFEMModel);
+if( NULL == piFEMModel)  return E_FAIL;
+CATISamAnalysisModel_var spAnalysisModel(piFEMModel);
+spAnalysisModel-&gt;AddCase(piCase);
+piCase-&gt;SetWorkingModel(piFEMModel);
+piCase-&gt;SetSolver(&quot;Aero_Solver&quot;);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="CreatingSet"></a>Creating the AeroDynamicSet Instance</h4>
+ <p>The Set is instantiated by using the <code>CreateUserSet</code> method of 
+ the <code>CATISamAnalysisModelFactory </code>interface. This method will return 
+ a pointer on a CATISamAnalysisSet. The input Arguments are used as follow:</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="30%">CreateUserSet(&quot;AeroDynamicSet&quot;</td>
+     <td width="70%">Feature type</td>
+   </tr>
+   <tr>
+     <td width="30%">&quot;AERO DYNAMIC Solution Set&quot;</td>
+     <td width="70%">Name of the feature (If Blank, Nls name is built according 
+     to the CATNls File).</td>
+   </tr>
+   <tr>
+     <td width="30%">piFEMModel);</td>
+     <td width="70%">Pointer on the Analysis model father of the new feature</td>
+   </tr>
+ </table>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+//===================================================================================
+// Creation of solution as output of the analysis case
+CATISamAnalysisScan_var spScan(piCase);
+CATISamAnalysisSet* piSet = NULL;
+// Creating the solution set
+piSet = spFactory-&gt;CreateUserSet(&quot;AeroDynamicSet&quot;,   // Solution Type  
+			     &quot;&quot;,                 // Identifier
+			     piFEMModel);
+if(piSet)
+{
+// The created set must be referenced as an output of the AnalysisCase
+  hr = spScan-&gt;AddSet(piSet,Sam_OUT);
+  if (!SUCCEEDED(hr)) return E_FAIL ;
+  CATISamSolution_var spSolution(piSet);
+  if(NULL_var != spSolution) spSolution-&gt;SetCase(piCase);
+  piSet-&gt;Release(); piSet = NULL;
+}
+piCase -&gt; Release (); piCase = NULL;
+piFEMModel -&gt; Release (); piFEMModel= NULL;
+
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case has demonstrated how to instantiate the Aero-Dynamic Set 
+ Feature's in an Analysis document. All kind of Analysis feature can be done by 
+ using the same overview. Next step is to implement some physics behavior on 
+ this instance.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><font size="2">[1]</font></td>
+     <td valign="top">
+     <a href="../CAAOsmQuickRefs/CAAOsmHome.htm">
+     Feature Modeler documentation</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+     Analysis Modeler Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+     Integrate new Feature inside Analysis.</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td><font size="2">
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></font></td>
+   </tr>
+   <tr>
+     <td valign="top">[5]</td>
+     <td><font size="2"><a href="CAAAniSampleAnalysisWorkBench.htm">Creating a 
+     New Analysis Workbench</a></font></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,106 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshOctTetra.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+<FONT COLOR="#008000">'   Purpose: Create an octree tetrahedron mesh</FONT>
+<FONT COLOR="#008000">'            assign the part body as support</FONT>
+<FONT COLOR="#008000">'            specify the global specifications</FONT>
+<FONT COLOR="#008000">'            create a local specifications and add local mesh size</FONT>
+<FONT COLOR="#008000">'            set attributes of domain specifications</FONT>
+<FONT COLOR="#008000">'   Assumptions:   </FONT>
+<FONT COLOR="#008000">'   Author:       bmw</FONT>
+<FONT COLOR="#008000">'   Languages:    VBScript</FONT>
+<FONT COLOR="#008000">'   Locales:      English </FONT>
+<FONT COLOR="#008000">'   CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Optional: allows to find the sample wherever it's installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+
+
+<FONT COLOR="#008000">' Open the CATAnalysis Document</FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">'Retrieve analysis manager</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManager = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">' Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+
+<FONT COLOR="#008000">' Retrieve the analysis model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">' Retrieve mesh manager and mesh part </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+<FONT COLOR="#008000">' Retrieve publications from product and retrieve the published face.</FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubedge = publications.Item("Edge")
+<FONT COLOR="#0000FF">Set </FONT>pubPartBody = publications.Item("PartBody")
+
+
+<FONT COLOR="#008000">' Add the new Octree tetrahedron mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>octreePart = oAnalysisMeshParts.Add ("MSHPartOctree3D") 
+
+<FONT COLOR="#008000">' Add reference previously created</FONT>
+octreePart.AddSupportFromPublication product, pubPartBody
+
+
+<FONT COLOR="#008000">' Set the global Specifications</FONT>
+octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+octreePart.SetGlobalSpecification "AbsoluteSagValue", "3.0 mm"
+octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
+octreePart.SetGlobalSpecification "MaxInteriorSize", "1.2 mm"
+octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
+octreePart.SetGlobalSpecification "MinGeometrySize", "0.5 mm"
+octreePart.SetGlobalSpecification "AbsoluteSag", 1
+octreePart.SetGlobalSpecification "MaxWarpAngle", "1.0 rad"
+octreePart.SetGlobalSpecification "Criteria", "Skewness"
+octreePart.SetGlobalSpecification "MeshGeometryViolation", 1
+octreePart.SetGlobalSpecification "InteriorSize", 1
+octreePart.SetGlobalSpecification "MinJacobian", 0.3
+octreePart.SetGlobalSpecification "MaxAttempts", 2
+octreePart.SetGlobalSpecification "MeshViolationValue", "0.5 mm"
+octreePart.SetGlobalSpecification "ProportionalSag", 1
+octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
+
+<FONT COLOR="#008000">' Add the Mesh local size as local specifications and assign it attributes</FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+<FONT COLOR="#0000FF">Set </FONT>spec1 = meshspecs1.Add("MSHLocalMeshSize")
+spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
+spec1.AddSupportFromPublication "ConnectorList", product, pubedge
+
+<FONT COLOR="#008000">'Update the mesh part</FONT>
+octreePart.Update
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

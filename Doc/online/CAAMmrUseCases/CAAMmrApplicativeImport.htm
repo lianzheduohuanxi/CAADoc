@@ -1,0 +1,495 @@
+<html>
+	<head>
+		<title>Retrieving Mechanical Import Information using GUID Mechanism</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta content="Microsoft FrontPage 6.0" name="GENERATOR">
+		<meta content="FrontPage.Editor.Document" name="ProgId">
+		<link href="../CAADocStyleSheets/caav5.css" type="text/css" rel="Stylesheet">
+                </head>
+	
+	<body>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving Mechanical Import Information using GUID Mechanism</h3>
+      Using CATIMmiMechanicalImportApplicative with GUID as 
+		authentication</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+<hr>
+
+				<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+					<font FACE="Verdana" SIZE="2" COLOR="#2f2f2f">
+                    <p>The Use Case creates a Mechanical Import<strike> </strike>
+                    and retrieving relevant information from it, using the GUID 
+                    Mechanism.</p>
+                    <p>It begins by copying a feature between two Part documents using 
+                    the &quot;Copy as Result with Link&quot; option. This results in a 
+                    Mechanical Import [</font><font FACE="Verdana" SIZE="2" COLOR="#ff8100">1</font><font FACE="Verdana" SIZE="2" COLOR="#2f2f2f">]. 
+                    It further illustrates the steps involved to authorize 
+                    retrieving information from this Mechanical Import. This 
+                    includes generating a GUID [</font><font FACE="Verdana" SIZE="2" COLOR="#ff8100">2</font><font FACE="Verdana" SIZE="2" COLOR="#2f2f2f">] 
+                    and specifying it to the copy process, so that it gets 
+                    associated with the Mechanical Import. This GUID, finally 
+                    authorizes us to seek all relevant information from the 
+                    copied feature.</p>
+                    </font>
+                    <ul>
+							<li>
+								<A href="#Learn"><strong>What You Will Learn 
+                                With This Use Case</strong></A>
+							<li>
+								<strong><a href="#UseCase">The 
+                                CAAMmrApplicativeImport Use Case</a></strong>
+								<ul>
+									<li>
+										<a href="#What">What Does 
+                                        CAAMmrApplicativeImport Do</a>
+									<li>
+										<a href="#How">How to Launch CAAMmrApplicativeImport</a>
+									<li>
+										<a href="#Where">Where to Find the CAAMmrApplicativeImport Code</a>
+									</li>
+								</ul>
+							<li>
+								<A href="#Step"><strong>Step-by-Step</strong></A>
+							<li>
+								<A href="#InShort"><strong>In Short</strong></A>
+							<li>
+								<A href="#References"><strong>References</strong></A>
+							</li>
+						</ul>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+		<p>This use case is intended to show you how to retrieve the relevant 
+        information from the Mechanical Import and how to create and use the <a>
+        <code><b>GUID</b></code></a> for copying as well as for retrieving 
+        relevant information. For these 
+        purpose Use case uses two interfaces:</p>
+		<ul>
+          <li>CATMmrInterPartCopy </li>
+          <li>CATIMmiMechanicalImportApplicative</li>
+    </ul>
+    <p><b>CATMmrInterPartCopy: </b>class services to copy a feature.&nbsp; </p>
+    <blockquote>
+      <p>You will use this interface to copy a feature.&nbsp; You can read the 
+		referenced use case to learn more about this class [<font face="Verdana" size="2" color="#FF8100">3</font>].</p>
+    </blockquote>
+    <p align="left"><b>CATIMmiMechanicalImportApplicative: </b>The interface to 
+    retrieve the information from the copied feature. The information are </p>
+    <ul>
+      <li>The original feature </li>
+      <li>The product instance ( if the copy is in assembly context)</li>
+    </ul>
+		<p><a><code><b>SetImportApplicativeId</b></code></a> and <a><code><b>
+        SetApplicativeId</b></code></a> methods uses <a><code><b>GUID</b></code></a> 
+        associated with copied feature. <a><code><b>SetImportApplicativeId</b></code></a> sets 
+        the <a><code><b>GUID</b></code></a> just prior to copying 
+        operation and <a><code><b>
+        SetApplicativeId</b></code></a> sets the <a><code><b>GUID</b></code></a> after the copying operation for information retrieving.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="UseCase"></a>The CAAMmrApplicativeImport Use Case</h3>
+		<p>CAAMmrApplicativeImport is a use case of the CAAMechanicalModeler.edu framework that 
+			illustrates MecModInterfaces framework capabilities.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What Does CAAMmrApplicativeImport Do</h4>
+		<p>The Use Case fundamentally copies a feature from a source Part to a 
+        target Part, both in Assembly context and out of it, and further 
+        retrieves relevant information from the copied feature. It operates on an Input Model as the one depicted in
+        <a href="#Fig.1 InputModel">Fig. 1 </a>below.</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+          <caption>
+          <p align="left"><a name="Fig.1 InputModel"></a>Fig. 1 Input Model</p>
+          </caption>
+          <tr>
+            <td width="100%">
+            <img border="0" src="images/CAAMmrApplicativeImport.png"></td>
+          </tr>
+    </table>
+		<p>Suppose you want to copy the <a><code><b>Line.1</b></code></a> feature then 
+        at the end of the Use Case execution, the <a><code><b>Line.1</b></code></a> 
+        feature from <a><code><b>CAAMmrApplMecImport_RepFeatOrg</b></code></a> 
+        is copied within the target Part <a><code><b>
+        CAAMmrApplMecImport_RepFeatCopied</b></code></a>, in assembly context as 
+        well as out of assembly context. Mechanical Import is the result of feature copy, it is a feature returned 
+    by the <a><code><b>Run</b></code></a> method. It is also valid for&nbsp; Point, Line, Curve and Plane.&nbsp; 
+		But take care, suppose you try to copy BodyPart, Geometrical Set,  Sketch feature, the feature returned by the <a><code><b>Run</b></code></a> 
+    method is not a Mechanical Import itself but the features beneath it are the 
+    Mechanical Import, this is properly explained in the technical article[<a href="#References">1</a>].</p>
+		<p>Most importantly, the Use Case illustrates the failure to 
+    retrieve the relevant information (source feature and Product Instance) from 
+    the copied feature, if you do not have the proper authorization for this 
+    retrieval.&nbsp; It further illustrates to us a mechanism to authorize 
+    retrieval of data by associating the copied feature with a <a><code><b>GUID</b></code></a> (using the <code><b>CATIMmiMechanicalImportApplicative</b></code> 
+    Interface) during the copying process.</p>
+    <p>The creation of <a><code><b>GUID</b></code></a> is illustrated in <a href="#Step">step by 
+    step</a> section.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="How"></a>How to Launch CAAMmrApplicativeImport</h4>
+		<p>To launch <code><b>CAAMmrApplicativeImport</b></code>, you will need to set up the build time environment, 
+			then compile <code><b>CAAMmrApplicativeImport</b></code> along with its prerequisites, set up the run time 
+			environment, and then execute the use case [<a href="#References">4</a>].&nbsp;</p>
+<p>To
+launch the use case execute the command:</p>
+<p><code> <a>mkrun -c &quot;</a></code><i><code>CAAMmrApplicativeImport</code>
+</i><a><code>InputPath Feature&quot;</code></a></p>
+<p><code>where</code></p>
+<ul>
+	<li>&nbsp;<a><code>InputPath </code>is the directory path where is located 
+	the <code>CAAMmrApplMecImport_Root</code> Product, its pointed sub-products, 
+	and its pointed Part.</a></li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $<code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></p>
+<ul>
+	<li><a><code>Feature</code>&nbsp; is the name one feature inside the Part
+	<code>CAAMmrApplMecImport_RepFeatOrg</code></a> </li>
+</ul>
+<p>Example:</p>
+<p><code> <a>mkrun -c &quot;</a></code><i><code>CAAMmrApplicativeImport</code>
+</i>&nbsp;$<code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData Point.1</code><a><code>&quot;</code></a></p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to Find the CAAMmrApplicativeImport Code</h4>
+<p>The <code><b>CAAMmrApplicativeImport</b></code> use case is located in the
+<code><b>CAAMmrApplicativeImport</b></code><a><code><b>.m</b></code></a> module of the
+<a><code><b>CAAMechanicalModeler.edu</b></code></a> framework:</p>
+<table>
+  <tr>
+    <td><code>InstallRootDirectory\</code><a><code>CAAMechanicalModeler</code></a>.<code>edu\CAAMmrApplicativeImport.m\</code></td>
+  </tr>
+</table>
+<p>where <code><a><b>InstallRootDirectory</b></a></code>  [<a href="#References">4</a>]
+is the directory where the CAA CD-ROM
+is installed.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Step"></a>Step-by-Step</h3>
+		<p>There are two logical parts in <code><b>CAAMmrApplicativeImport</b></code>, first part is 
+        consist of generation of <code><b>GUID</b></code> and second part is a batch which consist 
+        of operations like Copying feature with and without assembly context as 
+        well as retrieving of information from the Mechanical Import.</p>
+    <h4>&nbsp;&nbsp;&nbsp; Creating the GUID&nbsp;</h4>
+    <ul>
+      <li>Generating the GUID</li>
+    </ul>
+    <blockquote>
+      <table class="code" id="table14">
+        <tr>
+          <td>
+          <pre>...
+uuidgen -s &gt; CAAMmrGUIDForApplicativeImport.h</pre>
+          </td>
+        </tr>
+      </table>
+     </blockquote>
+    <p><code><b>uuidgen</b></code> is a command, generates the header file which contains 
+    <code><b>GUID</b></code>. We 
+    need to run this command on windows prompt and create the header file. </p>
+    <ul>
+      <li>Edit the header file </li>
+    </ul>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; replace INTERFACENAME word by GUID 
+    CAAMmrGUIDForApplicativeImport, and remove the comments /*.... */</p>
+    <blockquote>
+      
+      <table class="code" id="table37">
+        <tr>
+          <td>
+          <pre>#ifndef CAAMmrGUIDForApplicativeImport_H
+#define CAAMmrGUIDForApplicativeImport_H			
+ <b>GUID</b> CAAMmrGUIDForApplicativeImport = { <strike>/* 7c7b3737-5358-0000-0280-020b3e000000 */</strike>
+    0x7c7b3737,
+    0x5358,
+    0x0000,
+    {0x02, 0x80, 0x02, 0x0b, 0x3e, 0x00, 0x00, 0x00}
+  };
+#endif
+</pre>
+          </td>
+        </tr>
+      </table>
+      
+    </blockquote>
+    <p>The <code><b>CAAMmrUUIDForApplicativeImport.h</b></code>&nbsp; 
+    can be located in any *Interfaces directory, based on the scope within which 
+    it is accessed&nbsp; by the client applications. Please note that the same
+    <code><b>GUID</b></code> can be associated with any number of Mechanical 
+    Imports.</p>
+    <p>Second part is also divided in several logical steps:</p>
+		<ol >
+    		<li><a href="#Copy feature in assembly context">Make the Copy</a><ul>
+				<li>
+				<a href="#Retrieve the CATIMmiInterPartCopy Interface pointer">Retrieve the CATMmrInterPartCopy Interface pointer</a></li> 
+				</li>
+				<li><a href="#Set information relevant for feature copy">Set information relevant for feature copy</a>
+				</li>
+				<li><a href="#Using GUID to be kept by the Mechanical Import">Using GUID to be kept by the Mechanical Import</a>
+				</li>
+				<li><a href="#Copy feature to target part">Copy feature to target part</a></li>
+			</ul></li>
+			<li><a href="#Retrieve information from the copied feature">Retrieve 
+          information from the copied feature using 
+          CATIMmiMechanicalImportApplicative </a></li>
+			<li><a href="#Reset the CATIMmiInterPartCopy pointer">Reset the 
+            CATMmrInterPartCopy pointer</a></li>
+    </ol>
+    <p align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+		<h4 align="left"><a name="Copy feature in assembly context"></a>Make the 
+        Copy</h4>
+		<h4 align="left">
+        <a name="Retrieve the CATIMmiInterPartCopy Interface pointer"></a>Retrieve the CATMmrInterPartCopy Interface 
+        pointer</h4>
+		<p align="left">The <code>CreateMmiInterPartCopy</code> method of <i>CATMmiPubServicesAccess</i>&nbsp; is used to creates a pointer on a
+		<i>CATMmrInterPartCopy</i> enabling to 
+        copy geometry.</p>
+		<table class="code" id="Table9">
+			<tr>
+				<td><pre>...
+     CATMmrInterPartCopy* pInterPartCopy = NULL; 
+     rc = <b>CATMmiPubServicesAccess::CreateMmiInterPartCopy</b>(pInterPartCopy);
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<h4 align="left"><a name="Set information relevant for feature copy">
+        </a>Set information relevant for feature copy</h4>
+		<p align="left">The process of actually copying a feature, is twofold. 
+        Initially we set the relevant information, essential for the copying 
+        operation. This is followed by the actual copy process. </p>
+		<p align="left">The <code>CreateMmiInterPartCopy</code> Interface has a set of 
+        APIs, illustrated in the code below, for setting these copy parameters.</p>
+		<table class="code" id="Table18">
+			<tr>
+				<td><pre>...
+     CATBaseUnknown_var spTargetPart = spSpecObjectOnMechPartOfRepFeatCopied;
+     CATBoolean <b>CopyWithLink</b> = TRUE;
+     pInterPartCopy-&gt;<b>SetObject</b>(spFeatureToCopy);
+     pInterPartCopy-&gt;<b>SetTarget</b>(spTargetPart);
+     pInterPartCopy-&gt;<b>SetProducts</b>(spPLMProductOnInstChild1,spPLMProductOnInstChild2 );
+     pInterPartCopy-&gt;<b>SetLinkMode</b>(CopyWithLink) ; 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"> <code><b>SetObject</b></code> and <code><b>SetTarget</b></code> are used to set the source object and target feature for 
+        copying. </p>
+		<p align="left">  
+		 <code><b>SetProducts</b></code> is used to set the source and target 
+         products context, it works only in case of copying in assembly context.</p>
+		<p align="left">  
+         Here <code><b>SetLinkMode</b></code> (<code><b>CopyWithLink</b></code> is 
+         TRUE) is used to Keep the link between source object and destination 
+        object, to reflect the changes in geometry. <code><b>CopyWithLink </b></code>should 
+         be TRUE as it is mandatory to create Mechanical Import.</p>
+		<h4 align="left">  
+		 <a name="Using GUID to be kept by the Mechanical Import"></a>Using GUID to be kept by the Mechanical Import</h4>
+		<table class="code" id="Table33">
+			<tr>
+				<td><pre>...
+     pInterPartCopy-&gt;<b>SetImportApplicativeId</b>(CAAMmrGUIDForApplicativeImport); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"><code><b>SetImportApplicativeId</b></code> uses <code>
+        <b>GUID</b></code> and sets an applicative identifier on the created 
+        Mechanical Import, this method must be called before the <code><b>Run</b></code> 
+        method. The 
+        application which produces the copied feature can expose one special 
+        identifier which is <code><b>GUID</b></code>. This identifier get associated with copied 
+        feature at the time of copying. And this association is done by <code>
+        <b>SetImportApplicativeId</b></code>.</p>
+		<h4 align="left"><a name="Copy feature to target part"></a>Copy feature to target part
+    </h4>
+		<table class="code" id="Table28">
+			<tr>
+				<td><pre>...
+     CATISpecObject_var ResultCopyAssm ;
+     pInterPartCopy-&gt;<b>Run</b>(ResultCopyAssm );
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">After setting all related information like source, 
+        target and other parameters in <i>CATMmrInterPartCopy</i> object (i.e.
+        <code><b>pInterPartCopy</b></code> in this example), its time to call <b>Run</b> method. This will compute 
+        the copy according to the specified inputs and the result will return in 
+        <code><b>ResultCopyAssm</b></code>.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4 align="left"><a name="Retrieve information from the copied feature">
+        </a>Retrieve information from the copied feature using 
+        CATIMmiMechanicalImportApplicative </h4>
+		<p align="left">Retrieve the <code><b>CATIMmiMechanicalImportApplicative*
+        </b></code>type on the copied feature.&nbsp; The <code><b>CATIMmiMechanicalImportApplicative
+        </b></code>Interface exposes CAA services to enable us retrieve 
+        information of the source feature from the copied feature.</p>
+		<table class="code" id="Table32">
+			<tr>
+				<td><pre>..
+     <b>CATIMmiMechanicalImportApplicative</b> *pIMecImportApplicativeOnResultCopy = NULL ; 
+     rc = ResultCopyAssm -&gt;<b>QueryInterface</b>(IID_CATIMmiMechanicalImportApplicative,
+				          (void**)&amp;<b>pIMecImportApplicativeOnResultCopy</b>); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">Before we proceed to seek the relevant information from 
+        the copied feature, it is mandatory that we specify the Applicative 
+        Identifier (<code><b>GUID</b></code>), (associated with the Mechanical Import, in an earlier 
+        step) to the retrieval mechanism.</p>
+		<p align="left">The following extract of code, illustrates the failure 
+        to retrieve information, in the absence of proper authorization. Once 
+        proper authorization is set, the calls which retrieve the information 
+        return SUCCESS.</p>
+		<table class="code" id="Table19">
+			<tr>
+				<td><pre>...
+
+     CATBaseUnknown_var spPointedElement1 ;
+     rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetPointedElement</b>(spPointedElement1 );
+     if (SUCCEEDED(rc))//It should fail
+          return 1;
+</pre>
+				<pre>     rc = pIMecImportApplicativeOnResultCopy-&gt;<b>SetApplicativeId</b>(CAAMmrGUIDForApplicativeImport);
+     rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetPointedElement</b>(spPointedElement1 );
+     
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"> <code><b>GetPointedElement</b></code> returns a 
+        pointer to the pointed element. It may be a sub-element or a feature. 
+        Before setting the applicativeId the <code><b>GetPointedElement</b></code> method 
+        should fail. </p>
+		<p align="left"> <code><b>SetApplicativeId</b></code><b> </b>is used to 
+        set the applicative identifier. You have to give here the identifier of 
+        the mechanical import. If you don't give the correct identifier, all 
+        methods of this interface will fail. </p>
+		<p align="left"> After setting the <code><b>ApplicativeId</b></code> you will be authorized 
+        to retrieve the information from the feature and this case your <code><b>
+        GetPointedElement</b></code> will work. </p>
+		<p align="left"> We now proceed to seek other relevant information from 
+        the copied feature. </p>
+		<table class="code" id="Table31">
+			<tr>
+				<td><pre>...
+     CATBoolean LoadedPointedReference ;
+     rc = pIMecImportApplicativeOnResultCopy-&gt;<b>IsPointedElementLoaded</b>(LoadedPointedReference);
+</pre>
+				<pre>     CATBaseUnknown_var spSourceProductInstance1;
+     pIMecImportApplicativeOnResultCopy-&gt;<b>GetSourceProduct</b>(spSourceProductInstance1);</pre>
+				<pre>...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"> <code><b>IsPointedElementLoaded</b></code><b> </b>gives the loading 
+        status of the pointed representation. </p>
+		<p align="left"> <code><b>GetSourceProduct</b></code><b> </b>
+        retrieve the Product Instance aggregating the Part document of the 
+        Source Feature. And the function will product instance in <code><b>
+        spSourceProductInstance1</b>,<b> </b></code>this happens only in case of 
+        copy in assembly context. But in case of copy without assembly context 
+        method should have to fail. In copying feature for without assembly 
+        context you can only retrieve the original feature, no product instance.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4 align="left"><a name="Reset the CATIMmiInterPartCopy pointer"></a>Reset the CATIMmiInterPartCopy pointer</h4>
+		<p align="left">After every confirmation of result we should have to 
+        reset the <code><b>CATMmrInterPartCopy</b></code> pointer for next 
+        copy.</p>
+		<table class="code" id="Table36">
+			<tr>
+				<td><pre>...
+     pInterPartCopy-&gt;<b>Reset</b>(); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="InShort"></a>In Short</h3>
+		<p align="left">The Use Case creates a Mechanical Import, an end result 
+        of copying a feature, with the Link mode set to 
+        TRUE. A Mechanical Import implements the <code><b>CATIMmiMechanicalImportApplicative
+        </b></code>Interface, which 
+        enables us to retrieve relevant information of the source feature from 
+        its copied entity.</p>
+		<p align="left">The process of actually retrieving this information 
+        needs proper authorization. The Use Case illustrates the failure to 
+        retrieve information, in the absence of proper authorization and details 
+        the steps involved in generating a <code><b>GUID</b></code> (Applicative ID) and specifying 
+        it to the copying process, so that it associates it with the Mechanical 
+        Import.</p>
+		<p align="left">Finally, this <code><b>GUID</b></code> is specified to the retrieving 
+        mechanism, which authorizes us to retrieve the source feature, its 
+        aggregating Product Instance and its load status.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table id="Table11" >
+			<tr>
+				<td  >[1]</td>
+				<td >
+                <a href="../CAAMmrTechArticles/CAAMmrApplicativeImport.htm">
+                Managing Applicative Mechanical Imports</a></td>
+			</tr>
+			<tr>
+				<td  >[2]</td>
+				<td   >
+                <a href="../CAASysQuickRefs/CAASysGUID.htm">About Globally Unique Identifiers</a></td>
+			</tr>
+			<tr>
+				<td  >[3]</td>
+				<td  ><a href="CAAMmrInterPartCopy.htm">
+                Copying Mechanical Features</a></td>
+			</tr>
+			<tr>
+				<td >[4]</td>
+				<td ><a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</A></td>
+			</tr>
+			</table>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table id="Table12" width="100%">
+			<tr>
+				<td vAlign="top">Version: <strong>1</strong> [July 2007]</td>
+				<td vAlign="top">Document created</td>
+			</tr>
+			<tr>
+				<td vAlign="top" align="right" colSpan="2">[<A href="#Top">Top</A>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

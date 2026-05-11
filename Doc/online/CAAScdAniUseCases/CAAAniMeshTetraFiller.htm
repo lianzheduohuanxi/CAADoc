@@ -1,0 +1,207 @@
+<HTML>
+
+<HEAD>
+<TITLE>Creating Tetrahedron Filler Mesh Parts</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Creating Tetrahedron Filler Mesh Parts</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to create tetrahedron 
+		filler mesh part in an existing Analysis document linked to a Part document. 
+		A surface mesh part must exist to create a Tetrahedron Filler mesh part. 
+		The surface mesh may not be associated with geometry. If it is associated 
+		with geometry, this geometry can be either a solid or a set of connected 
+		faces. This scenario requires "FEM Solid (FMD) product".</P>
+		<P>The macro opens an Analysis document which already contains a surface 
+		mesh part. This surface mesh part "Surface Mesh.1" is used to create tetrahedron 
+		filler mesh. Global specifications are assigned to this mesh part. Finally 
+		the mesh part is updated to generate mesh.</P>
+		<P ALIGN="center"><img src="images/TetrahedronFiller.jpg" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniMeshTetraFiller is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniMeshTetraFillerSource.htm">CAAAniMeshTetraFiller.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniMeshTetraFiller.catvbs">Execute macro</A> (Windows 
+		only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniMeshTetraFiller includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting from the Part Document the Reference 
+			Object for Meshing</A></LI>
+			<LI><A HREF="#Navigate">Creating Mesh Part and Assigning Values to its 
+			Attributes</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Optional: allows to find the sample wherever it's installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path has already been stored in the
+		<CODE>sDocPath</CODE> variable. In the collection of documents, two documents 
+		can be retrieved; the Analysis document and the Part document.</P>
+		<H4><A NAME="Reference"></A><B>Extracting the Reference Object from the 
+		Part Document for&nbsp; Meshing</B></H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">' Retrieve the Analysis Manager</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisManager = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">' Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set</FONT> PartDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set</FONT> product = partDocument.Product
+			
+<FONT COLOR="#008000">' Retrieve the analysis model from the list of models</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">' Retrieve mesh manager and mesh part from the list of mesh parts specifying its name</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshPart = oAnalysisMeshParts.Item("Surface Mesh.1")
+
+<FONT COLOR="#008000">' Create Reference from the mesh part.</FONT>
+<FONT COLOR="#0000FF">Set</FONT> reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, the <B>Analysis Models</B> and 
+		the <B>Mesh Manager Objects</B>. </P>
+		<P>The extraction of pre-defined geometric elements is done with the help 
+		of Reference interface. This is equivalent to the selection of a B-Rep element 
+		inside the interactive applications.</P>
+		<H4><A NAME="Navigate"></A>Creating Mesh Part and Assigning Values to its 
+		Attributes</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...  </PRE>
+				<PRE><FONT COLOR="#008000">' Add the new Tetrahedron Filler mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>tetraFiller = oAnalysisMeshParts.Add("MHSPartGHS3D")
+
+<FONT COLOR="#008000">' Add reference previously created</FONT>
+tetraFiller.AddSupportFromReference NOTHING, reference1
+
+<FONT COLOR="#008000">' Set the global Specifications</FONT>
+tetraFiller.SetGlobalSpecification "Propagation", 1.5
+tetraFiller.SetGlobalSpecification "ElementOrder", "Parabolic"
+
+<FONT COLOR="#008000">'Update the mesh part</FONT>
+tetraFiller.Update
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				 End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView&nbsp; 
+		environment variable must be defined. After running the macro the mesh may not be immediately visible,
+                the user has to go to the Advanced Meshing Tools workbench to see the mesh.</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create a mesh part and how to assign other mesh 
+parts as supports.</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="74">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+
+</BODY>
+
+</HTML>

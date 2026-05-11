@@ -1,0 +1,1138 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Catalog Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Catalog Overview</h3>
+      <em>Essential characteristics and mechanisms of catalog documents</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article details the essential characteristics and mechanisms of
+      catalog document.</p>
+      <ul>
+        <li><strong><a href="#Introduction">Introduction</a></strong></li>
+        <li><strong><a href="#Creating a Catalog">Catalog Basis</a></strong>
+          <ul>
+            
+            <li><strong><a href="#Create a chapter"> Chapter</a></strong></li>            
+            
+            <li><strong><a href="#Create a Tree structure">Description</a></strong></li>            
+            <li><strong><a href="#create and valuate keyword"> Keyword</a></strong></li>
+            <li><strong><a href="#Query Mechanism">Query Mechanism</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Create a part family">Part Family</a></strong>
+          <ul>
+            <li><strong><a href="#PF definition">Definition</a></strong></li>
+            <li><strong><a href="#Part Resolution">Part Resolution</a></strong></li>
+            <li><strong><a href="#Part Instantiation">Part Instantiation</a></strong></li>
+          </ul>
+        </li>
+            <li><strong><a href="#Persistent query"> Persistent Query</a></strong></li>
+        <li><strong><a href="#Integrating a new type of object">Integrating a
+          New Type of Component</a></strong></li>
+        <li><strong><a href="#Using the catalog browser"> Catalog Browser</a></strong></li>
+        <li><strong><a href="#instantiating a component">Instantiating a Component</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>Users often need a way of storing and classifying the many objects they have
+at their disposal, whether they be screws, ball bearings or computer parts.
+These objects may number tens of thousands, each with its own specific
+characteristics such as shape, color, size, diameter, length, etc. To facilitate
+fast and easy retrieval of such objects and avoid time-wasting
+redesign, Version 5 offers the possibility of creating catalogs.&nbsp;</p>
+<p>A catalog is a V5 document and is in the form of a tree structure made up of:&nbsp;</p>
+<ol>
+  <li><b>Components: </b>it is a reference to an external entity such as feature
+    (e.g. User Feature, Power Copy), V5 documents (e.g. Part, Product)&nbsp;</li>
+  <li><b>F</b><b>amilies (end chapters): </b>it is a set of
+    components &nbsp;</li>
+  <li><b>Chapters: </b> a chapter references others chapters and families. It is a
+      way of classifying the elements it refers to</li>
+  <li><b>Keywords: </b>a keyword describes the chapter and the family content. You can associate keywords to chapters and families and thus, perform
+      searches by keyword value to filter their contents.</li>
+</ol>
+<p>This external catalog view is internally described by three object types:</p>
+<ol>
+  <li><b>Keyword:&nbsp;</b> it is like a property represented by a simple type
+    (integer, real, double) or a knowledge type ( Length, Mass, Volume, Time ...)</li>
+  <li><b>Description: </b>it contains a reference to an object (chapter, file, description, feature) and keyword values&nbsp;</li>
+  <li><b>Chapter : </b>it contains descriptions and keywords</li>
+</ol>
+<p>The &quot;<a href="#Creating a Catalog">Catalog Basis</a>&quot; section&nbsp;
+presents all the aspects of these objects: creation, valuation and explains the
+filtering mechanism.&nbsp;</p>
+<p>A way to create automatically descriptions is done through:</p>
+<ul>
+  <li>The Part family
+mechanism. The &quot;<a href="#Create a part family">Part family</a>&quot;
+section describes in details this mechanism and gives you explanations about the
+options proposed in Tools/Options.</li>
+  <li>The <a href="#Persistent query">Persistent Query</a> mechanism.&nbsp;</li>
+</ul>
+<p>The CAA Application Programming Interface (API) enables you to integrate you own
+component in a catalog document. It is the topic of the &quot;<a href="#Integrating a new type of object">Integrating a New Type of Component</a>&quot;
+  section.</p>
+<p>In addition to this API, you can use a
+  Catalog Browser which enables to visualize the contents of catalogs and to
+instantiate components. The
+layout and the usage of this browser is explained in the &quot;<a href="#Using the catalog browser">Catalog Browser</a>&quot;
+  section.</p>
+<p>The last section &quot;<a href="#instantiating a component">Instantiating a
+Component</a>&quot; explains how to instantiate a catalog component outside the
+  Catalog Browser scope.</p>
+<p>Notice that, the Catalog document can be edited using the Catalog Editor
+workbench. This article makes sometimes references to this workbench. You can
+also you refer to the &quot;Catalog Architecture&quot;
+article [<a href="#References">1</a>] to have a global view and internal
+view of the Catalog architecture.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+  
+<h3><a name="Creating a Catalog"></a>    Catalog Basis</h3>
+<p>The catalog is a V5 document such as Part, Product and so on. It means that
+to create one, you use the ObjectModelerBase framework API. You can you refer to the &quot;Creating a Catalog&quot; use case [<a href="#References">2</a>]
+for an example.</p>
+<p>This document is based on three main features: the chapter, the
+description and the keyword and on a main mechanism the chapter's filtering
+thanks the keywords and their values.</p>
+<p>The &quot;Browsing a Catalog&quot;
+use case [<a href="#References">3</a>] scans a
+catalog contents.</p>
+<h4><a name="Create a chapter"></a>   Chapter</h4>
+<p>All the chapters are created thanks to the <i>CATICatalogChapterFactory</i>
+interface:&nbsp;</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ CATICatalogChapter * pICatalogChapterOnNewChapter = NULL ;
+
+ CATUnicodeString <b>ChapterName</b> = &quot;ChapterName&quot; ;
+ CATBoolean <b>IsEndChapter</b> = FALSE ;
+ rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,
+                                                       IsEndChapter,
+                                                       pICatalogChapterOnNewChapter);
+...       </pre>
+    </td>
+  </tr>
+</table>
+<p>Where <code>pICatalogChapterFactory</code> is the <i>CATICatalogChapterFactory</i>
+interface pointer on the root container of the catalog document. As usual, to
+retrieve the root container of a document, use the <i>CATInit</i> interface and
+its <code>GetRootContainer</code> method.&nbsp;&nbsp;</p>
+<p>The <code>CreateChapter</code> method creates a new chapter in the root
+container:</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="25%" valign="top"><code>ChapterName</code></td>
+    <td width="75%">The name of the new chapter. Then you retrieve it with the <code>GetChapterName</code>  method on <i>CATICatalogChapter</i>
+    </td>
+  </tr>
+  <tr>
+    <td width="25%" valign="top"><code>IsEndChapter</code></td>
+    <td width="75%">It is a boolean which defines the kind of chapter:&nbsp;
+      <ul>
+        <li>True: It will contain only descriptions pointing to components, so
+          it is a family.</li>
+        <li>False: It will contain only descriptions pointing to other
+        chapters&nbsp;</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="25%" valign="top"><code>pICatalogChapterOnNewChapter</code></td>
+    <td width="75%">It is the <i>CATICatalogChapter</i> interface pointer on
+    the new chapter. This pointer must be released as soon as it becomes useless.</td>
+  </tr>
+</table>
+<p>The first created chapter is the <b>root chapter</b>. It is necessary inside
+the catalog and you retrieve it thanks the <code>GetRootChapter</code>  method of the <i>CATICatalogChapterFactory</i>
+interface.</p>
+<h4><a name="Create a Tree structure"></a>Description</h4>
+<p>The chapter contains a set of descriptions. Each description references an
+object which can be a chapter, a feature, a file, or a description.&nbsp;</p>
+<h5>Creation</h5>
+<p>Whatever is the
+contents of the description, its creation is based on the same principle:</p>
+<ul>
+  <li>Retrieve a <i>CATILinkableObject</i> interface pointer to the object to
+    link to the description</li>
+  <li>Create a new description on the chapter with this <i>CATILinkableObject</i>
+    interface pointer&nbsp;</li>
+</ul>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pICatalogChapter-&gt;<b>AddDescription</b>(pICatalogDescription, pILinkableObject);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where <code>pICatalogChapter</code>
+    is the <i>CATICatalogChapter</i> interface pointer on the parent
+    chapter, and <code>pILinkableObject</code> the <i>CATILinkableObject</i> interface pointer
+to the
+object to link.</p>
+<h5>Description referencing a chapter</h5>
+<p>When the description references chapters that make a <b>chapters tree
+structure</b>. So once a chapter is created, except of course the root chapter,
+use the <code>AddDescription</code> method to insert it in the chapter tree
+structure of the catalog.&nbsp;</p>
+<p>It is also possible to link a description with an external chapter. An
+external chapter is a chapter from an another catalog. It is recommended to
+insert &quot;virtual&quot; descriptions on a chapter through a link to an
+external chapter that create new descriptions in the current catalog. The update
+modifications are easier. A best way is to create catalogs for each specific
+topic, and create &quot;super&quot; catalogs pointing these unitary catalogs.
+The link between catalogs is done by creating in the &quot;super&quot;
+catalog&quot; a description which references a chapter of the smaller
+catalog.&nbsp;</p>
+<p>The &quot;Creating a Catalog&quot; use case [<a href="#References">2</a>]
+gives an example of different kinds of chapters (family or not, external or
+not).&nbsp;</p>
+<h5>Description referencing an object other than a chapter</h5>
+<p>If the description does not reference a chapter, the chapter
+which has this description is a <b>family</b>. There are three ways to have a
+such description. In the first two the descriptions are automatically created:</p>
+<ul>
+  <li>Through Part Family mechanism - see the &quot;<a href="#Create a part family">Part
+    Family</a>&quot; paragraph</li>
+  <li>Through Persistent Query mechanism - see the &quot;<a href="#Persistent query">Persistent
+    Query</a>&quot; paragraph</li>
+
+<li>
+The third case is, of course, in using the <code>AddDescription</code> method. Notice however that if the referenced
+object is a document, there is a best way (the document is not opened) to make the
+reference:</li>
+  </ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogDescription * pICatalogDescription = NULL ;
+CATUnicodeString Filename =&quot;/../../../MyDoc.CATPart&quot;;
+pICatalogChapterOnFamily-&gt;<b>AddDescription</b>(pICatalogDescription);
+pIDescription-&gt;<b>SetDocumentName</b>(FileName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where&nbsp;<code>Filename</code> is the complete path of the document.</p>
+<p>The &quot;Creating a Catalog With Part Component&quot; use case [<a href="#References">4</a>]
+is an example where the description is created using the API.</p>
+<p>Retrieval the Referenced Object</p>
+  
+<p> In all cases,
+except the chapter case, the object of the description is retrieved thanks to
+the <code>GetObject</code>
+method of <i>CATICatalogDescription. </i>For a chapter, there are two ways, the
+first being easier:</p>
+  <ul>
+  <li> By using the the <code>GetSubChapter</code>
+method of the <i>CATICatalogDescription</i>  interface. </li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogChapter * pICatalogChapterOnChildChapter = NULL ;
+pICatalogChapterOnChildChapter = pICatalogDescription-&gt;<b>GetSubChapter</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+  <li>By using the <code>GetObject</code>
+method of <i>CATICatalogDescription</i> and the <code>GetChapter</code>
+method of <i>CATICatalogQueryResult</i> &nbsp;</li>
+<p>The <code>GetObject</code>
+ method retrieves a temporary object a QueryResult object which
+implements the <i>CATICatalogQueryResult</i> interface. Use the <code>GetChapter</code>
+method on this interface to retrieve the referenced object as follow:</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBaseUnknown * pReferencedObject = NULL ;
+pICatalogDescription-&gt;<b>GetObject</b>(pReferencedObject);
+CATICatalogQueryResult * pICatalogQueryResultOnReferencedObject = NULL
+HRESULT rc = pReferencedObject-&gt;<b>QueryInterface</b>(IID_CATICatalogQueryResult, 
+                                      (void**) &amp; pICatalogQueryResultOnReferencedObject );
+if ( SUCCEEDED(rc) )
+{
+   CATICatalogChapter * pICatalogChapter = NULL ;
+   rc = pICatalogQueryResultOnReferencedObject-&gt;<b>GetChapter</b>(pICatalogChapter);
+   ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>Where pICatalogDescription </code> is a <i>CATICatalogDescription</i> 
+interface pointer on a description of a chapter and <code>pICatalogChapter</code>
+  a pointer on its child chapter.</p>
+</ul>
+<h5>Preview image</h5>
+<p>On each description there is a preview image. This image is displayed in the
+&quot;Preview&quot; Tab page of the Catalog Editor [<a href="#Fig.1">Fig.1</a>]
+or in the Catalog Browser&nbsp;[<a href="#Fig.2">Fig.2</a>].</p>
+ <table>
+<caption><i> <a name="Fig.1">Fig.1</a> Preview Image in the Catalog Editor</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewPreview1.jpg" width="650" height="282">
+</td>
+</tr>
+</table>
+<table>
+<caption><i> <a name="Fig.2">Fig.2</a> Preview Image in the Catalog Browser</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewPreview2.jpg" width="501" height="242">
+</td>
+</tr>
+</table>
+
+<p>For each type of description there is a default image:</p>
+<ul>
+  <li>Chapter </li>
+  <p><img border="0" src="images/CAACciCatalogOverviewPreview3.jpg"></p>
+  <li>Family</li>
+  <p><img border="0" src="images/CAACciCatalogOverviewPreview4.jpg" width="63" height="54"></p>
+
+  <li>Document</li>
+  <p>The preview image of the document</p>
+  <li>Feature</li>
+  <p>The preview image of the feature</p>
+</ul>
+
+<p>You can change the default image in two ways:</p>
+<ul>
+  <li>By giving a <i>CATPixelImage</i> - the image is embedded in the catalog</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATPixelImage Image = .... ;   
+pICatalogDescription-&gt;<code><b>SetPreview</b></code>(Image );
+...</pre>
+    </td>
+  </tr>
+</table>
+  <li>In indicating a file name - the image is outside the catalog</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString FileName =&quot;...&quot;;     
+pICatalogDescription-&gt;<code><b>SetPreviewName</b></code>(FileName);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>Where pICatalogDescription </code> is a <i>CATICatalogDescription</i>
+  interface pointer on a description, and <code>FileName</code> is the complete
+  path of the image. If an embedded image exists, this image is not taken
+  account.</p>
+</ul>
+
+<p>The large image is displayed with 130x110 pixels, so if your image is smaller
+or larger, it is increased or decreased to this size.&nbsp;</p>
+
+<h4><a name="create and valuate keyword"></a>    Keyword</h4>
+  
+<p>The keywords are associated with the chapters so it is with the <i>CATICatalogChapter</i>
+interface that you can create them and set their default values. Each description of a chapter can have a own value for each keyword of the
+chapter. While a keyword is not
+valuated on a description, its value is the default value kept on the chapter.&nbsp;</p>
+  
+<h5>Creation</h5>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogKeyword * pICatalogKeywordOnNewKW = NULL ;
+CATUnicodeString KeywordName = &quot;xxxx&quot;;
+<b>CATUnicodeString</b> KeywordType =&quot;yyy&quot;;
+pICatalogChapterOnChapter-&gt;<b>AddKeyword</b>(KeywordName,KeywordType,pICatalogKeywordOnNewKW );
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+</ul>
+<p>or</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogKeyword * pICatalogKeywordOnNewKW = NULL ;
+CATUnicodeString KeywordName = &quot;xxxx&quot;;
+<b>CATICkeType</b> * pCATICkeTypeOnNewKeyword = ... ;
+pICatalogChapterOnChapter-&gt;<b>AddKeyword</b>(KeywordName,pCATICkeTypeOnNewKeyword ,pICatalogKeywordOnNewKW );
+...</pre>
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="22%" valign="top">KeywordName</td>
+    <td width="78%">The name of the keyword. Then you retrieve it&nbsp; with the <code>GetKeywordName</code>  method on the <i>CATICatalogkeyword</i>
+    interface.&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top">pCATICkeTypeOnNewKeyword&nbsp;</td>
+    <td width="78%">The type of the keyword:
+      <ul>
+        <li>For a CATUnicodeString - some examples:
+          <ul>
+            <li>&quot;CATUnicodeString&quot;</li>
+            <li>&quot;Integer&quot;</li>
+            <li>&quot;Real&quot;</li>
+            <li>&quot;LENGTH&quot;</li>
+          </ul>
+        </li>
+        <li>For a CATICkeType - see the literal feature documentation&nbsp;</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top">pICatalogKeywordOnNewKW&nbsp;</td>
+    <td width="78%">The <i>CATICatalogKeyword</i> interface pointer on
+    the new keyword. This pointer must be released as soon as it becomes useless.</td>
+  </tr>
+</table>
+<h5>Hidden Keyword</h5>
+<p>All the keywords for a chapter appear in the &quot;Keywords&quot; tab page in
+the Catalog Editor - but some can be hidden in the Catalog Browser. Those are
+suffixed by the star in the Catalog Editor.&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.3">Fig.3</a>: Hidden Keyword&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewKW.jpg" width="333" height="307">
+</td>
+</tr>
+</table>
+<p>To hide a keyword:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pICatalogKeywordOnNewKW-&gt;<b>SetHidden</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>pICatalogKeywordOnNewKW</code> is a <i> CATICatalogKeyword</i> interface
+pointer.&nbsp;</p>
+<h5>Keyword Default Value</h5>
+
+<p>Once the keyword is created, you can -eventually- set it a<b> default value</b>.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogChapter * pICatalogChapterOnChapter  = ... ;  
+CATUnicodeString KeywordName=&quot;..&quot; ;
+pICatalogChapterOnChapter-&gt;<b>SetDefaultValue</b>(KeywordName,DefaultValue);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The type of the <code>DefaultValue </code>variable depends on the keyword
+type.</p>
+<p>Keyword Value</p>
+
+<p> To valuate a keyword
+of a description use the <code>SetValue</code> method as follow:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICatalogDescription * pICatalogDescriptionOnCurrentDescription  = ... ;  
+CATUnicodeString KeywordName=&quot;..&quot; ;
+pICatalogDescriptionOnCurrentDescription-&gt;<b>SetValue</b>(KeywordName,Value);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The type of the <code>Value</code> variable depends on the keyword
+type.&nbsp;</p>
+<p>Specific Keyword</p>
+<p>The &quot;Name&quot; keyword is a specific keyword. Its value is also the name of the
+description. In other words, the value returned by the <code>GetName</code>
+method of the <i>CATICatalogDescription</i>  interface is also the value
+returned by the <code>GetValue</code>  method.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+ In the Catalog Editor, for each chapter the &quot;Name&quot; keyword is created
+automatically but not in the CAA API case. But even the keyword
+doesn't exist, the <code>GetValue</code> method of the <i>CATICatalogDescription</i>
+interface returns the name of the
+description.&nbsp;</p>
+<h4><strong><a name="Query Mechanism"></a></strong>Query Mechanism</h4>
+<p>As a data base, a query mechanism enables to research a specific object into
+a catalog. This mechanism is based on the keywords and their values. As a data
+base request, you build a query expression with keywords and you apply this
+request to a chapter. The &quot;Using Query&quot; use case [<a href="#References">5</a>]
+gives you a concrete example.</p>
+<p>Query Expression</p>
+<p>The query is an expression which has a knowledgeware syntax and the available operators
+  are&nbsp;</p>
+  <ul>
+  <li>+,-,*,/,(,),**,==,&lt;&gt;,&lt;,&gt;,&lt;=,&gt;=</li>
+  <li>abs,sqrt,cos,sin,tan,log,min,max ...</li>
+  <li>Search,Extract,Length,ToUpper ...</li>
+  <li>if ... then.., and,or,...</li>
+  </ul>
+  <p>For example: (x.DIAMETER&lt;=4)AND(x.TYPE==&quot;FHC&quot;)</p>
+<p>Query Request</p>
+  
+<p>The chapter implements the <i>CATICatalogQuery</i>  interface. Use the <code>Query</code> 
+method to do a request as follow:</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+CATUnicodeString Expression = &quot;(x.SideNumber==6)&quot;;
+CATICatalogQueryResult * pIQueryResult = NULL;
+rc = piCatalogQueryOnChapter-&gt;<b>Query</b>(pIQueryResult,Expression);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where&nbsp;<code>piCatalogQueryOnChapter</code> is a <i>CATICatalogQuery</i>
+    interface on the chapter to filter. The arguments of this method are:</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="12%">pIQueryResult</td>
+    <td width="88%">The output object. It is a temporary object which contains
+      the descriptions matching to the expression.</td>
+  </tr>
+  <tr>
+    <td width="12%">Expression</td>
+    <td width="88%">The query</td>
+  </tr>
+</table>
+<p>The <code>Query</code>  method is not recursive. So if the chapter contains sub-chapters, the research
+stops at the first level.&nbsp;</p>
+
+<h4><a name="Create a part family"></a>   Part Family</h4>
+<p>This paragraph explains what is a Part Family. Refer you to
+the
+&quot;Creating a Part family&quot; use case [<a href="#References">6</a>] for a
+concrete case.</p>
+<h4><a name="PF definition"></a>Definition</h4>
+<p>A Part family is a whole family with Part components created from a single
+Part which has several configurations referenced in a design table.&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.4">Fig.4</a>: Part Family</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewPFa.jpg" width="680" height="412">
+</td>
+</tr>
+</table>
+
+<p>On this picture, notice that :</p>
+<ul>
+  <li>The design table is a tabulated text file (a Excel file is not UNIX
+    compatible),</li>
+  <li>The design table contains the <code>PartNumber</code> header. <b>It is
+    mandatory</b>,</li>
+  <li>The keywords of the Part family are the headers
+    name of the design table,</li>
+  <li>There are as many descriptions as configuration rows in the design table,</li>
+  <li>The values of each description's keyword are the value extracted from the
+    design table.</li>
+</ul>
+<p>It is always possible to add keywords to the family after or before having
+created a Part family. But if the keywords
+providing from the design table are automatically created and valuated, it is on
+your charge to valuate the added keywords.&nbsp;</p>
+<p>The <code><b>PartNumber</b></code> keyword value is a specific keyword. It
+has the same role as the &quot;Name&quot; keyword for an another type of
+chapter. It is also the
+    name of the description.</p>
+<p>Once the family is created, use the <code>AddFamilyDescriptionsFromDesignTable</code>
+method on the <i>CATICatalogChapter</i> interface.</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pICatalogChapterOnFamily-&gt;<b>AddFamilyDescriptionsFromDesignTable</b>(piDesignTable);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code> pICatalogChapterOnFamily</code> is a <i>CATICatalogChapter</i> interface
+pointer, and <code> piDesignTable</code> a <i>CATIDesignTable</i> interface
+pointer. The &quot;Creating a Catalog&quot; use case [<a href="#References">2</a>]
+gives the code to retrieve a design table in a Part document.</p>
+<p><b><a name="Part Resolution"></a>Part Resolution</b></p>
+<p>Each description could have a link to a Part generated from a configuration
+defined in the design table. It is the case when the description is
+&quot;resolved&quot;. The advantage is that when a resolved Part is stored in a catalog,
+it can be automatically generated during the instantiation. So for the end user,
+there is no
+time-wasting for configuration computation during the instantiation.</p>
+<p>&nbsp;It means that for the previous example [<a href="#Fig.4">Fig.4</a>], if you instantiate:</p>
+<ul>
+  <li>The Part document
+of the first line, you instantiate a Part with 20 mm for the First Limit length
+    and&nbsp; the diameter</li>
+  <li>The Part document of the second line, you instantiate a Part with 30mm for
+    the First Limit length and 10 mm for the diameter</li>
+  <li>The Part document of the third line, you instantiate a Part with 40mm for
+    the First Limit length and 10 mm for the diameter</li>
+</ul>
+ <table>
+<caption><i><a name="Fig.5">Fig.5</a>: Part Family Configurations</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewPFb.jpg" width="652" height="338">
+</td>
+</tr>
+</table>
+
+<p>When a Part family is created, in the Reference tab page of the Catalog
+Editor, you can notice that the type of each descriptions is &quot;Part family
+configuration&quot;. If you resolve a description, the type of the
+description becomes &quot;Resolved part family configuration&quot; [<a href="#Fig.6">Fig.6</a>].</p>
+ <table>
+<caption><i><a name="Fig.6">Fig.6</a>: Resolved Part Document</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewPFc.jpg" width="819" height="131">
+</td>
+</tr>
+</table>
+
+<p>On the above picture, you notice that:</p>
+<ul>
+  <li>The first description is resolved. The Part has been stored in the &quot;C:\Documents
+    and Settings\...&quot; directory. This location is defined in the
+    Catalog Editor tab page in the Tool Options Command [<a href="#Fig.7">Fig.7</a>]. The next
+    paragraph &quot;<a href="#Part Instantiation">Part Instantiation</a>&quot;
+    describes this tab page.</li>
+  <li>The last two are not resolved. The Object Name field contains the path of
+    the Part with the design table.</li>
+</ul>
+<p>To resolve a description by using CAA API, use the <code>ResolvedDocumentFromDesignTable</code>
+method on a <i>CATICatalogDescription</i> interface pointer.&nbsp;</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pICatalogDescription-&gt;<code><b>ResolvedDocumentFromDesignTable</b></code>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>pICatalogDescription</code> is a <i>CATICatalogDescription</i>
+interface pointer.&nbsp;</p>
+
+<h4><a name="Part Instantiation"></a>Part Instantiation</h4>
+<p>In the Tools/Options command, if you select Infrastructure and Catalog
+Editor, the following tab page appears:</p>
+ <table>
+<caption><i><a name="Fig.7">Fig.7</a>: Catalogs Tools/Options</i></caption>
+<tr>
+<td>
+<img border="0" src="../CAACciUseCases/images/CAACciCatalogToolsOptions.jpg" width="703" height="285">
+</td>
+</tr>
+</table>
+
+<p>This tab page defines the instantiation mode for components coming from
+Part family.&nbsp;</p>
+
+<p>The Folder editor defines the path of the resolved Part.
+The three others options are exclusive:</p>
+
+<ul>
+  <li>Use the &quot;Create new reference for each instantiation&quot; option to
+    create a component reference from each instantiated reference part (just
+    like the <kbd>New from...</kbd> command). In other words, each component
+    instantiation will result in the generation of a Part document saved in
+    the folder you specified.</li>
+  <li>The &quot;Allow family component dynamic resolution in catalog&quot; option lets you dynamically resolve components when
+    instantiating them. It means that after such an instantiation, the catalog
+    could&nbsp; be modified because one of this description could now contain a
+    link towards a resolved Part if it doesn't exist already.&nbsp;</li>
+  <li>The &quot;Instantiate only resolved family components&quot; option lets
+    you instantiate only resolved and stored components. Otherwise, an error
+    message appears to warn you that the component cannot be resolved.</li>
+</ul>
+
+<p>Through this tab page, an administrator can impose the instantiation mode and/or
+set the location of the resolved Part.&nbsp;</p>
+
+<h3><a name="Persistent query"></a> Persistent Query</h3>
+          <ul>
+            
+          </ul>
+<p>A persistent query is
+associated with a family. It enables you to have a filtered view of an external
+catalog into a catalog. You can you refer&nbsp; you to the
+&quot;Creating Persistent Query&quot; use case [<a href="#References">7</a>] for a concrete example.</p>
+  
+<p>
+  You can create a sub-set of keywords on the family with the keywords
+    defining the expression. But caution, except the <code>Name</code> keyword,
+    there is no automatic valuation of the family's keyword.</p>
+  
+<p>Once the family is created, there are four or five steps to create a persistent
+query:</p>
+  
+<ol>
+  <li>Use the <code>AddPersistentQuery</code><b> </b>method of the <i>CATICatalogChapter</i> interface.</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString PersistentQueryName =&quot;&quot; ;   
+CATICatalogPersistentQuery * pICatalogPersistentQuery = NULL ;   
+pICatalogChapterOnFamily-&gt;<b>AddPersistentQuery</b>(PersistentQueryName,
+                                                       pICatalogPersistentQuery);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>where pICatalogChapterOnFamily is a <i>CATICatalogChapter</i> interface
+pointer, and <code>pICatalogPersistentQuery</code> a <i>CATICatalogPersistentQuery</i> interface
+pointer on the new persistent query.&nbsp;</p>
+<li>Associate the chapter to filter with the new persistent query</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+CATICatalogChapter * piChapterToFilter =... ;   
+pICatalogPersistentQuery-&gt;<b>SetResolutionChapter</b>(piChapterToFilter);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>where <code>piChapterToFilter</code> is a <i>CATICatalogChapter</i> interface
+  pointer on <b>the root chapter</b> of the catalog to filter.&nbsp;&nbsp;</p>
+<li><a name="Associate expression with the new PQ"></a>Associate an expression with the persistent query</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+CATUnicodeString Expression = &quot; xxx&quot; ;  
+pICatalogPersistentQuery-&gt;<b>SetExpression</b>(Expression);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The expression has a knowledgeware syntax. See the &quot;<a href="#Query Mechanism">Query
+  Mechanism</a>&quot; paragraph.</p>
+  <li>Associate default values with the persistent query</li>
+  <p>This step is not mandatory. For each persistent query of a family it is possible to associate new default value
+  for the keyword's family.</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+CATUnicodeString KeywordName= &quot;xxx&quot; ;  
+pICatalogPersistentQuery-&gt;<b>SetDefaultValue</b>(KeywordName,DefaultValue);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>where <code>KeywordName</code> is a keyword of the family.&nbsp;</p>
+  <li>Resolve the query</li>
+  <p>The resolution generates the descriptions on the family.</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+int ResolveMode = 0 ; 
+CATListValCATICatalogDescription_var * pListExternalDescription  = NULL ;
+pICatalogPersistentQuery-&gt;<b>ResolveQuery</b>(ResolveMode,pListExternalDescription);
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+<li>The <code>ResolveMode</code> argument can have two values&nbsp;</li>
+<ul>
+<li>0: it is a simulation. The
+  descriptions are not created on the family</li>
+<li>1:&nbsp; it is a resolution. The
+  descriptions are created on the family</li>
+</ul>
+<li><code>pListExternalDescription</code> contains the list of the simulated or
+  resolved description.&nbsp;</li>
+</ul>
+ 
+</ol>
+<h3><a name="Integrating a new type of object"></a>Integrating a New Type of
+Component</h3>
+  <p>Natively, the catalog document integrates some components like:</p>
+  <ul>
+  <li>Documents</li>
+  <ul>
+  <li>Product</li>
+  <li>Part (with or without design table)</li>
+  <li>Script&nbsp;</li>
+  </ul>
+  <li>Features</li>
+   <ul>
+   <li>Drafting Details</li>
+   <li>Power Copy</li>
+   <li>User Feature</li>
+   <li>Manufacturing Tools</li>
+   <li>Manufacturing Process</li>
+  </ul>
+   <li>Knowledge</li>
+   <ul>
+   <li>Fomulas, Rules, Checks</li>
+   <li>Rule base</li>
+   <li>Generative Knowledge Script (CATGScriptFile)</li>
+  </ul>
+
+  </ul>
+<p>To integrate a new type of component in a catalog document, you have to
+implement the three following interfaces:</p>
+<ul>
+  <li>CATICatalogInstantiation
+    <p>This interface contains the method&nbsp; which launches an interactive
+    command to create a new instance of the component.&nbsp;</p>
+  </li>
+  <li>CATICatalogSynchronize<p>It is not mandatory to implement this interface.
+    It enables you to provide information for the description which
+    has a link to an instance of the component:</p>
+    
+    <ul>
+      <li>The display name of the description (<code>GetAlias</code>)</li>
+      <li>An embedded preview image&nbsp;(<code>GetEmbeddedPreview</code>)</li>
+      <li>Keyword values (<code>GetKeywordValue</code>)</li>
+    </ul>
+  <li>CATICatalogEnable (only for features)<p>This&nbsp;interface authorizes the integration of the feature in a
+    catalog document.&nbsp;This interface is without method.</p>
+</ul>
+<p>The use case &quot;Integrating a Component&quot; details on a feature the
+implementation of these three interfaces.<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+ Although the Part and the Product are documents natively integrated in a catalog
+document, they don't directly implement <i>CATICatalogInstantiation.</i> &nbsp;
+<h3><a name="Using the catalog browser"></a> Catalog Browser</h3>
+<p>The Catalog Browser is an interactive command to browse catalogs and
+instantiate components in context.&nbsp;It provides:</p>
+<ul>
+  <li>The same user interface for all applications&nbsp;
+    <ul>
+      <li>Assembly</li>
+      <li>Part ( PartDesign, ShapeDesign...)</li>
+      <li>Drafting</li>
+      <li>Plant layout, Mold ...</li>
+    </ul>
+  </li>
+  <li>Instantiation in context with drag&amp;drop, double click or contextual
+    menu</li>
+</ul>
+<p>The Catalog Browser is a Dialog box with the following layout:</p>
+ <table>
+<caption><i><a name="Fig.8">Fig.8</a>: Catalog Browser</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewBrowserComment.jpg" width="697" height="404">
+</td>
+</tr>
+</table>
+
+<p>The CAA API enables you to create an instance of this command and customize its layout. The &quot;Using the Catalog Browser&quot;
+use case is a demonstrator which allows you to understand interactively all the
+possible options.&nbsp;</p>
+<p>The Catalog Browser is created thanks to the <i>CATICatalogBrowserFactory</i>
+interface. This interface is implemented by the <i>CATFrmEditor</i> class (ApplicationFrame
+framework).&nbsp;</p>
+<p>The <i>CATFrmEditor</i> class is the &quot;C&quot; in the
+MVC paradigm, where M (Model) is the document and V (View) the Visualization world. To be
+visualized, a document must implement the <i>CATIEditor</i>    (ObjectModelerBase
+framework) interface which provides a <i>CATFrmEditor</i> class instance.</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+CATFrmEditor * pDocumentEditor = <b>CATFrmEditor::GetCurrentEditor</b>();
+CATICatalogBrowserFactory * pICatalogBrowserFactory = NULL;
+HRESULT rc = pDocumentEditor-&gt;QueryInterface (IID_CATICatalogBrowserFactory, 
+                                              (void**) &amp;pICatalogBrowserFactory);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Once you have the <i>CATICatalogBrowserFactory</i> interface pointer, use its
+single method to create a Catalog Browser instance:</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+CATICatalogBrowser *  pICatalogBrowser = NULL ;
+CATCciCatalogBrowserDisplayOptions DisplayOptions = CATCatalogDisplayCombo | 
+                                                    CATCatalogDisplayWndBtnOKCancel | 
+                                                    CATCatalogDisplayWithLargeIcons ;
+int DragAndDropAuthorized = 1 ;
+int InstantiationAuthorized =1 ;
+pICatalogBrowserFactory-&gt;<b>OpenCatalogBrowser</b> (pICatalogBrowser, 
+                                             DisplayOptions , 
+                                             DragAndDropAuthorized, 
+                                             InstantiationAuthorized);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where</p>
+<ul>
+  <li><code>pICatalogBrowser</code> is the&nbsp;new <i>CATICatalogBrowser</i> 
+    interface pointer</li>
+  <p>It is an output argument. With this pointer you can change some layout
+  options and retrieve the end user interactions: its selection, filter value,
+  ...</p>
+  <li><code>DisplayOptions</code>, is a sum of <code>CATCciCatalogBrowserDisplayOptions</code>
+    values&nbsp;</li>
+  <p>It is a sum of single option to customize the layout of the dialog box. In
+  the just above example, the value for this argument means that the Catalog browser has:
+  <ul>
+  <li><code>CATCatalogDisplayWndBtnOKCancel</code>: The Ok and Cancel buttons (and not
+  the Close button as [<a href="#Fig.8">Fig.8</a>] )</li>
+  <li><code>CATCatalogDisplayCombo: </code>The&nbsp; Display options combo (Large and Small icons and Details
+    options)</li>
+  <li><code>CATCatalogDisplayWithLargeIcons</code> <code>: </code>At the beginning the large icons are displayed</li>
+  </ul> 
+  <p>It is recommended to always have the <code>CATCatalogDisplayCombo</code>
+  value.</p>
+  <li><code>DragAndDropAuthorized</code> , authorize or not the instantiation by drag
+    and drop</li>
+  <li><code>InstantiationAuthorized</code>, authorize or not the component's
+    instantiation by contextual menu or&nbsp; by double click on the description</li>
+</ul>
+<h3><a name="instantiating a component"></a>Instantiating a Component</h3>
+<p>The instantiation can be done through the Catalog Browser:</p>
+<ul>
+  <li>Drag and Drop&nbsp;</li>
+  <li>Double click</li>
+  <li>Contextual menu</li>
+</ul>
+<p>but you can also launch yourself an instantiation. There are two steps&nbsp;</p>
+<ol>
+
+  <li>Retrieve the <i>CATICatalogDescription</i> interface pointer on the
+    description which contains the component to instantiate. If it is a
+    description selected by an end user through the Catalog Browser, use the
+    method of the <i> CATICatalogBrowser</i> interface</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+CATICatalogDescription * piCatalogDesc = NULL ;
+rc = _pICatalogBrowser-&gt;<b>GetSelectedDescription</b> (piCatalogDesc);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Where <code>_pICatalogBrowser</code> is a <i>CATICatalogBrowser</i>
+  interface pointer on the opened Catalog Browser.</p>
+  <li>Instantiate the referenced object thanks to the <code>RunInstantiationCmd
+    </code>method on the <i>CATICatalogDescription</i> interface pointer</li>
+    
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+rc = piCatalogDesc-&gt;<code><b>RunInstantiationCmd</b>(</code>_pICatalogBrowser,InstantiateMode,RepeatMode)
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Where the arguments of this method are the following:</p>
+  <ul>
+  <li> <code>pICatalogBrowser, a </code> <i> CATICatalogBrowser</i> interface
+    pointer</li>
+  <p>It is a pointer on the current Catalog Browser (can be NULL). It
+  will possibly be used to temporaryly hide the Catalog Browser during the
+  instantiation or to close it.</p>
+    <li><code>InstantiateMode </code>(int)</li>
+  <p>This argument is only useful for the document's instantiation into a
+  Product. In this case there are two ways to do an instantiation, the first
+  being recommended:</p>
+  <ul>
+  <li><code>1</code>: The destination Product will have a link to the
+    reference document.&nbsp;</li>
+  <li><code>0</code>: It is a &quot;New From&quot; instantiation. It means that
+    a new document is created from the reference document</li>
+  </ul>
+  </ul>
+  <ul>
+  <p>The second solution is recommended.</p>
+    <li><code>RepeatMode </code>(int)</li>
+  <p>The instantiation will be done through an interactive command which can
+  have the repeat mode. This mode means that when the command is finished, it is
+  automatically re-launched. So this parameter is often without interest
+  because in most cases the repeat mode is not available (and not recommended) .</p>
+  </ul>
+  <p>To instantiate a component you must not use the <code>RunInstantiationCmd</code>
+  method of the <i> CATICatalogInstantiation</i> interface and that for two reasons:</p>
+  <ol>
+  <li>The DS components do not always implement <i>directly </i>the <i> CATICatalogInstantiation</i> interface</li>
+  <li>The current workbench or the current workshop can be called before.</li>
+
+  </ol>
+  <p>The <code>RunInstantiationCmd</code>
+  method of the <i> CATICatalogDescription</i> interface calls the <code>RunInstantiationCmd</code>&nbsp;
+  method of the <i> CATICatalogInstantiation</i> interface.&nbsp;</p>
+</ol>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"><b>Advice</b></p>
+<ul>
+<li>You cannot make an instantiation outside an interactive session.&nbsp;</li>
+<li>The catalog which contains the component to instantiate must always be opened</li>
+<li>There is no link with the catalog after an instantiation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The catalog is a document which enables you to classify a lot of objects (file,
+feature, etc.) to retrieve them quickly. It is made up of three main features:</p>
+<ol>
+  <li>The chapter: It has several descriptions and keywords</li>
+  <li>The description: It contains a referenced object (file, feature, chapter,
+    description)</li>
+  <li>The keyword: It is the way to classify chapters and theirs descriptions</li>
+</ol>
+<p>The description's creation on a chapter can be done explicitly or
+automatically through the</p>
+<ul>
+  <li>Part family mechanism: each description comes from a design table
+    configuration.</li>
+  <li>Persistent query mechanism: each description comes from a filtered
+    catalog.</li>
+</ul>
+<p>The ComponentsCatalogsInterfaces framework provides a component, the Catalog
+Browser, which allows you to browse a catalog and instantiate components having the same look and feel that the other DS applications.</p>
+<p>A component instantiation can be done through the Catalog Browser but also
+through the CAA API.&nbsp;</p>
+<p>At last, it is possible to integrate a new type of component into the
+catalog's document.</p>
+<p align="right"><i></i>[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="892" height="155">
+  <tr>
+    <td valign="top" width="91" height="18">[1]</td>
+    <td width="787" height="18"><a href="CAACciCatalogArchitecture.htm">Catalog Architecture</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="18">[2]</td>
+    <td width="787" height="18"><a href="../CAACciUseCases/CAACciCatalogCreationStructure.htm">Creating
+      a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="18">[3]</td>
+    <td width="787" height="18"><a href="../CAACciUseCases/CAACciCatalogBrowsing.htm">Browsing
+      a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="19">[4]</td>
+    <td width="787" height="19"><a href="../CAACciUseCases/CAACciCatalogCreationPart.htm">Creating
+      a Catalog With Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="18">[5]</td>
+    <td width="787" height="18"><a href="../CAACciUseCases/CAACciCatalogQuery.htm">Using
+      Query</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="18">[6]</td>
+    <td width="787" height="18"><a href="../CAACciUseCases/CAACciCatalogCreationPartFamily.htm">Creating
+      a Part With Part Family</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91" height="18">[7]</td>
+    <td width="787" height="18"><a href="../CAACciUseCases/CAACciCatalogCreationQP.htm">Creating
+      a Persistent Query</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="884" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

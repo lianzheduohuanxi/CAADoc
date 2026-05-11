@@ -1,0 +1,506 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating and Publishing Events</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Creating and Publishing Events</h3>
+      <i>Working with events, publishers and subscribers</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAVpiPublishEvents use case. This use case
+      explains how to create Events, and use them in Programs.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiPublishEvents Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVPublishEvents Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiPublishEvents</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiPublishEvents Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to declare and raise events for you
+own objects. The use case will show you also how a client object will be able to
+subscribe to your events and you will see the Publisher and Subscriber behaviors
+when events are raised.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiPublishEvents Use Case</h3>
+<p>CAAVpiPublishEvents is a use case of the CAAVPMInterfaces.edu framework that
+illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiPublishEvents Do</h4>
+<p>The goal of CAAVpiPublishEvents use case is to show the whole process from
+the declaration of new events that a publisher class can raise to the emission
+of those events and the call of subscribers which will react to those events.</p>
+<p>The CAAVpiPublishEvents use Case is closely linked to CAAVpiEventsObjects
+module, where the new events, the test publisher class (CAAVpiFileManager) and
+the test subscriber class (CAAVpiFMEventsSubscriber) are defined.</p>
+<p>In our scenario, the publisher is a FileManager which has three methods:
+<ul>
+  <li>one for creating a file,</li>
+  <li>one for moving a file from one directory to another,</li>
+  <li>and the third one to delete a file.</li>
+</ul>
+<p>Each method will raise an event. Those events will be declared in the
+INDEX.event file , and their definition allows a subscriber to veto the move
+file and delete file operations.</p>
+<p>On the other side CAAVpiPublishEvents:</p>
+<ul>
+  <li>Creates an ENOVIA Session</li>
+  <li>Gets the event manager which is necessary for subscription.</li>
+  <li>Creates a client object, CAAVpiFMEventsSubscriber, which subscribes to
+    events declared by the CAAVpiFileManager class. This client is able to veto
+    some operations of the CAAVpiFileManager class, after check when being
+    called by the event raised.</li>
+  <li>Creates a CAAVpiFileManager instance, which simulates creation, move, and
+    deletion of files.</li>
+  <li>Calls methods which raise events in two cases: for files and directories
+    not protected by the subscriber, and for files and directories protected.</li>
+</ul>
+<p>The traces should show the event raised and the callbacks with no problem in
+the first case, the event raised and the veto put by the subscriber in the
+second case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiPublishEvents</h4>
+<p>To launch CAAVpiPublishEvents, you will need to set up the build time
+environment, then compile CAAVpiPublishEvents along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiPublishEvents</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiPublishEvents</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiPublishEvents Code</h4>
+<p>The CAAVpiPublishEvents use case is made of an executable class named
+CAAVpiPublishEvents located in the CAAVpiPublishEvents.m module, 2 classes
+CAAVpiFileManager and CAAVpiFMEventsSubscriber located in the CAAVpiEventObjects
+of the CAAVPMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiPublishEvents.m\
+      (executable class)<br>
+      InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiEventObjects.m\ (event
+      declarations,callback interface,publisher and subscriber classes)</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiPublishEvents.m/
+      (executable class)<br>
+      InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiEventObjects.m/ (event
+      declarations,callback interface,publisher and subscriber classes)</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five main steps in CAAVpiPublishEvents Use Case:</p>
+<ol>
+  <li><a href="#Prolog">Prolog: Prerequisite declarations and classes in
+    CAAVpiEventObjects module</a></li>
+  <li><a href="#Create Session">Start of CAAVpiPublishEvents: Create an ENOVIA
+    Session and get its event manager</a></li>
+  <li><a href="#Client Creation and Subscription">Subcriptions of a created
+    Client object.</a></li>
+  <li><a href="#Publisher Creation">Creation of a Publisher object and call of
+    its methods which raise events</a></li>
+  <li><u><a href="#SessionClose">End of CAAVpiPublishEvents: Session Close</a></u></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Before launching the subscribing and publishing events, four steps, in the
+CAAVpiEventObjects module:</p>
+<ul>
+  <li>Declare the events in a &quot;Domain&quot;.event file (see the
+    CAA_INDEX.event file in the
+    InstallRootDirectory/CAAVPMInterfaces.edu/CNext/resources directory). The
+    name of that domain should be your dedicated domain. For the sample purpose,
+    it was renamed INDEX.event, where INDEX is the domain to be integrated in
+    your installation. See [<a href="#References">3</a>].</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;Class Name=&quot;CAAVpiFileManager&quot; Type=&quot;Real&quot;&gt;
+  &lt;Event Name=&quot;CreateFile&quot;
+         Mode=&quot;Public&quot;
+         Before=&quot;Yes&quot;
+         After=&quot;Yes&quot;
+         Veto=&quot;No&quot;
+         EventInterface=&quot;CAAIVpiFMEventCallBacks&quot; *&gt;
+  &lt;/Event&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+* see next item
+<ul>
+  <li>Create a new interface (the &quot;callback&quot; interface) that a client
+    must implement to be able to subscribe to those new events. This interface
+    in this use case is named: CAAIFMEventCallbacks
+    <ul>
+      <li>write the CAAIFMEventCallbacks.h file</li>
+    </ul>
+  </li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDeclareInterface;
+ //
+ public:
+ ...
+ virtual HRESULT onKo (const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; oNotifyReturnCode) = 0 ;
+ virtual HRESULT onBeforeCreateFile (const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode) = 0 ;
+ virtual HRESULT onAfterCreateFile  (const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode) = 0 ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note&gt;</b>: The methods of a callback interface always have the same
+signature and their name is generic. If you define a new event MyEvent
+(before/after), the methods to be inserted in the associated interface will be:</p>
+<ul>
+  <li><i>onBeforeMyEvent</i></li>
+  <li><i>onAfterMyEvent</i></li>
+  <li><i>onKo</i>: there is one onKo method per callback interface. For a
+    complete explanation, see [<a href="#References">2</a>]</li>
+</ul>
+<p>In the XML event declaration file, in the Event tag, the EventInterface
+attribute is valuated with the name of the callback interface.</p>
+<ul>
+  <li>write the IID_CAAIVpiFMEventCallbacks.cpp file (IID interface unique
+    identifier)</li>
+  <li>write the IID in the file
+    CAAVPMInterfaces.edu/CNext/code/dictionary/CAAVPMInterfaces.iid</li>
+  <li>write the TIE_CAAIVpiFMEventCallbacks.tsrc file (definition of the TIE)</li>
+</ul>
+<ul>
+  <li>Create the publisher class: CAAVpiFileManager</li>
+</ul>
+<p>The methods which emit events will insert 2 macros &quot;EVENT_FIRE&quot; ,
+one at the start of the method, the second one at the end of the method
+<table class="code">
+  <tr>
+    <td>
+      <pre>//=======================================================================
+//function: MoveFile
+//purpose:
+//=======================================================================
+HRESULT CAAVpiFileManager::MoveFile( const CATUnicodeString&amp; iFileName,
+     const CATUnicodeString&amp; iFromDirectory,
+     const CATUnicodeString&amp; iToDirectory)
+{
+  // 1: Fill the Data Stream related to the event &quot;MoveFile&quot; with the arguments defined
+  // in the declaration file: INDEX.event
+  ENOVIStream_var spPublisherStream=NULL_var;
+  <b>DATA_EVENT_INIT(MoveFile,spPublisherStream);</b>
+
+  CORBAAny iTmpValue ; // for conversion of data.
+  iTmpValue&lt;&lt;iFileName; // translates a CATUnicodeString into a CORBAAny;
+  spPublisherStream-&gt;AddArgumentValue(&quot;FileName&quot;,iTmpValue); // adds arguments in the stream
+  ...
+  // Fire event MoveFile step before.
+  <b>EVENT_FIRE(MoveFile,CAAIVpiFMEventCallBacks,Before,spClientStream,oNotify);</b>
+  ...
+  //5. fire the step After of the event MoveFile
+  EVENT_FIRE(MoveFile,CAAIVpiFMEventCallBacks,After,spClientStream,oNotify);
+  if(FAILED(oNotify)){.... }
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>Create a sample of class (CAAVpiFMEventsSubscriber) which can subscribe to
+    events on the CAAVpiFileManager. It must implement the Callback interface
+    CAAIVpiFMEventCallBacks.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAVpiFMEventsSubscriber::onBeforeMoveFile (const ENOVIEvent_var&amp; iRaisedEvent,
+                                                  HRESULT&amp; ioNotifyReturnCode)
+{
+  cout&lt;&lt;&quot;\t-&gt;[&quot;&lt;&lt;_Name.ConvertToChar()&lt;&lt;&quot;] is called back on event:&quot;;
+  cout&lt;&lt;&quot;MoveFile (step before)&quot;&lt;&lt;endl;
+
+  ioNotifyReturnCode=S_OK;
+  // get the data stream attached to the event entity.
+  ENOVIStream_var spLinkedStream=NULL_var;
+  iRaisedEvent-&gt;GetDataEvent(spLinkedStream);
+  if(NULL_var==spLinkedStream){
+    cout&lt;&lt;&quot;\t\t No data stream attached to the event&quot;&lt;&lt;endl;
+    return S_FALSE;
+  }
+  // just verify the stream Name
+  CATUnicodeString oStreamName;
+  spLinkedStream-&gt;GetName(oStreamName);
+  cout&lt;&lt;&quot;\t\t Data stream : &quot;&lt;&lt;oStreamName&lt;&lt;endl;
+  
+  //get the arguments: directories and file name
+  CORBAAny oArgVal;
+  CATUnicodeString oArgType,Result;
+
+  // get the Target directory for Move operation and check it's not a protected one.
+
+  HRESULT rc = spLinkedStream-&gt;GetArgumentValue(&quot;ToDirectory&quot;,oArgVal,oArgType);
+  if(FAILED(rc)){
+    cout&lt;&lt;&quot;\t\t==&gt; impossible to get argument ToDirectory in stream : FAIL&quot;&lt;&lt;endl;
+    return rc;
+  }
+  oArgVal&gt;&gt;Result;
+  if(Result==_TheProtectedDir){
+    cout&lt;&lt;&quot;\t\t*****************************************************************************&quot;&lt;&lt;endl;
+    cout&lt;&lt;&quot;\t\t *** The Target Directory is a protected one : Put a VETO on the event !!! ***&quot;&lt;&lt;endl;
+    cout&lt;&lt;&quot;\t\t *****************************************************************************&quot;&lt;&lt;endl;
+    ioNotifyReturnCode=E_ACCESSDENIED;
+  }
+  else
+    cout&lt;&lt;&quot;\t\t TargetDirectory : &quot;&lt;&lt;Result.ConvertToChar()&lt;&lt;&quot; OK for me&quot;&lt;&lt;endl;
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In this code sample, this code is called when the first step of MoveFile
+event is raised (&quot;Before&quot;). The code checks if the target directory
+name (stored in the datastream of the event) equals to _TheProtectedDirectory,
+name of the directory protected by this subscriber instance. if Yes, the
+subscriber sends a veto return code, which is transmitted to the publisher, so
+that the execution of the method is stopped .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create Session"></a>Create an ENOVIA Session and get the Event
+Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+VPMSession* pSession = VPMSession::OpenSession();
+if ( NULL == pSession ) {
+  cout&lt;&lt;endl&lt;&lt;endl &lt;&lt; &quot;Unable to Open a VPM Session&quot; &lt;&lt; endl;
+  return 1;
+}
+cout&lt;&lt;endl&lt;&lt;endl &lt;&lt; &quot; 1. Open VPM Session OK &quot; &lt;&lt; endl&lt;&lt;endl;
+
+...
+
+// --------------------------------------------------
+// --&gt; 2. Get the Event Manager in order to subscribe
+// ---------------------------------------------------
+//
+ENOVIEventManager_var spEventManager;
+rc = spLoginSession-&gt;get_ENOVEventManager( spEventManager );
+if ( FAILED(rc) ){
+  cout&lt;&lt;endl&lt;&lt;endl&lt;&lt;&quot;Unable to get the Event Manager from the Session&quot;&lt;&lt;endl;
+  return 2;
+}
+cout&lt;&lt;endl&lt;&lt;endl &lt;&lt; &quot; 2. Get Event Manager OK &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Event Manager is used to subscribe to events on objects types or
+instances. By implementing explicit callback interfaces, declared by the ENOVIA
+domains or a generic callback interface ENOVISubscriberEvent, client just can
+subscribe to events on a given type (Strings arguments), or on a given instance
+(pointer argument).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Client Creation and Subscription"></a>Creation and Subscriptions of
+a client object</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString File1(&quot;NormalFile.txt&quot;),File2(&quot;VeryImportantFile.txt&quot;);
+CATUnicodeString Dir1(&quot;aNormalDirectory&quot;),Dir2(&quot;anotherNormalDirectory&quot;),Dir3(&quot;UntouchableDirectory&quot;);
+
+// create an instance of subscriber
+CAAVpiFMEventsSubscriber* pSubscriber = new CAAVpiFMEventsSubscriber(&quot;TheFMSubscriber#1&quot;);
+pSubscriber-&gt;SetProtectedFile(File2); // to be able to veto a delete on this file.
+pSubscriber-&gt;SetProtectedDirectory(Dir3); // to be able to veto a Move into that directory
+...
+CAAIVpiFMEventCallBacks * piFMEventSubscriber=NULL;
+rc = pSubscriber-&gt;QueryInterface(IID_CAAIVpiFMEventCallBacks, (void**) &amp;piFMEventSubscriber);
+...
+CATUnicodeString CreateEvent(&quot;CreateFile&quot;),MoveEvent(&quot;MoveFile&quot;),DelEvent(&quot;DeleteFile&quot;);
+CATUnicodeString PublisherClass(&quot;CAAVpiFileManager&quot;);
+rc = piFMEventSubscriber-&gt;QueryInterface(IID_CATBaseUnknown, (void**)&amp; piCBU);
+...
+CATBaseUnknown_var spCBU(piCBU);
+...
+rc = spEventManager-&gt;Subscribe(CreateEvent,PublisherClass,spCBU,IID_CAAIVpiFMEventCallBacks,&amp;oCookie);</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAVpiFMEventsSubscriber class is a client sample: its aim is to
+subscribe to events declared by the CAAVpiFileManager class, and veto them if
+the data given by the event match the protected file and directory stored in it
+( refer to the two methods SetProtectedFile and SetProtectedDirectory).</p>
+<p>To be able to subscribe , the CAAVpiFMEventsSubscriber has implemented the
+CallBack interface given by the Publisher side: CAAIVpiFMEventCallBacks. Then,
+another Query Interface is needed to be able to get a CATBaseUnknown_var smart
+pointer, which is the argument needed for the Subscribe method of the event
+manager.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher Creation"></a>Creation of a PublisherObject and call of
+the methods which raise events</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAVpiFileManager * pFileMgr = new CAAVpiFileManager(&quot;TheTestFileManager&quot;);
+CATUnicodeString File1(&quot;NormalFile.txt&quot;),File2(&quot;VeryImportantFile.txt&quot;);
+CATUnicodeString Dir1(&quot;aNormalDirectory&quot;),Dir2(&quot;anotherNormalDirectory&quot;),Dir3(&quot;UntouchableDirectory&quot;);
+rc = pFileMgr-&gt;CreateFile(File1,Dir1);  rc = pFileMgr-&gt;CreateFile(File2,Dir2);
+
+//Simulate MoveFile for File from Dir1 to Dir2
+...
+
+rc = pFileMgr-&gt;MoveFile(File1,Dir2,Dir2);
+...
+rc = pFileMgr-&gt;MoveFile(File2,Dir2,Dir3);
+
+//simulate DeleteFiles for File1 and File2:
+// For File1 the execution will be ok
+// For File2, there should be a Veto put by the subscriber, while File2 is protected by it.
+// Traces should show such a behaviour.
+
+rc = pFileMgr-&gt;DeleteFile(File1);
+rc = pFileMgr-&gt;DeleteFile(File2);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAVpiFileManager is intended to simulate create file, move file and
+delete file operations. Each of those methods raise an event, in two steps
+(before/after). The test of delete file is done here with a normal file and a
+file which was protected by the subscriber object, and the test of move file is
+done with normal directories and a directory protected by the same subscriber
+object.</p>
+<p>The interest of that use case is to see traces at execution time: you should
+see the publisher and the subscriber behaviours, in the normal case, and in the
+case of a veto put by the subscriber on the execution of the publisher method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="SessionClose"></a><b>End of Use case: Session close</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ rc = VPMSession::CloseSession();</pre>
+    </td>
+  </tr>
+</table>
+<p>Each opened session must be closed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to define and raise events for a new
+publisher class, and how the clients can subscribe to those events and be called
+back when they are emitted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The
+      ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAVpiEventsCommonDoc.htm">ENOVIA Event Use Case Overview</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Oct 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

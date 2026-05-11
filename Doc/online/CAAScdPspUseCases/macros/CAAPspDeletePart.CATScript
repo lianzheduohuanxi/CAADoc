@@ -1,0 +1,221 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrates how to delete a logical line instance, 
+'                 and a Group instance in a Distributive System document.
+'                 
+'  
+'   Assumption:   Looks for document CAAPspEduIn.CATProduct.  
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ---------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		      "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct")
+
+    If (CATIA.FileSystem.FileExists(sDocFullPath) = False) then 
+        MsgBox sDocFullPath & " doesn't exist" 
+        Exit Sub
+    End IF
+       
+    strMessage_g = sDocFullPath
+    'MsgBox strMessage_g
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "-------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspDeletePart.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+    '
+    ' Find the top node (PspWorkbench)of the Distributive System object tree.
+    '
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( Not(objPspApplication Is Nothing)  ) Then        
+        strMessage_g = strMessage_g & "Success in getting objPspApplication" _
+                                                       & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+
+    Dim objPspID          As PspID                
+    Dim iIdx              As Integer
+    '-----------------------------------------------------------------------
+    ' Create a Group, list groups and Delete group
+    '-----------------------------------------------------------------------
+    
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+      Dim objLGroups        As PspListOfObjects      
+      Dim objPspGroup       As PspGroup
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface( _
+                                "CATIAPspAppFactory", objPspApplication )      
+                                                      
+
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+        Dim strGroupType As String
+        Dim strGroupID As String
+        strGroupType = "CATPipSpool"
+        strGroupID   = "PipingSpoolID"
+        Set objPspGroup = objPspAppFactory.CreateGroup (objPrdRoot, _            
+                           strGroupType, strGroupID)
+    
+        If ( Not (objPspGroup Is Nothing) ) Then
+          strMessage_g = strMessage_g & "Created Group object: " & _
+                                         strGroupID & vbCr               
+        End If 
+    
+        Set objLGroups = objPspAppFactory.ListGroups (objPrdRoot)
+        If ( Not ( objLGroups Is Nothing ) ) Then          
+          
+          strMessage_g = strMessage_g & _
+                    "Number of Groups=" & objLGroups.Count & vbCr              
+          '-----------------------------------------
+          ' Display all the group information
+          '-----------------------------------------
+
+          If ( objLGroups.Count > 0 ) Then 
+            For iIdx = 1 To objLGroups.Count      
+              Set objPspID = objLGroups.Item(iIdx,"CATIAPspID")
+              If ( Not (objPspID Is Nothing) ) Then
+                strMessage_g = strMessage_g & "Group object ID=" _
+                                           &   objPspID.GetID & vbCr               
+              End If 
+            Next ' End for loop indx = iIdx
+
+          End if
+        End If       
+
+        '-------------------------------------------
+        ' Delete group
+
+        If ( Not (objPspGroup Is Nothing) ) Then
+          objPspAppFactory.DeleteGroup objPspGroup
+          strMessage_g = strMessage_g & "Deleted Group successfully :" _
+                                      & strGroupID  & vbCr               
+        End If
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+
+    '-----------------------------------------------------------------------
+    ' Create a Logical line instance, list line and Delete new instance
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+      Dim objPspLogLine     As PspLogicalLine        
+      Dim objLLines         As PspListOfObjects  
+      Dim strLineID As String
+      
+      strLineID = "U1-P103-6in-CS150R-FG"
+
+      ' ---------------------
+      ' Create line instance
+      Set objPspLogLine = objPspAppFactory.GetLogicalLine (objPrdRoot, _            
+                         strLineID )
+  
+      If ( Not (objPspLogLine Is Nothing) ) Then
+        strMessage_g = strMessage_g & "Create logical line instance ID = " _
+                                      &  strLineID & vbCr               
+      End If 
+  
+      ' ---------------------
+      ' List logical lines
+      Set objLLines = objPspAppFactory.ListLogicalLines (objPrdRoot)
+      If ( Not ( objLLines Is Nothing ) ) Then          
+        
+        strMessage_g = strMessage_g & _
+                  "Number of Lines=" & objLLines.Count & vbCr              
+        '-----------------------------------------
+        ' Display all the group information
+        '-----------------------------------------
+
+        If ( objLLines.Count > 0 ) Then 
+          For iIdx = 1 To objLLines.Count      
+            Set objPspID = objLLines.Item(iIdx,"CATIAPspID")
+            If ( Not (objPspID Is Nothing) ) Then
+              strMessage_g = strMessage_g & "Line ID =" & _
+                                               objPspID.GetID & vbCr               
+            End If 
+          Next ' End for loop indx = iIdx
+
+        End if
+      End If       
+
+      '-------------------------------------------
+      ' Delete Line
+      '-------------------------------------------
+
+      If ( Not (objPspLogLine Is Nothing) ) Then
+        objPspAppFactory.DeleteLogicalLine objPspLogLine
+        strMessage_g = strMessage_g & "Deleted Line successfully :" & _
+                                       strLineID  & vbCr               
+      End If
+    End If
+
+     
+    
+    strMessage_g = strMessage_g & _
+      "------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+
+

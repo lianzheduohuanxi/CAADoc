@@ -1,0 +1,242 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using a Dialog Box as Input</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using a Dialog Box as Input</h3>
+      <em>How to take end user input from a dialog window</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the different ways of using a dialog box to input
+      values used by a dialog command.
+      <ul>
+        <li><a href="#900000"><strong>Using a Dialog Box as Input</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="900000"></a>Using a Dialog Box as Input</h3>
+<p>Using a dialog box as input for a state dialog command is a very common way
+to get many parameters at the same time. This is possible thanks to a dialog
+agent created and plugged to the state that displays the dialog box. The dialog
+agent behavior should be modified using the <code>AcceptOnNotify</code> method
+in order to value the dialog agent, that is accept the end user input and
+trigger the transition, when, for example, the end user clicks the OK button in
+the dialog box.</p>
+<table>
+  <tr>
+    <td><img src="images/PointEditor.jpg" alt="PointEditor.jpg (8843 bytes)" width="228" height="144"></td>
+    <td>For example, a command that creates 3D points can use a dialog box to
+      input the point X,Y, and Z coordinates.</td>
+  </tr>
+</table>
+<p>To do this, you should create the dialog box and the dialog agent, set the
+dialog agent behavior, plug the dialog agent to the state, and create the
+transition in the <code>BuildGraph</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4>Creating the Point Editor Dialog Box</h4>
+<p>The Point Editor dialog box is created using a class that derives from the <i>CATDlgDialog</i>
+class that groups three labels and three spinners, and that features the OK,
+Apply, and Cancel buttons. This class is instantiated in the <code>BuildGraph</code>
+method and is made visible for the appropriate state.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pPointEditor = new CAAPointEditor();
+_pPointEditor-&gt;Build();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Creating the Dialog Agent</h4>
+<p>The&nbsp; dialog agent is created as an instance of the <i>CATDialogAgent</i>
+class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pdaEditorAgent = new CATDialogAgent(&quot;PointEditorId&quot;);
+...      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4>Setting the Dialog Agent Behavior</h4>
+<p>The dialog agent behavior must be set in order to value the dialog agent when
+the end user clicks the OK button of the Point Editor. This is done by using the
+<code>AcceptOnNotify</code> method to which the point editor instance, that is,
+the notifier, is passed as first parameter, and the notification to react to as
+second parameter.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pdaEditorAgent-&gt;AcceptOnNotify(_pPointEditor,
+                                _pPointEditor-&gt;GetDiaOKNotification());
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The object that sends the notification must always be used. Here, however,
+this is not the OK push button, but the point editor dialog box, because the
+dialog box class derives from <i>CATDlgDialog</i> that sends itself the
+notifications for its OK, Apply, or Cancel push buttons.</p>
+<p>Once properly configured the <code>_daEditorAgent</code> dialog agent is used
+like any other dialog agent: it must be plugged to a dialog state using the <code>AddDialogAgent</code>
+method before being used in the guard condition as a parameter of the <code>IsOutputSetCondition</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pSourceState-&gt;AddDialogAgent(_pdaEditorAgent);
+...
+AddTransition(pSourceState, pTargetState,
+              AndCondition(
+                 IsOutputSetCondition(_pdaEditorAgent),
+              ...
+              Action( 
+                 (ActionMethod) &amp; CAACommandCmd::CreatePointByBox));
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreatePointByBox</code> action method uses <code>_pPointEditor</code>,
+the pointer to the dialog box, to retrieve input values. This method should
+either know the dialog box content to ask the controls to return their value.
+The dialog box can also explore a method to enable any object to retrieve these
+values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4>Enabling Your Dialog Box for the Power Input Mode</h4>
+<p>The Power Input mode lets the end user enter several values requested by
+editors or spinners of a dialog box in a single entry field of the main
+application window when the P2 style is selected. For example, the figure below
+shows the Hole creation dialog box and how it uses the Power Input field.</p>
+<p><img src="images/PowerInput.gif" alt="PowerInput.gif (53540 bytes)" width="530" height="448"></p>
+<p>The three spinner entry fields are repeated and concatenated in the status
+bar:
+<ul>
+  <li>The three titles appear in the message area as the Power Input prompt. If
+    the message to display is too long, it overrides the Power Input prompt.
+    This prompt is made up of the three spinner titles separated by commas in
+    English, but the separator associated with the current language is used.
+    This implies to associate a title with the spinners, or more generally also
+    with the editors, while this title is not displayed in the dialog box. The
+    fields displayed in front of the spinners are labels that have their own
+    titles</li>
+  <li>The values are displayed in the entry field. Values are separated using
+    the separator associated with the current language used. The end user can
+    enter the values one after the other, and press Enter. This updates the
+    dialog window spinner values. The entry field has a constant length of 300
+    pixels</li>
+  <li>The push button at the right is a switch that shows or hides the dialog
+    box.</li>
+</ul>
+<p>When the field content doesn't match the expected one, it displayed in red.</p>
+<p><img src="images/PowerInput2.jpg" alt="PowerInput2.jpg (45827 bytes)" width="461" height="396"></p>
+<p>For example, on the figure above, three fields are expected, and only two are
+provided.</p>
+<p>To enable your dialog box to use the Power Input for its editors and
+spinners, create this box using the <code>CATDlgPowerInputLink</code> style.
+This will automatically enable all the descending editors and spinners to take
+advantage of the Power Input. This capability can be limited to a part of a
+dialog box, such as the editors and spinners contained in a frame. To do this,
+use the <code>CATDlgPowerInputLink</code> style in the frame constructor instead
+of using it in the dialog box constructor.</p>
+<p>You can dynamically set or reset the Power Input capability using the <code>SetPowerInputLink</code>
+method. You need to call the <code>UpdatePowerInput</code> method just after to
+update the Power Input prompt and entry field.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_PointEditor-&gt;SetPowerInputLink(0);  // disable
+_PointEditor-&gt;UpdatePowerInput();
+...
+_PointEditor-&gt;SetPowerInputLink(1);  //enable
+_PointEditor-&gt;UpdatePowerInput();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A single dialog box can use the Power Input at a time. If several dialog
+boxes that enable the Power Input mode are simultaneously displayed, you must
+select the one that will use the Power Input using the <code>TakePowerInputFocus</code>
+method and disable the others using the <code>ReleasePowerInputFocus</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A dialog state command is a dialog command designed as a state machine, each
+state enabling end user input, that enables the end user to pass from state to
+state using transitions between these states triggered when requested events
+happen and when requested guard conditions are satisfied, and that execute the
+declared actions. It is modeled using a class deriving from the <i>CATStateCommand</i>
+class.</p>
+<p>The statechart diagram is implemented using the <code>BuildGraph</code>
+method, and the command life cycle is managed by the <code>Activate</code>, <code>Desactivate</code>,
+and <code>Cancel</code> methods in addition to the command class constructor and
+destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

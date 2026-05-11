@@ -1,0 +1,643 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Implementing Lifecycle Condition/Command</title>
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="TOP">
+     <h1>Lifecycle Applications</h1>
+     </td>
+     <td valign="TOP">
+     <h2>Action Editor</h2>
+     </td>
+     <td align="RIGHT" valign="TOP" rowspan="2">
+     <h3><a name="Top"></a><span lang="en-us">Implementing</span> Lifecycle 
+     Condition/Command</h3>
+     <p><i>Working with action lifecycle</i></td>
+   </tr>
+   <tr>
+     <td colspan="2" class="use">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h2>Abstract</h2>
+     <p>The document is related to the use case CAAVpiAFLLifecycle. It describes 
+     how to implement a lifecycle condition and/or command for ActionFlow 
+     entities such as Action, AffectedObject or Link. </p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><b><a href="#UseCase">The CAAVpiAFLLifecycle Use Case</a></b></li>
+       <ul>
+         <li><a href="#What">What Does CAAVpiAFLLifecycle Do</a></li>
+         <li><a href="#How">How to Launch CAAVpiAFLLifecycle</a></li>
+         <li><a href="#Where">Where to Find the CAAVpiAFLLifecycle Code</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#Step">Step-by-Step</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to help you make your first steps in programming 
+ lifecycle conditions and commands. More particularly, it shows how to implement 
+ a condition and a command defined in an Action lifecycle. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAVpiAFLLifecycle Use Case</h3>
+ <p>CAAVpiAFLLifecycle is a use case of the CAAVpiInterfaces.edu framework that 
+ illustrates VPMInterfaces framework functionalities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAVpiAFLLifecycle Do</h4>
+ <p>The goal of CAAVpiAFLLifecycle use-case is to show how to implement a 
+ condition and a command defined in a lifecycle Action. The condition and 
+ command would be triggered when an Action is promoted.</p>
+ <p>To do so, the use case goes through the following steps:</p>
+ <ul>
+   <li>Define the lifecycle in a Step file that will be used for the Action. 
+   This lifecycle is very simple and has one transition from the initial status 
+   &quot;Created&quot; to the final status &quot;Accepted&quot;. A condition is specified for the 
+   transition to check if the Action has an abstract before to promote it. In 
+   the positive case, the transition is triggered, and as side effect will 
+   execute a command that will seek for the child actions in order to promote 
+   them and update their abstracts as well..</li>
+   <li>Implement the condition and command defined in the lifecycle in two 
+   separate files.</li>
+   <li>Implement the main program of the use-case which will consist of the 
+   following steps:</li>
+   <ul>
+     <li>Create a parent action of type &quot;Action_Design&quot;,</li>
+     <li>Create two child actions and link them to the first through AFLParent 
+     relationship,</li>
+     <li>Promote the parent Action.. The step should fail because the action has 
+     no abstract.</li>
+     <li>Set an abstract to the parent Action and promote again. This time the 
+     promotion should succeed, and the lifecycle command will be executed to 
+     promote the child actions as well .</li>
+   </ul>
+   </li>
+ </ul>
+ <p>The implementation of the lifecycle condition and command are contained in 
+ the files CAAVpiAFLCondSample.cpp and CAAVpiAFLCmdSample.cpp respectively. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAVpiAFLLifecycle</h4>
+ <p>To launch CAAVpiAFLLifecycle, you will need to set up the build-time 
+ environment, next compile CAAVpiAFLLifecycle, CAAVpiAFLCondSample, and 
+ CAAVpiAFLCmdSample, then set up the run-time environment, and finally execute 
+ the use case [<a href="#References">1</a>].</p>
+ <p>First, load the graph into the database. To this end, from ht run time 
+ environment, run the <code>VPMGRAPHADM</code> command:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre style="margin-left: 0; margin-right: 0">e:&gt;VPMGRAPHADM Import $INSTALLDIR\CAAVPMInterfaces.edu\CNext\reffiles\sample\ENOVIA_ACTION_DESIGN_CAASample.VGraph</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Then, launch the use case as follows:</p>
+ <ul>
+   <li>With Windows</li>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>e:&gt;CAAVpiAFLLifecycle</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX</li>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>$ CAAVpiAFLLifecycle</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAVpiAFLLifecycle Code</h4>
+ <p>The use case is made of three source files named CAAVpiAFLLifecycle.cpp, 
+ CAAVpiAFLCondSample.cpp, and CAAVpiAFLCmdSample. All the three are located in 
+ the module CAACAAVpiAFLLifecycle.m of the framework CAAVPMInterfaces.edu.</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiAFLLifecycle.m\src</tt></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiAFLLifecycle.m/src</tt></td>
+   </tr>
+ </table>
+ <p>The lifecycle graph is defined in the STEP file 
+ ENOVIA_ACTION_DESIGN_CAASample.VGraph located in the directory CNext of the 
+ framework CAAVPMInterfaces.edu.</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CNext\reffiles\sample</tt></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CNext/reffiles/sample</tt></td>
+   </tr>
+ </table>
+ <p>Where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is 
+ installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are five main steps in CAAVpiLifecycle:</p>
+ <ol>
+   <li><a href="#Prolog">Prolog</a></li>
+   <li><a href="#Step2">Defining the Lifecycle Graph</a></li>
+   <li><a href="#Step3">Implementing the Lifecycle Condition</a></li>
+   <li><a href="#Step4">Implementing the Lifecycle Command</a></li>
+   <li><a href="#Step5">Applying the Lifecycle</a></li>
+ </ol>
+ <p>In the following sections, the different steps are commented in detail.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Prolog"></a>Prolog</h4>
+ <p>CAAVpiAFLLifecycle.cpp is the main program that actually implements and run 
+ the Use Case. It creates an action which will be promoted based on its 
+ lifecycle. This latter is defined in a Step file and uses a condition and a 
+ command also described in this use-case. The condition ensures that the action 
+ has an abstract before to promote it. If so, the action is actually promoted 
+ from its initial status <i>Created</i> to the final status <i>Accepted</i>. As 
+ a side effect, the command will be triggered to promote all the actions defined 
+ as children of the first.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Defining the Lifecycle Graph</h4>
+ <p>Generally, a lifecycle graph in ENOVIA is defined using a STEP file. The 
+ objective of this use-case is not to describe the full syntax of a lifecycle 
+ definition. Instead, we will only focus on some relevant aspects that are 
+ directly related to the Action modeler.</p>
+ <p>Let us see what are the main constructs for the definition of our use-case 
+ lifecycle.</p>
+ <p>The following lines declares the lifecycle to be defined with its internal 
+ name ENOVIA_ACTION_DESIGN_CAASample and the list of status. They are 2 states 
+ declared <i>Created</i> and <i>Accepted</i>. From the initial status <i>Created</i>, 
+ any object which has this lifecycle attached to it could move to status 
+ Accepted through a transition referred to as #30 which is described below.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+
+#10=GIMaster($,$,$,$,$,$,$,$,$,$,$,$,$,'ENOVIA_ACTION_DESIGN_CAASample',$,$,$,$,$,$,'','');
+
+#11=GIVersion($,$,$,$,$,$,$,$,$,$,$,$,$,'---',1,'Active',$,$,$,#10,$,#20,(#20,#21),$);
+
+#20=status((#30),'Created','');
+
+#21=status($,'Accepted',' ');
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The transition from <i>Created</i> to <i>Accepted</i> can be triggered with 
+ terminal <i>Promote</i>. Also, there is a condition (#40) and an operation 
+ (#50) attached to it.</p>
+ <p>The condition must be satisfied in order for the transition to be actually 
+ triggered, i.e. the object status moves to status <i>Accepted</i>. It is 
+ specified that this condition must be implemented with late-type <i>
+ VPMAFLCondSample</i>.</p>
+ <p>The operation is a set of commands that can be executed once the transition 
+ has been actually triggered. Each command may itself have a condition 
+ associated with, in which case the condition must be fulfilled in order for the 
+ command to be executed. In our example, there is only one command which has to 
+ be implemented using late-type <i>VPMAFLCmdSample</i>. The command also uses a 
+ predicate that allows to search for all Actions that are related to the current 
+ Action through AFLParent and then promote it. Finally the predicate specifies 
+ that for each child Action found, its attribute <i>V_abstract</i> must be set 
+ with the string &quot;Promoted automatically from parent.&quot;.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+
+#30=transition('Promote',1,0,#40,#50,'Accepted','');
+
+#40=condition('Cond_HasAbstract','VPMAFLCondSample',$,'');
+
+#50=operation('Op_PromoteChildren',(#60),$);
+
+#60=command('Cmd_PromoteChildren','VPMAFLCmdSample',$,(#70),$,'');
+
+#70=predicat('Action&gt;AFLParent','V_abstract','=','Promoted automatically from parent.');
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Finally, notice that the lifecycle graph must be loaded into the database. 
+ To this end, the command VPMGRAPHADM must be executed in a runtime environment.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre style="margin-left: 0; margin-right: 0">&gt; ls
+ENOVIA_ACTION_DESIGN_CAASample.VGraph
+&gt;VPMGRAPHADM Import $INSTALLDIR\CAAVPMInterfaces.edu\CNext\reffiles\sample\ENOVIA_ACTION_DESIGN_CAASample.VGraph
+&gt;</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Implementing the Lifecycle Condition</h4>
+ <p>As mentioned before, the condition declared in the lifecycle STEP file 
+ specifies that it must be implement through late-type VPMAFLCondSample. In the 
+ following piece of code, this what the <i>CATImplementClass()</i> line is 
+ about. Next the implementation class CAAVpiAFLLifecycleCond must adhere to the 
+ interface <i>CATIVpmObjectOperation</i>. Notice that lifecycle command 
+ implementation must also adhere to this interface. However, for a condition it 
+ is the method <i>RunUserCondition</i><i>()</i> which must be implemented, while 
+ for a command it is <i>RunUserCommand()</i>.</p>
+ <p>The method takes 4 parameters. The first one specifies the condition 
+ internal name (<i>Cond_HasAbstract</i> in our lifecycle), the list of 
+ predicates that might be associated with the condition (empty in our example), 
+ the current object to which the lifecycle is attached to (should be an Action 
+ in our use-case), and finally the simulation mode. For more information about 
+ how to handle the different constructs in a lifecycle please see
+ <a href="#References">[2]</a>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATImplementClass (CAAVpiAFLLifecycleCond, DataExtension, CATBaseUnknown, VPMAFLCondSample);
+
+  #include &quot;TIE_CATIVpmObjectOperation.h&quot;
+
+  TIE_CATIVpmObjectOperation(CAAVpiAFLLifecycleCond);
+
+  HRESULT CAAVpiAFLLifecycleCond::RunUserCondition(
+            const CATUnicodeString&amp; iConditionName,
+            const CATLISTV(CATBaseUnknown_var)&amp; iGraphPredicateList,
+            const CATBaseUnknown_var&amp; iObject,
+            const long&amp; iSimulateMode) const
+  {
+    ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The method body is pretty simple. In the code below, after querying the 
+ interface <i>CATIVpmAFLAction</i> on the object <i>iObject</i>, the attribute
+ <i>V_abstract</i> is checked using the method GetAbstract(). Depending whether 
+ this attribute is valuated or not, a hresult <i>S_OK</i> or S_FALSE is 
+ returned.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    ...
+    // Query for interface CATIVpmAFLAction on the current LC object iObject
+    CATIVpmAFLAction_var action(iObject);
+    ...
+    // Check the Action abstract
+    CATUnicodeString actAbstract;
+    action-&gt;GetAbstract(actAbstract);
+
+    if (actAbstract.GetLengthInChar()&lt;1)
+    {
+      cout &lt;&lt; &quot;Action abstract is not set. Could not accept this Action.&quot; &lt;&lt; endl;
+      rc = S_FALSE;
+    }
+    else
+    {
+      cout &lt;&lt; &quot;Action abstract is specified. Action can be accepted.&quot; &lt;&lt; endl;
+      rc = S_OK;
+    }
+    return rc;
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Implementing the Lifecycle Command</h4>
+ <p>The implementation of the lifecycle command is similar to a condition. A 
+ class must be implemented as an extension to the late-type specified in the 
+ lifecycle for the command (<i>VPMAFLCmdSample</i>). Also the class must adhere 
+ to the interface CATIVpmObjectOperation but this time it is the method <i>
+ RunUserCommand</i>() which must be implemented.</p>
+ <p>The method parameters are slightly different. The first is the operation 
+ internal name (in our lifecycle it is <i>Op_PormoteChildren</i>). The second 
+ parameter specifies the command internal name (<i>Cmd_PromoteChildren</i>). The 
+ third specifies a list of predicates associated with the command. In our 
+ lifecycle, there is only one defined for the command (#70). The fourth 
+ parameter of the method specifies the arguments that may be used for the 
+ command. For the use-case, it should be empty since our command requires no 
+ arguments. The fifth parameter gives the internal name of the condition that 
+ may attached to the command (none), with its predicates specified in the sixth 
+ parameter (none). Finally, the last two parameters are the same as for the 
+ method <i>RunUserCondition()</i>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATImplementClass (CAAVpiAFLLifecycleCmd, DataExtension, CATBaseUnknown, VPMAFLCmdSample);
+  ...
+  #include &quot;TIE_CATIVpmObjectOperation.h&quot;
+  TIE_CATIVpmObjectOperation (CAAVpiAFLLifecycleCmd);
+  HRESULT CAAVpiAFLLifecycleCmd::RunUserCommand(
+      const CATUnicodeString&amp; iOperationName,
+      const CATUnicodeString&amp; iCommandName,
+      const CATLISTV(CATBaseUnknown_var)&amp; iCmdPredicateList,
+      const CATUnicodeString&amp; iParameters,
+      const CATUnicodeString&amp; iConditionName,
+      const CATLISTV(CATBaseUnknown_var)&amp; iCondPredicateList,
+      const CATBaseUnknown_var&amp; iObject,
+      const long&amp; iSimulateMode) const
+      {
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The first step in the method body is to get the ActionFlow manager.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Get a session
+  VPMSession* session = VPMSession::OpenSession();
+...
+
+  // Get a factory manager from the session
+  CATIVpmFactoryManager_var factoryMgr = NULL_var;
+  session-&gt;GetVPMObjectFactory(factoryMgr);
+...
+
+  // Query an interface on CATIVpmAFLManager
+  CATIVpmAFLManager_var aflMgr(factoryMgr);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Next, a checking is performed for a command condition. This is normally 
+ useless since there is no condition specified for the command in the lifecycle.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Check the condition related to the current command.
+  // If it is not satisfied, the command is not executed
+  CATUnicodeString currentCond = iConditionName;
+  rc = aflMgr-&gt;CheckCondition(iCondPredicateList,
+                              failObj,
+                              currentCond);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Next the predicate attached to the command (#70) is handled in order to find 
+ the objects involved in the command. To do so, the different elements of the 
+ predicates are extracted. In general, a predicate consists of 4 fields: (name, 
+ expression, operator, value). In our example, the predicate looks like:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+#70=predicat('Action&gt;AFLParent','V_abstract','=','Promoted automatically from parent.');
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The first field contains a navigation path that specifies the objects 
+ related to the current Action through the link AFLParent. This path is 
+ retrieved before to be parsed using static method GetObjectsFromPath().</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATIVpmGraphPredicat_var pred(iCmdPredicateList[i]);
+  CATUnicodeString pathToObjs;
+
+  // Get the path to objects
+  pred-&gt;GetName(pathToObjs);
+
+  // Look up for the objects specified by the navigation path
+  CATLISTV(CATIVpmFactoryObject_var) listObjs;
+  rc = aflMgr-&gt;GetObjectsFromPath(pathToObjs, listObjs);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The objects found in the previous step should be of type Action and are 
+ children of the current one. The following loop statement allows to promote 
+ each of the child Action and update its abstract (attribute specified in the 
+ second field of the predicate) with the text specified in the 4th field of the 
+ predicate.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  int nbObj = listObjs.Size();
+  if (nbObj&gt;0)
+  {
+    // Normally the objects found are of type AFLAction
+    for (int j=1; j&lt;=nbObj; j++)
+    {
+      childAction = listObjs[i];
+      ...
+      rc = aflMgr-&gt;StepForwardActionStatus(childAction, &quot;Promote&quot;);
+      ...
+      rc = childAction-&gt;SetAbstract(value);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Applying the Lifecycle</h4>
+ <p>This last step in this use case is to write a main program which makes use 
+ of the lifecycle. It consists of the following sub-steps.</p>
+ <ul>
+   <li><a href="#Step5.1">Creating a Parent Action Along with the Defined 
+   Lifecycle</a></li>
+   <li><a href="#Step5.2">Creating Child Actions</a></li>
+   <li><a href="#Step5.3">Promoting the Parent Action Based on its Lifecycle</a></li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h5><a name="Step5.1"></a>Creating a Parent Action Along with the Defined 
+ Lifecycle</h5>
+ <p>First the lifecycle to be used is checked to see whether it is defined or 
+ not. Next, an Action is created by specifying the lifecycle to be attached to. 
+ Notice that in general, if a lifecycle is not explicitly specified at the 
+ creation time, the lifecycle associated with the Action type is set by default. 
+ Also, once the Action is created, its status will be automatically set to the 
+ initial status defined in the lifecycle, which is &quot;<i>Created</i>&quot;.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // The name of the graph used is ENOVIA_ACTION_DESIGN_CAASample
+  CATUnicodeString graphName(&quot;ENOVIA_ACTION_DESIGN_CAASample&quot;);
+
+  // The AFL manager provides a method which allows to get easily a graph manager
+  CATIVpmGraphMng_var graphMgr;
+  rc = aflMgr-&gt;GetGraphManager(&quot;Not_Relevant&quot;, graphMgr);
+  ...
+  CATListOfCATUnicodeString listOfGraph;
+  graphMgr-&gt;GetListOfGraphName(listOfGraph);
+
+  if (listOfGraph.Size()&gt;0 &amp;&amp; listOfGraph.Locate(graphName)&gt;0)
+  {
+    cout &lt;&lt; &quot;Lifecycle graph '&quot; &lt;&lt; graphName.ConvertToChar() &lt;&lt; &quot;' is
+      defined (out of &quot; &lt;&lt; listOfGraph.Size() &lt;&lt; &quot;).
+      Continue...&quot; &lt;&lt; endl;
+  }
+  else
+  {
+    cout &lt;&lt; &quot;Could not execute this Use Case. Lifecycle graph '&quot; &lt;&lt;
+      graphName.ConvertToChar() &lt;&lt; &quot;' is not defined (out of &quot;
+      &lt;&lt; listOfGraph.Size() &lt;&lt; &quot;).&quot; &lt;&lt; endl;
+    VPMSession::CloseSession();
+    return 2;
+  }
+
+  // Create an action of type Action_Design with the customized lifecycle called ENOVIA_ACTION_DESIGN_CAASample
+  CATIVpmAFLAction_var action;
+  CATUnicodeString actionType(&quot;Action_Design&quot;);
+  rc = aflMgr-&gt;CreateAction(actionType, action, &quot;ENOVIA_ACTION_DESIGN_CAASample&quot;);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The ActionFlow Manger manages some object creations as well as their 
+ lifecycles. It also provides useful functions to query various types of 
+ objects.</p>
+ <p>A session is needed to retrieve a smart pointer to the standard 
+ FactoryManager. An interface query on <i>CATIVpmAFLManager</i> is then 
+ performed to retrieve the specific ActionFlow manager.</p>
+ <table>
+   <tr>
+     <td><i>CATIVpmAFLManager</i></td>
+     <td>The ActionFlow Manager interface</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h5><a name="Step5.2"></a>Creating Child Actions</h5>
+ <p>In this step, two child actions are created and linked to the one created in 
+ the previous step. The relationship used is <i>AFLParent</i>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Create 2 child actions
+  CATIVpmAFLAction_var childAction1, childAction2;
+  aflMgr-&gt;CreateAction(actionType, childAction1);
+  aflMgr-&gt;CreateAction(actionType, childAction2);
+
+  // Create Parent link between action and its children
+  CATIVpmAFLLink_var link1, link2;
+  aflMgr-&gt;CreateLink(action, childAction1, link1, &quot;AFLParent&quot;);
+  aflMgr-&gt;CreateLink(action, childAction2, link2, &quot;AFLParent&quot;);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h5><a name="Step5.3"></a>Promoting the Parent Action</h5>
+ <p>The last step consists of promoting the Action using the method <i>
+ StepForwardActionStatus()</i> provided by the interface <i>CATIVpmAFLManager</i>. 
+ This first attempt will fail because the condition attached to the transition 
+ will fail since no abstract is defined for the parent Action. Once the abstract 
+ is set, the second attempt for promotion will succeed and the child Actions 
+ will be promoted as well after the command execution.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Promote the action
+  // This should fail since the Action has no abstract specified
+  rc = aflMgr-&gt;StepForwardActionStatus(action, &quot;Promote&quot;);
+  if (rc==S_OK)
+  {
+    cout &lt;&lt; &quot;Promotion should fail because Action abstract is missing. Abnormal behaviour!&quot; &lt;&lt; endl;
+    VPMSession::CloseSession();
+    return E_FAIL;
+  }
+
+  cout &lt;&lt; &quot;Promotion failed because Action abstract is not defined.&quot; &lt;&lt; endl;
+  cout &lt;&lt; &quot;Set the abstract and promote again...&quot; &lt;&lt; endl;
+  action-&gt;SetAbstract(&quot;This Action is used for a CAA Use Case.&quot;);
+
+  // Try again to promote the parent Action
+  rc = aflMgr-&gt;StepForwardActionStatus(action, &quot;Promote&quot;);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use-case demonstrates how conditions and commands for ActionFlow 
+ lifecycles can be defined can be defined and implemented.<br>
+ Despite the simplicity of the scenario, even more complex behavior could be 
+ implemented thanks to a wide range of predefined commands already provided by 
+ the ActionFlow. For more information about this list of commands and the full 
+ syntax used for ActionFlow lifecycle see related documentation.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAAVpiGraph.htm">Working with VPM Graphs</a></td>
+   </tr>
+   <tr>
+     <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <b>1</b> [Jan 2002]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i> </p>
+
+ </body>
+
+</html>

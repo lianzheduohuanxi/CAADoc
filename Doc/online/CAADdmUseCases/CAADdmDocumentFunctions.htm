@@ -1,0 +1,693 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Manipulating Document Objects</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Document Management</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Manipulating Document Objects</h3>
+      <i>Programming basic methods in ENOVDDManager</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use functionalities provided by interfaces in
+      ENOVDDManager framework.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAADdmDocumentFunctions Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAADdmDocumentFunctions Do</a></li>
+          <li><a href="#How">How to Launch CAADdmDocumentFunctions</a></li>
+          <li><a href="#Where">Where to Find the CAADdmDocumentFunctions Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use interfaces in ENOVDDManager
+framework. Involved interfaces are <i>ENOVIDocumentRevision</i>, <i>ENOVIDocumentIteration</i>,
+and <i>ENOVIIterationFormat</i>. This use case will help you to understand how
+to create an iteration under a revision, create format from an iteration, and
+other useful methods from revision, iteration, and format, etc.</p>
+<p>As explained in the Data Model section, the structure of a Document could be 
+viewed as follows:</p>
+<pre>
+Document Master
+  |
+  ---- Document Revision
+         |
+         ---- Document Iteration
+                |
+                ---- Document Format
+                       |
+                       ---- Document File
+</pre>
+<p>When a Document without an attached file is created, the object type that gets 
+created is a Document Revision. When a Document with an attached file is 
+created, the object type that gets created is a Document File.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADdmDocumentFunctions Use Case</h3>
+<p>CAADdmDocumentFunctions is a use case of the CAAENOVDDManager.edu framework
+that illustrates ENOVDDManager framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADdmDocumentFunctions Do</h4>
+<p>CAADdmDocumentFunctions begins by creating a document master and document
+revision, then uses functionalities provided by <i>ENOVIDocumentRevision</i> to
+create document iteration, and also creates document format, document file
+through <i>ENOVIDocumentIteration</i> and <i>ENOVIIterationFormat</i>
+interfaces. Methods defined in these interfaces are called one by one to
+demonstrate their usages.</p>
+<p>Here is the list of methods called in this use case:
+<ul>
+  <li>Methods in <i>ENOVIDocumentRevision</i>:
+    <pre>HRESULT CopyIteration(CATIVpmFactoryObject_var &amp; iDocIteration,
+                      CATIVpmFactoryObject_var &amp; oNewIter);
+HRESULT AggregateIteration(CATIVpmFactoryObject_var &amp; oDocIteration);
+HRESULT get_MIMEType(CATListOfCATUnicodeString &amp;oTypes);
+HRESULT set_MIMEType(const CATUnicodeString &amp; iMIMEType);
+HRESULT IsTOC(boolean &amp; isTOC);
+HRESULT IsSheet(boolean &amp; isSheet);
+HRESULT get_PrimaryFormat(CATIVpmFactoryObject_var &amp; oFormat);</pre>
+  </li>
+  <li>Methods in <i>ENOVIDocumentIteration</i>:
+    <pre>HRESULT get_RevisionFromIteration(CATIAVPMObjectVersion* &amp; oDocRevision);
+HRESULT AggregateFormat(const int iControlCode,
+                        const CATUnicodeString &amp; iMimeType,
+                        const CATUnicodeString &amp; iSubMimeType,
+                        const boolean &amp; iIsURL,
+                        CATIVpmFactoryObject_var &amp; oDocFormat);
+HRESULT get_DocFormats(CATLISTV(CATIVpmFactoryObject_var) &amp; oDocFormats);
+HRESULT get_DocFormatCount(long &amp; oNbFormats);</pre>
+  </li>
+  <li>Methods in <i>ENOVIIterationFormat</i>:
+    <pre>HRESULT get_IterationFromFormat(ENOVIDocumentIteration_var &amp; oDocIteration);</pre>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADdmDocumentFunctions</h4>
+<p>To launch CAADdmDocumentFunctions, you will need to set up the build time
+environment, then compile CAADdmDocumentFunctions along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case by executing the following command:
+<pre>mkrun -c &quot;CAADdmDocumentFunctions&quot;</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADdmDocumentFunctions Code</h4>
+<p>The CAADdmDocumentFunctions use case is made of one class in a single file
+located in the CAADdmDocumentFunctions.m module of the CAAENOVDDManager.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVDDManager.edu\CAADdmDocumentFunctions.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVDDManager.edu/CAADdmDocumentFunctions.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are totally 19 steps in the CAADDManagerFunctions use case:
+<ol>
+  <li><a href="#Step1">Creating a Login Session</a></li>
+  <li><a href="#Step2">Retrieving a CATIEnovDDManager Interface Handler</a></li>
+  <li><a href="#Step3">Creating a Document</a></li>
+  <li><a href="#Step4">Retrieving the Last Document Revision under the Master</a></li>
+  <li><a href="#Step5">Obtaining the ENOVIDocumentRevision</a></li>
+  <li><a href="#Step6">Aggregating an Iteration through ENOVIDocumentRevision</a></li>
+  <li><a href="#Step7">Obtaining ENOVIDocumentIteration Interface</a></li>
+  <li><a href="#Step8">Aggregating a Format from Iteration</a></li>
+  <li><a href="#Step9">Creating a File for More Testing</a></li>
+  <li><a href="#Step10">Creating an Iteration by Copying an Old One in
+    ENOVIDocumentRevision</a></li>
+  <li><a href="#Step11">Retrieving Primary Format Using ENOVIDocumentRevision</a></li>
+  <li><a href="#Step12">Retrieving MimeType from ENOVIDocumentRevision</a></li>
+  <li><a href="#Step13">Setting MimeType from ENOVIDocumentRevision</a></li>
+  <li><a href="#Step14">Retrieving Revision from ENOVIDocumentIteration</a></li>
+  <li><a href="#Step15">Retrieving All the Formats from ENOVIDocumentIteration</a></li>
+  <li><a href="#Step16">Retrieving Format Count from ENOVIDocumentIteration</a></li>
+  <li><a href="#Step17">Obtaining the ENOVIIterationFormat interface</a></li>
+  <li><a href="#Step18">Retrieving Iteration from Format</a></li>
+  <li><a href="#Step19">Closing the Session</a></li>
+</ol>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a Login Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get Session
+    CATIVpmLoginSession_var spSession = NULL_var;
+    VPMSession* piSess_handle = <b>VPMSession::OpenSession</b>();
+    if (piSess_handle!=NULL)
+        rc = piSess_handle-&gt;<b>CreateLoginSession</b>(&quot;&quot;, &quot;&quot;, &quot;&quot;, 0, spSession);
+    if(rc != S_OK || spSession==NULL_var) return 1;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first step is to create a login session as in the above code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Retrieving a CATIEnovDDManager Interface Handler</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get a DDManager
+    CATIEnovDDManager_var spDDMgr = ::<b>GetRootDesktop</b>();
+    if ( spDDMgr == NULL_var ) return 2;
+
+    cout &lt;&lt; &quot;Got DDManager successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The above code retrieves a pointer to the <i>CATIEnovDDManager</i> interface.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating a Document</h4>
+<p>1. First initialize some attributes before calling the createDocument.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Initialize class field and keywords
+    CATListOfCATUnicodeString Doc_classfield;
+    Doc_classfield.Append(CATUnicodeString(&quot;Name&quot;));
+    CATListOfCATUnicodeString Doc_keywords;
+    Doc_keywords.Append(CATUnicodeString(&quot;ENOVIA&quot;));
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>2. Secondly call <code>CreateDocument</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Create a DocumentMaster (It also creates a default Revision)
+    CATIAVPMDocumentMaster  * piDocMaster = NULL;
+    rc = spDDMgr-&gt;<b>CreateDocument</b>( &quot;CAADocument_ID&quot;,
+                                  &quot;Doc_title&quot;,
+                                  &quot;Doc_desc&quot;,
+                                  &quot;Doc_type&quot;,
+                                  Doc_classfield,
+                                  Doc_keywords,
+                                  piDocMaster );
+    if ( !SUCCEEDED(rc) || piDocMaster==NULL )
+        return 3;
+    cout &lt;&lt; &quot;Created Document successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Call <code>CreateDocument</code> from the <i>CATIEnovDDManager</i> interface
+to create a document. In this method the input arguments are:</p>
+<table>
+  <tr>
+    <td><code>&quot;CAADocument_ID&quot;</code></td>
+    <td>Document ID</td>
+  </tr>
+  <tr>
+    <td><code>&quot;Doc_title&quot;</code></td>
+    <td>Document name (title)</td>
+  </tr>
+  <tr>
+    <td><code>&quot;Doc_desc&quot;</code></td>
+    <td>Document description</td>
+  </tr>
+  <tr>
+    <td><code>&quot;Doc_type&quot;</code></td>
+    <td>Document type</td>
+  </tr>
+  <tr>
+    <td><code>Doc_classfield</code></td>
+    <td>Document classification field</td>
+  </tr>
+  <tr>
+    <td><code>Doc_keywords</code></td>
+    <td>Document keywords</td>
+  </tr>
+  <tr>
+    <td><code>piDocMaster</code></td>
+    <td>Resulted document master</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Retrieving the Last Document Revision under the Master</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get the Revision as a ObjectVersion
+    CATIAVPMObjectMaster_var spObjectMaster(piDocMaster);
+    CATIAVPMObjectVersion *piObjectVersion=NULL;
+    rc = spObjectMaster-&gt;<b>get_LastVersion</b>(piObjectVersion);
+    if ( !SUCCEEDED(rc) || piObjectVersion==NULL )
+        return 4;
+    cout &lt;&lt; &quot;Got Revision successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call uses the master object to retrieve its latest revision.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Obtaining the ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Convert ObjectVersion to DocumentRevision
+    ENOVIDocumentRevision_var spDocRevision = piObjectVersion;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Convert a CATIAVPMObjectVersion to ENOVIDocumentRevision.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Aggregating an Iteration through ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Create an Iteration by AggregateIteration()
+    CATIVpmFactoryObject_var spIterationObj=NULL_var;
+    rc = spDocRevision-&gt;<b>AggregateIteration</b>(spIterationObj); 
+    if ( !SUCCEEDED(rc) || spIterationObj==NULL_var )    
+        return 5;
+    cout &lt;&lt; &quot;Created Iteration successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call creates an new iteration under the calling revision.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Obtaining ENOVIDocumentIteration interface</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Convert oIterationObj to DocumentIteration
+    ENOVIDocumentIteration_var spDocIteration = spIterationObj;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Convert an CATIVpmFactoryObject to ENOVIDocumentIteration.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step8"></a>Aggregating a Format from Iteration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Create a Format by AggregateFormat()
+    CATIVpmFactoryObject_var spFormatObj=NULL_var;
+    rc = spDocIteration-&gt;<b>AggregateFormat</b>( 2,                 // ControlCode
+                                          &quot;DocMimeType&quot;,     // input MIMEType
+                                          &quot;SubMimeType&quot;,     // Sub MIMETYPE
+                                          FALSE,             // IsURL
+                                          spFormatObj);
+    if (  !SUCCEEDED(rc) || spFormatObj==NULL_var )
+        return 6;
+    cout &lt;&lt; &quot;Create a Format successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call creates a format under the calling iteration. Its argument list:</p>
+<table>
+  <tr>
+    <td><code>2</code></td>
+    <td>Control code (1 for system controlled document, 2 for user controlled)</td>
+  </tr>
+  <tr>
+    <td><code>&quot;DocMimeType&quot;</code></td>
+    <td>Format Mime type</td>
+  </tr>
+  <tr>
+    <td><code>&quot;SubMimeType&quot;</code></td>
+    <td>Sub-Mime type</td>
+  </tr>
+  <tr>
+    <td><code>FALSE</code></td>
+    <td>Whether it is URL link or not</td>
+  </tr>
+  <tr>
+    <td><code>spFormatObj</code></td>
+    <td>The resulted format</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Creating a File for More Testing</h4>
+<p>1. First we must get the UUID of the format that the file will be attached
+to.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get UUID of DocFormat in order to call CreateFile() from DDManager
+      CORBAAny oFormatUuid;
+      CATILinkableObject_var splinkObjectFmt(spFormatObj);
+      SEQUENCE(octet) FormatUuid = splinkObjectFmt-&gt;GetName_B(CATSafestName);
+      oFormatUuid &lt;&lt; FormatUuid;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>2. Create the file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Create a File using DDManager interface
+      CATIVpmFactoryObject_var spFileObj=NULL_var;
+      CORBAAny oVaultUuid;
+      rc = spDDMgr-&gt;<b>CreateFile</b>(oFormatUuid,    // Format UUID
+                               2,              // Control Code
+                               oVaultUuid,     // VaultDocument UUID
+                               &quot;TestVault&quot;,    // Vault Name
+                               &quot;TestHost&quot;,     // File Host Name
+                               &quot;TestPath&quot;,     // File Path Name
+                               &quot;TestFileName&quot;, // File Name
+                               1,              // File Number (never used.)
+                               spFileObj);
+      if ( !SUCCEEDED(rc) || spFileObj==NULL_var )
+          return 7;
+      cout &lt;&lt; &quot;Create a File successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The call to create a file has following argument list:
+<table>
+  <tr>
+    <td><code>oFormatUuid</code></td>
+    <td>Format UUID</td>
+  </tr>
+  <tr>
+    <td><code>2</code></td>
+    <td>Control code (as in the format)</td>
+  </tr>
+  <tr>
+    <td><code>oVaultUuid</code></td>
+    <td>Vault document UUID</td>
+  </tr>
+  <tr>
+    <td><code>&quot;TestVault&quot;</code></td>
+    <td>Vault Name</td>
+  </tr>
+  <tr>
+    <td><code>&quot;TestHost&quot;</code></td>
+    <td>Vault Host name</td>
+  </tr>
+  <tr>
+    <td><code>&quot;TestPath&quot;</code></td>
+    <td>Vault path name</td>
+  </tr>
+  <tr>
+    <td><code>&quot;TestFileName&quot;</code></td>
+    <td>File name</td>
+  </tr>
+  <tr>
+    <td><code>1</code></td>
+    <td>File number (never used)</td>
+  </tr>
+  <tr>
+    <td><code>spFileObj</code></td>
+    <td>Resulted file object.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step10"></a>Create an Iteration by Copying an Old One in
+ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- CopyIteration
+      CATIVpmFactoryObject_var spIterObj2=NULL_var;
+      rc = spDocRevision-&gt;<b>CopyIteration</b>(spIterationObj, spIterObj2);
+      if ( !SUCCEEDED(rc) || spIterObj2==NULL_var )
+          return 8;
+      cout &lt;&lt; &quot;Copied Iteration successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call uses CopyIteration() method in interface ENOVIDocumentRevision to
+create a new iteration from an old one.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step11"></a>Retrieving Primary Format Using ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get Primary Format
+      CATIVpmFactoryObject_var spPrimFormat=NULL_var;
+      rc = spDocRevision-&gt;<b>get_PrimaryFormat</b>( spPrimFormat );
+      if ( !SUCCEEDED(rc) || spPrimFormat==NULL_var )
+         return 9;
+      cout &lt;&lt; &quot;Got primary Format successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves the primary format from revision.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step12"></a>Retrieving MimeType from ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get MIMEType
+      CATListOfCATUnicodeString aTypes=NULL;
+      rc = spDocRevision-&gt;<b>get_MIMEType</b>(aTypes);
+      if ( !SUCCEEDED(rc) )
+         return 10;
+      cout &lt;&lt; &quot;Got MIMEType successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves the MimeType attribute in document format object under
+the revision.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step13"></a>Setting MimeType from ENOVIDocumentRevision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Set MIMEType
+      CATUnicodeString iMimeType(&quot;New MimeType&quot;);
+      rc = spDocRevision-&gt;<b>set_MIMEType</b>(iMimeType);
+      if ( !SUCCEEDED(rc) )
+          return 11;
+      cout &lt;&lt; &quot;Set MIMEType successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call sets the MimeType attribute in document format object under the
+revision.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step14"></a>Retrieving Revision from ENOVIDocumentIteration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get Revision from Iteration
+      CATIAVPMObjectVersion * piObjVer2 =NULL;
+      rc = spDocIteration-&gt;<b>get_RevisionFromIteration</b>(piObjVer2);
+      if ( !SUCCEEDED(rc) || piObjVer2==NULL )
+          return 12;
+      cout &lt;&lt; &quot;Got Revision from Iteration successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves the revision that the calling iteration belongs to.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step15"></a>Retrieving All the Formats from ENOVIDocumentIteration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get all Formats
+      CATLISTV(CATIVpmFactoryObject_var) aFormatList=NULL;
+      rc = spDocIteration-&gt;<b>get_DocFormats</b>(aFormatList);
+      if ( !SUCCEEDED(rc) )
+          return 13;
+      cout &lt;&lt; &quot;Got all the Formats successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves all the format under the calling iteration.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step16"></a>Retrieving Format Count from ENOVIDocumentIteration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get Format count
+      long nbFormats=0;
+      rc = spDocIteration-&gt;<b>get_DocFormatCount</b>(nbFormats);
+      if ( !SUCCEEDED(rc) )
+          return 14;
+      cout &lt;&lt; &quot;Got Format count successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves the format count of the calling iteration.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step17"></a>Obtaining the ENOVIIterationFormat interface</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Convert Format from Factory object to DocumentFormat
+      ENOVIIterationFormat_var spDocFormat=spFormatObj;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Convert an CATIVpmFactoryObject to ENOVIIterationFormat.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step18"></a>Retrieving Iteration from Format</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--- Get Iteration from Format
+      ENOVIDocumentIteration_var spDocIter2=NULL_var;
+      rc=spDocFormat-&gt;<b>get_IterationFromFormat</b>(spDocIter2);
+      if ( !SUCCEEDED(rc) || spDocIter2==NULL_var )
+          return 15;
+      cout &lt;&lt; &quot;Got Iteration from Format successfully.&quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This call retrieves the iteration that the calling format belongs to.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+ 
+<h4><a name="Step19"></a>Closing the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//-----------------------------------------------------------------------------
+// Close the VPM Session
+//-----------------------------------------------------------------------------
+    <b>VPMSession::CloseSession</b>();
+    return 0;</pre>
+    </td>
+  </tr>
+</table>
+<p>Close the session using the <code>CloseSession</code> method of <i>VPMSession</i>.
+Then return a 0 value for a successful completion.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demos the usages of document related interfaces in Content
+Manager</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [May 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

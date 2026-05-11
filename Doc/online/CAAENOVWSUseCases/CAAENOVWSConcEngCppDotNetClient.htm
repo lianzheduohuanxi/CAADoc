@@ -1,0 +1,901 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>Consuming the ENOVWSCntMgmtCpp CAA Web Service</title>
+</head>
+<body>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <h1>CAA Web Services Home</h1>
+                </td>
+                <td valign="top">
+                    <h2>&nbsp;</h2>
+                </td>
+                <td rowspan="2" align="right" valign="top">
+                    <h3><a name="Top"></a>Consuming the ENOVWSConcEngCpp CAA Web Service</h3>
+                    <em>Using the ENOVWSConcEngCpp CAA Web Service for 
+					concurrent engineering management</em></td>
+            </tr>
+            <tr>
+                <td class="use" colspan="2">Use Case</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- HEADER --------------------------------------------------------------------------------------- HEADER -->
+    <table class="abstract">
+        <tbody>
+            <tr>
+                <td>
+                    <h3>Abstract</h3>
+                    <p>This article discusses the <strong>CAAENOVWSConcEngCpp DotNet1_1Client</strong> use case. It describes how to use
+                        the C# client binding that can be generated using the wsdl.exe utility in order to consume the <strong>
+					ENOVWSConcEngCpp
+                            CAA Web service</strong>. It provides a sample usage scenario that demonstrates how to handle lifecycle
+                        management.</p>
+                    <ul>
+                        <li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+                        <li><a href="#2"><strong>The CAAENOVWSDotNet1_1Client Use Case</strong></a>
+                            <ul>
+                                <li><a href="#2.1">What Does CAAENOVWSConcEngCppUseCase Do</a></li>
+                                <li><a href="#2.2">Where To Find the 
+								CAAENOVWSConcEngCppUseCase Code</a></li>
+                                <li><a href="#2.3">How to Launch CAAENOVWSConEngCppUseCase DotNet1_1Client</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#3"><strong>Step-by-step</strong></a></li>
+                        <li><a href="#InShort"><strong>In Short</strong></a></li>
+                        <li><a href="#References"><strong>References</strong></a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- SECTION 1 --------------------------------------------------------------------------------- SECTION 1 -->
+    <h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+    <p>This use case demonstrates how to write a client application that consumes the 
+	ENOVWSConcEngCpp CAA Web
+        service. It helps you to:</p>
+    <ul>
+        <li>Generate the C# client binding for the ENOVWSConcEngCpp CAA Web service,</li>
+        <li>Configure and use the generated proxy,</li>
+        <li>Understand a sample usage scenario of the ENOVWSConcEngCpp CAA Web service.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2 --------------------------------------------------------------------------------- SECTION 2 -->
+    <h3><a name="2"></a>The CAAENOVWSConcEngCppUseCase DotNet1_1Client Use Case</h3>
+    <p>CAAENOVWSConcEngCppUseCase is a use case of the CAAENOVWS.edu framework that illustrates the 
+	ENOVWSConcEngCpp
+        CAA Web service capabilities.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.1 ----------------------------------------------------------------------------- SECTION 2.1 -->
+    <h4><a name="2.1"></a>What Does CAAENOVWSConcEngCppUseCase&nbsp; Do</h4>
+    <p>The sample usage scenario delivered with this use case contains the following steps:</p>
+<ul>
+	<li>Create two ENOVIA LCA V5 Documents,</li>
+	<li>Create a ENOVIA LCA V5 Part,</li>
+	<li>Attach the two Documents created to the already created Part,</li>
+	<li>CheckIn a file for the Document,</li>
+	<li>Lock a document,</li>
+	<li>GetLock of two documents and 1 part,</li>
+	<li>TransferOwnership of document1 and part,</li>
+	<li>GetLock of the document1 and part to show the new owner,</li>
+	<li>Unlock the document.</li>
+</ul>
+    <p>The ENOVWSConcEngCpp CAA Web service is used in support of the primary objective of this use case,
+        which is to manage concurrent engineering using the ENOVWSConcEngCpp CAA Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.2 ----------------------------------------------------------------------------- SECTION 2.2 -->
+    <h4><a name="2.2"></a>Where To Find the CAAENOVWSConcEngDotNet1_1Client Code</h4>
+    <p>The CAAENOVWSDotNet1_1Client use case is made of several classes located in both <b>CAAENOVWSDotNet1_1Client.m</b>
+        and <b>CAAENOVWSDotNet1_1ClientBase.m</b> modules of the <b>CAAENOVWS.edu</b> framework:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code><br>
+                    <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p>The CAAENOVWSDotNet1_1ClientBase.m module (library) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSConcEngCppProxy.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSConcEngCppWrapper.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSConcEngCppProxy.cs</b> file contains the C# client binding generated using the wsdl.exe
+        utility. A C# client binding consists of a proxy and several types definitions. The <b>CAAENOVWSConcEngCppWrapper.cs</b>
+        file contains a class that describes how to configure the generated proxy and how to invoke its methods.</p>
+    <p>The CAAENOVWSDotNet1_1Client.m module (executable) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSDotNet1_1Client.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSConcEngCppUseCase.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSDotNet1_1Client.cs</b> file contains the main program. It parses the command line inputs
+        and starts up the use case. The <b>CAAENOVWSConcEngCppUseCase.cs</b> file contains the sample use case
+        scenario.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.3 ----------------------------------------------------------------------------- SECTION 2.3 -->
+    <h4><a name="2.3"></a>How to Launch CAAENOVWSDotNet1_1Client</h4>
+    <p>To run the CAAENOVWSDotNet1_1Client use case, you will need to build both CAAENOVWSDotNet1_1ClientBase.m
+        and CAAENOVWSDotNet1_1Client.m modules. The use case code can be built using either the CAA V5 buildtime
+        environment, or Visual Studio .NET 2003 as explained in [<a href="#References">1</a>].</p>
+    <p>You can then execute the command described below:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td>   
+    <table class="code" id="table1">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em> -t 
+			ENOVWSConcEngCpp</code>
+          	-n &lt;Newowner.Organization.Project&gt;</td>
+        </tr>
+      </tbody>
+    </table>
+    			</td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;URI&gt;</i></code>: is the root URI of the Web application where the 
+		ENOVWSConcEngCpp CAA
+            Web service is deployed,</li>
+        <li><code><i>&lt;ENOVIA username&gt;</i></code>: is a valid username declared in the ENOVIA P&amp;O database,</li>
+        <li><code><i>&lt;Basic Authentication Username&gt;</i> and <i>&lt;Basic Authentication Password&gt;</i></code>:
+            are a valid set of credentials for authentication on the remote Web server. </li>
+    	<li>&lt;&lt;Newowner.Organization.Project&gt;: valid new user information for 
+		transfer ownership.</li>
+    </ul>
+    <p>Here follows a sample command, to be updated with your own environment configuration:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B18 -e 
+				auser -u wpsadmin -p wpsadmin -t ENOVWSConcEngCpp</code> -n 
+				TACR.ADMIN.DEFAULT</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The same executable is used to launch all of the available ENOVIA CAA Web services use cases. The <code>
+        -t</code> option is used to choose the target use case to run.</p>
+    <p>When building the modules with the CAA V5 buildtime environment, the CAAENOVWSDotNet1_1Client executable
+        can be launched from the following location:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\intel_a\code\clr</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3 --------------------------------------------------------------------------------- SECTION 3 -->
+    <h3><a name="3"></a>Step-by-step</h3>
+    <p>The following section first explains how to generate the C# client binding for the 
+	ENOVWSConcEngCpp CAA
+        Web service demonstrated. The remaining sections describe how to configure the generated proxy and how
+        to consume the Web service:</p>
+    <ol>
+        <li><a href="#3.1">Creating the C# Client Binding</a></li>
+        <li><a href="#3.2">Instantiating and Configuring the Generated Proxy</a></li>
+        <li><a href="#3.3">Lock ENOVIA V5 Objects</a></li>
+        <li><a href="#3.4">Unlcock ENOVIA V5 Objects</a></li>
+        <li><a href="#3.5">GetLock of ENOVIA V5 Objects</a></li>
+        <li><a href="#3.6">TransferOwnership of ENOVIA V5 Objects</a></li>
+        <li><a href="#3.7">Sample Usage Scenario</a></li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.1 ----------------------------------------------------------------------------- SECTION 3.1 -->
+    <h4><a name="3.1"></a>Creating the C# Client Binding</h4>
+    <p>Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using
+        the wsdl.exe utility.</p>
+    <p>Here follows a sample command in order to generate the C# client binding for the 
+	ENOVWSConcEngCpp CAA
+        Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>wsdl /namespace:com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientgen.ENOVWSConcEngcpp /username:wpsadmin
+                    /password:wpsadmin /out:CAAENOVWSConcEngCppProxy.cs http://stophe1dsy.dsy.ds:9080/B18/wsdl?service=urn:com:dassault_systemes:ENOVWSConcEngImpl:ENOVWSConcEngImpl:ENOVWSConcEngCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The server name, port, and context root URI information must be updated to match the server where the
+        ENOVWSConcEngCpp CAA Web service has been deployed. The <code>/username</code> and <code>/username</code>
+        options are required to authenticate on the Web server hosting the Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.2 ----------------------------------------------------------------------------- SECTION 3.2 -->
+    <h4><a name="3.2"></a>Instantiating and Configuring the Generated Proxy</h4>
+    <p>In order to consume an implementation of the ENOVWSConcEngCpp CAA Web service deployed on a target Web
+        server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must
+        then be configured in order to manage authentication on the remote Web server, timeout, and session
+        management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.</p>
+    <p>The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and
+        to unmarshall SOAP responses to objects. The following code describes how to instantiate and configure
+        it:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> 
+				CAAENOVWSConcEngCppWrapper {</code><pre>	private const string SERVICE_ID = &quot;urn:com:dassault_systemes:ENOVWSConcEngImpl:ENOVWSConcEngImpl:ENOVWSConcEngCpp&quot;;	
+	private CAAENOVWSConcEngCppProxy proxy = null;</pre>
+				<pre>	public CAAENOVWSConcEngCppWrapper(
+		CookieContainer container, 
+		string uri, 
+		string credUser, 
+		string credPwd,
+		int timeOut) {
+		proxy = new CAAENOVWSConcEngCppProxy();</pre>
+				<pre>		// Compute the SOAP endpoint URI value that bounds to the deployed implementation of the 
+		// ENOVWSConcEngCpp CAA Web service
+		proxy.Url = uri + &quot;servicerouter?service=&quot; + SERVICE_ID;</pre>
+				<pre>		// Required for HTTP session state management
+		proxy.CookieContainer = container;</pre>
+				<pre>		// Required for the Basic Authentication mechanism
+		ICredentials credentials = new NetworkCredential(credUser, credPwd);
+		proxy.Credentials = credentials; 
+		// Increase the default client time-out
+		proxy.Timeout = timeOut;
+	}</pre>
+				</td>
+            </tr>
+        </tbody>
+        <tbody>
+        </tbody>
+    </table>
+    <p><strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed
+        using either the same or multiple proxy instances, the <code>CookieContainer</code> property must be
+        set on the proxy. This is mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+        <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+        <code>Credentials </code>property on the proxy. The values specified must match a valid set of credentials
+        for the Basic Authentication mechanism,<br>
+        <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues
+        at runtime, such as losing the HTTP connection before receiving the SOAP responses. The value specified
+        in the code is in milliseconds.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.3 ----------------------------------------------------------------------------- SECTION 3.3 -->
+    <h4><a name="3.3"></a>Lock ENOVIA V5 Objects</h4>
+    <p>To create documents, you can use the following method available through the generated proxy interface:</p>
+<p>ENOVIA LCA V5 Objects (Part and 
+Document) can be locked using the following method, which is
+available through the generated <code>IConcEngWS</code> proxy interface:</p>
+<table class="code" id="table2">
+	<tbody>
+		<tr>
+			<td><code>public Status Lock(Identifier[] iObjectIds)<br>
+			&nbsp;&nbsp;throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table3">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjects</code></td>
+			<td>&nbsp;Array of Identifiers</td>
+		</tr>
+		<tr>
+			<td><code>[out] Status</code></td>
+			<td>&nbsp;Return the status</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>lock</code>
+method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSConcEngCppWrapper {<br>
+                    &nbsp;&nbsp;&nbsp; ...</code><pre>    public void Lock(String[] ids) {
+		Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'lock' on ENOVWSConcEngCpp CAA Web service proxy&quot;);
+		if (ids == null) {
+                throw new ApplicationException(
+			    &quot;object UUID array is null&quot;);
+		}
+		// Create input data
+            	Identifier[] idents = ToIdentifierArray(ids);
+    	    	// Invoke method on remote CAA Web service
+		try {
+		    	Status status = proxy.Lock(idents);
+                	Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+            	}
+            	catch (Exception e)
+            	{
+                	throw new Exception(&quot;Failed to lock objects&quot;, e);
+            	}
+    }</pre>
+				<pre>    public Identifier ToIdentifier(string id) {
+		if (id == null) {
+			throw new ApplicationException(&quot;Illegal argument: identifier value is null&quot;);
+		}</pre>
+				<pre>		Identifier identifier = new Identifier();
+		identifier.Identifier1 = CAAENOVWSUtils.ConvertFromHexToBinary(id);
+		return identifier;		
+    }</pre>
+				<pre>    public Identifier[] ToIdentifierArray(string[] ids) {
+		if (ids == null) {
+			throw new ApplicationException(&quot;Illegal argument: identifiers array is null&quot;);
+		}</pre>
+				<pre>		Identifier[] identifiers = new Identifier[ids.Length];
+		for (int i = 0; i &lt; ids.Length; i++) {
+			identifiers[i] = ToIdentifier(ids[i]);
+		}
+		return identifiers;
+   }<code><br>
+                    }</code></pre></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.4 ----------------------------------------------------------------------------- SECTION 3.4 -->
+    <h4><a name="3.4"></a>Unlock ENOVIA V5 Objects</h4>
+<p>ENOVIA LCA V5 Objects can be unlocked using the
+following method, which is available through the generated <code>ICntMgmtWS</code>
+proxy interface:</p>
+<table class="code" id="table7">
+	<tbody>
+		<tr>
+			<td><code>public Status Unlock(Identifier[] iObjectIds)<br>
+			&nbsp;&nbsp;throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+</table>
+<p><u>Prerequisite</u>: A ENOVIA LCA V5 Part Object should be existing.</p>
+<p>This method accepts the following parameters:</p>
+<table id="table8">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjects</code></td>
+			<td>&nbsp;Array of Identifiers</td>
+		</tr>
+		<tr>
+			<td><code>[out] Status</code></td>
+			<td>&nbsp;Return the status</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code can demonstrates the use of the <code>Unlock()</code>
+method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSConcEngCppWrapper {<br>
+                    &nbsp; ...</code><pre>    public void Unlock(String[] ids){</pre>
+				<pre>           Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'unlock' on ENOVWSConcEngCpp CAA Web service proxy&quot;);
+	   if (ids == null) {
+                throw new ApplicationException(
+			    &quot;object UUID array is null&quot;);
+	   }
+	    // Create input data
+            Identifier[] idents = ToIdentifierArray(ids);</pre>
+				<pre>	    // Invoke method on remote CAA Web service
+	    try {
+		    Status status = proxy.Unlock(idents);
+	            Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(&quot;Failed to unlock objects&quot;, e);
+            }</pre>
+				<pre>    }<code><br>
+                    }</code></pre></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.5 ----------------------------------------------------------------------------- SECTION 3.5 -->
+    <h4><a name="3.5"></a>GetLock of ENOVIA V5 Objects</h4>
+<p>ENOVIA LCA V5 Document can be checked in using the following method, which is
+available through the generated <code>IConcEngWS</code> proxy interface:</p>
+<table class="code" id="table9">
+	<tbody>
+		<tr>
+			<td><code>ublic Status getLock(SessionToken iSessionToken,<br>
+			&nbsp;&nbsp;Identifier[] iObjectIds,<br>
+			&nbsp;&nbsp;ObjectLockInfoArrayTypeHolder oLockInfos) throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table10">
+	<tbody>
+		<tr>
+			<td><code>[in] iSessionToken</code></td>
+			<td>&nbsp;The session token</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjectIds</code></td>
+			<td>&nbsp;The array of object identifiers</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oLockInfos</code></td>
+			<td>&nbsp;arrays of object lock information</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>The following code demonstrates the use of the <code>GetLock</code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSConcEngCppWrapper {<br>
+                    &nbsp;&nbsp;&nbsp; ...</code><pre>    public ObjectLockInfo[] GetLock(String[] ids) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'lock' on ENOVWSConcEngCpp CAA Web service proxy&quot;);
+	if (ids == null) {
+                throw new ApplicationException(
+			    &quot;object UUID array is null&quot;);
+	}
+	// Create input data
+	SessionToken token = new SessionToken();  //place holder not used
+        Identifier[] idents = ToIdentifierArray(ids);
+    	// Invoke method on remote CAA Web service
+	try {
+                ObjectLockInfo [] lockHolder = null ;
+		Status status = proxy.GetLock(token, idents, ref lockHolder);
+		Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+		 return lockHolder;
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to getlock&quot;, e);
+	}
+    }	</pre>
+				<pre>    public void DisplayLockInfo(ObjectLockInfo[] lockInfos){
+            Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'DispplayLockInfo' on ENOVWSConcEngCpp CAA Web service proxy&quot;);
+            if (lockInfos == null)
+            {
+                throw new ApplicationException(
+                        &quot;object lock info is null&quot;);
+            }
+ </pre>
+				<pre>            // Invoke method on remote CAA Web service
+            try
+            {
+                for (int i = 0; i &lt; lockInfos.Length; i++)
+                {
+                    Console.Out.WriteLine(&quot;--------Object Lock Infor &quot; + (i+1) + &quot;------:&quot;);</pre>
+				<pre>                    if (lockInfos[i].IsLocked)
+                        Console.Out.WriteLine(&quot;Lock Status: is locked&quot;);
+                    else
+                        Console.Out.WriteLine(&quot;Lock Status: is not locked&quot;);
+                    Console.Out.WriteLine(&quot;User = &quot; + lockInfos[i].User);
+                    Console.Out.WriteLine(&quot;Project = &quot; + lockInfos[i].Project);
+                    Console.Out.WriteLine(&quot;Organization = &quot; + lockInfos[i].Organization);
+                    Console.Out.WriteLine(&quot;-------------------------:&quot;);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(&quot;Failed to DispplayLockInfo&quot;, e);
+            }
+        }	
+   }<code><br>
+                    }</code></pre></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.6 ----------------------------------------------------------------------------- SECTION 3.6 -->
+    <h4><a name="3.6"></a>TransferOwnership of ENOVIA V5 Objects</h4>
+<p>ENOVIA LCA V5 Object lock information can be obtained using the following method, which
+is available through the generated <code>IConcEngWS</code> proxy interface:</p>
+<table class="code" id="table11">
+	<tbody>
+		<tr>
+			<td><code>public Status TransferOwnership(SessionToken iSessionToken,<br>
+			&nbsp;&nbsp;ObjectLockInfo[] iObjOwners,<br>
+			&nbsp;&nbsp;boolean iSendEmail) throws RemoteException, 
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table12">
+	<tbody>
+		<tr>
+			<td><code>[in] iSessionToken</code></td>
+			<td>&nbsp;session token</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjOwners</code></td>
+			<td>&nbsp;array of object lock new owner infromation</td>
+		</tr>
+		<tr>
+			<td><code>[in] iSendEmail</code></td>
+			<td>flag to or not to send email</td>
+		</tr>
+		<tr>
+			<td><code>[out] </code></td>
+			<td>&nbsp;Status</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+	<p>&nbsp;</p>
+<p>The following code demonstrates the use of the <code>transferOwnership</code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSConcEngCppWrapper {<br>
+                    &nbsp; ...</code><pre>    public void TransferOwnership(ObjectLockInfo [] lockInfos){
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'transferOwnership' on ENOVWSConcEngCpp CAA Web service proxy&quot;);
+	if (lockInfos== null) {
+                throw new ApplicationException(
+					    &quot;object lock info is null&quot;);
+	}
+	// Create input data
+	 SessionToken token = new SessionToken();  //place holder not used</pre>
+				<pre>	 // Invoke method on remote CAA Web service
+	try {
+	    	Status status = proxy.TransferOwnership(token, lockInfos, false);
+                Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to transferownership&quot;, e);
+	}
+    }<code><br>
+}</code></pre>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.7 ----------------------------------------------------------------------------- SECTION 3.7 -->
+    <h4><a name="3.7"></a>Sample Usage Scenario</h4>
+    <p>The following code depends on:</p>
+    <ul>
+        <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">3</a>]
+            for details,</li>
+        <li>the CAAENOVWSProdStructCppWrapper class to create/delete a part. See [<a href="#References">4</a>],</li>
+        <li>the CAAENOVWSConcEngCppWrapper class to handle document management. See this document.</li>
+    </ul>
+    <p>It demonstrates a sample usage scenario for the ENOVWSConcEngCpp CAA Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td>
+				<pre>public class CAAENOVWSConcEngCppUseCase
+    {
+        private string uri = null;
+        private string credUser = null;
+        private string credPwd = null;</pre>
+				<pre>        public CAAENOVWSConcEngCppUseCase(string uri, string credUser, string credPwd)
+        {
+            this.uri = uri;
+            this.credUser = credUser;
+            this.credPwd = credPwd;
+        }</pre>
+				<pre>        public void RunSampleUsageScenario(string enoviaUser, String newOwnerStr)
+        {
+            bool success = false;
+            Exception exception = null;
+            enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = null;
+            enoposapplicationbinderimpl.SessionToken sessionToken = null;
+            try
+            {
+                // ------------------------------------------------------------
+                // Step 1 - Instantiate and configure the proxies
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;STEP 1: Instantiating and configuring CAA Web services proxies&quot;);</pre>
+				<pre>                // Create a CookieContainer object to maintain the HTTP session state accross proxies
+                CookieContainer container = new CookieContainer();</pre>
+				<pre>                // Instantiate wrapper client classes
+                int timeOut = 360000;
+                binderWrapper = new enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper(container, uri, credUser, credPwd, timeOut);
+                enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper prodStructWrapper = new enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper(container, uri, credUser, credPwd, timeOut);
+                enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper = new enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper(container, uri, credUser, credPwd, timeOut);
+                enovwsconcengcpp.CAAENOVWSConcEngCppWrapper concEngWrapper = new enovwsconcengcpp.CAAENOVWSConcEngCppWrapper(container, uri, credUser, credPwd, timeOut);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 2 - Open session with ENOVIA LCA V5
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 2: Opening session with ENOVIA LCA V5&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                // Get user contexts
+                string[] userContexts = binderWrapper.GetUserContexts(enoviaUser);
+                Console.Out.WriteLine(&quot;Found {0} context(s) in database&quot;, userContexts.Length);
+                Console.Out.WriteLine(&quot;Displaying list of available contexts:&quot;);
+                for (int i = 0; i &lt; userContexts.Length; i++)
+                {
+                    Console.Out.WriteLine(&quot;Context[{0}]: {1}&quot;, i, userContexts[i]);
+                }</pre>
+				<pre>                // Log in using the first available context
+                if (userContexts.Length == 0)
+                {
+                    throw new ApplicationException(&quot;No context found for the user specified&quot;);
+                }
+                sessionToken = binderWrapper.Login(userContexts[0]);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 3 - Create 2 documents
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 3: Creating 2 documents&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                string docId1 = &quot;CAAWSCnt1&quot; + Environment.TickCount; // the VID has to be unique  
+                string docName1 = &quot;Doc1&quot; + docId1;
+                string domain = &quot;DOCDIR&quot;;</pre>
+				<pre>                enovwscntmgmtcpp.ENOVIA createDocResultSet1 = cntMgmtWrapper.CreateDocument(docId1, docName1, domain);</pre>
+				<pre>                string[] docUUIDs1 = cntMgmtWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+                if (docUUIDs1.Length &gt; 1)
+                {
+                    throw new ApplicationException(&quot;Invalid state: more than 1 document was returned&quot;);
+                }
+                else if (docUUIDs1.Length != 1)
+                {
+                    throw new ApplicationException(&quot;Failed to create the document&quot;);
+                }
+                string docUUID1 = docUUIDs1[0];</pre>
+				<pre>                CAAENOVWSUtils.DisplayResults(createDocResultSet1, 1);</pre>
+				<pre>                string docId2 = &quot;CAAWSCnt2&quot; + Environment.TickCount;
+                string docName2 = &quot;Doc2&quot; + docId2;</pre>
+				<pre>                enovwscntmgmtcpp.ENOVIA createDocResultSet2 = cntMgmtWrapper.CreateDocument(docId2, docName2, domain);</pre>
+				<pre>                string[] docUUIDs2 = cntMgmtWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet2);
+                if (docUUIDs2.Length &gt; 1)
+                {
+                    throw new ApplicationException(&quot;Invalid state: more than 1 document was returned&quot;);
+                }
+                else if (docUUIDs2.Length != 1)
+                {
+                    throw new ApplicationException(&quot;Failed to create the document&quot;);
+                }
+                string docUUID2 = docUUIDs2[0];</pre>
+				<pre>                CAAENOVWSUtils.DisplayResults(createDocResultSet2, 1);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 4 - Create part
+                // ------------------------------------------------------------      </pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 4: Creating part reference&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                string partNumber = &quot;CAAWSCntPrt&quot; + Environment.TickCount;</pre>
+				<pre>                enovwsprodstructcpp.ENOVIA createPartResultSet = prodStructWrapper.CreatePartRef(new string[] { partNumber }, &quot;PRODUCT&quot;, &quot;FALSE&quot;);</pre>
+				<pre>                string[] partRefUUIDs = prodStructWrapper.GetENOVIA_VPMPartVersionUUIDs(createPartResultSet);
+                if (partRefUUIDs.Length &gt; 1)
+                {
+                    throw new ApplicationException(&quot;Invalid state: more than 1 part reference was returned&quot;);
+                }
+                else if (partRefUUIDs.Length != 1)
+                {
+                    throw new ApplicationException(&quot;Failed to create part reference&quot;);
+                }
+                string partRefUUID = partRefUUIDs[0];</pre>
+				<pre>                CAAENOVWSUtils.DisplayResults(createPartResultSet, 1);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 5 - Attach document to part
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 5: Attaching document to part&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                string attachType = &quot;Primary&quot;; // &quot;Primary&quot; or &quot;Secondary&quot;
+                string role = &quot;Documentation&quot;; // &quot;Representation&quot; or &quot;Documentation&quot;
+                string[] docUUIDs = { docUUID1, docUUID2 };</pre>
+				<pre>                cntMgmtWrapper.AttachDocument(partRefUUID, docUUIDs, attachType, role);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 6 - Check in document
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 6: Check in document&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                string fileName = &quot;CAAFileTestForCntCheckIn.txt&quot;;
+                string vaultName = &quot;&quot;;
+                string fileContent = &quot;asasasasasaasasasasaskljadlkfhslkdfhsdlfhklsdh;asdhjl;dfhsdhjksdfhkshjkshjksdhfjksdhfjksd&quot;;
+                byte[] data = (new UnicodeEncoding()).GetBytes(fileContent);</pre>
+				<pre>                enovwscntmgmtcpp.ENOVIA checkInResultSet = cntMgmtWrapper.CkeckIn(docUUID1, fileName, vaultName, data);</pre>
+				<pre>                CAAENOVWSUtils.DisplayResults(checkInResultSet, 1);</pre>
+				<pre>                 // ------------------------------------------------------------
+                // Step 7 - lock document 2
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 7: lock document2 &quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                </pre>
+				<pre>                String[] docIDs = { docUUID2 };
+                concEngWrapper.Lock(docIDs);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 8 - getLock of doc1, doc2 (locked) and partRef
+                // ------------------------------------------------------------
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;Step 8 - getLock of doc1, doc2 (locked) and partRef &quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+     </pre>
+				<pre>                String[] objIDs = { docUUID1, docUUID2, partRefUUID};
+                enovwsconcengcpp.ObjectLockInfo [] lockInfos = concEngWrapper.GetLock(objIDs);</pre>
+				<pre>                concEngWrapper.DisplayLockInfo(lockInfos);</pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 9 - transfer  doc1 and partRef ownership
+                // ------------------------------------------------------------
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;Step 9 - transfer  doc1 and partRef ownership &quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                </pre>
+				<pre>                String[] tokens = newOwnerStr.Split('.');
+                String user = tokens[0];
+                String org = tokens[1];
+                String proj = tokens[2];
+                Console.Out.WriteLine(&quot;user=&quot;+user+&quot; org=&quot;+org+&quot; proj=&quot;+proj);</pre>
+				<pre>                enovwsconcengcpp.ObjectLockInfo doclock1 = new enovwsconcengcpp.ObjectLockInfo();
+                doclock1.ObjID = concEngWrapper.ToIdentifier(docUUID1);
+                doclock1.User=user;
+                doclock1.Project=proj;
+                doclock1.Organization=org;</pre>
+				<pre>                enovwsconcengcpp.ObjectLockInfo partLock2 = new enovwsconcengcpp.ObjectLockInfo();
+                partLock2.ObjID = concEngWrapper.ToIdentifier(partRefUUID);
+                partLock2.User=user;
+                partLock2.Project=proj;
+                partLock2.Organization=org;             
+             </pre>
+				<pre>                enovwsconcengcpp.ObjectLockInfo [] newlockInfo = {doclock1, partLock2};
+                concEngWrapper.TransferOwnership(newlockInfo);
+                </pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 10 - getLock of doc1, and partRef to show new user 
+                // ------------------------------------------------------------
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;Step 10 - getLock of doc1, and partRef to see new owner&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                String[] newObjIDs = { docUUID1, partRefUUID};
+                enovwsconcengcpp.ObjectLockInfo [] lockInfos2 = concEngWrapper.GetLock(newObjIDs);</pre>
+				<pre>                concEngWrapper.DisplayLockInfo(lockInfos2);
+                    </pre>
+				<pre>                // ------------------------------------------------------------
+                // Step 11 - unlock doc2
+                // ------------------------------------------------------------           
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;Step 11 - unlock doc2&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                String[] docIDs2 = { docUUID2 };
+                concEngWrapper.Unlock(docIDs2);          </pre>
+				<pre>                success = true;
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+            finally
+            {
+                // ------------------------------------------------------------
+                // Step 12 - Terminate opened session
+                // ------------------------------------------------------------</pre>
+				<pre>                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+                Console.Out.WriteLine(&quot;STEP 12: Terminating opened session with ENOVIA LCA V5&quot;);
+                Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>                // The session must be closed even if a call to a method on the ENOVWSQueryCpp 
+                // CAA Web service fails
+                binderWrapper.Logout(sessionToken);
+            }</pre>
+				<pre>            if (success)
+            {
+                Console.Out.WriteLine(&quot;================================================================================&quot;);
+                Console.Out.WriteLine(&quot;Use case execution successful&quot;);
+                Console.Out.Flush();
+                Console.Out.Close();
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.Out.Flush();
+                Console.Out.Close();
+                Console.Error.WriteLine(&quot;================================================================================&quot;);
+                Console.Error.WriteLine(&quot;Use case execution failed&quot;);
+                Console.Error.WriteLine(exception.Message);
+                Console.Error.WriteLine(&quot;Details:&quot;);
+                if (exception.InnerException != null)
+                {
+                    Console.Error.WriteLine(exception.InnerException); // handles ApplicationException launched from the use case
+                }
+                else
+                {
+                    Console.Error.WriteLine(exception); // handles unexpected exception
+                }
+                Console.Error.Flush();
+                Console.Error.Close();
+                Environment.Exit(-1);
+            }
+        }
+    }</pre>
+&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- IN SHORT ----------------------------------------------------------------------------------- IN SHORT -->
+    <hr>
+    <h3><a name="InShort"></a>In Short</h3>
+    <p>This use case explains how to use the C# client binding generated using the wsdl.exe utility in order
+        to consume the ENOVWSConcEngCpp CAA Web service. It also gives an overview of the available method:</p>
+    <ul>
+        <li><code><a href="#3.3">Lock</a></code>: lock ENOVIA objects.</li>
+        <li><code><a href="#3.4">Unlock</a></code>: unlock ENOVIA 
+		objects.</li>
+        <li><code><a href="#3.5">GetLock</a></code>: get lock information of 
+		objects.</li>
+        <li><code><a href="#3.6">TransferOwnership</a></code>: transfer 
+		ownership of objects.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- REFERENCES ------------------------------------------------------------------------------- REFERENCES -->
+    <hr>
+    <h3><a name="References"></a>References</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">[1]</td>
+                <td valign="top" align="left"><a href="#">Building and Launching a CAA Web Service Use Case</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[2]</td>
+                <td><a href="#">Generating a C# Client Binding</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[3]</td>
+                <td><a href="../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm">
+                    Consuming the ENOPosApplicationBinderImpl CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[4]</td>
+                <td><a href="CAAENOVWSProdStructCppDotNetClient.htm">Consuming the ENOVWSProdStructCpp CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[5]</td>
+                <td><a href="CAAENOVWSCntMgmtCppDotNetClient.htm">Consuming the ENOVWSCntMgmtCpp CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- FOOTER ------------------------------------------------------------------------------------- FOOTER -->
+    <hr>
+    <h3><a name="History"></a>History</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">Version: <strong>1</strong> [Dec 2006]</td>
+                <td valign="top">Document created</td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <!----------------------------------------------------------------------------->
+    <hr>
+    <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+
+

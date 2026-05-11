@@ -1,0 +1,669 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Tool Path Computation on Axial Operations</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Tool Path Computation on Axial
+      Operations</h3>
+      <em>Implementing the CATIMfgComputeToolPathCustom interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiToolPathCustomization use case and
+      explains how to implement the <i>CATIMfgComputeToolPathCustom</i>
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiToolPathCustomization Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiToolPathCustomization Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiToolPathCustomization</a></li>
+            <li><a href="#Where">Where to Find the CAAMaiToolPathCustomization
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the tool path computation of
+a prismatic machining activity, namely an axial operation, by implementing the <i>CATIMfgComputeToolPathCustom</i>
+manufacturing interface. This involves the following:&nbsp;</p>
+<ul>
+  <li>Creating an extension class to implement <i>CATIMfgComputeToolPathCustom</i>
+    for an axial operation, here a drilling operation</li>
+  <li>Implementing the <code>ComputeToolPath</code> method of <i>CATIMfgComputeToolPathCustom</i>
+    to:
+    <ul>
+      <li>Read the manufacturing activity parameters,</li>
+      <li>Read the tool parameters</li>
+      <li>Create a tool path.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiToolPathCustomization Use Case</h3>
+<p>CAAMaiToolPathCustomization is a use case of the CAAManufacturingItf.edu
+framework that illustrates ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiToolPathCustomization Do</h4>
+<p>CAAMaiToolPathCustomization runs with the Process document shown on <a href="#Fig1">Fig.1</a>
+that contains the Drilling operation to use, the part to be machined, and the
+tool to use. The Drilling operation is accessible from the ProcessList, the part
+is in the ProductList, and the tool is stored in the ResourcesList. The five
+holes of the part are machined. The use case computes the tool path to enable
+the end user to replay the drilling operation.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The customized tool path of a drilling
+    operation</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMaiDrillingReplay1.jpg" width="539" height="566"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiToolPathCustomization</h4>
+<p>To launch CAAMaiToolPathCustomization, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiToolPathCustomization.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#'
+    character:</p>
+    <pre>Drilling CATIMfgComputeToolPathCustom libCAAMaiToolPathCustomization</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiToolPathCustomization.CATPart file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+    <p><img border="0" src="images/CAAMaiDrillingPartToDrill.jpg" width="614" height="417"></p>
+  </li>
+  <li>Using the Start menu, select the Prismatic Machining workbench in Machining
+    <p><img border="0" src="images/CAAMaiDrillingNCWorkbench.jpg">
+    <p>This displays the PPR document:</p>
+    <p><img border="0" src="images/CAAMaiDrillingProcessDoc.jpg" width="619" height="421"></p>
+  </li>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a Drilling
+    operation using the Drilling command in the Insert-&gt; Machining Operations-&gt;Axial Machining
+      Operations -&gt; Drilling operation.
+    <p><img border="0" src="images/CAAMaiDrillingInsert.jpg"></p>
+  </li>
+  <li>The following dialog box appears:
+    <p><img border="0" src="images/CAAMaiDrillingOpDefinition1.jpg"></p>
+    <p><b>Note</b>: at this step, the Drilling operation is not completed. The
+    icon in the second tab page shows a red traffic light. The Replay push
+    button is grayed. You have to select the geometry to machine.</p>
+  </li>
+  <li>In the sensitive icon, select the orange hole plane, and select the hole
+    plane in the Process document. The hole plane becomes green in the Process
+    document 3D view and in the sensitive icon
+    <p><img border="0" src="images/CAAMaiDrillingPlaneSelected.jpg" width="619" height="421"></p>
+  </li>
+  <li>In the sensitive icon, select hole extension type to set it as Through,
+    select the red hole depth, and select one of the holes in the Process
+    document. Double click to exit
+    <p><img border="0" src="images/CAAMaiDrillingOpDefinition2.jpg" width="371" height="735"></p>
+  </li>
+  <li>Now the Drilling operation is completed. You can replay it by clicking on
+    the Replay push button in the Drilling operation dialog box.
+    <p><img border="0" src="images/CAAMaiDrillingOpDefinition3.jpg" width="371" height="735"></p>
+  </li>
+  <li>Replay the tool path using the push buttons in the Drilling.1 dialog box
+    <p><img border="0" src="images/CAAMaiDrillingReplay2.jpg" width="613" height="419"></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiToolPathCustomization Code</h4>
+<p>The CAAMaiToolPathCustomization use case is made of a class named <i>CAAEMaiToolPathDrillingCustomization</i>
+located in the CAAMaiToolPathCustomization.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiToolPathCustomization.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiToolPathCustomization.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are four logical steps in CAAMaiToolPathCustomization:</p>
+<ol>
+  <li><a href="#Step1">Creating an Extension Class to Implement
+    CATIMfgComputeToolPathCustom for an Axial Operation</a></li>
+  <li><a href="#Step2">Reading the Manufacturing Activity Parameters</a></li>
+  <li><a href="#Step3">Reading the Tool Parameters</a></li>
+  <li><a href="#Step4">Creating a Tool Path</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Extension Class to Implement
+CATIMfgComputeToolPathCustom for an Axial Operation</h4>
+<p>The extension class that will implement <i>CATIMfgComputeToolPathCustom</i>
+is named <i>CAAEMaiToolPathDrillingCustomization</i>. Creating this class is
+done is three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiToolPathDrillingCustomization</i> class header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// Infrastructure interfaces
+#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATIContainer.h&quot;
+
+// Manufacturing Interfaces
+#include &quot;CATIMfgToolPath.h&quot;
+
+class CAAEMaiToolPathDrillingCustomization : public CATBaseUnknown
+{
+  // Used in conjonction with CATImplementClass in the .cpp file
+	CATDeclareClass;
+  
+public:
+    CAAEMaiToolPathDrillingCustomization();
+    virtual ~CAAEMaiToolPathDrillingCustomization();
+ 
+    // ComputeToolPath
+	//================
+	// Compute the tool path of the current Drilling operation
+	//
+	//  ispContainer : Interface on the tool path container
+	//  ospToolPath  : Computed tool path
+	virtual HRESULT <b>ComputeToolPath</b>(const CATIContainer_var   &amp;ispContainer,
+                                          CATIMfgToolPath_var &amp;ospToolPath);
+  private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiToolPathDrillingCustomization
+		(const CAAEMaiToolPathDrillingCustomization &amp;iObjectToCopy);
+ 
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiToolPathDrillingCustomization &amp; operator  = 
+		(const CAAEMaiToolPathDrillingCustomization &amp;iObjectToCopy);
+ 
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiToolPathDrillingCustomization</i> class C++-derives from <i>CATBaseUnknown</i>.
+    The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiToolPathDrillingCustomization</i>
+    belongs to a component. The class has a constructor, a destructor, and the <code>ComputeToolPath</code>
+    method of&nbsp; <i>CATIMfgComputeToolPathCustom</i>, and a copy constructor.
+    Note that the copy constructor is set as private. This is very important for
+    extensions. Since extensions must never be directly instantiated by client
+    applications, this prevents the compiler from creating the copy constructor
+    as public without you know. This copy constructor is not implemented in the
+    source file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiToolPathDrillingCustomization</i> class source file.
+    It begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgComputeToolPathCustom.h&quot;
+<b>TIE_CATIMfgComputeToolPathCustom(CAAEMaiToolPathDrillingCustomization);</b>
+<b>CATImplementClass(CAAEMaiToolPathDrillingCustomization,
+                  DataExtension,
+                  CATBaseUnknown,
+                  Drilling);
+</b>...
+HRESULT CAAEMaiToolPathDrillingCustomization::<b>ComputeToolPath</b>(const CATIContainer_var   &amp;spContainer,
+					   		  CATIMfgToolPath_var &amp;spToolPath)
+{
+  HRESULT RC = E_FAIL;
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiToolPathDrillingCustomization</i> class states that it
+    implements the <i>CATIMfgComputeToolPathCustom</i> interface thanks to the <code>TIE_CATIMfgComputeToolPathCustom</code>
+    macro. The <code>CATImplementClass</code> macro declares that the <i>CAAEMaiToolPathDrillingCustomization</i>
+    class is data extension class, thanks to the <code>DataExtension</code>
+    keyword, and that it extends the feature whose type is <i>Drilling</i>. The
+    third parameter must always be set to <i>CATBaseUnknown</i>, makes no sense,
+    and is unused for extensions.</p>
+    <p>Extending the <i>Drilling</i> feature using the <i>CAAEMaiToolPathDrillingCustomization</i>
+    class that implements <i>CATIMfgComputeToolPathCustom</i> means fitting this
+    feature with your customized behavior for drilling which will replace the
+    default one. The <code>ComputeToolPath</code> method implementation is shown
+    in the next steps. It has a smart pointer to the Process document
+    manufacturing container as input parameter, and a smart pointer to the
+    created tool path as output parameter.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>Drilling</i>
+    feature implements the <i>CATIMfgComputeToolPathCustom</i> interface, and
+    whose code is located in the libCAAMaiToolPathCustomization shared library
+    or DLL. Pay attention to remove the comment (#) in the supplied dictionary.</p>
+    <pre>Drilling CATIMfgComputeToolPathCustom libCAAMaiToolPathCustomization</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Reading the Manufacturing Activity Parameters</h4>
+<p>The Manufacturing Activity parameters are:</p>
+<ul>
+  <li>The tip approach clearance</li>
+  <li>The tip depth mode</li>
+  <li>The machining tool axis</li>
+  <li>The hole depth</li>
+  <li>The pattern.</li>
+</ul>
+<p>The Manufacturing Activity parameters are retrieved as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATIMfgAxialOperation</b> *piAxialOperationOnDrilling = NULL;
+  RC = QueryInterface(IID_CATIMfgAxialOperation,(void**) &amp;piAxialOperationOnDrilling);  
+  if (FAILED(RC))
+    return RC;
+  
+  CATUnicodeString depthMode;
+  CATMathVector machiningToolAxis(0,0,0);
+  double clearTipValue = .0;
+  double depthValue = .0;
+  
+  // -1.1-b Read Tip Approach Clearance 2nd Solution
+  RC = piAxialOperationOnDrilling-&gt;<b>GetClearTip</b>(clearTipValue);
+  if (SUCCEEDED(RC))    
+  {
+	  // -1.2- Read Tip Depth Mode : by Tip, by Shoulder, by Diameter
+	  RC = piAxialOperationOnDrilling-&gt;<b>GetDepthComputationMode</b>(depthMode); 
+	  if (SUCCEEDED(RC))      
+	  {        // -1.3- Read the Machining Tool Axis
+		  RC = piAxialOperationOnDrilling-&gt;<b>GetOperationAxis</b>(machiningToolAxis);
+		  if (SUCCEEDED(RC))        
+		  {          
+			  // -1.4- Read the hole Depth 
+			  RC = piAxialOperationOnDrilling-&gt;<b>GetFeatureDepth</b>(depthValue);
+		  }
+		  
+	  }   
+	  
+  }
+  
+  piAxialOperationOnDrilling-&gt;Release();
+  piAxialOperationOnDrilling = NULL;
+  if (FAILED(RC))   
+	  return RC;  
+
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>To get all the activity parameters, use the methods of the <i>CATIMfgAxialOperation</i>
+interface that the <i>Drilling</i> feature already implements.</p>
+<p>The pattern data is read as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  // -1.5- Read Pattern Information
+  CATMathSetOfPoints pointsInPattern; // Points in the pattern
+  CATListOfDouble    entryDistances;  // Entry distances associated with the points
+  CATListOfDouble    exitDistances;   // Exit distances associated with the points
+  int                nbOfPts = 0;     // Number of points in the pattern 
+  
+  <b>CATIMfgAxialToolPathGeneratorBase</b> * piAxialTPGenBaseOnDrilling = NULL;
+  RC = QueryInterface(IID_CATIMfgAxialToolPathGeneratorBase, 
+	  (void**) &amp;piAxialTPGenBaseOnDrilling);
+  if (SUCCEEDED(RC)) 
+  {
+      piAxialTPGenBaseOnDrilling-&gt;<b>GetOperationPattern</b>(pointsInPattern, 
+		  entryDistances, exitDistances, nbOfPts);
+      piAxialTPGenBaseOnDrilling-&gt;Release();    
+      piAxialTPGenBaseOnDrilling = NULL;
+  }  
+  else    
+      return RC;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetOperationPattern</code> method of the <i>CATIMfgAxialToolPathGeneratorBase</i>
+interface implemented by the Drilling feature enables you to retrieve the
+pattern as a set of points. This interface provides additional methods dedicated
+to axial tool path computation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Reading the Tool Parameters</h4>
+<p>The tool parameters are read as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  //********************************************************************************************
+  // -2- Reading Tool Parameters 
+  //********************************************************************************************
+  <b>CATIMfgActivity_var</b> spActivity(this);
+  if (NULL_var == spActivity) 
+      return E_FAIL;
+  
+  CATBaseUnknown_var spUnknownOnTool;
+  spUnknownOnTool = spActivity-&gt;<b>GetTool</b>();  
+  if (NULL_var == spUnknownOnTool)
+      return E_FAIL;  
+  
+  <b>CATIMfgTool</b> * piToolOnTool = NULL;
+  RC = spUnknownOnTool-&gt;QueryInterface(IID_CATIMfgTool, (void**) &amp; piToolOnTool);
+  if (FAILED(RC))
+      return E_FAIL;  
+  
+  // -3.1- Tool Diameter
+  double toolDiamValue = .0;
+  RC = piToolOnTool-&gt;<b>GetValue</b>(MfgNominalDiameter, toolDiamValue);
+  
+  // -3.2- Way Of Rotation  
+  CATUnicodeString wayOfRotation;  
+  if (SUCCEEDED(RC))
+      RC = piToolOnTool-&gt;<b>GetValue</b>(MfgWayOfRotation, wayOfRotation);
+  
+  piToolOnTool-&gt;Release();  
+  piToolOnTool = NULL;  
+  if (FAILED(RC))    
+      return RC;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The activity is retrieved as a smart pointer to <i>CATIMfgActivity</i>, and
+will be used to retrieve the tool and to initialize the tool path. The tool is
+retrieved from the activity thanks to the <code>GetTool</code> method of <i>CATIMfgActivity</i>,
+as a smart pointer to <i>CATBaseUnknown</i>. To get the tool parameter, a
+pointer to <i>CATIMfgTool</i> must first be retrieved from the tool. The <code>GetValue</code>
+method of <i>CATIMfgTool</i> enables you to retrieve the tool diameter thanks to
+the keyword <code>MfgNominalDiameter</code>, and its way of rotation thanks to
+the keyword <code>MfgWayOfRotation</code>.</p>
+<p>Note that the keywords are defined in the CATMfgToolConstant.h file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating a Tool Path</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIMfgToolPathFactory</b> *piToolPathFactoryOnContainer = NULL;
+  RC= <b>spContainer</b>-&gt;QueryInterface(IID_CATIMfgToolPathFactory,
+	  (void**) &amp;piToolPathFactoryOnContainer);
+  if (FAILED (RC)) return E_FAIL;
+  
+  //==============================
+  // Creation of tool path element
+  //==============================
+  <b>CATIMfgCompoundTraject</b>_var spCompoundTraject = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgCompoundTraject</b>();
+  if (NULL_var == spCompoundTraject) return E_FAIL;
+  <b>CATIMfgToolPathComponents_var</b> spToolPathComponentsOnCompound(spCompoundTraject); 
+  if (NULL_var == spToolPathComponentsOnCompound) return E_FAIL;
+
+  //=============================================================================
+  // Initialization of tool path from activity (copy of feedrates, spindle, ....)
+  //=============================================================================
+  spCompoundTraject-&gt;<b>Init</b>(spActivity);
+
+  //=========================================
+  // Initialization of tool axis on tool path
+  //=========================================
+  CATIMfgToolPathConstantToolAxis_var spToolAxis = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgToolPathConstantToolAxis</b>(machiningToolAxis);
+  if (NULL_var == spToolAxis) return E_FAIL;
+  spCompoundTraject-&gt;<b>SetToolAxis</b>(spToolAxis);
+  //==================================================================================
+  // Creation of the objet dedicated to the description of motions
+  // This objet is linked to the tool path
+  //
+  // In the sample,only linear motions are described
+  // Note that it is also possible to describe circular motions and PP Instructions
+  // PP Instructions are described through NC_Commands and NC_Instructions of PP Table
+  //==================================================================================
+  <b>CATIMfgTPMultipleMotion_var</b> spMultipleMotion = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgTPMultipleMotion</b>();
+  if (NULL_var == spMultipleMotion) return E_FAIL;
+  spToolPathComponentsOnCompound-&gt;<b>AddElement</b>(spMultipleMotion);
+  //==============================
+  // Description of linear motions
+  //==============================
+  CATMathPoint previousClearPoint;
+  for (int I = 1; I&lt;=nbOfPts; I++)      
+  {
+	  CATListOfDouble X,Y,Z;
+	  CATMathPoint point = pointsInPattern.GetPoint(I-1);
+	  CATMathPoint clearPoint = point + machiningToolAxis * clearTipValue;
+	  CATMathPoint depthPoint = point - machiningToolAxis * depthValue;
+	  //=======================================================
+	  // Linking traject in rapid feedrate between clear points
+	  //=======================================================
+	  if (I&gt;1)
+	  {
+		  CATListOfDouble X2,Y2,Z2;
+		  X2.Append (previousClearPoint.GetX()); 
+		  Y2.Append (previousClearPoint.GetY()); 
+		  Z2.Append (previousClearPoint.GetZ());
+		  X2.Append (clearPoint.GetX()); 
+		  Y2.Append (clearPoint.GetY()); 
+		  Z2.Append (clearPoint.GetZ());
+		  spMultipleMotion-&gt;<b>AddPolyline</b> (TPLinkingTraject,TPRapidFeedrate,X2,Y2,Z2);
+	  }
+	  //======================================
+	  // Machining Traject to machine the hole
+	  //======================================
+	  X.Append (clearPoint.GetX()); 
+	  Y.Append (clearPoint.GetY()); 
+	  Z.Append (clearPoint.GetZ());
+	  X.Append (depthPoint.GetX()); 
+	  Y.Append (depthPoint.GetY()); 
+	  Z.Append (depthPoint.GetZ());
+	  X.Append (clearPoint.GetX()); 
+	  Y.Append (clearPoint.GetY()); 
+	  Z.Append (clearPoint.GetZ());
+	  spMultipleMotion-&gt;<b>AddPolyline </b>(TPMachiningTraject,TPMachiningFeedrate,X,Y,Z);
+
+	  previousClearPoint = clearPoint;
+  }
+
+  //========================
+  // Save tool path in model
+  //========================
+  <b>CATIMfgTPSaveData</b>_var spSaveData (spToolPathComponentsOnCompound);
+  if (NULL_var == spSaveData) return E_FAIL;
+  spSaveData-&gt;<b>SaveData</b>();</pre>
+      <pre>  //=======
+  // Return
+  //=======
+  ospToolPath = spToolPathComponentsOnCompound;
+  if (NULL_var == ospToolPath) return E_FAIL;
+  
+  piToolPathFactoryOnContainer-&gt;Release();
+  piToolPathFactoryOnContainer = NULL;
+  
+  return RC;
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The tool path is created and returned as a <i>CATIMfgCompoundTraject</i>
+smart pointer using the <code>CreateMfgCompoundTraject</code> method of the <i>CATIMfgToolPathFactory</i>
+interface implemented by the Process document manufacturing container passed as
+input parameter. Then, a smart pointer to <i>CATIMfgToolPathComponents</i> is
+retrieved from the tool path and the tool path is initialized from the activity
+using the <code>Init</code> method of <i>CATIMfgCompoundTraject</i>. The tool
+axis is created thanks to the <code>CreateMfgToolPathConstantToolAxis</code>
+method of <i>CATIMfgToolPathFactory</i> to which the machining tool axis
+retrieved in the <a href="#Step2">data reading step</a> is passed. This tool
+axis is set to the tool path using the <code>SetToolAxis</code> method of <i>CATIMfgCompoundTraject</i>.</p>
+<p>The tool path data can now be created from the pattern. First, a set of
+points is created and filled in, for each point in the pattern, with:</p>
+<ul>
+  <li>a clearance point, used at the beginning and at the end of each machining
+    sequence</li>
+  <li>a depth point that represents the drilling depth.</li>
+</ul>
+<p>The <code>CreateMfgTPMultipleMotion</code> method of <i>CATIMfgToolPathFactory</i>
+creates the object which contains the motions (linear or circular motion) and PP
+Instructions (NC_Command). This object is added to the tool path thanks to the <code>AddElement</code>
+method of <i>CATIMfgToolPathComponents</i>.</p>
+<p>In this sample, two linear motions are stored for each point of the pattern :</p>
+<ul>
+  <li>If there are at least two points in the pattern, a linking path (<code>TPLinkingTraject</code>)
+    in rapid feedrate (<code>TPRapidFeedrate</code>) between the previous hole
+    to the current one.</li>
+  <li>a machining path (<code>TPMachiningTraject</code>)&nbsp; in machining
+    feedrate (<code>TPMachiningFeedrate</code>) to machine the current point.</li>
+</ul>
+<p>With interface <i>CATIMfgTPSaveData</i> on tool path, the tool path is saved
+in the model with the method <code>SaveData.</code></p>
+<p>Then, the tool path is passed to the output parameter as a pointer to <i>CATIMfgToolPath</i>.</p>
+<p>Note that the keywords such as TPMachiningFeedrate, TPMachiningTraject, used
+for tool path computation are located in the CATMfgToolPathDefs.h file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, and has illustrated them on a axial tool path customization. It shows
+how to implement the <i>CATIMfgComputeToolPath</i> interface to compute the tool
+path of a drilling operation in a process document that includes this operation
+as an activity, and that also include the part to be machined, and the tool
+resources.</p>
+<p>The <i>Drilling</i> feature behavior is modified by implementing <i>CATIMfgComputeToolPath</i>
+in a data extension class. The only method to implement is <code>ComputeToolPath</code>,
+to successively retrieve the manufacturing parameters from the activity thanks
+to methods of either the <i>CATIMfgActivityParameters</i> interface, or to the <i>CATIMfgAxialOperation</i>
+interface, both implemented by the <i>Drilling</i> feature. The pattern is
+retrieved thanks to the CATIMfgAxialToolPathGeneratorBase interface also
+implemented by the <i>Drilling</i> feature, and the tool parameters are
+retrieved using the CATIMfgTool interface.</p>
+<p>The tool path is created and handled as a <i>CATIMfgCompoundTraject</i>
+pointer using the <code>CreateMfgCompoundTraject</code> method of the <i>CATIMfgToolPathFactory</i>
+interface implemented by the Process document manufacturing container. The tool
+axis, and the object that makes up the tool path created from the pattern as a <i>CATIMfgTPMultipleMotion</i>,
+are set or added to the tool path handled as a <i>CATIMfgToolPathComponents</i>.
+Then, the tool path is passed to the output parameter as a pointer to <i>CATIMfgToolPath</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

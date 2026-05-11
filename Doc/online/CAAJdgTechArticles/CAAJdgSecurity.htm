@@ -1,0 +1,175 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Security with JDialog</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="TOP">
+      <h2>JDialog</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Security with JDialog</h3>
+      <i>How to deploy security on JDialog Applications</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article shows how to personalize (add, remove and configure, your PO
+      access drivers).&nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Technical Article</a></b></li>
+        <li><b><a href="#Technical">The CAAJdgSecurity Technical Article</a></b></li>
+        <li><b><a href="#Configure">How to deploy security</a></b></li>
+        <ul>
+          <li><a href="#Add">Pre-deployment on your Workspace</a></li>
+          <li><a href="#Remove">Configuring IRAD6 for security</a></li>
+          <li><a href="#Order">Testing security</a></li>
+          <li><a href="#Param">Exporting EAR file with security for deployment
+            on Websphere</a></li>
+        </ul>
+        <li><b><a href="#History">History</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Technical Article</h3>
+The security allow the administrator to restrict the access to the application
+to authorized people only
+<p>The first question when installing security is to ask &quot;Who made What and
+Who can access What?&quot;
+<p>The security is very important to keep integrity and confidentiality of the
+data .
+<p>This technical article is intended to show you how to configure the security
+on you JDialog Applications:
+<ol>
+  <li>Pre-deployment on your Workspace,</li>
+  <li>Configuring IRAD6 for security,</li>
+  <li>Testing security,</li>
+  <li>Exporting EAR file with security for deployment on Websphere</li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Technical"></a>The CAAJdgSecurity Technical Article</h3>
+CAAJdgSecurity is a technical article of the CAAJDialog.edu framework that
+illustrates CATJDialog framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Configure"></a>How to deploy security&nbsp;</h3>
+<p>It's important to install security to limit the access of data to authorized
+people only.</p>
+<p>We will see step by step how to deploy security</p>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Add"></a>Pre-deployment on your Workspace</h4>
+<p>Make sure you have the last version of JDialog</p>
+<p>To install the security, you must run the &quot;mkrun -c eclipsesetup&quot;
+command line on your WS.</p>
+<p>The web.xml file is update and the security role and mapping are configured.</p>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Remove"></a> Configuring IRAD6 for security</h4>
+<p>After the pre-deployment, you must refresh your project on IRAD6,</p>
+<p>Be sure your configuration is correct by watching your <b>web.xml</b> file in
+webapplication/WEB-INF/ folder</p>
+<p>In the security tab you can see tow predefine roles:</p>
+<ul>
+  <li>The &quot;All Authentificated&quot; role</li>
+  <li>The &quot;Everyone&quot; role</li>
+</ul>
+<p>In the Pages panel of this file, you can define your Login process (by
+default we have a Basic IE Panel)</p>
+<p>&nbsp;</p>
+<p>In the <b>server-cfg.xml</b>, you must enable security as the next panel in
+the security Panel, for the server ID, define the user ID under which the server
+runs, for security purposes. This ID is not associated with the system process.</p>
+<ul>
+  <li>On Windows operating systems, the account must be a member of the
+    Administrators group and must have the rights to &quot;Log on as a
+    service&quot; and &quot;Act as part of the operating system&quot; and
+    &quot;Create a Token&quot; If the Windows machine is a member of an NT
+    domain, then the ID must also be an administrator in the NT domain. Do not
+    use an account whose name matches the name of your machine or Windows
+    Domain.</li>
+</ul>
+<center>
+<p><img src="images/Securi1.gif" border="0" width="866" height="163"></p>
+</center>
+<p align="left">&nbsp;</p>
+<p>In the <b>application.xml</b> file, you must go to the security Panel and
+then choose &quot;Gather Roles from Modules&quot;
+<p>Finally in the <b>ibm-application-bnd.xmi</b> file, you must bind the roles
+on the Security Bindings Panel</p>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Order"></a>Testing security</h4>
+<p>After restarting your server, try to access JDialog, a Panel will open and
+then everyone can access with his NT Password if the security is successfully
+installed.</p>
+<p>Your application is now secure.</p>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<h4><a name="Param"></a>Exporting EAR file with security for deployment on
+Websphere</h4>
+<p>To deploy your application with the security, you must launch the command
+&quot;mkrun -c WASSetup -ear PathToEar&quot;</p>
+<p>An EAR is generated and you can deploy it on Websphere</p>
+<p>Note: Be sure to have the good version of Websphere and all the fix pack
+installed and security center well configured.</p>
+<p>Finally, try to access JDialog, you must have the same comportment you have
+with IRAD6.</p>
+<p>&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jun 2002]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

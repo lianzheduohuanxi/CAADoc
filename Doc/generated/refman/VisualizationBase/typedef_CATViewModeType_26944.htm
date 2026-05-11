@@ -1,0 +1,229 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>VisualizationBase Typedef CATViewModeType</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../VisualizationBase.htm" href="../VisualizationBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "VisualizationBase";	}
+		function getCurrentObjectName() { 
+ 	return "CATViewModeType"; } 
+	function getCurrentType() { 
+ 	return "typedef"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>VisualizationBase Typedef CATViewModeType</h1>
+<pre>
+typedef int CATViewModeType</pre>
+<b><i> <b>Visual mode management.</i></b><br>
+</b>
+   <br>
+ The rules to get the OutputMode for a RequestedMode to be added or removed from the CurrentMode are listed below:
+    <ul>
+     <li> Note.1 : Activation Rules A## are opposite of DeActivation Rules D##. </li>
+     <li> Note.2 : Exclusion rules E## are symmetric but order dependent. </li> 
+     <li> Note.3 : Each of the view modes VIEW_WITHOUT_WIRES, VIEW_WITHOUT_AXIS, VIEW_WITHOUT_POINTS is independent of all other view modes; except when VIEW_EDGE is removed these three are also removed. </li>
+    </ul>
+ <b>Deactivation</b>: When the RequestedMode is to be removed from the CurrentMode 
+    <ul>
+     <li> <b> STEP.D0</b> : Initialize OutputMode to CurrentMode. </li> 
+     <li> <b>STEP.D1</b> : Consider the modes on (-) side as ModesToRemove, if the RequestedMode is on (=) side of (=>-) DeActivate operator in D## DeActivation Rules. </li>
+     <ul>
+ <li> <b>D01</b>. VIEW_EDGE    =>-  VIEW_WITHOUT_SMOOTH_EDGE, VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_WITHOUT_VERTEX, VIEW_COLORED_EDGES_FROM_FACES, VIEW_LINEONLINE, VIEW_HRD, VIEW_HIDDEN_EDGE, VIEW_WITHOUT_WIRES, VIEW_WITHOUT_AXIS, VIEW_WITHOUT_POINTS </li>
+ <br>
+ <li> <b>D02</b>. VIEW_MESH    =>-  VIEW_MATERIAL, VIEW_POLYGON, VIEW_TRANSPARENT, VIEW_TOON, VIEW_HRD, VIEW_HIDDEN_EDGE </li>
+ <br>
+ <li> <b>D03</b>. VIEW_OUTLINE =>-  VIEW_HRD </li>
+ Exception : If the RequestedMode contains VIEW_HLR and CurrentMode contains VIEW_HIDDEN_EDGE then add VIEW_MESH and VIEW_EDGE to OutputMode
+ <li> <b>A04</b>. VIEW_HIDDEN_EDGE            =>+ VIEW_MESH, VIEW_EDGE </li>
+   <br>
+ </ul>
+     <li> <b>STEP.D2</b> : Remove the RequestedMode and the ModesToRemove from the OutputMode </li>
+    </ul>
+ 
+ <b>Activation</b>: When the RequestedMode is to be added to the CurrentMode
+    <ul>
+     <li> <b>STEP.A0</b> : Initialize OutputMode to CurrentMode  </li>
+     <li> <b>STEP.A1</b> : Consider the modes on (+) side, as ModesToAdd, if the RequestedMode is on (=) side of (+<=) Activate operator in A## Activation Rules.  </li>
+     <ul>
+ <li> <b>A01</b>. VIEW_EDGE    +<=  VIEW_WITHOUT_SMOOTH_EDGE, VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_WITHOUT_VERTEX, VIEW_COLORED_EDGES_FROM_FACES, VIEW_LINEONLINE, VIEW_HRD, VIEW_HIDDEN_EDGE  </li>
+ <br>
+ <li> <b>A02</b>. VIEW_MESH    +<=  VIEW_MATERIAL, VIEW_POLYGON, VIEW_TRANSPARENT, VIEW_TOON, VIEW_HRD, VIEW_HIDDEN_EDGE  </li>
+ <br>
+ <li> <b>A03</b>. VIEW_OUTLINE +<=  VIEW_HRD  </li>
+ Exception : Rules A01 and A02 are applicable for VIEW_HIDDEN_EDGE only if the CurrentMode does not contain VIEW_HLR
+ <br>
+    </ul>
+     <li> <b>STEP.A2</b> : Add the RequestedMode and the ModesToAdd to the OutputMode   </li>
+     <li> <b>STEP.A3</b> : Update the RequestedMode and OutputMode by excluding the modes on (x) side if RequestedMode is on (=) side of (x<=) Exclude operator in E## Exclusion Rules.   </li>
+ Note  : The Exclusion Rules are executed in the following order and consider the RequestedMode updated by previous rule.
+ <br>
+    <ul>
+ <br>
+ <li> <b>E00</b>. VIEW_HLR x<= VIEW_MESH, VIEW_MATERIAL, VIEW_EDGE, VIEW_WITHOUT_SMOOTH_EDGE, VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_OUTLINE, VIEW_HRD, VIEW_POLYGON, VIEW_TRANSPARENT,  VIEW_TOON, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES, VIEW_REP_OVERLOAD, VIEW_ISOPARS   </li>
+ Exception : If E00 succeeds and OutputMode contains VIEW_HIDDEN_EDGE then add VIEW_MESH and VIEW_EDGE
+ <br>
+ <li> <b>A04</b>. VIEW_HIDDEN_EDGE            =>+ VIEW_MESH, VIEW_EDGE  </li>
+ <br>
+ <li> <b>E01</b>. VIEW_WITHOUT_SMOOTH_EDGE    =>x  VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_TOON  </li>
+ <br>
+ <li> <b>E02</b>. VIEW_WITH_HALF_SMOOTH_EDGE  =>x  VIEW_WITHOUT_SMOOTH_EDGE, VIEW_TOON  </li>
+ <br>
+ <li> <b>E03</b>. VIEW_TOON                   x<= VIEW_EDGE, VIEW_OUTLINE  </li>
+ <br>
+ <li> <b>E04</b>. VIEW_POLYGON                =>x VIEW_MATERIAL, VIEW_HIDDEN_EDGE, VIEW_HRD, VIEW_TOON, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E05</b>. VIEW_ISOPARS                =>x VIEW_TOON, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E06</b>. VIEW_HIDDEN_EDGE            =>x VIEW_POLYGON, VIEW_TOON, VIEW_TRANSPARENT, VIEW_COLORED_EDGES_FROM_FACES, VIEW_LINEONLINE  </li>
+ <br>
+ <li> <b>E07</b>. VIEW_MATERIAL               =>x VIEW_HRD, VIEW_POLYGON, VIEW_TOON, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES  </li>
+ <br>
+ <li> <b>E08</b>. VIEW_HRD                    =>x VIEW_MATERIAL, VIEW_POLYGON, VIEW_TOON, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES  </li>
+ <br>
+ <li> <b>E09</b>. VIEW_HLR                    =>x VIEW_MESH, VIEW_EDGE, VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_WITHOUT_SMOOTH_EDGE, VIEW_OUTLINE, VIEW_MATERIAL, VIEW_HRD, VIEW_POLYGON, VIEW_ISOPARS, VIEW_TOON, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E10</b>. VIEW_TOON                   =>x VIEW_EDGE, VIEW_WITH_HALF_SMOOTH_EDGE, VIEW_WITHOUT_SMOOTH_EDGE, VIEW_HIDDEN_EDGE, VIEW_MATERIAL, VIEW_OUTLINE, VIEW_HRD, VIEW_POLYGON, VIEW_ISOPARS, VIEW_TRANSPARENT, VIEW_LINEONLINE, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E11</b>. VIEW_TRANSPARENT            =>x VIEW_HIDDEN_EDGE, VIEW_MATERIAL, VIEW_HRD, VIEW_POLYGON, VIEW_ISOPARS, VIEW_TOON, VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E12</b>. VIEW_LINEONLINE             =>x VIEW_MESH, VIEW_HIDDEN_EDGE, VIEW_MATERIAL, VIEW_OUTLINE, VIEW_HRD, VIEW_POLYGON, VIEW_ISOPARS, VIEW_TRANSPARENT, VIEW_TOON, VIEW_REP_OVERLOAD  </li>
+ <br>
+ <li> <b>E13</b>. VIEW_MESH                   =>x VIEW_LINEONLINE, VIEW_COLORED_EDGES_FROM_FACES  </li>
+ <br>
+ <li> <b>E14</b>. VIEW_OUTLINE                =>x VIEW_COLORED_EDGES_FROM_FACES, VIEW_LINEONLINE  </li>
+ <br>
+ <li> <b>E15</b>. VIEW_COLORED_EDGES_FROM_FACES =>x VIEW_MESH, VIEW_HIDDEN_EDGE, VIEW_MATERIAL, VIEW_OUTLINE, VIEW_HRD, VIEW_POLYGON, VIEW_TRANSPARENT, VIEW_REP_OVERLOAD  </li>
+ <br>
+ Exception : Exclude VIEW_REP_OVERLOAD from the OutputMode if it contains any of the modes below
+ <li> <b>E16</b>. VIEW_REP_OVERLOAD  x<= VIEW_COLORED_EDGES_FROM_FACES, VIEW_LINEONLINE, VIEW_TRANSPARENT, VIEW_TOON, VIEW_ISOPARS, VIEW_POLYGON, VIEW_HLR  </li>
+ <br>
+    </ul>
+    </ul>
+
+  <dl>
+  <dt> <b>Values:</b>
+  <dd>
+    <dl>
+    <dt><tt> VIEW_NO_DISPLAY</tt>
+   <dd>   No objects are seen.
+  </dd>
+    <dt><tt> VIEW_MESH</tt>
+   <dd>   Face of 3D objects are seen in shading.
+  </dd>
+    <dt><tt> VIEW_EDGE</tt>
+   <dd>   Edge of 3D objects are seen.
+  </dd>
+    <dt><tt> VIEW_OUTLINE</tt>
+   <dd>   Lines wich form the shadow of 3D objects are seen.
+  </dd>
+    <dt><tt> VIEW_MATERIAL</tt>
+   <dd>   The rendering takes account of </dd>
+<script type="text/javascript"> activateLinkAnchor('CATGraphicMaterial','','CATGraphicMaterial') </script> set on 3D object  
+    <dt><tt> VIEW_HLR</tt>
+   <dd>   Hidden Line Removal: compute by software.
+  </dd>
+    <dt><tt> VIEW_HRD</tt>
+   <dd>   Hidden Line Removal: compute by hardware.
+  </dd>
+    <dt><tt> VIEW_HIDDEN_EDGE</tt>
+   <dd>   Hidden Edges of faces are seen in dashed line.
+  </dd>
+    <dt><tt> VIEW_POLYGON</tt>
+   <dd>   See all the polygons that constitute the faces of 3D objects.
+  </dd>
+    <dt><tt> VIEW_ISOPARS</tt>
+   <dd>   Face are drawn with isoparametric lines.
+  </dd>
+    <dt><tt> VIEW_TOON</tt>
+   <dd>   This mode is not implemented. 
+  </dd>
+    <dt><tt> VIEW_TRANSPARENT</tt>
+   <dd>   All the geometry will be drawn half transparent.
+  </dd>
+    <dt><tt> VIEW_REP_OVERLOAD</tt>
+   <dd>   Rendering style defined per object will be considered.
+  </dd>
+    <dt><tt> VIEW_WITH_HALF_SMOOTH_EDGE</tt>
+   <dd>   Faces are drawn with edges but with half lighted smooth edges.
+  </dd>
+    <dt><tt> VIEW_WITHOUT_SMOOTH_EDGE</tt>
+   <dd>   Faces are drawn with edges but without smooth edges.
+  </dd>
+    <dt><tt> VIEW_LINEONLINE</tt>
+   <dd>   Enables to visualize superimposed lines by displaying them in a different color.
+  </dd>
+    <dt><tt> VIEW_WITHOUT_VERTEX</tt>
+   <dd>   Points are drawn but vertices are not.
+  </dd>
+    <dt><tt> VIEW_COLORED_EDGES_FROM_FACES</tt>
+   <dd>    The Edges are colored according to the shading faces color. 
+   Each edge has the same color as its adjacent faces. For internal edges, if the two adjacent faces 
+   have two different colors, the edge is painted with the color of the face whose bounding sphere radius is the smallest.
+  </dd>
+    <dt><tt> VIEW_WITHOUT_WIRES</tt>
+   <dd>   Deactivates the display of wires.
+  </dd>
+    <dt><tt> VIEW_WITHOUT_AXIS</tt>
+   <dd>   Deactivates the display of axes and axis systems.
+  </dd>
+    <dt><tt> VIEW_WITHOUT_POINTS</tt>
+   <dd>   Deactivates the display of points.</dd>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATViewerUtility.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

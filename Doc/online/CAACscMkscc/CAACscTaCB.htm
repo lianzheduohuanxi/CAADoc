@@ -1,0 +1,168 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Callback Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Callback Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article describes the check relative to callbacks. This check is
+      identified by BCBA.</p>
+				  <ul>
+					  <li><a href="#Problematic">Problematic</a></li>
+					  <li><a href="#Checks">Checks</a>
+						  <ul>
+							  <li><a href="#Principle">Principle</a></li>
+							  <li><a href="#BCBA">BCBA</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#Relative">Relative Sections  in Setting Files</a></li>
+					  <li><a href="#InShort">In Short</a></li>
+					  <li><a href="#References">References</a></li>
+					  <li><a href="#History">History</a></li>
+				  </ul>
+      </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>The callback mechanism is the way CAA V5 implements publish/subscribe between
+objects. This mechanism is implemented with method pointers. The user has to
+specify the type of the method by a cast of the address of the method pointer.
+If the cast does not meet the method signature (incorrect number of arguments),
+heap overwriting will happen at runtime, which is a serious problem leading to
+memory corruption.</p>
+<p>Four ways of setting a callback are checked by the tool:</p>
+<ol>
+  <li><strong>AddAnalyseNotificationCB </strong><code>[<a href="#References">2</a>]</code><br />
+    the third argument must be a method pointer. The implementation of this
+    method pointer must have 3 arguments.
+    <pre class="code"><strong>AddAnalyseNotificationCB</strong>(__Select_Mechanism, __Select_Mechanism-&gt; GetComboSelectNotification(), 
+  (CATCommandMethod) &amp;DNBDeviceMoveScheduleDlg::OnMechanismSelectionChange, NULL);</pre>
+  </li>
+  <li><strong>AddCallback </strong><code>[<a href="#References">1</a>]</code><br />
+    the third argument must be a method pointer. The implementation of this
+    method pointer must have 5 arguments.</li>
+  <li><strong>AddTransition </strong><code>[<a href="#References">3</a>]</code><br />
+    the third argument must be a method pointer. The implementation of this
+    method pointer must have 1 argument.</li>
+  <li><strong>Filter </strong><code>[<a href="#References">3</a>]</code><br />
+    the first argument must be a method pointer. The implementation of this
+    method pointer must have 2 arguments.</li>
+</ol>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Checks"></a>Checks</h2>
+<h3><a name="Principle"></a>Principle</h3>
+<p>For each occurrence of a callback set (each occurrence of
+AddAnalyseNotificationCB, AddCallback, AddTransition or Filter), the tool looks
+if the corresponding argument (ex : 3rd for AddAnalyseNotificationCB) is a
+method pointer. If it is, CSC looks in its symbol table for the implementation
+of this method. If the corresponding implementation does not have the good
+number of arguments (ex : 3 for AddAnalyseNotificationCB), the tool reports a
+BCBA error.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="BCBA"></a>BCBA</h3>
+<p>BCBA stands for Bad CallBAck.</p>
+<p>An error of type BCBA is reported when :</p>
+<ul>
+  <li>a callback is set with a bad signature for callback method</li>
+</ul>
+<h4><a name="BCBA-1"></a>Example BCBA-1</h4>
+<p>Let's assume that the signature of the method OnMechanismSelectionChange of
+the class CATDeviceMoveScheduleDlg is :</p>
+<pre class="code">class CATDeviceMoveScheduleDlg
+{
+  ...
+  void <strong>OnMechanismSelectionChange</strong>( CATCommand * iFromClient, CATNotification * iEvtDat);
+  ...
+}</pre>
+<p>The following code will report a BCBA error :</p>
+<pre class="code">CATDeviceMoveDcheduleDlg.cpp
+...
+<strong>AddAnalyseNotificationCB</strong>(_selection, _selection-&gt; GetComboSelectNotification(), 
+  (CATCommandMethod) &amp;<strong>CATDeviceMoveScheduleDlg::OnMechanismSelectionChange</strong>, NULL);
+...</pre>
+<p>To correct the error, modify the signature of
+CATDeviceMoveScheduleDlg::OnMechanismSelectionChange like the following :</p>
+<pre class="code">class CATDeviceMoveScheduleDlg
+{
+  ...
+  void <strong>OnMechanismSelectionChange</strong>( 	CATCommand * iFromClient,
+				CATNotification * iEvtDat,
+				CATCommandClientData iUsefulData);
+  ...
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>No external parameter is taken into account for this check.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>C++ Source Checker can easily and quickly point bad usage of callbacks,
+preventing a very laborious runtime debug, preventing runtime abort and waste of
+time for the user.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="#" onclick="javascript:CAAlinkOutOfPreqs('CAASysTechArticles/CAASysCallbacks.htm');return false;">The
+      Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="#" onclick="javascript:CAAlinkOutOfPreqs('CAASysTechArticles/CAASysSendReceive.htm');return false;">The
+      Send/Receive Communication Protocol</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="#" onclick="javascript:CAAlinkOutOfPreqs('CAADegTechArticles/CAADegGraph.htm');return false;">Implementing
+    the Command Statechart Diagram</a></td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

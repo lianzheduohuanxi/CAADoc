@@ -1,0 +1,384 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>NavigatorInterfaces Group (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../NavigatorInterfaces.htm" href="../NavigatorInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "NavigatorInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "Group"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>Group<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_Group_22740','Group','0');</script>
+<b><i>   Represents a DMU group.</i></b><br>
+
+ The DMU group is an entity which gathers references to several products in order to automate validation and verification of the Digital Mock-Up.
+ <p>A user can build a group using several methods: explicitely point out some products or take all products by default. The designated products
+ can be intermediate or terminal node of the product structure. For instance, a user  who has to verify the integration of the engine in engine
+ bay may define a group with the engine assembly or with all the parts from the engine in order to detect clashes. In the first case this user has to add
+ the engine assembly (as a product) in the group, and in the second case, to add all the parts to the group. Obviously, when a modification
+ happens to the engine assembly the user has to change the group only in the second case. To manage the explicit definition of the group, one may use the
+ <tt>XxxxExplicit</tt> methods.
+ <p>When the system takes the group into account to perform a given task, it may be necessary to retrieve:
+ <ul>
+ <li>The products designated by the user (For example, the section of these products)
+ <li>The terminal nodes (or leaves) of the product (For example, clash detection takes into account terminal nodes)
+ <li>The set of products in the product structure which are not selected (For example, hide all products which are not in the group)
+ <li>The set of terminal nodes which are not selected (For example, clash of some products against all others).
+ </ul>
+ To perform these treatments one may use <tt>YyyyExtract</tt> or <tt>ZzzzInvert</tt> methods.<hr>
+<dl>
+ <h2><a name="PropertyIndex"></a>Property Index</h2>
+ <dt>
+    <a href="#ExtractMode"><b>ExtractMode</b></a>
+<dd>  Returns or sets the mode for the extraction methods.
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#AddExplicit"><b>AddExplicit</b></a>
+<dd>  Adds a product to the group.
+ <dt>
+    <a href="#CountExplicit"><b>CountExplicit</b></a>
+<dd>  Returns the number of products in the group.
+ <dt>
+    <a href="#CountExtract"><b>CountExtract</b></a>
+<dd>  Returns the number of products which can be extracted from the group.
+ <dt>
+    <a href="#CountInvert"><b>CountInvert</b></a>
+<dd>  Returns the number of terminal node products which cannot be extracted from the group.
+ <dt>
+    <a href="#FillSelWithExtract"><b>FillSelWithExtract</b></a>
+<dd>  Fills the selection with all products which can be extracted from the group.
+ <dt>
+    <a href="#FillSelWithInvert"><b>FillSelWithInvert</b></a>
+<dd>  Fills the selection with all terminal node products which cannot be extracted from the group.
+ <dt>
+    <a href="#ItemExplicit"><b>ItemExplicit</b></a>
+<dd>  Returns a product using its index in the group.
+ <dt>
+    <a href="#ItemExtract"><b>ItemExtract</b></a>
+<dd>  Returns a product which can be extracted from the group using its index.
+ <dt>
+    <a href="#ItemInvert"><b>ItemInvert</b></a>
+<dd>  Returns a terminal node product which cannot be extracted from the group using its index.
+ <dt>
+    <a href="#RemoveExplicit"><b>RemoveExplicit</b></a>
+<dd>  Removes a product from the group using its index.
+</dl>
+ <h2><a name="Properties"></a>Properties</h2> <br>
+<a name="ExtractMode"><dt>
+
+<table><tr><td>o Property <b>ExtractMode</b>(<td>) As <script type="text/javascript"> activateLink('long','long')</script> </table></dt>
+<dl>
+  <dd>
+ Returns or sets the mode for the extraction methods.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The extraction mode
+    <ul>
+    <li>0: the extraction provides the products from the group (intermediate of terminal nodes).
+    <li>1: the extraction provides terminal nodes of the products from the group.
+    </ul>
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves the extraction mode of the <tt>NewGroup</tt> Group and sets it to 1.
+    <pre>
+    Dim Mode As Integer
+    Mode = NewGroup.<font color="red">ExtractMode</font>
+    NewGroup.<font color="red">ExtractMode</font> = 1
+    </pre></pre></dd>
+</dl>
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="AddExplicit"><dt>
+
+<table><tr><td>o Sub <b>AddExplicit</b>(<td><script type="text/javascript"> activateLink('CATBaseDispatch','CATBaseDispatch')</script> <td><tt>iProduct</tt>)</table></dt>
+<dl>
+  <dd>
+ Adds a product to the group.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iProduct</tt>
+   <dd>    The product to add
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example adds the product <tt>MyProduct</tt> to the group <tt>NewGroup</tt>.
+    <pre>
+    NewGroup.<font color="red">AddExplicit</font> MyProduct
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="CountExplicit"><dt>
+
+<table><tr><td>o Func <b>CountExplicit</b>(<td>) As <script type="text/javascript"> activateLink('long','long')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the number of products in the group.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves the number of products in the group <tt>NewGroup</tt>.
+    <pre>
+    Dim number As Integer
+    number = NewGroup.<font color="red">CountExplicit</font>
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="CountExtract"><dt>
+
+<table><tr><td>o Func <b>CountExtract</b>(<td>) As <script type="text/javascript"> activateLink('long','long')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the number of products which can be extracted from the group.
+ <p>Depending on the extraction mode, the extracted products can be:
+    <ul>
+    <li>Mode = 0: the products from the group (intermediate or terminal nodes).
+    <li>Mode = 1: the terminal nodes of the products from the group.
+    </ul>
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The number of products
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example reads the number of products in the group <tt>NewGroup</tt>.
+    <pre>
+    Dim number As Integer
+    number = NewGroup.<font color="red">CountExtract</font>
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="CountInvert"><dt>
+
+<table><tr><td>o Func <b>CountInvert</b>(<td>) As <script type="text/javascript"> activateLink('long','long')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the number of terminal node products which cannot be extracted from the group.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves the number of terminal node products which cannot be extracted from the group <tt>NewGroup</tt>.
+    <pre>
+    Dim number As Integer
+    number = NewGroup.<font color="red">CountInvert</font>
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="FillSelWithExtract"><dt>
+
+<table><tr><td>o Sub <b>FillSelWithExtract</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Fills the selection with all products which can be extracted from the group.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example fills the selection with products which can be extracted
+    from the <tt>NewGroup</tt> group.
+    <pre>
+    NewGroup.<font color="red">FillSelWithExtract </font>
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="FillSelWithInvert"><dt>
+
+<table><tr><td>o Sub <b>FillSelWithInvert</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Fills the selection with all terminal node products which cannot be extracted from the group.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example fills the selection with all products which cannnot be extracted
+    from the <tt>NewGroup</tt> group.
+    <pre>
+    NewGroup.<font color="red">FillSelWithInvert </font>
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="ItemExplicit"><dt>
+
+<table><tr><td>o Func <b>ItemExplicit</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>) As <script type="text/javascript"> activateLink('CATBaseDispatch','CATBaseDispatch')</script> </table></dt>
+<dl>
+  <dd>
+ Returns a product using its index in the group.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>    The index of the product in the group.
+    The index of the first product is 1, and
+    the index of the last product is CountExplicit.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The retrieved product
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves in <tt>ThisProduct</tt> the ninth product
+    from the <tt>NewGroup</tt> group.
+    <pre>
+    Dim ThisProduct As Product
+    Set ThisProduct = NewGroup.<font color="red">ItemExplicit</font>(9)
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="ItemExtract"><dt>
+
+<table><tr><td>o Func <b>ItemExtract</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>) As <script type="text/javascript"> activateLink('Product','Product')</script> </table></dt>
+<dl>
+  <dd>
+ Returns a product which can be extracted from the group using its index.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>    The index of the product in the group.
+    The index of the first product is 1, and
+    the index of the last product is CountExtract.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The retrieved product
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves in <tt>ThisProduct</tt> the ninth product
+    from the <tt>NewGroup</tt> group.
+    <pre>
+    Dim ThisProduct As Group
+    Set ThisProduct = NewGroup.<font color="red">ItemExtract</font>(9)
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="ItemInvert"><dt>
+
+<table><tr><td>o Func <b>ItemInvert</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>) As <script type="text/javascript"> activateLink('Product','Product')</script> </table></dt>
+<dl>
+  <dd>
+ Returns a terminal node product which cannot be extracted from the group using its index.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>    The index of the product in the group.
+    The index of the first product is 1, and
+    the index of the last product is CountExtract.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The retrieved product
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     This example retrieves in <tt>ThisProduct</tt> the ninth product which cannot be extracted from 
+    the <tt>NewGroup</tt> group.
+    <pre>
+    Dim ThisProduct As Group
+    Set ThisProduct = NewGroup.<font color="red">ItemInvert</font>(9)
+    </pre></pre></dd>
+</dl>
+</dl>
+<a name="RemoveExplicit"><dt>
+
+<table><tr><td>o Sub <b>RemoveExplicit</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>)</table></dt>
+<dl>
+  <dd>
+ Removes a product from the group using its index.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>    The index of the product in the group.
+    The index of the first product is 1, and
+    the index of the last product is CountExplicit.
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">     The following example removes the tenth product from the <tt>NewGroup</tt> group.
+    <pre>
+    NewGroup.<font color="red">RemoveExplicit</font> 10
+    </pre></pre></dd>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

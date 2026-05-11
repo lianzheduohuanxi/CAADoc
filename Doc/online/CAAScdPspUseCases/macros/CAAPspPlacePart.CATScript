@@ -1,0 +1,369 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2007
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interface
+'                 CATIAPspPlacePart
+'  
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R17 
+' *****************************************************************************
+
+' *****************************************************************************
+'--- Global variables
+' *****************************************************************************
+Dim gTraceOutput As String
+Set gTraceOutput = ""
+Dim gObjListFactory As PspTempListFactory
+Set gObjListFactory = Nothing
+Dim gObjPspDoc As Document
+Set gObjPspDoc = Nothing
+Dim gObjPrdRoot        As Product
+Set gObjPrdRoot = Nothing
+Dim gObjRootProduct    As Product
+Set gObjRootProduct = Nothing
+Dim gObjPspWorkbench   As PspWorkbench
+Set gObjPspWorkbench = Nothing
+
+' *****************************************************************************
+'--- Support routines
+' *****************************************************************************
+' Show a trace output line.
+Sub ShowTraceOutputLine(iTraceOutput As String)
+  'Add message to output string for sending to message box at end of run.
+  gTraceOutput = gTraceOutput & iTraceOutput & vbCr               
+  'Show message right away. May cause a lot of message boxes if used interactively.
+  'CATIA header and lots of stuff is added to every MsgBox.
+  'MsgBox iTraceOutput
+  ' Print doesn't work in CATIA VB
+  'Print iTraceOutput & vbCr   
+End Sub
+
+' Dump all traces.
+Sub DumpTraces()
+  MsgBox gTraceOutput
+End Sub
+
+' Get the ID of an object.
+Function GetObjectID(iObject As CATIABase) As String
+  Dim objPspPhyID       As PspID
+  GetObjectID = ""
+  If ( Not ( gObjPspWorkbench Is Nothing ) And _
+        Not ( iObject Is Nothing ) ) Then  
+  
+    Set objPspPhyID = gObjPspWorkbench.GetInterface("CATIAPspID", iObject )      
+
+    If ( Not (objPspPhyID Is Nothing) ) Then
+      GetObjectID = objPspPhyID.GetID
+    End If 
+
+  End If
+End Function
+
+' Show the ID of an object.
+Sub ShowObjectID(iObjectComment As String, iObject As CATIABase)
+  ShowTraceOutputLine iObjectComment &  " ID = " & GetObjectID(iObject)
+End Sub
+
+
+' Empty list of doubles.
+Sub ClearDoubles(iListDoubles As PspListOfDoubles)
+  If ( Not iListDoubles Is Nothing ) Then
+    Dim ii As Integer
+    For ii = iListDoubles.Count To 1 Step -1
+      iListDoubles.RemoveByIndex ii
+    Next
+  End If
+End Sub
+
+' Convert list of three doubles to string.
+Function DumpVector(iVector As PspListOfDoubles) As String
+  DumpVector = ""
+  
+  If ( Not iVector Is Nothing ) Then
+    If (iVector.Count = 3) Then
+      DumpVector = "("
+      Dim iiCoord As Integer
+      For iiCoord = 1 To 3
+        Dim coord As Double
+        coord = iVector.Item(iiCoord)
+        DumpVector = DumpVector & coord
+        if (iiCoord < 3) Then DumpVector = DumpVector & ","
+      Next
+      DumpVector = DumpVector & ")"
+    End If
+
+  End If
+End Function
+
+' Convert a four vector transform matrix to a string
+Function DumpTransform(iTransform As CATSafeArray) As String
+  DumpTransform = ""
+  
+  Dim vector As PspListOfDoubles
+  Set vector = gObjListFactory.CreateListOfDoubles()
+  Dim iiVector As Integer
+  For iiVector = 1 To 4
+    Dim ii1 As Integer
+    ii1 = 3 * iiVector
+    vector.Append iTransform(ii1 - 3)
+    vector.Append iTransform(ii1 - 2)
+    vector.Append iTransform(ii1 - 1)
+    DumpTransform = DumpTransform & DumpVector(vector)
+    if (iiVector < 4) Then DumpTransform = DumpTransform & " "
+    ClearDoubles vector
+  Next
+End Function
+
+' *****************************************************************************
+'--- Main routine
+' *****************************************************************************
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Setup the Environment
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+
+    
+    Set gObjPspDoc = CATIA.Documents.Open(sDocFullPath)
+    If (gObjPspDoc Is Nothing) Then
+      Err.Raise 9999,sDocPath,"No Document Open"
+    End If
+
+    ShowTraceOutputLine "Output traces from CAAPspPlacePart.CATScript"
+
+    ' Find the top node of the Distributive System object tree - .  
+    Set gObjPrdRoot = gObjPspDoc.Product 
+    If (gObjPrdRoot Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get root product object"
+    End If
+    
+    Set gObjPspWorkbench = gObjPrdRoot.GetTechnologicalObject ("PspWorkbench")
+    If (gObjPspWorkbench Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get PspWorkbench"
+    End If
+    ShowTraceOutputLine "Success in getting PspWorkbench"
+
+    Set gObjRootProduct = gObjPspWorkbench.GetInterface("CATIAProduct", gObjPrdRoot )      
+    If (gObjRootProduct Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get root product"
+    End If
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    Dim objPspPhysicalPrd As PspPhysicalProduct
+    
+    Dim ePspIDLDomainID   As CatPspIDLDomainID    
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    ' Get Application
+    Set objPspApplication = gObjPspWorkbench.GetApplication(catPspIDLCATPiping)
+    If (objPspApplication Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get PspApplication"
+    End If
+    ShowTraceOutputLine "Success in getthing objPspApplication"
+    objPspApplication.Initialization()             
+    
+    '-----------------------------------------------------------------------
+    ' Get Data for Part Placement
+    '-----------------------------------------------------------------------
+    ' Get gObjListFactory
+    Set gObjListFactory = gObjPspWorkbench.GetInterface("CATIAPspTempListFactory", objPspApplication )      
+    If (gObjListFactory Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get list factory"
+    End If
+    
+    ' Get root product children and parent product for placed part
+    Dim ParentProductRef As CATIABase
+    Set ParentProductRef = Nothing
+    Dim ParentProduct As Product
+    Set ParentProduct = Nothing
+    ShowTraceOutputLine "Number of root children = " & gObjRootProduct.Products.Count
+    Dim Prod As CATIABase
+    For Each Prod in gObjRootProduct.Products
+      ShowTraceOutputLine "Root child product name = " & Prod.Name
+      If (Prod.Name = "CAAPsp3DEduIn.1") Then 
+        Set ParentProductRef = gObjPspWorkbench.GetInterface("CATIABase", Prod )      
+        Set ParentProduct = gObjPspWorkbench.GetInterface("CATIAProduct", Prod )      
+      End If
+    Next
+    If (ParentProductRef Is Nothing Or ParentProduct Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get parent product"
+    End If
+    'ShowTraceOutputLine "Part place parent product name = " & ParentProductRef.Name
+    ShowTraceOutputLine "Part place parent product name = " & ParentProduct.Name
+ 
+    ' Get PspPhysicalProduct object
+    Dim objLPhysicals     As PspListOfObjects                  
+    Set objPspAppFactory = gObjPspWorkbench.GetInterface("CATIAPspAppFactory", objPspApplication )      
+  
+    Set objLPhysicals = objPspAppFactory.ListPhysicals ( gObjPrdRoot , catPspIDLCATPIP)
+    If ( Not ( objLPhysicals Is Nothing ) And _
+        ( objLPhysicals.Count > 0 ) ) Then      
+      Set objPspPhysicalPrd =  objLPhysicals.Item( 1, "CATIAPspPhysicalProduct" )
+    End If
+    If (objPspPhysicalPrd Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get physcial part for reference product input"
+    End If
+    ShowObjectID "Physical Product object", objPspPhysicalPrd
+ 
+    ' Get object reference part and parent.
+    Dim objPhysicalProduct As Product
+    Dim objReferenceProduct As Product
+    Dim objParentProduct As Product
+    Set objPhysicalProduct = gObjPspWorkbench.GetInterface("CATIAProduct", objPspPhysicalPrd )      
+  
+    If ( Not (objPhysicalProduct Is Nothing) ) Then
+      Set objReferenceProduct = objPhysicalProduct.ReferenceProduct
+
+      'Just for info: got parent for part place above.
+      Set objParentProduct = objPhysicalProduct.Parent
+      If (Not (objParentProduct Is Nothing)) Then
+        ShowTraceOutputLine "Parent part name = " & objParentProduct.Name
+      End If
+    End If 
+    If (objReferenceProduct Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get reference product input"
+    End If
+    ShowTraceOutputLine "Reference part number = " & objReferenceProduct.PartNumber
+    ShowObjectID "Reference Product object", objReferenceProduct
+ 
+    ' Get logical line
+    Dim LogicalLine As PspLogicalLine
+    Set LogicalLine = Nothing
+    Dim PhysicalProductGroupable As PspGroupable
+    Set PhysicalProductGroupable = Nothing
+    Set PhysicalProductGroupable = gObjPspWorkbench.GetInterface("CATIAPspGroupable", objPspPhysicalPrd )      
+    If ( Not ( PhysicalProductGroupable Is Nothing ) ) Then
+      ShowTraceOutputLine "Number of groups = " & PhysicalProductGroupable.Groups.Count
+      Dim iiGroup As Integer
+      For iiGroup = 1 to PhysicalProductGroupable.Groups.Count
+        Dim Group As CATIABase
+        Set Group = PhysicalProductGroupable.Groups.Item(iiGroup, "CATIABase")
+        ShowTraceOutputLine "Group name = " & Group.Name
+        Set LogicalLine = gObjPspWorkbench.GetInterface("CATIAPspLogicalLine", Group ) 
+        If ( Not ( LogicalLine Is Nothing ) ) Then
+          ShowTraceOutputLine "Part place logical line name = " & LogicalLine.Name
+          Exit For
+        End If
+      Next
+    End If
+ 
+    
+    '-----------------------------------------------------------------------
+    ' Place Part
+    '-----------------------------------------------------------------------
+    Dim Standard As String
+    Standard = "ASTL"
+    Dim FunctionType As String
+    FunctionType = "CATPspValveFunction"
+    Dim PlacedPartID As String
+    PlacedPartID = "" 'Null string uses name generated by PP engine
+    ' Up direction for part = (0,0,1)
+    Dim UpDirection As PspListOfDoubles
+    Set UpDirection = gObjListFactory.CreateListOfDoubles()
+    UpDirection.Append 0.0 'Align vertical parallel to z-axis.
+    UpDirection.Append 0.0
+    UpDirection.Append 1.0
+    ' Horizontal alignment for part = (1,0,0)
+    Dim HorizontalOrientation As PspListOfDoubles
+    Set HorizontalOrientation = gObjListFactory.CreateListOfDoubles()
+    HorizontalOrientation.Append 1.0 'Align horizontal parallel to x-axis.
+    HorizontalOrientation.Append 0.0
+    HorizontalOrientation.Append 0.0
+    ' Part position = (1000,2000,4000) (mm)
+    Dim Position As PspListOfDoubles
+    Set Position = gObjListFactory.CreateListOfDoubles()
+    Position.Append 1000.0 'Position part at (1000, 2000, 3000)
+    Position.Append 2000.0
+    Position.Append 4000.0
+    Dim PlacePartRef As CATIABase
+    Set PlacePartRef = Nothing
+    Dim objPlacePart As PspPlacePart                  
+    Set objPlacePart = Nothing
+    Set objPlacePart = gObjPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplication )      
+    If ( Not ( objPlacePart Is Nothing ) ) Then      
+      Set PlacePartRef = objPlacePart.PlacePartInSpace(Standard, _
+                                                       FunctionType, _
+                                                       objReferenceProduct, _
+                                                       ParentProductRef, _
+                                                       LogicalLine, _
+                                                       PlacedPartID, _
+                                                       UpDirection, _
+                                                       HorizontalOrientation, _
+                                                       Position)
+    End If
+    If ( PlacePartRef Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+    End If
+ 
+    '-----------------------------------------------------------------------
+    ' View and Test Part Data
+    '-----------------------------------------------------------------------
+    ' Placed part position
+    Dim objPlacePartProduct As Product
+    'Set objPlacePartProduct = PlacePartRef
+    Set objPlacePartProduct = gObjPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    If ( objPlacePartProduct Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    End If
+    Dim placePartPositArray(12) As CATSafeArray
+    objPlacePartProduct.Position.GetComponents(placePartPositArray)
+    ShowTraceOutputLine "Product posit = " & DumpTransform(placePartPositArray)
+    
+    ' Placed part connectors
+    Dim objPlacePartPhysical As CATIAPspPhysicalProduct                  
+    Set objPlacePartPhysical = Nothing
+    Set objPlacePartPhysical = gObjPspWorkbench.GetInterface("CATIAPspPhysicalProduct", PlacePartRef )      
+    If ( Not ( objPlacePartPhysical Is Nothing ) ) Then
+      ShowTraceOutputLine "Number of connectors = " & objPlacePartPhysical.Connectors.Count
+      If ( objPlacePartPhysical.Connectors.Count <> 2 ) Then      
+        Err.Raise 9999,sDocPath,"Wrong number of connectors"
+      End If
+      Dim iiCtr As Integer
+      For iiCtr = 1 to objPlacePartPhysical.Connectors.Count
+        ShowTraceOutputLine "iiCtr = " & iiCtr
+        Dim Ctr As PspPartConnector
+        Set Ctr = objPlacePartPhysical.Connectors.Item(iiCtr, "CATIAPspPartConnector")
+        If ( Ctr Is Nothing ) Then      
+          Err.Raise 9999,sDocPath,"Bad connector"
+        End If
+        ShowTraceOutputLine "Ctr name = " & Ctr.Name
+        Dim CtrPosit As PspListOfDoubles
+        Set CtrPosit = Nothing
+        Set CtrPosit = Ctr.GetPosition(ParentProduct)
+        ShowTraceOutputLine "Ctr posit = " & DumpVector(CtrPosit)
+        Dim CtrAlign As PspListOfDoubles
+        Set CtrAlign = Nothing
+        Set CtrAlign = Ctr.GetAlignmentDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr align = " & DumpVector(CtrAlign)
+        Dim CtrUp As PspListOfDoubles
+        Set CtrUp = Nothing
+        Set CtrUp = Ctr.GetUpDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr up = " & DumpVector(CtrUp)
+      Next
+    End If
+    
+    ' Dump messages.
+    DumpTraces
+
+End Sub
+
+
+

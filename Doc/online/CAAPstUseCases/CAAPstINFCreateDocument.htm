@@ -1,0 +1,1063 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 12.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Creating New Features &quot;From Scratch&quot; in a Product Document</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Creating New Features &quot;From Scratch&quot; in a Product 
+        Document</H3>
+        <P><EM>Instantiating new features in applicative containers</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+    <TR>
+        <TD valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">
+        CAAPstIntegrateNewFeatures</A> &gt; <B>CAAPstINFCreateDocument</B> &gt;
+        <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</A> &gt;
+        <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</A> &gt;
+        <a href="CAAPstINFVisu.htm">CAAPstINFVisu</A> &gt;
+        <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</A>&nbsp; 
+        &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</A> &gt;
+        <a href="CAAPstINFDelete.htm">CAAPstINFDelete</A> &gt;
+        <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</A></TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article discusses the CAAPstINFCreateDocument use case. This use 
+        case explains how to create a new applicative container in a Product 
+        document and how to instantiate new features in it.&nbsp; </P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><A href="#UseCase"><STRONG>The CAAPstINFCreateDocument Use Case</STRONG></A>
+            <UL>
+                <LI><A href="#What">What Does CAAPstINFCreateDocument Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstINFCreateDocument</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstINFCreateDocument 
+                Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#StepByStep">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>This use case is intended to illustrate how to instantiate new features in an 
+applicative container of a Product document. </P>
+<P>You should already be familiar with the CAAPstIntegrateNewFeatures use case 
+article [<A href="#References">1</A>] in order to more easily understand the 
+context of this use case. A general pre-requisite knowledge of the Feature 
+Modeler and of Providers may be required to fully understand this sample. You 
+may want to review the basics of the Feature Modeler by looking over the 
+&quot;Feature Modeler Overview&quot; technical article [<A href="#References">2</A>].&nbsp; 
+Finally, it may be useful for you to look over the &quot;Product Structure Model&quot; 
+technical article [<A href="#References">3</A>] as well.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstINFCreateDocument Use Case</H3>
+<P>The CAAPstINFCreateDocument is a use case that is part of the 
+CAAPstIntegrateNewFeatures use case defined in the CAAProductStructure.edu 
+framework that illustrates the integration of ObjectSpecsModeler framework 
+capabilities in the scope of a Product document.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does the CAAPstINFCreateDocument Use Case Do</H4>
+<P>This use case is made up of a batch program that creates a new Product 
+document, a new applicative container within the Product document and a number 
+of new features within the applicative container. The StartUps of these features 
+were created by the CATfctEditorAssistantTool. 
+Each new feature type implements its own interface whose methods manage the 
+valuation and retrieval of the feature's attributes. These implementations will 
+be looked at in detail in this use case as well.</P>
+<P>Initially, the Product document is created and the &quot;CAAPstINFCont&quot; 
+applicative container is created within it. Next, two &quot;CAAPstINFRoot&quot; features 
+are instantiated in the applicative container, the first that will aggregate the 
+other features and the second that will be used during the interactive scenario 
+to demonstrate CCP capabilities. Five &quot;CAAPstINFPoint&quot; features are then 
+instantiated in the applicative container, each having different coordinate 
+values. Then, a &quot;CAAPstINFLine&quot; feature is also instantiated, whose attribute 
+values reference the first two &quot;CAAPstINFPoint&quot; features. Finally, a 
+&quot;CAAPstINFWire&quot; feature is instantiated and its attribute points to a list 
+containing references to the last three &quot;CAAPstINFPoint&quot; features.&nbsp; The 
+&quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features are then 
+aggregated by the first &quot;CAAPstINFRoot&quot; feature. Here are the contents of the 
+new Product document:</P>
+<P><B>Fig. 1: Contents of the CAAPstINFDocument.CATProduct document.</B> </P>
+<TABLE border="0" cellpadding="0" cellspacing="0" width="100%">
+    <TR>
+        <TD width="100%">
+        <img border="0" src="images/CAAPstINFDocStructure.jpg" width="428" height="438"></TD>
+    </TR>
+</TABLE>
+<P>As you can see, the five &quot;CAAPstINFPoint&quot; features, the &quot;CAAPstINFLine&quot; 
+feature and &quot;CAAPstINFWire&quot; feature are the elements in the list of components 
+of the &quot;CAAPstINFRoot1&quot; feature. Also, notice that the &quot;CAAPstINFLine1&quot; feature 
+points to &quot;CAAPstINFPoint1&quot; and &quot;CAAPstINFPoint2&quot; through a &quot;SpecObject&quot; link 
+and that the &quot;CAAPstINFWire1&quot; feature points to &quot;CAAPstINFPoint3&quot;, 
+&quot;CAAPstINFPoint4&quot;, and &quot;CAAPstINFPoint5&quot; through a &quot;SpecObject&quot; link as well.</P>
+<P>You can see, in this case, that &quot;CAAPstINFRoot1&quot; aggregates the other 
+features, meaning that if &quot;CAAPstINFRoot1&quot; were to be deleted, all of the 
+aggregated features would be deleted as well. The &quot;CAAPstINFLine&quot; and the 
+&quot;CAAPstINFWire&quot; objects, on the other hand, only reference the points that make 
+up their definitions, meaning that if they were to be deleted, the points would 
+continue to exist independently. Inversely, however, in the case of the line, 
+for example, if ever one of the points were to be deleted, it would be necessary 
+to delete the line as well, since its definition would no longer be valid.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch the CAAPstINFCreateDocument Use Case</H4>
+<P>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures Use 
+Case&quot; in the &quot;<a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features 
+in a Product Structure</A>&quot; use case for a detailed description of how this use 
+case should be launched.</P>
+<P>The particular part of the use case described in this article is launched by 
+executing the following command:</P>
+<PRE>    mkrun -c &quot;CAAPstINFCreateDocument CatalogName DocumentStorageName&quot;</PRE>
+<P>where: </P>
+<UL>
+    <LI><CODE>CatalogName</CODE> is the name and <CODE>.CATfct</CODE> suffix of 
+    the catalog containing the StartUps that are to be instantiated. This 
+    catalog must be found in the current runtime view. You can reference here 
+    the catalog called &quot;CAAPstINFCatalog.CATfct&quot; that is delivered along with 
+    this use case, or you can reference the catalog you may have yourself 
+    created using the CATfctEditorAssistant tool described by the Managing the 
+	Startup Catalogs Lifecycle technical article [<a href="#References">6</a>].</LI>
+    <LI><CODE>DocumentStorageName</CODE> is the entire pathname, name and 
+    .CATProduct suffix of the new document that is to be created.&nbsp;</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstINFCreateDocument Code</H4>
+<P>The CAAPstINFCreateDocument use case is made of two modules, 
+CAAPstINFCreateDocument.m and CAAPstINFModeler.m, both found in the 
+CAAProductStructure.edu framework. CAAPstINFCreateDocument.m is a load module 
+containing a single source program, CAAPstINFMainCreateDocument.cpp which 
+creates the new document. This program also references the implementation 
+classes of the <I>CAAIPstINFRoot</I>, <I>CAAIPstINFPoint</I> and <I>
+CAAIPstINFLine</I> interfaces called <I>CAAEPstINFRoot</I>, <I>CAAEPstINFPoint,</I>
+<I>CAAEPstINFLine</I> and CAAEPstINFWire whose source files are called 
+CAAEPstINFRoot.cpp, CAAEPstINFPoint.cpp, CAAEPstINFLine.cpp and 
+CAAEPstINFWire.cpp and whose header files are called CAAEPstINFRoot.h, 
+CAAEPstINFPoint.h, CAAEPstINFLine.h and CAAEPstINFWire.h. These files can be 
+found in the CAAPstINFModeler.m module.</P>
+<TABLE>
+    <TR>
+        <TD>Windows</TD>
+        <TD><CODE>
+        InstallRootDirectory\CAAProductStructure.edu\CAAPstINFCreateDocument.m 
+        and CAAPstINFModeler</CODE></TD>
+    </TR>
+    <TR>
+        <TD>Unix</TD>
+        <TD><CODE>
+        InstallRootDirectory/CAAProductStructure.edu/CAAPstINFCreateDocument.m 
+        and CAAPstINFModeler</CODE></TD>
+    </TR>
+</TABLE>
+<P>where <CODE>InstallRootDirectory</CODE> is the directory where the CAA CD-ROM 
+is installed.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H3><A name="StepByStep"></A>Step-by-Step</H3>
+<P>There are seven logical steps in CAAPstINFCreateDocument:</P>
+<OL>
+    <LI><A href="#CreateDoc">Creating a New Product Document</A></LI>
+    <LI><A href="#CreateAppliCont">Creating a New Applicative Container</A></LI>
+    <LI><A href="#OpenCatalog">Opening the StartUp Catalog</A></LI>
+    <LI><A href="#Instantiate">Instantiating New Features in the Applicative 
+    Container</A></LI>
+    <LI><A href="#Valuate">Valuating the New Feature's Attributes</A></LI>
+    <LI><A href="#Aggregate">Aggregating the New Features to the Root Feature 
+    Node</A></LI>
+    <LI><A href="#SaveDoc">Saving the New Product Document</A></LI>
+</OL>
+<P>We will now comment each of these sections by looking at the code.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="CreateDoc"></A>Creating a New Product Document</B></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+CATDocument *pDoc = NULL;
+rc = CATDocumentServices::<B>New</B>(&quot;Product&quot;,
+                              pDoc);
+...   </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">A new Product document is created using the <CODE>New</CODE> 
+static method of <I>CATDocumentServices</I> and specifying a &quot;Product&quot; type of 
+document. This method returns a <I>CATDocument</I> pointer to the new document 
+that has been created.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="CreateAppliCont"></A>Creating a New Applicative 
+Container</B></P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...   
+CATIdent idAppliCont = &quot;CAAPstINFCont&quot;;
+CATUnicodeString appliContIdentifier = &quot;PstINFContainer&quot;;
+CATBaseUnknown *pINFAppliCont = NULL;
+rc = ::<B>CATCreateApplicativeContainer</B>(&amp;pINFAppliCont,       // appli cont created
+                                     pDoc,                 // document 
+                                     idAppliCont,          // type of appli cont
+                                     IID_CATIContainer,    // interface type of appli cont
+                                     &quot;CATFeatCont&quot;,        // supertype of appli cont 
+                                     appliContIdentifier); // name of appli cont
+...
+
+// Get a CATIContainer handle on the applicative container
+
+<B>CATIContainer *piINFAppliCont = (CATIContainer*) pINFAppliCont;
+</B>
+<FONT color="#0000FF"><B>#ifdef INTERACTIVE_APPLICATION
+</B>// Initialize the applicative container
+// For a product structure, the call to CATInit is only mandatory
+// in interactive
+CATInit * pInit = NULL ;
+rc = piINFAppliCont-&gt;QueryInterface(IID_CATInit, (void**) &amp;pInit);
+...
+pInit-&gt;<B>Init</B>(FALSE);
+..
+
+// Declare the container to the Undo/redo mechanism
+// only in interactive otherwise the method returns E_FAIL
+// (as there is no undo/redo management in batch mode)
+
+rc = ::<B>CATOmbPerformAfterContainerCreation</B>(piINFAppliCont);
+...
+</FONT><B><FONT color="#0000FF">#endif</FONT>
+</B>...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">A new applicative container is created using the <CODE>
+CATCreateApplicativeContainer</CODE> global function. This function takes the 
+following arguments:</P>
+<UL>
+    <LI>
+    <P align="left"><B>pINFAppliCont</B> - this is the returned <I>
+    CATBaseUnknown</I> pointer to the new applicative container that will be 
+    created.</LI>
+    <LI>
+    <P align="left"><B>pDoc - </B>this is the <I>CATDocument</I> pointer to the 
+    current document in which the applicative container will be created.</LI>
+    <LI>
+    <P align="left"><B>idAppliCont </B>- this is the late type of the new 
+    applicative container that will be created.&nbsp;</LI>
+    <LI>
+    <P align="left"><B>IID_CATIContainer</B> - this is the requested interface 
+    that the returned <I>CATBaseUnknown</I> pointer to the new applicative 
+    container can be cast into.</LI>
+    <LI>
+    <P align="left"><B>&quot;CATFeatCont&quot;</B> -&nbsp; this is the late type of the 
+    container this applicative container derives from; it must be &quot;CATFeatCont&quot; 
+    if the late type of the new applicative container itself&nbsp; (idAppliCont 
+    variable) is not &quot;CATFeatCont&quot; already.</LI>
+    <LI>
+    <P align="left"><B>appliContIdentifier</B> - this is the identifier of the 
+    new applicative container.</LI>
+</UL>
+<P align="left">Once the applicative container has been created, the <I>
+CATBaseUnknown</I> pointer to it can be directly cast to the requested 
+interface, in this case, <I>CATIContainer,</I> which will be used to open the 
+StartUp catalog.&nbsp;</P>
+<P align="left">For interactive applications, additional steps are required for 
+the applicative container (see
+<a href="../CAAOsmUseCases/CAAOsmAppliCont.htm">
+&quot;Creating Features in an Applicative Container&quot;</A>):</P>
+<UL>
+    <LI>
+    <P align="left">Initialize the container with the <TT><B>Init</B></TT> 
+    method of the <TT><B>CATInit</B></TT> interface</LI>
+    <LI>
+    <P align="left">Call the global function <TT><B>
+    CATOmbPerformAfterContainerCreation</B></TT> after <TT><B>CATInit::Init</B></TT> 
+    to support the Undo/Redo mechanism</SPAN></B></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><A name="OpenCatalog"></A><B>Opening the StartUp Catalog</B></P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CATUnicodeString stgName = argv[1];
+CATICatalog *piCatalog = NULL;
+CATUnicodeString clientId(&quot;CAAPstINFClientId&quot;);
+rc = ::<B>AccessCatalog</B> (&amp;stgName,
+                      &amp;clientId,
+                      piINFAppliCont,
+                      &amp;piCatalog); 
+...   </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">An existing StartUp catalog can be opened using the <CODE>
+AccessCatalog</CODE> global function. This function takes the following 
+arguments:</P>
+<UL>
+    <LI>
+    <P align="left"><B>stgName</B> - this is the name of the StartUp catalog 
+    that must be found in the runtime directory. In this use case, the name of 
+    the StartUp catalog is passed as an argument to the main program.</LI>
+    <LI>
+    <P align="left"><B>clientId</B> - this is the client id assigned to the 
+    catalog at the time of its creation to protect it from unwanted access.&nbsp;</LI>
+    <LI>
+    <P align="left"><B>piINFAppliCont</B> - this is a <I>CATIContainer</I> 
+    pointer to the applicative container in which the StartUps from this catalog 
+    will be instantiated.</LI>
+    <LI>
+    <P align="left"><B>piCatalog</B> - this is the returned <I>CATICatalog</I> 
+    pointer to the opened StartUp catalog.</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="Instantiate"></A>Instantiating New Features in the 
+Applicative Container</B></P>
+<P align="left">Instantiating a new feature in an applicative container is a 
+two-step process: the StartUp must first be retrieved from the catalog and then 
+it can be instantiated in the applicative container.</P>
+<P align="left">1. Retrieving a StartUp from the catalog.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CATBaseUnknown *pRootSU = NULL;
+CATUnicodeString rootSUType(&quot;CAAPstINFRoot&quot;);
+rc = piCatalog -&gt; <B>RetrieveSU</B>(&amp;pRootSU, 
+                             &amp;rootSUType,
+                             &quot;CATISpecObject&quot;);
+...
+// Get a CATISpecObject handle on the CAAPstINFRoot StartUp
+<B>CATISpecObject *piRootSU = (CATISpecObject*) pRootSU;</B>
+...   </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">In order to retrieve a StartUp from the catalog, use the <CODE>
+RetrieveSU</CODE> method of <I>CATICatalog</I>. This method takes the following 
+arguments:</P>
+<UL>
+    <LI>
+    <P align="left"><B>pRootSU</B> - this is the returned <I>CATBaseUnknown</I> 
+    pointer to the retrieved StartUp.</LI>
+    <LI>
+    <P align="left"><B>rootSUType</B> - this is the late type of the StartUp 
+    that we want to retrieve.</LI>
+    <LI>
+    <P align="left"><B>&quot;CATISpecObject&quot; </B>- this is the interface that will 
+    support this StartUp.</LI>
+</UL>
+<P align="left">Once the StartUp has been retrieved, the <I>CATBaseUnknown</I> 
+pointer can be directly cast to a pointer of the requested interface, in this 
+case, <I>CATISpecObject</I>.</P>
+<P align="left">This example shows retrieving the &quot;CAAPstINFRoot&quot; StartUp. The 
+retrieval of the &quot;CAAPstINFPoint&quot;,&quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;&nbsp; 
+StartUps is done in exactly the same way.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">2. Instantiating the StartUp in the applicative container.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CATISpecObject *piRootInst1 = piRootSU -&gt; <B>Instanciate</B>(CATUnicodeString(&quot;CAAPstINFRoot1&quot;),
+                                                      pINFAppliCont);
+...   </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">A new feature is created using the <CODE>Instanciate</CODE> 
+method of <I>CATISpecObject</I>. In this case, the <I>CATISpecObject</I> points 
+to the StartUp that was previously retrieved. This method takes the following 
+arguments:</P>
+<UL>
+    <LI>
+    <P align="left"><B>&quot;CAAPstINFRoot1&quot;</B> - this is the name of the new 
+    feature; its late type will always be the same as the StartUp.</LI>
+    <LI>
+    <P align="left"><B>pINFAppliCont</B> - a pointer to the applicative 
+    container in which the new feature will be instantiated.</LI>
+</UL>
+<P align="left">In this use case, two &quot;CAAPstINFRoot&quot; features are created, 
+&quot;CAAPstINFRoot1&quot; and &quot;CAAPstINFRoot2&quot;. The first root feature will serve to 
+aggregate the five &quot;CAAPstINFPoint&quot; features, the &quot;CAAPstINFLine&quot; feature, and 
+the &quot;CAAPstINFWire&quot; feature which are all created here. The second root feature 
+is created in order to demonstrate certain CCP operations during the interactive 
+session. All of these features are instantiated in the same way and in the same 
+applicative container, using the <CODE>Instanciate</CODE> method, as seen above.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="Valuate"></A>Valuating the New Feature's Attributes</B></P>
+<P align="left">1. Accessing &quot;CAAPstINFPoint&quot; attributes.</P>
+<P align="left">When creating new features, it is always a good idea to define 
+specific interfaces for them in order to manipulate their data values in a 
+proper way. The <I>CAAIPstINFPoint</I> interface is, therefore, defined to 
+retrieve and set the &quot;CAAPstINFPoint&quot; attribute values.</P>
+<P align="left">1.1 Implementing the <I>CAAIPstINFPoint</I> interface.</P>
+<P align="left">The <I>CAAIPstINFPoint</I> interface is composed of six methods, 
+the first three to retrieve the values of the point coordinates: <CODE>GetX</CODE>,
+<CODE>GetY</CODE>, and <CODE>GetZ</CODE>; the other three to set the values of 
+the point coordinates: <CODE>SetX</CODE>, <CODE>SetY</CODE> and <CODE>SetZ</CODE>. 
+The code example below is taken from the <I>CAAEPstINFPoint</I> implementation 
+class found in the CAAEPstINFPoint.cpp source file of the CAAPstINFModeler.m 
+module. Only the <CODE>GetX</CODE> and the <CODE>SetX</CODE> methods are shown, 
+the others being practically identical to these.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFPoint::GetX(double *pX)</B> 
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnPoint = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+	                        (void**) &amp;piSpecAttrAccessOnPoint);
+...
+
+    CATISpecAttrKey *piXKey = piSpecAttrAccessOnPoint -&gt; <B>GetAttrKey</B> (&quot;X&quot;);
+...
+	
+    *pX = piSpecAttrAccessOnPoint -&gt; <B>GetDouble</B>(piXKey);
+
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>GetX</CODE> method returns a <CODE>double</CODE>-type 
+pointer to the current &quot;X&quot; attribute value. To do this, first of all, it 
+retrieves a <I>CATISpecAttrAccess</I> interface pointer on the current 
+&quot;CAAPstINFPoint&quot; feature. Using this pointer, it executes the <CODE>GetAttrKey</CODE> 
+method for the attribute called &quot;X&quot; in order to retrieve a <I>CATISpecAttrKey</I> 
+pointer to the &quot;X&quot; attribute key. Then using this key as a parameter, it 
+executes the <CODE>GetDouble</CODE> method of <I>CATISpecAttrAccess</I> in order 
+to retrieve the value of the x coordinate of the point, which it then returns 
+through a <CODE>double</CODE>-type pointer.&nbsp;</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFPoint::SetX(double iX)</B>
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnPoint = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+	                         (void**) &amp;piSpecAttrAccessOnPoint);</PRE>
+        <PRE>...
+
+    CATISpecAttrKey *piXKey = piSpecAttrAccessOnPoint -&gt; <B>GetAttrKey</B> (&quot;X&quot;);
+...
+	
+    piSpecAttrAccessOnPoint -&gt; <B>SetDouble</B>( piXKey, iX );
+
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>SetX</CODE> method does exactly the same thing as the
+<CODE>GetX</CODE> method, except that it executes the <CODE>SetDouble</CODE> 
+method of <I>CATISpecAttrAccess</I>, on the same attribute key as in <CODE>GetX</CODE>, 
+in order to set a new value to the &quot;X&quot; attribute of the current &quot;CAAPstINFPoint&quot; 
+feature.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">1.2 Valuating &quot;CAAPstINFPoint&quot; attributes.</P>
+<P align="left">Valuating the &quot;CAAPstINFPoint&quot; features' attributes is done just 
+after the instantiation of the features in the CAAPstINFMainCreateDocument.cpp 
+file. This operation is simply performed by calling the &quot;Set&quot; methods defined in 
+the <I>CAAIPstINFPoint</I> interface, whose implementation we just saw in the 
+above section.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CAAIPstINFPoint *piPstINFPoint = NULL;
+rc = piPointInst1 -&gt; <B>QueryInterface</B> (IID_CAAIPstINFPoint,
+                                     (void**) &amp;piPstINFPoint);
+...
+
+rc = piPstINFPoint -&gt; <B>SetX</B> (0.0);
+...
+
+rc = piPstINFPoint -&gt; <B>SetY</B> (0.0);
+...
+
+rc = piPstINFPoint -&gt; <B>SetZ</B> (0.0);
+
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">First of all, a <I>CAAIPstINFPoint</I> interface pointer is 
+retrieved for the first instance of &quot;CAAPstINFPoint&quot;. Then, the methods for 
+valuating the point coordinates are called: <CODE>SetX, SetY </CODE>and<CODE> 
+SetZ</CODE>. Exactly the same procedure is employed for the following instances 
+of the &quot;CAAPstINFPoint&quot; feature.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">2. Accessing &quot;CAAPstINFLine&quot; attributes.</P>
+<P align="left">The <I>CAAIPstINFLine</I> interface is defined to retrieve and 
+set the &quot;CAAPstINFLine&quot; attribute values.</P>
+<P align="left">2.1 Implementing the <I>CAAIPstINFLine</I> interface.</P>
+<P align="left">The <I>CAAIPstINFLine</I> interface is composed of two methods. 
+The first, <CODE>GetPoint</CODE>, is used to retrieve the values of the first 
+and second attributes pointing to the &quot;CAAPstINFPoint&quot; features that define the 
+line. The second, <CODE>SetPoint</CODE>, is used to set these same values.&nbsp;The 
+code example below is taken from the <I>CAAEPstINFLine</I> implementation class 
+found in the CAAEPstINFLine.cpp source file of the CAAPstINFModeler.m module.&nbsp;</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFLine::GetPoint(int iNum, CATISpecObject **piPoint) </B>
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnLine = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+	                         (void**) &amp;piSpecAttrAccessOnLine);
+...
+    CATUnicodeString keyName;
+    keyName = (1 == iNum ? &quot;Point1&quot; : &quot;Point2&quot;);
+
+    CATISpecAttrKey *piPointKey = piSpecAttrAccessOnLine -&gt; <B>GetAttrKey</B> (keyName);
+...
+	
+    *piPoint = piSpecAttrAccessOnLine -&gt; <B>GetSpecObject</B>(piPointKey);
+	
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>GetPoint</CODE> method returns a <I>CATISpecObject</I> 
+pointer to one of the &quot;CAAPstINFPoint&quot; features used to define the line, 
+depending on whether the first or the second point was requested in the <CODE>
+iNum</CODE> input parameter. To do this, first of all, it retrieves a <I>
+CATISpecAttrAccess</I> interface pointer on the current &quot;CAAPstINFLine&quot; feature. 
+Using this pointer, it executes the <CODE>GetAttrKey</CODE> method for the 
+attribute called either &quot;Point1&quot; or &quot;Point2&quot; in order to retrieve a <I>
+CATISpecAttrKey</I> pointer to the attribute key. Then using this key as a 
+parameter, it executes the <CODE>GetSpecObject</CODE> method of <I>
+CATISpecAttrAccess</I> in order to retrieve a <I>CATISpecObject</I> pointer to 
+the &quot;CAAPstINFPoint&quot; feature defining the line and returns this value as an 
+output parameter.&nbsp;</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFLine::SetPoint(int iNum, CATISpecObject *piPoint)</B>
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnLine = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+	                         (void**) &amp;piSpecAttrAccessOnLine);
+...
+    CATUnicodeString keyName;
+    keyName = (1 == iNum ? &quot;Point1&quot; : &quot;Point2&quot;);
+
+    CATISpecAttrKey *piPointKey = piSpecAttrAccessOnLine -&gt; <B>GetAttrKey</B> (keyName);
+...		
+    piSpecAttrAccessOnLine -&gt; <B>SetSpecObject</B>(piPointKey, piPoint);
+	
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>SetPoint</CODE> method does exactly the same thing as 
+the <CODE>GetPoint</CODE> method, except that it executes the <CODE>
+SetSpecObject</CODE> method of <I>CATISpecAttrAccess</I> on the same attribute 
+key, in order to set a new &quot;CAAPstINFPoint&quot; feature value to the attribute of 
+the current &quot;CAAPstINFLine&quot; feature.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">2.2 Valuating &quot;CAAPstINFLine&quot; attributes.</P>
+<P align="left">Now, once the &quot;CAAPstINFPoint1&quot; feature has been created, we 
+want to valuate its attributes. Here is how this is done:</P>
+<P align="left">Valuating the &quot;CAAPstINFLine&quot; feature's attributes is done just 
+after the instantiation of the feature in the CAAPstINFMainCreateDocument.cpp 
+file. This operation is simply performed by calling the <CODE>SetPoint</CODE> 
+method defined in the <I>CAAIPstINFLine</I> interface, whose implementation we 
+just saw in the above section.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CAAIPstINFLine *piPstINFLine = NULL;
+rc = piLineInst1 -&gt; <B>QueryInterface</B> (IID_CAAIPstINFLine,
+                                    (void**) &amp;piPstINFLine);
+...
+
+rc = piPstINFLine -&gt; <B>SetPoint</B> (1, piPointInst1);
+...
+
+rc = piPstINFLine -&gt; <B>SetPoint</B> (2, piPointInst2);
+
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">First of all, a <I>CAAIPstINFLine</I> interface pointer is 
+retrieved for the &quot;CAAPstINFLine1&quot; feature. Then, the <CODE>SetPoint</CODE> 
+method is called twice with the two instances of the &quot;CAAPstINFPoint&quot; feature 
+that define the line.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">3. Accessing &quot;CAAPstINFWire&quot; attributes.</P>
+<P align="left">The <I>CAAIPstINFWire</I> interface is defined to retrieve and 
+set the &quot;CAAPstINFWire&quot; attribute values.</P>
+<P align="left">3.1 Implementing the <I>CAAIPstINFWire</I> interface.</P>
+<P align="left">The <I>CAAIPstINFWire</I> interface is composed of two methods. 
+The first, <CODE>GetPoints</CODE>, is used to retrieve the list of 
+&quot;CAAPstINFPoint&quot; features that define the line. The second, <CODE>SetPoints</CODE>, 
+is used to valuate this same list.&nbsp;The code example below is taken from the <I>
+CAAEPstINFWire</I> implementation class found in the CAAEPstINFWire.cpp source 
+file of the CAAPstINFModeler.m module.&nbsp;</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFWire::GetPoints(CATListPtrCATISpecObject **pPointList) </B>
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnWire = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+		               (void**) &amp;piSpecAttrAccessOnWire);
+    
+...
+    // Retrieve the key to the feature's &quot;Points&quot; attribute
+    CATUnicodeString keyName = &quot;Points&quot;;
+    CATISpecAttrKey *piPointKey = piSpecAttrAccessOnWire -&gt; <B>GetAttrKey</B> (keyName);
+...	
+    // Scan through the list of features referenced by the attribute,
+    // retrieve each feature and append it to the list to be returned to the caller.
+    *pPointList = <B>new</B> CATListPtrCATISpecObject();
+
+    CATISpecObject *piPoint = NULL;
+    piSpecAttrAccessOnWire -&gt; <B>Beginning</B>(piPointKey);
+
+    while (piSpecAttrAccessOnWire -&gt; <B>Next</B>(piPointKey))	{
+        piPoint = piSpecAttrAccessOnWire -&gt; <B>GetSpecObject</B>(piPointKey);	
+        (*pPointList) -&gt; <B>Append</B>(piPoint);
+	piPoint = NULL;
+    }
+
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>GetPoint</CODE> method returns a <I>
+CATListPtrCATISpecObject</I> pointer to the list containing the &quot;CAAPstINFPoint&quot; 
+features used to define the wire. To do this, first of all, it retrieves a <I>
+CATISpecAttrAccess</I> interface pointer on the current &quot;CAAPstINFWire&quot; feature. 
+Using this pointer, it executes the <CODE>GetAttrKey</CODE> method for the 
+attribute called &quot;Points&quot; in order to retrieve a <I>CATISpecAttrKey</I> pointer 
+to the attribute key. Then using this key as a parameter, it loops through the 
+list of features using the <CODE>Beginning</CODE> and <CODE>Next</CODE> methods 
+of <I>CATISpecAttrAccess</I> and executes the <CODE>GetSpecObject</CODE> method 
+in order to retrieve each <I>CATISpecObject</I> pointer to the &quot;CAAPstINFPoint&quot; 
+feature defining the line, which it appends to the list to be returned as an 
+output parameter.&nbsp;</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFWire::SetPoints(CATListPtrCATISpecObject *pPointList)</B>
+{
+    CATISpecAttrAccess *piSpecAttrAccessOnWire = NULL;
+    HRESULT rc = <B>QueryInterface</B> (IID_CATISpecAttrAccess,
+		               (void**) &amp;piSpecAttrAccessOnWire);
+...
+    // Retrieve the key to the feature's &quot;Points&quot; attribute
+    CATUnicodeString keyName = &quot;Points&quot;;
+    CATISpecAttrKey *piPointKey = piSpecAttrAccessOnWire -&gt; <B>GetAttrKey</B> (keyName);
+...
+    // If the list of attributes is already valuated, initialize it to NULL in order
+    // to entirely re-create it.
+    int nb = piSpecAttrAccessOnWire -&gt; <B>GetListSize</B>(piPointKey);
+    if ( 0 != nb ) {
+       piSpecAttrAccessOnWire -&gt; <B>UnsetAttributeValue</B>(piPointKey);
+    }   
+
+    // Scan through the list of features passed in the argument,
+    // retrieve each feature from the list and save it in the list of features
+    // referenced by the &quot;Points&quot; attribute.
+    CATISpecObject *piPoint = NULL;
+    for (int i=1; i&lt;=pPointList-&gt;<B>Size</B>(); i++) {
+        piPoint = (*pPointList)[i] ;
+        piSpecAttrAccessOnWire -&gt; <B>SetSpecObject</B>(piPointKey, piPoint, 0);
+        piPoint = NULL;
+    }
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The <CODE>SetPoints</CODE> method does exactly the same thing as 
+the <CODE>GetPoints</CODE> method, except that it executes the <CODE>
+SetSpecObject</CODE> method of <I>CATISpecAttrAccess</I> on the same attribute 
+key, in order to add the given number of &quot;CAAPstINFPoint&quot; features to the list 
+attribute of the current &quot;CAAPstINFWire&quot; feature. Note that the list is entirely 
+re-created every time the method is called. This is done by using the <CODE>
+UnsetAttributeValue</CODE> method of <I>CATISpecAttrAccess</I> in order to 
+re-initialize the list of SpecObjects.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">3.2 Valuating &quot;CAAPstINFWire&quot; attributes.</P>
+<P align="left">Valuating the &quot;CAAPstINFWire&quot; feature's attributes is done just 
+after the instantiation of the feature in the CAAPstINFMainCreateDocument.cpp 
+file. This operation is simply performed by calling the <CODE>SetPoints</CODE> 
+method defined in the <I>CAAIPstINFWire</I> interface, whose implementation we 
+just saw in the above section.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CAAIPstINFWire *piPstINFWire = NULL;
+rc = piWireInst1 -&gt; <B>QueryInterface</B> (IID_CAAIPstINFWire,
+                                    (void**) &amp;piPstINFWire);
+...
+
+CATListPtrCATISpecObject pointList;
+pointList.<B>Append</B> (piPointInst3);
+pointList.<B>Append</B> (piPointInst4);
+pointList.<B>Append</B> (piPointInst5);
+cout &lt;&lt; &quot;Size of pointlist = &quot; &lt;&lt; pointList.<B>Size</B>() &lt;&lt; endl;
+rc = piPstINFWire -&gt; <B>SetPoints</B> (&amp;pointList);
+	
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">First of all, a <I>CAAIPstINFWire</I> interface pointer is 
+retrieved for the &quot;CAAPstINFWire1&quot; feature. Then, the <CODE>SetPoints</CODE> 
+method is called with the list of&nbsp; the &quot;CAAPstINFPoint&quot; features that 
+define the wire.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="Aggregate"></A>Aggregating the New Features to the 
+Root Feature Node</B></P>
+<P align="left">1. Implementing the <I>CAAIPstINFRoot</I> interface.</P>
+<P align="left">The <I>CAAIPstINFRoot</I> interface is composed of two methods. 
+The first, <CODE>AddChild</CODE>, is used to aggregate a new feature to the 
+&quot;CAAPstINFRoot&quot; feature representing a root node in the product structure. The 
+second, <CODE>GetChildren</CODE>, retrieves the list of features aggregated by 
+the &quot;CAAPstINFRoot&quot; feature. The code example below is taken from the <I>
+CAAEPstINFRoot</I> implementation class found in the CAAEPstINFRoot.cpp source 
+file of the CAAPstINFModeler.m module.&nbsp;</P>
+<P align="left">1.1 AddChild.</P>
+<P align="left">This method has three distinct parts. The first part deals with 
+the data modifications that are necessary whenever a new feature is created and&nbsp; 
+aggregated to the &quot;CAAPstINFRoot&quot; node. The second part deals with the update of 
+the specs tree to display the new feature. And finally, the third part deals 
+with the necessary notification of the creation that needs to be sent so that 
+the new feature can be visualized.</P>
+<P align="left">1.1.1 AddChild: Data modification.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+<B>HRESULT CAAEPstINFRoot::AddChild (CATISpecObject *piFeature)</B>
+{
+    HRESULT rc;
+
+    CATISpecAttrAccess *piAttrAccess = NULL;
+    rc = this -&gt; <B>QueryInterface</B>(IID_CATISpecAttrAccess,
+	                       (void**) &amp;piAttrAccess);
+...
+
+    // Retrieve the attribute key in order to access the list of aggregated features
+    CATISpecAttrKey *piListKey = piAttrAccess -&gt; <B>GetAttrKey</B>(&quot;ListOfComponents&quot;);
+...
+
+    // Add the new feature to the end of the list
+    piAttrAccess -&gt; <B>SetSpecObject</B> (piListKey,
+	                          piFeature);
+...  </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Using a <I>CATISpecAttrAccess</I> pointer retrieved on the 
+current root feature, we execute the <CODE>GetAttrKey</CODE> method in order to 
+retrieve a <I>CATISpecKey</I> pointer to the &quot;ListOfComponents&quot; attribute 
+defined for the &quot;CAAPstINFRoot&quot; feature. Then, using this key, we execute the
+<CODE>SetSpecObject</CODE> method of <I>CATISpecAttrAccess</I>, specifying the 
+new feature that is to be aggregated (or, in other words, added to the list as a 
+component feature).</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">1.1.2 AddChild: Refresh of the specs tree.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+    // Refresh the navigation tree
+    CATIRedrawEvent *piRedrawOnRoot = NULL;
+    rc = <B>QueryInterface</B>(IID_CATIRedrawEvent,
+                        (void**) &amp;piRedrawOnRoot);
+...
+
+    piRedrawOnRoot -&gt; <B>Redraw</B>();
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Once the data modifications are complete, in order to update the 
+specs tree, we retrieve a <I>CATIRedrawEvent</I> pointer on the current 
+&quot;CAAPstINFRoot&quot; feature and execute the <CODE>Redraw</CODE> method.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">1.1.3 AddChild: Refresh of the visualization.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+    // Force the visualization of the new feature by sending an event on the Product root
+  
+    // Retrieve a pointer to the current document
+    CATILinkableObject *piLinkableOnRoot = NULL;
+    rc = <B>QueryInterface</B>(IID_CATILinkableObject, 
+                        (void**) &amp;piLinkableOnRoot);
+...
+
+    CATDocument *pDoc = piLinkableOnRoot -&gt; <B>GetDocument</B>();
+...
+  
+    // Retrieve the document's product root
+    CATIDocRoots* piDocRootsOnDoc = NULL;
+    rc = pDoc -&gt; <B>QueryInterface</B>(IID_CATIDocRoots,
+                                (void**) &amp;piDocRootsOnDoc);
+...
+  
+    // The document's root product is the first element of the list returned by GiveDocRoots
+    CATListValCATBaseUnknown_var *pProductList = piDocRootsOnDoc -&gt; <B>GiveDocRoots</B>();
+    CATBaseUnknown *pRootProduct = NULL;
+    CATIProduct *piRootProduct = NULL;
+...
+    if (pProductList-&gt;<B>Size</B>()) {  
+        pRootProduct = (*pProductList)[1];
+...
+        rc = pRootProduct -&gt; <B>QueryInterface</B>(IID_CATIProduct,
+                                            (void**) &amp;piRootProduct);
+...
+    }
+...
+
+    // Retrieve a CATIModelEvents pointer on the product root and connect the feature
+    CATIModelEvents *piModelEventsOnProductRoot = NULL;
+    rc = piRootProduct -&gt; <B>QueryInterface</B>(IID_CATIModelEvents,
+                                         (void**) &amp;piModelEventsOnProductRoot);
+...
+
+    piModelEventsOnProductRoot -&gt; <B>ConnectTo</B>(piFeature);
+  
+    // Send a notification of the creation to the view
+    CATCreate <B>ntfCreate(piFeature, piModelEventsOnProductRoot)</B>;
+    piModelEventsOnProductRoot -&gt; <B>Dispatch</B>(ntfCreate);
+  
+    piModelEventsOnProductRoot -&gt; <B>Release</B>();
+    piModelEventsOnProductRoot = NULL;
+
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The visualization process must be notified of the creation 
+through an event notification that must be sent at the Product level. This is 
+because the real visualization root of our features is the Product root. The 
+&quot;CAAPstINFRoot&quot; nodes serve only to better structure our features; they do not 
+enter into the visualization process.&nbsp;</P>
+<P align="left">Therefore, the first step in sending a creation notification is 
+to retrieve the Product root. To do this, it is necessary to retrieve a <I>
+CATDocument</I> pointer to the current document using the <CODE>GetDocument</CODE> 
+method of <I>CATILinkableObject</I> on the current aggregating &quot;CAAPstINFRoot&quot; 
+feature. Then, from the <I>CATDocument</I> pointer, we can retrieve a <I>
+CATIDocRoots</I> interface pointer and execute the <CODE>GiveDocRoots</CODE> 
+method. This method returns a list of the documents' products, the first of 
+which is the Product root. Now, on the Product root, we can retrieve a <I>
+CATIModelEvents</I> interface pointer and execute the <CODE>ConnectTo</CODE> 
+method for the new feature that has been created. Then, a new <CODE>CATCreate</CODE> 
+object is instantiated for the new feature on the Product root and this <CODE>
+CATCreate</CODE> object is then dispatched through the <CODE>Dispatch</CODE> 
+method of <I>CATIModelEvents</I>.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left">1.2 GetChildren.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE><B>HRESULT CAAEPstINFRoot::GetChildren (CATListValCATBaseUnknown_var **pList)</B>
+{
+    CATISpecAttrAccess *piAttrAccessOnRoot = NULL;
+    HRESULT rc = this -&gt; <B>QueryInterface</B>(IID_CATISpecAttrAccess,
+                                        (void**) &amp;piAttrAccessOnRoot);
+...
+  
+    CATISpecAttrKey *piListComponentKey = NULL;
+    piListComponentKey = piAttrAccessOnRoot -&gt; <B>GetAttrKey</B> (&quot;ListOfComponents&quot;);
+...
+    CATISpecObject *piComponent = NULL;
+    piAttrAccessOnRoot -&gt; <B>Beginning</B>(piListComponentKey);
+    while (piAttrAccessOnRoot -&gt; <B>Next</B>(piListComponentKey)) {
+        piComponent = piAttrAccessOnRoot -&gt; <B>GetSpecObject</B>(piListComponentKey);	            
+...
+        (*pList) -&gt; <B>Append</B>(piComponent);
+...
+    }
+
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">This method retrieves a list of the features aggregated by this 
+&quot;CAAPstINFRoot&quot; node. To do this, it first retrieves a <I>CATISpecAttrAccess</I> 
+interface pointer on the current &quot;CAAPstINFRoot&quot;. Then, using the <CODE>
+GetAttrKey</CODE> method, it retrieves the <I>CATISpecAttrKey</I> corresponding 
+to the &quot;ListOfComponents&quot; attribute. Using this key, it then loops through the 
+list of components using the <CODE>Beginning</CODE> and <CODE>Next</CODE> 
+methods of <I>CATISpecAttrAccess</I> and executes the <CODE>GetSpecObject</CODE> 
+on each list element in order to retrieve the <I>CATISpecObject</I> pointer 
+corresponding to the aggregated feature. It appends this object to the list that 
+is to be returned using the <CODE>Append</CODE> method of the <I>
+CATListVarCATBaseUnknown</I> collection.</P>
+<P align="left">2. Valuating &quot;CAAPstINFRoot&quot; attributes.</P>
+<P align="left">Valuating the &quot;CAAPstINFRoot&quot; feature's attributes is done in 
+the CAAPstINFMainCreateDocument.cpp file, after the instantiation of all of the 
+features that are to be aggregated to it. This operation is simply performed by 
+calling the <CODE>AddChild</CODE> method defined in the <I>CAAIPstINFRoot</I> 
+interface, whose implementation we just saw in the above section.</P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+CAAIPstINFRoot *piPstINFRoot = NULL;
+rc = piRootInst1 -&gt; <B>QueryInterface</B> (IID_CAAIPstINFRoot,
+                                    (void**) &amp;piPstINFRoot);
+...
+   
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piPointInst1);
+...
+   
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piPointInst2);
+...
+
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piPointInst3);
+...
+
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piPointInst4);
+...
+
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piPointInst5);
+...
+ 
+rc = piPstINFRoot -&gt; <B>AddChild</B>(piLineInst1);
+...</PRE>
+        <PRE>rc = piPstINFRoot -&gt; <B>AddChild</B>(piWireInst1);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Use the <I>CAAIPstINFRoot</I>::<CODE>AddChild</CODE> method to 
+aggregate a new feature to a &quot;CAAPstINFRoot&quot;. This method performs the necessary 
+data modifications to aggregate the new feature to the &quot;CAAPstINFRoot&quot;, performs 
+a refresh of the navigation tree in order for the new feature to be taken into 
+account and finally, sends a creation notification event to the product root in 
+order for the new feature to be visualized.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P align="left"><B><A name="SaveDoc"></A>Saving the New Product Document</B></P>
+<TABLE class="code" width="773">
+    <TR>
+        <TD width="765">
+        <PRE>...
+rc = CATDocumentServices::<B>SaveAs</B> (*pDoc, argv[2]);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Use the <CODE>SaveAs</CODE> static method of <I>
+CATDocumentServices</I> to save the new document. The storage pathname of the 
+new document is passed as an argument to the use case.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="InShort"></A>In Short</H3>
+<P>The CAAPstINFCreateDocument use case has shown you how to create new features 
+&quot;from scratch&quot; in an applicative container of a Product document.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">[1]</TD>
+        <TD><a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features in 
+        a Product Document</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[2]</TD>
+        <TD>
+        <a href="../CAAOsmTechArticles/CAAOsmOverview.htm">
+        Feature Modeler Overview</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[3]</TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[4]</TD>
+        <TD>
+        <a href="../CAAOsmUseCases/CAAOsmAppliCont.htm">
+        Creating Features in an Applicative Container</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[5]</TD>
+        <TD>
+        <a href="../CAAPstTechArticles/CAAPstTACatalogLifecycle.htm">Managing the StartUp Catalogs Lifecycle</a></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top">Version: <strong><span style="font-weight: 400">1.2</span></strong><b><span style="font-weight: 400">
+        </span></b>[Aug 2004]</TD>
+        <TD valign="top">Document revised</TD>
+    </tr>
+    <TR>
+        <TD valign="top">Version: <STRONG><span style="font-weight: 400">2</span></STRONG> [May 2003]</TD>
+        <TD valign="top">Add reference to &quot;Creating Features in an Applicative 
+        Container&quot;</TD>
+    </TR>
+    <TR>
+        <TD valign="top">Version: <STRONG><span style="font-weight: 400">1</span></STRONG> [May 2002]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2002, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>
+

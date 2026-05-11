@@ -1,0 +1,167 @@
+Language="VBSCRIPT"
+
+'*******************************************************************************************
+'*
+'* Procedure that allow the user to insert an axial  sequential operation
+'* 
+'*    Open CATProcess and load NC Manufacturing workbench
+'*    Execute the VB Script Macro
+'*
+'*******************************************************************************************
+
+'********************************* 
+'Global variables
+'********************************
+
+Dim MfgDoc1 As Document
+Dim ActivityRef As AnyObject
+Dim Setup1 As ManufacturingSetup
+Dim Program1 As ManufacturingProgram
+Dim PartMachined As Product     	         	    ' Product including the Design Part
+Dim documents1 As Documents
+Dim partDocument1 As Document
+
+'*******************************************************************************************
+'* 				Main Entry  Point
+'*******************************************************************************************
+
+Sub CATMain()
+
+	Dim ProgramList As MfgActivities
+	Dim NumberOfPO As Integer
+	Dim childs As Activities
+	Dim child As Activity
+	Dim quantity As Integer
+	Dim Line1 As CATIABase
+	Dim Point1 As CATIABase
+	Dim Point2 As CATIABase
+	Dim Point3 As CATIABase
+	Dim Plane2 As CATIABase	
+	Dim Line2 As CATIABase
+	Dim Line3 As CATIABase
+	
+	'*******************************************************************************************
+	'*** Retrieve the Open body of the part
+	'*******************************************************************************************
+
+	Set documents1 = CATIA.Documents
+	Set partDocument1 = documents1.Item("Part_ToolMotion.CATPart")
+
+	Set part1 = partDocument1.Part
+	Set hybridBodies1 = part1.HybridBodies
+	Set hybridBody1 = hybridBodies1.Item("Open_body.1")
+	Set hybridShapes1 = hybridBody1.HybridShapes
+
+	'*******************************************************************************************
+	'*** Retrieve the tool motion's geometry
+	'*******************************************************************************************
+
+	Set Plane1 = hybridShapes1.Item("Plane.1")
+	Set Line1 = hybridShapes1.Item("Line.1")
+	Set Point1 = hybridShapes1.Item("Point.1")
+	Set Point2 = hybridShapes1.Item("Point.2")
+	Set Point3 = hybridShapes1.Item("Point.3")
+	Set Plane2 = hybridShapes1.Item("Plane.2")
+	Set Line2 = hybridShapes1.Item("Line.2")
+	Set Line3 = hybridShapes1.Item("Line.3")
+
+	Set MfgDoc1 = CATIA.ActiveDocument
+
+	'*******************************************************************************************
+	'*** Retrieve current Process Root
+	'*******************************************************************************************
+
+	Set ActivityRef = MfgDoc1.GetItem("Process")
+
+	'*** Retrieve current SetUp
+	'***
+	If (ActivityRef.IsSubTypeOf("PhysicalActivity")) Then
+
+	Set childs = ActivityRef.ChildrenActivities
+	quantity = childs.Count
+
+	if quantity <= 0 then
+	  Exit Sub
+	End if
+	NumberOfPO = 0
+	For I=1 To quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf("ManufacturingSetup")) Then
+			Set Setup1 = child
+			NumberOfPO = NumberOfPO +1
+			Exit For
+		End If
+	Next
+     
+	End If
+
+	'*******************************************************************************************
+	'*** Retrieve current Program
+	'*******************************************************************************************
+
+	set ProgramList = Setup1.Programs
+	Set PartMachined = SetUp1.Product
+	Set Program1 = ProgramList.GetElement(1)	
+
+	'*******************************************************************************************
+	' Creation axial sequential operation
+	'*******************************************************************************************
+
+	Dim Mo As ManufacturingOperation 	
+	Set Mo = Program1.AppendOperation("PointToPoint",1)
+	Mo.SetTool("T3 End Mill D 10")
+
+	'*******************************************************************************************
+	' Creation of point tool motion
+	'*******************************************************************************************
+
+	Dim Tm1 as ToolMotion
+	Set Tm1 = Mo.InsertToolMotion("MfgSeqMotionPoint",1)
+	Call Tm1.SetGeometry("PointSite",Point3, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of position tool motion
+	'*******************************************************************************************
+
+	Dim Tm2 as ToolMotion
+	Set Tm2 = Mo.InsertToolMotion("MfgSeqMotionPosition",2)
+
+    Call Tm2.SetGeometry("Parts", Plane1, PartMachined, 0)
+   	Call Tm2.SetGeometry("FirstRelimitingElement", Line2, PartMachined, 0)
+   	Call Tm2.SetGeometry("Drives",Line3 , PartMachined, 0)
+   	Call Tm2.SetGeometry("RelimitingElements",Point3 , PartMachined, 0)
+
+	'*******************************************************************************************
+	' Modification of Position on check parameter
+	'*******************************************************************************************
+	Dim CheckMode As Variant
+    Set CheckMode = Tm2.GetAttribute("MfgCheckStopMode")
+    CheckMode.ValuateFromString ("MfgTo")
+
+	'*******************************************************************************************
+	' Creation of delta tool motion 
+	'*******************************************************************************************
+	Dim Tm3 as ToolMotion
+	Set Tm3 = Mo.InsertToolMotion("MfgSeqMotionDelta",3)
+   	Set CheckMode = Tm3.GetAttribute("MfgPtDeltaMode")
+    CheckMode.ValuateFromString ("MfgPtDeltaParallelLine")
+    Call Tm3.SetGeometry("GuidingElements", Line2, PartMachined, 0)
+	Dim OffsetValue As Variant
+   	Set OffsetValue = Tm3.GetAttribute("MfgPtDeltaDistance")
+    OffsetValue.Value = 15
+
+	'*******************************************************************************************
+	' get the list of tool motions and reading each tool motion 
+	'*******************************************************************************************
+	Dim TMList2 As MfgToolMotions
+	Set TMList2 = MO.GetListOfToolMotions
+	NbMo = TMList2.Count
+	Dim Test2 As ManufacturingToolMotion
+	Set Test2 = TMList2.GetElement(1)
+	'msgbox(Test2.Name)
+	Set Test2 = TMList2.GetElement(2)
+	'msgbox(Test2.Name)
+	Set Test2 = TMList2.GetElement(3)
+	'msgbox(Test2.Name)
+
+End Sub

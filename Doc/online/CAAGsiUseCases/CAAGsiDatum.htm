@@ -1,0 +1,478 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Converting a Shape Design Feature into a Datum</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Shape Design &amp; Styling</h1>
+     </td>
+     <td valign="top">
+     <h2>Generative Shape Design</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Converting a Shape Design Feature into a Datum</h3>
+     <p><em>Using the Shape Design factory to convert a Shape Design feature 
+     into a datum</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAAGsiDatum use case. This use case explains 
+     how to convert feature into datum. </p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><b><a href="#UseCase"><b>The CAAGsiDatum Use Case</b>
+       <ul>
+         <li></a><a href="#What">What Does CAAGsiDatum Do</a></li>
+         <li><a href="#How">How to Launch CAAGsiDatum</a></li>
+         <li><a href="#Where">Where to Find the CAAGsiDatum Code</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#Step">Step-by-Step</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+     </ul>
+     </b></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will You Learn With This Use Case</h3>
+ <p><br>
+ This use case illustrate the ability to convert any Wireframe and Shape Design 
+ feature into a Datum. <br>
+ Wireframe and Shape Design features to be converted do not have any child, that 
+ is to say, they do not aggregate other features (Ex: contextual features) </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right"></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAGsiDatum Use Case</h3>
+ <p>CAAGsiDatum is a use case of the CAAGSMInterfaces.edu framework that 
+ illustrates the <code>ConvertToDatum</code> method of <i>theCATIGSMFactory</i> 
+ interface of the GSMInterfaces framework.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAGsiDatum Do</h4>
+ <p>The goal of CAAGsiDatum is to take the result of surface features of the 
+ CAAGsiNozzle use case, join them and convert the join into a corresponding 
+ datum feature (skin surface).</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAGsiDatum</h4>
+ <p>To launch CAAGsiDatum, you will need to set up the build time environment, 
+ then compile CAAGsiDatum along with its prerequisites, and set up the run time 
+ environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>Launch the use case as follows: </p>
+ <ul>
+   <li>With Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:&gt;CAAGsiDatum inputDirectory\GAAGsiNozzle.CATPart outputDirectory\CAAGsiDatum.CATPart</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ CAAGsiDatum inputDirectory/GAAGsiNozzle.CATPart outputDirectory/CAAGsiDatum.CATPart</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p>where:</p>
+ <table>
+   <tr>
+     <td><code>outputDirectory</code></td>
+     <td>The directory into which <code>CAAGsiDatum.CATPart is saved</code></td>
+   </tr>
+   <tr>
+     <td><code>inputDirectory</code></td>
+     <td>The directory into which <code>CAAGsiNozzle.CATPart is found </code>
+     </td>
+   </tr>
+   <tr>
+     <td><code>CAAGsiDatum.CATPart</code> </td>
+     <td>The file that contains the part created with the datum surface t</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAGsiDatum Code</h4>
+ <p>The CAAGsiDatum use case is made of main program located in the 
+ CAAGsiDatum.m module of the CAAGSMInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiDatum.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiDatum.m/</code></td>
+   </tr>
+ </table>
+ <p>The input CAAGsiNozzle.CATPart is proposed in Data.d directory of 
+ CAAGSMInterfaces.edu </p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAAGSMInterfaces.edu\Data.d\CAAGsiNozzle.CATPart
+     </code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAAGSMInterfaces.edu/Data.d/CAAGsiNozzle.CATPart</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are four logical step in CAAGsiDatum: </p>
+ <ol>
+   <li><a href="#Prolog">Prolog</a></li>
+   <li><a href="#Join">Create the join feature</a></li>
+   <li><a href="#Datum">Convert to datum the join feature</a></li>
+   <li><a href="#Close">Save and close session</a></li>
+ </ol>
+ <p>We will now comment each of those sections by looking at the code of the 
+ main method of file CAAGsiDatum.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Prolog"></a>Prolog</h4>
+ <p>CAAGsiDatum sample first creates a session and opens the input CATPart. </p>
+ <p>Note: The important feature of the following sequence of code consists in 
+ the required call to the GetPart() method of the CATPrtContainer interfaces. \</p>
+ <p>This method allow to load in session the different containers of the part 
+ (feature container, geometric container,..)&nbsp; </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// creates a session
+char *pSessionName = &quot;SampleSession&quot;;
+CATSession *pSession = NULL; 
+rc = Create_Session(pSessionName, pSession); 
+if (NULL == pSession ) {
+   cout &lt;&lt; &quot;(CAAGsiDatum) ERROR: Create_Session&quot; &lt;&lt; endl;
+   TestCaseError = 1 ;
+}
+
+// loads the document and initializes it
+cout &lt;&lt; &quot;The input document &quot; &lt;&lt; InputName &lt;&lt; &quot; is opened&quot; &lt;&lt; endl ;
+CATDocument *pDoc = NULL; 
+rc =CATDocumentServices::OpenDocument(InputName, pDoc) ;
+
+if (NULL == pDoc ) {
+   cout &lt;&lt; &quot;(CAAGsiDatum) ERROR CATDocumentServices::OpenDocument&quot; &lt;&lt; endl;
+   TestCaseError = 2 ;
+}
+
+// Part Container 
+CATIPrtContainer *piPartContainer = NULL ; 
+CATIPrtPart_var spPrtPart; 
+
+if ( NULL != pDoc ) { 
+   // queries on the document to get the root container
+   CATInit *pDocAsInit = NULL; 
+   pDoc-&gt;QueryInterface(IID_CATInit, (void**)&amp;pDocAsInit) ; 
+   if ( NULL != pDocAsInit ) {
+
+    // Extracts from document a reference to its part in hPartAsRequest
+   piPartContainer = 
+      (CATIPrtContainer*)pDocAsInit-&gt;GetRootContainer(&quot;CATIPrtContainer&quot;);
+   pDocAsInit-&gt;Release(); pDocAsInit = NULL ;
+
+   if( NULL != piPartContainer ) {
+      CATISpecObject_var spPart = piPartContainer-&gt;GetPart() ; 
+      spPrtPart = spPart ;
+   } 
+} 
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Finally, the wireframe and shape design factory is retrieved. . </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>....
+// Retrieve the Generative Shape Design Interface 
+CATIGSMFactory_var spGsmFact; 
+if ( NULL !=piPartContainer ) { 
+   CATIGSMFactory * _pFact =NULL; 
+   rc = piPartContainer -&gt; QueryInterface(IID_CATIGSMFactory ,(void**)&amp;_pFact);
+   if (SUCCEEDED(rc) ) {
+     spGsmFact = _pFact;
+     if (_pFact) _pFact -&gt; Release(); _pFact = NULL; 
+  }
+} 
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Join"></a>Create the join feature </h4>
+ <p>Using standard creation method for join (also named assemble),&nbsp; sweep 
+ and loft features are joined </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// Join 
+// ------------------
+CATLISTV(CATISpecObject_var) aObjectParametersAssemble;
+aObjectParametersAssemble.Append(spSweep1);
+aObjectParametersAssemble.Append(spLoft1);
+aObjectParametersAssemble.Append(spSweep2);
+aObjectParametersAssemble.Append(spLoft2);
+
+// Create feature 
+double MergingDistanceTol = 0.001 ; 
+CATBoolean iCheckConnexity = TRUE ; 
+
+CATICkeParm_var spParm;
+CATICkeParmFactory_var spCkeFact = spGsmFact ; 
+if (!!spCkeFact) { 
+   spParm = spCkeFact -&gt; CreateLength(&quot;MergingDistance&quot;,MergingDistanceTol/1000.0);
+}
+CATIGSMAssemble_var spAssemble = spGsmFact -&gt; CreateAssemble(aObjectParametersAssemble,spParm,iCheckConnexity);
+aObjectParametersAssemble.RemoveAll();
+
+// Insert in procedural view 
+// ------------------
+CATISpecObject_var spSpecTmp = spAssemble;
+if (NULL_var != spSpecTmp) { 
+   // Insert in procedural view 
+   CATIGSMProceduralView_var ispProcView = spSpecTmp;
+   if (NULL_var != ispProcView ) {
+      rc = ispProcView -&gt;InsertInProceduralView();
+   }
+}
+
+// Update 
+CAAGsiObjectUpdate(spSpecTmp);
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The join feature is then</p>
+ <ul>
+   <li>&nbsp;Insert in the procedural view thanks to the InsertInProceduralView 
+   method of CATIGSMProceduralView interface of GSMInterfaces framework </li>
+   <li>&nbsp;Updated thanks to generic service CAAGsiObjectUpdate
+   <a href="../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm">[4]</a></li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Datum"></a>Convert to datum the join feature </h4>
+ <p>Verify that the feature to convert is not already a Datum </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>....
+// Check the feature to convert is not already a Datum 
+CATIMf3DBehavior_var ispBehave(ispSpec);
+if(NULL_var != ispBehave ){
+
+  if ( FAILED( ispBehave -&gt; IsADatum() ) ) { 
+      .... 
+      }
+}
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Use the ConvertToDatum method of CATIGSMFactory interface. <br>
+ This method is only available for features which do not have any child (do not 
+ aggregate other features) , The argument &quot;Verif&quot; allow to verify it. </p>
+ <p>For multi-domain feature, one datum feature is generated by domain of the 
+ original feature </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>....
+CATListValCATISpecObject_var *ListDatum=NULL;
+
+// Convert Spec in one or more Datum 
+int iVerif =1 ;   // Check feature do not have any child 
+rc = ispGsmFact-&gt;ConvertToDatum(ispSpec, ListDatum,iVerif);
+if (FAILED(rc)) return E_FAIL; 
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Once created the datum feature got the representation of the the original 
+ feature thus it is mandatory to remove the original feature <br>
+ This operation has to be done in 2 step </p>
+ <ul>
+   <li>Dispatch the delete event to the model (in interactive session this make 
+   the visualization to be re-drawed) </li>
+   <li>Delete the feature itself in using &quot;RemoveChild&quot; of CATIDescendant 
+   interface if the feature is aggregated or the &quot;Remove&quot; of LifeCycleObject if 
+   not </li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>....
+// Delete of Procedural Specification 
+// -- Model event for delete / update visualization 
+CATIModelEvents_var IME(ispSpec);
+if(NULL_var != IME) {
+    CATDelete info(ispSpec-&gt;GetImpl());
+    IME-&gt;Dispatch(info);
+}
+
+// -- Delete Specification 
+CATISpecObject_var ispFather = ispSpec-&gt;GetFather();
+// Specification is aggretated in the prodecural view 
+if (NULL_var != ispFather) {
+   ispFather-&gt;Release();
+   CATIDescendants_var ispDes = ispFather;
+   ispDes-&gt;RemoveChild (ispSpec);
+}
+// Specification is not in the prodecural view 
+else {
+   LifeCycleObject_var LCO = ispSpec;
+   LCO -&gt; remove();
+} 
+....
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The Datum is created , previous feature is deleted, now the Datum has to be 
+ inserted in the procedural view as for any other shape designs feature (Wires, 
+ Surfaces and Volumes created in CATIGSMFactory). </p>
+ <p></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>....
+// Insert in procedural view 
+int i;
+int size = AllDatums.Size();
+for(i=1;i&lt;=size;i++) {
+   CATIGSMProceduralView_var curobj = AllDatums[i];
+   if (NULL_var != curobj ) {
+   rc = curobj-&gt;InsertInProceduralView();
+   if (FAILED(rc)) cout &lt;&lt; &quot; (CAAGsiDatum)  Failed to insert datum in procedural view&quot; &lt;&lt; endl ;
+....
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Close"></a>Save and close session </h4>
+ <p>Save part and close the session </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>... 
+// save  
+if (NULL != OutputName )      {    
+    rc = CATDocumentServices::SaveAs  (*pDoc, OutputName );
+    if (SUCCEEDED(rc))   {
+            cout &lt;&lt; &quot; (CAAGsiDatum)  Document saved &quot; &lt;&lt; endl;
+     }
+     else {
+            cout &lt;&lt; &quot; ERROR in saving document &quot; &lt;&lt;  endl ;
+     }
+}    
+// Closes the document
+CATDocumentServices::Remove(*pDoc);
+   
+// Ends session and drops document	
+Delete_Session(&quot;SampleSession&quot;);
+...    
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case has demonstrated the way to convert de Datum from an existing 
+ feature. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p></p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm">
+     About Generative Shape Design Features</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td>
+     <a href="../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm">
+     Inserting a Shape Design Feature in the procedural view</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td><a href="../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm">
+     Updating a shape Design feature </a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [May 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

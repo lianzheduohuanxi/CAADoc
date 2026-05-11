@@ -1,0 +1,88 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Prerequisites on Windows NT</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Prerequisites on Windows NT</h3>
+      <em>Explicitly declaring DLL</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>An inherent mechanism on Windows NT imposes that the shared librairies
+      (dll) declare explicitly what they import and what they export.</p>
+      <ul>
+        <li><a href="#100000"><strong>How to Define Prerequisites between
+          Frameworks</strong></a></li>
+        <li><a href="#200000"><strong>Generic Solution through mkmk</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>How to Define Prerequisites between Frameworks</h3>
+<p>When a framework exports services, it must explicitly declare them. If you
+omit that, the other frameworks cannot import the exported services.</p>
+<p>The following figure explains what is mandatory to declare for using services
+from a DLL in a prerequisite framework.</p>
+<p>FW1 framework exports services through visu.h header file. The themine.cpp
+file of FW2 needs services from FW1.
+<p><img border="0" src="images/FileTree5.gif" width="639" height="439"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Generic Solution through mkmk</h3>
+<p>Given this architecture, a generic mechanism has been set to discharge the
+developer to deal with these export-import issues.</p>
+<p>Here is the declarative section that should be added to every header file
+which belongs to a PublicInterfaces directory.</p>
+<p><img border="0" src="images/prereqNT.gif" width="439" height="519"></p>
+<p>At compile time, when it is operated on Windows NT, mkmk defines /D option
+_WINDOWS_SOURCE. It does not do so on Unix.</p>
+<p>Furthermore, when mkmk processes the module owner of the header, it defines
+variable __&lt;modulename&gt;.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

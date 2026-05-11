@@ -1,0 +1,301 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIMmiMechanicalImportApplicative</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMmiMechanicalImportApplicative"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIMmiMechanicalImportApplicative</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMmiMechanicalImportApplicative_74151','CATIMmiMechanicalImportApplicative','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMmiMechanicalImportApplicative</b>
+</p>
+<p>
+<b><i> Interface to manage an applicative mechanical import (or external reference).</i></b><br>
+
+ <b>Role</b>: This interface is implemented on external references.
+ It is used to retrieve link information on a mechanical import (which is obtained by copy with link between two parts).
+ <br>An authentication process is required prior to retrieving link information.
+ <br> Before calling any method of this interface, you have to init the authentication mechanism in either of two ways :
+ <ul>
+ <li>if the import was created using <script type="text/javascript"> activateLinkAnchor('CATMmrInterPartCopy','SetImportApplicativeId','CATMmrInterPartCopy.SetImportApplicativeId') </script> or 
+<script type="text/javascript"> activateLinkAnchor('CATFeatureImportAgent','SetImportApplicativeId','CATFeatureImportAgent.SetImportApplicativeId') </script>  to set an applicative identifier (computer-generated UID)
+ you have to give it using 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> : then this interface allows the user to retrieve the pointed element or the source product of the mechanical import, or
+ to retrieve the loading status, or to load the pointed element.
+ <li>if the StartUp definition of the pointed element of the import is in a catalog (CATFct), 
+ you have to give the correct catalog client id (using 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId)','SetPointedElementClientId)') </script> : a pre-requisite for this authentication is that the pointed element is already loaded.
+ It allows the user to retrieve only the pointed element or the source product.
+ <br>(since the pointed element is already loaded, it explains the irrelevance of retrieving the loading status or to load the pointed element, in this context.)
+ </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#BreakLink(GUID&amp;)"><b>BreakLink</b></a>(GUID&amp;)
+<dd>  Breaks a link associated to an applicative mechanical import.
+ <dt> o 
+    <a href="#GetPointedElement(CATBaseUnknown_var&amp;)"><b>GetPointedElement</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Retrieves the pointed element.
+ <dt> o 
+    <a href="#GetSourceProduct(CATBaseUnknown_var&amp;)"><b>GetSourceProduct</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Retrieves the product instance which aggregates an instance of the representation of the pointed element.
+ <dt> o 
+    <a href="#IsPointedElementLoaded(CATBoolean&amp;)"><b>IsPointedElementLoaded</b></a>(CATBoolean&amp;)
+<dd>  Retrieves the loading status of the pointed document.
+ <dt> o 
+    <a href="#LoadPointedElement()"><b>LoadPointedElement</b></a>()
+<dd>  Loads the pointed document containing the pointed element.
+ <dt> o 
+    <a href="#SetApplicativeId(GUID&amp;)"><b>SetApplicativeId</b></a>(GUID&amp;)
+<dd>  Sets the applicative identifier.
+ <dt> o 
+    <a href="#SetPointedElementClientId(CATUnicodeString&amp;)"><b>SetPointedElementClientId</b></a>(CATUnicodeString&amp;)
+<dd>  Sets the client identifier of the pointed element.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="BreakLink"></a><a name="BreakLink(GUID&amp;)"></a> <dt> o <b>BreakLink</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>BreakLink</b>(<td> const <script type="text/javascript"> activateLink('GUID','GUID&amp;')</script> <td><tt>iApplicativeId</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Breaks a link associated to an applicative mechanical import.
+ <br><b>Role:</b> Removes the link between the external reference and its reference.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iApplicativeId</tt>
+   <dd> the applicative identifier that is associated to the mechanical import
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl><dt><tt>S_OK</tt></dt><dd>The link has been successfully removed.</dd>
+   <dt><tt>E_FAIL</tt></dt><dd>The applicative identifier isn't valid or the method has unexpectedly failed.</dd></dl>
+</dl>
+</dl>
+<a name="GetPointedElement"></a><a name="GetPointedElement(CATBaseUnknown_var&amp;)"></a> <dt> o <b>GetPointedElement</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetPointedElement</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>oPointedElement</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the pointed element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oPointedElement</tt>
+   <dd>   A pointer to the pointed element. It may be a subelement or a feature.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if pointed element is returned
+ <br> E_FAIL  <ul><li>if 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script> was not previously successfully called.      <li>if the pointed element is deleted
+      <li>if the pointed element is not loaded in session.
+      </ul>
+</dl>
+</dl>
+<a name="GetSourceProduct"></a><a name="GetSourceProduct(CATBaseUnknown_var&amp;)"></a> <dt> o <b>GetSourceProduct</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetSourceProduct</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>oSourceProduct</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the product instance which aggregates an instance of the representation of the pointed element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSourceProduct</tt>
+   <dd> a pointer to the source product instance
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the source product is found
+ <br> E_FAIL  <ul>
+      <li>if 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script> was not previously successfully called.      <li> if it is not a contextual link. 
+      <li>if the source product instance is not loaded in session.
+      </ul>
+</dl>
+</dl>
+<a name="IsPointedElementLoaded"></a><a name="IsPointedElementLoaded(CATBoolean&amp;)"></a> <dt> o <b>IsPointedElementLoaded</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsPointedElementLoaded</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oLoaded</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the loading status of the pointed document.
+ <br><b>Role:</b> This method is used to retrieve the loading status of the pointed document when 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> is called before. <br> It always fails if 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script> is used instead of 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script>. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLoaded</tt>
+   <dd>   TRUE if the pointed document is loaded otherwise <tt>FALSE</tt> 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the information is correctly retrieved.
+ <br> E_FAIL  if 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> was not previously successfully called. For 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script>, irrespective of its success or failure.
+</dl>
+</dl>
+<a name="LoadPointedElement"></a><a name="LoadPointedElement()"></a> <dt> o <b>LoadPointedElement</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>LoadPointedElement</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Loads the pointed document containing the pointed element.
+ <br><b>Role:</b> This method is used to load the document that contains the pointed element when 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> is called before. <br> It always fails if 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script> is used instead of 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script>. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the document is effectively loaded.
+ <br> S_FALSE if the document is already loaded.
+ <br> E_FAIL  if 
+<script type="text/javascript"> activateLinkAnchor('','SetApplicativeId','SetApplicativeId') </script> was not previously successfully called. For 
+<script type="text/javascript"> activateLinkAnchor('','SetPointedElementClientId','SetPointedElementClientId') </script>, irrespective of its success or failure.
+</dl>
+</dl>
+<a name="SetApplicativeId"></a><a name="SetApplicativeId(GUID&amp;)"></a> <dt> o <b>SetApplicativeId</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetApplicativeId</b>(<td> const <script type="text/javascript"> activateLink('GUID','GUID&amp;')</script> <td><tt>iApplicativeId</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the applicative identifier.
+ <br><b>Role:</b> Inits the authentication mechanism allowing to retrieve informations on the mechanical import.
+ You have to give here the identifier of the mechanical import.
+ If you don't give the correct identifier, all methods of this interface will fail.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iApplicativeId</tt>
+   <dd> a unique identifier : the applicative identifier 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the applicative identifier matches the identifier of the mechanical import
+ <br> E_FAIL otherwise
+</dl>
+</dl>
+<a name="SetPointedElementClientId"></a><a name="SetPointedElementClientId(CATUnicodeString&amp;)"></a> <dt> o <b>SetPointedElementClientId</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetPointedElementClientId</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iClientId</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the client identifier of the pointed element.
+ <br><b>Role:</b> Inits the authentication mechanism allowing to retrieve informations on the mechanical import.
+ You have to give here the client id of the catalog of the pointed element.
+ If you don't give the correct identifier, all methods of this interface will fail.
+ <br> The pointed element must be loaded before calling this method. 
+ In order to load it, you have to know the pointed component and open it (you cannot use 
+<script type="text/javascript"> activateLinkAnchor('','LoadPointedElement','LoadPointedElement') </script> to load it). 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iClientId</tt>
+   <dd> the client id of the catalog corresponding to the pointed element.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the client id matches the identifier of the StartUp Catalog of the pointed element
+ <br> E_FAIL if it does not or if the pointed element is not loaded
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMmiMechanicalImportApplicative.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

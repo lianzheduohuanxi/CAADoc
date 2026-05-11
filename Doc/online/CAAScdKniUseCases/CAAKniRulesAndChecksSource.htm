@@ -1,0 +1,93 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniRulesAndChecks.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro:</font>
+<font color="#008000">'                 1 - Checks whether the active document is a CATPart</font>
+<font color="#008000">'                 2 - Retrieves the Relations collection  </font>
+<font color="#008000">'                 3 - Creates the rule below </font>
+<font color="#008000">'                      if PartBody\Hole.1\Diameter &gt; 10mm</font>
+<font color="#008000">'                      Message The hole diameter is PartBody\Hole.1\Diameter</font>
+<font color="#008000">'                 4 - Creates the check below: </font>
+<font color="#008000">'                      PartBody\Pad.1\FirstLimit\Length  &gt; 100mm </font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumptions:    </font>
+<font color="#008000">'                 This macro is intended to be run on the </font>
+<font color="#008000">'                 KwrMacro0.CATPart document or any CATPart document</font>
+<font color="#008000">'                 with the appropriate parameters (PartBody\Hole.1\Diameter</font>
+<font color="#008000">'                 and PartBody\Pad.1\FirstLimit\Length) </font>
+<font color="#008000">'   </font>
+<font color="#008000">'</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE, Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6  </font>
+<font color="#008000">'   revision V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+<font color="#008000">' Retrieve your active document - CATIA is your application </font>
+<font color="#008000">' You get the active document by using the ActiveDocument property</font>
+<font color="#008000">' on your application object</font>
+<font color="#0000FF">Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF">Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+<font color="#008000">' Check whether the document is a CATPart</font>
+<font color="#0000FF">If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+    <font color="#008000">' Retrieve the collection object which contains</font>
+    <font color="#008000">' all the document relations.</font>
+    <font color="#008000">' The statements below are only valid when the active</font>
+    <font color="#008000">' document is a CATPart</font>
+<font color="#0000FF">    Dim </font>oRelations<font color="#0000FF"> As </font>Relations
+<font color="#0000FF">    Set </font>oRelations = oActiveDoc.Part.Relations
+
+    <font color="#008000">' Create the rule below:</font>
+    <font color="#008000">'           if PartBody\Hole.1\Diameter &gt; 10mm</font>
+    <font color="#008000">'           Message The hole diameter is , PartBody\Hole.1\Diameter)</font>
+<font color="#0000FF">    Dim </font>Rule0<font color="#0000FF"> As </font>Rule
+<font color="#0000FF">    Set </font>Rule0 = oRelations.CreateProgram("Rule.1",_
+                                         "", "" +_
+                                         chr(10)_
+                                         + "if PartBody\Hole.1\Diameter &gt; 10mm" +_
+                                         chr(10) +_
+                     "Message (""The hole diameter is # "", PartBody\Hole.1\Diameter)" ) 
+
+    <font color="#008000">' Create the check below:</font>
+    <font color="#008000">'       PartBody\Pad.1\FirstLimit\Length  &gt; 100mm</font>
+<font color="#0000FF">    Dim </font>Check1<font color="#0000FF"> As </font>Check
+<font color="#0000FF">    Set </font>Check1 = oRelations.CreateCheck  ( "Check.1", "Increase the pad thickness",_
+                                           "/* Check created by CRE 03/16/00 */" +_
+                                chr(10) + "PartBody\Pad.1\FirstLimit\Length  &gt; 100mm" ) 
+
+<font color="#008000">' Update the document</font>
+CATIA.ActiveDocument.Part.Update 
+else 
+   MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

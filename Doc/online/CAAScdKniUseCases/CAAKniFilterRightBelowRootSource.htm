@@ -1,0 +1,96 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniFilterRightBelowRoot.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Given a CATProduct document,</font>
+<font color="#008000">'                 this macro filters the parameters right below the root </font>
+<font color="#008000">'                 product.</font>
+<font color="#008000">'                 Note: You cannot retrieve the list of parameters </font>
+<font color="#008000">'                 right below the root product by using the </font>
+<font color="#008000">'                 Product.Parameters attribute of the active document</font>
+<font color="#008000">'                 because if you do this, you retrieve all the  </font>
+<font color="#008000">'                 parameters of the CATProduct document (parameters    </font>
+<font color="#008000">'                 right below the root product as well as parameters    </font>
+<font color="#008000">'                 below components.</font>
+<font color="#008000">'                 The trick is to determine whether a parameter which belongs</font>
+<font color="#008000">'                 to the activedocument.Product.Parameters list belongs to </font>
+<font color="#008000">'                 one of the sub-component parameter list.</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumptions:  This macro is intended to be run on  </font>
+<font color="#008000">'                 any CATProduct with CATProduct documents as components</font>
+<font color="#008000">'</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE , Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+<font color="#0000FF"> Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF"> Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+<font color="#0000FF"> Dim </font>i,j,k<font color="#0000FF"> As </font>Integer
+<font color="#0000FF"> Dim </font>BelongToComp<font color="#0000FF"> As </font>Integer
+ <font color="#008000">' Check whether the document is a CATProduct</font>
+<font color="#0000FF"> If </font>(InStr(oActiveDoc.Name,".CATProduct")) &lt;&gt; 0  Then 
+
+    <font color="#008000">' Scan the complete list of parameters                          </font>
+<font color="#0000FF">    Dim </font>oProductList<font color="#0000FF"> As </font>Products
+<font color="#0000FF">    Set </font>oProductList = oActiveDoc.Product.Products
+<font color="#0000FF">    Dim </font>S1<font color="#0000FF"> As </font>String
+<font color="#0000FF">    For </font>i = 1<font color="#0000FF"> to </font>oActiveDoc.Product.Parameters.Count
+    S1 =  oActiveDoc.Product.Parameters.Item(i).Name
+    <font color="#008000">' Use the BelongToComp flag to set the parameter status</font>
+    <font color="#008000">' Initial value = 0 (does not belong to a sub-component)</font>
+    BelongToComp = 0
+       <font color="#008000">' Scan each parameter list of a sub-component</font>
+<font color="#0000FF">       For </font>j = 1<font color="#0000FF"> to </font>oProductList.Count
+<font color="#0000FF">          For </font>k = 1<font color="#0000FF"> to </font>oProductList.Item(j).Parameters.Count
+          <font color="#008000">' If the document parameter is the same as the sub-component</font>
+          <font color="#008000">' parameter - Sets the flag to 1</font>
+<font color="#0000FF">          if </font> S1 = oProductList.Item(j).Parameters.Item(k).name<font color="#0000FF"> then </font>
+          BelongToComp = 1
+<font color="#0000FF">          end if </font>
+<font color="#0000FF">          next</font>
+<font color="#0000FF">       Next  </font>
+        <font color="#008000">' if the flag is set to 0 - the document parameter</font>
+        <font color="#008000">' does not belong to ant sub-component </font>
+        <font color="#008000">' Conclusion: it is right below the root</font>
+<font color="#0000FF">        if </font>BelongToComp = 0<font color="#0000FF"> then</font>
+        msgbox S1
+<font color="#0000FF">       end if</font>
+<font color="#0000FF">    Next    </font>
+ Else 
+    MsgBox "The active document must be a CATProduct"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>VisualizationBase Global Function MakeLods</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../VisualizationBase.htm" href="../VisualizationBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "VisualizationBase";	}
+		function getCurrentObjectName() { 
+ 	return "MakeLods"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>VisualizationBase Global Function MakeLods</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('int',' int')</script>  <b>MakeLods</b>(<td><script type="text/javascript"> activateLink('LodData','LodData*')</script> <td><tt>input</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>number_of_lods</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>lod_step</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>initial_sag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>sag_approx</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double**')</script> <td><tt>sag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('LodData','LodData***')</script> <td><tt>output</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Function to provide mesh simplification. <br><b>Role</b>: This single function provides mesh simplification mechanism for both)
+       surfaces and solids. The number of level of details and the simplifica-
+       tion rate for each level are to be defined by the user.
+         - Solids  : The global solid geometry will be modified and the 
+                     topology won't be left intact unless the simplification
+                     ratios are extremely low.
+         - Surfaces: The surface edges are left unchanged at low ratios.
+                     Only the inner surface parts will be modified. At higher
+                     levels, boundary edges are being modified.
+       The number of returned lods may be different than the wanted one. The
+       simplification ratios can be different from the given values.
+       This function returns at least one level of detail for each input part,
+       when working normally. Some parts are too small to be simplified. In
+       this case, no level of details are ever computed.
+       The function returns sags defining the precision rate of each level of
+       detail. The user has to give the sag of the initial geometry to be
+       simplified.
+
+  Input parameters are made of CAT3DFaceGP parameters, converted into a 
+  LodData structure:
+  
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> input</tt>
+   <dd>  Pointer to the LodData structure.
+ </dd>
+    <dt><tt> number_of_lods</tt>
+   <dd>  The number of wanted LOD's (will be used as output parameter too).        
+ </dd>
+    <dt><tt> lod_step</tt>
+   <dd>         The simplification ratio for each lod (defined by
+  a simplification percentage relative to the number
+  of triangles).
+ </dd>
+    <dt><tt> initial_sag</tt>
+   <dd>    The precision of the given original geometry.
+  The simplification process will compute
+  an approximative sag from the tesselation when
+  the <sag_approx> value is set to 1.
+ </dd>
+    <dt><tt> sag_approx</tt>
+   <dd>      <br><b>Legal values</b>:
+ <ol>
+ <li> 0: Automatical sag computation is disabled.</li>
+ <li> 1: Automatical sag computation is enabled.</li>
+ </ol>
+
+ Output parameters are the following:
+ </dd>
+    <dt><tt> number_of_lods</tt>
+   <dd>  The real number of computed lods.
+ </dd>
+    <dt><tt> sag</tt>
+   <dd>   Sag's of the different levels of detail.
+ </dd>
+    <dt><tt> output</tt>
+   <dd>        Array of LodData of <number_of_lods> size.
+  <*output> is the adress to a pointer list to the
+  LodData, (*output)[i] is the adress of the i-th
+  lod information LodData.
+ </dd>
+    <dt><tt> initial_sag</tt>
+   <dd>   When the <sag_approx> is turned to 1, the value
+  of it is updated with the automatically computed sag.
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:
+ <tt>1 in case of success</tt>
+ <tt>0 for failure</tt>
+
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATLevelOfDetail.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

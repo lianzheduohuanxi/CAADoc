@@ -1,0 +1,222 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Updating all Sheets of all Drawing Documents of a Given Folder</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Generative Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Updating all Sheets of all Drawing Documents of a
+      Given Folder</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This macro shows you how to update sheets in Drawing documents.</p>
+      <!-----------------------------------comment------------------------------------->
+      <p>This macro retrieves all the drawing documents in a given folder, and
+      loops on these documents to open them, update all their <i>DrawingSheet</i>
+      <b></b>objects, save and close them.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAADriUpdateSheets is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <!-----------------------------------comment------------------------------------->
+
+      <p><a href="CAADriUpdateSheetsSource.htm">CAADriUpdateSheets.CATScript</a>
+      is located in the CAADriUseCases module.&nbsp; <a href="macros/CAADriUpdateSheets.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAADriUpdateSheets includes five steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Creating a File System Object to Handle the Folder</li>
+          <li></a><a href="#Step3">Retrieving the Folder</li>
+          <li></a><a href="#Step4">Looping on the Drawing Documents to Update
+          Their Sheets</a></li>
+        <li><a href="#Step5">Saving and Closing the Documents</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+  ' Set the CATIA popup file alerts to False
+  ' It prevents to stop the macro at each alert during its execution
+  CATIA.DisplayFileAlerts = False
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The CATIA prompts are disabled thanks to the <code>DisplayFileAlerts</code>
+      property of the <i>Application</i> object set to <code>False</code>.</p>
+      <h4><a name="Step2"></a>Creating a File System Object to Handle the Folder</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+  ' Set the file system object containing the folder
+  Dim fileSys As FileSystem
+  Set fileSys = CATIA.FileSystem 
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>FileSystem</code> property of the <i>Application</i> object
+      returns a portable object between Windows and Unix. Thanks to this object,
+      a folder and its files and subfolders can be retrieved.</p>
+      <h4><a name="Step3"></a>Retrieving the Folder</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' Define the path's folder where we are looking for Drawing documents</font>
+<font color="#0000FF">    Dim </font>sFolderPath<font color="#0000FF"> As </font>String
+    sFolderPath = InputBox( &quot;Enter a folder path:&quot;, &quot;Update All Sheets Of a Folder&quot; ,_
+                            sDocPath &amp; &quot;\online\CAAScdDriUseCases\samples&quot;)
+<font color="#0000FF">    If </font>(Not oFileSys.FolderExists(sFolderPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,sFolderPath &amp; &quot;: This Folder does not exist&quot;
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Set the folder object</font>
+<font color="#0000FF">    Dim </font>oFolder<font color="#0000FF"> As </font>Folder 
+<font color="#0000FF">    Set </font>oFolder = oFileSys.GetFolder(sFolderPath) 
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The folder is retrieved in <code>folder</code> from the <code>fileSys</code>
+      object using the <code>GetFolder</code> method to which the folder name <code>sFolderPath</code>
+      is given. <code>sFolderPath</code> is initialized to a documentation
+      folder using an environment variable and a confirmation is requested using
+      the InputBox function. The <code>FolderExists</code> method of the <code>FileSystem</code>
+      object is then used to check the existence of this folder.</p>
+      <h4><a name="Step4"></a>Looping on the Drawing Documents to Update Their
+      Sheets</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+     <font color="#008000">' Loop on the files collection of the folder</font>
+    <font color="#008000">' For Each File In Folder.Files</font>
+<font color="#0000FF">    Dim </font>iI, iJ
+<font color="#0000FF">    For </font>iI = 1<font color="#0000FF"> To </font>oFolder.Files.Count
+<font color="#0000FF">        Dim </font>oFile<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>oFile = oFolder.Files.Item(iI)
+    
+        <font color="#008000">'  Retrieve in the files collection only the Drawing documents from its extension</font>
+<font color="#0000FF">        If </font>InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
+
+            <font color="#008000">' Set and open a Drawing document</font>
+<font color="#0000FF">            Dim </font>oDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF">            Set </font>oDoc = CATIA.Documents.Open(oFile.Path)
+            MsgBox &quot;Updating Document &quot; &amp; oFile.Path, 0  ' VBOKOnly
+
+            <font color="#008000">' Loop on the sheets collection of the drawing document</font>
+            <font color="#008000">' For Each sheet In oDoc.Sheets </font>
+<font color="#0000FF">            For </font>iJ = 1<font color="#0000FF"> To </font>oDoc.Sheets.Count
+                <font color="#008000">' Update the sheet even is not necessary</font>
+                oDoc.Sheets.Item(iJ).ForceUpdate 
+<font color="#0000FF">            Next</font>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>To retrieve each file of the folder, a <code>For ... To ... Next</code>
+      loop uses the <code>iI</code> variable that ranges from 1 to the number of
+      files in the folder returned by the <code>Count</code> property of the
+      collection of files. The collection is retrieved thanks to the <code>Files</code>
+      property of the <i>Folder</i> object. The <code>Item</code> method of this
+      collection enables you to retrieve the <code>iI</code><sup>th</sup> file
+      in the collection handled using the <code>oFile</code> variable. Then,
+      using the <code>InStr</code> function, each file name is checked for the
+      &quot;.CATDrawing&quot; extension before being opened thanks to the <code>Open</code>
+      method of the <i>Documents</i> collection to which the file pathname is
+      passed using the <code>Path</code> property of the <i>File</i> object. A <code>For
+      Each ... In ... Next</code> embedded loop onto the sheets of the Drawing
+      document uses the <code>Sheets</code> property of such as document to
+      retrieve each sheet. The <code>ForceUpdate</code> method of the <i>Sheet</i>
+      object updates the sheet, even if updating the sheet is not needed.</p>
+      <h4><a name="Step5"></a>Saving and Closing the Documents</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+            <font color="#008000">' Save the Drawing document</font>
+            <font color="#008000">' oDoc.Save</font>
+            <font color="#008000">' Close the Drawing document</font>
+            oDoc.Close
+<font color="#0000FF">        End If</font>
+
+<font color="#0000FF">    Next</font>
+
+<font color="#0000FF">End Sub</font>
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>When all the sheets are processed, the drawing document is successively
+      saved and closed thanks to the <code>Save</code> and <code>Close</code>
+      methods of the <i>Document</i> object. The use of <code>Save</code> method
+      is here commented to avoid access right problems to the documentation
+      files.</p>
+      &lt;.td&gt;
+  </tr>
+</table>
+<!-----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to update Drawing document sheets using the <code>ForceUpdate</code>
+method of the <i>DrawingSheet</i> object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>,
+      <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!-----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

@@ -1,0 +1,935 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 12.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Modifying Object Graphic Properties</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Setting Graphical Properties</H3>
+        <P><EM>Implementing the CATIVisProperties interface</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+    <TR>
+        <TD valign="top" colspan="3" height="33">
+        <a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures</A> &gt;
+        <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</A> &gt;
+        <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</A> &gt;
+        <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</A> &gt;
+        <a href="CAAPstINFVisu.htm">CAAPstINFVisu</A> &gt; <B>
+        CAAPstINFGraphicalProperties</B> &gt; CAAPstINFEdit &gt;
+        <a href="CAAPstINFCCP.htm">CAAPstINFCCP</A> &gt;
+        <a href="CAAPstINFDelete.htm">CAAPstINFDelete</A> &gt;
+        <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</A></TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article shows how to implement the <I>CATIVisProperties</I> 
+        interface. It enables you to associate graphical properties to features. 
+        But, sometimes, implementing the <I>CATIVisProperties </I>interface is 
+        not enough, and you should overwrite methods of the <I>CATExtIVisu</I> 
+        adapter class of the <I>CATIVisu</I> interface. It is also described in 
+        this article.</P>
+        <UL>
+            <LI><A href="#Learn"><STRONG>What You Will Learn With This Use Case</STRONG></A></LI>
+            <LI><A href="#UseCase"><STRONG>The CAAPstINFGraphicProperties Use 
+            Case</STRONG></A>
+            <UL>
+                <LI><A href="#What">What Does CAAPstINFGraphicProperties Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstINFGraphicProperties</A></LI>
+                <LI><A href="#Where">Where to Find the 
+                CAAPstINFGraphicProperties Code</A></LI>
+            </UL>
+            </LI>
+            <LI><A href="#Step"><STRONG>Step-by-Step</STRONG></A></LI>
+            <LI><A href="#InShort"><STRONG>In Short</STRONG></A></LI>
+            <LI><A href="#References"><STRONG>References</STRONG></A></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Before reading this article, it is recommended to see the &quot;Graphical 
+Properties&quot; technical article [<A href="#References">1</A>] to understand how 
+the graphical properties are proceeded in the visualization mechanism. It is 
+based on three interfaces:</P>
+<UL>
+    <LI><B>CATIVisProperties</B>, the main interface enables to associate one or 
+    several type of geometry with the feature. Each geometry type is a <I>
+    CATVisGeomType. </I>As main pre-defined type there are the point type (<CODE>CATVPPoint</CODE>), 
+    the lineic type (<CODE>CATVPLine</CODE> or <CODE>CATVPEdge</CODE>) or the 
+    surfacic type (<CODE>CATVPMesh</CODE>). Each type of geometry regroups 
+    together a set of graphical properties. A such property, the color, the line 
+    type etc, is a <I>CATVisPropertyType</I></LI>
+    <LI><B>CATIProperty</B>, the interface to save the graphical properties. 
+    This interface is natively implemented on each feature.</LI>
+    <LI>The interface, which derives from <B>CATIVisu,</B> uses <I>
+    CATIVisProperties</I> to associate the graphical properties with the 
+    graphical representations.</LI>
+</UL>
+<P>When you want associate graphical properties with a feature, there are three 
+questions to ask :</P>
+<UL>
+    <LI>Which are the graphical properties to modify on the feature ?</LI>
+    <LI>Which are the type of geometry concerned by the graphical properties 
+    displayed in the &quot;Graphic Properties&quot; toolbar ?</LI>
+    <LI>Are the CATIVisu correctly implemented to modify the graphical 
+    representation associated with the feature?</LI>
+</UL>
+<P>In this use case you will learn :</P>
+<UL>
+    <LI>To implement the <I>CATIVisProperties </I>interface: the <CODE>
+    IsGeomTypeDefined</CODE> method and the <CODE>GetSubTypeFromPath</CODE> 
+    method answer respectivelely to the first and second question.</LI>
+    <LI>To overwrite, when it is necessary, some methods of the <I>CATExtIVisu</I> 
+    adapter class of the <I>CATIVisu</I> Interface</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstINFGraphicProperties Use Case</H3>
+<P>CAAPstINFGraphicProperties is a use case of the CAAProductStructure.edu 
+framework that illustrates Visualization and GeometryVisualization framework 
+capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstINFGraphicProperties Do</H4>
+<P>This use case enables to modify the graphical properties of the <CODE>
+CAAPstINFPoint</CODE>, <CODE>CAAPstINFWire</CODE> and <CODE>CAAPstINFLine</CODE> 
+features. Refer to the &quot;Creating a New StartUp Catalog &quot; use case [<A href="#References">2</A>] 
+to have more details about these three features. The document CAAPstINFDocument 
+[<A href="#Fig.1">Fig.1</A>] created by the &quot;Creating New Features 'From 
+Scratch' in a Product Document&quot; use case [<A href="#References">3</A>] contains 
+some instances of theses features.</P>
+<TABLE>
+    <CAPTION><I><A name="Fig.1">Fig.1</A>: The </I>CAAPstINFDocument <I>Document</I></CAPTION>
+    <TR>
+        <TD>
+        <img border="0" src="images/CAAPstINFDocumentWithArrow.jpg" width="312" height="267"></TD>
+    </TR>
+</TABLE>
+<P>In selecting the Properties command (Contextual menu or in the Edit menu), it 
+is possible to modify some graphical properties of these features. See an 
+example [<A href="#Fig.1">Fig.2</A>] that you can obtain:</P>
+<TABLE>
+    <CAPTION><I><A name="Fig.2">Fig.2</A>: The </I>CAAPstINFDocument <I>Document 
+    after some graphical modifications</I></CAPTION>
+    <TR>
+        <TD>
+        <img border="0" src="images/CAAPstINFDocumentWithGraProp.jpg" width="404" height="359"></TD>
+    </TR>
+</TABLE>
+<P>You can see just above, that</P>
+<UL>
+    <LI>on the CAAPstINFPoint2 feature: the color and the type of the symbol 
+    have changed</LI>
+    <LI>on the CAAPstINFLine1 feature: the color, the thickness and the type of 
+    the line have changed</LI>
+    <LI>on the CAAPstINFWire1feature: the color and the symbol of the markers 
+    have changed, and for the lines, the color, the thickness and the type have 
+    changed. Notice that now, we can distingue the markers created for the wire, 
+    and the markers created for the points. In the previous image [<A href="#Fig.1">Fig.1]</A>, 
+    the visual distinction was not possible because the markers have the same 
+    representation (a white cross).</LI>
+</UL>
+<P>It is possible thanks to:</P>
+<UL>
+    <LI>The implementation of the <I>CATIVisProperties</I> interface on the 
+    three features:<CODE>CAAPstINFPoint</CODE>, <CODE>CAAPstINFWire</CODE> and
+    <CODE>CAAPstINFLine,</CODE></LI>
+    <LI>Overwriting (or not) some methods of the <I>CATExtIVisu</I> class 
+    adapter of the <I>CATI3DGeoVisu</I> interface for the same features.</LI>
+    <P>If you read the &quot;Graphical Properties&quot; [<A href="#References">1</A>] 
+    technical article, and more precisely the &quot;Integration of the Graphical 
+    Properties in The Visualization Processus&quot; section, you know that the 
+    visualization process calls one of these following methods to update the 
+    graphical representations (<I>CATRep</I> class):<UL>
+        <LI><CODE>SetPointGraphicAttribute</CODE> </LI>
+        <LI><CODE>SetLineGraphicAttribute</CODE> </LI>
+        <LI><CODE>SetMeshGraphicAttribute</CODE> </LI>
+        <LI><CODE>SetEdgeGraphicAttribute</CODE> </LI>
+        <LI><CODE>SetAsmGraphicAttribute</CODE> </LI>
+        <LI><CODE>SetOtherGeomTypeGraphicAttribute</CODE></LI>
+    </UL>
+    <P>To be more precise, it is one or several methods which are called. It 
+    depend on the number of geometry's types defined by the feature. The current 
+    article describes the overwriting of the <CODE>SetPointGraphicAttribute</CODE> 
+    and the <CODE>SetLineGraphicAttribute</CODE> methods.</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstINFGraphicProperties</H4>
+<P>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures Use 
+Case&quot; in the &quot;Integrating New Features in a Product Structure&quot; use case for a 
+detailed description of how this use case should be launched.</P>
+<P>Specifically, the code described in this article is executed upon loading the 
+Product document (you can use the CAAPstINFDocument.CATProduct document that can 
+be found in the CNext/resources/graphic directory of the CAAProductStructure.edu 
+framework [<A href="#Fig.1">Fig.1</A>] ) into the CATIA session.</P>
+<P>Interactive scenario once the CAAPstINFDocument.CATProduct is loaded:</P>
+<UL>
+    <LI>Click button left on the <B>CAAPstINFPoint2</B></LI>
+    <LI>Button right, click the <B>Properties</B> command</LI>
+    <LI>The <B>Properties</B> dialog box appears
+    <UL>
+        <LI>Click the <B>Graphic</B> tab
+        <UL>
+            <LI>In the <B>Points</B> frame
+            <UL>
+                <LI>select a color in the <B>Color</B> combo</LI>
+                <LI>select a new symbol in the <B>Symbol</B> combo</LI>
+            </UL>
+            </LI>
+        </UL>
+        </LI>
+        <LI>Click <B>OK</B></LI>
+    </UL>
+    </LI>
+    <LI>Click button left on the <B>CAAPstINFLine1</B></LI>
+    <LI>Button right, click the <B>Properties</B> command</LI>
+    <LI>The <B>Properties</B> dialog box appears
+    <UL>
+        <LI>Click the <B>Graphic</B> tab
+        <UL>
+            <LI>In the <B>Lines and Curves</B> frame
+            <UL>
+                <LI>select a color in the <B>Color</B> combo</LI>
+                <LI>select a line type in the <B>LineType</B> combo</LI>
+                <LI>select a thickness (line width) in the <B>Thickness</B> 
+                combo</LI>
+            </UL>
+            </LI>
+        </UL>
+        </LI>
+        <LI>Click <B>OK</B></LI>
+    </UL>
+    </LI>
+    <LI>Click button left on the <B>CAAPstINFWire1</B></LI>
+    <LI>Button right, click the <B>Properties</B> command</LI>
+    <LI>The <B>Properties</B> dialog box appears
+    <UL>
+        <LI>Click the <B>Graphic</B> tab
+        <UL>
+            <LI>In the <B>Points</B> frame
+            <UL>
+                <LI>select a color in the <B>Color</B> combo</LI>
+                <LI>select a new symbol in the <B>Symbol</B> combo</LI>
+            </UL>
+            </LI>
+            <LI>In the <B>Lines and Curves</B> frame
+            <UL>
+                <LI>select a color in the <B>Color</B> combo</LI>
+                <LI>select a line type in the <B>LineType</B> combo</LI>
+                <LI>select a thickness (line width) in the <B>Thickness</B> 
+                combo</LI>
+            </UL>
+            </LI>
+        </UL>
+        </LI>
+        <LI>Click <B>OK</B></LI>
+    </UL>
+    </LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstINFGraphicProperties Code</H4>
+<P>The CAAPstINFGraphicProperties use case is made of source files located in 
+the CAAPstINFModeler.m module of the CAAProductStructure.edu framework.</P>
+<TABLE>
+    <TR>
+        <TD>Windows</TD>
+        <TD>
+        <UL>
+            <LI><CODE>
+            InstallRootDirectory\CAAProductStructure.edu\CAAPstINFModeler.m\</CODE></LI>
+        </UL>
+        </TD>
+    </TR>
+    <TR>
+        <TD>Unix</TD>
+        <TD>
+        <UL>
+            <LI><CODE>
+            InstallRootDirectory/CAAProductStructure.edu/CAAPstINFModeler.m\</CODE></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<P>where <CODE>InstallRootDirectory</CODE> is the directory where the CAA CD-ROM 
+is installed.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A>Step-by-Step</H3>
+<P>The main steps of CAAPstINFGraphicProperties are:</P>
+<OL>
+    <LI><A href="#Creating the CATIVisProperties data ext">Creating the 
+    CATIVisProperties Data Extension</A></LI>
+    <LI><A href="#Line feature">Processing the Line Feature</A></LI>
+    <LI><A href="#Point feature">Processing the Point Feature</A></LI>
+    <LI><A href="#Wire feature">Processing the Wire Feature</A></LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="Creating the CATIVisProperties data ext"></A>Creating the 
+CATIVisProperties Data Extension</H4>
+<P>For the three features the <I>CATIVisProperties</I> interface is implemented 
+in creating a data extension. To be shorter, only the case of the CAAPstINFPoint 
+feature is described. For the line and the wire, change CAAPstINFPoint by 
+CAAPstINFLine and CAAPstINFWire respectively.</P>
+<OL>
+    <LI>Header source</LI>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>#ifndef CAAEPstVisPropertiesPoint_H
+#define CAAEPstVisPropertiesPoint_H
+
+<B>#include &quot;CATExtIVisProperties.h&quot;</B>    // Need to derive from
+
+class CAAEPstVisPropertiesPoint : public <B>CATExtIVisProperties</B>
+{
+  <B>CATDeclareClass</B>;
+
+  public:
+
+    CAAEPstVisPropertiesPoint();
+    virtual ~CAAEPstVisPropertiesPoint();
+
+    HRESULT <B>IsGeomTypeDefined</B>(CATVisGeomType &amp; iGeomType) ;
+
+    HRESULT <B>GetSubTypeFromPath</B>(CATPathElement     &amp; iPathElement,
+                               CATVisPropertyType   iPropertyType,
+                               CATVisGeomType     &amp; oGeomType,
+                               unsigned int       &amp; oPropertyNumber) ;
+
+  private:
+
+  CAAEPstVisPropertiesPoint(const CAAEPstVisPropertiesPoint &amp;iObjectToCopy);
+  CAAEPstVisPropertiesPoint &amp; operator = (const CAAEPstVisPropertiesPoint &amp;iObjectToCopy);
+
+};
+#endif</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The <I>CAAEPstVisPropertiesPoint</I> C++ class derives from <I>
+    CATExtIVisProperties, </I>the adapter class of the <I>CATIVisProperties</I> 
+    interface. The <CODE>CATDeclareClass</CODE> macro declares that the <I>
+    CAAEPstVisPropertiesPoint</I> class belongs to a component. The copy 
+    constructor and the &quot;=&quot; operator are set as private to prevent the compiler 
+    from automatically creating them as public.</P>
+    <P>The public methods, other than the constructor and the destructor, are 
+    methods defined in the <I>CATIVisProperties</I> interface</LI>
+    <LI>Code source</LI>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>//Local Framework
+#include &quot;CAAEPstVisPropertiesPoint.h&quot;
+
+#include &quot;TIE_<B>CATIVisProperties</B>.h&quot;
+TIE_CATIVisProperties(CAAEPstVisPropertiesPoint);
+
+<B>CATImplementClass</B>(CAAEPstVisPropertiesPoint, DataExtension, CATBaseUnknown, <B>CAAPstINFPoint</B>);
+
+CAAEPstVisPropertiesPoint::CAAEPstVisPropertiesPoint()
+{
+}
+
+CAAEPstVisPropertiesPoint::~CAAEPstVisPropertiesPoint()
+{
+}
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The <I>CAAEPstVisPropertiesPoint</I> class states that it implements the
+    <I>CATIVisProperties</I> interface thanks to the <CODE>TIE_</CODE><CODE>CATIVisProperties</CODE> 
+    macro. This extension class is dedicated to the <CODE>CAAPstINFPoint</CODE> 
+    feature. The <CODE>CATImplementClass</CODE> macro declares that the <CODE>
+    <I>CAAEPstVisPropertiesPoint</I> </CODE>class is a data extension class, 
+    thanks to the <CODE>DataExtension</CODE> keyword, and that it extends the 
+    component whose main class is <CODE>CAAPstINFPoint</CODE>. The third 
+    parameter must always be set to <I>CATBaseUnknown</I> (unused parameter)</P>
+    <P>The constructor and destructor are empty.</P>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>...
+HRESULT CAAEPstVisPropertiesPoint::<B>IsGeomTypeDefined</B>(CATVisGeomType &amp; iGeomType)
+{
+  see the implementation for the <A href="#isgeomtype pour le point">point</A>
+  see the implementation for the <A href="#isgeomtype pour la line">line</A> 
+  see the implementation for the <A href="#is geomtype pour le wire">wire</A>
+} 
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The goal of this method is to return S_OK when the input argument, <CODE>
+    iGeomType</CODE>, is available for the feature, otherwise it returns E_FAIL. 
+    This method is explained for each feature later in the article.</P>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>...
+HRESULT CAAEPstVisPropertiesPoint::<B>GetSubTypeFromPath</B>(CATPathElement &amp; iPathElement,
+                                                         CATVisPropertyType        iPropertyType,
+                                                         CATVisGeomType          &amp; oGeomType,
+                                                         unsigned int            &amp; oPropertyNumber)
+{
+  see the implementation for the <A href="#getsubtype pour le point">point</A>
+  see the implementation for the <A href="#getsubtype pour la line">line</A> 
+  see the implementation for the <A href="#getsubtype pour le wire">wire</A>
+}</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>This method is automatically called to update the &quot;Graphic Properties&quot; 
+    toolbar. This toolbar contains combos to modify the color, the type of a 
+    line, etc... of the selected feature(s). The goal of this method is to 
+    return the type of geometrie, <CODE>oGeomType</CODE>, for the input 
+    graphical properties <CODE>iPropertyType</CODE>, concerned by the toolbar 
+    modifications. The returned type of geometry must be of course defined by 
+    the feature.</P>
+    <P>Remarks:
+    <UL>
+        <LI><CODE>oPropertyNumber </CODE>is not used by the visualization 
+        mechanism, so valuate it by zero.</LI>
+        <LI>do not process the type of property <CODE>CATVPGlobalType</CODE>. It 
+        is done by the visualization mechanism.</LI>
+    </UL>
+    <P>This method is explained for each feature later in the article.</LI>
+    <LI>Modifying the interface dictionary</LI>
+    <P>In the interface dictionary dedicated to the CAAProductStructure.edu 
+    framework, it is necessary to add the following lines to indicate that the
+    <CODE>CAAPstINFPoint</CODE>, <CODE>CAAPstINFLine</CODE>, and <CODE>
+    CAAPstINFWire</CODE> features implement the <I>CATIVisProperties </I>
+    interface in the <CODE>libCAAPstINFModeler</CODE> module.</P>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>...
+CAAPstINFPoint             CATIVisProperties             libCAAPstINFModeler
+CAAPstINFine               CATIVisProperties             libCAAPstINFModeler
+CAAPstINFWire              CATIVisProperties             libCAAPstINFModeler
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="Line feature"></A>Processing the Line Feature</H4>
+<P>The <CODE>CAAPstINFLine</CODE> feature is graphically represented by a line 
+between the two <CODE>CAAPstINFPoint</CODE> which constitue it. Refer to the 
+&quot;Enabling the Visualization of New Features in a Product Document&quot; [<A href="#References">4</A>] 
+article to see how the <CODE>BuildRep</CODE> method of the <I>CATI3DGeoVisu</I> 
+interface is implemented.</P>
+<OL>
+    <LI><A name="isgeomtype pour la line"></A>The IsGeomTypeDefined method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesLine::IsGeomTypeDefined(CATVisGeomType &amp; iGeomType)
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (<B>CATVPLine</B> == iGeomType) || (<B>CATVPGlobalType</B> == iGeomType) )
+        rc =  S_OK ;
+
+    return rc ;
+} </PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The <CODE>CAAPstINFLine</CODE> feature defines the <CODE>CATVPLine</CODE> 
+    geometry type to modify the color, the thickness and the type of the line. 
+    The <CODE>CATVPGlobalType</CODE> type enables to modify the show/no show 
+    flag, the pick/no pick flag, the lowint flag and the number of the layer.</LI>
+    <LI><A name="getsubtype pour la line"></A>The GetSubTypeFromPath method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesLine::GetSubTypeFromPath(CATPathElement &amp; iPathElement,
+                                                     CATVisPropertyType           iPropertyType,
+                                                     CATVisGeomType             &amp; oGeomType,
+                                                     unsigned int               &amp; oPropertyNumber)
+{
+    HRESULT rc = E_FAIL ;
+
+    switch ( iPropertyType )
+    {
+    case CATVPColor:
+    case CATVPLineType:
+    case CATVPWidth:
+        <B>oGeomType</B> = <B>CATVPLine</B> ;c
+        rc = S_OK ;
+        break;
+
+    }
+    <B>oPropertyNumber</B> = 0 ;
+    return rc ;
+}</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>For the CAAPstINFLine feature there is no ambiguity, for the <CODE>
+    CATVPColor</CODE>, <CODE>CATVPLineType</CODE> and the <CODE>CATVPWidth</CODE><CODE>
+    </CODE>properties, the type of geometry is <CODE>CATVPLine</CODE>.</LI>
+    <LI>CATExtIVisu methods<P>The type of geometry is <CODE>CATVPLine</CODE> , 
+    so it is the <CODE>SetLineGraphicAttribute</CODE> method of the <I>
+    CATExtIVisu</I> adapter class which is concerned. The graphic representation 
+    of the <CODE>CAAPstINFLine</CODE> feature is a <I>CAT3DCustomRep</I> which 
+    contains one graphic primitive a <I>CAT3DLineGP.</I> So the default 
+    implementation, those of the <I>CATExtIVisu</I> adapter class, will 
+    correctly process the properties modifications. It is not necessary to 
+    overwrite this method.</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Point feature"></A>Processing the Point Feature</H4>
+<P>The <CODE>CAAPstINFPoint</CODE> feature is graphically represented by a 
+marker. Refer to the &quot;Enabling the Visualization of New Features in a Product 
+Document&quot; [<A href="#References">4</A>] article to see how the <CODE>BuildRep</CODE> 
+method of the <I>CATI3DGeoVisu</I> interface is implemented.</P>
+<OL>
+    <LI><A name="isgeomtype pour le point"></A>The IsGeomTypeDefined method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesPoint::IsGeomTypeDefined(CATVisGeomType &amp; iGeomType)
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (<B>CATVPPoint</B> == iGeomType) || (<B>CATVPGlobalType</B> == iGeomType) )
+        rc =  S_OK ;
+    return rc ;
+} </PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The <CODE>CAAPstINFPoint</CODE> feature defines the <CODE>CATVPPoint</CODE> 
+    geometry type to modify the color and the symbol of the marker. The <CODE>
+    CATVPGlobalType</CODE> type enables to modify the show/no show flag, the 
+    pick/no pick flag, the lowint flag and the number of the layer.</LI>
+    <LI><A name="getsubtype pour le point"></A>The GetSubTypeFromPath method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesPoint::GetSubTypeFromPath(CATPathElement &amp; iPathElement,
+                                                         CATVisPropertyType        iPropertyType,
+                                                         CATVisGeomType          &amp; oGeomType,
+                                                         unsigned int            &amp; oPropertyNumber)
+{
+    HRESULT rc = E_FAIL ;
+
+    switch ( iPropertyType )
+    {
+    case CATVPColor:
+    case CATVPSymbol:
+        <B>oGeomType</B> = <B>CATVPPoint</B> ;
+        rc = S_OK ;
+        break;
+
+    }    
+    <B>oPropertyNumber</B> = 0 ;
+    return rc ;
+}</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>For the CAAPstINFPoint feature there is no ambiguity, for the <CODE>
+    CATVPColor</CODE> and the CATVPSymbol properties, the type of geometry is
+    <CODE>CATVPPoint</CODE>.</LI>
+    <LI>CATExtIVisu method<P>The type of geometry is <CODE>CATVPPoint</CODE> , 
+    so it is the <CODE>SetPointGraphicAttribute</CODE> method of the <I>
+    CATExtIVisu</I> adapter class which is concerned. The graphic representation 
+    of the <CODE>CAAPstINFLine</CODE> feature is a <I>CAT3DCustomRep</I> which 
+    contains one graphic primitive a <I>CAT3DMarkerGP.</I> So the default 
+    implementation, those of the <I>CATExtIVisu</I> adapter class, will not 
+    correctly process the properties modifications. It is necessary to overwrite 
+    this method.</P>
+    <P>The goal of this method is to modify the color (<CODE>CATVPColor</CODE>) 
+    and the symbol (<CODE>CATVPSymbol</CODE>) of the marker. In case of the
+    <CODE>CATVPAllPropertyType</CODE> the color and the symbol must be changed.<OL>
+        <LI>The symbol of the marker</LI>
+        <TABLE class="code">
+            <TR>
+                <TD>
+                <PRE>void CAAEPstINFVisuPoint::SetPointGraphicAttribute(CATRep *iRep, 
+                                                   CATVisPropertyType iPropertyType,
+                                                   CATVisPropertiesValues &amp; iPropertyValue)
+{
+   if ( NULL == iRep ) return;
+  
+   CAT3DCustomRep * pRepPoint = (CAT3DCustomRep *) iRep ;
+
+   // The symbol property
+   if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPSymbol</B>))
+   {
+      // retrieve the new symbol
+      unsigned int NewSymbol;
+      if (SUCCEEDED(iPropertyValue.<B>GetSymbol</B>(NewSymbol)))
+      {
+         // Retrieve the current GP 
+         CATGraphicPrimitive * pOldGP = pRepPoint-&gt;<B>GetGP</B>(0) ;
+         if ( NULL != pOldGP )
+         {
+            CAT3DMarkerGP * pOldPointGP = (CAT3DMarkerGP *) pOldGP ;
+
+            // retrieve the coordinate's point and the current symbol
+            float * points;
+            int nbPoints;
+            SymbolType OldSymbol;
+            
+            pOldPointGP-&gt;<B>Get</B>(&amp;points, &amp;nbPoints, &amp;OldSymbol);
+
+            if ( NewSymbol != OldSymbol )
+            {
+               // Creation of a new marker with the new symbol
+               CAT3DMarkerGP * pNewPointGP = new <B>CAT3DMarkerGP</B>(points,1,(SymbolType) NewSymbol);
+
+               //Replace the marker with the same graphic attribute
+               pRepPoint-&gt;<B>Modify</B>(pOldPointGP,pNewPointGP,NULL);
+
+               //The old GP must be deleted
+               CATGraphicPrimitive::<B>Destroy</B>(pOldPointGP);
+               pOldPointGP = NULL ;
+            }
+         }
+     } 
+  }
+ ...
+}</PRE>
+                </TD>
+            </TR>
+        </TABLE>
+        <P>The symbol of the <I>CAT3DMarkerGP</I> is not set into a <I>
+        CATGraphicAttributeSet</I> instance. The value is given at the graphic 
+        primitive (GP) construction. So to change it, a new GP must be created.</P>
+        <P>If the new symbol is different from the current, a new <I>
+        CAT3DMarkerGP</I> will be created. The new GP replaces the old thanks to 
+        the <CODE>Modify</CODE> method of the <I>CAT3DCustomRep</I> class. The 
+        old GP must be destroyed, thanks to <CODE>Destroy</CODE> method.
+      </ol>
+    </LI>
+        <LI>The color</LI>
+        <TABLE class="code">
+            <TR>
+                <TD>
+                <PRE>...
+  // The color property
+  if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPColor</B>))<B>  </B> 
+  {
+    CATGraphicAttributeSet * pAg = &amp;(pRepPoint-&gt;<B>GetAttribut</B>(0));
+    <B>SetGraphicAttributeSet</B> (pAg, CATVPColor, iPropertyValue);      
+  }
+}</PRE>
+                </TD>
+            </TR>
+        </TABLE>
+        <P>The color is modified on the <I>CATGraphicAttributeSet</I> instance 
+        associated with the first (<CODE>0</CODE>) GP of the CAT3DCustomRep. You 
+        retrieve it thanks to the <CODE>GetAttribut</CODE> method. The <CODE>
+        SetGraphicAttributeSet</CODE> method enables to modify on the <CODE>pAg
+        </CODE>graphic attribute, the <CODE>CATVPColor</CODE> properties read on 
+        the <CODE>iPropertyValue </CODE>argument<CODE>.</CODE></LI>
+    </OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="Wire feature"></A>Processing the Wire Feature</H4>
+<P>The <CODE>CAAPstINFWire</CODE> feature is graphically represented markers and 
+lines between each markers. Refer to the &quot;Enabling the Visualization of New 
+Features in a Product Document&quot; [<A href="#References">4</A>] article to see how 
+the <CODE>BuildRep</CODE> method of the <I>CATI3DGeoVisu</I> interface is 
+implemented.</P>
+<OL>
+    <LI><A name="is geomtype pour le wire"></A>The IsGeomTypeDefined method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesWire::IsGeomTypeDefined(CATVisGeomType &amp; iGeomType)
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (<B>CATVPLine</B> == iGeomType) || (<B>CATVPPoint</B> == iGeomType) || (<B>CATVPGlobalType</B> == iGeomType) )
+        rc =  S_OK ;
+
+    return rc ;
+} </PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The CAAPstINFWire feature defines the <CODE>CATVPLine</CODE> geometry 
+    type to modify the color, the thickness and the type of the lines and 
+    defines the <CODE>CATVPPoint</CODE> geometry type to modify the color and 
+    the symbol of the markers. The <CODE>CATVPGlobalType</CODE> type enables to 
+    modify the show/no show flag, the pick/no pick flag, the lowint flag and the 
+    number of the layer.</LI>
+    <LI><A name="getsubtype pour le wire"></A>The GetSubTypeFromPath method of 
+    the CATIVisProperties interface</LI><TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>HRESULT CAAEPstVisPropertiesWire::GetSubTypeFromPath(CATPathElement &amp; iPathElement,
+                                                     CATVisPropertyType           iPropertyType,
+                                                     CATVisGeomType             &amp; oGeomType,
+                                                     unsigned int               &amp; oPropertyNumber)
+{
+
+    HRESULT rc = E_FAIL ;
+
+    switch ( iPropertyType )
+    {
+    case CATVPColor:
+    case CATVPLineType:
+    case CATVPWidth:
+        <B>oGeomType = CATVPLine</B> ;
+        rc = S_OK ;
+        break;
+
+    case CATVPSymbol:
+        <B>oGeomType = CATVPPoint</B> ;
+        rc = S_OK ;
+        break;
+    }
+    oPropertyNumber = 0 ;
+    return rc ;
+}</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>For the <CODE>CATVPLineType</CODE>, <CODE>CATVPWidth </CODE>ou<CODE> 
+    CATVPSymbol </CODE>property type<CODE> </CODE>there are no ambiguite, it is 
+    either <CODE>CATVPLine</CODE> for the lineic geometry or <CODE>CATVPPoint
+    </CODE>for the marker. But for the color, the choice is between the line and 
+    the marker geometry. Here the choice is <CODE>CATVPLine</CODE>.</LI>
+    <LI>CATExtIVisu methods</LI><P>The type of geometries are <CODE>CATVPPoint</CODE> 
+    and <CODE>CATVPLine, </CODE>so the concerned methods of the <I>CATExtIVisu</I> 
+    class adapter are <CODE>SetPointGraphicAttribute</CODE> and <CODE>
+    SetLineGraphicAttribute</CODE>. The graphic representation of the <CODE>
+    CAAPstINFWire</CODE> feature is a <I>CAT3DCustomRep</I> which contains two 
+    graphic primitives: a <I>CAT3DMarkerGP</I> with N points and a <I>
+    CAT3DLineGP</I> with the same points. The default <CODE>
+    SetPointGraphicAttribute</CODE> method don't process the <I>CAT3DCustomRep,
+    </I>and the default <CODE>SetLineGraphicAttribute </CODE>modifies all the 
+    graphic Primitive of the CAT3DCustomRep without testing the type of the 
+    graphic primitive. It is necessary to overwrite these two methods.<UL>
+        <LI>SetPointGraphicAttribute</LI>
+        <P>The goal of this method is to modify the color (<CODE>CATVPColor</CODE>) 
+        and the symbol (<CODE>CATVPSymbol</CODE>) of all the markers. In case of 
+        the <CODE>CATVPAllPropertyType</CODE> the color and the symbol must be 
+        changed.</P>
+        <TABLE class="code">
+            <TR>
+                <TD>
+                <PRE>void CAAEPstINFVisuWire::SetPointGraphicAttribute(CATRep *iRep, 
+                                                   CATVisPropertyType iPropertyType,
+                                                   CATVisPropertiesValues &amp; iPropertyValue)
+{
+if ( NULL == iRep ) return;
+  
+   CAT3DCustomRep * pRepWire = (CAT3DCustomRep *) iRep ;
+
+   // Retrieve the CAT3DMarkerGP
+   int NbGP = pRepWire-&gt;<B>GetGPSize</B>();
+   if ( NbGP != 2 ) return ;
+
+   CATGraphicPrimitive * pGP = pRepWire-&gt;<B>GetGP</B>(<B>0</B>) ;
+   if ( 0 == pGP-&gt;IsAKindOf(&quot;CAT3DMarkerGP&quot;) ) return;
+
+   // Change the symbol
+   if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPSymbol</B>))
+   {
+      // Retrieve the new symbol
+      unsigned int NewSymbol;
+      if (SUCCEEDED(iPropertyValue.<B>GetSymbol</B>(NewSymbol)))
+      {
+         // Retrieve the current GP 
+         CAT3DMarkerGP * pOldPointGP = (CAT3DMarkerGP *) pGP ;
+         if ( NULL != pOldPointGP )
+         {
+            // retrieve the coordinate's points and the current symbol
+            float * points;
+            int nbPoints;
+            SymbolType OldSymbol;
+            
+            pOldPointGP-&gt;<B>Get</B>(&amp;points, &amp;nbPoints, &amp;OldSymbol);
+
+            if ( NewSymbol != OldSymbol )
+            {
+               // Creation of a new marker with the new symbol
+               CAT3DMarkerGP * pNewPointGP = new <B>CAT3DMarkerGP</B>(points,nbPoints,(SymbolType) NewSymbol);
+
+               //Replace the marker with the same graphic attribute
+               pRepWire-&gt;<B>Modify</B>(pOldPointGP,pNewPointGP,NULL);
+
+               //The old GP must be deleted
+               CATGraphicPrimitive::<B>Destroy</B>(pOldPointGP);
+               pOldPointGP = NULL ;
+            }
+         }
+     } 
+  }
+
+  // Change the color
+  if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPColor</B>))   
+  {
+    // The color of the marker is modified
+    CATGraphicAttributeSet * pAg = &amp;(pRepWire-&gt;GetAttribut(0));
+    SetGraphicAttributeSet (pAg, CATVPColor, iPropertyValue);      
+  } 
+}</PRE>
+                </TD>
+            </TR>
+        </TABLE>
+        <P>This method is slightly the same as for the <CODE>CAAPstINFPoint</CODE> 
+        feature. The difference resides in retrieving the <I>CAT3DMarkerGP</I> 
+        in the <I>CAT3DCustomRep</I>. If in the <CODE>CAAPstINFPoint</CODE> 
+        case, the graphic primitive is unique, with the <CODE>CAAPstINFWire</CODE>, 
+        the CAT3DCustomRep contains at the creation, in first position the 
+        marker GP and in second position the line GP. This order is always kept, 
+        since even thought the <I>CAT3DMarkerGP</I> must be deleted to modify 
+        the symbol, the <CODE>Modify</CODE> method replaces the old GP by the 
+        new GP.</LI>
+        <LI>SetLineGraphicAttribute</LI>
+        <P>The goal of this method is to modify the color (<CODE>CATVPColor</CODE>), 
+        the thickness (<CODE>CATVPLineType) and the </CODE>type of line (<CODE>CATVPLineType</CODE>) 
+        of all the lines. In case of the <CODE>CATVPAllPropertyType</CODE> the 
+        three properties must be changed.</P>
+        <TABLE class="code">
+            <TR>
+                <TD>
+                <PRE>void CAAEPstINFVisuWire::SetLineGraphicAttribute(CATRep *iRep, 
+                                                   CATVisPropertyType iPropertyType,
+                                                   CATVisPropertiesValues &amp; iPropertyValue)
+{
+   if ( NULL == iRep ) return;
+  
+   CAT3DCustomRep * pRepWire = (CAT3DCustomRep *) iRep ;
+
+   // Test that the second GP is the GP which contains the lines
+   int NbGP = pRepWire-&gt;<B>GetGPSize</B>();
+   if ( NbGP != 2 ) return ;
+
+   CATGraphicPrimitive * pGP = pRepWire-&gt;<B>GetGP</B>(<B>1</B>) ;
+   if ( 0 == pGP-&gt;IsAKindOf(&quot;CAT3DLineGP&quot;) ) return ;
+ 
+   // Change the thickness
+   if ( (iPropertyType == <B>CATVPAllPropertyType </B>) || ( iPropertyType == <B>CATVPWidth</B>))
+   {
+      CATGraphicAttributeSet * pAg = &amp;(pRepWire-&gt;<B>GetAttribut(1)</B>);
+      <B>SetGraphicAttributeSet</B> (pAg, CATVPWidth, iPropertyValue); 
+   }
+   
+   // Change the type 
+   if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPLineType</B> ))
+   {
+      CATGraphicAttributeSet * pAg = &amp;(pRepWire-&gt;<B>GetAttribut(1)</B>);
+      <B>SetGraphicAttributeSet</B> (pAg, CATVPLineType, iPropertyValue); 
+   }
+
+   // Change the color 
+   if ( (iPropertyType == <B>CATVPAllPropertyType</B> ) || ( iPropertyType == <B>CATVPColor</B>))   
+   {
+      CATGraphicAttributeSet * pAg = &amp;(pRepWire-&gt;<B>GetAttribut(1)</B>);
+      <B>SetGraphicAttributeSet</B> (pAg, CATVPColor, iPropertyValue);      
+   }
+}</PRE>
+                </TD>
+            </TR>
+        </TABLE>
+        <P>For the lines graphical attributes it is easier than for the points, 
+        all the properties are on a <I>CATGraphicAttributeSet</I> value. The <I>
+        CAT3DLineGP</I> being the second graphic primitive of the 
+        CAT3DCustomRep, the <I>CATGraphicAttributeSet</I> value to modify is 
+        those returned by the <CODE>GetAttribut </CODE>method with <CODE>1</CODE> 
+        as argument.</LI>
+    </UL>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="InShort"></A>In Short</H3>
+<P>This article illustrates how to to implement the <I>CATIVisProperties</I> to 
+associate graphical properties to features. This interface has an adapter class,
+<I>CATExtIVisProperties,</I> whose two methods are to be overwriten:</P>
+<UL>
+    <LI>IsGeomTypeDefined</LI>
+    <P>This method defines the types of property defined by the feature. A type 
+    of geometry is a <I>CATVisGeomType</I> whose the main predefined values are:
+    <CODE>CATVPPoint, CATVPLine, CATVPEdge , CATVPMesh </CODE>and<CODE> 
+    CATVPGlobalType</CODE></LI>
+    <LI>GetSubTypeFromPath</LI>
+    <P>This method defines for each properties displayed in the &quot;Graphic 
+    Properties&quot; toolbar the type of geometry affected.</LI>
+</UL>
+<P>The graphical representations take account of the graphical properties thanks 
+to methods of the <I>CATExtIVisu</I> class adapter of the <I>CATIVisu</I> 
+interface:<CODE> SetPointGraphicAttribute, SetLineGraphicAttribute</CODE>, etc. 
+When the default implementation of these methods cannot modify correctly the 
+graphic representation of the feature, it is necessary to overwrite them.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE border="0" width="100%">
+    <TR>
+        <TD valign="top">[1]</TD>
+        <TD>
+        <a href="../CAAVisTechArticles/CAAVisGraphicProperties.htm">
+        Graphical Properties</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[2]</TD>
+        <TD>Creating a New StartUp Catalog</TD>
+    </TR>
+    <TR>
+        <TD valign="top">[3]</TD>
+        <TD>Creating New Features &quot;From Scratch&quot; in a Product Document</TD>
+    </TR>
+    <TR>
+        <TD valign="top">[4]</TD>
+        <TD>Enabling the Visualization of New Features in a Product Document</TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">Version: <STRONG>1</STRONG> [May 2002]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2002, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

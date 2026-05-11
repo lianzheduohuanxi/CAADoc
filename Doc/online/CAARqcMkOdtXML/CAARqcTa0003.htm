@@ -1,0 +1,232 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Concatenate Run Time Environments</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Concatenate Run Time Environments</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows the different ways of concatenating 
+		the run time environments, that is, the folder pathname concatenation where 
+		the executable modules and/or shared libraries are searched for when replaying 
+		test objects.</p>
+		<ul>
+			<li><a href="#Concatenation">Using Concatenation Options</a></li>
+			<li><a href="#Loading">Information/Best Practices about the Modules/Libraries Loading</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Concatenation"></a>Using Concatenation Options</h2>
+<p>mkodt includes three options to concatenate run time environments [<a href="#References">1</a>]:</p>
+<ol>
+	<li><code>-d</code> that both designates the workspace root folder to search 
+		for the test objects, and the run time environment comprising the workspace 
+		designated by the <code>-d</code> option, concatenated to its prerequisite 
+		workspaces as declared using the mkGetPreq command. It initializes the
+		<code>ADL_ODT_CONCATENATION</code> environment variable [<a href="#References">2</a>] 
+		with this run time environment.</li>
+	<li><code>-p</code> sets both the run time environment and the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable with the path(s) declared using this option.</li>
+	<li><code>-r</code> sets the run time environment, but not the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable. When both <code>-p</code> and <code>-r</code> are 
+		used,&nbsp; <code>-p</code> sets the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable and <code>-r</code> sets the run time environment.</li>
+</ol>
+<p><strong>Examples</strong>:</p>
+<p>Assume that the workspace where the test objects are to be searched for is WS, 
+that this workspace has the run time prerequisites set by the mkGetPreq command 
+to WS1;WS2, that the workspace WS3 contains test frameworks and their run time view, 
+and WS4 contains at least only an application run time view.</p>
+<table class="fill">
+	<tr>
+		<th>Command Line</th>
+		<th>Values</th>
+		<th>Comment</th>
+	</tr>
+	<tr>
+		<td>
+		<pre class="code">mkodt -d WS -a</pre>
+		</td>
+		<td>
+		<pre class="code">ADL_ODT_CONCATENATION  = WS;WS1;WS2
+Run Time Concatenation = WS;WS1;WS2</pre>
+		</td>
+		<td>The standard case.</td>
+	</tr>
+	<tr>
+		<td>
+		<pre class="code">mkodt -d WS3 -a -p WS;WS4</pre>
+		</td>
+		<td>
+		<pre class="code">ADL_ODT_CONCATENATION  = WS;WS4
+Run Time Concatenation = WS;WS4</pre>
+		</td>
+		<td>Useful is you want to use the test objects of a remote test workspace 
+		WS3 to test changes in a local workspace WS concatenated to a local run 
+		time view WS4.</td>
+	</tr>
+	<tr>
+		<td>
+		<pre class="code">mkodt -d WS -a -r WS1;WS2</pre>
+		</td>
+		<td>
+		<pre class="code">ADL_ODT_CONCATENATION  = WS;WS1;WS2
+Run Time Concatenation = WS1;WS2</pre>
+		</td>
+		<td>Possible, but not advised, if you need to use a workspace with a test 
+		framework that uses data located in the InputData folder of another framework 
+		of WS, but you do not want to use WS in the run time concatenation.</td>
+	</tr>
+	<tr>
+		<td>
+		<pre class="code">mkodt -d WS -a -r WS3 -p WS4</pre>
+		</td>
+		<td>
+		<pre class="code">ADL_ODT_CONCATENATION  = WS4
+Run Time Concatenation = WS3</pre>
+		</td>
+		<td>Possible, but not advised.</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Loading"></a>Information/Best Practices about the Modules/Libraries 
+Loading</h2>
+<p>The test object is going to launch a load module. How is this module found and 
+how are the libraries loaded?</p>
+<ul>
+	<li><strong>With Windows:</strong>
+		<p>The system is looking for the module to run in the folders declared in 
+		the <code>PATH</code> environment variable. <code>PATH</code> is reset during 
+		the replay to contain the run time concatenation defined above at its beginning, 
+		and is reset to its previous value after the replay. When the module is 
+		found in the run time concatenation, the system launches it. If this module 
+		loads libraries, the system looks for these libraries in the following order:</p>
+		<ol>
+			<li>In the folder where the load module was found.</li>
+			<li>In the folders declared in the <code>PATH</code> environment variable.</li>
+		</ol>
+		<p><strong>So, to be able to load a modified library from a developer workspace 
+		in a test object, this workspace must contain the executable module.</strong></p>
+		<p><strong>Example</strong>:</p>
+		<p>MyODT launch the load module MyMOD. This module is linked with MyLIB.dll</p>
+		<p>The developer workspace WSDEV has the following concatenation: WSDEV;WSPROJ;WSBSF</p>
+		<p>The developer modifies MyLIB.dll and rebuilds it in the workspace WSDEV.</p>
+		<p>During the ODT execution:</p>
+		<table class="fill">
+			<tr>
+				<th>MyMOD Is Found in</th>
+				<th>MyLIB Can Be Loaded from</th>
+				<th>&nbsp;MyLIB Is Effectively Loaded from</th>
+				<th>Result</th>
+			</tr>
+			<tr>
+				<td>WSDEV</td>
+				<td>WSDEV;WSPROJ;WSBSF</td>
+				<td>WSDEV</td>
+				<td>OK</td>
+			</tr>
+			<tr>
+				<td>WSPROJ</td>
+				<td>WSPROJ;WSBSF</td>
+				<td>WSPROJ</td>
+				<td><strong>KO</strong></td>
+			</tr>
+			<tr>
+				<td>WSBSF</td>
+				<td>WSBSF</td>
+				<td>WSBSF</td>
+				<td><strong>KO</strong></td>
+			</tr>
+			<!--
+		<tr>
+			<td>WSDEV</td>
+			<td>WSPROJ;WSBSF</td>
+			<td>WSPROJ</td>
+			<td>????</td>
+		</tr>
+		<tr>
+			<td>WSPROJ</td>
+			<td>WSDEV;WSPROJ;WSBSF</td>
+			<td><strong>WSPROJ</strong></td>
+			<td>????</td>
+		</tr>
+		<tr>
+			<td>WSBSF</td>
+			<td>WSDEV;WSPROJ;WSBSF</td>
+			<td><strong>WSBSF</strong></td>
+			<td>????</td>
+		</tr>
+-->
+		</table>
+		<p>So, to be sure that the loaded library is the one you have modified, 
+		copy the load module to launch to your workspace!</p>
+	</li>
+	<li><strong>With UNIX:</strong>
+		<p>The system is looking for the executable module in the <code>PATH</code> 
+		environment variable. When the module is found, the system launches it. 
+		If this module loads libraries, the system looks for these libraries using 
+		the <code>LIBPATH</code> environment variable (AIX). During the test object 
+		execution, the environment variables <code>PATH</code> and <code>LIBPATH</code> 
+		contain the same concatenation, so the developer has nothing to do (no copy!) 
+		to be sure to load the correct library!</p>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>You can declare a workspace path concatenation for both the run time view from 
+which the executable modules and shared libraries are searched for and the data 
+view from which the input data are retrieved. The last one is the value of the
+<code>ADL_ODT_CONCATENATION</code> environment variable.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0001.htm">mkodt</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

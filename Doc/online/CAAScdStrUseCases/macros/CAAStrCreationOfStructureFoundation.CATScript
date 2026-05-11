@@ -1,0 +1,46 @@
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Create structure foundation
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R7
+' ***********************************************************************
+
+Sub CATMain()
+
+    Dim doc As Document
+
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
+
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
+
+    dim products as Products
+	set products = rootProduct.Products
+
+	dim component as Product
+	set component = products.AddNewProduct("Foundation")
+
+    Set strFactory = component.GetTechnologicalObject("StructureObjectFactory")
+
+    ' Creating a foundation assembly
+
+	dim foundation as StrFoundation 
+	set foundation = strFactory.ExtendProductAsFoundation("")
+
+	' Retreiving a foundation assembly
+
+    dim foundations as StrFoundations
+	set foundations = rootProduct.GetTechnologicalObject("StructureFoundations")		
+	
+	set foundation = foundations.Item(1)
+
+End Sub
+
+

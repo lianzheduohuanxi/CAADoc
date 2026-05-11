@@ -1,0 +1,280 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding New External Components Function</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding New External Components Function</h3>
+      <em>Importing a new external component</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the <i>AddNewExternalComponent</i> function
+      found in the <i>CAAPstComponentServices</i> utility program. It explains
+      how to add a new external component to a product structure.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Function</a></strong></li>
+        <li><a href="#UseCase"><strong>The <i>AddNewExternalComponent</i>
+          Function</strong></a>
+          <ul>
+            <li><a href="#What">What Does AddNewExternalComponent Do</a></li>
+            <li><a href="#How">How to Launch AddNewExternalComponent</a></li>
+            <li><a href="#Where">Where to Find the AddNewExternalComponent Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Function</h3>
+<p>This function is intended to help you program importing a new external
+component into a product structure. But before we get to the function itself, it
+is important to get an understanding of the Product Structure model by reading
+the referenced article [<a href="#References">1</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The AddNewExternalComponent Function</h3>
+<p>AddNewExternalComponent is a global function called by the samples found in
+the CAAProductStructure.edu framework
+that illustrates ProductStructure framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="What"></a>What Does AddNewExternalComponent Do</h4>
+<p>The goal of <i>AddNewExternalComponent</i> is to add a new existing component
+to a product structure. This document must first be created. It will be saved at
+the same time as the importing CATProduct document. Here are its input and
+output parameters:
+<p>INPUT:
+<ul>
+  <li><b><i>CATIProduct</i> <code>*iThisProd</code> </b>- the importing
+    CATProduct document's root product</li>
+  <li><b><i>CATUnicodeString </i><code>iDocumentType</code> </b>- the type of
+    document to be created (&quot;Product&quot; or &quot;Part&quot;)</li>
+  <li><b><i>CATUnicodeString </i><code>iPartNumber</code> </b>- the name of the
+    document to be created</li>
+</ul>
+<p>OUTPUT:</p>
+<ul>
+  <li><b><i>CATIProduct</i> <code>*oNewProduct</code> </b>- the product instance
+    of the new imported document under<code> iThisProd</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch AddNewExternalComponent</h4>
+<p>AddNewExternalComponent is a global function that is called from the
+CAAPstAddComponent [<a href="#References">2</a>] use case. It is not an independently executable sample
+itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the AddNewExternalComponent Code</h4>
+<p><i>AddNewExternalComponent</i> code is located in the <b>CAAPstComponentServices.m</b>
+shared library of the <b>CAAProductStructure.edu</b> framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstComponentServices.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstComponentServices.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAPstAddServices.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in <i>AddNewExternalComponent</i>:</p>
+<ol>
+  <li><a href="#CreatingNewDoc">Creating a New CATPart or CATProduct Document</a></li>
+  <li><a href="#RetrievingRoot">Retrieving the Root Product of the New Document</a></li>
+  <li><a href="#AddingNewDoc">Adding the New Document as a Product Instance of
+    the Importing Product Structure</a></li>
+</ol>
+<p>We will now comment each of these steps by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<p><b><a name="CreatingNewDoc"></a>Creating a New CATPart or CATProduct Document</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT rc = E_FAIL;
+*oNewProduct = NULL;
+	
+CATUnicodeString product = &quot;Product&quot;;
+CATUnicodeString part = &quot;Part&quot;;
+
+if ( (iDocumentType != product) &amp;&amp;  (iDocumentType != part) )
+{
+   cout &lt;&lt; &quot; ERROR in AddNewExternalComponent : document type : &quot; &lt;&lt; iDocumentType.CastToCharPtr() &lt;&lt; &quot; is not allowed &quot;&lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> rc;
+}
+
+CATDocument *pNewDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(iDocumentType,
+		              pNewDoc );
+if ( FAILED(rc) || (NULL==pNewDoc) )
+{
+   cout &lt;&lt; &quot;ERROR : document Creation Failed&quot; &lt;&lt; endl&lt;&lt; flush;
+   <b>return</b> rc;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>If the document type is valid, the actual document is created using the <code>New</code>
+method of <i>CATDocumentServices</i>. A <i>CATDocument</i> pointer to the new
+document is thus retrieved.</p>
+<p><b><a name="RetrievingRoot"></a>Retrieving the Root Product of the New
+Document</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIDocRoots *piDocRootsOnNewDoc = NULL;
+rc = pNewDoc-&gt;<b>QueryInterface</b>(IID_CATIDocRoots,
+			     (void**) &amp;piDocRootsOnNewDoc);
+if ( SUCCEEDED( rc ) )
+{			
+   CATListValCATBaseUnknown_var *pRootProducts =
+	piDocRootsOnNewDoc-&gt;<b>GiveDocRoots</b>(); 
+   CATIProduct_var spRootProduct;
+   if (NULL != pRootProducts)
+      if (pRootProducts-&gt;<b>Size</b>())
+      {  
+         // the root product is first element of
+         // the list of root elements.
+         spRootProduct = <b>(*pRootProducts)[1]</b>;
+         <b>delete</b> pRootProducts;
+         pRootProducts = NULL;
+      }
+	
+   piDocRootsOnNewDoc-&gt;<b>Release</b>();
+   piDocRootsOnNewDoc=NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to get the root product of the new document, we first get a <i>CATIDocRoots</i>
+handle on it. Then, using the <code>GiveDocRoots</code> method, we get a list
+whose first element is the root product itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<p><b><a name="AddingNewDoc"></a>Adding the New Document as a Product Instance
+of the Importing Product Structure</b></p>
+<table class="code">
+  <tr>
+    <td width="100%">
+      <pre>   if (NULL_var != spRootProduct)
+   {
+      // Set PartNumber to the created root
+      // ATTENTION : be sure that the part number is single
+      // in a document .
+      spRootProduct -&gt; <b>SetPartNumber</b>(iPartNumber);
+
+      // We have the root product from which one
+      // will be agregated in &quot;this&quot;
+      CATIProduct_var spProduct;
+      spProduct = iThisProd-&gt;<b>AddProduct</b> (spRootProduct);
+      rc = spProduct-&gt;<b>QueryInterface</b>(IID_CATIProduct, 
+                                     (void**) &amp;*oNewProduct);
+
+   }
+}</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Before actually adding the new component to the product structure, we
+attribute it a name passed to the program as the argument
+&quot;iPartNumber&quot;. We use the <code>SetPartNumber</code> method of <i>CATIProduct</i>
+to do this. Next, we use the <code>AddProduct</code> method to add the root
+product of the new document under the root product of the initial importing
+product structure.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This function has demonstrated how to import a new document into a product
+structure. Specifically, it has illustrated:</p>
+<ul>
+  <li>Creating a new CATPart or CATProduct document using the <code>New</code>
+    method of <i>CATDocumentServices</i></li>
+  <li>Retrieving the root product of the document using the <code>GiveDocRoots</code>
+    method of <i>CATIDocRoots</i></li>
+  <li>Adding the new document as a product instance of a product structure using
+    the <code>AddProduct</code> method of <i>CATIProduct</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The Product
+      Structure Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPstAddComponent.htm">Adding Components to a Product
+      Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

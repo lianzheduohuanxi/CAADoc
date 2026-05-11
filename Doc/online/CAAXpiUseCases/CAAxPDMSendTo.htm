@@ -1,0 +1,242 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Sending a Consistent Set of Files</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a><a href="CAAxPDMSendTo.htm">Sending a Consistent 
+       Set of Files</a></h3>
+       <p>How to use CATIxPDMSendToServices</td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article shows how to send a consistent set of files [<a 
+       href="#References">1</a>] using the <i>CATIxPDMSendToServices</i> 
+       interface</p>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+         <li><a href="#UseCase"><strong>The CAAxPDMSendTo Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAxPDMSendTo Do</a></li>
+           <li><a href="#How">How to Launch CAAxPDMSendTo</a></li>
+           <li><a href="#Where">Where to Find the CAAxPDMSendTo Code</a></li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a></li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+	<p>This use case details the usage the <i>CATIxPDMSendToServices</i> 
+       interface. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAxPDMSendTo Use Case</h3>
+   <p>CAAxPDMSendTo is a use case of the CAAxPDMInterfaces.edu framework that 
+   illustrates CATxPDMInterfaces framework capabilities. <b>Be careful</b>, such 
+   as all use cases illustrating the CATxPDMInterfaces framework, the current 
+   one requires a PX1 licence. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="What"></a>What Does CAAxPDMSendTo Do</h4>
+	<p>This use case sends (copies) a set of files to a target directory. The 
+	sent files are :</p>
+	<ul>
+		<li>input files with their name </li>
+		<li>+ those pointed by input files. ( recursive computation)</li>
+	</ul>
+	<p>The files are renamed (Send_to_CATIA_Document_Num) and, only Part and 
+	Product files are sent, other one are excluded. </p>
+	<p>A report file ( CAAxPDMSendToReport.txt ) in the target directory is 
+	created. It lists the sent file, and their new names. </p>
+	<p>Here is an example. ( see <a href="#How">How to Launch CAAxPDMSendTo</a> 
+	section) </p>
+   <pre>mkrun -c &quot;CAAxPDMSendTo TestDir E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Product1.CATProduct&quot;</pre>
+<table class="code" id="table2">
+  <tr>
+    <td>
+      <pre>...
+_The CAAxPDMSendTo main program begins ....
+
+A session is created
+Read all information on file : E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Product1.CATProduct
+Compute Consistent set of E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Product1.CATProduct
+Number of items in consistent set:3
+-Found items:3
+1 E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Product1.CATProduct
+2 E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Part1.CATPart
+3 E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Part2.CATPart
+Item E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Product1.CATProduct will be send to :
+TestEGD\Send_To_CATIA_Document_1.CATProduct
+Item E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Part1.CATPart will be send to :
+TestEGD\Send_To_CATIA_Document_2.CATPart
+Item E:\...\CAAxPDMInterfaces.edu\InputData\SendTo\Part2.CATPart will be send to :
+TestEGD\Send_To_CATIA_Document_3.CATPart
+The session is deleted
+
+The CAAxPDMSendTo main program is ended.
+...</pre>
+    </td>
+  </tr>
+</table>
+	<p>The CAAxPDMSendToReport.txt file is the following</p>
+<table class="code" id="table1">
+  <tr>
+    <td>
+      <pre>...
+_________________________________________________________
+
+===========   Send To operation Report File   ===========
+_________________________________________________________
+
+====> The copy is carried out 
+<b>Location</b>=: E:\.....\CAAxPDMInterfaces.edu\InputData\SendTo\
+<b>Name</b>=: Product1.CATProduct
+<b>TargetLocation</b>: TestDir
+<b>TargetCompleteName</b>: Send_To_CATIA_Document_1.CATProduct
+
+Success while copying the file :Product1.CATProduct 
+
+<b>Location</b>=: E:\users\egd\adele\DevR17\egdpreint17\CAAxPDMInterfaces.edu\InputData\SendTo\
+<b>Name</b>=: Part1.CATPart
+<b>TargetLocation</b>: TestDir
+<b>TargetCompleteName</b>: Send_To_CATIA_Document_2.CATPart
+
+Success while copying the file :Part1.CATPart 
+
+<b>Location</b>=: E:\users\egd\adele\DevR17\egdpreint17\CAAxPDMInterfaces.edu\InputData\SendTo\
+<b>Name</b>=: Part2.CATPart
+<b>TargetLocation</b>: TestDir
+<b>TargetCompleteName</b>: Send_To_CATIA_Document_3.CATPart
+
+Success while copying the file :Part2.CATPart 
+
+Copied documents links update in progress 
+_________________________________________________________
+_________________________________________________________
+
+ SEND TO OPERATION PROCESSED
+_________________________________________________________
+...</pre>
+    </td>
+  </tr>
+</table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="How"></a>How to Launch CAAxPDMSendTo</h4>
+   <p>To launch CAAxPDMSendTo, you will need to set up the build time 
+   environment, then compile CAAxPDMSendTo along with its prerequisites, set up 
+   the run time environment, and then execute the use case [<a 
+   href="#References">2</a>]. To launch it, execute the following command:</p>
+   <pre>mkrun -c &quot;CAAxPDMSendTo TargetDirectory FileName1 [FileName2 FileName3 ...]&quot;</pre>
+   <p>where <code>Filenamei</code> is&nbsp;the <b>complete path of a file</b>. You 
+   can use&nbsp;those located in the InputData/SendTo directory of the&nbsp; 
+   CAAxPDMInterfaces.edu framework . </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAxPDMSendTo Code</h4>
+   <p>The CAAxPDMSendTo use case is made of one single file, the 
+   CAAxPDMSendToMain.cpp file, located in the CAAxPDMSendTo.m module of the 
+   CAAxPDMInterfaces.edu framework:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMSendTo.m\</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMSendTo.m/</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Step"></a>Step-by-Step</h3><font SIZE="2">
+	<ul>
+		<li>1. Read and Check the argument.</li>
+		<li>2. Open the session.</li>
+		<li>3. Retrieve the input file items.</li>
+		<li>4. Compute the cumulated consistent Set of the input file items.</li>
+		<li>5. Create a SendTo Instance. </li>
+		<li>6. Add all input file items. </li>
+		<li>7. Rename all pointed items of the consitent set</li>
+		<li>8. Remove all items which are not CATProduct or CATPart</li>
+		<li>9. Simulate Send To operation.</li>
+		<li>10. Run Send To operation.</li>
+		<li>11. Delete the session</li>
+	</ul>
+	</font>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td>
+       <a href="../CAAXpiTechArticles/CAAXpiIntegrationOverview.htm">
+       CATIA V5 and External PDM System Integration Principles</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2006]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

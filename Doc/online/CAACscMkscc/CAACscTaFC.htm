@@ -1,0 +1,561 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Forbidden Construction Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Forbidden Construction Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article describes the checks identified by UACS, STRTOK, UADC, PCOM, 
+		DOKM, PUCE, IDGP, VISI.</p>
+					<ul>
+						<li><a href="#Problematic">Problematic</a></li>
+						<li><a href="#Checks">Checks</a>
+							<ul>
+								<li><a href="#Principle">Principle</a></li>
+								<li><a href="#UACS">UACS</a></li>
+								<li><a href="#STRTOK">STRTOK</a></li>
+								<li><a href="#UADC">UADC</a></li>
+								<li><a href="#PCOM">PCOM</a></li>
+								<li><a href="#DOKM">DOKM</a></li>
+								<li><a href="#PUCE">PUCE</a></li>
+								<li><a href="#IDGP">IDGP</a></li>
+								<li><a href="#VISI">VISI</a></li>
+							</ul>
+						</li>
+						<li><a href="#Relative">Relative Sections in Setting Files</a>
+							<ul>
+								<li><a href="#UnauthorizedIdentifiers">UnauthorizedIdentifiers</a></li>
+								<li><a href="#UnauthorizedClassDelete">UnauthorizedClassDelete</a></li>
+								<li><a href="#ReplaceDeleteMethods">ReplaceDeleteMethods</a></li>
+								<li><a href="#ProhibitedCalls">ProhibitedCalls</a></li>
+								<li><a href="#ClassDetection">ClassDetection</a></li>
+								<li><a href="#InterfaceDetection">InterfaceDetection</a></li>
+							</ul>
+						</li>
+						<li><a href="#InShort">In Short</a></li>
+						<li><a href="#References">References</a></li>
+						<li><a href="#History">History</a></li>
+					</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Migrations lead to existence of deprecated constructions (call to a method, use 
+of class or interface ...). Furthermore, some C++ constructions are prohibited with 
+Object Modeler (identifier, call to delete on some kinds of pointers). CSC checks 
+the uses of C++ entities, methods, constructions or identifiers which are declared 
+as forbidden.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Checks"></a>Checks</h2>
+<h3><a name="Principle"></a>Principle</h3>
+<p>UACS:</p>
+<p>Some identifiers or keywords are forbidden when programming with CAA architecture. 
+When CSC sees one of these keywords, an error is reported.</p>
+<p>STRTOK:</p>
+<p>This check is a particular case of the previous one as its aim is to prevent 
+the usage of strtok function. strtok is a standard C library function whose use 
+is not safe. Indeed, the function is not thread-safe and not re-entrant and can 
+induce unpredictable run-time errors. That is why it may be safe to use a substitute.</p>
+<p>UADC:</p>
+<p>The Lifecycle of the instances of some classes (like dialog objects) must not 
+be managed by the user, but by the infrastructure itself. These objects are automatically 
+and recursively deleted by the infrastructure when useless. The user must not delete 
+these instances himself.</p>
+<p>For example, to delete a dialog object in a dialog window while the dialog window 
+remains active, you can use the RequestDelayedDestruction; the delete operation 
+is then delayed. See Deleting Dialog Objects in [<a href="#References">1</a>].</p>
+<p>CSC looks, for each pointer of these types, if the pointer is deleted. In that 
+case, an error is reported, and a message specifies the correct method to use.</p>
+<p>PCOM:</p>
+<p>Some methods are defined for a class (by inheritance for example) but must not 
+be called on the class instances. When an object calls a method prohibited for its 
+class (or for a parent class), an error is reported.</p>
+<p>DOKM:</p>
+<p>Overloading certain C++ keywords via a macro definition is not recommended, as 
+it can transgress the encapsulation principle. An error is reported for each macro 
+definition with a prohibited name.</p>
+<p>PUCE:</p>
+<p>Some C++ entities (classes, interfaces) have deprecated, or prohibited, uses. 
+When one of these entities is used in a not allowed way, an error is reported.</p>
+<p>IDGP:</p>
+<p>To prevent dead-lock on multi-processor machines, the graphic primitives aggregated 
+within a composite graphic primitive should not be destroyed during the destruction 
+of the composite. Then, the check controls that no call to Destroy on a graphic 
+primitive is done in the destructor of a CATGraphicPrimitive derived class.</p>
+<p>VISI:</p>
+<p>To prevent access to SpecsModeler internals, uses of some identifiers and the 
+corresponding strings report an error.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="UACS"></a>UACS</h3>
+<p>UACS stands for UnAuthorized Construction.</p>
+<p>An error of type UACS is reported when:</p>
+<ul>
+	<li>an unauthorized identifier is found.</li>
+</ul>
+<h4><a name="UACS-1"></a>Example UACS-1</h4>
+<p>&quot;assert&quot; is forbidden in CAA.</p>
+<p>The following code will report an error:</p>
+<pre class="code">...
+<strong>assert</strong>( iCKEFactory != NULL_var );
+...</pre>
+<p>To correct the error, use the CAA error management [<a href="#References">2</a>].</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="STRTOK"></a>STRTOK</h3>
+<p>An error of type STRTOK is reported when:</p>
+<ul>
+	<li>a call to standard C library function strtok is found.</li>
+</ul>
+<h4><a name="STRTOK-1"></a>Example STRTOK-1</h4>
+<p>The following code will report an error:</p>
+<pre class="code">...
+char* input = ...;
+char* token = <strong>strtok</strong>( input, &quot;\t&quot;);
+...</pre>
+<p>To correct the error, use other standard library calls or system services.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="UADC"></a>UADC</h3>
+<p>UADC stands for UnAuthorized Delete Class.</p>
+<p>An error of type UADC is reported when:</p>
+<ul>
+	<li>a pointer is deleted.</li>
+	<li>the type of this pointer is a type not allowed for deletion by users.</li>
+</ul>
+<p>If the user deletes the pointer himself, the application will try to delete the 
+pointer again, implying a Freeing Freed Memory error.</p>
+<p>One can specify in <a href="#ReplaceDeleteMethods">ReplaceDeleteMethods</a> section 
+of setting files which method should be used instead of delete.</p>
+<h4><a name="UADC-1"></a>Example UADC-1</h4>
+<p>The CATDialog object pointers must not be deleted by the user, but by the application 
+itself. Method RequestDelayedDestruction() should be used instead of delete. The 
+class CATDialogAgent inherits from class CATDialog:</p>
+<p>
+<img alt="CATDialogAgent" src="images/CAACscTaCNextCATDialogAgent.gif" width="150" height="156"/></p>
+<p>Let&#39;s imagine a class CATTestImportCmd containing a data member _dialogAgentDlgOK 
+of type CATDialogAgent:</p>
+<pre class="code">...
+class CATTestImportCmd : public CATStateCommand
+{
+  ...
+  CATDialogAgent* _dialogAgentDlgOK;
+  ...
+};
+...</pre>
+<p>The following code will report an error:</p>
+<pre class="code">...
+CATTestImportCmd::~CATTestImportCmd
+{
+  if( _dialogAgentDlgOK!=NULL ) 
+  {
+    <strong>delete</strong> _dialogAgentDlgOK;
+    _dialogAgentDlgOK= NULL;
+  }
+  ...
+}
+...</pre>
+<p>To correct the error, replace the delete as follow:</p>
+<pre class="code">...
+CATTestImportCmd::~CATTestImportCmd
+{
+  if( _dialogAgentDlgOK!=NULL ) 
+  {
+    _dialogAgentDlgOK-&gt;<strong>RequestDelayedDestruction</strong>();
+    _dialogAgentDlgOK= NULL;
+  }
+  ...
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="PCOM"></a>PCOM</h3>
+<p>PCOM stands for Prohibited Call Of Method.</p>
+<p>Call of some methods are prohibited for the instances of specific classes. Only 
+explicit calls are checked. The method signature is not taken into account for this 
+check. The list of prohibited calls is provided in the setting files, see
+<a href="#ProhibitedCalls">ProhibitedCalls</a> section.</p>
+<p>An error of type PCOM is reported when:</p>
+<ul>
+	<li>a method is called on an instance of a class for which the method is prohibited.</li>
+</ul>
+<h4><a name="PCOM-1"></a>Example PCOM-1</h4>
+<p>Instances of class CATRep and of all the inherited classes must not call the 
+Release method, therefore the following code will report an error:</p>
+<pre class="code">CATRep* rep = new CATRep();
+...
+<strong>rep-&gt;Release();</strong>
+...</pre>
+<p>To correct the code, replace the call to Release() by a call to Destroy() method:</p>
+<pre class="code">CATRep* rep = new CATRep();
+...
+<strong>rep-&gt;Destroy();</strong>
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="DOKM"></a>DOKM</h3>
+<p>DOKM stands for Dangerous Overloading of C++ Keyword via MacroDefinition.</p>
+<p>Overloading certain C++ keywords via a macro definition leads to transgress the 
+encapsulation principle. For example, defining a macro called &quot;class&quot; to expand 
+in &quot;struct&quot; would give access to all class members with default private access.</p>
+<p>An error of type PCOM is reported when:</p>
+<ul>
+	<li>a macro named &quot;private&quot;, &quot;protected&quot;, &quot;class&quot;, &quot;struct&quot; is defined.</li>
+</ul>
+<h4><a name="DOKM-1"></a>Example DOKM-1</h4>
+<p>The following code will report an error:</p>
+<pre class="code">#define class struct</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="PUCE"></a>PUCE</h3>
+<p>PUCE stands for Prohibited Use of C++ Entity.</p>
+<p>For a class, a prohibited use can be one of the following:</p>
+<ul>
+	<li>Derivation of the class.</li>
+	<li>Expected type of function or method argument.</li>
+	<li>Type of a local variable, type of a data member of another class.</li>
+	<li>Cast of an object into the class type.</li>
+	<li>Inclusion in a source file of the header in which the class is defined.</li>
+	<li>Creation of an instance of the class by the operator new.</li>
+	<li>Use of static member (data ot method) of the class.</li>
+</ul>
+<p>For an interface, the possible prohibited uses are the same as above, except 
+the creation of an instance by new, which means nothing for an interface. On the 
+other hand, an additional interface use is the possibility to adhere to the interface 
+using TIE_xxx or TIEchain_xxx macros.</p>
+<p>The list of the prohibited / deprecated uses for each class concerned is provided 
+in the <a href="#ClassDetection">ClassDetection</a> section of the setting files. 
+The list of the prohibited / deprecated uses for each interface concerned is provided 
+in the <a href="#InterfaceDetection">InterfaceDetection</a> section of the setting 
+files.</p>
+<p>An error of type PUCE is reported when:</p>
+<ul>
+	<li>a class or an interface is used in a prohibited way.</li>
+</ul>
+<p>To correct the error, see the C++ API documentation in CAA V5 Encyclopedia.</p>
+<h4><a name="PUCE-1"></a>Example PUCE-1</h4>
+<p>Let&#39;s assume that deriving class CATDlgFile is a deprecated use. The following 
+code will report a PUCE error:</p>
+<pre class="code">class CATFrmFile : <strong>public CATDlgFile</strong>{
+...
+}</pre>
+<h4><a name="PUCE-2"></a>Example PUCE-2</h4>
+<p>Let&#39;s assume that use of a CATDlgFile as method or function argument type is 
+a deprecated use. The following code will report a PUCE error:</p>
+<pre class="code">class CATScriptEditor : public CATDlgDialog {
+  ...
+  HRESULT SetFilterStrings(<strong>CATDlgFile</strong> * iDlgFile);
+}</pre>
+<h4><a name="PUCE-3"></a>Example PUCE-3</h4>
+<p>Let&#39;s assume that defining CATDlgFile data members is a deprecated use of CATDlgFile. 
+The following code will report a PUCE error:</p>
+<pre class="code">class CATMCVBBox : public CATFrmDialog {
+<strong>CATDlgFile </strong>* _fileDialog;
+...
+}</pre>
+<h4><a name="PUCE-4"></a>Example PUCE-4</h4>
+<p>Let&#39;s assume that casting into CATDlgFile is a deprecated use of CATDlgFile. 
+The following code will report a PUCE error:</p>
+<pre class="code">CATDlgFile *dlgFile = <strong>(CATDlgFile *)</strong>iSendingCommand;</pre>
+<h4><a name="PUCE-5"></a>Example PUCE-5</h4>
+<p>Let&#39;s assume that the inclusion of the header of class CATDocument is a deprecated 
+use of CATDocument. The following code will report a PUCE error:</p>
+<pre class="code">#include &quot;CATDlgFile.h&quot;
+...</pre>
+<h4><a name="PUCE-6"></a>Example PUCE-6</h4>
+<p>Let&#39;s assume that creating a CATDlgFile instance with the operator new is a deprecated 
+use. The following code will report a PUCE error:</p>
+<pre class="code">CATDlgFile * dlgFile = <strong>new CATDlgFile</strong>(this, &quot;OpenDlgFile&quot;, CATDlgWndModal);</pre>
+<h4><a name="PUCE-7"></a>Example PUCE-7</h4>
+<p>Let&#39;s assume that adhesion to CATIPersistent interface is a deprecated use of 
+CATIPersistent. The following code, implementation of class CATImplementPersistent, 
+will report a PUCE error:</p>
+<pre class="code">CATImplementClass( CATImplementPersistent,
+                   Implementation, 
+                   CATBaseUnknown,
+                   CATNull );
+#include &quot;CATIPersistent.h&quot;
+<strong>TIE_CATIPersistent(CATImplementPersistent);</strong>
+....</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="IDGP"></a>IDGP</h3>
+<p>IDGP stands for Invalid Destructor of a Graphic Primitive.</p>
+<p>To prevent dead-lock on multi-processor machines, the graphic primitives aggregated 
+within a composite graphic primitive should not be destroyed during the destruction 
+of the composite.</p>
+<p>Then, an error of type IDGP is reported when:</p>
+<ul>
+	<li>the destructor of a class inheriting from CATGraphicPrimitive contains a 
+	call to Destroy method.</li>
+</ul>
+<h4><a name="IDGP-1"></a>Example IDGP-1</h4>
+<p>Let&#39;s assume that CATMyShapeGP class derives (indirectly) from CATGraphicPrimitive 
+class and that its data member _pGroundGP points to an instance of CAT3DPlanarFaceGPclass. 
+Finally, let&#39;s assume that CAT3DPlanarFaceGP is also a sub-class of CATGraphicPrimitive 
+class.</p>
+<pre class="code">class CATMyShapeGP : public CATMyGeneralShapeGP {
+public:
+    ~CATMyShape();
+    ...
+private:
+    CAT3DPlanarFaceGP* _pGroundGP;
+}</pre>
+<p>The following implementation of CATMyShapeGP::~CATMyShapeGP will report a IDGP 
+error:</p>
+<pre class="code">CATMyShapeGP::~CATMyShapeGP(){
+    if (_pGroundGP){
+        <strong>CATGraphicPrimitive::Destroy</strong>(_pGroundGP);
+        _pGroundGP = NULL;
+    }
+}</pre>
+<p>To correct the code, destruction of the face should not occur during the destruction 
+of the main graphic primitive.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="VISI"></a>VISI</h3>
+<p>VISI stands for Virtual Instances : SpecsModeler Impacts.</p>
+<p>To prevent access to SpecsModeler internals, any use of
+CATSpecRoot, CATSpecNamed, CATSpecObject, CATSpecValRoot, CATSpecValArray, 
+	CATSpecLiteral identifiers<br />
+	CATListPtr&lt;type&gt; and CATListVal&lt;type&gt; identifiers, where &lt;type&gt; belongs to the 
+	previous list<br />
+	strings corresponding to these identifiers (&quot;CATSpecRoot&quot;, &quot;CATListPtrCATSpecObject&quot;...)
+is prohibited.</p>
+<p>An error of type VISI is reported when:</p>
+<ul>
+	<li>an occurrence of one of these identifiers or one of these strings is found 
+	in code source.</li>
+</ul>
+<h4><a name="VISI-1"></a>Example VISI-1</h4>
+<p>The following code will report 2 VISI errors:</p>
+<pre class="code"><strong>CATListPtrCATSpecRoot</strong> lpSR_AllVisuPrd;
+CATProdListAllInstances(lpSR_AllVisuPrd, (<strong>CATSpecObject</strong>*)(iProd-&gt;GetImpl()));</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">3</a>].</p>
+<h3><a name="UnauthorizedIdentifiers"></a>UnauthorizedIdentifiers</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; Various_OptionLists</p>
+<p>
+<img alt="UnauthorizedIdentifiers" src="images/CAACscTaCNextUnauthorizedIdentifiers.gif" width="601" height="275"/></p>
+<p>This section contains a list of Word. Each Word describes an unauthorized identifier.</p>
+<p>Example:</p>
+<pre>Word     assert</pre>
+<p>This means that the C++ keyword &quot;assert&quot; is not authorized.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="UnauthorizedClassDelete"></a>UnauthorizedClassDelete</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; Various_OptionLists</p>
+<p>
+<img alt="UnauthorizedClassDelete" src="images/CAACscTaCNextUnauthorizedClassDelete.gif" width="601" height="258"/></p>
+<p>This section contains a list of ClassName. Each ClassName describes a class one 
+can not delete directly.</p>
+<p>Be careful:</p>
+<ul>
+	<li>Every inherited class will be seen as non-deletable as well.</li>
+</ul>
+<p>Example:</p>
+<pre>ClassName  CATCommand</pre>
+<p>This means that no pointer of type CATCommand can be deleted directly. It also 
+means that no pointer of an inheriting type can be deleted directly.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ReplaceDeleteMethods"></a>ReplaceDeleteMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; Various_OptionLists</p>
+<p>
+<img alt="ReplaceDeleteMethods" src="images/CAACscTaForbiddenConstReplaceDeleteMethods.gif" width="602" height="357"/></p>
+<p>This section contains a list of Call.</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>The name of the class.</dd>
+	<dt>MethodOrFunctionSign</dt>
+	<dd>The signature of the method which must replace delete for this class and 
+	its children, if declared as non-deletable (see above, section
+	<a href="#UnauthorizedClassDelete">UnauthorizedClassDelete</a>)</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+	<li>A replace delete method can be specified for a class which accepts delete. 
+	The method will concern its non-deletable subclasses.</li>
+	<li>For a given non-deletable class, its replace delete method will be the one 
+	specified for its closer parent class, if there is one, which is on the list.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre>ClassName  		CATBaseUnknown
+MethodOrFunctionSign 	Release()
+
+ClassName  		CATRep
+MethodOrFunctionSign 	Destroy()</pre>
+<p>This means that a pointer of type CATBaseUnknown must be deleted by a call to 
+Release and a pointer of type CATRep, although it inherits from CATBaseUnknown, 
+by a call to Destroy. A pointer of type CATNotification, which inherits from CATBaseUnknown 
+but not from CATRep, must be deleted by a call to Release ; a pointer of type CAT2DLineRep, 
+which inherits from CATRep, must be deleted by a call to Destroy.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ProhibitedCalls"></a>ProhibitedCalls</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; Various_OptionLists</p>
+<p>
+<img alt="ProhibitedCalls" src="images/CAACscTaForbiddenConstProhibitedCalls.gif" width="499" height="262"/></p>
+<p>This section contains a list of Call. Each Call describes a prohibited call:</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>The name of the class</dd>
+	<dt>MethodOrFunctionSign</dt>
+	<dd>The name of the method that instances of the class are not authorized to 
+	call. No argument can be provided.</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+	<li>When a method is prohibited for a class, the method is also prohibited on 
+	all the inherited classes.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre>ClassName            CATRep
+MethodOrFunctionSign Release</pre>
+<p>means that CATRep instances, and instances of classes inheriting from CATRep, 
+must not call Release method.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ClassDetection"></a>ClassDetection</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; EntityDetection_OptionLists</p>
+<p>
+<img alt="ClassDetection" src="images/CAACscTaForbiddenConstClassDetection.gif" width="576" height="493"/>
+</p>
+<p>This section contains a list of ClassDetection. Each ClassDetection is composed 
+of</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>Name of the class</dd>
+	<dt>ClassUseSet</dt>
+	<dd>Set of prohibited uses for the class (prohibited = true means that the use 
+	is prohibited)</dd>
+	<dt>Replacement</dt>
+	<dd>Optional message helping to correct the error</dd>
+</dl>
+<p>The possible values of <em>use</em> attribute are: &quot;Derivation&quot;, &quot;MethodOrFunctionArgument&quot;, 
+&quot;DataMemberOrLocalVar&quot;, &quot;CastInto&quot;, &quot;IncludeOfHeader&quot;, &quot;New&quot; and &quot;StaticMember&quot;.</p>
+<p>Example 1:</p>
+<pre>ClassName   :     	CATDlgFile
+ClassUseSet : 	Derivation 		prohibited
+		MethodOrFunctionArgument 	prohibited
+		DataMemberOrLocalVar 	prohibited
+		CastInto			prohibited
+		IncludeOfHeader		prohibited
+		New			prohibited
+		StaticMember 		prohibited
+Replacement : 	nothing specified</pre>
+<p>means that class CATDlgFile cannot be inherited or used as formal argument, data 
+member or local variable type. Casting into CATDlgFile is also prohibited, as well 
+as the inclusion of the CATDlgFile.h file and the call to <code>new CATDlgFile(...)</code> 
+to create new CATDlgFile instances.</p>
+<p>Be careful:</p>
+<ul>
+	<li>When the type <code>&lt;ClassName&gt;</code> is prohibited, all derived types 
+	(<code>CATLISTP(&lt;ClassName&gt;, &lt;ClassName&gt;*, &lt;ClassName&gt;&amp;</code> ...) are also 
+	prohibited.</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="InterfaceDetection"></a>InterfaceDetection</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; EntityDetection_OptionLists</p>
+<p>
+<img alt="InterfaceDetection" src="images/CAACscTaForbiddenConstInterfaceDetection.gif" width="576" height="433"/></p>
+<p>This section is quite similar to the previous one. The only difference is in 
+the possible values of use attribute, which are: &quot;Derivation&quot;, &quot;MethodOrFunctionArgument&quot;, 
+&quot;DataMemberOrLocalVar&quot;, &quot;CastInto&quot;, &quot;IncludeOfHeader&quot;, &quot;TIE&quot; and &quot;StaticMember&quot;.</p>
+<p><strong>Example</strong>:</p>
+<pre>ClassName   :     	CATIFactoryOfContainers
+ClassUseSet : 	Derivation 		prohibited
+		MethodOrFunctionArgument 	prohibited
+		DataMemberOrLocalVar 	prohibited
+		CastInto			prohibited
+		IncludeOfHeader		prohibited
+		TIE 			prohibited
+		StaticMember 		prohibited
+Replacement : 	CATCreateApplicativeContainer (in CATAppliContServices)</pre>
+<p>means that interface CATIFactoryOfContainers cannot be inherited or implemented 
+directly, or used as formal argument, data member or local variable type. Casting 
+into CATIFactoryOfContainers is prohibited, like the inclusion of the CATIFactoryOfContainers.h 
+file</p>
+<p>Be careful:</p>
+<ul>
+	<li>When the type <code>&lt;InterfaceName&gt;</code> is prohibited, all derived types 
+	(<code>CATLISTP(&lt;InterfaceName&gt;), &lt;InterfaceName&gt;*,</code> ...) are also prohibited.</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>UACS prevents from using unauthorized identifiers.<br />
+UADC prevents &quot;Freeing Freed Memory&quot; errors (in purify&#39;s nomenclature). These errors 
+can, in some cases, be fatal.<br />
+PCOM prevents prohibited calls of methods.<br />
+PUCE prevents deprecated or prohibited uses of classes or interfaces.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="#" onclick="javascript:CAAlinkOutOfPreqs('CAADlgTechArticles/CAADlgCreatingDialogs.htm');return false;">
+		Creating Dialog Objects</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="#" onclick="javascript:CAAlinkOutOfPreqs('CAASysTechArticles/CAASysErrors.htm');return false;">
+		Managing Errors Using HRESULT</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

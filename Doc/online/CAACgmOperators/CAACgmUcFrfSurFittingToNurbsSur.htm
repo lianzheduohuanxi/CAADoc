@@ -1,0 +1,277 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Converting Surfaces into NURBS</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Converting Surfaces into NURBS</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>You can convert surfaces into NURBS by using the CATICGMSurFittingToNurbsSur 
+		operator. These operator allows you to specify the characteristics of the 
+		resulting NURBS as well as a maximum deviation you would like to obtain 
+		with respect to the initial surface.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#CATTopComputePointOnWire">The CATICGMSurFittingToNurbsSur 
+			Operator</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsSurFittingToNurbsSur Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsSurFittingToNurbsSur 
+				Do</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsSurFittingToNurbsSur</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsSurFittingToNurbsSur 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you use the free form operators. It particularly 
+illustrates how to convert a curve/surface into a NURBS curve/surface.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="CATTopComputePointOnWire"></a>The CATICGMSurFittingToNurbsSur Operator</h2>
+<p>The CATICGMSurFittingToNurbsSur operator is to be used according to the general 
+scheme of operators:</p>
+<ol>
+	<li>Creation of an operator instance from a global function. Two modes BASIC 
+	or ADVANCED are proposed.</li>
+	<li>If the ADVANCED mode is chosen, tuning of the parameters by using the Setxxx 
+	methods then run of the operator.</li>
+	<li>Retrieve the created NURBS by using the GetNurbsxxx method.</li>
+</ol>
+<p><strong>Note</strong>: In ADVANCED mode, you cannot use the same operator to 
+convert several surfaces. You must replay the sequence below:</p>
+<ol>
+	<li>Operator creation.</li>
+	<li>Set of parameters.</li>
+	<li>Run.</li>
+	<li>GetNurbsSurface.</li>
+	<li>Operator deletion.</li>
+</ol>
+<p>As many times as you need.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsSurFittingToNurbsSur Use Case</h2>
+<p>CAAGMOperatorsSurFittingToNurbsSur is a use case of the CAAGMOperatorsInterfaces.edu 
+framework that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsSurFittingToNurbsSur Do</h3>
+<p>This use case</p>
+<ol>
+	<li>Creates a revolution surface to be converted into a NURBS surface.</li>
+	<li>Creates a first CATICGMSurFittingToNurbsSur operator to be used to convert 
+	the initial surface into a rational surface. No constraints are specified.</li>
+	<li>Creates a second CATICGMSurFittingToNurbsSur operator and set a constraint 
+	on the minimum length of an arc.</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsSurFittingToNurbsSur</h3>
+<p>To launch CAAGMOperatorsSurFittingToNurbsSur, you will need to set up the build 
+time environment, then compile CAAGMOperatorsSurFittingToNurbsSur.m along with its 
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMOperatorsSurFittingToNurbsSur with no argument, the use 
+case executes, but doesn&#39;t save the result in an NCGM file. If you want to save 
+this result, provide the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsSurFittingToNurbsSur e:\NurbsSur.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsSurFittingToNurbsSur Code</h3>
+<p>The CAAGMOperatorsSurFittingToNurbsSur use case is made of a main named CAASurFittingToNurbsSur.cpp 
+located in the CAAGMOperatorsSurFittingToNurbsSur.m module of the CAAGMOperatorInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorInterfaces.edu\CAAGMOperatorsSurFittingToNurbsSur.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>CAAGMOperatorsSurFittingToNurbsSur.cpp is divided into five logical steps:</p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Surf">Creating the Surface to Be Converted into NURBS</a></li>
+	<li><a href="#Conv1">Converting the Created Surface into a NURBS without Specifying 
+	Any Constraints</a></li>
+	<li><a href="#Conv2">Converting the Created Surface into a NURBS and Specifying 
+	a Constraint on the Minimum Length of an Arc</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model and 
+	Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular) [<a href="#References">1</a>]. This 
+creation is done by the global function <code>::CATCreateCGMContainer</code>. Notice 
+that the factory can be defined by reading a NCGM file that was previously stored. 
+In that case, the global function <code>::CATLoadCGMContainer</code> must be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Surf"></a>Creating the Surface to Be Converted into a NURBS</h3>
+<p>The surface to be converted is a revolution surface created from a spline curve. 
+Both the spline and the revolution surface are geometric objects created from the 
+geometry factory.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Conv1"></a>Converting the Created Surface into a NURBS without Specifying 
+any Constraints</h3>
+<p>This first operator is intended to create an operator instance with the following 
+parameters:</p>
+<ol>
+	<li>A 0.001 maximum deviation. It is important to note that this value is the 
+	CATIA resolution and it would not be meaningful to specify a maximum deviation 
+	less than this resolution.</li>
+	<li>The rational factor is 1 - meaning that resulting curve is to be rational 
+	(different weights can be assigned to control points.</li>
+</ol>
+<pre class="code">CATICGMSurFittingToNurbsSur * pSurFitting1 = 
+		::CATCGMCreateSurFittingToNurbsSur(piGeomFactory,
+		pConfig,
+		piSurface,
+		surLimits,
+		0.001,
+		1,
+		ADVANCED);</pre>
+<p>At this stage, you have just created an instance of operator, if you want to 
+get the converted NURBS, you must Run the operator and retrieve the resulting NURBS 
+by using the GetNurbsSurface operator.</p>
+<pre class="code">pSurFitting1-&gt;Run();
+CATNurbsSurface * pNurbsSurf1 = pSurFitting1-&gt;GetNurbsSurface();</pre>
+<p>The transformation of the surface into NURBS is exact. To check this, you can 
+use the IsExactTransformation method or retrieve the maximum deviation (0 is returned 
+in the present use case).</p>
+<pre class="code">// (g) --- Determine whether the transformation is exact 
+// &quot;Transformation exact&quot; expected as the surface
+// has been specified rational
+//
+IsExact = pSurFitting1-&gt;IsExactTransformation();
+if (IsExact == 0) cout &lt;&lt; &quot;Transformation not exact&quot; &lt;&lt; endl;
+else {cout &lt;&lt; &quot;Exact transformation&quot; &lt;&lt; endl;}
+// (h) --- Display the maximum deviation on the standard output
+//
+maxDeviat = pSurFitting1-&gt;GetMaxDeviation();
+cout &lt;&lt; &quot;Maximum deviation of surface 1 &quot; &lt;&lt;  maxDeviat &lt;&lt; endl;</pre>
+<p>Modify the rationality factor by replacing 1 with 0 in the argument 4 of the 
+CATCreateSurFittingToNurbsSur operator. Recompile and rerun, the curve cannot be 
+converted exactly because actually, you have set a constraint on the control point 
+weights (1 everywhere).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Conv2"></a>Converting the Created Surface into a NURBS and Specifying 
+a Constraint on the Minimum Length of an Arc</h3>
+<p>This second operator is intended to create an operator instance with the same 
+parameters as the first operator. Prior to running the operator, the minimum length 
+of an arc is set to 32. The resulting transformation is not exact and a maximum 
+deformation around 0.09 is achieved.</p>
+<p>The operator tries first to comply the parameters specified by using the Setxxx 
+methods.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The CATICGMSurFittingToNurbsSur operators allows you to convert a surface into 
+a NURBS surface. Apart from the usual parameters, this operator requires you specify 
+the maximum deviation you would like to obtain from the initial surface as well 
+as the rationality. Constraints on the resulting surface can be specified by using 
+Setxxx methods.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobAboutNurbs.htm">
+		About NURBS</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobGeoObjects.htm">
+		The Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobCurves.htm">
+		The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

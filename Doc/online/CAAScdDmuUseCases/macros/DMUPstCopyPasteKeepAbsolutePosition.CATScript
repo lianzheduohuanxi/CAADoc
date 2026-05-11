@@ -1,0 +1,224 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Copy and paste products while keeping their absolute position.
+'   Assumptions : Products to copy/paste have to be selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English
+'   CATIA Level : V5R7
+' ***********************************************************************
+
+' ***********************************************************************
+'
+' Purpose:  Define the product of two matrix.
+'
+' Inputs :  matrix1  Array       array corresponding to the first matrix
+'           matrix2  Array       array corresponding to the second matrix
+'
+' Outputs:  res      Array       array corresponding to the product
+'
+' ***********************************************************************
+Sub MatrixProduct ( ByVal matrix1, ByVal matrix2, ByRef res )
+
+  Dim a(11)
+  Dim b(11)
+  Dim I As Integer
+  For I = 0 to 11
+    a(I) = matrix1(I)
+    b(I) = matrix2(I)
+  Next
+  
+  res( 0) = a(0)*b(0) + a(1)*b(3) + a(2)*b(6)
+  res( 3) = a(3)*b(0) + a(4)*b(3) + a(5)*b(6)
+  res( 6) = a(6)*b(0) + a(7)*b(3) + a(8)*b(6)
+  res( 1) = a(0)*b(1) + a(1)*b(4) + a(2)*b(7)
+  res( 4) = a(3)*b(1) + a(4)*b(4) + a(5)*b(7)
+  res( 7) = a(6)*b(1) + a(7)*b(4) + a(8)*b(7)
+  res( 2) = a(0)*b(2) + a(1)*b(5) + a(2)*b(8)
+  res( 5) = a(3)*b(2) + a(4)*b(5) + a(5)*b(8)
+  res( 8) = a(6)*b(2) + a(7)*b(5) + a(8)*b(8)
+  res( 9) = a( 9)*b(0) + a(10)*b(3) + a(11)*b(6) + b( 9)
+  res(10) = a( 9)*b(1) + a(10)*b(4) + a(11)*b(7) + b(10)
+  res(11) = a( 9)*b(2) + a(10)*b(5) + a(11)*b(8) + b(11)
+
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Define the inverse of a position matrix.
+'
+' Inputs :  matrix   Array       array corresponding to the matrix
+'
+' Outputs:  inverse  Array       array corresponding to the inverse of the matrix
+'
+' ***********************************************************************
+Sub MatrixInverse ( ByVal matrix, ByRef inverse )
+
+  Dim a(11)
+  Dim I As Integer
+  For I = 0 to 11
+    a(I) = matrix(I)
+  Next
+  
+  inverse( 0) = a(4)*a(8) - a(7)*a(5)
+  inverse( 1) = a(2)*a(7) - a(8)*a(1)
+  inverse( 2) = a(1)*a(5) - a(4)*a(2)
+  inverse( 3) = a(5)*a(6) - a(8)*a(3)
+  inverse( 4) = a(0)*a(8) - a(6)*a(2)
+  inverse( 5) = a(2)*a(3) - a(5)*a(0)
+  inverse( 6) = a(3)*a(7) - a(6)*a(4)
+  inverse( 7) = a(1)*a(6) - a(7)*a(0)
+  inverse( 8) = a(0)*a(4) - a(1)*a(3)
+  inverse( 9) = -(a( 9)*inverse(0)+a(10)*inverse(3)+a(11)*inverse(6))
+  inverse(10) = -(a( 9)*inverse(1)+a(10)*inverse(4)+a(11)*inverse(7))
+  inverse(11) = -(a( 9)*inverse(2)+a(10)*inverse(5)+a(11)*inverse(8))
+
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Print the content of a matrix.
+'
+' Inputs :  sName    String      name of the matrix
+'           matrix   Array       array corresponding to the matrix
+'
+' ***********************************************************************
+Sub MatrixPrint ( ByVal sName, ByVal matrix )
+
+  Dim a(11)
+  Dim I As Integer
+  For I = 0 to 11
+    If ((matrix(I) < 0.001) AND (matrix(I) > -0.001)) Then
+      a(I) = 0.0
+    Else
+      a(I) = matrix(I)
+    End If
+  Next
+
+  Msgbox sName+" = "+_
+    Cstr(a( 0))+",  "+Cstr(a( 1))+",  "+Cstr(a( 2))+",  "+Cstr(a( 3))+",  "+Cstr(a( 4))+",  "+Cstr(a( 5))+",  "+_
+    Cstr(a( 6))+",  "+Cstr(a( 7))+",  "+Cstr(a( 8))+",  "+Cstr(a( 9))+",  "+Cstr(a(10))+",  "+Cstr(a(11))
+
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Retrieve the absolute position of a product.
+'
+' Inputs :  oProduct Product     the product
+'           oRoot    Product     the root product
+'
+' Outputs:  position Array       array corresponding to position of the product
+'
+' ***********************************************************************
+Sub GetAbsPosition ( ByRef oProduct, ByRef oRoot, ByRef position )
+
+  If (oProduct.Name = oRoot.Name) Then
+    position( 0) = 1.0
+    position( 1) = 0.0
+    position( 2) = 0.0
+    position( 3) = 0.0
+    position( 4) = 1.0
+    position( 5) = 0.0
+    position( 6) = 0.0
+    position( 7) = 0.0
+    position( 8) = 1.0
+    position( 9) = 0.0
+    position(10) = 0.0
+    position(11) = 0.0
+  Else
+    Dim positionToFather(11)
+    Dim fatherAbsolutePosition(11)
+    oProduct.Position.GetComponents positionToFather
+    GetAbsPosition oProduct.Parent.Parent, oRoot, fatherAbsolutePosition
+    MatrixProduct positionToFather, fatherAbsolutePosition, position
+  End If
+
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Main.
+'
+' ***********************************************************************
+Sub CATMain()
+
+  ' Retrieve the Groups collection
+  Dim cGroups As AnyObject
+  Set cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+
+  ' Create a group with selected products
+  Dim oGroup As Group
+  Set oGroup = cGroups.AddFromSel
+  If (oGroup.CountExplicit = 0) Then
+    Msgbox "No product selected"
+  Else
+
+    ' Acquire the component to paste onto
+    Dim oSelection As Selection
+    Set oSelection = CATIA.ActiveDocument.Selection
+    oSelection.Clear
+    Dim sIID(0)
+    sIID(0) = "Product"
+    Dim sOutputState As String
+    sOutputState = oSelection.SelectElement2(sIID, "Select the component to paste onto", true)
+    If (sOutputState = "ok" OR sOutputState = "Normal") Then
+
+      ' Retrieve the product to paste onto (i.e. the father)
+      If (oSelection.Count > 0) Then
+        Dim oRoot As Product
+        Set oRoot = CATIA.ActiveDocument.Product
+        Dim oFatherProduct As AnyObject
+        Set oFatherProduct = oSelection.Item(1).Value
+        Dim cFatherProduct As Products
+        Set cFatherProduct = oFatherProduct.Products
+
+        ' Compute the inverse of the father position
+        Dim fatherAbsolutePosition(11)
+        GetAbsPosition oFatherProduct, oRoot, fatherAbsolutePosition
+        Dim inverseOfFatherAbsolutePosition(11)
+        MatrixInverse fatherAbsolutePosition, inverseOfFatherAbsolutePosition
+
+        Dim oProductToCopy As Product
+        Dim oCopiedProduct As Product
+        Dim productAbsolutePosition(11)
+        Dim positionToFather(11)
+        Dim oPosition As Position
+        Dim J As Integer
+        For J = 1 to oGroup.CountExplicit
+
+          ' Retrieve the next product to be copied
+          Set oProductToCopy = oGroup.ItemExplicit(J)
+
+          ' Compute the absolute position of the product
+          GetAbsPosition oProductToCopy, oRoot, productAbsolutePosition
+
+          ' Compute the relative position of the product with respect to father
+          MatrixProduct productAbsolutePosition, inverseOfFatherAbsolutePosition, positionToFather
+
+          ' Copy/Paste the product
+          oSelection.Clear
+          oSelection.Add oProductToCopy
+          oSelection.Copy
+          oSelection.Clear
+          oSelection.Add oFatherProduct
+          oSelection.Paste
+
+          ' Move the product to get the right position
+          Set oCopiedProduct = cFatherProduct.Item(cFatherProduct.Count)
+          oCopiedProduct.Position.SetComponents positionToFather
+
+        Next
+      End If
+    End If
+
+  End If
+
+  ' Clear
+  cGroups.Remove oGroup
+  Set oGroup = Nothing
+
+End Sub
+

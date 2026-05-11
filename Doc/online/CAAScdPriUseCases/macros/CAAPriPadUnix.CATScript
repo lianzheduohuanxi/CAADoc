@@ -1,0 +1,84 @@
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2001
+
+' ***********************************************************************
+'   Purpose:      Creates constraints between assembly Parts using Publications
+'   Assumtions:   Looks for CAAPriPad.CATPart in the DocView   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R7 
+' ***********************************************************************
+
+
+Sub CATMain()
+
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim oDoc As Document
+    set oDoc = CATIA.Documents.Open(sDocPath & _
+                 "/online/CAAScdPriUseCases/samples/CAAPriPad.CATPart")
+
+
+' ------------
+' Get the part
+' ------------
+Dim oPart As Part
+Set oPart = oDoc.Part
+
+' ------------
+' Get the part body in the part
+' ------------
+Dim oBody As Body
+Set oBody = oPart.Bodies.Item  ( "PartBody" ) 
+
+' ------------
+' Get the sketch in the body
+' ------------
+Dim oSketch As Sketch
+Set oSketch = oBody.Sketches.Item  ( "Sketch.1" ) 
+
+' ------------
+' Create the pad with a default first limit
+' ------------
+MsgBox "Click OK to create the pad."
+Dim oPad As Pad
+Set oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+
+' ------------
+' Define the pad first limit
+' ------------
+MsgBox "Click OK to set the pad first limit to 40mm."
+oPad.FirstLimit.Dimension.Value = 40.000000
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+
+' ------------
+' Define the pad to be symmetric relative to the sketch plane
+' ------------
+MsgBox "Click OK to mirror the extrusion offset."
+oPad.IsSymmetric = True
+
+' ------------
+' Update the part
+' ------------
+oPart.Update 
+
+End Sub

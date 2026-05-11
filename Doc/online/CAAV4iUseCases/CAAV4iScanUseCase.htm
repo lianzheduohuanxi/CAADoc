@@ -1,0 +1,340 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Scanning a Model to Retrieve V4 Elements</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>V4 Access</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Scanning a Model to Retrieve V4 Elements</h3>
+      <i>Working with the elements of model</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article shows how to scan a model.&nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAV4iEduModelScan Use Case</a></b>&nbsp;</li>
+        <ul>
+          <li><a href="#What">What Does CAAV4iModelScan Do</a></li>
+          <li><a href="#How">How to Launch CAAV4iEduModelScan</a></li>
+          <li><a href="#Where">Where to Find the CAAV4iEduModelScan Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to show you how to retrieve elements of a model.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV4iEduModelScan Use Case</h3>
+CAAV4iEduModelScan is a use case of the CAACATIAV4Interfaces.edu framework that
+illustrates CATIAV4Interfaces framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV4iEduModelScan Do</h4>
+The scaning functions retrieve the elements by creating object of the
+CATV4iV4Element class.<br>
+CAAV4iEduModelScan begins by opening the .model document.<br>
+Then, it scans the model to retrieve each workspace, every workspace are scaned
+to retrieves theire sets and finally, the elements of every set are retrieved.<br>
+CAAV4iEduModelScan retrieves all the element of a model. The name of each
+element is retrieved and put in a file.<br>
+At the end of CAAV4iEduModelScan using the input model DITTOS.model, the output
+file looks like :
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        --*MASTER<br>
+        ----*SET1<br>
+        ------*CST1<br>
+        ------*CRV1<br>
+        ------*SOL1<br>
+        ------*DIT4<br>
+        ------*DIT5<br>
+        ----*SET2<br>
+        ------*SOL3<br>
+        ------*SOL5<br>
+        ----*SET5<br>
+        ------*DIT6<br>
+        ------*DIT7<br>
+        --DETAIL-1<br>
+        ----*SET3<br>
+        ------*SOL7<br>
+        ------*SOL9<br>
+        --DETAIL-2<br>
+        ----*SET4<br>
+        ------*SOL11<br>
+        ------*SOL13
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV4iEduModelScan</h4>
+To launch CAAV4iEduModelScan , you will need to set up the build time
+environment, then compile CAAV4iEduModelScan along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].<br>
+CAAV4iEduModelScan takes two parameters. &nbsp;
+<p>mkrun -c CAAV4iEduModelScan InputModel OutputFile&nbsp;</p>
+<p>Where:</p>
+&nbsp;&nbsp;InputModel : the full path of the model to scan<br>
+&nbsp;&nbsp;OutputFile : the full path of the output text file.
+<p>You can use the model <code>DITTOS.model</code> located in <code>CAA</code><code>CATIAV4Interfaces</code><code>.edu/InputData</code></p>
+<ul>
+  <li>Windows : <code>InstallRootDirectory\CAA</code><code>CATIAV4Interfaces</code><code>.edu\InputData</code>
+  <li>Unix : <code>InstallRootDirectory/CAA</code><code>CATIAV4Interfaces</code><code>.edu/InputData</code></li>
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAV4iEduModelScan Code</h4>
+The CAAV4iEduModelScan use case is made of a single file located in the
+CAAV4iEduModelScan.m module of the CAACATIAV4Interfaces.edu framework:<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAACATIAV4Interfaces.edu\</tt>CAAV4iEduModelScan<tt>.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAACATIAV4Interfaces.edu/</tt>CAAV4iEduModelScan<tt>.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are 4 logical steps in CAAV4iEduModelScan :
+<ol>
+  <li><a href="#Step1">Opening the output file</a></li>
+  <li><a href="#Step2">Opening the model</a></li>
+  <li><a href="#Step3">Retrieving the workspaces</a></li>
+  <li><a href="#Step4">Retrieving the sets</a></li>
+  <li><a href="#Step5">Retrieving the elements</a></li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Opening the output file</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp; ofstream outputFile (argv[2]);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second argument of CAAV4iEduModelScan is the full path of the output
+file.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Opening the model</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp; char* pathname = argv[1];
+&nbsp; CATDocument * doc=NULL;
+&nbsp; CATUnicodeString filename( pathname );
+&nbsp; CATDocumentServices::OpenDocument( filename, doc, readOnlyFlag );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To access to the data of the model, a CATDocument is needed.<br>
+The path of the model passed in argument is converted to a CATString and is used
+to open the model in &quot;read only&quot; mode.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Retrieving the workspaces</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp; if (! CATV4iGetMaster(doc, wspElem, ier) )
+&nbsp; {
+&nbsp;&nbsp;&nbsp; while(!endWsp &amp;&amp; !ier)
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (wspElem)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; outputFile &lt;&lt; &quot;--&quot;&lt;&lt;wspElem-&gt;GetId()&lt;&lt;endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // the sets of the workspace wspElem are retrieved here
+...
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( ! CATV4iGiswsp(wspElem, nextWspElem, wspType, endWsp, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wspElem=nextWspElem;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp; }
+&nbsp; }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This part of code consist in retrieving the workspaces of the model.<br>
+<i>CATV4iGetMaster(doc, wspElem, ier)</i> retrieves the MASTER workspace in
+wspElem.<br>
+Then, while <i>endWsp </i>is false, the identificator of the workspace is
+printed in the output file and the next workspace is searched using <i>CATV4iGiswsp</i>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Retrieving the sets</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! CATV4iGisset(wspElem, setElem, endSet, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while(!endSet &amp;&amp; !ier)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (setElem)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; outputFile &lt;&lt; &quot;----&quot;&lt;&lt;setElem-&gt;GetId()&lt;&lt;endl;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // the elements of the set setElem are retrieved here
+...
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! CATV4iGisset(setElem, nextSetElem, endSet, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setElem=nextSetElem;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This part of code consist in retrieving the set of a workspace.<br>
+<i>CATV4iGisset(wspElem, setElem, endSet, ier)</i> retrieves the first set of
+the workspace <i>wspElem</i>.<br>
+Then, while <i>endSet </i>is false, the identificator of the set is printed in
+the output file and the next set is searched using <i>CATV4iGisset(setElem,
+nextSetElem, endSet, ier)</i>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Retrieving the elements</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! CATV4iGisels(setElem, NULL, element, endEls, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while(!endEls &amp;&amp; !ier)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (element)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; outputFile &lt;&lt; &quot;------&quot;&lt;&lt;element-&gt;GetId()&lt;&lt;endl;
+...
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! CATV4iGisels(setElem, element, nextElement, endEls, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; element=nextElement;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This part of code consist in retrieving the element of a set.<br>
+<i>CATV4iGisels(setElem, NULL, element, endEls, ier)</i> retrieves the first
+element of the set <i>setElem</i>.<br>
+Then, while <i>endEls </i>is false, the identificator of the element is printed
+in the output file and the next set is searched using <i>CATV4iGisels(setElem,
+element, nextElement, endEls, ier)</i>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+These sample show a way to retrieve an element of a model by scaning all the
+model.
+<div align="right">
+  <i>[</i><a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jul 2003]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

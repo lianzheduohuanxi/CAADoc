@@ -1,0 +1,635 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating an Electrical Schematic Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Systems Diagrams</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating an Electrical Schematic Document</h3>
+      <em>How to create an electrical schematic document and place different
+      schematic entities</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEDICreateSchema</i> use case. This use
+      case explains how to create a schematic document, how to create in-line
+      references of schematic entities, how to place those references on a
+      sheet, how to assemble and connect those entities, and how to save the
+      document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEDICreateSchema Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEDICreateSchema Do</a></li>
+            <li><a href="#How">How to Launch CAAEDICreateSchema</a></li>
+            <li><a href="#Where">Where to Find the CAAEDICreateSchema Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The following operations are detailed is this use case:
+<ul>
+  <li>How to Initialize the Electrical Schematic Environment</li>
+  <li>How to Create an Electrical Schematic Document</li>
+  <li>How to Create In-Line References of Electrical Entities</li>
+  <li>How to Place Instances of Those References on a Sheet</li>
+  <li>How to Assemble and Connect Those Instances</li>
+  <li>How to Save the Document and Leave.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEDICreateSchema Use Case</h3>
+<p>CAAEDICreateSchema is a use case of the CAAElecSchematicItf.edu framework
+that illustrates the ElecSchematicItf framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEDICreateSchema Do</h4>
+<p>The goal of CAAEDICreateSchema is to create an electrical schematic document
+and a simple schema using in-line references.</p>
+<table width="614">
+  <tr>
+    <td width="609"><img border="0" src="images/CreateSchemaResult.gif" width="607" height="473"></td>
+  </tr>
+</table>
+<p>Above is a CATIA image of the resulting electrical schema.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEDICreateSchema</h4>
+<p>To launch CAAEDICreateSchema, you will need to set up the build time
+environment, then compile CAAEdiSchematicSample.cpp along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">1</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEDICreateSchema output_name.CATProduct&quot;</pre>
+<ul>
+  <li><b>output_name.CATProduct</b> - the path where the file will be saved and
+    the name of the CATProduct document to be created.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEDICreateSchema</i> Code</h4>
+<p>CAAEDICreateSchema code is located in the CAAEDICreateSchema.m use case
+module of the CAAElecSchematicItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAElecSchematicItf.edu/CAAEDICreateSample.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAElecSchematicItf.edu\CAAEDICreateSample.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEdiSchematicSample.cpp</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are ten steps in <i>CAAEDICreateSchema</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#CreateDoc">Creating a drawing document</a></li>
+  <li><a href="#CreateEqtRef">Creating the equipment reference</a></li>
+  <li><a href="#CreateSocketRef">Creating the socket reference</a></li>
+  <li><a href="#CreatePlugRef">Creating the plug reference</a></li>
+  <li><a href="#Place">Placing the components in the main sheet</a></li>
+  <li><a href="#Annotate">Annotating the components</a></li>
+  <li><a href="#Assy_all">Assembling the equipments and the sockets and
+    connecting the plugs to the sockets</a></li>
+  <li><a href="#Route">Routing a cable between the plugs</a></li>
+  <li><a href="#Epilog">Epilog</a>.</li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Creating a session. For more detail see<a href="#References">[2]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateDoc"></a>Creating a Schematic Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      </pre>
+      <pre>  CATISchSession *piSchSession = NULL;
+  RC = piSession-&gt;QueryInterface(IID_CATISchSession, (void **)&amp;piSchSession);
+...
+
+  CATDocument *piSchemDoc = NULL;
+  RC = piSchSession-&gt;CreateDocument(&quot;CATProduct&quot;, FALSE, &amp;piSchemDoc);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To create a schematic document use the <code>CreateDocument</code> method of
+the <i>CATISchSession</i> interface. For more detail on this interface see [<a href="#References">3</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateEqtRef">Creating the Equipment Reference</a></h4>
+<p>Here are the four steps to create a component reference:</p>
+<ol>
+  <li><a href="#Step1">Create a Detail Sheet and a View on That Detail Sheet</a></li>
+  <li><a href="#Step2">Create the Graphical Representation</a></li>
+  <li><a href="#Step3">Create the Equipment</a></li>
+  <li><a href="#Step4">Add the Connectors.</a></li>
+</ol>
+<p><a name="Step1"></a>Create a Detail Sheet and a View on That Detail Sheet</p>
+<p>To create the equipment reference, we need to create a detail sheet and a
+view on that detail sheet. For more detail on creating and managing detail
+sheets and views see [<a href="#References">4</a>].</p>
+<p><a name="Step2"></a>Create the Graphical Representation</p>
+<p>To create the graphical representation (a square made of four lines in this
+case), we use the <i>CATI2DWFFactory</i> interface. For more detail on this
+interface see [<a href="#References">5</a>].</p>
+<p><a name="Step3"></a>Create the Equipment</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // get the application factory
+  CATISchAppObjectFactory *piAppFact = NULL;
+  RC = pSchSession-&gt;GetSchObjInterface(SCHELEClass_Application, IID_CATISchAppObjectFactory, (void **)&amp;piAppFact);
+  
+  // create the applicative schematic component reference
+  IUnknown *piCompoRef = NULL;
+  RC= piAppFact-&gt;AppCreateCompRef(SCHELEClass_Equipment, &amp;piCompoRef);
+    
+  // creating the list of GRR associated to my component
+  CATSchListServices list;
+  CATIUnknownList *piLUK = NULL;
+  RC = list.CreateCATIUnknownList(&amp;piLUK);
+    
+  IUnknown *piUK = NULL;
+  RC = piNewView-&gt;QueryInterface(IID_IUnknown, (void **)&amp;piUK);
+    
+  piLUK-&gt;Add(0,piUK);
+  
+  // getting schematic extension container
+  IUnknown *piSchExtCont = NULL;
+  RC = piSchSession-&gt;GetSchExtContainer (piSchemDoc, &amp;piSchExtCont);
+
+  CATISchBaseFactory *piBaseFact = NULL;
+  RC = piSchExtCont-&gt;QueryInterface(IID_CATISchBaseFactory, (void **)&amp;piBaseFact);
+  
+  // schematic ref. component creation
+  CATISchComponent *piSchComp = NULL;
+  RC = piBaseFact-&gt;CreateSchComponent(piCompoRef, piLUK, &amp;piSchComp);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To create the equipment reference we must retrieve the application factory
+using the <code>GetSchObjInterface</code> method of the <i>CATISchSession</i>
+interface.</p>
+<table width="100%">
+  <tr>
+    <td><code>SCHELEClass_Application</code></td>
+    <td>Type of objects the factory will be able to create (See the
+      CATEdiSampleParameters.h header file)</td>
+  </tr>
+  <tr>
+    <td><code>IID_CATISchAppObjectFactory</code></td>
+    <td>IID of the interface to which a pointer is requested</td>
+  </tr>
+  <tr>
+    <td><code>piAppFact</code></td>
+    <td>The pointer retrieved to CATISchAppObjectFactory</td>
+  </tr>
+</table>
+<p>The <code>AppCreateComRef</code> method of the <i>CATISchAppObjectFactory</i>
+interface is used to create the application component of type equipment.</p>
+<table width="100%">
+  <tr>
+    <td><code>SCHELEClass_Equipment</code></td>
+    <td>Electrical schematic equipment type (See the CATEdiSampleParameters.h
+      header file)</td>
+  </tr>
+  <tr>
+    <td><code>piCompoRef</code></td>
+    <td>The pointer retrieved to IUnknown</td>
+  </tr>
+</table>
+<p>The application component must then be associated with a graphical
+representation. To do this we use the <code>CreateSchComponent</code> method of
+the <i>CATISchBaseFactory</i> interface. We get the a pointer on the
+CATISchBaseFactory interface using the <code>QueryInterface</code> method on the
+schematic extension container which we got using the <code>GetSchExtContainer</code>
+method of the <i>CATISchSession</i> interface.</p>
+<table width="100%">
+  <tr>
+    <td><code>piCompoRef</code></td>
+    <td>Pointer to a schematic component reference</td>
+  </tr>
+  <tr>
+    <td><code>piLUK</code></td>
+    <td>List of pointers to views containing geometry</td>
+  </tr>
+  <tr>
+    <td><code>piSchComp</code></td>
+    <td>The pointer retrieved to CATISchComponent</td>
+  </tr>
+</table>
+<p><a name="Step4"></a>Add the Connectors</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // adding a WidePin and an AssemblyCtr
+  CATISchCompConnector *piCompCntr = NULL;
+  RC = piSchComp-&gt;QueryInterface(IID_CATISchCompConnector, (void **)&amp;piCompCntr);
+  
+  double CntrLoc[2];
+  CntrLoc[0] = 20.0;
+  CntrLoc[1] = 20.0;
+  CATISchAppConnector *piSchCntr = NULL;
+  RC = piCompCntr-&gt;AddConnector(SCHELEClass_WidePinCtr, NULL, CntrLoc, &amp;piSchCntr);
+
+  CntrLoc[0] = 10.0;
+  CntrLoc[1] = 10.0;
+  CATISchAppConnector *piSchEqtAssemblyCntr = NULL;
+  RC = piCompCntr-&gt;AddConnector(SCHELEClass_AssemblyCtr, NULL, CntrLoc, &amp;piSchEqtAssemblyCntr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The last step is to add the assembly connector and the wide pin connector.
+The assembly connector is used to assemble components together. In this case, we
+will assemble the socket and the equipment. The wide pin connector is used to
+connect to a cable extremity. We will create it but we will not use in this use
+case. The cable will be connected from plug to plug (plug1 to plug2). To add a
+connector to a component, we use the <code>AddConnector</code> method of the <i>CATISchCompConnector</i>
+interface.</p>
+<table width="100%">
+  <tr>
+    <td><code>SCHELEClass_WidePinCtr</code></td>
+    <td>Electrical schematic wide pin type (See the CATEdiSampleParameters.h
+      header file)</td>
+  </tr>
+  <tr>
+    <td><code>NULL</code></td>
+    <td>Graphical representation of the component (if the pointer is NULL, then
+      the connector will be added to all representation (case of a
+      multi-representation component)</td>
+  </tr>
+  <tr>
+    <td><code>CntrLoc</code></td>
+    <td>The position of the connector</td>
+  </tr>
+  <tr>
+    <td><code>piSchEqtAssemblyCntr</code></td>
+    <td>The pointer retrieved to CATISchAppConnector</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="CreateSocketRef"></a>Creating the Socket Reference</h4>
+<p>To create a socket reference, we go through the same steps as when creating
+the equipment reference. There are only two differences. The first one being the
+type of the component to create in the <code>AppCreateCompRef</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ RC= piAppFact-&gt;AppCreateCompRef(SCHELEClass_Socket, &amp;piSocketRef);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second difference is the types of the connectors to add on the socket. We
+add an assembly connector to assemble the socket to the equipment and a mating
+connector to connect the socket to the plug. We also add a wide pin connector
+which we will not use.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  RC = piCompSocketCntr-&gt;AddConnector(SCHELEClass_WidePinCtr, NULL, CntrLoc, &amp;piSchWidePinCntr);
+...
+  RC = piCompSocketCntr-&gt;AddConnector(SCHELEClass_MatingCtr, NULL, CntrLoc, &amp;piSchMatingSCntr);
+...
+  RC = piCompSocketCntr-&gt;AddConnector(SCHELEClass_AssemblyCtr, NULL, CntrLoc, &amp;piSchAssemblyCntr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="CreatePlugRef"></a>Creating the Plug Reference</h4>
+<p>To create a plug reference, we go through the same steps as when creating the
+equipment reference. There are only two differences. The first one being the
+type of the component to create in the <code>AppCreateCompRef</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  RC= piAppFact-&gt;AppCreateCompRef(SCHELEClass_Plug, &amp;piPlugRef);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second difference is the types of the connectors to add on the plug. We
+add a mating connector to connect the plug to the socket and we add a wide pin
+connector to connect the cable.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  RC = piCompPlugCntr-&gt;AddConnector(SCHELEClass_WidePinCtr, NULL, CntrLoc, &amp;piSchWidePinPgCntr);
+...
+  RC = piCompPlugCntr-&gt;AddConnector(SCHELEClass_MatingCtr, NULL, CntrLoc, &amp;piSchMatingPgCntr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Place"></a>Placing the Components on the Main Sheet</h4>
+<p>Before placing the components on the main sheet, we must make it active. For
+more detail on managing sheets see [<a href="#References">4</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATISchComponent *piComponentInst1 = NULL;
+  double iDb6Axis1[6] = { 1.0, 0.0, 0.0, 1.0,  50.0,  50.0};
+  RC = piSchComp-&gt;PlaceInSpace(NULL, iDb6Axis1, &amp;piComponentInst1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To place a component on the main sheet, we use the PlaceInSpace method of the
+CATISchComponent interface. The first argument is a pointer to the graphical
+representation of the component. If the pointer is NULL, then the primary
+representation is used. The second argument is the position on the sheet. The
+result is a pointer on the instance of the component.</p>
+<table width="100%">
+  <tr>
+    <td><code>NULL</code></td>
+    <td>Graphical representation of the component (if the pointer is NULL, then
+      the connector will be added to all representation (case of a
+      multi-representation component)</td>
+  </tr>
+  <tr>
+    <td><code>iDb6Axis1</code></td>
+    <td>The position of the connector</td>
+  </tr>
+  <tr>
+    <td><code>piComponentInst1</code></td>
+    <td>The pointer retrieved to CATISchComponent</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Annotate"></a>Annotating the Components</h4>
+<p>To annotate the components, we have to get a pointer on the annotation
+factory. For more detail on annotations see [<a href="#References">6</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Assy_all"></a>Assembling the Equipments and the Sockets and Connect
+the Plugs to the Sockets</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Eqt1
+  CATISchAppConnectable *piEqtConnectable1 = NULL;
+  RC = piComponentInst1-&gt;QueryInterface(IID_CATISchAppConnectable, (void **)&amp;piEqtConnectable1);
+ 
+  CATICStringList *piLAssyCtrType = NULL;
+  RC = list.CreateCATICStringList(&amp;piLAssyCtrType);
+
+  piLAssyCtrType-&gt;Add(0, SCHELEClass_AssemblyCtr);
+
+  CATIUnknownList *piLEqtAsyConnector1 = NULL;
+  RC = piEqtConnectable1-&gt;AppListConnectors(piLAssyCtrType, &amp;piLEqtAsyConnector1);
+
+  IUnknown *piEqtCntr1 = NULL;
+  RC = piLEqtAsyConnector1-&gt;Item(0, &amp;piEqtCntr1);
+  
+  CATISchAppConnector *piAppEqtCntr1 = NULL;
+  RC= piEqtCntr1-&gt;QueryInterface(IID_CATISchAppConnector, (void **)&amp;piAppEqtCntr1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first step to assemble the equipment and the socket is to get a pointer
+on both the assembly connector of the equipment and the assembly connector of
+the socket. To do that, we use the <code>AppListConnectors</code> method of the <i>CATISchAppConnectable</i>
+interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATISchAppConnection *piAssyConnection1 = NULL;
+  RC = piAppEqtCntr1-&gt;AppConnect(piAppSocketCntr1, &amp;piAssyConnection1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To connect both connectors together, we use the <code>AppConnect</code>
+method of the <i>CATISchAppConnector</i> interface.</p>
+<p>To connect the plug and the socket, we go through the same steps but with a
+mating connector instead of the assembly connector.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Route"></a>Routing a Cable Between the Two Plugs</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  IUnknown *piUKAppRoute = NULL;
+  RC = piAppFact-&gt;AppCreateRoute(SCHELEClass_Cable, &amp;piUKAppRoute);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first step is to create a route object using the AppCreateRoute of the
+CATISchBaseFactory interface. The first argument is type of route (electrical
+cable in our case) we want to create. The result is a pointer on a route object.</p>
+<table width="100%">
+  <tr>
+    <td><code>SCHELEClass_Cable</code></td>
+    <td>Electrical schematic cable type (See the CATEdiSampleParameters.h header
+      file)</td>
+  </tr>
+  <tr>
+    <td><code>piUKAppRoute</code></td>
+    <td>The pointer retrieved to IUnknown</td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+  double pPts[14] = {80.0, 60.0, 73.0, 60.0, 73.0, 147.0, 197.0, 147.0, 197.0, 173.0, 170.0, 173.0, 170.0, 160.0};
+
+  // create the cable in the main sheet
+  CATISchRoute *piSchRoute = NULL;
+  RC = piBaseFact-&gt;CreateSchRouteByPoints(piUKAppRoute, pPts, 14, &amp;piSchRoute);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then we need to link the route object with a graphical representation. The <code>CreateSchRouteByPoints</code>
+method of the <i>CATISchBaseFactory</i> interface does that.</p>
+<table width="100%">
+  <tr>
+    <td><code>piUKAppRoute</code></td>
+    <td>Pointer to the route.</td>
+  </tr>
+  <tr>
+    <td><code>pPts</code></td>
+    <td>Points by which the cable will go through (the position of the plug's
+      wide pins should be the first and the last points)</td>
+  </tr>
+  <tr>
+    <td><code>14</code></td>
+    <td>Size of the array</td>
+  </tr>
+  <tr>
+    <td><code>piSchRoute</code></td>
+    <td>The pointer retrieved to CATISchRoute</td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+RC = piRouteCntr1-&gt;AppConnect(piAppPlugWPCntr1, &amp;piConnection1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The last step is to connect both extremities of the cable to the plugs' wide
+pins. We have to retrieve pointers on the wide pins and on the cable
+extremities, the same way we did for the assembly connectors or the mating
+connectors. Then, using the <code>AppConnect</code> method of the <i>CATISchAppConnector</i>
+interface we create the connection between the wide pin of the first plug and
+the first extremity of the cable and the connection between the wide pin of
+second plug and the second extremity of the cable.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  RC = CATDocumentServices::SaveAs ( *piSchemDoc, argv[1]);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To save the document, we use CATDocumentServices::SaveAs method. For more
+detail on managing documents see [<a href="#References">2</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATSession::Delete_Session (pSessionIdent);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The session is deleted before exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown you how to create a schematic document, how to create
+in-line references of schematic entities, how to place those references on a
+sheet, how to assemble, and connect those entities and how to save the document.</p>
+<p>Following operations have been detailed is this use case:
+<ul>
+  <li>How to initialize the electrical schematic environment</li>
+  <li>How to create an electrical schematic document</li>
+  <li>How to create in-line references of electrical entities</li>
+  <li>How to place instances of those references on a sheet</li>
+  <li>How to assemble and connect those instances</li>
+  <li>How to save the document and leave.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASchUseCases/CAASchSample1.htm">Creating
+      Schematic Application Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADriUseCases/CAADriStructure.htm">Creating
+      Sheets and Views in a CATDrawing Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADriUseCases/CAADriTitleBlock.htm">Creating
+      Frames and Title Blocks in a CATDrawing Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADriUseCases/CAADriDimDressup.htm">Editing
+      Dimension Dress-Up</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

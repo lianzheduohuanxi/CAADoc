@@ -1,0 +1,425 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Creating a Schematic Component Instance (Placement)</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Creating a Schematic Component Instance (Placement)</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!null ---------------------------------comment----------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to create a 
+     component instance in a 2D viewer of a Schematic document. It also shows 
+     how to create an instance and connect that to an existing one at the same 
+     time.<p>To create a Schematic component instance, its reference component 
+     needs to be identified. This use case illustrates how to specify that 
+     reference based on a Schematic component catalog.</p>
+     <p>
+     <img border="0" src="images/CAASchPlaceComponent_01.jpg" width="493" height="374"></p>
+     <p>In this use case, the &quot;Blocking Valve&quot; and the &quot;Control Valve&quot; component 
+     references will be used.</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchPlaceComponent is launched in CATIA 
+     [<a href="#References">1</a>]. No open document is needed.<p>Special 
+		environment must be available to successfully run this macro:</p>
+		<ul>
+			<li>Prerequisites:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>RADE must be installed.</li>
+				<li>CAASchPlatformModeler.edu must exist in CAADoc folder.</li>
+			</ol>
+		</blockquote>
+		<ul>
+			<li>Setup:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>Build CAASchAppBase.m and CAASchAppUtilities.m, located in 
+				CAASchPlatformModeler.edu (RADE is required). </li>
+				<li>Copy generated DLLs, CAASchAppBase.dll and 
+				CAASchAppUtilities.m, respectively, to the run-time environment 
+				folder &quot;intel_a\code\bin.&quot;</li>
+				<li>Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, 
+				to the run-time environment folder &quot;intel_a\resources\graphic.&quot;</li>
+				<li>Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico 
+				to the run-time environment folder &quot;intel_a\code\dictionary.&quot;</li>
+			</ol>
+		</blockquote>
+		<p>
+     <a href="CAASchPlaceComponentSource.htm">CAASchPlaceComponent.CATScript </a>
+     is located in the CAAScdSchUseCases module.
+     <a href="macros/CAASchPlaceComponent.CATScript">Execute macro</a> (windows 
+     only).</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchPlaceComponent includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Place a Schematic component in free space">Place a 
+       Schematic component instance in free space (not connected to any other 
+       object).</a></li>
+       <li><a href="#Place a Schematic component on another object">Place a 
+       Schematic component instance and connect it to instance created in 
+       previous step.</a></li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first loads two documents: CAASCH_Sample.catalog and 
+     CAASCH_RouteForPlacement2.CATProduct. </p>
+     <table class="code">
+       <tr>
+         <td width="100%">
+     <pre>    <font color="#008000">...</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the schematic document </font>
+<font color="#0000FF">    Dim </font>sCtlgFilePath
+    sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+
+<font color="#0000FF">    Dim </font>objSchCtlgDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)</pre>
+     <pre>    <font color="#008000">' Open main schematic P&amp;ID design document (for new component instances created here)</font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement2.CATProduct")
+
+<font color="#0000FF">    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)
+    <font color="#008000">...</font></pre>
+         </td>
+       </tr>
+     </table>
+     <p>Next, the macro acquires the schematic root object from the document. 
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objPrdRoot<font color="#0000ff"> As </font>Product<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objSchRoot<font color="#0000ff"> As </font>SchematicRoot<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objPrdRoot = objSchDoc.Product
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Place a Schematic component in free space"></a>Place a 
+     Schematic component instance in free space (not connected to any other 
+     object).</h4>
+     <p>The SchematicRoot interface provides the GetCompSymbolFromCatalog method 
+     to retrieve the graphical representation of a specific Schematic component 
+     reference by name. In this case, the &quot;Blocking Valve&quot; is chosen. Based on 
+     this graphical representation, the macro calls the GetSchObjOwner to obtain 
+     the Schematic component reference.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">' Get the first symbol from component catalog.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objSchGRRCtlg = objSchRoot.GetCompSymbolFromCatalog (&quot;Blocking Valve&quot;,objSchCtlgDoc)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' Get the owner of the first symbol. That is a reference component</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' in the catalog.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         Set </font>objSchCntblRef = objSchGRRCtlg.GetSchObjOwner<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Method PlaceInSpace is then called to create a new instance of the 
+     &quot;Blocking Valve&quot; reference component in the design document. Note that the 
+     placement position and orientation are defined by a 6-words double-array 
+     (db6Array) which is an input to the method.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">'--------------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Component instance (to be created below) orientation matrix.</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' x-axis = (1.0,0.0)</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' y-axis = (0.0,1.0)</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' origin = (100.0,300.0)</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">'--------------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>db6Array(6)<font color="#0000FF"> As </font>CATSafeArrayVariant<br>
+&nbsp;&nbsp;&nbsp; db6Array(0)=1.0<br>
+&nbsp;&nbsp;&nbsp; db6Array(1)=0.0<br>
+&nbsp;&nbsp;&nbsp; db6Array(2)=0.0<br>
+&nbsp;&nbsp;&nbsp; db6Array(3)=1.0<br>
+&nbsp;&nbsp;&nbsp; db6Array(4)=145.0<br>
+&nbsp;&nbsp;&nbsp; db6Array(5)=130.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Place an instance of the catalog reference in an empty space in </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' the design document</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Note that the target document is an input to PlaceInSpace</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Set </font>objSchComp2Ref = objSchRoot.Ge<font color="#0000FF">tInt</font>erface (&quot;CATIASchComponent2&quot;,objSchCntblRef)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>( Not ( objSchComp2Ref Is Nothing ) )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchComp2Ref.PlaceInSpace objSchGRRCtlg,db6Array,objSchDoc,objSchCompInstA<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Place a Schematic component on another object"></a>Place a 
+     Schematic component instance and connect it to instance created in previous 
+     step</h4>
+     <p>As in previous step, the macro find the reference component from the 
+     catalog by the name of the graphical representation of the component. In 
+     this case, the name is &quot;Control Valve&quot;</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog (&quot;Control Valve&quot;,objSchCtlgDoc)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' Get the owner of the second symbol. That is a reference component</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' in the catalog.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         Set </font>objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Unlike previous step, instead of specifying a placement position, the 
+     macro obtains the SchComponent interface from the &quot;Blocking Valve&quot; 
+     component instance (created in previous step) and creates an Control Valve 
+     component instance by calling the PlaceOnComponentWithInfo method of the 
+     interface. </p>
+     <p>In the comment section of the following code segments, instance A refers 
+     to &quot;Blocking Valve&quot; instance that was created in previous step and instance 
+     B refers to &quot;Control Valve&quot; instance the macro is about to create.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">
+         '----------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp; 1- QueryConnectAbility.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; Ask the reference 
+         of the new instance B for information</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; to use in 
+         compatibility checking. The objCompRefPlaceInfo</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; is an output and 
+         should be used as a &quot;black box&quot;. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; It is the input to 
+         the next call.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp; 2- IsTargetOKForPlace</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; Check whether A is 
+         compatible to B in making a connection.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; A is the first 
+         instance, it is the &quot;target&quot;. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; objCompatInfo is 
+         an output and should be used as </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; a &quot;black box&quot;. It 
+         is an input to the next call.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp; 3- GetBestFitPlaceInfo</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; Input the 
+         placement location, close to the x-y location of</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; the connector of 
+         objSchCompInstA (A) that you want to connect</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; B to. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; objFinalPlaceInfo 
+         is an output and should be used as</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; a &quot;black box&quot;. It 
+         is an input to the next call.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp; 4- PlaceOnComponentWithInfo</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'&nbsp;&nbsp;&nbsp;&nbsp; Place a new 
+         instance with the black box info. </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">' </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">
+         '----------------------------------------------------------------</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <font color="#008000">' -- step 1 </font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         Set </font>objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         (objSchGRRCVCtlg) <br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+
+              <font color="#008000">' -- step 2 </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         objSchCompatInstA.IsTargetOKForPlace objSchGRRCompInstA, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         objCompRefPlaceInfo, objCompatInfo, bYesCompat<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         Dim </font>db2Pt(2)<font color="#0000FF"> As </font>CATSafeArrayVariant<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              <font color="#008000">'-- 6.50 is the relative x coordinate of the 
+         right connector</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <font color="#008000">'-- from the symbol origin of the &quot;Blocking 
+         Valve&quot; instance.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         db2Pt(0) = 145.0 + 6.50<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         db2Pt(1) = 130.0<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         If </font>( bYesCompat )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         bFindAllSolutions = false<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                 <font color="#008000">' -- step 3 </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         objSchCompatInstA.GetBestFitPlaceInfo db2Pt, objCompatInfo, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         objFinalPlaceInfo, bFindAllSolutions<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         If </font>( Not ( objFinalPlaceInfo is Nothing ) )<font color="#0000FF"> 
+         Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <font color="#008000">' -- step 4 </font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         Set </font>objSchCompInstB = objSchCompCVRef.PlaceOnComponentWithInfo _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+         (objFinalPlaceInfo)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to create component instances. A message logging the 
+ status of the critical steps is displayed at the end of the use case.</p>
+ <p>
+ <img border="0" src="images/CAASchPlaceComponent_02.jpg" width="713" height="490"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!null ---------------------------------comment----------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,740 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working with Primitive Attribute Type</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+
+.style9 {
+	margin-left: 80px;
+}
+
+.style10 {
+}
+
+.style11 {
+	list-style-type: circle;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Primitive Attribute Type</h3>
+      <p><em>How to work with the Primitive types of attributes</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code> 
+		use case. It illustrates working with primitive attribute types. We 
+		consider an attribute of type double, for the current UC, but the 
+		concepts explained here are equally applicable for an attribute of any 
+		primitive type. We recommend understanding the basics of feature 
+		attributes [<a href="#References">1</a>] before proceeding with this UC.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtPrimitiveAttrTypeMgt Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtPrimitiveAttrTypeMgt Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtPrimitiveAttrTypeMgt</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtPrimitiveAttrTypeMgt Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The user learns working with a primitive attribute type. This includes</p>
+<ul>
+	<li>Feature attribute value is either inherited from its reference or 
+	explicitly assigned locally, thus overriding its inherited value</li>
+	<li>A primitive attribute value can be unset. The value set is that of a 
+	&quot;special unset value&quot; defined for each primitive type</li>
+	<li>Setting an attribute value to the &quot;special Unset value&quot; is distinct from 
+	calling an Unset Value. The call to retrieve the attribute value returns S_OK 
+	in the former case while S_FALSE for the latter</li>
+	<li>Restoring inheritance of an attribute value. It overrides the attribute 
+	value if locally assigned</li>
+</ul>
+
+<table class="Remark"> 
+	<tr> 
+		<td class="remark"><span class="run-in">Note</span>: An attribute can be 
+		valuated through redirection, as well. This implies that the attribute 
+		refers to another attribute for its value. We haven't included this case 
+		in the scope of the current UC.</td> 
+	</tr> 
+</table> 
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtPrimitiveAttrTypeMgt Use Case</h2>
+<p> <code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code> is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code> framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtPrimitiveAttrTypeMgt Do</h3>
+<p>The UC primarily deals with working with feature attributes of the primitive 
+types. The execution 
+proceeds as follows</p>
+<ul>
+	<li>The UC is based on a 2D Point StartUp, defined in the 
+	CAAFmExtElementCatalog as follows. Its x attribute value is default valuated 
+	to -1, while its y attribute is not explicitly set, and hence default 
+	valuated to 0.<table class="code">
+	<tr>
+		<td><pre>...
+<strong>feature CAAFmExtPoint2D</strong> #startup {
+<strong>             double x
+	    x = -1
+	    double y</strong>
+...</pre>
+	</td>
+	</tr>
+</table>
+
+
+</ul>
+<p>The steps of execution that follow are logically grouped in sections 
+dedicated to explaining a specific concept linked to feature attributes set in 
+bold.</p>
+<ul>
+	<li><strong>Feature attributes inherited from a StartUp</strong><ul>
+		<li class="style11">We instantiate the 2D Point StartUp (referred 
+		as FeatInst1, hereafter)</li>
+		<li class="style11">The &quot;x&quot; and &quot;y&quot; feature attribute values are both 
+		inherited from the StartUp. Their Valuation Mode is thus &quot;Inherited&quot;</li>
+		<li class="style11">The FeatInst1 x value is -1, the default 
+		value inherited from the Startup OSM</li>
+		<li class="style11">The FeatInst1 y is 0. The value of an attribute 
+		of a primitive type is the unset value, if not explicitly set. For a 
+		double, the unset value is 0</li>
+	</ul>
+	</li>
+	<li><strong>Overriding an inherited Feature Attribute Value </strong>
+	<ul>
+		<li class="style11">&nbsp;We instantiate another 2D Point feature 
+		(referred as FeatInst2, hereafter) but this time with FeatInst1, as 
+		reference </li>
+		<li class="style11">&nbsp;The FeatInst2 x and y attribute values are 0 
+		and -1, both inherited from FeatInst1. The valuation mode is thus 
+		Inherited</li>
+		<li class="style11">&nbsp;We valuate FeatInst1 x to 5, we check that 
+		FeatInst2 x value is now 5. FeatInst2 x is still retrieved from its 
+		reference.</li>
+		<li class="style11">&nbsp;Next we override the FeatInst2 x value to 7. 
+		So the FeatInst2 x value is now an immediate value. </li>
+		<li class="style11">&nbsp;We modify the FeatInst1 x value to 8 , the 
+		FeatInst2 x value remains 7. </li>
+	</ul>
+	</li>
+	<li><strong>Unset the FeatInst1 x value to illustrate its characteristics</strong><ul>
+		<li class="style11">Unset the FeatInst1 x value</li>
+		<li class="style11" style="height: 13px">The FeatInst1 x value is 0. 
+		Unset is equivalent to set a default attribute value. The default value 
+		for an attribute of type double is 0</li>
+		<li class="style11">The call to GetValue on feature returns S_FALSE 
+		instead S_OK ( both succeeded )</li>
+		<li class="style11">Its Valuation Mode is Immediate, meaning its locally valuated</li>
+	</ul>
+	</li>
+	<li><strong>Set the FeatInst1 y attribute value to 0, to illustrate it is 
+	distinct from Unset</strong><ul>
+		<li class="style11">FeatInst1 y is set to 0</li>
+		<li class="style11">The call to GetValue on the feature returns S_OK. 
+		Did you notice that it is S_FALSE when the value was Unset?</li>
+	</ul>
+	</li>
+	<li><strong>Remove the locally defined FeatInst2 x value (Restore its 
+	inheritance)</strong><ul>
+		<li class="style11">Remove locally defined value for FeatInst2 x</li>
+		<li class="style11">FeatInst2 x is now 0, the value inherited from its 
+		immediate reference FeatInst1 x</li>
+	</ul>
+	</li>
+	<li><strong>Remove the locally defined FeatInst1 x value (Restore its 
+	inheritance)</strong><ul>
+		<li class="style11">Remove locally defined value for FeatInst1 x</li>
+		<li class="style11">FeatInst2 x is now -1, the value inherited from 
+		FeatInst1 x, which in turn inherits from the Startup</li>
+	</ul>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtPrimitiveAttrTypeMgt</h3>
+<p>To launch <code>
+CAAV5V6FmExtPrimitiveAttrTypeMgt</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtPrimitiveAttrTypeMgt </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<code>CAAV5V6FmExtPrimitiveAttrTypeMgt </code><i>DocumentStorageName.CATPart </i>&quot;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtPrimitiveAttrTypeMgt Code</h3>
+<p><code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code> code is located in the
+<span class="style1"><code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code></span><code>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\</code><span class="style1"><code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code></span><code>.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtPrimitiveAttrTypeMgt.cpp</code></span>.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>In addition, the UC also refers to the Catalogs <code>
+CAAFmExtElementCatalog.CATfct</code>. The Catalogs are provided at the 
+location</p>
+<p> <code>
+InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CNext\resources\graphic</code></p>
+<p>and by running the mkrtv tool, user copies it to the WS RTV.</p>
+<p>In addition we have also provided the OSM files corresponding to this 
+catalog at the location below, just in case you would like to generate the
+<code>CATfct</code> with the <code>
+CATfctEditorAssistant</code> tool</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\InputData</code></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are nine logical steps in <code>CAAV5V6FmExtPrimitiveAttrTypeMgt</code>:</p>
+<ol class="style9">
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#The ConfirmAttributeInfo() routine">The ConfirmAttributeInfo() 
+	routine</a></li>
+	<li><a href="#Local variable initialization">Local Variable Initialization</a></li>
+	<li><a href="#Attr value inherited from startup OSM">Feature Attribute Value inherited from the StartUp</a></li>
+	<li class="style10">
+	<a href="#Locally valuating an attribute">Locally Valuating an Attribute, thus overriding the Value Inherited</a></li>
+	<li><a href="#Unseet value of an attribute">Unset an Attribute Value</a></li>
+	<li><a href="#Set the value to 0">Set Value of an attribute of type double to 0. Illustrate its distinct from Unset</a></li>
+	<li><a href="#Restore inheritance">Restore Inheritance of an Attribute Value 
+	(Attribute no longer Locally Defined)</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will go further to detail each step.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see CAAObjectSpecsModeler.edu 
+V5 UC documentation. It further creates the <strong>Credentials</strong> [<a href="#References">2</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="The ConfirmAttributeInfo() routine"></a>The ConfirmAttributeInfo() routine</h3>
+<p>The <code>ConfirmAttributeInfo</code> routine, used all along this use case, checks and validates the 
+contents of a <em>CATFmAttributeValuationInfo</em> class instance. 
+This class, that you get from a <em>CATFmFeatureFacace</em> class, gives information about 
+an feature's attribute. The implementation follows.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>HRESULT <strong>ConfirmAttributeInfo</strong>(CATFmFeatureFacade &amp; iFeatFacadeOnFeat,
+                             CATFmAttributeName &amp; iAttrKey,
+			 CATFmAttributeValuationMode iValuationMode )
+{
+  HRESULT rc = E_FAIL;
+
+  CATFmAttributeValuationInfo AttrValuationInfo;
+  rc = <strong>iFeatFacadeOnFeat.GetAttributeValuationInfo(iAttrKey,AttrValuationInfo)</strong>;
+
+  if (SUCCEEDED(rc))
+  {
+    // Confirmed checks for our attributes
+    if ((CATFmKind_double != AttrValuationInfo.<strong>m_Type</strong>) || (TRUE == AttrValuationInfo.<strong>m_IsList</strong>) ) rc = E_FAIL;
+      
+    // Checks specific to each case
+<strong>    if ( </strong>AttrValuationInfo<strong>.m_ValuationMode != </strong>iValuationMode<strong> ) </strong>rc = E_FAIL;
+        
+  }
+
+  return rc;
+}   
+</pre>
+	</td>
+	</tr>
+</table>
+
+<p>The routine inputs are</p>
+<ul>
+	<li><code>iFeatFacadeOnFeat</code>, a <em>CATFmFeatureFacace</em> class, represents the feature
+	</li>
+	<li><code>iAttrKey</code>, a <i>CATFmAttributeName</i> class, represents the feature attribute 
+	for validation</li>
+	<li><code>iValuationMode</code>, an enum type representing the expected attribute 
+	valuation mode. The possible modes are namely. Immediate, Inherited, 
+	Redirected</li>
+</ul>
+<p>The <code>GetAttributeValuationInfo</code> of the 
+<em>CATFmFeatureFacace</em> class retrieves the valuation information <code>AttrValuationInfo</code> (<em>a CATFmAttributeValuationInfo</em> type) of the 
+feature attribute input (<code>iAttrKey</code>). The tests are:</p>
+<ul>
+	<li>The input attribute must be a double : <code>m_Type</code>, the class member variable of an enum 
+type (<i>CATFmAttributeAndValueKind</i>) must be valuated to 
+<code>CATFmKind_double</code></li>
+	<li>The input attribute cannot be a list&nbsp;&nbsp;&nbsp; : <code>m_IsList</code> 
+	, the class member variable of <em>CATBoolean</em> type must be always FALSE.</li>
+	<li>The input attribute has the expected valuation mode 
+	: we compare <code>m_ValuationMode</code>, the class member variable of an enum 
+type (<i>CATFmAttributeValuationMode </i>) with the input value. </li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Local variable initialization"></a>Local Variables Initialization</h3>
+<p>We initialize the constants required through our UC execution, at the 
+beginning inside main().</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+<strong>CATFmAttributeName</strong> XAttrKey("x");
+CATFmAttributeName YAttrKey("y");
+
+<strong>CATFmAttributeValue</strong> AttrValueSet;
+double val = 0 ; </pre>
+	</td>
+	</tr>
+</table>
+
+<p>We deal with the &quot;x&quot; and the &quot;y&quot; attribute associated with the 
+CAAFxExtPoint2D feature represented by the variables <code>XAttrKey</code> and Y<code>AttrKey</code> of 
+type <i>CATFmAttributeName</i> respectively.</p>
+<p>The values of these attributes are set and retrieved as <code>AttrValueSet</code>, a
+<i>CATFmAttributeValue</i> type. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Attr value inherited from startup OSM"></a>Feature Attribute Value 
+inherited from the StartUp</h3>
+<p>To begin with, the UC instantiates a <code>CAAFmExtPoint2D</code> StartUp. We instantiate this Startup and the result is <code>FeatFacadeOnPoint2D1</code> (a
+<em>CATFmFeatureFacade</em> type, referred to as <code>FeatInst1</code> hereafter). The instantiation 
+is a subject of another UC [<a href="#References">3</a>].</p>
+<p>We proceed to 
+analyze FeatInst1 for its &quot;x&quot; attribute value.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = ConfirmAttributeInfo<strong>(</strong>FeatFacadeOnPoint2D1<strong>,</strong>XAttrKey<strong>,CATFmInherited)</strong>;
+if (FAILED(rc)) return 1;  
+...  </pre>
+	</td>
+	</tr>
+</table>
+
+<p>The &quot;ValuationMode&quot; of FeatInst1 attribute &quot;x&quot; is confirmed to be <code>
+CATFmInherited</code><strong> </strong>with a call to <code>ConfirmAttributeInfo</code>.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = FeatFacadeOnPoint2D1<strong>.GetValue</strong>(XAttrKey,AttrValueSet<strong>)</strong>;
+<strong>if (rc != S_OK) return 1;</strong>  
+AttrValueSet.GetDouble(val);
+<strong>if ( </strong>val <strong>!= -1) return 1</strong>;
+...   
+</pre>
+	</td>
+	</tr>
+</table>
+
+<p>The FeatInst1 &quot;x&quot; attribute value is -1, that inherited from its StartUp. 
+The steps involved in retrieving an attribute value is a subject of the UC [<a href="#References">8</a>]</p>
+<p>We proceed to do a similar analyze for the attribute &quot;y&quot;. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = ConfirmAttributeInfo (FeatFacadeOnPoint2D1,YAttrKey,<strong>CATFmInherited</strong>);
+if (FAILED(rc))  return 1;
+...
+</pre>
+	</td>
+	</tr>
+</table>
+
+<p>Yet again, the value of attribute &quot;y&quot; is inherited from the StartUp. The 
+valuation mode is <code>CATFmInherited</code><strong> </strong>.&nbsp; </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = FeatFacadeOnPoint2D1.<strong>GetValue</strong>(YAttrKey,AttrValueSet);
+<strong>if (rc != S_FALSE) return 1</strong>; 
+AttrValueSet.GetDouble(val);
+<strong>if ( val != 0) return 1</strong>; 
+...   
+</pre>
+	</td>
+	</tr>
+</table><p>
+It is significant to note that the FeatInst1 "y" attribute is not explicitly set so far, and hence is assigned the default value 0. The call GetValue() to retrieve the feature attribute value returns S_FALSE since the value is not set, so far.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Locally valuating an attribute"></a>Locally 
+Valuating an Attribute, thus Overriding the Value Inherited </h3>
+<p>On similar lines as instantiating a feature from a StartUp, a feature can be instantiated from 
+a feature, as well. The attribute values of the 
+feature, is then either inherited from its feature reference or locally 
+assigned, thus overriding the inherited value.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>
+rc = <strong>FeatFacadeOnPoint2D1.InstantiateIn(MyContainerFacade,AttrValue)</strong>;
+if (FAILED(rc)) return 1;
+CATFmFeatureFacade FeatFacadeOnPoint2D2(MyCredential,AttrValue);</pre></td>	</tr>
+</table>
+<p>We begin by instantiating a feature from an existing feature reference 
+(created in the earlier section, <code>FeatInst1</code> ). The details of this instantiation 
+is a subject of another UC [<a href="#References"><span class="style10">3</span></a>]. The output is 
+FeatFacadeOnPoint2D2, a <em>CATFmFeatureFacade</em> type. (referred to as FeatInst2, 
+hereafter)</p>
+<p>We proceed to 
+analyze <code>FeatInst2</code> for its &quot;x&quot; attribute value. </p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>..
+rc = ConfirmAttributeInfo(FeatFacadeOnPoint2D2,XAttrKey,<strong>CATFmInherited</strong>);
+if (FAILED(rc)) return 1;
+		
+...
+rc = <strong>FeatFacadeOnPoint2D2.GetValue(XAttrKey,AttrValueSet)</strong>;
+if (rc != S_OK) return 1; 
+ 
+<strong>AttrValueSet.GetDouble(val)</strong>;
+<strong>if ( val != -1) return 1</strong>;</pre></td>
+	</tr>
+</table>
+<p>We retrieve the value of the attribute &quot;x&quot;, for the <code>FeatInst2</code> 
+. It is -1. Also, its Valuation Mode is <code>CATFmInherited</code><strong> </strong>
+.</p>
+<p>We next retrieve the &quot;y&quot; attribute valuation info and the value.<br>
+</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+rc = ConfirmAttributeInfo(FeatFacadeOnPoint2D2,YAttrKey,<strong>CATFmInherited</strong>);
+if (FAILED(rc))  return 1; 
+       
+rc = FeatFacadeOnPoint2D2.<strong>GetValue</strong>(YAttrKey,AttrValueSet);
+<strong>if (rc != S_FALSE) return 1; </strong>
+
+AttrValueSet.GetDouble(val);
+if ( val != 0) return 1;</pre>	</td>
+	</tr>
+</table>
+<p>You'll notice the information retrieved for <code>FeatInst2</code> , is exactly the same as 
+for the feature instantiated from the StartUp (<code>FeatInst1</code> ). The &quot;y&quot; 
+attribute Valuation mode is <code>CATFmInherited</code><strong> </strong>and its value is 0. Yet again,&nbsp; 
+point to note is that the return of <code>GetValue</code> of the
+<i>CATFmFeatureFacade</i> class is 
+S_FALSE in this case, since the value is the default (not explicitly set)</p>
+<p>We proceed to valuate the <code>FeatInst1</code> x to 5, in the code that 
+follows.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+<strong>AttrValueSet.SetDouble(5)</strong>;
+rc =<strong> FeatFacadeOnPoint2D1.SetValue(XAttrKey,AttrValueSet)</strong>;
+if (FAILED(rc)) return 1;
+</pre>
+</td>
+	</tr>
+</table>
+<p>The <code>FeatInst2</code> x is also valuated to 5, as confirmed below. This implies, 
+<code>FeatInst1</code> serves as a reference of FeatInst2.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+rc = <strong>FeatFacadeOnPoint2D2.GetValue(XAttrKey,AttrValueSet)</strong>;
+if (rc != S_OK) return 1; 
+<strong>AttrValueSet.GetDouble(val)</strong>;
+<strong>if ( val != 5) return 1</strong>;
+</pre></td>
+	</tr>
+</table>
+<p>Let us now override the <code>FeatInst2</code> x to 7, as depicted in 
+the code that follows.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+<strong>AttrValueSet.SetDouble(7)</strong>;
+rc = <strong>FeatFacadeOnPoint2D2.SetValue(XAttrKey,AttrValueSet)</strong>;
+if (FAILED(rc)) return 1;</pre></td>	</tr>
+</table>
+<p>You'll now observe that any modification of <code>FeatInst1</code> x, will not impact 
+<code>FeatInst2</code> x. Let us modify the <code>FeatInst1</code> &quot;x&quot; attribute value 
+to confirm that this modification is not propagated below.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+<strong>AttrValueSet.SetDouble(8)</strong>;
+rc = <strong>FeatFacadeOnPoint2D1.SetValue(XAttrKey,AttrValueSet)</strong>;
+if (FAILED(rc))return 1;</pre></td>
+	</tr>
+</table>
+<p>The <code>FeatInst1</code> x value is modified to 8. </p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+rc = <strong>FeatFacadeOnPoint2D2.GetValue(XAttrKey,AttrValueSet)</strong>;
+if (rc != S_OK) return 1; 
+<strong>AttrValueSet.GetDouble(val)</strong>;
+<strong>if ( val != 7) return 1</strong>;	</pre></td>	</tr>
+</table>
+<p>Now let us check for the <code>FeatInst2</code> x value.&nbsp;It remains 
+7, the value last set. In other words, <code>FeatInst2</code> x overrides the <code>FeatInst1</code> x 
+inherited value, and hereafter it is the <code>FeatInst2</code> x value which will be 
+inherited by the features down the instantiation hierarchy.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Unseet value of an attribute"></a>Unset an Attribute Value</h3>
+<p>We study unsetting an attribute value.</p>
+<table class="code">
+	<tr>
+		<td><pre>rc = FeatFacadeOnPoint2D1.<strong>UnsetValue</strong>(XAttrKey);
+if (FAILED(rc))return 1;
+		
+rc = ConfirmAttributeInfo(FeatFacadeOnPoint2D1,XAttrKey,<strong>CATFmImmediate</strong>);
+if (FAILED(rc)) return 1; 
+... </pre>
+		</td>
+	</tr>
+</table>
+<p>The call to UnsetValue of the <i>CATFmFeatureFacade</i> class, unsets an attribute 
+value. The attribute name, as a <i>CATFmAttributeName</i> type (<code>XAttrKey</code>) is an input 
+to the API.</p>
+<p>We seek the <code>FeatInst1</code> &quot;x&quot; attribute valuation mode and 
+confirm it is <strong>CATFmImmediate</strong>, meaning that it is locally valuated. It is significant to 
+note here that though the operation is unset, since its explicitly invoked on 
+the feature, its treated as a local valuation.</p>
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = FeatFacadeOnPoint2D1.<strong>GetValue</strong>(XAttrKey,AttrValueSet);
+if (rc != <strong>S_FALSE</strong>) return 1; 
+AttrValueSet.GetDouble(val);
+<strong>if ( val != 0) return 1; </strong></pre>
+		</td>
+	</tr>
+</table>
+<p>Moreover, on unset an attribute is assigned a &quot;<strong>special unset value</strong>&quot;, 
+0 for type double, in this case. It is significant to note that on Unset of a 
+feature attribute, the return of <code>GetValue()</code> which retrieves that attribute value 
+is S_FALSE. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Set the value to 0"></a>Set value of an attribute of type double to 0. Illustrate 
+it is distinct from Unset</h3>
+<p>One may be curious to know the consequence of setting an attribute value 
+explicitly to 0?&nbsp; Is it distinct from never setting an attribute value 
+or calling an Unset on it ? The code that follows has in it the answer to those key questions.</p>
+<table class="code">
+	<tr>
+		<td><pre>AttrValueSet.SetDouble(<strong>0</strong>);
+rc = FeatFacadeOnPoint2D1.<strong>SetValue</strong>(YAttrKey,AttrValueSet);
+if (FAILED(rc))return 1;
+
+...
+rc = ConfirmAttributeInfo(FeatFacadeOnPoint2D1,YAttrKey,<strong>CATFmImmediate</strong>);
+if (FAILED(rc))return 1; 
+        
+...
+rc = FeatFacadeOnPoint2D1.<strong>GetValue</strong>(YAttrKey,AttrValueSet);
+if (rc != <strong>S_OK</strong>) return 1; 
+AttrValueSet.GetDouble(val);
+<strong>if ( val != 0) return 1</strong>; 
+...</pre>
+		</td>
+	</tr>
+</table>
+
+<p>We set the <code>FeatInst1</code> y attribute value explicitly to 0, with a call to SetValue of the <i>CATFmFeatureFacade</i> 
+class. The value of the attribute is obvious set to 0. The Valuation Mode is 
+also<strong> </strong><code>CATFmImmediate</code>.</p>
+<p>However the return of <code>GetValue</code> of the
+<i>CATFmFeatureFacade</i> class in the current 
+scenario is S_OK, while for the <code>UnsetValue</code> call it returned <code>S_FALSE</code>. Though the 
+value of the attribute in both cases is 0, the return is <code>S_OK</code> in the former case 
+since it was explicitly set while it is <code>S_FALSE</code> in the latter case, since it is 
+implicitly assigned (default valuated).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Restore inheritance"></a>Restore Inheritance of an Attribute Value 
+(Attribute no longer Locally Defined)</h3>
+<p>If it is possible for one to override an inherited value with a locally 
+assigned one, doing the reverse is also possible. In other words, its possible 
+to restore the inheritance of an attribute value, which was locally overridden.</p>
+<p>We do so for the <code>FeatInst2</code> x value, in the code that follows.</p>
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = FeatFacadeOnPoint2D2.<strong>RestoreInheritance</strong>(XAttrKey);
+if (FAILED(rc)) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+<p>The <code>RestoreInheritance()</code> call of the
+<i>CATFmFeatureFacade</i> class restores the 
+inheritance of the feature attribute input to it. We thus restore the 
+inheritance of the <code>FeatInst2</code> &quot;x&quot; attribute. </p>
+<p>We retrieve the <code>FeatInst2</code> x value in the code that follows.</p>
+<table class="code">
+	<tr>
+		<td><pre>...
+// 11-2- Confirm the Point2D2 X attribute is INHERITED
+rc = ConfirmAttributeInfo(FeatFacadeOnPoint2D2,XAttrKey,<strong>CATFmInherited)</strong>;
+if (FAILED(rc)) return 1; 
+rc = FeatFacadeOnPoint2D2.<strong>GetValue</strong>(XAttrKey,AttrValueSet);
+if (rc != <strong>S_FALSE</strong>) return 1; 
+AttrValueSet.GetDouble(val);
+<strong>if ( val != 0) return 1</strong>; ;</pre>
+		</td>
+	</tr>
+</table>
+<p>The <code>FeatInst2</code> x value which was previously 7 is now 0, the value it inherits 
+from <code>FeatInst1</code> x. (Remember we unset <code>FeatInst1</code> x in a previous step. Its value 
+is thus 0). The call to GetValue() on <code>FeatInst2</code> for the x attribute value 
+returns <code>S_FALSE</code>, since the value it inherits is an Unset value.</p>
+<p>The Valuation Mode switches from <code>CATFmImmediate</code> to <code>CATFmInherited</code>, as expected.&nbsp; </p>
+<p>We proceed to repeat the restore inheritance operation for the <code>FeatInst1</code> x 
+value, as well. </p>
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = FeatFacadeOnPoint2D1.<strong>RestoreInheritance</strong>(XAttrKey)</strong>;
+if (FAILED(rc)) return 1;
+   
+rc = FeatFacadeOnPoint2D2.<strong>GetValue</strong>(XAttrKey,AttrValueSet);
+<strong>if (rc != S_OK) return 1</strong>; 
+AttrValueSet.GetDouble(val);
+<strong>if ( val != -1) return 1</strong>;</pre>
+		</td>
+	</tr>
+</table>
+<p>We have the <code>RestoreInheritance() </code>call for the <code>FeatInst1</code> x value. Its current value &quot;0&quot; is overridden by the value it inherits from the StartUp. The Startup definition default valuates&nbsp; x to -1.&nbsp; As a 
+result, <code>FeatInst2</code> x value is -1.</p>
+<p>Moreover, the call to <code>GetValue() </code>to retrieve <code>FeatInst2</code> x,&nbsp; returns 
+<code>S_OK</code>, 
+this time for the simple reason that the value is no longer unset, but is 
+explicitly set to -1, its OSM default value.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>At last the document is saved and session is closed</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The objective of the UC is to illustrate working with feature attributes of 
+the primitive type. An attribute can either inherit its value from its 
+reference, or override the inherited value locally. The third possibility is to 
+valuate an attribute by redirecting it to another attribute for its value, which 
+is not within the scope of the current UC.</p>
+<p>One can also restore the inheritance of an attribute value, meaning override 
+its locally defined value with the value that it inherits from its reference.</p>
+<p>On Unset of an attribute value, its assigned with a &quot;special Unset value&quot; 
+corresponding to the primitive type. Since the current UC deals with an 
+attribute of type double, this special Unset value is 0.</p>
+<p>One may also explicitly set an attribute value to 0 (for type double), but 
+though the value is the same as that for Unset, the call to 
+<code>GetValue</code> on a <i>CATFmFeatureFacade</i> class type returns <code>S_OK</code> for the explicitly Set while it 
+returns <code>S_FALSE</code> for the Unset call.</p>
+<p>Though we illustrate working with a feature attribute of type double in the 
+current UC, the behavior is equally applicable for all primitive attribute 
+types.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding 
+		Feature Attributes</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="CAAV5V6FmExtUcWorkingWithCredentials.htm">Working with 
+		Credentials</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating Features</a></td>
+	
+	
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Aug 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

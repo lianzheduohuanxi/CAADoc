@@ -1,0 +1,363 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Querying Schematic Document Content</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Querying Schematic Document Content</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to query for 
+     information from a Schematic design document.
+     <p>The information includes the following:</p>
+     <ol>
+       <li>A list of all Schematic components (references or instances) in the 
+       document.</li>
+       <li>A list of all Schematic routes in the document.</li>
+       <li>The placement matrix of a specific Schematic component instance.</li>
+       <li>The defining route points of the route path of a specific Schematic 
+       route instance.</li>
+       <li>The position of a connector.</li>
+     </ol>
+     <p>This macro open the CAASCH_CompRoute01.CATProduct document for querying 
+     information.</p>
+     <p>
+     <img border="0" src="images/CAASchQueryCompRoute_01.jpg" width="807" height="520"></td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchQueryCompRoute is launched in CATIA 
+     [<a href="#References">1</a>]. No open document is needed.<p>Special 
+		environment must be available to successfully run this macro:</p>
+		<ul>
+			<li>Prerequisites:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>RADE must be installed.</li>
+				<li>CAASchPlatformModeler.edu must exist in CAADoc folder.</li>
+			</ol>
+		</blockquote>
+		<ul>
+			<li>Setup:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>Build CAASchAppBase.m and CAASchAppUtilities.m, located in 
+				CAASchPlatformModeler.edu (RADE is required). </li>
+				<li>Copy generated DLLs, CAASchAppBase.dll and CAASchAppUtilities.m, respectively, to the run-time environment 
+				folder &quot;intel_a\code\bin.&quot;</li>
+				<li>Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, 
+				to the run-time environment folder &quot;intel_a\resources\graphic.&quot;</li>
+				<li>Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico 
+				to the run-time environment folder &quot;intel_a\code\dictionary.&quot;</li>
+			</ol>
+		</blockquote>
+		<p>
+     <a href="CAASchQueryCompRouteSource.htm">CAASchQueryCompRoute.CATScript </a>
+     is located in the CAAScdSchUseCases module.
+     <a href="macros/CAASchQueryCompRoute.CATScript">Execute macro</a> (windows 
+     only).</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchQueryCompRoute includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Query current document name">Query for the name of the 
+       current document in the session.</a></li>
+       <li><a href="#Query list of component references">Query for a list of 
+       Schematic reference components in the document.</a></li>
+       <li><a href="#Query list of component instances">Query for a list of 
+       Schematic component instances in the document.</a></li>
+       <li><a href="#Find component image position">Find the positioning matrix 
+       of specific graphical image of a Schematic component instance.</a></li>
+       <li><a href="#Query list of connectors">Query for a list of all the 
+       connectors of a Schematic component instance.</a></li>
+       <li><a href="#Query list of route instances">Query for a list of all the 
+       Schematic route instances in the document.</a></li>
+       <li><a href="#Query list of route path points">Query for a list of route 
+       path definition points.</a></li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first loads the document: CAASCH_CompRoute01.CATProduct.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Open the schematic document </font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>sFilePath<br>
+&nbsp;&nbsp;&nbsp; sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Next, the macro acquires the schematic root object from the document. 
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.&nbsp; </p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objPrdRoot<font color="#0000ff"> As </font>Product<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objSchRoot<font color="#0000ff"> As </font>SchematicRoot<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objPrdRoot = objSchDoc.Product
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query current document name"></a>Query for the name of the 
+     current document in the session</h4>
+     <p>The SchSession interface provides the GetCurrentDocument method to 
+     return the name of the current document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objSchSession = objSchRoot.GetSchematicSession<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'| Query the name of the current document </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       If </font>( Not ( objSchSession Is Nothing ) )<font color="#0000FF"> Then</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          Set </font>objCurDoc = objSchSession.GetCurrentDocument<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query list of component references"></a>Query for a list of 
+     Schematic reference components in the document</h4>
+     <p>The SchematicRoot interface provides the GetRefComponents method to 
+     return a list of Schematic component references in the document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' |&nbsp; List schematic component references in the model</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchLCompRefs = objSchRoot.GetRefComponents<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query list of component instances"></a>Query for a list of 
+     Schematic component instances in the document</h4>
+     <p>The SchematicRoot interface provides the GetComponents method to return 
+     a list of Schematic component instances in the document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' |&nbsp; List schematic component instances in the model</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+&nbsp;<br>
+ 
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchLComps = objSchRoot.GetComponents<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Find component image position"></a>Find the positioning matrix 
+     of specific graphical image of a Schematic component instance</h4>
+     <p>This macro provides the GetComponentImage internal Function to return a 
+     specific SchGRRComp interface handle on a specific graphical image of a 
+     component instance. This interface provides the GetTransformation2D method 
+     to return the positioning matrix of the image.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            If </font>( Not ( objCompGraphInst Is Nothing ) )<font color="#0000FF"> Then</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Set </font>objGRRCompInst = GetComponentImage (objCompGraphInst)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objGRRCompInst.GetTransformation2D objSchLDbComp<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query list of connectors"></a>Query for a list of all the 
+     connectors of a Schematic component instance</h4>
+     <p>The macro calls AppListConnectors to list all the connectors. Notice 
+     that the input objFilter is an empty list which specifies no filtering is 
+     requested.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">' Get the connector locations of all component instances</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            If </font>( Not ( objCntbl Is Nothing ) And&nbsp; Not ( objGRR Is Nothing ) )<font color="#0000FF"> Then</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Set </font>objLCntrs = objCntbl.AppListConnectors (objLFilter)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>For each connector in the returned list, the macro calls the method 
+     calls GetPosition method to obtain the x-y coordinates of the connector 
+     position.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                     For </font>iCntr = 1 To<font color="#0000FF"> int</font>NbCntr<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                        Set </font>objCntr = Nothing<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                        Set </font>objCntr = objLCntrs.Item (iCntr,&quot;CATIASchCntrLocation&quot;)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                        If </font>( Not ( objCntr Is Nothing ))<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objCntr.GetPosition objGRR, objLDbCntr<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query list of route instances"></a>Query for a list of all the 
+     Schematic route instances in the document</h4>
+     <p>The SchematicRoot interface provides the GetRoutes method to return a 
+     list of Schematic route instances in the document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' |&nbsp; List schematic route instances</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+         <br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchLRoutes = objSchRoot.GetRoutes<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Query list of route path points"></a>Query for a list of route 
+     path definition points</h4>
+     <p>The macro calls the GetRoutePrimitives to get the graphical 
+     representation of a specific Schematic route instance. Then it calls 
+     GetPath to get a list of x-y coordinates for each defining points of the 
+     route path.&nbsp; </p>
+     <table class="code">
+       <tr>
+         <td width="100%">
+     <pre>    <font color="#008000">...</font>
+            <font color="#008000">'------------------------------------------------------------------</font>
+            <font color="#008000">' Get the route points x-y coordinates of the route. </font>
+            <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">            If </font>( Not ( objSchRouteGraph Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">               Set </font>objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
+
+<font color="#0000FF">               If </font>( Not ( objGRRRoute Is Nothing ) )<font color="#0000FF"> Then</font>
+
+                  objGRRRoute.GetPath objSchLDbRoute
+
+<font color="#0000FF">                  If </font>( Not ( objSchLDbRoute Is Nothing ) And _
+                      <font color="#0000FF"> int</font>NbOut &gt; 3 )<font color="#0000FF"> Then</font>
+
+                    <font color="#0000FF"> int</font>Nb = objSchLDbRoute.Count
+
+<font color="#0000FF">                     Dim </font>iIndex<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">                     Dim </font>jIndex<font color="#0000FF"> As </font>integer
+<font color="#0000FF">                     Dim </font>dbX<font color="#0000FF"> As </font>Double
+<font color="#0000FF">                     Dim </font>dbY<font color="#0000FF"> As </font>Double
+<font color="#0000FF">                     Dim </font>intNbPoint<font color="#0000FF"> As </font>Integer
+                    <font color="#0000FF"> int</font>NbPoint =<font color="#0000FF"> int</font>NbOut/2
+
+<font color="#0000FF">                     If </font>( (intNbOut =<font color="#0000FF"> int</font>Nb ) And  (intNbPoint &gt; 1) )<font color="#0000FF"> Then</font></pre>
+     <pre>    <font color="#008000">...</font>
+                        
+<font color="#0000FF">                        For </font>iIndex = 1 To<font color="#0000FF"> int</font>NbPoint
+                           jIndex = ((iIndex-1) * 2) + 1
+                           dbX = objSchLDbRoute.Item(jIndex)
+                           dbY = objSchLDbRoute.Item(jIndex+1)
+     <font color="#008000">...</font>
+<font color="#0000FF">                        Next </font></pre>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to query the data of a Schematic document and of its 
+ object. A message logging the status of the critical steps is displayed at the 
+ end of the use case.</p>
+ <p>
+ <img border="0" src="images/CAASchQueryCompRoute_02.jpg" width="847" height="505"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

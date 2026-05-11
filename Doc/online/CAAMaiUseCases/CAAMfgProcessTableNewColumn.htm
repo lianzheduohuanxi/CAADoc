@@ -1,0 +1,452 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding Commands in the Toolbar of the Cut Areas Command</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Adding new Columns in the Process Table</h3>
+      <i>Implementing</i> <i>CATIMfgTabularViewColumn</i> and <i>
+      CATICreateInstance</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAMfgTPECutAreasUserHeader use case.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAMfgProcessTableNewColumn Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAMfgProcessTableNewColumn Do</a></li>
+          <li><a href="#How">How to Launch CAAMfgProcessTableNewColumn</a></li>
+          <li><a href="#Where">Where to Find the CAAMfgProcessTableNewColumn
+            Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Learn"></a>What You Will Learn With This Use Case</h4>
+This use case is intended to help you to add new columns in the Process Table.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UseCase"></a>The CAAMfgProcessTableNewColumn Use Case</h4>
+CAAMfgProcessTableNewColumn is a use case of the CAAManufacturingItf.edu
+framework that illustrates ManufacturingInterfaces framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAMfgProcessTableNewColumn Do</h4>
+CAAMfgProcessTableNewColumn helps you to insert your own column in the Process 
+Table as shown on <a href="#Fig1">Fig.1</a>.<br>
+&nbsp;
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The new columns in the Process Table</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMfgProcessTableNewColumn1.jpg" width="806" height="392"></td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMfgProcessTableNewColumn</h4>
+To launch 
+CAAMfgProcessTableNewColumn, you will need to:
+<ul>
+  <li>Set up the build time environment, then compile
+    the CAAMaiProcessTableNewColumn.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following lines by removing the '#'
+    character:</p>
+    <pre>CAAMfgProcessTableNewColumn 	CATIMfgTabularViewColumn 		libCAAMaiProcessTableNewColumn</pre>
+    <pre>CAAMfgProcessTableNewColumn 	CATICreateInstance 		libCAAMaiProcessTableNewColumn</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiDumpProcess123.CATProcess file located in:</li>
+  <table width="100%">
+    <tr>
+      <td>Windows</td>
+      <td><tt>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic</tt></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><tt>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic</tt></td>
+    </tr>
+  </table>
+  </ul>
+  <p>
+  &nbsp;<ul>
+  <li>Launch the Process Table<p>
+  <img border="0" src="images/CAAMfgProcessTableNewColumn2.jpg" width="135" height="67">
+  <p>
+  &nbsp;</li>
+  <li>Make a Column Filter by a key 3 on the Process Table</li>
+</ul>
+    <p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img border="0" src="images/CAAMfgProcessTableNewColumn3.jpg" width="160" height="144">
+    <ul>
+    <li>Select only Number, Name, Type, Fixture accuracy and info<p>
+    <img border="0" src="images/CAAMfgProcessTableNewColumn4.jpg" width="308" height="427"></p>
+    <p>
+    &nbsp;</p>
+    </li>
+  <li>You obtain this Process Table with 2 new columns Fixture accuracy and 
+    info.</li>
+</ul>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img border="0" src="images/CAAMfgProcessTableNewColumn5.jpg" width="533" height="331"></p>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the  CAAMfgProcessTableNewColumn Code</h4>
+  <p>The CAAMfgProcessTableNewColumn use case is made of a class named 
+  CAAMfgProcessTableNewColumn
+located in the CAAMaiProcessTableNewColumn .m module of the
+CAAManufacturingItf.edu framework:<br>
+&nbsp; </p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiProcessTableNewColumn.m</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiProcessTableNewColumn.m</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step"></a><b>Step-by-Step</b></h4>
+  <ol>
+  <li><a href="#Step1">Create a component to implement the CATIMfgTabularViewColumn interface</a></li>
+  <li><a href="#Step2">Implement methods of CATIMfgTabularViewColumn</a> 
+  <a href="#Step4">
+  on this component</a></li>
+  <li><a href="#Step3">Create an extension of the component to implement 
+  CATICreateInstance interface</a></li>
+  <li><a href="#Step4">Implement  metho</a><a href="#Step2">d</a><a href="#Step2"> 
+  of CATICreateInstance </a> <a href="#Step4">on this </a><a href="#Step3">
+  extension</a></li>
+  </ol>
+We now comment these sections by looking at the code.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Create a component to implement the 
+CATIMfgTabularViewColumn interface</h4>
+The class that will implement the CATIMfgTabularViewColumn interface is named <i>
+  CAAMfgProcessTableNewColumn</i>.<br>
+Create the CAAMfgProcessTableNewColumn header file:<br>
+&nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAMfgProcessTableNewColumn: public CATIMfgTabularViewColumn
+{
+CATDeclareClass;
+
+public:
+
+// Standard constructors and destructors for an implementation class
+// -----------------------------------------------------------------
+CAAMfgProcessTableNewColumn ();
+virtual ~CAAMfgProcessTableNewColumn ();
+
+/**
+* Implements a function from an interface.
+* @see ManufacturingInterfaces.CATIMfgTabularViewColumn#GetListColumnId
+*/
+HRESULT GetListColumnId (CATListOfCATString&amp; oListColumnId ) ;
+
+/**
+* Implements a function from an interface.
+* @see ManufacturingInterfaces.CATIMfgTabularViewColumn#GetListTitleColumn
+*/
+HRESULT GetListTitleColumn (CATListOfCATUnicodeString&amp; oListTitle ) ;
+
+/**
+* Implements a function from an interface.
+* @see ManufacturingInterfaces.CATIMfgTabularViewColumn#GetParamCke
+*/
+HRESULT GetParamCke (const CATBaseUnknown_var&amp; ispBUActivity , const CATString&amp; iColumnId , CATBaseUnknown_var&amp; ospBUCkeParm, int&amp; MultiMod ) ;
+
+/**
+* Implements a function from an interface.
+* @see ManufacturingInterfaces.CATIMfgTabularViewColumn#GetValue
+*/
+HRESULT GetValue (const CATBaseUnknown_var&amp; ispBUActivity , const CATString&amp; iColumnId , CATUnicodeString&amp; ostrValue ) ;
+
+/**
+* Implements a function from an interface.
+* @see ManufacturingInterfaces.CATIMfgTabularViewColumn#ResetCache
+*/
+HRESULT ResetCache (const int iCacheID ) ;
+
+private:
+// The copy constructor and the equal operator must not be implemented
+// -------------------------------------------------------------------
+CAAMfgProcessTableNewColumn (const CAAMfgProcessTableNewColumn &amp;);
+CAAMfgProcessTableNewColumn&amp; operator=(const CAAMfgProcessTableNewColumn&amp;);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAMfgProcessTableNewColumn </i>C++-derives from <i>CATBaseUnknown</i>. 
+The class has a constructor, a destructor, and the method of interfaces <i>CATIMfgTabularViewColumn</i>.<h4><a name="Step2"></a>Implement methods of CATIMfgTabularViewColumn 
+  on this component</h4>
+<p>First you have to implement the method GetListColumnId, which
+defines&nbsp;ID of columns as CATString.
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgProcessTableNewColumn::GetListColumnId (CATListOfCATString&amp; oListColumnId)
+{
+	oListColumnId.RemoveAll();
+
+	oListColumnId.Append(&quot;FixtureAccuracyID&quot;);
+	oListColumnId.Append(&quot;InfoID&quot;);
+
+	return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Second you have to implement the method GetListTitleColumn, which
+defines NLS column titles as CATUnicodeString. &nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgProcessTableNewColumn::GetListTitleColumn (CATListOfCATUnicodeString&amp; oListTitle)
+{
+	oListTitle.RemoveAll();
+
+	oListTitle.Append(&quot;Fixture accuracy&quot;);
+	oListTitle.Append(&quot;info&quot;);
+
+	return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Third you have to implement the method GetParamCke, which
+defines how to access the Cke Parameter (returns in CATBaseUnknown_var) for 
+columns containing such parameters. Note that you can set an integer ( 
+MultiModif which is an output of the method) to 1 if you don't want that your 
+attribute can be modified during a multi selection.<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgProcessTableNewColumn::GetParamCke (const CATBaseUnknown_var&amp; ispBUActivity , const CATString&amp; iColumnId , CATBaseUnknown_var&amp; ospBUCkeParm, int &amp; MultiModif)
+{
+	HRESULT RC = E_FAIL;
+	
+	if (iColumnId == &quot;FixtureAccuracyID&quot;)
+	{
+		CATIMfgActivityParameters_var spActParameters(ispBUActivity);
+		if (NULL_var != spActParameters)
+		{
+			CATBaseUnknown_var spBUCkeParm;
+			HRESULT hr = spActParameters-&gt;FindElement(&quot;MfgFixtureAccuracy&quot;, spBUCkeParm);
+			if (NULL_var != spBUCkeParm)
+			{ 
+				CATICkeParm_var spCkeParm(spBUCkeParm);
+				if (NULL_var != spCkeParm)
+				{
+					ospBUCkeParm = spCkeParm;
+					RC = S_OK;
+				}
+			}
+		}
+	}
+
+	return RC;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Fourth you have to implement the method GetValue, which
+defines the CATUnicodeString displayed for columns containing such parameters.&nbsp;
+<table class="code" height="172">
+  <tr>
+    <td height="168">
+      <pre>HRESULT CAAMfgProcessTableNewColumn::GetValue (const CATBaseUnknown_var&amp; ispBUActivity , const CATString&amp; iColumnId , CATUnicodeString&amp; ostrValue)
+{
+
+	ostrValue = &quot;-&quot;;
+
+	if (iColumnId == &quot;InfoID&quot;)
+		ostrValue = &quot;Info User&quot;;
+	return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Finally you have to implement ResetCache which return S_OK to indicate that 
+you don't want to manage cache.&nbsp;
+<table class="code" height="172">
+  <tr>
+    <td height="168">
+      <pre>HRESULT CAAMfgProcessTableNewColumn::ResetCache (const int iCacheID)
+{
+// no cache to manage here !
+return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><b><a name="Step3"></a>Create an extension of the component to implement 
+CATICreateInstance interface</b></p>
+<p>The class that will extend the component and implement CATICreateInstance 
+interface is named <i>
+  CAAMfgProcessTableNewColumnInstance</i>.<br>
+Create the CAAMfgProcessTableNewColumnInstance header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAMfgProcessTableNewColumnInstance: public CATBaseUnknown
+{
+CATDeclareClass;
+
+public:
+
+// Standard constructors and destructors for an implementation class
+// -----------------------------------------------------------------
+CAAMfgProcessTableNewColumnInstance ();
+virtual ~CAAMfgProcessTableNewColumnInstance ();
+
+/**
+* Implements a function from an interface.
+* @see System.CATICreateInstance#CreateInstance
+*/
+HRESULT __stdcall CreateInstance (void ** oPPV ) ;
+
+
+private:
+// The copy constructor and the equal operator must not be implemented
+// -------------------------------------------------------------------
+CAAMfgProcessTableNewColumnInstance (CAAMfgProcessTableNewColumnInstance &amp;);
+CAAMfgProcessTableNewColumnInstance&amp; operator=(CAAMfgProcessTableNewColumnInstance&amp;);
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Step4"></a>Implement method of CATICreateInstance on this extension</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;TIE_CATICreateInstance.h&quot;
+TIE_CATICreateInstance( CAAMfgProcessTableNewColumnInstance);
+//-----------------------------------------------------------------------------
+// Implements CATICreateInstance::CreateInstance
+//-----------------------------------------------------------------------------
+HRESULT __stdcall CAAMfgProcessTableNewColumnInstance::CreateInstance (void ** oPPV)
+{
+CAAMfgProcessTableNewColumn * pt = new CAAMfgProcessTableNewColumn();
+
+*oPPV = (void*) pt;
+
+if (NULL != pt)
+return S_OK;
+else
+return E_FAIL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This article provides an example on how to add  new columns in the Process 
+  Table.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jul 2004]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

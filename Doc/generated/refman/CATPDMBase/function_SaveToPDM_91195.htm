@@ -1,0 +1,119 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATPDMBase Global Function SaveToPDM</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATPDMBase.htm" href="../CATPDMBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATPDMBase";	}
+		function getCurrentObjectName() { 
+ 	return "SaveToPDM"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATPDMBase Global Function SaveToPDM</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('HRESULT',' HRESULT')</script>  <b>SaveToPDM</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument*')</script> <td><tt>ipRootDoc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oMessageReport</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSaveMode</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Interface to start EV5 Save process from CATIA based on a root starter doc loaded in CATIA Session
+
+ <br><b>Role</b>: Starts EV5 save process from a root doc available in CATIA session and Saves all related Docs to ENOVIA database.
+<p>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipRootDoc</tt>
+   <dd>    (input) The CATIA root document to be saved in Enovia database
+ </dd>
+    <dt><tt> oMessageReport</tt>
+   <dd>     (output) The message report returned as an XML stream 
+ </dd>
+    <dt><tt> iSaveMode</tt>
+   <dd>     (input) The Save Mode
+     Possible values : 0= Full Save mode (Default mode)
+                     : 1= Partial Save mode (Applicable to batch mode only).
+     Rules: Input parameter will be used in Batch mode only. 
+            Interactively CATSetting will be taken into consideration.
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     <ul>
+      <li><tt>S_OK</tt>: EV5 Save process has been succeded, Commit done for Root doc and all.related docs available in session</li>
+      <li><tt>S_FALSE</tt>: EV5 save process failed for some objects (In case of Partial save commit not done for some docs).</li>
+      <li><tt>E_FAIL</tt>: EV5 save process failed. Commit not done and Rollback has been performed. Possible errors may be:
+       <ul>
+        <li>The connection with the ENOVIA V5 Server isn't established.</li>
+        <li>A service is not supported on the current Server,</li>
+        <li>Some P&O priveleges are missing for the current user,</li>
+        <li>An abnormal error occured during Save process.</li>
+       </ul>
+      </li>
+      <li><tt>E_INVALIDARG</tt>: One or several arguments contain an improper value. Possible errors may be:
+       <ul>
+        <li>The [ipRootDoc] parameter is NULL or is not a CATDocument.</li>
+       </ul>
+      </li>
+    </ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPDMInteropServices.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

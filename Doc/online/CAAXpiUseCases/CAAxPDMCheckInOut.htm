@@ -1,0 +1,273 @@
+<html>
+   <head>
+      <title>Creating an Interactive Command to Save a Complete Session in a Directory</title>
+      <meta name="vs_showGrid" content="False">
+      <meta http-equiv="Content-Language" content="en-us">
+      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+      <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+      <meta name="ProgId" content="FrontPage.Editor.Document">
+      <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+   </head>
+   <body>
+      <table width="100%">
+         <tr>
+            <td valign="top">
+	      <a name="Top"></a>
+               <h1>3D PLM PPR Hub Open Gateway</h1>
+            </td>
+            <td valign="top">
+               <h2>File XPDM (PX1)</h2>
+            </td>
+            <td rowspan="2" align="right" valign="top">
+               <h3><a href="CAAxPDMToolbar.htm"> Implementing Check-In command with specific icons 
+                     in tree </a>
+               </h3>
+               <p>
+                  How to use CATxPDMSessionUIServices</p>
+            </td>
+         </tr>
+         <tr>
+            <td class="use" colspan="2">Use Case</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <table class="abstract">
+         <tr>
+            <td>
+               <h3>Abstract</h3>
+               <p>This article shows how to create an interactive command to save a complete 
+                  session in a given directory.</p>
+               <ul>
+                  <li>
+                     <a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+                  <li>
+                     <a href="#UseCase"><strong>The CAAxPDMUICommands Use Case</strong></a>
+                     <ul>
+                        <li>
+                           <a href="#What">What Does CAAxPDMUICommands Do</a>
+                        <li>
+                           <a href="#How">How to Launch CAAxPDMUICommands</a>
+                        <li>
+                           <a href="#Where">Where to Find the CAAxPDMUICommands Code</a></li>
+                     </ul>
+                  <li>
+                     <a href="#Step"><strong>Step-by-Step</strong></a>
+                  <li>
+                     <a href="#InShort"><strong>In Short</strong></a>
+                  <li>
+                     <a href="#References"><strong>References</strong></a></li>
+               </ul>
+            </td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+      <p>In this use case you will mainly earn how to use the <code>ConnectToPX1</code> and
+         <CODE>DisconnectFromPX1 </CODE>methods of the <font SIZE="2"><i>CATxPDMSessionUIServices</i>
+            class.</font></p>
+      <font SIZE="2"></font>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="UseCase"></a>The CAAxPDMUICommands Use Case</h3>
+      <p>CAAxPDMUICommands is a use case of the CAAxPDMInterfaces.edu framework that 
+         illustrates CATxPDMInterfaces framework capabilities. <b>Be careful</b>, such 
+         as all use cases illustrating the CATxPDMInterfaces framework, the current one 
+         requires a PX1 licence.
+      </p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="What"></a>What Does CAAxPDMUICommands Do</h4>
+      <ul>
+         <li>
+         Launch CATIA,
+         <li>
+         Create or load documents
+         <li>
+            Retrieve the <b>PX1 CAASample</b> Toolbar
+            <ul>
+               <li>
+                  View / Toolbars / PX1 CAASample</li>
+            </ul>
+         </li>
+      </ul>
+      <blockquote>
+         <p>The PX1 Toolbar containing&nbsp;several commands.
+         </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="BORDER-COLLAPSE: collapse" bordercolor="#111111" id="AutoNumber4">
+            <tr>
+               <td><img border="0" src="images/CAAxPDMCheckInOut01.gif" width="193" height="57"></td>
+            </tr>
+         </table>
+      </blockquote>
+      <ul>
+         <LI>
+            Select the <B>Connect To PX1</B> command<BR>
+            Automatically,&nbsp;a new icon is added to all Read-Only items.<BR>
+            It gives to user a direct feedback of Check-In status in PDM&nbsp;: item with 
+            specific mask&nbsp;should not be modified.<BR>
+            <img alt="" src="images/CAAxPDMCheckInOut02.gif">&nbsp;<BR>
+         <LI>
+            Double-clic on an object with specific mask to UI Activate it and select <B>Check 
+               Out</B> command<BR>
+            This command should be customized to perform Check-Out operation in PDM and 
+            change file right access from Read-Only to Read-Write.<BR>
+            Icon in tree is refreshed, user can now modify document.<BR>
+            <img alt="" src="images/CAAxPDMCheckInOut03.gif"><BR>
+         <LI>
+            You can repeat Check-In and Check-Out operations on all documents.<BR>
+            Notice that Check-In operation is forbidden on modified documents. If user try 
+            to modify a read-only document, a specific mask will appear (see Product3 on 
+            picture).<BR>
+            User has to launch Check-Out command to correct the problem else he will not be 
+            able to save.<BR>
+            <img alt="" src="images/CAAxPDMCheckInOut05.gif"><BR>
+         <LI>
+            When you have finish, you can disconnect from through&nbsp;the <B>Disconnect From 
+               PX1</B> command<BR>
+            Automatically,&nbsp;a specific icons are removed in tree.<BR>
+            <img alt="" src="images/CAAxPDMCheckInOut04.gif"></LI>
+      </ul>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="How"></a>How to Launch CAAxPDMUICommands</h4>
+      <p>To launch CAAxPDMUICommands, you will need to set up the build time 
+         environment, then compile CAAxPDMUICommands along with its prerequisites, set 
+         up the run time environment, and then execute the use case [<a href="#References">1</a>]. 
+         To launch it, refer to the <a href="#What">What Does CAAxPDMUICommands Do</a> section.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="Where"></a>Where to Find the CAAxPDMUICommands Code</h4>
+      <p>The CAAxPDMUICommands use case is made of three files,
+      </p>
+      <ul>
+         <li>
+            The CAAxPDMToolbar class, located in the CAAxPDMToolbar.m module of the 
+            CAAxPDMInterfaces.edu framework:<table id="Table1">
+               <tr>
+                  <td>Windows</td>
+                  <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMToolbar.m\</code></td>
+               </tr>
+               <tr>
+                  <td>Unix</td>
+                  <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMToolbar.m/</code></td>
+               </tr>
+            </table>
+         </li>
+      </ul>
+      <blockquote>
+         <p>this file contains the addin to create the toolbar.
+         </p>
+      </blockquote>
+      <ul>
+         <li>
+            The CAAxPDMConnectCmd.cpp class and the </FONT>CAAxPDMCheckInOutCmd class
+            <table id="Table2">
+               <tr>
+                  <td>Windows</td>
+                  <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMUICommands.m\</code></td>
+               </tr>
+               <tr>
+                  <td>Unix</td>
+                  <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/</code></td>
+               </tr>
+            </table>
+            </FONT></li>
+      </ul>
+      <blockquote>
+         <p>The first class is the state command launched when the end user push <b>Connect To 
+               PX1</b>&nbsp;command. The second one defines <STRONG>Check-In</STRONG> and <STRONG>
+               Check-Out</STRONG> commands (this is same command with a different 
+            argument)&nbsp;
+         </p>
+      </blockquote>
+      <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+         is installed.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="Step"></a>Step-by-Step</h3>
+      <P><FONT size="3"><STRONG>Activation of PX1 icon mask</STRONG></FONT></P>
+      <P>PX1 icon mask is activated through <CODE>CATxPDMUIServicess::ConnectToPX1</CODE>
+         APIs.<BR>
+         This API should be called after connection to your PDM (integrated in 
+         connection command).<BR>
+         An automatic refresh of all icons already displayed is included in this call.<BR>
+         Complete sample of connection is delivered in CAAxPDMConnectCmd.cpp, you can 
+         insert your own connection code in dedicated area (see comment in code).</P>
+      <P><FONT size="3"><STRONG>Refreshing PX1 icon mask</STRONG></FONT></P>
+      <P>There is no automatic update of PX1&nbsp;icon mask in session (it will lead to 
+         bad performances if CATIA check Read/Write status on disc for each icon 
+         display). It means that this is responsability of CAA PDM Integration to update 
+         them after each Check-In or Check-Out operation.<BR>
+         This refresh should be done through <CODE>CATxPDMSessionServices::RefreshItemInformation</CODE>
+         with <CODE>CATxPDMSessionServices::ReadWrite</CODE> parameter.<BR>
+         This call is updating two information:<BR>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Read/Write status of item in 
+         memory. Without this update, you will never be able to Save item, even if you 
+         have Read/Write access on disc.<BR>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Mask of all icons<BR>
+         Complete sample of check-in delivered in CAAxPDMCheckInOutCmd.cpp, you can 
+         insert your own connection code in dedicated area (see comment in code).<BR>
+         <BR>
+         Remarks:</P>
+      <UL>
+         <LI>
+            Check-In operation should be forbidden if document is modified in session. PX1 
+            API <CODE>CATxPDMItem::NeedToBeSaved</CODE>
+         allows&nbsp;checking this before Check-In.
+         <LI>
+            Refresh of icons is designed to refresh automatically icons of Parts and Root 
+            Products. For Product Instance (for performance reason), API refreshes only 
+            icons of UI active object (the blue node). CAA Sample command is designed to 
+            Check-In (or Check-Out) automatically the blue node. If you design your 
+            interactive command to work on another object, you have to refresh yourself 
+            icon, you can do it with&nbsp;&nbsp;<CODE>CATIRedrawEvent::RedrawNodeVisu</CODE>
+            <BR>
+         </LI>
+      </UL>
+      <P>&nbsp;</P>
+      <P align="right">[<a href="#Top">Top</a>]</P>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="InShort"></a>In Short</h3>
+      <P><FONT size="3">This sample show you :</FONT></P>
+      <UL>
+         <LI>
+            <FONT size="3">how to activate a specific icon mask on document which could not be 
+               modified in session because they are controled by PDM</FONT>
+         <LI>
+            how to update this specific icon mask after each PDM operation like Check-In or 
+            Check-Out</LI></UL>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="References"></a>References</h3>
+      <table width="100%" id="Table3">
+         <tr>
+            <td valign="top">[1]</td>
+            <td>
+               <a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+                  and Launching a CAA V5 Use Case</a></td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="History"></a>History</h3>
+      <table width="100%" id="Table4">
+         <tr>
+            <td valign="top">Version: <strong>1</strong> [Feb 2006]</td>
+            <td valign="top">Document created</td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+   </body>
+</html>

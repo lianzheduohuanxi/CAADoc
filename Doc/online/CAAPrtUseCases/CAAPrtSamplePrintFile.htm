@@ -1,0 +1,391 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Printing Files</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization - Print</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Printing Files</h3>
+      <em>Creating a paper output from your files</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to print a given object on a printer.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAPrtPrintFile Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPrtPrintFile Do</a></li>
+            <li><a href="#How">How to Launch CAAPrtPrintFile</a></li>
+            <li><a href="#Where">Where to Find the CAAPrtPrintFile Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to print a given object on a printer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAPrtPrintFile Use Case</h3>
+<p>CAAPrtPrintFile is a use case of the CAAPrint.edu framework that illustrates
+the Print framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPrtPrintFile Do</h4>
+<p>CAAPrtPrintFile is a batch program that reads a JPEG file from the command
+line and prints it on the chosen printer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPrtPrintFile Use</h4>
+<p>To launch CAAPrtPrintFile Use, you will need to set up the build time
+environment, then compile CAAPrtPrintFile Use along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>You can launch CAAPrtPrintFile using a JPEG file as argument. The use case
+lists the available printers and then type the number associated to the chosen printer,&nbsp;
+the input JPEG file is printed on
+the chosen printer.</p>
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>E:&gt;<b>CAAPrtPrintFile</b>  InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtPrintFile.jpg</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>$ <b>CAAPrtPrintFile</b> InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtPrintFile.jpg</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<ul>
+  <li><code>InstallRootDirectory</code> is the directory into which the CAA
+    CD-ROM were unloaded
+  <li><code>CAAPrtPrintFile.jpg </code>is the sample JPEG file supplied. You can
+    use other JPEG files you may have at hand.</li>
+</ul>
+<table border="0">
+<caption><i>The CAAPrtPrintFile.jpg File</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAASamplePrtPrintFile.jpg" width="400" height="800"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPrtPrintFile Use Code</h4>
+<p>The CAAPrtPrintFile use case is made of a several classes located in the CAAPrtPrintFile.m module of the CAAPrint.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPrint.edu\CAAPrtPrintFile.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPrint.edu/CAAPrtPrintFile.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To print a JPEG file on aprinter, there are seven main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Displays the List of Printers</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Asks the End User for a Printer Choice</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Creates a Print File Image from the Input File</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Creates a Printer Device</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Defines Print Parameters</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Prints the Image</td>
+    <td valign="top">main</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Cleans the application</td>
+    <td valign="top">main</td>
+  </tr>
+</table>
+<p>The preliminary task that consist in retrieving the input file name from the
+command line is not described. The input file name is retrieved from the command
+line in the <code>InputName</code> variable, such as TestFile.jpg.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Displaying the List of Printers</h4>
+<p>As soon as the input file is retrieved,&nbsp;the list of available printers
+is displayed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATPrintFileImage.h&quot;   <em>// To create an image from the input file</em>
+#include &quot;CATPrintParameters.h&quot;  <em>// To define print parameters</em>
+#include &quot;CATPrinterDevice.h&quot;    <em>// To define a print device</em>
+#include &quot;CATPrinterManager.h&quot;   <em>// To retrieve the printer list</em>
+#include &quot;CATPrinter.h&quot;          <em>// To print</em>
+...
+
+int main(int argc, char* argv[])
+{
+  int ReturnCode = 0;
+  ... <em>// Retrieving the input file name is not described here</em>
+     
+  <strong>CATPrinterManager::Begin();</strong>
+
+  // Retrieves and displays the list of printers
+  cout &lt;&lt; &quot;Available printers: &quot; &lt;&lt; endl &lt;&lt; endl;
+
+  for (int i=0; i&lt;<strong>CATPrinterManager::GetPrinterCount()</strong>; i++)
+  {
+    CATPrinter printer = <strong>CATPrinterManager::GetPrinterFromIndex(i)</strong>;
+    int old_width = cout.width(3);
+    cout.setf( ios::right );
+    cout &lt;&lt; i+1;
+    cout.setf( ios::left );
+    //cout.width(old_width);
+    cout &lt;&lt; &quot; : &quot; &lt;&lt; (const char*) <strong>printer.GetDescription()</strong> &lt;&lt; endl;
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This printer manager is initialized using the static <code>Begin</code>
+method. Then for each available printer, the printer description is retrieved
+using the <code>GetDescription</code> method of the CATPrinter class, and
+displayed, associated with its number. The static <code>GetPrinterCount</code>
+method returns the number of available printers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Asking the End User for a Printer Choice</h4>
+<p>The end user should now select a printer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATPrinter printer = <strong>CATPrinterManager::GetPrinterFromIndex</strong>(printerIndex);
+  <strong>CATPrinterManager::End();</strong>
+...   </pre>
+    </td>
+  </tr>
+</table>
+<p>The printer is selected using its index. This index is used to retrieve the
+printer. As soon as this is done, the printer manager becomes useless and can
+freed using the static <code>End</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating a Print File Image from the Input File</h4>
+<p>The print file image can now be built from the input file.</p>
+<p>A print parameter object should be defined to be associated with the print
+file image to convert.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATPrintFileImage* image = new <strong>CATPrintFileImage</strong>(InputName, &quot;JPEG&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This print file image is an instance of the CATPrintFileImage class
+instantiated from the input file. The input file format is passed as the second
+argument, here JPEG. The print file image created holds the input file in memory
+and the JPEG interpreter to enable the file interpretation as soon as this will
+be asked.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating a Printer Device</h4>
+<p>The printer device should be next instantiated.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATPrinterDevice device( &amp;printer );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The printer device is created using the selected printer as input. It is made
+of a generator for the printer format, and of of a stream into which the created
+file will be written.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Defining Print Parameters</h4>
+<p>A print parameter object should be defined to be associated with the print
+file image to print.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATPrintParameters parameters;
+
+  parameters.SetRotation( CATPRINTCCW_90 );     <em> // Rotate the image</em> 
+  parameters.SetMapToPaper(1);                   <em>// Resize image to match paper forma</em>t
+  parameters.SetMargins(20.0, 20.0, 10.0, 10.0); <em>// Set margins</em>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The print parameters are taken into account to create the printed output. The
+following parameters are set:
+<ul>
+  <li>The image is rotated by 90 degrees</li>
+  <li>The image is resized to match the paper size</li>
+  <li>The margins are set to 20 mm for left and right margins, and to 10 mm for
+    top and bototom margins.</li>
+</ul>
+<p>Other print parameters take their default values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Printing the Image</h4>
+<p>The file conversoin can now take place.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  image-&gt;<strong>Print</strong>( &amp;device, parameters );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Print</code> method converts the print file image from JPEG to the
+printer format, usually PostScript, and prints the file using the parameters
+set.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Cleaning the Application</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  delete image;
+
+  return ReturnCode;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Simply don't forget to delete allocated objects, and return the appropriate
+return code..</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved when printing a file, here encoded
+using JPEG, on a printer. These objects are the pinter manager, the printer,
+print file image, the printer device, and the set of parameters that are needed
+to print.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

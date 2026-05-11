@@ -1,0 +1,261 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Applying or Retrieving a Material on a Product, a Part, or a Body</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Materials</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Applying or Retrieving a Material on a Product, a
+      Part, or a Body</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to apply and retrieve an
+      existing material onto a Product, a Part or a Body.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a><a name="How">applyMaterial</a> is launched in CATIA.
+      Existing documents called &quot;MyCatalog.CATMaterial&quot;,
+      &quot;Product1.CATProduct&quot; and &quot;Part1.CATPart&quot; must be
+      found in the CATDocView.</p>
+      <p><a href="applyMaterialsSource.htm" target="Source">applyMaterials.CATScript
+      </a>is located in the CAAScdMatUseCases module. <a href="macros/applyMaterials.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>applyMaterials includes three steps:</p>
+      <ol>
+        <li><a href="#Prolog">Open the CATMaterial document and retrieve
+          materials</a></li>
+        <li><a href="#CreateFolderAndFile">Open a CATProduct document and
+          apply/retrieve a material</a></li>
+        <li><a href="#Declarations">Open a CATPart document and apply/retrieve a
+          material on the Part and the PartBody</a></li>
+      </ol>
+      <p><a name="Prolog"></a><b>Open the material library and retrieve 3
+      existing materials</b></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+    <font color="#008000">'</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Open the material library (.CATMaterial file)</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">'</font></pre>
+            <pre><font color="#008000">    </font><font color="#0000FF">Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 &quot;\online\CAAScdMatUseCases\samples\MyCatalog.CATMaterial&quot;)
+
+<font color="#0000FF">    Dim </font>oMaterial_document<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oMaterial_document = CATIA.Documents.Open(sFilePath)
+<font color="#0000FF">    Set </font>oMaterial_document = CATIA.ActiveDocument
+    <font color="#008000">'</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Read materials in this catalog (which contains 3 families and 5 materials in each family)</font>
+    <font color="#008000">' First retrieve the families of the library</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>cFamilies_list<font color="#0000FF"> As </font>MaterialFamilies
+<font color="#0000FF">    Set </font>cFamilies_list = oMaterial_document.Families
+
+<font color="#0000FF">    Dim </font>iNb_families<font color="#0000FF"> As </font>Integer
+    iNb_families = cFamilies_list.Count
+<font color="#0000FF">    Dim </font>sFamiliesName<font color="#0000FF"> As </font>String
+    sFamiliesName = cFamilies_list.Name
+    <font color="#008000">'</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Retrieve the first family of the library</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oFirst_family<font color="#0000FF"> As </font>MaterialFamily
+<font color="#0000FF">    Dim </font>ifamily_no<font color="#0000FF"> As </font>Integer
+    ifamily_no = 1
+<font color="#0000FF">    Set </font>oFirst_family = cFamilies_list.Item(iFamily_no)
+<font color="#0000FF">    Dim </font>sFamilyName<font color="#0000FF"> As </font>String
+    sFamilyName = oFirst_family.Name
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Retrieve the material number 1,2 and 3 of the family</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>cMaterials_list<font color="#0000FF"> As </font>Materials
+<font color="#0000FF">    Set </font>cMaterials_list = oFirst_family.Materials
+
+<font color="#0000FF">    Dim </font>iNb_materials<font color="#0000FF"> As </font>Integer
+    iNb_materials = cMaterials_list.Count
+
+<font color="#0000FF">    Dim </font>imaterial_no<font color="#0000FF"> As </font>Integer
+    imaterial_no = 1
+<font color="#0000FF">    Dim </font>oMaterial1<font color="#0000FF"> As </font>Material
+<font color="#0000FF">    Set </font>oMaterial1 = cMaterials_list.Item(imaterial_no)
+  
+    imaterial_no = 2
+<font color="#0000FF">    Dim </font>oMaterial2<font color="#0000FF"> As </font>Material
+<font color="#0000FF">    Set </font>oMaterial2 = cMaterials_list.Item(imaterial_no)
+  
+    imaterial_no = 3
+<font color="#0000FF">    Dim </font>oMaterial3<font color="#0000FF"> As </font>Material
+<font color="#0000FF">    Set </font>oMaterial3 = cMaterials_list.Item(imaterial_no)	</pre>
+            <pre>	...
+</pre>
+          </td>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="CreateFolderAndFile"></a>Open a CATProduct document. Apply a
+      material on the root product and retrieve it</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>	...</pre>
+            <pre><font color="#008000">    '</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Read product file</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oProductDocument<font color="#0000FF"> As </font>Document
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 &quot;\online\CAAScdMatUseCases\samples\Product1.CATProduct&quot;)
+<font color="#0000FF">    Set </font>oProductDocument = CATIA.Documents.Open(sFilePath)
+<font color="#0000FF">    Set </font>oProductDocument = CATIA.ActiveDocument
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Access on material manager on root product document</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oRootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>oRootProduct = oProductDocument.Product
+      
+<font color="#0000FF">    Dim </font>oManager<font color="#0000FF"> As </font>MaterialManager
+<font color="#0000FF">    Set </font>oManager = oRootProduct.GetItem(&quot;CATMatManagerVBExt&quot;)
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Apply the material on the Product (as a link)</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>linkMode<font color="#0000FF"> As </font>Integer
+    linkMode = 1
+    oManager.ApplyMaterialOnProduct oRootProduct,oMaterial1,linkMode 
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Retrieve the material applied on the Product </font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oAppliedMaterial<font color="#0000FF"> As </font>Material
+    oManager.GetMaterialOnProduct oRootProduct,oAppliedMaterial 
+    oProductDocument.Close<font color="#008000">	</font></pre>
+            <pre>	... </pre>
+          </td>
+        </tr>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="Declarations"></a>Open a CATPart document. Apply a material
+      on the part and its partbody and retrieve them</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre><font color="#008000">	</font>...
+            
+<font color="#008000">    '</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Open the Part document</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 &quot;\online\CAAScdMatUseCases\samples\Part1.CATPart&quot;)
+    
+<font color="#0000FF">    Dim </font>oPartDocument<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oPartDocument = CATIA.Documents.Open(sFilePath)
+<font color="#0000FF">    Set </font>oPartDocument = CATIA.ActiveDocument
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Access on material manager on root part document</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oRootPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">    Set </font>oRootPart = oPartDocument.Part
+    
+    <font color="#008000">' Retrieve the extension object associated to Y under the key &quot;MyCATIVBExtensionImpl&quot;</font>
+<font color="#0000FF">    Set </font>oManager = oRootPart.GetItem(&quot;CATMatManagerVBExt&quot;)
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Apply the material on the Part</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    linkMode = 0
+    oManager.ApplyMaterialOnPart oRootPart,oMaterial2,linkMode 
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Retrieve the material on the Part </font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    oManager.GetMaterialOnPart oRootPart,oAppliedMaterial 
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'  Retrieve the Part Body</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>oMainBody<font color="#0000FF"> As </font>Body
+<font color="#0000FF">    Set </font>oMainBody = oRootPart.MainBody
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Apply the material on the Part Body (as a link)</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    linkMode = 1
+    oManager.ApplyMaterialOnBody oMainBody,oMaterial3,linkMode 
+    <font color="#008000">'</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">' Retrieve the material on the Part Body</font>
+    <font color="#008000">' -----------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    oManager.GetMaterialOnBody oMainBody,oAppliedMaterial </pre>
+            <pre>	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case presents a macro which can be useful to:</p>
+<ol>
+  <li>Apply materials from a material library onto products, parts or bodies.</li>
+  <li>Retrieve materials already applied onto products, parts or bodies.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

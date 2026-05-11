@@ -1,0 +1,718 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Working with Cut, Copy and Paste Operations</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Feature Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Cut, Copy and Paste Operations</h3>
+      <em>Performing CCP operations on features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAOsmCCP use case. This use case explains
+      how to perform Cut, Copy and Paste operations on feature objects in
+      applicative containers.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAOsmCCP Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOsmCCP Do</a></li>
+            <li><a href="#How">How to Launch CAAOsmCCP</a></li>
+            <li><a href="#Where">Where to Find the CAAOsmCCP Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you understand how to perform Cut, Copy and
+Paste operations on feature objects in applicative containers. Specifically, you
+will learn how to:</p>
+<ul>
+  <li>Cut, Copy and Paste feature objects from one applicative container to
+    another in a batch environment using the <code>Paste</code> and <code>Remove</code>
+    methods of <i>CATICutAndPastable</i></li>
+  <li>Copy and Paste feature objects from one applicative container to another
+    in an interactive environment by passing through the clipboard, using the <code>BoundaryExtract</code>,
+    <code>Extract</code> and <code>Paste</code> methods of <i>CATICutAndPastable</i></li>
+</ul>
+<p>Before getting to the use case itself, you should have a good understanding
+of what a feature object is and how it is created [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAOsmCCP Use Case</h3>
+<p>CAAOsmCCP is a use case of the CAAObjectSpecsModeler.edu framework that
+illustrates ObjectSpecsLegacy framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAOsmCCP Do</h4>
+<p>The goal of CAAOsmCCP is to illustrate performing CCP operations on feature
+objects in both batch and interactive modes. To exemplify this, it uses the
+&quot;CAAOsmNovel&quot; and &quot;CAAOsmChapter&quot; StartUps defined in the 
+catalog CAAOsmCatalogSU.
+These StartUps are instantiated in an applicative container created in a new
+document. Here is an image of the initial contents of this document:
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <caption>Fig.1: Initial CATPart Document Contents</caption>
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAOsmCCPInitial.gif" width="361" height="156"></td>
+  </tr>
+</table>
+<p>Note that two CATFeatCont containers have been created, one of which contains
+one instance of the &quot;CAAOsmNovel&quot; StartUp and three new instances of
+the &quot;CAAOsmChapter&quot; StartUp. The second CATFeatCont is initially
+empty.
+<p>Next, &quot;CAAOsmChapter1&quot; and &quot;CAAOsmChapter2&quot; are copied
+from the first container, said to be the <i>source container</i>, to the second,
+said to be the <i>target container</i>. &quot;CAAOsmChapter1&quot; is removed
+from the source container. This illustrates a Cut/Paste of
+&quot;CAAOsmChapter1&quot; as it is removed from the source container and pasted
+in the target container and a Copy/Paste of &quot;CAAOsmChapter2&quot; from the
+source container to the target container. This example is meant to show how you
+would program this operation in <b>batch mode</b>, without needing to pass
+through the clipboard. Here is an image of the CATPart Document after this
+operation has been performed:
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <caption>Fig.2 CATPart Document Contents After the First CCP Operation</caption>
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAOsmCCPCase1.gif" width="361" height="188"></td>
+  </tr>
+</table>
+<p>Finally, &quot;CAAOsmChapter3&quot; is copied from the source container to
+the target container. This operation is shown as it would need to be programmed
+in <b>interactive mode</b>. In this case, it is first necessary to extract the
+object from the source container and store it in the clipboard. Then, it is
+extracted from the clipboard and pasted in the target container. Here is an
+image of the CATPart Document after this second operation has been performed:</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <caption>Fig.3 CATPart Document Contents After the Second CCP Operation</caption>
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAOsmCCPCase2.gif" width="357" height="216"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOsmCCP</h4>
+<p>To launch CAAOsmCCP, you will need to set up the build time environment, then
+compile CAAOsmCCP along with its prerequisites, set up the run time environment,
+and then execute the sample as follows:</p>
+<pre>   mkrun -c &quot;CAAOsmCCP CAAOsmCatalogSU.CATfct DocumentStorageName.CATPart&quot;</pre>
+<p>This step is fully described in the referenced article [<a href="#References">2</a>].
+Following are the arguments passed when launching the use case:</p>
+<ul>
+  <li><b>CAAOsmCatalogSU.CATfct </b>- is the name of the catalog without the
+    storage path and with the .CATfct extension. The catalog must be found under
+    the current workspace &quot;os&quot;/resources/graphic file directory.
+    Normally, it should be stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic
+    file directory. Then, the &quot;Update Runtime View&quot; command creates
+    the proper run-time environment.&nbsp;</li>
+  <li><b>DocumentStorageName.CATPart</b> - the entire pathname, name and
+    extension (.CATPart) under which the new document is to be stored.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAOsmCCP Code</h4>
+<p>CAAOsmCCP code is located in the CAAOsmCCP.m use case module of the
+CAAObjectSpecsModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAObjectSpecsModeler.edu\CAAOsmCCP.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAObjectSpecsModeler.edu/CAAOsmCCP.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAAOsmCCP.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight logical steps in CAAOsmCCP:</p>
+<ol>
+  <li><a href="#CreatingDocument">Creating a New Document</a></li>
+  <li><a href="#Formats">Initializing Formats for CCP Operations</a></li>
+  <li><a href="#Creating AppliCont">Creating Applicative Source and Target
+    Containers</a></li>
+  <li><a href="#LoadingCatalog">Loading an Existing Catalog</a></li>
+  <li><a href="#InstantiatingObjects">Instantiating New Feature Objects from
+    Existing StartUps</a></li>
+  <li><a href="#Case1">Case 1: CCP in Batch Mode</a></li>
+  <li><a href="#Case2">Case 2: CCP in Interactive Mode</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatingDocument"></a>Creating a New Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// We will work with a &quot;CATPart&quot; document. 
+
+CATDocument *pDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(&quot;Part&quot;,
+                              pDoc);
+if (NULL != pDoc) cout &lt;&lt; &quot;New document created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in creating New document&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A new document is created simply by executing the <code>New</code> method of <i>CATDocumentServices</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CATLockDocument</b>(*pDoc);</pre>
+    </td>
+  </tr>
+</table>
+<p>In general, when working in batch with CCP operations, it is a good idea to <b>lock</b>
+the document ahead of time in order to avoid problems when wanting to save it or
+remove it from the session. This is done using the <code>CATLockDocument</code>
+method of <i>CATSessionServices</i>. Remember, however, that it is extremely
+important not to forget to <b>unlock</b> the document at the end!</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// Retrieve the root container of the document
+CATInit *piInitOnDoc = NULL;
+rc = pDoc -&gt; <b>QueryInterface</b>(IID_CATInit,
+                            (void**) &amp;<b>piInitOnDoc</b>);
+if (FAILED(rc)) 
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATInit for doc&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 3;
+}
+
+const CATIdent idCATIContainer = &quot;CATIContainer&quot;;
+CATIContainer *piRootContainer = NULL;
+piRootContainer = (CATIContainer*) piInitOnDoc -&gt; <b>GetRootContainer</b>(idCATIContainer);
+
+piInitOnDoc -&gt; <b>Release</b>();
+piInitOnDoc = NULL;
+
+if (NULL == piRootContainer)
+{
+   cout &lt;&lt; &quot;ERROR in GetRootContainer&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 4;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>It is also necessary to retrieve the root container of the newly-created
+document because it will be needed in order to load the catalog of StartUps. The
+root container is retrieved using the <code>GetRootContainer</code> method of <i>CATInit</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Formats"></a>Initializing Formats for CCP Operations</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IdFormat FEATURE_FORMAT = &quot;CATFeatCont&quot;;
+const CATFormat *featFormat = ::<b>SpecBindNativeFormat</b>(FEATURE_FORMAT);</pre>
+    </td>
+  </tr>
+</table>
+<p>Formats are used by the CCP system in order to perform specific user-defined
+actions. A format type can be any user-defined string. Format types must be
+defined in the CCP system before they can be used. Use <code>SpecBindNativeFormat</code>
+to declare them. If no formats are needed, as in this use case, the container's
+late type is used by default. Here we are working in a &quot;<code>CATFeatCont</code>&quot;
+container.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating AppliCont"></a>Creating Applicative Source and Target
+Containers</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIdent idAppliCont = &quot;CATFeatCont&quot;;
+CATUnicodeString sourceAppliContId (&quot;CAAOsmSourceContainer&quot;);
+CATBaseUnknown *pSourceContainer = NULL;
+rc = ::<b>CATCreateApplicativeContainer</b>(&amp;pSourceContainer,        // appli cont created
+                                     pDoc,                     // document  
+                                     idAppliCont,              // type of appli cont
+                                     IID_CATIContainer,        // interface type of appli cont
+                                     &quot;&quot;,                       // supertype of appli cont 
+                                     sourceAppliContId);       // name of appli cont
+if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Source applicative container created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in creating source applicative container&quot; &lt;&lt; endl &lt;&lt; flush;
+   piRootContainer -&gt; <b>Release</b>();
+   <b>return</b> 5;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>A new applicative container is created using the <code>CATCreateApplicativeContainer</code>
+global function. See the CAAOsmAppliCont [<a href="#References">4</a>] use case
+for a more detailed description of this service. Above you can see how to create
+the first or &quot;Source&quot; container. The same procedure is performed for
+the second or &quot;Target&quot; container.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="LoadingCatalog">Getting the CATOsmSUHandler on the StartUps of the 
+Catalog</a></h4>
+<p>It means getting a handler on the StartUps of the catalog that will be needed 
+in order to retrieve StartUps from the catalog.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATUnicodeString stgName = argv[1];
+CATUnicodeString clientId(&quot;CAAOsmClientId&quot;);
+CATUnicodeString novelSUType("CAAOsmNovel");
+
+CATOsmSUHandler novelSUHandler(novelSUType, clientId, CatalogName);
+ 
+</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="InstantiatingObjects"></a>Instantiating New Feature Objects from
+Existing StartUps</h4>
+<ol>
+  <li>Retrieving StartUps
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+// Get a CATISpecObject handle on the CAAOsmNovel StartUp
+
+	CATISpecObject_var spNovelSU = NULL_var;
+	rc = novelSUHandler.RetrieveSU(spNovelSU);
+
+	if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmNovel SU retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieveing CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	        piSourceContainer -&gt; Release();
+		return 3;
+	}
+
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to create new feature objects in the document, it is first
+    necessary to retrieve an existing StartUp. The example above shows how the
+    StartUp whose type is &quot;CAAOsmNovel&quot; is retrieved from the catalog.
+    The same must be done for the &quot;CAAOsmChapter&quot; StartUp whose type
+    is &quot;CAAOsmChapter&quot;.</p>
+  </li>
+  <li>Instantiating StartUps to create new feature objects
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+CATUnicodeString novel1("CAAOsmNovel1");
+
+CATISpecObject_var spNovelInst1 = NULL_var;
+
+rc = novelSUHandler.Instanciate(spNovelInst1, piSourceContainer, novel1);
+if (SUCCEEDED(rc))
+	cout &lt;&lt; &quot;CAAOsmNovel SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+	cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	piSourceContainer -&gt; Release();
+	return 3;
+}
+
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A new feature object is created in the source container by instantiating
+    a StartUp. Above, you can see that a new feature object
+    &quot;CAAOsmNovel1&quot; is created using the <code>Instanciate</code>
+    method of <em>CATOsmSUHandler</em> . The same must be done in order to create
+    the other three features, &quot;CAAOsmChapter1&quot;,
+    &quot;CAAOsmChapter2&quot; and &quot;CAAOsmChapter3&quot; which will be
+    needed in this use case. They will be handled using <code>spChapterInst1</code>,
+    <code>spChapterInst2</code> and <code>spChapterInst3</code> respectively.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Case1"></a>Case 1: CCP in Batch Mode</h4>
+<p>This first case deals with performing CCP operations while working in batch
+mode. This case is simpler, since there is no need to pass through the
+clipboard, the CCP operations are performed directly. However for a <b>Mechanical</b>
+feature, the second methodology must be used. See <a href="#Case2">CCP in
+Interactive Mode</a>.</p>
+<p>The first case directly pastes
+&quot;CAAOsmChapter1&quot; and &quot;CAAOsmChapter2&quot; into the target
+container and then deletes &quot;CAAOsmChapter1&quot; from the source container.</p>
+<ol>
+  <li>Get a <i>CATICutAndPastable</i> handle on the target container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATICutAndPastable *piCutAndPastableOnTargetCont = NULL;
+rc = pTargetContainer -&gt; <b>QueryInterface</b>(IID_CATICutAndPastable,
+                                        (void**) &amp;<b>piCutAndPastableOnTargetCont</b>);
+pTargetContainer -&gt; <b>Release</b>();
+pTargetContainer = NULL;
+if (FAILED(rc)) 
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATICutAndPastable on Target Container&quot; &lt;&lt; endl &lt;&lt; flush;
+   pSourceContainer -&gt; <b>Release</b>();
+   spChapterInst1 -&gt; <b>Release</b>();
+   spChapterInst2 -&gt; <b>Release</b>();
+   spChapterInst3 -&gt; <b>Release</b>();
+   <b>return</b> 3;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Copy objects from the source container to the target container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ListOfVarBaseUnknown listToPaste;
+listToPaste.<b>Append</b>(spChapterInst1);
+listToPaste.<b>Append</b>(spChapterInst2);
+
+ListOfVarBaseUnknown listPastedObjects = piCutAndPastableOnTargetCont -&gt; <b>Paste</b> (listToPaste,
+                                                                                NULL,
+                                                                                NULL);
+if (listPastedObjects.Size() != 2)
+{
+   cout &lt;&lt; &quot;ERROR in Paste of objects&quot; &lt;&lt; endl &lt;&lt; flush;
+   pSourceContainer -&gt; <b>Release</b>();
+   <b>return</b> 9;
+}
+else 
+	cout &lt;&lt; &quot;Objects Pasted in Target Container from Source Container OK&quot; &lt;&lt; endl &lt;&lt; flush;
+
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A copy in batch mode is simply performed by pasting objects directly in
+    the target container. This is done using the <code>Paste</code> method of <i>CATICutAndPastable</i>
+    which takes the following arguments:</p>
+    <ul>
+      <li><b><i>listToPaste</i></b> - This is the list of objects that are to be
+        pasted</li>
+      <li><b><i>iToCurObjects</i></b> - This argument is not used in this case;
+        it represents the case where we would want to paste objects in a
+        particular position within the target container</li>
+      <li><b><i>iAnImposedFormat</i></b> - This argument is not used in this
+        case either; it represents a format that can further screen the objects
+        being pasted. Formats are not supported in V5R5.</li>
+    </ul>
+  </li>
+  <li>Get a <i>CATICutAndPastable</i> handle on the source container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATICutAndPastable *piCutAndPastableOnSourceCont = NULL;
+rc = pSourceContainer -&gt; <b>QueryInterface</b>(IID_CATICutAndPastable,
+                                        (void**) &amp;<b>piCutAndPastableOnSourceCont</b>);
+pSourceContainer -&gt; <b>Release</b>();
+pSourceContainer = NULL;
+if (FAILED(rc)) 
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATICutAndPastable on Source Container&quot; &lt;&lt; endl &lt;&lt; flush;
+   piCutAndPastableOnTargetCont -&gt; <b>Release</b>();
+   <b>return</b> 3;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Deleting objects from the source container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ListOfVarBaseUnknown listToRemove;
+listToRemove.<b>Append</b>(spChapterInst1);
+ 
+if (piCutAndPastableOnSourceCont -&gt; <b>Remove</b> (listToRemove, NULL))
+   cout &lt;&lt; &quot;Remove of objects from Source Container succeeded&quot; &lt;&lt; endl &lt;&lt; flush;
+else 
+{
+   cout &lt;&lt; &quot;Remove failed&quot; &lt;&lt; endl &lt;&lt; flush;
+   piCutAndPastableOnSourceCont -&gt; <b>Release</b>();
+   piCutAndPastableOnTargetCont -&gt; <b>Release</b>();
+   <b>return</b> 10;
+}  </pre>
+        </td>
+      </tr>
+    </table>
+    <p>Deleting an object in batch mode is simply performed by passing the list
+    of objects to be removed as input to the <code>Remove</code> method of <i>CATICutAndPastable</i>.
+    Note that the second argument to this method is the format type which is not
+    used here.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Case2"></a>Case 2: CCP in Interactive Mode</h4>
+<p>This second case deals with performing CCP operations while working in
+interactive mode. In this case, all operations need to pass through the
+clipboard. In other words, objects must first be extracted from the source
+container to the clipboard, from which they must again be extracted in order to
+be copied to the target container. In other words, &quot;CAAOsmChapter3&quot;
+will be extracted from the source container to the clipboard from which it will
+be extracted and pasted into the target container.</p>
+<ol>
+  <li>Extract objects from the source container to the clipboard
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ListOfVarBaseUnknown newListToCopy;
+ListOfVarBaseUnknown listFromCopy;
+listFromCopy.<b>Append</b>(spChapterInst3);
+
+int result = NULL;
+result = piCutAndPastableOnSourceCont -&gt; <b>BoundaryExtract</b> (newListToCopy, 
+                                                          &amp;listFromCopy,
+                                                          NULL);
+if (NULL != result)
+{
+   cout &lt;&lt; &quot;BoundaryExtract from Source Container succeeded&quot; &lt;&lt; endl &lt;&lt; flush;
+   cout &lt;&lt; &quot;Number of objects extracted = &quot; &lt;&lt; newListToCopy.Size() &lt;&lt; endl &lt;&lt; flush;
+}
+else
+{
+   cout &lt;&lt; &quot;BoundaryExtract failed&quot; &lt;&lt; endl &lt;&lt; flush;
+   piCutAndPastableOnSourceCont -&gt; <b>Release</b>();
+   piCutAndPastableOnTargetCont -&gt; <b>Release</b>();
+   <b>return</b> 11;
+}
+
+VarBaseUnknown pExtractedList;
+pExtractedList = piCutAndPastableOnSourceCont -&gt; <b>Extract</b> (newListToCopy,
+                                                          NULL);
+piCutAndPastableOnSourceCont -&gt; <b>Release</b>();
+piCutAndPastableOnSourceCont = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In the above example, objects are first stored in a list using the <code>BoundaryExtract</code>
+    method of <i>CATICutAndPastable</i> which is useful when constructing a list
+    of objects. This method takes the following arguments:</p>
+    <ul>
+      <li><b><i>newListToCopy</i></b> - This argument represents the list of
+        objects to which will be added new objects (found in the second
+        argument)</li>
+      <li><b><i>listFromCopy</i></b> - This argument represents the list of
+        objects that are to be added to the current list (first argument)</li>
+      <li><b><i>iAnImposedFormat</i></b> - This argument is not used in this
+        case; it represents a format that can further screen the objects being
+        pasted. Formats are not supported in V5R5.</li>
+    </ul>
+    <p>Next, using the <code>Extract</code> method of <i>CATICutAndPastable, </i>the
+    objects contained in the list passed into the first argument are actually
+    extracted and saved in the clipboard. The second argument to this method is
+    again the <b><i>iAnImposedFormat</i></b> which is not used.</p>
+  </li>
+  <li>Get a <i>CATICutAndPastable</i> handle on the clipboard container (<code>pExtractedList</code>)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATICutAndPastable *piCutAndPastableOnExtractedList = NULL;
+rc = pExtractedList -&gt; <b>QueryInterface</b>(IID_CATICutAndPastable,
+		                      (void**) &amp;<b>piCutAndPastableOnExtractedList</b>);
+if (FAILED(rc)) 
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATICutAndPastable on Target Container&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 3;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to paste objects, they must be extracted from the clipboard.
+    First of all, it is necessary to get a <i>CATICutAndPastable</i> handle on
+    the container representing the clipboard. The pointer to this container was
+    returned by the preceding <code>Extract</code> operation.</p>
+  </li>
+  <li>Copy objects from the clipboard to the target container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ListOfVarBaseUnknown extractedListToCopy;
+    
+result = NULL;
+result = piCutAndPastableOnExtractedList -&gt; <b>BoundaryExtract</b> (extractedListToCopy, 
+                                                             NULL,
+                                                             NULL);
+if (NULL != result)
+{
+   cout &lt;&lt; &quot;BoundaryExtract from Clipboard succeeded&quot; &lt;&lt; endl &lt;&lt; flush;
+   cout &lt;&lt; &quot;Number of objects extracted = &quot; &lt;&lt; extractedListToCopy.Size() &lt;&lt; endl &lt;&lt; flush;
+}
+else
+{
+   cout &lt;&lt; &quot;BoundaryExtract failed&quot; &lt;&lt; endl &lt;&lt; flush;
+   piCutAndPastableOnTargetCont -&gt; <b>Release</b>();
+   <b>return</b> 11;
+}
+
+piCutAndPastableOnExtractedList -&gt; <b>Release</b>();
+piCutAndPastableOnExtractedList = NULL;
+
+listPastedObjects = piCutAndPastableOnTargetCont -&gt; <b>Paste</b> (extractedListToCopy,
+                                                           NULL,
+                                                           NULL);
+if (listPastedObjects.Size() != 1)
+{
+   cout &lt;&lt; &quot;ERROR in Paste of objects&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 9;
+}
+else cout &lt;&lt; &quot;Objects Pasted from Clipboard to Target Container OK&quot; &lt;&lt; endl &lt;&lt; flush;
+	
+piCutAndPastableOnTargetCont -&gt; <b>Release</b>();
+piCutAndPastableOnTargetCont = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Next, a <code>BoundaryExtract</code> is performed passing a NULL pointer
+    in the second argument, thus creating a list of all of the objects currently
+    waiting in the clipboard. Then, the <code>Paste</code> method simply copies
+    the objects contained in this list into the target container.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>See the referenced article [<a href="#References">2</a>] for a detailed
+description of the steps to go through when saving the document. Note, however,
+that an <b>unlock</b> of the document must be performed in order to effectively
+release it from the session:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CATUnLockDocument</b>(*pDoc);</pre>
+    </td>
+  </tr>
+</table>
+<p>This is done using the <code>CATUnlockDocument</code> method of <i>CATSessionServices</i>.</p>
+<p>Note that the catalog document does not need to be removed from the session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to perform Cut, Copy and Paste operations
+on feature objects in applicative containers in both batch and interactive mode.
+Specifically, it has illustrated:</p>
+<ul>
+  <li>Declaring default formats for CCP operations using the <code>SpecBindNativeFormat</code>
+    global function</li>
+  <li>Creating applicative containers using the <code>CATCreateApplicativeContainer</code>
+    global function</li>
+  <li>Performing CCP operations in batch mode by directly using the <code>Paste</code>
+    and <code>Remove</code> methods of <i>CATICutAndPastable</i></li>
+  <li>Performing CCP operations in interactive mode necessitating an
+    intermediate step through the clipboard, using the <code>BoundaryExtract</code>
+    and <code>Extract</code> methods in order to store in and retrieve objects
+    from the clipboard</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Conceptual Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAOsmAppliCont.htm">Creating Features in an Applicative
+      Container</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Aug 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2000]</td>
+    <td valign="top">Document modified</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

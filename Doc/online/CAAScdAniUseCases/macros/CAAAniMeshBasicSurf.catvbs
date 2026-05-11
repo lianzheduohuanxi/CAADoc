@@ -1,0 +1,97 @@
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create a basic surface mesh  
+'                 assign the surface as support
+'                 specify the global specifications and assing values
+'   Assumtions:   Looks for Surface.CATAnalysis in the directory
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+' Open the Analysis document 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+' Retrieve the Analysis Manager and Analysis Model
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+
+' Retreive the product from Analysis manager
+Set oAnalysisLinkedDocument = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocument.Item(1)
+Set product = partDocument.Product
+
+' Retrieve the analysis model from the list of models
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+' Retrieve mesh manager and mesh part 
+Set meshManagar = oAnalysisModel.MeshManager
+Set meshPart = meshManagar.AnalysisMeshParts
+
+' Retrieve publications from product and retrieve the published face.
+Set publications = product.Publications
+Set pubSurf = publications.Item("Round Hole.1")
+Set pubCurve = publications.Item("Spine")
+Set pubPoint = publications.Item("Point")
+
+
+' Add the new basic surface mesh part to the list of mesh parts
+Set surfPart = meshPart.Add ("MSHPartBasicSurf") 
+
+' Add the support from the published surface
+surfPart.AddSupportFromPublication product, pubSurf
+
+
+' Set the global Specifications
+surfPart.SetGlobalSpecification "GlobalMethod", 1
+surfPart.SetGlobalSpecification "QuadsOnly", 2
+surfPart.SetGlobalSpecification "ElementOrder", "Parabolic"
+surfPart.SetGlobalSpecification "DedicatedMesh", 1
+surfPart.SetGlobalSpecification "GlobalSize", "10.0 mm"
+surfPart.SetGlobalSpecification "Offset", "15.0 mm"
+surfPart.SetGlobalSpecification "TopologySize", "20.0 mm"
+surfPart.SetGlobalSpecification "TopologySag", 2
+surfPart.SetGlobalSpecification "SharpEdges", 1
+surfPart.SetGlobalSpecification "FaceAngle", "0 deg"
+surfPart.SetGlobalSpecification "OffsetFromThickness", 1
+surfPart.SetGlobalSpecification "MeshRelSag", 1
+surfPart.SetGlobalSpecification "MeshRelSagValue", "0.1 mm"
+surfPart.SetGlobalSpecification "CurveCapture", 1
+surfPart.SetGlobalSpecification "CurveCaptureTol", "1.1 mm"
+surfPart.SetGlobalSpecification "MeshCapture", 1
+surfPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
+surfPart.SetGlobalSpecification "MeshAbsSag", 1
+surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"
+
+'Add the local specifications
+Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications
+Set spec = meshSpecs.Add("MSHTopProjectCurve")
+spec.AddSupportFromPublication "ConnectorList", product, pubCurve
+spec.SetAttribute "Tolerance", "500 mm"
+
+
+Set spec = meshSpecs.Add("MSHTopProjectPoint")
+spec.AddSupportFromPublication "ConnectorList", product, pubPoint
+spec.SetAttribute "Tolerance", "500 mm"
+spec.SetAttribute "Project", 0
+
+
+'Upadte the mesh part
+surfPart.Update
+
+End Sub

@@ -1,0 +1,921 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOVWSQueryCpp CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Source code for&nbsp; 
+				CAAENOVWSProdStructConfigCppUseCaseCar
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          	Source code dot net example</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>Methods</h3>
+    <p>
+      List of method in CAAENOVWSProdStructConfigCppUseCaseCar.
+    </p>
+    <ul>
+      <li>
+        <a href="#CreatPartVersionObjects">creatPartVersionObjects</a>&nbsp; 
+      </li>
+		<li>
+        <a href="#CreatDocumentObjects">creatDocumentObjects</a></li>
+		<li>
+        <a href="#BuildProdStructExhaust">BuildProdStructExhaust</a></li>
+		<li>
+        <a href="#BuildProdStructCAR">BuildProdStructCAR</a></li>
+		<li>
+        <a href="#CreatModsForCar">CreatModsForCar</a></li>
+		<li>
+        <a href="#CreatModsForExhaust">CreatModsForExhaust</a></li>
+		<li>
+        <a href="#CreatConfigHandlers">CreatConfigHandlers</a></li>
+		<li>
+        <a href="#CreatAction">CreatAction</a></li>
+		<li>
+        <a href="#AddAssociatedObjectsToExhaust">AddAssociatedObjectsToExhaust</a></li>
+		<li>
+        <a href="#AddAssociatedObjectsToCar">AddAssociatedObjectsToCar</a></li>
+		<li>
+        <a href="#AddAffectedObjects">AddAffectedObjects</a></li>
+		<li>
+        <a href="#GetAffectedObjects">GetAffectedObjects</a></li>
+		<li>
+        <a href="#GetAndResolveOperationsExhaust">GetAndResolveOperationsExhaust</a></li>
+		<li>
+        <a href="#GetAndResolveOperationsCAR">GetAndResolveOperationsCAR</a></li>
+		<li>
+        <a href="#ModifyCar">ModifyCar</a></li>
+		<li>
+        <a href="#ReportBOM">ReportBOM</a></li>
+    </ul>
+    <p>
+    <!-- ========================================================================= -->
+    To go back to <a href="CAAENOVWSProdStructConfigCppDotNetClient.htm">Consuming the 
+	ENOVWSProdStructConfigCpp CAA Web Service</a> </p>
+	<p>&nbsp;</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <pre>// COPYRIGHT DASSAULT SYSTEMES 2006</pre>
+			<pre>// ============================================================================
+// This class provides a sample use case scenario that illustrates the 
+// ENOVWSChgMgmtCpp CAA Web service.
+// ============================================================================</pre>
+			<pre>using System;
+using System.Net;
+using System.Text;</pre>
+			<pre>using enoposapplicationbinderimpl = com.dassault_systemes.caaplmsecurity.caaenoposappbinderdotnet1_1clientbase.enoposapplicationbinderimpl;
+using enovwsquerycpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwsquerycpp;
+using enovwschgmgmtcpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwschgmgmtcpp;
+using enovwscntmgmtcpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwscntmgmtcpp;
+using enovwsprodstructcpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwsprodstructcpp;
+using enovwsprodstructconfigcpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwsprodstructconfigcpp;</pre>
+			<pre>using com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase;</pre>
+			<pre>namespace com.dassault_systemes.caaenovws.caaenovwsdotnet1_1client 
+{
+	/// &lt;summary&gt;
+	/// Class to demonstrate a sample usage scenario of the ENOVWSChgMgmtCpp CAA Web service.
+	/// &lt;/summary&gt;
+	public class CAAENOVWSProdStructConfigCppUseCaseCar 
+	{
+		private String uKey = null;
+		private String carPRC = null;
+		</pre>
+			<pre>		//Unique identification (UUID) 
+		//CPV = configured part version
+		//PV unconfigured part version
+		//II Item instance
+		private String exhaustCPV = null;
+		private String rearWDPV = null;	
+		private String frontWDPV = null;
+		private String allWDPV = null;
+		private String fourWDPV = null;
+		private String tailSmallPV = null;	
+		private String tailLargePV = null;
+		//document	
+		private String ownerManualDOC = null;
+	</pre>
+			<pre>		//item instance uuid
+		private String exhaustCII = null;	
+		private String rearWDII = null;	
+		private String frontWDII = null;
+		private String tailSmallII = null;	
+		private String tailLargeII = null;
+	</pre>
+			<pre>		//mods UUIDs
+		private String rearWDMod = null;
+		private String frontWDMod = null;
+		private String allWDMod = null;
+		private String fourWDMod = null;
+		private String exhaustMod = null;
+		private String tailSmallMod = null;	
+		private String tailLargeMod = null;
+</pre>
+			<pre>		//configHandler UUIDs
+		private String carConfgHUnit1 = null;
+		private String carConfgHUnit40 = null;
+		private String carConfgHUnit51 = null;
+		private String carConfgHUnit80 = null;
+		private String carConfgHUnit91 = null;	 </pre>
+			<pre>	
+		//-V_ID of the parts.
+		private	String rearWDPV_ID = null;
+		private	String frontWDPV_ID = null;
+		private String allWDPV_ID = null;
+		private String fourWDPV_ID = null;
+		private String tailSmallPV_ID = null;
+		private String tailLargePV_ID = null;
+		private String exhaustCPV_ID = null;
+</pre>
+			<pre>		private String carAction1 = null;
+	</pre>
+			<pre>		public CAAENOVWSProdStructConfigCppUseCaseCar(String prc, String key) 
+		{
+			this.carPRC = prc;
+			this.uKey = &quot;-&quot; + key;
+					</pre>
+			<pre>			this.rearWDPV_ID = &quot;rearWDPV&quot; +uKey;
+			this.frontWDPV_ID = &quot;frontWDPV&quot; +uKey;
+			this.allWDPV_ID = &quot;allWDPV&quot; +uKey;
+			this.fourWDPV_ID = &quot;fourWDPV&quot; +uKey;
+			this.tailSmallPV_ID = &quot;tailSmallPV&quot; +uKey;
+			this.tailLargePV_ID = &quot;tailLargePV&quot; +uKey;
+			this.exhaustCPV_ID = &quot;exhaustCPV&quot; +uKey;
+		}
+		public String GetCarPRC()
+		{
+			return carPRC;
+		}
+		public String GetExhaustCII()
+		{
+			return exhaustCII;
+		}	</pre>
+			<pre>		/// &lt;summary&gt;
+		/// creatPartVersionObjects
+		///		Create a configured PV : Exhaust
+		///		Create the following un-configured PV:
+		///			Rear Wheel Drive, Front Wheel Drive, All Wheel Drive,Four Wheel Drive,Tail Small,Tail Large
+		/// &lt;/summary&gt;
+		<a name="CreatPartVersionObjects"></a>public void CreatPartVersionObjects(enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper)  
+		{
+			Console.Out.WriteLine(&quot;-&gt;create car parts.&quot;);
+			bool success = false;
+			Exception exception = null;
+			try {			
+				//create configured PV Exhaust
+				String envDomain = &quot;PRODUCT&quot;;
+				String configurable = &quot;TRUE&quot;;
+				String[] partNumbers = { exhaustCPV_ID};</pre>
+			<pre>				enovwsprodstructcpp.ENOVIA createPartRefResultSet = psWrapper.CreatePartRef(partNumbers,envDomain, configurable);</pre>
+			<pre>				String[] partRefUUIDs = psWrapper.GetENOVIA_VPMPartVersionUUIDs(createPartRefResultSet);
+				if (partRefUUIDs.Length != 1) {
+					throw new Exception(&quot;Failed to create the just 1 part references&quot;);
+				}
+				exhaustCPV = partRefUUIDs[0];</pre>
+			<pre>				//create unconfigured PVs
+				configurable = &quot;FALSE&quot;;
+				String[] partCollection_ID = { rearWDPV_ID,frontWDPV_ID,allWDPV_ID,fourWDPV_ID,tailSmallPV_ID,tailLargePV_ID};
+            </pre>
+			<pre>				enovwsprodstructcpp.ENOVIA createPartRefResultSetB = psWrapper.CreatePartRef(partCollection_ID,envDomain, configurable);</pre>
+			<pre>				String[] partRefUUIDsB = psWrapper.GetENOVIA_VPMPartVersionUUIDs(createPartRefResultSetB);
+				if (partRefUUIDsB.Length != 6) {
+					throw new Exception(&quot;Failed to create the just 6 part references&quot;);
+				}
+				rearWDPV = partRefUUIDsB[0];
+				frontWDPV = partRefUUIDsB[1];
+				allWDPV = partRefUUIDsB[2];
+				fourWDPV = partRefUUIDsB[3];
+				tailSmallPV = partRefUUIDsB[4];
+				tailLargePV = partRefUUIDsB[5];
+				</pre>
+			<pre>				success = true;	
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;create car parts.- sucess.&quot;);	
+			else
+				throw new Exception(&quot;create car parts. - failure.&quot;);		
+			</pre>
+			<pre>		}//[<a href="#Top">Top</a>]
+		/// &lt;summary&gt;
+		/// Create car owner manual document
+		/// &lt;/summary&gt;
+		<a name="CreatDocumentObjects"></a>public void CreatDocumentObjects(enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper cntWrapper) 
+		{
+			Console.Out.WriteLine(&quot;-&gt;create a document CAR owner manual.&quot;);
+			bool success = false;
+			Exception exception = null;
+			</pre>
+			<pre>			try {
+				String docId = &quot;PSCWSDoc&quot;+uKey;
+				String docName = &quot;carOwnerManual&quot;+uKey;
+				String domain = &quot;DOCDIR&quot;;			
+				enovwscntmgmtcpp.ENOVIA createDocResultSet1 = cntWrapper.CreateDocument(docId,docName,domain);
+				String[] docUUIDs1 = cntWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+				if (docUUIDs1.Length != 1) {
+					throw new Exception(&quot;Failed to create the 1 document&quot;);
+				}		
+				ownerManualDOC = docUUIDs1[0];</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+ 			}
+ 			if (success)
+				Console.Out.WriteLine(&quot;create a document CAR - sucess.&quot;);	
+			else
+				throw new Exception(&quot;create a document CAR - failure.&quot;);				
+		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// buildProdStruct as follows
+		///		- Add Child Part Service on	Exhaust
+		///		  Pass in the following parts: Tail Small, Tail Large
+		/// &lt;/summary&gt;</pre>
+			<pre>		<a name="BuildProdStructExhaust"></a>public void BuildProdStructExhaust(enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper) 
+		{
+			Console.Out.WriteLine(&quot;-&gt;BuildProdStructExhaust:&quot;);
+			Exception exception = null;
+			bool success = false;
+			</pre>
+			<pre>			try {			</pre>
+			<pre>				//add Child Part Service on	Exhaust
+				String[] partRefUUIDs2 = {tailSmallPV,tailLargePV};
+				enovwsprodstructcpp.ENOVIA createPartInstResultSet2 = psWrapper.CreatePartInst(exhaustCII, partRefUUIDs2);
+				String[] vpmBOPartInstanceUUIDArray2 = psWrapper.GetVPMBOPartInstanceUUIDs(createPartInstResultSet2);
+				if (vpmBOPartInstanceUUIDArray2.Length != 2) {
+					throw new Exception(&quot;Failed to create just the 2 part instances on the Exhaust&quot;);
+				}
+				tailSmallII = vpmBOPartInstanceUUIDArray2[0];
+				tailLargeII = vpmBOPartInstanceUUIDArray2[1];
+							</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;buildProdStruct - sucess.&quot;);	
+			else
+				throw new Exception(&quot;buildProdStruct - failure.&quot;);		</pre>
+			<pre>		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// buildProdStruct as follows
+		///		- Add Child Part Service on CAR
+		///		  Pass in the following parts: 
+		///		  Rear Wheel Drive
+		///		  Front Wheel Drive
+		///		  TExhaust
+		/// &lt;/summary&gt;</pre>
+			<pre>		<a name="BuildProdStructCAR"></a>public void BuildProdStructCAR(enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper) 
+		{
+			Console.Out.WriteLine(&quot;-&gt;BuildProdStructCAR.&quot;);
+			Exception exception = null;
+			bool success = false;
+			</pre>
+			<pre>			try {			
+				// Add Child Parts on CAR 
+				String[] partRefUUIDs1 = {rearWDPV,frontWDPV,exhaustCPV};
+				enovwsprodstructcpp.ENOVIA createPartInstResultSet1 = psWrapper.CreatePartInst(carPRC, partRefUUIDs1);
+				String[] vpmBOPartInstanceUUIDArray1 = psWrapper.GetVPMBOPartInstanceUUIDs(createPartInstResultSet1);
+				if (vpmBOPartInstanceUUIDArray1.Length != 3) {
+					throw new Exception(&quot;Failed to create just the 3 part instances on the Car&quot;);
+				}
+				rearWDII = vpmBOPartInstanceUUIDArray1[0];
+				frontWDII = vpmBOPartInstanceUUIDArray1[1];
+				exhaustCII = vpmBOPartInstanceUUIDArray1[2];</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;buildProdStruct - sucess.&quot;);	
+			else
+				throw new Exception(&quot;buildProdStruct - failure.&quot;);		</pre>
+			<pre>		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// Create the following mods using Create Mod Service on CAR  configured object 
+		///		Rear Wheel Drive(Engineering;unit 1-50)
+		///		Front Wheel Drive(Engineering; unit 51-100 
+		///		All Wheel Drive (Engineering; unit 35-50)
+		///		Four Wheel Drive (Engineering unit 80-90)
+		///		Exhaust(Engineering;unit 1-100)
+		/// &lt;/summary&gt;</pre>
+			<pre>		<a name="CreatModsForCar"></a>public void CreatModsForCar(enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+			{
+				Console.Out.WriteLine(&quot;-&gt;CreatModsForCar&quot;);
+				bool success = false;
+				Exception exception = null;</pre>
+			<pre>				try {
+										</pre>
+			<pre>					String rearWheel_MOD = &quot;MODRear Wheel&quot;+uKey;
+					String frontWheel_MOD = &quot;MODFront Wheel&quot;+uKey;
+					String allWheel_MOD = &quot;MODAll Wheel&quot;+uKey;
+					String fourWheel_MOD = &quot;MODFour Wheel&quot;+uKey;
+					String exhaust_MOD = &quot;exhaustMod&quot;+uKey;				
+						</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Rear Wheel Drive(Engineering;unit 1-50) &quot;);
+					String iRearWheelExp = CAAENOVWSUtils.crtModConfigExp (rearWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;50&quot;);
+					enovwsprodstructconfigcpp.ENOVIA rearWheelResultSet = pscWrapper.CreateModification(carPRC, iRearWheelExp);
+					rearWDMod =  pscWrapper.GetENOVIA_EFF_MOD_UUID(rearWheelResultSet);
+					</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Rear Wheel Drive(Engineering;unit 51-100) &quot;);
+					String iFrontWheelExp = CAAENOVWSUtils.crtModConfigExp (frontWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;51&quot;,&quot;100&quot;);
+					enovwsprodstructconfigcpp.ENOVIA frontWheelResultSet = pscWrapper.CreateModification(carPRC, iFrontWheelExp);
+					frontWDMod =  pscWrapper.GetENOVIA_EFF_MOD_UUID(frontWheelResultSet);
+									</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Rear Wheel Drive(Engineering;unit 35-50) &quot;);
+					String iAllWheelExp = CAAENOVWSUtils.crtModConfigExp (allWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;35&quot;,&quot;50&quot;);
+					enovwsprodstructconfigcpp.ENOVIA allWheelResultSet = pscWrapper.CreateModification(carPRC, iAllWheelExp);
+					allWDMod =  pscWrapper.GetENOVIA_EFF_MOD_UUID(allWheelResultSet);
+									</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Rear Wheel Drive(Engineering;unit 80-90) &quot;);
+					String iFourWheelExp = CAAENOVWSUtils.crtModConfigExp (fourWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;80&quot;,&quot;90&quot;);
+					enovwsprodstructconfigcpp.ENOVIA fourWheelResultSet = pscWrapper.CreateModification(carPRC, iFourWheelExp);
+					fourWDMod =  pscWrapper.GetENOVIA_EFF_MOD_UUID(fourWheelResultSet);</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Exhaust(Engineering;unit 1-100) &quot;);
+					String iExhaust = CAAENOVWSUtils.crtModConfigExp (exhaust_MOD,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;100&quot;);
+					enovwsprodstructconfigcpp.ENOVIA exhaustResultSet = pscWrapper.CreateModification(carPRC, iExhaust);
+					exhaustMod =  pscWrapper.GetENOVIA_EFF_MOD_UUID(exhaustResultSet);
+</pre>
+			<pre>					success = true;
+					</pre>
+			<pre>				} catch (Exception e) {
+					exception = e;
+				}
+				</pre>
+			<pre>				if (success)
+						Console.Out.WriteLine(&quot;creatModsForCar - sucess.&quot;);
+				else
+						throw new Exception(&quot;creatModsForCar - failure.&quot;);
+						</pre>
+			<pre>							
+		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// Create the following mods using Create Mod Service on Exhaust configured object
+		///		Tail Small (Engineering; unit 1-25, unit 51-75)
+		///		Tail Large (Engineering; unit 26-50, 76-100)
+		/// &lt;/summary&gt;
+		</pre>
+			<pre>		<a name="CreatModsForExhaust"></a>public void CreatModsForExhaust(enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+			{
+				Console.Out.WriteLine(&quot;-&gt;CreatModsForExhaust.&quot;);
+				bool success = false;
+				Exception exception = null;</pre>
+			<pre>				try {
+				</pre>
+			<pre>					String TailSmall = &quot;MODTailSmall&quot;+uKey;
+					String TailLarge = &quot;MODTailLarge&quot;+uKey;
+									</pre>
+			<pre>					StringBuilder iModConfigExpTailSmall = new StringBuilder();
+					iModConfigExpTailSmall.Append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;ENOVIA_MODIFICATION NAME=\&quot;&quot;);
+					iModConfigExpTailSmall.Append(TailSmall); 
+					iModConfigExpTailSmall.Append(&quot;\&quot;xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xsi:noNamespaceSchemaLocation=\&quot;Configuration_Final.xsd\&quot;&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;MOD_DOMAIN&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;EFF_DOMAIN NAME=\&quot;Engineering Effectivity\&quot;&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;MOD_EFFECTIVITY&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;EFF_TYPE&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;RANGE_RANGE END=\&quot;25\&quot; START=\&quot;1\&quot;/&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;RANGE_RANGE END=\&quot;75\&quot; START=\&quot;51\&quot;/&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;/EFF_TYPE&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;/MOD_EFFECTIVITY&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;/EFF_DOMAIN&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;/MOD_DOMAIN&gt;&quot;);
+					iModConfigExpTailSmall.Append(&quot;&lt;/ENOVIA_MODIFICATION&gt;&quot;);
+					String iTailSmallExp = iModConfigExpTailSmall.ToString();
+					</pre>
+			<pre>		
+					Console.Out.WriteLine(&quot;Creating Mod - Tail Small (Engineering; unit 1-25) &quot;);
+					enovwsprodstructconfigcpp.ENOVIA tailSmallResultSet = pscWrapper.CreateModification(exhaustCPV, iTailSmallExp);
+					String tailSmall_MOD =  pscWrapper.GetENOVIA_EFF_MOD_UUID(tailSmallResultSet);
+					</pre>
+			<pre>					StringBuilder iModConfigExpTailLarge = new StringBuilder();
+					iModConfigExpTailLarge.Append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;ENOVIA_MODIFICATION NAME=\&quot; &quot;);
+					iModConfigExpTailLarge.Append(TailLarge); 
+					iModConfigExpTailLarge.Append(&quot;\&quot;xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xsi:noNamespaceSchemaLocation=\&quot;Configuration_Final.xsd\&quot;&gt; &quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;MOD_DOMAIN&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;EFF_DOMAIN NAME=\&quot;Engineering Effectivity\&quot;&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;MOD_EFFECTIVITY&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;EFF_TYPE&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;RANGE_RANGE END=\&quot;50\&quot; START=\&quot;26\&quot;/&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;RANGE_RANGE END=\&quot;100\&quot; START=\&quot;76\&quot;/&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;/EFF_TYPE&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;/MOD_EFFECTIVITY&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;/EFF_DOMAIN&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;/MOD_DOMAIN&gt;&quot;);
+					iModConfigExpTailLarge.Append(&quot;&lt;/ENOVIA_MODIFICATION&gt;&quot;);
+					String iTailLargeExp = iModConfigExpTailLarge.ToString();</pre>
+			<pre>					Console.Out.WriteLine(&quot;Creating Mod - Tail Large (Engineering; unit 76-100) &quot;);
+					enovwsprodstructconfigcpp.ENOVIA tailLargeResultSet = pscWrapper.CreateModification(exhaustCPV, iTailLargeExp);
+					String tailLarge_MOD =  pscWrapper.GetENOVIA_EFF_MOD_UUID(tailLargeResultSet);</pre>
+			<pre>					tailSmallMod = tailSmall_MOD;
+					tailLargeMod = tailLarge_MOD;
+					success = true;</pre>
+			<pre>				} catch (Exception e) {
+					exception = e;
+				}
+				if (success)
+					Console.Out.WriteLine(&quot;CreatModsForExhaust - sucess.&quot;);
+				else
+					throw new Exception(&quot;CreatModsForExhaust- failure.&quot;);
+		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// Create the following config handlers:
+		///		CAR 1(unit 1-1)	
+		///		CAR 40(unit 40-40)
+		///		CAR 51(unit 51-51)
+		///		CAR 80(unit 80-80)
+		///		CAR broken(unit 91-91)
+		/// &lt;/summary&gt;
+	</pre>
+			<pre>		<a name="CreatConfigHandlers"></a>public void CreatConfigHandlers(enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+			{
+				Console.Out.WriteLine(&quot;-&gt;CreatConfigHandlers.&quot;);
+				bool success = false;
+				Exception exception = null;</pre>
+			<pre>				try {
+				Console.Out.WriteLine(&quot;Creating CH - CAR 1 (Engineering; unit 1-1) &quot;);
+				String car1_Name = &quot;CHCAR1&quot;+uKey;
+				String iCAR_1 = CAAENOVWSUtils.crtConfigHandlerExp(car1_Name,&quot;CAR with Range1&quot; ,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;1&quot;);
+				enovwsprodstructconfigcpp.ENOVIA carRS_1 = pscWrapper.CreateConfigHandler(carPRC, iCAR_1);
+				String carCH_1 =  pscWrapper.GetENOVIA_CFHANDLER_UUID(carRS_1);
+								</pre>
+			<pre>				String car40_Name = &quot;CHCAR40&quot;+uKey;
+				Console.Out.WriteLine(&quot;Creating CH - CAR 40 (Engineering; unit 40-40) &quot;);
+				String iCAR_40 = CAAENOVWSUtils.crtConfigHandlerExp(car40_Name,&quot;CAR with Range40&quot; ,&quot;Engineering Effectivity&quot;,&quot;40&quot;,&quot;40&quot;);
+				enovwsprodstructconfigcpp.ENOVIA carRS_40 = pscWrapper.CreateConfigHandler(carPRC, iCAR_40);
+				String carCH_40 =  pscWrapper.GetENOVIA_CFHANDLER_UUID(carRS_40);
+					</pre>
+			<pre>				String car51_Name = &quot;CHCAR51&quot;+uKey;
+				Console.Out.WriteLine(&quot;Creating CH - CAR 51 (Engineering; unit 51-51) &quot;);
+				String iCAR_51 = CAAENOVWSUtils.crtConfigHandlerExp(car51_Name,&quot;CAR with Range51&quot; ,&quot;Engineering Effectivity&quot;,&quot;51&quot;,&quot;51&quot;);
+				enovwsprodstructconfigcpp.ENOVIA carRS_51 = pscWrapper.CreateConfigHandler(carPRC, iCAR_51);
+				String carCH_51 =  pscWrapper.GetENOVIA_CFHANDLER_UUID(carRS_51);
+					</pre>
+			<pre>				String car80_Name = &quot;CHCAR80&quot;+uKey;
+				Console.Out.WriteLine(&quot;Creating CH - CAR 80 (Engineering; unit 80-80) &quot;);
+				String iCAR_80 = CAAENOVWSUtils.crtConfigHandlerExp(car80_Name,&quot;CAR with Range80&quot; ,&quot;Engineering Effectivity&quot;,&quot;80&quot;,&quot;80&quot;);
+				enovwsprodstructconfigcpp.ENOVIA carRS_80 = pscWrapper.CreateConfigHandler(carPRC, iCAR_80);
+				String carCH_80 =  pscWrapper.GetENOVIA_CFHANDLER_UUID(carRS_80);
+				</pre>
+			<pre>				String car91_Name = &quot;CHCAR91&quot;+uKey;
+				Console.Out.WriteLine(&quot;Creating CH - CAR broken (Engineering; unit 91-91) &quot;);
+				String iCAR_91 = CAAENOVWSUtils.crtConfigHandlerExp(car91_Name,&quot;CAR with Range91&quot; ,&quot;Engineering Effectivity&quot;,&quot;91&quot;,&quot;91&quot;);
+				enovwsprodstructconfigcpp.ENOVIA carRS_91 = pscWrapper.CreateConfigHandler(carPRC, iCAR_91);
+				String carCH_91 =  pscWrapper.GetENOVIA_CFHANDLER_UUID(carRS_91);
+</pre>
+			<pre>				//configHandler UUIDIds
+  				carConfgHUnit1 = carCH_1;
+				carConfgHUnit40 = carCH_40;
+				carConfgHUnit51 = carCH_51;
+				carConfgHUnit80 = carCH_80;
+				carConfgHUnit91 = carCH_91; 
+				success = true;
+					</pre>
+			<pre>				} catch (Exception e) {
+					exception = e;
+				}
+ 			if (success)
+				Console.Out.WriteLine(&quot;CreatConfigHandlers - sucess.&quot;);
+			else
+				throw new Exception(&quot;CreatConfigHandlers - failure.&quot;);</pre>
+			<pre>		}//[<a href="#Top">Top</a>]
+		/// &lt;summary&gt;
+		/// Change Management
+		///		Create Action using Create Action Service Action make CAR	
+		/// &lt;/summary&gt;
+		<a name="CreatAction"></a>public void CreatAction(enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgWrapper)
+			{
+				Console.Out.WriteLine(&quot;-&gt;create a action CAR owner manual.&quot;);
+				bool success = false;
+				Exception exception = null;		
+			</pre>
+			<pre>				try {
+					String actionId = &quot;PSCWSAction&quot;+uKey;
+					String[] actionsID = {actionId};</pre>
+			<pre>					String actionDomain = &quot;APLAFL&quot;;
+					String actionPriority = &quot;Routine&quot;;
+					</pre>
+			<pre>					enovwschgmgmtcpp.ENOVIA newAction = chgWrapper.CreateAction(	actionsID,
+																actionDomain,
+																actionPriority);
+																</pre>
+			<pre>					String[] newActionUUIDs = chgWrapper.GetENOVIA_Action_DesignUUIDs(newAction);
+					if (newActionUUIDs.Length != 1) {
+						throw new Exception(&quot;Failed to create action&quot; + newActionUUIDs);
+					}
+				</pre>
+			<pre>					carAction1 = newActionUUIDs[0];		</pre>
+			<pre>					success = true;
+				} catch (Exception e) {
+					exception = e;
+				}
+				if (success)
+					Console.Out.WriteLine(&quot;create an action CAR - sucess.&quot;);	
+				else
+					throw new Exception(&quot;create an action CAR - failure.&quot;);				</pre>
+			<pre>		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// Add Associate Object Service  to Exhaust configured object on Action make CAR	
+		///		Pass in the following mods: 
+		///			Tail Small
+		///			Tail Large
+		/// &lt;/summary&gt;</pre>
+			<pre>		<a name="AddAssociatedObjectsToExhaust"></a>public void AddAssociatedObjectsToExhaust(enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgWrapper)
+		{
+			Console.Out.WriteLine(&quot;-&gt;AddAssociatedObjectsToExhaus.&quot;);
+			bool success = false;
+			Exception exception = null;		
+			</pre>
+			<pre>			try {
+				</pre>
+			<pre>				String[] associateMods = {tailSmallMod,tailLargeMod};
+				</pre>
+			<pre>				chgWrapper.AddAssociatedObject(carAction1,exhaustCPV,associateMods);		</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;add associated object CAR PRC on action - sucess.&quot;);	
+			else
+				throw new Exception(&quot;add associated object CAR PRC on action - failure.&quot;);				
+			</pre>
+			<pre>		}//[<a href="#Top">Top</a>]	
+		/// &lt;summary&gt;
+		/// Add Associated Object Service CAR	configured object on Action make CAR
+		///		Pass in the following mods:
+		///			Rear Wheel Drive, Front Wheel Drive, All Wheel Drive and Four Wheel Drive
+		/// &lt;/summary&gt;
+		<a name="AddAssociatedObjectsToCar"></a>public void AddAssociatedObjectsToCar(enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgWrapper)
+		{
+			Console.Out.WriteLine(&quot;-&gt;AddAssociatedObjectsToCar.&quot;);
+			bool success = false;
+			Exception exception = null;		
+			</pre>
+			<pre>			try {
+				</pre>
+			<pre>				String[] associateMods = {rearWDMod,frontWDMod,allWDMod,fourWDMod};
+				</pre>
+			<pre>				chgWrapper.AddAssociatedObject(carAction1,carPRC,associateMods);		</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;add associated object CAR Exhaust on action - sucess.&quot;);	
+			else
+				throw new Exception(&quot;add associated object CAR Exhaust on action - failure.&quot;);				
+			</pre>
+			<pre>		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		/// &lt;summary&gt;
+		/// Add Affected Object Service CAR Owner Manual
+		/// &lt;/summary&gt;
+		<a name="AddAffectedObjects"></a>public void AddAffectedObjects(enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgWrapper)
+		{
+			Console.Out.WriteLine(&quot;-&gt;add affected object CAR owner manual on action.&quot;);
+			bool success = false;
+			Exception exception = null;		
+			</pre>
+			<pre>			try {
+				</pre>
+			<pre>				String[] inputAO = {ownerManualDOC};
+				String[] outputAO = {};
+				</pre>
+			<pre>				chgWrapper.AddAffectedObject(carAction1,inputAO,outputAO);		</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;add affected object CAR owner manual - sucess.&quot;);	
+			else
+				throw new Exception(&quot;add affected object CAR owner manual - failure.&quot;);				
+		</pre>
+			<pre>		}//[<a href="#Top">Top</a>]	
+		</pre>
+			<pre>		/// &lt;summary&gt;
+		//Get Affected Object S
+		/// &lt;/summary&gt;
+		<a name="GetAffectedObjects"></a>public void GetAffectedObjects(enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgWrapper) 
+		{
+			Console.Out.WriteLine(&quot;-&gt;get affected objects on action.&quot;);
+			bool success = false;
+			Exception exception = null;		
+			</pre>
+			<pre>			try {
+				</pre>
+			<pre>				String[] objTypes = null;</pre>
+			<pre>				enovwschgmgmtcpp.ENOVIA affectedObjectsResultSet = chgWrapper.GetAffectedObjects(carAction1,
+																				objTypes,
+																				null);
+				// you need the size here ...	
+				CAAENOVWSUtils.DisplayResults(affectedObjectsResultSet, 99);
+				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;get affected objects on action - sucess.&quot;);	
+			else
+				throw new Exception(&quot;get affected objects on action - failure.&quot;);				
+		</pre>
+			<pre>		}//[<a href="#Top">Top</a>]	</pre>
+			<pre>		/// &lt;summary&gt;
+		// GetAndResolveOperations
+		/// &lt;/summary&gt;
+		/// 
+	</pre>
+			<pre>		<a name="GetAndResolveOperationsExhaust"></a>public void GetAndResolveOperationsExhaust(enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		{</pre>
+			<pre>				Console.Out.WriteLine(&quot;-&gt;GetAndResolveOperationsExhaust - Config product Structure.&quot;);
+				bool success = false;
+				Exception exception = null;</pre>
+			<pre>				try {
+					Console.Out.WriteLine(&quot;Get All Operations on the input.&quot;);
+					enovwsprodstructconfigcpp.OperationStructure  [] valOpers  = pscWrapper.GetOpers(exhaustCII);
+												</pre>
+			<pre>					int lenOper = valOpers.Length;
+					Console.Out.WriteLine(&quot;Number of Operations found &quot;+ lenOper);
+					for(int i=0;i&lt;lenOper;i++)
+					{
+						String operStr=valOpers[i].Operation;
+						Console.Out.WriteLine(&quot;Operation &quot;+operStr);
+						</pre>
+			<pre>						
+						String partName = CAAENOVWSUtils.ParseOperation(operStr);
+						enovwsprodstructconfigcpp.Identifier objID = valOpers[i].OperandObjId1;
+						Console.Out.WriteLine(&quot;Operation &quot;+operStr);
+												</pre>
+			<pre>						//Console.Out.WriteLine(&quot;------The type of object------&quot;+objStr);
+						enovwsprodstructconfigcpp.OperationStructure[] resolveOperStruct = new enovwsprodstructconfigcpp.OperationStructure[1];
+						enovwsprodstructconfigcpp.OperationStructure operStruct = new enovwsprodstructconfigcpp.OperationStructure();
+						operStruct.OperandObjId1 = objID;
+						operStruct.OperandObjId2 = valOpers[i].OperandObjId2;
+						operStruct.ConfigViewId3 = valOpers[i].ConfigViewId3;
+						operStruct.Operation = operStr;
+						</pre>
+			<pre>						//Add the operStruct to the array
+						resolveOperStruct[0]=operStruct;
+						//Add the array to the holder
+						enovwsprodstructconfigcpp.OperationStructure [] iOperations = resolveOperStruct;
+						</pre>
+			<pre>						if((operStr.IndexOf(tailSmallPV_ID) &gt; 0))
+						{
+							Console.Out.WriteLine(&quot;The Part Name = &quot; +tailSmallPV_ID);
+							pscWrapper.ResolveOpers(tailSmallMod, iOperations);
+						}
+						else if((operStr.IndexOf(tailLargePV_ID) &gt; 0))
+						{
+							Console.Out.WriteLine(&quot;The Part Name = &quot; +tailLargePV_ID);
+							pscWrapper.ResolveOpers(tailLargeMod, iOperations);
+						}
+					}			
+					</pre>
+			<pre>					success = true;
+				} catch (Exception e) {
+					exception = e;
+				}
+				if (success)
+					Console.Out.WriteLine(&quot;GetAndResolveOperationsExhaust - sucess.&quot;);
+				else
+					throw new Exception(&quot;GetAndResolveOperationsExhaust - failure.&quot;);
+		</pre>
+			<pre>		}//[<a href="#Top">Top</a>]
+		</pre>
+			<pre>		/// &lt;summary&gt;
+		// GetAndResolveOperations
+		/// &lt;/summary&gt;
+		/// 
+		<a name="GetAndResolveOperationsCAR"></a>public void GetAndResolveOperationsCAR(enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		{
+	</pre>
+			<pre>			Console.Out.WriteLine(&quot;-&gt;GetAndResolveOperationsCAR - Config product Structure.&quot;);
+			bool success = false;
+			Exception exception = null;</pre>
+			<pre>			try {
+				Console.Out.WriteLine(&quot;Get All Operations on the input.&quot;);
+				enovwsprodstructconfigcpp.OperationStructure [] valOpers = pscWrapper.GetOpers(carPRC);
+				</pre>
+			<pre>				int lenOper = valOpers.Length;
+				Console.Out.WriteLine(&quot;Number of Operations found &quot;+ lenOper);
+				for(int i=0;i&lt;lenOper;i++)
+				{
+					String operStr=valOpers[i].Operation;
+					Console.Out.WriteLine(&quot;Operation &quot;+operStr);
+					</pre>
+			<pre>					
+					String partName = CAAENOVWSUtils.ParseOperation(operStr);
+					enovwsprodstructconfigcpp.Identifier objID = valOpers[i].OperandObjId1;
+					Console.Out.WriteLine(&quot;Operation &quot;+operStr);
+					Console.Out.WriteLine(&quot;The Part Name = &quot; +partName);
+					</pre>
+			<pre>					
+					</pre>
+			<pre>					//Console.Out.WriteLine(&quot;------The type of object------&quot;+objStr);
+					enovwsprodstructconfigcpp.OperationStructure[] resolveOperStruct = new enovwsprodstructconfigcpp.OperationStructure[1];
+					enovwsprodstructconfigcpp.OperationStructure operStruct = new enovwsprodstructconfigcpp.OperationStructure();
+					operStruct.OperandObjId1 = objID;
+					operStruct.OperandObjId2 = valOpers[i].OperandObjId2;
+					operStruct.ConfigViewId3 = valOpers[i].ConfigViewId3;
+					operStruct.Operation = operStr;
+					</pre>
+			<pre>					//Add the operStruct to the array
+					resolveOperStruct[0]=operStruct;
+					//Add the array to the holder
+					enovwsprodstructconfigcpp.OperationStructure [] iOperations = resolveOperStruct;
+					</pre>
+			<pre>									
+					if(partName.Equals(rearWDPV_ID))
+					{
+						pscWrapper.ResolveOpers(rearWDMod, iOperations);
+					}
+					else if(partName.Equals(frontWDPV_ID))
+					{
+						pscWrapper.ResolveOpers(frontWDMod, iOperations);
+					}
+					else if(partName.Equals(allWDPV_ID))
+					{
+						pscWrapper.ResolveOpers(allWDMod, iOperations);
+					}
+					else if(partName.Equals(fourWDPV_ID))
+					{
+						pscWrapper.ResolveOpers(fourWDMod, iOperations);
+					}
+					else if(partName.Equals(exhaustCPV_ID))
+					{
+						pscWrapper.ResolveOpers(exhaustMod, iOperations);
+					}</pre>
+			<pre>				}
+				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}
+			if (success)
+				Console.Out.WriteLine(&quot;GetAndResolveOperationsCAR - sucess.&quot;);
+			else
+				throw new Exception(&quot;GetAndResolveOperationsCAR - failure.&quot;);
+	</pre>
+			<pre>	
+		}//[<a href="#Top">Top</a>]
+		
+</pre>
+			<pre>		/// &lt;summary&gt;
+		// Modify ProdStruct:
+		//		Replace Child Rear Wheel Drive with All Wheel Drive
+		//		Cut Child Front Wheel Drive
+		//		Add Child Four Wheel Drive
+		/// &lt;/ summary&gt;
+		</pre>
+			<pre>		<a name="ModifyCar"></a>public void ModifyCar(enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper)
+			{
+			Console.Out.WriteLine(&quot;-&gt;modify the car product Structure.&quot;);
+			bool success = false;
+			Exception exception = null;
+			</pre>
+			<pre>			try {
+				Console.Out.WriteLine(&quot;Replace Child Rear Wheel Drive with All Wheel Drive.&quot;);
+				enovwsprodstructcpp.ENOVIA createDocResultSet = psWrapper.ReplacePart(rearWDII,allWDPV);
+				</pre>
+			<pre>				Console.Out.WriteLine(&quot;Cut Child Front Wheel Drive.&quot;);
+				String [] childInstIds = {frontWDII};
+				psWrapper.CutPartInstance(carPRC,childInstIds);</pre>
+			<pre>				Console.Out.WriteLine(&quot;Add Child Four Wheel Drive.&quot;);
+				String [] childRefIds = {fourWDPV};
+				psWrapper.CreatePartInst(carPRC,childRefIds );
+		</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				exception = e;
+			}		
+			if (success)
+				Console.Out.WriteLine(&quot;create a document CAR - sucess.&quot;);	
+			else
+			throw new Exception(&quot;create a document CAR - failure.&quot;);				
+		}//[<a href="#Top">Top</a>]
+		</pre>
+			<pre>		/// &lt;summary&gt;
+		// Report BOM as follows
+		//   Expand all levels on CARPRC using the config handlers to retrieve:
+		/// &lt;/summary&gt;
+		/// 
+		<a name="ReportBOM"></a>public void ReportBOM(	enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper,
+								enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper){	
+			Console.Out.WriteLine(&quot;reportBOM.&quot;);
+			bool success = false;
+			Exception exception = null;
+			</pre>
+			<pre>			try {
+		</pre>
+			<pre>				Console.Out.WriteLine(&quot;-&gt;expand car by applying config handler CAR unit 1 ::&quot;);
+				ExpandCarByApplyingConfigHandler(psWrapper,carConfgHUnit1,queryWrapper);
+				Console.Out.WriteLine(&quot;-&gt;expand car by applying config handler CAR unit 40 ::&quot;);
+				ExpandCarByApplyingConfigHandler(psWrapper,carConfgHUnit40,queryWrapper);
+				Console.Out.WriteLine(&quot;-&gt;expand car by applying config handler CAR unit 51 ::&quot;);
+				ExpandCarByApplyingConfigHandler(psWrapper,carConfgHUnit51,queryWrapper);
+				Console.Out.WriteLine(&quot;-&gt;expand car by applying config handler CAR unit 80::&quot;);
+				ExpandCarByApplyingConfigHandler(psWrapper,carConfgHUnit80,queryWrapper);
+				Console.Out.WriteLine(&quot;-&gt;expand car by applying config handler CAR unit 91 ::&quot;);
+				ExpandCarByApplyingConfigHandler(psWrapper,carConfgHUnit91,queryWrapper);			
+				success = true;		
+			} catch (Exception e) {
+				exception = e;
+			}		
+			if (success)
+				Console.Out.WriteLine(&quot;reportBOM - success.&quot;);	
+			else
+				throw new Exception(&quot;reportBOM - failure.&quot;);					
+		}//[<a href="#Top">Top</a>]</pre>
+			<pre>		public void ExpandCarByApplyingConfigHandler(enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper psWrapper, 
+														String configHandlerUUID,
+													enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper){	
+			Console.Out.WriteLine(&quot;--------------expandCarByApplyingConfigHandler --------------&quot;);	
+			bool success = false;
+			Exception exception = null;
+			</pre>
+			<pre>			try { 
+	</pre>
+			<pre>				String filter = CAAENOVWSUtils.BuildExpandConfigHandlerFilter(carPRC, configHandlerUUID);			
+				enovwsprodstructcpp.ENOVIA expandResultSet = psWrapper.ExpandProductStructure(carPRC,1, filter);
+				if (expandResultSet.ENOVIA_VPMProductRootClass == null || expandResultSet.ENOVIA_VPMProductRootClass.Length != 1) {
+					throw new Exception(&quot;Failed to find product root class&quot;);
+				} 
+				CAAENOVWSUtils.DisplayResults(expandResultSet, 20);			
+				success = true;		
+			} catch (Exception e) {
+				exception = e;
+			}		
+			if (success)
+				Console.Out.WriteLine(&quot;expandCarByApplyingConfigHandler - sucess.&quot;);	
+			else
+				throw new Exception(&quot;expandCarByApplyingConfigHandler - failure.&quot;);					
+		}	
+		
+
+</pre>
+			<pre>	}
+}</pre>
+			<font SIZE="2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en_us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Cutouts</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Cutouts</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Target Icon" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create cutout on structure 
+		objects. Here we will place cutout on Plate using After Forming as well 
+		as Before Forming modes.</p>
+		<p>
+		<img alt="Starting Product" src="images/CAAScdStrCutout01.png" width="559" height="295">
+		</p>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Information Icon" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAAStrCreateCutout is launched in CATIA [<a href="#References">1</a>]. 
+		Some documents are needed.</p>
+		<ul>
+			<li><a href="CAAStrCreationOfCutoutSource.htm" target="Source">CAAStrCreateCutout.CATScript</a> 
+			is located in the CAAScdStrUseCases module.
+			<a href="macros/CAAStrCreateCutout.CATScript">Execute macro</a> (Windows 
+			only).</li>
+			<li>The document Product1.CATProduct is located in the CAAScdStrUseCases 
+			module in the samples directory. Grid.CATPart is linked to the previous 
+			document and it contains the grid, sketches and surfaces used by the 
+			macro.</li>
+			<li>The CATPart containing the section is located in the samples directory.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Scenario Icon" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAAStrCreateCutout includes four steps:</p>
+		<ol>
+			<li><a href="#Prolog">Prolog</a></li>
+			<li><a href="#Step1">Retrieving the Factory from Object on which Cutout 
+			Is to Be Placed</a></li>
+			<li><a href="#Step2">Defining Sketch and Direction (After Forming Mode)</a></li>
+			<li><a href="#Step3">Defining Sketch and Surface (Before Forming Mode)</a></li>
+		</ol>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Prolog"></a>Prolog</h4>
+		<pre class="code">Dim doc As Document
+
+Dim StrWorkbench As StrWorkbench
+Dim strFactory As StrObjectFactory
+
+Set doc = CATIA.ActiveDocument
+
+Dim rootProduct As Product
+Set rootProduct = doc.Product
+   
+Set StrWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+    
+Dim strPlates As strPlates
+Set strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step1"></a>Retrieving the Factory from Object on which Cutout 
+		Is to Be Placed</h4>
+		<p>This step describes how to get Structure Feature Factory. The Factory 
+		object is retrieved by adding object on which cutout is to be placed to 
+		the selection list.</p>
+		<pre class="code">&#39;Get the Factory from Selection Method
+Dim PlateToCut1 As StrPlate
+Set PlateToCut1 = strPlates.Item(&quot;Plate_052&quot;)
+
+Dim Selection1 As Selection
+Set Selection1 = CATIA.ActiveDocument.Selection
+Selection1.Add PlateToCut1
+  
+Dim Factory1 As StrFeatureFactory
+Set Factory1 = Selection1.FindObject(&quot;CATIAStrFeatureFactory&quot;)
+</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step2"></a>Defining Sketch and Direction (After Forming Mode)</h4>
+		<p>For placing cutout using After Forming Mode you need to select a sketch 
+		and a direction.</p>
+		<pre class="code">&#39;Define the Sketch
+Dim sketch As Reference
+Set sketch1 = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Sketch.1&quot;)
+
+&#39;Define the Direction by selecting sketch containing line
+Dim dir1 As Reference
+Set dir1 = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Sketch.3&quot;)
+
+'Create the Cutout
+Dim Cutout1 As StrCutoutFeature
+Set Cutout1 = Factory1.AddCutoutWithAfterFormingMode(sketch1, dir1)</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step3"></a>Defining Sketch and Surface (Before Forming Mode)</h4>
+		<p>For placing cutout using Before Forming Mode you need to select a sketch 
+		and a Surface.</p>
+		<pre class="code">&#39;Define the Sketch
+Dim sketch As Reference
+Set sketch1 = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Sketch.1&quot;)
+
+&#39;Define the Surface 
+Dim Sur1 As Reference
+Set Sur1 = rootProduct.CreateReferenceFromName(&quot;Product1/Grid/!Extrude.1&quot;)
+
+'Create the Cutout
+Dim Cutout2 As StrCutoutFeature
+Set Cutout2 = Factory2.AddCutoutWithBeforeFormingMode(sketch1, Sur1)</pre>
+		<p>
+		<img alt="Resulting Product" src="images/CAAScdStrCutout02.png" width="429" height="317">
+		</p>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+</table>
+<!-- -------------------------------comment--------------------------------- -->
+<p align="center">
+<img alt="End Task Icon" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create cutout on structure objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top" width="40">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a macro</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<p><i>Copyright © 1999-2010, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

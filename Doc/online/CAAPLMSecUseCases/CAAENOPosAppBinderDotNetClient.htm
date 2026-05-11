@@ -1,0 +1,782 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOPosApplicationBinderImpl CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming the ENOPosApplicationBinderImpl CAA Web Service
+            </h3><em>Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENOVIA LCA V5</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- HEADER ======================================================================================= HEADER -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article discusses the <strong>CAAENOPosAppBinderDotNet1_1Client</strong> use case. It describes how
+              to use the C# client binding that can be generated using the wsdl.exe utility in order to consume the
+              <strong>ENOPosApplicationBinderImpl</strong> CAA Web service. It provides a sample usage scenario that
+              demonstrates how to manage a session with an ENOVIA LCA V5 system.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The CAAENOPosAppBinderDotNet1_1Client Use Case</strong></a>
+                <ul>
+                  <li>
+                    <a href="#2.1">What Does CAAENOPosAppBinderDotNet1_1Client Do</a>
+                  </li>
+                  <li>
+                    <a href="#2.2">Where To Find the CAAENOPosAppBinderDotNet1_1Client Code</a>
+                  </li>
+                  <li>
+                    <a href="#2.3">How to Launch CAAENOPosAppBinderDotNet1_1Client</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- SECTION 1 ================================================================================= SECTION 1 -->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      This use case demonstrates how to write a client application that consumes the ENOPosApplicationBinderImpl CAA
+      Web service. It helps you to:
+    </p>
+    <ul>
+      <li>Generate the C# client binding for the ENOPosApplicationBinderImpl CAA Web service,
+      </li>
+      <li>Configure and use the generated proxy,
+      </li>
+      <li>Understand a sample usage scenario of the ENOPosApplicationBinderImpl CAA Web service.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 2 ================================================================================= SECTION 2 -->
+    <h3>
+      <a name="2"></a>The CAAENOPosAppBinderDotNet1_1Client Use Case
+    </h3>
+    <p>
+      CAAENOPosAppBinderDotNet1_1Client is a use case of the CAAPLMSecurity.edu framework that illustrates the
+      ENOPosApplicationBinderImpl CAA Web service capabilities.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 2.1 ============================================================================= SECTION 2.1 -->
+    <h4>
+      <a name="2.1"></a>What Does CAAENOPosAppBinderDotNet1_1Client Do
+    </h4>
+    <p>
+      The sample usage scenario delivered with this use case contains the following steps:
+    </p>
+    <ul>
+      <li>Retrieve the contexts (or roles) available for a user specified in parameter, and then display the results to
+      the standard output,
+      </li>
+      <li>Select the first context available from the result list and use it to log on to ENOVIA LCA V5,
+      </li>
+      <li>Log out from ENOVIA LCA V5 and terminate the opened session.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 2.2 ============================================================================= SECTION 2.2 -->
+    <h4>
+      <a name="2.2"></a>Where To Find the CAAENOPosAppBinderDotNet1_1Client Code
+    </h4>
+    <p>
+      The CAAENOPosAppBinderDotNet1_1Client use case is made of several classes located in both
+      <strong>CAAENOPosAppBinderDotNet1_1Client.m</strong> and <strong>CAAENOPosAppBinderDotNet1_1ClientBase.m</strong>
+      modules of the <strong>CAAPLMSecurity.edu</strong> framework:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src</code><br>
+            <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The CAAENOPosAppBinderDotNet1_1ClientBase.m module (library) contains the following resources:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\CAAENOPosApplicationBinderImplProxy.cs<br>
+            <em>&lt;Source&gt;</em>\CAAENOPosApplicationBinderImplWrapper.cs</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>:
+        <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src</code>.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOPosApplicationBinderImplProxy.cs</strong> file contains the C# client binding generated using
+      the wsdl.exe utility. A C# client binding consists of a proxy and several types definitions. The
+      <strong>CAAENOPosApplicationBinderImplWrapper.cs</strong> file contains a class that describes how to configure
+      the generated proxy and how to invoke its methods.
+    </p>
+    <p>
+      The CAAENOPosAppBinderDotNet1_1Client.m module (executable) contains the following resources:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\CAAENOPosAppBinderDotNet1_1Client.cs<br>
+            <em>&lt;Source&gt;</em>\CAAENOPosApplicationBinderImplUseCase.cs</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>:
+        <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src</code>.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOPosAppBinderDotNet1_1Client.cs</strong> file contains the main program. It parses the command
+      line inputs and starts up the use case. The <strong>CAAENOPosApplicationBinderImplUseCase.cs</strong> file
+      contains the sample use case scenario.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 2.3 ============================================================================= SECTION 2.3 -->
+    <h4>
+      <a name="2.3"></a>How to Launch CAAENOPosAppBinderDotNet1_1Client
+    </h4>
+    <p>
+      To run the CAAENOPosAppBinderDotNet1_1Client use case, you will need to build both
+      CAAENOPosAppBinderDotNet1_1ClientBase.m and CAAENOPosAppBinderDotNet1_1Client.m modules. The use case code can be
+      built using either the CAA V5 buildtime environment, or Visual Studio .NET 2003 as explained in [<a href="#References">1</a>].
+    </p>
+    <p>
+      You can then execute the command described below:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>CAAENOPosAppBinderDotNet1_1Client -w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the ENOPosApplicationBinderImpl
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>CAAENOPosAppBinderDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p
+            wpsadmin</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      When building the modules with the CAA V5 buildtime environment, the CAAENOPosAppBinderDotNet1_1Client executable
+      can be launched from the following location:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\intel_a\code\clr</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3 ================================================================================= SECTION 3 -->
+    <h3>
+      <a name="3"></a>Step-by-step
+    </h3>
+    <p>
+      The following section first explains how to generate the C# client binding for the ENOPosApplicationBinderImpl
+      CAA Web service demonstrated. The remaining sections describe how to configure the generated proxy and how to
+      consume the Web service:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Creating the C# Client Binding</a>
+      </li>
+      <li>
+        <a href="#3.2">Instantiating and Configuring the Generated Proxy</a>
+      </li>
+      <li>
+        <a href="#3.3">Retrieving User Contexts</a>
+      </li>
+      <li>
+        <a href="#3.4">Logging On To ENOVIA LCA V5</a>
+      </li>
+      <li>
+        <a href="#3.5">Logging Out From ENOVIA LCA V5</a>
+      </li>
+      <li>
+        <a href="#3.6">Sample Usage Scenario</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.1 ============================================================================= SECTION 3.1 -->
+    <h4>
+      <a name="3.1"></a>Creating the C# Client Binding
+    </h4>
+    <p>
+      Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using the
+      wsdl.exe utility.
+    </p>
+    <p>
+      Here follows a sample command in order to generate the C# client binding for the ENOPosApplicationBinderImpl CAA
+      Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>wsdl
+            /namespace:com.dassault_systemes.caaplmsecurity.caaenoposappbinderdotnet1_1clientbase.enoposapplicationbinderimpl
+            /username:wpsadmin /password:wpsadmin /out:CAAENOPosApplicationBinderImplProxy.cs
+            http://stophe1dsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The server name, port, and context root URI information must be updated to match the server where the
+      ENOPosApplicationBinderImpl CAA Web service has been deployed. The <code>/username</code> and
+      <code>/username</code> options are required to authenticate on the Web server hosting the Web service.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.2 ============================================================================= SECTION 3.2 -->
+    <h4>
+      <a name="3.2"></a>Instantiating and Configuring the Generated Proxy
+    </h4>
+    <p>
+      In order to consume an implementation of the ENOPosApplicationBinderImpl CAA Web service deployed on a target Web
+      server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must then be
+      configured in order to manage authentication on the remote Web server, timeout, and session management.
+      Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.
+    </p>
+    <p>
+      The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and to
+      unmarshall SOAP responses to objects. The following code describes how to instantiate and configure it:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">public class</font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp; <font color="#0000FF">private const string</font> SERVICE_ID =
+            "urn!com!dassault_systemes!ENOPosWS!ENOPosAppliBinder!ENOPosApplicationBinderImpl";<br>
+            &nbsp; <font color="#0000FF">private</font> CAAENOPosApplicationBinderImplProxy proxy = <font color=
+            "#0000FF">null</font>;&nbsp;<br>
+            <br>
+            &nbsp; public CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp; &nbsp; CookieContainer container,<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> uri,<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> credUser,<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> credPwd,<br>
+            &nbsp; &nbsp; <font color="#0000FF">int</font> timeOut) {<br>
+            &nbsp; &nbsp; proxy = new CAAENOPosApplicationBinderImplProxy();<br>
+            <br>
+            &nbsp; &nbsp; <font color="#008000">// Compute the SOAP endpoint URI value that bounds to the
+            deployed&nbsp;<br>
+            &nbsp; &nbsp; // implementation of the ENOPosApplicationBinderImpl CAA Web service</font><br>
+            &nbsp; &nbsp; proxy.Url = uri + "servicerouter?service=" + SERVICE_ID;<br>
+            <br>
+            &nbsp; &nbsp; <font color="#008000">// Required for HTTP session state management</font><br>
+            &nbsp; &nbsp; proxy.CookieContainer = container; <strong>(1)</strong><br>
+            <br>
+            &nbsp; &nbsp; <font color="#008000">// Required for the Basic Authentication mechanism</font><br>
+            &nbsp; &nbsp; ICredentials credentials = new NetworkCredential(credUser, credPwd);<br>
+            &nbsp; &nbsp; proxy.Credentials = credentials; <strong>(2)</strong><br>
+            <br>
+            &nbsp; &nbsp; <font color="#008000">// Increase the default client time-out</font><br>
+            &nbsp; &nbsp; proxy.Timeout = timeOut; <strong>(3)</strong><br>
+            &nbsp; &nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed using either
+      the same or multiple proxy instances, the <code>CookieContainer</code> property must be set on the proxy. This is
+      mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+      <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+      <code>Credentials</code> property on the proxy. The values specified must match a valid set of credentials for
+      the Basic Authentication mechanism,<br>
+      <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues at runtime,
+      such as losing the HTTP connection before receiving the SOAP responses. The sample value specified in the code is in
+      milliseconds.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.3 ============================================================================= SECTION 3.3 -->
+    <h4>
+      <a name="3.3"></a>Retrieving User Contexts
+    </h4>
+    <p>
+      In order to log on to ENOVIA LCA V5, you must first retrieve the contexts associated with a given user declared
+      in the P&amp;O (People &amp; Organization) database. This can be achieved using the following method, which is
+      available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="getUserContexts" id="getUserContexts"></a><code><font color="#0000FF">public</font> Status
+            getUserContexts(<font color="#0000FF">string</font> iUserName, <font color="#0000FF">ref string</font>[]
+            oUserContexts)</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iUserName</code>
+          </td>
+          <td>
+            &nbsp; The name of a user declared in the P&amp;O database
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oUserContexts</code>
+          </td>
+          <td>
+            &nbsp; The list of contexts allowed for the specified user (for example VPMDESIGNER.VPM.DEFAULT)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#getUserContexts"><code>getUserContexts</code></a>
+      method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">public class</font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;...<br>
+            &nbsp; <font color="#0000FF">public string</font>[] GetUserContexts(<font color="#0000FF">string</font>
+            username) {&nbsp;<br>
+            &nbsp; &nbsp; <font color="#0000FF">if</font> (username == <font color="#0000FF">null</font>) {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("Illegal argument: P&amp;O
+            username is null");<br>
+            &nbsp; &nbsp; }<br>
+            <br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font>[] userContexts = <font color="#0000FF">null</font>;<br>
+            &nbsp; &nbsp; <font color="#0000FF">try</font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Status status =
+            proxy.</strong><strong>getUserContexts</strong><strong>(username, <font color="#0000FF">ref</font>
+            userContexts);</strong><br>
+            &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);&nbsp;<br>
+            &nbsp; &nbsp; } <font color="#0000FF">catch</font> (Exception e) {&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; throw new ApplicationException("Failed to get user contexts", e);<br>
+            &nbsp; &nbsp; }<br>
+            <br>
+            &nbsp; &nbsp; <font color="#0000FF">if</font> (userContexts == <font color="#0000FF">null</font>) {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("Failed to get user
+            contexts");<br>
+            &nbsp; &nbsp; }&nbsp;<br>
+            &nbsp; &nbsp; <font color="#0000FF">return</font> userContexts;<br>
+            &nbsp; }<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.4 ============================================================================= SECTION 3.4 -->
+    <h4>
+      <a name="3.4"></a>Logging On To ENOVIA LCA V5
+    </h4>
+    <p>
+      You can then log on to ENOVIA LCA V5 with one of the contexts available for the user specified using the
+      following method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="bindToApplication" id="bindToApplication"></a><code><font color="#0000FF">public</font> Status
+            bindToApplication(<font color="#0000FF">string</font> iSelectedUserContext, <font color=
+            "#0000FF">ref</font> SessionToken oSessionId)</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSelectedUserContext</code>
+          </td>
+          <td>
+            &nbsp; The context to use in order to log on to ENOVIA LCA V5
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oSessionId</code>
+          </td>
+          <td>
+            &nbsp; The session identifier, if any (may be null)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#bindToApplication"><code>bindToApplication</code></a>
+      method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">public class</font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp; <font color="#0000FF">public</font> SessionToken Login(<font color="#0000FF">string</font> context)
+            {&nbsp;<br>
+            &nbsp; &nbsp; <font color="#0000FF">if</font> (context == <font color="#0000FF">null</font>) {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("Illegal argument: context
+            is null");<br>
+            &nbsp; &nbsp; }&nbsp;<br>
+            <br>
+            &nbsp; &nbsp; SessionToken sessionToken = <font color="#0000FF">null</font>;<br>
+            &nbsp; &nbsp; <font color="#0000FF">try</font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Status status = proxy.bindToApplication(context, <font color=
+            "#0000FF">ref</font> sessionToken);<br></strong> &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}",
+            status.Status1);<br>
+            &nbsp; &nbsp; } <font color="#0000FF">catch</font> (Exception e) {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("Failed to login", e);<br>
+            &nbsp; &nbsp; }<br>
+            <br>
+            &nbsp; &nbsp; <font color="#0000FF">return</font> sessionToken;<br>
+            &nbsp; }<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.5 ============================================================================= SECTION 3.5 -->
+    <h4>
+      <a name="3.5"></a>Logging Out From ENOVIA LCA V5
+    </h4>
+    <p>
+      You can finally log off from ENOVIA LCA V5 and terminate the opened session using the following method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="releaseFromApplication" id="releaseFromApplication"></a><code><font color="#0000FF">public</font>
+            Status releaseFromApplication(SessionToken iSessionId)</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSessionId</code>
+          </td>
+          <td>
+            &nbsp;The session identifier retrieved through the call to <a href="#bindToApplication"><code>bindToApplication</code></a>, if any (may be null)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#releaseFromApplication"><code>releaseFromApplication</code></a> method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">public class</font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#0000FF">public void</font> Logout(SessionToken sessionToken) {<br>
+            &nbsp; &nbsp; <font color="#0000FF">try</font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Status status =
+            proxy.releaseFromApplication(sessionToken);</strong><br>
+            &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);&nbsp;<br>
+            &nbsp; &nbsp; } <font color="#0000FF">catch</font> (Exception e) {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("Failed to log out",
+            e);<br>
+            &nbsp; &nbsp; }&nbsp;<br>
+            &nbsp; }<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- SECTION 3.6 ============================================================================= SECTION 3.6 -->
+    <h4>
+      <a name="3.6"></a>Sample Usage Scenario
+    </h4>
+    <p>
+      The following code depends on the CAAENOPosApplicationBinderImplWrapper class described above. It demonstrates a
+      sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">public class</font> CAAENOPosApplicationBinderImplUseCase {<br>
+            &nbsp; <font color="#0000FF">private string</font> uri = <font color="#0000FF">null</font>;<br>
+            &nbsp; <font color="#0000FF">private string</font> credUser = <font color="#0000FF">null</font>;<br>
+            &nbsp; <font color="#0000FF">private string</font> credPwd = <font color="#0000FF">null</font>;<br>
+            <br>
+            &nbsp; <font color="#0000FF">public</font> CAAENOPosApplicationBinderImplUseCase(<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> uri,<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> credUser,<br>
+            &nbsp; &nbsp; <font color="#0000FF">string</font> credPwd) {<br>
+            &nbsp; &nbsp; <font color="#0000FF">this</font>.uri = uri;<br>
+            &nbsp; &nbsp; <font color="#0000FF">this</font>.credUser = credUser;<br>
+            &nbsp; &nbsp; <font color="#0000FF">this</font>.credPwd = credPwd;<br>
+            &nbsp; }<br>
+            <br>
+            &nbsp; <font color="#0000FF">public void</font> RunSampleUsageScenario(<font color="#0000FF">string</font>
+            enoviaUser) {<br>
+            &nbsp; &nbsp; <font color="#0000FF">try</font> {<br>
+            &nbsp; &nbsp; &nbsp; <font color="#008000">//
+            ------------------------------------------------------------<br>
+            &nbsp; &nbsp; &nbsp; // Step 1 - Instantiate and configure the proxy<br>
+            &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp; &nbsp; &nbsp; <font color="#008000">// Create a CookieContainer object to maintain the HTTP session
+            state</font>&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; CookieContainer container = <font color="#0000FF">new</font> CookieContainer();<br>
+            <br>
+            &nbsp; &nbsp; &nbsp; <strong>CAAENOPosApplicationBinderImplWrapper wrapper =&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000FF">new</font>
+            CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, 360000);</strong>&nbsp;<br>
+            <br>
+            &nbsp; &nbsp; &nbsp; <font color="#008000">//
+            ------------------------------------------------------------<br>
+            &nbsp; &nbsp; &nbsp; // Step 2 - Get contexts for the user specified<br>
+            &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+            &nbsp; &nbsp; &nbsp; <strong><font color="#0000FF">string</font>[] userContexts =
+            wrapper.GetUserContexts(enoviaUser);</strong>&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; <font color="#0000FF">if</font> (userContexts.Length == 0) {&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000FF">throw new</font> ApplicationException("No context found
+            for the user specified");<br>
+            &nbsp; &nbsp; &nbsp; }<br>
+            <br>
+            &nbsp; &nbsp; &nbsp; <font color="#008000">//
+            ------------------------------------------------------------<br>
+            &nbsp; &nbsp; &nbsp; // Step 3 - Log on to ENOVIA LCA V5 with the first available context<br>
+            &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+            &nbsp; &nbsp; &nbsp; <strong>SessionToken sessionToken = wrapper.Login(userContexts[0]);</strong><br>
+            <br>
+            &nbsp; &nbsp; &nbsp; <font color="#008000">//
+            ------------------------------------------------------------<br>
+            &nbsp; &nbsp; &nbsp; // Step 4 - Log out from ENOVIA LCA V5<br>
+            &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+            &nbsp; &nbsp; &nbsp; <strong>wrapper.Logout(sessionToken);</strong><br>
+            &nbsp; &nbsp; } <font color="#0000FF">catch</font> (Exception e) {&nbsp;<br>
+            &nbsp; &nbsp; &nbsp; ...<br>
+            &nbsp; &nbsp; }&nbsp;<br>
+            &nbsp; }<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- IN SHORT =================================================================================== IN SHORT -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case explains how to use the C# client binding generated using the wsdl.exe utility in order to consume
+      the ENOPosApplicationBinderImpl CAA Web service. It also gives an overview of the available methods:
+    </p>
+    <ul>
+      <li>
+        <a href="#getUserContexts"><code>getUserContexts</code></a>: retrieve the contexts associated with a given user
+        declared in the P&amp;O database,
+      </li>
+      <li>
+        <a href="#bindToApplication"><code>bindToApplication</code></a>: log on to ENOVIA LCA V5 using a specific
+        context,
+      </li>
+      <li>
+        <a href="#releaseFromApplication"><code>releaseFromApplication</code></a>: log off from ENOVIA LCA V5 in order
+        to terminate an opened session.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- REFERENCES =============================================================================== REFERENCES -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="#">Building and Launching a CAA Web Service Use Case</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="#">Generating a C# Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- FOOTER ===================================================================================== FOOTER -->
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <p>
+      <em>Copyright © 2006, Dassault Systèmes. All rights reserved.</em>
+    </p>
+  </body>
+</html>

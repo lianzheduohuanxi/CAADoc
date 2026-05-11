@@ -1,0 +1,300 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>ENOVIA Event Use Case Overview</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+&nbsp;
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>ENOVIA Event Use Case Overview</h3>
+      <i>Working with events, publishers and subscribers</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the Event Model use cases. It explains the classes
+      which are common to the 4 existing uses Cases.&nbsp;<br>
+      &nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Article</a></b></li>
+        <li><b><a href="#PreReq">Customization Requirements before running the
+          Use Cases</a></b></li>
+        <li><b><a href="#UseCase">The UML Diagram for Classes Involved in the
+          Use Cases</a></b></li>
+        <li><b><a href="#Step">Detailing the UML Diagram Classes</a></b></li>
+        <li><b><a href="#Classes and Use Cases">Classes and Use Cases</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Article</h3>
+<p>This article describes the basic classes and notions which will be used in
+the four use cases dealing with event model and&nbsp; publish/subscribe notions.
+Some classes are used in more than one use case, and the article details them:</p>
+<ul>
+  <li>CAAVpiSimpleSubscription</li>
+  <li>CAAVpiPublishEvents</li>
+  <li>CAAVpiAutomaticSubscription</li>
+  <li>CAAVpiPackageSubscription</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="PreReq">Customization Requirements before running the Use Cases</a></h3>
+<p>The Use Cases presented in this education framework require that a data
+domain named &quot;INDEX&quot; exists in LCA. By default, no such domain exists.
+Hence, for the following Use Cases to run properly, your installation has to be
+customized to include this data domain in the runtime environment.</p>
+<p>For this purpose, a metadata file named &quot;CAA_INDEX.metadata&quot; is
+delivered in the directory
+&quot;InstallRootDirectory/CAADoc/CAAVPMInterfaces.edu/CNext/resources&quot;.</p>
+<p>This file defines two entities &quot;Part&quot; and &quot;Document&quot; in
+the data domain &quot;INDEX&quot;. These entities are created and manipulated by
+the following Use Cases located in the present education framework:
+<ul>
+  <li><a href="CAAVpiPublishEvents.htm">CAAVpiPublishEvents</a></li>
+  <li><a href="CAAVpiAutomaticSubscription.htm">CAAVpiAutomaticSubscription</a></li>
+  <li><a href="CAAVpiPackageSubscription.htm">CAAVpiPackageSubscription</a></li>
+</ul>
+<p>To customize your environment, you have first to create a new framework named
+&quot;INDEX&quot; under your workspace root directory along with the following
+file tree:</p>
+<p>INDEX -&gt; CNext -&gt; code -&gt; dictionary</p>
+<p>INDEX -&gt; CNext -&gt; reffiles -&gt; DBMS -&gt; Generator</p>
+<p>Copy the metadata file &quot;CAA_INDEX.metadata&quot; to the newly created
+directory &quot;RootDirectory/INDEX/CNext/code/dictionary&quot;, and rename it
+&quot;INDEX.metadata&quot;.</p>
+<p>Copy the param file &quot;CAA_INDEX.param&quot; to the newly created
+directory &quot;RootDirectory/INDEX/CNext/reffiles/DBMS/Generator&quot;, and rename it
+&quot;INDEX.param&quot;.</p>
+<p>Then you have to publish and deploy this customization in your runtime
+environment using the <a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm">Data
+Model Customizer RADE Tool</a>.</p>
+<p>Refer to the technical article concerning DMC for ENOVIA LCA to learn how to
+do it. Finally, check that the file &quot;INDEX.metadata&quot; exists now in the
+directory &quot;OS_a/code/dictionary&quot; of your runtime environment.</p>
+<p>Under directory
+&quot;InstallRootDirectory/CAADoc/CAAVPMInterfaces.edu/CNext/resources&quot;,
+you will also find an event file named &quot;CAA_INDEX.event&quot; which
+declares the events related to the data domain &quot;INDEX&quot;.</p>
+<p>For the following Use Cases to run properly, you have to copy this event file
+to the directory &quot;OS_a/reffiles&quot; of your runtime environment, and
+rename it &quot;INDEX.event&quot;.</p>
+<p>Note that you could alternatively copy the file to the directory
+&quot;RootDirectory/INDEX/CNext/reffiles&quot; (to be created), rename it, and
+update the runtime view.</p>
+<p>This is the final step of the Customization Requirements.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The UML Diagram for Classes Involved in the Use Cases</h3>
+<p>This UML diagram represents all the classes involved in the four use cases
+delivered for illustrating the ENOVIA event model capabilities.</p>
+<img src="images/SchemaUMLEvents.gif" height="693" width="703"><br>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Detailing the UML Diagram Classes</h3>
+<p>In the event use cases, there are four different kinds of classes to be
+precised.</p>
+<table>
+  <tr>
+    <td>Standard classes</td>
+    <td>The Event Manager, the Session and the Login Sessions</td>
+  </tr>
+  <tr>
+    <td>Publisher class</td>
+    <td>The CAAVpiFileManager</td>
+  </tr>
+  <tr>
+    <td>Subscriber classes</td>
+    <td>The CAAVpiSimpleSubscriber, the CAAVpiFMEventsSubscriber, and the
+      CAAVpiFileManagerListener</td>
+  </tr>
+  <tr>
+    <td>Automatic listener classes</td>
+    <td>The CAAVpiSessionListener and the CAAVpiPlugin</td>
+  </tr>
+</table>
+<h4>The Standard Classes</h4>
+<p>In each use case, an ENOVIA Session must be created and opened, and to be
+able to work further, a login session must be opened too (attached to 1 user).
+To be able to subscribe to events, people must get the object which manages the
+event model: a query on the Session gives an ENOVIEventManager interface
+pointer, and using it, you will be able to perform subscriptions and get
+information on events. There usually is one Event Manager per ENOVIA session
+while there can be more than one Login Session per ENOVIA session.</p>
+<h4>The Publisher Class</h4>
+<p>The <b>CAAVpiFileManager </b>class is used in 3 of the 4 events use cases :
+it raises events that the CAAVpiFMEventsSubscriber and the <b>CAAVpiFileManager</b>
+classes can subscribe to , by implementing the associated CAAIVpiFMCallback
+interface.</p>
+<p>To raise events, <b>CAAVpiFileManager</b> uses an EVENT_FIRE macro (see <a href="#References">[2]</a>)
+which implies an indirect and hidden link with the event manager class . In the
+different use cases the <b>CAAVpiFileManager</b> instances will have methods
+called, which raise events, so that potential subscribers receive messages .</p>
+<h4>The Subscriber Classes</h4>
+<p>The UML diagram shows three &quot;simple&quot; subscriber classes, each of
+them being used in one single use case.</p>
+<ul>
+  <li>The <b>CAAVpiSimpleSubscriber</b> subscribes to events that a login
+    session may raise . To do that , it implements an &quot;explicit&quot;
+    callback interface : ENOVISessionEvent, and a &quot;generic&quot; callback
+    interface : ENOVISubscriberEvent , to show 2 different ways of subscription.
+    in both cases, one must get the event manager attached to the current
+    session.</li>
+  <li>The <b>CAAVpiFMEventsSubscriber</b> and <b>CAAVpiFileManagerListener</b>
+    classes will subscribe to events that the <b>CAAVpiFileManager</b> instances
+    may raise. To do that, they implement the CAAIFMEventsCallback interface,
+    and get the event manager attached to the current session.<br>
+  </li>
+</ul>
+<br>
+<b>Note:</b> The CAAVpiFMEventsSubscriber instance is explicitly created in the
+CAAVpiPublishEvents use case code , as the instanciation and the use of
+CAAVpiFileManagerListener is automatically processed by the
+&quot;listeners&quot; (see below).
+<h4>The Automatic Listener Classes</h4>
+<p>The CAAVpiAutomaticSubscription and CAAVpiPackageSubscription use cases show
+2 different mechanisms of automatic subscription when the creation of a login
+session is involved.</p>
+<ul>
+  <li>The first one implies a <b>CAAVpiPlugin</b> class, extending a late type <b>T_Plugin</b>
+    for the implementation of ENOVIEventPlugin interface (see details in the use
+    case documentation). The session is able to automatically instantiate an
+    object and call the unique method of the ENOVIEventPlugin Interface : Init.
+    In this method, a subscription to event CreateLoginSession step After is
+    performed for a listener class that implements ENOVISessionEvent. In the
+    callback method onAfterCreateLoginSession, a CAAVpiFileManager instance will
+    be created and will subscribe to events on CAAVpiFileManager objects.<br>
+  </li>
+  <li>The second one implies the <b>CAAVpiSessionListener</b> class, to use a
+    generic mechanism of the session : each domain of ENOVIA (PRODUCT, ACTION,
+    DOCDIR, INDEX, ...) is associated with a late type <b>INFO_&lt;&lt;NameOfDomain&gt;&gt;</b>;
+    when a domain is loaded during the session initializations, the session asks
+    if there is an extension of the late type which implements the
+    ENOVISessionEvent interface (let's call it &quot;listener&quot;), and if
+    yes, subscribes it to Session and LoginSession events . So when a
+    loginsession is created, the &quot;listener&quot; is called back and can
+    subscribe other objects to others events.</li>
+</ul>
+<p>Here, the CAAVpiSessionListener extends a late Type <b>INFO_INDEX</b>,
+associated to the test ENOVIA Domain &quot;INDEX&quot; and implements
+ENOVISessionEvents interface.When it's called back at loginsession creation
+time, it instanciates the CAAVpiFileManagerListener and makes subscriptions to
+events raiseable by the CAAVpiFileManager objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Classes and Use Cases"></a>Classes and Use Cases</h3>
+<p>The following table shows the use of the different classes in the use cases.</p>
+<table>
+  <tr>
+    <td><b>Classes</b></td>
+    <td><a href="CAAVpiSimpleSubscription.htm">Use Case 1</a></td>
+    <td><a href="CAAVpiPublishEvents.htm">Use Case 2</a></td>
+    <td><a href="CAAVpiAutomaticSubscription.htm">Use Case 3</a></td>
+    <td><a href="CAAVpiPackageSubscription.htm">Use Case 4</a></td>
+  </tr>
+  <tr>
+    <td>CAAVpiSimpleSubscriber</td>
+    <td align="center">X</td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td>CAAVpiFMEventsSubscriber</td>
+    <td align="center"></td>
+    <td align="center">X</td>
+    <td align="center"></td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td>CAAVpiFileManager</td>
+    <td align="center"></td>
+    <td align="center">X</td>
+    <td align="center">X</td>
+    <td align="center">X</td>
+  </tr>
+  <tr>
+    <td>CAAVpiPlugin</td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center">X</td>
+    <td align="center"></td>
+  </tr>
+  <tr>
+    <td>CAAVpiSessionListener</td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center"></td>
+    <td align="center">X</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has introduced the common notions of the four use cases
+describing events model. To go further refer to the detailed four use cases.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="TOP">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The
+      ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Oct 2001]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

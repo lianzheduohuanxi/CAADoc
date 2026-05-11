@@ -1,0 +1,266 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Portal Registry</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Portal Registry</h3>
+      <em>The declaration and the use of the registry of the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article describes the Portal registry.</p>
+      <ul>
+        <li><a href="#File"><b>The Portal Registry MIMEtypes.xml File</b></a></li>
+        <li><a href="#Java"><b>How to Manipulate the Portal Registry in Java</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="File"></a>The Portal Registry MIMEtypes.xml File</h3>
+<p>The Portal registry is based on the MIMEtypes and Mailcap mechanism. All this
+is described in an xml file named MIMEtypes.xml. As most of the Portal
+configuration file, this file can also be prefixed by third party applications
+to have a custom MIMEtypes.xml file.<br>
+Here is an example of a MIMEtypes.xml file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;MIME-Types&gt;
+
+&lt;MIME&gt;
+  &lt;Type&gt;
+    text/html
+    &lt;Command value=&quot;default&quot;&gt;
+      bean://<span class="tx">com.dassault_systemes.catweb.browser.EBrowserCATlet</span>?paramName=value
+    &lt;/Command&gt;
+  &lt;/Type&gt;
+  &lt;Desc&gt; Hyper text &lt;/Desc&gt;
+  &lt;Extension&gt; html &lt;/Extension&gt;
+  &lt;Extension&gt; htm &lt;/Extension&gt;
+&lt;/MIME&gt;
+
+&lt;MIME&gt;
+  &lt;Type&gt;
+    application/java-bean
+    &lt;Command value=&quot;default&quot;
+      newInstance=&quot;ALWAYS&quot;&gt; com.dassault_systemes.catweb.bean.catlet.CATletBeanContainer
+    &lt;/Command&gt;
+  &lt;/Type&gt;
+  &lt;Desc&gt; CATlet bean container &lt;/Desc&gt;
+  &lt;Extension&gt; class &lt;/Extension&gt;
+&lt;/MIME&gt;
+
+&lt;MIME&gt;
+  &lt;Type&gt;
+    application/catia
+    &lt;Command value=&quot;default&quot;&gt;
+      com.dassault_systemes.catweb.local3D.controller.LocalCATlet3D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Local3D&quot;&gt;
+      com.dassault_systemes.catweb.local3D.controller.LocalCATlet3D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Swing3D&quot;&gt;
+      com.dassault_systemes.catweb.basev4.catlet.Modeller3DCATlet
+    &lt;/Command&gt;
+      &lt;Command value=&quot;Local2D&quot;&gt;
+        com.dassault_systemes.catweb.local2D.controller.LocalCATlet2D
+    &lt;/Command&gt;
+      &lt;Command value=&quot;Remote2D&quot; mode=&quot;CONNECTED&quot;&gt;
+        com.dassault_systemes.catweb.local2D.controller.RemoteCATlet2D
+    &lt;/Command&gt;
+      &lt;Command value=&quot;Remote3D&quot; mode=&quot;CONNECTED&quot;&gt;
+        com.dassault_systemes.catweb.remote.controller.RemoteCATlet3D
+    &lt;/Command&gt;
+    &lt;Command
+      value=&quot;Reporter&quot;&gt;
+      com.dassault_systemes.catweb.bommy.BOMCATlet &lt;/Command&gt;
+  &lt;/Type&gt;
+
+  &lt;Desc&gt;
+    CATIA model
+  &lt;/Desc&gt;
+
+  &lt;Extension&gt; model &lt;/Extension&gt;
+  &lt;/MIME&gt;
+&lt;/MIME-Types&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>Each MIME type is declared with the MIME tag. Inside this tag, you will find
+the Desc tag that gives a short description of the type, a list of Extension tag
+that specifies all the file extensions that support this type and the Type tag
+that gives more information about the type.</p>
+<p>Inside the Type tag you will find the MIMEtype (application/java-bean or
+text/html) as well as a list of commands that represent an application that can
+handle this type. Each command is described by its value (default for a default
+application, Local3D for an application that can visualize the data locally in
+3D ...) and the class name or the URL (bean:// with arguments) of the bean
+application that will handle the type. A command can contain a parameter
+newInstance (not mandatory) which define if a new instance of the application
+must be created for each document (newInstance=&quot;always&quot;) or only one
+instance must be created and used by each document
+(newInstance=&quot;never&quot;), or the creation of a new instance depends on
+the request (newInstance=&quot;default&quot;, the default value). For more
+details about these mechanisms, please refer to the URL mechanisms article [<a href="#References">1</a>].</p>
+<p>The Command tag may also contains an attribute mode which describes in which
+mode this command is intended to be used: when connected to a server, when
+running as a nomade or simply in both mode. The right values for this attribute
+are CONNECTED, BOTH or NOMADE (all three in uppercases).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Java"></a>How to Manipulate the Portal Registry in Java</h3>
+<p>The Portal registry can be accessed through the
+com.dassault_systemes.catweb.base.net.registry.PortalRegistry object. Its API as
+well as the API of classes related to this one are described inside the
+PortalURI paper [1].<br>
+Here is a list of how-to examples to manipulate the registry:</p>
+<ul>
+  <li><a href="#FileExtension">How to Get the MIME Type from a File Extension</a></li>
+  <li><a href="#CommandDesc">How to Get the List of Command Descriptions that
+    Can Handle My Type</a></li>
+  <li><a href="#Applications">How to Get the Names of the Already Instantiated
+    Applications that Can Handle My Type</a></li>
+  <li><a href="#Data1">How to Get My Data Handled by a CATlet of a Specific Type</a></li>
+  <li><a href="#Data2">How to Get My Data Handled by an Already Instantiated
+    CATlet</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="FileExtension"></a>How to Get the MIME Type from a File Extension</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// --- get a PortalMIMETypes object
+PortalMIMETypes type = PortalRegistry.getMIMETypesForExtension(&quot;.myExtension&quot;);
+
+// --- get the mime type
+String mimetype = type.getType();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CommandDesc"></a>How to Get the List of Command Descriptions that
+Can Handle My Type</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// --- get a PortalMIMETypes object
+PortalMIMETypes type = PortalRegistry.getMIMETypesForExtension(&quot;.myExtension&quot;);
+
+// --- get an array of commands
+PortalMIMECommand[] commands = type.getCommandsList();
+
+// --- get the description of each command (will get the result of the value attribute of the Command tag)
+String descriptions = new String[commands.length];
+for(int i=0;i&lt;commands.length;i++)
+  descriptions[i] = commands[i].getDescription();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Applications"></a>How to Get the Names of the Already Instantiated
+Applications that Can Handle My Type</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// --- get a PortalMIMETypes object
+PortalMIMETypes type = PortalRegistry.getMIMETypesForExtension(&quot;.myExtension&quot;);
+
+// --- get the mime type
+String mimetype = type.getType();
+
+// --- get the list of instance names
+String[] names = PortalRegistry.getInstancesNameForType(mimetype);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Data1"></a>How to Get My Data Handled by a CATlet of a Specific
+Type</h4>
+<p>First, you must get the command description of the application you want to
+handle your data. Then you must construct an url on your data and add the
+following argument inside your url : Command=commandDescription. Then construct
+an URLEvent object and fire it.</p>
+<p>For example, if I want to visualize a CATIAV4 model inside a Local3D viewer,
+I will construct the following url:</p>
+<pre>file:/u/users/ddl/model/CUBES.model?Command=Local3D</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Data2"></a>How to Get My Data Handled by an Already Instantiated
+CATlet</h4>
+<p>First, you must get the instance name of the application you want to handle
+your data. Then you must construct an url on your data and add the following
+argument inside your url : InstanceName=name. Then construct an URLEvent object
+and fire it.</p>
+<p>For example, if I want to visualize a CATIAV4 model inside the Local3D-1
+viewer, I will construct the following url:</p>
+<pre>file:/u/users/ddl/model/CUBES.model?InstanceName=Local3D-1</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPlbPortalURI.htm">The URL Mechanism for the ENOVIA Portal</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

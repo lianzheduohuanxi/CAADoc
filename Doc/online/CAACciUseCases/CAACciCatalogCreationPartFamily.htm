@@ -1,0 +1,703 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Catalog With Part Family</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Catalog With Part Family</h3>
+      <em>&nbsp;How to associate a design table to a family</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case illustrates how to 
+      create a catalog which contains a Part Family.</p>     
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACciNuts6SidesCatalogCreation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACciNuts6SidesCatalogCreation Do</a></li>
+            <li><a href="#How">How to Launch CAACciNuts6SidesCatalogCreation</a></li>
+            <li><a href="#Where">Where to Find the CAACciNuts6SidesCatalogCreation
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to create a catalog which contains a Part family. A
+Part family is a chapter whose all the descriptions are components created from
+a single Part which has several configurations referenced in a design
+table.&nbsp;This article describes in particularly the contents of such
+descriptions and remind you that the design table must necessarily contain a
+&quot;Part Number&quot; column. It tackles also the question of the description
+resolution.&nbsp;</p>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of Catalog. See the referenced article [<a href="#References">1</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACciNuts6SidesCatalogCreation Use Case</h3>
+<p>CAACciNuts6SidesCatalogCreation is a use case of the CAAComponentsCatalogs.edu framework that
+illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACciNuts6SidesCatalogCreation Do</h4>
+<p>This use case creates the <code>CAANuts6Sides</code>.catalog document [<a href="#Fig.1">Fig.1</a>].
+The scenario of its creation is explained through images created in editing the
+catalog thanks to the Catalog Editor workbench.&nbsp;At last, the interactive scenario to obtain the same result, is
+given.&nbsp;</p>
+
+  <table width="430">
+<caption><i><a name="Fig.1">Fig.</a>1: The CAANuts6Sides.catalog Document</i></caption>
+<tr>
+<td width="422">
+<img border="0" src="images/CAACciCatalogNuts6Sides1.jpg" width="298" height="157">
+</td>
+</tr>
+</table>
+<p>The <code>Nuts6Sides</code> chapter is the root chapter which&nbsp; contains the <code>Nuts6SidesFamily</code> 
+chapter.&nbsp;</p>
+<p>The <code>Nuts6SidesFamily</code> chapter is a end chapter and more
+  precisely a Part Family because the contents of this chapter will be created
+  in associating it with a design table [<a href="#Fig.4">Fig 4</a>] of&nbsp;
+the <code>CAANuts6Sides</code> Part document [<a href="#Fig.3">Fig
+3</a>].&nbsp;</p>
+<p>The <code>Nuts6SidesFamily</code> contains 3 descriptions, one for each line of the
+  design table:&nbsp;</p>
+   <table>
+<caption><i><a name="Fig.2">Fig.2</a> The Descriptions of the
+  Nuts6SidesFamily Part Family</i></caption> 
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogNuts6Sides4.jpg" width="663" height="224">
+
+</td>
+</tr>
+</table>
+<p>The document which contains the design table is <code> CAANuts6Sides.CATPart:</code></p>
+  <table width="387">
+<caption><i><a name="Fig.3">Fig.3</a>: The CAANuts6Sides.CATPart Document</i></caption>
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogNuts6Sides2.jpg" width="303" height="236">
+
+</td>
+</tr>
+</table>
+<p>This design table consists in a file text (*) whose each line defines a
+configuration for the Part [<a href="#Fig.4">Fig 4]</a>. This file contains the following lines:</p>
+  <table border="0" width="593">
+  <caption><i><a name="Fig.4">Fig.4</a>: The CAANuts6Sides.txt file</i></caption>
+    <tr>
+      <td width="75"><b>PartNumber&nbsp;</b></td>
+      <td width="277"><b>PartBody\Pad.1\FirstLimit\Length (mm)</b></td>
+      <td width="221"><b>PartBody\Hole.1\Diameter (mm)</b></td>
+    </tr>
+    <tr>
+      <td width="75">Nut20x20&nbsp;</td>
+      <td width="277">20</td>
+      <td width="221">20</td>
+    </tr>
+    <tr>
+      <td width="75">Nut30x10&nbsp;</td>
+      <td width="277">30</td>
+      <td width="221">10</td>
+    </tr>
+    <tr>
+      <td width="75">Nut40x10&nbsp;</td>
+      <td width="277">40</td>
+      <td width="221">10</td>
+    </tr>
+  </table>
+  <p>where:&nbsp;</p>
+  <ul>
+  <li><b>PartNumber</b>, is a mandatory field, it gives a name to the design
+    table line</li>
+  <li><b>PartBody\Pad.1\FirstLimit\Length</b>, is the name of the parameter <code>Length</code>
+    in the <code> Pad Definition</code> dialog box when the <code>Dimension</code> type is
+    selected. [<a href="#Fig.5">Fig 5</a>]</li>
+  <li><b>PartBody\Hole.1\Diameter</b>, is the name of the parameter <code>Diameter</code>
+    in the <code> Hole Definition </code> dialog box. [<a href="#Fig.5">Fig 5</a>]</li>
+  </ul>
+<p>(*)&nbsp; xls file is not UNIX compliant</p>
+  <table>
+<caption><i><a name="Fig.5">Fig.5</a> The Pad Definition and the Hole Definition Dialog Box</i></caption> 
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogNuts6Sides3.jpg" width="606" height="236">
+
+</td>
+</tr>
+</table>
+<p>The last step of the use case is to resolve the Part configurations. It means that Part documents are created,
+one for each configuration defined by the design table. The location of the new
+Part documents is defined by the Tools/Options&nbsp;command in the Folder
+editor.</p>
+   <table>
+<caption><i><a name="Fig.6">Fig.6</a> Tools Options- Catalogs Tab page</i></caption> 
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogToolsOptions.jpg" width="703" height="285">
+
+</td>
+</tr>
+</table>
+
+<p> In the next
+  image, [<a href="#Fig.7">Fig 7</a>], you can note that in the <code>Reference</code> tab page, the column
+&quot;<code>Type&quot;</code> 
+  is <code> &quot;Resolved part family configuration&quot;,</code> and the<code> 
+&quot;Object
+  Name&quot;</code> column is the location of the resolved file.</p>
+    <table>
+<caption><i><a name="Fig.7">Fig.7</a> The Resolution of the
+  Nuts6SidesFamily Part Family</i></caption> 
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogNuts6Sides5.jpg" width="769" height="182">
+
+</td>
+</tr>
+</table>
+
+  <p>The interactive scenario to obtain the same <code> CAANuts6Sides.catalog</code> document is
+  the following:</p>
+  <p>Launch CATIA. When the application is ready:&nbsp;</p>
+  <ul>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the <b>File New&nbsp; </b>Dialog box select <b>CatalogDocument</b>&nbsp;
+    and click <b>OK</b></li>
+  <li>Select <b>Chapter.1</b> in the specification tree&nbsp;</li>
+  <li>Contextual menu, select <b>Chapter.1 object </b>item and <b>Definition</b>
+    item&nbsp;</li>
+  <li>In the dialog box, enter <b>Nuts6Sides </b>in the<b> Name </b>field<b> </b>and click <b>OK</b></li>
+  <li>Launch the <b>Add Part Family <img border="0" src="images/CAACatalogAddFamilyFromDesignTable.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the <b>Part Family Definition</b> dialog box
+    <ul>
+      <li>Enter <b>Nuts6SidesFamily </b>in the <b>Name</b> field</li>
+      <li>Push <b>Select Document</b></li>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAANuts6Sides.CATPart</b>
+        (*) file and click <b>Open</b></li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </li>
+  <li>Select <b>Nuts6SidesFamily</b> in the specification tree</li>
+  <li>Contextual menu, select <b>Nuts6SidesFamily</b> <b> object </b>item and <b>Resolve</b>
+    item&nbsp;</li>
+  </ul>
+  <p>(*) The file is located in the directory <code>CAAComponentsCatalogs.edu/InputData</code></p>
+  <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+      </ul>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACciNuts6SidesCatalogCreation</h4>
+<p>To launch CAACciNuts6SidesCatalogCreation , you will need to set up the build time environment,
+then compile the CAACciCatalogCreate module along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">2</a>].&nbsp;</p>
+<p>mkrun -c <b>CAACciCatalogCreate</b> InputPath [OutputPath]</p>
+<p>Where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of some files included in the directory <code>CAAComponentsCatalogs.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+    </ul>
+    <p> where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+  <li><b>OutputPath</b>: The path to write the created catalogs. If this path is empty, the output files
+    are created in the current directory.</li>
+</ol>
+<p>The use case creates three documents:</p>
+<ul>
+  <li><code>CAAScrew.catalog</code> , explained in&nbsp; the &quot;Creating a Catalog With Part
+    Documents&quot;
+    article [<a href="#References">3</a>]&nbsp;</li>
+  <li><code>CAANuts6Sides.catalog</code>, explained in the current article</li>
+  <li><code>CAATools.catalog</code>, explained in the &quot;Creating a
+    Catalog&quot; article [<a href="#References">4</a>]</li>
+</ul>
+<p>After its execution, you can launch CATIA and open the created catalogs or
+execute the CAACciCatalogNavigation use case [<a href="#References">5</a>] for
+each. This use case displays the contents of a catalog.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACciNuts6SidesCatalogCreation Code</h4>
+<p>The CAACciNuts6SidesCatalogCreation use case is made of several source files located in the
+CAACciCatalogCreate.m module of the CAAComponentsCatalogs.edu framework:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the source file</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogCreateMain</td>
+    <td width="67%">Main source file&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciNuts6SidesCatalogCreation</td>
+    <td width="67%">Global function to create the
+      CAANuts6Sides.catalog document</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogDocumentServices</td>
+    <td width="67%">Global functions</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\CAACciCatalogCreate.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/CAACciCatalogCreate.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are nine logical steps in the CAACciNuts6SidesCatalogCreation use case:</p>
+<ol>
+  <li><a href="#creating a new doc">Creating a New Catalog Document</a></li>
+  <li><a href="#Creating the Root chap">Creating the Root Chapter&nbsp;</a></li>
+  <li><a href="#creating the end chapter">Creating the End Chapter&nbsp;</a></li>
+  <li>
+<a href="#addign dt">
+Adding the Design Table to the End Chapter which Becomes a Part Family</a></li>
+  <li>
+<a href="#retrieving the Descriptions of the PF">Retrieving the Description List
+of the Part Family</a></li>
+  <li>
+<a href="#displaying the KW list of the PF">
+Displaying the Keyword List of the Part Family</a></li>
+  <li>
+<a href="#Displaying value kw of the PF">
+Displaying the Keyword's Value of the each Description of the Part Family</a></li>
+  <li>
+<a href="#resolving the Part config">
+Resolving Part Configuration</a></li>
+  <li><a href="#Saving the doc">Closing the Catalog</a></li>
+</ol>
+<p>Some operations like create a document, save a document, retrieve the design
+table have been factorized in global
+functions. These functions are defined in the <i>CAACciCatalogServices.cpp </i>file<i>.
+</i>You retrieve theirs explanations in the &quot;Creating a
+Catalog&quot; article [<a href="#References">4</a>] .</p>
+<!---------------------------------comment------------------------------------->
+
+<ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+</ol>
+
+
+<h4>
+
+
+<a name="creating a new doc"></a>
+
+
+Creating a New Catalog Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATDocument * pDocument = NULL ;
+    CATICatalogChapterFactory * pICatalogChapterFactory = NULL ;
+
+    rc = ::<b>CAACreateCatalogDocument</b>(&amp;pDocument,&amp;pICatalogChapterFactory);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="CAACciCatalogCreationStructure.htm#CAACreateCatalogDoc">CAACreateCatalogDocument</a>
+global
+function creates a &quot;catalog&quot; document and returns a <i>CATICatalogChapterFactory</i>
+interface pointer on its root container. This interface is necessary to create
+chapters.&nbsp;</p>
+<h4><a name="Creating the Root chap"></a>Creating the Root Chapter&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pICatalogChapterFactory) )
+    {
+       CATICatalogChapter * piNuts6SidesChapter = NULL ;
+
+       CATUnicodeString <b>ChapterName</b> = &quot;Nuts6Sides&quot; ;
+       CATBoolean <b>IsEndChapter</b> = FALSE ;
+       rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piNuts6SidesChapter);
+       ...
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code> Nuts6Sides</code> chapter is created thanks to the <code>CreateChapter</code>
+method of the <i>CATICatalogChapterFactory</i> interface. The second parameter, <code>IsEndChapter</code>,
+specifies that the chapter is a not a end chapter, so not a family. The returned pointer, <code>piNuts6SidesChapter</code>,
+must be released as soon as it will be useless.</p>
+
+<p>The <code> Nuts6Sides</code> chapter is the first chapter created in the new
+document, so it is the root chapter. It means that you can retrieve it thanks to
+the <code>GetRootChapter </code>method of the same interface<code> </code><i>CATICatalogChapterFactory</i>
+. Refer to the use case &quot;Browsing a Catalog&quot; [<a href="#References">5</a>]
+for an example about this method.</p>
+<h4><a name="creating the end chapter"></a>Creating the End Chapter&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATICatalogChapter * piNuts6SidesFamily = NULL ;
+
+       if ( SUCCEEDED(rc) )
+       {
+          CATUnicodeString     ChapterName = &quot;Nuts6SidesFamily&quot; ;
+          CATBoolean           <b>IsEndChapter</b> = TRUE ;
+          rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piNuts6SidesFamily);
+          ...
+       }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>As the <code> Nuts6Sides</code> chapter, the <code>Nuts6SidesFamily</code> chapter is
+created thanks to the <i>CATICatalogChapterFactory </i>interface. But contrary to
+the <code>Nuts6Sides</code>
+chapter, the second argument of this method is TRUE: it means
+that the <code>Nuts6SidesFamily</code>  chapter is a end chapter, in other words, it could
+contains only descriptions referencing components and not chapters.</p>
+The new chapter is linked with its parent chapter thanks a new description
+created on the parent chapter. In this case the parent chapter is the <code>Nuts6Sides</code>
+Chapter.&nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piNuts6SidesFamily) &amp;&amp; (NULL != piNuts6SidesChapter) )
+       {                    
+          <b>CATILinkableObject</b> * pLinkOnFamily = NULL ;
+          rc = <b>piNuts6SidesFamily</b>-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnFamily);     
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = piNuts6SidesChapter-&gt;<b>AddDescription</b>(piDescription, pLinkOnFamily);
+             if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+             {
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             }
+
+             pLinkOnFamily-&gt;Release();
+             pLinkOnFamily = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p> Like any kind object to set in a description, the <i>CATILinkableObject</i>
+interface on the <code>Nuts6SidesFamily</code>  chapter, <code>pLinkOnFamily</code>,
+is necessary.&nbsp; The <code>AddDescription</code> method applied&nbsp; to the <code>Nuts6Sides</code> 
+chapter,&nbsp;the parent chapter pointed by <code>piNuts6SidesChapter</code>, creates a new
+description with the <code>pLinkOnFamily </code>interface pointer on the <code>Nuts6SidesFamily</code>  
+chapter.</p>
+<h4><a name="addign dt"></a>
+Adding the Design Table to the End Chapter which Becomes a Part Family</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          CATDocument * pCAANuts6SidesDocument = NULL ;
+          CATUnicodeString ModelDocName = &quot;CAANuts6Sides.CATPart&quot; ;
+          <b>ModelDocName</b> = iInputPath + Slash + &quot;CAANuts6Sides.CATPart&quot; ;
+
+          CATIDesignTable * <b>pDesignTable</b> = NULL ;
+          if ( SUCCEEDED(rc) )
+          {
+             rc = ::<b>CAARetrieveDTInPartDocument</b>(ModelDocName,<b>pDesignTable</b>);
+          }
+          if ( SUCCEEDED(rc) &amp;&amp; ( NULL!=pDesignTable) )
+          {
+             rc = piNuts6SidesFamily-&gt;<b>AddFamilyDescriptionsFromDesignTable</b>(<b>pDesignTable</b>);
+             ...
+             pDesignTable-&gt;Release();
+             pDesignTable = NULL ;
+          } 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="CAACciCatalogCreationStructure.htm#CAARetrieveDTinPartDocument">CAARetrieveDTInPartDocument</a><b>
+</b>global function retrieves the design table from the <code>CAANuts6Sides</code> Part document.&nbsp;The
+design table is associated with a Part Family thanks to the <code>AddFamilyDescriptionsFromDesignTable</code>
+method. This method is applied on <code>piNuts6SidesFamily</code>, the <i>CATICatalogChapter</i>
+interface pointer on the <code>Nuts6SidesFamily</code> chapter.&nbsp;</p>
+<p>It is important to notice that the design table must contain the <code>PartNumber</code>
+column.&nbsp;The <a href="CAACciCatalogCreationStructure.htm#CAARetrieveDTinPartDocument">CAARetrieveDTInPartDocument</a>
+doesn't check that but it is a mandatory pre-requisite for the design table. The
+<code>PartNumber</code>&nbsp; value represents the name of the description. The <code>GetName</code>
+method of the <i>CATICatalogDescription</i> returns this value (In fact, you
+will see in the &quot;<a href="#displaying the KW list of the PF">Displaying the Keyword List of the Part Family&quot;</a>
+section, the value of the <code>PartNumber</code>&nbsp; keyword)</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">On
+a Part family you can associate several design table from the same Part, but it
+is not recommended to associate design tables from several Part document.</p>
+<h4><a name="retrieving the Descriptions of the PF"></a>Retrieving the Descriptions of the Part
+Family</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          CATListValCATICatalogDescription_var * pListDesc = NULL ;
+          int NbDesc = 0 ;
+          if ( SUCCEEDED(rc) )
+          {
+             rc = piNuts6SidesFamily-&gt;<b>ListDescriptions</b>(pListDesc);
+             NbDesc = pListDesc-&gt;Size() ;
+             ...
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The list of descriptions of the <code>Nuts6SidesFamily</code> chapter, the
+Part Family, is retrieved thanks to the <code>ListDescriptions</code> method.
+This method is applied on <code>piNuts6SidesFamily, </code>the <i>CATICatalogChapter</i>
+interface pointer on the <code>Nuts6SidesFamily </code>chapter.&nbsp;</p>
+<h4><a name="displaying the KW list of the PF"></a>Displaying the Keyword List of the Part Family</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          int NbKeyword = 0 ;
+          if ( SUCCEEDED(rc) )
+          {
+             rc = piNuts6SidesFamily-&gt;<b>ListKeywords</b>(pListKeyword);
+             if ( SUCCEEDED(rc) &amp;&amp; (NULL != pListKeyword) )
+             {
+                NbKeyword = pListKeyword-&gt;Size() ;
+                ...
+                for ( int i= 1 ; i&lt;= NbKeyword; i++)
+                {
+                   CATICatalogKeyword_var spKeyword = (*pListKeyword)[i];
+                   if ( NULL_var != spKeyword )
+                   {              
+                      cout &lt;&lt;&quot;         &quot; &lt;&lt; spKeyword-&gt;GetKeywordName().CastToCharPtr() &lt;&lt; endl;               
+                   } 
+                }
+                cout &lt;&lt; endl;
+             }else rc = E_FAIL ;
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After the association of the design table on the chapter, a keyword for each column of the design table has been
+automatically created on the chapter. There is
+at least the <code>PartNumber</code>  keyword since the design table contains
+necessarily a column with this name.&nbsp;</p>
+<p>The list of keywords of the <code>Nuts6SidesFamily</code> chapter, the Part
+Family, is retrieved thanks to the <code>ListKeywords</code> method. This method
+is applied on <code>piNuts6SidesFamily, </code>the <i>CATICatalogChapter</i>
+interface pointer on the <code>Nuts6SidesFamily </code>chapter.&nbsp;</p>
+<h4><a name="Displaying value kw of the PF"></a>
+Displaying the Keyword's Value of each Description&nbsp;of the Part Family</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pListKeyword) &amp;&amp; ( NULL !=pListDesc))
+          {
+                 int i = 1 ;
+                 while ( SUCCEEDED(rc) &amp;&amp; (i &lt;= NbDesc ))
+                 {
+                     CATUnicodeString KWName, KWValue;
+                     CATICatalogDescription_var <b>spDesc</b> = (*pListDesc)[i] ;
+    
+                     if ( NULL_var != spDesc )
+                     {
+                        for ( int j= 1 ; j &lt;= NbKeyword ; j++ )
+                        {
+                             if ( NULL_var !=  (*pListKeyword)[j] )
+                             {
+                                CATUnicodeString <b>KWName</b> = (*pListKeyword)[j]-&gt;<b>GetKeywordName</b>();
+                                rc = <b>spDesc</b>-&gt;<b>GetValue</b>(<b>KWName</b>, <b>KWValue</b>) ;
+                                ...
+                             }
+                        }
+                     }
+                     ...
+                     i++ ;
+                 }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The value of each keyword is defined in using the values in the design
+table.&nbsp;</p>
+<h4>
+<a name="resolving the Part config"></a>
+ Resolving the Part Configuration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          if ( SUCCEEDED(rc) &amp;&amp; ( NULL!= pListDesc) )
+          {
+                 int i = 1 ;
+                 while ( SUCCEEDED(rc) &amp;&amp; (i &lt;= NbDesc ))
+                 {
+                     CATICatalogDescription_var spDesc = (*pListDesc)[i] ;
+                      
+                     if ( NULL_var != spDesc )
+                     {
+                        rc = spDesc-&gt;<b>ResolvedDocumentFromDesignTable</b>();
+                        ...
+                     }
+                     i++ ;
+                 }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pListDesc</code> is the list of <i>CATICatalogDescription</i> smart
+pointers for the <code>Nuts6SidesFamily</code> chapter. Before the resolution,
+all these descriptions&nbsp;contain a pointer to the <code>CAANuts6Sides</code>
+Part document, the document which contains the design table. In applying the <code>ResolvedDocumentFromDesignTable</code>
+method on a description, a<b>&nbsp;</b> Part is
+created in taken account of the configuration of the design table.&nbsp;</p>
+<p>Notice, that if the use case resolves all the descriptions, it is not mandatory.&nbsp;</p>
+<h4><a name="Saving the doc"></a>Closing the New Catalog</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL != pDocument) )
+    {
+        CATUnicodeString DocumentName = &quot;<b>CAANuts6Sides</b>&quot; ;
+        rc = <b>::CAACloseCatalogDocument</b>(DocumentName,*pDocument,iOutputPath);
+        pDocument = NULL ;
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The<a href="CAACciCatalogCreationStructure.htm#CAAClosecatalogDocument"> CAACloseCatalogDocument</a> global
+function saves the new catalog&nbsp; under the name <code>CAANuts6Sides</code></p>
+  <p align="right">[</a><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use cases illustrates how to associate a design table to a chapter. This
+chapter, a end chapter, is also called a Part family. Four things to retain:</p>
+<ul>
+  <li>The design table must contain the Part Number column</li>
+  <li>The keywords of the Part family are automatically created from the design
+    table keywords</li>
+  <li>The value of each keyword for each description comes from the design table</li>
+  <li>A description can be resolved to create a Part in taken account of the
+    configuration referenced by the design table. The location of the resolved
+    Part document is defined in Tools/Options Catalogs tab page.</li>
+</ul>
+<p align="right"><i></i>[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAACciCatalogCreationPart.htm">Creating A Catalog With Part
+      Documents</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAACciCatalogCreationStructure.htm">Creating a
+      Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAACciCatalogBrowsing.htm">Browsing a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

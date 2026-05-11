@@ -1,0 +1,611 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a New StartUp Deriving from a Mechanical StartUp</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a New StartUp Deriving from a Mechanical StartUp</h3>
+      <em>Creating a StartUp and a StartUp factory interface</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The aim of this article is to describe all the steps to build a new
+      mechanical feature: creating a new StartUp, creating a StartUp's
+      catalog and creating a factory to create instances. This new feature,
+      deriving from a mechanical feature, benefits from mechanical behaviors. The
+      &quot;Integrating a New Mechanical Feature in V5&quot; [<a href="#References">1</a>]
+      article lists them and explains the interfaces that the new feature must
+      necessarily implement, or eventually implement, to be fully integrated in V5 and
+      to behave as any other Dassault Systemes mechanical feature.</p>
+      <p>This article is part of a set of documents which describe the
+      Mechanical Modeler. Refer to the &quot;Mechanical
+      Modeler Overview&quot; [<a href="#References">2</a>] article to have a
+      view of all these articles.</p>
+      <ul>
+        <li><b><a href="#Choosing the deriving MF">Choosing the Mechanical Feature to
+          Derive from</a></b></li>
+        <li><strong><a href="#Creating the new derived startup">Creating the New Derived StartUp</a></strong></li>
+        <li><strong><a href="#Creating the interface of type">Creating an
+          Interface of Type</a></strong></li>
+                <li><strong><a href="#Creating the Factory">Creating the New
+                  Derived StartUp Factory</a></strong>
+                  <ul>
+                    <li><strong><a href="#Creating the interface">Creating the
+                      Factory Interface</a></strong></li>
+                    <li><strong><a href="#implementing the interface">Implementing
+                      the Factory Interface</a></strong></li>
+                  </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Choosing the deriving MF"></a>Choosing the Mechanical Feature to
+Derive from</h3>
+<p>&nbsp;The
+next UML schema [<a href="#Fig.1">Fig.1</a>] presents a part of the mechanical feature tree:</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Mechanical Features Architecture</i></caption>
+  <tbody>
+    <tr>
+      <td>
+		<img src="images/CAAMmrDerivableFeature.jpg" width="861" height="624"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To create a new feature type, you should derive from an existing public feature.
+These features and their public attributes can be found in the <b>.CATSpec</b>
+files. In the CAA encyclopedia, you will find references to these files in the Quick
+Reference section.&nbsp;</p>
+
+<p> In the case of mechanical features, there are two files:</p>
+<ul>
+  <li><b>MecMod</b>: MecMod Public Specs Reference [<a href="#References">4</a>]</li>
+  <p>This file contains the names of mechanical StartUps that you can
+  derive from. Depending on what you are going to do with your new CAA Feature, 
+	it might be judicious to choose the right ascendant feature to derive 
+	from... </p>
+   <p><i>Traditional Features: </i>
+	<ul>
+		<li>MechanicalFeature -&nbsp; a general mechanical feature type</li>
+		<li>GeometricalElement3D - a general geometrical feature [<a href="#References">3</a>]
+    type</li>
+		<li>MechanicalFormFeature - a solid feature type (Like a Pad...)</li>
+		<li>MechanicalContextualFeature - a solid contextual feature type (like 
+		a fillet or a chamfer...)</li>
+		<li>MechanicalElement - feature dedicated to define non geometrical 
+		features [<a href="#References">12</a>]</li>
+	</ul>
+	<p><i>Features Set - Dedicated to aggregation: </i>
+	<ul>
+		<li>GSMTool -&nbsp; a Set define to aggregate geometrical feature 
+		without any order</li>
+		<li>MechanicalSet - a Set define to aggregate non geometrical features (i.e. MechanicalElements) without any order 
+		[<a href="#References">13</a>]</li>
+	</ul>
+  <li><b>CATHybridShape</b>: CATHybridShape Public Specs Reference</li>
+ 
+</ul>
+<blockquote>
+  <p>This file references the GSMGeom StartUp that you can also derive from.</p>
+</blockquote>
+<p>How to choose ? The choice depends on the targeted domain in which the new feature
+should be part of:</p>
+<ul>
+  <li>if the new feature has no geometry</li>
+</ul>
+<blockquote>
+  <p>By deriving only from the <b>MechanicalFeature</b> StartUp, you have a
+  mechanical feature without geometry but integrated in some mechanical mechanisms.
+  For example, you can insert this feature inside the MechanicalPart [<a href="#References">9</a>]
+  and the feature will be displayed in the specification tree.</p>
+	<p>However, it is preferable to derive from <b>MechanicalElement</b> StartUp 
+	which is really dedicated to define non geometrical feature</p>
+</blockquote>
+<ul>
+  <li>If the new feature is a <b> solid</b> feature, then it contributes to the design
+    of a solid Part.</li>
+    <p>There are two possibilities: </p>
+    <ul>
+      <li>Deriving from <b>MechanicalFormFeature</b></li>
+      <p>The new feature type has a form.&nbsp;Take a Groove for instance. From its input parameters, a Curve and a
+      closed Sketch, one can easily derive a shape (a <em>Form) </em>by sliding
+      the Sketch along the Curve. The resulting solid must then be operated
+      with the Part's shape as it exists prior to the definition of the Groove,
+      by removing matter (thanks to a boolean difference operation in this
+      case).</p>
+
+      <li>Deriving from <b> MechanicalContextualFeature</b></li>
+        <p>In contrast to form features, contextual features, cannot be applied by
+        first computing a standalone
+        footprint, and then operating it with the geometrical features set. Fillets, Drafts and
+        generally all <em>Dress up features </em>fall into this category, because their shape is determined
+        not only by their own input parameters, but also by the local topology
+        of the target geometrical features set (hence their name). Contextual features do not have a
+        footprint.</p>
+</ul>
+  <li>If the new feature is <b> surfacic or wireframe</b>:<p>There are two
+    possibilities in this case as well:</p>
+    <ul>
+      <li>Deriving from <b>GSMGeom</b></li>
+      <p>This allows you to benefit from the following behaviors of the Generative Shape Design (GSD)
+      features [<a href="#References">3</a>]:</p>
+      <ul>
+      <li>Replace&nbsp;mechanism</li>
+      <li>Changing Body mechanism</li>
+      <li>Applying a material&nbsp;</li>
+      <li>Contextual sub-menu</li>
+      <li>... [<a href="#References">1</a>]</li>
+      </ul>
+      <p>As well as the future Generative Shape Design (GSD) behaviors ...</p>
+      <li>Deriving from <b> GeometricalElement3D</b></li>
+      <p>There are two reasons to derive from this feature:</p>
+      
+      <ul>
+      <li>You want a surfacic/Wireframe feature without the GSD behaviors</li>
+      <li>You want to create a datum feature - Refer to the &quot;Datum versus
+        Specification&quot; section of &quot;The Contents of the Specification Container -
+        Geometrical Features&quot;
+        article [<a href="#References">3</a>]</li>
+      </ul>
+      
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Creating the new derived startup"></a>Creating the New Derived
+StartUp</h3>
+
+<p>The StartUp is a feature prototype that describes the data structure of all
+feature instances that will be created from it. The new StartUp must be created
+in a .<b>CATFct</b> catalog file. Here are the steps needed to realize the
+creation of a new StartUp:</p>
+<ol>
+  <li><a name="step 1"></a>Create a new OSM file or update an existing one for 
+	the new derived StartUp.&nbsp;</li>
+  <li><a name="Step 2"></a>Define the new derived StartUp</li>
+  <li><a name="Step 3"></a>Add new attributes to the derived StartUp</li>
+  <li><a name="Step 4"></a>Generate the catalog from the OSM</li>
+  <li>Create or modify the CatalogNameNLS.CATNls file to set an NLS name to the
+    new StartUp.</li>
+</ol>
+<p>These five steps are described in more detail in the following articles:</p>
+<ul>
+  <li>&quot;Creating an Externally Derived StartUp&quot; [<a href="#References">5</a>],&nbsp;
+    the reference use case&nbsp;</li>
+  <li>&quot;Creating
+      Combined Curve's Catalog&quot; [<a href="#References">6</a>], a use case
+    dedicated to a geometrical feature</li>
+</ul>
+<p>Once created, the StartUp should be able to be instantiated; See the &quot;<a href="#Creating the Factory">Creating the New Derived StartUp Factory</a>&quot;
+section below. Each feature instance should also be modifiable, as you will see
+in the next section.</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Creating the interface of type"></a>Creating an Interface&nbsp;of
+Type</h3>
+<p>The new feature has certainly its own specific attributes (see <a href="#Step 3">step
+3</a> in the previous section). To valuate them or to
+retrieve their values, it is recommended to create an interface of type, as
+compared to an interface of behavior. This interface enables you to access all
+specific attributes of the feature.&nbsp;</p>
+<p> To
+achieve this goal, two steps are necessary:</p>
+<ol>
+  <li><a href="#Creating the interface of type">Defining the Interface Of Type</a>
+  <li><a href="#implementing interface of type">Implementing the Interface of Type</a></li>
+</ol>
+<h4><a name="Creating interface of type"></a>Creating the Interface of Type</h4>
+<p> Refer to the &quot;Creating an Interface&quot; article [<a href="#References">7</a>], to create the header,
+the source and
+  the .trsc files of this interface.</p>
+<h4><a name="implementing interface of type"></a>Implementing the Interface of
+Type</h4>
+<p>This interface will be implemented on the new StartUp, so in the
+implementation source file you will find:&nbsp;</p>
+
+      <table class="code" width="336">
+      <tr>
+        <td width="328">
+          <pre>...
+CATImplementClass ( SourceName,
+                    DataExtension         ,
+                    CATBaseUnknown        ,
+                    <b>NameOfTheNewStartup</b>);
+...</pre>
+        </td>
+      </tr>
+    </table>
+<p>The <code>CATImplementClass</code> macro means that <code>SourceName</code> is a data extension of&nbsp;<i>
+</i><code>NameOfTheNewStartup</code>. The third argument
+must always be set to <i>CATBaseUnknown</i> or <i>CATNull</i> for any kind of
+extension.&nbsp; <code>NameOfTheNewStartup </code>is the name of the StartUp 
+described in the Catalog. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Creating the Factory"></a>Creating the New Derived StartUp Factory</h3>
+<p>This paragraph explains how to create instances of the new StartUp. To
+achieve this goal, two steps are necessary:</p>
+<ol>
+  <li><a href="#Creating the interface">Defining the Factory Interface</a>
+  <li><a href="#implementing the interface">Implementing this Interface</a>&nbsp;</li>
+</ol>
+<h4>
+  <a name="Creating the interface"></a>Creating the Factory Interface</h4>
+<p>In most cases, this interface contains only one method which has as input
+arguments, the values needed to initialize the attributes of the new instance and
+as output
+  argument, the new instance.&nbsp;Here is an
+  example:</p>
+
+      <table class="code" width="336">
+      <tr>
+        <td width="328">
+          <pre>#ifndef CAAIXXFactory_h
+#define CAAIXXFactory_h
+
+#include &quot;CATBaseUnknown.h&quot;
+class CATISpecObject ;
+extern ExportedByCAADLL IID IID_CAAIXXFactory;
+
+class ExportedByCAADLL CAAIXXFactory : public CATBaseUnknown
+{
+  CATDeclareInterface;
+  public :
+    virtual HRESULT <b>CreateMyNewFeature</b>(...,..., 
+                                       CATISpecObject **pISpecObjectOnInstance) = 0;
+};
+
+#endif</pre>
+        </td>
+      </tr>
+    </table>
+<p>The last argument of this method, <code>pISpecObjectOnInstance</code>,&nbsp; is the newly created instance.&nbsp;&nbsp;</p>
+<p>Refer to the &quot;Creating an Interface&quot; article [<a href="#References">7</a>], to create the src and
+  the .trsc files .&nbsp;</p>
+<h4>
+  <a name="implementing the interface"></a>Implementing the Factory Interface</h4>
+<p>This section answers the following questions:</p>
+  <ul>
+  <li><a href="#Specification container">What is the component that implements
+    this interface </a>?&nbsp;</li>
+
+  <li><a href="#Generic contents of the method">What is the generic contents of
+    the <code>CreateMyNewFeature </code>method</a> ?</li>
+
+  <li><a href="#Location of the new instantiation">Where is the new instance
+    located</a> ?</li>
+  </ul>
+<h5><a name="Specification container"></a> Implementing the Interface on the Specification Container</h5>
+
+<p>This factory interface will be implemented on the specification container named <code>CATPrtCont</code>
+  [<a href="#References">8</a>]. So in the implementation source file, you will have
+a declaration such as:</p>
+
+      <table class="code" width="336">
+      <tr>
+        <td width="328">
+          <pre>CATImplementClass ( CAAEXXFactory,
+                    DataExtension         ,
+                    CATBaseUnknown        ,
+                    <b>CATPrtCont</b> );
+                    
+#include &quot;TIE_CAAIXXFactory.h&quot; 
+TIE_CAAIXXFactory( CAAEXXFactory);</pre>
+        </td>
+      </tr>
+    </table>
+<p>The <code>CATImplementClass</code> macro means that <i>CAAEXXFactory</i>
+is a data extension of <code>CATPrtCont</code> . The third argument
+must always be set to <i>CATBaseUnknown</i> or <i>CATNull</i> for any kind of
+extension.&nbsp;The TIE macro is needed to tie the implementation to its interface.&nbsp;</p>
+  <p>Do not forget to modify the interface dictionary to declare
+  that <code>CATPrtCont</code> implements the interface factory in the
+  library which contains the implementation of the interface.</p>
+       <table class="code" width="336">
+      <tr>
+        <td width="328">
+          <pre>CATPrtCont CAAIXXFactory libYYYY</pre>
+        </td>
+      </tr>
+    </table>
+  <h5><a name="Generic contents of the method"></a>The Contents of the Instantiation
+  Method</h5>
+<p>The generic contents of the <code>CreateMyNewFeature </code>method can be the
+following:</p>
+      <table class="code" width="533">
+      <tr>
+        <td width="525">
+          <pre>HRESULT CAAEXXFactory::<b>CreateMyNewFeature</b>( ...,...,
+                                        CATISpecObject ** pISpecObjectOnInstance )  
+{</pre>
+  <ol>
+  <li>
+    <pre><a href="#Getting a pointer on container">Get a CATIContainer pointer on &quot;this&quot;</a></pre>
+  </li>
+  <li>
+    <pre><a href="#Opening the catalog">Create a &quot;handler&quot; on the newly derived StartUp</a></pre>
+  </li>
+  <li>
+	<pre><a href="#Creating an instance">Create an instance of the derived StartUp</a></pre>
+	</li>
+	<li>
+	<pre><a href="#Subscribes to repository for Configuration Data Storage">Subscribes to repository for Configuration Data Storage</a></pre>
+	</li>
+	<li>
+	<pre><a href="#Gets Feature Type Information for BackUp / StartUp management">Gets Feature Type Information for BackUp / StartUp management - Only if you use a Geometrical Feature</a></pre>
+	</li>
+	<li>
+	<pre><a href="#setting default values">Set default values for the attributes of the new feature instance</a></pre>
+	</li>
+  </ol>
+
+}
+        </td>
+      </tr>
+    </table>
+  <p>1) <a name="Getting a pointer on container"></a>  Get the <i>CATIContainer</i>
+  interface pointer on &quot;this&quot;</p>
+      <table class="code" width="533">
+      <tr>
+        <td width="525"><pre>...
+<b>CATIContainer</b> * pIContainer = NULL ;  
+rc = QueryInterface( IID_CATIContainer , ( void**)&amp;pIContainer);    
+...</pre>
+        </td>
+      </tr>
+    </table>
+  <p>2) <a name="Opening the catalog"></a>Create a &quot;handler&quot; on the newly derived StartUp</p>
+      <table class="code" width="685">
+      <tr>
+        <td width="677"><pre>...
+    CATUnicodeString <b>StorageName</b> = &quot;NameOfTheCatalog.CATfct&quot;;
+    CATUnicodeString <b>ClientId</b> = &quot;MyCatalogClientId&quot;;
+    CATUnicodeString <b>StartupType</b> = &quot;NameOfTheNewStartup&quot;;
+
+    CATOsmSUHandler <b>StartupHandler</b>(StartupType, ClientId, StorageName);
+...</pre></td>
+      </tr>
+    </table>
+  <p>The
+  parameters of the &quot;handler&quot; constructor are:</p>
+  <ul>
+  <li><b>StartupType: </b>the name of our derived StartUp</li>
+  <li><b>ClientId</b> : The client id of the catalog containing the derived 
+	StartUp</li>
+  <li><b>StorageName</b> : The name of the catalog</li>
+  </ul>
+
+ <p>3) <a name="Creating an instance"></a>  Create an instance of the derived StartUp</p>
+      <table class="code" width="739">
+      <tr>
+        <td width="731"><pre>...
+    CATISpecObject_var <b>spISpecObjectOnInstance</b>;
+    rc = StartupHandler.Instanciate(spISpecObjectOnInstance, pIContainer);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  <p>The instance is returned via a smart pointer on the <i>CATISpecObject</i> 
+	interface: <code>spISpecObjectOnInstance</code> </p>
+
+<p>4) <a name="Subscribes to repository for Configuration Data Storage"></a>
+Subscribes to repository for Configuration Data Storage</p>
+<p>As Mechanical Modeler and CGM algorithms are versioned, feature instances are 
+&quot;software level dependant&quot;.<br>
+Consequently, feature instances must store the software configuration to choose 
+the right level to use, particularly on build process.[<a href="#References">10</a>]<br>
+This storage must be initialize just after instantiation thanks to &quot;CreateConfigurationData&quot; 
+method of CATMmrAlgoConfigServices.<br>
+&nbsp;</p>
+      <table class="code" width="739" id="table1">
+      <tr>
+        <td width="731"><pre>...
+   rc = <b>CATMmrAlgoConfigServices::CreateConfigurationData</b>(*pISpecObjectOnInstance);
+   if( FAILED(rc) )
+     return rc;
+...</pre>
+        </td>
+      </tr>
+    </table>
+  <p><code>pISpecObjectOnInstance</code> is the output argument of the method.&nbsp;</p>
+<p>5) <a name="Gets Feature Type Information for BackUp / StartUp management">
+</a>Gets Feature Type Information for BackUp / StartUp management - Only if you 
+use a Geometrical Feature</p>
+<p>BackUp / StartUp is a specific mode which occurs when something goes wrong 
+with the CAA feature (when startup catalog and code are not longer available on 
+the runtime view) [<a href="#References">11</a>]<br>
+<br>
+If your feature derived from a &quot;geometrical startup&quot; ( <b>GeometricalElement3D 
+or GSMGeom </b>) ,&nbsp; you need to define and store its type according to <b>
+CATIInputDescription</b> implementation. This information, stored on the 
+instance, will be useful in <b>BackUpStartUp</b> Mode to determine which 
+behaviours are authorized. </p>
+<p>This operation is done after instantiation, calling <b>
+CATMmrFeatureAttributes::SetFeatureType</b>&nbsp; </p>
+      <table class="code" width="739" id="table2">
+      <tr>
+        <td width="731"><pre>...
+<b>CATIInputDescription</b>* pInputDescriptionOnInstance = NULL;
+rc = (*pISpecObjectOnInstance)-&gt;QueryInterface( IID_CATIInputDescription, (void**) &amp;pInputDescriptionOnInstance);
+
+...
+
+CATIInputDescription::FeatureType Feature_type = CATIInputDescription::FeatureType_Unset;
+rc = pInputDescriptionOnInstance -&gt; <b>GetFeatureType</b>(Feature_type);
+
+...
+
+rc = <b>CATMmrFeatureAttributes::SetFeatureType</b>(*pISpecObjectOnInstance, Feature_type);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  <p><b><i>Note:</i></b> This step is not to do if your feature is not 
+	geometrical or if it is a &quot;Solid feature&quot; i.e. derivate from <b>
+	MechanicalFormFeature, MechanicalContextualFeature.</b></p>
+<p>6) <a name="setting default values"></a>  Set default values for the attributes of the
+new feature instance</p>
+  <p>By using the interface described in &quot;<a href="#Creating the interface of type">Creating an
+  Interface of Type</a>&quot; section, you can apply default values for the attributes.</p>
+
+<h5><a name="Location of the new instantiation"></a>Location of the New Instance</h5>
+
+<p>It is recommended that the factory does not aggregate the new instance in a geometrical features set
+or in a MechanicalSet[<a href="#References">9</a>].&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>A new mechanical feature should derive from one of the five available public
+mechanical StartUps list below:</p>
+<ul>
+  <li>GeometricalElement3D &gt;&gt;&gt; To design a new surfacic or wireframe feature</li>
+  <li>GSMGeom, &gt;&gt;&gt; To design a new surfacic or wireframe feature</li>
+  <li>MechanicalFormFeature, &gt;&gt;&gt; To design a new solid feature</li>
+  <li>MechanicalContextualFeature, &gt;&gt;&gt; To design a new solid feature</li>
+  <li>MechanicalElement. &gt;&gt;&gt; To design a new non geometrical feature</li>
+</ul>
+<p>You can also create a new mechanical feature designed to aggregate features. 
+In this case, you should derived from GSMTool or MechanicalSet startUps, 
+depending on what kind of features you want to aggregate.</p>
+<p>The main steps necessary to create the new StartUp are:</p>
+<ul>
+  <li>Define the new derived StartUp using OSM - create the catalog.</li>
+  <li>Creating an interface of type to retrieve or set the values of the
+    feature's attributes</li>
+  <li>Creating the new derived StartUp factory interface&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="859">
+  <tr>
+    <td valign="top" width="50">[1]</td>
+    <td width="795"><a href="CAAMmrFeatureIntegration.htm">Integrating a New
+      Mechanical Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[2]</td>
+    <td width="795"><a href="CAAMmrMechModOverview.htm">Mechanical Modeler
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[3]</td>
+    <td width="795"><a href="CAAMmrContentsSpecCont2.htm"> The Contents of the Specification Container
+      - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[4]</td>
+    <td width="795"><a href="../CAAMmrQuickRefs/CAAMmrMechMod.htm"> The MecMod Public Specs Reference&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[5]</td>
+    <td width="795"> <a href="../CAAOsmTechArticles/CAAOsmTaMaintainingCatalogs.htm">
+    Managing Startup Catalogs</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[6]</td>
+    <td width="795"> <a href="../CAAMmrUseCases/CAAMmrCombCrvCatalog.htm">Creating
+      Combined Curve's Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[7]</td>
+    <td width="795"><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating an Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[8]</td>
+    <td width="795"><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[9]</td>
+    <td width="795"><a href="CAAMmrContentsSpecCont1.htm"> The Contents of the Specification Container
+      - Geometrical Features Sets</a></td>
+  </tr>
+	<tr>
+    <td valign="top" width="50">[10]</td>
+    <td width="795"><a href="CAAMmrVersioningMechFeat.htm">Configuration and Versioning in Mechanical Modeler</a></td>
+  </tr>
+	<tr>
+    <td valign="top">[11]</td>
+    <td><a href="CAAMmrBackupStartUp.htm">Geometrical Backup StartUp - BackUp / 
+	StartUp Mode</a></td>
+  </tr>
+	<tr>
+    <td valign="top">[12]</td>
+    <td><a href="CAAMmrMechanicalElement.htm">MechanicalElement StartUp and 
+	Feature</a></td>
+  </tr>
+	<tr>
+    <td valign="top">[13]</td>
+    <td><a href="CAAMmrMechanicalSet.htm">MechanicalSet StartUp and Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="851">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+	<tr>
+    <td valign="top">Version: <strong>2</strong>   [Jan 2007]</td>
+    <td valign="top">Document updated (Algorithm Services and BackUp/StartUp 
+	data)</td>
+  </tr>
+	<tr>
+    <td valign="top">Version: <strong>3</strong>   [Mar 2007]</td>
+    <td valign="top">Document updated (New Derivable StartUp - MechanicalElement 
+	&amp; MechanicalSet)</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

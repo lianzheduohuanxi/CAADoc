@@ -1,0 +1,253 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 5.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Customizing Effectivity Domain On Export</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>PDM Object Hub</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Customizing Effectivity Domain On Export</H3>
+        <P><EM>I</EM><I>mplementing The UE_EH_MH_integration User Exit </I></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article discusses the <I>CAAEiiCustomDomain</I> use case which 
+        shows how to select a particular effectivity domain when exporting data 
+        from ENOVIA to DELMIA IPD.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><A href="#UseCase"><STRONG>The <I>CAAEiiCustomDomain</I> Use 
+            Case</STRONG></A>
+            <UL>
+                <LI><A href="#What">What Does <I>CAAEiiCustomDomain</I> Do</A></LI>
+                <LI><A href="#How">How to Launch <I>CAAEiiCustomDomain</I></A></LI>
+                <LI><A href="#Where">Where to Find the <I>CAAEiiCustomDomain</I> 
+                Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>This use case shows how the UE_EH_MH_integration user exit can be 
+implemented.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The <I><B>CAAEiiCustomDomain</B></I> Use Case</H3>
+<P><I>CAAEiiCustomDomain</I> is a use case of the <B>
+<SPAN style="font-weight: 400">CAAENOVEdeIntegrationItf.edu</SPAN></B> 
+framework. It gives an example on how to implement&nbsp; the 
+UE_EH_MH_integration user exit that is called by the export tools.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does <B><I>CAAEiiCustomDomain</I></B> Do</H4>
+<P>The goal of <I>CAAEiiCustomDomain</I> is to select a particular effectivity 
+domain name by implementing the UE_EH_MH_integration user exit. This is 
+necessary when exporting to DELMIA IPD that only supports a single domain, when 
+many can be defined in ENOVIA. By default, ENOVIA will select the first 
+effectivity domain if there is no customization.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch <I>CAAEiiCustomDomain</I></H4>
+<P>To launch <I>CAAEiiCustomDomain</I>, you will need to </P>
+<UL>
+    <LI>set up the build time environment</LI>
+    <LI>compile the <I>CAAEiiCustomDomain</I> module along with its 
+    prerequisites [<A href="#References">1</A>]</LI>
+    <LI>set up the run time environment and launch ENOVIA</LI>
+    <LI>transfer data from ENOVIA to IPD</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the <I>CAAEiiCustomDomain</I> Code</H4>
+<P><I>CAAEiiCustomDomain</I> code is located in the <B>CAAEiiCustomDomain.m</B> 
+use case module of the <B>CAAENOVEdeIntegrationItf.edu </B>framework:</P>
+<TABLE>
+    <TR>
+        <TD><CODE>
+        InstallRootDirectory/CAAENOVEdeIntegrationItf.edu/CAAEiiCustomDomain.m</CODE></TD>
+    </TR>
+</TABLE>
+<P>where <CODE>InstallRootDirectory</CODE> is the root directory of your CAA V5 
+installation. It consists of one source file named <B>
+CAAEiiCustomDomainUserExit.cpp<SPAN style="font-weight: 400"> and one header 
+file named </SPAN>CAAEiiCustomDomainUserExit.h.</B></P>
+<P align="right">[<A href="#Top">Top</A>]
+<!---------------------------------comment------------------------------------->
+</P>
+<H3><A name="Step"></A>Step-by-Step</H3>
+<P>There are two logical steps in <I>CAAEiiCustomDomain</I>:</P>
+<OL>
+    <LI><A href="#Create_product">Implementing the UE_EH_MH_integration User 
+    Exit </A></LI>
+    <LI><A href="#Add_existing">Updating the Interface Dictionary</A></LI>
+</OL>
+<P>We will now comment each of these steps by looking at the code.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Create_product"></A>Implementing the UE_EH_MH_integration User Exit</H4>
+<P>First we need to define the CAAEiiCustomDomainUserExit class deriving from 
+CATBaseUnknown with a <TT>Get_EffectivityDomain</TT> method. Below is the class 
+definition from the <B>CAAEiiCustomDomainUserExit.h</B> header file. Please note 
+that the copy constructor and the assignment operator are declared as private to 
+prevent the compiler from defining it as public by default. This is to avoid 
+extensions being directly instantiated by the application.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>class CAAEiiCustomDomainUserExit: public CATBaseUnknown
+{
+  CATDeclareClass;</PRE>
+        <PRE>  public:</PRE>
+        <PRE>  // Standard constructors and destructors for an implementation class
+  // -----------------------------------------------------------------
+     CAAEiiCustomDomainUserExit ();
+     virtual ~CAAEiiCustomDomainUserExit ();</PRE>
+        <PRE>    /**
+     * Implements a function from an interface.
+     * @see ENOVEdeIntegrationItf.ENOVIExUE_EH_MH_integration#Get_EffectivtiyDomain
+     */
+     HRESULT Get_EffectivtiyDomain (CATUnicodeString &amp;  oDomain) ;
+</PRE>
+        <PRE>  private:
+  // The copy constructor and the equal operator must not be implemented
+  // -------------------------------------------------------------------
+  CAAEiiCustomDomainUserExit (CAAEiiCustomDomainUserExit &amp;);
+  CAAEiiCustomDomainUserExit&amp; operator=(CAAEiiCustomDomainUserExit&amp;);</PRE>
+        <PRE>};</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Next we will look at the <B>CAAEiiCustomDomainUserExit.cpp</B> source file.</P>
+<P>First, CAAEiiCustomDomainUserExit is declared as a CodeExtension to the 
+UE_EH_MH_integration late type using the CATImplementClass macro:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>CATImplementClass( CAAEiiCustomDomainUserExit,
+                   CodeExtension,
+                   CATBaseUnknown,
+                   UE_EH_MH_integration );</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Second, our implementation is TIEd to the ENOVIExUE_EH_MH_integration 
+interface with:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>#include &quot;TIE_ENOVIExUE_EH_MH_integration.h&quot;
+TIE_ENOVIExUE_EH_MH_integration( CAAEiiCustomDomainUserExit);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Lastly, we implement the <TT>Get_EffectivityDomain</TT> method to do what we 
+want, that is always returning &quot;Manufacturing Effectivity&quot; as domain:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>HRESULT CAAEiiCustomDomainUserExit::Get_EffectivtiyDomain (CATUnicodeString &amp; oDomain)
+{
+	//return the desired domain name 
+	oDomain = CATUnicodeString(&quot;Manufacturing Effectivity&quot;);
+	return S_OK;
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Add_existing"></A>Updating the Interface Dictionary</H4>
+<P>Next we use the CAAENOVEdeIntegrationItf.edu.dic interface dictionary to 
+register what the shared library is actually implementing. It is located in the 
+following directory:</P>
+<TABLE>
+    <TR>
+        <TD><CODE>
+        InstallRootDirectory/CAAENOVEdeIntegrationItf.edu/CNext/code/dictionary/</CODE></TD>
+    </TR>
+</TABLE>
+<P>It must be edited (by removing the leading comment character) to contain the 
+line</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>UE_EH_MH_integration ENOVIExUE_EH_MH_integration libCAAEiiCustomDomain</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>This indicates that the UE_EH_MH_integration component implementing the 
+ENOVIExUE_EH_MH_integration interface is located in the libCAAEiiCustomDomain 
+shared library, the one our CAAEiiCustomDomain.m module should be creating.</P>
+<P>Once the dictionary is edited, it must be installed in the ../code/dictionary 
+directory of the CAAENOVEdeIntegration.edu framework, either by copying it or by 
+issuing the mkCreateRuntimeView command.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to select a particular effectivity domain 
+when exporting data to DELMIA IPD.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>Reference</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">[1]</TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">Version: <STRONG>1</STRONG> [Apr 2004]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2004, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

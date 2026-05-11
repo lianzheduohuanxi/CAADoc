@@ -1,0 +1,684 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Application Property Access</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Application Property Access</h3>
+      <em>How to add a property page for your application properties</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The Tools/Options menu displays a dialog box containing a workshop and
+      workbench list, presented&nbsp; by solution, and associated property
+      sheets. For each workshop or
+      workbench, the associated property sheet gathers the property pages that
+      enable the end user to access and modify persistent properties for the
+      documents edited using this workshop or workbench and saved in the end
+      user's setting files. This article explains how to create and integrate
+      your own property sheet and your own property pages to this dialog box.
+      <ul>
+        <li><a href="#100000"><strong>What Are the Tools/Options Property Sheets
+          and Pages?</strong></a></li>
+        <li><a href="#Property access"><b>Property Access</b></a></li>
+        <li><a href="#200000"><strong>Creating Your Property Page</strong></a>
+          <ul>
+            <li><a href="#210000"><strong>Creating the Property Page Editor
+              Factory</strong></a></li>
+            <li><a href="#220000"><strong>Creating the Property Page Editor</strong></a></li>
+            <li><a href="#230000"><strong>Creating the Property Page Dialog</strong></a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#title PP">Setting a Title to the Property Page</a></strong></li>
+        <li><b><a href="#How to integrate the PP in a PS">How to Integrate a
+          Property Page in a Specific Property Sheet</a></b></li>
+        <li><a href="#Creating a PP doc"><b>Creating a Property Page
+          Documentation</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+        </ul>
+        </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>What Are the Tools/Options Property Sheets and Pages?</h3>
+<p>A property sheet is a tabbed dialog box, each tab containing a property page.
+It enables the end user to work with many properties gathered in a single place,
+rather than to display several dialog boxes accessed each from a different menu.
+Each property page contains various controls to set values or options for the
+property. When the end user clicks on a tab, the controls for the property are
+displayed and the end user can alternatively display different property pages by
+clicking on different tabs. A property page accessed from the Tools menu is
+either of general purpose or attached to a workshop or workbench. It manages
+persistent parameters that the end user can modify or reset to their default
+values. These parameters are dedicated to application management and are stored
+in setting files. Other property pages can exist, namely those dedicated to a
+given object and accessed using Edit Properties, or from the Properties item of
+the contextual menu triggered from an object. These property pages manage
+parameters or attributes that the end user can assign to the objects and are
+stored with the objects in the document.</p>
+<p>The Tools Options property sheet dialog box displays the list of the
+currently available workshops and workbenches along with the associated property
+pages.</p>
+<p><img border="0" src="images/CAACafToolsOptions1.jpg" width="703" height="522"></p>
+<p>The first item in the workshop and workbench list is named
+&quot;General&quot; and is not really a workshop. It gathers property pages
+common to all applications. Clicking on a workshop or workbench name displays
+the associated property sheet. Below is the property sheet associated with the
+Material Library workbench . It includes one property page.</p>
+<p><img border="0" src="images/CAACafToolsOptions2.jpg" width="704" height="525"></p>
+<p>Each property page displays controls to set parameter values or working
+options for a given property or for several.</p>
+<p>The dialog box works as follows:
+<ul>
+  <li>Clicking OK commits all the changed values and options in all the property
+    pages of all the property sheets modified or simply scanned, that is saves
+    the setting repository objects with these values, and closes the Options
+    dialog box.</li>
+  <li>Clicking Cancel cancels all the modifications and closes the Options
+    dialog box.</li>
+  <li>Clicking Reset resets all the values and options to the default ones<br>
+    <img border="0" src="images/CAACafReset.jpg" width="334" height="233"><br>
+    Reset needs then to be confirmed by clicking Yes, or canceled by clicking
+    No.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Property access"></a>Property Access</h3>
+<p>Properties displayed in a property page are stored in a setting file. A
+property page can use several setting files, but a setting file can not be used
+for several property pages. The reason is easy to understand: If you perform a
+reset in the current page, in choosing the first option of the previous dialog
+box, you will modify setting attributes displayed in another pages.</p>
+<p>In memory the setting file is represented by a setting repository, an
+instance of the <i>CATSettingRepository</i> class [<a href="#References">1</a>].
+A setting repository must not be used directly, it must have a setting
+controller [<a href="#References">2</a>]. This setting controller manages and
+controls the access to the setting repository. This controller enables also to
+shared the internal representation from the logical parameter.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>Creating Your Property Page</h3>
+<p>This is described using an example that can be found in the <code>CAACafEltToolsOptions.m</code>
+module of the CAACATIAApplicationFrm.edu framework [<a href="#References">3</a>].
+In this example, properties common to any geometric elements are gathered in a
+property page.
+<p>To create a property page, you need to create:
+<ul>
+  <li>A property page <strong>editor</strong><br>
+    It manages the setting repository operations (save, commit, rollback) and
+    displays the property page dialog.</li>
+  <li>A property page <strong>dialog</strong><br>
+    It gathers the different controls that enable the end user to see and edit
+    the different parameters.</li>
+</ul>
+<p>You need first to create a <b>factory interface </b>and then implement it to
+create the property page factory. This factory creates the property page editor.</p>
+<p>Let's detail the tasks to do to create a property page, whose editor is <code>CAAPPEdt</code>.</p>
+<h4><a name="210000"></a>Creating the Property Page Editor Factory</h4>
+<p>You need:
+<ul>
+  <li>To create the property page editor factory interface<br>
+    The <em>CAAIPPEdtFactory</em> interface derives from the <em>CATIGenericFactory</em>
+    interface.
+    <p><img src="images/CAACafEditPropertiesFactory1.gif" alt="CAACafEditPropertiesFactory1.gif (1836 bytes)" width="379" height="129"></p>
+  </li>
+</ul>
+<ul>
+  <li>To create the property page editor factory<br>
+    The factory class can be created using macros in the header and source
+    files.
+    <p><img src="images/CAACafEditPropertiesFactory2.gif" alt="CAACafEditPropertiesFactory2.gif (1645 bytes)" width="413" height="99"></p>
+  </li>
+  <li>To update the interface dictionary and the factory dictionary.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="220000"></a>Creating the Property Page Editor</h4>
+<p>You'll now create the class for the property page. This class derives from
+the <i>CATEditor</i> class, implements the <em>CATIUserSettings</em> interface
+and overrides the methods shown in the diagram below.</p>
+<p><img src="images/CAACafToolsOptionsObjects.jpg" width="633" height="261"></p>
+<p>These methods are those of the <em>CATIUserSettings</em> interface and are
+either pure virtual or empty in their <i>CATEditor</i> implementation. You
+should provide their body to make them play the following role:
+<ul>
+  <li><code>BuildEditor</code> instantiates the associated dialog class</li>
+  <li><code>SetUserSettingValue</code> sets the values and options in the
+    property page</li>
+  <li><code>ResetUserSettingValue</code> resets the values and options in the
+    property page using the default ones. These default values are those set in
+    the code in none administrator environment.</li>
+  <li><code>CommitModification</code> saves in the setting file the
+    modifications made to values and options in the property page.</li>
+  <li><code>CancelModification</code> cancels the modifications made to values
+    and options in the property page and restore the previous ones</li>
+</ul>
+<p>The methods <code>BuildEditor</code>, and <code>SetUserSettingValue</code>
+are executed in this order when instantiating the property page. The methods <code>ResetUserSettingValue</code>,
+<code>CancelModification</code>, and <code>CommitModification</code> are
+executed when the end user clicks Reset, OK, and Cancel respectively.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="title PP"></a>Setting a Title to the Property Page</h3>
+<p>To set a NLS title to the property page, you have to create a CATNls file
+whose prefix is the property page editor class name. <code>CAAPPEdt.CATNls</code>
+for the editor of the previous section. This file contains:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>TabPage.<b>Title</b> = &quot;xxx&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<table width="355">
+  <tr>
+    <td valign="top" width="69"><code>TabPage</code></td>
+    <td width="272">A required keyword for property pages</td>
+  </tr>
+  <tr>
+    <td valign="top" width="69"><code>Title</code></td>
+    <td width="272">The keyword for titles</td>
+  </tr>
+</table>
+<p><b>Example:</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>TabPage.<b>Title</b> = &quot;Elements&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p><img src="images/CAACafToolsOptionsTitle.jpg" width="474" height="360"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="How to integrate the PP in a PS"></a>How to Integrate the Property
+Page in a Specific Property Sheet</h3>
+<p>To integrate a property page in a property sheet, you have to create a CATRsc
+file whose prefix is the property page editor class name. <code>CAAPPEdt.CATRsc</code>
+for the editor of the previous section.</p>
+<p>The property page can be integrated in a property sheet of a solution or in a
+property sheet of a workbench. In some cases, you can duplicate the property
+page in several property sheet. You can also precise a priority of the property
+page in the property sheet.</p>
+<ul>
+  <li><b>The property page in the property sheet of a solution</b></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName</b>= &quot;xxx&quot; </pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table>
+    <tr>
+      <td valign="top"><code>TabPage</code></td>
+      <td>A required keyword for property pages</td>
+    </tr>
+    <tr>
+      <td valign="top"><code>SolutionName</code></td>
+      <td>The submenu of the <b>Start</b> menu where your workshop or workbench
+        appears. This name is defined in the CATRsc file of your workshop or
+        workbench within the keyword <code>Category</code>. The list of the
+        solutions is given at the end of the document &quot;Creating Resources
+        for Workshops or Workbenches&quot; <code>[<a href="#References">5</a>]</code></td>
+    </tr>
+  </table>
+  <p>Example:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName</b>= &quot;Infrastructure&quot; </pre>
+      </td>
+    </tr>
+  </table>
+  <p><img src="images/CAACafToolsOptionsSolution.jpg" width="386" height="362"></p>
+  <li><b>The property page in the property sheet of a workbench</b></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName</b>= &quot;xxx&quot; 
+TabPage.<b>WorkbenchName</b>= &quot;yyy&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table>
+    <tr>
+      <td valign="top"><code>TabPage</code></td>
+      <td>A required keyword for property pages</td>
+    </tr>
+    <tr>
+      <td valign="top"><code>SolutionName</code></td>
+      <td>The submenu of the <b>Start</b> menu where your workshop or workbench
+        appears. This name is defined in the CATRsc file of your workshop or
+        workbench within the keyword <code>Category</code>. The list of the
+        solutions is given at the end of the document &quot;Creating Resources
+        for Workshops or Workbenches&quot; <code>[<a href="#References">5</a>]</code></td>
+    </tr>
+    <tr>
+      <td valign="top"><code>WorkbenchName</code></td>
+      <td>The identifier of your workshop or workbench, set using the <code>NewAccess</code>
+        macro in the <code>CreateWorkshop</code> or <code>CreateWorkbench</code>
+        method [<a href="#References">1</a>]</td>
+    </tr>
+  </table>
+  <p>Example:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName</b>= &quot;Infrastructure&quot; 
+TabPage.<b>WorkbenchName</b>= &quot;CAAAfrGeoCreationWkb&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p><img src="images/CAACafToolsOptionsWB.jpg" width="362" height="408"></p>
+  <li><b>To indicate extra property sheet for the property page</b></li>
+  <p>It is possible to set the property page in several property sheets. To
+  indicate the number of extra page
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>ExtraOccurrenceNb</b>= &quot;N&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>Where N is an integer larger than or equal to 1.<br>
+  &nbsp;
+  <li><b>Set the extra property page in an another solution</b></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName.Extra.N</b>= &quot;xxx&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table>
+    <tr>
+      <td valign="top"><code>TabPage</code></td>
+      <td>A required keyword for property pages</td>
+    </tr>
+    <tr>
+      <td valign="top"><code>SolutionName</code></td>
+      <td>The submenu of the <b>Start</b> menu where your workshop or workbench
+        appears. This name is defined in the CATRsc file of your workshop or
+        workbench within the keyword <code>Category</code>. The list of the
+        solutions is given at the end of the document &quot;Creating Resources
+        for Workshops or Workbenches&quot; <code>[<a href="#References">5</a>]</code></td>
+    </tr>
+    <tr>
+      <td valign="top">Extra</td>
+      <td>A required keyword for extra pages</td>
+    </tr>
+    <tr>
+      <td valign="top">N</td>
+      <td>The number of the extra page</td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <li><b>Set the extra property page in an another workbench</b></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>SolutionName.Extra.N</b>= &quot;xxx&quot;
+TabPage.<b>WorkbenchName.Extra.N</b>= &quot;yyy&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table>
+    <tr>
+      <td valign="top"><code>TabPage</code></td>
+      <td>A required keyword for property pages</td>
+    </tr>
+    <tr>
+      <td valign="top"><code>SolutionName</code></td>
+      <td>The submenu of the <b>Start</b> menu where your workshop or workbench
+        appears. This name is defined in the CATRsc file of your workshop or
+        workbench within the keyword <code>Category</code>. The list of the
+        solutions is given at the end of the document &quot;Creating Resources
+        for Workshops or Workbenches&quot; <code>[<a href="#References">5</a>]</code></td>
+    </tr>
+    <tr>
+      <td valign="top"><code>WorkbenchName</code></td>
+      <td>The identifier of your workshop or workbench, set using the <code>NewAccess</code>
+        macro in the <code>CreateWorkshop</code> or <code>CreateWorkbench</code>
+        method [<a href="#References">1</a>]</td>
+    </tr>
+    <tr>
+      <td valign="top">Extra</td>
+      <td>A required keyword for extra pages</td>
+    </tr>
+    <tr>
+      <td valign="top">N</td>
+      <td>The number of the extra page</td>
+    </tr>
+  </table>
+  <li><b>Indicating a priority between property pages in a property sheet</b></li>
+  <p>In a property sheet, if any property page has indicated a priority, the
+  alphanumeric order on the NLS title is taken into account. To be independant of the
+  language, you can precise a priority for a property page.
+  <table class="code">
+    <tr>
+      <td>
+        <pre>TabPage.<b>PriorityNb</b>= &quot;N&quot; ;</pre>
+      </td>
+    </tr>
+  </table>
+  Where N is an integer larger than or equal to 0. If two pages of the same
+  property sheet have the same priority, the alphanumeric order between these two
+  pages is taken into account.
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="230000"></a>Creating the Property Page Dialog</h3>
+<h4>A property page divided in sections</h4>
+<p>This dialog is a class that derives from <i>CATDlgFrame</i>. A property page
+is divided in sections. Each section has a title, a separator and eventually an
+icon.</p>
+<table width="100%">
+  <tr>
+    <td width="29%"><img border="0" src="images/CAACafToolsOptionsDialogFrames.jpg" width="199" height="238"></td>
+    <td width="71%">This property page contains 3 sections, only the first one has
+      no icon.</td>
+  </tr>
+</table>
+<p>Each section is an instance of the <i>CATDlgToolsOptionsFrame</i> class. A
+section is a frame. The constructor to use is the following: <i>CATDlgToolsOptionsFrame
+(CATDialog * iParent, const CATString &amp; iFrameName, const CATString &amp;
+iIconName, CATDlgSTyle iStyle =NULL) </i>where:</p>
+<ul>
+  <li><code>iParent</code> is the property page dialog</li>
+  <li><code>iFrameName</code><i> </i>is the internal name of the frame (section)
+    used for the NLS</li>
+  <li><code>iIconName </code>is the name of the icon</li>
+  <p>It is the icon bmp image file name without the bmp extention. If in a CNext/resources/graphic/icons/normal directory you have the <code>I_CAAIconeName.bmp</code>
+  file, set I_CAAIconeName for <code>iIconName</code></p>
+  <li><code>iStyle </code>the style of the frame (section)
+    <ul>
+      <li>NULL</li>
+      <table border="0" width="100%">
+        <tr>
+          <td width="23%"><img border="0" src="images/CAACafToolsOptionsFrameElt2.jpg" width="179" height="59"></td>
+          <td width="77%">The section contains a visible icon and a bottom
+            invisible separator.</td>
+        </tr>
+      </table>
+      <li>CATDlgToolsOptionsInvisibleIcon</li>
+      <table border="0" width="100%">
+        <tr>
+          <td width="23%"><img border="0" src="images/CAACafToolsOptionsFrameElt1.jpg" width="186" height="90"></td>
+          <td width="77%">The section doesn't contain any icon but all dialog
+            objects inside this frame (here 3 radio buttons) are shifted as if
+            there were an icon.<br>
+          </td>
+        </tr>
+      </table>
+      <li>CATDlgToolsOptionsNoIcon</li>
+      <table border="0" width="100%">
+        <tr>
+          <td width="23%"><img border="0" src="images/CAACafToolsOptionsFrameView.jpg" width="161" height="140"></td>
+          <td width="77%">The property page doesn't contain any frame with icon.
+            Notice the shorter space between the radio button of this image and
+            the below image.<br>
+          </td>
+        </tr>
+      </table>
+      <li>CATDlgToolsOptionsBottomFrame</li>
+      <p>This style must be mixed with the previous styles for the last section of
+      the property page.</p>
+    </ul>
+  </li>
+</ul>
+<p>In each section you integrate dialog object, <i>CATDlgRadioButton,
+CATDlgSlider </i>etc... These objects are inside a frame inside the section<i>. </i>This
+intermediate frame is<i> </i>retrieved thanks to the <code>GetOptionsFrame()</code>
+method of the <i>CATDlgToolsOptionsFrame </i>class<i>.</i></p>
+<h4>Administrator management</h4>
+<p>A property page dialog is a special dialog box. It displays parameters which
+can be controlled by an administrator. The setting file enables this type of
+management. An administrator can :</p>
+<ul>
+  <li>prevent the parameters modification</li>
+  <li>give default values</li>
+</ul>
+<p>To introduce administration in a dialog box, you use <i>CATDlgLock</i>
+objects. Consider this property page:</p>
+<ul>
+  <li>You are an administrator of first level</li>
+  <table border="0" width="100%">
+    <tr>
+      <td width="26%"><img border="0" src="images/CAACafToolsOptionsLockAdmin.jpg" width="183" height="233"></td>
+      <td width="74%">If the lock is green, the end user could modify the
+        parameter. If you select the lock, you prevent the modification for the
+        parameter.</td>
+    </tr>
+  </table>
+  <li>You are an end user in administrator mode</li>
+  <table border="0" width="100%">
+    <tr>
+      <td width="26%"><img border="0" src="images/CAACafToolsOptionsLockEndUser.jpg" width="181" height="232"></td>
+      <td width="74%">The lock in front of the stopped parameter is red,
+        otherwise the lock is grayed.</td>
+    </tr>
+  </table>
+</ul>
+<p>Each section must have at least one <i>CATDlgLock</i> but a section which
+contains several parameters can have several <i>CATDlgLock. </i>In the two
+cases, it is important:</p>
+<ul>
+  <li>To link all the dialog objects to represent the parameter to its lock by using the <code>AddAssociatedDialog</code> method of the <i>CATDlgLock</i>
+    class.</li>
+  <li>In the constructor of the <i>CATDlgLock</i> class, you pass each <i>CATSettingInfo</i>
+    instance class of all the setting attributes, which are the internal data,
+    for one or several parameter controlled by it.</li>
+</ul>
+<h4>The Property Page Dialog Resource Files</h4>
+<p>In the CATNls file dedicated to the property page dialog you find:</p>
+<ul>
+  <li>The title of each frame</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>IdFrame.HeaderFrame.Global.Title =&quot;xxx&quot;;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table width="655">
+    <tr>
+      <td valign="top" width="173">IdFrame</td>
+      <td width="468">Identifier of the frame, the second argument of the
+        CATDlgToolsOptionsFrame method</td>
+    </tr>
+    <tr>
+      <td valign="top" width="173">HeaderFrame.Global.Title</td>
+      <td width="468">A required keyword</td>
+    </tr>
+  </table>
+  <p>&nbsp;
+  <li>For each object inside a frame</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>IdFrame.IconAndOptionsFrame.OptionsFrame.IdWidget.Title = &quot;xxx&quot;;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>where:
+  <table width="723">
+    <tr>
+      <td valign="top" width="246">IdFrame</td>
+      <td width="463">Identifier of the frame, the second argument of the
+        CATDlgToolsOptionsFrame method</td>
+    </tr>
+    <tr>
+      <td valign="top" width="246">IconAndOptionsFrame.OptionsFrame</td>
+      <td width="463">A required keyword</td>
+    </tr>
+    <tr>
+      <td valign="top" width="246">IdWidget</td>
+      <td width="463">Identifier of the dialog object inside de frame</td>
+    </tr>
+    <tr>
+      <td valign="top" width="246">Title</td>
+      <td width="463">A required keyword</td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Creating a PP doc"></a>Creating a Property Page Documentation</h3>
+<p>When you click F1 in a property page, a documentation is displayed if you
+have set the TabPage.<b>LongHelpId</b> keyword in the CATRsc file of the
+property page editor.
+<table class="code">
+  <tr>
+    <td>
+      <pre>TabPage.<b>LongHelpId</b>= &quot;<b>ToolsOptions</b>.xxx.[yyy.]zzz&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<ul>
+  <li>ToolsOptions: is mandatory</li>
+  <li>xxx: English name of the solution. (A::Z, a::z)</li>
+  <li>yyy: English name of the workbench.(A::Z, a::z)]</li>
+  <li>zzz: English name of the property page. (A::Z, a::z)</li>
+</ul>
+<p>Example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>TabPage.<b>LongHelpId</b>=&quot;<b>ToolsOptions</b>.Infrastructure.CAAV5GeometricalCreation.Elements&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<h4>How to create a documentation page ?</h4>
+<p>In the documentation directory [<a href="#References">5</a>], create an html
+document and in the <b>CommonId2url.</b>CATNls file, where xxx represents the product
+line, add the following line:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>ToolsOptions</b>.xxx.[yyy.]zzz=&quot;ppp&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<ul>
+  <li>xxx: English name of the solution. (A::Z, a::z),</li>
+  <li>yyy: English name of the workbench.(A::Z, a::z)],</li>
+  <li>zzz: English name of the property page. (A::Z, a::z),</li>
+  <li> ppp is the relative path, from the <code>online</code> directory, of
+the html document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Creating a property page for the Tools/Options menu implies to create a
+property page editor factory, a property page editor class instantiated by this
+factory, and to supply a property page dialog class gathering the controls to
+access the parameters and values you let the end user access and modify.</p>
+<p>The property page uses a setting controller, dedicated to a setting
+repository, to read and save these parameters and values.</p>
+<p>Associate with the property page editor, two resource files must be created:</p>
+<ul>
+  <li>a CATNls file for the title of the property page</li>
+  <li>a CATRsc file to define
+    <ul>
+      <li>The property sheet of the property page ( inside a solution or a
+        workbench)</li>
+      <li>The priority of the property page inside the property sheet</li>
+      <li>The key for a help online page</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysSettingRepositories.htm">Setting
+      Repositories and Attributes</a></td>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAACafSettingController.htm">The Setting Controller</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAACafUseCases/CAACafSampleToolsOptions.htm">Creating
+      a Property Page for Application Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrI18NWorkshop.htm">Creating
+      Resources for Workshops or Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrHelpOnLine.htm">Contextual
+      Help</a></td>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

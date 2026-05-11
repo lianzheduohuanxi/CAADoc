@@ -1,0 +1,626 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Browsing a Toleranced Model</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Functional Tolerancing &amp; Annotation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Browsing a Toleranced Model</h3>
+      <em>Accessing and reading tolerancing information</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAATpiBrowseTolerances use case. This use
+      case explains how to browse and read tolerances defined in a CATIA V4
+      model inserted in a CATProduct document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAATpiBrowseTolerances Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAATpiBrowseTolerances Do</a>
+            <li><a href="#How">How to Launch CAATpiBrowseTolerances</a></li>
+            <li><a href="#Where">Where to Find the CAATpiBrowseTolerances Code</a>
+          </ul>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use Technological Product
+Specifications (TPS) interfaces [<a href="#References">1</a>]. This set of
+interfaces allows you to navigate and read tolerancing information.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAATpiBrowseTolerances Use Case</h3>
+<p>CAATpiBrowseTolerances is a use case of the CAATPSInterfaces.edu framework
+that illustrates CATTPSInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAATpiBrowseTolerances Do</h4>
+<p>The use case analyzes the model illustrated below. This model has been
+toleranced with CATIA V4 FDT function. First, this model is inserted into a
+CATProduct document. Then the use case retrieves tolerancing information using
+TPS interfaces and dumps them in an output text file.</p>
+<table border="0" width="100%">
+  <caption><a name="Fig1"></a>Toleranced Model Browsed: the
+    CAATpiBrowseInModel1.model</caption>
+  <tr>
+    <td>
+      <pre><img border="0" src="images/CAATpiBrowseInModel1.gif" align="left" width="681" height="470" alt="CAATpiBrowseInModel1.gif"></pre>
+    </td>
+  </tr>
+</table>
+<p>The following output text file is generated: CAATpiBrowseOutText1.txt</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>COPYRIGHT DASSAULT SYSTEMES 2000
+------------------------ Set.0.Tolerance.0 -----------------------
+SuperType:                     Datum
+Type:                          Simple datum
+Link to surface:               1 TTRS, Planar
+------------------------ Set.0.Tolerance.1 -----------------------
+SuperType:                     Form
+Type:                          Flatness
+Semantic behavioral itfs:      CATITPSToleranceZone
+                               CATITPSMaterialCondition
+Link to surface:               1 TTRS, Planar
+Tolerance zone value:          0.008 mm
+------------------------ Set.0.Tolerance.2 -----------------------
+SuperType:                     Form
+Type:                          Straightness
+Semantic behavioral itfs:      CATITPSToleranceZone
+                               CATITPSMaterialCondition
+Link to surface:               1 TTRS, Planar
+Tolerance zone value:          0.003 mm
+------------------------ Set.0.Tolerance.3 -----------------------
+SuperType:                     Datum
+Type:                          Simple datum
+Link to surface:               1 TTRS, Cylindrical
+------------------------ Set.0.Tolerance.4 -----------------------
+SuperType:                     Size
+Type:                          Linear
+Semantic behavioral itfs:      CATITPSDimensionLimits
+                               CATITPSEnvelopCondition
+Link to surface:               1 TTRS, Prismatic
+Up limit:                      0.015 mm
+Low limit:                     0.000 mm
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAATpiBrowseTolerances</h4>
+<p>To launch CAATpiBrowseTolerances, you will need to set up the build time
+environment, then compile CAATpiBrowseTolerances along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAATpiBrowseTolerances inputDir\CAATpiBrowseInModel1.model outputDir\CAATpiBrowseOutText1.txt</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAATpiBrowseTolerances inputDir/CAATpiBrowseInModel1.model outputDir/CAATpiBrowseOutText1.txt</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>inputDir</code></td>
+    <td>The CNext/resources directory of CAATPSInterfaces.edu into which <code>CAATpiBrowseOutText1.model</code>
+      is stored</td>
+  </tr>
+  <tr>
+    <td><code>outputDir</code>
+    <td>The directory where you want to generate the file</td>
+  </tr>
+  <tr>
+    <td><code>CAATpiBrowseInModel1.model</code></td>
+    <td>The model to process</td>
+  </tr>
+  <tr>
+    <td><code>CAATpiBrowseOutText1.txt</code></td>
+    <td>The file generated from the model</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAATpiBrowseTolerances Code</h4>
+<p>The CAATpiBrowseTolerances use case is located in the
+CAATpiBrowseTolerances.m module of the CAATPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAATPSInterfaces.edu\CAATpiBrowseTolerances.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAATPSInterfaces.edu/CAATpiBrowseTolerances.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>Materials for this use case are located in
+CAATPSInterfaces.edu/CNext/resources (CAATpiBrowseInModel1.model,
+CAATpiBrowseOutText1.txt).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>This diagram can be used as a guide to follow the differents steps of the use
+case.</p>
+<p><img border="0" src="images/CAATpiSequenceDiagram.gif" width="648" height="772"></p>
+<p>There are ten logical steps in CAATpiBrowseTolerances:
+<ol>
+  <li><a href="#Prolog">Prolog</a>
+  <li><a href="#Inserts Model in Product">Inserting the Model into the Product</a>
+  <li><a href="#Retrieves CATITPSDocument Interface on Document">Retrieving the
+    CATITPSDocument Interface on the Document</a>
+  <li><a href="#Retrieves TPS Sets in Document">Retrieving TPS Sets in Document</a>
+  <li><a href="#Retrieves Tolerances from Set">Retrieving Tolerances from Set</a>
+  <li><a href="#Analyses Tolerance's Semantic Validity">Analyzing Tolerance's
+    Semantic Validity</a></li>
+  <li><a href="#Analyses Tolerance's Link with Geometry">Analyzing Tolerance's
+    Link with Geometry</a></li>
+  <li><a href="#Reads Tolerance Zone Informations">Reading Tolerance Zone
+    Information</a></li>
+  <li><a href="#Reads Dimension Limits Informations">Reading Dimension Limits
+    Information</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is a main program (batch) with two input arguments. First, the
+path to an existing CATIA V4 model, second, the path to a dump text file. The
+usual sequence for creating a document is used to create a new Product document
+[<a href="#References">3</a>]. The <code>pDoc</code> variable used forward is a
+pointer on this document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Inserts Model in Product"></a>Inserting the Model into the Product</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  <i>// Retrieve root product</i>
+  CATIDocRoots_var spDocRootOnDoc (pDoc);
+  if ( spDocRootOnDoc == NULL_var ) return (2);
+
+  CATListValCATBaseUnknown_var* RootsList = spDocRootOnDoc-&gt;<b>GiveDocRoots</b>();
+  if ( RootsList == NULL || RootsList-&gt;Size() &lt; 1 ) return (3);
+
+  CATIProduct_var spProductOnDocRoot ((*RootsList)[1]);
+  if (spProductOnDocRoot == NULL_var) return (4);
+
+  <i>// Add a receipt Product</i>
+  CATUnicodeString Name(&quot;TolerancedModel&quot;);
+  CATIProduct_var spChildProduct = spProductOnDocRoot -&gt; <b>AddProduct</b>(Name);
+
+  <i>// Transform command line argument in a path with correct string type</i>
+  CATUnicodeString ModelPath(iapArgv[1]);
+  CATBSTR ModelPathAsBSTR;
+  ModelPath.<b>ConvertToBSTR</b>(&amp;ModelPathAsBSTR);
+
+  <i>// Add model in receipt Product</i>
+  CATIAProduct_var spChildProductJnl( spChildProduct );
+
+  if ( spChildProductJnl == NULL_var ) return (5);
+
+  int ier = spChildProductJnl -&gt; <b>AddMasterShapeRepresentation</b>(ModelPathAsBSTR);
+  if ( ier != 0 ) return (6);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A new product is added&nbsp; under the root product. The model path provided
+as first argument is transformed in BSTR string type. The model is used to
+provide shape representation to the created product.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieves CATITPSDocument Interface on Document"></a>Retrieving the
+CATITPSDocument Interface on the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  HRESULT rc = E_FAIL;
+
+  <i>// Retrieve TPS entry point interface on document</i>
+  CATITPSDocument * piTPSDoc = NULL;
+  rc = pDoc -&gt; QueryInterface (IID_CATITPSDocument, (void**) &amp;piTPSDoc);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Standard <code>QueryInterface</code> on document. <i>CATITPSDocument</i> is
+the entry point for accessing tolerancing data&nbsp; included in document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieves TPS Sets in Document"></a>Retrieving TPS Sets in Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  <i>// Retrieve list of tolerancing sets in document as a CATITPSList</i>
+  CATITPSList * piSetList = NULL;
+  piTPSDoc -&gt; <b>GetSets</b>(&amp;piSetList);
+  ...
+  <i>// Retrieve set count</i>
+  unsigned int SetCount = 0;
+  piSetList -&gt; <b>Count</b>(&amp;SetCount);
+
+  <i>// Iterate on list of set and for each set analyze tolerances</i>
+  for( unsigned int SetIdx = 0; SetIdx &lt; SetCount; SetIdx++ )
+  {
+    <i>// Retrieve set in the list</i>
+    CATITPSComponent* piCompOnSet = NULL;
+    piSetList-&gt;<b>Item</b> (SetIdx, &amp;piCompOnSet);
+
+    <i>// Analyze sets of piTPSDoc</i>
+    CATITPSSet* piSet = NULL;
+    HRESULT rc = piCompOnSet -&gt;QueryInterface(IID_CATITPSSet, (void **)&amp;piSet);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Tolerancing sets included in document are retrieved as a <i>CATITPSList</i>.
+This list interface is implemented by a temporary object. List size is
+provided&nbsp; by the <code>Count</code> method.&nbsp; List members are returned
+by the Item method as <i>CATITPSComponent</i>. A query on the wanted interface
+(here <i>CATITPSSet</i>) can then be done.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieves Tolerances from Set"></a>Retrieving Tolerances from Set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    <i>// Retrieve tolerances that belong to set as a CATITPSList</i>
+    CATITPSList* piToleList = NULL;
+    piSet -&gt; <b>GetTPSs</b>(&amp;piToleList);
+
+    <i>// Retrieve tolerances count in set</i>
+    unsigned int ToleCount = 0;
+    piToleList -&gt; <b>Count</b>(&amp;ToleCount);
+
+    <i>// Analyze tolerances of set</i>
+    for ( unsigned int ToleIdx = 0; ToleIdx &lt; ToleCount; ToleIdx ++ )
+    {
+      <i>// Get ToleIdx tolerance in set</i>
+      CATITPSComponent * piCompOnTole = NULL;
+      piToleList -&gt; <b>Item</b> (ToleIdx, &amp;piCompOnTole);
+...
+      <i>// Dump tolerance informations</i>
+      <b>CAATpiDumpCATITPSSemanticValidity</b> (piCompOnTole, pStream);
+      <b>CAATpiDumpCATITPS</b>                 (piCompOnTole, pStream);
+      <b>CAATpiDumpCATITPSToleranceZone</b>    (piCompOnTole, pStream);
+      <b>CAATpiDumpCATITPSDimensionLimits</b>  (piCompOnTole, pStream);
+
+      piCompOnTole -&gt; Release();
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Tolerances included in a set are accessible&nbsp; with <code>GetTPSs</code>
+method that returns a <i>CATITPSList</i>. Tolerances can then be retrieved as
+list members. For each tolerance the four functions <code>CAATpiDumpxxx</code>
+are called. The purpose of each function is to illustrate how to use a TPS
+interface and to dump the retrieved information to the output stream <code>pStream</code>.
+The four following steps describes these functions.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Analyses Tolerance's Semantic Validity"></a>Analyzing Tolerance's
+Semantic Validity</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void <b>CAATpiDumpCATITPSSemanticValidity</b> (CATITPSComponent * ipiTole,
+                                        FILE * ipStream)
+{
+  <i>// Retrieve CATITPSSemanticValidity interface on input tolerance.</i>
+  CATITPSSemanticValidity * piSemantic = NULL;
+  HRESULT rc = ipiTole -&gt; QueryInterface (IID_CATITPSSemanticValidity,
+                                          (void **)&amp; piSemantic);
+  if ( SUCCEEDED(rc) )
+  {
+<i>    //-------------------------------------------------------------------------
+    // Identify SuperType and Type
+    //-------------------------------------------------------------------------</i>
+  
+    <i>// Retrieve tolerance SuperType as an IID</i>
+    IID * pSuperTypeAsIID = NULL;
+    piSemantic -&gt; <b>GetSuperType</b> (&amp;pSuperTypeAsIID);
+  
+    <i>// Retrieve tolerance Type as an IID</i>
+    IID * pTypeAsIID = NULL;
+    piSemantic -&gt; <b>GetType</b> (&amp;pTypeAsIID);
+  
+    <i>// Transform SuperType and Type IID in strings</i>
+    CATUnicodeString Type (&quot;Unknown&quot;);
+    CATUnicodeString SuperType (&quot;Unknown&quot;);
+  
+ <i>   // Form tolerances
+    // If SuperType IID is the same that IID of CATITPSForm interface then this
+    // tolerance belongs to the Form Super Type.</i>
+    if ( <b>CATCmpGuid</b>(&amp;IID_CATITPSForm, pSuperTypeAsIID) == TRUE )
+    {
+      SuperType = &quot;Form&quot;;
+  
+<i>      // If Type IID is the same that IID of CATITPSStraightness interface then
+      // this tolerance is a Straightness tolerance.</i>
+      if ( <b>CATCmpGuid</b>(&amp;IID_CATITPSStraightness, pTypeAsIID) == TRUE )
+        Type = &quot;Straightness&quot;;
+      else if ( <b>CATCmpGuid</b>(&amp;IID_CATITPSFlatness, pTypeAsIID) == TRUE )
+        Type = &quot;Flatness&quot;;
+      else if ...
+...
+
+<i>    //-------------------------------------------------------------------------
+    // Access list of behavioral interfaces implemented on tolerance
+    //-------------------------------------------------------------------------
+
+    // Retrieve list of behavioral interfaces that must be analyzed for a 
+    // correct and plenty semantic understanding of this tolerance.
+    // List is returned as a pointer on an array of pointers (IID adresses)
+</i>    int    SemanticItfCount = 0;
+    IID ** ppSemanticItfList = NULL;
+
+    rc = piSemantic -&gt; <b>GetUnderstandingSemanticsItf</b> (&amp;SemanticItfCount,
+                                                     &amp;ppSemanticItfList);<i>
+
+    // First and second IID in list (idx 0,1) are SuperType and Type of 
+    // tolerance. Here start to iterate directly on index 2.
+    // The list of semantic interfaces can contains interface IID that are not 
+    // published yet. In order to be protected against misunderstanding, the 
+    // client code must assume that, if one or some semantic interfaces are
+    // unknown, all the interfaces and thus the whole tolerance must be
+    // ignored.
+</i>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Super type and type of tolerances must be retrieved via <i>CATITPSSemanticValidity</i>
+interfaces. Types are returned as Global Unique Identifiers (GUID or IID) which
+correspond to TPS typing interface IID's. The <code>CATCmpGuid</code> method can
+be used to compare IID.</p>
+<p>Behavioral TPS interfaces implemented on tolerance are returned by <code>GetUnderstandingSemanticsItf</code>
+method. All behavioral interfaces must be analyzed for a correct and plenty
+semantic understanding of this tolerance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Analyses Tolerance's Link with Geometry"></a>Analyzing Tolerance's
+Link with Geometry</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void <b>CAATpiDumpCATITPS</b> (CATITPSComponent * ipiTole,
+                        FILE * ipStream)
+{
+<i>  // Retrieve CATITPS interface on input tolerance</i>
+  CATITPS * piTPS = NULL;
+  HRESULT rc = ipiTole -&gt; QueryInterface (IID_CATITPS, (void **)&amp;piTPS );
+  if ( SUCCEEDED(rc) )
+  {
+    <i>// Links to toleranced surfaces is retrieved as a TTRS list</i>
+    unsigned int Count = 0;
+    CATITTRSList * piTTRSList = NULL;
+    CATITTRS * piTTRS = NULL;
+    <b>CATMmrTTRSClass</b> TTRSClass = CATMmrUnknownTTRSClass;
+ <i>   // Type CATMmrTTRSClass is an enum that describe functional surface class.
+    // It can take values such as spherical, cylindrical, planar...</i>
+    <i>// Unknown is a default value used for initialization purpose.</i>
+
+    rc = piTPS -&gt; <b>GetTTRS</b> (&amp;piTTRSList);
+
+    if ( SUCCEEDED(rc) )
+    {
+      <i>// Dump TTRS count</i>
+      piTTRSList -&gt; <b>Count</b> (&amp;Count);
+      fprintf(ipStream, &quot;%d%s&quot;, Count, &quot; TTRS&quot;);
+
+      <i>// Iterate on TTRS list, and for each of them read 
+      // and dump his surface class</i>
+      for ( unsigned int i = 0; i &lt; Count; i++ )
+      {
+        <i>// Retrieve TTRS number i in the list as a CATITTRS</i>
+        piTTRS = NULL;
+        piTTRSList -&gt; <b>Item</b> (i, &amp;piTTRS);
+
+        <i>// Read TTRS class</i>
+        TTRSClass = CATMmrUnknownTTRSClass;
+        piTTRS -&gt; <b>GetTTRSClass</b>(TTRSClass);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Link to geometry is defined for each tolerance with TTRSs. The <i>CATITPS</i>
+interface provides the <code>GetTTRS</code> method which returns a TTRS list
+that can be manipulated with the <code>Count</code> and <code>Item</code>
+methods. Each TTRS defines a functional surface to which a tolerance is applied.
+A complete geometric and topologic analyze of this functional surface can be
+realized from the TTRS object. Here we only access the geometrical class of this
+functional surface by&nbsp; using the <code>GetTTRSClass</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Reads Tolerance Zone Informations"></a>Reading Tolerance Zone
+Information</h4>
+<p>A tolerance zone is a region of space where the toleranced surface of a real
+part must be within to respect a geometric TPS.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void <b>CAATpiDumpCATITPSToleranceZone</b> (CATITPSComponent * ipiTole,
+                                     FILE * ipStream)
+{
+  <i>// Retrieve tolerance zone interface on input tolerance</i>
+  CATITPSToleranceZone * piToleZoneOnTPS = NULL;
+  HRESULT rc = ipiTole -&gt; QueryInterface (IID_CATITPSToleranceZone, 
+                                          (void **)&amp;piToleZoneOnTPS);
+
+  <i>// QueryInterface succeeded only if CATITPSToleranceZone is a behavioral
+  // interface of tolerance</i>
+  if ( <b>SUCCEEDED(rc)</b> )
+  {
+    <i>// Read tolerance zone value</i>
+    double ToleZoneValue = 0.0;
+    rc = piToleZoneOnTPS -&gt; <b>GetValue</b> (&amp;ToleZoneValue);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Tolerance zone value is accessible on TPS that implements the <i>CATITPSToleranceZone</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Reads Dimension Limits Informations"></a>Reading Dimension Limits
+Information</h4>
+<p>Dimension limits define an interval for a dimension TPS. The real part
+dimension must be inside this interval to respect the specification .</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void <b>CAATpiDumpCATITPSDimensionLimits</b> (CATITPSComponent * ipiTole,
+                                       FILE * ipStream)
+{
+  <i>// Retrieve dimension limits interface on input tolerance</i>
+  CATITPSDimensionLimits * piDimLimitsOnTPS = NULL;
+  HRESULT rc = ipiTole -&gt; QueryInterface (IID_CATITPSDimensionLimits,
+                                          (void **)&amp;piDimLimitsOnTPS);
+
+  <i>// QueryInterface succeeded only if CATITPSDimensionLimits is a behavioral
+  // interface of tolerance. (Tolerance is a dimension)</i>
+  if ( <b>SUCCEEDED(rc)</b> )
+  {
+    <i>// Try to read up and bottom limits of the dimension</i>
+    double UpLimit = 0.0;
+    double BottomLimit = 0.0;
+    rc = piDimLimitsOnTPS -&gt; <b>GetLimits</b> (&amp;BottomLimit, &amp;UpLimit);
+
+    <i>// HRESULT returned by GetLimits must be tested, because E_FAIL is returned
+    // when, for instance, dimension is defined as &quot;10 max&quot;. In that case, it
+    // is a single limit dimension. Modifier on this dimension can be read by 
+    // using GetModifier method.</i>
+    if ( <b>SUCCEEDED(rc)</b> )
+    {
+      <i>// Dump up and bottom dimensions limits values</i>
+      ...
+    }
+    else
+    {
+      <i>// Read modifier on single limit dimension</i> 
+      CATTPSSingleLimit Modifier = CATTPSSLNotDefined;
+      rc = piDimLimitsOnTPS -&gt; <b>GetModifier</b> (&amp;Modifier);
+      ...
+
+      <i>// Dump modifier</i>
+      ...
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When tolerance is a dimension, the <i>CATITPSDimensionLimits</i> interface
+provides access to up and bottom limits or single limit modifier.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The use case finishes by freeing memory (release interface pointers) and
+closing the output stream, the document and the session [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to browse a toleranced model included
+in a CATProduct document by retrieving first tolerancing Sets then TPS.&nbsp;</p>
+<p>For a TPS:</p>
+<ul>
+  <li>semantic analyses is performed, identify type and list of behavioral
+    interfaces</li>
+  <li>link with toleranced functional surface provided by TTRS is retrieved</li>
+  <li>reading tolerance zone value and dimension limits is illustrated.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="RefTPSOverview">[1]</a></td>
+    <td><a href="../CAATpiTechArticles/CAATpiTPSOverview.htm">Technological
+      Product Specification Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[2]</a></td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="RefProlog">[3]</a></td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

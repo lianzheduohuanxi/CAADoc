@@ -1,0 +1,92 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAMaiInsertPPInstruction.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>Language=&quot;VBSCRIPT&quot;
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Procedure that allow the user to insert a PP Instruction at a specified location</font>
+<font color="#008000">'* </font>
+<font color="#008000">'*    Open CATProcess and load Machining workbench</font>
+<font color="#008000">'*    Execute the VB Script Macro</font>
+<font color="#008000">'*    Enter the name of the activity before which you want to insert the PP Instruction</font>
+<font color="#008000">'*      If no Name is defined the PP Instruction will be added at the end of the Program</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+	
+	Dim MfgDoc1<font color="#0000FF"> As </font>Document
+	Set MfgDoc1 = CATIA.ActiveDocument
+
+<font color="#008000">'*** Retrieve current Process</font>
+	
+	Dim ActivityRef<font color="#0000FF"> As </font>AnyObject
+	Set ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+
+<font color="#008000">'*** Retrieve current Set Up</font>
+
+	Dim Setup1<font color="#0000FF"> As </font>ManufacturingSetup
+
+	If (ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+		Set childs = ActivityRef.ChildrenActivities
+		quantity = childs.Count
+
+		if quantity &lt;= 0<font color="#0000FF"> then</font>
+			Exit Sub
+		End if
+
+		NumberOfPO = 0
+
+		For I=1<font color="#0000FF"> To </font>quantity
+			Set child = childs.Item(I)
+			If (child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+				Set Setup1 = child
+				NumberOfPO = NumberOfPO +1
+				Exit For
+			End If
+		Next   
+	End If
+
+	if NumberOfPO &lt;= 0<font color="#0000FF"> then</font>
+	  Exit Sub
+	End if
+
+<font color="#008000">'*** Retrieve current Program</font>
+
+	Set ProgramList = Setup1.Programs
+
+	Dim Program1<font color="#0000FF"> As </font>ManufacturingProgram
+	Set Program1 = ProgramList.GetElement(1)	
+
+<font color="#008000">'*** Box for user-defined referenced activity</font>
+
+	Dim DefName<font color="#0000FF"> As </font>String
+	Dim RefActivityName<font color="#0000FF"> As </font>String
+         RefActivityName = InputBox(&quot;Add PP Instruction before activity&quot;, &quot;Set name&quot;, DefName)
+
+<font color="#008000">'*** Create PP Instruction</font>
+
+	Dim PPInstr<font color="#0000FF"> As </font>ManufacturingActivity
+	Set PPInstr = Program1.AddPPInstruction (&quot;PPRINT/MY PP WORD&quot;)
+
+<font color="#008000">'*** Move to the correct Position</font>
+
+	Dim ActCur<font color="#0000FF"> As </font>ManufacturingActivity
+	Dim ActName<font color="#0000FF"> As </font>String
+
+	Set ActInProg = Program1.ChildrenActivities
+	quantity = ActInProg.Count
+
+	For I=1<font color="#0000FF"> To </font>quantity
+		set ActCur = ActInProg.Item(I)
+
+		If (ActCur.IsSubTypeOf(&quot;ManufacturingActivity&quot;)) Then
+			ActName = ActCur.Name
+
+			if ActName = RefActivityName<font color="#0000FF"> then</font>
+				Program1.MoveOperation ActCur,PPInstr
+			End if
+		End If
+	Next   
+	
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

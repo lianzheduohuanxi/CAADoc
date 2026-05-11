@@ -1,0 +1,580 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>
+      Building and Launching a CAA Web Service Use Case
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <script language="JavaScript" src="../CAADocJavaScript/submit.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Building and Launching a CAA Web Service Use Case
+            </h3><em>How to build and launch the CAA Web services use cases using Visual Studio .NET 2003</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article explains how to set up a buildtime and runtime environment for the CAA Web service use cases
+              that rely on the .NET Framework. It describes how to compile    the code samples, and how to
+              launch the related use case scenarios.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The CAAXXXDotNet1_1Client Use Cases</strong></a>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step Using Visual Studio .NET 2003</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      The code samples delivered within CAA Web service use cases are intended to demonstrate how to write client
+      applications that consume CAA Web services. The aim of this article is to help you build and run these code
+      samples. It explains how to set up your buildtime and runtime environments using <strong>Visual Studio .NET 2003</strong>. It uses a given CAA Web service use case as example, but the related concepts apply to any other
+      available use case.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>The CAAXXXDotNet1_1Client Use Cases
+    </h3>
+    <p>
+      CAAXXXDotNet1_1Client is a generic name for the CAA Web service use cases that rely on the .NET Framework. You
+      should just replace XXX by the actual name of the CAA V5 use case you want to build and launch. To leave your
+      CD-ROM installation as a safe reference, please create your project in a separate root directory for the CAA use
+      cases in which you can freely copy, build, run, and possibly modify the use cases.
+    </p>
+    <p>
+      The code samples are only provided inside a typical CAA Web service framework/module architecture for convenience
+      purpose. There is no prerequisite on either the CAA V5 buildtime or the CAA Web service runtime environment when
+      using CAA Web services. In the following section, the code samples are imported from the CAA CD-ROM media for
+      clarity. It is expected that you generate/write the related code yourself by referring to the use case describing
+      how to consume the CAA Web service you wish to use.
+    </p>
+    <p>
+      You can also use the CAA V5 buildtime environment (mkmk) to build the delivered code, as you would build any other
+      frameworks/modules. Building the code related to a given CAAXXXDotNet1_1Client use case will produce a .NET
+      assembly and a .NET executable in the runtime view, in the <em>\intel_a\code\clr</em> folder. You can this executable
+      to run the use case scenario. In this article, we focus on how to use the Visual Studio .NET 2003 environment to 
+      build and launch the use case.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step Using Visual Studio .NET 2003 
+    </h3>
+    <p>
+      The following section first describes how to set up the Visual Studio .NET solution, then how to import the use
+      case code samples in the created projects, and finally how to build and run the sample use case scenario. In the
+      following, the CAAENOPosAppBinderDotNet1_1Client use case [<a href="#References">1</a>] is used for reference:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Setting Up the Visual Studio .NET Solution</a>
+      </li>
+      <li>
+        <a href="#3.2">Creating and Configuring the C# Class Library Project</a>
+      </li>
+      <li>
+        <a href="#3.3">Adding the Required Resources to the C# Class Library Project</a>
+      </li>
+      <li>
+        <a href="#3.4">Creating and Configuring the C# Console Application Project</a>
+      </li>
+      <li>
+        <a href="#3.5">Adding the Required Resources to the C# Console Application Project</a>
+      </li>
+      <li>
+        <a href="#3.6">Building the Solution and Running the Sample Use Case Scenario</a>
+      </li>
+    </ol>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>Setting Up the Visual Studio .NET Solution
+    </h4>
+    <p>
+      To create the solution, please complete the following steps:
+    </p>
+    <ol>
+      <li>On the <strong>Start</strong> menu, point to <strong>Programs</strong> -&gt; <strong>Microsoft Visual Studio
+      .NET 2003</strong>, and click on <strong>Microsoft Visual Studio .NET 2003</strong>,
+      </li>
+      <li>Go to <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Blank Solution</strong>,
+      </li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOPosAppBinderDotNet1_1ClientSolution</em>, and then
+      <em>C:\</em> in the <strong>Location</strong> field. The rest of the article will assume that the solution has
+      been created in the <em>C:\CAAENOPosAppBinderDotNet1_1ClientSolution</em> directory. You are free to choose any
+      other name or location you wish to use,
+      </li>
+      <li>You can then click <strong>OK</strong> to close the <strong>New Project</strong> dialog box and create the
+      solution.
+      </li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig1" id="Fig1"></a>Fig.1: Setting Up the Visual Studio .NET Solution
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig1.png" alt="Setting Up the Visual Studio .NET Solution">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Creating and Configuring the C# Class Library Project
+    </h4>
+    <p>
+      In this step, you need to create a <strong>C# class library</strong>. It holds the C# proxy and wrapper class
+      that consumes the ENOPosApplicationBinderImpl CAA Web services being demonstrated in the use case:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the solution, and go to <strong>Add</strong>
+      -&gt; <strong>New Project</strong>,
+      </li>
+      <li>In the <strong>Project Types</strong> left pane, select the <strong>Visual C# Projects</strong> folder,
+      </li>
+      <li>From <strong>Templates</strong> right pane, select the <strong>Class Library</strong> template,
+      </li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOPosAppBinderDotNet1_1ClientBase</em>,
+      </li>
+      <li>Click <strong>OK</strong> to close the <strong>Add New Project</strong> dialog box,
+      </li>
+      <li>You can finally delete the default <em>Class1.cs</em> resource created.
+      </li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig2" id="Fig2"></a>Fig.2: Creating the C# Class Library Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig2.png" alt="Creating the C# Class Library Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Then, you need to configure your project in order to reference the System.Web.Services.dll assembly (from the
+      .NET Framework):
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, expand the <em>CAAENOPosAppBinderDotNet1_1ClientBase</em>
+      project. Right click on the <strong>References</strong> folder, and point to <strong>Add Reference</strong>,
+      </li>
+      <li>In the <strong>Add Reference</strong> dialog box, select the <em>System.Web.Services.dll</em> assembly from
+      the <strong>.NET</strong> pane, and click on the <strong>Select</strong> button. You should now see the
+      <em>System.Web.Services.dll</em> assembly in the <strong>Selected Components</strong> pane,
+      </li>
+      <li>Click on <strong>OK</strong> to close the <strong>Add Reference</strong> dialog box.
+      </li>
+    </ol>
+    <p>
+      Your solution should now be configured as follows:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig3" id="Fig3"></a>Fig.3: Configuring the C# Class Library Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig3.png" alt="Configuring the C# Class Library Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>Adding the Required Resources to the C# Class Library Project
+    </h4>
+    <p>
+      From Visual Studio .NET 2003, please complete the following steps:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the
+      <em>CAAENOPosAppBinderDotNet1_1ClientBase</em> project and go to <strong>Add</strong> -&gt; <strong>Add Existing
+      Item</strong>,
+      </li>
+      <li>From the <strong>Add Existing Item</strong> dialog box, browse to the location where you installed the CAA
+      CD-ROM content. Point to <em>CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src</em> and then select
+      the two following resources: <em>CAAENOPosApplicationBinderImplProxy.cs</em> and
+      <em>CAAENOPosApplicationBinderImplWrapper.cs</em>,
+      </li>
+      <li>Click <strong>Open</strong> to close the dialog box and add the resources to the project.
+      </li>
+    </ol>
+    <p>
+      Your solution should now contain the following resources:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig4" id="Fig4"></a>Fig.4: C# Class Library Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig4.png" alt="C# Class Library Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.4"></a>Creating and Configuring the C# Console Application Project
+    </h4>
+    <p>
+      In this step, you need to create a <strong>C# console application</strong>. It holds the client application built
+      on top of the ressources held in the C# library project created above:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the solution, and go to <strong>Add</strong>
+      -&gt; <strong>New Project</strong>,
+      </li>
+      <li>In the <strong>Project Types</strong> left pane, select the <strong>Visual C# Projects</strong> folder,
+      </li>
+      <li>From <strong>Templates</strong> right pane, select the <strong>Console Application</strong> template,
+      </li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOPosAppBinderDotNet1_1Client</em>,
+      </li>
+      <li>Click <strong>OK</strong> to close the <strong>Add New Project</strong> dialog box,
+      </li>
+      <li>You can finally delete the default <em>Class1.cs</em> resource created.
+      </li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig5" id="Fig5"></a>Fig.5: Creating the C# Console Application Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig5.png" alt="Creating the C# Console Application Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Then, you need to configure your project in order to reference the C# library project created above:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, expand the <em>CCAAENOPosAppBinderDotNet1_1Client</em> project.
+      Right click on the <strong>References</strong> folder, and point to <strong>Add Reference</strong>,
+      </li>
+      <li>In the <strong>Add Reference</strong> dialog box, select the <strong>Projects</strong> tab,
+      </li>
+      <li>In the left pane, select the <em>CAAENOPosAppBinderDotNet1_1ClientBase</em> project,
+      </li>
+      <li>Click on the <strong>Select</strong> button. You should now see the
+      <em>CAAENOPosAppBinderDotNet1_1ClientBase</em> project in the <strong>Selected Components</strong> pane at the
+      bottom,
+      </li>
+      <li>Click on <strong>OK</strong> to close the <strong>Add Reference</strong> dialog box.
+      </li>
+    </ol>
+    <p>
+      Finally, you can set the C# console application as the startup project. Right click on the
+      <em>CCAAENOPosAppBinderDotNet1_1Client</em> project, and click on <strong>Set as StartUp Project</strong>.
+    </p>
+    <p>
+      Your solution should now be configured as follows:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig6" id="Fig6"></a>Fig.6: Configuring the C# Console Application Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig6.png" alt="Configuring the C# Console Application Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.5"></a>Adding the Required Resources to the C# Console Application Project
+    </h4>
+    <p>
+      From Visual Studio .NET 2003, please complete the following steps:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOPosAppBinderDotNet1_1Client</em>
+      project and go to <strong>Add</strong> -&gt; <strong>Add Existing Item</strong>,
+      </li>
+      <li>From the <strong>Add Existing Item</strong> dialog box, browse to the location where you installed the CAA
+      CD-ROM content. Point to <em>CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1Client.m\src</em> and then select the
+      two following resources: <em>CAAENOPosAppBinderDotNet1_1Client.cs</em> and
+      <em>CAAENOPosApplicationBinderImplUseCase.cs</em>,
+      </li>
+      <li>Click <strong>Open</strong> to close the dialog box and add the resources to the project.
+      </li>
+    </ol>
+    <p>
+      Your solution should now contain the following resources:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig7" id="Fig7"></a>Fig.7: C# Console Application Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig7.png" alt="C# Console Application Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.6"></a>Building the Solution and Running the Sample Use Case Scenario
+    </h4>
+    <p>
+      First, you need to build the entire solution. In <strong>Solution Explorer</strong>, right-click
+      <em>CAAENOPosAppBinderDotNet1_1ClientSolution</em>, and then click <strong>Build</strong>. The
+      <strong>Output</strong> window at the bottom of the screen should read: <em>Build: 2 succeeded, 0 failed, 0
+      skipped</em>.
+    </p>
+    <p>Then, 
+      you can either directly run the sample use case scenario from Visual Studio .NET 2003, or invoke the created
+      executable from a command line prompt.
+    </p>
+    <p>
+      To run the use case from Visual Studio .NET, you need to complete the following steps:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOPosAppBinderDotNet1_1Client</em>
+      project and go to <strong>Properties</strong>,
+      </li>
+      <li>Select <strong>Configuration Properties</strong> then <strong>Debugging</strong> from the left pane,
+      </li>
+      <li>Enter the command line options documented in the use case. For the use case being demonstrated,
+      you need to enter <em>-w http://karindsy.dsy.ds:9081/LCAB17D49 -e cjk -u wpsadmin -p wpsadmin</em> (the parameter
+      values depend on your environment), as shown below:<br>
+        <br>
+        <table border="0">
+          <caption>
+            <a name="Fig8" id="Fig8"></a>Fig.8: C# Console Application Project Properties
+          </caption>
+          <tbody>
+            <tr>
+              <td valign="top">
+                <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig8.png" alt="C# Console Application Project Properties">
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </li>
+      <li>From Visual Studio .NET, go to <strong>Debug</strong> then <strong>Start Without Debugging</strong>:<br>
+        <br>
+        <table border="0">
+          <caption>
+            <a name="Fig9" id="Fig9"></a>Fig.9: Running the Sample Use Case Scenario
+          </caption>
+          <tbody>
+            <tr>
+              <td valign="top">
+                <img border="0" src="images/CAAWSBuildAndLaunchUsingDotNet_Fig9.png" alt="Running the Sample Use Case Scenario">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ol>
+    <p>
+      To run the use case from command line, you need to complete the following steps:
+    </p>
+    <ol>
+      <li>Open up a command prompt. Click on <strong>Start</strong> -&gt; <strong>Run</strong> and then type
+      <strong>cmd</strong>,
+      </li>
+      <li>From the prompt, browse to the
+      <em>C:\CAAENOPosAppBinderDotNet1_1ClientSolution\CAAENOPosAppBinderDotNet1_1Client\bin\Debug</em> directory,
+      </li>
+      <li>Invoke the executable created for the use case scenario you wish to run, using the options documented in the
+      related use case article. For the CAAENOPosAppBinderDotNet1_1Client use case demonstrated, you need to issue the
+      following command: <em>CAAENOPosAppBinderDotNet1_1Client.exe -w http://karindsy.dsy.ds:9081/LCAB17D49 -e cjk -u
+      wpsadmin -p wpsadmin</em> (the parameter values depend on your environment).
+      </li>
+    </ol>
+    <p>
+      A sample output is given for the CAAENOPosAppBinderDotNet1_1Client use case demonstrated. Running the client in
+      your own environment will most likely produce different results. In any case, the last line should always inform
+      that the test passed successfully:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>C:\CAAENOPosAppBinderDotNet1_1ClientSolution\CAAENOPosAppBinderDotNet1_1Client\bin\Debug&gt;CAAENOPosAppBinderDotNet1_1Client.exe
+            -w http://karindsy.dsy.ds:9081/LCAB17D49 -e cjk -u wpsadmin -p wpsadmin<br>
+            ================================================================================<br>
+            Displaying inputs<br>
+            ================================================================================<br>
+            Web application context root URI: http://karindsy.dsy.ds:9081/LCAB17D49<br>
+            ENOVIA LCA V5 P&amp;O username: cjk<br>
+            Basic authentication username: wpsadmin<br>
+            Basic authentication password: wpsadmin<br>
+            ================================================================================<br>
+            Running ENOPosApplicationBinderImpl CAA Web service use case<br>
+            ================================================================================<br>
+            STEP 1: Instantiating and configuring CAA Web service proxy<br>
+            --------------------------------------------------------------------------------<br>
+            STEP 2: Getting contexts for user specified<br>
+            --------------------------------------------------------------------------------<br>
+            &gt;&gt;&gt; Invoking 'getUserContexts' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+            Username: cjk<br>
+            Status: Success<br>
+            Found 1 context(s) in database<br>
+            Displaying list of available contexts:<br>
+            Context[0]: VPMADMIN.ADMIN.DEFAULT<br>
+            --------------------------------------------------------------------------------<br>
+            STEP 3: Logging on to ENOVIA LCA V5<br>
+            --------------------------------------------------------------------------------<br>
+            &gt;&gt;&gt; Invoking 'bindToApplication' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+            Using context: VPMADMIN.ADMIN.DEFAULT<br>
+            Status: Success<br>
+            --------------------------------------------------------------------------------<br>
+            STEP 4: Logging out from ENOVIA LCA V5<br>
+            --------------------------------------------------------------------------------<br>
+            &gt;&gt;&gt; Invoking 'releaseFromApplication' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+            Status: Success<br>
+            ================================================================================<br>
+            Use case execution successful</code><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case describes how to set up a buildtime and runtime environment using Visual Studio .NET 2003 in order
+      to compile and launch the CAA Web services use cases relying on the .NET Framework.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="#" onclick=
+            "javascript:CAAlinkUrl('../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm');return false;">Consuming
+            the ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p>
+      <em>Copyright © 1994-2006, Dassault Systèmes. All rights reserved.</em>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,606 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving and Analyzing Electrical Objects</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Equipment &amp; Systems Engineering</h1>
+		</td>
+		<td valign="top">
+		<h2>Electrical Library</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Retrieving and Analyzing Electrical Objects</h3>
+		<em>How to retrieve electrical devices and navigate in the product tree</em></td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article discusses the ElecDeviceItf use case. This use case explains 
+		how to manage electrical objects in the tree of product</p>
+		<ul>
+			<li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+			<li><b><a href="#UseCase">The CAAElecDevice Use Case</a></b>
+			<ul>
+				<li><a href="#What">What does CAAElecDevice do</a></li>
+				<li><a href="#How">How to Launch CAAElecDevice</a></li>
+				<li><a href="#Where">Where to Find the CAAElecDevice code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step"><b>Step-by-Step</b></a></li>
+			<li><b><a href="#InShort">In Short</a></b></li>
+			<li><b><a href="#history">History</a></b></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming with 
+CATIA ELB Interfaces. Its main intent is to allow you to manage electrical objects 
+and to show you how to retrieve electrical object under the root product and how 
+to navigate through the electrical model of CATIA V5.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAElecDevice Use Case</h3>
+<p>CAAElecDevice is a use case of the CAAElecDeviceItf.edu framework that illustrates 
+the CATIA ELB Interfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAElecDevice Do?</h4>
+<p>The goal of CAAElecDevice use case is to show how to manage Electrical objects 
+and how to use the services of infrastructure of the interfaces which define the 
+behavior of electric objects as <i>CATIElbEquipment, CATIElbSingleConnector or
+</i><i>CATIElbConnectorShell </i>for example<i>.</i></p>
+<p align="center">
+<img border="0" src="images/CAAElbModel.jpg" width="877" height="706"></p>
+<p>Above is a CATIA image of a electrical model we will use for our study. [<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAElecDevice ?</h4>
+<p>To launch CAAElecDevice, you will need to set up the build time environment, 
+then compile CAAElecDevice along with its prerequisites, set up the run time environment, 
+and then execute the sample.</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAElecDevice input.CATProduct&quot; </pre>
+<ul>
+	<li><b>input.CATProduct</b> - the path to the existing external CATProduct to 
+	be browsed. You may reference the supplied CATProduct document called &quot;CAA_ElecDeviceSample.CATProduct&quot; 
+	found in:
+	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic</pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">1</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+	</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where">Where to Find the CAAElecDevice Code</a></h4>
+<p>The CAAElecDevice sample is made of a single class named CAAElecDevice located 
+in the CAAElecDevice.m module of the CAAElecDeviceItf.edu framework:</p>
+<table>
+	<tr>
+		<td>Windows</td>
+		<td><code>InstallRootDirectory\CAAElecDeviceItf.edu\CAAElecDevice.m\</code></td>
+	</tr>
+	<tr>
+		<td>Unix</td>
+		<td><code>InstallRootDirectory/CAAElecDeviceItf.edu/CAAElecDevice.m/</code></td>
+	</tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p>This sample deals with the following classes:</p>
+<table>
+	<tr>
+		<td><i>IUnknown</i></td>
+		<td>Base Class for the References and Instances</td>
+	</tr>
+	<tr>
+		<td><i>CATSessionServices</i></td>
+		<td>Class for managing the session</td>
+	</tr>
+	<tr>
+		<td><i>CATDocument</i></td>
+		<td>Class for the document base class</td>
+	</tr>
+	<tr>
+		<td><i>CATDocumentServices</i></td>
+		<td>Class for managing document in the session</td>
+	</tr>
+	<tr>
+		<td><i>CATIDocRoots</i></td>
+		<td>Class for browsing root object in document</td>
+	</tr>
+	<tr>
+		<td><i>CATIGSMSpline</i></td>
+		<td>Interface allows to access data of the spline feature</td>
+	</tr>
+	<tr>
+		<td><i>CATICkeInst</i></td>
+		<td>Interface dedicated to parameters value management</td>
+	</tr>
+	<tr>
+		<td><i>CATIEleDocServices</i></td>
+		<td>Interface dedicated electrical environment initialization</td>
+	</tr>
+	<tr>
+		<td><i>CATIElecAttrAccess</i></td>
+		<td>Interface dedicated to manage electrical attribute</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbEquipment</i></td>
+		<td>Interface for defining electrical equipment behavior</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbSingleConnector</i></td>
+		<td>Interface for defining single connector behavior</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbCavity</i></td>
+		<td>Interface for defining electrical cavity behavior</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbConnectorShell</i></td>
+		<td>Interface for defining electrical connector shell behavior</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbTermination</i></td>
+		<td>Interface for defining electrical termination behavior</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbBundleCnctPt</i></td>
+		<td>Interface for defining electrical bundle connection point behavior</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now first comment the Electrical environment and it&#8217;s components creation 
+by looking at the code of the CAAElecDevice. There are 16 logical steps in CAAElecDevice:</p>
+<table width="100%">
+	<tr>
+		<td><b>#</b></td>
+		<td><b>Step</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step1">1</a></td>
+		<td valign="top">Creating the session and opening an existing CATProduct</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step2">2</a></td>
+		<td valign="top">Retrieving the root product of the CATProduct document</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step3">3</a></td>
+		<td valign="top">Initializing Electrical Environment</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step4">4</a></td>
+		<td valign="top">Retrieving all electrical equipment under the root product</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step5">5</a></td>
+		<td valign="top">Selecting the first equipment of model and to analyze it.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step6">6</a></td>
+		<td valign="top">Retrieving the list of cavity of the first equipment.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step7">7</a></td>
+		<td valign="top">Retrieving the parent of each cavity of the list.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step8">8</a></td>
+		<td valign="top">Retrieving the Device plugged in the cavity</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step10">9</a></td>
+		<td valign="top">If the device plugged in the cavity is a single connector, 
+		retrieving its list of cavity.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step11">10</a></td>
+		<td valign="top">Retrieving the list of bundle connection point of single 
+		connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step12bis">11</a></td>
+		<td valign="top">Retrieving the list of contact aggregate in the single 
+		connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step13">12</a></td>
+		<td valign="top">If the device plugged in cavity of first equipment is a 
+		connector shell retrieving its list of cavity.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step14">13</a></td>
+		<td valign="top">Retrieving the cavity of the father equipment used by the 
+		connector shell.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step15">14</a></td>
+		<td valign="top">Selecting the second equipment of model and to analyse 
+		it.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step16">15</a></td>
+		<td valign="top">Retrieving the list of bundle connection point defined 
+		on the second equipment.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step18">16</a></td>
+		<td valign="top">Epilog</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the session and opening an existing CATProduct</h4>
+<p>We need a <i>CATSession</i> pointer to create the Session.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATSession *pSession = NULL;
+char *sessionName = &quot;CAA_ElbDevice_Session&quot;;
+HRESULT rc = ::Create_Session(sessionName,pSession);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>We need a CATDocument pointer to opening the document.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATDocument *pDoc = NULL;
+rc = CATDocumentServices::<font face="Courier New" size="1">OpenDocument</font>(argv[1], pDoc);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Once the current session has been created, the CATProduct document can be loaded 
+into the session. pDoc is a pointer to this document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Retrieving the root product of the CATProduct document</h4>
+<p>We need a <i>CATProduct</i> pointer to retrieve the root product.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>....
+  CATIProduct* piRootProduct = NULL;  
+  CATIDocRoots * pDocRoots = NULL;
+  rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,(void**) &amp;pDocRoots);
+  ...
+  CATListValCATBaseUnknown_var* pListRootProduct = pDocRoots-&gt;GiveDocRoots();
+  ...
+  
+  if ( pListRootProduct &amp;&amp; pListRootProduct-&gt;Size() )
+  {  
+    rc = (*pListRootProduct)[1]-&gt;QueryInterface(IID_CATIProduct,(void**) &amp;piRootProduct );
+  }
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Initializing Electrical Environment</h4>
+<p>We initialize the Document by using CATIEleDocServices interface pointer and 
+the method Initialize() on it.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>....
+  CATIEleDocServices * piElecDocServices = NULL;  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to electrical 
+object or electrical attributes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Retrieving all electrical equipment under the root product</h4>
+<p>We need a generic method GetAllChildren() of interface CATIProduct to retrieve 
+all equipment defined under the root product.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATListValCATBaseUnknown_var* pListElectricalEquipment = NULL;
+pListElectricalEquipment = piRootProduct-&gt;GetAllChildren(CATIElbEquipment::ClassName());
+piRootProduct -&gt; Release();
+piRootProduct = NULL ;
+  
+int NumberOfEquipment = 0;
+if ( (NULL!=pListElectricalEquipment) &amp;&amp; pListElectricalEquipment-&gt;Size() ) 
+      NumberOfEquipment = pListElectricalEquipment-&gt;Size();	
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Selecting the first equipment of model and to analyse it</h4>
+<p>We need a <i>CATIElbEquipment</i> interface pointer to be able to selecting the 
+first equipment defined under the root poduct..</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbEquipment * piFirstElecEquipment = NULL;
+rc = (*pListElectricalEquipment)[1]-&gt;QueryInterface(IID_CATIElbEquipment,(void**) &amp;piFirstElecEquipment);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Retrieving the list of cavity of the first equipment</h4>
+<p>We use method ListCavities() of <i>CATIElbEquipment</i> interface to find the 
+list of cavities defined on the first equipment. Every element of the list adheres 
+to the CATIElbCavity interface.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+ CATListValCATBaseUnknown_var* pListOfCavity = NULL;
+rc = piFirstElecEquipment -&gt;ListCavities(pListOfCavity);
+int nNumberOfCavity = pListOfCavity? pListOfCavity-&gt;Size() : 0;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElbConnectivityOfFirstEquipment.jpg" width="544" height="638"></p>
+<p>Above is a CATIA image of connectivity of first equipment.</p>
+<p align="center">
+<img border="0" src="images/CAAElbTreeConnectityOfFirstEquipment.jpg" width="647" height="524"></p>
+<p>Above is a CATIA image of the tree of connectivity of first equipment. We can 
+see the list of cavity defined on the first equipment</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Retrieving the parent of each cavity of the list</h4>
+<p>We need the method GetParent() of the interface <i>CATIElbCavity</i> to find 
+where the cavity is aggregate.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  for(int i=1;i&lt;=nNumberOfCavity;i++)
+  {
+    CATIElbCavity * pElecCavity =NULL;
+    if(SUCCEEDED((*pListOfCavity)[i]-&gt;QueryInterface(IID_CATIElbCavity,(void**)&amp; pElecCavity)) &amp;&amp; pElecCavity)
+    {      
+      CATBaseUnknown * pParentOfCavity = NULL;
+      rc = pElecCavity-&gt;GetParent(pParentOfCavity);
+    }
+  }
+... </pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Retrieving the Device plugged in the cavity</h4>
+<p>We need the method GetPluggedInDevice () of the interface CATIElbCavity to find 
+the device connected with the cavity.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+      </pre>
+		<pre>CATBaseUnknown * pDevicePluggedInCavity = NULL;
+rc = pElecCavity-&gt;GetPluggedInDevice(pDevicePluggedInCavity);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>If the device plugged in the cavity is a single connector, 
+retrieving its list of cavity</h4>
+<p>The device plugged in the cavity is a single connector if it adheres to the interface
+<i>CATIElbsingleConnector. </i>The method ListCavities() of <i>CATIElbSingleConnector</i> 
+interface allows to find the list of cavity defined on the single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbSingleConnector * pElecSingleConnector = NULL;
+if(SUCCEEDED(pDevicePluggedInCavity-&gt;QueryInterface(IID_CATIElbSingleConnector,(void**)&amp; pElecSingleConnector)) &amp;&amp;pElecSingleConnector )
+{
+  CATListValCATBaseUnknown_var * pListCavityOfSic = NULL;
+  rc = pElecSingleConnector-&gt;ListCavities(pListCavityOfSic);
+  int NumberOfCavity = pListCavityOfSic?pListCavityOfSic-&gt;Size():0;</pre>
+		} ...<pre></pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElbCavityOfSic.jpg" width="664" height="526"></p>
+<p>Above is a CATIA image of general view of single connector.</p>
+<p align="center">
+<img border="0" src="images/CAAElbConnectivityOfSic.jpg" width="619" height="499"></p>
+<p>Above is a CATIA image of connectivity of the single connector</p>
+<p align="center">
+<img border="0" src="images/CAAElbTreeOfConnectivityOfSic.jpg" width="730" height="587"></p>
+<p>Above is a CATIA image of the tree of connectivity of single connector. We can 
+see the list of cavity defined on the single connector</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step11"></a>Retrieving the list of bundle connection point of 
+single connector</h4>
+<p>We need the method ListBundleCnctPts() of <i>CATIElbSingleConnector</i> interface 
+to find the list of bundle connection point defined on the single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATListValCATBaseUnknown_var * pListBundleCnctPtOfSic = NULL;
+rc = pElecSingleConnector-&gt;ListBundleCnctPts(pListBundleCnctPtOfSic);
+int NumberOfBCP = pListBundleCnctPtOfSic?pListBundleCnctPtOfSic-&gt;Size():0;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step12bis"></a>Retrieving the list of contact aggregate in the 
+single connector</h4>
+<p>We need the method ListDeviceComposition() of <i>CATIElbSingleConnector</i> interface 
+to find the list of contact (or filler plug) defined on the single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATListValCATBaseUnknown_var * pListDeviceComposition = NULL;
+rc = pElecSingleConnector-&gt;ListDeviceComposition(pListDeviceComposition);
+int NumberOfContact = pListDeviceComposition?pListDeviceComposition-&gt;Size():0;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step13"></a>If the device plugged in cavity of first equipment is a 
+connector shell retrieving its list of cavity</h4>
+<p>The device plugged in the cavity is a connector if it adheres to the interface
+<i>CATIElbConnectorShell. </i>The method ListCavities() of <i>CATIElbConnectorShell</i>
+interface allows to find the list of cavity defined on the connector shell.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbConnectorShell * pElecConnectorShell = NULL;
+if(SUCCEEDED(pDevicePluggedInCavity-&gt;QueryInterface(IID_CATIElbConnectorShell,(void**)&amp; pElecConnectorShell)) &amp;&amp; pElecConnectorShell )
+{
+  CATListValCATBaseUnknown_var * pListCavityInConnectorShell = NULL;
+  rc = pElecConnectorShell-&gt;ListCavities(pListCavityInConnectorShell); 
+  int NumberOfShellCavity = pListCavityInConnectorShell?pListCavityInConnectorShell-&gt;Size():0;
+}
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElbConnectivityOfConnectorShell.jpg" width="553" height="659"></p>
+<p>Above is a CATIA image of connectivity of the connector shell</p>
+<p align="center">
+<img border="0" src="images/CAAElbTreeConnectivityOfConnectorShell.jpg" width="702" height="566"></p>
+<p>Above is a CATIA image of the tree of connectivity of connector shell. We can 
+see its list of cavity.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step14"></a>Retrieving the cavity of the father equipment used by the 
+connector shell</h4>
+<p>We need the method GetEquipmentCavity of <i>CATIElbConnectorShell</i> interface 
+to find the cavity where the connector shell is inserted.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbCavity * pElecCavityOfFatherEquipment = NULL;
+rc =pElecConnectorShell-&gt;GetEquipmentCavity(pElecCavityOfFatherEquipment);</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step15"></a>Selecting the second equipment of model and analyze it</h4>
+<pre class="code">CATIElbEquipment * piSecondElecEquipment = NULL;
+rc = (*pListElectricalEquipment)[2]-&gt;QueryInterface(IID_CATIElbEquipment,(void**) &amp;piSecondElecEquipment);</pre>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step16"></a>Retrieving the list of bundle connection point defined 
+on the second equipment</h4>
+<p>We need the method ListBundleCnctPts() of <i>CATIElbEquipment</i> interface to 
+find the bundle connection point defined on the equipment.</p>
+<pre class="code">...
+CATListValCATBaseUnknown_var * pListBCPinEquipment = NULL;
+rc = piSecondElecEquipment-&gt;ListBundleCnctPts(pListBCPinEquipment);
+if(piSecondElecEquipment) piSecondElecEquipment-&gt;Release();
+piSecondElecEquipment = NULL;
+int tailleListBCP = pListBCPinEquipment ? pListBCPinEquipment-&gt;Size() : 0;
+...</pre>
+<p align="center">
+<img border="0" src="images/CAAElbSecondEquipment.jpg" width="795" height="634"></p>
+<p>Above is a CATIA image of the second equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step18"></a>Epilog</h4>
+<p>Removing document from session and closing the session.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>rc = CATDocumentServices::Remove(*pDoc);
+rc = ::Delete_Session(sessionName);
+</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to navigate electrical entities in a document 
+and how use electrical services to manage electrical model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="history"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [August 2002]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

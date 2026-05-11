@@ -1,0 +1,584 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>C++ Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>C++ Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article describes the checks relative to C++ rules. This checks
+      are identified by BDON, BDON2, EOLC, SCIS, NWD1, NWD2, UPVA.</p>
+				  <ul>
+					  <li><a href="#Problematic">Problematic</a></li>
+					  <li><a href="#Checks">Checks</a>
+						  <ul>
+							  <li><a href="#Principle">Principle</a></li>
+							  <li><a href="#BDON">BDON</a></li>
+							  <li><a href="#BDON2">BDON2</a></li>
+							  <li><a href="#EOLC">EOLC</a></li>
+							  <li><a href="#SCIS">SCIS</a></li>
+							  <li><a href="#NWD2">NWD2</a></li>
+							  <li><a href="#UPVA">UPVA</a></li>
+							  <li><a href="#IOS1">IOS1</a></li>
+							  <li><a href="#IOS2">IOS2</a></li>
+							  <li><a href="#BVSS">BVSS</a></li>
+							  <li><a href="#MINC">MINC</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#Relative">Relative Sections in Setting Files</a>
+						  <ul>
+							  <li><a href="#NewMethods"> MemoryManagement_NewMethods</a></li>
+							  <li><a href="#EffectiveCopyClass"> EffectiveCopyClass</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#InShort">In Short</a></li>
+					  <li><a href="#References">References</a></li>
+					  <li><a href="#History">History</a></li>
+				  </ul>
+      </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Some C++ errors are checked by CSC, like the allocation of memory with an
+API, and the de-allocation of this memory with another API, or allocation on the
+heap without de-allocation, or use of passage by value whereas passage by
+reference is more effective.</p>
+<h2><a name="Checks"></a>Checks</h2>
+<h3><a name="Principle"></a>Principle</h3>
+<p>BDON / BDON2:<br />
+CSC follows all pointers, noting for each of them every allocation via new or
+new[] and every de-allocation via delete or delete[]. When a bad
+allocation/de-allocation couple is detected, CSC reports an error.</p>
+<p>EOLC:<br />
+A class declared in a LocalInterfaces directory of a module can not be used
+outside of this module, so it is useless to declare it as
+&quot;__dllspec(dllexport)&quot;. Don't forget that this will generate a
+(little) bigger object file. When CSC detects an exported class in a header file
+located in a LocalInterfaces directory of a module, an error is reported.</p>
+<p>SCIS:<br />
+A &quot;if(...)&quot; expression not followed by an instruction is, most of the
+time, an error.</p>
+<p><!--NWD1 / -->NWD2:<br />
+An object is allocated on the heap directly <!--with a new, or--> via an allocation
+method and is never deleted.</p>
+<p>UPVA:<br />
+An object of complex type is passed by value in method or function argument,
+that gives bad performances (use of the copy constructor ...). Passage by
+constant reference is far more effective.</p>
+<p>IOS1 / IOS2:<br />
+CSC checks that ofstream objects are not opened in input mode (IOS1 error) or
+ifstream objects in output mode (IOS2 error). Inconsistency can lead to errors
+with some operating systems.</p>
+<p>BVSS:<br />
+For each call to strcpy function, which copy a source string into a destination
+string, CSC checks that the destination string is longer than the source. An
+error causes an overflow and thus memory corruption whose origin can be
+difficult to recognize.</p>
+<!-- <p>UINC:<br />
+When a source file includes a header file whereas there is no use of any
+declaration contained in it.</p> -->
+<p>MINC:<br />
+<strong>Due to a large amount of false positives, this error is deactivated.</strong> But you can activate it by using custom settings.
+Indirect header modification without common build level can cause build error. 
+Indeed, when a source uses resources without including the header file where the 
+declaration of the resources is located, a build error occurs. Unless if the 
+inclusion is indirect, i.e. there is an inclusion path starting from the source 
+file to the header file needed. If the inclusion path is broken, i.e. one 
+of the files in the path stops including the following file of the path, build 
+process fails. </p>
+<p>For example, let&#8217;s assume following inclusion path:</p>
+<p>
+<img alt="Inclusion Path" src="images/CAACscTaCppMINCPrinciple.gif" width="507" height="210"/></p>
+<p>If code <code>#include &#8220;2.h&#8221;</code> is deleted 
+in 1.h file, development <em>A </em>still compiles, whereas compilation error occurs in 
+file B.cpp in Development <em>B</em>.</p>
+<p>If the modification happens in a different workspace, the 
+error can appear only in an upper level, possibly only in the highest one. A 
+build error in those levels leads to a useless loss of time in release and 
+development process.</p>
+<p>The objective of this check is to provide a mean to 
+anticipate these problems of indirect inclusion of header file, and then  to react earlier, at developer level. </p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="BDON"></a>BDON</h3>
+<p>BDON stands for Bad Delete On New.</p>
+<p>An error of type BDON is reported when :</p>
+<ul>
+  <li>an array pointer is allocated via new[] and de-allocated via delete.</li>
+  <li>the type of this pointer is not a simple type (like int, char, short, ...)</li>
+</ul>
+<p>Forgetting to delete the pointer as an array will prevent from calling the
+destructors of every element of the array, thus probably leading to memory
+leaks.</p>
+<p><a name="BDON-1"></a><strong>Example BDON-1</strong></p>
+<p>The following code will report a BDON error:</p>
+<pre class="code">...
+CATNode * nodes = NULL;
+int nbnodes= ...;
+nodes = new CATNode [nbnodes];
+...
+if( nodes ) <strong>delete nodes</strong>;
+...</pre>
+<p>To correct the error, use the correct de-allocation routine:</p>
+<pre class="code">...
+CATNode * nodes = NULL;
+int nbnodes= ...;
+nodes = new CATNode [nbnodes];
+...
+if( nodes ) <strong>delete [] nodes</strong>;
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="BDON2"></a>BDON2</h3>
+<p>BDON2 stands for Bad Delete On New type 2.</p>
+<p>An error of type BDON2 is reported when:</p>
+<ul>
+  <li>an array pointer is allocated via new and de-allocated via delete [].</li>
+</ul>
+<p><a name="BDON2-1"></a><strong>Example BDON2-1</strong></p>
+<p>The following code will report a BDON2 error:</p>
+<pre class="code">...
+CATNode * nodes = NULL;
+int nbnodes= ...;
+nodes = new CATNode();
+
+if( nodes ) <strong>delete [] nodes</strong>;
+...</pre>
+<p>To correct the error, use the correct de-allocation routine:</p>
+<pre class="code">...
+CATNode * nodes = NULL;
+int nbnodes= ...;
+nodes = new CATNode();
+
+if( nodes ) <strong>delete nodes</strong>;
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="EOLC"></a>EOLC</h3>
+<p>EOLC stands for Export Of Local Class.</p>
+<p>An error of type EOLC is reported when:</p>
+<ul>
+  <li>a class is declared in a LocalInterfaces directory (in a module).</li>
+  <li>this class contains the keyword ExportedByxxx in its declaration.</li>
+</ul>
+<p><a name="EOLC-1"></a><strong>Example EOLC-1</strong></p>
+<p>Let's assume that CATSpecCheckCmd.h is located in the directory
+LocalInterfaces of the module CATCheckServices.m
+(MyFramework/CATCheckServices.m/<strong>LocalInterfaces</strong>/CATSpecCheckCmd.h). If
+the declaration of the class is as the following, a EOLC error will be reported:</p>
+<pre class="code"><strong>class ExportedByCATCheckServices CATSpecCheckCmd : public CATCommand</strong> 
+{ 
+  ...
+};</pre>
+<p>To correct the error, don't use the keyword ExportedByxxx (it is useless here
+since the class is local):</p>
+<pre class="code"><strong>class CATSpecCheckCmd : public CATCommand</strong> 
+{ 
+  ...
+};</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="SCIS"></a>SCIS</h3>
+<p>SCIS stands for SuspiCious If in Source.</p>
+<p>An error of type SCIS is reported when :</p>
+<ul>
+  <li>an expression if(...) is used.</li>
+  <li>this expression is not followed by an instruction.</li>
+</ul>
+<p><a name="SCIS-1"></a><strong>Example SCIS-1</strong></p>
+<p>The following code will report a SCIS error:</p>
+<pre class="code">...
+HRESULT hr= product-&gt; QueryInterface(iIID, (void **)&amp;path);
+if (SUCCEEDED(hr));
+{ 
+  ...
+}
+...</pre>
+<p>To correct the error, remove the semicolon which is a bad programming pattern
+in this case.</p>
+<pre class="code">...
+HRESULT hr= product-&gt; QueryInterface(iIID, (void **)&amp;path);
+if (SUCCEEDED(hr))
+{ 
+  ...
+}
+...</pre>
+<p><a name="SCIS-2"></a><strong>Example SCIS-2</strong></p>
+<p>Invalids SCIS are generated when an &quot;if (..)&quot; expression is
+preceded by a macro not ended by a semicolon.</p>
+<p>The following code will report an invalid SCIS error. The parser will not
+understand correctly the macro.</p>
+<pre class="code">...
+MACRO_USE(&quot;Hello&quot;)
+if (elem1 == NULL_var)
+{
+  ...
+}
+...</pre>
+<p>To correct the error, add a semicolon after the use of the macro (this as not
+effect for the code, and will correct the error):</p>
+<pre class="code">...
+MACRO_USE(&quot;Hello&quot;);
+if (elem1 == NULL_var)
+{
+  ...
+}
+...</pre>
+<!--<h3><a name="NWD1"></a>NWD1</h3>
+<p>NWD1 stands for New Without Delete 1.</p>
+<p>An error of type NWD1 is reported when :</p>
+<ul>
+  <li>an object is allocated using new.</li>
+  <li>this object is never deleted.</li>
+</ul>
+<p><a name="NWD1-1"></a><strong>Example NWD1-1</strong></p>
+<p>The variable myCATBase is allocated with new and it is never deleted, the
+following code will report a NWD1 error:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>{
+  CATBaseUnnown* myCATBase = new CATBaseUnknown();
+  ... // use of myCATBase
+}</pre>
+    </td>
+</tr>
+</tbody>
+</table>
+<p>The correct code is:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>{
+  CATBaseUnnown* myCATBase = new CATBaseUnknown();
+  ... // use of myCATBase
+<strong>  delete myCATBase;</strong>
+}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+-->
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="NWD2"></a>NWD2</h3>
+<p>NWD2 stands for New without Delete 2.</p>
+<p>An error of type NWD2 is reported when:</p>
+<ul>
+  <li>an object is allocated on the heap via an allocation method or function.</li>
+  <li>this object is never deleted.</li>
+</ul>
+<p>An allocation method (or function) is a method (or a function) returning a
+pointer (directly or as out/in-out argument) which will have to be deleted after
+last use. The list of the allocation methods and functions is provided in the
+setting files, see <a href="#NewMethods">MemoryManagement_NewMethods</a>
+section.</p>
+<p><a name="NWD2-1"></a><strong>Example NWD2-1</strong></p>
+<p>Let's take the following function CATCreateTopLayDown and assume that it is
+referenced as an allocation function:</p>
+<pre class="code">CATLayDownOperator* CATCreateTopLayDown(
+       CATGeoFactory* iFactory, CATTopData* iData, CATBody* iBodyToLayDown, CATBody* iBodySupport){
+  CATLayDownOperator * volatile iLayDownOp = NULL;
+  ...
+  iLayDownOp = new CATLayDownOperator(iFactory,iData,iBodyToLayDown,iBodySupport); 
+  ...
+  return iLayDownOp ;
+}</pre>
+<p>The following code will report a NWD2 error, as the variable TestLay is
+allocated via CATCreateTopLayDown and never deleted:</p>
+<pre class="code">{ 
+  CATLayDownOperator * TestLay = NULL;
+  TestLay = CATCreateTopLayDown (iFacto, CurData, iToTest, iSupport);
+  if (TestLay != NULL){
+    TestLay-&gt;Run(); 
+  } 
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">{ 
+  CATLayDownOperator * volatile TestLay = NULL;
+  TestLay = CATCreateTopLayDown (iFacto, CurData, iToTest, iSupport);
+  if (TestLay != NULL){
+    TestLay-&gt;Run(); 
+    <strong>delete TestLay;</strong>
+  } 
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="UPVA"></a>UPVA</h3>
+<p>UPVA stands for ineffective Use of Passage by Value in method or function
+Argument.</p>
+<p>Using passage by value can be really costly for object of complex type (or
+for object lists), particularly because of the calls to the copy constructor.
+Using passage by constant reference can then perform the same behavior with
+better performances.</p>
+<p>A warning of type UPVA is reported when:</p>
+<ul>
+  <li>an object is passed by value as method or function argument.</li>
+  <li>considering the type of the argument, it is estimated sufficiently
+    valuable (not a basic type, no envelope/letter mechanism, ...) to use a
+    passage by constant reference instead.</li>
+</ul>
+<p>It is possible to indicate in the setting files classes for which passage by
+reference instead of passage by value is not required. Therefore no UPVA warning
+will be reported for an argument of this type passed by value. The section
+concerned of the setting files is the <a href="#EffectiveCopyClass">EffectiveCopyClass</a>
+section.</p>
+<p><a name="UPVA-1"></a><strong>Example UPVA-1</strong></p>
+<p>Let's assume that the method IsCurveReferencedByWire has the following
+signature:</p>
+<pre class="code">void IsCurveReferencedByWire( CATCurve * Curve, <strong>const CATCrvParam iPrmOnECrv</strong>, CATEdge *&amp; oEdgeSupport, 
+  CATCrvParam &amp; oPrmOnEdge, int i);</pre>
+<p>The argument iPrmOnECrv of complex type CATCrvParam, is passed by constant
+value, therefore the code will report an UPVA warning.<br />
+The correct signature is :</p>
+<pre class="code">void IsCurveReferencedByWire( CATCurve * Curve, <strong>const</strong> CATCrvParam <strong>&amp;  </strong>iPrmOnECrv, CATEdge *&amp; oEdgeSupport, 
+  CATCrvParam &amp; oPrmOnEdge, int i);</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="IOS1"></a>IOS1</h3>
+<p>IOS1 is set for Bad Use Of Input Stream.</p>
+<p>An error of type IOS1 is reported when:</p>
+<ul>
+  <li>an ifstream object is opened in output mode</li>
+</ul>
+<p><a name="IOS1-1"></a><strong>Example IOS1-1</strong></p>
+<p>The following code will report an IOS1 error:</p>
+<pre class="code"><strong>ifstream</strong> dumpFile ; 
+dumpFile.open(filePathString.CastToCharPtr(), <strong>ios::out</strong>);</pre>
+<p>The correct code is:</p>
+<pre class="code"><strong>ofstream</strong> dumpFile ; 
+dumpFile.open(filePathString.CastToCharPtr(), ios::out);</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="IOS2"></a>IOS2</h3>
+<p>IOS2 is set for Bad Use Of Output Stream.</p>
+<p>An error of type IOS2 is reported when:</p>
+<ul>
+  <li>an ofstream object is opened in input mode</li>
+</ul>
+<p><a name="IOS2-1"></a><strong>Example IOS2-1</strong></p>
+<p>The following code will report an IOS2 error:</p>
+<pre class="code"><strong>ofstream</strong> dumpFile ; 
+dumpFile.open(filePathString.CastToCharPtr(), <strong>ios::in</strong>);</pre>
+<p>The correct code is:</p>
+<pre class="code"><strong>ifstream</strong> dumpFile ; 
+dumpFile.open(filePathString.CastToCharPtr(), ios::in);</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="BVSS"></a>BVSS</h3>
+<p>BVSS stands for Bad Variable Size for strcpy</p>
+<p>An error of type BVSS is reported when:</p>
+<ul>
+  <li>a call to C function strcpy is make.</li>
+  <li>destination and source are declared is the same scope.</li>
+  <li>destination variable is a character array and is shorter than the source
+    string.</li>
+</ul>
+<p><a name="BVSS-1"></a><strong>Example BVSS-1</strong></p>
+<p>The following code will report an BVSS error:</p>
+<pre class="code">char hello [3];
+strcpy(hello, &quot;hello&quot;);</pre>
+<p>The correct code is:</p>
+<pre class="code">char hello [6];
+strcpy(hello, &quot;hello&quot;);</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!--
+<h3><a name="UINC"></a>UINC</h3>
+<p>UINC stands for Useless INClude.</p>
+<p>Including a header file is expensive in compilation time, as it implies to
+expand the included file but also all the files includes by this one, directly
+or not.</p>
+<p>An error of type UINC is reported when:</p>
+<ul>
+  <li>a header file is included in the source file.</li>
+  <li>none of the declarations (types, structures, variables, functions, macros)
+    present in the header file is used.</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="MINC"></a>MINC</h3>
+<p>MINC stands for Missing INClude.</p>
+<p>The check lists  the type 
+declarations needed in current source file, and reports those that are not included directly in the source file. 
+At the moment, <strong>a type 
+declaration is considered as needed</strong> in a source file if there is at least 
+one local variable of this type (or a derived type) declared in one of the 
+function or method implemented in the file.</p>
+<p>However, as an <em>implementation file</em> must include the corresponding <em>
+declaration file</em>, and as the owners of the both file are usually the same, 
+it is not demanded to include 
+a header file needed in <em>implementation file</em> if the corresponding<em> declaration file</em> 
+already includes it. This means that <strong><span style="font-weight: 400">if the source file implements a class declared in another file &#8211; usually a header file, 
+</span>files 
+included in the header file do not have to be included in the implementation 
+source file.</strong></p>
+<p>Moreover, in a file declaring or implementing a class, <strong>no 
+error is generated on parent class types. </strong> </p>
+<p><strong>To sum-up</strong>, an error of type MINC is reported when:</p>
+<ul>
+  <li>at least one local variable of type T is declared</li>
+  <li>type T is not declared in any of the header files directly included in the 
+  file analyzed or in the corresponding <em>declaration file </em>(if the analyzed 
+  file is an <em>implementation file</em>)</li>
+  <li>T is not a parent class of a class declared or implemented in the file 
+  analyzed.</li>
+</ul>
+<p>A particular case is set for types
+<code>CATListOfInt, CATListOfFloat, 
+CATListOfDouble, CATListOfCATString</code> and
+<code>CATListOfCATUnicodeString</code>. These types 
+are declared as typedefs in header <em>file CATCollec.h</em>. However, the 
+files <em>CATListOfInt.h, CATListOfFloat.h, CATListOfDouble.h, 
+CATListOfCATString.h </em>and<em> CATListOfCATUnicodeString.h</em> include
+<em>CATCollec.h</em> and are frequently included to have access to these types 
+declarations. For readability reasons, and to limit useless error occurrences, 
+including these files instead of CATCollec.h is not reported as an error.</p>
+
+<h4>Limitations</h4>
+<p>Invalid MINC errors reported in source file can be 
+filtered. Then, the filtered error will no more be reported.</p>
+<p>Mechanism of MINC checker implies that if a type declaration is not found or not 
+understand by the tool, using this type will generate MINC errors. </p>
+<p>Macro expansion can lead to such cases. Indeed, for performance reasons, macro expansion is not automatic in CSC tool 
+(see [<a href="#References">1</a>]). 
+Nevertheless, if needed, it is possible to declare in the settings file the 
+macros which must be expanded. Then, the tool may generate different results whereas a macro 
+is expanded or not by the tool. Here are two different cases:</p>
+<p><em>First case</em><br />
+Type of a local variable declared in a macro body will be said as needed in each 
+file containing this macro, if the macro is declared in CSC settings to be 
+expanded.<br />
+Let&#8217;s assume the following code example:<br />
+<img alt="Code Example" src="images/CAACscTaCppMINCLimitation1.gif" width="501" height="129"/></p>
+<p>Expected behavior would be that no error MINC be reported 
+for file A.cpp. But if the macro <code>THROW_ERROR</code> is expanded by the tool, the 
+variable declaration <code>Error* e = new Error(msg)</code> is seen in file A.cpp and an 
+error MINC is then reported for <code>Error</code> type. If the macro is not expanded, no 
+error will be reported.<br />
+Furthermore, suppression of directive &#8216;#include &#8220;Error.h&#8221; &#8217; 
+in file 1.h will not provoke the generation of a MINC error.</p>
+<p><em>Second case</em><br />
+Let&#8217;s assume the following code example:<br />
+<img alt="Code Example" src="images/CAACscTaCppMINCLimitation2.gif" width="426" height="128"/></p>
+<p>Expected behavior would be that an error MINC be reported: 
+declaration of <code>CATString</code> type is not included in A.cpp, whereas it is used.<br />
+This will happen only if the tool expands <code>MACRO</code>. Otherwise, 
+no error will be reported.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">2</a>].</p>
+<h3><a name="NewMethods"></a>MemoryManagement_NewMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+MemoryManagement_OptionLists</p>
+<p><img alt="MemoryManagement_NewMethods" src="images/CAACscTaCppNewMethods.gif" width="588" height="393"/></p>
+<p>This section contains a list of CallWithSpecificArg. Each CallWithSpecificArg
+describes a method or a function returning a pointer (directly or as out/in-out
+argument) which will have to be deleted after last use:</p>
+<dl>
+  <dt>ClassName</dt>
+  <dd>The name of the class (no ClassName means that it is a function)</dd>
+  <dt>MethodOrFunctionSign</dt>
+  <dd>The signature of the method or function</dd>
+  <dt>SpecificArg</dt>
+  <dd>The number of the argument which is allocated (0 refers to the method's
+    result)</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+  <li>This section must not contain methods returning a list of pointers (or
+    handlers), each one being allocated (like CATListOfPtr). This is not
+    supported by the tool.</li>
+  <li>Avoid describing the type of the arguments (just specify the number of
+    arguments with &quot;?&quot;).</li>
+</ul>
+<p>Example 1:</p>
+<pre>SpecificArg          1
+ClassName            myClass
+MethodOrFunctionSign myClassAllocationMethod(?)</pre>
+<p>This means that the method myClassAllocationMethod with 1 argument of the
+class myClass (or any inheriting class) makes an allocation by new on its first
+and only argument.</p>
+<p>Example 2:</p>
+<pre>SpecificArg          0
+ClassName            
+MethodOrFunctionSign myClassAllocationFunction</pre>
+<p>This means that the the function myClassAllocationFunction (no matter the
+number of arguments) makes an allocation by new on its returned pointer.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="EffectiveCopyClass"></a>EffectiveCopyClass</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+Various_OptionLists</p>
+<p><img alt="EffectiveCopyClass" src="images/CAACscTaCppEffectiveCopyClass.gif" width="564" height="230"/></p>
+<p>This section contains a list of ClassName. Each ClassName describes a name of
+class for which UPVA warnings will not be reported.</p>
+<p>Example:</p>
+<pre>ClassName  CATString</pre>
+<p>This means that arguments of type CATString can be passed by value without
+generating any UPVA warnings.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>C++ Source Checker can easily and quickly point some C++ simple rules,
+improving performance or preventing some memory leaks.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAACscTaCppParser.htm">Inside the mkscc Parser</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

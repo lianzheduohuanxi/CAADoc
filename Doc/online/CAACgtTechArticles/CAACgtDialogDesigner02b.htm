@@ -1,0 +1,142 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Starting Rich Application Presentation Designer</title>
+</head>
+
+<body onload="createToc();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Starting Rich Application Presentation Designer</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The purpose of this article is to explain how to prepare a proper
+		workspace environment to run the Rich Application Presentation Designer, and how to create a new dialog box design file.</p>
+		<div id="toc">
+		<ul>
+			<li><a href="#Installing_Dialog_Designer">Setting up the Environment</a></li>
+			<li><a href="#Installing_Dialog_Designer0">Creating a New Rich Application Presentation Designer File</a></li>
+			<li><a href="#Limitations">Limitations</a></li>
+		</ul>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td><!-- IR IR-421828-V5-6R2017 -->
+			<strong>Warning</strong>: Note that with Windows, the Rich Application Presentation Designer requires the folder C:\temp. Make sure this 
+			folder exists on your computer.
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Installing_Dialog_Designer"></a>Setting up the Environment</h2>
+<p>The Rich Application Presentation Designer is designed to 
+work in a development environment. The first step is to open or create a workspace:</p>
+<ul>
+	<li>To open a 3DS workspace,
+on the <kbd>File</kbd> menu, point to <kbd>Open</kbd> and click
+			<img alt="Workspace Icon" src="images/iconOpenWS1.png" width="16" height="16">
+			<kbd>3DS Workspace</kbd>.</li>
+	<li>To create a 3DS workspace, on the <kbd>File</kbd> menu, point to <kbd>New</kbd>, and click
+		<img alt="Workspace Icon" src="images/iconNewWS1.png" width="16" height="16">
+		<kbd>3DS Workspace</kbd>.</li>
+</ul>
+
+<p>Now that we are in a valid edition context, we must update 
+the workspace prerequisites if necessary, so that they include the designer 
+resources. You can modify 
+those prerequisites using the RADE customization menu:</p>
+<ul>
+<li>In the <kbd>3DS Workspace Explorer</kbd>, right click the workspace name, and 
+click <kbd>Prerequisites</kbd>.</li>
+</ul>
+<p>Your concatenation path should at least contain the folder into which the 
+Dassault Systèmes' solutions and products run time and API CD-ROMs were 
+unloaded, usually C:\Program Files\Dassault Systemes\B28.</p>
+<p>If you change your prerequisites after creating or opening an Rich 
+Application Presentation Designer file, the designer must be refreshed to be 
+able to use the new resources found in the changed prerequisites. This can be 
+done using the 'Refresh IDD Definitions' command, located in the Project menu of 
+Visual Studio:</p>
+<ul>
+<li>On the <kbd>Project</kbd> menu, click <kbd>Refresh IDD Definitions</kbd>.</li>
+</ul>
+<p>This command must first close any opened Rich Application Presentation 
+Designer file, and will 
+prompt the user to save and close those file before refreshing the environment:</p>
+<p><img border="0" src="images/IDDRefreshEnv2.png" width="359" height="126"></p>
+<p>Remark: The Rich Application Presentation Designer environment is automatically 
+refreshed when a new workspace is opened.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Installing_Dialog_Designer0"></a>Creating a New Rich Application 
+Presentation Designer File</h2>
+<p>To create a new Dialog file handled by the application, you 
+can call the creation wizard. This wizard is located in the standard Visual 
+Studio &#8216;Add New Item&#8217; dialog. To invoke it, use the contextual menu in the 
+Solution Explorer window, on the &#8216;src&#8217; folder that will contain the generated 
+file:</p>
+<p><img alt="0" src="images/CreateNew1.png" width="622" height="203"></p>
+<p>Then in the &#8216;Add new item&#8217; dialog, select the 
+Dassault Systemes Code 
+Gen File category, where you will find the Creation wizard:</p>
+<p><img alt="0" src="images/CreateNew2.png" width="600" height="350"></p>
+<p>Once the name of the created file is fixed, click &#8216;Add&#8217; to 
+launch the wizard.</p>
+<p>In the creation wizard, just click &#8216;Finish&#8217; to select the 
+Dialog Designer template, and create a new dialog box.</p>
+<p><img alt="0" src="images/CreateNew3.png" width="517" height="264"></p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Limitations"></a>Limitations</h2>
+<p>The designer will automatically generate the C++ files (header and 
+implementation) associated to a designed dialog box. However, it will not handle 
+other files in the project that may need an update for the dialog box to work 
+properly. In particular:</p>
+<ul>
+	<li>It will not update the Identity card and the Imakefile that defines 
+the prerequisites of the module containing the dialog box. You have to edit 
+them manually, to add the frameworks (in the Identity card) or modules (in the Imakefile) that contain the implementation of the 
+widgets used in your Dialog box. The required frameworks and modules for each 
+widget are described in the documentation, on top of each widget description.</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

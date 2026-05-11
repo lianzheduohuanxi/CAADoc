@@ -1,0 +1,421 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Change Management Interfaces</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Change Management Interfaces</h3>
+      <em>Typical Uses of Change Management Interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This technical article shows how to use interfaces of the
+      ENOVInterfaces framework to perform a typical Change Management operation.
+      In this case, we create an Engineering Change Order and a design Action,
+      add an Affected Object, link the Action and add an Effectivity to the ECO.</p>
+      <ul>
+        <li><a href="#Scenario"><strong>A Typical Change Management Scenario</strong></a></li>
+        <li><a href="#Eco"><strong>Creating an ECO</strong></a></li>
+        <li><a href="#Action"><strong>Creating an Action</strong></a></li>
+        <li><a href="#Affected"><strong>Adding an Affected Object to the ECO</strong></a></li>
+        <li><a href="#Link"><strong>Adding an Action to the ECO</strong></a></li>
+        <li><a href="#Effect"><strong>Adding an Effectivity to the ECO</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Scenario"></a>A Typical Change Management Scenario</h3>
+<p>This technical article is intended to show you how to use available
+interfaces in ENOVInterfaces in a typical Change Management scenario. It will
+demonstrate how to: create an ECO; create a design Action; add an existing
+object, in this case a part version, as an Affected Object; link the Action to
+the ECO; and finally add an Effectivity. You would use this operation if for
+example you would like to direct the modification of a certain part version, for
+instance, a structural clip. You would like to change the type of fasteners in
+this clip for future production to a different type. The part version is added
+to the ECO as an Affected Object and the ECO controls the modification of the
+part. You would also link a design Action to change the design drawings and
+other documents to reflect the different fasteners. And you would need to add an
+Effectivity to the ECO to ensure that all clips produced within a time range
+will have the different fasteners. The ENOVInterfaces framework contains the
+interfaces which allow you to perform these typical operations. Those operations
+including code samples are shown below. To perform these operations, however,
+some prior work is required which is beyond the scope of this article. For the
+creation of the part version, the Configured View and the Effectivity, refer to
+the appropriate documentation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Eco"></a>Creating an ECO</h3>
+<p>The first step is to create an ECO which will control the modification. Refer
+to use case <a href="../CAAEviUseCases/CAAEviAffectedObjects.htm">CAAEviEcoManager</a>
+for more details on working with ECOs. [<a href="#References">1</a>]
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVIBOEcoManager.h&quot;
+    #include &quot;CATIEnovCMEco.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+	 </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    //--- Create an Engineering Change Order 
+    
+    CATIEnovCMEco_var Eco = NULL_var;
+    CATUnicodeString EcoType(&quot;ECO&quot;);
+    CATUnicodeString EcoVersion(&quot;1&quot;);
+    CATUnicodeString EcoName(&quot;ECO123&quot;);
+    CATUnicodeString EcoPriority(&quot;Routine&quot;);
+    CATUnicodeString EcoTypeCode(&quot;Release&quot;);
+    CATUnicodeString EcoInitialAbstract(&quot;Change fasteners in clip p/n 1111 to #6 HI-LOKs.&quot;);
+ 
+    rc = spEcoMgr-&gt;CreateNewEco( EcoType, 
+                                 EcoVersion,
+                                 Eco,
+                                 EcoName,
+                                 EcoPriority,
+                                 EcoTypeCode,
+                                 EcoInitialAbstract );
+                                  
+    if ( !SUCCEEDED(rc) || Eco==NULL_var )
+    {  
+    	cout &lt;&lt; &quot;ERROR in creating ECO.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 3;
+    } 
+       
+    cout &lt;&lt; &quot;Created new Engineering Change Order successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>With the ECO manager <b>spEcoMgr</b> a call to member method <b>CreateNewEco</b>
+    is made. The arguments passed are <b>EcoType</b> (&quot;ECO&quot;), <b>EcoVersion</b>
+    (&quot;1&quot;), <b>EcoName</b> (&quot;ECO123&quot;), <b>EcoPriority</b>
+    (&quot;Routine&quot;), <b>EcrTypeCode</b> (&quot;Release&quot;), and <b>EcoInitialAbstract</b>
+    (&quot;Change fasteners in clip p/n 1111 to #6 HI-LOKs&quot;).</li>
+  <li>The method creates a CATIEnovCMEco object (<b>Eco</b>) and returns S_OK
+    when successfully completed. E_FAIL is returned if the create is not
+    successful.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Action"></a>Creating an Action</h3>
+<p>An Action will be required to accomplish the necessary work, that is, change
+the drawing. The code below shows how to create an Action. The Action will then
+be linked to the ECO. Refer to use case <a href="../CAAEviUseCases/CAAEviActionManager.htm">CAAEviActionManager</a>
+for more details on working with Actions. [<a href="#References">2</a>]
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;CATIAFLAction.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    #include &quot;ENOVIBOActionManager.h&quot;
+       </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//--- Create a new Action 
+
+    CATIVpmAFLAction_var Action = NULL_var;
+    CATUnicodeString ActType(&quot;Action_Design&quot;);
+    CATUnicodeString ActName(DSG123&quot;);
+    CATUnicodeString ActPriority(&quot;Routine&quot;);
+    CATUnicodeString ActInitialAbstract(&quot;Change DWG1111 to reflect #6 Hi-Loks in p/n 1111 clip.&quot;);
+    
+    rc = spActMgr-&gt;CreateNewAction( ActType, 
+                                  DsgAct,
+                                  ActName,
+                                  ActPriority,
+                                  ActInitialAbstract );
+                                  
+    if ( !SUCCEEDED(rc) || DsgAct==NULL_var )
+    {   
+    	cout &lt;&lt; &quot;ERROR in creating Action.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 3;
+    }    
+    cout &lt;&lt; &quot;Created new Action successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>With the Action manager <b>spActMgr,</b> a call to member method <b>CreateNewAction
+    </b>is made. The arguments passed are <b>ActType</b>
+    (&quot;Action_Design&quot;), <b>ActName</b> (&quot;DSG123&quot;), <b>ActPriority</b>
+    (&quot;Routine&quot;), and <b>ActInitialAbstract</b> (&quot;Change DWG1111
+    to reflect #6 Hi-Loks in p/n 1111 clip&quot;).</li>
+  <li>The method creates a CATIVpmAFLAction object (<b>DsgAction</b>) and
+    returns S_OK when successfully completed. E_FAIL is returned if the create
+    is not successful.&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Affected"></a>Adding an Affected Object to an ECO</h3>
+<p>Now add an Affected Object to the ECO. Note that the part version type object
+has been previously created, and in this case would refer to the p/n 1111 clip.
+Refer to use case <a href="../CAAEviUseCases/CAAEviAffectedObjects.htm">CAAEviAffectedObjects</a>
+for a more details on working with Affected Objects. [<a href="#References">3</a>]
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWAffectedObjects.h&quot;
+    #include &quot;CATIVpmAFLAffectedObject.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Add Clip Part Version as an Affected Object to ECO
+  
+    CATUnicodeString AOType(&quot;ENOVIA_CMAFFECTED_OBJECT&quot;);
+    CATIVpmAFLAffectedObject_var AffObj = NULL_var;
+    ENOVICWAffectedObjects_var spAffObj(Eco);
+        
+    rc = spAffObj-&gt;AddAffectedObject(ClipPartVersion, 
+    				    AOType,
+    				    AffObj);
+    
+    if (AffObj==NULL_var||rc!=S_OK)
+    {
+    	cout &lt;&lt; &quot;Failed to Add Affected Object.&quot; &lt;&lt; endl;    
+    	VPMSession::CloseSession();
+    	return 7;
+    }
+
+    cout &lt;&lt; &quot;Added Affected Object succesfully.&quot; &lt;&lt; endl;    
+      </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>You can use the ENOVICWAffectedObjects interface to add the Affected
+    Object to the ECO.</li>
+  <li>First, the ECO object, <b>Eco</b>, is cast as a ENOVICWAffectedObject type
+    - <b>spAffObj</b>.</li>
+  <li>With the type <b>AOType</b> set as &quot;ENOVIA_CMAFFECTED_OBJECT&quot;, <b>spAffObj</b>
+    calls method <b>AddAffectedObject</b>.</li>
+  <li>The method returns S_OK if successful and the affected object <b>AffObj</b>
+    is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Link"></a>Adding an Action to an ECO</h3>
+<p>The next step is to link the Design Action to the ECO as a deliverable. Refer
+to use case <a href="../CAAEviUseCases/CAAEviLinks.htm">CAAEviLinks</a>
+for a more details on creating different types of links. [<a href="#References">4</a>]
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+     </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Create a Deliverable Link from ECO123 to the Design Action
+
+    CATIVpmAFLLink_var LinkObj = NULL_var;
+    boolean IsPaste = FALSE;
+            
+    rc = spLink-&gt;CreateDeliverableLink(DsgAct, LinkObj, IsPaste);
+   
+    if (LinkObj==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR to Add Deliverable Link.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 8;
+    }
+    cout &lt;&lt; &quot;Created Deliverable Link successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>First, the link-to action is the Design Action, <b>DsgAct</b>.</li>
+  <li>The ECO object, <b>Eco</b>, is cast as a ENOVICWLinks type - <b>spLink</b>.
+    The boolean IsPaste indicates if the link is being made as a result of a cut
+    and paste.</li>
+  <li>Then, <b>spLink</b> calls method <b>CreateDeliverableLink</b>.</li>
+  <li>The method returns S_OK if successful and the link object <b>LinkObj</b>
+    is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Effect"></a>Adding an Effectivity to an ECO</h3>
+<p>The next step is to link the Effectivity to the ECO. Note that this
+Effectivity and the Configured View have been previously created and that this
+operation simply adds the Effectivity to the ECO. Refer to documentation for
+Product Editor for information on creating a Configured View and an Effectivity.
+Refer to use case <a href="../CAAEviUseCases/CAAEviConfiguredViews.htm">CAAEviConfiguredViews</a>
+for a more details on adding and removing Effectivities and Product Views to
+Change Management objects. [<a href="#References">5</a>]</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWConfiguredViews.h&quot;
+    #include &quot;CATIEnovCMEffectivity.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//---Add Effectivity for the clip to the ECO
+ 
+    CATUnicodeString prodName(&quot;Clip&quot;);
+    CATUnicodeString EffId(&quot;Mod1&quot;);
+    CATIEnovCMEffectivity_var ecoEff = NULL_var;
+    ENOVICWConfiguredViews_var spCfgView(Eco);
+       
+    rc = spCfgView-&gt;AddNewEcoEffectivity(CV1, 
+    					 prodName,
+    					 EffId,
+    					 ecoEff);
+    
+    if (ecoEff==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in adding Effectivity to ECO.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 12;
+    }
+    cout &lt;&lt; &quot;Added Effectivity to ECO successfully.&quot; &lt;&lt; endl &lt;&lt; flush;   
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>You can use the ENOVICWConfiguredViews interface to add the configured
+    view to the ECO.</li>
+  <li>The existing Configured View with its Effectivity is the <b>CV1</b>
+    variable. The ECO object, <b>Eco</b>, is cast as a ENOVICWConfiguredViews
+    type - <b>spCfgView</b>.</li>
+  <li>With the <b>prodName</b> set as &quot;Clip&quot; , the <b>EffId</b> set as
+    &quot;Mod1&quot;, <b>spCfgView</b> calls method <b>AddNewEcoEffectivity</b>.</li>
+  <li>The method returns S_OK if successful, the Effecitivity is added to the
+    ECO and the Effectivity object <b>ecoEff</b> is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The basic operations in the Change Management domain can be accomplished
+using interfaces available in the ENOVInterfaces framework. Refer the use cases
+listed in References below for the different interfaces for examples of how to
+apply the methods available.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAEviUseCases/CAAEviEcoManager.htm">The ECO
+      Manager Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAEviUseCases/CAAEviActionManager.htm">The
+      Action Manager Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAEviUseCases/CAAEviAffectedObjects.htm">The
+      Affected Objects Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAEviUseCases/CAAEviLinks.htm">The Links
+      Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAEviUseCases/CAAEviConfiguredViews.htm">The
+      Configured Views Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

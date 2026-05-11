@@ -1,0 +1,394 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>How to Thread a Rod</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Thread a Rod</h3>
+      <em>Combining sweep and boolean operations to create a threading operator</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The CAAAdtThreadOpMain use case provides you with a way to create an
+      operator that threads a rod. To achieve the threading, an appropriate
+      profile is swept along an helix, then after being closed, the resulting
+      body is removed from the rod to be threaded.&nbsp; The operations
+      illustrated in this use case are: the creation of a sweep, the closing of
+      a surface and the union boolean operation.&nbsp;</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAdtThreadOpMain and
+          CAAAdtThreadUtility Use Cases</strong></a>
+          <ul>
+            <li><a href="#What">What Do CAAAdtThreadOpMain and
+              CAAAdtThreadUtility do?</a></li>
+            <li><a href="#How">How to Launch CAAAdtThreadOpMain</a></li>
+            <li><a href="#Where">Where to Find the CAAAdtThreadOpMain
+              CAAAdtThreadOpMain code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case, you learn how to create a sweep, close it and remove the
+resulting body from the rod to be threaded. You also learn the basics about how
+to create a user operator.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAdtThreadOpMain and CAAAdtThreadUtility Use
+Cases</h3>
+<p>CAAAdtThreadOpMain and CAAAdtThreadUtility are use cases of the
+CAAAdvancedTopologicalOperators.edu framework that illustrate the
+CAAAdvancedTopologicalOperators framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Do CAAAdtThreadOpMain and CAAAdtThreadUtility Do?</h4>
+<div align="center">
+  <center>
+  <table border="0" cellspacing="1">
+    <tr>
+      <td><img border="0" src="images/resultthread.gif" width="280" height="291"></td>
+      <td valign="top">The CAAAdtThreadUtility use case defines the CAAAdtThread
+        operator. Like any other operator, it must specify
+        <ul>
+          <li>a constructor as well as a destructor</li>
+          <li>a Run method</li>
+          <li>a GetResult method.</li>
+        </ul>
+        <p>In addition, two global functions which are discussed later on are
+        defined in the CAAAdtThreadUtility use case.</p>
+        <p>The CAAAdtThreadOpMain use case contains the main program that
+        creates the cylinder to be threaded and call the CAAAdtThread operator.
+        <p>This is the solid you obtain when you execute the CAAAdtThreadOpMain
+        use case.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAdtThreadOpMain</h4>
+<p>You must compile CAAAdtThreadUtility prior to launching
+CAAAdtThreadOpMain.&nbsp; CAAAdtThreadOpMain requires CAAAdtThreadUtility as a
+module to be linked with in its Imakefile.mk file.</p>
+<p>To launch CAAAdtThreadOpMain, you will need to set up the build time
+environment, then compile CAAAdtThreadOpMain.m, set up the run time environment,
+and then execute the use case [<a href="#References">1</a>].</p>
+<font face="Helv" size="2" color="#000000">
+<p>If you simply type CAAAdtThreadOpMain with no argument, the use case
+executes, but doesn't save the result in an NCGM file. If you want to save this
+result, provide the full pathname of the NCGM file to create. For example:</p>
+</font><font face="Courier New" size="2" color="#000000">
+<p>With Windows CAAAdtThreadOpMain <code>e:\thread.NCGM</code></p>
+<p>With UNIX CAAAdtThreadOpMain <code>/u/thread.NCGM</code></p>
+</font><font face="Helv" size="2" color="#000000">
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+</font>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAdtThreadOpMain and
+CAAAdtThreadUtility Code</h4>
+<p>The CAAAdtThreadOpMain use case is made of a main named CAAAdtCreateThread
+.cpp located in the CAAAdtThreadOpMain.m module of the
+CAAAdvancedTopologicalOperators.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAdvancedTopologicalOperators.edu\</code>CAAAdtThreadOpMain
+      <code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAdvancedTopologicalOperators.edu/</code>CAAAdtThreadOpMain
+      <code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>This use case uses the CAAAdtThread class which is defined in the
+CAAAdtThreadUtility.m module.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The CAAAdtThreadOpMain use case is divided into the following main steps:</p>
+<ul>
+  <li>Creation of the geometry factory (not discussed below - see for example [<a href="#References">2</a>])</li>
+  <li>Creation of a CATSolidCylinder (see [<a href="#References">2</a>])</li>
+  <li>Creation of the thread operator by using the CAAAdtThread operator defined
+    in the CAAAdtThreadUtility.m module. This is the most interesting part of
+    the use case. In this part, we must define</li>
+  <ul>
+    <li>the constructor and the destructor of the operator</li>
+    <li>the Run() method whose operations are going to be reviewed below:
+      <ol>
+        <li>Creation of a first sweep</li>
+        <li>Boolean remove from the initial rod</li>
+        <li>Creation of a second sweep</li>
+        <li>Boolean remove from the body resulting from the first remove.</li>
+      </ol>
+    </li>
+    <li>the GetResult() method.</li>
+  </ul>
+  <li>Running the CAAAdtThread operator and retrieving the resulting body in the
+    main program.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="Creating the curves making up the wire">The Methodology</a></h4>
+<p>At first sight, the methodology to thread is rod would consist in removing a
+single triangular sweep from the cylindrical rod as indicated below:</p>
+<div align="center">
+  <center>
+  <table border="0" cellspacing="1">
+    <tr>
+      <td valign="top"><b><i>Step 1</i></b><br>
+        <i>Creating a cylindrical rod</i></td>
+      <td valign="top"><i><b>Step 2</b></i><br>
+        <i>Sweeping a triangular profile<br>
+        along an helix</i></td>
+      <td valign="top"><b><i>Step 3</i></b><br>
+        <i>Boolean remove</i></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/thread7.gif" width="207" height="189"></td>
+      <td><img border="0" src="images/thread6.gif" width="228" height="190"></td>
+      <td><img border="0" src="images/thread8.gif" width="220" height="191"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>However, a usual source of problems when performing boolean operations is
+tangent or near-tangent surfaces. In the sequence of operations above, removing
+the sweep from the rod would result in a crash because the cylindrical surfaces
+of&nbsp; both operands are coincident. This problem can be worked around by
+creating extensions so that the sweep to be substracted out has a diameter&nbsp;
+slightly larger that the rod diameter. Another source of problem is when one
+operand auto-intersects. If we make the sweep jut out from the rod, unless the
+sweep auto-intersects, parasite cylindrical faces will be generated in place of
+the outer edge of the thread. This is not what we want to obtain.</p>
+<p>To get over these two restrictions, we decided to proceed in two phases:</p>
+<p><b><i>Phase 1</i></b>: a first sweep is created. The profile for this first
+sweep is a rectangular triangle as described below. This sweep is removed from
+the rod.</p>
+<div align="center">
+  <center>
+  <table border="0" cellspacing="1">
+    <tr>
+      <td valign="top"><b><i>Phase 1 (a)</i></b><br>
+        <i>Initial&nbsp; rod</i></td>
+      <td valign="top"><b><i>Phase 1 (b)</i></b><br>
+        <i>First sweep</i></td>
+      <td valign="top"><b><i>Phase 1 (c)</i></b><br>
+        <i>First Boolean remove</i></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/thread7.gif" width="207" height="189"></td>
+      <td><img border="0" src="images/thread0.gif" width="230" height="191"></td>
+      <td><img border="0" src="images/thread2.gif" width="223" height="189"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p><b><i>Phase 2</i></b>: a second sweep is created. A symetrical profile is
+used for this second sweep. This second sweep is removed from the solid
+resulting from the first boolean remove.</p>
+<div align="center">
+  <center>
+  <table border="0" cellspacing="1">
+    <tr>
+      <td valign="top"><b><i>Phase 2 (a)</i></b><br>
+        <i>Intermediary solid</i></td>
+      <td valign="top"><b><i>Phase 2 (b)</i></b><br>
+        <i>Second sweep</i></td>
+      <td valign="top"><b><i>Phase 2 (c)</i></b><br>
+        <i>Second Boolean remove</i></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/thread2.gif" width="223" height="189"></td>
+      <td><img border="0" src="images/thread1.gif" width="232" height="191"></td>
+      <td><img border="0" src="images/thread8.gif" width="220" height="191"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<h4>Creating the Sweeps</h4>
+<p>The sweeps are created in the CAASweepCreate function. The
+CATFrFTopologicalSweep operator is created by the CATCreateFrFTopologicalSweep
+global function requires a guide and a profile as arguments.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#008000">// a - Create the sweep operator
+//</font>
+CATFrFTopologicalSweep * pSweepOperator = CATCreateFrFTopologicalSweep(
+        myFactory,
+        myTopdata,
+        iHelix,     <font color="#008000">//  guide</font>
+        iSection);  <font color="#008000">//  profile</font>
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>Other parameters are tuned by using the Setxxx methods.</p>
+<h5><b><i>Specifying the Guide</i></b></h5>
+<p>The guide is an helix which is created by the CATCreateTopHelix global
+function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#008000">// b - Helix creation
+//</font>
+CATBody* piHelix = CATCreateTopHelix(
+        _factory,
+        _topData,
+        piHelixAxis,                     <font color="#008000">// axis</font>
+        1,                               <font color="#008000">// orientation</font>
+        piBPOrigin,                      <font color="#008000">// origin</font>
+        CATAngle (0),                    <font color="#008000">// start angle</font>
+        CATAngle (helixAngleInt*CATPI),  <font color="#008000">// end angle</font> 
+        CATLength (pitch),               <font color="#008000">// pitch</font>
+        1);                              <font color="#008000">// orientation of the rotation about the axis</font>
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>The helix parameters are:</p>
+<ul>
+  <li>the axis is defined by the P1 and P2 CATMathPoint.
+  <li>the origin which is not located on the rod cylindrical surface so that the
+    sweep to be created later on protrude off the rod.<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBody * piBPOrigin = CATCreateTopPointXYZ ( 
+_factory,
+_topData,
+P1.GetX() + (cylRadius +<b> 0.001</b>),
+P1.GetY() ,
+P1.GetZ());
+  </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>the start and end angle. The end angle (the number of helix turns) is
+    roughly determined so that the portion of the rod to be threaded goes until
+    an extremity of the rod. The distance where the thread starts is passed as
+    the argument of the CAAAdtThread constructor in the form of a length.</li>
+</ul>
+<h5><b><i>Specifying the Profile</i></b></h5>
+<p>The profiles are defined in the CAASweepProfile function. They are originally
+created in the XOY plane but their positioning is moved to the beginning of the
+helix.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathAxis Ref; <font color="#008000">// the canonical math axis</font>
+pSweepOperator-&gt;SetProfilePositionType(1);
+pSweepOperator-&gt;SetProfilePosition(&amp;Ref); <font color="#008000">// set profile axis system</font>
+  </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><i>Specifying the reference element</i></b></p>
+<p>In order to avoid a twisted sweep, the XOY plane must be specified as the
+reference element.</p>
+<ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+</ol>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>When writing an operator such as CAAAdtThread, the steps requiring attention
+are:</p>
+<ul>
+  <li>the definition of the sweep(s). An important parameter is the reference
+    plane. If it is not properly specified, the resulting sweep can be twisted.</li>
+  <li>the boolean operations: a boolean remove operation cannot complete when
+    there are tangent or near-tangent surfaces in both operands. You must design
+    the operand to be extracted so that it protrudes off the operand it is to be
+    extracted from.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAATopUseCases/CAATopOverview.htm">Overview
+      of the Topological Operators</a></td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

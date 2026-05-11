@@ -1,0 +1,449 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Modifying a Mechanical Design Feature</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Part Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating and Modifying a Mechanical Design Feature</h3>
+      <em>Using the Mechanical Design factory and the Part Design interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPriCreateModify use case. This use case
+      explains how to create and modify a Mechanical Design feature.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The CAAPriCreateModify Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAPriCreateModify Do</a></li>
+            <li><a href="#How">How to Launch CAAPriCreateModify</a></li>
+            <li><a href="#Where">Where to Find the CAAPriCreateModify Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the CATIA Part Design [<a href="#References">1</a>]. Its main intent is to
+create mechanical design feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPriCreateModify Use Case</h3>
+<p>CAAPriCreateModify is a use case of the CAAPartInterfaces.edu framework that
+illustrates PartInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPriCreateModify Do</h4>
+<p>The goal of CAAPriCreateModify use case is to show how to use Mechanical
+Design factory to instantiate Mechanical Design feature and how to modify
+Mechanical design feature by using the interfaces of Part Design. We illustrate
+this by creating and modifying a pad feature. The created part and the modified
+part are saved in two different documents. More precisely CAAPriCreateModify:</p>
+<ul>
+  <li>Creates an empty CATPart document</li>
+  <li>Creates a rectangular sketch</li>
+  <li>Creates a pad based on the sketch and defined with two offset limit values</li>
+  <li>Saves the pad in a CATPart document whose path is the first argument
+    passed when launching CAAPriCreateModify</li>
+  <li>Modifies the extrusion direction and sets the symmetrical extension
+    property</li>
+  <li>Updates the pad</li>
+  <li>Saves the modified pad in another CATPart document whose path is passed as
+    the second argument when launching CAAPriCreateModify.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPriCreateModify</h4>
+<p>To launch CAAPriCreateModify, you will need to set up the build time
+environment, then compile CAAPriCreateModify along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAPriCreateModify outputDirectory\PartCM1.CATPart outputDirectory\PartCM2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAAPriCreateModify outputDirectory/PartCM1.CATPart outputDirectory/PartCM2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>outputDirectory</code></td>
+    <td>The directory into which <code>PartCM1.CATPart</code> and <code>PartCM2.CATPart</code>
+      will be stored</td>
+  </tr>
+  <tr>
+    <td><code>PartCM1.CATPart</code>
+    <td>The file that contains the pad created</td>
+  </tr>
+  <tr>
+    <td><code>PartCM2.CATPart</code></td>
+    <td>The file that contains the pad after it is modified</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPriCreateModify Code</h4>
+<p>The CAAPriCreateModify use case is made of a single class named
+CAAPriCreateModify located in the CAAPriCreateModify.m module of the
+CAAPartInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCreateModify.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCreateModify.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven main steps in CAACreateModify:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Factories">Retrieving the Sketch Factory and the List of
+    Reference Planes</a></li>
+  <li><a href="#Sketch">Creating the Sketch</a></li>
+  <li><a href="#Pad">Creating the Pad</a></li>
+  <li><a href="#Saving1">Checking and Saving the Created Pad</a></li>
+  <li><a href="#Modifying">Modifying the Created Pad</a></li>
+  <li><a href="#Saving2">Saving the Modified Pad and Exiting</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>CAAPriCreateModify begins by checking that the command lines contains three
+arguments. It then creates a session, and creates a new CATPart document,
+reffered to using a pointer to the <i>CATDocument</i> class named <code>pDoc</code>,
+and a smart pointer to the <i>CATInit</i> interface named <code>spiInitOnDoc</code>.
+This is the usual sequence for creating a CATIA document [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Factories"></a>Retrieving the Sketch Factory and the List of
+Reference Planes</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+  </i>// Retrieves the sketch factory to instantiate objects
+  CATISketchFactory_var spSketchFactOnPrtCont(piPrtCont);
+	
+  // Creates the sketch plane
+  // retrieves the reference planes of the part
+  CATIPrtPart_var spPart = piPrtCont-&gt;GetPart();
+  CATListValCATISpecObject_var spListRefPlanes = spPart-&gt;GetReferencePlanes();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the smart pointer to <i>CATInit</i>, the document's root container is
+retrieved thanks to the <code>GetRootContainer</code> method as a <i>CATIPrtContainer</i>
+interface pointer. The root container implements the factory interfaces needed
+to create sketch objects and allows the reference planes of the document to be
+accessed.</p>
+<table>
+  <tr>
+    <td><i>CATISketchFactory</i></td>
+    <td>The sketch object factory interface</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Sketch"></a>Creating the Sketch</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+ // defines the xy plane as the first sketch plane
+  CATISpecObject_var spSketchPlane = spListRefPlanes[1];
+</i>
+  <i>// Instantiates the sketch with the plane</i>
+  CATISketch_var spSketch =
+    spSketchFactOnPrtCont-&gt;<b>CreateSketch</b>(spSketchPlane);
+
+  <i>// Retrieves the 2D factory to create the lines and points of the sketch</i>
+  <b>CATI2DWFFactory</b>_var spWF2DFactOnSketch(spSketch);
+
+  <i>// Creates the elements of the sketch</i>
+  double pt1[2] = { 10.,  5.},
+         pt2[2] = {-10.,  5.},
+         pt3[2] = {-10., -5.},
+         pt4[2] = { 10., -5.};
+
+  // Edits the sketch and draws the lines and the endpoints.
+  spSketch-&gt;OpenEdition();
+  CATISpecObject_var spLine1 = spWF2DFactOnSketch-&gt;<b>CreateLine</b>(pt1,pt2);
+  CATISpecObject_var spLine2 = spWF2DFactOnSketch-&gt;CreateLine(pt2,pt3);
+  CATISpecObject_var spLine3 = spWF2DFactOnSketch-&gt;CreateLine(pt3,pt4);
+  CATISpecObject_var spLine4 = spWF2DFactOnSketch-&gt;CreateLine(pt4,pt1);
+
+  CATI2DCurve_var spCurveOnLine1(spLine1);
+  spCurveOnLine1-&gt;<b>GetStartPoint</b>();
+  spCurveOnLine1-&gt;<b>GetEndPoint</b>();
+  CATI2DCurve_var spCurveOnLine2(spLine2);
+  spCurveOnLine2-&gt;GetStartPoint();
+  spCurveOnLine2-&gt;GetEndPoint();
+  CATI2DCurve_var spCurveOnLine3(spLine3);
+  spCurveOnLine3-&gt;GetStartPoint();
+  spCurveOnLine3-&gt;GetEndPoint();
+  CATI2DCurve_var spCurveOnLine4(spLine4);
+  spCurveOnLine4-&gt;GetStartPoint();
+  spCurveOnLine4-&gt;GetEndPoint();
+
+  // Closes the sketch edition
+  spSketch-&gt;CloseEdition();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>As we will see later, one of the specifications of the pad is a sketch. It is
+a 2D object made of curves and points positioned in a plane of the 3D space.
+Consequently, to instantiate a sketch, we use the <code>spSketchPlane</code>
+that represents the plane (0,x,y), created from a <i>CATMathPlane</i> and
+retrieved as a <i>CATISpecObject</i> thanks to the <code>CreatePlane</code>
+method of <i>CATIGSMFactory</i>. This plane is given the <code>SketchPlane</code>
+identifier. Then the sketch is created using the <code>CreateSketch</code>
+method of <i>CATISketchFactory</i>. The sketch implements the <i>CATI2DWFFactory</i>
+interface that groups all methods to create 2D geometric objects, and the smart
+pointer <code>spWF2DFactOnSketch</code> to this interface is retrieved from the
+sketch for this purpose. A rectangle defined with four points whose coordinates
+are set using <code>pt1</code>, <code>pt2</code>, <code>pt3</code>, and <code>pt4</code>
+makes up the sketch. The <i>CATISketch</i> interface defines a set of methods to
+edit the sketch. Any sketch editing sequence begins with <code>OpenEdition</code>,
+and closes with <code>CloseEdition</code>. The <code>CreateLine</code> method of
+<i>CATI2DWFFactory</i> creates the line and the <code>GetStartPoint</code> and <code>GetEndPoint</code>
+methods on <i>CATICurve2D</i> interface allow to create the endpoints.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Pad"></a>Creating the Pad</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...</i>
+  CATMathDirection dirZ(0., 0., 1.); <i>// Extrusion direction of the pad
+</i>  double firstLimit  = 20.;
+  double secondLimit =  0.;
+
+  <i>// Retrieves the Mechanical Design factory to create the pad</i>
+  <b>CATIPrtFactory</b>_var spPrtFactOnPrtCont(piPrtCont);
+  piPrtCont-&gt;Release();
+
+  CATISpecObject_var spSpecObj = spPrtFactOnPrtCont-&gt;<b>CreatePad</b>(spSketch);
+
+  <b>CATIPad</b>_var spPadOnSpecObj(spSpecObj);</pre>
+      <pre>  spPadOnSpecObj-&gt;<b>ModifyDirection</b>(dirZ);
+  spPadOnSpecObj-&gt;<b>ModifyEndType</b>(catOffsetLimit);
+  spPadOnSpecObj-&gt;<b>ModifyEndOffset</b>(firstLimit);
+  spPadOnSpecObj-&gt;<b>ModifyStartType</b>(catOffsetLimit);
+  spPadOnSpecObj-&gt;<b>ModifyStartOffset</b>(secondLimit);
+
+  spSpecObj-&gt;<b>Update</b>(); <i>// Builds the pad</i>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The sketch on which the pad relies is now created. The remaining
+specifications of the pad are the direction along which the sketch is to be
+extruded, and its two limits. The <i>CATIPrtFactory</i> interface is also
+implemented by the root container, which is now not any longer needed. The pad
+is created using the <code>CreatePad</code> method to which the sketch is passed
+as the argument, and its specifications are set using the <i>CATIPad</i>
+interface methods that the pad implements itself:</p>
+<ul>
+  <li><code>ModifyDirection</code>, that sets the pad extrusion direction to the
+    z axis. Note that the default, that is, omitting to call <code>ModifyDirection</code>,
+    is to set this direction to the normal of the sketch plane</li>
+  <li><code>ModifyEndType</code>, that sets the pad end to be set using an
+    offset from the sketch plane using the <code>catOffsetLimit</code> value of
+    the <code>CatLimitMode</code> enum</li>
+  <li><code>ModifyEndOffset</code>, that sets this offset, also named the first
+    limit in the pad edition dialog box</li>
+  <li><code>ModifyStartType</code> and <code>ModifyStartOffset</code>, that do
+    the same for the pad second limit. Since <code>firstLimit</code> equals to
+    0, the pad starts from the sketch plane.</li>
+</ul>
+<p>The <code>Update</code> method takes these specifications into account to
+build the pad.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Saving1"></a>Checking and Saving the Created Pad</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+  // Checks the limits of the created pad</i>
+  if (spPadOnSpecObj-&gt;<b>GetEndOffset</b>()   != firstLimit ||
+      spPadOnSpecObj-&gt;<b>GetStartOffset</b>() != secondLimit)
+        return 3;
+
+  <i>// Saves the created pad in the first input path</i>
+  char * pNomPart1 = iArgv[1];
+  CATDocumentServices::SaveAs(*pDoc, pNomPart1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><img border="0" src="images/SaveCheckCreatedPad.jpg" width="598" height="456"></p>
+<p>A simple check of the actual offsets of the pad using the methods <code>GetEndOffset</code>
+and <code>GetStartOffset</code> that retrieve the values of the first limit and
+the second limit respectively. If one of these values is different from those
+defined for the creation, CAAPriCreateModify stops with a code 3, otherwise the
+pad is saved in the CATPart document in the directory set as the first argument
+when launching CAAPriCreateModify. This is the usual sequence for saving a
+document [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p>The figure shows the pad in both the graphic viewer and the specification
+tree where it is displayed using its name <b>Pad.1</b>. It relies on the sketch
+named <b>Sketch.1</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Modifying"></a>Modifying the Created Pad</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+  // Modifies the pad changing the extrusion direction
+  // and applying the symetry</i>
+  
+  CATMathDirection dir2(0., 1., 1.); // Direction of the pad
+
+  <i>// Modifies the first limit type</i>
+  spPadOnSpecObj-&gt;ModifySym(1);
+
+  <i>// Modifies the first limit</i>
+  spPadOnSpecObj-&gt;ModifyDirection(dir2);
+
+  spSpecObj-&gt;<b>Update</b>(); <i>// Builds the pad</i>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's now modify one of the pad's specifications: using the <code>ModifySym</code>
+method, we set the symmetrical extension property and we modify the direction
+using the method <code>ModifyDirection</code> with <code>dir2</code> as new
+extrusion direction.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Saving2"></a>Saving the Modified Pad and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+  // Saves the modified pad in the second input path</i>
+  char * pNomPart2 = iArgv[2];
+  CATDocumentServices::SaveAs(*pDoc, pNomPart2);
+
+  <i>// Closes the session</i>
+  ::Delete_Session(&quot;SampleSession&quot;);
+
+  return rc;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><img border="0" src="images/SaveModifiedPad.jpg" width="598" height="456"></p>
+<p>The modified pad is saved in the CATPart document stored in the file whose
+path is the second argument passed when launching CAAPriCreateModify. The figure
+shows modified pad for which the height is now two times the initial height, and
+the extrusion direction is no more perpendicular to the sketch plane. The
+session is then deleted. This is the usual sequence for saving a document and
+closing the session [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create and modify a Mechanical
+feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPriTechArticles/CAAPriFormAndShapeFeature.htm">Form
+      Feature and Contextual Feature Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

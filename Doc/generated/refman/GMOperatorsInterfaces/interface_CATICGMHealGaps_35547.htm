@@ -1,0 +1,496 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMHealGaps</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMHealGaps"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMHealGaps</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMHealGaps_35547','CATICGMHealGaps','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMHealGaps</b>
+</p>
+<p>
+<b><i> Class defining the topological operator that heals edge and vertex gaps in a sheet or solid body.</i></b><br>
+
+ By default, the operator works globally and tries to repair all edge and vertex gaps in the body.
+ If the user calls <tt>SetCellsToHeal</tt>, then the operator will try to repair only the specified edges and vertices.
+ By default, the operator will try to heal edge gaps by extending and reintersecting adjacent faces and edges.
+ Use the <tt>AllowShapeDeformation</tt> method to turn on healing by deforming face and edge geometry.
+ <ul>
+     <li> The <tt>CATICGMHealGaps</tt> operator is created with the <tt>CATCGMCreateHealGaps</tt> global function.
+     <li> It is the user's responsibility to release the operator after it has been used.
+ </ul></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AllowShapeDeformation(double)"><b>AllowShapeDeformation</b></a>(double)
+<dd>  Allows face and edge geometry to be deformed and sets the maximum deformation value.
+ <dt> o 
+    <a href="#GetDeformedFaces(CATLISTP(CATFace)&amp;)"><b>GetDeformedFaces</b></a>(CATLISTP(CATFace)&amp;)
+<dd>  Returns the faces that have been deformed.
+ <dt> o 
+    <a href="#GetEdgesWithGaps(CATLISTP(CATEdge)&amp;)"><b>GetEdgesWithGaps</b></a>(CATLISTP(CATEdge)&amp;)
+<dd>  Returns the list of the edges with gaps.
+ <dt> o 
+    <a href="#GetGap(CATEdge*)"><b>GetGap</b></a>(CATEdge*)
+<dd>  Returns the gap for the given edge.
+ <dt> o 
+    <a href="#GetGap(CATVertex*)"><b>GetGap</b></a>(CATVertex*)
+<dd>  Returns the gap for the given vertex.
+ <dt> o 
+    <a href="#GetMaxDeformation(CATFace*)"><b>GetMaxDeformation</b></a>(CATFace*)
+<dd>  Returns the value of the maximum deformation applied to the given face.
+ <dt> o 
+    <a href="#GetMaxDeformation(CATEdge*)"><b>GetMaxDeformation</b></a>(CATEdge*)
+<dd>  Returns the value of the maximum deformation applied to the given edge.
+ <dt> o 
+    <a href="#GetMaxGap()"><b>GetMaxGap</b></a>()
+<dd>  Returns the global maximum gap.
+ <dt> o 
+    <a href="#GetMaxGapOnVertices()"><b>GetMaxGapOnVertices</b></a>()
+<dd>  Returns the global maximum gap on all vertices.
+ <dt> o 
+    <a href="#GetVerticesWithGaps(CATLISTP(CATVertex)&amp;)"><b>GetVerticesWithGaps</b></a>(CATLISTP(CATVertex)&amp;)
+<dd>  Returns the list of the vertices with gaps.
+ <dt> o 
+    <a href="#SetCellsNotToChange(CATFace*)"><b>SetCellsNotToChange</b></a>(CATFace*)
+<dd>  Adds a face to the list of cells that cannot be modified.
+ <dt> o 
+    <a href="#SetCellsNotToChange(CATEdge*)"><b>SetCellsNotToChange</b></a>(CATEdge*)
+<dd>  Adds an edge to the list of cells that cannot be modified.
+ <dt> o 
+    <a href="#SetCellsNotToChange(CATGeometricType)"><b>SetCellsNotToChange</b></a>(CATGeometricType)
+<dd>  Adds all faces whose geometry is of the specified type to the list of cells that cannot be modified.
+ <dt> o 
+    <a href="#SetCellsNotToChange(CATLISTP(CATFace)&amp;)"><b>SetCellsNotToChange</b></a>(CATLISTP(CATFace)&amp;)
+<dd>  Adds faces to the list of cells that cannot be modified.
+ <dt> o 
+    <a href="#SetCellsNotToChange(CATLISTP(CATEdge)&amp;)"><b>SetCellsNotToChange</b></a>(CATLISTP(CATEdge)&amp;)
+<dd>  Adds edges to the list of cells that cannot be modified.
+ <dt> o 
+    <a href="#SetCellsToHeal(CATEdge*)"><b>SetCellsToHeal</b></a>(CATEdge*)
+<dd>  Restricts healing to specified edges and vertices and adds an edge to the list of cells to be healed.
+ <dt> o 
+    <a href="#SetCellsToHeal(CATVertex*)"><b>SetCellsToHeal</b></a>(CATVertex*)
+<dd>  Restricts healing to specified edges and vertices and adds a vertex to the list of cells to be healed.
+ <dt> o 
+    <a href="#SetCellsToHeal(CATLISTP(CATEdge)&amp;)"><b>SetCellsToHeal</b></a>(CATLISTP(CATEdge)&amp;)
+<dd>  Restricts healing to specified edges and vertices and adds edges to the list of cells to be healed.
+ <dt> o 
+    <a href="#SetCellsToHeal(CATLISTP(CATVertex)&amp;)"><b>SetCellsToHeal</b></a>(CATLISTP(CATVertex)&amp;)
+<dd>  Restricts healing to specified edges and vertices and adds vertices to the list of cells to be healed.
+ <dt> o 
+    <a href="#SetMaxGapToHeal(double)"><b>SetMaxGapToHeal</b></a>(double)
+<dd>  Sets the maximum healing gap.
+ <dt> o 
+    <a href="#SetMinGapToHeal(double)"><b>SetMinGapToHeal</b></a>(double)
+<dd>  Sets the minimum gap to heal.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AllowShapeDeformation"></a><a name="AllowShapeDeformation(double)"></a> <dt> o <b>AllowShapeDeformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AllowShapeDeformation</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMaxShapeDeformation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows face and edge geometry to be deformed and sets the maximum deformation value.
+ By default, shape deformation is disabled.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMaxShapeDeformation</tt>
+   <dd> The the maximum allowed face deformation value. The value must be 
+ greater than factory resolution.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDeformedFaces"></a><a name="GetDeformedFaces(CATLISTP(CATFace)&amp;)"></a> <dt> o <b>GetDeformedFaces</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetDeformedFaces</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>oListOfFaces</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the faces that have been deformed.
+ 
+<dl>
+</dl>
+</dl>
+<a name="GetEdgesWithGaps"></a><a name="GetEdgesWithGaps(CATLISTP(CATEdge)&amp;)"></a> <dt> o <b>GetEdgesWithGaps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetEdgesWithGaps</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATEdge)','CATLISTP(CATEdge)&amp;')</script> <td><tt>oEdgesWithGaps</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the edges with gaps.
+ If calling before healing, the edges are with gaps greater than the minimum gap tolerance. 
+ If calling after healing, the edges are the remaining un-healed ones.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oEdgesWithGaps</tt>
+   <dd> The list of edges with gaps.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetGap"></a><a name="GetGap(CATEdge*)"></a> <dt> o <b>GetGap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetGap</b>(<td><script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>ipEdge</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the gap for the given edge.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum gap of the edge.
+</dl>
+</dl>
+<a name="GetGap"></a><a name="GetGap(CATVertex*)"></a> <dt> o <b>GetGap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetGap</b>(<td><script type="text/javascript"> activateLink('CATVertex','CATVertex*')</script> <td><tt>ipVertex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the gap for the given vertex.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum gap of the vertex.
+</dl>
+</dl>
+<a name="GetMaxDeformation"></a><a name="GetMaxDeformation(CATFace*)"></a> <dt> o <b>GetMaxDeformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMaxDeformation</b>(<td><script type="text/javascript"> activateLink('CATFace','CATFace*')</script> <td><tt>ipFace</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the value of the maximum deformation applied to the given face.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum deformation applied to the face.
+</dl>
+</dl>
+<a name="GetMaxDeformation"></a><a name="GetMaxDeformation(CATEdge*)"></a> <dt> o <b>GetMaxDeformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMaxDeformation</b>(<td><script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>ipEdge</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the value of the maximum deformation applied to the given edge.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum deformation applied to the edge.
+</dl>
+</dl>
+<a name="GetMaxGap"></a><a name="GetMaxGap()"></a> <dt> o <b>GetMaxGap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMaxGap</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the global maximum gap.
+ If calling before healing, the value is from the input body. 
+ If calling after healing, the value is from the result body. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum gap on the whole body.
+</dl>
+</dl>
+<a name="GetMaxGapOnVertices"></a><a name="GetMaxGapOnVertices()"></a> <dt> o <b>GetMaxGapOnVertices</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMaxGapOnVertices</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the global maximum gap on all vertices.
+ If calling before healing, the value is from the input body. 
+ If calling after healing, the value is from the result body. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The maximum vertex gap on the whole body.
+</dl>
+</dl>
+<a name="GetVerticesWithGaps"></a><a name="GetVerticesWithGaps(CATLISTP(CATVertex)&amp;)"></a> <dt> o <b>GetVerticesWithGaps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetVerticesWithGaps</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATVertex)','CATLISTP(CATVertex)&amp;')</script> <td><tt>oVerticesWithGaps</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the vertices with gaps.
+ If calling before healing, the vertices are with gaps greater than the minimum gap tolerance. 
+ If calling after healing, the vertices are the remaining un-healed ones.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oVerticesWithGaps</tt>
+   <dd> The list of vertices with gaps.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsNotToChange"></a><a name="SetCellsNotToChange(CATFace*)"></a> <dt> o <b>SetCellsNotToChange</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsNotToChange</b>(<td><script type="text/javascript"> activateLink('CATFace','CATFace*')</script> <td><tt>ipFaceNotToChange</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a face to the list of cells that cannot be modified. 
+ By default, all cells are modifiable.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipFaceNotToChange</tt>
+   <dd> The pointer to the face. The face must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsNotToChange"></a><a name="SetCellsNotToChange(CATEdge*)"></a> <dt> o <b>SetCellsNotToChange</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsNotToChange</b>(<td><script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>ipEdgeNotToChange</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds an edge to the list of cells that cannot be modified. 
+ By default, all cells are modifiable.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipEdgeNotToChange</tt>
+   <dd> The pointer to the edge. The edge must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsNotToChange"></a><a name="SetCellsNotToChange(CATGeometricType)"></a> <dt> o <b>SetCellsNotToChange</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsNotToChange</b>(<td><script type="text/javascript"> activateLink('CATGeometricType','CATGeometricType')</script> <td><tt>iFaceTypeNotToChange</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds all faces whose geometry is of the specified type to the list of cells that cannot be modified. 
+ This is useful, for example, to not allow canonical faces to change.
+ By default, all cells are modifiable.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFaceTypeNotToChange</tt>
+   <dd> The face geometry type. All the faces of the type in the input body belong to the set.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsNotToChange"></a><a name="SetCellsNotToChange(CATLISTP(CATFace)&amp;)"></a> <dt> o <b>SetCellsNotToChange</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsNotToChange</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>iFacesNotToChange</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds faces to the list of cells that cannot be modified. 
+ By default, all cells are modifiable.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFacesNotToChange</tt>
+   <dd> The list of the face pointers. The faces must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsNotToChange"></a><a name="SetCellsNotToChange(CATLISTP(CATEdge)&amp;)"></a> <dt> o <b>SetCellsNotToChange</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsNotToChange</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATEdge)','CATLISTP(CATEdge)&amp;')</script> <td><tt>iEdgesNotToChange</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds edges to the list of cells that cannot be modified. 
+ By default, all cells are modifiable.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdgesNotToChange</tt>
+   <dd> The list of the edge pointers. The edges must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsToHeal"></a><a name="SetCellsToHeal(CATEdge*)"></a> <dt> o <b>SetCellsToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToHeal</b>(<td><script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>ipEdgeToHeal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restricts healing to specified edges and vertices and adds an edge to the list of cells to be healed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipEdgeToHeal</tt>
+   <dd> The pointer to the edge. The edge must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsToHeal"></a><a name="SetCellsToHeal(CATVertex*)"></a> <dt> o <b>SetCellsToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToHeal</b>(<td><script type="text/javascript"> activateLink('CATVertex','CATVertex*')</script> <td><tt>ipVertexToHeal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restricts healing to specified edges and vertices and adds a vertex to the list of cells to be healed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipVertexToHeal</tt>
+   <dd> The pointer to the vertex. The vertex must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsToHeal"></a><a name="SetCellsToHeal(CATLISTP(CATEdge)&amp;)"></a> <dt> o <b>SetCellsToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToHeal</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATEdge)','CATLISTP(CATEdge)&amp;')</script> <td><tt>iEdgesToHeal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restricts healing to specified edges and vertices and adds edges to the list of cells to be healed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdgesToHeal</tt>
+   <dd> The list of edge pointers. The edges must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsToHeal"></a><a name="SetCellsToHeal(CATLISTP(CATVertex)&amp;)"></a> <dt> o <b>SetCellsToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToHeal</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATVertex)','CATLISTP(CATVertex)&amp;')</script> <td><tt>iVerticesToHeal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restricts healing to specified edges and vertices and adds vertices to the list of cells to be healed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVerticesToHeal</tt>
+   <dd> The list of the vertex pointers. The vertices must belong to the input body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMaxGapToHeal"></a><a name="SetMaxGapToHeal(double)"></a> <dt> o <b>SetMaxGapToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMaxGapToHeal</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMaxGapTolerance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the maximum healing gap. 
+ Healing will not be applied to gaps greater than this value. The default value is the 1000 * model resolution.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMaxGapTolerance</tt>
+   <dd> The maximum healing gap.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMinGapToHeal"></a><a name="SetMinGapToHeal(double)"></a> <dt> o <b>SetMinGapToHeal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMinGapToHeal</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinGapTolerance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the minimum gap to heal. 
+ Healing will not be applied to gaps less than this value. The default value is the model resolution.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMinGapTolerance</tt>
+   <dd> The minimum healing gap.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMHealGaps.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

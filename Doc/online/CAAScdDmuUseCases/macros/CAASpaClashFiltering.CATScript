@@ -1,0 +1,54 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Compute clash and filter results.
+'   Assumptions : A CATProduct document should be active and some components selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    'Acquire the filtering value
+    Dim sFilterValue As String
+    sFilterValue = "-1." 'Default value
+    sFilterValue = InputBox("What is the filtering value ?", "Filtering value", sFilterValue)
+    If (sFilterValue <> "") Then
+       Dim dFilterValue As Double
+       dFilterValue = Cdbl(sFilterValue)
+
+       ' Retrieve the Clashes collection
+       Dim cClashes As Clashes
+       Set cClashes = CATIA.ActiveDocument.Product.GetTechnologicalObject("Clashes")
+
+       ' Create a clash with selected components and compute it
+       Dim oClash As Clash
+       Set oClash = cClashes.AddFromSel
+       oClash.ComputationType = catClashComputationTypeInsideOne
+       oClash.InterferenceType = catClashInterferenceTypeContact
+       oClash.Compute
+
+       ' Filter conflicts
+       Dim cConflicts As Conflicts
+       Set cConflicts = oClash.Conflicts
+       Dim I As Integer
+       For I = 1 To cConflicts.Count
+           Dim oConflict As Conflict
+           Set oConflict = cConflicts.Item(I)
+           If (oConflict.Type = catConflictTypeClash) Then
+               If (oConflict.Value > dFilterValue) Then
+                   oConflict.Status = catConflictStatusIrrelevant
+                   oConflict.Comment = "Automatic filter : penetration less than " & dFilterValue
+               End If
+           ElseIf (oConflict.Type = catConflictTypeContact) Then
+               oConflict.Status = catConflictStatusIrrelevant
+               oConflict.Comment = "Automatic filter : contact"
+           End If
+       Next
+
+    End If
+
+End Sub

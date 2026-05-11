@@ -1,0 +1,485 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Saving and Restoring the Dialog Box State</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Saving and Restoring the Dialog Box State</h3>
+      How to keep and retrieve the dialog object values&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to save parameters so that one can find the
+      Dialog box in the same state that it was before its closing.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADlgFrameReplace Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADlgFrameReplace Do</a></li>
+            <li><a href="#How">How to Launch CAADlgFrameReplace</a></li>
+            <li><a href="#Where">Where to Find the CAADlgFrameReplace Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use a setting file and
+repository [<a href="#References">1</a>] to store and retrieve the values of
+Dialog Objects.&nbsp;The setting repository being the memory copy of a setting
+file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADlgFrameReplace Use Case</h3>
+<p>CAADlgFrameReplace is a use case of the CAADialog.edu framework that
+illustrates Dialog and System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADlgFrameReplace Do</h4>
+<p>CAADlgFrameReplace simulates the&nbsp; &quot;Point Definition&quot; V5 Dialog
+box. It creates the &quot;Frame Replacement Demonstrator&quot; Dialog box that
+you can see just below. The end user can select the mode of creation for the
+point: by coordinate values, by the center of a circle or between two points [<a href="#References">2</a>].&nbsp;&nbsp;</p>
+<table border="0">
+  <tr>
+    <td valign="top">
+      <table border="0">
+        <tr>
+          <td><a name="Fig 3a"><i>Fig. 1a</i></a><i>:Coordinates</i></td>
+        </tr>
+        <tr>
+          <td valign="top"><img border="0" src="images/CAADlgTabulationFrameReplace2.jpg" width="197" height="178"></td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <table border="0">
+        <tr>
+          <td valign="top"><i><a name="Fig 3b:">Fig. 1b:</a> Circle Center</i></td>
+        </tr>
+        <tr>
+          <td valign="middle"><img border="0" src="images/CAADlgTabulationFrameReplace1.jpg" width="197" height="143"></td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <table border="0">
+        <tr>
+          <td><i><a name="Fig 3c:">Fig. 1c:</a> Between</i></td>
+        </tr>
+        <tr>
+          <td><img border="0" src="images/CAADlgTabulationFrameReplace3.jpg" width="198" height="194"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>When the end user clicks <b>OK</b>, the following values are kept:
+<ul>
+  <li>The &quot;<code>Point Type</code>&quot; ( an integer )</li>
+  <li>The point coordinates (<code>X, Y,&nbsp;Z</code>)&nbsp; (three double)</li>
+</ul>
+<p>The others values are not kept, for the following reasons:</p>
+<ul>
+  <li><code>Circle</code>, <code>P1</code> and <code>P2</code> : The values, in
+    a V5 context, will be a string, the <i>GetDisplayName</i> of a <i>CATISpecObject.</i>
+    You can save a string, but it is not possible to save a <i>CATISpecObject</i>
+    instance, so there is no need to keep the value of these fields.</li>
+  <li><code>Ratio</code> : The Dialog object is a <i>CATDlgEditor</i> class. It
+    is the only one Dialog object which natively keeps the last values.&nbsp;You
+    retrieve them with the up and down arrows.&nbsp;</li>
+</ul>
+<p>When the end user clicks <b>Cancel</b> or <b>closes</b> the window, the
+current values of the Dialog objects are not kept.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADlgFrameReplace</h4>
+<p>To launch the use case, you will need to set up the build time environment,
+then compile CAADlgDialogDemonstrator along with its prerequisites, set up the
+run time environment, and then execute the use case [<a href="#References">3</a>].</p>
+<p><code>mkrun -c CAADlgDialogDemonstrator&nbsp;</code></p>
+<p>When the <code>CAADlgDialogDemonstrator</code> application is launched:</p>
+<ul>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement</b></li>
+  <li>Click <b>Circle Center </b>in the combo</li>
+  <li>Click <b>OK</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement&nbsp;</b></li>
+  <li>Click <b>Coordinates </b>in the combo</li>
+  <li>Enter a value in <b>X</b>, <b>Y</b> and <b>Z</b> field&nbsp;</li>
+  <li>Click <b>OK&nbsp;</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement&nbsp;</b></li>
+  <li>Click <b>Between </b>in the combo</li>
+  <li>Enter different values in the <b>Ratio</b> field&nbsp;&nbsp;</li>
+  <li>Click <b>OK&nbsp;</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement&nbsp;</b></li>
+  <li>On the <b>Ratio</b> field retrieve the different value with the <b>up </b>and<b>
+    down</b> arrows&nbsp;</li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement</b></li>
+  <li>Click <b>Coordinates </b>in the combo</li>
+  <li>Enter a value in <b>X</b>, <b>Y</b> and <b>Z</b> field&nbsp;</li>
+  <li>Click <b>Cancel</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement&nbsp;</b></li>
+  <li>On the<b> File</b> menu click<b> Exit</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADlgFrameReplace Code</h4>
+<p>The CAADlgFrameReplace use case is made of several classes located in the
+CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In the LocalInterfaces and src directory, you will find the following files:</p>
+<ul>
+  <li>CAADlgDemoApplication.h/CAADlgDemoApplication.cpp: The <i>&quot;DialogDemonstrator&quot;</i>
+    application definition. ( a <i>CATInteractiveApplication</i> )</li>
+  <li>CAADlgDemoWindow.h/CAADlgDemoWindow.cpp : The <i>CATDlgDocument</i>
+    definition.</li>
+  <li>CAADlgFrameReplaceDlg.h/CAADlgFrameReplaceDlg.cpp : The &quot;Frame
+    Replacement Demonstrator&quot; dialog box definition</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in the use case:</p>
+<ol>
+  <li><a href="#Creating the Class header">Creating the Class Header</a></li>
+  <li><a href="#Retrieving the Setting Repository">Retrieving the Setting
+    Repository</a></li>
+  <li><a href="#Retrieving the Last Values">Retrieving the Last Values</a></li>
+  <li><a href="#Saving the Values">Saving the Values</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Class header"></a>Creating the Class Header</h4>
+<p>The main contents of the CAADlgFrameReplaceDlg.h file is the following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATDlgDialog.h&quot;   // To derive from
+...
+class <b>CATSettingRepository</b> ; // To manage values
+
+class CAADlgFrameReplaceDlg: public <b>CATDlgDialog</b>
+{
+  ...
+  public:
+
+      CAADlgFrameReplaceDlg(CATDialog * pParentDlg);
+      virtual ~CAADlgFrameReplaceDlg();
+
+      void Build ();
+
+  private:
+      ...
+      virtual void <b>CloseWindowOK</b> (CATCommand * iSendingCommand, 
+                                CATNotification * iSentNotification, 
+                                CATCommandClientData iUsefulData);
+
+      virtual void <b>CloseWindow</b> (CATCommand * iSendingCommand, 
+                                CATNotification * iSentNotification, 
+                                CATCommandClientData iUsefulData);
+     ...
+  private:
+     ...
+     CATSettingRepository * _pSettingFrameReplace ;
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>where</p>
+<ul>
+  <li>The <code>Build</code> method enables you to construct the Dialog objects
+    and to initialize them with the values saved in the setting file.&nbsp;</li>
+  <li>The <code>CloseWindowOK</code> method is a callback method which is called
+    when the end user pushes the Ok Button</li>
+  <li>The <code>CloseWindow</code> method is a callback method which is called
+    when the end user pushes the Cancel Button or closes the window.</li>
+  <li><code>_pSettingFrameReplace</code> is a <i>CATSettingRepository</i> class
+    pointer. It will be initialized in the constructor class. You should not
+    release this pointer.&nbsp;</li>
+</ul>
+<h4><a name="Retrieving the Setting Repository"></a>Retrieving the Setting
+Repository</h4>
+<p>In the <i>CAADlgFrameReplaceDlg</i> class constructor you retrieve a setting
+repository pointer thanks to the static <code>GetRepository</code> method. The
+first and unique argument of this method is the name of the setting file.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADlgFrameReplaceDlg::CAADlgFrameReplaceDlg(CATDialog * pParentDlg) :
+  CATDlgDialog (pParentDlg,&quot;CAADlgFrameReplaceDlg&quot;,
+      CATDlgWndAutoResize | CATDlgWndBtnOKCancel |CATDlgWndNoResize ),
+      _CurrentSelection(0),_pComboPointType(NULL),_pSpinnerX(NULL),
+      _pSpinnerY(NULL),_pSpinnerZ(NULL)
+{
+   ...
+   _pSettingFrameReplace = CATSettingRepository::<b>GetRepository</b>(&quot;CAADlgFrameReplaceDlg&quot; );
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">In the <i>CAADlgFrameReplaceDlg</i> class destructor you have
+just to set NULL&nbsp;the <code>_pSettingFrameReplace</code> pointer.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADlgFrameReplaceDlg::~CAADlgFrameReplaceDlg()
+{
+    _pSettingFrameReplace = NULL ;
+    ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving the Last Values"></a>Retrieving the Last Values</h4>
+<p>The <code>Build</code> method can be divided&nbsp;in three parts:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgFrameReplaceDlg::Build()
+{
+   <a href="#Creating the Dialog objects and Arranging them">a/ Creating the Dialog objects and Arranging them</a>
+
+   <a href="#Retrieving the Initial Values">b/ Retrieving the initial values</a>
+ 
+   <a href="#Defining the Callbacks">c/ Defining the callbacks</a>
+}</pre>
+    </td>
+  </tr>
+</table>
+<h5><a name="Creating the Dialog objects and Arranging them"></a>a/ Creating the
+Dialog objects and Arranging them</h5>
+<h5>This part is described in the use case about the tabulation layout [<a href="#References">2</a>].</h5>
+<h5><a name="Retrieving the Initial Values"></a>b/ Retrieving the Initial Values</h5>
+<p>To retrieve a value in a setting repository use the <code>ReadSetting</code>
+method. The arguments of this method are</p>
+<ul>
+  <li>The name of the attribute</li>
+  <li>The value of the attribute</li>
+</ul>
+<p>For the use case:</p>
+<ul>
+  <li><code>XCoord</code>, <code>YCoord</code> and <code>ZCoord</code> are the
+    names of the attributes to initialize the X, Y and Z spinner respectively.
+    The value of each attribute is a double</li>
+  <li><code>ComboPointType </code>is the name of the attribute to initialize the
+    first selected element in the combo list. The value of the attribute is an
+    integer.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      double X(0.0f),Y(0.0f),Z(0.0f);
+      if ( NULL != _pSettingFrameReplace )
+      {
+         _pSettingFrameReplace-&gt;<b>ReadSetting</b>(&quot;<b>XCoord</b>&quot;,&amp;X);
+         _pSettingFrameReplace-&gt;ReadSetting(&quot;<b>YCoord</b>&quot;,&amp;Y);
+         _pSettingFrameReplace-&gt;ReadSetting(&quot;<b>ZCoord</b>&quot;,&amp;Z);
+      }
+      
+      _pSpinnerX -&gt;<b>SetValue</b>(X,0);
+      _pSpinnerY -&gt;SetValue(Y,0);
+      _pSpinnerZ -&gt;SetValue(Z,0);
+      
+      _CurrentSelection = Coordinates ;
+      if ( NULL != _pSettingFrameReplace )
+      {
+         _pSettingFrameReplace-&gt;<b>ReadSetting</b>(&quot;<b>ComboPointType</b>&quot;,&amp;_CurrentSelection);
+      }
+      _pComboPointType-&gt;<b>SetSelect</b>(_CurrentSelection,0);
+...
+}</pre>
+    </td>
+  </tr>
+</table>
+<h5>Where <code>_pSpinnerX, _pSpinnerY</code> and<code> _pSpinnerZ </code>are <i>CATDlgSpinner</i>
+class instances created in the first part of the <code>Build</code> method, but
+not explained in this article. <code>_pComboPointType</code> is a <i>CATDlgCombo</i>
+class instance created in the first part of the <code>Build </code>method, but
+also not explained in this article.&nbsp;</h5>
+<h5><a name="Defining the Callbacks"></a>c/ Defining the Callbacks</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   AddAnalyseNotificationCB (this, 
+                               GetDiaCANCELNotification(),
+                               (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::<b>CloseWindow</b>,
+                               NULL);
+
+   AddAnalyseNotificationCB (this, 
+                               GetDiaOKNotification(),
+                               (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::<b>CloseWindowOK</b>,
+                               NULL);
+   AddAnalyseNotificationCB (this, 
+                               GetWindCloseNotification(),
+                               (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::<b>CloseWindow</b>,
+                               NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Saving the Values"></a>Saving the Values</h4>
+<p>When the end user clicks OK, the dialog box must be closed. The current
+values of the Dialog objects should be saved. To save the values in the setting
+repository use the <code>WriteSetting</code> method. The arguments of this
+method are</p>
+<ul>
+  <li>The name of the attribute</li>
+  <li>The value of the attribute</li>
+</ul>
+<p>&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgFrameReplaceDlg::CloseWindowOK(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
+{
+   ...
+   if ( NULL != _pSettingFrameReplace )
+   {
+       if ( NULL != _pComboPointType )
+       {
+          int PointType = _pComboPointType-&gt;GetSelect() ;
+          _pSettingFrameReplace-&gt;<b>WriteSetting</b>(&quot;ComboPointType&quot;,&amp;PointType);
+       }
+
+       if ( (NULL !=_pSpinnerX) &amp;&amp; (NULL !=_pSpinnerY) &amp;&amp; (NULL !=_pSpinnerZ) )
+       {
+          double XVal = _pSpinnerX-&gt;GetValue() ;
+          _pSettingFrameReplace-&gt;<b>WriteSetting</b>(&quot;XCoord&quot;,&amp;XVal);
+          double YVal = _pSpinnerY-&gt;GetValue() ;
+          _pSettingFrameReplace-&gt;<b>WriteSetting</b>(&quot;YCoord&quot;,&amp;YVal);
+          double ZVal = _pSpinnerZ-&gt;GetValue() ;
+          _pSettingFrameReplace-&gt;<b>WriteSetting</b>(&quot;ZCoord&quot;,&amp;ZVal);
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To retrieve the values after the session closing use the <code>SaveRepository</code>
+method. The setting repository is saved in a setting file whose the name is
+those of the setting repository.&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       _pSettingFrameReplace-&gt;<b>SaveRepository</b>();
+ ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>When the end user clicks Cancel or closes the window, there is nothing to
+save. The end user will retrieve the values before the current
+modifications.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgFrameReplaceDlg::<b>CloseWindow</b>(CATCommand* cmd, CATNotification* evt, 
+                                                          CATCommandClientData data)
+{
+ ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the setting file and repository to save and
+restore the Dialog object values.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysSettingRepositories.htm">Setting
+      Repositories and Attributes</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADlgSampleTabulation.htm">Creating Dialog Boxes Automatically
+      Resizable</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

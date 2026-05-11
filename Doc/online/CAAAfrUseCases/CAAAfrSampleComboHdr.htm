@@ -1,0 +1,1178 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Combo Command Header</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Combo Command Header</h3>
+      How to create a command header class whose the representation is a combo
+      in a toolbar?</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create a specialized command header. This
+      command header has a customized graphic representation. In place of a
+      check button into a toolbar, the graphic representation is a combo.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrComboColorHeader Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrComboColorHeader Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrComboColorHeader</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrComboColorHeader Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates the creation of a customized command header. In a
+toolbar, its graphic representation is a combo in place of a check button, the
+default representation. You will learn how to:</p>
+<ul>
+  <li>Create the component representing the command header&nbsp;</li>
+</ul>
+<blockquote>
+  <p>It is a component which must derive from the <i>CATAfrDialogCommandHeader</i>
+  class.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>Create the component instantiating the graphic representation</li>
+</ul>
+<blockquote>
+  <p>It is a component which must derive from the <i>CATAfrCommandHeaderRep</i>
+  class and which instantiates a <i>CATDlgCombo</i> instance.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>Create the component controlling the data used by the graphic representation</li>
+</ul>
+<blockquote>
+  <p>The data used by the the graphic representation is the value of the current
+  color in the combo. This data is dependent of the instance of a V5 document.&nbsp;</p>
+</blockquote>
+<p>You can also read the CAAAfrMRUHeader use case [<a href="#References">1</a>]
+which presents another customized command header. In this case, the graphic
+representation is a dynamic list of push items in a menu of the menu bar. Contrarily
+to the current use case, the data (a list of string) is independent of
+the document.&nbsp;</p>
+<p>To take full advantage of this article, you can first read &quot;The Command
+Headers&quot; technical article [<a href="#References">2</a>], and precisely the
+&quot;Creating Customized Command Headers&quot; section.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrComboColorHeader Use Case</h3>
+<p>CAAAfrComboColorHeader is a use case of the CAAApplicationFrame.edu framework that
+illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrComboColorHeader Do</h4>
+<p>CAAAfrComboColorHeader creates a command header whose the
+graphic representation is a combo color in a toolbar. The following picture shows the header
+in the Customized Command Header toolbar:</p>
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a> The combo header</caption>
+  <tr>
+    <td><img border="0" src="../CAAAfrTechArticles/images/CAAAfrCommandHeaderComboHdr.jpg" width="143" height="51"></td>
+  </tr>
+</table>
+<p>If you drop down the combo, you have the choice between ten colors:</p>
+<table border="0" >
+<caption><a name="Fig.2">Fig.2</a> Ten values of the combo</caption>
+
+  <tr>
+    <td ><img border="0" src="images/CAAAfrComboHdrDeplie.jpg"></td>
+    <td >
+      The combo needs two information:
+      <ul>
+        <li>The available colors in the combo. These ten color are
+          &quot;hard&quot; coded.&nbsp;&nbsp;</li>
+        <li>The current selected color. This information is kept by a component
+          linked to the
+CAAGeometry document. This component is the CAASysGeomRootObj component. Refer to
+the referenced article for complete details on the CAAGeometry document and the CAASysGeomRootObj
+component [<a href="#References">3</a>].</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>The <b> CAASysGeomRootObj component</b> is the component controlling the data used by the graphic representation.
+It manages the current value of the color through the <i>CAAIAfrTemporaryObjectColor</i>
+interface. This interface enables us to get and set the current color. However
+the color is not persistent (not streamed) because the CAAGeometry document is
+not &quot;streamable&quot;.</p>
+<table border="0">
+<caption><a name="Fig.3">Fig.3</a>  Component Controlling the Data Used by the
+  Graphic Representation - UML Diagram</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAAfrComboColorHdrUMLModel.jpg" width="540" height="153"></td>
+  </tr>
+</table>
+<p>The CAASysGeomRootObj component plays the role of controller [<a href="#References">2</a>],
+when the current color value is modified using the <i>CAAIAfrTemporaryObjectColor</i>
+ interface, the <i>CAAEAfrTemporaryObjectColor</i>
+ implementation class sends a notification, a <i>CAAAfrComboColorNotification</i>
+class instance.&nbsp;</p>
+<p>The <b> combo header class</b> is an instance of a class deriving from the <i>CATAfrDialogCommandHeader
+</i>class<i>,</i> like any command header whose the graphic representation is customized. The
+following UML diagram describes in details the schema of classes:</p>
+<table border="0">
+<caption><a name="Fig.4">Fig.4</a> Combo Header - UML Diagram</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAAfrComboColorHdrUMLHdr.jpg" width="636" height="323"></td>
+  </tr>
+</table>
+<p>CAAAfrComboColorHeader is a component which must implement the <i>CATIAfrCommandHeaderRep
+</i>interface to provide the customized graphic representation<i>. </i>This
+interface contains three methods:</p>
+<ul>
+  <li><code>CreateCtxMenuRep</code>: it returns nothing</li>
+  <li><code>CreateMenuRep</code>: it returns nothing</li>
+  <li><code>CreateToolbarRep</code>: it instantiates an instance of the <i>CAAAfrComboRep</i> 
+    class. This class is
+described by the following UML diagram:</li>
+</ul>
+<table border="0">
+<caption><a name="Fig.5">Fig.5</a>  Class Instantiating the Graphic Representation
+  - UML
+  Diagram</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAAfrComboColorHdrUMLRep.jpg" width="343" height="242"></td>
+  </tr>
+</table>
+<p>The <i>CAAAfrComboRep</i>  class creates a <i>CATDlgCombo</i> [<a href="#References">4</a>]
+class instance and sets a callback to be inform when the current color is
+changed. Therefore, if there are several instances of the <i>CAAAfrComboColorHeader</i>
+class in the same document, see the <a href="#How">How to Launch CAAAfrComboColorHeader</a>
+section, all the representations will be automatically updated.&nbsp;</p>
+<p>The combo header is instantiated in an Add-in of the workshop of the
+CAAGeometry document. The last step of the <a href="#Step">Step by Step</a>
+section explains this instantiation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrComboColorHeader</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+      CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>On the <b>File</b> menu, click <b>New</b>
+  <li><b>New</b> Dialog box click <b>CAAGeometry</b> and click <b>OK</b></li>
+  <li>If the <b> Customized Command Header</b> toolbar is not displayed, right click on
+    any toolbar and select it in the contextual menu to make it appear. (the
+    default current color is red)
+  <li>Select the first <b>blue</b> color&nbsp;in the combo color</li>
+  <li>Click <b>Point</b> and creates some points</li>
+  <li>Click <b>Clipping By Box</b>&nbsp;</li>
+  <ul>
+  <li>Select the ISO Selection text</li>
+  <li>Select a point (A blue trihedral is displayed)</li>
+  <li>move the mouse and click left to define the clipping box size</li>
+  </ul>
+  <li>Select a <b>purple</b> color&nbsp;in the combo color</li>
+  <li>Click <b>Clipping By Box</b>&nbsp;
+    <ul>
+      <li>Select the ISO Selection text</li>
+      <li>Select a point (A purple trihedral is displayed)</li>
+      <li>move the mouse and click left to define the clipping box size</li>
+    </ul>
+  </li>
+    <li>On the <b>File</b> menu, click <b>New</b>
+  </li>
+    <li><b>New</b> Dialog box click <b>CAAGeometry</b> and click <b>OK </b>(The current color in the combo color is red.)</li>
+    <li>Select the <b> blue</b> color in the combo color</li>
+  <li>Click <b>Clipping By Box</b>&nbsp;
+    <ul>
+      <li>Select the ISO Selection text</li>
+      <li>Select a point (A blue trihedral is displayed)</li>
+      <li>move the mouse and click left to define the clipping box size</li>
+    </ul>
+  </li>
+  <li>Select the first <b>CAAGeometry</b>  document (The current color in the combo color is always
+    purple)</li>
+  <li>On the <b>Tools</b> menu, click <b>Customize</b>
+    <ul>
+      <li>Select <b>Command</b> tab page</li>
+      <li>Select <b>CAAAfrComboColorHdr</b> in <b>All Commands</b> categories</li>
+      <li>Drag and Drop the command header in the <b>Chart Window</b> toolbar</li>
+      <li>click <b> OK</b></li>
+    </ul>
+  </li>
+  <li>Select the <b> red</b> color in one combo color instance (the other instance is
+    red too)</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrComboColorHeader Code</h4>
+<p>The CAAAfrComboColorHeader use case is made of several classes located in
+three modules of the CAAApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The <code>CAAAfrCustCommandHdrModel.m</code> module contains classes to
+define (update) the component controlling the current color.</p>
+<ul>
+  <li>CAAIAfrTemporaryObjectColor.cpp , CAAIAfrTemporaryObjectColor.h (PublicInterfaces),
+    TIE_CAAIAfrTemporaryObjectColor.tsrc (src)</li>
+  <p>It is the interface managing the current color.&nbsp;</p>
+  <li>CAAEAfrTemporaryObjectColor.h (LocalInterfaces) and CAAEAfrTemporaryObjectColor.cpp
+    (src)</li>
+  <p>It is the implementation of the <i>CAAIAfrTemporaryObjectColor </i>interface
+  on the CAASysGeomRootObj component.</p>
+
+  <li>CAAAfrComboColorNotification.h (LocalInterfaces) and CAAAfrComboColorNotification.cpp
+    (src)</li>
+  <p>It is the notification sent by the <i>CAAEAfrTemporaryObjectColor</i> class
+  when the current color is modified.</p>
+</ul>
+<p>The <code>CAAAfrCustomizedCommandHeader</code><code>.m</code> module contains
+classes to define the combo color header:</p>
+<ul>
+  <li>CAAAfrComboRep.h (LocalInterfaces) and CAAAfrComboRep.cpp (src)</li>
+  <li>CAAEAfrCommandHeaderRepForComboColor.h (LocalInterfaces) and CAAEAfrCommandHeaderRepForComboColor.cpp
+    (src)</li>
+  <li>CAAAfrComboColorHeader.cpp (src),&nbsp; CAAAfrComboColorHeader.h (PrivateInterfaces)</li>
+</ul>
+<p>The <code>CAAAfrGeoWksAddin2.</code><code>m</code> module contains an Add-in
+of the CAAGeometry workshop&nbsp;</p>
+<ul>
+  <li>CAAAfrGeoChartWindowAdn.h (LocalInterfaces) and CAAAfrGeoChartWindowAdn.cpp
+    (src)</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAAAfrComboColorHeader:</p>
+<ol>
+  <li><a href="#Creating the Data Model Representing the Current Color in the Combo">Creating the
+    Component Representing the Current Color in the Combo</a></li>
+  <li><a href="#Creating the Component Representing the Command Header&nbsp;">Creating the Component Representing the Command Header&nbsp;</a></li>
+  <li><a href="#Creating the component instantiating the graphic representation">Creating the
+    Class Instantiating the Graphic Representation</a></li>
+  <li><a href="#Instantiating the Combo Header Class">Instantiating the Combo
+    Header Class</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Data Model Representing the Current Color in the Combo"></a>Creating the Data Model Representing the Current Color
+in the Combo</h4>
+<p>The current color is kept by the CAASysGeomRootObj component which implements the <i>CAAIAfrTemporaryObjectColor</i>
+ interface to set and retrieve the current color (<a href="#Fig.3">Fig.3</a>). When the color is modified on
+the component (Set method) a <i>CAAAfrComboColorNotification</i> notification is
+sent by the callback mechanism [<a href="#References">5</a>].&nbsp;</p>
+<p>Here the <i>CAAIAfrTemporaryObjectColor</i>
+ interface such as you can see it in the PublicInterfaces directory of
+the CAAApplicationFrame.edu framework. Refer to the Creating an Interface use
+case [<a href="#References">6</a>] for more details on its creation.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &lt;CATBaseUnknown.h&gt;      
+
+class ExportedByCAAAfrCustCommandHdrModel CAAIAfrTemporaryObjectColor: public CATBaseUnknown
+{
+  CATDeclareInterface;
+
+  public:
+      virtual HRESULT <b>GetCurrentColor</b>(int &amp; oRed, int &amp; oGreen, int &amp; oBlue) const = 0 ;
+      virtual HRESULT <b>SetCurrentColor</b>(int &amp; iRed, int &amp; iGreen, int &amp; iBlue) = 0 ;
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This interface is implemented by the CAASysGeomRootObj component thanks to the
+<i>
+CAAEAfrTemporaryObjectColor</i> class extension.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;<b>TIE_CAAIAfrTemporaryObjectColor.h</b>&quot;              
+TIE_CAAIAfrTemporaryObjectColor(CAAEAfrTemporaryObjectColor); 
+
+<b>CATImplementClass</b> (CAAEAfrTemporaryObjectColor,<b>DataExtension</b>, 
+                          CATBaseUnknown, <b>CAASysGeomRootObj</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEAfrTemporaryObjectColor</i> class states that it implements the <i>CAAIAfrTemporaryObjectColor</i>
+ interface thanks to the <code>TIE_</code><code>CAAIAfrTemporaryObjectColor</code><i>
+</i>macro. This extension class is dedicated to this component, and the <code>CATImplementClass</code>
+macro declares that the <i>CAAEAfrTemporaryObjectColor</i> class is data
+extension class, thanks to the <code>DataExtension</code> keyword, and that it
+extends the component whose main class is CAASysGeomRootObj. The third parameter
+must always be set to <i>CATBaseUnknown</i>, makes no sense, and is unused for
+extensions.&nbsp;</p>
+<p>In the constructor class, you can see that the default value is red (
+255,0,0).&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAEAfrTemporaryObjectColor::CAAEAfrTemporaryObjectColor(): CATBaseUnknown()
+                            
+{    
+   <b>_RedComp</b>   = 255   ;
+   _GreenComp = 10    ;
+   _BlueComp  = 0     ; 
+}
+
+CAAEAfrTemporaryObjectColor::~CAAEAfrTemporaryObjectColor(){}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetCurrentColor</code> returns the three data members representing
+the red, blue and green components of the current color.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEAfrTemporaryObjectColor::GetCurrentColor(int &amp; oRed, int &amp; oGreen, int &amp; oBlue) const
+{
+   oRed   = _RedComp ;
+   oGreen = _GreenComp ;
+   oBlue  = _BlueComp ; 
+
+   return (S_OK) ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetCurrentColor</code> valuates the three data members using the
+input argument:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEAfrTemporaryObjectColor::SetCurrentColor(int &amp; iRed, int &amp; iGreen, int &amp; iBlue) 
+{
+   _RedComp   = iRed   ;
+   _GreenComp = iGreen;
+   _BlueComp  = iBlue; 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>and sends a notification:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATCallbackManager * pCBManager = ::<b>GetDefaultCallbackManager</b>(this) ;
+    if ( NULL != pCBManager )
+    {
+         CAAAfrComboColorNotification * pNotification = new CAAAfrComboColorNotification();
+         pCBManager-&gt;<b>DispatchCallbacks</b>(pNotification,this);
+         pNotification-&gt;Release(); pNotification = NULL ;
+    }
+   return (S_OK) ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetCurrentColor</code> method publishes the notification that states the current color is modifying. To do this, the global function <code>GetDefaultCallbackManager</code>
+retrieves the callback manager associated by default with the <i>CAAEAfrTemporaryObjectColor</i>
+class
+instance, and this callback uses its <code>DispatchCallbacks</code> method to
+inform its subscribers or listeners that the current color is modifying by means of the
+<i>CAAAfrComboColorNotification</i> notification created.</p>
+<p>Refer to the callback use case [<a href="#References">7</a>] which explains
+in details the callback mechanism, and how the <i>CAAAfrComboColorNotification</i>
+must be created. You will learn why the <i>CAAAfrComboColorNotification</i>
+class instance is deleted just after the <code>DispatchCallbacks</code> call.
+See the <a href="#The constructor class">constructor</a> of the
+CAAAfrComboColorRep class.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Component Representing the Command Header&nbsp;"></a>Creating the Component Representing the Command
+Header&nbsp;</h4>
+
+<p>The combo header is a component which must Object Modeler and C++ derive from
+<i><a href="#combo hdr Component Creation">CATAfrDialogCommandHeader</a></i> and
+must implement the <i><a href="#CATIAfrCommandHeaderRep implementation">CATIAfrCommandHeaderRep</a></i>
+interface (<a href="#Fig.4">Fig.4</a>). This paragraph is divided in two parts:</p>
+<ul>
+  <li><a name="combo hdr Component Creation" href="#combo hdr Component Creation">Component Creation</a></li>
+  <li><a name="CATIAfrCommandHeaderRep implementation" href="#CATIAfrCommandHeaderRep implementation">CATIAfrCommandHeaderRep
+implementation</a></li>
+</ul>
+<h5><a name="combo hdr Component Creation"><b>Component Creation</b></a></h5>
+<p>Here the CAAAfrComboColorHeader header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//ApplicationFrame framework
+#include &quot;CATAfrDialogCommandHeader.h&quot;
+
+class ExportedByCAAAfrCustomizedCommandHeader CAAAfrComboColorHeader : public <b>CATAfrDialogCommandHeader</b>
+{
+  CATDeclareHeaderResources;
+  CATDeclareClass ;
+
+  public:
+    CAAAfrComboColorHeader(const CATString &amp; iHeaderName);
+
+    virtual ~CAAAfrComboColorHeader();
+    CATCommandHeader * <b>Clone</b>() ;
+      
+  private:
+    <b>CAAAfrComboColorHeader(CATCommandHeader *iHeaderToCopy);</b>
+    CAAAfrComboColorHeader(const CAAAfrComboColorHeader &amp;iObjectToCopy);
+    CAAAfrComboColorHeader &amp; operator = (const CAAAfrComboColorHeader &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p><i>CAAAfrComboColorHeader</i> derives from <i>CATAfrDialogCommandHeader</i>.
+It is mandatory for a command header whose the graphic representation is
+customized. The <code>CATDeclareClass</code> macro declares that it belongs to a
+CAA component. The <code>CATDeclareHeaderResources</code> macro inserts the
+methods to manage the command header resources.&nbsp;</p>
+<p>About the mandatory public methods:</p>
+<ul>
+  <li>A <code>constructor</code> with a reference to a <nobr><code>const
+    CATString</code></nobr> as parameter,&nbsp;
+  <li>A <code>destructor</code>,
+  <li>The <code>Clone</code> method inherited from <i>CATCommandHeader </i>and
+    used to duplicate the command header instance. Refer to the &quot;Customized
+    Command Header Class Structure&quot; section of the technical article about
+    the command headers [<a href="#References">2</a>]. You will have all the
+    details about the <code>Clone</code> method.&nbsp;</li>
+</ul>
+<p>About the mandatory private methods:</p>
+<ul>
+  <li>A <code>constructor</code> taking a pointer to a <i>CATCommandHeader</i>
+    is dedicated to the <code>Clone</code> method.&nbsp;
+  <li>Two other <code>constructor</code> are declared in the private part, and
+    are not implemented in the source file. This prevents the compiler from
+    creating them as public without you know.</li>
+</ul>
+<p>Here the CAAAfrComboColorHeader header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAAfrComboColorHeader.h&quot;
+
+CATImplementClass(CAAAfrComboColorHeader, 
+                  Implementation,
+                  <b>CATAfrDialogCommandHeader</b>, 
+                  CATNull);
+
+CATImplementHeaderResources(CAAAfrComboColorHeader,  
+			 CATAfrDialogCommandHeader,          
+			 CAAAfrComboColorHeader);            
+
+CAAAfrComboColorHeader::CAAAfrComboColorHeader(const CATString &amp; iHeaderName) : 
+    <b>CATAfrDialogCommandHeader</b>(iHeaderName){}
+
+CAAAfrComboColorHeader::~CAAAfrComboColorHeader(){}
+
+CATCommandHeader * CAAAfrComboColorHeader::<b>Clone</b> ()                                  
+{ 
+    return new <b>CAAAfrComboColorHeader</b>(this); 
+}   
+
+CAAAfrComboColorHeader::CAAAfrComboColorHeader(CATCommandHeader * iHeaderToCopy):
+                          <b>CATAfrDialogCommandHeader</b>(iHeaderToCopy)
+{}	                  </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>A customized command header is a CAA component. The <code>CATImplementClass</code>
+    macro makes the class <i>CAAAfrComboColorHeader</i> a component main class (<code>Implementation</code>)
+    that OM-derives [<a href="#References">9</a>] from <i>CATAfrDialogCommandHeader</i>.&nbsp;</li>
+  <li>
+    The <code>CATImplementHeaderResources</code> macro is used in conjunction
+    with the <code>CATDeclareHeaderResources</code> macro in the header file. It
+    states that the <i>CAAAfrComboColorHeader</i> class derives from <i>CATAfrDialogCommandHeader</i>,
+    and that its associated resource file names use the class name: CAAAfrComboColorHeader.CATNls and
+    CAAAfrComboColorHeader.CATRsc
+    respectively. The base class name set as second argument helps to use
+    resource concatenation. The third argument could be set to the name of
+    another class that is associated with resource files that use its class
+    name, or to the name, without suffix, of an already existing resource file
+    pair.</li>
+  <li>The <code>Clone</code> method returns a copy construction instance of
+    this.</li>
+</ul>
+<p><b><i><a name="CATIAfrCommandHeaderRep implementation">CATIAfrCommandHeaderRep</a></i><a name="CATIAfrCommandHeaderRep implementation">
+implementation</a></b></p>
+<p>This interface of the ApplicationFrame framework must be implemented by all
+command header whose the graphic representation is customized. On <a href="#Fig.4">Fig.4</a>,
+you see that the <i>CAAEAfrCommandHeaderRepForComboColor</i> class is the
+implementation of this interface for the CAAAfrComboColorHeader component.&nbsp;</p>
+<p>Here the CAAEAfrCommandHeaderRepForComboColor header file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class CAAEAfrCommandHeaderRepForComboColor : public CATBaseUnknown
+{
+  CATDeclareClass;
+public:
+  
+  CAAEAfrCommandHeaderRepForComboColor();
+  virtual ~CAAEAfrCommandHeaderRepForComboColor();
+  
+  virtual HRESULT  <b>CreateToolbarRep</b> (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  virtual HRESULT  <b>CreateMenuRep</b>    (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  virtual HRESULT  <b>CreateCtxMenuRep</b> (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  
+private:
+  CAAEAfrCommandHeaderRepForComboColor(const CAAEAfrCommandHeaderRepForComboColor &amp;iObjectToCopy);
+  CAAEAfrCommandHeaderRepForComboColor &amp; operator = (const CAAEAfrCommandHeaderRepForComboColor &amp;iObjectToCopy);
+};      </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATDeclareClass</code> macro declares that <i>CAAEAfrCommandHeaderRepForComboColor</i>
+belongs to a component. <code>CreateToolbarRep</code>, <code>CreateMenuRep</code>,
+and <code>CreateCtxMenuRep</code> are methods of the <a name="CATIAfrCommandHeaderRep implementation"><i>CATIAfrCommandHeaderRep</i></a>
+interface.</p>
+<p>Here the CAAEAfrCommandHeaderRepForComboColor source file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &lt;TIE_CATIAfrCommandHeaderRep.h&gt;
+TIE_<b>CATIAfrCommandHeaderRep</b>(CAAEAfrCommandHeaderRepForComboColor);
+
+CATImplementClass(CAAEAfrCommandHeaderRepForComboColor, 
+                  DataExtension,
+                  CATBaseUnknown, 
+                  <b>CAAAfrComboColorHeader</b>);
+};
+CAAEAfrCommandHeaderRepForComboColor::
+           CAAEAfrCommandHeaderRepForComboColor():CATBaseUnknown(){}
+
+CAAEAfrCommandHeaderRepForComboColor::~CAAEAfrCommandHeaderRepForComboColor(){}
+...      </pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEAfrCommandHeaderRepForComboColor</i> class states that it
+implements the <a name="CATIAfrCommandHeaderRep implementation"><i>CATIAfrCommandHeaderRep</i></a><i>
+</i>interface thanks to the <code>TIE_CATIAfrCommandHeaderRep </code>macro. The <code>CATImplementClass</code>
+macro declares that the <i>CAAEAfrCommandHeaderRepForComboColor</i> class is a
+data extension, thanks to the <code>DataExtension</code> keyword, that extends
+CAAAfrComboColorHeader. The third argument must always be set as <i>CATBaseUnknown</i>
+or <i>CATNull</i> for any kind of extension.&nbsp; The class constructor and the
+class destructor are empty.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEAfrCommandHeaderRepForComboColor::<b>CreateToolbarRep</b>
+         (const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+   HRESULT rc = E_FAIL ;
+
+   if ( oHdrRep != NULL )
+   {
+      CATString Name = &quot;CAAAfrComboRepId&quot; ;
+      CAAAfrComboRep * pComboRep = new <b>CAAAfrComboRep</b>(iParent,Name);
+
+      *oHdrRep = (CATAfrCommandHeaderRep *) pComboRep ;
+      rc = S_OK ;
+   }
+
+   return rc ;
+}
+...      </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreateToolbarRep</code> method provides the class instantiating the
+graphic representation of the combo header. This method is called each time the header
+command must be represented in a toolbar.</p>
+<p>The <i>CAAAfrComboRep</i> class is a <i>CATCommand</i> class (<a href="#Fig.5">Fig.5</a>)
+which instantiates the graphic
+representation of the combo header (a <i>CATDlgCombo</i> instance). It is
+detailed in the <a href="#Creating the component instantiating the graphic representation">Creating the Component Instantiating the Graphic Representation</a>
+section, just below.&nbsp;&nbsp;</p>
+<p><code>iParent</code> is a <i>CATDialog</i> component. It will be the dialog
+parent of the <i>CATDlgCombo</i> instance. <code>Name</code> is the command name
+of the <i>CAAAfrComboRep</i> class.
+You can set the same identifier for all <i>CAAAfrComboRep</i> class
+instances.&nbsp;</p>
+<p>You do not have to take care of the <i>CAAAfrComboRep</i> class instance, the
+returned value, <code>oHdrRep</code> is kept by the frame application, and the
+deletion of this pointer is automatically done.&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEAfrCommandHeaderRepForComboColor::
+             <b>CreateMenuRep </b>(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+  return  <b>E_FAIL</b> ;
+}
+
+HRESULT CAAEAfrCommandHeaderRepForComboColor::
+          <b>CreateCtxMenuRep </b>(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+  return <b>E_FAIL</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The combo header has no representation in the menu bar or in a contextual
+menu, so <code>CreateMenuRep</code> and <code>CreateCtxMenuRep</code> return
+E_FAIL.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Creating the component instantiating the graphic representation"></a>Creating
+the Class Instantiating the Graphic Representation</h4>
+<p align="left">This class is the <i>CAAAfrComboRep</i>  class. Its main roles are:</p>
+<ul>
+  <li>
+    <p align="left">Set a
+callback to be informed when the current color on the CAASysGeomRootObj
+    component changes, see <a href="#Creating the Data Model Representing the Current Color in the Combo">Creating the Data Model Representing the Current Color in the Combo</a>
+step&nbsp;</li>
+  <li>
+    <p align="left">Create a <i>CATDlgCombo</i>  instance</li>
+  <li>
+    <p align="left">Change the
+current value of the <i>CATDlgCombo</i> instance when a notification is sent by
+    the CAASysGeomRootObj component</li>
+</ul>
+<p align="left">Here the CAAAfrComboRep  header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class CAAAfrComboRep : public <b>CATAfrCommandHeaderRep</b>
+{
+public:
+  CAAAfrComboRep(const CATDialog * iParent, CATString &amp; iCommandName);
+  virtual ~CAAAfrComboRep();
+
+  HRESULT <b>Build</b>();
+
+private:
+  void <b>SelectCB</b>(CATCommand * iPublishingCommand, 
+                CATNotification * iNotification, 
+                CATCommandClientData iData);
+
+  void <b>ModifiedCB</b>(CATCallback       iEvent, 
+                  void            *       , 
+                  CATNotification * iNotification, 
+                  CATCallbackEvent  iData,
+		          CATSubscriberData iCallBack);
+  HRESULT <b>SetCurrentColor</b>() ;
+
+  CAAAfrComboRep(const CAAAfrComboRep &amp;iObjectToCopy);
+  CAAAfrComboRep &amp; operator = (const CAAAfrComboRep &amp;iObjectToCopy);
+
+private:
+     CATDlgCombo    * _pCombo;
+     CATBaseUnknown * _pUIActiveObject ;
+     int              _ColorTable[30] ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p align="left">The <i>CAAAfrComboRep</i> class derives from the <i>CATAfrCommandHeaderRep</i>
+    class ( <a href="#Fig.5">Fig.5</a>)</li>
+  <li>
+    <p align="left">The <code><a href="#The Build method">Build</a></code> method is a method of the <i>CATAfrCommandHeaderRep</i>
+    class. You must overwrite this method. In the <i>CATAfrCommandHeaderRep</i>
+    class it is a pure virtual method. This method is called by the frame
+    application just after the <i>CAAAfrComboRep</i> class instantiation, in
+    other words just after the <code><a href="#CATIAfrCommandHeaderRep implementation">CreateToolbarRep</a></code>
+    method call.&nbsp;&nbsp;</li>
+  <li>
+    <p align="left">In private methods&nbsp;
+    <ul>
+      <li>
+        <p align="left">The <code><a href="#The SelectCB method">SelectCB</a></code> method is a callback method
+        when the end user selects a color in the combo.</li>
+      <li>
+        <p align="left">The <code><a href="#The ModifyCB method">ModifiedCB</a></code> method is a callback method
+        called when the CAASysGeomRootObj component sends a <i>CAAAfrComboColorNotification</i>
+        notification.&nbsp;</li>
+      <li>
+        <p align="left">The <code><a href="#The SetCurrentColor method">SetCurrentColor</a></code> is called by <code>SelectCB</code>
+        and <code>ModifiedCB</code> methods to modify the current selected value of <code>_pCombo</code>,
+        the data member&nbsp;</li>
+    </ul>
+  </li>
+  <li>
+    <p align="left">In data member
+    <ul>
+      <li>
+        <p align="left"><code>_pCombo</code> the <i>CATDlgCombo</i> class
+        instance created in the <code>Build</code> method&nbsp;</li>
+      <li>
+        <p align="left"><code>_pUIActiveObject</code> the UI active object of
+        the CAAGeometry document. It is those which sends <i>CAAAfrComboColorNotification</i>
+        notification and keeps the current color. In your modelization, it can
+        another component than the UI active object.&nbsp;&nbsp;</li>
+      <li>
+        <p align="left"><code>_ColorTable</code> is the array defining the ten
+        colors - See <a href="#Fig.2">Fig.2</a>.&nbsp;&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p align="left">Here the CAAAfrComboRep  source file:</p>
+<ul>
+  <li>
+    <p align="left"><a name="The constructor class">The <b> constructor</b> class</a>&nbsp;</li>
+  <p>First the ten values of the combo are initialized. To simplify the use case,
+  there are always ten values, and there are &quot;hard&quot; coded.&nbsp;</p>
+
+    <table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrComboRep::CAAAfrComboRep(const CATDialog * iParent,CATString &amp; iCommandName): 
+                 CATAfrCommandHeaderRep(iParent,iCommandName)
+                ,_pUIActiveObject(NULL),_pCombo(NULL)
+{
+   float val ;
+   for ( int i= 0 ; i &lt; 10 ; i++)
+   {
+      // red
+      val = (255 * i / 9 ); 
+      _ColorTable[i*3]   = (int)val;
+
+      // green
+      _ColorTable[i*3+1] = 10 ;
+
+      // blue
+      val = (255 * (9-i) / 9); 
+      _ColorTable[i*3+2] = (int)val;
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The second step consists in to retrieve the CAASysGeomRootObj component. it is
+  also the UI active object of
+  the CAAGeometry document.&nbsp;</p>
+
+    <table class="code">
+  <tr>
+    <td>
+      <pre>...
+   CATFrmEditor * pEditor   = <b>CATFrmEditor</b>::<b>GetCurrentEditor</b>();
+   if ( NULL != pEditor )
+   {
+
+       CATPathElement path = pEditor-&gt;<b>GetUIActiveObject</b>();
+       if ( 0 != path.GetSize() ) 
+       {
+          _pUIActiveObject=path[path.GetSize()-1];
+
+         _pUIActiveObject-&gt;<b>AddRef</b>();
+       }
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The last step&nbsp;consists in to set a callback method to be informed when
+  the CAASysGeomRootObj component will sent a <i>CAAAfrComboColorNotification</i>
+  notification, in other words when the current color kept by the CAASysGeomRootObj
+  component, will be modified.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+   if ( NULL != _pUIActiveObject )
+   {
+      ::<b>AddCallback</b>(this,
+                   _pUIActiveObject,
+	          &quot;CAAAfrComboColorNotification&quot;,
+	          (CATSubscriberMethod)&amp;CAAAfrComboRep::<b><a href="#The ModifyCB method">ModifiedCB</a></b>,
+	          NULL);
+   }
+}</pre>
+    </td>
+  </tr>
+</table>
+  <p> <code>AddCallback</code> is a static global function&nbsp;whose the
+  parameters are:</p>
+  <ul>
+  <li><code>this:</code> The subscriber</li>
+  <li><code>_pUIActiveObject</code>: The publisher&nbsp;</li>
+  <li><code>CAAAfrComboColorNotification:</code>The notification class sent by
+    the publisher</li>
+  <li><code>ModifiedCB:</code>The method of this which is called when a <i>CAAAfrComboColorNotification
+    notification is sent</i></li>
+  <li><code>NULL<b>:</b></code>No parameters for the callback method<br></li>
+  </ul>
+
+  <li>
+    <p align="left">The <b>Destructor</b> class</li>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+CAAAfrComboRep::~CAAAfrComboRep()
+{
+    if ( NULL != _pUIActiveObject )
+    {
+       ::<b>RemoveSubscriberCallbacks</b>(this, _pUIActiveObject);
+
+        _pUIActiveObject-&gt;Release();
+        _pUIActiveObject = NULL ;
+    }
+    if ( NULL != _pCombo )
+    {
+       _pCombo-&gt;<b>RequestDelayedDestruction</b>();
+       _pCombo = NULL ;
+    }
+
+}...</pre>
+    </td>
+  </tr>
+</table>
+
+   <p>At the end, the callback set in the constructor must be removed from the
+   callback manager [<a href="#References">7</a>], and the <i>CATDlgCombo </i>instance
+   must be released.&nbsp;</p>
+  <li>
+    <p align="left"><a name="The Build method">The <b>Build</b> method</a></li>
+  <p>You must overwrite this method. The goal of this method is to create the
+  graphic representation and to initialize it.</p>
+
+  <p>The first step consists in to retrieve the Dialog parent of the graphic
+  representation to create. This information is kept by the <i>CATAfrCommandHeaderRep</i>
+  class, and retrieved by its <code>GetDialogParent</code> method. Then you can
+  create a <i>CATDlgCombo</i> class instance using, <code>pParent</code>, the
+  Dialog parent. The second argument of the <i>CATDlgCombo</i> class is the
+  identifier of the dialog object, and the last one is the type of combo (<code>CATDlgCmbColor</code>:
+  a combo of colors). Once the creation is done, you can set a callback to be
+  informed when the end user selects a color among the ten values.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+HRESULT  CAAAfrComboRep::Build()
+{
+   const CATDialog * pParent = NULL ;
+   <b>GetDialogParent</b>(&amp;pParent);
+
+   _pCombo = new <b>CATDlgCombo</b>((CATDialog *)pParent, &quot;CAAAfrEduCombo&quot;, CATDlgCmbColor);
+
+   <b>AddAnalyseNotificationCB</b>(_pCombo,
+			   _pCombo-&gt;GetComboSelectNotification(),
+			   (CATCommandMethod)&amp;CAAAfrComboRep::<b><a href="#The SelectCB method">SelectCB</a></b>,
+			   (CATCommandClientData)NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then, you can initialize the combo with the ten values using <code>_ColorTable</code>,
+  the data member, initialized in the constructor class. Once the initialization
+  is done, you can set current value calling <code><a href="#The SetCurrentColor method">SetCurrentColor</a></code>.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+   for ( int i=0 ; i &lt; 10 ; i++)
+   {
+     _pCombo-&gt;<b>SetLine</b>(CATUnicodeString(),
+			(unsigned char)_ColorTable[i*3 ], 
+			(unsigned char)_ColorTable[i*3+1], 
+			(unsigned char)_ColorTable[i*3+2], 
+			i);
+   }
+   <b>SetCurrentColor</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the <i>CATCommand</i> parent of the combo is changed. By default, the command
+  parent is the Dialog parent, so it is <code>pParent</code>, the container in
+  which the combo will be inserted. If you do not change the command parent,
+  this, the current <i>CAAAfrComboRep</i> instance, will do not receive the <code>GetComboSelectNotification</code>
+  notification. Refer to the referenced article about the command tree [<a href="#References">8</a>].</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+   _pCombo-&gt;<b>SetFather</b>(this);
+
+   return S_OK ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <li>
+    <p align="left"><a name="The SelectCB method">The <b>SelectCB</b> method</a></li>
+  <p>The <code>SelectCB</code> method is called when the end user has selected a
+  color in the combo. When <code>_pCombo</code> sends a notification, this
+  callback method is called. The goal of this method, is first to retrieve the
+  current color, using <code>GetSelect</code>, and then to modify the current
+  color on the CAASysGeomRootObj component. <code>_pUIActiveObject,</code>  is the
+  CAASysGeoRootObj component which implements the <i>CAAIAfrTemporaryObjectColor</i>
+  interface.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+void CAAAfrComboRep::SelectCB(CATCommand * iPublishingCommand, 
+			      CATNotification * iNotification, 
+			      CATCommandClientData iData)
+{
+  <b>CAAIAfrTemporaryObjectColor</b> * pITemporaryObjectColor = NULL ;
+  HRESULT rc = _pUIActiveObject-&gt;QueryInterface(IID_CAAIAfrTemporaryObjectColor,
+                                                (void**) &amp; pITemporaryObjectColor);
+  ...
+     int val = _pCombo-&gt;<b>GetSelect</b>();
+
+     pITemporaryObjectColor-&gt;<b>SetCurrentColor</b>(_ColorTable[val*3 ],
+                                                _ColorTable[val*3+1],
+                                                _ColorTable[val*3+2]);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <li>
+    <p align="left"><a name="The ModifyCB method">The <b>ModifyCB</b> method</a></li>
+  <p>The <code>ModifyCB</code> method is called when the CAASysGeomRootObj
+  component sends the <i>CAAAfrComboColorNotification</i>
+  notification. It informs the <i> CAAAfrComboRep</i> class instance, that the current
+  color on the CAASysGeoRootObj component has been changed by someone.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+void CAAAfrComboRep::ModifiedCB(CATCallback, 
+                              void *, 
+                              CATNotification * iNotification,
+			                  CATCallbackEvent, 
+                              CATSubscriberData)
+{
+   <b>SetCurrentColor</b>();
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <li>
+    <p align="left"><a name="The SetCurrentColor method">The <b>SetCurrentColor</b>
+    method</a></li> <p>This method consists in to read the current color on the
+  CAASysGeoRootObj component, and modify, thanks to the <code>SetSelect</code>
+  method, the current value on <code>_pCombo</code>, the <i>CATDlgCombo</i> data
+  member of the <i>CAAAfrComboRep</i> class.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+HRESULT CAAAfrComboRep::SetCurrentColor()
+{
+   <b>CAAIAfrTemporaryObjectColor</b> * pITemporaryObjectColor = NULL ;
+   HRESULT rc = _pUIActiveObject-&gt;QueryInterface(IID_CAAIAfrTemporaryObjectColor,
+                                                (void**) &amp; pITemporaryObjectColor);
+   ...
+      int r,g,b ;
+      pITemporaryObjectColor-&gt;<b>GetCurrentColor</b>(r,g,b);
+
+      int position = 0 ;
+      CATBoolean FOUND = FALSE ;
+      while ( ( FALSE == FOUND) &amp;&amp; ( position &lt; 10 ))
+      {
+         if ( (r == _ColorTable[position*3 ]) &amp;&amp;
+              (g == _ColorTable[position*3+1 ]) &amp;&amp;
+              (b == _ColorTable[position*3+2 ]) )
+         {
+             FOUND = TRUE ;
+         }else position ++ ;
+      }
+
+      if ( TRUE == FOUND) 
+      {
+         _pCombo-&gt;<b>SetSelect</b>(position,0);
+      }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Instantiating the Combo Header Class"></a>Instantiating
+the Combo Header Class</h4>
+<p align="left">The combo header is used in the CAAGeometry document. An
+instance of this header has been created in an Add-in of the workshop of the
+document. Here is an extract of the <i>CAAAfrGeoChartWindowAdn</i> class
+which is an implementation of the <i> CAAIAfrGeometryWksAddin</i> interface.&nbsp;</p>
+
+    <table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+void CAAAfrGeoChartWindowAdn::CreateCommands()
+{
+...
+   new <b>CAAAfrComboColorHeader</b>(&quot;CAAAfrComboColorHdr&quot;);
+}
+</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="left">The combo command header is created using its constructor class.&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has explained how to create a command header whose the graphic
+representation is customized:</p>
+<ul>
+  <li>The command header is a component which OM and C++ derives from
+    CATAfrDialogCommandHeader and implements CATIAfrCommandHeaderRep</li>
+  <li>The customized graphic representation is created by a class which must
+    derive from CATAfrCommandHeaderRep</li>
+</ul>
+<p>The component controlling the data used by the graphic representation is
+dependent of the document.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Creating
+      a Most Recent Used Command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+      CAAGeometry Sample</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgCATDlgCombo.htm">CATDlgCombo</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbacks.htm">The
+      Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMCreatingInt.htm">Creating an Interface</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleCallbacks.htm">The
+      Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Fev 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

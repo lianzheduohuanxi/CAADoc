@@ -1,0 +1,80 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASpaMaximumSeparation.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Compute the maximum separation.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active and some components selected.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Retrieve the group of all components</font>
+<font color="#0000FF">    Dim </font>cGroups<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+<font color="#0000FF">    Dim </font>oGroup1<font color="#0000FF"> As </font>Group
+<font color="#0000FF">    Set </font>oGroup1 = cGroups.AddFromSel
+<font color="#0000FF">    Dim </font>iNumber<font color="#0000FF"> As </font>Integer
+    iNumber = oGroup1.CountExtract
+<font color="#0000FF">    If </font>(iNumber &lt;= 1)<font color="#0000FF"> Then</font>
+       <font color="#008000">' Display the warning</font>
+       MsgBox "At least two products must be selected"
+    Else
+
+
+       <font color="#008000">' Retrieve the Distances collection</font>
+<font color="#0000FF">       Dim </font>cDistances<font color="#0000FF"> As </font>Distances
+<font color="#0000FF">       Set </font>cDistances = CATIA.ActiveDocument.Product.GetTechnologicalObject("Distances")
+
+       <font color="#008000">'Loop on each couple of components</font>
+<font color="#0000FF">       Dim </font>dMaximum<font color="#0000FF"> As </font>Double
+       dMaximum = 0.
+<font color="#0000FF">       Dim </font>oDistance<font color="#0000FF"> As </font>Distance
+<font color="#0000FF">       Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">       Dim </font>J<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">       Dim </font>oGroup2<font color="#0000FF"> As </font>Group
+<font color="#0000FF">       Set </font>oGroup2 = cGroups.Add
+<font color="#0000FF">       Dim </font>oProduct1<font color="#0000FF"> As </font>Product
+<font color="#0000FF">       Dim </font>oProduct2<font color="#0000FF"> As </font>Product
+<font color="#0000FF">       For </font>I = 1<font color="#0000FF"> To </font>iNumber-1
+<font color="#0000FF">           Set </font>oProduct1 = oGroup1.ItemExtract(I)
+           oGroup2.AddExplicit oProduct1
+<font color="#0000FF">           For </font>J = I+1<font color="#0000FF"> To </font>iNumber
+<font color="#0000FF">               Set </font>oProduct2 = oGroup1.ItemExtract(J)
+               oGroup2.AddExplicit oProduct2
+
+               <font color="#008000">' Create the distance and compute it</font>
+<font color="#0000FF">               Set </font>oDistance = cDistances.Add
+               oDistance.FirstGroup = oGroup2
+               oDistance.Compute
+
+               <font color="#008000">' Compare the distance with the maximum value</font>
+<font color="#0000FF">               If </font>(oDistance.IsDefined = 1)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                   If </font>(oDistance.Value &gt; dMaximum)<font color="#0000FF"> Then</font>
+                       dMaximum = oDistance.Value
+<font color="#0000FF">                   End If</font>
+<font color="#0000FF">               End If</font>
+               cDistances.remove oDistance
+               oGroup2.RemoveExplicit 2
+<font color="#0000FF">           Next</font>
+           oGroup2.RemoveExplicit 1
+<font color="#0000FF">       Next</font>
+
+       <font color="#008000">' Clean</font>
+       cGroups.Remove oGroup2
+       cGroups.Remove oGroup1
+
+       <font color="#008000">' Display the results</font>
+       MsgBox "Maximum separation is :" & Cstr(dMaximum)
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

@@ -1,0 +1,663 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Dialog Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Dialog Overview</h3>
+      <em>A first glance at dialog windows and boxes</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article introduces the Dialog framework architecture and
+      components.
+      <ul>
+        <li><a href="#100000"><strong>Overview</strong></a></li>
+        <li><a href="#200000"><strong>The Dialog Framework Class Tree</strong></a></li>
+        <li><a href="#300000"><strong>The Dialog Framework Class Definition</strong></a>
+          <ul>
+            <li><a href="#310000">Containers</a>
+              <ul>
+                <li><a href="#311000">Windows</a></li>
+                <li><a href="#312000">Boxes</a></li>
+                <li><a href="#313000">Bars</a></li>
+                <li><a href="#314000">Menus</a></li>
+              </ul>
+            </li>
+            <li><a href="#320000">Components</a>
+              <ul>
+                <li><a href="#321000">Indicators</a></li>
+                <li><a href="#322000">Control to Trigger an Action</a></li>
+                <li><a href="#323000">Controls to Set Options</a></li>
+                <li><a href="#324000">Controls to Enter or Select Texts or
+                  Values</a></li>
+              </ul>
+            </li>
+            <li><a href="#330000">Menu Items</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Overview</h3>
+<p>You will find below:
+<ul>
+  <li>the Dialog framework class tree</li>
+  <li>the definition for all the Dialog Framework classes, illustrated whenever
+    possible. To have a complete description of the classes interface, refer to
+    the <a href="../CAADlgQuickRefs/CAADlgObjectList.htm">Dialog
+    Class Catalog</a>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The Dialog Framework Class Tree</h3>
+<p>Below are the Dialog Framework classes used in dialog windows and arranged in
+a tree showing the inheritance links. In addition to these classes, the Dialog
+Framework includes the class CATInteractiveApplication [<a href="#References">1</a>]
+you will derive to create your own application class with dialog windows, and
+the notification classes which are used to propagate user interactions in dialog
+windows to the command that can deal with them.</p>
+<p><img src="images/DialogClassTree.jpg" alt="DialogClassTree.jpg (74029 bytes)" width="628" height="510"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>The Dialog Framework Class Definitions</h3>
+<p>The Dialog framework includes two main class types:
+<ol>
+  <li>The <strong>containers</strong> to contain and arrange component objects.
+    The containers can be visible or not, and do not react themselves to the
+    user interactions, except for repositioning and resizing. They are <strong>windows</strong>,
+    <strong>boxes</strong>, <strong>bars</strong> and <strong>menus</strong></li>
+  <li>The <strong>components</strong> which are atom objects to fill the
+    containers. Most of them are sensitive to user interactions: they are <strong>controls</strong>
+    and <strong>menu items</strong>. Some others are used to separate or name
+    other controls: they are the <strong>indicators</strong>.</li>
+</ol>
+<p>All these classes derive from the abstract class <code><a href="../CAADlgQuickRefs/CAADlgCATDialog.htm">CATDialog</a></code>
+which includes methods to define their common behavior and attributes. These
+include:
+<ul>
+  <li>Name, relationship with other containers or controls, visibility,
+    sensitivity to user interaction, focus, and style. This is described in
+    &quot;Creating Dialog Objects&quot; [<a href="#References">2</a>]</li>
+  <li>External resources, composed of the title, the mnemonic, the accelerator,
+    the icon, and the resource object. This is described in &quot;Assigning
+    Resources to a Dialog Box&quot; [<a href="#References">3</a>]</li>
+  <li>Position and dimensions. This is described in &quot;Arranging Dialog
+    Objects&quot; [<a href="#References">4</a>]</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Containers</h4>
+<p>The containers are used to contain several dialog components and to handle
+them as a whole, for example for layout purposes. They can be classified in:
+<ul>
+  <li>Windows deriving from the abstract class <a href="../CAADlgQuickRefs/CAADlgCATDlgWindow.htm">CATDlgWindow</a></li>
+  <li>Boxes deriving from the abstract class <a href="../CAADlgQuickRefs/CAADlgCATDlgBox.htm">CATDlgBox</a>.
+    They are used to contain several Dialog framework objects</li>
+  <li>Bars deriving from the abstract class <a href="../CAADlgQuickRefs/CAADlgCATDlgBar.htm">CATDlgBar</a></li>
+  <li>Menus deriving from the abstract class <a href="../CAADlgQuickRefs/CAADlgCATDlgMenu.htm">CATDlgMenu</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="311000"></a>Windows</h5>
+<p>The windows are the primary containers which contain either other containers
+and components. They can be moved and resized. They include:
+<ul>
+  <li>The document window: class <a href="../CAADlgQuickRefs/CAADlgCATDlgDocument.htm">CATDlgDocument</a>
+    <p>The document window is the main application window. It can contain one or
+    several dialog windows, each containing a document's presentation, depending
+    on whether the application is SDI (Single Document Interface) or MDI
+    (Multiple Document Interface), and other dialog windows, such as the Macro
+    window. In addition, it usually features a menu bar, toolbars, and a status
+    bar.</p>
+    <p><img src="images/CATDlgDocument.jpg" alt="CATDlgDocument.jpg (72554 bytes)" width="604" height="507"></p>
+  </li>
+  <li>The dialog: class <a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">CATDlgDialog</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgDialog1.jpg" alt="CATDlgDialog1.jpg (30443 bytes)" width="478" height="359"><br>
+          <img src="images/CATDlgDialog2.jpg" alt="CATDlgDialog2.jpg (21008 bytes)" width="366" height="239"></td>
+        <td valign="top">The dialog window is designed to enable the dialog
+          between the end user and the application. It can contain a
+          presentation of the application document such as an 2D or 3D viewer,
+          or a 2D graph immersed into a 3D viewer as shown in the Part1 window.
+          It can also contain controls, such as in the Macro window. The dialog
+          window is designed to allow for data acquisition from the user.
+          Applications can thus request data from the user to go on executing.
+          In addition, a dialog window can be set to modal. In this case, the
+          dialog is limited to this window, and when it ends, the window
+          disappears.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The message window: class <a href="../CAADlgQuickRefs/CAADlgCATDlgNotify.htm">CATDlgNotify</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgNotify.jpg" alt="CATDlgNotify.jpg (7009 bytes)" width="251" height="119"></td>
+        <td valign="top">The message window is used for displaying information,
+          warning and error messages to the end user. The application can also
+          request a validation from the end user to go on working using a
+          message window.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The file window: class <a href="../CAADlgQuickRefs/CAADlgCATDlgFile.htm">CATDlgFile</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgFile.jpg" alt="CATDlgFile.jpg (32498 bytes)" width="426" height="309"></td>
+        <td valign="top">The file window offers a standard file selection box
+          with a filter to apply to search for files. There are three kinds of
+          file windows: default, apply, and help. Apply and help file windows
+          feature an Apply and Help push button respectively, in addition to the
+          OK, Filter and Cancel push buttons. In addition, a file window can be
+          set to modal. The modal file window locks the dialog to this window as
+          long as it is displayed.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="312000"></a>Boxes</h5>
+<p>The boxes are used to gather dialog components in consistent sets inside a
+dialog window. These components are usually controls, but a box can often
+contain boxes. For example, a frame can contain frames, as well as a tab page.
+The boxes' base class is <a href="../CAADlgQuickRefs/CAADlgCATDlgBox.htm">CATDlgBox</a>.
+They include:
+<ul>
+  <li>The <strong>container</strong>: class <a href="../CAADlgQuickRefs/CAADlgCATDlgContainer.htm">CATDlgContainer</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgContainer.jpg" alt="CATDlgContainer.jpg (5781 bytes)" width="155" height="103"></td>
+        <td valign="top">The container defines a scrollable area which can
+          contain a single object, this object could be a frame itself
+          containing as many objects as you want. If the container contents does
+          not fit in the displayable area, horizontal and/or vertical scroll
+          bars are automatically created to allow scrolling through this
+          contents. The figure beside shows a container that contains the frame
+          Measurement as unique child. This frame contains radio buttons,
+          frames, and other controls that can be seen using the scroll bars.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The <strong>splitter</strong>: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSplitter.htm">CATDlgSplitter</a>
+    <table>
+      <tr>
+        <td valign="middle"><img src="images/CATDlgSplitterNT.jpg" alt="CATDlgSplitterNT.jpg (3606 bytes)" width="202" height="70"></td>
+        <td>The splitter consists in an area split into two resizeable subareas
+          by a sash that can be dragged along to resize, decreasing one subarea
+          while increasing the other. The split between the two subareas can be
+          vertical or horizontal. The two splitters shown in the figure above
+          contain both a label and a frame.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The <strong>tab container</strong>: class <a href="../CAADlgQuickRefs/CAADlgCATDlgTabContainer.htm">CATDlgTabContainer</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgTabPage.jpg" alt="CATDlgTabPage.jpg (13881 bytes)" width="272" height="198"></td>
+        <td>The tab container gathers a set of tab pages, instances of the
+          CATDlgTabPage class, one page being shown at a time. It presents a tab
+          index at the top to select the page to show. This is the Color tab
+          page in the fiugre beside.
+          <p>The <strong>tab page</strong>: class CATDlgTabPage. The tab page is
+          one of the pages available in a tab container. The Color tab page
+          displayed beside contains several controls: three radio buttons on
+          top, a label and a spinner below, and a check button at the bottom.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The <strong>frame</strong>: class <a href="../CAADlgQuickRefs/CAADlgCATDlgFrame.htm">CATDlgFrame</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgFrame.gif" alt="CATDlgFrame.gif (22661 bytes)" width="333" height="354"></td>
+        <td>The frame is designed to group several Dialog framework objects,
+          like controls and labels, having something in common from the user or
+          from the application point of view. In this figure, the left frame is
+          empty while the right frame contains three radio buttons, five check
+          buttons, and a vertical slider.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The <strong>icon box</strong>: class <a href="../CAADlgQuickRefs/CAADlgCATDlgIconBox.htm">CATDlgIconBox</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgIconBox1.jpg" alt="CATDlgIconBox1.jpg (1042 bytes)" width="33" height="38">
+          <p><img src="images/CATDlgIconBox.gif" alt="CATDlgIconBox.gif (3122 bytes)" width="123" height="61"></td>
+        <td valign="top">The icon box is used in a toolbar to build a pull-down
+          (dropdown) menu composed of icons. Each of&nbsp; these icons
+          represents a command and can be clicked to fire an action. The figure
+          left shows an inactive icon box. It displays only the last icon
+          selected and an arrow. The figure right displays the same icon box
+          while the user is selecting another icon than the last selected one.
+          To do this, the end user clicks the arrow. This displays the four
+          icons are available in the icon box. The icon the user will click will
+          remain the only one displayed afterwards.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="313000"></a>Bars</h5>
+<p>The bars allow to gather a set of controls without needing to arrange them.
+Controls appear in their instantiation order. They include:
+<ul>
+  <li>The tool bar: class <a href="../CAADlgQuickRefs/CAADlgCATDlgToolBar.htm">CATDlgToolBar</a>
+    <p><img src="images/CATDlgToolBar1.jpg" alt="CATDlgToolBar1.jpg (8119 bytes)" width="380" height="59"></p>
+    <p><img src="images/CATDlgToolBar2.jpg" alt="CATDlgToolBar2.jpg (4627 bytes)" width="374" height="34"></p>
+    <p>The tool bar is designed to gather the tools of application. These tools
+    are commands represented usually using icons, and are also usually available
+    from pull-down menus.</p>
+  </li>
+  <li>The status bar: class <a href="../CAADlgQuickRefs/CAADlgCATDlgStatusBar.htm">CATDlgStatusBar</a>
+    <p><img src="images/dialoa10.jpg" alt="dialoa10.jpg (4803 bytes)" width="393" height="27"></p>
+    <p><img src="images/CATDlgStatusBar1.jpg" alt="CATDlgStatusBar1.jpg (5287 bytes)" width="626" height="30"></p>
+    <p>The status bar is used to display temporary or permanent information. It
+    is generally located at the bottom of the window. It includes an area for
+    messages in its left part, and can include push buttons, check buttons,
+    radio buttons, and labels.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="314000"></a>Menus</h5>
+<p>The menus gather in a small area the actions that are offered to the user.
+They are fully displayed on request only and save space for other purposes. They
+include:
+<ul>
+  <li>The menu bar: class <a href="../CAADlgQuickRefs/CAADlgCATDlgMenu.htm">CATDlgMenu</a>
+    <img src="images/CATDlgMenuBar.jpg" alt="CATDlgMenuBar.jpg (2728 bytes)" width="327" height="20">
+    <p>The menu bar is the object to house the main menus of an application and
+    as such is the application entry point. Each main menu is composed of
+    pull-down menus, each of them composed of items</p>
+  </li>
+  <li>The submenu: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSubMenu.htm">CATDlgSubMenu</a>
+    <table>
+      <tr>
+        <td valign="top"><img src="images/CATDlgSubMenu.gif" alt="CATDlgSubMenu.gif (11435 bytes)" width="260" height="328"></td>
+        <td valign="top">This class is used for menus and submenus. (A submenu
+          is also called a child menu with Windows.) The menus and submenus are
+          used to group menu items for pull-down menus. Submenus are depicted
+          using an horizontal arrow end and can be nested. Menu items trigger
+          commands. Submenus items can be push items, radio items, check items,
+          and separator items. In the figure beside, File is a menu. Among its
+          items, some can be submenus. For example, Send To is a submenu.
+          Selecting Send To displays the Mail and Directory items.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The contextual menu: class <a href="../CAADlgQuickRefs/CAADlgCATDlgContextualMenu.htm">CATDlgContextualMenu</a>
+    <table>
+      <tr>
+        <td valign="top"><img src="images/CATDlgContextualMenu.jpg" alt="CATDlgContextualMenu.jpg (20119 bytes)" width="272" height="488"></td>
+        <td valign="top">The contextual menu depends on the context determined
+          by the mouse position. (A contextual menu is also called a shortcut
+          menu with Windows.) Usually, the mouse in a window can preactivate a
+          given object by simply being located above it, and a floating menu
+          depending on the preactivated object can be available using the mouse
+          right button. The commands available in the contextual menu are
+          dedicated to the object under the mouse.
+          <p>A contextual menu, like any other menu, can contain submenus, push
+          items, check items, radio items, and separator items. As an example,
+          the figure beside shows the contextual menu of a PartBody. It contains
+          push items, such as&nbsp; Center Graph or Copy, separators, such as
+          the one between Paste Special and Delete, and the PartBody object
+          submenu.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Components</h4>
+<p>The components are the dialog objects you will use to let the user interact
+with your application. When the user performs such interactions, you trigger
+methods to execute the requested action until it is completed. The callback
+mechanism allows you to link a component, usually a control, with such methods.</p>
+<p>The controls can be classified into different functional groups:
+<ul>
+  <li>Indicators to separate or name other controls</li>
+  <li>A control to directly trigger an action</li>
+  <li>Controls to set options</li>
+  <li>Controls to enter texts and values</li>
+</ul>
+<p>They are described below.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="321000"></a>Indicators</h5>
+<p>They are used to name some controls or containers and to help to layout
+windows. They include:
+<ul>
+  <li>The separator: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSeparator.htm">CATDlgSeparator</a>
+    <img src="images/CATDlgSeparator.gif" alt="CATDlgSeparator.gif (8487 bytes)" width="495" height="121">
+    <p>The separator is used to leave thin vertical or horizontal empty areas
+    between different Dialog framework objects to help better visualize the
+    different parts of a window or box.</p>
+  </li>
+  <li>The label: class <a href="../CAADlgQuickRefs/CAADlgCATDlgLabel.htm">CATDlgLabel</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgLabel.gif" alt="CATDlgLabel.gif (14046 bytes)" width="310" height="214"></td>
+        <td>The label is used to add an information text to controls and to
+          other objects as well, such as frames. This text can be parametrized
+          with data coming from the application.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The progress indicator: class <code>CATDlgProgress</code> <img src="images/CATDlgProgressBar.jpg" alt="CATDlgProgressBar.jpg (11999 bytes)" width="600" height="79">
+    <p>The progress indicator gives feedback about a task completion rate.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="322000"></a>Control to Trigger an Action</h5>
+<p>The push button: class <a href="../CAADlgQuickRefs/CAADlgCATDlgPushButton.htm">CATDlgPushButton</a></p>
+<table>
+  <tr>
+    <td><img src="images/CATDlgPushButton.gif" alt="CATDlgPushButton.gif (22816 bytes)" width="332" height="354"></td>
+    <td>The push button is the only control dedicated to execute an action, such
+      as trigger a command, display help, cancel or quit the window. Use the
+      push button whenever you want to execute an action as soon as the user has
+      pushed on the push button.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="323000"></a>Controls to Set Options</h5>
+<p>Two controls allow to set options:
+<ul>
+  <li>The radio button: class <a href="../CAADlgQuickRefs/CAADlgCATDlgRadioButton.htm">CATDlgRadioButton</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgRadioButton.jpg" alt="CATDlgRadioButton.jpg (4708 bytes)" width="125" height="135"></td>
+        <td>Each circle and its related title is a radio button instance. The
+          radio buttons allow for selecting mutually exclusive options, that is
+          one radio button is in the &quot;on&quot; state and all the others are
+          in the &quot;off&quot; state. For example, you must choose for your
+          car one, and only one, motor-fuel value among the three proposed. The
+          on state is depicted by the specific color and shading of the radio
+          button &quot;Unleaded&quot; in the picture. This can vary depending on
+          the platform.
+          <p>Use radio buttons whenever you propose to the end user a choice
+          among several exclusive options, that is when one option only can be
+          selected.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The check button: class <a href="../CAADlgQuickRefs/CAADlgCATDlgCheckButton.htm">CATDlgCheckButton</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgCheckButton.jpg" alt="CATDlgCheckButton.jpg (9303 bytes)" width="323" height="112"></td>
+        <td>Each square and related title is a check button instance. The check
+          buttons allow for selecting several options among all the options
+          proposed, that is several can be in the &quot;on&quot; state while the
+          others are in the &quot;off&quot; state. The &quot;on&quot; state is
+          depicted by the specific color .
+          <p>Use check buttons whenever you propose to the end user a choice
+          among several inclusive options, that is when several options can be
+          selected at the same time.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="324000"></a>Controls to Enter or Select Texts or Values</h5>
+<p>These controls allow to key in or to enter a text or a value, or to select a
+value from a proposed list.
+<ul>
+  <li>The selector list: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSelectorList.htm">CATDlgSelectorList</a>
+    <p><img src="images/CATDlgSelector.jpg" alt="CATDlgSelector.jpg (11109 bytes)" width="469" height="134"></p>
+    <p>The selector list allows to create a window on a list of values and to
+    allow the end-user select one or several values in the list. The values are
+    generally a character strings.</p>
+    <p>Use the selector list when you propose to the end user a choice among a
+    list, or possibly several choices.</p>
+  </li>
+  <li>The combo: class <a href="../CAADlgQuickRefs/CAADlgCATDlgCombo.htm">CATDlgCombo</a>&nbsp;
+    <p><img src="images/CATDlgCombo.jpg" alt="CATDlgCombo.jpg (6774 bytes)" width="199" height="114"></p>
+    <p>The combo allows to select a value or an option by selecting a character
+    string from a predefined list, or through a keyboard entry.</p>
+    <p>On this picture, the three types of combos available are displayed from
+    left to right:
+    <ul>
+      <li>The drop down combo</li>
+      <li>The standard combo</li>
+      <li>The option style combo, which is very near of the drop down combo with
+        a Motif style. It is replaced by a drop down combo with Windows.</li>
+    </ul>
+    <p>Drop down and standard combos allow for keyboard text entry if required.</p>
+    <p>Use the combo whenever you want to select in a list and possibly key in a
+    character string.</p>
+  </li>
+  <li>The editor: class <a href="../CAADlgQuickRefs/CAADlgCATDlgEditor.htm">CATDlgEditor</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgEditor.gif" alt="CATDlgEditor.gif (22041 bytes)" width="297" height="467"></td>
+        <td>The editor allows character strings to be keyed in. Two kinds of
+          editors exist: the single-line editor that accepts input on one line
+          only, while the multi-line editor enables you to enter text spanning
+          on several lines. Use the editor whenever you want the user to key in
+          a character string without predefined values.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The spinner: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSpinner.htm">CATDlgSpinner</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgSpinner.gif" alt="CATDlgSpinner.gif (13189 bytes)" width="336" height="217"></td>
+        <td valign="top">The spinner allows a value to be chosen and selected
+          among a discrete list. The value can be incremented or decremented by
+          clicking the arrows. It can also be entered.
+          <p>Use the spinner when you ask the user to select a numeric value
+          which ranges between two limits with a fixed step. You can also use
+          the slider.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The slider: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSlider.htm">CATDlgSlider</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgSlider.jpg" alt="CATDlgSlider.jpg (4722 bytes)" width="373" height="64"></td>
+        <td valign="top">The slider allows a value to be selected among a
+          discrete list. The value can be incremented or decremented by dragging
+          along with the mouse. The step between each displayed value can be set
+          upon request. A slider can be vertical or horizontal.
+          <p>Use the slider when you ask the user to select a numeric value
+          which ranges between two limits with a fixed step. You can also use
+          the spinner.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The multi-list: class <a href="../CAADlgQuickRefs/CAADlgCATDlgMultiList.htm">CATDlgMultiList</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgMultiList.jpg" alt="CATDlgMultiList.jpg (16110 bytes)" width="336" height="152"></td>
+        <td valign="top">The multi-list allows connected values to be presented
+          and selected within a set of finite lists. Selecting a value in one
+          list selects all the connected values in the other lists, that is all
+          the values located on the same line.
+          <p>Use the multi-list when you want the user to select among a finite
+          list of predefined values which can feature several sub values.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The scroll bar: class <a href="../CAADlgQuickRefs/CAADlgCATDlgScrollbar.htm">CATDlgScrollBar</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgScrollbar.jpg" alt="CATDlgScrollbar.jpg (13511 bytes)" width="210" height="195"></td>
+        <td valign="top">The scroll bar allows scrolling facilities to be set to
+          a scrollable dialog object, that is usually a container. Scroll bars
+          can be vertical or horizontal. The figure shows a selector list that
+          is too big to fit in its dedicated area. A vertical scroll bar allows
+          the end user to scroll and select into the list.
+          <p>Use the scroll bar when you want to enable scrolling facilities in
+          a container of your own that you do not want to display entirely. Note
+          that a <i>CATDlgContainer</i> instance is created with scroll bars by
+          default.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Menu Items</h4>
+<ul>
+  <li>The push item: class <a href="../CAADlgQuickRefs/CAADlgCATDlgPushItem.htm">CATDlgPushItem</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgPushItem1.jpg" alt="CATDlgPushItem1.jpg (18641 bytes)" width="223" height="424"></td>
+        <td valign="top">
+          <table>
+            <tr>
+              <td>The push item is one of the most common menu item for menus
+                and submenus. It is also used in toolbars. A command to execute
+                is linked with each push item. The command is executed when the
+                item is pushed.&nbsp;</td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <td><img src="images/CATDlgPushItem2.jpg" alt="CATDlgPushItem2.jpg (6772 bytes)" width="261" height="60"></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The radio item: class <a href="../CAADlgQuickRefs/CAADlgCATDlgRadioItem.htm">CATDlgRadioItem</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgRadioItem.gif" alt="CATDlgRadioItem.gif (5062 bytes)" width="257" height="104"></td>
+        <td>The radio item is used to build menus and submenus. A radio item has
+          two states, on and off. One of the radio items can be in the state on
+          while all others are in the state off. Selecting another radio item
+          sets this radio item to on and sets back to off the radio item which
+          was on.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The check item: class <a href="../CAADlgQuickRefs/CAADlgCATDlgCheckItem.htm">CATDlgCheckItem</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgCheckItem.jpg" alt="CATDlgCheckItem.jpg (5512 bytes)" width="154" height="130"></td>
+        <td>The check item is used to build menus and submenus. A check item has
+          two states, on or off. Selecting a check item sets its state to on if
+          it was off or to off if it was on, regardless the state of the other
+          check items. So several check items can be in the state on while
+          several others can be in the state off.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The separator item: class <a href="../CAADlgQuickRefs/CAADlgCATDlgSeparatorItem.htm">CATDlgSeparatorItem</a>
+    <table>
+      <tr>
+        <td><img src="images/CATDlgSeparatorItem.gif" alt="CATDlgSeparatorItem.gif (14301 bytes)" width="341" height="331"></td>
+        <td>The separator item allows to group consistent menu items. The
+          submenu beside features a separator item between Save and Print. The
+          menu items New, Open and Save deal with creating, opening and saving
+          files respectively, that is with a consistent set of file access
+          functions. Print deals with printing the contents of a file and can be
+          separated than the previous menu items. Additional menu items dealing
+          with printing could be added below Print, and a new separator item
+          could separate them from possible next menu items.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADlgInteractiveApplication.htm">Designing Your Interactive
+      Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADlgCreatingDialogs.htm">Creating Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAADlgResources.htm">Assigning Resources to a Dialog Box</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAADlgObjectLayout.htm">Arranging Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Fev 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

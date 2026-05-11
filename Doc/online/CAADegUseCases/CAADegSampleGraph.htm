@@ -1,0 +1,511 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Implementing the Statechart Diagram</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing the Statechart Diagram</h3>
+      <em>Coding the BuildGraph method</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to retrieve a point in the 3D space from an end
+      user mouse click on the screen in a state dialog command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Rectangle Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Rectangle Command Do</a></li>
+            <li><a href="#How">How to Launch the Rectangle Command</a></li>
+            <li><a href="#Where">Where to Find the Rectangle Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to implement the statechart diagram of
+a state dialog command by coding the command <code>BuildGraph</code> [<a href="#References">1</a>]
+method. <code>BuildGraph</code> is the command core. It declares the objects
+that make up the dialog steps and sequences, and their relationships.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Rectangle Command Use Case</h3>
+<p>The Rectangle command is a use case of the CAADialogEngine.edu framework that
+illustrates the DialogEngine framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Rectangle Command Do</h4>
+<p>CAACreateRectangleCmd is a state dialog command that creates a rectangle in
+the 3D space according to the following UML statechart diagram [<a href="#References">2</a>].</p>
+<p><img src="images/CAACreateRectangleStatechart.jpg" alt="CAACreateRectangleStatechart.jpg (22767 bytes)" width="632" height="328"></p>
+<p>The dialog is as follows:</p>
+<table>
+  <tr>
+    <td><img src="images/CAACreateRectangle1.jpg" alt="CAACreateRectangle1.jpg (17043 bytes)" width="387" height="327"></td>
+    <td>Select the CAADegCreateRectangleCmd command. The active state is GetPlane.
+      Select an existing plane that will be used as the rectangle plane. The
+      selection is possible thanks to a selection agent.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateRectangle2.jpg" alt="CAACreateRectangle2.jpg (16653 bytes)" width="387" height="328"></td>
+    <td>The viewpoint changes to make the selected plane and the screen plane
+      coincide. The active state becomes GetFirstPoint.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateRectangle3.jpg" alt="CAACreateRectangle3.jpg (17322 bytes)" width="388" height="328"></td>
+    <td>Click to indicate a point for the diagonal first end point. The active
+      state becomes GetSecondPoint. This image is captured just after the click.
+      The indicated point is shown beside the plane. The mouse has not yet
+      moved. The indication is enabled thanks to an indication agent.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateRectangle4.jpg" width="387" height="327" alt="CAACreateRectangle4.jpg (17881 bytes)"></td>
+    <td>Move the mouse from this point. A temporary rectangle is drawn and
+      increases or decreases to follow the mouse moves. The active state remains
+      GetSecondPoint. The self transition loops onto this state. The indication
+      is enabled thanks to the second indication agent.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateRectangle5.jpg" alt="CAACreateRectangle5.jpg (19354 bytes)" width="389" height="329"></td>
+    <td>Still moving the mouse, the temporary rectangle go on increasing or
+      decreasing to follow the mouse moves. The active state remains
+      GetSecondPoint thank sto the self transition that loops onto this state.
+      The indication remains enabled thanks to the second indication agent.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateRectangle6.jpg" alt="CAACreateRectangle6.jpg (18214 bytes)" width="387" height="329"></td>
+    <td>When the wished rectangle is obtained,&nbsp;click to create the diagonal
+      second end point. This creates the rectangle. The indicated point is retrieved thanks to the second indication agent. The command is now
+      complete.</td>
+  </tr>
+</table>
+<p>The Rectangle command statechart diagram comprises three states in addition
+to the initial and final states, and four transitions including a self
+transition that loops onto a state to create a temporary rubber rectangle.
+Dialog agents with appropriate types and behaviors, associated with the states,
+make it possible to convert the end user input into stimuli that trigger the
+transitions and to retrieve the end user interaction intent, that is selecting
+an object for a selection agent [<a href="#References">3</a>] or indicating a
+point for an indication agent [<a href="#References">4</a>]. To simplify the <code>BuildGraph</code>
+method, undo/redo [<a href="#References">5</a>] is not taken into into account.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Rectangle Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.&nbsp;</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:
+<ul>
+  <li>Select File-&gt;New
+  <li>In the New box, select CAAGeometry and click OK
+  <li>Select Insert-&gt;Point
+  <li>Create three points
+  <li>Select Insert-&gt;Plane
+  <li>Successively click the three points to create a plane</li>
+  <li>Select Insert-&gt;Rectangle</li>
+  <li>Click two points to create a rectangle.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Rectangle Command Code</h4>
+<p>The Rectangle command is made of a single class named <i>CAADegCreateRectangleCmd</i>
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the CAACreateRectangleCmd BuildGraph method, there are three steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the dialog agents</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the states</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the transitions between the states</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Dialog Agents</h4>
+<p>The <code>BuildGraph</code> methods starts by creating the dialog agents.
+Pointers to dialog agents are data members of the state dialog command, because
+they are often used in several condition and/or action methods in addition to
+BuildGraph. The first one is a selection (path element) agent to select the
+rectangle underlying plane.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegCreateRectangleCmd::BuildGraph()
+{
+<em>  //1- Creates the dialog agents </em>
+
+<em>  //1-1 Dialog agent to select the rectangle plane </em>
+  _daPathEltPlane = <strong>new CATPathElementAgent</strong>(&quot;SelPlane&quot;);
+  _daPathEltPlane-&gt;<strong>AddElementType</strong>(&quot;<strong>CAAISysPlane</strong>&quot;);
+
+  <em>// To enable agent prevaluation, plane prehighlight and highlight</em>
+  <em>// No Undo step recorded for this agent</em>
+  _daPathEltPlane-&gt;<strong>SetBehavior</strong>(CATDlgEngWithPrevaluation |
+                               CATDlgEngWithPSOHSO |
+                               CATDlgEngWithUndo);
+<em>  // Let _daPathEltPlane be valued from the CSO </em> 
+  <strong>AddCSOClient</strong>(_daPathEltPlane); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This code portion has the following meaning:
+<ul>
+  <li>The selection agent is a CATPathElementAgent instance. <code>SelPlane</code>
+    is the dialog agent identifier that could be used if an undo step were
+    recorded. Even if this is not the case here, the identifier is requested</li>
+  <li>Thanks to the <code>AddElementType</code> method, the selection agent is
+    valued only when an object that implements the CAAISysPlane interface is
+    selected. The selection agent remains impassive when any object that doesn't
+    implement this interface is selected</li>
+  <li>Any dialog agent has a behavior assigned using the <code>SetBehavior</code>
+    method. The global behavior is made of a concatenation of unit behaviors set
+    using keywords separated with the &quot;|&quot; pipe character
+    <ul>
+      <li><code>CATDlgEngWithPrevaluation</code> means that the selection agent
+        is prevalued when an object is preselected, that is, as long as the
+        mouse moves or is located above the object without left clicking. The
+        object must of course match the type set by <code>AddElementType</code>,
+        otherwise the dialog agent is not prevalued</li>
+      <li><code>CATDlgEngWithPSOHSO</code> means that any preselected object is
+        prehighlighted, and thus put in the PSO (Prehighlighted Set of Objects),
+        and that any selected object is highlighted, and thus put in the HSO
+        (Highlighted Set of Objects)</li>
+      <li><code>CATDlgEngWithUndo</code> means that no undo step is recorded for
+        this dialog agent [x]</li>
+    </ul>
+  </li>
+  <li>The dialog agent can be valued when the end user selects an object that
+    implements CAAISysPlane. In addition, the <code>AssCSOClient</code> method
+    enables the dialog agent to be valued if the CSO (Current Set of Objects)
+    contains such an object when the command is selected, this object being put
+    in the CSO before the command selection either by an end user selection or
+    as a result of the preceding command. This is a powerful means to increase
+    end user productivity.</li>
+</ul>
+<p>The second dialog agent is an indication agent used to get the rectangle
+diagonal first end point.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <em>//1-2 Dialog agent to indicate the rectangle diagonal first end point</em>
+  _daIndicationP1 = new <strong>CATIndicationAgent</strong>(&quot;IndicationP1&quot;);
+  <em>// No Undo step recorded for this agent</em> 
+  _daIndicationP1-&gt;<strong>SetBehavior</strong>(CATDlgEngWithUndo);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Its identifier is set as the argument of its constructor, even if it will be
+useless since no undo step is recoreded.</p>
+<p>The third dialog agent is an indication agent used to get the rectangle
+diagonal second end point.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+  <em>//1-3 Agent to indicate the rectangle diagonal second end point</em>
+  _daIndicationP2 = new <strong>CATIndicationAgent</strong>(&quot;IndicationP2&quot;);
+  <em>// To enable agent prevaluation, and transition to trigger on prevaluation</em>
+  <em>// No Undo step recorded for this agent</em> 
+  _daIndicationP2-&gt;<strong>SetBehavior</strong>(CATDlgEngWithPrevaluation | 
+                               CATDlgEngAcceptOnPrevaluate |
+                               CATDlgEngWithUndo);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Its behavior enables prevaluation, like with the selection agent. In addition
+<code>CATDlgEngAcceptOnPrevaluate</code> means that prevaluation is enough to
+trigger a transition, while usually it is not.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the States</h4>
+<p>The states are created in the order where they appear in the statechart
+diagram, and the dialog agents are immediately associated to them. They can be
+created on the stack.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <em>//2- Creates states. See Nls file </em>
+  CATDialogState *stPlaneState = <strong>GetInitialState</strong>(&quot;stPlaneStateId&quot;);
+  stPlaneState-&gt;<strong>AddDialogAgent</strong>(_daPathEltPlane);
+
+  CATDialogState *stGetFirstPointState = <strong>AddDialogState</strong>(&quot;stGetFirstPointStateId&quot;);
+  stGetFirstPointState-&gt;<strong>AddDialogAgent</strong>(_daIndicationP1);
+
+  CATDialogState *stGetLastPointState = <strong>AddDialogState</strong>(&quot;stGetLastPointStateId&quot;);
+  stGetLastPointState-&gt;<strong>AddDialogAgent</strong>(_daIndicationP2);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first state is created using the <code>GetInitialState</code> method that
+also create an automatic transition fromthe initial state to this state, while
+the others are created using the <code>AddDialogState</code> method. Each state
+is assigned an identifier used to set a prompt displayed in the status bar when
+the state is active. The <code>AddDialogAgent</code> method associates dialog
+agents with states.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Transitions between the States</h4>
+<p>Still in the <code>BuildGraph</code> method, the last thing to do is to
+create the transitions. They can also be created on the stack. The first
+transition links the states that requests the rectangle plane and the rectangle
+diagonal first end point.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <em>//3- Creates transitions</em> 
+  CATDialogTransition *pFirstTransition = AddTransition(
+    stPlaneState,
+    stGetFirstPointState,
+    IsOutputSetCondition(_daPathEltPlane),
+    Action((ActionMethod) &amp; CAADegCreateRectangleCmd::CreateCamera)
+  );  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Transitions are created using the <code>AddTransition</code> method using the
+following arguments:
+<ul>
+  <li><code>stPlaneState</code> is the transition source state</li>
+  <li><code>stGetFirstPointState</code> is the transition target state</li>
+  <li>The third argument is the transition guard condition. It is a condition
+    method returned by <code>IsOutPutSetCondition</code> that acts as the
+    transition trigger, since it returns True if the selection agent is valued,
+    and False otherwise. No other condition is set, for example on the selected
+    object</li>
+  <li>The fourth argument is the action executed when the transition fires. This
+    action is an action method that is a member of the state dialog command.</li>
+</ul>
+<p>The second transition links the two rectangle diagonal end point indication
+states.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDialogTransition *pSecondTransition = AddTransition(
+    stGetFirstPointState,
+    stGetLastPointState,
+    AndCondition(IsOutputSetCondition(_daIndicationP1),
+                 Condition((ConditionMethod)&amp; CAADegCreateRectangleCmd::TestPoint1)),
+    Action((ActionMethod) &amp; CAADegCreateRectangleCmd::CreatePoint)
+  );  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The two states are the first two arguments. A composite condition is used as
+the transition guard condition, and a member function is used as the transition
+action. The composite condition is a CATBoolean AND between two condition return
+values:
+<ol>
+  <li>The <code>IsOutputSetCondition</code> method that returns True if the
+    indication agent is valued</li>
+  <li>The state dialog class member function <code>TestPoint1</code> that
+    returns True if a point can be created in the document.</li>
+</ol>
+<p>The third transition is a self-transition that loops on the state that asks
+for the diagonal second end point. This transition creates a temporary rectangle
+that has for diagonal the line segment joining the first indicated point and the
+point that would be created if the end user clicked at the current mouse
+location. The mouse move seems to drag a rubber rectangle.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDialogTransition *pRubberTransition = AddTransition(
+    stGetLastPointState,
+    stGetLastPointState,
+    AndCondition(IsLastModifiedAgentCondition(_daIndicationP2),
+                 Condition((ConditionMethod)&amp; CAADegCreateRectangleCmd::TestPoint2)),
+    Action((ActionMethod) &amp; CAADegCreateRectangleCmd::UpdateRectangle)
+  );  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The same state is used for both the transition source and target states. Note
+that the transition condition is a composite condition that is also a CATBoolean
+AND condition between:
+<ol>
+  <li>The <code>IsLastModifiedAgentCondition</code> method that returns True if
+    the indication agent is prevalued.</li>
+  <li>The state dialog class member function <code>TestPoint2</code> that
+    returns True if the current mouse location doesn't coincide with the first
+    indicated point.</li>
+</ol>
+<p>The transition action is the state dialog class member function <code>UpdateRectangle</code>
+that creates the temporary rectangle.</p>
+<p>The last transition links the state that asks for the diagonal second end
+point to the final state.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDialogTransition *pFinalTransition = AddTransition(
+    stGetLastPointState,
+    NULL,
+    AndCondition(IsOutputSetCondition(_daIndicationP2),
+                 Condition((ConditionMethod)&amp; CAADegCreateRectangleCmd::TestPoint2)),
+    Action( (ActionMethod) &amp; CAADegCreateRectangleCmd::NewRectangle)
+  ); 
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The final state is designated as the <code>NULL</code> state. The transition
+condition is almost identical than the condition of the above transition. It
+uses the same indication agent. The only difference is that the <code>IsOutputSetCondition</code>
+method is used in place of <code>IsLastModifiedAgentCondition</code> to return
+True when the dialog agent is valued instead of prevalued, that is when the end
+user has left clicked instead of simply moving the mouse. The transition action
+is the state dialog class member function <code>NewRectangle</code> that creates
+the rectangle in the document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved when implementing the statechart of
+a state dialog command&nbsp; in the <code>BuildGraph</code> method. These
+ojbects are the dialog agents that retrieve end user input, the states of the
+statechart diagram with which they are associated, and the transitions that link
+these states. A trigger encapsulated in the guard condition, and an action are
+associated with each transition.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm">Implementing
+      the Command Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing
+      State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm#520000">Managing
+      Selection</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm#510000">Managing
+      Indication</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADegTechArticles/CAADegUndoRedo.htm">Managing
+      Undo/Redo</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

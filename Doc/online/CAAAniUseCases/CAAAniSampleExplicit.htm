@@ -1,0 +1,582 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Generating the Field Model</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right">
+      <h3><a name="Top"></a>Generating the Field Model</h3>
+      <em>Generate the field model of an analysis entity associated to a support</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to generate the field model of an analysis 
+      entity associated to a support. This&nbsp; step includes the creation of 
+      the start up into the <b>catalog of features</b> and the definition of the
+      <b>CATISamExplicitation</b> extension.&nbsp;
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#CATSymetricalTensorEntityTst">The definition of 
+        the authorized support of an analysis feature</a></strong>
+          <ul>
+            <li><a href="#generation_startUp">Generation of the StartUp :</a><a href="#generation_startUp">
+              ANISymetricalTensorEntityTst</a>&nbsp;</li>
+            <li><a href="#def_authorized_support">Authorized support : FreeGroup</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StartUp">The implementation of 
+        CAAEAniTensorExplicit : extension of CATISamExplicitation</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAAniExplicit Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAniExplicit Do</a></li>
+            <li><a href="#Where">Where to Find the CAAAniExplicit Code</a></li>
+            <li><a href="#illustration">Illustration of the result</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><strong><a href="#in short">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to generate the field model of an 
+analysis entity associated to a support. This use case will also include the 
+definition of the authorized support.&nbsp;
+<p>More specifically, the CAAAniExplicit use case shows how to :
+<ul>
+  <li>Define the authorized support of an analysis feature.&nbsp;</li>
+  <li>Implement the extension of CATISamExplicitation interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3 align="left"><a name="CATSymetricalTensorEntityTst"></a>Definition of the 
+authorized support of an analysis feature</h3>
+<h4 align="left"><a name="generation_startUp"></a>Generation of the StartUp : 
+ANISymetricalTensorEntityTst&nbsp;</h4>
+<p align="left">ANISymetricalTensorEntityTst is an analysis entity made of two 
+basic components : a symmetrical (3x3) tensor and a degree of freedom. Its 
+authorized support is only FreeGroup. In order to have the behavior of a clamp, 
+we keep the default value of SAMDOFBinary which restraints each degree.&nbsp; 
+SAMDOFBinary&nbsp; is composed of 6 bits to code each degree of freedom. If the 
+degree is restrained, the value is set to 1. So for the clamp, we get a value of 
+63.</p>
+<table width="893">
+  <tr>
+    <td width="349">
+      <p align="center"><img border="0" src="images/featureTensor.jpg" width="226" height="68"></p>
+    </td>
+    <td width="530">&nbsp;The <b>ANISymetricalTensorEntityTst</b> derives from the <b>
+    AnalysisRestraint</b> StartUp and the&nbsp; <b>ANISymetricalTensorTst</b>
+      from the <b>SAMTensor</b> StartUp.</td>
+  </tr>
+</table>
+<p align="left">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="def_authorized_support"></a>Authorized support : 
+FreeGroup</h4>
+<p align="left">In order to specify the authorized support born by 
+ANISymetricalTensorEntityTst, you can use the <i>
+CATISamAnalysisSupport::SetAuthorizedSupport</i>
+method to set the &quot;AuthorizedSupport&quot; attribute to SupportId_FreeGroup (you can 
+find the support identity in CATSamDefs.h).</p>
+<p align="center"><img border="0" src="images/panelTensor.jpg" width="360" height="205"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<h3><a name="StartUp"></a>Implementation of CATESamTensorExplicit, extension of 
+CATISamExplicitation</h3>
+<p style="margin-bottom: 6">The link from Analysis features and field model 
+entities is managed by both <b>CATISamExplicit</b> and <b>CATISamExplicitation</b>
+interfaces. CATISamExplicit manages the life cycle of the field model entities 
+associated to a feature and CATISamExplicitation ensure the possibility for the 
+analysis features to be translated into a format understandable by solvers 
+(Explicit format).&nbsp;</p>
+<p style="margin-top: 0">This second interface must be overloaded for a specific 
+field model creation. That is why we must overload all the abstract methods of 
+CATISamExplicitation which implies the overload of <b>TranslateToFieldModel</b>. 
+The translation of an analysis feature into an explicit language may result in 
+the creation of several explicit data.</p>
+<p>In all cases Field model entities have to be created inside an implementation 
+of CATISamExplicitation interface. This will ensure that all V5 fundamentals 
+(copy/paste, update, undo/redo... ) will be correctly managed for the field 
+model entities.</p>
+<p align="right" style="margin-top: 0">[<a href="#Top">Top</a>]</p>
+<p align="right" style="margin-top: 0">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAniExplicit Use Case</h3>
+<p>CAAAniExplicit is a use case of the CAAAnalysisInterfaces.edu framework that 
+illustrates the CATIA Analysis modeler frameworks capabilities.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAAniExplicit Do</h4>
+<p>The goal of this use case is to generate the associated field model of <b>
+ANISymetricalTensorEntityTst</b>, an analysis feature composed of a tensor, a 
+degree of freedom and associated to a FreeGroup support. For this, the required 
+method <b>TranslateToFieldModel</b>
+must be overloaded in the <b>CAAEAniTensorExplicit</b> extension of <b>
+CATISamExplicitation</b>
+interface. You have to manage prerequisite catalog knowledge or the exact 
+attribute names used for the modelisation.</p>
+<p>The main methods to use are:</p>
+<ul>
+  <li>CATISamAnalysisSupport::GetEntities that returns the entities associated 
+  to the support.</li>
+  <li>CATISamGroup::GetContent that gets a collection of objects defined by a 
+  particular category and position. We use this interface because the authorized 
+  support is a FreeGroup.</li>
+  <li>CATISamExplicit::GetPhysicalType that returns the physical type string as 
+  defined in the feature StartUp.</li>
+  <li>CATISamExplicit::GetContainingData that returns the list of explicit 
+  parent object in which the feature is involved.</li>
+  <li>CATAnalysisExplicitEntity::CreateEntity that creates an entity associated 
+  to the field model.&nbsp;</li>
+  <li>CATAnalysisExplicitCharac::CreateCharac that creates a charac associated 
+  to the entity.&nbsp;</li>
+  <li>CATISamExplicit::UpdateExplicitList that associates the new explicit 
+  objects to the previous containing data and flags the previous version to be 
+  deleted.</li>
+</ul>
+<p>More specifically, the CAAAniExplicit use case shows how to:
+<ul>
+  <li>Define the authorized support of an analysis feature.</li>
+  <li>Generate the extension of CATISamExplicitation interface.</li>
+  <li>Overload the TranslateToFielModel method : definition of the new version 
+  generation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAniExplicit Code</h4>
+<p>CAAAniExplicit code is located in the CAAAniExplicit.m use case module of the 
+CAAAnalysisInterfaces.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniExplicit.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniExplicit.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed. It is made of a source file named <b>CAAEAniTensorExplicit.cpp</b>
+and the include file CAAEAniTensorExplicit.h. There is also a main file called <b>
+CAAAniModifyCatalog.cpp</b>
+which modifies the feature catalog, CAAAniCatalog.CATfct,&nbsp;used in the different 
+UseCases.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 style="margin-bottom: 10"><a name="illustration"></a>Illustration of the 
+result</h4>
+<p align="center"><img border="0" src="images/2clampsExampleTensor.jpg" width="609" height="441"></p>
+<p>First two free groups have been creating : a spherical box (&quot;Spherical 
+Box/Edition.1&quot;) and a pad (&quot;SAMBoxGroup.1&quot;). Then we have applied a clamp on 
+them with the feature ANISymetricalTensorEntityTst referenced by 
+&quot;Tensor/Edition.2&quot; in the feature tree. We can notice that the <b>
+TranslateToFieldModel</b>
+has been well done. Indeed on every node belonged to the free groups there is a 
+blue axis which shows the restraints.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical sections in CAAAniExplicit.m. We will now comment 
+each of those sections by looking at the code.</p>
+<ul>
+  <li><a href="#dico">Update the dictionary to link the CATISamExplicitation 
+  interface to ANISymetricalTensorEntityTst</a></li>
+  <li><a href="#implement">Implementing the CATISamExplicitation extension : 
+  CAAEAniTensorExplicit</a></li>
+  <li><a href="#translate">Function TranslateToFieldModel to overload</a></li>
+  <li><a href="#retrieveFieldModel">Retrieve the field model pointer&nbsp;</a></li>
+  <li><a href="#neededList">Creation of the needed lists for the explicitation 
+  and retrieve the list of containing data&nbsp;</a></li>
+  <li><a href="#newVersion">Creation of the new version of the explicit objects&nbsp;</a>
+    <ul>
+      <li><a href="#dof">Retrieve the definition of the DoF fixation</a></li>
+      <li><a href="#supportEntity">Retrieve the support entities</a></li>
+      <li><a href="#entityCollec">Get the entities collector</a></li>
+      <li><a href="#newExpliciteEntCharac">Create the new explicit entity and 
+      the new explicit charac</a></li>
+      <li><a href="#applyOnSupport">Apply the explicit entity on the support</a>&nbsp;</li>
+    </ul>
+  </li>
+  <li><a href="#updateList">Update the lists</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="dico"></a>Update the dictionary to link the CATISamExplicitation 
+interface to SAMSymetricalTensorEntityTst</h4>
+<table class="code" width="100%">
+  <tr>
+    <td width="457">STRUCTURAL_ANISymetricalTensorEntityTst&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td width="32%">CATISamExplicitation</td>
+    <td width="252%">
+      <pre>libCAAAniExplicit</pre>
+    </td>
+  </tr>
+</table>
+<table width="1244">
+  <tr>
+    <td width="326">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    STRUCTURAL_My feature&nbsp;</td>
+    <td width="308">Interface it adheres to &nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td width="604">Library that contains the actual code&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="326"></td>
+    <td width="308">through its extension</td>
+    <td width="604">for this given interface adhesion</td>
+  </tr>
+</table>
+<p style="margin-top: 6; margin-bottom: 0" align="left">In order to implement 
+the extension bound to SAMSymetricalTensorEntityTst, you have to update the 
+dictionary (*.dic).&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="implement"></a>Implementing the CATISamExplicitation extension : 
+CAAEAniTensorExplicit</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass( CAAEAniTensorExplicit, CodeExtension, CATBaseUnknown, STRUCTURAL_ANISymetricalTensorEntityTst);
+ 
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CATISamExplicitation.h&quot;
+TIEchain_CATISamExplicitation(CAAEAniTensorExplicit);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="translate"></a>Function TranslateToFieldModel to implement</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>HRESULT CAAEAniTensorExplicit::TranslateToFieldModel(	CATISpecObject* iFeatToTranslate, 
+		 			       	CATISamAnalysisModel* iFEMModel, 
+						CATAnalysisExplicitListUsr&amp; iOldExplObjects, 
+						CATAnalysisExplicitListUsr&amp; oNewExplObjects)
+{ ...</pre>
+    </td>
+  </tr>
+</table>
+<p><b>iFeatToTranslate</b> is the analysis feature to &quot;translate&quot; to the field 
+model (implement CATISAMExplicit). <b>iFEMModel</b> is the analysis model in 
+which the feature is defined. <b>iOldExplObjects</b> is the previous version of 
+the field model version, where as <b>oNewExplObjects</b> is the new version of 
+the field model objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="retrieveFieldModel"></a>Retrieve the field model pointer&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATISamExplicit_var SpecExpli(iFeatToTranslate);
+if (! SpecExpli) return E_NOINTERFACE;</pre>
+      <pre>CATAnalysisExplicitModel* ExplicitModel = SpecExpli -&gt; GetExplicitModel();
+if (!ExplicitModel) return E_FAIL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="neededList"></a>Creation of the needed lists for the explicitation 
+and retrieve the list of containing data&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATAnalysisExplicitListUsr	ContainingData,	AxisList;
+ContainingData.CreateList(ExplicitModel);
+AxisList.CreateList(ExplicitModel);
+
+HR = SpecExpli -&gt; GetContainingData(iOldExplObjects,ContainingData);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <i>GetContainingData</i> returns the list of explicit parent 
+object in which the feature is involved.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="newVersion"></a>Creation of the new version of the explicit 
+objects&nbsp;</h4>
+<p>The <b>ANISymetricalTensorEntityTst</b> is defined by its value (DoF = 63, 
+&quot;clamp&quot;) and is applied to the nodes determined by the FreeGroup support. This 
+implies that in the field model an entity with the physical type &quot;RESTRAINT_DISPLACEMENT&quot; 
+must be created. Moreover this entity is applied to the list of nodes.</p>
+<blockquote>
+  <ul>
+    <li>
+      <p align="left"><a name="dof"></a>Retrieve the definition of the DoF 
+      fixation</li>
+  </ul>
+</blockquote>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATISamAnalysisEntity_var AnalysisEntity(iFeatToTranslate);
+if(!AnalysisEntity)	return E_HANDLE;
+	
+CATLISTV(CATBaseUnknown_var) *BasCompList = NULL;
+CATISamBasicComponent_var aBasComp;
+
+// We get the Basic Component dedicated to the DOF description of
+// the restrain. 
+int DOFDescVal=0;
+HR = AnalysisEntity-&gt;GetBasicComponents(BasCompList,&quot;SAMDOFBinary&quot;);
+if (SUCCEEDED(HR) &amp;&amp; BasCompList-&gt;Size()&gt;0)
+{
+	aBasComp = (*BasCompList)[1];		
+	if (!aBasComp) 			HR = E_FAIL;
+
+	if (SUCCEEDED(HR))HR = aBasComp-&gt;GetIntegerValue(DOFDescVal);	</pre>
+      <pre>}
+if (BasCompList) 	delete BasCompList;	BasCompList = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">To extract the values of the basic component, you can use the 
+CATISamAnalysisEntity interface which is implemented on <b>iFeatToTranslate</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<blockquote>
+  <ul>
+    <li><a name="supportEntity"></a>Retrieve the support entities</li>
+  </ul>
+</blockquote>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATISamAnalysisSupport_var Support(iFeatToTranslate);
+if (!Support) return E_FAIL;
+
+CATLISTV(CATBaseUnknown_var) SupportsList;
+HR = Support-&gt;GetEntities(SupportsList,CATBaseUnknown::ClassId());
+if (FAILED(HR)) return E_FAIL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<blockquote>
+  <ul>
+    <li><a name="entityCollec"></a>Get the entities collector</li>
+  </ul>
+</blockquote>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATISamGroup_var					Group;
+CATISamAnalysisConnector_var			Connector	;
+const	CATAnalysisEntityCollector*	EntityCollector	= NULL;
+CATSamValue					SamValue		= CATSamValueNode;
+const	CATSamPhysicalType*			oElemTypes	= NULL;
+CATLISTP(CATAnalysisEntityCollector) 		ListCollectors;
+ 
+for (i=1 ; i &lt;= SupportsList.Size() ; i++)
+{
+	Connector = SupportsList[i];
+	if (!!Connector)	Group = Connector;
+	if (!Group) return E_FAIL;</pre>
+      <pre>	HR = Group-&gt;GetContent(SamValue,Position,EntityCollector);
+	if (FAILED(HR) ) return E_FAIL;
+	if (EntityCollector)
+	{
+		ListCollectors.Append((CATAnalysisEntityCollector*)EntityCollector);
+		EntityCollector=NULL;
+	}	
+	else 
+		return E_FAIL;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">To retrieve the list of nodes from the FreeGroup, you can use 
+the <i>GetContent</i> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<blockquote>
+  <ul>
+    <li><a name="newExpliciteEntCharac"></a>Create the new explicit entity and 
+    the new explicit charac</li>
+  </ul>
+</blockquote>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATSamPhysicalType EntPhysTypeNb,CharacPhysTypeNb;
+CATAnalysisExplicitEntity ExpEntity;
+CATAnalysisExplicitCharac ExpCharac;
+short characValue = DOFDescVal;
+size = ListCollectors.Size();
+const CATAnalysisExplicitRulesData *pRulesData = NULL;
+pRulesData = ExplicitModel-&gt;GetRulesData();
+if(!pRulesData) return E_FAIL;</pre>
+      <pre>pRulesData-&gt;GetPhysicalTypeNumber(aPhysicalType,EntPhysTypeNb);
+pRulesData-&gt;GetPhysicalTypeNumber(&quot;DEGREES_OF_FREEDOM&quot;,CharacPhysTypeNb);
+  
+for(i=1 ; i &lt;= size ; i++)
+{
+  ExpEntity.CreateEntity(ExplicitModel,EntPhysTypeNb);
+  ExpCharac.CreateCharac(ExpEntity,CharacPhysTypeNb);
+  ExpCharac.SetValues(characValue);
+  if (ExpEntity != NULL_exp) oNewExplObjects += ExpEntity;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The main object is created without parent and is stored in the <b>
+oNewExplObjects</b>
+list.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<blockquote>
+  <ul>
+    <li><a name="applyOnSupport"></a>Apply the explicit entity on the support</li>
+  </ul>
+</blockquote>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>const CATSamExplicitPtr * ApplyTo = NULL;
+const int* ApplyNumber = NULL;
+int NbEntity = oNewExplObjects.GetLength();
+if (!NbEntity) return E_FAIL;</pre>
+      <pre>ExpEntity = *(oNewExplObjects.First()) ;
+CATSamPosition  ApplyPosition;
+
+<i>//Retrieve the collector information</i>
+CATString Pos;
+for(i=1 ; i &lt;= ListCollectors.Size(); i++)
+{
+	EntityCollector = ListCollectors[i];
+	if(!EntityCollector) return E_FAIL;
+
+	HR = EntityCollector-&gt;GetDefinition(SamValue, Pos);
+	if(FAILED(HR)) return HR;
+	HR = CATSamIdentityEnum(Pos.CastToCharPtr(), ApplyPosition);
+	
+	<i>//retrieve the explicit pointers</i>
+	HR = EntityCollector -&gt; GetExplicitPointers(Number, ApplyTo, ApplyNumber);
+	if (FAILED(HR)) return HR;
+	if (ApplyNumber) 
+		HR = ExpEntity.ApplyTo(Number, ApplyTo, ApplyPosition, ApplyNumber);
+	else             
+		HR = ExpEntity.ApplyTo(Number, ApplyTo, ApplyPosition);
+	if (FAILED(HR)) return HR;
+
+	ApplyTo = NULL;
+	EntityCollector = NULL;
+	if (NbEntity == size) ExpEntity = *(oNewExplObjects.Next()) ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="updateList"></a>Update the lists&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>HR = SpecExpli -&gt; UpdateExplicitList(iOldExplObjects,ContainingData,oNewExplObjects);
+if (ContainingData != NULL_exp ) ContainingData.Delete();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This method deletes the <b>oOldExplObjects</b>, create the links between <b>
+oNewExplObjects</b>
+and the containing data.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="in short"></a>In Short</h3>
+<p>This article goal is to have a example of the implementation of the 
+CATISamExpliciation interface on an analysis entity associated to a support.</p>
+<p align="right"><a href="#Top">[Top]</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1"></a>[1]</td>
+    <td valign="top"><a href="../CAAOsmQuickRefs/CAAOsmHome.htm">
+    Feature Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3"></a>[2]</td>
+    <td valign="top"><a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+    Analysis Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref4"></a>[3]</td>
+    <td valign="top"><a href="../CAAAniQuickRefs/CAAAniDOF.htm">About 
+    Degree of Freedom</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <p align="left"><a name="Ref4"></a>[4]</p>
+    </td>
+    <td valign="top" align="right">
+      <p align="left"><a href="CAAAniCatalog.htm">Creating Analysis Startup's in 
+      a Catalog file</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

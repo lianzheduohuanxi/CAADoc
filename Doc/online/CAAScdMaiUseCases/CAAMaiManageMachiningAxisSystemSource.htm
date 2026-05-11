@@ -1,0 +1,111 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAMaiManageMachiningAxisSystem.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+Language=&quot;VBSCRIPT&quot;
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Main Entry  Point</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+	
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'Declarations</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">	Dim </font>Count1<font color="#0000FF"> As </font>VARIANT
+<font color="#0000FF">	Dim </font>MyHole<font color="#0000FF"> As </font>Hole
+<font color="#0000FF">	Dim </font>Rel<font color="#0000FF"> As </font>Relations
+<font color="#0000FF">	Dim </font>Setup1<font color="#0000FF"> As </font>ManufacturingSetup
+<font color="#0000FF">	Dim </font>Program1<font color="#0000FF"> As </font>ManufacturingProgram
+<font color="#0000FF">	Dim </font>MachAxis<font color="#0000FF"> As </font>ManufacturingOperation
+<font color="#0000FF">	Dim </font>MfgDoc1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">	Dim </font>ActivityRef<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">	Dim </font>Feature<font color="#0000FF"> As </font>CATIABase
+<font color="#0000FF">	Dim </font>MfgView<font color="#0000FF"> As </font>ManufacturingView
+<font color="#0000FF">	Dim </font>MfgFeatures<font color="#0000FF"> As </font>ManufacturingFeatures
+
+<font color="#0000FF">	Set </font>MfgDoc1 = CATIA.ActiveDocument
+<font color="#0000FF">	Set </font>PartDoc1 = CATIA.Documents.Item(&quot;Sample_Part.CATPart&quot;)
+	<font color="#008000">'MsgBox PartDoc1.Name</font>
+<font color="#0000FF">	Set </font>ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+<font color="#0000FF">	If </font>(ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+<font color="#0000FF">		Set </font>childs = ActivityRef.ChildrenActivities
+		quantity = childs.Count
+
+<font color="#0000FF">		if </font>quantity &lt;= 0<font color="#0000FF"> then</font>
+<font color="#0000FF">			Exit Sub</font>
+<font color="#0000FF">		End if</font>
+
+		NumberOfPO = 0
+
+<font color="#0000FF">		For </font>I=1<font color="#0000FF"> To </font>quantity
+<font color="#0000FF">			Set </font>child = childs.Item(I)
+<font color="#0000FF">			If </font>(child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+<font color="#0000FF">				Set </font>Setup1 = child
+				NumberOfPO = NumberOfPO +1
+<font color="#0000FF">				Exit For</font>
+<font color="#0000FF">			End If</font>
+<font color="#0000FF">		Next   </font>
+<font color="#0000FF">	End If</font>
+
+<font color="#0000FF">	if </font>NumberOfPO &lt;= 0<font color="#0000FF"> then</font>
+<font color="#0000FF">	  Exit Sub</font>
+<font color="#0000FF">	End if</font>
+
+<font color="#008000">'*** Retrieve current Program</font>
+<font color="#008000">'***</font>
+
+<font color="#0000FF">	Set </font>ProgramList = Setup1.Programs
+	NumberOfProgram = ProgramList.Count
+
+<font color="#0000FF">	Set </font>Product = Setup1.<font SIZE="2">GetProductInstance</font>
+
+<font color="#0000FF">	Set </font>MfgView = Setup1.GetManufacturingView
+
+<font color="#0000FF">	Set </font>MyFeature = MfgView.ManufacturingFeatures.Add(&quot;MfgMachiningAxisSystem&quot;)
+
+<font color="#0000FF">	Set </font>Program1 = ProgramList.GetElement(1)	
+<font color="#0000FF">	Set </font>MachAxis = Program1.AppendOperation (&quot;CoordinateSystem&quot;,1)
+
+	MachAxis.SetFeature(MyFeature)
+
+	<font color="#008000">'MsgBox MyFeature.Name</font>
+
+	MyFeature.Origin = 1
+	<font color="#008000">'MsgBox MyFeature.Origin</font>
+
+	MyFeature.OriginNumber = 2
+	<font color="#008000">'MsgBox MyFeature.OriginNumber</font>
+
+	MyFeature.OriginGroup = 3
+	<font color="#008000">'MsgBox MyFeature.OriginGroup</font>
+	
+	MyFeature.Origin = 0
+	<font color="#008000">'MsgBox MyFeature.Origin</font>
+
+<font color="#0000FF">	set </font>part1 = PartDoc1.Part
+<font color="#0000FF">	Set </font>axisSystems = part1.AxisSystems
+
+<font color="#0000FF">	Set </font>axisSystem = axisSystems.Item(1)
+
+<font color="#0000FF">	Call </font>MyFeature.SetPartAxisSystem (axisSystem,Setup1.<font SIZE="2">GetProductInstance</font>)
+
+<font color="#0000FF">	Set </font>hybridBodies1 = part1.HybridBodies
+
+<font color="#0000FF">	Set </font>hybridBody1 = hybridBodies1.Item(&quot;Open_body.1&quot;)
+
+<font color="#0000FF">	Set </font>hybridShapes1 = hybridBody1.HybridShapes
+
+<font color="#0000FF">	Set </font>hybridShapePointCoord2 = hybridShapes1.Item(&quot;Point.1&quot;)
+
+<font color="#0000FF">	Call </font>MyFeature.SetOriginPoint( hybridShapePointCoord2,Setup1.<font SIZE="2">GetProductInstance</font>)
+
+<font color="#0000FF">	Call </font>MyFeature.SetOriginXDirection (0.0,0.0,-1.0)
+<font color="#0000FF">	Call </font>MyFeature.SetOriginZDirection (-1.0,0.0,0.0)
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

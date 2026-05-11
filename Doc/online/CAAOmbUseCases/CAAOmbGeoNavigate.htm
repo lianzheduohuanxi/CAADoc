@@ -1,0 +1,795 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Object Navigator</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - File</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Object Navigator</h3>
+      <em>Navigating through and customizing an object tree</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAAOmbGeoNavigate use case. This use case
+      explains how to create an object tree and navigate through it by
+      expanding its nodes. It also explains how to customize the
+      tree nodes by changing colors, by adding icons and by modifying short
+      help. The way to refresh the object tree is also started on.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#Important_Concepts"><strong>Some Important Concepts about
+          the Object Navigator</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAOmbGeoNavigate Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOmbGeoNavigate Do</a></li>
+            <li><a href="#How">How to Launch CAAOmbGeoNavigate</a></li>
+            <li><a href="#Where">Where to Find the CAAOmbGeoNavigate Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate the Object Navigator. Its main intent
+is to show how to create and navigate through an object tree. Basically, it
+shows how to:
+<ul>
+  <li>Implement the <i>CATINavigateObject</i><code> </code>interface for the
+    <code>GetIdentificators</code> and <code>GetChildren</code> methods in order
+    to provide node texts, and navigate
+    through the object tree,</li>
+  <li>Implement the <i>CATINavigModify </i>interface for the <code>UpdateElem</code>
+    and <code>ModifyShortHelp</code> methods in order to allow the customization of&nbsp;
+    tree
+    nodes,</li>
+  <li>Use the <i>CATIRedrawEvent</i> interface to update the object tree.</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of what the Object Navigator is. This is the goal of the next
+section. You can go directly to the <a href="#UseCase">use case </a>itself if
+you are already familiar with all of these concepts.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Important_Concepts"></a>Some Important Concepts about the Object
+Navigator</h3>
+<p>A tree is a planar graph that contains no closed path. Because the components
+of a V5 document are organized as a tree, a tree is usually used to show the
+relationships between the components in a document window. This is called the
+document &quot;object tree&quot;. Each component is a node of the tree, and each
+node can be expanded to display its sub-nodes, or collapsed to hide them. By
+clicking on a node, you display the children of the component represented by the
+node, and so on, thus discovering all of the components that make it up as well
+as the relationships between them. The set of services dedicated to the
+management of a tree is called the Object Navigator. By using the Object
+Navigator, you can display the relationships between any kind of objects
+provided that a parent-child link can be defined between these objects, such as
+the components in a V5 Product or Part document.</p>
+<p>From a programmer standpoint, any object intended to be displayed within an
+object tree and managed by the object navigator must support the <i>CATINavigateObject</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAOmbGeoNavigate Use Case</h3>
+<p>CAAOmbGeoNavigate is a use case of the CAAObjectModelerBase.edu framework
+that illustrates ObjectModelerBase framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAOmbGeoNavigate Do</h4>
+<p>This use case uses an existing pre-defined document type called
+&quot;CAAGeometry&quot; [<a href="#References">1</a>]. This document
+contains&nbsp;
+<ul>
+  <li>One root element</li>
+  <li>points,&nbsp;</li>
+  <li>lines</li>
+  <li>ellipses</li>
+  <li>....</li>
+</ul>
+<p>All these elements implements <i>CATINavigateObject</i> to be displayed in
+the object tree associated with the CAAGeometry document window. This window is
+a <i>CATFrmGraphAnd3DWindow</i>  class which natively contains an object tree.&nbsp;</p>
+<p>The default representation for a node is:</p>
+<ul>
+  <li>A white text with a blue background,&nbsp;and a frame,</li>
+  <li>No icon,</li>
+  <li>The short help text is the text of the node.</li>
+</ul>
+<p>By implementing <i>CATINavigModify</i></p>
+<ul>
+  <li>On the root element: the background text is green, the text color
+    automatically becomes black to have enough contrast, and an icon in the form
+    of a ladybug is added.</li>
+  <li>On the point element: the short help displays the point coordinates.</li>
+</ul>
+<p>Here is a picture to show node representations.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAOmbGeoNavig1.jpg" width="425" height="245"></td>
+  </tr>
+</table>
+<p>The two next pictures show the short help for a point (left) and a line
+(right).&nbsp;</p>
+<table border="0">
+  <tr>
+    <td valign="top"><img border="0" src="images/CAAOmbGeoNavig2.jpg" width="289" height="237"></td>
+    <td><img border="0" src="images/CAAOmbGeoNavig3.jpg" width="301" height="236"></td>
+  </tr>
+</table>
+<p align="left"> You can see on the right picture that the default text of the short help is
+the same as the text of the node.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOmbGeoNavigate</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. Next, you must launch a CATIA interactive session and go through the following
+scenario:&nbsp;
+<ul>
+  <li>Select <b>File-&gt;New</b></li>
+  <li>In the <b>New </b>box, select CAAGeometry and click <b>OK</b></li>
+  <li>Create point elements&nbsp;</li>
+  <li>Create lines elements&nbsp;</li>
+  <li><b>Double-click </b>on the CAASysGeomRootObject node or on its icon to
+    collapse the tree</li>
+  <li><b>Double-click </b>on the CAASysGeomRootObject node or on its icon to
+    re-expand the tree</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAOmbGeoNavigate Code</h4>
+<p>CAAOmbGeoNavigate code is located in the CAAOmbGeoNavigate.m use case module
+of the CAAObjectModelerBase.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAObjectModelerBase.edu\CAAOmbGeoNavigate.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAObjectModelerBase.edu/CAAOmbGeoNavigate.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. This module contains the implementations of the <i>CATINavigateObject</i>
+and <i>CATINavigModify</i> interfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAAOmbGeoNavigate:</p>
+<ol>
+  <li><a href="#Implementing CATINavigateObject on Root Object">Implementing
+    CATINavigateObject on Root Object</a></li>
+  <li><a href="#Implementing CATINavigateObject on Children Objects">Implementing CATINavigateObject on Children Objects</a></li>
+  <li><a href="#Implementing CATINavigModify to Modify Node Graphic Representation">Implementing CATINavigModify to
+    Modify Node Graphic Representation</a></li>
+  <li><a href="#Implementing CATINavigModify to Modify the Default Short Help Text">Implementing CATINavigModify to
+    Modify the Default Short Help Text</a></li>
+  <li><a href="#Using CATIRedrawEvent to Update the Object Tree&nbsp;">Using CATIRedrawEvent to
+    Update the Object Tree&nbsp;</a></li>
+</ol>
+<p>We will now comment these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Implementing CATINavigateObject on Root Object"></a>Implementing CATINavigateObject
+on Root Object</h4>
+<ol>
+  <li>Class definition<p>The <i>CAAOmbNavigateObjectRoot </i> is the class which implements the <i>CATINavigateObject
+    </i>interface. This interface being without adaptor, the <i>CAAOmbNavigateObjectRoot
+    </i>class<i> </i>derives from <i>CATBaseUnknown</i>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;             // Needed to derive from
+class CATListValCATUnicodeString;       // Needed by GetIdentificators
+class CATListValCATBaseUnknown_var;     // Needed by GetChildren
+
+class CAAOmbNavigateObjectRoot : public CATBaseUnknown
+{
+    CATDeclareClass;
+
+  public :
+    CAAOmbNavigateObjectRoot();
+    virtual ~CAAOmbNavigateObjectRoot();
+	
+    virtual CATListValCATUnicodeString       * <b>GetIdentificators</b>();
+    virtual CATListValCATBaseUnknown_var     * <b>GetChildren</b>();
+ 
+ ...
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p><i>CATINavigateObject</i> contains two basic methods that have to be
+    coded:</p>
+    <ul>
+      <li><code><a href="#Root CATINavigateObject::GetIdentificators.">GetIdentificators</a></code> defines the text
+    associated with the node.&nbsp;</li>
+      <li><p><a href="#Root CATINavigateObject::GetChildren.">GetChildren</a> defines the children of the node</p></li>
+    </ul>
+    <li><i>&nbsp;</i>Defines <i>CAAOmbNavigateObjectRoot </i>as an implementation of <i>CATINavigateObject</i>:</li>
+    <p>The <i>CAAOmbNavigateObjectRoot </i> is the class which implements the <i>CATINavigateObject</i>
+    for the <code>CAASysGeomRootObj</code> object.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+#include &quot;TIE_CATINavigateObject.h&quot;
+<b>TIE_CATINavigateObject</b>(CAAOmbNavigateObjectRoot);
+
+
+<b>CATImplementClass</b>(CAAOmbNavigateObjectRoot,
+		DataExtension,
+		CATBaseUnknown,
+		<b>CAASysGeomRootObj</b>);</pre>
+        </td>
+      </tr>
+    </table>
+  &nbsp;
+  <li><i><a name="Root CATINavigateObject::GetIdentificators.">CATINavigateObject::</a></i><a name="Root CATINavigateObject::GetIdentificators."><code>GetIdentificators.</code>
+    </a><p> The <code>GetIdentificators</code> defines the text
+    associated with the node. This text can be composed of several lines, each
+    line being appended to the returned list.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATListValCATUnicodeString * CAAOmbNavigateObjectRoot::GetIdentificators()
+{
+  CATListOfCATUnicodeString *pIdent = <b>new</b> CATListOfCATUnicodeString;
+
+  CATUnicodeString Name = &quot;Root&quot; ;
+
+  <b>CAAISysName</b> * pISysName = NULL ;
+  HRESULT rc = QueryInterface(IID_CAAISysName, (void**) &amp; pISysName);
+  if ( SUCCEEDED(rc) )
+  {
+     pISysName-&gt;<b>GetName</b>(Name);
+     pISysName-&gt;Release();
+     pISysName = NULL ;
+  }
+  pIdent -&gt; <b>Append</b>(Name);
+
+  <b>return</b> pIdent;
+
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Each component of the CAAGeometry document implements the <i>CAAISysName</i>
+    interface. This interface keeps the name of the instance. The name,
+    retrieved thanks to the <code>GetName</code> method, is added to <code>pIdent</code>,
+    the returned list. The text is only one line.&nbsp;</p>
+  </li>
+  <li><i><a name="Root CATINavigateObject::GetChildren.">CATINavigateObject::</a></i><a name="Root CATINavigateObject::GetChildren."><code>GetChildren.</code>
+    </a><p>This method returns a list of the children of the current node using several
+    methods from specific CAA interfaces:</p>
+    <ul>
+      <li><code>GetContainer</code> from <i>CAAISysAccess</i></li>
+      <li><code>GetNumberOfObjects</code> and <code>GetObject</code> from <i>CAAISysCollection</i>.</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATListValCATBaseUnknown_var * <b>CAAOmbNavigateObjectRoot::GetChildren</b>()
+{
+   CATListValCATBaseUnknown_var *pList = NULL ;
+
+   CAAISysAccess *piSysAccess = NULL ;
+   HRESULT rc = <b>QueryInterface</b>(IID_CAAISysAccess,
+                               (void**)&amp;piSysAccess);
+
+   if ( SUCCEEDED(rc) )
+   {
+      CATBaseUnknown *pContainer = NULL ;
+      piSysAccess -&gt; <b><i>GetContainer</i></b>(&amp;pContainer);
+      if ( NULL != pContainer) 
+      {
+         CAAISysCollection *piSysCollection = NULL ;
+         rc = pContainer -&gt; <b>QueryInterface</b>(IID_CAAISysCollection,
+                                           (void**)&amp;piSysCollection);
+         if ( SUCCEEDED(rc) )
+         {
+            int count(0);
+            piSysCollection -&gt; <b>GetNumberOfObjects</b>(&amp;count);
+            if ( count &gt; 1 )
+            {
+               pList = <b>new</b> CATListValCATBaseUnknown_var();
+
+               for (int i=2; i&lt;=count; i++)
+               {
+                  CATBaseUnknown * pObject = NULL ;
+                  piSysCollection -&gt; <b>GetObject</b>(i, &amp;pObject);
+         ...
+   }
+   <b>return</b> pList;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>GetChildren</code> returns a list of pointers to the children of
+    the root node, which are all of the objects of the model except the root. To do this, it
+    gets a handle to the <code>CAAISysAccess</code> interface using the <code>this</code>
+    pointer and uses this handle to get the container object which implements
+    the <code>CAAISysCollection</code> interface from which we actually get all
+    of the objects of the model which are appended to the list returned.</p>
+  </li>
+  <li>Dictionary declaration as for any interface implementation, a
+    dictionary entry is necessary in order to map the implementation name and
+    shared library reference to the name of the interface:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAASysGeomRootObj   CATINavigateObject    libCAAOmbGeoNavigate</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You can find this entry in the <i>CAAObjectModelerBase.edu.dico</i>
+    file.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Implementing CATINavigateObject on Children Objects"></a>Implementing
+CATINavigateObject on Children Objects</h4>
+<ol>
+  <li>Class header
+  </li>
+  <p>The <i>CAAOmbNavigateObjectChildren </i> is the class which implements the <i>CATINavigateObject
+    </i>interface. This interface being without adaptor, the <i>CAAOmbNavigateObjectChildren </i>class<i> </i>derives from <i>CATBaseUnknown</i>.&nbsp;</p>
+  <li>Define <i>CAAOmbNavigateObjectChildren </i>as an implementation of <i>CATINavigateObject</i>
+    for several components<p>The <i>CAAOmbNavigateObjectRoot </i> is the class which implements the <i>CATINavigateObject</i>
+    for the <code>CAASysPoint, CAASysLine, CAASysEllipse...</code> objects.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><b>CATBeginImplementClass</b>(CAAOmbNavigateObjectChildren, DataExtension, CATBaseUnknown, 
+                                          <b>CAASysPoint</b>);
+CATAddClassExtension(CAASysLine);
+CATAddClassExtension(CAASysEllipse);
+CATAddClassExtension(CAASysPlane);
+CATAddClassExtension(CAASysCircle);
+CATAddClassExtension(CAASysPolyline);
+CATAddClassExtension(CAASysCuboid);
+CATAddClassExtension(CAASysCylinder);
+<b>CATEndImplementClass</b>(CAAOmbNavigateObjectChildren); </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  &nbsp;
+  <li><i>CATINavigateObject::</i><code>GetIdentificators.</code>
+    <p>The <code>GetIdentificators</code>  method defines the text
+    associated with the node. This text can be composed of several lines, each
+    line being appended to the returned list.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATListValCATUnicodeString * CAAOmbNavigateObjectChildren::GetIdentificators()
+{
+  CATListOfCATUnicodeString *pIdent = <b>new</b> CATListOfCATUnicodeString;
+
+  CATUnicodeString Name = &quot;Children&quot; ;
+
+  <b>CAAISysName</b> * pISysName = NULL ;
+  HRESULT rc = QueryInterface(IID_CAAISysName, (void**) &amp; pISysName);
+  if ( SUCCEEDED(rc) )
+  {
+     pISysName-&gt;<b>GetName</b>(Name);
+     pISysName-&gt;Release();
+     pISysName = NULL ;
+  }
+  pIdent -&gt; <b>Append</b>(Name);
+
+  <b>return</b> pIdent;
+
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Each component of the CAAGeometry document implements the <i>CAAISysName</i>
+    interface. This interface keeps the name of the instance. The name,
+    retrieved thanks to the <code>GetName</code> method, is added to <code>pIdent</code>,
+    the returned list. The text is only one line.&nbsp;</p>
+  </li>
+  <li><i>CATINavigateObject::</i><code>GetChildren.</code>
+    <p>This
+    method returns an empty list since the root's children have no children.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATListValCATBaseUnknown_var * CAAOmbNavigateObjectChildren<b>:</b>:GetChildren()
+{
+   <b>return</b> NULL;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Dictionary declaration as for any interface implementation, a
+    dictionary entry is necessary in order to map the implementation name and
+    shared library reference to the name of the interface. There is a line for
+    each component:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAASysLine   CATINavigateObject    libCAAOmbGeoNavigate
+CAASysPoint   CATINavigateObject    libCAAOmbGeoNavigate
+CAASysPlane   CATINavigateObject    libCAAOmbGeoNavigate
+CAASysCircle  CATINavigateObject    libCAAOmbGeoNavigate
+CAASysEllipse   CATINavigateObject    libCAAOmbGeoNavigate
+CAASysCuboid   CATINavigateObject    libCAAOmbGeoNavigate
+CAASysCylinder  CATINavigateObject    libCAAOmbGeoNavigate
+CAASysPolyline  CATINavigateObject    libCAAOmbGeoNavigate</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You can find this entry in the <i>CAAObjectModelerBase.edu.dico</i>
+    file.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Implementing CATINavigModify to Modify Node Graphic Representation"></a>Implementing CATINavigModify
+to Modify Node Graphic Representation</h4>
+<ol>
+  <li>Class header
+  </li>
+  <p>The <i>CAAOmbNavigModifyRoot</i> is the class which implements the <i>CATINavigModify
+    </i>interface. This class<i> </i>derives from the <i>CATNodeExtension </i>class.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATNodeExtension.h&quot;             // Needed to derive from
+class CATNavigInstance;
+
+class CAAOmbNavigModifyRoot : public <b>CATNodeExtension</b>
+{
+  CATDeclareClass;
+
+  public :
+
+    CAAOmbNavigModifyRoot();
+    virtual ~CAAOmbNavigModifyRoot();
+	
+    void <b>UpdateElem</b>(CATNavigInstance * iInstance);
+ 
+ ...
+};
+</pre>
+        </td>
+      </tr>
+    </table>
+  <p>The <i>CAAOmbNavigModifyRoot</i>  class re-implements only the <code>UpdateElem</code>
+  method.</p>
+    <li>Define <i>CAAOmbNavigModifyRoot</i>  as an implementation of <i>CATINavigModify</i>&nbsp;<p>The <i>CATINavigModify</i>
+      interface is not implemented on the object it-self, but on a late type
+      based on the object's name. The last argument of the <code>CATImplementClass</code>
+    macro must have the &quot;<b>_node</b>&quot; extension as part of its name.
+      The first part being the object's name.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// Creates the TIE Object
+#include &quot;TIE_CATINavigModify.h&quot;
+<b>TIE_CATINavigModify</b>(CAAOmbNavigModifyRoot);
+
+// Declares that the class is a data extension of CAASysGeomRootObj_node. 
+//
+<b>CATImplementClass</b>(CAAOmbNavigModifyRoot,
+	         DataExtension,
+		CATBaseUnknown,
+		<b>CAASysGeomRootObj_node</b>);</pre>
+        </td>
+      </tr>
+    </table>
+      <p><code>CAASysGeomRootObj</code> is the name of the root component.&nbsp;</p>
+  </li>
+  <li><i>CATINavigModify</i>::<code>UpdateElem</code>
+    <p>The <code>UpdateElem</code> method enables you to modify the default
+    visual aspect of a node. This implementation changes the background color of the node
+    and attaches an icon to it.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAAOmbNavigModifyRoot::UpdateElem(CATNavigInstance * iInstance)
+{
+   cout &lt;&lt; &quot;CAAOmbNavigModifyRoot::UpdateElem&quot; &lt;&lt; endl;
+
+   CATIGraphNode *piGraphNode = NULL ;
+   HRESULT rc = <b>QueryInterface</b>(IID_CATIGraphNode,
+                               (void**)&amp;piGraphNode);
+
+   if ( SUCCEEDED(rc) ) 
+   {
+      // Set the node to green instead of blue (default)
+      piGraphNode -&gt; <b>SetColor</b>(50);
+
+      // Attach an icon to the node
+      CATUnicodeString iconName(&quot;CAAOmbIcon2&quot;);
+      piGraphNode -&gt; <b>SetPixelImage</b>(iconName);
+
+      piGraphNode -&gt; <b>Release</b>();
+      piGraphNode= NULL ;
+   }
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CATIGraphNode</i> interface being automatically implemented by a node, a simple
+    <code> QueryInterface</code> on itself enables you to modify node
+    characteristics. The <b> </b><code>SetColor</code> takes as input an integer value representing the
+    color of the node. <code>SetPixelImage</code> takes as input a character
+    string representing the name of the icon. This name is searched for in the
+    CNext/resources/graphic directory. It should be a bitmap file having a .bmp
+    suffix.
+    </p>
+    <p>Note: <code>iInstance</code>, the input data is not used in this
+    implementation but can be useful for your implementation. Refer to the section
+    <a href="#Implementing CATINavigModify to Modify the Default Short Help Text">Implementing CATINavigModify to
+Modify the Default Short Help Text</a> section for more details about its usage.&nbsp;
+    </p>
+  </li>
+  <li>Dictionary definition
+    <p>Here is the dictionary entry necessary for the implementation of the <i>CATINavigModify</i>
+    interface:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAASysGeomRootObj_node    CATINavigModify    libCAAOmbGeoNavigate</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You can find this entry in the <i>CAAObjectModelerBase.edu.dico</i> file.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Implementing CATINavigModify to Modify the Default Short Help Text"></a>Implementing CATINavigModify to
+Modify the Default Short Help Text</h4>
+<ol>
+  <li>Class header
+  </li>
+  <p>  
+  The <i>CAAOmbNavigModifyPoint</i> is the class which implements the <i>CATINavigModify 
+    </i>interface. This class<i> </i>derives from the <i>CATNodeExtension </i>class.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATNodeExtension.h&quot;             // Needed to derive from
+class CATNavigInstance;
+
+class CAAOmbNavigModifyPoint : public CATNodeExtension
+{
+  CATDeclareClass;
+
+  public :
+
+    CAAOmbNavigModifyPoint();
+    virtual ~CAAOmbNavigModifyPoint();
+
+    virtual HRESULT <b>ModifyShortHelp</b>(CATUnicodeString &amp; ioText) ;
+...
+};</pre>
+        </td>
+      </tr>
+    </table>
+  <p> <i>CAAOmbNavigModifyPoint</i> re-implements only the <code>ModifyShortHelp</code>
+  method.</p>
+  <li>Define <i>CAAOmbNavigModifyPoint</i> as an implementation of the <i>CATINavigModify</i>
+    interface<p>Define <i>CAAOmbNavigModifyPoint</i> as an implementation of the <i>CATINavigModify</i>
+    interface. Note that the last argument of the <code>CATImplementClass</code>
+    macro must have the &quot;<b>_node</b>&quot; extension as part of its name.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// Creates the TIE Object
+#include &quot;TIE_CATINavigModify.h&quot;
+<b>TIE_CATINavigModify</b>(CAAOmbNavigModifyPoint);
+
+
+<b>CATImplementClass</b>(CAAOmbNavigModifyRoot,
+	         DataExtension,
+		CATBaseUnknown,
+		<b>CAASysPoint_node</b>);</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>CAASysPoint</code> is the name of the point component.</p>
+  </li>
+  <li><i>CATINavigModify</i>::<code>ModifyShortHelp</code>
+    <p>The <code>ModifyShortHelp</code>
+    method enables you to modify the default behavior for the short help of a
+    node. In this example, the text contains the point coordinates.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT  CAAOmbNavigModifyPoint::ModifyShortHelp(CATUnicodeString&amp; ioText)
+{
+    CATBaseUnknown_var Ref ;
+
+    <b>CATINavigElement</b> *pINavigElement = NULL ;
+    HRESULT rc = QueryInterface(IID_CATINavigElement, (void **) &amp; pINavigElement);
+    if ( SUCCEEDED(rc) )
+    {
+       // Do not release this pointer
+       CATNavigInstance * pInst = pINavigElement-&gt;<b>GetAssociatedInstance</b>();
+       if ( NULL != pInst)
+       {
+          Ref = pInst-&gt;<b>GetReference</b>();
+       }else 
+          rc = E_FAIL ;
+
+       pINavigElement-&gt;Release();
+       pINavigElement = NULL ;
+    }
+ ...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The first part of the method consists in to retrieve a pointer on the
+    point associated with the node. The <i>CATINavigModify</i> interface is
+    implemented on the <code>CAASysPoint_node</code> late type. The <code>GetAssociatedInstance</code><b>
+    </b>method retrieves the <i>CATNavigInstance</i> class instance pointer which
+    has kept a pointer to the <code>CAASysPoint</code> element. The <code>GetReference</code> method retrieves
+    this <code>CAASysPoint</code> pointer.
+    </p>
+    <p>Then once, you have a pointer on the <code>CAASysPoint</code>, you
+    can retrieve specific information.
+    </p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...
+    if (NULL_var != Ref)
+    {
+       <b>CAAISysPoint</b> *pISysPoint = NULL ;
+       rc = Ref-&gt;QueryInterface(IID_CAAISysPoint, (void **) &amp; pISysPoint);
+       if ( SUCCEEDED(rc) )
+       {
+          float x,y,z ;
+          pISysPoint-&gt;<b>GetCoord</b>(x,y,z);
+       
+          char PointPosistionBuffer[200];
+          sprintf(PointPosistionBuffer,&quot;X=%f Y=%f Z=%f&quot;,x,y,z);
+
+          CATUnicodeString TextBuff (PointPosistionBuffer);
+          <b>ioText</b> = TextBuff ;
+
+          pISysPoint-&gt;Release();
+          pISysPoint = NULL ;
+       }
+    }
+    return<b> S_OK</b> ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>ioText</code> is the inout parameter of the method. As input its
+    value is the text of the node. The current implementation modifies the input
+    text to create a new string from the three point coordinates.&nbsp;
+    </p>
+    <p>The returned value is <code> S_OK</code> because even there is a problem to retrieve
+    the point coordinates, a short help will be displayed with the default text.
+    If the returned value is <code>E_FAIL</code>, no short help is displayed.&nbsp;<br>
+    </p>
+  </li>
+  <li>Dictionary definition
+    <p>Here is the dictionary entry necessary for the implementation of the <i>CATINavigModify</i>
+    interface:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAASysPoint_node    CATINavigModify    libCAAOmbGeoNavigate</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You can find this entry in the <i>CAAObjectModelerBase.edu.dico</i> file.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Using CATIRedrawEvent to Update the Object Tree&nbsp;"></a>Using CATIRedrawEvent to
+Update the Object Tree&nbsp;</h4>
+<p align="left">The <i>CATIRedrawEvent</i> interface enables you to update the
+object tree. Here is an extract of the Point command [<a href="#References">2</a>].&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+      CATIRedrawEvent * piRedrawEvent = NULL;                
+      rc =_pUIActiveObject-&gt;QueryInterface(IID_CATIRedrawEvent, (void**)&amp;piRedrawEvent);
+      if (SUCCEEDED(rc))
+      {
+        piRedrawEvent-&gt;<b>Redraw</b>();
+        
+        piRedrawEvent-&gt;Release();
+        piRedrawEvent= NULL ;
+      }
+</pre>
+        </td>
+      </tr>
+    </table>
+<p align="left"><code>_pUIActiveObject</code> is a pointer on the UI-active
+object of the CAAGeometry document [<a href="#References">1</a>]. This object is
+also the root object, in other words the <code>CAASysGeomRootObj</code>
+component. The <code>QueryInterface</code> is called on this component because
+it is the father node of the point element node.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create and customize an object tree and
+navigate through it by expanding its nodes. It has also explained a number of
+concepts related to the Object Navigator.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+      CAAGeometry Sample</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>Associating
+      a Dialog Box with a State</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Aug 2003]</td>
+    <td valign="top">Short Help introduction</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

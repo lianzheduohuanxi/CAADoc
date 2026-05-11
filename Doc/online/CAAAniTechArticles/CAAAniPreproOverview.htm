@@ -1,0 +1,1288 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Preprocessing data overview</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Preprocessing data overview</h3>
+     <p><em>Some concepts about preprocessing</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article present some general concepts on the preprocessing 
+     features. </p>
+     <ul>
+       <li><strong><a href="#What">Introduction</a></strong></li>
+       <li><strong><a href="#PrepSet">Preprocessing Sets</a></strong></li>
+       <li><a href="#AnEntity"><b>Analysis Entities</b></a>
+       <ul>
+         <li><b><a name="Associated interfaces" href="#EntityIft">Associated 
+         interfaces</a></b></li>
+         <li><b><a href="#EntityModel">Model description</a></b></li>
+       </ul>
+       </li>
+       <li><b><a href="#BasicC">Basic Components</a></b></li>
+       <li><a href="#NewBC"><b>Define New Basic component and customize the User 
+       interface</b></a></li>
+       <li><b><a href="#BCManager">The Basic component manager interface.</a></b></li>
+       <li><b><a href="#Example">Example of Analysis Entity definition</a></b>
+       <ul>
+         <li><b><a href="#Catalog">Catalog Definition.</a></b></li>
+         <li><b><a name="Create the interactive command" href="#Command">Create 
+         the interactive command</a></b></li>
+         <li><b><a href="#Field">Generate the associated field model</a></b></li>
+         <li><b><a href="#Idl">Check Automation</a></b></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Short">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="What"></a>Introduction</h3>
+ <p>The main intent is to explain some general concept for defining 
+ preprocessing data. So it explains the concepts related to:</p>
+ <ul>
+   <li>Preprocessing sets
+   <ul>
+     <li>Analysis Entities
+     <ul>
+       <li>Basic Components</li>
+     </ul>
+     </li>
+   </ul>
+   </li>
+ </ul>
+ <p>For a more complete presentation about the analysis features, see reference[<a href="#Ref1">1</a>].</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="PrepSet"></a>Preprocessing Sets.</h3>
+ <p>All preprocessing sets are defined by derivation of the Analysis Set 
+ startup. They can be referenced by the analysis model or any analysis case by 
+ using the CATISamAnalysisScan Interface, this interface allow also o defined 
+ them as input or output features regarding to the update mechanism. They are 
+ identified by their physical type attribute. Some preprocessing sets are 
+ already defined for the structural analysis applications and can be used as 
+ defined for all existing interface (specially the collect of physical data):</p>
+ <div align="center">
+   <table border="1" width="60%">
+     <tr>
+       <td width="33%" align="left"><b>Model Feature Late Type</b></td>
+       <td width="33%" align="left"><b>NLS Name</b></td>
+       <td width="33%" align="left"><b>Physical Type</b></td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">AnalysisManager</td>
+       <td width="33%" align="left">Analysis Manager</td>
+       <td width="33%" align="left">ANALYSIS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">AnalysisModel</td>
+       <td width="33%" align="left">Finite Element Model</td>
+       <td width="33%" align="left">ANALYSIS_MODEL</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">AnalysisCase</td>
+       <td width="33%" align="left">AnalysisCase</td>
+       <td width="33%" align="left">ANALYSIS_CASE</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left"><b>Sets Feature Late Type</b></td>
+       <td width="33%" align="left"><b>NLS Name</b></td>
+       <td width="33%" align="left"><b>Physical Type</b></td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">MSHMeshSet</td>
+       <td width="33%" align="left">Nodes and Elements</td>
+       <td width="33%" align="left">MESH</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">PropertySet</td>
+       <td width="33%" align="left">Properties</td>
+       <td width="33%" align="left">PROPERTIES</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">MaterialSet</td>
+       <td width="33%" align="left">Materials</td>
+       <td width="33%" align="left">MATERIALS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">AxisSet</td>
+       <td width="33%" align="left">Axes</td>
+       <td width="33%" align="left">AXES</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">GroupSet</td>
+       <td width="33%" align="left">Groups</td>
+       <td width="33%" align="left">GROUPS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">ModulationSet</td>
+       <td width="33%" align="left">Modulation</td>
+       <td width="33%" align="left">FUNCTIONS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">RestraintSet</td>
+       <td width="33%" align="left">Restraints</td>
+       <td width="33%" align="left">RESTRAINTS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">LoadSet</td>
+       <td width="33%" align="left">Loads</td>
+       <td width="33%" align="left">LOADS</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">MassSet</td>
+       <td width="33%" align="left">Masses</td>
+       <td width="33%" align="left">MASSES</td>
+     </tr>
+     <tr>
+       <td width="33%" align="left">SensorSet</td>
+       <td width="33%" align="left">Sensors</td>
+       <td width="33%" align="left">SENSORS</td>
+     </tr>
+   </table>
+ </div>
+ <p>If new Analysis Sets may be defined. You need to create a CATFct file with 
+ the PPR tools, as described in references [<a href="#Ref2">2</a>] and [<a href="#Ref4">3</a>]. 
+ In short, to customize your new feature:</p>
+ <ul>
+   <li>NLS Name must be stored in a file called <b>&quot;<i> NameOfCATFct</i>&quot;NLS.CATNls</b> 
+   with the following syntax: <b>LateType Of The feature</b> =&quot;Nls identifier&quot;.</li>
+   <li>Icon is defined in a file called <b>&quot;<i>NameOfCATFct</i>&quot;RSC.CATRsc</b> 
+   with the following syntax: <b>&quot;LateTypeOfThefeature&quot;.IconName</b> =&quot;Name of 
+   the file that define the icon&quot;.</li>
+ </ul>
+ <p>Both files are located for developing in <code>InstallRootDirectory\NameOftheFW\CNext\resources\msgcatalog\.</code> 
+ and will be copied by the &quot;<i>mkcreateruntimeview&quot;</i> command.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="AnEntity"></a>Analysis Entities.</h3>
+ <p>All preprocessing entities are defined by derivation of the Analysis entity 
+ startup. They are identified by their physical type attribute. Some 
+ preprocessing entities are already defined for the structural analysis 
+ applications as follow.</p>
+ <div align="center">
+   <center>
+   <table border="1" width="40%">
+     <tr>
+       <td width="50%">Feature Set</td>
+       <td width="50%">Preprocessing entity derivation</td>
+     </tr>
+     <tr>
+       <td width="50%">LoadSet</td>
+       <td width="50%">
+       <img border="0" src="images/DistForce.jpg" width="181" height="88"></td>
+     </tr>
+     <tr>
+       <td width="50%">RestraintSet</td>
+       <td width="50%">
+       <img border="0" src="images/ClampRest.jpg" width="184" height="77"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>The physical type of an analysis entity is the one of the explicit entity 
+ that will be generated when building the field model by implementing the 
+ CATISamExplicitation interface. For example, the SAMDistributedForce vector is 
+ converted as Nodal forces, so associated physical type is &quot;LOAD_POINT_FORCE&quot;. 
+ For SAMClamp, the Physical type is &quot;RESTRAINT_DISPLACEMENT&quot;. The same kind of 
+ philosophy can be retrieved for all the preprocessing entities. The existing 
+ Analysis Entities for preprocessing entities are defined in the Reference [<a href="#Ref4">4</a>]. 
+ The scheme of derivation for analysis entities is always the same. The father 
+ feature type is AnalysisEntity, then a derivation for Analysis<code>XXX</code>.
+ <code>XXX</code> represent the set in which the entity will be created, then 
+ the physics for which the entity is designed (For example <code>XXX</code> is 
+ Load for the SAMDistributed Force).</p>
+ <p>The implementation provided by <i>Dassault Systèmes </i>to collect physical 
+ data (CATICharacollector interface) is defined at the level of each analysis 
+ entity and each preprocessing set defined in the previous chapter. The 
+ implementation of the collect for a set is based on combining the collected 
+ data as returned by the collector of analysis entities.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="EntityIft"></a>Interfaces related to Analysis entities.</h4>
+ <p>They are summarized in the following array:</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/AnalysisEntity.jpg" width="380" height="230"></td>
+     <td width="50%"><u>Interface to implement</u>:
+     <ul>
+       <li>Generate associated result.</li>
+       <li>Define a 3D rep.</li>
+       <li>Customize Instantiation / Deletion / Father Set</li>
+     </ul>
+     <p><u>Default Implementation</u></p>
+     <ul>
+       <li>Analysis Entity.</li>
+       <li>Field model link</li>
+       <li>Analysis Support</li>
+       <li>Feature Build.</li>
+       <li>Edition.</li>
+       <li>Collect of physical data.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p>Implemented by <i>Dassault Systèmes</i>:</p>
+ <ul>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisEntity');return false;">
+   CATISamAnalysisEntity</a></b> is dedicated to set up parameters at the level 
+   of the startup, and to access information on the instance.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamExplicit');return false;">
+   CATISamExplicit</a></b> is dedicated to manage the field model associated to 
+   the entity.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisSupport');return false;">
+   CATISamAnalysisSupport</a></b> is dedicated to set up parameters related to 
+   the kind of authorized support, their number at the level of the startup, and 
+   to access them on the instance.
+   <ul>
+     <li>SetAuthorizedSupports method that defined the authorized support type 
+     by combining the <b>
+     <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'typedef', 'SAM_SupportId');return false;">
+     SAM_SupportId</a></b> typedefs.</li>
+     <li>SetMinAndMaxEntitiesNumber that defined the minimum and maximum allowed 
+     support.</li>
+     <li>GetEntities that returns the list of links to the support.</li>
+   </ul>
+   </li>
+ </ul>
+ <blockquote>
+   <p>The links to the pointed objects are stored in features that implement 
+   CATISamAnalysisConnector interface. Such a link returns two pointers:</p>
+   <ul>
+     <li>The pointed object is the objects with the SAMSupport_ID as defined on 
+     the entity.</li>
+     <li>The positioning Object (CATIProduct Object) manages the instance of the 
+     pointed object in the product structure and its position.</li>
+     <li>In the case of pointed objects that are in the same CATAnalysis 
+     document, no positioning object returns also the pointed object.</li>
+   </ul>
+ </blockquote>
+ <ul>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'ObjectSpecsModeler', 'interface', 'CATIBuild');return false;">
+   CATIBuild</a></b> is dedicated manage the update.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'ApplicationFrame', 'interface', 'CATIEdit');return false;">
+   CATIEdit</a></b> is dedicated manage the user interface.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'interface', 'CATICharacCollector');return false;">
+   CATICharacCollector</a></b> is dedicated manage an global view of the field 
+   model objects associated to an entity.</li>
+ </ul>
+ <p>The only interfaces that can be overloaded safely are CATIEdit and 
+ CATICharacCollector.</p>
+ <p>To be implemented by you:</p>
+ <ul>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisEntityInit');return false;">
+   CATISamAnalysisEntityInit</a></b> Customizes Instantiation / Deletion / 
+   Selection of the Analysis set for Analysis entity creation. This interface is 
+   implemented on the feature type.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamExplicitation');return false;">
+   CATISamExplicitation</a></b> Generates associated field model during the 
+   update state. This interface is implemented on a STRUCTURAL_featuretype late 
+   type.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'Visualization', 'interface', 'CATIGeo3DVisu');return false;">
+   CATIGeo3DVisu</a></b> Defines a 3D graphic representation. This interface is 
+   implemented on the feature type.</li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="EntityModel"></a>The model and GUI of Analysis entities.</h4>
+ <p>The analysis entities are defined with two main kind of objects the <b>basic 
+ component</b> and the <b>analysis connector </b>that will be presented next. 
+ The basic components are used to define the physics (all the parameters). They 
+ can be defined at the level of the startup catalog, in this case, they will be 
+ considered as mandatory. For more advance use, see the
+ <a name="CATISamBasicComponentManager" href="#BCManager">
+ CATISamBasicComponentManager</a> interface. The connectors are created with the 
+ CATISamAnaysisModelFactory Interface, as for any other analysis eatures, and 
+ accessed on the entity with the CATISamAnalysisSupport Interface.</p>
+ <p>A standard user interface can be used from the <i>Dassault Systèmes</i> 
+ analysis package. The command <b>CATSamCreateEntityCmd</b> exported by the <b>
+ CATAnalysisModelerUI</b> module will assume some default user interface in 
+ order to create, modify and edit the analysis entities that are build by using 
+ the concepts of basic components and analysis supports. This commands will 
+ propose a window definition that includes:</p>
+ <ul>
+   <li>A frame that allow to define the name of the analysis entity. To 
+   customize the title of the window use MyLateType.Window.Title =&quot; &quot;;</li>
+   <li>A frame that allow to select the supports according to its definition. To 
+   customize the title of the window use MyLateType.LabelSupport.Title =&quot; &quot;; 
+   This definition is set up according to the CATISamAnalysisSupport Interface 
+   by the use of:</li>
+   <li>For each basic components, a dialog object (frame or command) to define 
+   its numerical values.</li>
+ </ul>
+ <p align="center"><a name="Fig1"></a>
+ <img border="2" src="images/Entity_NLS.jpg" width="473" height="379"></p>
+ <p>In order to have some additional control on the command, The <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamValidity');return false;">
+ CATISamValidity</a></b> interface allows to drive the validation button of this 
+ command. You can implement this interface. It also allows to overload the tree 
+ visualization if the entity becomes invalid. </p>
+ <p align="right"><a href="#Top">[Top]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3></a><a name="BasicC"></a>Basic Components</h3>
+ <p>This chapter will expose existing basic component startup that can be 
+ customized in order to build new analysis entities. Some of them are defined 
+ with some generic way in order to be specialized. The interactive customization 
+ is defined in a file called <b>&quot;<i>NameOfCATFct</i>&quot;UI.CATNls</b>.</p>
+ <p><b>Literal</b> is used to defined a single Value with an unit. (see the 
+ magnitude in the literal framework).</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:
+     <ul type="circle">
+       <li>InstanceName.Label.Title=</li>
+       <li>InstanceName.Help=</li>
+       <li>InstanceName.LongHelp=</li>
+       <li>InstanceName.ShortHelp=</li>
+     </ul>
+     </td>
+     <td width="50%">In this Example, the basic component is an instance of a 
+     pressure:
+     <p align="center">
+     <img border="0" src="images/LiteralEditor.jpg" width="203" height="29"></td>
+   </tr>
+ </table>
+ <p>The label is defined by using the name of the instance of the literal:</p>
+ <p><b>SAMVector </b>is used to define n dimension vector. The attributes which 
+ need to be valuated are:</p>
+ <ul>
+   <li>ValuesDim: tk_list(tk_integer) The list that define the dimension 
+   (example 1;n,1).</li>
+   <li>DataType: (tk_string) Character string that defines the <b>Literal</b> 
+   type used to define each of the vector component. This attribut is optional, 
+   it's better to set it on a dimensioned startup.</li>
+ </ul>
+ <p>This Startup is a dummy one that may be customized before to be instanciated. 
+ As Example, the following 3D Force vector is defined with ValuesDim set to 3 
+ ;1;1.</p>
+ <p><b>SAM3DVector</b> is used to define 3D vectors. It is a kind of SAMVector. 
+ The attribute which needs to be valuated is</p>
+ <ul>
+   <li>DataType (tk_string) : the literal name which will be used for the values 
+   (speed, pressure .... see the magnitudes as defined by the literal feature 
+   package). This Attribute is the same a defined on the SAMVector startup.</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:
+     <ul type="circle">
+       <li>MyLateType.Title=&quot;Force Vector&quot;;</li>
+       <li>MyLateType_LiteralName.Label.Title=&quot;Norm&quot;</li>
+       <li>MyLateType_LiteralName.Help=</li>
+       <li>MyLateType_LiteralName.LongHelp=</li>
+       <li>MyLateType_LiteralName.ShortHelp=</li>
+     </ul>
+     <p>And similarly for MyLateType_LiteralName1 that customizes &quot;X&quot;, 
+     MyLateType_LiteralName2 that customizes &quot;Y&quot; and MyLateType_LiteralName3.</td>
+     <td width="50%">The user interface provides then four fields, one for the 
+     norm and three for the components. The interactive compass can be used to 
+     modify the components while keeping the same norm. For example, a data type 
+     set to FORCE will produce:<p align="center">
+     <img border="0" src="images/ForceVectorEditor.jpg" width="227" height="124"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p><b>SAMAxisSystem</b> is used to define in which axis system the data of an 
+ entity will be defined in. The attributes which need to be valuated is</p>
+ <ul>
+   <li>AvailDefModes (tk_integer): The list presented to the user of available 
+   definitions (a combination of
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamAxisDefinitionMode');return false;">
+   CATSamAxisDefinitionMode</a> as defined in CATSamDefs.h).</li>
+   <li>AvailMathTypes (tk_integer): The list presented to the user of available 
+   axis types (a combination of
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamAxisType');return false;">
+   CATSamAxisType</a> as defined in CATSamDefs.h).</li>
+   <li>IntenseStatus (tk_integer): states if the entity values depend on the 
+   extent of the support or not. If they do, the only available axis type is 
+   rectangular (defined by
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamIntenseStatus');return false;">
+   CATSamIntenseStatus</a> as defined in CATSamDefs.h).</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="70%">The attributes which will be valued by the user interface 
+     are:
+     <ul>
+       <li>Values (tk_integer) : the definition chosen from the availables 
+       AvailDefModes.</li>
+       <li>MathType (tk_integer) : The axis type chosen from AvailMathTypes.</li>
+       <li>ConnectorList (tk_component, only valued if a user axis is chosen) : 
+       manage a connector linked to:
+       <ul>
+         <li>The CATIProduct where the chosen user axis system is defined (As 
+         Positioning Object)</li>
+         <li>The chosen user axis system (As Pointed Object).</li>
+       </ul>
+       </li>
+     </ul>
+     <p>You can not change any of the labels.</td>
+     <td width="30%">
+     <p align="center">
+     <img border="0" src="images/AxisSystemEditor.jpg" width="217" height="153"></td>
+   </tr>
+ </table>
+ <p>This Startup is a dummy one that may be customized before being 
+ instantiated. Some already configured axis system are defined inside the <i>
+ Dassault Systèmes</i> catalog.</p>
+ <blockquote>
+   <p>SAMGUAxisSystem: allows global and user axis.</p>
+   <ul>
+     <li>AvailDefModes = CATSamGlobalAxis + CATSamUserAxis (3)</li>
+     <li>AvailMathTypes = CartesianAxis + CylindricalAxis +SphericalAxis (7)</li>
+   </ul>
+   <p>SAMGUIntAxisSystem : allows global and user axis with an intensive 
+   behavior</p>
+   <ul>
+     <li>AvailDefModes = CATSamGlobalAxis + CATSamUserAxis (3)</li>
+     <li>AvailMathTypes = CartesianAxis + CylindricalAxis +SphericalAxis (7)</li>
+     <li>IntenseStatus = 1</li>
+   </ul>
+   <p>SAMGCartUAxisSystem :allows global and user axis used as Cartesian.</p>
+   <ul>
+     <li>AvailDefModes = CATSamGlobalAxis + CATSamUserAxis (3)</li>
+     <li>AvailMathTypes = 0</li>
+   </ul>
+   <p>SAMGIAxisSystem allows global and implicit axis.</p>
+   <ul>
+     <li>AvailDefModes = CATSamGlobalAxis + CATSamImplicitAxis (5)</li>
+     <li>AvailMathTypes = 0</li>
+   </ul>
+   <p>SAMGUIAxisSystem allows global, implicit and user axis</p>
+   <ul>
+     <li>AvailDefModes = CATSamGlobalAxis +CATSamUserAxis + CATSamImplicitAxis 
+     (7)</li>
+     <li>AvailMathTypes = CartesianAxis + CylindricalAxis +SphericalAxis (7)</li>
+   </ul>
+ </blockquote>
+ <p>&nbsp;</p>
+ <p><b>SAMSingleEntityPtr</b> is used to support a link to another analysis 
+ feature. The attributes which need to be valued at the level of the startup 
+ are:</p>
+ <ul>
+   <li><b>AllowedFeatType</b> (tk_string): the feature late type which can be 
+   selected, if several late type need to be specified, separate them with <b>;</b> 
+   character.</li>
+   <li><b>AllowedInterfId</b> (tk_string): the name of an interface which the 
+   selected feature must implement. This value corresponds to the string 
+   returned by CATIInterface::ClassName().</li>
+   <li><b>Neighbourhood</b> (tk_integer): an integer defining how far from the 
+   current position in the feature tree you can select the feature (
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'SAM_Neighbourhood');return false;">
+   SAM_Neighbourhood</a> as defined in CATSamDefs.h).</li>
+   <li><b>AllowedPhysicalType</b> (tk_string): the name of the physical type of 
+   the Analysis feature to be linked.</li>
+ </ul>
+ <p>At least one of the two first attributes needs to be valuated. The two last 
+ attributes are optional and complete the checks made according to the two first 
+ one. The Basic Component will be completed by an attribute called &quot;<b>ConnectorList</b>&quot; 
+ defined as a <i>tk_component</i> in order to store the pointed object.</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:<ul type="circle">
+       <li>MyLateType.EntityPtrLabel.Title=&quot;restraint&quot;</li>
+       <li>MyLateType.Help=</li>
+       <li>MyLateType.LongHelp=</li>
+       <li>MyLateType.ShortHelp=</li>
+     </ul>
+     <p>To customize the dialogue state of the selection:</p>
+     <p>MyLateType.Message=&quot;xxx &quot;;<br>
+&nbsp;</td>
+     <td width="50%">
+     <p align="left">In this Example, the basic component have a reference to an 
+     analysis restraint entity type:</p>
+     <p align="center">
+     <img border="0" src="images/EntityPtrEditor.jpg" width="217" height="23"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p><b>SAMSingleGeomPtr</b> and <b>SAMMultiGeomPtr</b> are used in order to 
+ point one or several geometrical elements. The attributes to be valued are: </p>
+ <ul>
+   <li>AuthorizedSupport (tk_integer) : which type of Breps are authorized (see
+   <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'typedef', 'SAM_SupportId');return false;">
+   SAM_SupportId</a> </b>in CATSamDefs.h)</li>
+   <li>MinMaxSupportsNb (only for SAMMultiGeomPtr, tk_list(tk_integer)): the 
+   minimum and maximum number of supports (-1 means not limit either for minimum 
+   or maximum support number).</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:
+     <ul type="circle">
+       <li>MyLateType.LabelSupport.Title=&quot;Rotation Axis&quot;;</li>
+       <li>MyLateType.ListSupport.Title=</li>
+       <li>MyLateType.ListSupport.Help=</li>
+       <li>MyLateType.ListSupport.LongHelp=</li>
+       <li>MyLateType.ListSupport.ShortHelp=</li>
+     </ul>
+     </td>
+     <td width="50%">In this Example, the basic component have a reference to a 
+     geometrical cylindrical face in order to keep a line definition (the 
+     cylinder axis) for defining a rotation direction.
+     <p align="center">
+     <img border="0" src="images/GeomPtrEditor.jpg" width="217" height="25"></td>
+   </tr>
+ </table>
+ <p><b>SAMActivableComponent</b> is used in order to define an optional basic 
+ component. The user interface will include a toggle button to set the on/off 
+ activity. The attributes to be valuated are:</p>
+ <ul>
+   <li>DataType (tk_string) : the literal name which will be used for the values 
+   (speed, pressure .... see the magnitudes as defined by the literal feature 
+   package).</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">The attributes which will be valued by the user interface 
+     are:
+     <ul>
+       <li>IsActivable (tk_integer) : =1 if it is activated, 0 if not.</li>
+       <li>Values (tk_component): The literal that returns the numerical value.</li>
+     </ul>
+     <p>To customize the interactive window, the labels are defined as follow:
+     </p>
+     <ul type="circle">
+       <font face="Courier New" size="2">
+       <li>MyLateType.Label.Title=</li>
+       <li>MyLateType.Help=</li>
+       <li>MyLateType.LongHelp=</li>
+       <li>MyLateType.ShortHelp=</li>
+       </font>
+     </ul>
+     </td>
+     <td width="50%">In this Example, the basic component is defined with a 
+     DataType LENGTH and is activated.
+     <p align="center">
+     <img border="0" src="images/ActivableEditor.jpg" width="182" height="31"></td>
+   </tr>
+ </table>
+ <p>This startup may no more be used since the concept of optional Basic 
+ component have been introduced. For this, implement the 
+ CATISamBasicComponentManager Interface.</p>
+ <p><b>SAMTensor</b> is used to define n,m dimensions tensor. The attributes 
+ which need to be valuated are:</p>
+ <ul>
+   <li>ValuesDim: tk_list(tk_integer) This list defines the dimensions (example 
+   n; m; 1).</li>
+   <li>DataType: (tk_string) string defining the <b>Literal </b>identifier<b>
+   </b>used for each component. (Optional, better to set it on a dimensioned 
+   startup)</li>
+   <li>Symetry: (tk_integer) this integer sets the <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamSymProperty');return false;">
+   CATSamSymProperty</a></b> parameter as defined in CATSamDefs.h. It allows to 
+   define the property of the tensor (full, symmetrical or antisymmetrical.). 
+   This attribute will influence the user interface by hiding some cells.</li>
+   <li>Labels: tk_list(tk_string)) List of the string that will manage the user 
+   interface of the Tensor frame.</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     in the following order:<font face="Courier New" size="2">
+     <ul type="circle">
+       <li>MyLateType.Comment1.Title=&quot; Row 1 &quot;</li>
+       <li>MyLateType.Comment2.Title=&quot; Row 2 &quot;</li>
+       <li>MyLateType.Comment3.Title=&quot; Row 3 &quot;</li>
+       <li>MyLateType.Comment4.Title=&quot; Column 1 &quot;</li>
+       <li>MyLateType.Comment5.Title=&quot; Column 2 &quot;</li>
+       <li>MyLateType.Comment6.Title=&quot; Column 3 &quot;</li>
+       </font>
+     </ul>
+     </td>
+     <td width="50%">Example of 3x3 Symmetrical tensor. The data type is set to 
+     FORCE and the labels are defined from Comment1 to Comment6.
+     <p>Labels = Comment1, Comment2, Comment3, Comment4, Comment5, Comment6.</p>
+     <p align="center">
+     <img border="0" src="images/SAMTensorTst.jpg" width="339" height="88"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p><b>SAMBindingComponent</b> is used to aggregate other basic components. The 
+ attributes which need to be valuated are:</p>
+ <ul>
+   <li>SonsList: the list of basic components that defines the binding one. 
+   Those are called subcomponent and must be valuated or retrieved by the 
+   CATISamBasicComponent interface by using the SubComponents methods.</li>
+   <li>PositionIndex: the position for each basic component for the user 
+   interface (as example &quot;1,1;2,1&quot; , means that the first one appear one the 
+   line 1 column , the second one on line 2 column 1)</li>
+ </ul>
+ <p>&nbsp;</p>
+ <p><b>SAMCompositeTensor </b>is used to define a tensor made of several others. 
+ Each of the basic tensors can have its own data type and symmetry property.</p>
+ <ul>
+   <li>Symetry : (tk_integer) This optional integer sets the <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamSymProperty');return false;">
+   CATSamSymProperty</a> </b>parameter as defined in CATSamDefs.h. It allows to 
+   define the symmetrical property of the composite tensor (full, symmetrical or 
+   antisymmetrical). This attribute will influence the user interface by hiding 
+   some cells.</li>
+   <li>SonsList: the list of basic components that defines the binding one.</li>
+   <li>PositionIndex: tk_list(tk_string) The position for each basic component 
+   for the user interface (as example &quot;1,1;2,1&quot; , means that the first one 
+   appear one the line 1 column , the second one on line 2 column 1)</li>
+   <li>Labels: tk_list(tk_string) The list of identifiers for the interactive 
+   labels. This list defines first the line labels then the column.</li>
+ </ul>
+ <p>&nbsp; </p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     in the following order:<font face="Courier New" size="2">
+     <ul type="circle">
+       <li>MyLateType.Cell_1_1.Comment1.Title=&quot;Line 1&quot;</li>
+       <li>MyLateType.Cell_1_1.Comment2.Title=&quot;Line 2&quot;</li>
+       <li>MyLateType.Cell_1_1.Comment3.Title=&quot;Line 3&quot;;</li>
+       <li>MyLateType.Cell_2_1.Comment4.Title=&quot;Line 4&quot;;</li>
+       <li>MyLateType.Cell_2_1.Comment5.Title=&quot;Line 5&quot;;</li>
+       <li>MyLateType.Cell_2_1.Comment6.Title=&quot;Line 6&quot;;</li>
+       <li>MyLateType.Cell_1_1.Comment7.Title=&quot;Column 1&quot;;</li>
+       <li>MyLateType.Cell_1_1.Comment8.Title=&quot;Column 2&quot;;</li>
+       <li>MyLateType.Cell_1_1.Comment9.Title=&quot;Column 3&quot;;</li>
+       <li>MyLateType.Cell_1_2.Comment10.Title=&quot;Column 4&quot;;</li>
+       <li>MyLateType.Cell_1_2.Comment11.Title=&quot;Column 5&quot;;</li>
+       <li>MyLateType.Cell_1_2.Comment12.Title=&quot;Column 6&quot;;</li>
+     </ul>
+     <p>To customize the title :</p>
+     <ul type="circle">
+       <li>MyLateType.Title = &quot;CompositeTensor/Edition&quot;;</li>
+     </ul>
+     </font></td>
+     <td width="50%">Example of a symmetrical composite tensor made of 3 (3x3) 
+     tensors of each type : symmetrical, full and antisymmetrical. The labels 
+     are set from Comment1 to Comment12.
+     <p>Labels = Comment1, Comment2, Comment3, Comment4, Comment5, Comment6, 
+     Comment7, Comment8, Comment9, Comment10, Comment11, Comment12.</p>
+     <p align="center">
+     <img border="0" src="images/SAMCompositeTensorTst.jpg" width="647" height="179"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p><b>SAMMultiLayerManager </b>is used to manage a set of several basic 
+ components. The user interface is managed with a list that allow to summarize 
+ the selected data. A contextual menu allows to add a layer, edit a layer 
+ (double-clicking is equivalent ), delete a layer and delete all layers. The 
+ attributes which need to be valuated are:</p>
+ <ul>
+   <li>Values: tk_list(tk_component): The list of components which appear in the 
+   list. (This corresponds to a line is the list).</li>
+   <li>ValuesDim: tk_list(tk_integer) The list of integer which defines the 
+   dimension:
+   <ul>
+     <li>Line number : As many as the number of component in Values. This set of 
+     components defines a layer.</li>
+     <li>Column number: 1</li>
+     <li>Layer number: 1 at the startup definition. The value then returns the 
+     number of lines in the interactive box.</li>
+   </ul>
+   </li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:
+     <ul>
+       <li>To customize N Titles (N-1 features per layer):
+       <ul>
+         <li>MyLateType_Title0.Label.Title=&quot;Index&quot;</li>
+         <li>MyLateType_Title1.Label.Title=&quot;Selected Solution&quot;</li>
+         <li>MyLateType_Title2.Label.Title=&quot;Coefficient&quot;</li>
+       </ul>
+       </li>
+     </ul>
+     <p>&nbsp;</p>
+     <ul>
+       <li>To customize the Default strings that identifies the values in the 
+       list:
+       <ul>
+         <li>MyLateType_Default1.Label.Title=&quot;No Selection&quot;</li>
+         <li>MyLateType_Default2.Label.Title=&quot;1&quot;</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+     <td width="50%">In this example, the attributes are defined as follow:<ul>
+       <li>Values : SAMSingleEntityPtr and Real feature</li>
+       <li>ValuesDim : (2, 1, 1)</li>
+     </ul>
+     <p><b><i>&quot;0.1&quot;</i></b> may be retrieved by CATISamBasicComponent:: 
+     GetDoubleValue() method with (2, 1, 1) as position. </p>
+     <p><b><i>&quot;Static Case Solution.2&quot;</i></b> may be retrieved by 
+     CATISamBasicComponent:GetLinkableValue() method with (1, 1, 2) as position.</p>
+     <p><img border="0" src="images/MultiLayerDLG.jpg" width="297" height="217"></td>
+   </tr>
+ </table>
+ <p align="left"><b>SAMBCFileAccess</b> is used to manage a link on a external 
+ file. This Basic component:</p>
+ <ul>
+   <li>
+   <p align="left">Keep the link to the file. To access the File use the &quot;<b>ExternDoc</b>&quot; 
+   Label. (with the set/get BaseUnknown method of CATISamBasicComponent) The 
+   CATBaseUnknown Object implements CATILinkableObject to access the file name.</li>
+   <li>
+   <p align="left">Manages some update capability (detect is the file is 
+   modified).</li>
+   <li>
+   <p align="left">The Type of file to link is defined by valuating the &quot;<b>LinkType</b>&quot; 
+   attribute at the level of the catalog definition, if several file extension 
+   need to be specified, separate them with the <b>;</b> character.</li>
+ </ul>
+ <p align="left">To access the File stored</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%">To customize the interactive window, the labels are defined 
+     as follow:
+     <ul>
+       <li>MyLateType.LabelFile.Title=&quot;Selected File&quot;;</li>
+       <li>MyLateType.BrowseButton.Title=&quot;Nls for Browse Button&quot;;</li>
+       <li>MyLateType.SamBCFileSelection.Title=&quot; Name Of FileSelector&quot;;</li>
+     </ul>
+     </td>
+     <td width="50%">
+     <img border="0" src="images/BCFilePtrEditor.jpg" width="469" height="385"></td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NewBC"></a>Define New Basic component and customize the User 
+ interface.</h3>
+ <p>In order be able to define and use new kind of Basic components, the 
+ standard user interface of the analysis entity can be customized by 
+ implementing the following interfaces on the new basic components types:</p>
+ <ul>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamEditWithCmd');return false;">
+   CATISamEditWithCmd</a></b> or <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamEditWithFrame');return false;">
+   CATISamEditWithFrame</a></b>.</li>
+   <li><b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamEditionCmd');return false;">
+   CATISamEditionCmd</a></b> or <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamEditionFrame');return false;">
+   CATISamEditionFrame</a></b>.</li>
+ </ul>
+ <p>If you just need some dialog objects, Implement CATISamEditWithFrame 
+ interface on the basic component type. The command that is returned may 
+ implement CATISamEditionFrame.</p>
+ <p>If you need more that dialogs (selections), Implement CATISamEditWithCmd 
+ interface on the basic component type. The command that is returned may 
+ implement CATISamEditionCmd.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="BCManager"></a>The Basic component manager interface.</h3>
+ <p>Defined at the level of the startup catalog, a basic component will be 
+ considered as mandatory. For more advance use, the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamBasicComponentManager');return false;">
+ CATISamBasicComponentManager</a></b> interface can be implemented on the 
+ analysis entity. With this interface, you can:</p>
+ <ul>
+   <li>Define optional basic component: User interface is a push button that 
+   will be replaced by the definition dialog if selected.</li>
+   <li>Set a basic component as read only: Associated dialog can no more be 
+   modified by the user.</li>
+   <li>Set a basic component as hidden: Associated dialog will not be displayed.</li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Example"></a>Example of Analysis Entity definition.</h3>
+ <p>Suppose you need to define and analysis entity that define a linear velocity 
+ applied in a global or local axis on a 3D body. The first thing to do is to 
+ define the startup of the Analysis Entity. The job to to will looks like:</p>
+ <ul>
+   <li>Generate the startup.</li>
+   <li>Define a new command.</li>
+ </ul>
+ <h4><a name="Catalog"></a>Catalog definition</h4>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// Defines a Basic component that is a derivation of 3D vector.
+//=============================================================
+CATUnicodeString VecSUType =&quot;SAM3DVector&quot;;
+CATBaseUnknown *pVecAeroSU = NULL;
+CATUnicodeString VecType(&quot;SAMSpeedVector&quot;);
+rc = CATSamCatalogFactory::CreateBasicComponent(&amp;VecType,&amp;VecSUType,&amp;pVecAeroSU,&amp;piCatalog);
+
+// This vector is a kind of SPEED (unit system).
+//==============================================
+CATUnicodeString DType(&quot;SPEED&quot;);
+rc = CATSamCatalogFactory::SetDataType (pVecAeroSU,&amp;DType);
+
+// This vector is a kind of TRANSLATIONAL_VELOCITY (Physical Type).
+//=================================================================
+CATUnicodeString PTypV(&quot;TRANSLATIONAL_VELOCITY&quot;);
+CATSamCatalogFactory::SetPhysicalType (pVecAeroSU, &amp;PTypV);
+
+// Defines an analysis entity that is a derivation of Analysis Load.
+//==================================================================
+CATUnicodeString VecSUEntity =&quot;AnalysisLoad&quot;;
+CATBaseUnknown *pVecEntity = NULL;
+CATUnicodeString EntiL(&quot;SAMSpeedLoad&quot;);
+rc = CATSamCatalogFactory::CreateAnalysisEntity (&amp;EntiL,&amp;VecSUEntity,&amp;pVecEntity,&amp;piCatalog);
+
+// This entity is a kind of LOAD_TRANSLATIONAL_VELOCITY (Physical Type).
+//======================================================================
+CATUnicodeString PTypVE(&quot;LOAD_TRANSLATIONAL_VELOCITY&quot;);
+CATSamCatalogFactory::SetPhysicalType (pVecEntity, &amp;PTypVE);
+
+// Associates the Basic component to the entity.
+//===============================================
+CATSamCatalogFactory::SetBasicComponent (&amp;VecType,pVecEntity,&amp;piCatalog);
+
+// Defines a body as support.
+//=====================================================================
+CATISamAnalysisSupport_var spSupport(pVecEntity); 
+if (!!spSupport) { 
+  spSupport -&gt; SetMinAndMaxEntitiesNumber(1,1); 
+  spSupport -&gt; SetAuthorizedSupports(SupportId_Body); }
+
+//=====================================================================
+CATUnicodeString AxisType(&quot;SAMGUAxisSystem&quot;);
+CATSamCatalogFactory::SetBasicComponent (&amp;AxisType,pVecEntity,&amp;piCatalog);
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Command"></a>Create the associated command</h4>
+ <p>Define in your command header a new command that will looks like:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// Late type of the created Analysis entity
+static CATUnicodeString Entity_Type = &quot;SAMSpeedLoad&quot;; 
+//
+new AniCommandHeader(&quot;CreateSpeedEntity&quot;,    // Command Name
+		     &quot;CATAnalysisModelerUI&quot;,    // Exported by         
+		     &quot;CATSamCreateEntityCmd&quot;,   // Generic command    
+		     (void *)&amp;Entity_Type );    // Late type of the Analysis Entity to be Created.
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">Additional information in order to create or customize commands 
+ will be found in the Basics frameworks.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Field"></a>Generate the associated field model.</h4>
+ <p>The link from Analysis features and field model entities is managed by both 
+ CATISamExplicit and CATISamExplicitation interfaces. CATISamExplicit manages 
+ the life cycle of the field model entities associated to a feature and 
+ CATISamExplicitation manages the creation of field model entities. This second 
+ interface must be overloaded for a specific field model creation. For an 
+ Analysis Set, a default behavior is provided that create an ExplicitSet with 
+ the physical type as defined on the Startup.</p>
+ <p>
+ <img border="0" src="../CAAIcons/images/caution.gif" width="32" height="32">&nbsp;&nbsp;&nbsp; 
+ In all cases, Field model entities have to be created inside an implementation 
+ of CATISamExplicitation interface. This will ensure that all V5 fundamentals 
+ (Copy paste, Update, Undo/Redo...) will be correctly managed for the field 
+ model entities.</p>
+ <p>The most important methods of CATISamExplicit interface are:</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="25%">GetExplicitObject(s)</td>
+     <td width="75%">Returns the first (or list) of Explicit parent representing 
+     the result data inside the field model.</td>
+   </tr>
+   <tr>
+     <td width="25%">GetPhysical type</td>
+     <td width="75%">Returns the physical type string as defined in the feature 
+     startup. This physical type is required when the create method of the 
+     CATISamAnalysisFatory is called in order to create the associated Field 
+     model Object.</td>
+   </tr>
+   <tr>
+     <td width="25%">GetContainingData</td>
+     <td width="75%">Returns the list of Explicit parent object in which the 
+     feature is involved. (For example, the list of parent cases for a set).</td>
+   </tr>
+   <tr>
+     <td width="25%">UpdateExplicitList</td>
+     <td width="75%">Must be called at the end of any CATISamExplicitation 
+     implementation. It Associates the new explicit Objects to the previous 
+     containing data and flags the previous version to be deleted.
+     <p>When CATAnalysisExplicitSet::CreateSet or 
+     CATAnalysisExplicitEntity::CreateEntity methods are used, Use the Field 
+     model as a parent and let the UpdateExplicitList method manage all the 
+     links with the new explicit data.</td>
+   </tr>
+ </table>
+ <p>Generate a Field model associated to a feature is done by implementing the 
+ CATISamExplicitation interface on a late type build as &quot;<b>STRUCTURAL_</b><i><b>FeatureLateType</b></i>&quot;. 
+ This is not to implement on a feature late type. The first string &quot;STRUCTURAL&quot; 
+ is dedicated to manage different kind of field model generation. This 
+ functionality is not active today.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td width="50%">
+     <pre>...
+// 
+::<b>TranslateToFieldModel</b>(
+CATISpecObject* iFeatToTranslate,
+CATISamAnalysisModel* iFEMModel, 
+CATAnalysisExplicitListUsr&amp; iOldExplObjects, 
+CATAnalysisExplicitListUsr&amp; oNewExplObjects)
+...</pre>
+     </td>
+     <td width="50%">
+     <pre>....
+// 
+The Analysis feature to &quot;translate&quot; (implement CATISAMExplicit).
+The Analysis Model in which the feature is define.
+The previous version of the field model version.
+The new version of field model objects.
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">The general scheme for this kind of implementation is described 
+ here.</p>
+ <ul>
+   <li>
+   <p align="left">Retrieve the Field model pointer</li>
+   <li>
+   <p align="left">Retrieve the list of containing data. For an entity, the list 
+   of explicit sets in which the entity is involved, for a set this list of 
+   analysis cases...</li>
+   <li>
+   <p align="left"><font color="#FF0000"><b>Create</b></font> a new version of explicit object. The main object is 
+   created without parent and is stored in the oNewExplObjects list. Note that 
+   we support a list of new objects. Never modify the existing field model by 
+   adding or removing children or apply link, those modification will not 
+   support undo redo, warm start and associated modification events will not be 
+   sent.</li>
+   <li>
+   <p align="left">Update the lists means update of the model. This method deletes the &quot;iOldExplObjects&quot;, 
+   create links between oNewExplObjects and the containing data. this may be the 
+   last method called for this implementation.</li>
+ </ul>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+CATISamExplicit_var spSpecExpli(iFeatToTranslate);
+if (NULL_var == spSpecExpli) return E_NOINTERFACE;
+
+// Retrieve the Field Model
+CATAnalysisExplicitModel* pExplicitModel = spSpecExpli -&gt; GetExplicitModel();
+if (NULL == pExplicitModel) return E_FAIL;
+
+// We get the list of current containing data.
+CATAnalysisExplicitListUsr containingData;
+containingData.CreateList(pExplicitModel);
+HR = spSpecExpli -&gt; GetContainingData(iOldExplObjects,containingData);
+if (FAILED(HR)) return HR;
+///////////////////////////////////////////////////////////////////////////////////
+// Insert the definition of the new version generation.
+///////////////////////////////////////////////////////////////////////////////////
+// Update the list with the new data
+HR = spSpecExpli -&gt;UpdateExplicitList(iOldExplObjects,containingData,oNewExplObjects);
+if (containingData!=NULL_exp) containingData.Delete();
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">Generate a New Field Model Version for a preprocessing feature:</p>
+ <p align="left">A preprocessing feature is defined by a physical type as 
+ defined in the field model dictionnary. This physical type may have a category 
+ corresponding to an entity. Associated to this definition are defined a list of 
+ Physical data and the finite element support type. The &quot;<i>oNewExplObjects</i>&quot; 
+ list of New Explicit Object created, must includes only the &quot;CATAnalysisExplicitEntity&quot; 
+ that are created.</p>
+ <p align="left">For example, in the example defined before, the translationnal 
+ velocity is defined by its value and is apply to the Nodes of a mesh that 
+ discretize a geometry. This means that in the field model must be created an 
+ entity with the physical type &quot;LOAD_TRANSLATIONAL_VELOCITY&quot; that includes a 
+ characteristic with &quot;TRANSLATIONAL_VELOCITY&quot; physical type and this entity is 
+ applied to a list of nodes.</p>
+ <p align="left">To Extract the values of the Basic components, use the 
+ CATISamAnalysisEntity interface that is implemented on the &quot;iFeatToTranslate&quot; 
+ argument. For example, read a basic component that is build by derivation of 
+ &quot;SAM3DVector&quot; and store the values in a CATMathVector.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+CATISamAnalysisEntity*	iEntity = NULL;
+iFeatToTranslate-&gt; QueryInterface(IID_CATISamAnalysisEntity,(void **) &amp;iEntity );
+if (NULL == iEntity ) return E_NOINTERFACE;
+//
+CATUnicodeString BasicCompName = &quot;NameOfBasiComponent&quot;;
+CATLISTV(CATBaseUnknown_var) *components = NULL;
+CATMathVector *vector = NULL;
+
+HRESULT hr = iEntity -&gt; GetBasicComponents(components,BasicCompName);
+if(SUCCEEDED(hr) &amp;&amp; components &amp;&amp; components-&gt;Size()&gt;0)
+{
+   CATISamBasicComponent * pibasComp = NULL;
+   if(!!(*components)[1])
+        (*components)[1] -&gt; QueryInterface(IID_CATISamBasicComponent,(void **)&amp;pibasComp);
+   if (pibasComp)
+   {
+      double vectorCoord[3] = {0.0, 0.0, 0.0};
+      pibasComp-&gt;GetDoubleValue(vectorCoord[0],NULL,1,1,1);
+      pibasComp-&gt;GetDoubleValue(vectorCoord[1],NULL,2,1,1);
+      pibasComp-&gt;GetDoubleValue(vectorCoord[2],NULL,3,1,1);
+      <b>vector</b> = new CATMathVector(vectorCoord);
+      pibasComp-&gt;Release();
+   }
+}
+if (components)  delete components; components = NULL;
+...
+// Use vector 
+...
+// Clean Up
+iEntity -&gt; Release();
+if (vector) delete vector; 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">To find the Meshing entities associated to a geometrical 
+ support, the CATISamAnalysisSupport (implemented by the Analysis Entity as &quot;iFeatToTranslate&quot; 
+ argument) and CATIMSHMeshAssociativity interfaces can be used. To retrieve the 
+ meshing associativity object use:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// From the iFEMModel given as argument:
+//===============================================
+CATIMSHMAssociativity piMeshAsso = NULL;
+CATBaseUnknown* piMesh = NULL;
+iFEMModel -&gt; GetMesh(piMesh);
+if (piMesh)
+{
+    CATIMSHMeshManager* piMeshManager = NULL;
+    piMesh -&gt; QueryInterface(IID_CATIMSHMeshManager,(void **) &amp;piMeshManager);
+    if (piMeshManager ) 
+    {
+        <b>piMeshAsso</b> = piMeshManager -&gt; GetAssociativity();
+        piMeshManager -&gt; Release();
+    }
+    piMesh -&gt; Release();
+}
+// Extract from associativity object the list of pointers of FE entities.
+...
+if (piMeshAsso) piMeshAsso -&gt; Release();
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">Other way of programming is to use the CATISamGroup Interface 
+ on the analysis connectors of the entity, as follow:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// Retrieve the linked  FE entities:
+//===============================================
+CATISamGroup_var				spGroup ;
+const	CATAnalysisEntityCollector*	        EntityCollector	= NULL;
+CATSamValue				   	SamValue		= CATSamValueNode;
+const	CATSamPhysicalType*			oElemTypes	= NULL;
+CATLISTP(CATAnalysisEntityCollector) 		ListCollectors;
+ 
+for (i=1 ; i &lt;= SupportsList.Size() ; i++)
+{
+  spGroup = SupportsList[i];
+  if (!spGroup) return E_FAIL;</pre>
+     <pre>  HR = Group-&gt;GetContent(SamValue,Position,EntityCollector);
+  if (FAILED(HR) ) return E_FAIL;
+  if (EntityCollector)
+  {
+     ListCollectors.Append((CATAnalysisEntityCollector*)EntityCollector);
+     EntityCollector=NULL;
+  }	
+  else 
+   return E_FAIL;
+}</pre>
+     <pre>
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">&nbsp;</p>
+ <p align="left">Then, we have to create the Field model Objects. As example, we 
+ will create an entity with one characteristic applied on a list of nodes.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// From the pExplicitModel as before:
+//===============================================
+const CATAnalysisExplicitRulesData *pRulesData = NULL;
+pRulesData = pExplicitModel -&gt;GetRulesData();
+
+// Extract the physical type for entity and charac:
+CATSamPhysicalType PhysicalTypeNumber,CharacPhysicalTypeNumber;
+if (NULL != pRulesData)
+{
+    pRulesData-&gt;GetPhysicalTypeNumber(&quot;ENTITY_PHYSICAL_TYPE&quot;, PhysicalTypeNumber);
+    pRulesData-&gt;GetPhysicalTypeNumber(&quot;CHARAC_PHYSICAL_TYPE&quot;, CharacPhysicalTypeNumber);
+}
+
+// Create the entity and store it in the output argument: oNewExplObjects
+CATAnalysisExplicitCharac		Charac = NULL_exp;
+CATAnalysisExplicitEntity		Entity = NULL_exp;
+float* Values = NULL;
+CATSamExplicitPtr*	 TabNodes     = NULL ;
+int NbNodes = 0; 
+
+Entity.CreateEntity(pExplicitModel,PhysicalTypeNumber);
+Entity.ApplyTo(NbNodes,&amp;TabNodes[0],CATSamPositionNode,0);
+
+Charac.CreateCharac(Entity,CharacPhysicalTypeNumber);
+Charac.SetValues(&amp;Values[0]);
+
+NewExplObjects+= Entity;
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Idl"></a>Check the Automation</h4>
+ <p>As defined previously, the associated commands will be generated for IDL 
+ recording:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+' Get the Load Set from analysis case collection of sets.
+Dim analysisSet1 As AnalysisSet
+Set analysisSet1 = analysisSets1.ItemByType(&quot;LoadSet&quot;)
+
+' Get the collection of an analysis entities defined under the Load Set.
+Dim analysisEntities1 As AnalysisEntities
+Set analysisEntities1 = analysisSet1.AnalysisEntities
+
+' Create a new analysis entity.
+Dim analysisEntity1 As AnalysisEntity
+Set analysisEntity1 = analysisEntities1.Add(&quot;AniSpeedLoad&quot;)
+
+' Valuate the Vector Values
+analysisEntity1.SetValue &quot;AniSpeedVector&quot;, &quot;&quot;, 1, 1, 1, 0.000000
+analysisEntity1.SetValue &quot;AniSpeedVector&quot;, &quot;&quot;, 2, 1, 1, 10.000000
+analysisEntity1.SetValue &quot;AniSpeedVector&quot;, &quot;&quot;, 3, 1, 1, 0.000000
+
+' Valuate the Connector for the support selection.
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">Some general informations about the Analysis Automation 
+ interfaces are included in the reference[<a href="#Ref5">5</a>].</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Short"></a>In Short</h3>
+ <p>This article goal is to have a global overview of all the interfaces and 
+ behavior as defined about analysis entities for preprocessing data.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>Reference</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><a name="Ref1"></a>[1]</td>
+     <td valign="top"><a href="CAAAniAnalysisOverview.htm">Analysis Modeler 
+     Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref2"></a>[2]</td>
+     <td valign="top">
+     <a href="../CAAOsmQuickRefs/CAAOsmHome.htm">
+     Feature Modeler</a></td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref3"></a>[3]</td>
+     <td valign="top"><a href="../CAAAniUseCases/CAAAniCatalog.htm">
+     Creating an Analysis feature catalog</a></td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref4"></a>[4]</td>
+     <td valign="top"><a href="CAAAniPreprocessingFeatures.htm">The physical 
+     types for structural analysis</a></td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref5"></a>[5]</td>
+     <td valign="top">See Automation documentation.</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3>History</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>
+

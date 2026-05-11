@@ -1,0 +1,420 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Imakefile.mk Special File</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Imakefile.mk Special File</h3>
+      <em>How to control the compilation of programs</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The <strong>Imakefile.mk</strong> file is a text file which must be
+      defined for each module in a framework and whose purpose is to describe
+      what must be produced (by <a href="CAABtlMkmk.htm">mkmk</a>) from this
+      module. The aim of this paper is to explain how to start with this file
+      and secondly how to use advanced features.</p>
+      <p>Before to start building your program, we advise you to read both the
+      first part of this paper (including few samples) and the use of <a href="CAABtlMkmk.htm">mkmk</a>.</p>
+      <ul>
+        <li><a href="#Why this kind of file?"><strong>Why this kind of file?</strong></a></li>
+        <li><a href="#Few samples"><strong>Few samples</strong></a></li>
+        <ul>
+          <li><a href="#Location">Location</a></li>
+          <li><a href="#How to build a shared library">How to build a shared
+            library</a></li>
+          <li><a href="#How to build an executable">How to build an executable</a></li>
+          <li><a href="#Java">How to Build a Java Module</a></li>
+          <li><a href="#Distinguish operating systems in Imakefile.mk">Distinguish
+            operating systems in Imakefile.mk</a></li>
+          <li><a href="#How to use personal preprocessing variables">How to use
+            personal preprocessing variables</a></li>
+        </ul>
+        <li><a href="#Syntax and variables"><strong>Syntax and variables</strong></a></li>
+        <ul>
+          <li><a href="#Syntax">Syntax rules</a></li>
+          <li><a href="#Variables">Variables interpreted by mkmk</a></li>
+        </ul>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<h3><a name="Why this kind of file?"></a>Why this kind of file?</h3>
+<p>Every module should be associated with a <strong>Imakefile.mk</strong> file
+before attempt to build with the CAA Workbench Code Builder mkmk.</p>
+<p>The Imakefile.mk contains make-like macros which are used at compilation time
+and build time. So the Imakefile.mk syntax must comply to the global syntax of
+makefiles.</p>
+<p>Like explained in <a href="CAABtlMkmk.htm#Hide operating system specificities">mkmk</a>
+paper, our environment proposes the same compiler for all operating systems
+where CNext can be run. This is a convenient way for developers to build their
+programs since they do not have to learn how to use different compilers and how
+to write (and keep up to date) makefiles. However all cannot be done by mkmk and
+users must explain at least what they want to generate.</p>
+<h3><a name="Few samples"></a>Few samples</h3>
+<p>Here are the most basic samples of Imakefile.mk files you could have to write
+regarding the type of data to generate.</p>
+<h4><a name="Location"></a>Location</h4>
+<p align="center"><img border="0" src="images/FileTree17.gif" width="439" height="399"></p>
+<h4><a name="How to build a shared library"></a>How to build a shared library</h4>
+<p>The type of result is specified by a <a href="#Variables">variable</a> named <code><em>BUILT_OBJECT_TYPE</em></code>.
+The most basic Imakefile.mk contains just one line:</p>
+<blockquote>
+  <p><code><em>BUILT_OBJECT_TYPE=SHARED LIBRARY</em></code></p>
+</blockquote>
+<p>Another type of library is the <strong>archive</strong>. It is less used than
+shared libraries but if you need to generate one, just replace the words &quot;<code><em>SHARED
+LIBRARY&quot; </em></code>by the word <code><em>&quot;ARCHIVE</em></code>&quot;.</p>
+<h4><a name="How to build an executable"></a>How to build an executable</h4>
+<p>A main program can be built by setting another value to the previous
+variable:</p>
+<blockquote>
+  <p><code><em>BUILT_OBJECT_TYPE=LOAD MODULE</em></code></p>
+</blockquote>
+<p>Another thing that could be interesting to control is the name of the
+program: this is achieved using another variable, for instance:</p>
+<blockquote>
+  <p><code><em>PROGRAM_NAME=my_beautiful_program<br>
+  BUILT_OBJECT_TYPE=LOAD MODULE</em></code></p>
+</blockquote>
+<p>If no name is defined, default names will be chosen regarding the type of
+data to build.</p>
+<h4><a name="Java"></a>How to Build a Java Module</h4>
+<p>To build a Java module, include:</p>
+<blockquote>
+  <p><code><em>PACKAGE_MODULE=my.package<br>
+  BUILT_OBJECT_TYPE=JAVA</em></code></p>
+</blockquote>
+<p>where <code>my.package</code> is the root of the packages that are to be
+included in the Java module.</p>
+<h4><a name="Distinguish operating systems in Imakefile.mk"></a>Distinguish
+operating systems in Imakefile.mk</h4>
+<p>Even if the same Imakefile.mk file can be used on any (supported) operating
+systems, you may want to mark some differences regarding the current operating
+system. To do this, consult the <a href="CAABtlMANprepro.htm">declarative file
+preprocessor</a> document.</p>
+<h4><a name="How to use personal preprocessing variables"></a>How to use
+personal preprocessing variables</h4>
+<p>Preprocessing variables are often used in programs for different purposes:</p>
+<ul>
+  <li>Debug: print messages to trace execution</li>
+  <li>Variants of implementation: according to the current OS or for different
+    levels of services</li>
+</ul>
+<p>The Imakefile.mk syntax proposes a set of keyword (one per language) to add
+such variables, here is an example where we set a &quot;<code><em>DEBUG</em></code>&quot;
+variable for the compilation of C and C++ files and a &quot;<code><em>API3</em></code>&quot;
+variable for the compilation of C++ files (note the use of &quot;<code><em>$(...)</em>&quot;</code>
+to reference the value of a variable):</p>
+<blockquote>
+  <p><code><em>LOCAL_CFLAGS=-DDEBUG<br>
+  LOCAL_CCFLAGS=$(LOCAL_CFLAGS) -DAPI3<br>
+  ...</em></code></p>
+  </blockquote>
+  <h3><a name="Syntax and variables"></a>Syntax and variables</h3>
+  <h4><a name="Syntax"></a>Syntax rules</h4>
+  <ol>
+    <li>A variable can be defined from a previously defined variable.
+      <pre><em>VAR2=$(VAR1)</em></pre>
+    </li>
+    <li>The makefile syntax does not allow to define a variable from itself.
+      Definition such as the following ones are not allowed:
+      <pre><em>VAR1=val1 val2</em>
+<em>VAR1=$(VAR1) val3</em></pre>
+    </li>
+    <li>Lines beginning by the '#' character are comments or pragma.</li>
+    <li>Lines ending with a backslash '\' character continue on the next line.</li>
+    <li>space characters are ignored on both sides of a equal '=' character.</li>
+    <li>except if specified, the space character can be used as separator if a
+      variable is set with several parameters</li>
+  </ol>
+  <h4><a name="Variables"></a>Variables interpreted by mkmk</h4>
+  <p>Note: Variables following the flag &quot;<strong>internal usage</strong>&quot;
+  are those used for special purpose and may not be used outside Dassault
+  Systèmes.</p>
+  <h5>mandatory</h5>
+  <blockquote>
+    <p><code><em>BUILT_OBJECT_TYPE</em></code>= type of the module to build. Its
+    value can be :</p>
+  </blockquote>
+  <blockquote>
+    <ul>
+      <li><code><em>LOAD MODULE</em></code> to build a main program,</li>
+      <li><code><em>SHARED LIBRARY</em></code> to build a shared library or DLL,</li>
+      <li><code><em>ARCHIVE</em></code> to build an archive,</li>
+      <li><code><em>EL LIBRARY</em></code> for Explicitly Loaded, this kind of
+        modules are explicitly loaded at run time. A shared library or DDL is
+        built but it cannot be referenced by the other modules through the <code><em>LINK_WITH</em></code>
+        macro</li>
+      <li><code><em>JAVA</em></code> to build a Java module.</li>
+    </ul>
+  </blockquote>
+  <h5>mandatory for Java</h5>
+  <blockquote>
+    <p><code><em>PACKAGE_MODULE</em></code>= root of the Java packages for the
+    module to build, such as com.dev for a module containing the packages
+    com.dev.view and com.dev.controller</p>
+  </blockquote>
+  <h5>internal usage</h5>
+  <blockquote>
+    <p><code><em>NONE</em></code> is used to group small modules into a bigger
+    module. The name of the small module must be included in an <code><em>INCLUDED_MODULES</em></code>
+    macro in the big module. The container module can be a LOAD MODULE or a
+    SHARED LIBRARY. The container and its contents must belong to the same
+    framework.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em><a name="PROGRAM_NAME"></a>PROGRAM_NAME</em></code>= name of
+    the built module.</p>
+    <p>Default value is the module directory name with a prefix or a suffix
+    depending of the module type (see <code><em>BUILT_OBJECT_TYPE</em></code>
+    variable).</p>
+    <p>For example, if the module to build is in <em>mymodule.m</em>
+    directory, the generated output name is:</p>
+    <div align="center">
+      <center>
+      <table border="1" width="90%">
+        <tr>
+          <th align="left" valign="top" bgcolor="#66FFFF">BUILT_OBJECT_TYPE</th>
+          <th align="left" valign="top" bgcolor="#66FFFF">Generated module name</th>
+        </tr>
+        <tr>
+          <td><code><em>LOAD MODULE</em></code></td>
+          <td>mymodule (UNIX)
+            <p>mymodule.exe (Windows)</td>
+        </tr>
+        <tr>
+          <td><code><em>SHARED LIBRARY</em></code></td>
+          <td>libmymodule.a (AIX)
+            <p>libmymodule.sl (HP-UX)</p>
+            <p>libmymodule.so (SunOS)</p>
+            <p class="CellBody">mymodule.dll (Windows)</p>
+            <p class="CellBody">mymodule.lib (Windows)</td>
+        </tr>
+        <tr>
+          <td><code><em>ARCHIVE</em></code></td>
+          <td>libmymodule.a (UNIX)
+            <p>mymodule.lib (Windows)</td>
+        </tr>
+      </table>
+      </center>
+    </div>
+    <p>The naming of modules concerns only load modules <code><em>(BUILT_OBJECT_TYPE=
+    LOAD MODULE</em></code>) and is advised for transparency reasons.</p>
+  </blockquote>
+  <h5>mandatory</h5>
+  <blockquote>
+    <p><code><em>LINK_WITH = lib_1 lib_2 ... lib_n</em></code></p>
+    <p>list of modules (i.e. libraries) to be used at link-edition time of the
+    current module. This option is mandatory. <b>You must always at least
+    include JS0GROUP in the list of load modules</b>. The statement becomes:</p>
+    <p><code><em>LINK_WITH = JS0GROUP lib_2 ... lib_n</em></code></p>
+    <p>When link-editing a module, mkmk uses the subset of libraries which
+    belong to the prerequisite frameworks of the embedding framework of the
+    module. mkmk only makes available the subset of libraries in the
+    prerequisites that <em><code>LINK_WITH</code></em> features. The library
+    name to be used is either the one specified in the corresponding
+    Imakefile.mk file or the default computed by mkmk (see <a href="#PROGRAM_NAME">PROGRAM_NAME</a>
+    keyword).</p>
+    <p>Do not forget to referenced the prerequisite frameworks in the identity
+    card (<a href="CAABtlMANIdCard.htm">IdentityCard.h</a> file) of the
+    framework to avoid an mkmk error (<em>mkmk-WARNING: .....: Modules .... in
+    LINK_WITH was found in component .... which is not directly referenced,
+    ignored</em>). <b>For JS0GROUP, you must reference the System framework</b>.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>INCLUDED_MODULES = mod_1 mod_2 ... mod_n</em></code></p>
+    <p>list of modules of the current framework whose objects must be included
+    in this module. Note that the &quot;.m&quot; code module suffix is not
+    written.</p>
+    <p>The type of the modules referenced in this macro must be <code><em>NONE</em></code>
+    (<code><em>BUILT_OBJECT_TYPE=NONE</em></code>).</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>COMDYN_MODULE</em></code>=</p>
+    <p>module name which exports the CNext dynamic commons. Be careful the
+    module name cannot be referenced in the <code><em>LINK_WITH</em></code>
+    macro. This macro concerns only Fortran modules of course. If you need to
+    share your own dynamic commons between sources, put the sources in the same
+    module.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>IMPACT_ON_IMPORT= YES</em></code></p>
+    <p>to force the build of the modules which import this module.</p>
+    <p>This solves the incoherences at runtime due to the no rebuild of
+    libraries. The problem does not exist with C++ programs because the
+    dependencies between modules are indicated in header files. The impact is
+    automatically computed and the rebuild is done. But with Fortran language
+    this problem exists as shown in the following sample.</p>
+    <table border="0">
+      <tr>
+        <td><img border="0" src="images/makefile2.gif" width="339" height="239"></td>
+        <td>
+          <ol>
+            <li>The m3 module in library3 has the m1 module from library1 as
+              prerequisite.</li>
+            <li>The s1 symbol moves from m1 (library1) to m2 (library2).</li>
+            <li>So library3 must be rebuilt to be correct at the execution time.</li>
+          </ol>
+        </td>
+      </tr>
+    </table>
+    <p>This macro must be included always in Fortran modules and never in other
+    modules for performance reasons. With C++ programs it is not necessary to
+    force the rebuild.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>OPTIMIZATION_xxx</em></code>=</p>
+    <p>xxx can be either <code><em>C</em></code>, <code><em>CPP</em></code>, or <code><em>FORTRAN</em></code></p>
+    <p>This macro is used to define an optimization level for a language. The
+    value is ignored if mkmk runs with -g or -dev option.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><i><code>CXX_EXCEPTION=</code></i></p>
+    <p>mkmk deactivates by default C++ native exceptions. If you need to use C++ 
+	native exceptions in your module, add this macro to reactivate them. Do not 
+	add any value after the equal sign. Pay attention not to nest V5 exceptions 
+	and C++ native exceptions.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>BUILD=NO</em></code></p>
+    <p>module won't be rebuilt by mkmk until this macro is removed.<br>
+    Useful in <code><em>OS</em></code>-specific section.</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>LOCAL_xxFLAGS=</em></code></p>
+    <p>additive compile-time options.</p>
+    <p>The following table lists the name of the macro
+    corresponding to the language to compile.</p>
+    <div align="left">
+      <table border="1" width="90%">
+        <tr>
+          <th align="left" valign="top" bgcolor="#66FFFF">Languages</th>
+          <th align="left" valign="top" bgcolor="#66FFFF">Macro name</th>
+        </tr>
+        <tr>
+          <td>C++</td>
+          <td><code><em>LOCAL_CCFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td><code><em>LOCAL_CFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>fortran</td>
+          <td><code><em>LOCAL_FFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>assembler</td>
+          <td><code><em>LOCAL_ASFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>express grammar</td>
+          <td><code><em>LOCAL_CKMFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>yacc grammar (on UNIX only)</td>
+          <td><code><em>LOCAL_YFLAGS</em></code></td>
+        </tr>
+        <tr>
+          <td>lex grammar (on UNIX only)</td>
+          <td><code><em>LOCAL_LFLAGS</em></code></td>
+        </tr>
+      </table>
+    </div>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>LOCAL_LDFLAGS</em></code>=</p>
+    <p>additive link-time options</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>SYS_LIBPATH</em></code>=</p>
+    <p>additive link-edit time system library directories (-L options)</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>SYS_LIBS</em></code>=</p>
+    <p>additive link-edit time system library directories (-l options)</p>
+  </blockquote>
+  <h5>optional</h5>
+  <blockquote>
+    <p><code><em>MKMFC_DEPENDENCY</em></code>=<code><em>yes</em></code></p>
+    <p>additive link-edit time option. Required to build shared libraries directly using MFC classes or load modules producing <em>Windows WPF Applications</em> (per opposition to <em>Windows Console Applications</em>). In this last case, the <code><em>$(SUB_WIN)</em></code> keywork is also mandatory:</p>
+<table class=code><tr><td>
+<pre>BUILT_OBJECT_TYPE=LOAD MODULE
+
+LINK_WITH = ...
+
+OS = Windows_NT 
+MKMFC_DEPENDENCY = yes
+LOCAL_LDFLAGS = $(SUB_WIN)<pre>
+</td></tr></table>
+  </blockquote>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+  <hr>
+  <!---------------------------------------------------------------------------->
+  <h3><a name="InShort"></a>In Short</h3>
+  <ul>
+    <li>Mkmk needs an Imakefile.mk file for every module.</li>
+    <li>The minimum required is to specify what to built (cf macro <code><em>BUILT_OBJECT_TYPE</em></code>).</li>
+    <li>You can expressed specific sections for all (supported) operating
+      systems;</li>
+    <li>You can add your own preprocessing variables as well as external
+      libraries.</li>
+  </ul>
+  <p align="right">[<a href="#Top">Top</a></p>
+  <hr>
+  <!---------------------------------comment------------------------------------->
+  <h3><a name="History"></a>History</h3>
+  <table width="100%">
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </table>
+  <hr>
+  <!---------------------------------comment------------------------------------->
+  <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+  </code></code>
+
+</body>
+
+</html>

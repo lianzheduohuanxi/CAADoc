@@ -1,0 +1,418 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Understanding the Migration of Customized Masks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Data Model Customizer for ENOVIA</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding the Migration of Customized Masks</h3>
+      <em>Customizing ENOVIA</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains  the complete mechanism to migrate customized
+      masks from an ENOVIA version N to a subsequent version of ENOVIA. For an
+      example of mask migration, please have a look to <a href="../CAADmcUseCases/CAADmcMigratingMaskCusto.htm">Migrating
+      customized masks Use Case</a>.
+      <ul>
+        <li><strong><a href="#Migrate_the_workspace">Why Migrating ENOVIA Masks 
+        Customization ?</a></strong>
+        <li><strong><a href="#Publishing_the_workspace">Migrating&nbsp; ENOVIA
+          Masks Customization</a></strong>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#Files needed for mask migration">Files
+          Required to Migrate the Mask</a>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp; 
+        <a href="#How to launch the merging application">Launching the Merging Application</a>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#After merging your files">After Merging 
+        Your files</a>
+        <li><strong><a href="#Principle">Principle</a></strong>
+        <li><strong><a href="#Details">Details</a></strong>
+        <li><strong>&nbsp;&nbsp; </strong><a href="#Tree and sort">Tree and sorting</a>
+        <li>&nbsp;&nbsp; <a href="#Action to execute">Action to Execute</a>
+        <li>&nbsp;&nbsp; <a href="#Alternative cases">Alternative Cases</a>
+        <li>&nbsp;&nbsp; <a href="#Rules file syntax">Rules File Syntax</a>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Migrate_the_workspace"></a>Why Migrating ENOVIA Masks Customization?</h3>
+<p>Some customers have decided to apply changes on Dassault Systemes masks, in
+ENOVIA, so that ENOVIA behavior and appearance agree with their application. But
+with ENOVIA migration, new Dassault Systemes masks will be set in place, and
+will replace the old customized masks. To prevent users from losing any information, RADE provides 
+them with a merger that will help them to quickly create new customized
+masks. These new masks will take into account the changes between ENOVIA release N
+and ENOVIA release N+1 and the old customized masks.</p>
+<p align="center">
+<img border="0" src="../CAADmcUseCases/images/CAADmcMigratingMaskCusto.gif"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Publishing_the_workspace"></a>Migrating ENOVIA Masks</h3>
+<p>The mask migration process is shown below.</p>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerProcess.gif"></p>
+<ul>
+  <li><b><a name="Files needed for mask migration"></a>Files Required to Migrate 
+  the Mask</b></li>
+</ul>
+<blockquote>
+  <p>To run the masks merger, three files are required:</p>
+  <ul>
+    <li>Mask DEF N (Default mask Release N)</li>
+    <li>Mask DEF N+1(Default mask Release N+1)</li>
+    <li>Mask CUST N (Customized mask Release N)</li>
+  </ul>
+  <ol>
+    <li><b>Mask release N</b>
+      <p>The default N mask can be retrieved using the VPMPeopleUpdate -savemask
+      &lt;dir&gt;. Your mask is exported to a file in the &lt;dir&gt;
+      folder.<br>
+      The customized N mask can be retrieved using the VPMPeopleImport -savemask
+      &lt;dir&gt;. Your customized mask is saved in a file in the folder
+      &lt;dir&gt;.<b><br>
+      &nbsp;</b></p>
+    </li>
+    <li><b>Mask release N+1</b>
+      <p>Once you have migrated your ENOVIA LCA database, use the command VPMPeopleUpdate -savemask 
+      &lt;dir&gt; to export the default N+1 mask.</p>
+
+      <p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#00CC99,#3333CC,#CCCCFF,#B2B2B2" />
+
+      <p>For further details on <font face="Courier New" color="#008000">VPMPeopleImport</font> and 
+      <font face="Courier New" color="#008000">VPMPeopleUpdate</font>,
+      refer to <var>ENOVIA V5
+      LifeCycle Applications Documentation: Administration Tasks: People, Organization and Security Tools</var><font face="Courier New" color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></p>
+    </li>
+  </ol>
+</blockquote>
+<ul>
+  <li><b><a name="How to launch the merging application"></a>Launching the
+    Merge Application</b></li>
+</ul>
+<blockquote>
+  <p>One you have retrieved all needed files for the migration, launch the CATVBTMaskMerger command as follows:</p>
+</blockquote>
+<div style="width: 1153; height: 268; border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+  <p align="center">&nbsp;&nbsp;$PREFIX$ <i>-run &quot;CATVBTMaskMerger FILE1
+  FILE2 FILE3 FILE4 -rule RULE&quot; </i><code>-direnv $EnvDir$ -env $EnvName$</code>
+  <p align="left"><i>where :</i>
+  <ul type="circle">
+    <li><b>On Windows</b>: PREFIX =
+      $RADE_INSTALLATION_PATH$/$OS$/code/bin/CATSTART</li>
+    <li><b>On UNIX</b>: PREFIX =
+      $RADE_INSTALLATION_PATH$/$OS$/code/command/catstart<br>
+      &nbsp;</li>
+    <li><b>RADE_INSTALLATION_PATH</b> is the location where you installed the
+      RADE CD.</li>
+    <li><b>OS</b> is the operating system tag (eg. solaris_a, intel_a, aix_a, hpux_b, ....).</li>
+    <li><b>FILE1</b> is the path of the file containing Dassault Systemes masks
+      - version Rn</li>
+    <li><b>FILE2</b> is the path of the file containing Dassault Systemes masks
+      - version Rn+1
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li><b>FILE3</b> is the path of the file containing customized masks -
+      version Rn&nbsp;</li>
+    <li><b>FILE4</b> is the path of the file containing Dassault Systemes masks
+      - version Rn+1 (result of this command).&nbsp;</li>
+    <li><b>RULE</b> is the rules file used in the merger engine. By default,
+      recommendations are followed in the merger engine, so this file is not
+      mandatory.<br>
+      In the case you do not use a rules file,&nbsp; remove &quot;-rule&quot;.</li>
+    <li><b><code>EnvDir</code></b> is the environment folder (i.e. containing
+      Envname.txt)</li>
+    <li><b><code>EnvName</code></b> is the name of the RADE environment (
+      Default is : <code>CAA_RADE.V5R14.B14 )</code></li>
+  </ul>
+</div>
+<p>&nbsp;</p>
+<ul>
+  <li><b><a name="After merging your files"></a>After Merging your Files</b></li>
+</ul>
+<blockquote>
+  <p>Now, your mask is ready to be used in the database, you must import it. To
+  do so, import the new custo files, using the command
+  <font face="Courier New" color="#008000">VPMPeopleImport</font>
+  in your ENOVIA installation files<font color="#282187">.
+  </font>For further details on <font face="Courier New" color="#008000">VPMPeopleImport</font>, refer to
+  <var>ENOVIA V5 LifeCycle Applications Documentation: Administration Tasks: People, Organization and Security Tools</var>.</p>
+</blockquote>
+<h3><b><a name="Principle"></a><span style="font-weight: 400">Principles of
+the Merger Application</span></b></h3>
+<p>The algorithm of the merger runs on sorted trees, so each *.custo file is
+  sorted, and transformed into a tree. Then, comparisons are made between nodes
+  of these trees, and according to the result of these comparisons, an action is
+  deduced. When a doubt exists in the treatment of one case, an alternative
+  action becomes necessary. At this moment, the user will choose which action to
+  execute, to solve the problem. To choose this action, the user will write a
+  rules file, to explain actions to do on one or several nodes.<br>
+  (Rules are explained further in this documentation).
+</p>
+<div align="left">
+  <table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+    <tr>
+      <td width="46">
+      <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+      <td>The result tree is based on the customized masks - version Rn</td>
+    </tr>
+  </table>
+</div>
+<h3><b><a name="Details"></a><span style="font-weight: 400">Details</span></b></h3>
+<ul>
+  <li><b><a name="Tree and sort"></a>Tree and Sorting</b></li>
+</ul>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerTreeAndSort.gif"></p>
+<blockquote>
+  <p align="left">This sort has no impact on nodes of the mask, except for nodes
+  whose type is VALUE.<br>
+  Indeed, customers who decide to customize VALUE nodes want to keep nodes
+  content but also the nodes order. The sort will disturb the order defined in
+  the mask. So to prevent any unwanted effects, a weight is affected to each
+  node (this weight is in fact the line number at which the VALUE node has been
+  found), and the sort is done.&nbsp; Thus, after merging the three trees, it
+  will be possible to retrieve the expected order, by reordering the VALUE nodes
+  according to their weight.</p>
+  <blockquote>
+    <p align="center">
+    <img border="0" src="images/CATVBTMaskMergerTreeAndSortValue.gif"></p>
+    <p align="left">&nbsp;</p>
+  </blockquote>
+</blockquote>
+<ul>
+  <li><b><a name="Action to execute"></a>Action to Execute</b></li>
+</ul>
+<blockquote>
+  <p>&nbsp;Once the 3 trees are sorted, compare them node by
+  node. All cases have been summed up in the following table:</p>
+  <div align="left">
+    <table border="0" cellpadding="2" style="border-collapse: collapse" id="table2" cellspacing="2">
+      <tr>
+        <td>Actions </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>Add</b>
+    node</td>
+        <td>the node and its sub tree are cloned and added in the result tree</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>Keep</b>
+    node</td>
+        <td>the node is kept and comparisons and actions are launched in the node sub tree,
+    that's why <i>deep-first = yes </i>for keep action</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>Ignore</b> node&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        <td>the node and its sub tree are ignored (they do not appear is the result)</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Node</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>New</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        <td>DEF(N+1) tree</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>Cus</b></td>
+        <td>Custo(N) tree</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><b>Ref</b>&nbsp; </td>
+        <td>DEF(N) tree&nbsp;</td>
+      </tr>
+    </table>
+  </div>
+</blockquote>
+<p>&nbsp;</p>
+<p align="center">
+<img border="0" src="../CAADmcUseCases/images/CAADMCMaskCombinaison.jpg"></p>
+<p align="center">&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For example:</p>
+<p align="center">
+<img border="0" src="../CAADmcUseCases/images/CATVBTMaskMergerExecuteAction.gif"></p>
+<ul>
+  <li><b><a name="Alternative cases"></a>Alternative<i> </i>Cases</b></li>
+</ul>
+<blockquote>
+  <p>In some cases, the merger engine cannot decide what to do, or cannot 
+  determine whether the chosen action matches the user intents. To let you set 
+  up the merger behavior, alternative actions&nbsp; were added. So, you can 
+  choose one of the actions shown in the matrix.&nbsp;
+  By default, the merger engine uses Recommendations, but if a valid rule is
+  found in the rules file, this latter is applied.</p>
+  <p>Thus, in an alternative case:</p>
+  <ol>
+    <li>You first try to find the first rule
+  which agrees with:<div align="left">
+      <table border="0" cellpadding="0" style="border-collapse: collapse" width="15%" id="table3">
+        <tr>
+          <td>The current node</td>
+        </tr>
+        <tr>
+          <td>The possible choice given in the matrix</td>
+        </tr>
+      </table>
+    </div>
+    </li>
+    <li>If no rule was met,
+  recommendations are used.</li>
+  </ol>
+</blockquote>
+<ul>
+  <li><b><a name="Rules file syntax"></a>Rules File Syntax</b></li>
+</ul>
+<blockquote>
+  <p>Rules define the choice strategy to adopt when an alternative solution
+  occurs.</p>
+  <blockquote>
+    <p><b>Syntax:&nbsp; {<i>keep|ignore</i>} {<i>new|custo</i>} <i>&lt;Xpath&gt;</i></b></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>keep </i>=
+    conservation&nbsp; / <i>ignore</i> = exclusion&nbsp; (only actions available
+    in alternative cases)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>new </i>= the reference (DS
+    mask) / <i>custo</i> = the customization.&nbsp;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Xpath&gt; defines all concerned
+    nodes</p>
+    <p>Each node&nbsp; has a format : &lt;node_type&gt;::&lt;node_id&gt;.<br>
+    Nodes are separated by '/'.</p>
+    <p>Types of these nodes can be :</p>
+    <p>E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    -&gt;&nbsp;&nbsp;&nbsp; Entity<br>
+    +--_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    -&gt;&nbsp;&nbsp;&nbsp; Property<br>
+    +--F&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    -&gt;&nbsp;&nbsp;&nbsp; Filter (of entities)<br>
+    +--A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    -&gt;&nbsp;&nbsp;&nbsp; Attribute<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; +--X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    -&gt;&nbsp;&nbsp;&nbsp; Access<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    +--_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt;&nbsp;&nbsp;&nbsp;
+    Property<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    +--V&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt;&nbsp;&nbsp; Value</p>
+    <p>&lt;node_id&gt; are :<br>
+    &nbsp;&nbsp;&nbsp; -either a full valid identifier<br>
+    &nbsp;&nbsp;&nbsp; -either '*', in this case the engine will deal with every
+    nodes</p>
+  </blockquote>
+  <p>Particular case : //&lt;type&gt;::&lt;id&gt; describe all the nodes
+  &lt;type&gt;::&lt;id&gt;, independently from their path</p>
+</blockquote>
+<blockquote>
+  <blockquote>
+    <p>A few examples :</p>
+    <p>//_::alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; all aliases properties (entities +attributes)<br>
+    E::*
+    /_::alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; aliases property of all entities<br>
+    E::E1/A::*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; all attributes of entity E1<br>
+    E::E1/A::A1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; attribute A1 of entity E1<br>
+    E::E2/_::alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; alias property of entity E2<br>
+    E::E9/A::*/_::*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; all properties of all attributes of entity E9<br>
+    E::E9/A::*/X::*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; all accesses of all attributes of entity E9<br>
+    E::E9/A::*/_::values/V::*&nbsp;&nbsp;&nbsp; ----------------&gt; all values
+    in values property in all attributes of&nbsp; E9<br>
+    E::*/F::F1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ----------------&gt; F1 filter of all entities<br>
+    &nbsp;<br>
+    <br>
+    &nbsp;</p>
+  </blockquote>
+</blockquote>
+<p>At this step, we only consider
+differences between Dassault Systemes nodes and customized nodes. That's why the
+rules only deal with &quot;new&quot; and &quot;custo&quot;.</p>
+<p>Thus, if we found such a situation:</p>
+<p align="center">
+<img border="0" src="../CAADmcUseCases/images/CAADmcMigratingMaskRulesSyntax.gif"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>For more details on ENOVIA masks, consult <var>ENOVIA V5 LifeCycle
+      Applications Documentation: Enterprise Architecture Foundation: Enterprise Architecture Administration Guide: 
+    Administration tasks: Understanding Object Access Control</var>.</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="UnderstandingMigratingMaskCusto.htm">Data Model Customizer for ENOVIA</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [March 2006]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

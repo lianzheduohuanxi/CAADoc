@@ -1,0 +1,191 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Accessing Light Part Data</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Accessing Light Part Data</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This use case is intended to show you how to obtain
+      and set Light part data on a light part object using a macro..</p>
+      <p>This macro opens the document CAAPsp3DEduIn.CATProduct. Using the root
+      node of the document, it then finds a Light Part object with a
+      given instance name. It then sets and gets the definition points of the
+      light part.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAPspLightPart is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPspLightPartSource.htm">CAAPspLightPart.CATScript</a>
+      is located in the CAAScdPspUseCases module. <a href="macros/CAAPspLightPart.CATScript">Execute
+      macro</a> (windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAPspLightPart includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Get a PspLightPart object">Get a Light Part Object</a></li>
+        <li><a href="#Set Definition Points">Set Definition Points</a></li>
+        <li><a href="#Get Definition points">Get Definition Points Information</a></li>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>The macro first loads Distributive System document
+      CAAPsp3DEduIn.CATProduct containing Equipment and Piping Design objects.</p>
+      <p>Note: To open a different document, modify the variable <i>sDocFullPath</i>
+      to point to full path name of the document.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct&quot; )
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspWorkbench</i> object from the
+      document using the top node of the object tree in a Distributive
+      System document.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">'---------------------------------------------------------</font>
+    <font color="#008000">' Find the top node (PspWorkbench) of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product       
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+    <font color="#008000">...</font></pre>
+      <h4> <a name="Get a PspLightPart object"></a>Get a Light Part Object</h4>
+      <p>Using the <i>objPrdRoot</i> as the node, the macros processes the Products
+      collection to get a product whose instance name is
+      &quot;Weld-011&quot;. It uses <i>GetInterface</i> method of <i> objPspWorkbench</i> to get
+      <i> CATIAPspLightPart</i> interface handle on the light part object.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">    ' ----------------------------------------------------</font>
+    <font color="#008000">' Get a Product whose instance name is Weld-011</font>
+    <font color="#008000">' and then get handler to PspLightPart</font>
+    <font color="#008000">' ----------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>objWeld          <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspLightPart  <font color="#0000FF"> As </font>PspLightPart
+    
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+    
+<font color="#0000FF">      Set </font>objWeld = objPrdRoot.Products.Item(&quot;Weld-011&quot;)                    
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspLightPart = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspLightPart&quot;, _
+                                                objWeld )                  
+<font color="#0000FF">      End If</font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="Set Definition Points"></a>Set Definition Points</h4>
+      <p>It then calls <i>SetDefinition</i> method of <i>objPspLightPart</i>
+      object to
+      set definition points of the light part by passing an array of six values as
+      coordinates of two points.</p>
+      <pre>      <font color="#008000">...</font>
+      <font color="#008000">' ----------------------------------------</font>
+      <font color="#008000">' Setting up array of definition of points </font>
+      <font color="#008000">' -----------------------------------------</font>
+        
+      db6Array(0)=0.5
+      db6Array(1)=0.0
+      db6Array(2)=0.0
+      db6Array(3)=4.0
+      db6Array(4)=0.0
+      db6Array(5)=0.0
+
+      objPspLightPart.SetDefinition  objRelAxisPrd, db6Array
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get Definition points"></a>Get
+      Definition Points Information</h4>
+      <p>It then <i>GetDefinition</i> method of <i>objPspLightPart</i>
+      object
+      to obtain definition point information.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">      ' ----------------------------------------</font>
+      <font color="#008000">' Get definition points of the light part</font>
+      <font color="#008000">' ----------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLDefPoints = objPspLightPart.GetDefinition ( _       
+                            objRelAxisPrd )      
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Display information on Definition points</font>
+      <font color="#008000">'-----------------------------------------</font>
+<font color="#0000FF">      If </font>( Not ( objLDefPoints Is Nothing ) )<font color="#0000FF"> Then</font>
+        
+        iNbPts =  objLDefPoints.Count / 3
+        strMessage_g = strMessage_g &amp; _
+               &quot;Number of definition points =&quot; &amp;  iNbPts &amp; vbCr    
+<font color="#0000FF">        For </font>iIdx = 1<font color="#0000FF"> To </font>objLDefPoints.Count Step 3                   
+          dbX = objLDefPoints.Item( iIdx )
+          dbY = objLDefPoints.Item( iIdx + 1 )
+          dbZ = objLDefPoints.Item( iIdx + 2 )
+  
+          strMessage_g = strMessage_g &amp; &quot;Definition pt &quot; &amp;  vbCr                                 
+          strMessage_g = strMessage_g &amp; &quot;      X= &quot; &amp; dbX &amp; vbCr                                 
+          strMessage_g = strMessage_g &amp; &quot;      Y= &quot; &amp; dbY &amp; vbCr                                 
+          strMessage_g = strMessage_g &amp; &quot;      Z= &quot; &amp; dbZ &amp; vbCr                                 
+          
+<font color="#0000FF">        Next</font>
+    <font color="#008000">...</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case shows how to access a light part of an
+existing document. A message logging the status of the critical steps is
+displayed at the end of the use case.</p>
+<p><img border="0" src="images/CAAPspLightPart_01.jpg" width="525" height="422"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspLightPart.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

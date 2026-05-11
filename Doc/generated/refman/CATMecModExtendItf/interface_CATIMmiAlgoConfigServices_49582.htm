@@ -1,0 +1,347 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATMecModExtendItf Interface CATIMmiAlgoConfigServices</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATMecModExtendItf.htm" href="../CATMecModExtendItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATMecModExtendItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMmiAlgoConfigServices"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATMecModExtendItf Interface CATIMmiAlgoConfigServices</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMmiAlgoConfigServices_49582','CATIMmiAlgoConfigServices','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMmiAlgoConfigServices</b>
+</p>
+<p>
+<b><i>   Class providing services to manage the mechanical feature versionning.</i></b><br>
+<br>
+  Use CATMmiExtendServicesFactory to get the services component with Component_AlgoConfigServices as class name.
+ <br>
+ <b>Role:</b>
+ <ul>
+ This class is used to manage the <script type="text/javascript"> activateLinkAnchor('CATSoftwareConfiguration','','CATSoftwareConfiguration') </script> that is needed to version a mechanical feature.<br> But this class doesn't provide services that modify the CATSoftwareConfiguration.
+ 
+ <p>At the end of the first build, the configuration must be stored thanks to the 
+<script type="text/javascript"> activateLinkAnchor('','StoreConfiguration','StoreConfiguration') </script> method. After this storage, the configuration can not be modified anymore. It is impossible to by-pass this restriction
+ thanks to a new call of the "store" method with a different configuration. It's the only way to assure that the
+ configuration used during the following builds will be the same that during the first one.
+ So if you use these methods correctly, your feature will have the same behavior update after update.<p>
+ </ul>
+ <br>
+ <b>Note about the different methods provided by this class and when to use them:</b>
+ <br>
+ <ul>
+   <li>
+     The 
+<script type="text/javascript"> activateLinkAnchor('','CreateConfigurationData','CreateConfigurationData') </script> method must be called in your factory implementation.<br>     It allows to initialize an internal mechanical data needed to manage the configuration.<br>
+     If this method is not properly used, the rest of the methods of this class will have a bad behavior.<br>
+   </li>
+   <li>
+     The 
+<script type="text/javascript"> activateLinkAnchor('','GetConfiguration','GetConfiguration') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','StoreConfiguration','StoreConfiguration') </script> methods must be used during the build,     in the 
+<script type="text/javascript"> activateLinkAnchor('CATIFmFeatureBehaviorCustomization','','CATIFmFeatureBehaviorCustomization') </script> interface implementation of your feature.<br>     Like the configuration is a common data that allows to version the different softwares (DS softwares and
+     your owns) called during the build, the 
+<script type="text/javascript"> activateLinkAnchor('','GetConfiguration','GetConfiguration') </script> method must be called at the begining of     the build, and the 
+<script type="text/javascript"> activateLinkAnchor('','StoreConfiguration','StoreConfiguration') </script> method at its ends.<br>   </li>
+ </ul>
+ <br>
+ See the CAA article entitled <b>"Integrating a New Geometrical Feature in the Update Mechanism"</b> for an example
+ of the use of the methods of this class.<br>
+ <br>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateConfigurationData(CATIMmiMechanicalFeature*)"><b>CreateConfigurationData</b></a>(CATIMmiMechanicalFeature*)
+<dd>     Initializes a data needed to store the configuration of the feature.
+ <dt> o 
+    <a href="#GetConfiguration(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*&amp;,int&amp;)"><b>GetConfiguration</b></a>(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*&amp;,int&amp;)
+<dd>     Reads the configuration stored on a mechanical feature.
+ <dt> o 
+    <a href="#StoreConfiguration(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*)"><b>StoreConfiguration</b></a>(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*)
+<dd>     Stores a configuration on a mechanical feature.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateConfigurationData"></a><a name="CreateConfigurationData(CATIMmiMechanicalFeature*)"></a> <dt> o <b>CreateConfigurationData</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateConfigurationData</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature*')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+    Initializes a data needed to store the configuration of the feature.<br>
+  <br>
+  <b>Role:</b><br>
+  This method initializes a data needed to store the configuration that allows to version your feature.<br>
+  <br>
+  <b>Note:</b>
+  <ul>          
+    <li>
+      This method must be called in the method instanciating the feature. More generally in the factory
+      implementation.
+    </li>
+    <li>
+      If this method is not properly used, the rest of the methods of this class will have a bad behavior.
+    </li>
+  </ul>
+  <br>
+  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>   iFeature</tt>
+   <dd>    The mechanical feature to version.
+  <br>
+  </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      <ul>
+      <li>
+        S_OK if the data has been correctly initialized.
+      </li>
+      <li>
+        E_INVALIDARG if <tt>iFeature</tt>:
+        <ul>
+          <li>is NULL</li>
+          <li>is not a mechanical feature</li>
+        </ul>
+      </li>
+      <li>
+        E_FAIL for all other problems.
+      </li>
+    </ul>
+  <br>
+  <br>
+</dl>
+</dl>
+<a name="GetConfiguration"></a><a name="GetConfiguration(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*&amp;,int&amp;)"></a> <dt> o <b>GetConfiguration</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetConfiguration</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature*')</script> <td><tt>iFeature</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSoftwareConfiguration','CATSoftwareConfiguration*&amp;')</script> <td><tt>oConfig</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oIsConfigToStore</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+    Reads the configuration stored on a mechanical feature.<br>
+  <br>
+  <b>Role:</b><br>
+  This method reads the configuration stored on the mechanical feature.<br>
+  It must be called at the beginning of the build of your feature.<br>
+  <br>
+  <b>Note:</b>
+  <ul>          
+    <li>
+      If the 
+<script type="text/javascript"> activateLinkAnchor('','CreateConfigurationData','CreateConfigurationData') </script> method has not been correctly called on the feature (because      it's an old feature not versionned, or because you made an error in the use of this method), an empty
+      configuration is provided. This configuration can not be valuated.<br> 
+      In this case the <b>oIsConfigToStore</b> parameter shows that it's useless to store the configuration.
+    </li>
+    <li>
+      If your feature has not been built yet, like it has no configuration at this step, an empty
+      configuration is provided. This configuration can be valuated.<br>
+      In this case the <b>oIsConfigToStore</b> parameter shows that the configuration must be stored,
+      and so you will have to store it at the end of the build of your feature, thanks to the 
+<script type="text/javascript"> activateLinkAnchor('','StoreConfiguration','StoreConfiguration') </script> method.
+    </li>
+    <li>
+      If the feature has already been built one time, it's the configuration stored at the end of the first
+      build that is provided. This configuration can not be valuated or modified.<br>
+      In this case the <b>oIsConfigToStore</b> parameter shows that it's useless to store the configuration.
+    </li>
+  </ul>          
+  <br>
+  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>   iFeature</tt>
+   <dd>    The feature on which you want to read the configuration.
+  </dd>
+    <dt><tt>   oConfig</tt>
+   <dd>    The configuration read (or created if the feature has no configuration stored) on the feature.<br>
+    <b>This object must be released at the end of the treatement!</b>
+  </dd>
+    <dt><tt>   oIsConfigToStore</tt>
+   <dd>    This integer allows to know if the configuration provided must be stored on the feature.<br>
+    <ul>
+      <li>
+        oIsConfigToStore = 1, the configuration must be stored.
+      </li>
+      <li>
+        oIsConfigToStore = 0, the configuration must not be stored.
+      </li>
+    </ul>
+  <br>
+  </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      <ul>
+      <li>
+        S_OK if the configuration has been correctly read on the feature (or created if no configuration is
+        stored on the feature).
+      </li>
+      <li>
+        S_FALSE if <tt>iFeature</tt> is an old created feature which does not have any configuration yet.
+      </li>
+      <li>
+        E_INVALIDARG if <tt>iFeature</tt>:
+        <ul>
+          <li>is NULL</li>
+          <li>is not a mechanical feature</li>
+        </ul>
+      </li>
+      <li>
+        E_FAIL for all other problems.
+      </li>
+    </ul>
+  <br>
+  <br>
+</dl>
+</dl>
+<a name="StoreConfiguration"></a><a name="StoreConfiguration(CATIMmiMechanicalFeature*,CATSoftwareConfiguration*)"></a> <dt> o <b>StoreConfiguration</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>StoreConfiguration</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature*')</script> <td><tt>iFeature</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSoftwareConfiguration','CATSoftwareConfiguration*')</script> <td><tt>iConfig</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+    Stores a configuration on a mechanical feature.<br>
+  <br>
+  <b>Role:</b><br>
+  This method stores the configuration that allow to version your mechanical feature.<br>
+  It must be called at the end of the build of your feature. Check the value of the <b>oIsConfigToStore</b>
+  parameter of the 
+<script type="text/javascript"> activateLinkAnchor('','GetConfiguration','GetConfiguration') </script> method to know when it's usefull to call this method.<br>  <br>
+  <b>Note:</b><br>
+  <ul>          
+    <li>
+      If the 
+<script type="text/javascript"> activateLinkAnchor('','CreateConfigurationData','CreateConfigurationData') </script> method has not been correctly called on the feature (because it's      an old feature not versionned, or because you made an error in the use of this method), nothing is done.
+    </li>
+    <li>
+      The configuration that is passed must be the same configuration that the one provided by the
+      
+<script type="text/javascript"> activateLinkAnchor('','GetConfiguration','GetConfiguration') </script> method.    </li>
+    <li>
+      The method checks that the configuration must effectively be stored. If it's not the case, nothing is done.
+    </li>
+  </ul>
+  <br>
+  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>   iFeature</tt>
+   <dd>    The feature that stores the configuration.
+  </dd>
+    <dt><tt>   iConfig</tt>
+   <dd>    The configuration that must be stored on the feature.<br>
+    <b>The configuration is not released if the store is done. The release must be done by the user!</b><br>
+  <br>
+  </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      <ul>
+      <li>
+        S_OK if the configuration has been correctly stored on the feature, or if it was useless to call this method
+        (because the configuration is already stored on the feature).
+      </li>
+      <li>
+        E_INVALIDARG if <tt>iFeature</tt>:
+        <ul>
+          <li>is NULL</li>
+          <li>is not a mechanical feature</li>
+        </ul>
+      </li>
+      <li>
+        E_INVALIDARG if <tt>iConfig</tt>:
+        <ul>
+          <li>is NULL</li>
+          <li>is not the same configuration that the one provided by the 
+<script type="text/javascript"> activateLinkAnchor('','GetConfiguration','GetConfiguration') </script> method</li>        </ul>
+      </li>
+      <li>
+        E_FAIL for all other problems.
+      </li>
+    </ul>
+  <br>
+  <br>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMmiAlgoConfigServices.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModExtendItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,124 @@
+
+' ***********************************************************************
+'   Purpose:      This macro:
+'                 1 - Opens an extended Part document
+'				  2 - Retrieves the BehaviorExtensionsRoot, 
+'					  which gives access to the behaviors defined in the corresponding CATfct file
+'				  3 - Successively retrieves behaviors under the main behavior, and get some of the input 
+'					  and output attributes defined on those behaviors
+'				  4 - created parameters under the Part document
+'				  5 - Assigns the value of those parameters to behavior's attribute: "MyExternal" attribute is linked to parameter P2
+'					  
+
+   
+' ***********************************************************************
+
+Sub CATMain()
+
+'**********************************************************
+dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdBKTUseCases\samples\TypedPartforBKTAutomation.CATPart")
+
+'**********************************************************
+
+
+'Before opening the extended part, don't forget to copy Doc_path\CAAScdBKTUseCases\samples\CAAScdBKTautomation.CATfct into installed_path/intel_a/resources/graphic
+
+' Set the CATIA popup file alerts to False
+' It prevents to stop the macro at each alert during its execution
+CATIA.DisplayFileAlerts = False
+
+'We open an extended Part
+Set CurDocument= CATIA.Documents.Open  (sFilePath)
+CurDocument.Activate()
+Set RootPart = CATIA.ActiveDocument.Part
+
+'We get the BehaviorExtension, which will provide access to every behavior instantiated
+Set BehExtension = RootPart.GetItem("CATGetBehaviorExtensions")
+
+'We get the behavior called Test Sequence, which is a main behavior (Sequential Combination)
+set MainBehavior = BehExtension.SelectBehavior("Test Sequence") 
+
+'We retrieve the behavior called "Display Information" under the sequence
+'and the behavior called VBScript
+'The method GetItem allows to retrieve a behavior of a sequence with its name
+set Behavior = MainBehavior.Behaviors.GetItem("Display Information")
+set Behavior2 = MainBehavior.Behaviors.GetItem("VBScript")
+msgbox "Name of the information Behavior : " & Behavior.Name
+
+'It is possible to access to any behavior of a sequence
+'the "Parent" method retrieves the owner of the behavior its called on
+set ParentBehavior= Behavior.Parent
+
+'It is possible to retrieve the type,and the list of behaviors
+set ExtensionBehavior= ParentBehavior.Parent
+NameExtension = ExtensionBehavior.Name
+
+'From the main behavior, we can get the list of every behaviors defined under it.
+set listBehavior = MainBehavior.Behaviors
+count = listBehavior.Count
+msgbox "number of behaviors : " & count, 64
+
+'ExtensionBehavior Parent is retrieved: it is the name of the extended object : here, Part1
+set ParentOfExtension = ExtensionBehavior.Parent
+ParentOfExtensionName = ParentOfExtension.Name
+
+type_parent= ExtensionBehavior.ExtensionClass
+msgbox "Type is " & type_parent, 64
+
+
+
+'As ParentBehavior is a sequence, we can access to any behavior of it using the "Item" method on "Behaviors"
+'This is another way than GetItem to access to a behavior
+set SecondBehavior=ParentBehavior.Behaviors.Item(1)
+name_second=SecondBehavior.Name
+'We display the name of the Information behavior to control it is the same as retrieved before by GetItem method.
+msgbox "Second Behavior of Parent List is " & name_second , 64   
+ 
+'The TestInput method ensures that the searched input attribute exists, before effectively retrieving it with GetInput 
+MyParameter="MyParameter"
+Dim Param 
+if (Behavior.TestInput(MyParameter)) then 
+	set Param = Behavior.GetInput(MyParameter)
+end if
+
+
+msgbox "MyParameter value is " & Param.Value , 64
+
+
+'We create a parameter P2 of type LENGTH under the Part. Its value is set to 100
+Dim params As Parameters
+Set params = RootPart.Parameters
+Set NewParameter = params.CreateDimension("P2", "LENGTH", 100.000000)
+
+
+Behavior2.Start
+'Now we retrieve the output attribute called "MyExternal" of the "VBScript" behavior
+'We test that this outupt attribute exists with TestOutput method
+MyExternal="MyExternal"
+Dim ParamExt
+if (Behavior2.TestOutput(MyExternal)) then 
+	set ParamExt = Behavior2.GetOutput(MyExternal)
+end if
+
+
+'The PutOutput methods assigns a value to an output attribute of a running Behavior
+'The Behavior2 has to be in executing mode, that's why we call the Start method on the VBScript behavior.
+Behavior2.PutOutput "MyExternal", NewParameter 
+msgbox "New parameter MyExternal value  is " & Behavior2.GetOutput(MyExternal).Value, 64
+
+
+
+
+Behavior2.Done
+
+End Sub
+
+

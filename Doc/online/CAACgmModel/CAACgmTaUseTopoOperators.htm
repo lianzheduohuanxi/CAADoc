@@ -1,0 +1,155 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>How to Use the Topological Operators</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Use Topological Operators</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>Build on a common scheme, the topological operators are transient objects 
+		used to create bodies.</p>
+		<ul>
+			<li><a href="#Learn">Introduction</a></li>
+			<li><a href="#Create_and_Use_a_Topological_Operator">How to Create and 
+			Use a Topological Operator</a></li>
+			<li><a href="#Delete">How to Delete a Topological Operator </a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Learn"></a>Introduction</h3>
+<p>Using topological operators is an easy way to create new consistent topological 
+objects. There are two types of operators:</p>
+<ol>
+	<li>The operators building topology from geometry. They derive from the
+	<code>CATICGMGeoToTopOperator</code> class ( to create wire bodies or skin bodies) 
+	or from <code>CATICGMSolidPrimitive</code> (to create basic primitives such 
+	as cylinder, box, sphere).</li>
+	<li>The operators only operating on topological objects. They derive from the
+	<code>CATICGMTopOperator</code> class. Some of them allows you to create simple 
+	bodies (point, line and spline bodies), see the <code>CAAGMOperatorsSpline</code> 
+	use case.</li>
+</ol>
+<p>All these operators follow the smart concept : they 
+never modify the input bodies. They always create new topological objects, which 
+share topological cells to reduce the model size.</p>
+<p>The operators can log, under request, the follow-up of the faces and free 
+edges from the input bodies to the resulting body. This data is written, under 
+request, on a topological journal attached to each operator. 
+Hence, the topological journal offers the developer the means to develop procedural 
+applications, such as feature based modeling, but this point in not detailed here. 
+See the dedicated use case in GMOperatorsInterfaces to have more information 
+on the use of the journal.</p>
+<p>The topological operators are transient objects used to define topological operations, 
+and cannot be streamed.</p>
+The GMOperatorsInterfaces framework provides main topological operators.
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Create_and_Use_a_Topological_Operator"></a>How to Create and Use a 
+Topological Operator</h3>
+<p>To use a topological operator, you must:</p>
+<ol>
+	<li>Create it:
+	<ul>
+		<li>By calling a global method.</li>
+		<li>During this step, the operation is not run.</li>
+	</ul>
+	</li>
+	<li>If needed, specify or modify additional information:
+	<ul>
+		<li>During this step, the operation is not run.</li>
+	</ul>
+	</li>
+	<li>Run the operator: <code>Run</code>
+	<ul>
+		<li>The operation is run.</li>
+	</ul>
+	</li>
+	<li>Get the result: <code>GetResult</code>
+	<ul>
+		<li>The topological result is always retrieved as a <code>CATBody</code>.</li>
+	</ul>
+	</li>
+	<li>Delete the operator instance (see <a href="#Delete">How to Delete a Topological 
+	Operator</a>).</li>
+</ol>
+<pre class="code">// Create the operator
+CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
+&amp;topdata,
+piPlane,
+nbPCurves, 
+aPCurves,
+aLimits,
+aOrientations);
+...
+
+// Run the operator
+pSkinOp-&gt;Run();
+
+// Get the resulting body
+CATBody * piSkinBody = pSkinOp-&gt;GetResult();
+...</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Delete"></a>How to Delete a Topological Operator</h3>
+<p>Topological operators should be deleted by using the <strong>Release</strong> 
+method.</p>
+<pre class="code">CATICGMTopSkin * pSkinOp = ::CATCGMCreateTopSkin (piGeomFactory,
+&amp;topdata,
+piPlane, ...)
+...
+// delete the operator
+pSkinOp <strong>-&gt;Release();  
+</strong>pSkinOp <strong>= NULL;</strong></pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+	<li>The topological operators are transient objects used to create on or more 
+	topological bodies. They follow the smart mechanism and do not modify the input 
+	operands.</li>
+	<li>All the topological operators are based on the same scheme: creation, specification 
+	od additional data if need be, run, read of the results, deletion. They work 
+	inside one container.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="History"></a>History</h3>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

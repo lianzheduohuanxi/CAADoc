@@ -1,0 +1,70 @@
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:  Create a tetrahedron filler mesh part
+'                   assign the support as surface mesh part
+'                   specify the global specifications           
+'   Assumtions:  Looks for Surface Mesh.1 in the analysis doc
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+Err.Raise 9999,,"No Doc Path Defined"
+End If
+' ----------------------------------------------------------- 
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+'Retrieve the Analysis Managar and Analysis Model
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+'Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+'Retrieve the analysis model from list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+' Retrieve mesh manager and mesh part 
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+' Retrieve publications from product and retrieve the published face.
+Set publications = product.Publications
+Set pubLine = publications.Item("Line.3")
+
+' Add the new beam mesh part to the list of mesh parts
+Set beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+
+beamPart.AddSupportFromPublication product, pubLine
+beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
+beamPart.SetGlobalSpecification "AbsoluteSag", 1
+beamPart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
+beamPart.SetGlobalSpecification "MinimumSizeValue", "1.1 mm"
+beamPart.SetGlobalSpecification "ElementOrder", "Parabolic"
+beamPart.SetGlobalSpecification "MeshCapture", 1
+beamPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
+beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
+
+'Update the mesh part
+beamPart.Update 
+
+End Sub
+

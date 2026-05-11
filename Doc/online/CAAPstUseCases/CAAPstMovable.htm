@@ -1,0 +1,636 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 6.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Positioning Products in a Product Document</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Positioning Products in a Product Document</H3>
+        <P><EM>Modifying relative and absolute positions of product instances</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article discusses the CAAPstMovable use case. This use case 
+        illustrates the way to position product instances within a  Product 
+        document. </P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstMovable Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstMovable Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstMovable</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstMovable Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>This use case is intended to help you understand how to modify the position 
+of products within a  Product document. Basically, you will see how to: </P>
+<UL>
+    <LI>Create a product and add an external component to it</LI>
+    <LI>Re-position products and retrieve their absolute and relative positions.</LI>
+</UL>
+<P>Before getting to the use case itself, it is important to get an 
+understanding of the Product Structure model by reading the referenced article [<A href="#References">1</A>].</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstMovable Use Case</H3>
+<P>CAAPstMovable is a use case of the CAAProductStructure.edu framework that 
+illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstMovable Do</H4>
+<P>The goal of CAAPstMovable is to illustrate re-positioning products within a 
+product document. It performs the following steps:</P>
+<UL>
+    <LI>Creates a new  Product document</LI>
+    <LI>Adds a new local product (&quot;AlternatProd&quot;) to the root product 
+    (&quot;Product1&quot;)</LI>
+    <LI>Adds an existing external part (&quot;Part1&quot;) to both the root product and to 
+    the local product</LI>
+    <LI>Re-positions the local product with respect to the root product</LI>
+    <LI>Re-positions the product instance of the part with respect to the local 
+    product to which it is attached</LI>
+    <LI>Displays the relative and absolute positions of the product instance of 
+    the part</LI>
+</UL>
+<P><img border="0" src="images/CAAPstMovable.jpg" width="736" height="590"> </P>
+<P>Above is an illustration of this product structure in a CATIA session after 
+all of the re-positioning has already occurred. Note that the two parts have 
+different positions, which is not the case initially (before any re-positioning 
+occurs), when the two parts are superposed. </P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstMovable</H4>
+<P>To launch CAAPstMovable, you will need to set up the build time environment, 
+then compile CAAMovable along with its prerequisites, set up the run time 
+environment, and then execute the sample. This is fully described in the 
+referenced article [<A href="#References">2</A>].&nbsp;</P>
+<P>To launch the use case, execute the following command:</P>
+<PRE>mkrun -c &quot;CAAPstMovable input.CATPart output.CATProduct&quot;</PRE>
+<UL>
+    <LI><B>input.CATPart</B> - the path to the existing external  Part that 
+    will be re-positioned. You may reference the supplied  Part document 
+    called &quot;CAAPstImport.CATPart&quot; found in
+    &nbsp;<table id="table1">
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CNEXT/resources/graphic</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CNEXT\resources\graphic</code></td>
+  </tr>
+</table>
+	<p>where <code>InstallRootDirectory</code> is the root directory of your CAA 
+	V5 installation.</LI>
+</UL>
+<UL>
+    <LI><B>output.CATProduct</B> - the path of the resulting  Product document</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstBrowse Code</H4>
+<P>CAAPstMovable code is located in the CAAPstMovable.m use case module of the 
+CAAProductStructure.edu framework:</P>
+<TABLE>
+    <TR>
+        <TD>Windows</TD>
+        <TD><CODE>InstallRootDirectory/CAAProductStructure.edu/CAAPstMovable.m</CODE></TD>
+    </TR>
+    <TR>
+        <TD>Unix</TD>
+        <TD><CODE>InstallRootDirectory\CAAProductStructure.edu\CAAPstMovable.m</CODE></TD>
+    </TR>
+</TABLE>
+<P>where <CODE>InstallRootDirectory</CODE> is the root directory of your CAA V5 
+installation. It is made of a unique source file named <B>CAAPstMovable.cpp</B>.
+</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A>Step-by-Step</H3>
+<P>There are nine logical steps in <I>CAAPstMovable</I>:</P>
+<OL>
+    <LI><A href="#NewDoc">Creating a New  Product Document</A></LI>
+    <LI><A href="#RetrieveRoot">Retrieving the Document's Root Product</A></LI>
+    <LI><A href="#LoadingDoc">Loading an Existing  Part Document</A></LI>
+    <LI><A href="#AddPartToRoot">Adding a Product Instance of the Part to the 
+    Root Product</A></LI>
+    <LI><A href="#AddPartToLocal">Adding a Product Instance of the Part to a New 
+    Local Product</A></LI>
+    <LI><A href="#ModifyLocal">Modifying the Position of the Local Product</A></LI>
+    <LI><A href="#ModifyPartUnderLocal">Modifying the Position of the Product 
+    Instance of the Part Attached to the Local Product</A></LI>
+    <LI><A href="#RetrievePartPosition">Retrieving the New Absolute and Relative 
+    Positions of the Product Instance of the Part</A></LI>
+    <LI><A href="#SaveDoc">Saving the  Product Document</A></LI>
+</OL>
+<P>We will now comment each of those sections by looking at the code.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="NewDoc"></A>Creating a New  Product Document</H4>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>HRESULT rc = 0;
+...
+CATSession *pSession = NULL;
+rc = <B>::Create_Session</B>(&quot;CAA2_Sample_Session&quot;, pSession );</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Generally, the first thing that is necessary in a batch program is the 
+creation of a new session. This is done using the <CODE>Create_Session</CODE> 
+global function. It is important not to forget to delete the session at the end 
+of your batch program.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>CATDocument *pDoc = NULL;
+rc = <B>CATDocumentServices::New</B>(&quot;Product&quot;, Doc);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Now that we have a current session, we can create the  Product document. 
+This is done using the <CODE>New</CODE> method of <I>CATDocumentServices</I> 
+with type &quot;Product&quot; as input parameter. Note that &quot;Product&quot; is not the extension 
+of the document (which is &quot;CATProduct&quot;), but rather its type, a name which 
+appears in the list of document types available seen in the <CODE>File/New</CODE> 
+menu of an interactive session.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="RetrieveRoot"></A>Retrieving the Document's Root Product</H4>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>CATIDocRoots *piDocRootsOnDoc = NULL;
+rc = pDoc-&gt;<B>QueryInterface</B>(IID_CATIDocRoots,
+                          (void**) &amp;<B>piDocRootsOnDoc</B>);
+...
+	
+// the root product is the first element of root elements
+CATListValCATBaseUnknown_var *pRootProducts = piDocRootsOnDoc-&gt;<B>GiveDocRoots</B>();
+CATIProduct_var spRootProduct = NULL_var;
+if (NULL != pRootProducts &amp;&amp; pRootProducts-&gt;<B>Size</B>() &gt; 0) {  
+      spRootProduct = <B>(*pRootProducts)[1]</B>;
+...
+// Get CATIProduct handle on the root product.
+CATIProduct *piProductOnRoot = NULL;
+rc = spRootProduct-&gt;<B>QueryInterface</B>(IID_CATIProduct, 
+                                   (void**) &amp;<B>piProductOnRoot</B>);
+...         </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>In order to work with a new product structure within the  Product document, 
+it is necessary to access the <B>root product</B>. This is done using the <CODE>
+GiveDocRoots</CODE> method of <I>CATIDocRoots</I> which returns a list of all of 
+the roots within the document, the first one being the root product we are 
+looking for. From this root product, we can get a <I>CATIProduct</I> handle 
+which will be needed later in order to add new components.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="LoadingDoc"></A>Loading a  Part Document</H4>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>CATDocument *pPartDoc = NULL;
+CATIProduct *piInstanceProd1 = NULL;
+...
+
+// load of the CATPart to import
+rc = <B>CATDocumentServices::Open</B>(argv[1], pPartDoc);
+</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>In order to add an existing external component to a product, it is necessary 
+to first load the document into the session. This is done using <I>
+CATDocumentServices</I><CODE>::Open</CODE>. The path name of the document to be 
+loaded is passed as the first argument to this use case.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="AddPartToRoot"></A>Adding a Product Instance of the Part to the 
+Root Product</H4>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>// import the CATPart under the root.
+rc = <B>::AddExternalComponent</B>(piProductOnRoot, 
+                            pPartDoc,
+                            &amp;piInstanceProd1);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Now that the part exists in the session, it can be added to the product 
+structure as a product instance. First, we add it to the <B>root product</B> 
+using the <CODE>AddExternalComponent</CODE> global function. See the referenced 
+article [<A href="#References">3</A>] for a description of this function. We 
+pass the following parameters to this function:</P>
+<UL>
+    <LI><B>piProductOnRoot</B> - the root product of the importing  Product 
+    document</LI>
+    <LI><B>pPartDoc</B> - the document to be imported</LI>
+    <LI><B>piInstanceProd1</B> - the product instance of the imported document.</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="AddPartToLocal"></A>Adding a Product Instance of the Part to a 
+New Local Product</B></P>
+<OL>
+    <LI>Create a local product under the root product
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// creation of a local product under the root.
+CATIProduct_var spAlternateProduct = piProductOnRoot -&gt;<B> AddProduct</B> ( &quot;AlternatProd&quot; );
+CATIProduct *piAlternateProduct = NULL;
+rc = spAlternateProduct-&gt;<B>QueryInterface</B>(IID_CATIProduct, 
+                                        (void**) &amp;<B>piAlternateProduct</B>);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>Now, we would like to add the same part to a local product. First, a new 
+    local product is created under the root product. This is done using the <I>
+    CATIProduct</I><CODE>::AddProduct</CODE> method which returns a <I>
+    CATIProduct</I>_var handle that we need to convert to a <I>CATIProduct</I> 
+    handle.</LI>
+    <LI>Import an existing external component under the local product
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// imports the same CATPart under the local product.
+CATIProduct *piInstanceProd2 = NULL;
+// imports it again
+rc = <B>::AddExternalComponent</B>(piAlternateProduct,
+                            pPartDoc, 
+	                   &amp;piInstanceProd2);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>We add the same external part to the <B>local product</B> also using the
+    <CODE>AddExternalComponent</CODE> global function as above.</P>
+    <P>Now that the product structure is constructed, we can move the products 
+    within the product document.</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="ModifyLocal"></A>Modifying the Position of the Local Product</B></P>
+<P>Initially, the axes of the root product and local product are identical. By 
+modifying the position of the local product, these axes will be different.</P>
+<OL>
+    <LI>Get <I>CATIMovable</I> handles
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// Get CATIMovable handle on the instance of product in the context of the
+// reference of the local product.
+CATIProduct_var spReferenceAlternateProduct = piAlternateProduct -&gt; <B>GetReferenceProduct</B>();
+...
+CATIProduct_var spMovableInstanceInContext = piInstanceProd2 -&gt; <B>FindInstance</B>(spReferenceAlternateProduct);
+...
+CATIMovable *piMovableInContext;
+rc = spMovableInstanceInContext -&gt; <B>QueryInterface</B>(IID_CATIMovable,
+                                                  (void**) &amp;<B>piMovableInContext</B>);
+...
+// Get CATIMovable handle on the instance of the local product.
+CATIMovable *piMovableOnAlternate = NULL;
+rc = spAlternateProduct-&gt;<B>QueryInterface</B>(IID_CATIMovable,
+                                        (void**) &amp;<B>piMovableOnAlternate</B>);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>In order to move the part instance under the local product, it is 
+    necessary to reference it in the context of the reference of the local 
+    product and not in the context of the instance of the local product. First 
+    of all, we need to get a handle on the actual reference of the local product 
+    (<CODE>GetReferenceProduct</CODE>). Next, we want to get a handle on the 
+    instance of the part under the reference of the local product (<CODE>FindInstance</CODE>) 
+    in order to get a <I>CATIMovable</I> handle on <B>it</B>. We also get a <I>
+    CATIMovable</I> handle on the local product instance.</LI>
+    <LI>Initialize the transformation matrix
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>double *aPositionAlt = <B>new</B> double [12];
+for (int l=0; l &lt; 12; l++)
+   aPositionAlt[l]=0.;</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>We set all entries to 0.</P>
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>aPositionAlt[0] = 1.;
+aPositionAlt[4] = 1.;
+aPositionAlt[8] = 1.;
+aPositionAlt[9] = 12.;
+aPositionAlt[10] = 12.;
+aPositionAlt[11] = 12.;</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>We initialize to 1 the diagonal terms of the rotation matrix and to 
+    (12,12,12) the coordinates of the new origin.</LI>
+    <LI>Modify the position of the local product
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// applying the matrix moves the local product.
+CATMathTransformation newRefPosition(aPositionAlt);
+piMovableOnAlternate -&gt; <B>SetPosition</B>(newRefPosition,
+                                    NULL_var);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>And now, using the <I>CATIMovable</I> handle we retrieved previously, we 
+    apply the transformation to the local product using the <CODE>SetPosition</CODE> 
+    method. This means that the position of the local product is now different 
+    from the position of the root product.</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="ModifyPartUnderLocal"></A>Modifying the Position of the Product 
+Instance of the Part within the Local Product</B></P>
+<P>To modify the position of the product instance of the part relative to the 
+local product, we proceed in the same manner as above.</P>
+<OL>
+    <LI>Initialize the transformation matrix
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>double *aPositionAxis = <B>new</B> double [12];
+for (int i=0; i &lt; 12; i++)
+   aPositionAxis[i]=0.;</PRE>
+            <PRE>aPositionAxis[0] = 1.;
+aPositionAxis[4] = 1.;
+aPositionAxis[8] = 1.;
+aPositionAxis[9] = 77.;
+aPositionAxis[10] = 77.;
+aPositionAxis[11] = 77.;</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>The transformation matrix is initialized in a similar way as previously.</P>
+    <P>The coordinates of the new origin of the product instance of the part 
+    under the local product are relative to the new axis of the local product.</LI>
+    <LI>Modify the position of the product instance of the part under the local 
+    product
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// applying the matrix moves the instance
+CATMathTransformation newPosition(aPositionAxis);
+piMovableInContext -&gt; <B>SetPosition</B>(newPosition,
+                                  NULL_var);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>And finally, using the <I>CATIMovable</I> handle we retrieved previously, 
+    we apply the transformation to the product instance of the part using the
+    <CODE>SetPosition</CODE> method.</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="RetrievePartPosition"></A>Retrieving the Absolute and Relative 
+Positions of the Product Instance of the Part</B></P>
+<P>If we now visualized the product document, we would see that the product 
+instance of the part under the root product has a different position from the 
+product instance of the part under the local product. The position of the 
+product instance of the part under the local product can either be expressed as 
+a &quot;relative position&quot;, i.e., with respect to the local product, or as an 
+&quot;absolute position&quot;, i.e., with respect to the root product.</P>
+<OL>
+    <LI>Get the absolute position
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// absolute position
+CATIMovable *piMovableOnInstance = NULL;
+rc = piInstanceProd2 -&gt; <B>QueryInterface</B> (IID_CATIMovable,
+                                        (void**) &amp;<B>piMovableOnInstance</B>);
+...
+
+CATMathTransformation absolutePosition;
+piMovableOnInstance -&gt; <B>GetAbsPosition</B>(absolutePosition );</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>In order to get the <B>absolute position</B>, we use the <I>CATIMovable</I> 
+    handle to get a <I>CATMathTransformation</I> <CODE></CODE>object using the
+    <CODE>GetAbsPosition</CODE> method.</LI>
+    <LI>Get the absolute position matrix
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>double *pAbsoluteCoeff = <B>new </B>double [12];
+<B>absolutePosition.GetCoef</B>(pAbsoluteCoeff);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>Now, using <CODE>GetCoef </CODE>on the<CODE> </CODE><I>
+    CATMathTransformation</I><CODE> </CODE>object, we get the absolute position 
+    matrix of the product instance which is:</P>
+    <P></P>
+    <CENTER>
+    <P><TT>1 0 0 89<BR>
+    0 1 0 89<BR>
+    0 0 1 89</TT></P>
+    </CENTER>
+    <P></P>
+    <P>As expected in this case, the absolute coordinates of the product 
+    instance of the part axis origin are the sum of the absolute coordinates of 
+    the local product origin with the relative coordinates of the product 
+    instance of the part axis origin with respect to the local product axis.</LI>
+    <LI>Get the relative position
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// relative position in the context of the local product.
+      // no specification for the context, means default movable will be used.
+      CATIMovable_var spContext = NULL_var;
+      CATMathTransformation relativePositon =
+      piMovableOnInstance -&gt; <B>GetPosition</B>(spContext);
+      double *aRelativeCoeff = <B>new</B> double [12];</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>In order to get the <B>relative position</B>, we use the <I>CATIMovable</I> 
+    handle to get a <I>CATMathTransformation</I> object using the <CODE>
+    GetPosition </CODE>method.</LI>
+    <LI>Get the relative position matrix
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>double *pRelativeCoeff = <B>new </B>double [12];
+<B>relativePositon.GetCoef</B>(pRelativeCoeff);
+
+...</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>As before, using <CODE>GetCoef</CODE> on the <I>CATMathTransformation</I> 
+    object, we get the relative position matrix of the product instance which 
+    is:</P>
+    <CENTER>
+    <P><TT>1 0 0 77<BR>
+    0 1 0 77<BR>
+    0 0 1 77 </TT></P>
+    <P></P>
+    </CENTER></LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="SaveDoc"></A>Saving the CATProduct Document</H4>
+<OL>
+    <LI>Save the CATProduct document
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>rc = <B>CATDocumentServices::SaveAs</B>(*pDoc, 
+		                 argv[2]);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>We save the product document using the <I>CATDocument</I><CODE>::SaveAs</CODE> 
+    method. The product document is saved under the name specified in the second 
+    argument to this routine.</LI>
+    <LI>Remove the CATProduct document from the session
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>rc = <B>CATDocumentServices::Remove</B> (*pPartDoc);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>It is good practice to remove any opened documents before exiting the 
+    session. In this case, we should remove the CATPart document we loaded into 
+    the session at the beginning of the program.</LI>
+    <LI>Delete the session
+    <TABLE class="code">
+        <TR>
+            <TD>
+            <PRE>// delete the session, removes the opened documents also.
+// never forget to delete a creating session after usage.
+rc = <B>::Delete_Session</B>(&quot;CAA2_Sample_Session&quot;);</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    <P>Do not forget to delete the session before exiting using the <CODE>
+    Delete_Session</CODE> global function!</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to position product instances within a 
+product document. Specifically, it has illustrated:</P>
+<UL>
+    <LI>Creating a new  Product document using the <CODE>New</CODE> method of
+    <I>CATDocumentServices</I></LI>
+    <LI>Retrieving the root product of the document using <CODE>GiveDocRoots</CODE> 
+    method of <I>CATIDocRoots</I></LI>
+    <LI>Loading a  Part document using the <CODE>Open</CODE> method of <I>
+    CATDocumentServices</I></LI>
+    <LI>Adding an existing external component to the root product using the
+    <CODE>AddExternalComponent</CODE> global function</LI>
+    <LI>Creating a local product under the root product using the <CODE>
+    AddProduct</CODE> method of <I>CATIProduct</I></LI>
+    <LI>Adding an existing external component under the local product using the
+    <CODE>AddExternalComponent</CODE> global function</LI>
+    <LI>Modifying the position of the local product using a <I>CATIMovable</I> 
+    handle on the product instance and the <CODE>SetPosition</CODE> method</LI>
+    <LI>Retrieving the absolute position of a product instance using <CODE>
+    GetCoef</CODE> on the <I>CATMathTransformation</I> object obtained through 
+    the <CODE>GetAbsPosition</CODE> method of <I>CATIMovable</I></LI>
+    <LI>Retrieving the relative position of a product instance using <CODE>
+    GetCoef</CODE> on the <I>CATMathTransformation</I> object obtained through 
+    the <CODE>GetPosition</CODE> method of <I>CATIMovable</I>.</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">[1]</TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[2]</TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[3]</TD>
+        <TD><a href="CAAPstAddExtComponent.htm">Adding Existing External 
+        Components Utility</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top">[4]</TD>
+        <TD><a href="CAAPstAddNewExtComponent.htm">Adding New External 
+        Components Utility</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1.1</span></STRONG><b><span style="font-weight: 400"> [Aug 2004]</span></b></TD>
+        <TD valign="top">Document revised</TD>
+    </tr>
+    <TR>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1</span></STRONG><b><span style="font-weight: 400"> [Mar 2000]</span></b></TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2000, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

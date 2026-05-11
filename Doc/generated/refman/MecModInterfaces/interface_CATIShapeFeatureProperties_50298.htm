@@ -1,0 +1,279 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIShapeFeatureProperties</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIShapeFeatureProperties"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIShapeFeatureProperties</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIShapeFeatureProperties_50298','CATIShapeFeatureProperties','0');</script>
+<p><b>Usage: you can reimplement this interface by deriving the supplied <a href="../MechanicalModeler/class_CATMmrShapeFeaturePropertiesAdapter_76920.htm">CATMmrShapeFeaturePropertiesAdapter</a> adapter class.</b></p>
+<hr>
+<p>
+ interface <b>CATIShapeFeatureProperties</b>
+</p>
+<p>
+<b><i> Interface to retrieve characteristics of a solid feature.</i></b><br>
+
+ <b>Role</b>: A solid feature is a geometrical feature which references 3D geometry.
+ There are two kinds of solid feature: the form and the contextual feature.
+ <br><br><b>Form versus Contextual Feature </b>
+ <p>A Pad, a Pocket, a Groove, are different features: some add matter, while some remove it. 
+ However, they share a common point: they have a form and are therefore called form features. 
+ What is that?</p>
+ <p>Take a Groove for instance. From its input parameters, a Curve and a closed Sketch, 
+ one can easily derive a shape (a Form) by sliding the Sketch along the Curve.
+ The resulting solid has then to be operated with the Part's shape as it exists prior to 
+ the definition of the Groove, by removing matter (thanks to a boolean remove operation in 
+ that case).</p>
+ <p>The fact that those features can be applied by first computing their form and 
+ then operating the form with the current shape of the set defines the form 
+ feature. The form of such a feature is sometimes called its footprint.</p>
+ In contrast to form features, contextual features cannot be applied 
+ by computing a standalone footprint first, and operating it with the current set in a 
+ second step. Fillets, Drafts, and generally all Dress up Features fall into this category, 
+ because their shape is determined not only by their own input parameters, but also by the local
+ topology of the target body (hence their name). Contextual features do not have a footprint.</p>
+ <p>This interface enables you to retrieve (or to define) the type of the solid feature thanks to the 
+ two first methods (<script type="text/javascript"> activateLinkAnchor('','IsAContextualFeature','IsAContextualFeature') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','IsAFreeFormFeature','IsAFreeFormFeature') </script> ) which are  of course exclusives (except for the Body feature, see below the section dedicated to this
+ feature, and the features representing the boolean operations)</p>
+ <b>Polarity of the Solid Feature</b>
+ <p>It must be noticed that the fact that some features add and some others remove matter from 
+ the Part is not linked to the Form/Contextual classification. A Draft is a Contextual Feature
+ that adds matter, while a Chamfer, still contextual, removes it. A Shaft and a Pocket are 
+ Form Features that create and remove matter respectively.
+ The 
+<script type="text/javascript"> activateLinkAnchor('','GetPolarity','GetPolarity') </script> method enables you to retrieve (or to define) the intrinsic polarity of  a solid feature.</p>
+ <b>Body Feature Implementation</b>
+ <p>This interface is implemented on the Body feature. In this case, only the
+ 
+<script type="text/javascript"> activateLinkAnchor('','GetPolarity','GetPolarity') </script> method is valid. <p><b>BOA information</b>: this interface CAN be implemented
+ using the BOA (Basic Object Adapter).
+ To know more about the BOA, refer to the CAA Encyclopedia home page.
+ Click Middleware at the bottom left, then click the Object Modeler tab page.
+ Several articles deal with the BOA.</p>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureBody','','CATIShapeFeatureBody') </script>, <script type="text/javascript"> activateLinkAnchor('CATIMechanicalTool','','CATIMechanicalTool') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CanBePatterned()"><b>CanBePatterned</b></a>()
+<dd>  Returns if the current solid feature can be patterned.
+ <dt> o 
+    <a href="#GetPolarity()"><b>GetPolarity</b></a>()
+<dd>  Returns the polarity of the current solid feature.
+ <dt> o 
+    <a href="#GiveMeYourBRepSpecifications()"><b>GiveMeYourBRepSpecifications</b></a>()
+<dd>   Returns all the BRep specifications of the current solid feature.
+ <dt> o 
+    <a href="#GiveMeYourFavoriteSketches()"><b>GiveMeYourFavoriteSketches</b></a>()
+<dd>  Returns specific sketches of the current solid feature.
+ <dt> o 
+    <a href="#IsAContextualFeature()"><b>IsAContextualFeature</b></a>()
+<dd>  Returns if the current solid feature is contextual.
+ <dt> o 
+    <a href="#IsAFreeFormFeature()"><b>IsAFreeFormFeature</b></a>()
+<dd>  Returns if the current solid feature is a form feature.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CanBePatterned"></a><a name="CanBePatterned()"></a> <dt> o <b>CanBePatterned</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>CanBePatterned</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns if the current solid feature can be patterned.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   An integer value.
+   <br><b>Legal values</b>: 
+   <ul>
+   <li><b>1</b> the current feature can be patterned.
+   <li><b>0</b> the current feature cannot be patterned.
+   </ul>
+</dl>
+</dl>
+<a name="GetPolarity"></a><a name="GetPolarity()"></a> <dt> o <b>GetPolarity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetPolarity</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the polarity of the current solid feature.
+ <br><b>Role:</b>This method returns the polarity of the solid feature. The polarity 
+ of a feature enables you to know if the feature adds or removes matter. But this method 
+ returns the intrinsic polarity  of the feature. In other words, for a Pad for example, 
+ this method always returns Add, even if the Pad removes matter. Consider the case where the Pad
+ is inside a Body feature which contains at first a Hole, the form of the Pad will be removed from
+ the hole.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The returned values depends on the feature.
+ <br><b>Legal values</b>: 
+ <ul>
+ <li><b>Body</b>: ToolAdd or ToolRemove</li>
+ <br>The Body polarity is the polarity of its first activated (
+<script type="text/javascript"> activateLinkAnchor('CATIMechanicalProperties','','CATIMechanicalProperties') </script> )  solid feature. 
+ <li><b>Assemble</b> boolean operation: EltAdd or EltRemove</li>
+ <br>The polarity of the Assemble feature is the polarity of its operated body 
+ (
+<script type="text/javascript"> activateLinkAnchor('CATIPartRequest','','CATIPartRequest') </script> ) <li><b>Add</b> boolean operation: EltAdd</li>
+ <li><b>Remove</b> boolean operation: EltRemove</li>
+ <li><b>Intersect</b> boolean operation: EltIntersect (== Add)</li>
+ <li><b>Other solid feature</b>: Add, EltAdd, Remove or EltRemove
+ </ul>
+</dl>
+</dl>
+<a name="GiveMeYourBRepSpecifications"></a><a name="GiveMeYourBRepSpecifications()"></a> <dt> o <b>GiveMeYourBRepSpecifications</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)')</script>  <b>GiveMeYourBRepSpecifications</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns all the BRep specifications of the current solid feature.
+ <br><b>Role:</b> This method returns all the BRep (
+<script type="text/javascript"> activateLinkAnchor('CATIFeaturize','','CATIFeaturize') </script> ) features  which are specifications of this solid feature.
+
+</dl>
+<a name="GiveMeYourFavoriteSketches"></a><a name="GiveMeYourFavoriteSketches()"></a> <dt> o <b>GiveMeYourFavoriteSketches</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)')</script>  <b>GiveMeYourFavoriteSketches</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns specific sketches of the current solid feature.
+ <br><b>Role:</b>This method returns specific referenced sketches of the solid feature. These sketches 
+ will be used in two cases:
+  <ul>
+  <li>Feature deletion: when the feature will be deleted, if the "Delete referenced sketches" 
+ ckeck button is
+  activated in Tools/Options, the given sketches will be also deleted.</li>
+  <li>Feature copy: when the feature will be copied, the given sketches will be also copied</li>
+  </ul>
+</dl>
+<a name="IsAContextualFeature"></a><a name="IsAContextualFeature()"></a> <dt> o <b>IsAContextualFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>IsAContextualFeature</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns if the current solid feature is contextual.
+ <br><b>Role:</b>This method enables you to know if the solid feature is a contextual feature or
+ not. 
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   An integer value.
+   <br><b>Legal values</b>: 
+   <ul><li><b>1</b> the current feature is contextual.
+   <li><b>0</b> the current feature is not contextual.
+ </ul>
+ For the features representing a boolean operation ( Add, Assemble, Remove, Intersect and
+ Union Trim) the value is 0.
+</dl>
+</dl>
+<a name="IsAFreeFormFeature"></a><a name="IsAFreeFormFeature()"></a> <dt> o <b>IsAFreeFormFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>IsAFreeFormFeature</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns if the current solid feature is a form feature.
+ <br><b>Role:</b>This method enables you to know if the solid feature is a form feature or
+ not. 
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   An integer value.
+   <br><b>Legal values</b>: 
+   <ul>
+      <li><b>1</b> the current feature is a form feature.
+      <li><b>0</b> the current feature is not a form feature.
+   </ul>
+ For the features representing a boolean operation ( Add, Assemble, Remove, Intersect and
+ Union Trim) the value is 0.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIShapeFeatureProperties.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

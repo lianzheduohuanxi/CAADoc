@@ -1,0 +1,704 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Catalog with Part Documents</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Catalog with Part Documents</h3>
+      <em>How to link a Part document into a catalog document</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case illustrates how to 
+      create a catalog which contains links towards Part documents.</p>     
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACciScrewCatalogCreation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACciScrewCatalogCreation Do</a></li>
+            <li><a href="#How">How to Launch CAACciScrewCatalogCreation</a></li>
+            <li><a href="#Where">Where to Find the CAACciScrewCatalogCreation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In reading the &quot;What You Will learn With this Use case&quot; section of
+the use case &quot;Creating a Catalog&quot; [<a href="#References">1</a>], you
+learn that a catalog is in the form of a tree structure made up of chapters,
+families (end chapter), components, descriptions and keywords. The goal of this article is to
+describe a simple catalog which contains descriptions referencing
+only Part documents. In addition, it explains how to set a previous image for a
+chapter.</p>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of Catalog. See the referenced article [<a href="#References">2</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACciScrewCatalogCreation Use Case</h3>
+<p>CAACciScrewCatalogCreation is a use case of the CAAComponentsCatalogs.edu framework that
+illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACciScrewCatalogCreation Do</h4>
+<p>This use case creates the <code>CAAScrew</code>.<code>catalog</code> document [<a href="#Fig.1">Fig.1</a>].
+The scenario of its creation is explained through images created in editing the
+catalog thanks to the Catalog Editor workbench.&nbsp;At last, the interactive scenario to obtain the same result, is
+given.&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.1">Fig.1</a>: The CAAScrew.catalog&nbsp; Document&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogScrew1.jpg" width="292" height="173">
+</td>
+</tr>
+</table>
+  <p>The <code>Screws</code> chapter is the root chapter. It contains the
+  visible &quot;<code>ToolType</code>&quot;
+  keyword. This keyword is a string whose the default value is
+  &quot;<code>Screw</code>&quot;.</p>
+    <table>
+<caption><i><a name="Fig.2">Fig.2</a>: The Screws's Keywords&nbsp;&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogScrew2.jpg" width="325" height="229">
+</td>
+</tr>
+</table>
+
+  <p>The <code>Screws</code> chapter contains the <code>ScrewsFamily</code> sub
+  chapter. This chapter is an end chapter, so it is a family. It contains the
+  visible &quot;<code>Material</code>&quot;
+  keyword. This keyword is a string whose the default value is
+  &quot;<code>Iron</code>&quot;.</p>
+      <table>
+<caption><i><a name="Fig.3">Fig.3</a>: The ScrewsFamily's Keywords&nbsp;&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogScrew3.jpg" width="329" height="235">
+</td>
+</tr>
+</table>
+
+<p>Two documents are added to this <code>ScrewsFamily</code><i> </i>family [<a href="#Fig.4">Fig.4</a>]: the <code>CAAScrew.CATPart</code>
+  and the <code>CAAGroovedScrew.CATPart </code>documents.</p>
+        <table>
+<caption><i><a name="Fig.4">Fig.4</a>: The ScrewsFamily's Components&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogScrew4.jpg" width="736" height="214">
+</td>
+</tr>
+</table>
+<p>In the right part of its window, the Catalog Editor workbench lists the descriptions
+  associated with the current chapter. You can notice the type of the
+  descriptions (Document) in the &quot;<code>Type</code>&quot; column and the name of the
+  Part document in the &quot;<code>Object Name</code>&quot; column.</p>
+  
+  <table border="0" width="100%">
+  <caption><i><a name="Fig.5">Fig.5</a>: The CAAScrew and the CAAGroovedScrew Documents</i></caption>
+    <tr>
+      <td width="36%"><img border="0" src="images/CAACciPartScrew.jpg" width="325" height="265">
+      </td>
+      <td width="64%"><img border="0" src="images/CAACciPartGroovedScrew.jpg" width="300" height="267">
+      </td>
+    </tr>
+  </table>
+  <p>For the ScrewsFamily, a preview image (130x110 pixels) is given:</p>
+         <table width="413">
+<caption><i><a name="Fig.6">Fig.6</a>: The CAAScrewFamilyPreview.jpg file</i></caption>
+<tr>
+<td width="405">
+<img border="0" src="images/CAAScrewFamilyPreview.jpg" width="130" height="110">
+</td>
+</tr>
+</table>
+
+<p>The display's image size is always 130x110 pixels. if the size of the image
+is smaller or larger, a ratio is applied to increase or decrease the image's
+size.&nbsp;&nbsp;</p>
+
+  <p>The interactive scenario to obtain the same CAAScrew.catalog document is
+  the following:</p>
+  <p>Launch CATIA. When the application is ready:&nbsp;</p>
+  <ul>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the <b>File New&nbsp; </b>Dialog box select <b>CatalogDocument</b>&nbsp;
+    and click <b>OK</b></li>
+  <li>Select <b>Chapter.1</b> in the specification tree&nbsp;</li>
+  <li>Contextual menu, select <b>Chapter.1 object </b>item and <b>Definition</b>
+    item&nbsp;</li>
+  <li>In the dialog box, enter <b>Screws </b>in the<b> Name </b>field<b> </b>and click <b>OK</b></li>
+  <li>Launch the <b>Add Family <img border="0" src="images/CAACatalogAddFamily.gif" width="22" height="22"></b>command</li>
+  <li>In the <b>Component Family Definition</b> dialog box, enter <b>ScrewsFamily</b>
+    in the <b>Name </b>field and click <b>OK</b></li>
+  <li>Double click on the <b>1 ScrewsFamily</b> line in the right part of the
+    window</li>
+  <li>In the <b>Description Definition</b> dialog box, select the <b>Preview</b>
+    tab page
+    <ul>
+      <li>click on<b> External file preview&nbsp;</b></li>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAAScrewFamilyPreview.jpg
+        </b>(*) file and click <b>Open</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add Keyword <img border="0" src="images/CAACatalogAddKeyword.jpg" width="21" height="24">
+    </b>command</li>
+  <li>In the&nbsp; <b>Keyword&nbsp; Definition</b> dialog box
+    <ul>
+      <li>enter <b>ToolType</b> in the <b>Name</b> field</li>
+      <li>select <b>String</b> in the <b>Type</b> selectot list</li>
+      <li>enter <b>Screw</b> in the <b>Default Value</b> field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Select <b>ScrewsFamily</b>&nbsp; in the specification tree&nbsp;</li>
+  <li>Launch the <b>Add Keyword <img border="0" src="images/CAACatalogAddKeyword.jpg" width="21" height="24">
+    </b>command</li>
+  <li>In the&nbsp; <b>Keyword&nbsp; Definition</b> dialog box
+    <ul>
+      <li>enter <b>Material</b> in the <b>Name</b> field</li>
+      <li>select <b>String</b> in the <b>Type</b> selectot list</li>
+      <li>enter <b>Iron</b>&nbsp; in the <b>Default Value</b> field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add Component <img border="0" src="images/CAACatalogDescription.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the&nbsp; <b>Description Definition</b> dialog box
+    <ul>
+      <li>Push <b>Select Document</b></li>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAAScrew.CATPart</b>
+        (*) document and click <b>Open</b></li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add Component <img border="0" src="images/CAACatalogDescription.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the&nbsp; <b>Description Definition</b> dialog box</li>
+      <ul>
+      <li>Push <b>Select Document</b></li>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAAGroovedScrew.CATPart</b>
+        (*) file and click <b>Open</b></li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </ul>
+  <p>(*) The files are located in the directory <code>CAAComponentsCatalogs</code><code>.edu/InputData</code></p>
+  <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+      </ul>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACciScrewCatalogCreation</h4>
+<p>To launch CAACciScrewCatalogCreation , you will need to set up the build time environment,
+then compile the CAACciCatalogCreate module along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">3</a>].&nbsp;</p>
+<p>mkrun -c <b>CAACciCatalogCreate</b> InputPath [OutputPath]</p>
+<p>Where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of some files included in the directory <code>CAA</code><code>ComponentsCatalogs</code><code>.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\InputData</code></li>
+    </ul>
+    <p> where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+  <li><b>OutputPath</b>: The path to write the created catalogs. If this path is empty, the output files
+    are created in the current directory.</li>
+</ol>
+<p>The use case creates three documents:</p>
+<ul>
+  <li><code>CAAScrew.catalog</code>, explained in the current article</li>
+  <li><code>CAANuts6Sides.catalog</code>, explained in the &quot;Creating a Catalog With Part Family&quot;
+    article [<a href="#References">4</a>]</li>
+  <li><code>CAATools.catalog</code>, explained in the &quot;Creating a
+    Catalog&quot; article [<a href="#References">1</a>]</li>
+</ul>
+<p>After its execution, you can launch CATIA and open the created catalogs or
+execute the CAACciCatalogNavigation use case [<a href="#References">5</a>] for
+each. This use case displays the contents of a catalog.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACciScrewCatalogCreation Code</h4>
+<p>The CAACciScrewCatalogCreation use case is made of several source files located in the
+CAACciCatalogCreate.m module of the CAAComponentsCatalogs.edu framework:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the source file</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogCreateMain</td>
+    <td width="67%">Main source file&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciScrewCatalogCreation</td>
+    <td width="67%">Global function to create the
+      CAAScrew.catalog document</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogDocumentServices</td>
+    <td width="67%">Global functions to factorize the code</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td><code>Windows</code></td>
+    <td><code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\CAACciCatalogCreate.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/CAACciCatalogCreate.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are nine logical steps in the CAACciScrewCatalogCreation use case:</p>
+<ol>
+  <li><a href="#Creating a new catalog">Creating a New Catalog Document</a></li>
+  <li><a href="#Creating the Root chpater">Creating the Root Chapter&nbsp;</a></li>
+  <li><a href="#Creating a kw for the RC">Creating a Keyword for the RootChapter</a></li>
+  <li><a href="#Creating a end chap">Creating&nbsp; the End Chapter</a></li>
+  <li><a href="#Assoc a preview image">
+Associating an Preview's Image for the End Chapter</a></li>
+  <li><a href="#creating kw for end chapter">Creating a Keyword&nbsp;for the End
+    Chapter</a></li>
+  <li>
+<a href="#adding screw part document">
+Adding the CAAScrew Document&nbsp;</a></li>
+  <li>
+<a href="#adding groovedscrew part document">Adding the CAAGroovedScrew Document</a></li>
+  <li>
+<a href="#Closing the new catalog">Closing the New Catalog</a></li>
+</ol>
+<p>Some operations like create or save a document have been factorized in global
+functions. These functions are defined in the <i>CAACciCatalogServices.cpp </i>file<i>.
+</i>You retrieve theirs explanations in the &quot;Creating a
+Catalog&quot; article [<a href="#References">1</a>] .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating a new catalog"></a>Creating a New Catalog Document</h4>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATDocument * pDocument = NULL ;
+    CATICatalogChapterFactory * pICatalogChapterFactory = NULL ;
+
+    rc = ::<b>CAACreateCatalogDocument</b>(&amp;pDocument,&amp;pICatalogChapterFactory);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="CAACciCatalogCreationStructure.htm#CAACreateCatalogDoc">CAACreateCatalogDocument
+</a> global
+function creates a &quot;catalog&quot; document and returns <code>pICatalogChapterFactory</code>,&nbsp;
+a <i>CATICatalogChapterFactory</i>
+interface pointer on its root container. This interface pointer is necessary to create
+chapters.</p>
+
+  <h4><a name="Creating the Root chpater"></a>Creating the Root Chapter&nbsp;</h4>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pICatalogChapterFactory) )
+    {
+       CATICatalogChapter * <b>piScrewsChapter</b> = NULL ;
+
+       CATUnicodeString <b>ChapterName</b> = &quot;Screws&quot; ;
+       CATBoolean IsEndChapter = FALSE ;
+       rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piScrewsChapter);
+       
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Screws</code> chapter is created thanks to the <code>CreateChapter</code>
+method of the <i>CATICatalogChapterFactory</i> interface. The second parameter, <code>IsEndChapter</code>,
+specifies that the chapter is a not a end chapter, so not a family. The returned pointer, <code>piScrewsChapter</code>,
+must be released as soon as it will be useless.</p>
+
+<p>The <code>Screws</code> chapter is the first chapter created in the new
+document, so it is the root chapter. It means that you can retrieve it thanks to
+the <code>GetRootChapter </code>method of the same interface<code> </code><i>CATICatalogChapterFactory</i>. Refer to the use case &quot;Browsing a Catalog&quot; [<a href="#References">5</a>]
+for an example about this method.</p>
+<h4><a name="Creating a kw for the RC"></a>Creating a&nbsp; keyword for the Root
+Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsChapter))
+       {
+          CATICatalogKeyword * piKeyword = NULL ;
+          rc = piScrewsChapter-&gt;<b>AddKeyword</b>(&quot;ToolType&quot;,&quot;String&quot;,piKeyword);
+          if ( SUCCEEDED(rc) )
+          {
+             piKeyword-&gt;Release();
+             piKeyword = NULL ;
+          }
+       }</pre>
+      <pre>       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsChapter))
+       {
+          CATUnicodeString Value = &quot;Screw&quot; ;
+          rc = piScrewsChapter-&gt;<b>SetDefaultValue</b>(&quot;<b>ToolType</b>&quot;,Value);
+       }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The string keyword &quot;<code>ToolType</code>&quot; is created thanks to the <code>AddKeyword</code>
+method of the <i>CATICatalogChapter</i> interface pointer on the <code>Screws</code> 
+chapter, <code>piScrewsChapter</code>.&nbsp;</p>
+<p>The default value for the keyword is set thanks to the <code>SetDefaultValue</code>
+method of the <i>CATICatalogChapter</i> interface pointer on the <code>Screws</code> 
+chapter, <code>piScrewsChapter</code>.&nbsp;</p>
+
+<h4>
+
+<a name="Creating a end chap"></a>
+
+Creating&nbsp; the End Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATICatalogChapter * piScrewsFamily = NULL ;
+
+       if ( SUCCEEDED(rc) )
+       {
+          CATUnicodeString     <b>ChapterName</b> = &quot;ScrewsFamily&quot; ;
+          CATBoolean           <b>IsEndChapter</b> = TRUE ;
+          rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piScrewsFamily);
+
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>As the <code>Screws</code> chapter, the <code>ScrewsFamily</code> chapter is
+created thanks to the <i>CATICatalogChapterFactory </i>interface. But contrary to
+the <code>Screws</code> chapter the second argument of this method is TRUE: It means
+that the <code>ScrewsFamily</code>  chapter is a end chapter, in other words, it could
+contains only data and none sub-chapter.</p>
+The new chapter is linked with its parent chapter thanks a new description
+created on the parent chapter. In this case the parent chapter is the <code>Screws</code>
+Chapter.&nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if (SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsFamily) &amp;&amp; (NULL != piScrewsChapter) )
+       {
+          <b>CATILinkableObject</b> * pLinkOnScrewsFamily = NULL ;
+          rc = piScrewsFamily-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnScrewsFamily);     
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = <b>piScrewsChapter</b>-&gt;<b>AddDescription</b>(piDescription,<b>pLinkOnScrewsFamily</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p> Like any kind object to set in a description, the <i>CATILinkableObject</i>
+interface on the <code>ScrewsFamily</code>  chapter, <code>pLinkOnScrewsFamily</code>,
+is necessary.&nbsp; The <code>AddDescription</code> method applied&nbsp; to the <code>Screws</code> 
+chapter,&nbsp;the parent chapter pointed by <code>piScrewsChapter</code>, creates a new
+description with the <code> pLinkOnScrewsFamily</code> interface pointer on the <code>ScrewsFamily</code>  
+chapter.</p>
+<h4><a name="Assoc a preview image"></a>
+ Associating an Preview's Image for the End Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+             if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+             {
+                CATUnicodeString PreviewFileName=&quot;CAAScrewFamilyPreview.jpg&quot; ;     
+                PreviewFileName = iInputPath + Slash + PreviewFileName ;
+                
+                rc = <b>piDescription</b>-&gt;<b>SetPreviewName</b>(PreviewFileName);
+                ...
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             }
+
+             pLinkOnScrewsFamily-&gt;Release();
+             pLinkOnScrewsFamily = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The previous image for the <code>ScrewsFamily</code>  chapter, comes from the
+external file <code>PreviewFileName</code>. Notice that the image's name&nbsp; is a complete path.&nbsp;The file is associated with the
+description which pointes towards the <code>ScrewsFamily</code>   chapter thanks
+to the <code>SetPreviewName</code> method of the <i>CATICatalogDescription</i>
+interface. <code>piDescription </code> is the <i>CATICatalogDescription</i>
+interface pointer on the <code>ScrewsFamily</code>   chapter previously created.</p>
+<h4><a name="creating kw for end chapter"></a>Creating a Keyword&nbsp;for the
+End Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsFamily) )
+       {
+          CATICatalogKeyword * piKeyword = NULL ;
+          rc = piScrewsFamily-&gt;<b>AddKeyword</b>(&quot;<b>Material</b>&quot;,&quot;<b>String</b>&quot;,piKeyword);
+          if ( SUCCEEDED(rc) )
+          {
+             piKeyword-&gt;Release();
+             piKeyword = NULL ;
+          }
+       }</pre>
+      <pre>       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsFamily) )
+       {
+          CATUnicodeString Value = &quot;<b>Iron</b>&quot; ;
+          rc = piScrewsFamily-&gt;<b>SetDefaultValue</b>(&quot;Material&quot;,Value);
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The string keyword &quot;<code>Material</code>&quot; is created thanks to the <code>AddKeyword</code>
+method of the <i>CATICatalogChapter</i> interface pointer on the <code>ScrewsFamily</code>    
+chapter, <code>piScrewsFamily</code>.&nbsp;</p>
+<p>The default value for the keyword is set thanks to the <code>SetDefaultValue</code>
+method of the <i>CATICatalogChapter</i> interface pointer on the <code>ScrewsFamily</code>    
+chapter, <code>piScrewsFamily</code>.&nbsp;</p>
+
+<h4><a name="adding screw part document"></a> Adding the CAAScrew Part Document&nbsp;</h4>
+<p>The first way to add a Part document in a catalog is the following:&nbsp;</p>
+<ol>
+<li>Opening the Part document</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATDocument * pScrewDocument = NULL ;
+       if ( SUCCEEDED(rc) )
+       {             
+          
+          CATUnicodeString ModelDocName = &quot;<b>CAAScrew.CATPart</b>&quot; ;
+          ModelDocName = iInputPath + Slash + &quot;CAAScrew.CATPart&quot; ;
+ 
+          rc = <b>CATDocumentServices::Open</b>(ModelDocName.CastToCharPtr(), <b>pScrewDocument</b>);
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Open</code><b> </b>static function of the <i>CATDocumentServices</i>
+class opens the <code>CAAScrew.CATPart</code> document.</p>
+<li>Associating the Part document with the End Chapter</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != pScrewDocument) &amp;&amp; (NULL != piScrewsFamily) )
+       {
+          <b>CATILinkableObject</b> * pLinkOnScrewPart = NULL ;
+          rc = <b>pScrewDocument</b>-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnScrewPart);  
+          if ( SUCCEEDED(rc ) )
+          {
+             <b>CATICatalogDescription</b> * piDescription = NULL ;
+             rc = piScrewsFamily-&gt;<b>AddDescription</b>(piDescription,<b>pLinkOnScrewPart</b>);       
+             ...
+             pLinkOnScrewPart-&gt;Release();
+             pLinkOnScrewPart = NULL ;
+          }
+       } 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p> The <code>AddDescription</code> method applied&nbsp; to <code>piScrewsFamily</code>, the <i>CATICatalogChapter</i>
+interface pointer on the <code>ScrewsFamily</code>, creates a new
+description&nbsp; for this chapter.&nbsp;The second argument is the object pointed by the description.
+In this case it is <code>pLinkOnScrewPart</code>, the <i>CATILinkableObject</i>
+interface pointer on the <code>CAAScrew</code> Part document.&nbsp;</p>
+<p>This mechanism is available for any kind component types: Here it is a Part
+document, but you add a Product or a feature integratable in a catalog (See the
+&quot;Integrating a New Type of Component&quot; use case) in retrieving their <i>CATILinkableObject</i>
+ interface pointer.&nbsp;</p>
+<p>Notice that once the Part document is referencing by the catalog document, it
+will be &quot;released&quot; when the catalog will be closed. To keep a link on
+the Part document, use the <code>CATLockDocument</code> global function (ObjectModelerBase
+framework).&nbsp;</p>
+</ol>
+<h4><a name="adding groovedscrew part document"></a> Adding the CAAGroovedScrew
+Part Document&nbsp;</h4>
+<p>The second way to add a Part document in a catalog is the following:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piScrewsFamily) )
+       {       
+          CATICatalogDescription * piDescription = NULL ;
+          rc = piScrewsFamily-&gt;<b>AddDescription</b>(piDescription);
+          if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+          {
+             CATUnicodeString ModelDocName ;
+             ModelDocName = iInputPath + Slash + &quot;CAAGroovedScrew.CATPart&quot; ;
+ 
+             rc = piDescription-&gt;<b>SetDocumentName</b>(ModelDocName);
+             ...
+       }   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In this case, the description is created &quot;empty&quot;, in other words
+without a <i>CATILinkableObject</i> interface pointer. The document is given by
+the <code>SetDocumentName</code> method on the new <i>CATICatalogDescription</i>
+interface pointer. The argument of this method is the complete path of the
+document.&nbsp;</p>
+
+<p>In this case, the pointed document is not opened.&nbsp;</p>
+
+<h4><a name="Closing the new catalog"></a>Closing the New Catalog</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL != pDocument) )
+    {
+        CATUnicodeString DocumentName = &quot;<b>CAAScrew</b>&quot; ;
+        rc = <b>::CAACloseCatalogDocument</b>(DocumentName,*pDocument,iOutputPath);
+        pDocument = NULL ;
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The<a href="CAACciCatalogCreationStructure.htm#CAAClosecatalogDocument"> CAACloseCatalogDocument </a> global
+function saves the new catalog under the name <code>CAAScrew.</code></p>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case illustrates how to create a description which
+references a Part document: (or any kind component types)
+<ul>
+  <li>Retrieves p1, a <i>CATILinkableObject</i> interface pointer on the Part
+    Document (or your component)</li>
+  <li>Retrieves p2, a <i>CATICatalogChapter</i> interface pointer on the family.</li>
+  <li>Creates a new description in using the <code>AddDescription</code> method
+    as following:</li>
+    <table class="code">
+  <tr>
+    <td>
+      <pre> CATICatalogDescription * pICatalogDesc = NULL ;
+ p2-&gt;AddDescription(pICatalogDesc,p1 );
+ </pre>
+    </td>
+  </tr>
+</table>
+
+         </ul>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="896">
+  <tr>
+    <td valign="top" width="63">[1]</td>
+    <td width="819"><a href="CAACciCatalogCreationStructure.htm">Creating a
+      Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[2]</td>
+    <td width="819"><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[3]</td>
+    <td width="819"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[4]</td>
+    <td width="819"><a href="CAACciCatalogCreationPartFamily.htm">Creating a
+      Catalog With Part
+      Family</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[5]</td>
+    <td width="819"><a href="CAACciCatalogBrowsing.htm">Browsing a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="888">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+

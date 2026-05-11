@@ -1,0 +1,692 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Marking Up Topology in a Part Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Marking Up Topology in a Part Document</h3>
+      <em>Finding fillets and planar faces within a Part document</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <strong>CAAV5V6MmrFeatureTopoBRep</strong> use case. 
+       It is a copy of the CAAMmrFeatureTopoBRep use case  [<a href="#References">7</a>], rewritten with V6 backported interfaces. 
+      In order to be V5/V6 compatible, some specific parts are coded inside #ifdef macros. 
+      We won't detail in this article any of the V6 specific code. </p>
+
+      
+      The CAAV5V6MmrFeatureTopoBRep use case explains how to open a Part document, navigate through its mechanical
+      features to find and modify graphically the fillets it contains.
+      In a second step, all planar faces that are found in the Part
+      representation are also graphically marked up.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrCombinedCurve Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6MmrFeatureTopoBRep Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6MmrFeatureTopoBRep</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6MmrFeatureTopoBRep Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is about scanning an existing Part document, looking for and
+changing the appearance of some of its content.</p>
+<table width="100%">
+  <tr>
+    <td><img src="../CAAMmrUseCases/images/CAAMmrMecModS2-1.jpg" width="417" height="324">&nbsp;</td>
+    <td>This picture represents a Part document before (left) and after (right) 
+	its processing by the use case. The program has looked for all fillet type 
+	features in the model and extracted the faces associated with them in the
+      underlying topological model in order to color them in green.
+      <p>In a second phase, the program has scanned the part, looking for <em>planar</em>
+      faces associated to any kind of feature found in the part. Those faces
+      have been colored in blue.</p>
+    </td>
+  </tr>
+</table>
+<p>In this use case, you will learn how to use two different techniques to
+browse through the mechanical modeler that manages the internal structure of a
+Part document:
+<ol>
+  <li>Using the feature decomposition of the part, as it appears in the
+    specification tree in the interactive product, to look for specific features
+    in the Part. This is used for coloring the part fillets.</li>
+  <li>Directly operating at the topological level in order to look for specific
+    topology, no matter which feature has generated it. This is used for
+    coloring the planar faces in blue.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6MmrFeatureTopoBRep Use Case</h3>
+<p>CAAV5V6MmrFeatureTopoBRep is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6MmrFeatureTopoBRep Do</h4>
+<p>The job of CAAV5V6MmrFeatureTopoBRep is divided into several steps:
+<ul>
+  <li>Opening and loading a Part document whose pathname is passed as argument</li>
+  <li>Getting access to the Part feature [<a href="#References">1</a>] that the document contains</li>
+  <li>Coloring the fillets in green
+    <ul>
+      <li>Scanning the Part feature children features in search for fillet
+        features</li>
+      <li>Accessing the topology associated to each of those fillet features</li>
+      <li>Changing the graphical attributes for this topology</li>
+    </ul>
+  </li>
+  <li>Coloring the planar faces in blue
+    <ul>
+      <li>Scanning the Part searching for all topology representing it</li>
+      <li>Filtering out this topology in order to retain only planar
+        bi-dimensional elements (i.e. faces)</li>
+      <li>Coloring those faces</li>
+    </ul>
+  </li>
+  <li>Saving the document and exiting.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAV5V6MmrFeatureTopoBRep</h4>
+<p>To launch CAAV5V6MmrFeatureTopoBRep, you will need to set up the build time
+environment, then compile CAAV5V6MmrFeatureTopoBRep along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].
+To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAV5V6MmrFeatureTopoBRep FilenameIn  FilenameOut&quot;</pre>
+<pre>where</pre>
+<ul>
+  <li>FilenameIn&nbsp; is&nbsp; the complete path of a Part document. You can
+    use the <code>CAAMmrPadFillet.CATPart </code>located:
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code></li>
+      <li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+    </ul>
+  </li>
+  <li><code>FilenameOut is the </code>complete path of a Part document which
+    will contain the FilenameIn document modified</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6MmrFeatureTopoBRep Code</h4>
+<p>The CAAV5V6MmrFeatureTopoBRep use case is made of a single source file named
+CAAV5V6MmrFeatureTopoBRep.cpp located in the CAAV5V6MmrFeatureTopoBRep.m module of the
+CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6MmrFeatureTopoBRep.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6MmrFeatureTopoBRep.m/</code></td>
+  </tr>
+</table>
+<p>It also uses a global initialization function, CAAV5V6MmrInitSession.cpp, located  in 
+the CAAV5V6MmrUtilities.m module 
+of the CAAV5V6MechanicalModeler.edu framework. Its header file, CAAV5V6MmrInitSession.h, is located in the PublicInterfaces directory of the framework.
+</p>
+
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6MmrInitSession.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6MmrInitSession.m/</code></td>
+  </tr>
+</table>
+
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight logical steps in CAAV5V6MmrFeatureTopoBRep:
+<ol>
+  <li><a href="#Checking">Checking Arguments, Initializing the Session and Loading the Document</a></li>
+  <li><a href="#Part">Accessing the Part Feature in the Document</a></li>
+  <li><a href="#FilteringFeatures">Filtering Out the Fillet Features</a></li>
+  <li><a href="#AccessingFilletsTopology">Accessing Fillets Topology</a></li>
+  <li><a href="#ColoringFillets">Coloring Fillet Topology</a></li>
+  <li><a href="#FindingPlanarFaces">Finding Out Planar Faces</a></li>
+  <li><a href="#ColoringPlanarFaces">Coloring the Planar Faces</a></li>
+  <li><a href="#ClosingSession">Closing and Exiting the Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Checking"></a>Checking Arguments, Initializing the Session and Loading the Document</h4>
+
+<p>This section represents the sequence for initializing a session, opening a document, and reaching the Specification Container 
+. It is specific code for V5
+or V6, therefore the code is inside #ifdef macros and uses a generic method 
+<em>CAAV5V6MmrInitSession</em> that does the job. The content of CAAV5V6MmrInitSession is detailed in the 
+"Navigating through a Part Document" article [<a href="#References">8</a>].
+<br>You can also refer to the 'Loading a Document" article for more information on document 
+management [<a href="#References">3</a>].</p>   
+
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#ifdef CATIAV5R23
+//============================================== 
+// V5 only
+//============================================== 
+    //
+    // Checks number of arguments
+    if (3!=iArgc)
+      return 1;
+
+
+    char *pSessionName = "SampleSession";
+    CATIMmiPrtContainer * piPartContainer = NULL;
+    CATUnicodeString FileName =  iArgv[1];
+    CATDocument *pDoc = NULL;
+    HRESULT rc =  <strong>CAAV5V6MmrInitSession</strong>(pSessionName, FileName, pDoc, piPartContainer) ;
+       
+   
+#endif	
+
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p> As seen in the <a href="#How">How to launch</a> section, there are two input arguments for this program, the 
+names of the file to open and file to save.  </p>
+
+<p> The output of <em>CAAV5V6MmrInitSession</em> is a <em>CATIMmiPrtContainer</em> pointer on the <code>CATPrtCont</code>
+container. </p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Part"></a>Accessing the Part Feature in the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATIMmiMechanicalFeature_var spMechFeatOnPart ;  
+    rc = piPartContainer-&gt;GetMechanicalPart(spMechFeatOnPart);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+The <em>CATIMmiPrtContainer</em> interface enables to access the Part feature 
+thanks to its <code>GetMechanicalPart</code> method. A <em>CATIMmiMechanicalFeature</em> 
+interface smart pointer on the Part feature
+is returned. 
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="FilteringFeatures"></a>Filtering Out the Fillet Features</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+<strong>CATIPartRequest</strong>_var spPartReq = spMechFeatOnPart;
+CATBaseUnknown_var spMainBody = NULL_var; 
+rc = spPartReq-&gt;<strong>GetMainBody</strong>("",spMainBody);
+...
+<strong>CATIMmiUseBodyContent</strong>_var spBodyContent = spMainBody;
+...
+CATListValCATBaseUnknown_var listFeat;
+rc = spBodyContent-&gt;<strong>GetMechanicalFeatures</strong>(listFeat);
+
+... 
+CATListValCATBaseUnknown_var filletFeatures;
+for (int currentFeat=1; currentFeat&lt;=listFeat.Size();currentFeat++)
+{
+   CATBaseUnknown* pFillet = NULL;
+   CATBaseUnknown_var hFeat = listFeat[currentFeat];
+   if (!!hFeat)
+   {
+     pFillet = hFeat-&gt;QueryInterface("<strong>CATIPdgUseFillet</strong>");
+     if (pFillet) 
+       filletFeatures.Append(pFillet);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+
+ <p>We retrieve the PartBody with the method <code>GetMainBody</code> of <em>CATIPartRequest</em> 
+	interface (<code>spPartReq</code> is a <em>CATIPartRequest</em> interface smart pointer on the Part feature).&nbsp; 
+</p>
+<p>Next, we retrieve the list of mechanical features aggregated by the PartBody 
+with the method <code>GetMechanicalfeatures</code> of<em> CATIMmiUseBodyContent</em> 
+interface (<code>spBodyContent</code> is<em> CATIMmiUseBodyContent</em> interface smart pointer on the 
+PartBody).</p>
+<p>We then scan the list to search for Fillet type features, using the <em>
+CATIPdgUseFillet</em> interface. (remarq: This method of QueryInterface enables 
+to check the type of the object without having a dependency on CATPartUseItf 
+framework).</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="AccessingFilletsTopology"></a>Accessing the Fillets Topology</h4>
+<table class="code">
+  <tr>
+    <td>
+    <pre>for (int currentFillet=1; currentFillet&lt;=filletFeatures.Size(); currentFillet++)
+{
+   <strong>CATIMmiUseGeometryAccess</strong> *pFilletAsGeomAccess = NULL;
+   rc = filletFeatures[currentFillet]-&gt;QueryInterface(IID_CATIMmiUseGeometryAccess,
+                                                           (void**)&amp;pFilletAsGeomAccess);
+   if( SUCCEEDED(rc))
+   {
+      CATLISTV(CATBaseUnknown_var) filletBReps;
+      pFilletAsGeomAccess-&gt;<b>GetBReps</b>(filletBReps);
+...</pre>
+
+    
+    </td>
+  </tr>
+</table>
+ <p>In order to change the color of each Fillet of the list, we need to access 
+	the topological elements of each Fillet feature. For this, we use the <code>GetBReps</code> 
+	method of the<em> 
+	CATIMmiUseGeometryAccess</em> interface (<code>pFilletAsGeomAccess</code> is a <em> 
+	CATIMmiUseGeometryAccess</em> interface pointer on a Fillet feature).</p>
+    <p><i>CATIMmiUseGeometryAccess</i> interface's mission is to allow a feature to get access to
+all or some of the cells that are part of the Topological Body that represents
+its shape. This is done through two methods, <code>GetBReps</code>
+and <code>GetTopoCells</code> that exist within the interface
+with many different signature to allow more or less filtering on the set of
+accessed cells. These two methods enable to access the Topology at two different levels: the topological level and the scope level. Scopes are
+management objects that exist within the mechanical world to ensure a Cell-level
+and stable bi-directional access from Mechanical features to Topological Cells.
+Scopes are made of nodes (also called Selecting Objects or BRep Access objects), 
+	each associated with a different Cell in the Topological world (for more 
+	information on scopes, nodes, cells and the mapping from Mechanical features 
+	to Topology, refer to the article &quot;Generic Naming Overview&quot; [<a href="#References">5</a>]).</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ColoringFillets"></a>Coloring the Fillets Topology</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+for(int currentBRep=1; currentBRep&lt;=filletBReps.Size(); currentBRep++)
+{
+  <strong>CATIVisProperties</strong> *pFilletBrepAsGraphics = 0;
+  rc =  filletBReps[currentBRep]-&gt;QueryInterface(IID_CATIVisProperties,
+                                                 (void**)&amp;pFilletBrepAsGraphics);
+  if (SUCCEEDED(rc))
+  {
+     CATVisPropertiesValues color;
+     color.SetColor(0, 255, 0); // green
+     pFilletBrepAsGraphics-&gt;<b>SetPropertiesAtt</b>(color, CATVPColor, CATVPMesh);
+     pFilletBrepAsGraphics-&gt;Release();
+     pFilletBrepAsGraphics = NULL;
+  }
+}
+
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>For each Fillet feature, we scan the list of BRep Acces objects in order to set their 
+   color to green.</p>
+   <p>At this point, lets raise an interesting question. In the previous step, 
+   we used the <code>GetBReps</code> method of <em>CATIMmiUseGeometryAccess</em> interface
+    to retrieve the BRep Access objects to color. 
+    Using <code>GetTopoCells</code> method of the same interface, 
+   we could have directly retrieved the topological cells. The question is, what's 
+	the difference between changing the color of the BRep Access objects and 
+	directly changing the color of the cells?</p>
+	
+   <p>The answer is, coloring BRep Access objects allows the color to be 
+   persistent at the Mechanical Modeler level.</p>
+   
+   <p>Indeed, colors can be managed both by the Mechanical Modeler and by the 
+	Topological Modeler. The color specifications managed by the Mechanical Modeler 
+   override the ones existing at the Topological Modeler level. This enables to color
+   in one go all the cells representing a mechanical feature, which is more efficient than
+   coloring cell by cell. Nevertheless, the capacity of coloring a single cell is also managed 
+   by mechanical Modeler, enabling their individual color to be taken into account 
+   in the general visualization mechanism of the Mechanical Modeler.</p>
+   
+   <p>In this Use Case, we could have directly assigned the green color to the Fillet  
+   features. Our example enables to show the capacity of the modeler to color at a finer level. </p>
+   
+   <p>So, back to our code sample. We use the  <code>SetColor</code> method of the
+    <i>CATIVisProperties</i> interface to change the color of each cell of the current
+    BRep Access object. <br>
+   
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="FindingPlanarFaces"></a>Finding Out the Planar Faces</h4>
+<p>Now that the fillets have been colored in green, the second part of the job 
+consists in coloring the planar faces in blue. The steps of this section are the
+following:</p>
+<ol>
+  <li><a href="#Retrieving the main Part body">Retrieving the main Body feature</a></li>
+  <li><a href="#Retrieving the feature which holds its result (named result feature)">Retrieving
+    the feature which holds its result (named result feature)</a></li>
+  <li><a href="#Retrieving the CATBody associating with the result feature">Retrieving
+    the <i>CATBody</i> associating with the result feature</a></li>
+  <li><a href="#Retrieving two dimensional topological cells">Retrieving two
+    dimensional topological cells</a></li>
+</ol>
+<p>You can refer to the technical article entitled &quot;Specification/Result
+Mechanism Applied to Mechanical features&quot; for more details about the result
+feature [<a href="#References">6</a>].&nbsp;This article explains that the
+association of the topological body to a geometrical features set is actually managed by
+a specialized feature, sometimes called the <strong>result feature</strong>.</p>
+<ol>
+  <li><a name="Retrieving the main Part body"></a>Retrieving the main Body
+    feature</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIPartRequest</b>_var spPartRequest = spPart ;
+   ...
+   CATBaseUnknown_var spMainPartBody ;
+   rc = spPartRequest-&gt;<b>GetMainBody</b>(&quot;&quot;,spMainPartBody);
+   
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>GetMainBody</code> of the <i>CATIPartRequest</i> interface retrieves 
+	the main Body feature of a Part document [<a href="#References">4</a>].</p>
+  <li><a name="Retrieving the feature which holds its result (named result feature)"></a>Retrieving
+    the feature which holds its result (named result feature)</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIBodyRequest</b>_var spMainPartBodyBodyRequest = spMainPartBody ;
+   ...
+   CATLISTV(CATBaseUnknown_var) ListResult ;
+   rc = spMainPartBodyBodyRequest-&gt;<b>GetResults</b>(&quot;&quot;,ListResult);
+   ...
+   <b>CATIMmiUseGeometricalElement</b>_var spFeatureResultGeomElem = ListResult[<b>1</b>] ;
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CATIBodyRequest</i> interface, implemented on the PartBody, enables you to retrieve the result feature. This feature is a Solid
+  feature which bears the topological result [<a href="#References">6</a>]. The
+  first element of <code>ListResult, </code>is the feature result itself.&nbsp;</p>
+  <li><a name="Retrieving the CATBody associating with the result feature"></a>Retrieving
+    the <i>CATBody</i> associated with the result feature</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+<strong>CATBody</strong>_var spPartTopoBody;
+rc = spFeatureResultGeomElem-&gt;<b>GetBodyResult</b>(spPartTopoBody);
+
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>GetBodyResult</code> method applied to the result feature of the
+  Body feature returns the topological result to process.&nbsp;&nbsp;</p>
+  <li><a name="Retrieving two dimensional topological cells"></a>Retrieving two
+    dimensional topological cells</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   CATLISTP(CATCell) cells;
+   spPartTopoBody-&gt;<b>GetAllCells</b>(cells, 2);
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>From <code>spPartTopoBody</code>, the topological body, a list of all its
+  topological cells can be obtained through <code>GetAllCells</code>. Here the
+  cells are filtered out, keeping only the 2 dimensional cells, i.e. faces.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ColoringPlanarFaces"></a>Coloring the Planar Faces</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+for(int currentCell=1; currentCell&lt;=cells.Size(); currentCell++)
+{
+  CATCell_var pCell(cells[currentCell]);
+  if ( NULL_var != pCell )
+  {
+    <strong>CATGeometry</strong> *pGeometry = pCell-&gt;GetGeometry();
+    if ((NULL != pGeometry) &amp;&amp; (pGeometry-&gt;<b>IsATypeOf</b>(<strong>CATPlaneType</strong>)))
+    {
+      <strong>CATIMmiUseBRepDecodeServices</strong>_var spBRepDecodeService ;
+      CATMmiUseServicesFactory::CreateBRepDecodeServices(spBRepDecodeService);
+      
+      <strong>CATIMmiUseBRepAccess</strong>_var spBRepAccess ; 
+      spBRepDecodeService-&gt;<strong>DecodeCellInGeomElt</strong>(spBRepAccess,pCell,spFeatureResultGeomElem);
+  
+      if (NULL_var!=spBRepAccess)
+      {
+        // Colorizes BRep
+      <strong>  CATIVisProperties</strong> *pBRepAccessAsGraphics = 0;
+        rc = spBRepAccess-&gt;QueryInterface(IID_CATIVisProperties,
+                                                  (void**)&amp;pBRepAccessAsGraphics);
+        if (SUCCEEDED(rc))
+        {
+          CATVisPropertiesValues color;
+          color.SetColor(0, 0, 255); // Blue
+          pBRepAccessAsGraphics-&gt;<strong>SetPropertiesAtt</strong>(color, CATVPColor, CATVPMesh);
+          pBRepAccessAsGraphics-&gt;Release();
+          pBRepAccessAsGraphics = NULL ;
+        }
+ 
+     
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>What's next? Painting the cells associated with the planar faces in blue. We
+got those cells in the cells collection, so we loop over it in search of <i>planar
+</i>faces.</p>
+
+<p>To check if a face is planar, we get from it an object of type <i>CATGeometry</i>,
+which bears its geometrical description. <code>CATGeometry::IsATypeOf</code>
+allows to discriminate among several geometry types, among which CATPlaneType
+for planar entities.</p>
+
+<p>One last trick. Remember that we said earlier that we wanted to place our 
+coloring attribute at the Mechanical Modeler level, otherwise it would be at 
+risk of being overridden. However, our search for the faces that are planar has 
+necessarily taken place at the Topological Modeler level, where such geometrical 
+properties are maintained and can be queried. So what we have so far is a list 
+of topological cells that we know as planar. What we want is to find their 
+corresponding Mechanical Modeler entity, the nodes (also called Selecting Objects, 
+or BRep Access objects). </p>
+
+<p>For that, we use the <code>DecodeCellInGeomElt</code> method of <em>CATIMmiUseBRepDecodeServices
+</em>interface, 
+that retrieves the BRep Access object associated with the planar cell.</p>
+<p>The resulting node implements the <i>CATIVisProperties</i> interface, which
+is used to change its color.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ClosingSession"></a>Closing and Exiting the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   // Saves the part document
+   CATDocumentServices::<b>SaveAs</b>(*pDoc, iArgv[2]);
+
+   // Closes the document
+   CATDocumentServices::<b>Remove</b>(*pDoc);
+  }
+  else
+  {
+    cerr &lt;&lt; &quot;doc not opened&quot; &lt;&lt; endl;
+    rc = 1;
+  }
+
+  // Deletes all documents in session 
+  ::<b>Delete_Session</b>(pSessionName);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the epilog of the use case, we save the modified Part as a new document
+under the file path entered on the command line, close the document from session
+and delete the session, in a way symmetrical to what we did in the prolog. Refer
+to [<a href="#References">3</a>] for details.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>In this use case we are interested in coloring specific details of a Part,
+based on two different criteria: feature nature (fillets) or a geometrical
+property (planarity of faces). This requires two strategies, depending upon
+whether or not we need to descend at the Topological Modeler level to find what
+we are looking for.</p>
+
+<p>Finding fillets just requires a search at the Mechanical Modeler level.&nbsp; 
+	The <em>CATIMmiUseBodyContent </em>interface enables to access the 
+	mechanical features and filter their types by checking which ones implement 
+	the <em>CATIPdgUseFillet </em>interface. Then the <em>
+	CATIMmiUseGeometryAccess </em>interface enables to extract the BRep Access objects
+	 that manage the 
+   links to the Topological cells that represent the fillet. 
+   The <i>CATIVisProperties</i> interface implemented on BRep Access objects
+    is used to set the 
+   color in a way that guarantees that the new color is persistent at the 
+   Mechanical Modeler level.</p>
+   <p>The search for planar faces is different in that it requires the help of 
+   the underlying Topological Modeler to sort out planar from non planar cells. 
+   So first, all cells associated with the main Body feature are requested, and 
+   then they are tested for planarity by accessing their geometry and querying 
+   it for planarity. With only planar cells left, the decoding mechanism is 
+   invoked, so as to relocate in the Mechanical Modeler the objects to modify.
+    The obtained BRep Access objects are then colored in the same way as the fillets 
+   in the first part of the use case.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont0.htm">The
+      Contents of the Specification Container- Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrGenericNaming.htm">Generic
+      Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrTopologyMarkup.htm">
+    V5 reference Use Case : Marking Up Topology in a Part Document </a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAV5V6MmrStructuralBrowsing.htm">Navigating through a Part Document</a></td>
+  </tr>
+
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2012, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

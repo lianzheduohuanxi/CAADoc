@@ -1,0 +1,541 @@
+<html>
+
+<head>
+<title>Checklist for CAA V5 C++ Coding Rules</title>
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Checklist for CAA V5 C++ Coding Rules</h2>
+      <em>Rules, hints and tips checklist to write C++ code</em></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class"abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This is a C++ and Object Modeler rule checklist to use when designing
+      and coding your CATIA applications, according to the following
+      classification: <a href="#Miscellaneous">C++</a>, <a href="#Lifecycle">Lifecycle</a>,
+      and <a href="#ObjectModeler">Object Modeler</a>. Each link refers to the
+      detailed rule explanation.</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="CheckList"></a>Rule Checklist</h3>
+<table width="100%">
+  <tr>
+    <td colspan="6" valign="top"><a name="Miscellaneous"></a><strong>C++ Rules</strong></td>
+  </tr>
+  <tr>
+    <th><img border="0" src="images/Check.jpg" width="14" height="14"></th>
+    <th>Detailed Rule</th>
+    <th>Rule Topic</th>
+    <th>Do</th>
+    <th>Don't</th>
+    <th>Advice/Explanation</th>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C1"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C1">Rule</a>]</p>
+    </td>
+    <td valign="top">Header files</td>
+    <td valign="top">Create a dedicated header file for each C++ or C entity</td>
+    <td valign="top">Don't, for example, insert a global enum in a class header
+      file</td>
+    <td valign="top"><em>This makes both client application programmer and CASE
+      tool job easier</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C2"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C2">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>#ifndef</code>, <code>#define</code>, and <code>#endif</code></td>
+    <td valign="top">Use <code>#ifndef</code>, <code>#define</code>, and <code>#endif</code>
+      to enclose your header file content</td>
+    <td valign="top">Don't create a header file without them</td>
+    <td valign="top"><em>This protects your code from header file multiple
+      inclusion</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C3"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C3">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>#include</code></td>
+    <td valign="top">Use <code>#include</code> judiciously</td>
+    <td valign="top">Don't, for example, include a class header file if a
+      pointer to this class is used as a method parameter</td>
+    <td valign="top"><em>Improper uses of #include are useless and&nbsp;
+      unnecessarily increase code size.<br>
+      </em><b>Advice</b>: Use forward reference whenever possible</td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C4"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C4">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>namespace</code></td>
+    <td valign="top"></td>
+    <td valign="top">Don't use</td>
+    <td valign="top"><em>This is not yet supported on every platform</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C5"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C5">Rule</a>]</p>
+    </td>
+    <td valign="top">Do not use threads</td>
+    <td valign="top"></td>
+    <td valign="top">Don't use</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C24"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C24">Rule</a>]</p>
+    </td>
+    <td valign="top">Do not use templates</td>
+    <td valign="top"></td>
+    <td valign="top">Don't use</td>
+    <td valign="top"><i>They are not portable.</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C6"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C6">Rule</a>]</p>
+    </td>
+    <td valign="top">Multiple inheritance</td>
+    <td valign="top"></td>
+    <td valign="top">Don't use</td>
+    <td valign="top"><em>It is much more complex than single inheritance</em>.<br>
+      <strong>Advice</strong>: Prefer the Object Modeler</td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C7"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C7">Rule</a>]</p>
+    </td>
+    <td valign="top">Virtual inheritance</td>
+    <td valign="top"></td>
+    <td valign="top">Don't use</td>
+    <td valign="top"><em>Linked to multiple inheritance, which is already
+      forbidden</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C8"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C8">Rule</a>]</p>
+    </td>
+    <td valign="top">Public inheritance</td>
+    <td valign="top">Use it to derive classes</td>
+    <td valign="top">Don't use protected or private inheritance</td>
+    <td valign="top"><em>This ensures that the base class members in the derived
+      class remain as they are defined in the base class, that is public,
+      protected, or private</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C9"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C9">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>friend</code></td>
+    <td valign="top"></td>
+    <td valign="top">Don't implement</td>
+    <td valign="top"><em>It breaks encapsulation</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C10"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C10">Rule</a>]</p>
+    </td>
+    <td valign="top">Data member</td>
+    <td valign="top"></td>
+    <td valign="top">Avoid to expose data members as public</td>
+    <td valign="top"><em>It breaks encapsulation and forbids you to make your
+      implementation evolve</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C11"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C11">Rule</a>]</p>
+    </td>
+    <td valign="top">Static data member</td>
+    <td valign="top">Use it only if you need an instance counter</td>
+    <td valign="top">Generally avoid</td>
+    <td valign="top"><em>They are shared by all instances of your classes</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C12"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C12">Rule</a>]</p>
+    </td>
+    <td valign="top">Constructors<br>
+    </td>
+    <td valign="top">For each class, provide by default:<br>
+      • A copy constructor<br>
+      • A default constructor<br>
+      • A destructor<br>
+      • An assignment operator</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This will help your clients assume that these
+      &quot;basic&quot; constructors always exist.</em><br>
+      <strong>Warning</strong>: Specific rule applies to extension classes.</td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C13"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C13">Rule</a>]</p>
+    </td>
+    <td valign="top">Destructor</td>
+    <td valign="top">Declare the destructor as virtual for classes to derive</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This will enable instances of derived classes to be
+      properly deleted</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C14"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C14">Rule</a>]</p>
+    </td>
+    <td valign="top">Virtual methods</td>
+    <td valign="top"></td>
+    <td valign="top">Don't declare virtual methods within class private parts</td>
+    <td valign="top"><em>This is useless</em><br>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C15"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C15">Rule</a>]</p>
+    </td>
+    <td valign="top">Virtual methods</td>
+    <td valign="top">Declare the methods intended to be redefined as virtual</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This enables for class derivation</em><br>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C16"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C16">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>inline</code> methods</td>
+    <td valign="top"></td>
+    <td valign="top">Avoid</td>
+    <td valign="top"><em>Every change in inlined code will force your client to
+      rebuild.</em><br>
+      <strong>Advice</strong>: You may do so only for proved gains (performance,
+      size).</td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C17"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C17">Rule</a>]</p>
+    </td>
+    <td valign="top">Basic operators</td>
+    <td valign="top"></td>
+    <td valign="top">Do not redefine</td>
+    <td valign="top"><em>Except if it is obvious for everybody (complexes,
+      points)</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C18"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C18">Rule</a>]</p>
+    </td>
+    <td valign="top">Do not include non declarative code in header files</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top"><em>It is disastrous from a size perspective, and couples
+      your code with your clients code (they'll have to rebuild when you modify
+      this code)</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C19"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C19">Rule</a>]</p>
+    </td>
+    <td valign="top">Implicit casts</td>
+    <td valign="top"></td>
+    <td valign="top">Do not use</td>
+    <td valign="top"><em>Your clients should always be fully aware of the type
+      they manipulate</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C20"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C20">Rule</a>]</p>
+    </td>
+    <td valign="top">Parameter types</td>
+    <td valign="top">Use legal types only</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This avoids problems with multi-platform and
+      multi-standard support, and distribution</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C21"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C21">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>const</code></td>
+    <td valign="top">Constrain variables, arguments and methods by using <code>const</code></td>
+    <td valign="top"></td>
+    <td valign="top"><code>const</code><em> is a chance for your to express your
+      design intent to your clients. Don't miss it: they'll know if using your
+      method can alter an object state or not.</em><br>
+      <strong>Advice</strong>: Do it even even if you have to cast away the
+      constness of your pointers in your implementation for efficiency purposes.</td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C22"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C22">Rule</a>]</p>
+    </td>
+    <td valign="top">Scope resolution operator (<code>::</code>)</td>
+    <td valign="top">Appropriately use the scope resolution operator (<code>::</code>)</td>
+    <td valign="top">Don't use it to access members inherited from classes above
+      the nearest base class</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="C23"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#C23">Rule</a>]</p>
+    </td>
+    <td valign="top">Exceptions</td>
+    <td valign="top">Use <code>CATTry</code>, <code>CATCatch</code>, and <code>CATCatchOthers</code>
+      to process existing exceptions</td>
+    <td valign="top">Don't create new exceptions</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td colspan="6" valign="top"><a name="Lifecycle"></a><strong>Lifecycle Rules</strong></td>
+  </tr>
+  <tr>
+    <th><img border="0" src="images/Check.jpg" width="14" height="14"></th>
+    <th>Detailed Rule</th>
+    <th>Rule Topic</th>
+    <th>Do</th>
+    <th>Don't</th>
+    <th>Advice/Explanation</th>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC1"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC1">Rule</a>]</p>
+    </td>
+    <td valign="top">Interface pointers</td>
+    <td valign="top">Use AddRef and Release appropriately</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC2"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC2">Rule</a>]</p>
+    </td>
+    <td valign="top">Other objects</td>
+    <td valign="top">Use new/delete and free/malloc appropriately</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC3"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC3">Rule</a>]</p>
+    </td>
+    <td valign="top">Available types</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC4"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC4">Rule</a>]</p>
+    </td>
+    <td valign="top">Pointer usage</td>
+    <td valign="top">Always initialize your pointers to <code>NULL</code></td>
+    <td valign="top">Don't let pointers be initialized at random</td>
+    <td valign="top"><em>Otherwise, this could lead to unexplainable memory
+      leaks</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC5"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC5">Rule</a>]</p>
+    </td>
+    <td valign="top">Pointer usage</td>
+    <td valign="top">Always test pointer values before using them</td>
+    <td valign="top">Never use a pointer before ensuring that it is not <code>NULL</code></td>
+    <td valign="top"><em>Otherwise, this could lead to core dumps</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC6"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC6">Rule</a>]</p>
+    </td>
+    <td valign="top">Pointers to objects</td>
+    <td valign="top">Always set pointers to deleted objects to <code>NULL</code></td>
+    <td valign="top">Never let a valued pointer to a deleted object</td>
+    <td valign="top"><em>Otherwise, this could lead to unexplainable memory
+      leaks and core dumps</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="LC7"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#LC7">Rule</a>]</p>
+    </td>
+    <td valign="top">Interface pointers</td>
+    <td valign="top">Always set release interface pointers to <code>NULL</code></td>
+    <td valign="top">Never let a released but valued interface pointer</td>
+    <td valign="top"><em>Otherwise, this could lead to unexplainable memory
+      leaks and core dumps</em></td>
+  </tr>
+  <tr>
+    <td colspan="6" valign="top"><a name="ObjectModeler"></a><strong>Object
+      Modeler</strong></td>
+  </tr>
+  <tr>
+    <th><img border="0" src="images/Check.jpg" width="14" height="14"></th>
+    <th>#</th>
+    <th>Rule Topic</th>
+    <th>Do</th>
+    <th>Don't</th>
+    <th>Advice/Explanation</th>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM1"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM1">Rule</a>]</p>
+    </td>
+    <td valign="top">Interface</td>
+    <td valign="top"></td>
+    <td valign="top">Don't implement the same interface twice in the same
+      component</td>
+    <td valign="top"><em>Otherwise, this could lead to unpredictable results</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM2"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM2">Rule</a>]</p>
+    </td>
+    <td valign="top">Interface OM-inheritance</td>
+    <td valign="top"></td>
+    <td valign="top">Don't implement in a component an interface that OM-derives
+      from another interface already implemented in the same component</td>
+    <td valign="top"><em>Otherwise, this could lead to unpredictable results</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM3"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM3">Rule</a>]</p>
+    </td>
+    <td valign="top">Extensions</td>
+    <td valign="top">Appropriately use data and code extensions</td>
+    <td valign="top">Don't use a data extension if it contains no data</td>
+    <td valign="top"><em>Using code extension spares memory</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM4"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM4">Rule</a>]</p>
+    </td>
+    <td valign="top">Extensions and OM-inheritance</td>
+    <td valign="top">Always OM-derive your extensions from CATBaseUnknown or
+      CATnull</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This is the only legal way of OM-deriving extensions</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM5"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM5">Rule</a>]</p>
+    </td>
+    <td valign="top">Extensions and C++-inheritance</td>
+    <td valign="top"></td>
+    <td valign="top">Don't C++-derive extensions that implement several
+      interfaces</td>
+    <td valign="top"><em>Otherwise, this could lead to unpredictable results</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM6"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM6">Rule</a>]</p>
+    </td>
+    <td valign="top"><code>QueryInterface</code></td>
+    <td valign="top">Correctly use <code>QueryInterface</code></td>
+    <td valign="top"></td>
+    <td valign="top"><em>This ensures to retrieve only valid interface pointers</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM7"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM7">Rule</a>]</p>
+    </td>
+    <td valign="top">Smart pointers</td>
+    <td valign="top"></td>
+    <td valign="top">Do not use smart pointers</td>
+    <td valign="top"><em>This avoids memory leaks</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM8"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM8">Rule</a>]</p>
+    </td>
+    <td valign="top">Smart pointers</td>
+    <td valign="top">Enable interface pointers and smart pointers to coexist</td>
+    <td valign="top"></td>
+    <td valign="top"><em>This avoids memory leaks</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><input name="C1" type="checkbox" value="ON"></td>
+    <td valign="top">
+      <p align="center"><a name="OM9"></a>[<a href="../CAADocTechArticles/CAADocCppCodingRules.htm#OM9">Rule</a>]</p>
+    </td>
+    <td valign="top">Interface dictionary</td>
+    <td valign="top">Correctly fill in the interface dictionary</td>
+    <td valign="top"></td>
+    <td valign="top"><em>Otherwise, the client application could not retrieve
+      interface pointers from your components, or worse, could retrieve wrong
+      interface pointers.</em></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

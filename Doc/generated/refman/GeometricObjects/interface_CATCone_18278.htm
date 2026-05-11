@@ -1,0 +1,395 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATCone</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATCone"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATCone</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATCone_18278','CATCone','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATCone</b>
+</p>
+<p>
+<b><i> Interface representing a geometric cone.</i></b><br>
+ Only right circular cones are supported.
+ <br> The CATCone is created by the <tt>CreateCone</tt>
+ method of the <tt>CATGeoFactory</tt> interface and deleted with the <tt>Remove</tt> method.
+ <br>A cone is defined by:
+ <ul>
+ <li>a CATMathAxis in which:
+ <ul>
+ <li>the third direction is the cone direction
+ <li>the first and second directions define the P plane on which relies the base radius.   
+ </ul>
+ <li>an external cone angle (CATAngle) expressed in radians. Legal values: <tt>0 < ConeAngle < Pi/2</tt>.
+ <li>a start angle in radians measured from the first direction of the cone axis. 
+ <li>an end angle in radians  measured from the first direction of the cone axis. 
+ This end angle must be greater than the start angle.
+ <li>a low limit of the cone length. This limit is the <b>slant height</b> counted from the 
+ P plane on which relies the base radius. Note that this 
+ limit is not counted along the cone axis.
+ <li>a high limit of the cone length. This limit is the <b>slant height</b> counted from the 
+ P plane on which relies the base radius. Note that this 
+ limit is not counted along the cone axis. The values of the low and high limits
+ must be such that the generated surface remains bounded by the apex. Double cones (two cones
+ placed apex to apex) are not supported.
+ </ul>
+ Note: <br>
+ The CATCone is parameterized by the arc length (first direction U) of the
+ mean circular section and the chord length (second direction V) along a 
+ ruling.
+ <pre>
+ C(U,V) = Origin +
+  (StartRadius + L * cos(ConeAngle))*(cos(theta)*OX + sin(theta)*OY)
+  +  L * sin(ConeAngle) * OZ 
+  where U = UScale * theta and L is the rule-length, L = LenScale*V.
+ </pre></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetApex(CATMathPoint&amp;)"><b>GetApex</b></a>(CATMathPoint&amp;)
+<dd>  Returns the apex of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetConeAngle()"><b>GetConeAngle</b></a>()
+<dd>  Returns the angle of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetEndAngle()"><b>GetEndAngle</b></a>()
+<dd>  Returns the high limit of the circle arc of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetEndRuleLength()"><b>GetEndRuleLength</b></a>()
+<dd>  Returns the high limit of the <b>slant height</b> of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetRadiusAtV(double)"><b>GetRadiusAtV</b></a>(double)
+<dd>  Returns the radius of the circular cross-section of <tt>this</tt> cone
+ at the input V-value.
+ <dt> o 
+    <a href="#GetSemiAngle()"><b>GetSemiAngle</b></a>()
+<dd>  Returns the angle between <tt>this</tt> cone and its axis third direction.
+ <dt> o 
+    <a href="#GetStartAngle()"><b>GetStartAngle</b></a>()
+<dd>  Returns the low limit of the circle arc of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetStartRadius()"><b>GetStartRadius</b></a>()
+<dd>  Returns the radius in the plane defined by the first and second 
+ directions of the cone axis.
+ <dt> o 
+    <a href="#GetStartRuleLength()"><b>GetStartRuleLength</b></a>()
+<dd>  Returns the low limit of the <b>slant height</b> of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetUScale()"><b>GetUScale</b></a>()
+<dd>  Retrieves the scale on the circular direction of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetVScale()"><b>GetVScale</b></a>()
+<dd>  Retrieves the scale along the rule-lines of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#GetVShift()"><b>GetVShift</b></a>()
+<dd>  Retrieves the shift along the rule-lines of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#SetUScale(double)"><b>SetUScale</b></a>(double)
+<dd>  Modifies the scale on the circular direction of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#SetVScale(double)"><b>SetVScale</b></a>(double)
+<dd>  Modifies the scale along the rule-lines of <tt>this</tt> CATCone.
+ <dt> o 
+    <a href="#SetVShift(double)"><b>SetVShift</b></a>(double)
+<dd>  Modifies the shift along the rule-lines of <tt>this</tt> CATCone.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetApex"></a><a name="GetApex(CATMathPoint&amp;)"></a> <dt> o <b>GetApex</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetApex</b>(<td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>ioPoint</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the apex of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioPoint</tt>
+   <dd> The mathematical definition of the apex.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetConeAngle"></a><a name="GetConeAngle()"></a> <dt> o <b>GetConeAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetConeAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the angle of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The external cone angle.
+</dl>
+</dl>
+<a name="GetEndAngle"></a><a name="GetEndAngle()"></a> <dt> o <b>GetEndAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetEndAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high limit of the circle arc of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The high limit of the circle arc.
+</dl>
+</dl>
+<a name="GetEndRuleLength"></a><a name="GetEndRuleLength()"></a> <dt> o <b>GetEndRuleLength</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetEndRuleLength</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high limit of the <b>slant height</b> of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The high limit of the <b>slant height</b>. Note that this 
+ limit is not counted along the cone axis.
+</dl>
+</dl>
+<a name="GetRadiusAtV"></a><a name="GetRadiusAtV(double)"></a> <dt> o <b>GetRadiusAtV</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetRadiusAtV</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iVval</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the radius of the circular cross-section of <tt>this</tt> cone
+ at the input V-value.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVval</tt>
+   <dd> The parameter value in the V direction.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The corresponding radius value.
+</dl>
+</dl>
+<a name="GetSemiAngle"></a><a name="GetSemiAngle()"></a> <dt> o <b>GetSemiAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetSemiAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the angle between <tt>this</tt> cone and its axis third direction.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The angle value.
+</dl>
+</dl>
+<a name="GetStartAngle"></a><a name="GetStartAngle()"></a> <dt> o <b>GetStartAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetStartAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low limit of the circle arc of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The low limit of the circle arc.
+</dl>
+</dl>
+<a name="GetStartRadius"></a><a name="GetStartRadius()"></a> <dt> o <b>GetStartRadius</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetStartRadius</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the radius in the plane defined by the first and second 
+ directions of the cone axis. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The base radius on the plane defined by the first and second 
+ directions of the cone axis.
+</dl>
+</dl>
+<a name="GetStartRuleLength"></a><a name="GetStartRuleLength()"></a> <dt> o <b>GetStartRuleLength</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetStartRuleLength</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low limit of the <b>slant height</b> of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The low limit of the <b>slant height</b>. Note that this 
+ limit is not counted along the cone axis.
+</dl>
+</dl>
+<a name="GetUScale"></a><a name="GetUScale()"></a> <dt> o <b>GetUScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetUScale</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the scale on the circular direction of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The scale: <tt>U = UScale * theta</tt>, in which <tt>theta</tt> is the angle measured
+ on the MeanCircularSection, with theta(OX)=0 and theta(OY)=Pi/2.
+</dl>
+</dl>
+<a name="GetVScale"></a><a name="GetVScale()"></a> <dt> o <b>GetVScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetVScale</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the scale along the rule-lines of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The scale. This starts as 1.0, so that V measures rule-length.  However,
+ to preserve parametrization under dilations, it may be changed.
+</dl>
+</dl>
+<a name="GetVShift"></a><a name="GetVShift()"></a> <dt> o <b>GetVShift</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetVShift</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the shift along the rule-lines of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The shift. This starts as 0.0, so that V measures rule-length from the
+ ex-ey plane of the CATMathAxis.  However,
+ to preserve parametrization under offsets, it may be changed.
+ In particular, positive offsets can be handled without the shift,
+ but a large enough negative offset requires a shift in V in order
+ to avoid a negative StartRadius.
+</dl>
+</dl>
+<a name="SetUScale"></a><a name="SetUScale(double)"></a> <dt> o <b>SetUScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetUScale</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewUScale</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the scale on the circular direction of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewUScale</tt>
+   <dd> The scale.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetVScale"></a><a name="SetVScale(double)"></a> <dt> o <b>SetVScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetVScale</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewVScale</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the scale along the rule-lines of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewVScale</tt>
+   <dd> The new scale.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetVShift"></a><a name="SetVShift(double)"></a> <dt> o <b>SetVShift</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetVShift</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewVScale</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the shift along the rule-lines of <tt>this</tt> CATCone.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewVScale</tt>
+   <dd> The new shift.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCone.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

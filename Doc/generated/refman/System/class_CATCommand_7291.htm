@@ -1,0 +1,667 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Class CATCommand</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATCommand"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System <script type="text/javascript" > writeClassCharacteristic(); </script> CATCommand</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATCommand_7291','CATCommand','0');</script>
+<p><b>Usage: you can derive this class.</b></p>
+<hr>
+<p>
+ public class <b>CATCommand</b>
+</p>
+<p>
+<b><i> Base class for all objects that need to collaborate through notifications.</i></b><br>
+
+ <b>Role</b>: To provide the basic command behavior, that is, to
+ send notifications, that usually depicts a user interaction, to other commands
+ and to receive notifications sent by other commands.
+ This behavior is known as the send/receive communication protocol.
+ <p>
+ All the existing commands are organized as a tree structure.
+ Each command has a parent command and possibly children.
+ The parent is passed as a parameter of the command constructor.
+ <p>
+ When the end-user interacts with the application, system events are produced
+ that CNext turns into notifications, and sends them to either the command
+ that is involved, such as the push button pushed by the end user,
+ or to the command that is the nearest to the 
+ user interaction, such as the manipulator set onto a document object's representation
+ selected by the end user in a graphics viewer.
+ <p>
+ The notification is sent from command to command along the tree structure
+ until it can be processed.
+ If no command able to process the notification is
+ found, it is sent to the command selector that resends it to
+ the active command.
+ This can decide to process the notification,
+ or otherwise to do something else, possibly nothing.
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATEventSubscriber','','CATEventSubscriber') </script>, <script type="text/javascript"> activateLinkAnchor('CATCallbackManager','','CATCallbackManager') </script>, <script type="text/javascript"> activateLinkAnchor('CATNotification','','CATNotification') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATCommand(CATCommand*,CATString&amp;)"><b>CATCommand</b></a>(CATCommand*,CATString&amp;)
+<dd>  Constructs a command with a given parent and identifier.
+ <dt> o 
+    <a href="#CATCommand(CATCommand*,CATString* const)"><b>CATCommand</b></a>(CATCommand*,CATString* const)
+<dd>  Constructs a command with a given parent and identifier.
+ <dt> o 
+    <a href="#~CATCommand()"><b>~CATCommand</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Activate(CATCommand*,CATNotification*)"><b>Activate</b></a>(CATCommand*,CATNotification*)
+<dd>  Activates a command.
+ <dt> o 
+    <a href="#AddAnalyseNotificationCB(CATCommand*,char*,CATCommandMethod,CATCommandClientData)"><b>AddAnalyseNotificationCB</b></a>(CATCommand*,char*,CATCommandMethod,CATCommandClientData)
+<dd>  Adds a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#AddAnalyseNotificationCB(CATCommand*,CATNotification*,CATCommandMethod,CATCommandClientData)"><b>AddAnalyseNotificationCB</b></a>(CATCommand*,CATNotification*,CATCommandMethod,CATCommandClientData)
+<dd>  Adds a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#AnalyseNotification(CATCommand*,CATNotification*)"><b>AnalyseNotification</b></a>(CATCommand*,CATNotification*)
+<dd>  Analyzes a notification sent by another command.
+ <dt> o 
+    <a href="#Cancel(CATCommand*,CATNotification*)"><b>Cancel</b></a>(CATCommand*,CATNotification*)
+<dd>  Cancels a command.
+ <dt> o 
+    <a href="#Desactivate(CATCommand*,CATNotification*)"><b>Desactivate</b></a>(CATCommand*,CATNotification*)
+<dd>  Deactivates a command.
+ <dt> o 
+    <a href="#GetFather()"><b>GetFather</b></a>()
+<dd>  Returns the command parent.
+ <dt> o 
+    <a href="#GetName()"><b>GetName</b></a>()
+<dd>  Returns the command identifier.
+ <dt> o 
+    <a href="#GetStartMode()"><b>GetStartMode</b></a>()
+<dd>  Returns the command start mode.
+ <dt> o 
+    <a href="#RemoveAnalyseNotificationCB(CATCallback)"><b>RemoveAnalyseNotificationCB</b></a>(CATCallback)
+<dd>  Removes a callback.
+ <dt> o 
+    <a href="#RemoveAnalyseNotificationCB(CATCommand*,char*)"><b>RemoveAnalyseNotificationCB</b></a>(CATCommand*,char*)
+<dd>  Removes a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#RemoveAnalyseNotificationCB(CATCommand*,CATNotification*)"><b>RemoveAnalyseNotificationCB</b></a>(CATCommand*,CATNotification*)
+<dd>  Removes a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#RemoveAnalyseNotificationCB(CATCommand*,char*,CATCommandClientData)"><b>RemoveAnalyseNotificationCB</b></a>(CATCommand*,char*,CATCommandClientData)
+<dd>  Removes a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#RemoveAnalyseNotificationCB(CATCommand*,CATNotification*,CATCommandClientData)"><b>RemoveAnalyseNotificationCB</b></a>(CATCommand*,CATNotification*,CATCommandClientData)
+<dd>  Removes a callback for a given notification published by a given command.
+ <dt> o 
+    <a href="#RequestDelayedDestruction()"><b>RequestDelayedDestruction</b></a>()
+<dd>  Requests the command delayed destruction.
+ <dt> o 
+    <a href="#RequestStatusChange(CATCommandMsg,CATCommand*)"><b>RequestStatusChange</b></a>(CATCommandMsg,CATCommand*)
+<dd>  Requests a command status change.
+ <dt> o 
+    <a href="#SendCommandSpecificObject(char*,CATNotification*)"><b>SendCommandSpecificObject</b></a>(char*,CATNotification*)
+<dd>  Requests an object to be retrieved.
+ <dt> o 
+    <a href="#SendNotification(CATCommand*,CATNotification*)"><b>SendNotification</b></a>(CATCommand*,CATNotification*)
+<dd>  Sends a notification to another command.
+ <dt> o 
+    <a href="#SendObject(char*,CATNotification*)"><b>SendObject</b></a>(char*,CATNotification*)
+<dd>  Requests an object to be retrieved.
+ <dt> o 
+    <a href="#SetFather(CATCommand*)"><b>SetFather</b></a>(CATCommand*)
+<dd>  Sets the command parent.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATCommand"></a><a name="CATCommand(CATCommand*,CATString&amp;)"></a> <dt> o <b>CATCommand</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATCommand</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iParent</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iIdentifier</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a command with a given parent and identifier.
+ <br><b>Role</b>: The command is constructed using its parent command
+ in the command tree structure, that is the command to which the notifications
+ that the constructed command cannot process are sent, and using its identifier.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The command's parent
+ </dd>
+    <dt><tt> iIdentifier</tt>
+   <dd>   The command's identifier, as a constant CATString</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATCommand"></a><a name="CATCommand(CATCommand*,CATString* const)"></a> <dt> o <b>CATCommand</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATCommand</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iParent</tt><td><tt>=NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString*','CATString* const')</script> <td><tt>iIdentifier</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a command with a given parent and identifier.
+ <br><b>Role</b>: The command is constructed using its parent command
+ in the command tree structure, that is the command to which the notifications
+ that the constructed command cannot process are sent, and using its identifier.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The command's parent
+ </dd>
+    <dt><tt> iIdentifier</tt>
+   <dd>   The command's identifier, as a pointer to a constant pointer to CATString</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATCommand"></a><a name="~CATCommand()"></a> <dt> o <b>~CATCommand</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATCommand</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Activate"></a><a name="Activate(CATCommand*,CATNotification*)"></a> <dt> o <b>Activate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATStatusChangeRC','CATStatusChangeRC')</script>  <b>Activate</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iFromClient</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Activates a command.
+ <br><b>Role</b>: Called by the command selector to give the focus
+ to the command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFromClient</tt>
+   <dd>   The command that requests to activate the current one
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification sent
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The command status.
+</dl>
+</dl>
+<a name="AddAnalyseNotificationCB"></a><a name="AddAnalyseNotificationCB(CATCommand*,char*,CATCommandMethod,CATCommandClientData)"></a> <dt> o <b>AddAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('CATCallback','CATCallback')</script>  <b>AddAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iNotificationClassName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandMethod','CATCommandMethod')</script> <td><tt>iMethodToExecute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandClientData','CATCommandClientData')</script> <td><tt>iUsefulData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification
+ </dd>
+    <dt><tt> iNotificationClassName</tt>
+   <dd>   The class name of the notification sent by <tt>iPublishingCATCommand</tt>.
+   <br><b>Legal values</b>: Use the <tt>ClassName</tt> static method of
+   the notification class.
+   <br>Example: <tt>MyNotification::ClassName()</tt>, where MyNotification
+   is the notification class from which an instance is expected 
+ </dd>
+    <dt><tt> iMethodToExecute</tt>
+   <dd>   The method to execute whenever <tt>iPublishingCATCommand</tt> publishes
+   <tt>iNotificationClassName</tt>
+ </dd>
+    <dt><tt> iUsefulData</tt>
+   <dd>   Data to pass to <tt>iMethodToExecute</tt> and that can be useful
+   to this method
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The added callback
+</dl>
+</dl>
+<a name="AddAnalyseNotificationCB"></a><a name="AddAnalyseNotificationCB(CATCommand*,CATNotification*,CATCommandMethod,CATCommandClientData)"></a> <dt> o <b>AddAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('CATCallback','CATCallback')</script>  <b>AddAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iPublishedNotification</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandMethod','CATCommandMethod')</script> <td><tt>iMethodToExecute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandClientData','CATCommandClientData')</script> <td><tt>iUsefulData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification.
+ </dd>
+    <dt><tt> iPublishedNotification</tt>
+   <dd>   The notification published by <tt>iPublishingCATCommand</tt>
+ </dd>
+    <dt><tt> iMethodToExecute</tt>
+   <dd>   The method to execute whenever <tt>iPublishingCATCommand</tt>
+   publishes <tt>iPublishedNotification</tt>
+ </dd>
+    <dt><tt> iUsefulData</tt>
+   <dd>   Data to pass to <tt>iMethodToExecute</tt> and that can be useful
+   to this method
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The added callback
+</dl>
+</dl>
+<a name="AnalyseNotification"></a><a name="AnalyseNotification(CATCommand*,CATNotification*)"></a> <dt> o <b>AnalyseNotification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATNotifPropagationMode','CATNotifPropagationMode')</script>  <b>AnalyseNotification</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iFromClient</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Analyzes a notification sent by another command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> FromClient</tt>
+   <dd>   The command that sends the notification to be analyzed
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification to analyze
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The notification propagation mode
+</dl>
+</dl>
+<a name="Cancel"></a><a name="Cancel(CATCommand*,CATNotification*)"></a> <dt> o <b>Cancel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATStatusChangeRC','CATStatusChangeRC')</script>  <b>Cancel</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iFromClient</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Cancels a command.
+ <br><b>Role</b>: Called by the command selector to definitely
+ withdraw the focus from the command.
+ The command should then request its destruction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFromClient</tt>
+   <dd>   The command that requests to cancel the current one
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification sent
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The command status.
+</dl>
+</dl>
+<a name="Desactivate"></a><a name="Desactivate(CATCommand*,CATNotification*)"></a> <dt> o <b>Desactivate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATStatusChangeRC','CATStatusChangeRC')</script>  <b>Desactivate</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iFromClient</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Deactivates a command.
+ <br><b>Role</b>: Called by the command selector to temporarily
+ withdraw the focus from the command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFromClient</tt>
+   <dd>   The command that requests to deactivate the current one
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification sent
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The command status.
+</dl>
+</dl>
+<a name="GetFather"></a><a name="GetFather()"></a> <dt> o <b>GetFather</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATCommand','CATCommand *')</script>  <b>GetFather</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the command parent.
+ <br><b>Role</b>: The command parent is usually set by the constructor.
+ The notifications sent to the command are resent to its parent if the 
+ command cannot process them.
+</dl>
+<a name="GetName"></a><a name="GetName()"></a> <dt> o <b>GetName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATString','CATString &')</script>  <b>GetName</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the command identifier.
+</dl>
+<a name="GetStartMode"></a><a name="GetStartMode()"></a> <dt> o <b>GetStartMode</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATCommandMode','CATCommandMode')</script>  <b>GetStartMode</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the command start mode.
+</dl>
+<a name="RemoveAnalyseNotificationCB"></a><a name="RemoveAnalyseNotificationCB(CATCallback)"></a> <dt> o <b>RemoveAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCallback','CATCallback')</script> <td><tt>iCallbackToRemove</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a callback.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCallbackToRemove</tt>
+   <dd>   The callback to remove</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAnalyseNotificationCB"></a><a name="RemoveAnalyseNotificationCB(CATCommand*,char*)"></a> <dt> o <b>RemoveAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iNotificationClassName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification
+ </dd>
+    <dt><tt> iNotificationClassName</tt>
+   <dd>   The class name of the notification sent by <tt>iPublishingCATCommand</tt>.
+   <br><b>Legal values</b>: Use the <tt>ClassName</tt> static method of
+   the notification class.
+   <br>Example: <tt>MyNotification::ClassName()</tt>, where MyNotification
+   is the notification class from which an instance is expected</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAnalyseNotificationCB"></a><a name="RemoveAnalyseNotificationCB(CATCommand*,CATNotification*)"></a> <dt> o <b>RemoveAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iPublishedNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification
+ </dd>
+    <dt><tt> iPublishedNotification</tt>
+   <dd>   The notification published by <tt>iPublishingCATCommand</tt></dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAnalyseNotificationCB"></a><a name="RemoveAnalyseNotificationCB(CATCommand*,char*,CATCommandClientData)"></a> <dt> o <b>RemoveAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iNotificationClassName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandClientData','CATCommandClientData')</script> <td><tt>iUsefulData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification
+ </dd>
+    <dt><tt> iNotificationClassName</tt>
+   <dd>   The class name of the notification sent by <tt>iPublishingCATCommand</tt>.
+   <br><b>Legal values</b>: Use the <tt>ClassName</tt> static method of
+   the notification class.
+   <br>Example: <tt>MyNotification::ClassName()</tt>, where MyNotification
+   is the notification class from which an instance is expected 
+ </dd>
+    <dt><tt> iUsefulData</tt>
+   <dd>   Data to pass to <tt>iMethodToExecute</tt> and that can be useful
+   to this method</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAnalyseNotificationCB"></a><a name="RemoveAnalyseNotificationCB(CATCommand*,CATNotification*,CATCommandClientData)"></a> <dt> o <b>RemoveAnalyseNotificationCB</b>
+
+<dt>  <table><tr><td>  protected <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveAnalyseNotificationCB</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iPublishingCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iPublishedNotification</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandClientData','CATCommandClientData')</script> <td><tt>iUsefulData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a callback for a given notification published by a given command.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPublishingCommand</tt>
+   <dd>   The command that publishes the notification
+ </dd>
+    <dt><tt> iPublishedNotification</tt>
+   <dd>   The notification published by <tt>iPublishingCATCommand</tt>
+ </dd>
+    <dt><tt> iUsefulData</tt>
+   <dd>   Data to pass to <tt>iMethodToExecute</tt> and that can be useful
+ to this method</dd>
+</dl>
+</dl>
+</dl>
+<a name="RequestDelayedDestruction"></a><a name="RequestDelayedDestruction()"></a> <dt> o <b>RequestDelayedDestruction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>RequestDelayedDestruction</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Requests the command delayed destruction.
+ <br><b>Role</b>: The command will ve destroyed as soon as this will be possible.
+</dl>
+<a name="RequestStatusChange"></a><a name="RequestStatusChange(CATCommandMsg,CATCommand*)"></a> <dt> o <b>RequestStatusChange</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>RequestStatusChange</b>(<td><script type="text/javascript"> activateLink('CATCommandMsg','CATCommandMsg')</script> <td><tt>iMessageType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iCommandSelector</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Requests a command status change.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMessageType</tt>
+   <dd>   The message type to send to the command selector
+ </dd>
+    <dt><tt> iCommandSelector</tt>
+   <dd>   The command selector
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    0 if the command status changes successfully
+</dl>
+</dl>
+<a name="SendCommandSpecificObject"></a><a name="SendCommandSpecificObject(char*,CATNotification*)"></a> <dt> o <b>SendCommandSpecificObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void *')</script>  <b>SendCommandSpecificObject</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iObjectClassNeeded</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Requests an object to be retrieved.
+ <br><b>Role</b>: This method should be redefined by derived classes.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObjectClassNeeded</tt>
+   <dd>   The class of which the requested object should be an instance
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification received before the request
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    A pointer to the retrieved object
+</dl>
+</dl>
+<a name="SendNotification"></a><a name="SendNotification(CATCommand*,CATNotification*)"></a> <dt> o <b>SendNotification</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SendNotification</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iToClient</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sends a notification to another command.
+ <br><b>Role</b>: This is a key method in the Send/receive communication
+ protocol which can be used to send to the parent command either
+ a notification received as is, or another notification that replaces and
+ enriches the received notification. A command different than the
+ parent command can be chosen if required. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToClient</tt>
+   <dd>   The command to which the notification is to be sent
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification to send</dd>
+</dl>
+</dl>
+</dl>
+<a name="SendObject"></a><a name="SendObject(char*,CATNotification*)"></a> <dt> o <b>SendObject</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void *')</script>  <b>SendObject</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iObjectClassNeeded</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotification</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Requests an object to be retrieved.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObjectClassNeeded</tt>
+   <dd>   The class of which the requested object should be an instance.
+ </dd>
+    <dt><tt> iNotification</tt>
+   <dd>   The notification received before the request.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    A pointer to the retrieved object
+</dl>
+</dl>
+<a name="SetFather"></a><a name="SetFather(CATCommand*)"></a> <dt> o <b>SetFather</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFather</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iParent</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the command parent.
+ <br><b>Role</b>: The command parent is usually set by the constructor.
+ The notifications sent to the command are resent to its parent if the 
+ command cannot process them.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The command to set as the parent of the current command
+   in the command tree structure</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCommand.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>JS0FM</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

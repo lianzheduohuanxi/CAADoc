@@ -1,0 +1,271 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Getting Started</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Unit Test Manager</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Getting Started</h3>
+      <em>How to write and run a test program</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p>This task shows you how to get started with C++ Unit Test Manager,
+		using a basic test scenario relying on a module of an education 
+		framework installed with the API CD ROM [<a href="#References">1</a>].</p>
+		<ul>
+			<li><a href="#Populating">Populating the Workspace</a></li>
+			<li><a href="#Creating1">Creating the Test Framework</a></li>
+			<li><a href="#Creating2">Creating a Test Object</a></li>
+			<li><a href="#Building">Building the Workspace</a></li>
+			<li><a href="#Running">Running the Test Object</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="Intro2">
+			<hr class="header" />
+			<span class="run-in">Before you begin:</span> Note that:
+			<ul>
+			<li>You should have first installed the RADE tools.</li>
+			<li>You should also have installed a Dassault Syst&#232;mes brand, such 
+				as CATIA or DELMIA, as well as the associated API CD ROM. The scenario 
+				uses some of the installed frameworks to populate the workspace 
+				and run the tools.</li>
+			<li>You should have already created a workspace, such as the one used 
+				as an example in
+				<a href="#" onclick="CAAlinkOutOfPreqs('CAAStudio/wxpuggs01.htm'); return false;">
+				Getting Started</a> of the C++ Interactive Dashboard (CID). Otherwise, 
+				create a simple folder that ill be used as the workspace root folder.
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Populating"></a>Populating the Workspace</h2>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The workspace is 
+		supposed to be located in E:\MyWorkspace in this example. </td>
+	</tr>
+</table>
+<ol class="task">
+	<li>
+		<p>Locate the API CD ROM installation folder (by default C:\Program Files\Dassault 
+		Systemes\B27).</p>
+	</li>
+	<li>
+		<p>Open the CAADoc folder in this installation folder.</p>
+	</li>
+	<li>
+		<p>Copy the CAASystem.edu framework into your workspace root folder.</p>
+	</li>
+</ol>
+<p>The use cases of this framework will be used as the code to test.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating1"></a>Creating the Test Framework</h2>
+<ol class="task">
+	<li>
+		<p>In you workspace, create a folder named CAASystem.tst</p>
+	</li>
+	<li>
+		<p>In CAASystem.tst, create a folder named IdentityCard.</p>
+	</li>
+	<li>
+		<p>In the IdentityCard folder, create an XML file named IdentityCard.xml 
+		with the following contents:</p>
+		<pre class="code">&lt;?xml version='1.0' ?&gt;
+&lt;testFramework xmlns=&quot;http://www.3ds.ic&quot;
+               xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+               xsi:schemaLocation=&quot;http://www.3ds.ic ICModel.xsd&quot;&gt;
+  &lt;prerequisite name = &quot;System&quot; access = &quot;Public&quot;/&gt;
+  &lt;prerequisite name = &quot;SystemTS&quot; access = &quot;Public&quot; /&gt;
+  &lt;prerequisite name = &quot;CAASystem.edu&quot; access = &quot;Public&quot;/&gt;
+  &lt;prerequisite name = &quot;SpecialAPI&quot; access = &quot;Public&quot;/&gt;
+&lt;/testFramework&gt;</pre>
+	</li>
+	<li>
+		<p>In CAASystem.tst, create a folder named FunctionTests.</p>
+	</li>
+	<li>
+		<p>In the FunctionTests folder, create a folder named TestCases.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating2"></a>Creating a Test Object</h2>
+<ol class="task">
+	<li>
+		<p>In the TestCases folder, create an XML file named CAASysCallBack.xml 
+		with the following contents:</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  ...
+&lt;/ODT&gt;</pre>
+	</li>
+	<li>
+		<p>Add the test object definition section.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  <strong>&lt;Definition&gt;
+    &lt;Replayed value=&quot;false&quot; osConstraint=&quot;!win_b64&quot; /&gt;
+  &lt;/Definition&gt;</strong>
+  ...
+&lt;/ODT&gt;</pre>
+		<p>The definition section is required and is enclosed within the tag &lt;Definition&gt;. 
+		In this example, it prevents the test object replay if the operating system 
+		is not one of the Windows 64 bit operating systems.</p>
+	</li>
+	<li>
+		<p>Add the test object execution section.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Replayed value=&quot;false&quot; osConstraint=&quot;!win_b64&quot; /&gt;
+  &lt;/Definition&gt;
+  <strong>&lt;Execution&gt;
+    &lt;Command value=&quot;CAASysCallback&quot; osConstraint=&#8221;win_b64&#8221; /&gt;
+  &lt;/Execution&gt;</strong>
+&lt;/ODT&gt;</pre>
+		<p>The execution section is required and is enclosed within the tag &lt;Execution&gt;. 
+		In this example, it requests CAASysCallback.exe to be executed, with the 
+		condition that the operating system is one of the Windows 64 bit operating 
+		systems.</p>
+	</li>
+	<li>
+		<p>Save the file CAASysCallBack.xml.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Building"></a>Building the Workspace</h2>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The Dassault Systemes 
+		3DEXPERIENCE run time and API are supposed to be installed in C:\Program 
+		Files\Dassault Systemes\B27 and while the Development Tools can be installed in the same place, it is recommended
+		to install them in another localtion like in C:\Program Files\Dassault Systemes\T27. Replace these paths with your own Dassault 
+		Systemes V5 installation folder and the Development Tools installation 
+		folder respectively if you installed them in other places. </td>
+	</tr>
+</table>
+<ol class="task">
+	<li>
+		<p>Open a command prompt.</p>
+	</li>
+	<li>
+		<p>Set the current folder at the root folder of your workspace.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">C:\Program Files\Dassault Systemes\T27\win_b64\code\command\tck_init.bat</pre>
+		<p>This command initializes the tools to be used to build the workspace.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">tck_list</pre>
+		<p>This command lists the available TCKs. Choose a value similar to
+		<strong>V5_6A2017_1524_B27</strong>.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">tck_profile V5_6A2017_1524_B27</pre>
+		<p>The build environment is now set up.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkGetPreq -p "C:\Program Files\Dassault Systemes\B27"</pre>
+		<p>The prerequisites of the frameworks in your workspace are now set up.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkmk -au</pre>
+		<p>The frameworks are now built.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkCreateRunTimeView</pre>
+		<p>The run time view of your workspace is created.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Running"></a>Running the Test Object</h2>
+<ol class="task">
+	<li>
+		<p>Still in the command prompt set at the root folder of your workspace, 
+		type:</p>
+		<pre class="code">mkodt -s CAASysCallBack</pre>
+		<p>Note that the test object name if the name of the XML file without its 
+		extension.</p>
+	</li>
+</ol>
+<p>The test object output is:</p>
+<pre class="code">## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B27
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [CAASystem.tst CAASysCallback] (1 / 1)
+elapsed_time: 00 min 01 sec
+## ++ CAASysCallback : Test execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.</pre>
+<p>The test object traces are located in E:\MyWorkspace\CAASystem.tst\FunctionTests\Output\win_b64. 
+The trace file name is the ODT name, CAASysCallback, with extension traces, that 
+is, CAASysCallback.traces. It contains the traces issued by the tested code, as 
+well as possible error messages.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="#" onclick="CAAlinkOutOfPreqs('CAASysTechArticles/CAASysCallbacks.htm'); return false;">
+		The Callback Mechanism</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

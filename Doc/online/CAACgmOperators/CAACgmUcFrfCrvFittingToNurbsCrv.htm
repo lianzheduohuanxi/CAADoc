@@ -1,0 +1,261 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Converting Curves into NURBS</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Converting Curves into NURBS</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>You can convert curves into NURBS by using the CATICGMCrvFittingToNurbsCrv 
+		operator. This operator allows you to specify the characteristics of the 
+		resulting NURBS as well as a maximum deviation you would like to obtain 
+		with respect to the initial curve. This maximum deviation may not be achieved.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#CATTopComputePointOnWire">The CATICGMCrvFittingToNurbsCrv&nbsp; 
+			Operator</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsCrvFittingToNurbsCrv Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsCrvFittingToNurbsCrv 
+				Do</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsCrvFittingToNurbsCrv</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you use the free form operators. It particularly 
+illustrates how to convert a curve into a NURBS.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="CATTopComputePointOnWire"></a>The CATICGMCrvFittingToNurbsCrv&nbsp; 
+Operator</h2>
+<p>The CATICGMCrvFittingToNurbsCrv&nbsp; operator is to be used according to the 
+general scheme of operators:</p>
+<ol>
+	<li>Creation of an operator instance from a global function. Two modes BASIC 
+	or ADVANCED are proposed.</li>
+	<li>If the ADVANCED mode is chosen, tuning of the parameters by using the Setxxx 
+	methods then run of the operator.</li>
+	<li>Retrieve the created NURBS by using the GetPNurbs method.</li>
+</ol>
+<p><strong>Note</strong>: In ADVANCED mode, you cannot use the same operator to 
+convert several curves. You must replay the sequence below:</p>
+<ol>
+	<li>Operator creation.</li>
+	<li>Set of parameters.</li>
+	<li>Run.</li>
+	<li>GetPNurbs.</li>
+	<li>Operator deletion.</li>
+</ol>
+<p>As many times as you need.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsCrvFittingToNurbsCrv Use Case</h2>
+<p>CAAGMOperatorsCrvFittingToNurbsCrv is a use case of the CAAGMOperatorsInterfaces.edu 
+framework that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsCrvFittingToNurbsCrv<em> </em>Do</h3>
+<p>This use case:</p>
+<ol>
+	<li>Creates a PSpline to be converted into a Nurbs.</li>
+	<li>Creates a CATICGMCrvFittingToNurbsCrv operator to be used to convert the 
+	initial curve into a rational curve<em>. </em>A constraint<em> </em>is<em>
+	</em>set on the minimum length of an arc.</li>
+	<li>Retrieves the created Nurbs.</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsCrvFittingToNurbsCrv</h3>
+<p>To launch CAAGMOperatorsCrvFittingToNurbsCrv, you will need to set up the build 
+time environment, then compile CAAGMOperatorsCrvFittingToNurbsCrv.m along with its 
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMOperatorsCrvFittingToNurbsCrv with no argument, the use 
+case executes, but doesn&#39;t save the result in an NCGM file. If you want to save 
+this result, provide the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsCrvFittingToNurbsCrv e:\NurbsSur.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsCrvFittingToNurbsCrv Code</h3>
+<p>The CAAGMOperatorsCrvFittingToNurbsCrv use case is made of a main named CAACrvFittingToNurbsCrv.cpp 
+located in the CAAGMOperatorsCrvFittingToNurbsCrv.m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCrvFittingToNurbsCrv.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>CAAGMOperatorsCrvFittingToNurbsCrv .cpp is divided into four logical steps:</p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Surf">Creating the Curve to Be Converted into a NURBS</a></li>
+	<li><a href="#Conv1">Converting the Created Curve into a NURBS and Specifying 
+	a Constraint on the Minimum Length of an Arc</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model and 
+	Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular) [<a href="#References">1</a>]. This 
+creation is done by the global function <code>::CATCreateCGMContainer</code>. Notice 
+that the factory can be defined by reading a NCGM file that was previously stored. 
+In that case, the global function <code>::CATLoadCGMContainer</code> must be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Surf"></a>Creating the Curve to Be Converted into a NURBS</h3>
+<p>The curve to be converted is a PSpline. Its underlying geometry is a sphere. 
+All the geometric objects are created from the geometry factory.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Conv1"></a>Converting the Created Curve into a NURBS and Specifying 
+a Constraint on the Minimum Length of an Arc</h3>
+<p>This first operator is intended to create an operator instance with the following 
+parameters:</p>
+<ol>
+	<li>A 0.001 maximum deviation. It is important to note that this value is the 
+	modeler resolution and it would not be meaningful to specify a maximum deviation 
+	less than this resolution.</li>
+	<li>The rational factor is 1 - meaning that resulting curve is to be rational.</li>
+</ol>
+<pre class="code">CATICGMCrvFittingToNurbsCrv  * pCrvFitting1 = ::CATCGMCreateCrvFittingToNurbsCrv(piGeomFactory,
+                  pConfig,
+		piCurve,
+		crvLimits,
+		maxdeviation,
+		1,
+		ADVANCED) ;</pre>
+<p>At this stage, you have just created an instance of operator. Prior to running 
+the operator, the minimum length of an arc is set to 14.</p>
+<pre class="code">//  (d) --- Specifies the minimal length of an arc on the output curve
+//          Should be properly specified with respect to the input curve
+//          length - otherwise the execution results in an abend
+//
+pCrvFitting1-&gt;SetInternalMinLength(14);</pre>
+<p>If you want to get the converted NURBS, you must Run the operator and retrieve 
+the resulting NURBS by using the GetPNurbs method. To convert a CATPCurve into a 
+CATNurbsCurve, you can use the Set3DCurveCreation method (before applying the Run 
+method), then use the GetNurbsCurve method instead of GetPNurbs.</p>
+<pre class="code">pCrvFitting1-&gt;Run();
+CATPNurbs * piPNurbs1 = pCrvFitting1-&gt;GetPNurbs();</pre>
+<p>The transformation of the curve into NURBS is not exact. To check this, you can 
+use the IsExactTransformation method or retrieve the maximum deviation (0.899 is 
+returned in the present use case).</p>
+<pre class="code">cout &lt;&lt; &quot;Maximum deviation is &quot; &lt;&lt; pCrvFitting1-&gt;GetMaxDeviation() &lt;&lt; endl;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The CATICGMCrvFittingToNurbsCrv operator allows you to convert a curve into a 
+NURBS. Apart from the usual parameters, this operator requires you specify the maximum 
+deviation you would like to obtain from the initial curve as well as the rationality. 
+Constraints on the resulting curve can be specified by using Setxxx methods.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobAboutNurbs.htm">
+		About NURBS</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobGeoObjects.htm">
+		The Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobCurves.htm">
+		The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAACgmUcFrfSurFittingToNurbsSur.htm">Converting Surfaces into 
+		NURBS</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

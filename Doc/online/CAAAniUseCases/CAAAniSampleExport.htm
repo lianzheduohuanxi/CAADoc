@@ -1,0 +1,890 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name=" generator" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Exporting an Analysis Document in ASCII Format</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Exporting an Analysis Document in ASCII Format</h3>
+      <em>How to navigate inside an Analysis document in order to export the
+      physical data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAniExport use case. This use case
+      explains how to manage an Analysis document (create, open or write) and
+      explore its content from the analysis specification modeler view, down to
+      the physical data supported by finite element entities. This covers the
+      meshing entities, pre and post-processing physical data. It is based on a
+      model created by the Structural Analysis application.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#concepts"><strong>Some Analysis Modeler Important Concepts</strong></a></li>
+        <ul>
+          <li><a href="#user">The End User View</a></li>
+          <li><a href="#Beyond">Beyond the End User View</a>
+            <ul>
+              <li><a href="#Features">Features</a></li>
+              <li><a href="#Field">Field Data Modeler</a></li>
+              <li><a href="#Explicit Objects">Explicit Objects as Features
+                Results</a></li>
+            </ul>
+          </li>
+        </ul>
+        <li><a href="#UseCase"><strong>The CAAAniExport Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAniExport Do</a></li>
+            <li><a href="#How">How to Launch CAAAniExport</a></li>
+            <li><a href="#Where">Where to Find the CAAAniExport Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#Short"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with the CATIA Analysis Modeler. This means, intent is to introduce important
+concepts about the underlying data structure of the analysis modeler, and ways
+to navigate inside it. More specifically, you will learn how to:</p>
+<ul>
+  <li>Open an Analysis document</li>
+  <li>Access and navigate through the analysis objects (sets) defined in the
+    document</li>
+  <li>Access the physical data within a set.</li>
+</ul>
+<p>Before getting to the use case itself, it is important to have an
+understanding of some of the concepts that are the heart of the Analysis
+Modeler, since the use case basically navigates among objects that represent
+those concepts. This is the goal of the next section. You can skip it and get
+directly to the <a href="#UseCase">use case</a> itself if you are already
+familiar with them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="concepts"></a>Some Analysis Modeler Important Concepts</h3>
+<p>Before discussing the use case, some concepts of the Analysis Modeler have to
+be introduced. These are:</p>
+<ul>
+  <li>The Analysis document structure and analysis features (sets)</li>
+  <li>The analysis features and the result view. How the Spec/Result approach is
+    managed inside the analysis domain (field model)</li>
+  <li>The physical type definition for structural analysis</li>
+  <li>The <i>CATICharacCollector</i> interface and the <i>CATAnalysisCharacCollector</i>
+    class.</li>
+</ul>
+<p>These concepts are the counterpart, on the programming side, of what the end
+users see and manipulate on the screen. So we will start with the end user view
+in order to understand what the program manipulates inside.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="user"></a>The End User View</h4>
+<p><img border="0" src="images/StructuralAnalysisWB.jpg" width="644" height="527"></p>
+<p>This is a typical CATIA V5 work session within the Structural Analysis
+application. This Analysis document contains a reference to a design document
+(in this case, a Part document) on which a stress analysis is computed.</p>
+<p>The Links Manager role is to keep the link to the referenced design document.
+It can be a Part for single part analysis, a Product for analysis of design
+assemblies or other external documents.</p>
+<p>The Analysis model is made of some different features. The Analysis Manager
+is the root feature that allows any other feature to be managed, such as:</p>
+<ol>
+  <li>The<em> Finite Element Model,</em> dedicated to the discretization
+    (meshing global and local specifications) and idealization (behavior of the
+    part as physical properties). By default it contains a meshing set called
+    &quot;Nodes and Elements&quot;, a material set, a property set and an axis
+    set.</li>
+  <li>Relative to one <i>Finite Element Model</i>, some analysis cases are
+    created in order to group all kinds of external data applied to the
+    idealization. (In this case, Boundaries, Loads and the solution set that
+    will give access to all the physical data that can be computed by the
+    solver.)</li>
+  <li>The analysis case is defined for a given solver and for a specific
+    computation. (In this case, static linear.) It is made of <i>analysis sets</i></li>
+  <li>The analysis sets group some analysis entities, which represent some
+    physical preprocessing actions applied to the design. (For this example,
+    apply a <b>clamp</b> or a <b>momentum</b> to B-rep elements of the part).</li>
+  <li>In order to have the result visualization, two images are in the tree. One
+    to display the deformed mesh and one for the Stress VonMises Iso display.
+    Associated to the second image, a color table is presented in order to
+    inform about the stress variation on the structure.</li>
+</ol>
+<p>The feature tree shows the required analysis specifications that may be used
+in order to build or scan an Analysis model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Beyond"></a>Beyond the End User View</h4>
+<p>The main goal of the analysis specification modeler is to capture as much as
+possible the user's design intent under the form of specifications, and to
+derive from it an analysis model supported by finite element entities. This
+second model is the result view of the specifications. It is called the field
+model and is managed by specific objects called <b>Analysis Explicit</b>
+objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Features"></a>Features</h5>
+<p>Features embody the know-how necessary to produce an analysis model. Sets are
+mainly designed in order to structure the model, by grouping entities for
+consistency: the Nodes and Element set (Meshing set) groups the MESH Part
+definitions, the load set groups the loading conditions (preprocessing entities)
+applied on the FEM model. The Entities are made of two kinds of objects: The <b>Component</b>,
+based on the Knowledge modeler, manages the numerical values of the physical
+data applied to the <b>Support</b>. As of today the support can be a B-rep
+element of a part, or an Assembly constraint for connection. Another goal of the
+feature is to implement all the basic behaviors of CAA V5 applications
+(Copy/Paste, Update, Delete, Properties, etc.).</p>
+<p>Analysis features, as all features, capture essentially the design intent of
+the end user. During the update step, each feature generates a finite element
+model that corresponds to this intent. To do this, it relies on an underlying
+modeler, the <em>Field Data Modeler</em>. This is assumed by implementing the <i>CATISamExplicitation</i><code>
+</code>interface. This interface will be called by the <i>CATISamExplicit</i>
+interface during the feature build. Another relation with the field model is the
+behavior of these features to extract a finite element view of the data that is
+defined inside it by implementing the <i>CATICharacCollector</i> interface. This
+behavior allows a set to get access to physical value data that can be stored in
+the field model.</p>
+<p>For example, a preprocessing set will return a result view of the
+preprocessing entities. This is done by combining the analysis entity values. A
+solution set will be designed from a specification point if view as a feature
+with a link attribute in order to locate the output solver file and will
+dynamically give to the system the data values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Field"></a>Field Data Modeler</h5>
+<p>This modeler is designed in order to manage data that can be understandable
+by all solvers. Inside the field data model, six main kinds of objects are
+defined by the following classes:</p>
+<ol>
+  <li>The <i>CATAnalysisExplicitModel</i> and <i>CATAnalysisExplicitRulesData</i>
+    classes support the physical type definition, and the rules for its
+    management. See [<a href="#References">1</a>] to list all physical data that
+    can be managed by the Structural Analysis application.</li>
+  <li>The <i>CATAnalysisExplicitSet</i> class is the image of the Feature sets.</li>
+  <li>The <i>CATAnalysisExplicitEntity</i> class reflects a physical action
+    applied to finite element support.</li>
+  <li>The <i>CATAnalysisExplicitCharac</i> class is the physical data that
+    supports the numerical values.</li>
+  <li>The <i>CATAnalysisCharacCollector</i> class manages the characteristics
+    obtained by combining the information of basic characteristics over several
+    entities.</li>
+  <li>The <i>CATICharacCollector</i> interface is dedicated to have specific
+    implementations, such as a solver-dependent implementation (Automatic Output
+    Acquisition). This interface has to be implemented for Analysis Feature Sets
+    and Entities. In addition, a default implementation is provided for
+    combining explicit entities and manage preprocessing sets and entities
+    provided by CATIA applications.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Explicit Objects"></a>Explicit Objects as Feature Results</h5>
+<p>The implementation that is done inside our application will show how the
+consistency is managed between the two models. All the analysis features
+implement the <i>CATIAnalysisExplicit</i> interface in order to generate the
+adequate Field Model. The following image explains the link between the
+specifications and the result models.</p>
+<p align="center"><img border="2" src="images/Explicit.jpg" width="697" height="414"></p>
+<p>For analysis sets, the <i>CATIAnalysisExplicitation</i> interface generates
+an explicit set in the field model. This set can be retrieved using the <i>CATISamExplicit</i>
+interface. It will manage through the CATISpecObject update schema, the update
+and clean of the field model. The <i>CATAnalysisCharacCollector</i> class that
+is generated by the <i>CATICharacCollector</i> interface returns the values as
+they are applied or can combine them. For example, forces applied in local axes
+by different features can be returned as a single vector in the global model
+axis system.</p>
+<p>For an analysis entity, the <i>CATIAnalysisExplicit</i> interface generates
+in the field model explicit entities and characteristics, then applies the
+values of the finite element entities. The CharacCollector that are generated by
+the <i>CATICharacCollector</i> interface implementation will retrieve the same
+kind of information by several ways.</p>
+<p>This can be done for pre-processing and post-processing sets. Another way to
+implement this interface can be notified. This way is mainly used for solver
+results. The feature set has a link to the output file in order to retrieve it
+from the model and to generate the <i>CATAnalysisCharacCollector</i> class
+according to the content of the file. Also, this data can be expressed in other
+positions or versions without being really stored in the field model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAniExport Use Case</h3>
+<p>CAAAniExport is a use case of the CAAAnalysisInterfaces.edu framework that
+illustrates the Analysis infrastructure frameworks capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAniExport Do</h4>
+<p>From the user view image to:</p>
+<p><img border="2" src="images/Sampleof_file.jpg" v:shapes="_x0000_i1030" width="609" height="373"></p>
+<p>The goal of analysis export is to open an Analysis document and to navigate
+inside its data structure that represents the concepts presented in the first
+part of this article. The different steps are:</p>
+<ul>
+  <li>Opening an Analysis document, whose pathname is passed as first argument
+  <li>Obtaining the list of Analysis models in the document</li>
+  <li>Requesting from each Analysis model the related sets</li>
+  <li>Requesting the associated physical data from the field model</li>
+  <li>Generating the file, whose pathname is passed as second argument.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAniExport</h4>
+<p>To launch CAAAniExport, you will need to set up the build time environment,
+then compile CAAAniExport along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>]. The
+program will take as first argument the complete pathname of the CATAnalysis
+document and as second one the complete pathname of the text file to generate.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAniExport Code</h4>
+<p>The CAAAniExport use case is made of classes located in the CAAAniExport.m
+module of the CAAAnalysisInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniExport.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniExport.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The following table shows which code resources are used in this Use Case.
+These resources are physically located within the appropriate directories (with
+same names) of your CAA installation.</p>
+<table width="100%">
+  <tr>
+    <th width="20%">Framework
+    <th width="16%">Module/Interface
+    <th width="19%">Source
+    <th width="44%">Content
+  </tr>
+  <tr>
+    <td width="20%" valign="top">
+      <p>CAAAnalysisInterfaces.edu</td>
+    <td width="16%" valign="top">
+      <p>CAAAniExport.m</td>
+    <td width="19%" valign="top">
+      <p>main.cpp</td>
+    <td width="44%" valign="top">
+      <p>Manages the document</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">&nbsp;</td>
+    <td width="16%" valign="top">CAAAniExport.m</td>
+    <td width="19%" valign="top">CAAAniExport.cpp</td>
+    <td width="44%" valign="top">Scans the CATAnalysis</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">&nbsp;</td>
+    <td width="16%" valign="top">CAAAniExport.m</td>
+    <td width="19%" valign="top">CAAAniSelectPhyscis.cpp</td>
+    <td width="44%" valign="top">Selects some physical data</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">&nbsp;</td>
+    <td width="16%" valign="top">CAAAniExport.m</td>
+    <td width="19%" valign="top">CAAAniExportMesh.cpp</td>
+    <td width="44%" valign="top">Accesses Meshing information</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">&nbsp;</td>
+    <td width="16%" valign="top">CAAAniExport.m</td>
+    <td width="19%" valign="top">CAAAniDumpByGroup.cpp</td>
+    <td width="44%" valign="top">Generates the file for the selected
+      characteristics. This file contains two methods :CAAAniDumpByGroup and&nbsp; 
+	CAAAniDumpByFEentity</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now comment each of those steps by looking at the code. This use case
+is made of the following steps:</p>
+<ol>
+  <li><a href="#Checking">Checking Arguments</a></li>
+  <li><a href="#document">Reading the CATAnalysis Document from Disk and
+    preparing it for Export</a></li>
+  <li><a href="#Manager">Getting Access to the Analysis Manager</a></li>
+  <li><a href="#meshing">Getting Access to Meshing Set</a></li>
+  <li><a href="#sets">Getting Access to Sets</a></li>
+  <li><a href="#output">Generating the Output File</li>
+    <li></a><a href="#CATCharacCollector">Getting the Associated
+    CATCharacCollector</a></li>
+  <li><a href="#Closing">Closing the Session and Exiting</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Checking"></a>Checking Arguments</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int iArgc,  <em>// Number of arguments (2)</em>
+         char** iArgv)  <em>// Path of an existing *.CATAnalysis document</em>
+                        <em>// Path of the exported file.</em>
+{
+  // Checking arguments
+  if(iArgc != 2) return 1;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The use case is a main (batch) program that takes two arguments. The first
+one is the complete path and name of an existing CATAnalysis document. The
+second is the complete path and name of the file that will be generated by the
+program.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="document"></a>Reading the CATAnalysis Document from Disk and
+Preparing it for Export</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //ObjectModelerBase Framework
+  #include &quot;CATSessionServices.h&quot;     // Create, Delete_Session
+  #include &quot;CATDocumentServices.h&quot;    // New, Open, Save, Remove Document
+
+  char       *sessionName = &quot;CAA2_Sample_Session&quot;;
+  CATSession *pSession    = NULL;
+  HRESULT rc = ::Create_Session(sessionName, pSession);
+  if ((! SUCCEEDED(rc)) || (!pSession))
+  {
+    cout &lt;&lt; &quot;ERROR in creating session&quot; &lt;&lt; endl &lt;&lt; flush;
+    return 1;
+  }
+  CATDocument *pDoc = NULL;
+  rc = CATDocumentServices::Open(argv[1], pDoc);
+  if (SUCCEEDED(rc) &amp;&amp; pDoc) cout &lt;&lt; &quot;Document opened OK&quot; &lt;&lt; endl &lt;&lt; flush;
+  else
+  {
+    cout &lt;&lt; &quot;ERROR in opening an existing document&quot; &lt;&lt; endl &lt;&lt; flush;
+    return 2;
+  }
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>This first step deals with CAA document management and uses standard
+interfaces of the ObjectModelerBase framework. In brief, a session must be
+created. This object manages all open documents and therefore should exist prior
+to the loading of any document. The necessary include files for programming are <code>CATSessionServices
+</code>and <code>CATDocumentServices</code>.</p>
+<p>Then, if a program needs to have an empty <code>CATDocument</code> created in
+memory instead of an existing document, you can use the following sample that
+creates a <code>CATDocument</code> with a versatile type that can be
+parameterized at run time. Here it is parameterized with the type of the
+document that we want to manipulate, &quot;CATAnalysis&quot;.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDocument *pDoc = NULL;
+  rc = CATDocumentServices::New(&quot;CATAnalysis&quot;, pDoc);
+  if (SUCCEEDED(rc) &amp;&amp; pDoc) cout &lt;&lt; &quot;Document creation OK&quot; &lt;&lt; endl &lt;&lt; flush;
+  else
+  {
+    cout &lt;&lt; &quot;ERROR in creating an empty document&quot; &lt;&lt; endl &lt;&lt; flush;
+    return 2;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Manager"></a>Getting Access to the Analysis Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<em>// Extract from document a reference to the Analysis Manager </em>
+CATIContainer *oSpecContainer=NULL;
+CATISamAnalysisContainer_var AnalysisContainer = NULL_var ;
+CATISamAnalysisManager_var   AnalysisManager = NULL_var ;
+
+CATISamAccess_var SamAccess (pDoc);
+if (!SamAccess) return E_FAIL;
+hr = SamAccess-&gt;GetSpecContainer(oSpecContainer) ;
+if (! SUCCEEDED(hr)) return E_FAIL;
+
+AnalysisContainer = oSpecContainer ;
+if (! AnalysisContainer) return E_FAIL;
+oSpecContainer-&gt;Release();
+
+hr = AnalysisContainer-&gt;GetAnalysisManager(AnalysisManager);
+if (! AnalysisManager) return E_FAIL;
+
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The Analysis Manager is the first feature to retrieve in the document in
+order to be able to scan the data structure of all the modelisation. From this
+Manager, you can:</p>
+<ol>
+  <li>get all analysis models</li>
+  <li>get one analysis model according to its name</li>
+  <li>get all the cases of the document</li>
+  <li>get one Case according to its name or type.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Extract from the document the field model pointer.
+CATAnalysisExplicitModel *ExplicitModel = CATAnalysisExplicitModel::GetDocumentModel(pDoc);
+
+// Extract from the document the Rules data manager pointer.
+const CATAnalysisExplicitRulesData *aRulesData = NULL;
+aRulesData = ExplicitModel-&gt;GetRulesData();
+
+if (!aRulesData)  return E_FAIL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>With the pointer to the CATAnalysisExplicitRulesData , the string that
+represents the Physical type definition can be converted into CATSamPhysical
+type, some information on the model rules definition can be retrieved.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<em>// Extract from the Analysis Manager all the Analysis models.</em>
+CATLISTV(CATBaseUnknown_var) AnalysisModels;
+hr = AnalysisManager-&gt;GetAllAnalysisModels(AnalysisModels);
+if ( ! SUCCEEDED(hr)) return E_FAIL;
+
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="meshing"></a>Getting Access to the Meshing Set</h4>
+<p>One of the set of the Analysis model has the physical type MESHSET. In order
+to retrieve this set from the Analysis model, the GetMesh method must be used.
+The returned value is defined as a CATBaseUnknown pointer. This pointer can be
+cast as a CATIMSHMeshManager pointer in order to access the container that
+manages the MSHNodes and MSHElements (by using the GetMesh method), or the
+associativity pointer, or the meshing specifications (MeshParts). Other solution
+is to use the CATAnalysisExplicitTopology Object that returns some topology
+arrays and allows to take into account the MESHPart Activity parameter.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBaseUnknown *Base = NULL;
+hr = AnalysisModel-&gt;GetMesh(Base);
+if (!Base) return E_NOINTERFACE;
+
+Base-&gt;QueryInterface(CATIMSHMeshManager::ClassId(),(void**)&amp;pMeshManager);
+if (!MeshManager) return E_NOINTERFACE;
+
+CATIMSHMesh * mesh = pMeshManager -&gt; GetMesh ();
+if (pMeshManager) pMeshManager -&gt; Release(); 
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Other interfaces, to retrieve the MeshManager:</p>
+<ul>
+  <li>Inside the feature world, use <code>CATISamAnalysisEntity::GetFEMModel</code>
+    or <code>CATISamAnalysisSet::GetFEMModel</code> to retrieve the
+    CATISamAnalysisModel and then the CATISamAnalysisModel<code>::GetMesh</code>
+    will return the manager defined as a CATBaseUnknown pointer as above.</li>
+  <li>Inside the field Model world, if you have no more access to feature
+    pointers, use the GestMeshManager method defined in the
+    CATAnalysisExplicitModel class.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIMSHMeshManager *pMeshManager = Exp_Model -&gt; GetMeshManager();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="sets"></a>Getting Access to Sets</h4>
+<p>The Analysis case and Model have a specific behavior called <code>CATISamAnalysisScan</code>
+that allows sets to be scanned (all the sets included or a specific one
+according to its name, type or both).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISamAnalysisScan_var      hAnalysisScan  =AnalysisModels[1];
+CATLISTV(CATBaseUnknown_var) oSetsList = NULL;
+hAnalysisScan  = AnalysisScan -&gt;GetAllSets(oSetsList);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This function returns a collection of Analysis sets. These sets are designed
+as features Modeler. They can be cast as CATISpecObject in order to retrieve
+name, type and standard attributes.</p>
+<p>For each set the CAAAniSelectPhysics function will generate some traces in
+the file. Required inputs are the Set (defined as a CATISamAnalysisSet), and the
+pointer on the Field Model.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISamAnalysisSet_var hFeatureSet = oSetsList[1];
+CATISpecObject_var SpecObjectSet = oSetsList[1];
+CATUnicodeString SetType(SpecObjectSet-&gt;GetType());
+hr = CAAAniSelectPhysics(File,ExplicitModel,hFeatureSet);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The next step consists in generating a trace of the output that can be
+generated by the sets. The interface used is <code>CATICharacCollector</code>.
+For all preprocessing sets, a default implementation is provided by the analysis
+modeler. It is built by combining the Explicit Charac Objects that are created
+in the Field Model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="output"></a>Generating the Output File</h4>
+<p>The definition of a <code>CATAnalysisCharacCollector</code> is based on a
+physical type, and version expressed for a given position. A physical type is
+the conversion of a string by using the <code>GetPhysicalTypeNumber </code>method
+of the CATAnalysisExplicitRulesData. The position is a string. The version is
+build with the following attributes:</p>
+<table border="2" width="253">
+  <tr>
+    <td valign="top" width="123">CATSamMathType</td>
+    <td valign="top" width="112">MathType</td>
+  </tr>
+  <tr>
+    <td valign="top" width="123">CATSamValue</td>
+    <td valign="top" width="112">ValueType</td>
+  </tr>
+  <tr>
+    <td valign="top" width="123">Int</td>
+    <td valign="top" width="112">MathDimension</td>
+  </tr>
+  <tr>
+    <td valign="top" width="123">CATSamRefFrame</td>
+    <td valign="top" width="112">RefFrame</td>
+  </tr>
+  <tr>
+    <td valign="top" width="123">CATSamValue</td>
+    <td valign="top" width="112">Category</td>
+  </tr>
+</table>
+<p>Some prefer enumerations show the possible values associated with this
+attributes. The position none is used for getting values expressed by group, the
+information at node or element will be reached by using the position NODE or
+ELEMENT.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICharacCollector_var Collect = FeatureSet;
+hr=Collect-&gt;GetAvailablePhysicalTypes(NbPhyTypes,PhyTypes,Units);
+if(! NbPhyTypes) {cout &lt;&lt; &quot; Empty Set !&quot;&lt;&lt; endl;}
+if (! SUCCEEDED(hr)) return E_FAIL;
+
+for (i=0 ; i&lt;NbPhyTypes ; i++)
+{
+  aRulesData -&gt; GetPhysicalTypeString(PhyTypes[i],oString);
+  oNbVersions = 0;
+  hr=Collect-&gt;GetAvailableVersions(PhyTypes[i],oNbVersions,oVersions);
+  if (! SUCCEEDED(hr)) goto error;
+  for (j=0 ; j&lt;oNbVersions ; j++)
+  {
+  oNbPositions = 0;
+  hr=Collect-&gt;GetAvailablePositions (PhyTypes[i],oVersions[j],oNbPositions,oPositions);
+  if (!SUCCEEDED(hr)) goto error;
+
+    for (k=0 ; k&lt;oNbPositions ; k++)
+    {
+      cout &lt;&lt; &quot;Physical Types &quot;&lt;&lt; oString &lt;&lt; &quot; Units:&quot; &lt;&lt; *Units &lt;&lt;
+         &quot; Position : &quot; &lt;&lt; (const char *) oPositions[k] &lt;&lt; endl;
+      cout &lt;&lt; &quot; Version &quot;&lt;&lt; endl;
+      oVersions[j].Dump();
+    }
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Example:</p>
+<table width="100%" border="1" cellspacing="1">
+  <tr>
+    <td width="20%" valign="top"><b>Physical Types</b></td>
+    <td width="12%" valign="top"><b>Position</b></td>
+    <td width="34%" valign="top"><b>Version</b></td>
+    <td width="34%" valign="top"><b>Return a Collector for</b></td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">Physical type</td>
+    <td width="12%" valign="top">NONE</td>
+    <td width="34%" valign="top">Type of value: <b>Integer</b><br>
+      Mathematical type: <b>Scalar</b><br>
+      Mathematical dimension: <b>1</b><br>
+      Reference frame: <b>None</b><br>
+      Category: <b>Preprocessor entity</b></td>
+    <td width="34%" valign="top">Get the list of entity types from the set
+      (i.e., list of material types for the material set)</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">User number</td>
+    <td width="12%" valign="top">NONE</td>
+    <td width="34%" valign="top">Type of value: <b>Integer</b><br>
+      Mathematical type: <b>Scalar</b><br>
+      Mathematical dimension: <b>1</b><br>
+      Reference frame: <b>None</b><br>
+      Category: <b>Preprocessor entity</b></td>
+    <td width="34%" valign="top">Get the list of the user numbers of the
+      entities from the set (i.e., list of material user numbers for the
+      material set)</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">Young's modulus</td>
+    <td width="12%" valign="top">NONE</td>
+    <td width="34%" valign="top">Type of value: <b>Real</b><br>
+      Mathematical type: <b>Scalar</b><br>
+      Mathematical dimension: <b>1</b><br>
+      Reference frame: <b>None</b><br>
+      Category: <b>Preprocessor entity</b></td>
+    <td width="32%" valign="top">Get the collector of the Young modulus for all
+      the materials</td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top">Property set</td>
+    <td width="12%" valign="top">ELEMENT</td>
+    <td width="34%" valign="top">Type of value: <b>Integer</b><br>
+      Mathematical type: <b>Scalar</b><br>
+      Mathematical dimension: <b>1</b><br>
+      Reference frame: <b>None</b><br>
+      Category: <b>Element</b></td>
+    <td width="32%" valign="top">
+      <p>Get the group number for element properties.</p>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATCharacCollector"></a>Getting the Associated CATCharacCollector</h4>
+<p>If the defined physical type, version and position are interesting for the
+program, call from the CATICharacCollector the GetCharacCollector method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATAnalysisCharacCollector *CharacCollector = NULL;
+kr = Collect-&gt;GetCharacCollector(PhyTypes[i],oPositions[k],oVersions[j],NULL,CharacCollector;
+if (! SUCCEEDED(hr)) return E_FAIL;</pre>
+    </td>
+  </tr>
+</table>
+<p>From this CATAnalysisCharacCollector, the program can access the values
+defined at a given position and version as:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>TheCC -&gt; <b>GetDefinition</b>(PhysicalType,Unit,Version,Position,NumOccurrence);
+Model -&gt; GetPhysicalTypeString(PhysicalType, Name);
+cout &lt;&lt;&quot;Physical type: &quot; &lt;&lt; Name &lt;&lt; &quot; Position: &quot;&lt;&lt; *Position &lt;&lt; endl ;
+cout &lt;&lt; &quot;Unit: &quot; &lt;&lt; (const char *) *Unit&lt;&lt;&quot;Occurrence Number : &quot; &lt;&lt; NumOccurrence &lt;&lt; endl ; Version -&gt; Dump();
+cout &lt;&lt; &quot; Values definition for Entities :&quot; &lt;&lt; endl ;
+hr = TheCC -&gt; <b>GetNbEntities</b>(NbEntities);
+cout &lt;&lt; &quot; Number : &quot; &lt;&lt; NbEntities &lt;&lt; endl ;
+Entities = new  char[NbEntities];
+if (!Entities) return E_FAIL;
+hr = TheCC -&gt; <b>GetEntities</b>(Entities);
+if (Entities)
+{
+  cout &lt;&lt; &quot; Flags : &quot; ;
+  cout &lt;&lt; (int) Entities[0] ;
+  for (i = 1 ; (i &lt; NbEntities) ; i++)
+    cout &lt;&lt; &quot;, &quot; &lt;&lt; (int) Entities[i] ;
+  cout &lt;&lt; endl ;
+}
+cout &lt;&lt; &quot;Dimensions :&quot; &lt;&lt; endl ;
+hr = TheCC -&gt; <b>GetDimensions</b>(NbDimensions,Dimensions,DimensionPointers);
+cout &lt;&lt; &quot; Number : &quot; &lt;&lt; NbDimensions &lt;&lt; endl ;
+cout &lt;&lt; &quot;Values :&quot; &lt;&lt; endl ;
+hr = TheCC -&gt;<b>GetValues</b>(NbValues,SizeValues,ValuePointers);
+cout &lt;&lt; &quot; Number : &quot; &lt;&lt; NbValues &lt;&lt; endl ;
+cout &lt;&lt; &quot; Size : &quot; &lt;&lt; SizeValues &lt;&lt; endl ;
+if (NbValues != 0)
+{
+  cout &lt;&lt; &quot; Values : &quot; &lt;&lt; endl ;
+  if (ValuePointers)
+  {
+    for (i = 0 ; i &lt; NbEntities ; i++)
+    {
+      if (DimensionPointers)
+        EntDimens = DimensionPointers[i] ;
+      else EntDimens = Dimensions ;
+      cout &lt;&lt; &quot; Entity &quot; &lt;&lt; (i + 1) &lt;&lt; &quot; : &quot; ;
+      if (ValuePointers[i])
+      {
+        switch (Version-&gt;ValueType)
+        {
+          case CATSamValueCharacter :
+            charPtr = (const char *) ValuePointers[i] ;
+            cout &lt;&lt; charPtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout&lt;&lt;&quot;, &lt;&lt;charPtr[j] ;
+            break ;
+          case CATSamValueShort :
+            shortPtr = (const short *) ValuePointers[i] ;
+            cout &lt;&lt; shortPtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout&lt;&lt;&quot;, &quot;&lt;&lt;shortPtr[j] ;
+              break ;
+          case CATSamValueInteger :
+            intPtr = (const int *) ValuePointers[i] ;
+            cout &lt;&lt; intPtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout&lt;&lt;&quot;, &quot;&lt;&lt;intPtr[j] ;
+            break ;
+          case CATSamValueReal :
+            floatPtr = (const float *) ValuePointers[i] ;
+            cout &lt;&lt; floatPtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout &lt;&lt;&quot;, &quot;&lt;&lt;floatPtr[j] ;
+            break ;
+          case CATSamValueDouble :
+            doublePtr = (const double *) ValuePointers[i] ;
+            cout &lt;&lt; doublePtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout &lt;&lt;&quot;, &quot;&lt;&lt;doublePtr[j];
+            break ;
+          case CATSamValuePointer :
+          case CATSamValueNode :
+          case CATSamValueElement :
+          case CATSamValueMaterial :
+          case CATSamValueAxis :
+          case CATSamValueProperty :
+          case CATSamValueRestraint :
+          case CATSamValueLoad :
+          case CATSamValueMass :
+            voidPtr = (const void **) ValuePointers[i] ;
+            cout &lt;&lt; (unsigned int) voidPtr[0] ;
+            for (j=1;j&lt;EntDimens-&gt;GetNbValues();j++)
+              cout&lt;&lt;&quot;, &quot;&lt;&lt;(unsigned int) voidPtr[j] ;
+            break ;
+          case CATSamValueComplex :
+          case CATSamValueComplexDouble :
+          default :
+             cout &lt;&lt; &quot;invalid value type&quot; ;
+        }
+        cout &lt;&lt; endl ;
+      }
+      else
+        cout &lt;&lt; &quot;no values&quot; &lt;&lt; endl ;
+    }
+  }
+}
+ </pre>
+    </td>
+  </tr>
+</table>
+<p>This is a generic example on how to dump a CATAnalysisCharacCollector. The
+life cycle of this object is managed by using the AddRef and Release methods.
+Inside its constructor, the object receive an AddRef and before being deleted, a
+Release is needed in order to inform that the object is no more referenced.</p>
+<p>CAAAniDumpByGroup and CAAAniDumpByFEentity functions show how to extract data
+associated respectively to a group definition or finite element definition. All
+of these outputs are piloted by the choice of a physical type, a version and a
+position. CAAAniDumpByGroup is useful for Material, Local Axis , properties and
+CAAAniDumpByFEentity will be preferred for Restraints, Load, Solution Sets.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Closing"></a>Closing the Session and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = CATDocumentServices::Remove (*pDoc);
+rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In any case, at the end of the program, the document has to be removed from
+memory, and the session as well.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Short"></a>In Short</h3>
+<p>This use case can be used as an example to scan some different kinds of
+entities managed inside the Analysis document, or to extract the physical data
+related to these entities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">The
+      Physical types for Physical Analysis</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

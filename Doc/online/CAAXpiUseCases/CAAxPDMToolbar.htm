@@ -1,0 +1,306 @@
+<html>
+   <head>
+      <title>Creating an Interactive Command to Save a Complete Session in a Directory</title>
+      <meta http-equiv="Content-Language" content="en-us">
+      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+      <meta content="Microsoft FrontPage 5.0" name="GENERATOR">
+      <meta content="FrontPage.Editor.Document" name="ProgId">
+      <link href="../CAADocStyleSheets/caav5.css" type="text/css" rel="Stylesheet"></head>
+   <body>
+      <table width="100%">
+         <tr>
+            <td vAlign="top">
+               <h1>3D PLM PPR Hub Open Gateway</h1>
+            </td>
+            <td vAlign="top">
+               <h2>File XPDM (PX1)</h2>
+            </td>
+            <td vAlign="top" align="right" rowSpan="2">
+               <h3><a name="Top"></a><a href="CAAxPDMToolbar.htm">Creating an Interactive Command to 
+                     Save a Complete Session </A>
+               </h3>
+               <p>How to use CATxPDMSessionServices</p>
+            </td>
+         </tr>
+         <tr>
+            <td class="use" colSpan="2">Use Case</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <table class="abstract">
+         <tr>
+            <td>
+               <h3>Abstract</h3>
+               <p>This article shows how to create an interactive command to save a complete 
+                  session in a given directory.</p>
+               <ul>
+                  <li>
+                     <A href="#Learn"><strong>What You Will Learn With This Use Case</strong></A>
+                  <li>
+                     <A href="#UseCase"><strong>The CAAxPDMToolbar Use Case</strong></A>
+                     <ul>
+                        <li>
+                           <A href="#What">What Does CAAxPDMToolbar Do</A>
+                        <li>
+                           <A href="#How">How to Launch CAAxPDMToolbar</A>
+                        <li>
+                           <A href="#Where">Where to Find the CAAxPDMToolbar Code</A>
+                        </li>
+                     </ul>
+                  <li>
+                     <A href="#Step"><strong>Step-by-Step</strong></A>
+                  <li>
+                     <A href="#InShort"><strong>In Short</strong></A>
+                  <li>
+                     <A href="#References"><strong>References</strong></A>
+                  </li>
+               </ul>
+            </td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+      <p>In this use case you will mainly earn how to use the <code>SaveSessionToDirectory</code>
+         method of the <font size="2"><i>CATxPDMSessionServices</i> class.</font></p>
+      <font size="2"></font>
+      <p align="right">[<A href="#Top">Top</A>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="UseCase"></a>The CAAxPDMToolbar Use Case</h3>
+      <p>CAAxPDMToolbar is a use case of the CAAxPDMInterfaces.edu framework that 
+         illustrates CATxPDMInterfaces framework capabilities. <b>Be careful</b>, such 
+         as all use cases illustrating the CATxPDMInterfaces framework, the current one 
+         requires a PX1 licence.
+      </p>
+      <p align="right">[<A href="#Top">Top</A>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="What"></a>What Does CAAxPDMToolbar Do</h4>
+      <ul>
+         <li>
+         Launch CATIA,
+         <li>
+         Create or load documents
+         <li>
+            Retrieve the <b>PX1 CAASample</b> Toolbar
+            <ul>
+               <li>
+                  View / Toolbars / PX1 CAASample
+               </li>
+            </ul>
+         <li>
+            Select the <b>Save Session to Directory</b> command
+         </li>
+      </ul>
+      <blockquote>
+         <p>The PX1 Toolbar containing several command, you have to select the Save one.
+         </p>
+         <img alt="" src="images/CAAxPDMCheckInOut01.gif">
+      </blockquote>
+      <ul>
+         <li>
+            When you click on the icon, you have this dialog box
+         </li>
+      </ul>
+      <blockquote><caption>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a name="Fig.1">Fig.1</a> The Save Session To Directory Dialog Box<BR>
+         </caption>
+         <img alt="" src="images/CAAxPDMToolbar03.gif">
+         <P>All documents in session are displayed in the dialog box.
+         </P>
+         <UL>
+            <li>
+               To send them to a directory, set a directory name in the <b>Destination Directory </b>
+            editor.&nbsp;
+            <li>
+               You can change the name of a document, by editing the<b> New Name</b> field.&nbsp;
+               <ul>
+                  <li>
+                     The document will be send to the directory with this name. The document's name 
+                     in session is changed too.
+                  </li>
+               </ul>
+            <LI>
+               The <b>status</b> field can have three values:
+               <UL>
+                  <li>
+                     <b>New</b>
+                  : it's a created document in the current session
+                  <li>
+                     <b>Modify</b>: the loaded document , not a new one, has been modified in the 
+                  session after the last save.
+                  <li>
+                     <b>blank</b>: the document has been loaded without modification.
+                  </li>
+               </UL>
+            <LI>
+               The access filed can have three values:</LI>
+            <UL>
+               <LI>
+                  <STRONG>Lock</STRONG>: it's a 'Check In' file
+               <LI>
+                  <STRONG>Forbidden</STRONG>: it's a modified 'Check In' file. It means that 
+               save will failed. User has to perform a checkout first.
+               <LI>
+                  <STRONG>blank</STRONG>: it's a 'Check Out' file.</LI></UL>
+            <LI>
+            Preview of selected file is display on right side of panel.
+            <LI>
+               You can check some design rules before launching Save. Several rules are 
+               available:
+               <UL>
+                  <LI>
+                     <STRONG>Import Resolution</STRONG>, this rule check that all geometrical and 
+                  parameters imports are resolved. System verify that all pointed documents are 
+                  available and that pointed object is available (not deleted).
+                  <LI>
+                     <STRONG>Import Synchronization</STRONG>, this rule verify that all imports 
+                  are synchronized.
+                  <LI>
+                     <STRONG>Cycle between document</STRONG>, this rule check there is no cycle 
+                  between CATPart due to imports.
+                  <LI>
+                     <STRONG>Publication usage</STRONG>, this rule check that all imports 
+                  (geometry and parameters) are using publication. One big added value of this 
+                  rule is ability to check without loading pointed objects.
+                  <LI>
+                     <STRONG>Limit number of level of nested import</STRONG>, this rule allow to 
+                  limit complexity of design by limiting number of level of imports. Number of 
+                  levels can be customized inside the command.
+                  <LI>
+                     <STRONG>Limit number of level of nested level for all documents</STRONG>, this 
+                     rule allow to limit complexity of design by limiting number of level of links. 
+                     Number of levels can be customized inside the command.</LI></UL>
+            <li>
+               Click on the OK button to launch the send operation.<BR>
+               If there is a error during check of Design Rules, a specific panel is displayed 
+               with list of errors<BR>
+               <caption>
+                  <BR>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a name="Fig.2">Fig.2</a> The Check Design Rule error Dialog Box<BR>
+               </caption>
+               <img alt="" src="images/CAAxPDMToolbar04.gif"><BR>
+               In this panel, for each error, you have access to
+               <UL>
+                  <LI>
+                     <STRONG>Document with error</STRONG>
+                  <LI>
+                     <STRONG>Error type</STRONG>
+                  <LI>
+                     <STRONG>Object with error</STRONG>, it could be document itself or an object 
+                  inside the document
+                  <LI>
+                     <STRONG>Complete error message</STRONG></LI></UL>
+            </li>
+         </UL>
+         <BLOCKQUOTE dir="ltr" style="MARGIN-RIGHT: 0px">
+            <P>If you select a line, complete message is displayed on bottom of panel.<BR>
+               If you double-clic on a line, document with error is automatically open in its 
+               editor.</P>
+         </BLOCKQUOTE></blockquote>
+      <p align="right">[<A href="#Top">Top</A>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="How"></a>How to Launch CAAxPDMToolbar</h4>
+      <p>To launch CAAxPDMToolbar, you will need to set up the build time environment, 
+         then compile CAAxPDMToolbar along with its prerequisites, set up the run time 
+         environment, and then execute the use case [<A href="#References">1</A>]. To 
+         launch it, refer to the <A href="#What">What Does CAAxPDMToolbar Do</A> section.</p>
+      <p align="right">[<A href="#Top">Top</A>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h4><a name="Where"></a>Where to Find the CAAxPDMToolbar Code</h4>
+      <p>The CAAxPDMToolbar use case is made of three files,
+      </p>
+      <ul>
+         <li>
+            The CAAxPDMToolbar class, located in the CAAxPDMToolbar.m module of the 
+            CAAxPDMInterfaces.edu framework:
+            <table>
+               <tr>
+                  <td>Windows</td>
+                  <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMToolbar.m\</code></td>
+               </tr>
+               <tr>
+                  <td>Unix</td>
+                  <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMToolbar.m/</code></td>
+               </tr>
+            </table>
+         </li>
+      </ul>
+      <blockquote>
+         <p>this file contains the addin to create the toolbar.
+         </p>
+      </blockquote>
+      <ul>
+         <li>
+            The CAAxPDMPackSessionCmd class and the </FONT>CAAxPDMPackSessionPanel class
+            <table>
+               <tr>
+                  <td>Windows</td>
+                  <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMUICommands.m\</code></td>
+               </tr>
+               <tr>
+                  <td>Unix</td>
+                  <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMUICommands.m/</code></td>
+               </tr>
+            </table>
+            </FONT></li></ul>
+      <blockquote>
+         <p>The first class is the state command launched when the end user push <b>Save 
+               Session to Directory</b> command. The second one defines the dialog box [<A href="#Fig.1">Fig.1</A>] 
+            launched by the <font size="2">CAAxPDMPackSessionCmd command.</font>
+         </p>
+      </blockquote>
+      <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+         is installed.</p>
+      <p align="right">[<A href="#Top">Top</A>]</p>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="Step"></a>Step-by-Step</h3>
+      <P>Save of session is performed throught <CODE>CATxPDMServices::SaveSessionToDirectory
+         </CODE>API.</P>
+      <P>Check of design rules is performed throught <CODE>CATxPDMServices::CheckDesignRules
+         </CODE>API.</P>
+      <P>Preview is computed through <CODE>CATIxPDMItem::GeneratePreview </CODE>API.</P>
+      <P align="right">[<A href="#Top">Top</A>]</P>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="InShort"></a>In Short</h3>
+      <P><FONT size="3">This sample show you :</FONT></P>
+      <UL>
+         <LI>
+            <FONT size="3">how to save a complete session insuring data integrity, especially 
+               links between file during rename operations.</FONT>
+         <LI>
+            how to integrate check of design rules during Save.</LI></UL>
+      <P align="right">[<a href="#Top">Top</a>]</P>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="References"></a>References</h3>
+      <table width="100%" id="Table1">
+         <tr>
+            <td valign="top">[1]</td>
+            <td>
+               <a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+                  and Launching a CAA V5 Use Case</a></td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="History"></a>History</h3>
+      <table width="100%" id="Table2">
+         <tr>
+            <td valign="top">Version: <strong>1</strong> [Feb 2006]</td>
+            <td valign="top">Document created</td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+   </body>
+</html>

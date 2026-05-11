@@ -1,0 +1,125 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      This macro:
+'                 1 - Retrieves the Relations collection from the active 
+'                     document
+'                 2 - Determines whether there is a rule base in the
+'                     Relations list   
+'                 3 - Determines whether the rule base is to be solved or not 
+'                 4 - Retrieves the list of components below the rule base
+'                 5 - Retrieves the list of Expert Checks from the component
+'                     list
+'                 6 - Displays the list of checks along with their status
+'                     (check valid or invalid) 
+'
+'   Assumptions:    
+'                 This macro is intended to be run on the 
+'                 CAAKhwRuleBaseRead.CATPart document located in
+'                 InstallRootDirectory/CAADoc/Doc/online/CAAScdKhwUseCases/samples/CAAKhwRuleBaseRead.CATPart
+'                 where InstallRootDirectory is the directory where the CAA CD-ROM is installed
+'   
+'   Author:       Carole ROULLE 
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKhwUseCases\samples\CAAKhwRuleBaseRead.CATPart")
+    Dim oDoc As Document
+    set oDoc = CATIA.Documents.Open(sFilePath)
+
+  ' Set the CATIA popup file alerts to False
+  ' It prevents to stop the macro at each alert during its execution
+  CATIA.DisplayFileAlerts = False
+
+  ' Check you have an active document
+  Dim CATDocs As Documents
+  Set CATDocs   = CATIA.Documents
+  if CATDocs.Count <> 0 then
+ 
+  ' Retrieve the active document
+  Dim oActiveDoc As Document 
+  Set oActiveDoc = CATIA.ActiveDocument
+  
+  ' Retrieve the Relations collection
+  ' A RuleBase if any is an item of this collection
+  Dim oRel As Relations
+  Set oRel = oActiveDoc.Part.Relations 
+
+  Dim i as Integer
+  Dim j as Integer
+  Dim k as Integer
+  j = 0
+  
+  ' Scan the Relations collection
+  For i = 1 to oRel.Count
+  
+  ' Determine whether there is a rulebase in the document
+  if oRel.Item(i).Name = "RuleBase" Then
+    j = j + 1
+    Dim oRuleBase as AnyObject
+    Set oRuleBase = oRel.Item("RuleBase")
+    ' Retrieve the rulebase Fingerprint 
+    ' if the Fingerprint is 0 - the rule base needs be solved
+    ' otherwise it is solved 
+    if (oRuleBase.Fingerprint = 0) then
+    msgbox "The rule base must be solved"
+    else 
+    msgbox "The rule base is solved"
+
+    ' Retrieve the list of component below the rulebase
+    ' IMPORTANT: a rule base is a rule set containing items
+    ' of  ExpertRuleBaseComponentRuntimes types
+    Dim oListCompo As AnyObject
+    Set oListCompo = oRuleBase.RuleSet.ExpertRuleBaseComponentRuntimes
+    Dim oRBRelation As AnyObject
+
+    ' Check the status of the expert checks
+    ' Specify the header to be displayed in a message box
+    Dim strRel1 As String
+    strRel1 = "Check Name and Status: 1 valid (Green) - 0 invalid (Red)" 
+ 
+    ' Scan the list of ExpertRuleBaseComponentRuntimes object
+    ' If an object of the list is of ExpertCheckRuntime
+    ' writes its name and status in a string 
+    For k = 1 to oListCompo.Count
+    Set oRBRelation = oListCompo.Item(k)
+      if (typename(oListCompo.Item(k)) = "ExpertCheckRuntime") then
+        strRel1 = strRel1 & vbCrLf & oListCompo.Item(k).Name &_
+             "   " & oListCompo.Item(k).Status 
+      End if
+    Next
+
+  ' Display the list of checks as well as their validity 
+  msgbox strRel1
+
+  End If 
+  if j = 0 then msgbox "There is no rule base in this document"
+  end if
+Next 
+
+CATIA.ActiveDocument.Part.Update 
+
+else MsgBox "You must have an active CATPart document"
+End If
+
+
+End Sub

@@ -1,0 +1,545 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Geometric Operators</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Geometric Operators</h3>
+      <em>The general use explained on an example</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Geometric operators are transient objects that allow you to create new
+      geometric objects from existing ones or to analyze them. These operators
+      are based on the same scheme, which is described. The example of the
+      intersection between a curve and a surface illustrates the general
+      mechanism, and is discussed using the <code>CAAGopIntersect.cpp</code>
+      sample.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#The Geometric Operators"><strong>The Geometric Operators</strong></a></li>
+        <li><a href="#How to Use a Tessellation Operator"><strong>How to Use a
+          Geometric Operator</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAGopIntersect Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAGopIntersect Do</a></li>
+            <li><a href="#How">How to Launch CAAGopIntersect</a></li>
+            <li><a href="#Where">Where to Find the CAAGopIntersect Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you use the geometric operator classes. It
+particularly details the intersection geometric operator, as an example of
+geometric operator.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The Geometric Operators"></a>The Geometric Operators</h3>
+<p>Using geometric operators is an easy way to create or analyze geometric
+objects. While the geometric objects provide basic services, that are easily
+computed by the objects themselves, the geometric operators do more complex
+operations using advanced mathematics tools. As an example, evaluations from
+parameters to Cartesian coordinates is offered by the geometric curve or
+surface, whereas the torsion or curvature are computed by a geometric operator.</p>
+<p>All these operators never modify the input objects: they create new ones.</p>
+<p>The geometric operators work inside one geometric container: the input and
+output objects must belong to the same geometric container.</p>
+<p>The operators creating geometric objects are:
+<ul>
+  <li>Intersection between
+    <ul>
+      <li>Two curves (<tt>CATIntersectionCrvCrv</tt>)</li>
+      <li>Two surfaces (<tt>CATIntersectionSurSur</tt>)</li>
+      <li>A curve and a surface (<tt>CATIntersectionCrvSur</tt>)</li>
+    </ul>
+  </li>
+  <li>Projection of
+    <ul>
+      <li>A curve on a surface (<tt>CATProjectionCrvSur</tt>)</li>
+      <li>A point on a curve (<tt>CATProjectionPtCrv</tt>) or a surface (<tt>CATProjectionPtSur</tt>)</li>
+    </ul>
+  </li>
+  <li>Creation of reflect lines (<tt>CATReflectCurve</tt></li>
+  <li>Creation of edge curves (<tt>CATEdgeCurveComputation</tt>).</li>
+</ul>
+<p>The operators of geometric analysis are:</p>
+<ul>
+  <li>Confusion of
+    <ul>
+      <li>Two points of a curve (<tt>CATConfusionPtOnCrvPtOnCrv</tt>)</li>
+      <li>Two points of a surface (<tt>CATConfusionPtOnSurPtOnSur</tt>)</li>
+    </ul>
+  </li>
+  <li>Inclusion of
+    <ul>
+      <li>A point on a curve (<tt>CATInclusionPtCrv</tt>)</li>
+      <li>A point on a surface (<tt>CATInclusionPtSur</tt>)</li>
+    </ul>
+  </li>
+  <li>Minimum distance between
+    <ul>
+      <li>Two curves (<tt>CATDistanceMinCrvCrv</tt>),</li>
+      <li>A point and a curve (<tt>CATDistanceMinPtCrv</tt>)</li>
+      <li>A point and a surface (<tt>CATDistanceMinPtSur</tt>)</li>
+    </ul>
+  </li>
+  <li>Local analysis of a point on a curve (<tt>CATLocalAnalysis1D</tt>), or a
+    surface (<tt>CATLocalAnalysis2D</tt>)</li>
+  <li>Global analysis of a point a a curve (<tt>CATMassProperties1D</tt>).</li>
+</ul>
+<p>The geometric operators are generic: the <tt>CATIntersectionCrvSur</tt>
+operator, for example, computes the intersection of any type of curves with any
+type of surfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="How to Use a Tessellation Operator"></a>How to Use a Geometric
+Operator</h3>
+<p>All the geometric operators are based on the same scheme. The geometric
+operator instances, created by a global function, are transient (that is to say,
+they are not streamed when streaming the geometric factory). They are used to
+declare an operation, to run it, and to retrieve the resulting objects.</p>
+<p>The geometric operators can be used in two modes, BASIC or ADVANCED.
+<ul>
+  <li>In the BASIC mode, data given when creating the operator is sufficient to
+    execute it, and the operation is automatically run.</li>
+  <li>In the ADVANCED mode, the operator can be tuned after its creation with
+    advanced options. You have then to explicitly ask for its execution. In any
+    cases, the resulting objects are not created during the execution step. They
+    are created when you ask for them, by calling the <tt>GetXxx</tt> methods.
+    These methods are often presented as iterators:
+    <ul>
+      <li>A method to retrieve the number of solutions</li>
+      <li>An initialization of the iterator</li>
+      <li>A method to increment the iterator</li>
+      <li>A method to retrieve (and, hence create) the geometric result.</li>
+    </ul>
+  </li>
+</ul>
+<p>For example, the intersection between a curve and a surface can lead to
+several resulting points and curves, so that this operator provides iterators on
+the resulting points and on the resulting curves.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAGopIntersect Use Case</h3>
+<p>CAAGopIntersect is a use case of the CAAGeometricOperators.edu framework that
+illustrates GeometricOperators framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAGopIntersect Do</h4>
+<table width="100%">
+  <caption>Fig. 1: The Geometry of the CAAGopIntersect Use Case</caption>
+  <tr>
+    <td width="50%"><img src="images/Intersect1.gif" alt="Intersect1.gif (36311 bytes)" width="480" height="384"></td>
+    <td width="50%">This use case presents the global scheme of the geometric
+      operators and takes the curve-surface intersection operator as example.
+      The curve is a line, and the surface a cylinder. The operator being
+      independent of the type of curve or surface, any kind of curve or surface
+      can be used in the same way.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAGopIntersect</h4>
+<p>To launch CAAGobIntersect, you will need to set up the build time
+environment, then compile CAAGobIntersect.m along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<font FACE="Helv" SIZE="2" COLOR="#000000">
+<p>If you simply type CAAGopIntersect with no argument, the use case executes,
+but doesn't save the result in an NCGM file. If you want to save this result,
+provide the full pathname of the NCGM file to create. For example:</p>
+</font><font FACE="Courier New" SIZE="2" COLOR="#000000">
+<p>With Windows <code>CAAGopIntersect e:\Intersect.NCGM</code></p>
+<p>With UNIX <code>CAAGopIntersect /u/Intersect.NCGM</code></p>
+</font><font FACE="Helv" SIZE="2" COLOR="#000000">
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+</font>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGopIntersect Code</h4>
+<p>The CAAGopIntersect use case is made of a main named CAAGopIntersect.cpp
+located in the CAAGopIntersect.m module of the CAAGeometricOperators.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGeometricOperators.edu\CAAGopIntersect.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGeometricOperators.edu/CAAGopIntersect.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAAGopIntersect.cpp is divided into five logical steps:
+<ol>
+  <li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+  <li><a href="#Creates the Line and Cylinder to Intersect">Creating the Line
+    and Cylinder to Intersect</a></li>
+  <li><a href="#Basic Mode">Using the BASIC Mode</a></li>
+  <ul>
+    <li>Creating the operator</li>
+    <li>Getting the results by using the iterators</li>
+    <li>Deleting the operator</li>
+  </ul>
+  <li><a href="#ADVANCED Mode">Using the ADVANCED Mode</a></li>
+  <ul>
+    <li>Creating the operator</li>
+    <li>Running</li>
+    <li>Getting the results</li>
+    <li>Modifying input parameters</li>
+    <li>Running again</li>
+    <li>Deleting the operator.</li>
+  </ul>
+  <li><a href="#Writes the Model and Closes the Factory">Writing the Model And
+    Closing the Container</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h4>
+<p>The geometry factory (CATGeoFactory) creates and manages all the
+CATICGMObject (and the curves and surfaces in particular) [<a href="#References">1</a>].
+This creation is done by the global function <tt>::CATCreateCGMContainer</tt>.
+Notice that the factory can be defined by reading a NCGM file that was
+previously stored. In that case, the global function <tt>::CATLoadCGMContainer</tt>
+must be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates the Line and Cylinder to Intersect"></a>Creating the Line
+and Cylinder to Intersect</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>// ------------ line passing thru (0,0,0), of direction (1.,1.,0)</em>
+CATLine * piLine = piGeomFactory-&gt;<strong>CreateLine</strong>(CATMathO,     <em>// (0,0,0) math point</em>
+                                             CATMathVector(1.,1.,0.) );
+if (NULL==piLine) 
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+<em>//
+// ------------ cylinder </em>
+double radius = 10.;
+double axisStart = -50.;
+double axisEnd = 50.;
+double angleStart = 0.;
+double angleEnd = CAT2PI;
+CATCylinder* piCylinder = piGeomFactory-&gt;<strong>CreateCylinder</strong>(CATMathOIJK, <em>// canonical axis system</em>
+                                                        radius,
+                                                        axisStart,
+                                                        axisEnd,
+                                                        angleStart,
+                                                        angleEnd);
+if (NULL==piCylinder) 
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The geometry is created by the <tt>CATGeoFactory</tt> with the <tt>CreateLine</tt>
+and <tt>CreateCylinder</tt> methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Basic Mode"></a>Using the BASIC Mode</h4>
+<p>To operate in this mode, write the following steps:
+<ol>
+  <li>Creates the operator with the appropriate global function (<tt>CreateIntersection</tt>),
+    and specify the BASIC mode (or without specifying any mode: by default, the
+    operator is created with the BASIC mode). The global function executes the
+    requested operation and returns the corresponding operator instance.</li>
+  <li>Gets the result with the desired iterator, here a point iterator:
+    <ul>
+      <li>Retrieves the number of solution points: <tt>GetNumberOfPoints</tt></li>
+      <li>Skips to the next point: <tt>NextPoint</tt></li>
+      <li>Creates the current geometric point: <tt>GetCartesianPoint</tt></li>
+    </ul>
+  </li>
+  <li>Deletes the operator instance.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>//  creation and run</em>
+CATIntersectionCrvSur* pIntOp = <strong>::CreateIntersection</strong>(
+                       piGeomFactory,   <em>// geometric factory</em> 
+                       piLine,          <em>// geometric line</em>
+                       piCylinder,      <em>// geometric cylinder</em>
+                       <strong>BASIC</strong>);          // the mode (default value)
+<em>//
+// <a name="get the results"></a>get the results
+if (NULL == pIntOp)</em> return (3);
+long nbPoints = pIntOp-&gt;<strong>GetNumberOfPoints</strong>();
+
+cout &lt;&lt; &quot;Basic case: Number of intersection points: &quot;&lt;&lt; nbPoints 
+     &lt;&lt; endl;
+if (0 != nbPoints) 
+{
+  <em>// iterator on the resulting points</em>
+  pIntOp-&gt;<strong>BeginningPoint</strong>();	         <em>// initialization</em>
+  while(TRUE== (pIntOp-&gt;<strong>NextPoint</strong>()) )   <em>// loop on the resulting points</em>
+  {
+    <em>// create the geometric point</em>
+    CATCartesianPoint* piPoint=pIntOp-&gt;<strong>GetCartesianPoint</strong>(); 
+    double x,y,z;
+    if (NULL != piPoint)
+    {
+      piPoint-&gt;GetCoord(x,y,z);
+      cout &lt;&lt; &quot; X= &quot;&lt;&lt; x &lt;&lt; &quot; Y= &quot;&lt;&lt; y &lt;&lt; &quot; Z= &quot;&lt;&lt; z &lt;&lt;endl;
+    <em>  // remove the point if you do not want to keep it</em>
+      piGeomFactory-&gt;<strong>Remove</strong>(piPoint); 
+    }                          
+  }
+}
+<em>// delete the operator</em>
+<strong>delete pIntOp; 
+pIntOp = NULL;</strong></pre>
+    </td>
+  </tr>
+</table>
+<p>The BASIC mode is the default mode. This argument can be omitted</p>
+<p>The <tt>CATICGMContainer::Remove</tt> method removes the point from the
+geometry factory. If the point is not removed, it is streamed when streaming the
+factory.</p>
+<p><strong>Note</strong>: Although geometric objects are handled by the mean of
+interfaces, such as <tt>CATCartesianPoint</tt>, <tt>CATLine</tt>, or <tt>CATBody</tt>,
+the pointers on these objects must not be released. In fact, they are released
+at the closure of the factory (the <tt>CATCloseCGMContainer</tt> global
+function).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ADVANCED Mode"></a>Using the ADVANCED Mode</h4>
+<p>This mode can be use, in case of the curve - surface intersection:
+<ul>
+  <li>To set advanced parameters: the limits on the geometry to take into
+    account for this operation</li>
+  <li>To run again the operator on a different curve. This mode can be useful
+    where performing intersections between a surface and a bunch of curves.</li>
+</ul>
+<p>To operate in this mode, write the following steps that:
+<ol>
+  <li>Create the operator with the appropriate global function (<tt>CreateIntersection</tt>),
+    and specify the ADVANCED mode. The global function returns the corresponding
+    operator instance, but does not run the operation</li>
+  <li>Specify additional information or advanced options to the operator by
+    calling one of its <tt>SetXxx</tt> methods: for example here <tt>SetLimits</tt></li>
+  <li>Execute the operation: <tt>Run</tt> method</li>
+  <li>Get the result with the desired iterator</li>
+  <li>Optionally, set new options, run again the operator, and retrieve the new
+    results</li>
+  <li>Remove the operator instance from the memory.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIntersectionCrvSur* pIntOp = <strong>::CreateIntersection</strong>(
+                                piGeomFactory,    <em>// geometric factory</em>
+                                piLine,           <em>// geometric line</em>
+                                piCylinder,       <em>// geometric cylinder</em>
+                                <strong>ADVANCED</strong>);        // MODE
+if (NULL==pIntOp) return (3);
+
+<em>// set  limits</em>. These limits were previously defined or computed
+pIntOp-&gt;<strong>SetLimits</strong>(<a href="#limits">crvLimits</a>);
+
+<em>// run</em>
+pIntOp-&gt;<strong>Run</strong>();</pre>
+      <pre>// get the results
+// ... same way as in <a href="#get the results">BASIC</a> mode ..., but not same result! 
+// as the curve limits are more restrictive, only one solution is found
+
+// set another line and new limits
+
+pIntOp-&gt;<strong>SetCurve</strong>(piNewLine);     <em>// piNewLine was previously created</em>
+pIntOp-&gt;SetLimits(newCrvLimits); <em>// </em>new<em>CrvLimits was previously defined</em>
+
+// run again 
+pIntOp-&gt;<strong>Run</strong>();
+
+// get the results
+nbPoints = pIntOp-&gt;GetNumberOfPoints();
+cout &lt;&lt; &quot; Number of intersection points: &quot;&lt;&lt; nbPoints &lt;&lt; endl;
+long nbCurves= pIntOp-&gt;GetNumberOfCurves();
+cout &lt;&lt; &quot;Number of intersection curves: &quot;&lt;&lt; nbCurves &lt;&lt; endl;</pre>
+      <pre>// delete
+<strong>delete pIntOp;  
+pIntOp=NULL;</strong></pre>
+    </td>
+  </tr>
+</table>
+<p><strong>Note</strong>:
+<ol>
+  <li>If you only ask for the number of solutions, without getting the
+    corresponding geometric objects, these objects are not created in the
+    geometric factory. So you will not see them at the visualization of the NCGM
+    document. In the use case, the <tt>NewLine</tt> curve is lying on the
+    cylinder. There is a curve solution, that is not created, because the <tt>GetPCurve</tt>
+    method is not called.</li>
+  <li>The <a name="limits"></a>limits are defined by two CATCrvParam. These
+    CATCrvParam are directly computed by calling the <tt>CATCurve::GetParam</tt>
+    method on two cartesian points. This is only possible, first because these
+    points belong to the curve, and second because the line is a canonical
+    entity. In other cases, you must use <tt>CATProjectionPtCrv</tt> to retrieve
+    the <tt>CATCrvParam</tt> corresponding to a <tt>CATPoint</tt> on a given
+    curve.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATCrvParam  startParam, endParam;
+
+<em>// piLine is the line of origin CATMathO and of direction (1.,1.,0.)
+// The use of GetParam is only possible because the points belong to the line
+// and piLine is canonical.
+// In other cases use a CATProjectionPtCrv operator</em>
+piLine-&gt;GetParam(CATMathO,startParam); 
+
+<em>// another point on the line </em>     
+piLine-&gt;GetParam(CATMathPoint(35.,35.,0.),endParam);
+
+<em>// the limits</em>
+CATCrvLimits crvLimits(startParam,endParam);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Writes the Model and Closes the Factory"></a>Writing the Model and
+Closing the Factory</h4>
+<p>To save the model in a file, the <tt>::CATSaveCGMContainer</tt> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <tt>::CATCloseCGMContainer</tt>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <em>//
+ // Closes the container
+ //</em>	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>The geometric operators are transient objects used to create or analyze
+    geometric objects. They do not modify the input operands.</li>
+  <li>All the geometric operators are based on the same scheme: creation,
+    optionally set of advanced options, run, read of the results, deletion. They
+    work inside one container.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAAGobTechArticles/GeoObjects.htm">The
+      CGM Objects</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAAGobTechArticles/Curves.htm">The
+      CGM Curves</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAAGobTechArticles/Surfaces.htm">The
+      CGM Surfaces</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,364 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Getting Started with Feature Modeler APIs</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+
+.style2 {
+	color: #F27A02;
+	text-decoration: underline;
+}
+
+.style3 {
+	color: #FF7900;
+	text-decoration: underline;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Introduction to Feature Modeler APIs</h3>
+      <p><em>Getting started with V6 Feature Modeler APIs</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtIntroFeatModelAPI</code> 
+		use case. The UC is an introduction to the Feature Modeler <strong>Facade</strong>,
+		<strong>Credentials</strong> and <strong>Attribute</strong> 
+		classes, their most commonly invokes APIs and their inter relationship. The 
+		<strong>Facade</strong> and the <strong>Credentials</strong> classes are key to 
+		realizing a secured access to the feature model. The UC primarily 
+		involves creating Credentials, instantiating a feature and subsequently setting and retrieving 
+		its attribute values. A prior understanding of the secured feature model 
+		access mechanism will help [<a href="#References">1</a>].</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtIntroFeatModelAPI&nbsp; Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtIntroFeatModelAPI Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtIntroFeatModelAPI</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtIntroFeatModelAPI Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This UC gives an end user</p>
+<ul>
+	<li>An introduction to the most fundamental feature facade classes</li>
+	<li>The relations between these classes</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtIntroFeatModelAPI Use Case</h2>
+<p> The <code>CAAV5V6FmExtIntroFeatModelAPI</code> is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code>&nbsp; framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtIntroFeatModelAPI Do</h3>
+<p>The UC is primarily to introduce user to the fundamental Feature Modeler 
+classes, their key APIs and the inter-relationship between these. The execution proceeds along the 
+steps listed below:</p>
+<ul>
+	<li>lt creates a <strong>Credentials</strong> object, authorizing 
+	access to the &quot;<strong>CAAOsmCatalogSU</strong>&quot; Catalog</li>
+	<li>Instantiates a facade over the &quot;<strong>CAAOsmNovel</strong>&quot; StartUp</li>
+	<li>Instantiates the &quot;<strong>CAAOsmNovel</strong>&quot; feature, returned as a
+	<strong>Feature Facade</strong></li>
+	<li>Valuates the <strong>attribute</strong> &quot;<strong>Author</strong>&quot; of the 
+	Novel</li>
+	<li>Retrieves the <strong>attribute</strong> &quot;<strong>Author</strong>&quot; value of the Novel</li>
+	<li>Valuates the <strong>attribute</strong> &quot;<strong>Title</strong>&quot; of the 
+	<strong>Novel</strong>, 
+	using the <strong>Interface</strong> service</li>
+	<li>Retrieves the <strong>attribute</strong> &quot;<strong>Title</strong>&quot; value of the 
+	<strong>Novel</strong>, using the <strong>Interface</strong> service</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtIntroFeatModelAPI </h3>
+<p>To launch <code>CAAV5V6FmExtIntroFeatModelAPI</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtIntroFeatModelAPI </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<i><code>CAAFmExtFeatModelerAPIIntroUse DocumentStorageName.CATPart</code></i>&quot;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtIntroFeatModelAPI Code</h3>
+<p>
+<code><span class="style1">CAAV5V6FmExtIntroFeatModelAPI</span></code><span class="style1"> </span>code is located in the
+<code><span class="style1">CAAFmExtFeatModelerAPIIntroUse</span>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\<span class="style1">CAAV5V6FmExtFeatModelerAPIIntroUse</span>.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtFeatModelerAPIIntroUse.cpp</code></span>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The logical steps of <code>CAAV5V6FmExtIntroFeatModelAPI</code> are:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Create credentials">Creating the Credentials 
+	(CATFmCredentials)</a></li>
+	<li><a href="#Instantiate SU">Instantiating a StartUp (CATFmStartUpFacade, 
+	CATFmFeatureFacade)</a></li>
+	<li><a href="#Work with feat attr">Working with Feature Attributes 
+	(CATFmAttributeName, CATFmAttributeValue)</a><ol>
+		<li><a href="#Set value to a feat attr">Set a Value to a Feature 
+		Attribute </a></li>
+		<li><a href="#Retrieve value of a feat attr">Retrieve the Value of a 
+		Feature Attribute</a></li>
+	</ol>
+	</li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see CAAObjectSpecsModeler.edu 
+V5 UC documentation. It further creates the <strong>Credentials</strong> [<a href="#References">1</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create credentials"></a>Creating the Credentials (CATFmCredentials)</h3>
+<p><strong>Credentials</strong>, are essentially required to work with a feature 
+(instantiation, introspection). This concept is dealt in depth, in the Technical 
+Article [<a href="#References">1</a>].</p>
+<pre class="code"><strong>CATFmCredentials</strong> MyCredential;
+CATUnicodeString <strong>InfraId</strong>("CATFmFeatureModelerID");
+CATUnicodeString <strong>partnerId</strong>("CAAFmExtFeatureModeler");
+rc = MyCredential.<strong>RegisterAsApplicationBasedOn</strong>(InfraId,partnerId)
+
+CATUnicodeString <strong>clientId</strong>("CAAOsmClientId");
+CATUnicodeString <strong>iCatalogName</strong>("CAAOsmCatalogSU");
+rc = MyCredential.<strong>RegisterAsCatalogOwner</strong>(iCatalogName,clientId);
+...			
+</pre>
+	<p>A <strong>Credentials</strong> object is represented by the <em>
+	CATFmCredentials</em> class, in our applications. It is instantiated to 
+	begin with, and we next append it with the credentials. </p>
+<p>The method 
+<code>RegisterAsApplicationBasedOn()</code>&nbsp;of the <em>CATFmCredentials</em> 
+class, appends it with the 
+credentials which authorizes working with an Applicative Container, whose the 
+access right are managed by an infrastructure exposed by Feature Modeler (<code>CATFmFeatureModelerID</code>). 
+The second argument is for licensing purpose. It represents your PartnerId, the 
+one of your PID if you are Partner), or a string representing your society if 
+you are customer.&nbsp; In all the 
+CAA use cases of CAAV5V6FeatureModelerExt.edu this string will be &quot;CAAFmExtFeatureModeler&quot;.</p>
+<p>The method <code>RegisterAsCatalogOwner()</code> of the same 
+class, appends it with the credentials to work with a Catalog.</p>
+<p>Working with Credentials, is further studied in the UC [<a href="#References">2</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Instantiate SU"></a>Instantiating a StartUp (CATFmStartUpFacade, CATFmFeatureFacade)</h3>
+<p>We now create a feature. It is instantiated from its StartUp.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>CATUnicodeString NovelStartUpType("CAAOsmNovel");
+<strong>CATFmStartUpFacade NovelStartUpFacade(MyCredential,NovelStartUpType)</strong>;
+
+<strong>CATFmFeatureFacade</strong> FeatFacadeOnNovelFeat(MyCredential);
+rc = <strong>NovelStartUpFacade.InstantiateIn</strong>(ContFacade,FeatFacadeOnNovelFeat);</pre>
+	</td>
+	</tr>
+</table>
+<p>A <strong>StartUp</strong> is handled using a <em>CATFmStartUpFacade</em> type (<code>NovelStartUpFacade</code>), in 
+our application. The call to <code>InstantiateIn()</code> of the <em>CATFmStartUpFacade</em> 
+class, instantiates the StartUp and returns the resulting feature facade, a <em>
+CATFmFeatureFacade</em> type (<code>FeatFacadeOnNovelFeat</code>). Since a 
+feature exists inside a Container, the <strong>
+Container Facade</strong> (<code>ContFacade</code>) is an input for the 
+Instantiation call.</p>
+<p>The UC[<a href="#References">3</a>] delivers further into the topic of instantiation features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="Work with feat attr"></a>Working with Feature Attributes (CATFmAttributeName, CATFmAttributeValue)</h3>
+<p>A feature is characterized by attributes [<a href="#References">4</a>]. An application valuates a 
+feature attribute and retrieves it, as and when required.</p>
+<h4><a name="Set value to a feat attr"></a>Set a Value to a Feature Attribute</h4>
+<p>An Attribute Value is represented in the code by its <em>CATFmAttributeValue</em> 
+equivalent. </p>
+
+<table class="code">
+	<tr>
+		<td><pre><strong>CATFmAttributeName AuthorAttrName("Author")</strong>;
+
+CATFmAttributeValue AuthorAttrValue;
+CATUnicodeString strAuthor("William Shakespeare");
+<strong>AuthorAttrValue.SetString(strAuthor)</strong>;
+
+rc = <strong>FeatFacadeOnNovelFeat.SetValue</strong>(AuthorAttrName,AuthorAttrValue);</strong>
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>SetValue()</code> call of the <em>CATFmFeatureFacade</em> valuates an attribute. 
+The attribute itself is identified by its name, represented by the <em>
+CATFmAttributeName</em> class type.&nbsp; Working with feature attributes is 
+discussed in depth in the UC[<a href="#References">5</a>].</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h4><a name="Retrieve value of a feat attr"></a>Retrieve the Value of a Feature Attribute</h4>
+<p>We normally retrieve a feature attribute value.&nbsp; </p>
+
+<table class="code">
+	<tr>
+		<td ><pre>CATFmAttributeValue RetrievedAuthorAsAttrValue;
+rc = <strong>FeatFacadeOnNovelFeat.GetValue</strong>(AuthorAttrName,RetrievedAuthorAsAttrValue);
+if (rc != S_OK) return 1; 
+ 
+CATUnicodeString strAuthorRetrieved;
+rc = <strong>RetrievedAuthorAsAttrValue.GetString</strong>(strAuthorRetrieved);</pre></td>
+	</tr>
+</table>
+<p>The <code>GetValue()</code> call of the <em>CATFmFeatureFacade</em> class, retrieves an 
+attribute value. The value is retrieved as a <em>CATFmAttributeValue</em> type 
+(<code>RetrievedAuthorAsAttrValue</code>).&nbsp; The real attribute value is then extracted 
+by the <code>GetString()</code> call of the <em>CATFmAttributeValue</em> class.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>Lastly the document is saved and the session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This UC introduces&nbsp; the Feature Modeler <strong>Facade</strong>,
+		<strong>Credentials</strong> and <strong>Attribute</strong> 
+		classes and also depicts their inter-relation. It further invokes the 
+most commonly used APIs of these classes. </p>
+<p>The UC realizes this by creating a <strong>Credentials</strong> object, which 
+authorizes access to the &quot;<strong>CAAOsmCatalogSU</strong>&quot; catalog. It 
+instantiates the StartUp &quot;<strong>CAAOsmNovel</strong>&quot;, using an instance of a
+<em>CATFmStartUpFacade</em> class. The feature occurs inside a container, 
+represented as a <em>CATFmContainerFacade</em> type in user application. The 
+instantiated feature is retrieved as a <em>CATFmFeatureFacade</em> type.</p>
+<p>The UC then delves into valuating a feature attribute (&quot;<strong>Author</strong>&quot; 
+of the Novel) and retrieving its value, using the <em>CATFmFeatureFacade</em> 
+service. An attribute value is represented by the <em>CATFmAttributeValue</em> 
+class type in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAAV5V6FmExtUcWorkingWithCredentials.htm">Working with 
+		Credentials</a></td>
+	</tr>
+	
+	<tr>
+		<td style="height: 6px">[3]</td>
+		<td style="height: 6px">
+		<span class="style3"><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating Features</a></span></td>
+	</tr>
+<tr>
+		<td style="height: 14px">[4]</td>
+		<td style="height: 14px" class="style2">
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attribute</a></td>
+	</tr>
+	
+	
+	
+<tr>
+		<td style="height: 14px">[5]</td>
+		<td style="height: 14px" class="style2">
+		<a href="CAAV5V6FmExtUcWorkingWithFeatureFacade.htm">Working with Feature Facade</a></td>
+	</tr>
+	
+	
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [July 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

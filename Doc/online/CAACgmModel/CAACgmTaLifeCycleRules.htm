@@ -1,0 +1,213 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="topictype" content="Ta" />
+<meta name="devlang" content="cpp" />
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Object Life Cycle: Rules</title>
+<style type="text/css">
+.style1 {
+				border: 2px solid #F2F2F2;
+}
+.style2 {
+				text-align: center;
+				border: 2px solid #F2F2F2;
+}
+.style3 {
+				text-align: center;
+}
+code
+	{font-family:"Courier New";
+	}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Object Life Cycle: Rules</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Object life cycle of CGM objects is managed through the implicit/explicit status 
+		assigned to objects. 
+		Here are the rules to comply with for a correct management of object life cycle.  </p>
+		<ul>
+			<li><a href="#Creating_and_Removing_Objects">Creating and Removing 
+			Objects</a></li>
+			<li>
+			<a href="#How_to_Create_the_Geometry_Factory">How to Create the Geometry 
+			Factory</a>
+			</li>
+			<li><a href="#Implicit_and_Explicit_Objects">Implicit and Explicit Objects</a></li>
+			<li><a href="#Recommendations_to_Avoid_Memory_Leaks">Recommendations to Avoid Memory Leaks 
+			</a> </li>
+		</ul>
+		<p>&nbsp;</p>
+		</td>
+	</tr>
+</table>
+
+<h2><a name="Creating_and_Removing_Objects">Creating and Removing Objects</a> </h2>
+<p>CGM objects can be created:</p>
+<ol>
+				<li>Either by the geometry factory<br>
+				<tt>CATPlane * piPlane = <em>theFactory</em>-&gt;CreatePlane(CATMathOIJ);</tt>
+				</li>
+				<li>Or by operators<br>
+				<tt>CATICGMTopWire * pWireOp1 = CATCGMCreateTopWire(<em>theFactory</em>, &#8230;);</tt>
+				</li>
+</ol>
+<p>Objects which are no longer of any use must be removed with <tt>
+CATICGMContainer::Remove</tt>. There are two options to remove an object:</p>
+<ol>
+				<li>The KeepDependancies option: <br>
+				<tt>pfactory-&gt;Remove(Body1,CATICGMContainer::KeepDependancies);</tt>
+				</li>
+				<li>The RemoveDependancies option:<br>
+				<tt>pfactory-&gt;Remove(Body1,CATICGMContainer::RemoveDependancies);</tt>
+				</li>
+</ol>
+<p>
+These options applies to the objects pointed to by the object to be removed. 
+Refer to <a href="#Implicit_and_Explicit_Objects">Implicit and Explicit Objects</a>.</p>
+
+<p><strong>Note</strong>: The 
+default mode of the <tt>Remove</tt> method is <tt>CATICGMContainer::KeepDependancies</tt>, due to legacy reasons. 
+However, it is strongly recommended to use this method with <tt>CATICGMContainer::RemoveDependancies</tt> to 
+enhance the memory management.</span></p>
+
+<h2><a name="How_to_Create_the_Geometry_Factory">How to Create the Geometry Factory
+</a> </h2>
+<p>There are two factories: </p>
+<ol>
+				<li>the explicit one which is dedicated to topology <br>
+				<tt>CATGeoFactory* theFactory =&nbsp;::CATCreateCGMContainer()&nbsp;;</tt></li>
+				<li>and the implicit one which is dedicated to geometry. <br>
+				<tt>CATGeoFactory * piImplicitFactory = theFactory- &gt;GetImplicitGeoFactory( );</tt></li>
+</ol>
+<h2><a name="Implicit_and_Explicit_Objects">Implicit and Explicit Objects</a></h2>
+<p>The implicit/explicit status of an object is related to its life cycle. Any 
+object created as implicit is removed when:</p>
+<ul>
+				<li>an object O pointing to it is removed with the 
+				RemoveDependancies option.</li>
+				<li>the object O is the only one pointing to it.</li>
+</ul>
+<p>The RemoveDependancies and KeepDependancies option are ineffective on 
+explicit objects. In other words, no matter the Remove option, removing an 
+object pointing to an explicit object does not remove the pointed to object. 
+This explicit object has to be removed directly by the Remove method.&nbsp; </p>
+<table cellspacing="3" align="center" cellpadding="3" class="style1">
+  <caption><a name="Fig.1">Fig.1</a> The Remove Options</caption>
+  <tr>
+    <td class="style2">
+	<img alt="" src="images/CGM_life_cycle_0.png" width="232" height="125"></td>
+    <td style="width: 385px" class="style2">
+	<img alt="" src="images/CGM_life_cycle_1.png" width="232" height="125"></td>
+    <td class="style2">
+	<blockquote class="style3">
+					Body 1 and CATSurface removed</blockquote>
+	</td>
+    </tr>
+    <tr>
+    <td class="style2">&nbsp;<em>Body1 (explicit or explicit) pointing to 
+	CATSurface(implicit)</em></td>
+      <td class="style2"><em>Body1 removed<br>
+&nbsp;with KeepDependancies (CATSurface not removed)</em></td>
+      <td class="style2"><em>Body1 removed<br>
+&nbsp;with RemoveDependancies</em></td>
+   </tr>
+    <tr>
+    <td class="style2">
+	<img alt="" src="images/CGM_life_cycle_2.png" width="232" height="125"></td>
+    <td style="width: 385px" class="style2">
+	<img alt="" src="images/CGM_life_cycle_3.png" width="232" height="125"></td>
+    <td class="style2">
+	<img alt="" src="images/CGM_life_cycle_3.png" width="232" height="125"></td>
+    </tr>
+	<tr>
+    <td class="style2">&nbsp;<em>Body1 and Body 2 (explicit or explicit) 
+	pointing to CATSurface(implicit)</em></td>
+      <td class="style2"><em>Body1 removed<br>
+&nbsp;with KeepDependancies (CATSurface not removed)</em></td>
+      <td class="style2"><em>Body1 removed<br>
+&nbsp;with RemoveDependancies (CATSurface not removed as it is pointed to by 
+		Body2)</em></td>
+   				</tr>
+    <tr>
+    <td class="style2">
+	<img alt="" src="images/CGM_life_cycle_4.png" width="232" height="125"></td>
+    <td style="width: 385px" class="style2">
+	<img alt="" src="images/CGM_life_cycle_5.png" width="232" height="125"></td>
+    <td class="style2">
+	<img alt="" src="images/CGM_life_cycle_5.png" width="232" height="125"></td>
+    </tr>
+    <tr>
+    <td class="style2">&nbsp;<em>Body1 (explicit or explicit) 
+	pointing to CATSurface(explicit)</em></td>
+      <td style="width: 385px" class="style2"><em>Body1 removed<br>
+&nbsp;with KeepDependancies (CATSurface not removed)</em></td>
+      <td class="style2"><em>Body1 removed<br>
+&nbsp;with RemoveDependancies (CATSurface not removed</em>)</td>
+   </tr>
+   </table>
+
+	<p>Notes:</p>
+	<ul>
+					<li>Only the objects pointed to by generic naming are streamed 
+on disk whether they are implicit or explicit. </li>
+				<li>Only explicit objects have their visualization computed.
+				</li>
+</ul>
+
+<h2><a name="Recommendations_to_Avoid_Memory_Leaks">Recommendations to Avoid Memory Leaks </a></h2>
+<ol>
+				<li>Create all objects as implicit (not only the geometry)<br>
+				</li>
+				<li>The resulting body to be kept as a final object in the container 
+must be declared as explicit right after its creation (GetResult). <br>
+				<tt>Object-&gt;SetMode(CatCGMExplicit)</tt> <br>
+				</li>
+				<li>All superfluous objects, either explicit or implicit should be 
+removed with the RemoveDependancies option <tt>pFactory-&gt;Remove(Object,CATICGMContainer::RemoveDependancies</tt><br>
+				</li>
+				<li>&nbsp;Objects which are no longer needed by the application 
+				should be removed after the creation of the final body. </li>
+</ol>
+<p><b>WARNING:</b><br>
+Objects not referred to by generic naming and not managed properly can 
+potentially inflate the virtual memory size.<br>
+</p>
+<a name="See_Also"></a>
+<h2><a name="History">History</a></h2>
+<table>
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

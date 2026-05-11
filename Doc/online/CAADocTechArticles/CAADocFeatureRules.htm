@@ -1,0 +1,540 @@
+<html>
+
+<head>
+<title>CAA V5 Feature Modeler Rules</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>CAA V5 Feature Modeler Rules</h2>
+      <em>Standard rules for working with the feature modeler</em></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>CAA V5 Feature Modeler rules must necessarily be considered in order to
+      create functional and coherent applications. These rules have been
+      designed as guidelines in performing the most frequent activities related
+      to CAA programming with the Feature Modeler:</p>
+      <ul>
+        <li><b><a href="#Introduction">Introduction</a></b>
+          <ul>
+            <li><a href="#ExtVsDeriv">Extensions vs. Derivation</a>
+            <li><a href="#Instantiation">Instantiation</a>
+            <li><a href="#PubPriv">&quot;Public&quot; and &quot;private&quot;
+              features and attributes</a>
+            <li><a href="#Compatibility">Managing StartUp compatibility</a>
+          </ul>
+        <li><strong><a href="#Catalog">Feature Catalog Creation and Access Rules</a></strong>
+        <li><strong><a href="#StartUps">StartUp Creation, Extension and
+          Derivation Rules</a></strong>
+        <li><strong><a href="#Features">Feature Creation, Extension and Deletion
+          Rules</a></strong></li>
+        <li><strong><a href="#Attributes">Attribute Creation and Access Rules</a></strong></li>
+        <li><strong><a href="#DataCompatiblity">Data Compatibility Rules</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>This document defines a number of rules to follow while working with the
+feature modeler. Following is a quick review of the concepts that are at the
+base of the rules defined here.</p>
+<p>The feature modeler is based on a prototype/instance model. As such, the
+creation of new features in a document is initially based on the retrieval of a
+prototype object called a StartUp. All StartUps must be created in catalogs in
+order to be shareable between documents as well as for memory size and
+performance reasons. Catalogs are protected by a client identifier that must be
+known in order to access the catalog. At run-time, new features are created by
+instantiating either StartUps from catalogs or by instantiating other features
+already existing in the document.</p>
+<p>A StartUp can be enriched with new behaviors and/or data in essentially two
+ways:</p>
+<ul>
+  <li>The feature extension mechanism: allows the feature object to be extended
+    at run-time with the data and behaviors of a feature extension object
+    defined in a specific application context.</li>
+  <li>The feature derivation mechanism: allows the feature object to inherit
+    data and behaviors from other, previously defined feature objects.</li>
+</ul>
+<p>A StartUp can be created in several different ways:</p>
+<ul>
+  <li>&quot;from scratch&quot; - this is the case where the StartUp is entirely
+    user-defined, i.e., it does not inherit any data or behaviors from other
+    StartUps.</li>
+  <li>simple derivation - this is the case where the StartUp derives from
+    another StartUp found in one of the owner's catalogs.</li>
+  <li>factory derivation - this is the case where the StartUp derives from
+    another StartUp found in a catalog that does not belong to the same owner.</li>
+</ul>
+<p>An extension is created like a StartUp except that it can only derive from
+another extension owned by the same user.</p>
+<p>Here is a graphical illustration of the methods and mechanisms described
+above:</p>
+<p>Case 1: Create a StartUp &quot;from scratch&quot; and derive a new StartUp
+from it.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="47%"><img border="0" src="images/CAAOsmFeatureRulesCase1.jpg" width="400" height="190"></td>
+    <td width="53%">
+      <p align="left">Client B creates a new StartUp &quot;from scratch&quot;
+      with late type &quot;XXX&quot;. Client B then derives a new StartUp with
+      late type &quot;YYY&quot; from &quot;XXX&quot;. Client B can perform this
+      direct derivation because he is the owner of both.</td>
+  </tr>
+</table>
+<p>Case 2: Create a new derived StartUp using a provided Factory.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="50%"><img border="0" src="images/CAAOsmFeatureRulesCase2.jpg" width="434" height="86"></td>
+    <td width="50%">Client B creates a new StartUp with late type
+      &quot;YYY&quot; deriving from the StartUp with late type &quot;XXX&quot;
+      by using the provided factory. Since Client B is not the owner of the
+      &quot;XXX&quot; late type, his only means of deriving a new StartUp from
+      it is through the provided factory.</td>
+  </tr>
+</table>
+<p>Case 3: Create a feature extension &quot;from scratch&quot; and use it to
+extend a feature object. Create a derived feature extension.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="41%"><img border="0" src="images/CAAOsmFeatureRulesCase3.jpg" width="346" height="240"></td>
+    <td width="59%">Client B activates a feature extension on a feature object.
+      The feature object can be his own, Dassault Systemes' or Client A's.
+      Client B can create a new feature extension by deriving one of his
+      already-existing feature extensions.</td>
+  </tr>
+</table>
+<p><font size="3"><b><a name="ExtVsDeriv"></a>Extension vs. Derivation</b></font></p>
+<p>The feature extension mechanism allows a base feature to be enriched with
+behaviors and data belonging to a feature extension that is activated at
+run-time. It is used in the case where a base object has characteristics common
+to several different applications. Using extensions, each application can take
+into account its own specific needs while the base feature object remains stable
+and unchanged.</p>
+<p>The derivation mechanism alters the base feature by actually creating a new
+feature late type having different data and behaviors.</p>
+<p>It is important to understand that in the case of a derived StartUp, an
+active application depends on the existence of API managing the derived/deriving
+StartUp as well as on the existence of the catalogs containing the
+derived/deriving StartUps. On the other hand, in the case of extensions, the
+active application will tolerate the absence of an extension.</p>
+<p>Between these two ways of enriching feature objects, choose the appropriate
+one given the specific application needs and remember that the extension
+mechanism should be favored whenever possible.</p>
+<p><font size="3"><b><a name="Instantiation"></a>Instantiation</b></font></p>
+<p>A feature object is instantiated in two possible types of containers: a
+general applicative container or a Dassault Systemes container, depending on the
+API used. In other words, if using the ObjectSpecsModeler API to manipulate
+client-owned features in a specific client applicative context, the general
+applicative container must be used. Otherwise, if using Dassault Systemes
+specific API to manipulate features in a specific applicative context, the
+container used will be a Dassault Systemes container.</p>
+<p><font size="3"><b><a name="PubPriv"></a>&quot;Public&quot; and
+&quot;Private&quot; features and attributes</b></font></p>
+<p>A StartUp can be either &quot;public&quot; or &quot;private&quot;. A
+&quot;public&quot; StartUp means that its derivation is permitted by others. In
+this case, the owner of the &quot;public&quot; StartUp must provide a factory
+that will actually create the derived StartUp. The owner of the
+&quot;public&quot; StartUp also provides specific API allowing the access and
+manipulation of the features instantiated from it. A &quot;private&quot;
+StartUp, on the other hand, remains hidden from others.</p>
+<p>The attributes of a &quot;public&quot; StartUp also have a &quot;public&quot;
+or &quot;private&quot; status defined at the time of their creation. A
+&quot;public&quot; attribute can be accessible in read and/or write mode,
+whereas a &quot;private&quot; attribute is not accessible at all.</p>
+<p><font size="3"><b><a name="Compatibility"></a>Managing StartUp Compatibility</b></font></p>
+<p>In order to ensure upward compability of feature data, specific rules must be
+followed and applied when modifying StartUps and StartUp catalogs. These rules
+are classified into 3 categories:</p>
+<ul>
+  <li>rules for StartUp structure: moving and adding attributes on StartUps or
+    from one StartUp to another</li>
+  <li>rules for StartUp hierarchy: deleting StartUps in catalogs that may
+    themselves be descendants or ascendants of other StartUps in the same or
+    pre-requisite catalogs</li>
+  <li>rules for StartUp catalogs: modifying catalog identity</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<h3><a name="Catalog"></a>Feature Catalog Creation and Access Rules</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="101%">
+  <tr>
+    <td width="13%">
+      <p align="center"><b>Rule Title</b></td>
+    <td width="20%">
+      <p align="center"><b>Rule Description</b></td>
+    <td width="23%">
+      <p align="center"><b>Explanation</b></td>
+    <td width="22%">
+      <p align="center"><b>Notes</b></td>
+    <td width="10%">
+      <p align="center"><b>Metrics</b></td>
+    <td width="10%">
+      <p align="center"><b>Objectives</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><strong>1-Catalog identification and creation</strong></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>Follow <a href="CAADocCppNamingRules.htm">naming rules</a> when
+          creating a new catalog</li>
+        <li>Always define a unique client identifier for a new catalog.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>A catalog must be named using the following naming rule:
+          CAA&lt;FWAlias&gt;name.CATfct. Naming rules should be followed in
+          order to avoid the collision of one catalog with another.</li>
+        <li>A client identifier is necessary in order to access and protect the
+          catalog.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>2-Catalog storage location</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>The storage pathname of a new catalog should reference the CNext +
+          resources + graphic directory of the current framework.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>In order to be accessible during an <code>AccessCatalog,
+          UpgradeCatalog</code> or <code>OpenPrereqCatalog</code> operation, a
+          catalog must be found under the current &quot;OS&quot; + resources +
+          graphic directory. If it is stored under the CNext + resources +
+          graphic directory as recommended, the update of the runtime view will
+          then automatically place the catalog in the proper directory for being
+          accessible.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="StartUps"></a>StartUp Creation, Extension and Derivation Rules</h3>
+<table border="0" cellpadding="0" cellspacing="0" width="101%">
+  <tr>
+    <td width="13%">
+      <p align="center"><b>Rule Title</b></td>
+    <td width="20%">
+      <p align="center"><b>Rule Description</b></td>
+    <td width="23%">
+      <p align="center"><b>Explanation</b></td>
+    <td width="22%">
+      <p align="center"><b>Notes</b></td>
+    <td width="10%">
+      <p align="center"><b>Metrics</b></td>
+    <td width="10%">
+      <p align="center"><b>Objectives</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><strong>1-Base StartUp and Extension creation
+      and Identification</strong></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>A new StartUp or extension name and late type should follow standard
+          <a href="CAADocCppNamingRules.htm">naming rules</a>.</li>
+        <li>Attributes should be added at StartUp or extension creation time.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>A StartUp or extension must be named using the following naming
+          rule: V5&lt;FWAlias&gt;FeatureName or V5&lt;FWAlias&gt;LateTypeName.
+          Naming rules should be followed in order to avoid the collision of one
+          StartUp with another.</li>
+        <li>For extensions, it is not even possible to add attributes or to
+          modify attribute values at run-time.</li>
+        <li>For &quot;public&quot; StartUps, &quot;public&quot; attributes can
+          only be added at build-time. &quot;Private&quot; attributes may,
+          however, be added at run-time as well.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%">
+      <ul>
+        <li>Attribute values on StartUps are propagated to all of the instances
+          based on this StartUp.</li>
+        <li>It is better that attributes be added and valuated at creation time
+          in order to gain performance at run-time. Furthermore, the definition
+          of the &quot;public&quot;/&quot;private&quot; status of an attribute
+          is done at creation time as well.</li>
+      </ul>
+    </td>
+    <td valign="top" width="10%">
+      <p>(Nb of deviations)/(Nb of entries)</p>
+    </td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>2-Deriving StartUps</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>The owner of a &quot;public&quot; StartUp must provide a factory
+          allowing its derivation.</li>
+        <li>The owner of a &quot;public&quot; StartUp must provide API in order
+          to manipulate those features instantiated from it.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>The users deriving the StartUp need not access the owner's catalog
+          themselves, nor should they have visibility on those attributes of the
+          StartUp considered as &quot;private&quot;.</li>
+        <li>The API must take into account the
+          &quot;public&quot;/&quot;private&quot; status of the StartUp's
+          attributes.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Features"></a>Feature Creation, Extension and Deletion Rules</h3>
+<table width="100%">
+  <tr>
+    <td width="13%" height="40">
+      <p align="center"><b>Rule Title</b></td>
+    <td width="20%" height="40">
+      <p align="center"><b>Rule Description</b></td>
+    <td width="23%" height="40">
+      <p align="center"><b>Explanation</b></td>
+    <td width="22%" height="40">
+      <p align="center"><b>Notes</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Metrics</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Objectives</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><strong>1-Creating a new feature by
+      instantiation</strong></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>New features should always be created in applicative containers if
+          they are instances of client-owned StartUps created &quot;from
+          scratch&quot;.</li>
+        <li>An applicative container should be named according to standard <a href="CAADocCppNamingRules.htm">naming
+          rules</a> for applicative containers.</li>
+        <li>The new feature's name should follow the standard <a href="CAADocCppNamingRules.htm">naming
+          rules</a> for features.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>An applicative container must be named using the following naming
+          rule: V5&lt;FWAlias&gt;ContainerName. Naming rules should be followed
+          in order to avoid the collision of one applicative container with
+          another.</li>
+        <li>A feature object must be named using the following naming rule:
+          V5&lt;FWAlias&gt;FeatureName. Naming rules should be followed in order
+          to avoid the collision of one feature with another.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</p>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Attributes"></a>Attribute Creation and Access Rules</h3>
+<table width="100%">
+  <tr>
+    <td width="13%" height="40">
+      <p align="center"><b>Rule Title</b></td>
+    <td width="20%" height="40">
+      <p align="center"><b>Rule Description</b></td>
+    <td width="23%" height="40">
+      <p align="center"><b>Explanation</b></td>
+    <td width="22%" height="40">
+      <p align="center"><b>Notes</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Metrics</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Objectives</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>1-Attribute status</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>The &quot;public&quot;/&quot;private&quot; status of an attribute is
+          defined at the time of its creation.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>The &quot;public&quot;/&quot;private&quot; status of an attribute
+          cannot be changed once it has been defined.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%">
+      <ul>
+        <li>If an attribute is defined as available for read and/or write
+          access, it is said to be a &quot;public&quot; attribute. Otherwise, it
+          is said to be a &quot;private&quot; attribute.</li>
+      </ul>
+    </td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>2-Attribute Creation and Access</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>An attribute should be added to a StartUp at build-time (i.e.,
+          StartUp creation time).</li>
+        <li>An attribute should be valuated with a default value at build-time
+          (i.e., StartUp creation time).</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>A &quot;public&quot; attribute cannot be defined at run-time.</li>
+        <li>A &quot;private&quot; attribute may be defined at run-time.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="DataCompatiblity"></a>Data Compatibility Rules</h3>
+<p>The following notation is used here: V5Rn and V5Rp designate two releases of
+CATIA, where p is greater than n.</p>
+<table width="100%">
+  <tr>
+    <td width="13%" height="40">
+      <p align="center"><b>Rule Title</b></td>
+    <td width="20%" height="40">
+      <p align="center"><b>Rule Description</b></td>
+    <td width="23%" height="40">
+      <p align="center"><b>Explanation</b></td>
+    <td width="22%" height="40">
+      <p align="center"><b>Notes</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Metrics</b></td>
+    <td width="10%" height="40">
+      <p align="center"><b>Objectives</b></td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>1-Modifying StartUp structure</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>A new attribute can be added in V5Rp. However, if the new attribute
+          is a &quot;tk_component&quot; type, the already existing feature
+          objects instantiated from it must be specifically synchronized.</li>
+        <li>An attribute can be moved from a StartUp to one of its base StartUps
+          except if it is a &quot;tk_component&quot; attribute in which case it
+          must not be moved.</li>
+        <li>The sp_IN/OUT facet of the attribute of a StartUp should not be
+          modified in order to avoid subsequent update problems.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%">
+      <ul>
+        <li>Adding an attribute in V5Rp is possible because applications written
+          for V5Rn will go on running without caring for the new attribute. In
+          V5Rp, the synchronization mechanism automatically adds the attribute
+          to any instance that does not already have it. If this attribute is
+          accessed, it is valued using the StartUp attribute value, if this
+          value exists. The application must either provide a default value that
+          is compatible with its process, or valuate the attribute when
+          accessing it on the instance. Remember that the automatic
+          synchronization mechanism does not apply to &quot;tk_component&quot;
+          types of attributes.</li>
+      </ul>
+    </td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>2-Modifying StartUp hierarchy</b></td>
+    <td valign="top" width="20%">
+      <ul>
+        <li>A StartUp must not be deleted unless it has definitely never been
+          used, i.e., instantiated or derived.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%"></td>
+    <td valign="top" width="22%">
+      <ul>
+        <li>A StartUp cannot be added into a catalog if another StartUp with the
+          same type exists in one of the prerequisite catalogs.</li>
+      </ul>
+    </td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+  <tr>
+    <td valign="top" width="13%"><b>3-Modifying StartUp catalogs</b></td>
+    <td valign="top" width="20%">If a catalog existed in V5Rn, then in V5Rp:
+      <ul>
+        <li>Its name or its UID must not be changed.</li>
+      </ul>
+    </td>
+    <td valign="top" width="23%"></td>
+    <td valign="top" width="22%"></td>
+    <td valign="top" width="10%">(Nb of deviations)/(Nb of entries)</td>
+    <td valign="top" width="10%">
+      <p align="center">0%</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Dec 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

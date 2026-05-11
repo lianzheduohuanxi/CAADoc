@@ -1,0 +1,95 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshTranslation.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+<FONT COLOR="#008000">'   Purpose:      Open an analysis document</FONT>
+<FONT COLOR="#008000">'                 Create Translation mesh</FONT>
+<FONT COLOR="#008000">'                 assign the Surface Mesh as support</FONT>
+<FONT COLOR="#008000">'                 specify the global specifications</FONT>
+<FONT COLOR="#008000">'   Assumptions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection</FONT>
+<FONT COLOR="#008000">'   Author:       bmw</FONT>
+<FONT COLOR="#008000">'   Languages:    VBScript</FONT>
+<FONT COLOR="#008000">'   Locales:      English </FONT>
+<FONT COLOR="#008000">'   CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Optional: allows to find the sample wherever it's installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+
+
+
+<FONT COLOR="#008000">' Open the CATAnalysis Document</FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">' Retrieve the analysis Manager </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManagar = oAnalysisDocument.Analysis
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+<FONT COLOR="#008000">' Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+<FONT COLOR="#008000">'Retrieve the published line </FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubDirection = publications.Item("Direction")
+
+<FONT COLOR="#008000">' Retrieve the analysis model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">'Retrieve the mesh manager and list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+<FONT COLOR="#0000FF">Set </FONT>surfMesh = oAnalysisMeshParts.Item("Surface Mesh.1")
+
+<FONT COLOR="#008000">'Create the reference of the surface mesh</FONT>
+<FONT COLOR="#0000FF">Set </FONT>reference = oAnalysisManagar.CreateReferenceFromObject(surfMesh)
+
+<FONT COLOR="#008000">'Add the mesh part to list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshTrans = oAnalysisMeshParts.Add("MSHPartTranslation")
+
+<FONT COLOR="#008000">'Assign the reference to the mesh part</FONT>
+meshTrans.AddSupportFromReference NOTHING, reference
+
+meshTrans.SetGlobalSpecification "TranslationValue", "-100.0 mm"
+meshTrans.SetGlobalSpecification "Condensation", 0
+meshTrans.SetGlobalSpecification "Tolerance", "1.0 mm"
+meshTrans.SetGlobalSpecification "NbCopies", 3
+
+<FONT COLOR="#008000">'Set the specification; the the direction of translation</FONT>
+meshTrans.SetSpecificationFromPublication "Direction", product, pubDirection, 0
+
+<FONT COLOR="#008000">'Update the mesh</FONT>
+meshTrans.Update
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+
+
+
+</PRE>
+
+</BODY>
+
+</HTML>

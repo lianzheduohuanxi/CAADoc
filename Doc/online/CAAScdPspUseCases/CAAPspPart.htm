@@ -1,0 +1,255 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Accessing Part Connector Data</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+    <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+    <h2><a name="Top"></a>Accessing Part Connector Data</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top">
+    <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+    <p><a name="Learn"></a>This use case is intended to show you how to obtain physical 
+    part&#39;s technological connectors, add and remove a technological part connector 
+    to a physical part, and query the connectors information.</p>
+    <p>This macro opens the document CAAPspEduIn.CATProduct. Using the root node 
+    of the document, it then finds a Physical object and then it gets associated 
+    parts connector information</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top">
+    <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+    <p><a name="How"></a>CAAPspPart is launched in CATIA [<a href="#References">1</a>]. 
+    No open document is needed.</p>
+    <p><a href="CAAPspPartSource.htm">CAAPspPart.CATScript</a> is located in the 
+    CAAScdPspUseCases module. <a href="macros/CAAPspPart.CATScript">Execute macro
+    </a>(windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top">
+    <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+    <p><a name="Step"></a>CAAPspPart includes the following steps:</p>
+    <ol>
+      <li><a href="#Prolog">Prolog</a></li>
+      <li><a href="#Get a Physical object">Get a Physical Object</a></li>
+      <li><a href="#Get List of Part connectors">Get a List of Part Connectors</a>
+      </li>
+      <li><a href="#Retrieving Part Connector Information">Retrieving Part Connector 
+        Information</a> </li>
+      <li><a href="#Add a  Part Connector">Add a Part Connector</a> </li>
+      <li><a href="#Remove a  Part Connector">Remove a Part Connector</a> </li>
+    </ol>
+    <h4><a name="Prolog"></a>Prolog</h4>
+    <p>The macro first loads Distributive System document CAAPspEduIn.CATProduct 
+    containing Equipment and Piping Design objects.</p>
+    <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i> 
+    to point to the directory and <i>sDocFullPath</i> to point to full path name 
+    of the document.</p>
+    <pre>    <font color="#008000">...</font>
+<font color="#008000">    &#39; ------------------------------------------------------------------------- </font>
+    <font color="#008000">&#39; Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct&quot; )
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <font color="#008000">...</font></pre>
+    <p>Next, the macro acquires the <i>PspWorkbench</i> object from the document 
+    using the top node of the object tree in a Distributive System document..</p>
+    <pre>    <font color="#008000">...</font>
+    <font color="#008000">&#39; Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+    <font color="#008000">...</font></pre>
+    <p>Next, the macro acquires the <i>PspApplication</i> object corresponding to 
+    Piping application and initializes the application data.</p>
+    <pre>    <font color="#008000">...</font>
+<font color="#0000ff">   </font><font color="#0000FF"> If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g &amp; &quot;Success in getting objPspApplication&quot; &amp; vbCr
+        objPspApplication.Initialization()
+    <font color="#008000">...</font></pre>
+    <p>Next, the macro acquires the PspAppFactory object <i>objPspAppFactory</i> 
+    on the application object.</p>
+    <pre>    <font color="#008000">...</font>
+<font color="#0000ff">    </font><font color="#0000FF">If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects                  
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAppFactory&quot;, _
+                                                objPspApplication )           
+    <font color="#008000">...</font></pre>
+    <h4><a name="Get a Physical object"></a>Get a Physical Object</h4>
+    <p>Using the <i>PspAppFactory</i> method <i>ListPhysicals</i>, it obtains a 
+    list of physical objects in the Piping domain under the root product. Note that 
+    the output of this method is a list of objects. The member of this list can 
+    be retrieved using the Item method. The second argument of this method specifies 
+    a particular interface to be returned on this object.</p>
+    <p>It then uses the first physical object and obtains a <i>CATIAPspPhysicalProduct</i> 
+    interface handle on the object</p>
+    <pre> <font color="#008000">   ...</font>
+<font color="#0000FF">     Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">      If </font>( Not ( objLPhysicals Is Nothing ) And _
+         ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">        Set </font>objPspPhysicalPrd =  objLPhysicals.Item( 1, &quot;CATIAPspPhysicalProduct&quot; )
+ <font color="#008000">   ...</font></pre>
+    <h4><a name="Get List of Part connectors"></a>Get a List of Part connectors</h4>
+    <p>Object<i> objPspPhysicalPrd </i>is used to get the list of technological 
+    connectors belonging to the physical part. For this it uses the property <i>
+    Connectors</i> to get a list as <i>objLCntrs</i> . It then gets number of technological 
+    connectors.</p>
+    <pre>    <font color="#008000">...</font>
+     <font color="#0000FF">Set </font>objLCntrs = objPspPhysicalPrd.Connectors 
+
+<font color="#0000FF">      If </font>( Not ( objLCntrs Is Nothing ) )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g &amp; _
+          &quot;Number of Part Connectors= &quot; &amp;  objLCntrs.Count &amp; vbCr
+    <font color="#008000">...</font></pre>
+    <p>It then uses the first connector object in the list <i>objLCntrs</i> and 
+    obtains a <i>CATIAPspPartConnector</i> interface handle on the connector and 
+    stores under the variable <i>objPspPartCntr</i> .</p>
+    <pre>    <font color="#008000">...</font>
+        <font color="#008000">&#39;----------------------------------------</font>
+        <font color="#008000">&#39; Getting the first PspPartConnector</font>
+<font color="#0000FF">        Set </font>objPspPartCntr = objLCntrs.Item (1, &quot;CATIAPspPartConnector&quot;)        
+    <font color="#008000">...</font></pre>
+    <h4><a name="Retrieving Part Connector Information"></a>Retrieving Part Connector 
+    Information</h4>
+    <p>The <i>objPspPartCntr</i> is used to get the following part connector information:</p>
+    <ul>
+      <li>Mechanical face connector associated to this technological connector by 
+        using <i>GetFaceConnector</i> function </li>
+      <li>Mechanical alignment connector associated to this technological connector 
+        by using <i>GetAlignmentConnector</i> function </li>
+      <li>Mechanical orientation connector associated to this technological connector 
+        by using <i>GetOrientationConnector</i> function </li>
+      <li>Connector face type by using <i>FaceType</i> </li>
+      <li>Connector alignment type by using <i>AlignType</i> </li>
+      <li>Connector clocking type by using <i>ClockType</i> </li>
+      <li>Connector number in the context of the physical part it belongs to.
+      </li>
+      <li>Connector position by using function <i>GetPosition</i> </li>
+      <li>Connector align direction (outward normal to the face plane position associated 
+        with this connector) by using function <i>GetAlignmentDirection</i> </li>
+      <li>Connector up direction (upward normal to the up plane position associated 
+        with this connector) by using <i>GetUpDirection</i> </li>
+      <li>Plane containing the connector position, alignment and up directions by 
+        using the method <i>GetConnectorMathPlane</i> </li>
+    </ul>
+    <pre>  <font color="#008000">...</font>
+<font color="#0000FF">      Set </font>objFaceCntr = objPspPartCntr.GetFaceConnector        
+<font color="#0000FF">      Set </font>objAlignCntr = objPspPartCntr.GetAlignmentConnector          
+<font color="#0000FF">      Set </font>objOrientnCntr = objPspPartCntr.GetOrientationConnector
+
+      eFaceType  = objPspPartCntr.FaceType
+      eAlignType = objPspPartCntr.AlignType
+      eClockType = objPspPartCntr.ClockType
+
+<font color="#0000FF">      Set </font>objRelAxisPrd = Nothing
+      
+<font color="#0000FF">      Set </font>objLDbPosition = objPspPartCntr.GetPosition (objRelAxisPrd)
+<font color="#0000FF">      Set </font>objLDbAlignDir = objPspPartCntr.GetAlignmentDirection( _
+                                                    objRelAxisPrd)
+<font color="#0000FF">      Set </font>objLDbUpDir = objPspPartCntr.GetUpDirection (objRelAxisPrd)    
+          
+<font color="#0000FF">      Set </font>objLDbMathPlane = objPspPartCntr.GetConnectorMathPlane( _
+                                                     objRelAxisPrd )   <font color="#008000">...</font>
+<font color="#008000">   ...   </font></pre>
+    <h4><a name="Add a  Part Connector"></a>Add a Part Connector</h4>
+    <p>This macro then add a part connector (technological connector) on the object
+    <i>objPspPhysicalPrd</i> by calling its<i> AddConnector </i>function<i>. </i>
+    Newly created connector is stored under the variable <i>objNewPspPartCntr</i></p>
+    <pre><font color="#008000">  ...</font>
+  objNewPspPartCntr = objPspPhysicalPrd.AddConnector( _
+ strCtrType, objFaceCntr,eFaceType, _
+ objAlignCntr, eAlignType, _
+ objOrientnCntr, eClockType )
+</pre>
+    <pre><font color="#008000">  ...
+    &#39; -----------------------------------
+    &#39; Add a new connector
+    &#39; -----------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objNewPspPartCntr <font color="#0000FF">As</font> PspPartConnector
+
+<font color="#0000FF">    If</font>( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">      Dim </font>strCtrType<font color="#0000FF"> As </font>String
+      strCtrType = &quot;CATPspMechPartConnector&quot;
+
+<font color="#0000FF">            Set</font> objNewPspPartCntr = objPspPhysicalPrd.AddConnector( _
+                             strCtrType, objFaceCntr,eFaceType, _                            
+                             objAlignCntr, eAlignType, _
+                             objOrientnCntr, eClockType )
+<font color="#008000">   ...   </font></pre>
+    <h4><a name="Remove a  Part Connector"></a>Remove a Part Connector</h4>
+    <p>This macro then removes the part connector (technological connector) <i>objNewPspPartCntr</i> 
+    on the object <i>objPspPhysicalPrd</i> by calling its<i> </i><i>RemoveConnector</i> 
+    method.</p>
+    <pre><font color="#008000">  ...   </font>
+<font color="#0000FF">    </font><font color="#008000">&#39; -----------------------------------</font>
+    <font color="#008000">&#39; Remove connector</font>
+    <font color="#008000">&#39; -----------------------------------</font>
+
+    If( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+      objPspPhysicalPrd.RemoveConnector objPspPartCntr
+<font color="#0000FF">    End if</font>
+<font color="#008000"> ...   </font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case is intended to show you how to obtain physical part&#39;s connectors, 
+add and remove a part connector to a physical part, and query the connectors. A 
+message logging the status of the critical steps is displayed at the end of the 
+use case.</p>
+<p><img border="0" src="images/CAAPspPart_01.jpg" width="374" height="440"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspQueryFunctionPhysicalSource.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAMaiMachiningPatternCreationSource.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+Language=&quot;VBSCRIPT&quot;
+
+<font color="#008000">'*****************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*		Description:</font>
+<font color="#008000">'*			Sample of a VB Script macro which retrieves a Design pattern </font>
+<font color="#008000">'*                and Design Holes and which creates a machining pattern linked </font>
+<font color="#008000">'*			to these Features.</font>
+<font color="#008000">'*                    </font>
+<font color="#008000">'*      Related Resources: </font>
+<font color="#008000">'*			Plate-VBSample01.CATPart</font>
+<font color="#008000">'*      Use:</font>
+<font color="#008000">'*			1- Open &quot;Plate-VBSample01.CATPart&quot;</font>
+<font color="#008000">'*			2- Go into workbench &quot;Prismatic Manufacturing Programmer&quot;</font>
+<font color="#008000">'*			3- Run this macro</font>
+<font color="#008000">'*                    </font>
+<font color="#008000">'*                           Created by Dassault Systemes</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*****************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Creating the machining pattern</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Retrieve the active CATProcess document</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF"> Dim </font>MfgDoc1<font color="#0000FF"> As </font>Document
+<font color="#0000FF"> Set </font>MfgDoc1 = CATIA.ActiveDocument
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Retrieve the current setup</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#008000">'*** Retrieve current Process Root</font>
+
+<font color="#0000FF"> Dim </font>ActivityRef<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF"> Set </font>ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+
+<font color="#0000FF"> Dim </font>Setup1<font color="#0000FF"> As </font>ManufacturingSetup
+<font color="#0000FF"> Dim </font>childs<font color="#0000FF"> As </font>Activities
+<font color="#0000FF"> Dim </font>child<font color="#0000FF"> As </font>Activity
+
+<font color="#0000FF"> If </font>(ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+<font color="#0000FF">    Set </font>childs = ActivityRef.ChildrenActivities
+    quantity = childs.Count
+
+<font color="#0000FF">    If </font>quantity &lt;= 0<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Exit Sub</font>
+<font color="#0000FF">    End If</font>
+
+    NumberOfSetup = 0
+
+<font color="#0000FF">    For </font>I=1<font color="#0000FF"> To </font>quantity
+<font color="#0000FF">		Set </font>child = childs.Item(I)
+<font color="#0000FF">		If </font>(child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+<font color="#0000FF">			Set </font>Setup1 = child
+			NumberOfSetup = NumberOfSetup +1
+<font color="#0000FF">			Exit For</font>
+<font color="#0000FF">		End If</font>
+<font color="#0000FF">    Next</font>
+     
+<font color="#0000FF"> End If</font>
+
+<font color="#0000FF"> If </font>NumberOfSetup &lt;= 0<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Exit Sub</font>
+<font color="#0000FF"> End If</font>
+
+<font color="#008000">'*** Retrieve current Product linked to the current setup</font>
+
+<font color="#0000FF"> Dim </font>Prod<font color="#0000FF"> As </font>Product
+<font color="#0000FF"> Set </font>Prod = SetUp1.Product
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Retrieve the Manufacturing View</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF">Dim </font>MfgView<font color="#0000FF"> As </font>ManufacturingView
+<font color="#0000FF">Set </font>MfgView = Setup1.GetManufacturingView 
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Create a Machining Pattern</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF">Dim </font>Features<font color="#0000FF"> As </font>ManufacturingFeatures
+<font color="#0000FF">Set </font>Features = MfgView.ManufacturingFeatures
+
+<font color="#0000FF">Dim </font>ManPattern<font color="#0000FF"> As </font>ManufacturingPattern 
+<font color="#0000FF">Set </font>ManPattern = Features.Add (&quot;MfgPatternUsage&quot;)
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Retrieving the design pattern and the holes</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Retrieve the Design Pattern and the Design Holes</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#008000">'*** Retrieve design pattern </font>
+
+<font color="#0000FF">Dim </font>documents1<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">Set </font>documents1 = CATIA.Documents
+
+<font color="#0000FF">Dim </font>partDocument1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Set </font>partDocument1 = documents1.Item(&quot;Plate-VBSample01.CATPart&quot;)
+
+<font color="#0000FF">Dim </font>part1<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>part1 = partDocument1.Part
+
+<font color="#0000FF">Dim </font>bodies1<font color="#0000FF"> As </font>Bodies
+<font color="#0000FF">Set </font>bodies1 = part1.Bodies
+
+<font color="#0000FF">Dim </font>body1<font color="#0000FF"> As </font>Body
+<font color="#0000FF">Set </font>body1 = bodies1.Item(&quot;MechanicalTool.1&quot;)
+
+<font color="#0000FF">Dim </font>shapes1<font color="#0000FF"> As </font>Shapes
+<font color="#0000FF">Set </font>shapes1 = body1.Shapes
+
+<font color="#0000FF">Dim </font>designpattern<font color="#0000FF"> As </font>Shape
+<font color="#0000FF">Set </font>designpattern = shapes1.Item(&quot;RectPattern.1&quot;)
+
+<font color="#008000">'*** Retrieve design holes</font>
+
+<font color="#0000FF">Dim </font>designhole1<font color="#0000FF"> As </font>Shape
+<font color="#0000FF">Dim </font>designhole2<font color="#0000FF"> As </font>Shape
+<font color="#0000FF">Dim </font>designhole3<font color="#0000FF"> As </font>Shape
+<font color="#0000FF">Dim </font>designhole4<font color="#0000FF"> As </font>Shape
+
+<font color="#0000FF">Set </font>designhole1 = shapes1.Item(&quot;Hole.1&quot;)
+<font color="#0000FF">Set </font>designhole2 = shapes1.Item(&quot;Hole.2&quot;)
+<font color="#0000FF">Set </font>designhole3 = shapes1.Item(&quot;Hole.3&quot;)
+<font color="#0000FF">Set </font>designhole4 = shapes1.Item(&quot;Hole.4&quot;)
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Assigning the Design Features to the Machining Pattern</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Assign these Design Features to the Machining Pattern</font>
+<font color="#008000">'--------------------------------------</font>
+
+ManPattern.AddPosition designpattern,Prod,0
+ManPattern.AddPosition designhole1 ,Prod,0
+ManPattern.AddPosition designhole2 ,Prod,0
+ManPattern.AddPosition designhole3 ,Prod,0
+ManPattern.AddPosition designhole4 ,Prod,1
+</pre><pre><font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Modifying the Jump Distance of the Machining Pattern </font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Modify the Jump Distance of the Machining Pattern</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF">Dim </font>Jump<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">Set</font> Jump = ManPattern.GetAnAttribute(&quot;JumpDistance&quot;)</pre><pre>Jump.ValuateFromString(&quot;50mm&quot;)</pre><pre><font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* <font FACE="Courier New" SIZE="2">Deactivating/Activating points of the Machining Pattern</font></font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' <font FACE="Courier New" SIZE="2">Deactivating the point number 3 of the Machining Pattern</font></font>
+<font color="#008000">'--------------------------------------</font>
+
+ManPattern.DeactivatePoint 3 </pre><pre>
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' <font FACE="Courier New" SIZE="2">Activating the point number 4 of the Machining Pattern</font></font>
+<font color="#008000">'--------------------------------------</font></pre><pre>ManPattern.ActivatePoint 4
+</pre><pre><font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Reading Numbers / Setting as Start Point / Reversing Numbering </font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Read Numbers</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF">Dim </font>Numbers<font color="#0000FF">()</font> <font color="#0000FF">As </font>VARIANT
+ManPattern.GetNumbers Numbers</pre><pre><font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Set the point number 2 as start point</font>
+<font color="#008000">'--------------------------------------</font>
+
+ManPattern.StartPoint 2</pre><pre><font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Reverse Numbering</font>
+<font color="#008000">'--------------------------------------</font>
+
+ManPattern.Reverse</pre><pre><font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Managing Part Surface on the Machining Pattern </font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Add a part surface to</font><font color="#008000"> the Machining Pattern</font>
+<font color="#008000">'--------------------------------------</font>
+
+<font color="#0000FF">Dim </font>sel <font color="#0000FF">As </font>Selection
+<font color="#0000FF">Set</font> sel = MfgDoc1.Selection</pre><pre>Dim MyTab(1)</pre><pre>MyTab(0)=&quot;Face&quot;
+MyTab(1)=&quot;Plane&quot;
+</pre><pre>RC = sel.SelectElement2 (MyTab,&quot;Select a Part Surface&quot;,True)</pre><pre><font color="#0000FF">Dim </font>PS <font color="#0000FF">As </font>AnyObject
+<font color="#0000FF">Set</font> SelectedElement = sel.Item(1)</pre><pre><font color="#0000FF">Set</font> PartSurface = SelectedElement.Value</pre><pre>ManPattern.AddPartSurface PartSurface,Prod,1</pre><pre><font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Remove the a part surface of</font><font color="#008000"> the Machining Pattern</font>
+<font color="#008000">'--------------------------------------</font>
+
+ManPattern.RemovePartSurfaces</pre><pre>
+<font color="#008000">'--------------------------------------</font>
+<font color="#008000">' Modify the Top Mode of the Machining Pattern </font>
+<font color="#008000">' Legal values: MfgProjectPattern and MfgTopPattern</font>
+<font color="#008000">'--------------------------------------</font>
+</pre><pre><font color="#0000FF">Dim </font>TopMode<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">Set</font> TopMode<font color="#0000FF"> </font>= ManPattern.GetAnAttribute(&quot;TopMode&quot;)</pre><pre>TopMode<font color="#0000FF"> </font>.ValuateFromString(&quot;MfgProjectPattern&quot;)</pre><pre>
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>
+
+

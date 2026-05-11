@@ -1,0 +1,595 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MechanicalModelerUI Class CATMMUIStateCommand</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MechanicalModelerUI.htm" href="../MechanicalModelerUI.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MechanicalModelerUI";	}
+		function getCurrentObjectName() { 
+ 	return "CATMMUIStateCommand"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MechanicalModelerUI <script type="text/javascript" > writeClassCharacteristic(); </script> CATMMUIStateCommand</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATMMUIStateCommand_34759','CATMMUIStateCommand','0');</script>
+<p><b>Usage: you can derive this class.</b></p>
+<hr>
+<p>
+ public class <b>CATMMUIStateCommand</b>
+</p>
+<p>
+<b><i> Basic class for mechanical feature creation and edition commands.</i></b><br>
+
+ <b>Role</b>: This class is a base class to edit or create a mechanical feature.
+ Do not derive it directly, but derive one of its deriving class.
+ <br><br><b>About the edited/created feature(s) : </b>
+ there are two cases to consider:
+ <ul> 
+   <li>There is only one feature in edition or creation</li>
+    <br>You implement the <script type="text/javascript"> activateLinkAnchor('','GiveMyFeature','GiveMyFeature') </script> , and the default implementation of the 
+<script type="text/javascript"> activateLinkAnchor('','GiveMyFeatures','GiveMyFeatures') </script> method will     return a list with the only one feature. 
+   <li>There are several features in edition or creation</li>
+   <br>You implement the 
+<script type="text/javascript"> activateLinkAnchor('','GiveMyFeature','GiveMyFeature') </script> method to return the main feature, and you implement the 
+<script type="text/javascript"> activateLinkAnchor('','GiveMyFeatures','GiveMyFeatures') </script> method   to return a list.
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATMMUIStateCommand(CATString&amp;,CATDlgEngBehavior,CATCommandMode,CATPathElement*,CATPathElement*)"><b>CATMMUIStateCommand</b></a>(CATString&amp;,CATDlgEngBehavior,CATCommandMode,CATPathElement*,CATPathElement*)
+<dd>  Constructs a CATStateCommand for feature creation and edition.
+ <dt> o 
+    <a href="#~CATMMUIStateCommand()"><b>~CATMMUIStateCommand</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddElementsInHSO(CATLISTP(CATBaseUnknown)*)"><b>AddElementsInHSO</b></a>(CATLISTP(CATBaseUnknown)*)
+<dd>  Puts the objects of the list <tt>iObjectList</tt> in the HSO.
+ <dt> o 
+    <a href="#AddInCSO(CATBaseUnknown*)"><b>AddInCSO</b></a>(CATBaseUnknown*)
+<dd>  Builds a path the leaf of which is <tt>iObject</tt>.
+ <dt> o 
+    <a href="#AddInHSO(CATBaseUnknown*)"><b>AddInHSO</b></a>(CATBaseUnknown*)
+<dd>  Builds a path the leaf of which is <tt>iObject</tt>.
+ <dt> o 
+    <a href="#AddInISO(CATBaseUnknown*)"><b>AddInISO</b></a>(CATBaseUnknown*)
+<dd>  Puts <tt>iObject</tt> in the ISO.
+ <dt> o 
+    <a href="#AddInPSO(CATBaseUnknown*)"><b>AddInPSO</b></a>(CATBaseUnknown*)
+<dd>  Builds a path the leaf of which is <tt>iObject</tt>.
+ <dt> o 
+    <a href="#Cancel(CATCommand*,CATNotification*)"><b>Cancel</b></a>(CATCommand*,CATNotification*)
+<dd>  Cancel Action.
+ <dt> o 
+    <a href="#EmptySO()"><b>EmptySO</b></a>()
+<dd>  Empties the CSO, the HSO and the PSO.
+ <dt> o 
+    <a href="#GetActiveObjectPath()"><b>GetActiveObjectPath</b></a>()
+<dd>  Retrieves the active object path.
+ <dt> o 
+    <a href="#GetCSO()"><b>GetCSO</b></a>()
+<dd>  Returns the CSO of the current editor.
+ <dt> o 
+    <a href="#GetCurrentFeature()"><b>GetCurrentFeature</b></a>()
+<dd>  Gets the current feature (the in work object) of the part you are working with.
+ <dt> o 
+    <a href="#GetEditor()"><b>GetEditor</b></a>()
+<dd>  Returns the current editor.
+ <dt> o 
+    <a href="#GetHSO()"><b>GetHSO</b></a>()
+<dd>  Returns the HSO of the current editor.
+ <dt> o 
+    <a href="#GetISO()"><b>GetISO</b></a>()
+<dd>  Returns the ISO of the current editor.
+ <dt> o 
+    <a href="#GetPSO()"><b>GetPSO</b></a>()
+<dd>  Returns the PSO of the current editor.
+ <dt> o 
+    <a href="#GetPart()"><b>GetPart</b></a>()
+<dd>  Gets the part you are working with (the part with the blue node in product context).
+ <dt> o 
+    <a href="#GetWorkingPath()"><b>GetWorkingPath</b></a>()
+<dd>  Retrieves the working path (used for highlight, etc).
+ <dt> o 
+    <a href="#GiveMyFeature()"><b>GiveMyFeature</b></a>()
+<dd>  Returns the edited or created feature.
+ <dt> o 
+    <a href="#GiveMyFeatures()"><b>GiveMyFeatures</b></a>()
+<dd>  Returns the edited or created feature list.
+ <dt> o 
+    <a href="#GivePathElementFrom(CATBaseUnknown*)"><b>GivePathElementFrom</b></a>(CATBaseUnknown*)
+<dd>  Builds a path the leaf of which is <tt>iObject</tt>.
+ <dt> o 
+    <a href="#SetActiveObject(CATBaseUnknown*)"><b>SetActiveObject</b></a>(CATBaseUnknown*)
+<dd>  Builds a path the leaf of which is <tt>iObject</tt>.
+ <dt> o 
+    <a href="#SetActiveObjectPath(CATPathElement*)"><b>SetActiveObjectPath</b></a>(CATPathElement*)
+<dd>  Sets the active object path.
+ <dt> o 
+    <a href="#SetCurrentFeature(CATISpecObject*)"><b>SetCurrentFeature</b></a>(CATISpecObject*)
+<dd>  Sets <tt>iFeature</tt> as the current feature (the in work object) of the part you are working with.
+ <dt> o 
+    <a href="#SetWorkingPath(CATPathElement*)"><b>SetWorkingPath</b></a>(CATPathElement*)
+<dd>  Sets the working path.
+</dl>
+<dl>
+</dl>
+<dl>
+ <h2>Data Member Index</h2> <br>
+ <dt> o 
+    <a href="#_MyFeature"><b>_MyFeature</b></a>
+<dd>  Data member you can use to store the element that is beeing created or edited.
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATMMUIStateCommand"></a><a name="CATMMUIStateCommand(CATString&amp;,CATDlgEngBehavior,CATCommandMode,CATPathElement*,CATPathElement*)"></a> <dt> o <b>CATMMUIStateCommand</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATMMUIStateCommand</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgEngBehavior','CATDlgEngBehavior')</script> <td><tt>iBehavior</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCommandMode','CATCommandMode')</script> <td><tt>iStatus</tt><td><tt>= CATCommandModeExclusive</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iWorkingPath</tt><td><tt>= 0</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iActiveObjectPath</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATStateCommand for feature creation and edition.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>  as in CATStateCommand
+ </dd>
+    <dt><tt> iBehavior</tt>
+   <dd>  as in CATStateCommand
+ </dd>
+    <dt><tt> iStatus</tt>
+   <dd>  as in CATStateCommand
+ </dd>
+    <dt><tt> iWorkingPath</tt>
+   <dd>   The working path in assembly
+ </dd>
+    <dt><tt> iActiveObjectPath</tt>
+   <dd>   The active object path
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATStateCommand','','CATStateCommand') </script>
+</dl>
+</dl>
+<a name="~CATMMUIStateCommand"></a><a name="~CATMMUIStateCommand()"></a> <dt> o <b>~CATMMUIStateCommand</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATMMUIStateCommand</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddElementsInHSO"></a><a name="AddElementsInHSO(CATLISTP(CATBaseUnknown)*)"></a> <dt> o <b>AddElementsInHSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddElementsInHSO</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATBaseUnknown)','CATLISTP(CATBaseUnknown)*')</script> <td><tt>iObjectList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Puts the objects of the list <tt>iObjectList</tt> in the HSO.
+</dl>
+<a name="AddInCSO"></a><a name="AddInCSO(CATBaseUnknown*)"></a> <dt> o <b>AddInCSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>AddInCSO</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a path the leaf of which is <tt>iObject</tt>.
+ Puts the path in the CSO.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The object
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned path.
+</dl>
+</dl>
+<a name="AddInHSO"></a><a name="AddInHSO(CATBaseUnknown*)"></a> <dt> o <b>AddInHSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>AddInHSO</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a path the leaf of which is <tt>iObject</tt>.
+ Puts the path in the HSO.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The object
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned path.
+</dl>
+</dl>
+<a name="AddInISO"></a><a name="AddInISO(CATBaseUnknown*)"></a> <dt> o <b>AddInISO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script>  <b>AddInISO</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Puts <tt>iObject</tt> in the ISO.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The object
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The object you pass in argument (<tt>iObject</tt>).
+</dl>
+</dl>
+<a name="AddInPSO"></a><a name="AddInPSO(CATBaseUnknown*)"></a> <dt> o <b>AddInPSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>AddInPSO</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a path the leaf of which is <tt>iObject</tt>.
+ Puts the path in the PSO.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The object
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned path.
+</dl>
+</dl>
+<a name="Cancel"></a><a name="Cancel(CATCommand*,CATNotification*)"></a> <dt> o <b>Cancel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATStatusChangeRC','CATStatusChangeRC')</script>  <b>Cancel</b>(<td><script type="text/javascript"> activateLink('CATCommand','CATCommand*')</script> <td><tt>iCmd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATNotification','CATNotification*')</script> <td><tt>iNotif</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Cancel Action.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCmd</tt>
+   <dd>   The command that requests to cancel the current one
+ </dd>
+    <dt><tt> iNotif</tt>
+   <dd>   The notification sent</dd>
+</dl>
+</dl>
+</dl>
+<a name="EmptySO"></a><a name="EmptySO()"></a> <dt> o <b>EmptySO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>EmptySO</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Empties the CSO, the HSO and the PSO.
+</dl>
+<a name="GetActiveObjectPath"></a><a name="GetActiveObjectPath()"></a> <dt> o <b>GetActiveObjectPath</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>GetActiveObjectPath</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the active object path.
+ <br><b>Role:</b>
+ This method is used to have the good workshop.Usually the working path and the active i
+ path are equal: the two path contain the part and the product structure. 
+ <br>Use #SetActiveObjectPath to change it.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned value.
+</dl>
+</dl>
+<a name="GetCSO"></a><a name="GetCSO()"></a> <dt> o <b>GetCSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATCSO','CATCSO*')</script>  <b>GetCSO</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the CSO of the current editor.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current CSO.
+ Do not release the returned value.
+</dl>
+</dl>
+<a name="GetCurrentFeature"></a><a name="GetCurrentFeature()"></a> <dt> o <b>GetCurrentFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>GetCurrentFeature</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the current feature (the in work object) of the part you are working with.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current feature.
+</dl>
+</dl>
+<a name="GetEditor"></a><a name="GetEditor()"></a> <dt> o <b>GetEditor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFrmEditor','CATFrmEditor*')</script>  <b>GetEditor</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the current editor.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current editor.
+ Do not release the returned value.
+</dl>
+</dl>
+<a name="GetHSO"></a><a name="GetHSO()"></a> <dt> o <b>GetHSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATHSO','CATHSO*')</script>  <b>GetHSO</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the HSO of the current editor.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current HSO.
+ Do not release the returned value.
+</dl>
+</dl>
+<a name="GetISO"></a><a name="GetISO()"></a> <dt> o <b>GetISO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATISO','CATISO*')</script>  <b>GetISO</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the ISO of the current editor.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current ISO.
+ Do not release the returned value.
+</dl>
+</dl>
+<a name="GetPSO"></a><a name="GetPSO()"></a> <dt> o <b>GetPSO</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPSO','CATPSO*')</script>  <b>GetPSO</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the PSO of the current editor.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current PSO.
+ Do not release the returned value.
+</dl>
+</dl>
+<a name="GetPart"></a><a name="GetPart()"></a> <dt> o <b>GetPart</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATIPrtPart','CATIPrtPart_var')</script>  <b>GetPart</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the part you are working with (the part with the blue node in product context).
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The part.
+</dl>
+</dl>
+<a name="GetWorkingPath"></a><a name="GetWorkingPath()"></a> <dt> o <b>GetWorkingPath</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>GetWorkingPath</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the working path (used for highlight, etc).
+ Usually the working path and the active path are equal: the two path contain
+ the part and the product structure. 
+ Use 
+<script type="text/javascript"> activateLinkAnchor('','SetWorkingPath','SetWorkingPath') </script> to change it. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned value.
+</dl>
+</dl>
+<a name="GiveMyFeature"></a><a name="GiveMyFeature()"></a> <dt> o <b>GiveMyFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>GiveMyFeature</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the edited or created feature.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The edited or created feature.
+</dl>
+</dl>
+<a name="GiveMyFeatures"></a><a name="GiveMyFeatures()"></a> <dt> o <b>GiveMyFeatures</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)')</script>  <b>GiveMyFeatures</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the edited or created feature list.  
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The edited or created feature list.
+</dl>
+</dl>
+<a name="GivePathElementFrom"></a><a name="GivePathElementFrom(CATBaseUnknown*)"></a> <dt> o <b>GivePathElementFrom</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script>  <b>GivePathElementFrom</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a path the leaf of which is <tt>iObject</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The object
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The path that has been generated.
+ The caller must release the returned value.
+</dl>
+</dl>
+<a name="SetActiveObject"></a><a name="SetActiveObject(CATBaseUnknown*)"></a> <dt> o <b>SetActiveObject</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetActiveObject</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a path the leaf of which is <tt>iObject</tt>.
+ Sets this path as the active object path of the editor.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd> The leaf of the new active object path</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetActiveObjectPath"></a><a name="SetActiveObjectPath(CATPathElement*)"></a> <dt> o <b>SetActiveObjectPath</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetActiveObjectPath</b>(<td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iActiveObjectPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the active object path.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iActiveObjectPath</tt>
+   <dd>	The active object path</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCurrentFeature"></a><a name="SetCurrentFeature(CATISpecObject*)"></a> <dt> o <b>SetCurrentFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCurrentFeature</b>(<td><script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject*')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets <tt>iFeature</tt> as the current feature (the in work object) of the part you are working with.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> The new current feature.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetWorkingPath"></a><a name="SetWorkingPath(CATPathElement*)"></a> <dt> o <b>SetWorkingPath</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetWorkingPath</b>(<td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iWorkingPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the working path.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWorkingPath</tt>
+   <dd>	The working path</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Data Members</h2> <br>
+<a name="_MyFeature"></a> <dt> o <b>_MyFeature</b>
+<pre>
+  protected CATISpecObject_var _MyFeature</dt>
+</pre>
+<dl>
+  <dd>
+ Data member you can use to store the element that is beeing created or edited.
+ Use it to implement the GiveMyFeature method.
+</dl>
+<hr>
+ This object is included in the file: <b>CATMMUIStateCommand.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMechanicalModelerUI</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

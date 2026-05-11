@@ -1,0 +1,593 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMModelInterfaces Interface CATBody</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMModelInterfaces.htm" href="../GMModelInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMModelInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATBody"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMModelInterfaces Interface CATBody</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATBody_19837','CATBody','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATBody</b>
+</p>
+<p>
+<b><i> Interface representing a topological body.</i></b><br>
+
+<br>
+ A body is a set of cells with the following conditions:
+<ul><li>If one of the cells belongs to the body, all the bounding cells also
+        belong to this body.
+    <li>If two cells of a same body are intersecting together, their
+        intersection is a set of cells belonging to this body.
+     <li> Cells can be shared between several bodies.
+</ul>
+This interface is dedicated to represent all kind of cell-complexes including
+ non-manifold, non connected complexes, mixing dimensions of topological cells.
+ The boundaries of a body are grouped into
+ domains (CATDomain), connected sets of cells (CATCell) of same
+ dimension. This definition is unique.
+<ul><li>a vertex can border:
+         <ul><li>an egde (the vertex is one of the edge extremities)
+             <li>a face ( the vertex is immersed inside the face:
+ non manifold case -> <tt>CATVertexInFace</tt> domain )
+             <li>a volume or a body ( the vertex is immersed into the volume:
+ non manifold case -> <tt>CATVertexInVolume</tt> domain) </ul>
+    <li>an edge may border:
+         <ul><li>a face ( the edge is one of the face borders
+ -> <tt>CATLoop</tt> domain)
+             <li>a face ( the edge is immersed inside the face:
+ non manifold case -> <tt>CATLoop</tt> domain)
+             <li>a volume or a body( the edge is immersed inside the volume:
+ non manifold case -> <tt>CATWire</tt> domain) </ul>
+    <li>an face may border (-> <tt>CATShell</tt> domain ):
+         <ul><li>a volume ( the face is one of the volume borders)
+             <li>a volume ( the face is immersed into the volume:
+ non manifold case) </ul>
+    <li>a <tt>CATLump</tt> is a domain of dimension 3.
+</ul>
+ Note that a vertex can not be immersed inside an egde, because it would cut
+ the edge in two pieces. As the same manner, an edge (/face) or a set
+ of edges (/faces) may be immersed inside a face (/volume) only if it does
+ not go right through it.
+ A CATCell is composed of CATDomains of lower dimension.
+ The CATBody interface is the factory of all domains and cells that it owns.
+ A CATBody is created with the
+  <script type="text/javascript"> activateLinkAnchor('CATGeoFactory','CreateBody','CATGeoFactory.CreateBody') </script> method and deleted with the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddDomain(CATDomain*,CATLocation)"><b>AddDomain</b></a>(CATDomain*,CATLocation)
+<dd>  Adds a CATDomain to <tt>this</tt> CATBody.
+ <dt> o 
+    <a href="#CreateCell(short)"><b>CreateCell</b></a>(short)
+<dd>  Creates a topological cell of a given dimension.
+ <dt> o 
+    <a href="#CreateDomain(short,short,CATLocation)"><b>CreateDomain</b></a>(short,short,CATLocation)
+<dd>  Creates a topological domain.
+ <dt> o 
+    <a href="#CreateEdge()"><b>CreateEdge</b></a>()
+<dd>  Creates an edge.
+ <dt> o 
+    <a href="#CreateFace()"><b>CreateFace</b></a>()
+<dd>  Creates a face.
+ <dt> o 
+    <a href="#CreateISmartDuplicator(CATBody*,CATTopData&amp;)"><b>CreateISmartDuplicator</b></a>(CATBody*,CATTopData&amp;)
+<dd>  Creates a smart duplicator.
+ <dt> o 
+    <a href="#CreateLoop(CATLocation)"><b>CreateLoop</b></a>(CATLocation)
+<dd>  Creates a topological domain (called loop) representing a set of connected egdes bounding
+ a face .
+ <dt> o 
+    <a href="#CreateLump()"><b>CreateLump</b></a>()
+<dd>  Creates a topological domain (called lump) which contained cells are CATVolumes.
+ <dt> o 
+    <a href="#CreateShell(CATLocation)"><b>CreateShell</b></a>(CATLocation)
+<dd>  Creates a topological domain (called shell) which contained connected cells are CATFaces.
+ <dt> o 
+    <a href="#CreateSmartDuplicator(CATBody*,CATTopData&amp;)"><b>CreateSmartDuplicator</b></a>(CATBody*,CATTopData&amp;)
+<dd>  Creates a smart duplicator.
+ <dt> o 
+    <a href="#CreateVertex()"><b>CreateVertex</b></a>()
+<dd>  Creates a vertex.
+ <dt> o 
+    <a href="#CreateVertexInFace()"><b>CreateVertexInFace</b></a>()
+<dd>  Creates a topological domain representing a vertex immersed inside a face.
+ <dt> o 
+    <a href="#CreateVertexInVolume()"><b>CreateVertexInVolume</b></a>()
+<dd>  Creates a topological domain representing a vertex immersed inside a volume.
+ <dt> o 
+    <a href="#CreateVolume()"><b>CreateVolume</b></a>()
+<dd>  Creates a volume.
+ <dt> o 
+    <a href="#CreateWire()"><b>CreateWire</b></a>()
+<dd>  Creates a topological domain representing a set of connected edges (called wire) of a
+ body or a volume.
+ <dt> o 
+    <a href="#Freeze()"><b>Freeze</b></a>()
+<dd>  
+ <dt> o 
+    <a href="#GetCellsHighestDimension(CATLONG32&amp;,CATBoolean&amp;,CATBoolean*,ListPOfCATCell*)"><b>GetCellsHighestDimension</b></a>(CATLONG32&amp;,CATBoolean&amp;,CATBoolean*,ListPOfCATCell*)
+<dd>   Gets information on the dimensions in <tt>this</tt> body.
+ <dt> o 
+    <a href="#GroupCells(CATLISTP(CATCell)*,CATListOfLong&amp;)"><b>GroupCells</b></a>(CATLISTP(CATCell)*,CATListOfLong&amp;)
+<dd>  Retrieves the number of manifold domains inside a list of cells.
+ <dt> o 
+    <a href="#IsLyingOn(CATBody*)"><b>IsLyingOn</b></a>(CATBody*)
+<dd>  Tests whether <tt>this</tt> CATBody is lying on another one.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddDomain"></a><a name="AddDomain(CATDomain*,CATLocation)"></a> <dt> o <b>AddDomain</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddDomain</b>(<td><script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script> <td><tt>iDomainToAdd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLocation','CATLocation')</script> <td><tt>iLocation</tt><td><tt>=CATLocationIn3DSpace </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a CATDomain to <tt>this</tt> CATBody.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDomainToAdd</tt>
+   <dd> The pointer to the domain to add, which location must be set to
+ <tt>CATLocationIn3DSpace</tt>.
+ </dd>
+    <dt><tt> iLocation</tt>
+   <dd> The location of the domain to bound <tt>this</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateCell"></a><a name="CreateCell(short)"></a> <dt> o <b>CreateCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCell','CATCell *')</script>  <b>CreateCell</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iDimension</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological cell of a given dimension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDimension</tt>
+   <dd> <dl><dt>0</dt><dd> Creates a CATVertex
+    <dt>1</dt><dd> Creates a CATEdge
+    <dt>2</dt><dd> Creates a CATFace
+    <dt>3</dt><dd> Creates a CATVolume </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateDomain"></a><a name="CreateDomain(short,short,CATLocation)"></a> <dt> o <b>CreateDomain</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATDomain','CATDomain *')</script>  <b>CreateDomain</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iContainedCellsDimension</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iContainingCellDimension</tt><td><tt>=3</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLocation','CATLocation')</script> <td><tt>iLocation</tt><td><tt>=CATLocationIn3DSpace</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain.
+<br>A CATDomain is composed of connected cells
+ of same dimension. It represents a cell boundary.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainedCellsDimension</tt>
+   <dd> The dimension of the cells contained into the domain to create.
+ </dd>
+    <dt><tt> iContainingCellDimension</tt>
+   <dd> The dimension of the unique cell containing the domain to create.
+<br> Note that <tt>iContainedCellDimension <= iContainingCellDimension</tt>.
+ For a CATDomain contained into a CATBody, this dimension is 3.
+ </dd>
+    <dt><tt> iLocation</tt>
+   <dd> The location of the contained cells relative to the containing cell.
+ <dl><dt><tt>CATLocationInner</tt></dt><dd> For internal boundaries (holes
+ into a faces or cavities into a volumes).
+     <dt><tt>CATLocationOuter</tt></dt><dd> For external boundaries.
+     <dt><tt>CATLocationFull</tt></dt><dd> All cells of the domain to
+ create are immersed into the containing cell (non-manifold topology).
+     <dt><tt>CATLocationIn3DSpace</tt></dt><dd> For creation into a body.
+</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateEdge"></a><a name="CreateEdge()"></a> <dt> o <b>CreateEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATEdge','CATEdge *')</script>  <b>CreateEdge</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an edge.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created edge (cell of dimension 1)
+</dl>
+</dl>
+<a name="CreateFace"></a><a name="CreateFace()"></a> <dt> o <b>CreateFace</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATFace','CATFace *')</script>  <b>CreateFace</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a face.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created face (cell of dimension 2)
+</dl>
+</dl>
+<a name="CreateISmartDuplicator"></a><a name="CreateISmartDuplicator(CATBody*,CATTopData&amp;)"></a> <dt> o <b>CreateISmartDuplicator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATICGMSmartBodyDuplicator','CATICGMSmartBodyDuplicator*')</script>  <b>CreateISmartDuplicator</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iBodyToRecopy</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopData','CATTopData&amp;')</script> <td><tt>iTopData</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a smart duplicator.
+<br>This is used in the context of the "smart mechanism".
+   When a body is frozen, the cells and domains that it contains cannot be modified anymore.
+ To allow an operator to operate on cells of a frozen body,
+   the smart duplicator only duplicates the touched cells and
+   domains. Hence:
+<ul>
+    <li> This is used to duplicate or share cells and domains from <tt>iBodyToRecopy</tt> into <tt>this</tt>.
+    <li> a cell or domain will be duplicated if it is non-modifiable and touched,
+      otherwise, it will be shared
+    <li> <tt>iBodyToRecopy</tt> and <tt>this</tt> can be the same body.
+</ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBodyToRecopy</tt>
+   <dd> The frozen body where cells are touched.
+ </dd>
+    <dt><tt> iTopData</tt>
+   <dd> The object defining the CATSoftwareConfiguration and the CATCGMJournalList.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  [out, IUnknown#Release] The pointer to the created duplicator. After use, you
+ have to <tt>Release</tt> it.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATICGMSmartBodyDuplicator','','CATICGMSmartBodyDuplicator') </script>
+</dl>
+</dl>
+<a name="CreateLoop"></a><a name="CreateLoop(CATLocation)"></a> <dt> o <b>CreateLoop</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLoop','CATLoop *')</script>  <b>CreateLoop</b>(<td><script type="text/javascript"> activateLink('CATLocation','CATLocation')</script> <td><tt>iLocation</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain (called loop) representing a set of connected egdes bounding
+ a face .
+ <br>It corresponds to <tt>iContainedCellsDimension = 1,
+ iContainingCellDimension = 2</tt>. The loop may be closed or not.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLocation</tt>
+   <dd> The location of the contained cells relative to the containing cell.
+ <dl><dt><tt>CATLocationInner</tt></dt><dd> For internal boundaries (holes
+ into a faces).
+     <dt><tt>CATLocationOuter</tt></dt><dd> For external boundaries.
+     <dt><tt>CATLocationFull</tt></dt><dd> All cells of the domain to
+ create are immersed into the containing cell (non-manifold topology).
+</dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created loop.
+</dl>
+</dl>
+<a name="CreateLump"></a><a name="CreateLump()"></a> <dt> o <b>CreateLump</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLump','CATLump *')</script>  <b>CreateLump</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain (called lump) which contained cells are CATVolumes.
+ <br>It corresponds to <tt>iContainedCellsDimension = 3,
+ iContainingCellDimension = 3</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created lump.
+</dl>
+</dl>
+<a name="CreateShell"></a><a name="CreateShell(CATLocation)"></a> <dt> o <b>CreateShell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATShell','CATShell *')</script>  <b>CreateShell</b>(<td><script type="text/javascript"> activateLink('CATLocation','CATLocation')</script> <td><tt>iLocation</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain (called shell) which contained connected cells are CATFaces.
+ <br>It corresponds to <tt>iContainedCellsDimension = 2,
+ iContainingCellDimension = 3</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLocation</tt>
+   <dd> The location of the contained cells relative to the containing cell.
+ <dl><dt><tt>CATLocationInner</tt></dt><dd> For internal boundaries (
+ cavities into volumes).
+     <dt><tt>CATLocationOuter</tt></dt><dd> For external boundaries.
+     <dt><tt>CATLocationFull</tt></dt><dd> All cells of the domain to
+ create are immersed into the containing cell (non-manifold topology).
+     <dt><tt>CATLocationIn3DSpace</tt></dt><dd> For creation into a body.
+</dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created shell.
+</dl>
+</dl>
+<a name="CreateSmartDuplicator"></a><a name="CreateSmartDuplicator(CATBody*,CATTopData&amp;)"></a> <dt> o <b>CreateSmartDuplicator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSmartBodyDuplicator','CATSmartBodyDuplicator*')</script>  <b>CreateSmartDuplicator</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iBodyToRecopy</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopData','CATTopData&amp;')</script> <td><tt>iTopData</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a smart duplicator.
+<br>This is used in the context of the "smart mechanism".
+   When a body is frozen, the cells and domains that it contains cannot be modified anymore.
+ To allow an operator to operate on cells of a frozen body,
+   the smart duplicator only duplicates the touched cells and
+   domains. Hence:
+<ul>
+    <li> This is used to duplicate or share cells and domains from <tt>iBodyToRecopy</tt> into <tt>this</tt>.
+    <li> a cell or domain will be duplicated if it is non-modifiable and touched,
+      otherwise, it will be shared
+    <li> <tt>iBodyToRecopy</tt> and <tt>this</tt> can be the same body.
+</ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBodyToRecopy</tt>
+   <dd> The frozen body where cells are touched.
+ </dd>
+    <dt><tt> iTopData</tt>
+   <dd> The object defining the CATSoftwareConfiguration and the CATCGMJournalList.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created duplicator. After use, you
+ have to <tt>delete</tt> it.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATSmartBodyDuplicator','','CATSmartBodyDuplicator') </script>
+</dl>
+</dl>
+<a name="CreateVertex"></a><a name="CreateVertex()"></a> <dt> o <b>CreateVertex</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATVertex','CATVertex *')</script>  <b>CreateVertex</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a vertex.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created vertex (cell of dimension 0)
+</dl>
+</dl>
+<a name="CreateVertexInFace"></a><a name="CreateVertexInFace()"></a> <dt> o <b>CreateVertexInFace</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATVertexInFace','CATVertexInFace *')</script>  <b>CreateVertexInFace</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain representing a vertex immersed inside a face.
+ <br>It corresponds to <tt>iContainedCellsDimension = 0,
+ iContainingCellDimension = 2</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created VertexInFace domain.
+</dl>
+</dl>
+<a name="CreateVertexInVolume"></a><a name="CreateVertexInVolume()"></a> <dt> o <b>CreateVertexInVolume</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATVertexInVolume','CATVertexInVolume *')</script>  <b>CreateVertexInVolume</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain representing a vertex immersed inside a volume.
+ <br>It corresponds to <tt>iContainedCellsDimension = 0,
+ iContainingCellDimension = 3</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created VertexInVolume domain.
+</dl>
+</dl>
+<a name="CreateVolume"></a><a name="CreateVolume()"></a> <dt> o <b>CreateVolume</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATVolume','CATVolume *')</script>  <b>CreateVolume</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a volume.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created volume (cell of dimension 3)
+</dl>
+</dl>
+<a name="CreateWire"></a><a name="CreateWire()"></a> <dt> o <b>CreateWire</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATWire','CATWire *')</script>  <b>CreateWire</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a topological domain representing a set of connected edges (called wire) of a
+ body or a volume.
+ <br>It corresponds to <tt>iContainedCellsDimension = 1,
+ iContainingCellDimension = 3</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created wire.
+</dl>
+</dl>
+<a name="Freeze"></a><a name="Freeze()"></a> <dt> o <b>Freeze</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Freeze</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R14 Completed.
+ <br>Use now 
+<script type="text/javascript"> activateLinkAnchor('CATICGMObject','Completed','CATICGMObject.Completed') </script> with the <tt>TRUE</tt> value. Freezes the contents of <tt>this</tt> body.<br> Further modifications of this
+ body will imply that all modified elements will be copied first,
+ thus keeping the current body state unmodified.
+</dl>
+</dl>
+<a name="GetCellsHighestDimension"></a><a name="GetCellsHighestDimension(CATLONG32&amp;,CATBoolean&amp;,CATBoolean*,ListPOfCATCell*)"></a> <dt> o <b>GetCellsHighestDimension</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCellsHighestDimension</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>ioCellsMaxDim</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>ioIsHomogeneous</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean*')</script> <td><tt>ioIsLocallyManifold</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ListPOfCATCell','ListPOfCATCell*')</script> <td><tt>oNonManifoldCells</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets information on the dimensions in <tt>this</tt> body.
+  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCellsMaxDim</tt>
+   <dd> The maximum dimension of the cells.
+  </dd>
+    <dt><tt> ioIsHomogeneous</tt>
+   <dd> The homogeneity in dimension.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>TRUE</tt></dt><dd>Every domain at the higest level has the same dimension <tt>ioCellsMaxDim</tt>.
+      <dt><tt>FALSE</tt> <dd>otherwise.</dl>
+  </dd>
+    <dt><tt> IsLocallyManifold</tt>
+   <dd> If not <tt>NULL</tt>, it will be filled by :
+  <dl><dt> <tt>TRUE</tt></dt><dd>if <tt>ioIsHomogeneous</tt> is <tt>TRUE</tt>
+ and the body is locally <tt>ioCellsMaxDim</tt>-Manifold
+  <dt> <tt>FALSE</tt></dt> <dd>otherwise</dl>
+  </dd>
+    <dt><tt> oNonManifoldCells</tt>
+   <dd> The optional pointer to a list containing the cells that lead to a non manifold context.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GroupCells"></a><a name="GroupCells(CATLISTP(CATCell)*,CATListOfLong&amp;)"></a> <dt> o <b>GroupCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)')</script>  <b>GroupCells</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)*')</script> <td><tt>iCellList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfLong','CATListOfLong&amp;')</script> <td><tt>ioNbOfCellsByDomain</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the number of manifold domains inside a list of cells.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCellList</tt>
+   <dd> The pointer to the list of cells to handle.
+ </dd>
+    <dt><tt> oNbOfCellsByDomain</tt>
+   <dd> The number of manifold groups.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsLyingOn"></a><a name="IsLyingOn(CATBody*)"></a> <dt> o <b>IsLyingOn</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATTopLyingOnDiagnostic','CATTopLyingOnDiagnostic')</script>  <b>IsLyingOn</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iDomain</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATBody is lying on another one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDomain</tt>
+   <dd> The body on which <tt>this</tt> may lay.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of the test.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATBody.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMModelInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

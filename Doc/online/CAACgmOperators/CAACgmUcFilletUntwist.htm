@@ -1,0 +1,156 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Fillet: Untwist</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Fillet: Untwist</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>To create fillets, you must specify a list of radii as well as a list 
+		of edges to be filleted. <br>
+		For a constant radius, the list of radii contains a single item that you 
+		can apply to one or more edges.<br>
+		The fillet operation illustrated in this use case involves a twist 
+		scenario, which is automatically resolved by the 
+		CATICGMDynAdvancedFillet operator.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a fillet, use the CATICGMDynAdvancedFillet operator in 
+GMOperatorsInterfaces. This operator has to be created using the 
+CATCGMCreateDynAdvancedFillet global function. This operator offers more 
+capabilities than CATICGMDynFillet, especially when the resulting body can be 
+potentially twisted.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsAllFillets.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how to create a fillet. This use case can be executed 
+without arguments. The CAATopAdvancedFillets.cpp file of the 
+CAAGMOperatorsAllFillets.m module contains the code which is specifically 
+dedicated to this untwist scenario.</p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>In this example, a cube is created with one of its vertical edges filleted with a relatively small radius.
+ Three of the edges on the cube's top face that are connected to the vertical fillet are then subsequently filleted with a relatively larger radius.
+ This combination of an initial fillet with a small radius followed by a fillet with a larger radius causes a twist scenario,
+ which is automatically resolved by the fillet operator. The figure below shows the input body for the fillet operation with the twist scenario.
+ <table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Fillet (Untwist) Input </caption>
+   <tr>
+    <td>
+	<img alt="Fillet Untwist Inputs" src="images/CGM_fillet_untwist_0.png" width="250" height="249">&nbsp;</td>
+   </tr>
+</table>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATLISTP(CATEdge) listEdges;
+listEdges.Append(pEdge1);
+listEdges.Append(pEdge2);
+listEdges.Append(pEdge3);
+        
+double * ratio= NULL;
+CATDynFilletRadius * pRadius = new CATDynFilletRadius(3.5,    // radius value
+            NULL,  
+            ratio,  
+            NULL);  
+...
+CATLISTP(CATDynFilletRadius) listRadius;		
+listRadius.Append(pRadius);		
+CATDynEdgeFilletRibbon * pRibbon = new 	CATDynEdgeFilletRibbon(listEdges, listRadius);
+...
+CATICGMDynAdvancedFillet * pFilletOp1 = CATCGMCreateDynAdvancedFillet(iFactory,iTopData,pBody2);
+pFilletOp1 ->Append(pRibbon);
+pFilletOp1->Run(); 
+CATBody * pResultBody = NULL;
+pResultBody = pFilletOp1->GetResult();
+pFilletOp1->Release();
+pFilletOp1 = NULL;
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Fillet Untwist Result </caption>
+   <tr>
+    <td>
+	<img alt="Fillet Untwist Result" src="images/CGM_fillet_untwist_1.png" width="250" height="257"></td>
+   </tr>
+   </table>
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

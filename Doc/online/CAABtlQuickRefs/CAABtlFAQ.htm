@@ -1,0 +1,101 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Frequently Asked Questions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Frequently Asked Questions</h3>
+      <p><em>Find answers to usual questions regarding mkmk family tools</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gathers answers to usual problems one user may encounter
+      when using mkmk and related commands. Answers are grouped by topics listed
+      below.</p>
+      <ul>
+        <li><a href="#Warnings"><b>Warnings Issued by Underlying Compilers and Linkers</b></a></li>
+	<li><a href="#Unload"><strong>Why Should I Avoid Unloading and Loading Modules?</strong></a></li>
+	<li><a href="#clr"><strong>Using /clr option is not supported</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Warnings"></a>Warnings Issued by Underlying Compilers and Linkers</h3>
+<h4>Warning on VC60.pdb on Windows</h4>
+<p>The following warning is often issued:</p>
+<code>Creating library E:\TESTB12\.\intel_a\code\bin\CAADrwCreateDim.lib and
+object E:\TESTB12\.\intel_a\code\bin\CAADrwCreateDim.exp
+SystemUUID.lib(CATIUnknownList.obj) : warning LNK4099: PDB &quot;vc60.pdb&quot;
+was not found with &quot;E:\CATIAB12\.\intel_a\code\lib\SystemUUID.lib&quot; or
+at &quot;E:\TESTB12\intel_a\code\bin\vc60.pdb&quot;; linking object as if no
+debug info</code>
+<p>It is due to the fact that some archives only contain UUID definitions which
+confuses the windows link-editor.</p>
+<p>This warning can be safely ignored.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Unload"></a>Why Should I Avoid Unloading and Loading Modules?</h3>
+<p>Unloading a DLL while CATIA is running, and then reloading it is technically 
+possible thanks to some system calls. Nevertheless, this may lead to 
+unpredictable results such as memory corruptions, memory leaks, or even process 
+crashes. This may happen because the unloaded DLL is reloaded 
+at a different memory address. All the dynamic bindings set, for example, 
+through QueryInterface, before the DLL unload and that might be held by objects 
+in the 
+other DLLs will now point to invalid addresses where no DLL is mapped any longer. 
+When these objects are used, the application cannot thus 
+behave as expected.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="clr"></a>Using /clr is not supported.</h3>
+<p>When building C++ modules, the /clr option can't be used. It is not compatible
+ with the options used to build the V5 client applications, so such a module would
+ not run in a V5 session.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

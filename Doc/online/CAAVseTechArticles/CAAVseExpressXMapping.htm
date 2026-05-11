@@ -1,0 +1,311 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Express-X Mapping</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>PDM Object Hub</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="top"></a>Express-X Mapping</h3>
+      <br>
+      <em>How to create a mapping to Express-X</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p>This article will introduce the basic functionalities of Express-X enabling
+you to perform an Express-X mapping.</p>
+<p>Express-X is destined to become the standard conversion tool between two
+Express schemas and to become a part of the STEP standard. The Express-X manual
+dated August 21, 1996 has reference number ISO TCI184/SC4/WG11/N002.</p>
+<p>The conversion should be specified in a file of which the syntax is similar
+to that of an Express file. In the current implementation, the file is compiled
+during the preliminary phase of the C++ code generation.</p>
+<h3>Basic Express Functionalities</h3>
+<h4>Global Declaration</h4>
+<p>Suppose you have two Express schemas defining the same data in two different
+manners. You will then define a mapping schema from the first (referred to as
+the base schema) to the second (referred to as the view schema) by declaring for
+each schema a schema instance identifier that will correspond to an SDAI model.</p>
+<p>With the following syntax, you can define more than two schema instances if
+necessary.</p>
+<pre>SCHEMA_MAP schema_name
+      
+GLOBAL
+DECLARE <i>MyView</i> INSTANCE OF schema_view
+DECLARE <i>MyBase</i> INSTANCE OF schema_base
+END_GLOBAL;
+
+(* entity mapping *)
+
+END_SCHEMA_MAP;</pre>
+<!---------------------------------comment------------------------------------->
+
+<h3>Entity Mapping Syntax</h3>
+<h4>View</h4>
+<p>Inside the SCHEMA_MAP block, you declare a mapping from the entity <i>entb</i>
+of the schema <i>MyBase</i> to the target entity <i>entv</i> as follows:</p>
+<pre>VIEW instv : <i>MyView</i>::entv;
+FROM (instb : <i>MyBase</i>::entb)
+WHEN TRUE; (* creation condition *)
+BEGIN_VIEW
+... (* Attribute mapping *)
+END_VIEW;</pre>
+<p>In the above syntax, <i>instv</i> and <i>instb</i> are two arbitrary
+identifiers the visibility of which is limited to the block <kbd>VIEW ...
+END_VIEW</kbd>. In the <kbd>FROM</kbd> statement you can indicate several base
+instances by separating the parameters using commas.</p>
+<!---------------------------------comment------------------------------------->
+<h4>Simple Type Attributes</h4>
+<p>Inside the <kbd>BEGIN_VIEW ... END_VIEW</kbd> block, you declare the matching
+between entity attributes of the base view with:</p>
+<pre>instv.attrv := instb.attrb;</pre>
+<p>You can use an attribute referenced indirectly by the entity by stating a
+path of type <kbd>attr1.attr2</kbd>, which means that the attribute <kbd>attr1</kbd>
+references the instance attribute <kbd>attr2</kbd>.</p>
+<!---------------------------------comment------------------------------------->
+<h4>Entity Type Attributes</h4>
+<p>If you want to convert an entity type attribute, you must specify the target
+entity in brackets. The way this conversion will be implemented must also be
+stated in a <kbd>VIEW</kbd> command.</p>
+<p>For example:</p>
+<pre>attrv := {entv} attrb;
+
+and (in another location)
+
+VIEW instv : <i>MyView</i>::entv;
+FROM (instb : <i>MyBase</i>::entb) ...</pre>
+<p>If there are several <kbd>VIEW</kbd> commands corresponding to an entity, the
+ambiguity can be resolved using the <i>FOR</i> parameter which specifies a
+unique identifier for the view:</p>
+<pre>attrv := {viewA} attrb;</pre>
+<p>If you have:</p>
+<pre>VIEW viewA FOR instv : <i>MyView</i>::entv;
+VIEW viewB FOR instv : <i>MyView</i>::entv;</pre>
+<p>If the real type of the attribute <kbd>attrb</kbd> may vary (in the case of a
+SELECT or a super-type), you must add a series of tests:</p>
+<pre>IF (attrb IS entb)
+attrv := {entv} attrb;
+END_IF;</pre>
+<p>This mechanism guarantees that the corresponding entity will be created only
+once in the view model even if it is referenced by several instances in the base
+model.</p>
+<p><img border="0" src="images/CAAVseMappingSchemaNLS.gif" width="487" height="167"></p>
+<!---------------------------------comment------------------------------------->
+<h4>Aggregate Type Attributes</h4>
+<ol>
+  <li>You create an aggregate type attribute as follows:
+    <pre>NEW entv.attrv;</pre>
+  </li>
+  <li>You add a value as follows:
+    <pre>entv.attrv += value;</pre>
+  </li>
+  <li>You index it as follows:
+    <pre>entv.attrv[i] := value;</pre>
+    <p>where <code>i</code> is a constant or a loop variable.</p>
+  </li>
+</ol>
+<!---------------------------------comment------------------------------------->
+<h4>Constants</h4>
+<p>In place of the source attribute, you can state a real constant, an integer
+or a string (between &quot;).</p>
+
+<!---------------------------------comment------------------------------------->
+<h3>Other Functionalities</h3>
+<h4>Compose</h4>
+<p>The <kbd>COMPOSE</kbd> command enables you to establish, after having created
+all the view instances, relations between view instances that were not possible
+previously.</p>
+<p>You can also update the base (in an asynchronous manner) in the event of a
+view modification.</p>
+<p>The syntax is the following:</p>
+<pre>COMPOSE (instv : <i>MyView</i>::entv)
+[ FROM (instv2 : <i>MyView</i>::entv2, ...) ]   (* optional *)
+WHEN TRUE;
+BEGIN_COMPOSE ...
+END_COMPOSE;</pre>
+<!---------------------------------comment------------------------------------->
+<h4>Functions</h4>
+<p>You can use the standard Express functions: <kbd>=</kbd>, <kbd>&lt;</kbd>, <kbd>&gt;</kbd>,
+<kbd>NOT</kbd>, <kbd>AND</kbd>, <kbd>OR</kbd>, <kbd>IN</kbd>, <kbd>IS</kbd>.</p>
+<p><b>Dassault Systemes Extension</b>:</p>
+<p>You can define your own functions by specifying a signature:</p>
+<p><code>SdaiPrimitiveH f(const SdaiPrimitiveH&amp;);</code></p>
+<p>or</p>
+<p><code>SdaiPrimitiveH f(const SdaiPrimitiveH&amp;, const SdaiPrimitiveH&amp;);</code></p>
+<p>Each identifier of a non-standard function will be considered as
+user-defined.</p>
+<!---------------------------------comment------------------------------------->
+<h4>Instruction Blocks</h4>
+<p>You can add an integration on an entity in a VIEW by adding a <kbd>FROM</kbd>
+command followed with <kbd>BEGIN ... END</kbd>:</p>
+<pre>FROM (instv2 : <i>MyView</i>::entv2)
+WHEN instv2 IS entv3;
+BEGIN
+...
+END;</pre>
+<p>You can define a conditional behavior:</p>
+<pre>if ( condition ) THEN
+x :=y;
+ED_IF;</pre>
+<p>If a condition is defined by a user function, the result should be an
+SdaiPrimitiveH of type SdaiLog.</p>
+<p>You can define a loop as follows:</p>
+<pre>REPEAT i := 1 to n;
+...
+END_REPEAT;</pre>
+<!---------------------------------comment------------------------------------->
+<h4>Manual Instantiating</h4>
+<p>You can instantiate in the view schema entities that do not correspond to any
+entity of the base schema by using the following syntax:</p>
+<pre>#<i>MyView</i>::person = Man('Smithee','Alan', 175,72.0);</pre>
+<p>This instance can be referenced in the mapping with <kbd>#person</kbd>.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4>Complex Entities (DS Extension)</h4>
+<p>You can define a complex entity by separating the components with a <kbd>+</kbd>
+(you should also list every entity supertypes).</p>
+<p>For example:</p>
+<pre>VIEW x : sch::a+b; or x := {a+b} y;</pre>
+
+<!---------------------------------comment------------------------------------->
+<h4>Global Variables (DS Extension)</h4>
+<p>You can declare global variables with the following syntax:</p>
+<pre>VarString : String ;</pre>
+<p>This instance can be referenced in the mapping with <kbd>#person</kbd>.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4>Cast with Multiple Source Entities (DS Extension)</h4>
+<p>When the view called by a cast contains several source entities, you should
+designate them in the cast call.</p>
+<p>For example:</p>
+<pre>attrv := {MyView::ent} (attrb,attrc);</pre>
+<p>If you want to call:</p>
+<pre>VIEW instv : <i>MyView</i>::entv;
+        FROM (instb : <i>MyBase</i>::entb, instc : MyBase::entc)</pre>
+
+<!---------------------------------comment------------------------------------->
+<h3>Using Express-X</h3>
+<h4>Compiling</h4>
+<p>If you want to perform a compilation, you have to define a file tree.</p>
+<p>The Express-X mapping must be in a module.</p>
+<p>You will then have to launch the mkmk tool.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4>Examples</h4>
+<h5>Source Schema</h5>
+<pre>SCHEMA AP203AIM ;
+ENTITY product ;
+id : STRING ;
+name : STRING ;
+END_ENTITY; -- product
+
+ENTITY product_definition ;
+description : STRING ;
+of_product : product ;
+END_ENTITY; -- product_definition
+
+ENTITY assembly_component_usage ;
+description : STRING;
+relating_product_definition : product_definition;
+related_product_definition : product_definition;
+reference_designator : OPTIONAL STRING;
+END_ENTITY; -- product_definition_usage
+
+END_SCHEMA</pre>
+
+<!---------------------------------comment------------------------------------->
+<h5>Target Schema</h5>
+<pre>SCHEMA AP203ARM ;
+ENTITY part_identification ;
+part_number : STRING ; (* identifier *)
+part_BOM : STRING ; (* label; *)
+description : STRING ; (* text; *)
+IEND_ETITY
+
+ENTITY bill_of_material;
+reference_designator : STRING ; (* identifier; *)
+is_the_assembly_for : part_identification;
+is_used_as_a_component_in: part_identification;
+END_ENTITY; -- bil_of_material
+
+END_SCHEMA</pre>
+<!---------------------------------comment------------------------------------->
+<h5>Express-X Schema</h5>
+<pre>SCHEMA_MAP ARM;
+
+GLOBAL
+DECLARE arm INSTANCE OF AP203ARM ; (* VIEW *)
+DECLARE arm INSTANCE OF AP203AIM ; (* BASE *)
+END_GLOBAL;
+
+VIEW pid : arm::part_identification;
+FROM ( pd : aim::product_definition)
+WHEN TRUE;
+BEGIN_VIEW
+pid.part_number := pd.creation_of_product.id ;
+pid.part_bill_of_material := pd.creation_of_product.name ;
+pid.revision_letter := pd.creation.id ;
+pid.description := 'unknown' ; -- constant
+END_VIEW ;
+
+VIEW bom : arm::bill_of_material;
+FROM (acu : aim::assembly_component_usage)
+WHEN TRUE;
+BEGIN_VIEW
+bom.reference_designator := acu.reference_designator ;
+bom.description := acu.description ;
+bom.is_used_as_a_component_in :=
+{ part identification } acu.related_product_definition ; -- cast !!
+bom.is_the_assembly_for :=
+{ part_identification } acu.relating_product_definition ;
+END_VIEW ;
+
+END_SCHEM_MAP</pre>
+<!---------------------------------comment------------------------------------->
+<h5>Source Data (STEP Part 21 format)</h5>
+<pre>#1=product('Wheel','product 001') ;
+#2=product('Window','product 002') ;
+#3=product('Tyre','product 003') ;
+#4=product_definition('prod def 001',#1) ;
+#5=product_definition('prod def 002', #2) ;
+#6=product_definition('prod def 003',#3) ;
+#7=assembly_component_use('descript 001', #4, #6, 'Front');
+#8=assembly_component_use('descript 002', #4, #6, 'Back');
+#9=assembly_component_use('descript 003', #6, #5, 'Left');</pre>
+
+<!---------------------------------comment------------------------------------->
+
+
+<h5>Target Data After Mapping</h5>
+<pre>#1=bill_of_material('Front','descript 001',#2,#4);
+#5=bill_of_material('Back','descript 002',#2,#4);
+#6=bill_of_material('Left','descript 003',#4,#3);
+#2=part_identification('Wheel','product 001','prod def 001');
+#3=part_identification('Window','product 002','prod def 002');
+#4=part_identification('Tyre','product 003','prod def 003');</pre>
+
+
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Modifying the Faces Orientation in a Shell</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Modifying the Face Orientations in a Shell</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The faces in a shell do not have necessarily the same orientation as 
+		the shell itself. You can invert the orientation of the faces so that 
+		they all point to the same direction, the shell orientation.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To modify the orientation of faces so that they all have the same orientation 
+as the shell, you must use the CATICGMTopShellOrientation operator which is 
+created by the CATCGMCreateTopShellOrientation global function. This is the only 
+way to modify the orientation of faces in a shell.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsShellOrientation.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to modify face orientations. This use case is to be run with 
+the FaceOrientation.NCGM input file which is delivered in 
+CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> Face Orientation: Input Data</caption>
+  <tr>
+    <td>
+	<img alt="Shell orientation" src="images/CGM_shellOrient_input_0.png" width="250" height="220"></td>
+	 <td>
+	<img alt="Shell orientation" src="images/CGM_shellOrient_input_1.png" width="250" height="220"></td>
+
+ <td>
+	<img alt="Shell orientation" src="images/CGM_shellOrient_input_2.png" width="250" height="220"></td>
+
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopShellOrientation* ShellOrientationOpe = NULL;
+...
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATTopData topdata(pConfig, NULL);
+ShellOrientationOpe = CATCGMCreateTopShellOrientation(piGeomFactory, &amptopdata, piBody );
+CATBody * piInvertedBody = NULL;</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Result after modifying the face orientation</caption>
+  <tr>
+    <td>
+	<img alt="Shell Orientation Output Faces" src="images/CGM_shellOrient_output_0.png" width="250" height="220"></td>
+  </tr>
+  </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

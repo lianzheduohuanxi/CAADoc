@@ -1,0 +1,538 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Freeze or Unfreeze Internal Copy</title>
+</head>
+
+<body>
+
+ <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>&nbsp;Mechanical Modeler</h1>
+       </td>
+       <td valign="top">
+       <h2></h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Freezing or Unfreezing Internal Copy</h3>
+       <p><em>&nbsp;Using CATIMmiResultFreeze</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+       <p>This article discusses the <strong>CAAV5V6MmrFreezeInternalCopy</strong> use case. It 
+		is a copy of the CAAMmrFreezeInternalCopy&nbsp; use case [<a href="#References">5</a>], rewritten with V6 
+		backported interfaces. In order to be V5/V6 compatible, some specific 
+		parts are coded inside #ifdef macros. We won't detail in this article 
+		any of the V6 specific code.
+
+      <p>The CAAV5V6MmrFreezeInternalCopy use case is an interactive State Command to switch the Freeze state 
+		of&nbsp; an <b>Internal Copy</b> with Link [<a href="#References">1</a>]. 
+		An Internal Copy is a feature copied &quot;As result with Link&quot; within a 
+      Part Document. It can be 
+		frozen while a feature copied across Part Document (<b>External Reference</b>) 
+		cannot be frozen. </p>
+		<p>The default state of an Internal Copy is Unfrozen. This implies that any 
+		modification in the geometry of the source feature is transmitted to the 
+		copied feature as well, thanks to an update mechanism which 
+		automatically handles this synchronization. When an Internal Copy is 
+		frozen, its link to its source feature is deactivated, and the geometry 
+		of the copied feature is not recomputed each time its source is 
+		modified. </p>
+		<p>The Use Case accomplishes this by deploying a <b>State Command</b> [<a href="#References">2</a>] 
+		located in the &quot;<b>Spec Tree</b>&quot; toolbar, a <b>Part Workshop Add-in</b> 
+		[<a href="#References">3</a>] within CATIA.</p>
+		<ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The <b>CAAV5V6MmrFreezeInternalCopy&nbsp; </b>Use 
+		Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does <b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b> Do</a></li>
+            <li><a href="#How">How to Launch <b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b>&nbsp;</a></li>
+            <li><a href="#Where">Where to Find the <b>
+			CAAV5V6MmrFreezeInternalCopy&nbsp;</b>&nbsp;Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The Use Case illustrates the capabilities of the <i><code><b>
+CATIMmiResultFreeze</b></code></i> APIs, primarily to:</p>
+<ul>
+	<li>an Internal Copy, selected interactively 
+	in CATIA with the help of a Selection Agent</li>
+	<li>retrieve the freeze status of this feature</li>
+	<li>If Internal Copy is Unfrozen (default creation behavior), the call to <i><code>
+	<b>CATIMmiResultFreeze</b></code></i>::<code><b>Freeze</b></code> to freeze 
+	it</li>
+	<li>If frozen, the call to <i><code><b>CATIMmiResultFreeze</b></code></i>::<code><b>Unfreeze</b></code>, 
+	to unfreeze it</li>
+	<li>Finally, a <i><code><b>CATISpecObject</b></code></i>::<code><b>Update</b></code> 
+	to bring the geometry/position of the copied feature after Unfreeze, in sync with the source 
+	feature</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="UseCase"></a>The <b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b>&nbsp;Use Case</h3>
+<p><code>CAAV5V6MmrFreezeInternalCopy&nbsp;</code> is a use case of the <code>CAAV5V6MechanicalModeler</code>.<code>edu</code> framework that mainly 
+illustrates Mechanical Modeler capabilities.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="What"></a>What Does<b>  CAAV5V6MmrFreezeInternalCopy&nbsp;&nbsp;</b>Do</h4>
+<p>This Use Case is an Interactive Exclusive State Command which switches the 
+Freeze status (Freeze/Unfreeze) of a feature copied within a Part document, with Link 
+(an Internal Copy). To begin with the Use Case integrates a <b>Freeze/Unfreeze</b> State Command, 
+viewed as 
+<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_CommandIcon.gif" width="30" height="25"> , in the&nbsp;&nbsp;&nbsp;&nbsp; &quot;<b>Spec Tree</b>&quot; 
+toolbar, a <b>Part Workshop Add-in</b> within <b>CATIA</b>, as depicted below. [<a href="#Fig. 1">Fig. 
+1</a>].</p>
+	<p><a name="Fig. 1"></a>Fig.1 &quot;<b>V5V6 Spec Tree</b>&quot;<i>
+        </i>Toolbar, a Part Workshop Add-in</p>
+	<table border="0" id="table19">
+		<tr>
+			<td>
+		<img alt="" src="../CAAMmrUseCases/images/CAAMmrSpecTreeToolbar.jpg" width="41" height="121"></td>
+		</tr>
+	</table>
+	 
+  
+    <p align="left"><span style="font-style: normal" >We illustrate the execution of this Use 
+	Case, on an input model, as the one seen below [<a href="#Fig. 2">Fig. 2</a>]. This Part 
+	document <a href="#(*)_">(*)</a> contains a <code><b>Geometrical 
+    Set.1</b></code> consisting of <code><b>Point.1</b></code>, 
+	and its copy &quot;<b>As Result with Link</b>&quot;,&nbsp; <code><b>Point.2</b></code>. 
+	Both points occur at the <b>Origin</b>, as [<a href="#Fig. 2">Fig. 2</a>] 
+	depicts. The icon 
+	<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_FeatureIcon.gif" width="16" height="15"> that appears 
+	alongside <code><b>Point.2</b></code> in the spec tree implies that a link 
+	exists to the source feature <code><b>Point.1</b></code>.</span></p>
+	<p align="left"><a name="Fig. 2"></a>Fig. 2 Input Model</p>
+	<div align="left">
+		<table border="0" id="table18">
+			<tr>
+				<td> 
+	<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_Fig2.jpg"></td>
+			</tr>
+		</table>
+	</div>
+  
+  <tr>
+    <td width="100%">&nbsp;</td>
+  </tr>
+ 
+<p align="left"><span style="font-style: normal">On activating the State Command, the first state prompts an end-user to 
+select an Internal Copy with Link in the model hierarchy. The selection is 
+restricted to only those entities, implementing the </span><code><b>CATIMmiResultFreeze</b></code><span style="font-style: normal">. On selection, application continues to prompt the user for the same 
+selection, owing to an incoming transition to the same state. </span></p>
+<p>To begin with, <code><b><span >Point.2</span></b></code> 
+is in an Unfrozen state, a default state wherein the position/geometry of the 
+copied feature (<code><b><span >Point.2</span></b></code>) 
+is in sync with the original feature (<code><b><span >Point.1</span></b></code>), 
+since the link between the two is active.</p>
+<p>As the [<a href="#Fig. 3">Fig. 3</a>] depicts, <code><b>
+<span >Point.1</span></b></code> was relocated at a 
+distance of <b>100mm</b> along the <b>X-axis</b>. Position of <code><b>
+<span >Point.2</span></b></code> is instantly updated 
+to this new position. Both points are coincident, at the new location, as [<a href="#Fig. 3">Fig. 
+3</a>] indicates.</p>
+<table border="0" width="100%" id="table11">
+	<caption>
+	<p align="left"><a name="Fig. 3"></a>Fig.3 Behavior of Point.2 (Internal 
+	Copy) while in Unfrozen (Default) State</p>
+	</caption>
+	<tr>
+		<td>
+        <img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_Fig3.jpg"></td>
+	</tr>
+</table>
+<table border="0" width="100%">
+  <caption>
+    <p align="left"><span style="font-style: normal"><span >At this stage, we launch 
+	the State Command </span>
+	<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_CommandIcon.gif" width="30" height="25">.
+	<span >It prompts the user to select an Internal 
+	Copy in the spec tree, to freeze its state. As soon as <code><b>Point.2</b></code> 
+	is selected, the icon </span>
+	<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_CommandIcon1.gif" width="18" height="19">&nbsp;
+	<span >appears alongside it, in the model 
+	hierarchy [<a href="#Fig.4">Fig. 4</a>]. Now if the source feature <code><b>
+	Point.1</b></code> is relocated, say at a distance of <b>150mm</b> along the
+	<b>X-axis</b>, <code><b>Point.2</b></code> remains frozen at its original 
+	location. This is owing to the fact that the link between the two has been 
+	temporarily deactivated.</span></span></p>
+	<p align="left"><a name="Fig.4"></a>Fig.4 Behavior of Point.2 (Internal 
+	Copy) while in Frozen State</p>
+  </caption>
+  <tr>
+    <td width="100%">
+	<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_Fig4.jpg"></td>
+  </tr>
+</table>
+<p align="left">The last step is to unfreeze <code><b>
+<span >Point.2</span></b></code>, yet again through 
+the state command 
+<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_CommandIcon.gif" width="30" height="25">. The icon
+<span >
+<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_FeatureIcon.gif" width="16" height="15"> 
+reappears alongside <code><b>Point.2</b></code>, in the model hierarchy, as soon 
+as it switches to an unfrozen (default) state. The link between the copied and 
+the source feature is restored, thus enabling the Update mechanism to 
+synchronize 
+the geometry/positions of the source and copied geometries.</span></p>
+<p>[<a href="#Fig. 5">Fig.5</a>] depicts thus Update. You'll find <code><b>
+<span >Point.2</span></b></code> also gets relocated 
+at <b>150mm </b>from <b>Origin</b>, thus coinciding with <code><b>
+<span >Point.1</span></b></code>.</p>
+<table border="0" width="100%" id="table12">
+	<caption>
+	<p align="left"><a name="Fig. 5"></a>Fig. 5 Position of Point.2 updated on 
+	being Unfrozen</p>
+	</caption>
+	<tr>
+		<td>
+        <img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_Fig5.jpg"></td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a href="#Where" name="How"></a>How to Launch CAAV5V6MmrFreezeInternalCopy&nbsp;</h4>
+<p>To launch <code><b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b></code>, you will need to set 
+up the build time environment, then compile <code><b>
+CAAV5V6MmrFreezeInternalCopy&nbsp;</b></code> 
+along with its prerequisites, set up the run time environment, and then execute 
+the use case [<a href="#References">4</a>].</p>
+<p>Launch CATIA, when the application is ready:</p>
+<ul>
+	<li><b>Connect</b> to the database</li>
+	<li>Select your <b>environment</b> </li>
+	<li><b>Open</b> <a href="#(*)_">(*)</a> or <b>Create</b> a <b>Part 
+    document</b>
+	as the one depicted above</li>
+	<li>On the <b>Tools</b> menu click <b>Customize</b> and check that the <b>
+	V5V6
+	Spec Tree</b> toolbar is existing. User can set the visibility of this 
+	toolbar with the <b>View</b>-&gt;<b>Toolbars
+      </b>option</li>
+</ul>
+<p>The Use Case is now ready for further execution further explained in the [<a href="#What">What 
+does the UC do</a>] section.</p>
+	<p><a name="(*)_">(*) </a>The CAAMmrFreezeInternalCopy&nbsp;.CATPart document is delivered in 
+	the InputData directory of the CAAV5V6MechanicalModeler.edu framework. </p>
+<p align="right">[<a href="#Top">Top</a>] </p>
+<b><h4><a name="Addin"></a>Addin Access</h4>
+</b><p>The&nbsp; <b>V5V6 Spec Tree</b>&nbsp; <b>Add-In</b> to the <b>Product Workshop</b> 
+within <b>CATIA</b>, is available thanks to a data extension of the <code><b>
+CAAMmrPartWksAddin</b></code> component.&nbsp; This necessitates the following 
+entries uncommented in the <code><b>CAAV5V6MechanicalModeler.edu.dico</b></code> 
+file.</p>
+<table class="code" id="table9">
+  <tr>
+    <td>
+      <pre>...
+#CAAV5V6MmrPartWksAddin CATIWorkbenchAddin libCAAV5V6MmrPartWksAddin
+#CAAV5V6MmrPartWksAddin CATIPrtWksAddin libCAAV5V6MmrPartWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code><b>dico</b></code> file entries imply that the Add-in implements <i>
+<code><b>CATIPrsWksAddin</b></code></i>. It also implements <i><code><b>
+CATIWorkbenchAddin</b></code></i>, owing to the fact that it is a data extension 
+of <code><b>CAAV5V6MmrPartWksAddin</b></code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="Where"></a>Where to Find the CAAV5V6MmrFreezeInternalCopy&nbsp; Code</h4>
+<p>The <code><b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b></code> use case is made of a Class 
+defined in the <code><b>CAAV5V6MmrFreezeInternalCopy</b></code>.<code><b>m</b></code><code><b> </b></code> 
+module of the
+<code><b>CAAV5V6MechanicalModeler.edu</b></code> framework:</p>
+<table>
+  <tr>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6MmrFreezeInternalCopy&nbsp;.m\</code></td>
+  </tr>
+</table>
+<ul>
+	<li><code><b>CAAV5V6MmrPartWksFreezeUnfreezeCmd</b></code>.<code><b>cpp</b></code> 
+	has the State Command implementation.</li>
+</ul>
+<p>The use case pre-reqs an Add-in module too:</p>
+<table id="table10">
+  <tr>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\</code><code>CAAV5V6MmrPartWksAddin.m\</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code>  [<a href="#References">4</a>] is the 
+directory where the CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The steps in the <code><b>CAAV5V6MmrFreezeInternalCopy&nbsp;</b></code> use case are</p>
+<ol>
+	<li><a href="#Prolog">Building the StateCommand and Integrating it within 
+	CATIA</a></li>
+	<li><a href="#Implementing a Callback">Implementing the Callback to an 
+	Incoming Transition associated with this State Command</a><ul>
+		<li><a href="#Retrieve the selected copied feature">Retrieving the 
+		chosen entity from the Selection Agent</a></li>
+		<li><a href="#Seek its freeze status and switch it">Seek the Freeze 
+		status of the copied feature</a></li>
+		<li><a href="#Seek its freeze status and switch it">Switch from Unfrozen 
+		(Default) state to Frozen</a></li>
+		<li><a href="#Seek its freeze status and switch it">Switch from Frozen 
+		to Unfrozen state</a></li>
+		<li><a href="#Seek its freeze status and switch it">Launch an Update on 
+		the copied feature</a></li>
+	</ul>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Prolog"></a>Building the StateCommand and Integrating it within 
+CATIA</h3>
+<p>The first step implements an exclusive State Command [<a href="#References">2</a>], 
+the UML diagram for which is seen below [<a href="#Fig. 6">Fig. 6</a>]. This 
+implementation occurs in the State Command <code><b>BuildGraph</b></code> 
+routine.</p>
+<p>This 
+command is integrated in the Spec Tree toolbar, a Part Workshop Add-in within CATIA. The steps involved in these implementations are detailed in the <b>Wintop 
+Command</b> and <b>Wintop Frame</b> sections of the <b>User Interface</b> domain 
+within the <b>V5 Encyclopedia</b>.</p>
+<table border="0" width="100%" id="table15" cellspacing="1">
+	<caption>
+	<p align="left"><a name="Fig. 6"></a>Fig. 6 UML Representation of the State 
+	Command</p>
+	</caption>
+	<tr>
+		<td>
+		<img border="0" src="../CAAMmrUseCases/images/CAAMmrFreezeInternalCopy_Fig6.gif" width="73" height="184"></td>
+	</tr>
+</table>
+<p>As the UML diagram [<a href="#Fig. 6">Fig. 6</a>] indicates, the State 
+Command has a state prompting an end user to select an Internal Copy with Link 
+in the model hierarchy. The selection is restricted to only those entities, 
+which implement <code><i><b>CATIMmiResultFreeze</b></i></code> as the code below 
+depicts.</p>
+<table class="code" id="table17">
+  <tr>
+    <td>
+      <pre><b>	CATPathElementAgent</b>* _daObjectToSelect;</pre>
+		<pre>...
+	<b>_daObjectToSelect</b> = new CATPathElementAgent(&quot;SelCopiedFeature&quot;);
+	_daObjectToSelect-&gt;<b>AddElementType</b>(<b>IID_CATIMmiResultFreeze</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This state has an incoming transition to itself associated with it, as a 
+result of which, it remains eternally prompting an end-user to select an entity 
+whose freeze status is to be switched. An action associated with 
+this incoming transition namely. <code><b>CAAV5V6MmrPartWksFreezeUnfreezeCmd</b></code>::<code><b>FreezeOrUnfreeze</b></code> 
+switches the freeze status of the selected feature. We proceed to now detail this 
+implementation of this callback routine.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Implementing a Callback"></a>Implementing the Callback to an 
+Incoming Transition associated with the State Command</h3>
+<p>Here we detail the implementation of the Callback associated with the State 
+Command. This callback is triggered in response to the user selecting an 
+Internal Copy, in the spec tree within CATIA. It retrieves the selected feature, 
+seeks its freeze status and switches its state (freeze/unfreeze)</p>
+<p><a name="Retrieve the selected copied feature"></a>To begin with, it 
+retrieves the chosen copied feature from the Selection Agent.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// Within the State Command Class
+<b>CATPathElementAgent</b>* _daObjectToSelect;</pre>
+		<pre>...
+void <b>CAAV5V6MmrPartWksFreezeUnfreezeCmd</b>::<b>FreezeOrUnfreeze</b>(void* iData)
+{
+	<b>CATPathElement</b>* pathModel = _daObjectToSelect-&gt;<b>GetValue</b>();
+	<b>CATBaseUnknown</b>* pSelectedObj = NULL;
+
+	<b>pSelectedObj</b> = (<b>*pathModel</b>)[<b>pathModel-&gt;GetSize()-1</b>];
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>On selecting an entity within CATIA, the Selection Agent, a <code><b>
+CATPathElementAgent</b></code> object, <code><b>_daObjectToSelect</b></code>&nbsp; 
+is valuated. The call to <code><b>GetValue</b></code> of the Selection Agent 
+returns the chosen entity, as a <code><b>CATPathElement</b></code> object, *<code><b>pathModel</b></code>. </p>
+<p align="left">This object consists of the entity selected, with all its 
+ancestors up the product model hierarchy until Root. We retrieve the first 
+element in this list, which is just the copied feature, for further processing.</p>
+<p align="left"><a name="Seek its freeze status and switch it"></a>We next seek 
+the freeze status of the selected feature. If Unfrozen it is 
+switched to the frozen state and vice versa.</p>
+<p align="left">On being Unfrozen, since the link is restored, an update is 
+explicitly launched, to synchronize the geometry of the copied feature with that 
+of its source.</p>
+<table class="code" id="table16">
+  <tr>
+    <td>
+      <pre>...
+	<b>CATIMmiResultFreeze</b>* pIMmiResultFreezeOnSelFeat = NULL;
+	HRESULT hr = pSelectedObj-&gt;QueryInterface(IID_CATIMmiResultFreeze,
+				      (void**)&amp;pIMmiResultFreezeOnSelFeat);
+	
+	CATBoolean FreezeStatus = pIMmiResultFreezeOnSelFeat-&gt;<b>IsFrozen</b>();
+	if (TRUE == FreezeStatus)
+	{
+	  hr = pIMmiResultFreezeOnSelFeat-&gt;<b>Unfreeze</b>();
+#ifdef CATIAR214
+//============================================== 
+// V6 only
+//==============================================
+			       
+	  <strong>CATIUseEntity </strong>*pUseEntityOnSelFeat= NULL;
+          hr = pIMmiResultFreezeOnSelFeat-&gt;QueryInterface(IID_CATIUseEntity , (void**)& pUseEntityOnSelFeat);
+	  if ( SUCCEEDED(hr) )
+	  {
+	    hr = <strong>DataCommonProtocolServices::Update</strong>(pUseEntityOnSelFeat);
+	    pUseEntityOnSelFeat-&gt;Release(); pUseEntityOnSelFeat = NULL ;
+	  } 
+#else
+//============================================== 
+// V5 only
+//==============================================
+	<b>  CATISpecObject_var </b>spSpecObjOnSelFeat = pIMmiResultFreezeOnSelFeat;
+	 <b> CATTry</b> 
+	  {
+	    spSpecObjOnSelFeat-&gt;<b>Update</b>();
+	  }
+	<b>  CATCatch</b>(CATError,error) 
+	  {
+	    cout &lt;&lt; &quot;update error:&quot; &lt;&lt; (<b>error-&gt;GetNLSMessage()</b>).CastToCharPtr() &lt;&lt; endl;
+            <b>Flush</b>(error); 
+	  }
+	<b>  CATEndTry</b>
+#endif			
+	} 
+	else
+	{
+	  hr = pIMmiResultFreezeOnSelFeat-&gt;<b>Freeze</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATIMmiResultFreeze</code>::<code>IsFrozen</code> 
+call returns a <code>CATBoolean</code>, <code>FreezeStatus</code> 
+(<code>TRUE</code>, if frozen, else <code>FALSE</code>)</p>
+<p>If Unfrozen, the <code>CATIMmiResultFreeze</code>::<code>Freeze</code> 
+call freezes the selected feature. The call is valid only for an Internal Copy, 
+meaning features copied across Part documents (External Reference) cannot be 
+frozen. On freeze, the Internal Copy is no longer linked with its source 
+feature, hence its geometry is no longer recomputed during an Update 
+operation. </p>
+<p>The <code>CATIMmiResultFreeze</code>::<code>Unfreeze</code> 
+call unfreezes the selected feature. The link with its source feature is now 
+restored, hence an update operation synchronizes the geometry of the copied 
+feature with its source. 
+<br></p>
+<p>  The update sequence is in between #ifdef and #endif macros because the 
+new Feature Modeler general protocole services that enable to do 
+an update, DataCommonProtocolServices::Update</code>, have not been implemented for Mechanical Features in V5.</p>
+<p>In V5, the <code>CATISpecObject</code>::<code>Update</code> call does an 
+Update.
+Please note that it is mandatory to call an Update within a <code>CATTry</code>-<code>CATCatch</code> 
+block, since <code>Update</code> is likely to throw an error which should 
+be handled (caught) and displayed to an end-user.</p>
+<p align="left">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The Use Case retrieves the freeze status of an Internal Copy with Link and switches its 
+state (Freeze/Unfreeze) [<a href="#References">1</a>]. An<b> Internal Copy</b> 
+is a feature copied within a Part document. It can be frozen while a feature copied 
+across Part documents (<b>External Reference</b>) cannot be frozen.</p>
+<p>The Use Case is executed through an Interactive <b>State Command</b> [<a href="#References">2</a>], integrated in the
+<b>Spec Tree toolbar</b>, a <b>Part Workshop Add-in</b> [<a href="#References">3</a>] within
+<b>CATIA</b>. On activating this 
+state command, it prompts an end-user to select a copied feature within the 
+product hierarchy. The Selection Agent associated with the State Command 
+restricts the selection to only those entities which implement <code><b>
+CATIMmiResultFreeze</b></code>. An Internal Copy is one of them.</p>
+<p>The default state of an Internal Copy is Unfrozen. In this state, the copied 
+geometry is synchronized with its source. On freezing it, the link between the 
+source and its copy, is deactivated, implying that the geometry of the copied 
+feature is not recomputed, in response to any modification in the source 
+geometry. On unfreezing, this link is restored and the copied feature is yet 
+again in sync with its source.</p>
+<p>Its significant to note that immediately after an Unfreeze, an explicit call 
+to the <code><b>CATISpecObject</b></code>::<code><b>Update</b></code> is 
+essential to achieve synchronization. However, any further modifications in the 
+source geometry, are automatically reflected in the copied feature, since it is 
+implicitly handled by the Update mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%" height="120">
+  <tr>
+    <td width="14%" height="16">[1]</td>
+    <td width="86%" height="16">
+	<a href="../CAAMmrTechArticles/CAAMmrFreeze.htm">Freezing 
+	Internal Copy With Link</a></td>
+  </tr>
+  <tr>
+    <td width="14%" height="29">[2]</td>
+    <td width="86%" height="29">
+	<a href="../CAADegTechArticles/CAADegGettingStarted.htm">
+	Getting stated with State Dialog Commands</a></td>
+  </tr>
+  <tr>
+    <td width="14%" height="31%">[3]</td>
+    <td width="86%" height="31%">
+	<a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+	Creating an Add-in</a></td>
+  </tr>
+  <tr>
+    <td width="14%" height="16">[4]</td>
+    <td width="86%" height="16"><a href="../CAADocUseCases/CAADocRunSample.htm">
+	Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrFreezeInternalCopy.htm">
+    V5 reference Use Case : Freeze or Unfreeze Internal Copy</a></td>
+  </tr>
+
+  </table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="20">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+
+
+
+</body>
+
+</html>
+
+

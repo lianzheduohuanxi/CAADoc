@@ -1,0 +1,526 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Inserting Lathe Tool Motions in a Sequential Activity</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Machining</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Inserting Lathe Tool Motions in a Sequential
+      Activity</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro CAAMaiInsertLatheToolMotion shows you
+      how to create a Sequential activity and insert tool motions inside this
+      activity.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAMaiInsertLatheToolMotion is launched in CATIA.
+      Open the file 'PartLathe_ToolMotion.CATPart' located in the
+      CAAScdMaiUseCases module, go to the Prismatic Manufacturing Programmer
+      workbench and run the macro.</p>
+      <p><a href="CAAMaiInsertLatheToolMotionSource.htm" target="Source">CAAMaiInsertLatheToolMotion.CATScript</a>
+      is located in the CAAScdMaiUseCases module.&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAMaiInsertLatheToolMotion includes 7 steps:</p>
+      <ol>
+        <li><a href="#Step1">Retrieve the open body of the CATPart</a></li>
+        <li><a href="#Step2">Retrieve the&nbsp; tool motions geometry.</a></li>
+        <li><a href="#Step3">Retrieve the active process and current setup</a></li>
+        <li><a href="#Step4">Retrieve the Manufacturing Program and create a
+          lathe machine&nbsp;</a></li>
+        <li><a href="#Step5">Insert a lathe sequential activity and assign its
+          tool</a></li>
+        <li><a href="#Step6">Create a Go Standard tool motion and set its
+          geometry</a></li>
+        <li><a href="#Step7">Creation of Go Go tool motion on line D1 and D2</a>&nbsp;</li>
+        <li><a href="#Step8">Creation of Indirv tool motion on line D3 and
+          D4&nbsp;</a></li>
+        <li><a href="#Step9">Creation of Delta tool motion on point PT2 and PT3</a></li>
+        <li><a href="#Step10">Creation of Go Go tool motion on line D5 and D6</a></li>
+        <li><a href="#Step11">Creation of Delta tool motion on line D5</a></li>
+        <li><a href="#Step12">Creation of Go Standard tool motion on line
+          D6&nbsp;</a></li>
+        <li><a href="#Step13">Creation of Follow on line D7</a></li>
+        <li><a href="#Step14">Creation of a PP Word</a></li>
+      </ol>
+      <p>&nbsp;</p>
+      <h4><a name="Step1"></a>Retrieve the open body of the CATPart</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the Open body of the part</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set documents1 = CATIA.Documents
+	Set partDocument1 = documents1.Item(&quot;PartLathe_ToolMotion.CATPart&quot;)
+	Set part1 = partDocument1.Part
+	Set hybridBodies1 = part1.HybridBodies
+	Set hybridBody1 = hybridBodies1.Item(&quot;Open_body.1&quot;)
+	Set hybridShapes1 = hybridBody1.HybridShapes
+</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves the open body and sets it in the variable hybridShapes1.</p>
+      <h4><a name="Step1"></a><a name="Step2">Retrieve the tool motions geometry</a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the tool motion's geometry</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set PT1 = hybridShapes1.Item(&quot;PT1&quot;)
+	Set PT2 = hybridShapes1.Item(&quot;PT2&quot;)
+	Set PT3 = hybridShapes1.Item(&quot;PT3&quot;)
+
+	Set D1 = hybridShapes1.Item(&quot;D1&quot;)
+	Set D2 = hybridShapes1.Item(&quot;D2&quot;)
+	Set D3 = hybridShapes1.Item(&quot;D3&quot;)
+	Set D3 = hybridShapes1.Item(&quot;D3&quot;)
+	Set D4 = hybridShapes1.Item(&quot;D4&quot;)
+	Set D5 = hybridShapes1.Item(&quot;D5&quot;)
+	Set D6 = hybridShapes1.Item(&quot;D6&quot;)
+	Set D7 = hybridShapes1.Item(&quot;D7&quot;)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">...</font></pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Retrieves the geometry used to define the tool motions, using their
+      names in the open body.</p>
+      <p><a name="Step3"></a><b>Retrieve the active process and current setup</b></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	Set MfgDoc1 = CATIA.ActiveDocument
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Process Root</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+
+	<font color="#008000">'*** Retrieve current SetUp</font>
+	<font color="#008000">'***</font>
+	If (ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+	Set childs = ActivityRef.ChildrenActivities
+	quantity = childs.Count
+
+	if quantity &lt;= 0<font color="#0000FF"> then</font>
+	  Exit Sub
+	End if
+	NumberOfPO = 0
+	For I=1<font color="#0000FF"> To </font>quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+			Set Setup1 = child
+			NumberOfPO = NumberOfPO +1
+			Exit For
+		End If
+	Next
+     
+	End If</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>&nbsp;Retrieves the Manufacturing Setup and sets it in the variable
+      Setup1 .</p>
+      <h4><a name="Step4"></a>Retrieve the Manufacturing Program and create a
+      lathe&nbsp; machine</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Program</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	set ProgramList = Setup1.Programs
+	Set PartMachined = SetUp1.Product
+	Set Program1 = ProgramList.GetElement(1)</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Create lathe horizontal machine</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim Machine1<font color="#0000FF"> As </font>ManufacturingMachine
+ 	Set Machine1 = SetUp1.CreateMachine(&quot;MfgHorizontalLatheMachine&quot;)
+
+ ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Retrieves the Manufacturing Program and sets&nbsp; it in the variable
+      Program1. Retrieves the product linked to the Setup and sets it in the
+      variable &quot;PartMachined&quot;, the variable will be useful to assign
+      geometry on the activity.</p>
+      <p>Creates a machine of type &quot;MfgHorizontalLatheMachine&quot;.</p>
+      <h4><a name="Step5"></a>Insert a lathe sequential activity and assign its
+      tool</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation lathe sequential operation</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	dim Mo1<font color="#0000FF"> As </font>ManufacturingOperation
+	Set Mo1 = Program1.AppendOperation(&quot;MfgLatheSequentialOperation&quot;,1)
+	MO1.SetTool(&quot;T1 External Tool&quot;)
+
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a lathe sequential operation in the program
+      &quot;Program1&quot; and assigns to it an External tool.</p>
+      <h4><a name="Step6"></a>Create a Go Standard tool motion and set its
+      geometry</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of gostd tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm1 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;, 1)
+<font color="#0000FF">    	Call </font>Tm1.SetGeometry(&quot;Parts&quot;, PT1, PartMachined, 0)
+
+</pre>
+            <pre style="word-spacing: 0; margin: 0"> </pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Go standard tool motion (&quot;MfgSeqMotionLatheGoStd&quot;)
+      at the first position(&quot;1&quot;) in the tool motion list, use
+      (&quot;0&quot;) as second argument to create a tool motion at the end of
+      the tool motion's list without specifying its position.</p>
+      <p>Assigns the first check geometry using the SetGeometry method. We are
+      using one point&nbsp; (PT1), from the geometry we retrieved at step 2,as
+      second argument&nbsp; and the product which contains this geometry
+      (PartMachined) as third argument. Use (&quot;0&quot;) as last argument .</p>
+      <p>Defines the first check element of a Go Standard motion by using the
+      geometry type &quot;Parts&quot; as first argument in SetGeometry method.</p>
+      <h4><a name="Step7"></a>Create a Go Go tool motion on line D1 and line D2</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Go GO tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm2 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;,2)
+<font color="#0000FF">    	Call </font>Tm2.SetGeometry(&quot;Parts&quot;, D2, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm2.SetGeometry(&quot;SecondRelimitingElement&quot;, D1, PartMachined, 0)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Go Go tool motion (&quot;MfgSeqMotionLatheGoStd&quot;) ,
+      creates it at the second position (&quot;2&quot;) of the tool motion's
+      list.</p>
+      <p>To assign the first check (D2) of Go Std or Go GO, uses SetGeometry
+      with &quot;Parts&quot; as geometry type, &quot;0&quot; as last argument.</p>
+      <p>To assign the second check (D1) of a Go Go tool motion , uses
+      &quot;SecondRelimitingElement&quot; as geometry type.</p>
+      <p>&nbsp;</p>
+      <h4><a name="Step8"></a>Create an Indirv tool motion on line D4 and line
+      D3&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Indirv tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm3 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheIndirv&quot;,3)
+<font color="#0000FF">    	Call </font>Tm3.SetGeometry(&quot;Parts&quot;, D4, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm3.SetGeometry(&quot;FirstRelimitingElement&quot;, D3, PartMachined, 0)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts an Indirv tool motion (&quot;MfgSeqMotionLatheIndirv&quot;) ,
+      creates it at the third position (&quot;3&quot;) of the tool motion's
+      list.</p>
+      <p>To assign the first check (D4) of the Indirv tool motion , uses
+      &quot;Parts&quot; as geometry type.</p>
+      <p>To assign the drive (D3) of Indirv tool motion, uses SetGeometry with
+      &quot;FirstRelimitingElement&quot; as geometry type, &quot;0&quot; as last
+      argument.</p>
+      <h4><a name="Step9"></a>Create a Delta tool motion using point PT2 and
+      PT3&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Delta tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+ 
+<font color="#0000FF">    	Set </font>Tm4 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheDelta&quot;, 4)
+<font color="#0000FF">    	Dim </font>DeltaMode<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">    	Set </font>DeltaMode = Tm4.GetAttribute(&quot;MfgLatheEODeltaCheckMode&quot;)
+    	DeltaMode.ValuateFromString (&quot;MfgLatheDeltaPtPt&quot;)
+<font color="#0000FF">    	Call </font>Tm4.SetGeometry(&quot;FirstRelimitingElement&quot;, PT2, PartMachined,1)
+<font color="#0000FF">    	Call </font>Tm4.SetGeometry(&quot;FirstRelimitingElement&quot;, PT3,PartMachined, 2)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Delta tool motion (&quot;MfgSeqMotionLatheDelta&quot;) ,
+      creates it at the fourth position (&quot;4&quot;) of the tool motion's
+      list.</p>
+      <p>The attribute Delta Check Mode (&quot;MfgLatheEODeltaCheckMode&quot;)
+      is set in variable DeltaMode<font color="#0000FF"> . </font>This delta
+      tool motion uses the &quot;Distance between two points&quot; mode, so
+      DeltaMode contains the value &quot;MfgLatheDeltaPtPt&quot;.</p>
+      <p>In the distance between two point mode,&nbsp; by the SetGeometry
+      method, we assign the first point (PT2)&nbsp; using
+      &quot;FirstRelimitingElement&quot; as geometry type, and &quot;1&quot; as
+      last argument. Which means that PT2 is stored in first position. We assign
+      the second point (PT3)&nbsp; using &quot;FirstRelimitingElement&quot; as
+      geometry type, and &quot;2&quot; as last element, to store it in second
+      position in the same container.</p>
+      <p>When using &quot;Line and Distance&quot; as Delta check mode, you will
+      have to store a line using SetGeometry with
+      &quot;FirstRelimitingElement&quot; as geometry type and &quot;0&quot; as
+      last argument.</p>
+      <h4><a name="Step10"></a>Create a Go Go tool motion on line D6 and line
+      D5&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Go GO tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm5 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;,5)
+<font color="#0000FF">    	Call </font>Tm5.SetGeometry(&quot;Parts&quot;, D6, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm5.SetGeometry(&quot;SecondRelimitingElement&quot;, D5, PartMachined, 0)
+
+
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Go Go tool motion (&quot;MfgSeqMotionLatheGoStd&quot;) ,
+      creates it at the fifth position (&quot;5&quot;) of the tool motion's
+      list. We could have used &quot;0&quot; as last argument to create it at
+      the end of current list.</p>
+      <p>To assign the first check (D6) of Go Std or Go GO, uses SetGeometry
+      with &quot;Parts&quot; as geometry type, &quot;0&quot; as last argument.</p>
+      <p>To assign the second check (D5) of the Go Go tool motion , uses
+      &quot;SecondRelimitingElement&quot; as geometry type.</p>
+      <h4><a name="Step11"></a>Create a Delta tool motion on line D5</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Delta tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+<font color="#0000FF">    	Set </font>Tm6 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheDelta&quot;, 6)
+<font color="#0000FF">    	Set </font>DeltaMode = Tm6.GetAttribute(&quot;MfgLatheEODeltaCheckMode&quot;)
+    	DeltaMode.ValuateFromString (&quot;MfgLatheDeltaLineDist&quot;)
+<font color="#0000FF">    	Call </font>Tm6.SetGeometry(&quot;FirstRelimitingElement&quot;, D5, PartMachined, 0)
+	Dim DeltaValue<font color="#0000FF"> as </font>Variant
+	Set DeltaValue = Tm6.GetAttribute(&quot;MfgLatheEOValueDistance&quot;)
+	DeltaValue.Value = 10
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Delta tool motion (&quot;MfgSeqMotionLatheDelta&quot;) ,
+      creates it at the sixth position (&quot;6&quot;) of the tool motion's
+      list.</p>
+      <p>The attribute Delta Check Mode (&quot;MfgLatheEODeltaCheckMode&quot;)
+      is set in variable DeltaMode<font color="#0000FF"> . </font>This delta
+      tool motion uses the &quot;Line and Distance&quot; mode, so DeltaMode is
+      valuated by &quot;MfgLatheDeltaLineDist&quot;.</p>
+      <p>In the &quot;Line and distance&quot; mode,&nbsp; using the SetGeometry
+      method, we assign the line (D5)&nbsp; using
+      &quot;FirstRelimitingElement&quot; as geometry type, and &quot;0&quot; as
+      last argument.</p>
+      <p>The Distance attribute (&quot;MfgLatheEOValueDistance&quot;) is set in
+      variable DeltaValue<font color="#0000FF"> . </font>DeltaValue is set to
+      &quot;10&quot;.</p>
+      <h4><a name="Step12"></a>Create a Go Standard tool motion on line D6&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of gostd tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm7 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;, 7)
+<font color="#0000FF">    	Call </font>Tm7.SetGeometry(&quot;Parts&quot;, D6, PartMachined, 0)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts an Go Standard tool motion (&quot;MfgSeqMotionLatheGoStd&quot;
+      with only one check element) , creates it at the seventh position
+      (&quot;7&quot;) of the tool motion's list.</p>
+      <p>Assigns the first check geometry using the SetGeometry method. We are
+      using one line&nbsp; (D6) from the geometry we retrieved at step 2.</p>
+      <p>To assign the drive (D6) of Go Standard tool motion, uses SetGeometry
+      with &quot;Parts&quot; as geometry type, &quot;0&quot; as last argument.</p>
+      <h4><a name="Step13"></a>Create a Follow tool motion on line D7&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Follow tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm8 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheFollow&quot;, 8)
+<font color="#0000FF">    	Call </font>Tm8.SetGeometry(&quot;Parts&quot;, D7, PartMachined, 0)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts an Follow tool motion (&quot;MfgSeqMotionLatheFollow&quot;) ,
+      creates it at the eightth position (&quot;8&quot;) of the tool motion's
+      list.</p>
+      <p>To assign the first check (D7) of the Follow tool motion , uses
+      &quot;Parts&quot; as geometry type.</p>
+      <h4><a name="Step14"></a>Create a PP Word tool motion&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">' Creation of PP Word tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm5 = Mo1.InsertToolMotion(&quot;MfgSeqMotionPPWord&quot;,9)
+	
+
+	Dim TMList<font color="#0000FF"> As </font>MfgToolMotions
+	Set TMList = MO1.GetListOfToolMotions
+
+	NbMo = TMList.Count
+	<font color="#008000">'msgbox NbMo</font>
+
+	Dim Test<font color="#0000FF"> As </font>ManufacturingToolMotion
+	Set Test = TMList.GetElement(1)</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts an PP Word tool motion (&quot;MfgSeqMotionPPWord&quot;) ,
+      creates it at the nineth position (&quot;9&quot;) of the tool motion's
+      list.</p>
+      <p>&nbsp;</p>
+      <p>Retrieves the list of tool motions and sets it to the variable TMList,
+      the method GetElement(number) enables to get the tool motion located at
+      position &quot;number&quot; in a variable of&nbsp;
+      &quot;MfgToolMotions&quot; type (list of tool motion). Count property
+      enables to retrieve the number of elements of this tool motions list.</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a lathe sequential activity, how to
+insert tool motions inside, and how to assign geometry to these tool motions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><i><a href="../CAAScdMaiTechArticles/CAAMaiTocManufacturingActivity.htm">Machining
+      automation objects</a></i>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+<h2>&nbsp;</h2>
+
+</body>
+
+</html>

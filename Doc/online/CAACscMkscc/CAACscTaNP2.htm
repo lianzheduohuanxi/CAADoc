@@ -1,0 +1,482 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>Null Pointers Part 2 Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Null Pointers Part 2 Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article describes the checks relative to NULL Pointers Part 2.
+      These checks are identified by LCDMMCBU, LCLVMCBU, LCAVMCBU, LCDMMCBU2,
+      LCLVMCBU2, LCAVMCBU2.</p>
+				  <ul>
+					  <li><a href="#Problematic">Problematic</a></li>
+					  <li><a href="#Principle">Check Principle</a>
+						  <ul>
+							  <li><a href="#LCMCBU">LC*MCBU</a></li>
+							  <li><a href="#LCMCBU2">LC*MCBU2</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#LCLVMCBU">LCLVMCBU</a></li>
+					  <li><a href="#LCDMMCBU">LCDMMCBU</a></li>
+					  <li><a href="#LCAVMCBU">LCAVMCBU</a></li>
+					  <li><a href="#LCLVMCBU2">LCLVMCBU2</a></li>
+					  <li><a href="#LCDMMCBU2">LCDMMCBU2</a></li>
+					  <li><a href="#LCAVMCBU2">LCAVMCBU2</a></li>
+					  <li><a href="#Relative">Relative Sections  in Setting Files</a></li>
+					  <li><a href="#IgnoredClassesForMCBU"> LifeCycle_IgnoredClassesForMCBU2</a>
+						  <ul>
+							  <li><a href="#UntrustableForMCBU2">LifeCycle_UntrustableForMCBU2</a></li>
+							  <li><a href="#SafeMethodsForMCBU">LifeCycle_SafeMethodsForMCBU</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#InShort">In Short</a></li>
+					  <li><a href="#References">References</a></li>
+					  <li><a href="#History">History</a></li>
+				  </ul>
+      </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Managing pointers Lifecycle is not as easy as it seems to be.
+How difficult can it be to debug an invalid pointer or an assert due to a NULL
+pointer.</p>
+<p>To prevent these errors, two different types of checks are made by CSC:</p>
+<ul>
+  <li><strong>Ensure pointer's validity: NULL Pointers Part 1</strong>
+    <p>These checks must insure that:</p>
+    <ul>
+      <li>a NON VALID pointer is NULL.</li>
+      <li>a NOT NULL pointer is VALID.</li>
+    </ul>
+    <p>(pointer is VALID) &lt;=&gt; (pointer is NOT NULL).</p>
+  </li>
+  <li><strong>Checking validity of pointers before use: NULL Pointers Part 2</strong>
+  <p>These checks must insure that every pointer is tested against NULL before
+  use.</p>
+  </li>
+</ul>
+<p>This article deals only with NULL Pointers Part 2.
+See [<a href="#References">1</a>] for NULL Pointers Part 1.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Principle"></a>Check Principle</h2>
+<h3><a name="LCMCBU"></a>LC*MCBU</h3>
+<p>In these checks, every variable (instance of class) of type pointer is
+followed. Each time a method (member function of the class) is called on the
+variable, CSC checks if the call is done in a safe branch of code against
+nullity of the pointer. If it is not, an error is reported. If CSC can not
+statically determine if the branch of code is safe, an error is reported.</p>
+<p>Methods and functions in <a href="#SafeMethodsForMCBU">LifeCycle_SafeMethodsForMCBU</a>
+cannot return a null pointer.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCMCBU2"></a>LC*MCBU2</h3>
+<p>These checks are a subpart of the LC*MCBU ones. In these checks, each time a
+method is called on a variable of type pointer, if the variable was previously
+assigned via a function <strong>declared in an external framework</strong> (not the
+current framework), and if the pointer may be null at this time, an error is
+reported.
+Pointers of type in <a href="#IgnoredClassesForMCBU">LifeCycle_IgnoredClassesForMCBU2</a>
+are ignored.</p>
+<p>These checks insure that the inter-framework interactions won't
+generate any runtime abort.</p>
+<p>If the <a href="#UntrustableForMCBU2">LifeCycle_UntrustableForMCBU2</a> list
+is not empty, the function must:</p>
+<ul>
+  <li>Be declared outside of the current framework.</li>
+  <li>Be declared in the list LifeCycle_UntrustableForMCBU2.</li>
+  <li>Not be in the <a href="#SafeMethodsForMCBU">LifeCycle_SafeMethodsForMCBU</a>
+    list.</li>
+</ul>
+<p>The default LifeCycle_UntrustableForMCBU2 section is empty: all the calls to
+a function declared in an external framework are analyzed, except calls of
+&quot;safe&quot; methods.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCLVMCBU"></a>LCLVMCBU</h2>
+<p>LCLVMCBU stands for LifeCycle: Local Variable Missing Check Before Use.</p>
+<p>An error of type LCLVMCBU is reported when:</p>
+<ul>
+  <li>A method is called on a local variable (of type pointer).</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null.</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, leading to the abort of the program.</p>
+<p><a name="LCLVMCBU-1"></a><strong>Example LCLVCMBU-1</strong></p>
+<p>The local variable edgeCurve is not tested before use.</p>
+<p>The following code will report a LCLVMCBU error:</p>
+<pre class="code">...
+CATEdgeCurve* <strong>edgeCurve</strong> = NULL;
+vertices[vindex]-&gt;GetParamOnEdgeCurve(startEdge, <strong>edgeCurve</strong>, crvParam, side);
+<strong>edgeCurve</strong>-&gt; Eval(crvParam, CATCrvEvalCommand::EvalFirstDerivative, NULL, &amp;edgeTgt);
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+CATEdgeCurve* <strong>edgeCurve</strong> = NULL;
+vertices[vindex]-&gt;GetParamOnEdgeCurve(startEdge, <strong>edgeCurve</strong>, crvParam, side);
+if( <strong>edgeCurve</strong> ) 
+{
+  <strong>edgeCurve</strong>-&gt; Eval(crvParam, CATCrvEvalCommand::EvalFirstDerivative, NULL, &amp;edgeTgt);
+  ...
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCDMMCBU"></a>LCDMMCBU</h2>
+<p>LCDMMCBU2 stands for LifeCycle: Data Member Missing Check Before Use.</p>
+<p>An error of type LCDMMCBU is reported when:</p>
+<ul>
+  <li>A method is called on a data member (of type pointer).</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null.</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, implying the abort of the program.</p>
+<p><a name="LCDMMCBU-1"></a><strong>Example LCDMMCBU-1</strong></p>
+<p>The data member _pHole is not tested before use.</p>
+<p>Let's take the following class:</p>
+<pre class="code">class CATPrtCreateHoleCom
+{
+  ...
+  CATINewHole* _pHole;
+  HRESULT CreateHole(void*);
+  ...;
+};</pre>
+<p>The following code will report a LCDMMCBU error:</p>
+<pre class="code">...
+HRESULT CATPrtCreateHoleCom::CreateHole (void *)
+{
+  ...
+  CATISpecObject_var hSpecLimit;
+  <strong>_pHole</strong>-&gt; GetLimit(hSpecLimit);
+  _pHole-&gt;Release();
+  _pHole= NULL;
+  ... // Use hSpecLimit
+}
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+HRESULT CATPrtCreateHoleCom::CreateHole (void *)
+{
+  ...
+  CATISpecObject_var hHole= ...; // Retrieve hHole
+  CATISpecObject_var hSpecLimit;
+  <strong>if( _pHole )
+</strong>  {
+    _pHole-&gt; GetLimit(hSpecLimit);
+    _pHole-&gt;Release();
+    _pHole= NULL;
+  }
+  ... // Use hSpecLimit
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCAVMCBU"></a>LCAVMCBU</h2>
+<p>LCAVMCBU stands for LifeCycle: Argument Variable Missing Check Before Use.</p>
+<p>An error of type LCAVMCBU is reported when:</p>
+<ul>
+  <li>A method is called on an argument variable (of type pointer).</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, implying the abort of the program.</p>
+<p><a name="LCAVMCBU-1"></a><strong>Example LCAVCMBU-1</strong></p>
+<p>The argument variable iEdgeList is not tested before use.</p>
+<p>The following code will report a LCAVMCBU error:</p>
+<pre class="code">long CATTopBasicTools::GetTangentDirection(..., CATLISTP(CATEdge) *<strong>iEdgeList</strong> ...)
+{
+  if ( <strong>iEdgeList</strong>-&gt; Size() == 1) 
+  { 
+     ...
+  }
+  ...
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">long CATTopBasicTools::GetTangentDirection(..., CATLISTP(CATEdge) *<strong>iEdgeList</strong> ...)
+{
+  if (! <strong>iEdgeList</strong>) return 0; // for example
+  if ( <strong>iEdgeList</strong>-&gt; Size() == 1) 
+  { 
+     ...
+  }
+  ...
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCLVMCBU2"></a>LCLVMCBU2</h2>
+<p>LCLVMCBU2 stands for LifeCycle: Local Variable Missing Check Before Use type
+2.</p>
+<p>An error of type LCLVMCBU2 is reported when:</p>
+<ul>
+  <li>A local variable (of type pointer) is assigned via a method not declared
+    in current framework.</li>
+  <li>A method is called on this variable.</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null.</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, leading to the abort of the program.</p>
+<p><a name="LCLVMCBU2-1"></a><strong>Example LCLVCMBU2-1</strong></p>
+<p>The local variable is not tested.</p>
+<p>The following code will report a LCLVMCBU2 Error:</p>
+<pre class="code">...
+CATFcaElementIParamsExt* element= ...; // Retrieve element
+if( element ) 
+{
+  CATIParmPublisher * ipDescendants = NULL;
+  element-&gt;QueryInterface( CATIParmPublisher::ClassId(), (void**) &amp;<strong>ipDescendants</strong> );
+  CATListValCATISpecObject_var ihSpec_parameters;
+  <strong>ipDescendants</strong>-&gt; GetAllChildren(CATIAParameter::ClassName(), ihSpec_parameters);
+  ipDescendants-&gt; Release();
+  ipDescendants= NULL;
+  ...
+}
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+CATFcaElementIParamsExt* element= ...; // Retrieve element
+if( element ) 
+{
+  CATIParmPublisher * ipDescendants = NULL;
+  <strong>HRESULT hr</strong>= element-&gt;<strong>QueryInterface</strong>( CATIParmPublisher::ClassId(), (void**) &amp;ipDescendants );
+  <strong>if( SUCCEEDED( hr ) ) </strong>
+  {
+    CATListValCATISpecObject_var ihSpec_parameters;
+    ipDescendants-&gt; GetAllChildren(CATIAParameter::ClassName(), ihSpec_parameters);
+    ipDescendants-&gt; Release();
+    ipDescendants= NULL;
+  }
+  ...
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCDMMCBU2"></a>LCDMMCBU2</h2>
+<p>LCDMMCBU2 stands for LifeCycle: Data Member Missing Check Before Use type 2.</p>
+<p>An error of type LCDMMCBU2 is reported when:</p>
+<ul>
+  <li>A data member (of type pointer) is assigned via a method not declared in
+    current framework.</li>
+  <li>A method is called on this variable.</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null.</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, implying the abort of the program.</p>
+<p><a name="LCDMMCBU2-1"></a><strong>Example LCDMMCBU2-1</strong></p>
+<p>The data member is not tested.</p>
+<p>Let's take the following class:</p>
+<pre class="code">class CATPrtCreateHoleCom
+{
+  ...
+  CATINewHole* _pHole;
+  HRESULT CreateHole(void*);
+  ...;
+};</pre>
+<p>The following code will report a LCDMMCBU2 Error:</p>
+<pre class="code">...
+HRESULT CATPrtCreateHoleCom::CreateHole (void *)
+{
+  ...
+  CATISpecObject_var hHole= ...; // Retrieve hHole
+  hHole-&gt; QueryInterface(CATINewHole::ClassId(), (void **)&amp;<strong>_pHole</strong>);
+  CATISpecObject_var hSpecLimit;
+  <strong>_pHole</strong>-&gt; GetLimit(hSpecLimit);
+  _pHole-&gt;Release();
+  _pHole= NULL;
+  ... // Use hSpecLimit
+}
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+HRESULT CATPrtCreateHoleCom::CreateHole (void *)
+{
+  ...
+  CATISpecObject_var hHole= ...; // Retrieve hHole
+  <strong>HRESULT hr=</strong> hHole-&gt; <strong>QueryInterface</strong>(CATINewHole::ClassId(), (void **)&amp;_pHole);
+  CATISpecObject_var hSpecLimit;
+  <strong>if( SUCCEEDED( hr ) )
+</strong>  {
+    _pHole-&gt; GetLimit(hSpecLimit);
+    _pHole-&gt;Release();
+    _pHole= NULL;
+  }
+  ... // Use hSpecLimit
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="LCAVMCBU2"></a>LCAVMCBU2</h2>
+<p>LCAVMCBU2 stands for LifeCycle: Argument Variable Missing Check Before Use
+type 2.</p>
+<p>An error of type LCAVMCBU2 is reported when:</p>
+<ul>
+  <li>An argument variable (of type pointer) is assigned via a method not
+    declared in current framework.</li>
+  <li>A method is called on this variable.</li>
+  <li>When the method is called, we can not be sure statically that the pointer
+    is not null.</li>
+</ul>
+<p>If the assigning method returned a null pointer, a null pointer read will
+occur at runtime, implying the abort of the program.</p>
+<p><a name="LCAVMCBU2-1"></a><strong>Example LCAVCMBU2-1</strong></p>
+<p>The argument variable is not tested.</p>
+<p>The following code will report a LCAVMCBU2 Error:</p>
+<pre class="code">...
+HRESULT CATSPPPhysicalActivityFlowMgt::AddControlInput(<strong>CATIPcsProductIO*&amp; oCIO, </strong>const CATBaseUnknown_var &amp; iItem)
+{ 
+  HRESULT rc= E_FAIL;
+  CATISpecObject* pCISO =... ; // Retrieve pCISO
+  if ( pCISO ) 
+  { 
+    rc = pCISO-&gt; QueryInterface(IID_CATIPcsProductIO,(void**)&amp;<strong>oCIO</strong>); 
+    <strong>oCIO -&gt; </strong>SetItem(iItem)<strong>;</strong>
+  } 
+  return rc; 
+}
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+HRESULT CATSPPPhysicalActivityFlowMgt::AddControlInput(<strong>CATIPcsProductIO*&amp; oCIO, </strong>const CATBaseUnknown_var &amp; iItem)
+{ 
+  HRESULT rc= E_FAIL;
+  CATISpecObject* pCISO =... ; // Retrieve pCISO
+  if ( pCISO ) 
+  { 
+    rc = pCISO-&gt; <strong>QueryInterface</strong>(IID_CATIPcsProductIO,(void**)&amp;<strong>oCIO</strong>); 
+    if( SUCCEEDED( rc ) ) 
+    {
+      <strong>oCIO -&gt; SetItem(iItem);
+    </strong>}
+  } 
+  return rc; 
+}
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">2</a>].</p>
+<h2><a name="IgnoredClassesForMCBU"></a>LifeCycle_IgnoredClassesForMCBU2</h2>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+LifeCycle_OptionLists.</p>
+<p><img alt="LifeCycle_IgnoredClassesForMCBU2" src="images/CAACscTaNullPointers2IgnoredClassesForMCBU.gif" width="601" height="274"/></p>
+<p>This section contains a list of ClassName. Every instance of class contained
+in this list will be excluded from all checks of type Null Pointers Part 2.</p>
+<p>Be careful:</p>
+<ul>
+  <li>Every inherited class will be ignored as well.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre>ClassName CATDialog</pre>
+<p>This means that no instance of class CATDialog (or any inherited class) will
+generate an error of type Null Pointers Part 2.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="UntrustableForMCBU2"></a>LifeCycle_UntrustableForMCBU2</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+LifeCycle_OptionLists.</p>
+<p><img alt="LifeCycle_UntrustableForMCBU2" src="images/CAACscTaNullPointers2UntrustableForMCBU2.gif" width="600" height="364"/></p>
+<p>This section contains a list of Call. Each Call describes a method or
+function which can return a null pointer:</p>
+<dl>
+  <dt>ClassName</dt>
+  <dd>The name of the class (no ClassName means it is a function).</dd>
+  <dt>MethodOrFunctionSign</dt>
+  <dd>The signature of the function or method</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+  <li>If this list is not empty, only these functions will be taken into account
+    for checks LC*MCBU2.</li>
+  <li>If this list is empty (default mode), all the external functions will be
+    taken into account for checks LC*MCBU2.</li>
+</ul>
+<p><strong>Example</strong>:</p>
+<pre>ClassName            CATBaseUnknown
+MethodOrFunctionSign QueryInterface</pre>
+<p>This means that the method QueryInterface of the class CATBaseUnknown can
+return a null pointer.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="SafeMethodsForMCBU"></a>LifeCycle_SafeMethodsForMCBU</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+LifeCycle_OptionLists</p>
+<p><img alt="LifeCycle_SafeMethodsForMCBU" src="images/CAACscTaNullPointers2SafeMethodsForMCBU.gif" width="647" height="357"/></p>
+<p>This section contains a list of CallDeclaration. Each Call describes a method
+or function which cannot return a null pointer:</p>
+<dl>
+  <dt>FrameworkName</dt>
+  <dd>The name of the framework in which the method is declared.</dd>
+  <dt>ClassName</dt>
+  <dd>The name of the class (no ClassName means it is a function).</dd>
+  <dt>MethodOrFunctionSign</dt>
+  <dd>The signature of the function or method.</dd>
+</dl>
+<p>Example 1:</p>
+<pre>FrameworkName        System
+ClassName            CATBaseUnknown
+MethodOrFunctionSign GetImpl</pre>
+<p>This means that the method GetImpl of the class CATBaseUnknown defined in
+framework System never returns a null pointer.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="InShort"></a>In Short</h3>
+<p>All checks included in Pointers Null Part 2 insure that no null pointer read
+will occur at runtime.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="References"></a>References</h3>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAACscTaNP1.htm">Null Pointers Part 2 Checks</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="History"></a>History</h3>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

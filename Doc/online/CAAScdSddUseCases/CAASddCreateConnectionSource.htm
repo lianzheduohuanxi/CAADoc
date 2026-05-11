@@ -1,0 +1,287 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddCreateConnection.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create a member.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddCreateConnection.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+  <font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  <font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+  <font color="#008000">'Get the Stiffeners,Plates and Members</font>
+<font color="#0000FF">  Dim </font>StiffenerReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>StiffenerReferencesObj = ManagerObj.GetSuperStiffeners
+
+<font color="#0000FF">  Dim </font>PlateReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>PlateReferencesObj = ManagerObj.GetSuperPlates
+  
+<font color="#0000FF">  Dim </font>MemberReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>MemberReferencesObj = ManagerObj.GetSuperMembers
+  
+<font color="#0000FF">  Dim </font>SuperPlate1, SuperPlate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>SuperPlate1 = PlateReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>SuperPlate2 = PlateReferencesObj.Item(2)
+
+<font color="#0000FF">  Dim </font>SuperStiffener1, SuperStiffener2, SuperStiffener3<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>SuperStiffener1 = StiffenerReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>SuperStiffener2 = StiffenerReferencesObj.Item(2)
+<font color="#0000FF">  Set </font>SuperStiffener3 = StiffenerReferencesObj.Item(3)
+  
+<font color="#0000FF">  Dim </font>SuperMember1, SuperMember2<font color="#0000FF"> As </font>SfmMember
+<font color="#0000FF">  Set </font>SuperMember1 = MemberReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>SuperMember2 = MemberReferencesObj.Item(2)
+  
+  <font color="#008000">'Get the OperationFactory Object</font>
+<font color="#0000FF">  Dim </font>EndCutFactoryObj<font color="#0000FF"> As </font>SfmOperationFactory
+<font color="#0000FF">  Set </font>EndCutFactoryObj = ObjPart.GetCustomerFactory("SfmOperationFactory")
+
+  <font color="#008000">'Get the EndcutManager Object</font>
+<font color="#0000FF">  Dim </font>EndCutManagerObj<font color="#0000FF"> As </font>SfmEndcutManager
+<font color="#0000FF">  Set </font>EndCutManagerObj = EndCutFactoryObj.GetEndcutManager
+  
+<font color="#008000">'APPLYING ENDCUTS ON STIFFENER2</font>
+  <font color="#008000">'Checking list of available endcuts for a given family and type</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames1<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames1 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  
+  <font color="#008000">'Gets the Specifications required to define a particular Endcut</font>
+<font color="#0000FF">  Dim </font>ListOfContextNames1(), ListOfParamNames1()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters1<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames1, ListOfUDFParameters1, ListOfParamNames1
+  <font color="#008000">'Read the Name of Context</font>
+<font color="#0000FF">  Dim </font>SizeOfContextNames<font color="#0000FF"> As </font>Long
+  SizeOfContext = UBound(ListOfContextNames1)
+<font color="#0000FF">  Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>i = 0<font color="#0000FF"> To </font>SizeOfContext
+<font color="#0000FF">   Dim </font>ContextName<font color="#0000FF"> As </font>String
+   ContextName = ListOfContextNames1(i)
+<font color="#0000FF">  Next</font>
+  
+  <font color="#008000">'Checking the UDFParameters and Setting their values</font>
+<font color="#0000FF">  Dim </font>NbOfUDFParams<font color="#0000FF"> As </font>Long
+<font color="#0000FF">  Dim </font>ParamName()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>UDFParamName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>UDFParam<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">  Dim </font>UDFParamValue<font color="#0000FF"> As </font>String
+  NbOfUDFParams = ListOfUDFParameters1.Count
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>NbOfUDFParams
+   UDFParamName = ListOfParamNames1(i - 1)
+<font color="#0000FF">   Set </font>UDFParam = ListOfUDFParameters1.Item(i)
+   UDFParamValue = UDFParam.ValueAsString
+   UDFParam.ValuateFromString ("50mm")
+<font color="#0000FF">  Next</font>
+  <font color="#008000">'Defining Limit</font>
+<font color="#0000FF">  Dim </font>FirstLimit<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>FirstLimit = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+  <font color="#008000">'Get FunctionFactory Object</font>
+<font color="#0000FF">  Dim </font>FactoryRef<font color="#0000FF"> As </font>SfmFunctionFactory
+<font color="#0000FF">  Set </font>FactoryRef = ObjPart.GetCustomerFactory("SfmFunctionFactory")
+  
+<font color="#0000FF">  Dim </font>ListOfContexts1<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Set </font>ListOfContexts1 = FactoryRef.SfmReferences
+  <font color="#008000">'Adding Limit</font>
+  ListOfContexts1.Add FirstLimit
+  <font color="#008000">'Creating EndCut</font>
+<font color="#0000FF">  Dim </font>EndCutObj1<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj1 = SuperStiffener2.AddEndcut(2, "Snipe", "T-CTX-SHAPE", ListOfContexts1, ListOfUDFParameters1)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj1.UpdateConnectionsSet
+
+ <font color="#008000">'Applying EndCut at Start Of Stiffener with Default Parameter values</font>
+  <font color="#008000">'Checking list of available endcuts</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames2<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames2 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Weld")
+  <font color="#008000">'Gets the Specifications required to define Endcut</font>
+<font color="#0000FF">  Dim </font>ListOfContextNames2(), ListOfParamNames2()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters2<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Weld", "Metal To Metal", ListOfContextNames2, ListOfUDFParameters2, ListOfParamNames2
+  <font color="#008000">'In this case there are No UDFParameters</font>
+  <font color="#008000">'Define Limit</font>
+<font color="#0000FF">  Dim </font>SecondLimit<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SecondLimit = ObjPart.CreateReferenceFromObject(SuperPlate2)
+<font color="#0000FF">  Dim </font>ListOfContexts2<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Set </font>ListOfContexts2 = FactoryRef.SfmReferences
+  ListOfContexts2.Add SecondLimit
+  <font color="#008000">'Creating EndCut</font>
+<font color="#0000FF">  Dim </font>EndCutObj2<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj2 = SuperStiffener2.AddEndcut(1, "Weld", "Metal To Metal", ListOfContexts2, Nothing)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj2.UpdateConnectionsSet
+  
+<font color="#008000">'APPLYING ENDCUTS ON STIFFENER1</font>
+  <font color="#008000">'Applying Endcut at Start Extremity with Default Parameter values</font>
+  <font color="#008000">'Checking list of available endcuts for a given family and type</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames3<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames3 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  <font color="#008000">'Gets the Specifications required to define Endcut</font>
+<font color="#0000FF">  Dim </font>ListOfContextNames3(), ListOfParamNames3()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters3<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-E70LSH", ListOfContextNames3, ListOfUDFParameters3, ListOfParamNames3
+
+  <font color="#008000">'Creating Endcut</font>
+<font color="#0000FF">  Dim </font>EndCutObj3<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj3 = SuperStiffener1.AddEndcut(1, "Snipe", "T-E70LSH", Nothing, ListOfUDFParameters3)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj3.UpdateConnectionsSet
+  
+  <font color="#008000">'Applying Endcut at End Extremity with Default Parameter values</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames4<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames4 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  
+<font color="#0000FF">  Dim </font>ListOfContextNames4(), ListOfParamNames4()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters4<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", ListOfContextNames4, ListOfUDFParameters4, ListOfParamNames4
+  
+<font color="#0000FF">  Dim </font>EndCutObj4<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj4 = SuperStiffener1.AddEndcut(2, "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", Nothing, ListOfUDFParameters4)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj4.UpdateConnectionsSet
+
+<font color="#008000">'APPLYING ENDCUTS ON MEMBER1</font>
+  <font color="#008000">'Applying Endcut at Start Extremity</font>
+  <font color="#008000">'Checking list of available endcuts for a given family and type</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames5<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames5 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Weld")
+  
+<font color="#0000FF">  Dim </font>ListOfContextNames5(), ListOfParamNames5()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters5<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Weld", "Weld", ListOfContextNames5, ListOfUDFParameters5, ListOfParamNames5
+  <font color="#008000">'In this case there are No UDFParameters</font>
+<font color="#0000FF">  Dim </font>ThirdLimit<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ThirdLimit = ObjPart.CreateReferenceFromObject(SuperStiffener2)
+<font color="#0000FF">  Dim </font>ListOfContexts5<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Set </font>ListOfContexts5 = FactoryRef.SfmReferences
+  ListOfContexts5.Add ThirdLimit
+  
+<font color="#0000FF">  Dim </font>EndCutObj5<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj5 = SuperMember1.AddEndcut(1, "Weld", "Weld", ListOfContexts5, Nothing)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj5.UpdateConnectionsSet
+
+  <font color="#008000">'Applying Endcut at End Extremity</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames6<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames6 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Snipe")
+  
+<font color="#0000FF">  Dim </font>ListOfContextNames6(), ListOfParamNames6()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters6<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Snipe", "HP_P27", ListOfContextNames6, ListOfUDFParameters6, ListOfParamNames6
+  <font color="#008000">'In this case there are no Contexts</font>
+<font color="#0000FF">  Dim </font>EndCutObj6<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj6 = SuperMember1.AddEndcut(2, "Snipe", "HP_P27", Nothing, ListOfUDFParameters6)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj6.UpdateConnectionsSet
+  
+<font color="#008000">'APPLYING ENDCUTS ON MEMBER2</font>
+  <font color="#008000">'Applying Endcut at Start Extremity</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames7<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames7 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  <font color="#008000">'Gets the Specifications required to define a particular Endcut</font>
+<font color="#0000FF">  Dim </font>ListOfContextNames7(), ListOfParamNames7()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters7<font color="#0000FF"> As </font>SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames7, ListOfUDFParameters7, ListOfParamNames7
+  <font color="#008000">'Creating Endcut with Default Parameter values</font>
+<font color="#0000FF">  Dim </font>EndCutObj7<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj7 = SuperMember2.AddEndcut(1, "Snipe", "T-CTX-SHAPE", ListOfContexts5, ListOfUDFParameters7)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj7.UpdateConnectionsSet
+  
+  <font color="#008000">'Applying Endcut at End Extremity</font>
+<font color="#0000FF">  Dim </font>ListOfEndCutNames8<font color="#0000FF"> As </font>Variant
+  ListOfEndCutNames8 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  
+<font color="#0000FF">  Dim </font>ListOfContextNames8(), ListOfParamNames8()<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ListOfUDFParameters8<font color="#0000FF"> As </font>SfmConnectionParameters
+  
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "BuiltIn-B4-B4O1-B3-B3O2", ListOfContextNames8, ListOfUDFParameters8, ListOfParamNames8
+<font color="#0000FF">  Dim </font>EndCutObj8<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>EndCutObj8 = SuperMember2.AddEndcut(2, "Trim", "BuiltIn-B4-B4O1-B3-B3O2", Nothing, ListOfUDFParameters8)
+  
+  <font color="#008000">'Update the Connection Set</font>
+  EndCutObj8.UpdateConnectionsSet
+  
+<font color="#008000">'********CREATING SLOTS*********</font>
+  <font color="#008000">'Get OperationFactory Object</font>
+<font color="#0000FF">  Dim </font>SlotFactoryObj<font color="#0000FF"> As </font>SfmOperationFactory
+<font color="#0000FF">  Set </font>SlotFactoryObj = ObjPart.GetCustomerFactory("SfmOperationFactory")
+  <font color="#008000">'Gets the list of available Slots from catalog for a given Profile(Stiffener/Member)</font>
+<font color="#0000FF">  Dim </font>ListOfAvailableSlots<font color="#0000FF"> As </font>Variant
+  ListOfAvailableSlots = SlotFactoryObj.GetAvailableSlotsFromCatalog(SuperStiffener3)
+  
+  <font color="#008000">'Gets the Slot Parameters and Names for a particular slot from catalog</font>
+<font color="#0000FF">  Dim </font>ListSlotParams1<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">  Dim </font>ListSlotPramNames1()<font color="#0000FF"> As </font>Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "Tee_Slot_thru_Plate", ListSlotParams1, ListSlotPramNames1
+  
+  <font color="#008000">'Get the object of SfmSlots</font>
+<font color="#0000FF">  Dim </font>SlotOnPlate<font color="#0000FF"> As </font>SfmSlots
+<font color="#0000FF">  Set </font>SlotOnPlate = SuperPlate2.GetSlotsOnPlate
+  <font color="#008000">'Create References for Penetrating and Penetrating Objects</font>
+<font color="#0000FF">  Dim </font>PenetratedRef1, PenetratingRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>PenetratedRef1 = ObjPart.CreateReferenceFromObject(SuperPlate2)
+<font color="#0000FF">  Set </font>PenetratingRef1 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+  
+  <font color="#008000">'Create Slot on Plate Using a Stiffener</font>
+<font color="#0000FF">  Dim </font>SfmSlotObj<font color="#0000FF"> As </font>SfmSlot
+<font color="#0000FF">  Set </font>SfmSlotObj = SlotOnPlate.AddSlot(PenetratedRef1, PenetratingRef1, "Tee_Slot_thru_Plate", ListSlotParams1)
+ 
+  <font color="#008000">'Update the Connection Set</font>
+  SfmSlotObj.UpdateConnectionsSet
+  
+  <font color="#008000">'Gets the Slot Parameters and Names for a particular slot from catalog</font>
+<font color="#0000FF">  Dim </font>ListSlotParams2<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">  Dim </font>ListSlotPramNames2()<font color="#0000FF"> As </font>Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "CC-10-2Tee_thru_Shape", ListSlotParams2, ListSlotPramNames2
+  <font color="#008000">'Get the object of SfmSlots</font>
+<font color="#0000FF">  Dim </font>SlotsonProfile<font color="#0000FF"> As </font>SfmSlots
+<font color="#0000FF">  Set </font>SlotsonProfile = SuperStiffener1.GetSlotsOnProfile
+  
+<font color="#0000FF">  Dim </font>PenetratedRef2, PenetratingRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>PenetratedRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+<font color="#0000FF">  Set </font>PenetratingRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+  
+  <font color="#008000">'Create Slot on Profile Using a Stiffener</font>
+<font color="#0000FF">  Dim </font>SfmSlotObj2<font color="#0000FF"> As </font>SfmSlot
+<font color="#0000FF">  Set </font>SfmSlotObj2 = SlotsonProfile.AddSlot(PenetratedRef2, PenetratingRef2, "CC-10-2Tee_thru_Shape", ListSlotParams2)
+
+  <font color="#008000">'Update the Connection Set</font>
+  SfmSlotObj2.UpdateConnectionsSet
+
+  <font color="#008000">'For Endcuts and Slots to appear in 3D</font>
+  SuperStiffener1.Run
+  SuperStiffener2.Run
+  SuperMember1.Run
+  SuperMember2.Run
+  SuperPlate2.Run
+
+  <font color="#008000">'To Update the Part</font>
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

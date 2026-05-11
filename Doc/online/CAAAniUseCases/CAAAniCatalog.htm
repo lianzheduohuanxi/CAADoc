@@ -1,0 +1,546 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Analysis StartUp's</title>
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right">
+      <h3><a name="Top"></a>Creating Analysis StartUp's</h3>
+      <em>Create Analysis StartUp's and store them in a catalog</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAAAniCatalog use case and explains how to 
+      generate some StartUp's stored in a catalog. This&nbsp; step includes the <b>
+      AeroMeshPart and AeroDynamicSet definition.</b> This step is the 
+      preliminary one for all analysis feature creation.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#StartUp">The Analysis modeler StartUp and the 
+        StartUp Catalog</a></strong>
+          <ul>
+            <li><a href="#Features">About StartUps and Features</a></li>
+            <li><a href="#Attributes">The AeroDynamicSet StartUp Attributes</a></li>
+            <li><a href="#Catalg">The StartUp Catalog</a></li>
+          </ul>
+        </li>
+        <li><a href="#UseCase"><strong>The CAAAniCatalog Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAniCatalog Do</a></li>
+            <li><a href="#How">How to Launch CAAAniCatalog</a></li>
+            <li><a href="#Where">Where to Find the CAAAniCatalog Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you generate a <b>feature catalog file</b>
+containing some Analysis Startup's. This use case will include the <b>
+AeroDynamic features </b>required for the Aero dynamic import sample.
+<p>More specifically, the CAAAniCatalog use case shows how to:
+<ul>
+  <li>Create a new startup catalog file (called CATfct file).</li>
+  <li>Define the AeroMeshPart StartUp by deriving it from&nbsp;the MSHPart Startup.</li>
+  <li>Define the AeroDynamicSet StartUp by deriving it from&nbsp;its SolutionSet 
+  StartUp.</li>
+  <li>Add your own attributes on the StartUp.</li>
+  <li>Save the catalog file.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="StartUp"></a>The Analysis Modeler StartUp and the StartUp Catalog</h3>
+<p>Two features need to be created:</p>
+<ul>
+  <li>One will be called <i>AeroMeshPart</i>. This meshpart feature is dedicated 
+  to integrate the imported mesh inside the Analysis document. For this import 
+  scenario, we will integrate the mesh creation as a mesher.</li>
+  <li>The second will be called <i> AeroDynamicSet.</i> This Solution Set 
+  feature dedicated to keep the link to the solution file and the access to its 
+  content for visualisation.</li>
+</ul>
+<p>Both objects to be created will be <b>features</b> [<a href="#Ref1">1</a>]. 
+They are the support for specification definition. The MSHPart intent is to keep 
+the meshing specification and the Solution Set will support the access to the 
+result. It is designed as a set to access to the aerodynamic physics in a 
+Analysis document. Indeed, both must be persistent, must have a name and some 
+attributes, can be integrated to an update engine, and must behave according to 
+the default analysis behavior.</p>
+<h4><a name="Features"></a>About StartUps and Features</h4>
+<p>A StartUp is a feature stored in a catalog. It can be instantiated and 
+enriched to create features. When creating a new StartUp, you have to answer two 
+main questions:</p>
+<ol>
+  <li>How does it <b>integrate among existing features</b>?</li>
+  <li>Which <b>attributes</b> does it need?</li>
+</ol>
+<p>Because the AeroMeshPart need to be considered as a mesher (Meshing 
+algorithm) specification, it is strongly recommended to make it <b>derive</b> 
+from a Analysis Modeler StartUp representing an Arena on meshing and having the 
+capability to be integrated inside the update mechanism. For this we will use 
+the MESHPart Startup.</p>
+<p>Since an AeroDynamicSet is a support to access result files of analysis data, 
+it is strongly recommended to make it <b>derive</b> from a Analysis Modeler 
+StartUp representing a set.&nbsp;Two categories of sets exist: the AnalysisSet and 
+the SolutionSet. AnalysisSet is dedicated to support preprocessing data and 
+SolutionSet is for post processing data.&nbsp;Also, SolutionSet is built by 
+derivation of AnalysisSet and have the capability to know the case in with it is 
+defined.</p>
+<p>Consequently, MSHPart and SolutionSet are the good candidates.</p>
+<p>The following figure represents the AeroDynamicSet StartUp inheritance tree.</p>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/Aero-deriv.jpg" width="265" height="121"></td>
+    <td>The <b>AeroDynamicSet</b> StartUp derives from the <b>SolutionSet</b>
+      StartUp.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Attributes"></a>The StartUp Attributes</h4>
+<p>No specific attributes are required for the AeroMeshPart startup. We will use 
+the Get/Set Support methods in order to keep at this feature level a link to the 
+input file.</p>
+<p>Now that you have met the parents of the AeroDynamicSet StartUp, you still 
+have to define its own attributes. These attributes will be added to those 
+inherited from its ancestors.</p>
+<p>One attribute inherited from SolutionSet and that will be set at the level of 
+the AeroDynamicSet StartUp is PhysicalType. This will drive the default creation 
+of the Explicit Set in the Field model. The other attribute which is proprietary 
+of the AeroDynamicSet StartUp is the link to the result file. This will be done 
+by using the &quot;SAMBCFileAccess&quot; basiccomponent definition. This feature is 
+designed for such capability and will provide automatically some user interface 
+for the AeroDynamicSet. Also, all the data management is done by using the 
+CATISamBasicComponent Interface.</p>
+<p> This functionality can be also achieved by defining an attribute 
+ExternalFile designed as tk_external, that is, as a symbolic link to this file, 
+is this case the user interface may have been provided by implementing the 
+CATIEdit interface on the AeroDynamicSet.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Catalg"></a>The StartUp Catalog</h4>
+<p>Once defined the features StartUp's inheritance and attributes, you are ready 
+to generate the <b>CAAAniCatalog catalog file</b> that will contain the 
+AeroDynamic Feature's initial definition.</p>
+<p>Catalogs are particular files in which StartUps are created, enhanced with 
+new attributes, and stored. These StartUps are then instantiated into run time 
+instances.</p>
+<p>Here is a figure representing what will the catalog file where the 
+AeroDynamicSet StartUp is created looks like:</p>
+<p align="center"><img border="0" src="images/AniCata.jpg" width="514" height="153"></p>
+<p>You can see the AroMeshPart and AeroDynamicSet StartUp - named with an 
+extention &quot;_CAAAniCatalog&quot; - included in the catalog file. Under the 
+catalogManager, a link that is not displayed is also kept to the prerequisite 
+catalogs that are used for derivation.</p>
+<p>This initial StartUp will be used each time you will need to create a new 
+Instance. This operation is called &quot;<b>instantiation</b>&quot;. For this, once your 
+catalog is loaded in memory, you need to use the corresponding&nbsp; factory 
+interface:</p>
+<ul>
+  <li><code>CreateMeshPart</code> method provided by the <i>CATIMSHMeshManager</i>
+    interface for Meshing features.</li>
+  <li><code>CreateUserSet</code>
+  method provided by the <i>CATISamAnalysisFactory</i>  interface for Analysis 
+  Sets and preprocessing data.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAniCatalog Use Case</h3>
+<p>CAAAniCatalog is a use case of the CAAAnalysisInterfaces.edu framework that 
+illustrates the CATIA Analysis modeler frameworks capabilities.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAAniCatalog Do</h4>
+<p>The goal of this use case is to create&nbsp; new StartUp by deriving the 
+existing one and to generate the Catalog File containing them. For this, all the 
+required methods are included inside the <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATSamCatalogFactory');return false;">
+<b>CATSamCatalogFactory</b></a>. You do not have to manage prerequisite catalog 
+knowledge or the exact attribute names used for the modelisation.</p>
+<p>The main methods to use inside this include are:</p>
+<ul>
+  <li>CATSamCatalogFactory::CreateAnalysisSet that allow to create a new startup 
+  that derive from Analysis Set. This include several subtypes as AnalysisSet, 
+  SolutionSet, RestraintSet, LoadSet ....</li>
+  <li>CATSamCatalogFactory::CreateMSHPart that allow to derive all startups for 
+  meshing arena and integrate new mesher.&nbsp;</li>
+  <li>CATSamCatalogFactory::CreateAnalysisEntity that allow to derive all 
+  startups at the Analysis Entity (Preprocessing actions) level. This include 
+  several subtypes as AnalysisEntity, AnalysisLoad, AnalysisConnection ....</li>
+  <li>CATSamCatalogFactory::CreateBasicComponent that allow to derive all 
+  startups at the Basic component level (Preprocessing data). This include 
+  several subtypes as BasicComponent, SAM3DVector, SAMTensor.... For using 
+  directly literal features as basic component, use the CATICkeParmFactory 
+  interface that is implemented on the CATICatalog object.</li>
+</ul>
+<p>More specifically, the CAAAniCatalog use case shows how to:
+<ul>
+  <li>Create a new catalog file named CAAAniCatalog to be stored in the 
+  CATAniCatalog.CATfct file</li>
+  <li>Create the AeroDynamicSet StartUp by it deriving from&nbsp;this SolutionSet 
+  StartUp</li>
+  <li>Assign a value to an inherited attribute and add an attribute to the 
+  created&nbsp; AeroDynamicSet StartUp</li>
+  <li>Create the AeroMeshPart StartUp by it deriving from&nbsp;this MSHPART StartUp</li>
+  <li>Store the catalog file.</li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAniCatalog</h4>
+<p>To launch CAAAniCatalog, you will need to set up the build time environment, 
+then compile CAAAniCatalog along with its prerequisites, set up the run time 
+environment, and then execute the use case [<a href="#Ref2">2</a>]. Launch 
+CAAAniCatalog as follows:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>CAAAniCatalog 
+      InstallRootDirectory\intel_a\resources\graphic\CAAAniCatalog_1.CATfct</code></td>
+    </tr>
+    <tr>
+      <td>AIX</td>
+      <td><code>CAAAniCatalog 
+      InstallRootDirectory/aix_a/resources/graphic/CAAAniCatalog_1.CATfct</code></td>
+    </tr>
+    <tr>
+      <td>HP-UX</td>
+      <td><code>CAAAniCatalog 
+      InstallRootDirectory/hpux_a/resources/graphic/CAAAniCatalog_1.CATfct</code></td>
+    </tr>
+    <tr>
+      <td>Solaris</td>
+      <td><code>CAAAniCatalog 
+      InstallRootDirectory/solaris_a/resources/graphic/CAAAniCatalog_1.CATfct</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAniCatalog Code</h4>
+<p>CAAAniCatalog code is located in the CAAAniCatalog.m use case module of the 
+CAAAnalysisInterfaces.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniCatalog.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniCatalog.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed. It is made of a unique source file named CAAAniCatalog.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical sections in CAAAniCatalog.m. We will now comment each 
+of those sections by looking at the code.</p>
+<ul>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#CreatingCatalog">Creating the StartUp Catalog</a></li>
+  <li><a href="#CatalogId">Adding a Client Identification to the StartUp Catalog</a></li>
+  <li><a href="#CreatingStartup">Creating the AeroDynamicSet StartUp</a></li>
+  <li><a href="#StartupAttribut">Adding Attributes to this startup</a></li>
+  <li><a href="#CreatingMPStartup">Creating the AeroMeshPart StartUp</a></li>
+  <li><a href="#Savingcatalog">Saving the catalog</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case begins by creating a session [<a href="#Ref1">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatingCatalog"></a>Creating the StartUp Catalog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>CATICatalog</b> *<b>piCatalog</b> = NULL;
+CATUnicodeString storageName = argv[1];
+rc = ::<b>CreateCatalog</b>(&amp;storageName, &amp;<b>piCatalog</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreateCatalog</code> global function creates a StartUp catalog 
+using the pathname passed as an argument of the use case and returns the created 
+StartUp catalog as a pointer to <i>CATICatalog</i>. If the CATfct suffix were 
+omitted in the pathname, it would be automatically added.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CatalogId"></a>Adding a Client Identification to the StartUp 
+Catalog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString clientId(&quot;CAAAniCatalog&quot;);
+rc = piCatalog -&gt; <b>SetClientId</b>(&amp;clientId);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A StartUp catalog cannot be used without any client identification. This 
+client identification is a <i>CATUnicodeString</i> instance set using the <code>
+SetClienId</code>
+method of <i>CATICatalog</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatingStartup"></a>Creating the AeroDynamicSet StartUp</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBaseUnknown *pAeroSU = NULL;
+CATUnicodeString AeroSUType(&quot;AeroDynamicSet&quot;);
+CATUnicodeString SolutionSUType(&quot;SolutionSet&quot;);
+rc = CATSamCatalogFactory::CreateAnalysisSet (&amp;AeroSUType,&amp;SolutionSUType,&amp;pAeroSU,&amp;piCatalog);
+
+<b>CATISpecObject *piSpecAeroSU = (CATISpecObject*) pAeroSU;
+</b>pAeroSU -&gt; Release();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The AeroDynamicSet StartUp is created using the 
+CATSamCatalogFactory::CreateAnalysisSet method in the new catalog CAAAniCatalog. 
+The parameters of this method are:</p>
+<p>This StartUp derives from the StartUp &quot;SolutionSet&quot; found in the existing 
+catalog we just loaded. The new StartUp is created using the <code>
+CreateSUInCatalog</code>
+method of <i>CATICatalog</i>.&nbsp; This method takes as arguments:</p>
+<ul>
+  <li>The pointer to the new StartUp
+  <li>The type of the new StartUp set to <code>AeroDynamicSet</code>
+  <li>The super type of the new StartUp: this is the type of the StartUp found 
+  in the AnalysisModeler catalog from which this new StartUp will derive, set to <code>
+  SolutionSet</code>.</li>
+</ul>
+<p>Note that the pointer to the created StartUp must nevertheless be cast to <i>
+CATISpecObject</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="StartupAttribut"></a>Adding Attributes to the StartUp</h4>
+<p>It is now time to assign a value to the inherited <code>PhysicalType</code>
+attribute, and to create a new attribute named <code>ExternalFile</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Valuate PhysicalType attribute
+CATUnicodeString PType(&quot;AERODYNAMICS_STEADY_STATE&quot;);
+CATSamCatalogFactory::SetPhysicalType(pAeroSU, &amp;PType);
+
+// Define  ExternalFile attribute : Create New Startup of SAMBCFileAccess BasicComponent
+
+CATUnicodeString NewBCType(&quot;ANIFileLink&quot;);
+CATUnicodeString DeriveBCType(&quot;SAMBCFileAccess&quot;);
+CATBaseUnknown * piOut = NULL;
+CATSamCatalogFactory::CreateBasicComponent (&amp;NewBCType,&amp;DeriveBCType,&amp;piOut,&amp;piCatalog);
+if (piOut)
+{
+   CATISamBasicComponent_var spComponent(piOut);
+   if (!!spComponent)
+   {
+// Valuate the External file attributethat defined the type of files to select:
+//      spComponent -&gt; SetStringValue(&quot;print;fif&quot;,&quot;LinkType&quot;); // Example for Multi file extension selection
+     spComponent -&gt; SetStringValue(&quot;print&quot;,&quot;LinkType&quot;);
+   }
+   piOut -&gt; Release();
+}
+// Associate the Basicomponent as a parameter of the set
+  CATISamAnalysisSet *piAnalysisSet =NULL;
+  pAeroSU -&gt; QueryInterface(IID_CATISamAnalysisSet,(void **)&amp; piAnalysisSet);
+  if (piAnalysisSet)
+  {
+    piAnalysisSet -&gt; AddBasicComponent(&quot;ANIFileLink&quot;,&quot;ANIFileLink&quot;);
+    piAnalysisSet -&gt; Release();
+  }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The physical type attribute is common to all Analysis feature, to set it in 
+the catalog file the CATSamCatalogFactory::SetPhysicalType method may be used. 
+This method uses the pointer on the created startup set as a <i>CATISpecObject</i>
+and the <i>CATUnicodeString</i> that represent the the physical type.</p>
+<p>To create a new attribute, use the existing pointer to <i>CATISpecObject</i>
+onto the StartUp to retrieve the CATISamAnalysisSet interface pointer, and use 
+the AddBasicComponent method. This method will instantiate the SAMBCFileAccess 
+with a customized name defined as ANIFileLink. The&quot; LinkType&quot; attribute is also 
+prevaluated in order to set up the kind of file that can be linked by the basic 
+component.</p>
+<p>Note that it is important to define a new startup of the basic component in 
+order to define an NLS Customization and to valuate some private attributes at 
+the level of the statup (in this case, the <i>LinkType</i> attribute).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatingMPStartup"></a>Creating the AeroMeshPart StartUp</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CCATBaseUnknown *pMpAeroSU = NULL;
+CATUnicodeString MPType(&quot;AeroMeshPart&quot;);
+rc = CATSamCatalogFactory::CreateMSHPart (&amp;MPType,&amp;pMpAeroSU,&amp;piCatalog);
+
+if (NULL == pMpAeroSU) 
+{
+    cout &lt;&lt; &quot;ERROR in creating Mesh Part StartUp&quot; &lt;&lt; endl &lt;&lt; flush;
+    piCatalog -&gt; Release();
+    return 3;
+}
+else cout &lt;&lt; &quot;Mesh Part StartUp created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+//
+CATISpecObject *piMshMart = (CATISpecObject*) pMpAeroSU;
+if ( NULL != piMshMart)
+{
+   CATISpecAttribute * Attribute = piMshMart-&gt;AddAttribute(&quot;InputLink&quot;,tk_specobject,sp_IN);
+   if (Attribute) Attribute-&gt; Release();Attribute = NULL;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The AeroMeshPartStartUp is created using the CATSamCatalogFactory::CreateMSHPart method in 
+the new catalog CAAAniCatalog. This is the same kind on method as for the 
+AeroDynamic Set. The parameters of this method are:</p>
+<ul>
+  <li>The pointer to the new StartUp
+  <li>The type of the new StartUp set to AeroMeshPart.
+</ul>
+<p>Also this new startup is completed by an attribute <i>InputLink</i> defined 
+as tk_specobject that will keep the link to the Import feature.</p>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Savingcatalog"></a>Epilog</h4>
+<p>The StartUp catalog is saved as any StartUp catalog by retrieving a <i>
+CATILinkableObject</i> pointer onto the StartUp catalog, retrieving a <i>
+CATDocument</i> instance from this pointer, saving the document, and deleting 
+the session [<a href="#Ref1">1</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//===============================================================================
+// Save the catalog and delete the session.
+//===============================================================================
+if (piCatalog)
+{
+  rc = ::SaveCatalog(&amp;piCatalog,&amp;storageName);
+  if (piCatalog) piCatalog -&gt; Release();
+  piCatalog = NULL;
+}
+if (FAILED(rc))
+{
+  cout &lt;&lt; &quot;ERROR in saving catalog document&quot; &lt;&lt; endl &lt;&lt; flush;
+  return 2;
+}
+//===============================================================================
+// Delete session
+//===============================================================================
+rc = ::Delete_Session(sessionName);
+if (FAILED(rc))
+{
+  cout &lt;&lt; &quot;ERROR in deleting session&quot; &lt;&lt; endl &lt;&lt; flush;
+  return 1;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create some Analysis StartUp's in the 
+newly created CAAAniCatalog catalog.&nbsp;All kinds of Analysis StartUps can be 
+created using the same process.</p>
+<p>This StartUp will later be used to <b>instantiate</b>  this features inside 
+an Analysis document. These tasks are described in next use cases [<a href="#Ref4">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1"></a>[1]</td>
+    <td valign="top"><a href="../CAAOsmQuickRefs/CAAOsmHome.htm">Feature Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2"></a>[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building and Launching a 
+    CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3"></a>[3]</td>
+    <td valign="top"><a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+    Analysis Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref4"></a>[4]</td>
+    <td valign="top"><a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+    Integrate new Feature inside Analysis</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+
+
+
+
+

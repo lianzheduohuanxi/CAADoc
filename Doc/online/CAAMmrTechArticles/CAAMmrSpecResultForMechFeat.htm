@@ -1,0 +1,802 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Specification/Result Mechanism Applied to Mechanical Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Specification/Result Mechanism Applied to Mechanical Features</h3>
+      <em>An internal view of the mechanical features.&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The aim of this article is to explain the Specification/Result modeler
+      applied to the
+      mechanical features. In other words, to describe the attributes of these
+      features and explain the result produced by the Build/Update mechanism.
+      This article is one among others in a series of articles which present various aspects of the Mechanical
+      Modeler and which are introduced in the &quot;Mechanical
+      Modeler Overview&quot; [<a href="#References">1</a>] article.&nbsp;</p>
+      <ul>
+        <li><b><a href="#Introduction">Introduction</a></b></li>
+                <li><b><a href="#Surfacic Feature Modelisation">The Surfacic Feature
+                  Modelization</a></b></li>
+        
+                <li><b><a href="#The Solid Feature Modelization">The Solid Feature
+                  Modelization</a></b></li>
+        
+                
+        <li><b><a href="#The Surfacic Body Modelization">The Surfacic Features Set
+          Modelization</a></b></li>
+          <ul>
+            <li><b><a href="#GSM Internal Desc">A Net of Features</a></b></li>
+            <li><b><a href="#An Ordered or not Net of Features">An Ordered or
+              Not Net of Features</a></b></li>
+            <li><b><a href="#GSM Result">Retrieving the Surfacic Features Set Result</a></b></li>
+          </ul>
+        
+        
+                               
+        <li><b><a href="#The Hybrid Body Modelization">The Solid and Surfacic Features Set
+          Modelization</a></b>
+          <ul>
+                        <li><b><a href="#MT Internal Desc">A Chain of Solid Features</a></b></li>
+            <li><b><a href="#Navigating through the PV">Navigating through the Solid
+              Features Chain</a></b></li>
+            <li><b><a href="#MT Result">Retrieving the Solid and Surfacic Features Set
+              Result</a></b></li>
+          </ul>
+        </li>
+        
+        <li><b><a href="#CATIBodyRequest Usage">CATIBodyRequest Usage</a></b></li>
+        
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>The Feature Modeler [<a href="#References">2</a>] is a <b>Specification/Result modeler</b> in that it allows the
+creation of a network of inter-related data objects in order to be able to
+automatically update the &quot;result&quot; of an object whose &quot;specification&quot;
+has been modified. The Spec/Result Modeler provides an infrastructure for
+spec/result management, also called the Build/Update mechanism.&nbsp;</p>
+<p>Mechanical features are&nbsp; features that derive from the
+MechanicalFeature StartUp. The UML schema below is an extract of the tree of StartUps
+deriving from the MechanicalFeature StartUp.</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: MechanicalFeature Architecture</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrMFAll.jpg" width="632" height="557"></td>
+    </tr>
+  </tbody>
+</table>
+<p>&quot;The Contents of the specification Container - Geometrical Features Sets&quot; article [<a href="#References">3</a>]
+describes the geometrical feature sets (features deriving from the MechanicalRoot
+StartUp), and &quot;The Contents of the specification Container - Geometrical
+Features&quot;
+article&nbsp; [<a href="#References">4</a>] describes the geometrical features
+(those deriving from the GeometricalElement StartUp).</p>
+<p>This article first consists in presenting the useful data (the modelization) needed to build,
+and to retrieve the result of the geometrical features. For these features, the result is a topological result, in other words
+a <i>CATBody</i>  object [<a href="#References">5</a>]. First it is for the <a href="#Surfacic Feature Modelisation">surfacic
+features</a>, and then for the <a href="#The Solid Feature Modelization">solid
+features</a>.&nbsp;</p>
+<p>This article next explains the internal modelization of the geometrical feature sets, in other words how each feature contained in a
+set takes part to the result of the set. First it is for the <a href="#The Surfacic Body Modelization">surfacic
+features set</a> (feature deriving from the GSMTool StartUp), and then for the <a href="#The Hybrid Body Modelization">solid
+and surfacic features set</a> (feature deriving from the HybridBody StartUp).</p>
+<p> The last section of this article consists in to explain the usage
+of the <i>CATIBodyRequest</i>  interface. It is the interface which returns
+the result of a geometrical feature sets.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Surfacic Feature Modelisation"></a>The Surfacic Feature Modelization</h3>
+<p>The surfacic feature is a feature that generally derives from either GeometricalElement3D or
+from the GSMGeom [<a href="#Fig.1">Fig.1</a>] StartUps. &nbsp;It
+is a feature for which the <code>IsAsShape</code> method of the <i>CATIMf3DBehavior</i>
+interface always returns <code>S_OK</code>.</p>
+<p> It has sp_in
+attributes but no sp_out attributes. The result of the build process, the topological
+result, is held by the surfacic feature itself. The following figure describes
+this:</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: Surfacic Feature Modelisation</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrModelSurfacicFeat.jpg" width="413" height="259"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To retrieve the topological result, a <i> CATBody</i>  
+(NewTopologicalObject), you should use the <code>GetBodyResult</code>
+method of the <i>CATIGeometricalElement</i>    (MechanicalModeler) interface on
+the surfacic feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="The Solid Feature Modelization"></a>The Solid Feature Modelization</h3>
+<p>The solid feature is a feature which generally derives from either the MechanicalFormFeature or
+from the MechanicalContextualFeature [<a href="#Fig.1">Fig.1</a>] StartUp.&nbsp;It
+is a feature for which the <code>IsAsSolid</code> method of the <i>CATIMf3DBehavior</i>
+interface always returns <code>S_OK</code>.</p>
+<p>The solid feature has sp_in and sp_out attributes. Two of them are, therefore,
+particular; they are called ResultIN and ResultOUT though the real names of
+these two attributes are not significant. The <i>CATIShapeFeatureBody</i>  
+ (MechanicalModeler)
+interface enables you to retrieve these attributes. The ResultOUT attribute is
+valuated by a Solid feature which is aggregated by the solid feature. For <b>S</b>olid
+feature,
+with a uppercase, solid is the name of the StartUp, and for <b>s</b>olid feature, with a lowercase,
+solid represents the nature of the feature. The
+following figure describes this:</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: Solid Feature Modelization</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrModelShapeFeat.jpg" width="524" height="360"></td>
+    </tr>
+  </tbody>
+</table>
+<p>The Solid feature represents the result of the solid feature, meaning that
+it holds the topological result produced by the <code>Build</code> method of the
+<i>CATIBuild</i>  interface [<a href="#References">5</a>]. In order to retrieve the
+resulting <i>CATBody</i> of the solid feature, you have two means (*):</p>
+<ol>
+  <li>Use directly the <code>GetBodyOUT</code> method of the <i>CATIShapeFeatureBody
+    (</i>MechanicalModeler) interface&nbsp;</li>
+  <li>First retrieve the aggregated Solid feature and next apply the <code>GetBodyResult</code>
+    method of the <i>CATIGeometricalElement</i> interface on it. To obtain the
+    Solid feature, you should use the <i>CATIShapeFeatureBody&nbsp;</i>
+    interface and its <code>GetResultOUT</code> method.&nbsp;</li>
+</ol>
+<p>(*) In both these two cases, the <i>CATBody </i>is those of the default 3D
+view. You cannot retrieve the unfolded view for example.</p>
+<p>The <code>GetBodyResult</code> method of the <i>CATIGeometricalElement</i>
+interface enables you to retrieve a topological result, in other words a <i>CATBody</i>
+object. The next diagram [<a href="#Fig.4">Fig.4</a>] represents the three cases
+to take into account by applying this method on a solid feature:</p>
+<ul>
+  <li>The position of the feature in the solid and surfacic features set (SSS)</li>
+  <li>The feature is a form feature</li>
+  <li>The feature is a contextual feature</li>
+</ul>
+<table>
+  <caption><i><a name="Fig.4">Fig.4</a>: The Topological Result</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrGetImplementationValue.jpg" width="445" height="440"></td>
+    </tr>
+  </tbody>
+</table>
+<p>You can notice that:</p>
+<ol>
+  <li>The Pad being the <b>first</b> object in the SSS, the <code>GetBodyResult</code> 
+    method applied to the solid feature or to its Solid feature returns the same <i>CATBody</i>,
+    the one created by the <code>Build</code> method.</li>
+  <li>The Hole feature is a <b>form</b>  feature, and the <code>GetBodyResult</code> 
+    method applied to the solid feature returns the topological result
+    representing the form of the feature (a cylinder). This <i>CATBody</i>
+    object is an internal data, created by the <code>BuildShape</code> method of
+    the <i>CATIBuildShape</i> interface, that you should not use. The topological result
+    created by the <code>Build</code> method on the solid feature, the Hole is returned by the <code>GetBodyResult</code> 
+    method on its Solid feature.&nbsp;</li>
+    <li>The EdgeFillet feature is a <b>contextual</b>  feature, and the <code>GetBodyResult</code>
+      method applied to either the EdgeFillet or to its Solid feature returns the
+      topological result of the contextual feature. (the Pad with a hole and an
+      edge).</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="The Surfacic Body Modelization"></a>The Surfacic Features Set Modelization</h3>
+<p>A surfacic features set is a set of features from zero to three dimension: points, wires,
+surfaces and volumes. The following picture <a href="#Fig.5">Fig.5</a> shows some of
+them into Geometrical Set
+and Ordered Geometrical Set, the two kinds of surfacic features set.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.5">Fig.5</a>: Surfacic features into Surfacic Bodies</i></caption>
+  <tbody>
+    <tr>
+      <td valign="top"><img src="images/CAAMmrResultSurfacicBody.jpg" width="438" height="335"></td>    </tr>
+  </tbody>
+</table>
+<p>Just above the picture illustrates, or introduces three things:</p>
+<ol>
+  <li>The surfacic features set forms a &quot;net&quot; of features where each feature
+    has its own result: there is a <i>CATBody</i> for <code>Point.1</code>, <code>Point.2,</code>
+    <code>Line.1</code>.</li>
+  <li>Each surfacic feature into surfacic features set has a result, even the no
+    relevant features. You can see that <code>Extrude.2</code>, absorbed by <code>Split.1</code>
+    is not drawn in 3D, but it is possible to highlight it because its result
+    exists.&nbsp;</li>
+  <li>The result of a surfacic features set is the list of its relevant features, the result of
+    <code>
+    Ordered Geometrical Set.2</code> will be different of <code> Geometrical Set.3</code>
+    even they contain the same type of features.&nbsp;</li>
+</ol>
+<p>These three aspects are now detailed.&nbsp;</p>
+<h4><a name="GSM Internal Desc"></a>The Net of Features</h4>
+<p>The features inside the surfacic features set form a net with their sp_in attributes. The
+next schema gives an example with two points and a line.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.6">Fig.6</a> A Net of Features</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrBuildGSMT.jpg" width="220" height="320"></td>
+    </tr>
+  </tbody>
+</table>
+<p>You can see that:&nbsp;</p>
+<ul>
+  <li>The surfacic features have no sp_out attributes&nbsp;
+  <li>The sp_in attributes of the line are the Pt1 and Pt2 features.&nbsp;
+  <li>The topological result is held by the feature itself.&nbsp;</li>
+</ul>
+<p>This schema, <a href="#Fig.6">Fig.6</a>,&nbsp; is independent of the type of
+the surfacic features set. The
+absorbed features are integrated into this net, and have also a result. You can use <i>CATIGeometricalElement</i>
+interface to retrieve their <i>CATBody</i> such as the other surfacic features.</p>
+<h4><a name="An Ordered or not Net of Features"></a>An Ordered or not Net of
+Features</h4>
+<p>The ordered surfacic features set has been introduced in R13 to strength the end user to create a feature which
+only relies on features above it in
+the specification tree [<a href="#References">6</a>]. Let us consider the consequences in term of graph thanks to the following two
+samples.&nbsp;</p>
+<table border="0" width="833">
+<caption><i><a name="Fig.7a">Fig.7a</a> A Non Ordered Net of Features for a Geometrical Set</i></caption>
+
+  <tr>
+    <td valign="top" width="371"><img src="images/CAAMmrSpecResultGS.jpg" width="341" height="189">
+      <p>Above, <a href="#Fig.7a">Fig.7a</a>, it is a Geometrical Set. After its creation, <code>Line.1</code> 
+is relied on <code>Point.3</code> in
+place of <code>Point.2</code>, and <code>Extrude.1</code>  is relied on <code>Plane.2</code>
+in place of <code>Plane.1</code>. On right, you can see that the arrows (sp_in
+references) are in all directions.&nbsp;</p>
+    </td>
+    <td width="448"><img border="0" src="images/CAAMmrSpecResultGSDesign.jpg" width="174" height="311"></td>
+  </tr>
+</table>
+<table border="0" width="833">
+<caption><i><a name="Fig.7b">Fig.7b</a> An Ordered Net of Features for an Ordered Geometrical Set</i></caption>
+
+  <tr>
+    <td valign="top" width="424"><img src="images/CAAMmrSpecResultOGS.jpg" width="329" height="196">
+      <p>Now on <a href="#Fig.7b">Fig.7b</a> it is an Ordered Geometrical Set with the same features as the
+previous Geometrical Set. But the modifications done on the previous GS are not possible for
+this OGS: <code>Point.3</code> is below <code>Line.1</code>, and <code>Plane.2</code>
+is below <code>Extrude.1</code>. So, on the left picture, you can see that the arrows
+      (sp_in references) are
+all in the same direction (top-down), since all the
+sp_in attributes of a feature come from features above it in the specification
+tree.&nbsp;</p>
+    </td>
+    <td width="395"><img border="0" src="images/CAAMmrSpecResultOGSDesign.jpg" width="176" height="307"></td>
+  </tr>
+</table>
+<p>The previous samples are not really relevant, but you can imagine that for an huge
+graph the
+rule of order can be useful.&nbsp;&nbsp;</p>
+<p>Attention, this order for an Ordered Geometrical
+Set is relative to the set itself. If inputs come
+from another sets, the design of the net can be no more ordered.&nbsp;</p>
+<h4><a name="GSM Result"></a>Retrieving the Surfacic Features Set Result</h4>
+<p>In order to retrieve the result of a surfacic features set, you must use the <i>CATIBodyRequest</i> 
+interface. Its usage is explained in the last section, the&nbsp; <a href="#CATIBodyRequest Usage">CATIBodyRequest Usage
+</a>section. The contents of the list returned by the unique <code> GetResults</code> method is
+depending on the type of the surfacic features set:</p>
+
+  <ul>
+  <li>A <b>Geometrical Set</b>:&nbsp;</li>
+  <p>There are as many elements in the list as there are features aggregated by the
+  Geometrical Set feature, and implementing the <i>CATI3DGeometricalElement</i> interface (Sketches
+  are included).&nbsp;Just below, two
+  samples to illustrate the result of the <code> GetResults</code>  method
+  applied on a
+  Geometrical Set feature.</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAMmrResultBodyRequestGeomSet.jpg" width="152" height="189"></td>
+      <td>
+        <ul>
+          <li> <code> GetResults</code>  applied on <code>Geometrical Set.1</code>
+ returns <code>Line.1</code>  and <code>Point.3</code>
+          </li>
+          <li> <code> GetResults</code>  applied on <code>Geometrical Set.2</code> returns&nbsp;<code>Point.3</code> and <code>Sketch.1</code>&nbsp;
+          </li>
+        </ul>
+        <p>&nbsp;</p>
+        <p>&nbsp;
+      </td>
+    </tr>
+  </table>
+  <p>The <code> GetResults</code>   method is not recursive for the Geometrical Set
+  features:</p>
+  <ul>
+  <li>The aggregated sets are not taken into account: <code>Point.4</code> and <code>Sketch.1</code>
+    are not in the list of <code>Geometrical Set.1</code>
+  </li>
+  <li>The features aggregated into features are also excluded: <code>Point.1</code>
+    and <code>Point.2</code> are not in the list of <code>Geometrical Set.1</code>
+  </li>
+  </ul>
+  <p>The <code> GetResults</code>   method has the same result as the <code>GetDirectChildren</code>
+    method of the <i>CATIDescendants</i> interface with <i>CATIGeometricalElement</i>
+  (or <i>CATI3DGeometricalElement)</i>  interface as filter.&nbsp;</p>
+      </ul>
+ 
+
+  <ul>
+  <li>An <b>Ordered Geometrical Set</b>  </li>
+  <p>Just below, two
+  samples to illustrate the result of the <code> GetResults</code>  method
+  applied on an Ordered Geometrical Set (OGS).</p>
+  <table border="0" height="164">
+    <tr>
+      <td valign="top" height="160"><img border="0" src="images/CAAMmrResultBodyRequestOGeomSet.jpg"></td>
+      <td height="160">
+ <code> GetResults</code>  applied on <code> Ordered Geometrical Set.1</code>
+            returns:
+            <ul>
+              <li><code>Sketch.1&nbsp;</code></li>
+              <li><code>+ Split.1&nbsp;</code></li>
+              <li>+ The result of <code> Ordered Geometrical Set.2:&nbsp;</code>
+                <ul>
+                  <li><code>Point.1&nbsp;</code></li>
+                  <li>+ <code>Point.2</code></li>
+                  <li><code>+ Line.1</code></li>
+                  <li>+ The result of <code>Body.2&nbsp;</code>- see the <code> </code><code><a href="#MT Result">R</a></code><a href="#MT Result">etrieving the Solid and Surfacic Features Set Result</a><code>
+                    </code>section<code>&nbsp;</code></li>
+                </ul>
+              </li>
+              <li>+ The result of <code>Body.3 </code>- see the<code> <a href="#MT Result">R</a></code><a href="#MT Result">etrieving the Solid and Surfacic Features Set Result</a><code>
+                </code>
+                    section</li>
+            </ul>
+ <code> GetResults</code>  applied on <code> Ordered Geometrical Set.2</code>
+        returns <code>E_FAIL</code>
+        <p>&nbsp;</td>
+    </tr>
+  </table>
+  <p>In details, the behaviors of the <code> GetResults</code>  method applied on an
+  OGS are:</p>
+  <ul>
+  <li>The method is valid, only if the OGS is aggregated by the Part feature,
+    otherwise the method returns E_FAIL. The method applied on <code>Ordered Geometrical Set.2
+    </code>returns <code>E_FAIL.</code></li>
+  <li>There are as many elements in the list as there are features aggregated by the
+    OGS and implementing the <i>CATI3DGeometricalElement</i> interface (Sketches
+  are included)
+    excepted the absorbed features: <code>Extrude.1</code> does not appear in
+    the result of <code> Ordered Geometrical Set.1.</code></li>
+  <li>The method is recursive:&nbsp;</li>
+  <ul>
+  <li>The aggregated sets are taken into account. If an OGS contains other
+    ordered sets (solid and surfacic features sets or ordered surfacic features
+    sets), the aggregated sets are processed: The contents of <code> Ordered Geometrical
+    Set.2, Body.2</code> and <code> Body.3</code> are added in the resulting
+    list of <code> Ordered Geometrical Set.1</code></li>
+  <li>The features aggregated into features are not excluded: <code>Point.1</code>
+    and <code>Point.2</code> are added in the resulting list of <code> Ordered </code> <code>Geometrical Set.1</code>
+  </li>
+     </ul>
+  <li>The order of the features in the returned list is not guarantee.&nbsp;
+  </li>
+  </ul>
+  <p>However, even if the method is recursive, the <code> GetResults</code>   method
+  it is not such as the <code>GetAllChildren</code> method of the <i>CATIDescendants</i> interface.
+  First the&nbsp;absorbed features are excluded, and then the result of a solid
+  and surfacic features set is completely different of the <code>GetAllChildren</code> 
+  method, such as described in the next section.</p>
+      </ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="The Hybrid Body Modelization"></a>The Solid and Surfacic Features Set
+Modelization</h3>
+<p>The solid and surfacic features set (SSS) can
+contain either solid and surfacic features excepted the volume [<a href="#References">4</a>].
+The following picture is an illustration.</p>
+<table>
+  <caption><i><a name="Fig.8">Fig.8</a>: Surfacic and Solid features into </i><i>s</i>olid and surfacic features
+    sets</caption>
+  <tbody>
+    <tr>
+      <td><img border="0" src="images/CAAMmrResultForHybridBodies.jpg" width="540" height="365"></td>
+    </tr>
+  </tbody>
+</table>
+<p>The above picture illustrates, or introduces, three things:</p>
+<ol>
+  <li>The surfacic features, such as <code>Surface.1</code> and <code>Offset.1</code>,
+    have their own result such as into a surfacic features set. They are included in the
+    list of features representing the result of the solid and surfacic features set.</li>
+  <li>The solid and surfacic features set is ordered such as the Ordered Geometrical Set, so you have exactly the same behavior: only
+    the relevant features are integrated into the result of a SSS feature: <code>Extrude.1</code>
+    is excluded of the <code>Body.3's</code> result.</li>
+  <li>There is only one result for the solid&nbsp;features: for <code>Body.2 </code>there
+    is no <i>CATBody </i> for <code>Pad.2</code>, <code>EdgeFillet.2</code> and
+    <code>Hole.1</code>, but rather only one <i>CATBody</i>,
+the filleted and holed Pad.&nbsp;This <i>CATBody </i>is the form obtained after successive
+    operations named a chain.&nbsp;</li>
+</ol>
+<p>For the first two points you can refer you to the previous paragraph, the <a href="#The Surfacic Body Modelization">Surfacic Features Set </a><a href="#The Surfacic Body Modelization">
+Modelization </a>paragraph. The next section explains the process used to create
+the result feature which is at the end of this &quot;chain&quot; of solid
+features.</p>
+<h4><a name="MT Internal Desc"></a>The Chain of Solid Features</h4>
+<p>The solid features inside a solid and surfacic features set are linked together by a kind of chain
+since the ResultIN attribute is valuated by the value of the ResultOUT
+attribute of the previous solid feature in the set. The next schema explains this
+chain with a solid and surfacic features set containing two solid features.</p>
+<table>
+  <caption><i><a name="Fig.9">Fig.9</a>: A Chain of Solid Features</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrBuildMT.jpg" width="253" height="315"></td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li>F1 has one or several sp_in attributes. Its sp_out attribute, named
+    ResultOUT, is valuated by the Solid A feature.&nbsp;
+  <li>The ResultIN attribute of feature F2 references the value of the
+    ResultOUT attribute of F1, i.e, the Solid A feature.
+  <li>The ResultOUT attribute of feature F2 is valuated by the Solid B
+    feature.
+  <li>The result of the SSS is the value of the ResultOUT attribute
+    of the last solid feature (*), so it is the Solid B feature.
+</ul>
+<p>(*) Not the last feature of the set such as former with the solid features
+set (MechanicalTool StartUp)., but the last solid feature. To be exact it is the
+last solid feature without update error.</p>
+<p>This chain must be always consistent with the order of aggregation into the set. It is for this reason that to insert a solid feature in
+a solid and surfacic features set you must use the <i>CATIPrtProceduralView</i> interface, and its <code>InsertInProceduralView</code>
+method instead the <i>CATIDescendants</i> interface. The <code>InsertInProceduralView</code>
+method:</p>
+<ul>
+  <li>Appends the feature in the set,&nbsp;</li>
+  <li>Makes the link between the new ResultIN and the last ResultOUT.</li>
+</ul>
+<h4><a name="Navigating through the PV"></a>Navigating through the Solid Features
+Chain</h4>
+<p>The following set of interfaces are available in order to retrieve different
+information:</p>
+<ul>
+  <li><i>CATIMechanicalTool </i>(MechanicalModeler)</li>
+  <p>This interface is used to retrieve the first and the last solid feature of the chain. The last
+  solid feature is that which aggregates the Solid feature holding the
+  topological result.&nbsp;</p>
+  <li><i>CATIShapeFeatureBody</i>   (MechanicalModeler)</li>
+  <p>This interface can be used to retrieve the previous or the next solid
+  feature(s) from the current one.</p>
+</ul>
+<h4><a name="MT Result"></a>Retrieving the Solid and Surfacic Features Set Result</h4>
+<p>The interface to retrieve the result of a solid and surfacic features set is the <i>CATIBodyRequest </i>interface too.
+Just below, it is a sample to have an overview of the list returned by the <code>GetResults</code>
+ method.</p>
+
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrResultBodyRequestHB.jpg"></td>
+    <td valign="middle">
+ <code> GetResults</code>  applied on <code> PartBody</code> returns:
+            <ul>
+              <li>The Solid result of the chain of the following solid features:
+                <ul>
+                  <li><code>Pad.1, EdgeFillet.1, Hole.1</code></li>
+                </ul>
+              </li>
+              <li><code>+ Sketch.1&nbsp;</code></li>
+                            <li><code>+ Sketch.2</code></li>
+              <li><code>+ </code> The result of <code> Ordered</code> <code>Geometrical Set.1</code>
+                <ul>
+                  <li><code>Point.1</code></li>
+                  <li><code>+ Sketch.3</code></li>
+                  <li> + The result of <code>Body.2</code>
+                    <ul>
+                      <li><code>Point.2</code></li>
+                      <li><code>+ Sketch.8</code></li>
+                      <li><code>+ Solid.1</code></li>
+                      <li><code>+ Sketch.9</code></li>
+                      <li><code>+ Split.1&nbsp;</code></li>
+                      <li><code>+ Point.3</code></li>
+                      <li><code>+ Line.1</code></li>
+                    </ul>
+                  </li>
+                                  </ul>
+              </li>
+              <li><code>+ Sketch.5</code></li>
+              <li>+ The result of <code> Ordered Geometrical Set.2</code>
+                <ul>
+                  <li><code>Sketch.7</code></li>
+                </ul>
+              </li>
+            </ul>
+ <code> GetResults</code>  applied on <code>Body.2</code> and <code>Body.3</code>
+            returns <code>E_FAIL</code>
+    </td>
+  </tr>
+</table>
+  <p>In details, the behaviors of the <code> GetResults</code>  method applied on an
+  solid and surfacic features set (SSS) are:</p>
+<ul>
+  <li>If the method is applied on a SSS which is not
+    directly aggregated by the Part feature, one aggregated by an
+Ordered Geometrical Set feature, the method returns <code>E_FAIL</code>.</li>
+  <li>The first element of the list is the main Solid feature. The
+    &quot;main&quot; means that it is the result of the chain of solid features
+    directly aggregated by the SSS on which the <code> GetResults</code>  
+    is applied. But attention if the SSS is without solid features, the first
+element of the list can be another kind of features than a Solid feature.&nbsp;</li>
+  <li>The returned list contains all the surfacic features (sketches included), excepted the absorbed
+    features (<code>Extrude.1</code> is not in the resulting list)</li>
+  <li>Except the main Solid feature position, the order of features in the
+    returned list
+    is not guarantee.&nbsp;</li>
+  <li>The method is recursive:&nbsp;</li>
+    <ul>
+  <li>The aggregated sets are taken into account. If a SSS contains other SSS or
+    OGS, the aggregated sets are processed: the contents of <code> Ordered Geometrical
+    Set.1, </code> <code> Ordered Geometrical Set.2, Body.2</code> and <code> Body.3</code> are added in the resulting
+    list of <code>PartBody</code></li>
+  <li>The features aggregated into features are not excluded: <code>Point.3</code>
+    is added in the resulting list of <code>PartBody.</code> 
+  </li>
+     </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="CATIBodyRequest Usage"></a>CATIBodyRequest
+Usage</h3>
+
+<p align="left">The <i>CATIBodyRequest</i> is the interface which retrieves the
+result of a geometrical features set. Here it is a piece of code which explains its usage.</p>
+
+      <table class="code" width="336">
+      <tr>
+        <td width="328">
+          <pre>...
+<b>CATIBodyRequest</b> *pIBodyRequest= NULL;
+pBody-&gt;QueryInterface(IID_CATIBodyRequest,(void**) &amp;pIBodyRequest);
+CATLISTV(CATBaseUnknown_var) ListResult ;
+pIBodyRequest-&gt;<b>GetResults</b>(&quot;&quot;,ListResult);
+
+<b>CATIGeometricalElement</b> * pIGeometricalElement = NULL ;
+for (int i=1 ; i&lt;= ListResult.Size(); i++)
+{
+   CATBaseUnknown_var spResult = ListResult[i];
+   spResult-&gt;QueryInterface(IID_CATIGeometricalElement ,(void**) &amp;pIGeometricalElement );
+
+   CATBody_var spBodyResult = pIGeometricalElement-&gt;<b>GetBodyResult</b>();
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+<p>where:</p>
+<ul>
+  <li><code>pBody</code> is a pointer on a geometrical features set.
+    <p>&nbsp;It can be:
+    <ul>
+      <li>A Geometrical Set (aggregated or not by another one)</li>
+      <li>A non aggregated Ordered Geometrical Set&nbsp;</li>
+      <li>A non aggregated Body feature</li>
+    </ul>
+    <p>otherwise the
+method returns <code>E_FAIL</code>.&nbsp;</p>
+  </li>
+  <li>The first argument of the <code>GetResults</code> method is the context
+    for the result:
+    <ul>
+      <li> &quot;&quot; is
+    the default value such as the &quot;<code>MfDefault3DView</code>&quot; to retrieve
+        the 3D result</li>
+      <li>&quot;<code>unfolded</code>&quot; or &quot;<code>MfUnfoldedView</code>&quot; to retrieve the unfolded result</li>
+    </ul>
+  </li>
+  <li>The second argument of the <code>GetResults</code> method is the list of
+    features which hold a topological result, and represent the result of the
+    geometrical features set.</li>
+  <li>For each element of the list, you can used the <i>CATIGeometricalElement</i>
+    interface to retrieve the <i>CATBody.&nbsp;</i></li>
+</ul>
+
+<p>You can use the &quot;Navigating a Part Document&quot; use case [<a href="#References">7</a>]
+to analyze the result of the geometrical feature sets of your own Part documents.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>In this article you learned that:</p>
+<ul>
+  <li>A surfacic feature holds itself its own topological result, whereas the topological
+    result of a solid feature is held by the Solid feature aggregated by the
+    solid feature itself.&nbsp;The <code>GetBody</code> method of the <i>CATIGeometricalElement</i>
+    interface applied on a surfacic feature, or on the Solid feature returns the <i>CATBody</i> result.&nbsp;</li>
+  <li>A set of surfacic features forms &quot;a net&quot;, whereas a set of solid
+    features forms a chain of solid features, the latter holding the
+    resulting <i>CATBody.&nbsp;</i></li>
+  <li><p>The interface to retrieve the result of a geometrical features set is <i>CATIBodyRequest</i>.
+    The following array presents the contents of the list returned by the <code>GetResults</code>
+method (column 2) depending on the type of the geometrical features set (the bolded
+    element of column 1), and its contents (the shifted elements of column 1).</p></li>
+<table border="2">
+  <tr>
+    <td  ><b>Set and its contents</b></td>
+    <td  >
+      <p align="center"><b>CATIBodyRequest::GetResults</b></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td  ><b>Body</b></td>
+    <td>Solid feature + surfacic features (- absorbed)&nbsp;</td>
+  </tr>
+  <tr>
+    <td ><b>OGS</b></td>
+    <td >surfacic features (- absorbed)&nbsp;</td>
+  </tr>
+  <tr>
+    <td ><b>GS</b></td>
+    <td >All surfacic features</td>
+  </tr>
+  <tr>
+    <td ><b>OGS1</b><br>
+      &nbsp;&nbsp;&nbsp;OGS2</td>
+    <td >
+    surfacic features (- absorbed) of OGS1 +<br>
+    surfacic features (- absorbed) of OGS2
+    </td>
+  </tr>
+  <tr>
+    <td><b>GS1</b><br>
+      &nbsp;&nbsp;&nbsp;GS2</td>
+    <td >
+      All surfacic elements of GS1&nbsp;</td>
+  </tr>
+  <tr>
+    <td ><b>Body</b>
+      <br >&nbsp;&nbsp; OGS</td>
+    <td >Solid feature of Body +<br>surfacic
+      features (- absorbed)
+      of Body +<br>
+      surfacic features (- absorbed) of OGS</td>
+  </tr>
+  <tr>
+    <td ><b>OGS</b>
+      <br>&nbsp;&nbsp;&nbsp;Body</td>
+    <td >
+      Solid feature of Body +
+      <br>surfacic features (- absorbed) of OGS +
+      <br> surfacic features (- absorbed) of Body&nbsp;</td>
+  </tr>
+  <tr>
+    <td><b>Body1</b>
+      <br>&nbsp;&nbsp;&nbsp;OGS
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Body2</td>
+    <td>Solid feature of Body1 + Solid feature of Body2
+      <br>surfacic features (- absorbed) of Body1 +
+      <br>surfacic features (- absorbed) of Body2 +
+      <br>surfacic features (- absorbed) of OGS</td>
+  </tr>
+</table>
+
+<p> This array summarizes the most important things:</p>
+
+<ul>
+  <li>
+    The absorbed features are always excluded of the result</li>
+  <li>
+    The process applied to an ordered set is
+    recursive</li>
+  <li>
+    The process applied to a Geometrical Set is not recursive</li>
+</ul>
+  <p>Attention, this table does not take into account the real order in the list.&nbsp;</p>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%" height="154">
+  <tr>
+    <td valign="top" height="18">[1]</td>
+    <td height="18"><a href="CAAMmrMechModOverview.htm">Mechanical
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[2]</td>
+    <td height="18"><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[3]</td>
+    <td height="18"><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification
+      Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[4]</td>
+    <td height="18"><a href="CAAMmrContentsSpecCont2.htm"> The Contents of the Specification
+      Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[5]</td>
+    <td height="18"><a href="CAAMmrBuildIntegrating.htm">Integrating a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[6]</td>
+    <td height="18"><a href="CAAMmrOrderLinearBody.htm">Order and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[7]</td>
+    <td height="18"><a href="../CAAMmrUseCases/CAAMmrStructuralBrowsing.htm">Navigating
+      a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2003]</td>
+    <td valign="top">Document updated for Ordered Geometrical Set</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [May 2004]</td>
+    <td valign="top">Document updated for solid and surfacic
+      features set&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

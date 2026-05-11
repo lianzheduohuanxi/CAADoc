@@ -1,0 +1,154 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Boolean Union</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Boolean Union</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A Boolean union results in a solid in which the unshared portions are 
+		unified and the shared portions cut away. The volumes making up the 
+		input bodies can be unified or not, depending on the operator. The 
+		CAAGMOperatorsCompatible use case illustrates how to perform a Boolean 
+		union with the CATICGMTopCompatible operator.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To perform a Boolean union between two solids, you can use: 
+<ol>
+				<li>either the CATICGMDynBoolean 
+operator which is created by the CATCGMCreateDynBoolean global function. The third argument 
+of the function must be set to CATBoolUnion. This operator unifies the input 
+volumes.</li>
+				<li>or the CATICGMTopCompatible operator which is created by the CATCGMCreateCompatibleForCGM
+
+				global function. This operator does not unify the input volumes.</li>
+</ol>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsCompatible.m module in CAAGMOperatorsInterfaces.edu 
+performs a Boolean union of two solid cuboids. This use case creates the 
+operator input data.&nbsp; If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input bodies below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Boolean Union Between Two Solid Cuboids 
+	(CATICGMTopCompatible)</caption>
+   <tr>
+    <td>
+	<img alt="Boolean Compatible: Inputs" src="images/CGM_boolean_union_comp_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopCompatible * pBoolOpe =::CATCGMCreateCompatibleForCGM(piGeomFactory, &topdata,
+        piCuboidBody1,
+        piCuboidBody2);
+    ...
+pBoolOpe->Run();
+CATBody *piBoolBody=NULL;
+piBoolBody = pBoolOpe->GetResult(NULL);
+...
+int nbVertices = 0;
+int nbEdges = 0;
+int nbFaces = 0;
+int nbVolumes = 0;
+// Check the number of volumes
+piBoolBody->GetCellNumbers( &nbVertices, &nbEdges, &nbFaces, &nbVolumes );
+if ( nbVolumes != 2 )
+ {
+        ::CATCloseCGMContainer(piGeomFactory);
+        return (1);
+ }
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Boolean Union: Result (CATICGMTopCompatible)</caption>
+   <tr>
+    <td>
+	<img alt="Boolean Union: Result" src="images/CGM_boolean_union_comp_1.png" width="250" height="220"></td>
+   </tr>
+   </table>
+<p>The result is a single body made up of 2 volumes, 12 faces, 24 edges and 16 vertices. 
+This can be checked by using the <tt>CATTopology::GetCellNumbers</tt> method.</p>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

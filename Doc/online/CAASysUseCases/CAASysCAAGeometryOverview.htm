@@ -1,0 +1,967 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script src="../CAADocJavaScript/submit.js" type="text/javascript">/* */</script>
+ <title>The CAAGeometry Sample</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>Frame</h1>
+     </td>
+     <td>
+     <h2></h2>
+     </td>
+     <td rowspan="2" align="right">
+     <h3><a name="Top"></a>The CAAGeometry Sample</h3>
+     <p><i>A sample to understand the main mechanisms of the V5 user interface.</i></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This use case explains, through the CAAGeometry document, the usage and 
+     the behavior of the main mechanisms of the basic &quot;Enterprise Architecture&quot; 
+     frameworks: ApplicationFrame, CATIAApplicationFrame, Dialog , 
+     DialogEngine, Visualization, VisualizationBase and System. </p>
+     <ul>
+       <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+       <li><a href="#UseCase"><strong>The CAAGeometry Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does the CAAGeometry Use Case Do</a></li>
+         <li><a href="#How">How to Launch the CAAGeometry Use Case</a></li>
+         <li><a href="#Where">Where to Find the CAAGeometry Code</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#Step-by-Step">Step-by-Step</a></b></li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case illustrates the mechanisms and the interfaces which define the 
+ user interface. It mainly concerns the <b>Frame</b> and the <b>Command</b> 
+ domains. You will learn concepts which are described in different articles 
+ indicated by the number in the bracket:</p>
+ <ul>
+   <li>In the<b> Frame</b> Domain
+   <ul>
+     <li>Creating a workbench [<a href="#References">1</a>],</li>
+     <li>Creating an Add-in [<a href="#References">2</a>],</li>
+     <li>Making Your Document Independent Command Available in All Workbenches [<a href="#References">30</a>]</li>
+     <li>Managing transitions between workbench [<a href="#References">3</a>],</li>
+     <li>Creating standard [<a href="#References">4</a>] or customized [<a href="#References">5</a>] 
+     [<a href="#References">32</a>] [<a href="#References">33</a>] [<a href="#References">34</a>] 
+     command headers,</li>
+     <li>Using Cameras [<a href="#References">6</a>],</li>
+     <li>Creating a window to visualize a document [<a href="#References">7</a>] 
+     [<a href="#References">8</a>],</li>
+     <li>Creating a Property Page for Application Properties [<a href="#References">25</a>] 
+     [<a href="#References">9</a>],</li>
+     <li>Implementing the <i>CATIContextualMenu</i> [<a href="#References">10</a>] 
+     and <i>CATIContextualSubMenu </i>on a component,</li>
+     <li>Implementing the <i>CATIEdit</i> on a component [<a href="#References">11</a>],</li>
+     <li>Creating a Property Page by implementing <i>CATIEditProperties</i> [<a href="#References">12</a>].</li>
+     <li>Using ISO [<a href="#References">29</a>]</li>
+     <li>Using Tools Palette toolbar [<a href="#References">35</a>] [<a href="#References">36</a>]</li>
+   </ul>
+   </li>
+   <li>In the <b>Command</b> Domain
+   <ul>
+     <li>About a state chart command:
+     <ul>
+       <li>Creating a simple CATStateCommand [<a href="#References">13</a>] ,</li>
+       <li>Understanding each kind of acquisition agent:
+       <ul>
+         <li>Agent of Indication [<a href="#References">14</a>] ,</li>
+         <li>Agent of selection [<a href="#References">15</a>] [<a href="#References">16</a>] 
+         ,</li>
+       </ul>
+       </li>
+       <li>Managing Undo/Redo [<a href="#References">17</a>] [<a href="#References">18</a>] 
+       ,</li>
+       <li>Using Dialog box to enhance the user interface : in association with 
+       a state [<a href="#References">19</a>] or with an agent [<a href="#References">20</a>] 
+       [<a href="#References">21</a>],</li>
+       <li>Creating contextual menu [<a href="#References">22</a>] ,</li>
+     </ul>
+     </li>
+     <li>Creating a Dialog Command [<a href="#References">23</a>] ,</li>
+     <li>Creating an interruptible task [<a href="#References">24</a>].</li>
+   </ul>
+   </li>
+   <li>In the <b>Visualization</b> Domain
+   <ul>
+     <li>Using ISO [<a href="#References">29</a>]</li>
+     <li>Using Viewer Feedback [<a href="#References">31</a>]</li>
+   </ul>
+   </li>
+ </ul>
+ <p>This use case is interesting for at least two reasons. At 
+ first, you can study the concepts by reading the articles or directly the code. 
+ By this way you have a static view. But you can also have an interactive view
+ to understand, for example, the call order. Most of the classes display output 
+ in the constructor, destructor, and in main methods.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAGeometry Use Case</h3>
+ <p>CAAGeometry is a use case distributed on several frameworks: 
+ CAAApplicationFrame.edu, CAACATIAApplicationFrm.edu, CAADialogEngine.edu, 
+ CAAVisualization.edu, CAAObjectModelerBase.edu and CAASystem.edu. They 
+ illustrate ApplicationFrame, CATIAApplicationFrame, Dialog, DialogEngine, 
+ Visualization, VisualizationBase and System framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does the CAAGeometry Use Case Do</h4>
+ <p>The CAAGeometry use case is mainly a set of commands which group together 
+ the main interfaces and behaviors of the frame/command domains. These commands 
+ are used to edit the CAAGeometry document. This document has two workbenches: 
+ The CAA V5: Geometrical Creation and the CAA V5: Geometrical Analysis 
+ workbenches.</p>
+ <p>
+     <img alt="" src="images/CAASysCAAGeometryStartMenuFileNew.jpg" width="551" height="283"></p>
+ <p>The CAAGeometry workshop consists in commands which are located in the menu 
+ bar and inside five toolbars, the last three toolbars being add-in toolbars.</p>
+ <p>
+     <img alt="" src="images/CAASysCAAGeometryWks.jpg" width="448" height="367"></p>
+ <p>The CAA V5: Geometrical Creation workbench contains two toolbars whose the 
+ Operation toolbar which is a Add-in toolbar. ( The menu bar, not described 
+ here, contains the commands too)</p>
+ <p>
+     <img alt="" src="images/CAASysCAAGeometryWkbElt.jpg" width="366" height="164"></p>
+ <p>The CAA V5: Geometrical Analysis workbench contains one toolbar. ( The menu 
+ bar, not described here, contains the commands too)</p>
+ <p>
+     <img alt="" src="images/CAASysCAAGeometryWkbAna.jpg" width="224" height="99"></p>
+ <p>The Basic Elements toolbar contains commands to create the CAAGeometry 
+ document elements: point, line, plane, cercle ...</p>
+ <p>
+     <img alt="" src="images/CAASysCAAGeometrySomeElt.jpg" width="539" height="385"></p>
+ <p>The use case shows the implementation of some interfaces on the elements:</p>
+ <ul>
+   <li>The <i>CATIEdit</i> implementation
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometryPlaneEdit.jpg" width="242" height="138"></td>
+       <td>On the Plane element</td>
+     </tr>
+   </table>
+   </li>
+   <li>The <i>CATIContextualMenu </i>implementation
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometryMenu.jpg" width="159" height="321"></td>
+       <td>On the Ellipse element</td>
+     </tr>
+   </table>
+   </li>
+   <li>The <i>CATIContextualSubMenu </i>implementation
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometrySubMenu.jpg" width="369" height="94"></td>
+       <td>On the Plane element</td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p>There are other behaviors:</p>
+ <ul>
+   <li>The Edit Properties
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometryEditProperties.jpg" width="285" height="157"></td>
+       <td>On the Circle element</td>
+     </tr>
+   </table>
+   </li>
+   <li>The Tools Options pages
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometryToolsOptions.jpg" width="322" height="332"></td>
+       <td>For the CAA V5: Geometrical Creation workbench</td>
+     </tr>
+   </table>
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysCAAGeometryToolsOptions2.jpg" width="321" height="337"></td>
+       <td>For the CAA V5: Geometrical Analysis workbench</td>
+     </tr>
+   </table>
+   </li>
+   <li>Customized command header
+   <p>There are two reasons to customize a command header:</p>
+   <ul>
+     <li>Set available or not a command depending on a context, [<a href="#References">5</a>]</li>
+     <li>Customize the default graphic representation. Just below, two examples 
+     are given:
+     <p>The left picture shows a combo of colors [<a href="#References">32</a>], 
+     on the middle a dynamic list of push items (Item 1,Item 2) [<a href="#References">33</a>], 
+     and on right two editors [<a href="#References">34</a>]. Third are 
+     specialized command headers.</p>
+     <table border="0">
+       <tr>
+         <td>
+         <img alt="" src="images/CAASysCommandHeaderComboHdr.jpg" width="143" height="51"><img alt="" src="images/CAASysCommandHeaderMRUHdr.jpg" width="173" height="79"></td>
+         <td valign="bottom">
+         <img alt="" src="images/CAASysCommandHeaderEdtHdr.jpg" width="229" height="47"></td>
+       </tr>
+     </table>
+     </li>
+   </ul>
+   </li>
+   <li>
+   <p>Tools Palette
+   <p>You can provide to the end user some &quot;options&quot;. These options 
+   are command header instances integrated in the Tools Palette toolbar. It is a 
+   specific toolbar, that the frame application creates. A workbench can added 
+   options [<a href="#References">36</a>], or a command [<a href="#References">35</a>].</p>
+   <table border="0">
+     <tr>
+       <td>
+       <img alt="" src="images/CAASysToolsPalette.jpg" width="351" height="57"></td>
+     </tr>
+   </table>
+   <p>On this above picture, you can see a command header instance represented 
+   by two editors [<a href="#References">34</a>], and inserted in the toolbar by 
+   the &quot;CAAGeometry Creation&quot; workbench [<a href="#References">36</a>]. The 
+   other forth icons are command header instances created in the Cuboid command 
+   [<a href="#References">35</a>].</p>
+ </li>
+ </ul>
+ <p>The Geometrical Creation workbench contains commands to create 
+ components of the CAAGeometry document. These components are the following:</p>
+ <ul>
+   <li><code>CAASysPoint</code>, for point elements.</li>
+   <li><code>CAASysLine</code> , for line elements</li>
+   <li><code>CAASysPlane</code>, for plane elements</li>
+   <li><code>CAASysPolyline</code>, for polyline, triangle and 
+   rectangle elements</li>
+   <li><code>CAASysCircle</code>, for circle elements</li>
+   <li><code>CAASysEllipse</code>, for ellipse elements</li>
+   <li><code>CAASysCuboid</code>, for cuboid elements</li>
+   <li><code>CAASysCylinder</code>, for cylinder elements</li>
+ </ul>
+ <p>The root component, not created by a command , is <code>
+ CAASysGeomRootObj</code>. This component implements some interfaces whose the 
+ main one is <i>CATIUIActivate</i> to provide the workshop of the CAAGeometry 
+ document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="How"></a>How to Launch the CAAGeometry Use Case</h4>
+ <p>To launch the CAAGeometry use case, you will need to set up the build time 
+ environment, then compile:</p>
+ <ul>
+   <li>The following modules of the <b>CAAApplicationFrame.edu</b> framework:
+   <ul>
+     <li>CAAAfrGeoAnalysisWbench.m</li>
+     <li>CAAAfrGeoCreationWbench.m</li>
+     <li>CAAAfrGeoEdition.m</li>
+     <li>CAAAfrGeoCreationWkbAddin.m</li>
+     <li>CAAAfrGeoDocument.m</li>
+     <li>CAAAfrGeoModel.m</li>
+     <li>CAAAfrGeoSubMenu.m</li>
+     <li>CAAAfrGeoWindows.m</li>
+     <li>CAAAfrGeoWksAddin.m</li>
+     <li>CAAAfrGeoWksAddin2.m</li>
+     <li>CAAAfrGeometryWksTransition.m</li>
+     <li>CAAAfrGeometryWshop.m</li>
+     <li>CAAAfrProgressTask.m</li>
+     <li>CAAAfrSampleDocument.m</li>
+     <li>CAAAfrGeoCommands.m</li>
+     <li>CAAAfrGeneralWksAddin.m</li>
+     <li>CAAAfrCustCommandHdrModel.m</li>
+     <li>CAAAfrCustomizedCommandHeader.m</li>
+     <li>CAAAfrPaletteOptions.m</li>
+   </ul>
+   </li>
+   <li>The following modules of the <b>CAACATIAApplicationFrm.edu</b> framework:
+   <ul>
+     <li>CAACafContextualMenu.m</li>
+     <li>CAACafCtrlToolsOptions.m</li>
+     <li>CAACafEditColorProp.m</li>
+     <li>CAACafEditTextureProp.m</li>
+     <li>CAACafEltToolsOptions.m</li>
+     <li>CAACafGeoDocument.m</li>
+     <li>CAACafRootProperties.m</li>
+     <li>CAACafUseToolsOptions.m</li>
+     <li>CAACafViewToolsOptions.m</li>
+     <li>CAACafViewerFeedback.m</li>
+   </ul>
+   </li>
+   <li>The following modules of the <b>CAADialogEngine.edu</b> framework:
+   <ul>
+     <li>CAADegGeoCommands.m</li>
+     <li>CAADegMultiDocCmd.m</li>
+   </ul>
+   </li>
+   <li>The following modules of the <b>CAAObjectModelerBase.edu</b> framework:
+   <ul>
+     <li>CAAOmbGeoNavigate.m</li>
+   </ul>
+   </li>
+   <li>The following modules of the <b>CAAVisualization.edu</b> framework:
+   <ul>
+     <li>CAAVisGeoModel.m</li>
+     <li>CAAVisModelForRep.m</li>
+     <li>CAAVisWireBoxComp.m</li>
+   </ul>
+   </li>
+   <li>The following modules of the <b>CAASystem.edu</b> framework:
+   <ul>
+     <li>CAASysGeoModelComp.m</li>
+     <li>CAASysGeoModelImpl.m</li>
+     <li>CAASysGeoModelInt.m</li>
+   </ul>
+   </li>
+ </ul>
+ <p>Launch CATIA. When the application is ready, follow scenarios described 
+ below:</p>
+ <blockquote>
+   <p>The <b>Workbenches Transitions</b> scenario</p>
+ <ul>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Creation</b></li>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Analysis</b></li>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Analysis</b></li>
+ </ul>
+   <p>Two CAAGeometry document's windows are open.</p>
+   <p>The <b>Creation</b> <b>Objects</b> scenario: (The complete scenarios are 
+   described in the article given in the brackets)</p>
+   <p>With the <b>CAAGeometry</b> workshop commands:</p>
+ <ul>
+     <li>Create points with the <b>Point</b> Command [<a href="#References">19</a>]</li>
+     <li>Create lines with the <b>Line</b> Command [<a href="#References">28</a>]</li>
+     <li>Create planes with the <b>Plane</b> Command [<a href="#References">15</a>]</li>
+     <li>Create circles with the <b>Circle</b> Command [<a href="#References">14</a>]</li>
+     <li>Create ellipses with the <b>Ellipse</b> Command </li>
+     <li>Create rectangles with the <b>Rectangle</b> Command ( In the<b> Insert</b>/<b>Multi-Lines</b> 
+     menu ) [<a href="#References">13</a>]</li>
+     <li>Create triangles with the <b>Triangle</b> Command ( In the <b>Insert</b>/<b>Multi-Lines</b> 
+     menu )</li>
+     <li>Create polylines with the <b>Polyline</b> Command ( In the <b>Insert</b>/<b>Multi-Lines</b> 
+     menu ) [<a href="#References">20</a>]</li>
+   </ul>
+   <p>With the <b>CAA V5: Geometrical Creation</b> workbench commands</p>
+   <ul>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Creation</b></li>
+     <li>Create Cylinders with the <b>Cylinder</b> Commands</li>
+     <li>Create Cuboids with the <b>Cuboid</b> Command</li>
+   </ul>
+   <p>With the <b>CAA V5: Geometrical Analysis </b>workbench commands</p>
+   <ul>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Analysis</b></li>
+     <li>Select the <b>Type of Element</b> Command [<a href="#References">22</a>]</li>
+     <li>Select the <b>Logical</b> Command [<a href="#References">22</a>]</li>
+     <li>Select the <b>Numerical</b> Command</li>
+   </ul>
+   <p>The <b>Edition</b> scenario [<a href="#References">11</a>]</p>
+   <ul>
+     <li><b>Double</b> click on a plane</li>
+     <li><b>Double</b> click on a point</li>
+   </ul>
+   <p>The <b>Contextual-SubMenu</b> / <b>Contextual Menu</b> [<a href="#References">10</a>] 
+   scenario</p>
+   <ul>
+     <li><b>Right</b> click a plane, select <b>Plane.x</b> <b>Object</b> and 
+     select <b>Element Count..</b><b>.</b></li>
+     <li><b>Right</b> click an ellipse and select <b>Circle</b></li>
+   </ul>
+   <p>The <b>New Window</b> scenario: [<a href="#References">7</a>]</p>
+   <ul>
+     <li>Select <b>Window</b>-&gt;<b>Histogram Chart Window</b> </li>
+     <li>Click <b>OK</b></li>
+   </ul>
+   <p>The <b>Edit Properties</b> scenario [<a href="#References">12</a>]</p>
+   <ul>
+     <li><b>Right</b> click the circle, and select <b>Properties</b> in the 
+     contextual menu</li>
+     <li>Click <b>More</b></li>
+     <li>Click <b>OK</b></li>
+   </ul>
+   <p>The <b>Tools/Option</b> scenario [<a href="#References">25</a>] then [<a href="#References">9</a>]</p>
+   <ul>
+     <li>Select <b>Tools</b> and click <b>Options</b></li>
+     <li>Click <b>Infrastructure</b> in the left part of the dialog box</li>
+     <li>In the list of workbenches displayed, click <b>CAA V5: Geometrical 
+     Creation</b></li>
+     <li>Change<b> </b>some options</li>
+     <li>Click <b>OK</b></li>
+     <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA 
+     V5: Geometrical Analysis</b></li>
+     <li>Select <b>Analyse</b>-&gt;<b>Circle discretization</b></li>
+     <li>Select <b>Tools</b> and click <b>Options</b></li>
+     <li>Click <b>Infrastructure</b> in the left part of the dialog box</li>
+     <li>In the list of workbenches displayed, click <b>CAA V5: Geometrical 
+     Creation</b></li>
+     <li>Change<b> </b>some options</li>
+     <li>Click <b>OK</b></li>
+   </ul>
+   <p>The <b>Interruptible Task</b> scenario [<a href="#References">24</a>]</p>
+   <ul>
+     <li>Launch the <b>Progress Task</b> command to see the <b>Interruptible 
+     Task</b> dialog box:
+     <ul>
+       <li>In the <b>Mathematical Analysis</b> toolbar or </li>
+       <li>In the<b> Analyse</b> menu, click <b>Progress Task</b></li>
+     </ul>
+     </li>
+     <li>Click <b>Compute</b>
+     <ul>
+       <li>The <b>Computing</b> Dialog box appears without the <b>Cancel</b> 
+       button. Wait until the end of the process</li>
+     </ul>
+     </li>
+     <li>Check <b>Interruptible Task</b> in the <b>Interruptible 
+     Task </b>dialog box</li>
+     <li>Click <b>Compute</b>
+     <ul>
+       <li>The <b>Computing</b> Dialog box appears with the <b>Cancel</b> 
+       button.</li>
+       <li>Click <b>Cancel </b>before the end of the process.</li>
+     </ul>
+     </li>
+     <li>Click <b>Compute</b>
+     <ul>
+       <li>The <b>Computing</b> Dialog box appears with the <b>Cancel</b> 
+       button. Wait until the end of the process</li>
+     </ul>
+     </li>
+     <li>Click <b>Close </b>in the <b>Interruptible Task</b> dialog box.</li>
+   </ul>
+   <p>The <b>Bounding Element</b> scenario [<a href="#References">23</a>]</p>
+   <ul>
+     <li>Launch the <b>Bounding Element</b> command to see the <b>Model Bounding 
+     Sphere</b> dialog box:
+     <ul>
+       <li>In the <b>Mathematical Analysis</b> toolbar or</li>
+       <li>In the<b> Analyse</b> menu, click <b>Bounding Element</b></li>
+     </ul>
+     </li>
+     <li>Click <b>Compute</b></li>
+     <li>Click <b>Close </b>in the <b>Model Bounding Sphere</b> dialog box</li>
+   </ul>
+   <p>The <b>Temporary Objects/ISO</b> scenario [<a href="#References">29</a>]</p>
+   <ul>
+     <li>Create some <b>Point</b> elements</li>
+     <li>Launch the <b>Clipping By Box</b> command in the <b>Clipping</b> 
+     toolbar</li>
+     <li>Select the<b> ISO Selection </b>text<b> </b>( first temporary object) 
+     located at the origin of the model (0,0,0)</li>
+     <li>Select a <b>Point</b>, the origin of the clipping box. A trihedral is 
+     located at the selected point (second temporary object)</li>
+     <li><b>Move</b> the mouse, click <b>left</b> to define the clipping box 
+     size and end the command. ( the temporary bounding box is the third 
+     temporary object) All the points outside this bounding box are removed from 
+     the model.</li>
+   </ul>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAGeometry Code</h4>
+ <p>The CAAGeometry use case is made of a several modules &quot;repartis sur 
+ plusieurs framework&quot;</p>
+ <ul>
+   <li><a href="#CAAApplicationFrame.edu - where">CAAApplicationFrame.edu</a></li>
+   <li><a href="#CAACATIAApplicationFrm.edu - where">CAACATIAApplicationFrm.edu</a></li>
+   <li><a href="#CAASystem.edu - where">CAASystem.edu</a></li>
+   <li><a href="#CAADialogEngine.edu -where">CAADialogEngine.edu</a></li>
+   <li><a href="#CAAVisualization.edu -where">CAAVisualization.edu</a></li>
+   <li><a href="#CAAObjectModelerBase.edu -where">CAAObjectModelerBase.edu</a></li>
+ </ul>
+ <p>which are inside:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p><b><a name="CAAApplicationFrame.edu - where">CAAApplicationFrame.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeometryWshop.m</b></td>
+     <td><b></b>This module contains the CAAGeometry 
+     workshop definition.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoAnalysisWbench.m</b></td>
+     <td><b></b>This module contains the &quot;CAA V5: 
+     Geometrical Analysis&quot; workbench definition. It is one of two workbench of 
+     the CAAGeometry document.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoCreationWbench.m</b></td>
+     <td><b></b>This module contains the &quot;CAA V5: 
+     Geometrical Creation&quot; workbench definition. It is one of two workbench of 
+     the CAAGeometry document. [<a href="#References">1</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoCreationWkbAddin.m</b></td>
+     <td><b></b>This module contains one Add-in of the 
+     &quot;CAA V5: Geometrical Creation&quot; workbench. [<a href="#References">2</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoWksAddin.m</b></td>
+     <td><b></b>This module contains one Add-in of the 
+     CAAGeometry workshop.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoWksAddin2.m</b></td>
+     <td><b></b>This module contains the second Add-in 
+     of the CAAGeometry workshop. This Add-in contains the &quot;Histogram 
+     Chart Window&quot; command [<a href="#References">7</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeometryWksTransition.m</b></td>
+     <td><b></b>This module contains the <i>
+     CATIWorkbenchTransition</i> implementation for the CAA Geometry workshop. [<a href="#References">3</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoDocument.m</b>
+     <p><b>CAAAfrGeoModel</b><b>.m</b></td>
+     <td>These two modules contain the necessary 
+     interface implementations to visualize the CAAGeometry document</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrSampleDocument.m</b></td>
+     <td>This module contains the necessary interface 
+     implementations to visualize the CAASample document</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoSubMenu.m</b></td>
+     <td><b></b>This module contains the <i>
+     CATIContextualSubMenu</i> implementation for a component of the CAAGeometry 
+     document.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoWindows.m</b></td>
+     <td><b></b>This module contains the definition of 
+     the &quot;Histogram Chart Window&quot; [<a href="#References">7</a>] window and of 
+     the default window of the CAASample document [<a href="#References">8</a>] 
+     .</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoEdition.m</b></td>
+     <td><b></b>This module contains the <i>CATIEdit</i> 
+     implementation for some components of the CAAGeometry document. [<a href="#References">11</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeoCommands.m</b></td>
+     <td>This module contains some commands used by the 
+     CAAGeometry workshop. [<a href="#References">23</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrProgressTask.m</b></td>
+     <td>This module contains a command which 
+     implements the <i>CATIProgressTask</i> interface. [<a href="#References">24</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrGeneralWksAddin.m</b></td>
+     <td>This module contains an Add-in of the General 
+     workshop [<a href="#References">30</a>]. It means that all the commands 
+     launched from a command header defined in this add-in are available 
+     whatever the type of the document, and even if no document is opened. 
+     Like the New command.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrCustCommandHdrModel.m</b></td>
+     <td>This module contains the &quot;model&quot; part of the 
+     specialized command headers.</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrCustomizedCommandHeader.m</b></td>
+     <td>This module contains the definition of the two 
+     specialized command headers: a combo header [<a href="#References">32</a>] 
+     a MRU header [<a href="#References">33</a>], and editor header [<a href="#References">34</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAAfrPaletteOptions.m</b></td>
+     <td>This module contains the implementation of the 
+     CATIAfrPaletteOptions interface on the workbench of creation.</td>
+   </tr>
+ </table>
+ <p><b><a name="CAACATIAApplicationFrm.edu - where">CAACATIAApplicationFrm.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAACafContextualMenu.m</b></td>
+     <td>This module contains the <i>CATIContextualMenu</i> 
+     implementation for a component of the CAAGeometry document. [<a href="#References">10</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAACafCtrlToolsOptions.m</b></td>
+     <td>This module contains the definition of the setting 
+     controllers. [<a href="#References">25</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAACafEltToolsOptions.m</b></td>
+     <td>This module creates the Elements property page that 
+     contains three frames: Identifier, Max Points/Curve, and Implicit Points. 
+     This property page is associated with the &quot;CAA V5: Geometrical Creation&quot; 
+     workbench. [<a href="#References">9</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAACafViewToolsOptions.m</b></td>
+     <td>This module creates the View property page that contains 
+     the 3DRepresentation frame. This property page is also associated with the 
+     &quot;CAA V5: Geometrical Creation&quot; workbench.</td>
+   </tr>
+   <tr>
+     <td><b>CAACafUseToolsOptions.m</b></td>
+     <td>This module contains a command which uses the &quot;Elements&quot; 
+     property page options.</td>
+   </tr>
+   <tr>
+     <td><b>CAACafEditTextureProp.m</b></td>
+     <td>This module contains the <i>CATIEditProperties</i> 
+     implementation for some components of the CAAGeometry document. It is the 
+     &quot;Texture&quot; properties. [<a href="#References">12</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAACafEditColorProp.m</b></td>
+     <td>This module contains the <i>CATIEditProperties</i> 
+     implementation for some components of the CAAGeometry document. It is the 
+     &quot;Color&quot; properties.</td>
+   </tr>
+   <tr>
+     <td><b>CAACafRootProperties.m</b></td>
+     <td>This module contains the <i>CATIRootProperties</i> 
+     implementation.</td>
+   </tr>
+   <tr>
+     <td><b>CAACafGeoDocument.m</b></td>
+     <td>This module contains the <i>CATIDocumentEdit</i> 
+     implementation for the CAAGeometry document</td>
+   </tr>
+   <tr>
+     <td><b>CAACafViewerFeedback.m</b></td>
+     <td>This module contains the code to see the usage of a 
+     specific notification sent by a viewer. This notification give you 
+     information about the mouse position, list of elements under the mouse ....</td>
+   </tr>
+ </table>
+ <p><b><a name="CAASystem.edu - where">CAASystem.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAASysGeoModelComp.m</b></td>
+     <td>This module contains the implementation of all the 
+     components contained in the CAAGeometry document. It contains the <i>
+     CATICreateInstance</i> implementations too.</td>
+   </tr>
+   <tr>
+     <td><b>CAASysGeoModelInt.m</b></td>
+     <td>This module contains the definition of some interfaces 
+     implemented by the CAAGeometry document components. It is the interface of 
+     type: the interface which characterizes the component.</td>
+   </tr>
+   <tr>
+     <td><b>CAASysGeoModelImpl.m</b></td>
+     <td>This module contains the data extensions for the 
+     interfaces defined in the previous module.</td>
+   </tr>
+ </table>
+ <p><b><a name="CAADialogEngine.edu -where">CAADialogEngine.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAADegGeoCommands.m</b></td>
+     <td>This module contains all the state commands of the 
+     CAAGeometry documents. [<a href="#References">13</a>, ..,
+     <a href="#References">22</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAADegMultiDocCmd.m</b></td>
+     <td>This module contains the command which derives from <i>
+     CATMultiDocumentCommand</i> and which is associated with a <i>
+     CATOtherDocumentAgent</i>.</td>
+   </tr>
+ </table>
+ <p><b><a name="CAAVisualization.edu -where">CAAVisualization.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAAVisGeoModel.m</b></td>
+     <td>This module contains the <i>CATIVis3DGeoVisu</i> 
+     implementation for the CAAGeometry document components. [<a href="#References">26</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAVisModelForRep.m</b></td>
+     <td>This module contains the creation of the CAAVisTextModel 
+     component. This component is a used as temporary object to represent the 
+     &quot;ISO Selection&quot; Text in the &quot;Clipping By Box&quot; command. [<a href="#References">29</a>]</td>
+   </tr>
+   <tr>
+     <td><b>CAAVisWireBoxComp.m</b></td>
+     <td>This module contains the creation of the CAAVisWireBox 
+     component. This component is a used as temporary object to represent the 
+     bounding box in the &quot;Clipping By Box&quot; command. [<a href="#References">29</a>]</td>
+   </tr>
+ </table>
+ <p><b><a name="CAAObjectModelerBase.edu -where">CAAObjectModelerBase.edu</a></b></p>
+ <table border="1">
+   <tr>
+     <td><i>Name of the Module</i></td>
+     <td><i>Contents of the module</i></td>
+   </tr>
+   <tr>
+     <td><b>CAAOmbGeoNavigate.m</b></td>
+     <td>This module contains the <i>CATINavigateObject</i> 
+     implementation for all the CAAGeometry document components and the <i>
+     CATINavigModify</i> implementation for Point and Root componants. [<a href="#References">27</a>]</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="Step-by-Step"></a>Step-by-Step</h3>
+ <p>Each articles named below contains a Step-By-Step section. Here 
+ are given the main articles to customize the V5 frame:</p>
+ <ul>
+   <li>Creating a Workbench</li>
+   <li>Creating an Add-In</li>
+   <li>Creating a Property Page for Application Properties</li>
+   <li>Implementing the Statechart Diagram</li>
+   <li>Creating a Command that Consists in a Dialog Window</li>
+ </ul>
+ <p>Once you have created you own feature, refer to the Mechanical 
+ Modeler articles for details, you can study the articles as follows: </p>
+ <ul>
+   <li>Inserting Commands in Contextual Menus</li>
+   <li>Editing Objects</li>
+   <li>Creating a Property Page for Object Properties</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The CAAGeometry use case enables you to understand the main mechanisms of 
+ the V5 user interface and to customize it.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table>
+   <tr>
+     <td>[1]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleWorkbench.htm'); return false;">Creating a Workbench</a></td>
+   </tr>
+   <tr>
+     <td>[2]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleAddin.htm'); return false;">Creating an Add-in</a></td>
+   </tr>
+   <tr>
+     <td>[3]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleWorkbenchTransitions.htm'); return false;">Managing Transitions between Workbenches</a></td>
+   </tr>
+   <tr>
+     <td>[4]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleStdCommandHeader.htm'); return false;">Creating Standard Command Headers</a></td>
+   </tr>
+   <tr>
+     <td>[5]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm'); return false;">Creating Customized Command Headers</a></td>
+   </tr>
+   <tr>
+     <td>[6]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleCamera.htm'); return false;">Using Cameras</a></td>
+   </tr>
+   <tr>
+     <td>[7]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm'); return false;">Creating a Document's Window - 
+	 Part 1</a></td>
+   </tr>
+   <tr>
+     <td>[8]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleCustomWindow2.htm'); return false;">Creating a Document's Window - 
+	 Part 2</a></td>
+   </tr>
+   <tr>
+     <td>[9]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAACafUseCases/CAACafSampleToolsOptions.htm'); return false;">Creating a Property Page for Application Properties</a></td>
+   </tr>
+   <tr>
+     <td>[10]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleContextualMenu.htm'); return false;">Inserting Commands in Contextual Menus</a></td>
+   </tr>
+   <tr>
+     <td>[11]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleObjectEdit.htm'); return false;">Editing Objects</a></td>
+   </tr>
+   <tr>
+     <td>[12]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAACafUseCases/CAACafSampleEditProperties.htm'); return false;">Creating a Property Page for Object Properties</a></td>
+   </tr>
+   <tr>
+     <td>[13]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleGraph.htm'); return false;">Implementing the Statechart Diagram</a></td>
+   </tr>
+   <tr>
+     <td>[14]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleIndication.htm'); return false;">Managing Indication</a></td>
+   </tr>
+   <tr>
+     <td>[15]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleSelection.htm'); return false;">Managing Selection</a></td>
+   </tr>
+   <tr>
+     <td>[16]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleMultiSelection.htm'); return false;">Managing Multi Selection</a></td>
+   </tr>
+   <tr>
+     <td>[17]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleCommandUndoRedo.htm'); return false;">Managing Command Undo/Redo</a></td>
+   </tr>
+   <tr>
+     <td>[18]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleInputAndActionUndoRedo.htm'); return false;">Managing Undo/Redo of Input and Actions</a></td>
+   </tr>
+   <tr>
+     <td>[19]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleDialogWithPanelState.htm'); return false;">Associating a Dialog Box with a State</a></td>
+   </tr>
+   <tr>
+     <td>[20]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleDialogWithAgent.htm'); return false;">Associating a Dialog Box with a Dialog Agent - 1</a></td>
+   </tr>
+   <tr>
+     <td>[21]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleDialogWithAgent2.htm'); return false;">Associating a Dialog Box with a Dialog Agent - 2</a></td>
+   </tr>
+   <tr>
+     <td>[22]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegUseCases/CAADegSampleCtxMenu.htm'); return false;">Creating Contextual Menus in a State Dialog Command</a></td>
+   </tr>
+   <tr>
+     <td>[23]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleDialogOnly.htm'); return false;">Creating a Command that Consists in a Dialog Window</a></td>
+   </tr>
+   <tr>
+     <td>[24]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleProgressTask.htm'); return false;">Creating an Interruptible Task</a></td>
+   </tr>
+   <tr>
+     <td>[25]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAACafUseCases/CAACafSampleSettingController.htm'); return false;">Creating a Setting Controller</a></td>
+   </tr>
+   <tr>
+     <td>[26]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAVisUseCases/CAAVisSampleCATIVisu.htm'); return false;">Making a Component Displayable With CATI3DGeoVisu</a></td>
+   </tr>
+   <tr>
+     <td>[27]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAOmbUseCases/CAAOmbGeoNavigate.htm'); return false;">The Object Navigator</a></td>
+   </tr>
+   <tr>
+     <td>[28]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAADegTechArticles/CAADegGettingStarted.htm'); return false;">Getting Started with State Dialog Commands</a></td>
+   </tr>
+   <tr>
+     <td>[29]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAVisUseCases/CAAVisSampleTempObject.htm'); return false;">Creating Temporary Components</a></td>
+   </tr>
+   <tr>
+     <td>[30]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm'); return false;">Making Your Document Independent Command Available in All 
+     Workbenches</a></td>
+   </tr>
+   <tr>
+     <td>[31]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAVisUseCases/CAAVisViewerFeedback.htm'); return false;">Viewer Feedback</a></td>
+   </tr>
+   <tr>
+     <td>[32]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleComboHdr.htm'); return false;">Creating a Combo Command Header</a></td>
+   </tr>
+   <tr>
+     <td>[33]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleMRUHdr.htm'); return false;">Creating a Most Recent used Command Header</a></td>
+   </tr>
+   <tr>
+     <td>[34]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSampleEditorHdr.htm'); return false;">Creating Editors in Toolbar</a></td>
+   </tr>
+   <tr>
+     <td>[35]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrCmdPalette.htm'); return false;">Creating a Command with Options in the &quot;Tools Palette&quot; 
+     Toolbar</a></td>
+   </tr>
+   <tr>
+     <td>[36]</td>
+     <td><a href="#" onclick="CAAlinkOutOfPreqs('CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm'); return false;">Using the &quot;Tools Palette&quot; Toolbar for a Workbench</a></td>
+   </tr>
+   <tr>
+     <td align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td>Version: <strong>1</strong> [Apr 2003]</td>
+     <td>Document created</td>
+   </tr>
+   <tr>
+     <td>Version: <strong>2</strong> [Feb 2004]</td>
+     <td>Document updated</td>
+   </tr>
+   <tr>
+     <td align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

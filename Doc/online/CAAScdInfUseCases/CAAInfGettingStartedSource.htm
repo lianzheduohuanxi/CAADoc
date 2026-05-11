@@ -1,0 +1,94 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAInfGettingStarted.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+Language="VBSCRIPT"
+
+<font color="#008000">'My macro creates five cylinders</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">Dim </font>documents1<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">Set </font>documents1 = CATIA.Documents
+
+<font color="#0000FF">Dim </font>partDocument1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Set </font>partDocument1 = documents1.Add("Part")
+
+<font color="#0000FF">Dim </font>part1<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>part1 = partDocument1.Part
+
+<font color="#0000FF">Dim </font>bodies1<font color="#0000FF"> As </font>Bodies
+<font color="#0000FF">Set </font>bodies1 = part1.Bodies
+
+<font color="#0000FF">Dim </font>body1<font color="#0000FF"> As </font>Body
+<font color="#0000FF">Set </font>body1 = bodies1.Item("MechanicalTool.1")
+
+<font color="#0000FF">Dim </font>sketches1<font color="#0000FF"> As </font>Sketches
+<font color="#0000FF">Set </font>sketches1 = body1.Sketches
+
+<font color="#0000FF">Dim </font>originElements1<font color="#0000FF"> As </font>OriginElements
+<font color="#0000FF">Set </font>originElements1 = part1.OriginElements
+
+<font color="#0000FF">Dim </font>reference1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">Set </font>reference1 = originElements1.PlaneXY
+
+x = 0
+
+<font color="#0000FF">Dim </font>arrayOfVariantOfDouble1(8)
+arrayOfVariantOfDouble1(0) = 0.000000
+arrayOfVariantOfDouble1(1) = 0.000000
+arrayOfVariantOfDouble1(2) = 0.000000
+arrayOfVariantOfDouble1(3) = 1.000000
+arrayOfVariantOfDouble1(4) = 0.000000
+arrayOfVariantOfDouble1(5) = 0.000000
+arrayOfVariantOfDouble1(6) = 0.000000
+arrayOfVariantOfDouble1(7) = 1.000000
+arrayOfVariantOfDouble1(8) = 0.000000
+
+<font color="#0000FF">For </font>I = 1<font color="#0000FF"> To </font>5
+
+<font color="#0000FF">  Dim </font>sketch1<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">  Set </font>sketch1 = sketches1.Add(reference1)
+
+  sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+
+<font color="#0000FF">  Dim </font>factory2D1<font color="#0000FF"> As </font>Factory2D
+<font color="#0000FF">  Set </font>factory2D1 = sketch1.OpenEdition()
+
+<font color="#0000FF">  Dim </font>geometricElements1<font color="#0000FF"> As </font>GeometricElements
+<font color="#0000FF">  Set </font>geometricElements1 = sketch1.GeometricElements
+
+<font color="#0000FF">  Dim </font>axis2D1<font color="#0000FF"> As </font>GeometricElement
+<font color="#0000FF">  Set </font>axis2D1 = geometricElements1.Item("AbsoluteAxis")
+
+<font color="#0000FF">  Dim </font>line2D1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>line2D1 = axis2D1.GetItem("HDirection")
+
+  line2D1.ReportName = 1
+
+<font color="#0000FF">  Dim </font>line2D2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>line2D2 = axis2D1.GetItem("VDirection")
+
+  line2D2.ReportName = 2
+
+<font color="#0000FF">  Dim </font>circle2D1<font color="#0000FF"> As </font>Circle2D
+<font color="#0000FF">  Set </font>circle2D1 = factory2D1.CreateClosedCircle(x, 0.000000, 10.000000)
+
+  circle2D1.ReportName = 3
+
+  sketch1.CloseEdition 
+
+  part1.Update 
+
+<font color="#0000FF">  Dim </font>shapeFactory1<font color="#0000FF"> As </font>Factory
+<font color="#0000FF">  Set </font>shapeFactory1 = part1.ShapeFactory
+
+<font color="#0000FF">  Dim </font>pad1<font color="#0000FF"> As </font>Pad
+<font color="#0000FF">  Set </font>pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+
+  part1.Update 
+
+  x = x + 25
+ 
+<font color="#0000FF">Next</font>
+<font color="#0000FF">End Sub  </font>
+</pre></body></html>
+
+

@@ -1,0 +1,567 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a CATlet</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a CATlet</h3>
+      <em>Creating a new CATlet (the MVC Structure) in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a CATlet and so presents the
+      interaction between the Model, View and Controller.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The FoodStoreCATlet Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does FoodStoreCATlet Do</a></li>
+            <li><a href="#How">How to Launch FoodStoreCATlet</a></li>
+            <li><a href="#Where">Where to Find the FoodStoreCATlet Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a CATlet and so presents the
+interaction between the Model, the View and the Controller, which create the
+CATlet bean.</p>
+<p>A CATlet can be assimilated to a Java Bean but it is a more than a Java Bean
+in the way it is designed to fit inside the Portal and as such has built-in
+functionalities to enhance this integration . Be careful: as a standard Java
+Bean a CATlet can be instantiated anywhere outside the Portal and any Java Bean
+can be instantiated inside the Portal (but with a degraded integration). A
+CATlet is a graphical container and is built around the model-view-controller
+paradigm (named MVC). The CATlet is itself the controller of the whole component
+and aggregates its views and models. A CATlet can have many views and models but
+most of the time it has only one for each. In the Portal, a CATlet can be added
+in the WebInfo part, as a browser CATlet or can be added in the WebSpace part,
+as a viewer CATlet.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The FoodStoreCATlet Use Case</h3>
+<p>The FoodStoreCATlet is a use case of the CAAJApplicationFrame.edu framework
+that illustrates the creation of a new CATlet and its integration in the Portal.<br>
+It uses the <i>JCATlet</i>, swing implementation of the <i>ICATlet</i> interface
+from the JApplicationFrame framework, the <i>ViewInterface</i> interface and the
+<i>Model</i> class from the PortalBase framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does FoodStoreCATlet Do</h4>
+<table>
+  <tr>
+    <td><img src="images/FoodStoreCATlet.jpg" alt="CAAAfrDump.jpg (9085 bytes)" width="410" height="384"></td>
+    <td>The FoodStoreCATlet use case creates a food store where end users can
+      select food items in different food categories. This use case creates a
+      FoodStoreModel (the Model) which contains the stock of the store, a
+      FoodStoreView (the View) which displays the food store content, and a
+      FoodStoreCATlet (the Controller) which manages the view and the model of
+      this store.
+      <p>Be careful that we use the term CATlet to represent two things: the
+      whole component (Model View and Controller) as well as the controller
+      itself. This may be confusing but in fact they represent quite the same
+      thing: The CATlet is the graphical controller component added inside the
+      Portal and it is the only part of the MVC, visible from outside.<br>
+      All the intelligence of the MVC component is located in the CATlet (the
+      Controller). The Model is meant to store the data of this component and
+      the View to display all or part of these data.</p>
+    </td>
+  </tr>
+</table>
+<p>The FoodStoreCATlet is the controller of the MVC application and plays the
+following roles:
+<ul>
+  <li>It is the graphical component added to the Portal ( FoodStoreCATlet
+    extends the JCATlet swing graphic component)</li>
+  <li>It creates theFoodStoreModel (which extends the Model class) and the
+    FoodStoreView (a graphical component which implements the ViewInterface)</li>
+  <li>It manages the View and the Model by direct method (it has a reference on
+    them).</li>
+  <li>It subscribes the View to property events from the Model and subscribes
+    itself to events from the view.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch FoodStoreCATlet</h4>
+<p>To launch the FoodStoreCATlet, you will need to set up the build time
+environment, then compile FoodStoreCATlet along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Specify the FilePrefix CAAGw0 in the Portal launching command, logon to the
+Portal and do the following steps:
+<ul>
+  <li>Select the CATlet list Workbook. (If you already have a personal Workbook
+    list customization and the CATlet list Workbook does not appear, then
+    customize your personal Workbook list and add the CATlet list Workbook)</li>
+  <li>In the WebInfo part, double click on the FoodStore CATlet item which will
+    add the CATlet in the WebSpace part.</li>
+</ul>
+<p><img border="0" src="images/PortalFoodStoreCATlet.jpg" width="807" height="522"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the FoodStoreCATlet Code</h4>
+<p>The FoodStoreCATlet use case is one part of an entire use case scenario. It
+is made of 3 main classes named FoodStoreCATlet , FoodStoreModel and
+FoodStoreView located in the CAAGw0FoodStore.mj module of the
+CAAJApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAJApplicationFrame.edu\CAAGw0FoodStore.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAJApplicationFrame.edu/CAAGw0FoodStore.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the FoodStoreCATlet MVC, there are five steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the Model class file</td>
+    <td valign="top">FoodStoreModel.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the View class file</td>
+    <td valign="top">FoodStoreView.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the CATlet class file</td>
+    <td valign="top">FoodStoreCATlet.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create the CATletBeanInfo class file</td>
+    <td valign="top">FoodStoreCATletBeanInfo.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Declare CATlet in the CATlet list configuration file</td>
+    <td valign="top">CAAGw0CATletList.xml</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Model Class</h4>
+<p>The models of a CATlet extend the Model class. A CATlet can have several
+models, but more often it has only one Model.<br>
+The FoodStoreCATlet use case has only one model, the FoodStoreModel. It is
+defined as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.model;
+...
+public class FoodStoreModel extends <b>Model</b>
+{
+public FoodStoreModel()
+  {
+   // --- initialize data contained
+   ...
+  }
+ ...
+ /**
+  * set the list of FoodItem for the current food category  
+  */
+ public void setCurrentFoodItems(FoodItem[] foodItems)
+  {
+   if(foodItems != null)
+    {
+     FoodItem[] oldFoodItems = currentFoodItems;
+     currentFoodItems = foodItems;
+
+     // --- fire a PropertyChangeEvent (to the View) with the new current food items
+     <b>support.firePropertyChange(</b>&quot;Current Food Items&quot;, oldFoodItems, currentFoodItems);
+    }
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreModel</em> derives from <em>Model</em>. It inherits the <i>PropertyChangeEvent</i>
+management from the <i>Model</i> class, and so can fire event to the view by
+called the PropertyChangeSupport <i>support</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the View Class</h4>
+<p>The views of CATlet implement the <i>ViewInterface</i> interface and extend
+graphical components (Swing graphic components in this use case because the
+FoodStoreCATlet extends the swing implementation of the ICATlet) . A CATlet can
+have several views, but more often it has only onel.<br>
+The FoodStoreView is defined as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.view;
+...
+public class FoodStoreView extends <b>JPanel</b>
+                           implements <b>ViewInterface</b>
+                                     ,ActionListener
+				     ,ListSelectionListener
+{
+  public FoodStoreView()
+  {
+    // --- create graphical view components layout
+    ...
+}
+
+ <b>public Component getGUI()</b>
+  {
+    return this;
+  }
+  <b>public void propertyChange(PropertyChangeEvent evt)</b>
+  {
+    // --- listen PropertyChangeEvent from the FoodStoreModel and update the view
+    ...
+  }
+  public void addFoodListener(FoodListener l)
+  {
+    foodListeners.addElement(l);
+  }
+   
+ public void removeFoodListener(FoodListener l)
+  {
+    foodListeners.removeElement(l);
+  }
+   
+ public void fireFoodEvent(FoodEvent evt)
+  {
+    // --- fire foodEvent to all FoodListener registered (FoodStoreCATlet)
+    <b>...</b>
+  }
+ <b>...</b>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreView</em> derives from a Swing graphic component (<i>JPanel</i>)
+and implements the <i>ViewInterface</i>. The events subscription in the MVC are
+made by the CATlet, which is the only one component to know each part of the
+MVC. The CATlet subscribes the View to the <i>PropertyChangeEvents</i> from the
+Model, and subscribes itself to the events from the View.</p>
+<p>The View listens to the <i>PropertyChangeEvent</i> from the <i>FoodStoreModel</i>,
+in order to update the view of the store with the new data of the model. It
+fires <i>FoodEvents</i> to the <i>FoodStoreCATlet</i> in order to inform the
+controller of end user interactions and selection of data views.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the CATlet class</h4>
+<p>The FoodStoreCATlet is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet;
+...
+public class FoodStoreCATlet extends <b>JCATlet</b>
+                             implements FoodListener
+				       ,PortalURLHandler
+{
+
+ public FoodStoreCATlet()
+  {
+    // --- create the view for this CATlet
+    views = new <b>ViewInterface</b>[1];
+    views[0] = new FoodStoreView();
+    
+    // --- create the model for this CATlet
+    models = new <b>Model</b>[1];
+    models[0] = new FoodStoreModel();
+    
+    // --- make the view subscribe to PropertyChangeEvents from the model
+    models[0].<b>addPropertyChangeListener(views[0]);</b>
+    
+    // --- subscribe to FoodEvents from the view
+    ((FoodStoreView)views[0]).<b>addFoodListener(this);</b>
+    
+    // --- add the view GUI inside the CATlet
+    add(views[0].<b>getGUI()</b>);
+    
+    // --- initialize the model
+    ((FoodStoreModel)models[0]).initializeModel();
+  }
+  <b>public void cleanup()</b>
+  {
+    // --- make the view unsubscribe to PropertyChangeEvents from the model
+    models[0].removePropertyChangeListener(views[0]);
+    
+    // --- unsubscribe to FoodEvents from the view
+    ((FoodStoreView)views[0]).removeFoodListener(this);
+    
+    // --- cleanup internal reference on objects for the Garbage Collector
+    <b>...</b>
+  }
+   
+ <b>public void activate()</b>
+  {
+    <b>...</b>
+  }
+
+ <b>public void deactivate()</b>
+  {
+    <b>...</b>
+  }
+
+ public void foodCategorySelected(FoodEvent evt)
+  {
+    // --- Implementation of FoodListener for FoodCategory selection from FoodStoreView
+    <b>...</b>
+  }
+     
+ public void foodItemSelected(FoodEvent evt)
+  {
+    // --- Implementation of FoodListener for FoodCategory selection from FoodStoreView
+    <b>...</b>
+  }
+  <b>...</b>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreCATlet</em> derives from JCATlet (the Swing implementation of
+the ICATlet interface). For AWT implementation of the ICATlet interface extend
+the CATlet class of the PortalBase framework. The <i>FoodStoreCATlet</i>
+implements the abstract methods <i>cleanup()</i>, <i>activate()</i>, and <i>deactivate()</i>
+of the <i>JCATlet</i>. It implements the <i>FoodListener</i> interface in order
+to listen to the end user interactions.</p>
+<p>The <i>FoodStoreCATlet</i> constructor:
+<ul>
+  <li>Initializes the <i>ViewInterface</i> and the <i>Model</i> arrays.</li>
+  <li>Creates the view and the model of the CATlet.</li>
+  <li>Subscribes the view to <i>PropertyChangeEvent</i> from the model</li>
+  <li>Dubscribes itself to events from the view (<i>FoodEvent </i>in this case)</li>
+  <li>Adds the View graphical user interface to the CATlet</li>
+  <li>Initializes the model.</li>
+</ul>
+<p>The CATlet methods called by the Portal desktop during the CATlet lifecycle:</p>
+<ul>
+  <li>The end user asks the CATlet creation : The Portal dekstop calls the
+    CATlet constructor, adds the CATlet in the desktop and calls it on the <i>activate()</i>
+    method.</li>
+  <li>The end user switches on a second CATlet : The Portal desktop calls the
+    first on <i>deactivate()</i> method and calls the second one on <i>activate()</i>
+    method.</li>
+  <li>The end user closes the CATlet: The Portal desktop calls the CATlet on <i>deactivate()</i>
+    method, removes it of the frame, calls it on <i>cleanup()</i> method and
+    forgets all references on it.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the CATletBeanInfo class</h4>
+<p>The FoodStoreCATletBeanInfo describes the bean FoodStoreCATlet as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet;
+...
+public class FoodStoreCATletBeanInfo extends <b>CATletBeanInfo</b>
+{
+  ...
+  protected EventSetDescriptor[] <b>getPublishedEventDescriptors()</b>
+  {
+    // --- Construct the list of EventSetDescriptor which represent the events published by the CATlet bean
+    <b>...</b>
+  }
+
+ public PropertyDescriptor[] <b>getPropertyDescriptors()</b>
+  {
+    // --- Construct the list of PropertyDescriptor which represent the property exposed by the CATlet bean
+    <b>...</b>
+  }
+
+ public Image <b>getIcon(int iconKind)</b>
+  {
+    if(iconKind == ICON_COLOR_32x32)
+	return ImageLoader.loadImagefromClassRoot(&quot;Resources/I_Wk13.gif&quot;);
+    else return super.getIcon(iconKind);
+  }
+
+ public BeanDescriptor <b>getBeanDescriptor()</b>
+  {
+   BeanDescriptor desc = super.getBeanDescriptor();
+   desc.setDisplayName(FoodStoreLanguage.getWidgetsString(&quot;FoodStoreCATlet&quot;));
+
+   return desc;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreCATletBeanInfo</em> derives from <i>CATletBeanInfo</i>. It
+overrides the <i>getIcon()</i> and <i>getBeanDescriptor()</i> methods of the <i>CATletBeanInfo</i>,
+in order to specify its icon representation and its NLS display name for the end
+user.</p>
+<p>The two methods <i>getPublishedEventDescriptors()</i> and <i>getPropertyDescriptors()</i>
+are used by the bean introspection. The property descriptor is used in the
+Portal by the <i>PortalURL</i> and the <i>PropertyCATletCustomizer</i> command.
+The Published EventDescriptor is used in the Portal by the <i>Hookup</i> for the
+event publishers declaration.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Declaring CATlet in the CATlet list configuration file</h4>
+<p>For the CAAJApplicationFrame application, a new CATletList file is created
+with the FilePrefix CAAGw0. The CAAGw0CATletList.xml is as follow</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;CATletList&gt;
+	<b>&lt;BrowserCATlets&gt;</b>
+		&lt;CATlet icon=&quot;Resources/I_CATlet.gif&quot; 
+                        label=&quot;CATlets List&quot; 
+                        label.fr=&quot;Liste des CATlets&quot;
+                        label.en=&quot;CATlets List&quot; 
+                        label.de=&quot;CATlets List&quot; 
+                        label.ja=&quot;&quot;CATlets List&quot; 
+                        help=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+                        help.fr=&quot;/help/french/ptlug/ptlugbt0700.htm&quot;
+                        help.en=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+                        help.de=&quot;/help/german/ptlug/ptlugbt0700.htm&quot;
+                        help.ja=&quot;/help/japanese/ptlug/ptlugbt0700.htm&quot;
+                        multiThread=&quot;false&quot;
+                        url=&quot;bean://com.dassault_systemes.catweb.frame.catlet.ViewerListCATlet&quot;&gt;
+		&lt;/CATlet&gt;
+		...
+
+	<b>&lt;/BrowserCATlets&gt;</b>
+
+	<b>&lt;ViewerCATlets&gt;</b>
+		<b>&lt;CATlet</b> icon=&quot;Resources/I_Wk13.gif&quot; 
+                        label=&quot;Food store&quot; 
+                        label.fr=&quot;Alimentation&quot;
+                        label.en=&quot;Food store&quot; 
+                        label.de=&quot;Food store&quot;
+                        label.ja=&quot;Food store&quot; 
+                        help=&quot;&quot;
+                        help.fr=&quot;&quot;
+                        help.en=&quot;&quot;
+                        help.de=&quot;&quot;
+                        help.ja=&quot;&quot;
+			workshop=&quot;FoodStoreCATlet.workshop&quot;
+                        <b>url=&quot;bean://com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet&quot;</b>&gt;
+		<b>&lt;/CATlet&gt;</b>
+
+		...		
+
+	<b>&lt;/ViewerCATlets&gt;
+</b>
+	&lt;OtherCATlets&gt;
+
+		...		
+	&lt;/OtherCATlets&gt;
+&lt;/CATletList&gt;
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAGw0CATletList.xml contains the declaration of the CAA use case CATlet
+used by the Portal and so contains the FoodStoreCATlet declaration.
+<p>There are three kinds of CATlet declarations:
+<ol>
+  <li>The BrowserCATlets are displayed in the WebInfo part associated with a
+    Workbook icon.</li>
+  <li>The ViewerCATlets are displayed in the WebSpace part and can be activated
+    by a BrowserCATlets or a document selection (with MIME Type registry).</li>
+  <li>The OtherCATlets are displayed in the WebSpace part and cannot be directly
+    activated by document selection, and are not listed in the CATlet List.</li>
+</ol>
+<p>In this use case the FoodStoreCATlet is displayed in the WebSpace part. It is
+activated when the end user selects its icon in the CATlet list, or when the
+user activates a &quot;.stock&quot; document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The use case show what is a CATlet and how to create one. The CATlet is a
+graphical container and is built around the model-view-controller paradigm
+(named MVC). The CATlet is itself the controller of the whole component and
+aggregates its views (which implement the <i>ViewInterface</i> interface) and
+models (which extends the <i>Model</i> class). A CATlet need to implement the
+ICATlet interface. Two default basic implementation are delivered : The AWT
+implementation named CATlet and delivered in the PortalBase framework,. The
+Swing implementation named JCATlet and delivered in the JApplicationFrame
+framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Building and Launching a CAA Enovia V5 Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

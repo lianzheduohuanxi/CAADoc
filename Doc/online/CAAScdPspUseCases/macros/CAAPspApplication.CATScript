@@ -1,0 +1,273 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2004
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspWorkbench, CATIAPspApplication, CATIAPspClass,
+'                 CATIAPspAppFactory and CATIAPspResource
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+Dim strMessage_g As String
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspApplication.CATScript" & vbCrLf
+
+    ' Find the top node of the Distribute System object tree - .
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    Dim objPspClass       As PspClass
+  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication and PspClass
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( objPspApplication Is Nothing  ) Then
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getting objPspApplication" & vbCr      
+        objPspApplication.Initialization()         
+        Set objPspClass = objPspWorkbench.GetInterface("CATIAPspClass",objPspApplication )
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+
+    If ( objPspClass Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get objPspClass" & vbCr             
+    Else
+      strMessage_g = strMessage_g & "Success in  getting objPspClass"  & vbCr           
+      QueryPspClass objPspClass
+    End If
+
+    '-----------------------------------------------------------------------
+    ' Get PspAppFactory
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+        Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory",objPspApplication )      
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+
+   If ( objPspAppFactory Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get objPspAppFactory" & vbCr             
+    Else
+      strMessage_g = strMessage_g & "Success in  getting objPspAppFactory"  & vbCr           
+      QueryPspAppFactory objPspAppFactory, objPrdRoot
+    End If
+
+
+    '-----------------------------------------------------------------------
+    ' Get PspResource
+    '-----------------------------------------------------------------------
+
+    Dim objPspResource As PspResource
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+        Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspResource = objPspWorkbench.GetInterface("CATIAPspResource", _
+                                      objPspApplication )      
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+
+    If ( Not( objPspResource Is Nothing ) ) Then      
+      QueryPspResource objPspResource
+    End If
+
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | Query QueryPspResource methods 
+' | 
+' | Input: objPspResourceArg: PspResoure object
+' | 
+' -----------------------------------------------------------------------------
+
+Private Sub QueryPspResource (objPspResourceArg As PspResoure )  
+    Dim strCatalogPartName As String
+    Dim strResNamePipingParts As String
+
+    strResNamePipingParts = "PipingPartsCatalog"
+
+    If ( Not ( objPspResourceArg Is Nothing ) ) Then  
+      strCatalogPartName = objPspResourceArg.GetResourcePath( _
+               strResNamePipingParts)      
+      
+      strMessage_g = strMessage_g & _
+             "PipingPartsCatalog= " & _
+              strCatalogPartName & vbCr    
+      
+
+    End If
+
+End Sub
+' -----------------------------------------------------------------------------
+' | Query PspClass methods 
+' | 
+' | Input: objPspClassArg: PspClass object
+' | 
+' -----------------------------------------------------------------------------
+
+Private Sub QueryPspClass (objPspClassArg As PspClass )  
+
+    Dim objLStrPhysicals As PspListOfBSTRs
+    Dim intNbPhysicals   As Integer
+
+    Dim objLStrFunctions As PspListOfBSTRs
+    Dim intNbFunctions   As Integer    
+
+    Dim objLStrConnectors As PspListOfBSTRs
+    Dim intNbConnectors   As Integer    
+
+
+    If ( Not ( objPspClassArg Is Nothing ) ) Then
+
+      '-----------------------------------------------------------------------
+      ' Get StartUpPhysicals
+      '-----------------------------------------------------------------------
+
+      Set objLStrPhysicals = objPspClassArg.StartUpPhysicals
+
+      If ( Not ( objLStrPhysicals Is Nothing ) ) Then
+        intNbPhysicals = objLStrPhysicals.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpPhysicals=" & intNbPhysicals & vbCr      
+      
+      End If 
+
+      Set objLStrFunctions = objPspClassArg.StartUpFunctions
+      If ( Not ( objLStrFunctions Is Nothing ) ) Then
+        intNbFunctions = objLStrFunctions.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpFunctions=" & intNbFunctions & vbCr      
+      End If 
+
+      Set objLStrConnectors = objPspClassArg.StartUpConnectors
+      If ( Not ( objLStrConnectors Is Nothing ) ) Then
+        intNbConnectors = objLStrConnectors.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpConnectors=" & intNbConnectors & vbCr      
+      End If 
+
+    End If  ' Not ( objPspClassArg Is Nothing )
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | Query PspAppFactory methods 
+' | 
+' | Input: objPspAppFactoryArg: PspAppFactory object
+' |        objRootPrdArg:       Product       object
+' -----------------------------------------------------------------------------
+
+
+Private Sub QueryPspAppFactory (objPspAppFactoryArg As PspAppFactory,_
+          objRootPrdArg As Product )  
+
+    Dim objLPhysicals    As PspListOfObjects    
+    Dim objLLogLines     As PspListOfObjects  
+    Dim objLGroups       As PspListOfObjects  
+    Dim iNbPhysicals     As Integer
+    Dim iNbLogLines      As Integer
+    Dim iNbGroups        As Integer
+    
+
+    If ( Not ( objPspAppFactoryArg Is Nothing ) ) Then
+
+      '-----------------------------------------------------------------------
+      ' Get ListPhysicals
+      '-----------------------------------------------------------------------
+
+      Set objLPhysicals = objPspAppFactoryArg.ListPhysicals (objRootPrdArg, catPspIDLNone)
+
+      If ( Not ( objLPhysicals Is Nothing ) ) Then
+        iNbPhysicals = objLPhysicals.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Physicals=" & iNbPhysicals & vbCr              
+      
+      End If 
+
+      '------------------------------------------------------------
+      ' Get ListLogicalLines
+      '------------------------------------------------------------
+
+      Set objLLogLines = objPspAppFactoryArg.ListLogicalLines (objRootPrdArg)
+      If ( Not ( objLLogLines Is Nothing ) ) Then
+        iNbLogLines = objLLogLines.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Logical Lines=" & iNbLogLines & vbCr              
+      End If       
+
+      Set objLGroups = objPspAppFactoryArg.ListGroups (objRootPrdArg)
+        If ( Not ( objLGroups Is Nothing ) ) Then          
+        iNbGroups = objLGroups.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Groups=" & iNbGroups & vbCr              
+      End If       
+          
+    End If  ' Not ( objPspClassArg Is Nothing )
+End Sub
+

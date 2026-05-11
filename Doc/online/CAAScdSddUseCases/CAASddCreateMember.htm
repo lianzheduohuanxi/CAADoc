@@ -1,0 +1,296 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Members</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Members</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create members.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddCreateMember is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddCreateMember.CATPart in the samples directory.</p>
+		<p><a href="CAASddCreateMemberSource.htm" target="Source">CAASddCreateMember.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddCreateMember.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddCreateMember includes ten steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Plates</a></li>
+			<li><a href="#Step5">Creating a Member with a Curve</a></li>
+			<li><a href="#Step6">Creating a Member with a Point and a Limit</a></li>
+			<li><a href="#Step7">Creating a Member with Beams and a Plane</a></li>
+			<li><a href="#Step8">Creating a Member with Two Points</a></li>
+			<li><a href="#Step9">Creating a Member with Reference Planes</a></li>
+			<li><a href="#Step10">Updating the Part Document</a></li>
+		</ol>
+		<p><img alt="" src="images/CAASddCreateMember.png"></p>
+
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASddCreateMember.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain()
+  <span class="keyword">Dim</span> ObjPart  <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.
+		The factory object will be used for creating Structure Functional Modeler objects.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>The SfmManager object is obtained using the GetManager method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj  <span class="keyword">As</span>  SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Plates</a></h4>
+		<p>This step describes how to get the plate collection and how to get one specific item in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'RETRIEVING THE SUPERPLATES</span>
+  <span class="keyword">Dim</span> SuperPlates <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SuperPlates = ManagerObj.GetSuperPlates
+  <span class="keyword">Dim</span> SuperPlate1, SuperPlate2 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> SuperPlate1 = SuperPlates.Item (1)
+  <span class="keyword">Set</span> SuperPlate2 = SuperPlates.Item (2)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Creating a Member with a Curve</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Creating Member On a Curve</span>
+  <span class="keyword">Dim</span> Curve1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Curve1 = ObjPart.FindObjectByName ("Intersect.2")
+  <span class="keyword">Dim</span> curveRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> curveRef = ObjPart.CreateReferenceFromObject (Curve1)
+  <span class="keyword">Dim</span> MemberCurve <span class="keyword">As</span> SfmMemberCurve
+  <span class="keyword">Set</span> MemberCurve = FactoryObj.AddMemberCrv ("Beam", "C12x25", curveRef, Nothing)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Creating a Member with a Point and a Limit</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'Creating Member with PointUpToLimit</span>
+  <span class="keyword">Dim</span> Point1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Point1 = ObjPart.FindObjectByName ("Point.5")
+  <span class="keyword">Dim</span> Point1Ref <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> Point1Ref = ObjPart.CreateReferenceFromObject (Point1)
+  <span class="keyword">Dim</span> Point2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Point2 = ObjPart.FindObjectByName ("Point.6")
+  <span class="keyword">Dim</span> Point2Ref <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> Point2Ref = ObjPart.CreateReferenceFromObject (Point2)
+  <span class="keyword">Dim</span> MemDirection <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> MemDirection = ObjPart.FindObjectByName ("xy plane")
+  <span class="keyword">Dim</span> MemDirRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> MemDirRef = ObjPart.CreateReferenceFromObject (MemDirection)
+  <span class="keyword">Dim</span> MemLimit <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> MemLimit = ObjPart.FindObjectByName ("DECK.5")
+  <span class="keyword">Dim</span> MemLimitRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> MemLimitRef = ObjPart.CreateReferenceFromObject (MemLimit)
+  <span class="keyword">Dim</span> Member1PtUpToLimit <span class="keyword">As</span> SfmMemberPointUpToLimit
+  <span class="keyword">Set</span> Member1PtUpToLimit = FactoryObj.AddMemberPtUpToLimit ("Pillar", "C12x25", Point1Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  <span class="keyword">Dim</span> Member2PtUpToLimit <span class="keyword">As</span> SfmMemberPointUpToLimit
+  <span class="keyword">Set</span> Member2PtUpToLimit = FactoryObj.AddMemberPtUpToLimit ("Beam", "C12x25", Point2Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  <span class="comment">'Applying Limit to Members With DeckPlate</span>
+  <span class="keyword">Dim</span> PlateRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> PlateRef = ObjPart.CreateReferenceFromObject (SuperPlate2)
+  Member1PtUpToLimit.SetProfileLimit 2, PlateRef
+  Member2PtUpToLimit.SetProfileLimit 2, PlateRef
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Creating a Member with Beams and a Plane</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Creating Member with two Beams and a Plane</span>
+  <span class="keyword">Dim</span> Plane1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Plane1 = ObjPart.FindObjectByName ("DECK.2")
+  <span class="keyword">Dim</span> RefPlane <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> RefPlane = ObjPart.CreateReferenceFromObject (Plane1)
+  <span class="keyword">Dim</span> Member2BeamsandPlane <span class="keyword">As</span> SfmMemberPlane2Curves
+  <span class="keyword">Set</span> Member2BeamsandPlane = FactoryObj.AddMemberBeamsAndPlane ("Beam", "C12x25", Member1PtUpToLimit, Member2PtUpToLimit, RefPlane, Nothing)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Creating a Member with Two Points</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieving the Supports of Members</span>
+  <span class="keyword">Dim</span> SupportRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SupportRef1 = Member1PtUpToLimit.Support
+  <span class="keyword">Dim</span> SupportRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SupportRef2 = Member2PtUpToLimit.Support
+  <span class="comment">'Creating Member with Two Curves</span>
+  <span class="keyword">Dim</span> Member2Points <span class="keyword">As</span> SfmMember2Points
+  <span class="keyword">Set</span> Member2Points = FactoryObj.AddMemberPtOnCrvPtOnCrv ("Beam", "C12x25", SupportRef1, True, "0.5", SupportRef2, False, "0", Nothing)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Creating a Member with Reference Planes</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Creating Member by AddMemberSurfSurf</span>
+  <span class="keyword">Dim</span> Surface1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Surface1 = ObjPart.FindObjectByName ("CROSS.60")
+  <span class="keyword">Dim</span> SurfaceRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SurfaceRef1 = ObjPart.CreateReferenceFromObject (Surface1)
+  <span class="keyword">Dim</span> Surface2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> Surface2 = ObjPart.FindObjectByName ("LONG.-8")
+  <span class="keyword">Dim</span> SurfaceRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SurfaceRef2 = ObjPart.CreateReferenceFromObject (Surface2)
+  <span class="keyword">Dim</span> MemberSurfSurf <span class="keyword">As</span> SfmMemberSurfSurf
+  <span class="keyword">Set</span> MemberSurfSurf = FactoryObj.AddMemberSurfSurf ("Beam", "C12x25", SurfaceRef1, SurfaceRef2, Nothing)
+
+  <span class="comment">'Applying Limits on Infinite MemberSurfSurf</span>
+  <span class="keyword">Dim</span> ShellPlateRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlateRef = ObjPart.CreateReferenceFromObject (SuperPlate1)
+  MemberSurfSurf.SetProfileLimit 2, PlateRef
+  MemberSurfSurf.SetProfileLimit 1, ShellPlateRef
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step10">Updating the Part Document</a></h4>
+		<p>Update the Part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'To Updating CATIA Part Document</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create members.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

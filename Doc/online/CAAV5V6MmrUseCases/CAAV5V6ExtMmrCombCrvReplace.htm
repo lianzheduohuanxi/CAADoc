@@ -1,0 +1,1202 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Modifying Combine's Curve Specifications</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Modifying Combine's Curve Specifications</h3>
+     <em>How to implement the replace mechanism for a new geometrical feature</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article explains how to implement the replace mechanism for V5V6ExtCombinedCurve feature. 
+It is a copy of the implementation of the replace mechanism for CombinedCurve features, described in the article 
+"Modifying Combined Curve's Specifications"[<a href="#References">5</a>], rewritten with V6 backported interfaces.
+      
+      <ul>
+        <li><b><a href="#Learn">What You Will You Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAV5V6ExtMmrCombinedCurveReplace Use Case</a></b></li>
+        
+        <ul>
+          <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurveReplace Do</a></li>
+          <li><a href="#How">How to Launch CAA<a href="#What">V5V6Ext</a>MmrCombinedCurveReplace</a></li>
+          <li><a href="#Where">Where to Find the CAA<a href="#What">V5V6Ext</a>MmrCombinedCurveReplace Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>Once you have created a new mechanical feature [<a href="#References">1</a>],
+you should integrate it in the V5. The technical article entitled
+&quot;Integrating a New Mechanical Feature in the V5&quot; [<a href="#References">2</a>]
+lists the main behaviors to take into account and gives all the mandatory and useful interfaces to
+implement. One of the V5 behavior is the Replace mechanism, in other words the possibility to change
+for a feature one
+specification by another one. In the case of a new feature
+deriving from the GeometricalElement3D StartUp, as it is the case with the
+V5V6ExtCombinedCurve [<a href="#References">3</a>], the Replace mechanism is fully
+integrated by implementing:</p>
+<ul>
+  <li>The <i><b>CATIReplace</b></i> interface. It is mandatory to implement it.&nbsp;</li>
+  <li>The <b><i>CATIReplaceUI</i></b> interface, a useful, but not mandatory
+    interface, to give the possibility to select a feature amongth a path of
+    features.</li>
+</ul>
+<p>To implement the <i>CATIReplace</i> interface, this use case explains also
+the usage of the two following interfaces:</p>
+<ul>
+  <li>The <i><b>CATIOrientationFlag</b></i> interface.
+    This interface enables you to manage a temporary flag to indicate the user
+    orientation of the input.&nbsp;</li>
+  <li>The <i><b>CATIMmiUseFeaturize</b></i> interface. This
+    interface enables you to featurize [<a href="#References">4</a>] an input which
+    is not one.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurveReplace Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurveReplace is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurveReplace Do</h4>
+<p>The replace mechanism is strongly related to the notion of history [<a href="#References">4</a>]. The goal
+is to replace in the history of all features a specification by another one.</p>
+<p>The basic scenario is:
+<ol>
+  <li>Select a feature</li>
+  <li>Click on the right button</li>
+  <li>Choose the Replace item in the contextual menu</li>
+  <li>Select an object (<a href="#About a BRep Selection">a sub-element of a feature in the 3D View</a> ( an edge ) or a feature in the
+    spec tree or
+    in the 3D View)</li>
+  <li>Choose the <a href="#About the Orientation Flag"> orientation</a> of the selected object</li>
+  <li>Click OK to validate the replacement.</li>
+</ol>
+<p>Screen grabs are shown below to illustrate the scenario on a simple case.</p>
+<table>
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceStart.jpg" width="391" height="370"></td>
+    <td>Here, two features reference the same line: Line.2.
+      <ol>
+        <li>An extruded feature references Line.2 as its extrusion direction</li>
+        <li>A combined curve is built using Line.1 and Line.2, as the
+          intersection of the surfaces generated by the extrusion of these lines
+          along their extrusion directions.</li>
+      </ol>
+      <p>The extrusion directions are shown as white arrows. We want to replace
+      this line Line.2 by another line Line.3.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceCmd.jpg" width="476" height="394"></td>
+    <td>We get into the replace capability, and select Line.2 that we want to
+      replace. The dialog box shows the Line.2 object to replace. Line.3 is not
+      yet selected.
+    </td>
+  </tr>
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceEnd.jpg" width="350" height="360"></td>
+    <td>Finally we select Line.3 and click OK. After checking that any feature
+      relying on Line.2 can be rebuilt using Line.3, the replace operation is
+      performed. Both extrusion and combined curve features are impacted by the
+      replace operation that is automatically carried out. Line.2 is no more
+      referenced by any feature that has replaced it by the new line Line.3.
+      (Here the extrusion and the combined curve are the only referencing
+      features.)
+    </td>
+  </tr>
+</table>
+<p>There is a need for three different kinds of services:
+<ol>
+  <li>To filter the selection path and set the level of granularity&nbsp;</li>
+  <li>To validate the pre-selection/selection of the object in the selection path</li>
+  <li>To replace every reference to the former feature by a reference to a new valid feature.&nbsp;</li>
+</ol>
+<p>The CAAV5V6ExtMmrCombinedCurveReplace use case explained also two advanced concepts.
+So for a first implementation of the Replace mechanism you can skip them.&nbsp;</p>
+<ul>
+  <li><a href="#About the Orientation Flag">How to manage the orientation of an input
+    selected for a replacement</a></li>
+</ul>
+<blockquote>
+  <p>Some features, as a line, a plane, and so one, have an orientation. It is
+  the orientation of their support. The Replace command enables you to select
+  the feature or its inverse (in selecting the green arrow, see [<a href="#Fig.2">Fig.2</a>]).
+  The use case explains how to
+  manage the inversion of an input.&nbsp;Note that the Replace command displays always a green arrow,
+  but in some cases the
+  inverse can have no meaning for your input.</p>
+</blockquote>
+<ul>
+  <li><a href="#About a BRep Selection">How to process an input selected for a
+    replacement which is not a feature&nbsp;</a></li>
+</ul>
+<blockquote>
+  <p>In some cases, the input of the feature can be
+  a sub-element: a face, an edge, a vertex. If you want manage those cases, the
+  use case explains how to featurize a selected input.</p>
+</blockquote>
+<p><b><a name="About the Orientation Flag">About the Orientation Flag</a></b></p>
+<p>To understand the meaning of this flag, consider the following scenario. On
+the Part below, the purple plane is an offset plane of the blue plane.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>: Plane with offset&nbsp;</i></caption>
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien1.jpg" width="381" height="266"></td>
+  </tr>
+</table>
+<p>The blue plane is selected to be replaced by the yellow plane. The Replace
+command displays two arrows: a red arrow to indicate the orientation of the
+input to modify (blue plane), and a green arrow to indicate the orientation of the
+selected input for the replacement (yellow plane):</p>
+<table border="0">
+<caption><i><a name="Fig.2">Fig.2</a>: The Blue Plane Replaced by the not
+  Inversed Yellow Plane&nbsp;</i></caption>
+
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien2.jpg" width="387" height="325"></td>
+  </tr>
+</table>
+<p>&nbsp;If you don't
+select the green arrow, the result is the following: the purple plane is over
+the yellow plane.</p>
+<table border="0">
+<caption><i><a name="Fig.3">Fig.3</a>: The Result</i></caption>
+
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien3.jpg" width="400" height="262"></td>
+  </tr>
+</table>
+<p>If you select the green arrow, it is inversed,</p>
+<table border="0">
+<caption><i><a name="Fig.4">Fig.4</a>: The Blue Plane Replaced by the Inversed
+  Yellow Plane&nbsp;</i></caption>
+
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien4.jpg" width="409" height="291"></td>
+  </tr>
+</table>
+<p>and the result is the following:&nbsp;the purple plane is under the yellow
+plane.</p>
+<table border="0">
+<caption><i><a name="Fig.5">Fig.5</a>: The Result</i></caption>
+
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien5.jpg" width="434" height="272"></td>
+  </tr>
+</table>
+<p>If the selection has been inversed, the new input of the feature is a
+specific feature: the Inverse feature. The next schema explains that for the
+combined curve:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceOrien6.jpg" width="361" height="173"></td>
+  </tr>
+</table>
+<p>In this example, for the first direction the <code>Line.1</code> feature has
+been selected and the green arrow has been inversed. So the value of the first
+direction is not <code>Line.1 </code>but the<code> Inverse.1</code> feature
+which has a link to the <code>Line.1</code> feature.&nbsp;</p>
+<p>The <i>CATIOrientationFlag</i> interface is the meaning to know the end user
+orientation of the selection in the replace code.</p>
+<p><b><a name="About a BRep Selection">About a BRep Selection</a></b></p>
+<p>The input element, the candidate for the Replace operation, can be a feature as described
+in the previous scenario, but could also be a topological sub-element such as an Edge, a Vertex, 
+a Face. Such an object is called a selecting object or BRep Access object.
+This object is not a feature. It needs to be transformed into a BRep feature thanks to the
+ <i>CATIMmiUseFeaturize</i> interface.
+
+<table border="0">
+<caption><i><a name="Fig.6">Fig.6</a>: A BRep object as input for the replace</i></caption>
+  <tr>
+    <td>
+    <img border="0" src="../CAAMcaUseCases/images/CAAMcaReplaceBRep.jpg" width="524" height="415"></td>
+  </tr>
+</table>
+<p>On the picture above, you can notice that one edge of the pad is the second
+direction of the combined curve. The selected edge has been featurized before
+becoming&nbsp; an input of the <code>CombinedCurve.1</code> feature. It will be done by the <code><a href="#ExtractFeature">ExtractFeature</a></code>
+private method of the <i>CATIReplace</i> implementation class.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurveReplace</h4>
+
+<p>See the section entitled &quot;How to Launch the V5V6ExtCombinedCurve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.&nbsp; </p>
+
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>In the <b>File</b> menu&nbsp;
+    <ul>
+      <li>click <b>Open</b>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAAV5V6ExtCombinedCurveForReplace.CATPart</b>
+        (<font size="1">*</font>) document and click <b>Open</b></li>
+    </ul>
+  <li>Select <b>Line.1 </b>(second direction)</li>
+  <li>Choose the <b> Replace</b> item in the contextual menu
+    <ul>
+      <li>Select <b>Line.5</b></li>
+      <li>lick<b> OK </b>in the <b>Replace</b> Dialog box</li>
+    </ul>
+  </li>
+  <li>Select <b>Line.3&nbsp; </b>(second curve)</li>
+  <li>Choose the <b> Replace</b> item in the contextual menu
+    <ul>
+      <li>Select <b>Line.6</b></li>
+      <li>Click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+    </ul>
+  </li>
+  <li>Select <b>Line.5&nbsp;</b><b> </b>(new second direction)</li>
+  <li>Choose the <b> Replace</b> item in the contextual menu
+    <ul>
+      <li>Select an edge of<b> Pad.1</b></li>
+      <li>click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+    </ul>
+  </li>
+  <li>Select <b>Line.6</b><b> </b>(new second curve)</li>
+  <li>Choose the <b> Replace</b> item in the contextual menu
+    <ul>
+      <li>Select <b>Line.3</b></li>
+      <li>Click on the <b>green arrow </b>to invert <b>Line.3</b></li>
+      <li>click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+    </ul>
+  </li>
+</ul>
+<p>(<font size="1">*</font>) The file is located in the directory <code>CAAV5V6MechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurveReplace Code</h4>
+<p>The CAAV5V6ExtMmrCombineCurveReplace use case is made of two classes named <i>CAAEV5V6ExtMmrCombineCurveReplace</i>,
+ and <i>CAAEV5V6ExtMmrCombineCurveReplaceUI</i>&nbsp;
+located in the CAAV5V6ExtMmrCombinedCurveReplace.m
+module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td valign="top">Windows</td>
+    <td>
+      <pre>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurveReplace.m\</pre>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">Unix</td>
+    <td>
+      <pre>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurveReplace.m/</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAAMmrCombinedCurveReplace use case:</p>
+<ol>
+  <li><a href="#CATIReplace">Implementing the CATIReplace Interface</a></li>
+  <li><a href="#CATIReplaceUI">Implementing the CATIReplaceUI Interface</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATIReplace"></a>Implementing the CATIReplace Interface</h4>
+
+<p>The first interface to implement is <i>CATIReplace</i>. To implement this
+interface, use its adapter class the <i>CATMmrReplaceAdapter</i> </p>
+
+<ol>
+  <li><a href="#CATIReplace header file">The header class</a></li>
+  <li><a href="#CATIReplace source file">The source file</a>
+  </li>
+  <li>The <code><a href="#IsElementValidForReplace">IsElementValidForReplace</a></code> method</li>
+  <li>The <a href="#Replace"> Replace</a> method</li>
+  <li>The <a href="#ExtractFeature">ExtractFeature</a>  private method</li>
+  <li>The <a href="#InvertFeature">InvertFeature</a>  private method</li>
+  <li>The <a href="#GetRequestedBehavior">GetRequestedBehavior</a>  method</li>
+</ol>
+<p>&nbsp;</p>
+<ol>
+  <li><a name="CATIReplace header file"></a>The header class</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#include "CATMmrReplaceAdapter.h"
+      
+class CAAEV5V6ExtMmrCombineCurveReplace : public CATMmrReplaceAdapter
+{
+   CATDeclareClass;
+      
+ public :
+
+   CAAEV5V6ExtMmrCombineCurveReplace();
+   virtual ~CAAEV5V6ExtMmrCombineCurveReplace();
+   
+   HRESULT IsElementValidForReplace(const CATUnicodeString& iNameOfRole,
+                                   const CATBaseUnknown_var& ispElement,
+                                   CATUnicodeString& oMessage, 
+                                   int& oElementValidity,
+                                   const CATBaseUnknown_var& ispOldValue=NULL_var);
+   
+   HRESULT Replace(const CATUnicodeString& iNameOfRole,
+                   CATBaseUnknown_var& ispNewElement,
+                   const CATBaseUnknown_var& ispOldValue=NULL_var);
+
+  
+    HRESULT GetRequestedBehavior(const  CATUnicodeString  &  iAttributeName,  
+                                 CATListPtrIID  **  oBehaviorArray,  
+                                  int  *  oBehaviorSize); 
+      
+      
+      
+ private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEV5V6ExtMmrCombineCurveReplace(const CAAEV5V6ExtMmrCombineCurveReplace &iObjectToCopy);
+
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEV5V6ExtMmrCombineCurveReplace & operator = (const CAAEV5V6ExtMmrCombineCurveReplace &iObjectToCopy);
+
+   // On the fly featurization for selection objects
+   HRESULT ExtractFeature(const CATBaseUnknown_var& ispSelectedObject,
+                                                   CATIMmiUseMfBRep_var& ospBRepFeature);
+
+
+   HRESULT InvertFeature(const CATBaseUnknown_var& ispSelectedObject,
+                           CATIMmiMechanicalFeature_var& iospFeature);
+  
+};
+</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <i>CAAEV5V6ExtMmrCombineCurveReplace</i> C++ class derives from CATMmrReplaceAdapter.
+  This class is the adapter class of the <i>CATIReplace</i> interface. The <code>CATDeclareClass</code>
+  macro declares that the <i>CAAEV5V6ExtMmrCombineCurveReplace</i> class belongs to a
+  component. The copy constructor and the &quot;=&quot; operator are set as
+  private to prevent the compiler from automatically creating as public.</p>
+  <p>The <i>CATIReplace</i> interface contains two methods:</p>
+  <ul>
+  
+  <li><a href="#IsElementValidForReplace">IsElementValidForReplace</a></li>
+  
+   <p>This method enables you to check that <code>ispElement</code> is an available
+  element for the attribute whose the name is <code>iNameOfRole.</code> If the
+  attribute is a list, <code>ispOldValue</code> is the element of the list to
+  change.</p>
+  <p>The easiest way to implement this method is to call the 
+	same method of the <i>CATMmrReplaceAdapter</i> class. </p>
+	<p>The type of available element for an attribute will be given by 
+	the method <code>GetRequestedBehavior</code> that 
+	needs to be implemented for this class.</span></p>
+
+ 
+  <li><a href="#Replace">Replace</a></li>
+  <p>This method enables you to change the value of the <code>iNameOfRole </code>attribute
+  by the ispNewElement value. If the attribute is a list, <code>ispOldValue</code>
+  is the element of the list to change.</p>
+  <p>This method manages the orientation of the ispNewElement input&nbsp; thanks
+  to the <code><a href="#InvertFeature">InvertFeature</a></code> method and
+  featurizes the no-feature input thanks to the <code><a href="#ExtractFeature">ExtractFeature</a></code>
+  method.</p>
+   </ul>
+  <li><a name="CATIReplace source file"></a>The source file</li>
+  <p>The beginning of the <i>CAAEV5V6ExtMmrCombineCurveReplace</i>.cpp file is the
+  following.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAEV5V6ExtMmrCombineCurveReplace, DataExtension, CATIReplace, V5V6ExtCombinedCurve);
+CATImplementBOA(CATIReplace, CAAEV5V6ExtMmrCombineCurveReplace);
+      
+      
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>CATImplementClass</code> macro is used in conjunction with the
+  <code>CATDeclareClass</code> macro in the class header file to express that 
+  the class is part of a CAA V5 Object Modeler component. Its argument read as 
+  follows:
+  <ol>
+    <li><code>CAAEV5V6ExtMmrCombineCurveReplace</code>: the class name </li>
+    <li><code>DataExtension</code>: the CAA V5 Object Modeler class type.&nbsp; </li>
+    <li><code>CATIReplace: </code>The name of implemented interface </li>
+    <li><code>V5V6ExtCombinedCurve</code> : the name of the extended component.</li>
+  </ol>
+  <p>The <code>CATImplementBOA</code> macro replaces the <code>TIE_CATIReplace</code> 
+  macro. Its arguments are the BOA-implemented interface and the extension class 
+  name respectively.</p>
+  <p>Do no forget to modify the interface dictionary by adding the following
+  line:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>V5V6ExtCombinedCurve	         CATIReplace	       libCAAV5V6ExtMmrCombinedCurveReplace</pre>
+    </td>
+  </tr>
+</table>
+   <li>The <a name="IsElementValidForReplace">IsElementValidForReplace</a>
+    method</li>
+   <p>The implementation of the <code>IsElementValidForReplace</code> method is
+   inherited from the adapter class.&nbsp; The default implementation calls the <a href="#GetRequestedBehavior"><i>GetRequestedBehavior</i></a> 
+   on the Feature referencing the object to replace, in order to know if the <code>iElement</code>
+   reference is able to replace the iOldValue object. Below is the signature of <code>IsElementValidForReplace</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+HRESULT
+CAAEV5V6ExtMmrCombineCurveReplace::IsElementValidForReplace(const CATUnicodeString& iNameOfRole,
+                                                     const CATBaseUnknown_var& iElement,
+                                                     CATUnicodeString& oMessage, 
+                                                     int& oElementValidity, 
+                                                     const CATBaseUnknown_var& iOldValue)
+{
+  
+   HRESULT rc = S_OK;
+
+   oElementValidity=0;
+
+   // Default implementation 
+   rc = CATMmrReplaceAdapter::IsElementValidForReplace(iNameOfRole,iElement,oMessage,oElementValidity,iOldValue);
+   
+   return rc;
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+   <li>The <a name="Replace">Replace</a> method</li>
+  <p> The
+purpose of this method is to set a new object, <code>ispNewElement</code>, in an
+attribute named <code>iNameOfRole</code> valuated with the former value <code>ispOldValue</code>.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      HRESULT
+CAAEV5V6ExtMmrCombineCurveReplace::Replace(const CATUnicodeString& iNameOfRole,
+                            CATBaseUnknown_var& ispNewElement,
+                            const CATBaseUnknown_var& ispOldValue)
+{
+   HRESULT rc = E_FAIL;
+   
+
+
+  ...</pre>
+    </td>
+  </tr>
+</table>
+  <p>This method can be divided in six parts. But the <a href="#second part">second
+  part</a>, managing the BRep selection and the <a href="#third part">third part</a>
+  managing the input orientation, can be skipped for a first implementation of this
+  method.</p>
+  <p>The <b> first</b> part of this method consists in checking <code>ispNewElement</code>.
+  There are two kinds of test:</p>
+  <ul>
+  <li>Check that the candidate element is not the same as the old. If it is the
+    case, it is not an error. The Replace operation is stopped once it is
+    useless.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   if (ispNewElement->IsEqual(ispOldValue))
+   {
+      <b>CATIOrientationFlag_var</b> spInvertFlag = ispNewElement;
+
+      if (NULL_var != spInvertFlag &amp;&amp; (0 == spInvertFlag-&gt;IsInversed()) )
+        return S_OK;
+   }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>spInvertFlag</code> is the smart pointer on the <i>CATIOrientationFlag</i>
+  interface of the selected feature. This interface enables to know if the end
+  user has inversed or not the selected input. If the selected input, <code>ispNewElement</code>,
+  is the same as the old value, <code>ispOldValue</code>. and that the end user
+  has not inversed the selected input, the Replace operation is useless.&nbsp;</p>
+  <p>If the end user has selected the same feature than the previous one, but
+  has inversed its orientation, the new value for the Combined Curve's input
+  will be an Inverse feature which pointes to the selected feature. Refer to the &quot;<a href="#About the Orientation Flag">About
+    the Orientation Flag</a>&quot; section for details about the orientation flag
+    management.&nbsp;</p>
+  <li>Check that the selected feature is not this (The combined Curve). If it is
+    the case, it is an error. It is a basic
+    test to avoid cycle between features.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>CATIMmiMechanicalFeature_var </strong>spCurrent = this; 
+<strong>CATIMmiMechanicalFeature_var</strong> spForReplace = ispNewElement;
+
+if (spCurrent == NULL_var)
+  return E_FAIL;
+
+if (spForReplace != NULL_var && spCurrent-&gt;IsEqual(spForReplace))
+  return E_FAIL;
+  
+...</pre>
+    </td>
+  </tr>
+</table>
+ <p>where <code>spForReplace<span lang="fr"> and spCurrent</span></code> 
+	<span lang="fr">are</span> <i>CAT<span lang="fr">IMmiMechanicalFeature</span></i> smart pointer<span lang="fr">s</span> on
+  the input element and on the Combined Curve.&nbsp;<b>&nbsp;</b></p>
+  </ul>
+  
+   <p>The <a name="second part"> <b> second</b> part</a> of the <code>Replace</code> method&nbsp;consists in transforming the input element into a feature if it is not one. In this case the
+  input element is a BRep object, an object of selection. Refer to the section <a href="#About a BRep Selection">&quot;About
+  BRep Selection</a>&quot; for details about BRep objects.&nbsp;</p>
+  
+    <p>If the input object,  <code>ispNewElement</code>, is not a mechanical 
+	feature, it needs to be featurized. It's the purpose of <code><a href="#ExtractFeature">ExtractFeature</a></code><b>
+</b>method, that will create a feature from a selection object <code>ispNewElement</code> and
+return it in <code>spElem</code> <i>CATIMmiUseMfBRep</i> smart pointer.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+   if (spForReplace == NULL_var)
+   {
+     CATIMmiUseMfBRep_var spElem=NULL_var;
+     rc = ExtractFeature(ispNewElement, spElem);
+     if (SUCCEEDED(rc) && spElem!= NULL_var)
+     {
+       spForReplace = spElem;
+       if (spForReplace == NULL_var)
+         return E_FAIL;
+     }
+   } 
+
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The <a name="third part"> <b> third</b> part </a> consists in managing the orientation flag of the input.
+  This flag can be available for a feature input or a BRep input. The private
+  method <code><a href="#InvertFeature">InvertFeature</a></code> 
+  manages the orientation associated with <code>spForReplace</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = <strong>InvertFeature</strong>(ispNewElement, spForReplace);
+
+  ...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <b> fourth</b>  part consists in checking that the new feature is a BRep feature. <b>In this case, it must be aggregated by the combined curve. </b>A
+  BRep feature should be aggregated by someone to be delete.&nbsp;If it has
+  already been aggregated by someone, the replace should not be done.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+   CATIMmiUseMfBRep_var spMfBRep = spForReplace;
+   if (spMfBRep != NULL_var)
+   {
+     CATIMmiMechanicalFeature_var spFather = NULL_var;
+     rc = spForReplace->GetMechanicalFather(spFather);
+         
+     if (NULL_var == spFather)
+     {
+       CATIMmiUseBasicInsertion_var hInsertedObject = spForReplace;
+       if (hInsertedObject != NULL_var)
+         rc = hInsertedObject->InsertInside(spCurrent);
+     }
+     else
+     {
+       //It should not be aggregated by someone else
+       rc = E_FAIL;
+     }
+   }      
+     
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The <b> fifth</b>&nbsp;part consists in invoking the replacement of the attribute named <code>iNameOfRole</code>
+  by using the <code> Replace</code> method of the adapter class.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = <strong>CATMmrReplaceAdapter::Replace</strong>(iNameOfRole,spForReplace,ispOldValue);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The <b> last </b> part of the <code> Replace</code> method sends an event to update the
+  graphic representation and the specification tree:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIRedrawEvent_var</b> spEvent(spCurrent);
+   if (NULL_var != spEvent) spEvent-&gt;<b>Redraw</b>();
+
+...</pre>
+    </td>
+  </tr>
+</table>
+ 
+
+   <li>The <a name="ExtractFeature">ExtractFeature</a> private method</li>
+  <p>The goal of this method is to featurize the <code>ispSelectedObject</code>
+  input if it not already a feature. It is done thanks to the <i> CATIMmiUseFeaturize</i>
+  interface. Refer to the &quot;Options for Featurization&quot;
+  section of the article entitled &quot;Generic Naming overview&quot; [<a href="#References">4</a>]
+  for explanations about this interface.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEV5V6ExtMmrCombineCurveReplace::ExtractFeature(const CATBaseUnknown_var& ispSelectedObject,
+                                                   CATIMmiUseMfBRep_var& ospBRepFeature)
+
+{
+   HRESULT rc = S_OK;
+
+   // Selected Object conversion into an equivalent feature
+   CATIMmiUseFeaturize_var spToFeaturize = ispSelectedObject;
+   
+   if (NULL_var != spToFeaturize)
+   {
+     HRESULT rc = spToFeaturize->Featurize(ospBRepFeature, 
+                                           MfPermanentBody | MfLastFeatureSupport | MfRelimitedFeaturization,
+                                           CATMmrRelimited);
+	 
+     if (SUCCEEDED(rc) && ospBRepFeature != NULL_var)
+     {
+
+#ifdef CATIAR214
+//============================================== 
+// V6 only
+//==============================================
+     CATIUseEntity * piPartEntity = NULL;
+	 rc = ospBRepFeature->QueryInterface(IID_CATIUseEntity , (void**) &piPartEntity);
+     if (SUCCEEDED(rc))
+     {
+   	    rc = DataCommonProtocolServices::Update(piPartEntity);
+	    piPartEntity->Release(); 
+	    piPartEntity = NULL;
+     }
+#else
+//============================================== 
+// V5 only
+//==============================================
+
+    CATISpecObject_var spNewValue = ospBRepFeature;
+    if (spNewValue != NULL_var)
+    {
+       CATTry
+       {
+         spNewValue->Update();
+       }
+       CATCatch(CATError,error)
+       {
+         ::Flush(error);
+       }
+       CATEndTry          
+    }
+#endif 
+     
+...</pre>
+    </td>
+  </tr>
+</table>
+
+ <p>The <code>Featurize</code><b> </b>method creates a feature that will have
+  the representation (the result) of the selected object that will be a
+  relimited one. After the featurization, the new feature must be updated (
+  build ) to be used as new input of this.<br>
+   As you an see, the update sequence is 
+	in betwenn #ifdef /#endif macros, this is because the new V6 sequence for 
+	update has not been backported to V5.</p>
+
+ 
+   <li><a name="ExtractFeature"></a>The <a name="InvertFeature">InvertFeature</a>
+    private method</li>
+   <p>The <code> Replace</code> method calls a private method <code>InvertFeature</code>, that has
+for implementation to create an inversion feature. It could be also to store a
+flag that models the orientation of the feature. The first argument, <code>ispSelectedObject</code>,
+   is the
+selection object and the <code>ispCurrentSpec</code>  is the feature associated
+to the selection object.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEV5V6ExtMmrCombineCurveReplace::InvertFeature(const CATBaseUnknown_var& ispSelectedObject,
+                                                  CATIMmiMechanicalFeature_var& iospFeature)
+
+{
+  HRESULT rc = S_OK;
+
+  CATIMmiMechanicalFeature_var spToReturn = iospFeature;
+  CATIMmiMechanicalFeature_var spThis = this;
+
+  //We check that the feature is not inversed
+  CATIOrientationFlag_var spInvertFlag = ispSelectedObject;
+  if (NULL_var != spInvertFlag <span lang="fr">&amp;&amp;</span> spInvertFlag<span lang="fr">-&gt;</span>IsInversed())
+  {
+    //We check first if the feature is an inversion
+    CATIGSMUseInverse_var spInverse = iospFeature;
+    if (NULL_var != spInverse)
+    {
+      //We retrieve inversion Parent
+      spToReturn = spInverse<span lang="fr">-&gt;</span>GetElem();
+    }      
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>If the selected input, <code>ispSelectedObject</code> is itself a Inverse
+  feature, and that it is inversed, the returned value is the contents of the
+  Inverse feature. In other words, the inverse of the inverse is the feature
+  itself.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIGSMUseInverse_var spInverse = NULL_var;
+
+      CATUnicodeString ClientId("SAMPLES");
+      CATUnicodeString PartnerId = "CAAMmrExtMechanicalModeler";
+      CATUnicodeString CatalogName("CAAV5V6ExtMmrCombinedCurveCatalog");
+      CATFmCredentials CredentialForCC;
+      CredentialForCC.RegisterAsApplicationBasedOn(CATFmFeatureModelerID,PartnerId); 
+      CredentialForCC.RegisterAsCatalogOwner(CatalogName,ClientId);
+      
+      CATFmFeatureFacade FeatFacadeOnInverseFeat(CredentialForCC, iospFeature);      
+      CATFmFeatureFacade FeatFacadeOnThis(CredentialForCC, this);
+
+      CATFmContainerFacade FeatCont;
+      rc = FeatFacadeOnThis.GetContainerFacade(FeatCont);
+
+      if (FAILED(rc))
+        return rc;
+
+      CATFmFeatureFacade FeatFacadeOnPointedFeat(CredentialForCC);
+      CATFmPointingFeatureIterator PointingFeatsIterator;
+      rc =  FeatFacadeOnInverseFeat.ScanPointingFeatures(PointingFeatsIterator);
+
+      if (SUCCEEDED(rc))
+      {
+        while (SUCCEEDED(PointingFeatsIterator.Next(FeatFacadeOnPointedFeat))) 
+        {
+          CATIGSMUseInverse * piPointingFeat = NULL;
+          rc = FeatFacadeOnPointedFeat.QueryInterfaceOnFeature(IID_CATIGSMUseInverse, (void**)&piPointingFeat);
+          if (SUCCEEDED(rc) && piPointingFeat)
+          {
+            //Get feature container
+            CATFmContainerFacade PointingFeatCont;
+            rc = FeatFacadeOnPointedFeat.GetContainerFacade(PointingFeatCont);
+          
+            if (SUCCEEDED(rc))
+            {
+              // if the feature is created in the same Container of Feature
+              // then we store the Inverse feature and exit the loop.
+              int compare=PointingFeatCont.CompareContainerWith(FeatCont);
+              if (compare)
+              {
+                spInverse = piPointingFeat;
+                piPointingFeat->Release();
+                piPointingFeat=NULL;
+                break;
+              }
+            }
+
+            piPointingFeat->Release();
+            piPointingFeat=NULL;
+          }
+        }
+      }
+
+      // Finally we create the inversion
+      // If no inversion was found above.
+      if (NULL_var == spInverse)
+      {
+        CATIGSMUseFactory * piFactoryOnFeatCont = NULL ;   
+        HRESULT rc = FeatCont.QueryInterfaceOnContainer(IID_CATIGSMUseFactory,(void**)&piFactoryOnFeatCont);
+        if (SUCCEEDED(rc) && piFactoryOnFeatCont)
+        {
+          spInverse = piFactoryOnFeatCont->CreateInverse(iospFeature);
+          if (NULL_var != spInverse)
+          {
+            //Hide the inversion
+            CATIVisProperties *pVisuSpec = NULL;
+            rc = spInverse->QueryInterface(IID_CATIVisProperties,(void**)&pVisuSpec);
+            if (SUCCEEDED(rc))
+            {
+              CATVisPropertiesValues MyProp;
+              MyProp.SetShowAttr(CATNoShowAttr);
+              pVisuSpec->SetPropertiesAtt(MyProp,CATVPShow,CATVPGlobalType);
+              pVisuSpec->Release();
+              pVisuSpec = NULL;
+            }
+
+            // Aggregation of the inversion to me
+            CATIMmiUseBasicInsertion_var hBasicInsertion = spInverse;
+            if (hBasicInsertion != NULL_var)
+              rc = hBasicInsertion->InsertInside(spThis);
+
+            //Update the inversion
+            CATFmFeatureFacade FeatFacadeOnInverse(CredentialForCC, spInverse);
+            rc = FeatFacadeOnInverse.Update();          
+      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Otherwise, the new Inverse feature is created. </p>
+
+  <li>The <a name="GetRequestedBehavior">GetRequestedBehavior</a>  method</li>
+ <p>This method specifies the list of interfaces required to set an object as an attribute. 
+ This is used intensively in the replace capability in order to choose a
+candidate specification that can replace an existing one referenced by many
+other specifications. 
+ </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ HRESULT CAAEV5V6ExtMmrCombineCurveReplace::GetRequestedBehavior(const  CATUnicodeString<span lang="fr">&amp;</span> AttributeName,  
+                                CATListPtrIID  **  oBehaviorArray,  
+                                int  *  oBehaviorSize)
+
+{
+  HRESULT rc = S_OK;
+ 
+  //Check input
+  int InputType=0;
+  if (2 == iAttributeName.Compare("V5V6Curve1") || 2 == iAttributeName.Compare("V5V6Curve2"))
+    InputType=1;
+  else if (2 == iAttributeName.Compare("V5V6Dir1") || 2 == iAttributeName.Compare("V5V6Dir2"))
+    InputType=2;
+  else
+  {
+    //call adapter for inherited attributes
+    rc = CATMmrReplaceAdapter::GetRequestedBehavior(iAttributeName, oBehaviorArray, oBehaviorSize);
+    return rc;
+  }
+
+  // Initialialize list of lists
+  // 1 list in the list of lists
+  (*oBehaviorSize) = 1;
+  (*oBehaviorArray) = new CATListPtrIID[1];
+
+  
+  //Only 1 interface in the sublist 
+  CATListPtrIID* SubList = new CATListPtrIID;
+  
+  if (InputType == 1)
+    SubList-<span lang="fr">&gt;</span>Append(<span lang="fr">&amp;</span>IID_CATIMfMonoDimResult);
+  else if(InputType == 2)
+    SubList-<span lang="fr">&gt;</span>Append(<span lang="fr">&amp;</span>IID_CATLine);
+
+  (*oBehaviorArray)-<span lang="fr">&gt;</span>Append(*SubList);
+  delete SubList;
+
+  return rc;
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>If the input string i<span lang="fr">AttributeName</span> is equal to "V5V6Curve1" or "V5V6Curve2" which are the names of two attributes of the 
+V5V6ExtCombineCurve feature, then the filter will be IID_CATIMfMonoDimResult. That is to say, we can replace in those two attributes a feature implementing the interface CATIMfMonoDimResult by another one that also implements CATIMfMonoDimResult.
+If the input string <span lang="fr">iAttributeName</span> is equal to "V5V6Dir" or "V5V6Dir2" which are the names of two other attributes of the 
+V5V6ExtCombineCurve feature, then the filter will be IID_CATLine. That is to say, we can replace in those two attributes a feature implementing the interface CATLine by another one that also implements CATLine.
+</p>
+
+</ol>
+
+<h4><a name="CATIReplaceUI"></a>Implementing the CATIReplaceUI Interface</h4>
+<p>The last interface to implement is <i> CATIReplaceUI</i>.&nbsp;</p>
+<ol>
+  <li><a href="#CATIReplaceUI header class">The header class</a></li>
+  <li><a href="#CATIReplaceUI source file">The source file</a></li>
+  <li>The <a href="#FindValidElementForReplace"> FindValidElementForReplace</a> method</li>
+</ol>
+<ol>
+<li><a name="CATIReplaceUI header class"></a>The header class</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   
+class CATUnicodeString ;
+class CATPathElement;        
+
+class CAAEV5V6ExtMmrCombineCurveReplaceUI : public CATBaseUnknown
+{
+   CATDeclareClass;
+      
+ public :
+
+   CAAEV5V6ExtMmrCombineCurveReplaceUI();
+   virtual ~CAAEV5V6ExtMmrCombineCurveReplaceUI();
+
+   HRESULT FindValidElementForReplace(const CATUnicodeString&amp; iRole,
+                                      const CATPathElement* ipSelection,
+                                      const CATBaseUnknown* ipOldValue, 
+                                      CATBaseUnknown*&amp; opFoundElement);
+ private:
+   CAAEV5V6ExtMmrCombineCurveReplaceUI(const CAAEV5V6ExtMmrCombineCurveReplaceUI &amp;iObjectToCopy);
+   CAAEV5V6ExtMmrCombineCurveReplaceUI &amp; operator = (const CAAEV5V6ExtMmrCombineCurveReplaceUI &amp;iObjectToCopy);
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEV5V6ExtMmrCombineCurveReplaceUI</i> C++ class derives from <i>CATBaseUnknown</i>. The <code>CATDeclareClass</code>
+  macro declares that the <i>CAAEV5V6ExtMmrCombineCurveReplaceUI </i>class belongs to a
+  component. The copy constructor and the &quot;=&quot; operator are set as
+  private to prevent the compiler from automatically creating as public. The <code>FindValidElementForReplace</code>
+method is the unique method of this interface.&nbsp;</p>
+<li><a name="CATIReplaceUI source file"></a>The source file</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAEV5V6ExtMmrCombineCurveReplaceUI,
+                  DataExtension,
+                  CATBaseUnknown,
+                  <b>V5V6ExtCombinedCurve</b>);
+
+#include &lt;TIE_CATIReplaceUI.h&gt;
+<b>TIE_CATIReplaceUI</b>(CAAEV5V6ExtMmrCombineCurveReplaceUI);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <ul>
+    <li><i>CAAEV5V6ExtMmrCombineCurveReplaceUI</i> implements the <i>CATIReplaceUI</i> interface:
+      this is expressed thanks to the <code>TIE_CATIReplaceUI</code> macro
+    <li><i>CAAEV5V6ExtMmrCombineCurveReplaceUI</i> implements the <i>CATIReplaceUI</i>
+      interface
+      for the <code>V5V6ExtCombinedCurve</code> component as a data extension. This is
+      expressed using the <code>CATImplementClass</code> macro</li>
+  </ul>
+  <p>Do no forget to modify the interface dictionary be adding the following
+  line:</p>
+
+<table class="code">
+  <tr>
+    <td>
+     <pre>
+      V5V6ExtCombinedCurve	         CATIReplaceUI	        libCAAV5V6ExtMmrCombinedCurveReplace
+     </pre>
+    </td>
+  </tr>
+</table>
+  <p>Where <code>libCAAV5V6ExtMmrCombinedCurveReplace</code> is the name of the library
+  that contains the <i>CAAEV5V6ExtMmrCombineCurveReplaceUI</i>.cpp class.</p>
+
+<li><a name="FindValidElementForReplace"></a>The FindValidElementForReplace
+  method</li>
+<p><code>FindValidElementForReplace</code> searches for the <code>opFoundElement</code>
+object in a <i>CATPathElement</i> <code>ipSelection</code> that can replace a
+given object <code>ipOldValue</code> for a given role <code>iRole</code>. Here, <code>spFeatParent</code>
+is a <i>CATISpecObject</i> smart pointer on the <code>pNextParent</code> <i>CATBaseUnknown</i>
+pointer, <code>spReplace</code> is a <i>CATIReplace</i> smart pointer on <code>this</code>,
+and <code>pNextParent</code> is a <i>CATBaseUnknown</i> pointer extracted from
+the <i>CATPathElement</i> <code>ipSelection</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEV5V6ExtMmrCombineCurveReplace::<b>FindValidElementForReplace</b>(
+                                            const CATUnicodeString &amp; iRole,
+                                            const CATPathElement   * ipSelection,
+                                            const CATBaseUnknown   * ipOldValue,
+                                            CATBaseUnknown        *&amp; opFoundElement)
+{
+  ...
+  while (NULL != pNextParent)
+  {
+    <b>spFeatParent = pNextParent;</b>
+    if (NULL_var != spFeatParent)
+    {
+      hr = spReplace -&gt; <b><a href="#IsElementValidForReplace">IsElementValidForReplace</a></b>(iRole,spFeatParent,message,ElementValidity,spOldValue);
+      if (SUCCEEDED(hr) &amp;&amp; 1 == ElementValidity)
+      {
+        opFoundElement = pNextParent;
+        opFoundElement-&gt;AddRef();
+        break;
+      }
+    }
+    <b>pNextParent = pTmp-&gt;NextFatherElement();</b>
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>For each object referenced in the <i>CATPathElement</i> <code>ipSelection</code>,
+we call the <code>IsElementValidForReplace</code> method to know if the current
+element is valid to replace <code>spOldValue</code> the old value for the <code>iRole</code>
+attribute. If one is valid, we stop the loop and <code>opFoundElement</code> is
+valuated. Here, we are looking especially for features referenced in the <i>CATPathElement</i>
+object.</p>
+<p>At this stage, we can have a <code>opFoundElement</code> that is valuated or
+not, depending on what objects are in the <i>CATPathElement</i>. Especially if
+no feature referenced in the <i>CATPathElement</i> object is valid for the given
+role. We do a second pass, but this time we check that the object are not
+features. We have done this to replace an object by an existing feature,
+avoiding to create each time a BRep feature for each replace action done in the
+model.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  if (NULL == opFoundElement)
+  {
+    pTmp-&gt;InitToLeafElement();
+    pNextParent = pTmp-&gt;NextFatherElement();
+    while (NULL != pNextParent)
+    {
+      spFeatParent = pNextParent;
+      <b>if (NULL_var == spFeatParent)</b>
+      {
+        hr = spReplace-&gt;<b><a href="#IsElementValidForReplace">IsElementValidForReplace</a></b>(iRole,pNextParent,message,ElementValidity,spOldValue);
+        if (SUCCEEDED(hr) &amp;&amp; 1 == ElementValidity)
+        {
+          opFoundElement = pNextParent;
+          opFoundElement-&gt;AddRef();
+          break;
+        }
+      }
+      <b>pNextParent = pTmp-&gt;NextFatherElement();</b>
+    }
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Here, we are doing the same as we have done above, except that we want none
+feature object, and we call the <code>IsElementValidForReplace</code><b> </b>method
+with a selection object at each step.</p>
+<p>In this method we have found a valid element for replace by searching a <i>CATPathElement</i>
+object.
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to implement the replace mechanism for
+a new feature. We illustrate the way interfaces collaborate in an algorithm and
+the openess that they give.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating
+      a New StartUp from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrFeatureIntegration.htm">Integrating a
+      New Mechanical Feature in the V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating
+      V5V6EXtCombinedCurve's Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrGenericNaming.htm">Generic
+      Naming Overview</a></td>
+  </tr>
+  <tr>
+    <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMcaUseCases/CAAMcaReplace.htm">
+    Modifying Combined Curve's Specifications</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>
+
+</html>
+

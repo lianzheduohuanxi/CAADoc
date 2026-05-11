@@ -1,0 +1,557 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Check Button</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Check Button</h3>
+      <em>Using CATAfrCheckHeaderAccessor</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to integrate in a workbench a check button in
+      order to launch a command when the button is &quot;checked&quot; and another one when the state of the button becomes &quot;unchecked&quot;.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrViewerFeedbackHdr Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrViewerFeedbackHdr Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrViewerFeedbackHdr</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrViewerFeedbackHdr Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how integrate in a workbench a button
+which launches a command when the button is checked and another one when the
+button is unchecked. It is possible thanks to a command header [<a href="#References">1</a>]
+whose the representation is a check button. This specialized command header is a
+check header. This picture below explains the internal process:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCheckHeaderDiagram.jpg" width="465" height="112"></td>
+    <td>
+      <ul>
+        <li>When the button is &quot;checked&quot;, a command header A is
+          started which itself launches a command 1</li>
+        <li>When the button is &quot;unchecked&quot;, a command header B is
+          started which itself launches a command 2</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>This article explains how to:</p>
+<ul>
+  <li>Use the <i>CATAfrCheckHeaderAccessor</i>&nbsp; class, the class which
+    encapsulates the non exposed check header class,</li>
+  <li>Create the command headers for the &quot;check&quot; and
+    &quot;uncheck&quot; states,</li>
+  <li>Create the command which contains the &quot;check&quot; and
+    &quot;uncheck&quot; behaviors.</li>
+</ul>
+<p>A check header can be also used without starting command headers. In this
+case, only the &quot;checked&quot; or &quot;unchecked&quot; state is
+interesting. This kind of usage is described in another use case [<a href="#References">2</a>]
+.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrViewerFeedbackHdr Use Case</h3>
+<p>CAAAfrViewerFeedbackHdr is a use case of the CAAApplicationFrame.edu framework that
+illustrates Application framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrViewerFeedbackHdr Do</h4>
+<p>The CAAAfrViewerFeedbackHdr use case inserts in the General workshop [<a href="#References">3</a>]
+a check header whose the title is &quot;Viewer Feedback demonstrator&quot;. The
+left picture&nbsp;shows the check header with the state &quot;off&quot;, and the
+right picture with the state &quot;On&quot;. In the two cases you have the representation
+of the header in the menu bar and the tool bar.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCheckHeaderAddinOff.jpg" width="269" height="176"></td>
+    <td><img border="0" src="images/CAAAfrCheckHeaderAddinOn.jpg" width="273" height="181"></td>
+  </tr>
+</table>
+<p>When the state is &quot;checked&quot;, if there is a current viewer,
+some information, such as the mouse position, is displayed in the 2D viewpoint
+as the image shows it below. Refer to the &quot;Viewer Feedback&quot; use case for details about this rendering [<a href="#References">4</a>].</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCheckHeaderMouseCoord.jpg" width="438" height="202"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrViewerFeedbackHdr</h4>
+<p>To launch CAAAfrViewerFeedbackHdr, you will need to set up the build time
+environment, then compile CAAAfrViewerFeedbackHdr along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">5</a>].</p>
+<p>But just before launching the execution, edit the CAAApplicationFrame.edu.dico
+interface dictionary file located in the dictionary directory of the
+CAAApplicationFrame.edu framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+#CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrViewerFeedbackHdr Code</h4>
+<p>The CAAAfrViewerFeedbackHdr use case is made of several classes located :</p>
+<ul><li>
+<p>In the CAAAfrGeneralWksAddin.m module of the CAAApplicationFrame.edu framework</p></li>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/</code></td>
+  </tr>
+</table>
+  <p>There is a single class, the <i>CAAAfrGeneralWksAdn</i> class, which is an
+  implementation of the <i>CATIAfrGeneralWksAddin</i> interface [<a href="#References">3</a>].
+  If the &quot;Making Your Document
+      Independent Command Available in All Workbenches&quot; use case explains
+  the implementation of this interface, this article only details the check
+  header instance creation and its integration in menu bar and tool bar.</p>
+
+  <li><p>In the CAACafViewerFeedback.m module of the CAACATIAApplicationFrm.edu
+    framework</p></li>
+    <table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACafCATIAApplicationFrm.edu\CAACafViewerFeedback.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACafCATIAApplicationFrm.edu/CAACafViewerFeedback.m/</code></td>
+  </tr>
+</table>
+  <p>There are the <i>CAACafViewerFeedbackCmd</i> and the <i>CAACafViewerFeedbackManager</i>
+  classes. The first is a command which is described in this article. The second
+  is an object to manage the viewer feedback which is only detailed in the
+  Visualization use case [<a href="#References">4</a>].&nbsp;</p>
+
+  </ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in the CAAAfrViewerFeedbackHdr use case:</p>
+<ol>
+  <li><a href="#Step1">Creating the Check Header Instance in Add-in</a></li>
+  <li><a href="#Creating the Check/Uncheck Command">Creating the Check/Uncheck Command</a></li>
+  <li><a href="#Retrieving the State of the Check Header">Retrieving the State
+    of a Check Header&nbsp;</a></li>
+  <li><a href="#Creating the Check Header Resources">Creating the Check Header Resources</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Check Header Instance in Add-in</h4>
+<p>The&nbsp; <i>CAAAfrGeneralWksAdn</i> class is an
+  implementation of the <i>CATIAfrGeneralWksAddin</i> interface which is an
+Add-in of the General workshop [<a href="#References">3</a>]. Like other Add-in
+implementations, there are two methods to consider:</p>
+<ul>
+  <li><a href="#CreateCommands"><code>CreateCommands</code></a>, the method to create
+    the command header instances,</li>
+</ul>
+<ul>
+  <li><code>CreateToolbars</code>, the method to
+    arrange the command header instances in menu bar and tool bar. Since this
+    piece code is not in relationship with the topic of this article, refer to the
+    CAAAfrGeneralWksAddin use case [<a href="#References">3</a>] for details.</li>
+</ul>
+<p><a name="CreateCommands"></a>Extract of the <code>CreateCommands</code>  method</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAAAfrGeneralWksAdn::CreateCommands()
+{
+  ...
+  CATAfrCheckHeaderAccessor <b>ViewerFeedbackHdrAccessor</b> (&quot;CAAAfrViewerFeedbackHdr&quot;);
+  ViewerFeedbackHdrAccessor.<b>SetResourceFile</b>(&quot;CAAAfrGeneralWksAddinHeader&quot;);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATAfrCheckHeaderAccessor</i> class enables you to create an instance
+of a non-exposed check header class.&nbsp; &quot;<code>CAAAfrViewerFeedbackHdr</code>&quot;
+will be the check header internal name. The <code>SetResourceFile</code> method
+allows you to specify in which filename, the Nls and Rsc resources will be set.
+See the <a href="#Creating the Check Header Resources">Creating the Check Header Resources</a>
+section.&nbsp;</p>
+<p>Then, the behavior for the &quot;check&quot; and &quot;uncheck&quot; states
+are specified.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+</pre>
+      <pre>  CATCommandHeader * pHdr = (CATCommandHeader*) new 
+                         CAAAfrGeneralWksAddinHeader(&quot;<b>CAACafViewerFeedbackCheckHdr</b>&quot;, 
+                             &quot;CAACafViewerFeedback&quot;, 
+                             &quot;CAACafViewerFeedbackCmd&quot;, (void *)1);
+  pHdr-&gt;<b>SetVisibility</b>(0);
+
+  pHdr = (CATCommandHeader*) new 
+                        CAAAfrGeneralWksAddinHeader(&quot;<b>CAACafViewerFeedbackUncheckHdr</b>&quot;, 
+                             &quot;CAACafViewerFeedback&quot;, 
+                             &quot;CAACafViewerFeedbackCmd&quot;, (void *)2);
+  pHdr-&gt;<b>SetVisibility</b>(0); 
+                             
+  ViewerFeedbackHdrAccessor.<b>SetCheckCommand</b>(&quot;CAACafViewerFeedbackCheckHdr&quot;);
+
+&nbsp; ViewerFeedbackHdrAccessor.<b>SetUncheckCommand</b>(&quot;CAACafViewerFeedbackUncheckHdr&quot;);
+</pre>
+    </td>
+  </tr>
+</table>
+<p>
+The <i>CAAAfrGeneralWksAddinHeader</i>&nbsp; class has been automatically
+created with the <code>MacDeclareHeader</code> macro insert in the <code>CAAAfrGeneralWksAdn.cpp
+</code>file [<a href="#References">3</a>].&nbsp;The arguments of the two
+instances are:</p>
+<ul>
+<li><code>CAACafViewerFeedbackCheckHdr/</code><code>CAACafViewerFeedbackUncheckHdr</code>: the internal name of the
+  two command header instances.&nbsp;</li>
+<li><code>CAACafViewerFeedback</code>: name of the library exporting the <code>CAACafViewerFeedbackCmd</code>
+  command</li>
+<li><code>CAACafViewerFeedbackCmd</code>: name of the command which
+  set/unset the viewer feedback. This class is explained further, see the <a href="#Creating the Check/Uncheck Command">Creating the Check/Uncheck Command</a>
+  section.</li>
+<li><code>1/2</code>: arguments of the <code>CAACafViewerFeedbackCmd</code>
+  command</li>
+</ul>
+<p>The <code>SetVisibility</code> method of the <i>CATCommandHeader</i> class
+prohibits that the two instances, <code>CAACafViewerFeedbackCheckHdr and CAACafViewerFeedbackUncheckHdr</code>
+appear in the Customize command. The end user which do not known the identifier
+of command header cannot launch them in the power input, or drag and drop the
+command in a toolbar. See the technical article for more information about this
+method [<a href="#References">1</a>].</p>
+<p>Associating the <code>CAACafViewerFeedbackCheckHdr </code>header instance
+with the &quot;Check&quot; state, thanks to the <code>SetCheckCommand</code>
+method, the <i> CAACafViewerFeedbackCmd</i> with<code> 1</code> as argument will be
+finally launched when the end use will check the check button.</p>
+<p>Associating the <code>CAACafViewerFeedbackUncheckHdr </code>header
+instance with the &quot;Uncheck&quot; state, thanks to the <code>SetUncheckCommand</code>
+method, the <i> CAACafViewerFeedbackCmd</i> with <code>2</code> as argument will be
+finally launched when the end use will uncheck the check button.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Check/Uncheck Command"></a>Creating the Check/Uncheck Command</h4>
+
+<p>The aim of this section is to explain the command which is launched when the
+end user selects the &quot;Viewer Feedback Demonstrator&quot; check button. This
+command is a <i>CAACafViewerFeedbackCmd</i> class:</p>
+
+<ul>
+  <li><i><a href="#CAACafViewerFeedbackCmd header file">CAACafViewerFeedbackCmd</a></i><a href="#CAACafViewerFeedbackCmd header file">
+    header file</a></li>
+  <li><i><a href="#CAACafViewerFeedbackCmd source file">CAACafViewerFeedbackCmd</a></i><a href="#CAACafViewerFeedbackCmd source file">
+    source file</a></li>
+</ul>
+<p><i><a name="CAACafViewerFeedbackCmd header file"></a>CAACafViewerFeedbackCmd</i>
+header file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCommand.h&quot;  
+
+class CAACafViewerFeedbackCmd : public <b>CATCommand</b>
+{
+  public :
+
+   CAACafViewerFeedbackCmd(void * iArgument);
+
+   virtual ~CAACafViewerFeedbackCmd();  
+	
+  private : 
+
+   CAACafViewerFeedbackCmd ();
+   CAACafViewerFeedbackCmd(const CAACafViewerFeedbackCmd &amp;iObjectToCopy);
+   CAACafViewerFeedbackCmd &amp; operator = (const CAACafViewerFeedbackCmd &amp;iObjectToCopy);
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAACafViewerFeedbackCmd</i> class is a <i>CATCommand</i> class without methods. The default constructor, the copy constructor, and the
+assignment operator are set as private, and are not implemented in the source
+file. This prevents the compiler from creating them as public without you know.&nbsp;</p>
+<p><i><a name="CAACafViewerFeedbackCmd source file"></a>CAACafViewerFeedbackCmd</i>
+source file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+#include &quot;CATCreateExternalObject.h&quot;
+<b>CATCreateClassArg</b>(CAACafViewerFeedbackCmd,void *);
+
+CAACafViewerFeedbackCmd::CAACafViewerFeedbackCmd(void *iArgument): 
+                       <b>CATCommand</b>(<b>NULL</b>,&quot;CAACafViewerFeedbackCmdId&quot;)
+{
+  CAACafViewerFeedbackManager * pCAACafViewerFeedbackManager = NULL ;
+  CAACafViewerFeedbackManager::GetManager(&amp;pCAACafViewerFeedbackManager);
+  if ( NULL != pCAACafViewerFeedbackManager )
+  {
+     int state = (int) <b>iArgument</b> ;
+
+     if ( 1 == state )
+     {
+        pCAACafViewerFeedbackManager-&gt;SetViewerFeedbackOn();
+     }else
+     {
+        pCAACafViewerFeedbackManager-&gt;SetViewerFeedbackOff();
+     }
+     ...
+  }
+  <b>RequestDelayedDestruction</b>();
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATCreateClassArg</code><b> </b>macro<b> </b>enables any command
+header (a <i>CATCommandHeader</i> class) to instantiate a <i>CATCommand</i> by
+its name and with an argument.&nbsp;</p>
+<p>The first argument, <code>NULL</code>, given to the <i>CATCommand</i> class
+means that the parent of the command is the current command selector [<a href="#References">6</a>]. The second argument (&quot;<code>CAACafViewerFeedbackCmdId</code>&quot;) is
+the internal name of the command. This <i>CATCommand</i> is undefined [<a href="#References">6</a>]
+(the default behavior of a <i>CATCommand)</i> because this command should not
+disturb the current active command.&nbsp;&nbsp;</p>
+<p>What it is necessary to retain in this class is the command's life cycle. The
+<i>CAACafViewerFeedbackCmd</i> is instantiated by a command header but not
+deleted by this command header, therefore the <i>CAACafViewerFeedbackCmd</i>
+should manage its deletion. But as the <i>CATCommand</i> is undefined [<a href="#References">6</a>],
+it means that it is not seen by the focus manager and cannot be activated,
+deactivated or canceled as usual for commands launched from a command header. So
+a <code>RequestDelayedDestruction</code> instruction is done at the end of the
+constructor. The three mandatory rules to respect for such call in a command's
+constructor are :</p>
+<ul>
+  <li>The class will be never derived ,<b> AND</b></li>
+  <li>Any method will be called after the class construction (avoid public
+    methods to ensure this point), <b>AND&nbsp;</b></li>
+  <li>The <code>RequestDelayedDestruction</code> is the last instruction.</li>
+</ul>
+<p>For details about the&nbsp; <i>CAACafViewerFeedbackManager</i> refer you to
+the Visualization use case [<a href="#References">4</a>].&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Retrieving the State of the Check Header"></a>Retrieving the State
+of a Check Header&nbsp;</h4>
+
+<p>A method of the <i>CAACafViewerFeedbackManager</i> class needs to know the
+state of the check header.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAACafViewerFeedbackManager::WindowActivatedCB( CATCallbackEvent   event,
+                                              void             * client,
+                                              CATNotification  * notification,
+                                              CATSubscriberData  data,
+                                              CATCallback        callback)
+{
+    CATAfrCheckHeaderAccessor ViewerFeedbackHdrAcc(&quot;CAAAfrViewerFeedbackHdr&quot;) ;
+    if( 1 == ViewerFeedbackHdrAcc.<b>IsChecked</b>() )
+    {
+      ...  
+    }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>WindowActivatedCB</code> is a callback method called when a window of the frame is activated. Before launching an action, you want to know
+the state of the check header in the window's context, in other words the state
+of the check header which has been created when the document displaying in the
+window has been opened. The <i>CATAfrCheckHeaderAccessor</i> class constructor
+tests that the check header already exists in the list of command for the
+current editor, before to create it. In all cases, after the&nbsp; <i>CATAfrCheckHeaderAccessor</i>
+constructor class, you have an access to the check header contained in the list
+of command headers dedicated to the current editor. Refer you to the &quot;Life
+Cycle management&quot; section of the technical article about command headers [<a href="#References">1</a>]
+to understand the relationship between editor (<i>CATFrmEditor</i>&nbsp; class)
+and command header (<i>CATCommandHeader</i> class).&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Creating the Check Header Resources"></a>Creating the Check Header Resources</h4>
+
+<p>Previously in the &quot;<a href="#Step1">Creating the Check Header Instance in Add-in</a>&quot;
+section, just after the check header creation through the <i>CATAfrCheckHeaderAccessor</i>
+class, the resource file name has been specified thanks to the <code>SetResourceFile</code>
+method. In this use case the prefix of the file name is &quot;CAAAfrGeneralWksAddinHeader&quot;.
+You retrieve the&nbsp; <code>CAAAfrGeneralWksAddinHeader.CATNls</code> and <code>CAAAfrGeneralWksAddinHeader.CATRsc</code>
+files in the CNext/resources/msgcatalog directory of the CAAApplicationFrame.edu
+framework.</p>
+
+<p>The <code>CAAAfrGeneralWksAddinHeader.CATNls</code> file contains:&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>CAAAfrGeneralWksAddinHeader</b>.<b>CAAAfrViewerFeedbackHdr</b>.Category  = &quot;View&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrViewerFeedbackHdr.Title     = &quot;Viewer Feeback demonstrator&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrViewerFeedbackHdr.ShortHelp = &quot;Viewer Feeback demonstrator&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrViewerFeedbackHdr.Help      = &quot;Demonstrator of the Viewer CAA API&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrViewerFeedbackHdr.LongHelp  = &quot;Viewer Feeback demonstrator
+This command checks or uncheks the feedback of the cursor in the current viewer.&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>and the <code>CAAAfrGeneralWksAddinHeader.CATNls</code> file contains:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrGeneralWksAddinHeader.CAAAfrViewerFeedbackHdr.Icon.Normal = &quot;I_CAAViewerFeedback&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where :</p>
+<ul>
+  <li><code>CAAAfrGeneralWksAddinHeader</code>: is the file name</li>
+  <li><code>CAAAfrViewerFeedbackHdr</code><b>: </b>is the command header
+    identifier.&nbsp;</li>
+  <li><code>Category, Title, ShortHelp, Help, </code>I<code>con.Normal</code> <code>and
+    LongHelp</code> : keywords for a command header [<a href="#References">7</a>]</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article explains how to use the <i>CATAfrCheckHeaderAccessor</i> class
+to create or retrieve a check header.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command
+      Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAAfrCmdPalette.htm">Creating a Command with Options in the &quot;Tools Palette&quot; Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAAfrSampleGeneralWksAddin.htm">Making Your Document
+      Independent Command Available in All Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAVisUseCases/CAAVisViewerFeedback.htm"> Viewer Feedback</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrI18NHeader.htm">Creating
+      Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Aug 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

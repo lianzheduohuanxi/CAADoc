@@ -1,0 +1,436 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATMecModUseItf Interface CATIMmiUseGeometryAccess</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATMecModUseItf.htm" href="../CATMecModUseItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATMecModUseItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMmiUseGeometryAccess"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATMecModUseItf Interface CATIMmiUseGeometryAccess</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMmiUseGeometryAccess_42225','CATIMmiUseGeometryAccess','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMmiUseGeometryAccess</b>
+</p>
+<p>
+<b><i> Interface to get selecting objects and topological cells through generic naming or symbolic information.</i></b><br>
+
+ Methods of this interfaces are called on a source shape feature.
+ They retrieve selecting objects or topological cells from
+ the specified source shape feature,
+ a key word <tt>iKey</tt>, 
+ if needed, a profile element <tt>iProfileElement</tt> of a sketch, and
+ a <tt>iFeature</tt> to specify the search domain.
+ <br>For example, the <tt>CATIMmiUseRsur</tt> selecting objects associated with the lateral face of Pad.3 
+ extruded from Line.7 are found with 
+ <tt>Pad.3->GetBReps(MfKeyExtrudedFrom,Line.7,List)</tt>.
+ Without any <tt>iFeature</tt>, the search is performed on the source solid (Pad.3 in the previous example).
+ The instruction <tt>Pad.3->GetBReps(MfKeyExtrudedFrom,Line.7,Fillet.6,List)</tt>
+ finds the <tt>CATIMmiUseRsur</tt> selecting objects associated with the lateral face of Pad.3 
+ extruded from Line.7 on the solid after Fillet.6.
+ <br>Another example, the face BRep feature associated with the top face of Pad.6 is found with
+ <tt>Pad.6->GetBReps(MfKeyTop,List)</tt>.
+ <br>The instruction <tt>Fillet.3->GetCells(List)</tt> retrieves the Fillet.3 faces,
+ and the instruction <tt>Fillet.3->GetCells(Draft.12,List)</tt> retrieves the 
+ Fillet.3 faces as they appear on the solid after Draft.12.
+ <br><b>Legal values</b>:
+ <lu><li><tt>MfKeyTop</tt> available for a pad, a pocket, a rib, a slot, a stiffener,
+ <li><tt>MfKeyBottom</tt> available for a pad, a pocket, a rib, a slot, a stiffener,
+ <li><tt>MfKeyExtrudedFrom</tt> available for a pad, a pocket, a rib, a slot, a stiffener, a shaft, a groove,
+ <li><tt>MfKeyStart</tt> available for a shaft, a groove,
+ <li><tt>MfKeyEnd</tt> available for a shaft, a groove.</ul></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetBReps(CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetBReps</b></a>(CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves all the selecting objects.
+ <dt> o 
+    <a href="#GetBReps(CATUnicodeString&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetBReps</b></a>(CATUnicodeString&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves selecting objects from symbolic information.
+ <dt> o 
+    <a href="#GetBReps(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetBReps</b></a>(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves all the selecting objects from symbolic information.
+ <dt> o 
+    <a href="#GetBReps(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetBReps</b></a>(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves selecting objects from symbolic information.
+ <dt> o 
+    <a href="#GetFilteredBReps(CATListValCATIMmiUseBRepAccess_var&amp;,CATMmiDimension,CATMmrBRepFilterType,CATIMmiUseGeometricalElement_var&amp;)"><b>GetFilteredBReps</b></a>(CATListValCATIMmiUseBRepAccess_var&amp;,CATMmiDimension,CATMmrBRepFilterType,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves all the selecting objects.
+ <dt> o 
+    <a href="#GetTopoCells(CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetTopoCells</b></a>(CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves all the topological cells.
+ <dt> o 
+    <a href="#GetTopoCells(CATUnicodeString&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetTopoCells</b></a>(CATUnicodeString&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves topological faces from symbolic information.
+ <dt> o 
+    <a href="#GetTopoCells(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetTopoCells</b></a>(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves topological faces from symbolic information.
+ <dt> o 
+    <a href="#GetTopoCells(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"><b>GetTopoCells</b></a>(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)
+<dd>  Retrieves topological faces from symbolic information.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetBReps"></a><a name="GetBReps(CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetBReps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetBReps</b>(<td><script type="text/javascript"> activateLink('CATListValCATIMmiUseBRepAccess_var','CATListValCATIMmiUseBRepAccess_var&amp;')</script> <td><tt>oBreps</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves all the selecting objects.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oBreps</tt>
+   <dd> [out] List of selecting objects. Query CATIMmiUseBRepAccess or its derived interfaces.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetBReps"></a><a name="GetBReps(CATUnicodeString&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetBReps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetBReps</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIMmiUseBRepAccess_var','CATListValCATIMmiUseBRepAccess_var&amp;')</script> <td><tt>oBreps</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves selecting objects from symbolic information.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfKeyTop</tt>, <tt>MfKeyBottom</tt>: available for a pad, a pocket, a rib, a slot, a stiffener,
+ <li> <tt>MfKeyStart</tt>, <tt>MfKeyEnd</tt>: available for a shaft, a groove.</ul>
+ </dd>
+    <dt><tt> oBreps</tt>
+   <dd> [out] List of <tt>CATIMmiUseRsur</tt> selecting objects.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetBReps"></a><a name="GetBReps(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetBReps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetBReps</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIMmiUseBRepAccess_var','CATListValCATIMmiUseBRepAccess_var&amp;')</script> <td><tt>oBreps</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves all the selecting objects from symbolic information.
+ Available for lateral faces of an extruded or revolute shape feature: a pad, a pocket, a shaft, a groove, a stiffener.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>: <tt>MfKeyExtrudedFrom</tt>.
+ </dd>
+    <dt><tt> iProfileElement</tt>
+   <dd> [in] Profile element.
+ </dd>
+    <dt><tt> oBreps</tt>
+   <dd> [out] List of <tt>CATIMmiUseRsur</tt> selecting objects.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetBReps"></a><a name="GetBReps(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATListValCATIMmiUseBRepAccess_var&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetBReps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetBReps</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIMmiUseBRepAccess_var','CATListValCATIMmiUseBRepAccess_var&amp;')</script> <td><tt>oBreps</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves selecting objects from symbolic information.
+ Available for lateral faces of a swept shape feature: a rib, a slot.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>: <tt>MfKeyExtrudedFrom</tt>
+ </dd>
+    <dt><tt> iProfileElement1</tt>
+   <dd> [in] First profile element.
+ </dd>
+    <dt><tt> iProfileElement2</tt>
+   <dd> [in] Second profile element.
+ </dd>
+    <dt><tt> oBreps</tt>
+   <dd> [out] List of <tt>CATIMmiUseRsur</tt> selecting objects.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetFilteredBReps"></a><a name="GetFilteredBReps(CATListValCATIMmiUseBRepAccess_var&amp;,CATMmiDimension,CATMmrBRepFilterType,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetFilteredBReps</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetFilteredBReps</b>(<td><script type="text/javascript"> activateLink('CATListValCATIMmiUseBRepAccess_var','CATListValCATIMmiUseBRepAccess_var&amp;')</script> <td><tt>oLBreps</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMmiDimension','CATMmiDimension')</script> <td><tt>iDim</tt><td><tt>= CATMmiDimUnknown</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMmrBRepFilterType','CATMmrBRepFilterType')</script> <td><tt>iFilterType</tt><td><tt>= CATMmrWithSelectingCell</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves all the selecting objects.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oBreps</tt>
+   <dd> [out] List of selecting objects. Query CATIMmiUseBRepAccess or its derived interfaces.
+ </dd>
+    <dt><tt> iDim</tt>
+   <dd> [in] the selecting object retrived will be of <tt>iDim</tt> dimension ( </dd>
+<script type="text/javascript"> activateLinkAnchor('CATMmiDimension','','CATMmiDimension') </script> ). 
+    <dt><tt> iFilterType</tt>
+   <dd> [in] the number of selecting object retrived will be of one for every cell with CATMmrWithSelectingCell option,
+ and will be minimum with CATMmrWithoutSelectingCell, as cells with the same naming will share the same selecting object.
+ For exemple one a Cylinder you will retrive 2 selecting objects with CATMmrWithSelectingCell option
+ and only 1 with the other option.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetTopoCells"></a><a name="GetTopoCells(CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetTopoCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTopoCells</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATBaseUnknown_var)','CATLISTV(CATBaseUnknown_var)&amp;')</script> <td><tt>oCells</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves all the topological cells.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oCells</tt>
+   <dd> [out] List of cells. Query CATCell or its derived interfaces.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetTopoCells"></a><a name="GetTopoCells(CATUnicodeString&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetTopoCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTopoCells</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTV(CATBaseUnknown_var)','CATLISTV(CATBaseUnknown_var)&amp;')</script> <td><tt>oCells</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves topological faces from symbolic information.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfKeyTop</tt>, <tt>MfKeyBottom</tt>: available for a pad, a pocket, a rib, a slot, a stiffener,
+ <li> <tt>MfKeyStart</tt>, <tt>MfKeyEnd</tt>: available for a shaft, a groove.</ul>
+ </dd>
+    <dt><tt> oCells</tt>
+   <dd> [out] List of <tt>CATFace</tt> cells.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetTopoCells"></a><a name="GetTopoCells(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetTopoCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTopoCells</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTV(CATBaseUnknown_var)','CATLISTV(CATBaseUnknown_var)&amp;')</script> <td><tt>oCells</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves topological faces from symbolic information.
+ Available for lateral faces of an extruded or revolute shape feature: a pad, a pocket, a shaft, a groove.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>: <tt>MfKeyExtrudedFrom</tt>
+ </dd>
+    <dt><tt> iProfileElement</tt>
+   <dd> [in] Profile element.
+ </dd>
+    <dt><tt> oCells</tt>
+   <dd> [out] List of <tt>CATFace</tt> cells.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<a name="GetTopoCells"></a><a name="GetTopoCells(CATUnicodeString&amp;,CATBaseUnknown_var&amp;,CATBaseUnknown_var&amp;,CATLISTV(CATBaseUnknown_var)&amp;,CATIMmiUseGeometricalElement_var&amp;)"></a> <dt> o <b>GetTopoCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTopoCells</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iKey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iProfileElement2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTV(CATBaseUnknown_var)','CATLISTV(CATBaseUnknown_var)&amp;')</script> <td><tt>oCells</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiUseGeometricalElement_var','CATIMmiUseGeometricalElement_var&amp;')</script> <td><tt>iFeature</tt><td><tt>= NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves topological faces from symbolic information.
+ Available for lateral faces of a swept shape feature: a rib, a slot.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKey</tt>
+   <dd> [in] Key word.
+ <br><b>Legal values</b>: <tt>MfKeyExtrudedFrom</tt>
+ </dd>
+    <dt><tt> iProfileElement1</tt>
+   <dd> [in] First profile element.
+ </dd>
+    <dt><tt> iProfileElement2</tt>
+   <dd> [in] Second profile element.
+ </dd>
+    <dt><tt> oCells</tt>
+   <dd> [out] List of <tt>CATFace</tt> cells.
+ </dd>
+    <dt><tt> iFeature</tt>
+   <dd> [in] Search is performed at the level of <tt>iFeature</tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <dl>
+   <dt><tt>S_OK</tt>          <dd>Successful.
+   <dt><tt>E_FAIL</tt>        <dd>In case of error.
+   </dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMmiUseGeometryAccess.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModUseItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

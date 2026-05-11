@@ -1,0 +1,380 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Reading Migration Report of a Model</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>V4 Access</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Reading Migration Report of a Model</h3>
+      <i>Working with the elements of model</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      		This article shows how to read Migration Report
+      		<ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">o	The CAAV4iMigrationReportExtraction Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAV4iMigrationReportExtraction Do</a></li>
+          <li><a href="#How">How to Launch CAAV4iMigrationReportExtraction</a></li>
+          <li><a href="#Where">Where to Find the CAAV4iMigrationReportExtraction Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to show you how to read Migration Report of a model.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV4iMigrationReportExtraction Use Case</h3>
+CAAV4iMigrationReportExtraction is a use case of the CAACATIAV4Interfaces.edu framework that illustrates CATIAV4Interfaces framework capabilities. <div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV4iMigrationReportExtraction Do</h4>
+The CAAV4iMigrationReportExtraction reads the Migration report file in ReadReportFile().<br>
+Then it creates a session and open the .CATPart (in OpenDocument(pfileNamePart, pDoc)) provided in input.<br>
+From this pDoc we get the entities of the part with GetListOfBodies() and stored in bodyList object<br>
+Now migrated object decoding is done and gets the Type.<br>
+If Type == 1, we retrieve the V4 model&#8217;s corresponding V5 object from RetrieveObject() and print its name
+<br>
+If Type == 2, it&#8217;s an attribute of the previous found V5 object and print attributes value.<br>
+The output looks like :
+<!---------------------------------comment------------------------------------->
+<pre> 
+attributcxr1.model   0000000000000000    OK
+*MASTER   0000000000000000    OK
+
+*SET1   0000000000000000    OK
+
+*LN1   0000000012226890    OK
+       0000000012226890   Att.:  discret 1  Val.: value discret 1
+       0000000012226890   Att.:  discret 2  Val.: bbbb discret 2
+       0000000012226890   Att.:  numeric 1  Val.: 10
+       0000000012226890   Att.:  numeric 2  Val.: -1.#QNAN
+       0000000012226890   Att.:  numeric 3  Val.: 30
+       0000000012226890   Att.:  alpha 1  Val.: TEXT1
+       0000000012226890   Att.:  alpha 2  Val.:
+       0000000012226890   Att.:  binaire 1  Val.:
+       0000000012226890   Att.:  binaire 2  Val.:
+
+*LN2   000000001222A370    OK
+       000000001222A370   Att.:  discret 2  Val.: bbbb discret 1
+       000000001222A370   Att.:  numeric 2  Val.: 20
+       000000001222A370   Att.:  alpha 2  Val.: TEXT2
+       000000001222A370   Att.:  binaire 2  Val.:
+
+*LN3   0000000012229A10    OK
+       0000000012229A10   Att.:  numeric 3  Val.: 100
+
+*LN4   0000000012309F70    OK
+
+</pre>
+
+<p> Close the report,release the buffer,remove the pDoc and finally delete the session. 
+if the reading failed, code returns an error with rc = 1.
+</p>
+<h4><a name="How"></a>How to Launch CAAV4iMigrationReportExtraction</h4>
+To launch CAAV4iMigrationReportExtraction, you will need to set up the build time environment, 
+then compile CAAV4iMigrationReportExtraction along with its prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].<br>
+CAAV4iMigrationReportExtraction takes two parameters. &nbsp;
+<p>mkrun -c CAAV4iMigrationReportExtraction PathReport PathPart &nbsp;</p>
+<p>Where:</p>
+&nbsp;&nbsp;PathReport: is the complete path of the report file<br>
+&nbsp;&nbsp;PathPart : is the complete path of the CATPart file. <p>You can use the model attribut.CATPart located in CAACATIAV4Interfaces.edu/InputData</p>
+<ul>
+  <li>Windows : <code>InstallRootDirectory\CAA</code><code>CATIAV4Interfaces</code><code>.edu\InputData</code>
+  <li>Unix : <code>InstallRootDirectory/CAA</code><code>CATIAV4Interfaces</code><code>.edu/InputData</code></li>
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAV4iMigrationReportExtraction Code</h4>
+The CAAV4iMigrationReportExtraction use case is made of a single file located in the CAAV4iMigrationReportExtraction.m module of the CAACATIAV4Interfaces.edu framework:<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAACATIAV4Interfaces.edu\</tt>CAAV4iMigrationReportExtraction<tt>.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAACATIAV4Interfaces.edu/</tt>CAAV4iMigrationReportExtraction<tt>.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are 4 logical steps in CAAV4iMigrationReportExtraction :
+<ol>
+  <li><a href="#Step1">Opening the report file</a></li>
+  <li><a href="#Step2">Opening the model</a></li>
+  <li><a href="#Step3">Get the entities of the part</a></li>
+  <li><a href="#Step4">Migrated object decoding</a></li>
+  <li><a href="#Step5">Retrieving the object and its attribute</a></li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Opening the report file</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+   const char *pfileNameReport =  iArgv[1];
+   CATUnicodeString Name(pfileNameReport);
+   int errread= ::ReadReportFile(Name, Buffer, LgBuffer, FileDesc, ier );
+...</pre>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Opening the model</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      
+  // The second argument of CAAV4iMigrationReportExtraction is complete path of the CATPart file. 
+      
+  const char *pfileNamePart =  iArgv[2];
+  // open the v5 document
+  CATDocument *pDoc = NULL;
+  HRESULT hr = CATDocumentServices::OpenDocument( pfileNamePart, pDoc) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Get the entities of the part</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATListValCATBaseUnknown_var bodyList;
+ int errlst = GetListOfBodies(pDoc,bodyList );
+...</pre>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Migrated object decoding</h4>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+PathReport: Reportfile is present in 
+CAACATIAV4Interfaces.edu\CNext\resources\graphic\MigrationReportExtraction\report.txt 
+
+Report Structure:
+  //                   Element 1
+ //                                  ATT 1 : Value
+  //                                  ATT 2 : Value
+  //                                  ....
+  //                   Element 2
+       --------------------------------------------------------
+Report snippet :
+
+attributcxr1.model | OK 
+   *MASTER         | OK 
+      *SET1        | OK 
+         *LN1      | OK 
+                   | discret 1        : value discret 1                                                        
+                   | discret 2        : bbbb discret 2                                                         
+                   | numeric 1        : 10 &#8230;
+
+--------------------------------------------------------
+
+int erdec = ::DecodeLine (Line, Start, End, Type, Label, Value);
+
+DecodeLine () function to read element and attribute from report file.
+  // decode a line
+  //                   oType = 1 -&gt; element;          : Label | Value
+  //                   oType = 2 -&gt; attribute;               :       | Label : Value
+  // for each type=&gt;  Label and Value are returned
+...</pre>
+    </td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Retrieving the object and its attribute</h4>
+<p>If above calculated Type from DecodeLine () equals to 1, it retrieve v4 element&#8217;s corresponding V5 object.&nbsp;</p>
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>...
+        // retrieving migrated object, using modified label
+        // ( because wsp name is repeated in migrated object name)
+        // ex V4 Name: *SOL1
+        // ex V5 Name: PartBody ( *SOL1 - wsp *MASTER -  )
+
+          CATUnicodeString Name =  "( " + Label; // Label = *SOL1, *LN1, etc..
+          int err = ::RetrieveObject(bodyList, Name, pObj);
+
+&#8230;
+
+&#8230;
+If Type from DecodeLine () equals to 2
+        // it&#8217;s an attribute of the previous found object
+        // Attribute: Label, Value
+&#8230;
+
+Output of above Retrieving the object and its attribute is below
+
+----------------------------------------------------------------------------------------------------------------------------
+attributcxr1.model   0000000000000000    OK
+
+*MASTER   0000000000000000    OK
+
+*SET1   0000000000000000    OK
+
+*LN1   0000000012226890    OK
+       0000000012226890   Att.:  discret 1  Val.: value discret 1
+       0000000012226890   Att.:  discret 2  Val.: bbbb discret 2
+       0000000012226890   Att.:  numeric 1  Val.: 10
+----------------------------------------------------------------------------------------------------------------------------
+</pre>
+    </td>
+  </tr>
+</table>
+<h3>Close the report file and delete buffer </h3>
+
+
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>
+...
+
+   // close the report file and delete buffer
+   int errclose = ::CloseReportFile(Buffer,FileDesc,ier);
+...
+</pre>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+<h3>Release the loaded document</h3>
+
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>
+...
+       CATDocumentServices::Remove (*pDoc);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<h3>Delete the session </h3>
+
+<table width="38%" class="code">
+  <tr>
+    <td>
+      <pre>
+...
+
+hrs = ::Delete_Session(pSessionName);
+...
+</pre>
+    </td>
+  </tr>
+</table>
+
+&nbsp;<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+These sample show a way to read Migration Report of a model.<div align="right">
+  <i>[</i><a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP" style="width: 35px">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jan 2014]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

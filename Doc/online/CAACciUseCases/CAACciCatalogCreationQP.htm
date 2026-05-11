@@ -1,0 +1,612 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Persistent Query</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Persistent Query&nbsp;</h3>
+      <em>Using CATICatalogPersistentQuery&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case illustrates how to create a persistent query.</p>     
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACciCatalogPersistentQuery Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACciCatalogPersistentQuery Do</a></li>
+            <li><a href="#How">How to Launch CAACciCatalogPersistentQuery</a></li>
+            <li><a href="#Where">Where to Find the CAACciCatalogPersistentQuery Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use cases explains how to create a resolved persistent query. This functionality
+aims at storing in a permanent way a filtered view of a catalog.&nbsp;</p>
+<p>Resolving the query is not a mandatory step. You do it in two cases:&nbsp;</p>
+<ul>
+  <li>To create the descriptions of the chapter&nbsp;</li>
+  <li>To update these descriptions if case of modifications in the external
+    chapter</li>
+</ul>
+<p>It is important to notice, that it is recommended to associate only one
+persistent query to a chapter. To be exact, this chapter is a family (a end
+chapter).</p>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of Catalog. See the referenced article [<a href="#References">1</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACciCatalogPersistentQuery Use Case</h3>
+<p>CAACciCatalogPersistentQuery is a use case of the CAAComponentsCatalogs.edu framework that
+illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACciCatalogPersistentQuery Do</h4>
+<p>The code of this&nbsp; use case is extracted from the code which creates the <code>CAATool</code>
+catalog [<a href="#Fig.1">Fig.1</a>]. This catalog is detailed in the use case &quot;Creating a
+Catalog&quot; [<a href="#References">2</a>].&nbsp;</p>
+ <table width="430">
+<caption><i><a name="Fig.1">Fig.</a>1 The CAATool.catalog Document</i></caption>
+<tr>
+<td width="422">
+<img border="0" src="images/CAACciCatalogTool1.jpg" width="291" height="205">
+</td>
+</tr>
+</table>
+
+<p>This current use case explained the creation of the <code>Nuts6SidesHole10Family</code>
+chapter and how a persistent query is associated to it.</p>
+<p>The name of the chapter, <code>Nuts6SidesHole10Family</code>, gives an idea
+of its desired contents: It is a chapter which will contain the six sides Nuts with a
+central&nbsp; hole of 10mm diameter. The query will be done in the <code>CAANuts6Sides</code>
+catalog [<a href="#Fig.2">Fig 2</a>].&nbsp;This catalog is detailed in the use case &quot;Creating a
+Catalog With Part Family&quot; [<a href="#References">3</a>].&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.2">Fig.2</a> The Descriptions of the
+  Nuts6SidesFamily Part Family</i></caption> 
+<tr>
+<td width="379">
+<img border="0" src="images/CAACciCatalogNuts6Sides4.jpg" width="663" height="224">
+
+</td>
+</tr>
+</table>
+<p>In the next picture, you can see the named of the query, &quot;<code>QueryOn6Sides</code>&quot;
+and its definition &quot;<code>(PartBody\Hole.1\Diameter==10mm)&quot;.</code></p>
+<table width="466">
+<caption><i><a name="Fig.4">Fig.4</a>: The Nuts6SidesHole10Family's Descriptions-
+  Generative Data Tab
+  Page</i></caption>
+<tr>
+<td width="458">
+<img border="0" src="images/CAACciCatalogTool9.jpg" width="705" height="170">
+</td>
+</tr>
+</table>
+
+<p>At last, the use case resolves the query, you can see that in the last column
+&quot;Status&quot;. It means that the descriptions resulting of the query have
+been created:</p>
+<table width="466">
+<caption><i><a name="Fig.5">Fig.5</a>: The Nuts6SidesHole10Family's Descriptions-
+  Reference Tab
+  Page</i></caption>
+<tr>
+<td width="458">
+<img border="0" src="images/CAACciCatalogTool10.jpg" width="668" height="153">
+</td>
+</tr>
+</table>
+
+<p>This picture shows three things:</p>
+
+<ul>
+  <li>This chapter (<code>Nuts6SidesHole10Family</code>) contains the keyword &quot;<code>Name</code>&quot;.&nbsp;This
+    keyword is explicitly created on the
+    chapter. For each description the query values this keyword with the name of
+    the external description</li>
+  <li>The &quot;Type&quot; column indicates that the current description pointes
+    towards an external description</li>
+  <li>The last column indicates the name of the file which contains these
+    external descriptions</li>
+</ul>
+<p>The interactive scenario to create a such persistent query is given in the
+&quot;Creating a Catalog&quot; use case [<a href="#References">2</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACciCatalogPersistentQuery</h4>
+<p>To launch CAACciCatalogPersistentQuery , you will need to set up the build time environment,
+then compile the CAACciCatalogCreate module along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">4</a>].&nbsp;</p>
+<p>mkrun -c <b>CAACciCatalogCreate</b> InputPath [OutputPath]</p>
+<p>Where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of some files included in the directory <code>CAAComponentsCatalogs.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+    </ul>
+    <p> where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+  <li><b>OutputPath</b>: The path to write the created catalogs. If this path is empty, the output files
+    are created in the current directory.</li>
+</ol>
+<p>The use case creates three documents:</p>
+<ul>
+  <li><code>CAAScrew.catalog</code> , explained in&nbsp; the &quot;Creating a Catalog With Part
+    Documents&quot;
+    article [<a href="#References">5</a>]&nbsp;</li>
+  <li><code>CAANuts6Sides.catalog</code>, explained in the &quot;Creating a Catalog With Part
+    Family&quot;
+    article [<a href="#References">3</a>]&nbsp;</li>
+  <li><code>CAATools.catalog</code>,&nbsp; explained here and in the &quot;Creating a Catalog&quot;
+    article [<a href="#References">2</a>]&nbsp;</li>
+</ul>
+<p>After its execution, you can launch CATIA and open the created catalogs or
+execute the CAACciCatalogNavigation use case [<a href="#References">6</a>] for
+each. This use case displays the contents of a catalog.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACciCatalogPersistentQuery Code</h4>
+<p>The code of the CAACciCatalogPersistentQuery use case is extracted from the <i>CAACciToolCatalogCreation.cpp</i>
+file located in the CAACciCatalogCreate.m module of the CAAComponentsCatalogs.edu
+framework. This part of code uses a global function defined in the <i>CAACciCatalogDocumentServices.cpp</i>
+file located in the same module.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the source file</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciToolCatalogCreation&nbsp;</td>
+    <td width="67%">Global function to create the CAATool.catalog document</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogDocumentServices</td>
+    <td width="67%">Global functions&nbsp;to factorize the code</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td><code>Windows</code></td>
+    <td><code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\CAACciCatalogCreate.m\</code></td>
+  </tr>
+  <tr>
+    <td><code>Unix</code></td>
+    <td><code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/CAACciCatalogCreate.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p>There are nine logical steps in the CAACciCatalogPersistentQuery use case:</p>
+<ol>
+  <li><a href="#Creating The end Chapter">Creating the End Chapter</a></li>
+  <li>
+<a href="#Creating KW">
+Creating Keyword for the End Chapter</a></li>
+  <li><a href="#creating the PQ">Creating the Persistent Query</a></li>
+  <li><a href="#Retrieving the external chapter">Retrieving the External Chapter</a></li>
+  <li>
+<a href="#associating the chapter to the PQ">
+Associating the External Chapter to the Persistent Query</a></li>
+  <li> <a href="#Associating the expression"> Associating the Expression to the Persistent Query</a></li>
+  <li><a href="#Resolving the query">Resolving the Persistent Query</a></li>
+  <li>
+<a href="#Verifying the external description">
+Verifying the External Descriptions</a></li>
+  <li><a href="#verifying the descriptions of he end chapter">Verifying the Descriptions of the End Chapter</a></li>
+</ol>
+  <a name="NLS resources for dlg">
+  <p align="right">[</a><a href="#Top">Top</a>]</p>
+
+<h4><a name="Creating The end Chapter"></a>
+
+Creating the End Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATICatalogChapter * piNuts6SidesHole10Family = NULL ;  
+
+       if ( SUCCEEDED(rc) )
+       {
+          CATUnicodeString     ChapterName = &quot;Nuts6SidesHole10Family&quot; ;
+          CATBoolean           IsEndChapter = TRUE ;
+          rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piNuts6SidesHole10Family);
+          ...
+       }
+       ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL !=piNuts6SidesHole10Family) 
+             &amp;&amp; (NULL != piNutsWithFixedSizeHoleChapter) )
+       {
+          <b>CATILinkableObject</b> * pLinkOnFamily = NULL ;
+          rc = <b>piNuts6SidesHole10Family</b>-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnFamily);     
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = <b>piNutsWithFixedSizeHoleChapter</b>-&gt;<b>AddDescription</b>(piDescription,pLinkOnFamily);     
+             if (SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+             {
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             } 
+
+             pLinkOnFamily-&gt;Release();
+             pLinkOnFamily = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Nuts6SidesHole10Family</code> chapter is
+created thanks to the <i>CATICatalogChapterFactory </i>interface.&nbsp;<code>pICatalogChapterFactory</code>
+is the <i>CATICatalogChapterFactory</i> interface pointer on the <code>CAATool</code>
+root container. In the use case &quot;Creating a Catalog&quot; [<a href="#References">2</a>]&nbsp;
+you have the detail about its recovery.&nbsp;</p>
+<p>This chapter is a family, <code>IsEndChapter</code> the second argument of
+the <code>CreateChapter</code> method is <code>TRUE</code>, because it will
+contain descriptions referencing no chapters, but another descriptions.&nbsp;</p>
+<p>The new chapter is linked with a parent chapter thanks a new description
+created on its parent chapter. In this case the parent chapter is the <code>NutsWithFixedSizeHole</code>
+chapter [<a href="#Fig.1">Fig.1</a>].&nbsp;This chapter is handled by <code>piNutsWithFixedSizeHoleChapter</code>,
+a <i>CATICatalogChapter</i> interface pointer. As <code>pICatalogChapterFactory</code>,
+refer to the use case [<a href="#References">2</a>] to see its recovery.</p>
+<p>Like any kind object to set in a description, the <i>CATILinkableObject</i>
+interface on the <code>Nuts6SidesHole10Family</code> chapter, <code>pLinkOnFamily</code>, is
+necessary.&nbsp; The <code>AddDescription</code> method applied&nbsp; to the <code>NutsWithFixedSizeHole</code>
+chapter,&nbsp;the parent chapter pointed by <code>piNutsWithFixedSizeHoleChapter</code>, creates
+a new description with the <code>pLinkOnFamily </code>interface
+pointer on the <code>Nuts6SidesHole10Family</code> chapter.</p>
+
+<h4><a name="Creating KW"></a>
+ Creating Keyword for the End Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATUnicodeString <b>KWName</b>= &quot;Name&quot; ;
+
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL!= piNuts6SidesHole10Family) )
+       {
+          CATICatalogKeyword * piKeyword = NULL ;
+          CATUnicodeString  TypeKW = &quot;String&quot; ;
+          rc = piNuts6SidesHole10Family-&gt;<b>AddKeyword</b>(KWName,TypeKW,piKeyword);
+                                                                               
+          if ( SUCCEEDED(rc) )
+          {
+             piKeyword-&gt;Release();
+             piKeyword = NULL ;
+          } 
+
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The string &quot;<code>Name</code>&quot; keyword is created on the <code>Nuts6SidesHole10Family</code>
+chapter. <code>piNuts6SidesHole10Family</code> <b> </b>is the <i>CATICatalogChapter</i> interface
+pointer on the <code>Nuts6SidesHole10Family</code> chapter.</p>
+<p>Often the keywords associated with the family with a persistent query are in
+relationship with those of the filtered catalog (It is a sub-set of keywords).
+But in opposite to the <code>Name </code>keyword, the family's keywords are not
+valuated with values from the external descriptions. The valuation must be done
+explicitly with the <code>SetValue</code> method as usual.</p>
+<h4><a name="creating the PQ"></a>Creating the Persistent Query</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piNuts6SidesHole10Family) )
+       {
+          CATUnicodeString <b>QueryPersistentName</b> =&quot;QueryOn6Sides&quot;;
+          CATICatalogPersistentQuery * piPersistentQuery = NULL ;
+          
+          rc = piNuts6SidesHole10Family-&gt;<b>AddPersistentQuery</b>(QueryPersistentName,piPersistentQuery);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The persistent query is created thanks to the <code>AddPersistentQuery</code>
+method on the chapter. <code>piNuts6SidesHole10Family</code> is the <i>CATICatalogChapter</i>
+interface pointer on the <code>Nuts6SidesHole10Family</code> chapter. The first
+argument of this method is the name of the persistent query, <code>QueryPersistentName</code>,&nbsp;
+and the second is the output pointer on the created query. This pointer must be
+released as soon as it becomes useless, i.e. when all the informations (the
+external chapter and the expression) to
+resolve the query will be set on the persistent query. It is done in the next
+steps.</p>
+<h4><a name="Retrieving the external chapter"></a>Retrieving the External
+Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+          if ( SUCCEEDED(rc) &amp;&amp; ( NULL != piPersistentQuery) )
+          {
+             CATICatalogChapter * piChapter = NULL ;
+             CATUnicodeString <b>ChapterName</b> = &quot;Nuts6Sides&quot;;
+             CATUnicodeString <b>DocumentName</b> =&quot;CAANuts6Sides&quot;;
+             
+             rc = ::<b>CAAFindChapterInCatalog</b>(DocumentName,iOutputPath,ChapterName,
+                                         IID_CATICatalogChapter, (void**) &amp;piChapter);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="CAACciCatalogCreationStructure.htm#CAAFindChapterInCatalog">CAAFindChapterInCatalog</a>
+global function retrieves&nbsp;the <code>Nuts6Sides</code> chapter in the <code>CAANuts6Sides</code>
+catalog. In the picture [<a href="#Fig.2">Fig.2</a>] describing this catalog,
+you will note that the <code>Nuts6Sides</code> chapter is the root chapter.<b> It
+is necessary to set a root chapter for a persistent query.&nbsp;</b></p>
+<p>Note: A root chapter can be retrieved thanks to
+the <code>GetRootChapter</code> method of the <i>CATICatalogChapterFactory</i>
+ interface. Refer to the use case &quot;Browsing a Catalog&quot; [<a href="#References">6</a>]
+for an example about this method.</p>
+<h4><a name="associating the chapter to the PQ"></a>
+ Associating the External Chapter to the Persistent Query</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+             if ( SUCCEEDED(rc) )
+             {
+                rc = piPersistentQuery-&gt;<b>SetResolutionChapter</b>(piChapter);
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>piPersistentQuery</code> is the <i>CATICatalogPersistentQuery</i>
+interface pointer created just above. <code>piChapter</code> is the <i>CATICatalogChapter</i>
+on the external root chapter of the <code>CAANuts6Sides</code> catalog.</p>
+<h4><a name="Associating the expression"></a>   Associating the Expression to the
+Persistent Query</h4>
+<p>The last operation to complete the persistent query is to determine the
+expression.:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                if ( SUCCEEDED(rc) )
+                {
+                   CATUnicodeString KW = &quot;\&quot;PartBody\\Hole.1\\Diameter\&quot;&quot;;
+
+                   CATUnicodeString Expression =&quot;(x.&quot; + KW  + &quot;==10mm)&quot; ;
+                  
+                   rc = piPersistentQuery-&gt;<b>SetExpression</b>(Expression) ; 
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<h4><a name="Resolving the query"></a>
+ Resolving the Persistent Query</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                   if ( SUCCEEDED(rc) )
+                   {
+                       int ResolveMode = 1 ; 
+                       CATListValCATICatalogDescription_var * pListExternalDescription = NULL ;
+
+                       rc = piPersistentQuery-&gt;<b>ResolveQuery</b>(ResolveMode,
+                                                            pListExternalDescription);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The <code>ResolveQuery</code> method is applied on <code>piPersistentQuery</code>
+the <i>CATICatalogPersistentQuery</i> interface pointer created just above. This
+method retrieves the list of external descriptions, those of the <code>CAANuts6Sides</code>
+catalog whose the value of theirs keywords satisfy to the expression. The first
+argument of the method, <code>ResolveMode</code>, indicates if its a simulation
+or not. In case of simulation, no descriptions are created on the chapter
+concerned by the persistent query, here <code>Nuts6SidesHole10Family</code>,
+only temporary descriptions are returned in the <code>pListExternalDescription</code>.&nbsp;</p>
+<h4><a name="Verifying the external description"></a>
+ Verifying the External Descriptions</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                       CATUnicodeString <b>KWFirstLimit</b>= &quot;PartBody\\Pad.1\\FirstLimit\\Length&quot; ;
+                       CATUnicodeString <b>KWDiameter</b>= &quot;PartBody\\Hole.1\\Diameter&quot; ;
+                       
+                       if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pListExternalDescription) )
+                       {
+                           int SizeList = pListExternalDescription-&gt;Size();
+                           ...
+                           int i = 1 ;
+                           while ( SUCCEEDED(rc)  &amp;&amp; (i &lt;=SizeList) )
+                           {
+                              CATICatalogDescription_var spDesc = (*pListExternalDescription)[i] ;
+                              if ( NULL_var != spDesc )
+                              {
+                                  ...
+                                  if ( SUCCEEDED(rc) )
+                                  {
+                                      ...
+                                      CATUnicodeString KeywordValue ;
+                                      rc = spDesc-&gt;<b>GetValue</b>(<b>KWFirstLimit</b>,KeywordValue) ;
+                                      ...
+                                      rc = spDesc-&gt;<b>GetValue</b>(<b>KWDiameter</b>,KeywordValue);
+                                      ...
+                                  }
+                              }else rc = E_FAIL ;
+                              i++ ;
+                           }
+                       }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p><code>pListExternalDescription</code> is a list of <i>CATICatalogDescription</i>
+smart pointer previously obtain by the <code>ResolveQuery</code> method applied
+on the persistent query. This list can be also obtain through the method <code>GetListGeneratedDescriptions</code>
+on the same persistent query.</p>
+<p><code>KWFirstLimit</code> and <code>KWDiameter</code> are the keywords of the
+<code>Nuts6SidesFamily</code> chapter, chapter whose the descriptions come from.</p>
+<h4><a name="verifying the descriptions of he end chapter"></a>Verifying the Descriptions of the
+End Chapter</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+           CATListValCATICatalogDescription_var * pListDescription = NULL;
+           rc = <b>piNuts6SidesHole10Family</b>-&gt;<b>ListDescriptions</b> (pListDescription) ;
+           if (SUCCEEDED(rc)|| (NULL != pListDescription) )
+           {
+              int NbDescriptions = pListDescription-&gt;Size() ;
+              int i=1 ; 
+              while ( SUCCEEDED(rc) &amp;&amp; ( i &lt;= NbDescriptions) )
+              {
+                 CATICatalogDescription_var spDesc = (*pListDescription)[i] ;
+                 if ( NULL_var != spDesc )
+                 {
+                   CATUnicodeString KeywordValue;
+                   ...
+                   rc = <b>spDesc-&gt;GetString</b>(&quot;Name&quot;, KeywordValue);
+                   ...
+                 }else rc = E_FAIL ;
+                 i++ ;
+              }
+           }
+           ..
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Since we have chosen the generation mode for the <code>ResolveQuery</code>
+method and there are descriptions on the external chapter to satisfy the
+expression, there is a list of description for the <code>Nuts6SidesHole10Family</code> 
+chapter. This chapter contains only one keyword,
+the <code>Name</code> keyword. Its valuation for each description of the current
+chapter is automatically done in using the name of its external description.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case illustrates the creation of a persistent query on a chapter.
+Three main steps:</p>
+<ul>
+  <li>Creating a persistent query on the chapter, thanks to the <code>AddPersistentQuery</code>
+    method which returns a <i>CATICatalogPersistentQuery</i>&nbsp; interface
+    pointer on the new query.</li>
+  <li>Defining the query&nbsp;
+    <ul>
+      <li>setting the catalog to filter, in fact the root chapter of this
+        catalog</li>
+      <li>setting the filter with a knowledgeware syntax&nbsp;</li>
+    </ul>
+  </li>
+  <li>Eventually resolving the query in calling the <code>ResolveQuery</code>
+    method on the persistent query</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAACciCatalogCreationStructure.htm">Creating a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAACciCatalogCreationPartFamily.htm">Creating a Catalog With a
+      Part Family</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAACciCatalogCreationPart.htm">Creating a Catalog With Part
+      Documents</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAACciCatalogBrowsing.htm">Browsing a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="topictype" content="Uc" />
+<meta name="devlang" content="cpp" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/DSDoc.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Managing Module Dependencies</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Managing Module Dependencies</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This command enables you to check the dependencies of 
+		a module, and compare the dependencies declared in the Imakefile.mk file 
+		and the ones actually imported from the module DLL.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span><ul>
+			<li>Open a workspace that is already built.</li>
+			<li>Expand the workspace up to a module.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>Before being able to run the written application, and after you have built it, 
+you need to refresh its run time view with the new built objects (exe or dll) and 
+the newly created or modified resources.</p>
+<ol class="task">
+	<li>
+	<p>In the <kbd>3DS Workspace Explorer</kbd>, expand a framework to display its modules.</p>
+	</li>
+	<li>
+		<p>Right click a module, and click <kbd>Show Dependencies</kbd>.</p>
+	</li>
+</ol>
+<p>The <kbd>Dependency Tool</kbd> dialog box opens.</p>
+<p>
+<img alt="Dependency Tool Dialog Box" height="400" src="images/dbDepend01.png" width="621"/>&nbsp;</p>
+<p>It displays the module dependencies, that is, the modules declared in the
+<kbd>LINK_WITH</kbd> statement of the module Imakefile.mk file, and the paths of 
+these modules in the workspace or in its prerequisite workspaces. In addition, 
+the command scans the DLL and checks in the <kbd>Necessary</kbd> column the 
+modules that are really imported by the DLL. The modules not used by the DLL are 
+not checked, and their paths is not displayed, such as the CATVisFoundation and CATVisController modules in the
+image above.</p>
+<p>The dialog box header lists the workspace, the framework, and the module 
+analyzed, as well as the operating system used to analyze the module 
+dependencies.</p>
+<table class="Remark">
+<tr>
+<td class="Remark">
+<span class="run-in">Warnings</span>:
+<ul>
+<li>Even if some modules are not checked and seem to be of no use for the DLL, you must check in the Imakefile.mk file that there are not used for other operating systems than the one used to show the
+module dependencies before removing them from the Imakefile.mk file.</li>
+<li>If you analyze a macro module, that is, a module that is made up as a 
+	concatenation of other smaller modules, you may see the same dependency 
+	twice or more if it is a dependency of two or more small modules used to 
+	build the macro module.</li>
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Document updated for Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Mar 2015]</td>
+		<td>Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The ENOVIA LCA Exposed Model Objects</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>ENOVIA LCA</h1>
+    </td>
+    <td valign="top">
+      <h2>ENOVIA Data Model</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The ENOVIA LCA Exposed Model Objects</h3>
+      <em>Description and UML representation of the ENOVIA model objects</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The ENOVIA model objects are declared in XML files used when creating
+      the database, and when running ENOVIA. A part of these model objects are
+      exposed. This article gives an overview and links to the description of
+      these model objects.</p>
+      <ul>
+        <li><a href="#ModelObjects"><b>The ENOVIA Model Objects</b></a>
+          <ul>
+            <li><a href="#ExposedPackages">The Exposed Packages</a></li>
+            <li><a href="#UMLRep">The UML Representation of the Exposed Packages</a></li>
+            <li><a href="#PackageDescription">The Description of the Exposed
+              Packages</a></li>
+          </ul>
+        </li>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="ModelObjects"></a>The ENOVIA Model Objects</h3>
+<p>The ENOVIA model objects are modeled as classes declared in XML files and
+gathered in packages that deal with a given ENOVIA LCA modeler. Each class
+usually has one or several attributes. The structure of a package is as follows:</p>
+<pre>&lt;Package Name=&quot;ACTION&quot;
+         Uuid=&quot;80A92508-0000-02A4-38B1372C0000C54B&quot;
+         ...
+         ExpositionLevel=&quot;CAA&quot;&gt;
+  &lt;Class Name=&quot;AFLAction&quot;
+         Uuid=&quot;80A92508-0000-02A4-38B1372C0000CDA5&quot;
+         ...
+         ExpositionLevel=&quot;CAA&quot;&gt;
+    &lt;Simple Name=&quot;V_name&quot;
+            Uuid=&quot;80A92508-0000-02A4-38B1372C000324EB&quot;
+            ...
+            ExpositionLevel=&quot;CAA&quot;&gt;
+    &lt;/Simple&gt;
+    ...
+    &lt;Relationship Name=&quot;C_histories&quot;
+                  ...
+                  TargetRef=&quot;80A92508-0000-02A4-38B1372C0003EDFB&quot;
+                  ...
+                  ExpositionLevel=&quot;CAA&quot;&gt;
+    &lt;/Relationship&gt;
+    ....
+  &lt;/Class&gt;
+  ...
+&lt;/Package&gt;</pre>
+<p>This declares that the ACTION package contains the AFLAction class that has
+the V_name and the C_histories attributes. V_name is a Simple model object
+attribute because it only contains a value, such as a string. C_histories is a
+Relationship model object attribute because it points to another class thanks to
+the TargetRef XML attribute, within or outside of the ACTION package, that
+contains the Uuid of the pointed class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ExposedPackages"></a>The Exposed Packages</h4>
+<p>The following packages are exposed:</p>
+<ul>
+  <li>Action modeler: ACTION</li>
+  <li>Workflow modeler: VPMWFL</li>
+  <li>Document modeler: DOCDIR</li>
+  <li>Engineering changes: APLAFL and APLECO</li>
+  <li>Configuration modeler: CONFIG</li>
+  <li>Product modeler: PRODUCT and TEMPLAT</li>
+  <li>Graph modeler: GRAPH</li>
+  <li>Security/P &amp; O: PEOPLE</li>
+</ul>
+<p>In each of these packages, a subset of objects are exposed, and for each
+object, a subset of its attributes are exposed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UMLRep"></a>The UML Representation of the Exposed Packages</h4>
+<p>Each package is described using an UML representation.</p>
+<ul>
+  <li><a href="CAADocUMLModelACTION.htm">ACTION</a></li>
+  <li><a href="CAADocUMLModelAPLAFL.htm">APLAFL</a></li>
+  <li><a href="CAADocUMLModelAPLECO.htm">APLECO</a></li>
+  <li><a href="CAADocUMLModelCONFIG.htm">CONFIG</a></li>
+  <li><a href="CAADocUMLModelDOCDIR.htm">DOCDIR</a></li>
+  <li><a href="CAADocUMLModelGRAPH.htm">GRAPH</a></li>
+  <li><a href="CAADocUMLModelPEOPLE.htm">PEOPLE</a></li>
+  <li><a href="CAADocUMLModelPRODUCT.htm">PRODUCT</a></li>
+  <li><a href="CAADocUMLModelTEMPLAT.htm">TEMPLAT</a></li>
+  <li><a href="CAADocUMLModelVPMWFL.htm">VPMWFL</a></li>
+</ul>
+<p>The following conventions apply to these UML representations:</p>
+<ul>
+  <li>Only Relationship attributes are shown</li>
+  <li>Classes that from other packages are shown with a blue background</li>
+  <li>Classes that are linked but not exposed are shown with a grey background</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="PackageDescription"></a>The Description of the Exposed Packages</h4>
+<p>The packages are also described thanks to information extracted from the XML
+files, making a set of interlinked html files. <a href="DefWithImages/index.htm">The
+ENOVIA LCA Exposed Model Object Reference</a> contains a link to each package
+that in turn contains links to each of its objects.</p>
+<p>The following conventions apply to this description:</p>
+<ul>
+  <li>The class detailed description include:
+    <ul>
+      <li>The class name</li>
+      <li>The class type</li>
+      <li>Possibly the class role</li>
+      <li>The class UUID</li>
+      <li>The class visibility in the user interface: Public if the class is
+        visible, and Private otherwise</li>
+      <li>The possible base class</li>
+      <li>The class possible extensibility: Yes or No</li>
+      <li>The class possible CAA derivation: Yes or No.</li>
+    </ul>
+  </li>
+  <li>An index of the exposed attributes appears before the attribute
+    descriptions, which may show the following icons, each having a specific
+    meaning that describes a characteristic of the attribute. Locating the mouse
+    above the icon shows the meaning in a tooltip. The meanings are:
+    <table>
+      <tr>
+        <td align="center"><img alt="Mandatory Icon" src="images/mandatorybig.gif" width="16" height="16"></td>
+        <td>The attribute is mandatory.</td>
+      </tr>
+      <tr>
+        <td align="center"><img alt="Key Icon" src="images/key.gif" width="22" height="22"></td>
+        <td>The attribute is unique.</td>
+      </tr>
+      <tr>
+        <td align="center"><img alt="Inheritance Icon" src="images/inherited.gif" width="15" height="14"></td>
+        <td>The attribute is inherited, and the tooltip displays the object from
+          which it is inherited.</td>
+      </tr>
+      <tr>
+        <td align="center"><img alt="Internal Relationship Icon" src="images/internalrelationship.gif" width="30" height="30"></td>
+        <td>The attribute is a relationship to another object. The tooltip
+          display the object and the package to which this object belongs. If
+          the object is exposed, clicking the icon displays the object
+          documentation.</td>
+      </tr>
+      <tr>
+        <td align="center"><img alt="External Relationship Icon" src="images/externalrelationship.gif" width="23" height="30"></td>
+        <td>The attribute is an external relationship.</td>
+      </tr>
+    </table>
+  </li>
+  <li>The attribute detailed description includes the following information
+    <ul>
+      <li>Possibly the attribute role</li>
+      <li>The attribute type: String, Integer, Boolean, Relationship, external
+        relationship,</li>
+      <li>The attribute UUID</li>
+      <li>The attribute visibility in the user interface: Public if the
+        attribute is visible, and Private otherwise</li>
+      <li>The mandatory characteristic: Yes or No</li>
+      <li>The attribute length</li>
+      <li>The attribute access mode: Read or Write</li>
+      <li>The possible aggregation type</li>
+      <li>The target object if the attribute is a relationship</li>
+      <li>The possible multivaluation: Yes or No.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="DefWithImages/index.htm">The ENOVIA LCA Exposed Model Object
+      Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

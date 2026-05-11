@@ -1,0 +1,308 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<style>ul.intable   { margin-left: 20; margin-bottom: 0 }
+</style>
+<title>CAA V5 Component Rules</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" rowspan="2" valign="top">
+      <h3><a name="Top"></a>CAA V5 Component Rules</h3>
+      <em>Standard patterns for CAA V5 applications</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>CAA V5 introduces various components at different levels
+      (interface-based components, framework components, modeler components,
+      product components). Those components have to be designed so that they:</p>
+      <ul>
+        <li>Increase object reusability
+        <li>Ensure build time and run time CAA developments upward compatibility
+        <li>Handle a multi-tier architecture</li>
+        <li>Insure high performance.</li>
+      </ul>
+      <p>In order to achieve these goals, here are compulsory architecture rules
+      dealing with the CAA V5 components:</p>
+      <ul>
+        <li><b><a href="#Introduction">Introduction</a></b>
+        <li><strong><a href="#Interface-based components">Interface-based
+          Component Rules</a></strong>
+        <li><strong><a href="#Frameworks components">Framework Component Rules</a></strong>
+        <li><strong><a href="#Products components">Product Component Rules</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>Basically, besides ordinary C++ or Java objects, CAA V5 provides four kinds
+of object-oriented components:</p>
+<ul>
+  <li>The <b>interface-based component</b>: thanks to the CAA Object Modeler
+    component, an elementary object can be implemented thru several C++ classes
+    and can be seen as a multi-interfaces behavioral object.<br>
+    <img border="0" src="images/CAABasicObject.jpg" width="384" height="164"></li>
+  <li>The <b>framework</b>: the CAA V5 file tree provides the CAA community
+    developers with consistent sets of functionalities packaged in super-objects
+    called frameworks.<br>
+    <img border="0" src="images/V5Framework.jpg" width="600" height="295"></li>
+  <li>The <b>modeler</b>: a modeler is a set of frameworks modeling data and
+    their associated behaviors. A modeler is usually made up of an interface
+    framework and their implementation frameworks.<br>
+    <img border="0" src="images/CAAModelers.jpg" width="602" height="324"></li>
+  <li>The <b>product</b>: a product is a set of frameworks insuring an end user
+    functionality (end user application) in a given applicative domain. This is
+    usually a modeler and its UI command frameworks.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Interface-based components"></a>Interface-based Component Rules</h3>
+<table width="100%">
+  <tr>
+    <th width="10%">Rule Title
+    <th width="25%">Rule Description
+    <th width="30%">Explanation
+    <th width="25%">Metric
+    <th width="10%">Objective
+  </tr>
+  <tr>
+    <td valign="top"><strong>1-True Interface Based Component</strong></td>
+    <td valign="top">A component should adhere to pure interfaces, i.e.,
+      interfaces inherited from IUnknown (C++) or Object (Java).</td>
+    <td valign="top">
+      <ul class="intable">
+        <li>It will allow a runtime compatibility between modelers (C++)</li>
+        <li>This reduces code coupling between component providers and
+          components users.</li>
+      </ul>
+    </td>
+    <td valign="top">By Framework public part<br>
+      (Nb CATBaseUnknown Interfaces) / (Nb Interfaces)</td>
+    <td align="center" valign="top">0%</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>2-Interface Stability</b></td>
+    <td valign="top">
+      <ul class="intable">
+        <li>Public interfaces (L1) must insure a build time
+          forward compatibility between releases, and a run time compatibility
+          between SPs.</li>
+        <li>See <a href="CAADocLxUsageRules.htm">CAA V5 Resource Exposition,
+          Usage, Deprecation, and Stability</a> for details.</li>
+      </ul>
+    </td>
+    <td valign="top">It will allow BP and customers to re-use their L1-based
+      development on all Service Packs</td>
+    <td valign="top">By framework, and by public parts<br>
+      Nb of deviations</td>
+    <td align="center" valign="top">0</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>3-Component Licensing</b></td>
+    <td valign="top">A component instantiation should required a license from
+      the interactive product it belongs to: the component has to be located in
+      an authorized framework, that is, a framework covered by an interactive
+      license.</td>
+    <td valign="top">
+      <ul class="intable">
+        <li>All factories or commands have to be secured when used thru API</li>
+        <li>The Enterprise Architecture framework provides component default
+          licensing behaviors which have to be &quot;manually&quot; completed
+          when instantiating objects with a non standard manner.</li>
+      </ul>
+    </td>
+    <td valign="top">For all entities<br>
+      (Nb licensed factories) / (Nb factories)</td>
+    <td align="center" valign="top">100%</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Frameworks components"></a>Framework Component Rules</h3>
+<table width="100%">
+  <tr>
+    <th width="10%">Rule Title
+    <th width="25%">Rule Description
+    <th width="30%">Explanation
+    <th width="25%">Metric
+    <th width="10%">Objective
+  </tr>
+  <tr>
+    <td valign="top"><b>4-Public/Protected Dependencies</b></td>
+    <td valign="top">
+      <ul class="intable">
+        <li>Public interfaces only rely on other public interfaces.
+        <li>Protected interfaces only rely on public or other protected
+          interfaces.</li>
+      </ul>
+    </td>
+    <td valign="top">Framework encapsulation must not be violated.</td>
+    <td valign="top">Nb of illegal frameworks links
+      <p>(&quot;Erreurs_prereqs_inconnus&quot;)</td>
+    <td align="center" valign="top">0</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>5-Acyclic Prerequisite Frameworks</b></td>
+    <td valign="top">Frameworks are located in a non cyclic oriented graph.</td>
+    <td valign="top">Compiling a framework is a process that cannot handle
+      cycles nor circular references.</td>
+    <td valign="top">Nb of cyclicities
+      <p>(&quot;Anomalies_cyclicité&quot;)</td>
+    <td align="center" valign="top">0</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>6-Framework identifications</b></td>
+    <td valign="top">Frameworks must specify their role in the
+      Model/Presentation paradigm : Interfaces / Model / UI.</td>
+    <td valign="top">Identifying frameworks lead to consistent frameworks
+      dependancies ; a framework is associated to a product/domain with the same
+      tag.</td>
+    <td valign="top">(Nb of tagged frameworks) / (Nb of frameworks)</td>
+    <td align="center" valign="top">100%</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>7-Interface Framework Contents</b></td>
+    <td valign="top">An interface framework only contains interfaces or global
+      function declarations acting as factories. Their implementations are not
+      contained within the interface framework</td>
+    <td valign="top">It must insure a loose coupling between frameworks.</td>
+    <td valign="top">By framework, public parts<br>
+      (Nb of concrete class)/(Nb of entities)</td>
+    <td align="center" valign="top">0%</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>8-Model or UI Framework Contents</b></td>
+    <td valign="top">Model or UI frameworks public part has to be empty.</td>
+    <td valign="top">Product interfaces are located within the product
+      interfaces frameworks.</td>
+    <td valign="top">Public part: (Nb of entities)</td>
+    <td align="center" valign="top">0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Products components"></a>Product Component Rules</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <th width="10%">Rule Title
+      <th width="25%">Rule Description
+      <th width="30%">Explanation
+      <th width="25%">Metric
+      <th width="10%">Objective
+    </tr>
+    <tr>
+      <td valign="top"><b>9-UI / Model / Interfaces Segregation</b></td>
+      <td valign="top">UI functionalities and model functionalities should be
+        located in two different frameworks, isolated by an interface
+        frameworks.</td>
+      <td valign="top">
+        <ul class="intable">
+          <li>It will allow batch developments and avoid loading of bundles of
+            useless code</li>
+          <li>It is one of the key factors to insure a multi-tier architecture.</li>
+        </ul>
+      </td>
+      <td valign="top">Nb of identified frameworks / products (or domains)</td>
+      <td valign="top">&gt;3 (at least 1 Interfaces Fmk + 1 Model + 1 UI)</td>
+    </tr>
+    <tr>
+      <td colspan="5" valign="top">
+        <p align="center"><img border="0" src="images/V5SPM.jpg" align="left" width="500" height="336">
+        <font color="#804040"><i>Product functional dependencies</i></font></p>
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="3" valign="top"><b>10-UI, Model and Interfaces frameworks
+        Dependencies</b></td>
+      <td rowspan="3" valign="top">
+        <ul class="intable">
+          <li>UI frameworks only rely on UI frameworks or Interface frameworks</li>
+          <li>Model frameworks only rely on model frameworks or Interface
+            frameworks</li>
+          <li>Interface frameworks only rely on interface frameworks</li>
+          <li>UI and model frameworks of a given product only communicate thru
+            their interface framework.</li>
+        </ul>
+      </td>
+      <td rowspan="3" valign="top">
+        <ul class="intable">
+          <li>It will minimize the bundle of code that has to be loaded at run
+            time to insure a given functionality.
+          <li>It will minimize the build time impacts.
+          <li>It will insure a true batch mode.
+          <li>It will provide a weak coupling between UI and model.
+          <li>It will generate weak build time dependencies between modelers or
+            products.
+          <li>It will allow build time dependencies controls.</li>
+        </ul>
+      </td>
+      <td valign="top">By model framework: (Nb of UI dependencies)</td>
+      <td align="center" valign="top">0</td>
+    </tr>
+    <tr>
+      <td valign="top">By UI framework: (Nb of model dependencies)</td>
+      <td align="center" valign="top">0</td>
+    </tr>
+    <tr>
+      <td valign="top">By Interface frameworks: (Nb of UI + Model dependencies)</td>
+      <td align="center" valign="top">0</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>11-Run Time Dependencies</b></td>
+      <td valign="top">A product should define at its very beginning its runtime
+        dependencies (Model frameworks IdentityCards) minimizing dependencies
+        between products.</td>
+      <td valign="top">Coupling several products will require runtime licenses
+        from all pre-requisite products ; that could be a major packaging issue
+        when unwanted resources from another domain are picked-up lately in the
+        implement process.</td>
+      <td valign="top">By packaged products : Nb of internal products/domains
+        (sets of associated Interfaces/UI/Model frameworks)</td>
+      <td align="center" valign="top">Ranking (complexity criteria)</td>
+    </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1.1</strong> [Oct 2000]</td>
+    <td valign="top">Metrics added; simplified UI/Model/Interfaces view</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

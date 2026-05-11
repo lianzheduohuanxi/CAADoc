@@ -1,0 +1,970 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOVWSQueryCpp CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming the ENOVWSQueryCpp CAA Web Service
+            </h3><em>Using the ENOVWSQueryCpp CAA Web Service for query</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article discusses the <strong>CAAENOVWSQueryCppAxis1_3Client</strong> use case. It describes how 
+              to use the Java client binding that can be generated using the Axis WSDL2Java emitter in order to 
+              consume the <strong>ENOVWSQueryCpp CAA Web service</strong>. It provides a sample usage scenario that 
+              demonstrates how to query objects from ENOVIA LCA V5.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The CAAENOVWSQueryCppAxis1_3Client Use Case</strong></a>
+                <ul>
+                  <li>
+                    <a href="#2.1">What Does CAAENOVWSQueryCppAxis1_3Client Use Case Do</a>
+                  </li>
+                  <li>
+                    <a href="#2.2">Where To Find the CAAENOVWSQueryCppAxis1_3Client Code</a>
+                  </li>
+                  <li>
+                    <a href="#2.3">How to Launch CAAENOVWSQueryCppAxis1_3Client</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      This use case demonstrates how to write a client application that consumes the ENOVWSQueryCpp CAA Web service. 
+      It uses <code>queryCount, queryObjects, getObjects</code> methods within this service as an example. It helps 
+      you to:
+    </p>
+    <ul>
+      <li>Generate the Java client binding for the ENOVWSQueryCpp CAA Web service,
+      </li>
+      <li>Write a wrapper class that instantiates the generated proxy, configures it, and uses it to remotely invoke
+      methods on the CAA Web service,
+      </li>
+      <li>Write a class that demonstrates a sample usage scenario for the ENOVWSQueryCpp CAA Web service,
+      using the wrapper class mentioned above.
+      </li>
+    </ul>
+    <p>
+      This article also provides guidances on how to build and run the sample client application using <strong>IRAD
+      (IBM Rational Application Developer) 6.0</strong>, although any other Java IDE (Integrated Development
+      Environment) or stand-alone JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that
+      purpose.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>The CAAENOVWSQueryCppAxis1_3Client Use Case
+    </h3>
+    <p>
+      CAAENOVWSQueryCppAxis1_3Client is a use case of the CAAENOVWS.edu framework that illustrates the
+      ENOVWSQueryCpp CAA Web service capabilities.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.1"></a>What Does CAAENOVWSQueryCppAxis1_3Client Use Case Do
+    </h4>
+    <p>
+      The sample usage scenario delivered with this use case contains the following steps:
+    </p>
+    <ul>
+      <li>Get a count of the object(s) matching a given select expression,
+      </li>
+      <li>Retrieve the object(s) matching a given select expression.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <h4>
+      <a name="2.2"></a>Where To Find the CAAENOVWSQueryCppAxis1_3Client Code
+    </h4>
+    <p>
+      The CAAENOVWSQueryCppAxis1_3Client use case is made of several classes located in the
+      <strong>CAAENOVWSAxis1_3Client.mj</strong> module of the <strong>CAAENOVWS.edu</strong> framework:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Windows</strong>:
+            <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code><br>
+
+            <strong>Unix</strong>:
+            <code><em>&lt;Install&gt;</em>/CAAENOVWS.edu/CAAENOVWSAxis1_3Client.mj/src</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory
+      (<strong>Windows</strong>):
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\CATServiceExceptionType.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\ENOVWSQueryCpp.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\ENOVWSQueryCppLocator.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\IQueryWS.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\IQueryWSBindingStub.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\Identifier.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\Status.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\ENOVIA.java</code> (+ all related classes)<br>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\holders\ENOVIAHolder.java</code> (+ all related classes)<br>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\holders\SessionTokenHolder.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\holders\StringArrayTypeHolder.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>:
+        <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code>,
+      </li>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Output-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client\generated
+        (based on the output package value specified when using the WSDL2Java emitter).
+      </li>
+    </ul>
+    <p>The CAAENOVWSAxis1_3Client.mj module contains the other following resources:</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSClient.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSQueryCppUseCase.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSQueryCppWrapper.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Root-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOVWSQueryCppWrapper</strong> class describes how to configure the generated 
+      proxy and how to invoke its methods. The <strong>CAAENOVWSQueryCppUseCase</strong> class 
+      demonstrates a sample use case scenario of the ENOVWSQueryCpp CAA Web service. 
+      The <strong>CAAENOVWSClient</strong> class contains the main program. It parses the 
+      command line inputs and starts up the use case.
+    </p>
+    <p>
+      This use case has a dependency on the <strong>CustomSessionHandler</strong> class which is available in the 
+      <strong>CAAJAXRPCHTTPSessionHandler.mj</strong> module of the <strong>CAAWebServices.edu</strong> 
+      framework. Please refer to [<a href="#References">1</a>] for details on HTTP session management and where
+      to find the related class.
+    </p>
+    <p>
+      This use case has also a dependency on the CAAENOPosAppBinderImplAxis1_3Client use case in order to manage
+      a session with ENOVIA LCA V5. Please refer to [<a href="#References">1</a>] for details on where to find
+      the related code.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.3"></a>How to Launch CAAENOVWSQueryCppAxis1_3Client
+    </h4>
+    <p>
+      To launch the CAAENOVWSQueryCppAxis1_3Client use case, you will need to set up a buildtime environment,
+      build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You
+      can see [<a href="#References">3</a>] for details on how to perform these steps within the IRAD 6 environment.
+    </p>
+    <p>
+      There is no prerequisites to running this use case. If there are no ENOVIA_VPMPartVersion (Parts) in the LCA V5
+      database then this service returns 0. Otherwise, it returns the count of the number of ENOVIA_VPMPartVersion
+      (Parts) in the LCA V5 database.
+    </p>
+    <p>
+      The sample usage scenario delivered within this use case is launched from the CAAENOVWSClient class. It defines
+      a main method that takes several options as parameters, as described below:
+    </p>   
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em> -t ENOVWSQueryCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the ENOPosApplicationBinderImpl
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t ENOVWSQueryCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step
+    </h3>
+    <p>
+      The following section first explains how to generate the Java client binding for the ENOVWSQueryCpp CAA Web
+      service demonstrated. The remaining sections then describe the code that must be written in order to consume this
+      Web service:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Creating the Java Client Binding</a>
+      </li>
+      <li>
+        <a href="#3.2">Instantiating and Configuring the Generated Proxy</a>
+      </li>
+      <li>
+        <a href="#3.3">Querying Count</a>
+      </li>
+      <li>
+        <a href="#3.4">Querying Objects</a>
+      </li>
+      <li>
+        <a href="#3.5">Getting Objects</a>
+      </li>
+      <li>
+        <a href="#3.6">Sample Usage Scenario</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>Creating the Java Client Binding
+    </h4>
+    <p>
+      Please refer to [<a href="#References">3</a>] for details on how to generate the Java client binding using the
+      Axis WSDL2Java emitter.
+    </p>
+    <p>
+      Here follows a sample command in order to generate the Java client binding for the ENOVWSQueryCpp CAA
+      Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C:\CAAENOVWS\src -p
+            com.dassault_systemes.caaenovws/caaenovwsaxis1_3client.generated
+            http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSQueryImpl:ENOVWSQueryImpl:ENOVWSQueryCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The server name, port, and context root URI information must be updated to match the server where the CAA Web
+      service has been deployed. The list of generated resources is available from the above section: 
+      "<a href="#2.2">Where To Find the CAAENOVWSQueryCppAxis1_3Client Code</a>".
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Instantiating and Configuring the Generated Proxy
+    </h4>
+    <p>
+      In order to be able to consume the ENOVWSQueryCpp CAA Web service implementation that has been
+      deployed on a target server, you first need to retrieve an instance of the <code>IQueryWSBindingStub</code>
+      generated class (also referred to as the <strong>proxy</strong>). It is a common best practice to manipulate an
+      instance through its related interface whenever available. The WSDL2Java emitter produces an interface that is
+      implemented by the <code>IQueryWSBindingStub</code> class: <code>IQueryWS</code>. It
+      describes the available methods for the remote CAA Web service.
+    </p>
+    <p>
+      <img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height= "30"> &nbsp; Although the <code>IQueryWSBindingStub</code> class can be directly instantiated using its
+      own set of constructors, the Axis User's Guide recommends to discard this approach. Instead, the recommended
+      approach is to use another generated class for that purpose: <code>ENOVWSQueryCppLocator</code>. It
+      implements the <code>ENOVWSQueryCpp</code> interface.
+    </p>
+    <p>
+      The following code describes how to instantiate the generated proxy. Such proxy is used in order to marshall
+      method calls and objects to SOAP requests, and to unmarshall SOAP responses to objects. This proxy must be
+      configured in order to manage authentication on the remote Web server, timeout, and session management.
+      Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOVWSQueryCppWrapper {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String SERVICE_ID = <font color="#2A00FF">"urn!com!dassault_systemes!ENOVWSQueryImpl!ENOVWSQueryImpl!ENOVWSQueryCpp"</font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> IQueryWS proxy = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> CAAENOVWSQueryCppWrapper(String clientId, String uri, <font color="#7F0055"><strong>int</strong></font> timeOut) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Compute the SOAP endpoint URI value that bounds to the deployed<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// implementation of the ENOVWSQueryCpp CAA Web service</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String endpoint = uri + <font color="#2A00FF">"servicerouter?service="</font> + SERVICE_ID;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Retrieve proxy instance</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ENOVWSQueryCppLocator locator = <font color="#7F0055"><strong>new</strong></font> ENOVWSQueryCppLocator();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proxy = locator.getENOVWSQueryCppPort(<font color="#7F0055"><strong>new</strong></font> URL(endpoint));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (MalformedURLException e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (ServiceException e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Required for HTTP session state management on the current proxy</font> <strong>(1)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;((IQueryWSBindingStub) proxy).setMaintainSession(true);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (clientId != <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Used to maintain the HTTP session state accross distinct proxies</font> <strong>(2)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerInfo info = <font color="#7F0055"><strong>new</strong></font> HandlerInfo();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerClass(CustomSessionHandler.<font color="#7F0055"><strong>class</strong></font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map handlerConfig = <font color="#7F0055"><strong>new</strong></font> HashMap();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerConfig(handlerConfig);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerRegistry registry = locator.getHandlerRegistry();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String portName = ((ENOVWSQueryCppLocator) locator).getENOVWSQueryCppPortWSDDServiceName();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QName name = <font color="#7F0055"><strong>new</strong></font> QName(portName);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List chain = registry.getHandlerChain(name);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chain.add(info);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Increase the default client time-out</font> <strong>(3)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;((IQueryWSBindingStub) proxy).setTimeout(timeOut);<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed using the
+      same proxy instance, the <code>setMaintainSession</code> method must be used. This is mandatory in the context of
+      ENOVIA LCA V5 CAA Web services,<br>
+      <strong>(2)</strong>: in order to maintain the HTTP session state between successive calls performed using distinct
+      proxy instances, a JAX-RPC custom handler must be configured on the proxy. This is mandatory in the context of 
+      ENOVIA LCA V5 CAA Web services. You can refer to [<a href="#References">1</a>] for details,<br>
+      <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues at runtime,
+      such as losing the HTTP connection before receiving the SOAP responses. The sample value specified in the code is in
+      milliseconds.<br>
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>Querying Count
+    </h4>
+    <p>
+      Object counts can be queried from ENOVIA LCA V5 based on search criteria. This can be achieved using the
+      following method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="queryCount" id="queryCount"></a><code><font color="#7F0055"><strong>public</strong></font> Status queryCount(SelectExpression iSelect, IntHolder oCount)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSelect</code>
+          </td>
+          <td>
+            &nbsp; The SelectExpression for query. See [<a href="#References">5</a>] for details
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oCount</code>
+          </td>
+          <td>
+            &nbsp; The count of objects matching the input SelectExpression criteria
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <code><a href="#queryCount">queryCount</a></code> method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOVWSQueryCppWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public int</strong></font> queryCount(String selectExpression) <font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Create input data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SelectExpression selectExp = <font color="#7F0055"><strong>new</strong></font> SelectExpression();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;selectExp.setValue(selectExpression);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;IntHolder count = <font color="#7F0055"><strong>new</strong></font> IntHolder();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;count.value = -1;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Invoke method on remote CAA Web service</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status status = proxy.queryCount(selectExp, count);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw</strong></font> e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to count objects"</font>, t);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Process output data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (count == <font color="#7F0055"><strong>null</strong></font> || count.value == -1) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to count objects"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return</strong></font> count.value;<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.4"></a>Querying Objects
+    </h4>
+    <p>
+      Objects can be queried from ENOVIA LCA V5 based on search criteria. This can be achieved using the following
+      method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="queryObjects" id="queryObjects"></a><code><font color="#7F0055"><strong>public</strong></font> Status queryObjects(SelectExpression iSelect, ENOVIAHolder oResult)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSelect</code>
+          </td>
+          <td>
+            &nbsp; The SelectExpression for query. See [<a href="#References">5</a>] for details
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oResult</code>
+          </td>
+          <td>
+            &nbsp; The objects matching the input SelectExpression criteria
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <code><a href="#queryObjects">queryObjects</a></code> method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOVWSQueryCppWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> ENOVIA queryObjects(String selectExpression) <font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br> 
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Create input data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SelectExpression selectExp = <font color="#7F0055"><strong>new</strong></font> SelectExpression();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;selectExp.setValue(selectExpression);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ENOVIAHolder resultSet = <font color="#7F0055"><strong>new</strong></font> ENOVIAHolder();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Status status = proxy.queryObjects(selectExp, resultSet);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw</strong></font> e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} catch (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to query objects"</font>, t);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Process output data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (resultSet == <font color="#7F0055"><strong>null</strong></font> || resultSet.value == <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to query objects"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return</strong></font> resultSet.value;<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <h4>
+      <a name="3.5"></a>Getting Objects
+    </h4>
+    <p>
+      Objects can be retrieved from ENOVIA LCA V5 based on given identifiers. This can be achieved using the following
+      method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="getObjects" id="getObjects"></a><code><font color="#7F0055"><strong>public</strong></font> Status getObjects(IdentifierArrayType iIds, ENOVIAHolder oResult)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iIds</code>
+          </td>
+          <td>
+            &nbsp; The object identifiers
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oResult</code>
+          </td>
+          <td>
+            &nbsp; The objects matching the input identifiers
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <code><a href="#getObjects">getObjects</a></code> method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOVWSQueryCppWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> ENOVIA getObjects(String[] objectUUIDs, String selectExpression)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Create input data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Identifier[] objectIds = CAAENOVWSUtils.toIdentifierArray(objectUUIDs);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SelectExpression selectExp = <font color="#7F0055"><strong>new</strong></font> SelectExpression();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;selectExp.setValue(selectExpression);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ENOVIAHolder resultSet = <font color="#7F0055"><strong>new</strong></font> ENOVIAHolder();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Invoke method on remote CAA Web service</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Status status = proxy.getObjects(objectIds, selectExp, resultSet);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw</strong></font> e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to get objects"</font>, t);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Process output data</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (resultSet == <font color="#7F0055"><strong>null</strong></font> || resultSet.value == <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to get objects"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return</strong></font> resultSet.value;<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The <code>CAAENOVWSUtils.toIdentifierArray</code> method can be found at:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\<em>&lt;Source&gt;</em>\<em>&lt;Package&gt;</em>\CAAENOVWSUtils.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: \CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em>\com\dassault_systemes\caaenovws\caaenovwsaxis1_3client</code>.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.6"></a>Sample Usage Scenario
+    </h4>
+    <p>
+      The following code depends on:
+    </p>
+    <ul>
+      <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">2</a>] for details,
+      </li>
+      <li>the CAAENOVWSQueryCppWrapper class for query. See this document.
+      </li>
+    </ul>
+    <p>
+      It demonstrates a sample usage scenario for the ENOVWSQueryCpp CAA Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOVWSQueryCppUseCase {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String uri = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String credUser = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String credPwd = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> CAAENOVWSQueryCppUseCase(String uri, String credUser, String credPwd) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>this</strong></font>.uri = uri;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>this</strong></font>.credUser = credUser;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>this</strong></font>.credPwd = credPwd;<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public void</strong></font> runSampleUsageScenario(String enoviaUser) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;CAAENOPosApplicationBinderImplWrapper binderWrapper = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SessionToken sessionToken = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 1 - Instantiate and configure the proxy<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String clientId = <font color="#7F0055"><strong>new</strong></font> Long(System.currentTimeMillis()).toString();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>int</strong></font> timeOut = 360000;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Instantiate the wrapper client class<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>binderWrapper = <font color="#7F0055"><strong>new</strong></font> CAAENOPosApplicationBinderImplWrapper(clientId,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uri, credUser, credPwd, timeOut);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAAENOVWSQueryCppWrapper queryWrapper = <font color="#7F0055"><strong>new</strong></font> CAAENOVWSQueryCppWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientId, uri, timeOut);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 2 - Open session with ENOVIA LCA V5<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>String[] userContexts = binderWrapper.getUserContexts(enoviaUser);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>sessionToken = binderWrapper.login(userContexts[0]);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 3 - Count objects and display result<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Create input XML select expression<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer xmlFilter = <font color="#7F0055"><strong>new</strong></font> StringBuffer();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;FILTER CASESENSITIVE=\"TRUE\"&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;SELECT&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;OBJECT DOMAIN=\"PRODUCT\" NAME=\"VPMBOPartInstance\"/&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/SELECT&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;WHERE&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;FILTER_CONDITION OPERATOR=\"AND\"&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;ATTRIBUTE_FILTER&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;EXPRESSION OP=\"LIKE\" VALUE=\"*\"&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;ATTRIBUTE NAME=\"ENOVIA_VPMPartMaster.V_ID\" /&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/EXPRESSION&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/ATTRIBUTE_FILTER&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/FILTER_CONDITION&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/WHERE&gt;"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.append(<font color="#2A00FF">"&lt;/FILTER&gt;"</font>);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color="#7F0055"><strong>int</strong></font> count = queryWrapper.queryCount(xmlFilter.toString());</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Query returned "</font> + count + <font color="#2A00FF">" result(s)"</font>);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 4 - Query objects and display results<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>ENOVIA resultSet = queryWrapper.queryObjects(xmlFilter.toString());</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAAENOVWSUtils.displayResults(resultSet, 2);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Exception e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>finally</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 5 - Terminate opened session<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// The session must be closed even if a call to a method on the<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ENOVWSQueryCpp CAA Web service fails<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>binderWrapper.logout(sessionToken);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Exception e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println(<font color="#2A00FF">"Failed to logout gracefully"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }<br></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The <code>CAAENOVWSUtils.displayResults</code> method can be found at:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\<em>&lt;Source&gt;</em>\<em>&lt;Package&gt;</em>\CAAENOVWSUtils.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: \CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em>\com\dassault_systemes\caaenovws\caaenovwsaxis1_3client</code>.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case explains how to use the Java client binding generated using the Axis WSDL2Java emitter in order to
+      consume the ENOVWSQueryCppCAA Web service. It also gives an overview of the methods available for that particular
+      CAA Web service:
+    </p>
+    <ul>
+      <li>
+        <a href="#queryCount"><code>queryCount</code></a>: Get a count of the object(s) matching a given select
+        expression,
+      </li>
+      <li>
+        <a href="#queryObjects"><code>queryObjects</code></a>: Retrieve the object(s) matching a given select
+        expression,
+      </li>
+      <li>
+        <a href="#getObjects"><code>getObjects</code></a>: Retrieve the object(s) matching a given set of identifiers.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining the
+            Session State</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm">Consuming the
+            ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building
+            and Launching a CAA Web Service Use Case</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [4]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating a
+            Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [5]
+          </td>
+          <td>
+            <a href="../CAAENOVWSTechArticles/SelectExpression.htm">Using SelectExpression</a>
+          </td>
+        </tr>
+      </tbody>
+    </table><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Apr 2005]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

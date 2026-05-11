@@ -1,0 +1,968 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOVWSQueryCpp CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Source code for&nbsp; 
+				CAAENOVWSProdStructConfigCppUseCaseCar
+            </h3>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          	Source code</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>Methods</h3>
+    <p>
+      List of method in CAAENOVWSProdStructConfigCppUseCaseCar.
+    </p>
+    <ul>
+      <li>
+        <a href="#createPartVersionObjcts">creatPartVersionObjects</a>&nbsp; 
+      </li>
+		<li>
+        <a href="#createDocumentObjects">creatDocumentObjects</a></li>
+		<li>
+        <a href="#buildProdStructExhaust">buildProdStructExhaust</a></li>
+		<li>
+        <a href="#buildProdStructCAR">buildProdStructCAR</a></li>
+		<li>
+        <a href="#creatModsForCar">creatModsForCar</a></li>
+		<li>
+        <a href="#creatModsForExhaust">creatModsForExhaust</a></li>
+		<li>
+        <a href="#creatConfigHandlers">creatConfigHandlers</a></li>
+		<li>
+        <a href="#creatAction">creatAction</a></li>
+		<li>
+        <a href="#addAssociatedObjectsToExhaust">addAssociatedObjectsToExhaust</a></li>
+		<li>
+        <a href="#addAssociatedObjectsToCar">addAssociatedObjectsToCar</a></li>
+		<li>
+        <a href="#addAffectedObjects">addAffectedObjects</a></li>
+		<li>
+        <a href="#getAffectedObjects">getAffectedObjects</a></li>
+		<li>
+        <a href="#GetAndResolveOperationsExhaust">GetAndResolveOperationsExhaust</a></li>
+		<li>
+        <a href="#GetAndResolveOperationsCAR">GetAndResolveOperationsCAR</a></li>
+		<li>
+        <a href="#modifyCar">modifyCar</a></li>
+		<li>
+        <a href="#reportBOM">reportBOM</a></li>
+    </ul>
+    <p>
+    <!-- ========================================================================= -->
+    To go back to <a href="CAAENOVWSProdStructConfigCppClient.htm">Consuming the 
+	ENOVWSProdStructConfigCpp CAA Web Service</a> </p>
+	<p>&nbsp;</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <pre>// COPYRIGHT DASSAULT SYSTEMES 2006</pre>
+			<pre>// =============================================================================
+// This class provides a sample use case scenario that illustrates the 
+// ENOVWSProdStructCpp CAA Web service.
+// =============================================================================</pre>
+			<pre>package com.dassault_systemes.caaenovws.caaenovwsaxis1_3client;</pre>
+			<pre>import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.CATServiceExceptionType;
+import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.ENOVIA;
+import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.Identifier;
+import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.holders.OperationStructureArrayTypeHolder;
+import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.holders.OperationStructureHolder;
+import com.dassault_systemes.caaenovws.caaenovwsaxis1_3client.generated.OperationStructure;
+</pre>
+			<pre>/**
+ * Class to hold the CAAENOVWSProdStructConfigCppUseCase car BOM.
+ * 
+ */
+public class CAAENOVWSProdStructConfigCppUseCaseCar {</pre>
+			<pre>	//	appended uKey to to introduce new objects in ENOVIA LCA each time this use case is run
+	private String uKey = null; 
+	</pre>
+			<pre>    // top level Product
+	private String carPRC = null;
+	</pre>
+			<pre>	// part versions
+	private String exhaustCPV = null;
+	private String rearWDPV = null;	
+	private String frontWDPV = null;
+	private String allWDPV = null;;
+	private String fourWDPV = null;
+	private String tailSmallPV = null;	
+	private String tailLargePV = null;
+	</pre>
+			<pre>	//document
+	private String ownerManualDOC = null;
+	</pre>
+			<pre>	//item instance, assembly relationship Id
+	private String exhaustCII = null;	
+	private String rearWDII = null;	
+	private String frontWDII = null;
+	private String tailSmallII = null;	
+	private String tailLargeII = null;
+	</pre>
+			<pre>	//mods UUIds
+	private String rearWDMod = null;
+	private String frontWDMod = null;
+	private String allWDMod = null;;
+	private String fourWDMod = null;
+	private String exhaustMod = null;
+	private String tailSmallMod = null;	
+	private String tailLargeMod = null;
+	</pre>
+			<pre>	//configHandler UUIDIds
+	private String carConfgHUnit1 = null;
+	private String carConfgHUnit40 = null;
+	private String carConfgHUnit51 = null;
+	private String carConfgHUnit80 = null;
+	private String carConfgHUnit91 = null;	 //car broken
+	</pre>
+			<pre>	//acttion
+	private String carAction1 = null;
+	</pre>
+			<pre>	//-V_ID of the parts.
+	private	String rearWDPV_ID = null;
+	private	String frontWDPV_ID = null;
+	private String allWDPV_ID = null;
+	private String fourWDPV_ID = null;
+	private String tailSmallPV_ID = null;
+	private String tailLargePV_ID = null;
+	private String exhaustCPV_ID = null;
+	</pre>
+			<pre>	
+	</pre>
+			<pre>	public CAAENOVWSProdStructConfigCppUseCaseCar(String prc, String key) {
+		this.carPRC = prc;
+		this.uKey = &quot;-&quot; + key;
+		</pre>
+			<pre>		rearWDPV_ID = &quot;rearWDPV&quot; +uKey;
+		frontWDPV_ID = &quot;frontWDPV&quot; +uKey;
+		allWDPV_ID = &quot;allWDPV&quot; +uKey;
+		fourWDPV_ID = &quot;fourWDPV&quot; +uKey;
+		tailSmallPV_ID = &quot;tailSmallPV&quot; +uKey;
+		tailLargePV_ID = &quot;tailLargePV&quot; +uKey;
+		exhaustCPV_ID = &quot;exhaustCPV&quot; +uKey;
+	}</pre>
+			<pre>	/*  creatPartVersionObjects
+	 * 
+	 *  Create a configured PV : Exhaust
+	 *	Create the following un-configured PV:
+	 *					Rear Wheel Drive
+	 *					Front Wheel Drive
+	 *					All Wheel Drive
+	 *					Four Wheel Drive
+	 *					Tail Small
+	 *					Tail Large
+	 */
+	<a name="createPartVersionObjcts"></a>public void creatPartVersionObjects(CAAENOVWSProdStructCppWrapper psWrapper)  throws Exception {
+		System.out.println(&quot;-&gt; create car parts.&quot;);
+		boolean success = false;</pre>
+			<pre>		try {			
+			//create configured PV Exhaust
+			String envDomain = &quot;PRODUCT&quot;;
+			String configurable = &quot;TRUE&quot;;
+			String[] partNumbers = {exhaustCPV_ID};</pre>
+			<pre>			ENOVIA createPartRefResultSet = psWrapper.createPartRef(partNumbers,envDomain, configurable);</pre>
+			<pre>			String[] partRefUUIDs = psWrapper.getENOVIA_VPMPartVersionUUIDs(createPartRefResultSet);
+			if (partRefUUIDs.length != 1) {
+				throw new Exception(&quot;-&gt; Failed to create the just 1 part references&quot;);
+			}
+			exhaustCPV = partRefUUIDs[0];</pre>
+			<pre>			//create unconfigured PVs
+			configurable = &quot;FALSE&quot;;</pre>
+			<pre>			String[] partCollection_ID = { rearWDPV_ID,frontWDPV_ID,allWDPV_ID,fourWDPV_ID,tailSmallPV_ID,tailLargePV_ID};
+            </pre>
+			<pre>			ENOVIA createPartRefResultSetB = psWrapper.createPartRef(partCollection_ID,envDomain, configurable);</pre>
+			<pre>			String[] partRefUUIDsB = psWrapper.getENOVIA_VPMPartVersionUUIDs(createPartRefResultSetB);
+			if (partRefUUIDsB.length != 6) {
+				throw new Exception(&quot;-&gt; Failed to create the just 6 part references&quot;);
+			}
+			rearWDPV = partRefUUIDsB[0];
+			frontWDPV = partRefUUIDsB[1];
+			allWDPV = partRefUUIDsB[2];
+			fourWDPV = partRefUUIDsB[3];
+			tailSmallPV = partRefUUIDsB[4];
+			tailLargePV = partRefUUIDsB[5];
+			</pre>
+			<pre>			success = true;	
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; create car parts.- sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; create car parts. - failure.&quot;);		
+		</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	/*
+	 * Create car owner manual document
+	 */
+	<a name="createDocumentObjects"></a>public void creatDocumentObjects(CAAENOVWSCntMgmtCppWrapper cntWrapper) throws Exception{
+		System.out.println(&quot;-&gt; create a document CAR owner manual.&quot;);
+		boolean success = false;
+		Exception exception = null;
+		</pre>
+			<pre>		try {
+			String docId = &quot;PSCWSDoc&quot;+uKey;
+			String docName = &quot;carOwnerManual&quot;+uKey;
+			String domain = &quot;DOCDIR&quot;;			
+			ENOVIA createDocResultSet1 = cntWrapper.createDocument(docId,docName,domain);
+			String[] docUUIDs1 = cntWrapper.getENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+			if (docUUIDs1.length != 1) {
+				throw new Exception(&quot;-&gt; Failed to create the 1 document&quot;);
+			}		
+			ownerManualDOC = docUUIDs1[0];</pre>
+			<pre>			success = true;
+		} catch (CATServiceExceptionType e) {
+			exception = e;
+ 		} catch (Exception e) {
+			exception = e;
+ 		}
+ 		if (success)
+			System.out.println(&quot;-&gt; create a document CAR owner manual - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; create a document CAR owner manual - failure.&quot;);				
+	}//[<a href="#Top">Top</a>] 
+	/*  
+	 * buildProdStruct as follows
+	 *  - Add Child Part Service on	Exhaust
+	 *        Pass in the following parts
+	 *					Tail Small
+	 * 					Tail Large
+	 */
+	<a name="buildProdStructExhaust"></a>public void buildProdStructExhaust(CAAENOVWSProdStructCppWrapper psWrapper) throws Exception{
+		System.out.println(&quot;-&gt; build second level product structure Exhaust.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {			</pre>
+			<pre>			//add Child Part Service on	Exhaust
+			String[] partRefUUIDs2 = {tailSmallPV,tailLargePV};
+			ENOVIA createPartInstResultSet2 = psWrapper.createPartInst(exhaustCII, partRefUUIDs2);
+			String[] vpmBOPartInstanceUUIDArray2 = psWrapper.getVPMBOPartInstanceUUIDs(createPartInstResultSet2);
+			if (vpmBOPartInstanceUUIDArray2.length != 2) {
+				 throw new Exception(&quot;-&gt; Failed to create just the 2 part instances on the Exhaust&quot;);
+			}
+			tailSmallII = vpmBOPartInstanceUUIDArray2[0];
+			tailLargeII = vpmBOPartInstanceUUIDArray2[1];
+						</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; build second level product structure Exhaust - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; build second level product structure Exhaust - failure.&quot;);		</pre>
+			<pre>	}//[<a href="#Top">Top</a>] </pre>
+			<pre>	/*  
+	 * buildProdStruct as follows
+	 * 	- Add Child Part Service on CAR 
+	 *        Pass in the following parts
+	 *                  Rear Wheel Drive
+	 *					Front Wheel Drive
+	 * 					Exhaust
+	 *
+	 */
+	<a name="buildProdStructCAR"></a>public void buildProdStructCAR(CAAENOVWSProdStructCppWrapper psWrapper) throws Exception{
+		System.out.println(&quot;-&gt; build first level product structure CAR Product.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {			
+			// Add Child Parts on CAR 
+			String[] partRefUUIDs1 = {rearWDPV,frontWDPV,exhaustCPV};
+			ENOVIA createPartInstResultSet1 = psWrapper.createPartInst(carPRC, partRefUUIDs1);
+			String[] vpmBOPartInstanceUUIDArray1 = psWrapper.getVPMBOPartInstanceUUIDs(createPartInstResultSet1);
+			if (vpmBOPartInstanceUUIDArray1.length != 3) {
+				 throw new Exception(&quot;-&gt; Failed to create just the 3 part instances on the Car&quot;);
+			}
+			rearWDII = vpmBOPartInstanceUUIDArray1[0];
+			frontWDII = vpmBOPartInstanceUUIDArray1[1];
+			exhaustCII = vpmBOPartInstanceUUIDArray1[2];</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; build first level product structure CAR Product - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; build first level product structure CAR Product - failure.&quot;);		</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	</pre>
+			<pre>    /*
+	Create the following mods using Create Mod Service on CAR  configured object 
+					Rear Wheel Drive(Engineering;unit 1-50)  
+					Front Wheel Drive(Engineering; unit 51-100)
+					All Wheel Drive (Engineering; unit 35-50)
+					Four Wheel Drive (Engineering unit 80-90)
+	*/</pre>
+			<pre>	<a name="creatModsForCar"></a>public void creatModsForCar(CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		throws Exception {
+			System.out.println(&quot;-&gt; create mods, one each for children of CAR : first level&quot;);
+					boolean success = false;</pre>
+			<pre>			try {
+									</pre>
+			<pre>				String rearWheel_MOD = &quot;rearWDMod&quot;+uKey;
+				String frontWheel_MOD = &quot;frontWDMod&quot;+uKey;
+				String allWheel_MOD = &quot;allWDMod&quot;+uKey;
+				String fourWheel_MOD = &quot;fourWDMod&quot;+uKey;
+				String exhaust_MOD = &quot;exhaustMod&quot;+uKey;				
+				</pre>
+			<pre>				
+				System.out.println(&quot;-&gt; Creating Mod - Rear Wheel Drive(Engineering;unit 1-50) &quot;);
+				String iRearWheelExp = CAAENOVWSUtils.crtModConfigExp (rearWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;50&quot;);
+				ENOVIA rearWheelResultSet = pscWrapper.createModification(carPRC, iRearWheelExp);
+				rearWDMod =  pscWrapper.getENOVIA_EFF_MOD_UUID(rearWheelResultSet);
+				</pre>
+			<pre>				System.out.println(&quot;-&gt; Creating Mod - Front Wheel Drive(Engineering;unit 51-100) &quot;);
+				String iFrontWheelExp = CAAENOVWSUtils.crtModConfigExp (frontWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;51&quot;,&quot;100&quot;);
+				ENOVIA frontWheelResultSet = pscWrapper.createModification(carPRC, iFrontWheelExp);
+				frontWDMod =  pscWrapper.getENOVIA_EFF_MOD_UUID(frontWheelResultSet);
+								</pre>
+			<pre>				System.out.println(&quot;-&gt; Creating Mod - All Wheel Drive(Engineering;unit 35-50) &quot;);
+				String iAllWheelExp = CAAENOVWSUtils.crtModConfigExp (allWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;35&quot;,&quot;50&quot;);
+				ENOVIA allWheelResultSet = pscWrapper.createModification(carPRC, iAllWheelExp);
+				allWDMod =  pscWrapper.getENOVIA_EFF_MOD_UUID(allWheelResultSet);
+								</pre>
+			<pre>				System.out.println(&quot;-&gt; Creating Mod - Four Wheel Drive(Engineering;unit 80-90) &quot;);
+				String iFourWheelExp = CAAENOVWSUtils.crtModConfigExp (fourWheel_MOD,&quot;Engineering Effectivity&quot;,&quot;80&quot;,&quot;90&quot;);
+				ENOVIA fourWheelResultSet = pscWrapper.createModification(carPRC, iFourWheelExp);
+			    fourWDMod =  pscWrapper.getENOVIA_EFF_MOD_UUID(fourWheelResultSet);</pre>
+			<pre>				System.out.println(&quot;-&gt; Creating Mod - Exhaust(Engineering;unit 1-100) &quot;);
+				String iExhaust = CAAENOVWSUtils.crtModConfigExp (exhaust_MOD,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;100&quot;);
+				ENOVIA exhaustResultSet = pscWrapper.createModification(carPRC, iExhaust);
+				exhaustMod =  pscWrapper.getENOVIA_EFF_MOD_UUID(exhaustResultSet);</pre>
+			<pre>				success = true;
+				</pre>
+			<pre>			} catch (Exception e) {
+				CAAENOVWSUtils.ProcessException(e);
+			}
+			</pre>
+			<pre>			if (success)
+						System.out.println(&quot;-&gt; create mods, one each for children of CAR : first level - sucess.&quot;);
+					else
+					throw new Exception(&quot;-&gt; create mods, one each for children of CAR : first level - failure.&quot;);
+					</pre>
+			<pre>						
+	}//[<a href="#Top">Top</a>] 
+	/*
+	Create the following mods using Create Mod Service on Exhaust configured object
+					Tail Small (Engineering; unit 1-25, unit 51-75)
+					Tail Large (Engineering; unit 26-50, 76-100)
+	*/
+	<a name="creatModsForExhaust"></a>public void creatModsForExhaust(CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		throws Exception {
+			System.out.println(&quot;-&gt; create mods, one each for children of Exhaust : second level&quot;);
+								boolean success = false;</pre>
+			<pre>						try {
+									</pre>
+			<pre>							String TailSmall = &quot;tailSmallMod&quot;+uKey;
+							String TailLarge = &quot;tailLargeMod&quot;+uKey;
+											</pre>
+			<pre>							StringBuffer iModConfigExpTailSmall = new StringBuffer();
+						    iModConfigExpTailSmall.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;ENOVIA_MODIFICATION NAME=\&quot;&quot;);
+							iModConfigExpTailSmall.append(TailSmall); 
+							iModConfigExpTailSmall.append(&quot;\&quot;xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xsi:noNamespaceSchemaLocation=\&quot;Configuration_Final.xsd\&quot;&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;MOD_DOMAIN&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;EFF_DOMAIN NAME=\&quot;Engineering Effectivity\&quot;&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;MOD_EFFECTIVITY&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;EFF_TYPE&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;RANGE_RANGE END=\&quot;25\&quot; START=\&quot;1\&quot;/&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;RANGE_RANGE END=\&quot;75\&quot; START=\&quot;51\&quot;/&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;/EFF_TYPE&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;/MOD_EFFECTIVITY&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;/EFF_DOMAIN&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;/MOD_DOMAIN&gt;&quot;);
+							iModConfigExpTailSmall.append(&quot;&lt;/ENOVIA_MODIFICATION&gt;&quot;);
+							String iTailSmallExp = iModConfigExpTailSmall.toString();
+							</pre>
+			<pre>				
+							System.out.println(&quot;-&gt; Creating Mod - Tail Small (Engineering; unit 1-25, 51-75) &quot;);
+							ENOVIA tailSmallResultSet = pscWrapper.createModification(exhaustCPV, iTailSmallExp);
+							String tailSmall_MOD =  pscWrapper.getENOVIA_EFF_MOD_UUID(tailSmallResultSet);
+							</pre>
+			<pre>							StringBuffer iModConfigExpTailLarge = new StringBuffer();
+							iModConfigExpTailLarge.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;ENOVIA_MODIFICATION NAME=\&quot; &quot;);
+							iModConfigExpTailLarge.append(TailLarge); 
+							iModConfigExpTailLarge.append(&quot;\&quot;xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xsi:noNamespaceSchemaLocation=\&quot;Configuration_Final.xsd\&quot;&gt; &quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;MOD_DOMAIN&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;EFF_DOMAIN NAME=\&quot;Engineering Effectivity\&quot;&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;MOD_EFFECTIVITY&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;EFF_TYPE&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;RANGE_RANGE END=\&quot;50\&quot; START=\&quot;26\&quot;/&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;RANGE_RANGE END=\&quot;100\&quot; START=\&quot;76\&quot;/&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;/EFF_TYPE&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;/MOD_EFFECTIVITY&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;/EFF_DOMAIN&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;/MOD_DOMAIN&gt;&quot;);
+							iModConfigExpTailLarge.append(&quot;&lt;/ENOVIA_MODIFICATION&gt;&quot;);
+							String iTailLargeExp = iModConfigExpTailLarge.toString();
+							</pre>
+			<pre>				
+							</pre>
+			<pre>							
+							System.out.println(&quot;-&gt; Creating Mod - Tail Large (Engineering; unit 26-50,76-100) &quot;);
+							ENOVIA tailLargeResultSet = pscWrapper.createModification(exhaustCPV, iTailLargeExp);
+							String tailLarge_MOD =  pscWrapper.getENOVIA_EFF_MOD_UUID(tailLargeResultSet);</pre>
+			<pre>							tailSmallMod = tailSmall_MOD;
+							tailLargeMod = tailLarge_MOD;
+							success = true;
+			</pre>
+			<pre>						} catch (Exception e) {
+							CAAENOVWSUtils.ProcessException(e);
+						}
+						if (success)
+									System.out.println(&quot;-&gt; create mods, one each for children of Exhaust : second level - sucess.&quot;);
+								else
+			throw new Exception(&quot;-&gt; create mods, one each for children of Exhaust : second level - failure.&quot;);
+</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	/*
+	Create the following config handlers:
+				CAR 1(unit 1-1)	
+				CAR 40(unit 40-40)	
+				CAR 51(unit 51-51)
+				CAR 80(unit 80-80)
+				CAR broken(unit 91-91)	
+	*/
+	<a name="creatConfigHandlers"></a>public void creatConfigHandlers(CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		throws Exception {</pre>
+			<pre>			System.out.println(&quot;-&gt; create config handlers to be used when BOM reports are generatd&quot;);
+			boolean success = false;</pre>
+			<pre>			try {
+			System.out.println(&quot;-&gt; Creating CH - CAR 1 (Engineering; unit 1-1) &quot;);
+			String car1_Name = &quot;CAR1&quot;+uKey;
+			String iCAR_1 = CAAENOVWSUtils.crtConfigHandlerExp(car1_Name,&quot;CAR with Range1&quot; ,&quot;Engineering Effectivity&quot;,&quot;1&quot;,&quot;1&quot;);
+			ENOVIA carRS_1 = pscWrapper.createConfigHandler(carPRC, iCAR_1);
+			String carCH_1 =  pscWrapper.getENOVIA_CFHANDLER_UUID(carRS_1);
+							</pre>
+			<pre>			String car40_Name = &quot;CAR40&quot;+uKey;
+			System.out.println(&quot;-&gt; Creating CH - CAR 40 (Engineering; unit 40-40) &quot;);
+			String iCAR_40 = CAAENOVWSUtils.crtConfigHandlerExp(car40_Name,&quot;CAR with Range40&quot; ,&quot;Engineering Effectivity&quot;,&quot;40&quot;,&quot;40&quot;);
+			ENOVIA carRS_40 = pscWrapper.createConfigHandler(carPRC, iCAR_40);
+			String carCH_40 =  pscWrapper.getENOVIA_CFHANDLER_UUID(carRS_40);
+				</pre>
+			<pre>			String car51_Name = &quot;CAR51&quot;+uKey;
+			System.out.println(&quot;-&gt; Creating CH - CAR 51 (Engineering; unit 51-51) &quot;);
+			String iCAR_51 = CAAENOVWSUtils.crtConfigHandlerExp(car51_Name,&quot;CAR with Range51&quot; ,&quot;Engineering Effectivity&quot;,&quot;51&quot;,&quot;51&quot;);
+			ENOVIA carRS_51 = pscWrapper.createConfigHandler(carPRC, iCAR_51);
+			String carCH_51 =  pscWrapper.getENOVIA_CFHANDLER_UUID(carRS_51);
+				</pre>
+			<pre>			String car80_Name = &quot;CAR80&quot;+uKey;
+			System.out.println(&quot;-&gt; Creating CH - CAR 80 (Engineering; unit 80-80) &quot;);
+			String iCAR_80 = CAAENOVWSUtils.crtConfigHandlerExp(car80_Name,&quot;CAR with Range80&quot; ,&quot;Engineering Effectivity&quot;,&quot;80&quot;,&quot;80&quot;);
+			ENOVIA carRS_80 = pscWrapper.createConfigHandler(carPRC, iCAR_80);
+			String carCH_80 =  pscWrapper.getENOVIA_CFHANDLER_UUID(carRS_80);
+			</pre>
+			<pre>			String car91_Name = &quot;CAR91&quot;+uKey;
+			System.out.println(&quot;-&gt; Creating CH - CAR broken (Engineering; unit 91-91) &quot;);
+			String iCAR_91 = CAAENOVWSUtils.crtConfigHandlerExp(car91_Name,&quot;CAR with Range91&quot; ,&quot;Engineering Effectivity&quot;,&quot;91&quot;,&quot;91&quot;);
+			ENOVIA carRS_91 = pscWrapper.createConfigHandler(carPRC, iCAR_91);
+			String carCH_91 =  pscWrapper.getENOVIA_CFHANDLER_UUID(carRS_91);
+</pre>
+			<pre>//			configHandler UUIDIds
+  			carConfgHUnit1 = carCH_1;
+			carConfgHUnit40 = carCH_40;
+			carConfgHUnit51 = carCH_51;
+			carConfgHUnit80 = carCH_80;
+			carConfgHUnit91 = carCH_91; 
+			success = true;
+				</pre>
+			<pre>			} catch (Exception e) {
+				CAAENOVWSUtils.ProcessException(e);
+			}
+ 		if (success)
+			System.out.println(&quot;-&gt; create config handlers to be used when BOM reports are generatd - sucess.&quot;);
+						else
+			throw new Exception(&quot;-&gt; create config handlers to be used when BOM reports are generatd - failure.&quot;);</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	/*	
+		 * Change Management
+		 * Create Action using Create Action Service Action make CAR
+	 */
+	<a name="creatAction"></a>public void creatAction(CAAENOVWSChgMgmtCppWrapper chgWrapper)
+		throws Exception {
+			System.out.println(&quot;-&gt; create an action to record changes to CAR.&quot;);
+			boolean success = false;
+		</pre>
+			<pre>			try {
+				String actionId = &quot;PSCWSAction&quot;+uKey;
+				String[] actionsID = {actionId};</pre>
+			<pre>				String actionDomain = &quot;APLAFL&quot;;
+				String actionPriority = &quot;Routine&quot;;
+				</pre>
+			<pre>				ENOVIA newAction = chgWrapper.createAction(	actionsID,
+															actionDomain,
+															actionPriority);
+															</pre>
+			<pre>				String[] newActionUUIDs = chgWrapper.getENOVIA_Action_DesignUUIDs(newAction);
+				if (newActionUUIDs.length != 1) {
+					throw new Exception(&quot;-&gt; Failed to create action&quot; + newActionUUIDs);
+				}
+			</pre>
+			<pre>				carAction1 = newActionUUIDs[0];		</pre>
+			<pre>				success = true;
+			} catch (Exception e) {
+				CAAENOVWSUtils.ProcessException(e);
+			}
+			if (success)
+				System.out.println(&quot;-&gt; create an action to record changes to CAR - sucess.&quot;);	
+			else
+			throw new Exception(&quot;-&gt; create an action to record changes to CAR - failure.&quot;);				</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	/*	
+	Add Associated Object Service CAR	configured object on Action make CAR
+			Pass in the following mods
+	Rear Wheel Drive
+						Front Wheel Drive
+	*/
+	<a name="addAssociatedObjectsToExhaust"></a>public void addAssociatedObjectsToExhaust(CAAENOVWSChgMgmtCppWrapper chgWrapper) throws Exception{
+		System.out.println(&quot;-&gt; add associated object to action : CAR's Exhaust.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			</pre>
+			<pre>			String[] associateMods = {tailSmallMod,tailLargeMod};
+			</pre>
+			<pre>			chgWrapper.addAssociatedObject(carAction1,exhaustCPV,associateMods);		</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; add associated object to action : CAR's Exhaust - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; add associated object to action : CAR's Exhaust - failure.&quot;);				
+		</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 	
+	/*
+	Add Associate Object Service  Exhaust configured object on Action make CAR	Pass in the following mods
+						Tail Small
+						Tail Large
+	*/
+	<a name="addAssociatedObjectsToCar"></a>public void addAssociatedObjectsToCar(CAAENOVWSChgMgmtCppWrapper chgWrapper) throws Exception{
+		System.out.println(&quot;-&gt; add associated object to action : CAR PRC.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			</pre>
+			<pre>			String[] associateMods = {rearWDMod,frontWDMod,allWDMod,fourWDMod,exhaustMod};
+			</pre>
+			<pre>			chgWrapper.addAssociatedObject(carAction1,carPRC,associateMods);		</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; add associated object to action : CAR PRC - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; add associated object to action : CAR PRC - failure.&quot;);				
+		</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 
+	/*
+	Add Affected Object Service CAR Owner Manual
+	*/
+	<a name="addAffectedObjects"></a>public void addAffectedObjects(CAAENOVWSChgMgmtCppWrapper chgWrapper) throws Exception{
+		System.out.println(&quot;-&gt; add affected object to action : CAR's owner manual.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			</pre>
+			<pre>			String[] inputAO = {ownerManualDOC};
+			String[] outputAO = {};
+			</pre>
+			<pre>			chgWrapper.addAffectedObject(carAction1,inputAO,outputAO);		</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; add affected object CAR owner manual - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; add affected object CAR owner manual - failure.&quot;);				
+	</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 	
+	</pre>
+			<pre>	/*
+	Get Affected Object Service CAR Owner Manual
+	*/
+	<a name="getAffectedObjects"></a>public void getAffectedObjects(CAAENOVWSChgMgmtCppWrapper chgWrapper) throws Exception{
+		System.out.println(&quot;-&gt; get affected objects on action.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			</pre>
+			<pre>			String[] objTypes = null;</pre>
+			<pre>			ENOVIA affectedObjectsResultSet = chgWrapper.getAffectedObjects(carAction1,
+																			objTypes,
+																			null);
+			// you need the size here ...	
+			CAAENOVWSUtils.displayResults(affectedObjectsResultSet, 99);
+			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}
+		if (success)
+			System.out.println(&quot;-&gt; get affected objects on action - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; get affected objects on action - failure.&quot;);				
+	</pre>
+			<pre>	}//[<a href="#Top">Top</a>] 	</pre>
+			<pre>	/* GetAndResolveOperations
+	Get Operations Service on CAR</pre>
+			<pre>	Expand Service Zero Level Get Mods on configured object  CAR</pre>
+			<pre>	Resolve Operations Service:		II					Mod
+								Rear Wheel Drive		Add	Rear Wheel Drive
+								Front Wheel Drive		Add	Front Wheel Drive
+								Exhaust					Add	Exhaust
+														All Wheel Drive
+														Four Wheel Drive
+</pre>
+			<pre>	Get Operations Service on Exhaust</pre>
+			<pre>	Resolve Operations Service:
+							Tail SmallAdd		Tail Small
+							Tail LargeAdd		Tail Large</pre>
+			<pre>	----------------
+	after modification, more operation and resolve
+	Expand Service Zero Level Get Mods on configured object  CAR</pre>
+			<pre>	Resolve Operations Service:		II				Mod
+					Rear Wheel Drive Cut	All Wheel Drive
+					All Wheel Drive Add		All Wheel Drive
+					Four Wheel Drive Add	Four Wheel Drive
+					Front Wheel Drive Cut	Four Wheel Drive
+														</pre>
+			<pre>	*/
+	/*
+	 * objectId = configured item instance, e.g, carPRC, exhaustCII
+	 */
+	<a name="GetAndResolveOperationsExhaust"></a>public void GetAndResolveOperationsExhaust(CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		throws Exception {
+			System.out.println(&quot;-&gt; get and resolve operations on exhast.&quot;);
+					boolean success = false;
+					Exception exception = null;</pre>
+			<pre>					try {
+						System.out.println(&quot;-&gt; Get All Operations on the input.&quot;);
+						OperationStructureArrayTypeHolder opers = pscWrapper.GetOpers(exhaustCII);
+						</pre>
+			<pre>								
+						OperationStructure[] valOpers =opers.value;
+						int lenOper = valOpers.length;
+						System.out.println(&quot;-&gt; Number of Operations found &quot;+ lenOper);
+						for(int i=0;i&lt;lenOper;i++)
+						{
+							String operStr=valOpers[i].getOperation();
+							System.out.println(&quot;-&gt; Operation &quot;+operStr);
+							</pre>
+			<pre>							
+							String partName = CAAENOVWSUtils.ParseOperation(operStr);
+							Identifier objID = valOpers[i].getOperandObjId1();
+							System.out.println(&quot;-&gt; Operation &quot;+operStr);
+													</pre>
+			<pre>							//System.out.println(&quot;------The type of object------&quot;+objStr);
+							OperationStructure[] resolveOperStruct = new OperationStructure[1];
+							OperationStructure operStruct = new OperationStructure();
+							operStruct.setOperandObjId1(objID);
+							operStruct.setOperandObjId2(valOpers[i].getOperandObjId2());
+							operStruct.setConfigViewId3(valOpers[i].getConfigViewId3());
+							operStruct.setOperation(operStr);
+							</pre>
+			<pre>							//Add the operStruct to the array
+							resolveOperStruct[0]=operStruct;
+							//Add the array to the holder
+							OperationStructureArrayTypeHolder iOperations = new OperationStructureArrayTypeHolder(resolveOperStruct);
+							</pre>
+			<pre>							if((operStr.indexOf(tailSmallPV_ID) &gt; 0))
+							{
+								System.out.println(&quot;-&gt; The Part Name = &quot; +tailSmallPV_ID);
+								pscWrapper.ResolveOpers(tailSmallMod, iOperations);
+							}
+							else if((operStr.indexOf(tailLargePV_ID) &gt; 0))
+							{
+								System.out.println(&quot;-&gt; The Part Name = &quot; +tailLargePV_ID);
+								pscWrapper.ResolveOpers(tailLargeMod, iOperations);
+							}
+							</pre>
+			<pre>						}
+					</pre>
+			<pre>						
+										</pre>
+			<pre>/*
+Number of Operations found 6
+Operation Add :: CAA_USECASE2 (nls_WIP) $ CAA_USECASE2
+Operation Add :: PSCWSRearWDPV1138902732623.1 | PSCWSRearWDPV1138902732623 --- (Unconfigured) $ CAA_USECASE2
+Operation Add :: PSCWSFrontWDPV1138902732623.1 | PSCWSFrontWDPV1138902732623 --- (Unconfigured) $ CAA_USECASE2
+Operation Add :: PSCWSexhaustCPV1138902732623.1 | PSCWSexhaustCPV1138902732623 --- (Configured) $ CAA_USECASE2
+Operation Add :: PSCWSexhaustCPV1138902732623 --- | PSCWSTailSmallPV1138902732623.1 | PSCWSTailSmallPV1138902732623--- (nls_WIP) $ PSCWSexhaustCPV1138902732623
+Operation Add :: PSCWSexhaustCPV1138902732623 --- | PSCWSTailLargePV1138902732623.1 | PSCWSTailLargePV1138902732623--- (nls_WIP) $ PSCWSexhaustCPV1138902732623
+create a document CAR - sucess.
+			</pre>
+			<pre>*/
+						</pre>
+			<pre>						
+						success = true;
+					} catch (Exception e) {
+						CAAENOVWSUtils.ProcessException(e);
+					}
+					if (success)
+						System.out.println(&quot;-&gt; get and resolve operations on exhast - sucess.&quot;);
+					else
+			throw new Exception(&quot;-&gt; get and resolve operations on exhast - failure.&quot;);
+			</pre>
+			<pre>			
+	}//[<a href="#Top">Top</a>] 
+	</pre>
+			<pre>	/*
+	/*
+	 * objectId = configured item instance, e.g, carPRC, exhaustCII
+	 */
+	<a name="GetAndResolveOperationsCAR"></a>public void GetAndResolveOperationsCAR(CAAENOVWSProdStructConfigCppWrapper pscWrapper)
+		throws Exception {
+			System.out.println(&quot;-&gt; get and resolve operations on CAR Product&quot;);
+					boolean success = false;
+					Exception exception = null;</pre>
+			<pre>					try {
+						System.out.println(&quot;-&gt; Get All Operations on the input.&quot;);
+						OperationStructureArrayTypeHolder opers = pscWrapper.GetOpers(carPRC);
+						</pre>
+			<pre>								
+						OperationStructure[] valOpers =opers.value;
+						int lenOper = valOpers.length;
+						System.out.println(&quot;-&gt; Number of Operations found &quot;+ lenOper);
+						for(int i=0;i&lt;lenOper;i++)
+						{
+							String operStr=valOpers[i].getOperation();
+							System.out.println(&quot;-&gt; Operation &quot;+operStr);
+							</pre>
+			<pre>							
+							String partName = CAAENOVWSUtils.ParseOperation(operStr);
+							Identifier objID = valOpers[i].getOperandObjId1();
+							System.out.println(&quot;-&gt; Operation &quot;+operStr);
+							System.out.println(&quot;-&gt; The Part Name = &quot; +partName);
+							</pre>
+			<pre>							
+							</pre>
+			<pre>							//System.out.println(&quot;------The type of object------&quot;+objStr);
+							OperationStructure[] resolveOperStruct = new OperationStructure[1];
+							OperationStructure operStruct = new OperationStructure();
+							operStruct.setOperandObjId1(objID);
+							operStruct.setOperandObjId2(valOpers[i].getOperandObjId2());
+							operStruct.setConfigViewId3(valOpers[i].getConfigViewId3());
+							operStruct.setOperation(operStr);
+							</pre>
+			<pre>							//Add the operStruct to the array
+							resolveOperStruct[0]=operStruct;
+							//Add the array to the holder
+							OperationStructureArrayTypeHolder iOperations = new OperationStructureArrayTypeHolder(resolveOperStruct);
+							</pre>
+			<pre>							
+							</pre>
+			<pre>											
+							if(partName.equals(rearWDPV_ID))
+							{
+								pscWrapper.ResolveOpers(rearWDMod, iOperations);
+							}
+							else if(partName.equals(frontWDPV_ID))
+							{
+								pscWrapper.ResolveOpers(frontWDMod, iOperations);
+							}
+							else if(partName.equals(allWDPV_ID))
+							{
+								pscWrapper.ResolveOpers(allWDMod, iOperations);
+							}
+							else if(partName.equals(fourWDPV_ID))
+							{
+								pscWrapper.ResolveOpers(fourWDMod, iOperations);
+							}
+							else if(partName.equals(exhaustCPV_ID))
+							{
+								pscWrapper.ResolveOpers(exhaustMod, iOperations);
+							}</pre>
+			<pre>						}
+					</pre>
+			<pre>						
+										</pre>
+			<pre>/*
+Number of Operations found 6
+Operation Add :: CAA_USECASE2 (nls_WIP) $ CAA_USECASE2
+Operation Add :: PSCWSRearWDPV1138902732623.1 | PSCWSRearWDPV1138902732623 --- (Unconfigured) $ CAA_USECASE2
+Operation Add :: PSCWSFrontWDPV1138902732623.1 | PSCWSFrontWDPV1138902732623 --- (Unconfigured) $ CAA_USECASE2
+Operation Add :: PSCWSexhaustCPV1138902732623.1 | PSCWSexhaustCPV1138902732623 --- (Configured) $ CAA_USECASE2
+Operation Add :: PSCWSexhaustCPV1138902732623 --- | PSCWSTailSmallPV1138902732623.1 | PSCWSTailSmallPV1138902732623--- (nls_WIP) $ PSCWSexhaustCPV1138902732623
+Operation Add :: PSCWSexhaustCPV1138902732623 --- | PSCWSTailLargePV1138902732623.1 | PSCWSTailLargePV1138902732623--- (nls_WIP) $ PSCWSexhaustCPV1138902732623
+create a document CAR - sucess.
+			</pre>
+			<pre>*/
+						</pre>
+			<pre>						
+						success = true;
+					} catch (Exception e) {
+						CAAENOVWSUtils.ProcessException(e);
+					}
+					if (success)
+						System.out.println(&quot;-&gt; get and resolve operations on CAR Product - sucess.&quot;);
+					else
+			throw new Exception(&quot;-&gt; get and resolve operations on CAR Product - failure.&quot;);
+			</pre>
+			<pre>			
+	}//[<a href="#Top">Top</a>] 
+	
+
+
+</pre>
+			<pre>	/* Modify ProdStruct
+	Replace Child Rear Wheel Drive with All Wheel Drive
+	Cut Child Front Wheel Drive
+	Add Child Four Wheel Drive
+	*/
+	<a name="modifyCar"></a>public void modifyCar(CAAENOVWSProdStructCppWrapper psWrapper)
+		throws Exception {
+		System.out.println(&quot;-&gt; modify the car product structure.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			System.out.println(&quot;-&gt; Replace Child Rear Wheel Drive with All Wheel Drive.&quot;);
+			ENOVIA createDocResultSet = psWrapper.replacePart(rearWDII,allWDPV);
+			</pre>
+			<pre>			System.out.println(&quot;-&gt; Cut Child Front Wheel Drive.&quot;);
+			String [] childInstIds = {frontWDII};
+			psWrapper.cutPartInstance(carPRC,childInstIds);</pre>
+			<pre>			System.out.println(&quot;-&gt; Add Child Four Wheel Drive.&quot;);
+			String [] childRefIds = {fourWDPV};
+			psWrapper.createPartInst(carPRC,childRefIds );
+	</pre>
+			<pre>			success = true;
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}		
+		if (success)
+			System.out.println(&quot;-&gt; modify the car product structure - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; modify the car product structure - failure.&quot;);				
+	}//[<a href="#Top">Top</a>] 
+	</pre>
+			<pre>	/* 
+	 * Report BOM as follows:
+	 *  Expand all levels on CARPRC using the config handlers to retrieve:
+	 *          CAR 1(unit 1)	
+	 *			CAR 40(unit 40)	
+	 *			CAR 51(unit 51)
+	 *			CAR 80(unit 80)
+	 *			CAR broken(unit 91)
+	 */</pre>
+			<pre>	<a name="reportBOM"></a>public void reportBOM(	CAAENOVWSProdStructCppWrapper psWrapper,
+							CAAENOVWSQueryCppWrapper queryWrapper) throws Exception{	
+		System.out.println(&quot;-&gt; reportBOM.&quot;);
+		boolean success = false;
+		</pre>
+			<pre>		try {
+			String filter = null;
+	</pre>
+			<pre>			System.out.println(&quot;-&gt; expand car by applying config handler CAR unit 1 ::&quot;);
+			expandCarByApplyingConfigHandler(psWrapper,carConfgHUnit1,queryWrapper);
+			System.out.println(&quot;-&gt; expand car by applying config handler CAR unit 40 ::&quot;);
+			expandCarByApplyingConfigHandler(psWrapper,carConfgHUnit40,queryWrapper);
+			System.out.println(&quot;-&gt; expand car by applying config handler CAR unit 51 ::&quot;);
+			expandCarByApplyingConfigHandler(psWrapper,carConfgHUnit51,queryWrapper);
+			System.out.println(&quot;-&gt; expand car by applying config handler CAR unit 80::&quot;);
+			expandCarByApplyingConfigHandler(psWrapper,carConfgHUnit80,queryWrapper);
+			System.out.println(&quot;-&gt; expand car by applying config handler CAR unit 91 ::&quot;);
+			expandCarByApplyingConfigHandler(psWrapper,carConfgHUnit91,queryWrapper);			
+			success = true;		
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}		
+		if (success)
+			System.out.println(&quot;-&gt; reportBOM - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; reportBOM - failure.&quot;);					
+	}</pre>
+			<pre>	public void expandCarByApplyingConfigHandler(CAAENOVWSProdStructCppWrapper psWrapper, 
+													String configHandlerUUID,
+												CAAENOVWSQueryCppWrapper queryWrapper)throws Exception{	
+		System.out.println(&quot;-&gt; Expand CAR by applying config handler&quot;);
+	</pre>
+			<pre>		boolean success = false;
+		</pre>
+			<pre>		try { 
+			//String configHandlerID = CAAENOVWSUtils.getConfigHandlerID(configHandlerUUID,queryWrapper);
+			String filter = CAAENOVWSUtils.buildExpandConfigHandlerFilter(carPRC, configHandlerUUID);			
+			ENOVIA expandResultSet = psWrapper.expandProductStructure(carPRC,1, filter);
+			if (expandResultSet.getENOVIA_VPMProductRootClass() == null || expandResultSet.getENOVIA_VPMProductRootClass().length != 1) {
+				throw new Exception(&quot;-&gt; Failed to find product root class&quot;);
+			}  /*else if (expandResultSet.getVPMBOPartInstance() == null || expandResultSet.getVPMBOPartInstance().length &lt;= 0) {
+				throw new Exception(&quot;-&gt; Failed to find item instances&quot;);
+			} */
+			CAAENOVWSUtils.displayResults(expandResultSet, 3);			
+			success = true;		
+		} catch (Exception e) {
+			CAAENOVWSUtils.ProcessException(e);
+		}		
+		if (success)
+			System.out.println(&quot;-&gt; Expand CAR by applying config handler - sucess.&quot;);	
+		else
+		throw new Exception(&quot;-&gt; Expand CAR by applying config handler - failure.&quot;);					
+	}				
+}</pre>
+			<font SIZE="2"></font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

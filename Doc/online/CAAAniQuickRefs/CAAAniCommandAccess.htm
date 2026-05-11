@@ -1,0 +1,1989 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Language" CONTENT="en">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+<META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Command Access</TITLE>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js">
+
+
+
+
+
+ </SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%">
+	<TR>
+		<TD VALIGN="top">
+		<H1>Analysis Solution</H1>
+		</TD>
+		<TD VALIGN="top">
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD ROWSPAN="2" ALIGN="right" VALIGN="top">
+		<H3><A NAME="Top"></A>Command Access</H3>
+		<P><EM>Accessing analysis commands</EM></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD CLASS="quick" COLSPAN="2">Quick Reference</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE CLASS="abstract">
+	<TR>
+		<TD>
+		<H3>Abstract</H3>
+		<P>This article describes the way some typical commands defined with the 
+		CAE domain can be reused in your workbench. The objective is to shared directly 
+		some command header with all their resources. The aim of this solution is 
+		to be completely independent of shared library name.</P>
+		<UL>
+			<LI><B><A HREF="#General">General overview.</A></B></LI>
+			<LI><B><A HREF="#WS">Default commands.</A></B></LI>
+			<LI><B><A NAME="Analysis_Meshing_Tools_commands." HREF="#Mesh">Analysis 
+			Meshing Tools commands.</A></B></LI>
+			<LI><B>
+			<A NAME="Analysis_Generative_Structural_Analysis_commands." HREF="#GSA">
+			Generative Structural Analysis commands.</A></B></LI>
+		</UL>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H1><A NAME="General"></A>General overview.</H1>
+<p>The provided solution is based on the usage of a set of global functions 
+located in CATAfrCommandHeaderServices header. This class allow to manage command headers. </p>
+<ul>
+  <li><a href="#" onclick="javascript:CAAlink('CPP', 'ApplicationFrame', 'function', 'CATAfrGetCommandHeader');return false;">
+   CATAfrGetCommandHeader</a> returns a pointer to a command header. This command 
+  header must be created before by a workshop or workbench initialization. Only 
+  the loaded workshop or workbenches are taken into account. If the 
+  corresponding workbench is not loaded use CATAfrCreateCommandHeader.</li>
+  <li><a href="#" onclick="javascript:CAAlink('CPP', 'ApplicationFrame', 'function', 'CATAfrCreateCommandHeader ');return false;">
+   CATAfrCreateCommandHeader</a> creates a command header from an official V5 
+  command header. After calling this service the identifier can be used in a 
+  toolbar or in a menu to give an access to the corresponding command.</li>
+</ul>
+<P>This way of accessing command headers as been implemented by analysis domain 
+and you will find after the list of provided commands. </P>
+<P>As example usage, refer to the Workbench provided with the use cases. In the 
+implementation of CATISAMWorkshopConfiguration, retrieve of create the command 
+header in the CreateCommands method, then you are able to use it in your own 
+toolbar with the CreateWorkbench method.</P>
+<table class="code" id="table4">
+  <tr>
+    <td>
+      <pre>...
+void CAAAniCfg::CreateCommands() { 
+   CATCommandHeader* PHeader = NULL; 
+   CATAfrGetCommandHeader( &quot;CATSamDumpFieldModel&quot;,PHeader); 
+   if (NULL == PHeader) CATAfrCreateCommandHeader( &quot;CATSamDumpFieldModel&quot;);
+}...</pre>
+    </td>
+  </tr>
+</table>
+<P>
+<img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"> With this new mechanism, 
+we will potentially no more support the usage of creating command headers by 
+referencing a command and library name. </P>
+<P ALIGN="right"><A HREF="#Top">[Top]</A></P>
+<H1><B><A NAME="WS"></A>Default commands.</B></H1>
+<P>The following commands is provided without any license. </P>
+<TABLE BORDER="1" WIDTH="100%" ID="table1">
+	<TR>
+		<TD WIDTH="5%">
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+		<TD WIDTH="25%">
+		<P><B>&nbsp;Command header Identifier</B></P>
+		</TD>
+		<TD WIDTH="70%">
+		<P><B>&nbsp;Command usage</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="5%">
+		<P ALIGN="center">
+		<img border="0" src="images/I_GraphModel.jpg" width="22" height="22"></P>
+		</TD>
+		<TD WIDTH="25%">
+		<P>CATSamDumpFieldModel</P>
+		</TD>
+		<TD WIDTH="70%">
+		<P>&nbsp;This command allows to dump the content of the field model in a 
+		2D Graph.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="5%">&nbsp;</TD>
+		<TD WIDTH="25%">&nbsp; </TD>
+		<TD WIDTH="70%">&nbsp;</TD>
+	</TR>
+</TABLE>
+<P ALIGN="right">&nbsp;</P>
+<P ALIGN="right"><A HREF="#Top">[Top]</A></P>
+<H1><B><A NAME="Mesh"></A>Analysis Meshing Tools commands.</B></H1>
+<P>The following commands is provided with the analysis meshing tools package. Some 
+of the commands can be used without particular license, other will require specific 
+meshing products like FEM Surface or FEM Solid.</P>
+<TABLE BORDER="1" WIDTH="100%" ID="Table2">
+	<TR>
+		<TD WIDTH="10%">
+		<P>&nbsp;</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P><B>&nbsp;Command header Identifier</B></P>
+		</TD>
+		<TD WIDTH="59%">
+		<P><B>&nbsp;Command usage</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">&nbsp;<img border="0" src="images\CATAmtGroupPointHdr.jpg" width="22" height="22"></P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupPointHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a point group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupLineHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupLineHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a line group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupSurfaceHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupSurfaceHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a surface group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupProxiPointHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupProxiPointHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a point group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupProxiLineHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupProxiLineHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a line group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupProxiSurfaceHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupProxiSurfaceHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a surface group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupBoundaryLineHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupBoundaryLineHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a line group by Boundary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGroupBoundarySurfaceHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGroupBoundarySurfaceHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Defines a surface group by Boundary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtEmptyMeshPartHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtEmptyMeshPartHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Removes the global mesh of the current meshpart</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtUpdateMeshPartHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtUpdateMeshPartHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Updates the current meshpart</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtActivateMeshPartHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtActivateMeshPartHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Activates / deactivates the meshpart</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtUpdateMeshSetHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtUpdateMeshSetHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Update all meshes</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtUpdateMeshColorSetHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtUpdateMeshColorSetHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Color meshes</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtAnalyzeMeshPartHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtAnalyzeMeshPartHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Analyze</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtShrinkCtxHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtShrinkCtxHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Modifies the element&#39;s shrink</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmt1DMesherHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmt1DMesherHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates beams on wireframe geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtAdv1DMesherHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtAdv1DMesherHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates beams on wireframe geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtBasicSurfHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtBasicSurfHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates triangle/quadrangle elements to modelize surface part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtSmartSurfHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtSmartSurfHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates triangle/quadrangle elements to modelize surface part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtOctree2DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtOctree2DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates triangle elements to modelize surface part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtAdvOctree2DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtAdvOctree2DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates triangle elements to modelize surface part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtGHS3DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtGHS3DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates tetrahedrons from a surface boundary mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtOctree3DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtOctree3DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates tetrahedron to modelize solid part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtAdvOctree3DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtAdvOctree3DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates tetrahedron to modelize solid part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtSweep3DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtSweep3DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates extruded mesh through a volume</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtFreeEdgesHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtFreeEdgesHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Displays the free edges of the mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtInterferHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtInterferHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Checks meshes to detect intersections / interferences</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtDuplicateHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtDuplicateHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Checks meshes to detect duplicate elements</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtQualityHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtQualityHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Analyzes elements quality, select and tune quality criteria</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtVisuStandardHdr.jpg" width="22" height="22">
+		<img border="0" src="images\CATAmtVisuQualityHdr.jpg" width="22" height="22">
+		<img border="0" src="images\CATAmtVisuOrientationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtVisuModeHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtCuttingPlaneHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtCuttingPlaneHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Mesh inspection using an exact/approximate cutting plane</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtOrientationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtOrientationHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Visualization of elements orientation</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtShrinkHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtShrinkHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Sets/Shrink the element&#39;s </P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPSummaryHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPSummaryHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Nodes To Nodes Connections Summary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPSummaryContextualHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPSummaryContextualHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Nodes To Nodes Connections Summary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtVisuByMPHdr.jpg" width="22" height="22">
+		<img border="0" src="images\CATAmtVisuByGrpHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtVisuTypeHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMeasureBetweenHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMeasureBetweenHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Measures between two elements</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMeasureItemHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMeasureItemHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Measures an element</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMeshOffsetHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMeshOffsetHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Selects a size and a direction to offset the mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtQuadToTriHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtQuadToTriHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Splits quadrangular elements of the mesh into triangular elements</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMoveNodeOpHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMoveNodeOpHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Move Mesh Nodes to a set of geometrical nearest points</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtImportMeshHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtImportMeshHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Imports a mesh in a specific format ( Bulk Data, CATIA V4... )</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtExportMeshHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtExportMeshHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Exports a mesh in a specific format ( Bulk data, CATIA V4...)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtWeldSpotHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtWeldSpotHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates elements to modelize spot welding connections</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtWeldSeamHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtWeldSeamHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates elements to modelize seam welding connections</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtWeldSurfHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtWeldSurfHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates elements to modelize surfaces welding connections</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtPointPointHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtPointPointHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates elements to modelize nodes to nodes connections</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtHalfPointHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtHalfPointHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates spring elements</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPTranslationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPTranslationHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Translation Mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPRotationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPRotationHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Rotation Mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPSymmetryHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPSymmetryHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Symmetry Mesh</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPExtrTranslationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPExtrTranslationHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Extruded Mesh with translation</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPExtrRotationHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPExtrRotationHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Extruded Mesh with rotation</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPExtrSymmetryHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPExtrSymmetryHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Extruded Mesh with Symmetry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtMPExtrSpineHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtMPExtrSpineHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates Extruded mesh along spine</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtCoating1DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtCoating1DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates bars from surface parts.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="10%">
+		<P ALIGN="center">
+		<img border="0" src="images\CATAmtCoating2DHdr.jpg" width="22" height="22">
+		</P>
+		</TD>
+		<TD WIDTH="29%">
+		<P>CATAmtCoating2DHdr</P>
+		</TD>
+		<TD WIDTH="59%">
+		<P>&nbsp;Generates faces from solid parts.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P ALIGN="right"><A HREF="#Top">[Top]</A></P>
+<P ALIGN="right">&nbsp;</P>
+<H1><B><A NAME="GSA"></A>Generative Structural Analysis commands.</B></H1>
+<P>The following commands are provided with the generative structural analysis package. 
+Some of the commands can be used without particular license, other will require 
+specific analysis products like EST or GAS or GDY.</P>
+<TABLE BORDER="1" WIDTH="100%" ID="Table3">
+	<TR>
+		<TD WIDTH="9%">&nbsp;</TD>
+		<TD WIDTH="29%"><B>&nbsp;Command header Identifier</B></TD>
+		<TD WIDTH="60%"><B>&nbsp;Command usage</B></TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ElementType.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSElementTypeHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Changes the element type of all octree mesh parts</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_MeshSize.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSLocalMeshSizeHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a local mesh size on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_MeshSag.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSLocalMeshSagHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a local mesh sag on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Prop3D.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSProp3DHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new 3D property for the selected 3D body</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Prop2D.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSProp2DHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new 2D property for the selected 2D or 3D body</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Prop1D.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSProp1DHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new 1D property for the selected 1D body</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ImportedBeam.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSImpProp1DHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new imported beam property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_MappingProperty.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSMappedPropertyHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new mapping property for the selected part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_CheckAnalysis.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSModelCheckHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Displays the model checker to check the consistency of the current 
+		model</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Sphere.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSMaterialWithNoSupport2Hdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new user material</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupVertexSp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVertexGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new point group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupEdgeSp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSEdgeGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new line group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupSurfaceSp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfaceGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupBodySp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBodyGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new body group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupBoxSp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBoxGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new box group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupSphereSp2.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSphereGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new sphere group</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupVertexProxy.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVertexByProxiHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new point group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupEdgeProxy.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineByProxiHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new line group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GroupSurfaceProxy.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfByProxiHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface group by neighborhood</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_LineGroupByBoundary.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineBoundaryGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new line group by boundary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SurfGroupByBoundary.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfBoundaryGroupHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface group by boundary</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignGene.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSGeneConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new general analysis connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignPoint.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPointConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a point analysis connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignPointWOP.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPointConnDesignWOPHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new point analysis connection within one part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignLine.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a line analysis connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignLineWOP.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineConnDesignWOPHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new line analysis connection within one part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignSurf.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a Surface Analysis Connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignSurfWOP.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfConnDesignWOPHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface analysis connection within one part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignPointPoint.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPointPointConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new points to points analysis connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ConnDesignHalfPoint.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPointHalfConnDesignHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new point analysis interface</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SliderConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSliderConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new slider connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ContactConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSContactConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new contact connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_FastenedConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSFastenedConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new fastened connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_FastenedSpringConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSFastenedSpringConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new fastened spring connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_FittingConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPressureFittingHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new pressure fitting connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_TighteningConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBoltTighteningHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new bolt tightening connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_RigidConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSRigidConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new rigid connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SmoothConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSmoothConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new smooth connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_VirtualBoltTighConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirtBoltTighteningHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new virtual bolt tightening connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SamVirtualSpringBoltTighConnect.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirtSpringBoltTighHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new virtual spring bolt tightening connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_GenericConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSGenericDistantHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new user-defined distant connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SamSpotWeldingConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSpotWeldingConnectionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new spot welding connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SamSeamWeldConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSeamWeldHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new seam welding connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SamSurfWeldConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfWeldHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface weld connection property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_PointPointConnProp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPointPointPropHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Nodes to Nodes Connection Property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_PointHalfConnProp.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSHalfPointPropHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new node interface property</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Clamp.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSClampHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new clamp on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Surface_Slider.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPlanPlanHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface slider on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Slider.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSliderHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new slider on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Slider_Pivot.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSlidingPivotHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new sliding pivot on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Ball_Join.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBallJoinHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new ball join on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Pivot.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPivotHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new pivot on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Analysis_Restraint.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSRestraintHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new user-defined restraint on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_IsostaticRestraint.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSIsostaticHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new isostatic restraint on the entire model</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Pressure.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSPressureHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new pressure on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_DistributedForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSDistributedForceHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new distributed force on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Moment.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSMomentHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new moment on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Bearing.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSBearingLoadHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new bearing load on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ImportedForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSImportedForceHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new imported force on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ImportedMoment.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSImportedMomentHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new imported moment on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Gravity.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSAccelerationHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new acceleration on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_RotationForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSRotationHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new rotation force on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Rigid.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSEnforcedDispHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Associates a new enforced displacement to a restraint</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_LineicForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineicForceHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new line force density on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SurfacicForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfacicForceHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new surface force density on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_VolumicForce.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBodyForceHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new volume force density on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ForceDensity.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSForceDensityHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new force density on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_TemperatureField.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSTemperatureFieldHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new temperature field on a body</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_TemperatureFieldFromThermalSolution.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSTemperatureFieldFromThermalSolutionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new temperature field from a thermal solution on a body</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_CombinedLoad.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSCombineLoadHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a combination of loads defined in current model</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_AssemblyLoad.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLoadAssemblyHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates an assembly of loads defined in sub-analyses</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Mass.jpg" width="22" height="22"> </TD>
+		<TD WIDTH="29%">CATGPSDistributedMassHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a distributed mass on a geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_LineicMass.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLineicMassHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a line mass density on a line geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SurfacicMass.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSSurfacicMassHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a surface mass density on a surface geometry</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_InertiaMass.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSInertiaMassHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Distributes mass and inertia on the selected support(s)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_CombinedMass.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSCombineMassHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a combination of masses defined in current model</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center" HEIGHT="31">
+		<img border="0" src="images\I_ApplyMaterial.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%" HEIGHT="31">CATGPSApplyMaterialHdr</TD>
+		<TD WIDTH="60%" HEIGHT="31">
+		<P>&nbsp;Applies material on Analysis Connection</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Calculator.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSComputeHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Meshes, computes and generates the solutions</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_AdaptivityCompute.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSComputeAdaptHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Computes taking into account the adaptivity process</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Adaptivity.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSAdaptivityEntityHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new adaptivity entity</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_Adaptivity.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSAdaptLocalHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a local adaptivity specification</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SmoothVirtualPart.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirPartSmoothHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new smooth virtual part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ContactVirtualPart.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirPartContactHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new contact virtual part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_RigidVirtualPart.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirPartRigidHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new rigid virtual part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_RigidSpringVirtualPart.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirPartSpringHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new rigid spring virtual part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_SmoothSpringVirtualPart.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSVirPartSmoSpriHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new smooth spring virtual part</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_PeriodicConnection.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSPeriodicHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new periodicity condition</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_HistoricGraph.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSGraphResultHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Displays the results graph</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ElfiniListing.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSElfiniListingHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Displays the listing</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ExternalStorage.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSExternalStorageHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Defines the storage location for analysis computation</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ClearExternalStorage.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSClearSelectedSolutionHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Clears the storage of the selected solution</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_TemporaryStorage.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSLocateScratchHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Defines the temporary data directory</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_StressAnalysis.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSStaticCaseHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new static analysis case</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_ModalAnalysis.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSFrequencyCaseHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new frequency analysis case</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_BucklingAnalysis.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSBucklingCaseHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new buckling analysis case</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center" height="40">
+		<img border="0" src="images\I_CombinedStatic.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%" height="40">CATGPSCombinedStaticCaseHdr</TD>
+		<TD WIDTH="60%" height="40">
+		<P>&nbsp;Creates a new combined analysis case</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center" height="56">
+		<img border="0" src="images\I_StaticConstrainedMode.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%" height="56">CATGPSStaticConstrainedModeCaseHdr</TD>
+		<TD WIDTH="60%" height="56">
+		<P>&nbsp;Creates a new static constrained modes case, first step in the 
+		implementation of the Craig-Bampton method</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images\I_AnalysisCase.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSCreateSolutionCaseHdr</TD>
+		<TD WIDTH="60%">
+		<P>&nbsp;Creates a new solution case</P>
+		</TD>
+	</TR>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_AnalysisCase.jpg" width="22" height="22">
+		</TD>
+		<TD WIDTH="29%">CATGPSCreatePreprocessingCaseHdr</TD>
+		<TD WIDTH="60%">
+		&nbsp;Creates a new preprocessing case</TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_MeshDeformed.jpg" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImageDeformedMeshHdr</font></TD>
+		<TD WIDTH="100%">
+		&nbsp;<span id="M13">Displays the deformed mesh</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_FailureCriteria.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImageVonMisesIsoHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M19">Displays the Von Mises stress</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Deformation.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImageDispHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M25">Displays the displacement</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Stress.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImagePrincipalStressHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M31">Displays the principal stress</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center" height="21">
+		<img border="0" src="images/I_Precision.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%" height="21"><font SIZE="2">CATSPMImageErrorHdr</font></TD>
+		<TD WIDTH="60%" height="21">
+		&nbsp;<span id="M37">Displays the stress estimated precision</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_MshMesh.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImageMeshHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M48">Displays the mesh</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Inactive.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMActivationHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M59">Activates/Deactivates images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_AnimateImage.jpg" width="20" height="21"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMAnimateHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M70">Animates analysis images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_SPMCuttingPlane.jpg" width="22" height="23"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMCutPlaneAnalysisHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M81">Activates cut plane on images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_ImageDeform.jpg" width="22" height="23"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMDeformHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M92">Modifies the amplification magnitude</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_ImageExtrema.jpg" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMImageExtremaHdr</font></TD>
+		<TD WIDTH="60%">
+		&nbsp;<span id="M103">Detects extrema on images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Update.gif" width="22" height="22"></TD>
+		<TD WIDTH="29%"><font SIZE="2">CATSPMExtremaLocalUpdateHdr</font></TD>
+		<TD WIDTH="60%">
+		<span id="M109">&nbsp;Launches local update on extrema</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_ZoomIn.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMFocusOnExtremumHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M115">Focus on extremum</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Infos.jpg" width="22" height="21"></TD>
+		<TD><font SIZE="2">CATSPMInfosHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M126">Gives information on the selected object</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_Photo.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMGenerateImageHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M137">Generates one or more images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/CATAmtUpdateMeshColorSetHdr.jpg" width="22" height="21"></TD>
+		<TD><font SIZE="2">CATSPMLockUnlockColorMapHdr</font></TD>
+		<TD>
+		<span id="M150">&nbsp;Locks/Unlock the Color Map</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_ImageLayout.jpg" width="22" height="21"></TD>
+		<TD><font SIZE="2">CATSPMLayoutHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M161">Activates layout for all activated images</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_DisplayQuality.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMSimplificationHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M172">Allows to choose a simplified representation for 
+		an image to accelerate its display</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_SPMSaveAsNewTemplate.jpg" width="16" height="16"></TD>
+		<TD><font SIZE="2">CATSPMSaveAsNewTemplateHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M183">Saves the customized image as template</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_SPMExportingData.jpg" width="21" height="21"></TD>
+		<TD><font SIZE="2">CATSPMExportingDataHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M194">Exports data from the selected image</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_AnalysisReport.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMBasicReportHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M205">Generates a basic HTML report</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_AnalysisReport.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMReportHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M216">Generates a report on the selected feature</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_AdvancedReport.jpg" width="21" height="21"></TD>
+		<TD><font SIZE="2">CATSPMAdvReportHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M227">Generates a customized HTML report</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_SPMEnvelopComputer.jpg" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMEnvelopComputerHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M238">Creates a new Envelop Case</span></TD>
+	</tr>
+	<tr>
+		<TD WIDTH="9%" ALIGN="center">
+		<img border="0" src="images/I_SPMAddEnvelopType.gif" width="22" height="22"></TD>
+		<TD><font SIZE="2">CATSPMAddEnvelopTypeHdr</font></TD>
+		<TD>
+		&nbsp;<span id="M244">Generates one or more envelop types</span></TD>
+	</tr>
+</TABLE>
+<P ALIGN="right"><A HREF="#Top">[Top]</A></P>
+<P ALIGN="right">&nbsp;</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A NAME="History"></A>History</H3>
+<TABLE WIDTH="100%">
+	<tr>
+		<TD VALIGN="top" WIDTH="50%">Version: <strong>3</strong> [January 2008]</TD>
+		<TD VALIGN="top" WIDTH="50%">Document updated</TD>
+	</tr>
+	<TR>
+		<TD VALIGN="top" WIDTH="50%">Version: <STRONG>2</STRONG> [March 2006]</TD>
+		<TD VALIGN="top" WIDTH="50%">Document updated</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="50%">Version: <STRONG>1</STRONG> [June 2005]</TD>
+		<TD VALIGN="top" WIDTH="50%">Document created</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" ALIGN="right" COLSPAN="2" WIDTH="100%">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2000, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

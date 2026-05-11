@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a New CATIA Document</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a New CATIA Document</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create a new CATIA
+      document. It details the programming equivalent to the <code>File -&gt;
+      New</code> command.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAInfCreateDocument is launched in CATIA [<a href="#References">1</a>].
+      No opened document is needed.</p>
+      <p><a href="CAAInfCreateDocumentSource.htm" target="Source">CAAInfCreateDocument.CATScript</a>
+      is located in the CAAScdInfUseCases module. <a href="macros/CAAInfCreateDocument.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAInfCreateDocument includes one step:</p>
+      <ol>
+        <li><a href="#CreateNewDoc">Creating a new CATIA Document</a></li>
+      </ol>
+      <h4><a name="CreateNewDoc"></a>Creating a New CATIA Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+ <font color="#0000FF">   </font><font color="#008000">'Create a new part document.
+    'Add the new document to the end of the collection of documents.
+    'Create and display a new window for the new document.
+    'Activate the new document and the window.</font><font color="#0000FF">
+     Dim </font>oNewPartDoc<font color="#0000FF"> As </font>Document<font color="#0000FF">
+     Set </font>oNewPartDoc = CATIA.Documents.<b>Add</b>(&quot;Part&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A new CATIA document is created using the <code>Add</code> method of
+      the <i>Documents</i> collection (<i>Documents</i> object). The type of
+      document to be created must be specified to the <code>Add</code> method.
+      This type can be a part, an assembly, or a drawing. You would then use <code>Part</code>,
+      <code>Product</code>, or <code>Drawing</code> type respectively as the
+      argument to the <code>Add</code> method. In this case, a <code>Part</code>
+      document is created. The new document is added to the end of the
+      collection of documents. A new window for the document is also created and
+      displayed. Both document and window are activated. Note that the existence
+      of the new document is limited to the CATIA session. To be persistent, the
+      document must be saved. See the CAAInfSaveAsDocument [<a href="#References">2</a>]
+      sample for an illustration of how to save the new document. Note also that
+      the newly created document should also be closed at the end of the
+      session. See the CAAInfCloseDocument [<a href="#References">3</a>] sample
+      for an illustration of how to close the new document.&nbsp;</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a new CATIA document during an
+interactive session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td><a href="CAAInfSaveAsDocument.htm">Saving a New CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[3]</td>
+    <td><a href="CAAInfCloseDocument.htm">Closing a CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

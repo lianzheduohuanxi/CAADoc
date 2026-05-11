@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE>Creating 2D Coating Mesh Parts</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link href="../CAAScrBase/caav5.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Creating 2D Coating Mesh Parts</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0" HEIGHT="2118">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to create coating 2D 
+		mesh part by extracting face elements of an existing 3D mesh part. A coating 
+		mesh can be extracted from a octree tetrahedron mesh part, tetrahedron filler 
+		mesh part, 3D transformed mesh part. This functionality is available in 
+		FEM Solid (FMD) product.</P>
+		The macro opens an Analysis document which already contains octree tetrahedron 
+		mesh part. The coating mesh is created over this mesh part. The mesh part 
+		is updated to generate coating mesh.
+		<P ALIGN="center">
+		<img height="200" src="images/Coating2DMesh.gif" width="510" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniMeshCoating2D is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniMeshCoating2DSource.htm">CAAAniMeshCoating2D.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniMeshCoating2D.catvbs">Execute macro</A> (Windows only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniMeshCoating1D includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting the List of Mesh Parts and Publications</A></LI>
+			<LI><A HREF="#Navigate">Creating Mesh part and Assigning Values to its 
+			Attributes</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">'Optional: allows to find the sample wherever it&#39;s installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+
+<FONT COLOR="#008000">'Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is fetched in the documentation 
+		installation path, this path is already stored in the <CODE>sDocPath</CODE> 
+		variable. If this variable is not valuated then error is raised. In the collection of documents, two documents can be retrieved: 
+		the Analysis document and the Part document. </P>
+		<H4><A NAME="Reference"></A>Extracting the List of Mesh Parts and Publications</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">'Retrieve the analysis Manager </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManagar = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">'Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retrieve the published face</FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications1 = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubFace = publications1.Item("Top")
+
+<FONT COLOR="#008000">'Retreive the analysis model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">&#39;Retrive The mesh manager and the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+<FONT COLOR="#008000">&#39;Retrieve the already existing Octree mesh part</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshPart = oAnalysisMeshParts.Item(1)</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Create reference from the mesh part</FONT>
+<FONT COLOR="#0000FF">Set </FONT>reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, the <B>Analysis Models</B> and 
+		the <B>Mesh Manager Objects</B>. The extraction of pre-defined geometric 
+		elements is done by using the Reference interface. This is equivalent to 
+		the selection of a B-Rep elements inside the interactive application. In 
+		this macro the reference is created from the octree tetrahedron mesh part.</P>
+		<H4><A NAME="Navigate"></A>Creating the Mesh Part and Assigning Values to 
+		its Attributes.</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+
+<FONT COLOR="#008000">&#39;Add the new Coating mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>coat2D = oAnalysisMeshPart.Add ("MSHPart2DCoating") 
+ 
+<FONT COLOR="#008000">&#39;Set the reference to the surface mesh part</FONT>
+coat2D.AddSupportFromReference product, reference1
+ 
+<FONT COLOR="#008000">&#39;Assign value to the global specification</FONT>
+coat2D.SetGlobalSpecification "ExtractionType", 1</PRE>
+				<PRE><FONT COLOR="#008000">&#39;Add the local specification</FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshSpecs = coat2D.AnalysisMeshLocalSpecifications
+<FONT COLOR="#0000FF">Set </FONT>spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+spec.SetAttribute "LocalExtractionType", 2
+
+spec.AddSupportFromPublication "ConnectorList", product, pubFace
+
+
+<FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+coat2D.Update
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><SPAN STYLE="font-weight: 400"><FONT COLOR="#000000">The local 
+		specification specifies the faces which are to be included or excluded 
+		while computing the coating mesh. You can specify multiple faces to one 
+		local specification. If you want to include some faces, and exclude some 
+		other then you need to create at least two local specifications. All the 
+		faces which are to be included, can be added as support to one local 
+		specification with the attribute &quot;LocalExtractionType&quot; valuated to 
+		1. Similarly faces which are to be exclude can be added as support to other 
+		local specification with the attribute &quot;LocalExtractionType&quot; valuated to 
+		2.</FONT></SPAN></H4>
+		<P>&nbsp;</P>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+End Sub
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variables must be defined. After running the macro the mesh may not be immediately visible,
+                the user has to go to the Advanced Meshing Tools workbench to see the mesh.</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">&nbsp;</P>
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create 2D coating mesh parts and how to assign 
+values to its global specifications.</P>
+<P>&nbsp;</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

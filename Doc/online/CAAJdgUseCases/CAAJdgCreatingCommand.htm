@@ -1,0 +1,555 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>JDialog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Command</h3>
+      <em>How to make a command with JDialog</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a command with JDialog, through the
+      CAAJdgSmartDictionary use case.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAJdgSmartDictionary Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAJdgSmartDictionary Do</a></li>
+            <li><a href="#How">How to Launch CAAJdgSmartDictionary</a></li>
+            <li><a href="#Where">Where to Find the CAAJdgSmartDictionary Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a JDialog command. It
+presents two ways of programming a command:</p>
+<ol>
+  <li>full-dynamic (similar to Java/AWT programming),</li>
+  <li>using static declarative files (the JDialog way).</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAJdgSmartDictionary Use Case</h3>
+<p>CAAJdgSmartDictionary is a use case of the CAAJDialog.edu framework that
+illustrates CATJDialog framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAJdgSmartDictionary Do</h4>
+<p>CAAJdgSmartDictionary is a dictionary command, able to translate anything
+from any language to any language. It is composed of:
+<ul>
+  <li>a combo-box to choose the source language,</li>
+  <li>a combo-box for the destination language,</li>
+  <li>a text field for the text to translate,</li>
+  <li>a button for asking for the translation,</li>
+  <li>and a label for displaying the result of the translation.</li>
+</ul>
+<p>It looks like this:</p>
+<p><img src="images/SmartDictionaryCommand.gif" border="0" width="469" height="230"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAJdgSmartDictionary</h4>
+<p>To launch CAAJdgSmartDictionary , you will need to set up the build time
+environment, then compile CAAJdgSmartDictionary along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Actually, this use case contains two JDialog commands:</p>
+<ul>
+  <li>&quot;SmartDictionary1&quot;, which illustrates the
+    &quot;full-dynamic&quot; way of programming a JDialog command,</li>
+  <li>&quot;SmartDictionary2&quot;, which illustrates the JDialog way of
+    programming, using static declarative files.</li>
+</ul>
+<p>Although those commands are programmed in a different way, the result
+(runtime behavior) is strictly identical.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAJdgSmartDictionary Code</h4>
+<p>The CAAJdgSmartDictionary use case is made of two classes located in the
+CAAJdgSmartDictionary.mj module of the CAAJDialog.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAJDialog.edu\CAAJdgSmartDictionary.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAJDialog.edu/CAAJdgSmartDictionary.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The CAAJdgSmartDictionary.mj module includes two java files:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><em>CATSmartDictionaryController1.java</em></td>
+      <td>The controller of the &quot;full-dynamic&quot; version</td>
+    </tr>
+    <tr>
+      <td><em>CATSmartDictionaryController2.java</em></td>
+      <td>The controller of the &quot;static declarative files&quot; version</td>
+    </tr>
+  </tbody>
+</table>
+<p>SmartDictionary1 uses the following resource file:</p>
+<ul>
+  <li>SmartDictionary1.XMLDlg in CNext/resources/dialog</li>
+</ul>
+<p>SmartDictionary2 uses the following resource files:</p>
+<ul>
+  <li>SmartDictionary2.XMLDlg in CNext/resources/dialog,</li>
+  <li>SmartDictionary2.CATNls in CNext/resources/msgcatalog</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<ol>
+  <li><a href="#Step1">Defining the command layout &quot;on paper&quot;</a></li>
+  <li><a href="#Step3">Declaring the SmartDictionary1 command</a></li>
+  <li><a href="#Step3">Writing the SmartDictionary1 command controller</a></li>
+  <li><a href="#Step4">Declaring the SmartDictionary2 command</a></li>
+  <li><a href="#Step5">Creating the message catalog file for SmartDictionary2</a></li>
+  <li><a href="#Step6">Writing the SmartDictionary2 command controller</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Defining the command layout &quot;on paper&quot;</h4>
+<p>The preliminary step in writing a command should always be to define its
+layout on paper. Layout is not a trivial thing, and spending a few minutes in
+drawing your application on paper and thinking about its resize behavior may
+save you a lot of time in debugging a badly constrained layout.</p>
+<p><i>Remark:</i></p>
+<p>Until now, the only layout manager provided by JDialog is a &quot;Grid
+Layout&quot; implementation.</p>
+<p>Every graphical component is associated to a <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'GC');return false;">GC</a>
+object, defining its layout in its father container. The GC object gives the
+following controls:
+<ul>
+  <li><b>x, y</b>: the position of the component on the grid,
+  <li><b>w, h</b>: the width and eight (in cells) occupied by the component,
+  <li><b>alignment</b>: defines the component alignment inside its cells
+    (combination of left/right/center and top/bottom/center),
+  <li><b>justification</b>: defines the spreading of the component in its cells
+    (none/horizontal/vertical/both).</li>
+</ul>
+<p>Grid layout is very powerful and should allow you to create almost any
+layout. So if you don't manage to reproduce the desired layout, it means a
+constraint must be missing somewhere. In order to have a good understanding of
+Grid Layout, you should be aware of a few things:</p>
+<ul>
+  <li>weight is used to divide remaining space between columns and lines
+    (proportionally to their weights) <b>and only for that</b>
+  <li>if all columns (or lines) have a null weight, then they are all considered
+    to have a weight=1 (by the layout algorithm)
+  <li>when a column (or line) has a null weight, then its width (height) is
+    given by the widest (higher) component in this column (line)
+  <li>an empty column (or line) with a null weight won't add any blank space in
+    your layout: it won't be visible!</li>
+</ul>
+<p>&nbsp;</p>
+<p>According to the SmartDictionary screen shot (see above), we want the
+following layout:</p>
+<p><img src="images/SmartDictionaryLayout.gif" border="0" width="677" height="530"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Declaring the SmartDictionary1 command</h4>
+<p>Obviously, JDialog gives the possibility to build applications dynamically.
+The only thing to do is to declare the command in the JDialog environment. This
+is done by adding an XML file (with extension XMLDlg) in the runtime view.</p>
+<p>Here is the resource file &quot;SmartDictionary1.XMLDlg&quot;, declaring the
+&quot;SmartDictionary1&quot; command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+  &lt;Frame Attribute=&quot;<font color="#3333ff">_frame</font>&quot; onCreate=&quot;<font color="#ff0000">onCreate</font>&quot; Controller=&quot;com.dassault_systemes.catjdialog.smartdictionary.
+CATSmartDictionaryController1&quot;&gt;
+  &lt;/Frame&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>The first role of this file is to <b>declare</b> &quot;SmartDictionary1&quot;
+as a JDialog command (a file &quot;MyCommand.XMLDlg&quot; would declare a
+&quot;MyCommand&quot; command).</p>
+<p>Its content defines that the &quot;SmartDictionnary1&quot; command is a <b>Frame</b>
+whose controller class is
+&quot;com.dassault_systemes.catjdialog.smartdictionary.CATSmartDictionaryController1&quot;
+which has a public attribute named &quot;<font color="#3333FF">_frame</font>&quot;
+(of type CATFrame), and a method &quot;<font color="#FF0000">onCreate</font>&quot;
+(with a given signature).</p>
+<p>When the command &quot;SmartDictionary1&quot; is activated, then the JDialog
+infrastructure does the following:</p>
+<ol>
+  <li>instantiates a Frame object (CATFrame),</li>
+  <li>instantiates a controller object (CATSmartDictionaryController1),</li>
+  <li>initializes its &quot;<font color="#3333FF">_frame</font>&quot; attribute
+    with the Frame object,</li>
+  <li>callbacks the controller object on its &quot;<font color="#FF0000">onCreate</font>&quot;
+    method to warn it that the Frame was just created.</li>
+</ol>
+<p>To know more about callbacks, please have a look at <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATCallbackSource');return false;">CATCallbackSource</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Writing the SmartDictionary1 command controller</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.catjdialog.smartdictionary;
+
+import com.dassault_systemes.catjdialog.CATFrame;
+import com.dassault_systemes.catjdialog.CATButton;
+import com.dassault_systemes.catjdialog.CATComboBox;
+import com.dassault_systemes.catjdialog.CATLabel;
+import com.dassault_systemes.catjdialog.CATDialog;
+import com.dassault_systemes.catjdialog.CATNotification;
+import com.dassault_systemes.catjdialog.CATTextField;
+import com.dassault_systemes.catjdialog.GC;
+
+<font color="#009900">/**
+ * JDialog controller for the 'SmartDictionary' command.
+ **/</font>
+public class CATSmartDictionaryController1
+{
+<font color="#009900">  // --- this attribute contains the command's CATFrame
+</font>  public CATFrame <font color="#3333FF">_frame</font>;
+  
+<font color="#009900">  // --- private attributes
+</font>  private CATComboBox _srcLangCombo;
+  private CATComboBox _destLangCombo;
+  private CATTextField _wordZone;
+  private CATLabel _resultZone;
+  
+  private static String[] languages = {&quot;English&quot;, &quot;Francais&quot;, &quot;Espagnol&quot;, &quot;Italiano&quot;, &quot;Deutch&quot;};
+  
+<font color="#009900">  /**
+   * Callback on panel creation
+   **/</font>
+  public void <font color="#FF0000">onCreate</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+<font color="#009900">    // --- create the components
+    // -------------------------</font>
+    CATLabel smartDictionaryTitle = new CATLabel(_frame, &quot;SmartDictionaryTitle&quot;, 1);
+
+    CATLabel sourceLangLabel = new CATLabel(_frame, &quot;SourceLangLabel&quot;);
+    _srcLangCombo = new CATComboBox(_frame, &quot;SourceLangCombo&quot;);
+<font color="#009900">    // --- listen to _srcLangCombo changes
+</font>    _srcLangCombo.addCallback(_srcLangCombo.getComboActivatedNotification(), this, &quot;<font color="#FF0000">onSourceLanguage</font>&quot;, null);
+
+    CATLabel destLangLabel = new CATLabel(_frame, &quot;DestLangLabel&quot;);
+    _destLangCombo = new CATComboBox(_frame, &quot;DestLangCombo&quot;);
+<font color="#009900">    // --- listen to _destLangCombo changes
+</font>    _destLangCombo.addCallback(_destLangCombo.getComboActivatedNotification(), this, &quot;<font color="#FF0000">onDestLanguage</font>&quot;, null);
+
+    CATLabel enterTextLabel = new CATLabel(_frame, &quot;EnterTextLabel&quot;);
+    _wordZone = new CATTextField(_frame, &quot;WordZone&quot;);
+    _wordZone.setWidth(32);
+    
+    CATButton translateButton = new CATButton(_frame, &quot;TranslateButton&quot;);
+<font color="#009900">    // --- listen to translateButton events
+</font>    translateButton.addCallback(translateButton.getButtonActivatedNotification(), this, &quot;<font color="#FF0000">onTranslate</font>&quot;, null);
+    
+    CATLabel resultLabel = new CATLabel(_frame, &quot;ResultLabel&quot;);
+    _resultZone = new CATLabel(_frame, &quot;ResultZoneLabel&quot;);
+    
+<font color="#009900">    // --- set component texts
+    // -----------------------
+</font>    smartDictionaryTitle.setTitle(&quot;Smart Dictionary v1&quot;);
+    sourceLangLabel.setTitle(&quot;Source Language :&quot;);
+    destLangLabel.setTitle(&quot;Destination Language :&quot;);
+    enterTextLabel.setTitle(&quot;Enter text :&quot;);
+    translateButton.setTitle(&quot;Translate!&quot;);
+    resultLabel.setTitle(&quot;Result :&quot;);
+    
+<font color="#009900">    // --- layout the command
+    // ----------------------
+</font>    _frame.setConstraints(smartDictionaryTitle, new GC(0, 0, 2, 1, GC.CENTER, GC.NOFILL));
+    _frame.setConstraints(sourceLangLabel,       new GC(0, 1, 1, 1, GC.RIGHT, GC.NOFILL));
+    _frame.setConstraints(_srcLangCombo,         new GC(1, 1, 1, 1, GC.LEFT, GC.NOFILL));
+    _frame.setConstraints(destLangLabel,         new GC(0, 2, 1, 1, GC.RIGHT, GC.NOFILL));
+    _frame.setConstraints(_destLangCombo,        new GC(1, 2, 1, 1, GC.LEFT, GC.NOFILL));
+    _frame.setConstraints(enterTextLabel,        new GC(0, 3, 1, 1, GC.RIGHT, GC.NOFILL));
+    _frame.setConstraints(_wordZone,             new GC(1, 3, 1, 1, GC.LEFT, GC.NOFILL));
+    _frame.setConstraints(translateButton,       new GC(1, 4, 1, 1, GC.LEFT, GC.NOFILL));
+    _frame.setConstraints(resultLabel,           new GC(0, 5, 1, 1, (GC.RIGHT | GC.TOP), GC.NOFILL));
+    _frame.setConstraints(_resultZone,           new GC(1, 5, 1, 1, (GC.LEFT | GC.TOP), GC.NOFILL));
+    
+    _frame.setColumnResizable(1, 1);
+    _frame.setRowResizable(5, 1);
+
+<font color="#009900">    // --- initialize
+    // --------------
+</font>    _srcLangCombo.setItems(languages);
+   	_destLangCombo.setItems(languages);
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;source language&quot; ComboBox modification
+   **/
+</font>  public void <font color="#FF0000">onSourceLanguage</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;destination language&quot; ComboBox modification
+   **/
+</font>  public void <font color="#FF0000">onDestLanguage</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;translate&quot; button pressed
+   **/
+</font>  public void <font color="#FF0000">onTranslate</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+    _resultZone.setTitle(&quot;translate &quot;+_wordZone.getText()+&quot; from &quot;+_srcLangCombo.getSelection()+&quot; to &quot;+_destLangCombo.getSelection());
+  }
+
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>As you can see, the controller builds up the whole user interface in its
+&quot;onCreate&quot; method (which is called right after the command is
+activated). Creating the user interface is divided into 4 steps:</p>
+<ol>
+  <li>create the components,</li>
+  <li>set components strings (not localized here: hard coded in English),</li>
+  <li>layout the command,</li>
+  <li>other initializations (source and destination combos).</li>
+</ol>
+<p><i>Remark:</i> While creating the components, the controller makes several
+registrations:</p>
+<ul>
+  <li>registration to &quot;ComboActivated&quot; from the source language combo
+    box,</li>
+  <li>registration to &quot;ComboActivated&quot; from the destination language
+    combo box,</li>
+  <li>registration to &quot;ButtonActivated&quot; from the button.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Declaring the SmartDictionary2 command</h4>
+<p>In our example, the SmartDictionary command is static (it never changes). It
+is very common that a large part of application user interfaces remains static.
+For those cases, JDialog gives the possibility to declare the static part of the
+user interface inside the XMLDlg file.</p>
+<p>Here is the resource file &quot;SmartDictionary2.XMLDlg&quot;, in which all
+static components and their layout are declared:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+  &lt;Frame onCreate=&quot;<font color="#FF0000">onCreate</font>&quot; Controller=&quot;com.dassault_systemes.catjdialog.smartdictionary.CATSmartDictionaryController2&quot;&gt;
+<font color="#009900">    &lt;!-- create the components --/&gt;
+</font>    &lt;Label Name=&quot;SmartDictionaryTitle&quot; Level=&quot;1&quot;/&gt;
+    &lt;Label Name=&quot;SourceLangLabel&quot;/&gt;
+    &lt;ComboBox Name=&quot;SourceLangCombo&quot; Attribute=&quot;<font color="#3333FF">_srcLangCombo</font>&quot; onComboActivated=&quot;<font color="#FF0000">onSourceLanguage</font>&quot;/&gt;
+    &lt;Label Name=&quot;DestLangLabel&quot;/&gt;
+    &lt;ComboBox Name=&quot;DestLangCombo&quot; Attribute=&quot;<font color="#3333FF">_destLangCombo</font>&quot; onComboActivated=&quot;<font color="#FF0000">onDestLanguage</font>&quot;/&gt;
+    &lt;Label Name=&quot;EnterTextLabel&quot;/&gt;
+    &lt;TextField Name=&quot;WordZone&quot; Width=&quot;32&quot; Attribute=&quot;<font color="#3333FF">_wordZone</font>&quot;/&gt;
+    &lt;Button Name=&quot;TranslateButton&quot; onButtonActivated=&quot;<font color="#FF0000">onTranslate</font>&quot;/&gt;
+    &lt;Label Name=&quot;ResultLabel&quot;/&gt;
+    &lt;Label Name=&quot;ResultZoneLabel&quot; Attribute=&quot;<font color="#3333FF">_resultZone</font>&quot;/&gt;
+
+<font color="#009900">    &lt;!-- layout the command --/&gt;
+</font>    &lt;GC Name=&quot;SmartDictionaryTitle&quot;  X=&quot;0&quot; Y=&quot;0&quot; W=&quot;2&quot; H=&quot;1&quot; A=&quot;C&quot;/&gt;
+    &lt;GC Name=&quot;SourceLangLabel&quot;       X=&quot;0&quot; Y=&quot;1&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;R&quot;/&gt;
+    &lt;GC Name=&quot;SourceLangCombo&quot;       X=&quot;1&quot; Y=&quot;1&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;L&quot;/&gt;
+    &lt;GC Name=&quot;DestLangLabel&quot;         X=&quot;0&quot; Y=&quot;2&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;R&quot;/&gt;
+    &lt;GC Name=&quot;DestLangCombo&quot;         X=&quot;1&quot; Y=&quot;2&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;L&quot;/&gt;
+    &lt;GC Name=&quot;EnterTextLabel&quot;        X=&quot;0&quot; Y=&quot;3&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;R&quot;/&gt;
+    &lt;GC Name=&quot;WordZone&quot;              X=&quot;1&quot; Y=&quot;3&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;L&quot;/&gt;
+    &lt;GC Name=&quot;TranslateButton&quot;       X=&quot;1&quot; Y=&quot;4&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;L&quot;/&gt;
+    &lt;GC Name=&quot;ResultLabel&quot;           X=&quot;0&quot; Y=&quot;5&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;RT&quot;/&gt;
+    &lt;GC Name=&quot;ResultZoneLabel&quot;       X=&quot;1&quot; Y=&quot;5&quot; W=&quot;1&quot; H=&quot;1&quot; A=&quot;LT&quot;/&gt;
+    &lt;Column X=&quot;1&quot; W=&quot;1&quot;/&gt;
+    &lt;Row Y=&quot;5&quot; W=&quot;1&quot;/&gt;
+  &lt;/Frame&gt;
+</pre>
+    </td>
+  </tr>
+</table>
+<p>As you can see, this new XMLDlg does most of the job that was done
+dynamically in the &quot;onCreate&quot; method in the previous Controller code.
+More precisely, it handles the following steps:</p>
+<ol>
+  <li>create the components (and makes appropriate registrations),</li>
+  <li>layout the command.</li>
+</ol>
+<p>This is much less job for the controller!</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Creating the message catalog file for SmartDictionary2</h4>
+<p>JDialog provides a way of defining the component strings into a static
+message catalog (text file with extension CATNls).</p>
+<p>Here is the message catalog &quot;SmartDictionary2.CATNls&quot;:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// --- Message catalog for SmartDictionary version 2
+SmartDictionaryTitle.Title = &quot;Smart Dictionary v2&quot;;
+SourceLangLabel.Title = &quot;Source Language :&quot;;
+DestLangLabel.Title = &quot;Destination Language :&quot;;
+EnterTextLabel.Title = &quot;Enter text :&quot;;
+TranslateButton.Title = &quot;Translate!&quot;;
+ResultLabel.Title = &quot;Result :&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>The great advantage of defining component strings in message catalog files is
+that JDialog manages automatically the localization for you. All you need to do
+is to provide different versions of your CATNls file (one for each supported
+language):
+<ul>
+  <li>English CATNls file should be created in <i><tt>[myFrameWork]/CNext/resources/msgcatalog/[command
+    name].CATNls</tt></i></li>
+  <li>French CATNls file should be created in <i><tt>[myFrameWork]/CNext/resources/msgcatalog/French/[command
+    name].CATNls</tt></i></li>
+  <li>German CATNls file should be created in <i><tt>[myFrameWork]/CNext/resources/msgcatalog/German/[command
+    name].CATNls</tt></i></li>
+  <li>and so on...</li>
+</ul>
+<p>Once again, this is a job the controller doesn't need to do anmore!</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Writing the SmartDictionary2 command controller</h4>
+<p>Now, the Controller code can be drastically reduced:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.catjdialog.smartdictionary;
+
+import com.dassault_systemes.catjdialog.CATComboBox;
+import com.dassault_systemes.catjdialog.CATLabel;
+import com.dassault_systemes.catjdialog.CATDialog;
+import com.dassault_systemes.catjdialog.CATNotification;
+import com.dassault_systemes.catjdialog.CATTextField;
+
+<font color="#009900">/**
+ * JDialog controller for the 'SmartDictionary' command.
+ **/
+</font>public class CATSmartDictionaryController2
+{
+<font color="#009900">  // --- attributes declared in the XMLDlg file
+</font>  public CATComboBox <font color="#3333FF">_srcLangCombo</font>;
+  public CATComboBox <font color="#3333FF">_destLangCombo</font>;
+  public CATTextField <font color="#3333FF">_wordZone</font>;
+  public CATLabel <font color="#3333FF">_resultZone</font>;
+<font color="#009900">  // --- end
+</font>  
+<font color="#009900">  // --- private attibutes
+</font>  private static String[] languages = {&quot;English&quot;, &quot;Francais&quot;, &quot;Espagnol&quot;, &quot;Italiano&quot;, &quot;Deutch&quot;};
+  
+<font color="#009900">  /**
+   * Callback on panel creation
+   **/
+</font>  public void <font color="#FF0000">onCreate</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+    _srcLangCombo.setItems(languages);
+    _destLangCombo.setItems(languages);
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;source language&quot; ComboBox modification
+   **/
+</font>  public void <font color="#FF0000">onSourceLanguage</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;destination language&quot; ComboBox modification
+   **/
+</font>  public void <font color="#FF0000">onDestLanguage</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+  }
+
+<font color="#009900">  /**
+   * Callback on &quot;translate&quot; button pressed
+   **/
+</font>  public void <font color="#FF0000">onTranslate</font>( CATDialog iSource, CATNotification iNotification, Object iData )
+  {
+    _resultZone.setTitle(&quot;translate &quot;+_wordZone.getText()+&quot; from &quot;+_srcLangCombo.getSelection()+&quot; to &quot;+_destLangCombo.getSelection());
+  }
+
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The only thing the controller has to do in its &quot;<font color="#FF0000">onCreate</font>&quot;
+method is to make initializations.</p>
+<p><i>Remark</i>: even filling combo-boxes could be done statically in the
+XMLDlg file!</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Creating a JDialog command involves 4 steps:
+<ol>
+  <li>defining its layout (preferably on paper),</li>
+  <li>declaring the command, and defining its static part in a XMLDlg file,</li>
+  <li>creating associated message catalogs,</li>
+  <li>writing the controller class.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAAVbtTechArticles/CAAVbtReplayJDialogUseCaseirad6.htm">Building
+      and Launching a CAA V5 JDialog Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

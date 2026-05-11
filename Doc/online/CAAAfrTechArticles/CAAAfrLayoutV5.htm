@@ -1,0 +1,1036 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding the Application Frame Layout</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding the Application Frame Layout</h3>
+      <em>A description of the objects involved in the V5 interactive
+      application layout</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the layout of the V5 application and the objects
+      involved in this layout. To take full advantage of this article, a reading
+      of the &quot;Application Frame Overview&quot; article [<a href="#References">1</a>]
+      can be benefit to have a global view of the V5 Application.&nbsp;</p>
+      <ul>
+        <li><strong><a href="#The Layout">The V5 Interactive Application Layout</a></strong>
+          <ul>
+            <li><strong><a href="#The CATApplicationDocument">The
+              CATApplicationDocument class</a></strong></li>
+            <li><strong><a href="#The CATApplicationFrame class">The
+              CATApplicationFrame Class</a></strong></li>
+            <li><strong><a href="#The CATFrmEditor Class">The CATFrmEditor Class</a></strong></li>
+            <li><strong><a href="#The CATFrmLayout Class">The </a></strong><a href="#The CATFrmLayout Class"><strong>CATFrmLayout
+              Class</strong></a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#The V5 Document's Window">The Document Window</a></strong>
+          <ul>
+            <li><b><a href="#The Contents of a Window">The Contents of a Window</a></b></li>
+            <li><strong><a href="#The Default Window">The Default Window</a></strong></li>
+            <li><strong><a href="#The Name of the Window">The Window Title</a></strong></li>
+            <li><strong><a href="#Defining a New Window Type">Defining a New
+              Window Type</a></strong></li>
+            <li><strong><a href="#Defining a Window Creation Interface">Defining
+              a Window Creation Interface</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The Layout"></a>The V5 Interactive Application Layout</h3>
+<p>The V5 Application is an interactive application [<a href="#References">2</a>].
+This section presents all the C++ objects which are involved in the layout of
+this application.</p>
+<h4><a name="The CATApplicationDocument"></a>The CATApplicationDocument</h4>
+<p>The application layout is provided by the non-exposed <i>CATApplicationDocument</i>
+class<i>.</i></p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a>: The V5 Interactive Application Layout</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout1.jpg" width="580" height="490"></td>
+  </tr>
+</table>
+<p>The V5 layout contains many objects among which the main ones are:</p>
+<table border="0" cellpadding="2" cellspacing="3">
+  <tr>
+    <td valign="top" width="112">Menu bar</td>
+    <td>It is a <a href="../CAADlgQuickRefs/CAADlgCATDlgMenu.htm"><i>CATDlgMenu</i></a>
+      class instance. You customize it through workbenches [<a href="#References">3</a>]
+      and Add-ins [<a href="#References">4</a>].&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112">Tool bars</td>
+    <td>They are <i><a href="../CAADlgQuickRefs/CAADlgCATDlgToolBar.htm">CATDlgToolbar</a></i>
+      class instances. You create them also through workbenches [<a href="#References">3</a>]
+      and Add-ins [<a href="#References">4</a>].&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112">Status bar</td>
+    <td>It is a <i><a href="../CAADlgQuickRefs/CAADlgCATDlgStatusBar.htm">CATDlgStatusBar</a></i>
+      class instance. The message displayed inside is either the active command
+      name or an information driven by the current command.&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112">Power input</td>
+    <td>It is a non-exposed dialog object class included in the status bar. This
+      tool, depending on the configuration level, may be unavailable.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112"><a href="#The V5 Document's Window">Document
+      window</a></td>
+    <td>Each window is an instance of a class deriving from the <i><a href="#The V5 Document's Window">CATFrmWindow</a></i>
+      class. In the picture below, the Part document is visualized with two
+      instances and the Product document with one instance.&nbsp;In the Product
+      and Part document cases, the default window is a <i>CATFrmGraphAnd3DWindow
+      </i>(CATIAApplicationFrame Framework)</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112">Dialog Box</td>
+    <td>It is a <i><a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">CATDlgDialog</a></i>
+      class instance. It can be a simple command [<a href="#References">7</a>]
+      or an object driven by a state command [<a href="#References">5</a>].&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" width="112"><a href="#decorator">Decorator</a></td>
+    <td>This object is an invisible dialog object which contains all the dialog
+      objects related to the document: all its windows and all its dialog boxes.
+      Thanks to this object, it is possible to hide/deactivate all the dialog
+      objects when the document loses the focus.&nbsp;</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<h4 align="left"><a name="The CATApplicationFrame class"></a>The
+CATApplicationFrame class&nbsp;</h4>
+<p align="left">&nbsp;This <i>CATApplicationDocument</i> class instance is built
+by the <i><b>CATApplicationFrame</b></i> class instance.&nbsp;</p>
+<table border="0">
+  <caption><a name="Fig.2">Fig.2</a>: The V5 Interactive Application UML Diagram</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout2.jpg" width="611" height="136"></td>
+  </tr>
+</table>
+<p align="left">&nbsp;This UML diagram shows that:</p>
+<ul>
+  <li>
+    <p align="left">The <i>CATApplicationDocument</i> deriving from the <i>CATDlgDocument</i>
+    class is created by the non-exposed <i>l_CATApplicationFrame</i>
+    class.&nbsp;</li>
+  <li>
+    <p align="left">The <i>l_CATApplicationFrame</i> class instance is a
+    workshop. In fact it is the <b>General</b> workshop, the one containing the
+    commands that are always available: File/New, Print .... whether a document
+    is opened or not.&nbsp;&nbsp;</li>
+  <li>
+    <p align="left">The <i>CATApplicationFrame</i> instance is created in the <code>BeginApplication</code>
+    method of the interactive application [<a href="#References">2</a>]</li>
+</ul>
+<p align="left">The main methods of the <i>CATApplicationFrame</i> class are:</p>
+<table border="0">
+  <tr>
+    <td valign="top"><code>GetFrame</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>This static method returns the unique instance of this class.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>SetMessage&nbsp;&nbsp;&nbsp;&nbsp;</code> &nbsp;</td>
+    <td>To set a message in the status bar.&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetApplicationDocument</code></td>
+    <td>This method returns the <i>CATApplicationDocument</i> class instance</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetMainWindow</code>&nbsp;&nbsp;&nbsp;</td>
+    <td>This method returns:
+      <ul>
+        <li>
+          <p align="left">The <i>CATApplicationDocument</i> class instance if no
+          document is open</li>
+        <li>
+          <p align="left">otherwise, the decorator associated to the current
+          document(editor)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="left">This class is generally used to retrieve the current <a name="decorator">decorator</a>
+in order to be set as the dialog parent of a dialog box [<a href="#References">6</a>]:
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATApplicationFrame * <b>pFrame</b> = CATApplicationFrame::<b>GetFrame</b>();
+if ( NULL != pFrame ) 
+{
+   CATDialog * <b>pParent</b> = pFrame-&gt;<b>GetMainWindow</b>();
+   CATMyDialogBox * pMyDialogBox = new MyDialogBox(<b>pParent</b>,...);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left"><code>MyDialogBox</code> will be automatically hidden when the
+editor will be deactivated. Therefore if you need a dialog box always visible,
+and independent of the life of the document, its parent must be the <i>CATApplicationDocument</i>
+class instance returned by the <code>GetApplicationDocument</code> method. You
+can also read the &quot;Defining Headers in CATIAfrGeneralWksAddin
+Implementations&quot; section in the technical article about the command headers
+[<a href="#References">5</a>].&nbsp;
+<p align="right">[<a href="#Top">Top</a>]
+<h4 align="left"><a name="The CATFrmEditor Class"></a>The CATFrmEditor Class</h4>
+<p>The C++ objects involved in the Model View Controller paradigm are:</p>
+<ul>
+  <li>M = a <i>CATDocument </i>(document)</li>
+  <li>V = a <i>CATFrmWindow</i>&nbsp;&nbsp;<i></i>(window)</li>
+  <li>C = a <i>CATFrmEditor</i>&nbsp;<i></i>(editor)</li>
+</ul>
+<table border="0">
+  <caption><a name="Fig.3">Fig.3</a>: The MVC Paradigm</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout3.jpg" width="553" height="337"></td>
+  </tr>
+</table>
+<p align="left">This diagram shows several things:</p>
+<ol>
+  <li>
+    <p align="left">The <b>document</b> manages the editor and the window
+    creation through interfaces:</p>
+    <ol>
+      <li>
+        <p align="left">The <i><b>CATIEditor</b></i> interface is used to create
+        the <i>CATFrmEditor</i> instance, actually a <i>CATFrmObjectEditor</i>
+        class instance.&nbsp;</p>
+      </li>
+      <li>
+        <p align="left">The <i><b>CATIDocumentEdit</b></i> interface is used to
+        create the default window to display the document. This window is a
+        class instance deriving from the <i><a href="#The V5 Document's Window">CATFrmWindow</a></i>
+        class.&nbsp;The &quot;<a href="#Defining a New Window Type">Defining a
+        New Window Type</a>&quot; section shows that the document can implement
+        other interfaces to provide other window types.&nbsp;</p>
+      </li>
+    </ol>
+  </li>
+  <li>
+    <p align="left">The <b>editor</b> is a <b><i>CATCommand</i></b>.</p>
+    <ul>
+      <li>
+        <p align="left">It creates an invisible object, the <b>decorator</b>
+        (See the <a href="#Fig.1">Fig.1</a>&nbsp;). This decorator is the dialog
+        parent of each window which displays the document. It must be also the
+        dialog parent of all dialog boxes which are used as commands or
+        associated with a state command. Refer to the previous section to
+        retrieve it.&nbsp;</p>
+      </li>
+      <li>
+        <p align="left">It creates a <i>CATCommandSelector</i> instance. Refer
+        to the article about the command for more information on the role of
+        this object [<a href="#References">5</a>].</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p align="left">The <i>CATFrmEditor</i> class does not contain the list of
+    the <b>windows</b> associated with the document. This list is managed by the
+    <i><a href="#The CATFrmLayout Class">CATFrmLayout</a></i> class. The next
+    section explains the role of this unique class instance and how to retrieve
+    the list of windows created for a document.&nbsp;</li>
+</ol>
+<p align="left">The methods of the <i>CATFrmEditor</i> class, those in
+relationship with the layout, are:</p>
+<table border="0" cellspacing="4">
+  <tr>
+    <td valign="top"><code>GetCurrentEditor&nbsp;</code></td>
+    <td>This static method returns the current editor. This method must be used
+      only in a command class constructor. In the state command case, you ought
+      to prefer the CATStateCommand#<code>GetEditor</code> method. This method
+      is available everywhere in the state command.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetDocument</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>Returns the document <i>which has created the editor</i> but which may
+      not be the one displayed in the windows. If you open a Product document,
+      then edit one of its Part instance's, the editor displays the Part, but <code>GetDocument</code>
+      always returns the Product document.&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetWindowCount</code>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td>Returns the count of <i>CATFrmWindow</i> associated with this editor.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetCommandSelector</code></td>
+    <td>Returns the command selector dedicated to the editor.</td>
+  </tr>
+</table>
+<p align="left">The <i>CATFrmEditor</i> class has other roles mentioned below
+but not detailed in this documentation:</p>
+<ul>
+  <li>
+    <p align="left">Managing the UI active object,</li>
+  <li>
+    <p align="left">Managing the sets of objects like : PSO,HSO,SDO,CSO [<a href="#References">1</a>]&nbsp;</li>
+  <li>
+    <p align="left">Managing the Interactive Set of Objects [<a href="#References">15</a>]</li>
+  <li>
+    <p align="left">Controlling the send/receive command tree through its <i>CATCommandSelector</i>
+    instance [<a href="#References">5</a>]</li>
+  <li>
+    <p align="left">Managing the command header list [<a href="#References">13</a>]</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="The CATFrmLayout Class"></a>The CATFrmLayout Class</h4>
+<p align="left">This class manages all the windows created. It enables you to:</p>
+<ul>
+  <li>
+    <p align="left"><a href="#This class enables you to find all the windows opened for a document:">Identify
+    all the windows associated with a document</a></li>
+  <li>
+    <p align="left"><a href="#It manages the notifications sent by the editor or the window">Receive
+    the events sent by the editors</a></li>
+  <li>
+    <p align="left"><a href="#Managing the current window">Manage the current
+    window</a></li>
+</ul>
+<h5 align="left"><a name="This class enables you to find all the windows opened for a document:"></a>This
+class enables you to find all the windows opened for a document:&nbsp;</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFrmLayout * <b>pLayout</b> = CATFrmLayout::<b>GetCurrentLayout</b>();
+if ( NULL != pLayout ) 
+{
+   CATLISTP(CATFrmWindow) WindowList ;
+   WindowList = pLayout -&gt;<b>GetWindowList</b>();
+   for ( int = i ; i &lt;= WindowList.Size() ; i++ )
+   {
+        <b>CATFrmWindow</b> * pCurrentWind = WindowList[i] ;
+        if ( NULL != pCurrentWind )
+        {
+           <b>CATFrmEditor</b> * pEditor = pCurrentWind-&gt;<b>GetEditor</b>(); 
+           if ( NULL != pEditor )
+           {
+               <b>CATDocument</b> * pDocument = pEditor -&gt;<b>GetDocument</b>(); 
+               if ( pDocument == pOurDocument)
+               {
+                  // pCurrentWind is a window for our document 
+               }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>There is only one instance of this class during a session. The <code>GetCurrentLayout</code>
+method retrieves this unique instance. The <code>GetWindowList</code> methods
+returns all the windows of the session. To select only those dedicated to a
+document, you should retrieve the document which has created the window. This
+information is kept by the editor which is itself kept by the window. <a href="#Fig.3">Fig.3</a></p>
+<h5><a name="It manages the notifications sent by the editor or the window"></a>Receiving
+the events sent by the editors&nbsp;</h5>
+<p>Each editor, a <i>CATFrmEditor</i> class instance, sends an event when it is
+closing or when its UI-active object is changing. If you are interested by
+receiving this information, you should be aware that the <i>CATFrmLayout</i>
+class is the &quot;sender&quot; and not the editor itself. In your code you set
+the following callback:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   ::AddCallback(this,
+                CATFrmLayout::<b>GetCurrentLayout</b>(),
+                CATFrmEditor::EDITOR_CLOSE_ENDED(),
+                (CATSubscriberMethod)&amp;Class::MethodCB,
+                NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Where:&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><code>This</code></td>
+    <td>It is the subscriber.</td>
+  </tr>
+  <tr>
+    <td><code>CATFrmLayout::GetCurrentLayout</code></td>
+    <td>The unique&nbsp; <i>CATFrmLayout</i> class instance is the event
+      publisher.</td>
+  </tr>
+  <tr>
+    <td><code>CATFrmEditor::EDITOR_CLOSE_ENDED()</code></td>
+    <td>It is the published event. You also have <code>CATFrmEditor::UIACTIVEOBJECT_CHANGED()</code></td>
+  </tr>
+  <tr>
+    <td><code>Class::MethodCB</code></td>
+    <td>It is the method called when the event is sent. As usual, the class must
+      be the class name of this.</td>
+  </tr>
+</table>
+<p>When the editor is not the publisher, you should test in the callback method
+that the editor which sent the event is at the origin of the event.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void Class::MethodCB(CATCallbackEvent  iEvent, void            * iFrom,
+                     CATNotification * iNotification,CATSubscriberData iClientData,
+                     CATCallback       iCallBack )     
+{
+  if ( _pMyEditor == iFrom )
+   {
+    ...
+   }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">where:</p>
+<table border="0" height="131">
+  <tr>
+    <td valign="top" height="18"><code>_pMyEditor</code>&nbsp;</td>
+    <td height="18" valign="top">A data member of the class&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" height="17"><code>iEvent</code></td>
+    <td height="17" valign="top">It is the published event (<code>CATFrmEditor::EDITOR_CLOSE_ENDED</code>
+      or <code>CATFrmEditor::UIACTIVEOBJECT_CHANGED)</code></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18"><code>iFrom</code></td>
+    <td height="18" valign="top">The <i>CATFrmEditor</i> class pointer concerned
+      by the event&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" height="18"><code>iNotification</code></td>
+    <td height="18" valign="top">This pointer is always NULL .</td>
+  </tr>
+  <tr>
+    <td valign="top" height="18"><code>iClientData</code></td>
+    <td height="18" valign="top">The fifth data of the <code>AddCallback</code>
+      global function</td>
+  </tr>
+  <tr>
+    <td valign="top" height="18"><code>iCallBack&nbsp;</code></td>
+    <td height="18" valign="top">The callback identifier</td>
+  </tr>
+</table>
+<p align="left">Refer to use case [<a href="#References">7</a>]&nbsp; for a
+sample.&nbsp;</p>
+<h5 align="left"><a name="Managing the current window"></a>Managing the current
+window</h5>
+<p align="left">The <i>CATFrmLayout</i> class enables you to activate a new
+window. This method is <code>SetCurrentWindow</code>. You can use it to display
+in the foreground the current document window or to change of the current
+document. However, bear in mind that using this method has the same effect as
+clicking on the window: a new editor may be activated and your command may be
+deleted.</p>
+<p align="left">Here is an action method of a state command of a Part workbench.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean MyStateClass::MyActionMethod(void *iPointIndice)
+{
+ ...
+ CATFrmWindow * pWindowProduct = ...
+ CATFrmLayout *pLayout = CATFrmLayout::<b>GetCurrentLayout</b>();
+ pLayout-&gt;<b>SetCurrentWindow</b>(pWindowProduct );
+ ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">In this action method <code>pWindowProduct</code> is a pointer
+on a Product document window. Thanks to the <code>SetCurrentWindow </code>method,
+this document will be activated. But the current command, <code>MyStateClass</code>,
+will be deleted if it is a shared or exclusive command [<a href="#References">5</a>].
+Nevertheless, you can interact until the action method is over (<code>MyActionMethod</code>).&nbsp;</p>
+<p align="left">To summarize, the methods of the <i>CATFrmLayout</i> class are:</p>
+<table border="0" cellspacing="4">
+  <tr>
+    <td valign="top"><code>GetCurrentLayout</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top">This static method returns the unique instance of this
+      class.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>SetCurrentWindow</code>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top">This method enables you to give the focus to a window. This
+      method is useful when the window has just been created. See the &quot;<a href="#The Default Window">The
+      Default Window</a>&quot; section.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetCurrentWindow</code>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top">This method returns the window which has the focus.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>GetWindowList</code>&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top">This method returns all the windows created in the
+      frame.&nbsp;</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="The V5 Document's Window"></a>The Document Window&nbsp;</h3>
+<p>A document window allows you to visualize the document content, either
+entirely or partly. It must be a class deriving from the <i>CATFrmWindow</i>
+class.&nbsp;All the windows have the following inheritance tree:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout4.jpg" width="184" height="345"></td>
+  </tr>
+</table>
+<p>This section explains the <a href="#The Contents of a Window">contents of a
+window</a>, how the <a href="#The Default Window">default window</a> is created,
+how the <a href="#The Name of the Window">window title</a> is managed and how to
+create your <a href="#Defining a New Window Type">own window</a>.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><b><a name="The Contents of a Window"></a>The Contents of a Window</b></h4>
+<p>A window is a <i>CATDlgDialog</i> class and as such, it can contain any
+dialog object susceptible to be included by this class [<a href="#References">6</a>].
+But in most cases it contains <i>CATViewer</i> (Visualization framework)
+instances. You have to respect only one rule: all the dialog objects must be
+inside a frame created by the <i>CATFrmWindow</i> class:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout5.jpg" width="390" height="304"></td>
+  </tr>
+</table>
+<p>This frame is an invisible frame that you retrieve with the <code>GetViewerFrame</code>
+method. Inside this frame the objects must be arranged with the tabulation
+layout [<a href="#References">8</a>]. To take full advantage of the grid layout
+[<a href="#References">9</a>], you can create an intermediary frame with the <i>CATDlgGridLayout</i>
+style.&nbsp;</p>
+<p>Here is an example :</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout6.jpg" width="559" height="357"></td>
+  </tr>
+</table>
+<p>Refer to the &quot;Creating a Document's Window -2&quot; use case [<a href="#References">10</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><b><a name="The Default Window"></a>The Default Window</b></h4>
+<p>On&nbsp; <a href="#Fig.3">Fig.3</a> you can note that the default window is
+created by the <i>CATIDocumentEdit</i> interface. This interface is used when
+the document is open.&nbsp;</p>
+<h4 align="left"><a name="The Name of the Window"></a>The Window Title</h4>
+<p align="left">The <i>CATFrmWindow</i> class constructor is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATFrmWindow(const CATString &amp; <b>iWindowTag</b>, CATFrmEditor * iEditor = NULL);</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The name of the window will be <code>iWindowTag.</code> If it is
+not a complete file name, otherwise the name will be the one of the file:</p>
+<ol>
+  <li>
+    <p align="left">CATFrmWindow(&quot;<b>MyWindowName</b>&quot;, pEditor);</li>
+  <p>The name of the window is <code>MyWindowName</code></p>
+  <li>
+    <p align="left">CATFrmWindow(&quot;<b>e:\users\Part.CATPart</b>&quot;,
+    pEditor);</li>
+  <p>The name of the window is <code>Part.CATPart</code></p>
+</ol>
+<p>In fact, this (truncated) name is the<b> base name. </b>You can change it
+using the <code>SetBaseName</code> method on the <i>CATFrmWindow</i>
+class.&nbsp;It is a base name because after the first window creation an index
+will be added to the window title. Consider this scenario:</p>
+<table border="0">
+  <tr>
+    <td valign="top">
+      <table border="0">
+        <tr>
+          <td>1) The TestFrame Part is opened</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="images/CAAAfrUnderstandingLayout7.jpg" width="267" height="234"></td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table border="0">
+        <tr>
+          <td>2) File/ New Window</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="images/CAAAfrUnderstandingLayout8.jpg" width="263" height="341"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p>After the creation of the second window, the name of the first window becomes
+<code>TestFrame.CATPart:1</code>. This part is detailed further in the &quot;<a href="#Managing the current window">Managing
+the base name</a>&quot; section.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><b><a name="Defining a New Window Type"></a>Defining a New Window Type</b></h4>
+<p>A default document window is provided by the V5 application. However, you can
+visualize it in a different way by creating a new window type for the document.
+The article [<a href="#References">11</a>] gives you a concrete
+sample.&nbsp;&nbsp;</p>
+<p>The class defining the new window type must have at least five methods:</p>
+<ul>
+  <li><a href="#Constructor/Destructor">Constructor/Destructor</a></li>
+  <li><a href="#new window build">Build&nbsp;</a></li>
+  <li><a href="#new window : DeleteWindow">DeleteWindow</a></li>
+  <li><a href="#new window: DuplicateWindow">DuplicateWindow</a></li>
+</ul>
+<p>Depending on your window, other methods may be available. For example, you
+can have a method which returns the list of viewers if the window is
+multi-viewer [<a href="#References">10</a>].</p>
+<h5><a name="Constructor/Destructor"></a>Constructor/Destructor</h5>
+<p>As usual the constructor of a dialog box is simple:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyWindow :: MyWindow ( const CATString &amp;iName, CATFrmEditor * iEditor )
+                   : <b>CATFrmWindow</b>(iName,iEditor):_pViewer(NULL),
+                                                 _pRootObjectPath(NULL)
+
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p>In the constructor the data members which are pointers are set to NULL.
+Generally, these data members correspond to the viewer(s) and the path of the
+objects to be visualized.</p>
+<p>In the destructor the data member which are pointers are set to NULL. You do
+not need to delete the viewers since they are automatically deleted.&nbsp;&nbsp;</p>
+<h5><a name="new window build"></a>Build&nbsp;</h5>
+<p>The <code>Build</code> method, as usual for a Dialog class, <b>creates</b>
+and <b>arranges</b> the dialog objects (<b>viewers</b>). The &quot;<a href="#The Contents of a Window">Contents
+of a Window</a>&quot; section can help you to carry out this part. The second
+role of this method is to <b>manage the interactivity</b> for the objects to
+visualize.&nbsp;</p>
+<p>There are two kinds of objects to visualize:</p>
+<ul>
+  <li>The elements of the document. In this case, the interactivity is managed
+    by the <i>CATVisManager</i> [<a href="#References">14</a>].&nbsp;</li>
+  <li>The temporary components (objects). Their interactivity is managed by the <i>CATISO</i>.</li>
+</ul>
+<p>In both cases, the main goal is to attach the objects to be visualized to the
+<i>CATCommand</i> tree. Actually it is the manipulator attached to the graphic
+representation of the objects. The following diagram illustrates this:&nbsp;</p>
+<table border="0">
+  <caption><a name="Fig.4">Fig.4</a>: The CATCommand tree</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout10.jpg" width="558" height="464"></td>
+  </tr>
+</table>
+<p>The code in the <code>Build</code> method is the following:</p>
+<p><b>For the elements of the document:</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+list<IID> <b>ListIVisu</b>;
+IID visu = IID_CAT3DGeoVisu;
+ListIVisu.fastadd(&amp;visu);
+
+CATVisManager * pVisuManager = <b>CATVisManager::GetVisManager</b>();
+CATCommandSelector *pCommandSelector = pEditor-&gt;GetCommandSelector();
+
+pVisuManager-&gt;<b>AttachTo</b>(_pRootObjectPath,pViewPoint,ListIVisu,pCommandSelector);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<table border="0">
+  <tr>
+    <td valign="top"><code>pVisuManager</code>&nbsp;</td>
+    <td valign="top">It is a pointer to the unique <i>CATVisManager</i> class
+      instance.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pEditor</code></td>
+    <td valign="top">The <i>CATFrmEditor</i> class instance of the window</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>_pRootObjectPath</code></td>
+    <td valign="top">It is a <i>CATPathElement</i> of the root model.&nbsp;It is
+      a data member used to keep a handle on the model.&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pViewPoint</code></td>
+    <td valign="top">One viewpoint of the viewer, the main 3D, the main2D or
+      another viewpoint.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>ListIVisu</code></td>
+    <td valign="top">A list of CATIVisu IID.&nbsp;</td>
+  </tr>
+</table>
+<p>This <code>AttachTo</code> method must be called as many times as the root
+model is in a viewpoint.</p>
+<p><b>For the temporary elements of the CATISO:</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISO * pISO = pEditor-&gt;<b>GetISO</b>()  ;  
+pISO-&gt;<b>AddViewer</b>(_pViewer);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The&nbsp; <code>AddViewer</code> method must be called as many times as there
+are viewers in the window.</p>
+<p>The last operation in the <code>Build</code> method is to declare the PSO [<a href="#References">1</a>]
+and HSO [<a href="#References">1</a>] to the <i>CATVisManager</i>.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATPSO * pPSO = pEditor-&gt;<b>GetPSO</b>() ;   
+pVisuManager-&gt;<b>AttachPSOTo</b>( pPSO,pViewPoint);
+
+CATHSO * pHSO = pEditor-&gt;<b>GetHSO</b>() ; 
+pVisuManager-&gt;<b>AttachHSOTo</b>( pHSO,pViewPoint);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>These <code>AttachPSOTo</code> and <code>AttachHSOTo</code> methods must be
+called as many time the root model is seen by a viewpoint.&nbsp;</p>
+<p>The <code>Build</code> method is now complete.&nbsp;</p>
+<h5><a name="new window : DeleteWindow"></a>DeleteWindow</h5>
+<p>This method is called when the end-user closes the document or when the
+window is closed.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void NewWindow :: DeleteWindow()
+{     
+   // ISO management
+      CATISO * pISO = NULL ;
+      pISO = GetEditor()-&gt;<b>GetISO</b>();
+      if  (NULL != pISO)   pISO-&gt;<b>RemoveViewer</b>(_pViewer);
+ 
+   // Root Model management
+      CATVisManager * pVisuManager = CATVisManager::<b>GetVisManager</b>();
+      CATViewpoint  * pViewPoint = NULL ;
+            
+      pViewPoint = (CATViewpoint*) &amp;(_pViewer-&gt;<b>GetMain3DViewpoint</b>());
+      pVisuManager-&gt;<b>DetachFrom</b>(_pRootObjectPath,pViewPoint);
+      
+   // PSO/HSO management
+      pVisuManager-&gt;<b>DetachPSOFrom</b>(pViewPoint);
+      pVisuManager-&gt;<b>DetachHSOFrom</b>(pViewPoint);
+
+   // Mandatory call
+      <b>CATFrmWindow::DeleteWindow();</b>
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<h5>This method is the opposite of the <code>Build</code> method. The temporary
+objects of the ISO&nbsp; and the object of the model are &quot;detached&quot;
+from the CATCommand tree <a href="#Fig.4">Fig.4</a>.&nbsp;</h5>
+<ul>
+  <li>The <i>CATISO</i> class, through the <code>RemoveViewer</code> method,
+    detaches the main viewpoint. It is the main 2D viewpoint for a 2D Viewer and
+    the main 3D viewpoint for a 3D viewer.</li>
+  <li>The <i>CATVisManager</i>, through the <code>DetachFrom</code><b> </b>method,
+    detaches the viewpoint.&nbsp;</li>
+</ul>
+<p>You should also detach the PSO and the HSO from the <i>CATVisManager</i>.&nbsp;</p>
+<p>At the end of the <code>DeleteWindow</code> method, do not forget to call the
+parent method. It is important to finish the window deletion.</p>
+<h5><a name="new window: DuplicateWindow"></a>DuplicateWindow</h5>
+<p>This method is called when the end user selects the Window/New Window
+command. Its role is to create a new instance of the window.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFrmWindow * MyWindow :: DuplicateWindow()
+{
+   // Window creation
+   CATString NameOfThis = <b>GetBaseName</b>().CastToCharPtr() ;
+   CAAAfrHistogramChartWindow * pWindowToReturn = new <b>MyWindow</b>(NameOfThis,GetEditor() )  ;
+   pWindowToReturn-&gt;<b>Build</b>();
+  
+   // Assigning the characteristic of the current instance 
+   float r,v,b ;
+   _pViewer-&gt;<b>GetBackgroundColor</b>(&amp;r,&amp;v,&amp;b);   
+   CATViewer *pNewViewer = pWindowToReturn-&gt;<b>GetViewer</b>()
+   pNewViewer-&gt;<b>SetBackgroundColor</b>(r,v,b);
+   
+  // Windows title management
+   pWindowToReturn-&gt;<b>SetBaseName</b>(NameOfThis);
+   return  pWindowToReturn ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+This method may assign to the new instance all the visual characteristics of the
+duplicated window. The last action consists in &quot;<a href="#The Name of the Window">recomputing</a>&quot;
+the name of the first window.
+<p><a name="Defining a Window Creation Interface"></a><strong>Defining a Window
+Creation Interface</strong></p>
+<p>To create instances of the new window type, you can use the constructor class
+(new). But it can be useful to create an interface, implemented by the document,
+to provide a creation method. This last methodology avoids linking the framework
+which creates the window to the one which uses it.</p>
+<p>The source file of the interface implementation must contain:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;TIE_MyInterface.h&quot;              
+TIE_MyInterface(CAAEMyInterface); 
+
+CATImplementClass(CAAEMyInterface, DataExtension, CATBaseUnknown, <b>XXX</b>);
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<table border="0">
+  <tr>
+    <td valign="top"><code>MyInterface</code></td>
+    <td valign="top">The name of the new interface [<a href="#References">12</a>]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CAAEMyInterface</code></td>
+    <td valign="top">The class which implements <code>MyInterface</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><b><code>XXX</code></b></td>
+    <td valign="top">The suffix of the document ( <code>CATPart</code> for a
+      Part document for example)</td>
+  </tr>
+</table>
+<p>This interface must have at least one method&nbsp; which creates an instance
+of the new window.&nbsp;In general, this method contains three parts:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT <code>CAAEMyInterface</code>::CreateWindow()  
+{
+   <a href="#Creating the new window">1/ Creating the new window </a>
+   <a href="#Retrieving the base name">2/ Managing the base name</a> 
+   <a href="#Declaring the window as current">3/ Declaring the window as current</a>
+}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li><a name="Creating the new window"></a>Creating the new window</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIEditor</b> * pIEditor = NULL ;
+   HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&amp;pIEditor);
+   if (SUCCEEDED(rc))
+   {
+      CATFrmEditor * pEditor = pIEditor-&gt;<b>GetEditor</b>();
+      CATString WindowBaseName =&quot;xxx&quot;;
+      MyWindow * pWindow = new <b>MyWindow</b>(WindowBaseName,pEditor);
+      pWindow -&gt;<b>Build</b>()
+...    </pre>
+      </td>
+    </tr>
+  </table>
+  <p>We are inside a data extension of the document. The <code>QueryInterface</code>
+  on the <i>CATIEditor</i> enables you to retrieve the editor which manages this
+  document.</p>
+  <li><a name="Retrieving the base name"></a>Managing the base name</li>
+  <p>This section&nbsp;enables you to modify the <a href="#The Name of the Window">name</a>
+  of the first window. At first it is important to retrieve the base name of the
+  window, then apply the <code>SetBaseName</code> method with this name.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+      CATUnicodeString BaseName = pWindow-&gt;<b>GetBaseName</b>();
+      pWindow-&gt;<b>SetBaseName</b>(BaseName);
+...    </pre>
+      </td>
+    </tr>
+  </table>
+  <li><a name="Declaring the window as current"></a>Declaring the window as
+    current</li>
+  <p>The <code>SetCurrentWindow</code> method enables you to give the focus to
+  the new window.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+      CATFrmLayout *currentLayout = CATFrmLayout::<b>GetCurrentLayout</b>();
+      currentLayout-&gt;<b>SetCurrentWindow</b>(pWindow)
+...    </pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article enables you to understand the role of the main objects defining
+or managing the V5 interactive application.&nbsp;</p>
+<ul>
+  <li><i>CATApplicationFrame</i></li>
+  <p>This class has only one instance during the session. You essentially use it
+  to retrieve the dialog parent of your dialog box.&nbsp;</p>
+  <li><i>CATFrmLayout</i></li>
+  <p>This class has only one instance during the session. Its role is to manage
+  all the document windows. You use it to retrieve windows and to define the
+  current one.&nbsp;</p>
+  <li><i>CATFrmEditor</i></li>
+  <p>This class controls the visualization and the interactivity of the
+  document. It is the C, in the MVC paradigm, where M is the document and V the
+  window.&nbsp;</p>
+  <li><i>CATFrmWindow</i></li>
+  <p>It is the base class of all the classes defining a window to display a
+  document.&nbsp;</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrOverview.htm">Application Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgInteractiveApplication.htm">Designing
+      Your Interactive Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleWorkbench.htm">Creating
+      a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">Creating an
+      Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgCreatingDialogs.htm">Creating
+      Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleDialogOnly.htm">Creating
+      a Command that Consists in a Dialog Window</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgTabLayout.htm">Arranging
+      Dialog Objects with Tabulation Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgGridLayout.htm">Arranging
+      Dialog Objects with Grid Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleCustomWindow2.htm">Creating
+      a Document's Window -2</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[11]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleCustomWindow1.htm">Creating
+      a Document's Window -1</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[12]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[13]</td>
+    <td><a href="CAAAfrCommandHeaders.htm">The Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[14]</td>
+    <td><a href="../CAAVisUseCases/CAAVisSampleVisManager.htm">Using
+      the Visualization Manager</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[15]</td>
+    <td><a href="../CAAVisTechArticles/CAAVisISO.htm">Interactive Set
+      of Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

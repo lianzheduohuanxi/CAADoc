@@ -1,0 +1,950 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>CAA V5 C++ 64-bit Operating System Support</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Rules and Standards</h1>
+     </td>
+     <td valign="top">
+     <h2></h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>CAA V5 C++ 64-bit Operating System Support</h3>
+     <p><em>Rules, hints, and tips to help your applications run on 64-bit 
+     operating systems</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p><b>CATIA</b>, <b>DELMIA</b>, and <b>DMU</b> solutions run on the <b>AIX</b> 
+     and <b>Windows</b> 
+     operating system in <b>64-bit</b> mode. If you are interested with
+     <b>64-bit</b>, you can check your application to build and run using the 
+     AIX 64-bit operating system.</p>
+     <p>This article describes the 64-bit operating system characteristics and 
+     their consequences on you current application code. It also gives some tips 
+     and rules about compiling, reviewing, and debugging your code, along with
+     the V5 generic basic types that help your code run on both 32-bit and 
+     64-bit operating systems. Finally, some common errors found when running in 
+     64-bit, but coming from 32-bit coding, 
+     are explained along with their solutions.</p>
+     <ul>
+       <li><b><a href="#10">What Does 64-bit Mean?</a></b></li>
+       <li><b><a href="#20">What Are the Differences between 32-bit and 64-bit?</a></b></li>
+       <li><b><a href="#Ready">Getting Ready for 64-bit</a></b></li>
+       <li><b><a href="#BasicTypes">The V5 Generic Basic Types</a></b></li>
+       <li><b><a href="#Errors">Most Common Errors and Solutions</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="10"></a>What Does 64-bit Means?</h3>
+ <p>A 64-bit operating system uses memory addressed using 64 bits instead of 32, 
+ that is, theoretically 16 EB (or 2<sup>64</sup> bytes, 1 exabyte being 2<sup>60</sup> 
+ bytes) instead of 4 GB (or 2<sup>32</sup> bytes, 1 gigabyte being 2<sup>30</sup> 
+ bytes). This increased virtual address space enables you: </p>
+ <ul>
+   <li>To handle more data easily and more reliably</li>
+   <li>To have more data residing in memory, thus reducing swapping pages 
+   between memory and disk</li>
+   <li>To get better performance when running in native 64-bit mode on 64-bit 
+   operating systems.</li>
+ </ul>
+ <p>Because of hardware or software restrictions, some platforms might not 
+ support the full 64-bit virtual address space. The actual limit is then below 
+ 16 EB, and is usually measured in TB (terabytes or 2<sup>40</sup> bytes). For 
+ example, Microsoft announces that 64-bit Windows NT supports 16 TB (or 2<sup>44</sup> bytes, 1 terabyte being 2<sup>40</sup>
+bytes) of memory, that is 1024 times more than 32-bit Windows NT.</p>
+ <p>All the components involved in a 64-bit application must be native 64-bit.</p>
+ <p>With AIX, an application built:</p>
+<ul>
+	<li>On a 32-bit machine runs on a 32-bit machine</li>
+	<li>On a 64-bit machine runs on a 64-bit machine.</li>
+</ul>
+ <p>With Windows, an application built:</p>
+<ul>
+	<li>On a 32-bit machine runs on a 32-bit machine and in 32-bit mode on a 
+	64-bit machine</li>
+	<li>On a 64-bit machine<ul>
+		<li>In 32-bit mode runs on a 32-bit machine and in 32-bit mode on a 
+		64-bit machine</li>
+		<li>In 64-bit mode runs on a 64-bit machine.</li>
+	</ul>
+	</li>
+</ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="20"></a>What Are the Differences between 32-bit and 64-bit?</h3>
+<p>Unix and Windows both tried to minimize changes needed in their existing 
+source code, which resulted in different definitions of some basic types. In 
+particular, <i>long</i> was defined as a 64-bit type on Unix and as a 32-bit 
+type on Windows.</p>
+ <p>The main changes are the size of some basic types:</p>
+ <ul>
+   <li>A pointer is 64-bit <i>long</i> instead of 32</li>
+   <li>Pointer and <i>int</i> sizes now differ</li>
+   <li>Some valid type casts in 32-bit are truncated in 64-bit</li>
+   <li><i>int</i> and <i>long</i> have no longer the same size with UNIX</li>
+   <li>Field alignment changes in 64-bit mode</li>
+ </ul>
+
+<table id="table1" border="1">
+<caption>Basic Types Lengths in 32-bit and 64-bit</caption>
+  <tbody>
+    <tr>
+      <th>Type</th>
+      <th>32-bit (*)</th>
+      <th>64-bit Unix</th>
+      <th>64-bit Windows</th>
+      <th>Definition</th>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td align="center">32</td>
+      <td align="center">32</td>
+      <td align="center">32</td>
+      <td>Integer</td>
+    </tr>
+    <tr>
+      <td>long</td>
+      <td align="center">32</td>
+      <td align="center"><b>64</b></td>
+      <td align="center"><b>32</b></td>
+      <td>Long integer</td>
+    </tr>
+    <tr>
+      <td>void *</td>
+      <td align="center">32</td>
+      <td align="center">64</td>
+      <td align="center">64</td>
+      <td>Pointer</td>
+    </tr>
+    <tr>
+      <td>size_t</td>
+      <td align="center">32</td>
+      <td align="center">64</td>
+      <td align="center">64</td>
+      <td>Data type for
+objects declared to store result of <code>sizeof</code> operator.</td>
+    </tr>
+    <tr>
+      <td>ssize_t</td>
+      <td align="center">32</td>
+      <td align="center">64</td>
+      <td align="center">64</td>
+      <td>Data type
+used to represent the sizes of blocks that can be read or written in a
+single operation. Similar to <code>size_t</code>, but must be signed</td>
+    </tr>
+    <tr>
+      <td>off_t</td>
+      <td align="center">32</td>
+      <td align="center"><b>64</b></td>
+      <td align="center"><b>32</b></td>
+      <td>Arithmetic
+data type used to represent file sizes</td>
+    </tr>
+    <tr>
+      <td>time_t</td>
+      <td align="center">32</td>
+      <td align="center"><b>32</b></td>
+      <td align="center"><b>64</b></td>
+      <td>Arithmetic
+data type representing calendar time</td>
+    </tr>
+  </tbody>
+</table>
+<p>(*): Common to Windows and UNIX.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Ready"></a>Getting Ready for 64-bit</h3>
+ <p>All the components involved in a 64-bit application must be native 64-bit.</p>
+ <p>To enable your applications to go on running with 32-bit operating systems, 
+ the advice in this article rely on the following migration hypotheses:</p>
+ <ul>
+   <li>Do not change data format, that is, keep it 32-bit, either for persistent 
+   data and for data exchange to ensure bi-directional data compatibility 
+   between 32-bit and 64-bit working environments</li>
+   <li>Do not impact the 32-bit run time of your applications:<ul>
+     <li>Keep 32-bit view of the code stable. This is possible when using V5 
+     typedefs and macros (see <a href="#BasicTypes">The V5 Generic Basic Types</a>) </li>
+     <li>Fix common 32- and 64-bit runtime problems on both 32- and 64-bit.</li>
+   </ul>
+   </li>
+ </ul>
+ <p><b>Note</b>: Having a very high automatic test code coverage is very helpful 
+ for 64-bit migration. Thus, once build time is successful, you will be able to 
+ estimate the time needed for run time convergence. But the most important is 
+ that you will be able to check that you do not introduce any regression either 
+ in 32-bit or in 64-bit.</p>
+ <p>To get ready for 64-bit, you should:</p>
+ <ol>
+   <li>Compile your code in 64-bit mode and correct the errors and warnings</li>
+   <li>Review your code according to the code review rules: find portions of 
+   code that match the identified patterns and apply the corrections advised for 
+   such patterns</li>
+   <li>Debug your code when finding runtime problems.</li>
+ </ol>
+ <p>Once 64-bit pure convergence has been achieved, validate that 64-bit 
+ streamed documents are readable in 32-bit mode.</p>
+<p>You can refer to [<a href="#References">1</a>] and [<a href="#References">2</a>] 
+for additional information about Windows 64-bit and porting applications to 
+64-bit.</p>
+ <h4>Compiling Your Code</h4>
+ <p>The mkmk environment uses the <code>
+ _MkmkOS_BitMode</code> environment variable set to 64 to compile and build 
+	code in 64-bit. On a 64-bit machine, this variable is set by tck_profile 
+	automatically.</p>
+ <p>The 64-bit AIX and Windows operating system related codes in the directory 
+	are:</p>
+ <table border="1">
+   <tr>
+     <td>IBM AIX</td>
+     <td>aix_a64</td>
+   </tr>
+   <tr>
+     <td>Microsoft Windows</td>
+     <td>win_b64</td>
+   </tr>
+
+ </table>
+ <p>To build your frameworks in 64-bit, type:</p>
+ <ul>
+   <li>With AIX
+ <pre class="code">. tck_init
+tck_profile MyTCK
+adl_ch_ws MyWorkspace
+mkmk -auw</pre>
+</li>
+   <li>With Windows
+
+ <pre class="code">t:tck_init             // assuming the RADE tool installation is mapped to the t: drive
+tck_profile MyTCK
+adl_ch_ws MyWorkspace
+mkmk -auw</pre>
+</li> </ul>
+ <p>In the build log, examine the errors or warnings that show 64-bit problems.</p>
+ <p>Some preprocessor flags are available to discriminate between the different 
+ types of processors or operating systems:</p>
+ <table border="1">
+   <tr>
+     <td><code>_WINDOWS_SOURCE</code></td>
+     <td>To compile for Microsoft Windows</td>
+   </tr>
+   <tr>
+     <td><code>_AIX_SOURCE</code></td>
+     <td>To compile for IBM AIX</td>
+   </tr>
+   <tr>
+     <td><code>_HPUX_SOURCE</code></td>
+     <td>To compile for HP HP-UX</td>
+   </tr>
+   <tr>
+     <td><code>_SUNOS_SOURCE</code></td>
+     <td>To compile for Sun Solaris</td>
+   </tr>
+   <tr>
+     <td><code>PLATEFORME_DS64</code></td>
+     <td>To compile in native 64-bit mode. Valid with all operating systems</td>
+   </tr>
+   <tr>
+     <td><code>_ENDIAN_LITTLE</code></td>
+     <td>To compile for a Little Endian processor</td>
+   </tr>
+   <tr>
+     <td><code>_ENDIAN_BIG</code></td>
+     <td>To compile for a Big Endian processor</td>
+   </tr>
+ </table>
+ <p><code>_ENDIAN_LITTLE</code> and <code>_ENDIAN_BIG </code>are used to 
+ discriminate between Little Endian and Big Endian processors. Currently, <code>
+ _ENDIAN_LITTLE</code> is enabled only for Intel or AMD processors (32- and 
+ 64-bit versions). Use these flags instead of <code>_WINDOWS_SOURCE</code> which 
+ is dedicated to Windows platforms and not available for other platforms.</p>
+ <p>Check the compilation errors and warnings against the <a href="#Errors">Most 
+ Common Errors and Solutions</a>. You can also use the portable
+ <a href="#BasicTypes">V5 Generic Basic Types</a>.</p>
+ <h4>Reviewing Your Code</h4>
+ <p>You can check your code against the <a href="#Errors">Most Common Errors and 
+ Solutions</a></p>
+ <h4>Debugging Your Code</h4>
+ <p>Once the application builds, run your ODTs to find out run time problems, 
+ and correct them.</p>
+ <h4>Using mkmk Commands for Windows 32-bit Code on Windows 64-bit Platforms</h4>
+ <p>As a default behavior, mkmk commands, such as mkmk, mkodt, mkrun, and 
+	mkscc allow 64-bit code to run on 
+ 64-bit platforms. To use these tools to build, test, run, and check 32-bit code on a 64-bit platform, 
+ set the _MkmkOS_BitMode variable to 32 before running the tck_init profile:</p>
+ <pre class="code">set _MkmkOS_BitMode=32
+t:tck_init.bat      // assuming the RADE tool installation is mapped to the t: drive</pre>
+<p>For example, to build your frameworks in 32-bit mode on a 64-bit machine, type:</p>
+ <pre class="code">set _MkmkOS_BitMode=32
+t:tck_init             // assuming the ENOVIA Studio tool installation is mapped to the t: drive
+tck_profile MyTCK
+adl_ch_ws MyWorkspace
+mkmk -auw</pre>
+
+ <h4>Deploying your Application</h4>
+<p>To deploy you application, refer to [<a href="#References">3</a>].</p>
+	<p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="BasicTypes"></a>The V5 Generic Basic Types</h3>
+ <p>Some generic basic types with explicit names help you to write code 
+ independent from the platform without using the preprocessor flags described 
+ above. Theses types (and macros) allow you to port your code without runtime 
+ impacts on 32-bit because you can modify your code keeping it identical when 
+ compiling on 32-bit platforms.</p>
+ <p>For example:</p>
+ <ul>
+   <li>CATINT32 will be an integer with 32-bit size on all platforms</li>
+   <li>CATINTPTR will be an integer with the same size as a pointer: a 32-bit 
+   integer on 32-bit platforms and a 64-bit integer on 64-bit platforms, usually 
+   used to cast pointers into integers.</li>
+ </ul>
+ <p>These generic basic types are available in the <b>
+ CATDataType.h</b> file of the SpecialAPI framework:</p>
+ <table border="1">
+   <tr>
+     <th>Types</th>
+     <th colspan="4">UNIX</th>
+      <th colspan="4">Windows</th>
+   </tr>
+   <tr>
+     <th></th>
+     <th align="center">32-bit</th>
+     <th align="center">Length</th>
+     <th align="center">64-bit</th>
+     <th align="center">Length</th>
+      <th align="center">32-bit</th>
+      <th align="center">Length</th>
+      <th align="center">64-bit</th>
+      <th align="center">Length</th>
+   </tr>
+   <tr>
+     <td>CATINT32</td>
+     <td>int</td>
+     <td align="center">4</td>
+     <td>int</td>
+     <td align="center">4</td>
+      <td>int</td>
+      <td align="center">4</td>
+      <td>int</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATUINT32</td>
+     <td>unsigned int</td>
+     <td align="center">4</td>
+     <td>unsigned int</td>
+     <td align="center">4</td>
+      <td>unsigned int</td>
+      <td align="center">4</td>
+      <td>unsigned int</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATLONG32</td>
+     <td>long</td>
+     <td align="center">4</td>
+     <td>int</td>
+     <td align="center">4</td>
+      <td>long</td>
+      <td align="center">4</td>
+      <td>long</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATULONG32</td>
+     <td>unsigned long</td>
+     <td align="center">4</td>
+     <td>unsigned int</td>
+     <td align="center">4</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATLONG64</td>
+     <td>long long</td>
+     <td align="center">8</td>
+     <td>long long</td>
+     <td align="center">8</td>
+      <td>_int64</td>
+      <td align="center">8</td>
+      <td>_int64</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATULONG64</td>
+     <td>unsigned long long</td>
+     <td align="center">8</td>
+     <td>unsigned long long</td>
+     <td align="center">8</td>
+      <td>unsigned _int64</td>
+      <td align="center">8</td>
+      <td>unsigned _int64</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>LONG</td>
+     <td>long</td>
+     <td align="center">4</td>
+     <td>int</td>
+     <td align="center">4</td>
+      <td>long</td>
+      <td align="center">4</td>
+      <td>long</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>ULONG</td>
+     <td>unsigned long</td>
+     <td align="center">4</td>
+     <td>unsigned int</td>
+     <td align="center">4</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td></td>
+     <td align="center"></td>
+     <td></td>
+     <td align="center"></td>
+      <td><br>
+      </td>
+      <td align="center"><br>
+      </td>
+      <td><br>
+      </td>
+      <td align="center"><br>
+      </td>
+   </tr>
+   <tr>
+     <td>CATINTPTR</td>
+     <td>int</td>
+     <td align="center">4</td>
+     <td>intptr_t</td>
+     <td align="center">8</td>
+      <td>__w64 int</td>
+      <td align="center">4</td>
+      <td>INT_PTR</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATUINTPTR</td>
+     <td>unsigned int</td>
+     <td align="center">4</td>
+     <td>uintptr_t</td>
+     <td align="center">8</td>
+      <td>__w64 unsigned int</td>
+      <td align="center">4</td>
+      <td>UINT_PTR</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATLONGPTR</td>
+     <td>long</td>
+     <td align="center">4</td>
+     <td>intptr_t</td>
+     <td align="center">8</td>
+      <td>__w64 long</td>
+      <td align="center">4</td>
+      <td>LONG_PTR</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATULONGPTR</td>
+     <td>unsigned long</td>
+     <td align="center">4</td>
+     <td>uintptr_t</td>
+     <td align="center">8</td>
+      <td>__w64 unsigned long</td>
+      <td align="center">4</td>
+      <td>ULONG_PTR</td>
+      <td align="center">8</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td></td>
+     <td align="center"></td>
+     <td></td>
+     <td align="center"></td>
+      <td><br>
+      </td>
+      <td align="center"><br>
+      </td>
+      <td><br>
+      </td>
+      <td align="center"><br>
+      </td>
+   </tr>
+   <tr>
+     <td>CATLONGINT</td>
+     <td>long</td>
+     <td align="center">4</td>
+     <td>long</td>
+     <td align="center">8</td>
+      <td>long</td>
+      <td align="center">4</td>
+      <td>long</td>
+      <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATULONGINT</td>
+     <td>unsigned long</td>
+     <td align="center">4</td>
+     <td>unsigned long</td>
+     <td align="center">8</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+      <td>unsigned long</td>
+      <td align="center">4</td>
+   </tr>
+ </table>
+ <p><b>Note</b>: Lengths are expressed in bytes.</p>
+ <p>Avoid using long because its size differs from Windows to UNIX in
+64-bit. Use LONG or ULONG instead.</p>
+ <p>In addition, some macros help to convert pointers to different types, and 
+ the reverse:</p>
+ <table border="1" cellpadding="2" cellspacing="0">
+   <tr>
+     <th>Macro </th>
+     <th>Equivalent to </th>
+     <th colspan="2">Length </th>
+   </tr>
+   <tr>
+     <th></th>
+     <th></th>
+     <th>32-bit</th>
+     <th>64-bit</th>
+   </tr>
+   <tr>
+     <td>CATPtrToINT32(p)</td>
+     <td>((CATINT32)(CATLONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATPtrToUINT32(p)</td>
+     <td>((CATUINT32)(CATULONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATPtrToLONG32(p)</td>
+     <td>((CATLONG32)(CATLONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">4</td>
+   </tr>
+   <tr>
+     <td>CATPtrToULONG32(p)</td>
+     <td>((CATULONG32)(CATULONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">4</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td></td>
+     <td align="center"></td>
+     <td align="center"></td>
+   </tr>
+   <tr>
+     <td>CATINT32ToPtr(p)</td>
+     <td>((void*)(CATLONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATUINT32ToPtr(p)</td>
+     <td>((void*)(CATULONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATLONG32ToPtr(p)</td>
+     <td>((void*)(CATLONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">8</td>
+   </tr>
+   <tr>
+     <td>CATULONG32ToPtr(p)</td>
+     <td>((void*)(CATULONGPTR)(p))</td>
+     <td align="center">4</td>
+     <td align="center">8</td>
+   </tr>
+ </table>
+ <p>When you modify a virtual method signature, for example moving an <i>int</i> 
+ to a CATINTPTR, you have to propagate the same modification on all the 
+ re-definitions of this method (of course in base classes too). This is 
+ mandatory for 64-bit runtime. If you don't do this you break polymorphism 
+ mechanisms on 64-bit runtime. Concerning 32-bit, even if you don't migrate 
+ these re-definitions the runtime works because in fact you didn't change the 
+ signature.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Errors"></a>Most Common Errors and Solutions</h3>
+ <p>The most common errors that you will have to deal with may be due to:</p>
+ <ul>
+   <li><a href="#41">Using C++ ANSI</a></li>
+   <li><a href="#43">Data Alignment</a></li>
+   <li><a href="#44">Storing a Pointer as an int or a long</a></li>
+   <li><a href="#45">Casting Non-Fixed Size Basic Types by Reference or Address 
+   to Make the Code Compile</a></li>
+   <li><a href="#46">Using union</a></li>
+   <li><a href="#47">Multiplying an int by and unsigned int</a></li>
+   <li><a href="#48">Invalid Format String Conversions</a></li>
+   <li><a href="#49">Explicit Constant Typing</a></li>
+   <li><a href="#4B">Implicit Function Prototype in C Files</a></li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="41"></a>Using C++ ANSI</h4>
+ <p>This deals with the scope of variables declared in for statement.</p>
+ <p><b>Note</b>: This is not dedicated to 64-bit, but happen with the compiler 
+ used. The same behavior will occur in 32-bit also when using VC 7.1.</p>
+ <p>The new ANSI C++ standard specifies that variables declared as in <code>for 
+ (int i=0; ...)</code> have a scope local to the for statement. Nevertheless, 
+ older compilers like Visual C++ 5.0 use the older concept that the scope is the 
+ enclosing group. Below, are two possible problems arising from this change and 
+ their recommended solutions.</p>
+ <pre class="code">for( int i=0; i&lt;N; i++ ) ...
+if ( i == N ) ...</pre>
+ <p>Since i is used outside of the for scope, the compilation fails with 
+ compilers compliant with the new ANSI C++. If you want to use the variable 
+ after the for statement, declare it before the for statement:</p>
+ <pre class="code">int i;
+for ( i=0; i&lt;N; i++ ) ...
+if (i==N) ...</pre>
+ <p>The compilation fails also when using the same variable in multiple for 
+ loops, such as:</p>
+ <pre class="code">for( int i=0; i&lt;N; i++ ) ...
+for( i=0; i&lt;M; i++ ) ...</pre>
+ <p>You can declare the variable outside of the for statement:</p>
+ <pre class="code">int i;
+for( i=0; i&lt;N; i++ ) ...
+for( i=0; i&lt;M; i++ ) ...</pre>
+ <p>You can also use a variable specific to each for:</p>
+ <pre class="code">for( int i=0; i&lt;N; i++ ) ...
+for( int j=0; j&lt;M; j++ ) ...</pre>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="43"></a>Data Alignment</h4>
+ <p>Data alignment deals with data location in memory. 64-bit compilers align 
+ data, that is, locate data at an address that is a multiple of its length, 
+ provided this data is less or equal to 8 bytes in length. Alignment defaults 
+ may occur in buffers and can throw exceptions and/or crash the application much 
+ more often than in 32-bit.</p>
+ <p>For more information, refer to the
+MSDN article about data alignment [<a href="#References">4</a>].</p>
+ <p>Example: Computing 32-bit hash key from a pointer resulting from an 
+ allocation:</p>
+ <pre class="code">unsigned int CATMyHashIt( void * iObj )
+{
+  unsigned int key=0;
+  if ( iObj )
+  {
+    #ifdef PLATEFORME_DS64
+    key = CATPtrToUINT32(iObj) &gt;&gt; 3;  // Generally in 64-bit allocations are aligned on a boundary of 8 bytes
+    #else
+    key = CATPtrToUINT32(iObj) &gt;&gt; 2;  // Generally in 32-bit allocations are aligned on a boundary of 4 bytes
+    #endif
+  }
+  return key;
+}</pre>
+ <p>In 64-bit, the key is the pointer cast to an <i>unsigned int</i> the length 
+ of which is 4 bytes. This <i>unsigned int</i> is then processed by the right 
+ bitwise shift operator that shifts it right 3 positions, that is, divides it by 
+ 8. In 32-bit mode, it is divided by 4.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="44"></a>Storing a Pointer as an int or a long</h4>
+ <p>When casting a pointer to a 32-bit basic type like an <i>int</i>, you have 
+ to know if it is a real 64-bit address or not. If not you can use CATPtrTo 
+ prefixed macros to make your code compile without warning. Otherwise you have 
+ to use the 64-bit equivalent type, for example CATINTPTR instead of an <i>int</i> 
+ thus you do not modify the 32-bit view of your code.</p>
+ <p><b>Example 1</b>: Typical compilation error or warning occurring when setting 
+ a send/receive callback that passes an integer to the calback method:</p>
+ <pre class="code">int info = ... ;
+ _selCallBack = AddAnalyseNotificationCB (label,
+                                          label-&gt;GetActivateNotification(),
+                                          (CATCommandMethod)&amp;MyStateCommand::MyCallback,
+                                          (CATCommandClientData) info);
+ ...
+ void MyStateCommand::MyCallback(CATCommand* iFromClient, CATNotification* iNotif, CATCommandClientData iData)
+ {
+    int ipos = (int) iData;
+    ...
+}</pre>
+ <p>The integer value is passed to the callback method <code>MyCallback</code> thanks to the 
+ <code>CATCommandClientData</code>, that is, a pointer to void. As usual in 32-bit, the <i>
+ int</i> and the pointer have both the same size of 4 bytes. In 64-bit mode, the 
+ pointer is 8-byte <i>long</i>, but the <i>int</i> remains 4-byte <i>long</i>. 
+ Even if there is no loss of data when putting 4 bytes in 8, and then retrieving 
+ the first 4 bytes from the _ bytes of the pointer, compilers will issue errors 
+ or warnings. To fix them, write:</p>
+ <pre class="code">int info = ... ;
+ _selCallBack = AddAnalyseNotificationCB (label,
+                                          label-&gt;GetActivateNotification(),
+                                          (CATCommandMethod)&amp;MyStateCommand::MyCallback,
+                                          (CATCommandClientData) <b>CATINT32ToPtr</b>(info));
+ ...
+
+ void MyStateCommand::MyCallback(CATCommand* iFromClient, CATNotification* iNotif, CATCommandClientData iData)
+{
+    int ipos = <b>CATPtrToINT32</b>(iData);
+    ...
+}</pre>
+ <p>First cast the <i>int</i> as a 32-bit pointer using CATINT32ToPtr in the 
+ AddAnalyseNotificationCB method that sets the callback, and then cast the 
+ pointer back to an <i>int</i> thanks to CATPrtToINT32 in the callback method.
+ </p>
+ <p><b>Example 2</b>: When casting a pointer to pointer into an <code>(unsigned 
+ int *)</code> for example, compilers do not issue any warning or error to help 
+ migration in case of non 64-bit portable instruction.</p>
+ <pre class="code">MyClass ** ppClass = ...;
+unsigned int * uiClass = (unsigned int *) ppClass;
+
+ for ( int i=0; i&lt;size ; i++ )
+{
+    MyClass * pClass = ppClass[i];
+    uiClass[i] = pClass-&gt;Method(); // destination zone is invalid and 32-bit are set instead of 64-bit.
+}</pre>
+ <p>To fix this problem:</p>
+ <pre class="code">MyClass ** ppClass = ...;
+CATUINTPTR * uiClass = (CATUINTPTR *) ppClass;
+
+ for ( int i=0; i&lt;size ; i++ )
+{
+    MyClass * pClass = ppClass[i];
+    uiClass[i] = pClass-&gt;Method();
+}</pre>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="45"></a>Casting Non-Fixed Size Basic Types by Reference or Address 
+ to Make the Code Compile</h4>
+ <pre class="code">unsigned int count = 0;
+...
+iValue.ConvertToUTF16( utf16String, (size_t *) &amp; count );
+</pre>
+ <p>To fix this problem:</p>
+ <pre class="code">size_t count = 0; // You can also use an intermediate temporary variable of size_t type.
+...
+iValue.ConvertToUTF16( utf16String, &amp; count );</pre>
+ <p>To avoid this kind of problems, check all the casts by reference or address 
+ for the following types:</p>
+ <ul>
+   <li>size_t</li>
+   <li><i>int</i></li>
+   <li><i>unsigned int</i> and <i>unsigned</i></li>
+   <li><i>long</i> and <i>long</i> <i>int</i></li>
+   <li><i>unsigned long</i> and <i>unsigned long int</i></li>
+   <li>LONG</li>
+   <li>ULONG</li>
+ </ul>
+ <p>Most of time, use an intermediate local variable of the right type!</p>
+ <p><b>Note</b>: If your application runs specifically on Windows,
+casting an int as (long&amp;), for example, is not a problem because
+these types are both 32-bit length. In this case you are interested in
+casting size_t to int or <i> long</i>.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="46"></a>Using Unions</h4>
+ <p>Avoid unions as far as possible. Do not use types in unions whose length is 
+ different from an operating system to another.</p>
+ <p>Unions are sometimes used to manipulate pointers as integers. For example:</p>
+ <pre class="code">union {
+  void * ptr;
+  <b>unsigned int</b> ptrAsInt;
+}
+</pre>
+ <p>This compiles in 32-bit because the pointer and the unsigned int sizes are 
+ both 4 bytes. This does not compile with 64-bit, because the pointer size 
+ passes to 8 bytes while the unsigned int size remains 4 bytes. To fix this 
+ problem, use CATUINTPTR that stores a pointer using the appropriate types 
+ depending on the operating system is Windows or UNIX in either 32-bit or 64-bit 
+ mode:</p>
+ <pre class="code">union {
+  void * ptr;
+  <b>CATUINTPTR</b> ptrAsInt;
+}</pre>
+ <p>Another union example is an equivalence between a simple type, say an 
+ unsigned <i>long</i>, and a table of chars:</p>
+ <pre class="code">union {
+  <b>unsigned long</b> lwEq;
+  char bytes [4];
+}</pre>
+ <p>This compiles in 32-bit because the unsigned <i>long</i> and a table of 
+ chars sizes are both 4 bytes. This does not compile with UNIX 64-bit, because 
+ the unsigned <i>long</i> size passes to 8 bytes while the table of chars size 
+ remains 4 bytes. To fix this problem, use CATULONG32 that stores an unsigned <i>
+ long</i> using its appropriate size depending on the operating system is 
+ Windows or UNIX in either 32-bit or 64-bit mode:</p>
+ <pre class="code">#include â€œCATDataType.hâ€
+...
+union {
+  <b>CATULONG32</b> lwEq;
+  char bytes [4];
+};</pre>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="47"></a>Multiplying an int by unsigned int</h4>
+ <p>Pay attention to results you may not expect when multiplying an int by an 
+ unsigned int, because the result, as specified by the C ANSI, is unsigned int!</p>
+ <p>For example:</p>
+ <pre class="code">unsigned int size = ...;
+ int i = -1;
+ void * tab;
+ tab [ icurrent + size * i ]  access to unexpected memory area.</pre>
+ <p>Multiplying size by i (-1) produces an unsigned int. The result of <code>
+ icurrent + size * i</code> is greater than <code>icurrent</code>, while the 
+ result is expected as smaller. An unexpected memory area might then be 
+ accessed.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="48"></a>Invalid Format String Conversions</h4>
+ <p>To print out a pointer or an integer value, use the appropriate format 
+ specifiers.</p>
+ <h5>Pointer Format Specifier</h5>
+ <p>In case of printing a pointer value, do not use %x or %X, but use %p 
+ instead.</p>
+ <p>The following code will print a truncated pointer value:</p>
+ <pre class="code">printf(&quot;%x&quot;, ptr_value) // %x is a 32-bit field and will truncate the pointer</pre>
+ <p>To fix this problem:</p>
+ <pre class="code">printf(&quot;%p&quot;,ptr_value)  // change to %p to display the full pointer value</pre>
+ <h5>32-bit Integer Format Specifier</h5>
+ <p>With UNIX only, to display or read an unsigned int or an int, do not use %u 
+ or %d with printf or scanf, but use %lu or %ld instead.</p>
+ <p>In the following example, the argument is incompatible with the 
+ corresponding format string conversion:</p>
+ <pre class="code">CATUINTPTR M = ...
+CATINTPTR  N = ...
+fprintf( stdout, &quot;size=%u number=%d \n&quot;, M, N );</pre>
+ <p>To fix this problem:</p>
+ <pre class="code">CATUINTPTR M = ...
+CATINTPTR  N = ...
+fprintf( stdout, &quot;size=%lu number=%ld \n&quot;, M, N );</pre>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="49"></a>Explicit Constant Typing</h4>
+ <pre class="code">long a = 0xffff;    // Assumes a long is 4 bytes
+void *ptr = 0xffff; // Assumes a pointer is 4 bytes</pre>
+ <p>To fix this problems, for instance you can extend these values:</p>
+ <pre class="code">#ifdef PLATEFORME_DS64
+long a = 0xffffffff;
+void *ptr = 0xffffffff;
+#else
+long a = 0xffff;
+void *ptr = 0xffff;
+#endif</pre>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="4B"></a>Implicit Function Prototype in C Files</h4>
+ <p>When you do not define the signature of a function in a C file, the compiler 
+ assumes the function returns an <i>int</i>.</p>
+ <p>This problem is not specific to 64-bit. Forgetting including math.h is a 
+ classical problem (in 32-bit as well as in 64-bit) because then using functions 
+ returning a double will be considered as returning an <i>int</i> and the result 
+ is truncated before being copied to the destination double variable.</p>
+ <p>With 64-bit, this problem also applies to functions returning pointers (or
+ <i>long</i> integers), like malloc which is defined in stdlib.h, or strdup 
+ which is defined in string.h.</p>
+ <p>In addition, this problem does not only concern standard C libraries but 
+ also your own libraries, so you have to include or explicitly define the right 
+ signature of all used functions, particularly those that do not return an <i>
+ int</i>.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td> <a href="#"
+ onclick="javascript:CAAlinkUrl('http://msdn2.microsoft.com/en-us/library/aa286481.aspx');return false">
+64-bit Windows</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td> <a href="#"
+ onclick="javascript:CAAlinkUrl('http://msdn2.microsoft.com/en-us/library/aa384190.aspx');return false">
+General Porting Guidelines</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td> <a href="CAADocPartnerCDInstallation.htm">CAA Partner Product Installation</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td> <a href="#"
+ onclick="javascript:CAAlinkUrl('http://msdn2.microsoft.com/en-us/library/aa290049.aspx');return false">
+Data Alignment with 64-bit Windows</a></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right" valign="top"><a href="#Top">[Top]</a></td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This article helps you prepare your applications to support 64-bit operating 
+ systems. The proposed methodology consists in setting the appropriate 64-bit 
+ environment, compiling your application to first analyze and correct the build 
+ time errors or warnings. When the application builds, then look for and correct 
+ run time errors shown when replaying your ODTs.</p>
+ <p>This article explains the differences between 32-bit and 64-bit operating 
+ systems, explains the most common errors found when preparing applications for 
+ 64-bit along with the appropriate solutions.</p>
+ <p align="right"><a href="#Top">[Top]</a></p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <b>2</b> [Apr 2008]</td>
+     <td valign="top">Document updated for 32-bit code built on a 64-bit machine 
+		with Windows</td>
+   	</tr>
+   <tr>
+     <td valign="top">Version: <b>1</b> [May 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2"><a href="#Top">[Top]</a></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright Â© 1994-2008, Dassault SystÃ¨mes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

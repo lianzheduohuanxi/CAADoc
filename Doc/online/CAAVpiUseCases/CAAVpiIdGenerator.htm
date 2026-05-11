@@ -1,0 +1,349 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Working with VPM Graphs</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Database</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Automatic Identifiers</h3>
+      <em>Using the VPMIIdentifierGeneratorMgr Interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article illustrates identifiers creation of identifiers guaranteed 
+      to be unique using the <i>VPMIIdentifierGeneratorMgr</i> interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVpiIdGenerator Use Case</strong></a>
+          <ul>
+            <li><b><a href="#What">What Does CAAVpiIdGenerator </a></b></li>
+            <li><b><a href="#How">How to Launch CAAVpiIdGenerator</a></b></li>
+            <li><b><a href="#Where">Where to Find the CAAVpiIdGenerator Source Code</a></b></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The goal of this use case is to show how the <i>VPMIIdentifierGeneratorMgr</i> 
+interface can be used to create identifiers that are guaranteed to be unique.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVpiIdGenerator Use Case</h3>
+<p>CAAVpiIdGenerator is a use case of the CAAVPMInterfaces.edu framework that
+illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVpiIdGenerator Do?</h4>
+<p>CAAVpiIdGenerator begins by retrieving a pointer to a 
+VPMIIdentifierGeneratorMgr implementation. Once the <tt>Init</tt> method is called, 
+identifiers of various formats can be generated with the property of being 
+unique.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch  CAAVpiIdGenerator </h4>
+<p>To launch  CAAVpiIdGenerator , you will need to set up the build time environment,
+then compile  CAAVpiIdGenerator along with its prerequisites, set up the run time
+environment, and then execute the use case. [<a href="#References">1</a>]. Launch the use case by executing the following command:</p>
+<p><code>mkrun -c &quot;CAAVpiIdGenerator&quot;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the  CAAVpiIdGenerator Code</h4>
+<p>The  CAAVpiIdGenerator use case is made of a single file located in the
+
+CAAVpiIdGenerator.m module of the CAAVPMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiIdGenerator</code><code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/</code><code>CAAVpiIdGenerator</code><code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the  CAAVpiIdGenerator use case is shown
+here. There are seven logical steps in the CAAVpiIdGenerator use case:</p>
+<ol>
+  <li><a href="#InitSession">Retrieving a Pointer to VPMIIdentifierGeneratorMgr</a></li>
+  <li><a href="#GraphAdminMgr">Initializing the Generator</a></li>
+  <li><a href="#Predicates">Generating an Identifier with a Given Prefix</a></li>
+  <li><a href="#GraphNames">Generating an Identifier with Given Prefix and 
+  Separator</a></li>
+  <li><a href="#GraphType">Generating Several Consecutive Identifiers with Given 
+  Prefix and Separator</a></li>
+  <li><a href="#Statuses">Generating an Identifier but Obtaining only the 
+  Integer Part</a></li>
+  <li><a href="#InitStatus">Releasing a VPMIdentifierGeneratorMgr</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="InitSession"></a>Retrieving a Pointer to VPMIIdentifierGeneratorMgr</h4>
+
+<p>The <i>VPMIIdentifierGeneratorMgr</i> pointer is retrieved with the global 
+function <tt>GetVPMIIdentifierGeneratorMgr</tt>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>        VPMIIdentifierGeneratorMgr *idGen = NULL;
+        HRESULT hr;</pre>
+      <pre>        //
+        // 1) Retrieve the VPMIIdentifierGeneratorMgr pointer
+        //
+        hr = GetVPMIIdentifierGeneratorMgr(idGen);
+        if (FAILED(hr)) {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="GraphAdminMgr"></a><b>Initializing the Generator</b></p>
+<p>The generator must be initialized prior to its use by calling the <tt>Init</tt> 
+method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 2) Initialize the generator
+        //
+        hr = idGen-&gt;<b>init</b>();
+        if (FAILED(hr)) {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="Predicates"></a><b>Generating an Identifier with a Given Prefix</b></p>
+<p>We begin by generating a single simple identifier prefixed by 'AAA':</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 3) Generate a single identifier with prefix 'AAA'
+        //
+        {
+                CATUnicodeString prefix(&quot;AAA&quot;);
+                CATUnicodeString id;
+                hr = idGen-&gt;<b>getIdentifier</b>(prefix, id);
+                if (FAILED(hr)) {
+...
+                } else {
+                        cout &lt;&lt; &quot;Generated ID: &quot; &lt;&lt; id.CastToCharPtr() &lt;&lt; endl;
+                }
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The output from the above code should be something like:</p>
+<pre>Generated ID: AAA:1</pre>
+<p>Please note that you might not obtain 1 as each run will create different 
+identifiers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="GraphNames"></a><b>Generating an Identifier with Given Prefix and  Separator</b></p>
+<p>Next we try to generate an identifier by specifying not only a prefix but 
+also a separator (which is ':' in the previous step):</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 4) Generate a single identifier with prefix 'BBB' and separator '-'
+        //
+        {
+                CATUnicodeString prefix(&quot;BBB&quot;);
+                CATUnicodeString separator(&quot;-&quot;);
+                CATUnicodeString id;
+                hr = idGen-&gt;<b>getIdentifier</b>(prefix, separator, id, -1, 10);
+                if (FAILED(hr)) {
+...
+                } else {
+                        cout &lt;&lt; &quot;Generated ID: &quot; &lt;&lt; id.CastToCharPtr() &lt;&lt; endl;
+                }
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The above code should output something like (again the identifier can be 
+different):</p>
+<pre>Generated ID: BBB-7
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="GraphType"></a>Generating Several Consecutive Identifiers with 
+Given Prefix and Separator</b></p>
+<p>If for any reason, several identifiers are need, it is best to generate all 
+of them at once instead of one at a time. In the following code we request 5 
+consecutive identifiers with a single call to <tt>getNConsecutiveIdentifier</tt>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 5) Generate 5 identifiers with prefix 'BBB' and separator '-'
+        //
+        {
+                CATUnicodeString prefix(&quot;BBB&quot;);
+                CATUnicodeString separator(&quot;-&quot;);
+                CATListOfCATUnicodeString ids(5);
+                int identifierCount(5);
+                hr = idGen-&gt;<b>getNConsecutiveIdentifier</b>(prefix,
+                                                      separator,
+                                                      identifierCount,
+                                                      ids, 
+                                                      -1, 
+                                                      10);
+                if (FAILED(hr)) {
+...
+                } else {
+                        int idCount = ids.Size();
+                        cout &lt;&lt; &quot;Generated &quot; &lt;&lt; idCount &lt;&lt; &quot; IDs:&quot; &lt;&lt; endl;
+                        for (int i = 1; i &lt;= idCount; i++) {
+                                cout &lt;&lt; &quot;   &quot; &lt;&lt; ids[i].CastToCharPtr() &lt;&lt; endl;
+                        }
+                }
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The above code should output something like (again the identifiers can be 
+different):</p>
+<pre>Generated 5 IDs:
+     BBB-8
+     BBB-9
+     BBB-10
+     BBB-11
+     BBB-12</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="Statuses"></a>Generating an Identifier but Obtaining only the 
+Integer Part</b></p>
+<p>If we are only interested in the integer part of the identifier, then 
+<tt>getIdentifierSuffix</tt> should be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 6) Generate a single identifier with prefix 'BBB' and separator '-'
+        //    and obtaining it as an integer
+        //
+        // This is identical to step 5) except that only the numeric part of
+        // the identifier is returned, instead of the whole string
+        //
+        {
+                CATUnicodeString prefix(&quot;BBB&quot;);
+                CATUnicodeString separator(&quot;-&quot;);
+                int id;
+                hr = idGen-&gt;<b>getIdentifierSuffix</b>(prefix, id, separator);
+                if (FAILED(hr)) {
+...
+                } else {
+                        cout &lt;&lt; &quot;Generated ID: &quot; &lt;&lt; id &lt;&lt; endl;
+                }
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<pre></pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="InitStatus"></a>Releasing a <i>VPMIdentifierGeneratorMgr</i></b></p>
+<p>When no more identifiers need to be created, it is advised to free its 
+associated resources by calling the <tt>end</tt> method and releasing the pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        //
+        // 7) Release the VPMIIdentifierGeneratorMgr pointer
+        //
+        idGen-&gt;<b>end</b>();
+        idGen-&gt;Release();
+        idGen = NULL;
+...        </pre>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has illustrated how to generate unique identifiers with various 
+formats using the <i>VPMIIdentifierGeneratorMgr</i> interface of
+the VPMInterfaces framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [September 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

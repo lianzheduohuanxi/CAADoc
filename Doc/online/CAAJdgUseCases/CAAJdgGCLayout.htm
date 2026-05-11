@@ -1,0 +1,445 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Grid Contraint Layout</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>JDialog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Grid Contraint Layout</h3>
+      <em>Define a complex layout using Grid Constraint</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to define a complex layout using Grid
+      Constraint.
+      <ul>
+        <li><a href="#Learn"><b>What you will learn with this use case</b></a></li>
+        <li><a href="#UseCase"><b>The CAAGCUseCase use case</b></a>
+          <ul>
+            <li><a href="#UseCaseOverview">Use case overview</a></li>
+            <li><a href="#HowToLaunch">How to launch CAAGCUseCase</a></li>
+            <li><a href="#WhereToFind">Where to find the CAAGCUseCase code</a></li>
+          </ul>
+        </li>
+        <li><a href="#GC_pres"><strong>Grid Constraint Layout introduction</strong></a></li>
+        <li><a href="#used_widgets"><strong>Used widgets</strong></a>
+        <li><a href="#layout_def"><strong>Layout definition on paper</strong></a>
+        <li><a href="#GC_frame_by_frame"><strong>Detailed GC layout frame by frame</strong></a>
+          <ul>
+            <li><a href="#GC_top_frame">Detailed GC layout for the top frame</a></li>
+            <li><a href="#GC_buttons_frame">Detailed GC layout for the buttons
+              frame</a></li>
+            <li><a href="#GC_middle_frame">Detailed GC layout for the middle
+              frame</a></li>
+            <li><a href="#GC_form_frame">Detailed GC layout for the form frame</a></li>
+          </ul>
+        </li>
+        <li><a href="#files"><strong>XMLDlg, Controller and CATNls files</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What you will learn with this use case</h3>
+<p>This use case is intended to show you how to use Grid Constraint layout to
+define a complex layout.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAGCUseCase use case</h3>
+<p>CAAGCUseCase is a use case of the CAAJDialog.edu framework that illustrates
+CATJDialog framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UseCaseOverview"></a>Use case overview</h4>
+<p>Here is a snapshot of the User Interface we want to build:</p>
+<p><img border="0" src="images/GCLayout_UI.jpg" width="668" height="603"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="HowToLaunch"></a>How to launch CAAGCUseCase</h4>
+<p>To launch CAAGCUseCase, you will need to set up the build time environment,
+then compile CAAJdgXMLModels.mj along with its prerequisites, set up the run
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>This use case is made of a unique JDialog command: &quot;CAAGCUseCase&quot;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="WhereToFind"></a>Where to find the CAAGCUseCase code</h4>
+<p>The CAAGCUseCase use case is made of a single command, without any java
+controller (that means the command has no behavior). It uses the following
+resource files:</p>
+<ul>
+  <li>CAAGCUseCase.XMLDlg in CNext/resources/dialog</li>
+  <li>CAAGCUseCase.CATNls in CNext/resources/msgcatalog
+    <p align="right">[<a href="#Top">Top</a>]</li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h3><a name="GC_pres"></a>Grid Constraint Layout introduction</h3>
+<p>The JDialog <b>CATFrame</b> is the only widget that allows positioning its
+children widgets. It offers this capability through a <b>Grid Constraint Layout</b>
+implementation.</p>
+<p>The Grid Constraint Layout is a flexible layout definition that aligns
+widgets vertically and horizontally, without requiring that the widgets be of
+the same size. It allows defining rectangular grid of cells, with each widget
+occupying one or more cells, called its <em>display area</em>.</p>
+<p>Each CATFrame children widget is associated with a set of GC attributes that specify
+how it is laid out within its display area:</p>
+<ul>
+  <li><b>X, Y</b>: specifies the cell at the upper left of the widget's display
+    area.</li>
+  <li><b>Width, Height</b>: specifies the number of cells in a row (for Width)
+    or column (for Height) in the widget's display area. The default value is 1.</li>
+  <li><b>Alignment</b>: Used when the widget is smaller than its display area to
+    determine where (within the display area) to place the widget.
+    <ul>
+      <li>horizontally: left, center (default) or right</li>
+      <li>vertically: top, middle (default) or bottom</li>
+    </ul>
+  </li>
+  <li><b>Justification</b>: Used when the widget is smaller than its display
+    area to determine whether (and how) to resize the widget. Possible values
+    are:
+    <ul>
+      <li>none (default)</li>
+      <li>horizontal</li>
+      <li>vertical</li>
+      <li>both</li>
+    </ul>
+  </li>
+</ul>
+<p><b>Note</b>: obviously when a widget is horizontally justified, it's
+horizontal alignment has no real meaning (since it will spread horizontally
+through its entire display area).</p>
+<p>Another information is required by the Grid Constraint Layout to distribute
+free space among cells. This is done by defining a <b>weight</b> on rows and
+columns: free space (if any) is then divided proportionally to columns and rows
+weight. Default rows and columns weight is 0.</p>
+<p><b>Notes</b>:&nbsp;</p>
+<ul>
+  <li>weight is used to divide remaining space between columns and rows
+    (proportionally to their weights) <b>and only for that</b>
+  <li>if all columns (or rows) have a null weight, then they are all considered
+    to have a weight=1 (by the layout algorithm)
+  <li>when a column (or row) has a null weight, then its width (height) is
+    given by the widest (higher) widget in this column (line)
+  <li>adding an empty column (or row) with a null weight won't add any blank space in
+    your layout: it won't be visible!</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="used_widgets"></a>Used widgets</h3>
+<p>Here is the detail of used widgets:</p>
+<p><img border="0" src="images/GCLayout_Widgets.gif" width="714" height="534"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="layout_def"></a>Layout definition on paper</h3>
+<p>Here is a drawing of how widgets are arranged on the panel:
+<p><img border="0" src="images/GCLayout_Layout.gif" width="1041" height="514">
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="widgets_hierarchy"></a>Widgets hierarchy</h3>
+<p>The above drawing gives the following widgets hierarchy:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Frame
+  |
+  +--Link
+  |
+  +--Link
+  |
+  +--Toolbar
+  |
+  +--Frame
+  |   |
+  |   +--WebPartFrame
+  |   |   |
+  |   |   +--Tree
+  |   | 
+  |   +--WebPartFrame
+  |       |
+  |       +--Frame
+  |           |
+  |           +--Label
+  |           |
+  |           +--TextField
+  |           |
+  |           +--Label
+  |           |
+  |           +--DateEditor
+  |           |
+  |           +--Label
+  |           |
+  |           +--ComboBox
+  |           |
+  |           +--Label
+  |           |
+  |           +--CheckBox
+  |
+  +--Frame
+      |
+      +--Button
+      |
+      +--Button
+      |
+      +--Button</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="GC_frame_by_frame"></a>Detailed GC layout frame by frame</h3>
+<p>We will now have a look into detail at the Grid Constraint layout definition for
+each frame of the user interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GC_top_frame"></a>Detailed GC layout for the top frame</h4>
+<p>Here is a drawing of the detailed Grid Constraint definition for the top
+frame:</p>
+<p><img border="0" src="images/GCLayout_TopFrame.gif" width="906" height="576"></p>
+<p><b>Explanations</b>:&nbsp;</p>
+<ul>
+  <li>&quot;help&quot; and &quot;home&quot; links are top-left aligned and do
+    not move when resizing the window.</li>
+  <li>The toolbar is top-right aligned</li>
+  <li>In order to place the 3 buttons at the center of the panel, we have to put
+    them in a frame that is center aligned</li>
+  <li>We want the middle frame to occupy &quot;the rest of the space&quot;. So
+    it is horizontally and vertically justified, and its row is affected with
+    all remaining space (non-null weight while other rows has a null weight).</li>
+</ul>
+<p><b>Remarks</b>:</p>
+<ul>
+  <li>all column weight could also have been given to column 1 without any
+    change.</li>
+  <li>the buttons frame could be horizontally justified (its inner layout
+    definition would then be different but it can work too).</li>
+  <li>most of the time, non-null weight values is not important. As long as only
+    one row/column has a non-null value, it will be given all remaining space.
+    Values are taken into account when several rows/columns have a non-null
+    value: remaining space is divided proportionally to the weights.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GC_buttons_frame"></a>Detailed GC layout for the buttons frame</h4>
+<p>Here is a drawing of the detailed Grid Constraint definition for the frame
+containing the buttons:</p>
+<p><img border="0" src="images/GCLayout_ButtonsFrame.gif" width="634" height="210"></p>
+<p><b>Explanations</b>:</p>
+<ul>
+  <li>As the buttons frame is nor horizontally and neither vertically justified
+    in the top frame layout definition, the buttons alignments here may be
+    anything: their display area will anyway fit to their size.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GC_middle_frame"></a>Detailed GC layout for the middle frame</h4>
+<p>Here is a drawing of the detailed Grid Constraint definition for the frame containing
+the 2 WebPartFrames:</p>
+<p><img border="0" src="images/GCLayout_MiddleFrame.gif" width="883" height="436"></p>
+<p><b>Explanations</b>:</p>
+<ul>
+  <li>Even if row 0 has here a null weight, it will occupy all available
+    vertical space due to the rule &quot;if all columns (or rows) have a null weight, then they are all considered
+    to have a weight=1 (by the layout algorithm)&quot;</li>
+  <li>We don't want the tree to expand horizontally when resizing, so all column
+    weight is given to column 1</li>
+  <li>We want the tree and the form to spread over their whole display area, so
+    they are both horizontally and vertically justified</li>
+  <li>As a result of the 2 above points, the form will expand horizontally when resizing.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GC_form_frame"></a>Detailed GC layout for the form frame</h4>
+<p>Here is a drawing of the detailed Grid Constraint definition for the frame
+containing the textfield, date editor, combo box and checkbox:</p>
+<p><img border="0" src="images/GCLayout_FormFrame.gif" width="681" height="573"></p>
+<p><b>Explanations</b>:</p>
+<ul>
+  <li>labels are all right-top aligned</li>
+  <li>editors (textfield, date editor, combo and checkbox) are all left-top
+    aligned</li>
+  <li>has we defined the User Interface, the widgets here may not move
+    relatively to the top-left corner when resizing. The way of defining this is
+    defining a non-null weight on last row (3) and last column (1).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="files"></a>XMLDlg, Controller and CATNls files</h3>
+<p>Here is the XMLDlg file that defines the User Interface with required layout
+(CAAJDialog.edu/CNext/resources/dialog/CAAGCUseCase.XMLDlg):</p>
+<table class="code">
+  <tr>
+    <td><pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+  &lt;Frame Name=&quot;LayoutSampleCtrl&quot;&gt;
+    &lt;Link Name=&quot;HelpLink&quot;/&gt;
+    &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;HelpLink&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;0&quot;/&gt;
+    &lt;Link Name=&quot;HomeLink&quot;/&gt;
+    &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;HomeLink&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;1&quot;/&gt;
+    &lt;Toolbar Name=&quot;Toolbar&quot; <b>ModelURL=&quot;com.dassault_systemes.caajdialog.caajdgxmlmodels.CATXMLMenuModel@sample/JDialog/SampleToolbarMenu.xml&quot;</b>/&gt;
+    &lt;GC A=&quot;RT&quot; W=&quot;1&quot; Name=&quot;Toolbar&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;2&quot;/&gt;
+
+    &lt;Frame Name=&quot;MiddleFrame&quot;&gt;
+      &lt;WebPartFrame Name=&quot;TreeWPFrame&quot;&gt;
+        &lt;Tree Name=&quot;Tree&quot; <b>ModelURL=&quot;com.dassault_systemes.caajdialog.caajdgxmlmodels.CATXMLTreeModel@sample/JDialog/FoodTree.xml&quot;</b>/&gt;
+      &lt;/WebPartFrame&gt;
+      &lt;GC A=&quot;CM&quot; W=&quot;1&quot; Name=&quot;TreeWPFrame&quot; J=&quot;HV&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;0&quot;/&gt;
+
+      &lt;WebPartFrame Name=&quot;FormWPFrame&quot;&gt;
+        &lt;Frame Name=&quot;FormFrame&quot;&gt;
+          &lt;Label Name=&quot;TextfieldLbl&quot;/&gt;
+          &lt;GC A=&quot;RT&quot; W=&quot;1&quot; Name=&quot;TextfieldLbl&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;0&quot;/&gt;
+          &lt;Label Name=&quot;DateEditorLbl&quot;/&gt;
+          &lt;GC A=&quot;RT&quot; W=&quot;1&quot; Name=&quot;DateEditorLbl&quot; H=&quot;1&quot; Y=&quot;1&quot; X=&quot;0&quot;/&gt;
+          &lt;Label Name=&quot;ComboLbl&quot;/&gt;
+          &lt;GC A=&quot;RT&quot; W=&quot;1&quot; Name=&quot;ComboLbl&quot; H=&quot;1&quot; Y=&quot;2&quot; X=&quot;0&quot;/&gt;
+          &lt;Label Name=&quot;CheckLbl&quot;/&gt;
+          &lt;GC A=&quot;RT&quot; W=&quot;1&quot; Name=&quot;CheckLbl&quot; H=&quot;1&quot; Y=&quot;3&quot; X=&quot;0&quot;/&gt;
+          &lt;TextField Name=&quot;TextField&quot; ExpectedFormat=&quot;.&quot;/&gt;
+          &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;TextField&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;1&quot;/&gt;
+          &lt;DateEditor Name=&quot;DateEditor&quot;/&gt;
+          &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;DateEditor&quot; H=&quot;1&quot; Y=&quot;1&quot; X=&quot;1&quot;/&gt;
+          &lt;ComboBox Name=&quot;ComboBox&quot;&gt;
+	        &lt;Item Title=&quot;item1&quot;/&gt;
+	        &lt;Item Title=&quot;item2&quot;/&gt;
+	        &lt;Item Title=&quot;item3&quot;/&gt;
+	        &lt;Item Title=&quot;item4&quot;/&gt;
+	        &lt;Item Title=&quot;item5&quot;/&gt;
+	        &lt;Item Title=&quot;item6&quot;/&gt;
+	      &lt;/ComboBox&gt;
+          
+          &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;ComboBox&quot; H=&quot;1&quot; Y=&quot;2&quot; X=&quot;1&quot;/&gt;
+          &lt;CheckBox Name=&quot;CheckBox&quot;/&gt;
+          &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;CheckBox&quot; H=&quot;1&quot; Y=&quot;3&quot; X=&quot;1&quot;/&gt;
+          &lt;Column W=&quot;1&quot; X=&quot;1&quot;/&gt;
+          &lt;Row W=&quot;1&quot; Y=&quot;3&quot;/&gt;
+        &lt;/Frame&gt;
+      &lt;/WebPartFrame&gt;
+      &lt;GC A=&quot;CM&quot; W=&quot;1&quot; Name=&quot;FormWPFrame&quot; J=&quot;HV&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;1&quot;/&gt;
+      &lt;Column W=&quot;1&quot; X=&quot;1&quot;/&gt;
+    &lt;/Frame&gt;
+    &lt;GC A=&quot;LT&quot; W=&quot;3&quot; Name=&quot;MiddleFrame&quot; J=&quot;HV&quot; H=&quot;1&quot; Y=&quot;1&quot; X=&quot;0&quot;/&gt;
+
+    &lt;Frame Name=&quot;ButtonsFrame&quot;&gt;
+      &lt;Button Name=&quot;OkButton&quot;/&gt;
+      &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;OkButton&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;0&quot;/&gt;
+      &lt;Button Name=&quot;ApplyButton&quot;/&gt;
+      &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;ApplyButton&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;1&quot;/&gt;
+      &lt;Button Name=&quot;CancelButton&quot;/&gt;
+      &lt;GC A=&quot;LT&quot; W=&quot;1&quot; Name=&quot;CancelButton&quot; H=&quot;1&quot; Y=&quot;0&quot; X=&quot;2&quot;/&gt;
+      &lt;Column W=&quot;1&quot; X=&quot;0&quot;/&gt;
+      &lt;Column W=&quot;1&quot; X=&quot;2&quot;/&gt;
+    &lt;/Frame&gt;
+    &lt;GC A=&quot;CT&quot; W=&quot;3&quot; Name=&quot;ButtonsFrame&quot; H=&quot;1&quot; Y=&quot;2&quot; X=&quot;0&quot;/&gt;
+
+    &lt;Column W=&quot;1&quot; X=&quot;2&quot;/&gt;
+    &lt;Row W=&quot;1&quot; Y=&quot;1&quot;/&gt;
+  &lt;/Frame&gt;</pre></td>
+  </tr>
+</table>
+<p><b>Remarks</b>:</p>
+<ul>
+  <li>Notice that this JDialog command has <b>no controller</b>. Obviously this
+    is not realistic as an application should do something, but it is not our
+    goal in this use case.&nbsp;</li>
+  <li>The Tree model is directly set from the XMLDlg file (with <b>ModelURL</b>
+    attribute). This model feeds the tree with the content of an xml file (CAAJDialog.edu/CNext/sample/JDialog/FoodTree.xml).</li>
+  <li>The Toolbar model is directly set from the XMLDlg file (with <b>ModelURL</b>
+    attribute). This model feeds the toolbar with the content of an xml file (CAAJDialog.edu/CNext/sample/JDialog/SampleToolbarMenu.xml).</li>
+</ul>
+<p>Here is the associated message catalog file in English (CAAJDialog.edu/CNext/resources/msgcatalog/CAAGCUseCase.CATNls):</p>
+<table class="code">
+  <tr>
+    <td><pre><font color="#009900">// --- links titles</font>
+HelpLink.Title = &quot;Help&quot;;
+HomeLink.Title = &quot;Home&quot;;
+
+<font color="#009900">// --- web frame part titles
+</font>MiddleFrame.TreeWPFrame.Title = &quot;Tree&quot;;
+MiddleFrame.FormWPFrame.Title = &quot;Form&quot;;
+
+<font color="#009900">// --- form label titles
+</font>MiddleFrame.FormWPFrame.FormFrame.TextfieldLbl.Title = &quot;Comment: &quot;;
+MiddleFrame.FormWPFrame.FormFrame.DateEditorLbl.Title = &quot;Date: &quot;;
+MiddleFrame.FormWPFrame.FormFrame.ComboLbl.Title = &quot;Status: &quot;;
+MiddleFrame.FormWPFrame.FormFrame.CheckLbl.Title = &quot;Activity: &quot;;
+MiddleFrame.FormWPFrame.FormFrame.CheckBox.Title = &quot;&quot;;
+
+<font color="#009900">// --- buttons titles
+</font>ButtonsFrame.OkButton.Title = &quot;Ok&quot;;
+ButtonsFrame.ApplyButton.Title = &quot;Apply&quot;;
+ButtonsFrame.CancelButton.Title = &quot;Cancel&quot;;</pre></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ol>
+  <li>Grid Constraint Layout is very powerful but far from being easy. A good
+    advice is: start defining your applications layout <b>on paper</b>.</li>
+  <li>Grid Constraint Layout gives several ways of defining the same layout.</li>
+  <li>The layout definition involves 2 questions:
+    <ul>
+      <li>where are the widgets? It is defining the &quot;static&quot;
+        layout: X, Y, Width, Height and Alignment</li>
+      <li>which widget occupies remaining space? Define the resize
+        behavior: Justification, columns and rows weights</li>
+    </ul>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAAVbtTechArticles/CAAVbtReplayJDialogUseCaseirad6.htm">Building
+      and Launching a CAA V5 JDialog Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

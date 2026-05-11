@@ -1,0 +1,342 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Class CATTransfoManager</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATTransfoManager"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects <script type="text/javascript" > writeClassCharacteristic(); </script> CATTransfoManager</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTransfoManager_27562','CATTransfoManager','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTransfoManager</b>
+</p>
+<p>
+<b><i> Class representing the process of geometric transformation of a CATGeometry.</i></b><br>
+<br>
+ <ul>
+ <li>The transformation process takes the forward links  into account
+ <li>A CATTransfoManager can process several CATGeometry at the same time.
+ <li>If the transformation is linear, a CATTransfoManager has two modes of transformation:
+<dl><dt>CATTransfoManager::Duplicate</dt><dd>Duplicates and transforms the objects
+ that are <tt>Add</tt>ed to the CATTransfoManager 
+    <dt>CATTransfoManager::Replace</dt><dd>Only transforms the objects
+ that are <tt>Add</tt>ed to the CATTransfoManager.
+</dl>
+ <li>A CATTransfoManager does not duplicate or replace a forward linked object 
+ if it is geometrically invariant by the transformation, 
+ except if this forward linked object
+ is specifically <tt>Add</tt>ed to the CATTransfoManager. Invariant means that
+ it is invariant within its maximum limits. A line is invariant
+ by a transformation along its direction, a circle is invariant by a rotation
+ of center the center of the circle, as examples.
+ A CATTransfoManager duplicates or replaces a forward linked object 
+ if it is not geometrically invariant by the transformation
+ <li>A CATTransfoManager offers two types of methods:
+<ul>
+ <li>"user methods" that are called by the application programmer 
+ to transform CATGeometry: <tt>Add</tt>, <tt>Run</tt>
+ <li>"object methods" that are called by the CATGeometry to
+ ask for the transformation of their forward linked objects. 
+ These methods must not be normally called,
+ except in the <tt>CATGeometry::Move3D</tt> and 
+ <tt>CATGeometry::CloneAndMove3D</tt> methods, 
+ if you intend to create your own CATGeometry class.
+</ul>
+ <li>The objects of this class are temporary and cannot be streamed
+ </ul></p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATTransfoManager(CATMathTransformation&amp;,CATGeoFactory*,CATTransfoManagerType,CATSoftwareConfiguration*)"><b>CATTransfoManager</b></a>(CATMathTransformation&amp;,CATGeoFactory*,CATTransfoManagerType,CATSoftwareConfiguration*)
+<dd>  Constructs a CATTransfoManager for linear transformation.
+ <dt> o 
+    <a href="#~CATTransfoManager()"><b>~CATTransfoManager</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Add(CATICGMObject*,CATICGMObject*)"><b>Add</b></a>(CATICGMObject*,CATICGMObject*)
+<dd>  Adds a CATGeometry to transform with <tt>this</tt> CATTransfoManager.
+ <dt> o 
+    <a href="#GetMathTransformation(CATMathTransformation*&amp;)"><b>GetMathTransformation</b></a>(CATMathTransformation*&amp;)
+<dd>  Retrieves the CATMathTransformation associated with <tt>this</tt>
+ CATTransfoManager.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs the CATTransfoManager process.
+ <dt> o 
+    <a href="#SetTransfoUV(CATSurface*,CATMathTransformation2D&amp;)"><b>SetTransfoUV</b></a>(CATSurface*,CATMathTransformation2D&amp;)
+<dd>  Associates a CATMathTransformation2D to a Surface to apply it on CATGeometry
+ that points to it.
+ <dt> o 
+    <a href="#SetTransfoW(CATCurve*,CATMathTransformation1D&amp;)"><b>SetTransfoW</b></a>(CATCurve*,CATMathTransformation1D&amp;)
+<dd>   Associates a CATMathTransformation1D to a curve to apply it on CATGeometry
+ that points to it.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATTransfoManagerType"><b>CATTransfoManagerType</b></a>
+<dd>  Defines the mode of the transformation process.
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATTransfoManager"></a><a name="CATTransfoManager(CATMathTransformation&amp;,CATGeoFactory*,CATTransfoManagerType,CATSoftwareConfiguration*)"></a> <dt> o <b>CATTransfoManager</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATTransfoManager</b>(<td> const <script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation&amp;')</script> <td><tt>iMathTransfo</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script> <td><tt>iFactory</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTransfoManagerType','CATTransfoManagerType')</script> <td><tt>iMode</tt><td><tt>= Duplicate</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSoftwareConfiguration','CATSoftwareConfiguration*')</script> <td><tt>iConfig</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATTransfoManager for linear transformation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMathTransfo</tt>
+   <dd> The transformation to apply.
+ </dd>
+    <dt><tt> iFactory</tt>
+   <dd> A pointer to the factory of the resulting objects
+ </dd>
+    <dt><tt> iType</tt>
+   <dd> The mode of the transformation process.
+ </dd>
+    <dt><tt>  iConfig</tt>
+   <dd> The pointer to the configuration.Should not be <tt>NULL</tt> in case of topological objects.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATTransfoManager"></a><a name="~CATTransfoManager()"></a> <dt> o <b>~CATTransfoManager</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATTransfoManager</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Add"></a><a name="Add(CATICGMObject*,CATICGMObject*)"></a> <dt> o <b>Add</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>Add</b>(<td><script type="text/javascript"> activateLink('CATICGMObject','CATICGMObject*')</script> <td><tt>iObjectToTransform</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICGMObject','CATICGMObject*')</script> <td><tt>iTransformedObject</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a CATGeometry to transform with <tt>this</tt> CATTransfoManager.
+<br>All the added objects must belong
+ to the same factory.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObjectToTransform</tt>
+   <dd> A pointer to the CATGeometry to add to the CATTransfoManager.
+ </dd>
+    <dt><tt> iTransformedObject</tt>
+   <dd> If not NULL, it forces the transformation of <tt>iObjectToTransform</tt> to be
+ the object <tt>iTransformedObject</tt>. This must be compatible with the
+ given transformation of the CATTransfoManager.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetMathTransformation"></a><a name="GetMathTransformation(CATMathTransformation*&amp;)"></a> <dt> o <b>GetMathTransformation</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetMathTransformation</b>(<td><script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation*&amp;')</script> <td><tt>oMathTransfo</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the CATMathTransformation associated with <tt>this</tt>
+ CATTransfoManager.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oMathTransfo</tt>
+   <dd> The associated transformation. This is part of the class and must not be deleted.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs the CATTransfoManager process.
+ This method should be called only once.
+</dl>
+<a name="SetTransfoUV"></a><a name="SetTransfoUV(CATSurface*,CATMathTransformation2D&amp;)"></a> <dt> o <b>SetTransfoUV</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransfoUV</b>(<td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iIn</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation2D','CATMathTransformation2D&amp;')</script> <td><tt>iTransfo2D</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Associates a CATMathTransformation2D to a Surface to apply it on CATGeometry
+ that points to it.
+ This is especially usefull together with the <tt>Add</tt> method to replace a transformed surface by another 
+ surface confused with it.
+ If it is not the case , the generated model will not be valid.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIn</tt>
+   <dd> A pointer to the input surface.
+ </dd>
+    <dt><tt> iTransfo2D</tt>
+   <dd> The 2D transformation on the surface corresponding to the 3D transformation defined by <tt>this</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTransfoW"></a><a name="SetTransfoW(CATCurve*,CATMathTransformation1D&amp;)"></a> <dt> o <b>SetTransfoW</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransfoW</b>(<td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iIn</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation1D','CATMathTransformation1D&amp;')</script> <td><tt>iTransfo1D</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Associates a CATMathTransformation1D to a curve to apply it on CATGeometry
+ that points to it. 
+ This is especially usefull together with the <tt>Add</tt> method to replace a transformed curve by another curve
+ confused with it.
+ If it is not the case , the generated model will not be valid.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIn</tt>
+   <dd> A pointer to the input curve.
+ </dd>
+    <dt><tt> iTransfo1D</tt>
+   <dd> The 1D transformation on the curve corresponding to the 3D transformation defined by <tt>this</tt>.</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATTransfoManagerType"> <dt> o <b>CATTransfoManagerType</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATTransfoManagerType</b> {
+  Duplicate,
+  FullDuplicate,
+  Replace
+}
+</pre>
+ Defines the mode of the transformation process.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> CATTransfoManager::Duplicate</tt>
+   <dd> Duplicates and transforms the objects
+ that are <tt>Add</tt>ed to the CATTransfoManager.
+ <br>Does not duplicate a forward linked object 
+ if it is geometrically invariant by the transformation, 
+ except if this forward linked object
+ is specifically <tt>Add</tt>ed to the CATTransfoManager.
+ Duplicates a forward linked object 
+ if it is not geometrically invariant by the transformation.
+ </dd>
+    <dt><tt> CATTransfoManager::FullDuplicate</tt>
+   <dd> Duplicates and transforms the objects
+ that are <tt>Add</tt>ed to the CATTransfoManager.
+ <br>Duplicates a forward linked object 
+ even if it is geometrically invariant by the transformation, 
+ </dd>
+    <dt><tt> CATTransfoManager::Replace</tt>
+   <dd> Only transforms the objects
+ that are <tt>Add</tt>ed to the CATTransfoManager.
+ <br>Does not replace a forward linked object 
+ if it is geometrically invariant by the transformation, 
+ except if this forward linked object
+ is specifically <tt>Add</tt>ed to the CATTransfoManager. 
+ Replaces a forward linked object 
+ if it is not geometrically invariant by the transformation.
+ <br>Invariant means that it is invariant within its maximum limits. An line is invariant
+ by a transformation along its direction, a circle is invariant by a rotation
+ of center the center of the circle, as examples.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTransfoManager.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGeometricObjects</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,697 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>ITC Overview and Using ITC</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Interactive Test Capture</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>ITC Overview and Using ITC</h3>
+      <em>Recording and replaying interactive scenarios</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The Interactive Test Capture&nbsp; (ITC) tool enables you to create
+      automated tests interactively. Automated tests can be used by programmers
+      to manage code quality, detect code regression or instability. An
+      automated test is created by launching V5 using a specific capture mode
+      during which all user interactions are recorded. Once recorded an automated
+      test can be replayed on all V5 supported platforms, independently of the
+      recording platform.</p>
+      <p><b>ITC vs. CUT</b>: ITC needs CUT to run since it is completely
+      integrated in mkodt. With ITC you can capture scenarios interactively
+      whereas it is necessary to code the scenario when using CUT. A non
+      developer can use ITC to capture and replay scenarios. Developer skill is
+      needed for failing replay analysis.</p>
+      <p>This documentation explains how to use ITC and provides some insight on
+      the internal mechanisms used by the V5 capture/replay engine. A sample use
+      case is provided along with a list of known limitations and best
+      practices.</p>
+      <ul>
+        <li><a href="#100000"><b>Overview</b></a>
+        <li><a href="#200000"><b>Basic Tasks</b></a>
+        <li><a href="#300000"><b>Advanced Tasks</b></a>
+        <li><a href="#400000"><b>Understanding the Internals of the
+          Record/Replay Engine</b></a>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>Overview</h3>
+<p>As programs grow and become more and more complex, ensuring code quality
+becomes a more and more challenging task. To ensure a good software quality, one
+might consider a multiple level approach: formal analysis of the source code,
+automated tests, and manual tests.</p>
+<p>ITC is a product dedicated to automated tests. Basically, it allows an
+interactive scenario to be recorded and replayed. The scenario needs only to be
+recorded once, and can be replayed as many times as necessary. This provides the
+developer with a way to make impact analysis or to check for regressions. The
+tester saves a tedious repetition of manual tests.</p>
+<p>The V5 record engine works at "V5 device level": what are recorded are mouse
+clicks, mouse moves and keyboard events that are translated into V5 system events. Contrary to other commercial automatic
+test tools, it takes advantage of its full integration into the V5 platform to
+provide a good stability:</p>
+<ul>
+  <li>Replay is not sensitive to the operating system. For instance, record can
+    be done on Windows and replay can be done on both Windows and Unix.</li>
+  <li>Replay is not sensitive to screen resolution.</li>
+  <li>Replay is not sensitive to window position, dialog box layout, toolbar
+    position, and toolbar layout.</li>
+  <li>Replay is not sensitive to the number of items or the order of items in
+    combo-boxes or list-boxes.</li>
+</ul>
+<p>The purpose of ITC is to detect changes between code levels. This happens
+when a scenario cannot be replayed anymore. When such a thing happens, it is
+left to the developer's responsibility to analyze whether the failure is a
+regression symptom or not. In some cases, the failure is normal because the
+software user interface or its internals have changed. In other cases, the
+failure is a true regression symptom. A discussion on how to make both stable
+and relevant automated tests can be found later in this document.</p>
+<p>In particular, ITC does not provide any mechanism to ensure stability between
+a V5 code level and another. No stability is insured between V5 releases,
+service packs or hot fixes.</p>
+<p>Other restrictions are:</p>
+<ul>
+  <li>ITC is built on a technology that applies to Wintop based products only
+    (no Webtop support).</li>
+  <li>Only file based scenario are supported. No VPM interoperability is
+    supported.</li>
+  <li>Scenarios must be captured and replayed on V5 using the English language,
+    installed on a machine that uses the US-English locale.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>Basic Tasks</h3>
+<h4><a name="210000"></a>Recording and Replaying</h4>
+<p>ITC product is accessed through mkodt tool. &quot;-C&quot; option is used for
+capture. No specific option is necessary for replay.</p>
+<ol>
+  <li>Create an XML file containing at least the Record tag with the attribute 
+	  value set to true, and a Command tag with the V5 executable to launch. In
+    case of CATIA V5 it will be:
+	  <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Environment&gt;
+      &lt;Record enable=&quot;true&quot; /&gt;
+    &lt;/Environment&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CNEXT&quot; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+	  <p>Save the file under a given name in the TestCases directory, for instance
+  TestCases/MyRecord.xml.</p>
+	  <p>In a licensed environment you need to activate the license for CNEXT.
+  Create a FunctionTest/InputData/MyRecord.rec directory, and drop a valid
+  licensing.CATSettings files that will activate the necessary license for
+  capturing and replaying the scenario.</p>
+  </li>
+  <li>Launch the command
+    <pre>  mkodt -s MyRecord -C</pre>
+    <p>This starts a V5 interactive session.</p>
+  </li>
+  <li>Perform your scenario in the V5 session and end it by exiting the
+    application.
+    <p>The returned error code should be 0, meaning the record has successfully
+    been captured.</p>
+    <p>Notice that the FunctionTests/InputData/MyRecord.rec directory has been
+    created. This directory contains three files: capture.rec, capture.env, and
+    capture.ver.</p>
+    <ul>
+      <li>capture.rec contains the record data. This is a binary file.</li>
+      <li>capture.env contains the list of authorized paths for the record. This
+        is a text file.</li>
+      <li>capture.ver specifies the level used for the record. This is a text
+        file and is used for record versioning.</li>
+    </ul>
+    <p>More explanations of the content of those files will be given in the
+    record engine internal description section.</p>
+  </li>
+  <li>Replay the test by launching the command:
+    <pre>mkodt -s MyRecord</pre>
+    <p>Notice that the test is replayed on screen. The return code should be 0
+    if the test succeed.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="220000"></a>Using Settings</h4>
+<p>When recording a session, all V5 default settings values are used. If your
+scenario needs to be recorded and replayed with non default setting values,
+simply put the necessary *.CATSettings files in the .rec directory.</p>
+<p>Those setting files are the same than the ones that are created and used when launching a
+normal V5 session.</p>
+<p>In a licensed environment, a valid licensing.CATSettings file is needed to
+activate the necessary licenses for the record and replay scenario.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>Using P2 UI Level</h4>
+<p>By default, in capture mode, V5 sessions are launched using the P1 UI level.
+This is a behavior difference between a normal V5 session and a record capture
+session. To obtain the P2 UI level you need to put a copy of the
+FrameGeneral.CATSetting file into the *.rec directory.</p>
+<p>It is recommended to use a clean FrameGeneral.CATSettings file. To obtain it,
+remove your FrameGeneral.CATSettings file in your setting directory, launch a
+normal V5 session and exit immediately.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="240000"></a>Opening Documents</h4>
+<p>Access the necessary files using the File-&gt;Open command. Authorized paths
+for document files are:</p>
+<ul>
+  <li>&quot;FW.tst/FunctionTests/InputData/&quot;</li>
+  <li>&quot;FW.tst/FunctionTests/Output/&quot;</li>
+  <li>ADL_ODT_TMP environment variable.</li>
+</ul>
+<p>Where:</p>
+<ul>
+  <li>FW.tst is the test framework</li>
+  <li>ADL_ODT_TMP environment variable value is a temporary directory that exists only while the scenario
+    is capture or replayed. You can choose it to open or save documents in the
+    file selection box.</li>
+</ul>
+<p>The record engine automatically makes file name and path name conversions to
+ensure stability when the replay environment differs from the record environment
+(Unix vs. Windows).</p>
+<p>However, to ensure stability when replaying Windows recorded scenario on
+Unix, make sure that a file path entered in the &quot;File Open&quot; or directory
+chooser dialog box at record time have exactly the same case as the actual
+directory structure on the machine. Otherwise, the scenario might capture and
+replay correctly on Windows but fail on Unix.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="250000"></a>Saving Documents</h4>
+<p>Saving files can be used to test the save functionality itself or to obtain
+documents that can be compared to a reference later in the automated test. ITC
+does not provide such tools for document comparison.</p>
+<p>Save the file using the File-&gt;Save command. Authorized path for files are:</p>
+<ul>
+  <li>ADL_ODT_TMP environment variable.</li>
+  <li>&quot;FW.tst/FunctionTests/Output/&quot;</li>
+</ul>
+<p>The directory&nbsp; declared using the ADL_ODT_TMP environment variable is deleted at the end of mkodt whereas the content
+of &quot;Output&quot; is kept. To avoid disk space saturation when replaying a
+large number of ODTs, use ADL_ODT_TMP environment variable to save documents.</p>
+<p>In admin mode to set output settings directory, insert a Command tag in the 
+ODT XML file:</p>
+<ul>
+<li>With Windows:
+<pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+  &lt;ODT Version=&quot;1.0&quot;&gt;
+    &lt;Definition&gt;
+      &lt;Environment&gt;
+        &lt;Record enable=&quot;true&quot; /&gt;
+      &lt;/Environment&gt;
+    &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CMD /C LaunchCATOptionsMgt.bat&quot; osConstraint=”Windows_NT” /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>Note that the bat file must be launched thanks to CMD /C.</p>
+	<p>Create LaunchCATOptionsMgt.bat with the following content:</p>
+<pre>@echo off
+MD %ADL_ODT_TMP%\tmp_settings
+chcatenv -notms -a user -e %CATDefaultEnvironment% -var CATReferenceSettingPath="%ADL_ODT_TMP%\tmp_settings"
+CATOptionsMgt -admin
+exit /b %ERRORLEVEL%</pre>
+</li>
+<li>With UNIX:
+<pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+  &lt;ODT Version=&quot;1.0&quot;&gt;
+    &lt;Definition&gt;
+      &lt;Environment&gt;
+        &lt;Record enable=&quot;true&quot; /&gt;
+      &lt;/Environment&gt;
+    &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;LaunchCATOptionsMgt.sh&quot; osConstraint=”UNIX” /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+	<p>And create LaunchCATOptionsMgt.sh with the following content:</p>
+<pre>mkdir -p $ADL_ODT_TMP/tmp_settings
+chcatenv -notms -a user -e $CATDefaultEnvironment -var CATReferenceSettingPath="$ADL_ODT_TMP/tmp_settings"
+
+CATOptionsMgt -admin
+
+RC=$?
+exit $RC</pre>
+
+</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="260000"></a>Using the Cache System</h4>
+<p>Cache system location is stored in CATIAV5Cache.CATSettings file. Enter
+${ADL_ODT_TMP} in the <b>Path to the local cache</b> setting attribute, thanks 
+to the <strong>Options</strong> command of the <strong>Tools</strong> menu, to make sure that cgr files are
+generated to a valid directory. This environment variable value is set at run 
+time. In addition, this directory is automatically cleaned,
+avoiding risk of disk saturation.</p>
+<p><img alt="Cache Path Directory" height="670" src="cachePath.png" width="901"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="270000"></a>Capture Recommendations, Limitations and Tips</h4>
+<ul>
+  <li>Play your scenario once before capturing it to check that it works
+    properly. Do not forget that a record ending with an abend is not captured.</li>
+  <li>Do not move your mouse too often since every movement is recorded. The
+    less interactions, the better.</li>
+  <li>Do not use the wheel or mouse scroll button to scroll the specification
+    tree, otherwise you will not be able to replay the record. The wheel
+    interaction is not supported by the record/replay engine.</li>
+  <li>Do not resize the MDI Client Window (document window). On the Unix
+    platform it is not possible to do it at capture time.</li>
+  <li>Do not use the Window menu. Window size management controls
+    (&quot;maximize&quot; and &quot;minimize&quot; buttons, for instance) at the
+    top-right corner of the window are not available.</li>
+  <li>Do not use the MRU in the File or Start menu to load documents</li>
+  <li>Bear in mind that any specification tree alteration (such as the insertion
+    of a node) may prevent the record to work properly.</li>
+  <li>Check that a creation command works correctly by recording a selection and
+    a deletion through contextual menu of the created object afterwards</li>
+  <li>Interactions with the compass can be recorded on condition that a local
+    transformation (such as a translation) of the 3D viewer is done before doing
+    the first interaction.</li>
+  <li>Some elements cannot be recorded:
+    <ul>
+      <li>Preselection navigator (also known as drill selection)</li>
+      <li>Drag and Drop</li>
+      <li>Contextual menus on toolbars</li>
+      <li>Context-sensitive help (also known as tool tips)</li>
+    </ul>
+  </li>
+  <li>The timing of interactions is not recorded. At replay, recorded
+    interactions are launched one after the other. If a scenario depends on a
+    precise timing sequence of interactions, then the replay will probably fail.
+    In other words the elapsed time between two interactions is not a stable
+    value, and might depend on machine hardware configuration, environment, etc</li>
+  <li><font face="Arial" size="2">Macros cannot be recorded and replayed.</font></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="280000"></a>Replay Limitations and Tips</h4>
+<ul>
+  <li>CATDlgNotify dialog boxes launched using the CATDlgNotify::DisplayBlocked
+    method are never displayed at replay. The interactions made in those boxes
+    are recorded and replayed but the box itself is never shown at replay.</li>
+  <li>Menus and contextual menus are visible at replay. Interactions menus are
+    recorded and replayed, but menus are not visually expanded at replay.</li>
+  <li>Modal dialog boxes are not modal at replay. If a modal dialog box appears
+    at replay while it was not there at capture time, it does not prevent the
+    record engine going on replaying the remaining interactions.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="290000"></a>Common Return Code</h4>
+<h5>Tip</h5>
+<p>The return code is the one of the command launched by mkodt. This command is 
+declared thanks to the Command tag of the XML file passed using -s
+argument [<a href="#References">1</a>]. The return code generated by the record
+engine can be overloaded in this command. Before making an analysis based on a
+given return code please check that it corresponds to the actual return code
+generated by the replay engine.</p>
+<h5>Code 1</h5>
+<p>Code 1 is used by the replay engine when the scenario cannot be replayed
+anymore. Most common situations are:</p>
+<ul>
+  <li>&quot;CATCommand not found&quot;: a notification went through a CATCommand
+    at capture time, but this CATCommand was not there at replay time. Since all
+    Dialog objects are CATCommands, this happens when any kind of element is
+    missing in the UI: icon, menu or contextual menu item, dialog box, etc...</li>
+  <li>&quot;Invalid record buffer&quot;: the capture.rec file is corrupted or
+    its end has been reached in an unexpected way. This situation might happen
+    when an unexpected CATDlgNotify message box is launched at replay time.</li>
+  <li>&quot;You want to create a new CATCommand named xxx, but you already have
+    in your path a CATCommand with the same name&quot;: two instances of
+    CATCommand with the same name share the same parent. This situation is not
+    supported by the replay engine. Either this is a design error, or one of the
+    instances has not been deleted, revealing a life-cycle object problem. A
+    common mistake leading to this error, is to use the same toolbar in two
+    different workbenches. The solution is to rename one of the toolbars.</li>
+</ul>
+<h5>Code 10</h5>
+<p>This code applies to problems encountered with dialog objects. Please read
+the associated message to get a description of the problem. Common situations
+are:</p>
+<ul>
+  <li>Visibility or sensitivity stability check fails
+    <p>To ensure non-regression of UI, V5 record/replay checks that visibility
+    and sensitivity of dialog objects on which interactions are made is stable.
+    At capture time the visibility and sensitivity status of the interacted
+    objects is stored along with the nature of the interaction. If this status
+    is different at replay time, then the replay fails.</p>
+    <p>An exception to this is the contextual menu, on which only the
+    sensitivity check is applied.</p>
+  <li>Missing lines in a CATDlgCombo or a CATDlgSelectorList
+    <p>When selecting a line in a combo-box or a list-box, the record engine
+    stores the content of the line as a string. This ensures stability towards
+    the change of the order and number of items in the list. When the string is
+    missing at replay time, the replay fails.</p>
+  </li>
+  <li>Missing line in a CATDlgMultilist
+    <p>When selecting a line in a multi-column list, the record engine stores
+    the whole line as a separate string for each column. At replay time, the
+    selected line is restored based on the content of the first visible column
+    of the CATDlgMultiList. If more than one line matches the item in the first
+    visible column, then the second column is considered, and so on until a
+    match is found.
+    <p>When a match is found, the content of the remaining column is not tested.
+    If no match is found the replay fails.</p>
+  </li>
+</ul>
+<h5>Code 99</h5>
+<p>When the allowed time for the test has been spent, mkodt kills the process.
+This can happen in case of CPU loops, or when the allowed time is not enough to
+replay the recorded scenario.</p>
+<p>Allowed time defaults to 5 minutes. To change this use the MaxTime tag in your ODT 
+XML file. See mkodt documentation [<a href="#References">1</a>].
+For example to change this value to 10 minutes use:</p>
+<pre>...
+  &lt;Definition&gt;
+    ...
+    &lt;MaxTime value=&quot;10&quot; /&gt;
+    ...
+  &lt;/Definition&gt;
+...</pre>
+<h5>Code 100</h5>
+<p>A CATSession object has not been deleted properly at the end of the process.
+If the process had a normal termination then this is the symptom of a real
+CATSession problem. Otherwise, the true cause is to be looked in the abnormal
+termination of the process.</p>
+<h5>Other codes</h5>
+<p>The V5 code includes many integrity checks. Those checks are performed on
+various domains such as memory management, geometrical modeler, UI
+implementation, etc. Many of them will generate only a warning or a trace when
+using a standard V5 session but an error in capture or replay mode. The effect
+of this is that a scenario that seems to behave well in a standard interactive
+session will fail to be recorded or fail to be replayed.</p>
+<p>This is a powerful tool to ensure good implementation of the V5
+infrastructure and non regression when code changes. When this happens an error
+code will be generated and an error message displayed explaining what is wrong.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="295000"></a>Debugging Tips</h4>
+<h5><a name="295100"></a>Slowing Down the Replay</h5>
+<p>Use the CATRecordReplayTimer environment variable to slow down the replay.
+For example, to have one interaction every 150 milliseconds:</p>
+<pre>set CATRecordReplayTimer=150      # Windows
+export CATRecordReplayTimer=150   # Unix</pre>
+<p>According to the captured scenario, you can adjust the timer in order to
+improve the visualization and facilitate error detection.</p>
+<p>When CATRecordReplayTimer is set, setting the CATRECORDNOTIMERAFTERMOTIONEVENTS 
+environment variable to any value inhibates the timer between two mouse moves events
+ in a row over any graphic window.  You are recommended to use both variables combined.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="295200"></a>Displaying the Mouse Position</h5>
+<p>Set the CATRecordVisualDebug environment variable to any value to display
+mouse position in windows containing a CATViewer. For example:</p>
+<pre>set CATRecordVisualDebug=1      # Windows
+export CATRecordVisualDebug=1   # Unix</pre>
+<p>Each recorded mouse position is displayed using a red cross. This mode does
+not correspond to the normal usage of V5, it should be used for debug purposes
+only and never set in the ODT command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="300000"></a>Advanced Tasks</h3>
+<h4>Using RecordTools</h4>
+<p>RecordTools is a command line utility that allows you to display and modify
+the capture.rec file.</p>
+<h5>Overview</h5>
+<p>Interactive scenarios are stored in a binary file named
+&quot;capture.rec&quot;. This file contains all the user interactions and
+necessary information to replay them. RecordTools gives access to the content of
+this file and provides some editing functionality. It can translate the binary
+file into a readable xml file format and change the content of an elementary
+interaction.</p>
+<p>RecordTools can be useful to:</p>
+<ul>
+  <li>Reverse-engineer the scenario of an automated test</li>
+  <li>Modify interactions when UI changes has been made: suppress &quot;OK&quot;
+    click on a warning panel that does not appear any more, change path for menu
+    items that has been moved, etc...</li>
+  <li>Make an impact analysis of code change.</li>
+</ul>
+<h5>Usage</h5>
+<p>Simply go to the V5 install directory (OS_a\code\bin) and launch RecordTools
+from the command line.</p>
+<p>To display the capture.rec file in xml format, use the -Check option. Use the
+-h for detailed instructions and display the list of available functionalities.</p>
+<h5>capture.rec File Content</h5>
+<p>When recording automated tests, all interactions are stored sequentially in
+the capture.rec file. An interaction consists in an identifier, a CATCommand
+path, an event name and optionally a set of data.</p>
+<p>Once displayed in xml, the content of the capture.rec file is quite
+self-explicit.</p>
+<p>The following example contains a commented capture.rec file, obtained with
+the simple following scenario:</p>
+<ul>
+  <li>Start V5</li>
+  <li>Launch &quot;Help | About&quot; command</li>
+  <li>Click &quot;OK&quot; on the &quot;Help About&quot; panel</li>
+  <li>Exit V5.</li>
+</ul>
+<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Record Version=&quot;V5 1.0&quot;&gt;
+&lt;Source                                                       // Source section
+  File=&quot;capture.rec&quot;                                          // name of the source capture.rec file
+  Vendor=&quot;DASSAULT-SYSTEMES&quot;
+  Tool=&quot;RECORD&quot;
+  Version=&quot;1&quot;
+  Date=&quot;&quot;&gt;
+&lt;/Source&gt;                                                     
+&lt;Interactions&gt;                                               // Interaction section
+  &lt;Interaction
+    ID=&quot;CR1&quot;                                                 // First interaction is triggered automatically 
+                                                             // when the V5 main window appears.
+    Path=&quot;CATCommandSelector/CATApplication/CNEXT/&quot;          // The parent of all CATCommands is a CommandSelector, so all
+                                                             // paths begin with &quot;CATCommandSelector/&quot;
+    Event=&quot;CATDlgResizeNotification&quot;&gt;                        // This interaction is a resize of the main V5 window.
+                                                             
+    &lt;Datas&gt;
+      &lt;Data Num=&quot;1&quot; Type=&quot;CHAR&quot; Value=&quot;CATDlgDocument&quot;/&gt;
+      &lt;Data Num=&quot;2&quot; Type=&quot;ULONG&quot; Value=&quot;65546&quot;/&gt;
+    &lt;/Datas&gt;
+  &lt;/Interaction&gt;
+  &lt;Interaction
+    ID=&quot;CR2&quot;                                                 // Interaction number 2 is activating the &quot;HelpAbout&quot;
+                                                             // menu item
+    Path=&quot;CATCommandSelector/CATApplication/CNEXT/MenuBar/HELP/CmdButton_CATHelpAboutCommand/CATHelpAboutCommand/&quot;
+                  // The names in the path are the internal names of the CATCommand.
+                  // There are no generic naming rules for the internal name, they might be related
+                  // to the End User name or not.
+    Event=&quot;CATDlgMenuIActivateNotification&quot;&gt;
+    &lt;Datas&gt;
+      &lt;Data Num=&quot;1&quot; Type=&quot;CHAR&quot; Value=&quot;CATDlgPushItem&quot;/&gt;
+      &lt;Data Num=&quot;2&quot; Type=&quot;ULONG&quot; Value=&quot;2147483658&quot;/&gt;
+      &lt;Data Num=&quot;3&quot; Type=&quot;INT&quot; Value=&quot;0&quot;/&gt;
+    &lt;/Datas&gt;
+  &lt;/Interaction&gt;
+  &lt;Interaction
+    ID=&quot;CR3&quot;                                                 // Interaction number 3 is clicking on &quot;OK&quot; button
+                                                             // of the &quot;Help About window&quot;
+    Path=&quot;CATCommandSelector/CATApplication/CNEXT/HelpAboutWindow/&quot;
+    Event=&quot;CATDlgDiaOKNotification&quot;&gt;
+    &lt;Datas&gt;
+      &lt;Data Num=&quot;1&quot; Type=&quot;CHAR&quot; Value=&quot;CATFrmDialog&quot;/&gt;
+      &lt;Data Num=&quot;2&quot; Type=&quot;ULONG&quot; Value=&quot;787978&quot;/&gt;
+      &lt;Data Num=&quot;3&quot; Type=&quot;INT&quot; Value=&quot;0&quot;/&gt;
+    &lt;/Datas&gt;
+  &lt;/Interaction&gt;
+  &lt;Interaction
+    ID=&quot;CR4&quot;                                                 // Interaction number 4 is clicking on the 
+                                                             // &quot;File | Exit&quot; menu item.
+    Path=&quot;CATCommandSelector/CATApplication/CNEXT/MenuBar/START/CmdButton_EXIT/EXIT/&quot;
+    Event=&quot;CATDlgMenuIActivateNotification&quot;&gt;
+    &lt;Datas&gt;
+      &lt;Data Num=&quot;1&quot; Type=&quot;CHAR&quot; Value=&quot;CATDlgPushItem&quot;/&gt;
+      &lt;Data Num=&quot;2&quot; Type=&quot;ULONG&quot; Value=&quot;2147483658&quot;/&gt;
+      &lt;Data Num=&quot;3&quot; Type=&quot;INT&quot; Value=&quot;0&quot;/&gt;
+    &lt;/Datas&gt;
+  &lt;/Interaction&gt;
+&lt;/Interactions&gt;
+&lt;/Record&gt;</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Understanding the Internals of the Record/Replay Engine</h3>
+<p>The record/replay engine is at the heart of ITC. It is an extension of the
+send/receive model events that is used for all user interactions in V5. Being
+part of the V5 core provides platform independency all well as some stability
+related to UI changes.</p>
+<h4>Principle</h4>
+<p>How does it work? When user makes an interaction with the keyboard or the
+mouse, an event is sent by the system to the V5 application. This event is
+translated into a CATNotification that propagates in V5 using the CATCommand
+send/receive mechanism. In general this first notification triggers a whole set
+of cascading CATNotification related to UI changes. What is recorded in the
+capture.rec file is the first CATNotification of all, and this one only.</p>
+<p>At replay time, the record engine just has to make sure that this first
+CATNotification is sent again, and all the cascading CATNotifications and
+corresponding associated code will execute as if all was triggered by a real
+user interaction.</p>
+<p>In short, V5 translates the operating system events into its own model event.
+Those events can be recorded and replayed to simulate real user interactions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4>Record Information</h4>
+<p>The V5 record needs to store the whole information necessary to send the
+CATNotification at replay time. This information serves three purposes:</p>
+<ol>
+  <li>Identify the instance of the CATCommand that sends the notification</li>
+  <li>Identify the kind of notification that needs to be sent</li>
+  <li>Provide additional data necessary to perform the interaction (for example,
+    if the interaction is a mouse move, provide mouse coordinates).</li>
+</ol>
+<h5>CATCommand Identification</h5>
+<p>To identify a CATCommand instance, the record engine takes advantage of the
+CATCommand tree. At capture time, the record engine stores the path from the
+CATCommand instance to the root of the tree. At replay time, the engine follows
+this path the reverse way, from the root to the CATCommand instance.</p>
+<p>A CATCommand path is a string made of CATCommand names. It begins with the
+CATCommand parent of all, whose name is &quot;CATCommandSelector&quot; (this
+CATCommand has the same name as its class name). CATCommand names are separated
+by &quot;/&quot;. The CATCommand instance that sends the notification
+corresponds to the last of the path.</p>
+<p>For the record/replay engine to work, the CATCommand tree must have the
+following requirements:</p>
+<ul>
+  <li>A CATCommand instance cannot have two children with the same name.
+    <p>When this situation arises, an indetermination exists to find the correct
+    CATCommand instance. This configuration is detected both at capture time and replay time.
+    An error message is then printed in the program output and the capture or replay session immediately stops.</p>
+  </li>
+  <li>A CATCommand must have a non empty name.
+    <p>Empty names are not supported in CATCommand path at replay time. If this
+    situation arises, the record will succeed but the replay will fail.</p>
+  </li>
+</ul>
+<p>In both cases, V5 applications will work fine interactively. However, it will
+not be possible to make interactive tests using ITC.</p>
+<p>The CATCommand path is stored in the capture.rec file for each notification.
+When the replay engine fails to find the instance of a CATCommand using the
+path, a &quot;CATCommand not found&quot; error message is generated and the
+replay fails with code 1.</p>
+<h5>Notification</h5>
+<p>The notification corresponds to the event that is to be sent by the last
+CATCommand of the CATCommand path. Each Dialog object is a CATCommand and has
+its own set of notifications, depending on the kind of interaction they support.</p>
+<p>For instance, pressing OK button on a CATDlgNotify dialog box corresponds to
+a CATDlgNfyOKNotification. Clicking with any button of the mouse in a CATViewer
+corresponds to a CATPressEvent.</p>
+<h5>Additional Data</h5>
+<p>Additional data is information necessary to correctly replay the
+notification. The values stored differ according to the kind of notification
+that is stored.</p>
+<p>For example, in case of a CATMotionEvent, which corresponds to a mouse move
+over a CATViewer, the data number 3 and 4 are mouse X and Y coordinates. Data
+number 5 and 6 are the graphic window size.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4>Replay Time</h4>
+<p>At replay time, interactions are read sequentially in the capture.rec file,
+and the read notifications are sent by the CATCommand, thus simulating user
+interactions.</p>
+<p>A new notification is sent at each OnIdle event that is generated by the
+operating system, thus synchronizing the speed of the replay at the maximum
+machine speed.</p>
+<p>During replay all draw requests in the visualization area are not taken into
+account, except those that come from the CATUpdateEvent which corresponds to
+draws that were recorded at capture time.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4>Tips to Write Code Compliant with the Record/Replay Engine</h4>
+<ul>
+  <li>Give names to all instantiated CATCommand</li>
+  <li>Give explicit and unique CATCommand names. Since the CATCommand name
+    appears in the CATCommand path, having a pertinent name facilitates the
+    finding of the corresponding source code in case of problem</li>
+  <li>Do not instantiate two CATCommands with the same name and with the same
+    parent</li>
+  <li>Do not use timer or thread synchronization mechanisms</li>
+  <li>Avoid to make record/replay dependent code. In this case, the standard
+    session code will not be covered.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4>Tips to Make Pertinent Tests</h4>
+<ul>
+  <li>Create a text file that describes each interaction of the scenario. This
+    will be of great help for analyzing in case the test fails</li>
+  <li>Do not forget that the replay engine does not check the result of the
+    interactions. As long as proper CATCommands are found to send the
+    notifications, the replay goes on<br>
+    In particular, the result of all interactions in a visualization area
+    (CATViewer) are not checked. For example, if a mouse click results in a
+    selection at capture time, the replay engine does not check that the
+    selection is indeed performed at replay. All the replay engine needs is the
+    CATCommand associated with the click to be able to simulate it</li>
+  <li>Use contextual menu commands (such as Delete) to make sure that an object
+    is under the mouse</li>
+  <li>Save your model and compare it to a reference file (you need to write our
+    own model comparator)</li>
+  <li>Add your own debug/check commands.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td valign="top"><a href="../CAARqcMkOdtXML/CAARqcTapr01.htm">Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

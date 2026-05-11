@@ -1,0 +1,496 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Document from a Memory Area in the Vault Server</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Database</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Document from a Memory Area in the Vault
+      Server</h3>
+      <em>Copying a memory area to a newly created vault document</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a document in the vault server, copy a
+      memory area into it, and save it.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEvcCreateDocFromMem Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEvcCreateDocFromMem Do</a></li>
+            <li><a href="#How">How to Launch CAAEvcCreateDoc</a><a href="#How">FromMem</a></li>
+            <li><a href="#Where">Where to Find the CAAEvcCreateDocFromMem Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a document in the vault
+server, copy a memory area into the vault document, and save it. It also shows
+how to open a vault session and a user session, how to get an URL from the vault
+document, and shows the two-step save operation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEvcCreateDocFromMem Use Case</h3>
+<p>CAAEvcCreateDocFromMem is a use case of the CAAENOVaultClientCPP.edu
+framework that illustrates ENOVaultClientCPP framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEvcCreateDocFromMem Do</h4>
+<p>CAAEvcCreateDocFromMem begins by opening a vault session and a user session.
+Then it creates a vault document, copies the contents of a memory area into it,
+retrieves the vault document URL, and finally save it using a two-step
+prepare/commit transaction.
+<p>On the standard output, the URL of the document it just created is displayed.
+You can use that URL as an input for the CAAEvcExtractDocIntoMem use case [<a href="#References">1</a>]
+or the CAAEvcExtractDocIntoFile use case [<a href="#References">2</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEvcCreateDocFromMem&nbsp;</h4>
+<p>To launch CAAEvcCreateDocFromMem, you will need to set up the build time
+environment, then compile CAAEvcCreateDocFromMem along with its prerequisites,
+set up the run time environment, and then execute the use case as follows: [<a href="#References">3</a>].</p>
+<pre>mkrun -c &quot;CAAEvcCreateDocFromMem -v <i>VaultAliasName</i>&quot;</pre>
+<p>where:</p>
+<ul>
+  <li><code><i>VaultAliasName</i></code> is the alias name of the vault server
+    that will contain the document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEvcCreateDocFromMem Code</h4>
+<p>The CAAEvcCreateDocFromMem use case is made of the single file
+CAAEvcCreateDocFromMem.cpp located in the CAAEvcCreateDocFromMem.m module of the
+CAAENOVaultClientCPP.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVaultClientCPP.edu\CAAEvcCreateDocFromMem.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVaultClientCPP.edu/CAAEvcCreateDocFromMem.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eleven logical steps in CAAEvcCreateDocFromMem:</p>
+<ol>
+  <li><a href="#Step1">Creating the Vault Session</a></li>
+  <li><a href="#Step2">Creating a User Session</a></li>
+  <li><a href="#Step3">Creating a Document</a></li>
+  <li><a href="#Step4">Retrieving the Document URL</a></li>
+  <li><a href="#Step5">Retrieving the Default Block Size</a></li>
+  <li><a href="#Step6">Opening the Document in Write Mode</a></li>
+  <li><a href="#Step7">Copying a Memory Area into the Document</a></li>
+  <li><a href="#Step8">Closing the Document</a></li>
+  <li><a href="#Step9">Preparing the Transaction</a></li>
+  <li><a href="#Step10">Committing the Transaction</a></li>
+  <li><a href="#Step11">Ending the Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Vault Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   ENOVIVaultError     VErr;
+   CATBoolean          Master  = TRUE;
+
+   // As the vault session is opened as master, the following arguments are 
+   // not taken into account
+   CATUnicodeString    Marker(&quot;&quot;);
+   CATUnicodeString    Host(&quot;&quot;);
+   int                 Port    = 0;
+
+   ENOVIVaultSession * pSession = NULL;
+
+   RC = <b>ENOVIVaultSessionFactory::getVaultSession</b>(Marker, Host, Port, Master, &amp;pSession, VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first thing to do is to create a vault session, thanks to the static <code>getVaultSession</code>
+method of the <i>ENOVIVaultSessionFactory</i> class. The vault component
+supports distributed transactions (i.e. several processes working in the context
+of the same transaction) but in this case only one of the sessions is a master
+one and is able to commit or rollback the transaction. As this use case is a
+stand alone program, the session must necessarily be opened as master. The
+useful arguments are:</p>
+<ul>
+  <li><code>Master</code> is set to <code>TRUE</code> to indicate a master
+    session</li>
+  <li><code>pSession</code> is the initialized vault session as a pointer to the
+    <i>ENOVIVaultSession</i> interface</li>
+  <li><code>VErr</code> is an <i>ENOVIVaultError</i> class instance passed as
+    the last argument used if the method fails to convey information about the
+    failure.
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a User Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   ENOVIVaultUserSession * pUserSession = NULL;
+
+   RC = pSession-&gt;<b>getUserSession</b>(s_InputVault, &amp;pUserSession, VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Once the vault session has be created, a user session must be initialized. A
+user session corresponds to the connection of a particular client to a given
+vault server. A user session is initialized using the <code>getUserSession</code>
+method of the <i>ENOVIVaultSession</i> interface whose arguments are:</p>
+<ul>
+  <li><code>s_InputVault</code> is the alias name of the vault server that will
+    contain the document passed as a parameter of the command that launches the
+    use case</li>
+  <li><code>pUserSession</code> is the initialized user session as a pointer to
+    the <i>ENOVIVaultUserSession</i> interface</li>
+  <li><code>VErr</code> is an <i>ENOVIVaultError</i> class instance passed as
+    the last argument used if the method fails to convey information about the
+    failure.</li>
+</ul>
+<p>If several vault servers were needed to be accessed, a user session per vault
+server should be created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating a Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   ENOVIVaultDocument      * pDoc = NULL;
+
+   // The following parameters are hard coded in this use case 
+   // They could have been taken as input
+   CATUnicodeString DocName      = &quot;MyDoc&quot;;
+   CATUnicodeString Description  = &quot;sample document&quot;;
+   CATUnicodeString MimeType     = &quot;txt&quot;;
+   CATUnicodeString OriginalName = &quot;&quot;;
+   CATUnicodeString OriginalPath = &quot;&quot;;
+   CATUnicodeString OriginalHost = &quot;&quot;;
+  
+   RC = pUserSession-&gt;<b>createDocument</b>(DocName,
+                                     Description,
+                                     MimeType,
+                                     OriginalName,
+                                     OriginalPath,
+                                     OriginalHost,
+                                     &amp;pDoc,
+                                     VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now a document can be created from the user session. Note that this is just
+an empty shell to which contents will be associated later on. The parameters to
+pass to <code>createDocument</code> to create a vault document are:</p>
+<ul>
+  <li><code>DocName</code> is the document's name</li>
+  <li><code>Description</code> is the document's description. This is a short
+    text that gives information about the document</li>
+  <li><code>MimeType</code> is the extension that corresponds to the document's
+    MIME (or content type)</li>
+  <li><code>OriginalName</code> is the document's original name</li>
+  <li><code>OriginalPath</code> is the document's original path name</li>
+  <li><code>OriginalHost</code> is the document's original host</li>
+  <li><code>pDoc</code> is the pointer to the document to create as pointer to
+    the <i>ENOVIVaultDocument</i> interface</li>
+  <li><code>VErr</code> is an <i>ENOVIVaultError</i> class instance passed as
+    the last argument used if the method fails to convey information about the
+    failure.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Retrieving the Document URL</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   SEQUENCE_octet    Url;
+   RC = pDoc-&gt;<b>getURL</b>(Url);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The document's URL is an external link to the document. It contains all the
+necessary information to retrieve the document without having to know in which
+vault it is stored, on which machine, and so on.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Retrieving the Default Block Size</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   const CATUnicodeString Pty(&quot;VaultClient_BlockSize&quot;);
+   CATUnicodeString sSize(&quot;&quot;); 
+
+   RC = pSession-&gt;<b>getProperty</b>(Pty, sSize); 
+...
+   int BSize = 0; 
+   sSize.ConvertToNum(&amp;BSize);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The default block size is stored as a property. It can then be retrieved
+using the generic <code>getProperty</code> method on the <i>ENOVIVaultSession</i>
+interface</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Opening the Document in Write Mode</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   unsigned long DocSize      = 0      ; // The size of the document is unknown
+   CATBoolean    WriteFullDoc = CATTrue; // The whole document will be written
+      
+   RC = pDoc-&gt;<b>openWrite</b>(DocSize, WriteFullDoc, VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Opening a document in write mode allows you to modify, or create in this
+case, its contents. This also sets a write lock on the document ensuring that
+nobody else is modifying it at the same time. That doesn't prevent other people
+from reading the document but they will only see the last committed image until
+the current modifications are committed. The parameters to pass to <code>openWrite</code>
+are:</p>
+<ul>
+  <li><code>DocSize</code> is the document's expected size after being modified,
+    expressed in bytes. Setting it to 0 means that the expected size is unknown
+    and will be determined by further operations</li>
+  <li><code>WriteFullDoc</code> is a flag to indicate whether the whole document
+    or only a part of it is to be written. It enables the vault server to
+    internally optimize the document management behavior according to the
+    application intent</li>
+  <li><code>VErr</code> is an <i>ENOVIVaultError</i> class instance passed as
+    the last argument used if the method fails to convey information about the
+    failure.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Copying a Memory Area into the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   int iCLength = BSize*3;
+   
+   unsigned char * cContent = new unsigned char[iCLength];
+   memset(cContent, 'A', iCLength);
+
+   SEQUENCE_octet Buffer(iCLength, iCLength, cContent, TRUE);
+
+   int iOffset = 0; // Offset from the beginning of the buffer
+
+   for (int i = 1; i &lt;= 3; i++)
+   {
+     RC = pDoc-&gt;<b>writeBlock</b>(Buffer, iOffset, BSize, VErr); 
+...
+     iOffset += BSize; 
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A memory area is now copied to the vault server document. In this use case,
+we have chosen to use the <code>writeBlock</code> method. We could have used the
+<code>write</code> method as well. In fact, in our example, the <code>write</code>
+method would have been more appropriate since the whole data we want to write
+into the document is contained into a single memory area. The <code>writeBlock</code>
+method is useful when data is split among several memory areas.</p>
+<p>The parameter to pass to writeBlock are:</p>
+<ul>
+  <li>Buffer is the data to write</li>
+  <li>iOffset is the position into Buffer where the data to write start</li>
+  <li>Bsize is the size of the data to write</li>
+  <li><code>VErr</code> is an <i>ENOVIVaultError</i> class instance passed as
+    the last argument used if the method fails to convey information about the
+    failure.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Closing the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   RC = pDoc-&gt;<b>close</b>(VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The document must always be closed. Pay a special attention to the error
+management. If any kind of error occurs after a document has been opened, make
+sure it is closed before exiting the method in which you handle the document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Preparing the Transaction</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   RC = pSession-&gt;<b>prepare</b>(VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The vault is designed to cooperate with other data servers. So it supports a
+two-phase commit. That means that the save operation has been split into two
+steps: prepare and commit.&nbsp;This applies to all the vault documents
+currently managed by all the user sessions of the vault session. When preparing
+and committing the transaction, a check is performed to determine whether
+documents are opened. If an opened document exists, it is considered as &quot;in
+work&quot; and to ensure that no document is saved in an inconsistent state, the
+whole save operation is aborted.&nbsp;</p>
+<p>When preparing the transaction, all the necessary checks and most of the save
+operations are performed, the objective being to make sure that nothing will
+prevent from committing.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>Committing the Transaction</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   RC = pSession-&gt;<b>commit</b>(VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Committing the transaction is a very light operation validating what has been
+done when preparing the transaction.&nbsp;Once committed, all the modifications
+done since the previous commit are saved and become visible to the other users.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step11"></a>Ending the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   RC = <b>ENOVIVaultSessionFactory::endVaultSession</b>(pSession, VErr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This ends and closes all the opened user sessions and closes the vault
+session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to initialize the vault environment,
+create a document and copy a memory area into it, and finally save it.</p>
+<ul>
+  <li>The vault environment is initialized by creating a vault session using the
+    <code>ENOVIVaultSessionFactory::getVaultSession</code> static method that
+    returns a pointer to the <i>ENOVIVaultSession</i> interface. This pointer is
+    used to create a user session thanks to the <code>getUserSession</code>
+    method that returns a pointer to <i>ENOVIVaultUserSession</i></li>
+  <li>This pointer is used in turn to create the vault document as an empty
+    shell using the <code>createDocument</code> method of <i>ENOVIVaultUserSession</i>.
+    This document is handled as a pointer to the <i>ENOVIVaultDocument</i>
+    interface. Its URL, that is an external link that enables the document to be
+    found without any additional information, can be retrieved thanks to the <code>getURL</code>
+    method of <i>ENOVIVaultDocument</i></li>
+  <li>Then the vault document is opened in write mode, a memory area is copied
+    into it, and it is closed using the <code>openWrite</code>, <code>writeBlock</code>,
+    and <code>close</code> methods of <i>ENOVIVaultDocument</i> respectively</li>
+  <li>The document is then saved in the vault using a two-step transaction
+    thanks to the prepare and commit methods of the <i>ENOVIVaultSession</i>
+    interface</li>
+  <li>Finally, the vault and user session are closed using the environment is <code>ENOVIVaultSessionFactory::endVaultSession</code>
+    static method of the <i>ENOVIVaultSession</i> interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAEvcExtractDocIntoMem.htm">Extracting a Document from the
+      Vault Server to a Memory Area</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAEvcExtractDocIntoFile.htm">Extracting a Document from the
+      Vault Server to a File</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Oct 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

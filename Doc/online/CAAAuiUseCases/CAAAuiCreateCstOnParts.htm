@@ -1,0 +1,529 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Parallelism Constraint in an Assembly</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Assembly Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Parallelism Constraint in an Assembly</h3>
+      <em>Set a parallelism constraint between an assembly component and a plane</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAuiCreateCstOnParts use case. This use
+      case explains how to create an assembly parallelism constraint in a
+      Product document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAAuiCreateCstOnParts Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAAuiCreateCstOnParts Do</a></li>
+            <li><a href="#How">How to Launch CAAAuiCreateCstOnParts</a></li>
+            <li><a href="#Where">Where to Find the CAAAuiCreateCstOnParts Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA Assembly Design. Its main intent is to create geometrical relations
+between products. More specifically, you will learn how to:</p>
+<ul>
+  <li>Create a connector on a reference plane yz, and how to retrieve such a
+    reference plane</li>
+  <li>Create a connector on a plane of a part, and how to retrieve a plane</li>
+  <li>Create a constraint using these two connectors.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAuiCreateCstOnParts Use Case</h3>
+<p>CAAAuiCreateCstOnParts is a use case of the CAAAssemblyUI.edu framework that
+illustrates the CATAssemblyInterfaces framework capabilities.</p>
+<p>Before discussing the use case, some main concepts have to be introduced:</p>
+<ul>
+  <li>
+    <p>A parallelism constraint is a geometrical relation created between two
+    components</li>
+  <li>
+    <p>Making parallel two components means creating a geometrical parallelism
+    between two geometrical elements, one in the first component and the other
+    in the second one, such as lines, planes, etc.</li>
+  <li>
+    <p>The constrained components must be child components of the active
+    component</li>
+  <li>
+    <p>To create a constraint between two components, a connector must be
+    created in each of these components, and the constraint will apply to the
+    components through these connectors.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAuiCreateCstOnParts Do</h4>
+<p><img border="0" src="images/Bishop01.jpg" width="689" height="527"></p>
+<p>CAAAuiCreateCstOnParts:</p>
+<ul>
+  <li>Creates a Product document</li>
+  <li>Creates an empty part in the Product document. This part is named Part1
+    and is displayed thanks to its YZ plane</li>
+  <li>Inserts an existing component: the part named bishop</li>
+  <li>Creates a connector on the YZ plane of the empty part</li>
+  <li>Creates a connector on the first plane found in the planes belonging to
+    the bishop part. This plane is parallel to the XY plane</li>
+  <li>Creates a parallelism constraint between these two planes</li>
+</ul>
+<p>The parallelism constraint appears in the specification tree at the same
+level as the child components and they are displayed in the geometry.</p>
+<p>These concepts are the counterpart, on the programming side, of what the end
+users sees and manipulates on the screen. So we will start with the end user
+view in order to infer what the program manipulates inside.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAuiCreateCstOnParts</h4>
+<p>To launch CAAAuiCreateCstOnParts, you will need to set up the build time
+environment, then compile CAAAuiCreateCstOnParts along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAAuiCreateCstOnParts InputDirectory\Fou.CATPart OutputDirectory\</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAAuiCreateCstOnParts InputDirectory/Fou.CATPart OutputDirectory/</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><code>InputDirectory</code></td>
+      <td>The directory into which Fou.CATPart is stored, usually in the
+        resources directory of your RuntimeView</td>
+    </tr>
+    <tr>
+      <td><code>OutputDirectory</code></td>
+      <td>The directory where you want to store the created CATProduct</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAuiCreateCstOnParts Code</h4>
+<p>The CAAAuiCreateCstOnParts use case is located in the
+CAAAuiCreateCstOnParts.m module of the CAAAssemblyUI.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAssemblyUI.edu\CAAAuiCreateCstOnParts.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAssemblyUI.edu/CAAAuiCreateCstOnParts.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five main steps in CAAAuiCreateCstOnParts:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Creating of a Connector on a Reference Plane YZ</a></li>
+  <li><a href="#Step3">Creating a Connector on a Plane</a></li>
+  <li><a href="#Step4">Creating a Constraint</a></li>
+  <li><a href="#Step5">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAAuiCreateCstOnParts begins by checking that the command lines contains two
+arguments. It then creates a session, and creates a new Product document,
+reffered to using a pointer to the <i>CATDocument</i> class named <code>pDoc</code>,
+and retrieves the document's root product handled using the <code>piProductOnRoot</code>
+pointer. This is the usual sequence for creating a Product document and
+accessing its root product [<a href="#References">2</a>] [<a href="#References">3</a>].
+Then, a new part component and an existing part component are successively added
+to the product structure [<a href="#References">3</a>]. The following variables
+are created to be used in the following steps:</p>
+<table width="100%">
+  <tr>
+    <td><code>piInstanceProd1</code></td>
+    <td>A pointer to <i>CATIProduct</i> onto the part component created from an
+      empty part</td>
+  </tr>
+  <tr>
+    <td><code>piInstanceProd2</code></td>
+    <td>A pointer to <i>CATIProduct</i> onto the part component created from the
+      existing Bishop part</td>
+  </tr>
+  <tr>
+    <td><code>pPartDoc2</code></td>
+    <td>A pointer to <i>CATDocument</i> onto the existing Bishop part document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating of a Connector on a Reference Plane XY of the
+Empty Part</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATIConnector * pConnector1 = NULL; 
+  CATILinkableObject_var spLO_InstProd1; 
+  if( SUCCEEDED(piInstanceProd1-&gt;GetShapeRep(spLO_InstProd1, &quot;Default&quot;, CATPrd3D, TRUE)) )
+  {
+    CATIPrtPart *pPart_InstProd1 = NULL;
+    rc = spLO_InstProd1-&gt;QueryInterface(IID_CATIPrtPart, (void **) &amp;pPart_InstProd1);
+    if( SUCCEEDED(rc) )
+    {
+      CATListValCATISpecObject_var spListRefPlanes = pPart_InstProd1-&gt;GetReferencePlanes();
+      // defines the yz plane as the first sketch plane
+      CATILinkableObject *pLO_xYPlane = NULL;
+      if( spListRefPlanes.Size() )
+      {
+        CATISpecObject_var spXYPlane = spListRefPlanes[1];
+        if( spXYPlane != NULL_var )
+        {
+          rc = spXYPlane-&gt;QueryInterface(IID_CATILinkableObject ,(void **) &amp;pLO_XYPlane);
+          if ( SUCCEEDED(rc) ) 
+          {
+            int iCreation = 0;
+            rc = ::GetProductConnector(pLO_XYPlane,
+                                       piInstanceProd1,
+                                       piProductOnRoot,
+                                       0,
+                                       pConnector1,
+                                       iCreation);
+            pLO_XYPlane-&gt;Release();
+            pLO_XYPlane = NULL;
+          }
+        }
+      }
+      pPart_InstProd1-&gt;Release();
+      pPart_InstProd1 = NULL;
+    }
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The XY plane is accessed by scanning the Part document structure [<a href="#References">4</a>]. 
+First we retrieve the shape representation of <code>piInstanceProd1</code>, 
+which is the Mechanical Part and ask it a pointer to <i>CATIPrtPart</i>. Then we 
+get the reference planes thank to&nbsp; and keep the first one, which is the XY 
+plane. A <i>CATILinkable</i> pointer is retrieved from the plane
+and is used to create the connector using the <code>GetProductConnector</code>
+global function, whose arguments are:</p>
+<table width="100%" id="table1">
+  <tr>
+    <td valign="top"><code>spiLinkableOnPlane</code></td>
+    <td valign="top">The geometric object onto which the connector is to be
+      created or retrieved. This object must be linkable to ensure its stability
+      during sessions</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piInstanceProd1</code></td>
+    <td valign="top">The component instance containing the geometric object
+      above</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piProductOnRoot</code></td>
+    <td valign="top">The active component, here the Product document's root
+      product</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>0</code></td>
+    <td valign="top">The searching mode: set to 0, it requests the function to
+      create the connector if no connector exists that matches the preceding
+      arguments</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piConnector1</code></td>
+    <td valign="top">The resulting connector, as a pointer to <i>CATIConnector</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>creationStatus</code></td>
+    <td valign="top">This is an output parameter. It is set to 1, meaning that
+      the connector has been created</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating a Connector on a Plane of the Bishop Part</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATInit * piInitOnDoc = NULL;
+  rc = pPartDoc2-&gt;QueryInterface(IID_CATInit, (void**)&amp;piInitOnDoc2);
+  if ( SUCCEEDED(rc) )
+  {
+    CATIPrtContainer *piPrtContainerOnRoot =
+     (CATIPrtContainer*)piInitOnDoc2-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+     piInitOnDoc2-&gt;Release();
+
+    CATIPrtPart_var spiPrtPartOnPartBody (NULL_var);
+    if( NULL != piPrtContainerOnRoot )
+    {
+      spiPrtPartOnPartBody = piPrtContainerOnRoot-&gt;<b>GetPart</b>();
+      piPrtContainerOnRoot-&gt;Release();      
+    }
+    CATIDescendants *piDescendantsOnPart= NULL;
+    CATLISTV(CATISpecObject_var) Planes;
+    CATILinkableObject_var  spiLinkableOnPlane (NULL_var);
+    CATIConnector * piConnector2 = NULL;
+    if( SUCCEEDED(spiPrtPartOnPartBody-&gt;QueryInterface(<b>IID_CATIDescendants</b>,
+                                                       (void**)&amp;piDescendantsOnPart)) )
+    {
+      piDescendantsOnPart-&gt;<b>GetAllChildren</b>(&quot;CATPlane&quot;, Planes);
+      piDescendantsOnPart-&gt;Release();
+      if (Planes.Size())
+      {
+        int creationStatus = 0;
+        spiLinkableOnGeometry = Planes[1];
+        if ( NULL_var != spiLinkableOnGeometry )
+        {
+          ::<b>GetProductConnector</b>((CATILinkableObject *)spiLinkableOnPlane,
+                                 piInstanceProd2,
+                                 piProductOnRoot,
+                                 0 ,
+                                 piConnector2,
+                                 creationStatus);
+        }
+      }
+    }
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The plane onto which a connector will be created is retrieved by scanning the
+Part document structure [<a href="#References">4</a>]. First, we have a pointer,
+<code>pPartDoc2</code>, to the <i>CATInit</i> interface onto the Part document,
+and the Part document root container is retrieved as a pointer to <i>CATIPrtContainer</i>
+thanks to the <code>GetRootContainer</code> method of <i>CATInit</i>. Then the
+Mechanical Part is retrieved from this container as a <i>CATIPrtPart</i> smart pointer
+thanks to the <code>GetPart</code> method of <i>CATIPrtContainer</i>. The 
+Mechanical Part is asked for a pointer to the <i>CATIDescendants</i> interface that enables
+a collection of all the objects that implement the <i>CATPlane</i> interface to
+be retrieved thanks to the <code>GetAllChildren</code> method. If at least one
+plane is retrieved, a <i>CATILinkable</i> pointer is retrieved from the plane
+and is used to create the connector using the <code>GetProductConnector</code>
+global function, whose arguments are:</p>
+<table width="100%">
+  <tr>
+    <td valign="top"><code>spiLinkableOnPlane</code></td>
+    <td valign="top">The geometric object onto which the connector is to be
+      created or retrieved. This object must be linkable to ensure its stability
+      during sessions</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piInstanceProd2</code></td>
+    <td valign="top">The component instance containing the geometric object
+      above</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piProductOnRoot</code></td>
+    <td valign="top">The active component, here the Product document's root
+      product</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>0</code></td>
+    <td valign="top">The searching mode: set to 0, it requests the function to
+      create the connector if no connector exists that matches the preceding
+      arguments</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piConnector2</code></td>
+    <td valign="top">The resulting connector, as a pointer to <i>CATIConnector</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>creationStatus</code></td>
+    <td valign="top">This is an output parameter. It is set to 1, meaning that
+      the connector has been created</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating a Constraint</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATLISTV (CATBaseUnknown_var) ConnectorList;
+  ConnectorList.Append(spiConnector1);
+  ConnectorList.Append(piConnector2);
+  piConnector2-&gt;Release();
+
+  CATIAConstraint *piCst = NULL;
+  rc = ::<b>CreateConstraint</b>(catCstTypeParallelism,
+                          ConnectorList,
+                          NULL,
+                          piProductOnRoot,
+                          piCst);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>To create a constraints, the connectors must be first put in a collection.
+Then, the constraint can be created using the <code>CreateConstraint</code>
+global function. <code>CreateConstraint</code> has the following arguments.</p>
+<table width="100%">
+  <tr>
+    <td valign="top"><code>catCstTypeParallelism</code></td>
+    <td valign="top">The constraint's type: a parallelism constraint.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>ConnectorList</code></td>
+    <td valign="top">The list which contains the connectors involved in the
+      constraint.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>NULL</code></td>
+    <td valign="top">The constraint's value. For angle or offset constraints
+      only.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piProductOnRoot</code></td>
+    <td valign="top">The active component under which the constraint is inserted
+      in the sprecification tree</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>piCst</code></td>
+    <td valign="top">The resulting constraint</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Epilog</h4>
+<p>The three documents created are saved:</p>
+<table width="100%">
+  <tr>
+    <td>Bishop.CATProduct</td>
+    <td>The Product document that contains the Bishop part</td>
+  </tr>
+  <tr>
+    <td>Part1.CATProduct</td>
+    <td>The Product document that contains the empty part</td>
+  </tr>
+  <tr>
+    <td>CstOnParts.CATProduct</td>
+    <td>The Product document that contains the assembly with the constraint
+      created</td>
+  </tr>
+</table>
+<p>Then, the session is closed, as usual [<a href="#References">5</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to constrain two components of an
+assembly, by creating a connector onto a geometric object in each of the
+products to constrain, and creating a constraint using these two connectors.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAPstUseCases/CAAPstAddComponent.htm">Adding
+      Components to a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrTopologyMarkup.htm">Marking
+      Up Topology In a .CATPart Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAPstUseCases/CAAPstMovable.htm">Positioning
+      Products in a Product Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

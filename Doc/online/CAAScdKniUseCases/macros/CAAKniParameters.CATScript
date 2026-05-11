@@ -1,0 +1,128 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      This macro:
+'                 1 - scans the list of parameters of a CATPart document
+'                 2 - for each parameter, determines whether a parameter is hidden,
+'                     whether it is a boolean type parameter
+'                     and sets its value to true
+'                 3 - displays the list of hidden parameters
+'                     along with their values and comments
+'                 4 - asks you to modify the status (Hidden->Show) of the parameters
+'                     and to re-run to macro.
+'                 The parameter comments are those you specify by using the Edit comments...
+'                 command from the contextual menu. After the list of hidden parameters
+'                 is displayed you can turn the status of each parameters to Show 
+'                 and run again the macro.
+'
+'   Assumptions:  This macro is intended to be run on the 
+'                 KwrMacroHiddenParameters.CATPart document.
+'                 However, you can run this macro on any CATPart document       
+'                 The KwrMacroHiddenParameters.CATPart sample has three 
+'                 hidden parameters: "Task1" , "Task2" and "Task3", all of them 
+'                 are booleans with their initial values set to false. 
+'                 As these parameters are in a hidden status, they are not displayed 
+'                 in the specification tree but they are visible in the f(x) dialog box.
+'
+'
+'   Author:       Carole ROULLE, Pierre Grignon
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6  
+'   revision V5R13
+' ***********************************************************************
+
+Sub CATMain()
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+    Dim oDoc As Document
+    set oDoc = CATIA.Documents.Open(sFilePath)
+
+ ' Set the CATIA popup file alerts to False
+ ' It prevents to stop the macro at each alert during its execution
+ CATIA.DisplayFileAlerts = False
+
+ ' Retrieve your active document - CATIA is your application 
+ ' You get the active document by using the ActiveDocument property
+ ' on your application object
+ Dim oActiveDoc As Document 
+ Set oActiveDoc = CATIA.ActiveDocument 
+ 
+ ' Check whether the document is a CATPart
+ ' InStr is a standard VB function
+ If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
+
+    ' Retrieve the collection object which contains
+    ' all the document parameters
+    Dim oParams As Parameters 
+    Set oParams = oActiveDoc.Part.Parameters 
+
+    ' Declare the variables to be used in the message box
+    ' which displays the hidden parameters
+    Dim strRel0 As String
+    Dim strRel1 As String
+    Dim strRel2 As String
+    Dim HiddenNumber As Integer
+    strRel0 = "Name   Value   Comments"
+    strRel1 = "Here is the list of hidden parameters" & vbCrLf & strRel0
+ 
+    ' Scan the parameter list,
+    ' test whether the value returned by the Hidden property is "True",
+    ' test whether the type of the parameter is BoolParam,
+    ' increment the HiddenNumber variable
+    ' set to true the boolean value of the hidden parameters (if any) 
+    ' Note about the BoolParam type test:
+    ' The statement oParams.Item(i).Value = "true" raises an error
+    ' whenever the parameter is not a boolean
+    Dim i As Integer
+    For i = 1 To oParams.Count
+       if (oParams.Item(i).Hidden = "True") Then
+         if TypeName(oParams.Item(i)) = "BoolParam" Then
+         strRel1 = strRel1 & vbCrLf & oParams.Item(i).Name &_
+             "   " & oParams.Item(i).Value &_
+             "   " & "'" & oParams.Item(i).Comment &_
+             "'" : HiddenNumber = HiddenNumber + 1 : oParams.Item(i).Value = "true"
+         end if
+       end if 
+
+    Next
+
+    ' Display the list of hidden parameters.
+    ' The parameter names, values and comments
+    ' are displayed in a message box.
+    ' Ask you to modify interactively the status of the
+    ' parameters and to re-run the macro.
+
+    strRel2 = "NOW, SHOW THE HIDDEN PARAMETERS" &_ 
+    vbCrLf & vbCrLf & "IN THE f(x) DIALOG BOX," &_
+    vbCrLf & "  1 ) RIGHT-CLICK THE PARAMETER VALUE FIELD " &_
+    vbCrLf & "  2 ) SELECT THE SHOW COMMAND FROM THE CONTEXTUAL MENU" &_
+    vbCrLf & vbCrLf & "THEN RE-RUN THE MACRO "
+    If (HiddenNumber > 0) Then
+       MsgBox strRel1  
+       MsgBox strRel2 
+    Else 
+       MsgBox "There are no hidden parameters in this document"
+    End If
+
+Else 
+   MsgBox "The active document must be a CATPart"
+End If
+
+End Sub
+
+

@@ -1,0 +1,415 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Create Datum Mode</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Create Datum Mode</h3>
+      <em>Using CATIMmiPartInfrastructurePreferencesAtt</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows to use the  
+		<i>CATIMmiPartInfrastructurePreferencesAtt</i> interface to control 
+		yourself the datum mode [<a href="#References">1</a>] when creating a 
+		mechanical feature. 
+		 
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrCreateDatumMode Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrCreateDatumMode Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrCreateDatumMode</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrCreateDatumMode Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case, an interactive command, is intended to show you how to use the
+<i>CATIMmiPartInfrastructurePreferencesAtt</i> to manage the CreateDatum mode</p>
+<ul>
+	<li>To change or Retrieve the current mode</li>
+	<li>To be informed when the current mode is modified by another command</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="UseCase"></a>The CAAMmrCreateDatumMode Use Case</h3>
+<p>CAAMmrCreateDatumMode is a use case of the CAAMechanicalModeler.edu framework that illustrates 
+MecModInterfaces
+framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="What"></a>What Does CAAMmrCreateDatumMode Do</h4>
+<p>The use case is functionaly similar to the CreateDatum Setting command, that 
+you can retrieve in Generative Shape Design application
+<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22">. </p>
+<p>The scenario to reach the command is the following:</p>
+<ul>
+	<li><b>Launch</b> CATIA</li>
+	<li>Start , Shape , <b>Generative Shape Design </b></li>
+	<li><b>Create</b> a new <b>Part</b></li>
+	<li>Retrieve the &quot;<b>Use Create Datum Mode</b>&quot; toolbar (<a href="#Addin Access">Addin 
+	Access</a>)</li>
+	<li>Launch the <b>CAAMmrCreateDatumMode</b> Command&nbsp; [<a name="Fig.1">Fig.1</a>]</li>
+</ul>
+<blockquote>
+	<table border="0" id="table2">
+	
+
+		<tr>
+			<td>
+			<img border="0" src="images/CAAMmrCreateDatumModeCmd.png" width="38" height="65"></td>
+		</tr>
+	</table>
+</blockquote>
+<ul>
+	<li>The following dialog box is opened</li>
+</ul>
+<blockquote>
+	<table border="0" id="table3">
+	<caption><a name="Fig.2">Fig.2</a> CAAMmrCreateDatumMode Dialog Box</caption>
+		<tr>
+			<td>
+			<img border="0" src="images/CAAMmrCreateDatumModeDlg.png"></td>
+		</tr>
+	</table>
+	<ul>
+		<li><b>First line:</b> On the right top, you have the current value of 
+		the datum mode</li>
+		<li><b>Second line</b>: a combo to select the new mode, and a push 
+		button (<b>Apply</b>) to modify the current mode. Push Apply button 
+		modify the editor just above.</li>
+	</ul>
+</blockquote>
+<ul>
+	<li>Close the dialog box to end the command</li>
+</ul>
+<p>Now some scenarios to understand the meaning of each type of datum mode.</p>
+<ul>
+	<li>Retrieve the CreateDatum Setting command- check that the icon is like 
+	that:
+	<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22"></li>
+	<li>Create three points</li>
+	<li>Open the <b>CAAMmrCreateDatumMode</b> Dialog box</li>
+	<li>Choose the &quot;<b>NoDatumCreation</b>&quot; mode<ul>
+		<li>The icon of CreateDatum Setting is still :
+		<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22"></li>
+	</ul>
+	</li>
+	<li>Create a line&nbsp; - the line is an associative feature - Modify the 
+	position of one point, it will imply a line's modification.<ul>
+		<li>After the line creation, the icon of CreateDatum Setting is still :
+		<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22"></li>
+	</ul>
+	</li>
+	<li>Choose the &quot;<b>DatumCreationTemporary</b>&quot; mode, and Push the Apply 
+	button<ul>
+		<li>The icon of CreateDatum Setting is now :
+		<a href="../CAAMmrUseCases/images/CAAMmrCreateDatumModeIcon.png">
+		<img border="0" src="images/CAAMmrCreateDatumModeIcon.png"></a></li>
+	</ul>
+	</li>
+	<li>Create a line&nbsp; - the line is no more an associative feature - 
+	Modify the position of one point, the line is not modified<ul>
+	<li>After the line creation, the icon of CreateDatum Setting is now :
+	<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22"> 
+	- and the Current state in the dialog is <b>NoDatumCreation</b></li>
+</ul>
+	</li>
+	<li>Choose the &quot;<b>DatumCreationPermanent</b>&quot; mode, and Push the Apply 
+	button<ul>
+	<li>The icon of CreateDatum Setting is now :
+		<a href="../CAAMmrUseCases/images/CAAMmrCreateDatumModeIcon.png">
+		<img border="0" src="images/CAAMmrCreateDatumModeIcon.png"></a></li>
+</ul>
+	</li>
+	<li>Create a line&nbsp; - the line is no more an associative feature - 
+	Modify the position of one point, the line is not modified<ul>
+	<li>After the line creation, the icon of CreateDatum Setting is still now :
+		<a href="../CAAMmrUseCases/images/CAAMmrCreateDatumModeIcon.png">
+		<img border="0" src="images/CAAMmrCreateDatumModeIcon.png"></a> - and 
+	the Current state in the dialog is still<b> DatumCreationPermanent</b></li>
+</ul>
+	</li>
+	<li>Push the CreateDatum Setting button, the icon is now
+	<img border="0" src="../CAAMmrTechArticles/images/I_Isolated.jpg" width="22" height="22"><ul>
+	<li>In the dialog box, the name of the current mode is <b>NoDatumCreation</b></li>
+</ul>
+	</li>
+	<li>Push the CreateDatum Setting button, the icon is now
+		<a href="../CAAMmrUseCases/images/CAAMmrCreateDatumModeIcon.png">
+		<img border="0" src="images/CAAMmrCreateDatumModeIcon.png"></a><ul>
+	<li>In the dialog box, the name of the current mode is <b>DatumCreationTemporary</b></li>
+</ul>
+	</li>
+</ul>
+<p>This scenario shows that the datum mode is kept by a setting (<b>data model</b>), 
+and&nbsp; whatever can get or set the value kept by the data model. In case of 
+modification, the model sends an event, and whatever has set callback can be 
+informed of the model's modification. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="How"></a>How to Launch CAAMmrCreateDatumMode</h4>
+<p>To launch CAAMmrCreateDatumMode, you will need to set up the build time 
+environment, then compile CAAMmrCreateDatumMode along with its prerequisites, 
+set up the run time environment, and then execute the use case .</p>
+<p>See the <a href="#What">What Does CAAMmrCreateDatumMode Do</a> Section for 
+the scenario. </p>
+<p><b><a name="Addin Access">Addin Access</a></b></p>
+<p>Before launching CATIA, Remove the # character in the 
+CAAMechanicalModeler.edu.dico in front of the following line: </p>
+<table class="code" id="table4">
+	<tr>
+		<td>
+		<pre>...
+#CAA# CAAMmrSettingsAddIn      CATIWorkbenchAddin              libCAAMmrSettingsAddIn
+#CAA# CAAMmrSettingsAddIn      CATIShapeDesignWorkshopAddin    libCAAMmrSettingsAddIn
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="Where"></a>Where to Find the CAAMmrCreateDatumMode Code</h4>
+<p>The CAAMmrCreateDatumMode use case is made of several classes located in two 
+modules:</p>
+<ul>
+	<li>CAAMmrUseCreateDatumMode.m module of the CAAMechanicalModeler.edu framework</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It contains the <b>CAAMmrCreateDatumMode</b> 
+Dialog box [<a href="#Fig.2">Fig.2</a>] definition CAAMmrDatumWindowCmd.cpp/CAAMmrDatumWindowCmd.h</p>
+<ul>
+	<li>CAAMmrSettingsAddIn.m module of the CAAMechanicalModeler.edu framework</li>
+</ul>
+<blockquote>
+	<p>It contains the addin of the<b> Generative Shape Design</b> Workbench<b> 
+	-</b> This addin contains the definition of the &quot;<b>Use Create Datum Mode</b>&quot; 
+	[<a href="#Fig.1">Fig.1</a>] toolbar </p>
+	<p>This part is not described in the article. Refer to the reference article
+	<a href="#">Creating an Add-in</a> [<a href="#References">2</a>]</p>
+</blockquote>
+<p>These two modules are located inside </p>
+<table>
+  <tr>
+    <td><code>InstallRootDirectory\</code>CAAMechanicalModeler<code>.edu\ </code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code>  [<a href="#References">3</a>] is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAAMmrCreateDatumMode:</p>
+<ol>
+  <li><a href="#Retrieving the Component Managing the Datum Mode">Retrieving the Component Managing the Datum Mode</a></li>
+  <li><a href="#Adding Callback to be informed of Datum mode modification">Adding Callback to be 
+	Informed of Datum Mode Modification</a></li>
+	<li><a href="#Refreshing the dialog box">Refreshing the Dialog Box</a></li>
+	<li><a href="#Modifying The Current Datum Mode">Modify the Current Datum Mode</a></li>
+	<li><a href="#Removing">Removing Callback</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="Retrieving the Component Managing the Datum Mode"></a>Retrieving the Component Managing the 
+Datum Mode</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   HRESULT rc = S_OK;
+   rc = ::CATInstantiateComponent (&quot;<b>CATMmuPartInfrastructurePreferencesCtrl</b>&quot;,
+           IID_CATIMmiPartInfrastructurePreferencesAtt, (void**) &amp;_piCATIMmiCreateDatumSettingAtt);  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_piCATIMmiCreateDatumSettingAtt</code> is a data member of the <b>CAAMmrCreateDatumMode</b> 
+dialog box. It is a <i>CATIMmiPartInfrastructurePreferencesAtt</i> interface 
+pointer on the <code>CATMmuPartInfrastructurePreferencesCtrl</code> component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+
+<h4> 
+<a name="Adding Callback to be informed of Datum mode modification"></a>Adding Callback to be 
+Informed of Datum mode Modification</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATCallbackEvent eventName=&quot;&quot;;
+    <b>_piCATIMmiCreateDatumSettingAtt</b>-&gt;<b>GetDatumModeEvent</b>(eventName);
+
+    ::<b>AddCallback</b>(this,
+           _piCATIMmiCreateDatumSettingAtt,<b>eventName</b>,
+           (CATSubscriberMethod)&amp;CAAMmrDatumWindowCmd::<b>ReceiveDatumModify</b>, 
+           NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Thanks the <code>GetDatumModeEvent</code> method you retrieve the name of the 
+event which will be sent by the <code>CATMmuPartInfrastructurePreferencesCtrl</code> 
+component when someone will modify the datum mode. The <code>ReceiveDatumModify</code> 
+is a method of the dialog box refreshing the dialog box. </p>
+<h4><a name="Refreshing the dialog box"></a>Refreshing the Dialog Box</h4>
+<p>This method is called by two methods of the dialog box </p>
+<ul>
+	<li>The constructor ( initialization )</li>
+	<li><code>The ReceiveDatumModify</code> method&nbsp; ( due to a callback)</li>
+</ul>
+<p>This method (InitWindow) retrieves the current datum mode, and modify the 
+right top editor [<a href="#Fig.2">Fig.2</a>] </p>
+
+<table class="code" id="table6" >
+  <tr>
+    <td>
+      <pre>...
+    CATIMmiPartInfrastructurePreferencesAtt::PreferenceMode TheMode ; 
+    rc = _piCATIMmiCreateDatumSettingAtt-&gt;<b>GetDatumMode</b>(TheMode);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The editor is modified according to the value of the <code>GetDatumMode</code> 
+method results. </p>
+<h4><a name="Modifying The Current Datum Mode"></a>Modify the Current Datum Mode</h4>
+<p>In the constructor, not detailed here, we have set a callback to be informed 
+when the end user push the Apply button. This callback is a method (<code>Apply</code> 
+method) whose the 
+principle is the following:</p>
+<ul>
+	<li>Retrieve the combo value</li>
+ 
+<table class="code" id="table7" >
+	<tr>
+		<td>
+		<pre>...
+    int LineSelected = _pDatumChoice-&gt;<b>GetSelect</b>() ;
+   _pDatumChoice-&gt;GetLine(usParam[1],LineSelected);
+...</pre></td>
+	</tr>
+</table>
+ 
+	<li>Modify the Datum value<table class="code" id="table8" >
+  <tr>
+    <td>
+      <pre>...
+    CATIMmiPartInfrastructurePreferencesAtt::PreferenceMode TheMode ;
+    ...
+    rc = _piCATIMmiCreateDatumSettingAtt-&gt;<b>SetDatumMode</b>(TheMode);
+...</pre>
+    </td>
+  </tr>
+</table>
+	</li>
+</ul>
+
+<blockquote>
+	<p><code>TheMode</code> is valuated according to the value returned by the 
+	combo (<code>LineSelected</code>)</p>
+</blockquote>
+
+<p>Note that the internal method (<code>InitWindow</code>) is not directly 
+called by the<code> Apply</code>&nbsp; method. Since the <code>SetDatumMode</code> 
+method is called, the <code>CATMmuPartInfrastructurePreferencesCtrl</code> 
+component sends a Modify event, and the <code>
+<a href="#Adding Callback to be informed of Datum mode modification">ReceiveDatumModify</a></code> 
+method is called. </p>
+
+<h4> 
+<a name="Removing"></a>Removing Callback&nbsp; </h4>
+<table class="code" id="table5">
+  <tr>
+    <td>
+      <pre>...
+      ::<b>RemoveSubscriberCallbacks</b>(this,_piCATIMmiCreateDatumSettingAtt);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the dialog box destructor method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The  
+		<i>CATIMmiPartInfrastructurePreferencesAtt</i> interface enables you to 
+retrieve the current datum mode and to modify it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+	<a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The Contents of the Specification Container - Geometrical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>
+	<a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+	Creating an Add-in</a></td>
+  </tr>
+  <tr>
+       <td valign="top">[3]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright &#169; 1999-2006, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm">CAA V5 CATIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm">CAA V5 DELMIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm">CAA V5 ENOVIA</a></p>
+
+</body>
+
+</html>

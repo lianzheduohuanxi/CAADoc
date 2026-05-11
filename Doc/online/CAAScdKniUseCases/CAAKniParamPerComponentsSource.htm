@@ -1,0 +1,96 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniParamPerComponents.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro filters the parameters created in a CATProduct </font>
+<font color="#008000">'                 document</font>
+<font color="#008000">'                 1 - It displays the parameters right below </font>
+<font color="#008000">'                     the root product</font>
+<font color="#008000">'                 2 - It displays the parameters belonging to a component </font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumptions:  This macro is intended to be run on the </font>
+<font color="#008000">'                 CAAKniClash.CATPoduct document.</font>
+<font color="#008000">'                 However, you can run this macro on any CATProduct document       </font>
+<font color="#008000">'                 which has a rule base.</font>
+<font color="#008000">'</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE, Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6  </font>
+<font color="#008000">'   revision V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF"> Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF"> Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+<font color="#0000FF"> Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF"> Dim </font>j<font color="#0000FF"> As </font>Integer
+ <font color="#008000">' Check whether the document is a CATPart</font>
+ <font color="#008000">' InStr is a standard VB function</font>
+<font color="#0000FF"> If </font>(InStr(oActiveDoc.Name,".CATProduct")) &lt;&gt; 0  Then 
+
+<font color="#0000FF">    Dim </font>oParams<font color="#0000FF"> As </font>Parameters
+<font color="#0000FF">    Set </font>oParams = oActiveDoc.Product.Parameters
+    msgbox oParams.Count
+    
+    <font color="#008000">' Search for the parameters having Product1 as their </font>
+    <font color="#008000">' "grand-parent"</font>
+    <font color="#008000">' Note that the parent of parameters created right below</font>
+    <font color="#008000">' a root product is the Parameters feature.</font>
+<font color="#0000FF">    For </font>i = 1<font color="#0000FF"> to </font>oParams.Count
+<font color="#0000FF">     if </font>oParams.item(i).Parent.Parent.name = "Product1" then 
+      msgbox oParams.item(i).name
+<font color="#0000FF">     end if</font>
+<font color="#0000FF">    Next </font>
+
+    <font color="#008000">' Searches for the parameters right below the p2.1 component</font>
+<font color="#0000FF">    Dim </font>oProductList<font color="#0000FF"> As </font>Products
+<font color="#0000FF">    Set </font>oProductList = oActiveDoc.Product.Products
+<font color="#0000FF">    For </font>j = 1<font color="#0000FF"> to </font>oProductList.Count
+<font color="#0000FF">       if </font> oProductList.Item(j).Name = "p2.1" then
+<font color="#0000FF">       Dim </font>oProd<font color="#0000FF"> As </font>Product
+<font color="#0000FF">       Set </font>oProd = oProductList.item(j)
+       <font color="#008000">'Msgbox oProductList.Item(j).Name</font>
+<font color="#0000FF">       For </font>i = 1<font color="#0000FF"> to </font>oProd.Parameters.Count
+          Msgbox oProd.Parameters.item(i).name
+          Msgbox oProd.Parameters.item(i).Parent.Parent.name 
+<font color="#0000FF">        Next  </font>
+<font color="#0000FF">       end if</font>
+<font color="#0000FF">    Next       </font>
+
+ Else 
+    MsgBox "The active document must be a CATProduct"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

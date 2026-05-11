@@ -1,0 +1,184 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAADriDimension.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre><font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language=&quot;VBScript&quot;
+
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2002</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To analyze a subset of dimensions pointed by text leaders</font>
+<font color="#008000">'                in the active drafting document.</font>
+<font color="#008000">'                That macro checks all dimensions pointed by text leader elements.</font>
+<font color="#008000">'                If dimensions have a wrong display (tolerances or wrong frame)</font>
+<font color="#008000">'                text leader object is highlighted.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   A Drafting document should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author: </font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R10</font>
+<font color="#008000">' Locales:       English </font>
+<font color="#008000">' CATIA Level: V5R10 </font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'1/ Read active CATDrawing Document</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>DrwDoc<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">Set </font>DrwDoc = CATIA.ActiveDocument
+
+<font color="#008000">' Get Selection Object and clear it</font>
+<font color="#0000FF">Dim </font>DrwSelect<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">Set </font>DrwSelect = DrwDoc.Selection
+
+<font color="#008000">' Variables declaration</font>
+<font color="#0000FF">Dim </font>ElemDispatch<font color="#0000FF"> As </font>CATBaseDispatch
+<font color="#0000FF">Dim </font>NomObj<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>numsheet<font color="#0000FF"> As </font>Long
+<font color="#0000FF">Dim </font>numview<font color="#0000FF"> As </font>Long
+<font color="#0000FF">Dim </font>numtxt<font color="#0000FF"> As </font>Long
+<font color="#0000FF">Dim </font>numleader<font color="#0000FF"> As </font>Long
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'2/ Scan all the sheet of the current drawing (Included detail sheet)</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>DrwSheets<font color="#0000FF"> As </font>DrawingSheets
+<font color="#0000FF">Set </font>DrwSheets = DrwDoc.Sheets
+<font color="#0000FF">Dim </font>CurrentSheet<font color="#0000FF"> As </font>DrawingSheet
+
+<font color="#008000">'Read the current sheet to restore it at the end of the macro</font>
+<font color="#0000FF">Dim </font>SheetToRestore<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">Set </font>SheetToRestore = DrwSheets.ActiveSheet
+
+<font color="#0000FF">For </font>numsheet = 1<font color="#0000FF"> To </font>DrwSheets.Count
+
+<font color="#0000FF">   Set </font>CurrentSheet = DrwSheets.Item(numsheet)
+   
+   <font color="#008000">' Active Currentsheet</font>
+   CurrentSheet.Activate
+   
+   <font color="#008000">' Clear the selection</font>
+   DrwSelect.Clear
+   
+<font color="#0000FF">   Dim </font>DrwViews<font color="#0000FF"> As </font>DrawingViews
+<font color="#0000FF">   Set </font>DrwViews = CurrentSheet.Views
+   
+   <font color="#008000">'Read the current view to restore it at the end of the macro</font>
+<font color="#0000FF">   Dim </font>ViewToRestore<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">   Set </font>ViewToRestore = DrwViews.ActiveView
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'3/ Scan all the view of the current sheet</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#0000FF">   Dim </font>CurrentView<font color="#0000FF"> As </font>DrawingView
+   
+<font color="#0000FF">   For </font>numview = 1<font color="#0000FF"> To </font>DrwViews.Count
+   
+<font color="#0000FF">      Set </font>CurrentView = DrwViews.Item(numview)
+      
+      <font color="#008000">'Active the current view</font>
+      CurrentView.Activate
+
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'4/ Scan all the texts of the current view</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+
+<font color="#0000FF">      Dim </font>Texts<font color="#0000FF"> As </font>DrawingTexts
+<font color="#0000FF">      Set </font>Texts = CurrentView.Texts
+         
+<font color="#0000FF">      For </font>numtxt = 1<font color="#0000FF"> To </font>Texts.Count
+         
+<font color="#0000FF">         Dim </font>CurrentText<font color="#0000FF"> As </font>DrawingText
+<font color="#0000FF">         Set </font>CurrentText = Texts.Item(numtxt)
+            
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'5/ Scan all the leaders of the current text</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+               
+<font color="#0000FF">         Dim </font>Leaders<font color="#0000FF"> As </font>DrawingLeaders
+<font color="#0000FF">         Set </font>Leaders = CurrentText.Leaders
+ 
+<font color="#0000FF">         For </font>numleader = 1<font color="#0000FF"> To </font>Leaders.Count
+<font color="#0000FF">            Dim </font>CurrentLeader<font color="#0000FF"> As </font>DrawingLeader
+<font color="#0000FF">            Set </font>CurrentLeader = Leaders.Item(numleader)
+                    
+            <font color="#008000">' Manage error on HeadTarget method when</font>
+            <font color="#008000">' no element is pointed by the text leader.</font>
+            On Error Resume Next
+            <font color="#008000">' Get object pointed on the leader</font>
+<font color="#0000FF">            Set </font>ElemDispatch = Nothing
+<font color="#0000FF">            Set </font>ElemDispatch = CurrentLeader.HeadTarget
+            NomObj = TypeName(ElemDispatch)
+                       
+<font color="#008000">'------------------------------------------------------------------------------</font>
+<font color="#008000">'6/ Check tolerances and the frame type of the dimension pointed by text leader</font>
+<font color="#008000">'------------------------------------------------------------------------------</font>
+
+            <font color="#008000">' A dimension is pointed by text leader</font>
+<font color="#0000FF">            If </font>NomObj = &quot;DrawingDimension&quot; Then
+                            
+               <font color="#008000">' Get the dimension object</font>
+<font color="#0000FF">               Dim </font>PointedDim<font color="#0000FF"> As </font>DrawingDimension
+<font color="#0000FF">               Set </font>PointedDim = ElemDispatch
+                   
+               <font color="#008000">' Read dimension tolerances</font>
+<font color="#0000FF">               Dim </font>oTolType<font color="#0000FF"> As </font>Long
+<font color="#0000FF">               Dim </font>oDisplayMode<font color="#0000FF"> As </font>Long
+<font color="#0000FF">               Dim </font>oTolName<font color="#0000FF"> As </font>String
+<font color="#0000FF">               Dim </font>oUpTolS<font color="#0000FF"> As </font>String
+<font color="#0000FF">               Dim </font>oLowTolS<font color="#0000FF"> As </font>String
+<font color="#0000FF">               Dim </font>oUpTolD<font color="#0000FF"> As </font>Double
+<font color="#0000FF">               Dim </font>oLowTolD<font color="#0000FF"> As </font>Double
+               PointedDim.GetTolerances oTolType, oTolName, oUpTolS, oLowTolS, oUpTolD, oLowTolD, oDisplayMode
+    
+               <font color="#008000">' Read dimension frame type</font>
+<font color="#0000FF">               Dim </font>TypeFrame<font color="#0000FF"> As </font>CatDimFrame
+               TypeFrame = PointedDim.ValueFrame
+               
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'7/ Change the visualization of the text leader linked to that dimension</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+            
+               <font color="#008000">' If dimension does not respect the criteria text leader object is highlighted</font>
+<font color="#0000FF">               If </font>oTolType &lt;&gt; 0 Or TypeFrame &lt;&gt; catFraRectangle<font color="#0000FF"> Then</font>
+                  DrwSelect.Add CurrentText
+                  DrwSelect.VisProperties.SetRealColor 255, 0, 0, 0
+                  DrwSelect.VisProperties.SetRealWidth 6, 1
+<font color="#0000FF">               End If</font>
+             
+<font color="#0000FF">            End If</font>
+<font color="#0000FF">         Next</font>
+
+<font color="#0000FF">      Next</font>
+
+    <font color="#008000">'Restore the view</font>
+    ViewToRestore.Activate
+
+<font color="#0000FF">   Next</font>
+
+<font color="#0000FF"> Next </font>
+
+<font color="#008000">'Restore the Drawing Document sheet</font>
+SheetToRestore.Activate
+   
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

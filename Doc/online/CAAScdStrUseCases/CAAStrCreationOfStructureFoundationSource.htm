@@ -1,0 +1,51 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAStrCreationOfStructureObjects.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create structure foundation</font>
+<font color="#008000">'   Assumtions:   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R7 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">    Dim </font>doc<font color="#0000FF"> As </font>Document
+
+<font color="#0000FF">    Dim </font>StrWorkbench<font color="#0000FF"> As </font>StrWorkbench
+<font color="#0000FF">    Dim </font>strFactory<font color="#0000FF"> As </font>StrObjectFactory
+
+<font color="#0000FF">    Set </font>doc = CATIA.ActiveDocument
+<font color="#0000FF">    Dim </font>rootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>rootProduct = doc.Product
+
+<font color="#0000FF">    Dim </font>products <font color="#0000FF">As </font>Products
+    <font color="#0000FF">Set </font>products = rootProduct.Products
+
+    <font color="#0000FF">Dim </font>component <font color="#0000FF">As </font>Product
+    <font color="#0000FF">Set </font>component = products.AddNewProduct(&quot;Foundation&quot;)
+
+    <font color="#0000FF">Set </font>strFactory = component.GetTechnologicalObject(&quot;StructureObjectFactory&quot;)
+
+    <font color="#008000">' Creating a foundation assembly</font>
+
+    <font color="#0000FF">Dim </font>foundation <font color="#0000FF">As </font>StrFoundation 
+    <font color="#0000FF">Set </font>foundation = strFactory.ExtendProductAsFoundation(&quot;&quot;)
+
+    <font color="#008000">' Retreiving the created foundation assembly</font>
+
+    <font color="#0000FF">Dim </font>foundations <font color="#0000FF">As </font>StrFoundations
+    <font color="#0000FF">Set </font>foundations = rootProduct.GetTechnologicalObject(&quot;StructureFoundations&quot;)		
+	
+    <font color="#0000FF">Set </font>foundation = foundations.Item(1)
+
+<font color="#0000FF">End Sub</font>
+
+
+
+</pre></body></html>
+
+

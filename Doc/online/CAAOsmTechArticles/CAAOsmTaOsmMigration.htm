@@ -1,0 +1,535 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>How to Move from C++ to OSM</title>
+<style type="text/css">
+.style2 {
+	font-size: x-small;
+}
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Move from C++ to OSM</h3>
+      <p><em>How to work efficiently</em></p>
+      </td>
+    </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article explains to you how to move from C++ to OSM language to manage 
+		your catalog features. </p>
+      <ul>
+        <li><strong><a href="#Part1">Introduction</a></strong></li>
+		<li><strong><a href="#Part2">Catalog Feature 
+		Changes</a></strong><ul>
+        <li><a href="#Part2.2">Catalog Update</a></li>
+		<li><a href="#part2.1">Catalog 
+		Migration</a></li>
+      </ul>
+    	</li>
+		<li><a href="#Part3"><strong>Impacts on Run-time Code</strong></a><ul>
+		<li><a href="#Part3.1">AccessCatalog/RetrieveSU Pattern</a></li>
+		<li><a href="#Part3.2">AccessCatalog/RetrieveSU/Instantiate Pattern</a></li>
+		<li><a href="#Part3.3">AccessCatalog/AddExtension Pattern</a></li>
+      </ul>
+    	</li>
+        <li><a href="#Part4"><strong>Useless APIs</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+		<li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<h2><a name="Part1"></a>Introduction</h2>
+<p>This migration is strongly recommended for several reasons</p>
+<ul>
+	<li>The fact that 
+ catalogs can be modified at run-time leads to inconsistencies. To alleviate 
+	this problem, the APIs that create or modify catalogs must be forgotten to use a new 
+language called <b>OSM</b>.</li>
+	<li>You will take benefit of the last PCS enhancement, especially 
+	when you handle feature extension. </li>
+</ul>
+<p>Catalogs are defined by writing    a file containing OSM statements (the OSM file) 
+and translated into CATfct catalogs with the <b>CATfctEditorAssistant</b> tool. The reverse is also possible: a CATfct can also be translated back to OSM.</p>
+<table>
+	<caption>Fig. 1 - From OSM to CATfct and back with CATfctEditorAssistant</caption>
+	<tr>
+		<td><img src="images/CAAOsmOsmMigration1.png" alt="" width="199" height="38" border="0"></td>
+	</tr>
+</table>
+<p>Creation of new catalogs is not addressed in this article because it is not a 
+migration case, see the appropriate article [<a href="#References">2</a>] </p>
+<p>The first consequence of this is that programs that were used to create 
+and/or upgraded catalogs have become irrelevant. The existing catalogs can 
+still be used with the exception of a few ones. This will be detailed in the
+<a href="#Part2">Catalog Feature Changes</a> section. </p>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part2"></a>Catalog Feature Changes</h2>
+<p>If you decide to use OSM language to define your StartUp, you can delete your 
+source creating or updating them.&nbsp; They are useless. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h3><a name="Part2.2"></a>Catalog Update</h3>
+<p align="left">First, obtain the OSM version of the CATfct with 
+CATfctEditorAssistant:</p>
+<pre class="code">$<strong> CATfctEditorAssistant -describe-as-osm</strong> <strong>-catalog-name </strong>&lt;name_of_catalog&gt;<strong> -with-client-id </strong>&lt;id&gt;<br></pre>
+<p align="left"><b>Notes</b>: </p>
+<ul>
+	<li>The correct client ID must be known</li>
+	<li>The path of the CATfct is ignored, it will be looked up in the runtime 
+	view (one of the directories indicated by the <code>CATGraphicPath</code> 
+environment variable)</li>
+	<li>A new OSM will be created at the location specified by its path. The update will fail if a file with the same name than the osm output file already exists</li>
+</ul>
+<p>Next, edit the newly created OSM file (myCatalog.osm) to include the changes. For further information on OSM, please refer to the 
+<a href="#References">Modeling Feature StartUps</a> article [<a href="#References">1</a>].</p>
+<pre class="code">$ <i><strong>your_favorite_editor</strong></i> myCatalog.osm<br></pre>
+<p>Finally, update the CATfct with the OSM file (myCatalog.osm):</p>
+<pre class="code">
+$ <b>CATfctEditorAssistant -update-catalog</b> -catalog-name <i>myCatalog</i>.CATfct -with-client-id <i>myid</i> -with-osm <i>myCatalog</i>.osm<br></pre>
+<p align="left"><b>Notes</b>: </p>
+<ul>
+	<li>The correct client ID must be known</li>
+	<li>A new CATfct will be created at the location specified. The update will 
+	fail if a file with the same name than the CATfct output file already exists</li>
+	<li>This command will use as input the CATfct found in the runtime view as 
+	with -describe-as-osm, but will output the updated .CATfct where 
+	specified by its path</li>
+	<li>Do not forget to copy the updated catalog to CNext/resources/graphic 
+	directory for storage and/or to the runtime view for testing</li>
+</ul>
+<p align="left">This process is similar to the edit-compile cycle that you are probably 
+very familiar with, except that you are not starting from scratch but from the OSM 
+that corresponds to an existing CATfct. The three steps are illustrated in Fig. 
+2 below:</p>
+<table>
+	<caption>Fig. 2 - How to upgrade an existing catalog</caption>
+	<tr>
+		<td>
+<img border="0" src="images/CAAOsmOsmMigration6.png" width="447" height="57"></td>
+	</tr>
+</table>
+
+<h3 align="left"><a name="part2.1"></a>Catalog Migration</h3>
+<p>You are invited to <strong>upgrade all your catalog</strong> to take benefit 
+either of the last PCS enhancement, or the last Feature modeler novelties. But 
+some cases are mandatory.&nbsp; Lets starts by the mandatory cases, and then 
+with the recommended ones.</p>
+<p align="left">Here are the following cases where the catalog's update is mandatory:</p>
+<ul>
+	<li><a href="#Catalogs not updated since CXR25">Catalog not updated since CXR25</li>
+	<li><a href="#Catalogs with StartUp Extensions">StartUp extensions</a>&nbsp; </li>
+	<li><a href="#Catalogs with Derivable StartUps">Derivable StartUps</a>&nbsp; </li>
+    <li><a href="#Otherwise catalog migration">Otherwise</a>&nbsp; </li>
+</ul>
+<a name="Catalogs not updated since CXR25"></a><h4>Catalogs not updated since CXR25</h4>
+<p>These catalogs need to be upgraded in CXR25 (or more) in order to mark them as resource and better ensure the integrity of the meta-model of the customer. 
+A simple execution of the CATfctEditorAssistant update command without specifying any osm file is enough.
+</p>
+<a name="Catalogs with StartUp Extensions"></a><h4>Catalogs with StartUp Extensions</h4>
+<p>These catalogs can be migrated because this will allow extensions to be 
+located at run-time without the need to open the catalog (See the<a href="#Part3.3"> AccessCatalog/AddExtension Pattern</a> 
+section). The OSM will need some mandatory modification:</p>
+<pre class="code">$<strong> CATfctEditorAssistant -describe-as-osm</strong> <strong>-catalog-name </strong>&lt;name_of_catalog&gt;<strong> -with-client-id </strong>&lt;id&gt;
+
+ ....#edit <em>myCatalog.osm</em> file to add <strong>#creation::parameter={.....}
+</strong>
+$ <b>CATfctEditorAssistant -update-catalog</b> <strong>-catalog-name</strong> <i>myCatalog</i>.CATfct <strong>-with-client-id</strong> <i>myid</i> <strong>-with-osm</strong> <i>myCatalog</i>.osm<br></pre>
+<p align="left">As a consequence, applicative containers for extensions need not 
+be created explicitly (See the<a href="#Part3.3"> AccessCatalog/AddExtension Pattern</a> 
+section).</p>
+
+			<p>If your catalog <strong>has never been updated since V5R18SP2</strong> 
+			you are strongly invited to upgrade any catalog in order to decrease the 
+instantiation's time.&nbsp; If your Startup's catalog is updated, its instantiation will be faster as described in the <a href="#About CATOsmSUHandler">About CATOsmSUHandler
+</a>section. <p>
+		If your StartUp's catalog contains Extension StartUp, then while 
+		upgrading the catalog, from now on it is must to include the following 
+		piece of parameter code inside the osm file:<pre class="code">
+...
+TestCCPExt1 #startup #extension {
+            #<strong>creation::parameter</strong>={"ContType":"CATFeatCont","Container":"MyAppli1Cont","Extends":["SU_CCP&quot;,&quot;SUCCP1"],"IsLocal":false}
+...</pre>
+<p>
+		Also note that the 4 fields mentioned above in the code above have to be 
+		filled since there is no CATRsc anymore.<h4><a name="Recommanded0">
+<span class="style2"></span></a><span class="style2">WARNING</span></h4>
+<p>From now on, if there is any catalog with Extension StartUp&nbsp; to be 
+updated then its compulsory to include the above #<strong>creation::parameter </strong>
+in the osm file within the feature scope. If not included, then an error message 
+would be displayed hereafter, saying that the facet #<strong>creation::parameter </strong>
+does not exist on the extension.</p>
+
+<h4><a name="Catalogs with Derivable StartUps"></a>Catalogs with Derivable StartUps</h4>
+<p>StartUps that are derivable used to be declared with <code>CATCreatePublicSpecsInFile
+</code>which then writes this information in CATSpecs files. This information 
+must now be specified in OSM by adding the <code>#inheritability(caa)</code> 
+facet on the corresponding StartUps.</p>
+<p>For example, this is how the StartUp CAAOsmAdd is made derivable:</p>
+<pre class="code">...
+	feature CAAOsmAdd #startup <b>#inheritability(caa)</b> {
+...<br></pre>
+<p>The migration steps for a catalog containing derivable StartUps:</p>
+<pre class="code">$<strong> CATfctEditorAssistant -describe-as-osm</strong> <strong>-catalog-name </strong>&lt;name_of_catalog&gt;<strong> -with-client-id </strong>&lt;id&gt;
+$ .... # edit <i>myCatalog.osm</i> to add <b>#inheritability(caa)</b> on derivable StartUps
+$ <b>CATfctEditorAssistant -update-catalog</b> <strong>-catalog-name</strong> <i>myCatalog</i>.CATfct <strong>-with-client-id</strong> <i>myid</i> <strong>-with-osm</strong> <i>myCatalog</i>.osm<br></pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="Otherwise catalog migration"></a>Otherwise</h4>
+<p>You are strongly invited to upgrade any catalog in order to increase the 
+instantiation's time.&nbsp; If your Startup's catalog is updated, its 
+instantation will be faster as described in the <a href="#About CATOsmSUHandler">About CATOsmSUHandler
+</a>section. The OSM does not 
+require any modification.</p>
+<pre class="code">$<strong> CATfctEditorAssistant -describe-as-osm</strong> <strong>-catalog-name </strong>&lt;name_of_catalog&gt;<strong> -with-client-id </strong>&lt;id&gt;
+$ <b>CATfctEditorAssistant -update-catalog</b> <strong>-catalog-name</strong> <i>myCatalog</i>.CATfct <strong>-with-client-id</strong> <i>myid</i> <strong>-with-osm</strong> <i>myCatalog</i>.osm</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Part3"></a>Impacts on Run-time Code</h2>
+<p>In this section, we will explain how to migrate the run-time code that used 
+APIs from Table 1. It must be converted to use a new class: 
+<code>CATOsmSUHandler</code>. This new APIs will make the code simpler, 
+sometimes replacing up to three calls with just a single one.</p>
+<table class="border1">
+	<caption>Table 1 - The StartUp retrieval APIs</caption>
+	<tr>
+		<th>Header File</th>
+		<th>API</th>
+		<th>Purpose</th>
+	</tr>
+	<tr>
+		<td><code>CATCatalogFactoryServices.h</code></td>
+		<td><code>AccessCatalog</code></td>
+		<td>Loads a catalog</td>
+	</tr>
+	<tr>
+		<td><code>CATICatalog.h</code></td>
+		<td><code>RetrieveSU</code></td>
+		<td>Retrieves a StartUp</td>
+	</tr>
+	</table>
+
+	<p >We will now illustrate how some of the most frequent patterns 
+	of usage can be converted:</p>
+<ul>
+	<li>The <a href="#Part3.1">AccessCatalog/RetrieveSU </a>pattern</li>
+	<li>The <a href="#Part3.2">AccessCatalog/RetrieveSU/Instanciate</a> pattern</li>
+	<li>The <a href="#Part3.3">AccessCatalog/AddExtension</a> pattern</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="Part3.1"></a>The AccessCatalog/RetrieveSU Pattern</h3>
+<p align="left">The previous way of retrieving a StartUp was to first open a catalog 
+with <code>AccessCatalog </code>to get a <code>CATICatalog </code>handle on it, and then 
+using this handle to retrieve the StartUp with <code>RetrieveSU</code>:</p>
+<pre class="code">	...
+	HRESULT           rc;
+	CATBaseUnknown    *piContainter = NULL;
+	...
+	CATUnicodeString  catalogName(&quot;CAAOsmCatalogSU.CATfct&quot;);
+	CATUnicodeString  clientId(&quot;CAAOsmClientId&quot;);
+	CATICatalog      *piStartUpCatalog = NULL;
+	rc = ::<b>AccessCatalog</b>(&amp;catalogName, &amp;clientId, piContainer, &amp;piStartUpCatalog);
+	...
+	CATBaseUnknown   *pNovelSU = NULL;
+	CATUnicodeString  novelSUType(&quot;CAAOsmNovel&quot;);
+	rc = piStartUpCatalog-&gt;<b>RetrieveSU</b>(&amp;pNovelSU, &amp;novelSUType, &quot;CATISpecObject&quot;);
+	...
+	CATISpecObject   *piNovelSU = (CATISpectObject *) pNovelSU;
+	...<br></pre>
+<p align="left">This is now done by constructing a <code>CATOsmSUHandler</code> object 
+with three parameters: the StartUp name, the client ID and the catalog name and 
+then calling its <code>RetrieveSU </code>method :</p>
+<pre class="code">	...
+	HRESULT           rc;
+	CATUnicodeString  catalogName(&quot;CAAOsmCatalogSU.CATfct&quot;);
+	CATUnicodeString  clientId(&quot;CAAOsmClientId&quot;);
+	CATUnicodeString  novelSUType(&quot;CAAOsmNovel&quot;);
+	<b>CATOsmSUHandler</b>   novelSUHandler(novelSUType, clientId, catalogName);
+	CATISpecObject_var spNovelSU = NULL_var;
+	rc = novelSUHandler.<b>RetrieveSU</b>(spNovelSU);
+	...</pre>
+<p>As you can see the new code is simpler: one call instead of two. 
+You must note that the StartUp is now returned as a <i>smart</i><b> </b> 
+<i>pointer</i> 
+to its <code>CATISpecObject </code>interface (previously it was a pointer to
+<code>CATBaseUnknown </code>that had to be cast into a <code>CATISpecObject</code>). 
+Due to the fact that it is now a smart pointer, a <code>Release </code>is not 
+required (it will be <code>Release</code>'d once its scope ends). This also 
+means that 
+an <code>AddRef </code>is necessary if the smart pointer continues to be used 
+outside of its scope (like when returning it to a caller function for example).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="Part3.2"></a>The AccessCatalog/RetrieveSU/Instanciate Pattern</h3>
+<p>This pattern is similar to the one above, with the additional step of 
+instantiating the StartUp retrieved:</p>
+<pre class="code">	...
+	HRESULT           rc;
+	CATBaseUnknown    *piContainter = NULL;
+	...
+	CATUnicodeString  catalogName(&quot;CAAOsmCatalogSU.CATfct&quot;);
+	CATUnicodeString  clientId(&quot;CAAOsmClientId&quot;);
+	CATICatalog      *piStartUpCatalog = NULL;
+	rc = ::<b>AccessCatalog</b>(&amp;catalogName, &amp;clientId, piContainer, &amp;piStartUpCatalog);
+	...
+	CATBaseUnknown   *pNovelSU = NULL;
+	CATUnicodeString  novelSUType(&quot;CAAOsmNovel&quot;);
+	rc = piStartUpCatalog-&gt;<b>RetrieveSU</b>(&amp;pNovelSU, &amp;novelSUType, &quot;CATISpecObject&quot;);
+	...
+	CATISpecObject   *piNovelSU = (CATISpectObject *) pNovelSU;
+	...
+	CATISpecObject   *piNovelInst1 = piNovelSU-&gt;<b>Instanciate</b>(CATUnicodeString(&quot;CAAOsmNovel1&quot;),
+	                                                        piContainer);
+	...<br></pre>
+<p>The replacement is still done with <code>CATOsmSUHandler </code>but with its <code>
+Instanciate </code>method. If the handle on the StartUp is not required, the 
+call to <code>RetrieveSU </code>can be skipped.</p>
+<pre class="code">	...
+	HRESULT           rc;
+	CATBaseUnknown    *piContainter = NULL;
+	...
+	CATUnicodeString  catalogName(&quot;CAAOsmCatalogSU.CATfct&quot;);
+	CATUnicodeString  clientId(&quot;CAAOsmClientId&quot;);
+	CATUnicodeString  novelSUType(&quot;CAAOsmNovel&quot;);
+	<b>CATOsmSUHandler</b>   novelSUHandler(novelSUType, clientId, catalogName);
+	CATISpecObject_var spNovelInst = NULL_var;
+	rc = novelSUHandler.<b>Instanciate</b>(spNovelInst, piContainer, CATUnicodeString(&quot;CAAOsmNovel1&quot;));
+	...</pre>
+<p>Since the instance is returned as a smart pointer to its <code>CATISpecObject</code>, 
+the same life-cycle rule applies as with the StartUp retrieved via <code>
+RetrieveSU</code>.</p>
+<p><b><a name="About CATOsmSUHandler"></a>About CATOsmSUHandler&nbsp;&nbsp; </b></p>
+<p>When using CATOsmSUHandler, it is mandatory (for both constructors) to specify the name of the catalog:</p>
+<ul>
+<li>Constructor with startup identification</li>
+<pre class="code">	
+1. /**
+2. * Prepares the access to a specified startup stored in a given catalog.
+3. * @param iIdentification
+4. * An identification of the Feature Definition.
+5. * &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:
+6. * &lt;ul&gt;&lt;li&gt;&lt;tt&gt;&quot;`StartUpIdentifier`@`Catalog.CATfct`&quot;&lt;/tt&gt;&lt;/li&gt;
+7. * &lt;li&gt;&lt;tt&gt;&quot;`StartUpIdentifier`#&lt;number&gt;@`Catalog.CATfct`&quot;&lt;/tt&gt;&lt;/li&gt;
+8. * &lt;li&gt;&lt;tt&gt;&quot;0u???????-????-????-????????????????@`Catalog.CATfct`&quot;&lt;/tt&gt;&lt;/li&gt;&lt;/ul&gt;
+9. * @param iClientId the client id related to catalog
+10. */
+11. CATOsmSUHandler(const CATUnicodeString &amp; iIdentification, const CATUnicodeString &amp; iClientId);
+
+    CATUnicodeString clientId("CAAOsmClientId");
+    CATUnicodeString novelSUIdentifier("`CAAOsmNovel`@`CAAOsmCatalogSU.CATfct`");
+    CATOsmSUHandler novelSUHandler(novelSUType, clientId );
+
+</pre>
+<li>Constructor with startup latetype and catalog name</li>
+<pre class="code">
+12. /**
+13. * Prepares the access to a specified startup stored in a given catalog.
+14. * @param iLateTypeName the startup late type
+15. * @param iClientId the client id related to catalog
+16. * @param iCatalogName the catalog base name
+17. */
+18. CATOsmSUHandler(const CATUnicodeString &amp; iLateTypeName,const CATUnicodeString &amp; iClientId, const CATUnicodeString &amp; iCatalogName);</pre>
+	
+	CATUnicodeString catalogName("CAAOsmCatalogSU.CATfct");
+    CATUnicodeString clientId("CAAOsmClientId");
+    CATUnicodeString novelSUType("CAAOsmNovel");
+    CATOsmSUHandler novelSUHandler(novelSUType, clientId , catalogName);
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="Part3.3"></a>The AccessCatalog/AddExtension Pattern</h3>
+<p align="left">A catalog containing Feature Extensions is opened via <code>AccessCatalog </code>with an applicative container. Another 
+feature can then add one of these extensions by calling the <code>AddExtension
+</code>method of its <code>CATIOsmExtendable </code>interface. Added extensions 
+are created in the applicative container.</p>
+<pre class="code">	...
+	HRESULT           rc;
+         CATIOsmExtendable *piExtendable = NULL;
+	...
+	//
+  	// Applicative container creation
+	//
+	CATBaseUnknown    *piContainter = NULL;
+	...
+	CATUnicodeString  catalogName(&quot;CAAOsmExt2Catalog.CATfct&quot;);
+	CATUnicodeString  clientId(&quot;CAAOsmClientId1&quot;);
+	CATICatalog      *piExtensionsCatalog = NULL;
+	rc = ::<b>AccessCatalog</b>(&amp;catalogName, &amp;clientId, piContainer, &amp;piExtensionsCatalog);
+	...
+	rc = piExtentable-&gt;<b>AddExtension</b>(&quot;CAAOsmChildrensNovel&quot;);
+	...</pre>
+<p align="left">With OSM, it is no longer necessary to open the extensions 
+catalog. As the catalog have been migrated the Feature Modeler will be able to locate the extension by its name. 
+Both the <code>AccessCatalog </code>call and the applicative container creation 
+code are discarded:</p>
+<pre class="code">	...
+	HRESULT           rc;
+         CATIOsmExtendable *piExtendable = NULL;
+	...
+	rc = piExtentable-&gt;AddExtension("`CAAOsmChildrensNovel`@`CAAOsmExt2Catalog.CATfct`");	
+	...</pre>
+<p align="left">Please note that the container creation code is suppressed 
+because the following 
+lines are added in the CATRsc file of the Feature Extension:</p>
+<pre class="code">ExtensionFeature.ContType=&quot;CATFeatCont&quot;;
+ExtensionFeature.ContSuperType=&quot;CATFeatCont&quot;;</pre>
+<p align="left">In summary, the <code>AddExtension </code>method of <i>
+CATIOsmExtendable</i> no longer requires the catalog to be opened, provided it 
+has been <a href="#part2.1">migrated</a>. The container creation code can also 
+be removed if the container type and supertype are defined in 
+the CATRsc file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h2 align="left"><a name="Part4"></a>Useless APIs</h2>
+<p align="left">For your reference, Table 2 lists all the APIs that are 
+useless as the result in the introduction of OSM:</p>
+
+<table class="border1">
+	<caption>Table 2 - Suppressed APIs</caption>
+	<tr>
+		<th>Header File</th>
+		<th>API</th>
+		<th>Purpose</th>
+		<th>Usage Patterns</th>
+	</tr>
+	<tr>
+		<td rowspan="4"><code>CATCatalogFactoryServices.h</code></td>
+		<td><code>AccessCatalog</code></td>
+		<td>Loads a catalog</td>
+		<td><a href="#Part3.1">AccessCatalog/RetrieveSU</a><br>
+		<a href="#Part3.2">AccessCatalog/RetrieveSU/Instanciate</a><br>
+		<a href="#Part3.3">AccessCatalog/AddExtension</a></td>
+	</tr>
+	<tr>
+		<td><code>CreateCatalog</code></td>
+		<td>Creates a catalog</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><code>SaveCatalog</code></td>
+		<td>Saves a catalog</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td><code>UpgradeCatalog</code></td>
+		<td>Loads a catalog to be updated</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td rowspan="4" bgcolor="#F8FBFF"><code>CATICatalog.h</code></td>
+		<td bgcolor="#F8FBFF"><code>CreateSUInCatalog</code></td>
+		<td bgcolor="#F8FBFF">Creates a StartUp</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF"><code>OpenPrereqCatalog</code></td>
+		<td bgcolor="#F8FBFF">Opens a catalog</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF"><code>RetrieveSU</code></td>
+		<td bgcolor="#F8FBFF">Retrieves a StartUp</td>
+		<td bgcolor="#F8FBFF"><a href="#Part3.1">AccessCatalog/RetrieveSU</a></td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF"><code>SetClientId</code></td>
+		<td bgcolor="#F8FBFF">Assigns a client ID</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td><code>CATIOsmExtensionFactory.h</code></td>
+		<td><code>CreateExtension</code></td>
+		<td>Creates an Extension StartUp</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF"><code>CATOsmSUFactory.h </code> </td>
+		<td bgcolor="#F8FBFF"><code>CATOsmSUFactory</code></td>
+		<td bgcolor="#F8FBFF">Creates a StartUp</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td><code>CATPublicSpecsDef.h</code></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF" rowspan="2"><code>CATPublicSpecsFileServices.h</code></td>
+		<td bgcolor="#F8FBFF"><code>CATCreatePublicSpecsInFile</code></td>
+		<td bgcolor="#F8FBFF">Declare public and derivable StartUps</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+	<tr>
+		<td bgcolor="#F8FBFF"><code>CATAddPublicAttributeToFile</code></td>
+		<td bgcolor="#F8FBFF">Declare public attributes</td>
+		<td bgcolor="#F8FBFF">&nbsp;</td>
+	</tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article shows how OSM impacts your existing catalogs and run-time code:</p>
+<ol>
+	<li>Existing catalogs are updated by generating the OSM, modify it and 
+	finally 
+	use it to upgrade the catalog</li>
+	<li>Code that implements the <code>AccessCatalog</code>/<code>RetrieveSU</code>/<code>Instanciate
+	</code>pattern should be converted to the new and simpler <code>
+	CATOsmSUHandler</code>/<code>RetrieveSU </code>and/or <code>CATOsmSUHandler</code>/<code>Instantiate.</code></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table >
+  <tr>
+    <td >[1] </td>
+    <td><a href="CAAOsmTaModelingStartUps.htm">Modeling Feature 
+	StartUps</a></td>
+  </tr>
+  <tr>
+    <td >[2] </td>
+    <td><a href="CAAOsmTaMaintainingCatalogs.htm">Managing 
+	StartUp Catalogs</a></td>
+  </tr>
+  </table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table >
+  <tr>
+    <td>Version: <strong>1</strong> [Oct 2009]</td>
+    <td >Document created</td>
+  </tr>
+  </table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+</body>
+
+</html>
+

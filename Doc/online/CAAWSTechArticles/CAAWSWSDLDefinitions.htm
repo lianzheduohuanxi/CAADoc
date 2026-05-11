@@ -1,0 +1,353 @@
+<html>
+<head>
+<title>CAA Web Services and WSDL Definitions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+<body>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td valign="top" align="left">
+            <h1>CAA Web Services Home</h1>
+            </td>
+            <td valign="top">
+            <h2>&nbsp;</h2>
+            </td>
+            <td rowspan="2" align="right" valign="top">
+            <h3><a name="Top"></a>CAA Web Services and WSDL Definitions</h3>
+            <em>Overview of WSDL and XSD definitions used to describe CAA Web services</em></td>
+        </tr>
+        <tr>
+            <td class="tech" colspan="2">Technical Article</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<table class="abstract">
+    <tbody>
+        <tr>
+            <td>
+            <h3>Abstract</h3>
+            <p>WSDL documents are used to describe CAA Web services. This article introduces the WSDL 1.1 specification, and explains how its
+            related concepts are used in the context of CAA Web services.</p>
+            <ul>
+                <li><a href="#1"><strong>CAA Web Services and WSDL Definitions</strong></a>
+                <ul>
+                    <li><a href="#1.1">WSDL 1.1 Specification</a></li>
+                    <li><a href="#1.2">WSDL 1.1 SOAP Binding Extension</a></li>
+                    <li><a href="#1.3">WS-I Compliance</a></li>
+                </ul>
+                </li>
+                <li><a href="#2"><strong>WSDL Interface Documents</strong></a></li>
+                <li><a href="#3"><strong>WSDL Implementation Documents</strong></a></li>
+                <li><a href="#InShort"><strong>In Short</strong></a></li>
+                <li><a href="#References"><strong>References</strong></a></li>
+            </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<h3><a name="1"></a>CAA Web Services and WSDL Definitions</h3>
+<!----------------------------------------------------------------------------->
+<p>Web services are software systems, which can be accessed through messages conveyed by standard Internet protocols. The functionalities that
+these systems deliver are described in a platform and language neutral-way using an XML language called <strong>WSDL (Web Services Description
+Language)</strong>. Using this abstract WSDL definition, developers can use off-the-shelf tools to generate a client proxy for their platform
+and programming language. This client proxy will know how to craft the correct messages and send them to the target software system. This
+mechanism enables the integration of heterogeneous systems.</p>
+<p>CAA Web services respect this standard and provide their descriptions in WSDL form. This section gives an overview of the <strong>WSDL 1.1
+specification</strong>, and then provides more information on the format of the exchanged messages through the description of the <strong>WSDL
+1.1 SOAP (Simple Object Access Protocol) binding extension</strong>. Finally, it describes the <strong>WS-I (Web Services Interoperability)
+Basic Profile 1.0</strong>, a set of additional rules to improve the interoperability provided by WSDL and SOAP.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.1"></a>WSDL 1.1 Specification</h4>
+<p>A WSDL document defines the contract between a Web service provider and a Web service consumer. The XML language defined in the WSDL 1.1
+specification [<a href="#References">1</a>] uses the following elements to describe a Web service:</p>
+<ul>
+    <li><code><strong>&lt;wsdl:type&gt;</strong></code>: description of the data types exposed, most of the time using <strong>XSD (XML Schema
+    Definition)</strong>,</li>
+    <li><code><strong>&lt;wsdl:message&gt;</strong></code> and <code><strong>&lt;wsdl:part&gt;</strong></code>: description of the messages that
+    can be exchanged, including references to the types defined in the above section,</li>
+    <li><code><strong>&lt;wsdl:portType&gt;</strong></code> and <code><strong>&lt;wsdl:operation&gt;</strong></code>: a portType contains an
+    abstract set of supported operations, along with references to the messages involved within each operation,</li>
+    <li><code><strong>&lt;wsdl:binding&gt;</strong></code>: message format and protocol specific information for the operations defined in a
+    portType,</li>
+    <li><code><strong>&lt;wsdl:service&gt;</strong></code> and <code><strong>&lt;wsdl:port&gt;</strong></code>: a service is defined by a set of
+    ports. Each port provides a single endpoint for a given binding.</li>
+</ul>
+<p>Even if all of these elements may be found in a single WSDL document, it is common to have them separated in two different locations:</p>
+<ul>
+    <li>A <strong>WSDL interface document</strong>: describes an "abstract" interface of a Web service,</li>
+    <li>A <strong>WSDL implementation document</strong>: describes a "concrete" (i.e. deployed) implementation of a Web service. It contains a
+    reference to the WSDL interface document describing the implemented interface.</li>
+</ul>
+<table border="0">
+    <caption><a name="Fig1"></a>Fig.1: Relationship Between WSDL Interface and Implementation Documents</caption>
+    <tbody>
+        <tr>
+            <td valign="top"><img border="0" src="images/CAAWSWSDLDefinitions_Fig1.png" alt="Relationship Between WSDL Interface and Implementation Documents"></td>
+        </tr>
+    </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.2"></a>WSDL 1.1 SOAP Binding Extension</h4>
+<p>The WSDL 1.1 specification includes an extension to describe Web services that can be consumed using the <strong>SOAP 1.1</strong> protocol [<a
+    href="#References">2</a>]. Such Web services can be remotely invoked by sending SOAP messages (XML content) embedded inside HTTP POST
+requests. In a WSDL document, the SOAP protocol specific information are based on the following elements:</p>
+<ul>
+    <li><code><strong>&lt;soap:binding&gt;</strong></code>: specifies that a given binding is bound to the SOAP 1.1 protocol,</li>
+    <li><code><strong>&lt;soap:operation&gt;</strong></code>, <code><strong>&lt;soap:body&gt;</strong></code> and <code><strong>&lt;soap:fault&gt;</strong></code>:
+    describe the format of the SOAP messages,</li>
+    <li><code><strong>&lt;soap:address&gt;</strong></code>: provides the value of the SOAP endpoint URI, where HTTP POST SOAP requests must be
+    sent in order to consume the given Web service.</li>
+</ul>
+<p>The <code>&lt;soap:binding&gt;</code> and <code>&lt;soap:operation&gt;</code> elements include a <code><strong>style</strong></code>
+attribute which is used to differentiate two styles of SOAP messages that can be exchanged on the wire:</p>
+<ul>
+    <li><strong>RPC</strong>: the message format must conform to some specific rules outside of the WSDL definition alone (see section "<em>3.5
+    soap:body</em>" of the WSDL 1.1 specification for a precise description of these rules),</li>
+    <li><strong>Document</strong>: there is no underlying specific formatting rule, the message format must simply conform to the schemas
+    described in the WSDL definition (most of the time it uses XML schema definitions).</li>
+</ul>
+<p>The <code>&lt;soap:body&gt;</code> element includes a <code><strong>use</strong></code> attribute which is used to specify the type of SOAP
+serialization:</p>
+<ul>
+    <li><strong>Encoded</strong>: data types (such as objects, structures or arrays) must be encoded within the SOAP messages according to the
+    rules defined in section "<em>5. SOAP Encoding</em>" of the SOAP 1.1 specification,</li>
+    <li><strong>Literal</strong>: messages (including data types) are serialized according to the schema definitions available in the WSDL
+    document.</li>
+</ul>
+<p>In the end, there are four combinations available: <code>rpc/encoded</code>, <code>rpc/literal</code>, <code>document/encoded</code>, <code>document/literal</code>.
+The following describes where these elements are defined inside WSDL documents:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code>&lt;wsdl:definitions .... &gt;<br>
+            &nbsp;&lt;wsdl:binding .... &gt;<br>
+            &nbsp;&nbsp;&lt;<strong>soap:binding style="rpc|document" ... /</strong>&gt;<br>
+            &nbsp;&nbsp;&lt;wsdl:operation .... &gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;<strong>soap:operation style="rpc|document" ... </strong>/&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;wsdl:input&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<strong>soap:body use="literal|encoded" ... </strong>/&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;/wsdl:input&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;wsdl:output&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<strong>soap:body use="literal|encoded" ... </strong>/&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;/wsdl:output&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;wsdl:fault&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<strong>soap:fault use="literal|encoded" ... </strong>/&gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;/wsdl:fault&gt;<br>
+            &nbsp;&nbsp;&lt;/wsdl:operation&gt;<br>
+            &nbsp;&lt;/wsdl:binding&gt;<br>
+            &lt;/wsdl:definitions&gt;</code></td>
+        </tr>
+    </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.3"></a>WS-I Compliance</h4>
+<p>CAA Web services are WS-I compliant and conform to the WS-I Basic Profile 1.0 [<a href="#References">3</a>]. A Basic Profile consists of a
+set of Web services related specifications grouped together, such as the ones published by the <strong>W3C</strong> (World Wide Web Consortium)
+and the <strong>UDDI.org</strong> (Universal Description, Discovery and Integration) organizations. The Basic Profile 1.0 refers to the
+following specification levels: SOAP 1.1, XML 1.0, HTTP/1.1, WSDL 1.1, XML Schema 1.0 and UDDI v2.0. It also contains clarifications and
+specific requirements that are intended to enhance these specifications. The aim is to maximize interoperability between implementers of the
+Basic Profile requirements. As the Basic Profile 1.0 states itself, there can be no 100% guarantee of interoperability. Despite this
+consideration, the WS-I compliance claim is still considered by the industry as a major step forward in order to ease the integration of Web
+services on heterogeneous systems.</p>
+<p>Following the Basic Profile 1.0 recommendation, WSDL documents for CAA Web services conform to the WSDL 1.1 specification. They use the <code><strong>document</strong></code>/<code><strong>literal</strong></code>
+approach described above. As explained in the Basic Profile 1.0 (section "<em>4.1.7 SOAP encodingStyle Attribute</em>"), the <code>literal</code>
+use is preferred to the <code>encoded</code> one, because the latter introduces unnecessary complexity. The <code>document</code> style is on
+the other hand the most widespread approach.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="2"></a>WSDL Interface Documents</h3>
+<p>WSDL interface documents contain abstract descriptions of CAA Web service interfaces. They are available from the product installation and
+can be found at the following location:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code><i>&lt;Product-install&gt;</i>\<i>&lt;Operating-system&gt;</i>\resources\wsdl\<i>&lt;Framework&gt;</i>\<i>&lt;Module&gt;</i>\<i>&lt;Interface&gt;</i>.wsdl</code></td>
+        </tr>
+    </tbody>
+</table>
+<ul>
+    <li><code><i>&lt;Product-install&gt;</i></code>: product installation root folder,</li>
+    <li><code><i>&lt;Operating-system&gt;</i></code>: identifier of the operating system chosen for the product installation. The following list
+    is not exhaustive:
+    <ul>
+        <li><strong>Windows</strong>: <code>intel_a</code></li>
+        <li><strong>AIX</strong>: <code>aix_a</code></li>
+        <li><strong>SOLARIS</strong>: <code>solaris_a</code></li>
+        <li><strong>HP/UX</strong>: <code>hpux_b</code></li>
+    </ul>
+    </li>
+    <li><code>\resources\wsdl\<i>&lt;Framework&gt;</i>\<i>&lt;Module&gt;</i>\<i>&lt;Interface&gt;</i>.wsdl</code>: relative path to the WSDL
+    interface document:
+    <ul>
+        <li><u>Example</u>: <code>\resources\wsdl\ENOPosWS\ENOPos_ws\IApplicationBinder.wsdl</code>.</li>
+    </ul>
+    </li>
+</ul>
+<p>WSDL documents describing CAA Web services rely on external XSDs in order to describe the data types that are relevant for the exchanged SOAP
+messages. WSDL documents import these XSDs, which can be found at the following location:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code><i>&lt;Product-install&gt;</i>\<i>&lt;Operating-system&gt;</i>\resources\xsd\*.xsd</code></td>
+        </tr>
+    </tbody>
+</table>
+<p>See [<a href="#References">4</a>] for the complete list of CAA Web service interfaces available. This document also provides the list of
+relative path values required to access each WSDL interface document.</p>
+<h4>Access From a Remote Location</h4>
+<p>Even if WSDL interface documents can be accessed directly from the file system, it may also be useful to access them from a remote location.
+In order to do so, CAA Web services must have been previously deployed on a target application server. Please refer to the product installation
+guide for more details about this task (see [<a href="#References">4</a>] for the list of related products). You can then use the following URL
+scheme to access a given WSDL interface document:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code>http://<i>&lt;Server&gt;</i>:<i>&lt;Port&gt;</i>/<i>&lt;Context-root&gt;</i>/file/resources/wsdl/<i>&lt;Framework&gt;</i>/<i>&lt;Module</i>&gt;/<i>&lt;Interface&gt;</i>.wsdl</code></td>
+        </tr>
+    </tbody>
+</table>
+<ul>
+    <li><code><i>&lt;Server&gt;</i></code>: server name, including domain,</li>
+    <li><code><i>&lt;Port&gt;</i></code>: server port,</li>
+    <li><code><i>&lt;Context-root&gt;</i></code>: context root of the Web application,</li>
+    <li><code>/resources/wsdl/<i>&lt;Framework&gt;</i>/<i>&lt;Module&gt;</i>/<i>&lt;Interface&gt;</i>.wsdl</code>: relative path to the WSDL
+    interface document as described in the previous section, with every backward slash character ('\') replaced by a forward slash character
+    ('/'):
+    <ul>
+        <li><u>Example</u>: <code>/resources/wsdl/ENOPosWS/ENOPos_ws/IApplicationBinder.wsdl.</code></li>
+    </ul>
+    <code></code></li>
+</ul>
+<table border="0">
+    <caption><a name="Fig2"></a>Fig.2: Sample WSDL Interface Document</caption>
+    <tbody>
+        <tr>
+            <td valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+            <td valign="top"><img border="0" src="images/CAAWSWSDLDefinitions_Fig2.png" alt="Sample WSDL Interface Document"></td>
+        </tr>
+    </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="3"></a>WSDL Implementation Documents</h3>
+<p>WSDL implementation documents contain concrete descriptions of deployed CAA Web service implementations. The main information available is
+the <strong>SOAP endpoint URI</strong>. It specifies the target location for the HTTP POST SOAP requests that must be sent in order to consume a
+given CAA Web service. Its value is contained in the <code>location</code> attribute of the <code>&lt;soap:address&gt;</code> element, as
+detailed below:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code>&lt;definitions.... &gt;<br>
+            &nbsp;&lt;port.... &gt;<br>
+            &nbsp;&nbsp;&lt;binding.... &gt;<br>
+            &nbsp;&nbsp;&nbsp;&lt;<strong>soap:address location="URI"</strong> /&gt;<br>
+            &nbsp;&nbsp;&lt;/binding&gt;<br>
+            &nbsp;&lt;/port&gt;<br>
+            &lt;/definitions&gt;</code></td>
+        </tr>
+    </tbody>
+</table>
+<p>The SOAP endpoint URI is bound to a specific application server. As a result, the complete content of a WSDL implementation document can only
+be resolved once the related CAA Web service has been deployed on a target application server. Therefore, unlike WSDL interface documents, WSDL
+implementation documents cannot be delivered in the file system. Instead, they can be obtained by querying a servlet hosted on the same
+application server than the requested CAA Web service implementation. This servlet can be accessed by using through the following URI scheme:</p>
+<table class="code">
+    <tbody>
+        <tr>
+            <td><code>http://<i>&lt;Server&gt;</i>:<i>&lt;Port&gt;</i>/<i>&lt;Context-root&gt;</i>/wsdl?service=<i>&lt;Identifier&gt;</i></code></td>
+        </tr>
+    </tbody>
+</table>
+<ul>
+    <li><code><i>&lt;Server&gt;</i></code>: server name, including domain,</li>
+    <li><code><i>&lt;Port&gt;</i></code>: server port,</li>
+    <li><code><i>&lt;Context-root&gt;</i></code>: context root of the Web application,</li>
+    <li><code><i>&lt;Identifier&gt;</i></code>: CAA Web service implementation identifier:
+    <ul>
+        <li><u>Example</u>: <code>urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl.</code></li>
+    </ul>
+    </li>
+</ul>
+<table border="0">
+    <caption><a name="Fig3"></a>Fig.3: Sample WSDL implementation document</caption>
+    <tbody>
+        <tr>
+            <td valign="top">&nbsp;</td>
+        </tr>
+        <tr>
+            <td valign="top"><img border="0" src="images/CAAWSWSDLDefinitions_Fig3.png" alt="Sample WSDL implementation document"></td>
+        </tr>
+    </tbody>
+</table>
+<p>See [<a href="#References">4</a>] for the complete list of available CAA Web service implementations. This document also provides the list of
+identifier values required to access each WSDL implementation document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>CAA Web services are WS-I compliant. In such context, they are described using WSDL definitions that conform to the WSDL 1.1 specification.
+There are two types of WSDL documents available to describe a CAA Web service, a WSDL interface document and a WSDL implementation document:</p>
+<ul>
+    <li>The former describes the "abstract" interface of the CAA Web service. It can be accessed from the file system (within the product
+    installation) or from a remote location (using a dedicated URI scheme),</li>
+    <li>The latter describes a "concrete" implementation of a CAA Web service that has been deployed on a target application server. This
+    implementation can be consumed by sending HTTP POST SOAP requests to a specific SOAP endpoint URI. WSDL implementation documents are
+    dynamically generated using a servlet hosted on the same server than the requested CAA Web service implementation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td valign="top">[1]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm#1.1">Web Services Description Language (WSDL) 1.1</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[2]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm#1.2">Simple Object Access Protocol (SOAP) 1.1</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[3]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm#1.4">WS-I Basic Profile 1.0</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[4]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/index.html">CAA Web Services Reference</a></td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+        </tr>
+    </tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td valign="top">Version: <strong>1</strong> [Apr 2005]</td>
+            <td valign="top">Document created</td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

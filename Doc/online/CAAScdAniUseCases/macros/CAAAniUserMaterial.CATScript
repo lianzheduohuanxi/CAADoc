@@ -1,0 +1,90 @@
+'COPYRIGHT DASSAULT SYSTEMES 2000
+
+'***********************************************************************
+'  Purpose:  	Create User Material
+'               Retrieve the material from material catalog
+'               Apply analysis properties to the material.
+'  Assumptions:  The material catalog is not empty
+'  Author:       bmw
+'  Languages:    CATScript
+'  Locales:      English 
+'  CATIA Level:  V5R18
+'***********************************************************************
+
+
+Sub CATMain()
+
+'----------------------------------------------------------- 
+'Optional: allows to find the sample wherever it's installed
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+Err.Raise 9999,,"No Doc Path Defined"
+End If
+'----------------------------------------------------------- 
+
+
+'Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Beam.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+'Retrieve the Analysis Managar and Analysis Model
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+'Retrieve the analysis model from list of models
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+'Retrieve the material set from list of analysis sets
+Set oAnalysisSets = oAnalysisModel.AnalysisSets 
+Set oAnalysisSet = oAnalysisSets.ItemByType("MaterialSet")
+
+
+'Add an new user material
+Set oAnalysisEntities = oAnalysisSet.AnalysisEntities
+Set oAnalysisEntity1 = oAnalysisEntities.Add("SAMUserMaterial")
+
+'Load the catalog of materials
+MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\CatalogForAutomation.CATMaterial")
+Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
+
+'Load the catalog of materials
+Set cFamilies_list = oMaterial_document.Families
+
+'Retrieve the first family of the library
+Dim ifamily_no As Integer
+ifamily_no = 1
+Set oFirst_family = cFamilies_list.Item(iFamily_no)
+
+'Retrieve the list of materials from the family
+Set cMaterials_list = oFirst_family.Materials
+
+Dim imaterial_no As Integer
+imaterial_no = 1
+
+Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+
+'Retrieve a material from the list and create analysis material 
+imaterial_no = 1
+Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+Set anlysisMaterial = oMaterial1.CreateAnalysisData("SAMAnisotropicMaterial")
+
+anlysisMaterial.PutValue "SAMShearModulus_11", "1e+10"
+anlysisMaterial.PutValue "SAMShearModulus_12", "1e+10"
+anlysisMaterial.PutValue "SAMShearModulus_1Z", "1e+10"
+anlysisMaterial.PutValue "SAMShearModulus_22", "1e+10"
+anlysisMaterial.PutValue "SAMShearModulus_2Z", "1e+10"
+anlysisMaterial.PutValue "SAMShearModulus_33", "1e+10"
+anlysisMaterial.PutValue "SAMDensity", "7860"
+anlysisMaterial.PutValue "SAMThermalExpansion_X", "1-e5"
+anlysisMaterial.PutValue "SAMThermalExpansion_Y", "1-e5"
+anlysisMaterial.PutValue "SAMThermalExpansion_Z", "1-e5"
+anlysisMaterial.PutValue "SAMTensileStressLimit", "1e+11"
+anlysisMaterial.PutValue "SAMCompressiveStressLimit", "2e+11"
+anlysisMaterial.PutValue "SAMShearStressLimit", "1e+10"
+
+'Apply the material on the User Material
+linkMode = 0
+Set oManager = oAnalysisManager.GetItem("CATMatManagerVBExt")
+oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode 
+
+End Sub

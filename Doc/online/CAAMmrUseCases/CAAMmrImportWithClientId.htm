@@ -1,0 +1,700 @@
+<html>
+	<head>
+		<title>Retrieving Mechanical Import Information using ClientID</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta content="Microsoft FrontPage 6.0" name="GENERATOR">
+		<meta content="FrontPage.Editor.Document" name="ProgId">
+		<link href="../CAADocStyleSheets/caav5.css" type="text/css" rel="Stylesheet">
+             </head>
+		
+	<body  >
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving Mechanical Import Information using 
+      ClientID</h3>
+      Using CATIMmiMechanicalImportApplicative with Startup Catalog Id as 
+		authentication</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+				<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+      <p>The Use Case illustrates retrieving the link information of an 
+		<b>Applicative Mechanical Import</b>, a copy with link across two Part 
+		documents using the <a>
+		<code><b>ClientId</b></code></a> authentication.</p>
+					<p>The article &quot;<b>Managing Applicative Mechanical Imports</b>&quot; [<a href="#References">1</a>] 
+					is a further reference on that subject.</p>
+					<ul>
+							<li>
+								<A href="#Learn"><strong>What You Will Learn 
+                                With This Use Case</strong></A>
+							<li>
+								<strong><a href="#UseCase">The 
+                                CAAMmrImportWithClientId Use Case</a></strong>
+								<ul type="disc">
+									<li>
+										<a href="#What">What Does 
+                                        CAAMmrImportWithClientId Do</a>
+									<li>
+										<a href="#How">How to Launch CAAMmrImportWithClientId </a>
+									<li>
+										<a href="#Where">Where to Find the CAAMmrImportWithClientId Code</a>
+									</li>
+								</ul>
+							<li>
+								<A href="#Step"><strong>Step-by-Step</strong></A>
+							<li>
+								<A href="#InShort"><strong>In Short</strong></A>
+							<li>
+								<A href="#References"><strong>References</strong></A>
+							</li>
+						</ul>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>User primarily learns the capabilities of the <i><a><code><b>CATIMmiMechanicalImportApplicative</b></code></a></i>
+APIs particularly to:</p>
+<ul>
+  <li>To authenticate retrieving information from a Mechanical Import by
+    a call to <a><code><b>SetPointedElementClientId</b></code></a>
+    API</li>
+  <li>Actually seek the information from the Mechanical Import by calls to
+    <a><code><b>GetPointedElement</b></code></a>, <a><code><b>GetSourceProduct</b></code></a> 
+	APIs</li>
+</ul>
+	<p>The Use Case also demonstrates the irrelevance of the calls to&nbsp;
+<a><code><b>IsPointedElementLoaded</b></code></a> and <a><code><b>LoadPointedElement</b></code></a> 
+	on an Applicative Mechanical Import, using the <a><code><b>ClientId</b></code></a> 
+	authentication.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="UseCase"></a>The CAAMmrImportWithClientId
+        Use Case</h3>
+		<p><code><b><a>CAAMmrImportWithClientId</a></b></code> is a use case of the 
+        <code><b><a>CAAMechanicalModeler.edu</a></b></code> framework that 
+			illustrates <code><b><a>MecModInterfaces</a></b></code> framework capabilities.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What Does CAAMmrImportWithClientId
+        Do</h4>
+		<p>The use case operates on an Input model as depicted in
+        <a href="#Fig.1 InputModel">Fig.1</a> below</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+          <caption>
+          <p align="left"><a name="Fig.1 InputModel"></a>Fig. 1 Input Model</p>
+          </caption>
+          <tr>
+            <td width="100%">
+            <img border="0" src="images/CAAMmrImportWithClientId_Fig1.png"></td>
+          </tr>
+    </table>
+<p>The Root Product <a><code><b>CAAMmrImportWithClientId_Root</b></code></a>
+has&nbsp; beneath it :</p>
+<ul>
+	<li>an instance of the product <a><code><b>CAAMmrImportWithClientId_Child1</b></code></a>
+namely. <a><code><b>CAAMmrImportWithClientId_Child1.1 </b></code></a></li>
+	<li>an Instance
+of the product<a><code><b> CAAMmrImportWithClientId_Child2</b></code></a> namely. 
+	<a><code><b>CAAMmrImportWithClientId_Child2.1</b></code></a></li>
+</ul>
+<p><a><code><b>CAAMmrImportWithClientId_Child1</b></code></a>&nbsp; has an 
+Instance of the product<a><code><b> CAAMmrImportWithClientId_Org</b></code></a>
+aggregated beneath it. This Product is a Part containing&nbsp; <a><code><b>CombinedCurve.1</b></code></a>
+and <a><code><b>Point.1</b></code></a> features . </p>
+	<p>The <a><code><b>CombinedCurve.1</b></code></a> is an instance of a <a>
+	<code><b>CombinedCurve</b></code></a> <a><code><b>StartUp</b></code>, 
+	contained within a catalog whose
+	<code><b>Client Id</b></code> is &quot;<b>SAMPLES</b>&quot;.</a> The &quot;<b>Instantiating 
+	Combined Curves</b>&quot; [<a href="#References">2</a>] Use Case details the 
+	steps involved in this instantiation.</p>
+<p><a><code><b>CAAMmrImportWithClientId_Child2</b></code></a> has an Instance of 
+the product&nbsp;<a><code><b>CAAMmrImportWithClientId_</b></code></a><code><b>Copies</b></code>
+aggregated beneath it. This Product is a Part containing three external features. These
+are:</p>
+<ul>
+  <li><a><code><b>Copy_CombinedCurve.1</b></code></a>, a copy &quot;as Result with 
+	Link&quot; of <a><code><b>CombinedCurve.1
+  </b></code></a>out of assy context, </li>
+  <li><a><code><b>Copy_CombinedCurve.2</b></code>,<code><b> </b></code></a>a copy 
+	&quot;as Result with Link&quot; of 
+  <a><code><b>CombinedCurve.1 </b></code></a>in assy context</li>
+  <li><a><code><b>Copy_Point.1</b></code>,</a> a copy &quot;as Result with Link&quot; of <a><code><b>Point.1</b></code></a>, in assy context</li>
+</ul>
+	<p>The use case mainly illustrates the following scenarios:</p>
+<ul>
+  <li>The first scenario begins with opening the Part <code><b> <a>CAAMmrImportWithClientId_</a>Copies</b></code>.
+    We retrieve the feature <code><b>Copy_CombinedCurve.1</b></code> under it. 
+	We then illustrate the failure in the <a><code><b>StartUp</b></code></a> <a>
+	<code><b>Catalog</b></code></a> authentication, since the 
+	pointed element (<a><code><b>CombinedCurve.1),
+  </b></code></a>included into <a><code><b>CAAMmrImportWithClientId_Org,</b></code></a> 
+	is not in session</li>
+	<li>Next we seek the load status <a>of pointed element, 
+	and also attempt to load it in the current session. Both operations fail, 
+	thus illustrating </a>the irrelevance of calls to <a><code><b>isPointedElementLoaded</b></code></a>
+    and <a><code><b>LoadPointedElement</b></code></a> in the context of 
+	retrieving information from a Mechanical Import with <a><code><b>ClientID</b></code></a> 
+	authentication</li>
+	<li>We next open the Root Product <a><code><b>CAAMmrImportClientId_Root</b></code></a>
+    in the current session. <a>All its sub-product are loaded too. Hence the </a>&nbsp;<a><code><b>StartUp</b></code></a>
+	<a><code><b>Catalog</b></code> authentication on the Mechanical Import now works fine, 
+	and we succeed in retrieving information from <code><b>Copy_CombinedCurve.1</b></code> 
+	and <code><b>Copy_CombinedCurve.2</b></code></a></li>
+	<li>Yet again, we make a call to <a><code><b>IsPointedElementLoaded</b></code></a> 
+	on <a><code><b>Copy_CombinedCurve.1</b></code></a> and demonstrate its 
+	failure and thus its irrelevance in this context. At this stage, you'll 
+	observe though authentication was done and the pointed 
+	element loaded, the API returns <a><code><b>E_FAIL</b></code></a></li>
+	<li><a>Finally, we illustrate the failure to do a </a>&nbsp;<a><code><b>StartUp</b></code></a>
+	<a><code><b>Catalog</b></code> authentication on the Mechanical Import <code><b>Copy_Point.1</b></code>. It 
+	fails because the source feature for <code><b>Copy_Point.1</b></code> is not 
+	defined in the same catalog as the <code><b>Combined Curve</b></code>.</a></li>
+</ul>
+	<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4><a name="How"></a>How to Launch CAAMmrImportWithClientId
+									</h4>
+		<p>To launch <code><b>CAAMmrImportWithClientId</b></code>, you will need to set up the build time environment, 
+			then compile <code><b>CAAMmrImportWithClientId </b></code>along with its prerequisites, set up the run time 
+			environment, and then execute the use case [<a href="#References">3</a>].&nbsp;</p>
+<p>To
+launch the use case execute the command:</p>
+<p><code><b> <a>mkrun -c &quot;</a>CAAMmrImportWithClientId inputpath&quot;</b></code></p>
+<p>where inputpath is <code>:</code></p>
+<ul>
+	<li>Windows: InstallRootDirectory\</code>CAAMechanicalModeler.edu\InputData</li>
+	<li>Unix: InstallRootDirectory/</code>CAAMechanicalModeler.edu/InputData</li>
+</ul>
+
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4><a name="Where"></a>Where to Find the CAAMmrImportWithClientId
+        Code</h4>
+<p>The <code><b>CAAMmrImportWithClientId </b></code>use case is defined at the 
+location:</p>
+<table>
+  <tr>
+    <td><code>InstallRootDirectory\</code><a><code>CAAMechanicalModeler</code></a>.<code>edu\CAAMmrImportWithClientId.m\</code></td>
+  </tr>
+</table>
+   <p>The use case has calls to:</p>
+	<p>Global routines<code><b> CAAMmrGetGeometry</b></code> and <code><b>CAAMmrGetPartFromProduct</b></code><i>,</i> to navigate a 
+    loaded model. 
+    These routines are defined at the location:</p>
+   <table>
+     <tr>
+       <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrUtilities.m\</code></td>
+     </tr>
+   </table>
+<p>where <code><a><b>InstallRootDirectory</b></a></code>  [<a href="#References">3</a>]
+is the directory where the CAA CD-ROM
+is installed.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h3><a name="Step"></a>Step-by-Step</h3>
+		<ul >
+			<li><a href="#Prolog">Prolog</a><li>
+			<a href="#Failure to set ClientID when pointed element is not loaded">Failure to do a ClientID Authentication when 
+          	Pointed Element is not loaded</a><ul>
+				<li><a href="#retrieve feature">Retrieve the feature 
+				Copy_CombinedCurve.1</a></li>
+				<li><a href="#CATIMmiMechanicalImportApplicative">Retrieve the CATIMmiMechanicalImportApplicative on 
+				the pointed 
+            feature</a></li>
+				<li><a href="#confirm failure">Confirm FAILURE to set ClientID on copied feature</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="#Illustrate the irrelevance of retrieving loading status of pointed element">Illustrating the 
+			Irrelevance of LoadPointedElement 
+			API</a></li>
+			<li>
+			<a href="#Success to set ClientID when pointed element is loaded">Success in ClientID 
+			Authentication when Pointed Element is loaded</a></li>
+			<li><a href="#Retrieve relevant info from Copy_CombinedCurve.1">
+			Retrieve relevant information from Copy_CombinedCurve.1</a></li>
+			<li>
+			<a href="#Illustrate the irrelevance of retrieving loading status of pointed element">
+			Illustrates Irrelevance of call to IsPointedElementLoaded</a></li>
+			<li><a href="#Retrieve info of Copy_CC.2">Retrieve information on 
+			Copy_CombinedCurve.2</a><ul>
+				<li><a href="#debut">Retrieve the feature 
+				Copy_CombinedCurve.2</a></li>
+				<li><a href="#debut">Retrieve the CATIMmiMechanicalImportApplicative 
+				type on this feature</a></li>
+				<li><a href="#Set ClientID on copied feature">Do a ClientId 
+				authentication on this feature</a></li>
+				<li><a href="#Set relevant information">Retrieve relevant 
+				information from it</a></li>
+			</ul>
+			</li>
+			<li>
+			<a href="#Failure to set ClientID when pointed feature is DS feature">
+			Failure to do a ClienId Authentication on Copy_Point.1</a><ul>
+				<li>
+				<a href="#Failure to set ClientID when pointed feature is DS feature">
+				Retrieve Copy_Point.1</a></li>
+				<li>
+				<a href="#Confirm FAILURE to set ClientID on copied feature">Confirm 
+				failure to Authenticate this feature</a></li>
+			</ul>
+			</li>
+			<li><a href="#Epilog">Epilog</a></li>
+	</ul>
+    <p align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog&nbsp;</h4>
+<p>CAAMmrImportWithClientId<code><b> </b></code>begins by creating a session, and opening the <code> <a>CAAMmrImportWithClientId_</a>Copies<b> </b></code>Part document. Next it retrieves the root container of this Part as a pointer to
+<i>CATIPrtContainer</i>, <code>pIPrtContOnDocument</code> . This is the usual 
+sequence for loading a Part document.</p>
+<p><a name="Retrieve MechanicalPart feature"></a>Thanks to&nbsp; the <code>GetPart</code> method on the root container we
+retrieve the Mechanical Part. This part is handled by the smart pointer <code>spSpecObjectOnMechPart</code>.&nbsp;This
+pointer will be useful to search specifications in the document.&nbsp;</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4 align="left">
+        <a name="Failure to set ClientID when pointed element is not loaded">
+        </a>Failure to do a ClientID Authentication when Pointed Element is not loaded</h4>
+	<p align="left"><a name="retrieve feature"></a>We proceed to retrieve the <code><b>
+    Copy_CombinedCurve.1 </b></code>feature under the <code><b>MechanicalPart</b></code> 
+	feature.</p>
+		<table class="code" id="Table8">
+			<tr>
+				<td><pre>...
+    CATBaseUnknown * pCopyCombCurve1= NULL ;    
+    rc = ::<b>CAAMmrGetGeometry</b>(<code>spSpecObjectOnMechPart</code>,&quot;<b>Copy_CombinedCurve</b>.1&quot;,
+					&amp;pCopyCombCurve1);
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">A call to <code><b>CAAMmrGetGeometry</b></code> enables 
+		us retrieve a feature <code>pCopyCombCurve1</code> 
+		by its name <code><b>Copy_CombinedCurve.1</b></code> from the <code><b>
+		MechanicalPart</b></code> feature <code><b>spSpecObjectOnMechPart</b></code>.</p>
+		<p><a name="CATIMmiMechanicalImportApplicative"></a>The next step is to 
+		seek information from the copied feature <code><b>Copy_CombinedCurve.1</b></code>. 
+		It begins with an authentication process, referred to as <code><b>
+		ClientID</b></code> authentication, in the steps ahead.</p>
+		<table class="code" id="Table38">
+			<tr>
+				<td><pre>...
+    CATIMmiMechanicalImportApplicative *<b>pIMecImportApplicativeOnResultCopy</b> = NULL ; 
+    rc = <code>pCopyCombCurve1</code>-&gt;<b>QueryInterface</b>
+				<b>  </b>(IID_CATIMmiMechanicalImportApplicative,
+                                  (void**)&amp;<b>pIMecImportApplicativeOnResultCopy</b>); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>We seek the <code><b><i>CATIMmiMechanicalImportApplicative</i>*
+        </b></code>type on the copied feature <code>pCopyCombCurve1</code>. </p>
+		<p><a name="confirm failure"></a>The <code><b><i>CATIMmiMechanicalImportApplicative</i></b></code> 
+		Interface exposes services which enable us do a <code><b>ClientID</b></code> authentication on the Mechanical Import <code><b>
+		Copy_CombinedCurve.1</b></code>.</p>
+		<table class="code" id="Table37">
+			<tr>
+				<td><pre>...
+    CATUnicodeString <b>ClientId</b> = &quot;SAMPLES&quot;;</pre>
+				<pre>    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>SetPointedElementClientId</b>(ClientId);
+    if (SUCCEEDED(rc))
+        return 1;
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The <code><b><i>CATIMmiMechanicalImportApplicative</i>::SetPointedElementClientId
+        </b></code>call on the Mechanical Import <code><b>
+		Copy_CombinedCurve.1,</b></code> takes the <code><b>ClientId</b></code>, 
+		a <code><b>CATUnicodeString</b></code> as an argument, which in this 
+		case has been valuated to &quot;<b>SAMPLES</b>&quot;. </p>
+	<p>The significance of this argument is that it should necessarily be the 
+	same as the <code><b>Client</b></code> <code><b>Id</b></code> of the <code>
+	<b>StartUp Catalog</b></code> defining the source feature of the Import. 
+	Here, <code><b>Copy_CombinedCurve.1</b></code> and <code><b>
+	Copy_CombinedCurve.2</b></code> are copies of <code><b>CombinedCurve.1</b></code>, 
+	a feature whose StartUp definition exists in a Catalog whose Client Id is 
+	&quot;SAMPLES&quot;, defined in the Use Case &quot;<b>Creating a Combined Curve's Catalog</b>&quot; 
+	[<a href="#References">4</a>]</p>
+	<p>That being the case, an essential pre-requisite for the authentication 
+	process is that the Part containing the pointed element should 
+	necessarily be loaded in the current session. Since <a><code><b>CAAMmrImportClientId_RepRef_org</b></code></a> 
+	is not loaded in the current session, the authentication process is bound to 
+	fail here.</p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4 align="left">
+        <a name="Illustrate the irrelevance of retrieving loading status of pointed element">
+        </a>Illustrating the Irrelevance of LoadPointedElement API call</h4>
+		<p>In the earlier step, the <code><b>ClientID</b></code> authentication 
+		failed since the pointed element was not loaded in the current session. 
+		We now attempt to load it by a call to <code><b>CATIMmiMechanicalImportApplicative::LoadPointedElement.</b></code></p>
+		<table class="code" id="Table44">
+			<tr>
+				<td><pre>...
+&nbsp;&nbsp;&nbsp; rc = pIMecImportApplicativeOnResultCopy-&gt;<code><b>LoadPointedElement</b></code>();
+    if (SUCCEEDED(rc))
+        return 1;</pre>
+				<pre>    rc = pIMecImportApplicativeOnResultCopy-&gt;<code><b>IsPointedElementLoaded</b></code>();
+    if (SUCCEEDED(rc))
+    	return 1;
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>It is important to note that the pointed element cannot be loaded 
+		with a call to <code><b>LoadPointedElement</b></code> 
+		since it 
+		always returns FAILURE. </p>
+	<p>Reason being, that any call on the copied feature requires an 
+	authentication. And the <code><b>ClientID</b></code> way of 
+	authentication succeeds only after the pointed element is loaded in the 
+	current session. That being the case, calls to <code>
+	<b>LoadPointedElement</b></code> and <code><b>IsPointedElementLoaded</b></code> 
+	are obviously irrelevant in the <code><b>ClientID</b></code> context, and 
+	hence always return <b>FAILURE</b>, as the code above indicates.</p>
+	<p align="right">[<A href="#Top">Top</A>]</p>
+		<h4 align="left">
+        <a name="Success to set ClientID when pointed element is loaded"></a>Success 
+		in ClientID Authentication when Pointed Element is loaded</h4>
+		<p>We proceed to do a <code><b>
+		ClientID</b></code> authentication on <code><b>Copy_CombinedCurve.1</b></code>, 
+		having loaded the Part containing the pointed element <code><b>CAAMmrClientId_RepRef_Org</b></code>. We load 
+		<code><b>CAAMmrClienId_RepRef_Org </b></code>by loading 
+		its Root <a><code><b>CAAMmrImportClientId_Root</b></code>. Loading the 
+		root product, load all its sub-product, and its Part documents.</a></p>
+		<table class="code" id="table51">
+			<tr>
+				<td><pre>...
+CATBaseUnknown_var spPointedElement1;
+CATBaseUnknown_var spSourceProductInstance1;
+
+rc = pIMecImportApplicativeOnResultCopy-><b>SetPointedElementClientId</b>(ClientId);
+...</pre>
+				</td>
+			</tr>
+		</table>
+				</td>
+			</tr>
+		</table>
+		<p><code>pIMecImportApplicativeOnResultCopy</code> is the <i>CATIMmiMechanicalImportApplicative</i> 
+		interface pointer on the copied feature, <code><b>Copy_CombinedCurve.1</b></code>. 
+		We have retrieved it in the
+		<a href="#CATIMmiMechanicalImportApplicative">previous</a> section. The call to <code><b>SetPointedElementClientId</b></code> is expected 
+		to return a <code><b>SUCCESS</b></code> at this stage since</p>
+	<blockquote>
+		<ul>
+			<li>Part containing the 
+			pointed element <code><b>CAAMmrClienId_RepRef_Org </b></code>is 
+			loaded in the current session</li>
+			<li>The <code><b>ClientId</b></code> argument valuated to &quot;<b>SAMPLES</b>&quot; 
+			[<a href="#confirm failure">#</a>] earlier, is the same as the <code>
+			<b>Client</b></code> <code><b>Id</b></code> of the <code><b>Catalog</b></code> 
+			containing the <code><b>StartUp</b></code> definition of <code><b>
+			CombinedCurve.1</b></code> (source feature for <code><b>
+			Copy_CombinedCurve.1</b></code>)</li>
+		</ul>
+	</blockquote>
+		<h4 align="left">
+		<a name="Retrieve relevant info from Copy_CombinedCurve.1"></a>Retrieve 
+		relevant information from Copy_CombinedCurve.1</h4>
+	<p><a name="Get the relevant information on the feature"></a>We can now 
+	retrieve all relevant information from <code><b>
+		Copy_CombinedCurve.1</b></code>, a feature copied out of Assy Context.</p>
+		<table class="code" id="Table40">
+			<tr>
+				<td><pre>...</pre>
+				<pre>    CATBaseUnknown_var spPointedElement1;
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetPointedElement</b>(spPointedElement1);
+   ...</pre>
+				<pre>    CATBaseUnknown_var spSourceProductInstance1;
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetSourceProduct</b>
+				<b>			</b>(spSourceProductInstance1); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"> The call to<code><b>
+        GetPointedElement</b></code> returns 
+        the source feature of 
+        <code><b>Copy_CombinedCurve.1</b></code></p>
+		<p align="left"> The call to<code><b> 
+        GetSourceProduct</b></code><b> </b>
+        fails, as expected since <code><b>Copy_CombinedCurve.1</b></code>, is a feature 
+        copied, out of Assy Context.</p>
+	<h4 align="left"> 
+	<a name="Illustrate Irrelevance of call to IsPointedElementLoaded"></a>
+	Illustrate Irrelevance of call to IsPointedElementLoaded</h4>
+		<p align="left">
+        Though the calls to the above <code><b>APIs</b></code> succeeded, the 
+		call to <code><b>IsPointedElementLoaded</b></code> still fails, since as 
+		explained earlier [<a href="#Illustrate the irrelevance of retrieving loading status of pointed element">#</a>], 
+		this API is irrelevant in the <code><b>ClientID</b></code> context.</p>
+		<table class="code" id="Table48">
+			<tr>
+				<td><pre>...
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>IsPointedElementLoaded</b>
+				                (LoadedPointedReference);    
+    if (SUCCEEDED(rc))
+        return 1;
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<h4 align="left"> <a name="Retrieve info of Copy_CC.2"></a>Retrieve 
+		relevant information from Copy_CombinedCurve.2</h4>
+	<p align="left"> The next step 
+		is to seek all relevant information from <code><b>Copy_CombinedCurve.2</b></code>, a 
+        feature copied in Assy Context, within the <code><b>Part</b></code> 
+	document <code><b>CAAMmrClienId_RepRef_Copies. </b></code>
+		In an earlier step [<a href="#Retrieve MechanicalPart feature">#</a>] we 
+		had retrieved the <code><b>MechanicalPart</b></code> feature contained 
+		within this Part.</p>
+		<p align="left"> <a name="debut"></a>We begin by seeking the <code><b>Copy_CombinedCurve.2</b></code> 
+		feature from this <code><b>MechanicalPart</b></code> feature as seen below.</p>
+		<table class="code" id="Table46">
+			<tr>
+				<td><pre>...
+    CATBaseUnknown *pCopiedFeatureInAssyContext= NULL ;
+    CATUnicodeString NameFeatureToCopy = &quot;<b>Copy_CombinedCurve.2</b>&quot;;
+    rc = ::<b>CAAMmrGetGeometry</b>(<b>spSpecObjectOnMechPart</b>, 
+                             NameFeatureToCopy ,&amp;<b>pCopiedFeatureInAssyContext</b>);	</pre>
+				<pre>    rc = pCopiedFeatureInAssyContext-&gt;<b>QueryInterface</b>
+				<b>       </b>(IID_CATIMmiMechanicalImportApplicative,
+                                  (void**)&amp;<b>pIMecImportApplicativeOnResultCopy</b>);
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">The <code><b>CAAMmrGetGeomtry</b></code> call returns 
+		the feature <code><b>pCopiedFeatureInAssyContext</b></code>, a <code><b>
+		CATBaseUnknown*</b></code> type, identified by its name <code><b>
+		Copy_CombinedCurve.2</b></code>, given a <code><b>MechanicalPart</b></code> 
+		feature, as an input. The <code><b>MechanicalPart</b></code> feature is 
+		available as <code><b>spSpecObjectOnMechPart</b></code>, <code><b>
+		CATISpecObject_var</b></code> type from an earlier step [<a href="#Retrieve MechanicalPart feature">#</a>]</p>
+	<p align="left">We then proceed to seek a <code><b>
+	CATIMmiMechanicalImportApplicative</b></code>* type on <code><b>
+	Copy_CombinedCurve.2.</b></code> The Interface <code><b>
+	CATIMmiMechanicalImportApplicative</b></code> has services for retrieving 
+	information from a copied feature.</p>
+	<p align="left"><a name="Set ClientID on copied feature"></a>As mentioned 
+	before, authentication on the copied feature is an essential pre-requisite 
+	before seeking any information from it. A call to <code><b>
+	SetPointedElementClientId</b></code> with the <code><b>ClientId</b></code>, 
+	a <code><b>CATUnicodeString</b></code> set to &quot;<b>SAMPLES</b>&quot; earlier [<a href="#confirm failure">#</a>] 
+	does this authentication.</p>
+		<table class="code" id="Table49">
+			<tr>
+				<td><pre>...
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>SetPointedElementClientId</b>(ClientId);
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The call to <code><b>SetPointedElementClientId</b></code> is expected 
+		to return a <code><b>SUCCESS</b></code> here since</p>
+	<blockquote>
+		<ul>
+			<li>Part containing the 
+			pointed element <code><b>CAAMmrClienId_RepRef_Org </b></code>is 
+			already loaded in the current session</li>
+			<li>The <code><b>ClientId</b></code> argument valuated to &quot;<b>SAMPLES</b>&quot; 
+			[<a href="#confirm failure">#</a>] earlier, is the same as the <code>
+			<b>Client</b></code> <code><b>Id</b></code> of the <code><b>Catalog</b></code> 
+			containing the <code><b>StartUp</b></code> definition of <code><b>
+			CombinedCurve.1</b></code> (source feature for <code><b>
+			Copy_CombinedCurve.2</b></code>)</li>
+		</ul>
+	</blockquote>
+	<p align="left"><a name="Set relevant information"></a>It is now 
+		possible to seek all relevant information from <a><code><b>
+		Copy_CombinedCurve.2</b></code></a>, as the code below depicts.</p>
+		<table class="code" id="Table41">
+			<tr>
+				<td><pre>...</pre>
+				<pre>    CATBaseUnknown_var <b>spPointedElement2</b>;
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetPointedElement</b>(spPointedElement2);</pre>
+				<pre>    CATBaseUnknown_var <b>spSourceProductInstance2</b>;
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>GetSourceProduct</b>
+				<b>                       </b>(spSourceProductInstance2);
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left"> The call to <code><b>GetPointedElement</b></code> 
+		returns the pointed element, <a><code><b>spPointedElement2</b></code></a>, 
+		a <a><code><b>CATBaseUnknown_var</b></code></a> type.</p>
+	<p align="left"> The call to <code><b>GetSourceProduct</b></code><b>&nbsp; </b>
+	returns the Product Instance <a><code><b>CAAMmrImportClientId_Child1.1</b></code> </a>
+	which aggregates the <a>Product <code><b>CAAMmrImportClientId_RepRef_Org, </b></code>
+	associated with the <code><b>Part</b></code> of the 
+	source feature <code><b>CombinedCurve.1</b></code>. It is returned as a
+	<code><b>CATBaseUnknown_var</b></code> type, <code><b>
+	spSourceProductInstance2</b></code>.&nbsp; It succeeds since <code><b>
+	Copy_CombinedCurve.2</b></code>, is a feature copied in Assy Context.</a></p>
+	<p align="right"> [<A href="#Top">Top</A>]</p>
+		<h4 align="left">
+        <a name="Failure to set ClientID when pointed feature is DS feature">
+        </a>Failure to do a ClientId Authentication on Copy_Point.1</h4>
+		<p align="left">
+        Lastly, we illustrate the failure to do a <a><code><b>ClientID</b></code></a> 
+		authentication on <a><code><b>Copy_Point.1</b></code></a>, a point 
+		copied in Root Context, within the Part associated with <code><b>CAAMmrClienId_RepRef_Copies</b></code>.</p>
+		<p align="left">
+        We begin by retrieving <code><b>Copy_Point.1</b></code> feature.</p>
+		<table class="code" id="Table50">
+			<tr>
+				<td><pre>...</pre>
+				<pre>    CATBaseUnknown* pCopiedFeature_Point= NULL;
+    NameFeatureToCopy = &quot;<b>Copy_Point.1</b>&quot;;
+    rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnMechPart, 
+                             NameFeatureToCopy ,&amp;<b>pCopiedFeature_Point</b>);
+  </pre>
+				<pre>    rc = pCopiedFeature_Point-&gt;<b>QueryInterface</b>(IID_CATIMmiMechanicalImportApplicative,
+                                        (void**)&amp;<b>pIMecImportApplicativeOnResultCopy</b>); 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">The <code><b>CAAMmrGetGeomtry</b></code> call returns 
+		the feature <code><b>pCopiedFeature_Point</b></code>, a <code><b>
+		CATBaseUnknown*</b></code> type, identified by its name <code><b>
+		Copy_Point.1</b></code>, given a <code><b>MechanicalPart</b></code> 
+		feature, as an input. The <code><b>MechanicalPart</b></code> feature is 
+		available as <code><b>spSpecObjectOnMechPart</b></code>, <code><b>
+		CATISpecObject_var</b></code> type [<a href="#Retrieve MechanicalPart feature">#</a>]</p>
+	<p align="left">We then proceed to seek a <code><b>
+	CATIMmiMechanicalImportApplicative</b></code>* type on <code><b>
+	Copy_Point.1.</b></code> The Interface <code><b>
+	CATIMmiMechanicalImportApplicative</b></code> has services for retrieving 
+	information from a copied feature.</p>
+	<p align="left">
+        <a name="Confirm FAILURE to set ClientID on copied feature"></a>A call 
+		to <code><b>SetPointedElementClientId</b></code> with the <code><b>
+		ClientId</b></code>, a <code><b>CATUnicodeString</b></code> set to &quot;<b>SAMPLES</b>&quot; 
+		earlier [<a href="#confirm failure">#</a>] attempts to do an authentication on
+		<code><b>Copy_Point.1</b></code>, an essential pre-requisite prior to 
+		proceeding further.</p>
+		<table class="code" id="Table47">
+			<tr>
+				<td><pre>...
+    rc = pIMecImportApplicativeOnResultCopy-&gt;<b>SetPointedElementClientId</b>(ClientId);
+    if (SUCCEEDED(rc))
+        return 1;
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="left">This authentication fails, for the simple reason that 
+		the <code><b>ClientId</b></code> input is that of the <code><b>
+		CombinedCurve</b></code> <code><b>StartUp</b></code> <code><b>Catalog</b></code>, 
+		which does not define the&nbsp; <code><b>Copy_Point.1</b></code> source.</p>
+	<p align="left">To retrieve any link information from a standard DS feature, 
+	eg. <code><b>Point</b></code>,&nbsp; it should necessarily be an <code><b>
+	Applicative</b></code> <code><b>Import</b></code>, meaning a feature copied 
+	&quot;<b>as result with Link</b>&quot; across Part documents 
+	and tagged by a &quot;<code><b>GUID</b></code>&quot; [<a href="#References">5</a>] The <code><b>ClientId</b></code> 
+	authentication could not be valid in this context.</p>
+	<p align="right">[<A href="#Top">Top</A>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<p align="left">The <code><b>CAAMmrImportWithClientId</b></code> use case ends by simply closing the PLM 
+session. </p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="InShort"></a>In Short</h3>
+      <p>The Use Case illustrates retrieving the link information of an 
+		Applicative Mechanical Import, a <a><code><b>CombinedCurve</b></code></a>&nbsp;<a>[</a><a href="#References">8</a><a>] 
+		using the</a> <a><code><b>StartUp</b></code></a>
+		<a><code><b>Catalog</b></code></a> authentication on the copied feature. The <a><code><b>ClientId</b></code></a> input at the time of 
+		authentication should necessarily be the same as the <code><b>ClientId</b></code> 
+		of the <code><b>StartUp Catalog</b></code> defining the source feature 
+		of the Import. </p>
+	<p>The authentication 
+	thus necessitates that the Part 
+	containing the pointed element should necessarily be loaded in the current 
+	session. That explains why calls to <a><code><b>IsPointedElementLoaded</b></code></a> 
+	and <a><code><b>LoadPointedElement</b></code></a> of the <a><i><code><b>
+	CATIMmiMechanicalImportApplicative</b></code></i></a> are irrelevant in the
+	<a><code><b>ClientId</b></code></a> context.</p>
+	<p>The article &quot;<b>Managing Applicative Mechanical Imports</b>&quot; [<a href="#References">3</a>] 
+	is a further reference on that subject.</p>
+	<p>To retrieve any link information from a copy of a standard DS feature, eg. 
+	Point, the copy should necessarily be an <b>Applicative Import</b> meaning, 
+	a feature copied &quot;<b>as result with link</b>&quot; across Part, and tagged by a &quot;<a><code><b>GUID</b></code></a>&quot; 
+	[<a href="#References">5</a>]. 
+	The <a><code><b>ClientId</b></code></a> authentication is irrelevant in this 
+	context.</p>
+					<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table id="Table11" width="1028" height="107">
+			<tr>
+				<td vAlign="top" width="58" height="16">[1]</td>
+				<td width="966" height="16">
+				<a href="../CAAMmrTechArticles/CAAMmrApplicativeImport.htm">Managing Applicative Mechanical 
+				Imports</a></td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="58" height="16">[2]</td>
+				<td width="966" height="16">
+				<a href="CAAMmrCombinedCurveInstantiation.htm">Instantiating 
+				Combined Curves</a></td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="58" height="16">[3]</td>
+				<td width="966" height="16">
+                <a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</A></td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="58" height="16">[4]</td>
+				<td width="966" height="16">
+                <a href="CAAMmrCombCrvCatalog.htm">Creating Combined Curve's 
+                Catalog</a></td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="58" height="16">[5]</td>
+				<td width="966" height="16">
+                <a href="CAAMmrApplicativeImport.htm">Retrieving Mechanical Import Information using GUID Mechanism</a></td>
+			</tr>
+			</table>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table id="Table12" width="100%">
+			<tr>
+				<td vAlign="top">Version: <strong>1</strong> [July 2007]</td>
+				<td vAlign="top">Document created</td>
+			</tr>
+			<tr>
+				<td vAlign="top" align="right" colSpan="2">[<A href="#Top">Top</A>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>
+

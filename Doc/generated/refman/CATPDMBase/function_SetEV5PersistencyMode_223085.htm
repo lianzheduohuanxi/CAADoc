@@ -1,0 +1,133 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATPDMBase Global Function SetEV5PersistencyMode</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATPDMBase.htm" href="../CATPDMBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATPDMBase";	}
+		function getCurrentObjectName() { 
+ 	return "SetEV5PersistencyMode"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATPDMBase Global Function SetEV5PersistencyMode</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('HRESULT',' HRESULT')</script>  <b>SetEV5PersistencyMode</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument*')</script> <td><tt>ipDoc</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIPDMPersistency::VaultMode','CATIPDMPersistency::VaultMode&amp;')</script> <td><tt>iSaveMode</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>iPropagate</tt><td><tt>= FALSE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Interface to set the persistency mode for a product to be saved in ENOVIA V5 and its children.
+
+ <br><b>Role:</b>Enable to set the persistency mode for a product and optionally its children before to Save them in ENOVIA V5.
+ <br>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ipDoc</tt>
+   <dd>    (input) The CATIA document to set its persistency mode.
+
+ </dd>
+    <dt><tt> iSaveMode</tt>
+   <dd>    (input) The persistency mode for the document to be saved. Possible values are: 
+    <ul>
+      <li><tt>PermanentBlackBox</tt>: Product, Part or any other applicative document will be streamed in the Vault.</li>
+      <li><tt>VolatileExposed</tt>: Product document will be saved and exposed in ENOVIA V5 VPM.</li>
+      <li>Values NotDefined and PermanentExposed are not accepted.</li>
+    </ul>
+
+ </dd>
+    <dt><tt> iPropagate</tt>
+   <dd>    (input) Boolean flag to enable the persistency mode propagation on children documents. Possible values are:
+    <ul>
+      <li><tt>TRUE</tt>: Propagation enable.</li>
+      <li><tt>FALSE</tt>: Propagation unable.</li>
+    </ul>
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      <ul>
+      <li><tt>S_OK</tt>: Persistency mode successfully set on document and successfully propagated on children.</li>
+      <li><tt>S_FALSE</tt>: VolatileExposed mode successfully set on document, but the children propagation has only been partially executed.</li>
+      <li><tt>E_FAIL</tt>: Persistency Mode or persistency children propagation has failed. Possible errors may be: 
+       <ul>
+        <li>The connection with the ENOVIA V5 Server isn't established.</li>
+        <li>The Document to be set is already persisted in ENOVIA V5.</li>
+        <li>The VolatileExposed mode isn’t supported on standalone CATProduct</li>
+        <li>The PermanentBlackBox mode can't be set on Document, because the VolatileExposed mode is set on one of its children.</li>
+        <li>The VolatileExposed mode can't be set on Document, because the PermanentBlackBox mode is set on one of its parents.</li>
+        <li>The VolatileExposed mode propagation can't be done, because a child of the document is already persisted as a PermanentBlackBox in EV5.</li>
+        <li>The PermanentBlackBox mode propagation can't be done, because a child of the document is already persisted as VolatileExposed in EV5.</li>
+        <li>An abnormal error happened while setting or propagting the VaultMode.</li>
+       </ul>
+      </li>
+      <li><tt>E_INVALIDARG</tt>: One or several arguments contain an improper value. Possible errors may be:
+       <ul>
+        <li>The [ipDoc] parameter is NULL or is not a CATDocument.</li>
+        <li>The [iSaveMode] parameter value is different from "PermanentBlackBox" and "VolatileExposed"</li>
+        <li>The [iSaveMode] parameter value is "VolatileExposed" whereas the [ipDoc] parameter isn't a "CATProduct" typed document.</li>
+       </ul>
+      </li>
+    </ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPDMInteropServices.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

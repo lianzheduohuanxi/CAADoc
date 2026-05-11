@@ -1,0 +1,181 @@
+' COPYRIGHT DASSAULT SYSTEMES 2002
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create a CATProduct containing all section curves of the current product in the same plane.
+'   Assumptions : A CATProduct document should be active having some sections.
+'                 An environment variable named "EXPORT_DIR" must be set (ex: export EXPORT_DIR=/tmp/).
+'                 It refers the directory where models will be stored.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English
+'   CATIA Level : V5R8SP1
+' ***********************************************************************
+
+' ***********************************************************************
+'
+' Purpose:  Define the inverse of a position matrix.
+'
+' Inputs :  matrix   Array       array corresponding to the matrix
+'
+' Outputs:  inverse  Array       array corresponding to the inverse of the matrix
+'
+' ***********************************************************************
+
+Sub MatrixInverse ( ByVal matrix, ByRef inverse )
+    
+    Dim a(11)
+    Dim I As Integer
+    For I = 0 to 11
+        a(I) = matrix(I)
+    Next
+    
+    inverse( 0) = a(4)*a(8) - a(7)*a(5)
+    inverse( 1) = a(2)*a(7) - a(8)*a(1)
+    inverse( 2) = a(1)*a(5) - a(4)*a(2)
+    inverse( 3) = a(5)*a(6) - a(8)*a(3)
+    inverse( 4) = a(0)*a(8) - a(6)*a(2)
+    inverse( 5) = a(2)*a(3) - a(5)*a(0)
+    inverse( 6) = a(3)*a(7) - a(6)*a(4)
+    inverse( 7) = a(1)*a(6) - a(7)*a(0)
+    inverse( 8) = a(0)*a(4) - a(1)*a(3)
+    inverse( 9) = -(a( 9)*inverse(0)+a(10)*inverse(3)+a(11)*inverse(6))
+    inverse(10) = -(a( 9)*inverse(1)+a(10)*inverse(4)+a(11)*inverse(7))
+    inverse(11) = -(a( 9)*inverse(2)+a(10)*inverse(5)+a(11)*inverse(8))
+    
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Main.
+'
+' ***********************************************************************
+
+Sub CATMain()
+    
+    CATIA.DisplayFileAlerts = False
+    
+    ' Retrieve the Sections collection
+    Dim cSections As Sections
+    Set cSections = CATIA.ActiveDocument.Product.GetTechnologicalObject("Sections")
+    
+    ' Retrieve the number of Sections
+    Dim iNbSection As Integer
+    iNbSection = cSections.Count
+
+    If (iNbSection = 0) Then
+        Msgbox "No section"
+    Else
+        
+        ' Initialize file management
+        Dim sExportDir As String
+        sExportDir = CATIA.SystemService.Environ("EXPORT_DIR")
+        
+        ' Initialize section management
+        Dim sV4ModelName()
+        ReDim sV4ModelName(iNbSection)
+        sV4ModelName(0) = " "
+        Dim sV4ModelType As String
+        sV4ModelType = "model"
+        Dim dPosition(11)  ' Position matrix of a section
+        Dim dInverse(11)   ' Inverse of position matrix
+        Dim dAllPosition() ' Array of all section position matrices
+        ReDim dAllPosition(iNbSection, 11)
+        
+        ' Loop on all sections
+        Dim oSection As Section
+        Dim oExportDoc As Document
+        Dim iNbExported As Integer
+        iNbExported = 0
+        Dim I As Integer
+        Dim J As Integer
+        For I=1 to iNbSection
+            Set oSection = cSections.Item(I)
+            
+            ' Treat only if section is not empty
+            If (oSection.IsEmpty <> 0) Then
+            
+                ' Export the Section into a V4 model
+                Set oExportDoc = oSection.Export
+                sV4ModelName(iNbExported)= sExportDir + oSection.Name + ".model"
+                oExportDoc.ExportData sV4ModelName(iNbExported), sV4ModelType
+                
+                ' Store the position of the section
+                oSection.GetPosition dPosition
+                For J=0 to 11
+                    dAllPosition(iNbExported, J) = dPosition(J)
+                Next
+                iNbExported = iNbExported + 1
+                
+                oExportDoc.Close
+                Set oExportDoc = Nothing
+            End If
+            
+            Set oSection = Nothing
+        Next
+        
+        ' Create a new CATProduct to receive section curves
+        Dim oNewDocument As Document
+        Set oNewDocument = CATIA.Documents.Add("Product").Product
+        oNewDocument.Products.AddComponentsFromFiles sV4ModelName , sV4ModelType
+        
+        ' Move the components to flatten the section
+        Dim oComponent As Product
+        For I=1 to iNbExported
+            Set oComponent = oNewDocument.Products.Item(I)
+            
+            oComponent.ApplyWorkMode DESIGN_MODE
+            For J=0 to 11
+                dPosition(J) = dAllPosition(I-1, J)
+            Next
+            MatrixInverse dPosition, dInverse
+            oComponent.Move.Apply dInverse
+            
+            Set oComponent = Nothing
+        Next
+        
+        ' Hide skeletton geometry
+        Dim oSelection As Selection
+        Set oSelection = CATIA.ActiveDocument.Selection
+        oSelection.Clear
+        oSelection.Search "('CATIA V4'.PLN + 'CATIA V4'.AXS),all"
+        oSelection.VisProperties.SetShow 1
+        oSelection.Clear
+        Set oSelection = Nothing
+        
+        ' Modify the viewpoint to 'top view'
+        Dim oViewer As Viewer
+        Set oViewer = CATIA.ActiveWindow.ActiveViewer
+        Dim oViewpoint As Viewpoint3D
+        Set oViewpoint = oViewer.Viewpoint3D
+        oViewer.Reframe
+        Dim StdSightDirection(2)
+        StdSightDirection(0) =  0.
+        StdSightDirection(1) =  0.
+        StdSightDirection(2) = -1.
+        Dim StdUpDirection(2)
+        StdUpDirection(0) = 0.
+        StdUpDirection(1) = 1.
+        StdUpDirection(2) = 0.
+        Dim Origin(2)
+        oViewpoint.GetOrigin Origin
+        Dim SightDirection(2)
+        oViewpoint.GetSightDirection SightDirection
+        Dim Focus As Double
+        Focus = oViewpoint.FocusDistance
+        For I = 0 to 2
+            Origin(I) = Origin(I) + Focus*(SightDirection(I) - StdSightDirection(I))
+        Next
+        oViewpoint.PutOrigin Origin
+        oViewpoint.PutSightDirection StdSightDirection
+        oViewpoint.PutUpDirection StdUpDirection
+        oViewpoint.ProjectionMode = catProjectionCylindric
+        oViewer.Update
+        Set oViewpoint = Nothing
+        Set oViewer = Nothing
+    End If
+    
+    Set cSections = Nothing
+    
+End Sub
+

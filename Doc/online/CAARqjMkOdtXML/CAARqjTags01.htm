@@ -1,0 +1,436 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>Getting Started</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Java Unit Test Manager</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Getting Started</h3>
+      <em>How to write and run a test program</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p>This task shows you how to get started with Java Unit 
+		Test Manager, using a basic test scenario.</p>
+		<ul>
+			<li><a href="#Populating">Populating the Workspace</a></li>
+			<li><a href="#Creating1">Creating the Test Framework</a></li>
+			<li><a href="#Creating2">Creating the Testing Code</a></li>
+			<li><a href="#Creating3">Creating a Test Object</a></li>
+			<li><a href="#Creating4">Creating JavaLauncher.bat</a></li>
+			<li><a href="#Creating5">Creating JavaLauncher.sh</a></li>
+			<li><a href="#Building">Building the Workspace</a></li>
+			<li><a href="#Running">Running the Test Object</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="Intro2">
+			<hr class="header" />
+			<span class="run-in">Before you begin:</span> Note that:
+			<ul>
+			<li>You should have first installed the Native Apps Developement Environment.</li>
+			<li>You should also have installed a Dassault Syst&#232;mes brand, such 
+				as CATIA or DELMIA, as well as the associated API CD ROM. The scenario 
+				uses some of the installed frameworks to populate the workspace 
+				and run the tools.</li>
+			<li>You should have already created a workspace, such as the one used 
+				as an example in
+				<a href="#" onclick="CAAlinkOutOfPreqs('CAAStudio/wxpuggs01.htm'); return false;">
+				Getting Started</a> in C++ Interactive Dashboard (CID). Otherwise, 
+				create a simple folder that will be used as the workspace root folder.
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Populating"></a>Populating the Workspace</h2>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The workspace is 
+		supposed to be located in E:\MyWorkspace in this example. </td>
+	</tr>
+</table>
+<ol class="task">
+	<li>
+		<p>In you workspace, create a folder named CAAApp</p>
+	</li>
+	<li>
+		<p>In CAAApp, create a folder named IdentityCard.</p>
+	</li>
+	<li>
+		<p>In the IdentityCard folder, create an XML file named IdentityCard.xml 
+		with the following contents:</p>
+		<pre class="code">&lt;?xml version='1.0' ?&gt;
+&lt;testFramework xmlns=&quot;http://www.3ds.ic&quot;
+               xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+               xsi:schemaLocation=&quot;http://www.3ds.ic ICModel.xsd&quot;&gt;
+&lt;/testFramework&gt;</pre>
+	</li>
+	<li>
+		<p>In CAAApp, create a folder named MyJavaModule.mj for the Java 
+		module.</p>
+	</li>
+	<li>
+		<p>In the MyJavaModule.mj module, create the Imakefile.mk file with the 
+		following contents:</p>
+		<pre class="code">BUILT_OBJECT_TYPE=JAVA
+LINK_WITH =</pre>
+	</li>
+	<li>In the MyJavaModule.mj module, create the folders src\com\dassault_systemes\myjavacode.</li>
+	<li>In the myjavacode folder, create the MyJavaCodeClass.java file with the 
+		following contents:
+		<pre class="code">package com.dassault_systemes.myjavacode;
+
+public class MyJavaCodeClass
+{
+	public MyJavaCodeClass()
+	{	
+		System.out.println("MyJavaCodeClass constructor...");
+	}
+}</pre>
+		
+		</li>
+</ol>
+<p>The Java class of this framework will be used as the code to test.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating1"></a>Creating the Test Framework</h2>
+<ol class="task">
+	<li>
+		<p>In you workspace, create a folder named CAATest.tst</p>
+	</li>
+	<li>
+		<p>In CAATest.tst, create a folder named IdentityCard.</p>
+	</li>
+	<li>
+		<p>In the IdentityCard folder, create an XML file named IdentityCard.xml 
+		with the following contents:</p>
+		<pre class="code">&lt;?xml version='1.0' ?&gt;
+&lt;testFramework xmlns=&quot;http://www.3ds.ic&quot;
+               xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+               xsi:schemaLocation=&quot;http://www.3ds.ic ICModel.xsd&quot;&gt;
+  &lt;prerequisite name = &quot;CAAApp&quot; access = &quot;Public&quot;/&gt;
+&lt;/testFramework&gt;</pre>
+	</li>
+	<li>
+		<p>In CAATest.tst, create a folder named FunctionTests.</p>
+	</li>
+	<li>
+		<p>In the FunctionTests folder, create a folder named TestCases.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating2"></a>Creating the Testing Code</h2>
+<ol class="task">
+	<li>
+		<p>In CAATest.tst, create a folder named MyJavaTestModule.mj for the Java 
+		module.</p>
+	</li>
+	<li>
+		<p>In the MyJavaTestModule.mj module, create the Imakefile.mk file with the 
+		following contents:</p>
+		<pre class="code">BUILT_OBJECT_TYPE=JAVA
+LINK_WITH = MyJavaModule</pre>
+	</li>
+	<li>In the MyJavaModule.mj module, create the folders src\com\dassault_systemes\myjavatest.</li>
+	<li>In the myjavatest folder, create the MyJavaTestClass.java file with the 
+		following contents:
+		<pre class="code">package com.dassault_systemes.myjavatest;
+
+import com.dassault_systemes.myjavacode.MyJavaCodeClass;
+
+public class MyJavaTestClass
+{
+  public MyJavaTestClass()
+  { }
+
+  private int runTest() throws Exception
+  {
+    MyJavaCodeClass aJavaCodeClass = new MyJavaCodeClass();
+    return 0;
+  }
+
+  public static void main(String[] args)
+  {
+    System.out.println(&quot;Starting MyJavaTestClass&quot;);
+    try {
+      int rc = new MyJavaTestClass().runTest();
+      if (rc!=0) {
+        System.exit(rc);
+      }
+    }
+    catch (Throwable e) {
+      e.printStackTrace();
+      System.exit(777);
+    }
+  }
+}</pre>
+		
+		</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating3"></a>Creating a Test Object</h2>
+<ol class="task">
+	<li>
+		<p>In the TestCases folder, create an XML file named MyODT.xml 
+		with the following contents:</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  ...
+&lt;/ODT&gt;</pre>
+	</li>
+	<li>
+		<p>Add the test object definition section.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  <strong>&lt;Definition&gt;
+     &lt;Target desc=&quot;This test validates MyJavaCodeClass&quot;/&gt; 
+     &lt;MaxTime value=&quot;10&quot;/&gt;
+  &lt;/Definition&gt;</strong>
+  ...
+&lt;/ODT&gt;</pre>
+		<p>The definition section is required and is enclosed within the tag &lt;Definition&gt;. 
+		In this example, it limits its replaying duration to 10 seconds.</p>
+	</li>
+	<li>
+		<p>Add the test object execution section.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt; 
+  &lt;Definition&gt; 
+    &lt;Target desc=&quot;This test validates function xxx&quot;/&gt; 
+    &lt;MaxTime value=&quot;10&quot;/&gt; 
+  &lt;/Definition&gt; 
+<strong>  &lt;Execution&gt; 
+    &lt;Command value=&quot;CMD /C JavaLauncher.bat&quot; osConstraint=&quot;Windows_NT&quot; /&gt; 
+    &lt;Command value=&quot;/bin/ksh JavaLauncher.sh&quot; osConstraint=&quot;Unix&quot; /&gt; 
+  &lt;/Execution&gt; </strong>
+&lt;/ODT&gt; </pre>
+		<p>The execution section is required and is enclosed within the tag &lt;Execution&gt;. 
+		In this example, it requests:</p>
+		<ul>
+			<li>The JavaLauncher.bat procedure to be run with Windows</li>
+			<li>The JavaLauncher.sh procedure to be run with UNIX.</li>
+		</ul>
+	</li>
+	<li>
+		<p>Save the file MyODT.xml.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating4"></a>Creating JavaLauncher.bat</h2>
+<ol class="task">
+<li><p>In CAATest.tst, create the CNext.specifics_Windows_NT/code/command 
+	folders.</p></li>
+<li><p>In the command folder, create a file named JavaLauncher.bat with the 
+	following contents:</p>
+<pre class="code">@echo off
+
+for /F "delims=" %%i in ( 'WhichDir %OS%\docs\java\MyJavaTestModule.jar' ) do set CLASSPATH=%%i;%CLASSPATH%
+for /F "delims=" %%i in ( 'WhichDir %OS%\docs\java\MyJavaModule.jar' ) do set CLASSPATH=%%i;%CLASSPATH%
+if not defined JAVA_HOME set JAVA_HOME=%JavaROOT_PATH%
+%JAVA_HOME%\bin\java com.dassault_systemes.myjavatest.MyJavaTestClass args1 args2</pre>
+</li>
+<li><p>In the command folder, create a file named WhichDir.bat with the 
+	following contents:</p>
+<pre class="code">@echo off
+setlocal
+
+echo %1 | findstr "^%OS%" &gt; NUL
+if %ERRORLEVEL% NEQ 0 (
+  for %%I in (%1) do (
+    if exist "%%~$ADL_ODT_CONCATENATION:I" (
+      echo %%~$ADL_ODT_CONCATENATION:I
+      exit /b 0
+    )
+  )
+) else (
+  for %%I in (%1) do (
+    if exist "%%~$MKMK_LST_RTV:I" (
+      echo %%~$MKMK_LST_RTV:I
+      exit /b 0
+    )
+  )
+)
+echo %1_Not_Found
+exit /b 1</pre>
+</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating5"></a>Creating JavaLauncher.sh</h2>
+<ol class="task">
+<li><p>In CAATest.tst, create the CNext.specifics_UNIX/code/command folders.</p></li>
+<li><p>In the command folder, create a file named JavaLauncher.sh with the 
+	following contents:</p>
+<pre class="code">#/bin/ksh
+
+WhichDir()
+{
+  printf "%s" "$*"| grep "^$OS" &gt; $ADL_ODT_NULL 2&gt;&amp;1
+  if [ $? != 0 ];then
+    for WSPREQ in $ADL_ODT_CONCATENATION
+    do
+      if [ "$WSPREQ" != "" ]
+      then
+        if [ -d $WSPREQ/$1 -o -r $WSPREQ/$1 ]
+        then
+          echo $WSPREQ/$*
+          return 0
+        fi
+      fi
+    done
+    printf "%s\n" "${1}_Not_Found"
+    return 1
+  else
+    IFS=":"
+    for WSPREQ in $MKMK_LST_RTV
+    do
+      if [ "$WSPREQ" != "" ]
+      then
+        if [ -d $WSPREQ/$1 -o -r $WSPREQ/$1 ]
+        then
+          unset IFS
+          echo $WSPREQ/$*
+          return 0
+        fi
+      fi
+    done
+    unset IFS
+    printf "%s\n" "${1}_Not_Found"
+    return 1
+  fi
+}
+
+export CLASSPATH=$(WhichDir $OS/docs/java/MyJavaModule.jar):$CLASSPATH
+export CLASSPATH=$(WhichDir $OS/docs/java/MyJavaTestModule.jar):$CLASSPATH
+if [ -z "$JAVA_HOME" ];then
+                export JAVA_HOME="$JavaROOT_PATH"
+fi
+$JAVA_HOME/bin/java com.dassault_systemes.myjavatest.MyJavaTestClass args1 args2</pre>
+</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Building"></a>Building the Workspace</h2>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The Dassault Systemes 
+		3DEXPERIENCE run time and API are supposed to be installed in C:\Program 
+		Files\Dassault Systemes\B27 and while the Development Tools can be installed in the same place, it is recommended
+		to install them in another localtion like in C:\Program Files\Dassault Systemes\T27. Replace these paths with your own Dassault 
+		Systemes V5 installation folder and the Development Tools installation 
+		folder respectively if you installed them in other places. </td>
+	</tr>
+</table>
+<ol class="task">
+	<li>
+		<p>Open a command prompt.</p>
+	</li>
+	<li>
+		<p>Set the current folder at the root folder of your workspace.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">C:\Program Files\Dassault Systemes\T27\win_b64\code\command\tck_init.bat</pre>
+		<p>This command initializes the tools to be used to build the workspace.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">tck_list</pre>
+		<p>This command lists the available TCKs. Choose a value similar to
+		<strong>V5_6A2017_1524_B27</strong>.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">tck_profile V5_6A2017_1524_B27</pre>
+		<p>The build environment is now set up.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkGetPreq -p "C:\Program Files\Dassault Systemes\B27"</pre>
+		<p>The prerequisites of the frameworks in your workspace are now set up.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkmk -au</pre>
+		<p>The frameworks are now built.</p>
+	</li>
+	<li>
+		<p>Type:</p>
+		<pre class="code">mkCreateRunTimeView</pre>
+		<p>The run time view of your workspace is created.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Running"></a>Running the Test Object</h2>
+<ol class="task">
+	<li>
+		<p>Still in the command prompt set at the root folder of your workspace, 
+		type:</p>
+		<pre class="code">mkodt -s MyODT</pre>
+		<p>Note that the test object name if the name of the XML file without its 
+		extension.</p>
+	</li>
+</ol>
+<p>The test object output is:</p>
+<pre class="code">## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace 
+## Concatenation : C:\Program Files\Dassault Systemes\B27
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [MyFW.tst MyODT] (1 / 1)
+max_time: 10 min.
+elapsed_time: 00 min 01 sec
+## ++ MyODT : Test execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.</pre>
+<p>The test object traces are located in 
+E:\MyWorkspace\CAATest.tst\FunctionTests\Output\win_b64 
+or aix_a64. 
+The trace file name is the ODT name, MyODT, with extension traces, that 
+is, MyODT.traces. It contains the traces issued by the tested code, as 
+well as possible error messages.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2015]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2015, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

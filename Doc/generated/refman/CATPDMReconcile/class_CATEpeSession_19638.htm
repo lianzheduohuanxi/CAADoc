@@ -1,0 +1,754 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATPDMReconcile Class CATEpeSession</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATPDMReconcile.htm" href="../CATPDMReconcile.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATPDMReconcile";	}
+		function getCurrentObjectName() { 
+ 	return "CATEpeSession"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATPDMReconcile <script type="text/javascript" > writeClassCharacteristic(); </script> CATEpeSession</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATEpeSession_19638','CATEpeSession','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATEpeSession</b>
+</p>
+<p>
+<b><i> Enables to manage a reconciliation session.</i></b><br>
+
+
+ <b>Role</b>:
+ CATEpeSession class federates all information that are managed during a 
+ Reconciliation operation.
+ <br>A typical reconciliation process is made of following steps
+ <ol>
+ <li>Initiate reconciliation session by creating a CATEpeSession with one 
+ one CATIA document in input.</li>
+ <li>Get list of Documents to be reconciled using CATEpeSession::GetTopLevelObjectsfrom.
+ (<script type="text/javascript"> activateLinkAnchor('CATEpeObject','','CATEpeObject') </script> )</li> <li>Set a Reconciliation rule on all relevant CATEpeObject. Rule could be applied 
+ on a CATEpeObject that represents either a CATIA Document or an ASM Product.
+ <br>If rule already set for this object, it will overwrite previous value.</li>
+ <li>Execute Reconciliation using CATEpeSession::ExecuteReconciliation.</li>
+ </ol>
+
+ <br>This class will also enable to access all ressources that are used in a Reconciliation,
+ such as:
+ <ul>
+ <li>List of available Environment</li>
+ <li>List of available Criteria</li>
+ <li>List of available Characteristics</li>
+ <li>List of available Object to be reconciled</li>
+ </ul>
+
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATEpeObject','','CATEpeObject') </script>
+</dl>
+</p>
+<hr>
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#BuildVpdmView(CATEpeSession*&amp;)"><b>BuildVpdmView</b></a>(CATEpeSession*&amp;)
+<dd>  Creates VPDM product structure view.
+ <dt> o 
+    <a href="#CloseReconcileSession()"><b>CloseReconcileSession</b></a>()
+<dd>  Closes Reconciliation Session.
+ <dt> o 
+    <a href="#CreateReconcileSession(CATLISTP(CATDocument)&amp;,CATEpeSession*&amp;)"><b>CreateReconcileSession</b></a>(CATLISTP(CATDocument)&amp;,CATEpeSession*&amp;)
+<dd>  Creates and returns the Reconciliation Session, if it is authorized
+
+ <b>Role:</b> Creates and returns the Reconciliation Session, if there is no previous CATEpeSession existing.
+ <dt> o 
+    <a href="#ExecuteProductStructureComparison(CATEpeInstance*&amp;)"><b>ExecuteProductStructureComparison</b></a>(CATEpeInstance*&amp;)
+<dd>  Executes Product structure comparison.
+ <dt> o 
+    <a href="#ExecuteReconciliation()"><b>ExecuteReconciliation</b></a>()
+<dd>  Starts reconciliation Execution.
+ <dt> o 
+    <a href="#GetComparisonStructure(CATEpeInstance*&amp;)"><b>GetComparisonStructure</b></a>(CATEpeInstance*&amp;)
+<dd>  Access to Product structure comparison results.
+ <dt> o 
+    <a href="#GetEnvironment(CATUnicodeString&amp;)"><b>GetEnvironment</b></a>(CATUnicodeString&amp;)
+<dd>  Gets the default <b><i>Environment</i></b> selected.
+ <dt> o 
+    <a href="#GetEnvironments(CATListValCATUnicodeString&amp;)"><b>GetEnvironments</b></a>(CATListValCATUnicodeString&amp;)
+<dd>  Gets list of authorized <b><i>Environments</i></b>.
+ <dt> o 
+    <a href="#GetExposedEntity()"><b>GetExposedEntity</b></a>()
+<dd>  Access to object reconciliator internal object.
+ <dt> o 
+    <a href="#GetExposedEntity(CATScmSession*)"><b>GetExposedEntity</b></a>(CATScmSession*)
+<dd>  Access to CAA reconciliator object from other reconciliator objects.
+ <dt> o 
+    <a href="#GetSupportedDocumentTypes(CATListValCATUnicodeString*)"><b>GetSupportedDocumentTypes</b></a>(CATListValCATUnicodeString*)
+<dd>  Gets list of supported Document Types in the Context of Reconciliation.
+ <dt> o 
+    <a href="#GetTopLevelObjects(CATListOfCATEpeNode*)"><b>GetTopLevelObjects</b></a>(CATListOfCATEpeNode*)
+<dd>  Gets list of document <b><i>Objects</i></b> to be reconciled.
+ <dt> o 
+    <a href="#IsDocTypeAuthorized(CATUnicodeString&amp;)"><b>IsDocTypeAuthorized</b></a>(CATUnicodeString&amp;)
+<dd>  Checks if this type of document is supported by reconciliator.
+ <dt> o 
+    <a href="#IsEnvironmentAuthorized(CATUnicodeString&amp;)"><b>IsEnvironmentAuthorized</b></a>(CATUnicodeString&amp;)
+<dd>  Checks if it is a supported environment for Reconciliator.
+ <dt> o 
+    <a href="#IsExecuteAuthorized(CATBoolean&amp;)"><b>IsExecuteAuthorized</b></a>(CATBoolean&amp;)
+<dd>  Checks if reconciliation Execution could be called.
+ <dt> o 
+    <a href="#IsProdStructComparisonAvailable(CATBoolean&amp;)"><b>IsProdStructComparisonAvailable</b></a>(CATBoolean&amp;)
+<dd>  Checks if Product structure comparison is available.
+ <dt> o 
+    <a href="#SetEnvironment(CATUnicodeString&amp;)"><b>SetEnvironment</b></a>(CATUnicodeString&amp;)
+<dd>  Defines default <b><i>Environment</i></b> where objects need to be stored.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATReconcileRule"><b>CATReconcileRule</b></a>
+<dd>  Enumeration of authorized rules.
+ <dt> o 
+    <a href="#CATStorageMode"><b>CATStorageMode</b></a>
+<dd>  Enumeration of authorized storage mode.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="BuildVpdmView"></a><a name="BuildVpdmView(CATEpeSession*&amp;)"></a> <dt> o <b>BuildVpdmView</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>BuildVpdmView</b>(<td><script type="text/javascript"> activateLink('CATEpeSession','CATEpeSession*&amp;')</script> <td><tt>oxVPDMSession</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates VPDM product structure view.
+
+ <b>Role:</b> Create VPDM product structure view.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oxVPDMSession</tt>
+   <dd>  Session containing result of VPDM Product structure .</dd>
+</dl>
+</dl>
+</dl>
+<a name="CloseReconcileSession"></a><a name="CloseReconcileSession()"></a> <dt> o <b>CloseReconcileSession</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>CloseReconcileSession</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Closes Reconciliation Session.
+
+ <b>Role:</b> Closes Reconciliation Session.
+</dl>
+<a name="CreateReconcileSession"></a><a name="CreateReconcileSession(CATLISTP(CATDocument)&amp;,CATEpeSession*&amp;)"></a> <dt> o <b>CreateReconcileSession</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateReconcileSession</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATDocument)','CATLISTP(CATDocument)&amp;')</script> <td><tt>iLstDocIn</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATEpeSession','CATEpeSession*&amp;')</script> <td><tt>oScmSession</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates and returns the Reconciliation Session, if it is authorized
+
+ <b>Role:</b> Creates and returns the Reconciliation Session, if there is no previous CATEpeSession existing.   
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns S_OK and <b><i>2</i></b> if there is already one Session existing. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLstDocIn</tt>
+   <dd>  List of <b><i>CATDocument</i></b>.
+ </dd>
+    <dt><tt> oScmSession</tt>
+   <dd>  Pointer to newly created <b><i> CATEpeSession </i></b>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ExecuteProductStructureComparison"></a><a name="ExecuteProductStructureComparison(CATEpeInstance*&amp;)"></a> <dt> o <b>ExecuteProductStructureComparison</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ExecuteProductStructureComparison</b>(<td><script type="text/javascript"> activateLink('CATEpeInstance','CATEpeInstance*&amp;')</script> <td><tt>oxTreeResult</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Executes Product structure comparison.
+
+ <b>Role:</b> Executes Product structure comparison.
+ <br><b>Note:</b>Nothing will be done inside VPDM repository or inside CATIA session.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oxTreeResult</tt>
+   <dd> Root of the assembly comparison structure.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ExecuteReconciliation"></a><a name="ExecuteReconciliation()"></a> <dt> o <b>ExecuteReconciliation</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ExecuteReconciliation</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Starts reconciliation Execution.
+
+ <b>Role:</b> Update CATIA session according what has been defined through
+ Reconciliation rules on objects. Nothing will be done inside VPDM repository before 
+ save in VPDM will be requested.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well.
+</dl>
+</dl>
+<a name="GetComparisonStructure"></a><a name="GetComparisonStructure(CATEpeInstance*&amp;)"></a> <dt> o <b>GetComparisonStructure</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetComparisonStructure</b>(<td><script type="text/javascript"> activateLink('CATEpeInstance','CATEpeInstance*&amp;')</script> <td><tt>oxTreeResult</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Access to Product structure comparison results.
+
+ <b>Role:</b> Access to Product structure comparison results.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oxTreeResult</tt>
+   <dd> Root of the assembly comparison structure.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEnvironment"></a><a name="GetEnvironment(CATUnicodeString&amp;)"></a> <dt> o <b>GetEnvironment</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEnvironment</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>ocEnv</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the default <b><i>Environment</i></b> selected.
+
+ <b>Role:</b> Gets default <b><i>Environment</i></b> where objects will be stored.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ocEnv</tt>
+   <dd>  Environment.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEnvironments"></a><a name="GetEnvironments(CATListValCATUnicodeString&amp;)"></a> <dt> o <b>GetEnvironments</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEnvironments</b>(<td><script type="text/javascript"> activateLink('CATListValCATUnicodeString','CATListValCATUnicodeString&amp;')</script> <td><tt>iocEnvListName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets list of authorized <b><i>Environments</i></b>.
+
+ <b>Role:</b> Gets list of authorized <b><i>Environments</i></b>.
+ 
+ <br><b>Precondition</b>: Assumes that the address of an already
+ built <b><i>CATListValCATUnicodeString</i></b> is passed.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iocEnvListName</tt>
+   <dd> List names of authorized <b><i>Environments</i></b>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetExposedEntity"></a><a name="GetExposedEntity()"></a> <dt> o <b>GetExposedEntity</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATScmSession','CATScmSession *')</script>  <b>GetExposedEntity</b>(<td>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Access to object reconciliator internal object.
+
+ <b>Role:</b> Access to object reconciliator internal object..
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>NULL</i></b> if one error occur, otherwise provide access
+ associated  <b><i>CATEpeSession</i></b>.
+</dl>
+</dl>
+<a name="GetExposedEntity"></a><a name="GetExposedEntity(CATScmSession*)"></a> <dt> o <b>GetExposedEntity</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATEpeSession','CATEpeSession *')</script>  <b>GetExposedEntity</b>(<td> const <script type="text/javascript"> activateLink('CATScmSession','CATScmSession*')</script> <td><tt>ixObj</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Access to CAA reconciliator object from other reconciliator objects.
+
+ <b>Role:</b> Access to CAA reconciliator object from other reconciliator objects.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>NULL</i></b> if one error occur, otherwise provide access
+ associated <b><i>CATEpeProxyDocument</i></b>. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ixObj</tt>
+   <dd>  Internal session entity.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetSupportedDocumentTypes"></a><a name="GetSupportedDocumentTypes(CATListValCATUnicodeString*)"></a> <dt> o <b>GetSupportedDocumentTypes</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetSupportedDocumentTypes</b>(<td><script type="text/javascript"> activateLink('CATListValCATUnicodeString','CATListValCATUnicodeString*')</script> <td><tt>oDocTypeList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets list of supported Document Types in the Context of Reconciliation.
+
+ <b>Role:</b> Gets list of supported Document Types in the Context of Reconciliation.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDocTypeList</tt>
+   <dd> List of document type supported in reconciliation operations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetTopLevelObjects"></a><a name="GetTopLevelObjects(CATListOfCATEpeNode*)"></a> <dt> o <b>GetTopLevelObjects</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTopLevelObjects</b>(<td><script type="text/javascript"> activateLink('CATListOfCATEpeNode','CATListOfCATEpeNode*')</script> <td><tt>ioListOfObjects</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets list of document <b><i>Objects</i></b> to be reconciled.
+
+ <b>Role:</b> Gets list of document <b><i>Objects</i></b> to be reconciled. (
+<script type="text/javascript"> activateLinkAnchor('CATEpeObject','','CATEpeObject') </script> ) If CATEpeObject corresponds to CATProduct and <b><i>Structure Exposed</i></b> is selected, then top level
+ will delegate Reconciliation to their part children (second level of <b><i>CATEpeObject</i></b>)
+ 
+ <br><b>Precondition</b>: Assumes that the address of an already
+ built <b><i>CATListPtrCATEpeObject</i></b> is passed.
+ 
+ <br><b>Postcondition</b>: List only to be emptied by RemoveAll and individual objects not to be deleted.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioListOfObjects</tt>
+   <dd> List of <b><i>CATEpeObjects</i></b> to be reconcilied.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsDocTypeAuthorized"></a><a name="IsDocTypeAuthorized(CATUnicodeString&amp;)"></a> <dt> o <b>IsDocTypeAuthorized</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsDocTypeAuthorized</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>icDocType</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks if this type of document is supported by reconciliator.
+
+ <b>Role:</b> Checks if this type (<b><i>DocType</i></b>) of document is supported by reconciliator. 
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icDocType</tt>
+   <dd>  Document type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsEnvironmentAuthorized"></a><a name="IsEnvironmentAuthorized(CATUnicodeString&amp;)"></a> <dt> o <b>IsEnvironmentAuthorized</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsEnvironmentAuthorized</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>icEnvironment</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks if it is a supported environment for Reconciliator.
+
+ <b>Role:</b> Checks if this type (<b><i>Environment</i></b>) is supported by reconciliator. 
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icEnvironment</tt>
+   <dd>  Environment late type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsExecuteAuthorized"></a><a name="IsExecuteAuthorized(CATBoolean&amp;)"></a> <dt> o <b>IsExecuteAuthorized</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsExecuteAuthorized</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks if reconciliation Execution could be called.
+
+ <b>Role:</b> Checks if reconciliation Execution could be called, 
+ ie Reconciliation rules are defined on all objects (
+<script type="text/javascript"> activateLinkAnchor('CATEpeObject','','CATEpeObject') </script> ). 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oResult</tt>
+   <dd> Indicates if Execute reconciliation is authorized.
+ <br><b>Legal values</b>:
+ <ul>
+ <li><b><i>TRUE</i></b> if <b><i>ExecuteReconciliation</b></i> method could be called.</li>
+ <li><b><i>FALSE</i></b> otherwise.</li>
+ </ul></dd>
+</dl>
+</dl>
+</dl>
+<a name="IsProdStructComparisonAvailable"></a><a name="IsProdStructComparisonAvailable(CATBoolean&amp;)"></a> <dt> o <b>IsProdStructComparisonAvailable</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsProdStructComparisonAvailable</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks if Product structure comparison is available.
+
+ <b>Role:</b> Checks if Product structure comparison information are available,
+ ie at least one Document Reconciliation rules is set to <b><i>Structure exposes</b></i>.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oResult</tt>
+   <dd> Indicates if Product structure comparison could computed.
+ <br><b>Legal values</b>:
+ <ul>
+ <li><b><i>TRUE</i></b> if <b><i>ExecuteProductStructureComparison</b></i> method could be called.</li>
+ <li><b><i>FALSE</i></b> otherwise.</li>
+ </ul></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetEnvironment"></a><a name="SetEnvironment(CATUnicodeString&amp;)"></a> <dt> o <b>SetEnvironment</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetEnvironment</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>icEnv</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines default <b><i>Environment</i></b> where objects need to be stored.
+
+ <b>Role:</b> Defines default <b><i>Environment</i></b> where objects need to be stored.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns <b><i>S_OK</i></b> if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icEnv</tt>
+   <dd>  String defining the <b><i>Environment</i></b>.
+ <br><b>Legal values</b>: Could be found using </dd>
+<script type="text/javascript"> activateLinkAnchor('CATEpeSession','GetEnvironments','CATEpeSession.GetEnvironments') </script>.
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATReconcileRule"> <dt> o <b>CATReconcileRule</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATReconcileRule</b> {
+  PUBEXP_RELOADFRMPDM,
+  PUBEXP_OVERWRITEINPDM,
+  PUBEXP_NEWOBJECT,
+  PUBEXP_EXTERNALREFERENCE,
+  PRODSTRUCTEXP_NEWOBJECT,
+  PRODSTRUCTEXP_OVERWRITEINPDM,
+  PRODSTRUCTEXP_RELOAD,
+  PRODSTRUCTEXP_IGNORE,
+  PRODSTRUCTEXP_CAP,
+  DELEGATE,
+  UNKNOWN,
+  PUBEXP_NEWREVISION,
+  PUBEXP_NEWVERSION,
+  PUBEXP_NEWFROM,
+  PRODSTRUCTEXP_NEWVERSION,
+  PRODSTRUCTEXP_OVERWRITEBYDELTA,
+  PRODSTRUCTEXP_NEWVERSIONBYDELTA,
+  ALL_RULES,
+  NO_RULE
+}
+</pre>
+ Enumeration of authorized rules.
+ 
+ <br><b>Role</b>: Enumeration of authorized rules. We have 3 categories of status
+ for reconciliation rules:
+ <ul>
+ <li>Rules corresponding to <b>Publication exposed:</b>: PUBEXP_RELOADFRMPDM, PUBEXP_OVERWRITEINPDM and PUBEXP_NEWOBJECT.</li>
+ <li>Rules corresponding to <b>Structure exposed</b>: PRODSTRUCTEXP_NEWOBJECT and PRODSTRUCTEXP_OVERWRITEINPDM.</li>
+ <li>Other rules: PRODSTRUCTEXP_RELOAD, PRODSTRUCTEXP_IGNORE, DELEGATE and UNKNOWN.</li>
+ </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> PUBEXP_RELOADFRMPDM</tt>
+   <dd>  Reload document from VPDM repository.
+ 
+ </dd>
+    <dt><tt> PUBEXP_OVERWRITEINPDM</tt>
+   <dd>  Overwrite document in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PUBEXP_NEWREVISION</tt>
+   <dd>  Overwrite document as a new revision in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PUBEXP_NEWVERSION</tt>
+   <dd>  Overwrite CATPart or CATProduct document with a new version requested on its root part in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PUBEXP_NEWOBJECT</tt>
+   <dd>  Save document as New in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PUBEXP_NEWFROM</tt>
+   <dd>  Save document as New document initialized for an existing one.
+ 
+ </dd>
+    <dt><tt> PUBEXP_EXTERNALREFERENCE</tt>
+   <dd>  Used to manage keep broken links as is after reconciliation.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_OVERWRITEINPDM</tt>
+   <dd>  Overwrite Part in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_NEWVERSION</tt>
+   <dd>  Overwrite Part as a new version in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_NEWOBJECT</tt>
+   <dd>  Save Part as new in VPDM repository.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_RELOAD</tt>
+   <dd>  Part associated to a CATIA V4 model or to a CATShape with PUBEXP_RELOADFRMPDM as reconciliation rule.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_IGNORE</tt>
+   <dd>  Part associated to a CATIA V4 model or to a CATShape with PUBEXP_EXTERNALREFERENCE as reconciliation rule.
+ 
+ </dd>
+    <dt><tt> PRODSTRUCTEXP_CAP</tt>
+   <dd>  For future usage.
+ 
+ </dd>
+    <dt><tt> DELEGATE</tt>
+   <dd>  Reconciliation rule is defined on children objects
+ 
+ </dd>
+    <dt><tt> UNKNOWN</tt>
+   <dd>  No rule set.
+ 
+ </dd>
+    <dt><tt> ALL_RULES</tt>
+   <dd>  All rules masks.
+ 
+ </dd>
+    <dt><tt> NO_RULE</tt>
+   <dd>  No rules masks.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATStorageMode"> <dt> o <b>CATStorageMode</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATStorageMode</b> {
+  PUBLICATION_EXPOSED,
+  STRUCTURE_EXPOSED,
+  BOTH_EXPOSED,
+  NO_STORAGE_MODE
+}
+</pre>
+ Enumeration of authorized storage mode.
+ 
+ <br><b>Role</b>: Enumeration of storage mode.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> PUBLICATION_EXPOSED</tt>
+   <dd>  Document will be saved in vault and only publications are exposed in VPDM repository.
+ 
+ </dd>
+    <dt><tt> STRUCTURE_EXPOSED</tt>
+   <dd>  Document will be not saved in vault and document content is exposed in VPDM repository.
+ 
+ </dd>
+    <dt><tt> BOTH_EXPOSED</tt>
+   <dd>  Document will be saved in vault as reference and document content is exposed in read only mode in VPDM repository.
+ 
+ </dd>
+    <dt><tt> NO_STORAGE_MODE</tt>
+   <dd>  Storage mode not defined.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATEpeSession.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATPDMReconcileModel</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

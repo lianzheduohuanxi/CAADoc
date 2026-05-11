@@ -1,0 +1,429 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Multi Sheet Interactive Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Drafting</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Multi Sheet Interactive Command</h3>
+      <em>How to create an interactive command working on several sheets</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADrwMultiSheetCmd use case. This use case
+      explains how to create a command working on several sheets.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+        <li><a href="#UseCase"><strong>The CAADrwMultiSheetCmd Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADrwMultiSheetCmd Do</a></li>
+            <li><a href="#How">How to Launch CAADrwMultiSheetCmd</a></li>
+            <li><a href="#Where">Where to Find the CAADrwMultiSheetCmd Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will You With This Use Case</h3>
+<p>In this use case you will learn how to create an interactive command working
+on several sheets.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADrwMultiSheetCmd Use Case</h3>
+<p>CAADrwMultiSheetCmd is a use case of the CAADraftingInterfaces.edu framework
+that illustrates DraftingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADrwMultiSheetCmd Do</h4>
+<p>This use case shows a command working on several sheets. The use case
+interactive command has two steps:</p>
+<ol>
+  <li>Select a reference text</li>
+  <li>Select a text to move. The text position is modified according to the
+    reference text position.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADrwMultiSheetCmd</h4>
+<p>To launch CAADrwMultiSheetCmd, you will need to set up the build time
+environment, then compile CAADrwMultiSheetCmd and CAADrwAddin along with its prerequisites, set
+up the run time environment, and then include the command in a workbench [<a href="#References">1</a>].</p>
+<ol>
+  <li>Launch CATIA session.</li>
+  <li>Right-click on Drafting workshop to activate CAAUseCaseCommands toolbar.</li>
+  <li>Launch the MultiSheet use case command.</li>
+  <li>Create a drawing document containing two sheets</li>
+  <li>Create &quot;TEXT SHEET 1&quot; text in Sheet 1. (See <a href="#Fig1">Fig:
+    1</a>)</li>
+  <li>Create &quot;TEXT SHEET 2&quot; text in Sheet 2. (See <a href="#Fig2">Fig:
+    2</a>)</li>
+  <li>Launch the use case interactive command. (Sheet 2 is the current sheet)</li>
+  <li>Select TEXT SHEET 1 text in Sheet 1. (Sheet 1 is the current sheet)</li>
+  <li>Select TEXT SHEET 2 text in Sheet 2. (Sheet 2 is the current sheet). The
+    TEXT SHEET2 is moved (See <a href="#Fig3">Fig: 3</a>) recording to TEXT
+    SHEET1 text position.</li>
+</ol>
+<table width="100%">
+  <caption><a name="Fig1"></a>Fig 1: Sheet.1 is the current sheet</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAADrwMultiSheet1.jpg" width="532" height="407"></td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <caption><a name="Fig2"></a>Fig 2: Sheet.2 is the current sheet</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAADrwMultiSheet2.jpg" width="526" height="407"></td>
+  </tr>
+</table>
+<table width="100%">
+  <caption><a name="Fig3"></a>Fig 3: Sheet.2 is the current sheet</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAADrwMultiSheet3.jpg" width="495" height="383"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADrwMultiSheetCmd Code</h4>
+<p>The CAADrwMultiSheetCmd use case is made of two source files named
+CAADrwMultiSheetCmd.h and CAADrwMultiSheetCmd.cpp located in the
+CAADrwMultiSheetCmd.m module of the CAADraftingInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwMultiSheetCmd.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwMultiSheetCmd.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven steps in CAADrwMultiSheetCmd:</p>
+<ol>
+  <li><a href="#Step1">Retrieve the current drawing from the Frame</a>
+  <li><a href="#Step2">Read the Current Multi Sheet Mode</a>
+  <li><a href="#Step3">Active the Multi Sheet Mode</a>
+  <li><a href="#Step4">Building the State Chart and Creating the Appropriate
+    Selection Agent</a></li>
+  <li><a href="#Step5">Select the Reference Text and Store its Coordinates</a></li>
+  <li><a href="#Step6">Select the Text to Move and Store the New Position</a></li>
+  <li><a href="#Step7">Restore the Previous Multi Sheet Mode Value</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Retrieving the Current Drawing from the Frame</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ----------------------------------------------------------------------------
+CAADrwMultiSheetCmd::CAADrwMultiSheetCmd()
+                    :CATStateCommand(CATString(&quot;AlignText&quot;)),
+                                     _pObjectAgent(NULL)
+{
+  // Get the current drawing from the frame
+  __piSheetsOnDrawing = NULL;
+  CATApplicationFrame *appFrame = CATApplicationFrame::GetFrame();
+  CATIAApplication *ptApp = NULL;
+  if (SUCCEEDED(appFrame-&gt;QueryInterface(IID_CATIAApplication, (void**) &amp;ptApp)))
+  {
+    CATIADocument *ptDoc = NULL;
+    if (SUCCEEDED(ptApp-&gt;get_ActiveDocument(ptDoc)))
+    {
+      CATIADrawingDocument *piDrawing = NULL;
+      if (SUCCEEDED(ptDoc-&gt;QueryInterface(IID_CATIADrawingDocument, (void**) &amp;piDrawing)))
+      {
+        piDrawing-&gt;get_Sheets(__piSheetsOnDrawing);
+        piDrawing-&gt;Release();
+      }
+      ptDoc-&gt;Release();
+    }
+    ptApp-&gt;Release();
+  }
+  // Save Multi sheet mode to restitute it at the end of the command
+  GetMultiSheetMode(_PreviousMode);
+
+  // Activate Multi sheet mode
+  if (!_PreviousMode) SetMultiSheetMode(TRUE);
+
+  _Xposition =0.0;
+  _Yposition =0.0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Reading the Current Multi Sheet Mode</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ----------------------------------------------------------------------------
+// Save Multi sheet mode to restore it at the end of the command
+   GetMultiSheetMode(_PreviousMode);
+//
+...
+// This internal method is used to manage CATIDftMultiSheetCmd Interfaces.
+void  CAADrwMultiSheetCmd::GetMultiSheetMode(boolean  &amp;oMode)
+{
+  oMode = FALSE;
+  if (!!__piSheetsOnDrawing)
+  {
+    CATIDftMultiSheetMode *multiSheetManager=NULL;
+    if (SUCCEEDED(__piSheetsOnDrawing-&gt;QueryInterface(IID_CATIDftMultiSheetMode, (void **) &amp;multiSheetManager)))
+    {
+      multiSheetManager-&gt;GetMultiSheetMode(&amp;oMode);
+      multiSheetManager-&gt;Release();
+    }
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Activating the Multi Sheet Mode</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// Active Multi sheet mode
+if (!_PreviousMode) SetMultiSheetMode(TRUE);
+...
+//This internal method is used to manage CATIDftMultiSheetCmd Interfaces.
+void  CAADrwMultiSheetCmd::SetMultiSheetMode(boolean  iMode)
+{
+  if (!!__piSheetsOnDrawing)
+  {
+    CATIDftMultiSheetMode *multiSheetManager=NULL;
+    if (SUCCEEDED(__piSheetsOnDrawing-&gt;QueryInterface(IID_CATIDftMultiSheetMode, (void **) &amp;multiSheetManager)))
+    {
+      multiSheetManager-&gt;SetMultiSheetMode(iMode);
+      multiSheetManager-&gt;Release();
+    }
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Building the State Chart and Creating the Appropriate
+Selection Agent</h4>
+<table>
+  <tr>
+    <td><img border="0" src="images/CAADrwMultiSheet4.jpg" width="342" height="353"></td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ----------------------------------------------------------------------------
+void CAADrwMultiSheetCmd::BuildGraph()
+{  
+  // Creation of the acquisition agent
+  _pObjectAgent = new CATPathElementAgent(&quot;pObjectAgent&quot;);
+  _pObjectAgent -&gt;SetBehavior( CATDlgEngWithPrevaluation | 
+                               CATDlgEngMultiAcquisition | 
+                               CATDlgEngWithCSO); 
+
+  // We want to select text
+  _pObjectAgent -&gt;SetElementType(&quot;CATIDrwText&quot;);
+  AddCSOClient(_pObjectAgent);
+   
+  //  States definition
+  CATDialogState* state1 = GetInitialState(&quot;Sel reference text&quot;);
+  CATDialogState* state2 = AddDialogState(&quot;Sel text to align&quot;);
+  state1-&gt;AddDialogAgent(_pObjectAgent);
+  state2-&gt;AddDialogAgent(_pObjectAgent);
+   
+  // Transition definition
+  AddTransition(state1, state2, IsOutputSetCondition(_pObjectAgent),
+                Action((ActionMethod)&amp;CAADrwMultiSheetCmd::CheckText, NULL, NULL));
+
+  // Transition definition
+  AddTransition(state2, NULL, IsOutputSetCondition(_pObjectAgent),
+                Action((ActionMethod)&amp;CAADrwMultiSheetCmd::MoveText, NULL, NULL));
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In this section we create a CATPathElementAgent and set the corresponding
+element type to CATIDrwText. So only Complex Texts could be selected.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Selecting the Reference Text and Storing its Coordinates</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ----------------------------------------------------------------------------
+boolean CAADrwMultiSheetCmd::CheckText(void *)
+{ 
+  // We get the Selected set of objects
+  CATSO* pObjSO = _pObjectAgent-&gt;GetListOfValues(); 
+  CATPathElement *pElemPath = NULL;
+   
+   
+  if (NULL != pObjSO)  
+  {
+    // There is a selection, we will scan it from the beginning
+    pObjSO-&gt;InitElementList();
+    while (NULL != (pElemPath = (CATPathElement*)pObjSO-&gt;NextElement()))
+    {
+      // Make sure the element is a text
+      CATIDrwText *piText = (CATIDrwText *)pElemPath-&gt;FindElement(IID_CATIDrwText);
+         
+      if (NULL != piText)
+      {            
+        piText-&gt;GetPosition(_Xposition,_Yposition);
+        piText-&gt;Release();
+      }
+    }
+  _pObjectAgent -&gt; InitializeAcquisition();
+  return TRUE;
+  }
+  return FALSE;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The acquisition agent did put the selected text into the CSO. So we get the
+set of object and loop on it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Selecting the Text to Move and Storing the New Position</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ----------------------------------------------------------------------------
+boolean CAADrwMultiSheetCmd::MoveText(void *)
+{ 
+  // We get the Selected set of objects
+  CATSO* pObjSO = _pObjectAgent-&gt;GetListOfValues(); 
+  CATPathElement *pElemPath = NULL;
+
+  if (NULL != pObjSO)  
+  {
+    // There is a selection, we will scan it from the beginning
+    pObjSO-&gt;InitElementList();
+    while (NULL != (pElemPath = (CATPathElement*)pObjSO-&gt;NextElement()))
+    {
+      // Make sure the element is a text
+      CATIDrwText *piText = (CATIDrwText *)pElemPath-&gt;FindElement(IID_CATIDrwText);
+
+      if (NULL != piText)
+      {            
+        piText-&gt;SetPosition(_Xposition,_Yposition);
+        CATIModelEvents_var event(piText);
+        if (event !=NULL_var)
+        {
+          CATModify info((CATBaseUnknown *)piText);
+          event-&gt;Dispatch(info);
+        }
+        piText-&gt;Release();
+      }
+    }
+    _pObjectAgent -&gt; InitializeAcquisition();
+    return TRUE;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note</b>: When a text is modified and needs to regenerate its graphical
+representations, it just has to send CATModify event to warn all its.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Restoring the Previous Multi Sheet Mode Value</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...            
+// Restore Active Multi sheet mode
+  SetMultiSheetMode(_PreviousMode);
+  return FALSE;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note</b>: The Multi Sheet Mode Value has to be restore in the destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a command working on several sheets:
+Retrieve current drawing, manage the multi sheet Mode and move a text.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Lauching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegUseCases/CAADegSampleGraph.htm">Implementing
+      the Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Aug 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

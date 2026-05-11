@@ -1,0 +1,653 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>Null Pointers Part 1 Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Null Pointers Part 1 Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article describes the checks relative to NULL Pointers Part 1. These 
+		checks are identified by LCDMNI, LCLVNI, LCDMMN, LCLVMN, LCVMNA, LCLVMNAR, 
+		LCVMNAAR, LCLVMNAC, LCVMNAAC.</p>
+					<ul>
+						<li><a href="#Problematic">Problematic</a></li>
+						<li><a href="#Principle">Check Principle</a>
+							<ul>
+								<li><a href="#DataMembers">Data Members</a></li>
+								<li><a href="#LocalVariables">Local Variables</a></li>
+								<li><a href="#ArgumentVariables">Argument Variables</a></li>
+							</ul>
+						</li>
+						<li><a href="#Initialization">Checks for Initialization</a>
+							<ul>
+								<li><a href="#LCDMNI">LCDMNI</a></li>
+								<li><a href="#LCLVNI">LCLVNI</a></li>
+							</ul>
+						</li>
+						<li><a href="#ResetCPP">Checks for Reset C++ Oriented</a>
+							<ul>
+								<li><a href="#LCDMMN">LCDMMN</a></li>
+								<li><a href="#LCLVMN">LCLVMN</a></li>
+								<li><a href="#LCVMNA">LCVMNA</a></li>
+							</ul>
+						</li>
+						<li><a href="#ResetCATIA">Checks for Reset CATIA Specific</a>
+							<ul>
+								<li><a href="#LCLVMNAR">LCLVMNAR</a></li>
+								<li><a href="#LCVMNAAR">LCVMNAAR</a></li>
+								<li><a href="#LCLVMNAC">LCLVMNAC</a></li>
+								<li><a href="#LCVMNAAC">LCVMNAAC</a></li>
+							</ul>
+						</li>
+						<li><a href="#Relative">Relative Sections in Setting Files</a>
+							<ul>
+								<li><a href="#DeleteMacro">LifeCycle_DeleteMacro</a></li>
+								<li><a href="#NewMacro">LifeCycle_NewMacro</a></li>
+								<li><a href="#DeleteMethods">LifeCycle_DeleteMethods</a></li>
+							</ul>
+						</li>
+						<li><a href="#InShort">In Short</a></li>
+						<li><a href="#References">References</a></li>
+						<li><a href="#History">History</a></li>
+					</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Managing pointers Lifecycle is not as easy as it seems to be. 
+How difficult can it be to debug an invalid pointer or an assert due to a NULL pointer.
+To prevent these errors, two different types of checks are made by CSC:</p>
+<ul>
+	<li><strong>Insure pointer&#39;s validity: NULL Pointers Part 1</strong>
+	<p>These checks must insure that:</p>
+	<ul>
+		<li>A NON VALID pointer is NULL.</li>
+		<li>A NOT NULL pointer is VALID.</li>
+	</ul>
+	<p>(pointer is VALID) &lt;=&gt; (pointer is NOT NULL)</p>
+	</li>
+	<li><strong>Check the validity of pointers before use: NULL Pointers Part 2</strong>
+	<p>These checks must insure that every pointer is tested against NULL before 
+	use.</p>
+	</li>
+</ul>
+<p>This article deals only with NULL Pointers Part 1.
+See [<a href="#References">1</a>] for NULL Pointers Part 2.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Principle"></a>Check Principle</h2>
+<h3><a name="DataMembers"></a>Data Members</h3>
+<p>CSC has the knowledge of every data member of every class. For each Data member 
+of type pointer, CSC checks:</p>
+<ul>
+	<li>In each constructor of the class, that the data member is set before use.</li>
+	<li>In the destructor of the class, that the data member is set to NULL after 
+	last use.</li>
+	<li>That after each delete or call to a delete method (and before next use, 
+	if exists), the data member is set to NULL.</li>
+</ul>
+<h3><a name="LocalVariables"></a>Local Variables</h3>
+<p>CSC has the knowledge of every local variable. For each Local Variable of type 
+pointer, CSC checks:</p>
+<ul>
+	<li>That the variable is set before first use.</li>
+	<li>That, after each delete or call to a delete method, if the variable is further 
+	use, the variable is set to NULL before next use.</li>
+</ul>
+<h3><a name="ArgumentVariables"></a>Argument Variables</h3>
+<p>CSC has the knowledge of every argument variable of functions or methods. For 
+each Argument Variable of type pointer, CSC checks:</p>
+<ul>
+	<li>That after each delete or call to a delete method (and before next use, 
+	if exists), the variable is set to NULL.</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Initialization"></a>Checks for Initialization</h2>
+<p>Checks for initialization deal with data members (LCDMNI) and local variable 
+(LCLVNI) initialization.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCDMNI"></a>LCDMNI</h3>
+<p>LCDMNI stands for LifeCycle: Data Member Not Initialized.</p>
+<p>An error of type LCDMNI is reported when:</p>
+<ul>
+	<li>A data member of type pointer is not set in a constructor (before use, if 
+	it is used).</li>
+	<li>This constructor is not the copy constructor.</li>
+</ul>
+<p>As the data member is not set, we can not test it against NULL to know if it 
+is valid or not.</p>
+<h4><a name="LCDMNI-1"></a>Example LCDMNI-1</h4>
+<p>The Data Member is not initialized.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest01
+{
+  CATBaseUnknown* _data;
+  CATTest01();
+  ...;
+};</pre>
+<p>The following code will report a LCDMNI Error:</p>
+<pre class="code">CATTest01::CATTest01()
+{
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATTest01::CATTest01() : <strong>_data(NULL)</strong> {}</pre>
+<p>or:</p>
+<pre class="code">CATTest01::CATTest01() 
+{
+  <strong>_data= NULL;</strong>
+}</pre>
+<h4><a name="LCDMNI-2"></a>Example LCDMNI-2</h4>
+<p>The Data Member is not initialized before use.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest02
+{
+  CATBaseUnknown* _data;
+  CATTest02();
+  ...;
+};</pre>
+<p>The following code will report a LCDMNI Error:</p>
+<pre class="code">CATTest02::CATTest02()
+{
+  CATBaseUnknown* localVar= _data;
+  ...
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATTest02::CATTest02()
+{
+  <strong>_data= ...;</strong>  // Retrieve _data
+  CATBaseUnknown* localVar= _data;
+}</pre>
+<p>_data MUST be initialized before use.</p>
+<h4><a name="LCDMNI-3"></a>Example LCDMNI-3</h4>
+<p>The Data Member is not initialized before use.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest03
+{
+  CATBaseUnknown* _data;
+  CATTest01();
+  ...;
+};</pre>
+<p>The following code will report a LCDMNI Error:</p>
+<pre class="code">CATTest03::CATTest03()
+{
+  functionForUse( _data );
+  ...
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATTest03::CATTest03()
+{
+  <strong>_data= NULL;</strong>  // Or retrieve _data: _data= ...;
+  functionForUse( _data );
+  }</pre>
+<p>_data MUST be initialized before use.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCLVNI"></a>LCLVNI</h3>
+<p>LCLVNI stands for LifeCycle: Local Variable Not Initialized.</p>
+<p>An error of type LCLVNI is reported when:</p>
+<ul>
+	<li>A Local Variable of type pointer is not set before use.</li>
+</ul>
+<p>As the variable is not set, we can not test it against NULL to know if it is 
+valid or not.</p>
+<h4><a name="LCLVNI-1"></a>Example LCLVNI-1</h4>
+<p>The Local Variable is not initialized before use.</p>
+<p>The following code will report a LCLVNI Error:</p>
+<pre class="code">...
+CATI2DDitto *<strong>ditto</strong>;
+HRESULT hr = myDittoPtr-&gt; QueryInterface(IID_CATI2DDitto, (void **)&amp;<strong>ditto</strong>);
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+CATI2DDitto *<strong>ditto= NULL</strong>;
+HRESULT hr = myDittoPtr-&gt; QueryInterface(IID_CATI2DDitto, (void **)&amp;<strong>ditto</strong>);
+...</pre>
+<h4><a name="LCLVNI-2"></a>Example LCLVNI-2</h4>
+<p>The Local Variable is not initialized before use.</p>
+<p>The following code will report a LCLVNI Error:</p>
+<pre class="code">...
+CATDocument *<strong>aDocument</strong>; 
+HRESULT hr = CATDocumentServices::Open (PathDoc, <strong>aDocument</strong>);
+...</pre>
+<p>The correct code is:</p>
+<pre class="code">...
+CATDocument *<strong>aDocument= NULL</strong>; 
+HRESULT hr = CATDocumentServices::Open (PathDoc, <strong>aDocument</strong>);
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="ResetCPP"></a>Checks for Reset C++ Oriented</h2>
+<p>The aim of these checks is to ensure the assignment to NULL of a pointer after 
+C++ specific calls which alter the validity of the pointer.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCDMMN"></a>LCDMMN</h3>
+<p>LCDMMN stands for LifeCycle: Data Member Missing NULL.</p>
+<p>An error of type LCDMMN is reported when:</p>
+<ul>
+	<li>a data member of type pointer is not set to NULL in destructor (after last 
+	use).</li>
+</ul>
+<p>Every data member of type pointer must be set to NULL in destructor (after last 
+use).</p>
+<h4><a name="LCDMMN-1"></a>Example LCDMMN-1</h4>
+<p>The Data Member is not reset in destructor.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest04
+{
+  CATBaseUnknown* _data;
+  CATTest04();
+  ~CATTest04();
+  ...;
+};</pre>
+<p>The following code will report a LCDMMN Error:</p>
+<pre class="code">CATTest04::~CATTest04()
+{
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATTest04::CATTest04()
+{
+  <strong>_data= NULL;</strong>
+}</pre>
+<h4><a name="LCDMMN-2"></a>Example LCDMMN-2</h4>
+<p>The Data Member is not reset in destructor after last use.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest05
+{
+  CATBaseUnknown* _data;
+  void check();
+  CATTest05();
+  ~CATTest05();
+  ...;
+};</pre>
+<p>The following code will report a LCDMMN Error:</p>
+<pre class="code">void CATTest05::check()
+{
+  if( _data ) 
+    cout &lt;&lt; &quot;_data is not null &quot; &lt;&lt; endl;
+}
+
+CATTest05::~CATTest05()
+{
+  _data= NULL;
+  check();
+}</pre>
+<p>As the method check() uses the data member _data, CSC will see that data member 
+_data is first set to NULL, then used in the destructor.</p>
+<p>The correct code is:</p>
+<pre class="code">void CATTest05::check()
+{
+  if( _data ) 
+    cout &lt;&lt; &quot;_data is not null &quot; &lt;&lt; endl;
+}
+
+CATTest05::~CATTest05()
+{
+  <strong>check();
+  _data= NULL;</strong>
+}</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCLVMN"></a>LCLVMN</h3>
+<p>LCLVMN stands for LifeCycle: Local Variable Missing NULL.</p>
+<p>An error of type LCLVMN is reported when a local variable is:</p>
+<ul>
+	<li>first deleted</li>
+	<li>then used</li>
+	<li>not set to NULL between delete and next use</li>
+</ul>
+<p>If the variable is not set to NULL after delete, we got a non null pointer which 
+is not valid !</p>
+<h4><a name="LCLVMN-1"></a>Example LCLVMN-1</h4>
+<p>The Local Variable is not reset after delete.</p>
+<p>The following code will report a LCLVMN Error:</p>
+<pre class="code">CATDbDriverCol *driverCol=0;
+... // use driverCol
+delete driverCol;
+CATDbDriverDatabase *driverDB = CATDbDriverDatabase::Create(vendor);
+driverDB-&gt; CreateCol(driverCol);
+</pre>
+<p>The correct code is:</p>
+<pre class="code">CATDbDriverCol *driverCol=0;
+... // use driverCol
+delete driverCol;
+<strong>driverCol= NULL;</strong>
+CATDbDriverDatabase *driverDB = CATDbDriverDatabase::Create(vendor);
+driverDB-&gt; CreateCol(driverCol);
+</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCVMNA"></a>LCVMNA</h3>
+<p>LCVMNA stands for LifeCycle: Variable Missing Null Assignment.<br />
+LCVMNA is for argument variables and data members the equivalent of LCLVMN for local 
+variables</p>
+<p>An error of type LCVMNA is reported when an argument variable or a data member 
+is:</p>
+<ul>
+	<li>first deleted</li>
+	<li>not set to NULL after delete (and before next use, if exists)</li>
+</ul>
+<p>If the variable is not set to NULL after delete, we got a non null pointer which 
+is not valid !</p>
+<h4><a name="LCVMNA-1"></a>Example LCVMNA-1</h4>
+<p>The Data Member is not reset after delete.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest06
+{
+  CATFont* _font;
+  void clean();
+  ...;
+};</pre>
+<p>The following code will report a LCVMNA Error:</p>
+<pre class="code">void CATTest06::clean()
+{
+  if( _font ) 
+    delete _font;
+}
+</pre>
+<p>The correct code is:</p>
+<pre class="code">void CATTest06::clean()
+{
+  if( _font ) {
+    delete _font;
+    <strong>_font= NULL;</strong>
+  }
+}
+</pre>
+<h4><a name="LCVMNA-2"></a>Example LCVMNA-2</h4>
+<p>The argument variable is not reset after delete.</p>
+<p>The following code will report a LCVMNA Error:</p>
+<pre class="code">void delete_dimension(dimension*&amp; dim)
+{ 
+  delete(dim);
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">void delete_dimension(dimension*&amp; dim)
+{ 
+  delete(dim);
+  <strong>dim= NULL;</strong>
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="ResetCATIA"></a>Checks for Reset CATIA Specific</h2>
+<p>The aim of these checks is to ensure the assignment to NULL of a pointer after 
+CATIA specific calls which alter the validity of the pointer.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCLVMNAR"></a>LCLVMNAR</h3>
+<p>LCLVMNAR stands for LifeCycle: Local Variable Missing NULL Assignment after Release. 
+It is a particular case of error LCLVMNAC.</p>
+<p>An error of type LCLVMNAR is reported when a local variable is:</p>
+<ul>
+	<li>first released</li>
+	<li>then used</li>
+	<li>not set to NULL between Release and next use</li>
+</ul>
+<p>If the variable is not set to NULL after a call to Release, we got a non null 
+pointer which is not valid !</p>
+<h4><a name="LCLVMNAR-1"></a>Example LCLVMNAR-1</h4>
+<p>The local variable is not reset after Release, the following code will report 
+a LCLVMNAR error:</p>
+<pre class="code">if (result) {
+   AddScope(result);
+   result-&gt;Release();
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">if (result) {
+   AddScope(result);
+   result-&gt;Release();
+   <strong>result = NULL;</strong>
+}</pre>
+<h4><a name="LCLVMNAR-2"></a>Example LCLVMNAR-2</h4>
+<p>The local variable is reused after Release and before assignment to NULL, the 
+following code will report a LCLVMNAR error:</p>
+<pre class="code">if (_Parent) {
+   <strong>_Parent-&gt; Release();</strong>
+   hr = _<strong>Parent</strong>-&gt; QueryInterface( IID_CATISketchingElement, (void **) &amp;geom );
+   _Parent = NULL;
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">if (_Parent) {
+   hr = _Parent-&gt; QueryInterface( IID_CATISketchingElement, (void **) &amp;geom );
+   <strong>_Parent-&gt; Release();</strong>
+   _Parent = NULL;
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCVMNAAR"></a>LCVMNAAR</h3>
+<p>LCVMNAAR stands for LifeCycle: Variable Missing Null Assignment After Release.<br />
+LCVMNAAR is for argument variables and data members the equivalent of LCLVMNAR for 
+local variables, and is a particular case of error LCVMNAAC.</p>
+<p>An error of type LCVMNAAR is reported when an argument variable or a data member 
+is:</p>
+<ul>
+	<li>released</li>
+	<li>not set to NULL after Release (and before next use, if exists)</li>
+</ul>
+<p>If the variable is not set to NULL after Release, we got a non null pointer which 
+is not valid !</p>
+<h4><a name="LCVMNAAR-1"></a>Example LCVMNAAR-1</h4>
+<p>The data member is not reset after Release.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest07
+{
+  CATBaseUnknown* _data;
+  void clean();
+  ...;
+};</pre>
+<p>The following code will report a LCVMNAAR error:</p>
+<pre class="code">void CATTest07::clean()
+{
+  if( _data ) 
+    _data-&gt;Release();
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">void CATTest07::clean()
+{
+  if( _data ) {
+    _data-&gt;Release();
+    <strong>_data = NULL;</strong>
+  }
+}
+</pre>
+<h4><a name="LCVMNAAR-2"></a>Example LCVMNAAR-2</h4>
+<p>The argument variable is not reset after delete, the following code will report 
+a LCVMNAAR error:</p>
+<pre class="code">void delete_sphere(CATSphere*&amp; sphere)
+{ 
+  sphere-&gt;Release();
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">void delete_sphere(CATSphere*&amp; sphere)
+{ 
+  sphere-&gt;Release;
+  <strong>sphere = NULL;</strong>
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCLVMNAC"></a>LCLVMNAC</h3>
+<p>LCLVMNAC stands for LifeCycle: Local Variable Missing NULL Assignment after Call 
+to delete method.</p>
+<p>Some classes must not be deleted via delete or Release but have a specific destruction 
+method. A pointer to an instance of one of these classes (or of an inherited class) 
+have to call the delete method corresponding to its class to be deleted. After the 
+call, the pointer must be set to NULL or to a valid data, in order to preserve equivalence 
+between validity of the pointer and a value not NULL.</p>
+<p>The list of each class concerned and its associated delete methods is provided 
+in the setting files, see <a href="#DeleteMethods">LifeCycle_DeleteMethods</a> section.</p>
+<p>An error of type LCLVMNAC is reported when a local variable:</p>
+<ul>
+	<li>First calls its delete method</li>
+	<li>Then is used</li>
+	<li>Is not set to NULL between the call to the delete methods and next use</li>
+</ul>
+<p>If the variable is not set to NULL after a call to a delete method, we got a 
+non null pointer which is not valid !</p>
+<h4><a name="LCLVMNAC-1"></a>Example LCLVMNAC-1</h4>
+<p>Let&#39;s assume that a pointer on a CATRep instance must be deleted using the method 
+Destroy().</p>
+<p>The local variable is not reset after call to delete method Destroy() and before 
+use, the following code will report a LCLVMNAC Error:</p>
+<pre class="code">CATRep * rep = new CATRep();
+ ... // use of rep
+rep-&gt;Destroy();
+CATManipulator* manip = rep-&gt;GetManipulator();</pre>
+<p>The correct code is:</p>
+<pre class="code">CATRep * rep = new CATRep();
+ ... // use of rep
+CATManipulator* manip = rep-&gt;GetManipulator();
+<strong>rep-&gt;Destroy();
+rep = NULL;</strong></pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="LCVMNAAC"></a>LCVMNAAC</h3>
+<p>LCVMNAAC stands for LifeCycle: Variable Missing Null Assignment After Call to 
+delete method.</p>
+<p>LCVMNAAC is for argument variables and data members the equivalent of LCLVMNAC 
+for local variables.<br />
+The list of each class concerned and its associated delete methods is provided in 
+the setting files, see <a href="#DeleteMethods">LifeCycle_DeleteMethods</a> section.</p>
+<p>An error of type LCVMNAAC is reported when an argument variable or a data member:</p>
+<ul>
+	<li>first calls its delete method</li>
+	<li>then is not set to NULL after the call (and before next use, if exists)</li>
+</ul>
+<p>If the variable is not set to NULL after a call to a delete method, we got a 
+non null pointer which is not valid !</p>
+<h4><a name="LCVMNAAC-1"></a>Example LCVMNAAC-1</h4>
+<p>Let&#39;s assume that a pointer on a CATRep instance must be deleted using the Destroy 
+method.</p>
+<p>Let&#39;s take the following class:</p>
+<pre class="code">class CATTest08
+{
+  CATRep* _rep;
+  void clean();
+  ...;
+};</pre>
+<p>The data member is not reset after call to delete method Destroy(), the following 
+code will report a LCVMNAAC error:</p>
+<pre class="code">void CATTest08::clean()
+{
+  if( _rep ) 
+    _rep-&gt;Destroy();
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">void CATTest08::clean()
+{
+  if( _rep ) {
+    _rep-&gt;Destroy();
+    <strong>_rep = NULL;</strong>
+  }
+}</pre>
+<h4><a name="LCVMNAAC-2"></a>Example LCVMNAAC-2</h4>
+<p>The argument variable is not reset after call to delete method Destroy(), the 
+following code will report a LCVMNAAR error:</p>
+<pre class="code">void delete_rep(CATRep*&amp; rep)
+{ 
+  rep-&gt;Destroy();
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">void delete_rep(CATRep*&amp; rep)
+{ 
+  rep-&gt;Destroy();	
+  <strong>rep = NULL;</strong>
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">2</a>].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="DeleteMacro"></a>LifeCycle_DeleteMacro</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; LifeCycle_OptionLists</p>
+<p>
+<img alt="LifeCycle_DeleteMacro" src="images/CAACscTaNullPointers1DeleteMacro.gif" width="605" height="309"/></p>
+<p>This section contains a list of Macro like:</p>
+<pre class="code">#define DELETEMACRO(ptr) if (ptr) {delete(ptr); ptr=NULL;} </pre>
+<p>This list is used in particular when a macro of this type is used to reset a 
+Data Member in a destructor. This prevent from generating an invalid LCDMMN error.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="NewMacro"></a>LifeCycle_NewMacro</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; LifeCycle_OptionLists</p>
+<p>
+<img alt="LifeCycle_NewMacro" src="images/CAACscTaNullPointers1NewMacro.gif" width="592" height="278"/></p>
+<p>This section contains a list of Macro like:</p>
+<pre class="code">#define NEWMACRO(ptr) ptr= new CL();</pre>
+<p>This list is used in particular when a macro of this type is used to initialize 
+a Data Member in a constructor. This prevent from generating an invalid LCDMNI error.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="DeleteMethods"></a>LifeCycle_DeleteMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; LifeCycle_OptionLists</p>
+<p>
+<img alt="LifeCycle_DeleteMethods" src="images/CAACscTaNullPointers1DeleteMethods.gif" width="592" height="328"/></p>
+<p>This section contains a list of Call. Each Call describes the delete method of 
+a class:</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>The name of the class (no ClassName means that it is a function)</dd>
+	<dt>MethodOrFunctionSign</dt>
+	<dd>The signature of the function or method</dd>
+</dl>
+<p><strong>Example</strong>:</p>
+<pre>ClassName            CATRep
+MethodOrFunctionSign Destroy</pre>
+<p>This means that the method Destroy deletes CATRep instances. Thus each CATRep 
+instance must be set to null (or to a valid data) after a call to Destroy.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>All checks included in Pointers Null Part 1 insure that no dangling pointer will 
+be present at runtime.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACscTaNP2.htm">Null Pointers Part 2 Checks</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

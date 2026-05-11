@@ -1,0 +1,352 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASchQueryCompRoute.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      Provides a list of component and route from a schematic </font>
+<font color="#008000">'                 document. List all the defining points of the component</font>
+<font color="#008000">'                 route instances. For each component instance, also lists</font>
+<font color="#008000">'                 the defining points of its connectors.</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the schematic document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_CompRoute01.CATProduct")
+
+<font color="#0000FF">    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF">    Dim </font>strMessage<font color="#0000FF"> As </font>String
+
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASchQueryCompRoute.CATScript" & vbCrLf
+
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font>
+<font color="#0000FF">    Dim </font>objPrdRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objSchRoot<font color="#0000FF"> As </font>SchematicRoot
+<font color="#0000FF">    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objSchDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>objSchLComps<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objSchLCompRefs<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objSchLRoutes<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objSchSession<font color="#0000FF"> As </font>SchSession
+<font color="#0000FF">    Dim </font>objCurDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Dim </font>strCurDocName<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">    If </font>( Not ( objSchRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">       Set </font>objSchSession = objSchRoot.GetSchematicSession
+
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+       <font color="#008000">'| Query the name of the current document </font>
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+<font color="#0000FF">       If </font>( Not ( objSchSession Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">          Set </font>objCurDoc = objSchSession.GetCurrentDocument
+<font color="#0000FF">          If </font>( Not ( objCurDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+             strCurDocName = objCurDoc.Name
+             strMessage = strMessage &  "Current Document = " & strCurDocName & vbCr
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">       End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>intNbComp<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intNbRoute<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intIndex<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>objPrd<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>strName<font color="#0000FF"> As </font>String
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' |  List schematic component references in the model</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+
+<font color="#0000FF">    Set </font>objSchLCompRefs = objSchRoot.GetRefComponents
+
+<font color="#0000FF">    If </font>( Not ( objSchLCompRefs Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#0000FF"> int</font>NbComp = objSchLCompRefs.Count
+       strMessage = strMessage &  "Number of schematic component REFERENCES = " _
+         &<font color="#0000FF"> int</font>NbComp & vbCr
+<font color="#0000FF">       If </font>(intNbComp &gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">         For </font>intIndex = 1 To<font color="#0000FF"> int</font>NbComp
+<font color="#0000FF">            Set </font>objPrd = Nothing
+            strName = ""
+<font color="#0000FF">            Set </font>objPrd = objSchLCompRefs.Item (intIndex,"CATIAProduct")
+<font color="#0000FF">            If </font>( Not ( objPrd Is Nothing ) )<font color="#0000FF"> Then</font>
+               strName = objPrd.Name
+               strMessage = strMessage &  "  member " & intIndex _
+                 & "= " & strName & vbCr
+<font color="#0000FF">            End If            </font>
+<font color="#0000FF">         Next </font>
+<font color="#0000FF">       End If</font>
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' |  List schematic component instances in the model</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+
+<font color="#0000FF">    Set </font>objSchLComps = objSchRoot.GetComponents
+
+<font color="#0000FF">    Dim </font>objGRRCompInst<font color="#0000FF"> As </font>SchGRRComp
+<font color="#0000FF">    Dim </font>objCompGraphInst<font color="#0000FF"> As </font>SchCompGraphic
+<font color="#0000FF">    Dim </font>objCntbl<font color="#0000FF"> As </font>SchAppConnectable
+<font color="#0000FF">    Dim </font>objLCntrs<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objSchLDbComp<font color="#0000FF"> As </font>SchListOfDoubles
+<font color="#0000FF">    Dim </font>objLFilter<font color="#0000FF"> As </font>SchListOfBSTRs
+<font color="#0000FF">    Dim </font>db6Matrix(6)<font color="#0000FF"> As </font>Double
+<font color="#0000FF">    Dim </font>intNb<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">    Set </font>objLFilter = Nothing
+
+<font color="#0000FF">    If </font>( Not ( objSchLComps Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#0000FF"> int</font>NbComp = objSchLComps.Count
+       strMessage = strMessage &  "Number of schematic component INSTANCES = " _
+         &<font color="#0000FF"> int</font>NbComp & vbCr
+
+<font color="#0000FF">       If </font>(intNbComp &gt; 0)<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">         Dim </font>iCntr<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">         Dim </font>intNbCntr<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">         Dim </font>objLDbCntr<font color="#0000FF"> As </font>SchListOfDoubles
+<font color="#0000FF">         Dim </font>objCntr<font color="#0000FF"> As </font>SchCntrLocation
+<font color="#0000FF">         Dim </font>objGRR<font color="#0000FF"> As </font>SchGRR
+<font color="#0000FF">         Dim </font>intNCoord<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">         Dim </font>dbCntrX<font color="#0000FF"> As </font>Double
+<font color="#0000FF">         Dim </font>dbCntrY<font color="#0000FF"> As </font>Double
+
+<font color="#0000FF">         For </font>intIndex = 1 To<font color="#0000FF"> int</font>NbComp
+
+<font color="#0000FF">            Set </font>objPrd = Nothing
+<font color="#0000FF">            Set </font>objCompGraphInst = Nothing
+<font color="#0000FF">            Set </font>objGRRCompInst = Nothing
+<font color="#0000FF">            Set </font>objCntbl = Nothing
+<font color="#0000FF">            Set </font>objLCntrs = Nothing
+<font color="#0000FF">            Set </font>objGRR = Nothing
+<font color="#0000FF">            Set </font>objSchLDbComp = Nothing
+
+            strName = ""
+<font color="#0000FF">            Set </font>objPrd = objSchLComps.Item (intIndex,"CATIAProduct")
+<font color="#0000FF">            If </font>( Not ( objPrd Is Nothing ) )<font color="#0000FF"> Then</font>
+               strName = objPrd.Name
+               strMessage = strMessage &  "  member " & intIndex _
+                 & "= " & strName & vbCr
+<font color="#0000FF">               Set </font>objCompGraphInst = objSchRoot.Ge<font color="#0000FF">tInt</font>erface  ("CATIASchCompGraphic", _
+                 objPrd)                
+<font color="#0000FF">            End If  </font>
+            
+            <font color="#008000">'------------------------------------------------------------------</font>
+            <font color="#008000">' Get the orientation matrix of the symbol representing the </font>
+            <font color="#008000">' component instance.</font>
+            <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">            If </font>( Not ( objCompGraphInst Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">               Set </font>objGRRCompInst = GetComponentImage (objCompGraphInst)
+<font color="#0000FF">               If </font>( Not ( objGRRCompInst Is Nothing ) )<font color="#0000FF"> Then</font>
+                  objGRRCompInst.GetTransformation2D objSchLDbComp
+
+<font color="#0000FF">                  If </font>( Not ( objSchLDbComp Is Nothing ) )<font color="#0000FF"> Then</font>
+
+                    <font color="#0000FF"> int</font>Nb = objSchLDbComp.Count
+
+<font color="#0000FF">                     If </font>(<font color="#0000FF"> int</font>Nb &gt; 5 )<font color="#0000FF"> Then</font>
+
+                        db6Matrix(0) = objSchLDbComp.Item(1)
+                        db6Matrix(1) = objSchLDbComp.Item(2)
+                        db6Matrix(2) = objSchLDbComp.Item(3)
+                        db6Matrix(3) = objSchLDbComp.Item(4)
+                        db6Matrix(4) = objSchLDbComp.Item(5)
+                        db6Matrix(5) = objSchLDbComp.Item(6)
+
+                        strMessage = strMessage & "---- rotation matrix = " & _
+                          "(" & db6Matrix(0) & "," & db6Matrix(1) & "," _
+                          & db6Matrix(2) & "," & db6Matrix(3) & ")" & vbCr
+                        strMessage = strMessage & "---- instance origin = " & _
+                          "(" & db6Matrix(4) & "," & db6Matrix(5) & ")" & vbCr 
+                    
+<font color="#0000FF">                     End If </font>
+
+<font color="#0000FF">                  End If    </font>
+<font color="#0000FF">               End If </font><font color="#008000">'--- If ( Not ( objGRRComp Is Nothing )...</font>
+
+<font color="#0000FF">               Set </font>objCntbl = objSchRoot.Ge<font color="#0000FF">tInt</font>erface ("CATIASchAppConnectable",_
+                 objCompGraphInst)
+<font color="#0000FF">               Set </font>objGRR = objSchRoot.Ge<font color="#0000FF">tInt</font>erface ("CATIASchGRR", objGRRCompInst)
+
+<font color="#0000FF">            End If </font><font color="#008000">'---if ( Not ( objCompGraphInst Is Nothing ) ...</font>
+        
+            <font color="#008000">'------------------------------------------------------------------</font>
+            <font color="#008000">' Get the connector locations of all component instances</font>
+            <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">            If </font>( Not ( objCntbl Is Nothing ) And  Not ( objGRR Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">               Set </font>objLCntrs = objCntbl.AppListConnectors (objLFilter)
+<font color="#0000FF">               If </font>( Not ( objLCntrs Is Nothing ) )<font color="#0000FF"> Then</font>
+                 <font color="#0000FF"> int</font>NbCntr = objLCntrs.Count
+<font color="#0000FF">                  If </font>(<font color="#0000FF"> int</font>NbCntr &gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                     For </font>iCntr = 1 To<font color="#0000FF"> int</font>NbCntr
+<font color="#0000FF">                        Set </font>objLDbCntr = Nothing
+<font color="#0000FF">                        Set </font>objCntr = Nothing
+<font color="#0000FF">                        Set </font>objCntr = objLCntrs.Item (iCntr,"CATIASchCntrLocation")
+<font color="#0000FF">                        If </font>( Not ( objCntr Is Nothing ))<font color="#0000FF"> Then</font>
+                           objCntr.GetPosition objGRR, objLDbCntr
+<font color="#0000FF">                           If </font>( Not ( objLDbCntr Is Nothing ) )<font color="#0000FF"> Then</font>
+                             <font color="#0000FF"> int</font>NCoord = objLDbCntr.Count
+<font color="#0000FF">                              If </font>(<font color="#0000FF"> int</font>NCoord &gt; 1 )<font color="#0000FF"> Then</font>
+                                 dbCntrX = objLDbCntr.Item(1)
+                                 dbCntrY = objLDbCntr.Item(2)
+                                 strMessage = strMessage & "---- ... connector " & iCntr 
+                                 strMessage = strMessage & " position = " & dbCntrX & _
+                                   "," & dbCntrY & vbCr
+<font color="#0000FF">                              End If </font>
+<font color="#0000FF">                           End If</font>
+<font color="#0000FF">                        End If </font><font color="#008000">'---If ( Not ( objCntr Is Nothing )) ...               </font>
+<font color="#0000FF">                     Next </font><font color="#008000">'--- For iCntr ...</font>
+<font color="#0000FF">                  End If </font><font color="#008000">'--- If ( NbCntr &gt; 0 ...</font>
+<font color="#0000FF">               End If </font><font color="#008000">'--- Not ( objLCntr Is Nothing ...</font>
+<font color="#0000FF">            End If </font><font color="#008000">'---if ( Not ( objCntbl Is Nothing )) ...</font>
+
+<font color="#0000FF">         Next  </font><font color="#008000">'--- For intIndex = 1 </font>
+<font color="#0000FF">       End If </font><font color="#008000">'--- If (intNbComp &gt; 0) ...</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objSchLComps Is Nothing ) ...</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' |  List schematic route instances</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+
+<font color="#0000FF">    Set </font>objSchLRoutes = objSchRoot.GetRoutes
+
+<font color="#0000FF">    Dim </font>objGRRRoute<font color="#0000FF"> As </font>SchGRRRoute
+<font color="#0000FF">    Dim </font>objSchRouteGraph<font color="#0000FF"> As </font>SchRouteGraphic
+<font color="#0000FF">    Dim </font>objSchLDbRoute<font color="#0000FF"> As </font>SchListOfDoubles
+<font color="#0000FF">    Dim </font>intNbOut<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">    If </font>( Not ( objSchLRoutes Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#0000FF"> int</font>NbRoute = objSchLRoutes.Count
+       strMessage = strMessage &  "Number of schematic route instances = " & _
+        <font color="#0000FF"> int</font>NbRoute & vbCr
+<font color="#0000FF">       If </font>(intNbRoute &gt; 0)<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">         For </font>intIndex = 1 To<font color="#0000FF"> int</font>NbRoute
+<font color="#0000FF">            Set </font>objPrd = Nothing
+<font color="#0000FF">            Set </font>objGRRRoute = Nothing
+<font color="#0000FF">            Set </font>objSchRouteGraph = Nothing
+
+            strName = ""
+<font color="#0000FF">            Set </font>objPrd = objSchLRoutes.Item (intIndex,"CATIAProduct")
+<font color="#0000FF">            If </font>( Not ( objPrd Is Nothing ) )<font color="#0000FF"> Then</font>
+               <font color="#008000">'strName = objPrd.Name</font>
+               strName = objPrd.PartNumber
+               strMessage = strMessage &  "  member " & _
+                <font color="#0000FF"> int</font>Index & "= " & strName & vbCr
+<font color="#0000FF">               Set </font>objSchRouteGraph = objSchRoot.Ge<font color="#0000FF">tInt</font>erface  ("CATIASchRouteGraphic", _
+                 objPrd) 
+<font color="#0000FF">            End If</font>
+
+            <font color="#008000">'------------------------------------------------------------------</font>
+            <font color="#008000">' Get the route points x-y coordinates of the route. </font>
+            <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">            If </font>( Not ( objSchRouteGraph Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">               Set </font>objGRRRoute = GetRoutePrimitives (objSchRouteGraph,objSchRoot)
+
+<font color="#0000FF">               If </font>( Not ( objGRRRoute Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">                  Set </font>objSchLDbRoute = Nothing
+                  objGRRRoute.GetPath objSchLDbRoute
+
+<font color="#0000FF">                  If </font>( Not ( objSchLDbRoute Is Nothing ) And _
+                      <font color="#0000FF"> int</font>NbOut &gt; 3 )<font color="#0000FF"> Then</font>
+
+                    <font color="#0000FF"> int</font>Nb = objSchLDbRoute.Count
+
+<font color="#0000FF">                     Dim </font>iIndex<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">                     Dim </font>jIndex<font color="#0000FF"> As </font>integer
+<font color="#0000FF">                     Dim </font>dbX<font color="#0000FF"> As </font>Double
+<font color="#0000FF">                     Dim </font>dbY<font color="#0000FF"> As </font>Double
+<font color="#0000FF">                     Dim </font>intNbPoint<font color="#0000FF"> As </font>Integer
+                    <font color="#0000FF"> int</font>NbPoint =<font color="#0000FF"> int</font>NbOut/2
+
+<font color="#0000FF">                     If </font>( (intNbOut =<font color="#0000FF"> int</font>Nb ) And  (intNbPoint &gt; 1) )<font color="#0000FF"> Then</font>
+                        strMessage = strMessage & "---- route points = [" 
+<font color="#0000FF">                        For </font>iIndex = 1 To<font color="#0000FF"> int</font>NbPoint
+                           jIndex = ((iIndex-1) * 2) + 1
+                           dbX = objSchLDbRoute.Item(jIndex)
+                           dbY = objSchLDbRoute.Item(jIndex+1)
+                           strMessage = strMessage & "(" & dbX & "," & dbY & ")"
+<font color="#0000FF">                        Next </font>
+                        strMessage = strMessage & "]" & vbCr
+<font color="#0000FF">                     End If </font>
+
+<font color="#0000FF">                  End If </font><font color="#008000">'--- If ( Not ( objSchLDbRoute Is Nothing ...</font>
+<font color="#0000FF">               End If </font><font color="#008000">'--- If ( Not ( objGRRRoute Is Nothing )...</font>
+<font color="#0000FF">            End If </font><font color="#008000">'---if ( Not ( objSchRouteGraph Is Nothing ) ... </font>
+             
+<font color="#0000FF">         Next </font><font color="#008000">'--- For intIndex = 1 To intNbRoute</font>
+<font color="#0000FF">       End If </font><font color="#008000">'--- If (intNbRoute &gt; 0) ...</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objSchLRoutes Is Nothing ) ...</font>
+
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find the first symbol used for the input schematic component.</font>
+<font color="#008000">' | Input: objSchCompGraph:  the schematic component </font>
+<font color="#008000">' |        (a CATIASchCompGraphic interface handle).</font>
+<font color="#008000">' | Returns: the component image (the symbol instance)</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Function GetComponentImage (objSchCompGraphArg<font color="#0000FF"> As </font>SchCompGraphic)<font color="#0000FF"> As </font>SchGRRComp
+<font color="#0000FF">   Dim </font>objSchLSymbols<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   If </font>( Not ( objSchCompGraphArg Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
+<font color="#0000FF">      If </font>( Not ( objSchLSymbols Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">         Set </font>GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRRComp")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">   End If</font>
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find the first graphical primitives of an input route.</font>
+<font color="#008000">' | Input: objSchRouteGraph: the schematic route</font>
+<font color="#008000">' |        (a CATIASchRouteGraphic interface handle).</font>
+<font color="#008000">' |        objSchRootGraph: the schematic root </font>
+<font color="#008000">' | Returns: the route graphic primitives</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Function GetRoutePrimitives (objSchRouteGraphArg<font color="#0000FF"> As </font>SchRouteGraphic, _
+  objSchRootArg<font color="#0000FF"> As </font>SchematicRoot)<font color="#0000FF"> As </font>SchGRRRoute
+<font color="#0000FF">   Dim </font>objSchLGRR<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   Dim </font>objSchGRR<font color="#0000FF"> As </font>SchGRR
+<font color="#0000FF">   If </font>( Not ( objSchRouteGraphArg Is Nothing ) And _ 
+        Not ( objSchRootArg Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
+<font color="#0000FF">      If </font>( Not ( objSchLGRR Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">         Set </font>objSchGRR = objSchLGRR.Item (1,"CATIASchGRR")
+<font color="#0000FF">         If </font>( Not ( objSchGRR Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Set </font>GetRoutePrimitives = objSchRootArg.Ge<font color="#0000FF">tInt</font>erface ("CATIASchGRRRoute", _
+              objSchGRR)
+<font color="#0000FF">         End If</font>
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">   End If</font>
+<font color="#0000FF">End Function</font>
+
+</pre></body></html>

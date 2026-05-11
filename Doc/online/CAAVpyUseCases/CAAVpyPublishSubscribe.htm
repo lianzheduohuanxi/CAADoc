@@ -1,0 +1,971 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Persistent Publish Subscribe Data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Database</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Persistent Publish Subscribe Data</h3>
+      <em>Performing persistent operations on subscriptions and published
+      events.</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article illustrates how to handle persistent Publish / Subscribe
+      data by using the ENOVIPubSubManager interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVpyPublishSubscribe Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Do CAAVpySubscribe and CAAVpyPublish Do?</a></li>
+            <li><a href="#How">How to Launch CAAVpySubscribe and CAAVpyPublish</a></li>
+            <li><a href="#Where">Where to Find the CAAVpySubscribe and
+              CAAVpyPublish Codes</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use some of the methods
+available on the ENOVIPubSubManager interface. These include:</p>
+<ul>
+  <li>Getting information about the Events that users can subscribe to</li>
+  <li>Subscribing to / Unsubscribing from Events</li>
+  <li>Getting information about current Subscriptions</li>
+  <li>Getting information about so far published Events</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVpyPublishSubscribe Use Case</h3>
+<p>CAAVpyPublishSubscribe is a use case of the CAAVPMPersistency.edu framework
+that illustrates VPMPersistency framework capabilities related to Publish /
+Subscribe.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Do CAAVpySubscribe and CAAVpyPublish Do?</h4>
+<p>CAAVpySubscribe is the first part of this use case. In this scenario, the
+login user mainly subscribes to two events (CreateObject and Attaching) on type <i>Document</i>
+and to one event (Attached) on a newly created instance of type <i>Document</i>.
+CAAVpyPublish is the second part of this use case. In this scenario, a newly
+created instance of type <i>Document</i> is attaching the former instance
+created in CAAVpySubscribe. Then, the login user looks for the published events
+it subscribes to and checks that four events have been raised so far:
+CreateObject (twice), Attaching, and Attached.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAVpySubscribe and CAAVpyPublish</h4>
+<p>To launch CAAVpySubscribe and CAAVpyPublish, you will need to set up the
+build time environment, then compile CAAVpySubscribe and CAAVpyPublish along
+with their prerequisites, set up the run time environment, and then execute the
+use case. [<a href="#References">1</a>] Launch the use case by executing the
+following commands:</p>
+<p><code>mkrun -c &quot;CAAVpySubscribe&quot;</code></p>
+<p>and</p>
+<p><code>mkrun -c &quot;CAAVpyPublish&quot;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVpySubscribe and CAAVpyPublish
+Codes</h4>
+<p>The CAAVpyPublishSubscribe use case is made of three modules of the
+CAAVPMPersistency.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMPersistency.edu\CAAVpySubscribe.m\</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory\CAAVPMPersistency.edu\CAAVpyPublish.m\</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory\CAAVPMPersistency.edu\CAAVpyPubSubLib.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMPersistency.edu/CAAVpySubscribe.m/</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory/CAAVPMPersistency.edu/CAAVpyPublish.m/</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory/CAAVPMPersistency.edu/CAAVpyPubSubLib.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p><b>Before launching these use cases, check for <a href="../CAAVpiUseCases/CAAVpiEventsCommonDoc.htm#PreReq">their
+common prerequisites.</a></b></p>
+<p>Here are the logical steps of <a href="#CAAVpySubscribe">CAAVpySubscribe</a>:</p>
+<ol>
+  <li><a href="#OpenSession">Open a VPM Session</a></li>
+  <li><a href="#CreateLogin">Open a Login Session</a></li>
+  <li><a href="#GetPSM">Get the PubSub Manager</a></li>
+  <li><a href="#ListEvent">List available events on type <i>Document</i></a></li>
+  <li><a href="#Subscribe1">Subscribe to two events on type <i>Document</i></a></li>
+  <li><a href="#Check1">Check subscriptions on type <i>Document</i></a></li>
+  <li><a href="#CreateObject">Create an instance of <i>Document</i> and Save</a></li>
+  <li><a href="#Subscribe2">Subscribe to one event on instance of <i>Document</i></a></li>
+  <li><a href="#Check2">Check subscriptions on instance</a></li>
+  <li><a href="#GetSub1">Get all previous subscriptions</a></li>
+  <li><a href="#GetSub2">Get all subscribers on type and instance of <i>Document</i></a></li>
+  <li><a href="#CloseSession">Close the Sessions</a></li>
+</ol>
+<p>Then the logical steps of <a href="#CAAVpyPublish">CAAVpyPublish</a> are:</p>
+<ol>
+  <li><a href="#OpenSession_">Open a VPM Session</a></li>
+  <li><a href="#CreateLogin_">Open a Login Session</a></li>
+  <li><a href="#GetPSM_">Get the PubSub Manager</a></li>
+  <li><a href="#CreateObject_">Create an instance of <i>Document</i> and Save</a></li>
+  <li><a href="#GetPub1">Get my so far published events</a></li>
+  <li><a href="#Query">Retrieve the <i>Document</i> instance created in
+    CAAVpySubscribe</a></li>
+  <li><a href="#Fire">Fire events on <i>Document</i> objects and Save</a></li>
+  <li><a href="#GetPub2">Get my so far published events again</a></li>
+  <li><a href="#DeleteObject">Delete all <i>Document</i> objects and Save</a></li>
+  <li><a href="#UnPub">Remove all published events</a></li>
+  <li><a href="#UnSub">Unsubscribe from all events</a></li>
+  <li><a href="#CloseSession_">Close the Sessions</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CAAVpySubscribe"></a>Part I : CAAVpySubscribe</h3>
+<h4><a name="OpenSession"></a>Open a VPM Session</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>
+	VPMSession* pSession = VPMSession::OpenSession();
+    	TEST_STEP(&quot;Open VPM Session&quot;, NULL==pSession);
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>OpenSession</code> static method of <i>VPMSession</i> in order
+to open a new VPM session and to obtain a pointer on it.</p>
+<p>Note that in this use case, for clarity purpose, we defined a macro <code>TEST_STEP</code>
+whose function is to test the success of the current operation. In case of
+failure, a KO message is displayed and the program exits. Otherwise, a OK
+message is displayed and the program goes on.</p>
+<p>Here is the code of this macro (defined in header CAAVpyDisplay.h of
+directory PrivateInterfaces) :</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>
+	#define TEST_STEP(message,condition)               \
+	if ( condition ) {                                 \
+	    	cout &lt;&lt; step &lt;&lt;&quot;. &quot;#message&quot; KO&quot;&lt;&lt; endl;       \
+	    	VPMSession::CloseSession();                    \
+	    	return step;                                   \
+	}                                                  \
+	cout &lt;&lt; step &lt;&lt;&quot;. &quot;#message&quot; OK&quot;&lt;&lt; endl;           \
+	step++;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CreateLogin"></a>Open a Login Session</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>    
+	CATUnicodeString userID (&quot;MyUserID&quot;);
+    	CATUnicodeString userPassword (&quot;MyPassword&quot;);
+    	CATUnicodeString userRole (&quot;MyRoleName&quot;);
+    	const int NetWorkCommunication = 0;
+    	CATIVpmLoginSession_var spLoginSession;
+    	rc = pSession-&gt;CreateLoginSession( userID,           // ENOVIA User login Id
+                                       userPassword,         // ENOVIA User login Password
+                                       userRole,             // ENOVIA User login Role
+                                       NetWorkCommunication, // Bus communication activation
+                                       spLoginSession );     // Login Session
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to create a new Login Session, use the <code>CreateLoginSession</code>
+method of <i>VPMSession</i> as exposed above.</p>
+<p>The method returns a <i>CATIVpmLoginSession</i> smart pointer on the Login
+Session.</p>
+<p>In this use case scenario, the login user identified by &quot;MyUserID&quot;
+is considered as our subscriber.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetPSM"></a>Get the PubSub Manager</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+	ENOVIEventManager_var spEventManager;
+    	rc = pSession-&gt;get_ENOVEventManager( spEventManager );    
+    	ENOVIPubSubManager_var spPSM = spEventManager;
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>All persistent Publish / Subscribe operations are managed through a single
+interface : <i>ENOVIPubSubManager</i>.</p>
+<p>To get a smart pointer on this interface, we have first to obtain a pointer
+on the <i>ENOVIEventManager</i> interface, using the <code>get_ENOVEventManager</code>
+method of <i>VPMSession</i>, and then to query the <i>ENOVIPubSubManager</i>
+interface.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ListEvent"></a>List available events on type <i>Document</i></h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+	CATUnicodeString publisherType (&quot;ENOVIA_Document&quot;); 
+    	CATListOfENOVIEventDefinition listdefs;
+    	rc = spPSM-&gt;GetRaisableEventDefs( publisherType, listdefs );
+        Dump(listdefs);
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>One of the first operation that can be performed on <i>ENOVIPubSubManager</i>
+is obtaining all the events that can be subscribed to on a given object type. In
+this use case, we will be interested in the type <i>Document</i> (which is a
+dummy type for test purpose) defined in the domain &quot;INDEX&quot;.</p>
+<p>To do so, use the <code>GetRaisableEventDefs</code> method of <i>ENOVIPubSubManager</i>
+as shown above. The result is a list of smart pointers on <i>ENOVIEventDefinition</i>
+interface, which exposes methods to get the main characteristics of events as
+they are defined in the XML .event files.</p>
+<p>Again, for clarity purpose, we defined a set of &quot;Dump&quot; methods that
+process different kinds of list of objects and display the main characteristics
+of each object in turn. The code of these methods can be found in the
+CAAVpyPubSubLib module.</p>
+<p>Dumping the <i>ENOVIEventDefinition</i> interface yields a lot of information
+about the <i>Document</i> events (refer to the program traces). In this use
+case, we focus on events CreateObject (inherited from VPMObject), Attaching, and
+Attached. The last two events have been defined for the purpose of this use
+case, along with the associated callback interface <i>CAAIVpyDocumentEvent</i>
+located in the PrivateInterfaces directory.</p>
+<p>As far as Publish / Subscribe is concerned (i.e. dealing with persistent and
+asynchronous events), the callback interface only appears when firing the events
+using the macro EVENT_FIRE. For the management of synchronous events and
+subscribing with callbacks, please refer to the corresponding technical article
+and use cases. [<a href="#References">2, 3</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Subscribe1"></a>Subscribe to two events on type <i>Document</i></h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>    
+	CATUnicodeString createEvent (&quot;CreateObject&quot;);
+    	rc = spPSM-&gt;Subscribe( userID,
+                           publisherType,
+                           createEvent );
+
+    	CATListOfENOVEventSubFilter listfil;
+    	CATUnicodeString condition (&quot;[name is_like Document*]&quot;);
+    	CORBAAny anyValue;
+    	anyValue&lt;&lt;condition;
+    	rc = spPSM-&gt;BuildListOfSubFilter( listfil,
+                                      &quot;ON_PUBLISHER&quot;,
+                                      &quot;Attach_Condition&quot;,
+                                      anyValue );
+
+    	CATUnicodeString attachingEvent (&quot;Attaching&quot;);
+    	rc = spPSM-&gt;Subscribe( userID,
+                           publisherType,
+                           attachingEvent,
+                           &quot;&quot;,&quot;&quot;,&quot;&quot;, listfil );
+
+    	spPSM-&gt;FreeSubFilters( listfil );
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>As shown above, subscribing to an event on a given type is simply performed
+by calling the method <code>Subscribe</code> of <i>ENOVIPubSubManager</i>. Note
+that the subscription applies immediately since it is committed directly in the
+database.</p>
+<p>The first three mandatory arguments are the user ID, the publisher type, and
+the event name. In this use case, our user first subscribes inconditionally to
+event CreateObject on type <i>Document</i>, that is, it will be warned each time
+an instance of <i>Document</i> is created.</p>
+<p>The next three arguments of <code>Subscribe</code> can be used to specify the
+means by which the user is to be notified. Though it is not used here, by
+default, we provide the means to be notified by e-mail through one of the
+&quot;PSmail&quot; shells, e.g. :</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>    
+    	rc = spPSM-&gt;Subscribe( userID,
+                           publisherType,
+                           createEvent,
+                           &quot;PSmail_en.sh&quot;,
+			   &quot;MyUserID@MyHostName.com&quot; );
+	</pre>
+    </td>
+  </tr>
+</table>
+<p>Besides the name of the shell to launch, the next mandatory argument is a
+valid e-mail address.</p>
+<p>Finally, there exists a last argument to specify some filters to be applied
+to the current subscription. They are given in a list of <i>ENOVEventSubFilter</i>
+objects that can be built before by calling the method <code>BuildListOfSubFilter</code>
+of <i>ENOVIPubSubManager</i> as many times as there are filters to define. After
+the <code>Subscribe</code> call, the list has to be emptied with special method <code>FreeSubFilters</code>.</p>
+<p>As shown in the code above, our user subscribes to event Attaching on type <i>Document</i>
+using only one filter of category &quot;ON_PUBLISHER&quot;. This means that,
+whenever an event Attaching will be raised, a condition will be applied on the
+publishing object (a <i>Document</i> instance) to decide whether or not the
+subscriber has to be notified.</p>
+<p>Here the litteral condition is &quot;[name is_like Document*]&quot; which is
+true whenever the simple attribute &quot;name&quot; of a <i>Document</i>
+instance is valuated with a string beginning with &quot;Document&quot;. In the
+following, we will see an other category of filter.</p>
+<p>Important: It is strongly recommended to use the same mode in subscribe and 
+unsubscribe operations. If events are subscribed in batch mode then unsubscribe 
+must be done in batch mode only and the same is the case for the interactive mode. 
+An inconsistent behavior can be seen if subscribe and unsubscribe both operations 
+done by different ways. If events are subscribed by batch mode but user try to unsubscribe 
+in interactively LCA and vice versa. Inconsistency can be noticed in interactive LCA mode if the 
+user tries to retrieve the list of subscribed events when those events were subscribed 
+through batch mode.
+
+ </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Check1"></a>Check subscriptions on type <i>Document</i></h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>    
+	CATListOfENOVPubSubDetails listdet;
+    	rc = spPSM-&gt;GetMySubscriptions( userID,
+                                    publisherType,
+                                    listdet );
+	Dump(listdet);
+	spPSM-&gt;FreePubSubDetails( listdet );
+	
+	ENOVPubSubDetails* psd = NULL;
+	rc = spPSM-&gt;GetMySubscription( userID,
+                                   publisherType,
+                                   createEvent,
+                                   psd );
+
+	rc = spPSM-&gt;GetMySubscription( userID,
+                                   publisherType,
+                                   attachingEvent,
+                                   psd );
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>To check the current subscriptions of a user, the <i>ENOVIPubSubManager</i>
+interface exposes a number of <code>Get*MySubscription*</code> methods. Here, we
+focus on the subscriptions on a given type (<i>Document</i>) to check the work
+done so far in this use case. The result is a list of generic <i>ENOVPubSubDetails</i>
+objects that contain information about either subscriptions or published events
+according to the context.</p>
+<p>Note that a &quot;Dump&quot; display method has been defined for this list in
+the CAAVpyPubSubLib module. Refer to this code and to the program traces to know
+the valuable information that can be retrieved from <i>ENOVPubSubDetails</i>
+objects. Note also that the list must be emptied after use with special method <code>FreePubSubDetails</code>.</p>
+<p>When the event name is also specified in the query, the result is just one <i>ENOVPubSubDetails</i>,
+since to a given ( user, publisher, event ) triplet corresponds one subscription
+only. Do not forget to release it using the C++ &quot;delete&quot; keyword as
+illustrated in the use case. When there is no corresponding subscription, the
+pointer is null.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CreateObject"></a>Create an instance of <i>Document</i> and Save</h4>
+<p>The corresponding code will not be treated here since it is the subject of
+another specific use case of this framework, i.e. CAAVpyGeneralPersistency. [<a href="#References">4</a>]
+We can however sum up the different steps :</p>
+<ol>
+  <li>Retrieve the Factory Manager from the VPM Session</li>
+  <li>Retrieve the Domain Container (here the Domain is &quot;INDEX&quot;) from
+    the VPM Session</li>
+  <li>Create a VPM object of type <i>Document</i> with the Factory Manager</li>
+  <li>Valuate the mandatory attributes of a <i>Document</i> (&quot;name&quot;
+    and &quot;doctype&quot;) using interface <i>CATIVpmAttribute</i></li>
+  <li>Save the Login Session</li>
+</ol>
+<p>Note that the <i>Document</i> instance is named by a string beginning with
+&quot;Document&quot;, so that this instance verifies the condition defined in
+the above subscription filter.</p>
+<p>Note also that saving the Login Session implies that all persistent events
+raised since the opening of the current VPM Session or since the last save are
+logged in the database and the persistent subscribers are notified accordingly.
+This means that our user helds now one published event, that is, event
+&quot;CreateObject&quot; fired by the just created <i>Document</i> instance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Subscribe2"></a>Subscribe to one event on instance of <i>Document</i></h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    CATUnicodeString status (&quot;Succeeded&quot;);
+    anyValue&lt;&lt;status;
+    rc = spPSM-&gt;BuildListOfSubFilter( listfil,
+                                      &quot;ON_EVENT&quot;,
+                                      &quot;Status&quot;,
+                                      anyValue );
+
+    ENOVIPublisher_var spPublisher = spObject;
+    CATUnicodeString attachedEvent(&quot;Attached&quot;);
+    rc = spPSM-&gt;Subscribe( userID,
+                           spPublisher,
+                           attachedEvent,
+                           &quot;&quot;,&quot;&quot;,&quot;&quot;,listfil );
+
+    spPSM-&gt;FreeSubFilters(listfil);
+      </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>ENOVIPubSubManager</i> interface allows also to subscribe on given
+instances of objects. Here our user takes the just created <i>Document</i>
+instance to subscribe on event &quot;Attached&quot;. The second argument is no
+more the type of the object but instead a smart pointer on interface <i>ENOVIPublisher</i>
+which can be retrieved from every instances of type <i>CATBaseUnknown</i>.</p>
+<p>Additionally, the user specifies one subscription filter of category
+&quot;ON_EVENT&quot;. This category applies a condition on the event itself
+(instead of the publishing object), more precisely on the arguments of the
+associated data stream. The above filter means that the user will be notified
+if, and only if, the &quot;Status&quot; argument of the data stream associated
+to the &quot;Attached&quot; event is equal to &quot;Succeeded&quot;.</p>
+<p>The data stream characteristics of an event can be retrieved from the <i>ENOVIEventDefinition</i>
+interface, as shown previously in this use case. Refer to the program traces and
+check that event &quot;Attached&quot; effectively has an associated data stream
+named &quot;AcknowledgeStream&quot; with one of its arguments named
+&quot;Status&quot;.</p>
+<p>Important: It is strongly recommended to use the same mode in subscribe and unsubscribe 
+operations. If events are subscribed in batch mode then unsubscribe must be done in batch mode 
+only and the same is the case for the interactive mode. An inconsistent behavior can be seen 
+if subscribe and unsubscribe both operations done by different ways. If events are subscribed 
+by batch mode but user try to unsubscribe in interactively LCA and vice versa. Inconsistency can 
+be noticed in interactive LCA mode if the user tries to retrieve the list of subscribed events 
+when those events were subscribed through batch mode.
+
+ </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Check2"></a>Check subscriptions on instance</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    rc = spPSM-&gt;GetMySubscriptions( userID,
+                                    spPublisher,
+                                    listdet );
+    Dump(listdet);
+    spPSM-&gt;FreePubSubDetails(listdet);
+
+    rc = spPSM-&gt;GetMySubscription( userID,
+                                   spPublisher,
+                                   attachedEvent,
+                                   psd );
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>As there exist methods to get the subscriptions on given types, <i>ENOVIPubSubManager</i>
+also exposes methods to get the subscriptions on given instances. The user has
+to specify the <i>ENOVIPublisher</i> view of the object instead of the object
+type. Everything is the same besides.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetSub1"></a>Get all previous subscriptions</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    rc = spPSM-&gt;GetAllMySubscriptions( userID,
+                                       listdet );
+    Dump(listdet);
+    spPSM-&gt;FreePubSubDetails( listdet );
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Here we illustrate the general method <code>GetAllMySubscriptions</code>
+which allows to get all information about the subscriptions performed by a given
+user. In this use case, we finally get our user's three subscriptions:</p>
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Document</th>
+    <th>Condition</th>
+  </tr>
+  <tr>
+    <td>CreateObject</td>
+    <td>Type</td>
+    <td>NONE</td>
+  </tr>
+  <tr>
+    <td>Attaching</td>
+    <td>Type</td>
+    <td>ON_PUBLISHER</td>
+  </tr>
+  <tr>
+    <td>Attached</td>
+    <td>Instance</td>
+    <td>ON_EVENT</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetSub2"></a>Get all subscribers on type and instance of <i>Document</i></h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    CATListOfCATUnicodeString listuser;
+    rc = spPSM-&gt;GetSubscribers( publisherType,
+                                listuser );
+    Dump(listuser);
+    listuser.RemoveAll();
+
+    rc = spPSM-&gt;GetSubscribers( spPublisher,
+                                listuser );
+    Dump(listuser);
+    listuser.RemoveAll();
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>For completeness, we illustrate here how to get user IDs of subscribers to
+events on given types or instances, through the <code>GetSubscribers</code>
+methods. The result is a list of string.</p>
+<p>Note that there exist two other <code>GetSubscribers</code> methods which
+allow to specify the event name to restrict the query. Finally, a <code>GetSubscribersOnEvent</code>
+method allows to get the subscribers to a given event, whatever the types or
+instances may be.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CloseSession"></a>Close the Sessions</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    rc = spLoginSession-&gt;Close();
+
+    VPMSession::CloseSession();
+	</pre>
+    </td>
+  </tr>
+</table>
+<p>To conclude this first part related to subscriptions, we close the open
+sessions using the <code>Close</code> method of <i>CATILoginSession</i> and the <code>CloseSession</code>
+method of <i>VPMSession</i>.</p>
+<p>Let's now move on to the second part, CAAVpyPublish, in which we will raise
+the events our user subscribed to, in order to show methods related to published
+events.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CAAVpyPublish"></a>Part II : CAAVpyPublish</h3>
+<h4><a name="OpenSession_"></a>Open a VPM Session</h4>
+<p>Same code as in <a href="#OpenSession">CAAVpySubscribe</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CreateLogin_"></a>Open a Login Session</h4>
+<p>Same code as in <a href="#CreateLogin">CAAVpySubscribe</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetPSM_"></a>Get the PubSub Manager</h4>
+<p>Same code as in <a href="#GetPSM">CAAVpySubscribe</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CreateObject_"></a>Create an instance of <i>Document</i> and Save</h4>
+<p>Same code as in <a href="#CreateObject">CAAVpySubscribe</a>.</p>
+<p>Here we create another <i>Document</i> instance to be able to fire events on
+it.</p>
+<p>For illustration purpose and to prepare the next steps, the <i>Document</i>
+instance is named by a string beginning with &quot;Document&quot;, so that this
+instance verifies the condition filter defined in <a href="#Subscribe1">CAAVpySubscribe</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetPub1"></a>Get my so far published events</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>    
+    CATListOfENOVPubSubDetails listdet;
+    spPSM-&gt;GetAllMyPublishedEvents( userID, listdet );
+    Dump(listdet);
+    spPSM-&gt;FreePubSubDetails(listdet);
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>GetAllMyPublishedEvents</code> of <i>ENOVIPubSubManager</i>
+allows to retrieve the so far published events for a given subscriber. The
+result is a list of <i>ENOVPubSubDetails</i> objects, already described above.</p>
+<p>At this stage of the use case, only two events have been published for our
+user, that is, the two &quot;CreateObject&quot; events raised after the creation
+of the two <i>Document</i> instances.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Query"></a>Retrieve the <i>Document</i> instance created in
+CAAVpySubscribe</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    CATUnicodeString entityName (&quot;Document&quot;);
+    CATIVpmPathExpression_var spPathExpr = CreatePathExpression( entityName, docName ); 
+    
+    CATUnicodeString queryValue (&quot;Document-1-CAAVpySubscribe-UC&quot;);
+    anyValue&lt;&lt;queryValue;
+    CATIVpmPredicate_var spPredicate = (spPathExpr == anyValue);
+    
+    CATIVpmQuery_var spQuery = CreateQuery( entityName, NULL_var, spPredicate, docName );
+    
+    CATLISTV(CATBaseUnknown_var)* listDocument = new CATLISTV(CATBaseUnknown_var);
+    rc = spFactory-&gt;RunQuery( spQuery, domainName, spContainer, listDocument );
+    
+    CATIVpmFactoryObject_var spDocument1 = (*listDocument)[1];
+    delete listDocument;
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>These lines of code illustrates how to retrieve a given instance from the
+database using a query. Here we want to recover the <i>Document</i> instance
+previously created in the first part to be able to fire events on it (remember
+that our user has subscribed to an event on this specific instance).</p>
+<p>As this is not the subject of this use case, we won't comment too much this
+part. The most important thing is that we query objects of type <i>Document</i>
+(in domain &quot;INDEX&quot;), whose &quot;name&quot; attribute is exactly equal
+to &quot;Document-1-CAAVpySubscribe-UC&quot;. So we expect to retrieve only one
+object, which is the instance created in the first part.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Fire"></a>Fire events on <i>Document</i> objects and Save</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    {   // Note the opening bracket to simulate being
+        // inside the scope of the firing method
+
+        ENOVIStream_var spPublisherStream, spClientStream;
+        OBJECT_DATA_EVENT_INIT(spDocument2,Attaching,spPublisherStream);
+        
+        CATUnicodeString iDomain = spDocument2-&gt;GetDomainName();
+        anyValue&lt;&lt;iDomain;
+        spPublisherStream-&gt;AddArgumentValue(&quot;Domain&quot;,anyValue);
+        // Other arguments ...
+
+        OBJECT_EVENT_FIRE(spDocument2,Attaching,CAAIVpyDocumentEvent,Before,spClientStream,rc);
+        
+        {   // New opening bracket to ensure isolation between events
+            
+            ENOVIStream_var spPublisherStream, spClientStream;
+            OBJECT_DATA_EVENT_INIT(spDocument1,Attached,spPublisherStream);
+            
+            CATUnicodeString iStatus (&quot;Succeeded&quot;);
+            anyValue&lt;&lt;iStatus;
+            spPublisherStream-&gt;AddArgumentValue(&quot;Status&quot;,anyValue);
+            // Other arguments ...
+            
+            OBJECT_EVENT_FIRE(spDocument1,Attached,CAAIVpyDocumentEvent,Before,spClientStream,rc);
+            
+            OBJECT_EVENT_FIRE(spDocument1,Attached,CAAIVpyDocumentEvent,After,spClientStream,rc);
+        }
+        
+        OBJECT_EVENT_FIRE(spDocument2,Attaching,CAAIVpyDocumentEvent,After,spClientStream,rc);
+    }
+
+    rc = spLoginSession-&gt;Save();
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Event firing does not directly concern the <i>ENOVIPubSubManager</i>
+interface but is actually in the heart of the whole ENOVIA LCA Event model on
+which the Publish / Subscribe model is itself built. In a realistic application,
+this part of the scenario is performed in every implementations of ENOVIA
+objects that raise events (as declared in the XML .event files).</p>
+<p>For our purpose, we simulate the attachment of the first document, created in
+<a href="#CreateObject">CAAVpySubscribe</a>, by the second document, created in <a href="#CreateObject_">CAAVpyPublish</a>.
+The simulation consists simply in raising event &quot;Attached&quot; on the
+first document and event &quot;Attaching&quot; on the second document.</p>
+<p>These events must be embedded (see the brackets) to ensure their isolation
+and the correct processing of each macro call. The <code>OBJECT_EVENT_FIRE</code>
+and <code>OBJECT_DATA_EVENT_INIT</code> macros have to be used since we are
+outside the implementation of the <i>Document</i> object.</p>
+<p>As both events have an associated data stream, we valuate their arguments
+accordingly with the method <code>AddArgumentValue</code> of <i>ENOVIStream</i>.
+The important thing to note for the use case is that the &quot;Status&quot;
+argument has value &quot;Succeeded&quot; so that event &quot;Attached&quot;
+verifies the condition filter defined in <a href="#Subscribe2">CAAVpySubscribe</a>.</p>
+<p>Finally the Login Session is saved, which triggers the processing of
+persistent events and the notification of their subscribers, as we will check
+below.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GetPub2"></a>Get my so far published events again</h4>
+<p>Same code as <a href="#GetPub1">above</a>.</p>
+<p>At this stage of the use case, four events have been published for our user:
+the two &quot;CreateObject&quot; events raised after the creation of the two <i>Document</i>
+instances, and the just fired events, &quot;Attaching&quot; and
+&quot;Attached&quot; since the condition filters defined in the respective
+subscriptions have been verified :</p>
+<table>
+  <tr>
+    <th>Event</th>
+    <th>Publisher</th>
+    <th>Filter</th>
+    <th>Condition</th>
+    <th>Checked ?</th>
+  </tr>
+  <tr>
+    <td>Attaching</td>
+    <td>Document2</td>
+    <td>ON_PUBLISHER</td>
+    <td>Attribute &quot;name&quot; starts with &quot;Document&quot;</td>
+    <td>YES</td>
+  </tr>
+  <tr>
+    <td>Attached</td>
+    <td>Document1</td>
+    <td>ON_EVENT</td>
+    <td>Argument &quot;Status&quot; equals &quot;Succeeded&quot;</td>
+    <td>YES</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="DeleteObject"></a>Delete all <i>Document</i> objects and Save</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    LifeCycleObject_var spLifecycle;
+
+    spLifecycle = spDocument1;
+    spLifecycle-&gt;remove();
+   
+    spLifecycle = spDocument2;
+    spLifecycle-&gt;remove();
+    
+    rc = spLoginSession-&gt;Save();
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Before closing the Sessions, the last part of this use case is dedicated to
+cleanup. Here we destroy the two <i>Document</i> instances we created, using the
+method <code>remove</code> of interface <i>LifeCycleObject</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="UnPub"></a>Remove all published events</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    rc = spPSM-&gt;RemoveAllMyPublishedEvents( userID );
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>We also delete all events published so far for our user, using the method <code>RemoveAllMyPublishedEvents</code>
+of <i>ENOVIOPubSubManager</i>. A method <code>RemovePublishedEvent</code> is
+also available to delete one event at a time, providing the user, the publisher,
+and the event as parameters.</p>
+<p>Note that these methods take effect immediately since a commit is done in the
+Publish / Subscribe tables: a call to <code>GetAllMyPublishedEvents</code> now
+returns an empty list.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="UnSub"></a>Unsubscribe from all events</h4>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>
+    rc = spPSM-&gt;UnsubscribeAll( userID );
+	</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>We also delete all subscriptions performed by our user, using the method <code>UnsubscribeAll</code>
+of <i>ENOVIOPubSubManager</i>. Other methods <code>Unsubscribe</code> are also
+available to delete one subscription at a time, providing the user, the
+publisher, and the event as parameters.</p>
+<p>Note that these methods take effect immediately since a commit is done in the
+Publish / Subscribe tables: a call to <code>Get*MySubscription*</code> now
+returns an empty list.</p>
+<p>Important: It is strongly recommended to use the same mode in subscribe and unsubscribe operations. 
+If events are subscribed in batch mode then unsubscribe must be done in batch mode only and the same is 
+the case for the interactive mode. An inconsistent behavior can be seen if subscribe and unsubscribe both 
+operations done by different ways. If events are subscribed by batch mode but user try to unsubscribe 
+in interactively LCA and vice versa. Inconsistency can be noticed in interactive LCA mode if the user 
+tries to retrieve the list of subscribed events when those events were subscribed through batch mode.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CloseSession_"></a>Close the Sessions</h4>
+<p>Same code as in <a href="#CloseSession">CAAVpySubscribe</a>.</p>
+<p>This concludes the CAAVpyPublish part and the CAAVpyPublishSubscribe use
+case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>The purpose of this use case was to illustrate most of the useful methods
+exposed by the <i>ENOVIPubSubManager</i> interface to handle persistent Publish
+/ Subscribe data.</p>
+<p>We have first seen how to retrieve information about declared Events on given
+types of objects. Then we have studied how to subscribe to these Events, either
+on types or on instances, and also how to define condition filters on the
+Subscriptions.</p>
+<p>We have given sample codes showing how to retrieve information either about
+current Subscriptions or about so far published Events. Finally, we have seen
+how to unsubscribe from Events and how to delete published Events of no more
+interest.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAVpiUseCases/CAAVpiEventsCommonDoc.htm">ENOVIA Event Use Case Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAVpyGeneralPersistency.htm">The CAAVpyGeneralPersistency Use
+      Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

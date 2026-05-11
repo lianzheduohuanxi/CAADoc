@@ -1,0 +1,890 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working with a Feature Facade</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+<style type="text/css">
+.style1 {
+	font-family: "Courier New", Courier;
+	font-size: 9pt;
+	color: #976970;
+}
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with a Feature Facade</h3>
+      <p><em>Explains the various services which are available to operate/work with features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtWorkingWithFeatureFacade</code> 
+		use case.&nbsp; It illustrates working with a Feature Facade, 
+		represented by the <em>CATFmFeatureFacade</em> class. Thus the user gets 
+		an understanding of confirming the validity of a feature facade, 
+		comparing two feature facades, retrieving its underlying feature, Type, 
+		Container, Reference, Startup, Parent , Root Parent and the PLM 
+		Component that aggregates it.</p>
+		<p>An understanding of the 
+		secured Feature Modeler Access mechanism and the entities involved 
+		(Facade, Credentials) [<a href="#References">1</a>] 
+		is&nbsp; a prerequisite to understanding this UC. </p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtWorkingWithFeatureFacade Use Case</a>
+			<ul>
+				<li><a href="#What">What Does 
+				CAAV5V6FmExtWorkingWithFeatureFacade Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtWorkingWithFeatureFacade</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtWorkingWithFeatureFacade Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This Use Case teaches an end user working with a Feature Facade. More 
+precisely, </p>
+<ul>
+	<li>Validating a feature facade to confirm it is bound to a valid underlying 
+	feature</li>
+	<li>Comparing two feature facades</li>
+	<li>Retrieving its Type, Reference, StartUp, Container, Parent and Root 
+	Parent</li>
+	<li>Retrieving its underlying feature</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAFmWorkingWithFeatureFacade Use Case</h2>
+<p> <code>CAAV5V6FmExtWorkingWithFeatureFacade</code> is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code> framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtWorkingWithFeatureFacade Do</h3>
+<p>The Use Case illustrates working with a Feature Facade. The UC execution 
+proceeds through the steps listed below:</p>
+<p><strong>Feature Model Creation with associated Credentials</strong></p>
+<ul>
+	<li>It begins by creating a PLM Technological Representation</li>
+	<li>&nbsp;A Credentials object is then created which authorizes user to access and work 
+with the features defined in the <strong>CAAFmExtBaseCatalogForCredential
+	</strong>catalog. This catalog defines the <strong>CAAFmExtLibBook</strong> 
+feature (whose display name is <strong>Book</strong>) and the <strong>CAAFmExtLibrary</strong> feature (whose display name is 
+	<strong>Library</strong>). The Library has a component attribute which 
+	allows it to aggregate other features inside it.</li>
+</ul>
+<p><strong>Feature and Facade Management </strong></p>
+<ul>
+	<li>To begin with it creates an empty feature facade. The call to <strong>
+	IsValid</strong> method 
+	on an empty feature facade returns FALSE, since the facade is so far, not bound to any 
+	feature</li>
+	<li>It next instantiates a Library feature. It validates the resulting feature 
+facade, with a call to <strong>IsValid</strong> on the facade. The call 
+returns TRUE, since the facade is now bound to a valid library feature.</li>
+	<li>The UC next instantiates the Book StartUp inside this PLM Technological 
+	Representation.&nbsp; The 
+resulting feature is then held as a reference to instantiate another Book 
+feature.</li>
+	<li>It creates a copy of the facade on the Book feature instantiated from a 
+StartUp. The copy and the original facade are then compared with a call to
+	<strong>CompareFeatureWith</strong> method of the <em>CATFmFeatureFacade </em>class. The call returns 
+	TRUE,&nbsp; 
+since the two facades are the same. Please note that this comparison takes only 
+the underlying feature, into account, but not the credentials.</li>
+	<li>We next compare the Library feature facade with the Book feature facade. The
+	<strong>CompareFeatureWith</strong> call returns 
+	FALSE, when invoked on a feature facade 
+which is not bound to the same feature as the facade passed as an argument to it.</li>
+	<li>Next, we call <strong>Clear</strong>() on the copied book feature facade. The 
+call dissociates the facade with the underlying feature. The call to <strong>IsValid</strong> on the facade returns 
+	FALSE, since the facade is no longer 
+bound to a feature.</li>
+	<li>The UC then illustrates the methods to retrieve the underlying feature from 
+its facade. The call to <strong>QueryInterfaceOnFeature()</strong> retrieves an 
+Interface on the underlying feature, while the call to <strong>GetFeature()</strong> 
+returns a handler on the bound feature.</li>
+</ul>
+<p><strong>Feature Identity</strong></p>
+<ul>
+	<li>It then retrieves the <strong>type</strong> of the two Book features, one 
+instantiated from a StartUp and the other from an existing feature. In both 
+cases, the type is the StartUp name.</li>
+	<li>We retrieve the <strong>StartUp facade</strong> from the Book feature. It is 
+confirmed to be the same as the StartUp facade used at the time of 
+instantiation.</li>
+	<li>It retrieves the <strong>Reference</strong> of the Book feature. The Book 
+feature instantiated from a StartUp has no Reference. The Book feature 
+instantiated from an existing feature, has its reference as the latter feature.</li>
+</ul>
+<p><strong>Feature Localization</strong></p>
+<ul>
+	<li>The <strong>Container Facade </strong>retrieved from a feature is the same as 
+that used for instantiation in the beginning.</li>
+</ul>
+<p><strong>Feature Genealogy</strong></p>
+<ul>
+	<li>Finally the UC instantiates a Library feature. It aggregates the Book feature 
+under it. Next it seeks the <strong>parent</strong> of the Book feature, 
+retrieved as the Library. </li>
+	<li>It finally retrieves the <strong>Root Parent</strong> of the Book feature. By 
+root parent, we imply the aggregating feature which itself does not occur as an 
+aggregation under another feature. In this case, for the Book feature, the 
+Library feature serves both as its parent and the Root Parent.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtWorkingWithFeatureFacade</h3>
+<p>ToTo launch <code>CAAV5V6FmExtWorkingWithFeatureFacade</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtWorkingWithFeatureFacade </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkmkrun -c &quot;<code>CAAV5V6FmExtWorkingWithFeatFacade</code><i> DocumentStorageName.CATPart  
+</i>&quot;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtWorkingWithFeatureFacade Code</h3>
+<p><code>CAAV5V6FmExtWorkingWithFeatureFacade</code> code is located in the
+<span class="style1"><code>CAAV5V6FmExtWorkingWithFeatureFacade</code></span><code>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\</code><span class="style1"><code>CAAV5V6FmExtWorkingWithFeatureFacade</code></span><code>.m</code></p>
+<p>where InstallRootDirectory 
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtWorkingWithFeatFacade.cpp</code></span>.<p>In addition, the UC also refers to the Catalogs <code>
+CAAFmExtBaseCatalogForCredential.CATfct</code>. The Catalogs are provided at the 
+location<p> <code>
+InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CNext\resources\graphic</code></p>
+<p>and by running the mkrtv tool, user copies it to the WS RTV.</p>
+<p>In addition we have also provided the OSM files corresponding to these 
+catalogs at the location below, just in case you would like to generate the
+<code>CATfct</code> with the <code>
+CATfctEditorAssistant</code> tool [<a href="#References">2</a>]</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\InputData</code></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are eight logical steps in <code>CAAV5V6FmExtWorkingWithFeatureFacade</code>:</p>
+<ul >
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#IsValid Method Significance">IsValid Method Significance</a></li>
+	<li><a href="#Instantiating_Book_Features">Instantiating Book features</a></li>
+	<li><a href="#Copy Feature &amp; Credential">Copy Feature &amp; Credential </a>
+	</li>
+	<li><a href="#CompareFeatureWith method Significance">CompareFeatureWith 
+	Method Significance</a></li>
+	<li><a href="#8">Retrieving the feature bound to a Facade</a></li>
+	<li><a href="#9">Retrieving the Feature Type</a></li>
+	<li><a href="#10">Retrieving the Feature StartUp</a></li>
+	<li><a href="#11">Retrieving the Feature Reference</a></li>
+	<li><a href="#12">Retrieving the Feature Container</a></li>
+	<li><a href="#13">Retrieving the Parent and the RootParent of a feature</a></li>
+	<li><a href="#15">Confirming methods invoked on a Feature Facade not bound to a valid 
+	feature return FAILURE</a></li>
+	<li><a href="#Prolog">Epilog</a></li>
+	
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p>We proceed to detail the steps involved.<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. It further creates the <strong>Credentials</strong> to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features [<a href="#References">3</a>], retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="2"></a><a name="IsValid Method Significance"></a>IsValid Method 
+Significance</h3>
+<p>This method enables you to know if a feature is bound to the facade.</p>
+<h4>Returns FALSE when Feature Facade 
+not bound or bound to an invalid feature</h4><table class="code">
+	<tr>
+		<td><pre>
+CATFmFeatureFacade oFeatFacadeOnLibrary(MyCredential);
+if ( TRUE == oFeatFacadeOnLibrary.<strong>IsValid</strong>() ) return 1;
+</pre>	</td>
+	</tr>
+</table>
+
+<p>We simply create a Feature Facade associated with our Credentials. </p>
+<p>Since it is not bound to any underlying feature, the call to 
+<code
+>IsValid&nbsp; </code
+>of 
+the <em>CATFmFeatureFacade</em> class, on 
+this feature facade returns FALSE. </p>
+
+
+<h4><a name="3"></a>Returns TRUE when Feature Facade 
+bound to a valid object</h4><table class="code">
+	<tr>
+		<td><pre>CATUnicodeString LibraryStartUpIdentity("<strong>CAAFmExtLibrary</strong>");
+CATFmStartUpFacade LibraryStartUpFacade(MyCredential,LibraryStartUpIdentity);
+rc = <strong>LibraryStartUpFacade.InstantiateIn(ContFacadeOnAppliCont,oFeatFacadeOnLibrary)</strong>;
+if ( FAILED(rc) ) return 1;
+
+</pre>
+	</td>
+	</tr>
+</table>
+<p>We create a Feature Facade bound to a libary feature [<a href="#References">4</a>].</p>
+<table class="code">
+	<tr>
+		<td>
+<pre>
+if (FALSE == oFeatFacadeOnLibrary.<strong>IsValid()) </strong>return 1;</pre>	</td>
+	</tr>
+</table>
+
+	<p>Since the facade is now bound to a valid feature, the call to 
+	<code
+>operator()</code
+> 
+	on it returns 1.</p>
+
+<h4>Returns FALSE, when invoked on a Feature Facade&nbsp; subsequent to 
+a call to Clear() on it</h4>
+<p>In an earlier case, it was seen <code
+>IsValid </code
+>returns FALSE, when called on a 
+Feature Facade, not bound to any feature. This feature facade was empty at 
+instantiation and at a later stage we associated it with a feature. </p>
+<p>Alternatively, a feature facade might exist bound to an underlying feature to 
+begin with and we might later choose to dissociate it with the bound feature. 
+This is accomplished with a call to <code
+>Clear()</code
+> on the Feature Facade. Eventually, 
+what we have is again a Feature Facade which is not bound to a feature. A call 
+to I<span class="style1">sValid</span> on this feature facade will return FALSE, as it did before.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+FeatFacadeOnBookCopy<strong>.Clear()</strong>;
+</pre>	</td>
+	</tr>
+</table>
+
+<p>A call to <code
+>IsValid()</code
+> on the copied book Feature Facade (<code
+>FeatFacadeOnBookCopy</code
+>) dissociates it from the 
+bound feature.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+<strong>i</strong>f ( TRUE == FeatFacadeOnBookCopy.<strong>IsValid</strong>() ) return 1</pre>	</td>
+	</tr>
+</table>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Instantiating_Book_Features"></a>Instantiating Book Features</h3>
+<p>We instantiate two Book Features. The first Book feature is instantiated from 
+the Book StartUp. </p>
+<p>The resulting feature then serves as a reference to instantiate the second 
+Book feature.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATUnicodeString BookStartUpIdentity("CAAFmExtLibBook");
+CATFmStartUpFacade BookStartUpFacade(MyCredential,BookStartUpIdentity);
+
+// 8-2- Instantiates the "CAAFmExtLibBook" StartUp
+CATFmFeatureFacade oFeatFacadeOnBookFromSU(MyCredential);
+rc = <strong>BookStartUpFacade.InstantiateIn(ContFacadeOnAppliCont,oFeatFacadeOnBookFromSU)</strong>;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The steps above output a Feature Facade on a Book feature, instantiated from 
+its StartUp [<a href="#References">3</a>]. It is represented by 
+<code
+>oFeatFacadeOnBookFromSU</code
+>, a <em>CATFmFeatureFacade</em> type.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATUnicodeString BookStartUpIdentity("CAAFmExtLibBook");
+<strong>CATFmStartUpFacade BookStartUpFacade(MyCredential,BookStartUpIdentity)</strong>;
+rc = <strong>oFeatFacadeOnBookFromSU.InstantiateIn(ContFacadeOnAppliCont,AttrValue)</strong>;
+if (FAILED(rc)) return 1;
+CATFmFeatureFacade oFeatFacadeOnBookFromBookFeat(MyCredential,AttrValue);
+</pre>	</td>
+	</tr>
+</table>
+
+<p>Here we instantiate a book feature from an existing feature (that created 
+earlier from the StartUp) [<a href="#References">3</a>]. It is represented by 
+<code
+>oFeatFacadeOnBookFromBookFeat</code
+>, a <em>CATFmFeatureFacade</em> type.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="Copy Feature &amp; Credential"></a>Copy Feature &amp; Credential</h3>
+<p>The operator = copies the feature and the credential.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmFeatureFacade FeatFacadeOnBook1 ;
+FeatFacadeOnBook1 = oFeatFacadeOnBookFromSU.<strong>GetFeature</strong>();
+CATUnicodeString Name ;
+rc = FeatFacadeOnBook1.GetDisplayName(Name);
+if (SUCCEEDED(rc)) return 1;   
+   </pre>	</td>
+	</tr>
+</table>
+<p>In this extract,&nbsp; just above, <code>FeatFacadeOnBook1</code> only contains the 
+feature book. So <code>GetDisplayName</code> fails since this method requires a 
+credential.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmFeatureFacade FeatFacadeOnBook2 ;
+FeatFacadeOnBook2<strong> = </strong>oFeatFacadeOnBookFromSU ;
+rc = FeatFacadeOnBook2.GetDisplayName(Name);
+if (FAILED(rc)) return 1;</pre>
+		</td>
+	</tr>
+</table>
+<p>Now, after the copy, <code>FeatFacadeOnBook1</code> is equal to 
+<code
+>oFeatFacadeOnBookFromSU. </code
+>The operator 
+= copies the feature and its credential. So&nbsp; the <code>GetDisplayName</code> 
+method is successful since 
+<code>oFeatFacadeOnBookFromSU </code>contains credential &amp; feature book <a href="#2">#</a></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3> <a name="CompareFeatureWith method Significance"></a>CompareFeatureWith method Significance</h3>
+<p>This method checks if two facades are bound to the same feature.</p>
+<h4>Returns TRUE, while comparing two 
+Feature Facades bound to the same feature</h4><p>This steps compares two Feature 
+Facades.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmFeatureFacade FeatFacadeOnBookCopy = oFeatFacadeOnBookFromSU;  
+if ( FALSE == FeatFacadeOnBookCopy.CompareFeatureWith(oFeatFacadeOnBookFromSU)) return 1 </pre>	</td>
+	</tr>
+</table>
+
+<p>We create a copy of the book feature (that instantiated from StartUp). The
+<code
+>CompareFeatureWith</code
+> method of the <em>CATFmFeatureFacade</em> class comes in handy here. The copied book 
+feature facade is represented by <code
+>FeatFacadeOnBookCopy</code
+>, a
+<em>CATFmFeatureFacade</em> 
+type.</p>
+<p>Now, the copied feature facade and the source are both bound to the same 
+underlying book feature. We do that comparison with a call to <code
+>CompareFeatureWith</code
+> of the 
+<em>CATFmFeatureFacade</em> class. It returns TRUE, since in the current case, the two 
+feature facades involved are bound to the same feature. </p>
+<table class="Remark"> 
+	<tr> 
+		<td class="remark" style="width: 910px"><span class="run-in">Note</span>: 
+		It is important to note that the CompareFeatureWith while 
+		comparing the two Feature Facades, take into account only the underlying 
+		feature, while ignoring the Credentials involved.</td> </tr> </table>
+		
+	 
+
+<h4>&nbsp;Returns FALSE, while comparing two 
+Feature Facades bound to different features</h4><table class="code">
+	<tr>
+		<td><pre>
+<strong>if ( TRUE == oFeatFacadeOnLibrary.CompareFeatureWith(oFeatFacadeOnBookFromSU)) </strong> return 1;</pre>	</td>
+	</tr>
+</table>
+
+<p>The 
+<code
+>CompareFeatureWith</code
+>&nbsp; method compares two feature facades and returns FALSE, if the two 
+facades are bound to different features. Yet again, the comparison is 
+restricted only to the features on either side, while the Credentials are not 
+taken into account.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="8"></a>Retrieving the feature bound to a Facade</h3>
+<p>A feature is handled either using its Interface or a handler in our CAA code.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATBaseUnknown* poCBUOnBook = NULL;
+rc = <strong>oFeatFacadeOnBookFromSU.QueryInterfaceOnFeature(IID_CATBaseUnknown,(void**)&amp;poCBUOnBook)</strong>;
+if (NULL == poCBUOnBook) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>QueryInterfaceOnFeature() </code
+>on the feature facade retrieves an Interface pointer on the 
+underlying feature. You'll notice the call is similar to <code
+>QueryInterface</code
+>, as far 
+its input arguments are concerned.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+<strong>CATBaseUnknown_var spCBUOnBook = oFeatFacadeOnBookFromSU.GetFeature()</strong>;
+if (NULL_var == spCBUOnBook) return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+<p>Alternately, the bound feature is also retrieved as a handler of the 
+<em>CATBaseUnknown</em> type.&nbsp; The call to <code
+>GetFeature()</code
+> on the feature facade 
+returns the handler to bound feature.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="9"></a>Retrieving the Feature Type</h3>
+<p>The type of a feature is its StartUp name. The&nbsp; feature may be 
+instantiated from its StartUp or from an existing feature, but its type always 
+remains the StartUp name.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+<strong>CATUnicodeString strBookSU("CAAFmExtLibBook")</strong>;
+CATUnicodeString strBookFromSUType;
+rc = <strong>oFeatFacadeOnBookFromSU.GetType(strBookFromSUType)</strong>;
+<strong>i</strong>f (FAILED(rc) || (strBookSU != strBookFromSUType)) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetType()</code
+> of the <em>CATFmFeatureFacade</em> class returns its type, 
+<code
+>strBookFromSUType</code
+>, as a <em>CATUnicodeString</em> type. We call it on the Book feature 
+instantiated from the StartUp (<code
+>oFeatFacadeOnBookFromSU</code
+>). The Book StartUp is 
+&quot;CAAFmExtLibBook&quot;, the name of the StartUp, as it exists in the Catalog define 
+(OSM file)</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATUnicodeString strBookFromFeatType;
+rc = <strong>oFeatFacadeOnBookFromBookFeat.GetType(strBookFromFeatType)</strong>;
+if (FAILED(rc) || (strBookSU != strBookFromFeatType)) return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+<p>We next make a call to <code
+>GetType()</code
+> on the facade over the book feature 
+instantiated from another book feature (<code
+>oFeatFacadeOnBookFromBookFeat</code
+>). The type 
+retrieved is yet again, &quot;CAAFmExtLibBook&quot;.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="10"></a>Retrieving StartUp from a Feature</h3>
+<p>We can directly retrieve from a feature, its StartUp facade. This comes in 
+handy, when we have to reinstantiate a feature from its StartUp, while we do not 
+have the StartUp name. So we may simply retrieve the StartUp facade from a 
+feature, and proceed with the instantiation as we normally do [<a href="#References">3</a>]. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmStartUpFacade oStartUpFacade(MyCredential);
+rc = <strong>oFeatFacadeOnBookFromSU.GetStartUpFacade(oStartUpFacade)</strong>;
+if (FAILED(rc) || (! oStartUpFacade.IsValid() ) || (! BookStartUpFacade.CompareStartUpWith(oStartUpFacade) )) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetStartUpFacade() </code
+>of the <em>CATFmFeatureFacade</em> class, returns the 
+StartUp Facade, a <em>CATFmStartUpFacade</em> type. We retrieve it for the Book feature 
+instantiated from the StartUp. </p>
+<p>Obviously the StartUp facade retrieved should be the same as that used for 
+the instantiation earlier, as far as the bound feature is concerned (ignoring 
+the credentials). The <code>IsValid</code> method comes in handy for this confirmation.</p>
+
+<table class="code"><td><pre>
+CATUnicodeString strRetrievedSUTypeName;
+rc = <strong>oStartUpFacade.GetTypeName(strRetrievedSUTypeName)</strong>;
+if (FAILED(rc)) return 1;
+    
+if (strBookSU != strRetrievedSUTypeName) return 1;
+</pre>
+		<tr><pre>
+oStartUpFacade.Clear();
+rc = oFeatFacadeOnBookFromBookFeat.GetStartUpFacade(oStartUpFacade);
+<strong>if (FAILED(rc) || (!oStartUpFacade) || (BookStartUpFacade != oStartUpFacade)) return 1</strong>;
+
+rc = <strong>oStartUpFacade.GetTypeName(strRetrievedSUTypeName)</strong>;
+if (FAILED(rc)) return 1;
+    
+<strong>if (strBookSU != strRetrievedSUTypeName) return 1</strong>;</pre>
+</tr></td></table>
+<p>Going a step ahead, the call to <code
+>GetTypeName()</code
+> of the
+<em>CATFmStartUpFacade</em> class 
+returns the StartUp name (as defined in the catalog OSM file). So, we 
+additionally confirm that the StartUp name is &quot;CAAFmExtLibBook&quot;.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+oStartUpFacade.Clear();
+rc = <strong>oFeatFacadeOnBookFromBookFeat.GetStartUpFacade(oStartUpFacade)</strong>;
+</pre>
+		</td>
+	</tr>
+</table>
+
+		<p>In the earlier case, we retrieved the StartUp facade from a Book 
+		feature instantiated from its StartUp.&nbsp; For a Book feature 
+		instantiated from another feature, the steps to retrieve the StartUp 
+		facade and to verify its Type name, is the same as before.</p>
+		<script type="text/javascript">insertLinkToTop();</script>
+		
+
+<h3><a name="11"></a>Retrieving Reference of a Feature</h3>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmAttributeValue oAttrValue;
+rc = <strong>oFeatFacadeOnBookFromSU.GetReference(oAttrValue)</strong>;
+if (FAILED(rc)) return 1;
+    
+CATFmFeatureFacade oFeatFacadeOnRef(MyCredential);
+rc = <strong>oAttrValue.GetFeature(oFeatFacadeOnRef)</strong>;
+if (FAILED(rc) || (oFeatFacadeOnRef.<strong>IsValid</strong>())) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetReference()</code
+> of the <em>CATFmFeatureFacade</em> class returns the 
+reference of the feature underlying the facade. It is retrieved as a 
+<em>CATFmAttributeValue</em> type. We retrieve the reference feature from the Attribute 
+Value by calling GetFeature() of the <em>CATFmAttributeValue</em> class&nbsp; [<a href="#References">4</a>]</p>
+<p>It is significant to note here that a feature instantiated from a StartUp has 
+no Reference associated with it. As a result though the call to 
+<code
+>GetReference()</code
+> 
+returns SUCCESS, the reference feature facade retrieved is empty.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+rc = <strong>oFeatFacadeOnBookFromBookFeat.GetReference(oAttrValue)</strong>;
+...
+rc = <strong>oAttrValue.GetFeature(oFeatFacadeOnRef)</strong>;
+f (FAILED(rc) || (! oFeatFacadeOnRef.<strong>CompareFeatureWith</strong>(oFeatFacadeOnBookFromSU) )) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>On similar lines as above, we retrieve the Reference to the Book feature 
+instantiated from another Book feature.&nbsp; The retrieved reference feature 
+facade is the same as the book feature instantiated from the StartUp.<br>
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="12"></a>Retrieving the Feature Container </h3>
+		<p>Feature exist inside Containers. So you can always retrieve from a 
+		feature, the Container it is instantiated within.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmContainerFacade ContFacadeFromFeat(MyCredential);
+rc = <strong>oFeatFacadeOnBookFromBookFeat.GetContainerFacade(ContFacadeFromFeat)</strong>;
+if (FAILED(rc) || (!ContFacadeOnAppliCont.<strong>CompareContainerWith</strong>(ContFacadeFromFeat)) ) return 1; </pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetContainerFacade()</code
+> of the <em>CATFmFeatureFacade</em> class, returns the 
+Container Facade, as a <em>CATFmContainerFacade</em> type. The 
+<code
+>CompareContainerWith</code
+> method comes in handy 
+to confirm that the retrieved Container facade is the same as the one used 
+earlier for Instantiating the features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="13"></a>Retrieve the Feature Parent and Root Parent</h3>
+		<p>A feature can exist aggregated under another feature. In such a case, 
+		the aggregating feature is parent to the aggregated feature. In the 
+		current step we retrieve the parent and the Root Parent of a feature, if 
+		that exists.</p>
+<p>A Parent to a feature is that which immediately aggregates it, while a Root 
+Parent is the feature that is at the very top of this aggregation hierarchy. A 
+Root Parent thus is at the root, meaning it itself does not occur as aggregated 
+under another feature.</p>
+<p>Our Library feature is defined with a component attribute, which allows it to 
+aggregate other features within. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmAttributeName LibBooksAttrName(&quot;LibraryBooks&quot;);
+<strong>oAttrValue.SetFeature(oFeatFacadeOnBookFromSU)</strong>;
+rc = <strong>oFeatFacadeOnLibrary.SetValue(LibBooksAttrName,oAttrValue)</strong>;
+if (FAILED(rc)) return 1;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The Book feature is aggregated under the Library. Valuating the 
+&quot;LibraryBooks&quot; component attribute of the Library feature, realizes this 
+aggregation [<a href="#References">9</a>]. &nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+...
+rc = <strong>oFeatFacadeOnBookFromSU.GetParentFeature(oAttrValue)</strong>;
+if (FAILED(rc)) return 1;
+CATFmFeatureFacade oFeatFacadeOfParent(MyCredential);
+rc = <strong>oAttrValue.GetFeature(oFeatFacadeOfParent)</strong>;
+if (FAILED(rc) || (! oFeatFacadeOfParent.<strong>CompareFeatureWith</strong>(oFeatFacadeOnLibrary) )) return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetParentFeature()</code
+> of the <em>CATFmFeatureFacade</em> class retrieves the 
+feature parent. We confirm the parent to our Book feature, is the Libary 
+feature.&nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td style="height: 72px"><pre>
+...
+rc = <strong>oFeatFacadeOnBookFromSU.GetRootParentFeature(oAttrValue)</strong>;
+if (FAILED(rc)) return 1;
+rc = oAttrValue.GetFeature(oFeatFacadeOfParent);
+if (FAILED(rc) || (! oFeatFacadeOfParent.<strong>CompareFeatureWith</strong>(oFeatFacadeOnLibrary))) return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code
+>GetRootParentFeature()</code
+> of the <em>CATFmFeatureFacade</em> class retrieves 
+the feature root parent. The Root Parent of our Book feature is yet again our 
+Library feature.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h3><a name="15"></a>Confirming methods invoked on a Feature Facade Not Bound to 
+a Valid Feature return FAILURE</h3>
+		<p>A Feature Facade not bound to a valid feature is an invalid facade. 
+		Any method invoked on this facade, returns FAILURE. &nbsp;</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+CATUnicodeString BookDisplayName;
+rc = <strong>oFeatFacadeOnBookFromSU.GetDisplayName(BookDisplayName)</strong>;
+<strong>if (FAILED(rc)) return 1</strong>;
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The <code
+>GetDisplayName()</code
+> call on the Book feature facade returns SUCCESS to begin 
+with, since at this stage, it is bound to a bound book feature.&nbsp;</p>
+<table class="code"><tr><td><pre>
+ <strong>oFeatFacadeOnBookFromSU.Clear()</strong>;&nbsp;</pre>
+</td></tr></table>
+<p>The call to <code
+>Clear()</code
+> on the Book feature facade, dissociates it from the Book 
+feature. Thus now we have an empty Book feature facade.</p>
+<table class="code"><tr><td>
+<pre>
+// 14-3- Illustrate GetValue() call fails 
+CATFmAttributeName AttrKey("Title");
+rc = <strong>oFeatFacadeOnBookFromSU.GetValue(AttrKey,oAttrValue)</strong>;
+<strong>if (SUCCEEDED(rc)) return 1</strong>;</pre></td></tr></table>
+		<p>We introspect the empty feature facade now by retrieving one of its 
+		attribute values [<a href="#References">4</a>]. It returns FAILURE, as 
+		expected.&nbsp;</p>
+<table class="code"><tr><td>
+<pre>
+// 14-4- Illustrate GetDisplayName() call fails 
+rc = <strong>oFeatFacadeOnBookFromSU.GetDisplayName(BookDisplayName)</strong>;
+<strong>if (SUCCEEDED(rc)) return 1</strong>;</pre></td></tr></table>
+
+		<p>The call to <code
+>GetDisplayName()</code
+> on the Book feature facade returns 
+		FAILURE, as expected.&nbsp;</p>
+<table class="code"><tr><td>
+<pre>
+// 14-5- Illustrate QueryInterfaceOnFeature() call fails 
+rc = <strong>oFeatFacadeOnBookFromSU.QueryInterfaceOnFeature(IID_CATBaseUnknown,(void**)&amp;poCBUOnBook)</strong>;
+<strong>if ((SUCCEEDED(rc)) || (NULL!=poCBUOnBook)) return 1</strong>;</pre></td></tr></table>
+
+		<p>The call to <code
+>QueryInterfaceOnFeature()</code
+> on the book feature facade to 
+		retrieve the underlying book feature also FAILS.&nbsp;</p>
+		
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>At last the document is saved and session is closed</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The UC illustrates working with a Feature Facade. Thus, you'll find the UC 
+scenario involves calls to various methods of the <em>CATFmFeatureFacade</em> class thus 
+helping an end user understand the relevance of these calls. </p>
+<p>There are calls to 
+check the validity of a feature facade (<code
+>operator(), operator !()</code
+>), compare two 
+feature facades (<code
+>operator ==, operator !=</code
+>) and retrieve the underlying feature 
+(<code
+>QueryInterfaceOnFeature, GetFeature</code
+>). </p>
+<p>It also calls the methods to retrieve a 
+feature facade type, its Reference, StartUp, Container, Parent and RootParent.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaOsmMigration.htm">Catalog StartUps</a></td>
+	</tr>
+
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAAV5V6FmExtUcInstantiation.htm">Creating Features</a></td>
+	</tr>
+
+		
+	
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAAV5V6FmExtUcSimpleAttr.htm">Accessing Feature Attributes</a></td>
+	</tr>
+
+		
+	
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAAV5V6FmExtUcAggregatedAttr.htm">Setting up an Aggregation 
+		Link</a></td>
+	</tr>
+
+		
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Aug 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

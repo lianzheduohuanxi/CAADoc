@@ -1,0 +1,549 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Instantiating Interactively a User Feature Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Instantiating Interactively a User Feature Reference</h3>
+      <em>Using CATIUdfFactory, CATIUdfInstantiate</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to instantiate a User Feature in an interactive
+      command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMcaUdfAddin Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMcaUdfAddin Do</a></li>
+            <li><a href="#How">How to Launch CAAMcaUdfAddin</a></li>
+            <li><a href="#Where">Where to Find the CAAMcaUdfAddin Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case describes how to instantiate a User Feature named
+&quot;CAAUserFeatureSample&quot; in an interactive command. Two other use cases
+are related to this one. The first, &quot;Creating a User Feature
+Reference&quot; use case [<a href="#References">1</a>] shows how to create this
+User Feature reference. The second, &quot;Instantiating an User Feature
+Reference&quot; use case [<a href="#References">2</a>] details how to
+instantiate it by a batch.</p>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of User Features. See the referenced article [<a href="#References">3</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMcaUdfAddin Use Case</h3>
+<p>CAAMcaUdfAddin is a use case of the CAAMechanicalCommands.edu framework that
+illustrates MechanicalCommands framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMcaUdfAddin Do</h4>
+<p>A new interactive command, called &quot;Create a CAAUdfLoft User
+Feature&quot;, is created and included in an addin of the &quot;Generative Shape
+Design&quot; workbench which contains one toolbar, the &quot;User Feature
+Creation&quot; Toolbar:</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The &quot;</i>Create a CAAUdfLoft user
+    feature&quot; Command<i> in the &quot;User Feature Creation Toolbar</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfToolbar.jpg" width="185" height="101"></td>
+  </tr>
+</table>
+<p>This command creates an instance of the &quot;CAAUserFeatureSample&quot; User
+Feature reference in the current Part document [<a href="#Fig.2">Fig. 2</a>].</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: The </i><i>&quot;</i>CAAUserFeatureSample&quot;
+    <i>User Feature Reference</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfLoftWithType.jpg" width="534" height="392"></td>
+  </tr>
+</table>
+<p>The User Feature reference has two inputs, which are two points. The new
+CATStateCommand created in this sue case allows the end user to select these
+points in order to create a new instance.</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: </i>Creation Command</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfCommand.jpg" width="523" height="550"></td>
+  </tr>
+</table>
+<p>Here is an example of a new User Feature instance,
+&quot;CAAUserFeatureSample.1&quot;, during the process of its creation. The
+first input has been selected (<code>Point.1</code>). When the end user will
+have selected the second point, the OK button will be selectable and the
+creation can be ended.</p>
+<p>The interactive command itself is an instance of the <i>CAAMcaUdfLoftEditCreateCmd</i>
+class. This class can be used in edition mode, when you double click on an
+instance of the User Feature reference, or in creation mode as shown above. The
+&quot;CATIEdit For a User Feature&quot; use case [<a href="#References">4</a>]
+describes this class in used edition mode. In this article you will see how to
+slightly modify this class in order to have a command that can be used in
+creation mode.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMcaUdfAddin</h4>
+<p>To launch the use case, you will need to set up the build time environment,
+then compile CAAMcaUdfAddin and CAAMcaUdfEdit along with their prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">5</a>].</p>
+<p>Before launching CATIA:</p>
+<ul>
+  <li>Remove the # character in the CAAMechanicalCommands.edu.dico in front of
+    the following line:</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>CAAMcaUdfAddin  CATIShapeDesignWorkshopAddin libCAAMcaUdfAddin</pre>
+      </td>
+    </tr>
+  </table>
+  <li>Export the <code>CAAMcaUdfLoftFile</code> environment file to indicate the
+    path of the file which contains the User Feature reference.</li>
+  <table width="460">
+    <tr>
+      <td width="49">Windows</td>
+      <td width="401"><code>InstallRootDirectory\CAAMechanicalCommands.edu\InputData\CAAUdfLoftWithType.CATPart</code></td>
+    </tr>
+    <tr>
+      <td width="49">Unix</td>
+      <td width="401"><code>InstallRootDirectory/CAAMechanicalCommands.edu/InputData/CAAUdfLoftWithType.CATPart</code></td>
+    </tr>
+  </table>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+  CD-ROM is installed.
+</ul>
+<p>Execute the use case by going through the following scenario:</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>Start </b>menu, click <b>Generative Shape Design</b></li>
+  <li>Click the <b>Point</b> Command and create some points.</li>
+  <li>Click the <b>Create a CAAUdfLoft User Feature</b> Command in the <b>User
+    Feature Creation</b> Toolbar</li>
+  <li>The <b>CAAUdfLoft Definition</b> Dialog Box appears</li>
+  <li>Select two points in the specification tree or in the 3D viewer</li>
+  <li>Click <b>OK</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMcaUdfAddin Code</h4>
+<p>The CAAMcaUdfAddin use case is made of several classes located in the
+CAAMcaUdfAddin.m module (for the addin) and in the CAAMcaUdfEdit.m (for the
+command) of the CAAMechanicalCommands.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalCommands.edu\CAAMcaUdfAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory\CAAMechanicalCommands.edu\CAAMcaUdfEdit.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalCommands.edu/CAAMcaUdfAddin.m/</code></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><code>InstallRootDirectory/CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>This section extracts certains methods from the <i>CAAMcaUdfLoftCreateCmd</i>
+class as well as the code from the beginning of the <code>BuildGraph</code>
+method needed to create the User Feature instance. In each method, we only
+explain the specific code for the creation. Refer to the &quot;CATIEdit For a
+User Feature&quot; use case [<a href="#References">4</a>] for more complete
+details.</p>
+<ol>
+  <li><a href="#constructor">Coding a Default Constructor</a></li>
+  <li><a href="#BuildGraph">Modifying the BuildGraph Method</a></li>
+  <li><a href="#CreateFeature">Coding the CreateFeature Method</a></li>
+  <li><a href="#retriuevethe ufref">Coding the RetrieveTheUFRef Method</a></li>
+  <li><a href="#isnatiate">Coding the InstantiateTheUFRef Method</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="constructor"></a>Coding a Default Constructor</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include <b>&quot;CATCreateExternalObject.h&quot;
+CATCreateClass(CAAMcaUdfLoftEditCreateCmd);</b>
+
+CAAMcaUdfLoftEditCreateCmd::CAAMcaUdfLoftEditCreateCmd():
+<b>CATPrtPanelStateCmd</b> (&quot;CAAMcaUdfLoftEditCreateCmd&quot;, 
+                             CATDlgEngOneShot, 
+                             CATCommandModeExclusive,<b>1</b>),
+_pInputDialogBox(NULL),_pAgentErrorDialogBox(NULL),_pFeatureAgent(NULL),_ErrorKey(&quot;NoError&quot;),
+_pErrorDialogBox(NULL),_pFirstPoint(NULL),_pSecondPoint(NULL),_pSelectedPath(NULL)
+{
+   HRESULT rc = <b>InitCommand</b>();
+   if (FAILED(rc) )
+   {
+       _ErrorKey = &quot;InternalError&quot;;
+   }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This class without arguments will be instantiated by the <i>CATStateCommand</i>
+class by its name.This is possible thanks to the <code>CATCreateClass</code>
+macro.</p>
+<p>The <i>CAAMcaUdfLoftEditCreateCmd</i> class derives from the <i>CATPrtPanelStateCmd</i>.
+The last argument is the mode of the command: <code>0</code> for an edition and <code>1</code>
+for a creation.</p>
+<p>The <code>InitCommand</code> creates the &quot;CAAUdfLoft Definition&quot;
+Dialog Box [<a href="#Fig.3">Fig.3</a>] used to display the selected inputs.</p>
+<h4><a name="BuildGraph"></a>Modifying the BuildGraph Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMcaUdfLoftEditCreateCmd::BuildGraph()
+{
+ 
+    if ( 1 == <b>GetMode</b>() &amp;&amp; ( CATString(&quot;NoError&quot;)  == _ErrorKey ) )
+    {
+        <b>CreateFeature</b>();
+    }
+    ...
+}    </pre>
+    </td>
+  </tr>
+</table>
+<p>Before creating the state chart, the user feature must be created ( <code>CreateFeature</code>
+) in creation mode.</p>
+<p><code>GetMode</code>(), is a method of the <i>CATMMUIPanelStateCmd class</i>,
+which is the parent class of the current command. It returns the mode (creation
+or edition) set in the constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CreateFeature"></a>Creating the CreateFeature Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMcaUdfLoftEditCreateCmd::CreateFeature()
+{
+    HRESULT rc = E_FAIL ;
+
+    char * pCAAUdfLoftFile = NULL ;
+    CATLibStatus result = ::<b>CATGetEnvValue</b>(&quot;<b>CAAMcaUdfLoftFile</b>&quot;,&amp;pCAAUdfLoftFile);  
+    if ( (CATLibError == result) || ( NULL == pCAAUdfLoftFile) )
+    {
+       <b>_ErrorKey</b> = &quot;EnvVarNotSet&quot;;
+    }else 
+    {
+       CATDocument * pUdfDocument = NULL ;
+       CATUnicodeString UdfDocumentName = pCAAUdfLoftFile ;
+
+       <b>free</b> (pCAAUdfLoftFile) ;
+       pCAAUdfLoftFile = NULL ;
+
+       HRESULT rc = <b>CATDocumentServices::Open</b>(UdfDocumentName,pUdfDocument);
+ 
+       if ( SUCCEEDED(rc) )
+       {
+          ::<b>CATLockDocument</b>(*pUdfDocument);
+          
+          CATIUdfInstantiate * pIUdf = NULL ;
+          rc = <b>RetrieveTheUFRef</b>(pUdfDocument, &amp;pIUdf);                                
+          if ( SUCCEEDED(rc) )
+          {
+             rc = <b>InstantiateTheUFRef</b>(pIUdf);
+             if (FAILED(rc) )
+             {
+                _ErrorKey = &quot;InternalError&quot;;
+             }
+             pIUdf-&gt;Release();
+             pIUdf = NULL ;
+          } 
+          else _ErrorKey = &quot;UserFeatureReferenceNotFound&quot;;
+    
+          rc = ::<b>CATUnLockDocument</b>(*pUdfDocument) ;
+          pUdfDocument = NULL ;
+          if ( FAILED(rc) ) _ErrorKey = &quot;InternalError&quot;;
+
+       }else _ErrorKey = &quot;FileNoFound&quot;;
+
+    }
+   
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The User Feature reference to be instantiate is saved in the <code>CAAMcaUdfLoftFile</code><b>
+</b>environment variable. In an industrial case, you can retrieve the reference
+from a catalog or thanks to the Open Dialog Box.</p>
+<p>The Part document which contains the reference, referenced by the <code>pUdfDocument
+</code><i>CATDocument</i> pointer, is opened by the <code>Open </code>function
+and immediately locked. It will be unlocked after the instantiation has
+finished, in other words, after the call to the <code>InstantiateTheUFRef</code>
+method.</p>
+<p>Note: The document which contains an instance of a User Feature reference,
+referred to as the &quot;Destination&quot; document, keeps a link on the
+document containing the User Feature reference., named &quot;Reference&quot;
+document. When the &quot;Destination&quot; document is closed, if you have not
+locked the &quot;Reference&quot; document, it will be also closed. However in
+this particular case, the lock is not mandatory, since the
+&quot;Destination&quot; document is the active document which has a longer life
+than the command; this is safer.</p>
+<p>The <code>RetrieveTheUFRef</code> method enables the retrieval of the
+&quot;CAAUserFeatureSample&quot; User Feature reference from <code>pUdfDocument.</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="retriuevethe ufref"></a>Coding the RetrieveTheUFRef Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMcaUdfLoftEditCreateCmd::RetrieveTheUFRef(CATDocument * iUFRefDocument, CATIUdfInstantiate ** oIUdf)
+{
+    HRESULT rc = E_FAIL ;
+
+    <b>CATInit</b> *pInitOnDoc = NULL ;
+    rc = iUFRefDocument-&gt;QueryInterface(IID_CATInit,(void **) &amp;pInitOnDoc);
+    if ( SUCCEEDED(rc) )
+    {
+        <b>CATIPrtContainer</b> * pIPrtCont = NULL ;
+        pIPrtCont = (CATIPrtContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+
+        if ( NULL != pIPrtCont )
+        {
+           <b>CATIUdfFactory</b> *pIUdfFactory = NULL ;
+           rc = pIPrtCont-&gt;QueryInterface(IID_CATIUdfFactory,(void **) &amp;pIUdfFactory);
+           if ( SUCCEEDED(rc) )
+           {
+              CATListValCATISpecObject_var * pListUserFeature = NULL ;
+              pListUserFeature = pIUdfFactory-&gt;<b>GetUserFeatureList</b>();
+
+              if ( NULL != pListUserFeature )
+              {
+                 int i= 1 ;
+                 int nb = pListUserFeature-&gt;Size();
+                 CATBoolean found = FALSE ;
+
+                 rc = E_FAIL ;
+                 while ( (i&lt;= nb) &amp;&amp; ( FALSE == found ) )
+                 {
+                    CATISpecObject_var spCurrentUserFeature = (*pListUserFeature)[i] ;
+                    if ( NULL_var != spCurrentUserFeature )
+                    {
+                       rc = <b>CheckUserFeatureType</b>(spCurrentUserFeature);
+ 
+                       if ( SUCCEEDED(rc) )
+                       {
+                          found = TRUE;
+                          rc = spCurrentUserFeature-&gt;QueryInterface(IID_CATIUdfInstantiate,
+                                                          (void **)oIUdf);
+                       }
+                    }
+                    i++ ;
+                 }
+
+              }else rc = E_FAIL ;
+              
+              pIUdfFactory-&gt;Release();
+              pIUdfFactory = NULL ;
+           }
+           pIPrtCont-&gt;Release();
+           pIPrtCont = NULL ;
+        }else rc = E_FAIL;
+
+        pInitOnDoc-&gt;Release();
+        pInitOnDoc = NULL ;
+    }
+ 
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The list of the User Feature references is given by the <i>CATIUdfFactory</i>
+Interface. This interface is implemented on the <code>CATPrtContainer</code>
+container, <code>pIPrtCont</code>, which is the root container of the Part
+document. In the technical article about User Feature [<a href="#References">3</a>],
+the structure of a Part document is described.</p>
+<p>This list is returned by the <code>GetUserFeatureList</code> method. The code
+loops for as long as the reference has not be found. The <code>CheckUserFeatureType</code>
+method, used to recognized the reference, is described in the edition use case [<a href="#References">4</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="isnatiate"></a>Coding the InstantiateTheUFRef Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMcaUdfLoftEditCreateCmd::InstantiateTheUFRef(CATIUdfInstantiate * iIUdf)
+{
+    HRESULT rc = E_FAIL ;
+                  
+    CATBaseUnknown * pBkunOnMechanicalPart = NULL ;
+
+    CATIPrtPart_var spIPrtPartOnMechanicalPart = <b>GetPart</b>();
+    if ( NULL_var != spIPrtPartOnMechanicalPart )
+    {
+       CATBaseUnknown_var spBkunOnMechanicalPart = spIPrtPartOnMechanicalPart ; 
+       if ( NULL_var !=  spBkunOnMechanicalPart )
+       {
+          pBkunOnMechanicalPart = (CATBaseUnknown *) spBkunOnMechanicalPart ;
+       }
+    }
+   
+    if ( NULL !=  pBkunOnMechanicalPart )
+    {
+       CATPathElement PathInstantiate(pBkunOnMechanicalPart); 
+       CATPathElement * FirstUIactiveObject1 = NULL ;
+       CATBaseUnknown_var FirstDest1 = NULL_var ; 
+
+       rc = iIUdf-&gt;<b>SetDestinationPath</b>(&amp;PathInstantiate,
+                                  FirstUIactiveObject1,
+                                  FirstDest1);
+ 
+       if ( SUCCEEDED(rc) )
+       {
+          rc = iIUdf-&gt;<b>Instantiate</b>(NULL_var);
+
+          if ( SUCCEEDED(rc) )
+          {
+             CATBaseUnknown_var spInstance = NULL_var ;
+             spInstance = iIUdf-&gt;<b>GetInstantiated</b>(iIUdf);
+
+             if ( NULL_var != spInstance )
+             { 
+                 rc = iIUdf-&gt;<b>EndInstantiate</b>();
+
+                 if ( SUCCEEDED(rc) )
+                 {
+                    _MyFeature = spInstance ;
+                 }
+             } else rc = E_FAIL ;
+          }
+       }
+    } 
+            
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The new instantiation will be done in the current Part. The <code>MechanicalPart</code>
+feature of this Part is returned by the <i>GetPart</i> method. This method is
+found in the <i>CATMMUIStateCommand </i>parent of the current class. The <code>MechanicalPart</code>
+implements the <i>CATIUdfInstantiate</i> interface. See the &quot;Instantiating
+a User Feature Reference&quot; use case [<a href="#References">2</a>] or the
+&quot;How to Use the Interfaces&quot; section of the technical article [<a href="#References">3</a>]
+in order to have a description of the main calls for an instantiation:</p>
+<ul>
+  <li><code>SetDestinationPath</code></li>
+  <p>The instantiation is done in a Part document, so the two last arguments are
+  useless</p>
+  <li><code>Instantiate</code></li>
+  <p>The argument is useless.</p>
+  <li><code>GetInstantiated</code></li>
+  <p>This method returns the pointer on the new instance</p>
+  <li><code>EndInstantiate</code></li>
+  <p>The process of instantiation is done.</p>
+</ul>
+<p>Notice that, contrary to the use case [<a href="#References">2</a>] and the
+technical article [<a href="#References">3</a>], the inputs are not valuated.
+This will be done when the end user will have selected two points and clicked on
+the Ok Button of the &quot;CAAUdfLoft Definition&quot; Dialog box [<a href="#Fig.3">Fig.3</a>].
+This valuation will be done through the <i>CATIUdfFeatureInstance</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to instantiate a User Feature reference in
+an interactive command.</p>
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMcaUdfCreation.htm">Creating a User Feature Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMcaUdfInstantiation.htm">Instantiating a User Feature
+      Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">Power
+      Copy and User Feature Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMcaUdfEdit.htm">CATIEdit For an User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

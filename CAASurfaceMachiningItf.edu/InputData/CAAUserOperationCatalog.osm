@@ -1,0 +1,50 @@
+/**
+ * Copyright Dassault Systemes 2012
+ * delmia.osm catalog skeleton
+ * use this skeleton to create Machining catalog
+ */
+// Mission : Generates a catalog with 2 new startups :
+//  1) CAASmgOperation which
+//   - use a user machining feature
+//   - has 3 parameters (CAAStep,CAAToolAngle,CAAApproachDistance)
+//   - has to derivate from the basic activity "MfgUserDefinedMO" 
+//  2) CAASmgOperationWithMA which
+//   - use a machining area (SMG native feature)
+//   - has 1 parameter 
+//   - has to derivate from the basic activity "MfgUserDefinedMO" 
+
+
+document `CAAUserOperationCatalog.CATfct` {
+	
+	container `SPPLibCont` #root #isa(SPPLibCont) #uuid(0ue5f0d896-0000-1a04-500fafee00000004) {
+
+		// User Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
+			Representation="I_CAASmgOperation"		
+			synchronize()
+		    
+			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+			this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,10.)
+			this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)	
+			this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)	
+		}
+		
+		// Second user Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
+			Representation="I_CAASmgOperationWithMA"		
+				
+			synchronize()
+		    
+			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+			this->StrategyParameters->AddStrategyParameter(`Box Offset`,LENGTH,0.0)	
+		}
+	}
+}
+
+// step 0 : CATfctEditorAssistant -create-new-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -using-template delmia
+// step 1 : CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm
+

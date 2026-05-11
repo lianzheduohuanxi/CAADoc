@@ -1,0 +1,204 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Language" content="en-us">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CAA Web Services Overview</title>
+</head>
+<body>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td valign="top">
+            <h1>CAA Web Services Home</h1>
+            </td>
+            <td valign="top">
+            <h2>&nbsp;</h2>
+            </td>
+            <td rowspan="2" align="right" valign="top">
+            <h3><a name="Top"></a>CAA Web Services Overview</h3>
+            <em>General principles of CAA exposition of Web services</em></td>
+        </tr>
+        <tr>
+            <td class="tech" colspan="2">Technical Article</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<table class="abstract">
+    <tbody>
+        <tr>
+            <td>
+            <h3>Abstract</h3>
+            <p>This article describes what are Web Services and what are the general principles of the CAA-exposition of Web services.</p>
+            <ul>
+                <li><a href="#1"><strong>Web Services Overview</strong></a>
+                <ul>
+                    <li><a href="#1.1">WSDL</a></li>
+                    <li><a href="#1.2">Proxies</a></li>
+                    <li><a href="#1.3">UDDI</a></li>
+                </ul>
+                </li>
+                <li><a href="#2"><strong>General Principles of CAA Web Services Exposition</strong></a>
+                <ul>
+                    <li><a href="#2.1">Supported Clients</a></li>
+                    <li><a href="#DocPrinciple">Documentation</a></li>
+                    <li><a href="#2.3">Code Samples</a></li>
+                    <li><a href="#ErrorMgt">Error Management</a></li>
+                    <li><a href="#2.5">ENOVIA Customization</a></li>
+                </ul>
+                </li>
+            </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<h3><a name="1"></a>Web Services Overview</h3>
+<p>Web services are language neutral API which can be remotely accessed over a network through messages. Most of the time, these messages are
+formatted according to the <strong>SOAP</strong> specification [<a href="#References">1</a>] and are conveyed by the standard <strong>HTTP</strong>
+protocol. The functionalities that these systems deliver are described in a platform and language neutral-way using an XML based language called
+<strong>WSDL</strong> (Web Services Description Language). This mechanism enables loose integration of heterogeneous systems.</p>
+<p>Setting up a Web Service architecture usually involves the following fundamental operations:</p>
+<ul>
+    <li><strong>Service Providers</strong> create Web Services. CAA doesn't offer specific tools for developing new Web Services but provides a
+    set of Web Services,</li>
+    <li>Service Providers then publish the services to a <strong>Service Broker</strong>,</li>
+    <li><strong>Service Consumers</strong> find services using the Service broker facilities and then bind to the provider code. Binding and
+    consumption are greatly eased by the use of generated, language-specific objects called <b>proxies</b>.</li>
+</ul>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.1"></a>WSDL</h4>
+<p>WSDL describes, among others information:</p>
+<ul>
+    <li>The <strong>service endpoint URI</strong> (Uniform Resource Identifier) where requests to the service are to be addressed,</li>
+    <li>The list of requests (also called methods or operations) than can be handled by the service and the description of their arguments.</li>
+</ul>
+<p>Argument types are described in <strong>XSD</strong> (XML Schema Definition) format.</p>
+<p>For more information on WSDL, see [<a href="#References">1</a>] and [<a href="#References">2</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.2"></a>UDDI</h4>
+<p>Web Services are located through a service endpoint URI. Knowing this URI is mandatory to be able to use the service. The URI of a Web
+Service can for example be documented, and it can also be retrieved from a directory. The service endpoint URI scheme for CAA Web services is
+documented in [<a href="#References">2</a>].</p>
+<p>UDDI (Universal Description Discovery and Integration) is a standard for a directory technology that describes how Web Services can be
+published and how they can be retrieved using queries. Publish/retrieval are often performed through web based user interfaces or using APIs.
+For retrieval, the use of an API allows an application to dynamically retrieve the locations of the services to consume by querying the UDDI
+registry where they have been previously registered.</p>
+<p>For more information on UDDI, see [<a href="#References">1</a>].</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="1.3"></a>Proxies</h4>
+<p>From the WSDL/XSD description of a service, developers can use off-the-shelf tools to generate a client proxy for their platform and
+programming language.</p>
+<p>This client proxy provides a language friendly way to invoke service methods. It knows how to craft the correct messages and send them to the
+target software system. For example proxies generated for the Java language will be Java interfaces and classes. Invoking a method of the Java
+interface will transparently invoke the corresponding method of the Web Service by marshalling/demarshalling SOAP messages.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="2"></a>General Principles of CAA Exposition of Web Services</h3>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.1"></a>Supported clients</h4>
+<p>As of V5R16, only clients using the <strong>Apache Axis</strong> technology are officially supported for consuming CAA Web services. See [<a
+    href="#References">3</a>] for the precise list of supported levels.</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="DocPrinciple"></a>Documentation</h4>
+<p>API documentation is presented in the familiar javadoc format for simplicity [<a href="#References">4</a>]. It is close from the javadoc
+documentation that could be generated from the Java proxies.</p>
+<p>Beware however, proxies generation may vary from a client technology to the other. An out parameter is for example described as a classic
+Java holder on the type of the parameter, while it could for example be a reference on the parameter type in C++ proxies. Even for proxies
+targeting the same language, generation may slightly vary from a client toolkit to another.</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.3"></a>Code Samples</h4>
+<p>Code samples are generally provided as CAA Java code in a framework/module structure. They rely on Axis proxies that are delivered with the
+samples. The Axis runtime is not delivered with the CAA media and must be obtained separately.</p>
+<p>It is strongly recommended to re-generate the proxies with your own installed tool instead of relying on the delivered version. How to
+generate proxies using Axis is described in details [<a href="#References">3</a>].</p>
+<p>The samples can be built and executed using any Java RADE tool as described for example in [<a href="#References">4</a>].</p>
+<p>They can also be built using the CAA Multi Workspace Application Builder. This requires however to modify the Imakefile.mk of the module
+samples to reference your own installation of the Axis runtime:</p>
+<ul>
+    <li>Remove any LINK_WITH reference to modules starting with &quot;caa-&quot;,</li>
+    <li>Either copy the Axis jars in .mjext CAA modules and add those modules as LINK_WITH references,</li>
+    <li>Or use the LOCAL_WS_LIBS statement to add the Axis jars of your installation to the CLASSPATH:</li>
+</ul>
+<table class="code">
+    <tbody>
+        <tr>
+            <td>LOCAL_WS_LIBS = <AXIS_INSTALLATION>/lib/axis.jar:<AXIS_INSTALLATION>/lib/commons-discovery.jar:<AXIS_INSTALLATION>/lib/commons-logging.jar:<AXIS_INSTALLATION>/lib/jaxrpc.jar:<AXIS_INSTALLATION>/lib/saaj.jar:<AXIS_INSTALLATION>/lib/wsdl4j.jar</td>
+        </tr>
+    </tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<h4><a name="ErrorMgt"></a>Error Management</h4>
+<p>CAA Web Services return a NLS translated status string to the consumer. The status string returned will contain a collection of all messages
+and warnings for the operation.</p>
+<p>In case of a failure, a SOAP fault of type CATServiceException will be returned. The error messages along with any warnings and informational
+messages will be returned in this exception. For Axis Java proxies, this results is a Java exception. Mapping may vary with other Web
+Services client technologies.</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.5"></a>ENOVIA Customization</h4>
+<p>ENOVIA LCA allows to add customer attributes on existing data type. Having those attributes been processed by CAA Web Services requires
+operations described in [<a href="#References">6</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3>In Short</h3>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td valign="top">[1]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm">Web Services Links and Resources</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[2]</td>
+            <td valign="top" align="left"><a href="CAAWSWSDLDefinitions.htm">CAA Web Services and WSDL Definitions</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[3]</td>
+            <td valign="top" align="left"><a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating a Java Client Binding</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[4]</td>
+            <td valign="top" align="left"><a href="../CAAWSQuickRefs/index.html">CAA Web Services API
+            Reference</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[5]</td>
+            <td valign="top" align="left"><a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building and Launching a CAA
+            Web Service Use Case</a></td>
+        </tr>
+        <tr>
+            <td valign="top">[6]</td>
+            <td valign="top" align="left"><a href="#"
+                onclick="javascript:LinkOutOfPreqs('CAAENOVWSTechArticles','Customization.htm'); return false;">Customization</a></td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+        </tr>
+    </tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td valign="top">Version: <strong>1</strong> [Apr 2005]</td>
+            <td valign="top">Document created</td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

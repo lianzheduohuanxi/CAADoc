@@ -1,0 +1,292 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Contextual Menus</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Contextual Menus</h3>
+      <em>How to add items to contextual menus when your command is the current
+      one</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Menus available using the right button of the mouse are called
+      contextual menus because they are created with respect to the object that
+      lies under the mouse. They illustrate the object/action paradigm.
+      Contextual menus can be displayed either when the Select command is
+      active, or with any other command. You can leave the default contextual
+      menu as is, customize it, or create your owns on each of your objects.
+      <ul>
+        <li><a href="#100000"><strong>What Are Contextual Menus?</strong></a></li>
+        <li><a href="#300000"><strong>Contextual Menus with A Dialog Command</strong></a>
+          <ul>
+            <li><a href="#310000">For Objects Implementing a Given Interface</a></li>
+            <li><a href="#320000">For All Objects and the Viewer Background</a></li>
+            <li><a href="#330000">For the Viewer Background Only</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Are Contextual Menus?</h3>
+<p>When you click on an object, a toolbar, or the window background, using the
+right button of the mouse, a menu generally appears. This menu's contents
+depends on the object under the mouse when you right-clicked, and is therefore
+called a contextual menu. Such contextual menus are very handy for the end user
+since they gather and show the commands available for the object, and only
+those, without moving the mouse from the object area to the menu bar or to a
+toolbar. This increases the end user productivity while ensuring that the
+commands presented are applicable to the object. This prevents from dialog
+errors. Contextual menus illustrate the object/action paradigm, since the object
+itself proposes the applicable commands without requiring any knowledge of this
+applicability from the end user.</p>
+<p>This article deals with contextual menus triggered from displayed objects or
+from the background only, and not contextual menus triggered from the status bar
+or the toolbar areas.</p>
+<p>Contextual menus onto an object can be found in any state dialog command. The
+items you add launch member function of the state dialog command class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Contextual Menus with A Dialog Command</h3>
+<p>You can customize contextual menus triggered on any objects, or even when the
+end user right clicks in the viewer background, when your dialog command is the
+active one. We'll take as examples dialog commands with only one state that uses
+a repeatable dialog agent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>For Objects Implementing a Given Interface</h4>
+<p>The command we use as example enables the end user to right click only lines,
+that is object implementing the <em>CAAILine</em> interface. A right click on
+such objects display a contextual menu with three items, concatenated to the items provided by the window, since we use a <i>CATFrmGraphAnd3DWindow</i>
+for the document.</p>
+<table border="0">
+  <tr>
+    <td><img src="images/CAACtxMenu1.jpg"></td>
+    <td>Window's items&nbsp;
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>Contextual menu's items</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Clicking on one of these items displays the start, medium, or end point of
+the line. To display this contextual menu whenever the end user right clicks on
+such an object, the following should be done:
+<ul>
+  <li>Create a selection dialog agent [<a href="#References">1</a>] that is
+    dedicated to selecting objects that implement <i>CAAILine</i></li>
+  <li>Create a state and a self transition [<a href="#References">2</a>] from/to
+    this state triggered by the selection dialog agent valuation and whose
+    action is to create the contextual menu</li>
+  <li>Set callbacks [<a href="#References">3</a>] for each menu item</li>
+</ul>
+<p>Below is the code to write in the <code>BuildGraph</code> method:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <pre>...
+void CAAxxxCmd::BuildGraph()
+{
+  ...
+  _daPathElement = new <strong>CATPathElementAgent</strong>(&quot;SelFirstLine&quot;);
+  _daPathElement-&gt;<strong>AddElementType</strong>(&quot;CAAILine&quot;);
+  _daPathElement-&gt;<strong>SetBehavior</strong>(<strong>CATDlgEngWithContext</strong> | <strong>CATDlgEngRepeat</strong>);
+
+  CATDialogState * stGetEltState = <strong>AddDialogState</strong>(&quot;stGetEltStateId&quot;);
+  stGetEltState-&gt;<strong>AddDialogAgent</strong>(_daPathElement);
+
+  CATDialogTransition * pCntxMenuTransition = <strong>AddTransition</strong>
+           (stGetEltState,
+            stGetEltState,
+            <strong>IsLastModifiedAgentCondition</strong>(_daPathElement), 
+            <strong>Action</strong>((ActionMethod) &amp; CAAAnalysisLogCmd::CreateCntxMenu));
+  ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A <i>CATPathElement</i> instance is created as a data member of the dialog
+command class. It is valued for objects implementing the <em>CAAILine</em>
+interface using the <code>AddElementType</code> method, and when right clicking
+on their representations thanks to the <code>CATDlgEngWithContext</code>
+behavior in the <code>SetBehavior</code> method. The <code>CATDlgEngRepeat</code>
+behavior makes this dialog agent repeatable. The dialog agent is added to the
+appropriate state. The transition loops on this state, and whenever right
+clicking on a object values the dialog agent, the <code>CreateCntxMenu</code>
+method is executed. This method creates the contextual menus and sets a callback
+method for each of its item. A method must correspond to each of these
+callbacks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>For All Objects and the Viewer Background</h4>
+<p>The same command should now react to any object whose representation is right
+clicked. This includes the viewer background. To do this, replace the <code>AddElementType</code>
+method by the <code>AcceptOnNotify</code> method to make the dialog agent match
+any right click, and remove the <code>CATDlgEngWithContext</code> behavior from
+the <code>AddElementType</code> method. The rest of the method is unchanged.</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <pre>void CAAxxxCmd::BuildGraph()
+{
+  _daPathElement = new <strong>CATPathElementAgent</strong>(&quot;SelFirstLine&quot;);
+  _daPathElement-&gt;<strong>AcceptOnNotify</strong>(NULL, &quot;CATContext&quot;);
+  _daPathElement-&gt;<strong>SetBehavior</strong>(<strong>CATDlgEngRepeat</strong>);
+
+  CATDialogState * stGetEltState = <strong>AddDialogState</strong>(&quot;stGetEltStateId&quot;);
+  stGetEltState-&gt;<strong>AddDialogAgent</strong>(_daPathElement);
+
+  CATDialogTransition * pCntxMenuTransition = <strong>AddTransition</strong>
+           (stGetEltState,        // From state
+            stGetEltState,        // To state
+            <strong>IsLastModifiedAgentCondition</strong>(_daPathElement), 
+            <strong>Action</strong>((ActionMethod) &amp; CAAAnalysisLogCmd::CreateCntxMenu));
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>For the Viewer Background Only</h4>
+<p>Another command should now only react to a right click in the viewer
+background. It proposes the following contextual menu.</p>
+<p><img src="images/CAACtxMenu2.jpg" alt="CAACtxMenu2.jpg (2845 bytes)" width="94" height="123"></p>
+<p>Clicking one of these items highlights the corresponding objects of the
+document. Below is the code to write in the <code>BuildGraph</code> method:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <pre>
+...
+void CAAAnalysisEltTypeCmd::BuildGraph()
+{
+  ...
+  _daPathElement = new <strong>CATPathElementAgent</strong>(&quot;pathelt&quot;);
+  _daPathElement-&gt;<strong>SetBehavior</strong>( CATDlgEngWithContext | CATDlgEngRepeat );
+
+  _daDialog = new <strong>CATDialogAgent</strong>(&quot;dialoagent&quot;);
+  _daDialog-&gt;<strong>SetBehavior</strong>(CATDlgEngRepeat);
+  _daDialog-&gt;<strong>AcceptOnNotify</strong>(NULL, &quot;CATContext&quot;);
+
+  CATDialogState *stBackGroundState = <strong>AddDialogState</strong>(&quot;stBackGroundState&quot;);
+  stBackGroundState-&gt;<strong>AddDialogAgent</strong>(_daPathElement);
+  stBackGroundState-&gt;<strong>AddDialogAgent</strong>(_daDialog);
+
+  CATDialogTransition * pCntxMenuTransition = <strong>AddTransition</strong>
+           (stBackGroundState,
+            stBackGroundState,
+            <strong>IsOutputSetCondition</strong>(_daDialog), 
+            <strong>Action</strong>((ActionMethod) &amp; CAAAnalysisEltTypeCmd::CreateCntxMenu));
+  ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Two dialog agents are needed: a <i>CATPathElementAgent</i> instance to catch
+all right clicks on any object representation, and a <i>CATDialogAgent</i> to
+catch remaining right clicks in the viewer background. These two dialog agents
+have the same behavior, that is react on right clicks with <code>CATDlgEngWithContext</code>
+for the path element agent, and with the <code>AcceptOnNotify</code> method for
+the dialog agent, and are repeatable with <code>CATDlgEngRepeat</code>. Only the
+last dialog agent is valued using the <code>AcceptOnNotify</code> method. The
+two dialog agents are added to the dialog state in the appropriate order to let
+the path element agent filter right clicks on any object representation for the
+dialog agent. The transition is triggered only for the <i>CATDialogAgent</i>
+instance. As an alternative, rather than using <code>IsLastModifiedAgentCondition</code>
+in the <code>AddTransition</code> method, you can use <code>IsOutPutSetCondition</code>
+and recycle the dialog agent in the <code>CreateCtxMenu</code> method, as it is
+done here. The transition loops on this state, and whenever right clicking on a
+object matches the dialog agent, the <code>CreateCntxMenu</code> method is
+executed. This method creates the contextual menus and sets a callback method
+for each of its item. A method must correspond to each of these callbacks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Contextual menus can be set onto objects by any dialog command. They can be
+set onto objects implementing a given interface, onto all objects including the
+viewer background, and onto the bakground only, thanks to dialog agents
+filtering the notifications sent by the mouse right click.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADegGraph.htm#510000">Managing Selection</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADegGraph.htm">Implementing the Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgCallbacks.htm">Using
+      Callbacks to Trigger Actions</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

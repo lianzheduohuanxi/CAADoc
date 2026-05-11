@@ -1,0 +1,88 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAPriPatternDescription.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre><font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Changes pattern description</font>
+<font color="#008000">'   Assumptions:   Looks for CAAPriChangePattern.htm in the DocView   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R14</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">Dim </font>oPartDocument<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">Dim </font>oPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">Dim </font>InputObjectType(0)<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>oStatus<font color="#0000FF"> as </font>String
+<font color="#0000FF">Dim </font>oCircularPattern<font color="#0000FF"> as </font>CircPattern
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part document</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oPartDocument = CATIA.ActiveDocument
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oPart = oPartDocument.Part
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the selection</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oSelection = oPartDocument.Selection
+<font color="#008000">' ------------</font>
+<font color="#008000">' Set the selection type</font>
+<font color="#008000">' ------------</font>
+InputObjectType(0) = &quot;CircPattern&quot;
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the status</font>
+<font color="#008000">' ------------</font>
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a circular pattern&quot;, True )
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the object in the selection</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oCircularPattern = oSelection.Item(1).Value
+<font color="#008000">' ------------</font>
+<font color="#008000">' Set the circular pattern instance number</font>
+<font color="#008000">' ------------</font>
+oCircularPattern.AngularRepartition.InstancesCount.Value = 6
+<font color="#008000">' ------------</font>
+<font color="#008000">' Set the circular pattern instance as Unequal Angular Spacing mode</font>
+<font color="#008000">' ------------</font>
+oCircularPattern.CircularPatternParameters = catUnequalAngularSpacing
+oCircularPattern.SetUnequalStep 6
+<font color="#008000">' ------------</font>
+<font color="#008000">' Set the circular pattern Unequal Angular Spacing</font>
+<font color="#008000">' ------------</font>
+oCircularPattern.SetInstanceAngularSpacing 2, 30.000000
+oCircularPattern.SetInstanceAngularSpacing 3, 75.000000
+oCircularPattern.SetInstanceAngularSpacing 4, 75.000000
+oCircularPattern.SetInstanceAngularSpacing 5, 30.000000
+oCircularPattern.SetInstanceAngularSpacing 6, 75.000000
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+
+
+<font color="#0000FF">End Sub</font>
+
+</pre>
+
+</body>
+
+</html>

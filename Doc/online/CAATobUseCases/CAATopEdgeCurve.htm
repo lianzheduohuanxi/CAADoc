@@ -1,0 +1,338 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Scanning an Edge Curve</title>
+ <style type="text/css">
+.style1 {
+	color: #008000;
+}
+</style>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Geometric Modeler</h1>
+     </td>
+     <td valign="top">
+     <h2>Topology</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>  Scanning an Edge Curve  </h3>
+     <p><em>How to Use the CATEdgeCurveIterator Operator</em>
+			</td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+		<p>Between the topology and the geometry, there are intermediate objects 
+		that are used by the geometric modeler to group objects with similar 
+		function. Such objects are created to join various pieces of geometry 
+		before covering them by topology. Given two <span lang="fr">faces</span> 
+		with a common <span lang="fr">edge</span>, the edge curve is the object 
+		which is buil<span lang="fr">t</span> from the two Pcurves defining the 
+		common side. The CATEdge topological object is then created from this 
+		edge curve. <span lang="fr">In short, this is the way an edge (a 
+		topological object) is constructed from the geometry. In this use case,&nbsp; 
+		no edge and no topology is created, this is the opposite which is done. 
+		From the topology (an edge), the underlying geometry is retrieved and 
+		analyzed.</span></p>
+		
+		</font>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAATopEdgeCurve   Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAATopEdgeCurve Do?</a></li>
+         <li><a href="#How">How to Launch CAATopEdgeCurve   </a></li>
+         <li><a href="#Where">Where to Find the CAATopEdgeCurve   Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn">What You Will Learn With This Use Case</a></h3>
+ <p>This use case is intended to make you
+	understand how an edge curve is constructed and how to use the <em>CATEdgeCurveIterator </em>
+			operator to scan an edge curve.</p>
+<h5><span lang="fr">About the Edge Curve ?</span></h5>
+<p><span lang="fr">An</span> edge curve is an aggregation of <span lang="fr">
+several</span> curves. <span lang="fr">The curves aggregated are the curves 
+which define the boundaries of the adjacent faces. They can be of various type: 
+CATPNurbs, CATLine or even CATEdgeCurve. </span>Among the aggregated curves, 
+there is one which is used as a reference to determine the orientation of the 
+edge curve and if needed reparameterize the other curve, this is the
+<span lang="fr">&quot;</span>ref curve<span lang="fr">&quot;</span>. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+<p>&nbsp;EDGE CURVE ORIENTATION / &#8220;REF CURVE&#8221; ORIENTATION = 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+<table style="width: 100%">
+	<tr>
+		<td style="width: 628px" valign="top">
+<p>The <span lang="fr">&quot;</span>ref curve<span lang="fr">&quot;</span> is: </p>
+		<ol>
+			<li>Either the first canonical curve (HasMathCurve returns non NULL)
+			</li>
+			<li>or the first curve which is neither a CATPCurve nor a 
+			CATEdgeCurve </li>
+			<li>or the first curve.&nbsp; </li>
+		</ol>
+		<p>There are three kinds of edge curve: </p>
+		<ol>
+			<li>The CATIntCurve which results from the intersection of surfaces. CAA 
+developers are not allowed to create directly such edge curves </li>
+			<li>The CATSimCurve which is created from curves which have a linear 
+parameterization </li>
+			<li>The CATMergedCurve type which is created for curves which do not have a 
+linear parameterization. By default, some operators create a CATMergedCurve even 
+if the underlying curves have a linear parameterization. This is to adjust to 
+any case of input geometry. </li>
+		</ol>
+		<p><span lang="fr">To manipulate an edge curve, you must:</span></p>
+		<ol>
+			<li>retrieve the edge curve from <span lang="fr">the 
+			corresponding </span>edge  by using </span>&nbsp;CATEdge::GetCurve
+			</li>
+			<li><span lang="fr">if need be, </span>retrieve the &#8220;ref curve&#8221; from 
+			an edge curve <span lang="fr">by using</span>&nbsp;&nbsp; CATEdgeCurve::GetRefCurve
+			</li>
+			<li>retrieve the CATCurve making up the edge curve  
+			by using the </span>CATEdgeCurveIterator <span lang="fr">operator.</span></li>
+		</ol>
+		</td>
+		<td style="width: 222px">
+		<img alt="" src="images/pCurve.gif" width="244" height="441"></td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAATopEdgeCurve   Use Case</h3>
+ <p>CAATopEdgeCurve is a use case of the CAATopologicalObjects.edu framework 
+ that illustrates the NewTopologicalObjects framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAATopEdgeCurve   Do?</h4>
+ <p>The CAATopEdgeCurve   use case:</p>
+ <ul>
+   <li>loads the container and retrieves the  edge to be scanned  </li>
+   <li> retrieves the edge curve from to edge to be analyzed  <span lang="fr">
+	and scans this edge curve</span></li>
+   <li> writes the model and closes the factory. Note that, in 
+	this use case the output model is the same as the input model.  </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How">How to Launch CAATopEdgeCurve</a>   </h4>
+ <p>To launch CAATopEdgeCurve   , you will need to set up the build time 
+ environment, then compile CAATopEdgeCurve.m along with its prerequisites, 
+ set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <font face="Helv" size="2" color="#000000"></font>
+ <font face="Courier New" size="2" color="#000000">
+ <p>With Windows CAATopEdgeCurve   <code>e:\edgeCurve1.NCGM</code></p>
+ <p>With UNIX 
+ <font face="Courier New" size="2" color="#000000">
+ CAATopEdgeCurve  
+ </font><code>/u/</code><font face="Courier New" size="2" color="#000000"><code>edgeCurve1.NCGM</code></font></p>
+ </font><font color="#000000" face="Times New Roman">
+ <p>where </font>
+ <font face="Courier New" size="2" color="#000000">
+ <code> edgeCurve1</code></font>.NCGM is 
+	an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData 
+	file.
+ </font></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>WWhere to Find the CAATopEdgeCurve
+	  Code</h4>
+ <p>The CAATopEdgeCurve use case is made of a main named CAAEdgeCurve.cpp located in the CAATopEdgeCurve.m module of the 
+ CAATopologicalObjects.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAATopologicalObjects.edu\CAATopEdgeCurve.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAATopologicalObjects.edu/CAATopEdgeCurve.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step">Step-by-Step</a></h3>
+ <p>There are  three   main steps in CAATopEdgeCurve.cpp: </p>
+ <ol>
+   <li><a href="#Creates the Geometry Factory">Loading the container and 
+   retrieving the edge to be scanned</a></li>
+   <li><a href="#Analyzing">Analyzing the edge contents</li>
+    <li><a href="#Writes the Model and Closes the Factory">Writing the 
+	model and closing the 
+	factory</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creates the Geometry Factory">Loading the <span lang="fr">C</span>ontainer and 
+ <span lang="fr">R</span>etrieving the <span lang="fr">B</span>ody to be 
+	<span lang="fr">C</span>hecked</a></h4>
+ <p>The geometry factory (CATGeoFactory) creates and manages all the 
+ CATICGMObject (and the curves and surfaces in particular). In this use case, 
+ the factory is defined by reading a NCGM file that was previously stored,&nbsp; 
+ the global function <code>::CATLoadCGMContainer</code> must be used to retrieve 
+ the factory. The  edge   is retrieved by using the CATICGMContainer::FindObjectFromTag method. 
+	1857 is the edge tag.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);...
+CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag( 1857  ); </pre>
+     </td>
+   </tr>
+ </table>
+  Here is the input model. The edge to be analyzed is highlighted.<br>
+  
+ <br>
+ <img alt="edge curve" longdesc="edge curve" src="images/edgecurve.gif" width="297" height="228"><p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Analyzing">Analyzing the Edge Contents</a></h4>
+ <p> <span lang="fr">There are three steps:</span></p>
+<ol>
+	<li><span lang="fr">retrieve the edge curve</span></li>
+	<li><span lang="fr">retrieve the &quot;ref curve&quot; from the edge curve</span></li>
+	<li><span lang="fr">scan the edge curve</span>  &nbsp;</li>
+</ol>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>         </span><span class="style1">// (a) - retrieve the edge curve from the edge
+</span>	<span lang="fr" class="style1">...</span>
+	CATEdgeCurve * pEdgeCurve = piEdge->GetCurve(&OriECrvVsEdge );
+	<span class="style1">//
+    </span><span lang="fr" class="style1">    </span><span class="style1">// (b) - retrieve the "ref curve"
+	//</span>
+	CATCurve * RefCurve = pEdgeCurve->GetRefCurve();<span lang="fr" class="style1"> 
+	...</span>
+        </span><span class="style1">//</span>
+        </span><span class="style1">// (c) - scans the edge curve
+	//       In this particular case, the scanned edge curve embeddes
+	//       two edge curves. 
+	//               !----------- Simcurve 393 
+    </span><span lang="fr" class="style1">    </span><span class="style1">//               !                    !--------- PLine 385
+	//               !                    !--------- PLine 386
+	//               !----------- Intcurve 1843
+    </span><span lang="fr" class="style1">    </span><span class="style1">//               !                    !--------- PLine 1841
+	//               !                    !--------- PLine 1842
+	//       SetLeafScan(1) returns the four PLines. 
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                               385
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                               386
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                              1841
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                              1842
+    </span><span lang="fr" class="style1">    </span><span class="style1">//       SetLeafScan(0) returns all the curves (the edge curve itself + sub edge curves + Pcurves).
+	//                                              1858
+	//                                               393
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                               385
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                               386
+	//                                              1843
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                              1841
+    </span><span lang="fr" class="style1">    </span><span class="style1">//                                              1842</span>
+	<span lang="fr">...</span>
+	CATEdgeCurveIterator Iterator(pEdgeCurve);  <span class="style1"> // create the iterator</span>
+	Iterator.SetLeafScan(0);                     
+	Iterator.SetRepetitions(0);
+	...  </pre>
+     </td>
+   </tr>
+ </table>
+ The edge cu<span lang="fr">r</span>ve which is scanned is itself made up of
+<span lang="fr">two edge curves. If you need to retrieve only the underlying 
+CATCurves and not the possible edge curves which are making up the initial edge 
+curve, you can specify the 1 option in SetLeafScan, otherwise you get all the 
+objects at all levels under the edge curve.</span><p align="right">[<a href="#Top">Top</a>] </p>
+<h4><a name="Writes the Model and Closes the Factory">Writing the Model and
+Closing the Factory</a></h4>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>::CATCloseCGMContainer</code>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <font color="#008000"><em>//
+ // Close the container
+ //</em>	</font>
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<br>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References">References</a></h3>
+ <table width="100%">
+   <tr>
+     <td>[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   </table>
+ <table width="100%">
+   <tr>
+     <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong>  [Jan   200 9  ]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 200 9  , Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

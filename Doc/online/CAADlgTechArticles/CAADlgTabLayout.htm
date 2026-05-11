@@ -1,0 +1,727 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Arranging Dialog Objects Using Tabulations</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Arranging Dialog Objects Using Tabulations</h3>
+      <em>How to manage the dialog object with the tabulation layout</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+    <p>Arranging dialog objects in a dialog window, a dialog box, a frame or a
+    tab page, that is a container, consists in positionning each object at a
+    given place with respect to the others [<a href="#References">1</a>]. The
+    container layout will then not changed when the dialog window is resized.
+    The dialog objects can be precisely arranged in their respective containers
+    using tabulations attached to the container.<ul>
+      <li><a href="#300000"><strong>Object Default Layout</strong></a> </li>
+      <li><a href="#500000"><strong>Tabulation Layout</strong></a> <ul>
+          <li><a href="#510000"><strong>Tabulation Lines</strong></a></li>
+          <li><a href="#520000"><strong>Attaching Containers and Controls along Tabulation Lines</strong></a></li>
+          <li><a href="#530000"><strong>Allowing for Container Resize</strong></a></li>
+          <li><a href="#540000"><strong>Creating Tabulation Lines and Attaching Objects Along Them</strong></a>
+            <ul>
+              <li><a href="#541000"><strong>Using Implicit Tabulation Lines</strong></a></li>
+              <li><a href="#542000"><strong>Using Explicit Tabulation Lines</strong></a></li>
+              <li><a href="#543000"><strong>A Window Layout Example</strong></a></li>
+            </ul>
+          </li>
+          <li><a href="#550000"><strong>Changing Attached Objects and Attachments</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#600000"><strong>The Object Container Tabulation Layout Specific Programming
+        Tasks</strong></a></li>
+      <li><a href="#InShort"><strong>In Short</strong></a></li>
+      <li><a href="#References"><strong>References</strong></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="300000"></a>Object Default Layout</h3>
+
+<p>By default, each object you create has its own size which depends on its contents.
+Let's take the example of a dialog window that derives from the CATDlgDialog class, and
+that contains a combo, a push button, a spinner, and a check button.</p>
+
+<table>
+  <tr>
+    <td><img src="images/CATDlgHorizontalLayout.jpg" width="284" height="159" alt="CATDlgHorizontalLayout.jpg (11122 bytes)"></td>
+    <td>These controls are arranged horizontally side by side in their instantiation order and
+    attached by their top side to an implicit horizontal tabulation line if nothing particular
+    is specified since the <code>SetDefaultOrientation(Horizontal)</code> method is the
+    default for any container.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CATDlgVerticalLayout.jpg" width="183" height="219" alt="CATDlgVerticalLayout.jpg (10034 bytes)"></td>
+    <td>If you insert the method <code>SetDefaultOrientation(Vertical)</code>for the
+    container, your objects are then arranged vertically and attached by their left side to an
+    implicit vertical tabulation line.</td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="500000"></a>Tabulation Layout</h3>
+
+<p>It is based on tabulation lines along which you can attach the sides of the containers
+and objects. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="510000"></a>Tabulation Lines</h4>
+
+<p>To arrange complex windows, and also to help for resizing such windows, we will use
+tabulation lines. These are horizontal or vertical lines located in a container. <img src="images/dialoaa6.gif" width="539" height="333"> </p>
+
+<p>They are used to attach objects using their sides. Attachments are ordered as follows: 
+
+<ul>
+  <li>Horizontal tabulation lines are ordered from top to bottom </li>
+  <li>Vertical tabulation lines are ordered from left to right </li>
+</ul>
+
+<p>Tabulation lines are identified using an integer number which grows, not necessarily
+continuously, from left to right for vertical tabulation lines and from top to bottom for
+horizontal tabulation lines. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="520000"></a>Attaching Containers and Controls along Tabulation Lines</h4>
+
+<p>You can attach containers and controls along tabulation lines as shown in this diagram:
+<img src="images/dialoaa7.gif" width="556" height="324"> </p>
+
+<p>The way the object is attached, referred to below as the attachment mode, along the
+tabulation line can be: 
+
+<ul>
+  <li>for a horizontal tabulation line: Top, Center or Bottom </li>
+  <li>for a vertical tabulation line: Left, Center or Right. </li>
+</ul>
+
+<p>When you create tabulations lines, you assign them an integer number. Vertical
+tabulation lines are positioned from left to right in the increasing order of their
+numbers. Horizontal tabulation lines are positioned from top to bottom, also in the
+increasing order of their numbers. </p>
+
+<p>A given tabulation line can accommodate any number of containers and controls, but all
+with the same attachment mode. In the same way you can not attach the same container or
+control with the same attachment mode to two different vertical tabulation lines (or to
+two different horizontal tabulation lines). </p>
+
+<p>For each tabulation line, objects are laid out from top to bottom for vertical
+tabulation lines, and from left to right for horizontal tabulation lines, in the order
+they are listed in the method creating the tabulation line, with the methods
+SetVerticalAttachment and SetHorizontalAttachment. </p>
+
+<p>The space between two tabulation lines is determined by the largest object located
+between them. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="530000"></a>Allowing for Container Resize</h4>
+
+<p>You can request that, when the user resizes a window, the different objects remain at
+their location, and that containers, if any, remain at the same size, or you can request
+that some or all the object locations and container sizes change according to the window
+resize. </p>
+
+<p>This is made possible thanks to the tabulation lines which can be set fixed or movable.
+Everything happens as if a given tabulation line is attached to the preceding one. A fixed
+tabulation line is attached with a rigid link to the preceding tabulation line, while a
+movable is attached with a spring link. </p>
+
+<p><img src="images/dialoaa8.gif" width="474" height="293"> </p>
+
+<p>Suppose now that the user resizes the window defined above by dragging the lower right
+corner according to the arrow direction. The size of the window increases of W
+horizontally and H vertically. The result is shown below: <img src="images/dialoaa9.gif" width="545" height="299"> </p>
+
+<p>The space between the horizontal tabulations 1 and 2 remains constant, since they are
+both fixed, but the movable horizontal tabulation 3 shifts of H towards the bottom. In the
+same way, the vertical tabulation 2 shifts of W/2 to the right with respect to tabulation
+1, and the space between tabulation 1 and 2 increases of W/2. The vertical tabulation 3
+shifts of W/2 to the right with respect to tabulation 2. The space between tabulation 2
+and 3 also increases of W/2. Even if tabulation 4 shifts of W, the space between
+tabulations 3 and 4 remains constant since tabulation 4 is fixed. </p>
+
+<p>In the same way, if the user drags in such a way that the window size decreases, the
+fixed tabulations stay at the same distance from their preceding tabulation while the
+movable tabulations bring closer to their preceding one. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="540000">Creating Tabulation Lines and Attaching Objects Along Them</a></h4>
+
+<p>To create tabulation lines and attachment modes, you can use the methods <code>Attach4Sides</code>,
+<code>SetVerticalAttachment</code>, and <code>SetHorizontalAttachment</code>. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h5><a name="541000"></a>Using Implicit Tabulation Lines</h5>
+
+<p>The <code>Attach4Sides</code> method is used to insert one object in a container. If
+you intend to use this method for a given container, you must use it for all the objects
+of this container. Objects are laid out horizontally and attached left and top to fixed
+tabulation lines and right and bottom to movable tabulation lines. You do not explicitly
+declare these tabulation lines.This makes the container and the objects it contains
+resizable. Use this method as follows: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Container-&gt;Attach4Sides(PushButton);
+Container-&gt;Attach4Sides(Spinner);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>where <code>Container</code> is a pointer to a container instance, which contains two
+controls: <code>PushButton</code> and <code>Spinner</code> which are pointers to a push
+button instance and a spinner instance respectively. </p>
+
+<p>For example, the following container, instance of the class CATDlgWindow <img src="images/dialaa10.gif" width="483" height="305"> </p>
+
+<p>contains a spinner, a vertical slider, an editor, and a tabcontainer. It is coded as
+follows: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>...                       // instantiate the objects
+Slider  = new CATDlgSlider(this, &quot;Sl&quot;, CATDlgCtrVertical);
+TabContainer = new CATDlgTabContainer(this, &quot;TC&quot;);
+Editor  = new CATDlgEditor(this, &quot;E&quot;);
+Spinner = new CATDlgSpinner(this, &quot;Sp&quot;);
+...
+Attach4Sides(Spinner);          // lay them out
+Attach4Sides(Slider);           // horizontally in that
+Attach4Sides(Editor);           // order
+Attach4Sides(TabContainer);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>This container is fully resizable and each container or object contained herein is
+resized in width and height proportionally to its initial size with respect to the
+container resize. For example, below is a snapshot of the same container after a resize
+which increases its width and reduces its height. <img src="images/dialaa11.gif" width="625" height="93"> </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h5><a name="542000"></a>Using Explicit Tabulation Lines</h5>
+
+<p>The methods <code>SetVerticalAttachment</code> and <code>SetHorizontalAttachment</code>
+are the two methods available to create vertical and horizontal tabulation lines
+respectively. Use them to define: 
+
+<ul>
+  <li>the tabulation line using the integer which identifies it </li>
+  <li>the attachment mode </li>
+  <li>the objects attached and their order. </li>
+</ul>
+
+<p>They are to be applied to containers. For example: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Container-&gt;SetVerticalAttachment(5, CATDlgTopOrLeft,
+              Frame, PushButton, Editor, NULL);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>creates a vertical tabulation line in <code>Container</code>, a pointer to a container
+instance, with <code>5</code> as vertical tabulation line number, <code>CATDlgTopOrLeft</code>
+as attachment mode, and lays out from top to bottom along this vertical tabulation line <code>Frame</code>,
+<code>PushButton</code> and <code>Editor</code>, which are pointers to a frame instance, a
+push button instance and an editor instance respectively. Note that three keywords only
+accommodate the five possible attachment modes: <code>CATDlgTopOrLeft</code> for top and
+left, <code>CATDlgCenter</code> for center and <code>CATDlgRightOrBottom</code> for right
+and bottom. Movable tabulation lines are declared using the same keywords suffixed by <code>Relative</code>.
+</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h5><a name="543000"></a>A Window Layout Example</h5>
+
+<p>The following example fully illustrates how to layout many objects in a window or a
+container. The main container is a CATDlgWindow instance which contains containers and
+controls. </p>
+
+<p>Below is an example of such a window, showing the tabulation lines. The text printed in
+each container or control is the identifier of its pointer in the code sample below,
+otherwise this pointer identifier is labelled in the figure: <img src="images/dialaa12.gif" width="691" height="560"> </p>
+
+<p>Tabulation lines are always declared, for a given container, from left to right for
+horizontal tabulation lines (0 and 1 in the figure) and from top to bottom for vertical
+ones (0, 1, and 2 in the figure). Note that each container contained in the window, that
+is Frame1, Frame2, and TabContainer, has implicit tabulation lines, one vertical and one
+horizontal. The controls located in these containers are laid out horizontally from left
+to right by default along the horizontal tabulation lines. </p>
+
+<p>The size of each container or control is determined using its actual contents. The
+largest sizes are used to place tabulation lines. For example, TabContainer has the
+largest width among the objects attached along the vertical tabulation line \xb0 0 and
+thus this width determines the space allocated between the vertical tabulation lines 0 and
+1. Space remain available beside Frame1, Slider and Spinner. </p>
+
+<p>The code to achieve that is as follows: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>int n = 0;
+SetVerticalAttachment(n, CATDlgTopOrLeft,       // 2 vertical
+  Frame1, Slider, Spinner, TabContainer, NULL); // tabulation lines
+n += 1;
+SetVerticalAttachment(n, CATDlgTopOrLeft,
+   Combo, Frame2, PB, NULL);
+n = 0;                                          // reset not required
+SetHorizontalAttachment(n, CATDlgTopOrLeft,     // 3 horizontal
+   Frame1, Combo, NULL);                        // tabulation lines
+n += 1;
+SetHorizontalAttachment(n, CATDlgTopOrLeft,
+   Slider, Frame2, NULL);
+n += 1;
+SetHorizontalAttachment(n, CATDlgTopOrLeft,
+   TabContainer, PB, NULL);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>Note that neither the radio buttons nor the check buttons appear as parameters in these
+methods which apply to the main container. As we said previously, they are arranged
+horizontally by default in their respective containers Frame1 and Frame2. Note also that
+the TabContainer layout can not be customized, even if it uses tabulation lines. </p>
+
+<p>As a variant, we could have chosen to set some attachment modes to CATDlgCenter. For
+example, choosing CATDlgCenter to the horizontal tabulation line 2 and to the vertical
+tabulation line 1 gives the following result: <img src="images/dialaa13.gif" width="573" height="561"> </p>
+
+<p>Combo, Frame2 and PB are horizontally centered with respect to the vertical tabulation
+line 1. In fact, Frame2 has not moved compared with the previous layout, since this
+container is the largest object and determines the space allocated horizontally for this
+part of the window. Remind that the size of Frame2 is depends on the texts for each check
+button. Note that PB, the push button labelled Apply, is centered in an area which seems
+too big for it, this area being sized by its neighbors. </p>
+
+<p>The attachment mode CATDlgRightOrBottom can also be chosen to attach containers and
+controls. In the following figure, the vertical tabulation line 0 has a CATDlgTopOrLeft
+attachment mode, while the vertical tabulation line 1 has a CATDlgRightOrBottom attachment
+mode.</p>
+
+<p><img src="images/dialaa14.gif" width="459" height="532"> </p>
+
+<p>This window is a bit narrower, since space is better used. A Window Resize Example</p>
+
+<p>What happens if the user resizes the window, for example extends it by dragging its
+lower right corner. The figure below shows the result when applying such a resize to our
+window. <img src="images/dialaa15.gif" width="542" height="574"> </p>
+
+<p>Empty space fills in areas between the objects and the right and bottom side of the
+window. No object is resized with the window. In the same way, if the window area was
+reduced, some objects might be partly or totally hidden. This is because we didn't use
+movable tabulation lines. </p>
+
+<p>Another way for more simple containers in which all the objects are laid out along an
+horizontal tabulation line is to use the method <code>Attach4Sides</code> for all the
+objects. We have seen that in <a href="#541000">Using Implicit Tabulation Lines</a>. </p>
+
+<p>Movable tabulation lines are set by means of the suffix <code>Relative</code> to the
+tabulation line keywords. Use <code>CATDlgTopOrLeftRelative</code>, <code>CATDlgCenterRelative</code>,
+and <code>CATDlgRightOrBottomRelative</code> in place of the previous <code>CATDlgTopOrLeft</code>,
+<code>CATDlgCenter</code>, and <code>CATDlgRightOrBottom</code>. This allows for moving
+the tabulation lines proportionally with the window resize. </p>
+
+<p>For example, to make Spinner and Frame2 resize vertically with the window, you simply
+need to attach them to an additional horizontal tabulation line with the keyword <code>CATDlgRightOrBottomRelative</code>
+as follows: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>n += 1;                                             // added 
+SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,  // statements
+                        Slider, Frame2, NULL);</pre>
+    </td>
+  </tr>
+</table>
+
+<p><img src="images/dialaa16.gif" width="532" height="573"> </p>
+
+<p>Spinner and Frame2 are resized vertically according to the new window size. Even if the
+window increases horizontally, nothing moves since there is no vertical movable tabulation
+line. </p>
+
+<p><img border="0" src="../CAAIcons/images/warning.gif">Note that you cannot use the same tabulation line in two successive
+statements <code>SetHorizontalAttachment</code> to attach an object, for example Spinner,
+using the keyword <code>CATDlgRightOrBottom</code>, and another object, for example
+TabContainer, using the keyword <code>CATDlgTopOrLeft</code>. </p>
+
+<p>If you want that all your objects fully resize with the window, you need to attach each
+of them to four tabulation lines: <img src="images/dialaa18.gif" width="495" height="509">
+</p>
+
+<p>Note that the different objects occupy all the space between their respective
+horizontal and vertical tabulation lines. For example, the area dedicated to press the
+push button is very large. </p>
+
+<p>This is coded as follows: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>int n = 0;
+SetVerticalAttachment(n, CATDlgTopOrLeft,
+   Frame1, Slider, Spinner, TabContainer, NULL); n += 1; // Vertical
+SetVerticalAttachment(n, CATDlgRightOrBottomRelative,    // attachments
+   Frame1, Slider, Spinner, TabContainer, NULL); n += 1; // fixed and
+SetVerticalAttachment(n, CATDlgTopOrLeft,                // movable
+   Combo, Frame2, PB, NULL);                     n += 1; // alternatively
+SetVerticalAttachment(n, CATDlgRightOrBottomRelative,
+   Combo, Frame2, PB, NULL);  n = 0;
+SetHorizontalAttachment(n, CATDlgTopOrLeft,              // Horizontal
+   Frame1, Combo, NULL);                         n += 1; // attachments
+SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,  // fixed and
+   Frame1, Combo, NULL);                         n += 1; // movable
+SetHorizontalAttachment(n, CATDlgTopOrLeft,              // alternatively
+   Slider, Frame2, NULL);                        n += 1;
+SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,
+   Slider, NULL);                                n += 1;
+SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,
+   Spinner, Frame2, NULL);                       n += 1;
+SetHorizontalAttachment(n, CATDlgTopOrLeft,
+   TabContainer, PB, NULL);                      n += 1;
+SetHorizontalAttachment(n, CATDlgRightOrBottomRelative,
+   TabContainer, PB, NULL);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The resized windows is as follows:</p>
+
+<p><img src="images/dialaa19.gif" width="639" height="563"> </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="550000"></a>Changing Attached Objects and Attachments</h4>
+
+<p>You can insert and remove objects into/from a tabulation line. Use the methods <code>InsertAlongHorizontalTab</code>
+or <code>InsertAlongVerticalTab</code> to insert an object, and <code>RemoveAlongHorizontalTab</code>
+or <code>RemoveAlongVerticalTab</code> to remove one. For example: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Window1-&gt;InsertAlongHorizontalTab(3, Editor, Combo, After);  // Insert</pre>
+    </td>
+  </tr>
+</table>
+
+<p>This means that you insert the control <code>Combo</code> <strong>after</strong> the
+control <code>Editor</code> along the horizontal tabulation number <code>3</code> in the
+container <code>Window1</code>. </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Container5-&gt;RemoveAlongVerticalTab(5, PushButton); // Remove </pre>
+    </td>
+  </tr>
+</table>
+
+<p>This means that you remove the control <code>PushButton</code> from the vertical
+tabulation line <code>5</code>. </p>
+
+<p>You can also detach an object from all its attachments within a container by means of
+the method <code>ResetAttachment</code>. </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Window1-&gt;ResetAttachment(Combo); // Reset attachment</pre>
+    </td>
+  </tr>
+</table>
+
+<p>You thus reset all attachments of the control <code>Combo</code> in the container <code>Window1</code>.
+</p>
+
+<p>You can also replace an object by another one by means of the method <code>ReplaceKeepAttachment</code>.
+For example: </p>
+
+<table class="code">
+  <tr>
+    <td><pre>Window1-&gt;ReplaceKeepAttachment(Spinner, Slider); // Replace</pre>
+    </td>
+  </tr>
+</table>
+
+<p>replaces the control <code>Spinner</code> by the control <code>Slider</code> while
+keeping the <code>Spinner</code> attachments for <code>Slider</code>. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h3><a name="600000"></a>The Object Container Tabulation Layout Specific Programming Tasks</h3>
+
+<p>To manage the layout of a container using tabulations, you can use the following
+methods. They apply to 
+
+<ul>
+  <li><a href="../CAADlgQuickRefs/CAADlgCATDlgFrame.htm">Frames</a>, instances
+    of the CATDlgFrame instances</li>
+  <li><a href="../CAADlgQuickRefs/CAADlgCATDlgTabPage.htm">Tab pages </a> or
+    property pages, instances of the CATDlgTabPage instances</li>
+  <li>Your classes that derive from <a href="../CAADlgQuickRefs/CAADlgCATDlgDocument.htm">CATDlgDocument</a> or
+    <a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">CATDlgDialog</a></li>
+</ul>
+
+<p>Layout using tabulations is available by default, that is, if the <i> CATDlgGridLayout</i>
+style is NOT used in the object constructor. With tabulations, you can: 
+
+<ul>
+  <li>Manage the frame content default orientation</li>
+  <li>Manage tabulation lines and attaching objects along them</li>
+  <li>Attach a object using its four sides</li>
+</ul>
+
+<p>The examples use a <i> CATDlgFrame</i> instance:</p>
+
+<h5>Managing the Frame Content Default Orientation</h5>
+
+<p>The default orientation is taken into account when no other layout information is
+provided. This orientation is horizontal. The controls or containers contained in the
+frame are placed horizontally one after the other in their instantiation order. This
+corresponds to the following call to the SetDefaultOrientation method:</p>
+
+<table class="code">
+  <tr>
+    <td><pre>pFrame-&gt;<strong>SetDefaultOrientation</strong>(Horizontal);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>You can ask for this orientation to be vertical. </p>
+
+<table class="code">
+  <tr>
+    <td><pre>pFrame-&gt;<strong>SetDefaultOrientation</strong>(<strong>Vertical</strong>);</pre>
+    </td>
+  </tr>
+</table>
+
+<h5>Managing Tabulation Lines and Attaching Objects along Them</h5>
+
+<p>To manage the tabulation lines, you can: 
+
+<ul>
+  <li>Create horizontal and vertical tabulations lines, and attach objects along them, using
+    the SetHorizontalAttachment and SetVerticalAttachment methods: <table class="code">
+      <tr>
+        <td><pre>CATDlgTabIndex HorTabIndex = 2;
+CATDlgAttachment AttachmentMode = CATDlgTopOrLeft;
+pFrame-&gt;<strong>SetHorizontalAttachment</strong>(HorTabIndex
+                                AttachmentMode,
+                                pFirstControl,
+                                ...,
+                                NULL);
+...
+CATDlgTabIndex VerTabIndex = 2;
+AttachmentMode = CATDlgRightOrBottom;
+pFrame-&gt;<strong>SetVerticalAttachment </strong> (VerTabIndex 
+                                AttachmentMode,
+                                pFirstControl,
+                                ...,
+                                NULL);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The parameters of these methods are:<ul>
+      <li>The tabulation index. It must grow from left to right for horizontal tabulations, and
+        from top to bottom for vertical tabulations.</li>
+      <li>The attachment mode. It can be set to: <table>
+          <tr>
+            <td valign="top"><code>CATDlgTopOrLeft</code></td>
+            <td>The objects are attached using their top sides along an horizontal tabulation line, or
+            using their left sides along a vertical tabulation line</td>
+          </tr>
+          <tr>
+            <td valign="top"><code>CATDlgTopOrLeftRelative</code></td>
+            <td>A <code>CATDlgTopOrLeft</code> tabulation line that enables resizing</td>
+          </tr>
+          <tr>
+            <td valign="top"><code>CATDlgRightOrBottom</code></td>
+            <td>The object are attached using their bottom sides along an horizontal tabulation line,
+            or using their right sides along a vertical tabulation line</td>
+          </tr>
+          <tr>
+            <td valign="top"><code>CATDlgRightOrBottomRelative</code></td>
+            <td>A <code>CATDlgRightOrBottom</code> tabulation line that enables resizing</td>
+          </tr>
+          <tr>
+            <td valign="top"><code>CATDlgCenter</code></td>
+            <td>The object are attached using their center along both an horizontal or a vertical
+            tabulation line</td>
+          </tr>
+          <tr>
+            <td valign="top"><code>CATDlgCenterRelative</code></td>
+            <td>A <code>CATDlgCenter</code> tabulation line that enables resizing</td>
+          </tr>
+        </table>
+      </li>
+      <li>The objects to attach. The list must end up with <code>NULL</code> </li>
+    </ul>
+  </li>
+  <li>Retrieve the horizontal and vertical tabulation line indices to which a given object is
+    attached: <table class="code">
+      <tr>
+        <td><pre>int HorTabIndex;
+HorTabIndex = pFrame-&gt;<strong>GetHorizontalTabIndex</strong>(pControl, AttachmentMode);
+...
+int VerTabIndex;
+VerTabIndex = pFrame-&gt;<strong>GetVerticalTabIndex</strong>(pControl, AttachmentMode);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Insert an object along an horizontal or vertical tabulation line with respect to an
+    already inserted object.: <table class="code">
+      <tr>
+        <td><pre>InsertionMode WhereToInsert = After;
+pFrame-&gt;<strong>InsertAlongHorizontalTab</strong>(HorTabIndex,
+                                 pControlToInsert,
+                                 pReferenceControl,
+                                 WhereToInsert);
+...
+WhereToInsert = Before;
+pFrame-&gt;<strong>InsertAlongVerticalTab</strong>  (VerTabIndex,
+                                 pControlToInsert,
+                                 pReferenceControl,
+                                 WhereToInsert);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The parameters of these methods are:<ul>
+      <li>The index of the tabulation aong which the object is to be inserted</li>
+      <li>The object to insert</li>
+      <li>The object used as reference for the insertion mode</li>
+      <li>The insertion mode. It can be set to After or Before</li>
+    </ul>
+  </li>
+  <li>Detach an object from an horizontal or a vertical tabulation line, or from both: <table
+    class="code">
+      <tr>
+        <td><pre>pFrame-&gt;<strong>RemoveAlongHorizontalTab</strong>(HorTabIndex, pControl);
+...
+pFrame-&gt;<strong>RemoveAlongVerticalTab</strong>(VerTabIndex, pControl);
+...
+pFrame-&gt;<strong>ResetAttachment</strong>(pControl);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>ResetAttachment has the same effect than the two calls to RemoveAlongHorizontalTab and
+    to RemoveAlongVerticalTab.</p>
+  </li>
+  <li>Replace an object by another using the same attachement parameters<table
+    class="code">
+      <tr>
+        <td><pre>pFrame-&gt;<strong>ReplaceKeepAttachment</strong>(pControlToInsert,
+                              pControlToRemove);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Attach an object using its four sides<table class="code">
+      <tr>
+        <td><pre>CATDlgCombo * pCombo = new CATDlgCombo(pFrame, &quot;pComboId&quot;);
+...
+pFrame-&gt;<strong>Attach4Sides</strong>(pCombo);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+
+<p>The dialog object sizes are determined using their contents, and arranging the layout
+of your objects in a container means either leaving the framework do it for you for
+containers with few objects which are placed horizontally one after the other in the order
+they are instantiated, or add code to attach objects to vertical tabulation lines using
+their left or right side and/or horizontal tabulation lines using their top or bottom
+side. The center of an object can be used in both cases. </p>
+
+<p>Movable tabulation lines allow to make objects resize when the container is resized. </p>
+
+<p>The keys to object layout are: 
+
+<ul>
+  <li>tabulation lines are instantiated with a number and are placed from left to right and
+    from top to bottom with increasing number order </li>
+  <li>objects are placed along the tabulation lines from left to right or from top to bottom
+    in the order they are referred to in the method <code>SetHorizontalAttachment</code> and <code>SetVerticalAttachment</code>
+    respectively </li>
+  <li>a single attachment mode can be used along a tabulation line, chosen among <code>CATDlgTopOrLeft</code>,
+    <code>CATDlgCenter</code> or <code>CATDlgRightOrBottom</code> </li>
+  <li>the suffix <code>Relative</code> to an attachment mode means that the corresponding
+    tabulation line is movable with respect to the tabulation line located left or above and
+    that objects attached to it are resized when the container is resized </li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADlgObjectLayout.htm">Arranging Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+

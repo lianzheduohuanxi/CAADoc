@@ -1,0 +1,382 @@
+<html>
+  <head>
+    <title>Placing a Physical Part</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+      <style type="text/css"> 
+      <!-- 
+       .rem {color: Green;}
+	     .kw {color: Blue;}
+	    -->
+	    </style>
+  </head>
+  <body>
+    <table border="0" width="100%">
+      <tr>
+        <td>
+          <h2>Distributive Systems</h2>
+        </td>
+        <td align="right" valign="top">
+          <h2><a name="Top"></a>Placing a Physical Part</h2>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <!-- ------------------------------comment---------------------------- -->
+    <table border="0" width="100%">
+      <tr>
+        <td width="7%" valign="top">
+          <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+        <td width="93%">
+          <p><a name="Learn"></a>
+          This use case is intended to show you how to place a physical part from a 
+          reference part.
+          <p>This macro opens the document CAAPspEduIn.CATProduct. Using the root node of 
+            the document, it then finds a piping valve and uses its reference to place 
+            another valve.</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="7%" valign="top">
+          <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+        <td width="93%">
+          <p><a name="How"></a>CAAPspPlacePart is launched in CATIA [<a href="#References">1</a>]. 
+            No open document is needed.</p>
+          <p><a href="CAAPspPlacePartSource.htm">CAAPspPlacePart.CATScript</a> is located 
+            in the CAAScdPspUseCases module. <a href="macros/CAAPspPlacePart.CATScript">Execute 
+              macro </a>(windows only).</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="7%" valign="top">
+          <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+        <td width="93%">
+          <p><a name="Step"></a>CAAPspPlacePart includes the following steps:</p>
+          <ol>
+            <li>
+              <a href="#Setup Environment">Setup Environment</a>
+            </li>
+            <li>
+              <a href="#Get Data for Part Placement">Get Data for Part Placement</a>
+            </li>
+            <li>
+              <a href="#Place Part">Place Part</a>
+            </li>
+            <li>
+              <a href="#View and Test Part Data">View and Test Part Data</a>
+            </li>
+          </ol>
+          <h4><a name="Setup Environment"></a>Setup Environment</h4>
+          <p>The macro first loads Distributive System document CAAPspEduIn.CATProduct 
+            containing Equipment and Piping Design objects.
+          </p>
+          <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i> 
+            to point to the directory and <i>sDocFullPath</i> to point to full path name of 
+            the document.</p>
+          <pre><span class=rem>    ...</span>
+    <span class="rem">' ------------------------------------------------------------------------- </span>
+    <span class="rem">' Setup the Environment</span>
+    <span class="rem">' ------------------------------------------------------------------------- </span>
+    <span class="rem">' Open the Distributive system document </span>
+<span class="kw">    dim </span>sDocPath<span class="kw"> As </span>String 
+<span class="kw">    dim </span>sDocFullPath<span class="kw"> As </span>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<span class="kw">    If </span>(Not CATIA.FileSystem.FolderExists(sDocPath))<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<span class="kw">    End If</span>
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+
+    
+<span class="kw">    Set </span>gObjPspDoc = CATIA.Documents.Open(sDocFullPath)
+<span class="kw">    If </span>(gObjPspDoc Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"No Document Open"
+<span class="kw">    End If</span>
+
+    ShowTraceOutputLine "Output traces from CAAPspPlacePart.CATScript"
+    <span class="rem">...</span></pre>
+          <p>Next, the macro acquires the <i>gObjPspWorkbench</i> object from the document 
+            using the top node of the object tree in a Distributive System document..</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Find the top node of the Distributive System object tree - .  </span>
+<span class="kw">    Set </span>gObjPrdRoot = gObjPspDoc.Product 
+<span class="kw">    If </span>(gObjPrdRoot Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get root product object"
+<span class="kw">    End If</span>
+    
+<span class="kw">    Set </span>gObjPspWorkbench = gObjPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<span class="kw">    If </span>(gObjPspWorkbench Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get PspWorkbench"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Success in getting PspWorkbench"
+
+<span class="kw">    Set </span>gObjRootProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", gObjPrdRoot )      
+<span class="kw">    If </span>(gObjRootProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get root product"
+<span class="kw">    End If</span>
+    <span class="rem">...</span></pre>
+          <p>Next, the macro acquires the <i>objPspApplication</i> object corresponding to 
+            Piping application and initializes the application data.</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Get Application</span>
+<span class="kw">    Set </span>objPspApplication = gObjPspWorkbench.GetApplication(catPspIDLCATPiping)
+<span class="kw">    If </span>(objPspApplication Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get PspApplication"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Success in getthing objPspApplication"
+    objPspApplication.Initialization()             
+    <span class="rem">...</span></pre>
+          <h4><a name="Get Data for Part Placement"></a>Get Data for Part Placement</h4>
+          <p>The first data the macro acquires for part placement is a PspTempListFactory object <i>gObjListFactory</i> on 
+            the application object. This is used to later generate lists of real values needed for part placement input</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Get Data for Part Placement</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Get gObjListFactory</span>
+<span class="kw">    Set </span>gObjListFactory = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspTempListFactory", objPspApplication )      
+<span class="kw">    If </span>(gObjListFactory Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get list factory"
+<span class="kw">    End If</span>
+        <span class="rem">...</span></pre>
+          <p>Next, the macro uses the root product object <i>gObjRootProduct</i> to  
+            find a parent for the part to be placed.</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Get root product children and parent product for placed part</span>
+<span class="kw">    Dim </span>ParentProductRef<span class="kw"> As </span>CATIABase
+<span class="kw">    Set </span>ParentProductRef = Nothing
+<span class="kw">    Dim </span>ParentProduct<span class="kw"> As </span>Product
+<span class="kw">    Set </span>ParentProduct = Nothing
+    ShowTraceOutputLine "Number of root children = " & gObjRootProduct.Products.Count
+<span class="kw">    Dim </span>Prod<span class="kw"> As </span>CATIABase
+<span class="kw">    For </span>Each Prod<span class="kw"> in </span>gObjRootProduct.Products
+      ShowTraceOutputLine "Root child product name = " & Prod.Name
+<span class="kw">      If </span>(Prod.Name = "CAAPsp3DEduIn.1") Then 
+<span class="kw">        Set </span>ParentProductRef = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIABase", Prod )      
+<span class="kw">        Set </span>ParentProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", Prod )      
+<span class="kw">      End If</span>
+<span class="kw">    Next</span>
+<span class="kw">    If </span>(ParentProductRef Is Nothing Or ParentProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get parent product"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Part place parent product name = " & ParentProductRef.Name
+     <span class="rem">...</span></pre>
+          <p>Now the PspAppFactory object <i>objPspAppFactory</i> is used to search for a physical product that will serve 
+            as a reference for the part to be placed. In this case it finds a piping valve.</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Get PspPhysicalProduct object</span>
+<span class="kw">    Dim </span>objLPhysicals    <span class="kw"> As </span>PspListOfObjects                  
+<span class="kw">    Set </span>objPspAppFactory = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspAppFactory", objPspApplication )      
+  
+<span class="kw">    Set </span>objLPhysicals = objPspAppFactory.ListPhysicals ( gObjPrdRoot , catPspIDLCATPIP)
+<span class="kw">    If </span>( Not ( objLPhysicals Is Nothing ) And _
+        ( objLPhysicals.Count &gt; 0 ) )<span class="kw"> Then      </span>
+<span class="kw">      Set </span>objPspPhysicalPrd =  objLPhysicals.Item( 1, "CATIAPspPhysicalProduct" )
+<span class="kw">    End If</span>
+<span class="kw">    If </span>(objPspPhysicalPrd Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get physcial part for reference product input"
+<span class="kw">    End If</span>
+    ShowObjectID "Physical Product object", objPspPhysicalPrd
+    <span class="rem">...</span></pre>
+          <p>Now the reference of the physical part (the valve) is found. 
+          A reference is needed as input to the part placement method.</p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Get object reference part and parent.</span>
+<span class="kw">    Dim </span>objPhysicalProduct<span class="kw"> As </span>Product
+<span class="kw">    Dim </span>objReferenceProduct<span class="kw"> As </span>Product
+<span class="kw">    Dim </span>objParentProduct<span class="kw"> As </span>Product
+<span class="kw">    Set </span>objPhysicalProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", objPspPhysicalPrd )      
+  
+<span class="kw">    If </span>( Not (objPhysicalProduct Is Nothing) )<span class="kw"> Then</span>
+<span class="kw">      Set </span>objReferenceProduct = objPhysicalProduct.ReferenceProduct
+
+      <span class="rem">'Just for info: got parent for part place above.</span>
+<span class="kw">      Set </span>objParentProduct = objPhysicalProduct.Parent
+<span class="kw">      If </span>(Not (objParentProduct Is Nothing))<span class="kw"> Then</span>
+        ShowTraceOutputLine "Parent part name = " & objParentProduct.Name
+<span class="kw">      End If</span>
+<span class="kw">    End If </span>
+<span class="kw">    If </span>(objReferenceProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get reference product input"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Reference part number = " & objReferenceProduct.PartNumber
+    ShowObjectID "Reference Product object", objReferenceProduct
+    <span class="rem">...</span></pre>
+          <p>The next piece of data needed is a logical line to contain the placed part.
+          The macro uses the logical line that contains the valve already in the model.
+          Note that the physical part can be in many groups: the code must filter for the 
+          group which is a logical line.
+            </p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">' Get logical line</span>
+<span class="kw">    Dim </span>LogicalLine<span class="kw"> As </span>PspLogicalLine
+<span class="kw">    Set </span>LogicalLine = Nothing
+<span class="kw">    Dim </span>PhysicalProductGroupable<span class="kw"> As </span>PspGroupable
+<span class="kw">    Set </span>PhysicalProductGroupable = Nothing
+<span class="kw">    Set </span>PhysicalProductGroupable = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspGroupable", objPspPhysicalPrd )      
+<span class="kw">    If </span>( Not ( PhysicalProductGroupable Is Nothing ) )<span class="kw"> Then</span>
+      ShowTraceOutputLine "Number of groups = " & PhysicalProductGroupable.Groups.Count
+<span class="kw">      Dim </span>iiGroup<span class="kw"> As </span>Integer
+<span class="kw">      For </span>iiGroup = 1<span class="kw"> to </span>PhysicalProductGroupable.Groups.Count
+<span class="kw">        Dim </span>Group<span class="kw"> As </span>CATIABase
+<span class="kw">        Set </span>Group = PhysicalProductGroupable.Groups.Item(iiGroup, "CATIABase")
+        ShowTraceOutputLine "Group name = " & Group.Name
+<span class="kw">        Set </span>LogicalLine = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspLogicalLine", Group ) 
+<span class="kw">        If </span>( Not ( LogicalLine Is Nothing ) )<span class="kw"> Then</span>
+          ShowTraceOutputLine "Part place logical line name = " & LogicalLine.Name
+<span class="kw">          Exit For</span>
+<span class="kw">        End If</span>
+<span class="kw">      Next</span>
+<span class="kw">    End If</span>
+    <span class="rem">...</span></pre>
+          <h4><a name="Place Part"></a>Place Part</h4>
+          <p>Now enough data has been gathered to place the part. 
+          The placement is done by calling the <i>PlacePartInSpace</i> method on the <i>objPlacePart</i> object.
+          Before <i>PlacePartInSpace</i> is called a few input argument values are set.
+          <i>Standard</i> is set to specify the standard to be used in the placement.
+          The function type to assciate with the placed part is specified by <i>FunctionType</i>.
+          <i>UpDirection</i>, <i>HorizontalOrientation</i> and <i>Position</i> are set to properly position and orient the part.
+          These are all taken by the <i>PlacePartInSpace</i> method as relative to the parent product.
+          </p>
+          <pre>    <span class="rem">...</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Place Part</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+<span class="kw">    Dim </span>Standard<span class="kw"> As </span>String
+    Standard = "ASTL"
+<span class="kw">    Dim </span>FunctionType<span class="kw"> As </span>String
+    FunctionType = "CATPspValveFunction"
+<span class="kw">    Dim </span>PlacedPartID<span class="kw"> As </span>String
+    PlacedPartID = "" 'Null string uses name generated by PP engine
+    <span class="rem">' Up direction for part = (0,0,1)</span>
+<span class="kw">    Dim </span>UpDirection<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>UpDirection = gObjListFactory.CreateListOfDoubles()
+    UpDirection.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+    UpDirection.Append 0.0
+    UpDirection.Append 1.0
+    <span class="rem">' Horizontal alignment for part = (1,0,0)</span>
+<span class="kw">    Dim </span>HorizontalOrientation<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>HorizontalOrientation = gObjListFactory.CreateListOfDoubles()
+    HorizontalOrientation.Append 1.0 <span class="rem">'Align horizontal parallel to x-axis.</span>
+    HorizontalOrientation.Append 0.0
+    HorizontalOrientation.Append 0.0
+    <span class="rem">' Part position = (1000,2000,4000) (mm)</span>
+<span class="kw">    Dim </span>Position<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>Position = gObjListFactory.CreateListOfDoubles()
+    Position.Append 1000.0 <span class="rem">'Position part at (1000, 2000, 3000)</span>
+    Position.Append 2000.0
+    Position.Append 4000.0
+<span class="kw">    Dim </span>PlacePartRef<span class="kw"> As </span>CATIABase
+<span class="kw">    Set </span>PlacePartRef = Nothing
+<span class="kw">    Dim </span>objPlacePart<span class="kw"> As </span>PspPlacePart                  
+<span class="kw">    Set </span>objPlacePart = Nothing
+<span class="kw">    Set </span>objPlacePart = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspPlacePart", objPspApplication )      
+<span class="kw">    If </span>( Not ( objPlacePart Is Nothing ) )<span class="kw"> Then      </span>
+<span class="kw">      Set </span>PlacePartRef = objPlacePart.PlacePartInSpace(Standard, _
+                                                       FunctionType, _
+                                                       objReferenceProduct, _
+                                                       ParentProductRef, _
+                                                       LogicalLine, _
+                                                       PlacedPartID, _
+                                                       UpDirection, _
+                                                       HorizontalOrientation, _
+                                                       Position)
+<span class="kw">    End If</span>
+<span class="kw">    If </span>( PlacePartRef Is Nothing )<span class="kw"> Then      </span>
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+<span class="kw">    End If</span>
+    <span class="rem">...</span></pre>
+          <h4><a name="View and Test Part Data"></a>View and Test Part Data</h4>
+          <p>After the part is placed, the script test and displays some data related to the placed part. 
+          First the position of the part itself is examined.</p>
+          <pre>  <span class="rem">...</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' View and Test Part Data</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Placed part position</span>
+<span class="kw">    Dim </span>objPlacePartProduct<span class="kw"> As </span>Product
+    <span class="rem">'Set objPlacePartProduct = PlacePartRef</span>
+<span class="kw">    Set </span>objPlacePartProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", PlacePartRef )      
+<span class="kw">    If </span>( objPlacePartProduct Is Nothing )<span class="kw"> Then      </span>
+      Err.Raise 9999,sDocPath,"Bad placed product"
+<span class="kw">    End If</span>
+<span class="kw">    Dim </span>placePartPositArray(12)<span class="kw"> As </span>CATSafeArray
+    objPlacePartProduct.Position.GetComponents(placePartPositArray)
+    ShowTraceOutputLine "Product posit = " & DumpTransform(placePartPositArray)
+<span class="rem">   ...   </span></pre>
+          <p>
+            Finally data associated with the part connectors of the part is tested and displayed.
+          </p>
+          <pre><span class="rem">  ...</span>
+    <span class="rem">' Placed part connectors</span>
+<span class="kw">    Dim </span>objPlacePartPhysical<span class="kw"> As </span>CATIAPspPhysicalProduct                  
+<span class="kw">    Set </span>objPlacePartPhysical = Nothing
+<span class="kw">    Set </span>objPlacePartPhysical = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspPhysicalProduct", PlacePartRef )      
+<span class="kw">    If </span>( Not ( objPlacePartPhysical Is Nothing ) )<span class="kw"> Then</span>
+      ShowTraceOutputLine "Number of connectors = " & objPlacePartPhysical.Connectors.Count
+<span class="kw">      If </span>( objPlacePartPhysical.Connectors.Count &lt;&gt; 2 )<span class="kw"> Then      </span>
+        Err.Raise 9999,sDocPath,"Wrong number of connectors"
+<span class="kw">      End If</span>
+<span class="kw">      Dim </span>iiCtr<span class="kw"> As </span>Integer
+<span class="kw">      For </span>iiCtr = 1<span class="kw"> to </span>objPlacePartPhysical.Connectors.Count
+        ShowTraceOutputLine "iiCtr = " & iiCtr
+<span class="kw">        Dim </span>Ctr<span class="kw"> As </span>PspPartConnector
+<span class="kw">        Set </span>Ctr = objPlacePartPhysical.Connectors.Item(iiCtr, "CATIAPspPartConnector")
+<span class="kw">        If </span>( Ctr Is Nothing )<span class="kw"> Then      </span>
+          Err.Raise 9999,sDocPath,"Bad connector"
+<span class="kw">        End If</span>
+        ShowTraceOutputLine "Ctr name = " & Ctr.Name
+<span class="kw">        Dim </span>CtrPosit<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrPosit = Nothing
+<span class="kw">        Set </span>CtrPosit = Ctr.GetPosition(ParentProduct)
+        ShowTraceOutputLine "Ctr posit = " & DumpVector(CtrPosit)
+<span class="kw">        Dim </span>CtrAlign<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrAlign = Nothing
+<span class="kw">        Set </span>CtrAlign = Ctr.GetAlignmentDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr align = " & DumpVector(CtrAlign)
+<span class="kw">        Dim </span>CtrUp<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrUp = Nothing
+<span class="kw">        Set </span>CtrUp = Ctr.GetUpDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr up = " & DumpVector(CtrUp)
+<span class="kw">      Next</span>
+<span class="kw">    End If</span>
+<span class="rem">   ...   </span></pre>
+        </td>
+      </tr>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <hr>
+    <!-- ------------------------------comment---------------------------- -->
+    <h4><a name="InShort"></a>In Short</h4>
+    <p>This use case is intended to show you how to place a physical part.
+      It shows how to load a model and setup the environment, how to gather necessary data and how to place the part.
+      It also illustrates how to extract some data from the placed part.</p>
+    <p>Here is what the input model looks like.</p>
+    <p><img border="0" src="images/CAAPspPlacePartBefore.jpg" alt="Before Part Placed"></p>
+    <p>Here is the model after the valve is placed.</p>
+    <p><img border="0" src="images/CAAPspPlacePartAfter.jpg" alt="After Part Placed"></p>
+    <p>Here are the status messages displayed at the end of the macro execution.</p>
+    <p><img border="0" src="images/CAAPspPlacePartMessage.jpg" alt="Message Panel"></p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <hr>
+    <!-- ------------------------------comment---------------------------- -->
+    <h4><a name="References"></a>References</h4>
+    <table border="0" width="100%">
+      <tr>
+        <td valign="top">[1]</td>
+        <td><a href="CAAPspQueryFunctionPhysicalSource.htm">Replaying a macro</a></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+      </tr>
+    </table>
+    <hr>
+    <!-- ------------------------------comment---------------------------- -->
+    <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+  </body>
+</html>

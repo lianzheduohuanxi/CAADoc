@@ -1,0 +1,121 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKiiMechanismCreation.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2000-2001</font>
+<font color="#0000FF">Option Explicit</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBSCRIPT"
+
+<font color="#008000">'*****************************************************************************</font>
+<font color="#008000">' Purpose:      This macro creates a simulable mechanism</font>
+<font color="#008000">'               in a specific product document</font>
+<font color="#008000">' Assumptions:  The product document used is called "ForKinMacro.CATProduct".</font>
+<font color="#008000">'               It contains a root product called Product1,</font>
+<font color="#008000">'               and two parts called "PartKIN_1" and "PartKIN_2".</font>
+<font color="#008000">'               In turn "PartKIN_1.CATPart" and "PartKIN_2.CATPart" </font>
+<font color="#008000">'                  each contain at least a line called Line.1</font>
+<font color="#008000">' Author:       </font>
+<font color="#008000">' Languages:    VBScript</font>
+<font color="#008000">' Version:      V5R6</font>
+<font color="#008000">' Locales:      US English</font>
+<font color="#008000">'*****************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">' 1-Prolog</font>
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 1.a-Retrieve the root product and the first sub-product</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>oRootProduct<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>oRootProduct = CATIA.ActiveDocument.Product
+
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 1.b-Retrieve the first sub-product to be used as fixed part </font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>oProductToFix<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>oProductToFix = oRootProduct.Products.Item(1)
+	
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 1.c-Switch the entire product to design mode</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+    oRootProduct.ApplyWorkMode DESIGN_MODE
+
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 1.d-Retrieve references to the geometry used for joint creation</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>sRefName<font color="#0000FF"> As </font>String
+    sRefName =  "Product1/PartKIN_1.1/!Line.1"
+<font color="#0000FF">    Dim </font>oReferenceLine1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oReferenceLine1 = oRootProduct.CreateReferenceFromName  ( sRefName ) 
+    sRefName =  "Product1/PartKIN_2.1/!Line.1"
+<font color="#0000FF">    Dim </font>oReferenceLine2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oReferenceLine2 = oRootProduct.CreateReferenceFromName  ( sRefName )
+
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">' 2-Create a new empty mechanism</font>
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 2.a-Retrieve the Mechanisms Collection from the Product</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>cTheMechanisms<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>cTheMechanisms = oRootProduct.GetTechnologicalObject("Mechanisms")
+ 
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 2.b-Create a new mechanism </font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>oNewMechanism<font color="#0000FF"> As </font>Mechanism
+<font color="#0000FF">    Set </font>oNewMechanism = cTheMechanisms.Add()
+
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 2.c-Check the number of mechanisms (expected to be one)</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>iNbmech<font color="#0000FF"> As </font>Integer
+    iNbmech =cTheMechanisms.Count
+ 
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 2.d-Retrieve the name of the Mechanism</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>sMechanismName<font color="#0000FF"> As </font>String
+    sMechanismName = oNewMechanism.Name
+
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">' 3-Create the fixed part in this mechanism</font>
+    <font color="#008000">'==================================================================</font>
+    oNewMechanism.FixedPart = oProductToFix
+
+
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">' 4-Create a cylindrical (actuator) joint in this mechanism</font>
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 4.a-Prepare an array of references used for the joint</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>aVar1(1)
+<font color="#0000FF">    Set </font>aVar1(0) = oReferenceLine1
+<font color="#0000FF">    Set </font>aVar1(1) = oReferenceLine2
+
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 4.b-Create the joint</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>oNewJoint<font color="#0000FF"> as </font>Joint
+<font color="#0000FF">    Set </font>oNewJoint = oNewMechanism.AddJoint("CATKinCylindricalJoint",aVar1)
+
+    <font color="#008000">'------------------------------------------------------------------</font>
+    <font color="#008000">' 4.c-Check the number of joints (expected to be one)</font>
+    <font color="#008000">'------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>iNbjnt<font color="#0000FF"> As </font>Integer
+    iNbjnt = oNewMechanism.NbJoints
+
+    <font color="#008000">'==================================================================</font>
+    <font color="#008000">' 5-Create 2 commands on that joint </font>
+    <font color="#008000">'==================================================================</font>
+<font color="#0000FF">    Dim </font>oNewCommand1<font color="#0000FF"> as </font>MechanismCommand
+<font color="#0000FF">    Dim </font>oNewCommand2<font color="#0000FF"> as </font>MechanismCommand
+<font color="#0000FF">    Set </font>oNewCommand1 = oNewMechanism.AddCommand("CATKinLengthCmd",oNewJoint)
+<font color="#0000FF">    Set </font>oNewCommand2 = oNewMechanism.AddCommand("CATKinAngleCmd",oNewJoint)
+
+ 
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

@@ -1,0 +1,1071 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Consuming the ENOVWSCntMgmtCpp CAA Web Service</title>
+</head>
+<body>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>CAA Web Services Home</h1>
+			</td>
+			<td valign="top">
+			<h2>&nbsp;</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Consuming the ENOVWSCntMgmtCpp CAA Web Service</h3>
+			<em>Using the ENOVWSCntMgmtCpp CAA Web Service for document management</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article discusses the <b>CAAENOVWSCntMgmtCppAxis1_3Client</b> use case. It
+			describes how to use the Java client binding that can be generated using the
+			Axis WSDL2Java emitter in order to consume the <strong> ENOVWSCntMgmtCpp CAA
+			Web service</strong>. It provides a sample usage scenario that demonstrates
+			how to create Documents, attach Documents to a Part, CheckIn and CheckOut
+			Documents from ENOVIA LCA V5.</p>
+			<ul>
+				<li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#2"><strong>The CAAENOVWSCntMgmtCppAxis1_3Client Use Case</strong></a>
+				<ul>
+					<li><a href="#2.1">What Does CAAENOVWSCntMgmtCppAxis1_3Client</a></li>
+					<li><a href="#2.2">Where To Find the CAAENOVWSCntMgmtCppAxis1_3Client Code</a></li>
+					<li><a href="#2.3">How to Launch CAAENOVWSCntMgmtCppAxis1_3Client</a></li>
+				</ul>
+				</li>
+				<li><a href="#3"><strong>Step-by-step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to write a client application that
+consumes the ENOVWSCntMgmtCpp CAA Web service. More specifically, you will learn
+how to:</p>
+<ul>
+	<li>Generate the Java client binding for the ENOVWSCntMgmtCpp CAA Web service,</li>
+	<li>Write a wrapper class that instantiates the generated proxy, configures it,
+	and uses it to remotely invoke methods on the CAA Web service,</li>
+	<li>Write a class that demonstrates a sample usage scenario for the
+	ENOVWSCntMgmtCpp CAA Web service, using the wrapper class mentioned above.</li>
+</ul>
+<p>This article also provides guidance on how to build and run the sample client
+application using <strong>IRAD (IBM Rational Application Developer) 6.0</strong>,
+although any other Java IDE (Integrated Development Environment) or stand-alone
+JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that
+purpose.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="2"></a>The CAAENOVWSCntMgmtCppAxis1_3Client Use Case</h3>
+<p>CAAENOVWSCntMgmtCppAxis1_3Client is a use case of the CAAENOVWS.edu framework that
+illustrates capabilities of the ENOVWSCntMgmtCpp CAA Web service.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.1"></a>What Does CAAENOVWSCntMgmtCppAxis1_3Client Do</h4>
+<p>The sample usage scenario performs the following actions:</p>
+<ul>
+	<li>Create two ENOVIA LCA V5 Documents,</li>
+	<li>Create a ENOVIA LCA V5 Part,</li>
+	<li>Attach the two Documents created to the already created Part,</li>
+	<li>CheckIn a file for the Document,</li>
+	<li>CheckOut the checked in file for the Document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.2"></a>Where To Find the CAAENOVWSCntMgmtCppClient Code</h4>
+<p>The CAAENOVWSCntMgmtCppClient use case is made of several classes located in 
+the
+      <strong>CAAENOVWSAxis1_3Client.mj</strong> module of the <strong>CAAENOVWS.edu</strong> framework:
+    </p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td>
+    <table class="code" id="table1">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Windows</strong>:
+            <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code><br>
+
+            <strong>Unix</strong>:
+            <code><em>&lt;Install&gt;</em>/CAAENOVWS.edu/CAAENOVWSAxis1_3Client.mj/src</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    		</td>
+		</tr>
+	</tbody>
+</table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory
+      (<strong>Windows</strong>):
+    </p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code><i>&lt;Source&gt;\&lt;Output-package&gt;</i>\CATServiceExceptionType.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\ENOVWSCntMgmtCpp.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\ICntMgmtWS.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\ENOVWSCntMgmtCppLocator.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\ICntMgmtWSBindingStub.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\Identifier.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\SessionToken.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\Status.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\StatusArrayType.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\StringArrayType.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\holders\SessionTokenHolder.java<br>
+			<i>&lt;Source&gt;\&lt;Output-package&gt;</i>\holders\StringArrayTypeHolder.java<i></i></code></td>
+		</tr>
+	</tbody>
+</table>
+<ul style="margin-bottom: 2mm">
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<em>&lt;Source&gt;</em></code>:
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code>, </li>
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<em>&lt;Install&gt;</em></code>: same as above, </li>
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<em>&lt;Output-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client\generated 
+	(based on the output package value specified when using the WSDL2Java 
+	emitter).
+      </li>
+</ul>
+<p>The CAAENOVWSAxis1_3Client.mj module contains the other following resources:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSClient.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSCntMgmtCppUseCase.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSCntMgmtCppWrapper.java</code>
+          </td>
+		</tr>
+	</tbody>
+</table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Root-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOVWSQueryCppWrapper</strong> class describes how to configure the generated 
+      proxy and how to invoke its methods. The <strong>CAAENOVWSQueryCppUseCase</strong> class 
+      demonstrates a sample use case scenario of the ENOVWSQueryCpp CAA Web service. 
+      The <strong>CAAENOVWSClient</strong> class contains the main program. It parses the 
+      command line inputs and starts up the use case.
+    </p>
+    <p>
+      This use case has a dependency on the <strong>CustomSessionHandler</strong> class which is available in the 
+      <strong>CAAJAXRPCHTTPSessionHandler.mj</strong> module of the <strong>CAAWebServices.edu</strong> 
+      framework. Please refer to [<a href="#References">1</a>] for details on HTTP session management and where
+      to find the related class.
+    </p>
+    <p>
+      This use case has also a dependency on the CAAENOPosAppBinderImplAxis1_3Client use case in order to manage
+      a session with ENOVIA LCA V5. Please refer to [<a href="#References">1</a>] for details on where to find
+      the related code.
+    </p>
+<p>&nbsp;</p>
+<p>This use case has a dependency on the <code>CustomSessionHandler</code>
+class. See [<a href="#References">1</a>] for details on how to access it. It
+also has a dependency on the CAAENOPosAppBinderImplAxis1_1Client use case. See [<a
+	href="#References">2</a>] for details on where to find the related resources.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.3"></a>How to Launch CAAENOVWSCntMgmtCppClient</h4>
+    <p>
+      To launch the CAAENOVWSCntMgmtCppAxis1_3Client use case, you will need to set up a buildtime environment,
+      build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You
+      can see [<a href="#References">3</a>] for details on how to perform these steps within the IRAD 6 environment.
+    </p>
+    <p>
+      There is no prerequisites to running this use case.
+    </p>
+    <p>
+      The sample usage scenario delivered within this use case is launched from the CAAENOVWSClient class. It defines
+      a main method that takes several options as parameters, as described below:
+    </p>   
+    <table class="code" id="table2">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em> -t ENOVWSCntMgmtCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the 
+		CAAENOVWSCntMgmtCpp
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code" id="table3">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t ENOVWSCntMgmtCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="3"></a>Step-by-step</h3>
+<p>The following section first explains how to generate the Java client binding
+for the ENOVWSCntMgmtCpp CAA Web service demonstrated. The remaining sections
+then describe the code that must be written in order to consume this Web
+service:</p>
+<ol>
+	<li><a href="#3.1">Creating the Java Client Binding</a></li>
+	<li><a href="#3.2">Instantiating the Generated Proxy</a></li>
+	<li><a href="#3.4">Creating ENOVIA LCA V5 Document</a></li>
+	<li><a href="#3.5">Attaching ENOVIA LCA V5 Document to ENOVIA LCA V5 Part</a></li>
+	<li><a href="#3.6">Checking In ENOVIA LCA V5 Document</a></li>
+	<li><a href="#3.7">Checking Out ENOVIA LCA V5 Document</a></li>
+	<li><a href="#3.8">Sample Usage Scenario</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.1"></a>Creating the Java Client Binding</h4>
+    <p>
+      Please refer to [<a href="#References">3</a>] for details on how to generate the Java client binding using the
+      Axis WSDL2Java emitter.
+    </p>
+    <p>
+      Here follows a sample command in order to generate the Java client binding for the ENOVWSCntMgmtpp CAA
+      Web service:
+    </p>
+    <table class="code" id="table4">
+      <tbody>
+        <tr>
+          <td>
+            <code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C:\CAAENOVWS\src -p
+            com.dassault_systemes.caaenovws/caaenovwsaxis1_3client.generated
+            http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSCntMgmtImpl:ENOVWSCntMgmtImpl:ENOVWSCntMgmtCpp</code></td>
+        </tr>
+      </tbody>
+    </table>
+<p>The server name, port, and context root URI information must be updated to
+match the server where the CAA Web service has been deployed. The list of
+generated resources is available from the above section: "<a href="#2.2">Where
+To Find the CAAENOVWSCntMgmtCppClient Code</a>".</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.2"></a>Instantiating the Generated Proxy</h4>
+    <p>
+      The following code describes how to instantiate the generated proxy. Such proxy is used in order to marshall
+      method calls and objects to SOAP requests, and to unmarshall SOAP responses to objects. This proxy must be
+      configured in order to manage authentication on the remote Web server, timeout, and session management.
+      Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.
+    </p>
+<p>&nbsp;</p>
+<p>In order to be able to consume the ENOVWSCntMgmtCpp CAA Web service
+implementation that has been deployed on a target server, you need to retrieve
+an instance of the <code>ICntMgmtWSBindingStub</code> generated class (also
+referred to as the <b>proxy</b>). It is a common best practice to manipulate an
+instance through its related interface whenever available. The WSDL2Java emitter
+produces an interface that is implemented by the <code>ICntMgmtWSBindingStub</code>
+class: <code>ICntMgmtWS</code>. It describes the methods available on the remote
+CAA Web service.</p>
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">&nbsp; Although the <code>ICntMgmtWSBindingStub</code>
+class can be directly instantiated using its own set of constructors, the Axis
+User's Guide recommends to discard this approach. Instead, the recommended
+approach is to use another generated class for that purpose: <code>
+ENOVWSCntMgmtCppLocator</code>. It implements the <code>ENOVWSCntMgmtCpp</code>
+interface.</p>
+<p>The following code describes how to instantiate the generated proxy. Such proxy is used in order to marshall
+      method calls and objects to SOAP requests, and to unmarshall SOAP responses to objects. This proxy must be
+      configured in order to manage authentication on the remote Web server, timeout, and session management.
+      Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services. </p>
+<p>&nbsp;</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppWrapper {
+    private String SERVICE_ID = &quot;urn:com:dassault_systemes:ENOVWSCntMgmtImpl:ENOVWSCntMgmtImpl:ENOVWSCntMgmtCpp&quot;;
+    private ICntMgmtWS proxy = null;</pre>
+			<pre>    /**
+     * Creates a new proxy for the ENOVWSCntMgmtCpp CAA Web service
+     * implementation and configures it.
+     * 
+     * @param clientId the client identifier used to maintain the session state
+     * accross distinct proxies
+     * @param uri the root URI of the Web application hosting the implementation
+     * of the ENOVWSCntMgmtCpp CAA Web service
+     * @param timeOut the proxy timeout
+     */
+    public CAAENOVWSCntMgmtCppWrapper(String clientId, String uri, int timeOut) {
+        // Compute the SOAP endpoint URI value that bounds to the deployed
+        // implementation of the ENOVWSCntMgmtCpp CAA Web service
+        String endpoint = uri + &quot;servicerouter?service=&quot; + SERVICE_ID;</pre>
+			<pre>        // Retrieve proxy instance
+        ENOVWSCntMgmtCppLocator locator = new ENOVWSCntMgmtCppLocator();
+        try {
+            proxy = locator.getENOVWSCntMgmtCppPort(new URL(endpoint));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(
+                    &quot;Invalid SOAP endpoint URI specified for the ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            throw new RuntimeException(
+                    &quot;Unable to instantiate the ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        }</pre>
+			<pre>        // Required for HTTP session state management on the current proxy
+        ((ICntMgmtWSBindingStub) proxy).setMaintainSession(true);</pre>
+			<pre>        if (clientId != null) {
+            // Used to maintain the HTTP session state accross distinct proxies
+            HandlerInfo info = new HandlerInfo();
+            info.setHandlerClass(CustomSessionHandler.class);
+            Map handlerConfig = new HashMap();
+            handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);
+            info.setHandlerConfig(handlerConfig);</pre>
+			<pre>            HandlerRegistry registry = locator.getHandlerRegistry();
+            String portName = locator.getENOVWSCntMgmtCppPortWSDDServiceName();
+            QName name = new QName(portName);
+            List chain = registry.getHandlerChain(name);
+            chain.add(info);
+        }</pre>
+			<pre>        // Increase the default client time-out
+        ((ICntMgmtWSBindingStub) proxy).setTimeout(timeOut);
+    }</pre>
+			<pre> }</pre>
+			</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p><strong>(1)</strong>: in order to maintain the HTTP session state between
+successive calls performed using the same proxy instance, the <code>setMaintainSession</code>
+method must be used. This is mandatory in the context of ENOVIA LCA V5 CAA Web
+services,<br>
+<strong>(2)</strong>: the default timeout is set to 60 seconds. This value can
+be increased in order to avoid potential issues at runtime, such as losing the
+HTTP connection before receiving the SOAP response. For security, the timeout is
+set to 360 seconds (the value specified in the code is in milliseconds),<br>
+<strong>(3)</strong>: when security is enabled, it is mandatory to set the <code>username</code>
+and <code>password</code> attributes on the generated proxy. The values
+specified must match a valid set of credentials for the Basic Authentication
+mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.4"></a>Creating ENOVIA LCA V5 Document</h4>
+<p>ENOVIA LCA V5 Document can be created using the following method, which is
+available through the generated <code>ICntMgmtWS</code> proxy interface:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code>public Status createDocument(ENOVIA iObjects,<br>
+			&nbsp;&nbsp;ENOVIAHolder oObjects) throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>[in] iObjects</code></td>
+			<td>&nbsp;ENOVIA_VPMDocumentRevision object with a unique V_ID for
+			ENOVIA_VPMTPDocumentMaster</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oUserContexts</code></td>
+			<td>&nbsp;Return the created document revision object</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>createDocument</code>
+method:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppWrapper {
+ ....
+    public ENOVIA createDocument(String docID, String docName, String domain)
+            throws Exception {
+        System.out.println(&quot;&gt;&gt;&gt; Invoking 'createDocument' on ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        if (docID == null) {
+            throw new IllegalArgumentException(&quot;Document ID is null&quot;);
+        } else if (docName == null) {
+            throw new IllegalArgumentException(&quot;Document name is null&quot;);
+        } else if (domain == null) {
+            throw new IllegalArgumentException(&quot;Document domain is null&quot;);
+        }
+        System.out.println(&quot;Document domain: &quot; + domain);
+        System.out.println(&quot;Document ID: &quot; + docID);
+        System.out.println(&quot;Document name: &quot; + docName);</pre>
+			<pre>        // Create input data
+        ENOVIA_VPMDocumentRevision vpmDocumentRevision = new ENOVIA_VPMDocumentRevision();
+        vpmDocumentRevision.setDomain(domain);
+        vpmDocumentRevision.setENOVIA_VPMTPDocumentMasterV_ID(docID);
+        vpmDocumentRevision.setENOVIA_VPMTPDocumentMasterV_name(docName);</pre>
+			<pre>        ENOVIA_VPMDocumentRevision[] vpmDocumentRevisions = { vpmDocumentRevision };
+        ENOVIA input = new ENOVIA();
+        input.setENOVIA_VPMDocumentRevision(vpmDocumentRevisions);
+        ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>        // Invoke create document on remote Web service
+        try {
+            Status status = proxy.createDocument(input, resultSet);
+            System.out.println(&quot;Status: &quot; + status.getStatus());
+        } catch (CATServiceExceptionType e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new Exception(&quot;Failed to create document(s)&quot;, t);
+        }</pre>
+			<pre>        // Process output data
+        if (resultSet == null || resultSet.value == null) {
+            throw new Exception(&quot;Failed to create document(s)&quot;);
+        }
+        return resultSet.value;
+    }
+}</pre>
+			<code><br>
+			</code></td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.5"></a>Attaching ENOVIA LCA V5 Document to ENOVIA LCA V5 Part</h4>
+<p>ENOVIA LCA V5 Document can be attached to an existing part using the
+following method, which is available through the generated <code>ICntMgmtWS</code>
+proxy interface:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code>public Status attachDocument(Identifier iParentId,<br>
+			&nbsp;&nbsp;IdentifierArrayType iDocumentIds,<br>
+			&nbsp;&nbsp;String iAttachType,<br>
+			&nbsp;&nbsp;String iDocRole) throws RemoteException, CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+</table>
+<p><u>Prerequisite</u>: A ENOVIA LCA V5 Part Object should be existing.</p>
+<p>This method accepts the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>[in] iParentId</code></td>
+			<td>&nbsp;Part object identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iDocumentIds</code></td>
+			<td>&nbsp;Document Identifier(s)</td>
+		</tr>
+		<tr>
+			<td><code>[in] iAttachType</code></td>
+			<td>&nbsp;Representation&quot; or &quot;Documentation&quot;</td>
+		</tr>
+		<tr>
+			<td><code>[in] iDocRole</code></td>
+			<td>&nbsp;Primary&quot; or &quot;Secondary&quot;</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code can demonstrates the use of the <code>attachDocument()</code>
+method:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppWrapper {
+.....
+    public void attachDocument(String partUUID,
+                               String[] docUUIDs,
+                               String attachType,
+                               String role) throws Exception {
+        System.out.println(&quot;&gt;&gt;&gt; Invoking 'attachDocument' on ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        if (partUUID == null) {
+            throw new IllegalArgumentException(&quot;Part reference UUID is null&quot;);
+        } else if (docUUIDs == null) {
+            throw new IllegalArgumentException(&quot;Document UUID array is null&quot;);
+        } else if (attachType == null) {
+            throw new IllegalArgumentException(&quot;Attach type is null&quot;);
+        } else if (role == null) {
+            throw new IllegalArgumentException(&quot;Role is null&quot;);
+        }
+        System.out.println(&quot;Part reference UUID: &quot; + partUUID);
+        System.out.println(&quot;Attach type: &quot; + attachType);
+        System.out.println(&quot;Role: &quot; + role);
+        for (int i = 0; i &lt; docUUIDs.length; i++) {
+            System.out.println(&quot;Document UUID[&quot; + i + &quot;]: &quot; + docUUIDs[i]);
+        }</pre>
+			<pre>        // Create input data
+        Identifier partId = CAAENOVWSUtils.toIdentifier(partUUID);
+        Identifier[] docIds = CAAENOVWSUtils.toIdentifierArray(docUUIDs);</pre>
+			<pre>        // Invoke create document on remote Web service
+        try {
+            Status status = proxy.attachDocument(partId,
+                                                 docIds,
+                                                 attachType,
+                                                 role);
+            System.out.println(&quot;Status: &quot; + status.getStatus());
+        } catch (CATServiceExceptionType e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new Exception(&quot;Failed to attach document(s)&quot;, t);
+        }
+    }
+}</pre>
+&nbsp;</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.6"></a>Check In ENOVIA LCA V5 Document</h4>
+<p>ENOVIA LCA V5 Document can be checked in using the following method, which is
+available through the generated <code>ICntMgmtWS</code> proxy interface:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code>public Status checkIn(Identifier iDocumentId,<br>
+			&nbsp;&nbsp;String iFileName,<br>
+			&nbsp;&nbsp;String iVaultName,<br>
+			&nbsp;&nbsp;byte[] iData,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>[in] iDocumentId</code></td>
+			<td>&nbsp;The Document revision identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iFileName</code></td>
+			<td>&nbsp;The desired doc filename</td>
+		</tr>
+		<tr>
+			<td><code>[in] iVaultName</code></td>
+			<td>&nbsp;The target vault name (optional, uses default)</td>
+		</tr>
+		<tr>
+			<td><code>[in] iData</code></td>
+			<td>&nbsp;Binary document file contents</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td>&nbsp;Modified Document file object and attributes</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>The following code demonstrates the use of the <code>checkIn</code> method:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppWrapper {
+.....</pre>
+			<pre>    public ENOVIA ckeckIn(String docUUID,
+                          String fileName,
+                          String vaultName,
+                          byte[] data) throws Exception {
+        System.out.println(&quot;&gt;&gt;&gt; Invoking 'checkIn' on ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        if (docUUID == null) {
+            throw new IllegalArgumentException(&quot;Document UUID is null&quot;);
+        } else if (fileName == null) {
+            throw new IllegalArgumentException(&quot;Filename is null&quot;);
+        } else if (vaultName == null) {
+            throw new IllegalArgumentException(&quot;Vault name is null&quot;);
+        } else if (data == null) {
+            throw new IllegalArgumentException(&quot;Data byte array is null&quot;);
+        }
+        System.out.println(&quot;Document UUID: &quot; + docUUID);
+        System.out.println(&quot;Filename: &quot; + fileName);
+        System.out.println(&quot;Vault name: &quot; + vaultName);
+        System.out.println(&quot;Data: &quot; + data);</pre>
+			<pre>        // Create input data
+        Identifier docId = CAAENOVWSUtils.toIdentifier(docUUID);
+        ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>        // Invoke create document on remote Web service
+        try {
+            Status status = proxy.checkIn(docId,
+                                          fileName,
+                                          vaultName,
+                                          data,
+                                          resultSet);
+            System.out.println(&quot;Status: &quot; + status.getStatus());
+        } catch (CATServiceExceptionType e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new Exception(&quot;Failed to check in document(s)&quot;, t);
+        }</pre>
+			<pre>        // Process output data
+        if (resultSet == null || resultSet.value == null) {
+            throw new Exception(&quot;Failed to check in document(s)&quot;);
+        }
+        return resultSet.value;
+    }</pre>
+			<pre>}</pre>
+&nbsp;</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.7"></a>Check Out ENOVIA LCA V5 Document</h4>
+<p>ENOVIA LCA V5 Document can be checked out using the following method, which
+is available through the generated <code>ICntMgmtWS</code> proxy interface:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code>public Status checkOut(Identifier iDocumentId,<br>
+			&nbsp;&nbsp;ByteArrayHolder oData,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType</code></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>[in] iDocumentId</code></td>
+			<td>&nbsp;Identifier of the Document Revision</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oData</code></td>
+			<td>&nbsp;Binary document file contents</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td>&nbsp;Structure containing the checked-out document file object and
+			attributes</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>The following code demonstrates the use of the <code>checkOut</code> method:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppWrapper {
+    ........</pre>
+			<pre>    public ENOVIA checkOut(String docUUID) throws Exception {
+        System.out.println(&quot;&gt;&gt;&gt; Invoking 'checkOut' on ENOVWSCntMgmtCpp CAA Web service proxy&quot;);
+        if (docUUID == null) {
+            throw new IllegalArgumentException(&quot;Document UUID is null&quot;);
+        }
+        System.out.println(&quot;Document UUID: &quot; + docUUID);</pre>
+			<pre>        // Create input data
+        Identifier docId = CAAENOVWSUtils.toIdentifier(docUUID);
+        ENOVIAHolder resultSet = new ENOVIAHolder();
+        ByteArrayHolder data = new ByteArrayHolder();</pre>
+			<pre>        // Invoke create document on remote Web service
+        try {
+            Status status = proxy.checkOut(docId, data, resultSet);
+            System.out.println(&quot;Status: &quot; + status.getStatus());
+        } catch (CATServiceExceptionType e) {
+            throw e;
+        } catch (Throwable t) {
+            throw new Exception(&quot;Failed to check out document(s)&quot;, t);
+        }</pre>
+			<pre>        // Process output data
+        if (resultSet == null || resultSet.value == null) {
+            throw new Exception(&quot;Failed to check out document(s)&quot;);
+        }
+        return resultSet.value;
+    }
+}</pre>
+&nbsp;</td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.8"></a>Sample Usage Scenario</h4>
+<p>The sample usage scenario consumes following CAA web services:</p>
+<ul>
+	<li>ENOVWSCntMgmtCpp CAA web service to manage document in ENOVIA LCA V5. See
+	this document,</li>
+	<li>ENOPosApplicationBinderImpl CAA web service to logon on/out ENOVIA LCA V5.
+	See [<a href="#References">2</a>] for details,</li>
+	<li>ENOVVWSProdStructCpp CAA web service to crate part in ENOVIA LCA V5. See [<a
+		href="#References">5</a>] for details.</li>
+</ul>
+<p>The following code demonstrates a sample usage scenario for the
+ENOVWSCntMgmtCpp CAA Web service:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSCntMgmtCppUseCase {
+    private String uri = null;
+    private String credUser = null;
+    private String credPwd = null;</pre>
+			<pre>    public CAAENOVWSCntMgmtCppUseCase(String uri,
+                                      String credUser,
+                                      String credPwd) {
+        this.uri = uri;
+        this.credUser = credUser;
+        this.credPwd = credPwd;
+    }</pre>
+			<pre>    public void runSampleUsageScenario(String enoviaUser) {
+        boolean success = false;
+        Exception exception = null;
+        CAAENOPosApplicationBinderImplWrapper binderWrapper = null;
+        SessionToken sessionToken = null;</pre>
+			<pre>        try {
+            // ------------------------------------------------------------
+            // Step 1 - Instantiate and configure the proxy
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;STEP 1: Instantiating and configuring CAA Web service proxy&quot;);</pre>
+			<pre>            String clientId = new Long(System.currentTimeMillis()).toString();
+            int timeOut = 360000;</pre>
+			<pre>            // Instantiate the wrapper client class
+            binderWrapper = new CAAENOPosApplicationBinderImplWrapper(clientId,
+                    uri, credUser, credPwd, timeOut);
+            CAAENOVWSProdStructCppWrapper prodStructWrapper = new CAAENOVWSProdStructCppWrapper(
+                    clientId, uri, timeOut);
+            CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper = new CAAENOVWSCntMgmtCppWrapper(
+                    clientId, uri, timeOut);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 2 - Open session with ENOVIA LCA V5
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 2: Opening session with ENOVIA LCA V5&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            String[] userContexts = binderWrapper.getUserContexts(enoviaUser);</pre>
+			<pre>            System.out.println(&quot;Found &quot; + userContexts.length + &quot; context(s) in database&quot;);
+            System.out.println(&quot;Displaying list of available contexts:&quot;);
+            for (int i = 0; i &lt; userContexts.length; i++) {
+                System.out.println(&quot;Context[&quot; + i + &quot;]: &quot; + userContexts[i]);
+            }</pre>
+			<pre>            System.out.println(&quot;\n--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 3: Logging on to ENOVIA LCA V5&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            if (userContexts.length == 0) {
+                throw new Exception(&quot;No context found for the user specified&quot;);
+            }
+            sessionToken = binderWrapper.login(userContexts[0]);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 3 - Create 2 documents
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 3: Creating 2 documents&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            String docId1 = &quot;CAAWSCnt1&quot; + System.currentTimeMillis(); // the VID
+            // has to
+            // be
+            // unique
+            String docName1 = &quot;Doc1&quot; + docId1;
+            String domain = &quot;DOCDIR&quot;;</pre>
+			<pre>            ENOVIA createDocResultSet1 = cntMgmtWrapper.createDocument(docId1,
+                                                                       docName1,
+                                                                       domain);</pre>
+			<pre>            String[] docUUIDs1 = cntMgmtWrapper.getENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+            if (docUUIDs1.length &gt; 1) {
+                throw new Exception(
+                        &quot;Invalid state: more than 1 document was returned&quot;);
+            } else if (docUUIDs1.length != 1) {
+                throw new Exception(&quot;Failed to create the document&quot;);
+            }
+            String docUUID1 = docUUIDs1[0];</pre>
+			<pre>            CAAENOVWSUtils.displayResults(createDocResultSet1, 1);</pre>
+			<pre>            String docId2 = &quot;CAAWSCnt2&quot; + System.currentTimeMillis();
+            String docName2 = &quot;Doc2&quot; + docId2;</pre>
+			<pre>            ENOVIA createDocResultSet2 = cntMgmtWrapper.createDocument(docId2,
+                                                                       docName2,
+                                                                       domain);</pre>
+			<pre>            String[] docUUIDs2 = cntMgmtWrapper.getENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet2);
+            if (docUUIDs2.length &gt; 1) {
+                throw new Exception(
+                        &quot;Invalid state: more than 1 document was returned&quot;);
+            } else if (docUUIDs2.length != 1) {
+                throw new Exception(&quot;Failed to create the document&quot;);
+            }
+            String docUUID2 = docUUIDs2[0];</pre>
+			<pre>            CAAENOVWSUtils.displayResults(createDocResultSet2, 1);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 4 - Create part
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 4: Creating part reference&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            String partNumber = &quot;CAAWSCntPrt&quot; + System.currentTimeMillis();</pre>
+			<pre>            ENOVIA createPartResultSet = prodStructWrapper.createPartRef(new String[] { partNumber },
+                                                                         &quot;PRODUCT&quot;,
+                                                                         &quot;FALSE&quot;);</pre>
+			<pre>            String[] partRefUUIDs = prodStructWrapper.getENOVIA_VPMPartVersionUUIDs(createPartResultSet);
+            if (partRefUUIDs.length &gt; 1) {
+                throw new Exception(
+                        &quot;Invalid state: more than 1 part reference was returned&quot;);
+            } else if (partRefUUIDs.length != 1) {
+                throw new Exception(&quot;Failed to create part reference&quot;);
+            }
+            String partRefUUID = partRefUUIDs[0];</pre>
+			<pre>            CAAENOVWSUtils.displayResults(createPartResultSet, 1);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 5 - Attach document to part
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 5: Attaching document to part&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            String attachType = &quot;Primary&quot;; // &quot;Primary&quot; or &quot;Secondary&quot;
+            String role = &quot;Documentation&quot;; // &quot;Representation&quot; or
+            // &quot;Documentation&quot;
+            String[] docUUIDs = { docUUID1, docUUID2 };</pre>
+			<pre>            cntMgmtWrapper.attachDocument(partRefUUID,
+                                          docUUIDs,
+                                          attachType,
+                                          role);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 6 - Check in document
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 6: Check in document&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            String fileName = &quot;CAAFileTestForCntCheckIn.txt&quot;;
+            String vaultName = &quot;&quot;;
+            String fileContent = &quot;asasasasasaasasasasaskljadlkfhslkdfhsdlfhklsdh;asdhjl;dfhsdhjksdfhkshjkshjksdhfjksdhfjksd&quot;;
+            byte[] data = fileContent.getBytes();</pre>
+			<pre>            ENOVIA checkInResultSet = cntMgmtWrapper.ckeckIn(docUUID1,
+                                                             fileName,
+                                                             vaultName,
+                                                             data);</pre>
+			<pre>            CAAENOVWSUtils.displayResults(checkInResultSet, 1);</pre>
+			<pre>            // ------------------------------------------------------------
+            // Step 7 - Check out document
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 7: Check out document&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            ENOVIA checkOutResultSet = cntMgmtWrapper.checkOut(docUUID1);</pre>
+			<pre>            CAAENOVWSUtils.displayResults(checkOutResultSet, 1);</pre>
+			<pre>            success = true;
+        } catch (CATServiceExceptionType e) {
+            exception = e;
+        } catch (Exception e) {
+            exception = e;
+        } finally {
+            // ------------------------------------------------------------
+            // Step 4 - Terminate opened session
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP 5: Terminating opened session with ENOVIA LCA V5&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            // The session must be closed even if a call to a method on the
+            // ENOVWSCntMgmtCpp CAA Web service fails
+            try {
+                binderWrapper.logout(sessionToken);
+            } catch (Exception e) {
+                System.err.println(&quot;Failed to logout gracefully&quot;);
+            }
+        }</pre>
+			<pre>        if (success) {
+            System.out.println(&quot;================================================================================&quot;);
+            System.out.println(&quot;Use case execution successful&quot;);
+        } else {
+            System.out.println(&quot;================================================================================&quot;);
+            System.out.println(&quot;Use case execution failed&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            if (exception instanceof CATServiceExceptionType) {
+                CATServiceExceptionType e = (CATServiceExceptionType) exception;
+                System.out.println(&quot;Error code: &quot; + e.getCode());
+                System.out.println(&quot;Error message: &quot; + e.getMessage1());
+                if (e.getErrorArguments() != null) {
+                    String[] errorArguments = e.getErrorArguments();
+                    System.out.println(&quot;Error arguments: &quot; + errorArguments.length);
+                    for (int i = 0; i &lt; errorArguments.length; i++) {
+                        System.out.println(&quot;\tArgument[&quot; + i + &quot;]: &quot; + errorArguments[i]);
+                    }
+                }
+            } else {
+                System.out.println(exception.getMessage());
+                if (exception.getCause() != null) {
+                    // Handle nested exceptions launched from the use case
+                    System.out.println(&quot;Exception details:&quot;);
+                    exception.getCause().printStackTrace();
+                } else if (exception.getStackTrace() != null &amp;&amp; exception.getStackTrace().length != 0) {
+                    // Handle unexpected exceptions
+                    System.out.println(&quot;Exception details:&quot;);
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+}</pre>
+&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+    <p>
+      The <code>CAAENOVWSUtils.displayResults</code> method can be found at:
+    </p>
+    <table class="code" id="table5">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\<em>&lt;Source&gt;</em>\<em>&lt;Package&gt;</em>\CAAENOVWSUtils.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: \CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em>\com\dassault_systemes\caaenovws\caaenovwsaxis1_3client</code>.
+      </li>
+    </ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the Java client binding generated using the
+Axis WSDL2Java emitter in order to consume the ENOVWSCntMgmtCpp CAA Web service.
+It also gives an overview of the methods available for that particular CAA Web
+service:</p>
+<ul style="margin-bottom: 2mm">
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<a href="#3.4">CreateDocument</a></code>: create documents.</li>
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<a href="#3.5">AttachDocument</a></code>: attach documents to parts.</li>
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<a href="#3.6">CheckIn</a></code>: check in a file for a document.</li>
+	<li>
+	<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+	<a href="#3.7">CheckOut</a></code>: check out a file for a document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">[1]</td>
+			<td><a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining
+			the Session State</a></td>
+		</tr>
+		<tr>
+			<td valign="top">[2]</td>
+			<td><a href="../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm">Consuming
+			the ENOPosApplicationBinderImp CAA Web Service</a></td>
+		</tr>
+		<tr>
+			<td valign="top">[3]</td>
+			<td valign="top" align="left"><a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building
+			and Launching a CAA Web Service Use Case</a></td>
+		</tr>
+		<tr>
+			<td valign="top">[4]</td>
+			<td><a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating
+			a Java Client Binding</a></td>
+		</tr>
+		<tr>
+			<td valign="top">[5]</td>
+			<td><a href="CAAENOVWSProdStructCppClient.htm">Consuming ENOVWSProdStructCpp
+			CAA Web Service</a></td>
+		</tr>
+		<tr>
+			<td valign="top">[6]</td>
+			<td><a href="../CAAENOVWSTechArticles/SelectExpression.htm">SelectExpression</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [Jun 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<p><i>Copyright &#169; 1994-2006,&nbsp; Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+
+
+
+

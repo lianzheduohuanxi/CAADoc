@@ -1,0 +1,310 @@
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Plates</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Plates</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to modify existing plates and
+		advanced plates. This macro modifies the existing plates created using the 
+		<a href="CAASfdCreatePlate.htm">CAASfdCreatePlate</a> macro.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASfdEditPlate is launched in CATIA [<a href="#References">1</a>].
+		First open CAASfdEditPlate.CATPart in the samples directory.</p>
+		<p><a href="CAASfdEditPlateSource.htm" target="Source">CAASfdEditPlate.CATScript</a>
+		 is located in the CAAScdSfdUseCases.
+		<a href="macros/CAASfdEditPlate.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASfdEditPlate includes nine steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Plates</a></li>
+			<li><a href="#Step5">Retrieving the Split Plates of the Seamed Shell Super Plate</a></li>
+			<li><a href="#Step6">Modifying the Split Plates Retrieved (Child Plate)</a></li>
+			<li><a href="#Step7">Retrieving and Modifying the Deck Plate</a></li>
+			<li><a href="#Step8">Retrieving and Modifying the Transverse Bulkhead</a></li>
+			<li><a href="#Step9">Updating the Part Document</a></li>
+		</ol>
+		<p><img alt="Edit Plates" src="images/CAASfdEditPlate.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the  CAASfdEditPlate.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+Sub CATMain()
+  Dim ObjPart  As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>This step describes how to get the SfmManager object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Get the Manager Object
+  Dim ManagerObj  As  SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Plates</a></h4>
+		<p>This step describes how to get the plate collection and how to get one specific item in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ 'RETRIEVING THE SUPERPLATES
+  Dim SuperPlates As References
+  Set SuperPlates = ManagerObj.GetSuperPlates
+  Dim ShellSuperPlate1, ShellSuperPlate2, DeckSuperPlate, TBHSuperPlate As SfmSuperPlate
+  Set ShellSuperPlate1 = SuperPlates.Item(1)
+  Set ShellSuperPlate2 = SuperPlates.Item(2)
+  Set DeckSuperPlate = SuperPlates.Item(3)
+  Set TBHSuperPlate = SuperPlates.Item(4)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Retrieving the Split Plates of the Seamed Shell Super Plate</a></h4>
+<p>This step describes how to get the child split plate of ShellSuperPlate1.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Retrieving the SplitPlates of ShellSuperPlate
+  Dim ShellSplitPlateRefs As References
+  Set ShellSplitPlateRefs = ShellSuperPlate1.SplitPlates
+  Dim ShellSplitPlateRef1, ShellSplitPlateRef2 As Reference
+  Set ShellSplitPlateRef1 = ShellSplitPlateRefs.Item(1)
+  Set ShellSplitPlateRef2 = ShellSplitPlateRefs.Item(2)
+
+  'Getting Selection Object
+  Dim SelectionObj As Selection
+  Set SelectionObj = CATIA.ActiveDocument.Selection
+
+  'Adding SplitPlate(as Reference) to Selection Object
+  SelectionObj.Add ShellSplitPlateRef1
+
+  'To get SplitPlate1 as SfmSuperPlate
+  Dim ShellSplitPlate1 As SfmSuperPlate
+  Set ShellSplitPlate1 = SelectionObj.FindObject("CATIASfmSuperPlate")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Modifying the Split Plates Retrieved (Child Plate)</a></h4>
+		<p>First, we are retrieving the thickness, material, and grade of the child plate,
+		and then we modify them.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Retrieving and Modifying the Attributes of ChildPlate
+  Dim Thickness1 As Double
+  Dim material1 As String
+  Dim grade1 As String
+  ShellSplitPlate1.GetSplitPlateAttributes 1, Thickness1, material1, grade1
+  ShellSplitPlate1.SetSplitPlateAttributes 1, 30, "Steel", "A42"
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Retrieving and Modifying the Deck Plate</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  SelectionObj.Add DeckSuperPlate
+  Dim DeckPlate As SfmSuperPlate
+  Set DeckPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  'Retrieving SuperPlate's Support
+  Dim DeckSupport As Reference
+  Set DeckSupport = DeckPlate.Support
+  'Setting and Retrieving the SuperPlate's support offset
+  DeckPlate.SupportOffset = "30.0"
+  Dim DeckSupportOffset As Double
+  DeckSupportOffset = DeckPlate.SupportOffset
+  'Retrieving the SuperPlate's limit mode
+  Dim LimitMode As Long
+  LimitMode = DeckPlate.LimitMode
+  'Retrieving the Limits Of SuperPlate
+  Dim DeckPlateLimits As References
+  Set DeckPlateLimits = DeckPlate.Limits
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Retrieving and Modifying the Transverse Bulkhead</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'EDITING THE TRANSVERSE BULKHEAD SUPERPLATE
+  SelectionObj.Add TBHSuperPlate
+  Dim TBHPlate As SfmSuperPlate
+  Set TBHPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+
+  'Getting Limits Of SuperPlate
+  Dim TBHPlateLimits As References
+  Set TBHPlateLimits = TBHPlate.Limits
+
+  'Setting 2nd Limit as Last Limit
+  TBHPlate.SetAsLastLimit (2)
+  'Adding One More Limit
+  Dim TBHPlateNewLimit As AnyObject
+  Set TBHPlateNewLimit = ObjPart.FindObjectByName("LONG.5")
+  Dim TBHPlateNewLimitRef As Reference
+  Set TBHPlateNewLimitRef = ObjPart.CreateReferenceFromObject(TBHPlateNewLimit)
+  Dim TBHPlateNewOrnt As Long
+  TBHPlateNewOrnt = 4
+  TBHPlate.AddLimit TBHPlateNewLimitRef, TBHPlateNewOrnt
+
+  'Inverting the limit orientation of 4th Limit
+  TBHPlate.InvertLimit (4)
+  'Retrieving and Modifying the Support of SuperPlate
+  Dim TBHPlateSupport As Reference
+  Set TBHPlateSupport = TBHPlate.Support
+  Dim TBHPlateNewSupport As AnyObject
+  Set TBHPlateNewSupport = ObjPart.FindObjectByName("CROSS.100")
+   Dim TBHPlateNewSupportRef As Reference
+  Set TBHPlateNewSupportRef = ObjPart.CreateReferenceFromObject(TBHPlateNewSupport)
+  
+  TBHPlate.Support = TBHPlateNewSupportRef
+   
+  'To get Category
+  Dim TBHPlateCategory As String
+  TBHPlateCategory = TBHPlate.Category
+
+  'Retrieving and Modifying the thickness,material,grade of SuperPlate
+  Dim TBHPlateThickness As Double
+  TBHPlateThickness = TBHPlate.Thickness
+  Dim TBHPlateMaterial, TBHPlateGrade As String
+  TBHPlateMaterial = TBHPlate.Material
+  TBHPlateGrade = TBHPlate.Grade
+  
+  TBHPlate.Material = "Steel"
+  TBHPlate.Grade = "A45"
+  TBHPlate.Thickness = "35.0"
+ ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Updating the Part Document</a></h4>
+		<p>The Part has to be updated to  generate the geometrical representations of the modified objects. 
+Once this done, the updated objects are visible in the 3D window and in the specification tree.
+</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  'Updating the Part with all modifications
+	ObjPart.Update
+End Sub
+</pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit plate objects.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

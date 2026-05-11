@@ -1,0 +1,439 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">
+</script>
+<title>Using APIs on CATIElbSupport</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Library</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using APIs on CATIElbSupport</h3>
+      <em>Retrieving support data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAElecSupport</i> use case. This use
+      case explains how to use APIs on CATIElbSupport.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAElecSupport Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAElecSupport Do</a></li>
+            <li><a href="#How">How to Launch CAAElecSupport </a></li>
+            <li><a href="#Where">Where to Find the 
+            CAAElecSupport  Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><b><a href="#History">History</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming with 
+CATIA ELB Interfaces and how use APIs on CATIElbSupport.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAElecSupport Use Case</h3>
+<p>CAAElecSupport  is a use case of the CAAElecDeviceItf.edu framework
+that illustrates the use of the CATIElbSupport interface capabilities of 
+the ElecDeviceItf framework .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAElecSupport  Do</h4>
+<p> The goal of CAAElecSupport  is to test the CATIElbSupport  API on Each Support.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAElecSupport </h4>
+<p>To launch CAAElecSupport , you will need to set up the build time
+environment, then compile CAAElecSupport.cpp along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">1</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAElecSupport  Inputdata  N &quot;</pre>
+<ul>
+	<li><b>Inputdata</b> - the path to the Cases excluding the suffix which is the case number. 
+	<li><b>N</b> - Number of the cases to be tested
+	<p>You may reference the supplied CATProduct document called &quot;Top.CATProduct&quot;in various cases 
+	found in:</p>
+	<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" width="100%" id="AutoNumber1">
+    <tr>
+      <td width="5%" style="border-style: none; border-width: medium">Unix</td>
+      <td width="95%" style="border-style: none; border-width: medium"><code>InstallRootDirectory/CAAElecDeviceItf.edu/CNext/resources/graphic/CAAElecSupport</code></td>
+    </tr>
+    <tr>
+      <td width="5%" style="border-style: none; border-width: medium">Windows</td>
+      <td width="95%" style="border-style: none; border-width: medium"><code>InstallRootDirectory\CAAElecDeviceItf.edu\CNext\resources\graphic\CAAElecSupport</code></td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAElecSupport </i> Code</h4>
+<p>CAAElecSupport  code is located in the 
+CAAElecSupport.m use case
+module of the CAAElecDeviceItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecDeviceItf.edu/CAAElecSupport.m/src/CAAElecSupport.cpp</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecDeviceItf.edu\CAAElecSupport.m\src\CAAElecSupport.cpp</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p>This sample deals with the following classes:</p>
+<table>
+	<tr>
+		<td><i>CATSessionServices</i></td>
+		<td>Class for managing the session</td>
+	</tr>
+	<tr>
+		<td><i>CATDocument</i></td>
+		<td>Class for the document base class</td>
+	</tr>
+	<tr>
+		<td><i>CATDocumentServices</i></td>
+		<td>Class for managing document in the session</td>
+	</tr>
+	<tr>
+		<td><i>CATIDocRoots</i></td>
+		<td>Class for browsing root object in document</td>
+	</tr>
+	<tr>
+		<td><i>CATIEleDocServices</i></td>
+		<td>Interface dedicated electrical environment initialization</td>
+	</tr>
+  <tr>
+		<td><i>CATIElbSupport</i></td>
+		<td>Interface dedicated electrical support</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now first comment the Electrical environment and it&#8217;s components creation 
+by looking at the code of the CAAElecSupport. There are 6 logical steps in CAAElecSupport:</p>
+<table width="100%">
+	<tr>
+		<td><b>#</b></td>
+		<td><b>Step</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step1">1</a></td>
+		<td valign="top">Creating the session and opening an existing CATProduct</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step2">2</a></td>
+		<td valign="top">Retrieving the root product of the opened document</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step3">3</a></td>
+		<td valign="top">Initializing Electrical Environment</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step4">4</a></td>
+		<td valign="top"> Retrieving all the supports under the root product </td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step5">5</a></td>
+		<td valign="top">Testing the API on  Support of all cases</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step6">6</a></td>
+		<td valign="top">Epilog</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the session and opening an existing CATProduct</h4>
+<p>We need a <i>CATSession</i> pointer to create the Session.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATSession *pSession = NULL;
+char *sessionName = &quot;CAA_ElbSupport_Session&quot;;
+HRESULT rc = ::Create_Session(sessionName,pSession);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>We need a CATDocument pointer to opening the document.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATDocument *pDoc = NULL;
+rc = CATDocumentServices::OpenDocument(sTmpDocPath, pDoc);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2">Retrieving the root product of the opened document</a></h4>
+<p>Retrieving the root product of the opened document <a href="#References"></a>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATIProduct* piRootProduct = NULL;
+    CATIDocRoots * pDocRoots = NULL;
+    rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,(void**) &amp;pDocRoots);
+    ...
+    CATListValCATBaseUnknown_var* pListRootProduct = pDocRoots-&gt;GiveDocRoots();
+    ...
+    if  ((NULL != pListRootProduct) &amp;&amp; (0 &lt; pListRootProduct-&gt;Size()))
+    {  
+      CATBaseUnknown_var spCBU ((*pListRootProduct)[1]);
+      if (NULL_var != spCBU)
+        rc = spCBU-&gt;QueryInterface(IID_CATIProduct,(void**) &amp;piRootProduct );
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3">Initializing Electrical Environment</a></h4>
+<p>To initialize the electrical environment, use the CATIElecDocServices 
+interface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> CATIEleDocServices * piElecDocServices = NULL;
+
+rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a> Retrieving all the supports under the root product </h4>
+<p>Use the CATIProduct::GetAllChildren method to retrieve the Support.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	  CATListValCATBaseUnknown_var* pListAll = NULL;
+    CATListValCATBaseUnknown_var* pListSupports = NULL;
+    pListSupports =  new CATListValCATBaseUnknown_var();
+    
+    pListAll = piRootProduct-&gt;GetAllChildren();
+    ...
+    int allChildren = 0;
+
+    if(NULL != pListAll)
+      allChildren = pListAll-&gt;Size();
+
+    for ( int m=1; m&lt;=allChildren ; m++)
+    {
+      CATIElbSupport *pSupport = NULL;
+      CATBaseUnknown_var hUnkSupport = ((*pListAll)[m]);
+      if (NULL_var != hUnkSupport)
+        rc = hUnkSupport-&gt;QueryInterface(IID_CATIElbSupport,(void**) &amp;pSupport);
+      if( (SUCCEEDED(rc)) &amp;&amp; (NULL!= pSupport) &amp;&amp; (NULL!=pListSupports) )
+       {
+         pListSupports-&gt;Append(hUnkSupport);
+       }
+       if(NULL != pSupport)
+         pSupport-&gt;Release();
+    }
+    ...
+     int NumberOfSupp = pListSupports-&gt;Size();	    
+      </pre>
+    </td>
+  </tr>
+</table>
+<p> Now CATIElbSupport API will be tested on support from all input cases.</p> 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment-------------------------------------> 	  
+<h4><a name="Step5"></a>Testing the API on  Support of all cases.</h4>
+<p>Testing the API on  Support of all Cases</p>
+<p>Case 1 and Case 2</p>
+<table class="code">
+  <tr>
+    <td>
+	<pre>...   
+  
+      CATIElbSupport *pSupport = NULL;
+      int NbSections=0;
+      CATListValCATBaseUnknown_var *pListOfSegments = NULL;
+      CATListOfDouble *pListOfSegmentU = NULL;
+      CATListOfDouble *pListOfSegmentV = NULL;   
+      CATListValCATBaseUnknown_var *pListOfSegments2 = NULL;
+      CATListOfDouble *pListOfSegmentU2 = NULL;
+      CATListOfDouble *pListOfSegmentV2 = NULL;
+      CATListOfDouble *pListOfSegmentU3 = NULL;
+      CATListOfDouble *pListOfSegmentV3 = NULL; 
+      CATBaseUnknown_var hUnkSupport = ((*pListSupports)[i]); 
+
+      if (NULL_var != hUnkSupport)
+        rc = hUnkSupport-&gt;QueryInterface(IID_CATIElbSupport,(void**) &amp;pSupport); 
+
+      if (SUCCEEDED(rc) &amp;&amp; (NULL!= pSupport))
+      {
+
+    <p> // To know the number of sections on support.</p> 
+        rc = pSupport-&gt;GetNumberOfSections(NbSections);
+		...
+
+    <p> // To list the segments passing through support and its U and V position.</p> 
+          rc = pSupport-&gt;ListSegments(&amp;pListOfSegments,1,&amp;pListOfSegmentU,&amp;pListOfSegmentV);
+		...
+
+    <p> // U and V position of segment in support can be modified using SetSegmentPosition.</p> 
+          pListOfSegmentU3 = new CATListOfDouble;
+          pListOfSegmentV3 = new CATListOfDouble;
+          pListOfSegmentU3-&gt;Append(0.20);
+          pListOfSegmentV3-&gt;Append(0.30);
+
+          rc = pSupport-&gt;SetSegmentPositions(pListOfSegments,pListOfSegmentU3,pListOfSegmentV3,1);
+		...
+
+    <p> // Modified U and V position of segment in support can be checked using ListSegment again.</p> 
+          rc = pSupport-&gt;ListSegments(&amp;pListOfSegments2,1,&amp;pListOfSegmentU2,&amp;pListOfSegmentV2);
+          if((SUCCEEDED(rc)) &amp;&amp; (0.20==(*pListOfSegmentU2)[1]) &amp;&amp; (0.30==(*pListOfSegmentV2)[1]))
+          { ... }
+    ...         
+      </pre>
+    </td>
+  </tr>
+</table>
+
+<p><b>Case 1</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_Case1_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_Case1.jpg" width="877" height="706"></p>
+
+<p><b>Case 2</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case2_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case2_list.jpg" width="877" height="706"></p>
+<p>ListSegments successful and SetSegmentPositions successful. </p>
+<p> For all the cases use ListSegments to know the number of segment passing through various supports. </p>
+
+<p><b>Case 3</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case3_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case3_list.jpg" width="877" height="706"></p>
+
+<p><b>Case 4</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case4_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case4_list.jpg" width="877" height="706"></p>
+
+<p><b>Case 5</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case5_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case5_list.jpg" width="877" height="706"></p>
+
+<p><b>Case 6</b></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case6_top.jpg" width="877" height="706"></p>
+<p align="center">
+<img border="0" src="images/CAAEleSupport_case6_list.jpg" width="877" height="706"></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment-------------------------------------> 	  
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step6"></a>Epilog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = CATDocumentServices::Remove(*pDoc);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To remove the document,&nbsp; use the CATDocumentServices::Remove&nbsp; method. For more
+detail on managing documents see [<a href="#References">2</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The session is deleted before exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use APIs on CATIElbSupport</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td>
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [January 2014]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2014, Dassault Systèmes. All rights reserved.</i></p>
+<p>&nbsp;</p>
+</body>
+
+</html>
+
+

@@ -1,0 +1,275 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Installing CAA RADE V5 Products in Batch Mode with UNIX</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>CAA V5 Encyclopedia</h1>
+     </td>
+     <td align="right">
+     <h2><a name="Top"></a>Installing CAA RADE V5 Products in Batch Mode with 
+     UNIX</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table>
+ <col valign="top" span="1">
+   <tr>
+     <td>
+     <img alt="Info" src="images/CAAPdiainfo.gif" width="32" height="32"></td>
+     <td>The <code>start</code> batch command lets you install CAA 
+     RADE without the graphical user interface. You can install all CAA Version 
+     5 RADE products in batch mode.
+     <p>Note that, if your Version 5 software is delivered on more than one 
+     CD-ROM, you must copy all the software to the same directory.</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>To perform a batch installation, change directory to the 
+     CD-ROM mount point and enter the command:<pre>./start</pre>
+     <p><code>start [-lic LicenseDir/License.lic] [-u CAARADEInstallDir] 
+     [-newdir] [-D] [-noLang] [-noFonts] [-TCKmode NoServer|Client|Server] 
+     [-TCKServerName name] [-TCKServerPort port] [-noCheckTCKPort] [-TCKBoot] 
+     -list|-all|-l &quot;list_to_unload&quot; [-s] [-v] [-h]</code></p>
+     <p>start Command Syntax</p>
+     <table>
+     <col valign="top" span="1">
+       <tr>
+         <td><nobr><code>-lic &quot;LicenseDir/License.lic&quot;</code></nobr></td>
+         <td>Enrolls a nodelock license. Specifies the directory and the file 
+         containing the license certificate to enroll. Make sure the directory 
+         path is enclosed like this: &quot;license dir&quot; if the directory name 
+         contains spaces.</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-u &quot;CAARADEInstallDir&quot;</code></nobr></td>
+         <td>Specifies the CAA RADE installation directory. Make sure the 
+         directory path is enclosed like this: &quot;unload dir&quot; if the directory 
+         name contains spaces. The default unload directory is:<br>
+         <code>/usr/DassaultSystemes/B28</code></td>
+       </tr>
+       <tr>
+         <td><code>-newdir</code></td>
+         <td>Creates the installation directory if it doesn't exist</td>
+       </tr>
+       <tr>
+         <td><code>-D</code></td>
+         <td>Specifies the environment directory. The default environment 
+         directory is:<br>
+         <code>/usr/DassaultSystemes/CATEnv</code></td>
+       </tr>
+       <tr>
+         <td><code>-noLang</code></td>
+         <td>Specifies the user interface languages to exclude. By default, all 
+         available languages are installed. The English language cannot be 
+         excluded. In addition to English, the available languages, associated 
+         symbols to use in this option, and associated language file 
+         installation directory are:<br>
+         <table>
+         <col align="left" span="1">
+         <col align="center" span="1">
+           <tr>
+             <th>Language</th>
+             <th>Symbol</th>
+             <th>Directory</th>
+           </tr>
+           <tr>
+             <td>French</td>
+             <td><code>fr</code></td>
+             <td><code>French</code></td>
+           </tr>
+           <tr>
+             <td>German</td>
+             <td><code>ge</code></td>
+             <td><code>German</code></td>
+           </tr>
+           <tr>
+             <td>Italian</td>
+             <td><code>it</code></td>
+             <td><code>Italian</code></td>
+           </tr>
+           <tr>
+             <td>Japanese</td>
+             <td><code>jp</code></td>
+             <td><code>Japanese</code></td>
+           </tr>
+           <tr>
+             <td>Korean</td>
+             <td><code>kr</code></td>
+             <td><code>Korean</code></td>
+           </tr>
+           <tr>
+             <td>Simplified Chinese</td>
+             <td><code>ch</code></td>
+             <td><code>Simplified_Chinese</code></td>
+           </tr>
+         </table>
+         <p>To exclude a given language, use the associated symbol. For example, 
+         to exclude the French language, enter:</p>
+         <p><code>-noLang &quot;fr&quot;</code></p>
+         <p>To exclude all the languages, excepted english, enter:</p>
+         <p><code>-noLang all</code></p>
+         <p>Note that the choice you made a first installation is definitive. 
+         You cannot add or remove languages later when installing additional 
+         configurations and/or products.</p>
+         <p>The language file installation directory is installed in the 
+         installation directory specified by the -u option, in <b>os</b>\resources\msgcatalog, 
+         where <b>os</b> is:</p>
+         <table>
+           <tr>
+             <th>Symbol</th>
+             <th>Operating System</th>
+           </tr>
+           <tr>
+             <td>aix_a64</td>
+             <td>AIX 64 bit</td>
+           </tr>
+         </table>
+         </td>
+       </tr>
+       <tr>
+         <td><code>-noFonts</code></td>
+         <td>Specifies that language-indexed fonts must not be installed. By 
+         default, language-indexed fonts are installed. These fonts are useful 
+         when installing the japanese, korean, and simplified chinese languages 
+         only.
+         <p>Note that the choice you made a first installation is definitive. 
+         You cannot add or remove fonts later when installing additional 
+         configurations and/or products.</p>
+         <p>The language-indexed fonts are installed in the installation 
+         directory specified by the -u option, in <b>os</b>\resources\fonts\Stroke.
+         <b>os</b> has the same values than above. The following files are 
+         installed</p>
+         <table>
+           <tr>
+             <th>Language</th>
+             <th>File</th>
+           </tr>
+           <tr>
+             <td>Japanese</td>
+             <td>KANJ.font</td>
+           </tr>
+           <tr>
+             <td>Korean</td>
+             <td>KOHG.font</td>
+           </tr>
+           <tr>
+             <td>Simplified Chinese</td>
+             <td>SICH.font</td>
+           </tr>
+           <tr>
+             <td>Traditional Chinese</td>
+             <td>TRCH.font</td>
+           </tr>
+         </table>
+         </td>
+       </tr>
+       <tr>
+         <td><nobr><code>-TCKMode NoServer|Client|Server</code></nobr></td>
+         <td>Specifies the tools access mode. Default is <code>NoServer</code></td>
+       </tr>
+       <tr>
+         <td><nobr><code>-TCKServerName serverName</code></nobr></td>
+         <td>Specifies the TCK server name. Useless with <code>NoServer</code> 
+         mode.</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-TCKServerPort serverPort</code></nobr></td>
+         <td>Specifies the TCK server port. Useless with <code>NoServer</code> 
+         mode.</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-</code></nobr><code>noCheckTCKPort</code></td>
+         <td>Does not check if the communication port specified using <code>
+         -TCKServerPort</code> is free.</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-TCKBoot</code></nobr></td>
+         <td>Boots the TCK server at restart. This option is of no use if CAA 
+         RADE is not installed on a server.</td>
+       </tr>
+       <tr>
+         <td><code>-list</code></td>
+         <td>Lists the configurations and products on the CD-ROM<br>
+         The arguments <b><code>-list, -all </code></b>and <b><code>-l 
+         &quot;list_to_unload&quot; </code></b>are mutually exclusive.</td>
+       </tr>
+       <tr>
+         <td><code>-all</code></td>
+         <td>Unloads all the configurations and the products on the CD-ROM<br>
+         The arguments <b><code>-list, -all </code></b>and <b><code>-l 
+         &quot;list_to_unload&quot; </code></b>are mutually exclusive.</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-l &quot;list_to_unload&quot;</code></nobr></td>
+         <td>Specifies the list of configurations and/or products to unload. You 
+         have to type the list of configurations and/or products, which you can 
+         obtain by running the command using the &quot;list&quot; argument. In the list, 
+         configuration names look like this: CDC.slt, and product names look 
+         like this: DMC.prd. Separate the names using a blank.<br>
+         The arguments <b><code>-list, -all </code></b>and <b><code>-l 
+         &quot;list_to_unload&quot; </code></b>are mutually exclusive.</td>
+       </tr>
+       <tr>
+         <td><code>-s</code></td>
+         <td>Silent mode</td>
+       </tr>
+       <tr>
+         <td><code>-v</code></td>
+         <td>Verbose mode</td>
+       </tr>
+       <tr>
+         <td><code>-h</code></td>
+         <td>Displays help</td>
+       </tr>
+       <tr>
+         <td></td>
+         <td>Reminder: if you run the command without arguments, 
+         the installation will be started using the graphical user interface.</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <h3>Examples</h3>
+ <p>The following examples install CAA RADE in batch mode. </p>
+ <ul>
+   <li>To install
+   <ul>
+     <li>In the <code>/u/RADE/V5R28</code> directory to be created by the 
+     command and the environment in <code>/u/RADE/CATEnv</code></li>
+     <li>For the english and german languages and without language-indexed fonts</li>
+     <li>The CAA RADE <code>CDC</code> configuration and <code>DMC</code> 
+     product in verbose mode</li>
+   </ul>
+   <p>Type the following command:</p>
+   <pre>start -u &quot;/u/RADE/V5R28&quot; -newdir -D &quot;/u/RADE/CATEnv&quot; -noLang &quot;fr it jp ko ch&quot; -noFonts -l &quot;CDC.slt DMC.prd&quot; -v</pre>
+   </li>
+   <li>To install in the existing <code>/u/RADE/V5R28</code> directory the <code>
+   JDV</code> configuration, type:
+   <pre>start -u &quot;/u/RADE/V5R28&quot; -l &quot;JDV.slt&quot; </pre>
+   </li>
+ </ul>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2017, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm">CAA V5 CATIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm">CAA V5 DELMIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm">CAA V5 ENOVIA</a></p>
+
+ </body>
+
+</html>

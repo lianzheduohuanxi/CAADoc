@@ -1,0 +1,129 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddCreateMember.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create a member.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddCreateMember.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+  <font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+
+  <font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+ <font color="#008000">'RETRIEVING THE SUPERPLATES</font>
+<font color="#0000FF">  Dim </font>SuperPlates<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>SuperPlates = ManagerObj.GetSuperPlates
+  
+<font color="#0000FF">  Dim </font>SuperPlate1, SuperPlate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>SuperPlate1 = SuperPlates.Item(1)
+<font color="#0000FF">  Set </font>SuperPlate2 = SuperPlates.Item(2)
+  
+  <font color="#008000">'Creating Member On a Curve</font>
+<font color="#0000FF">  Dim </font>Curve1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Curve1 = ObjPart.FindObjectByName("Intersect.2")
+<font color="#0000FF">  Dim </font>curveRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>curveRef = ObjPart.CreateReferenceFromObject(Curve1)
+  
+<font color="#0000FF">  Dim </font>MemberCurve<font color="#0000FF"> As </font>SfmMemberCurve
+<font color="#0000FF">  Set </font>MemberCurve = FactoryObj.AddMemberCrv("Beam", "C12x25", curveRef, Nothing)
+  
+  <font color="#008000">'Creating Member with PointUpToLimit</font>
+<font color="#0000FF">  Dim </font>Point1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Point1 = ObjPart.FindObjectByName("Point.5")
+<font color="#0000FF">  Dim </font>Point1Ref<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>Point1Ref = ObjPart.CreateReferenceFromObject(Point1)
+  
+<font color="#0000FF">  Dim </font>Point2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Point2 = ObjPart.FindObjectByName("Point.6")
+<font color="#0000FF">  Dim </font>Point2Ref<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>Point2Ref = ObjPart.CreateReferenceFromObject(Point2)
+  
+<font color="#0000FF">  Dim </font>MemDirection<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>MemDirection = ObjPart.FindObjectByName("xy plane")
+<font color="#0000FF">  Dim </font>MemDirRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>MemDirRef = ObjPart.CreateReferenceFromObject(MemDirection)
+  
+<font color="#0000FF">  Dim </font>MemLimit<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>MemLimit = ObjPart.FindObjectByName("DECK.5")
+<font color="#0000FF">  Dim </font>MemLimitRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>MemLimitRef = ObjPart.CreateReferenceFromObject(MemLimit)
+  
+<font color="#0000FF">  Dim </font>Member1PtUpToLimit<font color="#0000FF"> As </font>SfmMemberPointUpToLimit
+<font color="#0000FF">  Set </font>Member1PtUpToLimit = FactoryObj.AddMemberPtUpToLimit("Pillar", "C12x25", Point1Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  
+<font color="#0000FF">  Dim </font>Member2PtUpToLimit<font color="#0000FF"> As </font>SfmMemberPointUpToLimit
+<font color="#0000FF">  Set </font>Member2PtUpToLimit = FactoryObj.AddMemberPtUpToLimit("Beam", "C12x25", Point2Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  <font color="#008000">'Applying Limit to Members With DeckPlate</font>
+<font color="#0000FF">  Dim </font>PlateRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>PlateRef = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  
+  Member1PtUpToLimit.SetProfileLimit 2, PlateRef
+  
+  Member2PtUpToLimit.SetProfileLimit 2, PlateRef
+  
+  <font color="#008000">'Creating Member with two Beams and a Plane</font>
+<font color="#0000FF">  Dim </font>Plane1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Plane1 = ObjPart.FindObjectByName("DECK.2")
+<font color="#0000FF">  Dim </font>RefPlane<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>RefPlane = ObjPart.CreateReferenceFromObject(Plane1)
+  
+<font color="#0000FF">  Dim </font>Member2BeamsandPlane<font color="#0000FF"> As </font>SfmMemberPlane2Curves
+<font color="#0000FF">  Set </font>Member2BeamsandPlane = FactoryObj.AddMemberBeamsAndPlane("Beam", "C12x25", Member1PtUpToLimit, Member2PtUpToLimit, RefPlane, Nothing)
+  
+  <font color="#008000">'Retrieving the Supports of Members</font>
+<font color="#0000FF">  Dim </font>SupportRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SupportRef1 = Member1PtUpToLimit.Support
+  
+<font color="#0000FF">  Dim </font>SupportRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SupportRef2 = Member2PtUpToLimit.Support
+  
+  <font color="#008000">'Creating Member with Two Curves</font>
+<font color="#0000FF">  Dim </font>Member2Points<font color="#0000FF"> As </font>SfmMember2Points
+<font color="#0000FF">  Set </font>Member2Points = FactoryObj.AddMemberPtOnCrvPtOnCrv("Beam", "C12x25", SupportRef1, True, "0.5", SupportRef2, False, "0", Nothing)
+  
+  <font color="#008000">'Creating Member by AddMemberSurfSurf</font>
+<font color="#0000FF">  Dim </font>Surface1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Surface1 = ObjPart.FindObjectByName("CROSS.60")
+<font color="#0000FF">  Dim </font>SurfaceRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SurfaceRef1 = ObjPart.CreateReferenceFromObject(Surface1)
+  
+<font color="#0000FF">  Dim </font>Surface2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Surface2 = ObjPart.FindObjectByName("LONG.-8")
+<font color="#0000FF">  Dim </font>SurfaceRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SurfaceRef2 = ObjPart.CreateReferenceFromObject(Surface2)
+  
+<font color="#0000FF">  Dim </font>MemberSurfSurf<font color="#0000FF"> As </font>SfmMemberSurfSurf
+<font color="#0000FF">  Set </font>MemberSurfSurf = FactoryObj.AddMemberSurfSurf("Beam", "C12x25", SurfaceRef1, SurfaceRef2, Nothing)
+  
+  <font color="#008000">'Applying Limits on Infinite MemberSurfSurf</font>
+<font color="#0000FF">  Dim </font>ShellPlateRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlateRef = ObjPart.CreateReferenceFromObject(SuperPlate1)
+  
+  MemberSurfSurf.SetProfileLimit 2, PlateRef
+  MemberSurfSurf.SetProfileLimit 1, ShellPlateRef
+  
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

@@ -1,0 +1,291 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Feature Deletion</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+
+.style3 {
+	list-style-type: circle;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Deleting a Feature</h3>
+      <p><em>Explains how to delete features and their impacts on various link attrubutes</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtFeatDeletion </code>
+				use case (UC). It illustrates the steps involved to delete a feature. The 
+		impact of this deletion is that the aggregated features and the feature 
+		extensions, also get deleted, recursively. The Referenced Features 
+		however remain unaffected. An initial study of the article &quot;<strong>Understanding 
+		Feature Lifecycle</strong>&quot; [<a href="#References">1</a>] will help 
+		users to relate to this UC better.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtFeatDeletion Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtFeatDeletion&nbsp; Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtFeatDeletion</a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6FmExtFeatDeletion Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>And end user learns primarily:&nbsp;</p>
+<ul>
+	<li>The method to delete a feature</li>
+	<li>The impact of this deletion is that<ul>
+		<li class="style3">Features aggregated, are deleted recursively</li>
+		<li class="style3">Features Referenced, remain unaffected</li>
+		<li class="style3">Feature Extensions, remain unaffected</li>
+	</ul>
+	</li>
+	<li>The Credentials of the feature for delete are sufficient. Those of the 
+	aggregated and extension features, are not required though those are also 
+	deleted, as an end-result</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtFeatDeletion Use Case</h2>
+<p> The <code>CAAV5V6FmExtFeatDeletion
+</code>is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code>&nbsp; framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtFeatDeletion Do</h3>
+<p>The UC primarily illustrates that on deleting a feature, its aggregated 
+features are recursively deleted. The feature extensions to the feature deleted 
+and those of its aggregated features, are recursively deleted as well. The 
+Referenced features though, of the deleted feature and those of its aggregated 
+features, recursively remain unaffected.</p>
+<p>The UC operates on a feature model depicted in the [<a href="#Fig.1">Fig.1</a>] 
+that follows. The base features referenced in this model are defined in the 
+catalog &quot;<strong>CAAOsmCatalogSU</strong>&quot; and the feature extensions are 
+defined in the catalog &quot;<strong>CAAOsmExt2Catalog</strong>&quot;.</p>
+<table>
+	<caption style="width: 556px"><a name="Fig.1"></a>Fig.1 Feature Model </caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUCFeatDeletion_Fig1.jpg" width="546" height="327"></td>
+	</tr>
+	<p>&nbsp;</p>
+</table>
+<p>This model consists of </p>
+<ul>
+	<li>Feature <strong>Novel1</strong>* (CAAOsmNovel type), the root feature which
+<ul>
+	<li>References <strong>Publisher1</strong> (CAAOsmPublisher type)</li>
+	<li>Extends <strong>ChildrenExt1</strong> (CAAOsmChildrensNovel type)</li>
+	
+</ul>
+	</li>
+	<ul>
+		<li>Aggregates <strong>Chapter1</strong> (CAAOsmChapter type)</li>
+		<li>Aggregates <strong>Novel2</strong> feature which in turn
+		<ul>
+			<li class="style3">References <strong>Publisher2</strong> (CAAOsmPublisher type)</li>
+			<li class="style3">Extends <strong>ChidrenExt2</strong> (CAAOsmChildrensNovel type)</li>
+			<li class="style3">Aggregates <strong>Chapter2</strong> (CAAOsmChapter type)</li>
+		</ul>
+		</li>
+	</ul>
+	<p>(*) The Feature Names depicted in the [<a href="#Fig.1">Fig.1</a>] above are 
+not their display names. These names are assigned by us solely so that the model 
+could be read and the UC execution can be explained with ease.</p>
+</ul>
+<p>The UC proceeds to delete the feature <strong>Novel1 </strong>and further 
+studies its impact on the model. The final model is depicted in [<a href="#Fig.2">Fig.2</a>] that 
+follows and the impact is listed in the section ahead.</p>
+
+<table>
+	<caption style="width: 559px"><a name="Fig.2"></a>Fig. 2 Feature Model on Delete of Novel1</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUCFeatDeletion_Fig2.jpg" width="546" height="327"></td>
+	</tr>
+</table>
+<p>On deleting the feature <strong>Novel1</strong>, it is observed</p>
+<ul>
+	<li>Feature Extension <strong>ChildrenExt1</strong> is deleted</li>
+	<li>Referenced Feature <strong>Publisher1</strong>, remains unaffected</li>
+	<li>Aggregated features <strong>Chapter1</strong> 
+	and <strong>Novel2</strong> are also deleted. This deletion is recursive for 
+	aggregated features. As a result, deleting <strong>Novel2</strong>, results in<ul>
+		<li class="style3">Feature Extension <strong>ChildrenExt2</strong> is 
+		deleted</li>
+		<li class="style3">Referenced Feature <strong>Publisher2</strong>, 
+		remains unaffected</li>
+		<li class="style3">Aggregated Feature <strong>Chapter2</strong> is 
+		deleted</li>
+	</ul>
+	</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtFeatDeletion<br>
+</h3>
+<p>To launch <code>CAAV5V6FmExtFeatDeletion</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtFeatDeletion </code>along with its prerequisites, 
+set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<i><code>CAAV5V6FmExtDeletingAFeature DocumentStorageName.CATPart</code></i>&quot;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtFeatDeletion&nbsp; Code</h3>
+<p>
+<span class="style1"> <code>CAAV5V6FmExtFeatDeletion&nbsp;</code></span>code is located in the
+<code><span class="style1">CAAV5V6FmExtDeletingAFeature</span>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\<span class="style1">CAAV5V6FmExtDeletingAFeature</span>.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtDeletingAFeature.cpp</code></span>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The logical steps of <code>CAAV5V6FmExtFeatDeletion</code>&nbsp;are:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Delete a feat">Delete a Feature</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description you may see CAAObjectSpecsModeler.edu 
+V5 UC documentation.<br>
+It further creates the <strong>Credentials</strong> [<a href="#References">2</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> and
+<strong>CAAOsmExt2Catalog</strong> catalog. 
+It next builds the data model as the one depicted in [<a href="#Fig.1">Fig.1</a>] 
+above. Please refer to the use-case. All the steps in the use-case are logically 
+simple and self-explanatory as all those feature creation, aggregation, 
+referencing etc aspects have been addressed in dedicated Use-cases. In this 
+use-case article you will find only the explanation to the delete aspect.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Delete a feat"></a>Delete a Feature</h3>
+	<p>A feature is deleted with a call to <code>DeleteSelf()</code> of the <em>CATFmFeatureFacade</em> 
+	class.</p>
+<pre class="code"><strong>CATFmFeatureFacade FeatFacadeOnNovelWithBaseFeatCred(MyCredentialForBaseCatalog)</strong>;
+FeatFacadeOnNovelWithBaseFeatCred = FeatFacadeOnNovel1;
+rc = <strong>FeatFacadeOnNovelWithBaseFeatCred.DeleteSelf()</strong>;</pre>
+	<p>We delete the root Novel feature here. (<strong>Novel1</strong>, depicted 
+	in <a href="#Fig.1">Fig.1</a>). This feature is deleted by a call to 
+	<code>DeleteSelf()</code> on <code>FeatFacadeOnNovelWithBaseFeatCred</code>, a 
+	<em>CATFmFeatureFacade</em> type representing this feature. This feature 
+	facade is associated with credentials of only the catalog which defines the 
+	base feature (<strong>Novel</strong>, in this case). The credentials of the catalog defining 
+	the aggregated feature or feature extensions are not required, though the 
+	delete of the base feature deletes the aggregated features and the feature 
+	extensions, as well.</p>
+<h3>Epilog<a name="Epilog"></a></h3>
+<p>Lastly the document is saved and session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The UC illustrates the steps involved to delete a feature. The <code>DeleteSelf()</code> 
+call of the <em>CATFmFeatureFacade</em> class, realizes this deletion. When a feature is deleted, it results in a recursive deletion of its 
+aggregated features, as well. The feature extensions to the deleted feature are 
+also deleted. The Referenced features however, remains unaffected. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureLifeCycle.htm">Understanding Feature 
+		Lifecycle</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Jun 2010]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

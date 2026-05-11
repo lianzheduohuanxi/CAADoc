@@ -1,0 +1,71 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAInfSaveAsDocument.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:       Save a New Document.</font>
+<font color="#008000">'   Assumtions:   None</font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:        English </font>
+<font color="#008000">'   CATIA Level:  V5R7 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' -----------------------------------------------------------------------------------------------</font>
+    <font color="#008000">' Optional: allows to find the sample wherever it may be installed</font>
+<font color="#0000FF">    Dim </font>sDocPath<font color="#0000FF"> As </font>String
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------------------------------ </font>
+
+    <font color="#008000">' -----------------------------------------------------------------------------------------------</font>
+    <font color="#008000">' Optional: allows to specify where document should be saved</font>
+<font color="#0000FF">    Dim </font>sTmpPath<font color="#0000FF"> As </font>String
+    sTmpPath=CATIA.SystemService.Environ("CATTemp")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sTmpPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Tmp Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------------------------------ </font>
+   
+    <font color="#008000">'Create a new part document.</font>
+    <font color="#008000">'Add the new document to the end of the collection of documents.</font>
+    <font color="#008000">'Create and display a new window for the new document.</font>
+    <font color="#008000">'Activate the new document and the window.</font>
+<font color="#0000FF">    Dim </font>oFirstNewPartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oFirstNewPartDoc = CATIA.Documents.Add("Part")
+
+    <font color="#008000">'The document just created is the active one.</font>
+    <font color="#008000">'Save the new document.</font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
+       "CAAInfWriteDocument1.CATPart")
+     CATIA.ActiveDocument.SaveAs(sFilePath)
+
+    <font color="#008000">'Create a second new part document.</font>
+<font color="#0000FF">     Dim </font>oSecondNewPartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">     Set </font>oSecondNewPartDoc = CATIA.Documents.Add("Part")
+
+    <font color="#008000">'Save the new document using the variable name defined for it.</font>
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
+       "CAAInfWriteDocument2.CATPart")
+     oSecondNewPartDoc.SaveAs(sFilePath)
+
+    <font color="#008000">'Open an existing document.</font>
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+       "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+<font color="#0000FF">     Dim </font>iThirdPartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">     Set </font>iThirdPartDoc = CATIA.Documents.Open(sFilePath)
+
+    <font color="#008000">'Save the new document by specifying its name.</font>
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sTmpPath, _
+         "CAAInfWriteDocument3.CATPart")
+    CATIA.Documents.Item("CAAInfReadDocument.CATPart").SaveAs(sFilePath)
+  
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

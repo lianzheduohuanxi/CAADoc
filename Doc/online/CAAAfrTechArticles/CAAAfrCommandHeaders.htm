@@ -1,0 +1,1106 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Command Headers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Command Headers</h3>
+      <em>Objects which stand for your dialog commands</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Command headers stand for commands in workshops and workbenches, and
+      are loaded instead of the commands when the workshop or workbench itself is loaded. A given command is actually loaded  when the
+      end user clicks on its representation to execute it. This article explains
+      how and where to create command headers, and how to use them.&nbsp;<p>Reading  the &quot;Application Frame Overview&quot; article [<a href="#References">1</a>]
+      can be useful to take full benefit from this technical article.
+      You will find a first approach of the command header concept, and how 
+      command header are involved in the frame architecture.&nbsp;
+      <ul>
+        <li><a href="#100000"><strong>Introduction</strong></a></li>
+        <li><strong><a href="#Command Headers's Management"> Command Header
+          Management</a></strong>
+          <ul>
+            <li><strong><a href="#Life Cycle">Life Cycle</a></strong></li>
+            <li><strong><a href="#Workbench Loading Order">Workbench Loading
+              Order</a></strong></li>
+            <li><strong><a href="#The Customize Command">The Customize Command</a></strong></li>
+          </ul>
+        </li>
+              <li><a href="#Creating Standard Command Headers"><strong>Creating
+                Standard Command Headers</strong></a></li>
+        <li><a href="#300000"><strong>Creating Customized Command Headers</strong></a>
+          <ul>
+            <li><a href="#Customized Command Header Class Structure"><b>Customized
+              Command Header Class Structure</b></a></li>
+            <li><strong><a href="#Managing Command Availability">Managing Command Availability</a></strong></li>
+            <li><strong><a href="#Creating Customized Representation&nbsp;">Creating 
+            a&nbsp; Customized Representation</a>&nbsp;</strong></li>
+            <li>
+                                        <strong><A href="#Managing Contextual Help&nbsp;">
+										Managing Contextual Help&nbsp;</A>&nbsp;</strong></li> 
+          </ul>
+        </li>
+        <li><strong><a href="#Re-Using Existing Command Headers">Re-Using Existing Command Headers</a></strong>
+          <ul>
+                       <li><strong><a href="#The Workshop Exposition Command">The Workshop Exposition Command&nbsp;</a></strong></li>
+            <li><strong><a href="#Reusability rules">Reusability Rules</a></strong></li>
+          </ul>
+        </li>
+        <li><a href="#Defining Headers in the CATIAfrGeneralWksAddin Interface"><b>General Command Headers</b></a> </li>
+        <li><strong><a href="#References">References</a></strong></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Introduction</h3>
+<p>Each command you want to make available in your workshop or workbench must
+have a command header. The command header plays the role of your business card,
+which holds information such as your name, your company, your function within
+the company, the address where your company is located, your phone and fax
+numbers, and your e-mail id. This card is very useful to contact you when you
+are out the office, and requires a very small space. Like a
+business card, the <b> command header holds the necessary information </b> to 
+load the command, such as the name of the shared library in which the command's 
+executable code is located, the name of the command class, and the data to pass 
+to the command code when this command becomes the current one.&nbsp;</p>
+<p>
+The <b> command header has resources</b> for each command to display, such as the
+command name shown to the end user, its ToolTip displayed in a balloon, its help
+message, and its icon. This enables the workshop or workbench to be displayed,
+that is loaded in memory, without any of its commands being itself loaded,
+except the default one, spares memory space, and improves performance. The end
+user can see the icons in the toolbars, the items in the menu bar, can ask for
+help on a given command, without loading any of its commands. It's only when the 
+user
+clicks on the menu item or on the icon that the command code is actually loaded.
+The &quot;Creating Resources for Command Headers&quot; article [<a href="#References">2</a>]
+explains in details what are the command header resources and how to assign
+them to  command headers.</p>
+<p>Before taking up the sections  detailing how to create a command header
+class, it is important to understand how the command header instances are <b>
+managed by the frame</b>. This is the main goal of the &quot;<a href="#Command Headers's Management">Command
+Header's
+Management</a>&quot; section.&nbsp;</p>
+<p>A command header instance is always an instance of a class deriving
+from the <i>CATCommandHeader</i> class. In most cases, you can create
+this class in a <a href="#Creating Standard Command Headers"> standard</a> way using
+a macro. However, you can also explicitly create your class in order to manage the command availability, or
+to create a command header whose  representation is customized. This is the
+topic of the <a href="#300000">Creating Customized Command Headers</a>
+ section.</p>
+<p>Sometimes you would like to reuse commands in your workbench, but either you
+have no information about them, or you do not want to create a new command
+header instance to avoid losing resources. The <a href="#Re-Using Existing Command Headers">Re-Using Existing Command Headers</a>
+ section first explains how to retrieve the command header instance associated with a
+command, and then draws your attention on how to reuse correctly an header
+instance.&nbsp;&nbsp;</p>
+<p>At last, from R12 onwards, you can create command header instances available whatever
+the type of the opened document, or even if there is no opened document. There are
+further named <b>
+general</b> headers. You create them in implementations of the <i>CATIAfrGeneralWksAddin</i> 
+ interface. Each implementation of this interface is an Add-in of the <i> CATAfrGeneralWks</i> workshop, also named
+General workshop [<a href="#References">2</a>]. The <a href="#Defining Headers in the CATIAfrGeneralWksAddin Interface">General Command Headers</a> 
+section explains the specificities of these general headers, and how to create 
+the command that they
+launch.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3 align="left"><a name="Command Headers's Management"></a>Command Headers
+Management</h3>
+<p align="left">The goal of this paragraph is to explain the <a href="#Life Cycle">life
+cycle</a> of a command header instance: who creates an instance and who deletes
+it. These explanations are illustrated by a schema <a name="Fig.1" href="#Fig.1">Fig.1<i></i></a><i>
+</i>showing that all command header instances associated with a workshop are grouped together in a list. The <a href="#Workbench Loading Order">Workbenches Loading Order</a>
+paragraph explains how this list is filled up. In an interactive session, this
+list is displayed in the Command tab page of the Tools/Customize command. The <a href="#The Customize Command">Customize
+command</a> paragraph gives you some information about the Command tab page and
+its contents.</p>
+<h4 align="left"><a name="Life Cycle"></a>Life Cycle</h4>
+<p align="left">A V5 document is controlled by an editor [<a href="#References">3</a>].
+Each editor, a <i>CATFrmEditor</i> class instance, keeps a list of command
+header instances. To be exact, the editor keeps a list of command header
+instances for each workshop [<a href="#References">1</a>]
+it can manage. This is illustrated by the picture hereunder.</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a> Command Header Instances Lists</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrCmdHdrLifeCycle.jpg" width="518" height="328"></td>
+  </tr>
+</table>
+<ul>
+  <li>When you open a Product document, the editor, named <code>Editor1</code>, 
+  has at first a list of command headers for the Product workshop (the first
+    yellow list). If  you edit a Part of the Product, in the same window, the 
+  Part
+    workshop is loaded, and the editor manages a second list (the first dotted-green
+    list).</li>
+  <li>When you open a second Product document, the editor, named <code>Editor2</code>, 
+  has at first a list of command headers for the Product workshop (the second
+    yellow list). If  you edit a Part of the Product, in the same window, the Part 
+  workshop is loaded, and the editor manages a second list (the second 
+  dotted-green list). If you edit a Sketch of the Part, always in the same 
+  window, the Sketcher
+    workshop is loaded, and <code>Editor2 </code>manages a third list (the
+    dashed-pink list)</li>
+</ul>
+<p>Each list is filled at the <i>CATCommandHeader</i>  class <b>instantiation</b>. The new instance
+is inserted in the current list of the current editor. The <i>CATFrmEditor</i>
+class manages the <b>destruction</b> of the <i>CATCommandHeader</i>
+ instances. When a document is closed, all its lists are deleted, and their
+content is also deleted.</p>
+<p>To avoid  filling up uselessly the list of <i>CATCommandHeader</i> instances, it
+is recommended to make the command header instantiation only in the following
+methods because these methods are called once for each editor instance:</p>
+<ul>
+  <li><code>CreateCommands</code> of the workbench implementations [<a href="#References">4</a>]</li>
+  <li><code>CreateCommands</code> of the add-in implementations (*) [<a href="#References">5</a>]</li>
+</ul>
+<p>(*) There is an exception for Add-ins of the CATAfrGeneralWks workshop. In
+this specific case, the <code>CreateCommands</code>  method is called once during the life time of
+the session.&nbsp;Refer to the <a href="#Defining Headers in the CATIAfrGeneralWksAddin Interface">General Command Headers</a> <b>
+</b>section which goes deeper for this specific case.&nbsp;</p>
+<p>For commands implementing <i>CATIAfrCmdPaletteOptions</i> [<a href="#References">6</a>]
+or workbenches implementing <i>CATIAfrPaletteOptions&nbsp;</i>[<a href="#References">7</a>], the code creating
+command header instances should first verify that the header instance does not
+already exist into the list of the current editor. A call to the <i>CATAfrGetCommandHeader</i> <code>
+</code>global function, which retrieves a command header instance from its
+identifier, enables you check this. Keep in mind that these two interfaces enables
+you to set command header instances into the &quot;Tools Palette&quot; toolbar. But
+even if these headers are not created in a workbench or an add-in implementation, once
+created, they are kept, like the others, in the current list of the current editor.&nbsp;</p>
+<h4><a name="Workbench Loading Order"></a>Workbench Loading Order</h4>
+<p>When an UI-active object is first UI-activated, the new list of command header
+instances is filled up in this order:</p>
+<ol>
+  <li>The <b> general</b> command header instances. Those of DS ( New, Open), and those created in the <code>CreateCommands</code> 
+    of each <i>CATIAfrGeneralWksAddin</i>  implementation.&nbsp;</li>
+  <li>The command header instances of the <b> workshop</b> implementation (DS code)</li>
+  <li>All the command header instances created in <b>Add-ins</b> of the current
+    <b>
+    workshop</b> (mainly CAA code)</li>
+  <li>The command header instances of the current <b> workbench</b> ( DS code or CAA
+    code)</li>
+  <li>All the command header instances created in <b>Add-ins</b> of the current
+    <b>
+    workbench</b> (mainly CAA code)</li>
+</ol>
+<p>This means that once the document is opened, only a part of the command header
+instances are inside the list, since only one workbench has been loaded. The
+other workbenches and their associated add-ins are  loaded only when a transition
+is invoked (Start menu for example).</p>
+<p>The loading of all workbenches can be forced for the following reasons:</p>
+<ul>
+  <li>Launching the Customize command in the Tools menu,</li>
+  <li>Launching the Commands List in the View menu,</li>
+  <li>Opening a document which contains toolbars with unknown command header
+    instances (coming from a workbench other than the current one). In the &quot;<a href="#Re-Using Existing Command Headers">Re-Using Existing Command Headers</a>&quot;
+section, you will see that this kind of management implies the respect of some rules
+when you when re-use command header instances.&nbsp;</li>
+  <li>Launching an unknown command in the power input.</li>
+</ul>
+<h4><a name="The Customize Command"></a>The Customize Command</h4>
+<p>The Customize command enables you&nbsp;to customize the organization of your
+commands in the frame. The Customize Dialog box contains the Commands
+tab page, see <a href="#Fig.2">Fig.2</a>, which displays the available commands
+for the end user.</p>
+<table border="0">
+<caption><i><a name="Fig.2">Fig.2</a> Customize Command</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrCommandHeaderToolsCusto.jpg" width="466" height="366"></td>
+  </tr>
+</table>
+<p align="left">The command header instances displayed in the Commands tab page
+are <b> all</b> the command header instances associated with the current UI-active
+object since launching the Customize command invokes the re-loading of all workbenches. However there are two exceptions:</p>
+<ol>
+  <li>
+    <p align="left">Command header instances that a <i> CATIAfrCmdPaletteOptions</i>
+    or <i> CATIAfrPaletteOptions</i> could have been created if they have been
+    called.</li>
+  <li>
+    <p align="left"> <b>Invisible</b> command header instances</li>
+  <p>Sometimes, it can be useful to hide headers to the end user. These can
+  be internal headers, such as  set and unset headers of a check header [<a href="#References">17</a>],
+  or headers that you do not want the end user to drag and drop onto a toolbar [<a href="#References">6</a>].&nbsp;</p>
+  <p>However, a hidden header in the Command tab page is not &quot;dead&quot;.
+  If the end user knows its name, it can always use the power input to launch
+  it, or you can use the <i>CATAfrStartCommand</i> global function to do the
+  same thing.</p>
+  <p>You can hide, or  show again a header using the <code>SetVisibility</code> 
+  method of the <i>CATCommandHeader </i> class.&nbsp;</p>
+  </ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Creating Standard Command Headers"></a>Creating Standard Command Headers</h3>
+<p>To create a standard command header class, you can use the <code>MacDeclareHeader</code>
+macro. It creates for you a class which derives from <i>CATCommandHeader</i>
+which is the base class for command headers and should never be directly
+instantiated.</p>
+<p>Let's assume you want to create a command header class named <i>CAAAfrCommandHeader</i>. 
+You simply need to create a file, say CAAAfrCommandHeader.h, with the
+following code:</p>
+<table class="#code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCommandHeader.h&quot;
+
+<b>MacDeclareHeader</b>(CAAAfrCommandHeader);</pre>
+    </td>
+  </tr>
+</table>
+<p>This macro creates the <i>CAAAfrCommandHeader</i> class declaration and
+implementation. To instantiate this command header for a command, you should
+simply use the following constructor created by the macro.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAAfrCommandHeader.h&quot;
+
+new CAAAfrCommandHeader(&quot;CAAAfrMyCommandHdr&quot;,
+                        &quot;CAAAfrCommandLibName&quot;,
+                        &quot;CAAAfrCommandClass&quot;,
+                        void * ipParameter);</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>CAAAfrMyCommandHdr</code> is the identifier you need to assign to
+    the command header. It will be used afterwards to associate the command
+    starters you will define to put the command in a menu and in toolbars with
+    the command starter. This identifier is also used to build the variables
+    
+    defining the command header resources, such as the name seen by the end
+    user in his/her own language in the menu, or the icon to display in a
+    toolbar [<a href="#References">2</a>]</li>
+  <li><code>CAAAfrCommandLibName</code> is the name of the shared library
+    containing the code of the command, without the prefix lib, and without the
+    suffix depending on the operating system</li>
+  <li><code>CAAAfrCommandClass</code> is the name of the class you used to
+    create the command</li>
+  <li><code>ipParameter</code>, the last argument is the possible pointer to the object to pass to the
+    command when starting it.</li>
+</ul>
+<p>Different commands can share the same command header class to create their
+command headers. Refer to the use case that creates a workbench [<a href="#References">4</a>].
+The following example shows how to create command header instances with and without an
+argument to pass to the command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAAfrGeometryWks::CreateCommands()
+{
+  ...
+  // Case without argument 
+  new CAAAfrGeometryWksHeader(&quot;CAAAfrPointHdr&quot;,
+                              &quot;CAADegGeoCommands&quot;, 
+                              &quot;CAADegCreatePointCmd&quot;,    
+                              (void *) NULL);
+  ...
+  // Cases with argument 
+  new CAAAfrGeometryWksHeader(&quot;CAAAfrNormalXHdr&quot;,
+                              &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,
+                              (void *)CATINT32ToPtr(1));
+
+  new CAAAfrGeometryWksHeader(&quot;CAAAfrNormalYHdr&quot;,
+                              &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,
+                              (void *)<b>CATINT32ToPtr</b>(2));
+
+  new CAAAfrGeometryWksHeader(&quot;CAAAfrNormalZHdr&quot;,
+                              &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,
+                              (void *)CATINT32ToPtr(3));
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">(*) <code>CATINT32ToPtr</code> is to be 64 compliant.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Creating Customized Command Headers</h3>
+<p>There are two reasons to create a customized command header:</p>
+<ol>
+  <li>When you want  your command availability to depend on the context that
+is on what exists or what happens in the document.&nbsp;</li>
+  <p> For example, let's assume a
+command applies to a given object in a document. If one or several instances of
+this object exist in the document, the command can be used and should be
+available. On the opposite, if no instance of this object exists, the command
+cannot execute, and it should be set unavailable. Its representation in menus
+and toolbars should be grayed out, and nothing should happen when the end user
+clicks on it. A full example describes such a customized command header [<a href="#References">8</a>].</p>
+  <li>When you want to customize the representation of a command header.&nbsp;</li>
+  <p>Here are three examples:</p>
+  <table border="1">
+  <caption><i><a name="Fig.3">Fig.3</a> Examples of Customized Representations</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAAfrCommandHeaderComboHdr.jpg" width="143" height="51"></td>
+      <td>It is a combo header. In place of the push button, the command header
+        instance is represented by a combo. A full example describes
+        its creation [<a href="#References">9</a>].&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+      <img border="0" src="images/CAAAfrCommandHeaderMRUHdr.jpg" width="173" height="79"></td>
+      <td>It is a &quot;Most Recent Used&quot; header. In place of a push item,
+        the command header instance is represented by a dynamic list of push
+        items (Item 1 and Item 2). When  end users select one of them, a command is
+        launched to display the selected item. Refer
+        to the referenced use case for a complete description of such
+        a command header. [<a href="#References">10</a>]&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/CAAAfrCommandHeaderToolsPal.jpg" width="231" height="47"></td>
+      <td>Two editors in a toolbar. Refer to the referenced use case for
+        more details [<a href="#References">19</a>].</td>
+    </tr>
+  </table>
+</ol>
+<h4><a name="Customized Command Header Class Structure"></a>Customized Command
+Header Class Structure</h4>
+<p>A customized command header class cannot be created using macros. The example below is a minimum customized command header class.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &lt;CATCommandHeader.h&gt;
+
+class MyCustomizedCommandHeader : public <b>HdrBaseClass</b>
+{
+  <b>CATDeclareClass;</b>
+  <b>CATDeclareHeaderResources;</b>
+
+  public :
+    MyCustomizedCommandHeader (const CATString &amp; iHeaderName);
+    virtual MyCustomizedCommandHeader ();
+    CATCommandHeader * <b>Clone</b>();
+      
+  private :
+    MyCustomizedCommandHeader (CATCommandHeader *ipHeaderToCopy);
+
+    MyCustomizedCommandHeader ();
+    MyCustomizedCommandHeader (const MyCustomizedCommandHeader &amp;iObjectToCopy);
+    ... 
+};   </pre>
+    </td>
+  </tr>
+</table>
+<p>The customized command header class should derive from a <i>CATCommandHeader</i>   class, so <code>HdrBaseClass</code><b> </b>can
+be:</p>
+<ul>
+  <li> <i>CATCommandHeader</i>  class for a class only managing the command
+    availability,&nbsp;</li>
+  <li> <i>CATAfrDialogCommandHeader</i> for a class whose  graphic
+    representation is customized.</li>
+</ul>
+<p>It should
+include the <code>CATDeclareClass</code> and <code>CATDeclareHeaderResources</code>
+macros. <code>CATDeclareClass</code> declares that the <i>MyCustomizedCommandHeader</i>
+class belongs to a CAA component, and <code>CATDeclareHeaderResources</code>
+inserts the methods to manage the command header resources. [<a href="#References">2</a>]</p>
+<p>This class should also include in its <b> public</b> part:</p>
+<ul>
+  <li>A <code> constructor</code> with a
+reference to a <nobr><code>const CATString</code></nobr> as parameter,&nbsp;</li>
+  <li>A <code>destructor</code>,</li>
+  <li>The <code> clone</code> method inherited from <i>CATCommandHeader </i>and 
+  used to duplicate the command header instance. This method is only used for <a href="#Defining Headers in the CATIAfrGeneralWksAddin Interface">general</a>
+    headers, those available whatever the document. For other command headers,
+    the <a href="#Life Cycle">Life Cycle</a> section has
+    previously shown that the <code>CreateCommands</code> method is called to
+    fill up each editor ists. However, it is strongly recommended to
+overwrite the <code> clone</code> method for  not pre-supposing the use of the
+    command header class.</li>
+</ul>
+<p>This class should also include in its <b> private</b> part:</p>
+<ul>
+  <li>A <code> constructor</code> with a pointer to a <i> CATCommandHeader</i> is dedicated to the <code>Clone</code>
+method.&nbsp;</li>
+  <li> Two other <code> constructor</code>, declared, but not
+implemented in the source file. This prevents the compiler from creating them as
+public without you knowing.</li>
+</ul>
+<p>Here is an example of implementation of the <i> MyCustomizedCommandHeader</i>
+class.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;MyCustomizedCommandHeader .h&quot;
+...
+<b>CATImplementClass</b>(MyCustomizedCommandHeader ,
+                  Implementation,
+                  <b>HdrBaseClass</b>,
+                  CATNull);
+
+<b>CATImplementHeaderResources</b>(MyCustomizedCommandHeader ,   
+                            <b>HdrBaseClass</b>,             
+                            MyCustomizedCommandHeader );  
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro states that the <i>
+MyCustomizedCommandHeader</i>
+    class OM-derives [<a href="#References">11</a>] from <code>HdrBaseClass</code><code>,</code><b>
+</b>the base class, and is a component main class thanks to the <code>Implementation</code>
+    keyword.</p>
+<p>
+ The <code>CATImplementHeaderResources</code>
+    macro is used in conjunction with the <code>CATDeclareHeaderResources</code>
+    macro in the header file. It defines the command header resource file name [<a href="#References">2</a>].
+The base class name
+    set as second argument helps you use resource concatenation [<a href="#References">12</a>].
+    The third argument could be set to the name of another class 
+    associated with resource files  using its class name, or to the name,
+    without suffix, of an already existing resource file pair. Here it states that
+its associated
+    resource file names use the class name: MyCustomizedCommandHeader.CATNls
+    and MyCustomizedCommandHeader.CATRsc, respectively.&nbsp;</p>
+<p>
+ The constructor must call one of the constructors of the base class, and the
+destructor is empty.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+MyCustomizedCommandHeader ::MyCustomizedCommandHeader (const CATString &amp;iHeaderName)
+                             : <b>HdrBaseClass</b>(...)</pre>
+      <pre>{...}
+				   
+MyCustomizedCommandHeader ::MyCustomizedCommandHeader ()                     
+{}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Clone</code> method calls the constructor class with <code>this</code>
+as an argument. The constructor class with a <i>CATCommandHeader</i> pointer is
+called. This constructor calls the same constructor of the base class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATCommandHeader * MyCustomizedCommandHeader ::<b>Clone</b>() 
+{
+  return new MyCustomizedCommandHeader (this);
+}
+
+MyCustomizedCommandHeader ::MyCustomizedCommandHeader (CATCommandHeader * ipHeaderToCopy)
+                             : <b>HdrBaseClass</b>(ipHeaderToCopy)
+{}
+...</pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Managing Command Availability"></a>Managing Command Availability</h4>
+<p>One good reason to create explicitly a command header is the need to manage the availability
+of the command represented by the header.&nbsp;[<a href="#References">8</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+MyCustomizedCommandHeader ::MyCustomizedCommandHeader (const CATString &amp;iHeaderName)
+                             : <b>HdrBaseClass</b>(...)  
+{ 
+
+    if ( condition )
+      <b>BecomeAvailable</b>();
+    else
+      <b>BecomeUnavailable</b>();
+      
+    ::<b>AddCallback</b>(this,    
+                 publisher,   
+                &quot;NotifClassNameForAvailable&quot;,   
+		(CATSubscriberMethod)&amp;MyCustomizedCommandHeader ::<b>AvailableCB</b>, 
+                NULL);  
+                
+    ::<b>AddCallback</b>(this,    
+                 publisher,   
+                &quot;NotifClassNameForUnavailable&quot;,   
+		(CATSubscriberMethod)&amp;MyCustomizedCommandHeader ::<b>UnavailableCB</b>, 
+                NULL);  
+                  		   
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code> constructor</code> should initialize the command availability by appropriately
+    calling the <code>BecomeAvailable</code> or <code>BecomeUnavailable</code> 
+method. If several commands share the same command header class, each command 
+should be examined individually.</p>
+<p> In addition, the <code> constructor</code> , and/or methods called by it, can set a callback
+on  objects and events that can change the command availability. Methods
+called by these callbacks should of course be declared.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void MyCustomizedCommandHeader ::<b>UnavailableCB</b>(CATCallbackEvent iPublishedEvent ,
+		                          void   * iPublishingObject , 
+		                          CATNotification   * iNotif,
+				          CATSubscriberData   iUsefulData,
+					  CATCallback         iCallbackId)
+{
+  <b>BecomeUnavailable</b>();
+} 
+void MyCustomizedCommandHeader ::<b>AvailableCB</b>(CATCallbackEvent iPublishedEvent ,
+		                          void   * iPublishingObject , 
+		                          CATNotification   * iNotif,
+				          CATSubscriberData   iUsefulData,
+					  CATCallback         iCallbackId)
+{
+  <b>BecomeAvailable</b>();
+} 
+...</pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Creating Customized Representation&nbsp;"></a>Creating a Customized Representation<strong>&nbsp;</strong></h4>
+<p>Before detailing how to create such a command header, a global
+explanation is useful. Below is a diagram introducing the main objects.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCommandHeaderCustoHdrDiagram.jpg" width="623" height="342"></td>
+  </tr>
+</table>
+<p>You retrieve the MVC model:</p>
+
+<ul>
+  <li><b>M</b> : The data used by the graphic representations of the command header.&nbsp;&nbsp;</li>
+  <p>There are two cases to consider:</p>
+  <ul>
+  <li>
+    <p align="left"><b>Associated with a document instance</b></li>
+</ul>
+<blockquote>
+  <p align="left">It means that the value of the data is linked to a document instance. When the end user switches between documents, the displayed
+  values could be different. In the combo color example, the data can be the value
+  of the current color. It could be also the available
+  colors.&nbsp;</p>
+  <p align="left">If the data is persistent, the best storage file is
+  the document.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>
+    <p align="left"><b>Independent of document instances</b>.</li>
+</ul>
+<blockquote>
+  <p align="left">It means that the data is valid whatever :
+   <ul>
+   <li>The opened document: for example, the most recent opened documents in the
+  File menu. The same list of documents is displayed, if no document is opened, or whatever
+    the opened document.</li>
+   <li>The type of document: for example, the option defined by the &quot;Create
+    Datum&quot; command of the Part workbench. 
+   Whatever the opened Part document, the option is the same.&nbsp;</li>
+   
+   </ul>
+   <p>In this case, the best storage file is a setting file.&nbsp;</p>
+</blockquote>
+  <li><b>V </b>:<b> </b>The command header instance and its graphic representation.&nbsp;</li>
+</ul>
+<blockquote>
+  <p>Each command header instance can be represented one or several times. Each
+  representation is the association of the command header instance with a
+  starter. You do it in a workbench or in an Add-in, but the end user can
+  interactively do it, by dragging and dropping a command (header) onto a
+  toolbar.&nbsp;&nbsp;</p>
+</blockquote>
+<ul>
+  <li><b>C</b>:&nbsp;&nbsp;The data&nbsp;controller</li>
+</ul>
+
+<ul>
+<p>It is a component that must control the data in memory. It must:</p>
+<ul>
+<li><b>Provide</b> the data from the file</li>
+<li><b>Save</b> the modified data in the file&nbsp;</li>
+<li><b>Inform</b> all the viewers (headers) when the data is modified<ul>
+    <li>From a viewer: if the end user modifies a graphic representation: e.g. changes
+      the state of a check button, changes the selected color of a combo, ....</li>
+    <li>From an application which directly modifies the data&nbsp;</li>
+  </ul>
+  <p>Here is an example with the combo header:</p>
+  
+</ul>
+<p><img border="0" src="images/CAAAfrCommandHeaderComboMAJ.jpg" width="676" height="231">
+</ul>
+
+<p align="left">The customized command header is a component [<a href="#References">17</a>]. Here is its UML
+diagram:&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCommandHeaderUMLHdr.jpg" width="581" height="317"></td>
+  </tr>
+</table>
+<p align="left"><code>MyHeader</code>, the component representing the customized
+command header Object Modeler [<a href="#References">11</a>] and C++ derives
+from the <i>CATAfrDialogCommandHeader</i> component.&nbsp;</p>
+<p align="left">This component must implement the <i>CATIAfrCommandHeaderRep</i>
+interface. This interface has three methods: <code>CreateToolbarRep</code>,
+<code>CreateMenuRep</code>, and <code>CreateCtxMenuRep</code>. Each method
+corresponds to the container where the starter associated with the
+command header instance is included. The invoked
+method instantiates a class which creates the graphic representation. Below is
+the UML diagram of the class creating the graphic representation:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCommandHeaderUMLRep.jpg" width="331" height="239"></td>
+  </tr>
+</table>
+<p align="left"><i>MyRep</i> is a class which derives from the <i>CATAfrCommandHeaderRep</i>
+class. The main roles of this class are:</p>
+<ul>
+  <li>
+    <p align="left">Setting a callback [<a href="#References">18</a>] on the
+    component controlling the data</li>
+  <li>
+    <p align="left">Instantiating one or more graphic representations ( Dialog
+    components)</li>
+  <li>
+    <p align="left">Updating the graphic representation (s) when the controller 
+    sends a notification when the data is modified.</li>
+</ul>
+<h4><a name="Managing Contextual Help&nbsp;"></a>Managing Contextual 
+		Help</h4>
+		<p>
+            The &#8220;More Info &#8230;&#8221; shortcut from the LongHelp message is available 
+			only if the Dialog (CATDlgxxx) object SetLongHelpId method was 
+			called. On Standard command headers SetLongHelpId is automatically 
+			called on the button using the LongHelpId resource of the command 
+			header. For customized command headers the command header does not 
+			know the Dialog objects so no SetLongHelpId is called. SetLongHelpId 
+			has to be called explicitely on the Dialog objects created to 
+			represent the customized command header.
+        </p>
+		<table class="code">
+			<tr>
+				<td><pre>...
+void MyCustomizedCommandHeader ::<b>Build</b>()
+{
+<b><pre>  ... pDialogItem-&gt;SetLongHelpId(pCustomizedCommandHeader-&gt;GetContextualHelp());
+</b>  ...
+} </pre>
+         </td>
+			</tr>
+		</table>
+
+<h3 align="right">[<a href="#Top">Top</a>]</h3>
+<h3 align="left"><a name="Re-Using Existing Command Headers"></a>Re-Using Existing Command Headers</h3>
+<p align="left">Until now, this article has explained how to create a command
+header instance to associate it with your own command. But sometimes you would like 
+to
+re-use an existing command (<i>CATCommand</i> ) without recreating a new command
+header instance:</p>
+<ul>
+  <li>
+    <p align="left">You do not know the necessary information about this command
+    (its class name, its dll name,...)</li>
+  <li>
+    <p align="left">You do not want to lose the resources associated with an
+    existing header.&nbsp;</li>
+</ul>
+<p align="left">So you should be able to retrieve the identifier of a command header thanks to its NLS name. It is 
+the one displayed in the Commands
+page of the <a href="#The Customize Command">Customize Command</a>.
+The <a href="#The Workshop Exposition Command"> Workshop Exposition Command&nbsp;</a>resolves
+this problem.&nbsp;</p>
+<p align="left">However, once you have this identifier, before associating it 
+with a starter, you should be aware of the workbench loading management. The
+rules to respect are detailed in the <a href="#Reusability rules">Reusability
+Rules</a> paragraph.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+<h4><a name="The Workshop Exposition Command"></a>The Workshop Exposition Command&nbsp;</h4>
+
+<p>The frame application provides the &quot;Workshop Exposition&quot; command to
+give the command header identifiers. You launch it as explained in the following scenario:</p>
+
+<p>Launch CATIA, then, when the application is ready,&nbsp;</p>
+<ul>
+  <li>enter <b>c: workshop exposition </b>in the power input or</li>
+  </ul>
+  <ul>
+  <li>From the <b>Tools</b> menu, click <b>Customize</b>
+  <li>The<b> Customize </b>Dialog Box appears
+    <ul>
+      <li>Click the <b>Command</b> page
+      <li>Click the <b>XCAA2</b> category
+      <li>Drag and Drop the <b>Workshop Exposition </b>command onto a toolbar
+      <li>Click <b>Close</b>&nbsp;</li>
+    </ul>
+  </li>
+  <li>Launch the <b>Workshop Exposition</b> command</li>
+</ul>
+<p>In the picture below, the current workshop is the <b>Part</b> workshop, and
+the current workbench is <b>Part Design</b>.&nbsp;</p>
+<table >
+<caption><i><a name="Fig.5">Fig.5</a> The Workshop Exposition Command</i></caption>
+  <tr>
+    <td><img src="images/CAAAfrCommandHeaderWshopExpo.jpg" width="605" height="284"></td>
+  </tr>
+</table>
+<p>This Dialog command contains:&nbsp;</p>
+
+<ul>
+  <li>The <b> list</b> <b> of</b> <b> current entities</b>. This list is always 
+  arranged in the following order:
+    <ul>
+      <li>The workshop defined by the frame application (CATAfrGeneralWks)</li>
+      <li>The current workshop&nbsp;(the one of the current UI-active object)</li>
+      <li>The Add-ins of the current workshop</li>
+      <li>The current workbench</li>
+      <li>The Add-ins of the current workbench</li>
+    </ul>
+  </li>
+  <li>The &quot;<b>Directory</b>&quot; editor to enter the path where the txt files
+    will be
+    generated.</li>
+  <li>The <b>Print</b> button enables you to generate the txt files for the selected
+    entities.&nbsp;Each file is named <code>NameOfTheEntity.txt</code>, ex: <code>
+    CATAfrGeneralWks.txt</code></li>
+  <li>The <b>OK</b> and <b>Cancel</b> Buttons close the Dialog box. Note, that to
+    switch to another workbench, it is not necessary to close the command.
+    The Workshop Exposition Dialog box will be automatically updated if a new workbench or a new workshop
+    is activated.&nbsp;</li>
+</ul>
+<p>The generated files contain two types of information, one being the list of the command header identifiers.
+&nbsp;Here  is an extract of the <code> CATAfrGeneralWks.txt </code> file:</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrCommandHeaderExtract.jpg" width="227" height="78"></td>
+    </tr>
+  </table>
+  <p>where:</p>
+  <table border="1">
+    <tr>
+      <td><b>Title</b></td>
+      <td>&nbsp;The Nls title of the command header&nbsp;instance</td>
+    </tr>
+    <tr>
+      <td><b>Id</b></td>
+      <td>The identifier of the command header&nbsp;instance</td>
+    </tr>
+    <tr>
+      <td><b>DLL</b></td>
+      <td>The library exporting the <i>CATCommand&nbsp;</i></td>
+    </tr>
+    <tr>
+      <td><b>Cmd</b></td>
+      <td>The <i>CATCommand</i> to execute&nbsp;</td>
+    </tr>
+    <tr>
+      <td><b>Arg</b></td>
+      <td>The possible argument of the <i>CATCommand</i></td>
+    </tr>
+  </table>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></p>
+<ul>
+  <li>Only the
+    visible identifiers in the Commands tab page of the <a href="#The Customize Command">Customize command</a> are generated in
+the txt files.</li>
+  <li>If you can safely reuse the identifier of a command header, there is no
+    guaranty of stability with the  other three parameters (DLL, Cmd, Arg).</li>
+</ul>
+<h4 align="left"><a name="Reusability rules"></a>Reusability Rules</h4>
+<p align="left">Before associating any identifier with a starter,
+you must know that the workbenches (and their add-ins) are loaded when  necessary. See the &quot;<a href="#Workbench Loading Order">Workbenches Loading Order</a>&quot;
+section. It means that, at a given time, all the command header identifiers
+defined in the workshop and its add-ins exist, but they are not necessary those of a
+workbench and its add-ins. The consequences are the followings:</p>
+<ul>
+  <li>Inside a workbench [<a href="#References">4</a>] (or add-in) [<a href="#References">5</a>]</li>
+  <p>When the entity (workbench/add-in) is loaded, if an identifier associated with a starter comes
+  from a non-loaded workbench, all the workbenches will be loaded. The consequences are important because you lose the benefit of the partial workbench
+  loading. Each time you  open a document of this type, you will have
+  the full loading.</p>
+  <li>
+    Inside a contextual menu&nbsp;[<a href="#References">13</a>]</li>
+  <p>When the contextual menu&nbsp;is displayed, if an identifier associated with a starter
+  comes from a non-loaded workbench, the starter will be not displayed.</p>
+
+</ul>
+<p>It gives the following advices:</p>
+
+<ul>
+  <li><b>Rule 1: </b>In a workbench or in an Add-in (workshop/workbench) avoid  using an identifier coming from another workbench or from an add-in of another workbench.&nbsp;</li>
+  <li><b>Rule 2 : </b>Into workbenches or contextual menus use identifiers
+    coming from the workshop or one of its Add-ins. You can create, for example, an add-in
+of the workshop to group together the shared headers. This add-in will only
+    contain command header instantiations, and will have no toolbar.&nbsp;</li>
+</ul>
+<h3 align="left"><a name="Defining Headers in the CATIAfrGeneralWksAddin Interface"></a>
+General Command Headers</h3>
+<p align="left">The <i>CATIAfrGeneralWksAddin</i> interface enables you to define an add-in of the General
+(CATAfrGeneralWks)
+workshop [<a href="#References">14</a>], in other words to define command headers
+and starters always available whatever  the open document, or even if no
+document is open.&nbsp;</p>
+<p align="left">The
+<code>CreateCommands</code> and <code>CreateToolbars</code> methods, the two methods
+of any Add-in interface, are called
+once during the session, when it starts. The command header instances created in the <code>CreateCommands</code>
+method are kept in a list (named <code>GeneralHdrList</code> on the <a href="#Fig.6">Fig.6</a>
+). This list is written  in each list associated with
+an editor, and the headers are duplicated thanks to the <code>Clone</code>
+method.</p>
+<table border="0">
+<caption><i><a name="Fig.6">Fig.6</a></i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrCommandHeaderGeneralAddin.jpg" width="539" height="321"></td>
+  </tr>
+</table>
+<p>When no document is open, a command is launched from a command header
+instance coming from the <code>GeneralHdrList</code>  list. But if a document is
+open, the same command is launched from the command header instance coming
+from the list associated with the document editor. With this architecture,
+you can understand that even if the end user has the feeling that the icon 
+representing the command is associated with the same object, in fact, swapping
+between documents or closing all of them, invokes different command header instances.
+What are the consequences:</p>
+<ul>
+  <li>For command headers launching a <b> shared</b> or <b> exclusive</b> command [<a href="#References">15</a>]</li>
+</ul>
+<blockquote>
+  <p>If the header is started when no document is open, it comes from the GeneralHdrList,
+  the shared or
+  exclusive command will be deleted as soon as a document is opened.&nbsp;</p>
+  <p>If the header is started when an editor is active, it comes from a list
+  associated with this editor, the shared or exclusive
+  command will be also deleted as soon as another editor is activated.&nbsp;</p>
+  <p>Consequently, you do not encounter any problem,&nbsp; the starter of the command header is always normal (not
+  highlighted) in the list associated with the &quot;leaving&quot; editor 
+  because the command is always deleted before a swap. So
+  after a swap, you retrieves always the state &quot;normal&quot; in any another
+  list. You can re-launch the same command with another command header
+  instance.&nbsp;</p>
+  <p>In this situation, you also have the Dialog command with the <code>CATDlgWndModal</code>
+  behavior. You have an example with the Add Item in MRU command of the
+  CAAAfrMRUHeader use case [<a href="#References">10</a>]. The command is not
+  described, but you will retrieve in this article the location of the
+  code.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>For command headers launching an <b> undefined</b> command [<a href="#References">15</a>]</li>
+</ul>
+<blockquote>
+  <p>In most cases, this command is a <i>CATDlgDialog</i> class. An example is
+  the Search command, or the <a href="#The Workshop Exposition Command">Workshop
+  Exposition</a> command.&nbsp;</p>
+  <p>It is recommended to create a command header which launches a simple <i>CATCommand</i> class.
+      This class has no method. In the constructor class and in this order:</p>
+   
+      <ol>
+        <li>Create the Dialog box &nbsp;</li>
+        <p> Take care of the Dialog parent - Refer to
+          the technical article about the frame layout [<a href="#References">3</a>],
+          and compare the difference between <code>GetMainWindow</code> and <code>GetApplicationDocument</code>,
+          the two methods of <i>CATApplicationFrame</i> class.&nbsp;</p>
+        <p>The Dialog box must manage its life cycle. When the end user clicks
+        the Close button, or the Close/Cancel buttons if they exist, the Dialog
+        box is deleted (by a <code>RequestDelayedDestruction</code>  on itself)</p>
+        <li>Call <code>RequestDelayedDestruction</code> on itself&nbsp;</li>
+        <p>The &quot;button&quot; of the command header instance becomes
+        &quot;normal&quot; (not highlighted anymore). The end user&nbsp;can
+        re-launch the command, the Dialog box will appear twice, if the
+        previous one has not been closed.</p>
+      </ol>
+  <p>This command class remaining undefined (do not use the <code>RequestStatusChange</code>
+      method ), the current shared or exclusive command is not deleted.&nbsp;
+   
+</blockquote>
+<ul>
+  <li>For command headers using <i>CATAfrCheckHeaderAccessor</i> [<a href="#References">16</a>]</li>
+  <p>Before using this class,&nbsp; you should be aware of this behavior: if the check header is started when no document is open,  the
+  instance in GeneralHdrList is modified. When an editor is created, its
+  header list is initialized with the content of GeneralHdrList, <a href="#Fig.6">Fig.6</a>,
+  so the initial state of the header associated with an editor depends on the
+  current state in GeneralHdrList. It's OK. But as long as an editor is active, if the end
+  user clicks a check button, the header of the list associated with the
+  current editor is modified. So if you change of current document, or if no 
+  documents are open anymore, the state of the check can be different: the
+  state is not independent of the document. So if you want a check header be independent of the 
+  document instance, you can create a customized
+  command header, which manages the refresh between all command header
+  instances. Refer to the <a href="#Creating Customized Representation&nbsp;">Creating Customized
+  Representation</a> section.&nbsp;</p>
+</ul>
+<h3 align="right">[<a href="#Top">Top</a>]</h3>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A command header stands for a command and avoids  loading the command when the
+end user does not require it. A command header is an instance of a command
+header class. This class can be used for several commands, and can be created
+either using a macro or explicitly if the command header should manage
+availability information or customize its representation.</p>
+<p>It is possible to re-use command header identifiers, but there are two rules
+to respect:</p>
+<ol>
+  <li>In a workbench or in an add-in (workshop/workbench) avoid using an identifier coming from another workbench or workbench's Add-in.</li>
+  <li>In a contextual menu do not use an identifier coming from a workbench or a 
+  workbench Add-in, but only coming from the workshop or an workshop add-in.</li>
+</ol>
+<p>The &quot;Workshop Exposition" command enables you to retrieve the command header identifiers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrOverview.htm">Application Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAAfrI18NHeader.htm">Creating Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAAfrLayoutV5.htm">Understanding the&nbsp;Application Frame
+      Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleWorkbench.htm">Creating
+      a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">Creating an
+      Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrCmdPalette.htm">Creating a Command with Options in the &quot;Tools Palette&quot; Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSamplePaletteWkb.htm">Using the &quot;Tools Palette&quot; Toolbar for a
+      Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleCustomCommandHeader.htm">Creating
+      Customized Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleComboHdr.htm">Creating a Combo Command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top">10]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleMRUHdr.htm">Creating a Most Recent Used
+      Command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[11]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[12]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgResources.htm">Assigning
+      Resources to a Dialog Box</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[13]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleContextualMenu.htm">Inserting Commands in Contextual Menus</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[14]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm">Making Your Document Independent Command Available in All Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[15]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[16]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrCheckHeader.htm">Creating Check Button</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[17]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      a Component</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[18]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbacks.htm">The
+      Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[19]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleEditorHdr.htm">Creating
+      Editors in Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong>       [Feb 2003]</td>
+    <td valign="top">Command header re-usage explanations</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Sep 2003]</td>
+    <td valign="top">Palette and General workshop add-in Integration&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>4</strong> [Jan 2004]</td>
+    <td valign="top">Customized command header integration&nbsp;+ a complete
+      review&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

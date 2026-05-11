@@ -1,0 +1,273 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Object Property Access</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Object Property Access</h3>
+      <em>How to add a property page for your object properties</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The Edit-&gt;Properties menu clicked when one or several objects are
+      selected in the document, as well as the Properties item of an object's
+      contextual menu, displays a dialog box with a property sheet containing
+      property pages. This article explains what are property sheets and pages,
+      and discusses how to create and integrate property pages for your own
+      objects into the property sheet of this dialog box.
+      <ul>
+        <li><strong><a href="#100000">What Are the Edit-&gt;Properties Property
+          Sheets?</a></strong></li>
+        <li><a href="#200000"><strong>Creating Your Property Page</strong></a>
+          <ul>
+            <li><a href="#210000"><strong>Creating the Property Page Editor
+              Factory</strong></a></li>
+            <li><a href="#220000"><strong>Creating the Property Page Editor</strong></a></li>
+            <li><a href="#230000"><strong>Creating the Property Page Dialog</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Are the Edit-&gt;Properties Property Sheets?</h3>
+<p>A property sheet is a tabbed dialog box, each tab containing a property page.
+It enables the end user to work with many properties gathered in a single place,
+rather than to display several dialog boxes accessed each from a different menu.
+Each property page contains various controls to set values or options for one or
+several properties to manage element's persistent parameters that the end user
+can modify. When the end user clicks on a tab, the controls for the properties
+are displayed and the end user can alternatively display different property
+pages by clicking on different tabs. A property sheet can be accessed using the
+Edit-&gt;Properties menu, and applies to the element(s) currently selected. It
+can also be accessed from the Properties item of an element's contextual menu.</p>
+<p>Other property pages can exist, namely those dedicated to the application, or
+to a given workshop, and accessed using the Tools-&gt;Options menu [1]. These
+property pages manage parameters or attributes that are independent from the
+current selection and are of general purpose. Their values are saved into, and
+retrieved from, setting files.</p>
+<p>The Edit-&gt;Properties property sheet dialog box displays a property page
+for each property available for the current selection. For example, below is a
+property sheet with two property pages named Graphic and Texture respectively.</p>
+<table>
+  <tr>
+    <td><img src="images/CAACafEditProperties1.jpg" alt="CAACafEditProperties1.jpg (36854 bytes)" width="397" height="536"></td>
+    <td>The Graphic property page is provided by the application and the
+      selected objects need to implement the <em>CATIVisProperties</em>
+      interface for all these properties. If the object does not implement this
+      interface, the page is not displayed.</td>
+  </tr>
+</table>
+<p>Each property page displays controls to set parameter values or working
+options for its related property. These values are read from the element when
+the property sheet is built. The dialog box works as follows:
+<ul>
+  <li>Clicking OK commits all the changed values and options in all the property
+    pages modified or simply scanned, that is saves the values and options into
+    the selected object(s), and closes the Properties dialog box.</li>
+  <li>Clicking Apply saves the values and options into the selected object(s),
+    but lets the dialog box open. Parameter modifications are taken into
+    account, and the selected objects change accordingly. This turns the Cancel
+    button into Close, meaning that modifications cannot be undone, unless the
+    end user reenters the values and options as they were before. For example,
+    in the dialog box below, the Apply button was clicked, and Close displays
+    instead of Cancel.<br>
+    <img src="images/CAACafEditProperties2.jpg" alt="CAACafEditProperties2.jpg (20253 bytes)" width="397" height="536"></li>
+  <li>Clicking Cancel closes the Properties dialog box. Since Apply was not
+    clicked, no property was changed.</li>
+  <li>Clicking Close closes the Properties dialog box. Since Apply was clicked,
+    the property values are those set by the last click on Apply.</li>
+</ul>
+<p>When the end user clicks Edit-&gt;Properties, or the Properties item of an
+object's contextual menu, the property pages are built as follows:
+<ul>
+  <li>The first time, the interface dictionary is scanned to retrieve all the
+    interfaces implemented by the CATEditorManager object. This object is used
+    by the application to create and manage property pages. Then the factory
+    dictionary is scanned to check whether these interfaces are factory
+    interfaces, and each factory interface is requested to create an instance of
+    the class it is dedicated to, that is a property editor</li>
+  <li>The CSO contents is retrieved and passed to the <code>ExtractFromSelection</code>
+    method of each property editor</li>
+  <li>The <code>ExtractFromSelection</code> method determines whether the
+    object(s) in the CSO implements the property interface(s) this property
+    editor deals with, and if this is the case, the property page editor creates
+    the property page dialog to be displayed in the property sheet.</li>
+</ul>
+<p><em>To help improve performance when creating the Properties dialog box, you
+can decide to hide some properties. Their property page editors are not created,
+as well as their dialogs. The Properties dialog box shows a More... push button
+that the end user can press to display these properties. To enable property
+pages to be displayed by default, the document objects must implement the
+CATIRootProperties interface. The GetListOfEditors method returns the property
+page editors to instantiate. Otherwise, the property pages are created when the
+end user presses More.</em></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Creating Your Property Page</h3>
+<p>To create your property page, you need to consider having objects that
+implement one or several property interfaces, that is, interfaces that derive
+from CATIEditProperty. If this is the case, you need to create:
+<ul>
+  <li>A property page <strong>editor</strong><br>
+    It retrieves the selected objects from the CSO, checks whether they
+    implement the appropriate property interface, retrieves the selected object
+    properties, creates and manages the dialog displayed and its controls, and
+    apply or cancel the modifications entered in the dialog.</li>
+  <li>A property page <strong>dialog</strong><br>
+    It gathers the different controls that enable the end user to see and edit
+    the selected object properties.</li>
+</ul>
+<p>Since you new properties and their property pages when you wish, the property
+page editor instantiation mechanism relies on factories. You need first to
+create a <strong>factory interface</strong>, and then implement it to create the
+property page <strong>factory</strong>.</p>
+<p>Let's detail the tasks to do to create a property page, whose editor is
+CAAPPEdt.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000"></a>Creating the Property Page Editor Factory</h4>
+<p>You need:
+<ul>
+  <li>To create the property page editor factory interface<br>
+    The <em>CAAIPPEdtFactory</em> interface derives from the <em>CATIGenericFactory</em>
+    interface.
+    <p><img src="images/CAACafEditPropertiesFactory1.gif" alt="CAACafEditPropertiesFactory1.gif (1836 bytes)" width="379" height="129"></p>
+  </li>
+</ul>
+<ul>
+  <li>To create the property page editor factory<br>
+    The factory class can be creates using macros in the header and source
+    files.
+    <p><img src="images/CAACafEditPropertiesFactory2.gif" alt="CAACafEditPropertiesFactory2.gif (1645 bytes)" width="413" height="99"></p>
+  </li>
+  <li>To update the interface dictionary and the factory dictionary.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Creating the Property Page Editor</h4>
+<p>You'll now create the class for the property page. This class derives from
+the CATEditor class, implements the <em>CATIEditProperties</em> interface and
+overrides the methods shown in the diagram below.</p>
+<p><img src="images/CAACafEditPropertiesObjects.gif" alt="CAACafEditPropertiesObjects.gif (4424 bytes)" width="586" height="238"></p>
+<p>These methods are those of the <em>CATIEditProperties</em> interface and are
+either pure virtual or empty in their CATEditor implementation. You should
+provide their body to make them play the following role:
+<ul>
+  <li><code>ExtractFromSelection</code> returns the list of objects found in the
+    Current Set of Objects (CSO) that implement the property interface</li>
+  <li><code>GetEditorTitle</code> returns the property page title</li>
+  <li><code>SetEditorSize</code> lets you request which size you need to
+    accommodate your property page, among the possible values: small, medium, or
+    large</li>
+  <li><code>BuildEditor</code> instantiates the associated dialog class</li>
+  <li><code>SetPropertyValue</code> sets the values and options in the property
+    page dialog from the objects</li>
+  <li><code>CommitModification</code> applies to the selected objects the
+    modifications made to values and options in the property page dialog.</li>
+  <li><code>CancelModification</code> is empty, but exists and could be used to
+    delete temporary objects that could possibly be allocated in previous
+    methods</li>
+  <li><code>CloseWindowFromEditor</code> is called whenever the end user selects
+    another property page.</li>
+</ul>
+<p>The methods <code>ExtractFromSelection</code>, <code>GetEditorTitle</code>, <code>SetEditorSize</code>,
+<code>BuildEditor</code>, and <code>SetPropertyValue</code> are executed in this
+order when instantiating the property page.</p>
+<p>When the end user clicks:
+<ul>
+  <li>OK, the <code>CommitModification</code> method is executed and the window
+    is closed</li>
+  <li>Apply,&nbsp; the <code>CommitModification</code> method is executed, but
+    the window is not closed</li>
+  <li>Cancel, the <code>CancelModification</code> method is executed and the
+    window is closed</li>
+  <li>Close, the window is closed.</li>
+</ul>
+<p><code>SetPropertyValue</code>, <code>CommitModification</code>, and <code>CancelModification</code>
+call in turn the methods with the same name of the associated dialog class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>Creating the Property Page Dialog</h4>
+<p>This dialog is a class that derives from <i>CATDlgFrame</i>. You can create and
+arrange the controls, and possibly other dialog objects, such as separators,
+frames, and so on, to help control arrangement.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Creating a property page for the Edit-&gt;Properties menu implies to create a
+property page editor factory, a property page editor class instantiated by this
+factory, and to supply a property page dialog class gathering the controls to
+access the parameters and values of the object's properties you let the end user
+access and modify.</p>
+<p>To be extracted from the Current Set of Objects (CSO), the objects should
+implement the property interface(s) to which this property page is dedicated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAACafToolsOptions.htm">Application Property Access</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

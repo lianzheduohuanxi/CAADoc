@@ -1,0 +1,97 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniSubListFilter.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      You can add user parameters to a given feature by using the</font>
+<font color="#008000">'                 Knowledge Advisor product. This macro filters the parameters</font>
+<font color="#008000">'                 related to a pad.1 feature. You can apply this macro to any </font>
+<font color="#008000">'                 part with a pad.1 feature or modify this macro to filter</font>
+<font color="#008000">'                 the parameters related to any other feature.</font>
+<font color="#008000">'                 This macro illustrates how to use the SubList method of a </font>
+<font color="#008000">'                 Parameters collection.</font>
+<font color="#008000">'                </font>
+<font color="#008000">'   Author:       Carole ROULLE, Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6  </font>
+<font color="#008000">'   revision V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+
+ 
+ <font color="#008000">' Retrieve your active document</font>
+<font color="#0000FF"> Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF"> Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+ <font color="#008000">' Check whether the document is a CATPart</font>
+<font color="#0000FF"> If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+    <font color="#008000">' Retrieve the collection object which contains</font>
+    <font color="#008000">' all the document parameters</font>
+<font color="#0000FF">    Dim </font>oParamList<font color="#0000FF"> As </font>Paraneters
+<font color="#0000FF">    Set </font>oParamList = oActiveDoc.Part.Parameters
+    
+    <font color="#008000">' Scans the collection of Bodies in a part</font>
+<font color="#0000FF">    Dim </font>oBodies<font color="#0000FF"> As </font>Bodies
+<font color="#0000FF">    Set </font>oBodies = oActiveDoc.Part.Bodies
+<font color="#0000FF">    Dim </font>i, j, k<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    For </font>j = 1<font color="#0000FF"> to </font>oActiveDoc.Part.Bodies.Count
+         <font color="#008000">' For each item of the Bodies collection,</font>
+         <font color="#008000">' search for a Pad.1 feature</font>
+<font color="#0000FF">         For </font>i = 1<font color="#0000FF"> to </font>oBodies.item(j).Shapes.Count
+<font color="#0000FF">         if </font>oBodies.item(j).Shapes.item(i).name = "Pad.1" then
+           <font color="#008000">' Display the list of parameters related to the Pad.1 feature</font>
+           <font color="#008000">' If False is specified in the second argument of the SubList</font>
+           <font color="#008000">' method, the list which is returned contains the parameters directly </font>
+           <font color="#008000">' related to Pad.1 (for example the pad limits) plus</font>
+           <font color="#008000">' the user parameters added right below Pad.1.</font>
+           <font color="#008000">' If True is specified in the second argument, the returned list contains</font>
+           <font color="#008000">' all the parameters related to Pad.1 itself plus the parameters related</font>
+           <font color="#008000">' to its children (for example, the parameters of the sketch from which </font>
+           <font color="#008000">' the pad was extruded from)          </font>
+           
+<font color="#0000FF">           Dim </font>oPad1SubList<font color="#0000FF"> As </font>Parameters
+<font color="#0000FF">           Set </font>oPad1SubList = oParamList.SubList(oBodies.item(j).Shapes.item(i), False)
+             for k = 1<font color="#0000FF"> to </font>oPad1SubList.Count
+                msgbox oPad1SubList.Item(k).name
+<font color="#0000FF">             next</font>
+<font color="#0000FF">         End if </font>
+<font color="#0000FF">         Next </font>
+<font color="#0000FF">    Next       </font>
+
+ Else
+    MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

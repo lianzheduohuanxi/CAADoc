@@ -1,0 +1,354 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using the &quot;Tools Palette&quot; Toolbar for a Workbench</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using the &quot;Tools Palette&quot; Toolbar for a
+      Workbench</h3>
+      <em>How to implement CATIAfrPaletteOptions</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case is intended to show you how to implement <i>CATIAfrPaletteOptions
+      </i>to provide &quot;options&quot; which are available as soon as a
+      specific workbench is active.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrPaletteOptions Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrPaletteOptions Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrPaletteOptions</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrPaletteOptions Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The Tools Palette is a special toolbar which updates dynamically when:</p>
+<ul>
+  <li>Entering a workbench - The workbench implements the <i>CATIAfrPaletteOptions</i>
+    interface.&nbsp;</li>
+</ul>
+<blockquote>
+  <p>Command headers are added in the Palette once the workbench is activated,
+  and they are removed from the toolbar after the workbench deactivation.</p>
+</blockquote>
+<ul>
+  <li>Executing a shared/exclusive command - The command implements the <i>CATIAfrCmdPaletteOptions</i>
+    interface.&nbsp;</li>
+</ul>
+<blockquote>
+  <p>Command headers may be added when the command is activated and they are
+  removed when the command is canceled. For a state command, there is also the
+  possibility to add command headers for a specific state, they are removed when
+  the state is left.&nbsp;When the command is deactivated, the command headers
+  become unavailable.&nbsp;[<a href="#References">1</a>]</p>
+</blockquote>
+<p>This use case is intended to show you how to implement <i>CATIAfrPaletteOptions.&nbsp;&nbsp;</i></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrPaletteOptions Use Case</h3>
+<p>CAAAfrPaletteOptions is a use case of the CAAApplicationFrame.edu framework
+that illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrPaletteOptions Do</h4>
+<p>CAAAfrPaletteOptions is the implementation of the <i>CATIAfrPaletteOptions </i>on
+a workbench of the CAAGeometry document [<a href="#References">2</a>]. It
+enables us to display a specific toolbar, the &quot;Tools Palette&quot; toolbar.
+This toolbar contains, like the other toolbars defined in workbench or Add-in [<a href="#References">3</a>],
+command header instances. In the use case, there is a command header displaying
+the count of points and lines created in the CAAGeometry document.</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> Tools Palette</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrSamplePaletteWkb.jpg" width="444" height="303"></td>
+  </tr>
+</table>
+<p>This header is a customized command header. Its graphic representation is not
+a check button with an icon, but two <i>CATDlgEditor</i> class instances. Refer
+to the CAAAfrEltCountHeader use case [<a href="#References">4</a>] for complete
+details about this specific header.&nbsp;
+<p>Now, if you launch the Cuboid command from the Solids Toolbar, you can see on
+the above picture, [<a href="#Fig.2">Fig.2</a>],&nbsp;that new options are
+added. This command also uses&nbsp; Tools Palette options for its scenario [<a href="#References">1</a>].</p>
+<table border="0">
+  <caption><a name="Fig.2">Fig.2</a> Cuboid Command</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrSamplePaletteWkbWithCmd.jpg" width="476" height="381"></td>
+  </tr>
+</table>
+<p>Once the Cuboid command is completed, the Tools Palette is restored, and
+contains the two editors again.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrPaletteOptions</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.&nbsp;</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:</p>
+<ul>
+  <li>On the <b>Start</b> menu, point to <b>Infrastructure</b>, and then click <b>CAA
+    V5: Geometrical Creation</b></li>
+  <li>click <b>Point</b> and create some points</li>
+  <li>click <b>Line</b> and create some points</li>
+  <li>click <b>Cuboid</b>&nbsp;
+    <ul>
+      <li>Select a point
+      <li>click <img src="images/CAACreateBoxSwitchAgentCuboidWidthDepth.jpg" border="0" width="22" height="22">
+      <li>Select a second point&nbsp;
+      <li>click <img src="images/CAACreateBoxSwitchOrigin.jpg" border="0" width="22" height="22">
+        (the icon is not highlighted any more)
+      <li>indicate a point&nbsp;to define the depth (= height)</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrPaletteOptions Code</h4>
+<p>The CAAAfrPaletteOptions use case is made of a single class,<i>CAAEAfrPaletteOptions</i>,
+located in the CAAAfrPaletteOptions.m module of the CAAApplicationFrame.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrPaletteOptions.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrPaletteOptions.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are two logical steps in CAAAfrPaletteOptions:</p>
+<ol>
+  <li><a href="#Creating the Header File" name="Declare the methods of the CATIProgressTask interface in the header file">Creating
+    the Header File</a>
+  <li><a href="#Creating the Source File">Creating the Source File</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Header File"></a>Creating the Header File</h4>
+<p>Here is the CAAEAfrPaletteOptions.h file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;    
+#include &quot;CATListOfCATCommandHeader.h&quot;       
+
+class CAAEAfrPaletteOptions: public CATBaseUnknown
+{
+  CATDeclareClass;
+
+  public:
+
+    CAAEAfrPaletteOptions();
+    virtual ~CAAEAfrPaletteOptions();
+ 
+    CATLISTP(CATCommandHeader) <b>GetPaletteOptions</b>();
+
+
+  private:
+    CAAEAfrPaletteOptions(const CAAEAfrPaletteOptions &amp;iObjectToCopy);
+    CAAEAfrPaletteOptions &amp; operator = (const CAAEAfrPaletteOptions &amp;iObjectToCopy);
+     
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEAfrPaletteOptions</i> class derives from <i>CATBaseUnkown</i>.&nbsp;The
+<code>GetPaletteOptions</code> method is the only one method of the <i>CATIAfrPaletteOptions</i>
+interface. The <code>CATDeclareClass</code> macro declares that the <i>CAAEAfrPaletteOptions</i>
+class belongs to a component. Note that the copy constructor and the assignment
+operator are set as private, and are not implemented in the source file. This
+prevents the compiler from creating them as public without you know.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Source File"></a>Creating the Source File</h4>
+<p>Here is the CAAEAfrPaletteOptions.cpp file</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &lt;TIE_CATIAfrPaletteOptions.h&gt;
+TIE_CATIAfrPaletteOptions(CAAEAfrPaletteOptions);
+
+CATImplementClass(CAAEAfrPaletteOptions, 
+                  <b>DataExtension</b>, 
+                  CATBaseUnknown, 
+                  <b>CAAAfrGeoCreationWkb_Palette</b>);
+
+CAAEAfrPaletteOptions::CAAEAfrPaletteOptions():CATBaseUnknown(){}
+
+CAAEAfrPaletteOptions::~CAAEAfrPaletteOptions(){}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEAfrPaletteOptions</i> class states that it implements the <i>CATIAfrPaletteOptions</i>
+interface thanks to the <code>TIE_CATIAfrPaletteOptions</code> macro. The <code>CATImplementClass</code>
+macro declares that the <i>CAAEAfrPaletteOptions</i> class is a data extension,
+thanks to the <code>DataExtension</code> keyword, that extends <code>CAAAfrGeoCreationWkb_Palette</code>.
+The third argument must always be set as <i>CATBaseUnknown</i> or <i>CATNull</i>
+for any kind of extension.&nbsp;</p>
+<p><code>CAAAfrGeoCreationWkb_Palette</code>: is the concatenation of the
+internal name of the workbench + &quot;_<code>Palette&quot;</code>. This
+interface can be only implemented on your workbench. You cannot implement it on
+a Dassault System workbench. The internal name of the workbench is the third
+argument of the <code>NewAccess</code> macro when the first argument is <code>CATCmdWorkbench</code>
+[<a href="#References">5</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+NewAccess(<b>CATCmdWorkbench</b>,pCAAAfrGeoCreationWkb,CAAAfrGeoCreationWkb);</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, lets us see the <code>GetPaletteOptions</code> implementation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATLISTP(CATCommandHeader) CAAEAfrPaletteOptions::GetPaletteOptions()
+{
+    CATLISTP(CATCommandHeader) TheListToReturn ;
+
+    CATCommandHeader *pMyCommand = NULL ;
+    HRESULT rc= ::<b>CATAfrGetCommandHeader</b>(&quot;CAAAfrEltCountHdr&quot;,pMyCommand);
+
+    if ( FAILED(rc) || ( NULL ==pMyCommand) )
+    {
+        pMyCommand = new <b>CAAAfrEltCountHeader</b>(&quot;CAAAfrEltCountHdr&quot;);
+    } 
+
+    if ( NULL != pMyCommand)
+    {
+       TheListToReturn.<b>Append</b>(pMyCommand);
+    }
+
+    return TheListToReturn ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The goal of this method is to append command header instances into the
+returned list. The most important thing, is to take care of the instantiation.
+This method is called each time one enters in the concerned workbench. So before
+instantiating the command header class, check that the instantiation does not
+already exist. Refer to the &quot;Command Header Management&quot; section of the
+technical article about the command header [<a href="#References">6</a>] to
+understand the life cycle of a command header instance.&nbsp;</p>
+<p>To do the check, use <i>CATAfrGetCommandHeader</i>, the global function which
+returns an instance associated with the current editor. (The <i>CATFrmEditor </i>class
+instance associated with the document). If no instance, i.e&nbsp; <code>pMyCommand</code>
+the second argument of the global function is NULL, then you can create the
+command header instance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has explained how to implement the <i>CATIAfrPaletteOptions</i>
+interface to add options in the Tools Palette for your workbench.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrCmdPalette.htm">Creating a Command with Options in the
+      &quot;Tools Palette&quot; Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+      CAAGeometry Sample</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAAfrSampleEditorHdr.htm">Creating Editors in Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAAfrSampleWorkbench.htm">Creating a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

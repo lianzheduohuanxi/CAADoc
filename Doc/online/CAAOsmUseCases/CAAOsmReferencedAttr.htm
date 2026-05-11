@@ -1,0 +1,818 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Referencing Features by Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Feature Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Referencing Features by Features</h3>
+      <em>Working with Referenced Attributes</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAOsmReferencedAttr use case. This use case
+      explains how to load an existing catalog containing StartUps, how to
+      create a document to contain new features, how to retrieve StartUps and
+      create new features by instantiating them, how to add features as
+      referenced attributes of other features and how to save the new document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAOsmReferencedAttr Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOsmReferencedAttr Do</a></li>
+            <li><a href="#How">How to Launch CAAOsmReferencedAttr</a></li>
+            <li><a href="#Where">Where to Find the CAAOsmReferencedAttr Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you understand the basics of working with
+referenced attributes. Its main intent is to explain the nature of referenced
+attributes, how to create them and how to assign them to features. Through this
+use case, you will also learn some important aspects recommended when
+programming with features. Specifically, you will learn how to:
+<ul>
+  <li>Create new features by instantiating StartUps</li>
+  <li>Valuate feature attributes</li>
+  <li>Add an existing feature to another feature as a referenced attribute.</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of what a feature object is and how it is created [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p><b>Note :-</b> Use-Case with the same scenario as of this use-case but with the use of V6 APIs is available 
+<a href="#References">[5]</a>. Please read the Preparing for V6 Feature Modeler-Overview article 
+<a href="#References">[4]</a></p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAOsmReferencedAttr Use Case</h3>
+<p>CAAOsmReferencedAttr is a use case of the CAAObjectSpecsModeler.edu framework
+that illustrates ObjectSpecsLegacy framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAOsmReferencedAttr Do</h4>
+<p>The goal of CAAOsmReferencedAttr is to illustrate adding features to features
+as <b>tk_specobject</b> attributes. These features are then said to be
+&quot;referenced&quot;. This use case uses the catalog defined in the <i>CAAOsmCatalogSU</i> which contains StartUps based on the
+&quot;book&quot; example.
+<p>In this use case, a new feature, &quot;CAAOsmPublisher1&quot; is instantiated
+from the &quot;CAAOsmPublisher&quot; StartUp and its attributes are
+valuated.&quot;CAAOsmPublisher1&quot; is added as a <b>tk_specobject</b> type of
+attribute to other features, &quot;CAAOsmNovel1&quot; and
+&quot;CAAOsmNovel2&quot;. In other words, we see that two different novels have
+the same publisher.
+<p>To enrich the example, a new feature, &quot;CAAOsmPublisher2&quot; is created
+by instantiating the &quot;CAAOsmPublisher&quot; StartUp once more. Its
+attributes are valuated and it is added as a <b>tk_specobject</b> to another new
+feature, &quot;CAAOsmDictionary1&quot;: &quot;CAAOsmDictionary1&quot; is not
+published by the same publishing house as are &quot;CAAOsmNovel1&quot; and
+&quot;CAAOsmNovel2&quot;. Here is a relational schematic view of the operations
+performed in this use case:
+<br>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td><img border="0" src="images/CAAOsmRef.gif" width="520" height="387"></td>
+  </tr>
+</table>
+<p>Next, this article demonstrates that the notion of &quot;parent&quot; for a
+referenced feature has no meaning. If a &quot;parent&quot; feature is deleted,
+as is &quot;CAAOsmDictionary1&quot;, the referenced feature remains intact and
+it can continue to be assigned to any number of other features. Note that this
+behavior is not true for &quot;aggregated&quot; features.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOsmReferencedAttr</h4>
+<p>To launch CAAOsmReferencedAttr , you will need to set up the build time
+environment, then compile CAAOsmReferencedAttr along with its prerequisites, set
+up the run time environment, and then execute the sample.&nbsp;</p>
+<p>mkrun -c &quot;CAAOsmReferencedAttr CAAOsmCatalogSU.CATfct DocumentStorageName.CATPart&quot;</p>
+<p> This is fully
+described in the referenced article [<a href="#References">2</a>]. When
+launching the use case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAOsmCatalogSU</b>.<b>CATfct</b> - is the name of the catalog
+    without the storage path and with the .CATfct extension. The catalog must be
+    found under the current workspace &quot;os&quot;/resources/graphic file
+    directory. Normally, it should be stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic file
+    directory. Then, the &quot;Update Runtime View&quot; command creates the
+    proper run-time environment.&nbsp;</li>
+  <li><b>DocumentStorageName.CATPart</b> - the entire pathname, name and
+    extension (.CATPart) under which the new document is to be stored.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAOsmReferencedAttr Code</h4>
+<p>CAAOsmReferencedAttr code is located in the CAAOsmReferencedAttr.m use case
+module of the CAAObjectSpecsModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAObjectSpecsModeler.edu\CAAOsmReferencedAttr.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAObjectSpecsModeler.edu/CAAOsmReferencedAttr.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAAOsmReferencedAttr.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are ten logical steps in CAAOsmReferencedAttr:</p>
+<ul>
+  <li><a href="#Create_Document">Prolog</a></li>
+  <li><a href="#Publisher1">Creating the Feature &quot;CAAOsmPublisher1&quot;</a></li>
+  <li><a href="#Novel1">Creating the Feature &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Novel1">Novel1&quot;</a></li>
+  <li><a href="#Publisher1_ref1">Assigning &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Publisher1_ref1">Publisher1&quot;
+    as a Referenced Feature</a></li>
+  <li><a href="#Publisher2">Creating the Feature &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Publisher2">Publisher2&quot;</a></li>
+  <li><a href="#Dictionary1">Creating the Feature &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Dictionary1">Dictionary1&quot;</a></li>
+  <li><a href="#Publisher2_ref">Assigning &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Publisher2_ref">Publisher2&quot;
+    as a Referenced Feature</a></li>
+  <li><a href="#Publisher2_independent">Illustrating that &quot;</a><a href="#Publisher1">CAAOsm</a><a href="#Publisher2_independent">Publisher2&quot;
+    Is Not Tied to a &quot;Parent&quot; Feature</a></li>
+  <li><a href="#Save_doc">Epilog</a></li>
+</ul>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create_Document"></a>Prolog</h4>
+<p>See the referenced article [<a href="#References">3</a>] for a detailed
+description of the steps to go through when creating a new document.</p>
+<p>In this use case, we create a new &quot;Part&quot; document: <i>CATDocument</i>
+<code>*pDoc</code>, and retrieve its root container: <i>CATIContainer</i> <code>*piRootContainer</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Load_Catalog">Getting the CATOsmSUHandler on the StartUps of the 
+Catalog</a></h4>
+<p>It means getting a handler on the StartUps of the catalog that will be needed 
+in order to retrieve StartUps from the catalog.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATUnicodeString stgName = argv[1];
+CATUnicodeString clientId(&quot;CAAOsmClientId&quot;);
+CATUnicodeString publisherSUType("CAAOsmPublisher");
+
+CATOsmSUHandler <strong>publisherSUHandler</strong>(publisherSUType, clientId, CatalogName);
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher1"></a>Creating the Feature &quot;CAAOsmPublisher1&quot;</h4>
+<ol>
+  <li>Retrieve &quot;CAAOsmPublisher&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+// Get a CATISpecObject handle on the CAAOsmPublisher StartUp
+
+	CATISpecObject_var spPublisherSU = NULL_var;
+
+	rc = publisherSUHandler.RetrieveSU(spPublisherSU);
+	if (NULL_var != spPublisherSU &amp;&amp; SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmPublisher StartUp retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+        else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieving CAAOsmPublisher StartUp&quot; &lt;&lt; endl &lt;&lt; flush;
+		return 6;
+	}
+...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A StartUp is retrieved from the catalog using the<i> CATOsmSUHandler</i><code><i>::</i>RetrieveSU
+    </code>method. This method returns directly CATISpecObject_var pointer in <code>
+	spPublisherSU</code></p>
+  </li>
+  <li>Get <i>CATISpecAttrAccess</i> handle
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnPubSU = NULL;
+rc = spPublisherSU -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                     void**) <b>&amp;piSpecAttrAccessOnPubSU</b>);
+if (FAILED(rc)) 
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Once the StartUp has been retrieved, it is a good idea to immediately get
+    the attribute keys that will be needed later on. These attribute keys remain
+    globally available once they have been accessed. This means that valuating
+    the attributes of any number instances of this StartUp will be more direct
+    since there will be no need to access the attribute before valuating it. In
+    order to get the StartUp's attribute keys, we first get a <i>CATISpecAttrAccess</i>
+    handle on the StartUp.</p>
+  </li>
+  <li>Get attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ATISpecAttrKey *piKeyPublisherName = piSpecAttrAccessOnPubSU -&gt;
+		<b>GetAttrKey</b>(&quot;PublisherName&quot;);
+if (NULL == piKeyPublisherName)
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+
+CATISpecAttrKey *piKeyPublisherAddress = piSpecAttrAccessOnPubSU -&gt;
+		<b>GetAttrKey</b>(&quot;PublisherAddress&quot;);
+if (NULL == piKeyPublisherAddress)
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+	
+piSpecAttrAccessOnPubSU -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the <i>CATISpecAttrAccess</i><code>::GetAttrKey</code>, we get a <i>CATISpecAttrKey</i>
+    handle to each attribute that will be valuated.</p>
+  </li>
+  <li>Instantiate &quot;CAAOsmPublisher&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATUnicodeString publisher1(&quot;CAAOsmPublisher1&quot;);
+	
+CATISpecObject_var spPublisherInst1 = NULL_var;
+rc = publisherSUHandler.Instanciate(spPublisherInst1, piRootContainer, publisher1);
+    
+	if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;Publisher SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+   	else
+	{
+		cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmPublisher SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	        piRootContainer -&gt; Release();
+		return 3;
+	}
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Finally, a new feature, &quot;CAAOsmPublisher1&quot; is created in the
+    root container by instantiating the StartUp &quot;CAAOsmPublisher&quot;.</p>
+  </li>
+  <li>Valuate &quot;CAAOsmPublisher1&quot; attributes
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnPub1 = NULL;
+rc = spPublisherInst1 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                                  (void**) <b>&amp;piSpecAttrAccessOnPub1</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+
+piSpecAttrAccessOnPub1 -&gt; <b>SetString</b>(piKeyPublisherName,
+                                    &quot;Collins Press&quot;);
+piSpecAttrAccessOnPub1 -&gt; <b>SetString</b>(piKeyPublisherAddress,
+                                    &quot;London&quot;);
+piSpecAttrAccessOnPub1 -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The new feature's attributes are valuated using a <i>CATISpecAttrAccess</i>
+    handle and <code>SetString</code>.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Novel1"></a>Creating the Feature &quot;CAAOsmNovel1&quot;</h4>
+<p>Now that &quot;CAAOsmPublisher1&quot; has been created, it will be assigned
+as a referenced attribute to a new feature, &quot;CAAOsmNovel1&quot;. So, let's
+create &quot;CAAOsmNovel1&quot;.</p>
+<ol>
+  <li>Retrieve &quot;CAAOsmNovel&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+...
+/* Get a CATOsmSUHandler on the StartUp "CAAOsmNovel".    */
+
+	CATUnicodeString novelSUType("CAAOsmNovel");
+	CATOsmSUHandler novelSUHandler(novelSUType, clientId, CatalogName);
+
+// Get a CATISpecObject handle on the CAAOsmNovel StartUp
+
+	CATISpecObject_var spNovelSU = NULL_var;
+	rc = novelSUHandler.RetrieveSU(spNovelSU);
+
+	if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmNovel SU retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+	else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieveing CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+		piRootContainer -&gt; Release();
+		return 3;
+	}
+...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The &quot;CAAOsmNovel&quot; StartUp is retrieved using the <code>RetrieveSU</code>
+    method of <i>CATOsmSUHandler</i></p>
+  </li>
+  <li>Get &quot;CAAOsmNovel&quot; StartUp's attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnNovel = NULL;
+rc = spNovelSU -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                 (void**) <b>&amp;piSpecAttrAccessOnNovel</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+} 
+
+CATISpecAttrKey *piKeyNovelPublisher = piSpecAttrAccessOnNovel -&gt;
+		<b>GetAttrKey</b>(&quot;BookPublisher&quot;);
+if (NULL == piKeyNovelPublisher)
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We get a <i>CATISpecAttrAccess</i> handle in order to get the attribute
+    keys from the StartUp using <code>GetAttrKey</code>.</p>
+  </li>
+  <li>Instantiate &quot;CAAOsmNovel&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+	CATUnicodeString novel1(&quot;CAAOsmNovel1&quot;);
+	CATISpecObject_var spNovelInst1 = NULL_var;
+
+	rc = novelSUHandler.<strong>Instanciate</strong>(spNovelInst1, piRootContainer, novel1);
+    if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmNovel SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+		piRootContainer -&gt; Release();
+		return 3;
+	}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>And now, we can instantiate the StartUp and create a new feature
+    &quot;CAAOsmNovel1&quot;:</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher1_ref1"></a>Assigning &quot;CAAOsmPublisher1&quot; as a
+Referenced Feature</h4>
+<ol>
+  <li>Assign &quot;CAAOsmPublisher1&quot; to &quot;CAAOsmNovel1&quot; as a
+    referenced feature
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnNov1 = NULL;
+rc = spNovelInst1 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                    (void**) <b>&amp;piSpecAttrAccessOnNov1</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+
+piSpecAttrAccessOnNov1 -&gt;<b> SetSpecObject</b>(piKeyNovelPublisher,
+	                                spPublisherInst1);
+piSpecAttrAccessOnNov1 -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The attribute &quot;BookPublisher&quot; of the StartUp
+    &quot;CAAOsmNovel&quot; has been defined as a <b>tk_specobject</b>. This
+    means that this attribute must be valuated by a feature object. We assign
+    the feature &quot;CAAOsmPublisher1&quot; as a referenced attribute (of <b>tk_specobject</b>
+    type) of &quot;CAAOsmNovel1&quot;. This is done using the <code>SetSpecObject</code>
+    method of <i>CATISpecAttrAccess </i>to which we pass the attribute key and
+    the <i>CATISpecObject</i> handle to the feature
+    &quot;CAAOsmPublisher1&quot;.</p>
+  </li>
+  <li>Assign &quot;CAAOsmPublisher1&quot; to &quot;CAAOsmNovel2&quot; as a
+    referenced feature
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+	CATUnicodeString novel2("CAAOsmNovel2");
+	CATISpecObject_var spNovelInst2 = NULL_var;
+
+	rc = novelSUHandler.<strong>Instanciate</strong>(spNovelInst2, piRootContainer, novel2);
+	if (FAILED(rc))
+	{
+		cout &lt;&lt; &quot;ERROR in creating instance 2 of CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+		piRootContainer -&gt; Release();
+		return 7;
+	}	
+	else cout &lt;&lt; &quot;CAAOsmNovel SU instance 2 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+
+
+// Valuate attribute &quot;BookPublisher&quot; for &quot;CAAOsmNovel2&quot; with the new instance of
+// &quot;CAAOsmPublisher&quot; (&quot;CAAOsmPublisher1&quot;)
+
+CATISpecAttrAccess *piSpecAttrAccessOnNov2 = NULL;
+rc = spNovelInst2 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                    (void**) <b>&amp;piSpecAttrAccessOnNov2</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+} 
+
+piSpecAttrAccessOnNov2 -&gt; <b>SetSpecObject</b>(piKeyNovelPublisher,
+                                        spPublisherInst1);
+
+piKeyNovelPublisher -&gt; <b>Release</b>();
+piSpecAttrAccessOnNov2 -&gt; <b>Release</b>();
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Since &quot;NovelPublisher&quot; is of type <b>tk_specobject</b>, this
+    means that the feature assigned to &quot;CAAOsmNovel1&quot; as a referenced
+    attribute can be assigned to other features as well. To show this, we create
+    a new feature, &quot;CAAOsmNovel2&quot; and assign
+    &quot;CAAOsmPublisher1&quot; to it.</p>
+    <p>As you can see, the novels &quot;CAAOsmNovel1&quot; and
+    &quot;CAAOsmNovel2&quot; both have the same publisher.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher2"></a>Creating the Feature &quot;CAAOsmPublisher2&quot;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	CATUnicodeString publisher2(&quot;CAAOsmPublisher2&quot;);
+	CATISpecObject_var <strong>spPubInst2</strong> = NULL_var;
+
+	rc = publisherSUHandler.<strong>Instanciate</strong>(spPubInst2, piRootContainer, publisher2);
+	if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmPublisher SU instance 2 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+	else 
+	{
+		cout &lt;&lt; &quot;ERROR in creating CAAOsmPublisher SU instance 2&quot; &lt;&lt; endl &lt;&lt; flush;
+        piRootContainer -&gt; Release();
+		return 7;
+	}
+
+
+CATISpecAttrAccess *piSpecAttrAccessOnPub2 = NULL;
+rc = spPubInst2 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                  (void**) <b>&amp;piSpecAttrAccessOnPub2</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}	
+	
+piSpecAttrAccessOnPub2 -&gt; <b>SetString</b>(piKeyPublisherName,
+                                    &quot;Larousse&quot;);
+piSpecAttrAccessOnPub2 -&gt; <b>SetString</b>(piKeyPublisherAddress, 
+                                    &quot;Paris&quot;);
+
+piKeyPublisherName -&gt; <b>Release</b>();
+piKeyPublisherAddress -&gt; <b>Release</b>();
+piSpecAttrAccessOnPub2 -&gt; <b>Release</b>();</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, to further our example, we create a new feature,
+&quot;CAAOsmPublisher2&quot; from the &quot;CAAOsmPublisher&quot; StartUp and we
+valuate its attributes with the names and address of another publishing house.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Dictionary1"></a>Creating the Feature &quot;CAAOsmDictionary1&quot;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+/* Get a CATOsmSUHandler on the StartUp "CAAOsmDictionary".    */
+
+	CATUnicodeString dictionarySUType("CAAOsmDictionary");
+
+	CATOsmSUHandler dictionarySUHandler(dictionarySUType, clientId, CatalogName);
+
+// Get a CATISpecObject handle on the CAAOsmDictionary StartUp
+
+	CATISpecObject_var spDictionarySU = NULL_var;
+	rc = dictionarySUHandler.RetrieveSU(spDictionarySU);
+
+	if (SUCCEEDED(rc)) cout &lt;&lt; &quot;CAAOsmDictionary StartUp retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+	else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieving CAAOsmDictionary StartUp&quot; &lt;&lt; endl &lt;&lt; flush;
+		piRootContainer -&gt; Release();
+		return 7;
+	}
+...</pre>
+      <pre>// Get the dictionary's attribute key &quot;BookPublisher&quot;
+
+CATISpecAttrAccess *piSpecAttrAccessOnDict = NULL;
+rc = spDictionarySU -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                                      (void**) <b>&amp;piSpecAttrAccessOnDict</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}	
+	
+CATISpecAttrKey *piKeyDictPublisher = piSpecAttrAccessOnDict -&gt;
+		<b>GetAttrKey</b>(&quot;BookPublisher&quot;);
+if (NULL == piKeyDictPublisher)
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+piSpecAttrAccessOnDict -&gt; <b>Release</b>();
+
+// Get an instance of the CAAOsmDictionary StartUp
+
+CATUnicodeString dictionary1(&quot;CAAOsmDictionary1&quot;);
+   CATISpecObject_var spDictionaryInst = NULL_var;
+   rc = dictionarySUHandler.Instanciate(spDictionaryInst, piRootContainer, dictionary1);
+   if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;Dictionary SU instance 1 created OK&quot;&lt;&lt; endl &lt;&lt; flush;
+   else 
+   {
+	   cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmDictionary SU&quot;&lt;&lt; endl &lt;&lt; flush;
+	   piRootContainer -&gt; Release();
+	   return 3;
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We also create a new feature, &quot;CAAOsmDictionary1&quot; from the
+&quot;CAAOsmDictionary&quot; StartUp and we acquire the attribute keys.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher2_ref"></a>Assigning &quot;CAAOsmPublisher2&quot; as a
+Referenced Feature</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATISpecAttrAccess *piSpecAttrAccessOnDict1 = NULL;
+rc = spDictionaryInst -&gt;<b> QueryInterface</b>(IID_CATISpecAttrAccess,
+                                   (void**) <b>&amp;piSpecAttrAccessOnDict1</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+} 
+
+piSpecAttrAccessOnDict1 -&gt; <b>SetSpecObject</b>(piKeyDictPublisher,
+                                         spPubInst2);
+
+piSpecAttrAccessOnDict1 -&gt; <b>Release</b>();</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, we assign &quot;CAAOsmPublisher2&quot; to &quot;CAAOsmDictionary1&quot;
+as a referenced feature in order to show that different types of
+&quot;CAAOsmBooks&quot;, such as dictionaries and novels, can have different
+publishers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Publisher2_independent"></a>Illustrating that
+&quot;CAAOsmPublisher2&quot; Is Not Tied to a &quot;Parent&quot; Feature</h4>
+<ol>
+  <li>Get the father of &quot;CAAOsmPublisher2&quot;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecObject *piPubInst2Father = spPubInst2 -&gt; <b>GetFather</b>();
+if (NULL == piPubInst2Father) cout &lt;&lt; &quot;OK:  Feature CAAOsmPublisher2 does not have a father!&quot; &lt;&lt; endl &lt;&lt; flush;
+else 
+{
+    cout &lt;&lt; &quot;ERROR:  Feature CAAOsmPublisher2 should not have a father and it does!&quot; &lt;&lt; endl &lt;&lt; flush;
+    piPubInst2Father -&gt; <b>Release</b>();
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A feature used as a referenced attribute does not have a
+    &quot;parent&quot;: it exists independently of any other feature. Therefore,
+    the method <code>GetFather</code> has no meaning when applied to a
+    referenced feature: it returns a NULL.</p>
+  </li>
+  <li>Delete &quot;CAAOsmDictionary1&quot;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>LifeCycleObject *pDict = NULL;
+rc = spDictionaryInst -&gt; <b>QueryInterface</b>(IID_LifeCycleObject,
+                                   (void**) <b>&amp;pDict</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+else pDict -&gt; <b>remove</b>();
+
+pDict -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>If &quot;CAAOsmDictionary1&quot; is deleted, &quot;CAAOsmPublisher2&quot;
+    can still be assigned to other features as a referenced attribute. So, let's
+    delete &quot;CAAOsmDictionary1&quot; and see. This is done using a <i>LifeCycleObject</i>
+    handle that we acquire on the &quot;CAAOsmDictionary1&quot; feature. Using
+    this handle, we perform a<code> remove</code> in order to delete the
+    feature.</p>
+  </li>
+  <li>Create &quot;CAAOsmDictionary2&quot;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATUnicodeString dictionary2(&quot;CAAOsmDictionary2&quot;);
+  CATISpecObject_var spDictionaryInst2 = NULL_var;
+
+   rc = dictionarySUHandler.Instanciate(spDictionaryInst2, piRootContainer, dictionary2);
+   if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;Dictionary SU instance 2 created OK&quot;&lt;&lt; endl &lt;&lt; flush;
+   else 
+   {
+		cout &lt;&lt; &quot;ERROR in creating instance 2 of CAAOsmDictionary SU&quot; &lt;&lt; endl &lt;&lt; flush;
+		piRootContainer -&gt; Release();
+		return 3;
+   }
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To show that &quot;CAAOsmPublisher2&quot; is not also deleted along with
+    &quot;CAAOsmDictionary1&quot;, assign it to a new instance of
+    &quot;CAAOsmDictionary&quot;. In order to do this, first we must create a
+    new instance of &quot;CAAOsmDictionary&quot; that we will call
+    &quot;CAAOsmDictionary2&quot;.</p>
+  </li>
+  <li>Assign &quot;CAAOsmPublisher2&quot; to &quot;CAAOsmDictionary2&quot; as a
+    referenced feature
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnDict2 = NULL;
+rc = spDictionaryInst2 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                                   (void**) <b>&amp;piSpecAttrAccessOnDict2</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}	
+	
+piSpecAttrAccessOnDict2 -&gt; <b>SetSpecObject</b>(piKeyDictPublisher,
+                                         spPubInst2);
+	
+piKeyDictPublisher -&gt; <b>Release</b>();
+piSpecAttrAccessOnDict2 -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>And now, we can assign &quot;CAAOsmPublisher2&quot; to the new
+    &quot;CAAOsmDictionary2&quot; feature using <code>SetSpecObject</code>.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Save_doc"></a>Epilog.</h4>
+<p>Before proceeding to save the document, be sure to release any remaining
+pointers that will no longer be used:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>piRootContainer -&gt; Release();
+piCatalogOnContainer -&gt; Release();</pre>
+    </td>
+  </tr>
+</table>
+<p>See the referenced article <a href="#References">[3]</a> for a detailed
+description of the steps to go through when saving a document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use referenced attributes.
+Specifically, it has illustrated:</p>
+<ul>
+  <li>Retrieving StartUps from the catalog using the <code>RetrieveSU</code>
+    method of <i>CATIOsmSUHandler</i></li>
+  <li>Retrieving the StartUp's attribute keys using the <code>GetAttrKey</code>
+    method of <i>CATISpecAttrAccess</i></li>
+  <li>Creating a new feature by instantiating a StartUp using the <code>Instanciate</code> method of <i>CATIOsmSUHandler</i></li>
+  <li>Valuating feature attributes using the &quot;<code>Set</code>...&quot;
+    methods of <i>CATISpecAttrAccess</i></li>
+  <li>Assigning a feature as a value of another feature's <code>tk_specobject</code>-type
+    attribute using the <code>SetSpecObject</code> method of <i>CATISpecAttrAccess</i></li>
+  <li>Deleting a feature using the <code>remove</code> method of <i>LifeCycleObject</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" style="width: 31px">[1]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Conceptual Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" style="width: 31px">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" style="width: 31px">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+    <tr>
+    <td valign="top" style="width: 31px">[4]</td>
+    <td>
+	<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FeatureModelerExtOverview.htm">
+		Preparing for V6 Feature Modeler-Overview </a></td>
+  </tr>
+  <tr>
+    <td valign="top" style="width: 31px">[5]</td>
+    <td><a href="CAAV5V6OsmUcReferencedAttr.htm">Referenced Attribute Use-Case 
+	with V6 APIs</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2000]</td>
+    <td valign="top">Document modified</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

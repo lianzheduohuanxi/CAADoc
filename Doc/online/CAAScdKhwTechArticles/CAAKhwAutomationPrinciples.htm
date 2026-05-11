@@ -1,0 +1,121 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Knowledge Expert Principles</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Automation</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Knowledge Expert Principles</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>This article provides the basis for understanding how to create macros
+replaying most of the operations you can perform with the Knowledge Expert
+product. Note that the Knowledge Expert product does not provide you with
+journaling capabilities. The objects described below as well as the Use Cases
+which illustrate how to manipulate these objects can only be used to write a VB
+macro to be replayed later on. None of the Knowledge Expert operations that you
+can perform interactively can be recorded in a script by using&nbsp; the <nobr>Tools-&gt;Macro-&gt;Start
+Recording</nobr> command.&nbsp;</p>
+<p>Basically, to start with Knowledge Expert automation, you need know:</p>
+<ol>
+  <li>
+    <p>how to create the Knowledge Expert objects you are going to manipulate.
+    These objects are the document rule base, the rule sets, the expert rules
+    and the expert checks.&nbsp; They are all Relation objects that you create
+    from the Relations collection.</li>
+  <li>
+    <p>how to manipulate these objects.</li>
+  <li>
+    <p>how to launch some Knowledge Expert specific operations such as Solving a
+    rule base, generating a check report or highlighting the elements that don't
+    fulfill the criteria specified in a check.</li>
+</ol>
+<p>The Use Cases provided as samples are fully commented and should help you
+understand how to<br>
+proceed to write simple macros as well as fully-fledged macros manipulating
+Knowledge Expert objects.</p>
+<h3>Creating a Rule Base</h3>
+<p>The entry point is the Relations collection which provides you with the
+CreateRuleBase method. This method takes as its argument the rule base name.</p>
+<div align="left">
+  <table border="0" cellspacing="0" cellpadding="0" bgcolor="#E1E1E1" width="100%">
+    <tr>
+      <td><font size="2">Dim oRel As Relations<br>
+        Set oRel = oActiveDoc.Part.Relations<br>
+        &nbsp;<br>
+        <font color="#008000">' Create the RB1 rulebase</font><br>
+        Dim oRuleBase As Relation<br>
+        Set oRuleBase = oRel.CreateRuleBase(&quot;RB1&quot;)</font></td>
+    </tr>
+  </table>
+</div>
+<p>You can create a rule base below the Relations node of a CATProduct.</p>
+<div align="left">
+  <table border="0" cellspacing="0" cellpadding="0" bgcolor="#E1E1E1" width="100%">
+    <tr>
+      <td><font size="2">Dim oRel As Relations<br>
+        Set oRel = oActiveDoc.Product.Relations<br>
+        &nbsp;<br>
+        <font color="#008000">' Create the RB1 rulebase</font><br>
+        Dim oRuleBase As Relation<br>
+        Set oRuleBase = oRel.CreateRuleBase(&quot;RB1&quot;)</font></td>
+    </tr>
+  </table>
+</div>
+<p>After a rule base has just been created, it is in a to-be-solved status.</p>
+<h3>Creating a Rule Set</h3>
+<p>In interactive mode, you don't have to create rule sets. They are
+automatically created upon creation of rules and checks. It is the same in VB.</p>
+<p>In the present version, rule sets cannot be gathered in a collection. There
+are no direct means to retrieve the set of RuleSet objects.</p>
+<h3>Creating Expert Rules and Expert Checks</h3>
+<p>Prior to using the rule or check creation methods, you need retrieve the
+RuleSet object from the rule base. To create an&nbsp; expert rule/check, you
+must specify the rule set name as the last argument of the CreateCheck or
+CreateRule method. In the statements below, RuleSet.1 is created if it does not
+exist yet. If it is already existing the HDiaCheck is created right below it.</p>
+<div align="left">
+  <table border="0" cellspacing="0" cellpadding="0" bgcolor="#E1E1E1" width="100%">
+    <tr>
+      <td>Dim oCheck As Relation<br>
+        Set oCheck=
+        oRuleBase.RuleSet.CreateCheck(&quot;HDiaCheck&quot;,&quot;H:Hole&quot;,&quot;H.Diameter&gt;12mm&quot;,&quot;RuleSet.1&quot;)</td>
+    </tr>
+  </table>
+</div>
+<h3>Determining whether a Rule Base is to Be Solved</h3>
+<p>The status of a rule base is described by its FingerPrint attribute. If it is
+set to 0, the rule base must be solved, if it is set to 1, the rule base is
+solved.</p>
+<h3>Manipulating the components of a Rule Base</h3>
+<p>The experts rules and checks making up a rule base are grouped into an
+ExpertRuleBaseComponentRunTimes collection. The component type where by you can
+differentiate a rule from a check in a collection is ExpertCheckRunTime or
+ExpertRuleRunTime.</p>
+<h3>Knowledge Expert Specific Operations</h3>
+<p>To solve a rule base, use the <i>rulebase</i>.Deduce()&nbsp; method.</p>
+<p>To generate a report, use the <i>rulebase</i>.Report() method</p>
+<p>To highlight the elements which do not satisfy the checks, use the <i>rulebase</i>.Highlight()
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

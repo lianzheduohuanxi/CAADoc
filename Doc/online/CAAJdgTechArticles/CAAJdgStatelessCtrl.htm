@@ -1,0 +1,727 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Writing Stateless Controllers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - CATJDialog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Writing Stateless Controllers</h3>
+      <em>Best practices to design stateless controllers</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you several rules and best practices to help you
+      designing <i><font color="#0000FF"><b>stateless</b></font></i> JDialog
+      controllers. This is a key topic if you want your application to scale.
+      <ul>
+        <li><a href="#scalability"><strong>General thoughts about scalability</strong></a></li>
+        <li><strong><a href="#jdialogstateless">Is JDialog stateless?</a></strong></li>
+        <li><strong><a href="#datamodel">Data Model: a JDialog pattern</a></strong></li>
+        <li><font color="#0000FF"><a href="#keyprinciple"><b>The Key: a common
+          language between JDialog and the application</b></a></font>
+          <ul>
+            <li><a href="#keyprinciple">How does it work?</a></li>
+            <li><a href="#choosingkey">How to choose the key?</a></li>
+            <li><a href="#keypath">What is the difference between
+              CATKeyTreeModel and CATKeyPathTreeModel?</a></li>
+          </ul>
+        </li>
+        <li><a href="#statelesskeymodel"><b>Designing a stateless KeyModel</b></a>
+          <ul>
+            <li><a href="#treeusecase">Tree use case</a></li>
+            <li><a href="#tableusecase">Table use case</a></li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="scalability"></a>General thoughts about scalability</h3>
+<p>In an application server environment, there is no choice between memory or
+CPU consumption. The critical resource in such an environment is definitely
+memory. Only applications with low memory usage (per user session) will scale.
+Obviously CPU consumption is the price to pay for a low memory usage.<br>
+The application has then to try to be &quot;as stateless as possible&quot;.
+<p>For example, an application that displays a query result in a table should
+not hold the result data between two client requests. Indeed, what would happen
+if the user never connects again after the first request? The server would have
+to wait until the session timeout to release the result data (that may be
+huge!).<br>
+Therefore - even if it's CPU consuming - the application has to (re) make the
+query at each client request, and drop the result at the end of the request.
+<p>Some definitions:
+<ul>
+  <li>From the application point of view, a <b>client request</b> may be seen as
+    a user interaction (button click, contextual menu invocation, tree
+    expansion, ...). Its processing has a duration.</li>
+  <li>In this article, we call <b>request caching</b> the fact of caching data
+    throughout the client request, and releasing that data at the end of the
+    request.</li>
+  <li>We call <b>session caching</b> the fact of caching data over client
+    requests (the data lifetime in cache is longer that a single client
+    request).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="jdialogstateless"></a>Is JDialog stateless?</h3>
+<p>JDialog provides the application with a collection of graphical components
+(widgets).<br>
+Those widgets are aimed at showing application data to the user.<br>
+From the widget point of view, we call it <b>presentation data</b>.</p>
+<p>For example, for a TextField, the presentation data is the displayed text.
+For a DateEditor, the presentation data is the displayed date. For a Tree, the
+presentation data are the tree nodes...</p>
+<p>Most of JDialog widgets hold the presentation data:</p>
+<ul>
+  <li>TextField: holds the 'Text' value</li>
+  <li>CheckBox: holds the 'State' value</li>
+  <li>ComboBox: holds 'ItemList' and 'Selection' values</li>
+  <li>DateEditor: holds the 'Date' value</li>
+  <li>...</li>
+</ul>
+<p>So - as a matter of fact - JDialog is <b>not stateless</b> (because it holds
+data throughout the session).<br>
+Anyway, holding those data is not a major concern as their size is
+&quot;reasonable&quot; and well controlled.</p>
+<p>But there are some widgets that display an uncontrolled amount of data (that
+may be huge):</p>
+<ul>
+  <li><b>Tree</b>: displays a boundless number of nodes</li>
+  <li><b>Table</b>: displays a boundless number of rows</li>
+</ul>
+<p>Those widgets have a specific design <b>not to hold the presentation data</b>:</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="datamodel"></a>Data Model: a JDialog pattern</h3>
+<p>When using a tree or a table widget, the application has to provide the
+widget with a <b>data model</b> object, that is in charge of feeding the widget
+with presentation data.<br>
+Those models MUST be stateless (otherwise it may hold a huge amount of data).</p>
+<p>This design allows JDialog to request presentation data only when rendering
+the tree or table widget to the Graphical User Interface (GUI), and to forget it
+right after that.</p>
+<p>For historical reasons and for addressing different needs, the tree and table
+widgets allow several types of models:</p>
+<p>Here are allowed model types for the Table widget:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="16%"><b>Allowed models for Table</b></td>
+    <td width="6%" align="center"><b>Stateless</b></td>
+    <td width="53%"><b>Reserved methods on CATT</b><b>able</b></td>
+  </tr>
+  <tr>
+    <td width="16%"><b>CATTableModel</b></td>
+    <td width="6%" align="center"><b><font color="#FF0000">NO</font></b></td>
+    <td width="53%">
+      <ul>
+        <li>setModel(), getModel()</li>
+        <li>setSelectedRow(), getSelectedRow(), isRowSelected()</li>
+        <li>getAllRowSelected()</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="16%"><b>CATKeyTableModel</b></td>
+    <td width="6%" align="center"><b><font color="#00FF00">YES</font></b></td>
+    <td width="53%">
+      <ul>
+        <li>setKeyModel(), getKeyModel()</li>
+        <li>setSelection(), getSelection()</li>
+        <li>setSelectedKeys(), getSelectedKeys(), isKeySelected()</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>Here are allowed model types for the Tree widget:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="16%"><b>Allowed models for Tree</b></td>
+    <td width="6%" align="center"><b>Stateless</b></td>
+    <td width="53%"><b>Reserved methods on CATTree</b></td>
+  </tr>
+  <tr>
+    <td width="16%"><b>CATTreeModel</b></td>
+    <td width="6%" align="center"><b><font color="#FF0000">NO</font></b></td>
+    <td width="53%">
+      <ul>
+        <li>setModel(), getModel()</li>
+        <li>collapse(), expand(), isExpanded()</li>
+        <li>setSelection(), getSelection()</li>
+        <li>setSelectedNodes(), getSelectedNodes()</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="16%"><b>CATKeyTreeModel</b></td>
+    <td width="6%" align="center"><b><font color="#00FF00">YES</font></b></td>
+    <td width="53%">
+      <ul>
+        <li>setKeyModel(), getKeyModel()</li>
+        <li>collapseKey(), expandKey(), isKeyExpanded()</li>
+        <li>selectKey(), unselectKey(), isKeySelected()</li>
+        <li>setSelectedKeys(), getSelectedKeys()</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="16%"><b>CATKeyPathTreeModel</b></td>
+    <td width="6%" align="center"><b><font color="#00FF00">YES</font></b></td>
+    <td width="53%">
+      <ul>
+        <li>setKeyPathModel(), getKeyPathModel()</li>
+        <li>collapseKeyPath(), expandKeyPath(), isKeyPathExpanded()</li>
+        <li>selectKeyPath(), unselectKeyPath(), isKeyPathSelected()</li>
+        <li>setSelectedKeyPaths(), getSelectedKeyPaths()</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="left">As you see in the previous charts, CATTreeModel and
+CATTableModel are not stateless compliant. Therefore you should not use them if
+you wish to write a stateless application. In the next chapter, we'll have a
+deep sight into CATKeyTableModel, CATKeyTreeModel and CATKeyPathTreeModel usage.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="thekey"></a>The Key: a common language between JDialog and the
+application</h3>
+<p align="left">The allowed stateless models are all <b>key models</b>: they
+identify widget items with a <b>key</b> (that is a string identifier).</p>
+<p align="left"><b>Note</b>: the tree 'item' is a <b>node</b>, the table 'item'
+is a <b>row</b>.</p>
+<p align="left"><img border="0" src="images/KeyModelPrinciple.gif" width="639" height="546"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="keyprinciple"></a>How does it work?</h4>
+<ol>
+  <li>
+    <p align="left">at render time, the model is asked for presentation data +
+    keys</li>
+  <li>
+    <p align="left">when an event occurs on the GUI, the source item (s) is
+    (are) identified with its (their) key (s)</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <p align="left"><b>Ex</b>: a Tree with a CATKeyTreeModel with a controller
+      listening to selection notifications:</p>
+      <p align="left">At <b>render time</b>, the model is asked for each visible
+      tree node:</p>
+      <ul>
+        <li>
+          <p align="left">its key (a string that identifies the application data
+          represented by this node)</li>
+        <li>
+          <p align="left">the node label</li>
+        <li>
+          <p align="left">the node icon</li>
+        <li>
+          <p align="left">the node type: node (has children) or leaf (no child)</li>
+        <li>
+          <p align="left">the node children (if any)</li>
+      </ul>
+      <p align="left">Later on, the user <b>selects a node</b>:</p>
+      <ul>
+        <li>
+          <p align="left">the application receives a SelectionNotification from
+          the Tree widget, with the key identifying the source node.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="choosingkey"></a>How to choose the key?</h4>
+<p align="left">Basically, the key should contain enough data for the
+application to identify clearly the related data.</p>
+<table class="code">
+  <tr>
+    <td>
+      <p align="left"><b>Ex</b>: a Table that shows a database query result</p>
+      <p align="left">If a row presented in the table corresponds to a database
+      n-uplet, then the key should obviously be the database table key.</p>
+      <p align="left">If a table row corresponds to a combination of database
+      n-uplets, then the key should be a combination (concatenation) of the
+      required database tables keys.</p>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="keypath"></a>What is the difference between
+CATKeyTreeModel and CATKeyPathTreeModel?</h4>
+<p align="left">When using a CATKeyPathTreeModel, tree nodes are no longer
+identified by the node key, but by the keys path from the root to the concerned
+node.</p>
+<p align="left">A key path is of type String[] and has the following format:</p>
+<blockquote>
+  <pre>{<font color="#0000FF">&lt;root node key&gt;</font>, <font color="#0000FF">&lt;first children key&gt;</font>, <font color="#0000FF">[...]</font>, <font color="#0000FF">&lt;the concerned node key&gt;</font>}</pre>
+</blockquote>
+<p align="left">There are two cases where the application should use a
+CATKeyPathTreeModel instead of CATKeyTreeModel:</p>
+<ol>
+  <li>
+    <p align="left">when 2 or more tree nodes may represent the same application
+    data</li>
+  <li>
+    <p align="left">when an event on a tree node has an impact on its parent
+    nodes, and the application has no way of retrieving the parents keys
+    programmatically (bad database design?)</li>
+</ol>
+<p align="left">Notice that identifying nodes with their keys path is heavier
+for the client and JDialog renderer, so applications should really be careful of
+using a CATKeyPathTreeModel only when needed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3 align="left"><a name="statelesskeymodel"></a>Designing a stateless KeyModel</h3>
+<p align="left">A <b>stateless</b> model should retrieve its application data
+only once per client request, and should not keep it beyond the request
+lifetime. There are two cases:</p>
+<ul>
+  <li>
+    <p align="left">If an information is requested <b>only once</b> per client
+    request and <b>through a single method</b>, then the model should simply
+    retrieve application data in the method, and forget it right away,</li>
+  <li>
+    <p align="left">If an information may be requested <b>several times</b> in
+    the client request lifetime, or if several application data from the same
+    source are requested <b>through different methods</b>, then the model should
+    use request caching (not to process several times the same database query
+    during the client request).</li>
+</ul>
+<p align="left">Request caching is performed through the session <b>volatile
+properties</b>:</p>
+<blockquote>
+  <div align="left">
+    <pre align="left">CATSession.getVolatileProperty(String iName);</pre>
+  </div>
+  <div align="left">
+    <pre align="left">CATSession.setVolatileProperty(String iName, Object iData);</pre>
+  </div>
+</blockquote>
+<p align="left">Volatile properties is a memory space related to the client
+request. It has two advantages on other ways of caching transient data:</p>
+<ul>
+  <li>
+    <p align="left">it is automatically destroyed at the end of the client
+    request (you shall not worry about dropping your application data),</li>
+  <li>
+    <p align="left">it is thread-safe: if the same model object is called at the
+    same time by 2 or more different client requests (threads), there is no risk
+    that the end of a request destroys data that is still required in an other
+    running request.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="treeusecase"></a>Tree use case</h4>
+<p align="left">JDialog requests 2 kinds of information when rendering a tree:</p>
+<ul>
+  <li>
+    <p align="left">the root key,</li>
+  <li>
+    <p align="left">node information (label, icon, children keys ...) for
+    displayed nodes.</li>
+</ul>
+<p align="left">Notes:</p>
+<ul>
+  <li>
+    <p align="left">the root key may be <b>static</b> (hardcoded value), or <b>dynamic</b>
+    (depending on the user for example).</li>
+  <li>
+    <p align="left">node information is only requested <b>once per client
+    request</b> and through a single method (getNodeInfo()). Therefore, no
+    caching is required.</li>
+</ul>
+<p align="left">Let's imagine we want to write a JDialog tree that presents data
+from a database:</p>
+<ul>
+  <li>
+    <p align="left">the root key is dynamic and depends on the user,</li>
+  <li>
+    <p align="left">node information is stored in the database (in a single
+    n-uplet).</li>
+</ul>
+<p align="left">Here is an implementation of this use case:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.myapplication;</pre>
+      <pre>import com.dassault_systemes.catjdialog.CATKeyTreeModel;
+import com.dassault_systemes.catjdialog.CATKeyTreeModelCtxMenuEx;
+import com.dassault_systemes.catjdialog.CATMenuModel;
+import com.dassault_systemes.catjdialog.CATTreeNodeInfo;</pre>
+      <pre>public class MyStatelessKeyTreeModel implements CATKeyTreeModel, CATKeyTreeModelCtxMenuEx
+{
+	private String _rootKey;</pre>
+      <pre><font color="#0000FF">	/**
+	 * MyStatelessKeyTreeModel constructor
+	 */</font>
+	public MyStatelessKeyTreeModel(CATSession iSession)
+	{
+<font color="#008000">		// --- compute the root Key for the current user
+		// [ TODO ]</font>
+	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTreeModelCtxMenuEx.getContextualMenu()
+	 */</font>
+	public CATMenuModel getContextualMenu( String iKey )
+	{
+<font color="#008000">		// --- retieve contextual menu model from the application data
+		// --- this info is only requested once per client request, so caching is not necessary
+		// [ TODO ]</font></pre>
+      <pre>		return null;
+	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTreeModel.getRootKey()
+	 */</font>
+	public String getRootKey()
+	{
+	<font color="#008000">	// --- root key has already been computed</font>
+		return _rootKey;
+	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTreeModel.getNodeInfo()
+	 */</font>
+	public CATTreeNodeInfo getNodeInfo(String iKey, boolean iGetChildren)
+	{
+		<font color="#008000">// --- retieve node info from the application data
+		// --- this info is only requested once per client request, so caching is not necessary
+		// [ TODO ]</font></pre>
+      <pre>		return null;
+	}
+}&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left"><b>Notes</b>:</p>
+<ul>
+  <li>
+    <p align="left">Here, the root key is computed in the model constructor, and
+    cached (as a class attribute) throughout the model lifetime. This is
+    &quot;acceptable&quot; session caching (because the amount of cached data is
+    known and controlled: 1 string value).</li>
+  <li>
+    <p align="left">The model may require the user <b>session</b>, or even the <b>tree</b>
+    object (for accessing message catalogs for example). Keeping the session (or
+    widget) object as a class attribute in the model is allowed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="tableusecase"></a>Table use case</h4>
+<p align="left">JDialog requests 3 kinds of information when rendering a table:</p>
+<ul>
+  <li>
+    <p align="left">column information (number, title, is sortable, ...),</li>
+  <li>
+    <p align="left">total number of rows,</li>
+  <li>
+    <p align="left">cell information (label, type, icon, ...) for displayed rows
+    (from an offset to a number of displayed rows).</li>
+</ul>
+<p align="left">Notes:</p>
+<ul>
+  <li>
+    <p align="left">Column information may be <b>static</b> (ex: we know in
+    advance that the table shows &quot;Name&quot;, &quot;Value&quot; and
+    &quot;Date&quot;), or <b>dynamic</b> (defined in the database).</li>
+  <li>
+    <p align="left">total number of rows and cell information are - in general -
+    fully dynamic.</li>
+</ul>
+<p align="left">Unlike in the tree models, cell information are requested
+through several methods (getCell(), getType(), getIcon(), ...). In that case,
+application data should be queried once and cached in the session volatile
+properties.</p>
+<p align="left">Let's imagine we want to write a JDialog table that presents
+data from a database:</p>
+<ul>
+  <li>
+    <p align="left">displayed columns are dynamic (stored in the database),</li>
+  <li>
+    <p align="left">cell information (label, type, icon, ...) is stored in the
+    database.</li>
+</ul>
+<p align="left">Here is an implementation of this use case:</p>
+<table class="code" width="1144">
+  <tr>
+    <td width="1136">
+      <pre>package com.dassault_systemes.myapplication;
+
+import com.dassault_systemes.catjdialog.CATDialog;
+import com.dassault_systemes.catjdialog.CATKeyTableModel;
+
+<font color="#0000FF">/**
+ * This table model represents a database table:
+ *  - displayed columns are customizable and set in the database
+ *  - cell information (label, type, icon, ...) is stored in the database
+ */</font>
+public class MyStatelessKeyTableModel extends CATKeyTableModel
+{
+	private CATDialog _dialog;
+	
+<font color="#0000FF">	/**
+	 * StatelessKeyTreeModel constructor
+	 * This model type needs the related dialog component (a tree)
+	 */</font>
+	public MyStatelessKeyTableModel (CATDialog iDialog)
+	{
+		_dialog = iDialog;
+	}
+<font color="#008000">	// =====================================================================================
+	// === COLUMN INFORMATION
+	// =====================================================================================</font>
+<font color="#0000FF">	/**
+	 * This method returns column related data and manages caching through Session Volatile Properties
+	 */</font>
+	private MyColumnsData getColumnsData(CATDialog iDialog)
+	{
+<font color="#008000">		// --- check whether the column data is cached or not</font>
+		MyColumnsData data = (MyColumnsData)iDialog.getSession().getVolatileProperty(iDialog.getPath()+&quot;&amp;Column&quot;);
+		
+		if(data != null)
+			return data;
+		
+<font color="#008000">		// --- retrieve columns data
+		// [ TODO ]</font>
+		
+<font color="#008000">		// --- cache the data for the request lifetime
+</font>		iDialog.getSession().setVolatileProperty(iDialog.getPath()+&quot;&amp;Column&quot;, data);
+		return data;
+	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getColumnCount()
+	 */
+</font>	public int getColumnCount()
+	{
+		MyColumnsData colData = getColumnsData(_dialog);
+<font color="#008000">		// --- return column count from colData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getColumnTitle()
+	 */
+</font>	public String getColumnTitle(int iColumn)
+	{
+		MyColumnsData colData = getColumnsData(_dialog);
+<font color="#008000">		// --- return column title from colData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.isColumnSortable()
+	 */
+</font>	public boolean isColumnSortable(int iColumn)
+	{
+		MyColumnsData colData = getColumnsData(_dialog);
+<font color="#008000">		// --- return whether the column is sortable or not from colData
+		// [ TODO ]
+</font>	}
+<font color="#008000">	// =====================================================================================
+	// === ROW COUNT INFORMATION
+	// =====================================================================================
+</font><font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getKeyCount()
+	 */
+</font>	public int getKeyCount()
+	{
+<font color="#008000">		/*
+		 * Two choices:
+		 * ------------
+		 * 1- make a complete query in database and only render the rows in the table display range
+		 * 2- make a first query for counting total number of results,
+		 *    and then make another query (with results) when asked for
+		 * 
+		 * The second choice is probably optimal.
+		 * Let's imagine we are in the second choice.
+		 */
+</font>		
+<font color="#008000">		// --- check whether the column data is cached or not
+</font>		Integer count = (Integer)_dialog.getSession().getVolatileProperty(_dialog.getPath()+&quot;&amp;Count&quot;);
+		
+		if(count != null)
+			return count.intValue();
+		
+<font color="#008000">		// --- make the 'count' request
+		// [ TODO ]
+</font>		
+<font color="#008000">		// --- cache the data for the request lifetime
+</font>		_dialog.getSession().setVolatileProperty(_dialog.getPath()+&quot;&amp;Count&quot;, count);
+		return count.intValue();
+	}
+<font color="#008000">	// =====================================================================================
+	// === CELL INFORMATION
+	// =====================================================================================
+</font><font color="#0000FF">	/**
+	 * This method returns rows related from Session Volatile Properties
+	 * (doesn't check whether is is valuated or not)
+	 */
+</font>	private MyRowsData getRowsDataFromCache(CATDialog iDialog)
+	{
+<font color="#008000">		// --- check whether the column data is cached or not
+</font>		return (MyRowsData)iDialog.getSession().getVolatileProperty(iDialog.getPath()+&quot;&amp;Rows&quot;);
+	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getKeys()
+	 */
+</font>	public void getKeys( int iOffset, String [] oKeys )
+	{
+<font color="#008000">		/*
+		 * This is the first called method before retrieving row informations
+		 * It manages the database query
+		 * It is only called once per client request
+		 */
+		// --- make the query, and keep it in a MyRowData object
+		// [ TODO ]
+		
+		// --- cache the data for the request lifetime
+</font>		_dialog.getSession().setVolatileProperty(_dialog.getPath()+&quot;&amp;Rows&quot;, rowsData);
+ 		
+<font color="#008000"> 		// --- return keys from rowsData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getType()
+	 */
+</font>	public int getType(String iKey, int iColumn)
+	{
+		MyRowsData rowsData = getRowsDataFromCache(_dialog);
+<font color="#008000">		// --- (rowsData is valuated as getKeys() was called before)
+		// --- return cell type from rowsData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getCell()
+	 */
+</font>	public String getCell(String iKey, int iColumn)
+	{
+		MyRowsData rowsData = getRowsDataFromCache(_dialog);
+<font color="#008000">		// --- (rowsData is valuated as getKeys() was called before)
+		// --- return cell label from rowsData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getState()
+	 */
+</font>	public boolean getState(String iKey, int iColumn)
+	{
+		MyRowsData rowsData = getRowsDataFromCache(_dialog);
+<font color="#008000">		// --- (rowsData is valuated as getKeys() was called before)
+		// --- return cell state from rowsData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getImage()
+	 */
+</font>	public String getImage(String iKey, int iColumn)
+	{
+		MyRowsData rowsData = getRowsDataFromCache(_dialog);
+<font color="#008000">		// --- (rowsData is valuated as getKeys() was called before)
+		// --- return cell icon from rowsData
+		// [ TODO ]
+</font>	}
+<font color="#0000FF">	/**
+	 * @see CATKeyTableModel.getLink()
+	 */
+</font>	public String getLink(String iKey, int iColumn)
+	{
+		MyRowsData rowsData = getRowsDataFromCache(_dialog);
+<font color="#008000">		// --- (rowsData is valuated as getKeys() was called before)
+		// --- return cell link from rowsData
+		// [ TODO ]
+</font>	}
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left"><b>Notes</b>:</p>
+<ul>
+  <li>
+    <p align="left"><b>MyColumnsData</b> may be any class that holds columns
+    data (it may be a simple Hashtable or Vector for example)</li>
+  <li>
+    <p align="left"><b>MyRowsData</b> may be any class that holds rows data (it
+    may be a SQL result set for example)</li>
+  <li>
+    <p align="left">start() and stop() methods (inherited from
+    CATRequestListener) don't need to be overloaded as the application data
+    cleanup is automatically done by the volatile properties</li>
+  <li>
+    <p align="left">Here, we know that column information may not change
+    throughout the session. We may have retrieved column information in the
+    model constructor and kept it as a class attribute (not to retrieve it at
+    each new client request). It would be &quot;acceptable&quot; session caching
+    as we may assume this information always has a reasonable size.</li>
+  <li>
+    <p align="left">Session caching row count information is a bit touchier.
+    This data has definitely a reasonable size, but the problem here is more a
+    functional matter: what if the real row count changes during the user
+    session (for example a row is removed by another user)? This may introduce
+    bugs. If row count can't change at runtime, then it is also
+    &quot;acceptable&quot; session caching (*see warning 1 below*).</li>
+  <li>
+    <p align="left">Obviously cell information caching is not acceptable as this
+    represents uncontrolled amount of data (notwithstanding it may probably
+    change during the session).</li>
+  <li>
+    <p align="left">In order to store cached data in a safe place in the
+    volatile properties, the property name is prefixed with the related widget's
+    path (supposed to be unique in the session). This avoids collision with
+    other models (and even the same model instantiated for another widget in the
+    same page!). (*see warning 2 below*)</li>
+</ul>
+<p align="left"><b>Warning 1</b>: Even request caching the row count may be
+unsafe as the count request and the cells information request are probably
+performed with 2 distinct requests and that data may have changed in the
+meantime. So be aware that row count may have changed when you request cells
+information.
+<p align="left"><b>Warning 2</b>: Prefixing volatile properties name with the
+widget's path forces the model to hold a reference to the widget (given by the
+controller in the model constructor). That's a problem with CATKeyTableModel
+design: the widget object should be passed to the model in each method (actually
+this is done in the new CATTreeKeyPathModel).
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

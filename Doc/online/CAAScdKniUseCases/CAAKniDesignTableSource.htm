@@ -1,0 +1,171 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniDesignTable.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro:</font>
+<font color="#008000">'                 1 - Checks whether the active document is a CATPart</font>
+<font color="#008000">'                 2 - Checks whether the xls file containing the design table </font>
+<font color="#008000">'                     exists</font>
+<font color="#008000">'                 3 - Creates a design table from an existing Excel file</font>
+<font color="#008000">'                 4 - Creates two associations </font>
+<font color="#008000">'                 5 - Applies a new configuration to the document</font>
+<font color="#008000">'                 6 - Add a new row to the design table          </font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumptions:  This macro only operates on Windows NT  </font>
+<font color="#008000">'                 This macro is intended to be run on the </font>
+<font color="#008000">'                 KwrMacro0.CATPart document.</font>
+<font color="#008000">'                 This macro uses as an input data the KwrMacTable.xls file</font>
+<font color="#008000">'                 You must replace the value of the sFolderPath variable with the path</font>
+<font color="#008000">'                 of the file where this Excel table has been downloaded.</font>
+<font color="#008000">'   </font>
+<font color="#008000">'</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE , Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6</font>
+<font color="#008000">'   Revision : V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\KwrMacro0.CATPart")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+<font color="#0000FF"> Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF"> Set </font>oActiveDoc = CATIA.ActiveDocument 
+  
+<font color="#008000">' Check whether the document is a CATPart</font>
+<font color="#008000">' InStr is a standard VB function</font>
+<font color="#0000FF">If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+    <font color="#008000">' Set the file system object containing the folder</font>
+<font color="#0000FF">    Dim </font>oFileSys<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>oFileSys = CATIA.FileSystem 
+
+    <font color="#008000">' Define the design table path</font>
+<font color="#0000FF">    Dim </font>sFolderPath<font color="#0000FF"> As </font>String
+    sFolderPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+    "online\CAAScdKniUseCases\samples\KwrMacTable.xls")
+ 
+    <font color="#008000">' Test whether the design table file exists</font>
+    <font color="#008000">' if it does not exist a message box is displayed</font>
+    <font color="#008000">' if it exists the design table is created in the document</font>
+<font color="#0000FF">    if </font>(oFileSys.FileExists(sFolderPath) = False)<font color="#0000FF"> then </font>
+        MsgBox sFolderPath & " doesn't exist" 
+    else
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document relations.</font>
+        <font color="#008000">' The statements below are only valid when the active</font>
+        <font color="#008000">' document is a CATPart</font>
+<font color="#0000FF">        Dim </font>oRelations<font color="#0000FF"> As </font>Relations
+<font color="#0000FF">        Set </font>oRelations = oActiveDoc.Part.Relations
+
+        <font color="#008000">' Just to be clean before creating relations</font>
+        <font color="#008000">' Scan the collection of relations and remove the relations</font>
+        <font color="#008000">' with name "DesignTable.1" </font>
+<font color="#0000FF">        Dim </font>i<font color="#0000FF"> As </font>Integer 
+<font color="#0000FF">        For </font>i = 1<font color="#0000FF"> To </font>oRelations.Count
+<font color="#0000FF">          if </font>oRelations.Item(i).Name  = "DesignTable.1" then
+          oRelations.Remove oRelations.Item(i).Name 
+<font color="#0000FF">          end if</font>
+<font color="#0000FF">        Next</font>
+
+
+       <font color="#008000">' Create the "DesignTable.1" design table</font>
+       <font color="#008000">' by using the Relations.CreateDesignTable method </font>
+       <font color="#008000">' Argument 1: Design table name</font>
+       <font color="#008000">' Argument 2: Comment (empty here below)</font>
+       <font color="#008000">' Argument 3: Allows you to specify whether you want to copy the</font>
+       <font color="#008000">'             design table data in the document or not. Set this argument</font>
+       <font color="#008000">'             to True whenever you work on a platform (NT/Unix)</font>
+       <font color="#008000">'             and intend to reuse your document on another platform</font>
+       <font color="#008000">'             (Unix/NT). Otherwise, set this argument to False</font>
+       <font color="#008000">' Argument 4: design table path</font>
+<font color="#0000FF">       Dim </font>oDesignTable<font color="#0000FF"> As </font>DesignTable
+<font color="#0000FF">       Set </font>oDesignTable = oRelations.CreateDesignTable("DesignTable.1","",_
+                                                    False,_
+                                                   sFolderPath) 
+
+       <font color="#008000">' Retrieve the collection object which contains</font>
+       <font color="#008000">' all the part bodies</font>
+<font color="#0000FF">       Dim </font>oBodies<font color="#0000FF"> As </font>Bodies
+<font color="#0000FF">       Set </font>oBodies = oActiveDoc.Part.Bodies
+
+       <font color="#008000">' Scan the Bodies collection to determine </font>
+       <font color="#008000">' whether a PartBody feature exists</font>
+       <font color="#008000">' if the PartBody exists - creates two associations</font>
+<font color="#0000FF">       Dim </font>j<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">       For </font>j = 1<font color="#0000FF"> to </font>oBodies.Count
+<font color="#0000FF">          if </font>oBodies.Item(j).Name  = "PartBody" then 
+             <font color="#008000">' Retrieve the "PartBody" item from the Bodies collection</font>
+<font color="#0000FF">             Dim </font>oPartBody<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">             Set </font>oPartBody = CATIA.ActiveDocument.Part.Bodies.Item("PartBody") 
+
+             <font color="#008000">' Check there is at least one shape in the Part </font>
+<font color="#0000FF">             Dim </font>oShapes<font color="#0000FF"> As </font>Shapes
+<font color="#0000FF">             Set </font>oShapes = oPartBody.Shapes
+<font color="#0000FF">             if </font>(oShapes.Count &lt;&gt; 0)<font color="#0000FF"> then  </font>
+               <font color="#008000">' Retrieve the Pad.1 object</font>
+<font color="#0000FF">               Dim </font>Pad2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">               Set </font>Pad2 = oPartBody.Shapes.Item("Pad.1")
+               <font color="#008000">' Creates two associations</font>
+               oDesignTable.AddAssociation Pad2.FirstLimit.Dimension, "A"
+               oDesignTable.AddAssociation Pad2.SecondLimit.Dimension, "B"
+               <font color="#008000">' Apply the third configuration of the design table </font>
+               <font color="#008000">' to your document </font>
+               oDesignTable.Configuration = 3
+             else 
+               msgbox "no shapes"
+<font color="#0000FF">             end if</font>
+
+            <font color="#008000">' Add a new row</font>
+            <font color="#008000">' A new row is added to the design table each time the</font>
+            <font color="#008000">' macro is replayed on the document</font>
+            <font color="#008000">' A limit of 10 rows is specified</font>
+            msgbox oDesignTable.ConfigurationsNb
+<font color="#0000FF">            If </font>(oDesignTable.ConfigurationsNb &lt; 10)<font color="#0000FF"> Then</font>
+              oDesignTable.AddNewRow()
+            else 
+              msgbox "configuration number = 10"
+<font color="#0000FF">            end if</font>
+
+          else
+            msgbox "A PartBody feature is required"
+<font color="#0000FF">          end if </font>
+
+<font color="#0000FF">       Exit For</font>
+<font color="#0000FF">       Next</font>
+
+      <font color="#008000">' Update the document</font>
+      CATIA.ActiveDocument.Part.Update 
+
+<font color="#0000FF">    End If</font>
+else 
+    MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

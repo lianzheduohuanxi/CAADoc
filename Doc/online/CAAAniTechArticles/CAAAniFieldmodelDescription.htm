@@ -1,0 +1,948 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Field Model Description</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Field Model Description</h3>
+     <p><em>All the physical types to build Finite element models</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract&nbsp;</h3>
+     <p>This article describes the physical types that are defined for 
+     structural Analysis. We will describe the content of the physical 
+     dictionary provided with the Analysis package. The intent of this 
+     dictionary is to define a physic independent of the solver that is used. 
+     This philosophy as been put in place in order to be able to share the same 
+     physical model for a large number of solver. In this article, we will 
+     progress inside the field model by describing:</p>
+     <ul>
+       <li><a href="#Dummy">&quot;Dummy&quot; Physical Types</a>.</li>
+       <li><a href="#Sets">The analysis document structure and the associated 
+       physical types.</a></li>
+       <li><a href="#SetContent">For each set the description of the Analysis 
+       entities allowed and their physical characteristics.</a>
+       <ul>
+         <li><a href="#MeshS">The Mesh set and its entities.</a></li>
+         <li><a href="#NodeS">The Node set.</a></li>
+         <li><a href="#ElementS">The Element set.</a>
+         <ul>
+           <li><a href="#Drawing">The Drawing elements.</a></li>
+           <li><a href="#StructElem">The Structural elements</a>.<ul>
+             <li><a href="#bar">Rod element</a></li>
+             <li><a href="#beam">Beam element</a></li>
+             <li><a href="#spring">Spring element</a></li>
+             <li><a href="#Shell">Shell element</a></li>
+             <li><a href="#volume">Volume element</a></li>
+           </ul>
+           </li>
+           <li><a href="#constraints">Constraint Element</a></li>
+         </ul>
+         </li>
+         <li><a href="PhysicalTypes/HTML/documentation/MATERIAL.htm">The Material set and its entities.</a></li>
+         <li><a href="PhysicalTypes/HTML/documentation/AXIS.htm">The Axis set and its entities.</a></li>
+         <li><a href="PhysicalTypes/HTML/documentation/PROPERTY.htm">The Property set and its entities.</a></li>
+         <li><a href="#CaseS">The Analysis case.</a></li>
+         <li><a href="#RestraintS">The Restraint set and its entities.</a></li>
+         <li><a href="#LoadS">The Load set and its entities.</a></li>
+         <li><a href="#MassS">The Mass set and its entities.</a></li>
+         <li><a href="#Groups">The Group set and its entities.</a></li>
+       </ul>
+       </li>
+       <li><a href="#Reference">References</a></li>
+       <li>All characteristics.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Dummy"></a><i>&quot;Dummy&quot;</i> physical types.</h3>
+ <p>Those physical types are defined for the general management of the field 
+ model. They do not correspond to a physical definition.</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="25%"><b>NONE</b></td>
+     <td width="75%">not a physical type definition.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>GENERIC_CHARACTERISTIC</b></td>
+     <td width="75%">The explicit object associated is a 
+     CATAnalysisExplicitCharac without any physics.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>GENERIC_ENTITY</b></td>
+     <td width="75%">The explicit object associated is a 
+     CATAnalysisExplicitEntity without any physics.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>GENERIC_SET</b></td>
+     <td width="75%">The explicit object associated is a CATAnalysisExplicitSet 
+     without any physics.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>CHARAC_COLLECTOR_POINTER</b></td>
+     <td width="75%">The corresponding explicit object is used to keep a link to 
+     a CATAnalysisCharacCollector. Such a kind of object will be used when the 
+     charac-collector is attach to it's parent. Internal use only.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>ENTITY_COLLECTOR_POINTER</b></td>
+     <td width="75%">The corresponding explicit object is used to keep a link to 
+     a CATAnalysisEntityCollector. Such a kind of object will be used when an 
+     entity-collector is attach to it's parent. Internal use only.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>EXPRESSION_POINTER</b></td>
+     <td width="75%">The corresponding explicit object is used to keep a link to 
+     a CATAnalysisExplicitExpression. Internal use only.</td>
+   </tr>
+ </table>
+ <p>The Generic physical types can be used if the definition of the physics is 
+ not defined in the mechanical file and it can be modified after by used the <i>
+ SetPhysicalType</i> method.&nbsp;Note that all the explicit objects that will remain 
+ as &quot;GENERIC&quot; will not be streamed in the document.</p>
+ <hr>
+ <p>The <a href="PhysicalTypes/HTML/documentation/IMPORTED.htm">IMPORTED physical types</a> can be used for import scenario. </p>
+ <hr>
+ <p align="left">The following physical types are defined in order to perform 
+ some data collect associated to an appropriate criterion.</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="25%"><b>PHYSICAL_TYPE&nbsp;</b></td>
+     <td width="75%">useful to collect the physical types of all the entities 
+     aggregated in a set, or the physical types of the elements of the document.</td>
+   </tr>
+   <tr>
+     <td width="25%"><b>USER_NUMBER</b></td>
+     <td width="75%">useful to collect the user number attributes of all the 
+     entities aggregated in a set, or the user number of the elements of the 
+     document.</td>
+   </tr>
+ </table>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Sets"></a>The analysis document structure and the associated 
+ physical types.</h3>
+ <p>The field model sets structure is the finite element view (set up as the 
+ result view) of the feature tree. This is generated by the <i>Dassault Systèmes
+ </i>implementation of the CATISamExplicitation Interface for AnalysisSet. It 
+ can be summarized by the following figure:</p>
+ <table border="1" width="842">
+   <tr>
+     <td width="349">
+     <img border="0" src="images/FieldSets.jpg" width="550" height="479"></td>
+     <td width="477">The figure shows the NLS names of the Sets (and associated 
+     physical type). For each set that is allowed to include others, find the 
+     list of allowed types.</td>
+   </tr>
+ </table>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="SetContent"></a>The Sets Contents.</h3>
+ <p>The Analysis Set and Finite Element Model sets are always created inside an 
+ Analysis document. they are respectively the field model view of the <b>
+ AnalysisManager</b> and <b>AnalysisModel</b> features. The Analysis Set is the 
+ root object for accessing the model, and the Finite Element Model set is 
+ dedicated to manage the discretization (meshing data) and idealization 
+ (behavior of the part as physical properties). By default it contains a meshing 
+ set called <i>Nodes and Elements</i>, a property set, a material set, and an 
+ axis set.</p>
+ <h4><a name="MeshS"></a>The Mesh set.</h4>
+ <p>This set is dedicated to receive meshing data inside the field model. It is 
+ the result of the <b>MSHMeshSet</b> (Nodes and Elements) feature. It can 
+ include a Node set and an Element set and (or) other MESH sets. This allow to 
+ design recursively meshing data.</p>
+ <h4><a name="NodeS"></a>The Node set.</h4>
+ <p>This set is dedicated to receive nodal meshing data inside the field model. 
+ It includes the explicit nodes objects. The Explicit Node is linked to the 
+ Meshing node. The Explicit Node has a physical type &quot;<b>NODE</b>&quot;. In some 
+ scenarios like assembly of analysis if the node is used to apply preprocessing 
+ data on node of external documents an explicit object with physical type &quot;<b>NODE_PROXY</b>&quot; 
+ is automatically created by the system.</p>
+ <h4><a name="ElementS"></a>The Element set.</h4>
+ <p>This set is dedicated to receive finite element meshing data inside the 
+ field model. It includes the explicit element objects. The Explicit element is 
+ linked to the Meshing element. From this link, the explicit element can access 
+ all the geometrical data that are manage by the meshing framework. In addition, 
+ on the explicit entity, a physical type is defined that will define a physical 
+ behavior (For example, distinguish a bar and a beam that are represented by the 
+ same meshing connectivity) and some physical characteristics can be added. For 
+ additional information on the connectivity's, see Reference <a href="#Ref1">[1]</a>. 
+ For additional information on the degrees of freedom definition, see Reference
+ <a href="#Ref2">[2]</a>.&nbsp; In some scenarios like assembly of analysis if 
+ the element is used to apply preprocessing data on element of external 
+ documents an explicit object with physical type &quot;<b>ELEMENT_PROXY</b>&quot; is 
+ automatically created by the system. </p>
+ <p>A characteristic of TRANSFORMATION_3D is used to define the cyclic 
+ periodicity transformation of a specific meshing specification.</p>
+ <p>The Explicit Element physical types are detailed here after.</p>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><a name="Drawing"></a><b><font size="3">The drawing elements</font></b></p>
+ <p>These element types can be used without adding any characteristic. They 
+ provide the capability to have a non physical view of connectivity's inside the 
+ field model. They can be used for visualization purpose. No degree of freedom 
+ will be provided by those elements.</p>
+ <ul>
+   <li>ELEMENT_DRAWING_BAR2. The associated connectivity is <b>BAR</b>.</li>
+   <li>ELEMENT_DRAWING_TRIA3. The associated connectivity is <b>TR3</b>.</li>
+   <li>ELEMENT_DRAWING_QUAD4. The associated connectivity is <b>QD4</b>.</li>
+ </ul>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><b><font size="3"><a name="StructElem"></a>The structural elements</font></b></p>
+ <p>Here are gathered all the structural elements: The structural elements as 
+ opposed to the cinematic elements are element which represent an actual part of 
+ the structure. These elements have for instance a structural mass.</p>
+ <p>&nbsp;&nbsp;&nbsp; <b><u>1D elements </u></b></p>
+ <p><b>Note</b>: Unlike the cinematic element the 1D structural element should 
+ not be of null size. Indeed, computing for instance the mass of such element 
+ would not make sense. </p>
+ <p><a name="bar"></a><b>The bar elements</b></p>
+ <p>The bar elements allow to define a rod&nbsp; with 2 or 3 nodes and 3 DOFs 
+ per node: <img border="0" src="images/DofUx.gif" width="19" height="17">,
+ <img border="0" src="images/DofUy.gif" width="19" height="18">,
+ <img border="0" src="images/DofUz.gif" width="19" height="17"></p>
+ <ul>
+   <li>ELEMENT_BAR_3D_BAR2. The associated connectivity is <b>BAR2
+   <span style="font-weight: 400">(two nodes bar).</span></b> The type of 
+   degrees of freedom is <b>BALL_JOIN</b>. The only supported property is <b>
+   PROPERTY_BAR_3D</b>.</li>
+   <li>ELEMENT_BAR_3D_BAR3. The associated connectivity is <b>BAR3
+   <span style="font-weight: 400">(three nodes bar).</span></b> The type of 
+   degrees of freedom is <b>BALL_JOIN</b>. The only supported property is <b>
+   PROPERTY_BAR_3D.</b></li>
+ </ul>
+ <p>No Characteristics can be defined these two elements.</p>
+ <p><a name="beam"></a><b>The beam elements</b></p>
+ <p>The beam elements allow to define beams with 2 or 3 nodes and 6 DOFs per 
+ node: <img border="0" src="images/DofUx.gif" width="19" height="17">,
+ <img border="0" src="images/DofUy.gif" width="19" height="18">,
+ <img border="0" src="images/DofUz.gif" width="19" height="17">,
+ <img border="0" src="images/DofRx.gif" width="17" height="16">,
+ <img border="0" src="images/DofRy.gif" width="17" height="16">,
+ <img border="0" src="images/DofRz.gif" width="17" height="16">.</p>
+ <ul>
+   <li>ELEMENT_BEAM_3D_BAR2.The associated connectivity is <b>BAR.</b> The type 
+   of degrees of freedom is <b>CLAMP</b>. The only supported property is <b>
+   PROPERTY_BEAM_3D.</b></li>
+   <li>ELEMENT_BEAM_3D_BAR3.The associated connectivity is <b>BAR3.</b> The type 
+   of degrees of freedom is <b>CLAMP</b>. The only supported property is <b>
+   PROPERTY_BEAM_3D.</b></li>
+   <li>ELEMENT_CURVED_BEAM_3D_BAR2.The associated connectivity is <b>BAR.</b> 
+   The type of degrees of freedom is <b>CLAMP</b>. The only supported property 
+   is <b>PROPERTY_CURVED_BEAM_3D.</b></li>
+ </ul>
+ <p>Beams support three optional characteristics in order to define an 
+ orientation:&nbsp;<b>ORIENTATION_VECTOR</b> (a 3D vector), or <b>ORIENTATION_POINT</b> 
+ (3D coordinates) or <b>ORIENTATION_NODE</b> (a Reference to an explicit node). 
+ One of these three characteristics allows the definition of a local axis: The X 
+ axis is taken as being along the element while the Y axis tends to be towards 
+ the point or along the vector added.</p>
+ <p>Moreover, it is possible at the element level to optionally input:</p>
+ <ul>
+   <li>Release of DOFs for ELEMENT_BEAM_3D_BAR2 with the characteristic 
+   DEGREES_OF_FREEDOM (See beam properties for more details).</li>
+   <li>Warping of the beam for ELEMENT_BEAM_3D_BAR2 with the characteristics 
+   WARPING_NODE_A and WARPING_NODE_B (See beam properties for more details).</li>
+ </ul>
+ <p><a name="spring"></a><b>The spring elements</b></p>
+ <p>The spring elements allow to define beams with 2 or 3 nodes and 6 DOFs per 
+ node: <img border="0" src="images/DofUx.gif" width="19" height="17">,
+ <img border="0" src="images/DofUy.gif" width="19" height="18">,
+ <img border="0" src="images/DofUz.gif" width="19" height="17">,
+ <img border="0" src="images/DofRx.gif" width="17" height="16">,
+ <img border="0" src="images/DofRy.gif" width="17" height="16">,
+ <img border="0" src="images/DofRz.gif" width="17" height="16">.</p>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <p>&nbsp;&nbsp;&nbsp; <b><u>2D elements </u></b></p>
+ <p><b><a name="Shell"></a>The shell elements</b></p>
+ <ul>
+   <li>ELEMENT_SHELL_3D_TRIA3. The associated connectivity is <b>TR3 (linear 
+   triangle). The </b>type of degrees of freedom is <b>CLAMP</b>. Supports the 
+   following properties:<ul>
+     <li>PROPERTY_SHELL_3D</li>
+     <li>PROPERTY_COMPOSITE_SHELL_3D </li>
+     <li>PROPERTY_MEMBRANE_3D.&nbsp;
+     <p>&nbsp;</li>
+   </ul>
+   </li>
+   <li>ELEMENT_SHELL_3D_QUAD4.The associated connectivity is <b>QD4 (linear 
+   quadrangle). The </b>type of degrees of freedom is <b>CLAMP</b>. Supports the 
+   following properties:<ul>
+     <li>PROPERTY_SHELL_3D</li>
+     <li>PROPERTY_COMPOSITE_SHELL</li>
+     <li>PROPERTY_MEMBRANE_3D</li>
+     <li>PROPERTY_SHEAR_PANEL_3D.</li>
+   </ul>
+   <p>&nbsp; </li>
+   <li>ELEMENT_SHELL_3D_TRIA6. The associated connectivity is <b>TR6 (parabolic 
+   triangle). The </b>type of degrees of freedom is <b>CLAMP</b>. Supports the 
+   following properties:<ul>
+     <li>PROPERTY_SHELL_3D</li>
+     <li>PROPERTY_COMPOSITE_SHELL_3D</li>
+     <li>PROPERTY_MEMBRANE_3D.&nbsp;
+     <p>&nbsp;</li>
+   </ul>
+   </li>
+   <li>ELEMENT_SHELL_3D_QUAD8. The associated connectivity is <b>QD8 (parabolic 
+   quadrangle). The </b>type of degrees of freedom is <b>CLAMP</b>. Supports the 
+   following properties:<ul>
+     <li>PROPERTY_SHELL_3D</li>
+     <li>PROPERTY_COMPOSITE_SHELL_3D</li>
+     <li>PROPERTY_MEMBRANE_3D
+     <p>&nbsp;</li>
+   </ul>
+   </li>
+ </ul>
+ <blockquote>
+   <p>These Shell elements are defined with 6 DOF per node:
+   <img border="0" src="images/DofUx.gif" width="19" height="17"> ,
+   <img border="0" src="images/DofUy.gif" width="19" height="18">,
+   <img border="0" src="images/DofUz.gif" width="19" height="17">,
+   <img border="0" src="images/DofRx.gif" width="17" height="16">,
+   <img border="0" src="images/DofRy.gif" width="17" height="16">,
+   <img border="0" src="images/DofRz.gif" width="17" height="16">. </p>
+   <p>Note: In fact only 5 DOFs in the local element reference frame:
+   <img border="0" src="images/DofRz.gif" width="17" height="16"> as for classic 
+   is inexistent and support the <b>PROPERTY_SHELL_3D </b>property.</p>
+   <p>Moreover two characteristics are optionally available on these four 
+   elements:</p>
+   <ul type="circle">
+     <li>The characteristic <b>SURFACE_OFFSET</b> allows the definition of an 
+     offset in meter normal to the element. This offset can be positive or 
+     negative; the normal is oriented in the classic way: If someone sees an 
+     element with the order of the nodes being clockwise, the normal is negative 
+     towards him.</li>
+     <li>The characteristic <b>MATERIAL_ANGLE</b> allows the storage of the 
+     orientation of each element with respect to a user axis. This is only 
+     useful when using associated non-isotropic characteristic such as 
+     materials. See composite property for more details.&nbsp;</li>
+   </ul>
+ </blockquote>
+ <p><b>The plate elements</b></p>
+ <p>These elements, also none as membrane elements, are elements that only 
+ strain in their plane (traction, compression and shear).</p>
+ <ul>
+   <li>ELEMENT_PLATE_3D_TRIA3.The associated connectivity is <b>TR3 (linear 
+   triangle) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>. The only 
+   supported property is PROPERTY_SHELL_3D.</li>
+   <li>ELEMENT_PLATE_3D_QUAD4. The associated connectivity is <b>QD4 (linear 
+   quadrangle) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>. The 
+   only supported property is PROPERTY_SHELL_3D.</li>
+ </ul>
+ <p>No characteristic allowed on plate elements.</p>
+ <p><b>The shear panel elements</b></p>
+ <p>These elements, also none as membrane elements, are elements that only 
+ strain in their plane (only shear).</p>
+ <ul>
+   <li>ELEMENT_SHEAR_3D_QUAD4. The associated connectivity is <b>QD4 (linear 
+   quadrangle) .</b> The type of degrees of freedom is <b>BALL_JOIN. </b>The 
+   only supported property is PROPERTY_SHEAR_PANEL_3D.</li>
+ </ul>
+ <p>No characteristic allowed on shear elements.</p>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <p>&nbsp;&nbsp;&nbsp; <u><a name="volume"></a>3</u><b><u>D elements </u></b>
+ </p>
+ <ul>
+   <li>ELEMENT_SOLID_3D_TETRA4. The associated connectivity is <b>TE4(linear 
+   tetrahedron) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>.&nbsp;Supports 
+   the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_PENTA6. The associated connectivity is <b>WE6(linear 
+   wedge) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>.&nbsp;Supports the 
+   following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_HEXA8. The associated connectivity is <b>HE8(linear 
+   hexahedron) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>. 
+   Supports the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_PYRA5. The associated connectivity is <b>PY5(linear 
+   hexahedron) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>. 
+   Supports the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_TETRA10. The associated connectivity is <b>
+   TE10(parabolic tetrahedron) .</b> The type of degrees of freedom is <b>
+   BALL_JOIN</b>.&nbsp;Supports the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_PENTA15. The associated connectivity is <b>WE15 
+   (parabolic wedge) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>.&nbsp;Supports 
+   the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_HEXA20. The associated connectivity is <b>HE20 
+   (parabolic hexahedron) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>.&nbsp;Supports 
+   the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SOLID_3D_PYRA13. The associated connectivity is <b>WE13 
+   (parabolic wedge) .</b> The type of degrees of freedom is <b>BALL_JOIN</b>. 
+   Supports the following properties:<ul>
+     <li>PROPERTY_SOLID_3D </li>
+     <li>PROPERTY_FLUID_3D.</li>
+   </ul>
+   </li>
+ </ul>
+ <p>No characteristic allowed on solid elements.</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><b><font size="3"><a name="constraints"></a>The cinematic elements</font></b></p>
+ <p>These elements as opposed to structural elements are not representation of 
+ actual parts. They are rather used to represent connections between parts or 
+ virtual parts. Note that a cinematic element has no mass. However additional 
+ mass can be added on the nodes of these elements. Note also that these elements 
+ unlike the structural elements can be of null size.</p>
+ <ul>
+   <li><b>ELEMENT_CONSTRAINT_3D_RIGID</b>. This element can be of connectivity
+   <b>BAR</b> or <b>SPIDER . The </b>type of degrees of freedom is <b>CLAMP on 
+   both sides </b>. The characteristics ORIENTATION_VECTOR, ORIENTATION_POINT 
+   and ORIENTATION_NODE allows the definition of an axis local to the element 
+   (See beam property for more details). It Supports the following properties:<ul>
+     <li>PROPERTY_CONSTRAINT_3D_RIGID</li>
+     <li>PROPERTY_CONSTRAINT_3D_TIGHTENING</li>
+     <li>PROPERTY_CONSTRAINT_3D_SPRING_DAMPER </li>
+     <li>PROPERTY_CONSTRAINT_3D_SPRING_DAMPER_FREQUENCY_DEPENDENT.</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_RIGID_TRANSLATION. This element can be of 
+   connectivity <b>BAR</b> or <b>SPIDER . The </b>type of degrees of freedom is
+   <b>CLAMP on one side and BALL_JOIN on the other side.
+   <span style="font-weight: 400">For a BAR element, by default the CLAMP DOF is 
+   on the first node and the BALL_JOIN DOF is on the second node; The 
+   characteristic REVERSE_CONNECTIVITY allows the inversion of the element in 
+   order to have CLAMP DOF on the second node and BALL_JOIN DOF on the first 
+   node. For a spider element (which is not symmetric), the clamp DOF is always 
+   on the slave node as the master nodes are all BALL_JOIN. A characteristic 
+   LOCAL_AXIS allows the definition of an axis. </span></b>Supports the 
+   following properties:<ul>
+     <li>PROPERTY_CONSTRAINT_3D_RIGID</li>
+     <li>PROPERTY_CONSTRAINT_3D_TIGHTENING</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_AXIAL. This element can be of connectivity <b>BAR</b> 
+   or <b>SPIDER . The </b>type of degrees of freedom is <b>BALL_JOIN on both 
+   sides. </b>Supports the following properties:<ul>
+     <li><b>PROPERTY_CONSTRAINT_3D_AXIAL </b></li>
+     <li><b>PROPERTY_CONSTRAINT_3D_CONTACT </b></li>
+     <li><b>PROPERTY_CONSTRAINT_3D_CABLE </b></li>
+     <li><b>PROPERTY_CONSTRAINT_3D_PERIODIC </b></li>
+     <li><b>PROPERTY_CONSTRAINT_3D_TIGHTENING </b></li>
+   </ul>
+   </li>
+ </ul>
+ <p>Note on that the three here above elements should model infinitely rigid 
+ connection or structures.</p>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_MEAN. The associated connectivity is <b>SPIDER</b>. 
+   The type of degree of freedom is <b>BALL_JOIN .
+   <span style="font-weight: 400">The only supported property is </span>
+   PROPERTY_CONSTRAINT_3D_MEAN. <span style="font-weight: 400">A characteristic 
+   LOCAL_AXIS allows the definition of an axis. </span></b></li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_MEAN_TRANSLATION. The associated connectivity is <b>
+   SPIDER</b>. The type of degree of freedom is<b> CLAMP<span style="font-weight: 400"> 
+   on the slave node and </span>BALL_JOIN <span style="font-weight: 400">on the 
+   other side. The only supported property is </span>PROPERTY_CONSTRAINT_3D_MEAN<span style="font-weight: 400">. 
+   A characteristic LOCAL_AXIS allows the definition of an axis. </span></b>
+   </li>
+ </ul>
+ <p>Note on the two here above MEAN elements normally used to model smooth 
+ connections.</p>
+ <p>The first node is linked to the center of gravity of the N-1other nodes 
+ according to rigid-body equations. This linkage process does not introduce any 
+ additional stiffness between the master nodes. The relations are computed as 
+ follow: </p>
+ <ul type="circle">
+   <li>Compute the center of gravity of the master nodes using the same weight 
+   for all the nodes.</li>
+   <li>Compute the displacement (i.e.: translation and rotation) of the center 
+   of gravity of the master nodes using as mean square approach:</li>
+ </ul>
+ <blockquote>
+   <p><img border="0" src="images/ConstrMean1.gif" width="209" height="35"></p>
+ </blockquote>
+ <ul type="circle">
+   <li>Link the displacement of the slave node to the displacement of the center 
+   of gravity using the rigid-body equation:</li>
+ </ul>
+ <blockquote>
+   <p><img border="0" src="images/ConstrMean2.gif" width="138" height="27"></p>
+ </blockquote>
+ <ul type="circle">
+   <li>Combine these two equations to get the relation between the displacements 
+   of the master nodes and the slave node:</li>
+ </ul>
+ <blockquote>
+   <p><img border="0" src="images/ConstrMean3.gif" width="271" height="33"> </p>
+ </blockquote>
+ <p><u>Notation:</u></p>
+ <blockquote>
+   <p><img border="0" src="images/ConstrMean4.gif" width="355" height="24"> is 
+   the vector containing the displacement at the master nodes.</p>
+   <p><img border="0" src="images/ConstrMean5.gif" width="30" height="16"> is 
+   the vector containing the displacement at the center of gravity of the master 
+   nodes.</p>
+   <p><img border="0" src="images/ConstrMean6.gif" width="254" height="23"> is 
+   the vector containing the displacement at the slave node.</p>
+   <p><img border="0" src="images/ConstrMean7.gif" width="152" height="24"> is 
+   the inertia tensor.</p>
+   <p><img border="0" src="images/ConstrMean8.gif" width="42" height="22"> is 
+   the [ (N-)1*6 , 6] matrix of the rigid bogy motion&nbsp;of the master nodes 
+   relative to the center of gravity. It depends on the coordinates of the 
+   center of gravity.</p>
+   <p><img border="0" src="images/ConstrMean9.gif" width="41" height="27"> is 
+   the [6 , 6] matrix of the rigid-body motion of the slave node relative to the 
+   center of gravity. It depends on the coordinates of the center of gravity.</p>
+   <p><img border="0" src="images/ConstrMean10.gif" width="25" height="14"> is 
+   the mass [18 , 18] matrix . It is a diagonal matrix whose coefficients are 
+   the weight of the master nodes (<img border="0" src="images/ConstrMean12.gif" width="17" height="12">).</p>
+   <p><img border="0" src="images/ConstrMean11.gif" width="94" height="22"> are 
+   the translations at i node , and
+   <img border="0" src="images/ConstrMean13.gif" width="94" height="24"> are the 
+   rotations at i node.</p>
+ </blockquote>
+ <ul>
+   <li>ELEMENT_CONTACT_3D_NODAL&nbsp; This element can be of connectivity <b>BAR</b> 
+   or <b>SPIDER . The </b>type of degrees of freedom is <b>BALL_JOIN on both 
+   sides. <span style="font-weight: 400">The only supported property is </span>
+   PROPERTY_CONTACT_3D. </b></li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_JOIN_SOLID_TO_SOLID. The associated connectivity is
+   <b>SPIDER. The </b>type of degrees of freedom is <b>BALL_JOIN</b>. The 
+   supported properties are:&nbsp;
+   <ul>
+     <li>PROPERTY_CONSTRAINT_3D_MEAN</li>
+     <li>PROPERTY_CONSTRAINT_3D_AXIAL</li>
+     <li>PROPERTY_CONSTRAINT_3D_CONTACT</li>
+     <li>PROPERTY_CONSTRAINT_3D_CABLE</li>
+     <li>PROPERTY_CONSTRAINT_3D_TIGHTENING</li>
+     <li>PROPERTY_CONSTRAINT_3D_FITTING</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_JOIN_SOLID_TO_SHELL. The associated connectivity is
+   <b>SPIDER. The </b>type of degrees of freedom is <b>BALL_JOIN
+   <span style="font-weight: 400">on the master nodes and </span>CLAMP<span style="font-weight: 400"> 
+   on the slave node</span></b>. The supported properties are:<ul>
+     <li>PROPERTY_CONSTRAINT_3D_MEAN</li>
+     <li>PROPERTY_CONSTRAINT_3D_AXIAL</li>
+     <li>PROPERTY_CONSTRAINT_3D_CONTACT</li>
+   </ul>
+   </li>
+ </ul>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_JOIN_SHELL_TO_SHELL.The associated connectivity is
+   <b>SPIDER. The </b>type of degrees of freedom is <b>CLAMP</b>. The supported 
+   properties are:<ul>
+     <li>PROPERTY_CONSTRAINT_3D_MEAN</li>
+     <li>PROPERTY_CONSTRAINT_3D_AXIAL</li>
+     <li>PROPERTY_CONSTRAINT_3D_CONTACT</li>
+   </ul>
+   </li>
+ </ul>
+ <p>The three here above elements are used to connect incompatible meshes with 
+ solid elements. The first node (slave node) is linked to its projection on the 
+ surface defined by the N other nodes (master nodes), according to the 
+ rigid-body equations (translations only). Then, the projected node is linked to 
+ the master nodes using the shape functions corresponding to the number of 
+ masters. This linkage process does not introduce any additional stiffness 
+ between the master nodes. The relations are obtained in the following way: </p>
+ <blockquote>
+   <blockquote>
+     <ul>
+       <li>Compute the projection of the slave. The surface on which this node 
+       is projected is defined by the shape function of:&nbsp;
+       <ul>
+         <li>Triangular 3 Node Element, if it is a 4-Node JOIN (3 slave nodes)&nbsp;</li>
+         <li>Quadrangular 4 Node Element, if it is a 5-Node JOIN (4 slave 
+         nodes)&nbsp;</li>
+         <li>Triangular 6 Node Element, if it is a 7-Node JOIN (6 slave nodes).&nbsp;</li>
+         <li>Quadrangular 8 Node Element, if it is a 9-Node JOIN.(8 slave 
+         nodes).&nbsp;</li>
+       </ul>
+       </li>
+       <li>Link the displacements of the projected node to those of the masters 
+       using the same Shape functions.&nbsp;</li>
+       <li>Link the displacements of the slave to those of the projected node 
+       using rigid-body equations.&nbsp;</li>
+     </ul>
+   </blockquote>
+ </blockquote>
+ <ul>
+   <li>ELEMENT_SPRING_3D. The associated connectivity is <b>BAR</b>. The type of 
+   degree of freedom is <b>CLAMP</b>. A characteristic 
+	<a href="PhysicalTypes/HTML/documentation/AXIS.htm">LOCAL_AXIS</a> allows the definition of an axis. It is strongly advised to 
+   define this axis as this element should be of null size. Moreover, a 
+   characteristic DEGREES_OF_FREEDOM allows the release of one of the 6 degrees 
+   of freedom. The only supported property is PROPERTY_SPRING_3D.</li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SPRING_3D_TRANSLATION. The associated connectivity is <b>BAR</b>. 
+   The type of degree of freedom is <b>BALL_JOIN</b>. A characteristic
+   <a href="PhysicalTypes/HTML/documentation/AXIS.htm">LOCAL_AXIS</a> allows the definition of an axis. It is 
+   strongly advised to define this axis as this element should be of null size. 
+   The only supported property is PROPERTY_SPRING_3D.</li>
+ </ul>
+ <ul>
+   <li>ELEMENT_SPRING_BEAM_3D_BAR2. The associated connectivity is <b>BAR</b>. 
+   The type of degree of freedom is <b>CLAMP</b>. Can be oriented with one of 
+   the three characteristic&nbsp; ORIENTATION_VECTOR, ORIENTATION_POINT or&nbsp; 
+   ORIENTATION_NODE. This element is dedicated to model spring added, for 
+   example, at the end of ELEMENT_BEAM_3D_BAR2. The only supported property is 
+   PROPERTY_SPRING_BEAM_3D</li>
+ </ul>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><b><font size="3">Other elements</font></b></p>
+ <ul>
+   <li>ELEMENT_PROXY is used for creating links between elements in different 
+   field models. They are used in scenarios like assembly of analysis. If they 
+   are required they will created automatically by the field model API's.</li>
+   <li>ELEMENT_DAMPER_3D</li>
+   <li>ELEMENT_DAMPER_THERMAL<p align="right"><small><a href="#Top">[Top]</a></small></li>
+ </ul>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="PropertyS"></a>The Property set.</h4>
+ <p>This set is dedicated to receive finite element properties data inside the 
+ field model. It includes explicit entity objects with physical types compatible 
+ with PROPERTIES. The Explicit entities that manage this are defined with the 
+ following physical types:</p>
+ <p align="right">&nbsp;</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="CaseS"></a>The Analysis case.</h4>
+ <p>This set is dedicated to build some hierarchy inside the model. It groups 
+ all kinds of external data applied on the idealization. It can include 
+ Boundaries, Loads and the solution set that will give access to all the 
+ physical data that can be computed by the solver.</p>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="RestraintS"></a>The Restraint Set.</h4>
+ <p>This set is dedicated to boundaries data inside the field model. It includes 
+ explicit entity objects with physical types compatible with RESTRAINTS. The 
+ entities that represent the fixities are the following:</p>
+ <ul>
+   <li><b>RESTRAINT_DISPLACEMENT</b> used to fix degrees of freedom on a node in 
+   a local coordinate system.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>DEGREES_OF_FREEDOM defines the fixed degrees according to a bit array 
+     definition. See <a href="#Ref2">CATSamDof</a> include for Degree of Freedom 
+     position definition.</li>
+   </ul>
+   </li>
+   <li><b>RESTRAINT_CONTACT</b>, used to define imposed contact definition that 
+   link a face of 3D element to a node or node to node contact. The contact 
+   parameters are:
+   <ul>
+     <li>CONTACT_TYPE&nbsp;</li>
+     <li>FRICTION_TYPE&nbsp;</li>
+     <li>FRICTION_RATIO defines the Normal to tangential force ratio in the case 
+     of friction type.</li>
+   </ul>
+   </li>
+   <li><b>RESTRAINT_TEMPERATURE</b> used to fix imposed temperature on nodes.
+   <ul>
+     <li>TEMPERATURE&nbsp;</li>
+   </ul>
+   </li>
+   <li><b>RESTRAINT_INITIAL_VELOCITY</b><b></b> used to fix an initial velocity 
+   on a node in a local coordinate system.&nbsp;
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>TRANSLATIONAL_VELOCITY</li>
+   </ul>
+   </li>
+   <li><b>RESTRAINT_INITIAL_ACCELERATION</b> used to fix an initial acceleration 
+   on a node in a local coordinate system.&nbsp;
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>TRANSLATIONAL_ACCELERATION&nbsp;</li>
+   </ul>
+   </li>
+   <li><b>RESTRAINT_INITIAL_TEMPERATURE</b> used to fix initial temperature on 
+   nodes.
+   <ul>
+     <li>TEMPERATURE&nbsp;</li>
+   </ul>
+   </li>
+ </ul>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="LoadS"></a>The Load Set.</h4>
+ <p>This set is dedicated to loading data inside the field model. It includes 
+ explicit entity objects with physical types compatible with LOADS. The explicit 
+ entities for representing loading condition are:&nbsp;</p>
+ <ul>
+   <li><b>LOAD_POINT_FORCE</b> defines a concentrated force applied on a node.<ul>
+     <li>LOCAL_AXIS</li>
+     <li>POINT_FORCE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_POINT_MOMENT</b> defines a concentrated moment applied on a node.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>POINT_MOMENT</li>
+   </ul>
+   </li>
+   <li><b>LOAD_LINEIC_FORCE</b> defines a line force vector applied on 1D 
+   elements or faces of 2D and 3D elements.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>LINEIC_FORCE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_PRESSURE</b> defines a pressure applied on 2D elements or faces 
+   of 3D elements.
+   <ul>
+     <li>PRESSURE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_SURFACIC_FORCE</b> defines a surface force vector applied on 2D 
+   elements or faces of 3D elements.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>SURFACIC_FORCE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_VOLUMIC_FORCE</b> defines a volume body force vector applied on 
+   2D elements or 3D elements.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>VOLUMIC_FORCE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_TRANSLATIONAL_ACCELERATION</b> defines a acceleration (gravity) 
+   applied on 2D elements or 3D elements.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>TRANSLATIONAL_ACCELERATION</li>
+   </ul>
+   </li>
+   <li><b>LOAD_ROTATION_FORCE</b> defines a force due to rotation (with angular 
+   velocity and acceleration) applied on 2D elements or 3D elements.
+   <ul>
+     <li>LOCAL_AXIS</li>
+     <li>ANGULAR_VELOCITY</li>
+     <li>ANGULAR_ACCELERATION</li>
+   </ul>
+   </li>
+   <li><b>LOAD_CLEARANCE</b> defines a contact clearance.
+   <ul>
+     <li>CLEARANCE</li>
+   </ul>
+   </li>
+   <li><b>LOAD_TRANSLATIONAL_VELOCITY</b> defines a velocity on nodes.
+   <ul>
+     <li>TRANSLATIONAL_VELOCITY</li>
+   </ul>
+   </li>
+   <li><b>LOAD_ENFORCED_DISPLACEMENT</b> prescribed displacement applied on 
+   nodes.
+   <ul>
+     <li>ASSOCIATED_RESTRAINT</li>
+     <li>TRANSLATION</li>
+     <li>ROTATION</li>
+   </ul>
+   </li>
+   <li><b>LOAD_TEMPERATURE_FIELD</b> defines a temperature field on elements.
+   <ul>
+     <li>TEMPERATURE</li>
+   </ul>
+   </li>
+ </ul>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="MassS"></a>The Mass Set.</h4>
+ <p>This set is dedicated to non structural masses data inside the field model. 
+ It includes explicit entity objects with physical types compatible with MASSES. 
+ The explicit entities for representing non structural masses are:</p>
+ <ul>
+   <li><b>MASS_POINT_MASS</b> defines a concentrated mass.
+   <ul>
+     <li>POINT_MASS</li>
+   </ul>
+   </li>
+   <li><b>MASS_LINEIC_MASS</b> defines a line mass.
+   <ul>
+     <li>LINEIC_MASS</li>
+   </ul>
+   </li>
+   <li><b>MASS_SURFACIC_MASS</b> defines a surface mass.
+   <ul>
+     <li>SURFACIC_MASS</li>
+   </ul>
+   </li>
+   <li><b>MASS_VOLUMIC_MASS</b> defines a volume body mass.
+   <ul>
+     <li>VOLUMIC_MASS</li>
+   </ul>
+   </li>
+ </ul>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Groups"></a>The GROUPS Set.</h4>
+ <p>This set is dedicated to grouping definition inside the field model based on 
+ finite elements entities. It includes explicit entity objects with the 
+ following physical types.</p>
+ <ul>
+   <li>SPECIFIED_GROUP</li>
+   <li>FILTRED_GROUP</li>
+   <li>FREE_GROUP</li>
+ </ul>
+ <blockquote>
+   <p>All of them are designed with sub-entities that are typed with the 
+   position of the apply type. </p>
+   <ul>
+     <li>NODE_GROUP</li>
+     <li>EDGE_GROUP</li>
+     <li>FACE_GROUP</li>
+     <li>ELEMENT_GROUP</li>
+   </ul>
+ </blockquote>
+ <p align="right"><small><a href="#Top">[Top]</a></small></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Modal"></a>The&nbsp; Mode Set.</h4>
+ <p>This set is dedicated to retrieve and results associated to a modal 
+ analysis. It includes explicit characteristics objects (dedicated to global set 
+ parameters) and charac collectors objects. Under this kind of solution the list 
+ of allowed physical type is:</p>
+ <ul>
+   <li>MODAL_INDICATOR</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="50%" align="center">
+     <p align="left">For each mode k, the following computation is done:</td>
+     <td width="50%" align="center">
+     <img border="0" src="images/ModalIndicator.gif" width="140" height="63">
+     </td>
+   </tr>
+ </table>
+ <p>Only the translational DOFs are taken into account for this calculation (so, 
+ the rotational DOFs are NOT considered). So, NT stands for the total number of 
+ translation DOFs. So, the formula says that the sum is taken of the amplitude 
+ values of the translational DOFs and that this sum is divided by the number of 
+ translational DOFs and the maximum value of the translational DOFs. Note that 
+ the value is always between 0 and 1. A mode is local when the value is close to 
+ zero. A mode is global when the value is approaching 1.</p>
+ <hr>
+ <p>Glossary:??</p>
+ <p>Rigid contact bar element with 2 nodes, used to impose a minimal clearance 
+ between the nodes in the direction of the segment joining the initial positions 
+ of these nodes. The user imposes the maximum amount by which the clearance 
+ projected on this segment can be reduced (this parameter can also be 
+ interpreted as an initial clearance between nodes, supposing that they are 
+ allowed to eventually come in contact). Its use is recommended when some part 
+ of a structure may be brought into contact with some other part of the 
+ structure. Contact elements are then defined for pairs of nodes from the two 
+ parts.</p>
+ <p>&nbsp;</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top" width="50%">Version: <strong>1</strong> [June 2001]</td>
+     <td valign="top" width="50%">Document created <font color="#FF0000">DRAFT 
+     VERSION</font></td>
+   </tr>
+ </table>
+ <h3><a name="Reference"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top" width="50%"><a name="Ref1"></a>[1]</td>
+     <td valign="top" width="50%">
+     <a href="CAAAniAnalysisOverview.htm#MeshConnectivity">Analysis Modeler 
+     Overview , Connectivities</a></td>
+   </tr>
+   <tr>
+     <td valign="top" width="50%"><a name="Ref2"></a>[2]</td>
+     <td valign="top" width="50%">
+     <a href="../CAAAniQuickRefs/CAAAniDOF.htm">About Degrees of 
+     freedom</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2" width="100%">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>

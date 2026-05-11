@@ -1,0 +1,46 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Compute the mass and the center of gravity of a component.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active and a component selected.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Retrieve the selected component</font>
+<font color="#0000FF">    Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelection = CATIA.ActiveDocument.Selection
+<font color="#0000FF">    Dim </font>oProduct<font color="#0000FF"> As </font>AnyObject
+    On Error Resume Next
+<font color="#0000FF">    Set </font>oProduct = oSelection.FindObject("CATIAProduct")
+<font color="#0000FF">    If </font>(Err.Number &lt;&gt; 0)<font color="#0000FF"> Then</font>
+        MsgBox "No selected product"
+    Else
+        On Error Goto 0
+
+        <font color="#008000">' Compute the inertia</font>
+<font color="#0000FF">        Dim </font>oInertia<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">        Set </font>oInertia = oProduct.GetTechnologicalObject("Inertia")
+
+        <font color="#008000">' Read the inertia data</font>
+<font color="#0000FF">        Dim </font>dMass<font color="#0000FF"> As </font>Double
+        dMass = oInertia.Mass
+<font color="#0000FF">        Dim </font>dCoordinates(2)
+        oInertia.GetCOGPosition dCoordinates
+      
+        <font color="#008000">' Display the results</font>
+        MsgBox oProduct.Name & ": Mass = " & Cstr(dMass) & ", Center of gravity : X = " & _
+            Cstr(dCoordinates(0)) & ", Y = "+Cstr(dCoordinates(1)) & ", Z = "+Cstr(dCoordinates(2))
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

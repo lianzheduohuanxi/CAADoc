@@ -1,0 +1,540 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <title>
+      Maintaining the Session State
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <script language="JavaScript" src="../CAADocJavaScript/submit.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Maintaining the Session State
+            </h3><em>Sharing the same session while consuming one or several ENOVIA LCA V5 CAA Web services</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="tech" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              Applications built on top of ENOVIA LCA V5 CAA Web services must maintain a session state across multiple
+              requests from the same client. This article describes how to perform this task when using the Axis SOAP
+              runtime.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>Need for Web Service Conversation</strong></a>
+                <ul>
+                  <li>
+                    <a href="#1.1">Consuming Multiple ENOVIA LCA V5 CAA Web Services With Axis</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step Maintaining the Session State</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>Need for Web Service Conversation
+    </h3>
+    <p>
+      ENOVIA LCA V5 CAA Web services can be combined together in order to build loosely coupled applications that
+      communicate with ENOVIA LCA V5. The first requirement consists in establishing a <strong>session</strong> between
+      a client instance and a target ENOVIA LCA V5 server instance. The client first logs in to the server with a given
+      role through the use of the ENOPosApplicationBinderImpl CAA Web service [<a href="#References">1</a>]. The opened
+      session can then be used to interact with ENOVIA LCA V5 through the other available ENOVIA LCA V5 CAA Web
+      services. They allow to perform various types of integration scenarios such as lifecycle management, query,
+      concurrent engineering, document management, change management, and product structure management.
+    </p>
+    <p>
+      CAA Web services communicate with client applications through <strong>SOAP messages</strong> conveyed by the
+      standard <strong>HTTP protocol</strong> which is <strong>stateless</strong> by nature. In such context, each HTTP
+      request-response cycle is independent and isolated. But when a Web server replies to a request, it usually
+      includes additional information in the headers of the HTTP response. The response includes one or more
+      <strong>cookie</strong> headers (when enabled). As a result, the client can use a cookie in order to identify
+      itself to the server for subsequent calls, so that the server knows which session to associate with the incoming
+      request. The exact cookie used for that purpose is described further below.
+    </p>
+    <p>
+      When consuming ENOVIA LCA V5 CAA Web services, it is mandatory to maintain a session throughout a cycle of
+      interactions between a client instance and the target ENOVIA LCA V5 server instance proceeding the requests. The
+      purpose of this article is to provide a way to perform this task with the Axis SOAP runtime.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="1.1"></a>Consuming Multiple ENOVIA LCA V5 CAA Web Services With Axis
+    </h4>
+    <p>
+      When consuming multiple CAA Web services with Axis, it is required to generate a Java client binding 
+      [<a href="#References">2</a>] for each Web service participating in the integration scenario. Among the generated classes,
+      one can be used to invoke methods on the remote CAA Web service by marshalling/demarshalling SOAP messages. Upon
+      generation, this class is the one named with the suffix "Stub", but it will be further referred to as the
+      <strong>proxy</strong> in the rest of this article, as it best describes its purpose.
+    </p>
+    <p>
+      Upon generation, all the proxies are independent from one another. From the server perspective, each call
+      performed with a given proxy is interpreted as coming from an isolated client instance. By default, no session
+      state is maintained while using multiple proxies combined together in an attempt to perform a given integration
+      scenario.
+    </p>
+    <p>
+      The Axis SOAP engine provides an open architecture allowing to create custom <strong>handlers</strong> that can
+      be used to modify both the HTTP headers and the SOAP message content. By writing a dedicated handler class and
+      configuring it to be used for each of the proxies participating in the integration scenario, the client can use
+      one of the cookies sent back by the Web server to maintain the HTTP session state throughout its requests. A
+      sample of such handler class is given further below.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step Maintaining the Session State
+    </h3>
+    <p>
+      The first task consists in writing a custom session handler class in order to extract the JSESSIONID cookie from
+      the HTTP response sent back by the Web server and use it for all subsequent requests from the same client. The
+      second task requires to configure the Axis SOAP engine so that it uses this handler with each generated proxy
+      participating in the integration scenario. These steps are described in the following sections:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Writing a Custom Session Handler</a>
+      </li>
+      <li>
+        <a href="#3.2">Configuring the Generated Proxy</a>
+      </li>
+      <li>
+        <a href="#3.3">Using the Axis TCP Monitor to Analyze the HTTP SOAP Transport</a>
+      </li>
+    </ol>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>Writing a Custom Session Handler
+    </h4>
+    <p>
+      The use of the sample class detailed in this section is demonstrated in all of the use cases describing how to
+      consume the available ENOVIA LCA V5 CAA Web services. The custom session handler class itself can be found in the
+      <strong>CAAJAXRPCHTTPSessionHandler.mj</strong> module of the <strong>CAAWebServices.edu</strong> framework, at
+      the following location:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Windows</strong>:
+            <code><em>&lt;Install-root-directory&gt;</em>\CAAWebServices.edu\CAAJAXRPCHTTPSessionHandler.mj\src\<em>Package</em>\CustomSessionHandler.java</code><br>
+
+            <strong>Unix</strong>:
+            <code><em>&lt;Install-root-directory&gt;</em>/CAAWebServices.edu/CAAJAXRPCHTTPSessionHandler.mj/src/<em>Package</em>/CustomSessionHandler.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install-root-directory&gt;</em></code>: the directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em></code>: com\dassault_systemes\caawebservices\caajaxrpchttpsessionhandler
+        (Windows).
+      </li>
+    </ul>
+    <p>
+      The following class can be used to maintain the HTTP session state:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CustomSessionHandler implements Handler
+            {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public static</strong></font> String HEADER_COOKIE = <font color=
+            "#2A00FF">"Cookie"</font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public static</strong></font> String CLIENT_ID = <font color=
+            "#2A00FF">"ClientID"</font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private static</strong></font> Map clientIdToHttpSession =
+            <font color="#7F0055"><strong>new</strong></font> HashMap();<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String clientId = <font color=
+            "#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong>
+            javax.xml.rpc.handler.Handler#handleRequest(javax.xml.rpc.handler.MessageContext)<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<a name="handleRequest" id="handleRequest"></a><font color="#7F0055"><strong>public
+            boolean</strong></font> handleRequest(MessageContext messageContext) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if (clientId == <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return false</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SOAPMessageContext ctx = (SOAPMessageContext) messageContext;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Object headerCookie = clientIdToHttpSession.get(clientId);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String property = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (headerCookie != <font color=
+            "#7F0055"><strong>null</strong></font> &amp;&amp; headerCookie <font color=
+            "#7F0055"><strong>instanceof</strong></font> String[]) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] values = (String[]) headerCookie;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Reading cookies from memory.
+            Client ID: "</font> + clientId);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer params = <font color="#7F0055"><strong>new</strong></font>
+            StringBuffer();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>for</strong></font> (<font color=
+            "#7F0055"><strong>int</strong></font> i = 0; i &lt; values.length; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (i != 0
+            &amp;&amp; i &lt;= (values.length - 1)) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params.append(<font color="#2A00FF">";
+            "</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;params.append(values[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (values.length &gt; 0)
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property = params.toString();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (property != <font color=
+            "#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Setting cookies on HTTP
+            request: "</font> + property);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx.setProperty(CustomSessionHandler.HEADER_COOKIE, property);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return true</strong></font>;<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong>
+            javax.xml.rpc.handler.Handler#handleResponse(javax.xml.rpc.handler.MessageContext)<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<a name="handleResponse" id="handleResponse"></a><font color="#7F0055"><strong>public
+            boolean</strong></font> handleResponse(MessageContext messageContext) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (clientId == <font color=
+            "#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return false</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SOAPMessageContext ctx = (SOAPMessageContext) messageContext;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Object headerCookieProperty =
+            ctx.getProperty(CustomSessionHandler.HEADER_COOKIE);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (headerCookieProperty !=
+            <font color="#7F0055"><strong>null</strong></font> &amp;&amp; headerCookieProperty <font color=
+            "#7F0055"><strong>instanceof</strong></font> String[]) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] cookies = (String[]) headerCookieProperty;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Reading "</font> +
+            cookies.length + <font color="#2A00FF">" cookies from HTTP response"</font>);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>boolean</strong></font> newHttpSession =
+            <font color="#7F0055"><strong>false</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>for</strong></font> (<font color=
+            "#7F0055"><strong>int</strong></font> i = 0; i &lt; cookies.length; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Cookie["</font> +
+            i + <font color="#2A00FF">"]: "</font> + cookies[i]);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font>
+            (cookies[i].startsWith(<font color="#2A00FF">"JSESSIONID"</font>)) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F5F7F">// If timeout occurs on
+            the server side, the JSESSIONID<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// coookie has to be updated with the newly
+            generated value</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newHttpSession = <font color=
+            "#7F0055"><strong>true</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (newHttpSession) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Storing cookies
+            in memory. Client ID: "</font> + clientId);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientIdToHttpSession.put(clientId, cookies);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return true</strong></font>;<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong>
+            javax.xml.rpc.handler.Handler#handleFault(javax.xml.rpc.handler.MessageContext)<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<a name="handleFault" id="handleFault"></a><font color="#7F0055"><strong>public
+            boolean</strong></font> handleFault(MessageContext arg0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return true</strong></font>;<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong>
+            javax.xml.rpc.handler.Handler#init(javax.xml.rpc.handler.HandlerInfo)<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public void</strong></font> init(HandlerInfo info) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;Map config = info.getHandlerConfig();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (config != <font color=
+            "#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientId = (String) config.get(CustomSessionHandler.CLIENT_ID);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong> javax.xml.rpc.handler.Handler#destroy()<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public void</strong></font> destroy() {<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#3F5FBF">/**<br>
+            &nbsp;&nbsp; * <strong>@see</strong> javax.xml.rpc.handler.Handler#getHeaders()<br>
+            &nbsp;&nbsp; */</font><br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> QName[] getHeaders() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return new</strong></font> QName[0];<br>
+            &nbsp;&nbsp;}<br>
+            }</code><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>Warning</strong>: Please note that this class is provided as a sample reference only and may not be
+      appropriate to any type of client application. It may be improved in order to support more complex scenarios than
+      the ones provided with the use cases. These use cases are only intended to describe how to consume CAA Web
+      services with Axis from a simple stand-alone Java application.
+    </p>
+    <p>
+      The <code>javax.xml.rpc.handler.Handler</code> interface is required to be implemented by a SOAP message handler.
+      The <a href="#handleRequest"><code>handleRequest</code></a>, <a href="#handleResponse"><code>handleResponse</code></a> and 
+      <a href="#handleResponse"><code>handleFault</code></a>
+      methods have access to the <code>SOAPMessage</code> from a <code>SOAPMessageContext</code> instance. The
+      implementation of these methods can modify the SOAP message including the headers and body elements. The main
+      methods implemented on the sample custom handler are <a href="#handleRequest"><code>handleRequest</code></a> and
+      <a href="#handleResponse"><code>handleResponse</code></a>:
+    </p>
+    <ul>
+      <li>
+        <a href="#handleResponse"><code>handleResponse</code></a>: the JSESSIONID cookie required to maintain the
+        session state and the LtpaToken cookies are read from the HTTP header sent back by the Web server upon the
+        first call to a CAA Web service and stored in memory,
+      </li>
+      <li>
+        <a href="#handleRequest"><code>handleRequest</code></a>: the JSESSIONID cookie is read from memory and added to
+        HTTP request for all subsequent calls.
+      </li>
+    </ul>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Configuring the Generated Proxy
+    </h4>
+    <p>
+      Every available CAA Web service use case relies on a wrapper class that demonstrates the use of the proxies
+      generated using the WSDL2Java emitter tool. Each proxy has a handler chain that must be configured in order to
+      add the custom session handler so that it gets invoked by the Axis SOAP engine at runtime. It ensures that the
+      session state will be maintained throughout requests performed from the configured proxy, but also throughout
+      requests coming from other proxies configured with the same pattern.
+    </p>
+    <p>
+      The code below provides an example of how to configure the proxy for the ENOPosApplicationBinderImpl CAA Web
+      service use case [<a href="#References">1</a>]:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplWrapper
+            {<br>
+            ...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font>
+            CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String clientId,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String uri,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credUser,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credPwd,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>int</strong></font> timeOut) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (clientId != <font color=
+            "#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F5F7F">// Required to maintain HTTP session state
+            accross services</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerInfo info = <font color="#7F0055"><strong>new</strong></font>
+            HandlerInfo();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerClass(CustomSessionHandler.<font color=
+            "#7F0055"><strong>class</strong></font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map handlerConfig = <font color="#7F0055"><strong>new</strong></font>
+            HashMap();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerConfig(handlerConfig);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerRegistry registry = locator.getHandlerRegistry();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String portName =
+            locator.getENOPosApplicationBinderImplPortWSDDServiceName();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QName name = <font color="#7F0055"><strong>new</strong></font>
+            QName(portName);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List chain = registry.getHandlerChain(name);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chain.add(info);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>Using the Axis TCP Monitor to Analyze the HTTP SOAP Transport
+    </h4>
+    <p>
+      The Axis toolkit provides a utility that can be used to monitor both SOAP messages and related HTTP headers
+      content. This may come in handy when trying to maintain the HTTP session state, as it provides a way to ensure
+      the proper use of the JSESSIONID cookie required to keep track of a client session.
+    </p>
+    <p>
+      You can refer to the "Appendix : Using the Axis TCP Monitor (tcpmon)" section of the Axis User's Guide for a
+      detailed description of how to use the Axis TCP Monitor utility. The Axis 1.3 User's Guide can be accessed at the
+      following location: <code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\docs\index.html</code>.
+    </p>
+    <p>
+      The picture below shows an example of client/server interactions that are tracked down through the Axis TCP
+      Monitor utility:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig2" id="Fig2"></a>Fig.1: Axis TCP Monitor Tool
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSMaintainSessionWithAxis_Fig1.png" alt="Axis TCP Monitor Tool">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      ENOVIA LCA V5 CAA Web services enable middleware oriented integration of ENOVIA LCA V5 with other Dassault
+      Systemes products and third-party enterprise applications. In order to achieve these type of integration
+      scenarios, the available CAA Web services must be combined together, starting with the creation of a session
+      between a client instance and a target ENOVIA LCA V5 server instance. It is then required to use this HTTP
+      session scope for all requests coming from the same client instance.
+    </p>
+    <p>
+      While the available use cases describe in details how to generate and use the Java client bindings required to
+      consume CAA Web services with Axis, this article focused on how to maintain the HTTP session state with the use
+      of the open handler architecture provided by the Axis SOAP engine.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="#" onclick="javascript:CAAlinkUrl('../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm');return false;">Consuming
+            the ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td valign="top" align="left">
+            <a href="CAAWSClientUsingAxis.htm">Generating a Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Apr 2005]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

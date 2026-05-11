@@ -1,0 +1,518 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+			<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+			<title>Using the CATSurfacicRep class</title>
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<h1>3D PLM Enterprise Architecture</h1>
+				</td>
+				<td valign="top">
+					<h2>3D Visualization</h2>
+				</td>
+				<td rowspan="2" align="right" valign="top">
+					<h3><a name="Top"></a>Using the CATSurfacicRep class</h3>
+					<em>Creating a <i>CATSufacicRep</i> class instance to visualize 
+					a set of <i>CAT3DFaceGP</i> and <i>CAT3DLineGP</i> and use some of the advanced
+					capability of this class.</em></td>
+			</tr>
+			<tr>
+				<td class="use" colspan="2">Use Case</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+					<p>This article shows how to create a <i>CATSufacicRep</i> class instance to visualize 
+					a set of <i>CAT3DFaceGP</i> and <i>CAT3DLineGP</i> and use some of the advanced capability
+					of this class.</p>
+					<ul>
+						<li>
+							<a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+						<li>
+							<a href="#UseCase"><strong>The CAAVisBasics Use Case</strong></a>
+							<ul>
+								<li>
+									<a href="#What">What Does CAAVisBasics Do</a></li>
+								<li>
+									<a href="#How">How to Launch CAAVisBasics</a></li>
+								<li>
+									<a href="#Where">Where to Find the CAAVisBasics Code</a></li>
+								<li>
+									<a href="#SurfacicRep">Using the CATSurfacicRep class</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#Step"><strong>Step-by-Step</strong></a></li>
+						<li>
+							<a href="#InShort"><strong>In Short</strong></a></li>
+						<li>
+							<a href="#References"><strong>References</strong></a></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+		<p>This article shows how to create a <i>CATSufacicRep</i> class instance to visualize 
+		a set of <i>CAT3DFaceGP</i> and <i>CAT3DLineGP</i> and use some of the advanced capability
+		of this class like the different topological slots available on the <i>CATSurfacicRep</i>, and the
+		way to persistently store in a CGR file topological informations on graphic primitives.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="UseCase"></a>The CAAVisBasics Use Case</h3>
+		<p>CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that 
+			illustrates Vizualization framework capabilities.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What Does CAAVisBasics Do</h4>
+		<p>CAAVisBasics includes a MDI interactive application that displays viewers in its 
+			document windows. The <i>VisuObjects</i> menu allows the creation of a <i>CATSurfacicRep</i> 
+			class instance that contains the visualization of a cylinder. This article focuses on 
+			how to create the <i>CATSurfacicRep</i> representation associated with <i>CAT3DFaceGP</i>
+			and <i>CAT3DLineGP</i> graphic primitives.</p>
+		<p>The cylinder is displayed in a 3D navigation viewer as soon as the corresponding menu is 
+			selected.</p>
+		<table>
+			<caption>
+				<i><a name="Fig1"></a>Fig 1: The Cylinder</i></caption>
+			<tr>
+				<td><img border="0" src="images/CAAVisSampleCylinder.jpg"></td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="How"></a>How to Launch CAAVisBasics</h4>
+		<p>To launch CAAVisBasics, you will need to set up the build time environment, then 
+			compile CAAVisBasics along with its prerequisites, set up the run time 
+			environment, and then execute the use case [<a href="#References">1</a>].</p>
+		<p>A torus is displayed in a 3D navigation viewer as soon as the application is 
+			launched.</p>
+		<p>Select in menu bar: VisuObject-&gt;CATSurfacicRep,&nbsp; the cylinder is 
+		displayed. </p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to Find the CAAVisBasics Code</h4>
+		<p>The CAAVisBasics use case is made of several classes located in the 
+			CAAVisBasics.m module of the CAAVisualization.edu framework:</p>
+		<table>
+			<tr>
+				<td>Windows</td>
+				<td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\</code></td>
+			</tr>
+			<tr>
+				<td>Unix</td>
+				<td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/</code></td>
+			</tr>
+		</table>
+		<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM is 
+			installed.</p>
+		<p>This use case deals with the following classes:</p>
+		<table>
+			<tr>
+				<td><i>CAAVisBaseApplication</i></td>
+				<td>Class for the interactive application that hosts the viewer</td>
+			</tr>
+			<tr>
+				<td><i>CAAVisBaseDocument</i></td>
+				<td>Class for the document base class</td>
+			</tr>
+			<tr>
+				<td><i>CAAVisBaseVisuObjectDocument</i></td>
+				<td>Class for the document that allows for specific visualization object creation</td>
+			</tr>
+			<tr>
+				<td><i>CAAVisBaseView</i></td>
+				<td>Class for the document window containing a viewer to display the document</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="SurfacicRep"></a>Using the CATSurfacicRep class</h4>
+		<p>This article does not focus on the details of tesselating a cylinder. A good sample
+		that covers the subject of creating tesselated shapes using strip and fans triangles can be found 
+		<a href="CAAVisSampleCAT3DFaceGP.htm">here</a>.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Step"></a>Step-by-Step</h3>
+		<table width="100%">
+			<tr>
+				<th>
+					#</th>
+				<th>
+					Step</th>
+				<th>
+					Where</th>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step1">1</a></td>
+				<td valign="top">Create the graphic primitive and its associated bounding box</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step2">2</a></td>
+				<td valign="top">Associate topological information to the graphic primitives</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top">3</td>
+				<td valign="top">Set graphic attributes to the graphic primitive</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step4">4</a></td>
+				<td valign="top">Creating the CATSurfacicRep representation</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step5">5</a></td>
+				<td valign="top">Associate the representation with the graphic primitive</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step5">5</a></td>
+				<td valign="top">Compute the representation bounding box</td>
+				<td valign="top"><code>CreateSurfacicRep</code> method of <i>CAAVisBaseVisuObjectDocument</i></td>
+			</tr>
+			<tr>
+				<td valign="top"><a href="#Step6">6</a></td>
+				<td valign="top">Display the created 3D representation</td>
+				<td valign="top"><code>AddRepToViewer</code> method of <i>CATVisBaseView</i></td>
+			</tr>
+		</table>
+		<p>The cylinder is displayed when the <i>CATSurfacicRep</i> menu item contained in the <i>VisuObjects</i>
+			menu is selected. The cylinder creation and display is performed in the <i>CAAVisBaseVisuObjectDocument</i> constructor 
+			that calls the <code>CreateSurfacicRep</code> and <code>AddRepToViewer</code> methods 
+			respectively. These two methods are described below.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step1"></a>Creating the Graphic Primitive and its Associated Bounding Box</h4>
+			<p>The graphic primitive is created using the arrays computed in the code. Feel free
+			to have a look at this part of the code that describes how to tesselate a cylinder.</p>
+			<table class="code">
+				<tr>
+					<td>
+						<pre>void CAAVisBaseVisuObjectDocument::CreateSurfacicRep()
+{
+   // ...
+   
+   // We create the top face
+   CAT3DPlanarFaceGP * topFace = new CAT3DPlanarFaceGP(  topVertices, nbFaceVertices*3,
+                                                         normal,
+                                                         triangleIndices,
+                                                         nbTriangles,
+                                                         stripIndices,
+                                                         nbStrips,
+                                                         nbStripVertices,
+                                                         fanIndices,
+                                                         nbFans,
+                                                         nbFanVertices);
+
+   // We create the line that bounds the face
+   CAT3DLineGP * topLine = new CAT3DLineGP(topVertices, nbFaceVertices, ALLOCATE, LINE_LOOP);
+
+   // ...
+   
+   // We create the body face
+   CAT3DFaceGP * bodyFace = new CAT3DFaceGP( bodyVertices, 2*nbFaceVertices*3,
+                                             bodyNormals,  2*nbFaceVertices*3,
+                                             triangleIndices,
+                                             nbTriangles,
+                                             stripIndices,
+                                             nbStrips,
+                                             nbStripVertices,
+                                             fanIndices,
+                                             nbFans,
+                                             nbFanVertices);
+
+   // We create the lines that bounds the body
+   CAT3DLineGP * bodyLine1 = new CAT3DLineGP(bodyLineVertices,     2, ALLOCATE, LINES);
+   CAT3DLineGP * bodyLine2 = new CAT3DLineGP(&bodyLineVertices[6], 2, ALLOCATE, LINES);
+   
+   // ...
+}</pre>
+					</td>
+				</tr>
+			</table>
+		<p>The <code>CAT3DPlanarFaceGP</code> graphic primitive used for the top and bottom faces of the cylinder
+		allows to create a planar face that only needs one normal definition instead of one normal for each vertex.
+		This allows for less memory consumption when creating planar faces.</p>
+		<p>The <code>CAT3DLineGP</code> graphic primitive used for the lines that bounds the top, bottom, and body faces 
+		of the cylinder allows to create a line using an input set of vertices.</p>
+		<p>The bounding box and bounding sphere are generated automatically when a <i>CAT3DFaceGP</i> or 
+		<i>CAT3DPlanarFaceGP</i> is instancianted based on it's input set of vertices. Both classes inherit 
+		<i>CAT3DBoundingGP</i> which provides the following methods to retrieve the bounding element on such classes:</p>
+<table ID="Table6">
+  <tr>
+    <td valign="top"><code>float * CAT3DBoundingGP::GetSphereCenter()</code></td>
+    <td valign="top">Returns a 3 fields array containing the sphere center coordinates</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>float CAT3DBoundingGP::GetSphereRadius()</code></td>
+    <td valign="top">Gets the bounding sphere radius</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>float * CAT3DBoundingGP::GetBoxCenter()</code></td>
+    <td valign="top">Returns a 3 fields array containing the box center coordinates</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>float * CAT3DBoundingGP::GetBoxDimensions()</code></td>
+    <td valign="top">Returns a 3 fields array containing the half box spans coordinates.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>void CAT3DBoundingGP::ComputeBox()</code></td>
+    <td valign="top">Forces the recomputation of the bounding sphere / box.</td>
+  </tr>
+</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step2"></a>Associate topological information to the graphic primitives</h4>
+		<p>Persistent (in the CGR file) topological informations can be stored on CATGraphicPrimitives.</p>
+		<table class="code" ID="Table9">
+			<tr>
+				<td>
+					<pre>
+   //////////////////////////////////////////////////////////////////////////
+   // Topological informations
+   // We can store topological informations on CATGraphicPrimitive objects
+   // If the visualization data is saved as a CGR file, topological data will
+   // be persistent in the CGR file
+   //////////////////////////////////////////////////////////////////////////
+   CATMathPoint center(0,0,0);
+   CATMathVector axis(0,0,1);
+   CATMathPoint startPoint,endPoint;
+
+   // Top face
+   CATGraphicPrimitive * gp = topFace;
+   CATVisMeasurableGP cylinderTop(gp);
+   cylinderTop.SetCylinder(center,axis,radius);
+
+   // Bottom face
+   gp = bottomFace;
+   CATVisMeasurableGP cylinderBottom(gp);
+   cylinderBottom.SetCylinder(center,axis,radius);
+
+   // Top line
+   gp = topLine;
+   CATVisMeasurableGP circleTop(gp);
+   circleTop.SetCircle(center,axis,radius);
+
+   // Bottom line
+   gp = bottomLine;
+   CATVisMeasurableGP circleBottom(gp);
+   circleBottom.SetCircle(center,axis,radius);
+
+   // Body face
+   gp = bodyFace;
+   CATVisMeasurableGP cylinderBody(gp);
+   cylinderBody.SetCylinder(center,axis,radius);
+
+   // Body line 1
+   gp = bodyLine1;
+   startPoint.SetCoord(bodyLineVertices[0], bodyLineVertices[1], bodyLineVertices[2]);
+   endPoint.SetCoord  (bodyLineVertices[3], bodyLineVertices[4], bodyLineVertices[5]);
+   CATVisMeasurableGP cylinderBodyLine1(gp);
+   cylinderBodyLine1.SetLine(startPoint,endPoint);
+
+   // Body line 2
+   gp = bodyLine2;
+   startPoint.SetCoord(bodyLineVertices[6], bodyLineVertices[7],  bodyLineVertices[8]);
+   endPoint.SetCoord  (bodyLineVertices[9], bodyLineVertices[10], bodyLineVertices[11]);
+   CATVisMeasurableGP cylinderBodyLine2(gp);
+   cylinderBodyLine2.SetLine(startPoint,endPoint);
+</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The <i>CATVisMeasurableGP</i> can be used in order to store topological informations
+			on any <i>CATGraphicPrimitive</i>. See the CAA documentation for more details on which
+			type of informations can be stored.</p>
+			
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step4"></a>Creating the CATSurfacicRep Representation</h4>
+		<table class="code" ID="Table2">
+			<tr>
+				<td>
+					<pre>
+   // ...
+   // We create the surfacic rep
+   CATSurfacicRep * sRep = new CATSurfacicRep();
+   sRep->GetGraphicAttributeSet().SetType(3); // Specifies that this surfacic rep is a volume
+   // ...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The CATSurfacicRep is a complex visualization class. It handles graphic primitives topologicaly
+		 in order to provide custom drawing algorithms. See below for a list of topological slots available
+		 on the CATSurfacicRep. We also specifie that this CATSurfacicRep is a volume, which will allow for
+		 some drawing optimizations like backface culling</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step5"></a>Associating the Representation with the Graphic Primitive</h4>
+		<table class="code" ID="Table3">
+			<tr>
+				<td>
+					<pre>
+   // ...
+   sRep->AddGeomFace(topFace,	 new CATGraphicAttributeSet(tmpAtt));
+   sRep->AddGeomFace(bottomFace, new CATGraphicAttributeSet(tmpAtt));
+   sRep->AddGeomFace(bodyFace,	 new CATGraphicAttributeSet(tmpAtt));
+   // ...
+   sRep->AddGeomElt(CATBoundaryEdge, topLine, new CATGraphicAttributeSet(tmpAtt));
+   sRep->AddGeomElt(CATBoundaryEdge, bottomLine, new CATGraphicAttributeSet(tmpAtt));
+   sRep->AddGeomElt(CATInternalSmoothEdge, bodyLine1, new CATGraphicAttributeSet(tmpAtt));
+   sRep->AddGeomElt(CATInternalSmoothEdge, bodyLine2, new CATGraphicAttributeSet(tmpAtt));
+   // ...
+   </pre>
+				</td>
+			</tr>
+		</table>
+		<p>The main methods used for adding/retrieving graphic primitives to a CATSurfacicRep are the following
+		(Please see the CAA documentation for the full list of methods available) :
+		</p>
+<table ID="Table8">
+  <tr>
+    <td valign="top"><code>HRESULT AddGeomFace(CAT3DFaceGP *face,CATGraphicAttributeSet *att)</code></td>
+    <td valign="top">Adds a CAT3DFaceGP / CAT3DPlanarFaceGP and it corresponding graphic attribute to the surfacic rep.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>int GeomNumberOfFaces()</code></td>
+    <td valign="top">Retrieves the number of faces owned by the surfacic rep.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>HRESULT AddGeomElt(const CATGeomType iType, CATGraphicPrimitive *iGP, CATGraphicAttributeSet *iAtt)</code></td>
+    <td valign="top">Adds a graphic primitive iGP of type iType and it corresponding graphic attribute to the surfacic rep.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGraphicPrimitive * GeomElt(const CATGeomType iType, const int i)</code></td>
+    <td valign="top">Retrieves the graphic primitive of type iType</td>
+  </tr>
+</table>
+		<p>The type of elements (input of the method AddGeomElt) a CATSurfacicRep can handle are the following:</p>
+<table ID="Table7">
+  <tr>
+    <td valign="top"><code>CATBoundaryEdge</code></td>
+    <td valign="top">A CAT3DEdgeGP or CAT3DLineGP that bounds a face</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATInternalSharpeEdge</code></td>
+    <td valign="top">A G0 continuous CAT3DEdgeGP or CAT3DLineGP between two faces</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATInternalSmoothEdge</code></td>
+    <td valign="top">An at least G1 continuous CAT3DEdgeGP or CAT3DLineGP between two faces</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATBoundaryPoint</code></td>
+    <td valign="top">A CAT3DMarkerGP that bounds a face</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATInternalSharpePoint</code></td>
+    <td valign="top">A G0 continuous CAT3DMarkerGP</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATInternalSmoothPoint</code></td>
+    <td valign="top">An at least G1 continuous CAT3DMarkerGP</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATSurfacicPoint</code></td>
+    <td valign="top">A CAT3DMarkerGP that lies on a face</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATFreePoint</code></td>
+    <td valign="top">A CAT3DMarkerGP</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATWireEdge</code></td>
+    <td valign="top">A CAT3DLineGP that represents a wire (polyline)</td>
+  </tr>
+</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step6"></a>Computing the Representation Bounding Sphere</h4>
+		<p>The representation needs a bounding sphere in order to be visualized.</p>
+		<table class="code" ID="Table4">
+			<tr>
+				<td>
+					<pre>
+   // ...
+   // We compute the bounding sphere of the resulting surfacic rep;
+   CAT3DBoundingSphere globalSphere;
+   globalSphere += CAT3DBoundingSphere(bottomFace->GetSphereCenter(), bottomFace->GetSphereRadius());
+   globalSphere += CAT3DBoundingSphere(topFace->GetSphereCenter(),    topFace->GetSphereRadius());
+   globalSphere += CAT3DBoundingSphere(bodyFace->GetSphereCenter(),   bodyFace->GetSphereRadius());
+   sRep->SetBoundingElement(globalSphere);
+   // ...
+}</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Here, the global bounding sphere is computed using the bounding sphere of all the faces that
+		makes our cylinder. This computation might not be optimal but is enough for this sample.
+		As you can see, CAT3DBoundingSphere objects can be added to one another using <code>operator +=</code>
+		</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Step6"></a>Displaying the Created 3D Representation</h4>
+		<p>The <code>AddRepToViewer</code> method displays the created representation.</p>
+		<table class="code" ID="Table5">
+			<tr>
+				<td>
+					<pre>void CAAVisBaseDocument::AddRepToViewer()
+{
+  _pView-&gt;Add3DRep(_pRootContainer);
+}</pre>
+				</td>
+			</tr>
+		</table>
+		<p><code>_pView</code> is a pointer to the 3D navigation viewer. The representation 
+			is assigned to this viewer thanks to the <code>Add3DRep</code> method.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="InShort"></a>In Short</h3>
+		<p>
+		This use case shows how to use some of the functionnality provided by the CATSurfacicRep 
+		object, how to create the graphic primitive and its associated bounding spheres, how to 
+		set the graphic attributes on the primitives and the representation and how to store 
+		persistent topological informations on graphic primitives.
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table border="0" width="100%">
+			<tr>
+				<td valign="top">[1]</td>
+				<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</a></td>
+			</tr>
+			<tr>
+				<td valign="top">[2]</td>
+				<td><a href="CAAVisSampleCAT3DFaceGP.htm">Creating a tesselated torus using CAT3DFaceGPs</a></td>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">Version: <strong>1</strong> [Dec 2005]</td>
+				<td valign="top">Document created</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

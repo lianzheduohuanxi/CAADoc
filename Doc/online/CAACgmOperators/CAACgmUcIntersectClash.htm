@@ -1,0 +1,223 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Boolean Intersection</title>
+<style type="text/css">
+.style1 {
+				color: #FF7900;
+				text-decoration: underline;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Boolean Intersection</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A Boolean intersection results in a solid which contains only the 
+		portions which are shared between the two input bodies. If you need to 
+		determine which cells in the resulting body come from either input body, 
+		you can use the journal.&nbsp; This is illustrated in the 
+		CAAGMOperatorsClashIntersect use case.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To perform a Boolean intersection, you must use the CATICGMDynBoolean 
+operator which is created by the CATCGMCreateDynBoolean global function. The third argument must be set to CATBoolIntersection. 
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsClashIntersect.m module in CAAGMOperatorsInterfaces.edu 
+intersects two cylinders. This use case 
+loads the BodiesForClashInput.NCGM file which contains the input data and is 
+delivered in the FunctionTests/InputData folder of the 
+CAAGMOperatorsInterfaces.edu framework.&nbsp; If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input bodies below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Boolean Intersection Between Two Cylinders</caption>
+   <tr>
+    <td>
+	<img alt="Boolean Intersection: Input Solids" src="images/CGM_clash_journal_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMDynBoolean * pBoolOpe = NULL;
+pBoolOpe =::CATCGMCreateDynBoolean(piGeomFactory,&topdata, 
+		CATBoolIntersection, piBodyA, piBodyB);
+...
+pBoolOpe->Run();
+CATBody * pBodyIntersect = pBoolOpe->GetResult();
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Boolean Intersection: Result</caption>
+   <tr>
+    <td>
+	<img alt="Boolean Intersection: Result" src="images/CGM_clash_journal_1.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>The code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+pJournal->Tass();
+CAAGMTopDumpJournal(pJournal);
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>dumps the journal on the standard output. You get something like this:
+<pre>
+[Face_2793],[Face_2782]->Absorption[Face_3350]
+[Face_2535]->Modification[Face_3298]
+[Face_2546]->Modification[Face_3296]
+[Face_2800],[Face_2553]->Absorption[Face_3286]
+[Face_2798],[Face_2551]->Absorption[Face_3290]
+ </pre>
+<p>Each face of the resulting body results from a modification or an absorption 
+of the input body(ies) faces.&nbsp; To determine which resulting face comes from 
+which input body, the CATCGMJournalList::FindFirst method is used.&nbsp; The 
+parent cells of the resulting cells are retrieved and looked for (&quot;located&quot;) in 
+the list of cells of the two input bodies.&nbsp; The code below scans the faces 
+of the resulting body and creates the list of faces coming from either input 
+bodies.<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+//
+// (b) - Scan the faces of the resulting body
+//
+for (int k = 1; k < listOfFaces.Size()+1; k++)
+  {
+    CATLISTP(CATGeometry) originObjects;
+    //
+    // Get the parent faces if the order is creation/modification/absorption
+    //
+    CATCell * myptr =listOfFaces[k];
+    pJournal->FindFirsts(myptr, originObjects, ThroughAllCreateAndModify);
+   if (myptr != NULL )
+      {
+        cout &lt;&lt; "Face :" &lt;&lt; myptr->GetPersistentTag() &lt;&lt; endl;
+      }  
+ ...
+if ( (isInBodyA==1) && (isInBodyB == 1) ) 
+        absorbedFaces.Append(myptr); 
+if ( (isInBodyA == 1) && (isInBodyB ==0) ) 
+        facesCommingFromA.Append(myptr);
+if ( (isInBodyA == 0) && (isInBodyB ==1) ) 
+        facesCommingFromB.Append(myptr);   
+   }   
+        </pre>
+        </TD>
+    </TR>
+</TABLE>
+When displaying the lists of faces coming from each input body and the list of absorbed faces, you get this:
+<pre>
+List of faces in the resulting body
+Faces coming from BodyA and only from A 
+3298
+3296
+Faces coming from BodyB and only from BodyB 
+3350
+Absorbed faces
+3290
+3286
+</pre>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+					<tr>
+		<td>[6]</td>
+		<td>
+		<a href="CAACgmTaTopJournal.htm">Topological 
+		Journal: Principles</a></td>
+	</tr>
+	<tr>
+		<td>[7]</td>
+		<td class="style1">
+		<a href="CAACgmTaTopJournalMethodology.htm">Topological Journal: 
+		Methodology</a></td>
+	</tr>
+	<tr>
+		<td>[8]</td>
+		<td class="style1">
+		<a href="CAACgmUcTopJournal.htm">Using the Topological Journal</a></td>
+					</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

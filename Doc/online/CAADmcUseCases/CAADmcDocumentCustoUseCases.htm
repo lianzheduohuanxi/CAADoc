@@ -1,0 +1,456 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customizing the Document Modeler</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customizing the Document Modeler</h3>
+     </td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3><a name="Top"></a>Abstract</h3>
+     <p>This article presents a comprehensive customization 
+     example on ENOVIA People. </p>
+     <ul>
+       <li><a href="#Principle"><b>Principle</b></a></li>
+       <li><b><a href="#Creating a UML Project">Creating a UML 
+       Project</a></b></li>
+       <li><a href="#Creating_a_new_Customization"><b>Creating a Customization</b></a></li>
+       <li><a href="#Details_about_customization"><b>Creating a 
+       Modeler Object</b></a></li>
+       <li><a href="#Generate_the metadata_file"><b>Generating the 
+       Dictionary File</b></a></li>
+       <li><a href="#Publish_Enovia_data"><b>Publishing Enovia Data</b></a></li>
+       <li><a href="#Test_In_Enovia"><b>Testing in E<span lang="fr">novia</span></b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <h3><a name="Principle"></a>Principle</h3>
+ <p align="left">The Document modeler belongs to those modelers that require rigor 
+ and knowledge of the model composition.<br>
+ Document customization will not be as simple as an Action one. It 
+ is quite 
+ understandable owing to its complexity.</p>
+ <ul>
+   <li>
+   <p align="left">On the one hand,&nbsp;restrictions on names exist and have a 
+   great importance. The suffix of the inherited class must be 
+   kept, and 
+   the prefix of the new classes must be the same for all.</li>
+   <li>
+   <p align="left">On the other hand, to build a Document customization, you 
+   need to customize 5 classes belonging to 
+   the Document&nbsp;modeler : 
+   <font face="Courier New" color="#008000">VPMDocSecuredFile</font>, 
+   <font face="Courier New" color="#008000">VPMDocumentIteration</font>, 
+   <font face="Courier New" color="#008000">VPMDocumentRevision</font>, 
+   <font face="Courier New" color="#008000">VPMDocumentIterationFormat</font> and finally 
+   <font face="Courier New" color="#008000">VPMTPDocumentMaster</font>.</li>
+ </ul>
+ <p align="left">These restrictions are summed up in the 
+ graphic below.</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentPrinciple.gif"></p>
+ <p align="left">You can also customize tables of contents if needed. To do this, just 
+ respect the same restrictions as documents ones, and inherit from 
+ <font face="Courier New" color="#008000">VPMTOCMaster</font> 
+ and <font face="Courier New" color="#008000">VPMTOCVersion</font>.</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentTOCPrinciple.gif"></p>
+ <p>You are going to customize a Document 
+ with a new customized table of contents.</p>
+ <ul>
+   <li>
+   <p align="left">Add an attribute to MyDocmaster,
+   a boolean 
+ named IsAXMLDoc.</p></li>
+   <li>
+   <p align="left">Add an attribute to MyDoCMaster,
+   a 
+ double named MyAttr1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3>Creating a UML Project <a name="Creating a UML Project">
+ </a></h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;UML 
+   Project</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>.
+   </li>
+   <li>Enter the name of the UML project. Click <code>
+   <font color="#008040">Next</font></code>&gt; and <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>In the <code><font color="#008040">Navigator</font></code> 
+   view, right-click your project and select <code><font color="#008040">
+   Open as a DMC Project</font></code>. </li>
+   <li>In the <code><font color="#008040">Open a DMC 
+   Project</font></code> window, select the tool level and click
+   <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Initializing tools</font></code> 
+   window.</li>
+   <li>Click <code><font color="#008040">Add</font></code> 
+   and select your prerequisite frameworks. Click <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Installing Prereqs</font></code> 
+   window.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Creating_a_new_Customization"></a>Creating a Document 
+ Customization</h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New LCA Customization</font></code>. Click <code>
+   <font color="#008040">Next&gt;</font></code>. </li>
+   <li>Enter the name of the application in the <code>
+   <font color="#008040">Application Name</font></code> field, 
+   MyDocument in this example.</li>
+   <li>Click <code><font color="#008040">...</font></code> 
+   in the <code><font color="#008040">Customize LCA Application</font></code> field. The 
+   <code><font color="#008040">Select a framework</font></code> dialog box opens.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentNewApplication.gif"></p>
+ <ol start="4">
+   <li>Select <code><font color="#008040">Document</font></code>. The list of 
+   the Use Package is automatically updated with the Use Package corresponding 
+   to the application.</li>
+   <li>Enter the name of your new customization and click 
+   <code><font color="#008040">OK</font></code>.&nbsp;</li>
+   <li>Click <code><font color="#008040">Finish</font></code>. The wizard 
+   creates a new workspace.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Details_about_customization"></a>Creating a 
+ Modeler Object</h3>
+ <p>Remember you have to customize five classes to create a Document&nbsp; 
+ customization.</p>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <code><font color="#008040">Other-&gt;DMC elements-&gt;New
+   Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. The 
+   New Modeler Object window opens.</li>
+   <li>Enter the class name in the <code>
+   <font color="#008040">Class name</font></code> field, 
+   MyDocMaster in this example.</li>
+   <li>Select the Super class,  <code><font color="#008040">VPMTPDocumentMaster</font></code>, in the list. Click <code><font color="#008040">Next&gt;</font></code>.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" width="30%" id="table2">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoDocumentModeler1.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> in 
+   the Attributes field to add the IsAXMLDoc 
+   attribute to your MyDocMaster.</li>
+   <li>Enter ISaXMLDoc in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">Boolean</font></code> in 
+   the list. Click <code><font color="#008040">Finish</font></code> 
+   when done.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoDocumentModeler2.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> in 
+   the Attributes field to add the MyAttr1 
+   attribute to your MyDocMaster.</li>
+   <li>Enter MyAttr1 in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">Double</font></code> in 
+   the list. Click
+   <code><font color="#008040">Finish</font></code> when 
+   done.</li>
+   <li>Optional: Add a new index using the second <code>
+   <font color="#008040">Insert</font></code> 
+   button. </li>
+   <li>Click <code><font color="#008040">OK</font></code> 
+   to finish the command.</li>
+ </ol>
+ <p align="center">
+ &nbsp;</p>
+ <p>Repeat these operations for:</p>
+ <div align="left">
+   <table border="0" cellpadding="0" style="border-collapse: collapse" width="80%" id="table1">
+     <tr>
+       <td colspan="2">
+       <ul>
+         <li><code><font color="#008040">VPMDocSecuredFile</font></code></li>
+         <li><code><font color="#008040">VPMDocumentIteration</font></code></li>
+         <li><code><font color="#008040">VPMDocumentRevision</font></code></li>
+         <li><code><font color="#008040">VPMDocumentIterationFormat</font></code></li>
+         <li><code><font color="#008040">VPMTOCMaster</font></code> </li>
+         <li><code><font color="#008040">VPMTOCVersion</font></code></li>
+       </ul></td>
+     </tr>
+     <tr>
+       <td width="6%" valign="top" height="32">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td width="94%" valign="top" height="32"><code><font color="#008040">VPMTOCMaster</font></code> and 
+       <code><font color="#008040">VPMTOCVersion</font></code> must be derived only if you want to 
+ customize a Table of Contents.</td>
+     </tr>
+   </table>
+ </div>
+ <p>You should now discover new UML schemas&nbsp; describing&nbsp; your 
+ customization. These UML representations will appear in several 
+ windows. Below they are gathered to show the global model.</p>
+ <ul>
+   <li>For MyDocument<div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table4">
+       <tr>
+         <td valign="top">
+         <h4>VPMDocumentRevision</h4>
+         </td>
+         <td valign="top">&nbsp;</td>
+         <td valign="top">
+         <h4>VPMDocumentIteration</h4>
+         </td>
+         <td valign="top">&nbsp;</td>
+         <td valign="top">
+         <h4>VPMDocumentIterationFormat</h4>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoDocumentUMLSchema1.gif" width="301" height="563"></td>
+         <td valign="top">&nbsp;</td>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoDocumentUMLSchema2.gif" width="289" height="344"></td>
+         <td valign="top">&nbsp;</td>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoDocumentUMLSchema3.gif" width="298" height="346"></td>
+       </tr>
+       <tr>
+         <td>
+         <h4>VPMTPDocumentMaster</h4>
+         </td>
+         <td>&nbsp;</td>
+         <td>
+         <h4>VPMDocSecuredFile</h4>
+         </td>
+         <td>&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoDocumentUMLSchema4.gif" width="288" height="473"></td>
+         <td valign="top">&nbsp;</td>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoDocumentUMLSchema5.gif" width="288" height="399"></td>
+         <td valign="top">&nbsp;</td>
+         <td>&nbsp;</td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ul>
+ <p>
+ &nbsp;</p>
+ <ul>
+   <li>For MyTOC<div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" width="70%" id="table5">
+       <tr>
+         <td>
+         <h4>VPMTOCVersion</h4>
+         </td>
+         <td>
+         <h4>VPMTOCMaster</h4>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <img border="0" src="images/CAADmcCustoDocTOCUMLSchema.gif" width="283" height="436"></td>
+         <td>
+         <img border="0" src="images/CAADmcCustoDocTOCUMLSchema1.gif" width="282" height="371"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ul>
+ <blockquote>
+ </blockquote>
+ <p align="left">Now, let's prepare ENOVIA execution. Original class names are 
+ imposed, and linked together by their names. But now, by customizing the 
+ modeler, we have decide to use new class&nbsp;&nbsp; <br>
+ names. ENOVIA can not guess the name of these customized classes and therefore, 
+ if link are not recreated, ENOVIA can not use these raw data (in particular, 
+ saves will not work).<br>
+ So have a look to the followings steps:</p>
+ <p align="left">The goal of this step is only to overload the original link to 
+ take into account our new customized class.<br>
+ In this modeler, we have to overload four (or five if we customize TOC) 
+ relationships.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+ <ol>
+   <li>So, select MyDocSecuredFile in the UML Diagram. Right-click the class, 
+   and select <code><font color="#008040">Add UML-&gt;Attribute</font></code><span lang="fr">.</span></li>
+   <li>
+   <p align="left">Enter the name of the new attribute (the name of this 
+   attribute MUST be: V_iterationformat) and edit it in the <code>
+   <font color="#008040">Properties</font></code> view.</li>
+   <li>
+   <p align="left">In the <code><font color="#008040">Properties</font></code> 
+   view, select the <code><font color="#008040">Stereotypes</font></code> tab, 
+   click <code><font color="#008040">Apply Stereotypes </font></code>and check 
+   RADE_AttributeRelation. </li>
+   <li>
+   <p align="left">In the <code><font color="#008040">Stereotype</font></code>
+   <code><font color="#008040">Properties</font></code>, you need to enter the 
+   name of the pointed class as RADE_AttributeObjectRef. Here enter MyDocFormat 
+   as follow<span lang="fr">s:</span><table border="1" width="100%" id="table7" style="border-width: 0px">
+	<tr>
+		<td style="border-style: none; border-width: medium">
+ <img border="1" src="images/CAADmcCustoRelationshipDocument1.gif" align="middle"></td>
+	</tr>
+	</table>
+	</li>
+ </ol>
+ <ol start="5">
+	<li>
+	<p align="left">And repeat this operation for the 
+ relationships presented in the following schema:</p>
+	<table border="1" width="100%" id="table9">
+		<tr>
+			<td>
+ <img border="1" src="images/caadmccustorelationshipDocument2.gif" align="middle" width="864" height="648"></td>
+		</tr>
+	</table>
+	</li>
+	</ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Generate_the metadata_file">
+ <span style="background-color: #FFFF00"></span></a>
+ Generating the 
+ Dictionary File</h3>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+    <li>From the <code><font color="#008040">DMC Project</font></code> 
+   menu, select <code><font color="#008040">Generate VPM Dictionary file</font></code>.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentGenMetadata.gif" width="356" height="479"></p>
+ <p>The wizard creates <i>MyDocument.metadata</i> under the directory MyDocument/CNext/code/dictionary. 
+ Close Close <span lang="en-us">IBM </span>Rational <span lang="en-us">Software 
+	Architect or IBM </span>Rational <span lang="en-us">Software Modeler</span>..</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Publish_Enovia_data"><span style="background-color: #FFFF00">
+ </span></a>Publishing Enovia Data</h3>
+ <ol>
+   <li>Select<code><font color="#008040"> DMC Project-&gt;Publish 
+   VPM Dictionary file in Database.</font></code><div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table6">
+       <tr>
+         <td><img border="0" src="images/CAADmcCustoDocumentGenMetadata2.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p>Check if the settings are correctly valuated and click <code>
+ <font color="#008040">OK</font></code> to start the Publish command to finish 
+ the scenario.</p>
+ <h3><a name="Test_In_Enovia"><span style="background-color: #FFFF00"></span></a>
+ Testing in ENOVIA</h3>
+ <p>Now it is time to test your customization. To use this customization, launch ENOVIA within the environment of 
+ the customization. To do so, indicate the location where your customization is 
+ built on the server, as follows:</p>
+ <div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+   <p align="center">$ENOVIA_INSTALL_PATH$/$OS$/code/bin/CATSTART -run &quot;ENOVIA.exe<i>&quot;
+   </i><code>-env $EnvName$ -direnv $EnvDir$ -object &quot;-senv $sEnvName$ -sdirenv 
+   $sEnvDir$&quot;</code> </p>
+   <p align="left"><i>where :</i> </p>
+   <ul type="circle">
+     <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li><b>OS</b> is the operating system tag (eg. intel_a).</li>
+     <li><b>EnvName</b> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b><code> )</code></li>
+     <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file</li>
+     <li><b>sEnvName</b> is the name of server environment contained in your new 
+     customization workspace ( Default is :<b>WorkspaceEnv</b><code> )</code></li>
+     <li><code><b>sEnvDir</b> </code>is the 
+     server environment folder containing the sEnvName.txt file<br>
+&nbsp;</li>
+   </ul>
+ </div>
+ <p>Now we can use our new customized document in ENOVIA.</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentEnoviaResult1.jpg"></p>
+ <p align="left">We can also create a new customized TOC to which we will add 
+ new documents :</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentEnoviaResult2.jpg"></p>
+ <p align="left">&nbsp;</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoDocumentEnoviaResult3.jpg"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [March 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,760 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="fr">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Working with Feature Extensions</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>Feature Modeler</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Working with Feature Extensions</h3>
+       <p><em>Extending base features with feature extensions</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article discusses the CAAOsmManageExtensions use case. This use 
+       case explains how to create extensions within a document in order to 
+       extend a base feature's behavior and data. </p>
+       <ul>
+         <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+         <li><a href="#UseCase"><strong>The CAAOsmManageExtensions Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAOsmManageExtensions Do</a></li>
+           <li><a href="#How">How to Launch CAAOsmManageExtensions</a></li>
+           <li><a href="#Where">Where to Find the CAAOsmManageExtensions Code</a></li>
+         </ul>
+         </li>
+         <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case is intended to help you understand how to work with feature 
+   extensions in a Part or Product document. You will learn to:</p>
+   <ul>
+     <li>Create and add, within its dedicated applicative container, a feature 
+     extension on a base feature. </li>
+     <li>Working with a feature extension by using one of its specific interface
+     </li>
+     <li>Removing extension on a base feature</li>
+   </ul>
+   <p>Before getting to the use case itself, you should have a good 
+   understanding of the feature modeler [<a href="#References">1</a>]. You 
+   should likewise be familiar with the basic concepts behind feature 
+	extensions.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <hr>
+<p><b>Note :-</b> Use-Case with the same scenario as of this use-case but with the use of V6 APIs is available 
+[<a href="#References">6</a>]. Please read the Preparing for V6 Feature Modeler-Overview article 
+[<a href="#References">5</a>]</p>
+<hr>
+
+   
+   <h3><a name="UseCase"></a>The CAAOsmManageExtensions Use Case</h3>
+   <p>CAAOsmManageExtensions is a use case of the CAAObjectSpecsModeler.edu 
+   framework that illustrates ObjectSpecsLegacy framework capabilities.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does CAAOsmManageExtensions Do</h4>
+   <p>The goal of CAAOsmManageExtensions is to illustrate working with feature 
+   extensions. It uses the extensions created in catalogs. It also uses 
+   the base feature &quot;CAAOsmNovel&quot; instantiated from the catalog created in the
+   <i>CAAOsmCatalogSU</i>. These two use 
+   cases are, therefore, pre-requisites to this one.&nbsp;</p>
+   <p>Here is an image of the &quot;CAAOsmNovel&quot; StartUp: </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <caption>Fig.1 CAAOsmCatalogSU.CATfct Catalog - &quot;Novel&quot; StartUp</caption>
+     <tr>
+       <td><img alt="CAAOsmCatalogSU.CATfct Catalog - Novel StartUp" src="images/CAAOsmExtensionsSUCat.gif" width="307" height="132"></td>
+     </tr>
+   </table>
+   <p>This use case calls one global function:<code> CAAOsmIllustrateExtensions</code> 
+   creates a new Part document in which a new applicative container is created 
+   to contain an instance of the &quot;CAAOsmNovel&quot; StartUp: </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <caption>Fig.2 CAAOsmBaseFeature Applicative Container</caption>
+     <tr>
+       <td><img alt="CAAOsmBaseFeature Applicative Container" src="images/CAAOsmExtensionsSUCont.gif" width="315" height="133"></td>
+     </tr>
+   </table>
+   <p>Two other applicative containers are then created, the first of which 
+   contains&nbsp; two extensions to the &quot;CAAOsmNovel1&quot; base feature: </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <caption>Fig.3 CAAOsmApplication1 Applicative Container</caption>
+     <tr>
+       <td><img alt="CAAOsmApplication1 Applicative Container" src="images/CAAOsmExtensions1.1Cont.gif" width="430" height="51"></td>
+     </tr>
+     <tr>
+       <td><img alt="CAAOsmApplication1 Applicative Container" src="images/CAAOsmExtensions1.2Cont.gif" width="462" height="77"></td>
+     </tr>
+   </table>
+   <p>The second contains one other extension to the &quot;CAAOsmNovel1&quot; base feature:
+   </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <caption>Fig.4 CAAOsmApplication2 Applicative Container</caption>
+     <tr>
+       <td><img alt="CAAOsmApplication2 Applicative Container" src="images/CAAOsmExtensions2.1Cont.gif" width="431" height="48"></td>
+     </tr>
+   </table>
+   <p>Once these two applicative containers have been created, the use case 
+   illustrates how to extend the base feature by adding extensions within these 
+   two applicative containers. Here is a view of the inter-relationships between 
+   the catalogs and the applicative containers as well as the created extension 
+   of the base feature: </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <caption>Fig.5 CAAOsmExtensions Use Case Illustration</caption>
+     <tr>
+       <td><img alt="CAAOsmExtensions Use Case Illustration" src="images/CAAOsmExtensions.gif" width="622" height="238"></td>
+     </tr>
+   </table>
+   <p>These data and behavior extensions are coherent with the declaration in 
+   the CATRsc files associated with the three extension StartUps[<a 
+   href="#References">3</a>].</p>
+   <ul>
+     <li>Only the <code>CAAOsmNovel</code> feature is extendable with the <code>
+     CAAOsmHistoricalNovel</code>, <code>CAAOsmBiographicalNovel</code> and
+     <code>CAAOsmHChildrensNovel</code> extensions</li>
+     <li>The <code>CAAOsmApplication1</code> applicative container only contains 
+     instances of the <code>CAAOsmHistoricalNovel</code> and <code>
+     CAAOsmBiographicalNovel</code> </li>
+     <li>The <code>CAAOsmApplication2</code> applicative container only contains 
+     instance of the <code>CAAOsmChildrensNovel</code> </li>
+   </ul>
+   <p><a name="CATRsc file"></a>Note: Here the information regarding which 
+	feature/startup will be instanciated in which container is stored in the 
+	respective <strong>.CATfct file</strong>. This information therefore has to 
+	be first entered in the respective <strong>.osm</strong> file</p>
+	<p>Once the base feature is extended, the use case shows how to modify the 
+   data of an extension by using an interface implemented on one of the three 
+   extension StartUp. For the use case, the <i>CAAIBiogNovel</i> interface has 
+   been created, and implemented on the <code>CAAOsmBiographicalNovel</code>&nbsp; 
+   StartUp. </p>
+   <p>Finally, the use case removes extensions on the CAAOsmNovel instance. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="How"></a>How to Launch CAAOsmManageExtensions</h4>
+   <p>To launch CAAOsmManageExtensions, you will need to set up the build time 
+   environment, then compile CAAOsmManageExtensions along with its prerequisites, 
+   set up the run time environment, and then execute the use case. This is fully 
+   described in the referenced article [<a href="#References">2</a>]. To launch 
+   the use case, execute the following command:</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>mkrun -c &quot;CAAOsmMainManageExt CAAOsmExt1Catalog.CATfct<b> </b>
+          CAAOsmExt2Catalog.CATfct CAAOsmCatalogSU.CATfct DocumentStorageName</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Where:</p>
+   <ul>
+     <li><b>CAAOsmExt1Catalog.CATfct </b>- is the name and .CATfct extension of 
+     the first extensions catalog. The catalog must be found under the current 
+     workspace &quot;os&quot;/resources/graphic file directory. Normally, it should be 
+     stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic file 
+     directory. Then, the &quot;Update Runtime View&quot; command creates the proper 
+     run-time environment.</li>
+     <li><b>CAAOsmExt2Catalog.CATfct</b> - is the name and .CATfct extension of 
+     the second extensions catalog. The catalog must be found under the current 
+     workspace &quot;os&quot;/resources/graphic file directory. Normally, it should be 
+     stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic file 
+     directory. Then, the &quot;Update Runtime View&quot; command creates the proper 
+     run-time environment.</li>
+     <li><b>CAAOsmCatalogSU.CATfct</b> - is the name of the catalog without the 
+     storage path and with the .CATfct extension. The catalog must be found 
+     under the current workspace &quot;os&quot;/resources/graphic file directory. Normally, 
+     it should be stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic 
+     file directory. Then, the &quot;Update Runtime View&quot; command creates the proper 
+     run-time environment.</li>
+     <li><b>DocumentStorageName </b>- the entire path, name and extension (.CATPart) 
+     of the new document created.&nbsp;</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAOsmManageExtensions Code</h4>
+   <p>The main CAAOsmManageExtensions code is located in the 
+   CAAOsmMainManageExt.m module of the CAAObjectSpecsModeler.edu framework. It 
+   contains a unique source file named CAAOsmMainManageExt.cpp. This main calls 
+   one global function: <code>CAAOsmIllustrateExtensions,</code> contained in 
+   the CAAOsmIllustrateExtensions.cpp source file found in the 
+   CAAOsmManageExtensions.m module. The <code>CAAOsmIllustrateExtensions</code> 
+   function also calls methods defined by the <i>CAAIBiogNovel</i> interface and 
+   implemented in the CAAEOsmBiogNovel.cpp source file also found in the 
+   CAAOsmManageExtensions.m. Here is the installation path, depending on the 
+   operating system:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAObjectSpecsModeler.edu\CAAOsmMainManageExt.m 
+       and CAAOsmManageExtensions.m</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAObjectSpecsModeler.edu/CAAOsmMainManageExt.m 
+       and CAAOsmManageExtensions.m</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the root directory of your CAA 
+   V5 installation. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Step"></a>Step-by-Step</h3>
+   <p>There are twelve logical steps in CAAOsmManageExtensions:</p>
+   <ol>
+     <li><a href="#NewPartDocument">Creating a New Part Document</a></li>
+     <li><a href="#NewAppliContBF">Creating New Applicative Containers</a></li>
+     <li><a href="#CreateBF">Creating a Base Feature in the First Applicative 
+     Container by Instantiating a StartUp</a></li>
+     <li><a href="#ActivateExtensions1">Creating Extensions from the First 
+     Catalog on the Base Feature</a></li>
+     <li><a href="#ActivateExtensions2">Creating Extension from the Second 
+     Catalog on the Base Feature</a></li>
+     <li><a href="#Behavior">Executing the Behaviors of an Extension</a></li>
+     <li><a href="#QueryAll1">Querying All the Extensions of the Base Feature</a></li>
+     <li><a href="#DeactivateExt1">Removing All of the Extensions from the First 
+     Application</a></li>
+     <li><a href="#QueryAll2">Querying All the Extensions of the Base Feature</a></li>
+     <li><a href="#Epilog">Epilog</a></li>
+   </ol>
+   <p>We will now comment each of these sections by looking at the code. This 
+   code is found in the <code>CAAOsmIllustrateExtensions</code> global function 
+   called by the main program.</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="NewPartDocument"></a>Creating a New Part Document</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>CATDocument *pDoc = NULL;
+rc = CATDocumentServices::<b>New</b>(&quot;Part&quot;,
+                              pDoc);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>A new Part document is created using the <code>New</code> method of <i>
+   CATDocumentServices</i>.<b> </b>This is the document that will contain the 
+   applicative containers in which the base feature's extensions will be created.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="NewAppliContBF"></a>Creating New Applicative Containers</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATIdent idAppliCont = &quot;CATFeatCont&quot;;
+CATUnicodeString appliContIdentifier(&quot;CAAOsmBaseFeature&quot;);
+CATBaseUnknown *pBaseFeatureAppliCont = NULL;
+rc = <b>::CATCreateApplicativeContainer</b>(&amp;pBaseFeatureAppliCont,   // appli cont created
+                                     pDoc,                     // document  
+                                     idAppliCont,              // type of appli cont
+                                     IID_CATIContainer,        // interface type of appli cont
+                                     &quot;&quot;,                       // supertype of appli cont 
+                                     appliContIdentifier);     // name of appli cont
+... 
+<b>CATIContainer *</b><b>piBaseFeatureAppliCont</b><b> = (CATIContainer*) </b><b>pBaseFeatureAppliCont</b><b>;</b></pre>
+       </td>
+     </tr>
+   </table>
+   <p>To create a new applicative container, use the <code>
+   CATCreateApplicativeContainer</code> global function. This function takes as 
+   arguments:</p>
+   <ul>
+     <li><code>pBaseFeatureAppliCont</code> - the pointer that references the 
+     new applicative container that is to be created. Its type can be a <i>
+     CATIContainer</i> or a <i>CATIClientContainer</i>, depending on the value 
+     of the fourth parameter.</li>
+     <li><code>pDoc</code> - the <i>CATDocument</i> pointer to the current 
+     document in which the applicative container will be created</li>
+     <li><code>idAppliCont</code> - if the value of this argument is not &quot;<code>CATFeatCont</code>&quot;, 
+     the fifth parameter, the supertype, must be &quot;<code>CATFeatCont</code>&quot;. 
+     This argument is the type of the container that will be created.</li>
+     <li><code>IID_CATIContainer</code> - the interface IID that this new 
+     applicative container will implement. If a <i>CATIClientContainer</i> 
+     handle were needed, this parameter would be: <i>IID_CATIClientContainer</i>.</li>
+     <li><code>&quot;&quot;</code> - this is the <b>supertype</b> of the applicative 
+     container. If left blank, the <code>idAppliCont</code> argument must be &quot;<code>CATFeatCont</code>&quot;. 
+     Otherwise, this argument must be &quot;<code>CATFeatCont</code>&quot; itself.</li>
+     <li><code>appliContIdentifier</code> - the name of this new applicative 
+     container.</li>
+   </ul>
+   <p>Note that the new applicative container created must be of type &quot;<code>CATFeatCont</code>&quot; 
+   or be of a type deriving from &quot;<code>CATFeatCont</code>&quot;, as seen in the 
+   fifth argument &quot;<b>supertype</b>&quot;.</p>
+   <p>Finally, the <i>CATBaseUnknown</i> pointer to the applicative container is 
+   cast to a <i>CATIContainer</i> pointer in order to be used to open the 
+   catalog of StartUps.</p>
+   <p>Two other applicative containers are created in the same way as shown 
+   above. The first will have as identifier &quot;CAAOsmApplication1&quot; as declared in 
+	the .osm file using CATfctEditor Assistant tool. The second will have as 
+	identifier &quot;CAAOsmApplication2&quot; declared same as above.</p>
+<p><strong>Note:</strong> The specification of the applicative containers will now be based upon 
+particular Extension StartUps and not on the extention catalogs. It means that 
+you will have to specify the applicative containers for every extension StartUps. 
+This specification has to be done through OSM language using the 
+CATfctEditorAssistant tool.</p>
+   <p>See the CAAOsmAppliCont [<a href="#References">3</a>] use case for a more 
+   detailed description of this service (<code>CATCreateApplicativeContainer</code>) 
+   in interactive context.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="CreateBF"></a>Creating a Base Feature in the First Applicative 
+   Container by Instantiating a StartUp</h4>
+	<p>1. Getting the CATOsmSUHandler on the StartUps of the Catalog</p>
+       <pre>...
+// Get a handler of CATOsmSUHandler on CAAOsmNovel StartUp
+
+    CATUnicodeString CatalogName = pFeatureCatalogName;
+	CATUnicodeString clientId("CAAOsmClientId");
+	CATUnicodeString novelSUType("CAAOsmNovel");
+
+	CATOsmSUHandler <strong>novelSUHandler</strong>(novelSUType, clientId, CatalogName);
+... 	</pre>
+   <p>2. Retrieve the &quot;CAAOsmNovel&quot; StartUp from the StartUp catalog.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Get a CATISpecObject handle on the CAAOsmNovel StartUp
+
+	CATISpecObject_var spNovelSU = NULL_var;
+	rc = novelSUHandler.RetrieveSU(spNovelSU);
+
+	if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmNovel SU retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieveing CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	        piBaseFeatureAppliCont -&gt; Release();
+		return 3;
+	}
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>3. Create a new feature by instantiating this StartUp in the first 
+   applicative container.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Instanciating the CAAOsmNovel StartUp
+
+	CATUnicodeString novel1("CAAOsmNovel1");
+
+	CATISpecObject_var spNovelInst1 = NULL_var;
+	rc = novelSUHandler.Instanciate(spNovelInst1, piBaseFeatureAppliCont, novel1);
+    if (SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmNovel SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmNovel SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	        piBaseFeatureAppliCont -&gt; Release();
+		return 3;
+	}
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>4. <a name="sub3 de creation"></a>Get a <i>CATIOsmExtendable</i>&nbsp; 
+   pointer on the new base feature object.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATIOsmExtendable  *piExtendableOnNovelInst1 = NULL;
+rc = spNovelInst1 -&gt; <b>QueryInterface</b>(IID_CATIOsmExtendable ,
+                                    (void**) &amp;piExtendableOnNovelInst1);
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="ActivateExtensions1"></a>Creating Extensions from the First 
+   Catalog on the Base Feature</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+const char *extensionName = &quot;CAAOsmHistoricalNovel&quot;;
+
+rc = piExtendableOnNovelInst1 -&gt; <b>AddExtension</b> (extensionName);
+...
+
+extensionName = &quot;CAAOsmBiographicalNovel&quot;;
+
+rc = piExtendableOnNovelInst1 -&gt; <b>AddExtension</b> (extensionName);
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>An extension is added to a base feature instance, thanks a <i>
+   CATIOsmExtendable</i> interface pointer. <code>piExtendableOnNovelInst1</code> 
+   just retrieved in the previous section, is a <i>CATIOsmExtendable</i> 
+   interface pointer on the new CAAOsmNovel instance. The&nbsp; <code>
+   AddExtension</code> method of the <i>CATIOsmExtendable</i> interface contains 
+   only one argument: the name of the extension StartUp.&nbsp; This method has 
+   two functionalities:</p>
+   <ol>
+     <li>Instantiating a feature extension StartUp in the container defined in 
+     the .CATfct file. The container specification is done in OSM language by 
+		using the CATfctEditorAssistant tool. See the<a href="../CAAOsmTechArticles/CAAOsmTaMaintainingCatalogs.htm"> Managing StartUp Catalogs</a> 
+		for more detailed description of CATfctEditorAssistant&nbsp; tool.<p>This method returns E_FAILS in at least three cases:</p>
+		<ul>
+       <li>If the container, which can be only an applicative container, is not 
+       the same as those defined in the CATfct file associated with the feature 
+       extension.</li>
+       <li>if the extended feature type, here is CAAOsmNovel, is not those 
+       declared within the .osm file or the CATfct file</li>
+     </ul>
+     </li>
+     <li>Adding the new extension instance in the applicative container </li>
+   </ol>
+   <p>In this case, both extensions from the first extensions catalog are 
+   instantiated in the &quot;CAAOsmApplication1&quot; applicative container.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="ActivateExtensions2"></a>Creating Extension from the Second 
+   Catalog on the Base Feature</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+extensionName = &quot;CAAOsmChildrensNovel&quot;;
+
+rc = piExtendableOnNovelInst1 -&gt; <b>AddExtension</b> (extensionName);
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The extension from the second extensions catalog is instantiated in the 
+   &quot;CAAOsmApplication2&quot; applicative container. See the CATRsc file associated 
+   with the <code>CAAOsmChildrensNovel</code> feature extension in the
+   <a href="#CATRsc file">What Does CAAOsmManageExtensions Do</a> section. </p>
+   <p>To verify that an extension is created, use the <code>QueryExtension</code> 
+   method of <i>CATIOsmExtendable</i> interface.&nbsp;</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>CATIOsmExtension</b> *piExtensionOnChildrensNovelInst1 = NULL;
+rc = piExtendableOnNovelInst1 -&gt; <b>QueryExtension</b> (extensionName,
+                                   IID_CATIOsmExtension,
+                           (void**) &amp;piExtensionOnChildrensNovelInst1);
+... 	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <code>QueryExtension</code>&nbsp; method retrieves the unique 
+   extension of the base feature whose the name is <code>extensionName</code>. 
+   You can choose the returned handler on the extension. Here we have choosen an 
+   interface implemented by all the feature extension, the <i>CATIOsmExtenson</i> 
+   interface. </p>
+   <p>Note that now, the base feature object has been extended by three 
+   different extensions</p>
+   <!---------------------------------comment------------------------------------->
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Behavior"></a>Executing the Behaviors of an Extension</h4>
+   <p>1. Retrieve a pointer on the feature extension.&nbsp;</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>CAAIBiogNovel</b> *piBiogNovelOnNovelInst1 = NULL;
+char* BiographicalNovelId = &quot;CAAOsmBiographicalNovel&quot;;
+
+rc = piExtendableOnNovelInst1 -&gt; <b>QueryExtension</b>(BiographicalNovelId, IID_CAAIBiogNovel,
+                                             (void**) &amp;piBiogNovelOnNovelInst1);
+... 	     </pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left"><code>piExtendableOnNovelInst1</code> is a <i>
+   CATIOsmExtendable</i> interface on the new base feature - See the
+   <a href="#sub3 de creation">Get a <i>CATIOsmExtendable</i>&nbsp; pointer on 
+   the new base feature objec</a>t sub-section of the&nbsp; <a href="#CreateBF">
+   Creating a Base Feature in the First Applicative Container by Instantiating a 
+   StartUp</a> section.</p>
+   <p align="left">2. Execute the methods of the interface which retrieve and 
+   valuate the extension's attribute values.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>// Get the value of the Epoch attribute of the CAAOsmBiographicalNovel extension.
+CATUnicodeString epoch(&quot;&quot;);
+rc = piBiogNovelOnNovelInst1 -&gt; <b>GetEpoch</b>(&amp;epoch);
+cout &lt;&lt; &quot;Epoch = &quot; &lt;&lt; epoch &lt;&lt; endl &lt;&lt; flush;
+
+// Set a new value to the Epoch attribute
+epoch = &quot;Renaissance&quot;;
+rc = piBiogNovelOnNovelInst1 -&gt; <b>SetEpoch</b>(epoch);
+epoch = &quot;&quot;;
+rc = piBiogNovelOnNovelInst1 -&gt; <b>GetEpoch</b>(&amp;epoch);
+cout &lt;&lt; &quot;*** New Epoch = &quot; &lt;&lt; epoch &lt;&lt; endl &lt;&lt; flush;
+
+// Get the value of the Domain attribute of the CAAOsmBiographical Novel extension.
+CATUnicodeString domain(&quot;&quot;);
+rc = piBiogNovelOnNovelInst1 -&gt; <b>GetDomain</b>(&amp;domain);
+cout &lt;&lt; &quot;Domain = &quot; &lt;&lt; domain &lt;&lt; endl &lt;&lt; flush;
+
+// Set a new value to the Domain attribute
+domain = &quot;Science&quot;;
+rc = piBiogNovelOnNovelInst1 -&gt; <b>SetDomain</b>(domain);
+domain = &quot;&quot;;
+rc = piBiogNovelOnNovelInst1 -&gt; <b>GetDomain</b>(&amp;domain);
+cout &lt;&lt; &quot;*** New Domain = &quot; &lt;&lt; domain &lt;&lt; endl &lt;&lt; flush;        </pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left">&quot;Epoch&quot; and &quot;Domain&quot; are attributes of the 
+   CAAOsmBiographicalNovel extension on the current base feature, 
+   &quot;CAAOsmNovel1&quot;. The methods:&nbsp; <code>GetEpoch</code>, <code>SetEpoch</code>,
+   <code>GetDomain</code> and <code>SetDomain</code> are defined by the <i>
+   CAAIBiogNovel</i> interface and implemented by the <i>CAAEOsmBiogNovel</i> 
+   implementation class.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="QueryAll1"></a>Querying All the Extensions of the Base Feature</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATListPtrCATBaseUnknown *paExtList = NULL;
+piExtendableOnNovelInst1 -&gt; <b>QueryAllExtensions</b> (IID_CATISpecObject, &amp;paExtList);
+CATUnicodeString pExtId = NULL;
+int jj = 0;
+CATIOsmExtension *piExtensionOnBase = NULL;
+
+if (NULL != paExtList)
+{
+   cout &lt;&lt; &quot;List size = &quot; &lt;&lt; paExtList -&gt; Size() &lt;&lt; endl &lt;&lt; flush;
+   for (jj=1; jj&lt;=paExtList-&gt;Size(); jj++)
+   {
+      CATBaseUnknown * pInt = (*paExtList)[jj] ;
+      if ( NULL != pInt )
+      {
+         rc = pInt -&gt; QueryInterface(IID_CATIOsmExtension,
+                                      (void**) &amp;piExtensionOnBase);
+
+         // each non nul element of the paExtList must be released 
+         pInt -&gt; Release();
+         pInt = NULL ;
+         ...
+         piExtensionOnBase -&gt; <b>GetID</b>(pExtId);
+         cout &lt;&lt; &quot;Extension ID = &quot; &lt;&lt; pExtId.ConvertToChar() &lt;&lt; endl &lt;&lt; flush;
+         piExtensionOnBase -&gt; Release();
+         piExtensionOnBase = NULL;
+       }
+     }
+     <b>delete</b> paExtList;
+     paExtList = NULL;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <code>QueryAllExtensions</code> method of <i>CATIOsmExtendable </i>&nbsp;retrieves 
+   a list of all of the extensions (all confused applicative containers ) of a 
+   base feature object. It takes the following arguments:</p>
+   <ul>
+     <li><code>IID_CATISpecObject</code>: this is a filter on the interface (any 
+     interface, not just <i>CATISpecObject</i> as in this case) implemented by 
+     the extension.</li>
+     <li><code>paExtList</code>: this is the pointer to the list of 
+     CATBaseUnknown pointers to the extensions answering this query.</li>
+   </ul>
+   <p>The list is scanned: For each <i>CATBaseUnknown</i> pointer in the list, 
+   the corresponding <i>CATIOsmExtension</i> pointer is retrieved in order to 
+   get the name of the extension using the <code>GetID</code> method. Here is 
+   what the output looks like:</p>
+   <pre>List size = 3
+Extension ID = CAAOsmChildrensNovel
+Extension ID = CAAOsmBiographicalNovel
+Extension ID = CAAOsmHistoricalNovel</pre>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="DeactivateExt1"></a>Deactivating All of the Extensions from the 
+   First Application&nbsp;</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>appliContIdentifier = &quot;CAAOsmApplication1&quot;;
+rc = piExtendableOnNovelInst1 -&gt; <b>RemoveApplicativeExtensions</b> (appliContIdentifier);</pre>
+       </td>
+     </tr>
+   </table>
+   <p>All of the extensions of a given applicative container can be removed at 
+   once using the <code>RemoveApplicativeExtensions</code> global function.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="QueryAll2"></a>Querying All the Extensions of the Base Feature</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+paExtList = NULL;
+piExtendableOnNovelInst1 -&gt; <b>QueryAllExtensions</b> (IID_CATISpecObject,&amp;paExtList);
+
+piExtendableOnNovelInst1 -&gt; Release();
+piExtendableOnNovelInst1 = NULL;
+
+if (NULL != paExtList)
+{
+   cout &lt;&lt; &quot;List size = &quot; &lt;&lt; paExtList -&gt; Size() &lt;&lt; endl &lt;&lt; flush;
+   for (jj=1; jj&lt;=paExtList-&gt;Size(); jj++)
+   {
+      CATBaseUnknown * pInt = (*paExtList)[jj] ;
+      if ( NULL != pInt )
+      { 
+         rc = pInt -&gt; QueryInterface(IID_CATIOsmExtension,
+                                   (void**) &amp;piExtensionOnBase);
+         pInt -&gt; Release();
+         pInt = NULL ;
+         ...
+
+         piExtensionOnBase -&gt; <b>GetID</b>(pExtId);
+         cout &lt;&lt; &quot;Extension ID = &quot; &lt;&lt; pExtId.ConvertToChar() &lt;&lt; endl &lt;&lt; flush;
+
+         piExtensionOnBase -&gt; Release();
+         piExtensionOnBase = NULL;
+      }
+     }
+<b>delete</b> paExtList;
+paExtList = NULL;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Scanning the new list returned from <code>QueryAllExtensions</code> shows 
+   that the only remaining extension on the base feature is:</p>
+   <pre>List size = 1
+Extension ID = CAAOsmChildrensNovel</pre>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Epilog"></a>Epilog</h4>
+   <p>See the referenced article [<a href="#References">5</a>] for a detailed 
+   description of the steps to go through when saving the document.</p>
+   <p>Note that the opened catalog documents do not need to be removed from the 
+   session.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>This use case has demonstrated how to add, remove, retrieve extensions on 
+   a base feature. These operations are possible thanks the <i>CATIOsmExtendable</i> 
+   interface implemented. </p>
+   <ul>
+     <li><code>AddExtension</code> , is the method to add an extension to a base 
+     feature. The CATfct file or the osm file associated with the feature extension type should 
+     be in correspondance with your code otherwise, the method fails:<ul>
+       <li>The current extended base feature type must be the same as defined in 
+       the&nbsp;.osm file or the CATfct file</li>
+       <li>The applicative container where the instance of the feature extension 
+       will be created, must be the same as those defined in the .osm file or 
+		the CATfct file using CATfctEditorAssistant tool</li>
+     </ul>
+     </li>
+     <li><b><span style="font-weight: 400"><code>RemoveApplicativeExtensions</code>,
+     </span></b>is the method to remove an extension to a base feature. </li>
+     <li><code>QueryExtension</code>, <code>QueryAllExtensions</code>, are two 
+     methods to retrieve a specific extension instance, or to retrieve all the 
+     feature extensions of the base feature.</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top" style="width: 22px">[1]</td>
+       <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature 
+       Modeler Conceptual Overview</a></td>
+     </tr>
+     <tr>
+       <td valign="top" style="width: 22px">[2]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top" style="width: 22px">[3]</td>
+       <td><a href="CAAOsmAppliCont.htm">Creating Features in an Applicative 
+       Container</a></td>
+     </tr>
+     <tr>
+       <td valign="top" style="width: 22px">[4]</td>
+       <td>
+       <a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">
+       Creating a New Document</a></td>
+     </tr>
+  <tr>
+    <td valign="top" style="width: 22px">[5]</td>
+    <td>
+	<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FeatureModelerExtOverview.htm">
+		Preparing for V6 Feature Modeler-Overview </a></td>
+  </tr>
+  <tr>
+    <td valign="top" style="width: 22px">[6]</td>
+    <td><a href="CAAV5V6OsmUcExtensionManagement.htm">Extensions Management Use-Case 
+	with V6 APIs</a></td>
+  </tr>
+
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2001]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>2</strong> [Sep 2003]</td>
+       <td valign="top">Update to add a link to the &quot;Creating Features in an App. 
+       Cont.&quot; article&nbsp;</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>3</strong> [Feb 2005]</td>
+       <td valign="top">Document updated to integrate the new feature extension 
+       API </td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

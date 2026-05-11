@@ -1,0 +1,352 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Check In and Check Out a document(s) from ENOVIA vault</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Document Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Checkin and Checkout Operations on Document Objects</h3>
+      <em>Check In and Check Out a document(s) from ENOVIA vault</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use VPMVDA commands for performing CheckIn and CheckOut functionalities for documents using ENOVIAVDADocCheckIn and ENOVIAVDADocCheckOut interfaces.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAADdmVDADocCheckInOut Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADdmVDADocCheckInOut Do</a></li>
+            <li><a href="#How">How to Launch CAADdmVDADocCheckInOut</a></li>
+            <li><a href="#Where">Where to Find CAADdmVDADocCheckInOut Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#Inshort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to Check In and Check Out a document(s) from ENOVIA vault or is controlled by the system. </p>
+<p>Documents, whether they are internal (the actual document resides in an ENOVIA vault and is controlled by the system) or external (paper or residing in a system outside of ENOVIA) may be checked in or out.</p> 
+<p>This allows for both version control and enterprise sharing.
+Checking In a document creates a link between the document record information and a physical document file.
+Check Out procedure, which allows you to update the document on your own computer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADdmVDADocCheckInOut Use Case</h3>
+<p>CAADdmVDADocCheckInOut is a use case of the CAAENOVDesktopDocument.edu framework that illustrates document(s) Check In and Check Out capabilities from ENOVIA vault.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADdmVDADocCheckInOut Do</h4>
+<p>CAADdmVDADocCheckInOut use case: </p>
+<ul>
+<li>Creates a new login session in the current application</li>
+<li>Create a Document Master and Revision</li>
+<li>Create ENOVIAVDADocCheckIn Interface</li>
+<li>Setting object info before execute CheckIn command</li>
+<li>Get ENOVIA_CHECKIN_PATH to Check In the file</li>
+<li>Execute CheckIn command of ENOVIAVDADocCheckIn Interface</li>
+<li>Then it proceed for check out, Create ENOVIAVDADocCheckOut interface</li>
+<li>Setting object info before execute CheckOut command</li>
+<li>Get ENOVIA_CHECKOUT_PATH to Check Out the file</li>
+<li>Execute CheckOut command of ENOVIAVDADocCheckOut interface</li>
+<li>Later Retrieve Vault info from CheckOut command</li>
+<li>Finally, close the session</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADdmVDADocCheckInOut</h4>
+<p>To launch CAADdmVDADocCheckInOut, you will need to: </p>
+<ul>
+  <li>Set up the build time environment, then compile <code>CAADdmVDADocCheckInOut</code> along with its prerequisites.</li>
+  <li>Set up the run time environment.</li>
+  <li>Then set the <code>ENOVIA_CHECKIN_PATH</code> and <code>ENOVIA_CHECKOUT_PATH</code> environment variables with some local directory path 
+  (Example: set <code>ENOVIA_CHECKIN_PATH=C:\temp</code> and <code>set ENOVIA_CHECKOUT_PATH=C:\temp\CheckOut</code>) before launch of this use case in the same command prompt window. Please note that there should be no space at the beginning of the path that is being set for these variables.</li>
+  <li>Make sure that there is a SampleDoc.txt file in the directory where <code>ENOVIA_CHECKIN_PATH</code> path has been defined. In our example have a SampleDoc.txt file in C:\temp</li>
+  <li>Launch the use case by executing the following command:</li>
+  <p>
+  <code>mkrun -c "CAADdmVDADocCheckInOut"</code></p>
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADdmVDADocCheckInOut Code</h4>
+<p>The CAADdmVDADocCheckInOut use case is made of a single file located in the CAADdmVDADocCheckInOut.m module of the CAAENOVDesktopDocument.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVDesktopDocument.edu\CAADdmVDADocCheckInOut.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVDesktopDocument.edu/CAADdmVDADocCheckInOut.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM is installed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>Before launching this use case, check for its prerequisites.</p>
+<p>For demonstration purposes, the code from the CAADdmVDADocCheckInOut use case is shown here. There are eight logical steps in the CAADdmVDADocCheckInOut use case:</p>
+<ol>
+  <li><a href="#NewSession">Create a New Login Session</a></li>
+  <li><a href="#CreateDoc">Create a Document Master and Revision</a></li>
+  <li><a href="#DocCheckin">Create an ENOVIAVDADocCheckIn Command</a></li>
+  <li><a href="#SetObjparamOnCheckin">Set Object and Parameters on CheckIn Command</a></li>
+  <li><a href="#ExecuteAfterCheckin">Call Execute Method of ENOVIAVDADocCheckIn Interface</a></li>
+  <li><a href="#DocCheckout">Create an ENOVIAVDADocCheckOut Command</a></li>
+  <li><a href="#SetObjparamOnCheckout">Set Object and Parameters on CheckOut Command</a></li>
+  <li><a href="#ExecuteAfterCheckout">Call Execute Method of ENOVIAVDADocCheckOut Interface</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="NewSession"></a>Create a New Login Session</h4>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+CATIVpmFactoryManager_var spTheFactory;
+If (piSess_handle != NULL)
+    rc = piSess_handle-&gt;GetVPMObjectFactory (spTheFactory);
+CATIVpmSCLogin_var spTheLogin (spTheFactory);
+CATUnicodeString user;
+CATUnicodeString pwd;
+CATUnicodeString role;
+VPMLoginPolicy iRoleChoicePolicy = VPMLoginDEFAULT;
+rc = spTheLogin-&gt;Login (user, pwd, iRoleChoicePolicy, role);
+if (FAILED (rc))
+{
+   cout &lt;&lt; &quot;login pb&quot; &lt;&lt; endl &lt;&lt; flush;
+   VPMSession::CloseSession ();
+   return 101;
+}    
+cout &lt;&lt; &quot;Login session successfully created&quot; &lt;&lt; endl &lt;&lt; flush;
+
+</pre>
+        </td>
+      </tr>
+    </table>
+<p>In order to create a new login session, use the login method of <code>CATIVpmSCLogin</code>. This method is used to get the login session corresponding to a specific user.
+The method return HRESULT. Once HRESULT is SUCEEDED then it is assumed that the user has been authenticated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateDoc"></a>Create a Document Master and Revision</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+CATIAVPMDocumentMaster  * piDocMaster = NULL;
+CATIEnovDDManager_var spDDMgr = GetRootDesktop();  
+if ( spDDMgr == NULL_var ) return 2;
+cout &lt;&lt; &quot;Got DDManager successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+rc = spDDMgr-&gt;CreateDocument( &quot;CAADdmVDADocCheckInOut_ID&quot;,
+                                  &quot;Doc_title&quot;,
+                                  &quot;Doc_desc&quot;,
+                                  &quot;Doc_type&quot;,
+                                  Doc_classfield,
+                                  Doc_keywords,
+                                  piDocMaster);
+if ( !SUCCEEDED(rc) || piDocMaster==NULL )
+	return 3;
+cout &lt;&lt; &quot;Created Document successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>In order to create a Create a Document Master and Revision use a method <code>CreateDocument</code> which create a document with title. This method return HRESULT.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="DocCheckin"></a>Create an ENOVIAVDADocCheckIn Command</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+CATIAVPMVDACommand *piCommand = NULL;
+CATIAVPMVDACommandFactory * piFactory = GetDocCommandFactory();
+rc = piFactory-&gt;Create( &quot;VDADocCheckIn&quot;, piCommand );  
+if ( !SUCCEEDED(rc) || !piCommand )
+     return 6;
+cout &lt;&lt; &quot;CheckIn Command has been created&quot; &lt;&lt; endl &lt;&lt; flush;                                                                                                                                                
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>To Create an ENOVIAVDADocCheckIn command, first create a <code>CATIAVPMVDACommandFactory</code> pointer then call Create method through <code>CATIAVPMVDACommandFactory</code> pointer, this Create method of <code>CATIAVPMVDACommandFactory</code> return a pointer of a type <code>CATIAVPMVDACommand</code>. 
+ENOVIAVDADocCheckIn interface checks in a given document revision with/without a file (physical file, vault file, or external file, etc.). It can also be used to undo the last check-out</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SetObjparamOnCheckin"></a>Set Object and Parameters on CheckIn Command</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+ENOVIAVDADocCheckIn * piCheckInCommand = NULL;
+rc = piCommand-&gt;QueryInterface( IID_ENOVIAVDADocCheckIn, (void **) &amp; piCheckInCommand );
+piCommand-&gt;Release(); piCommand=NULL;
+if ( !SUCCEEDED(rc) || !piCheckInCommand)
+   return 7;
+cout &lt;&lt; "QueryInterface succeeded for ENOVIAVDADocCheckIn" &lt;&lt; endl &lt;&lt; flush;
+ENOVIABusinessObject_var spBODocRev(piObjectVersion);
+rc = piCheckInCommand-&gt;put_BObject(spBODocRev);
+if ( !SUCCEEDED(rc) )
+   return 8;
+cout &lt;&lt; &quot; put_BObject succeeded.&quot; &lt;&lt; endl &lt;&lt; flush;  
+rc = piCheckInCommand-&gt;set_GenNewIter(1);
+if ( !SUCCEEDED(rc) )
+   return 8;
+cout &lt;&lt; &quot; set_GenNewIter succeeded.&quot; &lt;&lt; endl &lt;&lt; flush;
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>To set object and parameters on CheckIn command use put_BObject method of ENOVIAVDADocCheckIn interface. This method return HRESULT.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ExecuteAfterCheckin"></a>Call Execute Method of ENOVIAVDADocCheckIn Interface</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+rc=piCheckInCommand-&gt;Exec();  
+if ( !SUCCEEDED(rc) )
+    return 9;
+cout &lt;&lt; &quot;CheckInCommand succeeded.&quot; &lt;&lt; endl &lt;&lt; flush;
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>Call execute method of ENOVIAVDADocCheckIn Interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="DocCheckout"></a>Create an ENOVIAVDADocCheckOut Command</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+CATIAVPMVDACommand *piCommand = NULL;
+CATIAVPMVDACommandFactory * piFactory = GetDocCommandFactory();
+rc = piFactory-&gt;Create( &quot;VDADocCheckOut&quot;, piCommand );
+if ( !SUCCEEDED(rc) || !piCommand )
+    return 10;
+cout &lt;&lt; &quot;CheckOut Command has been created&quot; &lt;&lt; endl &lt;&lt; flush;
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>To Create an ENOVIAVDADocCheckOut command, first create a <code>CATIAVPMVDACommandFactory</code> pointer then call Create method through CATIAVPMVDACommandFactory pointer, this Create method of CATIAVPMVDACommandFactory return a pointer of a type <code>CATIAVPMVDACommand</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SetObjparamOnCheckout"></a>Set Object and Parameters on CheckOut Command</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+ENOVIAVDADocCheckIn * piCheckInCommand = NULL;
+rc = piCommand-&gt;QueryInterface( IID_ENOVIAVDADocCheckIn, (void **) &amp; piCheckInCommand );
+piCommand-&gt;Release(); piCommand=NULL;
+if ( !SUCCEEDED(rc) || !piCheckInCommand)
+    return 7;
+cout &lt;&lt; &quot;QueryInterface succeeded for ENOVIAVDADocCheckIn&quot; &lt;&lt; endl &lt;&lt; flush;
+ENOVIABusinessObject_var spBODocRev2(piObjectVersion);
+rc = piCheckOutCommand-&gt;put_BObject(spBODocRev2);
+if ( !SUCCEEDED(rc) )
+   return 12;
+cout &lt;&lt; &quot; put_BObject succeeded.&quot; &lt;&lt; endl &lt;&lt; flush;
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>In order to set object and parameters on CheckOut command use put_BObject method of ENOVIAVDADocCheckOut interface. This method return HRESULT.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ExecuteAfterCheckout"></a>Call Execute Method of ENOVIAVDADocCheckOut Interface</h4>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>
+rc=piCheckOutCommand-&gt;Exec();                                   
+if ( !SUCCEEDED(rc) )                                          
+    return 13;                                                 
+cout &lt;&lt; &quot; CheckOutCommand-&gt;Exec() succeeded.&quot; &lt;&lt; endl &lt;&lt; flush;
+	   </pre>
+    </td>
+  </tr>
+</table>
+<p>Call execute method of ENOVIAVDADocCheckOut Interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Inshort"></a>In Short</h3>
+<p>This use case has illustrated how to Check In and Check Out a document(s) from ENOVIA vault or is controlled by the system. 
+Initially, the login session is created using <code>CATIVpmSCLogin::Login</code> method. 
+Then obtain DDManager using <code>CATIEnovDDManager::GetRootDesktop</code> method. 
+Then create a document using <code>CATIEnovDDManager::CreateDocument</code> method. 
+The create ENOVIAVDADocCheckIn interface using <code>CATIAVPMVDACommandFactory::Create</code> method. 
+Now, set the object info before execute CheckIn command using <code>ENOVIAVDADocCheckIn::put_BObject</code> method.
+Then Execute Check In command. To Create ENOVIAVDADocCheckOut interface use <code>CATIAVPMVDACommandFactory::Create</code> method. 
+To set object info before execute CheckOut command using <code>ENOVIAVDADocCheckOut::put_BObject</code> method. 
+Then Execute Check Out command. Finally close the session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+   <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Mar 2016]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2016, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,447 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Managing Character Strings</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM Enterprise Architecture</h1>
+     </td>
+     <td valign="top">
+     <h2>Middleware Abstraction</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Managing Character Strings</h3>
+     <p><em>Creating and using character strings and messages</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article shows how to create and use character strings and how to 
+     retrieve messages in message catalog. </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAASysCharStrings Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAASysCharStrings Do</a></li>
+         <li><a href="#How">How to Launch CAASysCharStrings</a></li>
+         <li><a href="#Where">Where to Find the CAASysCharStrings Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to create and use character 
+ strings, and messages stored in message catalogs and in resources catalog.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAASysCharStrings Case</h3>
+ <p>CAASysCharStrings is a use case of the CAASystem.edu framework that 
+ illustrates the System framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAASysCharStrings Do</h4>
+ <p>This use case creates and uses character strings.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAASysCharStrings</h4>
+ <p>To launch CAASysCharStrings, you will need to set up the build time 
+ environment, then compile CAASysCharStrings along with its prerequisites, set 
+ up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAASysCharStrings Code</h4>
+ <p>The CAASysCharStrings use case is made of a several classes located in the 
+ CAASysCharStrings.m module of the CAASystem.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAASystem.edu\CAASysCharStrings.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAASystem.edu/CAASysCharStrings.m/</code></td>
+   </tr>
+ </table>
+ <p>wherwe <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>The character string capabilities are shown using five steps:</p>
+ <table width="100%">
+   <tr>
+     <th>#</th>
+     <th>
+     <p align="left">Step</th>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step1">1</a></td>
+     <td valign="top">Retrieve a Simple Message in a Message Catalog</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step2">2</a></td>
+     <td valign="top">Retrieve a Parameterized Message in a Message Catalog</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step3">3</a></td>
+     <td valign="top">Retrieve a Simple Value in a Resource Catalog</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step4">4</a></td>
+     <td valign="top">Message Catalog Files Format</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step5">5</a></td>
+     <td valign="top">Create a CATUnicodeString from a wchar_t</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step6">6</a></td>
+     <td valign="top">Convert a CATUnicodeString to UTF8 and to STEP</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step7">7</a></td>
+     <td valign="top">Convert CATUnicodeString to numerals and the reverse</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Retrieving a Simple Message in a Message Catalog</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATString ExampleMsgCatalogName(&quot;CAASysCharStrings&quot;);
+  CATString ExampleMsgCatalogKey(&quot;CAASystemCharacterStrings.MessageWithoutParameter&quot;);
+  CATUnicodeString ExampleBuiltMessage;
+  ExampleBuiltMessage = <b>CATMsgCatalog::BuildMessage</b>(ExampleMsgCatalogName,
+                                                    ExampleMsgCatalogKey);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A message catalog contains strings to display which must be translated into 
+ languages. A message catalog should only contain strings which must be 
+ translated into other languages, otherwise, resource catalogs should be used.
+ </p>
+ <p>The two <i>CATString</i> instances created are the message catalog name and 
+ the key of the message to search for in the catalog respectively. The static
+ <code>BuildMessage</code> method retrieves the message as a <i>CATUnicodeString</i> 
+ instance that can be used, for example, for display in a dialog box.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Retrieving a Parameterized Message in a Message Catalog</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATString MsgCatalogName(&quot;CAASysCharStrings&quot;);
+  CATString MsgCatalogKey(&quot;CAASystemCharacterStrings.MessageWithTwoParameters&quot;);
+
+  CATUnicodeString DefaultMessage = 
+     &quot;A problem occurred while loading the CAASysCharStrings.CATNls file&quot;;
+
+  int ParametersCount = 2;
+  CATUnicodeString Parameters[2];
+  Parameters[0] = &quot;First Param&quot;;
+  Parameters[1] = &quot;Second Param&quot;;
+
+  CATUnicodeString BuiltMessage;
+  BuiltMessage = <b>CATMsgCatalog::BuildMessage</b>(MsgCatalogName,
+                                             MsgCatalogKey,
+                                             Parameters,
+                                             ParametersCount,
+                                             DefaultMessage);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The two <i>CATString</i> instances created are the message catalog name and 
+ the key of the message to search for in the catalog respectively. A default 
+ message is created to be issued if the message catalog loading fails. Two 
+ parameters are created in the <code>Parameters</code> array. To be merged with 
+ the message extracted from the catalog, they must be <i>CATUnicodeString</i> 
+ instances. The static <code>BuildMessage</code> method retrieves the message as 
+ a <i>CATUnicodeString</i> instance and puts the parameters at the place 
+ reserved for them in the message, the first parameter in the array being placed 
+ at the first parameter location in the message, and so on. Then the message can 
+ be used, for example, for display in a dialog box. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Retrieving a Simple Value in a Resource Catalog</h4>
+ <table class="code" id="table1">
+   <tr>
+     <td>
+     <pre>...
+  CATString ExampleRscCatalogName(&quot;CAAAfrGeneralWksAddinHeader&quot;);
+  CATString ExampleRscCatalogKey(&quot;CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Icon.Normal&quot;);
+  CATString ExampleBuiltResourceValue;(&quot;CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Icon.Normal&quot;);</pre>
+     <pre>
+  CATRscCatalog::BuildResource(ExampleRscCatalogName,ExampleRscCatalogKey,ExampleBuiltResourceValue);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Resource Catalogs must be used for all non hard-coded strings which must not 
+ be translated into other languages.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Step4"></a>Message Catalog Files Format</h4>
+ <p>The message catalog files (.CATNls) contain a list of messages. They are 
+ clear-text files, encoded in the following code pages:</p>
+ <ul>
+   <li>English, German, French, Italian, Portuguese, Spanish, Danish, Swedish, 
+   Dutch, Finnish, Icelandic, Norwegian: ISO 8859-1</li>
+   <li>Polish, Czech : ISO 8859-2</li>
+   <li>Russian : ISO 8859-5</li>
+   <li>Greek : ISO 8859-7</li>
+   <li>Hebrew: ISO 8859-8</li>
+   <li>Turkish: ISO 8859-9</li>
+   <li>Japanese :IBM 943</li>
+   <li>Korean : EUC KR</li>
+   <li>Simplified_Chinese : EUC CN</li>
+   <li>Traditional_Chinese : EUC TW<br>
+&nbsp;</li>
+ </ul>
+ <p>They may be edited, for example:</p>
+ <ul>
+   <li>on Windows using Wordpad</li>
+   <li>on Unix using vi</li>
+ </ul>
+ <p><br>
+ On Windows, they are located in the directory intel_a\resources\msgcatalog.<br>
+ <br>
+ A message catalog file contains several messages. When a message may take 
+ several lines, it is possible to enter it in several parts (compound message). 
+ Thus, the<br>
+ message will be more readable. Each message has the following syntax:<br>
+ <br>
+ Message ::= SpacesOrComment* Key SpacesOrComment* &lt;EQUALS SIGN&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ SpacesOrComment* MessagePart <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( &lt;COMMA&gt; SpacesOrComment* MessagePart )* SpacesOrComment* &lt;SEMICOLON&gt;<br>
+ <br>
+ Key ::= [a-z A-Z 0-9 . _]+</p>
+ <p><br>
+ MessagePart ::= &lt;QUOTATION MARK&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( EffectiveCharacter | ControlCharacter | <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ FormalParameter | SlashExpression )* <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ &lt;QUOTATION MARK&gt;</p>
+ <p><br>
+ EffectiveCharacter ::= &lt;character encoded in the supported code page (see 
+ above),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ except control characters,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ the SOLIDUS character (slash) and the REVERSE SOLIDUS character&gt;</p>
+ <p><br>
+ ControlCharacter ::= &lt;REVERSE SOLIDUS&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( &lt;QUOTATION MARK&gt; | &lt;LATIN SMALL LETTER N&gt; | &lt;LATIN SMALL LETTER T&gt; | <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ &lt;LATIN SMALL LETTER A&gt; | &lt;LATIN SMALL LETTER B&gt; |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ &lt;LATIN SMALL LETTER F&gt; | &lt;LATIN SMALL LETTER R&gt; |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ &lt;LATIN SMALL LETTER V&gt; )</p>
+ <p><br>
+ FormalParameter ::= ( &lt;LATIN CAPITAL LETTER P&gt; | &lt;LATIN SMALL LETTER P&gt; ) 
+ [0-9]*<br>
+&nbsp;</p>
+ <p>SlashExpression ::= ( &lt;SOLIDUS (slash)&gt; &lt;any character except LATIN CAPITAL 
+ LETTER P and<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ LATIN SMALL LETTER P&gt; ) |<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( &lt;SOLIDUS&gt; &lt;SOLIDUS&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( &lt;LATIN CAPITAL LETTER P&gt; | &lt;LATIN SMALL LETTER P&gt; ) )<br>
+&nbsp;</p>
+ <p>SpacesOrComment ::= SpaceCharacter* | <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ ( &lt;SOLIDUS (slash)&gt; &lt;SOLIDUS (slash)&gt; &lt;any character except '\n' and '\0'&gt;* 
+ &lt;'\n'&gt; )<br>
+&nbsp;</p>
+ <p>SpaceCharacter ::= &lt;SPACE&gt; | &lt;CARRIAGE RETURN&gt; | &lt;LINE FEED&gt; | &lt;CHARACTER 
+ TABULATION &gt; | <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ &lt;LINE TABULATION&gt;<br>
+ <br>
+ Note: Regarding the ControlCharacter entity, if it is valued to &lt;REVERSE 
+ SOLIDUS&gt;&lt;QUOTATION MARK&gt; , then, in the effective displayed message, it will 
+ have been converted to &lt;QUOTATION MARK&gt;. &lt;REVERSE SOLIDUS&gt;&lt;LATIN SMALL LETTER 
+ N&gt;, &lt;REVERSE SOLIDUS&gt;&lt;LATIN SMALL LETTER T&gt; . . . are converted the same way.<br>
+&nbsp;</p>
+ <p>Note: Regarding the SlashExpression entity, if it is valued to 
+ &lt;SOLIDUS&gt;&lt;SOLIDUS&gt;&lt;LATIN CAPITAL LETTER P&gt; , then, in the effective displayed 
+ message, it will have been converted to &lt;SOLIDUS&gt;&lt;LATIN CAPITAL LETTER P&gt; . 
+ &lt;SOLIDUS&gt;&lt;SOLIDUS&gt;&lt;LATIN SMALL LETTER P&gt; is converted the same way.<br>
+&nbsp;</p>
+ <p>Caution: regarding a EffectiveCharacter entity, if it does not correspond to 
+ an effective code in the corresponding code page (ISO 8859-1 for an english 
+ message catalog file, IBM 932 for a japanese message catalog file . . .), the 
+ parsing of the message catalog file will fail.<br>
+&nbsp;</p>
+ <p>Caution: Each key must be present only once in a given file .<br>
+&nbsp;</p>
+ <p>Examples:</p>
+ <table class="code" id="table2">
+   <tr>
+     <td>
+     <blockquote>
+       <pre>Message1 = &quot;This is a simple english message.&quot;;
+Message2 = &quot;This message includes the parameter /P1 that is valued by your application at run-time.&quot;;
+Message3 = &quot;This is a&quot;, &quot;compound &quot;, &quot;message.&quot;;
+Message4 = &quot;You can use control characters such as \t or \n in your messages.&quot;;</pre>
+     </blockquote>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Step5"></a>Creating a CATUnicodeString from a wchar_t</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  wchar_t* CLanguageUnicodeString = L&quot;Unicode string&quot;;
+  int CharacterCount = wcslen(CLanguageUnicodeString);
+
+  CATUC2Bytes *UnicodeCharacters = new <b>CATUC2Bytes</b>[CharacterCount];
+  for (int i=0; i&lt;=CharacterCount; i++) 
+     UnicodeCharacters[i] <b>=</b> CLanguageUnicodeString[i];
+
+  CATUnicodeString UnicodeString;
+  UnicodeString.<b>BuildFromUCChar</b>(UnicodeCharacters, CharacterCount);
+  delete UnicodeCharacters;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A <code>wchar_t</code> string is created and its length is retrieved thanks 
+ to the <code>wcslen</code> function. Then a <i>CATUC2Bytes</i> table is 
+ instantiated with the string length as size, and filled in with the <code>
+ wchar_t</code> string. The <i>CATUC2Bytes</i> class represents the Unicode 
+ character encode using two bytes, and its assignment operator converts <code>
+ wchar_t</code> to <i>CATUC2Bytes</i> instances. Then a <i>CATUnicodeString</i> 
+ instance is created using the <i>CATUC2Bytes</i> table, thanks to the <code>
+ BuildFromUCChar</code> method..</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Converting a CATUnicodeString to UTF8 and to STEP</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  CATUnicodeString StringToConvert = &quot;String&quot;;
+  char *UTF8String = new char[4+6*(StringToConvert.GetLengthInChar())];
+  size_t UTF8StringByteCount;
+  StringToConvert.<b>ConvertToUTF8</b>(UTF8String, &amp;UTF8StringByteCount);
+  ... // Display UTF8String
+
+  char *STEPString = new char[50];
+  StringToConvert.<b>ConvertToSTEP</b>(STEPString);
+  cout &lt;&lt; &quot;STEP String = &quot; &lt;&lt; STEPString &lt;&lt; endl;
+  delete STEPString;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A <i>CATUnicodeString</i> instance is converted as an array of characters 
+ expressed using the UTF8 Unicode format thanks to the <code>ConvertToUTF8</code> 
+ method. The array size takes the maximum possible size of the character string, 
+ whose actual length is returned in <code>UTF8StringByteCount</code>. Then the
+ <code>ConvertToSTEP</code> method converts the same string to the character 
+ string format used by the STEP standard.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Converting CATUnicodeString to Numerals and the Reverse</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  StringToConvert = &quot;1250&quot;;
+  int OutputInteger;
+  int IsConversionOK = StringToConvert.<b>ConvertToNum</b>(&amp;OutputInteger);
+  StringToConvert = &quot;1250.12&quot;;
+  double OutputReal;
+  IsConversionOK = StringToConvert.<b>ConvertToNum</b>(&amp;OutputReal);
+
+  int InputInteger = 253;
+  CATUnicodeString StringToFill;
+  int FillingWasOK = StringToFill.<b>ConvertNumToString</b>(InputInteger);
+  double InputReal = 253.57;
+  FillingWasOK = StringToFill.<b>ConvertNumToString</b>(InputReal);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>ConvertToNum</code> method converts a <i>CATUnicodeString</i> 
+ instance into an integer or a double. conversely, the <code>ConvertNumToString</code> 
+ method converts an integer or a double into a <i>CATUnicodeString</i> instance. 
+ The conversion succeeds if the returned integer is different from 0. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows how to create and use character strings and how to 
+ retrieve messages from message catalogs.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,1970 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Command to Edit a User Feature</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Command to Edit a User Feature</h3>
+      <em>Implementing CATIEdit onto a User Feature</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a command to edit a User Feature of a
+      given type by implementing the <i>CATIEdit</i> interface
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMcaUdfEdit Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMcaUdfEdit Do</a></li>
+            <li><a href="#How">How to Launch CAAMcaUdfEdit</a></li>
+            <li><a href="#Where">Where to Find the CAAMcaUdfEdit Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a command to edit a User
+Feature of a given type in implementing the <i>CATIEdit</i> interface. This
+interface is implemented on a late type whose the name is the type of the User
+Feature. This article describes how to:</p>
+<ul>
+  <li>Define the type of an User Feature</li>
+  <li>Implement the <i>CATIEdit</i> interface (ApplicationFrame framework)</li>
+  <li>Create the command to edit a User Feature</li>
+</ul>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of User Features. See the referenced article [<a href="#References">1</a>]
+for a detailed overview.</p>
+<p>This article has been updated in V5R13 to take the Ordered
+Geometrical Set into account. The following icon <img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+is in front of each piece of code newly added or modified.&nbsp;On the other
+hand, it does not have been functionally modified to take into account the solid
+and surfacic features set.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMcaUdfEdit Use Case</h3>
+<p>CAAMcaUdfEdit is a use case of the CAAMechanicalCommands.edu framework that
+illustrates MechanicalCommands and MechanicalModelerUI framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMcaUdfEdit Do</h4>
+<p>In the CAAUdfLoft Part document you have the <code>CAAUserFeatureSample</code><code>
+</code>User Feature reference [<a href="#References">2</a>]. This file, as all
+the files indicated in this article, is located in the <code>InputData</code>
+module of the CAAMechanicalCommands.edu framework.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The CAAUdfLoft Part Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfCreation2.jpg" width="527" height="455"></td>
+  </tr>
+</table>
+<p>Double click on the <code>CAAUserFeatureSample </code>feature: the
+&quot;Userfeature Definition&quot; Dialog box appears [<a href="#Fig.2">Fig 2</a>].
+Select the &quot;Type&quot; tab and observe that the &quot;Instance Type&quot;
+field is empty.</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: User Feature Definition- No Type</i></caption>
+  <tr>
+    <td>
+	<img alt="User Feature Definition" longdesc="No Type" src="images/CAAMcaUdfEditDlg1.png" width="580" height="483">&nbsp;</td>
+  </tr>
+</table>
+<p>The CAAUdfLoftWithType Part document contains the same User Feature
+reference, <code>CAAUserFeatureSample</code>, enriched with the &quot;<b>CAAUdfLoft&quot;<code>
+</code></b>type. The following picture shows the &quot;Userfeature
+Definition&quot; Dialog box [<a href="#Fig.3">Fig 3</a>] when this feature is
+edited.&nbsp;<b>&nbsp;</b></p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: User Feature Definition, the CAAUdfLoft
+    Type</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEditDlg2.png"></td>
+  </tr>
+</table>
+<p>Notice that, in the Type 1 field:</p>
+<ul>
+  <li>The first field of the &quot;Instance Type&quot; is <code>CAA</code>:
+    there you set the company-based prefix</li>
+  <li>The second field is dependent of the user feature reference: we have set <code>UdfLoft</code>&nbsp;</li>
+  <li>The concatenation of the two fields forms the type of the User Feature
+    reference: <code>CAAUdfLoft</code>.&nbsp;</li>
+</ul>
+<p>To set a type to an User Feature reference there are two means:</p>
+<ul>
+  <li>By CAA API,&nbsp; use the <i>CATIUdfFeatureUser</i> interface to set (<code>SetType</code>
+    method) or retrieve (<code>GetType</code> method) the type of the User
+    Feature.</li>
+  <li>Interactively, thanks to the above &quot;Userfeature Definition&quot;
+    Dialog box. See the first scenario in the <a href="#How">How to Launch
+    CAAMcaUdfEdit</a> section.</li>
+</ul>
+<p>In the CAAUdfModelWithTypeInst Part document you will find an instance of the
+<code>CAAUserFeatureSample</code> feature with the <code>CAAUdfLoft</code> type.
+This instance is named <code>CAAUserFeatureToEdit</code>.<code>&nbsp;</code></p>
+<table>
+  <caption><i><a name="Fig.4">Fig.4</a>: The CAAUdfModelWithTypeInst Part
+    Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEditUserFeatureInst.jpg" width="425" height="418"></td>
+  </tr>
+</table>
+<p>When you double click on the <code>CAAUserFeatureToEdit</code> feature, in
+place of the default edit command, the following dialog box appears:</p>
+<table>
+  <caption><i><a name="Fig.5">Fig.5</a>: Dialog Box to Edit a CAAUdfLoft User
+    Feature</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEditDlg.jpg" width="255" height="103"></td>
+  </tr>
+</table>
+<p>This dialog box is the <i>CAAMcaUdfLoftEditCreateCmd</i> class which contains</p>
+<ul>
+  <li>The <i>CATIAlias</i> name of the inputs (at right of the dialog box)</li>
+  <li>The role of the input (at left of the dialog box)</li>
+</ul>
+<p>Refer to the use case &quot;Creating a User Feature Reference&quot; [<a href="#References">2</a>]
+for details about the inputs and the roles of the &quot;CAAUserFeatureSample<code>&quot;</code>
+User Feature.</p>
+<p>To replace the default command we have implemented the <i>CATIEdit</i>
+interface [<a href="#References">3</a>] on the <code>CAAUdfLoft</code> late
+type. This interface contains the method, <code>Activate, </code>which returns a
+pointer to the command that edits the object. This command is the <i>CAAMcaUdfLoftEditCreateCmd</i>
+command which derives from <i>CATPrtPanelStateCmd</i> (MechanicalModelerUI
+framework). It is recommended to derive from this class to benefit from
+Mechanical Modeler behaviors (update, input validation ...)</p>
+<p>The <i>CAAMcaUdfLoftEditCreateCmd</i> command is a <i>CATStateCommand</i>
+which has two state charts:</p>
+<ul>
+  <li>
+    <p>An error prevents to edit the User Feature</p>
+  </li>
+  <table>
+    <caption><i><a name="Fig.6">Fig.6</a>: The State Chart in Case of Error</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAMcaUdfEditStateChartError.jpg" width="217" height="312"></td>
+    </tr>
+  </table>
+  <p>A notify window displays the error message and the command is ended when
+  the end user clicks on the Ok or Close Button.</p>
+  <li>
+    <p>The User Feature can be normally edited</p>
+  </li>
+  <table>
+    <caption><i><a name="Fig.7">Fig.7</a>: The State Chart to Edit</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAMcaUdfEditStateChartNormal.jpg" width="615" height="366"></td>
+    </tr>
+  </table>
+</ul>
+<blockquote>
+  <br>
+  The &quot;CAAUdfLoft<i>&quot; </i>dialog box [<a href="#Fig.5">Fig 5</a>] is
+  instantiated. The end user can:
+  <ul>
+    <li>Click OK: the user feature instance is modified with the current value</li>
+    <li>Click Close/Cancel to cancel the edition</li>
+    <li>Select a feature</li>
+    <li>Click Preview to see the user feature instance with the current value</li>
+  </ul>
+  <p>This UML [<a href="#References">4</a>] diagram shows the transitions
+  triggered at each end user interaction:</p>
+  <ul>
+    <li>The transition between the Cancel state and the Null State are
+      automatically defined by the <i>CATStateCommand</i> class</li>
+    <li>The loop transition to select a feature is defined in the <i>CAAMcaUdfLoftEditCreateCmd</i>
+      class</li>
+    <li>All the others transitions are defined in the <i>CATMMUIPanelStateCmd</i>
+      class</li>
+  </ul>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMcaUdfEdit</h4>
+<p>To launch CAAMcaUdfEdit , you will need to set up the build time environment,
+then compile CAAMcaUdfEdit along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">5</a>].</p>
+<p>First scenario, to set a type to an User Feature reference:</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li>In the <b>File Selection</b> Dialog box click <b>CAAUdfLoft.CATPart</b>
+    and click <b>Open</b></li>
+  <li>Double click <b>CAAUserFeatureSample</b></li>
+  <li>The <b>Userfeature Definition</b> Dialog box appears <a href="#Fig.3">Fig
+    3</a>
+    <ul>
+      <li>select the <b>Type</b> tab page</li>
+      <li>set an instance type</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+</ul>
+<p>Second scenario, to see the new edit command:</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li>In the <b>File Selection</b> Dialog box click <b>CAAUdfModelWithTypeInst.CATPart</b>
+    and click <b>Open</b></li>
+  <li>Double click <b>CAAUserFeatureSampleToEdit</b></li>
+  <li>The <b>CAAUdfLoft Definition</b> dialog box appears</li>
+</ul>
+<p>Third scenario, to see the default edit command:</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li>In the <b>File Selection</b> Dialog box click <b>CAAUdfModelWithInstances.CATPart</b>
+    and click <b>Open</b></li>
+  <li>Double click <b>CAAUserFeatureSample.1 </b>or<b> The Loft With Point2 and
+    Point3</b></li>
+  <li>The <b>Userfeature Edition</b> dialog box appears</li>
+</ul>
+Where <code>CAAUdfLoft.CATPart, </code><code>CAAUdfModelWithTypeInst.CATPart,</code>
+and <code>CAAUdfModelWithInstances.CATPart </code>are included in the directory <code>CAAMechanicalCommands.edu/InputData</code>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAMechanicalCommands.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAMechanicalCommands.edu\InputData</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMcaUdfEdit Code</h4>
+<p>The CAAMcaUdfEdit use case is made of several classes located in the
+CAAMcaUdfEdit.m module of the CAAMechanicalCommands.edu framework:</p>
+<table>
+  <tr>
+    <td><code>Windows</code></td>
+    <td><code>InstallRootDirectory\CAAMechanicalCommands.edu\CAAMcaUdfEdit.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalCommands.edu/CAAMcaUdfEdit.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in the CAAMcaUdfEdit use case:</p>
+<ol>
+  <li><a href="#Implementing CATIEdit">Implementing the <i>CATIEdit</i>
+    Interface</a></li>
+  <li><a href="#Creating the Command to Edit a User Feature Instance">Creating
+    the Command to Edit a User Feature</a></li>
+  <li><a href="#Creating the Dialog Box Used in the Edition Command">Creating
+    the Input Dialog Box</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Implementing CATIEdit"></a>Implementing the <i>CATIEdit</i>
+Interface</h4>
+<p>The implementation class is <i>CAAEMcaEditUdfLoft</i>. This section
+describes:</p>
+<ol>
+  <li><a href="#CAAEMcaEditUdfLoft hdr">The header file</a></li>
+  <li><a href="#CAAEMcaEditLoft src">The source file</a></li>
+  <li><a href="#CAAEMcaEditUdfLoft dico">The interface dictionary</a></li>
+</ol>
+<ol>
+  <li><a name="CAAEMcaEditUdfLoft hdr"></a>The CAAEMcaEditUdfLoft header file.</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATExtIEdit.h&quot; 
+
+class CAAEMcaEditUdfLoft : public CATExtIEdit
+{
+  CATDeclareClass;
+  public :
+    CAAEMcaEditUdfLoft();
+    virtual ~CAAEMcaEditUdfLoft();
+
+    virtual CATCommand  * <b>Activate</b>(CATPathElement * iPath);
+
+ private :
+    CAAEMcaEditUdfLoft(const CAAEMcaEditUdfLoft &amp;iObjectToCopy);
+    CAAEMcaEditUdfLoft &amp; operator = (const CAAEMcaEditUdfLoft &amp;iObjectToCopy);
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CAAEMcaEditUdfLoft</code> C++ class derives from the <i>CATExtIEdit
+  </i>adapter class. The <code>CATDeclareClass</code> macro declares that the <code>CAAEMcaEditUdfLoft
+  </code>class belongs to a component. The copy constructor and the
+  &quot;=&quot; operator are set as private to prevent the compiler from
+  automatically creating them as public.</p>
+  <li><a name="CAAEMcaEditLoft src"></a>The CAAEMcaEditUdfLoft source file.</li>
+  <ul>
+    <li><b>Data extension of the CAAUdfLoft component</b></li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAEMcaEditUdfLoft.h&quot;
+#include &quot;CAAMcaUdfLoftEditCreateCmd.h&quot; 
+#include &quot;CATISpecObject.h&quot;	
+#include &quot;CATPathElement.h&quot;
+
+
+CATImplementClass( CAAEMcaEditUdfLoft,
+                   DataExtension,
+                   <b>CATIEdit</b>,
+                   <b>CAAUdfLoft</b>);
+
+<b>TIE_CATImplementBOA</b>(CATIEdit,CAAEMcaEditUdfLoft);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CATImplementClass</code> macro is used in conjunction with the
+    <code>CATDeclareClass</code> macro in the class header file to express that 
+    the class is part of a CAA V5 Object Modeler component. Its argument read as 
+    follows:
+    <ol>
+      <li>CAAEMcaEditUdfLoft: the class name </li>
+      <li><code>DataExtension</code>: the CAA V5 Object Modeler class type.&nbsp;
+      </li>
+      <li><code>CATIEdit: </code>The name of implemented interface
+      </li>
+      <li><code>CAAUdfLoft</code> : the name of the extended component . <code>CAAUdfLoft</code> is the instance type that you find in the
+    &quot;Userfeature Definition&quot; dialog box, &quot;Type&quot; tab, when
+    you edit the User Feature reference. Refer to the [<a href="#Fig.3">Fig 3</a>].</li>
+    </ol>
+    <p>The <code>CATImplementBOA</code> macro replaces the <code>
+    TIE_CATIEdit</code> macro. Its arguments are the BOA-implemented 
+    interface and the extension class name respectively.</p>
+   
+    <li><b>Constructor</b> and <b>Destructor</b> are empty:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAEMcaEditUdfLoft::CAAEMcaEditUdfLoft()
+{
+}
+
+CAAEMcaEditUdfLoft::~CAAEMcaEditUdfLoft()
+{
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <li><b>Activate</b> method</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATCommand * CAAEMcaEditUdfLoft::Activate (CATPathElement *  iPath)
+{
+    CATCommand * pCommand = NULL ;
+    
+    if ( NULL != iPath ) 
+    {  
+        CATBaseUnknown* piUk= NULL;
+        piUk= iPath-&gt;<b>CurrentElement</b>();
+
+        if ( NULL != piUk ) 
+        {
+           <b>CATISpecObject</b> *piSpecOnEditFeature = NULL;
+           HRESULT rc = <b>piUk</b>-&gt;QueryInterface(IID_CATISpecObject, 
+                                                     (void **)&amp;piSpecOnEditFeature);
+           if (SUCCEEDED(rc))
+           {
+              pCommand =  new <b>CAAMcaUdfLoftEditCreateCmd</b>( piSpecOnEditFeature );
+
+              piSpecOnEditFeature-&gt;Release();
+              piSpecOnEditFeature = NULL;
+           }
+        }	
+    }
+    return pCommand ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In most cases, the object to edit is the one implementing <i>CATIEdit</i>,
+    so you can retrieve a pointer on it thanks to <code>this</code>. But in this
+    particular case, the implementation is done on a late type, so you need to
+    retrieve a pointer on the object to edit thanks to the input argument <code>iPath</code>.</p>
+  </ul>
+  <li><a name="CAAEMcaEditUdfLoft dico"></a>The interface dictionary</li>
+  <p>In the interface dictionary dedicated to the CAAMechanicalCommands.edu
+  framework, it is necessary to add the following line to indicate that the <code>CAAUdfLoft</code><b>
+  </b>component<code> </code>implements the <i>CATIEdit</i> interface in the <code>CAAMcaUdfEdit.m</code>
+  module.</p>
+  <p><code>CAAUdfLoft CATIEdit libCAAMcaUdfEdit</code></p>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+</ol>
+<h4><a name="Creating the Command to Edit a User Feature Instance"></a>Creating
+the Command to Edit a User Feature</h4>
+<p>The command <i>CAAMcaUdfLoftEditCreateCmd</i> is a command which can edit and
+create a <code>CAAUdfLoft</code> User Feature. In this section we have only
+extracted the code to make an edition. The &quot;Instantiating Interactively a
+User Feature&quot; [<a href="#References">6</a>] use case details the
+complementary code which are in this article preceded by the comment
+&quot;Create Code&quot;:&nbsp;</p>
+<ul>
+  <li>A specific constructor,</li>
+  <li>A method to do the user feature creation.</li>
+</ul>
+<p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+From V5R13, to ensure the insertion of <code>CAAUdfLoft</code> user features
+into an ordered set, the <i>CAAMcaUdfLoftEditCreateCmd</i> command must now:</p>
+<ul>
+  <li>Set current the edited or created user feature at the beginning of the
+    command</li>
+  <li>Restore the previous current feature, in case of edition, at the end of
+    the command&nbsp;</li>
+</ul>
+<p>This section describes:</p>
+<ol>
+  <li><a href="#The CAAMcaUdfLoftEditCreateCmd header file.">The header class</a></li>
+  <li><a href="#Here is the CAAMcaUdfLoftEditCreateCmd source file:">The source
+    class</a></li>
+  <li><a href="#NLS resources file for cmd">The Nls resources</a></li>
+</ol>
+<ol>
+  <li><a name="The CAAMcaUdfLoftEditCreateCmd header file.">The <code>CAAMcaUdfLoftEditCreateCmd</code>
+    header file.</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATPrtPanelStateCmd.h&quot; // To derive from
+
+class CAAMcaUdfLoftDlg ;         // Dialog box to edit the user feature
+class CATFeatureImportAgent ;    // To select features
+class CATIUdfInstantiate ;       // Interface to instantiate a user feature 
+class CATDocument ;              // Used by the RetrieveTheUFRef method
+class CATDlgNotify ;             // Dialog box to display the error message
+class CATPathElement ;           // Input selected
+
+class CAAMcaUdfLoftEditCreateCmd: public <b>CATPrtPanelStateCmd</b>
+{
+
+  <b>CmdDeclareResource</b>( CAAMcaUdfLoftEditCreateCmd, CATPrtPanelStateCmd )
+
+  public:
+
+    <b>CAAMcaUdfLoftEditCreateCmd</b>(CATISpecObject *iObjectToEdit);
+    ...
+    virtual ~CAAMcaUdfLoftEditCreateCmd();
+
+  private:
+
+    CAAMcaUdfLoftEditCreateCmd(const CAAMcaUdfLoftEditCreateCmd &amp;iObjectToCopy);
+
+    CAAMcaUdfLoftEditCreateCmd &amp; operator = (const CAAMcaUdfLoftEditCreateCmd &amp;iObjectToCopy);
+  
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAMcaUdfLoftEditCreateCmd</i> command derives from the <i>CATPrtPanelStateCmd</i>
+  command that enables to benefit from MechanicalModeler behaviors: update,
+  inputs validation ... The copy constructor and the &quot;=&quot; operator are
+  set as private to prevent the compiler from automatically creating them as
+  public. Notice that the default constructor is not set as private because it
+  is set as public in creation mode.</p>
+  <p>The <code>CmdDeclareResource</code> macro states that the resources of the <i>CAAMcaUdfLoftEditCreateCmd</i>
+  command are located in the <code>CAAMcaUdfLoftEditCreateCmd.CATNls</code>
+  file. If resources were assigned to the <i>CATPrtPanelStateCmd</i> class, they
+  would be concatenated with the resources for <code>CAAMcaUdfLoftEditCreateCmd</code>.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    HRESULT <b>InitCommand</b>();
+    HRESULT <b>CheckUserFeatureType</b>(CATISpecObject * iUserFeature);
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>In the <code><a href="#InitCommand">InitCommand</a></code> method we have
+  grouped together the common code to call in the constructors, for edition and
+  for creation. For our command, this code creates only the dialog box to
+  display the input even though the parameter as not proceeded.</p>
+  <p>The <code><a href="#CheckUserFeatureType">CheckUserFeatureType</a> </code>method
+  checks that the feature to edit has the <code>CAAUdfLoft</code> type.</p>
+  <p>Some methods are overriden from <i>CATPrtPanelStateCmd</i> or from its
+  parent class: <i>CATMMUIPanelStateCmd:</i> <code><a href="#GiveMyPanel">GiveMyPanel</a>,
+  <a href="#OkAction">OkAction</a> and <a href="#PreviewAction">PreviewAction</a>.
+  </code>We will see that in case of the two first methods, it is mandatory to
+  override them; in the case of the third, is is necessary here since the dialog
+  box includes a Preview button.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    virtual CATDlgDialog*		<b>GiveMyPanel</b>();
+
+    virtual CATBoolean		<b>OkAction</b>(void * iUsefuldata);  
+
+    virtual CATBoolean		<b>PreviewAction</b>(void * iUsefuldata); 
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>Below is a <i>CATStateCommand</i> with its <code><a href="#BuildGraph">BuildGraph</a></code>
+  method, its condition method <code><a href="#CheckInput">CheckInput</a></code>
+  and its action methods: <code><a href="#SelectPoint">SelectPoint</a></code>
+  and <code><a href="#CloseErrorDialogBox">CloseErrorDialogBox</a></code>.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    virtual void    	         <b>BuildGraph</b>(); 
+    ...
+    virtual CATBoolean              <b>CheckInput</b>(void * iUsefuldata);
+
+    virtual CATBoolean		<b>SelectPoint</b>(void * iUsefuldata);
+    
+    virtual CATBoolean		<b>CloseErrorDialogBox</b>(void * iUsefuldata);
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+  V5R13 novelty. To manage the current feature, the following methods have been
+  added:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    virtual CATBoolean <b>CancelAction</b>(void * iUsefuldata); 
+    ...
+    CATStatusChangeRC  <b>Activate</b>   (CATCommand * iCmd,CATNotification * iNotif);
+
+    CATStatusChangeRC  <b>Deactivate</b> (CATCommand * iCmd,CATNotification * iNotif);
+    
+    virtual CATBoolean <b>InitAction</b>(void * iUsefuldata);
+    
+    virtual CATBoolean <b>BeforeBuildGraph</b>();
+    
+    virtual CATBoolean <b>IsUFInsideOrderedBody</b>();
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The first part of the data members concerns the error management</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  private:
+    
+    CATString               _ErrorKey ;
+    
+    CATDlgNotify          * _pErrorDialogBox;
+
+    CATDialogAgent        * _pAgentErrorDialogBox ; 
+
+    ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>When an error occurs in the constructor, a dialog box, _pErrorDialogBoxis,
+  is launched and which displays the error.</p>
+  <p><code>_ErrorKey</code> contains the type of the error. This string enables
+  the creation of a keyword used to search the NLS message to display in the <code>_pErrorDialogBox
+  </code>dialog box. <code>_pAgentErrorDialogBox</code> is an agent to trigger
+  the transition between the first state and the Cancel state when the end user
+  clicks OK or Close [<a href="#Fig.6">Fig. 6</a>].</p>
+  <p>The next part concerns the input acquisition.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    CAAMcaUdfLoftDlg      * _pInputDialogBox;
+
+    CATFeatureImportAgent * _pFeatureAgent ;
+
+    CATPathElement        * _pFirstPoint ;
+    CATPathElement        * _pSecondPoint ;
+    CATPathElement        * _pSelectedPath ;
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The dialog box to display the input is <code>_pInputDialogBox</code>.</p>
+  <p><code>_pFeatureAgent</code> is the agent used to select the input in the
+  specification tree or in 3D.</p>
+  <p><code>_pFirstPoint</code> and <code>_pSecondPoint</code> contain pointers
+  on the initial inputs, or on the selected inputs during the life of the
+  command. These two pointers enable to modify the edited User Feature in the <code>OkAction</code>
+  when the end user clicks OK, or in the <code>PreviewAction</code> when he
+  clicks on the Preview Button. <code>_pSelectedPath</code> is a storage path
+  valuated in the <code>CheckInput</code> condition method and used in the <code>SelectPoint</code>
+  action method to valuate <code>_pFirstPoint</code> or <code>_pSecondPoint</code>.</p>
+  <p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+  V5R13 novelty. The last data member is the current feature when the command is
+  launched. <code>_spSpecObjOnPreviousCurrentFeat</code> is kept to be restored
+  at the end of the command (excepted in case of successful creation into an
+  ordered set, because the new feature must stay the current one).&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>    ...
+    CATISpecObject_var      _spSpecObjOnPreviousCurrentFeat ;
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>Notice that the feature to edit is not a data member of this class. This
+  feature is set in the <code>_MyFeature</code> data member of the <i>CATMMUIPanelStateCmd
+  </i>class. After the affectation, we retrieve this smart pointer thanks to the
+  <code>GiveMyFeature</code> method, always defined in the grand-parent class.</p>
+  <li><a name="Here is the CAAMcaUdfLoftEditCreateCmd source file:">The <code>CAAMcaUdfLoftEditCreateCmd</code>
+    source file.</li>
+    <ul>
+      <li>The <b>constructor</b></li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>//Local Framework
+#include &quot;CAAMcaUdfLoftEditCreateCmd.h&quot;
+#include &quot;CAAMcaUdfLoftDlg.h&quot;            // Dialog box to display the inputs
+
+//ObjectModelerBase Framework
+#include &quot;CATSessionServices.h&quot;          // Lock and Unlock
+#include &quot;CATDocumentServices.h&quot;         // Open, Remove
+#include &quot;CATInit.h&quot;                     // To retrieve the root container
+#include &quot;CATDocument.h&quot;                 // Document which contains the user feature
+                                         // to instantiate
+
+//DialogEngine Framework
+#include &quot;CATFeatureImportAgent.h&quot;       // To select a feature
+#include &quot;CATDialogTransition.h&quot;         // To set resource ID to transitions
+
+// Dialog Framework
+#include &quot;CATDlgNotify.h&quot;                // The dialog box in case of failure
+
+//MechanicalCommands Framework
+#include &quot;CATIUdfFeatureUser.h&quot;          // To return the type of the u.f.
+#include &quot;CATIUdfFeatureInstance.h&quot;      // To modify the u.f.
+#include &quot;CATIUdfInstantiate.h&quot;          // To instantiate a new u.f.
+#include &quot;CATIUdfFactory.h&quot;              // To retrieve the u.f. to isntantiate
+
+//MecModInterfaces Framework
+#include &quot;CATIPrtContainer.h&quot;            // The root container
+#include &quot;CATIPrtPart.h&quot;                 // The mechanical Part
+
+//ObjectSpecsModeler Framework
+#include &quot;CATIAlias.h&quot;                   // To retrieve the name of the features
+
+//ApplicationFrame Framework
+#include &quot;CATApplicationFrame.h&quot;         // To retrieve the parent dialog boxes
+#include &quot;CATFrmEditor.h&quot;                // To unset the repeat command
+
+//System framework
+#include &quot;CATGetEnvValue.h&quot;                                                       
+
+//Visualization framework
+#include &quot;CATPathElement.h&quot;
+...
+CAAMcaUdfLoftEditCreateCmd::CAAMcaUdfLoftEditCreateCmd(CATISpecObject *iObjectToEdit):
+CATPrtPanelStateCmd (&quot;CAAMcaUdfLoftEditCreateCmd&quot;, 
+                     <b>CATDlgEngOneShot</b>, 
+                     <b>CATCommandModeExclusive</b>,<b>0</b>),
+_pInputDialogBox(NULL),_pAgentErrorDialogBox(NULL),_pFeatureAgent(NULL),
+_ErrorKey(&quot;NoError&quot;),
+_pErrorDialogBox(NULL),_pFirstPoint(NULL),_pSecondPoint(NULL),_pSelectedPath(NULL)
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( NULL != iObjectToEdit ) 
+    {
+        rc = <b>InitCommand</b>();
+
+        if ( SUCCEEDED(rc) ) 
+        {
+           rc = <b>CheckUserFeatureType</b>(iObjectToEdit);
+           if ( SUCCEEDED(rc) )
+           {
+              <b>CATIUdfFeatureInstance</b>_var spIUdfFeatureInstance = iObjectToEdit ;
+              if (NULL_var != spIUdfFeatureInstance) 
+              {
+                 <b>_MyFeature</b> = iObjectToEdit ;
+     
+                 CATBaseUnknown_var spBUknInput ;
+                 CATBaseUnknown * pBUknInput = NULL ;
+                 CATIAlias_var spAliasInput ;
+                 
+                 // first Input
+                 spIUdfFeatureInstance-&gt;<b>GetInput(1</b>,spBUknInput);
+ 
+                 spAliasInput = spBUknInput ;
+                 CATUnicodeString FirstName = spAliasInput-&gt;<b>GetAlias</b>() ;
+
+                 pBUknInput = (CATBaseUnknown *) spBUknInput ;
+                 <b>_pFirstPoint</b> = new CATPathElement(pBUknInput);
+
+                 // second input
+                 spIUdfFeatureInstance-&gt;<b>GetInput(2</b>,spBUknInput);
+  
+                 spAliasInput = spBUknInput ;
+                 CATUnicodeString SecondName = spAliasInput-&gt;<b>GetAlias</b>() ;
+
+                 pBUknInput = (CATBaseUnknown *) spBUknInput ;
+                 <b>_pSecondPoint</b> = new CATPathElement(pBUknInput);
+
+                 // Initialize the edit dialog box
+                 _pInputDialogBox-&gt;<b>InitPointName</b>(FirstName,SecondName);
+
+                 // The end user can click the Ok and Preview buttons
+                 _pInputDialogBox-&gt;<b>SetOKSensitivity</b>(CATDlgEnable);
+                 _pInputDialogBox-&gt;<b>SetPREVIEWSensitivity</b>(CATDlgEnable);
+                   
+              }
+           }
+        }
+    }
+    if ( FAILED(rc) )
+    {
+       _ErrorKey = &quot;InternalError&quot;;
+    }
+}</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The arguments of the <i>CATPrtPanelStateCmd</i> are the following:</p>
+      <ul>
+        <li><code>CATDlgEngOneShot</code>: when the command is ended, it is not
+          relaunched. The end user selects the repeat mode by double clicking
+          the icon in the toolbar (in creation mode)</li>
+        <li><code>CATCommandModeExclusive</code> : same as for any command which
+          modifies a document</li>
+      </ul>
+      <ul>
+        <li>The mode is edition: so the last argument is <code>0</code>. You can
+          retrieve the mode by the <code>GetMode</code> method</li>
+      </ul>
+      <p><code>_pInputDialogBox i</code>s created in the <code>InitCommand </code>method.
+      After the validation of the type of <code>iObjectToEdit</code>, thanks to
+      the <code>CheckUserFeatureType</code><b> </b>method, the inputs dialog box
+      is initialized. The <i>CATIUserFeatureInstance </i>interface enables the
+      retrieval of the two input of the User Feature.</p>
+      <p><code>_pSecondPoint </code>and<code> _pFirstPoint </code>are
+      initialized with the initial input values.</p>
+      <p>The <code>InitPointName</code> is a method used to valuate the dialog
+      objects with the alias name of the input values. Since the two input
+      values already exist, the <code>Ok</code> and the <code>Preview</code>
+      buttons are accessible to the end user.</p>
+      <li>The <b>Destructor</b> method</li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+CAAMcaUdfLoftEditCreateCmd::~CAAMcaUdfLoftEditCreateCmd()
+{
+    if ( NULL != _pInputDialogBox )
+    {
+        _pInputDialogBox-&gt;RequestDelayedDestruction();
+        _pInputDialogBox = NULL ;
+    }
+
+    if ( NULL != _pErrorDialogBox )
+    {
+        _pErrorDialogBox-&gt;RequestDelayedDestruction();
+        _pErrorDialogBox = NULL ;
+    }
+
+    if ( NULL != _pAgentErrorDialogBox )
+    {
+       _pAgentErrorDialogBox-&gt;RequestDelayedDestruction();
+       _pAgentErrorDialogBox = NULL ;
+    }
+
+    if ( NULL != _pFeatureAgent )
+    {
+       _pFeatureAgent-&gt;RequestDelayedDestruction();
+       _pFeatureAgent = NULL ;
+    }
+    
+    if ( NULL != _pFirstPoint )
+    {
+       _pFirstPoint-&gt;Release();
+       _pFirstPoint = NULL ;
+    }
+    
+    if ( NULL != _pSecondPoint )
+    {
+       _pSecondPoint-&gt;Release();
+       _pSecondPoint = NULL ;
+    }
+    if ( NULL != _pSelectedPath )
+    {
+       _pSelectedPath -&gt;Release();
+       _pSelectedPath = NULL ;
+    }   
+}
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The destructor of a CATStateCommand contains a <code>RequestDelayedDestruction</code>
+      for each agent created in the <code>BuildGraph</code> method. States and
+      transitions are automatically deleted by the <i>CATStateCommand</i>.</p>
+      <li>The <b></a><a name="InitCommand">InitCommand</a></b> method</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT  CAAMcaUdfLoftEditCreateCmd::InitCommand()
+{
+    HRESULT rc = E_FAIL ;
+
+    CATApplicationFrame * pFrame = NULL ;
+    pFrame = <b>CATApplicationFrame::GetFrame</b>();
+    if ( NULL != pFrame )
+    {
+        if ( NULL != pFrame-&gt;<b>GetMainWindow</b>() )
+        {
+           _pInputDialogBox = new <b>CAAMcaUdfLoftDlg</b>(pFrame-&gt;GetMainWindow());
+           _pInputDialogBox-&gt;Build();
+           _pInputDialogBox-&gt;<b>SetOKSensitivity</b>(CATDlgDisable);
+           _pInputDialogBox-&gt;<b>SetPREVIEWSensitivity</b>(CATDlgDisable);
+
+           rc = S_OK ;
+        }
+    }  
+    return rc ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The dialog parent of the input dialog box is the same dialog object which
+    contains also all the windows for the current document. This parent object
+    is returned by the <code>GetMainWindow</code> method applied to the unique <i>CATApplicationFrame</i>
+    pointer of the session.</p>
+    <p>This method is also used in case of creation, so the default behavior of
+    the input dialog box, is to hide the <code>Ok</code> and the <code>Preview</code>
+    button as long as the two input values are not valuated.</p>
+    <li>The <b><a name="GiveMyPanel">GiveMyPanel</a></b> method</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATDlgDialog*    CAAMcaUdfLoftEditCreateCmd::GiveMyPanel()
+{
+    return _pInputDialogBox ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This method returns the dialog box used in the state chart [<a href="#Fig.7">Fig.7</a>].
+    In fact this method will be mainly called by the <i>CATMMUIPanelStateCmd</i>
+    class to create transitions when the end user clicks on the Ok, Cancel,
+    Preview and Close Buttons.</p>
+    <li>The <b><a name="CheckUserFeatureType">CheckUserFeatureType</a></b>
+      method
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+HRESULT  CAAMcaUdfLoftEditCreateCmd::CheckUserFeatureType(CATISpecObject * iUserFeature)
+{
+    HRESULT rc = E_FAIL ;
+
+    <b>CATIUdfFeatureUser</b>_var spIUdfFeatureUser = iUserFeature ;
+
+    if ( (NULL_var != spIUdfFeatureUser) )
+    {
+       CATUnicodeString CAAUdfLoft(&quot;<b>CAAUdfLoft</b>&quot;);
+       CATUnicodeString Type ;          
+       spIUdfFeatureUser-&gt;<b>GetType</b>(Type);
+       if ( CAAUdfLoft == Type )
+       {
+          rc = S_OK ;
+       }
+    }
+    return rc;
+}
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p><code>The iUserFeature</code> input argument represents the feature
+      whose type must be checked. Thanks to the <i>CATIUdfFeatureUser</i>
+      interface, the type can be compared with <code>CAAUdfLoft</code>.</p>
+    <li>The <b><a name="BuildGraph">BuildGraph</a></b> method</li>
+    <p>When there is an error in the constructor, a specific state chart is
+    defined [<a href="#Fig.6">Fig.6</a>].</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+void CAAMcaUdfLoftEditCreateCmd::BuildGraph()
+{  
+   <b>BeforeBuildGraph</b>();
+   
+   if ( CATString(&quot;NoError&quot;)  != _ErrorKey )
+   {  
+        CATApplicationFrame * pFrame = NULL ;
+        pFrame = CATApplicationFrame::GetFrame();
+        if ( NULL != pFrame )
+        {
+           if ( NULL != pFrame-&gt;<b>GetMainWindow</b>() )
+           {
+              _pErrorDialogBox = new <b>CATDlgNotify</b>(pFrame-&gt;GetMainWindow(),
+                                                            &quot;Error&quot;,
+                               CATDlgNfyError| CATDlgNfyOK | CATDlgWndModal);
+              CATUnicodeString ErrorMessage ;
+              CATString <b>KeyOfTheErrorMessage</b> = &quot;Error.&quot; + _ErrorKey ;
+
+              ErrorMessage = <b>CATMsgCatalog::BuildMessage</b>(&quot;CAAMcaUdfLoftEditCreateCmd&quot;,
+                                   KeyOfTheErrorMessage,NULL,0,
+                                  &quot;Error in the CAAMcaUdfLoftEditCreateCmd command&quot;);
+                                  
+              _pErrorDialogBox-&gt;<b>SetText</b>(ErrorMessage);
+              _pErrorDialogBox-&gt;SetVisibility(CATDlgShow);
+              
+              CATDialogState *pErrorState = <b>GetInitialState</b>(&quot;ErrorStateId&quot;);
+              
+              _pAgentErrorDialogBox = new <b>CATDialogAgent</b>(&quot;PanelError&quot;);
+              pErrorState-&gt;<b>AddDialogAgent</b>(_pAgentErrorDialogBox); 
+              
+              _pAgentErrorDialogBox-&gt;<b>AcceptOnNotify</b>(_pErrorDialogBox,
+                                  _pErrorDialogBox-&gt;<b>GetNfyOKNotification</b>());
+              _pAgentErrorDialogBox-&gt;AcceptOnNotify(_pErrorDialogBox,
+                                  _pErrorDialogBox-&gt;<b>GetWindCloseNotification</b>());
+
+              <b>AddTransition</b>(pErrorState,GetCancelState(),
+                  IsOutputSetCondition(_pAgentErrorDialogBox),
+                  Action((ActionMethod) &amp;CAAMcaUdfLoftEditCreateCmd::<b>CloseErrorDialogBox</b>));
+           }
+        }
+    }else
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+    Before V5R13, at the beginning of the <code>BuildGraph</code> method there
+    was the method to create the user feature. This method has been off-set in
+    the <code><a href="#The BeforeBuildGraph method">BeforeBuildGraph</a></code>
+    method which also manages the current feature.&nbsp;</p>
+    <p>If an error occurs in the constructor, an error dialog box appears, <code>_pErrorDialogBox</code>
+    . This <i>CATDlgNotify</i> has the same parent as the <code>_pInputDialogBox</code>,
+    which is the dialog object returned by the <code>GetMainWindow</code>
+    method.</p>
+    <p>This dialog box displays a message depending on the error's type. <code>KeyOfTheErrorMessage</code>
+    is a string built from the type of the error. In the <code>CAAMcaUdfLoftEditCreateCmd.CATNls</code>
+    file, see the <a href="#NLS resources file for cmd">NLS section</a>, the
+    different message are defined and retrieved thanks to the <code>BuildMessage</code>
+    method of the <i>CATMsgCatalog</i> class. If the keyword is not found in the
+    NLS file, the default message is the last argument of the <code>BuildMessage
+    </code>method: &quot;<code>Error in the CAAMcaUdfLoftEditCreateCmd command</code>&quot;.</p>
+    <p>The first and unique state is created using the <code>GetInitialState</code>
+    method that also creates an automatic transition from the initial state to
+    this state. An identifier ( <code>ErrorStateId</code>) is assigned to the
+    state to set a prompt displayed in the status bar when the state is active.
+    In the <a href="#NLS resources file for cmd">NLS part </a>, you have the
+    definition of this prompt. The <code>AddDialogAgent</code> method associates
+    the dialog agent, <code>_pAgentErrorDialogBox</code>, with the state.</p>
+    <p>Here is the <code>BuildGraph</code> method when there is no error. An
+    other state chart is defined [<a href="#Fig.7">Fig.7</a>].</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+    {
+
+        _pInputDialogBox -&gt;<b>SetVisibility</b>(CATDlgShow);
+        
+        <b>CATIUdfFeatureInstance</b>_var spIUdfFeatureInstance = <b>GiveMyFeature</b>() ;
+        
+        CATUnicodeString Role ;
+        spIUdfFeatureInstance-&gt;<b>GetInputRole</b>(1,Role);
+        _pInputDialogBox-&gt;SetRole(1,Role);
+        spIUdfFeatureInstance-&gt;<b>GetInputRole</b>(2,Role);
+        _pInputDialogBox-&gt;SetRole(2,Role);
+
+        CATDialogState * pInputState = <b>GetInitialPanelState</b>(&quot;InputStateId&quot;);
+
+        _pFeatureAgent = new <b>CATFeatureImportAgent</b>(&quot;PointAgentId&quot;);
+        _pFeatureAgent-&gt;<b>SetBehavior</b>(CATDlgEngWithPSOHSO | 
+                                    CATDlgEngWithPrevaluation);
+
+        pInputState -&gt;<b>AddDialogAgent</b>(_pFeatureAgent);
+
+        CATDialogTransition * pInputTransition = <b>AddTransition</b>(pInputState,pInputState,
+                      <b>AndCondition</b>(IsOutputSetCondition(_pFeatureAgent),
+                      Condition((ConditionMethod) &amp; CAAMcaUdfLoftEditCreateCmd::<b>CheckInput</b>)),
+                      Action((ActionMethod) &amp;CAAMcaUdfLoftEditCreateCmd::<b>SelectPoint</b>));     
+                                
+        pInputTransition-&gt;<b>SetResourceID</b>(&quot;InputTransitionId&quot;);
+    }
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In this part of the code, the input dialog box is visualized in order for
+    the feature to be edited.</p>
+    <p>Notice the initialization of the dialog box: in the constructor we have
+    set the name of the input values. This operation is not available in case of
+    creation mode, since the input values are not yet valuated. However, the
+    role of the input values, independent of the instances, are set in the <code>BuildGraph</code>
+    method in a part available to the creation and edition modes.</p>
+    <p>The feature to edit is retrieved by the <code>GiveMyFeature</code>
+    method. This method is defined in the <i>CAAMMUIPanelStateCmd</i> class and
+    returns a smart pointer on the feature, <code>_MyFeature</code>. This
+    feature is initialized in the constructor of the edition mode and in a
+    specific method of the creation mode.</p>
+    <p>A state, <code>pInputState</code>, is created by the <i>CAAMMUIPanelStateCmd</i>
+    class thanks to the <code>GetInitialPanelState</code> method. This method
+    defines transitions on the OK, Cancel, Preview and Close button.</p>
+    <p>In this method we have defined only one transition, those when the end
+    user selects a feature in 3D or in the specification tree. It is a loop
+    transition between the unique state <code>pInputState</code>. The agent of
+    selection, <code>_pFeatureAgent</code> , is a <i>CATFeatureImportAgent </i>without
+    filtering. The analysis of the selection will be done in the condition
+    method, the <code>CheckInput</code> method and if the selected feature can
+    be an input to the user feature reference, the <code>SelectPoint</code> will
+    be executed.</p>
+    <li>The <b><a name="CheckInput">CheckInput</a></b> method</li>
+    <p>This is a condition method, called each time the end user selects a
+    feature.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::CheckInput( void *UsefulData)
+{
+    CATBoolean rcode = FALSE;
+
+    CATPathElement * pPathElt= _pFeatureAgent-&gt;GetValue();
+    if ( NULL != pPathElt )
+    {
+       int i = _pInputDialogBox-&gt;<b>GetActiveEditorNumber</b>();
+
+       CATIUdfFeatureInstance_var spFeatInst = <b>GiveMyFeature</b>();
+
+       CATPathElement * pFilterPath = NULL ;
+       HRESULT rc = spFeatInst-&gt;<b>FilterInput</b>(i,pPathElt,&amp;pFilterPath);
+
+       if ( SUCCEEDED(rc)  &amp;&amp; ( NULL != pFilterPath) )
+       {
+          if (  0 != pFilterPath-&gt;GetSize() )
+          {
+             CATBaseUnknown * <b>pLeaf</b> = NULL ;
+             pLeaf = (*pFilterPath)[pFilterPath-&gt;GetSize()-1];
+
+             if ( NULL != pLeaf )
+             {
+                rcode = TRUE ;
+ 
+                _pSelectedPath = pFilterPath ;
+                _pSelectedPath-&gt;AddRef() ;
+             }
+          } 
+          pFilterPath-&gt;Release();
+          pFilterPath = NULL ;
+       }   
+    }
+
+    if ( FALSE == rcode )
+    {
+       _pFeatureAgent-&gt;<b>InitializeAcquisition</b>();
+    }
+
+    return rcode;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The current input is given by the dialog box which manages the current
+    selector. This is done by the <code>GetActiveEditorNumber </code>method.</p>
+    <p>The verification is done by the <code>FilterInput</code> method. In fact,
+    you request to the User Feature itself to verify if the selected object is a
+    valid input. The output of this method is a new <i>CATPathElement</i>, <code>pFilterPath</code>,
+    and if this path is not empty it is the new input.</p>
+    <p>If the selected feature is not correct, the agent of acquisition,
+    _pFeatureAgent, must be reset in order to be used in the next loop.</p>
+    <li>The <b><a name="SelectPoint">SelectPoint</a></b> method</li>
+    <p>This is an action method called when the selected input has been
+    validated by the <code>CheckInput</code> condition method.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::SelectPoint( void *UsefulData)
+{
+    if ( NULL != _pSelectedPath )
+    {
+       int i = _pInputDialogBox-&gt;<b>GetActiveEditorNumber</b>();
+       
+       if ( i == 1 ) 
+       {
+           if ( NULL != _pFirstPoint ) _pFirstPoint-&gt;Release();
+           <b>_pFirstPoint</b>  = _pSelectedPath ;
+       }
+       if ( i == 2 ) 
+       {
+           if ( NULL != _pSecondPoint ) _pSecondPoint-&gt;Release();
+            <b>_pSecondPoint</b> = _pSelectedPath ;
+       }
+
+       CATBaseUnknown * pLeaf = NULL ;
+       pLeaf = (*_pSelectedPath)[_pSelectedPath-&gt;GetSize()-1];
+
+       if ( NULL != pLeaf )
+       {
+          CATIAlias * pIAlias = NULL ;
+          HRESULT rc = pLeaf-&gt;QueryInterface(IID_CATIAlias,(void**)&amp; pIAlias);
+          if ( SUCCEEDED(rc) )
+          {
+             _pInputDialogBox-&gt;<b>SetPointName</b>(i,pIAlias-&gt;GetAlias());
+                  
+             pIAlias-&gt;Release();
+             pIAlias = NULL ;
+          }
+       }
+       _pSelectedPath = NULL ;
+    }
+
+    if ( (NULL != _pFirstPoint ) &amp;&amp; ( NULL != _pSecondPoint) )
+    {
+        _pInputDialogBox-&gt;<b>SetOKSensitivity</b>(CATDlgEnable);
+        _pInputDialogBox-&gt;<b>SetPREVIEWSensitivity</b>(CATDlgEnable);
+    }
+
+    // To enable a new selection with the same agent
+    _pFeatureAgent-&gt;<b>InitializeAcquisition</b>();    
+
+    return TRUE;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>_pFirstPoint</code> or<code>_pSecondPoint</code> are valuated with
+    the path defined in the <code>CheckInput</code> method and if the two points
+    are valuated, the end user can click on the Ok and Preview Button.</p>
+    <li><a name="The BeforeBuildGraph method">The <b>BeforeBuildGraph</b> method</a></li>
+    <p>This method is called in the <code><a href="#BuildGraph">BuildGraph</a></code>
+    method to:</p>
+    <ol>
+      <li>Retrieves the current feature&nbsp;</li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    CATISpecObject_var spSpecObjOnLocalPreviousCurrentFeat ;
+    spSpecObjOnLocalPreviousCurrentFeat = <b>GetCurrentFeature</b>();
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p><code>GetCurrentFeature </code>is the method of the <i>CATMMUIStateCommand
+      class.</i> This call is done before the CreateFeature call because the <code>Instantiate</code>
+      method the <i>CATIUdfInstantiate </i>interface will set the new User
+      Feature as the current one.&nbsp;</p>
+      <li>Creates the UF if creation mode</li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    if ( 1 == GetMode() )
+    {
+       <b>CreateFeature</b>();
+    }
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>In case of creation, the <code>CreateFeature</code> method instantiates
+      the user feature. It is explained in the referenced article [<a href="#References">6</a>].</p>
+      <li>Keeps the current feature into the data member</li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    CATBoolean IsInsideOrderedBody = FALSE ;
+    rc = <b>IsUFInsideOrderedBody</b>IsInsideOrderedBody );
+    if ( TRUE == IsInsideOrderedBody )
+    {
+       _spSpecObjOnPreviousCurrentFeat = spSpecObjOnLocalPreviousCurrentFeat ;
+    }
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p><a name="IsUFInsideOGS"></a>Once the user feature is created, and even
+      in edition mode, you check the type of the set aggregating the user
+      feature. The <code>IsUFInsideOrderedBody </code>method is the same method
+      as the <code>IsCombCrvInsideOrderedBody</code> of the
+      CAAMmrCombCrvPanelStCmd class. Refer to the CAAMmrCombinedCurveUI use case
+      [<a href="#References">8</a>] to see an implementation of a such method. <code>_spSpecObjOnPreviousCurrentFeat</code>
+      , the data member of the <code>CAAMcaUdfLoftEditCreateCmd</code> state
+      command contains the current feature before to launch the command in case
+      of user feature into an ordered set.</p>
+      <li>Manages the current active path object</li>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    if ( (NULL_var != <b>GiveMyFeature</b>()) &amp;&amp; (NULL !=<b>GetEditor</b>()) )
+    {
+       <b>CATIBuildPath</b> *piBuildPath = NULL;
+       
+       rc = GiveMyFeature()-&gt;QueryInterface( IID_CATIBuildPath, 
+                                                       (void**) &amp;piBuildPath );
+        if ( SUCCEEDED(rc) &amp;&amp; (NULL!=piBuildPath) )
+        {
+            CATPathElement Context = GetEditor()-&gt;GetUIActiveObject();
+            CATPathElement * pPathElement = NULL ;
+            rc = piBuildPath-&gt;<b>ExtractPathElement</b>(&amp;Context,&amp;pPathElement);
+
+            if ( NULL != pPathElement )
+            {
+               <b>SetActiveObject</b>(pPathElement);
+
+               pPathElement-&gt;<b>Release</b>();
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>In any case, you should call the <code>SetActiveObject</code> with a
+      path containing the user feature.&nbsp;</p>
+    </ol>
+    <li>The<b> <a name="OkAction">OkAction</a></b> method</li>
+    <p>This is an action method called once the end user has clicked on the Ok
+    button of the input dialog box. This action method has been set in a
+    transition created by the <code>GetInitialPanelState</code> method. You
+    overwrite this method to set the new inputs on the feature to edit, those
+    returned by the <code>GiveMyFeature</code> method. At the end of this
+    method, it is important to call the <code>OkAction</code> of the <i>CATPrtPanelStateCmd</i>
+    to benefit from the update and the input validation.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::OkAction( void *UsefulData)
+{
+    CATIUdfFeatureInstance_var spIUdfFeatureInstance = <b>GiveMyFeature</b>() ;
+    
+
+    spIUdfFeatureInstance-&gt;<b>SetNewInput(1</b>,_pFirstPoint);
+
+    spIUdfFeatureInstance-&gt;<b>SetNewInput(2</b>,_pSecondPoint);
+
+    if (0 == <b>GetMode</b>())
+    {
+       CATBoolean IsInsideOrderedBody = FALSE ;
+       IsUFInsideOrderedBody(IsInsideOrderedBody );
+       if ( TRUE == IsInsideOrderedBody )
+       {
+          <b>SetCurrentFeature</b>(_spSpecObjOnPreviousCurrentFeat);
+       }
+    }
+    CATBoolean rc = <b>CATPrtPanelStateCmd::OkAction</b>(UsefulData);
+
+    return rc;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">
+    Since V513, before calling the <code>OkAction</code> of the parent command,
+    you should restore the kept current feature in case of edition (<code>GetMode</code>
+    returns <code>0</code>) and if the user feature is into an ordered set. <code>_spSpecObjOnPreviousCurrentFeat</code>
+    is a data member initialized in the <code><a href="#The BeforeBuildGraph method">BeforeBuildGraph</a></code>
+    method.&nbsp;</p>
+    <li>The <b><a name="PreviewAction">PreviewAction</a></b> method</li>
+    <p>This is an action method called once the end user has clicked on the
+    Preview Button of the input dialog box. This action method has been set on a
+    transition created by the <code>GetInitialPanelState</code> method. You can
+    overwrite this method to set the new inputs on the feature to edit, those
+    returned by the <code>GiveMy</code>Feature method. At the end of this
+    method, it is important to call the <code>PreviewAction</code> of the <i>CATPrtPanelStateCmd</i>
+    to benefit from the update and the input validation.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::PreviewAction( void *UsefulData)
+{
+    
+    CATIUdfFeatureInstance_var spIUdfFeatureInstance = <b>GiveMyFeature</b>() ;
+    
+    spIUdfFeatureInstance-&gt;<b>SetNewInput(1</b>,_pFirstPoint);
+
+    spIUdfFeatureInstance-&gt;<b>SetNewInput(2</b>,_pSecondPoint);
+
+    CATBoolean rc = <b>CATPrtPanelStateCmd::PreviewAction</b>(UsefulData);
+
+    return rc;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <li>The <b><a name="CancelAction">CancelAction</a></b> method</li>
+    <p>This is an action method called once the end user has clicked on the
+    Cancel button of the input dialog box. This action method has been set in a
+    transition created by the <code>GetInitialPanelState</code> method. You
+    overwrite this method to restore the current feature, in edition and
+    creation mode, the user feature must only be into an OGS. <code>spSpecObjOnPreviousCurrentFeat</code>
+    is a data member initialized in the <code><a href="#The BeforeBuildGraph method">BeforeBuildGraph</a></code>
+    method.&nbsp;</p>
+    <p>At the end of this method, it is important to call the <code>CancelAction</code>
+    of the <i>CATPrtPanelStateCmd</i> to benefit from the parent command code.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::CancelAction( void *UsefulData)
+{
+    CATBoolean IsInsideOrderedBody = FALSE ;
+    IsUFInsideOrderedBody(IsInsideOrderedBody);
+    if ( TRUE == IsInsideOrderedBody)
+    {
+       <b>SetCurrentFeature</b>(_spSpecObjOnPreviousCurrentFeat);
+    }
+
+    CATBoolean rc = CATPrtPanelStateCmd::<b>CancelAction</b>(UsefulData);
+
+    return rc;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><img border="0" src="../CAAIcons/images/hand.gif" width="31" height="15">This
+    method has been override in V5R13.&nbsp;</p>
+    <li>The <b><a name="CloseErrorDialogBox">CloseErrorDialogBox</a></b> method</li>
+    <p>This method is an action method called when the end user clicks <code>Ok</code>
+    or <code>Close</code>. It prevent a loop when the end user double clicks on
+    the icon in the toolbar (creation mode).</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::CloseErrorDialogBox( void *UsefulData)
+{
+    if ( NULL != GetEditor() )
+    {
+       GetEditor()-&gt;<b>UnsetRepeatedCommand</b>();
+    }
+    return TRUE;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <li>The <a name="Activate / Deactivate"><b>Activate / Deactivate </b></a>methods</li>
+    <p>These both methods are <i>CATCommand</i> methods. The first one is called
+    each time the focus manager gives the focus to the command [<a href="#References">9</a>],
+    and the second one when it looses it.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATStatusChangeRC CAAMcaUdfLoftEditCreateCmd::<b>Activate</b> (CATCommand * iCmd,
+                                                     CATNotification * iNotif)
+{
+    if ( NULL_var != GiveMyFeature() )
+    {
+       CATBoolean IsInsideOrderedBody= FALSE ;
+       IsUFInsideOrderedBody(IsInsideOrderedBody);
+      
+       if ( TRUE == IsInsideOrderedBody)
+       {
+          <b>SetCurrentFeature</b>(GiveMyFeature());  
+ 
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>When the user feature is into an ordered set checked by the <a href="#IsUFInsideOGS"><code>IsUFInsideOrderedBody</code>
+    </a>method, the user feature must be set the current one.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATStatusChangeRC CAAMcaUdfLoftEditCreateCmd::Deactivate (CATCommand * iCmd,
+                                                     CATNotification * iNotif)
+{
+    CATBoolean IsInsideOrderedBody= FALSE ;
+    <b>IsUFInsideOrderedBody</b>(IsInsideOrderedBody);
+    if ( TRUE == IsInsideOrderedBody)
+    {
+       <b>SetCurrentFeature</b>(<b>_spSpecObjOnPreviousCurrentFeat</b>);      
+    }
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>When the user feature is into an ordered set, checked by the <a href="#IsUFInsideOGS"><code>IsUFInsideOrderedBody</code>
+    </a>method, the kept user feature is set as the current one. <code>spSpecObjOnPreviousCurrentFeat</code>
+    is a data member initialized in the <code><a href="#The BeforeBuildGraph method">BeforeBuildGraph</a></code>
+    method.&nbsp;</p>
+    <li>The <b>InitAction</b> method</li>
+    <p>It is a method of the parent command. You should overwrite to prevent to
+    execute the code of the parent command.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAAMcaUdfLoftEditCreateCmd::InitAction (void * iUseful)
+{
+    return TRUE ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </ul>
+  <li><a name="NLS resources file for cmd">The NLS resources.</a></li>
+  <p>The <code>CAAMcaUdfLoftEditCreateCmd.CATNls</code> file is located in the <code>CAAMechanicalCommands.edu/Cnext/resources/msgcatalog
+  </code>directory. It contains:</p>
+  <ul>
+    <li>Error Messages</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+<b>Error.InternalError</b>  = &quot;Internal error&quot;;
+</pre>
+        </td>
+      </tr>
+    </table>
+    <li>Undo/Redo for the command</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAAMcaUdfLoftEditCreateCmd.UndoTitle  = &quot;CAAUdfLoft Definition&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <li>States prompts</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAAMcaUdfLoftEditCreateCmd.<b>ErrorStateId</b>.Message         = &quot;Click ok to end the command&quot;;
+CAAMcaUdfLoftEditCreateCmd.<b>InputStateId</b>.Message        = &quot;Select points to give new inputs&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <li>Undo/Redo for the loop transition</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAAMcaUdfLoftEditCreateCmd.InputTransitionId.UndoTitle = &quot;Element selection&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+  </ul>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creating the Dialog Box Used in the Edition Command"></a>Creating
+the Input Dialog Box</h4>
+<p>This dialog box is a <i>CAAMcaUdfLoftDlg</i> class.This section describes:</p>
+<ol>
+  <li><a href="#Here is the CAAMcaUdfLoftDlg header file">The header file</a></li>
+  <li><a href="#Here is the CAAMcaUdfLoftDlg source file:">The source file</a></li>
+  <li><a href="#NLS resources for dlg">The NLS resources</a></li>
+</ol>
+<ol>
+  <li><a name="Here is the CAAMcaUdfLoftDlg header file">The CAAMcaUdfLoftDlg
+    header file.</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATDlgDialog.h&quot;   
+class  CATDlgSelectorList;  
+class  CATDlgLabel;         
+
+class CAAMcaUdfLoftDlg: public CATDlgDialog
+{
+
+  <b>DeclareResource</b>(CAAMcaUdfLoftDlg,CATDlgDialog) ;
+
+  public :
+
+    CAAMcaUdfLoftDlg(CATDialog *iParent);
+    virtual ~CAAMcaUdfLoftDlg(); 
+	
+    void <b>Build</b>();
+
+    void <b>InitPointName</b>(CATUnicodeString iName1 , CATUnicodeString iName2 );
+    void <b>SetRole</b>(int iPointNumber , CATUnicodeString iName );
+    
+    void <b>SetPointName</b>(int iPointNumber , CATUnicodeString iName );
+    int  <b>GetActiveEditorNumber</b>();
+
+  private : 
+
+    CAAMcaUdfLoftDlg ();
+    CAAMcaUdfLoftDlg(const CAAMcaUdfLoftDlg &amp;iObjectToCopy);
+    CAAMcaUdfLoftDlg &amp; operator = (const CAAMcaUdfLoftDlg &amp;iObjectToCopy);
+	
+    virtual void <b>EditorSelect</b> (CATCommand *, CATNotification* , CATCommandClientData data);
+
+  private : 
+
+      int _ActiveEditor ;
+
+      CATDlgSelectorList * _pEditorOfThePoint1 ;
+      CATDlgSelectorList * _pEditorOfThePoint2;
+
+      CATDlgLabel        * _pLabelOfThePoint1 ;
+      CATDlgLabel        * _pLabelOfThePoint2 ;
+
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAMcaUdfLoftDlg</i> class derives from the <i>CATDlgDialog</i>
+  class and contains the following methods:</p>
+  <ul>
+    <li>Methods called once: <code>Build</code>, to construct the dialog object,
+      <code>InitPointName</code> to valuate the <i>CATDlgSelectorList</i> with
+      the name of the input and <code>SetRole</code> to set the role of the
+      input as the title of the <i>CATDlgLabel</i></li>
+    <li>Methods called at each input selection: <code>GetActiveEditorNumber </code>to
+      retrieve the current input selected and <code>SetPointName</code> to
+      change the name in the current <i>CATDlgSelectorList</i>.</li>
+    <li>The <code>EditorSelect</code> method is a callback executed when the end
+      user clicks on a <i>CATDlgSelectorList. </i>It is the means for the end
+      user to change the current input</li>
+  </ul>
+  <p>To display the name of the input, we have chosen a <i>CATDlgSelectorList</i>
+  dialog object even though a <i>CATDlgEditor</i> with the <tt>CATDlgEdtReadOnly
+  </tt>style could have been used as well. But the selected lines of the <i>CATDlgSelectorList</i>
+  are highlighted, it is not the case of the <i>CATDlgEditor</i> class. The
+  highlight is the visual means for the end user to know which input will be
+  valuated with its selection. Notice that in this command the <i>CATDlgSelectorList</i>
+  are highlighted each one in his turn.</p>
+  <li><a name="Here is the CAAMcaUdfLoftDlg source file:">The CAAMcaUdfLoftDlg
+    source file.</a></li>
+  <ul>
+    <li>The <b>Constructor </b>and<b> Destructor</b></li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAMcaUdfLoftDlg.h&quot;
+
+// Dialog Framework
+#include &quot;CATDlgGridConstraints.h&quot;
+#include &quot;CATDlgLabel.h&quot;
+#include &quot;CATDlgSelectorList.h&quot;
+#include &quot;CATMsgCatalog.h&quot;          
+
+
+CAAMcaUdfLoftDlg::CAAMcaUdfLoftDlg(CATDialog * iParent): 
+      CATDlgDialog (iParent,&quot;CAAMcaUdfLoftDlg&quot;,
+                    <b>CATDlgWndBtnOKCancelPreview</b> | CATDlgGridLayout),
+_pLabelOfThePoint1(NULL),_pLabelOfThePoint2(NULL),
+_pEditorOfThePoint1(NULL),_pEditorOfThePoint2(NULL)      
+{
+}
+
+CAAMcaUdfLoftDlg::~CAAMcaUdfLoftDlg()
+{
+  _pLabelOfThePoint1 = NULL ;
+  _pLabelOfThePoint2 = NULL ;
+  _pEditorOfThePoint1 = NULL ;
+  _pEditorOfThePoint2 = NULL ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The style of the dialog box is
+    <ul>
+      <li><code>CATDlgWndBtnOKCancelPreview</code></li>
+    </ul>
+  </ul>
+  <blockquote>
+    <blockquote>
+      <p>Among the recommended styles for a <i>CATDlgDialog</i> we have chosen a
+      dialog box with three buttons at the bottom: OK, Cancel and Preview. The
+      Preview button is not mandatory.</p>
+    </blockquote>
+  </blockquote>
+  <ul>
+    <ul>
+      <li>CATDlgGridLayout</li>
+      <p>The frame layout is managed using a grid.</p>
+    </ul>
+    The constructor initializes all the data members. In the destructor it is
+    not necessary to delete the dialog object created in this command, as it
+    will be automatically deleted by the Dialog process, but it is strongly
+    recommended to reset the data member to NULL.<br>
+    <li>The <b>Build</b> method</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAAMcaUdfLoftDlg::Build()
+{
+   // Labels
+   _pLabelOfThePoint1 = new <b>CATDlgLabel</b>(this, &quot;LabelOfThePoint1&quot;);
+   _pLabelOfThePoint1 -&gt; SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+   
+   _pLabelOfThePoint2 = new CATDlgLabel(this, &quot;LabelOfThePoint2&quot;);
+   _pLabelOfThePoint2 -&gt; SetGridConstraints(1, 0, 1, 1, CATGRID_4SIDES);
+
+   // Editor
+   _pEditorOfThePoint1 = new <b>CATDlgSelectorList</b>(this, &quot;EditorOfThePoint1&quot;);
+   _pEditorOfThePoint1 -&gt; <b>SetVisibleTextHeight</b>(1);
+   _pEditorOfThePoint1 -&gt; SetGridConstraints(0, 1, 1, 1, CATGRID_4SIDES);
+
+   _pEditorOfThePoint2 = new <b>CATDlgSelectorList</b>(this, &quot;EditorOfThePoint2&quot;);
+   _pEditorOfThePoint2 -&gt; SetVisibleTextHeight(1);
+   _pEditorOfThePoint2 -&gt; SetGridConstraints(1, 1, 1, 1, CATGRID_4SIDES);
+
+   CATUnicodeString NoSelectionMsg ;
+   NoSelectionMsg = C<b>ATMsgCatalog::BuildMessage</b>(&quot;CAAMcaUdfLoftDlg&quot;,
+                                        &quot;NoSelectionMsg&quot;,NULL,0,
+                                        &quot;no selection&quot;);
+
+   _pEditorOfThePoint1 -&gt; <b>SetLine</b>(NoSelectionMsg);
+   _pEditorOfThePoint2 -&gt; SetLine(NoSelectionMsg);
+
+   int RowNb = 0 ;
+   _pEditorOfThePoint1-&gt;<b>SetSelect</b>(&amp;RowNb, 1);
+   _ActiveEditor = 1 ;
+
+   AddAnalyseNotificationCB (_pEditorOfThePoint1, 
+                              _pEditorOfThePoint1-&gt;<b>GetListSelectNotification</b>(),
+                              (CATCommandMethod)&amp;CAAMcaUdfLoftDlg::<b>EditorSelect</b>,
+                              (void*)1);
+
+   AddAnalyseNotificationCB (_pEditorOfThePoint2, 
+                              _pEditorOfThePoint2-&gt;GetListSelectNotification(),
+                              (CATCommandMethod)&amp;CAAMcaUdfLoftDlg::EditorSelect,
+                              (void*)2);
+                              
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>_pEditorOfThePoint1</code> and <code>_pEditorOfThePoint2 </code>data
+    members <code></code>are pointers to instances of the <i>CATDlgSelectorList</i>
+    class with one line, <code>SetVisibleTextHeight(<b>1</b>)</code>. This line
+    contains a default message at the beginning. This message is retrieved in
+    the CAAMcaUdfLoftDlg.CATNls file (<a href="#NLS resources for dlg">see the
+    NLS section</a>), thanks to the static <code>BuildMessage</code> method. If
+    the Keyword <code>NoSelectionMsg </code>is not found, the default message:
+    &quot;<code>no selection</code>&quot; is the last argument of the static
+    method.</p>
+    <p>The <code>SetSelect</code> on <code>_pEditorOfThePoint1</code> enables to
+    highlight the first and unique line of this selector list.</p>
+    <li>The <b>EditorSelect</b> method</li>
+    <table class="code" height="51">
+      <tr>
+        <td height="47">
+          <pre>void CAAMcaUdfLoftDlg::EditorSelect(CATCommand* cmd, 
+                                    CATNotification* evt, 
+                                    CATCommandClientData data)
+{
+    int number = (int) data; 
+
+    if (_ActiveEditor != number) 
+    {
+        if ( _pEditorOfThePoint1 == cmd )
+        {
+           _pEditorOfThePoint2-&gt;ClearSelect();
+        }
+        else if ( _pEditorOfThePoint2 == cmd )
+        {
+          _pEditorOfThePoint1-&gt;ClearSelect();
+        }
+    }
+
+    _ActiveEditor = number;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This callback method enables the end user to change itself the current
+    input. When it is the case, the selected selector list is automatically
+    highlighted, and with this method the last selected selector list is
+    dehighlighted thanks to the <code>ClearSelect</code> method.</p>
+    <li>The <b>GetActiveEditorNumber</b> method</li>
+    <table class="code" height="51">
+      <tr>
+        <td height="47">
+          <pre>int CAAMcaUdfLoftDlg::GetActiveEditorNumber()
+{
+    if (_pEditorOfThePoint1-&gt;IsSelect(0)) _ActiveEditor= 1;
+    if (_pEditorOfThePoint2-&gt;IsSelect(0)) _ActiveEditor= 2;
+
+    return _ActiveEditor; 
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <li>The <b>SetPointName</b> method</li>
+    <table class="code" height="51">
+      <tr>
+        <td height="47">
+          <pre>void CAAMcaUdfLoftDlg::SetPointName(int iPointNumber , CATUnicodeString iName )
+{
+    int RowNb = 0;
+    if ( 1 == iPointNumber )
+    {
+       _pEditorOfThePoint1-&gt;ClearLine();
+       _pEditorOfThePoint1-&gt;SetLine ( iName ); 
+       _pEditorOfThePoint2-&gt;SetSelect(&amp;RowNb, 1);
+    }else
+    {
+       _pEditorOfThePoint2-&gt;ClearLine();
+       _pEditorOfThePoint2-&gt;SetLine (iName); 
+       _pEditorOfThePoint1-&gt;SetSelect(&amp;RowNb, 1);
+    }
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This method is called each time the end user selects a valid feature as
+    input. The current selector list is modified with the new name: <code>ClearLine</code>
+    and <code>SetLine</code> on the current selector. Notice that the current
+    selector list is no longer highlighted. (<code>ClearLine</code> and <code>SetLine</code>
+    deshighlights the line if it was selected). Finally, the <code>SetSelect</code>
+    method on the next selector list highlights it.</p>
+    <li>The <b>SetRole</b> method</li>
+    <table class="code" height="51">
+      <tr>
+        <td height="47">
+          <pre>void CAAMcaUdfLoftDlg::SetRole(int iPointNumber , CATUnicodeString iName )
+{
+    int RowNb = 0;
+    if ( 1 == iPointNumber )
+    {
+       _pLabelOfThePoint1-&gt; <b>SetTitle</b>(iName+&quot;  &quot;); 
+    }else
+    {
+       _pLabelOfThePoint2-&gt; SetTitle(iName+&quot;  &quot;); 
+    }
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To set a title for a <i>CATDlgLabel</i> outside the constructor, your NlS
+    file does not have the <code>Title</code> keyword.</p>
+    <li>The <b>InitPointName</b> method</li>
+    <table class="code" height="51">
+      <tr>
+        <td height="47">
+          <pre>void CAAMcaUdfLoftDlg::InitPointName(CATUnicodeString iName1 , CATUnicodeString iName2 )
+{
+    _pEditorOfThePoint1-&gt;<b>ClearLine</b>();
+    _pEditorOfThePoint1-&gt;<b>SetLine</b> (iName1); 
+ 
+    _pEditorOfThePoint2-&gt;ClearLine();
+    _pEditorOfThePoint2-&gt;SetLine (iName2); 
+    
+    int RowNb = 0 ;
+    _pEditorOfThePoint1-&gt;<b>SetSelect</b>(&amp;RowNb, 1);
+    _ActiveEditor = 1  ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+  </ul>
+  <li><a name="NLS resources for dlg">NLS resources.</li>
+    <p>The <code>CAAMcaUdfLoftDlg.CATNls file is </code>located in the <code>CAAMechanicalCommands.edu/Cnext/resources/msgcatalog
+    </code>directory. It contains:</p>
+    <ul>
+      <li>The title of the dialog box</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre><b>Title</b> =&quot;CAAUdfLoft Definition&quot; ;
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <li>The help message displayed in the status bar when you pass over the
+        dialog box</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre>...
+<b>Help</b> = &quot;Dialog box to edit or create a user feature which two inputs.&quot;;
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <li>The long help message displayed in a baloon when you select a dialog
+        object with the question mark</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre>...
+LabelOfThePoint1.<b>LongHelp</b> =&quot;Role of the first input&quot; ;
+LabelOfThePoint2.LongHelp =&quot;Role of the second input&quot; ;
+EditorOfThePoint1.LongHelp =&quot;Alias name of the first input, or no selection if the input is not valuated&quot; ;
+EditorOfThePoint2.LongHelp =&quot;Alias name of the second input, or no selection if the input is not valuated&quot; ;
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <li>The short help message displayed in a baloon when you pass over a
+        dialog object</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre>...
+LabelOfThePoint1.<b>ShortHelp</b> =&quot;First input&quot; ;
+LabelOfThePoint2.ShortHelp =&quot;Second input&quot; ;
+EditorOfThePoint1.ShortHelp =&quot;First input's alias name&quot; ;
+EditorOfThePoint2.ShortHelp =&quot;Second input's alias name&quot; ;
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <li>The help message displayed in the status bar when you pass over a
+        dialog object</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre>...
+LabelOfThePoint1.<b>Help</b> =&quot;Role of the first input&quot; ;
+LabelOfThePoint2.Help =&quot;Role of the second input&quot; ;
+EditorOfThePoint1.Help =&quot;Alias name of the first input, or no selection if the input is not valuated&quot; ;
+EditorOfThePoint2.Help =&quot;Alias name of the second input, or no selection if the input is not valuated&quot; ;
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <li>Message displayed in the CATDlgSelectorList when there is no input</li>
+      <table class="code" height="51">
+        <tr>
+          <td height="47">
+            <pre>...
+NoSelectionMsg = &quot;no selection&quot;;</pre>
+          </td>
+        </tr>
+      </table>
+    </ul>
+  </ol>
+  <p align="right">[</a><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to provide a new command to edit a User
+Feature of a given type by implementing the <i>CATIEdit</i> interface. This
+command is a <i>CATStateCommand </i>which derives from the <i>CATPrtPanelStateCmd</i>
+class in order to benefit from the MechanicalModeler behaviors.
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">Power
+      Copy and User Feature Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMcaUdfCreation.htm">Creating a User Feature Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleObjectEdit.htm">Editing
+      Object</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing
+      State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMcaUdfInteractiveInstantiation.htm">Instantiating
+      Interactively a User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIEdit.htm">Editing
+      Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2003]</td>
+    <td valign="top">Document updated to take into account the Ordered
+      Geometrical Set</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Jan 2005]</td>
+    <td valign="top">CATImplementBOA usage instead TIE_CATIEdit</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

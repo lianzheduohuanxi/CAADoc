@@ -1,0 +1,801 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Search Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Search Overview</h3>
+      <em>How to search objects in V5 documents</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to search objects in a V5 document using the
+      Search API.</p>
+      <ul>
+        <li><strong><a href="#Principles">Principles</a></strong></li>
+        <li><strong><a href="#Criteria Definition">Criteria Definition</a></strong>
+          <ul>
+            <li><a href="#General Criteria">General Criteria</a></li>
+            <li><a href="#Advanced Criteria">Advanced Criteria</a></li>
+            <li><a href="#Combinaison Criteria">Combination Criteri</a><a href="#Combinaison Criteria">a</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Query Definition">Query Definition</a></b>
+          <ul>
+            <li><a href="#Context">Context</a></li>
+            <li><a href="#TransFormat versus NLS Format">NLS versus Transformat
+              Format</a></li>
+            <li><a href="#Create a Query from a String">Create a Query from a
+              String</a></li>
+          </ul>
+        </li>
+        <li><a href="#Mechanism based on Components and Interfaces"><b>Mechanism
+          Based on Components and Interfaces</b></a>
+          <ul>
+            <li><a href="#Criteria">Criteri</a><a href="#Criteria">a</a></li>
+            <li><a href="#Context And Search Engine&nbsp;">Context, Search
+              Engine and Services</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Packages, Types and Attributes">Workbench, Package,
+          Type and Attribute</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Principles"></a>Principles</h3>
+<p>The Edit/Search interactive command enables you to look for objects in the
+current V5 document. This command uses an API detailed in this article and which
+is located in the InteractiveInterfaces framework. It is significant to say that
+this API offers more possibilities than the command itself.</p>
+<p>The aim is to look for elements inside a document that match a criterion or a
+combination of criteria. The process is as follows: a <b>criterion</b> and a
+scope of search (called the <b>context</b>) are defined and fed into the search
+engine.</p>
+<p>For the criteria, detailed in the <a href="#Criteria Definition">Criteria
+Definition</a> section, two cases can be distinguished:</p>
+<ul>
+  <li>Criteria used to carry out simple queries, in other words those possible
+    through the Search command <b>General</b> tab page.</li>
+  <li>Criteria used to carry out queries with Knowledge parameters, in other
+    words those possible through the <b>Advanced</b> tab page.</li>
+</ul>
+<p>In fact there is a third category of criterion, the <b>combination</b>
+criterion. It enables to compose criteria through logical operations to create
+only one criterion to set as parameter of the search engine.&nbsp;</p>
+<p>The architecture of the API is based on the components [1]. A criterion is a
+component, the context is a component and a component will be created to launch
+a query. This is explained in the <a href="#Mechanism based on Components and Interfaces">Mechanism
+Based on Components and Interfaces</a> section.</p>
+<p>At the end of this article, there is a section about the Knowledge. The <a href="#Packages, Types and Attributes">Workbench,
+Package, Type and Attribute</a> section defines briefly the notions of
+workbenches, package, type and attribute, and details how to retrieve these
+objects.</p>
+<p>To be complete, it should be specified that there is a use case entitled
+&quot;Creating Search Queries&quot;&nbsp; [<a href="#References">2</a>]. Through
+some examples, it shows how to create and launch queries, and it gives you some
+tips not detailed here.</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Criteria Definition"></a>Criterion&nbsp; Definition</h3>
+<p>In this section, all the criteria will be described. In fact, the following
+questions will be answered each time:</p>
+<ul>
+  <li>What is this criterion,</li>
+  <li>What are the specificities for the objects to be a candidat for the
+    criterion,</li>
+  <li>What are the possibilities of comparison between the value of the
+    criterion and the value associated with each object.</li>
+</ul>
+<h4><a name="General Criteria"></a>General Criteria</h4>
+<p>This picture shows the General tag page of the Search command.</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a>: The General Tab Page</caption>
+  <tr>
+    <td><img border="0" src="images/CAACafSearchGeneral.jpg" width="496" height="376"></td>
+  </tr>
+</table>
+<p>The criteria are:</p>
+<ul>
+  <li>The <b>Name</b> Criterion</li>
+  <p>In interactive mode, the criterion is obtained by unchecking the &quot;As
+  displayed in graph&quot; button. It enables to look for objects by their
+  external name. It is the name returned by <i>CATIAlias</i> or <i>CATI</i><i>NavigateObject
+  </i>if <i>CATIAlias</i> is not supported. The comparison operator between the
+  value of the criterion and those associated with objects can only be a
+  difference or an equality.&nbsp;</p>
+  <li>The <b>Graph Name </b>Criterion</li>
+  <p>In interactive mode, the criterion is obtained by checking the &quot;As
+  displayed in graph&quot; button. It enables to look for objects by the name
+  displayed in the specification tree. It is the name returned by <i>CATINavigateObject</i>.
+  The comparison operator between the value of the criterion and those
+  associated with objects can only be a difference on an equality.&nbsp;</p>
+</ul>
+<p>The other criteria&nbsp;imply only objects implementing the <i>CATIVisProperties
+interface </i>[<a href="#References">3</a>].</p>
+<ul>
+  <li>The <b>Color </b>Criterion</li>
+  <p>The criterion is based on the object's color. If an object has several
+  color (a color for its different sub-elements), the color of the geometry
+  displayed in the Graphic Properties toolbar will be used as a reference for
+  comparison. Refer to the article &quot;Graphical Properties&quot;&nbsp;<i> </i>[<a href="#References">3</a>]
+  for more details about the choice of the geometry used in the graphic toolbar.
+  The comparison operator between the value of the criterion and those
+  associated with objects can only be a difference on an equality.&nbsp;</p>
+</ul>
+<ul>
+  <li>The <b>Visibility </b>Criterion</li>
+  <p>The criterion is based on the visibility state of an object. The comparison
+  operator between the value of the criterion and those associated with objects
+  can only be a difference on an equality.&nbsp;</p>
+  <li>The <b>Layer </b>Criterion</li>
+  <p>The criterion is based on the layer. The comparison operator between the
+  value of the criterion and those associated with objects can be anything
+  (equality, difference , superior, inferior, superior or equal, inferior or
+  equal).</p>
+  <li>The <b>Weight </b>Criterion</li>
+  <p>The criterion is based on the line thickness. It only applies to linear
+  objects (<code>CATVPLine</code> geometry but not <code>CATVPEdge</code> [<a href="#References">3</a>]).
+  All the comparison signs are accepted.&nbsp;</p>
+  <li>The <b>Dashed</b>&nbsp;Criterion</li>
+  <p>The criterion is based on the line type. It only applies to linear objects
+  (<code>CATVPLine</code> geometry but not <code>CATVPEdge</code> [<a href="#References">3</a>]).
+  The comparison operator between the value of the criterion and those
+  associated with objects can only be a difference on an equality.&nbsp;</p>
+</ul>
+<h4><a name="Advanced Criteria"></a>Advanced Criteria</h4>
+<p>This second picture shows the Advanced tab page of the Search command.</p>
+<table border="0">
+  <caption><a name="Fig.2">Fig.2</a>: The Advanced Tab Page</caption>
+  <tr>
+    <td><img border="0" src="images/CAACafSearchAdvanced.jpg" width="497" height="377"></td>
+  </tr>
+</table>
+<p>The queries available in advanced mode are based on the knowledge
+infrastructure. An advanced criterion is a logical combination between a <b>type</b>
+based criterion <b>and eventually </b>an <b>attribute</b> based criterion whose
+attribute is linked to the designed type. The <a href="#Packages, Types and Attributes">Package,
+Type and Attribute</a> section gives you more details about knowledge
+parameters.&nbsp;</p>
+<p>The <b>Type</b> Criterion</p>
+<p>This criterion enables you to carry out a search based on a knowledge type (<i>CATIType</i>).
+The comparison operator between the value of the criterion and those associated
+with objects can only be a difference on an equality.&nbsp;</p>
+<p>The <b>Attribute</b> Criteria</p>
+<p>These criteria are based on the knowledge attribute. They are the
+following:&nbsp;</p>
+<ul>
+  <li>The <b>Boolean</b> Criterion</li>
+  <p>This refers to any Knowledge attribute that is defined as boolean. The
+  comparison operator between the value of the criterion and those associated
+  with objects can only be a difference on an equality.&nbsp;</p>
+  <li>The <b>Dimension </b>Criterion</li>
+  <p>This refers to any Knowledge attribute that uses units, like the diameter
+  of a hole, the first length of a pad, and so one. The comparison operator
+  between the value of the criterion and those associated with objects can be
+  anything (equality, difference , superior, inferior, superior or equal,
+  inferior or equal).</p>
+  <li>The <b>Integer </b>Criterion</li>
+  <p>This refers to any integer type Knowledge attribute. There are two kinds of
+  criterion: with one comparison value or with a range of values comparison. In
+  the first case, the comparison operator can be anything, and in the second
+  case the comparison operator can be only a difference (the value is outside
+  the range) or an equality (inside the range).</p>
+  <li>The <b>Listing </b>Criterion</li>
+  <p>This refers to any a finite list of values Knowledge attribute. The
+  comparison operator between the value of the criterion and those associated
+  with objects can only be a difference on an equality.&nbsp;</p>
+  <li>The <b>Real </b>Criterion</li>
+  <p>This refers to any real type Knowledge attribute. There are two kinds of
+  criterion: with one comparison value or with a range of values comparison. In
+  the first case, the comparison operator can be anything, and in the second
+  case the comparison operator can be only a difference (the value is outside
+  the range) or an equality (inside the range).</p>
+  <li>The <b>String </b>Criterion</li>
+  <p>This refers to any string type Knowledge attribute. The comparison operator
+  between the value of the criterion and those associated with objects can only
+  be a difference on an equality.&nbsp;</p>
+  <li>The <b>User </b>Criterion</li>
+</ul>
+<blockquote>
+  <p>This criterion has to be used to look for objects that have a user-defined
+  type attribute. The authorized comparison operators sign values depend on the
+  attribute's type (boolean, dimensioned, integer, listing, real or string).</p>
+</blockquote>
+<h4 align="left"><a name="Combinaison Criteria"></a>Combination Criteria</h4>
+<p align="left">A query is composed of one criterion and one context. But a
+criterion can be a combination of elementary criteria. There are three kind of
+combination:</p>
+<ul>
+  <li>
+    <p align="left"><b>And</b> : The found element should be available for the
+    two criteria,</li>
+  <li>
+    <p align="left"><b>Or : </b>The found element should be available for at
+    least one criterion,</li>
+  <li>
+    <p align="left"><b>Except : </b>The found element should be available for
+    the first criterion but not for the second.</li>
+</ul>
+<p align="left">These three logical combinations are consequently a criterion.
+This criterion has two criteria as parameters for the logical operation.&nbsp;</p>
+<p align="left"><img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"><b>About
+the criteria order</b></p>
+<p align="left">If the And and Or logical operations are commutative operations,
+the order for the parameter is important:</p>
+<ul>
+  <li>
+    <p align="left">Between a <b>type</b> criterion and an <b>attribute</b>
+    criterion, the type criterion must be the first operand,</li>
+  <li>
+    <p align="left">For an And operation, the most discriminant criteria should
+    be the first operand,</li>
+  <li>
+    <p align="left">For an Or operation, the least discriminant criteria should
+    be the first operand.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Query Definition"></a>Query Definition</h3>
+<p>A search query enables you to look for objects in a V5 document. Several
+aspects of a query are explained here under.</p>
+<h4><a name="Context"></a>Context</h4>
+<p>A query is composed of a criterion and a context. The context defines the
+limits to look for objects.This is important: useful to decrease the research
+time and to define the scope of the research.The search into the document is
+based on the specification tree representation. There exist six types of scope:</p>
+<ul>
+  <li>Everywhere (all)</li>
+  <p>To look for objects located anywhere in the document.&nbsp;</p>
+  <li>InUIActiveObject (in)</li>
+  <p>To look for objects located between the current UI-Active object [<a href="#References">4</a>]
+  (called top object) and the next UI-Activable objects located below this top
+  object (called bottom objects). Objects located under those UI-activable
+  objects are not taken into account. The top object and all bottom objects are
+  included in the search.</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAACafSearchContext1.jpg" width="248" height="460"></td>
+    </tr>
+  </table>
+  <p>If the UI-active object is <code>UI-Active Object 1.1</code> (the
+  underlined object) all the red and in italic font elements in the above
+  diagram are taken into account during the search process.</p>
+  <li>FromUIActiveObjectToBottom (from)</li>
+  <p>To look for objects located from the current UI-Active object [<a href="#References">4</a>]
+  (called top object) to the very bottom of the specification tree for this
+  branch. The top object is included in the search process.</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAACafSearchContext2.jpg" width="235" height="444"></td>
+    </tr>
+  </table>
+  <p>If the UI-active object is <code>UI-Active Object 1.1</code> (the
+  underlined object) all the red and in italic font elements in the above
+  diagram are taken into account during the search process.</p>
+  <li>FromSelection (sel)</li>
+  <p>To look for objects located in the current set of objects of the editor ( <i>CATCSO</i>
+  [<a href="#References">4</a>] ) as well as other objects located underneath in
+  the specification tree.&nbsp;</p>
+  <li>OnSameLevel&nbsp;</li>
+  <p>To look for objects located on the same specification tree level as a
+  reference object. This scope is not possible in the Search command.&nbsp;</p>
+
+	<li>VisibleOnScreen&nbsp; </li>
+		<p>To look for objects visible (fully 
+		or not) in the current active window. This context won't take into 
+		account elements not activated, not represented (features used to build 
+		other features that appear in the specification tree but not in 3D), not 
+		in the current active filter, not in the current mask... and when the 2D 
+		mode is activated elements not in the active plane are excluded from the 
+		search result too. <strong>Caution</strong>: 
+		this scope must not be used in a batch. The result would be 
+		unpredictable.</p>
+
+</ul>
+<h4><a name="TransFormat versus NLS Format"></a><a name="TransFormat versus NLS Format">
+NLS versus </a>Transformat Format</h4>
+<p>In an interactive session you can create queries through the dialog objects
+(such as combo boxes) of the Search command. But in the Advanced tab page, see <a href="#Fig.2">Fig.2</a>,
+you can also enter a string to formulate a criterion. Imagine you enter the
+&quot;Couleur='Base 25' &amp; Trait=plein&quot; text as follows:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchQueryInFrench.jpg" width="489" height="316"></td>
+  </tr>
+</table>
+<p>If you are in a French session, this query will be successfully analyzed and
+processed. But the same query in a none English session is not valid. This is
+why it is important to use the <b>transformat</b> format, a session language
+independent format. If you now enter the following text, <code>Color='(255,0,0)'
+&amp; dashed=1)</code>, the query will be valid whatever the language session.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchQueryInTransformat.jpg" width="497" height="337"></td>
+  </tr>
+</table>
+<p>To interactively translate a query from the NLS format to the transformat
+format, you record a macro command on a Search command based scenario with the
+appropriate query.</p>
+<ol>
+  <li>On the <b>Tools</b> Menu, select <b>Macro </b>and <b>Start Recording</b></li>
+  <li>Click <b>Start</b> in the <b>Record Macro </b>dialog box.</li>
+  <li>On the <b>Edit</b> Menu, click <b>Search</b></li>
+  <li><b>Create</b> interactively the query</li>
+  <li>Click <b>Search</b></li>
+  <li>On the <b>Tools</b> Menu, select <b>Macro </b>and <b>Stop Recording</b></li>
+  <li>On the <b>Tools</b> Menu, select <b>Macro </b>and<b> Macros</b></li>
+  <li><b>Edit</b> the macro</li>
+</ol>
+<p>Here is the macro file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Language=&quot;VBSCRIPT&quot;
+
+Sub CATMain()
+
+Set partDocument1 = CATIA.ActiveDocument
+
+Set selection1 = partDocument1.Selection
+
+selection1.Search &quot;<b>(Color='(255,0,0)' &amp; Dashed=1),all&quot;</b>
+
+End Sub</pre>
+    </td>
+  </tr>
+</table>
+<p>where :</p>
+<ul>
+  <li><code>(Color='(255,0,0)' &amp; Dashed=1),all</code> is the query in the
+    transformat format.&nbsp;</li>
+  <li><code>(Color='(255,0,0)' &amp; Dashed=1)</code> is the criterion&nbsp;</li>
+  <li><code>all</code> is the context.</li>
+</ul>
+<p>This macro file gives you also the internal name for knowledge types and
+attributes. These pieces of information are mandatory to create any advanced
+criterion.</p>
+<p><a name="Scenario"></a>Here is an example of scenario:</p>
+<ol>
+  <li>On the <b>Tools</b> Menu, select <b>Macro </b>and <b>Start Recording</b></li>
+  <li>Click <b>Start</b> in the <b>Record Macro </b>dialog box</li>
+  <li>On the <b>Edit</b> Menu, click <b>Search</b></li>
+  <li>Choose the <b>Advanced</b> tab page</li>
+  <li>Select <b>Generative Shape Design</b> in the <b>Workbench</b> combo</li>
+  <li>Select <b>Scaling</b> in the <b>Type</b> combo</li>
+  <li>Select IsDatum in the <b>Attribute</b> combo</li>
+  <li>Enter a value for the attribute</li>
+  <li>Click <b>Search</b></li>
+  <li>On the <b>Tools</b> Menu, select <b>Macro </b>and <b>Stop Recording</b></li>
+  <li><b>Edit</b> the macro</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Language=&quot;VBSCRIPT&quot;
+
+Sub CATMain()
+
+Dim partDocument1 As Document
+Set partDocument1 = CATIA.ActiveDocument
+
+Dim selection1 As Selection
+Set selection1 = partDocument1.Selection
+
+selection1.Search &quot;<b>CATGmoSearch.GSMScaling.NameInGraph</b>=CAAName,all&quot;
+
+End Sub</pre>
+    </td>
+  </tr>
+</table>
+<p>Where :</p>
+<ul>
+  <li><code>CATGmoSearch</code><b> </b>is the internal name of&nbsp;a category
+    (also named <b>workbench</b> in the Search command) which is a set of
+    packages whose external name (NLS name) is <code>Generative Shape
+    Design.&nbsp;</code></li>
+  <li><code>GSMScaling</code> is the internal name for a knowledge type whose
+    the NLS name is <code>Scaling</code></li>
+  <li><code>NameInGraph</code><b> </b>is the internal name for a&nbsp; knowledge
+    attribute whose NLS name is <code>Name in Graph</code></li>
+</ul>
+<h4><a name="Create a Query from a String"></a>Create a Query from a String</h4>
+<p>From a string (NLS or Transformat) it is possible to (re-)create a query.
+Thus you can store&nbsp; queries in a setting file using the transformat format
+and then fully reuse this information in an other session whatever the language
+used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Mechanism based on Components and Interfaces"></a>Mechanism Based
+on Components and Interfaces</h3>
+<p>Criteria, context and search engine are components [<a href="#References">1</a>].
+A component is identifiable through a CLSID and instantiable thanks to the <i>CATCreateInstance</i>
+global function [<a href="#References">5</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   #<b>include</b> &quot;CATIniSearchEngineComponent.h&quot;
+   ...
+   <b>CATIIniSearchEngine</b>* pISearchEngine=NULL;
+   HRESULT rc = ::<b>CATCreateInstance</b>(<b>CLSID_</b>CATIniSearchEngineComponent, NULL, 0, 
+                                     IID_CATIIniSearchEngine,
+                                     (void**)&amp;pISearchEngine);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIniSearchEngineComponent</i> header file contains the definition of
+the CLSID associated with the Search Engine component. This CLSID is <code>CLSID_CATIniSearchEngineComponent.&nbsp;</code></p>
+<p>For each object of the Search mechanism, the CLSID of the component and its
+specific interface will be given in the following array. All the useful CLSID
+and interfaces are located in the InteractiveInterfaces framework</p>
+<h4><a name="Criteria"></a>Criteria</h4>
+<p>At first the General criteria:</p>
+<table border="1" height="216">
+  <tr>
+    <td height="16"><b>General Criterion</b></td>
+    <td height="16" align="center"><b>Component CLSID</b></td>
+    <td height="16" align="center"><b>Dedicated Interface</b></td>
+  </tr>
+  <tr>
+    <td height="16">Color</td>
+    <td height="16">CLSID_CATIniSearchColorCriterion</td>
+    <td height="16">CATIIniSearchColorCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">Name</td>
+    <td height="16">CLSID_CATIniSearchNameCriterion</td>
+    <td height="16">CATIIniSearchNameCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">GraphName</td>
+    <td height="16">CLSID_CATIniSearchGraphNameCriterion</td>
+    <td height="16">CATIIniSearchGraphNameCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">Line type</td>
+    <td height="16">CLSID_CATIniSearchDashedCriterion</td>
+    <td height="16">CATIIniSearchDashedCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">Line thickness</td>
+    <td height="16">CLSID_CATIniSearchWeightCriterion</td>
+    <td height="16">CATIIniSearchWeightCriterion</td>
+  </tr>
+  <tr>
+    <td height="12">Layer</td>
+    <td height="12">CLSID_CATIniSearchLayerCriterion</td>
+    <td height="12">CATIIniSearchLayerCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">Visibility</td>
+    <td height="16">CLSID_CATIniSearchVisibilityCriterion</td>
+    <td height="16">CATIIniSearchVisibilityCriterion</td>
+  </tr>
+  <tr>
+    <td height="16">V4 Model</td>
+    <td height="16">CLSID_CATIniSearchV4ModelCriterion</td>
+    <td height="16">CATIIniSearchV4ModelCriterion</td>
+  </tr>
+</table>
+<p>Then, the advanced criteria.&nbsp;</p>
+<table border="1">
+  <tr>
+    <td><b>Advanced Criterion</b></td>
+    <td align="center"><b>Component CLSID</b></td>
+    <td align="center"><b>Dedicated Interface</b></td>
+  </tr>
+  <tr>
+    <td>Boolean</td>
+    <td>CLSID_CATIniSearchBooleanCriterion</td>
+    <td>CATIIniSearchBooleanCriterion</td>
+  </tr>
+  <tr>
+    <td>Integer</td>
+    <td>CLSID_CATIniSearchIntegerCriterion</td>
+    <td>CATIIniSearchIntegerCriterion</td>
+  </tr>
+  <tr>
+    <td>Real</td>
+    <td>CLSID_CATIniSearchRealCriterion</td>
+    <td>CATIIniSearchRealCriterion</td>
+  </tr>
+  <tr>
+    <td>Listing</td>
+    <td>CLSID_CATIniSearchListingCriterion</td>
+    <td>CATIIniSearchListingCriterion</td>
+  </tr>
+  <tr>
+    <td>Dimension</td>
+    <td>CLSID_CATIniSearchDimensionCriterion</td>
+    <td>CATIIniSearchDimensionCriterion</td>
+  </tr>
+  <tr>
+    <td>String</td>
+    <td>CLSID_CATIniSearchStringCriterion</td>
+    <td>CATIIniSearchStringCriterion</td>
+  </tr>
+  <tr>
+    <td>User&nbsp;</td>
+    <td>CLSID_CATIniSearchUserCriterion</td>
+    <td>CATIIniSearchUserCriterion</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td>CLSID_CATIniSearchTypeCriterion</td>
+    <td>CATIIniSearchTypeCriterion</td>
+  </tr>
+</table>
+<p>Finally, the combination criteria.</p>
+<table border="1">
+  <tr>
+    <td><b>Combination</b> <b>Criterion</b></td>
+    <td align="center"><b>Component CLSID</b></td>
+    <td align="center"><b>Dedicated Interface</b></td>
+  </tr>
+  <tr>
+    <td>And</td>
+    <td>CLSID_CATIniSearchAndCriterion</td>
+    <td>CATIIniSearchAndCriterion</td>
+  </tr>
+  <tr>
+    <td>Or</td>
+    <td>CLSID_CATIniSearchOrCriterion</td>
+    <td>CATIIniSearchOrCriterion</td>
+  </tr>
+  <tr>
+    <td>Except</td>
+    <td>CLSID_CATIniSearchExceptCriterion</td>
+    <td>CATIIniSearchExceptCriterion</td>
+  </tr>
+</table>
+<p>Interfaces Architecture</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchEngineArchi.jpg" width="603" height="169"></td>
+  </tr>
+</table>
+<p>In this diagram you can note that:</p>
+<ul>
+  <li>All criteria interfaces derive from the <i>CATIIniSearchCriterion</i>
+    interface. This interface contains methods criterion type independent:
+    transformation of a criterion in an NLS or a transformat string for
+    example.&nbsp;</li>
+  <li>The three combination criteria derive from the <i>CATIIniSearchCombinationCriterion</i>
+    interface, but you don't have to use this interface.&nbsp;</li>
+  <li>All the general Criteria (color, weight,...) are summarized by the
+    GeneralCriterion box</li>
+  <li>All the Advanced Criteria ( type, boolean,...) are summarized by the
+    AdvancedCriterion box</li>
+</ul>
+<h4><a name="Context And Search Engine&nbsp;"></a>Context And Search
+Engine&nbsp;and Services</h4>
+<p>The last three components are the following:</p>
+<table border="1">
+  <tr>
+    <td><b>Type</b></td>
+    <td><b>Componant CLSID</b></td>
+    <td><b>Dedicated Interface</b></td>
+  </tr>
+  <tr>
+    <td>Context</td>
+    <td>CLSID_CATIniSearchContext</td>
+    <td>CATIIniSearchContext</td>
+  </tr>
+  <tr>
+    <td>Search Engine</td>
+    <td>CLSID_CATIniSearchSearchEngine</td>
+    <td>CATIIniSearchEngine</td>
+  </tr>
+  <tr>
+    <td>Services</td>
+    <td>CLSID_CATIniSearchServices</td>
+    <td>CATIIniSearchServices</td>
+  </tr>
+</table>
+&nbsp;
+<h3><a name="Packages, Types and Attributes"></a>Workbench, Package, Type and
+Attribute</h3>
+<p>In the advanced queries, you should be familiar with some knowledge&nbsp;
+objects: workbench, packages, type and attribute.&nbsp;To sum up a workbench is
+a group of packages, which is itself a group of types, and a type is a group of
+attributes. The section begins to explain the package notion, and ends by
+explanation about workbench.&nbsp;</p>
+<p>A <b>package</b> defines a set of types. All the types are &quot;stored&quot;
+in a dictionary. To retrieve a smart pointer on the unique type dictionary, you
+can use the static <code>GetTypeDictionary</code> method of the <i>CATGlobalFunction</i>
+class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATITypeDictionary</b>_var pITypeDictionary;
+   pITypeDictionary = <b>CATGlobalFunctions</b>::<b>GetTypeDictionary</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A type is handled through a <i>CATIType</i> interface. To retrieve a pointer
+on a type, you can use the <code>FindTypeInPackage</code> method on the <i>CATITypeDictionary
+</i>interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIType_var spITypeToFind;
+  CATUnicodeString InternalTypeName =&quot;Hole&quot;;
+  CATUnicodeString PackageName = &quot;PartDesign&quot; ;
+  
+  rc = pITypeDictionary -&gt;<b>FindTypeInPackage</b>(InternalTypeName,
+                                            PackageName ,
+                                            spITypeToFind);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The first two arguments of this method respectively are the
+internal name of a type and its package . The following scenario gives you the
+means to know the list of packages and for each of them the list of types and
+their associated attributes.&nbsp;</p>
+<ol>
+  <li>On the <b>Tools</b> Menu, click <b>Options</b></li>
+  <li>Select the <b>Language</b> tab page of&nbsp;<b>General/Parameters and
+    Measure</b></li>
+  <li>Select all the packages or only the necessary</li>
+  <li>On the <b>Start</b> Menu, click <b>Knowledge Expert</b></li>
+  <li>Launch <b>Expert Check</b>&nbsp;<img border="0" src="images/CAACafSearchKnowExpertCheck.jpg" width="29" height="26"></li>
+  <li>Click <b>Ok</b> in the dialog box</li>
+  <li>In the <b>Check Editor</b> dialog box click <img border="0" src="images/CAACafSearchKnowCheckEditor.jpg" width="28" height="25"></li>
+</ol>
+<p>The following dialog box appears:</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchBrowserAttribute.jpg" width="577" height="305"></td>
+  </tr>
+</table>
+<p>The first column displays the list of packages, the second column displays
+the type contained by the selected package, and the last column displays the
+list of attributes for the selected type. All the names are internal name, in
+other words language independent.&nbsp;</p>
+<p><b>Internal name versus NLS name</b></p>
+<ul>
+  <li><b>Package</b> : There is no NLS name for packages</li>
+  <li><b>Type</b>: <code>UserName</code> on the <i>CATIType</i> interface
+    provides the NLS name of a type</li>
+  <li><b>Attribute</b>: the <i>CATAttributeInfo</i> class contains a method to
+    retrieve the NLS name.&nbsp;</li>
+</ul>
+<p>A <b>workbench</b>, knowledge sense, groups together packages. It is without
+relationship with the workbench of a V5 document [<a href="#References">4</a>].&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchWorkbenchDef.jpg" width="526" height="409"></td>
+  </tr>
+</table>
+<p>The workbench is only used for the Search Mechanism. The following picture
+shows some of them in the Search command.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAACafSearchWorkbench.jpg" width="465" height="185"></td>
+  </tr>
+</table>
+<p>In the Search command, you must choose a workbench to launch a query. The
+workbench enables us to provide a limited list of types (second combo). The
+first combo could have been a package name, but the notion of package is too
+short. A workbench groups together a &quot;logical&quot; set of types.</p>
+<p>The workbench entity is optional for the Search API. To create a <a href="#Advanced Criteria">type</a>
+criterion, only a <i>CATIType</i> interface pointer is mandatory. Lets us see
+the <code>SetParameters</code> method of the <i>CATIIniSearchTypeCriterion</i>
+interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  virtual HRESULT <b>SetParameters</b> (const CATIType* iSearchedType, 
+                                 CATIniSearchEnumeration::Comparison iOperatingSign,
+                                 CATUnicodeString <b>iWorkbenchInternalName</b>=&quot;&quot;) = 0;                                                                                                              
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>iWorkbenchInternalName</code> is optional, you can set an empty string.
+Specifying the name of the workbench can be useful if you want display the query
+and inform your end users that the type provide from such or such workbench.</p>
+<p><code>iWorkbenchInternalName</code> is an internal name, it is not the NLS
+name displayed by the Search command. To retrieve the internal name from the NLS
+name, follow the <a href="#Scenario">scenario</a> which uses a VB macro.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article give you an overview of the Search API. It describes :</p>
+<ul>
+  <li>The existing criteria,</li>
+  <li>The existing context,</li>
+  <li>The transformat format,</li>
+  <li>The architecture based on components instanciable using a CLSID.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysUsingComponents.htm">Using
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAACafUseCases/CAACafSampleSearch.htm">Creating
+      Search Queries</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAVisTechArticles/CAAVisGraphicProperties.htm">Graphical
+      Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMSimpleCmpCLSID.htm">Instantiating
+      a Component Using its CLSID</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

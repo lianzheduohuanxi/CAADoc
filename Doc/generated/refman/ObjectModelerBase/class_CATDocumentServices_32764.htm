@@ -1,0 +1,612 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>ObjectModelerBase Class CATDocumentServices</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../ObjectModelerBase.htm" href="../ObjectModelerBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "ObjectModelerBase";	}
+		function getCurrentObjectName() { 
+ 	return "CATDocumentServices"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>ObjectModelerBase <script type="text/javascript" > writeClassCharacteristic(); </script> CATDocumentServices</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATDocumentServices_32764','CATDocumentServices','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATDocumentServices</b>
+</p>
+<p>
+<b><i> Services to create, open and close documents.</i></b><br>
+
+ <b>Role:</b>All methods of this class must be used to create, open or close a document when <b>no
+ visualization is necessary</b>. This is always the case in batch mode, but it is also possible 
+ in interactive mode. 
+ <br>If you want to visualize the document, use the <i>CATIIniInteractiveSession</i>
+ interface. This last interface is defined in the InteractiveInterfaces Framework.
+ <br>Please notice that Open, Save and SaveAs methods perform the same action on model data using either CATDocumentServices or CATIIniInteractiveSession.
+ <br><br>There are three methods for creating a (or several) new document(s) in the current session:
+ <ul>
+ <li><script type="text/javascript"> activateLinkAnchor('','New','New') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','OpenDocument','OpenDocument') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','NewFrom','NewFrom') </script> </li> </ul>
+ There are three methods for saving a document:
+ <ul>
+ <li>
+<script type="text/javascript"> activateLinkAnchor('','Save','Save') </script> (to use only in interactive mode)</li> <li>
+<script type="text/javascript"> activateLinkAnchor('','SaveAs','SaveAs') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','SaveAsNew','SaveAsNew') </script> </li> </ul>
+  There is one method for closing a document:
+ <ul>
+ <li>
+<script type="text/javascript"> activateLinkAnchor('','Remove','Remove') </script> </li> </ul>
+ There is one method for retrieving a document by its filename:
+ <ul>
+ <li>
+<script type="text/javascript"> activateLinkAnchor('','GetDocumentInSession','GetDocumentInSession') </script> </ul>
+ <b>Life cycle of the document:</b>
+ <br>
+ <br><i>The AddRef/Release mechanism is not used:</i>
+ <br>All methods which return a CATDocument pointer have not performed an Addref on the pointer. So
+ there is no need to release it. 
+ <br> A CATDocument object created by <tt>New</tt>, <tt>Open</tt>(*), or <tt>NewFrom</tt> must 
+ be removed from the session by the <tt>Remove</tt> method. 
+ <br>(*)Note that if the "open" is actually a "reopen", only one call to <tt>Remove</tt> must be done.
+ <br>
+ <br><i>The Lock/Unlock mechanism is used</i>
+ <br>Look at this example:
+ <br>1)Open a CATProduct which contains a CATPart
+ <br>2)Open independently the same CATPart too 
+ <br>You should <tt>Remove</tt> the 2 documents, but when the CATProduct document will be closed, 
+ the CATPart will be also. So a specific call to <tt>Remove</tt> for the independent CATPart 
+ will end in an error. 
+ <br>So a multi-reference mechanism is necessary: 
+<script type="text/javascript"> activateLinkAnchor('CATLockDocument','','CATLockDocument') </script> and 
+<script type="text/javascript"> activateLinkAnchor('CATUnLockDocument','','CATUnLockDocument') </script>.  <br><br><i>When do you lock a document ?</i>
+ <br> In batch mode, if you are not sure of the relation between each model opened, 
+ lock the model after each open, and unlock it to remove it. 
+ <br> In interactive mode, if your class keeps a pointer on a document, lock it and 
+ unlock it when the pointer is no longer needed. 
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATDocument','','CATDocument') </script>
+</dl>
+</p>
+<hr>
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetDocumentInSession(CATUnicodeString&amp;,CATDocument*&amp;)"><b>GetDocumentInSession</b></a>(CATUnicodeString&amp;,CATDocument*&amp;)
+<dd>  Retrieves a document in session by its complete access name.
+ <dt> o 
+    <a href="#GetDocumentLastSaveVersion(CATIDocId*,CATUnicodeString&amp;)"><b>GetDocumentLastSaveVersion</b></a>(CATIDocId*,CATUnicodeString&amp;)
+<dd>  Retrieves the last save version of a document by its identifier.
+ <dt> o 
+    <a href="#GetMinimalVersionToOpenDocument(CATIDocId*,CATUnicodeString&amp;)"><b>GetMinimalVersionToOpenDocument</b></a>(CATIDocId*,CATUnicodeString&amp;)
+<dd>  Retrieves the minimal version to open a document by its identifier.
+ <dt> o 
+    <a href="#HasDocumentEducationalFlag(CATIDocId*,int&amp;)"><b>HasDocumentEducationalFlag</b></a>(CATIDocId*,int&amp;)
+<dd>  Check if a document has been saved with an educational licence.
+ <dt> o 
+    <a href="#IsKnownAsAPersistentType(CATUnicodeString&amp;)"><b>IsKnownAsAPersistentType</b></a>(CATUnicodeString&amp;)
+<dd>  Test if a given document type is meant to be CATIA loadable.
+ <dt> o 
+    <a href="#IsKnownAsAnAliasType(CATUnicodeString&amp;)"><b>IsKnownAsAnAliasType</b></a>(CATUnicodeString&amp;)
+<dd>  Test if a given document alias is meant to be CATIA creatable.
+ <dt> o 
+    <a href="#New(CATUnicodeString&amp;,CATDocument*&amp;)"><b>New</b></a>(CATUnicodeString&amp;,CATDocument*&amp;)
+<dd>  Creates a document of a given type.
+ <dt> o 
+    <a href="#NewFrom(CATLISTV(CATUnicodeString)*,CATLISTP(CATDocument)*,short)"><b>NewFrom</b></a>(CATLISTV(CATUnicodeString)*,CATLISTP(CATDocument)*,short)
+<dd>  Creates documents from an existing file.
+ <dt> o 
+    <a href="#NewFrom(CATLISTP(CATDocument)*,CATLISTV(CATUnicodeString)*&amp;,CATLISTV(CATUnicodeString)*)"><b>NewFrom</b></a>(CATLISTP(CATDocument)*,CATLISTV(CATUnicodeString)*&amp;,CATLISTV(CATUnicodeString)*)
+<dd>  Creates documents from existing files.
+ <dt> o 
+    <a href="#OpenDocument(CATUnicodeString&amp;,CATDocument*&amp;,CATBoolean)"><b>OpenDocument</b></a>(CATUnicodeString&amp;,CATDocument*&amp;,CATBoolean)
+<dd>  Opens a given document.
+ <dt> o 
+    <a href="#Remove(CATDocument&amp;,short)"><b>Remove</b></a>(CATDocument&amp;,short)
+<dd>  Removes a document.
+ <dt> o 
+    <a href="#Save(CATDocument&amp;,CATBoolean)"><b>Save</b></a>(CATDocument&amp;,CATBoolean)
+<dd>  Saves a given document in interactive mode.
+ <dt> o 
+    <a href="#SaveAs(CATDocument&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean)"><b>SaveAs</b></a>(CATDocument&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean)
+<dd>  Saves a document with a different name.
+ <dt> o 
+    <a href="#SaveAsNew(CATDocument&amp;,CATUnicodeString&amp;,CATBoolean)"><b>SaveAsNew</b></a>(CATDocument&amp;,CATUnicodeString&amp;,CATBoolean)
+<dd>  Creates a new document from an existing one and saves it.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetDocumentInSession"></a><a name="GetDocumentInSession(CATUnicodeString&amp;,CATDocument*&amp;)"></a> <dt> o <b>GetDocumentInSession</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDocumentInSession</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStorageName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDocument','CATDocument*&amp;')</script> <td><tt>oOpenedDoc</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a document in session by its complete access name.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStorageName</tt>
+   <dd>      The complete access name to the searched file (path + name of the file ).
+      <br>See </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDocument','StorageName','CATDocument.StorageName') </script> for more information about the storage name. 
+    <dt><tt> oOpenedDoc</tt>
+   <dd>      The found document.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDocumentLastSaveVersion"></a><a name="GetDocumentLastSaveVersion(CATIDocId*,CATUnicodeString&amp;)"></a> <dt> o <b>GetDocumentLastSaveVersion</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDocumentLastSaveVersion</b>(<td><script type="text/javascript"> activateLink('CATIDocId','CATIDocId*')</script> <td><tt>iDocId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oVersion</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the last save version of a document by its identifier.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocId</tt>
+   <dd>        The identifier of the document.
+ </dd>
+    <dt><tt> oVersion</tt>
+   <dd>        The last save version of the document (this information is only accessible for documents created from V5R10 and after. 
+        <br>(for example : &lt Version &gt 5/ &lt Version &gt &lt Release &gt 10/ &lt Release&gt &lt ServicePack&gt 1/&lt ServicePack &gt &lt BuildDate &gt mm-dd-yyyy.hh.mm/ &lt BuildDate &gt).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>       <li>S_OK: The version has been correctly retrieved, 
+	    <li>E_FAIL : The version could not be retrieved. </li>
+     </ul>
+</dl>
+</dl>
+<a name="GetMinimalVersionToOpenDocument"></a><a name="GetMinimalVersionToOpenDocument(CATIDocId*,CATUnicodeString&amp;)"></a> <dt> o <b>GetMinimalVersionToOpenDocument</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetMinimalVersionToOpenDocument</b>(<td><script type="text/javascript"> activateLink('CATIDocId','CATIDocId*')</script> <td><tt>iDocId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oVersion</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the minimal version to open a document by its identifier.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocId</tt>
+   <dd>        The identifier of the document.
+ </dd>
+    <dt><tt> oVersion</tt>
+   <dd>        The minimal version needed to open the document (this information is only accessible for documents created from V5R8 and after). 
+        <br>(for example : &lt Version &gt 5/ &lt Version &gt &lt Release &gt 10/ &lt Release&gt).
+ <br>Due to service pack compatibility, no service pack number is specified. 
+ <br>Document can be opened on any service pack of the oVersion version.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>       <li>S_OK: The version has been correctly retrieved, 
+     <li>E_FAIL : The version could not be retrieved. </li>
+     </ul>
+</dl>
+</dl>
+<a name="HasDocumentEducationalFlag"></a><a name="HasDocumentEducationalFlag(CATIDocId*,int&amp;)"></a> <dt> o <b>HasDocumentEducationalFlag</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>HasDocumentEducationalFlag</b>(<td><script type="text/javascript"> activateLink('CATIDocId','CATIDocId*')</script> <td><tt>iDocId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>iEducational</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Check if a document has been saved with an educational licence.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocId</tt>
+   <dd>        The identifier of the document.
+ </dd>
+    <dt><tt> iEducational</tt>
+   <dd>     <li>0: This is a standard document. </li>
+	    <li>Otherwise : This document has been saved with an educational license. </li>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>       <li>S_OK: The check has been successfully done. 
+	<li>E_INVALIDARG: Null input iDocId. </li>
+	<li>E_FAIL: Impossible to perform this check. </li>
+     </ul>
+</dl>
+</dl>
+<a name="IsKnownAsAPersistentType"></a><a name="IsKnownAsAPersistentType(CATUnicodeString&amp;)"></a> <dt> o <b>IsKnownAsAPersistentType</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsKnownAsAPersistentType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Test if a given document type is meant to be CATIA loadable.
+ <br><b>Role:</b> Provide support to know if a given document type can be or not 
+ loaded in session memory as a CATDocument 
+ <br>Being a loadable document requires CATIPersistent implementation on the given type
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd>     The string to define the kind of document to test. 
+     it returns S_OK otherwise E_FAIL</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsKnownAsAnAliasType"></a><a name="IsKnownAsAnAliasType(CATUnicodeString&amp;)"></a> <dt> o <b>IsKnownAsAnAliasType</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsKnownAsAnAliasType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAliasType</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Test if a given document alias is meant to be CATIA creatable.
+ <br><b>Role:</b> Provide support to know if a given document alias can be or not 
+ provided to be created in session memory as a CATDocument (See New) 
+ <br>Being a creatable document requires CATIDocAlias or CATIPersistent implementation on the given alias
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAliasType</tt>
+   <dd>     The string to define the kind of document to test. 
+     it returns S_OK, this can be used as a creation alias
+     it returns E_FAIL, this is not.</dd>
+</dl>
+</dl>
+</dl>
+<a name="New"></a><a name="New(CATUnicodeString&amp;,CATDocument*&amp;)"></a> <dt> o <b>New</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>New</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDocument','CATDocument*&amp;')</script> <td><tt>oNewDoc</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a document of a given type.
+ <br><b>Role:</b> Creates and initializes data of a document of the given type. The
+ initialization is done thanks to the 
+<script type="text/javascript"> activateLinkAnchor('CATInit','init','CATInit.init') </script> method. <br>The document must be removed from the session before exiting or when it is
+ no longer needed. See explanations, at the top of this page, about the life 
+ cycle of the document.
+ <br>The name of the document is <tt>iType + Number + suffix</tt>. The suffix 
+ is dedicated to iType such as <tt>.CATPart</tt> for the type <tt>Part</tt>.  
+ <br>As long as the document is not saved, the storage name ( 
+<script type="text/javascript"> activateLinkAnchor('CATDocument','StorageName','CATDocument.StorageName') </script> ), is equal to the name. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd>     The string to define the kind of document to create. 
+     <br> The string is the one which appears in the panel File/New.
+ </dd>
+    <dt><tt> oNewDoc</tt>
+   <dd>      The document created.</dd>
+</dl>
+</dl>
+</dl>
+<a name="NewFrom"></a><a name="NewFrom(CATLISTV(CATUnicodeString)*,CATLISTP(CATDocument)*,short)"></a> <dt> o <b>NewFrom</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>NewFrom</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATUnicodeString)','CATLISTV(CATUnicodeString)*')</script> <td><tt>iListOfStorageName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATDocument)','CATLISTP(CATDocument)*')</script> <td><tt>oListOfDocuments</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iIndividualNewFrom</tt><td><tt>=TRUE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates documents from an existing file.
+ <br><b>Role:</b>This method allows you to create, in the current session, a new document 
+ from an existing one. But if the original document is already opened in session, no new 
+ document is generated.
+ <br>The method processes separately each document. But if an error occurs during the process of
+ one document the method is stopped and returns the error code about the last processing. So the 
+ output list of new document can be shorter than the input list of storage name. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListOfStorageName</tt>
+   <dd>        The list of complete access file names.
+ </dd>
+    <dt><tt> oListOfDocuments</tt>
+   <dd>        The list of new documents.
+        <br>The length of this output list is equal to correct processed document. 
+ </dd>
+    <dt><tt> iIndividualNewFrom</tt>
+   <dd>        Useless
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>       The result of the last processed storage name:
+     <ul>
+     <li>S_OK: All documents are created. The lenght of iListOfStorageName is equal to
+                   oListOfDocument </li>
+	<li>S_FALSE : The last processed document was already loaded. The lenght of oListOfDocument
+                    is equal to correct document previously processed.</li>
+	<li>E_FAIL :  An error is occured during the last document processed. The lenght of 
+                  oListOfDocument is equal to correct document previously processed.</li>
+     </ul>
+</dl>
+</dl>
+<a name="NewFrom"></a><a name="NewFrom(CATLISTP(CATDocument)*,CATLISTV(CATUnicodeString)*&amp;,CATLISTV(CATUnicodeString)*)"></a> <dt> o <b>NewFrom</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>NewFrom</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATDocument)','CATLISTP(CATDocument)*')</script> <td><tt>oListOfDocuments</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLISTV(CATUnicodeString)','CATLISTV(CATUnicodeString)*&amp;')</script> <td><tt>iListOfPaths</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLISTV(CATUnicodeString)','CATLISTV(CATUnicodeString)*')</script> <td><tt>iListOfNewFileNames</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates documents from existing files.
+ <br><b>Role:</b>This method allows you to create, in the current session, new documents 
+ from existing ones. The links between the original documents are reported accordingly
+ between the new documents. 
+ <br>If an error occurs during the process of one document or if one the original documents 
+ is already opened in session, a NULL pointer is put in oListOfDocuments and the method 
+ continues and returns the corresponding error code. So the output list of new documents has 
+ the same length as the input list of storage names. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oListOfDocuments</tt>
+   <dd>        The list of new documents.
+        <br>The length of this output list is equal to the length of the input list but it can contain
+ NULL pointers if the method has failed for one of the input paths.
+ </dd>
+    <dt><tt> iListOfPaths</tt>
+   <dd>        The list of complete access file names.
+ </dd>
+    <dt><tt> iListOfNewFileNames</tt>
+   <dd>        The list of the new file names (optional).
+		   <br>NULL : default value, new names will be computed automatically for the new documents.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>       <li>S_OK: All documents are created. 
+	<li>S_FALSE : One of the processed document was already loaded.</li>
+	<li>E_FAIL :  An error has occurred during for at least one of the documents.</li>
+     </ul>
+</dl>
+</dl>
+<a name="OpenDocument"></a><a name="OpenDocument(CATUnicodeString&amp;,CATDocument*&amp;,CATBoolean)"></a> <dt> o <b>OpenDocument</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>OpenDocument</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStorageName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDocument','CATDocument*&amp;')</script> <td><tt>oOpenedDoc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iReadOnly</tt><td><tt>=FALSE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Opens a given document.
+ <br><b>Role:</b> If the file already exists in the session, it will not be re-loaded.
+ <br>The document must be removed from the session before exiting or when it is no 
+ longer needed. See explanations at the top of this page about the life 
+ cycle of the document.
+ <br><b>Note:</b> This method does not allow opening .feat or .CATfct catalogs. It is not possible to access .feat
+ catalogs because they contain Dassault Systemes private data. To open a .CATfct catalog, see <i>CATCatalogFactoryServices</i>
+ (ObjectSpecsModeler framework). 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStorageName</tt>
+   <dd>      The complete access name of the file to open ( path + name of the file ). 
+      <br>See </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDocument','StorageName','CATDocument.StorageName') </script> for more information about the storage name. 
+    <dt><tt> oOpenedDoc</tt>
+   <dd>       The opened document.
+      <br>If the "open" is a "re-open", the pointer is not a new pointer. Do not remove 
+      the pointer twice.
+ </dd>
+    <dt><tt> iReadOnly</tt>
+   <dd>      FALSE: Default value, the document will be in read/write mode.
+  <br> TRUE: The document is in read only mode.
+  <br>In case of a re-opening, the mode of the document is defined by the first open.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 		 S_OK : The document was opened sucessfully.
+	<br> S_FALSE : The document has already been loaded. The returned oOpenedDoc pointer 
+ points to this document.
+	<br> E_FAIL : The open operation failed.
+</dl>
+</dl>
+<a name="Remove"></a><a name="Remove(CATDocument&amp;,short)"></a> <dt> o <b>Remove</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Remove</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument&amp;')</script> <td><tt>iDoc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iEmptyClipbordIfNecessary</tt><td><tt>=TRUE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a document.
+ <br><b>Role:</b>This method closes the document in the session.  
+ <br><b>Caution</b>This method is without effect if the document has been previously
+ locked. If you have locked your document, a call to this method is not necessary, the last
+ unlock closes it. 
+ <br>Read information at the top of the page about the life cycle of the document.  
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDoc</tt>
+   <dd>       The document to remove.
+ </dd>
+    <dt><tt> iEmptyClipbordIfNecessary</tt>
+   <dd>       TRUE : will remove all the links from clipboard to iDoc.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Save"></a><a name="Save(CATDocument&amp;,CATBoolean)"></a> <dt> o <b>Save</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Save</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument&amp;')</script> <td><tt>iDocument</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iSavePointedIfNecessary</tt><td><tt>= TRUE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Saves a given document in interactive mode.
+ <br><b>Role:</b>To save a document two cases:
+ <ul>
+ <li>In interactive mode, use this method or the method  
+ <i>CATIIniInteractiveSession::Save</i> twice are equal</li>
+ <li>In batch mode, use 
+<script type="text/javascript"> activateLinkAnchor('','SaveAs','SaveAs') </script> in using the current storage name of your document 
+<script type="text/javascript"> activateLinkAnchor('CATDocument','StorageName</li>','CATDocument.StorageName</li>') </script> <pre>
+     CATUnicodeString StorageNameDocument ;
+     StorageNameDocument = pDocument->StorageName();
+     ::SaveAs(pDocument,StorageNameDocument);
+ </pre>
+ </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocument</tt>
+   <dd>       The document to save.
+ </dd>
+    <dt><tt> iSavePointedIfNecessary</tt>
+   <dd>       TRUE : default value, to save all documents referred to by iDocument if they have 
+              been modified during the session.
+       <br> FALSE: only iDocument will be saved.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 		 S_OK : The document was saved successfully.
+	<br> S_FALSE : The document does not need to be saved.
+	<br> E_FAIL : The document save operation failed.
+</dl>
+</dl>
+<a name="SaveAs"></a><a name="SaveAs(CATDocument&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean)"></a> <dt> o <b>SaveAs</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SaveAs</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument&amp;')</script> <td><tt>iDocument</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStorageName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iFormat</tt><td><tt>=""</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iSavePointedIfNecessary</tt><td><tt>= TRUE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Saves a document with a different name.
+ <br><b>Role:</b>Save the document in the file specified by iStorageName. 
+ <br> Please note that no thumbnail for the document is generated or updated in batch mode. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocument</tt>
+   <dd>       The document to save.
+ </dd>
+    <dt><tt> iStorageName</tt>
+   <dd>       The complete access name of the file.
+       <br>The format of this argument is: path + name of the file.
+       <br>It is the new storage name of the document. 
+       <br>See </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDocument','StorageName','CATDocument.StorageName') </script> to have more information about the storage name. 
+    <dt><tt> iFormat</tt>
+   <dd>       To save the document with a specific format. (recognized by iDocument).
+     <br> The string is the one which appears in the "Format" combo of the panel
+        File/Save or File/SaveAs.
+ </dd>
+    <dt><tt> SavePointedIfNecessary</tt>
+   <dd>      TRUE : default value, to save all documents referred by iDocument if they 
+             have been modified during the session.
+       <br> FALSE: only iDocument will be saved.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SaveAsNew"></a><a name="SaveAsNew(CATDocument&amp;,CATUnicodeString&amp;,CATBoolean)"></a> <dt> o <b>SaveAsNew</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SaveAsNew</b>(<td><script type="text/javascript"> activateLink('CATDocument','CATDocument&amp;')</script> <td><tt>iDocument</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStorageName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iSaveRecursively</tt><td><tt>=FALSE</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a new document from an existing one and saves it.
+ <br><b>Role:</b>The new document is identical to the original except for its UUIDs. 
+ The original document, iDocument, remains unchanged.  
+ <br>The new document does not exist in the session,it is just created in a file. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDocument</tt>
+   <dd>        The original document from which the new document will be generated and saved 
+        with different UUIDs.
+ </dd>
+    <dt><tt> iStorageName</tt>
+   <dd>        The name under which the new document will be saved.
+ </dd>
+    <dt><tt> iSaveRecursively</tt>
+   <dd>         Not used.  FALSE by default.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATDocumentServices.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATObjectModelerBase</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

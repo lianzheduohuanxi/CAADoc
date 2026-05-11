@@ -1,0 +1,575 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Frames and Title Blocks in a CATDrawing Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Drafting</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Frames and Title Blocks in a CATDrawing
+      Document</h3>
+      <em>How to create drawing geometry and annotations</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADrwTitleBlock use case. This use case
+      explains how to read a CATDrawing document, get the sheet background view,
+      and create geometry and annotations in it.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADrwTitleBlock Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAADrwTitleBlock Do</a></li>
+          <li><a href="#How">How to Launch CAADrwTitleBlock</a></li>
+          <li><a href="#Where">Where to Find the CAADrwTitleBlock Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to navigate through drawing sheets
+and views as well as how to get and use geometrical and annotation factories.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADrwTitleBlock Use Case</h3>
+<p>CAADrwTitleBlock is a use case of the CAADraftingInterfaces.edu framework
+that illustrates DraftingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADrwTitleBlock Do?</h4>
+<table>
+  <caption>Fig. 1: Initial Document</caption>
+  <tr>
+    <td><img border="0" src="images/CAADrwTitleBlock1.jpg" width="604" height="399"></td>
+  </tr>
+</table>
+<p>Fig. 1 represents the CATDrawing document on which a title block will be
+added. This document is not provided with the use case.</p>
+<table>
+  <caption>Fig. 2 The Document modified by the Use Case</caption>
+  <tr>
+    <td><img border="0" src="images/CAADrwTitleBlock2.jpg" width="604" height="401"></td>
+  </tr>
+</table>
+<p>Fig. 2 represents the CATDrawing document modified by the use case program.
+It first creates a basic drafting structure composed of a drawing, a sheet, and
+two superimposed views.</p>
+<p>The two views are:
+<ol>
+  <li>The main view which contains the elements directly created in the sheet</li>
+  <li>The background view, which is dedicated to the frames and title blocks.</li>
+</ol>
+<p>These two views are part of the sheet. So they cannot be deleted and they are
+not shown in the graph. Then the program gets the background view and creates a
+frame using 2D lines and a text in the bottom right corner.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAADrwTitleBlock</h4>
+<p>To launch CAADrwTitleBlock, you will need to set up the build time
+environment, then compile CAADrwTitleBlock along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>When you launch the use case, pass the full pathname of the file into which
+you you want to store the created document as argument.
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt; mkrun -c cmd
+CAADrwTitleBlock c:\DrawingTest.CATDrawing c:\DrawingTestwithtitleblocks.CATDrawing</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ mkrun -c cmd
+CAADrwTitleBlock /u/users/DrawingTest.CATDrawing  /u/users/DrawingTestwithtitleblocks.CATDrawing</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADrwTitleBlock Code</h4>
+<p>The CAADrwTitleBlock use case is made of a single source file named
+CAADrwTitleBlock.cpp located in the CAADrwTitleBlock.m module of the
+CAADraftingInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwTitleBlock.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwTitleBlock.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six steps in CAADRWTitleBlock:</p>
+<ol>
+  <li><a href="#Creating">Creating and Initializing the Document</a></li>
+  <li><a href="#Acces">Accessing the Drawing in the Document</a></li>
+  <li><a href="#Navigating">Navigating through the Drawing and Sheet to Get the
+    Background View</a></li>
+  <li><a href="#Fact2D">Getting the Geometry Factory and Creating the Frame 2D
+    Lines</a></li>
+  <li><a href="#FactAnn">Getting the Annotation Factory and Creating the Title
+    Block Texts</a></li>
+  <li><a href="#Saving">Saving the Document and Exiting</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating"></a>Creating and Initializing the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATDrawing document
+{
+  // Check arguments
+  if(3 != iArgc) return 1;
+  const char *fileName = iArgv[1];
+  const char *fileNameOut = iArgv[2];
+
+  // CREATE  SESSION
+  // ==================
+
+  CATSession *pSampleSession = NULL;
+  HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+  if (FAILED(hr)) return 1;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for creating a CATIA document [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Acces"></a>Accessing the Drawing in the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDocument* pDoc = NULL;
+  if (!SUCCEEDED(CATDocumentServices::OpenDocument(fileName, pDoc)))
+  {
+    // Ends session
+    ::Delete_Session(&quot;SampleSession&quot;);
+    return 2;
+  }</pre>
+      <pre>  // Gets the drawing feature using the CATIDftDocumentServices interface
+  CATIDrawing *piDrawing = NULL;
+  <b>CATIDftDocumentServices</b> *piDftDocServices = NULL;
+  if (SUCCEEDED(pDoc-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+  {
+    piDftDocServices-&gt;<b>GetDrawing</b>(IID_<b>CATIDrawing</b>, (void **)&amp;piDrawing);
+    piDftDocServices-&gt;<b>Release</b>();
+  }
+
+  if (NULL == piDrawing)
+    return 1;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The root feature of a drawing document is the Drawing, that is, the feature
+that implements the <i>CATIDrawing</i> interface. We can get a pointer to <i>CATIDrawing</i>
+using the <i>CATIDftDocumentServices</i> interface, which is implemented by the
+document. The <code>GetDrawing</code> method first argument is the <i>CATIDrawing</i>
+interface IID.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Navigating"></a>Navigating through the Drawing and Sheet to Get the
+Background View</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // We can get the current sheet
+  <b>CATISheet</b>_var spSheet = piDrawing-&gt;<b>GetCurrentSheet</b>();
+  // And the sheet background view
+  <b>CATIView</b>_var spBgView = spSheet-&gt;<b>GetBackgroundView</b>();
+
+  // Memory cleaning
+  piDrawing-&gt;<b>Release</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A drawing may contain several sheets, but only one is current at a time. The
+current sheet is the sheet containing the active view, that is the view
+currently edited. The methods of the <i>CATISheet</i> and <i>CATIView</i>
+interfaces do return handlers, so we don&#8217;t need to care about releasing them.
+The drawing variable is a pointer to <i>CATIDrawing</i>, so we have to release
+when it's no longer used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Fact2D"></a>Getting the Geometry Factory and Creating the Frame 2D
+Lines</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // GEOMETRY CREATION
+  // =================
+
+  // We now can create geometries in the view after :
+  //   - Setting the view as the current one
+  //   - Getting the view geometry factory interface
+  spSheet-&gt;SetCurrentView(spBgView);
+  CATI2DWFFactory_var spGeomFactory = spBgView;
+
+  double X[8] = { 936.0, 949.0, 963.0, 1010.0, 1062.0, 1093.0, 1157.0, 1176.0};
+  double Z[11] ={ 17.0, 22.0, 35.0, 48.0, 53.0, 58.0, 63.0, 68.0, 73.0, 78.0, 88.0};
+  double PtTmp[6];
+
+  double startPoint[2], endPoint[2];
+
+  // Creation of horizontal lines
+  PtTmp[0]=Z[0];
+  PtTmp[1]=Z[1];
+  PtTmp[2]=Z[3];
+  PtTmp[3]=Z[5];
+  PtTmp[4]=Z[7];
+  PtTmp[5]=Z[10];
+  for (int i= 0;i &lt; 6; i++)
+  {
+    startPoint[0] = X[0];
+    startPoint[1] = PtTmp[i];
+    endPoint[0] = X[7];
+    endPoint[1] = PtTmp[i];
+    spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+  }
+  startPoint[0] = X[3];
+  startPoint[1] = Z[2];
+  endPoint[0] = X[7];
+  endPoint[1] = Z[2];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+
+  startPoint[0] = X[0];
+  startPoint[1] = Z[9];
+  endPoint[0] = X[5];
+  endPoint[1] = Z[9];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+
+  PtTmp[0]=Z[4];
+  PtTmp[1]=Z[6];
+  PtTmp[2]=Z[8];
+  for (i= 0;i &lt; 3; i++)
+  {
+    startPoint[0] = X[3];
+    startPoint[1] = PtTmp[i];
+    endPoint[0] = X[5];
+    endPoint[1] = PtTmp[i];
+    spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+  }
+
+  // Creation of vertical lines
+  PtTmp[0]=X[0];
+  PtTmp[1]=X[7];
+  for (i= 0;i &lt; 2; i++)
+  {
+    startPoint[0] = PtTmp[i];
+    startPoint[1] = Z[0];
+    endPoint[0] = PtTmp[i];
+    endPoint[1] = Z[10];
+    spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+  }
+
+  startPoint[0] = X[3];
+  startPoint[1] = Z[1];
+  endPoint[0] = X[3];
+  endPoint[1] = Z[10];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+
+  startPoint[0] = X[5];
+  startPoint[1] = Z[3];
+  endPoint[0] = X[5];
+  endPoint[1] = Z[10];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+
+  PtTmp[0]=X[4];
+  PtTmp[1]=X[6];
+  for (i= 0;i &lt; 2; i++)
+  {
+    startPoint[0] = PtTmp[i];
+    startPoint[1] = Z[1];
+    endPoint[0] = PtTmp[i];
+    endPoint[1] = Z[2];
+    spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+  }
+
+  startPoint[0] = X[1];
+  startPoint[1] = Z[5];
+  endPoint[0] = X[1];
+  endPoint[1] = Z[7];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+  startPoint[0] = X[2];
+  startPoint[1] = Z[5];
+  endPoint[0] = X[2];
+  endPoint[1] = Z[9];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+
+  //  Lines and circles creation for projection mode symbol.
+  double X1[3] = { 941.0, 949.0, 955.0};
+  double Z1[5] ={ 70.0, 71.0, 73.0, 75.0, 76.0};
+  startPoint[0] = X1[0];
+  startPoint[1] = Z1[1];
+  endPoint[0] = X1[0];
+  endPoint[1] = Z1[3];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);    
+
+  startPoint[0] = X1[0];
+  startPoint[1] = Z1[3];
+  endPoint[0] = X1[1];
+  endPoint[1] = Z1[4];
+  CATISpecObject_var Line1 = spGeomFactory-&gt;CreateLine(startPoint, endPoint);    
+
+  startPoint[0] = X1[1];
+  startPoint[1] = Z1[4];
+  endPoint[0] = X1[1];
+  endPoint[1] = Z1[0];
+  spGeomFactory-&gt;CreateLine(startPoint, endPoint);    
+
+  startPoint[0] = X1[1];
+  startPoint[1] = Z1[0];
+  endPoint[0] = X1[0];
+  endPoint[1] = Z1[1];
+  CATISpecObject_var Line2 = spGeomFactory-&gt;CreateLine(startPoint, endPoint);    
+
+  // Creation of two concentric circles:
+  double center[2];
+  center[0]=X1[2];
+  center[1]=Z1[2];
+  double radius = 3.0;
+  CATISpecObject_var Cercle1 = spGeomFactory-&gt;CreateCircle(center,radius);
+
+  radius = 2.0;
+  spGeomFactory-&gt;CreateCircle(center,radius);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Before using the factory, you have to make the view current. The view
+implements the <i>CATI2DWFFactory</i> 2D geometry factory interface. It is the
+sketcher factory and, as a consequence, you can use the same methods to create a
+profile in a part or 2D geometric objects in a drawing view.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="FactAnn"></a>Getting the Annotation Factory and Creating Dress Up
+(Texts, Axis Line and Center Line)</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // DRESSUP CREATION
+  // ================
+
+  // Gets the view annotation factory
+  CATIDrwAnnotationFactory_var spAnnFactory = spBgView;
+
+  // Texts creation
+  CATIDftText *piDftText = NULL;
+  const double txtpos1[2] = {1013.,45.};
+  if (SUCCEEDED(spAnnFactory-&gt;CreateDftText(txtpos1,&amp;piDftText)))
+  {
+    // Set String
+    CATUnicodeString textString(&quot;TITLE BLOCK PERFORMED BY CAA2 APPLICATION&quot;);
+    wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+    textString.ConvertToWChar(ptxtChar);
+    piDftText-&gt;SetString(ptxtChar);
+    delete [] ptxtChar;
+    ptxtChar = NULL; 
+    // Text properties modification: Set bold and italic
+    CATIDftTextProperties *piDftTextProp = NULL;
+    if (SUCCEEDED(piDftText-&gt;GetTextProperties(&amp;piDftTextProp)))
+    {
+      piDftTextProp-&gt;SetBold(TRUE);
+      piDftTextProp-&gt;SetItalic(TRUE);
+
+      piDftTextProp-&gt;Release();piDftTextProp=NULL;
+    }
+    piDftText-&gt;Release();piDftText=NULL;
+  }
+  const double txtpos2[2] = {940., 40.};
+  if (SUCCEEDED(spAnnFactory-&gt;CreateDftText(txtpos2,&amp;piDftText)))
+  {
+    // Set String
+    CATUnicodeString textString(&quot;DASSAULT \nSYSTEMES&quot;);
+    wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+    textString.ConvertToWChar(ptxtChar);
+    piDftText-&gt;SetString(ptxtChar);
+    delete [] ptxtChar;
+    ptxtChar = NULL; 
+    CATIDftTextProperties *piDftTextProp = NULL;
+    // Text properties modification: Set bold and italic
+    if (SUCCEEDED(piDftText-&gt;GetTextProperties(&amp;piDftTextProp)))
+    {
+      piDftTextProp-&gt;SetBold(TRUE);
+      piDftTextProp-&gt;SetItalic(TRUE);
+      piDftTextProp-&gt;Release();piDftTextProp=NULL;
+    }
+    piDftText-&gt;Release();piDftText=NULL;
+  }
+  const double txtpos3[2] = {940., 54.};
+  if (SUCCEEDED(spAnnFactory-&gt;CreateDftText(txtpos3,&amp;piDftText)))
+  {
+    // Set String
+    CATUnicodeString textString(&quot;Date : 07 - 31 - 2000&quot;);
+    wchar_t *ptxtChar = new wchar_t[textString.GetLengthInChar()+1];
+    textString.ConvertToWChar(ptxtChar);
+    piDftText-&gt;SetString(ptxtChar);
+    delete [] ptxtChar;
+    ptxtChar = NULL; 
+    // Text properties modification: Set bold and italic
+    CATIDftTextProperties *piDftTextProp = NULL;
+    if (SUCCEEDED(piDftText-&gt;GetTextProperties(&amp;piDftTextProp)))
+    {
+      piDftTextProp-&gt;SetBold(TRUE);
+      piDftTextProp-&gt;SetItalic(TRUE);
+
+      CATIDrwSubString *piDrwSubString = NULL;
+      if (SUCCEEDED(piDftText-&gt;QueryInterface(IID_CATIDrwSubString,(void **)&amp;piDrwSubString)))
+      {
+        // Select the sub string to modifiable.
+        piDrwSubString-&gt;SetSelection(1,21);
+        piDftTextProp-&gt;SetFontSize(3.5);
+        piDrwSubString-&gt;Release();piDrwSubString=NULL;
+      }
+      piDftTextProp-&gt;Release();piDftTextProp=NULL;
+    }
+    piDftText-&gt;Release();piDftText=NULL;
+  }</pre>
+      <pre>  // axis line and center line creation
+  CATIDrwAxisLine_var axisline = spAnnFactory-&gt;CreateDrwAxisLine(Line1,Line2);
+  CATIDrwCenterLine_var centerline = spAnnFactory-&gt;CreateDrwCenterLine(Cercle1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIDrwAnnotationFactory</i> annotation factory is implemented by the
+view and so the coordinates passed in <code>CreateDrwText</code> are view
+coordinates. The <i>CATIDrwTextProperties</i> interface allows for text property
+modification, such as setting the text with a bold typeface using the <code>SetBold</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Saving"></a>Saving the Document and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Save the result
+  rc = CATDocumentServices::<b>SaveAs</b>(*pDoc, (char *)fileName);
+  ... // Check rc
+  rc = CATDocumentServices::<b>Remove</b> (*pDoc);
+  ... // Check rc
+  // Ends session and drops document	
+  rc = ::<b>Delete_Session</b>(&quot;SampleSession&quot;);
+  ... // Check rc
+
+  return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for saving a newly created CATIA
+document [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects and interfaces used when creating a
+CATDrawing document, and when creating a frame and a title block in the current
+sheet background view. The <i>CATIDrawing</i> interface is implemented by the
+drawing root object. A pointer to this interface is the key to enter and
+navigate the drawing structure, and can be retrieved using the <code>GetDrawing</code>
+method of the <i>CATIDftDocumentServices</i> interface implemented by the
+document. Retrieving the background view is performed first by retrieving the
+current sheet thanks to the <code>GetCurrentSheet</code> method of the <i>CATIDrawing</i>
+interface, and then asking the current sheet for this background view using the <code>GetBackgroundView</code>
+of <i>CATISheet</i>. This background view is made current using the <code>SetCurrentView</code>
+method of <i>CATISheet</i>, and a handler to the <i>CATI2DWFFactory</i>
+interface implemented by the view is retrieved to create the frame lines thanks
+to the <code>CreateLine</code> method. The view also implements the <i>CATIDrwAnnotationFactory</i>
+interface and the title block is created using its <code>CreateDrwText</code>
+method, and set with a bold typeface using the <code>SetBold</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Lauching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

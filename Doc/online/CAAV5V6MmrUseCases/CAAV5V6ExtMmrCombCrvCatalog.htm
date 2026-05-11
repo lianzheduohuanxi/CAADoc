@@ -1,0 +1,358 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Combined Curve's Catalog</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Combined Curve's Catalog</h3>
+      <em>Defining a New StartUp in a catalog&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td colspan="3"><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating a
+      New Geometrical Feature: The V5V6ExtCombinedCurve</a> &gt; <b>Creating Combined
+      Curve's Catalog</b></td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p> This article explains how to generate a Catalog file including the V5V6ExtCombinedCurve Feature's Initial Definition: 
+      its StartUp.&nbsp;
+      <br> It's equivalent to the article explaining how the generate the 
+		catalog for the original CombinedCurve feature, "Creating Combined Curve's
+      Catalog" [<a href="#References">5</a>] 
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The <b>CAAV5V6ExtMmrCombinedCurve </b>&nbsp;Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve Do</a></li>
+            <li><a href="#How">How to Create the 
+			CAAV5V6ExtMmrCombinedCurveCatalog.CATfct Catalog</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurveCatalog.osm file</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you generate the <b>Catalog file</b>
+containing the <b>V5V6ExtCombinedCurve Feature StartUp</b>.</p>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6ExtMechanicalModeler.edu
+framework that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurve Do</h4>
+<p>The goal of this use case is to generate the Catalog file containing the
+V5V6ExtCombinedCurve Feature's StartUp. As described in the technical article entitled
+&quot;Creating a New StartUp from a Mechanical Feature&quot; [<a href="#References">1</a>], the first
+thing is
+to define the new StartUp:</p>
+<ol>
+  <li>Choosing the derived mechanical StartUp</li>
+  <p>The V5V6ExtCombinedCurve is a wireframe geometrical object, so we have chosen to
+  derive the V5V6ExtCombinedCurve StartUp from the <b>GeometricalElement3D</b>
+  mechanical StartUp.&nbsp;Derive from the GSMGeom StartUp can be also
+  possible, but it is not possible to derive from MechanicalFormFeature and
+  MechanicalContextualFeature since it's not a solid feature.&nbsp;</p>
+  <p>The hieararchy of StartUp is the following:</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveStartUps.jpg"></td>
+    </tr>
+  </table>
+  <p>In doing so, you will automatically benefit from all standard behaviors
+  already implemented for all geometrical features and more generally for all
+  mechanical features. Refer to the article entitled &quot;Integrating a New
+  Mechanical Feature in V5&quot; [<a href="#References">2</a>] for details about
+  the standard behavior of a feature deriving from the GeometricalElement3D
+  StartUp and the interfaces to implement to be fully integrated in V5.&nbsp;</p>
+  <li>Defining the attributes of the new feature</li>
+</ol>
+<blockquote>
+<p>Now that we have seen the parents of the V5V6ExtCombinedCurve Feature, we still
+have to define its own Attributes. Those Attributes will be added to those
+inherited from its ancestors.</p>
+<p>Since a V5V6ExtCombinedCurve is built using two curves and two directions, it is
+straightforward to define <b>four new input Attributes</b>: &quot;V5V6Curve1&quot;,
+&quot;V5V6Direction1&quot;, &quot;V5V6Curve2&quot; and &quot;V5V6Direction2&quot;.</p>
+<p>These Attributes will be point to four other Features. This means they are of
+type &quot;tk_specobject&quot;. From an update point of view, the input
+Attributes have to be evaluated before building the V5V6ExtCombinedCurve. That's why
+they are IN Attributes ( &quot;sp_IN&quot; type ) [<a href="#References">3</a>]</p>
+
+<p>A last attribute, "V5V6Desactive" enables to manage the active/desactive status of the 
+V5V6ExtCombinedCurve feature.  </p>
+
+
+</blockquote>
+<p>Once the V5V6ExtCombinedCurve feature's inheritance and attributes have been
+defined, we are ready to generate the <b>V5V6ExtCombinedCurveCatalog.CATfct </b> file 
+that will contain the V5V6ExtCombinedCurve's initial definition: The 
+V5V6ExtCombinedCurve <b>StartUp</b>.</p>
+<p>Catalogs are particular files in which StartUps are created, enhanced with new
+Attributes and stored. These StartUps are then instantiated into run time
+instances.</p>
+
+
+<p>From the osm file, we will generate the V5V6ExtCombinedCurveCatalog.CATfct file, 
+by running the command-line tool <b>CATfctEditorAssistant. </b>&nbsp;The 
+generated file will then be stored in the 
+CAAV5V6MechanicalModelerEduRcsCNext.m\src\CNext/resources/graphic directory of the CAAV5V6MechanicalModeler.edu framework. </p>
+
+<p>The next chapter explains how to use the CATfctEditorAssistant tool.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Create the CAAV5V6ExtMmrCombinedCurveCatalog.CATfct 
+Catalog</h4>
+
+
+<p>To create the CAAV5V6ExtMmrCombinedCurveCatalog.CATfct catalog, you will need to set up the run time environment 
+and then execute the <b>CATfctEditorAssisant</b> tool as indicated.</p>
+<table class="code" id="table14">
+	<tr>
+		<td>
+		<pre>$ mkrun -c sh
+$ cd <i>your_workspace_root</i>
+$ # Make sure that no previous catalog exists in the run-time view, including in the concatenation
+$ rm <i>OS_directory</i>/resources/graphic/CAAV5V6ExtMmrCombinedCurveCatalog.CATfct
+
+$ # Create empty catalog and empty osm 
+$ <b>CATfctEditorAssistant -create-new-catalog -catalog-name CAAV5V6ExtMmrCombinedCurve.CATFct -with-client-id</b> <b>SAMPLES 
+-into-directory $PWD</b>
+$ exit # the mkrun shell
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>Two empty files have been generated in your workspace root, CAAV5V6ExtMmrCombinedCurve.osm and  
+CAAV5V6ExtMmrCombinedCurve.CATfct.
+<br>Move the CAAV5V6ExtMmrCombinedCurve.CATfct file to the run-time view 
+directory : <i>OS_directory</i>/resources/graphic/
+<br>Edit the CAAV5V6ExtMmrCombinedCurve.osm file and add the description of the V5V6ExtCombiendCurve StartUp. 
+<br> We now need to execute CATfctEditorAssistant again.</p>
+
+<table class="code" id="table14">
+	<tr>
+		<td>
+		<pre>$ mkrun -c sh
+$ cd <i>your_workspace_root</i>
+
+$ # Upgrade the empty catalog with the InputData osm. 
+$ <b>CATfctEditorAssistant -update-catalog -catalog-name CAAV5V6ExtCombinedCurveCatalog.CATfct -with-client-id SAMPLES 
+-with-osm $PWD/CAAV5V6ExtMmrCombinedCurveCatalog.osm -into-directory $PWD
+
+$ exit # the mkrun shell
+ </pre>
+		</td>
+	</tr>
+</table>
+ 
+<p>CAAV5V6ExtMmrCombinedCurve.CATfct has been regenerated in your workspace 
+root. Move it to the&nbsp; 
+CAAV5V6MechanicalModelerEduRscCNext.m\src\CNext\resources\graphic directory of 
+your framework. Launch build to refresh the Run-time view.
+ </p>
+
+
+
+<p><b>Notes</b>: </p>
+<p>CATfctEditorAssistant looks for the catalog and outputs it in two different 
+locations:</p>
+<ul>
+	<li>On input, the catalog argument is stripped of its directory and looked 
+	up in the run-time view. At your workspace level, it is the 
+<code><i>workspace_root</i>/<i>OS_directory</i>/resources/graphic</code> directory. 
+	</li>
+	<li>On output, the catalog is written at the location specified by the 
+	catalog argument</li>
+</ul>
+<p>The place to store catalogs in your workspace is <code>Your-framework/CNext/resources/graphic</code>. Any catalog found in 
+this directory will be automatically copied to the run-time view 
+<code><i>workspace_root</i>/<i>OS_directory</i>/resources/graphic </code>by the 
+mkrtv command. </p>
+ 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurveCatalog.osm 
+file</h4>
+
+<p>The <code>CAAV5V6ExtMmrCombinedCurveCatalog.osm</code> file is located in the InputData directory of 
+the <code>CAAV5V6MechanicalModeler.edu</code> framework:</p>
+<p><code><i>InstallRootDirectory</i>\CAAV5V6MechanicalModeler.edu\InputData</code></p>
+<p>where <code>InstallRootDirectory</code>  [<a href="#References">5</a>] is the directory where the CAA CD-ROM
+is installed.</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p>There are two parts in the <code>CAAV5V6ExtMmrCombinedCurveCatalog.osm</code>:</p>
+<ol>
+  <li><a href="#Step1">OSM prolog</a></li>
+  <li><a href="#Step2">The V5V6ExtCombinedCurve Catalog StartUp</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step1"></a>OSM Prolog</h3>
+<p>The OSM prolog is automatically generated by the CATfctAssitant tool. It defines the catalog and its root container, 
+and also give information on the file history.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+document `CAAV5V6ExtMmrCombinedCurveCatalog.CATfct` {
+	  history("ads","","2012-09-21 14:45",0., 0uf1ce8025-0000-fa1c-505c7d6e0000000a)
+	  check_revision(0uf1ce8025-0000-fa1c-505c7d6e0000000a)
+	
+	  container `RootCont` #root #uuid(0uf1ce8025-0000-fa1c-505c7d6e00000005) {
+		
+// insert here your startups
+      
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="Step2"></a>The V5V6ExtCombinedCurve StartUp</h3>
+
+<p>Here is the content of the V5V6ExtCombinedCurve StartUp&nbsp; that your 
+should add in the CAAV5V6ExtMmrCombinedCurveCatalog.osm file, just after the 
+line:&nbsp; // insert here your startups.  </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+feature V5V6ExtCombinedCurve GeometricalElement3D@`MechMod.feat` #startup {
+	specobject V5V6Curve1 #in
+	specobject V5V6Dir1 #in
+	specobject V5V6Curve2 #in
+	specobject V5V6Dir2 #in
+	int V5V6Desactive #in 
+         }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="left">The V5V6ExtCombinedCurve feature has five input attributes: V5V6Curve1, V5V6Direction1, 
+V5V6Curve2, V5V6Direction2 and V5V6Desactive. 
+
+<br> You can note that compared to the CombinedCurve's original StartUp, there is an extra input specification 
+     called "V5V6Desactive", necessary for Active/Desactive functionnality explained in the article 
+		&quot;Enabling the Build Deactivation&quot;. </p>
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<hr>
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create and define the V5V6ExtCombinedCurve
+Feature's StartUp in a Catalog. This StartUp will later be used to <b>instantiate</b> 
+V5V6ExtCombinedCurve Instances through a factory interface [<a href="#References">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%" height="87">
+  <tr>
+    <td valign="top" height="18">[1]</td>
+    <td height="18"><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating
+      a New StartUp Deriving from a Mechanical StartUp&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="17">[2]</td>
+    <td height="17"><a href="../CAAMmrTechArticles/CAAMmrFeatureIntegration.htm">Integrating a New
+  Mechanical Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[3]</td>
+    <td height="18"><a href="../CAAOsmQuickRefs/CAAOsmHome.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[4]</td>
+    <td height="18"><a href="CAAV5V6ExtMmrCombinedCurveFactory.htm">Creating V5V6ExtCombinedCurve's Factory Interface</a></td>
+  </tr>
+  <tr>
+   <tr>
+    <td valign="top" height="18">[5]</td>
+    <td height="18"><a href="../CAAMmrUseCases/CAAMmrCombCrvCatalog.htm">
+    Creating Combined Curve's Catalog</a></td>
+  </tr>
+  <tr>
+
+    <td valign="top" align="right" colspan="2" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>
+

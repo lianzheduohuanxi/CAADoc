@@ -1,0 +1,687 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>AddRef Release Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>AddRef Release Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article describes the checks relative to AddRef / Release. These 
+		checks are identified by AWRS, AWR2, AWPD, PNSS.</p>
+					<ul>
+						<li><a href="#Problematic">Problematic</a></li>
+						<li><a href="#Checks">Checks</a>
+							<ul>
+								<li><a href="#Principle">Principle</a></li>
+								<li><a href="#Limitations">Limitations</a></li>
+								<li><a href="#PNSS">PNSS</a></li>
+								<li><a href="#AWRS">AWRS</a></li>
+								<li><a href="#AWR2">AWR2</a></li>
+								<li><a href="#AWPD">AWPD</a></li>
+								<li><a href="#WPD">WPD</a></li>
+							</ul>
+						</li>
+						<li><a href="#Relative">Relative Sections in Setting Files</a>
+							<ul>
+								<li><a href="#AddRefMethods">MemoryManagement_AddRefMethods</a></li>
+								<li><a href="#NeutralMethods">MemoryManagement_NeutralMethods</a></li>
+								<li><a href="#StorageMethods">MemoryManagement_StorageMethods</a></li>
+							</ul>
+						</li>
+						<li><a href="#DynamicRecognition">Dynamic AddReff'ing Method Recognition</a>
+							<ul>
+								<li><a href="#Target">Target</a></li>
+								<li><a href="#Syntax">Syntax</a></li>
+								<li><a href="#Remarks">Remarks</a></li>
+								<li><a href="#DynamicExamples">Examples of Use</a></li>
+							</ul>
+						</li>
+						<li><a href="#InShort">In Short</a></li>
+						<li><a href="#References">References</a></li>
+						<li><a href="#History">History</a></li>
+					</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Managing component lifecycle in client applications can be a quite difficult 
+job. The lifecycle of the component is managed by a reference count, this count 
+represents the number of concurrent users of the component. The reference count 
+management is under the responsibility of the client application. This reference 
+count is modified by both methods AddRef() (to increase it) or Release() (to decrease 
+it). When the reference count is null (after the last call to Release()), the component 
+deletes itself.</p>
+<p>If the client application does not manage this reference count properly, the 
+reference count will be de-correlated from the effective number of users, thus leading 
+to potential bugs. For example, if a client application forgets to call Release() 
+after an AddRef(), the component will nether be destroyed, thus leading to a memory 
+leak.</p>
+<p>Some methods (the most known of them being QueryInterface) call AddRef() internally 
+on the component. A call to one of these methods requires a call to Release() afterwards 
+on the pointer which has been AddRef'ed, to decrease the reference count.</p>
+<p>CSC helps debugging these memory leaks, by pointing some of the non-Released 
+components.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Checks"></a>Checks</h2>
+<h3><a name="Principle"></a>Principle</h3>
+<p>CSC knows a list of AddReffing methods (these methods are declared in the settings 
+file or they are tagged in source code), the most known of them being QueryInterface. 
+When one of these methods is called, the AddRef'ed pointer is followed by CSC to 
+see if it is further Released (or stored, or duplicated, or returned). If this pointer 
+is neither Released, nor stored, nor duplicated, nor returned, an error will be 
+reported.</p>
+<h3><a name="Limitations"></a>Limitations</h3>
+<p>If there are different overloading methods with the same number of arguments 
+inside a class, they are supposed to have the same behavior. For example, if one 
+of them is declared as returning an AddRef'ed pointer, they all will be regarded 
+as doing the same.</p>
+<h3><a name="PNSS"></a>PNSS</h3>
+<p>PNSS stands for Pointer Not Stored in Source.</p>
+<p>An error of type PNSS is reported when:</p>
+<ul>
+	<li>a method returning a AddRef'ed pointer is called</li>
+	<li>the returned pointer is not stored</li>
+</ul>
+<p>As the returned pointer is not stored, it can not be released, thus leading to 
+a memory leak.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="PNSS-1"></a>Example PNSS-1</h4>
+<p>The returned pointer is not stored.</p>
+<p>Let's assume that CATPathElement::FindElement returns an AddRef'ed Pointer:</p>
+<pre class="code">CATBaseUnknown * CATPathElement::FindElement( const IID &amp;iIid )<strong>
+</strong>{
+  ...
+<strong>  pElt-&gt;AddRef();</strong>
+  return <strong>pElt</strong>;
+}</pre>
+<p>The following code will report a PNSS error:</p>
+<pre class="code">CATPathElement* pathElement= ...;
+const IDD iid= ...;
+
+if( pathElement-&gt; <strong>FindElement</strong>(iid) ) <strong>
+</strong>{
+  ...
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATPathElement* pathElement= ...;
+const IDD iid= ...;
+
+CATBaseUnknown* foundElement= NULL;
+if( foundElement= pathElement-&gt; <strong>FindElement</strong>(iid) ) <strong>
+</strong>{
+  ...
+<strong>  foundElement-&gt;Release();
+</strong>  foundElement= NULL;
+}</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="PNSS-2"></a>Example PNSS-2</h4>
+<p>The returned pointer is directly used.</p>
+<p>Let's assume that CATPathElement::FindElement returns an AddRef'ed pointer:</p>
+<pre class="code">CATBaseUnknown * CATPathElement::FindElement( const IID &amp;iIid )
+{
+  ...
+<strong>  pElt-&gt;AddRef();</strong>
+  return <strong>pElt</strong>;
+}</pre>
+<p>The following code will report a PNSS error:</p>
+<pre class="code">CATPathElement* pathElement= ...;
+const IDD iid= ...;
+
+if( pathElement-&gt; <strong>FindElement</strong>(iid)-&gt;IsAKindOf( &quot;CATPathElement&quot; ) ) <strong>
+</strong>{
+  ...
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATPathElement* pathElement= ...;
+const IDD iid= ...;
+
+CATBaseUnknown* foundElement= NULL;
+foundElement= pathElement-&gt; <strong>FindElement</strong>(iid); <strong>
+</strong>if( foundElement ) 
+{
+  if( foundElement-&gt;IsAKindOf( &quot;CATPathElement&quot; ) ) 
+  {
+    ...
+  }
+  <strong>foundElement-&gt;Release();
+  foundElement= NULL;</strong>
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="AWRS"></a>AWRS</h3>
+<p>AWRS stands for AddRef Without Release in Source.</p>
+<p>An error of type AWRS is reported when:</p>
+<ul>
+	<li>a method returning (directly or as a returned argument) an AddRef'ed pointer 
+		is called</li>
+	<li>the returned pointer is stored in a local object (pointer or handler)</li>
+	<li>the object is neither Released, nor stored, nor duplicated, nor returned</li>
+</ul>
+<p>As the returned pointer is not released, a memory leak is generated.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="AWRS-1"></a>Example AWRS-1</h4>
+<p>The returned pointer is not Released.</p>
+<p>The second argument of CATBaseUnknown::QueryInterface(..., ...) is an AddRef'ed 
+pointer.</p>
+<p>The following code will report an AWRS error:</p>
+<pre class="code">CATBaseUnknown *entityToBeLinked= ...;  // Retrieve entityToBeLinked
+if( entityToBeLinked )
+{
+  CATIElecConnector *pInputCtr = NULL;
+  HRESULT rc = entityToBeLinked-&gt; <strong>QueryInterface</strong>(CATIElecConnector::ClassId(), (void **)&amp;pInputCtr);
+  if( SUCCEEDED( rc ) )
+  {
+    // use of pInputCtr
+    ..
+  }
+}</pre>
+<p>The correct code is:</p>
+<pre class="code">CATBaseUnknown *entityToBeLinked= ...;  // Retrieve entityToBeLinked
+if( entityToBeLinked )
+{
+  CATIElecConnector *pInputCtr = NULL;
+  HRESULT rc = entityToBeLinked-&gt; <strong>QueryInterface</strong>(CATIElecConnector::ClassId(), (void **)&amp;pInputCtr);
+  if( SUCCEEDED( rc ) )
+  {
+    // use of pInputCtr
+    ..
+   <strong> pInputCtr-&gt;Release();
+    pInputCtr= NULL;</strong>
+  }
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="AWR2"></a>AWR2</h3>
+<p>AWR2 stands for AddRef Without Release type 2.</p>
+<p>An error of type AWR2 is reported when:</p>
+<ul>
+	<li>a method returning (directly or as a returned argument) a AddRef'ed pointer 
+		is called</li>
+	<li>the returned pointer is stored in an object (pointer or handler)</li>
+	<li>the returned object is duplicated (once or several times)</li>
+	<li>the duplicated objects are not themselves duplicated</li>
+	<li>neither the initial, nor the duplicated objects (pointers or handlers) are 
+		Released, stored, or returned</li>
+</ul>
+<p>In the instruction &quot;final= initial;&quot;, let's call final the &quot;duplicating 
+object&quot; and initial the &quot;duplicated object&quot;.</p>
+<ul>
+	<li>if the duplicating object is a handler and that both types are incompatible 
+		(in 2 different derivation branches), an implicit QueryInterface will occur 
+		at runtime, so the duplication is not taken into account.</li>
+	<li>if the duplicating object is a handler and that this handler is released, 
+		stored or duplicated (same rule as before), the tool assumes that the release 
+		is done on duplicated object, and no error is reported.</li>
+	<li>if the duplicating object is a pointer and that this pointer is released, 
+		stored, duplicated or returned, the tool assumes that the release is done 
+		on the duplicated object, and no error is reported.</li>
+	<li>In any other case, the initial pointer or handler is seen as non-released, 
+		and an AWR2 error is reported.</li>
+</ul>
+<p>As the returned pointer can is not released, a memory leak is generated.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="AWR2-1"></a>Example AWR2-1</h4>
+<p>The returned pointer is duplicated and not released.</p>
+<p>The return of CATISpecAttribute::GetSpecObject() is a AddRef'ed pointer.</p>
+<p>The following code will report an AWR2 error:</p>
+<pre class="code">CATISpecAttribute* pIFaceConnectorAttr = ...;  // Retrieving the CATISpecAttribute pointer
+CATISpecObject* pISpecDrwConnector= NULL;
+if( pIFaceConnectorAttr != NULL ) 
+{ 
+  pISpecDrwConnector = pIFaceConnectorAttr-&gt; <strong>GetSpecObject</strong>(); // Retrieving the AddRef'ed pointer
+} 
+
+CATIConnector_var <strong>spIConnector</strong> = <strong>pISpecDrwConnector</strong>;   // Duplicating the pointer
+if( spIConnector != NULL_var) 
+{
+  // Using spIConnector
+  ...
+}
+// Neither the initial pointer, nor the duplicated handler are released</pre>
+<p>The correct code is:</p>
+<pre class="code">CATISpecAttribute* pIFaceConnectorAttr = ...;  // Retrieving the CATISpecAttribute pointer
+CATISpecObject* pISpecDrwConnector= NULL;
+if( pIFaceConnectorAttr != NULL ) 
+{ 
+  pISpecDrwConnector = pIFaceConnectorAttr-&gt; <strong>GetSpecObject</strong>(); // Retrieving the AddRef'ed pointer
+} 
+
+CATIConnector_var <strong>spIConnector</strong> = <strong>pISpecDrwConnector</strong>;   // Duplicating the pointer
+if( pISpecDrwConnector )
+{
+  <strong>pISpecDrwConnector-&gt;Release();</strong>  // Releasing the AddRef'ed pointer (spIConnector is still valid, as it is a handler)
+  <strong>pISpecDrwConnector= NULL;
+</strong>}
+if( spIConnector != NULL_var ) 
+{
+  // Using spIConnector
+  ...
+}</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="AWPD"></a>AWPD</h3>
+<p>AWPD stands for AddRef done Without Prototype Declaration.</p>
+<p>An error of type AWPD is reported when:</p>
+<ul>
+	<li>a method returning (directly or as a returned argument) an AddRef'ed pointer 
+		is called but without declaring it in the Prototype Declaration</li>
+</ul>
+<h4><a name="AWPD-1"></a>Example AWPD</h4>
+<p>HisAPI is doing an Addref on opiToto.</p>
+<p>MyAPI is doing an Addref too, since MyAPI is calling HisAPI. </p>
+<p>By Calling MyAPI, MyCode is doing an Addref on piToto but it doesn't know it.</p>
+<p>To prevent this type of scenario, MyAPI will get an AWPD error when calling HisAPI.</p>
+<pre class="code">
+HisAPI.h
+/**
+ * @param opiToto [out, IUnknown#Release] 
+ */
+HRESULT HisAPI(CATIToto *&amp; opiToto);
+</pre>
+<pre class="code">
+MyAPI.h
+HRESULT MyAPI(CATIToto *&amp; opiToto) // no prototype declaration explaining that ipToto need to be release
+</pre>
+<pre class="code">
+HRESULT MyAPI(CATIToto *&amp; opiToto)
+{
+  <strong>HRESULT hr=HisAPI (opiToto ); // AWPD error since we are addrefing piToto in a method returning this pointer</strong>
+  return hr;	
+}</pre>
+<pre class="code">
+MyCode.cpp
+HRESULT MyCode()
+{
+  CATIToto * piToto = NULL; 
+  HRESULT HR = MyAPI(piToto); // no error in this code, but this code will generate a memory leak since ipToto won't be released.
+  Return HR;
+ }
+</pre>
+<p>To correct the AWPD error, the developer just need to add the following prototype 
+description:</p>
+<pre class="code">
+<strong>/**
+ * @param opiToto [out, IUnknown#Release] 
+ */</strong>
+MyAPI.h
+HRESULT MyAPI(CATIToto *&amp; opiToto)
+</pre>
+<p>The AWPD error will disappear, but MyCode.cpp will now get an AWRS explaining 
+that piToto need to be released.</p>
+<pre class="code">
+MyCode.cpp
+HRESULT MyCode()
+{
+  CATIToto * piToto = NULL;
+  HRESULT HR = MyAPI(piToto);
+  <strong>ipToto-&gt;Release;</strong>
+  Return HR;
+ }
+</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="WPD"></a>WPD</h3>
+<p>WPD stands for Wrong Parameter Definition.</p>
+<p>mkscc uses method parameters and their documentations to figure out how the life 
+cycle of the objects passed as parameters must be managed. An error of type WPD 
+is reported when the method comment:</p>
+<ul>
+	<li>Is not consistent with the method signature.</li>
+	<li>Does not match the expected syntax to raise AWRS errors.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="WPD1"></a>Method Comment and Signature not Consistent</h4>
+<p>&nbsp;When inconsistencies appear between the signature and its documentation, 
+mkscc cannot determine how the life cycle of the objects passed as parameters is 
+intended to be managed.</p>
+<p>For example, consider the following method declaration:</p>
+<pre class="code">/**
+ * Retrieves a component corresponding to AdpId passed as input.
+ * To get the full set of components, use the iterator.
+ *
+ * @param iId
+ *        AdpIndentifier from which we want the corresponding component
+ * @param iIID
+ *        IID to cast to
+ * @param <strong>oComponent</strong> [out, CATBaseUnknown#Release]
+ *        Element casted. Use : (void**)&amp;oComponent
+ * @return
+ *        S_OK   : element found
+ *        S_FALSE: element not found
+ *        E_FAIL : if failure
+ */
+HRESULT GetComponent(CATIAdpPLMIdentificator *  iId, 
+                     const IID               &amp;  iIID,
+                     void                    ** <strong>oOpenedElement</strong>) const;</pre>
+<p>The <strong>oOpenedElement</strong> parameter in the signature is shown as
+<strong>oComponent</strong> in the documenation. Such an inconsistency raises a 
+WPD error for the <strong>oComponent</strong> parameter to report that this parameter 
+does not exist in the method signature.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="WPD2"></a>Method Comment Syntax Error</h4>
+<p>When a parameter documentation syntax is not correct, mkscc cannot parse the 
+comment to determine the way the the life cycle is intended to be managed.</p>
+<p>For example, consider the following method declaration:</p>
+<pre class="code">/**
+ * Get a component corresponding to AdpId passed as input.
+ * To get the full set of components, use the iterator.
+ *
+ * @param iId
+ *        AdpIndentifier from which we want the corresponding component
+ * @param iIID
+ *        IID to cast to
+ * @param <strong>void ** oOpenedElement [out, CATBaseUnknown#Release]</strong>
+ *        Element casted. Use : (void**)&amp;oComponent
+ * @return
+ *        S_OK   : element found
+ *        S_FALSE: element not found
+ *        E_FAIL : if failure
+ */
+HRESULT GetComponent(CATIAdpPLMIdentificator *  iId, 
+                     const IID               &amp;  iIID ,
+                     void                    ** oOpenedElement) const;</pre>
+<p>The <strong>oOpenedElement</strong> parameter documentation matches the signature, 
+but its type is also part of the comment, which is not correct. The correct syntax 
+is:</p>
+<pre class="code"> * @param <strong>oOpenedElement [out, CATBaseUnknown#Release]</strong></pre>
+<p>Such a syntax error raises a WPD error to report that the <strong>void</strong> 
+parameter, and no the <strong>oOpenedElement</strong> parameter, must be released 
+by the caller.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">1</a>].</p>
+<h3><a name="AddRefMethods"></a>MemoryManagement_AddRefMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; MemoryManagement_OptionLists</p>
+<p>
+<img alt="MemoryManagement_AddRefMethods" height="390" src="images/CAACscTaAddRefReleaseAddRefMethods.gif" width="597"/></p>
+<p>This section contains a list of CallWithSpecificArg. Each CallWithSpecificArg 
+describes a method, a function or a macro returning an AddRef'ed pointer (directly 
+or via a returned argument), which will have to be released (or return or stored):</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>The name of the class (no ClassName means that it is a function)</dd>
+	<dt>MethodOrFunctionSign</dt>
+	<dd>The signature of the method or function AddReffing the pointer</dd>
+	<dt>SpecificArg</dt>
+	<dd>The number of the AddRef'ed argument (0 refers to the method's result)</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+	<li>This section must not contain methods returning a handler (the lifecycle 
+		of handlers is managed by handlers themselves, not by users).</li>
+	<li>This section must not contain methods returning a list of pointers (or handlers), 
+		each one being AddRef'ed (like CATListOfPtr). This is not supported by the 
+		tool.</li>
+	<li>Avoid describing the type of the arguments (just specify the number of arguments 
+		with &quot;?&quot;).</li>
+	<li>This section must not contain methods returning a pointer which must be 
+		deleted.</li>
+	<li>The behavior of a method declared in a base class is inherited to child 
+		classes. For example, if the method declared in the base class is declared 
+		as returning an AddRef'ed pointer, the overloading methods defined in the 
+		child classes will be regarded as doing the same.</li>
+</ul>
+<p>Example 1:</p>
+<pre>SpecificArg          2
+ClassName            IUnknown
+MethodOrFunctionSign QueryInterface(?,void**)</pre>
+<p>This means that the method QueryInterface with 2 arguments (the second being 
+a void**) of the class IUnknown (or any inheriting class, like CATBaseUnknown) makes 
+an AddRef on its second argument.</p>
+<p>Example 2:</p>
+<pre>SpecificArg          0
+ClassName            CATIGraphNode
+MethodOrFunctionSign GetGraphNode</pre>
+<p>This means that the method GetGraphNode (no matter the number of arguments) of 
+the class CATIGraphNode (or any inheriting class) makes an AddRef on its returned 
+pointer.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="NeutralMethods"></a>MemoryManagement_NeutralMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; MemoryManagement_OptionLists</p>
+<p>
+<img alt="MemoryManagement_NeutralMethods" height="388" src="images/CAACscTaAddRefReleaseNeutralMethods.gif" width="595"/></p>
+<p>This is an internal section. Do not use it.</p>
+<h3><a name="StorageMethods"></a>MemoryManagement_StorageMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt; MemoryManagement_OptionLists</p>
+<p>
+<img alt="MemoryManagement_StorageMethods" height="450" src="images/CAACscTaAddRefReleaseStorageMethods.gif" width="605"/></p>
+<p>This section contains a list of CallWithSpecificArg. Each CallWithSpecificArg 
+describes a method, a function or a macro storing or releasing a pointer:</p>
+<dl>
+	<dt>ClassName</dt>
+	<dd>The name of the class (no ClassName means that it is a function or a macro)</dd>
+	<dt>MethodOrFunctionSign</dt>
+	<dd>The signature of the method or function or macro storing or releasing the 
+	pointer</dd>
+	<dt>SpecificArg</dt>
+	<dd>The number of the released argument (0 refers to the method's result)</dd>
+</dl>
+<p>If the argument is being released, it does not need to be released directly a 
+second time. If the argument is being stored, it can be released later.<br />
+So, if an AddRef'ed pointer is passed to a method registered in this section, and 
+that this pointer is not released, no error of type AWRS or AWR2 will be reported.</p>
+<p>Example 1:</p>
+<pre>SpecificArg          2
+ClassName            CATIUnknownList
+MethodOrFunctionSign Add(?,?)</pre>
+<p>This means that the method Add with 2 arguments of the class CATIUnknownList 
+stores its second argument.</p>
+<p>Example 2:</p>
+<pre>SpecificArg          1
+ClassName            &lt;none&gt;
+MethodOrFunctionSign CATShmRelease</pre>
+<p>This means that the macro (no matter the number of arguments) CATShmRelease Releases 
+its first argument.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="DynamicRecognition"></a>Dynamic AddReff'ing Method Recognition</h2>
+<h3><a name="Target"></a>Target</h3>
+<p>Settings files provide CSC with information about the code it cannot obtain from 
+the implementation (see [<a href="#References">1</a>] for description of settings 
+files). But this mechanism can lead to de-correlation between information data in 
+the settings file and the current implementation, which can lead to invalid errors. 
+Then, CSC tool provides a means to declare for each method, in the header file in 
+which the method is declared, the returned pointers to release after a call to the 
+method.</p>
+<p>This mechanism has other advantages compared to the use of a settings file:</p>
+<ul>
+	<li>The detection is immediate at each level, as soon as the source file is 
+		released;</li>
+	<li>It provides an additional documentation for user.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Syntax"></a>Syntax</h3>
+<p>The mechanism leans on the specific comments inserted in a header file enclosing 
+information used to document the declared entities, classes, methods and global 
+functions...</p>
+<p>CSC tool parses documentation comment preceding each method and function declaration 
+and detects the use of @param and @return mkman tags. These tags are used to describe 
+global function or method parameters and returned value.</p>
+<!-- See [<a href="#References">4</a>]
+for a general description on how to use these tags.</p -->
+<p>Among other information, a deallocation method or function can be specified for 
+the parameter or the return value, if needed. Any caller of the method has to use 
+the specified method to &quot;deallocate&quot; the parameter or return variable 
+after use. Here is a part of the specification (using BNF notation) for @param and 
+@return tags:</p>
+<pre class="code">&lt;param&gt; ::= ' * @param' &lt;identifier&gt; [&lt;direction&gt; [',' &lt;dealloc&gt;]]
+            ' *' &lt;comment&gt;
+	   ...
+&lt;identifier&gt; ::= &lt;dir&gt; &lt;upperalphabetic&gt; { &lt;limitedalphabetic&gt; }
+&lt;dir&gt;        ::= 'i'    | 'o'     | 'io'
+&lt;direction&gt;  ::= '[in]' | '[out]' | '[inout]'
+&lt;dealloc&gt;    ::= &lt;class-name&gt;     &quot;#&quot; &lt;memberfunction-name&gt; |
+                 &lt;interface-name&gt; &quot;#&quot; &lt;memberfunction-name&gt; |
+                 &lt;memberfunction-name&gt; | 'delete'
+
+&lt;return-sequence&gt; ::= &lt;return&gt;
+&lt;return&gt; ::= '  * @return' [&lt;hresult&gt; | &lt;dealloc&gt; ]
+             '  *' &lt;comment&gt;
+             ...
+&lt;dealloc&gt;    ::= &lt;class-name&gt;     &quot;#&quot; &lt;memberfunction-name&gt; |
+                 &lt;interface-name&gt; &quot;#&quot; &lt;memberfunction-name&gt; |
+                 &lt;memberfunction-name&gt; | 'delete'</pre>
+<p>Multiple @param tags are allowed in the same comment. Multiple @return tags are 
+not allowed in the same comment</p>
+<p><strong>If the dealloc method specified for a parameter in a @param section is &lt;class&gt;#Release</strong> 
+(eg. CATBaseUnknown#Release or IUnknown#Release), CSC will recognize the method 
+as returning an AddReff'ed pointer via the parameter, and will check that this latter 
+is released (or returned or stored) after use.<br />
+<strong>If the dealloc method specified in the @return section is &lt;class&gt;#Release</strong> 
+(eg. CATBaseUnknown#Release or IUnknown#Release), CSC will recognize the method 
+as returning an AddReff'ed pointer and will check that this latter is released (or 
+returned or stored) after use.<br />
+</p>
+<p><strong>In all other cases</strong> (delete, CATRep#Destroy...)<strong>, CSC 
+will not consider the dealloc method information.</strong></p>
+<h3><a name="Remarks"></a>Remarks</h3>
+<ol>
+	<li>If Release() is the dealloc method, the recommendation is to use the appropriate 
+		type, consistent with the method argument signature type, that is
+		<strong>CATBaseUnknown#Release</strong> for any object modeler class or 
+		interface whenever Release applies (Dialog objects should use RequestDelayedDestruction, 
+		Visualization repositories request Destroy, etc), and <strong>IUnknown#Release</strong> 
+		for any interface deriving from IUnknown but not from CATBaseUnknown, even 
+		if the TIE recalls CATBaseUnknown#Release onto the implementation.</li>
+	<li>As for a method declared in the settings file, the behaviour of a method 
+		declared in a base class <strong>is inherited in child classes</strong>. 
+		For example, if the method declared in the base class is declared as returning 
+		an AddRef'ed pointer, the overloading methods defined in the child classes 
+		will be regarded as doing the same.</li>
+	<li>On the other hand, the behaviour is not retrieved via the adhesion: the 
+		declaration of an AddReff'ing method should be tagged <strong>in the interface 
+		and in the implementation</strong> header file.</li>
+</ol>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="DynamicExamples"></a>Examples of Use</h3>
+<h4><a name="param-1"></a>Example @param-1</h4>
+<pre class="code">/**
+ * ...
+ * <strong>@param iRow [in]</strong>
+ *  The table row
+ * <strong>@param iCol [in]</strong>
+ *  The table column
+ * <strong>@param opCell [out, IUnknown#Release]</strong>
+ *  The object in the cell ...
+ */
+virtual HRESULT getCellContent(int iRow, int iCol, IUnknown*&amp; opCell);</pre>
+<p>The comment informs that this method AddReff'ed parameter opCell. The pointer 
+must be released (or stored or return) by any caller of the method:</p>
+<pre class="code">pTable-&gt;getCellContent(row, col, pCell);
+// use of pCell
+// ...
+if (pCell) {
+    pCell-&gt;Release();
+    pCell = NULL;
+}</pre>
+<p>Otherwise, an error of type AWRS or AWR2 will be generated by CSC.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="param-2"></a>Example @param-2</h4>
+<pre class="code">/**
+ * ...
+ * <strong>@param  oProduct  [out,  CATBaseUnknown#Release]</strong>
+ * <strong>@param  oSupport [out,  CATBaseUnknown#Release]</strong>
+ * ...
+ */
+virtual HRESULT getSupport(CATIProduct*&amp; oProduct, CATILinkableObject*&amp; oSupport, int iNumber = 1);</pre>
+<p>In this case, oProduct and oSupport pointer must be released (or stored or return) 
+by the caller:</p>
+<pre class="code">pObject-&gt;getSupport(pProduct, pSupport);
+// ...
+if (pProduct) {
+    pProduct-&gt;Release();
+    pProduct = NULL;
+}
+if (pSupport) {
+    pSupport-&gt;Release();
+    pSupport = NULL;
+}</pre>
+<p>Otherwise, an error of type AWRS or AWR2 will be generated by CSC.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="return-1"></a>Example @return-1</h4>
+<pre class="code">/**
+ * ...
+ * <strong>@return CATBaseUnknown#Release</strong>
+ *   Free text
+ * ...
+ */
+virtual CATPathElementAgent* createPathElementAgent();</pre>
+<p>The comment informs that this method get returns an AddReff'ed pointer. The pointer 
+must be released (or stored or return) by any caller of the method:</p>
+<pre class="code">CATPathElementAgent* pAgent = createPathElementAgent();
+// ...
+if (pAgent){
+   pAgent-&gt;Release();
+   pAgent = NULL;
+}</pre>
+<p>Otherwise, an error of type AWRS, AWR2 or PNSS will be generated by CSC.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>CSC helps debugging missing Releases on pointers, via a list of known AddRef 
+methods, declared in the setting file or tagged in source files. You can tag your 
+own AddReffing methods to detect missing Releases on your methods. You can also 
+add your methods using your own settings file.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+	</tr>
+	<!-- 
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../../../CAACppResourcesDoc.edu/CAACppTechArticles.doc/src/CAADocCppHeaderDoc.htm">CAA
+      V5 C++ Documentation Rules</a></td>
+  </tr>
+   -->
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

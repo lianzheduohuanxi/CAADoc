@@ -1,0 +1,556 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Analyzing a Protection</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Harness Installation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Analyzing a Protection</h3>
+      <em>How to get geometrical definition of a protection</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEhiProtection </i>use case. This use
+      case explains how to navigate within an existing product structure,
+      searching geometrical bundles, bundle segments, finding location of
+      support linked on&nbsp; bundle segment and how to get geometrical
+      definition or location of protection linked a bundle segment.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEhiProtection Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEhiProtection Do</a></li>
+            <li><a href="#How">How to Launch CAAEhiProtection</a></li>
+            <li><a href="#Where">Where to Find the CAAEhiProtection Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to browse the content of a harness
+branch (geometrical bundles) and to get all bundle segment. For each bundle
+segment you can retrieve all linked support and for each support his distance
+with extremity of bundle segment. You can also retrieve all protection linked
+with bundle segment and for each protection his distance the distance of his
+extremity with extremity of bundle segment and you can so retrieve geometrical
+definition of protection.
+<p>Following operations are detailed is this use case:
+<ul>
+  <li>How to initialize the electrical environment .</li>
+  <li>How to retrieve all geometrical bundles in product structure.</li>
+  <li>How to retrieve all bundle segments contained in a geometrical bundle.</li>
+  <li>How to retrieve bundle segment extremities of each bundle segment bundle
+    segment.</li>
+  <li>How to retrieve for each bundle segment extremities his parent.</li>
+  <li>How to retrieve all support linked on bundle segment and for each support
+    retrieve his distance with bundle segment extremities.</li>
+  <li>How to retrieve all protection linked with bundle segment.</li>
+  <li>How to retrieve the distance between an extremity of protection and the
+    extremity of bundle segment.</li>
+  <li>How to retrieve the geometrical representation, the curve, the length of
+    protection.</li>
+  <li>How to retrieve the list of bundle segment linked with protection.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEhiProtection Use Case</h3>
+<p>CAAEhiProtection&nbsp; is a use case of the CAAElecHarnessItf.edu framework
+that illustrates the ElecHarnessItf framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEhiProtection Do</h4>
+<p>The goal of CAAEhiProtection&nbsp; is to navigate within an product structure
+and to retrieve and analyze electrical content. The existing product structure
+is found under the pathname of the document passed as an argument to this
+program.</p>
+<p><img border="0" src="images/CAAEhiProtection1.jpg" width="1065" height="798"></p>
+<p>Above is a CATIA image of a product structure we will use as an example to
+browse electrical harness components.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEhiProtection?</h4>
+<p>To launch CAAEhiProtection, you will need to set up the build time
+environment, then compile CAAEhiProtection.cpp along with its prerequisites, set
+up the run time environment, and then execute the sample. This is fully
+described in the referenced article [<a href="#References">2</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEhiProtection input.CATProduct&quot;</pre>
+<ul>
+  <li><b>input.CATProduct</b> - the path to the existing external CATProduct to
+    be browsed. You may reference the supplied CATProduct document called
+    &quot;Product1.CATProduct&quot; found in;
+    	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic\CAAEhiProtectionSample</pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">2</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEhiProtection</i> Code?</h4>
+<p>CAAEhiProtection code is located in the CAAEhiProtection.m use case module of
+the CAAElecHarnessItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAElecHarnessItf.edu/CAAEhiProtection.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAElecHarnessItf.edu\CAAEhiProtection.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEhiProtection</b><b>.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in <i>CAAEhiProtection</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Init_Elec">Initializing Electrical Environment</a></li>
+  <li><a href="#Retrieve_GBN">Retrieving all Geometrical Bundle under Root
+    Product and Selecting one to Analyze</a></li>
+  <li><a href="#Retrieve_BNS">Retrieving all Bundle Segments under Selected
+    Geometrical Bundle</a></li>
+  <li><a name="Retrieveextremitiesofbns" href="#Retrieving extremities of each bundle segment">Retrieving
+    extremities of each bundle segment</a>.</li>
+  <li><a name="Get_SPT" href="#GetParentBnsExt">Retrieving the parent of bundle
+    segment extremities</a></li>
+  <li><a href="#GetParentBnsExt">Retrieving all Supports Linked to Bundle
+    Segment</a></li>
+  <li><a name="Get_Attribute" href="#Retrieving distance between  support and bundle segment extremity">Retrieving
+    distance between&nbsp; support and bundle segment extremity.</a></li>
+  <li><a name="Get_Attribute" href="#Retrieving list of protection linked with bundle segment">Retrieving
+    list of protection linked with bundle segment</a></li>
+  <li><a name="Get_Attribute" href="#Retrieving distance between protection  extremity and  bundle segment extremity.">Retrieving
+    distance between protection&nbsp; extremity and&nbsp; bundle segment
+    extremity.</a></li>
+  <li><a name="Get_Attribute" href="#Retrieving the Length of protection.">Retrieving
+    the Length of protection.</a></li>
+  <li>
+    <p><a href="#Retrieving the geometric representation of the protection">Retrieving
+    the geometric representation of the protection</a></p>
+  </li>
+  <li>
+    <p><a href="#Retrieving the curve of protection">Retrieving the curve of
+    protection</a></p>
+  </li>
+  <li>
+    <p><a href="#Retrieving the list of bundle segment linked on protection">Retrieving
+    the list of bundle segment linked on protection</a></p>
+  </li>
+  <li><a href="#Close">Epilog</a>.</li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Once the current session has been created, the CATProduct document can be
+loaded into the session . pDoc is a pointer to this document.</p>
+<p>The root product of the document is retrieved . pRootProduct is a CATIProduct
+handle to the root product .</p>
+<p>Methodology describing how to load a CATProduct document and how to retrieve
+the root product is described in <a href="#References">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Init_Elec"></a>Initialize Electrical Environment</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIEleDocServices * piElecDocServices = NULL;
+  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to
+electrical object or electrical attributes.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve_GBN">Retrieving all Geometrical Bundle under Root Product
+and Selecting one to Analyze</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListGeoBundle = NULL;
+  pListGeoBundle = piRootProduct-&gt;GetAllChildren(CATIEhiGeoBundle::ClassName());
+  piRootProduct -&gt; Release();
+  piRootProduct = NULL ;
+  
+  int NumberOfGeoBundle = 0;
+  if ( (NULL!=pListGeoBundle) &amp;&amp; pListGeoBundle-&gt;Size() ) 
+  {
+    NumberOfGeoBundle = pListGeoBundle-&gt;Size();	
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use generic method CATIProduct::GetAllChildren to retrieve all geometric
+bundles under root product.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATIEhiGeoBundle * piGeoBundle = NULL;
+  rc = (*pListGeoBundle)[NumberOfGeoBundle]-&gt;QueryInterface(IID_CATIEhiGeoBundle,(void**) &amp;piGeoBundle);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Last element in list of geometric bundle is selected.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieve_BNS">Retrieving all Bundle Segments under Selected
+Geometrical Bundle.</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListBundleSegment = NULL;
+  rc = piGeoBundle-&gt;ListBundleSegments(&amp;pListBundleSegment);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use <code>CATIEhiBundleSegment::ListBundleSegments</code> to retrieve list
+of bundle segments under selected geometric bundle.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATIEhiBundleSegment * piBundleSegment = NULL;
+  int TailleListBundleSegment = pListBundleSegment-&gt;Size() ;
+  for(int rank =1 ; rank&lt;=TailleListBundleSegment; rank++)
+  {
+    rc = (*pListBundleSegment)[rank]-&gt;QueryInterface(IID_CATIEhiBundleSegment,(void**) &amp;piBundleSegment);
+  ...
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We selecting each bundle segment in list of bundle segments.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving extremities of each bundle segment">Retrieving
+extremities of each bundle segment</a>.</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATIEhiBnlSegmentExtremity * pEhiFirstBnsExtremity = NULL;
+   CATIEhiBnlSegmentExtremity * pEhiSecondBnsExtremity = NULL;
+
+   rc = piBundleSegment -&gt; GetExtremities ( &amp;pEhiFirstBnsExtremity, &amp;pEhiSecondBnsExtremity);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We get two extremities of bundle segment. This extremity adhere on
+CATIEhiBnlSegmentExtremity interface.</p>
+<h4><a name="GetParentBnsExt">Retrieving the parent of bundle segment
+extremities</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>    CATIEhiBundleSegment * pEhiBundleSegment = NULL;</pre>
+      <pre>    rc = pEhiFirstBnsExtremity -&gt; GetBundleSegment (pEhiBundleSegment);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We get the bundle segment of extremity.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get_SPT">Retrieving all Supports Linked to Bundle Segment</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATListValCATBaseUnknown_var* pListInstanceSupport = NULL;
+int numberOfSupport = 0;
+
+rc = piBundleSegment-&gt;ListLinkedSupports(&amp;pListInstanceSupport);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Method <i>ListLinkedSupports</i> is used to retrieve all support instances
+linked to bundle segment.</p>
+<h4><a name="Retrieving distance between  support and bundle segment extremity">Retrieving
+distance between&nbsp; support and bundle segment extremity.</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIProduct* piInstanceProduct = NULL;
+CATUnicodeString InstanceName = &quot;unknown&quot;;
+int i ;
+for ( i =1; i&lt;=numberOfSupport; i++ )
+{
+  (*pListInstanceSupport)[i]-&gt;QueryInterface(IID_CATIProduct,(void**) &amp;piInstanceProduct);
+  ...
+  double LocationSupport_FirstExt = 0.0;
+  rc = piBundleSegment-&gt;GetLocationSupport(pEhiFirstBnsExtremity, piInstanceProduct,LocationSupport_FirstExt);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>For each support we find his distance with each bundle segment extremity of
+his linked bundle segment.</p>
+<p align="center"><img border="0" src="images/CAAEhiProtection2.jpg" width="564" height="430"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving list of protection linked with bundle segment">Retrieving
+list of protection linked with bundle segment</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATListValCATBaseUnknown_var * pListOfLinked_PROTECTION = NULL;
+   int NumberOfProtection = 0;
+
+   rc = piBundleSegment-&gt;ListLinkedProtections( &amp; pListOfLinked_PROTECTION ) ;
+
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use <i>ListLinkedProtection </i>method<i> </i>of<i> CATIEhiBundleSegement </i>to
+get allm protection linked with bundle segment.</p>
+<p>&nbsp;</p>
+<h4><a name="Retrieving distance between protection  extremity and  bundle segment extremity.">Retrieving
+distance between protection&nbsp; extremity and&nbsp; bundle segment extremity.</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>int j = 0;
+CATIEhiProtection * pEhiProtection = NULL;
+
+for(j = 1 ; j&lt;=NumberOfProtection ; j++ )
+{
+  if(NULL_var != (*pListOfLinked_PROTECTION)[j]) 
+  {
+    rc = (*pListOfLinked_PROTECTION)[j] -&gt;QueryInterface(IID_CATIEhiProtection,(void**) &amp; pEhiProtection);
+...
+    if(pEhiProtection)
+    {
+       double LocationFirstExtremityOfProtection = 0.0;
+       double LocationSecondExtremityOfProtection = 0.0;
+
+      rc = pEhiProtection-&gt;GetLocationExtremities( pEhiFirstBnsExtremity ,
+                                                   LocationFirstExtremityOfProtection ,
+                                                   LocationSecondExtremityOfProtection);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>For each protection linked with bundle segment we retrieve his distance
+between his extremities ant extremities of bundle segment.</p>
+<p align="center"><img border="0" src="images/CAAEhProtection3.jpg" width="545" height="577"></p>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving the Length of protection.">Retrieving the Length of
+protection.</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre> double Length_Protection = 0.0 ;
+
+rc = pEhiProtection -&gt;ComputeLength(Length_Protection);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use ComputeLength() method of CATIEhiProtection interface to find the
+length of protection.</p>
+<p>&nbsp;</p>
+<h4><a name="Retrieving the geometric representation of the protection">Retrieving
+the geometric representation of the protection</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATListValCATBaseUnknown_var * pListRepresentation = NULL;
+
+rc = pEhiProtection -&gt; GetRepresentation (&amp;pListRepresentation );
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use GetRepresentation() method to find the geometrical representation
+of&nbsp; a protection.</p>
+<h4><a name="Retrieving the curve of protection">Retrieving the curve of
+protection</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATBaseUnknown * pCurve = NULL;
+
+rc = pEhiProtection -&gt; GetCurve (&amp;pCurve );
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use GetCurve() method to find the curve of a protection.</p>
+<p align="center"><img border="0" src="images/CAAEhiProtection4.jpg" width="461" height="417"></p>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Retrieving the list of bundle segment linked on protection">Retrieving
+the list of bundle segment linked on protection</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATListValCATBaseUnknown_var * pListLinkedBundleSegment = NULL;
+int NumberOfLinkedBns = 0;
+
+rc = pEhiProtection-&gt; ListBundleSegments (pListLinkedBundleSegment);
+
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use ListBundleSegment() method to find the list of bundle segment linked
+on a protection.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Close">Epilog</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>rc = CATDocumentServices::Remove(*pDoc);
+...
+rc = ::Delete_Session(sessionName);
+.</pre>
+    </td>
+  </tr>
+</table>
+<p>Opened documents are removed and session is deleted before exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case is has demonstrated how to browse the content of a harness
+branch and to get geometrical definition of bundle segments contained in a
+geometrical bundle.
+<p>Following operations have been detailed is this use case :
+<ul>
+  <li>How to activate electrical environment using <code>Initialize </code>method
+    of <i>CATIEleDocServices</i>.</li>
+  <li>How to retrieve geometrical bundles in product structure using <code>GetAllChildren</code>
+    method of <i>CATIProduct</i></li>
+  <li>How to retrieve bundle segments contained in geometrical bundle using <code>ListBundleSegments</code>
+    of <i>CATIEhiBundleSegment</i></li>
+  <li>How to retrieve bundle segment extremities&nbsp; using GetExtremities
+    method of <i>CATIEhiBundleSegment.</i></li>
+  <li>How to retrieve bundle segment of bundle segment extremities using
+    GetBundleSegment of <i>CATIEhiBnlSegmentExtremity.</i></li>
+  <li>How to get supports linked to bundle segment using <code>ListLinkedSupports
+    </code>of <i>CATIEhiBundleSegment.</i></li>
+  <li>How to get distance between bundle segment extremity and a support using
+    GetLocationSupport of <i>CATIEhiBundleSegment</i>.</li>
+  <li>How to get protection linked to bundle segment using ListLinkedProtection
+    of <i>CATIEhiBundleSegment</i>.</li>
+  <li>How to retrieve distance between protection extremity and bundle segment
+    extremity using GetLocationExtremities of <i>CATIEhiProtection</i>.</li>
+  <li>How to retrieve the length of protection using GetLength of <i>CATIEhiProtection</i>.</li>
+  <li>How to retrieve geometrical representation of protection using
+    GetRepresentation of <i>CATIEhiProtection.</i></li>
+  <li>How to retrieve protection curve using GetCurve of <i>CATIEhiProtection.</i></li>
+  <li>How to retrieve list of bundle segment linked with protection using
+    ListBundleSegment of <i>CATIEhiProtection.</i></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,153 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <style>ul.intable   { margin-left: 20; margin-bottom: 0 }
+ </style>
+ <title>CAA V5 NLS Compliance Rules</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>Rules and Standards</h1>
+     </td>
+     <td align="right" rowspan="2" valign="top">
+     <h3><a name="Top"></a>CAA V5 NLS Compliance Rules</h3>
+     <p><em>Standard NLS rules for CAA V5 applications</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="1">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>Messages in V5 code should support multiple languages (National Language 
+     Support, or NLS), including Double-Byte encoded languages such as Japanese 
+     or Korean. For this to happen, strings are externalized in so-called <b>PII 
+     files</b>, named *.CATNls and *_en.properties depending on the underlying 
+     V5 infrastructure. Here is the set of rules that the developer should 
+     comply with in order for externalization to work properly.</p>
+     <ul>
+       <li><b><a href="#NLS1">NLS Dependent Data</a></b> </li>
+       <li><b><a href="#NLS2">Strings in Code</a></b> </li>
+       <li><b><a href="#NLS3">Resource File Contents</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NLS1"></a>NLS Dependent Data</h3>
+ <p>NLS-dependent data should never be stored as such in any model, except if it 
+ was entered manually by the user. In case of NLS-dependent strings made from 
+ different parts, the string should not be stored as result, and it should be 
+ dynamically computed. It is safe to store NLS keys, allowing to retrieve 
+ dynamically the associated language-dependent string.</p>
+ <p>As a result of this rule, do not use the SetName() method for a feature 
+ which would store a language-dependent name in the model for the concerned 
+ feature factory.</p>
+ <p align="right">[<a href="#Top">Top</a>] </p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NLS2"></a>Strings in Code</h3>
+ <ul>
+   <li>No message strings in code but their corresponding keys. Message are to 
+   be in PII files (see next section). </li>
+   <li>Use the table hereunder to perform operations on strings:<br>
+   <br>
+   <table>
+     <tr>
+       <th>Operation</th>
+       <th>CATNls-Based Infrastructure in C++</th>
+       <th>CATNls-Based Infrastructure in java</th>
+       <th>*.properties Based Infrastructure (java)</th>
+     </tr>
+     <tr>
+       <td>Retrieve a message (with or without parameters) from NLS file</td>
+       <td>CATMessageCatalog.BuildMessage()</td>
+       <td>CATMessageCatalog.BuildMessage() in com.dassault_systemes.catjsystem</td>
+       <td>java.text.MessageFormat</td>
+     </tr>
+     <tr>
+       <td>Format numbers and currencies</td>
+       <td>CATUnicodeString standard methods (nothing for currencies)</td>
+       <td colspan="2">java.text.NumberFormat</td>
+     </tr>
+     <tr>
+       <td>Format dates</td>
+       <td>CATTime</td>
+       <td colspan="2">java.text.DateFormat<br>
+       java.text.SimpleDateFormat</td>
+     </tr>
+     <tr>
+       <td>Tokenize a string (strtok equivalent)</td>
+       <td>CATToken In case of char*, use CATSysStrtok</td>
+       <td colspan="2">java.util.StringTokenizer</td>
+     </tr>
+     <tr>
+       <td>Compare strings (strcmp equivalent)</td>
+       <td>CATUnicodeString::operator==<br>
+       CATUnicodeString::Compare()</td>
+       <td colspan="2">String.compareTo()<br>
+       String.compareToIgnoreCase()</td>
+     </tr>
+   </table>
+   <p><br>
+   </li>
+   <li>Beware of strings and GUI display truncation issues, especially regarding 
+   Double-Byte translations.</li>
+   <li>In C++, don&#8217;t confuse following methods, that lead to different results 
+   in DBCS context:<ul>
+     <li>CATUnicodeString::GetLengthInChar() &#8211; retrieve number of characters in 
+     a string</li>
+     <li>CATUnicodeString::GetLengthInByte() &#8211; retrieve numbers of bytes in a 
+     string, used to allocate an array or example.</li>
+   </ul>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>] </p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NLS3"></a>Resource File Contents</h3>
+ <ul>
+   <li>PII files (*.CATNls, *_en.properties) should include only translatable 
+   text that should be translated</li>
+   <li>Non-NLS strings, such as icon names, should be in *.CATRsc and 
+   *.properties (without _en) files. This includes:
+   <ul>
+     <li>File path, file name, file extension</li>
+     <li>Numbers: list dimensions, time delay, default value, etc.</li>
+     <li>ISO codepages</li>
+     <li>ENOVIA specific syntaxes: names combined with ., +, -</li>
+   </ul>
+   </li>
+   <li>*.CATNls keys should only contain plain ASCII characters.</li>
+ </ul>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1.0</strong> [Dec 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

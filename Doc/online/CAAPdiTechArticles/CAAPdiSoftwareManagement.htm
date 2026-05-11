@@ -1,0 +1,278 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Managing Your Installed CAA V5 APIs</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>CAA V5 Encyclopedia</h1>
+     </td>
+     <td align="right">
+     <h2><a name="Top"></a>Managing Your Installed CAA V5 APIs</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>When installing CAA APIs, three new tab pages are added to the Software 
+     Management tool. They allow you to get information and manage the CAA APIs 
+     you have installed.</p>
+     <ul>
+       <li><a href="#CAA"><b>Getting the List of Installed Configurations and 
+       Products</b></a></li>
+       <li><a href="#CAACI"><b>Checking Your Installation Integrity</b></a></li>
+       <li><a href="#CAASP"><b>Committing or Rolling Back Service Packs</b></a></li>
+       <li><a href="#CAABatch"><b>Running Software Management Tools in Batch 
+       Mode</b></a></li>
+       <li><a href="#InShort"><b>In Short</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p>To get the Software Management dialog box:</p>
+ <ul>
+   <li>With Windows, either:
+   <ul>
+     <li>Click <b>Start</b>, point to <b>All Programs</b>, then to the product line 
+     you have installed, that is <b>CATIA</b>, <b>DELMIA</b>, <b>ENOVIA</b>, or
+		<strong>CAA RADE</strong>,
+		point to <b>Tools</b> and click <b>Software Management V5-6R2017</b>, possibly suffixed with the identifier you have 
+     entered when installing the run time part (for example <b>Software 
+     Management V5-6R2017_INSTALL2</b>)</li>
+     <li>Run <code>InstallRoot\intel_a\code\bin\CATSoftwareMgt.exe</code>
+     <p>where <code>InstallRoot</code> is the directory in which you have 
+     installed the run time part or the product line.<br>
+     </li>
+   </ul>
+   </li>
+   <li>With UNIX:
+   <ol>
+     <li>Log on as root or end user</li>
+     <li>Enter the command:
+     <pre>$InstallRoot/$OS/code/command/catstart -run &quot;CATSoftwareMgt&quot;</pre>
+     <p>where:</p>
+     <ul>
+       <li><code>InstallRoot</code> is the directory in which you have installed 
+       the run time part or the product line</li>
+       <li><code>OS</code> is the directory containing the installed code:<ul>
+            <li><code>aix_a</code> for AIX 32 bit</li>
+			<li><code>aix_a64</code> for AIX 64 bit.</li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+   </ol>
+   </li>
+ </ul>
+ <h3><a name="CAA"></a>Getting the List of Installed Configurations and Products</h3>
+ <p><img alt="" src="images/CAAPdiSoftMgtCAA.png" width="716" height="418">
+ </p>
+ <p>The CAA tab page lists:</p>
+ <ul>
+   <li>The solutions whose CAA APIs are installed</li>
+   <li>The products whose CAA APIs are installed.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="CAACI"></a>Checking Your Installation Integrity</h3>
+ <p>
+ <img alt="" src="images/CAAPdiSoftMgtCAACheckIntegrity.png" width="716" height="418">
+ </p>
+ <p>This checks the overall integrity of your software.</p>
+ <p>There are three integrity check levels:</p>
+ <ul>
+   <li>Level 1: only control files are checked. The quickest</li>
+   <li>Level 2: checks existence of all installed files</li>
+   <li>Level 3: checks existence and validity of all installed files. May take 
+   several minutes.</li>
+ </ul>
+ <p>The message:</p>
+ <p><code>Integrity is OK</code></p>
+ <p>confirms there is no integrity problem. However, when the message:</p>
+ <p><kbd>Integrity is KO</kbd></p>
+ <p>appears, your installation has been corrupted (for example, some files are 
+ missing), it will be followed by troubleshooting information helping you to 
+ identify the problem.</p>
+ <p><img src="images/CAAPdiawarning.gif" alt="" width="32" height="32"> When 
+ running a level 3 integrity check on a remote computer from a Windows client, a 
+ read error may occur on several files due to a saturation problem. </p>
+ <p>These errors may cause the following message to appear:</p>
+ <p><code>unable to open this file in reading mode</code></p>
+ <p>The problem may be resolved by deactivating the cache of the network 
+ redirector on the client computer, by modifying the following registry key as 
+ follows:</p>
+ <ol>
+   <li>Open the registry at the following location:
+   <pre>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Lanmanworkstation\parameters</pre>
+   </li>
+   <li>Modify the following value:
+   <pre>Value name: UtilizeNTCaching
+Data type: REG_DWORD
+Data: 0</pre>
+   </li>
+ </ol>
+ <p><img alt="" src="images/CAAPdiawarning.gif" width="32" height="32"> 
+ Please exercise extreme caution when editing the registry. It is only 
+ recommended for advanced users with the proper authorization: deactivating the 
+ network cache may cause the computer's performance on the local network to 
+ deteriorate.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="CAASP"></a>Committing or Rolling Back Service Packs</h3>
+ <p>
+ <img alt="" src="images/CAAPdiSoftMgtCAASPMgt.png" width="716" height="418"></p>
+ <p>Click <b>Commit</b> to commit a Service Pack, or <b>Rollback</b> to 
+ uninstall the service pack and restore the previous level.</p>
+ <h4>Commit and Rollback Rules</h4>
+ <p>Keep the following rules in mind when committing and rolling back service 
+ packs:</p>
+ <ul>
+   <li>If you install a GA level, then &quot;Service Pack 1&quot;, and then intend to 
+   install &quot;Service Pack 2&quot;, you must commit &quot;Service Pack 1&quot; before installing 
+   &quot;Service Pack 2&quot;</li>
+   <li>Let's assume you install a GA level, then &quot;Service Pack 1&quot;, and commit 
+   the service pack; if you then add configurations or products to your 
+   installation, you will be prompted at the end of the installation to 
+   reinstall &quot;Service Pack 1&quot;; when you reinstall &quot;Service Pack 1&quot;, the service 
+   pack is committed automatically</li>
+   <li>You always need to commit the run time part of the configurations and 
+   products before the CAA APIs part, and conversely roll back the CAA APIs part 
+   before the run time part.</li>
+ </ul>
+ <p>You can also choose to commit a service pack automatically during service 
+ pack installation. The consequences of choosing to automatically commit a 
+ service pack at installation are:</p>
+ <ul>
+   <li>The service pack overwrites any previous level (GA or service pack): if 
+   you have already decided to commit the new service pack, and you do not want 
+   to keep the previous version, this allows you to save disk space</li>
+   <li>Once you have automatically committed the service pack, you cannot roll 
+   back to the previous level (GA or service pack)</li>
+   <li>When you add products after automatically committing a service pack, the 
+   new software is also automatically committed.</li>
+ </ul>
+ <p>If running processes are detected in the installation directory when you 
+ choose the Rollback option, you will be prompted to kill running processes.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="CAABatch"></a>Running Software Management Tools in Batch Mode</h3>
+ <p>You can run the Software Management tools in batch mode as follows:</p>
+ <ul>
+   <li>With Windows:
+   <ul>
+     <li>Run <code>InstallRoot\intel_a\code\bin\CATSoftwareMgtB.exe -option</code>
+     <p>where <code>InstallRoot</code> is the directory in which you have 
+     installed the run time part or the product line and <code>-option</code> is 
+     one of the options described below<br>
+     </li>
+   </ul>
+   </li>
+   <li>With UNIX:
+   <ol>
+     <li>Log on as root or end user</li>
+     <li>Enter the command:
+     <pre>InstallRoot/OS/code/command/catstart -run &quot;CATSoftwareMgtB <code>-option</code>&quot;</pre>
+     <p>where:</p>
+     <ul>
+       <li><code>InstallRoot</code> is the directory in which you have installed 
+       the run time part or the product line</li>
+       <li><code>OS</code> is the directory containing the installed code
+       <ul>
+         <li><code>aix_a</code> for AIX 32 bit</li>
+         <li><code>aix_a64</code> for AIX 64 bit.</li>
+       </ul>
+       </li>
+       <li><code>-option</code> is one of the options described below</li>
+     </ul>
+     </li>
+   </ol>
+   </li>
+ </ul>
+ <p>The available options are:</p>
+ <table>
+   <tr>
+     <th>Option</th>
+     <th>Meaning</th>
+   </tr>
+   <tr>
+     <td><code>-L</code></td>
+     <td>To get the list of installed configurations and products</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>To check your installation integrity</td>
+   </tr>
+   <tr>
+     <td><code>-caaI1 or -caaI</code></td>
+     <td>Level 1 integrity: only control files are checked (quickest)</td>
+   </tr>
+   <tr>
+     <td><code>-caaI2</code></td>
+     <td>Level 2 integrity: existence of all installed files are checked</td>
+   </tr>
+   <tr>
+     <td><code>-caaI3</code></td>
+     <td>Level 3 integrity: existence and validity of all installed files are 
+     checked (may take several minutes)</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>To commit or roll back Service Packs</td>
+   </tr>
+   <tr>
+     <td><code>-caaR</code></td>
+     <td>Roll back Service Packs</td>
+   </tr>
+   <tr>
+     <td><code>-caaC</code></td>
+     <td>Commit Service Packs</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>Using the Software Management dialog box, you can:</p>
+ <ul>
+   <li>Get information about the configurations and products whose CAA APIs are 
+   installed</li>
+   <li>Check the installed configurations and products integrity</li>
+   <li>Commit of roll back Service Packs</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Aug 2002]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2016, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm">CAA V5 CATIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm">CAA V5 DELMIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm">CAA V5 ENOVIA</a></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,187 @@
+<html>
+
+ <head>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>CAAAniPreproOnProduct.catvbs</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ </head>
+
+ <body>
+
+ <pre style="margin-top: 0; margin-bottom: 0">Language=&quot;VBSCRIPT&quot;
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create a New Analysis document.</font>
+<font color="#008000">'                 Import on a CATProduct document with some publication defined </font>
+<font color="#008000">'                 Define all preprocessing data based on constraints and publications</font>
+<font color="#008000">'                 Launch the Computation.</font>
+<font color="#008000">'                 Extract some values stored in the document</font>
+<font color="#008000">'   Assumptions:   Looks for basic_assembly.CATProduct stored in the DocView   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+<font color="#008000">'_____________________________________________________________________________________</font>
+<font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">'_____________________________________________________________________________________</font>
+<font color="#008000">' Get the collection of documents in session</font>
+<font color="#0000FF">  Set </font>documents1 = CATIA.Documents
+
+<font color="#008000">' Create the CATAnalysis Document </font>
+<font color="#0000FF">  Set </font>TheAnalysisDoc = documents1.<font color="#FF0000">Add</font>(&quot;Analysis&quot;)
+
+<font color="#008000">' Only one Analysis Document is required</font>
+<font color="#008000">' if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench</font>
+  WBName = CATIA.GetWorkbenchId
+<font color="#0000FF">  if </font>(WBName &lt;&gt; &quot;GPSCfg&quot;) Then
+     CATIA.<font color="#FF0000">StartWorkbench</font>(&quot;GPSCfg&quot;)
+<font color="#0000FF">  End If</font>
+
+<font color="#008000">'_____________________________________________________________________________________</font>
+<font color="#008000">' Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager
+' We call the Import on CATAnalysisImport which implements CATISamImportDefine</font></pre>
+
+ <pre style="margin-top: 0; margin-bottom: 0">
+<font color="#0000FF">  Set </font>analysisManager1 = TheAnalysisDoc.Analysis</pre>
+
+ <pre style="margin-top: 0; margin-bottom: 0">  Dim arrayOfVariantOfShort1(0)
+  analysisManager1.<font color="#FF0000">ImportDefineFile</font> (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;basic_assembly.CATProduct&quot;),				     &quot;</pre>
+
+ <pre style="margin-top: 0; margin-bottom: 0">  				     &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Reframe All.</font>
+<font color="#0000FF">  Set </font>specsAndGeomWindow2 = CATIA.ActiveWindow
+<font color="#0000FF">  Set </font>viewer3D1 = specsAndGeomWindow2.ActiveViewer
+  viewer3D1.Reframe 
+
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing</font>
+<font color="#0000FF">  Set </font>analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+  CATIA.SystemService.Print analysisLinkedDocuments1.Name
+<font color="#0000FF">  If </font>(analysisLinkedDocuments1.Count &lt;&gt; 1 )<font color="#0000FF"> Then</font>
+    Err.Raise 9999,,&quot;NbDoc Lié NE 1&quot;
+<font color="#0000FF">  End If</font>
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Retrieve the CATProduct Document and associated publications and constraints collection.</font>
+
+<font color="#0000FF">  Set </font>productDocument1 = analysisLinkedDocuments1.Item(1)
+
+<font color="#0000FF">  Set </font>product1 = productDocument1.Product
+<font color="#0000FF">  Set </font>products1 = product1.<font color="#FF0000">Products</font>
+
+<font color="#0000FF">  Set </font>publications1 = product1.<font color="#FF0000">Publications</font>
+<font color="#0000FF">  Set </font>constraints1 = product1.<font color="#FF0000">Connections</font>(&quot;CATIAConstraints&quot;)
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Create a Virtual Part in the analysis model to transmit the load.</font>
+<font color="#0000FF">Set </font>analysisModels1 = analysisManager1.AnalysisModels
+<font color="#0000FF">Set </font>analysisModel1 = analysisModels1.Item(1)
+
+<font color="#0000FF">Set </font>analysisSets1 = analysisModel1.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet1 = analysisSets1.<font color="#FF0000">ItemByType</font>(&quot;PropertySet&quot;)
+
+<font color="#0000FF">Set </font>analysisEntities1 = analysisSet1.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity1 = analysisEntities1.<font color="#FF0000">Add</font>(&quot;SAMVirPartRigid&quot;)
+<font color="#0000FF">Set </font>publication1 = publications1.<font color="#FF0000">Item</font>(&quot;FaceCylinderTop&quot;)
+analysisEntity1.<font color="#FF0000">AddSupportFromPublication</font> product1, publication1
+<font color="#0000FF">Set </font>basicComponents1 = analysisEntity1.BasicComponents
+<font color="#0000FF">Set </font>basicComponent1 = basicComponents1.<font color="#FF0000">GetItem</font>(&quot;SAMRigSlavePoint.1&quot;)
+<font color="#0000FF">Set </font>publication4 = publications1.<font color="#FF0000">Item</font>(&quot;ForceHandler&quot;)
+basicComponent1.<font color="#FF0000">AddSupportFromPublication</font> product1, publication4
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Create a Fastened connection in the analysis model to complete the constraints </font>
+<font color="#008000">' definition</font>
+<font color="#0000FF">Set </font>analysisEntity2 = analysisEntities1.<font color="#FF0000">Add</font>(&quot;SAMFaceFaceFastened&quot;)
+<font color="#0000FF">Set </font>constraint1 = constraints1.<font color="#FF0000">Item</font>(&quot;Surface contact.2&quot;)
+analysisEntity2.<font color="#FF0000">AddSupportFromConstraint</font> product1, constraint1
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Create a Static Case in the current analysis model.</font>
+<font color="#0000FF">Set </font>analysisCases1 = analysisModel1.AnalysisCases
+<font color="#0000FF">Set </font>analysisCase1 = analysisCases1.<font color="#FF0000">Add</font>()
+
+<font color="#0000FF">Set </font>analysisSets2 = analysisCase1.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet2 = analysisSets2.<font color="#FF0000">Add</font>(&quot;RestraintSet&quot;, catAnalysisSetIn)
+<font color="#0000FF">Set </font>analysisSet3 = analysisSets2.<font color="#FF0000">Add</font>(&quot;LoadSet&quot;, catAnalysisSetIn)
+<font color="#0000FF">Set </font>analysisSet5 = analysisCase1.<font color="#FF0000">AddSolution</font>(&quot;StaticSet&quot;)
+
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Create clamp boundary. Associated to a publication</font>
+<font color="#0000FF">Set </font>analysisEntities2 = analysisSet2.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity3 = analysisEntities2.<font color="#FF0000">Add(&quot;</font>SAMClamp&quot;)
+<font color="#0000FF">Set </font>publication2 = publications1.<font color="#FF0000">Item</font>(&quot;FaceToClamp&quot;)
+analysisEntity3.<font color="#FF0000">AddSupportFromPublication</font> product1, publication2
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Create load boundary. Associated to the virtual part</font>
+<font color="#0000FF">Set </font>analysisEntities3 = analysisSet3.AnalysisEntities
+
+<font color="#0000FF">Set </font>analysisEntity4 = analysisEntities3.<font color="#FF0000">Add</font>(&quot;SAMDistributedForce&quot;)
+<font color="#0000FF">Set </font>reference2 = analysisManager1.<font color="#FF0000">CreateReferenceFromObject</font>(analysisEntity1)
+analysisEntity4.<font color="#FF0000">AddSupportFromReference</font> reference2, reference2
+CATIA.SystemService.Print &quot;Name of the Reference&quot; &amp; reference2.<font color="#FF0000">DisplayName</font>  
+
+
+<font color="#0000FF">Set </font>basicComponents2 = analysisEntity4.BasicComponents
+<font color="#0000FF">Set </font>basicComponent2 = basicComponents2.<font color="#FF0000">GetItem</font>(&quot;SAMForceAxis.1&quot;)
+basicComponent2.<font color="#FF0000">SetValue</font> &quot;Values&quot;, 0, 0, 0, 1
+<font color="#0000FF">Set </font>basicComponent3 = basicComponents2.<font color="#FF0000">GetItem</font>(&quot;SAMForceVector.1&quot;)
+basicComponent3.SetDimensions 3, 1, 1
+basicComponent3.SetValue &quot;&quot;, 1, 1, 1, 100.000000
+basicComponent3.SetValue &quot;&quot;, 2, 1, 1, 0.000000
+basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Some examples to read the data on the basic componenent</font>
+<font color="#008000">'In this case, direct read </font>
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<font color="#FF0000">GetValue</font>(&quot;&quot;, 1, 1, 1) 
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<font color="#FF0000">GetValue</font>(&quot;&quot;, 2, 1, 1)
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<font color="#FF0000">GetValue</font>(&quot;&quot;, 3, 1, 1)
+
+CATIA.SystemService.Print &quot; ForceVector Type &quot; &amp; basicComponent3.<font color="#FF0000">Type</font>  
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<font color="#FF0000">GetLinesNumber</font>  (&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<font color="#FF0000">GetColumnsNumber</font>(&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<font color="#FF0000">GetLayersNumber</font> (&quot;&quot;)
+
+<font color="#008000">'In this case, use the Kwe CATIAParameter interface.</font>
+<font color="#0000FF">Set </font>ParametersList = analysisManager1.<font color="#FF0000">Parameters</font>
+<font color="#0000FF">Set </font>SubList = ParametersList.<font color="#FF0000">SubList</font>(basicComponent3,FALSE)
+
+<font color="#0000FF">For </font>i = 1<font color="#0000FF"> to </font>SubList.Count
+	Set Parameter = SubList.<font color="#FF0000">Item</font>(i)
+	CATIA.SystemService.Print Parameter.Name  
+	CATIA.SystemService.Print Parameter.<font color="#FF0000">ValueAsString</font>
+<font color="#0000FF">Next</font>
+
+<font color="#008000">' _____________________________________________________________________________________</font>
+<font color="#008000">' Launch the MeshOnly update</font>
+analysisCase1.<font color="#FF0000">ComputeMeshOnly</font>
+
+
+<font color="#008000">'------------------------------- END   END   END   ----------------------------</font>
+  CATIA.DisplayFileAlerts = False
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+ </body>
+
+</html>

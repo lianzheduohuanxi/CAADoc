@@ -1,0 +1,415 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Points and Lines and Converting them into Datum</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+</script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating Points and Lines and Converting them into
+      Datum</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This macro shows how to create wireframe and shape feature / convert to
+      datum of corresponding dimension&nbsp; / delete features /change
+      properties of features in a CATIA Part document.</p>
+      <p><img border="0" src="images/GsiCreateAndConvertToDatum.jpg" width="394" height="457"></p>
+
+
+      <!----------------------------------comment------------------------------------->
+      <p>The macro opens a CATIA Part Document CAAGsiStart.CATPart</p>
+      <p>Note:<br>
+      - The resulting document can be saved by setting the CAA_GSD_SAVE runtime
+      environment variable<br>
+      - Moreover, if CAA_GSD_EXIT variable is setted, the macro exit from CATIA<br>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAGsiCreatePtLnAndConvertToDatum is launched in
+      CATIA [<a href="#References">1</a>]. No open document is needed.</p>
+
+      <!----------------------------------comment------------------------------------->
+      <p><a href="CAAGsiCreatePtLnAndConvertToDatumSource.htm">CAAGsiCreatePtLnAndConvertToDatum.CATScript</a>
+      is located in the CAAScdGsiUseCases module. <a href="macros/CAAGsiCreatePtLnAndConvertToDatum.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAGsiCreatePtLnAndConvertToDatum includes five
+      steps:</p>
+      <ol>
+        <li><a href="#Step1">Opening the Part Document and Retrieving the
+          Current Open Body</a></li>
+        <li><a href="#Step2">Creating Associative Points and Lines</a></li>
+        <li><a href="#Step3">Converting Middle Points and Lines into Datum</a></li>
+        <li><a href="#Step4">Deleting Useless Remaining Points</a></li>
+        <li><a href="#Step5">Changing Graphic Properties (Color) and Datum Names</a></li>
+        <li><a href="#Step6">Saving the Part Document and Exiting CATIA</a></li>
+      </ol>
+
+      <!---------------------------------- Step 1-------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <h4><a name="Step1"></a>Openning the Part Document and Retrieving the
+      Current Open Body</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#008000">' Open CATIA Part : CAAGsiCreateJoinSurface.CATPart </font>
+ <font color="#0000FF">Dim </font>sDocPath<font color="#0000FF"> As </font>String
+ sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+ <font color="#0000FF">Dim </font>partDocument1<font color="#0000FF"> As </font>Document
+ <font color="#0000FF">Set </font>partDocument1 = documents1.Open(sDocPath &amp; &quot;\online\CAAScdGsiUseCases\samples\CAAGsiStart.CATPart&quot;)
+
+ <font color="#0000FF">Dim </font>part1<font color="#0000FF"> As </font>Part
+ <font color="#0000FF">Set </font>part1 = partDocument1.Part
+</pre>
+            <pre> <font color="#008000">' Retrieving the active OpenBody</font>
+ <font color="#0000FF">Dim </font>hybridShapeFactory1<font color="#0000FF"> As </font>Factory
+ <font color="#0000FF">Set </font>hybridShapeFactory1 = part1.HybridShapeFactory
+
+ <font color="#0000FF">Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+ <font color="#0000FF">Set </font>hybridBodies1 = part1.HybridBodies
+
+ <font color="#0000FF">Dim </font>hybridBody1<font color="#0000FF"> As </font>HybridBody
+ <font color="#0000FF">Set </font>hybridBody1 = hybridBodies1.Item(&quot;Open_body.1&quot;)</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Opens the starting CATIA Part document and retieves OpenBody , the
+      document contains parameters in order to store the number of created
+      iterations.</p>
+
+      <!---------------------------------- Step 1-------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <h4><a name="Step2"></a>Creating Associative Points and Lines</h4>
+      <p>The VBScript macro use the &quot;max&quot; internal parameter to define
+      the number of iterations</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#008000">' Array </font>
+<font color="#008000">' ----------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>TabExt ()
+<font color="#0000FF">Dim </font>TabMil ()
+<font color="#0000FF">Dim </font>TabLine()
+<font color="#0000FF">Dim </font>TabLineExpl()
+<font color="#0000FF">Dim </font>TabPtExpl()
+
+ReDim TabExt(2*max)
+ReDim TabMil(max)
+ReDim TabLine(max)
+ReDim TabLineExpl(max)
+ReDim TabPtExpl(max)</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Defines VBScript arrays for keeping generated hybridshapes objects in
+      order to access them in following steps</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#0000FF">Dim </font>Pi<font color="#0000FF"> As </font>double
+<font color="#0000FF">Dim </font>R<font color="#0000FF"> As </font>double  
+<font color="#0000FF">Dim </font>Omega<font color="#0000FF"> As </font>double
+
+R    = 50.0000
+Pi   = 3.14116  
+Omega= 2*Pi/max  </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Defines some parameters for creating point and line.<br>
+      Note : In the sample lines form a sort of &quot;hyperboloid&quot; 3D form:<br>
+      Extremities of lines are defines on two mathematical computed circles
+      position of point are taken a with 2*Pi/3 phase.</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' GSD Geometrie Creation 	</font>
+<font color="#008000">' ------------------------------------------------------</font>
+Catia.SystemService.Print &quot;(CAAGsiCreatePtLnAndConvertToDatum)  Create Points and Lines &quot;
+
+for i=1<font color="#0000FF"> to </font>max
+
+  
+   <font color="#008000">'Create two points</font>
+    Angle = Omega * (i-1)
+ 	
+<font color="#0000FF">    Set </font>TabExt(2*i-1)   = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle), R*sin(Angle), 100.000000)  
+    hybridBody1.AppendHybridShape  TabExt(2*i-1) 
+    part1.InWorkObject =  TabExt(2*i-1) 
+<font color="#0000FF">    Set </font>TabExt(2*i)  = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle+2*Pi/2), R*sin(Angle+2*Pi/2), -100.000000)
+    hybridBody1.AppendHybridShape  TabExt(2*i)
+    part1.InWorkObject = TabExt(2*i)
+
+   <font color="#008000">'Draw line</font>
+<font color="#0000FF">    Set </font>reference1 = part1.CreateReferenceFromObject(TabExt(2*i-1))
+<font color="#0000FF">    Set </font>reference2 = part1.CreateReferenceFromObject(TabExt(2*i))
+<font color="#0000FF">    Set </font>TabLine(i)  = hybridShapeFactory1.AddNewLinePtPt(reference1, reference2)
+    hybridBody1.AppendHybridShape TabLine(i)
+    part1.InWorkObject = TabLine(i)
+
+    
+   <font color="#008000">'Generate Intersection Point</font>
+<font color="#0000FF">    Set </font>reference3 = part1.CreateReferenceFromObject(TabLine(i))
+<font color="#0000FF">    Set </font>originElements1 = part1.OriginElements
+<font color="#0000FF">    Set </font>hybridShapePlaneExplicit1 = originElements1.PlaneXY
+<font color="#0000FF">    Set </font>reference4 = part1.CreateReferenceFromObject(hybridShapePlaneExplicit1)
+<font color="#0000FF">    Set </font>TabMil(i) = hybridShapeFactory1.AddNewIntersection(reference3, reference4)
+    hybridBody1.AppendHybridShape TabMil(i) 
+    part1.InWorkObject = TabMil(i)
+
+    
+    <font color="#008000">'Settings status parameter : Num_Of_Points_Created parameter</font>
+   <font color="#0000FF"> int</font>Param1.Value = i
+
+    
+    <font color="#008000">'Settings status parameter :  Percentage_Completed parameter</font>
+    realParam1.Value = i/max *100
+
+<font color="#0000FF">next</font>
+part1.Update
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Creates extremity points / lines / middle points of lines and keep in
+      dedicated arrays</p>
+
+      <!---------------------------------- Step 1-------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <h4><a name="Step3"></a>Converting Middle Points and Lines into Datum</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Convert to Datum </font>
+<font color="#008000">' ------------------------------------------------------</font>
+
+<font color="#008000">' Add OpenBodys   for datum point and for datum line</font>
+<font color="#0000FF">Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">Dim </font>OpenBody2<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">Dim </font>referencebody<font color="#0000FF"> As </font>Reference
+
+<font color="#0000FF">Set </font>OpenBody1 = hybridBodies1.Add()
+<font color="#0000FF">Set </font>referencebody = part1.CreateReferenceFromObject(OpenBody1)	
+hybridShapeFactory1.ChangeFeatureName referencebody  , &quot;DatumPointBody&quot; 
+
+<font color="#0000FF">Set </font>OpenBody2 = hybridBodies1.Add()
+<font color="#0000FF">Set </font>referencebody = part1.CreateReferenceFromObject(OpenBody2)	
+hybridShapeFactory1.ChangeFeatureName referencebody ,  &quot;DatumLineBody&quot; 
+
+<font color="#008000">' Loop on element to convert </font>
+for i=1<font color="#0000FF"> to </font>max
+
+   <font color="#008000">'Isolate Intersection point</font>
+<font color="#0000FF">    Set </font>reference5 = part1.CreateReferenceFromObject(TabMil(i))
+<font color="#0000FF">    Set </font>TabPtExpl(i) = hybridShapeFactory1.AddNewPointDatum(reference5)
+    OpenBody1.AppendHybridShape TabPtExpl(i)
+    part1.InWorkObject = TabPtExpl(i)
+
+    
+   hybridShapeFactory1.DeleteObjectForDatum reference5
+
+   <font color="#008000">'Isolate the line</font>
+<font color="#0000FF">    Set </font>reference5 = part1.CreateReferenceFromObject(TabLine(i))
+<font color="#0000FF">    Set </font>TabLineExpl(i) = hybridShapeFactory1.AddNewLineDatum(reference5)
+    OpenBody2.AppendHybridShape TabLineExpl(i)
+    part1.InWorkObject = TabLineExpl(i)
+     
+    hybridShapeFactory1.DeleteObjectForDatum reference5
+
+<font color="#0000FF">next </font>
+part1.Update </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Point datum and Line datum are stored respectively in an OpenBody for
+      PointDatum an one for LineDatum</p>
+
+
+      <!---------------------------------- Step 1-------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+
+
+      <h4><a name="Step4"></a>Deleting Useless Remaining Points</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Delete Useless points </font>
+<font color="#008000">' ------------------------------------------------------</font>
+for i=1<font color="#0000FF"> to </font>max
+    selection1.Clear()
+    selection1.Add(TabExt(2*i-1))
+    selection1.Add(TabExt(2*i))
+    selection1.Delete
+<font color="#0000FF">next </font>
+part1.Update</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Uses of selection mecanism in order to manage deletion.<br>
+      All extremities of lines are removed.</p>
+      <h4><a name="Step5"></a>Changing Graphic Properties (Color) and Datum
+      Names</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Change graphic properties(color)  and datum names  </font>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>referencedat1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>referencedat2<font color="#0000FF"> As </font>Reference
+
+<font color="#008000">' Loop on element to modify </font>
+for i=1<font color="#0000FF"> to </font>max
+    <font color="#008000">' -- Points </font>
+    <font color="#008000">' Change Color of Middle Point  </font>
+    selection1.Clear()
+    selection1.Add(TabPtExpl(i))
+<font color="#0000FF">    Set </font>VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor 255,<font color="#0000FF"> int</font>(255*(i-1)/max),<font color="#0000FF"> int</font>(255*(1-((i-1)/max)) ), 1
+ 
+    <font color="#008000">' Rename  </font>
+    NewName =&quot;PointDatum&quot; &amp; &quot;.&quot; &amp; i	
+<font color="#0000FF">    Set </font>referencedat1 = part1.CreateReferenceFromObject(TabPtExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat1 ,NewName 	
+
+    <font color="#008000">' -- Lines </font>
+    <font color="#008000">' Change Color of Line  	</font>
+    selection1.Clear()
+    selection1.Add(TabLineExpl(i))
+<font color="#0000FF">    Set </font>VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor<font color="#0000FF"> int</font>(255*(i-1)/max), 255,<font color="#0000FF"> int</font>(255*(1-((i-1)/max)) ), 1 
+    
+    <font color="#008000">' Rename </font>
+    NewName = &quot;LineDatum&quot; &amp; &quot;.&quot; &amp; i
+<font color="#0000FF">    Set </font>referencedat2  = part1.CreateReferenceFromObject(TabLineExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat2 ,NewName 	
+<font color="#0000FF">next </font>
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Uses of visualisation method for setting color of an object (R,V,B)
+      with each from 0 to 255</p>
+      <p>Uses of ChangeFeatureName method implemented in HybridshapeFactory for
+      renaming Feature<br>
+      Important note : The availability of this method is temporary proposed: a
+      more general way for renaming features will be provided in future
+      releases. 
+ 
+ 
+
+
+      <!---------------------------------- Step 1-------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+      <!---------------------------------- Step 1 ------------------------------------->
+
+
+      <h4><a name="Step6"></a>Saving the Part Document and Exiting CATIA</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>On Error Resume Next 
+CATIA.DisplayFileAlerts = False	
+<font color="#008000">' ---------------------------------------------------------------------------</font>
+<font color="#008000">' Save As </font>
+<font color="#008000">' ---------------------------------------------------------------------------</font>
+
+<font color="#008000">' Note : Optional -  allows to specify where document should be saved</font>
+<font color="#0000FF"> Dim </font>sTmpPath<font color="#0000FF"> As </font>String
+ sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+<font color="#0000FF"> If </font>(Not CATIA.FileSystem.FolderExists(sTmpPath))<font color="#0000FF"> Then</font>
+    Err.Raise 9999,,&quot;No Tmp Path Defined&quot;
+<font color="#0000FF"> End If</font>
+
+<font color="#008000">' Save </font>
+  partDocument1.SaveAs sTmpPath &amp; &quot;\CAAGsiCreatePtLnAndConvertToDatum.CATPart&quot;</pre>
+            <pre>
+<font color="#008000">' ---------------------------------------------------------------------------</font>
+<font color="#008000">' Close and Quit </font>
+<font color="#008000">' ---------------------------------------------------------------------------</font>
+partDocument1.Close 
+Catia.Quit</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Allow to store document in a user choosen directory and name</p>
+      <p>Note: The number of part update is optimized all along the VBScript
+      macro<br>
+      It allows to save performances in replaying macro</p>
+    </td>
+  </tr>
+</table>
+
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create geometry in a Macro starting from
+existing geometry in a CATPart.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm">Hybrid
+      Shapes Automation Objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

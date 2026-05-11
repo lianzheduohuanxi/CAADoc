@@ -1,0 +1,191 @@
+<html>
+
+<head>
+<meta content="text/html; charset=windows-1252" http-equiv="Content-Type">
+<meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+<title>CAA V5 Automation Code Presentation Rules</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" rowspan="2" valign="top">
+      <h2><a name="Top"></a>CAA V5 Automation Code Presentation Rules</h2>
+      <em>Presentation conventions to improve the readability of Automation code</em></td>
+  </tr>
+  <tr>
+    <td class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------------------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article presents how to program scripts using Dassault Systèmes
+      V5 product lines scripting capabilities as regards code layout.&nbsp;
+      <ul>
+        <li><a href="#General considerations"><b>General Considerations</b></a>
+        <li><a href="#Layout"><b>Layout</b></a>
+        <li><a href="#Naming Conventions"><b>Naming Conventions</b></a>
+        <li><a href="#Example"><b>Example</b></a>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="General considerations">General Considerations</a></h3>
+<p>As Dassault Systèmes V5 product lines currently officially support VBScript
+5.x and BasicScript 2.25, this document targets scripts developped using those
+languages. It does not cover all topics needed to develop a complex application
+using for example Visual Basic but most of the rules still apply to this kind of
+application.</p>
+<p>As a general rule, unless overridden by the present document, apply <a href="#" onclick="javascript:CAAlinkHtm('http://msdn.microsoft.com/library/default.asp?url=/library/en-us/script56/html/vbsCodingConventions.asp');return false">Microsoft
+(R) VBScript Coding Convention Rules</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="Layout">Layout</a></h3>
+<blockquote>
+  <b>[l1]</b> A copyright is mandatory for scripts to be delivered within any
+  Dassault Systèmes product.
+  <p><b>[l2]</b> A global header is mandatory, it must contain:
+</blockquote>
+<table border="1" width="100%">
+  <tr>
+    <td width="17%">Purpose</td>
+    <td width="83%">Description of what this sample does</td>
+    <td width="71%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="17%">Assumptions</td>
+    <td width="83%">List of external elements impacting the behavior of this
+      files,&nbsp; state of the session, selected objects</td>
+    <td width="71%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="17%">Author</td>
+    <td width="83%">For customer provided scripts, empty for samples delivered
+      within a Dassault Systèmes product</td>
+    <td width="71%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="17%">Languages</td>
+    <td width="83%">Supported development languages</td>
+    <td width="71%">VBScript, BasicScript, VBA and/or VB</td>
+  </tr>
+  <tr>
+    <td width="17%">CATIA Level</td>
+    <td width="83%">Original CATIA version.&nbsp;<br>
+      Available interfaces can change from one version to the other</td>
+    <td width="71%">ex: V5R4, V5R5, ...</td>
+  </tr>
+  <tr>
+    <td width="17%">Locale</td>
+    <td width="83%">Macros recorded or written for a specific locale may not
+      work for another one. Use language names described in the interactive
+      product documentation.</td>
+    <td width="71%">As of V5R5: English, French, German, Japanese, Czech,
+      Polish, Russian, Korean or Simplified Chinese</td>
+  </tr>
+</table>
+<blockquote>
+  <p><b>[l3] </b>Indentation should be 4 spaces</p>
+  <b>[l4] </b>Comment important variables on the same line
+  <p><b>[l5]</b> Prefer the ' syntax to the REM keyword for comments
+  <p><b>[l6]</b> Align comments concerning a nested block with its
+  indentation&nbsp;
+  <p><b>[l7] </b>A header for each internal function or procedure containing
+  purpose, description of parameters and return values.
+  <p><b>[l8] </b>Keep lines length shorter than 80 characters
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="Naming Conventions">Naming Conventions</a></h3>
+<blockquote>
+  <b>[n1] </b>method names are to be verbs or verb phrases, in mixed case with
+  the first letter of any word capitalized:
+  <p><br>
+  Sub <font face="Courier New">DoItBetter()<br>
+  &nbsp; ...<br>
+  End Sub<br>
+  </font></p>
+  <b>[n2]</b> variable names are to begin with a lowercase letter describing its
+  type, if you don't have to use your own prefix system (as for example
+  Microsoft's VBScript Coding Conventions), the following minimal prefixes are
+  mandatory:<br>
+</blockquote>
+<table border="1" width="60%">
+  <tr>
+    <td width="33%">b</td>
+    <td width="33%">boolean</td>
+    <td width="34%">bIsUpToDate</td>
+  </tr>
+  <tr>
+    <td width="33%">d</td>
+    <td width="33%">double</td>
+    <td width="34%">dLength</td>
+  </tr>
+  <tr>
+    <td width="33%">s</td>
+    <td width="33%">string</td>
+    <td width="34%">sName</td>
+  </tr>
+  <tr>
+    <td width="33%">i</td>
+    <td width="33%">int</td>
+    <td width="34%">iNumberOfElements</td>
+  </tr>
+  <tr>
+    <td width="33%">o</td>
+    <td width="33%">objects</td>
+    <td width="34%">
+      <p style="margin-bottom: 0">oSketch1</td>
+  </tr>
+</table>
+<p>&nbsp;
+<blockquote>
+  <p><b>[n3]</b> constants names should be a sequences of one or more words,
+  acronyms, or abbreviations, in uppercase letters, with components separated by
+  underscore &quot;_&quot; characters:
+  <p><br>
+  <code>&nbsp;MAX_VALUE.</code>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="Example">Example</a></h3>
+<p><img border="0" src="images/ScriptPres.jpg" width="540" height="720"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+    </tr>
+    <tr>
+      <td valign="top"><font size="2">Version: <strong>1.0</strong> [Sep 2000]</font></td>
+      <td valign="top"><font size="2">Document created</font></td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top">
+        <p align="right">[<a href="#Top">Top</a>]</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

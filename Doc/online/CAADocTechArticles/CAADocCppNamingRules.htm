@@ -1,0 +1,673 @@
+<html>
+
+<head>
+<title>CAA V5 C++ Naming Rules</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 C++ Naming Rules</h3>
+      <em>Standard names for public CAA V5 C++ entities</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>As CAA V5 introduces a number of different programming entities, naming
+      rules and conventions have been developed in order to avoid name
+      collisions inside and outside the CAA environment, and to make things
+      clearer for its developers. This article describes these naming rules for
+      the C++ entities.</p>
+      <ul>
+        <li><strong><a href="#General principles">General Principles</a></strong>
+        <li><strong><a href="#Global Rules">Global Rule</a></strong>
+        <li><strong><a href="#Entities associated to a directory">Entities
+          Associated with a Directory</a></strong>
+        <li><strong><a href="#Entities associated to a file">C++ Entities
+          Associated with a File</a></strong>
+        <li><strong><a href="#Language-independent Entities associated with a file">Language-independent
+          Entities Associated with a File</a></strong>
+        <li><strong><a href="#UserInt">User Interface Entities</a></strong>
+        <li><strong><a href="#Other entities">Other Entities</a></strong>
+        <li><strong><a href="#CPPCode">Naming Variables Within C++ Code</a></strong>
+          <ul>
+            <li><strong><a href="#GeneralRules">General Rules</a></strong>
+            <li><strong><a href="#Hungarian">Hungarian Notation</a></strong>
+            <li><strong><a href="#InterfacePointers">Naming Interface Pointers</a></strong></li>
+          </ul>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="General principles"></a>General Principles</h3>
+<p>The following general principles have been established when choosing rules
+for CAA V5 names:
+<ol>
+  <li><strong>Brand-based prefixes</strong>. A <a name="prefix"></a><em>prefix</em>
+    [<a href="#Ref1">1</a>] is used for most entities that may collide with
+    other entities of the same nature, but developed outside the Dassault
+    Systèmes (DS) Group. It denotes the DS origin of the entity. Other entity
+    suppliers, and in particular CAA partners, are expected not to begin their
+    names with DS reserved prefixes. Prefixes are based on DS brandnames,
+    because of their perennity: CAT for CATIA, VPM and ENOV for ENOVIA, DNB for
+    DELMIA)
+  <li><a name="FWaliases"></a><strong>Aliases for frameworks</strong>. All
+    frameworks (FW) are assigned a short 3-letter alias with first letter
+    capitalized (e.g. CATDialog-&gt; Dlg) [<a href="#Ref2">2</a>]. This alias is
+    used as a shortcut for the framework name for building other framework
+    related names. It is referred to as &lt;FWAlias&gt; in the remaining of this
+    document. Framework aliases will be defined in the framework's identity
+    card. Trigrams are typically used to name entities that are associated to
+    frameworks (e.g., modules). Since all modules from all frameworks are merged
+    at runtime into common repositories (e.g., RuntimeView), trigrams provide a
+    means of avoiding conflicts. For a given framework FW, the same trigram
+    applies to the framework and to its associated FW.tst and FW.edu frameworks.
+  <li><a name="English"></a><strong>English</strong>. Names are based on
+    english/american words.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Global Rules"></a>Global Rule</h3>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name</th>
+    <th width="25%">Entity Nature</th>
+    <th width="35%">Naming Rule</th>
+    <th width="25%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top" width="15%"><strong>1-All</strong></td>
+    <td valign="top">All</td>
+    <td valign="top"><strong>&lt;prefix&gt;&lt;EntityName&gt;</strong>
+      <ul>
+        <li>Name length should not exceed 27 characters</li>
+        <li>Names are composed using [A-Z][a-z][0-9] symbol range. Other symbols
+          (such as \, -, /, ; _and the like) are forbidden</li>
+      </ul>
+    </td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a directory"></a>Entities Associated with a
+Directory</h3>
+<p>The entity and the directory that contain it must have the same name.</p>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Directory Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>2-Code Framework</strong></td>
+    <td valign="top">Physical grouping of classes, interfaces, macros, functions
+      dedicated to some specific task or domain.</td>
+    <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWName&gt;</strong></td>
+    <td valign="top"></td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>3-Test Framework</strong></td>
+    <td valign="top">Physical grouping of classes, interfaces, macros, functions
+      dedicated to some specific task or domain.</td>
+    <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWName&gt;.tst</strong></td>
+    <td valign="top">&lt;prefix&gt;&lt;FWName&gt;.tst contain test material for
+      code contained in the code FW.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="CAAFrameworks"></a>4-CAA Frameworks</strong></td>
+    <td valign="top">Special kinds of frameworks that contain sample code and
+      documentation that is intended for delivery to final customer as CAA
+      products</td>
+    <td valign="top"><strong>CAA&lt;FrameworkName&gt;.edu<br>
+      CAA&lt;FrameworkName&gt;Doc.edu<br>
+      CAA&lt;FrameworkName&gt;.tst</strong></td>
+    <td valign="top">CAA&lt;FWName&gt;.edu contains only sample CAA Code (*.m
+      modules).<br>
+      CAA&lt;FWName&gt;Doc.edu contains only CAA Documentation (*.doc modules).<br>
+      CAA&lt;FWName&gt;.tst contain test material for code contained in sample
+      code FW.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>5-Code Module</strong></td>
+    <td valign="top">Physical grouping of interrelated objects within a
+      framework, which defines the unit of code loading into main memory.</td>
+    <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;ModuleName&gt;.m</strong></td>
+    <td valign="top">Modules should retain their FW name to avoid collisions
+      when they are all mixed together in a single directory of the run time
+      view.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="test"></a>6-Code Module in test FW</strong></td>
+    <td valign="top">Physical grouping of interrelated objects within a
+      framework, which defines the unit of code loading into main memory. Used
+      for testing the code delivered by a FW</td>
+    <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Tst&gt;&lt;ModuleName&gt;.m</strong></td>
+    <td valign="top">Additional &lt;Tst&gt; allows same FW alias to be used
+      between FW and associated FW.tst, without risk of duplicate names.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="test"></a>7-Code Module in education FW</strong></td>
+    <td valign="top">Same as code module, but within a CAA code framework.</td>
+    <td valign="top"><strong>CAA&lt;FWAlias&gt;&lt;Edu&gt;&lt;ModuleName&gt;.m</strong></td>
+    <td valign="top">Additional &lt;Edu&gt; allows the same FW alias to be used
+      between FW and the associated FW.edu, without risk of duplicate names.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>8-Code main module</strong></td>
+    <td valign="top">Utility code module, unique to a FW, that act as the union
+      of all the FW's modules when link editing other FWs modules.</td>
+    <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWName&gt;.m</strong></td>
+    <td valign="top">Clients wishing to link edit with any module of the target
+      FW do not have to know about each module name while retaining the benefits
+      of FW modularity.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="DocModuleCAA"></a><b>9-Doc Module in education FW</b></td>
+    <td valign="top">Logical grouping of related documents about a CAA
+      framework.</td>
+    <td valign="top"><strong>CAA&lt;FWAlias&gt;TechArticles.doc<br>
+      CAA&lt;FWAlias&gt;UseCases.doc<br>
+      CAA&lt;FWAlias&gt;QuickRefs.doc<br>
+      CAA&lt;FWAlias&gt;Base.doc</strong></td>
+    <td valign="top">These modules are standard for those Fw.<br>
+      TechArticles contain articles not linked to a particular piece of
+      delivered code.<br>
+      UseCases support some delivered code (in a CAAxxx.edu associated FW)<br>
+      QuickRefs are for special articles that are presented as
+      &quot;catalogs&quot; of resources for the Fw<br>
+      Base is for the rest of articles, mainly navigation articles.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a file"></a>C++ Entities Associated with a
+File</h3>
+<p>A file, or a pair of files, must be dedicated to the following entities, that
+must have the same name than the files:</p>
+<ul>
+  <li>C++ classes and extension classes
+  <li>C++ and Automation interfaces
+  <li>Global functions, enumerations, and macros.</li>
+</ul>
+<table width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>10-Simple Classes</strong></td>
+    <td valign="top">Standard C++ objects.</td>
+    <td valign="top"><strong>Class:
+      &lt;prefix&gt;&lt;FWAlias&gt;&lt;ClassName&gt;<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;ClassName&gt;.h<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;ClassName&gt;.cpp</strong></td>
+    <td valign="top">A class named CATDlgBox must be declared in a file named
+      CATDlgBox.h and implemented in a file named CATDlgBox.cpp. Only one class
+      definition per file pair is allowed.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>11-Extension Classes</strong></td>
+    <td valign="top">Special implementation classes that extent another class or
+      a late type.</td>
+    <td valign="top"><strong>Class:
+      &lt;prefix&gt;E&lt;FWAlias&gt;&lt;ClassName&gt;<br>
+      File: &lt;prefix&gt;E&lt;FWAlias&gt;&lt;ClassName&gt;.h<br>
+      File: &lt;prefix&gt;E&lt;FWAlias&gt;&lt;ClassName&gt;.cpp</strong></td>
+    <td valign="top">&lt;ClassName&gt; is free, but it is recommended to use
+      there the name of the <em>extended</em> class, as the extension actually
+      belongs to the same 'logical' class. In case of several classes extending
+      the same base class, it is recommended to use an integer number following
+      &lt;ClassName&gt; to distinguish them.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>12-Interfaces</strong></td>
+    <td valign="top">Object Modeler special classes that model an abstract
+      behaviour that many classes may implement.</td>
+    <td valign="top"><strong>Interface:
+      &lt;prefix&gt;I&lt;FWAlias&gt;&lt;InterfaceName&gt;<br>
+      File: &lt;prefix&gt;I&lt;FWAlias&gt;&lt;InterfaceName&gt;.h<br>
+      File: &lt;prefix&gt;I&lt;FWAlias&gt;&lt;InterfaceName&gt;.cpp</strong></td>
+    <td valign="top">If the first letter in a framework alias is a I, then both
+      I's should appear, as in CATIIxxIdentifiable.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>13-Automation Interfaces</strong></td>
+    <td valign="top">Special type of interfaces that allows CATIA/ENOVIA/...
+      programmation from scripting environments.</td>
+    <td valign="top"><strong>Interface:
+      &lt;prefix&gt;IA&lt;FWAlias&gt;&lt;InterfaceName&gt;<br>
+      File: &lt;prefix&gt;IA&lt;FWAlias&gt;&lt;InterfaceName&gt;.idl<br>
+      File: &lt;prefix&gt;IA&lt;FWAlias&gt;&lt;InterfaceName&gt;.h<br>
+      File: &lt;prefix&gt;IA&lt;FWAlias&gt;&lt;InterfaceName&gt;.cpp</strong></td>
+    <td valign="top"></td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>14-Interface Dictionaries</strong></td>
+    <td valign="top">File containing a correspondence table between
+      implementation classes or late types and the interfaces they implement.</td>
+    <td valign="top"><strong>File: &lt;prefix&gt;&lt;FWName&gt;.dico</strong>
+      for CAA customers<br>
+      <strong>File: &lt;prefix&gt;&lt;FWName&gt;.dic</strong> for DS</td>
+    <td valign="top">One given framework must include only one interface
+      dictionary.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>15-Factory Dictionaries</strong></td>
+    <td valign="top">File containing a correspondence table between a class, and
+      the factory interface that creates it.</td>
+    <td valign="top"><strong>File: &lt;prefix&gt;&lt;FWName&gt;.fact</strong></td>
+    <td valign="top">One given framework must include only one factory
+      dictionary.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>16-Global Functions and Variables</strong></td>
+    <td valign="top">C++ functions defined outside any class</td>
+    <td valign="top"><strong>Function/variable:
+      &lt;prefix&gt;&lt;FWAlias&gt;&lt;FunctionName&gt;<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;FunctionName&gt;.h<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;FunctionName&gt;.cpp</strong></td>
+    <td valign="top">It is strongly advised to embody such function within an
+      object as static functions, thus taking benefit from the scoping (::)
+      operator.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="Enumerated"></a>17-Enumerated Types</strong></td>
+    <td valign="top">Programmer-defined type with value limited to a predefined
+      list of named items.</td>
+    <td valign="top"><strong>Type: &lt;prefix&gt;&lt;FWAlias&gt;&lt;EnumName&gt;<br>
+      Value: &lt;prefix&gt;&lt;FWAlias&gt;&lt;EnumItemName&gt;<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;EnumName&gt;.h</strong></td>
+    <td valign="top">In case of an enum with class scope, do <strong>not </strong>include
+      the leading &lt;prefix&gt; to enum items, since the risk of name collision
+      do not exist in that case.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>18-Macros</strong></td>
+    <td valign="top">Piece of C++ code that is referenced by name is some other
+      code and expanded by compiler at buildl time.</td>
+    <td valign="top"><strong>Macro:
+      &lt;prefix&gt;&lt;FWAlias&gt;&lt;MacroName&gt;<br>
+      File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;MacroName&gt;.h</strong></td>
+    <td valign="top"></td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>19-Typedef</strong></td>
+    <td valign="top">C++ alias that defines a name as a substitute for another
+      name</td>
+    <td valign="top"><strong>Same as substituted name</strong></td>
+    <td valign="top">A substitute name for something whose name begins by CAT,
+      CATI, CATIA etc. should also begin with CAT, CATI, CATIA etc.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="NLS"></a>20-NLS resources</strong></td>
+    <td valign="top">File containing texts used as resources by code, and
+      subject to translation in foreign language</td>
+    <td valign="top"><strong>File: &lt;prefix&gt;&lt;FWAlias&gt;Name.CATNls</strong></td>
+    <td valign="top">Error messages, dialog box names and labels, and prompts
+      are typical NLS resources.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="ResourceCat"></a>21-Resource catalogs</strong></td>
+    <td valign="top">Files containing non translatable resources</td>
+    <td valign="top"><strong>File: &lt;prefix&gt;&lt;FWAlias&gt;Name.CATRsc</strong></td>
+    <td valign="top">Icons are typical resources contained in a resource catalog</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>22-Feature catalogs</strong></td>
+    <td valign="top">File containing predefined feature definitions.</td>
+    <td valign="top"><strong>File:
+      &lt;prefix&gt;&lt;FWAlias&gt;&lt;CatalogName&gt;.CATFct </strong>for CAA
+      customers<br>
+      <strong>File: &lt;prefix&gt;&lt;FWAlias&gt;&lt;CatalogName&gt;.feat </strong>for
+      DS</td>
+    <td valign="top"></td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Language-independent Entities associated with a file"></a>Language-independent
+Entities Associated with a File</h3>
+<table width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>23-Icon files</strong></td>
+    <td valign="top">File containing the graphical definition of an icon.</td>
+    <td valign="top"><strong>File:
+      &lt;prefix&gt;&lt;FWAlias&gt;&lt;IconName&gt;.&lt;ext&gt;</strong></td>
+    <td valign="top">&lt;ext&gt; refers to the standard file extension
+      corresponding to the graphical format used (e.g. .bmp) .</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><b><a name="Setting Files"></a>24-Setting File</b></td>
+    <td valign="top">File containing configuration information to save between
+      two sessions</td>
+    <td valign="top"><strong>File: </strong><b>&lt;prefix&gt;</b><b>&lt;Name&gt;.CATSettings</b></td>
+    <td valign="top"></td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="UserInt"></a>User Interface Entities</h3>
+<p>These rules apply to the identifiers assigned to the user interface entities
+to ensure their uniqueness when you add a workbench or an add-in.</p>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <th width="15%">Entity Name
+      <th width="15%">Entity Nature</th>
+      <th width="40%">Naming Rule</th>
+      <th width="20%">Notes</th>
+      <th width="10%">Metrics</th>
+    </tr>
+    <tr>
+      <td valign="top"><strong>25-Command Header</strong></td>
+      <td valign="top">Proxy for a command in the application frame</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Hdr</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>26-Workshop</strong></td>
+      <td valign="top">Set of workbenches associated with a document</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Wks</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>27-Workbench</strong></td>
+      <td valign="top">A grouping of process-related commands</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Wkb</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>28-Toolbar</strong></td>
+      <td valign="top">A (sub) grouping of related commands</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Tlb</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>29-Command Starter</strong></td>
+      <td valign="top">A command starter</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Str</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>30-Separator</strong></td>
+      <td valign="top">A separator between two commands in a menu or a toolbar</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Sep</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>31-Icon Box</strong></td>
+      <td valign="top">A grouping of icons</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Icb</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>32-MenuBar</strong></td>
+      <td valign="top">A list of menu accessors</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Mbr</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>33-Menu</strong></td>
+      <td valign="top">A list of command accessible by name</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Mnu</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>34-SubMenu</strong></td>
+      <td valign="top">A (sub) list of command accessible by name</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;Name&gt;Snu</strong></td>
+      <td valign="top"></td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Other entities"></a>Other Entities</h3>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <th width="15%">Entity Name
+      <th width="15%">Entity Nature</th>
+      <th width="40%">Naming Rule</th>
+      <th width="20%">Notes</th>
+      <th width="10%">Metrics</th>
+    </tr>
+    <tr>
+      <td valign="top"><strong>35-Features and Late Types</strong></td>
+      <td valign="top">Name that federates a number of interfaces as
+        characteristic of a type.</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;&lt;FeatureName&gt;<br>
+        &lt;prefix&gt;&lt;FWAlias&gt;&lt;LateTypeName&gt;</strong></td>
+      <td valign="top">At run time, all features and late types are fetched from
+        a virtual unique dictionary that concatenates all dictionary files from
+        all frameworks. Therefore, two late types in two frameworks cannot bear
+        the same name.</td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>35b-Applicative Containers</strong></td>
+      <td valign="top">Logical areas within a document that contain client
+        features enriching supplied features.</td>
+      <td valign="top"><strong>&lt;prefix&gt;</strong><strong>&lt;FWAlias&gt;AppCont&lt;ContainerName&gt;</strong></td>
+      <td valign="top">Applicative containers are accessed using their names in
+        a session, therefore this name must be unique.</td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong><a name="Data"></a>36-Data Members</strong></td>
+      <td valign="top">Data associated to a class.</td>
+      <td valign="top"><strong>_&lt;DataName&gt;</strong></td>
+      <td valign="top">The underscore helps to remember is source code that a
+        data member is being manipulated.<br>
+        Per CAA V5 coding rules, data member should never be assigned public (in
+        the C++ sense) visibility.</td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>37-Method or Function Arguments</strong></td>
+      <td valign="top">Arguments in function and method signatures.</td>
+      <td valign="top">Use:
+        <ul>
+          <li>The<strong> i</strong> prefix for input parameters
+          <li>The <strong>o</strong> prefix for output parameters
+          <li>The <strong>io</strong> prefix for input/output parameters</li>
+        </ul>
+      </td>
+      <td valign="top">Refer to the CAA V5 C++ coding rules [<a href="#Ref2">2</a>]</td>
+      <td valign="top">Nb of deviations / Nb of entities</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="CPPCode"></a>Naming Variables Within C++ Code</h3>
+<p>Rules described in this section are 'best practices' for V5 code and
+mandatory for CAA code.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GeneralRules"></a>General Rules</h4>
+<ul>
+  <li>variable names are to begin with a lowercase letter (int counter;)
+  <li>function names are to begin with an Uppercase letter (void CountItems();)
+  <li>* and &amp; are to be collated to the variable name, not the type name, in
+    order to avoid ambiguities in case of multiple definitions on the same line<br>
+    <code>CATBaseUnknown *pFirstItem, *pSecondItem;</code>
+  <li>data members are to begin with an underscore (int _length). Data members
+    should never be assigned public (in the C++ sense) visibility.</li>
+</ul>
+<h4><a name="Hungarian"></a>Hungarian Notation</h4>
+<p>It consist in putting a prefix in front of the name that reminds the reader
+of some aspect of the type of the variable (ex. is it an array?). The advantage
+is that it allows a better understanding of the valid operations that can apply
+to a certain type (ex. delete applies to a pointer, delete [] to an array).</p>
+<p>Here is a table of standard hungarian prefixes defined for CAA V5:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><em><strong>Prefix</strong></em></td>
+      <td><em><strong>Means</strong></em></td>
+      <td><em><strong>Example</strong></em></td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>pointer</td>
+      <td>CATBaseUnknown *pTarget;</td>
+    </tr>
+    <tr>
+      <td>pp</td>
+      <td>pointer to pointer</td>
+      <td>void **ppTarget;</td>
+    </tr>
+    <tr>
+      <td>pi</td>
+      <td>pointer to interface</td>
+      <td>CATISpecObject *piTargetFeature;</td>
+    </tr>
+    <tr>
+      <td>sp</td>
+      <td>smart pointer || handler</td>
+      <td>CATISpecObject_var spTargetFeature;</td>
+    </tr>
+    <tr>
+      <td>a</td>
+      <td>array</td>
+      <td>char *aPath;</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Note:</strong> when writing method signatures, the hungarian notation
+combines with the i, o, io prefixes that denotes the direction of information
+flow within arguments (f(CATISpecObject **ioppTargetFeature) denotes a pointer
+to a pointer to a feature that is used as input-output arguments -- i.e. after
+f() is run, the feature accessed through ioppTargetFeature might be a different
+one).</p>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="InterfacePointers"></a>Naming Interface Pointers</h4>
+<p>Many interface pointers may be used in the same scope to manipulate one
+single implementation by different &quot;behavioral handles&quot;. If those
+interface pointers bear very different names, figuring out that in fact one
+single object is being manipulated required a mental effort.</p>
+<p>To avoid it, the following scheme is adopted:
+<ol>
+  <li>Choose a (short) identifier to refer to the implementation (e.g. Doc for a
+    document) as a root name
+  <li>Forge a derived name around this root name when you manipulate this
+    implementation through an interface pointer, by using the following pattern
+    pi&lt;InterfaceName&gt;On&lt;RootName&gt;. Interface name is obtained by
+    removing the &lt;prefix&gt;I prefix from its class name. For instance, <strong>piInitOnDoc</strong>
+    and <strong>piPersistentOnDoc</strong> are two interface pointers (pi) by
+    which a document implementation referred to as Doc is manipulated through
+    interfaces of type CATIInit (Init) and CATIPersistent (Persistent)
+    respectively.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[<a name="Ref1">1</a>]</td>
+    <td><a href="CAADocNamingRules.htm">CAA V5 Naming Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[<a name="Ref2">2</a>]</td>
+    <td><a href="../CAADocQuickRefs/CAADocFWTrigrams.htm">Trigrams
+      for Frameworks</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[<a name="Ref3">3</a>]</td>
+    <td><a href="CAADocCppCodingRules.htm">CAA V5 C++ Coding Rules</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Mar 2000]</td>
+    <td valign="top">Document created.</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1.1</b> [Oct 2000]</td>
+    <td valign="top">New brands prefix conventions; new global rule item.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Replay Test Objects</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Replay Test Objects</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows how to replay test objects.</p>
+		<ul>
+			<li><a href="#Overview">Replay Overview</a></li>
+			<li><a href="#Prolog">Prolog to Test Object Replay</a></li>
+			<li><a href="#Single">Replaying a Single Test Object</a></li>
+			<li><a href="#Several">Replaying Several Test Objects</a></li>
+			<li><a href="#Framework">Replaying All the Test Objects of a Framework</a></li>
+			<li><a href="#Workspace">Replaying All the Test Objects of a Workspace</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="Intro2">
+		<hr class="header" />
+		<span class="run-in">Before you begin</span>, note that:
+		<ul>
+			<li>The workspace where your application frameworks are located must 
+				have its prerequisites set and be built.</li>
+			<li>The test workspace where your test frameworks are located must have 
+				its prerequisites set, including your application workspace, and 
+				must be built.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Overview"></a>Replay Overview</h2>
+<p>Before replaying test objects, you need to set up the replay environment as 
+described in <a href="#Prolog">Prolog to Test Object Replay</a>.
+This environment is required by the test object to find commands such as 
+CATSTART, and environment variables such as the run time library location.</p>
+<p>To ensure that a test object uses this environment, mkodt runs the test 
+object twice:</p>
+<ol>
+	<li>A first run is made outside of the environment, and is thus very quick. 
+		If the test object returns normally, it is said as non pertinent since 
+		it does not use the replay environment. Otherwise, it is said as 
+		pertinent.</li>
+	<li>A second run uses the replay environment. If the test object is non 
+		pertinent, a warning is issued when the test object returns.
+		<pre class="code">## WARNING : Your ODT is not pertinent on win_b64
+## WARNING : It produces a 0 CC without any CNEXT module available ....</pre>
+		</li>
+</ol>
+<p>You can disable the pertinence measure by preventing this first step from 
+being run using either the <code>-NoPert</code> option [<a href="#References">1</a>] 
+or the <code>ODT_PERTINENCE</code> environment variable [<a href="#References">2</a>].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Prolog"></a>Prolog to Test Object Replay</h2>
+<p>For each section of this article, the following prolog must be executed prior 
+to running the described test scenario:</p>
+<ol class="task">
+	<li>
+		<p>Open a command prompt.</p>
+	</li>
+	<li>
+		<p>Initialize the appropriate TCK.</p>
+		<pre class="code">"c:\Program Files\Dassault Systemes\B27\win_b64\code\command\tck_init.bat"</pre>
+		<p>This assumes that the Development Tools are installed in the default 
+		installation folder (c:\Program Files\Dassault Systemes\B27). Otherwise, 
+		use the actual installation folder.</p>
+	</li>
+	<li>
+		<p>List the available TCKs.</p>
+		<pre class="code">tck_list</pre>
+	</li>
+	<li>
+		<p>Set the TCK to run mkodt by choosing one among those displayed.</p>
+		<pre class="code">tck_profile V6B2014x_1330_B216</pre>
+	</li>
+	<li>
+		<p>Locate the current folder to the test workspace root folder to run the 
+		mkodt command.</p>
+		<table class="Remark">
+			<tr>
+				<td class="Remark"><span class="run-in">Important</span>: You can 
+				run the mkodt command from a current folder different from test 
+				workspace root folder. In this case, used the <code>-d</code> to 
+				pass the test workspace root folder to mkodt:
+				<pre>mkodt -d E:\MyWorkspace ...</pre>
+				</td>
+			</tr>
+		</table>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Single"></a>Replaying a Single Test Object</h2>
+<p>To replay a single test object, type:</p>
+<pre class="code">mkodt -s MyODT</pre>
+<p>This replays the test object MyODT described in the MyODT.xml file, located in 
+a TestCases folder of a framework in your workspace.</p>
+<p>This displays traces in the command prompt similar as the following:</p>
+<pre class="code">## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B216
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [MyTestFramework.tst MyODT] (1 / 1)
+elapsed_time: 00 min 01 sec
+## ++ MyODT.xml : execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.</pre>
+<p>Two files are created in the output folder [<a href="#References">3</a>], which 
+is by default the TestCases/Output folder of the test framework to which the MyODT.xml 
+file belongs:</p>
+<ol>
+	<li>ODTName.traces which contains the traces created by either the echo command 
+		in bat or shell files, and/or the traces created by the cout command in 
+		C++ programs.</li>
+	<li>ODTName.mkodt_result which contains data about the test object replay.</li>
+</ol>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Several"></a>Replaying Several Test Objects</h2>
+<p>To replay several test objects, you can use one of the following ways:</p>
+<ul>
+	<li>To replay several test objects, given their name:
+		<pre class="code">mkodt -s MyODT1 MyODT2 MyODT3</pre>
+	</li>
+	<li>To replay several test objects, given their name stored in a file:
+		<pre class="code">mkodt -l e:\MyWorkspace\TestObjectList.txt</pre>
+		<p>The file referenced by the <code>-l</code> option is expressed using 
+		its absolute path name. Its contents is:</p>
+		<pre class="code">MyODT1
+MyODT2
+MyODT3</pre>
+		<p>Each line contains the name of one test object to replay, that is, the 
+		name of its XML file without the .xml extension.</p>
+	</li>
+	<li>To replay several test objects, given their name and type:
+		<pre class="code">mkodt -L e:\MyWorkspace\TestObjectList.txt</pre>
+		<p>The file referenced by the <code>-L</code> option is expressed using 
+		its absolute path name. Its contents is:</p>
+		<pre class="code">MyODT1 TestCases       MyTestFramework1.tst
+MyODT2 TestCases       MyTestFramework2.tst
+MyODT3 SwitchTestCases MyTestFramework1.tst</pre>
+		<p>Each line contains:</p>
+		<ul>
+			<li>The name of one test object to replay, that is, the name of its 
+				XML file without the .xml extension.</li>
+			<li>The test object type, that is either <code>TestCases</code> is the 
+				test object is located in the TestCases folder, or <code>SwitchTestCases</code> 
+				if it is located in the SwitchTestCases folder of the test framework.</li>
+			<li>The test framework where the test object description file is located.
+			</li>
+		</ul>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Framework"></a>Replaying All the Test Objects of a Framework</h2>
+<p>To replay all the test objects of a framework, you can use one of the following 
+ways:</p>
+<ul>
+	<li>With the current folder not located at the framework root folder:
+		<pre class="code">mkodt -a -F MyTestFramework.tst</pre>
+		<p>Or:</p>
+		<pre class="code">mkodt -a -FWlist e:\MyWorkspace\TestFrameworkList.txt</pre>
+		<p>The file referenced by the <code>-FWlist</code> option is expressed using 
+		its absolute path name. Its contents is:</p>
+		<pre class="code">MyTestFramework.tst</pre>
+	</li>
+	<li>With a current folder located at the framework root folder:
+		<pre class="code">mkodt -a</pre>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Workspace"></a>Replaying All the Test Objects of a Workspace</h2>
+<p>To replay the test objects of a workspace, you can use one of the following ways:</p>
+<ul>
+	<li>To replay all the test objects of a workspace, with the current folder located 
+		at the workspace root folder:
+		<pre class="code">mkodt -a</pre>
+	</li>
+	<li>To replay all the test objects of a given set of frameworks:
+		<pre class="code">mkodt -FWlist e:\MyWorkspace\TestFrameworkToIncludeList.txt</pre>
+		<p>The file referenced by the <code>-FWlist</code> option is expressed using 
+		its absolute path name. Its contents is:</p>
+		<pre class="code">MyTestFramework1.tst
+MyTestFramework2.tst
+MyTestFramework3.tst</pre>
+	</li>
+	<li>To replay all the test objects of a workspace, except those of a given set 
+		of frameworks:
+		<pre class="code">mkodt -a -ExcludFW e:\MyWorkspace\TestFrameworkToExcludeList.txt</pre>
+		<p>The file referenced by the <code>-ExcludFW</code> option is expressed 
+		using its absolute path name. Its contents is:</p>
+		<pre class="code">MyTestFramework2.tst
+MyTestFramework5.tst</pre>
+	</li>
+	<li>To replay the all test objects of several frameworks as a priority, that 
+		is, before the test objects belonging to the other frameworks of a workspace:
+		<pre class="code">mkodt -a -PriorityFW e:\MyWorkspace\TestFrameworkInPriorityList.txt</pre>
+		<p>The file referenced by the <code>-PriorityFW </code>option is expressed 
+		using its absolute path name. Its contents is:</p>
+		<pre class="code">MyTestFramework4.tst
+MyTestFramework6.tst</pre>
+		<p>The test objects of the listed frameworks are replayed before those of 
+		the other frameworks, in the order the frameworks are listed in the file.</p>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!--
+<h2><a name="Workspace"></a>Controlling Test Object Replays</h2>
+<p>You may want to better control your test object replays, namely set 
+environment variable values for some test objects, pass options to the mkodt 
+command for others, extract reporting data to create a replay dashboard, and so 
+on. The way to do this is to write a bat file that contains the structure of 
+your replay, set and reset the environment variable values, use many mkodt 
+commands with appropriate options for dedicated test objects, and call other bat 
+files to perform your specific tasks.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+-->
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The mkodt command enables you to run a single test object, several ones, all 
+those from a test frameworks or from a workspace, and exclude some frameworks from 
+the replay, and/or replay the test objects of some frameworks before those of the 
+others.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0001.htm">mkodt</a></td>
+	</tr>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAARqcTa0005.htm">How to Use and Change the Output Folder</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

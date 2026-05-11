@@ -1,0 +1,577 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Integrating the Knowledge Language</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2><a name"Top"></a>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3>Integrating 
+     the Knowledge Language</h3>
+     <em>How to integrate its applicative objects 
+     and user functions</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to integrate your 
+     own objects in CATIA, so that they can be recognized by generic tools
+     and so that they can be interpreted by the Knowledge 
+     language.</p>
+     <ul>
+       <li><b><a href="#introduction">Introduction</a></b></li>
+       <li><b><a href="#Code">Where to Find a Code 
+       Example</a></b></li>
+       <li><a href="#Adding New Type"><b>Adding New 
+       User Types</b></li> </a>
+       <ul>
+         <li><a href="#New Type_What to Do">What To 
+         Do</a></li>
+         <li><a href="#New Type_How it works">How Tt 
+         Works - Loading Process</a></li>
+       </ul>
+       </li>
+       <li><a href="#Adding New User Function"><b>
+       Adding New User Functions</b> </a></li>
+       <li><b><a href="#Manipulating User Object">
+       Manipulating User Objects</a></b></li>
+       <li><b>
+       <a href="#Visibility in Knowlegde Browser">Visibility In Knowledge 
+       Browsers</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">Reference</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="introduction"></a>Introduction</h3>
+ <p>Let's introduce vocabulary: the Knowledge browsers manipulate the notion of <b>packages</b>,
+ <b>types</b> and <b>attributes</b>.</p>
+ <p>The following image represents the Knowledge 
+ Expert browser.</p>
+ <p><img border="0" src="images/CAALifKWEBrowser.gif" width="609" height="454"></p>
+ <p>All the available object types are classified in 
+ packages. For example, you have the Electrical package, the GSD package or the 
+ PartDesign package selected above. A package contains a set of types which can 
+ be pre-defined CATIA types or User types. A type is constituted of attributes. 
+ An attribute can be a simple value or an object.</p>
+ <p>Besides integrating User types, you can create 
+ User functions manipulating any types ( pre-defined types or user types). These 
+ functions are classified in <b>method packages</b>. It is also visible in 
+ Knowledge browsers.</p>
+ <p>Each type, attribute and function displayed in 
+ the Knowledge Expert browser above can be used in a Knowledge Expert rule.</p>
+ <p>These types and functions are C++ objects 
+ created at runtime and gathered in a single dictionary.</p>
+ <p>To be able to manipulate your own objects this 
+ way, you have to implement several interfaces and declare ressources.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Code"></a>Where to Find a Code Example</h4>
+ <p>The CAALifIntegrateKnowledge.m module of the 
+ CAALiteralFeatures.edu framework is a shared library containing an example of 
+ definiton of user types and user functions.</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAALiteralFeatures.edu\</code>CAALifIntegrateKnowledge<code>.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAALiteralFeatures.edu/</code>CAALifIntegrateKnowledge<code>.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>
+ InstallRootDirectory</code> 
+ is the directory where the CAA CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Adding New Type"></a>Adding New User Types</h3>
+ <p><b><a name="New Type_What to Do"></a>What To Do</b></p>
+ <p>To 
+ create a new type you have to implement the <i><b>CATIAddTypeLibrary</b></i> 
+ interface of KnowledgeInterfaces. Let's call this implementation <i>MyLibrary</i>.</p>
+ <p>In the <b>
+ <code>Add</code></b> method of this 
+ interface you will specify your new type with its attributes and to which 
+ package it belongs. Also, you will specify its father type: a type has to 
+ inherit from another one. The basic type is the type &quot;Feature&quot;. Your new type 
+ will inherit from the attributes of its father type.</p>
+ <p><img border="0" src="images/CAALifFeatureType.gif" width="503" height="427"></p>
+ <p>To create packages and types use the <b><i>
+ CATITypeDictionary</i> </b>interface which is dedicated to accessing the 
+ dictionary of types shown to the user. To retrieve a smart pointer on this 
+ unique type dictionary, you can use the static 
+ <code>GetTypeDictionary</code> 
+ method of the <i>CATGlobalFunction</i> class.</p>
+ <p><a name="CATITypeDictionary"></a></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATITypeDictionary_var dico;
+dico = <b>CATGlobalFunctions</b>::<b>GetTypeDictionary</b>();</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Let's add a package &quot;<b>DoItYourself</b>&quot;,</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATListOfCATUnicodeString iListOfPrerequisites;
+rc = dico-&gt;AddPackage( &quot;<b>DoItYourself</b>&quot;, iListOfPrerequisites );</pre>
+     </td>
+   </tr>
+ </table>
+ <p><code>iListOfPreriquisites</code> 
+ contains the list of the required packages necessary to have the types from 
+ which we derive.</p>
+ <p>In this package, let's create a user type &quot;<b>Screw</b>&quot; 
+ with 2 length attributes Dim1 and Dim2:</p>
+ <p>First, you have to get the type of your 
+ attributes in the parameter's type dictionary.</p>
+ <p><a name="CATIParmDictionary"></a></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATIParmDictionary_var spParmDictionary = <b>CATCkeGlobalFunctions::GetParmDictionary</b>();</pre>
+     <pre>CATICkeType_var spType = spParmDictionary-&gt;GetLengthType();</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Then, create the attributes of your type 
+ specifying their type, name, NLS name, if it is writable and if it contents a 
+ component ...</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATAttributeInfos attribute1( spType, &quot;Dim1&quot;, &quot;Dim1&quot;, 1, 1 );
+CATAttributeInfos attribute2( spType, &quot;Dim2&quot;, &quot;Dim2&quot;, 1, 1 );</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Put the attributes in a list ...</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATListValCATAttributeInfos listAttributes;
+listAttributes.Append( attribute1 );
+listAttributes.Append( attribute2 );</pre>
+     </td>
+   </tr>
+ </table>
+ <p>At last, create your type &quot;Screw&quot; with the list 
+ of attributes in argument, and add the type in the package &quot;DoItYourself&quot;.</p>
+ <p><a name="TypeScrew"></a></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATIType_var typeScrew = NULL_var;
+
+<a href="#CATITypeDictionary">dico</a>-&gt;CreateType( &quot;<b>Screw</b>&quot;, &quot;<b>Screw</b>&quot;, NULL_var, typeScrew, &amp;listAttributesScrew);</pre>
+     <pre>dico-&gt;AddTypeForPackage( typeScrew, &quot;<b>DoItYourself</b>&quot; );</pre>
+     </td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p>To allow 
+ the creation of an instance of the implementation <i>MyLibrary</i>, you have to 
+ implement the <i><b>CATICreateInstance</b></i> interface of System through a 
+ CodeExtension of the component to create. The necessary method to implement is
+ <code>CreateInstance</code><i>
+ </i>in which you make a simple new of the wanted implementation <i>MyLibrary</i>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>HRESULT __stdcall CAALifAddLibraryExt::CreateInstance (void ** ppv)
+{
+*ppv = new <b>MyLibrary</b>;
+return S_OK;
+}</pre>
+     </td>
+   </tr>
+ </table>
+
+ <p>You need to implement <i>CATIAddTypeLibrary</i> 
+ and <i>CATICreateInstance</i> only once in your library. Ideally, this code 
+ should be in a small DLL so that retrieving the definition of types doesn't 
+ load all your code.</p>
+ <p>Then you 
+ have to edit your dictionary to specify that:</p>
+ <blockquote>
+   <p>&nbsp;&nbsp;&nbsp; - the implementation <i>
+   MyLibrary</i> implements <i>CATIAddTypeLibray</i> in a given library, 
+   </p>
+   <p>&nbsp;&nbsp;&nbsp; - the implementation <i>
+   MyLibrary</i> implements <i>CATICreateInstance</i> in a given library</p>
+   <p>&nbsp;&nbsp;&nbsp; (always specify in a 
+   dictionary, the implementation and not the extension).</p>
+   <p>&nbsp;</p>
+ </blockquote>
+ <p>Finally, 
+ you have to create a resources file named <b>CATPackageXXX.CATRsc</b>, where 
+ XXX is the name of your package. This file contains one line declaring the link 
+ between your package and its implementation class (PackageImplementation = &quot;<i>MyLibrary</i>&quot;) 
+ . It can also contain description for each type for documentation.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p><b><a name="New Type_How it works"></a>How It 
+ Works - Loading Process</b></p>
+ <p>Let's describe the algorithm executed to 
+ retrieve all the types.</p>
+ <p>In Tools/Options, the user can specify the 
+ packages he needs in order to work. The list of the needed packages is obtained 
+ by scanning the .CATRsc files beginning by &quot;CATPackage&quot;. The name mapping is 
+ the following: CATPackageXXX.CATRsc with XXX = the package name. This resource 
+ file indicates the necessary implementation class. Then we search in the 
+ dictionary, the library in which this implementation class implements the <i>
+ <b>CATICreateInstance</b></i> interface and we execute its <i>CreateInstance</i> 
+ method. It returns an instance of the implementation class implementing the <i>
+ <b>CATIAddTypeLibrary</b></i> interface. Finally we can call the <code>Add</code> 
+ method of the <i>CATIAddTypeLibrary</i>. </p>
+ <p>If necessary, you can also ask in your code to 
+ load a library with the <code>
+ CATIParmDictionary::LoadLibrary</code> 
+ service taking the implementation class name in argument.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Adding New User Function"></a>Adding New User 
+ Functions</h4>
+ <p>If you need to add method or function specific 
+ to your application types, do it the same way in the 
+ <code>Add</code> method of <i><b>
+ CATIAddTypeLibrary</b></i>.</p>
+ <p>Be carefull, you have to create a package 
+ specific to these user functions. The name of this package must look like 
+ &quot;CATPackageMethodXXX&quot;.</p>
+ <p>You have to create&nbsp; a <b>
+ CATPackageMethodXXX.CATNls</b> file specifying the package name of your 
+ functions which will be seen in the knowledge editors (PackageName = &quot;My 
+ Functions&quot;).</p>
+ <p>First, create the signature of your function 
+ with the <code>
+ CATICkeFunctionFactory::CreateFunction</code> 
+ service. Its arguments are its name, the type of the returned value, the name 
+ of the C++ function, a NULL argument, and an enumerated value to express the 
+ format of your function(method x.f(y), function f(x,y) or attribute x.y).
+ </p>
+ <p>Here, we create a volume function called 
+ &quot;EvaluateScrewVolume&quot; to calculate the volume of an object of type Screw. We 
+ want the result as a real value. The evaluation is in a C++ function called <i>
+ VolumeFunction </i>( see in CATAddLibrary.cpp). It will be a function rather 
+ than a method.</p>
+ <table class="code" width="527">
+   <tr>
+     <td bgcolor="#C0C0C0" bordercolor="#C0C0C0" width="521">
+     <pre>CATICkeType_var ReturnedType = NULL_var;
+ReturnedType = <a href="#CATIParmDictionary">spParmDictionary</a>-&gt;GetRealType();
+
+CATICkeFunctionFactory_var funcFactory = <b>CATCkeGlobalFunctions::GetFunctionFactory()</b>;
+
+CATICkeSignature_var Sign = funcFactory-&gt;CreateFunction (&quot;EvaluateScrewVolume&quot;,ReturnedType,VolumeFunction,NULL,CATICkeSignature::Function);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Then, add to the signature an argument of type 
+ Screw which will be taken in input of the function to produce the volume 
+ result.</p>
+ <table class="code" width="527">
+   <tr>
+     <td bgcolor="#C0C0C0" bordercolor="#C0C0C0" width="521">
+     <pre>Sign-&gt;AddArgument (funcFactory-&gt;CreateArg (&quot;iA&quot;,<a href="#TypeScrew">typeScrew</a>));
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Finally, create a method package and add the 
+ signature of your user function in it.</p>
+ <table class="code" width="527">
+   <tr>
+     <td bgcolor="#C0C0C0" bordercolor="#C0C0C0" width="521">
+     <pre>rc = <a href="#CATITypeDictionary">dico</a>-&gt;AddPackage( &quot;CATPackageMethodDoItYourself&quot;, iListOfPrerequisites );
+...</pre>
+     <pre>dico-&gt;AddMethodForPackage( Sign, &quot;CATPackageMethodDoItYourself&quot; );
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>See Writing a User Function [<a href="#References">1</a>] 
+ for more information on how to write a user functions.</p>
+ <p align="right">&nbsp;&nbsp; [<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Manipulating User Object"></a>Manipulating User 
+ Objects</h4>
+ <p>Now that you have defined the type/attribute 
+ view, it is time to indicate how to manipulate the objects themselves. For that 
+ you have to implement the <i><b>CATIInstance</b></i> interface dedicated to 
+ manipulate objects in Knowlegdeware.</p>
+ <p>With this implementation, your will create a 
+ specific view of existing objects responding to user types. For example, you 
+ will create a simplified view of a geometrical feature compared to its internal 
+ modelisation. Only relevant attributes for the user will be visible in the Knowledge browsers.</p>
+ <p>Your implementation class will be an extension 
+ of the object you want to expose to the user with a simplified view. This 
+ object can be a feature or a simple C++ object. This implementation should 
+ derive from <i>CATKweInstanceAdapter</i>.</p>
+ <p>In the methods 
+ <b><code>Type</code></b> 
+ and <b><code>ListSupportedTypes</code>,</b> 
+ you will indicate the main type of your object and its others types ( we assume 
+ multi - type objects). The types you returned are taken in the packages you 
+ have previously defined.</p>
+ <p>&nbsp;</p>
+ <p>Implementation of the <b><code>Type</code></b> 
+ method:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATIType* CAALifInstanceScrewExt::Type() const
+{
+
+...</pre>
+     <pre>CATIType_var TypeInDico = NULL_var;
+
+rc = <a href="#CATITypeDictionary">dico</a>-&gt;<b>FindTypeSafe</b>(&quot;Screw&quot;,&quot;DoItYourself&quot;,TypeInDico);
+</pre>
+     <pre>...
+
+return TypeInDico;</pre>
+     <pre>}
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p><b>Always</b> use  the <code>FindTypeSafe</code> 
+ method, which load the package if the type isn't found in first step.</p>
+ <p>In the methods 
+ <b><code>GetValue</code></b> 
+ and <b><code>SetValue</code></b>, 
+ you manage the attributes of your object: what are they and how are they 
+ valuated. </p>
+ <p>These two methods manipulate  <b><code>CATIValue</code></b>. 
+ This interface is a union of different types of object. It can be values 
+ (parameters) or features (in features, we include List of features).</p>
+ <p>&nbsp;</p>
+ <p>Implementation of the <b>
+ <code>SetValue</code></b> method: 
+ <code>CAALifInstanceScrewExt::<b>SetValue</b>( const 
+ CATUnicodeString&amp; iKey, const CATIValue_var&amp; iValue )</code></p>
+ <p>The argument 
+ <code>iKey</code> is the name of the 
+ attribute we want to valuate, and the argument 
+ <code>iValue</code> 
+ contains the value of the argument (parameter or feature)</p>
+ <p>Let's get a handler on the attribute manager of 
+ the object, and also the key of the attribute you want to modify.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATISpecAttrAccess_var piSpecAttrAccess = GetImpl();</pre>
+     <p>...</p>
+     <p>CATISpecAttrKey *attrkey = 
+     piSpecAttrAccess-&gt;GetAttrKey(iKey);<br>
+     </td>
+   </tr>
+ </table>
+ <p>According to the wanted attribute, you may have 
+ different manner to valuate it.</p>
+ <p>The attribute is a <b>parameter</b>:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>if (iKey == &quot;ScrewLength&quot; || iKey == &quot;ScrewHeadDiameter&quot; || iKey == &quot;ScrewStemDiameter&quot;)
+{
+   CATISpecObject_var SpecParm =  piSpecAttrAccess-&gt;GetSpecObject(attrkey);
+   ...
+   CATICkeParm_var Parm = SpecParm;
+   Parm-&gt;Valuate(iValue-&gt;AsReal());
+}</pre></td>
+   </tr>
+ </table>
+ <p><b>Always</b> 
+ valuate an attribute parameter with the value of the parameter located in the 
+ CATIValue in argument.</p>
+ <p>Or the attribute is a <b>feature</b>:</p>
+ <p><a name="AttrAccess"></a></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>else if (iKey == &quot;CenterPoint&quot;)
+{
+   CATISpecObject_var newSpecObj = iValue-&gt;AsObject();
+   piSpecAttrAccess-&gt;SetSpecObject(attrkey, newSpecObj);
+   ...
+}</pre></td>
+   </tr>
+ </table>
+
+ <p>Implementation of the <b><code>GetValue</code></b> 
+ method: <code>CATIValue* CAALifInstanceScrewExt::<b>GetValue</b>( 
+ const CATUnicodeString&amp; iKey )</code></p>
+ <p>The argument 
+ <code>iKey</code> is the name of the 
+ attribute from which you want the value.</p>
+ <p>If the wanted attribute is a <b>parameter</b>:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATISpecObject_var obj = NULL_var;
+if (iKey == &quot;ScrewLength&quot; || iKey == &quot;ScrewHeadDiameter&quot; || iKey == &quot;ScrewStemDiameter&quot;)
+{
+  CATIValue_var value = NULL_var;
+  obj = <a href="#AttrAccess">piSpecAttrAccess</a>-&gt;GetSpecObject(<a href="#AttrAccess">attrkey</a>);
+  attrkey-&gt;Release();
+
+  if (obj != NULL_var)
+    obj-&gt;Release();<br>
+  ...</pre></td>
+   </tr>
+ </table>
+ <p>We return a pointer on a CATIValue</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATIValue* returnedValue = NULL;
+CATIValue_var value = NULL_var;
+value = obj;
+
+if (value != NULL_var)
+{
+  returnedValue = value;
+  returnedValue-&gt;AddRef();
+}
+return returnedValue;</pre></td>
+   </tr>
+ </table>
+ <p>If the wanted attribute is a <b>feature</b>:</p>
+ <p>First we get the feature ...</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATISpecObject_var obj = NULL_var;
+
+if (iKey == &quot;CenterPoint&quot;)
+{
+  obj = <a href="#AttrAccess">piSpecAttrAccess</a>-&gt;GetSpecObject(<a href="#AttrAccess">attrkey</a>);
+  attrkey-&gt;Release();
+  if (obj != NULL_var)
+    obj-&gt;Release();
+  ...<pre>
+</td>
+   </tr>
+ </table>
+ <p>Then we have to transform this feature in a 
+ CATIValue*. For that we need a volatile factory.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATICkeParmFactory_var VolFactory = <b>CATCkeGlobalFunctions</b>::GetVolatileFactory();</pre>
+</td>
+   </tr>
+ </table>
+ <p>From the volatile factory we create a parameter 
+ from the feature. And finally we make a QueryInterface from the parameter to 
+ get a CATIValue*.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATICkeParm_var parm = VolFactory-&gt;CreateObjectReference(obj);
+CATIValue* returnedValue = NULL;
+if(parm != NULL_var)
+  parm-&gt;<b>QueryInterface</b>(CATIValue::ClassId(), (void **)&amp;returnedValue);
+...
+return returnedValue;
+...</pre></td>
+   </tr>
+ </table>
+ <p>The returned <i><b>CATIValue</b></i> pointer 
+ must be released in the context where it will be used when it is becoming 
+ useless.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Visibility in Knowlegde Browser"></a>Visibility in Knowledge Browsers</h3>
+ <p>Your objects will be visible in <b>Knowledge Expert</b> if they are accessible through 
+ the CATIParmPublisher interface from the root of the document (Part, Product, etc.)</p>
+ <p>In <b>Knowledge Expert</b>, you 
+ will see your package, your types and their attributes. If there are some user 
+ methods, they will be displayed at the same level as the attributes. If there 
+ are some user functions, they will be displayed when selecting the &quot;Functions&quot; 
+ package.</p>
+ <p>In <b>Knowledge Advisor</b>, you 
+ can only see your method packages and the corresponding methods/functions. User 
+ types will be visible only in the signature of methods/functions. If your 
+ object implement the <i><b>CATICkeFeature</b></i> interface, you will be able 
+ to select one of these object to write a call to a method/function in the 
+ editor. Specifically to the Reaction/Action editor, the access to feature's 
+ attributes will be possible. To finish, if your object implements the <i><b>
+ CATIParmPublisher</b></i> interface, the attributes of type parameter of your 
+ object will be visible in the Knowledge Advisor browser.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The Knowledgeware allows to integrate your own 
+ object, functions or method in oder to create a simplified user view of your 
+ data.</p>
+ <p>For that, you have to create a few resources 
+ files and to implement the interfaces <i><b>CATIAddTypeLibrary</b></i>, <i><b>
+ CATICreateInstance</b></i> and <i><b>CATIInstance</b></i>.</p>
+ <p>Afterwards, your object user view will be 
+ accessible and understood in the Knowledge 
+ language.</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAALifUseCases/CAALifUserFunctions.htm">Writing a 
+     User Function</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> 
+     [Nov 2003]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

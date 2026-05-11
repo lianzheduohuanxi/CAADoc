@@ -1,0 +1,571 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Configuring a Product Structure and Using Filters</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Configuration Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Configuring a Product Structure and Using Filters</h3>
+      <p><em>Working with a Product structure</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVpiConfigurateStructure use case. This
+      use case explains how to configurate a Product Structure, and use filters
+      on it.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>TheCAAVpiConfigurateStructure Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVpiConfigurateStructure Do</a></li>
+            <li><a href="#How">How to Launch CAAVpiConfigurateStructure</a></li>
+            <li><a href="#Where">Where to Find the CAAVpiConfigurateStructure
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the ENOVIA Configuration Management. Its main intent is to create a
+configuration structure on a product structure, and use configuration filters .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiConfigurateStructure Use Case</h3>
+<p>CAAVpiConfigurateStructure is a use case of the CAAVPMInterfaces.edu
+framework that illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiConfigurateStructure Do</h4>
+<p>The goal of CAAVpiConfigurateStructure case is to show how to use
+Configuration Management interfaces to configurate a simple Product Structure.
+Then, some filters are defined and applied to the Configurated Product
+Structure. More precisely CAAVpiConfigurateStructure:</p>
+<ul>
+  <li>Creates a simple Product Structure</li>
+  <li>Creates basics Configuration objects such as: Configurable Root,
+    Configurable View, Modifications</li>
+  <li>Defines different kind of Effectivities for Modifications, using
+    Specifications, Ranges, Dates</li>
+  <li>Defines Configuration Filters on the Configurated Structure, and applies
+    them.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiConfigurateStructure</h4>
+<p>To launch CAAVpiConfigurateStructure, you will need to set up the build time
+environment, then compile CAAVpiConfigurateStructure along with its
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAVpiConfigurateStructure</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAAVpiConfigurateStructure</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiConfigurateStructure Code</h4>
+<p>The CAAVpiConfigurateStructure use case is made of a single class named
+CAAVpiConfigurateStructure located in the CAAVpiConfigurateStructure.m module of
+the CAAVPMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiConfigurateStructure.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiConfigurateStructure.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are ten main steps in CAAVpiConfigurateStructure Code:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Step2">Getting a Configuration Manager</a></li>
+  <li><a href="#Step3">Creating a Configurable Root</a></li>
+  <li><a href="#Step4">Creating a Configurable View (Configurable Object)</a></li>
+  <li><a href="#Step4.1">Attaching a Program and Milestones to a Configurable
+    Root</a></li>
+  <li><a href="#Step5">Attaching a Specification Category and Specifications to
+    a Configurable Root</a></li>
+  <li><a href="#Step6">Creating a Modification</a></li>
+  <li><a href="#Step7">Defining Effectivities for Modification</a></li>
+  <li><a href="#Step8">Performing &quot;Add&quot; and &quot;Cut &quot;operations
+    on a Object</a></li>
+  <li><a href="#Step9">Creating a Filter</a></li>
+  <li><a href="#Step10">Applying a Filter</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>CAAVpiConfigurateStructure creates first a simple product tree, made of one
+product root class (uidPRC1), and under it, two item instances (uidII11 and
+uidII12). The creation process won't be detailed here, as it's not the purpose
+of this use case, but a prerequisite. Please refer to Product Structure samples
+to get more explanations about Product Structure management.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Getting a Configuration Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--Get Session
+  VPMSession* session = VPMSession::<b>OpenSession</b>();
+	 
+//--Get FactoryManager
+  CATIVpmFactoryManager_var FactoManager = NULL_var;
+  session-&gt;<b>GetVPMObjectFactory</b>(FactoManager);
+...
+//--Get Configuration Manager
+  CATICfgManager_var CfgManager(FactoManager);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The configuration manager manages most object creations and queries used in
+the context of product configuration. It's a generic object used as a factory
+for a number of objects like modifications, configurable objects, specification
+categories, and filters. It also serves as a base object supporting methods
+dedicated to queries.</p>
+<p>A session is needed to retrieve a smart pointer to the standard factory
+manager. Then the specific configuration manager is retrieved using a <i>CATICfgManager</i>
+pointer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating a Configurable Root</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>...
+  </i>CATIConfigurable_var ConfigurableRoot;
+  CATUnicodeString ConfigurableRootName(&quot;CR1&quot;);
+  ret = CfgManager-&gt;<b>CreateConfigurable</b>(uidPRC1,ConfigurableRootName,ConfigurableRoot); 
+  if FAILED(ret) {return ret;}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This is an example of a configuration entity creation, here the configurable
+root, using the configuration manager. A configurable root is an image of a
+product root class, root of a product tree, in the &quot;configuration
+world&quot;. It's a view of a product root class on which it's possible to
+define configuration entities, such as specifications and milestones. These
+entities are then used to define effectivities on item instances under a product
+root class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating a Configurable View (Configurable Object)</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIConfigurableObject_var ConfigurableView;
+  CATUnicodeString CVName(&quot;CV1&quot;);
+  ret = ConfigurableRoot-&gt;<b>CreateConfigurableView</b>(CVName,ConfigurableView); 
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A configurable view is created under a configurable root. Several
+configurable views can be created under a configurable root. A configurable view
+is an entity supporting modifications, thus defining a configuration tree based
+on the product tree.</p>
+<h4><a name="Step4.1"></a>Attaching a Program and Milestones to a Configurable
+Root</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--Create Program 
+  CATICfgProgram_var Program;
+  CATUnicodeString ProgName(&quot;ProgVpiConfigurateStructure&quot;);
+  ret = CfgManager-&gt;CreateProgram(ProgName,Program);
+  if FAILED(ret) return ret;
+
+  //--Create Milestones
+  CATICfgMileStone_var MSA, MSB;
+  CATUnicodeString MSAName(&quot;BSF&quot;), MSBName(&quot;END&quot;);
+
+  ret = Program-&gt;CreateMileStone(MSAName, MSA);
+  if FAILED(ret) return ret;
+  MSA-&gt;SetValue(10);
+
+  ret = Program-&gt;CreateMileStone(MSBName,MSB);
+  if FAILED(ret) return ret;
+  CATTime Date = CATTime(2003,08,12,15,12,25);
+  MSB-&gt;SetValue(Date);
+
+//--Attachements
+ret = ConfigurableRoot-&gt;AttachProgram(Program);
+if FAILED(ret) return ret;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The configuration manager is used to create a program. A program aggregates
+milestones under its unique name.&nbsp;</p>
+<p>To create milestones, a smart pointer to<i> CATICfgMileStone </i>is needed.
+Here, two milestones under Program are created.<br>
+Milestones are one of the configuration variables. Their value could be changed
+using the method SetValue.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Attaching a Specification Category and Specifications to
+a Configurable Root</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--Create Category
+  CATICfgSpecCategory_var SpecCategory;
+  CATUnicodeString CatName(&quot;Category1&quot;);
+  CATUnicodeString CatDescription(&quot;Description&quot;);
+
+  ret = CfgManager-&gt;CreateSpecCategory (CatName, CatDescription,SpecCategory);
+  if FAILED(ret) return ret;
+	 
+//--Create Specifications	
+  CATICfgSimpleSpecification_var SpecA, SpecB;
+  CATUnicodeString SpecAName(&quot;SpecA&quot;), SpecBName(&quot;SpecB&quot;);
+
+  ret =SpecCategory-&gt;CreateSpecification(SpecAName,SpecA);
+  if FAILED(ret) return ret;
+
+  ret =SpecCategory-&gt;CreateSpecification(SpecBName,SpecB);
+  if FAILED(ret) return ret;
+	 
+//--Attachements
+  ret = ConfigurableRoot-&gt;AttachSpecCategory(SpecCategory);
+  if FAILED(ret) return ret;
+  ret = ConfigurableRoot-&gt;AttachSpec(SpecA);
+  if FAILED(ret) return ret;
+  ret = ConfigurableRoot-&gt;AttachSpec(SpecB);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The configuration manager is used again to create a specification category. A
+specification category aggregates specifications under its unique name. It's a
+good way of gathering specifications that are conceptually linked to each other.</p>
+<p>To create specifications, a smart pointer to<i> CATICfgSpecCategory</i> is
+needed. Here, two specifications under <code>Category1</code> are created.</p>
+<p>A specification is a label referencing a special context for the configurated
+product. As a simple example, a car configurated with <i>Germany </i>specification<i>,
+</i>and a car configurated with the <i>GreatBritain </i>specification won't have
+the driving wheel located at the same place.</p>
+<p>A category <i>Country</i> may gather these two specifications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Creating a Modification</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATICfgModification_var Mod1;
+  CATUnicodeString ModName1(&quot;Mod01&quot;);
+  ret=  ConfigurableView-&gt;<b>CreateModificationEffectivity</b>(ModName1,Mod1);
+  if FAILED(ret)   return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The configurable view is used to create a modification.</p>
+<p>A modification keeps track of a configuration operation made on an item
+instance. It defines condition for which a configured item instance is present
+or absent in a a configured tree. A modification is often associated with an
+action<i>, </i>which makes the link between Configuration Management and
+Workflow.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Defining Effectivities for Modifications</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATICfgBasicEffectivity_var BasEff1;
+  ret = CfgManager-&gt;CreateBasicEffectivity(BasEff1);
+  if FAILED(ret) return ret;
+...
+  CATICfgEffectivity_var Effectivity1; ret = CfgManager-&gt;CreateEffectivity(Effectivity1);
+  if FAILED(ret) return ret;
+...
+  ret = Effectivity1-&gt;AddEffectivity(BasEff1);
+  if FAILED(ret) return ret;
+...
+//--Domain for wich Effectivity will be set. CATUnicodeString
+  DomainName(&quot;VALIDE&quot;); ret =  Mod1-&gt;
+  SetX_Effectivity(DomainName, Effectivity1);
+  if FAILED(ret) return ret;</pre>
+    </td>
+  </tr>
+</table>
+<p>An effectivity is defined for a specific <i>Domain </i>such as <i>Engineering
+Domain</i> or <i>Maintenance Domain, </i>which refers to a special context for
+the Effectivity.</p>
+<p>An effectitivity is from type <i>CATICfgEffectivity </i>and is built from one
+or several objects whose type is <i>CATICfgBasicEffectivity.</i></p>
+<p>Each &quot;Basic Effectivity&quot; plays the role of one logical OR
+Expression member.</p>
+<p>It means, if two &quot;basic effectivities&quot; are added to an effectivity,
+the resulting expression will be: &quot;BasicEffectivity 1&quot; OR &quot;Basic
+Effectivity 2&quot;</p>
+<h5>Defining Simple Date and Range Basic Effectivities</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATTime StartDate = CATTime(2001,02,01,0,0,0);
+  CATTime EndDate   = CATTime(2001,03,01,0,0,0);
+	 
+  ret = BasEff1-&gt;SetDateInterval(StartDate, EndDate);
+  if FAILED(ret) return ret;
+...
+  int StartRange2 = 1;
+  int EndRange2   = 10;
+	 
+  ret = BasEff2-&gt;SetRangeInterval(StartRange2, EndRange2);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<h5>Defining Milestone Date and Range Basic Effectivities</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  ret = BasEff1-&gt;SetStartMilestone(MSA);
+  if FAILED(ret) return ret;
+...
+  ret = BasEff1-&gt;SetEndMilestone(MSB);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<h5>Defining Basic Effectivities with a Specification Expression</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATICfgSignedSpec_var SignedSpecA;
+  ret = CfgManager-&gt;CreateSignedSpec(SignedSpecA);
+  if FAILED(ret) return ret;
+	 
+  SignedSpecA-&gt;SetSpec(SpecA);
+  SignedSpecA-&gt;SetSign(1);
+...
+  CATICfgSignedSpec_var SignedSpecB;
+  ret = CfgManager-&gt;CreateSignedSpec(SignedSpecB);
+  if FAILED(ret) return ret;
+   
+  SignedSpecB-&gt;SetSpec(SpecB);
+  SignedSpecB-&gt;SetSign(-1);
+   
+  CATICfgSpecANDExpression_var SpecANDExp3;
+  ret = CfgManager-&gt;CreateSpecANDExp(SpecANDExp3);
+  if FAILED(ret) return ret;
+   
+  SpecANDExp3-&gt;AddSignedSpec(SignedSpecA);
+  if FAILED(ret) return ret;
+  SpecANDExp3-&gt;AddSignedSpec(SignedSpecB);
+  if FAILED(ret) return ret;
+...
+  ret = BasEff3-&gt;SetSpecExp(SpecANDExp3); 
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The specification expression created is &quot;SpecA AND NOT SpecB&quot;.</p>
+<p>For this we need to create <i>CATICfgSignedSpec</i> and <i>CATICfgSpecANDExpression
+</i>objects.</p>
+<p>A signed specification is necessary to define a NOT operator applying to a
+specification.</p>
+<p>Signed specifications added on the same specification expression are linked
+with AND logical operator.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Performing Add and Cut Operations on an Object</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//-- Add Operations
+  ret = Mod2-&gt;Modify(CATICfgModification::<b>Add</b>, uidII1);
+  if FAILED(ret) return ret;
+...
+//-- Cut Operation
+  ret = Mod2-&gt;Modify(CATICfgModification::<b>Cut</b>, uidII2);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>Add</i> and <i>Cut</i> operations are made using the method <i>Modify</i>
+on a modification object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Creating a Filter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--Filter Creation
+  CATICfgFilter_var Filter1, Filter2, Filter3;
+  ret = CfgManager-&gt;<b>CreateFilter</b>(ConfigurableView, DomainName, Filter1); 
+  if(FAILED(ret)) return ret;
+	 
+//--Config Handler Creation (Persisten Filter)
+  CATIConfigHandler_var PersistentFilter1;
+  ret = ConfigurableView-&gt;CreateConfigHandler(&quot;Filter Name&quot;,
+                                              &quot;Filter Description&quot;,
+                                              PersistentFilter1);
+  if FAILED(ret) return ret;</pre>
+      <pre>//--To Filter all objects pointed by a Modification whose Effectivity contains SpecA
+  CATICfgNormalValue_var NVFilter1, NVFilter2, NVFilter3;
+  ret =  CfgManager-&gt;<b>CreateNormalValue</b>(SpecA,NVFilter1);
+  if(FAILED(ret)) return ret;
+
+//--To define a Range Filter int StartFilterRange = 5;
+  int EndFilterRange = 10;
+  ret = CfgManager-&gt;CreateNormalValue(StartFilterRange,  EndFilterRange, NVFilter2);
+  if(FAILED(ret)) return ret;
+
+//--To Filter all objects pointed by a Modification Mod1
+  ret = CfgManager-&gt;CreateNormalValue(Mod1,NVFilter3);
+  if(FAILED(ret)) return ret;
+
+//--Add Conditions to Filters.
+  ret = Filter1-&gt;<b>AddCondition</b> (NVFilter1);
+  if(FAILED(ret)) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Here are described the three main steps necessary to define a filter: filter
+creation, normal value definition, and link normal value and filter.</p>
+<ol>
+  <li>Filter creation: the configuration manager creates the filter. A filter is
+    defined for a specific<i> Configurable View and </i>a specific <i>Domain.<br>
+    </i>B<i>y </i>efault filters are not persistent. To make it persistent, a <i>ConfigHandler
+    </i>has to be created.</li>
+  <li>Normal value definition: a specific normal value can be created according
+    to the kind of filter to define</li>
+  <li>Link normal value to filter: the normal value defines a condition, that
+    will be compared to modification effectivities when filtering.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>Applying a Filter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//-- Returns the UUIDs which are TRUE according to the filter.
+  SEQUENCE(CORBAAny) UIDList1, UIDList2, UIDList3;
+  ret = Filter1-&gt;<b>AllFilteredObjects</b>(UIDList1);
+  if(FAILED(ret)) return ret;
+  ret = Filter2-&gt;<b>Filter</b>(UIDList1, UIDList2);
+  if(FAILED(ret)) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>First, <code>Filter1</code> is applied to every object under the configurable
+view used to create the filter. Then, <code>Filter2</code> is applied to <code>UIDList1</code>
+only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create a configuration structure
+and use filters on it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

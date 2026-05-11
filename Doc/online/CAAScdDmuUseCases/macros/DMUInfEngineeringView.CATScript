@@ -1,0 +1,132 @@
+' COPYRIGHT DASSAULT SYSTEMES 2002
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Change viewpoint to an engineering view defined by a series of parameters.
+'                 This macro is a sample: the presented engineering view has to be reworked knowing industrial standards.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English
+'   CATIA Level : V5R7
+' ***********************************************************************
+Sub CATMain()
+
+  ' Parameters
+  Const Front  = 0
+  Const Back   = 1
+  Const Right  = 2
+  Const Left   = 3
+  Const Bottom = 4
+  Const Top    = 5
+  Const Iso    = 6
+  Const Custom = 7
+
+  Const Sight = 0
+  Const Up    = 1
+
+  Const X = 0
+  Const Y = 1
+  Const Z = 2
+
+  Dim StdDirection(7,1,2)
+
+  StdDirection(Front , Sight, X) =  1.
+  StdDirection(Front , Sight, Y) =  0.
+  StdDirection(Front , Sight, Z) =  0.
+  StdDirection(Front , Up   , X) =  0.
+  StdDirection(Front , Up   , Y) =  0.
+  StdDirection(Front , Up   , Z) =  1.
+
+  StdDirection(Back  , Sight, X) = -1.
+  StdDirection(Back  , Sight, Y) =  0.
+  StdDirection(Back  , Sight, Z) =  0.
+  StdDirection(Back  , Up   , X) =  0.
+  StdDirection(Back  , Up   , Y) =  0.
+  StdDirection(Back  , Up   , Z) =  1.
+
+  StdDirection(Right , Sight, X) =  0.
+  StdDirection(Right , Sight, Y) =  1.
+  StdDirection(Right , Sight, Z) =  0.
+  StdDirection(Right , Up   , X) =  0.
+  StdDirection(Right , Up   , Y) =  0.
+  StdDirection(Right , Up   , Z) =  1.
+
+  StdDirection(Left  , Sight, X) =  0.
+  StdDirection(Left  , Sight, Y) = -1.
+  StdDirection(Left  , Sight, Z) =  0.
+  StdDirection(Left  , Up   , X) =  0.
+  StdDirection(Left  , Up   , Y) =  0.
+  StdDirection(Left  , Up   , Z) =  1.
+
+  StdDirection(Bottom, Sight, X) =  0.
+  StdDirection(Bottom, Sight, Y) =  0.
+  StdDirection(Bottom, Sight, Z) =  1.
+  StdDirection(Bottom, Up   , X) =  0.
+  StdDirection(Bottom, Up   , Y) =  1.
+  StdDirection(Bottom, Up   , Z) =  0.
+
+  StdDirection(Top   , Sight, X) =  0.
+  StdDirection(Top   , Sight, Y) =  0.
+  StdDirection(Top   , Sight, Z) = -1.
+  StdDirection(Top   , Up   , X) =  0.
+  StdDirection(Top   , Up   , Y) =  1.
+  StdDirection(Top   , Up   , Z) =  0.
+
+  StdDirection(Iso   , Sight, X) = -1./ Sqr(3)
+  StdDirection(Iso   , Sight, Y) = -1./ Sqr(3)
+  StdDirection(Iso   , Sight, Z) = -1./ Sqr(3)
+  StdDirection(Iso   , Up   , X) = -1./ Sqr(6)
+  StdDirection(Iso   , Up   , Y) = -1./ Sqr(6)
+  StdDirection(Iso   , Up   , Z) =  2./ Sqr(6)
+
+  StdDirection(Custom, Sight, X) = -1./ Sqr(2)
+  StdDirection(Custom, Sight, Y) = -1./ Sqr(2)
+  StdDirection(Custom, Sight, Z) =  0.
+  StdDirection(Custom, Up   , X) =  0.
+  StdDirection(Custom, Up   , Y) =  0.
+  StdDirection(Custom, Up   , Z) =  1.
+
+  ' Engineering view do display
+  Dim iIndView As Integer
+  iIndView = Custom ' <==== To be changed on the different macros ====
+
+  ' Get the viewer
+  Dim oViewer As Viewer
+  Set oViewer = CATIA.ActiveWindow.ActiveViewer
+
+  ' Get the viewpoint
+  Dim oViewpoint As Viewpoint3D
+  Set oViewpoint = oViewer.Viewpoint3D
+
+  ' Get the current parameters
+  Dim Origin(2)
+  oViewpoint.GetOrigin Origin
+  Dim SightDirection(2)
+  oViewpoint.GetSightDirection SightDirection
+  Dim Focus As Double
+  Focus = oViewpoint.FocusDistance
+
+  ' Compute the new parameters
+  Dim StdSightDirection(2)
+  Dim StdUpDirection(2)
+  Dim I As Integer
+  For I = 0 to 2
+    StdSightDirection(I) = StdDirection(iIndView,Sight,I)
+    StdUpDirection(I) = StdDirection(iIndView,Up,I)
+    Origin(I) = Origin(I) + Focus*(SightDirection(I) - StdSightDirection(I))
+  Next
+
+  ' Change the viewpoint
+  oViewpoint.PutOrigin Origin
+  oViewpoint.PutSightDirection StdSightDirection
+  oViewpoint.PutUpDirection StdUpDirection
+  oViewpoint.ProjectionMode = catProjectionCylindric
+
+  ' Update the viewer
+  oViewer.Update
+
+  Set oViewpoint = Nothing
+  Set oViewer = Nothing
+
+End Sub

@@ -1,0 +1,594 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Contextual Menus in a State Dialog Command</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Contextual Menus in a State Dialog Command</h3>
+      <em>Customizing object's contextual menus in a state dialog command</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create, in a state dialog command, a 
+	  contextual menu displayed when right clicking on objects that implement a 
+	  given interface.</p>
+      <ul>
+        <li><a href="#100000"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#200000"><strong>The Logical Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Logical Command Do</a></li>
+            <li><a href="#How">How to Launch the Logical Command</a></li>
+            <li><a href="#Where">Where to Find the Logical Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#Variant"><strong>Displaying the Contextual Menu when 
+		Clicking on Any Object and on the Background</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a contextual menu that 
+displays on objects that implement a given interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The Logical Command Case</h3>
+<p>The Logical command is a use case of the CAADialogEngine.edu framework that 
+illustrates the DialogEngine framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Logical Command Do</h4>
+<p>The Logical command is a state dialog command that creates a contextual menu, 
+that is, a menu displayed when the end user right clicks on objects. This menu 
+is displayed only if the object implements a given interface, namely <i>
+CAAISysLine</i>. A right click on such objects displays a contextual menu with 
+three items, concatenated to the items provided by the window, since the 
+document is displayed in a <i>CATFrmGraphAnd3DWindow</i> instance.</p>
+<table border="0">
+  <tr>
+    <td><img alt="Contextual Menu" src="../CAADegTechArticles/images/CAACtxMenu1.jpg"></td>
+    <td>Window's items&nbsp;       <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>Items added by the Logical command</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Clicking on one of these items displays the start, medium, or end point of 
+the line. These points are temporary points ( CAAISysPoint objects) displayed by 
+the ISO.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Logical Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot; in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The 
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use case 
+should be launched.</p>
+<p>Then, in the window where you run the mkrun command, do not type the module 
+name on the command line, but type CNEXT instead. When the application is ready, 
+do the following:</p>
+<ul>
+  <li>Select the Start-&gt;Infrastructure-&gt;CAA V5: Geometrical Analysis
+  <li>Select Insert-&gt;Line</li>
+  <li>Click twice to create the line</li>
+  <li>Select Analyze-&gt;Logical</li>
+  <li>Right click the line, and click one of the proposed item. The 
+  corresponding point is displayed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Use Case Code</h4>
+<p>The Logical command is made of a single class named <i>CAADegAnalysisLogCmd</i>
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the CAADegAnalysisLogCmd <code>BuildGraph</code> method, there are 
+seven steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the state dialog command header file</td>
+    <td valign="top">Header file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Enable the command to be instantiated by a command header</td>
+    <td valign="top">Source file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Implement the command state chart diagram</td>
+    <td valign="top">BuildGraph method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create the Action Method</td>
+    <td valign="top">action method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Create the callback methods</td>
+    <td valign="top">action method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Manage the command lifecycle</td>
+    <td valign="top">callback method and destructor</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Release the indication agent</td>
+    <td valign="top">Destructor or <code>Cancel</code> method</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the State Dialog Command Header File</h4>
+<p>Below is the header file of the <i> CAADegAnalysisLogCmd</i> class that holds 
+the code for this command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATStateCommand.h&quot;  // Needed to derive from CATStateCommand
+
+class CATPathElementAgent; 
+class CATISO;
+class CAAISysPoint;
+class CATMathPoint;
+
+class CAADegAnalysisLogCmd : public CATStateCommand
+{
+
+  CmdDeclareResource(CAADegAnalysisLogCmd,CATStateCommand);
+  public :
+    CAADegAnalysisLogCmd();
+    virtual           ~CAADegAnalysisLogCmd(); 
+
+    <em>// Manages the focus</em>
+    CATStatusChangeRC Activate   ( CATCommand * iCmd,CATNotification * iNotif);
+    CATStatusChangeRC Cancel     ( CATCommand * iCmd,CATNotification * iNotif);
+    CATStatusChangeRC Desactivate( CATCommand * iCmd,CATNotification * iNotif);
+
+    virtual void <b>BuildGraph</b>(); <em> // Implements the statechart</em>
+
+    CATBoolean <b>CreateCntxMenu</b>(void * iUsefulData);
+
+    void StartPoint (CATCommand           * iCmd , 
+		     CATNotification      * iNotif, 
+	             CATCommandClientData   iData) ;
+    void MediumPoint(CATCommand           * iCmd , 
+		     CATNotification      * iNotif, 
+	             CATCommandClientData   iData) ;
+    void EndPoint   (CATCommand           * iCmd , 
+		     CATNotification      * iNotif, 
+	             CATCommandClientData   iData) ;
+  
+  private :
+
+    void ShowPoint(CATMathPoint &amp;iPoint);
+    CATPathElementAgent  * _daPathElement ;    
+    CATISO               * _ISO ;
+    CAAISysPoint         * _TemporaryPoint ;
+    CATBaseUnknown       * _Container;      
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>This class includes the following:</p>
+<ul>
+  <li>The <code> CmdDeclareResource</code> macro states that the resources for 
+  this command, that is the prompts associated with the different states, are 
+  located in a file named CAADegAnalysisLogCmd.CATNls</li>
+  <li>The three methods <code>Activate</code>, <code>Desactivate</code>, and <code>
+  Cancel</code>, are called by the command selector to manage the command in the 
+  command stack</li>
+  <li>The <code> BuildGraph</code> method creates the states, dialog agents, anf 
+  transitions of the dialog command</li>
+  <li>The <code> CreateCntxMenu</code> method is called when the end user clicks 
+  a line</li>
+  <li>The <code>StartPoint</code>, <code>MediumPoint</code>, and <code> EndPoint</code> 
+  methods are the methods called by the menu items</li>
+  <li>The <code> ShowPoint</code> method creates and displays the required 
+  point.</li>
+</ul>
+<p>The data members are pointers to the path element agent used by the <code> 
+BuildGraph</code> method, the Interactive Set of Objects used to display the 
+start, medium, or end point as a temporary point that doesn't belong to the 
+document, and the document container that implements the point factory interface 
+used to create this point.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Enabling the Command to Be Instantiated by a Command 
+Header</h4>
+<p>The CAADegAnalysisLogCmd.cpp begins by:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATCreateExternalObject.h&quot;
+CATCreateClass(CAADegAnalysisLogCmd);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This macro creates a C function that creates an instance of this class. This 
+function is called by the command header to instantiate the command when the end 
+user selects it if it weren't previously instantiated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Implementing the Command State chart Diagram</h4>
+<p>Below is the code to write in the <code> BuildGraph</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADegAnalysisLogCmd::BuildGraph()
+{
+   _daPathElement = new CATPathElementAgent(&quot;SelFirstLine&quot;);
+   _daPathElement-&gt;AddElementType(&quot;CAAISysLine&quot;);
+   _daPathElement-&gt;SetBehavior( CATDlgEngWithContext |
+	                        CATDlgEngRepeat      |	                
+                                CATDlgEngWithUndo );
+
+  CATDialogState *stGetEltState = GetInitialState(&quot;stGetEltStateId&quot;);
+   stGetEltState-&gt;AddDialogAgent(_daPathElement);
+
+  CATDialogTransition *pCntxMenuTransition =    AddTransition
+	   (
+		   stGetEltState,
+		   stGetEltState,
+		   IsLastModifiedAgentCondition(_daPathElement)  , 
+		   Action((ActionMethod) &amp; CAADegAnalysisLogCmd::CreateCntxMenu)
+		) ; 
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A <i> CATPathElement</i> instance is created as a data member of the dialog 
+command class. It is valued for objects implementing the <em>CAAISysLine</em> 
+interface using the <code>AddElementType</code> method, and when right clicking 
+on their representations thanks to the <code>CATDlgEngWithContext</code> 
+behavior in the <code>SetBehavior</code>
+method. The <code>CATDlgEngRepeat</code> behavior makes this dialog agent 
+repeatable. A single state is created, and the dialog agent is added to it. The 
+transition loops on this state, and whenever right clicking on a object matches 
+the dialog agent, the <code>CreateCntxMenu</code> method is executed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the Action Method</h4>
+<p>This method is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBooleanCAADegAnalysisLogCmd::CreateCntxMenu(void * iData)
+{
+  // Selected Line 
+  CATPathElement * pLinePath = _daPathElement-&gt;GetValue();
+  CATBaseUnknown * pLine = NULL;
+  if ( pLinePath &amp;&amp; pLinePath-&gt;GetSize() )
+  {
+    pLine = (*pLinePath)[pLinePath-&gt;GetSize()-1];
+  }
+
+  if ( pLine)
+  {
+    // Retrieves the contextual menu
+    CATNotification *pNotif = GetLastNotification();
+    CATDlgContextualMenu *pCntxMenu = ((CATContext*)pNotif)-&gt;GetContextualMenu();
+
+    // Default Item Title 
+    CATString StartString (&quot;StartPoint&quot;);
+    CATString MediumString(&quot;MediumPoint&quot;);
+    CATString EndString (&quot;EndPoint&quot;) ;
+
+    // all these dialog objects are deleted when the contextual menu 
+    // is deleted. The command does't delete them.
+    CATDlgSeparatorItem *Separator = new CATDlgSeparatorItem(pCntxMenu,&quot;separator&quot;);
+    CATDlgPushItem * StartPoint    = new CATDlgPushItem(pCntxMenu,StartString) ;
+    CATDlgPushItem * MediumPoint   = new CATDlgPushItem(pCntxMenu,MediumString) ;
+    CATDlgPushItem * EndPoint      = new CATDlgPushItem(pCntxMenu,EndString) ;
+    
+    // NLS data in the NLS file of this command ( see this header file )
+    StartPoint-&gt;SetTitle(CATMsgCatalog::BuildMessage(
+                                      &quot;CAADegAnalysisLogCmd&quot;,
+                                      &quot;StartPointTitle&quot;)); 
+    MediumPoint-&gt;SetTitle(CATMsgCatalog::BuildMessage(
+                                       &quot;CAADegAnalysisLogCmd&quot;,
+                                       &quot;MediumPointTitle&quot;)); 
+    EndPoint-&gt;SetTitle(CATMsgCatalog::BuildMessage(
+                                       &quot;CAADegAnalysisLogCmd&quot;,
+                                       &quot;EndPointTitle&quot;)); 
+
+    // Callbacks
+    AddAnalyseNotificationCB(EndPoint,
+                             EndPoint-&gt;GetMenuIActivateNotification(),
+                             (CATCommandMethod) &amp; CAADegAnalysisLogCmd::EndPoint, 
+			     (void*) pLine );
+
+    AddAnalyseNotificationCB(MediumPoint,
+                             MediumPoint-&gt;GetMenuIActivateNotification(),
+			  (CATCommandMethod) &amp; CAADegAnalysisLogCmd::MediumPoint, 
+			  (void*) pLine );
+
+    AddAnalyseNotificationCB(StartPoint,
+                             StartPoint-&gt;GetMenuIActivateNotification(),
+			  (CATCommandMethod) &amp; CAADegAnalysisLogCmd::StartPoint, 
+			  (void*) pLine );
+  }
+  return TRUE ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This method is called when the transition of the <code>BuildGraph</code>
+method is executed. It:</p>
+<ul>
+  <li>Retrieves the last notification sent, that is a <i> CATContext</i> 
+  instance, and retrieves from this notification a pointer to the contextual 
+  menu</li>
+  <li>Creates the three push items added as children of the contextual menu</li>
+  <li>Sets their displayed titles from the message file</li>
+  <li>Retrieves a pointer to the path element of the object right clicked from 
+  the dialog agent that holds it</li>
+  <li>Retrieves a pointer to the line implementation, as the last item in the 
+  path element table (its range is table size minus 1)</li>
+  <li>Sets callbacks for the three menu items. The pointer to the line is passed 
+  as the fourth parameter of the <code>AddAnalyseNotificationCB</code> method to 
+  the called methods.</li>
+</ul>
+<p>Since the contextual menu is retrieved and updated with push items and a 
+separator rather than being created, there is no need to delete the push items 
+and the separator. They will be deleted when the contextual menu itself will be 
+deleted by the destructor of the class that creates it. In the same way, there 
+is no need to remove the callbacks. They will also be automatically 
+removed when the contextual menu will be deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating the Callback Methods</h4>
+<p>The callback methods retrieve each the appropriate point to display, and call 
+the <code>ShowPoint</code> method. Only <code>StartPoint</code> is shown here</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADegAnalysisLogCmd::StartPoint(CATCommand           * iSendingCommand, 
+                                   CATNotification      * iSentNotification, 
+                                   CATCommandClientData   iUsefulData)
+{
+  CATBaseUnknown * pLine = (CATBaseUnknown *) iUsefulData;
+  if ( pLine )
+  {
+    CAAISysLine * Line = NULL;                
+    HRESULT rc = pLine-&gt;QueryInterface(IID_CAAISysLine, (void**)&amp;Line);
+    if (SUCCEEDED(rc))
+    {
+      CATMathPoint point ;
+      Line-&gt;GetStartPoint(point) ;
+      ShowPoint(point);
+      Line -&gt; Release();
+    }
+  }
+}
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>ShowPoint</code> method creates a point instance, if it doesn't 
+already exist, that implements the <em>CAAISysPoint</em> interface, and the 
+point factory returns a pointer to this interface, and adds it to the 
+Interactive Set of Objects. This makes it possible to display it. Then <code>
+ShowPoint </code>assigns to that instance the coordinates of the <i> 
+CATMathPoint</i> instance passed from the called back method and updates the ISO 
+with this point..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADegAnalysisLogCmd::ShowPoint(CATMathPoint &amp; iPoint)
+{   
+  if ( NULL == _piTemporaryPoint ) 
+  {
+    CAAISysGeomFactory * piSysGeomFactory = NULL;                
+    HRESULT rc = _pContainer-&gt;QueryInterface(IID_CAAISysGeomFactory, 
+                                          (void**)&amp;piSysGeomFactory);
+    if (SUCCEEDED(rc))
+    {
+      piSysGeomFactory -&gt; Create(CAAISysGeomFactory::Point, IID_CAAISysPoint, 
+                        (CATBaseUnknown**)&amp;_piTemporaryPoint);
+      _pISO-&gt;AddElement(_piTemporaryPoint);
+
+      piSysGeomFactory -&gt; Release();
+      piSysGeomFactory=NULL;
+    }
+  }
+
+  if (  NULL != _piTemporaryPoint )
+  {
+    _piTemporaryPoint-&gt;SetCoord((float) iPoint.GetX(),
+                                (float) iPoint.GetY(), 
+                                (float) iPoint.GetZ());
+    _pISO-&gt;<b>UpdateElement</b>(_piTemporaryPoint) ;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Managing the Command Lifecycle</h4>
+<p>The following methods are called by the command selector to manage the 
+command when it becomes the active one, or when another command becomes active 
+instead.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATStatusChangeRC CAADegAnalysisLogCmd::Cancel(CATCommand *iCmd, CATNotification *iNotif)
+{
+  if (_TemporaryPoint)
+  {
+    _ISO-&gt;<b>RemoveElement</b>(_TemporaryPoint);
+    _TemporaryPoint-&gt;Release();
+    _TemporaryPoint= NULL ;
+  }
+  return (CATStatusChangeRCCompleted);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Releasing the Indication Agent</h4>
+<p>A pointer to the selection agent was created in the command <code>BuildGraph</code>
+method as a data member to be accessed and used in different methods.&nbsp;It should 
+be released when it becomes useless. This can be done in the command destructor, 
+as shown here. This could also be done in the <code>Cancel</code>
+method called just before the destructor.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADegAnalysisLogCmd::CAADegAnalysisLogCmd()
+{
+  ...
+  if ( NULL != _daPathElement  )
+  {
+     _daPathElement -&gt;RequestDelayedDestruction() ;
+     _daPathElement = NULL ;
+  }  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Variant"></a>Displaying the Contextual Menu when Clicking on Any 
+Object and on the Background</h3>
+<p>The same command should now react to any object whose representation is right 
+clicked. This includes the viewer background. To do this, replace the <code>
+AddElementType</code>
+method by the <code>AcceptOnNotify</code> method to make the dialog agent match 
+any right click, and remove the <code>CATDlgEngWithContext</code> behavior from 
+the <code>AddElementType</code> method. The rest of the method is unchanged.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegAnalysisLogCmd::BuildGraph()
+{
+  _daPathElement = new <strong>CATPathElementAgent</strong>(&quot;SelFirstLine&quot;);
+  _daPathElement-&gt;<strong>AcceptOnNotify</strong>(NULL, &quot;CATContext&quot;);
+  _daPathElement-&gt;<strong>SetBehavior</strong>(CATDlgEngRepeat);
+
+  CATDialogState * stGetEltState = <strong>GetInitialState</strong>(&quot;stGetEltStateId&quot;);
+  stGetEltState-&gt;<strong>AddDialogAgent</strong>(_daPathElement);
+
+  CATDialogTransition * pCntxMenuTransition = AddTransition
+           (stGetEltState,        // From state
+            stGetEltState,        // To state
+            <strong>IsLastModifiedAgentCondition</strong>(_daPathElement), 
+            <strong>Action</strong>((ActionMethod) &amp; CAADegAnalysisLogCmd::CreateCntxMenu));
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreateCtxMenu</code> method is the same as above.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Contextual menus can be set onto objects implementing a given interface by 
+any dialog command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

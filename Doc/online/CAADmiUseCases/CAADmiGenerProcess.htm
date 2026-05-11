@@ -1,0 +1,729 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a New Process Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Process Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a New Process Document</h3>
+      <em>Defining new activities, items and resources in a process document</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAADmiGenerProcess use case. This use case
+      explains how to create a new document by defining new activities, items
+      and resources and the relationships between them.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAADmiGenerProcess Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADmiGenerProcess Do</a></li>
+            <li><a href="#How">How to Launch CAADmiGenerProcess</a></li>
+            <li><a href="#Where">Where to Find the CAADmiGenerProcess Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you create a new process document
+containing activities, items and resources, ordered in a control flow.
+Specifically, you will learn how to:
+<ul>
+  <li>Retrieve activities defined in an activity library</li>
+  <li>Create a control flow based on these activities and having a beginning
+    (Start) and an end (Stop)</li>
+  <li>Add items and resources to these activities.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADmiGenerProcess Use Case</h3>
+<p>CAADmiGenerProcess is a use case of the CAADMAPSInterfaces.edu framework that
+illustrates DMAPSInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADmiGenerProcess Do</h4>
+<p>The goal of CAADmiGenerProcess is to illustrate the creation of a new process
+document. This specific process document uses activities defined in the
+CAADmiGenerLibrary use case <a href="#References">[1]</a>:
+&quot;CAADmiPlace&quot; and &quot;CAADmiAssembly&quot;. Two
+&quot;CAADmiPlace&quot; activities and one &quot;CAADmiAssembly&quot; activity
+are instantiated in this use case. These activities are then ordered in a
+control flow having a beginning and an end. Next, two <code>CATProduct</code>
+documents are loaded into the session. The first contains two items,
+&quot;sheet&quot; and &quot;screw&quot;. &quot;Sheet&quot; is attached to the
+first &quot;CAADmiPlace&quot; activity and to the &quot;CAADmiAssembly&quot;
+activity. &quot;Screw&quot; is attached to the second &quot;CAADmiPlace&quot;
+activity and to the &quot;CAADmiAssembly&quot; activity. The second <code>CATProduct</code>
+document contains a resource, &quot;table&quot; which is attached to the
+&quot;CAADmiAssembly&quot; activity.
+<p>Here is a CATIA image of the <code>CATProduct</code> document containing the
+two items, &quot;sheet&quot; and &quot;screw&quot;:
+<table width="100%">
+  <caption>Fig.1</caption>
+  <tr>
+    <td><img border="0" src="images/CAADmiItem.jpg" width="715" height="591"></td>
+  </tr>
+</table>
+<p>And here is a CATIA image of the <code>CATProduct</code> document containing
+the resource &quot;table&quot;:
+<table width="100%">
+  <caption>Fig.2</caption>
+  <tr>
+    <td><img border="0" src="images/CAADmiResource.jpg" width="715" height="591"></td>
+  </tr>
+</table>
+<p>Finally, you can see the entire process: the activity flow in the MainProcess
+goes from <code>Startxxx.1</code> to <code>Stopxxx.1</code>, going through the
+three activities we just saw, namely the two &quot;Place&quot; activities called
+<code>CAADmiPlaceSU1</code> and <code>CAADmiPlaceSU2</code>, and the &quot;
+Assembly&quot; activity, called <code>Assembly</code>, containing the table
+resource and the sheet + screw assembly.
+<table width="100%">
+  <caption><a name="Fig3"></a>Fig.3</caption>
+  <tr>
+    <td><img border="0" src="images/CAADmiProcess.jpg" width="716" height="591"></td>
+  </tr>
+</table>
+<p>Below is a schematic view of the flow of control between the different
+activities. You can also see the items and resources attached to each activity.
+In essence, this diagram shows that first the sheet and screw are placed on the
+table where they are assembled. In other terms, this means that the sheet item
+is attached to a &quot;Place&quot; activity, the screw item is attached to
+another &quot;Place&quot; activity and finally the sheet item and the screw item
+are assembled together and placed on the table resource defined in the
+&quot;Assembly&quot; activity.</p>
+<table width="100%">
+  <caption>Fig.4</caption>
+  <tr>
+    <td><img border="0" src="images/CAADmiProcess.gif" width="611" height="660"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADmiGenerProcess?</h4>
+<p>To launch CAADmiGenerProcess, you will need to set up the build time
+environment, then compile CAADmiGenerProcess along with its prerequisites, set
+up the run time environment, and then execute the sample. This is fully
+described in the referenced article <a href="#References">[2]</a>.&nbsp;</p>
+<p> To launch the use case,
+execute the following command:</p>
+<pre>mkrun -c &quot;CAADmiGenerProcess LibraryName.act Item.CATProduct Resource.CATProduct Process.CATProcess&quot;</pre>
+<ul>
+  <li><b>LibraryName.act</b> - path to library file of activities. Here we
+    suppose it is the one generated in the CAADmiGenerLibrary [<a href="#References">1</a>]
+    use case. You may, however, reference the supplied .act document called
+    &quot;CAADmiTestLibrary.act&quot; found in
+    <pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic</pre>
+<p>where <b>InstallRootDirectory</b> is the root directory of your 
+CAA V5 installation, and <b>OS</b> is a directory the name of which depends on the operating 
+system. Refer to [<a href="#References">2</a>] 
+to get the list of the currently supported operating systems and their 
+associated directory names.</p>
+	</li>
+  <li><b>Item.CATProduct</b> - path to the CATProduct document defining items
+    (may be a different kind of document). Here again, you may reference the supplied
+    .CATProduct document called
+    &quot;CAADmiItem.CATProduct&quot; found in the same directory as the file
+    referenced above.</li>
+  <li><b>Resource.CATProduct</b> - path to the CATProduct document defining
+    resources (may be a different kind of document). You may reference the supplied
+    .CATProduct document called
+    &quot;CAADmiResource.CATProduct&quot; found in the same directory as the
+    file referenced above.</li>
+  <li><b>Process.CATProcess </b>- path name under which the resulting process
+    document is to be saved.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find CAADmiGenerProcess Code?</h4>
+<p>CAADmiGenerProcess code is located in the CAADmiGenerProcess.m use case
+module of the CAADMAPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAADMAPSInterfaces.edu/CAADmiGenerProcess.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAADMAPSInterfaces.edu\CAADmiGenerProcess.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAADmiGenerProcess.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in CAADmiGenerProcess:</p>
+<ol>
+  <li><a href="#CreateNewProcess">Creating a New Process Document</a></li>
+  <li><a href="#InstantiateActivities">Instantiating Activities Defined in an
+    Activity Library</a></li>
+  <li><a href="#OrderActivities">Ordering the Activities Using Control Flow</a></li>
+  <li><a href="#SetItems">Setting Items on Different Activities</a></li>
+  <li><a href="#SetResource">Setting a Resource on an Activity</a></li>
+  <li><a href="#SaveProcess">Saving the Process Document</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateNewProcess"></a>Creating a New Process Document</h4>
+<ol>
+  <li>Create session and configure library file path
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT rc = E_FAIL;
+...
+CATSession *pSession = NULL;
+rc = <b>::Create_Session</b>(&quot;CAA2_Sample_Session&quot;, pSession );
+CATListOfCATUnicodeString ActivityLibrariesList;
+ActivityLibrariesList.<b>Append</b>(argv[1]);
+CATISPPConfig *piConfigSession = NULL;
+rc = pSession -&gt; <b>QueryInterface</b>(IID_CATISPPConfig,
+                                (void**) <b>&amp;piConfigSession</b>);
+if (FAILED(rc) ) <b>return</b> 5;
+
+piConfigSession-&gt;<b>SetListOfLibraryFilePath</b>(ActivityLibrariesList);
+piConfigSession-&gt;<b>Release</b>();
+piConfigSession = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Generally, the first thing that is necessary in a batch program is the
+    creation of a new session. This is done using the <code>Create_Session</code>
+    global function. It is important not to forget to delete the session at the
+    end of your batch program.</p>
+    <p>In order to instantiate activities defined in the activities library, it
+    is also necessary to configure the library file path in order for the
+    library to be accessible. This is done by first creating a list containing
+    the name of the activities library (passed as an argument to the use case)
+    which is an <code>.act </code>file. Next, we get a <i>CATISPPConfig</i>
+    handle based on the pointer to the current Session and using this handle, we
+    perform the <code>SetListOfLibraryFilePath </code>method having as argument
+    the list of libraries we have just defined.</p>
+  </li>
+  <li>Create a new process document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pNewDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(&quot;Process&quot;, pNewDoc );
+if ( FAILED(rc) || (NULL==pNewDoc)) <b>return</b> 2;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The new process document is created using <i>CATDocumentServices</i><code>::New
+    </code>specifying &quot;Process&quot; as the document type. The document
+    type is the name that appears in the list of document types when performing
+    a <code>File/New</code> during an interactive CATIA session: it is not the
+    suffix of the document.</p>
+  </li>
+  <li>Retrieve Process document's root container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATInit *piInitOnDoc = NULL;
+rc = pNewDoc -&gt; <b>QueryInterface</b>(IID_CATInit,
+                               (void**) &amp;piInitOnDoc);
+if (FAILED(rc) ) <b>return</b> 5;
+</pre>
+          <pre>CATISPPProcessContainer *piProcessCont = (CATISPPProcessContainer* )
+	piInitOnDoc-&gt;<b>GetRootContainer</b>(CATISPPProcessContainer::ClassName());
+if ( NULL == piProcessCont ) <b>return</b> 3;
+piInitOnDoc -&gt; <b>Release</b>();
+piInitOnDoc = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>First of all, the document's root container is retrieved using the <code>GetRootContainer</code>
+    method of <i>CATInit</i> which is directly cast to a <i>CATISPPProcessContainer</i>
+    handle.</p>
+  </li>
+  <li>Get Processes
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTV(CATBaseUnknown_var)* pProcessList =
+	piProcessCont-&gt;<b>GetAllProcess</b>();
+if ((NULL == pProcessList) || ((*pProcessList).Size() &lt; 1))
+{ 
+   cout &lt;&lt; &quot;** ERROR empty list of process &quot; &lt;&lt; endl;
+   if ((*pProcessList).Size() &gt; 0) <b>delete</b> pProcessList;
+   <b>return</b> 4;
+}
+cout &lt;&lt; &quot; number of processes : &quot;&lt;&lt; (*pProcessList).Size() &lt;&lt; endl &lt;&lt; flush;
+piProcessCont -&gt; <b>Release</b>();
+piProcessCont = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the <i>CATISPPProcessContainer</i> handle, we can get a list of all
+    the processes container in the document using the <code>GetAllProcess</code>
+    method.</p>
+  </li>
+  <li>Get root activity
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// root activity is the first of the list of processes.
+CATISPPActivityRoot_var spActivityRoot = <b>(*pProcessList)[1]</b>;
+<b>delete</b> pProcessList;
+pProcessList=NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The root activity is the first process in the list and we retrieve it in
+    a <i>CATISPPActivityRoot</i> handle.</p>
+  </li>
+  <li>Get <i>CATISPPChildManagement</i> and <i>CATISPPAbstractActivity</i>
+    handles
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISPPChildManagement *piChildManagOnActivity = NULL;
+rc = spActivityRoot -&gt; <b>QueryInterface</b>(IID_CATISPPChildManagement, 
+		                      (void**) &amp;piChildManagOnActivity);
+if (FAILED(rc))	<b>return</b> 5;
+
+CATISPPAbstractActivity *piActivityOnActivity = NULL;
+rc = spActivityRoot -&gt; <b>QueryInterface</b>(IID_CATISPPAbstractActivity, 
+		                      (void**) &amp;piActivityOnActivity);
+if (FAILED(rc)) <b>return </b>5;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the <i>CATISPPActivityRoot</i> handle, we can get handles on <i>CATISPPChildManagement</i>
+    and <i>CATISPPAbstractActivity</i> which will be needed later, as you will
+    see in the following section.</p>
+  </li>
+  <li>Set a label on the root activity
+    <table class="code">
+      <tr>
+        <td>
+          <pre>piActivityOnActivity-&gt;<b>SetLabel</b>(&quot;MainProcess&quot;);
+piActivityOnActivity -&gt; Release();
+piActivityOnActivity = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We can also set a label on the root activity which will appear on the
+    first node under &quot;ProcessList&quot; in the process document (see <a href="#Fig3">Fig.3</a>).
+    This is done using the <code>SetLabel</code> method of <i>CATISPPAbstractActivity</i>.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="InstantiateActivities"></a>Instantiating Activities Defined in an
+Activity Library</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// instanciate the &quot;CAAAssembly&quot; process
+// ( defined in the library of activities ).
+CATISPPAbstractActivity_var spAssemblyProcess = 
+	piChildManagOnActivity-&gt;<b>AddChild</b>(&quot;CAADmiAssembly&quot;);   
+spAssemblyProcess-&gt;<b>SetLabel</b>(&quot;Assembly ( sheet + screw)&quot;);
+
+// instanciate the &quot;CAAPlace &quot; process 
+// ( defined in the library of activities ).
+CATISPPAbstractActivity_var spPlaceActivity1 =
+	piChildManagOnActivity-&gt;<b>AddChild</b>(&quot;CAADmiPlace&quot;);
+CATISPPAbstractActivity_var spPlaceActivity2 = 
+	piChildManagOnActivity-&gt;<b>AddChild</b>(&quot;CAADmiPlace&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>The activities from the library are instantiated. This is done using the <i>CATISPPChildManagement
+</i>handle acquired in the previous section to execute the <code>AddChild </code>method
+on the name of the activity. This is how we create three activities, one based
+on the &quot;CAADmiAssembly&quot; activity and two others based on the
+&quot;CAADmiPlace&quot; activity. Remember that these activities were created in
+an activity file in the <i>CAADmiGenerLibrary</i> use case <a href="#References">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OrderActivities"></a>Ordering the Activities Using Control Flow</h4>
+<ol>
+  <li>Define Start and Stop
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISPPFlowMgt_var spRootStartFlow = 
+	(*piChildManagOnActivity-&gt;<b>GetChild</b>(&quot;Start&quot;))[1];
+CATISPPFlowMgt_var spRootStopFlow  = 
+	(*piChildManagOnActivity-&gt;<b>GetChild</b>(&quot;Stop&quot;))[1];
+
+piChildManagOnActivity -&gt; <b>Release</b>();
+piChildManagOnActivity = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Ordering activities implies defining a beginning and an end. This is done
+    by defining a <i>CATISPPFlowMgt_var</i> variable by executing the <code>GetChild</code>
+    method of <i>CATISPPChildManagement</i> on the &quot;Start&quot; and
+    &quot;Stop&quot; keywords. This creates &quot;Start&quot; and
+    &quot;Stop&quot; nodes in the activities tree of the process document.</p>
+  </li>
+  <li>Ordering the flow of control
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// adds a control flow between &quot;start&quot; activity and &quot;Place&quot; one.
+CATISPPFlowMgt *piRootStartOnFlow = NULL;
+rc = spRootStartFlow -&gt; <b>QueryInterface</b>(IID_CATISPPFlowMgt,
+		                       (void**) &amp;piRootStartOnFlow);
+if (FAILED(rc) ) <b>return</b> 5;
+piRootStartOnFlow-&gt;<b>AddControlFlow</b>(spPlaceActivity1);
+piRootStartOnFlow-&gt;<b>Release</b>();
+piRootStartOnFlow = NULL;
+
+// adds a control flow between activities &quot;place&quot;.
+CATISPPFlowMgt *piPlaceOnFlow1 = NULL;
+rc = spPlaceActivity1 -&gt; <b>QueryInterface</b>(IID_CATISPPFlowMgt,
+		                        (void**) &amp;piPlaceOnFlow1);
+if (FAILED(rc) ) <b>return</b> 5;
+piPlaceOnFlow1-&gt;<b>AddControlFlow</b>(spPlaceActivity2);
+piPlaceOnFlow1-&gt;<b>Release</b>();
+piPlaceOnFlow1 = NULL;
+
+// adds a control flow between activity &quot;place&quot; and &quot;assembly&quot;
+CATISPPFlowMgt *piPlaceOnFlow2 = NULL;
+rc = spPlaceActivity2 -&gt; <b>QueryInterface</b>(IID_CATISPPFlowMgt,
+		                        (void**) &amp;piPlaceOnFlow2);
+piPlaceOnFlow2-&gt;<b>AddControlFlow</b>(spAssemblyProcess);
+piPlaceOnFlow2-&gt;<b>Release</b>();
+
+// adds a control flow between &quot;Assembly&quot; and &quot;Stop&quot; one.
+CATISPPFlowMgt *piAssemblyProcessOnFlow = NULL;
+rc = spAssemblyProcess -&gt; <b>QueryInterface</b>(IID_CATISPPFlowMgt,
+		                         (void**) &amp;piAssemblyProcessOnFlow);
+if (FAILED(rc) ) <b>return</b> 5;
+piAssemblyProcessOnFlow-&gt;<b>AddControlFlow</b>(spRootStopFlow);
+piAssemblyProcessOnFlow-&gt;<b>Release</b>();
+piAssemblyProcessOnFlow = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The actual ordering of the control flow begins. First of all, we add a
+    control flow between the &quot;Start&quot; activity and the first
+    &quot;CAADmiPlace&quot; activity. This is done by getting a <i>CATISPPFlowMgt</i>
+    handle on the &quot;Start&quot; activity and executing the <code>AddControlFlow</code>
+    method on the first &quot;CAADmiPlace&quot; activity using the <i>CATISPPAbstractActivity
+    </i>handle we defined when instantiating it from the activities library. We
+    proceed in a similar manner to add the second &quot;CAADmiPlace&quot;
+    activity following the first one, the &quot;CAADmiAssembly&quot; activity
+    following the second &quot;CAADmiPlace&quot; activity and finally the
+    &quot;Stop&quot; activity following the &quot;CAADmiAssembly&quot; activity.
+    This creates a complete control flow of the activities we have defined in
+    this process document. Next, we will see how we can add items and resources
+    to these different activities in order to define a complete process.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SetItems"></a>Setting Items on Different Activities</h4>
+<ol>
+  <li>Retrieve a <i>CATIProduct</i> handle
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// load product document.
+CATDocument *pItemDoc = NULL;
+rc = <b>CATDocumentServices::Open</b>(argv[2],pItemDoc);
+if ( FAILED(rc) || (NULL==pItemDoc)) <b>return</b> 6;
+cout &lt;&lt; endl &lt;&lt; &quot;CAAPmiGenerProcess.m:	product document opened : &quot; 
+	&lt;&lt; argv[2] &lt;&lt; endl &lt;&lt; flush;
+
+CATIDocRoots* piDocRootsOnDoc = NULL;
+rc = pItemDoc-&gt;<b>QueryInterface</b>(IID_CATIDocRoots,
+		              (void**) &amp;piDocRootsOnDoc);
+CATListValCATBaseUnknown_var* pRootProducts = 
+		piDocRootsOnDoc-&gt;<b>GiveDocRoots</b>();
+CATIProduct_var spRootProduct = NULL_var;
+if (pRootProducts-&gt;<b>Size</b>())
+{ 
+   spRootProduct = <b>(*pRootProducts)[1]</b>;
+   <b>delete</b> pRootProducts;
+   pRootProducts = NULL;
+}
+CATIProduct *piProductOnRoot = NULL;
+rc = spRootProduct-&gt;<b>QueryInterface</b>(IID_CATIProduct, 
+		                   (void**) &amp;piProductOnRoot);
+if (FAILED(rc) ) <b>return</b> 5;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>First of all, we retrieve the items from the<code> CATProduct</code>
+    document. This is done by loading the document whose pathname is defined in
+    the second argument to this program using the <code>Open </code>static
+    method of <i>CATDocumentServices. </i>Next, we must get a <i>CATIProduct</i>
+    handle on the root product of the document because it will be needed later
+    on, as you will see. The root product of the document is the first element
+    in the <i>CATListValCATBaseUnknown_var</i> list returned from <code>GiveDocRoots</code>
+    which is executed using a <i>CATIDocRoots</i> handle on the product
+    document.</p>
+  </li>
+  <li>Setting items on activities
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// get items in the product document
+// associate them to activity.
+CATListValCATBaseUnknown_var *ListItems = 
+	piProductOnRoot -&gt; <b>GetAllChildren</b>();
+piProductOnRoot-&gt;<b>Release</b>();
+piProductOnRoot=NULL;
+
+CATIProduct_var spItem = NULL_var;
+CATUnicodeString itemName (&quot; &quot;);
+
+// first item associate to Place activity and to Assembly activity. 
+spItem = <b>(*ListItems)[1]</b>;
+rc = spItem -&gt; <b>GetPrdInstanceName</b> ( itemName ) ;
+
+CATISPPItemMgt *piAssemblyOnItem = NULL;
+spAssemblyProcess -&gt; <b>QueryInterface</b>(IID_CATISPPItemMgt,
+		                    (void**) &amp;piAssemblyOnItem);
+if (FAILED(rc) ) <b>return</b> 5;
+piAssemblyOnItem-&gt;<b>AddItem</b>(spItem);
+
+CATISPPItemMgt *piPlaceOnItem1 = NULL;
+spPlaceActivity1 -&gt; <b>QueryInterface</b>(IID_CATISPPItemMgt,
+		                   (void**) &amp;piPlaceOnItem1);
+if (FAILED(rc) ) <b>return</b> 5;
+piPlaceOnItem1-&gt;<b>AddItem</b>(spItem);
+piPlaceOnItem1-&gt;<b>Release</b>();
+piPlaceOnItem1=NULL;
+
+// second associate to Place activity and to Assembly activity. 
+spItem = <b>(*ListItems)[2]</b>;
+rc = spItem -&gt; <b>GetPrdInstanceName</b> ( itemName ) ;
+
+piAssemblyOnItem-&gt;<b>AddItem</b>(spItem);
+
+CATISPPItemMgt *piPlaceOnItem2 = NULL;
+spPlaceActivity2 -&gt; <b>QueryInterface</b>(IID_CATISPPItemMgt,
+		                   (void**) &amp;piPlaceOnItem2);
+piPlaceOnItem2-&gt;<b>AddItem</b>(spItem);
+piPlaceOnItem2-&gt;<b>Release</b>();
+piPlaceOnItem2 = NULL;
+
+piAssemblyOnItem-&gt;<b>Release</b>();
+piAssemblyOnItem = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the CATIProduct handle previously retrieved, we can get a list of
+    all of the children of the root product by executing <code>GetAllChildren</code>.
+    Next, we want to associate the first item in the list, which is the
+    &quot;sheet&quot;, to the first &quot;CAADmiPlace&quot; activity as well as
+    to the &quot;CAADmiAssembly&quot; activity. First of all, we get the name of
+    the first item in the list using <code>GetPrdInstanceName</code> in order to
+    print it out on the batch listing. Now, in order to actually add the item to
+    the activity, we get a <i>CATISPPItemMgt</i> handle based on the <i>CATISPPAbstractActivity</i>
+    handle of the &quot;CAADmiAssembly&quot; activity with which we can execute
+    the <code>AddItem</code> method to add the &quot;sheet&quot; to the
+    &quot;CAADmiAssembly&quot; activity. We do the same thing to add the
+    &quot;sheet&quot; to the first &quot;CAADmiPlace&quot; activity. Then we
+    proceed in exactly the same way for the second item in the list, the
+    &quot;screw&quot;, this time adding it to the &quot;CAADmiAssembly&quot;
+    activity, as we did with the first item, but to the second
+    &quot;CAADmiPlace&quot; activity.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SetResource"></a>Setting a Resource on an Activity</h4>
+<ol>
+  <li>Retrieve <i>CATIProduct</i> handle
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// load product document.
+CATDocument* pResourceDoc = NULL;
+rc = <b>CATDocumentServices::Open</b>(argv[3],pResourceDoc);
+if ( FAILED(rc) || (NULL==pResourceDoc) ) <b>return</b> 7;
+
+CATIDocRoots* piDocRootsOnDoc2 = NULL;
+rc = pResourceDoc-&gt;<b>QueryInterface</b>(IID_CATIDocRoots,
+		                  (void**) &amp;piDocRootsOnDoc2);
+if (FAILED(rc) ) <b>return</b> 5;
+CATListValCATBaseUnknown_var* pRoots = 
+	piDocRootsOnDoc2-&gt;<b>GiveDocRoots</b>();
+CATIProduct_var spRoot = NULL_var;
+if (pRoots-&gt;<b>Size</b>())
+{ 
+   spRoot = <b>(*pRoots)[1]</b>;
+   delete pRoots;
+   pRoots = NULL;
+}
+CATIProduct *piProductOnRoot2 = NULL;
+rc = spRoot-&gt;<b>QueryInterface</b>(IID_CATIProduct,
+		            (void**) &amp;piProductOnRoot2);
+if (FAILED(rc) ) <b>return</b> 5;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to set a resource on an activity, we first need to retrieve the
+    resource from the <code>CATProduct</code> document containing it. This is
+    done by loading the document whose pathname is defined in the third argument
+    to this program using the<code> Open</code> static method of <i>CATDocumentServices.</i>
+    Next, we must get a <i>CATIProduct</i> handle on the root product of the
+    document because it will be needed later on, as you will see. As we have
+    seen in the previous section, the root product of the document is the first
+    element in the <i>CATListValCATBaseUnknown_var</i> list returned from <code>GiveDocRoots</code>
+    which is executed using a <i>CATIDocRoots</i> handle on the product
+    document.</p>
+  </li>
+  <li>Set a resource on an activity
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// get resources in the product document
+// associate them to activity.
+CATListValCATBaseUnknown_var *ListResources = 
+	piProductOnRoot2 -&gt; <b>GetAllChildren</b>();
+
+piDocRootsOnDoc2-&gt;<b>Release</b>();
+piDocRootsOnDoc2=NULL;
+piProductOnRoot2-&gt;<b>Release</b>();
+piProductOnRoot2=NULL;
+
+CATIProduct_var spResource = NULL_var;
+CATUnicodeString resourceName (&quot; &quot;);
+
+spResource = (<b>*ListResources)[1]</b>;
+rc = spResource -&gt; <b>GetPrdInstanceName</b> ( resourceName ) ;
+
+CATISPPResourceManagement *piAssemblyOnResource = NULL;
+rc = spAssemblyProcess -&gt; <b>QueryInterface</b>(IID_CATISPPResourceManagement, 
+		                         (void**) &amp;piAssemblyOnResource);
+if (FAILED(rc) ) <b>return</b> 5;
+piAssemblyOnResource-&gt;<b>AddResource</b>(spResource);
+
+piAssemblyOnResource-&gt;<b>Release</b>();
+piAssemblyOnResource=NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the CATIProduct handle previously retrieved, we can get a list of
+    all of the children of the root product by executing <code>GetAllChildren</code>.
+    Next, we want to associate the first resource in the list, which is the
+    &quot;table&quot;, to the &quot;CAADmiAssembly&quot; activity. First of all,
+    we get the name of the resource using <code>GetPrdInstanceName</code> in
+    order to print it out on the batch listing. Now, in order to actually add
+    the resource to the activity, we get a <i>CATISPPResourceManagement</i>
+    handle based on the <i>CATISPPAbstractActivity</i> handle of the
+    &quot;CAADmiAssembly&quot; activity with which we can execute the <code>AddResource</code>
+    method to add the &quot;table&quot; to the &quot;CAADmiAssembly&quot;
+    activity.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SaveProcess"></a>Saving the Process Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>cout &lt;&lt; endl &lt;&lt; &quot;CAAPpbGenerProcess.m: Now we can save the created and modified CATProcess in &quot;
+	&lt;&lt; argv[4] &lt;&lt; endl &lt;&lt; flush;
+rc = <b>CATDocumentServices::SaveAs</b>(*pNewDoc, argv[4]);
+if ( FAILED(rc) ) <b>return</b> 8;
+
+// remove opened document
+rc = <b>CATDocumentServices::Remove </b>(*pNewDoc);
+if (!SUCCEEDED(rc)) <b>return</b> 9;
+
+// delete the session, removes the opened documents also.
+// never forget to delete a creating session after usage.
+rc = <b>::Delete_Session</b>(&quot;CAA2_Sample_Session&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>Now that our process is complete, we save the process document using the <code>SaveAs</code>
+static method of <i>CATDocumentServices</i> under the pathname passed as a
+fourth argument to this program. It is always a good habit to also remove the
+document from the session using the <code>Remove</code> static method of <i>CATDocumentServices</i>.
+And finally, the session must be deleted using the <code>Delete_Session</code>
+global function.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>In this article, you have seen how to:</p>
+<ul>
+  <li>retrieve and instantiate activities from an activities library using the <code>AddChild</code>
+    method of <i>CATISPPAbstractActivities</i></li>
+  <li>how to order the control flow of these activities using the <code>AddControlFlow</code>
+    method of <i>CATISPPFlowMgt</i></li>
+  <li>how to define a beginning and an end to the flow of control using the <code>GetChild</code>
+    method of <i>CATISPPFlowMgt</i></li>
+  <li>how to add items and resources to activities using <code>AddItem</code> of
+    <i>CATISPPItemMgt</i> and <code>AddResource</code> of <i>CATISPPResourceManagement</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADmiGenerLibrary.htm">Creating a Library of Activities</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,925 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Axis Systems</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Axis Systems</h3>
+      <em>Using CATIMf3DAxisSystemFactory and CATIMf3DAxisSystem&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the <em>CATIMf3DAxisSystemFactory</em>
+      and <em>CATIMf3DAxisSystem</em> interfaces to create axis systems.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrAxisSystemCreation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrAxisSystemCreation Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrAxisSystemCreation</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrAxisSystemCreation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create axis systems by using the
+<em>CATIMf3DAxisSystemFactory</em> and the <em>CATIMf3DAxisSystem&nbsp;</em><em>
+</em>interfaces. You will learn to :</p>
+<ul>
+  <li>Create the three kinds of axis system:
+    <ul>
+      <li>Standard ,</li>
+      <li>Axis Rotation,</li>
+      <li>Euler Angle,</li>
+    </ul>
+  </li>
+  <li>Create an axis system from an another one,</li>
+  <li>Isolate an axis system, in other words, fix its geometry.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrAxisSystemCreation Use Case</h3>
+<p>CAAMmrAxisSystemCreation is a use case of the CAAMechanicalModeler.edu
+framework that illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrAxisSystemCreation Do</h4>
+<p>CAAMmrAxisSystemCreation creates several axis systems from data retrieved
+inside the <code>CAAAxisSystemCreation </code>Part document.</p>
+<table width="651">
+  <caption><i><a name="Fig.1">Fig.1</a>: The </i>CAAAxisSystemCreation Part
+    Document</caption>
+  <tr>
+    <td width="507"><img border="0" src="images/CAAMmrAxisSystemCreatModl1.jpg" width="507" height="334"></td>
+    <td valign="bottom" width="150"><code><b>Point.1</b> (xy plane, H=50, V=50)</code>
+      <p><code><b>Point.3</b> (xy plane, H=50, V=100)</code>
+      <p><code><b>Point.4</b> (50,50,100)</code>
+      <p><code><b>Point.5</b> (0,50,100)</code>
+      <p><code><b>Point.6</b> (100,100,0)</code>
+      <p><code><b>Point.7</b> (-200,0,0)</code>
+      <p><code><b>D1</b> = (P1,P4)</code>
+      <p><code><b>D2</b> = (P1,P3)</code>
+      <p><code><b>D3 </b>= (P1,P6)</code></td>
+  </tr>
+</table>
+<p>Five axis systems are created. The <code>CAAAxisSystemCreation_Save</code>
+Part document shows them:</p>
+<table border="0">
+  <caption><i><a name="Fig.2">Fig.2</a>: The </i>CAAAxisSystemCreation_Save Part
+    Document</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemCreatModl2.jpg" width="626" height="452"></td>
+  </tr>
+</table>
+<ol>
+  <li>The <b>AS_Standard</b> axis system</li>
+  <p>The first axis system is a &quot;Standard&quot; axis system, you can verify
+  that in the Axis System Definition dialog box just below:</p>
+  <table border="0">
+    <caption><i><a name="Fig.3a">Fig.3a</a>: The </i>AS_Standard Axis System</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatAS.jpg" width="401" height="400"></td>
+    </tr>
+  </table>
+  <p>For a standard axis system you can propose an axis direction for the three
+  one.</p>
+  <table border="0">
+    <caption><i><a name="Fig.3b">Fig.3b</a>: The </i>Standard Axis System
+      Definition</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatStd.jpg" width="313" height="206"></td>
+      <td>The three axis directions X, Y and Z are explicitly given or can be
+        automatically computed if no vector is specify.</td>
+    </tr>
+  </table>
+  <p>The AS_Standard's<b> </b>axis system characteristics are:</p>
+  <ul>
+    <li>Its X axis is one edge coming from a Pad.1's corner,</li>
+    <li>Its Y axis is the second edge coming from this corner,</li>
+    <li>Its Z is not specified to have a right-handed axis system,</li>
+    <li>It is located in (150,0,0) in the absolute axis system.</li>
+  </ul>
+  <p>In the More Dialog object, you can see the internal data:</p>
+  <table border="0">
+    <caption><i><a name="Fig.3c">Fig.3c</a>: The AS_</i>Standard Axis System
+      Internal Data</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatMoreAS.jpg" width="518" height="191"></td>
+    </tr>
+  </table>
+  <ul>
+    <li>The origin is located in x=150, y and z = 0,</li>
+    <li>The X axis direction (Edge.1) is the z axis in the absolute axis system,</li>
+    <li>The Y axis direction (Edge.2) is the -y axis in the absolute axis
+      system,</li>
+    <li>The third axis direction has been automatically computed to have a
+      right-handed axis system.</li>
+  </ul>
+  <p>In this case, you will learn how to create a standard axis system and how
+  to use BRep features as axis direction inputs.</p>
+  <li>The&nbsp;<i> </i><b>AS_AxisRotation</b><i> </i>axis system</li>
+  <p>The second axis system is an &quot;Axis rotation&quot; axis system. You can
+  verify that in the Axis System Definition dialog box just below:&nbsp;</p>
+  <table border="0">
+    <caption><i><a name="Fig.4a">Fig.4a</a>: The AS_AxisRotation </i>Axis System</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatAR.jpg" width="566" height="419"></td>
+    </tr>
+  </table>
+  <p>An &quot;rotation axis&quot; axis system means that you can propose one
+  axis direction (<b>AR</b>) to rotate about, one specification to be the
+  rotation's reference (<b>Ref</b>) and an angle of rotation (<font face="Math A"><b>h</b></font>).
+  The schema below presents the three data in general:</p>
+  <table border="0">
+    <caption><i><a name="Fig.4b">Fig.4b</a>: The </i>Axis Rotation Axis System
+      Definition</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatRot1.jpg" width="492" height="298"></td>
+    </tr>
+  </table>
+  <p>This schema shows the AS_AxisRotation's axis system characteristics:&nbsp;</p>
+  <table border="0">
+    <caption><i><a name="Fig.4c">Fig.4c</a>: The </i>AS_AxisRotation<b> </b><i>Axis
+      System </i>Characteristics</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatRot2.jpg" width="355" height="206"></td>
+      <td>
+        <ul>
+          <li><b>AR</b>&nbsp; = <code>D1</code>, a line orthogonal to the xy
+            plane. It defines the Y axis.&nbsp;</li>
+          <li><b>Ref </b>= <code>D2</code>, a line already in the xy plane and
+            // to the y axis. It defines the Z axis.</li>
+          <li><b><font face="Math A">h</font></b><font face="Arial"><b> </b>= </font><font face="Math A">o</font><font face="Arial">/2
+            . The third axis (X) is automatically computed.</font></li>
+          <li>The axis system is located in <code>Point.5.</code></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <p>In the More Dialog object, you can see the internal data:</p>
+  <table border="0">
+    <caption><i><a name="Fig.4d">Fig.4d</a>: The </i>AS_AxisRotation's Axis
+      System Internal Data</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatMoreAR.jpg" width="517" height="192"></td>
+    </tr>
+  </table>
+  <p>In this case, you will learn how to set the three data (AR, Ref and <font face="Math A">h</font>)
+  and how to specify the&nbsp;axis direction order.&nbsp;<br>
+  </p>
+  <li>The <b>AS_EulerAngles</b> axis system</li>
+  <p>The second axis system is an &quot;Euler angles&quot; axis system. You can
+  verify that in the Axis System Definition dialog box just below:&nbsp;</p>
+  <table border="0">
+    <caption><i><a name="Fig.5a">Fig.5a</a>: The </i>AS_EulerAngles Axis System
+      Characteristics</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatEuler.jpg" width="436" height="265"></td>
+    </tr>
+  </table>
+  <p>An &quot;Euler angles&quot; axis system means that you can propose three
+  angles to form an Euler axis system. This schema presents the Euler system:</p>
+  <table>
+    <caption><i><a name="Fig.5b">Fig.5b</a>: </i>The Euler Axis System</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatEulerGen.jpg" width="417" height="322"></td>
+      <td>
+        <ul>
+          <li><b><font face="Math A">h</font><font face="Arial">1 </font></b><font face="Arial">=
+            (x,N) a rotation about z transforming vector X into vector N</font></li>
+          <li><b><font face="Math A">h</font><font face="Arial">2 </font></b><font face="Arial">=
+            (z,X)&nbsp; a rotation about N transforming vector z into vector <b>Z&nbsp;</b></font></li>
+          <li><b><font face="Math A">h</font><font face="Arial">3 </font></b><font face="Arial">=
+            (N,X<b>) </b>a rotation about Z transforming vector N into vector <b>X</b>&nbsp;</font></li>
+        </ul>
+        <p><font face="Arial">The vector <b>Y</b> is computed to have an
+        right-handed axis system.</font></td>
+    </tr>
+  </table>
+  <p>The AS_EulerAngles's<b> </b>axis system characteristics are:</p>
+  <table border="0">
+    <tr>
+      <td>
+        <ul>
+          <li><b><font face="Math A">h</font><font face="Arial">1 </font></b><font face="Arial">=
+            </font><font face="Math A">o</font><font face="Arial">/2&nbsp;</font></li>
+          <li><b><font face="Math A">h</font><font face="Arial">2 = </font></b><font face="Math A">o</font><font face="Arial">/2&nbsp;</font></li>
+          <li><b><font face="Math A">h</font><font face="Arial">3 = </font></b><font face="Math A">o</font><font face="Arial">/2&nbsp;</font></li>
+          <li>The axis system is located in <code>(200,0,0)</code></li>
+        </ul>
+        <p>&nbsp;</td>
+      <td>
+        <ul>
+          <li>N = y</li>
+          <li>Z = x</li>
+          <li>X = z</li>
+          <li>Y = -y</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <p>In the More Dialog object, you can see the internal data:</p>
+  <table border="0">
+    <caption><i><a name="Fig.5c">Fig.5c</a>: </i>The Euler Axis System Internal
+      Data</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatMoreEuler.jpg" width="517" height="189"></td>
+    </tr>
+  </table>
+  <p><br>
+  In this case, you will learn how to set the three angles.</p>
+  <li>The <b>AS_AxisStandardOriAxisDir</b> axis system&nbsp;</li>
+  <p>This axis system is created from the AS_Standard axis system. We have only
+  changed the origin's location. The AS_AxisStandardOriAxisDir axis
+  system&nbsp;is located at the axis direction's origin.</p>
+  <table border="0">
+    <caption><i><a name="Fig.6">Fig.6</a>: The </i>AS_AxisStandardOriAxisDir
+      Axis System Characteristics</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatOAxe.jpg" width="528" height="557"></td>
+    </tr>
+  </table>
+  <p>You can see that the axis direction's coordinates are identical to the
+  AS_Standard axis system. See<a href="#Fig.3c"> Fig3.c</a></p>
+  <p>In this case, you will learn how to create an axis system from another one
+  and how to locate it at the axis direction's origin.</p>
+  <li>The <b>AS_Explicit</b> Axis System&nbsp;</li>
+  <p>The last axis system&nbsp;enables you to understand the creation of an
+  explicit axis system. It means that its geometry (CATBody) will be fixed, no
+  modification to change the origin location or the axis directions will be
+  possible.&nbsp;</p>
+  <table border="0">
+    <caption><i><a name="Fig.7a">Fig.7a</a>: The</i><i> </i>AS_Explicit Axis
+      System&nbsp;</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatExpli.jpg" width="285" height="299"></td>
+    </tr>
+  </table>
+  <p>Before to be fixed, the AS_Explicit<b> </b>axis system is a standard axis
+  system with the characteristics as follows:</p>
+  <table border="0">
+    <caption><i><a name="Fig.7b">Fig.7b</a>: The</i><i> </i>AS_Explicit Axis
+      System Characteristics before Update</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatExpli1.jpg" width="264" height="205"></td>
+      <td valign="top">The three axis directions are given in this order:
+        <ul>
+          <li>Y = the line D1 (along z)</li>
+          <li>Z = the line D2 (in the xy plane)</li>
+          <li>X = the line&nbsp;D3 (in the xy plane)</li>
+        </ul>
+        <p>&nbsp;</td>
+    </tr>
+  </table>
+  <p>You can remark that this axis system is not orthogonal. So its internal
+  data are automatically modified (during the update operation) to be
+  orthonormal. The axis order determines the modifications:</p>
+  <table border="0" width="618">
+    <caption><i><a name="Fig.7c">Fig.7c</a>: The</i><i> </i>AS_Explicit Axis
+      System after Update</caption>
+    <tr>
+      <td width="310"><img border="0" src="images/CAAMmrAxisSystemCreatExpli2.jpg" width="310" height="212"></td>
+      <td valign="top" width="294">
+        <ul>
+          <li>The first axis is never modified, Y = D1&nbsp;</li>
+          <li>The second axis, Z, is orthogonal to Y, so it stays at the same
+            position</li>
+          <li>The third axis is modified to be Y and Z orthogonal</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <p>To be complete, the location of the newly axis system is the Point.7. This
+  point is initially in (-200,0,0). It is move to (-100,0,0).&nbsp;</p>
+  <table border="0">
+    <caption><i><a name="Fig.7d">Fig.7d</a>: The</i><i> </i>AS_Explicit Axis
+      System&nbsp;Internal Data</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrAxisSystemCreatMoreExplicit.jpg" width="514" height="194"></td>
+    </tr>
+  </table>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrAxisSystemCreation</h4>
+<p>To launch CAAMmrAxisSystemCreation , you will need to set up the build time
+environment, then compile CAAMmrAxisSystemCreation along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].
+To launch the use case execute the command:</p>
+<p>mkrun -c CAAMmrAxisSystemCreation InputPath [OutputPath]</p>
+<p>where</p>
+<ul>
+  <li><b>InpuPath : </b>The path of the <code>CAAAxisSystemCreation </code>Part
+    document included in the directory <code>CAAMechanicalModeler.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+    </ul>
+  </li>
+  <li><b>OutputPath : </b>The output path where the <code>CAAAxisSystemCreation_Save</code>
+    Part document will be saved. If this path is empty, the file will be saved
+    in the current directory</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrAxisSystemCreation Code</h4>
+<p>The CAAMmrAxisSystemCreation use case is made of several files located in the
+following modules of the CAAMechanicalModeler.edu framework (*)</p>
+<ul>
+  <li><b>CAAMmrAxisSystemCreation</b>.m
+    <ul>
+      <li>CAAMmrTestCreation.cpp (src) contains the main of the batch,</li>
+      <li>CAAMmrRetrieveCornerAndVectorsFromPad.h (LocalInterfaces) /
+        CAAMmrRetrieveCornerAndVectorsFromPad.cpp (src) contain the <i>CAAMmrRetrieveCornerAndVectorsFromPad</i>
+        global function which retrieves a corner and its three edges of a Pad
+        and featurizes them. This function is not completely described because
+        in most cases the BRep feature is obtained from a selection, and with
+        the <i>CATFeatureAgent or CATFeatureImportAgent</i> (DialogEngine FW)
+        agents you will have directly the BRep feature.</li>
+    </ul>
+  </li>
+  <li><b>CAAMmrUtilities</b>.m
+    <ul>
+      <li>CAAMmrGetGeometry.cpp contains the <i>CAAMmrGetGeometry</i> global
+        function which retrieves a feature in a Part document. The
+        CAAMmrGetGeometry.h is located in the ProtectedInterfaces directory of
+        CAAMechanicalModeler.edu&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p>(*)&nbsp;</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are height logical steps in CAAMmrAxisSystemCreation:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Retrieves the CATIMf3DAxisSystemFactory Interface Pointer">Retrieves
+    the CATIMf3DAxisSystemFactory Interface Pointer</a></li>
+  <li><a href="#Creates the AS_Standard axis system">Creates the AS_Standard
+    Axis System&nbsp;</a></li>
+  <li><a href="#Creates the AS_AxisRotation axis system">Creates the
+    AS_AxisRotation Axis System</a>&nbsp;</li>
+  <li><a href="#Creates the AS_EulerAngles  axis system">Creates the
+    AS_EulerAngles Axis System&nbsp;</a></li>
+  <li><a href="#Creates the AS_AxisStandardOriAxisDir axis system">Creates the
+    AS_AxisStandardOriAxisDir Axis System</a>&nbsp;</li>
+  <li><a href="#Creates the AS_Explicit axis system">Creates the AS_Explicit
+    Axis System&nbsp;</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>CAAMmrAxisSystemCreation begins by creating a session, and opening the input
+Part document. Next it retrieves the root container of this Part as a pointer to
+<i>CATIPrtContainer</i>, <code>pIPrtContOnDocument</code> . This is the usual
+sequence for loading a Part document [<a href="#References">2</a>].</p>
+<p>Thanks to&nbsp; the <code>GetPart</code> method on the root container we
+retrieve the Mechanical Part. This part is handled by the smart pointer <code>spSpecObjectOnPart</code>.&nbsp;This
+pointer will be useful to search specifications in the document.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieves the CATIMf3DAxisSystemFactory Interface Pointer"></a>Retrieves
+the CATIMf3DAxisSystemFactory Interface Pointer</h4>
+<p>The <i>CATIMf3DAxisSystemFactory </i>interface is implemented by the root
+container, <code>pIPrtContOnDocument,</code> which is also the specification
+container of the Part document [<a href="#References">3</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIMf3DAxisSystemFactory</b> * pIMf3DAxisSystemFactoryOnFeatCont = NULL ;
+  rc = pIPrtContOnDocument-&gt;QueryInterface(IID_CATIMf3DAxisSystemFactory,
+                                      (void **) &amp; pIMf3DAxisSystemFactoryOnFeatCont);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates the AS_Standard axis system"></a>Creates the AS_Standard
+Axis System</h4>
+<p>The axis system is created by the <i>CATIMf3DAxisSystemFactory </i>interface.
+The method's creation with one point and two vectors has been chosen.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathPoint <b>Origin</b> (150.0,.0,.0);
+  CATMathVector X (1.0,.0,.0);
+  CATMathVector Y (0.0,1.0,.0);
+
+  <b>CATIMf3DAxisSystem</b>_var NewAxisSystemStd ;
+  rc = pIMf3DAxisSystemFactoryOnFeatCont-&gt;<b>CreateAxisSystem</b>(<b>Origin</b>,X,Y,NewAxisSystemStd);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIMf3DAxisSystemFactoryOnFeatCont</code> is the <i>CATIMf3DAxisSystemFactory
+</i>interface pointer on the specification container. <code>NewAxisSystemStd</code>
+is the newly axis system. The origin is located in (150,0,0) in the absolute
+axis system. The <code>X,Y</code>&nbsp; values are not important since the axis
+directions will be redefined further after.</p>
+<p>Then, <code>Pad.1</code> is retrieved from the Part document thanks to the <i>CAAMmrGetGeometry</i>
+global function. Its contents being not essential for the use case, the code is
+not detailed here; refer to the source file otherwise.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATBaseUnknown * pPad = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;Pad.1&quot;,&amp;pPad);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spSpecObjectOnPart</code> is the smart pointer on the Mechanical Part,
+see the <a href="#Prolog">prolog</a> section, and <code>pPad</code> is a <i>CATBaseUnknown</i>
+pointer on <code>Pad.1</code>.<code> </code>Thanks to this pointer the <i>CAAMmrRetrieveCornerAndVectorsFromPad
+</i>global function retrieves two edges coming from the same corner.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATBaseUnknown *pCorner  = NULL;
+  CATBaseUnknown *pVectorX = NULL;
+  CATBaseUnknown *pVectorY = NULL;
+  CATBaseUnknown *pVectorZ = NULL;
+  rc=::<b>CAAMmrRetrieveCornerAndVectorsFromPad</b>(pPad,&amp;pVectorX,&amp;pVectorY);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The output arguments of this function <code>pVectorX</code> and <code>pVectorY</code>
+are not cells but the featurization (a BRep feature) of these cells. Here just
+an extract of the global function which explains how to go from a cell to a BRep
+feature.&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ <b>CATIGeometricalElement</b>_var FeatureResultGeomElt = FeatureResult ;
+ CATCell_var spEdgeCell = ListEdgeCorner[1] ;
+ C<b>ATIBRepAccess</b>_var BRepEdge1 = <b>CATBRepDecode</b>(spEdgeCell,FeatureResultGeomElt);
+                   
+ <b>CATISpecObject_var</b> MFEdge1Cell = FCell-&gt;<b>FeaturizeF</b>();
+ MFEdge1Cell-&gt;QueryInterface(IID_CATBaseUnknown,(void**) &amp;(*oVectorX));                                      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>FeatureResult</code> is the feature for which the associated
+topological result (a <i>CATBody</i>) contains the two edges (<code>ListEdgeCorner</code>).
+<code>BRepEdge1</code> is the BRep object of the edge obtained with the <code>CATBRepDecode</code>
+global function. This object is featurized thanks to the <i>CATIFeaturize</i>
+interface. The <code>FeaturizeF</code> method is used because a functional
+featurization is sufficient. <code>oVectorX</code> is a <i>CATBaseUnknown</i>
+pointer, the first output argument of the global function.&nbsp;</p>
+<p><img border="0" src="../CAAIcons/images/information.gif" width="31" height="30">For
+all BRep features, used to define the origin or an axis direction, a <b>functional</b>
+featurization is sufficient.&nbsp;</p>
+<p>Now, that the Brep features are created, the axis directions can be defined.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemStd-&gt;<b>SetAxisDirection</b>(<b>CATAxisSystemXNumber</b>, pVectorX);
+  NewAxisSystemStd-&gt;SetAxisDirection(<b>CATAxisSystemYNumber</b>, pVectorY);                                             
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetAxisDirection </code>method is used for the X (<code>CATAxisSystemXNumber</code>)
+and Y (<code>CATAxisSystemYNumber</code>) axis directions. The third is not
+specified, it will be automatically computed to have an right-handed axis
+system.&nbsp;</p>
+<p>After an update, not described here, you can see the result in the picture <a href="#Fig.3c">Fig.3c</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creates the AS_AxisRotation axis system"></a>Creates the
+AS_AxisRotation Axis System</h4>
+<p>The axis system is created by the <i>CATIMf3DAxisSystemFactory </i>interface.
+The method's creation with a mathematical axis system has been chosen.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATMathAxis</b> MathAxis ;
+  CATIMf3DAxisSystem_var NewAxisSystemRot;
+  rc = pIMf3DAxisSystemFactoryOnFeatCont-&gt;<b>CreateAxisSystem</b>(MathAxis,NewAxisSystemRot);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIMf3DAxisSystemFactoryOnFeatCont</code> is the <i>CATIMf3DAxisSystemFactory
+</i>interface pointer on the specification container. <code>NewAxisSystemRot</code>
+is the newly axis system. <code>MathAxis</code> is without importance since the
+axis directions and the origin will be redefined further after.</p>
+<p>Then, the specifications ( D1, D2 and Point.5)&nbsp; are retrieved from the
+Part document thanks to the <i>CAAMmrGetGeometry</i> global function. Its
+contents being not essential for the use case, the code is not detailed here;
+refer to the source file otherwise.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATBaseUnknown * pPoint5 = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;Point.5&quot;,&amp;pPoint5);
+
+  CATBaseUnknown * pLineD1 = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;D1&quot;,&amp;pLineD1);
+
+  CATBaseUnknown * pLineD2 = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;D2&quot;,&amp;pLineD2);
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spSpecObjectOnPart</code> is the smart pointer on the Mechanical Part,
+see the <a href="#Prolog">prolog</a> section, and <code>pPoint5, pLineD1 </code>and<code>
+pLineD2</code>&nbsp; are <i>CATBaseUnknown</i> pointers on <code>Point.5</code>,
+<code>D1 </code>and<code> D2 </code>respectively.</p>
+<p>First, the origin of the axis system is defined:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetOriginPoint</b>(pPoint5);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, the <code>SetAxisSystemType</code> method applied to <code>NewAxisSystemRot,</code>
+the <i>CATIMf3DAxisSystem</i> interface pointer on the newly axis system,
+enables you to switch this axis system from a standard (default) to an axis
+rotation axis system.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetAxisSystemType</b>(CATAxisSystemAxisRotation);                                           
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Before to affect the axis directions, it is important to &quot;deselect&quot;
+<b>all</b> the axis directions. With the <code>SetAxisType</code> method and the
+<code>CATAxisSystemSameDirection</code> value as argument it is done. The <code>GetAxisDirection</code>
+method should also return NULL_var, it is the case here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetAxisType</b>(<b>CATAxisSystemXNumber</b>,<b>CATAxisSystemSameDirection</b>);
+  NewAxisSystemRot-&gt;SetAxisType(<b>CATAxisSystemYNumber</b>,CATAxisSystemSameDirection);
+  NewAxisSystemRot-&gt;SetAxisType(<b>CATAxisSystemZNumber</b>,CATAxisSystemSameDirection); 
+                                       
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After this &quot;deselection&quot;, the <code>SetAxisDirection</code> call
+order defines the axes order.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetAxisDirection</b>(<b>CATAxisSystemYNumber</b>,pLineD1);                                       
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Y axis (<code>CATAxisSystemYNumber</code><b>) </b>is defined with the
+line D1 (pLineD1).&nbsp; It is the first axis direction, so it defines the axis
+of rotation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetAxisRotationReference</b>(pLineD2);                                   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The line D2 (pLineD2) is defined as the reference of the rotation. It is the
+second axis direction.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATICkeParm_var RotationParm ;
+  NewAxisSystemRot-&gt;<b>GetAxisRotationParm</b>(RotationParm);
+  if ( NULL_var != RotationParm )
+  {
+     // The valuate method is in MKS 
+     RotationParm-&gt;<b>Valuate</b>(CATPI/2); //                                  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, the rotation from the line D2 about D1 is defined. The value of the <code>Valuate</code>
+method must be expressed in MKS.</p>
+<p>After an update, not described here, you can see the result in the picture <a href="#Fig.4d">Fig.4d</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creates the AS_EulerAngles  axis system"></a>Creates the
+AS_EulerAngles&nbsp; Axis System</h4>
+<p>The axis system is created by the <i>CATIMf3DAxisSystemFactory </i>interface.
+The method's creation with the mathematical axis system has been chosen.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathAxis MathAxisEuler ;
+  CATMathPoint OriginEuler (.0,200.0,.0);
+  MathAxisEuler.SetOrigin(OriginEuler);
+
+  CATIMf3DAxisSystem_var NewAxisSystemEuler;
+  rc = pIMf3DAxisSystemFactoryOnFeatCont-&gt;<b>CreateAxisSystem</b>(MathAxisEuler,
+                                             NewAxisSystemEuler);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIMf3DAxisSystemFactoryOnFeatCont</code> is the <i>CATIMf3DAxisSystemFactory
+</i>interface pointer on the specification container. <code>NewAxisSystemEuler</code>
+is the newly axis system. Its origin is located on the axis y.&nbsp;</p>
+<p>Then, the <code>SetAxisSystemType</code> method applied to <code>NewAxisSystemEuler,</code>
+the <i>CATIMf3DAxisSystem</i> interface pointer on the newly axis system,
+enables you to switch this axis system from a standard (default) to an Euler
+axis system.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemRot-&gt;<b>SetAxisSystemType</b>(CATAxisSystemEulerAngles);                                           
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetEulerAnglesParm</code> method enables you to retrieve the
+knowledge parameters corresponding to the three angles. The angles must be
+expressed in MKS.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATICkeParm_var EulerAngles[3] ;
+  NewAxisSystemEuler-&gt;<b>GetEulerAnglesParm</b>(EulerAngles);
+  if ( (NULL_var != EulerAngles[0]) &amp;&amp; (NULL_var != EulerAngles[1]) &amp;&amp;
+       (NULL_var != EulerAngles[2]) )
+  {
+     <b>EulerAngles[0]-&gt;Valuate(CATPI/2);  
+     EulerAngles[1]-&gt;Valuate(CATPI/2);  
+     EulerAngles[2]-&gt;Valuate(CATPI/2);  </b>                                      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After an update, not described here, you can see the result in the picture <a href="#Fig.5c">Fig.5c</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creates the AS_AxisStandardOriAxisDir axis system"></a>Creates the
+AS_AxisStandardOriAxisDir Axis System</h4>
+<p>This axis system is created from the <a href="#Creates the AS_Standard axis system">AS_Standard</a>
+axis system.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIMf3DAxisSystem_var NewAxisSystemCopyConst;
+  rc = pIMf3DAxisSystemFactoryOnFeatCont-&gt;<b>CreateAxisSystem</b>(NewAxisSystemStd,
+                                                           NewAxisSystemCopyConst);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIMf3DAxisSystemFactoryOnFeatCont</code> is the <i>CATIMf3DAxisSystemFactory
+</i>interface pointer on the specification container. <code>NewAxisSystemStd</code>
+is the axis system to copy and <code>NewAxisSystemCopyConst</code> is the newly
+axis system.&nbsp;</p>
+<p>This newly axis system should be located at the axis direction's origin. To
+do that, transform the type of the point to be <code>CATAxisSystemPoint </code>(origin
+defined by geometry) and set no geometry.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemCopyConst-&gt;<b>SetOriginType</b>(CATAxisSystemPoint);
+  NewAxisSystemCopyConst-&gt;<b>SetOriginPoint</b>(NULL_var);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After an update, not described here, you can see the result in the picture <a href="#Fig.6">Fig.6</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creates the AS_Explicit axis system"></a>Creates the AS_Explicit
+Axis System</h4>
+<p>The last axis system is first a standard axis system defined such as:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIMf3DAxisSystem_var NewAxisSystemExplicit;
+  CATMathAxis MathAxisExplicit ;
+  rc = pIMf3DAxisSystemFactoryOnFeatCont-&gt;<b>CreateAxisSystem</b>(MathAxisExplicit,
+                                                           NewAxisSystemExplicit);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIMf3DAxisSystemFactoryOnFeatCont</code> is the <i>CATIMf3DAxisSystemFactory
+</i>interface pointer on the specification container. <code>NewAxisSystemExplicit</code>
+is the newly axis system.&nbsp;</p>
+<p>Then, the specifications (Point.7 and D3)&nbsp; are retrieved from the Part
+document thanks to the <i>CAAMmrGetGeometry</i> global function. Its contents
+being not essential for the use case, the code is not detailed here; refer to
+the source file otherwise.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATBaseUnknown * pPoint7 = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;Point.7&quot;,&amp;pPoint7);
+  CATBaseUnknown * pLineD3 = NULL ;
+  rc = ::<b>CAAMmrGetGeometry</b>(spSpecObjectOnPart,&quot;D3&quot;,&amp;pLineD3);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetOriginPoint</code> method enables you to set a geometry (the
+point Point.7) for the axis system's origin. This method transforms
+automatically the type of the origin to <code>CATAxisSystemPoint.&nbsp;</code></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemExplicit-&gt;<b>SetOriginPoint</b>(pPoint7);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Before to affect the axis directions, it is important to &quot;deselect&quot;
+<b>all</b> the axis directions. With the <code>SetAxisType</code> method and the
+<code>CATAxisSystemSameDirection</code> value as argument it is done. The <code>GetAxisDirection</code>
+method should also return NULL_var, it is the case here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemExplicit-&gt;<b>SetAxisType</b>(<b>CATAxisSystemXNumber</b>,<b>CATAxisSystemSameDirection</b>);
+  NewAxisSystemExplicit-&gt;SetAxisType(<b>CATAxisSystemYNumber</b>,CATAxisSystemSameDirection);
+  NewAxisSystemExplicit-&gt;SetAxisType(<b>CATAxisSystemZNumber</b>,CATAxisSystemSameDirection);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, each axis direction is valuated with a geometry ( a line ). The <code>SetAxisDirection</code><b>
+</b>call's order is important: In this case, the Y axis (<code>CATAxisSystemYNumber</code>)
+is the first, the Z axis (<code>CATAxisSystemZNumber</code><b>) </b>is the
+second, and X is the third. See <a href="#Fig.7b">Fig.7b</a> and <a href="#Fig.7c">Fig.7c</a>
+for the role of the axe's order.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemExplicit-&gt;<b>SetAxisDirection</b>(<b>CATAxisSystemYNumber</b>,pLineD1);
+  NewAxisSystemExplicit-&gt;SetAxisDirection(<b>CATAxisSystemZNumber</b>,pLineD2);
+  NewAxisSystemExplicit-&gt;SetAxisDirection(<b>CATAxisSystemXNumber</b>,pLineD3);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Next, the Z axis is reversed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  NewAxisSystemExplicit-&gt;<b>SetAxisType</b>(CATAxisSystemZNumber,<b>CATAxisSystemOppositeDirection</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>At last, the position of the point Point.7 is changed.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIGSMPointCoord</b> *pGSMPointCoordOnP7 = NULL ;
+  rc = pPoint7-&gt;QueryInterface(IID_CATIGSMPointCoord,(void **) &amp;pGSMPointCoordOnP7);
+  if ( SUCCEEDED(rc) )
+  {
+     CATICkeParm_var Xnew,Ynew,Znew ;
+     pGSMPointCoordOnP7-&gt;<b>GetCoordinates</b>(Xnew,Ynew,Znew);
+     
+     Xnew-&gt;Valuate(-0.1); 
+     Ynew-&gt;Valuate(0.0); 
+     Znew-&gt;Valuate(0.0);
+    
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After an update, not described here, you can see the result in the picture <a href="#Fig.7d">Fig.7d</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The last actions of the use case are the following: save as the Part
+document, close it and delete the session. It is also described in the Loading a
+Document use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to create different axis systems.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      Structure of the Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Topological Journal: Creation and Validation (2)</title>
+<style type="text/css">
+.style1 {
+				color: #FF7900;
+				text-decoration: underline;
+}
+.style3 {
+				color: #FF7900;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Topological Journal: Creation and Validation (2)</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>If you create your own operator, you have generally to create also 
+		the associated topological journal. The journal plays a prominent role 
+		in the naming mechanism which is used by applications to differentiate 
+		cells.&nbsp; Any user journal is to be checked by the appropriate tool. </p>
+		<p>This use case creates and validates a journal. The created journal is 
+		valid and applications in need for journal data will successfully use 
+		it. However the journal contains an order which is ignored. In other 
+		words, it is not clean. It is recommended to discard such order from 
+		your journals.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To check the validity of a topological journal, you can use the 
+CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation 
+function, the operator has to be created by using the provided constructor.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsCheckGnOK.m module in CAAGMOperatorsInterfaces.edu 
+creates a new journal which is valid. This use case 
+creates its input topological data. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnOK is to 
+be launched with three arguments: </p>
+<code>CAAGMOperatorsCheckGnOK outputfile.NCGM verdictFile.NCGM DetailedErrorFile.NCGM</code>
+<p>With the input and output cells below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Journal Checking: Boolean Intersection</caption>
+   <tr>
+    <td>
+	<img alt="Journal Checking: Boolean Operation" src="images/CGM_journal_checking_2.png" width="250" height="220"></td>
+    <td>
+	<img alt="Journal Checking: Boolean Result" src="images/CGM_journal_checking_3.png" width="250" height="220"></td>
+    </tr>
+    <tr>
+    <td>
+	Input Bodies</td>
+    <td>
+	Output Solid</td>
+    </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATCGMJournalList* pJournalNew = new CATCGMJournalList(pConfig,NULL);
+...
+// Prism creation
+...
+// Creation of a new journal
+// NOTE: edgeList[1] is not backtracked
+// the order below will be ignored by the checker
+pJournalNew->ReportCreation( NULL, edgeList[1], new CATCGMJournalInfo(1));
+pJournalNew->ReportCreation( NULL, faceList[1], new CATCGMJournalInfo(6));
+pJournalNew->ReportCreation( NULL, faceList[2], new CATCGMJournalInfo(1));
+pJournalNew->ReportCreation( NULL, faceList[3], new CATCGMJournalInfo(2));
+pJournalNew->ReportCreation( NULL, faceList[4], new CATCGMJournalInfo(3));
+pJournalNew->ReportCreation( NULL, faceList[5], new CATCGMJournalInfo(4));
+pJournalNew->ReportCreation( NULL, faceList[6], new CATCGMJournalInfo(5));
+...
+// Tass and Dump the New journal
+pJournalNew->Tass();
+CAAGMTopDumpJournal(pJournalNew);
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result on the standard output:</p>
+<pre>
+[ ]->Creation[Edge_257] Info = 1
+[ ]->Creation[Face_301] Info = 6
+[ ]->Creation[Face_115] Info = 1
+[ ]->Creation[Face_323] Info = 2
+[ ]->Creation[Face_319] Info = 3
+[ ]->Creation[Face_317] Info = 4
+[ ]->Creation[Face_313] Info = 5
+</pre>
+<p>The code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+ofstream verdictFile(pFileName1, ios::binary ) ;
+ofstream warningFile(pFileName2, ios::binary ) ;
+CATUnicodeString mafeat("MyFeature");
+CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(pJournalNew,
+        piPrismBody,
+        &mafeat,
+        &verdictFile, &warningFile, TRUE);
+reportCheck-&gt;CAAAddInputBody(pBody1, CAATopCheckNoCopy);
+reportCheck-&gt;CAAAddInputBody(pBody2, CAATopCheckNoCopy);
+int checkReturn = reportCheck->CAACheck();
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>checks the created journal and generates two output .htm files containing information on the journal.
+<p>
+<strong>Step 1 -</strong>
+Open the first file, you can read something like this. The journal is valid:
+<pre>
+(1) - Mandatory Checking that all cells in result body can be traced back OK 
+(2) - Checking that all reported cells are of CATFace/CATEdge/CATVertex type OK
+(3) - Checking that all reported cells are bording cells (rule not fulfilled) 
+(4) - Checking that cells with same parents &amp; infos are not of different type OK
+TOPOLOGICAL JOURNAL FOR FEATURE MyFeature OK 
+</pre>
+<p>
+The journal is valid. However, rule (3) is not fulfilled because Edge_257 is 
+not to be reported (it is not a bording cell).
+<p>
+<strong>Step 2 -</strong>
+Open the second .htm file for more information. You can read something like 
+this:<pre>
+* </pre>
+<pre>
+...
+* 
+WARNING
+[ ]->Creation[Edge_257] Info=1
+257 is not a bording cell - The order is ignored
+* 
+
+WARNING
+The following cells are not bording cells:
+257 
+
+</pre>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+					<tr>
+		<td>[6]</td>
+		<td>
+		<a href="CAACgmTaTopJournal.htm">T<span class="style3">opological 
+		Journal: Principles</span></a></td>
+	</tr>
+	<tr>
+		<td>[7]</td>
+		<td class="style1">
+		<a href="CAACgmTaTopJournalMethodology.htm">Topological Journal: 
+		Methodology</a></td>
+	</tr>
+	<tr>
+		<td>[8]</td>
+		<td class="style1">
+		<a href="CAACgmUcTopJournal.htm">Using the Topological Journal</a></td>
+					</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

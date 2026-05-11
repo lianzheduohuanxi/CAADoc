@@ -1,0 +1,14 @@
+# COPYRIGHT DASSAULT SYSTEMES  2000
+
+#
+# LOAD MODULE 
+#
+BUILT_OBJECT_TYPE=LOAD MODULE
+PROGRAM_NAME = CAALifValuatorMain   
+
+#
+LINK_WITH =	CAALifBasis\
+			CATObjectSpecsModeler\
+			CATObjectModelerBase \
+			JS0GROUP JS0FM Collections  \
+            KnowledgeItf

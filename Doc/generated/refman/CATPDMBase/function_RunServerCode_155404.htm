@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATPDMBase Global Function RunServerCode</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATPDMBase.htm" href="../CATPDMBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATPDMBase";	}
+		function getCurrentObjectName() { 
+ 	return "RunServerCode"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATPDMBase Global Function RunServerCode</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('HRESULT',' HRESULT')</script>  <b>RunServerCode</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCmdName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATVariant','CATVariant&amp;')</script> <td><tt>iInput</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATVariant','CATVariant&amp;')</script> <td><tt>oOutput</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Enable the execution of command on ENOVIA V5 server.
+
+<br><b>Role:</b>This method enables customized code written in CATIA to exercise customized 
+ code written in the ENOVIA V5 server.
+<p> 
+<br>Interop infrastructure does the marshalling of input and output arguments between the 2 process.
+<br>Interop does the adequate RPC call in ENOVIA by instanciating the requested late type and
+  calling it on ENOVIUERunInteropServerCode::RunServerCode.
+
+<p>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCmdName<p></tt>
+   <dd> 
+  Three pre-defined commands are available:
+  <ul> 
+   <li><b>"EnovTransferToOwner"</b>: allows transfer ownership of a part to a given user.
+    <br>
+                The <tt>iInput</tt> argument must be a CATVariant containing a CATSafeArray with:
+                 <ul>
+                    <li>the part number value of the part.
+                    <li>the value of user that we want to transfer ownership of part.
+                    <li>the value of V_Organisation attribute for the new owner.
+                    <li>the value of V_Role attribute  for the new owner.
+                    <li>the value of V_Project attribute for the new owner.
+                 </ul>
+                In fact if we change the owner of a given part we need update the role, 
+               the organisation and the project value for the new owner of part.
+   </li>               
+<p>
+
+   <li><b>"EnovPromoteToFinalState"</b>: allows the promote of a given part.
+       <br>The <tt>iInput</tt> argument must contain the part number of the part to promote to final state.
+           The change will be committed only if the action succeeds.
+   </li>
+<p>
+   <li><b>"EnovPartAttribute"</b>: allows valuate the attributes on a created part.
+       <br>The <tt>iInput</tt> argument must contain the part number of the part whose attribute must be set by ENOVIA server code.
+       <br>The default implementation does nothing on attribute. this is a sample that explains how to modify 
+             ENOVIA attributes.
+   </li>
+  </ul>
+<p>
+    <tt>iCmdName</tt> is the Late type on server side containing the customized code. 
+   We provide for this above late type one default implementation for the last part version in ENOVIA Server.
+<br>
+    The late type <tt>iCmdName</tt> should implement the interface <b>ENOVIUERunInteropServerCode</b>.
+<p>  
+    The customization developer is in charge of writting customized code in ENOVIA LCA, 
+    the code in ENOVIA being developped
+    as a late type implementing the interface ENOVIUERunInteropServerCode.  
+<p>
+    User implementing such commands must avoid use services that set values on the server side.
+    Such services may not be compatible with ENOVIA native process.
+</p>
+
+  </dd>
+    <dt><tt> iInput</tt>
+   <dd>    Input information for <tt>iCmdName</tt> command.
+<br>It is marshalled to the server and passed in as input to the customized code on server side.
+ 
+  </dd>
+    <dt><tt> oOutput</tt>
+   <dd>     Information returned by customized code on server side.
+<br>It is marashalled back to CATIA and returned to the caller of this method.
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     <ul>
+     <li><tt>S_OK</tt>: command successfully executed on server</li> 
+     <li><tt>E_FAIL</tt>: The method has failed. Possible reasons of error are: 
+       <ul>
+        <li>Invalid argument</li> 
+        <li>Connection to ENOVIA V5 database doesn't exist</li>
+       </ul>
+      </li>
+  </ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPDMInteropServices.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

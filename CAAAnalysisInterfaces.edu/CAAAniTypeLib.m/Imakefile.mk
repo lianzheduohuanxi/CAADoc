@@ -1,0 +1,5 @@
+BUILT_OBJECT_TYPE = TYPELIB
+#
+LINK_WITH = InfTypeLib CATAnalysisTypLib 
+
+

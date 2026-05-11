@@ -1,0 +1,128 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddMidDist_MidDist.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create members.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Product document Product1.CATProduct located in</font>
+<font color="#008000">'                CAASddUseCases/samples/StandardOpening should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R20</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R20</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+<font color="#0000FF">  Dim </font>documents1<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">  Set </font>documents1 = CATIA.Documents
+<font color="#0000FF">  Dim </font>PartDocument1<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">  Set </font>PartDocument1 = documents1.Item("Design_Unit_002.CATPart")
+<font color="#0000FF">  dim </font>Part1<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>Part1 = PartDocument1.Part
+<font color="#0000FF">  Dim </font>plate<font color="#0000FF"> As </font>SuperPlate
+<font color="#0000FF">  Set </font>plate = Part1.FindObjectByName("Deck_002")
+<font color="#0000FF">  Dim </font>plateref<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>plateref = Part1.CreateReferenceFromObject(plate)
+<font color="#0000FF">  Dim </font>Factory<font color="#0000FF"> As </font>SfmFunctionFactory
+<font color="#0000FF">  Set </font>Factory = Part1.GetCustomerFactory("SfmFunctionFactory")
+
+<font color="#0000FF">  Dim </font>ObjSfmContourMgr<font color="#0000FF"> As </font>SfmOpeningContoursMgr
+<font color="#0000FF">  Set </font>ObjSfmContourMgr = Factory.GetOpeningMgr(Part1, "SfmOpeningContoursMgr")
+ 
+<font color="#0000FF">  Dim </font>ObjSfmPosStrategyMgr<font color="#0000FF"> As </font>SfmPositioningStrategyManager
+<font color="#0000FF">  Set </font>ObjSfmPosStrategyMgr = Factory.GetOpeningMgr(Part1, "SfmPositioningStrategyManager")
+
+  <font color="#008000">'Define The Contour</font>
+
+<font color="#0000FF">  Dim </font>oListContourNames()<font color="#0000FF"> As </font>Variant
+  ObjSfmContourMgr.GetAvailableStdOpeningContours oListContourNames
+
+<font color="#0000FF">  Dim </font>NbOfContour<font color="#0000FF"> As </font>Long
+  NbOfContour = UBound(oListContourNames)
+
+  <font color="#008000">'Display List of contours</font>
+<font color="#0000FF">  Dim </font>i<font color="#0000FF"> As </font>Integer
+  <font color="#008000">'For i = 0 To NbOfContour</font>
+    <font color="#008000">'MsgBox oListContourNames(i)</font>
+  <font color="#008000">'Next</font>
+
+  <font color="#008000">'Set the Required Contour and Set it's Contour Parameters</font>
+<font color="#0000FF">  Dim </font>oListCkeParms<font color="#0000FF"> As </font>SfmStandardContourParameters
+<font color="#0000FF">  Set </font>oListCkeParms = ObjSfmContourMgr.GetStdOpeningContourParams("Sfm_Rect")
+
+<font color="#0000FF">  Dim </font>NbOfParam<font color="#0000FF"> As </font>Long
+  NbOfParam = oListCkeParms.Count
+
+<font color="#0000FF">  Dim </font>ContourParam<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">  Dim </font>ContourParamName<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>NbOfParam
+<font color="#0000FF">    Set </font>ContourParam = oListCkeParms.Item(i)
+    ContourParamName = oListCkeParms.Item(i).Name
+    <font color="#008000">'MsgBox ContourParamName</font>
+
+<font color="#0000FF">    If </font>ContourParamName = "Sfm_Width" Then
+      ContourParam.ValuateFromString ("1000mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    If </font>ContourParamName = "Sfm_Height" Then
+      ContourParam.ValuateFromString ("2000mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    If </font>ContourParamName = "Sfm_CornerRadius" Then
+      ContourParam.ValuateFromString ("10mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+  <font color="#008000">'Define The Postition Strategy</font>
+<font color="#0000FF">  Dim </font>PositionStrategyParms<font color="#0000FF"> As </font>SfmStandardPosStrategyParameters
+<font color="#0000FF">  Set </font>PositionStrategyParms = ObjSfmPosStrategyMgr.GetPositioningStrategyParams("CATSfmPosMidDistMidDist")
+
+  <font color="#008000">'Prepare a List of U & V Reference</font>
+<font color="#0000FF">  Dim </font>UrefList<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Dim </font>Uref1, Uref2, Uref3, Uref4<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>Uref1 = Part1.FindObjectByName("CROSS.95")
+<font color="#0000FF">  Set </font>Uref2 = Part1.FindObjectByName("CROSS.50")
+<font color="#0000FF">  Set </font>Uref3 = Part1.FindObjectByName("CROSS.25")
+<font color="#0000FF">  Set </font>Uref4 = Part1.FindObjectByName("CROSS.40")
+<font color="#0000FF">  Set </font>UrefList = Factory.SfmReferences
+  UrefList.Add Uref1
+  UrefList.Add Uref2
+  UrefList.Add Uref3
+  UrefList.Add Uref4
+
+<font color="#0000FF">  Dim </font>VrefList<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Dim </font>Vref1, Vref2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>Vref1 = Part1.FindObjectByName("LONG.0")
+<font color="#0000FF">  Set </font>Vref2 = Part1.FindObjectByName("LONG.10")
+<font color="#0000FF">  Set </font>VrefList = Factory.SfmReferences
+  VrefList.Add Vref1
+  VrefList.Add Vref2
+ 
+<font color="#0000FF">  Dim </font>NbofURef<font color="#0000FF"> As </font>Long
+  NbofURef = UrefList.Count
+ 
+<font color="#0000FF">  Dim </font>NbofVRef<font color="#0000FF"> As </font>Long
+  NbofVRef = VrefList.Count
+
+<font color="#0000FF">  Dim </font>StdOpening<font color="#0000FF"> As </font>SfmStandardOpening
+
+<font color="#0000FF">  Dim </font>URefLis<font color="#0000FF">tint</font><font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Set </font>URefLis<font color="#0000FF">tint</font> = Factory.SfmReferences
+
+<font color="#0000FF">  Dim </font>nUrefCnt<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>nUrefCnt = 1<font color="#0000FF"> To </font>NbofURef Step 2
+<font color="#0000FF">    If </font>(nUrefCnt + 1) &lt;= NbofURef<font color="#0000FF"> Then</font>
+      URefLis<font color="#0000FF">tint</font>.Add UrefList.Item(nUrefCnt)
+      URefLis<font color="#0000FF">tint</font>.Add UrefList.Item(nUrefCnt + 1)
+      PositionStrategyParms.SetPosParamData "CATSfmPosMidDistMidDist", 20, URefListint, 1, VrefList, 2
+<font color="#0000FF">      Set </font>StdOpening = Factory.CreateStandardOpening("FunctionalOpening", "Sfm_Rect", oListCkeParms, "CATSfmPosMidDistMidDist", PositionStrategyParms, plateref)
+      URefLis<font color="#0000FF">tint</font>.ClearList
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+  Part1.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

@@ -1,0 +1,606 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Subscribing Automatically to Login Session Events</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Subscribing Automatically to Login Session Events</h3>
+      <i>Working with events and subscribers</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVpiAutomaticSubscription2 use case, which
+      is a particular case of the CAAVpiAutomaticSubscription use case. Indeed,
+      this use case explains how to subscribe automatically to events raised by
+      the Login Session itself, via the ENOVIEventPlugin interface. Note that
+      those events cannot be subscribed to in the method Init of the plug-in,
+      since the Login Session object is not accessible at that time. Only a
+      subscription to event CreateLoginSession step After is allowed there. The
+      main purpose of this use case is hence to show how you can do it.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiAutomaticSubscription2 Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiAutomaticSubscription2 Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiAutomaticSubscription2</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiAutomaticSubscription2
+            Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you the recommanded method to be used to
+automatically subscribe to the events raised by the Login Session itself. It
+also shows how to implement the dedicated callback interfaces to handle these
+events when they are raised.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiAutomaticSubscription2 Use Case</h3>
+<p>CAAVpiAutomaticSubscription2 is a use case of the CAAVPMInterfaces.edu
+framework that illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiAutomaticSubscription2 Do</h4>
+<p>The CAAVpiAutomaticSubscription2 use case processes to a subscription at the
+opening of the Login Session through the dedicated plug-in functionality
+illustrated by the CAAVpiAutomaticSubscription use case. The subscription is
+done on the step After of the event CreateLoginSession. Then in the associated
+callback interface, a second subscription is done on the steps Before and After
+of the event SaveLoginSession. Finally, the main program raises the event that
+has been subscribed to and the corresponding subscriber is called back.</p>
+<p>The CAAVpiAutomaticSubscription2 use case is related to the
+CAAVpiEventObjects.m module where the following classes are defined:</p>
+<ul>
+  <li>CAAVpiListenAndSubscribe: the object that implements the callback
+    interface ENOVISessionEvent, which is called whenever any corresponding
+    event is raised, i.e. CreateLoginSession and SaveLoginSession.</li>
+  <li>CAAVpiPlugin4Subscribing2Session: the object that implements
+    ENOVIEventPlugin and so does the subscription to the step After of the
+    CreateLoginSession event.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiAutomaticSubscription2</h4>
+<p>To launch CAAVpiAutomaticSubscription2, you will need to set up the build
+time environment, then to compile CAAVpiAutomaticSubscription2 along with its
+prerequisites, to set up the run time environment, and then to execute the use
+case [<a href="#References">1</a>].</p>
+Launch the use case as follows:
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiAutomaticSubscription2</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiAutomaticSubscription2</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiAutomaticSubscription2 Code</h4>
+<p>The CAAVpiAutomaticSubscription2 use case is made of a main named
+CAAVpiAutomaticSubscription2.cpp located in the CAAVpiAutomaticSubscription2.m
+module and two classes named CAAVpiListenAndSubscribe and
+CAAVpiPlugin4Subscribing2Session located in the CAAVpiEventObjects.m module of
+the CAAVPMInterfaces.edu framework.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiAutomaticSubscription2.m\(main)</tt><br>
+      <tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiEventObjects.m\(plugin+listener
+      class)</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiAutomaticSubscription2.m/(main)</tt><br>
+      <tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiEventObjects.m/(plugin+listener
+      class)</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We can divide this use case in three distinct main parts:</p>
+<ol>
+  <li>Implementation of ENOVIEventPlugin in the class
+    CAAVpiPlugin4Subscribing2Session</li>
+  <li>Implementation of ENOVISessionEvent in the class CAAVpiListenAndSubscribe</li>
+  <li>Implementation of the main CAAVpiAutomaticSubscription2.cpp</li>
+</ol>
+<p>There are three main steps in the first part of the
+CAAVpiAutomaticSubscription2 Use Case: Implementation of ENOVIEventPlugin</p>
+<ol>
+  <li><a href="#CreateSubscriber">Create an instance of the class
+    CAAVpiListenAndSubscribe</a></li>
+  <li><a href="#Subscribe1">Subscribe to the step After of the event
+    CreateLoginSession</a></li>
+  <li><a href="#Resource">Create a resource file to declare this plug-in</a></li>
+</ol>
+<p>There are two main steps in the second part of the
+CAAVpiAutomaticSubscription2 Use Case: Implementation of ENOVISessionEvent</p>
+<ol>
+  <li><a href="#Subscribe2">Subscribe to the event SaveLoginSession in method
+    onAfterCreateLoginSession</a></li>
+  <li><a href="#CBImpl">Implement onBefore- and onAfterSaveLoginSession methods</a></li>
+</ol>
+<p>There are four main steps in the third part of the
+CAAVpiAutomaticSubscription2 Use Case:</p>
+<ol>
+  <li><a href="#CreateSession">Create a Session</a></li>
+  <li><a href="#CreateLoginSession">Create a Login Session</a></li>
+  <li><a href="#FireEvent">Save the Login Session</a></li>
+  <li><a href="#CloseSession">Close the Sessions</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSubscriber">Create an instance of the class
+CAAVpiListenAndSubscribe</a></h4>
+<p>In this use case, the automatic subscription is made through a plug-in
+functionality. To use this functionality the class
+CAAVpiPlugin4Subscribing2Session has to implement the ENOVIEventPlugin interface
+which declares a unique method : Init. Then, during the creation of the Login
+Session, each implementation of the ENOVIEventPlugin interface is called on the
+method Init where the code can carry out the subscription on event
+CreateLoginSession step After only.</p>
+<p>We first do some object modeler declarations:</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+// Object modeler declarations
+CATImplementClass( CAAVpiPlugin4Subscribing2Session, 
+                   DataExtension, 
+                   CATBaseUnknown, 
+                   T_CAAVpiPlugin4Subscribing2Session );
+#include &quot;TIE_ENOVIEventPlugin.h&quot;
+TIE_ENOVIEventPlugin( CAAVpiPlugin4Subscribing2Session );
+
+// Init implementation
+HRESULT CAAVpiPlugin4Subscribing2Session::Init( const ENOVIEventManager_var &amp;spEventManager )
+{
+	// code...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To finalize the implementation of the plug-in interface, we do not forget to
+complete the object modeler dictionary properly by adding the line:</p>
+<p><tt>T_CAAVpiPlugin4Subscribing2Session ENOVIEventPlugin libCAAVpiEventObjects</tt></p>
+<p>to the file CAAVPMInterfaces.edu.dic located in the directory
+CAAVPMInterfaces.edu/CNext/code/dictionary</p>
+<p>Then, the first step in the Init method is to create an instance of the
+subscriber. As soon as the subscriber is created, a query interface is carried
+out to retrieve the appropriate smart pointers the Subscribe method is waiting
+for.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // -----------------------------------
+    // --&gt; 1. Plugin Subscriber creation
+    // -----------------------------------
+    //
+    CAAVpiListenAndSubscribe* pCAAVpiListenAndSubscribe = new CAAVpiListenAndSubscribe();
+    //
+    ENOVISessionEvent* piENOVISessionEvent = NULL;
+    Rc = pCAAVpiListenAndSubscribe-&gt;QueryInterface( IID_ENOVISessionEvent, (void**)&amp; piENOVISessionEvent );
+    pCAAVpiListenAndSubscribe-&gt;Release();
+    pCAAVpiListenAndSubscribe = NULL;
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to get a handler on Plugin Subscriber&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin: Get a ENOVISessionEvent handler on Plugin Subscriber done &quot; &lt;&lt; endl;
+    //
+    CATBaseUnknown_var spPluginSubscriber = piENOVISessionEvent;
+    piENOVISessionEvent-&gt;Release();
+    piENOVISessionEvent = NULL;
+    if ( NULL_var == spPluginSubscriber )
+    {
+	cout&lt;&lt;&quot;Unable to get a handler on Plugin Subscriber&quot;&lt;&lt;endl;
+        return E_FAIL;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin: Get a CATBaseUnknown handler on Plugin Subscriber done &quot; &lt;&lt; endl;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Subscribe1"></a>Subscribe to the step After of the event
+CreateLoginSession</h4>
+<p>This step is the subscription itself thanks to the Event Manager. It is
+referred to as a type subscription since the argument for the publisher is the
+string VPMSession itself.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ----------------------------------------
+    // --&gt; 4. Subscribe on After Create Login Session event
+    //         EARLY MODE Subscription on type VPMSession
+    // ----------------------------------------
+    //
+    CATUnicodeString EventName ( &quot;CreateLoginSession&quot; );
+    CATUnicodeString EventPublisherType ( &quot;VPMSession&quot; );
+    unsigned long cookie = 0;
+    Rc = spEventManager-&gt;Subscribe( EventName, 
+                                       EventPublisherType, 
+                                       spPluginSubscriber, 
+                                       IID_ENOVISessionEvent, 
+                                       &amp;cookie, 
+                                       ENOVIEvent::EventFireAfter );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to subscribe on CreateLoginSession&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin: Subscribe on CreateLoginSession (after) done &quot; &lt;&lt; endl;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Resource"></a>Create a resource file to declare the plug-in</h4>
+<p>Finally the last step of this first part is to declare our plug-in
+implementation through the creation of a resource file. To do this, in the
+directory CAAVPMInterfaces.edu/CNext/resources/msgcatalog, a file named
+CAAVpiPluginList2.CATRsc has been created and just contains the line:</p>
+<pre>T_CAAVpiPlugin4Subscribing2Session = &quot;0&quot;;</pre>
+<p>which simply states that the late type <it>T_CAAVpiPlugin4Subscribing2Session</it> 
+ implements the ENOVIEventPlugin interface and has to be called during the Login
+Session creation.</p>
+<p>However, at runtime, a new step is also required to declare the resource file
+name to be looked for, i.e.</p>
+<pre>export VPM_PLUGIN_OBJECTS_LIST=CAAVpiPluginList2</pre>
+<p>This completes the first part of the CAAVpiAutomaticSubscription2 use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Subscribe2"></a>Subscribe to the event SaveLoginSession in method
+onAfterCreateLoginSession</h4>
+<p>Now begins the second part of this use case in which we will implement
+ENOVISessionEvent.</p>
+<p>The CAAVpiListenAndSubscribe class is an <b>early</b> subscriber that
+implements the callback interface ENOVISessionEvent since we are interested in
+Login Session events.</p>
+<p>We hence begin with object modeler declarations.</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+// Object modeler declarations
+CATImplementClass( CAAVpiListenAndSubscribe, Implementation, CATBaseUnknown, CATNull );
+#include &quot;TIE_ENOVISessionEvent.h&quot;
+TIE_ENOVISessionEvent( CAAVpiListenAndSubscribe );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To finalize the implementation of the callback interface, we do not forget to
+complete the object modeler dictionary properly by adding the line:<br>
+<tt>CAAVpiListenAndSubscribe ENOVISessionEvent libCAAVpiEventObjects</tt><br>
+to the file CAAVPMInterfaces.edu.dic located in the directory
+CAAVPMInterfaces.edu/CNext/code/dictionary.</p>
+<p>We can now implement the ENOVISessionEvent methods and first of all the
+method onAfterCreateLoginSession. We will be called back here at the end of the
+Login Session creation since we subscribed to this event via the plug-in. In
+this method we can subscribe to the event SaveLoginSession since the Login
+Session is now fully available.</p>
+<p>The subscription looks like the subscription shown in the first step above.
+However we have first to get the VPMSession, then the Login Session, and finally
+the Event Manager to do the subscription. Note that the subscriber instance is
+the instance of CAAVpiListenAndSubscribe itself (i.e. this).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    ENOVISessionEvent* piENOVISessionEvent = NULL;
+    Rc = QueryInterface( IID_ENOVISessionEvent, (void**)&amp; piENOVISessionEvent );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to get a handler on Plugin Subscriber&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout&lt;&lt;&quot;&gt;&gt;plugin listener: Get a ENOVISessionEvent handler on Plugin Subscriber done&quot;&lt;&lt;endl;
+    //    
+    CATBaseUnknown_var spPluginSubscriber = piENOVISessionEvent;
+    piENOVISessionEvent-&gt;Release();
+    piENOVISessionEvent = NULL;
+    if ( NULL_var == spPluginSubscriber )
+    {
+	cout&lt;&lt;&quot;Unable to get a handler on Plugin Subscriber&quot;&lt;&lt;endl;
+        return E_FAIL;
+    }
+    cout&lt;&lt;&quot;&gt;&gt;plugin listener: Get a CATBaseUnknown handler on Plugin Subscriber done&quot;&lt;&lt;endl;
+    //
+    // ----------------------------------------
+    // --&gt; 4. Subscribe on Save login Session event (before &amp; after)
+    //         EARLY MODE Subscription on instance of LoginSession
+    // ----------------------------------------
+    //
+    CATUnicodeString EventName ( &quot;SaveLoginSession&quot; );
+    CATIVpmLoginSession_var oLoginSession = NULL_var;
+    pSession-&gt;GetLoginSession( oLoginSession );
+    ENOVIPublisher_var spSessionPublisher = oLoginSession;
+    unsigned long cookie = 0;
+    Rc = spEventManager-&gt;Subscribe( EventName, 
+                                       spSessionPublisher, 
+                                       spPluginSubscriber, 
+                                       IID_ENOVISessionEvent, 
+                                       &amp;cookie, 
+                                       ENOVIEvent::EventFireBefore );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to subscribe on Save login Session&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Subscribe on Save login Session (before) done &quot; &lt;&lt; endl;
+
+    // Etc. Idem for step after
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CBImpl"></a>Implement onBefore- and onAfterSaveLoginSession methods</h4>
+<p>Finally we can implement the two methods related to the Save Login Session
+event in which we will be called back thanks to the above subscription. For
+example, a sample code will look like the following.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAVpiListenAndSubscribe::onBeforeSaveLoginSession(const ENOVIEvent_var&amp; iRaisedEvent, 
+                                                           HRESULT&amp; ioNotifyReturnCode)
+{
+    HRESULT Rc = S_OK;
+
+    CATUnicodeString iEventName;
+    Rc = iRaisedEvent-&gt;GetName( iEventName );
+    if( SUCCEEDED(Rc) )
+    // etc.
+        
+    ioNotifyReturnCode = S_OK;
+    return Rc ;    
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that not all the methods of ENOVISessionEvent have to be implemented
+since the class CAAVpiListenAndSusbcribe derives from the adapter class
+ENOVPackageListener as recommended.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSession"></a>Create a Session</h4>
+<p>Now begins the third and last part of this use case, which describes the main
+program. The first thing to do in any Enovia program is to create the VPM
+Session. Here is the code to do it:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ---------------------------
+    // --&gt; 1. Open a VPM Session
+    // ---------------------------
+    //
+    cout &lt;&lt; &quot;main: Open VPM Session ... &quot; &lt;&lt; endl;
+    VPMSession* pSession = VPMSession::OpenSession();
+    if ( NULL == pSession ) 
+    {
+        cout &lt;&lt; &quot;Unable to Open a VPM Session&quot; &lt;&lt; endl;
+        return 1;
+    }
+    cout &lt;&lt; &quot;main: Open VPM Session done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateLoginSession"></a>Create a Login Session</h4>
+<p>Then we have to create the Login Session. During its creation the plug-in
+will be called and the subscription to event CreateLoginSession step After will
+be made.<br>
+The interest of this step is also to see the traces at execution time: you
+should see the listener being called back after the creation of the Login
+Session and doing the subscriptions.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // -------------------------------
+    // --&gt; 2. Login Session creation
+    // -------------------------------
+    //
+    cout &lt;&lt; &quot;main: Create LoginSession ... &quot; &lt;&lt; endl;
+    const int NetWorkCommunication = 0;
+    CATIVpmLoginSession_var spLoginSession;
+    Rc = pSession-&gt;CreateLoginSession( &quot;MyUserID&quot;,
+                                          &quot;MyPassword&quot;, 
+                                          &quot;MyRoleName&quot;, 
+                                          NetWorkCommunication, 
+                                          spLoginSession );
+    if ( FAILED(Rc) )
+    {
+        cout&lt;&lt;&quot;Unable to Create Login Session&quot;&lt;&lt;endl;
+        VPMSession::CloseSession();
+        return 2;
+    }
+    cout &lt;&lt; &quot;main: Create LoginSession done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="FireEvent"></a>Save the Login Session</h4>
+<p>Now we are ready to fire SaveLoginSession event and to look at the traces to
+see if our subscriber is actually called back.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ---------------------------------------
+    // --&gt; 3. Fire Save Login Session
+    // ---------------------------------------
+    //
+    cout &lt;&lt; &quot;main: Save Login Session ... &quot; &lt;&lt; endl;	
+    Rc = spLoginSession-&gt;Save();
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Save Login Session&quot;&lt;&lt;endl;
+        VPMSession::CloseSession();
+	return 3;
+    }
+    cout &lt;&lt; &quot;main: Save Login Session done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CloseSession"></a>Close the Sessions</h4>
+<p>Each opened session must be closed as followed:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // --------------------------------------------
+    // --&gt; 4. Close Login Session and VPM Session
+    // --------------------------------------------
+    //
+    Rc = spLoginSession-&gt;Close();
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Close Login Session&quot;&lt;&lt;endl;
+	return 4;
+    }
+    cout &lt;&lt; &quot;main: Close Login Session done &quot; &lt;&lt; endl;
+
+    VPMSession::CloseSession();
+    cout &lt;&lt; &quot;main: Close VPM Session done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step concludes the third part of the CAAVpiAutomaticSubscription2 use
+case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to automatically subscribe to Login
+Session events via the ENOVIEventPlugin interface and how to be called back when
+they are raised.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The
+      ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>2</b> [Oct 2003]</td>
+    <td valign="top">Document updated for new interface ENOVIEventPlugin</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1</b> [Mar 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>
+

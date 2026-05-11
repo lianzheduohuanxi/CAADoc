@@ -1,0 +1,688 @@
+<html>
+  <head>
+    <title>Define User computed property</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  </head>
+  <body>
+    <table width="100%">
+      <tr>
+        <td valign="top">
+          <h1>Equipment &amp; Systems</h1>
+        </td>
+        <td valign="top">
+          <h2>Distributive Systems</h2>
+        </td>
+        <td rowspan="2" align="right" valign="top">
+          <h3><a name="Top"></a>Define User computed properties</h3>
+          <em>How to define computed properties</em></td>
+      </tr>
+      <tr>
+        <td class="use" colspan="2">Use Case</td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <table class="abstract">
+      <tr>
+        <td>
+          <h3>Abstract</h3>
+          <p>This article discusses the CAAPspDefineUserProperties use case.</p>
+          <ul>
+            <li>
+              <strong><a href="#Learn">What You Will Learn With This Use Case</a></strong>
+            <li>
+              <a href="#UseCase"><strong>The CAAPspDefineUserProperties Use Case</strong></a>
+              <ul>
+                <li>
+                  <a href="#What">What Does CAAPspDefineUserProperties Do</a>
+                <li>
+                  <a href="#How">How to use CAAPspDefineUserProperties Code</a>
+                <li>
+                  <a href="#Where">Where to Find the CAAPspDefineUserProperties Code</a></li>
+              </ul>
+            <li>
+              <strong><a href="#Step">Step-by-Step</a></strong>
+            <li>
+              <strong><a href="#Optional Steps">Optional Steps</a></strong>
+            <li>
+              <strong><a href="#InShort">In Short</a></strong>
+            <li>
+              <strong><a href="#References">References</a></strong></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+    <p>This use case is intended to show you how to define a computed property for an 
+      exposed (knowledgeware) type in Distributive System document.&nbsp;</p>
+    <p><span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">A
+Computed property (attribute) is an exposed knowledgeware attribute whose value
+is computed based on values of other attributes (static attributes that are
+Feature Dictionary defined, internal or other computed attributes) or by use of
+specific application interface methods. This use case will allow users to define
+their own computed attributes so that they can be used in such tools as
+"Edit + Search", "Report generator" command and other
+knowledgeware tools.</span></p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="UseCase"></a>The CAAPspDefineUserProperties Use Case</h3>
+    <p>CAAPspDefineUserProperties is a use case of the CAAPlantShipInterfaces.edu 
+      framework that illustrates CATPlantShipInterfaces framework capabilities.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4><a name="What"></a>What Does CAAPspDefineUserProperties Do</h4>
+    <p>The goal of&nbsp; CAAPspDefineUserProperties is to show you how to define a 
+      computed property for an exposed (knowledgeware) type in Distributive System 
+      document. This use case defines an attribute "TotalWallThickness" for&nbsp; 
+      "PipingPart" exposed type in&nbsp; "PipingLayout" package.</p>
+    <p>Additionally this use case defines attributes that compute their value from 
+      Enovia based attributes.&nbsp; These additional computed attributes demonstrate 
+      the usefulness of using computed attributes to obtain information from the 
+      Enovia data base that can be listed in reports or searches.&nbsp; To 
+      successfully use this part of the use case, you must be running within an 
+      Enovia environment, enable Attribute Mapping for interoperability, and know the 
+      exact attribute names of the Enovia attributes you wish to retrieve.
+    </p>
+    <p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <h4><a name="How"></a>How to Use CAAPspDefineUserProperties&nbsp;</h4>
+    <p>To use CAAPspDefineUserProperties, you will need to set up the build time 
+      environment, then compile CAAPspDefineUserProperties along with its 
+      prerequisites, set up the run time environment. In addition you may want to</p>
+    <ol>
+      <li>
+      Customize your implementation in&nbsp; CAAPspDefineUserAttributes.cpp to define 
+      additional computed properties for Piping exposed types.&nbsp;
+      <li>
+        Remove the conditional blocks of code that&nbsp; checking for environment 
+        variable "RunSample".</li>
+    </ol>
+    <pre>           if (CATGetEnvValue("RunSample",0) ...</pre>
+    <ol>
+      <li>
+      Compile the source code. See the compiler documentation for more information.
+      <li>
+        Copy the shared library <i>CAAPspDefineUserPropert.dll</i> or <i>libCAAPspDefineUserProperties</i>
+      depending on the operating system to your run time bin directory.
+      <li>
+        Copy the<i> CAAPlantShipInterfaces.edu.dico</i>
+      to your run time dictionary directory.
+      <li>
+        Do the following to test your implementation:
+        <ul>
+          <li>
+          Start CNext and select Piping Design workbench.
+          <li>
+          Click Edit-&gt;Search
+          <li>
+          Select "Piping Design" workbench
+          <li>
+            Check attributes of "Piping Part". You should see "Total Wall Thickness" 
+            attribute as shown below.</li>
+        </ul>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="images/CAAPspDefineUserProperties_01.jpg" width="664" height="469"></p>
+        <p>&nbsp;&nbsp;&nbsp; And/Or</p>
+        <p>
+          <ul>
+            <li>
+              Run sample <a href="CAAPspUserProperties.htm">CAAPspUserProperties </a>to see 
+              attribute values of the defined user computed attributes.</li>
+          </ul>
+      </li>
+    </ol>
+    <p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4><a name="Where"></a>Where to Find the CAAPspDefineUserProperties Code</h4>
+    <p>CAAPspDefineUserProperties code is located in the CAAPspDefineUserProperties 
+      .m use case module of the CAAPlantShipInterfaces.edu framework:</p>
+    <table>
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\</code>CAAPspDefineUserProperties
+          <code>.m</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/</code>CAAPspDefineUserProperties
+          <code>.m</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5 
+      installation. It is made of&nbsp;a unique source file named 
+      CAAPspDefineUserProperties.cpp.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="Step"></a>Step-by-Step</h3>
+    <p>There are five logical steps in CAADefineUserPspProperties :</p>
+    <ol>
+      <li>
+        <a href="#Prolog">Prolog</a>
+      <li>
+        <font color="#0000ff"><a href="#Declaring implementation of CATIPspKweUserAttr">Declaring 
+            implementation of <i>
+              <span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">CATIPspKweUserAttr</span></i></a></font>
+      <li>
+        <font color="#0000ff"><a href="#Define a computed attribute">Define a computed 
+            attribute</a></font>
+      <li>
+        <font color="#0000ff"><a href="#Defining computation method to evaluate computed attribute">
+            Define computation
+            <span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+  method</span></a></font>
+      <li>
+        <font color="#0000ff"><a href="#Update dictionary">Update dictionary&nbsp;</a></font></li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4><a name="Prolog"></a>Prolog</h4>
+    <p>To define computed attributes this use case provides an&nbsp; implementation 
+      for <i>
+        <span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">CATIPspKweUserAttr</span></i>.&nbsp;<i><span style="FONT-SIZE: 8pt; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"></span></i><span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">The
+implementation derives from adaptor class&nbsp; CATPspKweUserAttrAdapter<span style="FONT-SIZE:8pt;FONT-FAMILY:Verdana;mso-bidi-font-size:12.0pt;mso-fareast-font-family:'Times New Roman';mso-bidi-font-family:'Times New Roman';mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA"></span>.&nbsp;</span></p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4><a name="Prolog"></a> <a name="Declaring implementation of CATIPspKweUserAttr">Declaring 
+        Implementation of
+        <span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">CATIPspKweUserAttr</span></a></h4>
+    <p>CAAPspDefineUserAttributes is an&nbsp; implementation on late type 
+      "PipingLayout"<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><i>&nbsp;
+        </i>to implement interface</span>
+      <span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA"><i>
+          CATIPspKweUserAttr.&nbsp; </i>It should always derive from base adaptor class <i>
+          CATPspKweUserAttrAdapter</i>.</span></p>
+    <pre>...</pre>
+    <pre>class CAAPspDefineUserAttributes: public CATPspKweUserAttrAdapter
+{</pre>
+    <pre>...</pre>
+    <pre>&nbsp;</pre>
+    <p style="tab-stops:207.35pt center 245.95pt"><i>CATIPspKweUserAttr<b> </b></i>can 
+      also be implemented on following Latetypes&nbsp; (corresponding to 
+      Knowledgeware exposed Package names) to define computed attributes on types 
+      exposed by them.</p>
+    <p class="MsoNormal" style="tab-stops:207.35pt center 245.95pt"><o:p></o:p>
+    </p>
+    <table border="1" cellspacing="0" cellpadding="0" style="BORDER-RIGHT:medium none; BORDER-TOP:medium none; MARGIN-LEFT:0.3in; BORDER-LEFT:medium none; BORDER-BOTTOM:medium none; BORDER-COLLAPSE:collapse; mso-border-alt:solid windowtext .5pt; mso-padding-alt:0in 5.4pt 0in 5.4pt">
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt"><o:p></o:p>
+          </p>
+        </td>
+        <td valign="top">
+          <h6 style="tab-stops:207.35pt center 245.95pt">Package Late type names</h6>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">1</p>
+        </td>
+        <td valign="top">
+          <p style="tab-stops:207.35pt center 245.95pt"><span style="FONT-WEIGHT:normal">PlantShipLayout<o:p></o:p>
+      </span></p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">2</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">PipingLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">3</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">InstrLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">4</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">HVACLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">5</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">EquipLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">6</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">TubingLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">7</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">WaveguideLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">8</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">RacewayLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">9</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">ConduitLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">10</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">HangerLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">11</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">CompAccessLayout</p>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">12</p>
+        </td>
+        <td valign="top">
+          <p class="MsoNormal" style="MARGIN-LEFT:0in;tab-stops:207.35pt center 245.95pt">ElectricalShipbuilding</p>
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATImplementClass(CAAPspDefineUserAttributes,
+                   DataExtension,
+                   CATBaseUnknown,
+                   PipingLayout);
+
+                  
+
+#include "TIE_CATIPspKweUserAttr.h"
+TIEchain_CATIPspKweUserAttr(CAAPspDefineUserAttributes);
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4><a name="Define a computed attribute">Define a Computed Attribute</a></h4>
+    <p>CAAPspDefineUserAttributes::<i>DefineKweUserAttr</i> is used to define 
+      computed attribute. It takes in two parameters. First parameter&nbsp;&nbsp; <i>isTypeName</i>
+      is the name of exposed type while other <i>olAttrInfos</i> is the output list 
+      of attributes ( collection of&nbsp; CATAttributeInfos).</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HESULT CAAPspDefineUserAttributes::DefineKweUserAttr(const CATString &amp;isTypeName, 
+                                  CATListValCATAttributeInfos &amp;olAttrInfos) 
+{
+   ...</pre>
+        </td>
+      </tr>
+    </table>
+    <pre>&nbsp;</pre>
+    <p>First get Type dictionary returned by CATGlobalFunctions::<i>GetTypeDictionary</i>
+      and a dictionary of types returned by calling CATCkeGlobalFunctions::<i>GetParmDictionary</i>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...</pre>
+          <pre>     cout&lt;&lt;"Entering DefineKweUserAttr!!!!"&lt;&lt;endl;
+    CATITypeDictionary_var spDico = CATGlobalFunctions::GetTypeDictionary();
+
+    // Get Dictionary of types
+    CATIParmDictionary_var spParmDictionary = CATCkeGlobalFunctions::GetParmDictionary();
+  </pre>
+          <pre>    ...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Use <i>spParmDictionary</i> to get type of an real type <i>spCkeReal</i>.&nbsp;&nbsp;</p>
+    <p>
+      Then for the exposed type "PipingPart",&nbsp; create an attribute ( 
+      object&nbsp; <i>infoAttr</i> of class <i>CATAttributeInfos</i>&nbsp; with 
+      computed attribute name&nbsp; "TotalWallThickness" and of&nbsp; real type <i>spCkeReal</i>) 
+      . Append <i>infoAttr</i>&nbsp; to the output collection parameter <i>olAttrInfos</i>.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>  
+    ...
+  
+    if(!!spDico &amp;&amp; !!spParmDictionary)
+    {
+      if( isTypeName == "PipingPart" )
+      {   
+        cout&lt;&lt;"Defining computed attribute for PipingPart "&lt;&lt; endl;
+        //
+        // Define Real type computed attribute TotalWallThickness
+        //
+        CATUnicodeString uAttrInternalName("TotalWallThickness");
+        CATUnicodeString uAttrNLSName("Total Wall Thickness");
+
+        CATICkeType_var spCkeReal = spParmDictionary-&gt;GetRealType();
+        CATIType_var spTypeReal(spCkeReal);         
+
+        CATAttributeInfos infoAttr(spTypeReal, uAttrInternalName, uAttrNLSName);
+        olAttrInfos.Append(infoAttr);       
+      }</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <h4><a name="Defining computation method to evaluate computed attribute">Defining 
+        Computation Method</a></h4>
+    <p>CAAPspDefineUserAttributes::<i>GetValue </i>method is used to define 
+      calculation method for user computed attribute. Its function signature takes in 
+      two parameters; <i>ipiObject</i> is the <i>CATIInstance</i> pointer to an 
+      exposed object, <i>iKey</i> is the name of the attribute for which calculation 
+      method is to be defined. It returns pointer to <i>CATIValue</i> interface that 
+      manages the value of the computed attribute.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIValue* CAAPspDefineUserAttributes::GetValue (CATIInstance*  ipiObject, 
+                       const CATUnicodeString&amp; iKey) 
+{
+   ...</pre>
+          <pre></pre>
+        </td>
+      </tr>
+    </table>
+    <p>Get a volatile factory of values <i>spVolFactory</i>&nbsp; using the function 
+      CATCkeGlobalFunctions::<i>GetVolatileFactory</i>(). A Length parameter&nbsp; <i>spResultParm</i>
+      (of&nbsp; handler to interface <i>CATICkeParm</i>) is created for 
+      "TotalWallThickness" computed attribute by using the function <i>CreateLength</i>
+      of&nbsp; <i>spVolFactory</i>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...</pre>
+          <pre>    CATUnicodeString uAttrInternalName("TotalWallThickness");
+    if (iKey == uAttrInternalName)
+    {
+      CATICkeParm_var spResultParm;
+
+      // Get volatile factory of values
+      CATICkeParmFactory_var spVolFactory = CATCkeGlobalFunctions::GetVolatileFactory();
+      
+      if (!!spVolFactory)
+        spResultParm = spVolFactory-&gt;CreateLength(iKey, 0.0);
+</pre>
+          <pre>    ...</pre>
+          <pre></pre>
+        </td>
+      </tr>
+    </table>
+    <p>Then it computes the grand total&nbsp; of the values for the computed 
+      attributes "WallThickness",&nbsp; "WallThickness2", "WallThickness3" and 
+      "WallThickness4" and stores the value in <i>dTotWallThickness</i>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>       double dTotWallThickness = 0.0;      </pre>
+          <pre>      // Get values for the other exposed attributes that
+      // will be used in calculating total of WallThickness* attributes
+      CATListOfCATUnicodeString LWallThicknessAttr;
+      LWallThicknessAttr.Append("WallThickness");
+      LWallThicknessAttr.Append("WallThickness2");
+      LWallThicknessAttr.Append("WallThickness3");
+      LWallThicknessAttr.Append("WallThickness4");
+
+      for( int idx =1; idx&lt; LWallThicknessAttr.Size(); idx++ )
+      {
+        piVal = ipiObject-&gt;GetValue (LWallThicknessAttr[idx]);
+        if( NULL != piVal )
+        {
+          double dVal;
+          HRESULT rc1 = piVal-&gt;AsReal(dVal);
+          if( SUCCEEDED(rc1) )
+          {
+            dTotWallThickness = dTotWallThickness + dVal;
+          }
+        }</pre>
+        </td>
+      </tr>
+    </table>
+    <p><i>spResultParm</i>&nbsp; is valuated with grand total&nbsp; ( <i>dTotWallThickness</i>) 
+      of various&nbsp; Wall thickness attributes by using the function <i>Valuate</i>(). 
+      Then get<i>&nbsp;</i> <i>CATIValue</i> interface pointer (<i>piResultValue</i>) 
+      to <i>spResultParm.&nbsp; </i>Use <i>piResultValue </i>to return from 
+      CATIPspKweUserAttr::<i>GetValue</i> implementation method.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>      if (!! spResultParm)
+      {
+        spResultParm-&gt;Valuate(dTotWallThickness);
+	spResultParm-&gt;QueryInterface(IID_CATIValue, (void **)&amp;piResultValue);
+      } </pre>
+          <pre>      ...</pre>
+          <pre> if (piResultValue)
+  {
+    cout &lt;&lt; "Returning value for TotalWallThickness:" &lt;&lt; (piResultValue-&gt;Show()).ConvertToChar();    
+  }
+  
+  cout&lt;&lt;"Exit CAAPspDefineUserAttributes::GetValue!!!!"&lt;&lt;endl;
+
+  return piResultValue;
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+    <h4>&nbsp;</h4>
+    <h4><a name="Update dictionary">Update dictionary</a></h4>
+    <p>Declare implementation of <i>CATIPspKweUserAttr</i> in the 
+      CAAPlantShipInterfaces.edu.dico file as shown below:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#======================================================================
+#CAAPlantShipInterfaces.edu
+#======================================================================
+
+PipingLayout        CATIPspKweUserAttr      libCAAPspDefineUserProperties</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <h3><a name="Optional Steps"></a>Optional Steps</h3>
+    <p>Optional steps can be performed in order to understand how to access Enovia 
+      attributes using the knowlegeware interface for computed attribues.</p>
+    <ol>
+      <li>
+        <font color="#0000ff"><a href="#Define Attribute Mapping file">Define attribute 
+            mapping file</a></font>
+      <li>
+        <font color="#0000ff"><a href="#Define Computed Attributes For Enovia">Define 
+            computed attributes for mapped Enovia attributes</a></font>
+      <li>
+        <a href="#Define Computation Methods for Mapped Enovia">Define computation 
+          methods for mapped Enovia attributes </a>
+      </li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <h4><a name="Define Attribute Mapping file"></a>Define Attribute Mapping File</h4>
+    <p>If you are running in an Enovia enviroment, you may wish to experiment with 
+      retrieving attributes from the Enovia data base for a given object.&nbsp; To do 
+      this, you must first define an attribute mapping file.&nbsp; A sample mapping 
+      file is located within comments at the end of the file 
+      CAAPspDefineUserProperties.cpp.</p>
+    <p>See the <u>VPM Navigator</u> guide, chapter on <i>Interoperability</i>, for 
+      details of the format of this file.&nbsp;
+    </p>
+    <p>You will need to set the proper tools option to point to this file:</p>
+    <p>
+      <img border="0" src="images/CAAPspDefineUserProperties_04.jpg" width="706" height="525"></p>
+    <p>&nbsp;</p>
+    <p>This extract shows the mapping of Enovia attributes <i>V_status</i> and <i>V_user</i>
+      to the CATIA attributes <i>Life Cycle Status</i> and <i>User In Enovia</i>.</p>
+    <table class="code" height="251">
+      <tr>
+        <td height="247">
+          <pre>&lt;!-- Attributes for Part Domain --&gt;
+&lt;AttributesMapping EntityType="Part" DomainName="PRODUCT"&gt;
+
+   &lt;!-- Part Attribute 2 --&gt;
+   &lt;Attribute Name="Status" Type="STRING"&gt;
+       &lt;CATIAInfo Name="Life Cycle Status" Editable="No" Visible="Yes" /&gt;
+       &lt;DBInfo Name="V_status" LCASubEntity="PV" Editable="Yes" Visible="Yes" /&gt;
+   &lt;/Attribute&gt;
+
+   &lt;!-- Part Attribute 3 --&gt;
+   &lt;Attribute Name="DBUser" Type="STRING"&gt;
+       &lt;CATIAInfo Name="User In Enovia" Editable="No" Visible="Yes" /&gt;
+       &lt;DBInfo Name="V_user" LCASubEntity="PM" Editable="Yes" Visible="Yes" /&gt;
+   &lt;/Attribute&gt;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The properties dialog will show the values of these mapped attributes as added 
+      properties.</p>
+    <p>
+      <img border="0" src="images/CAAPspDefineUserProperties_03.jpg" width="520" height="568"></p>
+    <p>&nbsp;</p>
+    <p>This extract shows the mapping of Enovia attributes <i>V_version</i> and <i>V_status</i>
+      to the CATIA attributes with internal names <i>ENOVIA5.DocumentRevision</i> and <i>
+        ENOVIA5.DocumentStatus</i>.&nbsp;
+    </p>
+    <table class="code" height="251">
+      <tr>
+        <td height="247">
+          <pre>&lt;!-- Attributes for Document Domain --&gt;
+&lt;AttributesMapping EntityType="Document" DomainName="DOCDIR"&gt;
+
+   &lt;!-- Document Attribute 1 --&gt;
+   &lt;Attribute Name="DocumentRevision" Type="STRING"&gt;
+       &lt;CATIAInfo Name="ENOVIA5.DocumentRevision" Editable="No" Visible="Yes" /&gt;
+       &lt;DBInfo Name="V_version" LCASubEntity="DV" Editable="Yes" Visible="Yes" /&gt;
+   &lt;/Attribute&gt;
+
+   &lt;!-- Document Attribute 2 --&gt;
+   &lt;Attribute Name="Status" Type="STRING"&gt;
+      &lt;CATIAInfo Name="ENOVIA5.DocumentStatus" Editable="No" Visible="Yes" /&gt;
+      &lt;DBInfo Name="V_status" LCASubEntity="DV" Editable="Yes" Visible="Yes" /&gt;
+   &lt;/Attribute&gt;
+&lt;/AttributesMapping&gt;
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The user names displayed in the PLM tab of the properties dialog will be 
+      "DocumentRevision" and "DocumentStatus".</p>
+    <p>
+      <img border="0" src="images/CAAPspDefineUserProperties_02.jpg" width="520" height="568"></p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <h4>
+      <a name="Define Computed Attributes For Enovia" href="#Define Computed Attributes For Enovia">
+      </a>Define Computed Attributes for Mapped Enovia Attributes</h4>
+    <p>Computed attributes are defined the same way as for "TotalWallThickness" in 
+      the standard steps.&nbsp; To use the optional code within the use case, locate 
+      the line listed below and change the '0' to '1', recompile and link the 
+      module.&nbsp;
+    </p>
+    <font SIZE="2" COLOR="#0000ff">
+      <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      #define</font><font SIZE="2"> CAA_PSP_OPTIONAL 0</P> </font>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <h4><a name="Define Computation Methods for Mapped Enovia"></a>Define Computation 
+      Methods for Mapped Enovia Attributes</h4>
+    <p>There are two types of mapped Enovia attributes in this use case.&nbsp; Both 
+      types return string information.&nbsp; However, the method of finding and 
+      retrieving the value is different.&nbsp;
+    </p>
+    <p>For mapped attributes found on the Product tab of the properties dialog, the 
+      method <i>GetUserStringValue</i> is used.&nbsp; It uses the <i>CATIPrdProperties</i>
+      interface to find the desired attribute.&nbsp; For mapped attributes found on 
+      the PLM Document attributes tab of the properties dialog, the method <i>GetPLMStringValue</i>
+      is used. This method retrieves the mapped attribute value from the document 
+      using the CATOmbDocPropertyServices utility.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="InShort"></a>In Short</h3>
+    <p>This use case has demonstrated how to Define a computed property&nbsp; 
+      "TotalWallThickness" for&nbsp; "PipingPart" exposed type in&nbsp; 
+      "PipingLayout" package.&nbsp; It has also shown how to define and compute 
+      values for mapped attributes.&nbsp; It has illustrated:</p>
+    <ul>
+      <li>
+        How to implement <i>CATIPspKweUserAttr</i>&nbsp; interface methods.</li>
+    </ul>
+    <p align="right"><a href="#Top">Top</a>]</p>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="References"></a>References</h3>
+    <table width="1037">
+      <tr>
+        <td valign="top" width="89">[1]</td>
+        <td width="934"><a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+            and Launching a CAA V5 Use Case</a></td>
+      </tr>
+      <tr>
+        <td valign="top" width="89">[2]</td>
+        <td width="934"><a href="CAAPspUserProperties.htm">Access user&nbsp; computed 
+            properties</a></td>
+      </tr>
+      <tr>
+        <td valign="top" width="89">[3]</td>
+        <td width="934"><u>VPM Navigator</u>&nbsp; guide - chapter on <i>Interoperability</i></td>
+      </tr>
+      <tr>
+        <td valign="top" width="89"></td>
+        <td width="934"></td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="History"></a>History</h3>
+    <table width="100%">
+      <tr>
+        <td valign="top">Version: <strong>1</strong> [January 2005]</td>
+        <td valign="top">Document created</td>
+      </tr>
+      <tr>
+        <td valign="top">Version: <strong>2</strong> [August 2005]</td>
+        <td valign="top">Optional steps added</td>
+      </tr>
+      <tr>
+        <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+    <P>&nbsp;</P>
+  </body>
+</html>

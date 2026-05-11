@@ -1,0 +1,807 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Visualizing Temporary Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Visualizing Temporary Components</h3>
+      How to use the Interactive Set of Objects</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>A temporary component is a component which is not integrated into the data
+      model of a V5 document. In most cases it is a simple component to help the understanding of an interactive command.
+      The CAAVisTemporaryObjects use case [<a href="#References">1</a>] has
+      explained how to create temporary components, the current one details how to
+      use the interactive Set of Objects to visualize them.&nbsp;<p>To take full
+      advantage of this article, you can first read the technical article about the Interactive Set of Objects
+      and the
+      temporary components [<a href="#References">2</a>].&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADegClippingByBoxCmd Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADegClippingByBoxCmd Do</a></li>
+            <li><a href="#How">How to Launch CAADegClippingByBoxCmd</a></li>
+            <li><a href="#Where">Where to Find the CAADegClippingByBoxCmd Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The main goal of this article is to show how to use the <b>I</b>nteractive <b>S</b>et of
+<b>O</b>bjects. The ISO enables you to visualize the temporary components, those not
+included in a V5 document. These components must implement
+either CATI2DGeoVisu or CATI3DGeoVisu.&nbsp;</p>
+<p>The ISO is a <i>CATISO</i> class instance which is associated with the editor
+(<i>CATFrmEditor</i>) of each V5 document. There are three kinds of ISO: normal,
+furtive (XOR drawing) and background. The first two are used in this use case.</p>
+<p>Naturally, you will learn how to use the methods of the <i>CATISO</i> class
+to display or erase a component, but this article goes beyond to explain the life
+cycle of the graphic representation associated with the components.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADegClippingByBoxCmd Use Case</h3>
+<p>CAADegClippingByBoxCmd is a use case of the CAADialogEngine.edu and
+CAAVisualization.edu frameworks that
+illustrates DialogEngine, ApplicationFrame, and Visualization frameworks capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADegClippingByBoxCmd Do</h4>
+<p>The CAADegClippingByBoxCmd use case is a state command [<a href="#References">3</a>]
+which displays temporary components to enhance the user interface. This command is a state
+command to remove all the points of the document outside a given box. This
+clipping box is defined by the end user: first, he/she defines its location by
+selecting an existing point. Then, from the selected point a first wire box
+is displayed, and he/she can drag the mouse to increase or decrease the size of
+the box.&nbsp;&nbsp;<p>The state command creates three kinds of components: a
+text (right picture on <a href="#Fig.1">Fig.1</a>), a trihedral (middle picture on
+<a href="#Fig.1">Fig.1</a>) and a wire box
+(left picture on <a href="#Fig.1">Fig.1</a>) [<a href="#References">1</a>] and uses the ISO
+to visualize them. The first two are visualized in the normal ISO, and the last
+one in the furtive ISO.&nbsp;<p>&nbsp;
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a> Temporary Components</caption>
+  <tr>
+    <td valign="top"><img border="0" src="images/CAAVisSampleTempObjectISOText.jpg" width="146" height="62"></td>
+    <td valign="top"><img border="0" src="images/CAAVisSampleTempObjectTrihedral.jpg" width="63" height="64"></td>
+    <td><img border="0" src="images/CAAVisSampleTempObjectWireBox.jpg" width="322" height="193"></td>
+  </tr>
+</table>
+<p>The text is displayed when the command is activated. It is useless for the
+result of the command itself, it has been added to show how select a temporary
+component.&nbsp;</p>
+<p>Here it is the UML diagram [<a href="#References">4</a>] of the CAADegClippingByBoxCmd
+command.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleVisuTempObjUML.jpg" width="573" height="412"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADegClippingByBoxCmd</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario:</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>Start</b> menu, point to <b>Infrastructure</b>, and then click <b>CAA
+    V5: Geometrical Creation</b>
+  <li>Launch the <b>Point</b> (<img border="0" src="../CAAAfrUseCases/images/CAAAfrPointIconNormal.jpg" width="32" height="32">)command
+    to create some points
+    <ul>
+      <li>In the <b>Basic Elements </b>toolbar
+      <li>In the<b> Insert </b>menu, click <b>Point</b>&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<ul>
+  <li>Launch the <b>Clipping By Box</b> (<img border="0" src="images/CAAVisClippingByBoxIcon.jpg" width="27" height="28">)command
+    in the <b>Clipping </b>toolbar</li>
+  <li>Select the <b>ISO Selection </b>text located at the origin of the model
+    (0,0,0)</li>
+</ul>
+<blockquote>
+  <p>After the selection, the text disappears</p>
+</blockquote>
+<ul>
+  <li>Select a <b>Point </b>as clipping box center</li>
+</ul>
+<blockquote>
+  <p>After the selection, the trihedral is displayed.&nbsp;</p>
+</blockquote>
+<ul>
+  <li><b>Move </b>the mouse, and click <b>left </b>to stop the command</li>
+  <p>All points outside the clipping
+box are removed from the document.</p>
+
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADegClippingByBoxCmd Code</h4>
+<p>The CAADegClippingByBoxCmd use case is made of the single class named <i>CAADegClippingByBoxCmd</i>
+ located in
+the CAADegGeoCommands.m module of the CAADialogEngine.edu framework:</p>
+<ul>
+
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+  </tr>
+</table>
+
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven main logical steps in CAADegClippingByBoxCmd:</p>
+<ol>
+  <li><a href="#Retrieving the normal and furtive ISO">Retrieving the Normal and
+    Furtive ISO</a></li>
+  <li><a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a></li>
+  <li><a href="#Defining the State Chart Diagram">Defining the State Chart Diagram</a></li>
+  <li><a href="#Managing the Text Component">Managing the Text Component</a>&nbsp;
+  </li>
+  <li><a href="#Managing the Trihedral Component">Managing the Trihedral Component</a>
+  </li>
+  <li><a href="#Managing the Wire Box Component">Managing the Wire Box Component</a>
+  </li>
+  <li><a href="#Deleting the Three Temporary Components">Erasing and Deleting the Three
+    Temporary Components</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieving the normal and furtive ISO"></a>Retrieving the Normal
+and Furtive ISO</h4>
+<p>The interactive set of objects are managed by the <i>CATFrmEditor</i> class [<a href="#References">5</a>].
+In the CAADegClippingByBoxCmd class constructor they are retrieved.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATFrmEditor * pEditor   = GetEditor();
+  ...
+  _pFurtiveISO = pEditor-&gt;<b>GetFurtiveISO</b>() ;
+
+  _pISO = pEditor-&gt;<b>GetISO</b>() ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetEditor</code> method of the <i>CATStateCommand</i> class,
+retrieves the current <i>CATFrmEditor</i> class instance. The <code>GetISO </code>method
+retrieves the &quot;normal&quot; ISO, and the <code>GetFurtiveISO</code> method
+the furtive ISO.&nbsp;<code>_pISO</code> and <code>_pFurtiveISO</code> are data
+members of the state command.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Creating the Three Temporary Components"></a>Creating the
+Three Temporary Components</h4>
+<p>In the CAADegClippingByBoxCmd class constructor you will find the three
+creations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  _pCenterBoxModel     = new CATModelForRep3D(); 
+
+  ::CATInstantiateComponent(&quot;CAAVisWireBox&quot;,IID_<b>CAAIVisWireBox</b>,(void**)&amp;_pIWireBox);
+
+  ::CATInstantiateComponent(&quot;CAAVisTextModel&quot;,IID_<b>CAAIVisTextModel</b>,(void**)&amp;_pITextToSelectModel);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_pCenterBoxModel, _pIWireBox,</code> and <code>_pITextToSelectModel</code>
+are data members of the <i> CAADegClippingByBoxCmd</i> class. The first one is
+an instance of the trihedral component, the second one is an instance of the
+wire box component, and the last one is an instance of the text component. The
+referenced article [<a href="#References">1</a>] gives you the UML diagram of
+each one.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Defining the State Chart Diagram"></a>Defining the State Chart Diagram</h4>
+
+<p>The CAADegClippingByBoxCmd class is a state command class. It implies that
+the state chart is defined in the <code>BuildGraph</code> method of the <i>CATStateCommand</i>
+class. Here it is an extract which shows the more interesting steps.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_daIndication = new <b>CATIndicationAgent</b>(&quot;Indication&quot;);
+  
+_daIndication-&gt;SetBehavior(CATDlgEngWithPrevaluation | <b>CATDlgEngAcceptOnPrevaluate</b> |
+	                         CATDlgEngWithUndo);
+	     </pre>
+    </td>
+  </tr>
+</table>
+<p><code>_daIndication</code> is a <i>CATIndicationAgent</i> class instance kept
+as data member by the <i> CAADegClippingByBoxCmd</i>  class. The <code>CATDlgEngWithOnPrevaluation</code>
+ behavior enables us to be informed at each mouse movement, and consequently to
+increase or decrease the size of the clipping box. See the <a href="#Managing the Wire Box Component">Managing
+Wire Box Component</a> step.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  _daTextSel = new <b>CATPathElementAgent</b>(&quot;SelText&quot;);
+  _daTextSel-&gt;<b>SetBehavior</b>(CATDlgEngWithPSO | CATDlgEngWithPrevaluation);
+  _daTextSel-&gt;<b>AddElementType</b>(IID_<b>CAAIVisTextModel</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_daTextSel, </code>a <i>CATPathElementAgent</i> pointer,<code> </code>is
+a data member of the <i> CAADegClippingByBoxCmd</i> class. The association of
+the <code>CATDlgEngWithPSO</code> and <code>CATDlgEngWithPrevaluation</code>
+behaviors enables us to have a visual feedback when an object is pre-selected
+(pre-highlight
+color). The <code>AddElementType</code> is the method to filter the selection.
+Using <i>CAAIVisTextModel</i>, only the components implementing this interface
+could be selected.&nbsp;This interface is only implemented on text component [<a href="#References">1</a>].</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Managing the Text Component"></a>Managing the Text Component</h4>
+
+<p>The text component (&quot;ISO Selection&quot;) is managed as follows:</p>
+
+<ul>
+  <li>Created at the beginning of the state command - see the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+    step&nbsp;</li>
+  <li>Displayed when the command is first activated - see the <a href="#Adding the text component into the ISO">Adding the text component into the ISO</a>
+    step&nbsp;</li>
+  <li>Erased once the text is selected - see the <a href="#Removing the text component from the ISO">Removing
+    the text component from the ISO</a> step</li>
+  <li>Re-Displayed/Re-Erased in case of undo/redo of the text selection- see the
+    <a href="#undo/redo step text">Undo/Redo</a>
+    step&nbsp;</li>
+  <li>Re-Erased/Re-Displayed in case of deactivation/re-activation of the state command - see the <a href="#Deactivation/Re-activation text">Deactivation/Re-activation</a>
+    step&nbsp;</li>
+  <li>Deleted at the end of the state command - see the <a href="#Deleting the Three Temporary Components">Deleting
+    the Three Temporary Components</a> step</li>
+</ul>
+<p>Here it is the detail of the parts own to the text component.&nbsp;</p>
+<ul>
+  <li><a name="Adding the text component into the ISO"><b>Adding the text component into the ISO</b></a></li>
+  <p>When the state command is first activated, the text is displayed to be
+  selected by the end user. This step consists in to create the graphic
+  representation of the text component, and sets the component in the normal
+  ISO.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   HRESULT rc = <b>CreateRepForText</b>();
+            
+  _pISO-&gt;<b>AddElement</b>(_pITextToSelectModel);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The text component, <code>_pITextToSelectModel</code>, is
+  created at the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+  step.&nbsp;</p>
+  <p>The <code>CreateRepForText</code> method creates the graphic representation
+  and associates it with the component. Refer for details to the &quot;Creating
+  Graphic Representation&quot; sub-step of the &quot;Creating
+  the Text Component&quot; step of the referenced article [<a href="#References">1</a>].&nbsp;</p>
+  <p> The component can be now visualized.&nbsp;The <code>AddElement</code> method adds the
+  component, handled by <code>_pITextToSelectModel</code>, in the normal ISO.
+  This method will send a <i>CATCreate</i> event to update the visualization.
+  Refer to the technical article [<a href="#References">2</a>] for details.&nbsp;</p>
+  <li><a name="Removing the text component from the ISO"><b>Removing the text
+    component from the ISO</b></a></li>
+  <p>The text has been selected, it must be erased.&nbsp;&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pISO-&gt;<b>RemoveElement</b>(_pITextToSelectModel,<b>1</b>) ;      
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>Remove</code><code>Element</code> method removes the component,<code>_pITextToSelectModel</code>,
+  from the ISO. This method will send a notification to update the
+  visualization. The last argument is important. The value <code>1</code> means
+  that the graphic representation associated with the component will be not
+  deleted. So, you could re-add the component into the ISO without re-create the graphic
+  representation.&nbsp;See the next step.</p>
+  <li><a name="undo/redo step text"><b>Undo/Redo</b></a>&nbsp;</li>
+  <p>It is the Undo/Redo of the action which consists in to select the text. The
+  Undo action re-displays the text, whereas the Redo action, erases back the
+  text.&nbsp;</p>
+  <p>Undo cases:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pISO-&gt;<b>AddElement</b>(_pITextToSelectModel);      
+...</pre>
+    </td>
+  </tr>
+</table>
+ <p>Redo cases:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pISO-&gt;<b>RemoveElement</b>(_pITextToSelectModel,<b>1</b>);      
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>You can note that the since the <code>_pITextToSelectModel </code>component
+  is always removed from the ISO without the destruction of its graphic
+  representation, thanks the value <code>1</code>  for the last argument of the <code>RemoveElement</code>
+  method, there is no need to re-create the graphic representation into the undo
+  action method.&nbsp;</p>
+<li><a name="Deactivation/Re-activation text"><b>Deactivation/Re-activation&nbsp;</b></a></li>
+
+</ul>
+<blockquote>
+  <p>A state command can be deactivated by a shared command, and once this
+  command is completed, our command is reactivated [<a href="#References">6</a>]. The management of the text
+  component, in this case, follows the same principle as into the <a href="#undo/redo step text">undo/redo</a>
+  methods. When the command is deactivated the text is erased without its graphic
+  representation destruction. So in case of re-activation of the state
+  command, the text can be re-displayed without graphic representation
+  reconstruction.</p>
+  <p>However, there is a little difference with the <a href="#undo/redo step text">undo/redo</a>
+  step. In the Deactivation method, a check of the presence into the ISO of the
+  text is done, it enables us in the re-activation method to avoid to re-display
+  the text if it useless.&nbsp;</p>
+  <p>Extract of the <code>Desactivate</code> method of the <i>CAADegClippingByBoxCmd</i>
+  command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( _pISO-&gt;<b>IsMember</b>(_pITextToSelectModel) )
+{
+   _pISO-&gt;<b>RemoveElement</b>(_pITextToSelectModel,<b>1</b>);  
+   _TextModelToRestore = TRUE ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>IsMember</code> method enables us to keep the state of the text. <code>_TextModelToRestore</code>,
+  a boolean value, will be then used in the <code>Activate</code> method.&nbsp;</p>
+  <p>Extract of the <code>Activate</code> method of the <i>CAADegClippingByBoxCmd</i>
+  command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( TRUE == TextModelToRestore  )
+{
+   _pISO-&gt;<b>AddElement</b>(_pITextToSelectModel);
+} 
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The text is added in the ISO only if before the de-activation the text was
+  displayed. You can note that there is no need to re-build the graphic
+  representation of the <code>_pITextToSelectModel</code> component since in the
+  deactivation method the last argument of the <code>RemoveElement</code> method
+  is <code>1.</code></p>
+
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Managing the Trihedral Component"></a>Managing the Trihedral Component</h4>
+
+<p>The trihedral component is managed as follows:</p>
+
+<ul>
+  <li>Created at the beginning of the state command - see the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+    step&nbsp;</li>
+  <li>Displayed when a point, representing the center of the clipping
+    box, is selected - see <a href="#Adding the trihedral component into the ISO">Adding
+    the trihedral component into the ISO</a> step&nbsp;</li>
+  <li>Erased/Re-Displayed when command is deactivated/re-activated - see <a href="#De-activation/Re-activation trihedral">De-activation/Re-activation</a>
+    step</li>
+  <li>Erased and Deleted at the end of the state command - see the <a href="#Deleting the Three Temporary Components">Deleting
+    the Three Temporary Components</a> step</li>
+</ul>
+<p>Here it is the detail of the parts own to the trihedral component.&nbsp;</p>
+<ul>
+  <li><a name="Adding the trihedral component into the ISO"><b>Adding the trihedral
+    component into the ISO</b></a></li>
+  <p>When the end user has selected a point to specify the center of the
+  clipping box, a trihedral is displayed. This step consists in to create the graphic
+  representation of the trihedral component, and sets the component in the normal
+  ISO.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = <b>CreateRepForCenterBox</b>();  
+             
+_pISO-&gt;<b>AddElement</b>(_pCenterBoxModel);             
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The trihedral component, <code>_pCenterBoxModel</code>, is
+  created at the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+  step.&nbsp;</p>
+  <p>The <code>CreateRepForCenterBox</code> method creates the graphic representation
+  and associates it with the component. Refer for details to the &quot;Creating
+  the Trihedral Component&quot; step of the&nbsp; referenced article [<a href="#References">1</a>].&nbsp;</p>
+  <p> The component can be now visualized.&nbsp;The <code>AddElement</code> method adds the
+  component, handled by <code>_pCenterBoxModel</code>, in the normal ISO.
+  This method will send a <i>CATCreate</i> event to update the visualization.
+  Refer to the technical article [<a href="#References">2</a>] for details.</p>
+  <li><a name="De-activation/Re-activation trihedral"><b>De-activation/Re-activation&nbsp;</b></a></li>
+</ul>
+
+<blockquote>
+  <p>When the state command is deactivated, the trihedral component must be
+  erased. Here it is an extract of the&nbsp; <code>Desactivate</code> method of the <i>CAADegClippingByBoxCmd</i>
+  command:</p>
+</blockquote>
+<ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( _pISO-&gt;<b>IsMember</b>(_pCenterBoxModel) )
+{   
+   _pISO-&gt;<b>RemoveElement</b>(_pCenterBoxModel,<b>0</b>);
+     
+   _CenterBoxModelToRestore = TRUE ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The trihedral component, <code>_pCenterBoxModel</code>, is
+  created at the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+  step.&nbsp;</p>
+<p>The <code>IsMember</code>&nbsp; method enables us to valuate a boolean data
+member, <code>_CenterBoxModelToRestore</code> , which will be used in the <code>Activate</code> 
+  method. It is the only one interest of this call because the <code>RemoveElement</code>&nbsp;
+  method checks that the component exists in the ISO. Note that the last
+  argument of this method is <code>0</code>, the default value. Its means that the graphic
+  representation of the trihedral component is deleted by the removal operation.</p>
+  <p>Now, an extract of the <code>Activate</code>  method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if (TRUE == _CenterBoxModelToRestore) 
+{
+   HRESULT rc = <b>CreateRepForCenterBox</b>();  
+                
+   _pISO-&gt;<b>AddElement</b>(_pCenterBoxModel);
+          
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The trihedral component, <code>_pCenterBoxModel</code>, is re-displayed
+  only if it was drawn before the deactivation ( test on <code>_CenterBoxModelToRestore</code>).&nbsp;</p>
+<p>Before to add the component into the ISO, you must re-create the graphic
+  representation because in the de-activation step it has been deleted by the&nbsp; <code>RemoveElement</code>&nbsp;call.</p>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Managing the Wire Box Component"></a>Managing the Wire Box
+Component</h4>
+
+<p>The wire box component is managed as follows:</p>
+
+<ul>
+  <li>Created at the beginning of the state command - see the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+    step&nbsp;</li>
+  <li>Displayed when a point, representing the center of the clipping
+    box, is selected - see <a href="#Adding the wire box component into the ISO">Adding
+    the wire box component into the ISO</a> step&nbsp;</li>
+  <li>Updated when the mouse move - see <a href="#Updating the wire box graphic representation">Updating
+    the wire box graphic representation</a> step</li>
+  <li>Erased and Deleted at the end of the state command - see the <a href="#Deleting the Three Temporary Components">Deleting
+    the Three Temporary Components</a> step</li>
+</ul>
+<p>Here it is the detail of the parts own to the wire box component.&nbsp;</p>
+<ul>
+  <li><a name="Adding the wire box component into the ISO"><b>Adding
+    the wire box component into the ISO</b></a></li>
+  <p>Once the point representing the center of the clipping box has been
+  selected, a first wire box is drawn.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+_pIWireBox-&gt;<b>SetCenterBox</b>(_CenterBox);
+_pIWireBox-&gt;<b>SetDimBox</b>(.2f);
+
+_PreviousPointInScreenPlane = _daIndication-&gt;GetValue();
+
+_pFurtiveISO-&gt;<b>AddElement</b>(_pIWireBox);      
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p><code>_pIWireBox </code>is a <i>CAAIVisWireBox</i> interface pointer on the
+  wire box component created in the class constructor. Refer to the <a href="#Defining the State Chart Diagram">Creating the Three
+    Temporary Components</a>  step for details about the <code>_pIWireBox</code>
+  data member.&nbsp;</p>
+  <p>The <i>CAAIVisWireBox</i> interface, an interface implemented by the wire
+  box component [<a href="#References">1</a>], enables us to initialize the value of
+  the wire box. <code>SetCenterBox</code> sets the position of the selected
+  point, <code>_CenterBox</code>, on the component, and<code> .2 </code>is the
+  initial size of the box.&nbsp;</p>
+  <p><code>_PreviousPointInScreenPlane</code> keeps the current position of the
+  mouse. <code>_daIndication</code> is an agent of indication, see the <a href="#Defining the State Chart Diagram">Defining the State Chart Diagram</a>
+  step.&nbsp;</p>
+  <p><code>_pFurtiveISO</code> is the furtive ISO associated with the editor of
+  the document. See the <a href="#Retrieving the normal and furtive ISO">Retrieving the
+  Normal and Furtive ISO</a> step which explains how to retrieve it.&nbsp;</p>
+  <p>Then, the component is set into the ISO to be displayed. The <code>AddElement</code> method adds the
+  component, handled by <code>_pIWireBox </code>, in the furtive ISO.
+  This method will send a <i>CATCreate</i> event to update the visualization.
+  The <i>CATVisManager</i> [<a href="#References">7</a>] will invoke the <code>build</code>
+  method of the <i>CATI3DGeoVisu</i> interface implemented by the wire box. Refer for details to the &quot;Implementing
+  <i>CATI3DGeoVisu</i> Interface&quot; sub-step of the &quot;Creating
+  the Wire Box Component&quot; step of the referenced article [<a href="#References">1</a>].&nbsp;</p>
+  <li><a name="Updating the wire box graphic representation"><b>Updating the wire box
+    graphic representation</b></a></li>
+  <p>At each mouse movement, the <code>UpdateClippingBox</code> method is
+  called.</p>
+<table class="code" height="303">
+  <tr>
+    <td height="299">
+      <pre>...
+CATMathPoint2D CurrentPointInScreenPlane = <b>_daIndication</b>-&gt;GetValue(); 
+
+float currentdimbox = .2f;
+_pIWireBox-&gt;<b>GetDimBox</b>(&amp;currentdimbox);
+
+if ( CurrentPointInScreenPlane.GetY() &gt; _PreviousPointInScreenPlane.GetY() )
+{
+   currentdimbox += .05f ;
+}else
+{
+   if ( (currentdimbox - .2f) &gt; EPSILON )
+   { 
+      currentdimbox -= 0.05f ;
+   }
+}
+_PreviousPointInScreenPlane = CurrentPointInScreenPlane ;
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The first step of this method consists in to define if the size of the box increases or
+  decreases. The following rule has been chosen:</p>
+
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAVisSampleVisuTempObjSensWireBox.jpg" width="215" height="187"></td>
+      <td>&nbsp;
+        <p>The black trihedral represents the axis system for the value returned
+        by the agent of indication (<code>_daIndication</code>)</p>
+        <p>When the mouse goes down ( the previous Y position is upper than the
+        the current one) the wire box increases, otherwise it decreases. But
+        there is a lower limit: the size of the box cannot be lowest that
+        .2f&nbsp; unit model.
+        <p><code>currentdimbox</code> is the new size of the wire box.&nbsp;</td>
+    </tr>
+  </table>
+  <p>Once the new size of the box is defined, thanks <code>_pIWireBox</code>,&nbsp;
+  the <i>CAAIVisWireBox</i> interface pointer on the wire box component, the
+  component can be updated.&nbsp;</p>
+<table class="code" >
+  <tr>
+    <td >
+      <pre>...
+_pIWireBox-&gt;<b>SetDimBox</b>(currentdimbox) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>There remains to update the ISO. The <code>UpdateElement</code> method will
+  send a <i>CATModify</i> event which implies the automatic reconstruction of the graphic
+  representation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+_pFurtiveISO-&gt;<b>UpdateElement</b>(_pIWireBox);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">if
+  you use the <code>UpdateElement</code>  method you must never modify
+  &quot;yourself&quot; the graphic representation. The modification must
+  be managed by the <i>CATVisManager</i>. So it is the reason why for the wire box we
+  have chosen to create a component which OM derives from CATBaseUnknown and not
+  from CATModelForRep3D. It is in <b>your</b>  <i> CATI3GeoVisu</i> implementation that the
+  graphic representation is built. Refer to the technical article for complete
+  details [<a href="#References">2</a>].&nbsp;</p>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Deleting the Three Temporary Components"></a>Erasing and Deleting the Three
+Temporary Components</h4>
+
+<p>At the end of the command, in the <i>CAADegClippingByBoxCmd</i> destructor
+class, the three temporary components must be removed from the ISO and then
+deleted.&nbsp;</p>
+
+<p>In the <code>Cancel</code> method, the component are removed from the
+ISO. You do not have to test if the component already exists in the ISO, the <code>RemoveElement</code>
+method does it.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...           
+     _pISO-&gt;RemoveElement(_pITextToSelectModel);         
+     _pISO-&gt;RemoveElement(_pCenterBoxModel);  
+
+     _pFurtiveISO-&gt;RemoveElement(_pIWireBox);
+      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>_<code>pISO </code>and <code>_pFurtiveISO</code> are data members initialized
+in the <a href="#Retrieving the normal and furtive ISO">Retrieving the Normal
+and Furtive ISO</a> step.</p>
+
+<p>In the <code>destructor</code> class, the component are deleted by releasing
+the handles:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+     _pITextToSelectModel-&gt;Release();
+ 
+     _pCenterBoxModel-&gt;Release();
+    
+     _pIWireBox-&gt;Release();    
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_pITextToSelectModel, _pCenterBoxModel</code>, and <code>_pIWireBox</code>
+are data members initialized in the <a href="#Creating the Three Temporary Components">Creating the Three Temporary Components</a>
+step.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has explained how to use the main methods of the <i>CATISO</i>
+class:</p>
+<ul>
+  <li><code>AddElement</code> to visualize a component</li>
+  <li><code>RemoveElement</code> to erase a component</li>
+  <li><code>UpdateElement</code> to update the graphic representation of a component already existing in
+    the ISO.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAVisSampleTempObject.htm">Creating Temporary Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVisTechArticles/CAAVisISO.htm">Interactive Set of Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADegTechArticles/CAADegGettingStarted.htm">Getting Started with State Dialog Command</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrLayoutV5.htm">Understanding the Application Frame Layout&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAVisSampleVisManager.htm">Using the Visualization Manager</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>      [Fev 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

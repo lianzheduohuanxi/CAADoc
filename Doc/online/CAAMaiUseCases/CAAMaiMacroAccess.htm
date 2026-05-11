@@ -1,0 +1,460 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Macro Data Access for Machining Operations</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Macro Data Access for Machining Operations</h3>
+      <em>Using the CATIMfgActivityMacroParameters, CATIMfgActivityMacroMotion
+      and CATIMfgActivityElementaryMotion interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiMacroAccess use case and explains how
+      to use the <i>CATIMfgActivityMacroParameters, CATIMfgActivityMacroMotion
+      and CATIMfgActivityElementaryMotion</i> manufacturing interfaces.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiMacroAccess Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiMacroAccess Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiMacroAccess</a></li>
+            <li><a href="#Where">Where to Find the CAAMaiMacroAccess Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the tool path computation of
+macros on an operation by using the <i>CATIMfgActivityMacroParameters
+CATIMfgActivityMacroMotion CATIMfgActivityElementaryMotion</i> manufacturing
+interface. This involves the following:</p>
+<ul>
+  <li>Using methods of <i>CATIMfgActivityMacroParameters,
+    CATIMfgActivityMacroMotion and CATIMfgActivityElementaryMotion</i> to:
+    <ul>
+      <li>Access to the approach, retract group of paths to each kind of macro
+        (approach, return,...) from an activity</li>
+      <li>Access to each elementary macro motion from a group of paths</li>
+      <li>Access to data of an elementary macro motion.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiMacroAccess Use Case</h3>
+<p>CAAMaiMacroAccess is a use case of the CAAManufacturingItf.edu framework that
+illustrates ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiMacroAccess Do</h4>
+<p>CAAMaiMacroAccess runs a sequence of method calls, showing a
+&quot;basic&quot; computation of macros.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiMacroAccess</h4>
+<p>To launch CAAMaiMacroAccess, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile CAAMaiMacroAccess.m module
+    along with its prerequisites [<a href="#References">1</a>]</li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiMacroAccess</h4>
+<p>The CAAMaiMacroAccess use case is made of a class named <i>CAAEMaiMacroAccess</i>
+located in the CAAMaiMacroAccess.m module of the CAAManufacturingItf.edu
+framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiMacroAccess.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiMacroAccess.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are three logical steps in CAAMaiMacroAccess:</p>
+<ol>
+  <li>Using methods of CATIMfgActivityMacroParameters to retrieve approach,
+    retract or clearance group of paths from an activity</li>
+  <li>Using methods of CATIMfgActivityMacroMotion to access to each elementary
+    macro motion from a group of paths</li>
+  <li>Using methods of CATIMfgActivityElementaryMotion to access data from an
+    elementary macro motion</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Sample of interfaces use</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAEMaiMacroAccess.h&quot;
+#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATListOfCATUnicodeString.h&quot;
+// Manufacturing Interfaces
+#include &quot;CATIMfgActivity.h&quot;
+#include &quot;CATIMfgActivityMacroParameters.h&quot;
+#include &quot;CATIMfgActivityMacroMotion.h&quot;
+#include &quot;CATIMfgActivityElementaryMotion.h&quot;
+// Mathematics
+#include &quot;CATMathPlane.h&quot;
+#include &quot;CATMathPoint.h&quot;
+#include &quot;CATMathVector.h&quot;
+//-----------------------------------------------------------------------------
+// Constructor
+//-----------------------------------------------------------------------------
+CAAEMaiMacroAccess::CAAEMaiMacroAccess(const CATIMfgActivity_var   &amp;iActivity)
+{
+	_iActivity=iActivity;
+}
+//-----------------------------------------------------------------------------
+// Destructor
+//-----------------------------------------------------------------------------
+
+CAAEMaiMacroAccess::~CAAEMaiMacroAccess()
+{
+}
+//-----------------------------------------------------------------------------
+// GetMacroDatas
+//-----------------------------------------------------------------------------
+HRESULT CAAEMaiMacroAccess::GetMacroDatas()
+{
+  HRESULT RC = E_FAIL;
+
+  CATListOfCATUnicodeString ListeCAAMacroTypes;
+
+  ListeCAAMacroTypes.Append(&quot;MfgApproachMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgRetractMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgReturnOneLevelMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgReturnTwoLevelMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgLinkingMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgReturnFinishPathMacro&quot;);
+  ListeCAAMacroTypes.Append(&quot;MfgClearanceMacro&quot;);
+  
+  CATIMfgActivityMacroParameters_var ParamMacro(_iActivity);
+  
+  if (NULL_var != ParamMacro)
+  {
+	  
+	  for ( int K = 1; K &lt;= ListeCAAMacroTypes.Size(); K++)
+	  {
+		  // Reading  Macro on  Activity with Type : ListeCAAMacroTypes[K].ConvertToChar() 
+		  
+		  
+		  //
+		  int oActive=0;
+		  RC=ParamMacro-&gt;IsActive (K,oActive);
+		  //			
+		  if (SUCCEEDED(RC) &amp;&amp; oActive==1)
+		  {
+			  if (K != ListeCAAMacroTypes.Size())
+			  {
+				  
+				  // for all types of macros except clearance
+				  // access to macro motions
+				  for ( int MotionNature= 1; MotionNature&lt;=2 ;MotionNature++)
+				  {	
+					  CATBaseUnknown_var BU1;
+					  if (MotionNature==1)
+					  {
+						  // Reading Retract Part of Macro  
+						  RC = ParamMacro-&gt;GetRetractMacroMotions(K,BU1);
+						  
+					  }
+					  else if (MotionNature==2)
+					  {
+						  // Reading Approach Part of Macro 
+						  RC = ParamMacro-&gt;GetApproachMacroMotions(K,BU1);
+						  
+					  }									
+					  
+					  if (SUCCEEDED(RC)) 
+					  {
+						  CATIMfgActivityMacroMotion_var MacroMotion(BU1);
+						  if (NULL_var != MacroMotion)
+						  {
+							  
+							  // Access to elementary motions of MacroMotion
+							  
+							  int MacroType=K;
+							  RC=this-&gt;ReadElementaryMotionDatas(MacroType,MacroMotion);
+						  }
+					  }
+				  }
+			  }
+			  else
+			  {
+				  CATBaseUnknown_var BU1;
+				  HRESULT RC;
+				  // Access to Clearance           
+				  RC = ParamMacro-&gt;GetClearanceMacroMotions(BU1);
+				  
+				  if (SUCCEEDED(RC)) 
+				  {
+					  CATIMfgActivityMacroMotion_var MacroMotion(BU1);
+					  if (NULL_var != MacroMotion)
+					  {
+						  int oMode=0;
+						  // Access to clerance mode
+						  RC=  MacroMotion-&gt;GetClearanceMode  (oMode); 
+						  if (SUCCEEDED(RC)) 
+						  {
+							  
+							  if (oMode==1)
+							  {
+								  // clearance mode = distance
+								  double oDist=0.0;
+								  RC=  MacroMotion-&gt;GetClearanceDistance  (oDist); 
+								  
+							  }
+							  
+						  }
+						  int MacroType=K;
+						  RC=this-&gt;ReadElementaryMotionDatas(MacroType,MacroMotion);
+					  }
+				  }
+			  }
+		  }
+	  }
+  }
+  
+  return RC;
+}
+//-----------------------------------------------------------------------------
+// ReadElementaryMotionData - read datas on elementary macro motions 
+//-----------------------------------------------------------------------------
+HRESULT CAAEMaiMacroAccess::ReadElementaryMotionDatas(const int &amp; iTypeMacro, 
+						      CATIMfgActivityMacroMotion_var&amp; MacroMotion)                                          
+{
+	HRESULT RC = E_FAIL;
+	
+	int oNumber;
+	RC=MacroMotion-&gt;GetNumberOfElementaryMotions(oNumber);
+	if (SUCCEEDED(RC)) 
+	{
+		// for all macro types except clearance
+		if (iTypeMacro != 7)
+		{
+			// loop on each elementary macro motion of MacroMotion
+			for (int iPos = 1; iPos &lt;= oNumber; iPos++)
+			{
+				CATBaseUnknown_var BU2; 
+				RC= MacroMotion-&gt;GetElementaryMotion  (iPos,BU2);
+				if (SUCCEEDED(RC)) 
+				{
+					CATIMfgActivityElementaryMotion_var ElementaryMotion(BU2);
+					if (NULL_var != ElementaryMotion)
+					{
+						
+						int oActive=0;
+						int oType=0;
+						RC=ElementaryMotion-&gt;IsActive(oActive);
+						if (SUCCEEDED(RC) ) 
+						{
+							
+							RC = ElementaryMotion-&gt;GetElementaryMotionType(oType);
+							
+						}
+						
+						// the motion must be active to be taken into account
+						if (SUCCEEDED(RC) &amp;&amp; oActive==1) 
+						{							
+							
+							if (oType==1 || oType==2 || oType==8)
+							{
+								// horizontal - axial 
+								double oDist=0.0;
+								RC = ElementaryMotion-&gt;GetDistanceValue(oDist);
+								
+							}
+							if (oType==6)
+							{
+								// goto plane
+								CATMathPlane oPlane;
+								RC = ElementaryMotion-&gt;GetMotionPlane(oPlane);
+								
+								
+							}
+							if (oType==4)
+							{
+								// PP
+                                CATListOfCATUnicodeString oPPWordList;
+								RC = ElementaryMotion-&gt;GetPPWordList(oPPWordList);
+								
+								if (SUCCEEDED(RC)) 
+								{	
+									int NbOfPPWords=oPPWordList.Size();
+									
+								}								
+								
+							}
+							if (oType==2)
+							{
+								// horizontal motion (equivalent to tangent - normal motion icons in macro tabpage in
+								// activity Panel editor
+								double oHAngle=0.0;
+								RC = ElementaryMotion-&gt;GetHorizontalAngleValue(oHAngle);
+								if (SUCCEEDED(RC)) 
+								{	
+									double oVAngle=0.0;
+									RC = ElementaryMotion-&gt;GetVerticalAngleValue(oVAngle);
+									
+								}
+							}
+							if (oType==3)
+							{
+								// circle motion
+								double oSector=0.0;
+								double oOrientAngle=0.0;
+								double oRadius=0.0;
+								RC = ElementaryMotion-&gt;GetAngularSectorValue(oSector);
+								if (SUCCEEDED(RC)) 
+								{	
+									RC = ElementaryMotion-&gt;GetAngularOrientationValue(oOrientAngle);
+									if (SUCCEEDED(RC)) 
+									{
+										RC = ElementaryMotion-&gt;GetCircleRadiusValue(oRadius);
+									}
+									
+								}								
+								
+							}
+							if (oType==5)
+							{
+								// ramping motion
+								double oRampAngle=0.0;
+								double oHDist=0.0;
+								double oVDist=0.0;
+								RC = ElementaryMotion-&gt;GetRampingAngleValue(oRampAngle);
+								if (SUCCEEDED(RC)) 
+								{	
+									RC = ElementaryMotion-&gt;GetHorizontalSafetyDistanceValue(oHDist);
+									if (SUCCEEDED(RC)) 
+									{	
+										RC = ElementaryMotion-&gt;GetVerticalSafetyDistanceValue(oVDist);
+									}
+									
+								}																
+								
+							}
+						}
+					}
+					int oFeedType=-1;
+					RC = ElementaryMotion-&gt;GetFeedrateType(oFeedType);
+					if (SUCCEEDED(RC)) 
+					{							
+						
+						if (oFeedType==5)
+						{
+							// local feedrate : access to feedrate value
+                            double oFeedValue;
+							RC=ElementaryMotion-&gt;GetFeedrateValue(oFeedValue);
+							
+						}
+					}
+					
+					int oSpeedType=-1;
+					RC = ElementaryMotion-&gt;GetSpindleSpeedType(oSpeedType);
+					if (SUCCEEDED(RC)) 
+					{							
+						if (oSpeedType==5)
+						{
+							// access to local value
+                            double oSpeedValue;
+							RC=ElementaryMotion-&gt;GetSpindleSpeedValue(oSpeedValue);
+						}
+					}
+					
+				}
+			}
+		}
+	}   
+	return RC;	
+   
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes on macro access.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [December 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

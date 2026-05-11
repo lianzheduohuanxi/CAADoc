@@ -1,0 +1,600 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>importMaterialLibrary.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:		Import a material library from a text file</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Version:		1.0</font>
+<font color="#008000">'   Author:			BMB</font>
+<font color="#008000">'   Languages:		CATScript </font>
+<font color="#008000">'   Locales:		English </font>
+<font color="#008000">'   CATIA Level:	V5R12 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#008000">' Main </font>
+<font color="#0000FF">Sub </font>CATMain()
+
+	<font color="#008000">' Get the file system object</font>
+	Dim oFileSys<font color="#0000FF"> as </font>FileSystem
+	Set oFileSys = CATIA.FileSystem
+
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox "A new material library document must be active to execute this macro.", vbOKOnly, "Import Material Library"
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oCat<font color="#0000FF"> As </font>Document
+	Set oCat = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oCat.Name, ".CATMaterial") Then
+		msgbox "A new material library document must be active to execute this macro.", vbOKOnly, "Import Material Library"
+		Exit Sub
+	End If
+
+	<font color="#008000">' Get name of the material library text file</font>
+	Dim sAnswer<font color="#0000FF"> As </font>String
+	sAnswer = CATIA.FileSelectionBox("Select a material library text file", "*.matlib", CatFileSelectionModeOpen)
+
+	If ""&lt;&gt;sAnswer Then ' CANCEL
+		
+		<font color="#008000">' Determine the file separator</font>
+		Dim sSep<font color="#0000FF"> As </font>String
+		sSep = oFileSys.FileSeparator
+
+		<font color="#008000">' Create the material library text file</font>
+		Dim oFileIn<font color="#0000FF"> As </font>File    
+		Set oFileIn = oFileSys.GetFile(sAnswer)
+		Dim oStream<font color="#0000FF"> As </font>TextStream
+		Set oStream = oFileIn.OpenAsTextStream("ForReading")
+
+		<font color="#008000">' Get the icon folder path</font>
+		Dim sFolderIcon<font color="#0000FF"> As </font>String
+		sFolderIcon = Left(sAnswer, InstrRev(sAnswer, sSep)-1) 
+
+		<font color="#008000">' Declarations and initializations</font>
+		Dim sLine<font color="#0000FF"> As </font>String
+		Dim sParam<font color="#0000FF"> As </font>String
+		Dim sValue<font color="#0000FF"> As </font>String
+		Dim sBuffer<font color="#0000FF"> As </font>String
+		Dim iInc<font color="#0000FF"> As </font>Int <font color="#008000">' counter of line</font>
+		iInc = 0
+		Dim iCurLevel<font color="#0000FF"> As </font>Int <font color="#008000">' current param level </font>
+		iCurLevel = 0
+		Dim bMinimumDone<font color="#0000FF"> As </font>Boolean <font color="#008000">' is TRUE if the file contains at least 1 LIBRARY and 1 FAMILY</font>
+		bMinimumDone = False
+		Dim bFirstLibMat<font color="#0000FF"> As </font>Boolean <font color="#008000">' is TRUE until the NewFamily and the NewMaterial haven't been initialized</font>
+		bFirstLibMat = True
+
+		Dim oFamilies<font color="#0000FF"> As </font>MaterialFamilies
+		Dim oFamily<font color="#0000FF"> As </font>MaterialFamily
+		Dim oMaterials<font color="#0000FF"> As </font>Materials
+		Dim oMaterial<font color="#0000FF"> As </font>Material
+		Dim oRenderingMaterial<font color="#0000FF"> As </font>RenderingMaterial
+		Dim oAnalysisMaterial<font color="#0000FF"> As </font>AnalysisMaterial
+		Dim aTab(2)<font color="#0000FF"> As </font>Double
+		Dim aTabString<font color="#0000FF"> As </font>Array
+		Dim aTabString2<font color="#0000FF"> As </font>Array
+		Dim iNumDouble<font color="#0000FF"> As </font>Double
+		Dim iNumInt<font color="#0000FF"> As </font>Int
+		Dim K<font color="#0000FF"> As </font>Int
+
+
+		<font color="#008000">' Read the input file line by line</font>
+		Do Until oStream.AtEndOfStream
+
+			<font color="#008000">' Read the current line</font>
+			sLine = oStream.ReadLine
+
+			sBuffer = Left(sLine, 1)
+
+			<font color="#008000">' Test if the line is empty or a comment</font>
+			If 0&lt;&gt;StrComp(sBuffer, "#") And 0&lt;Len(sBuffer) And 0&lt;&gt;FindChar(sLine) Then
+				
+				<font color="#008000">' Parse the line, determine param and value</font>
+				If 0=ParseLine(sLine, sParam, sValue)<font color="#0000FF"> Then </font><font color="#008000">' test for syntax error</font>
+					SYNTAX_ERROR iInc
+					Exit Sub
+				Else
+					<font color="#008000">' special case for the first param (LIBRARY)</font>
+					If iCurLevel=0 And 0&lt;&gt;StrComp(sParam, "LIBRARY") Then
+						SEMANTIC_ERROR iCurLevel
+						Exit Sub
+					Else
+						If 0&lt;&gt;iCurLevel<font color="#0000FF"> Then</font>
+							If LevelParam(sParam) &gt; iCurLevel<font color="#0000FF"> Then </font><font color="#008000">' test for semantic error</font>
+								SEMANTIC_ERROR iCurLevel
+								Exit Sub
+							Else
+								If 0&lt;&gt;StrComp(sParam, "FAMILY") Then
+									bMinimumDone = True
+								End If
+
+								<font color="#008000">' case with no error</font>
+								If 0=StrComp(sParam, "FAMILY") Then ' FAMILY treatment
+									<font color="#008000">' Init families</font>
+									Set oFamilies = oCat.Families
+									<font color="#008000">' Init the new family</font>
+									Set oFamily = oFamilies.Add
+									<font color="#008000">' Affect name</font>
+									oFamily.Name = sValue
+								Else
+									If 0=StrComp(sParam, "MATERIAL") Then ' MATERIAL treatment
+										<font color="#008000">' Init materials</font>
+										Set oMaterials = oFamily.Materials
+										<font color="#008000">' Init the new material</font>
+										Set oMaterial = oMaterials.Add
+										<font color="#008000">' Affect name</font>
+										oMaterial.Name = sValue
+										<font color="#008000">' Affect icon</font>
+										If oFileSys.FileExists(sFolderIcon & sSep & oFamily.Name & sSep & oMaterial.Name & ".jpg") Then
+											oMaterial.PutIcon(sFolderIcon & sSep & oFamily.Name & sSep) <font color="#008000">' & oMaterial.Name & ".jpg")</font>
+										End If
+									Else
+										If 0=StrComp(sParam, "PROPERTY") Then ' PROPERTY treatment
+
+											If 0=StrComp(sValue, "Rendering") Then ' rendering case
+												<font color="#008000">' Add rendering data on the new material</font>
+												Set oRenderingMaterial = oMaterial.CreateRenderingData
+											End If
+											If 0=StrComp(sValue, "AnalysisIsotropic") Then ' AnalysisIsotropic case
+												<font color="#008000">' Add Analysis data on the new material</font>
+												Set oAnalysisMaterial = oMaterial.CreateAnalysisData("SAMIsotropicMaterial")
+											End If
+											If 0=StrComp(sValue, "AnalysisOrthotropic") Then ' AnalysisOrthotropic case
+												<font color="#008000">' Add Analysis data on the new material</font>
+												Set oAnalysisMaterial = oMaterial.CreateAnalysisData("SAMOrthotropicMaterial")
+											End If
+
+										Else <font color="#008000">' AmbientCoefficient, DiffuseCoefficient, ... treatment</font>
+
+											<font color="#008000">' one variable mode (format: var)</font>
+											If 0=StrComp(sParam, "MAPPINGTYPE") Then
+												oRenderingMaterial.MappingType = sValue
+											End If
+											If oRenderingMaterial.MappingType = 5<font color="#0000FF"> Then </font><font color="#008000">' Manual mapping</font>
+												If 0=StrComp(sParam, "ADAPTIVECOEFF") Then
+													oRenderingMaterial.AdaptiveCoeff = sValue
+												End If
+											End If
+											If 0=StrComp(sParam, "PREVIEWSIZE") Then
+												oRenderingMaterial.PreviewSize = sValue
+											End If
+											If 0=StrComp(sParam, "AMBIENTCOEFFICIENT") Then
+												oRenderingMaterial.AmbientCoefficient = sValue
+											End If
+											If 0=StrComp(sParam, "DIFFUSECOEFFICIENT") Then
+												oRenderingMaterial.DiffuseCoefficient = sValue
+											End If
+											If 0=StrComp(sParam, "SPECULARCOEFFICIENT") Then
+												oRenderingMaterial.SpecularCoefficient = sValue
+											End If
+											If 0=StrComp(sParam, "SPECULAREXPONENT") Then
+												oRenderingMaterial.SpecularExponent = sValue
+											End If
+											If 0=StrComp(sParam, "TRANSPARENCYCOEFFICIENT") Then
+												oRenderingMaterial.TransparencyCoefficient = sValue
+											End If
+											If 0=StrComp(sParam, "REFRACTIONCOEFFICIENT") Then
+												oRenderingMaterial.RefractionCoefficient = sValue 
+											End If
+											If 0=StrComp(sParam, "REFLECTIVITYCOEFFICIENT") Then
+												oRenderingMaterial.ReflectivityCoefficient = sValue
+											End If
+											If 0=StrComp(sParam, "ENVIRONMENTIMAGE") Then
+												oRenderingMaterial.EnvironmentImage = sValue
+											End If
+											If 0=StrComp(sParam, "REFLECTIONMODE") Then
+												oRenderingMaterial.ReflectionMode = sValue
+											End If
+											If 4=oRenderingMaterial.ReflectionMode<font color="#0000FF"> Then </font><font color="#008000">' 4=CUSTOM</font>
+												If 0=StrComp(sParam, "REFLECTIONHEIGHT") Then
+													oRenderingMaterial.ReflectionHeight = sValue
+												End If
+												If 0=StrComp(sParam, "REFLECTIONLENGTH") Then
+													oRenderingMaterial.ReflectionLength = sValue
+												End If
+											End If
+											If 0=StrComp(sParam, "TEXTURETYPE") Then
+												oRenderingMaterial.TextureType = sValue
+											End If
+											If 0=StrComp(sParam, "BUMP") Then
+												oRenderingMaterial.Bump = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTUREIMAGE") Then
+												oRenderingMaterial.TextureImage = sValue
+											End If
+											If 0=StrComp(sParam, "FLIPU") Then
+												oRenderingMaterial.FlipU = sValue
+											End If
+											If 0=StrComp(sParam, "FLIPV") Then
+												oRenderingMaterial.FlipV = sValue
+											End If
+											If 0=StrComp(sParam, "REPEATU") Then
+												oRenderingMaterial.RepeatU = sValue
+											End If
+											If 0=StrComp(sParam, "REPEATV") Then
+												oRenderingMaterial.RepeatV = sValue
+											End If
+											If 0=StrComp(sParam, "SCALEU") Then
+												oRenderingMaterial.ScaleU = sValue
+											End If
+											If 0=StrComp(sParam, "SCALEV") Then
+												oRenderingMaterial.ScaleV = sValue
+											End If
+											If 0=StrComp(sParam, "POSITIONU") Then
+												oRenderingMaterial.PositionU = sValue
+											End If
+											If 0=StrComp(sParam, "POSITIONV") Then
+												oRenderingMaterial.PositionV = sValue
+											End If
+											If 0=StrComp(sParam, "ORIENTATION") Then
+												oRenderingMaterial.Orientation = sValue
+											End If
+											If 0=StrComp(sParam, "COLORNUMBER") Then
+												oRenderingMaterial.ColorNumber = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTURECOMPLEXITY") Then
+												oRenderingMaterial.TextureComplexity = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTUREAMPLITUDE") Then
+												oRenderingMaterial.TextureAmplitude = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTUREVEINAMPLITUDE") Then
+												oRenderingMaterial.TextureVeinAmplitude = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTUREPERTURBATION") Then
+												oRenderingMaterial.TexturePerturbation = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTUREGAIN") Then
+												oRenderingMaterial.TextureGain = sValue
+											End If
+											If 0=StrComp(sParam, "TEXTURETURBULENCE") Then
+												oRenderingMaterial.TextureTurbulence = sValue
+											End If
+											If 0=StrComp(sParam, "CHESSBOARDTILEWIDTH") Then
+												oRenderingMaterial.ChessboardTileWidth = sValue
+											End If
+											If 0=StrComp(sParam, "CHESSBOARDTILEHEIGHT") Then
+												oRenderingMaterial.ChessboardTileHeight = sValue
+											End If
+											If 0=StrComp(sParam, "CHESSBOARDOFFSET") Then
+												oRenderingMaterial.ChessboardOffset = sValue
+											End If
+											If 0=StrComp(sParam, "CHESSBOARDJOINTWIDTH") Then
+												oRenderingMaterial.ChessboardJointWidth = sValue
+											End If
+											If 0=StrComp(sParam, "CHESSBOARDJOINTHEIGHT") Then
+												oRenderingMaterial.ChessboardJointHeight = sValue
+											End If
+
+											<font color="#008000">' array mode (format: var/var/var)</font>
+											If 0=StrComp(sParam, "AMBIENTCOLOR") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.PutAmbientColor aTab
+											End If
+											If 0=StrComp(sParam, "DIFFUSECOLOR") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.PutDiffuseColor aTab 
+											End If
+											If 0=StrComp(sParam, "SPECULARCOLOR") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.PutSpecularColor aTab 
+											End If
+											If 0=StrComp(sParam, "TRANSPARENCYCOLOR") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.PutTransparencyColor aTab 
+											End If
+											If 0=StrComp(sParam, "3DTEXTURESCALE") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.Put3DTextureScale aTab 
+											End If
+											If 0=StrComp(sParam, "3DTEXTUREPOSITION") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.Put3DTexturePosition aTab 
+											End If
+											If 0=StrComp(sParam, "3DTEXTUREORIENTATION") Then
+												aTabString = Split(sValue, "/")
+												aTab(0) = CDbl(aTabString(0))
+												aTab(1) = CDbl(aTabString(1))
+												aTab(2) = CDbl(aTabString(2))
+												oRenderingMaterial.Put3DTextureOrientation aTab 
+											End If
+
+											<font color="#008000">' index mode (format: :i:var/var/var:i:var/var/var... OU :i:var:i:var...)</font>
+											If 0=StrComp(sParam, "3DTEXTURECOLOR") Then
+												aTabString = Split(sValue, ":")
+												For K = 0<font color="#0000FF"> To </font>oRenderingMaterial.ColorNumber-1
+													aTabString2 = Split(aTabString(2*K+2), "/")
+													aTab(0) = CDbl(aTabString2(0))
+													aTab(1) = CDbl(aTabString2(1))
+													aTab(2) = CDbl(aTabString2(2))
+													oRenderingMaterial.Put3DTextureColor CInt(aTabString(2*K+1)), aTab
+												Next
+											End If
+											If 0=StrComp(sParam, "3DTEXTURECOLORCOEFFICIENT") Then
+												aTabString = Split(sValue, ":")
+												For K = 0<font color="#0000FF"> To </font>oRenderingMaterial.ColorNumber-1
+													oRenderingMaterial.Put3DTextureColorCoefficient CInt(aTabString(2*K+1)), CDbl(aTabString(2*K+2))
+												Next
+											End If
+
+											<font color="#008000">' Analysis variable</font>
+											
+											If 0=StrComp(sParam, "SAMDENSITY") Then
+												oAnalysisMaterial.PutValue "SAMDensity", sValue 
+											End If
+											<font color="#008000">' Isotropic properties	</font>
+											If 0=StrComp(sParam, "SAMTHERMALEXPANSION") Then
+												oAnalysisMaterial.PutValue "SAMThermalExpansion", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMYOUNGMODULUS") Then
+												oAnalysisMaterial.PutValue "SAMYoungModulus", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMPOISSONRATIO") Then
+												oAnalysisMaterial.PutValue "SAMPoissonRatio", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMSHEARMODULUS") Then
+												oAnalysisMaterial.PutValue "SAMShearModulus", sValue 
+											End If
+											<font color="#008000">' Orthotropic properties	</font>
+											If 0=StrComp(sParam, "SAMYOUNGMODULUS_11") Then
+												oAnalysisMaterial.PutValue "SAMYoungModulus_11", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMYOUNGMODULUS_22") Then
+												oAnalysisMaterial.PutValue "SAMYoungModulus_22", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMPOISSONRATIO_12") Then
+												oAnalysisMaterial.PutValue "SAMPoissonRatio_12", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMSHEARMODULUS_12") Then
+												oAnalysisMaterial.PutValue "SAMShearModulus_12", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMSHEARMODULUS_1Z") Then
+												oAnalysisMaterial.PutValue "SAMShearModulus_1Z", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMSHEARMODULUS_2Z") Then
+												oAnalysisMaterial.PutValue "SAMShearModulus_2Z", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMTENSILESTRESSLIMIT_X") Then
+												oAnalysisMaterial.PutValue "SAMTensileStressLimit_X", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMTENSILESTRESSLIMIT_Y") Then
+												oAnalysisMaterial.PutValue "SAMTensileStressLimit_Y", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMCOMPRESSIVESTRESSLIMIT_X") Then
+												oAnalysisMaterial.PutValue "SAMCompressiveStressLimit_X", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMCOMPRESSIVESTRESSLIMIT_Y") Then
+												oAnalysisMaterial.PutValue "SAMCompressiveStressLimit_Y", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMTHERMALEXPANSION_X") Then
+												oAnalysisMaterial.PutValue "SAMThermalExpansion_X", sValue 
+											End If
+											If 0=StrComp(sParam, "SAMTHERMALEXPANSION_Y") Then
+												oAnalysisMaterial.PutValue "SAMThermalExpansion_Y", sValue 
+											End If
+
+										End If
+									End If
+								End If
+							End If
+						End If
+						<font color="#008000">' update the level</font>
+						iCurLevel = LevelParam(sParam) +1
+					End If
+				End If
+			End If
+			iInc = iInc +1
+		Loop
+
+		If bMinimumDone=False<font color="#0000FF"> Then</font>
+			msgbox "ERROR : input file must contain at least 1 LIBRARY and 1 FAMILY", vbOKOnly, "Import Material Library"
+			Exit Sub
+		End If
+
+		<font color="#008000">' Save the new CATMaterial</font>
+		<font color="#008000">'oCat.SaveAs(Left(sAnswer, InStr(sAnswer, ".matlib")-1) & ".CATMaterial")</font>
+
+		<font color="#008000">' End message</font>
+		<font color="#008000">'msgbox "Operation succeed." & Chr(10) & "The material library has been saved at this location :" & Chr(10) & Chr(10) & Left(sAnswer, InStr(sAnswer, ".matlib")-1) & ".CATMaterial", vbOKOnly, "Import Material Library"</font>
+		msgbox "Operation succeed." & Chr(10) & "The material library has been imported.", vbOKOnly, "Import Material Library"
+
+	End If
+<font color="#0000FF">End Sub</font>
+
+
+
+
+<font color="#008000">'************************************************************************************</font>
+<font color="#008000">'	Subs and Functions code</font>
+<font color="#008000">'************************************************************************************</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	ParseLine</font>
+<font color="#008000">'	Parse a line with the format "PARAM=Value" and return the PARAM and the Value</font>
+<font color="#008000">'	Return 0 if there is a syntax error on the line</font>
+<font color="#008000">'	Return 1 either</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Function ParseLine(ByVal sLine<font color="#0000FF"> As </font>String, sParam, sValue)<font color="#0000FF"> As </font>Int
+
+	<font color="#008000">' Test the line format</font>
+	If 0=InStr(sLine, "=") Then
+		ParseLine = 0
+		Exit Function
+	Else
+		If FindChar(sLine)=InStr(sLine, "=") Or _
+			0=StrComp(Mid(sLine, InStr(sLine, "=")-1, 1), Chr(9)) Or _
+			0=StrComp(Mid(sLine, InStr(sLine, "=")-1, 1), " ") Or _
+			0=StrComp(Mid(sLine, InStr(sLine, "=")+1, 1), Chr(9)) Or _
+			0=StrComp(Mid(sLine, InStr(sLine, "=")+1, 1), " ") Then
+			ParseLine = 0
+			Exit Function
+		Else
+			sParam = UCase(Mid(sLine, FindChar(sLine), InStr(sLine, "=")-FindChar(sLine)))
+			sValue = Mid(sLine, InStr(sLine, "=")+1, FindCharLeft(sLine)-InStr(sLine, "="))
+			ParseLine = 1
+		End If
+	End If
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	FindChar</font>
+<font color="#008000">'	Return the position of the first character which is not a space or a tab in a string</font>
+<font color="#008000">'	Return 0 either</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Function FindChar(ByVal sLine<font color="#0000FF"> As </font>String)<font color="#0000FF"> As </font>Int
+
+	Dim iCount<font color="#0000FF"> As </font>Int
+
+	FindChar = 0
+
+	For iCount = 1<font color="#0000FF"> To </font>Len(sLine)
+		<font color="#008000">' Avoid the space and tab characters</font>
+		If 0&lt;&gt;StrComp(Mid(sLine, iCount, 1), Chr(9)) And 0&lt;&gt;StrComp(Mid(sLine, iCount, 1), " ") Then
+			FindChar = iCount
+			Exit For
+		End If
+	Next
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	FindCharLeft</font>
+<font color="#008000">'	Return the position of the first character which is not a space or a tab in a string</font>
+<font color="#008000">'		starting at the left</font>
+<font color="#008000">'	Return 0 either</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Function FindCharLeft(ByVal sLine<font color="#0000FF"> As </font>String)<font color="#0000FF"> As </font>Int
+
+	Dim iCount<font color="#0000FF"> As </font>Int
+
+	FindCharLeft = 0
+
+	For iCount = Len(sLine)<font color="#0000FF"> To </font>1 Step -1
+		<font color="#008000">' Avoid the space and tab characters</font>
+		If 0&lt;&gt;StrComp(Mid(sLine, iCount, 1), Chr(9)) And 0&lt;&gt;StrComp(Mid(sLine, iCount, 1), " ") Then
+			FindCharLeft = iCount
+			Exit For
+		End If
+	Next
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	LevelParam</font>
+<font color="#008000">'	Return the level of a param</font>
+<font color="#008000">'	0 -&gt; LIBRARY</font>
+<font color="#008000">'	1 -&gt; FAMILY</font>
+<font color="#008000">'	2 -&gt; MATERIAL</font>
+<font color="#008000">'	3 -&gt; PROPERTY</font>
+<font color="#008000">'	4 -&gt; AmbientCoefficient, DiffuseCoefficient, ..., AnyWord</font>
+<font color="#008000">'	-1 if the param is empty</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Function LevelParam(ByVal sParam<font color="#0000FF"> As </font>String)<font color="#0000FF"> As </font>Int
+
+	If 0=StrComp(sParam, "LIBRARY") Then
+		LevelParam = 0
+	Else
+		If 0=StrComp(sParam, "FAMILY") Then
+			LevelParam = 1
+		Else
+			If 0=StrComp(sParam, "MATERIAL") Then
+				LevelParam = 2
+			Else
+				If 0=StrComp(sParam, "PROPERTY") Then
+					LevelParam = 3
+				Else
+					If 0&lt;Len(sParam)<font color="#0000FF"> Then</font>
+						LevelParam = 4
+					Else 
+						LevelParam = -1
+					End If
+				End If
+			End If
+		End If
+	End If
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	SYNTAX_ERROR</font>
+<font color="#008000">'	Stop the program and indicate the line error</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Sub SYNTAX_ERROR(ByVal iInc<font color="#0000FF"> As </font>Int)
+	msgbox "SYNTAX ERROR : on line " & iInc, vbOKOnly, "Import Material Library"
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	SEMANTIC_ERROR</font>
+<font color="#008000">'	Stop the program and indicate the word expected</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Sub SEMANTIC_ERROR(ByVal iLevel<font color="#0000FF"> As </font>Int)
+
+	Dim sMsg<font color="#0000FF"> As </font>String
+
+	sMsg = "SEMANTIC ERROR : "
+
+	Select Case iLevel
+		Case 0
+			sMsg = sMsg & "LIBRARY"
+		Case 1
+			sMsg = sMsg & "FAMILY"
+		Case 2
+			sMsg = sMsg & "FAMILY or MATERIAL"
+		Case 3
+			sMsg = sMsg & "FAMILY or MATERIAL or PROPERTY"
+		Case 4
+			sMsg = sMsg & "FAMILY or MATERIAL or PROPERTY or AmbientCoefficient or ..."
+	End Select
+
+	sMsg = sMsg & " was expected"
+
+	msgbox sMsg, vbOKOnly, "Import Material Library"
+
+<font color="#0000FF">End Sub</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></body></html>

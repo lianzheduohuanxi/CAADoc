@@ -1,0 +1,485 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Setting Repositories and Attributes</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Setting Repositories and Attributes</h3>
+      <em>How to save and get setting attributes and values</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Setting attributes are used to store values and attributes set by the
+      user and managed in setting repositories, and stored between working
+      sessions in one or several setting files. This article explains how to
+      create and use settings.
+      <ul>
+        <li><a href="#100000"><strong>What Are Setting Attributes and
+          Repositories?</strong></a></li>
+        <li><a href="#100001"><b>Basic Setting Rules</a></b></li>
+        <li><a href="#200000"><strong>A Setting Example</strong></a></li>
+        <li><strong><a href="#300000">How Do Setting Repositories and Attributes
+          Work?</a></strong>
+          <ul>
+            <li><a href="#310000">Saving and Restoring Application Objects using
+              Setting Attributes</a></li>
+            <li><a href="#320000">Saving and Restoring Setting Repositories</a></li>
+          </ul>
+        </li>
+        <li><a href="#400000"><strong>Saving and Restoring Simple Type Variables</strong></a></li>
+        <li><strong><a href="#700000">Setting Attributes Programming Tasks</a></strong>
+          <ul>
+            <li><a href="#710000">Creating or Retrieving a Setting Repository</a></li>
+            <li><a href="#720000">Creating or Reading a Setting Attribute</a></li>
+            <li><a href="#730000">Writing a Setting Attribute</a></li>
+            <li><a href="#740000">Searching For a Setting Attribute</a></li>
+            <li><a href="#750000">Deleting a Setting Attribute</a></li>
+            <li><a href="#760000">Listing Setting Attributes</a></li>
+            <li><a href="#770000">Saving/Restoring a Setting Repository to/from
+              a Memory Area</a></li>
+            <li><a href="#780000">Saving a Setting Repository to a Disk File</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Are Setting Attributes and Repositories?</h3>
+<p>Setting attributes provide an easy way for applications to store and retrieve
+default values and last used values, or values to save and restore upon request,
+for the parameters or objects they use.</p>
+<p>Setting attributes are stored in one or several setting repositories,
+instances of the class <code>CATSettingRepository</code>. Each setting
+repository has a unique name used by the application to access it. The
+application sees the setting repository as an aggregate of named attributes
+which gathers copies of all the parameters or objects the application has
+decided to save.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+Even if the setting attributes are objects, you can not handle setting
+attributes as objects, that is you cannot instantiate them using a constructor,
+use the new and delete operators, and use their methods. You will see them only
+as named attributes.</p>
+<p>A setting repository instance can be saved in memory for temporary storage
+using a commit/rollback mechanism, and in a file for persistent storage.</p>
+<p>The base class for setting repositories is <code>CATSettingRepository</code>.
+The application should instantiate this class to create its own setting
+repository.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h3><a name="100001"></a>Basic Setting Rules</h3>
+<p>The following rules apply to setting attributes:</p>
+<ol>
+  <li>Keep the meaning of an attribute defined in an earlier version</li>
+  <li>Define the default value of an attribute once</li>
+  <li>Never modify a setting attribute value out of the Options command of the
+    Tools menu</li>
+  <li>Always store the attributes of a given Options command property page in
+    the same setting file</li>
+  <li>Any parameter storing a file or directory pathname must accept environment
+    variables and DLNames to make up the pathname</li>
+  <li>Any parameter displayed in an Options command property page must be
+    lockable and restorable.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="200000"></a>A Setting Example</h3>
+<p>This example uses the simple types <code>integer</code> and <code>float</code>.
+The example is split in several parts to give full explanations on each part.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATSettingRepository.h&quot;
+...
+  int length=10;
+
+  CATSettingRepository * SampleRepository; // instantiate a repository
+
+  SampleRepository =                       // get a repository by its name 
+         CATSettingRepository::GetRepository(&quot;sample&quot;);
+                                           // read settings
+  SampleRepository-&gt;ReadSetting(&quot;LengthSetting&quot;,&amp;length);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The setting repository <code>SampleRepository</code> is instantiated, and
+then assigned the values retrieved from the file <code>sample</code><code>.CATSettings</code>.
+If <code>sample</code><code>.CATSettings</code> exists as a disk file in one of
+the directories whose pathnames are declared using the <code>CATUserSettingPath</code>
+and <code>CATReferenceSettingPath</code> environment variables, it is copied
+into <code>SampleRepository</code>. Otherwise <code>SampleRepository</code>
+remains empty and can be used after being filled in to create the disk file <code>sample</code><code>.CATSettings</code>
+using the method <code>SaveRepository</code>.</p>
+<p>The method <code>ReadSetting</code> assigns the value of the setting
+attribute <code>LengthSetting</code> to the variable <code>length</code>. If <code>LengthSetting</code>
+does not exist, <code>ReadSetting</code> executes first the method <code>WriteSetting</code>
+with the current value of <code>length</code> to initialize <code>LengthSetting</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int newlength;
+  SampleRepository-&gt;ReadSetting(&quot;LengthSetting&quot;,
+                                &amp;newlength);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>ReadSetting</code> assigns the value saved in the setting
+attribute <code>LengthSetting</code> to <code>newlength</code> which is thus set
+to 10.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  SampleRepository-&gt;Commit();
+  length=11;
+  SampleRepository-&gt;WriteSetting(&quot;LengthSetting&quot;,&amp;length);
+  SampleRepository-&gt;Rollback();
+  SampleRepository-&gt;ReadSetting(&quot;LengthSetting&quot;,&amp;length);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The setting repository <code>SampleRepository</code> is saved in memory using
+the method <code>Commit</code>. This saves the setting attribute <code>LengthSetting</code>
+along with its current value, that is 10. The method <code>WriteSetting</code>
+assigns then the current value of <code>length</code>, that is 11, to the
+setting attribute <code>LengthSetting</code>.</p>
+<p>The method <code>Rollback</code> restores the saved setting repository <code>SampleRepository</code>.
+The setting attribute <code>LengthSetting</code> is assigned the value 10. The <code>ReadSetting</code>
+method assigns this value to <code>length</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  SampleRepository-&gt;SaveRepository();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>SaveRepository</code> writes the setting repository <code>SampleRepository</code>
+to the disk file <code>sample</code><code>.CATSettings</code>. In addition, this
+method executes the method <code>Commit</code> and thus saves <code>SampleRepository</code>
+in memory for a possible future <code>Rollback</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>How Do Setting Repositories and Attributes Work?</h3>
+<p>Setting repositories are the basic objects to store setting attributes. They
+are accessed using their name. If the setting repository searched for with a
+given name does not exist, it is created as an empty setting repository with
+this name.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Saving and Restoring Application Objects using Setting
+Attributes</h4>
+<p>A setting repository contains setting attributes. Each setting attribute is
+accessed by its name. Reading from and writing to a setting repository works as
+follows:
+<ul>
+  <li>Application objects used must be instantiated and valued</li>
+  <li>Reading a setting attribute from a setting repository to value an
+    application object copies the value saved in the setting attribute into the
+    application object if the setting attribute exists, or creates and valuates
+    the setting attribute with the application object current value if it does
+    not exist. This avoids from testing if the setting attribute exists before
+    using it.</li>
+  <li>Writing a setting attribute into a setting repository copies the
+    application object value to save into the setting attribute.</li>
+</ul>
+<p>The methods <code>ReadSetting</code> and <code>WriteSetting</code> strictly
+control the type of their arguments and issue an error when the application
+attempts to overload or redefine an existing type.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Saving and Restoring Setting Repositories</h4>
+<p>The commit/rollback mechanism using the methods <code>Commit</code> and <code>Rollback</code>
+allows to save the current state of a setting repository in memory, and to
+restore it upon request. This save is dedicated to be used within the
+application and is lost when exiting.</p>
+<p>To save a setting repository as a disk file, use the method <code>SaveRepository</code>,
+which also executes the <code>Commit</code> method. This is the method to use
+for a persistent save. The directories to use are declared using two environment
+variables:
+<ol>
+  <li><code>CATReferenceSettingPath</code> to declare the administrator
+    directory pathnames</li>
+  <li><code>CATUserSettingPath</code> to declare the user directory pathnames.</li>
+</ol>
+<p>The directory pathnames declared using <code>CATReferenceSettingPath</code>
+can only be read by the user and are aimed to be shared by several users.
+Through the applications they use, the users can not add or delete setting
+attributes in files located in these directories.</p>
+<p>The administrator can choose two ways for the users to manipulate the files
+located in these directories through the applications they use:
+<ol>
+  <li>Allowing for overloading of a file in a user directory which pathname is
+    declared using the <code>CATUserSettingPath</code> variable. This is made
+    possible by setting the file mode to <code>rwxr--r--</code></li>
+  <li>Preventing from overloading a file is made possible by setting the file
+    mode to <code>rw-r--r--</code></li>
+</ol>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+The variable <code>CATReferenceSettingPath</code> must be valued and has no
+default value. The variable <code>CATUserSettingPath</code> has the user's
+$HOME/CATSettings directory as default value with UNIX and c:\Documents and
+Settings\username\CATSettings with Windows.</p>
+<p>The pathnames declared by these variables are concatenated: first those of <code>CATReferenceSettingPath</code>,
+then those of <code>CATUserSettingPath</code> and files are searched for in this
+order. The first file found is taken.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Saving and Restoring Simple Type Variables</h3>
+<p>Simple type variables, such as <code>integer</code>, <code>float</code> or <code>character</code>,
+can be saved as, and restored from, setting attributes by means of the methods <code>ReadSetting</code>
+and <code>WriteSetting</code>. No customization is required.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>Setting Attributes Programming Tasks</h3>
+<p>The setting attributes programming tasks are the following:
+<ul>
+  <li>Creating or retrieving a setting repository</li>
+  <li>Creating or reading a setting attribute</li>
+  <li>Writing a setting attribute</li>
+  <li>Searching for a setting attribute</li>
+  <li>Deleting a setting attribute</li>
+  <li>Listing setting attributes</li>
+  <li>Saving and restoring a setting repository to/from a memory area</li>
+  <li>Saving a setting repository to a disk file</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="710000"></a>Creating or Retrieving a Setting Repository</h4>
+<p>Use the method <code>GetSettingRepository</code> which searches for a setting
+repository file in the directories whose pathnames are declared using the
+environment variables <code>CATReferenceSettingPath</code> and <code>CATUserSettingPath</code>
+and concatenated in this order. The first file found is used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository = 
+       CATSettingRepository::GetRepository(&quot;Repository&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>If no file named <code>Repository</code><code>.CATSettings</code> is found,
+the setting repository is created in memory and will be written on disk with the
+file name <code>Repository</code><code>.CATSettings</code> if the method <code>SaveRepository</code>
+is executed afterwards.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+Never call the <tt>GetRepository</tt> method from a static object.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="720000"></a>Creating or Reading a Setting Attribute</h4>
+<p>Use the method <code>ReadSetting</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository-&gt;ReadSetting(SettingAttributeName,
+                               ObjectToValuate);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>ReadSetting</code> restores from <code>SettingRepository</code> the
+current value of <code>SettingAttributeName</code> into the existing class
+instance <code>ObjectToValuate</code>. If <code>SettingAttributeName</code> does
+not exist in the current setting repository, it is created and assigned the
+current value of <code>ObjectToValuate</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="730000"></a>Writing a Setting Attribute</h4>
+<p>Use the method <code>WriteSetting</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository-&gt;WriteSetting(SettingAttributeName,
+                                ObjectToSave);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>WriteSetting</code> saves the current value of <code>ObjectToSave</code>
+into the setting attribute <code>SettingAttributeName</code> in <code>SettingRepository</code>.
+If this setting attribute does not exist, it is created.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="740000"></a>Searching For a Setting Attribute</h4>
+<p>Use the method <code>IsPresent</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository-&gt;IsPresent(SettingAttributeName,
+                             SettingAttributeClass);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>IsPresent</code> returns 1 if <code>SettingAttributeName</code> is
+found in <code>SettingRepository</code> and is an instance of the class <code>SettingAttributeClass</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="750000"></a>Deleting a Setting Attribute</h4>
+<p>Use the method <code>DelAttribute</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository-&gt;DelAttribute(SettingAttributeName);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>DelAttribute</code> deletes the setting attribute <code>SettingAttributeName</code>
+from <code>SettingRepository</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="760000"></a>Listing Setting Attributes</h4>
+<p>Use the method <code>NextAttribute</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>while (SettingRepository-&gt;NextAttribute(
+                    SettingAttributeName,
+                    SettingAttributeClass) =! -1) {
+  cout &lt;&lt; SettingAttributeName
+       &lt;&lt; &quot; is an instance of the class &quot;
+       &lt;&lt; SettingAttributeClass &lt;&lt; endl;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><code>NextAttribute</code> used in a loop retrieves the setting attributes
+one after the other from <code>SettingRepository</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="770000"></a>Saving/Restoring a Setting Repository to/from a Memory
+Area</h4>
+<p>Use the method <code>Commit</code> to save the current state of a setting
+repository to a memory area. You can then restore it upon request using the
+method <code>Rollback</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+SettingRepository-&gt;Commit();                // Save
+...
+SettingRepository-&gt;Rollback();              // Restore
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="780000"></a>Saving a Setting Repository to a Disk File</h4>
+<p>Use the method <code>SaveRepository</code> to write the current state of a
+setting repository to a disk file. The setting repository must be instantiated
+first using the method <code>GetRepository</code>. The file name is the
+repository name suffixed by <code>setting</code>, here <code>Repository</code><code>.CATSettings</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SettingRepository = 
+       CATSettingRepository::GetRepository(&quot;Repository&quot;);
+...
+SettingRepository-&gt;SaveRepository();</pre>
+    </td>
+  </tr>
+</table>
+<p>Depending on the environment variables and on the administrator declaration,
+the following can occur:
+<ul>
+  <li>If the file does not exist, this file is created in the first directory
+    declared using the <code>CATUserSettingPath</code> environment variable,
+    which value is defaulted to the user's $HOME/CATSettings directory with UNIX
+    and c:\Documents and Settings\username\CATSettings with Windows.</li>
+  <li>If the file does exist in a directory declared using <code>CATUserSettingPath</code>,
+    it is overwritten.</li>
+  <li>If the file does exist in a directory declared using <code>CATReferenceSettingPath</code>:</li>
+  <ul>
+    <li>if the file has the access mode <code>rwxr--r--</code>, it is created in
+      the first directory declared using the <code>CATUserSettingPath</code>
+      environment variable</li>
+    <li>If the file has the access mode <code>rw-r--r--</code>, it is not
+      created an error is issued.</li>
+  </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A setting attribute can be of a simple type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+    <!----------------------------------------------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><font size="2"><a name="Ref1">[1]</a></font></td>
+    <td><a href="../CAASysUseCases/CAASysSampleSettings.htm">Creating
+      and Using Settings</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+    <!----------------------------------------------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+    <!----------------------------------------------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,361 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Components</h3>
+      <em>Creating components, asking for interface pointers, and managing
+      component life cycle</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create interfaces.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysUsingComp Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysUsingComp Do</a></li>
+            <li><a href="#How">How to Launch CAASysUsingComp</a></li>
+            <li><a href="#Where">Where to Find the CAASysUsingComp Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create interfaces that declare
+either a type or a behavior that a component [<a href="#References">1</a>] can
+implement [<a href="#References">2</a>] and that can be used in client
+application [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASysUsingComp Use Case</h3>
+<p>CAASysUsingComp is a use case of the CAASystem.edu framework that illustrates
+CATIA System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAASysUsingComp Do</h4>
+<p>This use case illustrates the usage of components. They are created using a
+factory, and accessed and modified using pointers to the interfaces they
+implement. The use case shows also how to manage their life cycle. This use case
+uses a circle component that implements a circle type interface named <i>CAAISysCircle</i>,
+and another interface: <i>CAAISysColorProperties</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysUsingComp</h4>
+<p>To launch CAASysUsingComp, you will need to set up the build time
+environment, then compile CAASysUsingComp along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+CATIA is ready, do the following:
+<ul>
+  <li>Select File-&gt;New
+  <li>In the New box, select CAAGeometry and click OK
+  <li>Create several geometric objects such as points, lines, planes, and so on,
+    using the Basic Elements toolbar, or using the same commands in the Insert
+    menu.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysUsingComp Code</h4>
+<p>The CAASysUsingComp use case is made of several classes located in the
+CAASysUsingComp.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysUsingComp.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysUsingComp.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create an interface such as <i>CAAISysCircle</i>, there are three main
+steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>
+      <p align="left">Step</p>
+    </th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Instantiating the component</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Modifying the Component Instance Using the <i>CAAISysCircle</i>
+      Interface</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Retrieve and use a pointer to the <i>CAAISysColorProperties</i>
+      interface</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Attempting to retrieve a pointer to an interface that the
+      circle component doesn't implement</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Manage the component life cycle</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Instantiting the Component</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int ReturnCode = 0;
+  CAAISysCircle * piSysCircleOnCircle = NULL; 
+  HRESULT rc = ::<b>CATInstantiateComponent</b>(&quot;CAASysCircle&quot;,  
+                                         IID_CAAISysCircle,
+                                         (void**)&amp;piSysCircleOnCircle);
+  if (FAILED(rc))
+    return 1; 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATInstantiateComponent</code> global function creates an instance
+of the <i>CAASysCircle</i> component and retrieves a pointer to <i>CAAISysCircle</i>.
+The parameters are:</p>
+<table>
+  <tr>
+    <td><code>CAASysCircle</code></td>
+    <td>Name of the component to instantiate. It's the name of its main class</td>
+  </tr>
+  <tr>
+    <td><code>IID_CAAISysCircle</code></td>
+    <td>IID of the interface to which a pointer is requested</td>
+  </tr>
+  <tr>
+    <td><code>piSysCircleOnCircle</code></td>
+    <td>The pointer retrieved to <i>CAAISysCircle</i></td>
+  </tr>
+</table>
+<p>The <code>CATInstantiateComponent</code> global function calls <code>AddRef</code>
+for the <code>piSysCircleOnCircle</code> pointer returned. To prevent from
+memory leak, this pointer will be released when it will be no longer needed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Modifying the Component Instance Using the <i>CAAISysCircle</i>
+Interface</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathPoint Center(-4.f,0.f,0.f);
+  rc = piSysCircleOnCircle-&gt;<b>SetCenter</b>(Center);
+  ... // Process failing rc 
+
+  float Radius = 10.f ;
+  rc = piSysCircleOnCircle-&gt;<b>SetRadius</b>(Radius);
+  ... // Process failing rc
+
+  CATMathVector Normal(1.f,0.f,0.f) ;
+  CATMathVector Axis (0.f,1.f,0.f)  ;
+  rc = piSysCircleOnCircle-&gt;<b>SetPlanar</b>(Normal,Axis);
+  ... // Process failing rc
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The center, radius, and support plane are successively set thanks to the <code>SetCenter</code>,
+<code>SetRadius</code>, and <code>SetPlanar</code> methods of <i>CAAISysCircle</i>
+[<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Retrieving and Using a Pointer to <i>CAAISysColorProperties</i>
+Interface</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAAISysColorProperties *<b>piSysColorPropOnCircle</b> = NULL; 
+  rc = piSysCircleOnCircle-&gt;<b>QueryInterface</b>(<b>IID_CAAISysColorProperties</b>, 
+                                           <b>(void**)&amp;piSysColorPropOnCircle</b>);
+  if (<b>SUCCEEDED</b>(rc))
+  {
+    int red   = 100;
+    int green = 100;
+    int blue  = 100;
+    rc = piSysColorPropOnCircle-&gt;<b>SetColor</b>(red, green, blue); 
+    ... // Check that the color is correctly set
+    piSysColorPropOnCircle-&gt;<b>Release</b>();
+    piSysColorPropOnCircle = NULL;
+  }
+  else
+    ReturnCode = 1;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The pointer to the <i>CAAISysCircle</i> interface on the circle component can
+be used to retrieve pointers to other interfaces implemented by the component,
+such as a pointer to <i>CAAISysColorProperties</i>, using the <code>QueryInterface</code>
+method. The variable used to return the pointer must be created with the <i>CAAISysColorProperties</i>
+type and initialized to <code>NULL</code>. Always test the returned <code>HRESULT</code>
+value using the macros <code>SUCCEEDED</code> and <code>FAILED</code>. The <code>SetColor</code>
+method of <i>CAAISysColorProperties</i> can then be used to set the circle color
+to green. As soon as the pointer to xx is no longer needed, it is released, and
+set tu <code>NULL</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Attempting to Retrieve a Pointer to an Interface that
+the Circle Component Doesn't Implement</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAAISysPointProperties * <b>piSysPointPropOnCircle</b> = NULL; 
+  rc = piSysCircleOnCircle-&gt;<b>QueryInterface</b>(<b>IID_CAAISysPointProperties</b>, 
+                                           <b>(void**)&amp;piSysPointPropOnCircle</b>);
+  if (<b>SUCCEEDED</b>(rc))
+  {
+    cout &lt;&lt; &quot;The circle component doesn't implement CAAISysPointProperties&quot; &lt;&lt; endl;
+    cout &lt;&lt; &quot;This trace should never be displayed&quot; &lt;&lt; endl;
+    piSysCircleOnCircle-&gt;Release();
+    piSysCircleOnCircle = NULL;
+  }
+  else
+  {
+     cout &lt;&lt; &quot;QueryInterface fails: this trace should always be displayed&quot; &lt;&lt; endl; 
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The pointer to the <i>CAAISysCircle</i> interface on the circle component is
+used to retrieve a pointer to <i>CAAISysPointProperties</i>. The variable used
+to return the pointer must be created with the <i>CAAISysPointProperties</i>
+type and initialized to <code>NULL</code>. But since the circle component
+doesn't implement this interface, <code>QueryInterface</code> will always fail.
+Even if&nbsp; this seems improbable, you may find components that you expect to
+implement a given interface and that do not. For example, you may get a list of
+pointers to an interface implemented by a set of components, and ask these
+pointers for another interface. Some of the components may not implement it, and
+the calling code falls in the case described above. This is the reason why the
+returned <code>HRESULT</code> value must be tested using the macros <code>SUCCEEDED</code>
+and <code>FAILED</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Managing the Component Life Cycle</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  piSysCircleOnCircle-&gt;Release();
+  piSysCircleOnCircle = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The only pointer that remains at thi spoint&nbsp; is <code>piSysCircleOnCircle</code>.
+The other pointers created or retrieved were released as soon as they were no
+longer needed, and set to <code>NULL</code> to prevent from a fortuitious but
+illegal usage. To prevent from memory leak, <code>piSysCircleOnCircle</code> is
+released and set to <code>NULL</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to use a component, that is how to create a component
+using the <code>CATInstantiateComponent</code> global function and retrieve a
+pointer to an interface the component implements. Using this interface pointer,
+the component is initialized, and a pointer to another interface is asked for,
+and used. Then a pointer to an interface that the component doesn't implement is
+asked for, to show what to do if this happens. The component life cycle is
+managed by releasing and setting to NULL the interface pointers as soon as they
+are no longer needed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritance</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

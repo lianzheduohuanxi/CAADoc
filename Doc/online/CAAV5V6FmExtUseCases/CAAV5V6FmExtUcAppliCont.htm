@@ -1,0 +1,376 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working Applicative Container</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style3 {
+}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working With Applicative Container</h3>
+      <p><em>How to use Applicative Container related Services</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code> CAAV5V6FmExtAppliCont</code> use case. 
+		It illustrates the steps involved to work with an existing Applicative 
+		Container [<a href="#References">1</a>], retrieve it and to scan through its contents 
+		(features), using the secured feature modeler access mechanism. You can 
+		well relate to this article if you take a look at the API presentation 
+		technical article[<a href="#References">2</a>].</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtAppliCont &nbsp; Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtAppliCont &nbsp; Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtAppliCont &nbsp;</a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6FmExtAppliCont &nbsp;Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The user learns to </p>
+<ul>
+	<li>Creating an Credentials [<a href="#References">3</a>] object to handle 
+	the Applicative Container&nbsp;</li>
+	<li>Scanning through the Applicative Container contents</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtAppliCont Use Case</h2>
+<p> <code> CAAV5V6FmExtAppliCont</code> is a use case of the 
+<code> CAAV5V6FeatureModelerExt.edu</code>  framework that 
+illustrates <code> FeatureModelerExt</code>  framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtAppliCont Do</h3>
+<p>The UC illustrates working with an Applicative Container. For this purpose it 
+refers to the features defined in the &quot;<code>CAAOsmCatalogSU</code>&quot; 
+catalog. The execution proceeds as follows:</p>
+<ul>
+	<li>Initializing Session</li>
+	<li>Creates a Credentials object to be registered as owner of the feature 
+	catalog &quot;<code>CAAOsmCatalogSU&quot;</code>, and based on Feature modeler 
+	Infrastructure</li>
+	<li>Instantiates a &quot;<code>CAAOsmNovel</code>&quot; feature with a &quot;<code>CAAOsmChapter</code>&quot; feature 
+	aggregated under it</li>
+	<li>Scans through the Applicative Container to retrieve all features owned 
+	by the application (those created from <code>CAAOsmCatalogSU </code>catalog<code>)</code></li>
+	<li>Scans through the Applicative Container to retrieve selectively the root 
+	features owned by the application</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtAppliCont &nbsp;</h3>
+<p>To launch CAAV5V6FmExtAppliCont, you will need to set up the build time
+environment, then compile CAAV5V6FmExtAppliCont along with its prerequisites, set up
+the run time environment, and then execute the sample.&nbsp;</p>
+<p>mkrun -c &quot;<i><code>CAAV5V6FmExtAppliCont</code></i><i> DocumentStorageName.CATPart
+</i>&quot;</p>
+<ul>
+  <li><b>DocumentStorageName.CATPart</b> - the entire pathname, name and
+    extension (.CATPart) under which the new document is to be stored.</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtAppliCont Code</h3>
+<p><code> CAAV5V6FmExtAppliCont </code>code is located in the
+<code> CAAV5V6FmExtAppliCont.m</code>  use case module of the
+<code> CAAV5V6FeatureModelerExt.edu</code>  framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CAAV5V6FmExtAppliCont.m</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA installation. It is made of a unique source file named 
+<code> CAAV5V6FmExtAppliCont.cpp</code> .</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are six logical steps in CAAV5V6FmExtAppliCont &nbsp;:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Create a credentials object">Creating a Credentials Object</a></li>
+	<li><a href="#Create a container facade">Creating a Facade to Handle the 
+	Container</a></li>
+	<li><a href="#Scan through an Appli Cont">Scanning through all features inside the Applicative Container</a></li>
+	<li><a href="#Scan through root feats">Scanning through the Root features inside 
+	the Applicative Container</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. It further creates the <strong>Credentials</strong> [<a href="#References">3</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It then uses these credentials to work with the Applicative Containers.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create a credentials object"></a>Creating a Credentials object</h3>
+
+<p>In our use case we instantiate StartUp, and scan a container. So as explained in 
+the referenced technical article [<a href="#References">2</a>], 
+the credentials object needs to contain two accreditations:</p>
+<ul>
+	<li>Infrastructure Identification </li>
+	<li>Owner of the catalog containing StartUp to instantiate</li>
+</ul>
+
+
+<table class="code">
+	<tr>
+		<td><pre><strong>CATFmCredentials MyCredentials</strong>;
+</pre>
+	</td>
+	</tr>
+</table>
+
+<p>A credential object is a
+
+<code>CATFmCredentials</code> class instance.
+</p>
+
+<pre class="code">...
+CATUnicodeString iParnerId("CAAFmExtFeatureModeler");
+CATUnicodeString iCatalogName("CAAOsmCatalogSU");
+<strong>rc = MyCredentials.RegisterAsApplicationBasedOn(CATFmFeatureModelerId,iParnerId)</strong>
+...</pre>
+<p>The call to <code>RegisterAsApplicationBaseOn()</code> of a
+ 
+<i>CATFmCredentials</i> instance (<code>MyCredentials</code>) 
+appends it with the privilege to work with container of the specified input 
+infrastructure. The <code>CATFmFeatureModelerId</code>, is an identifier exposed 
+by the Feature Modeler enabling us to instantiate and scan a container while 
+your are owner of the catalog containing feature to instantiate or to retrieve. 
+The last argument, PartnerId, a string is required for licensing test.</p>
+
+<p>We proceed to append our Credentials object with the Catalog
+Credentials, as well</p>
+
+<pre class="code">...
+CATUnicodeString iCatalogName("CAAOsmCatalogSU");
+CATUnicodeString clientId("CAAOsmClientId");
+rc = MyCredentials.<strong>RegisterAsCatalogOwner</strong>(iCatalogName,clientId);
+...</pre>
+<p>The call to <code>RegisterAsCatalogOwner</code> on a
+<i>CATFmCredentials</i> instance (<code>MyCredentials</code>) 
+appends it with the ownership credentials of a feature catalog. The 
+API inputs include a set, the Catalog name (<code>CAAOsmCatalogSU</code>) 
+and its associated clientID (<code>CAAOsmClientID</code>), an input at the time 
+of catalog creation. See the referenced use case [<a href="#References"><span class="style3">3</span></a>] 
+about the catalog creation.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create a container facade"></a>Creating a Facade to Handle the Container</h3>
+
+<p>We proceed to create a Container Facade.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+<strong>CATFmContainerFacade </strong>MyContainerFacade<strong>(MyCredential,piApplicativeContainer)</strong>;	</pre>
+	</td>
+	</tr>
+</table>
+
+<p><code>MyContainerFacade</code>, a 
+	<i>CATFmContainerFacade</i> class instance is created with a call to its parametrized constructor whose arguments are:</p>
+<ul>
+	<li><code>MyCredential</code>, a 
+ 
+<i>CATFmCredentials</i> class representing the Container 
+	Credentials, we create in the next section</li>
+	<li><code>piApplicativeContainer</code>, a 
+	<i> CATBaseUnknown</i> pointer,&nbsp; representing the 
+	Applicative Container we retrieved in the earlier step</li>
+</ul>
+
+<h3>Instantiating Features in an Applicative Container</h3>
+<p>Now that we have a valid Applicative Container Facade in place, we may use it 
+for both instantiating a feature in this Container and further to retrieve it by 
+scanning through the Container. We begin with the instantiation.</p>
+<p>We instantiate a '<code>CAAOsmNovel</code>' feature. A '<code>CAAOsmChapter</code>' 
+feature is further instantiated, aggregated under the Novel feature, both inside 
+our Container.</p>
+<p>We proceed now to scan through our Container.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Scan through an Appli Cont"></a>Scanning through all features inside the Applicative Container</h3>
+<p>We begin by scanning for all features (for which you are granted to handle)&nbsp; inside our Applicative Container.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>CATFmFeatureIterator oIteratorOnAllFeats;
+rc = <strong>MyContainerFacade.ScanFeatures</strong>(oIteratorOnAllFeats);</pre>
+		</td>
+	</tr>
+</table>
+<p>The <code> ScanFeatures</code> method of the  
+	<i>CATFmContainerFacade</i>
+class retrieves all features inside the container according to its credentials. The return is 
+<code>oIteratorOnAllFeats</code>, a <i> CATFmFeatureIterator</i>  class object. </p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>int featcount = 0;
+CATFmFeatureFacade oFeat(MyCredential);
+rc =  <strong>oIterator.Next(oFeat)</strong>;
+<strong>while(SUCCEEDED(rc))
+</strong>{
+   CATUnicodeString oDisplayName;
+   oFeat.GetDisplayName(oDisplayName);
+   ...
+   featcount++;
+   rc =  <strong>oIteratorOnAllFeats.Next(oFeat)</strong>;
+}</pre>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>The <code> Next</code>  call on a <i> CATFmFeatureIterator</i>  returns the 
+retrieved feature as a feature facade. We wish to reiterate here that the scan returns only those features (through the Iterator), which the client owns. This ownership is determined by the 
+Credentials object (<code>MyCredentials</code>) associated with the Container Facade.</p>
+<p>Note that <code>oFeat </code>is created without feature. At each iteration, 
+the retrieved feature is bound to the facade. We can use <code>GetDisplayName</code> 
+on <code>oFeat </code>because the facade has been created with <code>MyCredentials</code> 
+as credentials<code>.</code></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Scan through root feats"></a>Scanning through the Root features inside the Applicative Container</h3>
+<p>We next scan through the applicative container, to retrieve only the root 
+features, meaning the non-aggregated features.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>CATFmFeatureIterator oIteratorForRootFeats;
+rc = <strong>MyContainerFacade.ScanRootFeatures</strong>(oIteratorForRootFeats);</pre>
+		</td>
+	</tr>
+</table>
+<p>The <code> ScanRootFeatures</code>  method of the   
+	<i>CATFmContainerFacade</i>
+class retrieves all the root features inside the container according to its 
+credentials. The return is <code>oIteratorForRootFeats</code>, a <i> CATFmFeatureIterator</i>  class object. 
+. </p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>int featcount = 0;
+CATFmFeatureFacade oRootFeat(MyCredential);
+rc =  <strong>oIteratorForRootFeats.Next(oRootFeat)</strong>;
+<strong>while(SUCCEEDED(rc))
+</strong>{
+   CATUnicodeString oDisplayName;
+   HRESULT hr = oRootFeat.GetDisplayName(oDisplayName);
+   featcount++;
+   rc =  <strong>oIteratorForRootFeats.Next(oRootFeat)</strong>;
+}</pre>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>The <code> Next</code>  call on a <i> CATFmFeatureIterator</i>  returns the 
+retrieved feature as a feature facade. We wish to reiterate here that the scan returns only those 
+root features (through the Iterator), which the client owns. This ownership is determined by the 
+Credentials object (<code>MyCredentials</code>) associated with the Container Facade. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+		<p>The UC illustrates working with an Applicative Container. Working 
+		with an Applicative Container primarily involves instantiation features 
+		in it and subsequently retrieving those features, by scanning through 
+		it. In order to work with an Applicative Container, one requires 
+		authorization, expressed as a set of credentials. </p>
+<p>These credentials are the ownership credentials of the feature instantiated 
+in and retrieved from the container and the credentials as a Feature Modeler 
+client which allows one to work (instantiate &amp; scan) with any kind of 
+containers. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaApplicativeContainer.htm">Understanding Applicative Container 
+		</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+				<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaAPIPresentation.htm">Understanding API presentation</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+				<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials</a></td>
+	</tr>
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: <b>1</b> [July 2012]</td>
+		<td>Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,193 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Handling Selections in Your CATlets</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Handling Selections in Your CATlets</h3>
+      <em>The selection management with the CSO object</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>As your CATlets can display data, most of the time the user will want to
+select one or several of these data to work on this selection. Your CATlets will
+then have to handle this set of selected data and warn other third parties as
+commands that data have been selected or unselected. To ease your development
+work, the Portal infrastructure offers you a CSO java class that will handle the
+selected data for you.<br>
+By using this CSO object, developers will benefit from a unified selection
+mechanism in all their CATlets and in this way will more easily share components
+or commands between their CATlets (like cut, copy and paste commands)</p>
+<p>This <i>CSO</i> class is located in the c<i>om.dassault_systemes.catweb.base.catlet</i>
+package of the PortalBase framework. The <i>CSO</i> object can store a set of
+select j<i>ava.lang.Object</i> and fire a <i>CSOEvent</i> each time its content
+has changed (objects in selection added or removed ...).<br>
+Each CATlet has one and only one instance of a CSO object. To get an instance of
+the CATlet CSO just call the <i>getCSO</i> method on the <i>ICATlet</i>
+interface (implemented by <i>CATlet</i> and <i>JCATlet</i>):</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATlet myCATlet;
+...
+CSO myCSO = myCATlet.getCSO();</pre>
+    </td>
+  </tr>
+</table>
+<p>The CSO can be manipulated through these different methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/**
+ * Adds an element in the CSO. If this element is already in CSO nothing is done. A CSOEvent is fired
+ * to warn a new element has been added in cso
+ */
+public void addElement(Object element);
+
+/**
+ * Removes an element from CSO. A CSOEvent is fired to warn an element has been removed from the CSO
+ */
+public void removeElement(Object element);
+
+/**
+ * Removes all elements from CSO. An event is fired to warn that all elements have been removed from the CSO 
+ */
+public void empty();
+
+/**
+ * Replaces all elements in the CSO by the specified element. A CSO event is fired to warn that an element 
+ * has replaced the current selection in CSO
+ */
+public void replace(Object element);
+
+/**
+ * returns the number of elements contained in the CSO
+ */
+public int getSize();
+
+/**
+ * returns the element located at the specified index. Returns null if index is not valid
+ */ 
+public Object getElement(int index);
+
+/**
+ * Returns all the elements contained in the CSO
+ */
+public Object[] getElements();
+/**
+ * returns the position in CSO of the specified element
+ * returns -1 if element is not in CSO
+ */
+public int locate(Object element);
+
+/**
+ * CSOEvent publishing methods 
+ */
+public synchronized void addCSOListener(CSOListener l);
+
+public synchronized void removeCSOListener(CSOListener l);</pre>
+    </td>
+  </tr>
+</table>
+<p>Components that want to be warned when the <i>CSO</i> content change must
+implement the c<i>om.dassault_systemes.catweb.base.event.CSOListener</i>
+interface in order to receive <i>com.dassault_systemes.catweb.base.event.CSOEvent</i></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public interface CSOListener extends EventListener 
+ {
+  /**
+   * Called each time the CSO content on which this object is subscribed is changed
+   */
+  public abstract void csoChanged(CSOEvent evt);
+ } </pre>
+    </td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class CSOEvent extends EventObject 
+ {
+  /**
+   * Type used when elements have been removed from CSO
+   */
+  public final static int CSO_ADD;
+
+  /**
+   * Type used when elements have been added in CSO
+   */
+  public final static int CSO_REMOVE;
+
+  /**
+   * Type used when all elements have removed from CSO and CSO is left empty
+   */
+  public final static int CSO_EMPTY;
+
+  /**
+   * Type used when all the cso's elements have been replaced by an element
+   */
+  public final static int CSO_REPLACE;
+
+  /**
+   * Constructs a CSO event
+   * @param source the CSO instance on which the modification occured
+   * @type the type of modification
+   * @elements the elements on which the modification occured
+   */
+  public CSOEvent(Object source,int type,Object[] elements);
+
+  /**
+   * Returns the type of modification that occured on the CSO
+   */
+  public int getType();
+
+  /**
+   * Returns the elements on which the modification occured
+   */
+  public Object[] getElements();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

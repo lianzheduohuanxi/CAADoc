@@ -1,0 +1,453 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Sketching Elements in a Part Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Sketcher</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Sketching Elements in a Part Document</h3>
+      <em>Using sketching objects and factory to create a simple constrained
+      sketch</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAASkiBasicGeometries use case. This use
+      case explains how to create a Part document, create geometry and
+      constraints in sketch and make some operations: solving geometry and
+      dimension systems and making corner.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With this Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASkiBasicGeometries Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAASkiBasicGeometries Do</a></li>
+          <li><a href="#How">How to Launch CAASkiBasicGeometries</a></li>
+          <li><a href="#Where">Where to Find the CAASkiBasicGeometries Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to :</p>
+<ul>
+  <li>Create sketched elements</li>
+  <li>Create constraints</li>
+  <li>Solve dimension systems in different ways</li>
+  <li>Create a corner (relimitation) on two lines.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASkiBasicGeometries Use Case</h3>
+<p>CAASkiBasicGeometries is a use case of the CAASketcherInterfaces.edu
+framework that illustrates the SketcherInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASkiBasicGeometries Do</h4>
+<table width="100%">
+  <caption>Fig. 1: The Document Created by the Use Case</caption>
+  <tr>
+    <td align="center"><img src="images/CAASketcherTitleBlock.jpg" width="538" height="573"></td>
+  </tr>
+</table>
+<p>This picture represents a CATPart document created by the use case. The
+program creates a basic PartBody composed of one sketch. The sketch contains:</p>
+<ul>
+  <li>The elements directly created in edition in the sketch</li>
+  <li>The constraints directly created on the elements.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAASkiBasicGeometries</h4>
+<p>To launch CAASkiBasicGeometries , you will need to set up the build time
+environment, then compile CAASkiBasicGeometries along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>When you launch the use case, pass the full pathname of the file into which
+you you want to store the created document as argument: for example
+Result.CATPart.
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt; CAASkiBasicGeometries Result.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAASkiBasicGeometries Result.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASkiBasicGeometries Code</h4>
+<p>The CAASkiBasicGeometries use case is made of a main program located in the
+CAASkiBasicGeometries.m module of the CAASketcherInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASketcherInterfaces.edu\CAASkiBasicGeometries.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASketcherInterfaces.edu/CAASkiBasicGeometries.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are ten steps in CAASkiBasicGeometries:</p>
+<ol>
+  <li><a href="#Initializing">Creating and Initializing the Document</a></li>
+  <li><a href="#Creating">Creating and Opening the Sketch Edition</a></li>
+  <li><a href="#Fact2D">Getting the Geometry Factory and Creating 2D Lines</a></li>
+  <li><a href="#Constraints">Creating 2D Constraints on Geometries</a></li>
+  <li><a href="#Modifying">Modifying the Position of the First Point Created</a></li>
+  <li><a href="#Solving">Solving (Evaluating) Dimension System and Geometry</a></li>
+  <li><a href="#Positioning">Positioning the Rectangle Compared to the Sketch</a></li>
+  <li><a href="#Corner">Creating a Corner</a></li>
+  <li><a href="#Closing">Closing the Sketch Edition</a></li>
+  <li><a href="#Saving">Saving the Document and Exiting</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Initializing"></a>Creating and Initializing the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATPart document
+{
+  if(iArgc&gt;2) return 1;
+  char *pFileName = iArgv[1];
+  char *pSessionIdent = &quot;SampleSession&quot;;
+
+  CATSession *pSession = NULL;
+  Create_Session(pSessionIdent,pSession);
+  CATDocument *pDocument = NULL;
+  CATDocumentServices::New(&quot;CATPart&quot;,pDocument);
+  if ( NULL == pDocument ) return 1;
+  CATInit_var spInit (pDocument);
+  if( NULL_var == spInit ) return 3; 
+  spInit-&gt;Init(TRUE); 
+  
+  CATIContainerOfDocument_var spDoc = pDocument;
+	CATIContainer *piContainer = NULL;
+  if ( FAILED(spDoc-&gt;GetSpecContainer( piContainer)) ) return 4;
+  CATIPrtContainer *piPrtContainer = NULL;
+  HRESULT hr = piContainer-&gt;QueryInterface( IID_CATIPrtContainer, (void **)&amp;piPrtContainer );
+  if ( FAILED(hr) ) return 5;
+  CATIPrtPart_var spPart(piPrtContainer-&gt;GetPart());
+  piPrtContainer-&gt;Release();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for creating a Part document
+(CATPart).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creating"></a>Creating and Opening the Sketch Edition</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATLISTV(CATISpecObject_var) spRefPlanes = spPart-&gt;GetReferencePlanes();
+
+  //------------------------------------------------------------------------------------------
+  // SKETCH CREATION and EDIT:Instantiates the sketch with the plane XY (refPlanes[1])
+  //------------------------------------------------------------------------------------------
+  CATISketchFactory_var spSketchFactory(piContainer);
+  if ( NULL_var == spSketchFactory ) return 6;
+  CATISketch_var spSketch(spSketchFactory-&gt;CreateSketch(spRefPlanes[1]));
+  if ( NULL_var == spSketch ) return 7;
+	spSketch-&gt;OpenEdition();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After having retrieving the reference planes of the part, we create a sketch
+on the first plane (xy-plane). We make it ready for edition. The sketch is
+created on the sketch factory (the sketch factory interface is implementing on
+the container).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Fact2D"></a>Getting the Geometry Factory and Creating 2D Lines</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATI2DWFFactory_var sketch2DFactory(spSketch); // Retrieves the 2D factory to create elements
+  CATI2DPoint_var spPt_bottom_left, spPt_bottom_right, spPt_top_right, spPt_top_left;
+  CATI2DLine_var spLine1, spLine2, spLine3, spLine4;
+  double pt_bottom_left[2]  = {10., 10.};
+  double pt_bottom_right[2] = {50., 10.};
+  double pt_top_right[2]    = {50., 50.};
+  double pt_top_left[2]     = {10., 50.};
+  
+  spPt_bottom_left  = sketch2DFactory-&gt;CreatePoint(pt_bottom_left);
+  spPt_bottom_right = sketch2DFactory-&gt;CreatePoint(pt_bottom_right);
+  spPt_top_right    = sketch2DFactory-&gt;CreatePoint(pt_top_right);
+  spPt_top_left     = sketch2DFactory-&gt;CreatePoint(pt_top_left);
+  spLine1 = sketch2DFactory-&gt;CreateLine(pt_bottom_left,pt_bottom_right);
+  spLine2 = sketch2DFactory-&gt;CreateLine(pt_bottom_right,pt_top_right);
+  spLine3 = sketch2DFactory-&gt;CreateLine(pt_top_right,pt_top_left);
+  spLine4 = sketch2DFactory-&gt;CreateLine(pt_top_left,pt_bottom_left);
+  
+  // connectivity
+  CATI2DCurve_var spCurve1 (spLine1);
+  CATI2DCurve_var spCurve2 (spLine2);
+  CATI2DCurve_var spCurve3 (spLine3);
+  CATI2DCurve_var spCurve4 (spLine4);
+  spCurve1-&gt;SetStartPoint(spPt_bottom_left); 
+  spCurve1-&gt;SetEndPoint(spPt_bottom_right);
+  spCurve2-&gt;SetStartPoint(spPt_bottom_right); 
+  spCurve2-&gt;SetEndPoint(spPt_top_right);
+  spCurve3-&gt;SetStartPoint(spPt_top_right); 
+  spCurve3-&gt;SetEndPoint(spPt_top_left);
+  spCurve4-&gt;SetStartPoint(spPt_top_left); 
+  spCurve4-&gt;SetEndPoint(spPt_bottom_left);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The geometry factory is directly implemented on the sketch. After having
+retrieved the 2D factory, we create four points, then four lines passing by
+these points (these four lines make a rectangle with common points). We
+establish connectivity on these points. Each curve shares a starting point and
+end point.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Constraints"></a>Creating 2D Constraints on Geometries</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATI2DConstraintFactory_var spConstraint2DFactory(spSketch);
+  spConstraint2DFactory-&gt;CreateConstraint( spLine1, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Horizontal, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spLine2, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Vertical, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spLine3, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Horizontal, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spLine4, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Vertical, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spLine2, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Length, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spLine2, NULL, spLine4, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Distance, 0, 0 );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constraint factory is directly implemented on the sketch. After having
+retrieved the 2D constraint factory, we create four constraints (horizontal and
+vertical on lines), then we create two dimensional constraints (length on a line
+and distance between two other lines).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Modifying"></a>Modifying the Position of the First Point Created</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  pt_bottom_left[0]  = 20.;
+  pt_bottom_left[1]  = 20.;
+  spPt_bottom_left-&gt;SetPointData(pt_bottom_left);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We change the coordinates of the first point created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Solving"></a>Solving (Evaluating) Dimension System and Geometry</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATLISTV(CATI2DWFGeometry_var) spSoftReferences(1);
+  spSoftReferences.Append(spPt_bottom_left);
+  spSketch-&gt;Evaluate(spSoftReferences);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We solve the dimensional system. The last point modified has the top
+priority. Geometry evaluation with soft reference element (<code>spPt_bottom_left</code>),
+solver tries to keep fixed these elements (<code>spPt_bottom_left</code> is the
+more prioritary). If we do not give the first point with high priority, the last
+modification (changing the first point position) would be useless. In this case
+the rectangle translates totally.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Positioning"></a>Positioning the Rectangle Compared to the Sketch</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATI2DAxis_var spSupport;
+  spSketch-&gt;GetAbsolute2DAxis(spSupport);
+  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetHDirection(), NULL, NULL, NULL, NULL,
+                                           Cst2DType_Distance, 0, 0 );
+  spConstraint2DFactory-&gt;CreateConstraint( spPt_bottom_left, NULL, spSupport-&gt;GetVDirection(), NULL, NULL, NULL, NULL,
+                                           Cst2DType_Distance, 0, 0 );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In this example the sketch is isoconstrained because the rectangle is rigid.
+We position it on the sketch support (and create two constraints between the
+first point and H-direction and V-direction). The rectangle is fixed now and it
+is sufficiently constrained.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Corner"></a>Creating a Corner</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  double radius = 10.;
+  double pt_center[2]  = {70., 40.};
+  CATI2DCurve_var spCurve5 = sketch2DFactory-&gt;CreateCorner(spCurve3, spCurve4, pt_center, &amp;radius);
+  CATI2DTopologicalOperators_var spOperateur = spSketch;
+  spOperateur-&gt;InsertCorner(spCurve5,spLine3,1,spLine4,1);
+  spConstraint2DFactory-&gt;CreateConstraint( spLine3, NULL, spCurve5, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Tangent, 0, 0);
+  spConstraint2DFactory-&gt;CreateConstraint( spCurve5, NULL, spLine4, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Tangent, 0, 0);
+  spConstraint2DFactory-&gt;CreateConstraint( spCurve5, NULL, NULL, NULL, NULL, NULL, NULL, 
+                                           Cst2DType_Radius, 0, 1);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create an operation on the geometry factory. This operation corresponds to
+a corner between two lines of the rectangle and we specify the relimitation
+(with all element trimed). We create two tangency, for creating a corner in
+tangency on the lines and we create the radius of the corner. Note that the last
+arguments of the <code>CreateConstraint</code> method is &quot;1&quot;, because
+we want to solve the dimensional system a last once.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Closing"></a>Closing the Sketch Edition</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  spSketch-&gt;CloseEdition();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We close the sketch edition.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Saving"></a>Saving the Document and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDocumentServices::SaveAs(*pDocument,pFileName);
+  pSession-&gt;Delete_Session(pSessionIdent);
+
+  // Memory cleaning
+  piContainer-&gt;Release();
+
+  return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for saving a document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects and interfaces used when creating a CATPart
+document, and when creating a Sketch containing 2D elements. A handler to the <i>CATISketch</i>
+interface is the key to enter and navigate the sketcher structure, and Retrieves
+the 2D factory to create elements. The 2D factory also implements the <i>CATI2DConstraintFactory</i>
+interface to create contrainst on the elements and also solve dimension system.<br>
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

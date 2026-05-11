@@ -1,0 +1,618 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Navigating a Part Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Navigating a Part Document</h3>
+      <em>Exploring mechanical entities down to topological entities</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMmrPartBodyRequest use case. This use
+      case explains how to open a Part document and explore its content from a
+      mechanical modeler perspective, down to the topological entities that
+      capture the shape of the mechanical entities contained in the document.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrPartBodyRequest Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrPartBodyRequest Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrPartBodyRequest</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrPartBodyRequest Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the Mechanical Modeler. Its main intent is to introduce important concepts about
+the underlying data structure of the mechanical modeler, and ways to navigate
+it. More specifically, you will learn how to:
+<ul>
+  <li>Open a Part document&nbsp;</li>
+  <li>Access the Part feature in the document</li>
+  <li>Access its geometrical features sets thanks to the <i>CATIDescendants</i> 
+    or the <i>CATIPartRequest</i>
+    interface [<a href="#References">1</a>]
+    <ul>
+      <li>Solid and surfacic features sets (Body features)</li>
+      <li>Surfacic sets ( Ordered Geometrical Set and Geometrical Set)</li>
+    </ul>
+  </li>
+  <li>Retrieves set result by using the <i>CATIBodyRequest</i>
+    interface&nbsp; [<a href="#References">2</a>]</li>
+  <li>Access topological bodies associated with features representing the result
+    of the sets</li>
+</ul>
+<p>In bracket, we have referenced technical articles which describe in details
+the concepts in relationship with this use case.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="UseCase"></a>The CAAMmrPartBodyRequest Use Case</h3>
+<p>CAAMmrPartBodyRequest is a use case of the CAAMechanicalModeler.edu framework
+that illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrPartBodyRequest Do</h4>
+<p>The goal of CAAMmrPartBodyRequest is to open a Part document and navigate
+data structure in it that represents the concepts presented in the referenced
+technical articles. Namely, it:</p>
+<ul>
+  <li><b>Opens</b> a <b> Part</b> document, whose pathname is passed in argument</li>
+  <li>Accesses the <b>Part</b> feature within it</li>
+  <li>Using the <i><b>CATIDescendants</b>&nbsp;</i> interface
+    <ul>
+      <li>Retrieves the <b>Body</b>  features,
+        and displays for each one the features returned by the <i>CATIBodyRequest</i>
+        interface.</li>
+      <li>Retrieves the <b>surfacic</b>   sets,
+        and displays for each one the features returned by the <i>CATIBodyRequest</i>
+        interface.</li>
+    </ul>
+  </li>
+  <li>Using the <i><b>CATIPartRequest</b></i> interface
+    <ul>
+      <li>Retrieves the <b>Body</b> features, and displays for each one the features
+        returned by the <i>CATIBodyRequest</i> interface.</li>
+      <li>Retrieves the <b>surfacic</b>  sets, and displays for each one the
+        features returned by the <i>CATIBodyRequest</i> interface.</li>
+    </ul>
+  </li>
+</ul>
+<p>Here is an sample, with the <code>CAAMmrPartBodyRequest</code> Part document
+(see the <a href="#How">How to Launch CAAMmrPartBodyRequest</a> section for its
+location).&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrPartBodyRequest.jpg" width="201" height="426"></td>
+  </tr>
+</table>
+<p align="left">The output traces for this Part are the following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>The CAAMmrPartBodyRequest use case begins
+   The document CAAMechanicalModeler.edu\InputData\CAAMmrPartBodyRequest.CATPart is opened
+   
+<b><font color="#0000FF"><i>Using CATIDescendants</i></font></b>
+
+   <b><font color="#CC3300">The list of Body Features:</font></b> , has <b>3</b> element(s)
+      <b>Body.3</b> E_FAIL for GetResult
+      <b>PartBody</b>
+         Count of elements in the result list=<b>5</b>
+            Solid.1, its topological result is with the following tag : 474
+            Sketch.1, its topological result is with the following tag : 263
+            Point.5, its topological result is with the following tag : 10351
+            Sketch.3, its topological result is with the following tag : 10507
+            Solid.1, its topological result is with the following tag : 10543
+      <b>Body.2</b> 
+         Count of elements in the result list=<b>0</b>
+         
+   <b><font color="#CC3300">The list of Ordered Geometrical Set:</font></b> , has <b>4</b> element(s)
+      <b>Ordered Geometrical Set.1</b> E_FAIL for GetResult
+      <b>Ordered Geometrical Set.3</b> E_FAIL for GetResult
+      <b>Ordered Geometrical Set.6</b>
+         Count of elements in the result list=<b>2</b>
+            Point.3, its topological result is with the following tag : 627
+            Point.4, its topological result is with the following tag : 633
+      <b>Ordered Geometrical Set.5</b>
+         Count of elements in the result list=<b>2</b>
+            Sketch.2, its topological result is with the following tag : 9026
+            Split.1, its topological result is with the following tag : 9915
+
+   <b><font color="#CC3300">The list of Geometrical Set:</font></b> , has <b>2</b> element(s)
+      <b>Geometrical Set.2</b>
+         Count of elements in the result list=<b>0</b>
+      <b>Geometrical Set.4</b>
+         Count of elements in the result list=<b>2</b>
+            Point.6, its topological result is with the following tag : 10714
+            Plane.1, its topological result is with the following tag : 11178
+
+<b><font color="#0000FF"><i>Using CATIPartRequest</i></font></b>
+
+   <font color="#CC3300"><b>The list of Body Features:</b></font> , has <b>2</b> element(s)
+      <b>PartBody</b>
+         Count of elements in the result list=<b>5</b>
+            Solid.1, its topological result is with the following tag : 474
+            Sketch.1, its topological result is with the following tag : 263
+            Point.5, its topological result is with the following tag : 10351
+            Sketch.3, its topological result is with the following tag : 10507
+            Solid.1, its topological result is with the following tag : 10543
+      <b>Body.2</b>  
+         Count of elements in the result list=<b>0</b>
+         
+   <font color="#CC3300"><b>The list of Surfacic Sets:</b></font> , has <b>4</b> element(s)
+      <b>Geometrical Set.2</b>
+         Count of elements in the result list=<b>0</b>
+      <b>Ordered Geometrical Set.6</b>
+         Count of elements in the result list=<b>2</b>
+            Point.3, its topological result is with the following tag : 627
+            Point.4, its topological result is with the following tag : 633
+      <b>Geometrical Set.4</b>
+         Count of elements in the result list=<b>2</b>
+            Point.6, its topological result is with the following tag : 10714
+            Plane.1, its topological result is with the following tag : 11178
+      <b>Ordered Geometrical Set.5</b>
+         Count of elements in the result list=<b>2</b>
+            Sketch.2, its topological result is with the following tag : 9026
+            Split.1, its topological result is with the following tag : 9915
+ 
+The CAAMmrPartBodyRequest use case is ended</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">You can note that :</p>
+<ul>
+  <li>
+    <p align="left">Using <i>CATIPartRequest</i> you do not have
+the same count of geometrical features sets than using <i>CATIDescendants</i>.
+The ordered sets [<a href="#References">1</a>] (<code>Body.3,Ordered Geometrical Set.1</code>, and <code>Ordered
+Geometrical Set.3</code>), aggregated by a set, are not returned by <i>CATIPartRequest</i>.&nbsp;</li>
+  <li>
+    <p align="left"> <i>CATIBodyRequest</i> does not return the
+    &quot;absorbed&quot; features ( <code>Extrude.2</code> is excluded from the
+    result of&nbsp; <code>Ordered
+Geometrical Set.5)</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrPartBodyRequest</h4>
+<p>To launch CAAMmrPartBodyRequest, you will need to set up the build time
+environment, then compile CAAMmrPartBodyRequest along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">3</a>].
+To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAMmrPartBodyRequest Filename &quot;</pre>
+<p>where Filename is&nbsp; the complete path of a Part document. You can use the
+<code>CAAMmrPartBodyRequest</code><code>.CATPart </code>located:</p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrPartBodyRequest Code</h4>
+<p>The CAAMmrPartBodyRequest use case is made of a single source file named
+CAAMmrPartBodyRequest.cpp located in the CAAMmrPartBodyRequest.m module of the
+CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\</code><code>CAAMmrPartBodyRequest</code><code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/</code><code>CAAMmrPartBodyRequest</code><code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAAMmrPartBodyRequest:</p>
+<ol>
+  <li><a href="#Checking"> Opening the Session</a></li>
+  <li><a href="#document">Reading the Part Document from Disk and Preparing It
+    for Parsing</a></li>
+  <li><a href="#part">Getting Access to the Part Feature</a></li>
+  <li><a href="#Getting Geometrical Features Sets thanks to CATIPartRequest">Getting
+    Geometrical Features Sets thanks to CATIPartRequest</a></li>
+  <li><a href="#Getting Geometrical Features Sets thanks to CATIDescendants">Getting
+    Geometrical Features Sets thanks to CATIDescendants</a></li>
+  <li><a href="#Getting the Geometrical Features Set Result">Getting the
+    Geometrical Features Set Result</a></li>
+  <li><a href="#Closing">Closing the Session and Exiting.</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Checking"></a>Opening the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char **iArgv)   // Path to an existing Part document
+{
+  ...
+  char *pSessionName = &quot;SampleSession&quot;;
+  CATSession *pSession = 0;
+  HRESULT rc = ::<b>Create_Session</b>(pSessionName, pSession) ;
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>The use case is a main (batch) program that takes a single argument - the
+path to an existing Part document. This first section opens a session
+to read the document in memory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="document"></a>Reading the Part Document From Disk and Preparing It
+For Parsing</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATDocument *pDoc = 0;
+    if( SUCCEEDED(CATDocumentServices::<b>OpenDocument</b>(iArgv[1], pDoc)) )
+    {
+        CATInit *pDocAsInit = 0;
+        if( SUCCEEDED(pDoc-&gt;QueryInterface(IID_CATInit, (void**)&amp;<b>pDocAsInit</b>)) )
+        {
+         
+           CATIPrtContainer *pSpecContainer = 
+             (CATIPrtContainer*)pDocAsInit-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+           pDocAsInit-&gt;Release();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATDocumentServices::OpenDocument</code> static method opens the document
+from its disk location and returns it as a <i>CATDocument</i>. This is the
+implementation for all of the interfaces that a document must implement.</p>
+<p>Documents are internally divided in <em>containers</em> [<a href="#References">4</a>]. If you think of a
+document as an apartment, then the containers are its rooms. Like the rooms in
+an apartment, containers are specialized. Each contains a specific set of data
+that represent some aspect of the overall document.</p>
+<p>The first container found in a document is a high-level container that
+basically give access to all the other, more specialized containers in the
+document, although it may contain other data as well. Along our apartment
+metaphor, it is similar to the lobby in which you enter first, and which
+provides access to the other rooms in the apartment. This container is called
+the <em>root container</em>.</p>
+<p>The first interface that we use on that document is <i>CATInit</i>. Through
+its <code>GetRootContainer</code> method, we can access the document's root
+container.</p>
+<p>In a Part document, the root container is the container that contains the
+features-based definition of the part being modeled. Such structure can be
+explored through a dedicated interface, <i>CATIPrtContainer</i>, that is of
+course implemented by the root container. By giving this interface name as
+argument to <code>GetRootContainer</code>, the root container is returned cast
+to this interface type, which makes it ready for being parsed as a Part.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="part"></a>Getting Access to the Part Feature</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          CATIPrtPart_var spPart( pSpecContainer-&gt;<b>GetPart</b>() );
+          pSpecContainer-&gt;Release();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We readily use the <i>CATIPrtContainer</i> to access the Part feature [<a href="#References">5</a>].
+The <code>GetPart</code> method returns a <i>CATIPrtPart</i> interface pointer
+on this feature. We will then
+use a navigation facet, namely the <i>CATIPartRequest interface</i>, onto the Part
+feature in order to discover its structure.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Getting Geometrical Features Sets thanks to CATIDescendants"></a>Getting
+Geometrical Features Sets thanks to CATIDescendants</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  cout &lt;&lt;&quot;Using CATIDescendants&quot; &lt;&lt; endl &lt;&lt;endl;
+  <b>CATIDescendants</b> *pPartAsDescendants = 0;
+  rc = spPart-&gt;QueryInterface(IID_CATIDescendants, (void**)&amp;pPartAsDescendants) ;
+  ...
+  	  
+  // 6-1 Extracts the lists of its Body Features
+  CATLISTV(CATISpecObject_var) BodyListDesc;  
+  pPartAsDescendants-&gt;<b>GetAllChildren</b>(&quot;<b>CATIMechanicalTool</b>&quot;, BodyListDesc);
+  cout &lt;&lt;&quot;   The list of Body Features:&quot; ;
+  <b>PrintGeometricalFeaturesSetsResult2</b>(BodyListDesc);
+
+  // 6-2 Extracts the lists of its OGS
+  CATLISTV(CATISpecObject_var) OGSList;  
+  pPartAsDescendants-&gt;<b>GetAllChildren</b>(&quot;<b>CATIMmiOrderedGeometricalSet</b>&quot;,OGSList);
+  cout &lt;&lt;&quot;   The list of Ordered Geometrical Set:&quot;  ;
+  <b>PrintGeometricalFeaturesSetsResult2</b>(OGSList);
+
+  // 6-3 Extracts the lists of its GS
+  CATLISTV(CATISpecObject_var) GSList;  
+  pPartAsDescendants-&gt;<b>GetAllChildren</b>(&quot;<b>CATIMmiNonOrderedGeometricalSet</b>&quot;,GSList);
+  cout &lt;&lt;&quot;   The list of Geometrical Set:&quot;  ;
+  <b>PrintGeometricalFeaturesSetsResult2</b>(GSList);
+
+  pPartAsDescendants-&gt;Release();
+  pPartAsDescendants = NULL ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+
+<p align="left">Using specific interfaces you retrieve all the geometrical
+features set into the Part document:</p>
+
+<ul>
+  <li>
+    <p align="left"><i>CATIMechanicalTool</i>: it is specific to the Body
+    features</li>
+  <li>
+    <p align="left"><i>CATIMmiOrderedGeometricalSet</i>: it is specific to the
+    Ordered Geometrical Set features</li>
+  <li>
+    <p align="left"><i>CATIMmiNonOrderedGeometricalSet</i>: it is specific to
+    the Geometrical Set features</li>
+</ul>
+<p align="left">The result of the <i>CATIBodyRequest</i> interface and the final extraction of the topological bodies from the set is
+delegated to a dedicated function: <code><a href="#Getting the Geometrical Features Set Result">PrintGeometricalFeaturesSetsResult</a></code>.
+The <code>PrintGeometricalFeaturesSetsResult2</code> method being just an
+encapsulation of the <code>PrintGeometricalFeaturesSetsResult </code>method to
+convert a list of <i>CATISpecObject</i> into a list of <i>CATBaseUnknown</i>.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Getting Geometrical Features Sets thanks to CATIPartRequest"></a>Getting
+Geometrical Features Sets thanks to CATIPartRequest</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  cout &lt;&lt;&quot;Using CATIPartRequest&quot; &lt;&lt; endl &lt;&lt;endl;
+  <b>CATIPartRequest</b> *pPartAsRequest = 0;
+  rc = spPart-&gt;QueryInterface(IID_CATIPartRequest, (void**)&amp;pPartAsRequest) ;
+  ...
+   
+  const CATUnicodeString <b>stdContext</b>(&quot; &quot;);  
+  	  
+  // 7-1 Extracts the lists of its Body Features
+  CATLISTV(CATBaseUnknown_var) BodyList;  
+  pPartAsRequest-&gt;<b>GetSolidBodies</b>(stdContext, BodyList);
+  cout &lt;&lt;&quot;   The list of Body Features:&quot; ;
+  <b>PrintGeometricalFeaturesSetsResult</b>(BodyList);
+
+  // 7-2 Extracts the lists of its surfacic sets
+  CATLISTV(CATBaseUnknown_var) SurfacicSetList;  
+  pPartAsRequest-&gt;<b>GetSurfBodies</b>(stdContext, SurfacicSetList);
+  cout &lt;&lt;&quot;   The list of Surfacic Sets:&quot;  ;
+  <b>PrintGeometricalFeaturesSetsResult</b>(SurfacicSetList);
+
+  pPartAsRequest-&gt;Release();
+  pPartAsRequest = NULL ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We saw earlier that specifying a context was necessary to choose among the
+potentially many topological bodies associated to one geometrical features set. This is
+what the <code>stdContext</code> variable does here. The blank value is the one
+that retrieve standard topological bodies. In case others set of topological
+bodies are associated to the geometrical features set by some application, then an
+application specific string can be passed to filter them out. For instance, the
+Mechanical Modeler maintains additional topological bodies for sheet metal
+applications that represent the parts in their unfolded configuration. Those
+topological bodies can be accessed through the string &quot;Unfolded&quot;.</p>
+<p>The <i>CATIPartRequest</i> interface offers a direct access to geometrical
+features sets that are associated to the Part, thanks to two dedicated methods, <code>GetSolidBodies</code> and <code>GetSurfBodies</code>.
+What is returned are :</p>
+<ul>
+  <li>All the Geometrical Set of the Part document</li>
+  <li>The Body features and the Ordered Geometrical Sets (the ordered sets) which are directly
+    aggregated by the Part feature. It is those for which the <i>CATIBodyRequest</i>
+    interface does not return <code> E_FAIL</code>.&nbsp;</li>
+</ul>
+<p>The result of the <i>CATIBodyRequest</i> interface and the final extraction of the topological bodies from the set is
+delegated to a dedicated function: <code><a href="#Getting the Geometrical Features Set Result">PrintGeometricalFeaturesSetsResult</a></code>.<code>&nbsp;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Getting the Geometrical Features Set Result"></a>Getting the
+Geometrical Features Set Result</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void PrintGeometricalFeaturesSetsResult(const CATLISTV(CATBaseUnknown_var) &amp;iSet) 
+{
+  const CATUnicodeString stdContext(&quot;&quot;); 
+
+  cout &lt;&lt;&quot; , has &quot; &lt;&lt; iSet.Size() &lt;&lt; &quot; element(s)&quot; &lt;&lt; endl;
+
+  for(int curSetIdx=1; curSetIdx&lt;=iSet.Size(); curSetIdx++)
+  {
+      CATBaseUnknown_var CurrentSet = iSet[curSetIdx] ;
+      if ( NULL_var == CurrentSet ) break ;
+
+      CATIAlias_var aliasOnCurrentSet = CurrentSet ;
+      
+      cout &lt;&lt; &quot;      &quot; &lt;&lt; aliasOnCurrentSet-&gt;<b>GetAlias</b>().ConvertToChar() ;
+      
+      CATLISTV(CATBaseUnknown_var) pListResult;
+
+      <b>CATIBodyRequest</b> *pBodyRequestOnCurrentSet = NULL;
+      HRESULT rc = CurrentSet-&gt;QueryInterface(IID_CATIBodyRequest, (void**)&amp;pBodyRequestOnCurrentSet);
+      if ( SUCCEEDED(rc) )
+      {  
+         rc = pBodyRequestOnCurrentSet-&gt;<b>GetResults</b>(stdContext, pListResult);</pre>
+    </td>
+  </tr>
+</table>
+<p>This function takes as input a collection of set, and displays the
+values returned by the <i>CATIBodyRequest</i> interface. Its unique method, <code>GetResults</code>,
+returns a list of features holding a topological result. The <code>GetResults</code> method requires the context of construction. For
+the default context, you can use the empty string or
+&quot;MfDefault3DView&quot;.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+         for(int curFeatIdx=1; curFeatIdx&lt;=SizeList; curFeatIdx++)
+         { 
+            CATBaseUnknown_var CurrentFeat = pListResult[curFeatIdx] ;
+            ...
+            CATIAlias_var aliasOnCurElt = CurrentFeat ;
+            
+            cout &lt;&lt; &quot;            &quot; &lt;&lt; aliasOnCurElt-&gt;GetAlias().ConvertToChar() ;
+            
+            <b>CATIGeometricalElement</b> *pCurFeatOnGeomElt = NULL ;
+            rc = CurrentFeat-&gt;QueryInterface(IID_CATIGeometricalElement, 
+                                                                 (void**)&amp;pCurFeatOnGeomElt);
+            if( SUCCEEDED(rc) )
+            {       
+                  CATBody_var ResultBody = pCurFeatOnGeomElt-&gt;<b>GetBodyResult</b>();
+                  
+                  if ( NULL_var != ResultBody )
+                  {
+                     <b>CATICGMObject</b> *pCurTopo = 0;
+                     rc=ResultBody-&gt;QueryInterface(IID_CATICGMObject,(void**)&amp;pCurTopo);
+                               
+                         unsigned long curResultTag = pCurTopo-&gt;<b>GetPersistentTag</b>();
+                         cout &lt;&lt;&quot;  ,Its contains a topological result with the following tag : &quot; ;
+                         cout &lt;&lt; curResultTag &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">For each element of the list returned by the <code>GetResults</code> method,
+its associated topological body is retrieved. It is possible thanks to the <i>CATIGeometricalElement</i>
+interface. The <code>GetBodyResult </code>method retrieves the <i>CATBody</i>
+associated with the feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Closing"></a>Closing the Session and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDocumentServices::<b>Remove</b>(*pDoc);
+  ... 
+  ::<b>Delete_Session</b>(&quot;SampleSession&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After the job is finished, a proper cleanup of document and session is
+necessary before ending. To do this, the <code>CATDocumentServices::Remove</code>
+static method and the <code>Delete Session</code> global function are used, as
+counterpart of <code>CATDocumentServices::Open</code> and <code>Create Session</code>
+that were used in the beginning of the use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to programmatically navigate a Part
+document, form the document itself down to the entities that hold the topology
+associated with the mechanical bodies of its part.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont0.htm">The
+      Contents of the Specification Container- The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Dec 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Jun 2004]</td>
+    <td valign="top">Document updated to take R13/R14 novelties into account</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systemes. All rights reserved.</i></p>
+
+</body>
+
+</html>

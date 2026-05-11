@@ -1,0 +1,371 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAGsiCreateStair.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'------------------------------------------------------------------------</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2000</font>
+<font color="#008000">'------------------------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create an helicoidal Stair   </font>
+<font color="#008000">'   Assumtions:   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">' ------------------------------------------------------------------------</font>
+<font color="#008000">'  VB Macro</font>
+<font color="#008000">'</font>
+<font color="#008000">'  Object:</font>
+<font color="#008000">'  Generate and helicoidal stair </font>
+<font color="#008000">'  Input data</font>
+<font color="#008000">'     Origin point and helix direction</font>
+<font color="#008000">'     Starting point of helix and its pitch / height definition</font>
+<font color="#008000">'     Height of each Step</font>
+<font color="#008000">'     </font>
+<font color="#008000">'  VB macro </font>
+<font color="#008000">'     Initialize input data</font>
+<font color="#008000">'     Compute number of required step for the helix height</font>
+<font color="#008000">'     Loop on number of step and generate the geometry for each step in a HybridBody</font>
+<font color="#008000">'</font>
+<font color="#008000">'  CATIA VB tools related to this sample</font>
+<font color="#008000">'     Open a CATIA document and a CATPart </font>
+<font color="#008000">'     Show/Noshow of wireframe and surfacic object</font>
+<font color="#008000">'     Adding new Open-Body</font>
+<font color="#008000">'     Create parameters and formula / Use it in geomety definition</font>
+<font color="#008000">'     Catia methods required CATIAReference as input object / Generate reference for each input geometry</font>
+<font color="#008000">'     Create Generative Shape Design feature </font>
+<font color="#008000">'     Update geometry / Note: done at the end in order to enhance creation performances </font>
+<font color="#008000">'      </font>
+<font color="#008000">'------------------------------------------------------------------------</font>
+
+<font color="#008000">'------------------------------------------------------------------------</font>
+<font color="#008000">' Global Variables</font>
+<font color="#008000">' ---------------------------------------------------------</font>
+<font color="#008000">' Origin Points </font>
+<font color="#0000FF">Dim </font>X0<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>Y0<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>Z0<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Starting Point of the stair helix </font>
+<font color="#0000FF">Dim </font>X1<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>Y1<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>Z1<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Direction of the helix </font>
+<font color="#0000FF">Dim </font>A1<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>B1<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>C1<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Pitch and height of the helix  </font>
+<font color="#0000FF">Dim </font>Pitch<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>Height<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Step height value </font>
+<font color="#0000FF">Dim </font>StepValue<font color="#0000FF"> As </font>Double
+
+<font color="#008000">'------------------------------------------------------------------------</font>
+<font color="#008000">' Main program</font>
+<font color="#008000">'------------------------------------------------------------------------</font>
+<font color="#008000">'     Open a New Part </font>
+<font color="#008000">'     Init global variable </font>
+<font color="#008000">'     Generate geometry</font>
+<font color="#008000">' ------------------------------------------------------------------------</font>
+<font color="#008000">'</font>
+<font color="#0000FF">Sub </font>CATMain()
+        
+  
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Create a CATIA Part Docuument  </font>
+    <font color="#008000">' --------------------------------------------------------------    </font>
+    <font color="#008000">' Creating  a Part Document </font>
+<font color="#0000FF">    Dim </font>PartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>PartDoc = CATIA.Documents.Add  ( "Part" ) 
+
+   <font color="#008000">' Retrieving HybridBodies collection in Part Document  </font>
+<font color="#0000FF">    Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">    Set </font>hybridBodies1 = PartDoc.Part.HybridBodies
+
+    <font color="#008000">' Adding an OpenBody </font>
+<font color="#0000FF">    Dim </font>myHBody<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">    Set </font>myHBody = hybridBodies1.Add()
+    
+<font color="#0000FF">    Dim </font>referencebody<font color="#0000FF"> As </font>Object
+	Set referencebody = PartDoc.Part.CreateReferenceFromObject(myHBody)
+    PartDoc.Part.HybridShapeFactory.ChangeFeatureName referencebody, "ConstructionElements" 
+    
+
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Init global Values</font>
+    <font color="#008000">' --------------------------------------------------------------</font>
+    X0 = 0
+    Y0 = 0
+    Z0 = 0
+
+    X1 = 1000
+    Y1 = 0
+    Z1 = 0
+
+    A1 = 0
+    B1 = 0
+    C1 = 1
+ 
+    Pitch = 3600
+    Height = 3000
+
+    StepValue = 100
+ 
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Declaring and setting working variables</font>
+    <font color="#008000">' --------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>iValide<font color="#0000FF"> As </font>Integer
+  
+<font color="#0000FF">    Dim </font>iLigne<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>Point1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>Point2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>HelixPitch <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>HelixHeight<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>HauteurMarche<font color="#0000FF"> As </font>Integer
+    
+    HelixPitch = Pitch
+    HelixHeight = Height
+    HauteurMarche = StepValue
+    
+   <font color="#008000">' --------------------------------------------------------------</font>
+   <font color="#008000">' Setting knowledge objects and variables </font>
+   <font color="#008000">' --------------------------------------------------------------</font>
+   <font color="#008000">' Init working knowledge parameters </font>
+<font color="#0000FF">    Dim </font>parameters<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>parameters = PartDoc.Part.parameters
+    <font color="#008000">' Working Parm object </font>
+<font color="#0000FF">    Dim </font>Parm <font color="#0000FF"> As </font>Object
+ 
+    <font color="#008000">' Init working knowledge relations     </font>
+<font color="#0000FF">    Dim </font>relations<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>relations = PartDoc.Part.relations
+    <font color="#008000">' Working Formula object </font>
+<font color="#0000FF">    Dim </font>Formula<font color="#0000FF"> As </font>Object
+      
+    <font color="#008000">' Set Parameters for stair generation </font>
+<font color="#0000FF">    Set </font>Parm = parameters.CreateDimension("HelixPitch", "LENGTH", Pitch)
+<font color="#0000FF">    Set </font>Parm = parameters.CreateDimension("HelixHeight", "LENGTH", Height)
+<font color="#0000FF">    Set </font>Parm = parameters.CreateDimension("StepHeight", "LENGTH", StepValue)
+  
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Generating  starting geometry (Reference points /Direction of helix /Helix)</font>
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">'</font>
+    <font color="#008000">' Origin and Starting Point</font>
+<font color="#0000FF">    Set </font>Point1 = PartDoc.Part.HybridShapeFactory.AddNewPointCoord(X0, Y0, Z0)
+    myHBody.AppendHybridShape Point1
+      
+<font color="#0000FF">    Set </font>Point2 = PartDoc.Part.HybridShapeFactory.AddNewPointCoord(X1, Y1, Z1)
+    myHBody.AppendHybridShape Point2
+    
+    <font color="#008000">' Plan horizontal XY</font>
+<font color="#0000FF">    Dim </font>Origin<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Origin = PartDoc.Part.OriginElements
+
+<font color="#0000FF">    Dim </font>Plane<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Plane = Origin.PlaneXY
+
+<font color="#0000FF">    Dim </font>Ref<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Ref = PartDoc.Part.CreateReferenceFromObject(Plane)
+    
+    <font color="#008000">' Direction of helix </font>
+<font color="#0000FF">    Dim </font>Dir<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Dir = PartDoc.Part.HybridShapeFactory.AddNewDirectionByCoord(A1, B1, C1)
+    <font color="#008000">' Note: Another way to create direction using horizontal plane    </font>
+    <font color="#008000">' Set Dir = PartDoc.Part.HybridShapeFactory.AddNewDirection(Ref)</font>
+    
+    <font color="#008000">' Line for helix definition </font>
+<font color="#0000FF">    Dim </font>Line<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Line = PartDoc.Part.HybridShapeFactory.AddNewLinePtDir(Point1, Dir, 0, HelixHeight, False)
+    myHBody.AppendHybridShape Line
+
+    <font color="#008000">' Create formula defining Line offset value equal to helix height parameter  </font>
+<font color="#0000FF">    Set </font>Formula = relations.CreateFormula("Formula.0", "", Line.EndOffset, "HelixHeight")
+    
+    <font color="#008000">' Helix</font>
+<font color="#0000FF">    Dim </font>RefH1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>RefH1 = PartDoc.Part.CreateReferenceFromObject(Line)
+
+<font color="#0000FF">    Dim </font>RefH2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>RefH2 = PartDoc.Part.CreateReferenceFromObject(Point2)
+
+<font color="#0000FF">    Dim </font>Helix<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>Helix = PartDoc.Part.HybridShapeFactory.AddNewHelix(RefH1, False, RefH2, HelixPitch, HelixHeight, False, 0, 0, False)
+    myHBody.AppendHybridShape Helix
+<font color="#0000FF">    Set </font>Formula = relations.CreateFormula("Formula.1", "", Helix.Pitch, "HelixPitch")
+<font color="#0000FF">    Set </font>Formula = relations.CreateFormula("Formula.2", "", Helix.Height, "HelixHeight")
+  
+
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Generating Steps </font>
+    <font color="#008000">' --------------------------------------------------------------    </font>
+ 
+<font color="#0000FF">    Dim </font>RefLine<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>RefPlane<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>RefHelix<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>RefPlaneOffset<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>Pt0<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>Pt1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>Pt2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>Pt3<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>LinePt0Pt1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>LinePt0Pt2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>RefFill<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Dim </font>RefExtrude<font color="#0000FF"> As </font>Object
+
+    <font color="#008000">' Compute number of step to generate</font>
+<font color="#0000FF">    Dim </font>indice<font color="#0000FF"> As </font>Integer
+    indice = HelixHeight / HauteurMarche
+
+    <font color="#008000">' Starting plane for helix/steps  </font>
+<font color="#0000FF">    Dim </font>PlaneOffset1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">    Set </font>PlaneOffset1 = PartDoc.Part.HybridShapeFactory.AddNewPlaneOffset(Plane, 0, False)
+    myHBody.AppendHybridShape PlaneOffset1    
+ 
+    <font color="#008000">' Setting reference objet use for each step </font>
+    <font color="#008000">' Note:  RefPlane is the basic plane used for each step / it is updated in the loop </font>
+<font color="#0000FF">    Set </font>RefLine  = PartDoc.Part.CreateReferenceFromObject(Line)
+<font color="#0000FF">    Set </font>RefPlane = PartDoc.Part.CreateReferenceFromObject(PlaneOffset1)
+<font color="#0000FF">    Set </font>RefHelix = PartDoc.Part.CreateReferenceFromObject(Helix)
+
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Loop on steps</font>
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">'</font>
+<font color="#0000FF">    Dim </font>CounterStep<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    For </font>CounterStep = 1<font color="#0000FF"> To </font>indice  Step 1
+             
+        <font color="#008000">' Create a new openbody</font>
+<font color="#0000FF">        Set </font>myHBody = PartDoc.Part.HybridBodies.Add()
+
+    	Dim stepbody<font color="#0000FF"> As </font>Object 
+		Set stepbody = PartDoc.Part.CreateReferenceFromObject(myHBody)
+        PartDoc.Part.HybridShapeFactory.ChangeFeatureName stepbody, "Step." & CounterStep
+                      
+        <font color="#008000">'Point0 = Point reference for the step on axis</font>
+<font color="#0000FF">        Dim </font>Intersection1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Intersection1 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefLine, RefPlane)
+        myHBody.AppendHybridShape<font color="#0000FF"> Int</font>ersection1
+<font color="#0000FF">        Set </font>Pt0 = PartDoc.Part.CreateReferenceFromObject(Intersection1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt0, 0
+        
+        <font color="#008000">'Point1 = Point reference for the step on helix</font>
+<font color="#0000FF">        Dim </font>Intersection2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Intersection2 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlane, RefHelix)
+        myHBody.AppendHybridShape<font color="#0000FF"> Int</font>ersection2
+<font color="#0000FF">        Set </font>Pt1 = PartDoc.Part.CreateReferenceFromObject(Intersection2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt1, 0
+        
+        <font color="#008000">'PlanOffset= Step height reference plane</font>
+<font color="#0000FF">        Dim </font>PlaneOffset2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>PlaneOffset2 = PartDoc.Part.HybridShapeFactory.AddNewPlaneOffset(RefPlane, HauteurMarche, False)
+        myHBody.AppendHybridShape PlaneOffset2
+<font color="#0000FF">        Set </font>Formula = relations.CreateFormula("Formula.Step.1", "", PlaneOffset2.Offset, "StepHeight")
+<font color="#0000FF">        Set </font>RefPlaneOffset = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefPlaneOffset, 0
+    
+    
+        <font color="#008000">'Point3 = Point reference on helix</font>
+<font color="#0000FF">        Dim </font>Intersection3<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Intersection3 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlaneOffset, RefHelix)
+        myHBody.AppendHybridShape<font color="#0000FF"> Int</font>ersection3
+<font color="#0000FF">        Set </font>Pt3 = PartDoc.Part.CreateReferenceFromObject(Intersection3)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt3, 0
+    
+        <font color="#008000">'Point2 = Point Projected from helix on step ground plane</font>
+<font color="#0000FF">        Dim </font>Project1 <font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Project1 = PartDoc.Part.HybridShapeFactory.AddNewProject(Pt3, RefPlane)
+        Project1.SolutionType = 0
+        Project1.Normal = True
+        myHBody.AppendHybridShape Project1
+<font color="#0000FF">        Set </font>Pt2 = PartDoc.Part.CreateReferenceFromObject(Project1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt2, 0
+    
+        <font color="#008000">' Step definition contours : 2 lines and a circle arc</font>
+        <font color="#008000">' Line1</font>
+<font color="#0000FF">        Set </font>LinePt0Pt1 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt1)
+        myHBody.AppendHybridShape LinePt0Pt1
+<font color="#0000FF">        Dim </font>RefLinePt0Pt1<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>RefLinePt0Pt1 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        
+        <font color="#008000">' Line2</font>
+<font color="#0000FF">        Set </font>LinePt0Pt2 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt2)
+        myHBody.AppendHybridShape LinePt0Pt2
+<font color="#0000FF">        Dim </font>RefLinePt0Pt2<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>RefLinePt0Pt2 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt2)
+        
+        <font color="#008000">' Circle arc</font>
+<font color="#0000FF">        Dim </font>Circle3Points<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Circle3Points = PartDoc.Part.HybridShapeFactory.AddNewCircle3Points(Pt0, Pt1, Pt2)
+        Circle3Points.SetLimitation 2
+        myHBody.AppendHybridShape Circle3Points
+<font color="#0000FF">        Dim </font>RefCircle<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>RefCircle = PartDoc.Part.CreateReferenceFromObject(Circle3Points)
+        
+<font color="#0000FF">        Dim </font>Split<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Split = PartDoc.Part.HybridShapeFactory.AddNewHybridSplit(RefCircle, RefLinePt0Pt1, 1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt2, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefCircle, 0
+        myHBody.AppendHybridShape Split
+<font color="#0000FF">        Dim </font>RefSplit<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>RefSplit = PartDoc.Part.CreateReferenceFromObject(Split)
+        
+        <font color="#008000">' Step surface</font>
+<font color="#0000FF">        Dim </font>Fill<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Fill = PartDoc.Part.HybridShapeFactory.AddNewFill()
+        Fill.AddBound(RefLinePt0Pt1)
+        Fill.AddBound(RefSplit)
+        Fill.AddBound(RefLinePt0Pt2)
+        myHBody.AppendHybridShape Fill
+        
+        <font color="#008000">'Riser (Opposite-step) surface</font>
+<font color="#0000FF">        Dim </font>Extrude<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Extrude = PartDoc.Part.HybridShapeFactory.AddNewExtrude(RefLinePt0Pt2, HauteurMarche, 0, Dir)
+        myHBody.AppendHybridShape Extrude
+<font color="#0000FF">        Set </font>Formula = relations.CreateFormula("Formula.Step.2", "", Extrude.BeginOffset, "StepHeight")
+        
+        <font color="#008000">' Join of two surfaces</font>
+<font color="#0000FF">        Set </font>RefFill = PartDoc.Part.CreateReferenceFromObject(Fill)
+<font color="#0000FF">        Set </font>RefExtrude = PartDoc.Part.CreateReferenceFromObject(Extrude)
+        
+<font color="#0000FF">        Dim </font>Join<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>Join = PartDoc.Part.HybridShapeFactory.AddNewJoin(RefFill, RefExtrude)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefFill, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefExtrude, 0
+        myHBody.AppendHybridShape Join
+
+        <font color="#008000">' End of loop - re-init ref plane for next step</font>
+        <font color="#008000">' RefPlane = RefPlaneOffset</font>
+<font color="#0000FF">        Set </font>RefPlane = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)
+    
+<font color="#0000FF">    Next</font>
+ 
+    <font color="#008000">'Updating CATIA Part Document </font>
+    <font color="#008000">' Note : Performed only at the end of geometry generation</font>
+    PartDoc.Part.Update
+
+    <font color="#008000">' Reframing CATIA Part Window </font>
+<font color="#0000FF">    Dim </font>specsAndGeomWindow1<font color="#0000FF"> As </font>Window
+<font color="#0000FF">    Set </font>specsAndGeomWindow1 = CATIA.ActiveWindow
+
+<font color="#0000FF">    Dim </font>viewer3D1<font color="#0000FF"> As </font>Viewer
+<font color="#0000FF">    Set </font>viewer3D1 = specsAndGeomWindow1.ActiveViewer
+    viewer3D1.Reframe 
+
+<font color="#0000FF">    Dim </font>viewpoint3D1<font color="#0000FF"> As </font>Viewpoint3D
+<font color="#0000FF">    Set </font>viewpoint3D1 = viewer3D1.Viewpoint3D
+   
+<font color="#0000FF">End Sub</font>
+
+
+
+
+
+
+</pre></body></html>

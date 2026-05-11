@@ -1,0 +1,136 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>DMUInfEngineeringView.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2002</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Change viewpoint to an engineering view defined by a series of parameters.</font>
+<font color="#008000">'                 This macro is a sample: the presented engineering view has to be reworked knowing industrial standards.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English</font>
+<font color="#008000">'   CATIA Level : V5R7</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+  <font color="#008000">' Parameters</font>
+  Const Front  = 0
+  Const Back   = 1
+  Const Right  = 2
+  Const Left   = 3
+  Const Bottom = 4
+  Const Top    = 5
+  Const Iso    = 6
+  Const Custom = 7
+
+  Const Sight = 0
+  Const Up    = 1
+
+  Const X = 0
+  Const Y = 1
+  Const Z = 2
+
+<font color="#0000FF">  Dim </font>StdDirection(7,1,2)
+
+  StdDirection(Front , Sight, X) =  1.
+  StdDirection(Front , Sight, Y) =  0.
+  StdDirection(Front , Sight, Z) =  0.
+  StdDirection(Front , Up   , X) =  0.
+  StdDirection(Front , Up   , Y) =  0.
+  StdDirection(Front , Up   , Z) =  1.
+
+  StdDirection(Back  , Sight, X) = -1.
+  StdDirection(Back  , Sight, Y) =  0.
+  StdDirection(Back  , Sight, Z) =  0.
+  StdDirection(Back  , Up   , X) =  0.
+  StdDirection(Back  , Up   , Y) =  0.
+  StdDirection(Back  , Up   , Z) =  1.
+
+  StdDirection(Right , Sight, X) =  0.
+  StdDirection(Right , Sight, Y) =  1.
+  StdDirection(Right , Sight, Z) =  0.
+  StdDirection(Right , Up   , X) =  0.
+  StdDirection(Right , Up   , Y) =  0.
+  StdDirection(Right , Up   , Z) =  1.
+
+  StdDirection(Left  , Sight, X) =  0.
+  StdDirection(Left  , Sight, Y) = -1.
+  StdDirection(Left  , Sight, Z) =  0.
+  StdDirection(Left  , Up   , X) =  0.
+  StdDirection(Left  , Up   , Y) =  0.
+  StdDirection(Left  , Up   , Z) =  1.
+
+  StdDirection(Bottom, Sight, X) =  0.
+  StdDirection(Bottom, Sight, Y) =  0.
+  StdDirection(Bottom, Sight, Z) =  1.
+  StdDirection(Bottom, Up   , X) =  0.
+  StdDirection(Bottom, Up   , Y) =  1.
+  StdDirection(Bottom, Up   , Z) =  0.
+
+  StdDirection(Top   , Sight, X) =  0.
+  StdDirection(Top   , Sight, Y) =  0.
+  StdDirection(Top   , Sight, Z) = -1.
+  StdDirection(Top   , Up   , X) =  0.
+  StdDirection(Top   , Up   , Y) =  1.
+  StdDirection(Top   , Up   , Z) =  0.
+
+  StdDirection(Iso   , Sight, X) = -1./ Sqr(3)
+  StdDirection(Iso   , Sight, Y) = -1./ Sqr(3)
+  StdDirection(Iso   , Sight, Z) = -1./ Sqr(3)
+  StdDirection(Iso   , Up   , X) = -1./ Sqr(6)
+  StdDirection(Iso   , Up   , Y) = -1./ Sqr(6)
+  StdDirection(Iso   , Up   , Z) =  2./ Sqr(6)
+
+  StdDirection(Custom, Sight, X) = -1./ Sqr(2)
+  StdDirection(Custom, Sight, Y) = -1./ Sqr(2)
+  StdDirection(Custom, Sight, Z) =  0.
+  StdDirection(Custom, Up   , X) =  0.
+  StdDirection(Custom, Up   , Y) =  0.
+  StdDirection(Custom, Up   , Z) =  1.
+
+  <font color="#008000">' Engineering view do display</font>
+<font color="#0000FF">  Dim </font>iIndView<font color="#0000FF"> As </font>Integer
+  iIndView = Custom <font color="#008000">' &lt;==== To be changed on the different macros ====</font>
+
+  <font color="#008000">' Get the viewer</font>
+<font color="#0000FF">  Dim </font>oViewer<font color="#0000FF"> As </font>Viewer
+<font color="#0000FF">  Set </font>oViewer = CATIA.ActiveWindow.ActiveViewer
+
+  <font color="#008000">' Get the viewpoint</font>
+<font color="#0000FF">  Dim </font>oViewpoint<font color="#0000FF"> As </font>Viewpoint3D
+<font color="#0000FF">  Set </font>oViewpoint = oViewer.Viewpoint3D
+
+  <font color="#008000">' Get the current parameters</font>
+<font color="#0000FF">  Dim </font>Origin(2)
+  oViewpoint.GetOrigin Origin
+<font color="#0000FF">  Dim </font>SightDirection(2)
+  oViewpoint.GetSightDirection SightDirection
+<font color="#0000FF">  Dim </font>Focus<font color="#0000FF"> As </font>Double
+  Focus = oViewpoint.FocusDistance
+
+  <font color="#008000">' Compute the new parameters</font>
+<font color="#0000FF">  Dim </font>StdSightDirection(2)
+<font color="#0000FF">  Dim </font>StdUpDirection(2)
+<font color="#0000FF">  Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>I = 0<font color="#0000FF"> to </font>2
+    StdSightDirection(I) = StdDirection(iIndView,Sight,I)
+    StdUpDirection(I) = StdDirection(iIndView,Up,I)
+    Origin(I) = Origin(I) + Focus*(SightDirection(I) - StdSightDirection(I))
+<font color="#0000FF">  Next</font>
+
+  <font color="#008000">' Change the viewpoint</font>
+  oViewpoint.PutOrigin Origin
+  oViewpoint.PutSightDirection StdSightDirection
+  oViewpoint.PutUpDirection StdUpDirection
+  oViewpoint.ProjectionMode = catProjectionCylindric
+
+  <font color="#008000">' Update the viewer</font>
+  oViewer.Update
+
+<font color="#0000FF">  Set </font>oViewpoint = Nothing
+<font color="#0000FF">  Set </font>oViewer = Nothing
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

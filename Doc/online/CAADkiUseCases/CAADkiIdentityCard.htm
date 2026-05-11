@@ -1,0 +1,461 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>How to use the Identity Card Interface</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>ENOVIA Lifecycle Applications</h1>
+     </td>
+     <td valign="top">
+     <h2>User Interface</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>How to use the Identity Card Interface</h3>
+     <p><em>Creating and displaying tabs in ENOVIA</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article shows how to use the ENOVIIdentityCardInterface interface 
+     of the VPMDesktop framework to create and display tabs in the Identity Card 
+     View.</p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+       </li>
+       <li><a href="#UseCase"><strong>The CAADkiIdentityCard Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAADkiIdentityCard Do?</a> </li>
+         <li><a href="#How">How to Launch CAADkiIdentityCard</a> </li>
+         <li><a href="#Where">Where to Find the CAADkiIdentityCard Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a> </li>
+       <li><a href="#InShort"><strong>In Short</strong></a> </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to create and display a new 
+ tab&nbsp;for the Identity Card view in the Change Management domain. Identity Cards 
+ are used to control and display the data of an object. The VPMDesktop framework 
+ contains the <i>ENOVIIdentityCardInterface</i> interface which allows you to directly 
+ create and display the tab which may then be manipulated as desired.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAADkiIdentityCard Use Case</h3>
+ <p>CAADkiIdentityCard is a use case of the CAAVPMDesktop.edu framework that 
+ illustrates the creation and display of tabs for the Identity Card view of 
+ ENOVIA objects.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAADkiIdentityCard Do?</h4>
+ <p>CAADkiIdentityCard is illustrating an example for a customer having a 
+ request from their user community to provide an informal way for each user to 
+ store personal notes connected to an ENOVIA object.&nbsp; For purposes of 
+ illustration we will assume that the requirement is to only display these notes 
+ for Change Management objects (Actions/COs/CRs).&nbsp; The information will be 
+ displayed by creating a new tab attached to the Identity Card view.&nbsp; All 
+ data displayed on the tab will be stored locally on the user's workstation.&nbsp;
+ </p>
+ <p>The <i>ENOVIIdentityCardInterface</i> interface/methods shown are as follows:</p>
+ <ul>
+   <li><strong><i>ENOVIIdentityCardInterface</i> - <code>isEnabled</code></strong> </li>
+   <li><strong><i>ENOVIIdentityCardInterface</i> - <code>setObject</code></strong> </li>
+   <li><strong><i>ENOVIIdentityCardInterface</i> - <code>setServerParameters</code></strong></li>
+ </ul>
+ <p>The <i>CAADkiNotesTab</i> methods shown are as follows:</p>
+ <ul>
+   <li><strong><i>CAADkiNotesTab</i> - <code>canEnabled</code></strong> </li>
+   <li><strong><i>CAADkiNotesTab</i> - <code>showMyView</code></strong> </li>
+   <li><strong><i>CAADkiNotesTab</i> - <code>CAADkiNotesTab</code></strong> </li>
+   <li><strong><i>CAADkiNotesTab</i> - <code>getFile</code></strong></li>
+ </ul>
+ <p>The <i>ActionListener</i> interface/methods shown are as follows:</p>
+ <ul>
+   <li><strong><i>ActionListener</i> - <code>actionPerformed</code></strong> </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch <i>CAADkiIdentityCard</i></h4>
+ <p>To launch <i>CAADkiIdentityCard</i>, you will need to execute the following steps:</p>
+ <ul>
+   <li>Set up the build time environment [<a href="#Ref1">1</a>]</li>
+   <li>Compile CAADkiNotesTab.java along with its prerequisites </li>
+   <li>Set up the run time environment </li>
+   <li>Modify the IdentityCardView.properties file declaring an additional view 
+   for <i>CAADkiNotesTab </i>to point to the new java class </li>
+   <li>Modify the VPMIdentityCard_en.properties file to declare a title for the 
+   new tab represented by the <i>CAADkiNotesTab</i> class</li>
+   <li>Launch ENOVIA LCA, create a Change Management object (Action/CO/CR) and 
+   select the object to display the Identity Card view </li>
+   <li>Enter data on the &quot;My Notes&quot; tab and select the Save button.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the <i>CAADkiIdentityCard</i> Code</h4>
+ <p>The CAADkiIdentityCard use case is made of a single file located in the 
+ CAADkiIdentityCard.mj module of the CAAVPMDesktop.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAVPMDesktop.edu\CAADkiIdentityCard.mj\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAVPMDesktop.edu/CAADkiIdentityCard.mj/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>For demonstration purposes, the code from the CAADkiIdentityCard use case is 
+ shown here. There are three logical steps in the CAADkiIdentityCard use case:</p>
+ <ol>
+   <li><a href="#Step1">Create a Class Extending <i>JPanel</i> and Implementing the 
+   <i>ENOVIIdentityCardInterface</i></a> </li>
+   <li><a href="#Step2">Implement the <i>ENOVIIdentityCardInterface</i> Methods</a>
+   </li>
+   <li><a href="#Step3">Detailed Implementation of the <code>ShowMyView</code> Method</a>
+   </li>
+   <li><a href="#Step4">Detailed Implementation of the Notes Data File</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Create a Class Extending <i>JPanel</i> and Implementing the 
+ <i>ENOVIIdentityCardInterface</i></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    import com.dassault_systemes.vpmdesktop.vdk0interfaces.interfaces.ENOVIIdentityCardInterface;
+    import com.dassault_systemes.vpmdesktop.vdk0interfaces.interfaces.ENOVIObject;
+    import javax.swing.JPanel;
+	 </pre>
+     </td>
+   </tr>
+ </table>
+ <p>These import statements are required for the following operations.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>//--- Create a class extending a JPanel implementing the ENOVIIdentityCardInterface
+      public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface 
+      {     
+          public CAADkiNotesTab() {}     
+          public void setServerParameters(String marker, String host) {}     
+          public boolean isEnabled(ENOVIObject obj) {}     
+          public void setObject(ENOVIObject obj) {}
+          public static boolean canEnabled(ENOVIObject obj) {}
+      }
+      </pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <ol>
+   <li>We create the <b>CAADkiNotesTab.java&nbsp;</b>class&nbsp;skeleton to include a 
+   constructor <strong><code>CAADkiNotesTab</code></strong> and the methods copied from 
+   <i>ENOVIIdentityCardInterface</i> <strong><code>setServerParameters</code>, <code>isEnabled</code>,
+   </strong>and <strong><code>setObject</code>.</strong> The method <b><code>canEnabled</code></b> is 
+   not a true method in the interface since static methods can not be part of an 
+   interface but this method is also needed for our new class. </li>
+   <li>The next method to implement is <strong><code>canEnabled</code></strong>.&nbsp; This 
+   method is used to determine whether this tab should be added to the 
+   IdentityCard being constructed.&nbsp; For our example we wish to add this new 
+   tab only to Actions, Change Orders and Change Requests.&nbsp; To limit when 
+   this tab will be created we will need to get the Type from the ENOVIObject.</li>
+   <li>The <code>setObject</code> method will be used to create the data and fields to be 
+   displayed on our new tab.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Implement the <i>ENOVIIdentityCardInterface</i> Methods</h4>
+ <p>No additional import statements are required for the following operations.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>//--- implement ENOVIIdentityCardInterface::setServerParameters
+public void setServerParameters(String marker, String host) {}
+
+//--- implement CAADkiNotesTab::canEnabled
+
+    public static boolean canEnabled(ENOVIObject obj)
+    {
+        return (&quot;ENOVIA_ECO&quot;==obj.getBaseType() ||
+                &quot;ENOVIA_ECR&quot;==obj.getBaseType() ||
+                &quot;ENOVIA_AFLAction&quot;==obj.getBaseType());
+    }
+
+//--- implement ENOVIIdentityCardInterface::isEnabled
+    public boolean isEnabled(ENOVIObject obj)
+    {
+        return canEnabled(obj);
+    }
+
+//--- implement ENOVIIdentityCardInterface::setObject
+    public void setObject(ENOVIObject obj)
+    {
+        myObject = obj;
+        String notes = myNotes.getProperty(obj.getInternalStringValue(&quot;V_name&quot;));
+        showMyView(notes);
+    }
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <ol>
+   <li>The method <code>setServerParameters</code> is not needed for our example so we just 
+   use an empty method body. </li>
+   <li>The <i>ENOVIObject</i> interface includes the <code>getBaseType</code> method to return a 
+   string that can be used to determine what type of object is represented.&nbsp; 
+   We can use this information in our implementation of the <code>canEnabled</code> method 
+   to limit when our new tab will be created.&nbsp;
+   </li>
+   <li>The <code>isEnabled</code> method determines when the user is allowed to select the 
+   tab for display and editing.&nbsp; We will return TRUE whenever our new tab 
+   is created.</li>
+   <li>The <code>setObject</code> method will do the main work of creating the layout of 
+   our new tab and populating the data to be displayed.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Detailed Implementation of the <code>ShowMyView</code> Method</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    import java.awt.BorderLayout;
+    import java.awt.Color;
+    import java.awt.Dimension;
+    import java.awt.event.ActionEvent;
+    import java.awt.event.ActionListener;
+
+    import javax.swing.border.Border;
+    import javax.swing.BorderFactory;
+    import javax.swing.JButton;
+    import javax.swing.JScrollPane;
+    import javax.swing.JTextArea;
+
+	 </pre>
+     </td>
+   </tr>
+ </table>
+ <p>These import statements are required for the following operations.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+    private void showMyView(String notes)
+    {
+        Border raisedbevel, loweredbevel;
+
+        raisedbevel     = BorderFactory.createRaisedBevelBorder();
+        loweredbevel    = BorderFactory.createLoweredBevelBorder();
+
+        myTextArea = new JTextArea(5, 30);
+        myTextArea.setLineWrap(true);
+        myTextArea.setBackground(Color.white);
+        myTextArea.append(notes);
+        JScrollPane scrollPane = new JScrollPane(myTextArea,
+                                            JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        setPreferredSize(new Dimension(450, 110));
+        scrollPane.setPreferredSize(new Dimension(500,250));
+        scrollPane.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createCompoundBorder(
+                                loweredbevel,
+                                raisedbevel),
+                scrollPane.getBorder()));
+        scrollPane.getHorizontalScrollBar().setEnabled(true);
+        scrollPane.getVerticalScrollBar().setEnabled(true);
+        add(scrollPane, BorderLayout.CENTER);
+
+        JButton b1 = new JButton(&quot;Save&quot;);
+        b1.setActionCommand(&quot;savenotes&quot;);
+        b1.addActionListener(this);
+        b1.setToolTipText(&quot;Click this button to save these notes.&quot;);
+
+        add(b1, BorderLayout.SOUTH);
+    }
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    
+    public class CAADkiNotesTab extends JPanel implements ENOVIIdentityCardInterface, <b>ActionListener</b>
+    
+    public void actionPerformed(ActionEvent e)
+    {
+        if (&quot;savenotes&quot;.equals(e.getActionCommand()))
+        {
+            setNotes(myObject.getInternalStringValue(&quot;V_name&quot;), myTextArea.getText());
+        }
+    }
+
+	 </pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <ol>
+   <li>Inside the <code>showMyView</code> </li>
+   <li>method we first create a <i>JTextArea</i> for editing and displaying the notes 
+   text.&nbsp; This <i>JTextArea</i> is added to a <i>JScrollPane</i> which is added to the 
+   <i>JPanel</i> of <i>CAADkiNotesTab</i> class. </li>
+   <li>We need to have a way to trigger saving the text data so we are also 
+   adding a JButton.&nbsp; To respond to the user selecting the Save button we 
+   need our class to implement <i>ActionListener</i>.</li>
+   <li>To implement <i>ActionListener</i>, we must add code to the <code>actionPerformed</code>
+   method.&nbsp; We will use this method the store the notes text in a file 
+   saved in the user's home directory.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Detailed Implementation of the Notes Data File</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    
+    import java.io.File;
+    import java.io.FileInputStream;
+    import java.io.FileOutputStream;
+    import java.io.FileNotFoundException;
+    import java.io.IOException;
+    import java.util.Properties;
+    import javax.swing.border.EtchedBorder;
+    import javax.swing.border.TitledBorder;
+	 </pre>
+     </td>
+   </tr>
+ </table>
+ <p>These import statements are required for the following operations.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    public CAADkiNotesTab()
+    {
+        TitledBorder myBorder = new TitledBorder(new EtchedBorder(), myFullFilename);
+        setBorder(myBorder);
+
+        myFile = getFile();
+        try
+        {
+            myNotes.load(new FileInputStream(myFile));
+        }
+        catch(IOException e)
+        {
+            //e.printStackTrace();
+            //No need to take any action since a file will be created when the notes are saved.
+        }
+    }
+
+    private String getNotes(String key)
+    {
+        return myNotes.getProperty(key);
+    }
+
+    private void setNotes(String key, String value)
+    {
+        myNotes.setProperty(key, value);
+        try
+        {
+            myNotes.store(new FileOutputStream(myFile),
+                  myFileHeader);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public File getFile() {
+        if((myFilename==null) || (myFilename.length() == 0))
+            myFile = null;
+        else
+        {
+            myFile = new File(myDirectory, myFilename);
+        }
+        return myFile;
+    }
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <ol>
+   <li>To simplify the file operations needed to read and store the notes text, 
+   we are using the standard Java properties class. </li>
+   <li>We create a <code>getNotes</code> method to return the notes text based on the key.&nbsp; 
+   This simple example is using the value stored in the V_name attribute as the 
+   key.</li>
+   <li>The <code>setNotes</code> method is used to store the new or edited notes text into a 
+   Properties object and also saves the updated Properties information to a text 
+   file stored in the user's home directory on the client.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>Use the <i>ENOVIIdentityCardInterface</i> interface to create and display 
+ additional tabs in the Identity Card view for ENOVIA objects. You can hide the 
+ tab using <strong><b><code>canEnabled</code></b></strong> and disable the tab using <strong>
+ <b><code>isEnabled</code></b>.</strong></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[<a name="Ref1">1</a>]</td>
+     <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building and Launching a CAA V5 Use 
+     Case</a></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr> 
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Nov 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

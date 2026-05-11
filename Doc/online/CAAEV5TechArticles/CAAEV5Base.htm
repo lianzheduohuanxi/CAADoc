@@ -1,0 +1,310 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Introducing component involved in the ENOVIA V5 VPM Customization</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>ENOVIA V5 VPM</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Architecture Overview</h3>
+      <em>Introducing component involved in the ENOVIA V5 VPM Customization</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This arcticles presents the ENOVIA V5 VPM Architecture and points out 
+		the components &amp; techniques involved in the ENOVIA V5 VPM Customization.<p>
+		It focuses on client side of the question, so a prerequisit knowledge of 
+		the ENOVIA LCA Server Modelers &amp; customization technics would be 
+		needed to deep dive into ENOVIA V5 VPM customization techniques.</p>
+      <ul>
+        <li><a href="#Learn"><strong>Overview of customization capabilities</strong></a></li>
+        <li><a href="#EV5Server"><strong>ENOVIA Server considerations</strong></a>
+          </li>
+        <li><a href="#EV5VPM"><strong>ENOVIA V5 VPM client architecture</strong></a></li>
+        <li><a href="#EV5VPMInt"><strong>VPM integration</strong></a></li>
+        <li><a href="#EV5VPMNav"><strong>VPM Navigator</strong></a></li>
+        <li><a href="#CATVPM"><strong>Authoring Applications</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>Overview of customization capabilities</h3>
+<p>ENOVIA is fully integrated with CATIA. Inside the PLM Architecture, one can 
+deploies customization pattern that are located either on the LCA server side or 
+either on CATIA cleint side. </p>
+<p>&nbsp;Customization is made of Declarative pattern or/and Programmatic 
+pattern.&nbsp; </p>
+<ul>
+	<li>One typical declarative pattern on ENOVIA server side is the definition 
+	of customizations of the ENOVIA Data model which is mainly done in using the 
+	RADE/DMC tool. The customized data model are then put in action in the CATIA 
+	client side, where those data can be created or modified by end user under 
+	the control of Integration facilities. </li>
+	<li>One typical declarative pattern on the client side is the definition of 
+	the attribute mapping that Integration software put in action to define 
+	which ENOVIA attribute will be associated with&nbsp; which CATIA Attribute.</li>
+	<li>One typical programmatic pattern on the ENOVIA server side is the 
+	implementation Object domain events. They are triggered by the CATIA client 
+	when some operations are performed on the server like modifying ENOVIA 
+	object attribute, changing ownership, ... It implies CAA API programming</li>
+	<li>One typical programmatic pattern on the CATIA client side is witing CAA 
+	command code either for VPM Navigator purpose or for CATIA Product 
+	Structure. This provides end user with dedicated command that will help him 
+	creating product structure compliant with customer rules regarding specific 
+	ENOVIA data model customization.</li>
+</ul>
+<p>Below is the overview of customization pattern that can be deployed on server 
+or on client in the context of ENOVIA V5 VPM. </p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img border="0" src="../CAAEV5TechArticles/images/EV5CustoOverview.jpg" width="820" height="630"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="EV5Server"></a>ENOVIA Server considerations</h3>
+<p>The ENOVIA LCA Server provides capabilities for customizing&nbsp; many 
+feature for the client using it. Although the same ENOVIA Data modeler 
+are used from LCA Navigator client (EBOM application) or ENOVIA V5 VPM client (CATIA 
+Product structure), there are differences in the way cusotmization operates in a 
+specific client context. There are specific customization feature for LCA Navigator and 
+specific customization for ENOVIA V5 VPM. Hereafter we explain main differences 
+in the customization of the server: </p>
+<UL>
+  <LI>LCA 
+	Navigator client &amp; related applications are not CAA opened. however most of 
+	the operations triggered by those client application are encapsulated into dedicated 
+	server code offering specific customization capabilities. Typically server 
+	customization feature related to LCA Navigator client GUI does generally 
+	apply to ENOVIA V5 VPM GUI.
+	<p>Moreover, many events, one is triggering on the server when working with 
+	LCA Navigator application are never triggered on server when working from the CATIA client because 
+	they are specific operations involved by specific LCA Navigator application commands 
+	(i.e. Cut or Paste event). 
+  <LI>ENOVIA V5 VPM &amp; related applications are CAA opened, they provide CAA 
+	client 
+	modeler API and CAA User Exit API that can be customized on the client side. Typical 
+	ENOVIA V5 VPM GUI customization is operated on the client by specific client 
+	customization. </UL>
+
+<p>One of the main customization feature offered on the server is provided by 
+the RADE/DMC application. It enables adding attributes to many of the 
+ENOVIA Server data modeler objects. Although the data customization is possible 
+on the server for both client, there are restriction in the RADE/DMC feature 
+that are supported by one or the other client. For instance, attribute list and 
+customer relations are not supported by ENOVIA V5 VPM. </p>
+
+<p>Other customization feature are defined only in the server, like People &amp; Organisation Masks, Lifecycle status, ... 
+From client point of view the customization is working the same. </p>
+<p>People &amp; Organization Securities are defined on the server. Security context 
+are customizable the same, but one must pay attention that there're might 
+different securities implied from one or the other client, because the involved 
+security processes are in relationship with the involved modeler capabilities. 
+Nevertheless basic security processes are supported the same: Create, Update, 
+Delete, Write, Lock, ChangeStatus, ...</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="EV5VPM"></a>ENOVIA V5 VPM client architecture</h3>
+<p>As explained above, ENOVIA V5 VPM uses the ENOVIA LCA Server and put in action 
+several data modeler. Hereafter some terminolgy to better understand the 
+relation between the ENOVIA LCA modeler &amp; the CATIA modelers. </p>
+<ul>
+	<li>
+	<p><b>Part</b>: an ENOVIAV5 part (named Part Reference in 
+	the ENOVIA LCA GUI, as provided by the LCA PRODUCT modeler) can correspond 
+	to<br>
+	. either a CATIAV5 root product (top of the specification tree in the CATIA 
+	GUI) in a CATPart or CATProduct document<br>
+	. or a CATIAV5 component-type node in a CATProduct document which is not 
+	kept in ENOVIAV5 (save option &#8220;Structure Exposed&#8221;)</li>
+	<li>
+	<p><b>Document</b>: an ENOVIAV5 document (named Document 
+	Revision in the ENOVIA LCA GUI, as provided by the LCA DOCDIR modeler) 
+	corresponds to most of CATIA documents (CATProduct, CATPart, catalog, 
+	CATDrawing, CATAnalysis&#8230;). <b>Document Master (DM) / Document Revision (DV)</b>: 
+	to manage versioning, ENOVIAV5 handles documents with these 2 different 
+	types of objects: several Document Revisions can exist for a given Document 
+	Master</li>
+	<li>
+	<p><b>Domain</b>: ENOVIA V5 standard and customized data 
+	schemas organize different ENOVIA objects into Domains. Domains have names, 
+	standard ENOVIA V5 objects can be derived in a customized domain by adding 
+	customer-defined attributes to the standard object. The standard domain name 
+	for documents is DOCDIR.</li>
+</ul>
+<p>Hereafter is the picture explaining how the client 
+architecture is delivered. It helps to understand the typical user process &amp; 
+components implied when working in ENOVIA V5 VPM context </p>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img border="0" src="../CAAEV5TechArticles/images/EV5VPMArchi.jpg" width="650" height="400"></p>
+<p>
+On the above picture, User is navigating on the persistent ENOVIA data (light 
+blue window). He can open the data in the Authoring session (dark blue window), 
+and work for hours modifiying those data. Hundred of modifications can then be 
+propagated (saved) all at once on the server. Hereafter we present the main 
+client component supporting this user data modification process.</p>
+
+<h4><a name="EV5VPMInt"></a>VPM integration</h4>
+<p>VPM integration provides </p>
+<ul>
+	<li>
+	<p>The underlying software for managing Open/Save of 
+	ENOVIA data in CATIA It offers CATIA facilities like attribute mapping to 
+	decide whether such ENOVIA domain attribute should be mapped on CATIA 
+	Product Modeler or document Modeler attributes. </li>
+	<li>
+	<p>Once opened in CATIA, those Data can be modified by 
+	many application like Product Structure, Assembly design, Part design .... 
+	<p>As long as data are opened in session, no ENOVIA server modification are 
+	applied, but are recorded in the form of long transaction to be further &quot;replayed&quot; 
+	to ENOVIA Server when the user will order saving. Only at that time the 
+	ENOVIA server will be involved, and all modifications will take effect and 
+	be committed at once. During that time, many ENOVIA Server feature are 
+	implied like P&amp;O Securities, </li>
+	<li>
+	<p>The connectivity with the ENOVIA server involving from 
+	CATIA the required conversion &amp; calling the required ENOVIA modeler 
+	capabilities to reflect what has been done during the CATIA Session.</li>
+</ul>
+
+<h4><a name="EV5VPMNav"></a>VPM Navigator</h4>
+<p>VPM Navigator provides </p>
+<ul>
+	<li>
+	<p>GUI to Access to persistent data thanks to dedicated 
+	navigation facilities like queries or expand graph. 
+	<p>Queries or Expand Graph 
+	are interfaced with the server &amp; fully support P&amp;O Mask customization on the 
+	server side. 
+	<p>Many ENOVIA modeler objects can be seen there, much more than 
+	CATIA may natively operates: like ENOVIA GCO, Configuration Handler, 
+	Effetivities, Actions, ...</li>
+	<li>
+	<p>GUI to Manage the CATIA session data in providing 
+	Filtered Open in CATIA or Save with Action from CATIA tools. 
+	<p>It provides 
+	dedicated Open behavior that matches CATIA User needs &amp;&nbsp; Decision 
+	support to better manage the CATIA session content &amp; the relationship with 
+	ENOVIA. 
+	<p>One one the Decision support tool is obviously save management 
+	implying ENOVIA Mapping when creating data, or ENOVIA Versioning when an 
+	ENOVIA data is already frozen, ENOVIA configuration modification through 
+	Action, .... 
+	<p>It also provides End User with Relational tool to address CATIA 
+	cooperative design processes &amp; dependancy analysis. 
+	<p>Moreover it also 
+	provides dedicated tools to reconcialite design with latest version of a 
+	CATIA design object.</li>
+	<li>
+	<p>GUI to Manage persistent data in short transaction. It 
+	consists of operations that are directly applied to the ENOVIA Server &amp; 
+	automatically commited. 
+	<p>It provides modification of Data attribute without 
+	needing to open in CATIA any data. 
+	<p>It also provides some advanced ENOVIA 
+	cooperative feature Locking, or changing ownership or lifecycle 
+	manipulations.</li>
+</ul>
+
+<h4><a name="CATVPM"></a>Authoring Applications</h4>
+<p>Authoring is one of the many application available in CATIA:
+</p>
+<ul>
+	<li>
+	<p>It can be Product Authoring as provided by the CATIA 
+	Product Structure Application. It can also be Assembly Design. Notice those 
+	application may suppport Native ENOVIA PRODUCT Modeling,&nbsp; implying 
+	ENOVIA Product (PRC), ItemInstances, Part,&nbsp; AseemblyRelations and so 
+	forth.</li>
+	<li>
+	<p>It can be also pure Mechanical Design Authoring as 
+	provided by CATIA Part Editor or Shape Modeling as provided by CATIA GSD 
+	applications. Those are interfaced with ENOVIA DOCDIR documents. Notice that 
+	CATPart are Documents but also contains ENOVIA Part corresponding to the 
+	CATIA Product side of the CATPart.</li>
+	<li>
+	<p>It can also be pure Evaluation Activities as offered by 
+	CATIA. Review activities on Product are interfaced with ENOVIA PRODUCT&nbsp; 
+	Technological Packages. FEM activities are supported by CATAnalysis CATIA 
+	Document wich are interfaced with ENOVIA DOCDIR.</li>
+</ul>
+<p>Notice that all these CATIA applications have their own CAA 
+offering. These offering may deal with Extending the Application GUI in 
+including new CAA Commands in the applications. They may also deal with CATIA Authoring 
+API that stand for the client modeling API for ENOVIA. </p>
+<p align="right">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>ENOVIA V5 VPM offers component that suport ENOVIA plug &amp; play in CATIA</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References &amp; Quick References</h3>
+<table width="100%" id="table1">
+	<tr>
+		<td class="quick" colSpan="2">&nbsp;</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="../CAADocTechArticles/CAADocEventsIndex.htm">
+		Domain Object Events</a></td>
+		<td>The objects declaring events in the different domains</td>
+	</tr>
+	<tr>
+		<td>
+		<a href="../CAADocMetadata/CAADocMetadataHome.htm">
+		The ENOVIA LCA Exposed Model Objects</a></td>
+		<td>The exposed ENOVIA LCA model objects</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

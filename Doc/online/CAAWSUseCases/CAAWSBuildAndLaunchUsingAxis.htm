@@ -1,0 +1,482 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <title>
+      Building and Launching a CAA Web Service Use Case
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <script language="JavaScript" src="../CAADocJavaScript/submit.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Building and Launching a CAA Web Service Use Case
+            </h3><em>How to build and launch the CAA V5 use cases that demonstrate how to consume CAA Web services</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!--=========================================================================-->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article explains how to set up a buildtime and runtime environment for the CAA Web service use cases
+              that rely on Axis. It describes how to compile one or several code samples, and how to launch the related
+              usage scenario samples.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The CAAXXXAxis1_3Client Use Cases</strong></a>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step Using IRAD 6.0</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!--=========================================================================-->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      The code samples delivered within CAA Web service use cases are intended to demonstrate how to write client
+      applications that consume CAA Web services. The aim of this article is to help you build and run these code
+      samples. It explains how to set up your buildtime and runtime environments using <strong>IRAD (IBM Rational
+      Application Developer) 6</strong>, although any other Java IDE (Integrated Development Environment) or
+      stand-alone JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that purpose. It uses a
+      given CAA Web service use case as example, but the related concepts apply to any other available use case.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <h3>
+      <a name="2"></a>The CAAXXXAxis1_3Client Use Cases
+    </h3>
+    <p>
+      CAAXXXAxis1_3Client is a generic name for the CAA Web service use cases that rely on Axis 1.3. You should just
+      replace XXX by the actual name of the CAA V5 use case you want to build and launch. To leave your CD-ROM
+      installation as a safe reference, please create your project in a separate root directory for the CAA use cases
+      in which you can freely copy, build, run, and possibly modify the use cases.
+    </p>
+    <p>
+      The code samples are only provided inside a typical CAA Web service framework/module architecture for convenience
+      purpose. There is no prerequisite on either the CAA V5 buildtime or the CAA Web service runtime environment when
+      using CAA Web services. In the following section, the code samples are imported from the CAA CD-ROM media for
+      clarity. It is expected that you generate/write the related code yourself by referring to the use case describing
+      how to consume the CAA Web service you wish to use.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <h3>
+      <a name="3"></a>Step-by-step Using IRAD 6.0
+    </h3>
+    <p>
+      The following section first describes how to set up the Axis prerequisites on your project, then how to import
+      the use case code samples, and finally how to build the project. It then explains how to launch the related use
+      case scenario. In the following, the CAAENOPosAppBinderAxis1_3Client use case [<a href="#References">1</a>] will
+      be used for reference:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Setting Up Your IRAD 6 Project</a>
+      </li>
+      <li>
+        <a href="#3.2">Building the Use Case Code Samples</a>
+      </li>
+      <li>
+        <a href="#3.3">Launching a Use Case Scenario</a>
+      </li>
+    </ol>
+    <!--=========================================================================-->
+    <h4>
+      <a name="3.1"></a>Setting Up Your IRAD 6 Project
+    </h4>
+    <p>
+      There are various ways available for building client applications that rely on Axis. You can build the code with
+      any Java IDE from the market, or even with the Apache Ant Java-based build tool for example. The only requirement
+      is to set up the Axis prerequisites. See [<a href="#References">2</a>] for a detailed description of such
+      prerequisites.
+    </p>
+    <p>
+      The following section describes how to build the code using IRAD 6.0. These steps could be performed in the
+      almost exact same way when using <strong>IBM WSAD (WebSphere Studio Application Developer) 5.1.x</strong> or
+      <strong>Eclipse 3.x</strong>. It demonstrates the use of the Axis 1.3 release, but it can be easily updated to
+      match any other certified release.
+    </p>
+    <p>
+      <img src="../CAAIcons/images/solution.gif" alt="Solution" width="28" height="30">
+      &nbsp;If using Java 1.3, a few extra steps are required. These steps (7 to 16) are highlighted in
+      <font color="red">red</font> below. Their aim is to change the default JRE used but also to add Xerces related
+      dependencies to the project classpath.
+    </p>
+    <p>
+      The following describes how to set up the build time environment:
+    </p>
+    <ol>
+      <li>Go to <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Project</strong>,
+      </li>
+      <li>Choose <strong>Java Project</strong> and click <strong>Next</strong>,
+      </li>
+      <li>Enter a value in the <strong>Project name</strong> field (you can use the name of the use case for example,
+      such as <em>CAAENOPosAppBinderAxis1_3Client</em>) and click <strong>Next</strong>,
+      </li>
+      <li>On the <strong>Java Settings</strong> window, point to the <strong>Libraries</strong> tabpage,
+      </li>
+      <li>Click on <strong>Add External JARs</strong> and browse to the directory where you unzipped the Axis binary
+      release,
+      </li>
+      <li>Point to the <code>\axis-1_3\lib</code> subfolder. Select the following JARs using <em>CTRL + Click</em> and
+      then click on <strong>Open</strong>: <code>axis.jar</code>, <code>axis-schema.jar</code>, <code>commons-discovery-0.2.jar</code>,
+      <code>commons-logging-1.0.4.jar</code>, <code>jaxrpc.jar</code>, <code>saaj.jar</code> and <code>wsdl4j-1.5.1.jar</code>,
+      </li>
+      <li>
+        <font color="red">Click on <strong>Add External JARs</strong> again and browse to the directory where you
+        unzipped the Xerces binary release,</font>,
+      </li>
+      <li>
+        <font color="red">Point to the <code>\xerces-2_6_2\</code> folder. Select the following JARs using <em>CTRL +
+        Click</em> and then click on <strong>Open</strong>: <code>xml-apis.jar</code>, <code>xmlParserAPIs.jar</code>
+        and <code>xercesImpl.jar</code></font>,
+      </li>
+      <li>
+        <font color="red">Select the existing <strong>JRE System Library</strong> entry and click
+        <strong>Remove</strong></font>,
+      </li>
+      <li>
+        <font color="red">Click on <strong>Add Library</strong>, select <strong>JRE System Library</strong> then click
+        <strong>Next</strong></font>,
+      </li>
+      <li>
+        <font color="red">Click on <strong>Installed JREs</strong>, then <strong>Add</strong></font>,
+      </li>
+      <li>
+        <font color="red">Select <strong>Browse...</strong> next to the <strong>JRE home directory</strong> field and
+        point to your Java 1.3 installation</font>,
+      </li>
+      <li>
+        <font color="red">In the <strong>JRE name</strong> field enter the value 
+		of one of the available JREs&nbsp; installed on the machine then click <strong>OK</strong></font>,
+      </li>
+      <li>
+        <font color="red">Click <strong>OK</strong> to close the <strong>Installed Java Runtime Environments</strong>
+        window</font>,
+      </li>
+      <li>
+        <font color="red">Select the newly created name entry from the <strong>Alternate
+        JRE</strong> drop-down list</font>,
+      </li>
+      <li>
+        <font color="red">Click <strong>Finish</strong> to close the <strong>JRE System Library</strong> window</font>,
+      </li>
+      <li>Click <strong>Finish</strong> to close the <strong>New Project</strong> wizard.
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <h4>
+      <a name="3.2"></a>Building the Use Case Code Samples
+    </h4>
+    <p>
+      CAA Web service use cases that demonstrate how to consume CAA Web services using Axis generally include:
+    </p>
+    <ul>
+      <li>The Java client binding(s) generated using the Axis WSDL2Java emitter,
+      </li>
+      <li>The Java class(es) that demonstrate(s) the use of the generated resources, referred to as wrapper class(es),
+      </li>
+      <li>The Java class(es) that demonstrate(s) sample usage scenario(s) for the related CAA Web service(s).
+      </li>
+    </ul>
+    <p>
+      For the CAAENOPosAppBinderImplAxis1_3Client use case being demonstrated, you can import these resources as
+      described below:
+    </p>
+    <ol>
+      <li>On the <strong>Package</strong> view, right click on the <strong>src</strong> source folder and go to
+      <strong>Import</strong>,
+      </li>
+      <li>Choose <strong>File system</strong> and browse to the
+      <em>\CAAPLMSecurity.edu\CAAENOPosAppBinderImplAxis1_3Client.mj\src</em> folder described in [<a href="#References">1</a>],
+      </li>
+      <li>Check the <strong>src</strong> folder icon that appears on the left pane. It automatically checks all the
+      subfolders and classes available,
+      </li>
+      <li>Click <strong>Finish</strong> to close the <strong>Import</strong> wizard.
+      </li>
+    </ol>
+    <p>
+      ENOVIA LCA V5 CAA Web services rely on a custom class that must be written in order to maintain the HTTP session
+      state with Axis [<a href="#References">3</a>]. This class is provided for convenience and can be added to your
+      project using the following steps:
+    </p>
+    <ol>
+      <li>Right click on the <strong>src</strong> source folder again and go to <strong>Import</strong>,
+      </li>
+      <li>Choose <strong>File system</strong> and browse to the
+      <em>\CAAWebServices.edu\CAAJAXRPCHTTPSessionHandler.mj\src</em> folder described in [<a href="#References">3</a>],
+      </li>
+      <li>Check the <strong>src</strong> folder icon that appears on the left pane. It automatically checks all the
+      subfolders and classes available,
+      </li>
+      <li>Click <strong>Finish</strong> to close the <strong>Import</strong> wizard.
+      </li>
+    </ol>
+    <p>
+      Several CAA Web services may be used in combination of others. In such context, you will need to import resources
+      from different use case modules before building and launching a given use case scenario. Please refer to the use
+      case that describes how to consume the CAA Web service you wish to use for a complete list of such dependencies.
+      You may then repeat the steps numbered from 1 to 4 above as many times as necessary.
+    </p>
+    <p>
+      By default, IRAD 6.0 is set on <strong>Build Automatically</strong> (<strong>Project</strong> menu). You should
+      see no build errors in the <strong>Problems</strong> view.
+    </p>
+    <p>
+      If using the default Java environment from IRAD 6.0, your Java project should look as the following for the
+      CAAENOPosAppBinderImplAxis1_3Client use case demonstrated as example:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig1" id="Fig1"></a>Fig.1: Using Java 1.4
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSBuildAndLaunchUsingAxis_Fig2.png" alt="Using Java 1.4">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <h4>
+      <a name="3.3"></a>Launching a Use Case Scenario
+    </h4>
+    <p>
+      CAA Web service use cases that demonstrate how to consume CAA Web services using Axis generally contains one or
+      more <code>CAAXXXClient</code> classes. You should just replace XXX by the actual name of the class
+      you want to launch. Each class is intended to provide a sample usage scenario for the CAA Web services being
+      demonstrated. They can be launched using either a JRE or any Java IDE from the market. When using a JRE, please
+      make sure to set your CLASSPATH so that it includes all of the required dependencies.
+    </p>
+    <p>
+      The following describes how to launch a use case scenario from within IRAD 6.0. These steps could be performed in
+      the almost exact same way when using IBM WSAD (WebSphere Studio Application Developer) 5.1.x or Eclipse 3.x:
+    </p>
+    <ol>
+      <li>Select the project from the <strong>Package Explorer</strong> view (for example
+      <code>CAAENOPosAppBinderAxis1_3Client</code>),
+      </li>
+      <li>Select the <strong>Run</strong> menu, then point to <strong>Run</strong> again,
+      </li>
+      <li>From the <strong>Main</strong> tabpage, choose <strong>Java Application</strong> then click on
+      <strong>New</strong>,
+      </li>
+      <li>Give a new name to the configuration using the <strong>Name</strong> field (such as
+      <em>CAAENOPosAppBinderAxis1_3Client</em>),
+      </li>
+      <li>Make sure that the right project is selected in the <strong>Project</strong> field, and then click on
+      <strong>Search</strong> in the <strong>Main class</strong> area,
+      </li>
+      <li>Select the <code>CAAXXXClient</code> class (for example,
+      <code>CAAENOPosApplicationBinderImplClient</code>) and click <strong>OK</strong>,
+      </li>
+      <li>From the <strong>Arguments</strong> tabpage, enter the required arguments as described in the related use
+      case article:<br>
+        <u>Example</u>: <code>-w http://karindsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin</code>,
+      </li>
+      <li>Click on <strong>Apply</strong> then <strong>Run</strong>.
+      </li>
+    </ol>
+    <p>
+      The output is displayed in the <strong>Console</strong> view within IRAD 6.0. A sample result is given for the
+      CAAENOPosAppBinderAxis1_3Client use case demonstrated. Running the client in your own environment will most
+      likely produce different results. In any case, the last line should always inform that the test passed
+      successfully:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>================================================================================<br>
+			Displaying inputs<br>
+			================================================================================<br>
+			Web application context root URI: http://karindsy.dsy.ds:9080/B17<br>
+			ENOVIA LCA V5 P&amp;O username: cjk<br>
+			Basic authentication username: wpsadmin<br>
+			Basic authentication password: wpsadmin<br>
+			================================================================================<br>
+			Running ENOPosApplicationBinderImpl CAA Web service use case<br>
+			================================================================================<br>
+			STEP 1: Instantiating and configuring CAA Web service proxy<br>
+			Jan 26, 2006 5:57:54 PM org.apache.axis.utils.JavaUtils isAttachmentSupported<br>
+			WARNING: Unable to find required classes (javax.activation.DataHandler and javax.mail.internet.MimeMultipart). Attachment support is disabled.<br>
+			--------------------------------------------------------------------------------<br>
+			STEP 2: Getting contexts for user specified<br>
+			--------------------------------------------------------------------------------<br>
+			&gt;&gt;&gt; Invoking 'getUserContexts' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+			Username: cjk<br>
+			Reading 2 cookies from HTTP response<br>
+			Cookie[0]: LtpaToken=mVD8PxR7VAh08zM+h9BOQ3px7/nnOpCi0cu2JSDBcvbyT5nKwMpMWMvKlHuaxo...<br>
+			Cookie[1]: JSESSIONID=0000-JrFIo0KK4Lnz7YOMWuuYt-:-1<br>
+			Storing cookies in memory. Client ID: 1138294673313<br>
+			Status: Success<br>
+			Found 1 context(s) in database<br>
+			Displaying list of available contexts:<br>
+			Context[0]: VPMADMIN.ADMIN.DEFAULT<br>
+			--------------------------------------------------------------------------------<br>
+			STEP 3: Logging on to ENOVIA LCA V5<br>
+			--------------------------------------------------------------------------------<br>
+			&gt;&gt;&gt; Invoking 'bindToApplication' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+			Using context: VPMADMIN.ADMIN.DEFAULT<br>
+			Reading cookies from memory. Client ID: 1138294673313<br>
+			Setting cookies on HTTP request: LtpaToken=mVD8PxR7VAh08zM+h9BOQ3px7/nnOpCi0cu2JSDBcvbyT5nKwMpMWMvKlHuaxo...; JSESSIONID=0000-JrFIo0KK4Lnz7YOMWuuYt-:-1<br>
+			Status: Success<br>
+			<br>
+			--------------------------------------------------------------------------------<br>
+			STEP 4: Logging out from ENOVIA LCA V5<br>
+			--------------------------------------------------------------------------------<br>
+			&gt;&gt;&gt; Invoking 'releaseFromApplication' on ENOPosApplicationBinderImpl CAA Web service proxy<br>
+			Reading cookies from memory. Client ID: 1138294673313<br>
+			Setting cookies on HTTP request: LtpaToken=mVD8PxR7VAh08zM+h9BOQ3px7/nnOpCi0cu2JSDBcvbyT5nKwMpMWMvKlHuaxo...; JSESSIONID=0000JrFIo0KK4Lnz7YOMWuuYt-:-1<br>
+			Status: Success<br>
+			================================================================================<br>
+			Use case execution successful</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case describes how to set up a buildtime and runtime environment using IRAD 6 in order to compile and
+      launch the CAA Web services use cases that rely on Axis.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!--=========================================================================-->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="#" onclick="javascript:CAAlinkUrl('../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm');return false;">Consuming
+            the ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm#3.1">Generating
+            a Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining the
+            Session State</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--=========================================================================-->
+    <hr>
+    <h3>
+      History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Apr 2005]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--=========================================================================-->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

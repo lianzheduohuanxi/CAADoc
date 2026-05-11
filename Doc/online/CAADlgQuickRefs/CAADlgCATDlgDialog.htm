@@ -1,0 +1,421 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgDialog</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgDialog</h3>
+      <em>Make dialog boxes or display documents</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgWindow.htm">CATDlgWindow</a>
+        |
+        +---CATDlgDialog</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table>
+  <caption><em>The Dialog Window</em></caption>
+  <tr>
+    <td><img src="images/CATDlgDialog.jpg" alt="CATDlgDialog.jpg (9014 bytes)" width="210" height="158"><br>
+      <img src="images/ListDialog.jpg" alt="ListDialog.jpg (13352 bytes)" width="267" height="193"></td>
+    <td>The dialog window is dedicated to either:
+      <ul>
+        <li>display views of a document, such as the first window beside that
+          contains a 3D view and a graph view or specification tree of the same
+          part</li>
+        <li>contain controls arranged to enable the end user to enter values, or
+          select options to edit, modify, or print these documents, or to
+          globally parameterize the application. For eample, the second window
+          beside is a dialog to set printing options.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>Use the dialog window as a base class when you want to create a window for a
+document or a dialog.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Containment Parent</caption>
+  <tr>
+    <td>The parent of a instance of a class that derives from CATDlgDialog must
+      be an instance of a class that derives from <a href="CAADlgCATInteractiveApplication.htm">CATInteractiveApplication</a>
+      (UNIX only) or <a href="CAADlgCATDlgDocument.htm">CATDlgDocument</a>.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Display</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td><img src="images/CATDlgDialogDefault.jpg" alt="CATDlgDialogDefault.jpg (5788 bytes)" width="183" height="83"></td>
+    <td>The dialog window features three OK, Cancel, and Help push buttons</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndModal</td>
+    <td><img src="images/CATDlgDialogModal.gif" alt="CATDlgDialogModal.gif (5599 bytes)" width="180" height="102"></td>
+    <td>The dialog window is modal, that is, no interaction is possible outside
+      this window as long as it is displayed. On UNIX, the cursor changes to show that nothing
+	  can be done outside the window.</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndOK</td>
+    <td><img src="images/CATDlgDialogOK.jpg" alt="CATDlgDialogOK.jpg (3743 bytes)" width="112" height="83"></td>
+    <td>The dialog window features the OK push button</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndCANCEL</td>
+    <td><img src="images/CATDlgDialogCANCEL.jpg" alt="CATDlgDialogCANCEL.jpg (4037 bytes)" width="112" height="83"></td>
+    <td>The dialog window features the Cancel push button</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndAPPLY</td>
+    <td><img src="images/CATDlgDialogAPPLY.jpg" alt="CATDlgDialogAPPLY.jpg (4003 bytes)" width="112" height="83"></td>
+    <td>The dialog window features the Apply push button</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndHELP</td>
+    <td><img src="images/CATDlgDialogHELP.jpg" alt="CATDlgDialogHELP.jpg (3863 bytes)" width="112" height="83"></td>
+    <td>The dialog window features the Help push button</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndNoButton</td>
+    <td><img src="images/CATDlgDialogNoButton.jpg" alt="CATDlgDialogNoButton.jpg (2779 bytes)" width="112" height="56"></td>
+    <td>The dialog window doesn't feature any push button</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndBtnBottom</td>
+    <td></td>
+    <td>The push buttons are located at the bottom of the window. This is
+      similar to the default. The push buttons are located at the right of the
+      window with Windows, and are regularly placed from left to righ with UNIX.</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndSmallDecoration</td>
+    <td><img src="images/CATDlgDialogSmallDecoration.jpg" alt="CATDlgDialogSmallDecoration.jpg (3989 bytes)" width="183" height="64"></td>
+    <td>The dialog window has no title bar</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndNoDecoration</td>
+    <td><img src="images/CATDlgDialogNoDecoration.jpg" alt="CATDlgDialogNoDecoration.jpg (3093 bytes)" width="175" height="40"></td>
+    <td>The dialog window has neither title bar nor resizing frame</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndPointerLocation</td>
+    <td></td>
+    <td>The dialog window is created at the mouse cursor location</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndAutoResize</td>
+    <td></td>
+    <td>The dialog window is automatically resized with respect to its content's
+      modifications</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndNoResize</td>
+    <td><img src="images/CATDlgDialogNoResize.jpg" alt="CATDlgDialogNoResize.jpg (5299 bytes)" width="181" height="81"></td>
+    <td>The dialog window cannot be resized by the end user. The minimize and
+      maximize buttons are not available</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndChildMDI</td>
+    <td></td>
+    <td>The dialog window is located within its parent application main window.
+      This is available with Windows only</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndTitleBarHelp</td>
+    <td><img src="images/CATDlgDialogHELPTitleBar.jpg" alt="CATDlgDialogHELPTitleBar.jpg (4751 bytes)" width="128" height="83"></td>
+    <td>The help button is located in the title bar, as a question mark. This is
+      possible with Windows only and has no effect with UNIX</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgDiaOKNotification</td>
+    <td><code>GetDiaOKNotification</code></td>
+    <td>Whenever the OK push button is pressed</td>
+  </tr>
+  <tr>
+    <td>CATDlgDiaCANCELNotification</td>
+    <td><code>GetDiaCANCELNotification</code></td>
+    <td>Whenever the Cancel push button is pressed</td>
+  </tr>
+  <tr>
+    <td>CATDlgDiaHELPNotification</td>
+    <td><code>GetDiaHELPNotification</code></td>
+    <td>Whenever the Help push button is pressed</td>
+  </tr>
+  <tr>
+    <td>CATDlgDiaAPPLYNotification</td>
+    <td><code>GetDiaAPPLYNotification</code></td>
+    <td>Whenever the Apply push button is pressed</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDIRestoreNotification</td>
+    <td><code>GetMDIRestoreNotification</code></td>
+    <td>Whenever the dialog window is restored</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDIMinimizeNotification</td>
+    <td><code>GetMDIMinimizeNotification</code></td>
+    <td>Whenever the dialog window is minimized</td>
+  </tr>
+  <tr>
+    <td>CATvMDIMaximizeNotification</td>
+    <td><code>GetMDIMaximizeNotification</code></td>
+    <td>Whenever the dialog window is maximized</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDINextNotification</td>
+    <td><code>GetMDINextNotification</code></td>
+    <td>Whenever the dialog window is activated as the next of the current one</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDIPreviousNotification</td>
+    <td><code>GetMDIPreviousNotification</code></td>
+    <td>Whenever the dialog window is activated as the previous of the current
+      one</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDICloseNotification</td>
+    <td><code>GetMDICloseNotification</code></td>
+    <td>Whenever the dialog window is closed</td>
+  </tr>
+  <tr>
+    <td>CATDlgMDIActivateNotification</td>
+    <td><code>GetMDIActivateNotification</code></td>
+    <td>Whenever the dialog window is activated</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>Create a dialog window by deriving the CATDlgDialog class. CATDlgDialog
+cannot be instantiated and must always be derived. A dialog window can be a MDI
+window only if its parent application window is also a MDI window. A dialog
+window includes all window capabilities of your operating system, such as move,
+resize, minimize, and maximize.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Dialog Window</h4>
+<p>Derive CATDlgDialog.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pDialogWindow = new DialogWindow(iApplication, iName, iStyle)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Retrieving the Contextual Menu and the Menu Bar</h4>
+<p>You can retrieve the contextual menu or the menu bar of a dialog window as
+follows:
+<ul>
+  <li>get the contextual menu with the GetContextualMenu method
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get contextual menu</em></td>
+        <td class="code">
+          <pre>CATDlgContextualMenu * _CtxMenu;
+CtxMenu = _pDialogWindow-&gt;GetContextualMenu();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the menu bar with the GetBarMenu method
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get menu bar</em></td>
+        <td class="code">
+          <pre>CATDlgBarMenu * _TheBarMenu;
+_TheBarMenu = _pDialogWindow-&gt;GetBarMenu();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the Push Buttons</h4>
+<p>You can manage the title and the sensitivity of any push button as follows.
+The examples are written for OK. Replace OK with CANCEL, HELP, or APPLY in the
+method names for the Cancel, Help, Apply push buttons respectively. When the
+push buttons are created, theit titles are OK, Cancel, Help,a nd Apply
+respectively:
+<ul>
+  <li>get the OK push button title with the GetOKTitle method (GetCANCELTitle,
+    GetHELPTitle, or GetAPPLYTitle respectively):
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get title</em></td>
+        <td class="code">
+          <pre>CATUnicodeString pucTitle;
+pucTitle = _pDialogWindow-&gt;GetOKTitle();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set the OK push button title with the SetOKTitle method (SetCANCELTitle,
+    SetHELPTitle, or SetAPPLYTitle respectively):
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set title</em></td>
+        <td class="code">
+          <pre>CATUnicodeString pucTitle = ...;
+_pDialogWindow-&gt;SetOKTitle(pucTitle);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the OK push button sensitivity with the GetOKSensitivity method
+    (GetCANCELSensitivity, GetHELPSensitivity, or GetAPPLYSensitivity
+    respectively):
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get sensitivity</em></td>
+        <td class="code">
+          <pre>CATULong Sensitivity;
+Sensitivity = _pDialogWindow-&gt;GetOKSensitivity();
+if (Sensitivity == CATDlgEnable)
+  ...    // OK push button is enabled</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set the OK push button sensitivity with the SetOKSensitivity method
+    (SetCANCELSensitivity, SetHELPSensitivity, or SetAPPLYSensitivity
+    respectively). For example, disable the OK push button:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set sensitivity</em></td>
+        <td class="code">
+          <pre>CATULong Sensitivity = CATDlgDisable;
+_pDialogWindow-&gt;SetOKSensitivity(Sensitivity);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the default button with the GetDefaultButton method:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get default button</em></td>
+        <td class="code">
+          <pre>int DefaultButton;
+DefaultButton = _pDialogWindow-&gt;GetDefaultButton();
+if (DefaultButton == CATDlgWndOK)
+  ...    // OK push button is the default button</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set the default button with the SetDefaultButton method. For example, set
+    the default button as the Apply push button:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set default button</em></td>
+        <td class="code">
+          <pre>int DefaultButton = CATDlgWndAPPLY;
+_pDialogWindow-&gt;SetDefaultButton(CATDlgWndAPPLY);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The default push button is the one activated whe the end user presses the
+    Enter key. Valid values are:</p>
+    <table>
+      <tr>
+        <td>NULL</td>
+        <td>No default push button</td>
+      </tr>
+      <tr>
+        <td>CATDlgWndOK</td>
+        <td>OK is the default push button</td>
+      </tr>
+      <tr>
+        <td>CATDlgWndCANCEL</td>
+        <td>Cancel is the default push button</td>
+      </tr>
+      <tr>
+        <td>CATDlgWndHELP</td>
+        <td>Help is the default push button</td>
+      </tr>
+      <tr>
+        <td>CATDlgWndAPPLY</td>
+        <td>Apply is the default push button</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title to an Application Main Window</h4>
+<p>The application window title should be set by the resource file using a key
+built with the identifier you declare as the second parameter of the application
+window constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

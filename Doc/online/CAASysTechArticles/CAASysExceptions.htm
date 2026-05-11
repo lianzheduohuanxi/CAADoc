@@ -1,0 +1,879 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Errors Using Exceptions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Errors Using Exceptions</h3>
+      <em>Creating, analyzing, enriching, and reacting to errors using
+      exceptions</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to create your own error objects and
+      messages, and how to process the errors returned by the methods you call
+      using exceptions. <b>Using exceptions is not recommended</b>.
+      <ul>
+        <li><a href="#100000"><strong>Understanding Error Management Using
+          Exceptions with an Example</strong></a></li>
+        <li><a href="#200000"><b>Exception Basics</b></a></li>
+        <li><a href="#300000"><strong>What Is a CAA V5 Exception Made Of?</strong></a></li>
+        <li><a href="#500000"><strong>Throwing an Exception</strong></a>
+          <ul>
+            <li><a href="#510000">Initializing Error Data</a></li>
+            <li><a href="#540000">Throwing the Exception</a></li>
+            <li><a href="#560000">Avoiding Memory Leaks while Throwing an
+              Exception</a></li>
+            <li><a href="#580000">Tracing Exceptions</a>
+            <li><a href="#590000">Documenting Exceptions</a></li>
+          </ul>
+        </li>
+        <li><a href="#600000"><strong>Catching and Processing Exceptions</strong></a>
+          <ul>
+            <li><a href="#610000">Catching Exceptions</a></li>
+            <li><a href="#620000">Analyzing the Error</a></li>
+            <li><a href="#630000">Enriching the Error and Throwing a New
+              Exception</a></li>
+            <li><a href="#640000">Rethrowing Exceptions</a></li>
+            <li><a href="#650000">Informing the End User with a Prompt Box</a></li>
+          </ul>
+        </li>
+        <li><a href="#700000"><b>V5 Exceptions Compared with C++ Exceptions</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Understanding Error Management Using Exceptions with an
+Example</h3>
+<p>Suppose you code a method in a matrix class to compute a 3x3 matrix
+inversion. If the matrix to invert has a null determinant, you cannot invert the
+matrix, and you can report the error by throwing an exception. The code that
+will call your method will catch the exception and will process it. Since the
+null determinant depends on the input matrix, you will use the <i>CATInputError</i>
+class, and create a message such as the one with the key <code>MatrixERR_3241</code>
+you will associate with the class, this message being located, for example, in
+the file CAAMatrixInputError.CATNls, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MatrixERR_3241.Request = &quot;Cannot invert the matrix /p1&quot; 
+MatrixERR_3241.Diagnostic = &quot;The matrix determinant is null.\n
+Its determinant value is: /p2\n
+This value is less than the lower limit for\n
+significant real numbers\n
+and is considered as null.&quot;;
+MatrixERR_3241.Advice = &quot;Check the /p1 matrix&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>The matrix inversion method can be as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATInputError.h&quot;
+#include &quot;CAAMatrix3x3.h&quot;
+
+CAAMatrix3x3 * CAAMatrix3x3::Invert()
+{
+  double det = Determinant();
+  if (fabs(det) &lt;= _epsilon)
+  {
+    CATInputError* pError = new <b>CATInputError</b>(&quot;MatrixERR_3241&quot;,        // Message key
+                                              &quot;CAAMatrixInputError&quot;);  // Message catalog
+    char * pId = GetMatrixId();
+    // Prepare parameters for the message
+    CATUnicodeString Param1(pId);
+    CATUnicodeString Param2;
+    Param2.BuildFromNum(det);
+    // Assign parameters to the error
+    pError-&gt;<b>SetNLSParameters</b>(2, &amp;Param1, &amp;Param2);
+    pError-&gt;<b>SetType</b>(CATErrorTypeCritical);
+
+    <b>CATThrow</b>(pError);
+  }
+...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The determinant value computed by the method <code>Determinant</code> is
+compared to the smallest acceptable value <code>_epsilon</code> and if it is
+smaller than this value, a <i>CATInputError</i> class instance is created. Note
+that the error class constructor uses the error identifier and the error message
+file as arguments. The matrix identifier is retrieved, and is converted into a <i>CATUnicodeString</i>
+instance, along with the actual determinant value, and assigned as the
+parameters of the error message. They will value <code>/p1</code> and <code>/p2 </code>in
+the error message respectively. The error is also assigned the type <code>CATErrorTypeCritical</code>.
+Then the exception is thrown.</p>
+<p>The code to write when you use this method could be the following:
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATInputError.h&quot;
+#include &quot;CAAMatrix3x3.h&quot;
+
+HRESULT CAAMyClass::Compute()
+{
+  CAAMatrix3x3 * <b>volatile</b> pMat    = NULL;
+  CAAMatrix3x3 * <b>volatile</b> pInvMat = NULL;
+  <b>CATTry</b>
+  {
+    pMat = new CAAMatrix3x3();
+    ...
+    pInvMat = pMat-&gt;Invert();
+    ...
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that the macro <code>CATThrow</code> does not appear explicitly in the
+method <code>Compute</code>, but in the <code>Invert</code> method called from <code>Compute</code>.
+You could have used the <code>Invert</code> method several times in your <code>CATTry</code>
+block without to worry about the error it can throw. You simply need to catch
+these errors once in <code>CATCatch</code> macros.</p>
+When catching an exception you must try in the following order:
+<ul>
+  <li>If you know how to repair the exception, repair the error and go on (in
+    this case you need to try/catch at each call)</li>
+  <li>If it is not a major error and
+    <ul>
+      <li>If there is no clean up to do, and if your method doesn't belong to
+        the framework border, do nothing. At last, the exception will be
+        converted into an HRESULT when reaching the framework border</li>
+      <li>Otherwise, catch the exception, clean up and
+        <ul>
+          <li>If your method doesn't belong to the framework border
+            <ul>
+              <li>Either rethrow the received CATError while possibly having
+                changed the CATError message</li>
+              <li>Or delete the received CATError, create a new CATError and
+                throws this new CATError (more expensive)</li>
+            </ul>
+          </li>
+          <li>If your method belongs to the framework border
+            <ul>
+              <li>Convert the exception into an HRESULT, with or without an
+                associated CATError</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>If it is a major error, catch the exception, use CATSysLogAbend. (This
+    call will make a core dump at DS and continue after having logged the error
+    in the abend trace at customer’s location.) Because the call doesn't make
+    a core dump at customer’s locations, you need to manage the error as if it
+    were not a major error as described above.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATCatch(CATInputError, pOccurringError)</b>
+  {
+    if (NULL != pOccurringError)
+    {
+      ... // <b>Clean</b>
+      const char * pMsgId = pOccurringError-&gt;GetMsgId();
+      if (0 == strcmp(&quot;MatrixERR_3241&quot;, pMsgId))                       // <b>Repair</b>
+      {
+        pOccurringError-&gt;Release();
+        pOccurringError = NULL;
+        ... // Repair the error, for example, by modifying pMat, and go on
+        return CATReturnSuccess;
+      }
+      else if (0 == strcmp(&quot;MatrixERR_3242&quot;, pMsgId))                  // <b>Rethrow as is</b>
+      {
+        ... // <b>Clean</b>
+        <b>CATRethrow</b>;
+      }
+      else if (0 == strcmp(&quot;MatrixERR_3243&quot;, pMsgId))                  // <b>Enrich</b>
+      {
+        pOccurringError-&gt;Release();
+        pOccurringError = NULL;
+        ... // <b>Clean</b>
+        CATInputError * pMyError = new CATInputError(&quot;AnalysisERR_1367&quot;, &quot;CATAnalysisInputError&quot;);
+        ... // Set message parameters
+        <b>CATThrow</b>(pMyError);
+      }
+      else                                                             // <b>Log and rethrow</b>
+      {
+        if (NULL == pInvMat)
+        {
+          ... // <b>Clean</b>
+          <b>::CATSysLogAbend</b>(&quot;This pointer should never be NULL&quot;);
+          <b>CATRethrow</b>;
+        }
+      }
+    }
+    else
+    {
+       ... // Process exceptions with NULL pointers ??
+    }
+  }
+  <b>CATCatch</b>(CATSystemError, pOccurringError)
+  {
+    ...
+  }
+  ...
+  <b>CATCatchOthers</b>
+  {
+    ...
+  }
+  <b>CATEndTry</b>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>Exceptions Basics</h3>
+<p>When a failure happens in a method, such as a division by zero, or if input
+parameters are out of the scope of the method, exceptions can be used. To do
+this, instantiate an existing error class by passing an appropriate error
+message key and the error message catalog file name as parameters of the error
+class constructor. If the message has parameters, assign them values of matching
+variables from your method, and throw the exception. The exception is thrown to
+an exception manager with the error class instance attached. Exception managers
+are associated with <code>CATTry</code> blocks and catch the exceptions thrown
+along with error class instances and parameters, and processes them.</p>
+<p>To make your applications platform-independent, macros are supplied to
+implement exceptions rather than using the C++-native <code>try</code>, <code>catch</code>,
+and <code>throw</code> expressions. You will have to split your code into blocks
+and encapsulate each block using the macros <code>CATTry</code> and <code>CATEndTry</code>.
+Then you or the methods you call inside the <code>CATTry</code> block use the
+macro <code>CATThrow</code> whenever an exception is to be thrown. Finally you
+use the macros <code>CATCatch</code> and <code>CATCatchOthers</code> to write
+the error processing code.</p>
+<p>Below is an example of such blocks along with the error macros:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>CATTry</b>
+{
+... // a part of your code which contains <b>CATThrow</b>
+}
+<b>CATCatch</b> (CATInputError, pError) {
+... // code processing the input errors
+}
+<b>CATCatch</b> (CATResourceError, pError)
+{
+... // code processing the resource errors
+}
+<b>CATCatchOthers</b>
+{
+... // code processing the other errors
+}
+<b>CATEndTry</b>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Errors are described using five classes, <i>CATSystemError</i>, <i>CATResourceError</i>,
+<i>CATInputError</i>, <i>CATInternalError</i>, and <i>CATCOMErrors</i> which all
+derive from the abstract class <i>CATError</i> [<a href="#References">2</a>].
+Each <code>CATCatch</code> block applies to exceptions to which a given error
+class is attached. The <code>CATCatchOthers</code> block applies to exceptions
+that are not processed by the preceding <code>CATCatch</code> blocks in the same
+<code>CATTry</code>/<code>CATEndTry</code> block.</p>
+<p>The code encapsulated by the <code>CATTry</code> macro is your main code to
+execute. If during its execution, or during the execution of one of the methods
+or functions called from it, an exception occurs and is thrown using the macro <code>CATThrow</code>,
+and if it is not caught by the code you call, the appropriate <code>CATCatch</code>
+block embedded in the same <code>CATTry</code>/<code>CATEndTry</code> block is
+executed, depending on the error class. Then the process resumes after the macro
+<code>CATEndTry</code>.</p>
+<p>Each <code>CATCatch</code> macro has the error class it processes as first
+argument. If the error is an instance of the specified class, or if it is an
+instance of one of its derived classes, the <code>CATCatch</code> block for this
+class is executed. The second argument contains a pointer to the error class
+instance conveyed with the exception.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>What Is a CAA V5 Exception Made Of?</h3>
+<p>The main characteristics of the error management using exceptions is that an
+error detected by a method is not returned to its caller, but thrown and may
+traverse several caller layers before being caught by a caller upwards in the
+call stack. An exception is built using the following:
+<ul>
+  <li>A macro that throws the exception</li>
+  <li>An error class instance you can associate with the returned value to hold
+    information the caller can retrieve to process the error, with:
+    <ul>
+      <li>A type you can associate with the error to describe its severity</li>
+      <li>An error message you can associate with the error class instance that
+        the caller can recognize thanks to its identifier, and possibly display
+        in a prompt box</li>
+    </ul>
+  </li>
+</ul>
+<p>Once thrown, the exception traveses the call stack until it finds an
+appropriate <code>CATCatch</code> block. Any caller can catch the exception to
+analyze it and take the appropriate decision. Refer to <a href="#600000">Catching
+and Processing Exceptions</a>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Throwing an Exception</h3>
+<p>When developing your objects and client applications, you will need to create
+your own errors and may throw exceptions. This includes mainly:
+<ul>
+  <li>Initializing the error data</li>
+  <li>Throwing the exception</li>
+  <li>Possibly tracing the error</li>
+  <li>Documenting the error</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="510000"></a>Initializing the Error Data</h4>
+<p>This includes:</p>
+<ul>
+  <li>Instantiating the error class</li>
+  <li>Filling in the error message with run time parameter values</li>
+  <li>Setting the error type</li>
+</ul>
+<p>This is fully described in [<a href="#References">2</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="540000"></a>Throwing the Exception</h4>
+<p>Exceptions are thrown using the <code>CATThrow</code> macro and an error
+class instance. Use <code>CATThrow</code> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATThrow(pError);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>pError</code> is the pointer to the error class instance created
+for this exception.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="560000"></a>Avoiding Memory Leaks while Throwing an Exception</h4>
+<p>Memory leaks with exceptions happen when automatic objects are used. They are
+allocated on the stack during the execution of a method or a function. The
+compiler generates calls to their constructors at function entry and to their
+destructors at function exit. Unlike C++, if an exception is thrown (either in
+the function itself or by some other functions it called), the call to the
+destructors will be skipped.&nbsp;The memory taken by these objects will
+automatically be released as the stack is restored but their destructors will
+not be called. This may have a serious impact if these destructors were used,
+for example, to release previously AddRef'd objects.</p>
+<p>Consider the following example.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBody * pBody = new Body(); // heap allocation
+CATDimBoolean * pBool = new CATDimBoolean();
+pBool-&gt;Run(pBody);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pBody</code> is allocated on the heap, and passed to the <code>Run</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDimBoolean::Run(CATBody * iBody)
+{
+  CATTry
+  {
+    // the constructor of CATTopCheck calls iBody-&gt;AddRef();
+    CATTopCheck Tcheck(iBody); // stack allocation
+    Tcheck.Check();            // may throw an exception
+  }
+  CATCatch(CATError, pError)
+  {
+    ...
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The Run method uses iBody to instantiate a CATTopCheck instance as an
+automatic object on the stack that AddRef's the CATBody. Then the Check method
+is called, and may throw an exception. In this case, the Tcheck variable is
+correctly deallocated from the stack, but the CATTopCheck destructor is not
+called, and the iBody variable is not released. This causes a memory leak.</p>
+<p>To avoid memory leaks when such an exception is thrown, declare local
+variables as volatile beyond the CATTry scope, allocate them on the heap, and
+explicitly delete or release them when no exception is called, catch the
+exception and explicitly delete or release them if necessary.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDimBoolean::Run(CATBody * iBody)
+{
+  CATTopCheck * volatile  pTcheck = NULL;
+  CATTry
+  {
+    // the constructor of CATTopCheck calls iBody-&gt;AddRef();
+    pTcheck = new CATTopCheck(iBody); // heap allocation
+    pTcheck-&gt;Check();                 // may throw an exception
+    delete pTcheck;                   // or Release pTcheck
+    pTcheck = NULL;
+  }
+  CATCatch (CATError, pError)
+  {
+    if (NULL != pTcheck)
+    {
+      delete pTcheck;                 // or Release pTcheck
+      pTcheck = NULL;
+    }
+    ...      //Repair, rethrow, or enrich the exception
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In other words, avoiding automatic objects prevents from memory leaks with
+exceptions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="580000"></a>Tracing Exceptions</h4>
+<p>If the error is a major one, you must trace it. This is fully described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="590000"></a>Documenting Exceptions</h4>
+<ul>
+  <li>Add a <strong>Throws</strong> section using the <strong>@exception</strong>
+    tag for each exception [<a href="#References">2</a>]</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+/**
+ ...
+ * <b>@exception CATInternalError ComponentERR_1000</b>
+ *   The component cannot be created because no default constructor exists
+ *   for the requested class
+ * <b>@exception CATInternalError ComponentERR_1001</b>
+ *   The component cannot be created because the class to instantiate
+ *   doesn't exist
+ * <b>@exception CATInternalError ComponentERR_1002</b>
+ *   The component was successfully created, but the interface query fails,
+ *   whether the component doesn't implement the interface, or the IID passed is invalid.
+ *   An IUnknown pointer to the component is returned
+ * <b>@exception CATInternalError ComponentERR_1003</b>
+ *   The memory allocation failed for the component
+ ...
+ */
+ExportedByJS0CORBA virtual void CATInstantiateComponent(const char *iname,
+                                                        const IID &amp;iid,
+                                                        void **oppv);</pre>
+    </td>
+  </tr>
+</table>
+<p>which gives after being processed:</p>
+<pre>public virtual void CATInstantiateComponent(const char *iname,
+                                            const IID &amp;iid,
+                                            void **oppv);</pre>
+<dl>
+  <dt><b>Throws:</b>
+  <dd>&nbsp;
+    <table>
+      <tr>
+        <th>Error Class</th>
+        <th>Error Id</th>
+        <th>Error Meaning</th>
+      </tr>
+      <tr>
+        <td><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td>ComponentERR_1000</td>
+        <td>The component cannot be created because no default constructor
+          exists for the requested class</td>
+      </tr>
+      <tr>
+        <td><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td>ComponentERR_1001</td>
+        <td>The component cannot be created because the class to instantiate
+          doesn't exist</td>
+      </tr>
+      <tr>
+        <td><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td>ComponentERR_1002</td>
+        <td>The component was successfully created, but the interface query
+          fails, whether the component doesn't implement the interface, or the
+          IID passed is invalid. An IUnknown pointer to the component is
+          returned</td>
+      </tr>
+      <tr>
+        <td><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td>ComponentERR_1003</td>
+        <td>The memory allocation failed for the component</td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="600000"></a>Catching and Processing Exceptions</h3>
+<p>The exception processing is made using the CATTry, CATCatch, CATCatchOthers
+and CATEndTry macros. If you catch an exception, your strategy of dealing with
+this error can be constructed knowing that you can:</p>
+When catching an exception you must try in the following order:
+<ul>
+  <li>If you know how to repair the exception, repair the error and go on (in
+    this case you need to try/catch at each call)</li>
+  <li>If it is not a major error and
+    <ul>
+      <li>If there is no clean up to do, and if your method doesn't belong to
+        the framework border, do nothing. At last, the exception will be
+        converted into an HRESULT when reaching the framework border</li>
+      <li>Otherwise, catch the exception, clean up and
+        <ul>
+          <li>If your method doesn't belong to the framework border
+            <ul>
+              <li>Either rethrow the received CATError while possibly having
+                changed the CATError message</li>
+              <li>Or delete the received CATError, create a new CATError and
+                throws this new CATError (more expensive)</li>
+            </ul>
+          </li>
+          <li>If your method belongs to the framework border
+            <ul>
+              <li>Convert the exception into an HRESULT, with or without an
+                associated CATError</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>If it is a major error, catch the exception, use CATSysLogAbend. (This
+    call will make a core dump at DS and continue after having logged the error
+    in the abend trace at customer’s location.) Because the call doesn't make
+    a core dump at customer’s locations, you need to manage the error as if it
+    were not a major error as described above.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="610000"></a>Catching Exceptions</h4>
+<p>Pay attention that this macro sequence CATTry, CATCatch, CATCatchOthers and
+CATEndTry is fully respected. If this is not the case, the C++ source generated
+will be invalid and will not compile. In addition, the error classes used must
+be one, or derive from one, of the five error base classes [<a href="#References">2</a>].</p>
+<p>The CATTry macro is used to start a code block to which the exception
+processing applies. If no error is detected during this code execution, the
+other macros are skipped and the process resumes after the macro CATEndTry.</p>
+<p>Never use a <code>goto</code> or <code>case</code> from a <code>switch</code>
+statement to enter in a block. The macro <code>CATTry</code> must always be
+executed to ensure proper error processing.</p>
+<p>If errors may be encountered, use the macro <code>CATCatch</code> to process
+these errors. Use one macro per error class which can potentially occurs. If
+such an error occurs, the macro <code>CATCatch</code> corresponding to this
+error class is executed. The process resumes then after the macro <code>CATEndTry</code>,
+if no other macro <code>CATThrow</code> or <code>CATRethrow</code> is found
+inside the macro <code>CATCatch</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATErrorMacros.h&quot;
+#include &quot;MyInternalError.h&quot;
+...
+CATTry
+{
+  Function1 (x);
+  Function2 (y);
+  ...
+}
+CATCatch (MyInternalError, pErrorFound)
+{
+  if (pErrorFound-&gt;GetId() == TheErrorIAmWaitingFor)
+  ...
+}
+CATCatchOthers
+{
+  ...
+}
+CATEndTry</pre>
+    </td>
+  </tr>
+</table>
+<p>The first argument of <code>CATCatch</code> is the error class, and the
+second is a pointer, valued by the code executed inside the macro <code>CATTry</code>,
+to the parameters associated with the error.</p>
+<p>The macro <code>CATCatchOthers</code> is used to insert code for any error
+class that is not handled by the macros <code>CATCatch</code> located in the
+same code block. It must be the last of the <code>CATCatch</code> macro sequence
+and must be followed by <code>CATEndTry</code>. <code>CATCatchOthers</code> must
+be used to protect from exception raise. For example, the preceding macro <code>CATCatchOthers</code>
+could be coded as follows:
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATCatchOthers {
+... // clean up
+cerr &lt;&lt; &quot;This error belongs to an unknown class\n;
+}
+CATEndTry</pre>
+    </td>
+  </tr>
+</table>
+<p>You can replace CATCatchOthers by CATCatch (CATError, Error_Found) since all
+errors derive from the class CATError.</p>
+<p>Never use a goto or a case from a switch statement to enter in a CATCatch
+block[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="620000"></a>Analyzing the Error</h4>
+<p>This is fully described in [<a href="#References">2</a>]. If the error is a
+major one, you must trace it. This is also described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="630000"></a>Enriching the Error and Throwing a New Exception</h4>
+<p>You often can add information about the error that happens because you have a
+better knowledge of what you request from the method you call than this method
+itself. For example, when you ask a method to compute the intersection of two
+surfaces, this method can simply return, in case of error, that the surfaces
+cannot be intersected, or that the intersection operator fails. You can replace
+this error in the calling context, that is for example to create a fillet or a
+chamfer, release the error class instance, and create a new one that better
+explains what really happens and that provide useful information to your own
+caller, or to the end user.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATCurve * volatile ptr = NULL;
+  ...
+  CATTry
+  {
+    ...
+    ptr-&gt;Intersect(Surf1, Surf2, &amp;Curve);
+    ...
+  }
+  CATCatch(CATError, pError)
+  {
+    ptr-&gt;Release();
+    ptr = NULL;
+    if (NULL != pError)
+    {
+      if pError-&gt;IsAKindOf(CATInputError::ClassName())
+      {
+        if (0 == strcmp(&quot;CurveERR_1256&quot;, pOccurringError-&gt;GetMsgId()))
+        {
+          pError-&gt;Release();
+          pError = NULL;
+          CATInputError * pMyError = new <b>CATInputError</b>(&quot;FilletERR_2341&quot;, &quot;MsgCatalog&quot;);
+          ... // Add appropriate parameters, if any
+          <b>CATThrow</b>(pMyError);
+        }
+        ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="640000"></a>Rethrowing Exceptions</h4>
+<p>You can simply resend the error if you cannot do anything, or if your own
+caller can process it.</p>
+<p>To raise again the current exception, use CATRethrow. This is the same as the
+C++ throw clause with no operand. This macro can only be used inside a CATCatch
+block.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATTry
+  {
+    ...
+    ptr-&gt;Intersect(Surf1, Surf2, &amp;Curve);
+    ...
+  }
+  ...
+  CATCatchOthers
+  {
+    ... // Clean
+    <b>CATRethrow</b>;
+  }
+CATEndTry</pre>
+    </td>
+  </tr>
+</table>
+<p>As with CATThrow, the CATTerminate function is called if there is no
+CATCatch* block to handle this exception.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="650000"></a>Informing the End User with a Prompt Box</h4>
+<p>This is fully described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>V5 Exceptions Compared with C++ Exceptions</h3>
+<p>The following table summarizes the differences between the V5 error
+management and the C++ exceptions</p>
+<table>
+  <tr>
+    <th>V5 Exceptions</th>
+    <th>C++ Native Exeptions</th>
+  </tr>
+  <tr>
+    <td>Error objects must derive from <i>CATError</i></td>
+    <td>Error objects can be of any type</td>
+  </tr>
+  <tr>
+    <td><code>CATTry</code></td>
+    <td><code>try</code></td>
+  </tr>
+  <tr>
+    <td><code>CATCatch (CATError, pErr)</code><br>
+      <code>pErr</code> must be a pointer</td>
+    <td><code>catch (CATError, err)</code><br>
+      <code>err</code> can be passed as a pointer, by reference or value</td>
+  </tr>
+  <tr>
+    <td><code>CATCatchOthers</code></td>
+    <td><code>catch(...)</code></td>
+  </tr>
+  <tr>
+    <td><code>CATEndTry</code></td>
+    <td>NA</td>
+  </tr>
+  <tr>
+    <td><code>CATThrow(pErr)</code><br>
+      <code>pErr</code> must be a pointer</td>
+    <td><code>throw(err)</code><br>
+      <code>err</code> can be passed as a pointer, by reference or value</td>
+  </tr>
+  <tr>
+    <td><code>CATRethrow</code></td>
+    <td><code>throw</code></td>
+  </tr>
+  <tr>
+    <td><code>CATDestructOnExit</code></td>
+    <td>NA</td>
+  </tr>
+  <tr>
+    <td><code>CATTerminate</code></td>
+    <td><code>terminate</code></td>
+  </tr>
+  <tr>
+    <td><code>CATSetTerminate</code></td>
+    <td><code>set_terminate</code></td>
+  </tr>
+  <tr>
+    <td>NA</td>
+    <td><code>unexpected</code></td>
+  </tr>
+  <tr>
+    <td>NA</td>
+    <td><code>set_unexpected</code>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Failures in methods or global functions can be reported using exceptions.
+Using the macro <code>CATThrow</code>, an error class instance can be associated
+with the exception, along with an error identifier and a error message that can
+include parameters values from the method current state. Exceptions can be
+traced using the <code>CATSysLogAbend</code> and <code>CATSysLogError</code>
+macros.</p>
+<p>Contratry to returned errors, exceptions can traverse the call stack and can
+be processed by a caller far away from the callee that throws the exceptions.
+This caller processes the exception, that is, first analyzes it, an then
+repairs, enriches, or resends it as is. If the method is located at the
+appropriate level, a prompt can be issued to the end user.</p>
+<p>If a method located at the framework border catches exceptions thrown by its
+callees, it must convert them into HRESULT associated with the same or another
+error class instance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocTechArticles/CAADocErrorsRules.htm">CAA
+      V5 Error Processing Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAASysCATError.htm">Using an Error Class with HRESULTs or
+      Exceptions</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysErrors.htm">Managing Errors Using HRESULT</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>2</b> [Nov 2001]</td>
+    <td valign="top">Enhanced with new error rules</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Plates</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Plates</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to modify existing plates and
+		advanced plates. This macro modifies the existing plates created using the 
+		<a href="CAASddCreatePlate.htm">CAASddCreatePlate</a> macro.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddEditPlate is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddEditPlate.CATPart in the samples directory.</p>
+		<p><a href="CAASddEditPlateSource.htm" target="Source">CAASddEditPlate.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddEditPlate.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddEditPlate includes nine steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Plates</a></li>
+			<li><a href="#Step5">Retrieving the Split Plates of the Seamed Shell Super Plate</a></li>
+			<li><a href="#Step6">Modifying the Split Plates Retrieved (Child Plate)</a></li>
+			<li><a href="#Step7">Retrieving and Modifying the Deck Plate</a></li>
+			<li><a href="#Step8">Retrieving and Modifying the Transverse Bulkhead</a></li>
+			<li><a href="#Step9">Updating the Part Document</a></li>
+		</ol>
+		<p><img alt="Edit Plates" src="images/CAASddEditPlate.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the  CAASddEditPlate.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain()
+  <span class="keyword">Dim</span> ObjPart  <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>This step describes how to get the SfmManager object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj  <span class="keyword">As</span>  SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Plates</a></h4>
+		<p>This step describes how to get the plate collection and how to get one specific item in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'RETRIEVING THE SUPERPLATES</span>
+  <span class="keyword">Dim</span> SuperPlates <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SuperPlates = ManagerObj.GetSuperPlates
+  <span class="keyword">Dim</span> ShellSuperPlate1, ShellSuperPlate2, DeckSuperPlate, TBHSuperPlate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSuperPlate1 = SuperPlates.Item(1)
+  <span class="keyword">Set</span> ShellSuperPlate2 = SuperPlates.Item(2)
+  <span class="keyword">Set</span> DeckSuperPlate = SuperPlates.Item(3)
+  <span class="keyword">Set</span> TBHSuperPlate = SuperPlates.Item(4)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Retrieving the Split Plates of the Seamed Shell Super Plate</a></h4>
+<p>This step describes how to get the child split plate of ShellSuperPlate1.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieving the SplitPlates of ShellSuperPlate</span>
+  <span class="keyword">Dim</span> ShellSplitPlateRefs <span class="keyword">As</span> References
+  <span class="keyword">Set</span> ShellSplitPlateRefs = ShellSuperPlate1.SplitPlates
+  <span class="keyword">Dim</span> ShellSplitPlateRef1, ShellSplitPlateRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellSplitPlateRef1 = ShellSplitPlateRefs.Item(1)
+  <span class="keyword">Set</span> ShellSplitPlateRef2 = ShellSplitPlateRefs.Item(2)
+
+  <span class="comment">'Getting Selection Object</span>
+  <span class="keyword">Set</span> SelectionObj = CATIA.ActiveDocument.Selection
+
+  <span class="comment">'Adding SplitPlate(as Reference) to Selection Object</span>
+  SelectionObj.Add ShellSplitPlateRef1
+
+  <span class="comment">'To get SplitPlate1 As SfmSuperPlate</span>
+  <span class="keyword">Dim</span> ShellSplitPlate1 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSplitPlate1 = SelectionObj.FindObject("CATIASfmSuperPlate")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Modifying the Split Plates Retrieved (Child Plate)</a></h4>
+		<p>First, we are retrieving the thickness, material, and grade of the child plate,
+		and then we modify them.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieving and Modifying the Attributes of Child Plate</span>
+  <span class="keyword">Dim</span> Thickness1 <span class="keyword">As</span> Double
+  <span class="keyword">Dim</span> material1 <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> grade1 <span class="keyword">As</span> String
+  ShellSplitPlate1.GetSplitPlateAttributes 1, Thickness1, material1, grade1
+  ShellSplitPlate1.SetSplitPlateAttributes 1, 30, "Steel", "A42"
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Retrieving and Modifying the Deck Plate</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  SelectionObj.Add DeckSuperPlate
+  <span class="keyword">Dim</span> DeckPlate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> DeckPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  <span class="comment">'Retrieving SuperPlate's Support</span>
+  <span class="keyword">Dim</span> DeckSupport <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> DeckSupport = DeckPlate.Support
+  <span class="comment">'Setting and Retrieving the SuperPlate's support offset</span>
+  DeckPlate.SupportOff<span class="keyword">Set</span> = "30.0"
+  <span class="keyword">Dim</span> DeckSupportOff<span class="keyword">Set</span> <span class="keyword">As</span> Double
+  DeckSupportOff<span class="keyword">Set</span> = DeckPlate.SupportOffset
+  <span class="comment">'Retrieving the SuperPlate's limit mode</span>
+  <span class="keyword">Dim</span> LimitMode <span class="keyword">As</span> Long
+  LimitMode = DeckPlate.LimitMode
+  <span class="comment">'Retrieving the Limits Of SuperPlate</span>
+  <span class="keyword">Dim</span> DeckPlateLimits <span class="keyword">As</span> References
+  <span class="keyword">Set</span> DeckPlateLimits = DeckPlate.Limits
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Retrieving and Modifying the Transverse Bulkhead</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'EDITING THE TRANSVERSE BULKHEAD SUPERPLATE</span>
+  SelectionObj.Add TBHSuperPlate
+  <span class="keyword">Dim</span> TBHPlate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> TBHPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+
+  <span class="comment">'Getting Limits Of SuperPlate</span>
+  <span class="keyword">Dim</span> TBHPlateLimits <span class="keyword">As</span> References
+  <span class="keyword">Set</span> TBHPlateLimits = TBHPlate.Limits
+
+  <span class="comment">'Setting 2nd Limit As Last Limit</span>
+  TBHPlate.SetAsLastLimit (2)
+  <span class="comment">'Adding One More Limit</span>
+  <span class="keyword">Dim</span> TBHPlateNewLimit <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> TBHPlateNewLimit = ObjPart.FindObjectByName("LONG.5")
+  <span class="keyword">Dim</span> TBHPlateNewLimitRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TBHPlateNewLimitRef = ObjPart.CreateReferenceFromObject(TBHPlateNewLimit)
+  <span class="keyword">Dim</span> TBHPlateNewOrnt <span class="keyword">As</span> Long
+  TBHPlateNewOrnt = 4
+  TBHPlate.AddLimit TBHPlateNewLimitRef, TBHPlateNewOrnt
+
+  <span class="comment">'Inverting the limit orientation of 4th Limit</span>
+  TBHPlate.InvertLimit (4)
+  <span class="comment">'Retrieving and Modifying the Support of SuperPlate</span>
+  <span class="keyword">Dim</span> TBHPlateSupport <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TBHPlateSupport = TBHPlate.Support
+  <span class="keyword">Dim</span> TBHPlateNewSupport <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> TBHPlateNewSupport = ObjPart.FindObjectByName("CROSS.100")
+  <span class="keyword">Dim</span> TBHPlateNewSupportRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TBHPlateNewSupportRef = ObjPart.CreateReferenceFromObject(TBHPlateNewSupport)
+  
+  TBHPlate.Support = TBHPlateNewSupportRef
+   
+  <span class="comment">'To get Category</span>
+  <span class="keyword">Dim</span> TBHPlateCategory <span class="keyword">As</span> String
+  TBHPlateCategory = TBHPlate.Category
+
+  <span class="comment">'Retrieving and Modifying the thickness, material, grade of SuperPlate</span>
+  <span class="keyword">Dim</span> TBHPlateThickness <span class="keyword">As</span> Double
+  TBHPlateThickness = TBHPlate.Thickness
+  <span class="keyword">Dim</span> TBHPlateMaterial, TBHPlateGrade <span class="keyword">As</span> String
+  TBHPlateMaterial = TBHPlate.Material
+  TBHPlateGrade = TBHPlate.Grade
+  
+  TBHPlate.Material = "Steel"
+  TBHPlate.Grade = "A45"
+  TBHPlate.Thickness = "35.0"
+ ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Updating the Part Document</a></h4>
+		<p>The Part has to be updated to  generate the geometrical representations of the modified objects. 
+Once this done, the updated objects are visible in the 3D window and in the specification tree.
+</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'Updating the Part with all modifications</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span>
+</pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit plate objects.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

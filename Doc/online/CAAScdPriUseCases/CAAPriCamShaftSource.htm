@@ -1,0 +1,441 @@
+<html>
+
+<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAPriCamShaft.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+</head>
+
+<body>
+
+<pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#008000">'*******************************************************************************</font>
+<font color="#008000">'  Purpose     : Build of a simplified camshaft</font>
+<font color="#008000">'  Assumptions :</font>
+<font color="#008000">'  Author :</font>
+<font color="#008000">'  Languages   : VBScript</font>
+<font color="#008000">'  Locales     : English (United states)</font>
+<font color="#008000">'  CATIA Level : V5R6</font>
+<font color="#008000">'*******************************************************************************</font>
+
+<font color="#008000">'Number Of Cylinders</font>
+<font color="#008000">' ------------------</font>
+<font color="#0000FF">   Dim </font>iNumberOfCylinders<font color="#0000FF"> As </font>Integer
+      
+<font color="#008000">' Shaft data</font>
+<font color="#008000">' ----------</font>
+    <font color="#008000">' -- Shaft origin</font>
+<font color="#0000FF">    Dim </font>iCenterX<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>iCenterY<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Distance between two cams of two different cylinders</font>
+<font color="#0000FF">    Dim </font>iCylinderSpacing<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Bearing diameter</font>
+<font color="#0000FF">    Dim </font>iBearingDiam<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Distance between the cylinders centers</font>
+<font color="#0000FF">    Dim </font>iBearingLength<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Pin diameter between two cams</font>
+<font color="#0000FF">    Dim </font>iPinDiam<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Distance between 2 cams of a single cylinder</font>
+<font color="#0000FF">    Dim </font>iPinLength<font color="#0000FF"> As </font>Integer
+
+<font color="#008000">' Cam data</font>
+<font color="#008000">' --------</font>
+    <font color="#008000">' -- Thickness</font>
+<font color="#0000FF">    Dim </font>iCamThickness<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Circle 1 diameter</font>
+<font color="#0000FF">    Dim </font>iCircle1Rad<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Circle 2 diameter</font>
+<font color="#0000FF">    Dim </font>iCircle2Rad<font color="#0000FF"> As </font>Integer
+
+    <font color="#008000">' -- Distance between the 2 circle centers</font>
+<font color="#0000FF">    Dim </font>iCircleDist<font color="#0000FF"> As </font>Integer
+
+<font color="#008000">' Pi definition</font>
+<font color="#008000">' -------------</font>
+<font color="#0000FF">    Dim </font>dPi<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Global data to define the different elements of the camshaft</font>
+<font color="#008000">' ------------------------------------------------------------</font>
+    <font color="#008000">' -- Cam Sketch and cam Sketch elements</font>
+<font color="#0000FF">    Dim </font>oCurrentSketch <font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">    Dim </font>oCurrentLine1  <font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Dim </font>oCurrentLine2  <font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Dim </font>oCurrentCircle1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Dim </font>oCurrentCircle2<font color="#0000FF"> As </font>AnyObject
+    
+    <font color="#008000">' -- Current distance from shaft origin</font>
+<font color="#0000FF">    Dim </font>iCurrentLevel<font color="#0000FF"> As </font>Integer
+
+<font color="#008000">' Part definition</font>
+<font color="#008000">' ---------------</font>
+     
+    <font color="#008000">' -- Part </font>
+<font color="#0000FF">    Dim </font>oPart<font color="#0000FF"> As </font>Part
+
+    <font color="#008000">' -- Main tool of the part</font>
+<font color="#0000FF">    Dim </font>oPartBody<font color="#0000FF"> As </font>Body
+
+    <font color="#008000">' -- Definition of YZ plane as work plane</font>
+<font color="#0000FF">    Dim </font>oPlaneYZ<font color="#0000FF"> As </font>Reference
+
+<font color="#008000">' **************************************************************************</font>
+<font color="#008000">' Main program</font>
+<font color="#008000">'</font>
+<font color="#008000">' **************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+	<font color="#008000">' -- Initialize global variables</font>
+    iNumberOfCylinders = 4
+    iCamThickness      = 15
+    iCircle1Rad        = 25
+    iCircle2Rad        = 15                               
+    iCircleDist        = 35                               
+    iCenterY           = 0
+    iCenterX           = 0
+    iCylinderSpacing   = 100
+    iPinDiam           = 15                                           
+    iPinLength         = 20                                         
+    iBearingDiam       = 32
+    iBearingLength     = iCylinderSpacing - iPinLength - 2*iCamThickness
+    dPi                = 3.14159265358979323846
+    iCurrentLevel      = 0
+
+<font color="#0000FF">    Dim </font>oPartDocument<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oPartDocument = CATIA.Documents.Add ( &quot;Part&quot; )
+<font color="#0000FF">    Set </font>oPart         = oPartDocument.Part
+<font color="#0000FF">    Set </font>oPartBody     = oPart.MainBody 
+<font color="#0000FF">    Set </font>oPlaneYZ      = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneYZ )
+    
+    <font color="#008000">' -- Shading view Mode</font>
+    CATIA.ActiveWindow.ActiveViewer.RenderingMode = 1
+
+    msgbox &quot;Create Five Bearings&quot;
+    Call CreatePatternBearing()
+    oPart.Update
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+
+    msgbox &quot;Create First Cam Set&quot;
+    Call CreateCamSet (0) 
+    oPart.Update 
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+
+    msgbox &quot;Create Second Cam Set&quot;
+    Call CreateCamSet (90)
+    oPart.Update
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+
+    msgbox &quot;Create Third Cam Set&quot;
+    Call CreateCamSet (180)
+    oPart.Update
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+
+    msgbox &quot;Create Fourth Cam Set&quot;
+    Call CreateCamSet (270)
+    oPart.Update
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+
+    msgbox &quot;Create Driving Wheel&quot;
+    Call CreateCylinder (iPinLength/2, iBearingDiam )
+    oPart.Update
+    Catia.ActiveWindow.ActiveViewer.Reframe 
+
+    msgbox &quot;This is the macro end&quot;
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' **************************************************************************</font>
+<font color="#008000">' Purpose:   Defines the cylinders between cylinders</font>
+<font color="#008000">' </font>
+<font color="#008000">' Inputs :</font>
+<font color="#008000">' </font>
+<font color="#008000">' **************************************************************************</font>
+<font color="#0000FF">Sub </font>CreatePatternBearing()
+
+  <font color="#008000">' Cylinder definition: Pad from a circular sketch</font>
+  <font color="#008000">' -----------------------------------------------</font>
+    
+    <font color="#008000">' -- The YZ plane is the sketch plane</font>
+<font color="#0000FF">    Set </font>oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
+        
+    <font color="#008000">' -- The sketch is a circle centered on shaft origin and of iBearingDiam diameter</font>
+<font color="#0000FF">    Dim </font>oFactory2D<font color="#0000FF"> as </font>Factory2D
+<font color="#0000FF">    Set </font>oFactory2D = oCurrentSketch.OpenEdition 
+<font color="#0000FF">    Set </font>oCurrentCircle1 = oFactory2D.CreateClosedCircle ( iCenterX, iCenterY, iBearingDiam/2 ) 
+    oCurrentSketch.CloseEdition 
+       
+    <font color="#008000">' Creation of the cylindrical pad</font>
+<font color="#0000FF">    Dim </font>oPad<font color="#0000FF"> As </font>Pad
+<font color="#0000FF">    Set </font>oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iBearingLength )
+
+  <font color="#008000">' Creating the pattern</font>
+  <font color="#008000">' --------------------</font>
+             
+<font color="#0000FF">    Dim </font>originElements1<font color="#0000FF"> As </font>OriginElements
+<font color="#0000FF">    Set </font>originElements1 = oPart.OriginElements
+
+<font color="#0000FF">    Dim </font>oRefPlaneXY<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefPlaneXY = oPart.CreateReferenceFromGeometry( oPart.OriginElements.PlaneXY )
+
+<font color="#0000FF">    Dim </font>rectPattern1<font color="#0000FF"> As </font>RectPattern
+
+    <font color="#008000">' Definition of the pattern: </font>
+    <font color="#008000">'   --  Element to be duplicated</font>
+    <font color="#008000">'   --  Number of instances in first direction</font>
+    <font color="#008000">'   --  Number of instances in second direction</font>
+    <font color="#008000">'   --  Spacing in first direction</font>
+    <font color="#008000">'   --  Spacing in second direction</font>
+    <font color="#008000">'   --  Direction 1</font>
+    <font color="#008000">'   --  Direction 2</font>
+    <font color="#008000">'   --  Angle</font>
+
+<font color="#0000FF">    Set </font>rectPattern1 = oPart.ShapeFactory.AddNewRectPattern(oPad,                 _
+                                                            iNumberOfCylinders+1, _
+                                                            1,                    _
+                                                            iCylinderSpacing,     _
+                                                            0.0,                  _
+                                                            1,                    _  
+                                                            1,                    _
+                                                            oRefPlaneXY,          _
+                                                            oRefPlaneXY,          _
+                                                            True,                 _
+                                                            True,                 _
+                                                            0.0)
+
+
+    <font color="#008000">' -- Update of the current level</font>
+    iCurrentLevel =  iBearingLength
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' **************************************************************************</font>
+<font color="#008000">' Purpose:   Creation of a cam from an angle value</font>
+<font color="#008000">' </font>
+<font color="#008000">' Inputs :   angle:   The angle</font>
+<font color="#008000">' </font>
+<font color="#008000">' **************************************************************************</font>
+<font color="#0000FF">Sub </font>CreateCam(angle)
+    
+<font color="#0000FF">    Dim </font>dRad<font color="#0000FF"> As </font>Double
+    dRad = angle*dPi/180
+  
+<font color="#0000FF">    Dim </font>dDSin1<font color="#0000FF"> as </font>Double
+    dDSin1 = iCircle1Rad*sin(dRad)
+
+<font color="#0000FF">    Dim </font>dDCos1<font color="#0000FF"> as </font>Double
+    dDCos1 = iCircle1Rad*cos(dRad)
+    
+<font color="#0000FF">    Dim </font>dDSin2<font color="#0000FF"> as </font>Double
+    dDSin2 = iCircle2Rad*sin(dRad)
+
+<font color="#0000FF">    Dim </font>dDCos2<font color="#0000FF"> as </font>Double
+    dDCos2 = iCircle2Rad*cos(dRad)
+    
+<font color="#0000FF">    Dim </font>dCSin <font color="#0000FF"> as </font>Double
+    dCSin  = iCircleDist*sin(dRad)
+
+<font color="#0000FF">    Dim </font>dCCos <font color="#0000FF"> as </font>Double
+    dCCos  = iCircleDist*cos(dRad)
+    
+  <font color="#008000">' Create a sketch </font>
+  <font color="#008000">' ---------------</font>
+<font color="#0000FF">    Set </font>oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ ) 
+
+  <font color="#008000">' Create base elements in the sketch</font>
+  <font color="#008000">' ----------------------------------</font>
+<font color="#0000FF">    Dim </font>oFactory2D<font color="#0000FF"> As </font>Factory2D
+<font color="#0000FF">    Set </font>oFactory2D = oCurrentSketch.OpenEdition
+
+<font color="#0000FF">    Dim </font>dRad1<font color="#0000FF"> As </font>Double
+    dRad1 = dRad - dPi/4
+
+<font color="#0000FF">    Dim </font>dRad2<font color="#0000FF"> As </font>Double
+    dRad2 = dRad + dPi/4
+
+<font color="#0000FF">    Set </font>oCurrentLine1   = oFactory2D.CreateLine   ( _
+                           iCenterX - dDSin1,          iCenterY + dDCos1, _
+                           iCenterX + dCCos + dDSin2,  iCenterY - dCSin + dDCos2  )
+
+<font color="#0000FF">    Set </font>oCurrentLine2   = oFactory2D.CreateLine   ( _
+                           iCenterX + dDSin1,          iCenterY - dDCos1, _
+                           iCenterX + dCCos - dDSin2,  iCenterY - dCSin - dDCos2 )
+
+<font color="#0000FF">    Set </font>oCurrentCircle1 = oFactory2D.CreateCircle ( _
+                           iCenterX,                   iCenterY, _
+                           iCircle1Rad,   dRad2,    dRad1)
+
+<font color="#0000FF">    Set </font>oCurrentCircle2 = oFactory2D.CreateCircle ( _
+                           iCenterX + dCCos,           iCenterY + dCSin, _
+                           iCircle2Rad,   dRad1,    dRad2)
+
+  <font color="#008000">' Get references from elements to constraint</font>
+  <font color="#008000">' ------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>oRefLine1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine1 = oPart.CreateReferenceFromObject(oCurrentLine1)
+
+<font color="#0000FF">    Dim </font>oRefCircle1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle1 = oPart.CreateReferenceFromObject(oCurrentCircle1)
+
+<font color="#0000FF">    Dim </font>oRefLine2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine2 = oPart.CreateReferenceFromObject(oCurrentLine2)
+
+<font color="#0000FF">    Dim </font>oRefCircle2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle2 = oPart.CreateReferenceFromObject(oCurrentCircle2)
+
+<font color="#0000FF">    Dim </font>oRefLine1StartPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine1StartPt = oPart.CreateReferenceFromObject(oCurrentLine1.StartPoint)
+
+<font color="#0000FF">    Dim </font>oRefLine1EndPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine1EndPt = oPart.CreateReferenceFromObject(oCurrentLine1.EndPoint)
+
+<font color="#0000FF">    Dim </font>oRefLine2StartPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine2StartPt = oPart.CreateReferenceFromObject(oCurrentLine2.StartPoint)
+
+<font color="#0000FF">    Dim </font>oRefLine2EndPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefLine2EndPt = oPart.CreateReferenceFromObject(oCurrentLine2.EndPoint)
+
+<font color="#0000FF">    Dim </font>oRefCircle1StartPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle1StartPt = oPart.CreateReferenceFromObject(oCurrentCircle1.StartPoint)
+
+<font color="#0000FF">    Dim </font>oRefCircle1EndPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle1EndPt = oPart.CreateReferenceFromObject(oCurrentCircle1.EndPoint)
+
+<font color="#0000FF">    Dim </font>oRefCircle2StartPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle2StartPt = oPart.CreateReferenceFromObject(oCurrentCircle2.StartPoint)
+
+<font color="#0000FF">    Dim </font>oRefCircle2EndPt<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>oRefCircle2EndPt = oPart.CreateReferenceFromObject(oCurrentCircle2.EndPoint)
+
+
+  <font color="#008000">' Create constraints</font>
+  <font color="#008000">' ------------------</font>
+<font color="#0000FF">    Dim </font>oConstraints<font color="#0000FF"> As </font>Constraints
+<font color="#0000FF">    Set </font>oConstraints = oCurrentSketch.Constraints
+<font color="#0000FF">    Dim </font>oConstraint<font color="#0000FF"> As </font>Constraint
+
+    <font color="#008000">' -- Fix Circle1</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
+                                                 oRefCircle1)
+
+    <font color="#008000">' -- Fix Circle2</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddMonoEltCst(catCstTypeReference, _
+                                                 oRefCircle2)
+
+    <font color="#008000">' -- Tangency Line1 Circle1</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
+                                               oRefLine1,          _
+                                               oRefCircle1)
+
+    <font color="#008000">' -- Tangency Line1 Circle2</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
+                                               oRefCircle2,        _
+                                               oRefLine1)
+
+    <font color="#008000">' -- Coincidence Circle1 Start Point Line1 Start Point</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
+                                               oRefCircle1StartPt, _
+                                               oRefLine1StartPt)
+
+    <font color="#008000">' -- Coincidence Circle2 End Point Line1 End Point</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
+                                               oRefCircle2EndPt, _
+                                               oRefLine1EndPt)
+
+    <font color="#008000">' -- Tangency Line2 Circle1</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _ 
+                                               oRefLine2,          _
+                                               oRefCircle1)
+
+    <font color="#008000">' -- Tangency Line2 Circle2</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeTangency, _
+                                               oRefLine2,          _
+                                               oRefCircle2)
+
+    <font color="#008000">' -- Coincidence Circle1 End Point Line2 Start Point</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,     _
+                                               oRefCircle1EndPt, _
+                                               oRefLine2StartPt)
+
+    <font color="#008000">' -- Coincidence Circle2 Start Point Line2 End Point</font>
+<font color="#0000FF">    Set </font>oConstraint = oConstraints.AddBiEltCst(catCstTypeOn,       _
+                                               oRefCircle2StartPt, _
+                                               oRefLine2EndPt)
+
+    oCurrentSketch.CloseEdition 
+
+  <font color="#008000">' Create the Pad from the sketch</font>
+  <font color="#008000">' ------------------------------</font>
+<font color="#0000FF">    Dim </font>oPad<font color="#0000FF"> As </font>Pad
+<font color="#0000FF">    Set </font>oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  iCamThickness + iCurrentLevel )
+    oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+    
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' **************************************************************************</font>
+<font color="#008000">' Purpose:   Create a cylindric Pad</font>
+<font color="#008000">' </font>
+<font color="#008000">' Inputs :   thickness:   length of the cylinder</font>
+<font color="#008000">'            radius   :   radius of the cylinder</font>
+<font color="#008000">' </font>
+<font color="#008000">' **************************************************************************</font>
+<font color="#0000FF">Sub </font>CreateCylinder(thickness, radius)
+    
+    <font color="#008000">' -- Create a sketch </font>
+<font color="#0000FF">    Set </font>oCurrentSketch = oPartBody.Sketches.Add ( oPlaneYZ )
+
+    <font color="#008000">' -- Create base circle in the sketch</font>
+<font color="#0000FF">    Dim </font>oFactory2D<font color="#0000FF"> As </font>Factory2D
+<font color="#0000FF">    Set </font>oFactory2D = oCurrentSketch.OpenEdition 
+<font color="#0000FF">    Set </font>oCurrentCircle1 = oFactory2D.CreateClosedCircle (iCenterX, iCenterY, radius) 
+    oCurrentSketch.CloseEdition 
+
+    <font color="#008000">' -- Create the Pad from the sketch</font>
+<font color="#0000FF">    Dim </font>oPad<font color="#0000FF"> As </font>Pad
+<font color="#0000FF">    Set </font>oPad = oPart.ShapeFactory.AddNewPad ( oCurrentSketch,  thickness + iCurrentLevel )
+    oPad.SecondLimit.Dimension.Value = iCurrentLevel*-1
+
+    <font color="#008000">' -- Increase Level</font>
+    iCurrentLevel = iCurrentLevel + thickness
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">' **************************************************************************</font>
+<font color="#008000">' Purpose:   Creation of the set of cams for a cylinder</font>
+<font color="#008000">' </font>
+<font color="#008000">' Inputs :   angle:   The angle between the set of cam and the Y Axis</font>
+<font color="#008000">' </font>
+<font color="#008000">' **************************************************************************</font>
+<font color="#0000FF">Sub </font>CreateCamSet(angle)
+
+    <font color="#008000">' -- Create a cam</font>
+    CreateCam(angle)
+    iCurrentLevel = iCurrentLevel + iCamThickness
+
+    <font color="#008000">' -- Create a cylinder for the pin between cams</font>
+    Call CreateCylinder(iPinLength, iPinDiam)
+
+    <font color="#008000">' -- Create the other cam</font>
+    CreateCam(angle)
+
+    <font color="#008000">' -- Increase level</font>
+    iCurrentLevel = iCurrentLevel + iBearingLength + iCamThickness
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>
+
+

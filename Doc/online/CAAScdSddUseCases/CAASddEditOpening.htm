@@ -1,0 +1,187 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Openings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Openings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment----------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Target Icon" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%"><a name="Learn"></a>This macro shows you how to edit opening 
+		on an SDD Plate. Here we will modify the creation mode, intersecting element, 
+		and direction for already existing openings.
+		<p>
+		<img alt="Openings Modified" src="images/CAASdd003.png" width="559" height="318"></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Information Icon" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%"><a name="How"></a>
+		<a name="How" href="macros/CAASddEditOpening.CATScript">CAASddEditOpening</a> 
+		is launched in CATIA [<a href="#References">1</a>]. Some documents are needed.
+		<ul>
+			<li><a href="CAASddEditOpeningSource.htm">CAASddEditOpening.CATScript</a> 
+			is located in the CAAScdSddUseCases module.
+			<a href="macros/CAASddEditOpening.CATScript">Execute macro</a> (Windows 
+			only).</li>
+			<li>The document Product1.CATProduct is located in the CAAScdSddUseCases 
+			module in the samples directory. Design_Unit_005.CATPart is linked to 
+			the previous document and contains the sketches required for the macro.</li>
+			<li>The CATPart containing the section is located in the samples directory.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%"><a name="Step"></a>CAASddEditOpening includes three steps:<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Get the Objects of the Three Openings</a></li>
+			<li><a href="#Step3">Edit the Opening Using Opening Objects</a></li>
+		</ol>
+		<!---------------------------------comment----------------------------------->
+		<h4><a name="Step1"></a>Prolog</h4>
+		<p>The macro first loads CAASCH_Detail01.CATProduct that contains three 
+		schematic component symbols.</p>
+		<pre class="code"><font color="#0000FF">Set</font> documents1 = CATIA.Documents
+<font color="#0000FF">Set</font> partDocument1 = documents1.Item(&quot;Design_Unit_005.CATPart&quot;)
+
+<font color="#0000FF">Set</font> part1 = partDocument1.Part
+</pre>
+&nbsp;<h4><a name="Step2"></a>Get the Objects of the Three Openings</h4>
+		<p>Get the Opening Objects by using the FindObject Method on selection.</p>
+		<pre class="code"><font color="#008800">&#39;Get the OpeningObject for Opening_038</font>
+<font color="#0000FF">Dim</font> Opening1 <font color="#0000FF">As</font> SfmOpening
+<font color="#0000FF">Set</font> Opening1 = part1.FindObjectByName(&quot;Opening_038&quot;)
+
+Dim Sel1 <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> Sel1 = CATIA.ActiveDocument.Selection
+Sel1.Add Opening1
+
+<font color="#0000FF">Dim</font> OpeningObject1 <font color="#0000FF">As</font> SfmOpening
+Set OpeningObject1= Sel1.FindObject(&quot;CATIASfmOpening&quot;)
+
+<font color="#008800">&#39;Get the OpeningObject for Opening_040</font>
+<font color="#0000FF">Dim</font> Opening2 <font color="#0000FF">As</font> SfmOpening
+<font color="#0000FF">Set</font> Opening2 = part1.FindObjectByName(&quot;Opening_040&quot;)
+
+<font color="#0000FF">Dim</font> Sel2 <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> Sel2 = CATIA.ActiveDocument.Selection
+Sel2.Add Opening2
+
+<font color="#0000FF">Dim</font> OpeningObject2 <font color="#0000FF">As</font> SfmOpening
+<font color="#0000FF">Set</font> OpeningObject2= Sel2.FindObject(&quot;CATIASfmOpening&quot;)
+
+&#39;Get the OpeningObject for Opening_043
+<font color="#0000FF">Dim</font> Opening3 <font color="#0000FF">As</font> SfmOpening
+<font color="#0000FF">Set</font> Opening3 = part1.FindObjectByName(&quot;Opening_043&quot;)
+
+<font color="#0000FF">Dim</font> Sel3 <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> Sel3 = CATIA.ActiveDocument.Selection
+Sel1.Add Opening3
+
+<font color="#0000FF">Dim</font> OpeningObject3 <font color="#0000FF">As</font> SfmOpening
+<font color="#0000FF">Set</font> OpeningObject3= Sel3.FindObject(&quot;CATIASfmOpening&quot;)</pre>
+		<!---------------------------------comment----------------------------------->
+		<h4><a name="Step3"></a>Edit the Opening Using Opening Objects</h4>
+		<pre class="code">&#39;Get the mode in which Opening_038 and Opening_040 is created
+<font color="#0000FF">Dim</font> CreationMode1 <font color="#0000FF">As</font> Long
+CreationMode1 = OpeningObject1.CreationMode
+<font color="#0000FF">MsgBox</font> CreationMode1
+
+<font color="#0000FF">Dim</font> CreationMode2 <font color="#0000FF">As</font> Long
+CreationMode2 = OpeningObject2.CreationMode
+<font color="#0000FF">MsgBox</font> CreationMode2
+
+<font color="#008800">&#39;Get the Intersecting Element for Opening_038</font>
+<font color="#0000FF">Dim</font> IntersectingElem1 <font color="#0000FF">As</font> Reference
+<font color="#0000FF">Set</font> IntersectingElem1 = OpeningObject1.IntersectingElement
+
+<font color="#008800">&#39;Modify the creation mode to Sketch Mode for Opening_040.
+Then assign a sketch as intersecting element to this opening</font>
+OpeningObject2.CreationMode = 1
+
+<font color="#0000FF">Set</font> Sketch = part1.FindObjectByName(&quot;Sketch.11&quot;)
+<font color="#0000FF">Set</font> sketchref = part1.CreateReferenceFromObject(Sketch)
+OpeningObject2.IntersectingElement = sketchref
+
+
+<font color="#008800">&#39;Get the current Direction of Opening_043 and then set a new direction</font>
+<font color="#0000FF">Dim</font> GetDir <font color="#0000FF">As</font> Reference
+<font color="#0000FF">Set</font> GetDir = OpeningObject3.Direction
+
+<font color="#0000FF">Set</font> SketchAsDir = part1.FindObjectByName(&quot;Sketch.14&quot;)
+<font color="#0000FF">Set</font> PutDir = part1.CreateReferenceFromObject(SketchAsDir)
+OpeningObject3.Direction  = PutDir
+
+
+<font color="#008800">&#39;GetMathDirection for Opening_043. This will return the direction in Vector Form.</font>
+
+<font color="#0000FF">Dim</font> GetMathDir(3)
+GetMathDir(3) = OpeningObject3.GetDirection
+<font color="#0000FF">Dim</font> x1, y1, z1 <font color="#0000FF">As</font> Double
+x1 = GetMathDir(0)
+y1 = GetMathDir(1)
+z1 = GetMathDir(2)
+
+part1.Update</pre>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td align="center">
+		<img alt="End Icon" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment----------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit openings.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment----------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top"></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment----------------------------------->
+<p><i>Copyright © 2010, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,363 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Feature Naming - Basic Skills</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+
+.style2 {
+	margin-right: 57px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Feature Naming</h3>
+      <p><em>Basic skills for naming Features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtFeatNamingBasicSkill
+		</code>use case (UC). The UC illustrates the steps involved to set and 
+		retrieve a&nbsp; feature <strong>display name</strong>. It further 
+		illustrates the impact of aggregation and referencing on a feature 
+		display name. It also illustrates the method to retrieve a 
+		<strong>StartUp/Feature late type</strong>. An understanding of the 
+		Feature Naming concept [<a href="#References">1</a>] and Modeling 
+		StartUps [<a href="#References">2</a>] is a prerequisite to 
+		understanding the relevance of the current UC.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtFeatNamingBasicSkill&nbsp; Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtFeatNamingBasicSkill API Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtFeatNamingBasicSkill API</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtFeatNamingBasicSkill 
+				API Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This UC teaches an end user </p>
+<ul>
+	<li>The significance of the <strong>#isa </strong>facet in a catalog <strong>
+	OSM</strong> file, to specify the <strong>Late Type</strong> of a 
+	StartUp/Feature and the method to retrieve this late type</li>
+	<li><strong>Set</strong> and <strong>Retrieve</strong> the <strong>display 
+	name</strong> of a feature, governed by the value set in its catalog <strong>
+	CATNls</strong> file</li>
+	<li>Impact of <strong>aggregation</strong> and <strong>referencing</strong> 
+	a feature on its <strong>display name</strong></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtFeatNamingBasicSkill Use Case</h2>
+<p> The <code>CAAV5V6FmExtFeatNamingBasicSkill</code> is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code>&nbsp; framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtFeatNamingBasicSkill Do</h3>
+<p>The UC execution primarily illustrates the key concepts associated with 
+Feature Naming and Type. The feature model that it refers to is as depicted in [<a href="#References">Fig.1</a>] 
+below.</p>
+<table>
+	<caption><a name="Fig.1"></a>Fig.1.Feature Model </caption>
+	<tr>
+		<td><img src="images/CAAFmExtUCFeatNamingBasicSkill_Fig1.jpg"></td>
+	</tr>
+</table>
+<p>These concepts and the associated execution traces are 
+listed below:</p>
+<ul>
+	<li><strong>#isa facet in StartUp definition</strong><pre class="code">feature <strong>CAAOsmLibrary</strong> #startup <strong>#isa</strong>(<strong>CAAOsmPublicLibrary</strong>) {}
+</pre>
+	<p>The #<strong>isa</strong> facet in the feature 
+	<strong>StartUp</strong> <strong>definition </strong> (<strong>OSM File 
+	contents</strong>) is used to declare the 
+StartUp <strong>Late Type</strong>. The <strong>CAAOsmLibrary</strong> definition as seen below, specifies its late 
+type as &quot;<strong>CAAOsmPublicLibrary</strong>&quot;.</p>
+<pre class="code">CAAFmExtLibrary StartUp Facade retrieved OK
+<strong>The Type of the Library StartUp is CAAOsmPublicLibrary</strong>&nbsp;</pre>
+	<p>The UC execution traces above, indicate that a Library StartUp facade was 
+	initially created. The facade when queried for the Library StartUp Late Type 
+	returns 
+&quot;<strong>CAAOsmPublicLibrary</strong>&quot;. </p>
+
+	</li>
+	<li><strong>StartUp Identifier as Type (#isa facet does not exist in the 
+	StartUp definition)</strong><p>
+	A StartUp definition can exist without a <strong>#isa</strong> facet. In 
+	that case, the StartUp identifier is its <strong>Late Type</strong>, as 
+	well.</p><p>feature <strong>CAAOsmChapter</strong> <strong>#startup</strong> {</p>
+<p>The <strong>CAAOsmChapter</strong> feature definition above is without the <strong>#isa</strong> 
+facet.</p>
+<pre class="code">CAAOsmChapter StartUp Facade retrieved OK
+<strong>The Type of the Chapter StartUp Facade is CAAOsmChapter</strong>&nbsp;</pre>
+<p>The UC creates a &quot;<strong>CAAOsmChapter</strong>&quot; StartUp facade. This facade 
+when queried for the StartUp Late Type, returns &quot;<strong>CAAOsmChapter</strong>&quot;, which is the 
+StartUp identifier, as well.</p>
+	</li>
+	<li><strong>Feature Type</strong><p>The feature type is the same as the 
+	StartUp type.</p>
+<pre class="code">Library Feature created OK
+<strong>The Type of the Library feature  is CAAOsmPublicLibrary</strong></pre>
+   	<p>The UC instantiates a Library feature. It then retrieves the Library 
+	feature Late Type. The Late Type is &quot;<strong>CAAOsmPublicLibrary</strong>&quot;, 
+	the same as its StartUp type.</p>
+	</li>
+	<li><strong>Display (NLS) name of a StandAlone feature</strong><p>The display name of a 
+	feature, is that updated in its catalog <strong>CATNls</strong> file, 
+	corresponding to its StartUp.</p><pre class="code"><strong>CAAOsmLibrary="Library";</strong></pre>
+	
+	<p>The update for the Library StartUp in the <strong>
+	CAAOsmCatalogSUNLS.CATNls</strong> is as depicted above. You'll find that 
+	the CAAOsmLibrary feature display name is specified as &quot;<strong>Library</strong>&quot;.</p>
+	<pre class="code"><strong>The display name of the Library feature is Library </strong>&nbsp;</pre>
+	<p>The UC retrieves the 
+	display name of the Library feature, which is &quot;<strong>Library</strong>&quot;.</p>
+	</li>
+	<li><strong>Aggregated Feature Display Name</strong>
+	<p>The display name of a feature on aggregation, is its <strong>NLS</strong> 
+	name&nbsp; suffixed with an index, representing the count of this Late Type 
+	feature, aggregated under the parent feature.</p>
+<pre class="code">Novel feature created OK
+Success in aggregating Chapter features to the Novel
+<strong>The display name of the first aggregated Chapter feature is Chapter.1
+The display name of the second aggregated Chapter feature is Chapter.2</strong>  </pre>
+   <p>The UC traces above depict that it creates a Novel feature. It further 
+	aggregates two Chapter features under the Novel. The two aggregated Chapter features 
+	display names are <strong>Chapter.1</strong> and <strong>Chapter.2</strong>. 
+	(referred as <strong>Chapter1</strong> and <strong>Chapter2</strong> 
+	respectively, further in this article)</p>
+	<pre class="code"><strong>CAAOsmChapter="Chapter";</strong></pre>
+	<p>The &quot;<strong>Chapter</strong>&quot; in the display name is determined by the 
+	entry in the <strong>CATNls</strong> file which specifies the display name 
+	for the &quot;<strong>CAAOsmChapter</strong>&quot; 
+	StartUp (as depicted above)</p>
+	
+	</li>
+	<li><strong>Display Name of a feature on Detach</strong></li>
+	<p>In contrast to aggregation, <strong>Detach</strong> removes an aggregated 
+	feature under a parent, and thus renders it standalone. As a result, the 
+	feature display name on detach is that of its standalone version. </p>
+<pre class="code">Success in detaching the first Chapter feature under the Novel
+<strong>The display name of the first Chapter feature after detach is Chapter</strong>  &nbsp;</pre>
+<p>The first Chapter feature (<strong>Chapter.1</strong>) is detached from under 
+the Novel. We retrieve its display name which is now simply &quot;<strong>Chapter</strong>&quot;.</p>
+	<li><strong>Display Name of a Referenced (Pointed) feature is same as the 
+	StandAlone</strong>
+	<p>A Referenced (Pointed) feature retains the same display name as its 
+	standalone version. The referencing does not impact its display name (in 
+	contrast to aggregation which resulted in an indexed display name for the 
+	aggregated features)</p>
+<pre class="code">CAAOsmPublisher StartUp Facade retrieved OK
+Publisher feature created OK
+<strong>The display name of the standalone Publisher feature is Publisher
+Success in creating a reference from the Novel feature to the Publisher
+The display name of the pointed Publisher feature is Publisher</strong></pre>
+   <p>A Publisher feature is created, standalone. Its display name 
+	is &quot;<strong>Publisher</strong>&quot; (the one specified in the <strong>CATNls</strong>). 
+	Next, we set the <strong>Novel</strong> feature pointing to the <strong>
+	Publisher</strong>. The display name of the Publisher feature still remains 
+	&quot;<strong>Publisher</strong>&quot;</p>
+	</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtFeatNamingBasicSkill</h3>
+<p>To launch <code>CAAV5V6FmExtFeatNamingBasicSkill</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtFeatNamingBasicSkill </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<i><code>CAAV5V6FmExtFeatNamingAndBasicSkill DocumentStorageName.CATPart</code> 
+</i>&quot;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtFeatNamingAndBasicSkill&nbsp; Code</h3>
+<p>
+<span class="style1"> <code>CAAV5V6FmExtFeatNamingBasicSkill </code></span>code is located in the
+<code><span class="style1">CAAV5V6FmExtFeatNamingAndBasicSkill</span>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\<span class="style1">CAAV5V6FmExtFeatNamingAndBasicSkill</span>.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtFeatNamingAndBasicSkill.cpp</code></span>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The logical steps of <code>CAAV5V6FmExtFeatNamingBasicSkill
+</code>&nbsp;are:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Retrieving a SU/Feat type">Retrieving a StartUp/Feature type</a></li>
+	<li><a href="#Retrieving the display name of feat">Retrieving the Display Name of Feature</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description you may see CAAObjectSpecsModeler.edu 
+V5 UseCase documentation.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Retrieving a SU/Feat type"></a>Retrieving a StartUp/Feature Type</h3>
+<pre class="code">CATUnicodeString strTypeName;
+rc =  <strong>SUFacadeOnLibrary.GetTypeName</strong>(strTypeName);    </pre>
+	<p>The method <code>GetTypeName()</code> of the <em>CATFmStartUpFacade</em> class, 
+	retrieves the <strong>Late Type</strong> Name of the <strong>StartUp</strong>, 
+	bound to this facade.&nbsp;&nbsp; <br>
+	<code>SUFacadeOnLibrary</code>, a <em>CATFmStartUpFacade</em> type represents 
+the &quot;<strong>CAAOsmLibrary</strong>&quot; StartUp Facade. </p>
+<p>The <strong>Late Type</strong> name is retrieved as <code>strTypeName</code>, a <em>CATUnicodeString</em> type.&nbsp;</p>
+<pre class="code"> rc =  <strong>FeatFacadeOnLibrary.GetType</strong>(strTypeName);</pre>
+	<p>The method <code>GetType()</code> of the <em>CATFmFeatureFacade</em> class, 
+	retrieves the <strong>Late Type</strong> Name of the <strong>Feature</strong>, 
+	bound to this facade.&nbsp;&nbsp; </p>
+<p><code>FeatFacadeOnLibrary</code>, a <em>CATFmFeatureFacade</em> type represents 
+the &quot;<strong>CAAOsmLibrary</strong>&quot; Feature Facade. </p>
+<p>The <strong>Late Type</strong> name is retrieved as <code>strTypeName</code>, a <em>CATUnicodeString</em> type.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Retrieving the display name of feat"></a>Retrieving the Display Name of a Feature</h3>
+<pre class="code">CATUnicodeString strDisplayName;
+rc = <strong>FeatFacadeOnLibrary.GetDisplayName</strong>(strDisplayName);</pre>
+	<p>The method <code>GetDisplayName()</code> of the <em>CATFmFeatureFacade</em> class, 
+	retrieves the <strong>Display Name</strong> of the <strong>Feature</strong>, 
+	bound to this facade.&nbsp;&nbsp; </p>
+<p><code>FeatFacadeOnLibrary</code>, a <em>CATFmFeatureFacade</em> type represents 
+the &quot;<strong>CAAOsmLibrary</strong>&quot; Feature Facade. </p>
+<p>The <strong>Display Name</strong> name is retrieved as <code>strDisplayName</code>, a <em>CATUnicodeString</em> 
+type.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>The document is then saved and the session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The UC illustrates the steps involved to explicitly set a Late Type for a 
+StartUp/Feature, with the <strong>#isa</strong> facet set in the catalog <strong>
+OSM</strong> file. It further illustrates that without the <strong>#isa</strong> 
+facet, the StartUp identifier serves as its late type as well. An instantiated 
+feature has the same late type as its StartUp. The <code>GetTypeName()</code> and the 
+<code>GetType()</code> calls of the <em>CATFmStartUpFacade</em> and the <em>
+CATFmFeatureFacade</em> class are responsible for retrieving the startup and 
+feature types, respectively.</p>
+<p>The display name of a standalone feature is governed by the value set for its 
+StartUp in the Catalog <strong>CATNls</strong> file, referred to from the WS 
+RTV. On aggregating a feature, its display name is the value set in the <strong>
+Nls</strong> suffixed with an index. The index tracks the count of the features 
+of this late type aggregated so far, under the parent. The <code>GetDisplayName()</code> call of the
+<em>
+CATFmFeatureFacade</em> class are responsible for retrieving a feature display 
+name.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table style="width: 254px" class="style2">
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td style="width: 18px">[1]</td>
+		<td style="width: 221px">
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaNamingFeatures.htm">Understanding Feature Naming</a></td>
+	</tr>
+
+	<tr>
+		<td style="width: 18px">[2]</td>
+		<td style="width: 221px">
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps
+		</a>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width: 18px">[3]</td>
+		<td style="width: 221px">
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+	
+	<tr>
+		<td style="width: 18px">[4]</td>
+		<td style="width: 221px"><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating Features</a></td>
+	</tr>
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Aug 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

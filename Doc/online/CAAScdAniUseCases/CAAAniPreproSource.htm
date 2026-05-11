@@ -1,0 +1,131 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#0000FF">Option Explicit</FONT>
+<FONT COLOR="#008000">&#39; COPYRIGTH DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">&#39; ***********************************************************************</FONT>
+<FONT COLOR="#008000">&#39;   Purpose:      Read an Analysis document already linked to a CATPart Document</FONT>
+<FONT COLOR="#008000">&#39;                 Define boundaries and loading condition on the Part and launch the</FONT>
+<FONT COLOR="#008000">&#39;                 Computation</FONT>
+<FONT COLOR="#008000">&#39;   Assumptions:   Looks for AnalysisCrank.CATAnalysis linked to Crankshaft.CATPart</FONT>
+<FONT COLOR="#008000">&#39;                 stored in the DocView   </FONT>
+<FONT COLOR="#008000">&#39;   Author: </FONT>
+<FONT COLOR="#008000">&#39;   Languages:    VBScript</FONT>
+<FONT COLOR="#008000">&#39;   Locales:      English </FONT>
+<FONT COLOR="#008000">&#39;   CATIA Level:  V5R6 </FONT>
+<FONT COLOR="#008000">&#39; ***********************************************************************</FONT>
+
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+
+    <FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+    <FONT COLOR="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</FONT>
+<FONT COLOR="#0000FF">    dim </FONT>sDocPath<FONT COLOR="#0000FF"> As </FONT>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+    <FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+
+    <FONT COLOR="#008000">&#39; Get the collection of documents in session</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>documents1<FONT COLOR="#0000FF"> As </FONT>Documents
+<FONT COLOR="#0000FF">    Set </FONT>documents1 = CATIA.Documents
+
+    <FONT COLOR="#008000">&#39; Open the CATAnalysis Document</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>oAnalysisDocument<FONT COLOR="#0000FF"> As </FONT>Document
+<FONT COLOR="#0000FF">    Set </FONT>oAnalysisDocument = documents1.Open(sDocPath &amp; &quot;\online\CAAScdAniUseCases\samples\AnalysisCrank.CATAnalysis&quot;)
+    <FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+
+    <FONT COLOR="#008000">&#39; Retrieve the CATPart document in order to compute the references for preprocessing</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>PartDocument<FONT COLOR="#0000FF"> As </FONT>PartDocument
+<FONT COLOR="#0000FF">    Set </FONT>PartDocument = documents1.Item(3)
+
+    <FONT COLOR="#008000">&#39; Retrieve the Part from this document</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>part1<FONT COLOR="#0000FF"> As </FONT>Part
+<FONT COLOR="#0000FF">    Set </FONT>part1 = PartDocument.Part
+
+    <FONT COLOR="#008000">&#39; Extract the product as input of preprocessing feature.</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>product1<FONT COLOR="#0000FF"> As </FONT>Product
+<FONT COLOR="#0000FF">    Set </FONT>product1 = PartDocument.Product
+
+    <FONT COLOR="#008000">&#39; Retrieve the References</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>referenceBound<FONT COLOR="#0000FF"> As </FONT>Reference
+<FONT COLOR="#0000FF">    Set </FONT>referenceBound = part1.CreateReferenceFromName(&quot;Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.2;0:(Brp:(Sketch.5;7)))))));None:());GSMRotate.2)&quot;)
+<FONT COLOR="#0000FF">    Dim </FONT>referenceLoad<FONT COLOR="#0000FF"> As </FONT>Reference
+<FONT COLOR="#0000FF">    Set </FONT>referenceLoad = part1.CreateReferenceFromName(&quot;Selection_RSur:(Face:(Brp:(GSMRotate.2;(Brp:(GSMTranslate.2;(Brp:(Shaft.1;0:(Brp:(Sketch.4;4)))))));None:());GSMRotate.2)&quot;)
+
+    <FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+    <FONT COLOR="#008000">&#39; Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>AnaManager<FONT COLOR="#0000FF"> As </FONT>AnalysisManager
+<FONT COLOR="#0000FF">    Set </FONT>AnaManager = oAnalysisDocument.Analysis
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisModels</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>AnaModels<FONT COLOR="#0000FF"> As </FONT>AnalysisModels
+<FONT COLOR="#0000FF">    Set </FONT>AnaModels = AnaManager.AnalysisModels
+
+    <FONT COLOR="#008000">&#39; To work with the first AnalysisModel of the collection</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>AnaModel<FONT COLOR="#0000FF"> As </FONT>AnalysisModel
+<FONT COLOR="#0000FF">    Set </FONT>AnaModel = AnaModels.Item(1)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisCases</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT> Cases<FONT COLOR="#0000FF"> As </FONT> AnalysisCases
+<FONT COLOR="#0000FF">    Set </FONT> Cases=AnaModel.AnalysisCases
+
+    <FONT COLOR="#008000">&#39; To work with the first AnalysisCase of the collection</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>MyCase<FONT COLOR="#0000FF"> As </FONT>AnalysisCase
+<FONT COLOR="#0000FF">    Set </FONT> MyCase=Cases.Item(1)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisSets</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>ListSets<FONT COLOR="#0000FF"> As </FONT>AnalysisSets
+<FONT COLOR="#0000FF">    Set </FONT>ListSets = MyCase.AnalysisSets
+
+    <FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+    <FONT COLOR="#008000">&#39; To work with the AnalysisSet of the collection that is typed for Boundary condition</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>MySet<FONT COLOR="#0000FF"> As </FONT>AnalysisSet
+<FONT COLOR="#0000FF">    Set </FONT>MySet = ListSets.ItemByType(&quot;RestraintSet&quot;)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisEntities collection defined on the set</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>anEntities<FONT COLOR="#0000FF"> As </FONT>AnalysisEntities
+<FONT COLOR="#0000FF">    Set </FONT>anEntities = MySet.AnalysisEntities
+
+    <FONT COLOR="#008000">&#39; Define an Analysis Entity on the set in order to Fix the referencebound of the Part</FONT>
+<FONT COLOR="#0000FF">    Dim </FONT>analysisEntity<FONT COLOR="#0000FF"> As </FONT>AnalysisEntity
+<FONT COLOR="#0000FF">    Set </FONT>analysisEntity = anEntities.Add(&quot;SAMClamp&quot;)
+    analysisEntity.AddSupportFromProduct product1, referenceBound
+
+    <FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+    <FONT COLOR="#008000">&#39; To work with the AnalysisSet of the collection that is typed for Load condition</FONT>
+<FONT COLOR="#0000FF">    Set </FONT>MySet = ListSets.ItemByType(&quot;LoadSet&quot;)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisEntities collection defined on the set</FONT>
+<FONT COLOR="#0000FF">    Set </FONT>anEntities = MySet.AnalysisEntities
+
+    <FONT COLOR="#008000">&#39; Define an Analysis Entity on the set in order to assign a pressure the referenceLoad of the Part</FONT>
+<FONT COLOR="#0000FF">    Set </FONT>analysisEntity = anEntities.Add(&quot;SAMMoment&quot;)
+ 
+   <FONT COLOR="#008000">&#39; Valuate the momentum value and assign it to the reference</FONT>
+    analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 1, 1, 1, 100000.
+    analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 2, 1, 1, 0.
+    analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 3, 1, 1, 0.
+
+    analysisEntity.AddSupportFromProduct product1, referenceLoad
+
+    <FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+    <FONT COLOR="#008000">&#39; Launch the computation of the Case</FONT>
+    MyCase.Compute
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

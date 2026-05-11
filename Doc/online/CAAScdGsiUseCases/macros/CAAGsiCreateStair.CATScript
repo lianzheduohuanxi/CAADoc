@@ -1,0 +1,369 @@
+Option Explicit
+'------------------------------------------------------------------------
+' COPYRIGTH DASSAULT SYSTEMES 2000
+'------------------------------------------------------------------------
+Dim Language as String
+Language="VBScript"
+' ***********************************************************************
+'   Purpose:      Create an helicoidal Stair   
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+' ------------------------------------------------------------------------
+'  VB Macro
+'
+'  Object:
+'  Generate and helicoidal stair 
+'  Input data
+'     Origin point and helix direction
+'     Starting point of helix and its pitch / height definition
+'     Height of each Step
+'     
+'  VB macro 
+'     Initialize input data
+'     Compute number of required step for the helix height
+'     Loop on number of step and generate the geometry for each step in a HybridBody
+'
+'  CATIA VB tools related to this sample
+'     Open a CATIA document and a CATPart 
+'     Show/Noshow of wireframe and surfacic object
+'     Adding new Open-Body
+'     Create parameters and formula / Use it in geomety definition
+'     Catia methods required CATIAReference as input object / Generate reference for each input geometry
+'     Create Generative Shape Design feature 
+'     Update geometry / Note: done at the end in order to enhance creation performances 
+'      
+'------------------------------------------------------------------------
+
+'------------------------------------------------------------------------
+' Global Variables
+' ---------------------------------------------------------
+' Origin Points 
+Dim X0 As Double
+Dim Y0 As Double
+Dim Z0 As Double
+
+' Starting Point of the stair helix 
+Dim X1 As Double
+Dim Y1 As Double
+Dim Z1 As Double
+
+' Direction of the helix 
+Dim A1 As Double
+Dim B1 As Double
+Dim C1 As Double
+
+' Pitch and height of the helix  
+Dim Pitch As Double
+Dim Height As Double
+
+' Step height value 
+Dim StepValue As Double
+
+'------------------------------------------------------------------------
+' Main program
+'------------------------------------------------------------------------
+'     Open a New Part 
+'     Init global variable 
+'     Generate geometry
+' ------------------------------------------------------------------------
+'
+Sub CATMain()
+        
+  
+    ' --------------------------------------------------------------
+    ' Create a CATIA Part Docuument  
+    ' --------------------------------------------------------------    
+    ' Creating  a Part Document 
+    Dim PartDoc As Document
+    Set PartDoc = CATIA.Documents.Add  ( "Part" ) 
+
+   ' Retrieving HybridBodies collection in Part Document  
+    Dim hybridBodies1 As HybridBodies
+    Set hybridBodies1 = PartDoc.Part.HybridBodies
+
+    ' Adding an OpenBody 
+    Dim myHBody As HybridBody
+    Set myHBody = hybridBodies1.Add()
+    
+    Dim referencebody As Object
+	Set referencebody = PartDoc.Part.CreateReferenceFromObject(myHBody)
+    PartDoc.Part.HybridShapeFactory.ChangeFeatureName referencebody, "ConstructionElements" 
+    
+
+    ' --------------------------------------------------------------
+    ' Init global Values
+    ' --------------------------------------------------------------
+    X0 = 0
+    Y0 = 0
+    Z0 = 0
+
+    X1 = 1000
+    Y1 = 0
+    Z1 = 0
+
+    A1 = 0
+    B1 = 0
+    C1 = 1
+ 
+    Pitch = 3600
+    Height = 3000
+
+    StepValue = 100
+ 
+    ' --------------------------------------------------------------
+    ' Declaring and setting working variables
+    ' --------------------------------------------------------------
+    Dim iValide As Integer
+  
+    Dim iLigne As Integer
+    Dim Point1 As Object
+    Dim Point2 As Object
+    Dim HelixPitch  As Integer
+    Dim HelixHeight As Integer
+    Dim HauteurMarche As Integer
+    
+    HelixPitch = Pitch
+    HelixHeight = Height
+    HauteurMarche = StepValue
+    
+   ' --------------------------------------------------------------
+   ' Setting knowledge objects and variables 
+   ' --------------------------------------------------------------
+   ' Init working knowledge parameters 
+    Dim parameters As Object
+    Set parameters = PartDoc.Part.parameters
+    ' Working Parm object 
+    Dim Parm  As Object
+ 
+    ' Init working knowledge relations     
+    Dim relations As Object
+    Set relations = PartDoc.Part.relations
+    ' Working Formula object 
+    Dim Formula As Object
+      
+    ' Set Parameters for stair generation 
+    Set Parm = parameters.CreateDimension("HelixPitch", "LENGTH", Pitch)
+    Set Parm = parameters.CreateDimension("HelixHeight", "LENGTH", Height)
+    Set Parm = parameters.CreateDimension("StepHeight", "LENGTH", StepValue)
+  
+    ' --------------------------------------------------------------
+    ' Generating  starting geometry (Reference points /Direction of helix /Helix)
+    ' --------------------------------------------------------------
+    '
+    ' Origin and Starting Point
+    Set Point1 = PartDoc.Part.HybridShapeFactory.AddNewPointCoord(X0, Y0, Z0)
+    myHBody.AppendHybridShape Point1
+      
+    Set Point2 = PartDoc.Part.HybridShapeFactory.AddNewPointCoord(X1, Y1, Z1)
+    myHBody.AppendHybridShape Point2
+    
+    ' Plan horizontal XY
+    Dim Origin As Object
+    Set Origin = PartDoc.Part.OriginElements
+
+    Dim Plane As Object
+    Set Plane = Origin.PlaneXY
+
+    Dim Ref As Object
+    Set Ref = PartDoc.Part.CreateReferenceFromObject(Plane)
+    
+    ' Direction of helix 
+    Dim Dir As Object
+    Set Dir = PartDoc.Part.HybridShapeFactory.AddNewDirectionByCoord(A1, B1, C1)
+    ' Note: Another way to create direction using horizontal plane    
+    ' Set Dir = PartDoc.Part.HybridShapeFactory.AddNewDirection(Ref)
+    
+    ' Line for helix definition 
+    Dim Line As Object
+    Set Line = PartDoc.Part.HybridShapeFactory.AddNewLinePtDir(Point1, Dir, 0, HelixHeight, False)
+    myHBody.AppendHybridShape Line
+
+    ' Create formula defining Line offset value equal to helix height parameter  
+    Set Formula = relations.CreateFormula("Formula.0", "", Line.EndOffset, "HelixHeight")
+    
+    ' Helix
+    Dim RefH1 As Object
+    Set RefH1 = PartDoc.Part.CreateReferenceFromObject(Line)
+
+    Dim RefH2 As Object
+    Set RefH2 = PartDoc.Part.CreateReferenceFromObject(Point2)
+
+    Dim Helix As Object
+    Set Helix = PartDoc.Part.HybridShapeFactory.AddNewHelix(RefH1, False, RefH2, HelixPitch, HelixHeight, False, 0, 0, False)
+    myHBody.AppendHybridShape Helix
+    Set Formula = relations.CreateFormula("Formula.1", "", Helix.Pitch, "HelixPitch")
+    Set Formula = relations.CreateFormula("Formula.2", "", Helix.Height, "HelixHeight")
+  
+
+    ' --------------------------------------------------------------
+    ' Generating Steps 
+    ' --------------------------------------------------------------    
+ 
+    Dim RefLine As Object
+    Dim RefPlane As Object
+    Dim RefHelix As Object
+    Dim RefPlaneOffset As Object
+    Dim Pt0 As Object
+    Dim Pt1 As Object
+    Dim Pt2 As Object
+    Dim Pt3 As Object
+    Dim LinePt0Pt1 As Object
+    Dim LinePt0Pt2 As Object
+    Dim RefFill As Object
+    Dim RefExtrude As Object
+
+    ' Compute number of step to generate
+    Dim indice As Integer
+    indice = HelixHeight / HauteurMarche
+
+    ' Starting plane for helix/steps  
+    Dim PlaneOffset1 As Object
+    Set PlaneOffset1 = PartDoc.Part.HybridShapeFactory.AddNewPlaneOffset(Plane, 0, False)
+    myHBody.AppendHybridShape PlaneOffset1    
+ 
+    ' Setting reference objet use for each step 
+    ' Note:  RefPlane is the basic plane used for each step / it is updated in the loop 
+    Set RefLine  = PartDoc.Part.CreateReferenceFromObject(Line)
+    Set RefPlane = PartDoc.Part.CreateReferenceFromObject(PlaneOffset1)
+    Set RefHelix = PartDoc.Part.CreateReferenceFromObject(Helix)
+
+    ' --------------------------------------------------------------
+    ' Loop on steps
+    ' --------------------------------------------------------------
+    '
+    Dim CounterStep As Integer
+    For CounterStep = 1 To indice  Step 1
+             
+        ' Create a new openbody
+        Set myHBody = PartDoc.Part.HybridBodies.Add()
+
+    	Dim stepbody As Object 
+		Set stepbody = PartDoc.Part.CreateReferenceFromObject(myHBody)
+        PartDoc.Part.HybridShapeFactory.ChangeFeatureName stepbody, "Step." & CounterStep
+                      
+        'Point0 = Point reference for the step on axis
+        Dim Intersection1 As Object
+        Set Intersection1 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefLine, RefPlane)
+        myHBody.AppendHybridShape Intersection1
+        Set Pt0 = PartDoc.Part.CreateReferenceFromObject(Intersection1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt0, 0
+        
+        'Point1 = Point reference for the step on helix
+        Dim Intersection2 As Object
+        Set Intersection2 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlane, RefHelix)
+        myHBody.AppendHybridShape Intersection2
+        Set Pt1 = PartDoc.Part.CreateReferenceFromObject(Intersection2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt1, 0
+        
+        'PlanOffset= Step height reference plane
+        Dim PlaneOffset2 As Object
+        Set PlaneOffset2 = PartDoc.Part.HybridShapeFactory.AddNewPlaneOffset(RefPlane, HauteurMarche, False)
+        myHBody.AppendHybridShape PlaneOffset2
+        Set Formula = relations.CreateFormula("Formula.Step.1", "", PlaneOffset2.Offset, "StepHeight")
+        Set RefPlaneOffset = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefPlaneOffset, 0
+    
+    
+        'Point3 = Point reference on helix
+        Dim Intersection3 As Object
+        Set Intersection3 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlaneOffset, RefHelix)
+        myHBody.AppendHybridShape Intersection3
+        Set Pt3 = PartDoc.Part.CreateReferenceFromObject(Intersection3)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt3, 0
+    
+        'Point2 = Point Projected from helix on step ground plane
+        Dim Project1  As Object
+        Set Project1 = PartDoc.Part.HybridShapeFactory.AddNewProject(Pt3, RefPlane)
+        Project1.SolutionType = 0
+        Project1.Normal = True
+        myHBody.AppendHybridShape Project1
+        Set Pt2 = PartDoc.Part.CreateReferenceFromObject(Project1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt2, 0
+    
+        ' Step definition contours : 2 lines and a circle arc
+        ' Line1
+        Set LinePt0Pt1 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt1)
+        myHBody.AppendHybridShape LinePt0Pt1
+        Dim RefLinePt0Pt1 As Object
+        Set RefLinePt0Pt1 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        
+        ' Line2
+        Set LinePt0Pt2 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt2)
+        myHBody.AppendHybridShape LinePt0Pt2
+        Dim RefLinePt0Pt2 As Object
+        Set RefLinePt0Pt2 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt2)
+        
+        ' Circle arc
+        Dim Circle3Points As Object
+        Set Circle3Points = PartDoc.Part.HybridShapeFactory.AddNewCircle3Points(Pt0, Pt1, Pt2)
+        Circle3Points.SetLimitation 2
+        myHBody.AppendHybridShape Circle3Points
+        Dim RefCircle As Object
+        Set RefCircle = PartDoc.Part.CreateReferenceFromObject(Circle3Points)
+        
+        Dim Split As Object
+        Set Split = PartDoc.Part.HybridShapeFactory.AddNewHybridSplit(RefCircle, RefLinePt0Pt1, 1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt2, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefCircle, 0
+        myHBody.AppendHybridShape Split
+        Dim RefSplit As Object
+        Set RefSplit = PartDoc.Part.CreateReferenceFromObject(Split)
+        
+        ' Step surface
+        Dim Fill As Object
+        Set Fill = PartDoc.Part.HybridShapeFactory.AddNewFill()
+        Fill.AddBound(RefLinePt0Pt1)
+        Fill.AddBound(RefSplit)
+        Fill.AddBound(RefLinePt0Pt2)
+        myHBody.AppendHybridShape Fill
+        
+        'Riser (Opposite-step) surface
+        Dim Extrude As Object
+        Set Extrude = PartDoc.Part.HybridShapeFactory.AddNewExtrude(RefLinePt0Pt2, HauteurMarche, 0, Dir)
+        myHBody.AppendHybridShape Extrude
+        Set Formula = relations.CreateFormula("Formula.Step.2", "", Extrude.BeginOffset, "StepHeight")
+        
+        ' Join of two surfaces
+        Set RefFill = PartDoc.Part.CreateReferenceFromObject(Fill)
+        Set RefExtrude = PartDoc.Part.CreateReferenceFromObject(Extrude)
+        
+        Dim Join As Object
+        Set Join = PartDoc.Part.HybridShapeFactory.AddNewJoin(RefFill, RefExtrude)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefFill, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefExtrude, 0
+        myHBody.AppendHybridShape Join
+
+        ' End of loop - re-init ref plane for next step
+        ' RefPlane = RefPlaneOffset
+        Set RefPlane = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)
+    
+    Next
+ 
+    'Updating CATIA Part Document 
+    ' Note : Performed only at the end of geometry generation
+    PartDoc.Part.Update
+
+    ' Reframing CATIA Part Window 
+    Dim specsAndGeomWindow1 As Window
+    Set specsAndGeomWindow1 = CATIA.ActiveWindow
+
+    Dim viewer3D1 As Viewer
+    Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+    viewer3D1.Reframe 
+
+    Dim viewpoint3D1 As Viewpoint3D
+    Set viewpoint3D1 = viewer3D1.Viewpoint3D
+   
+End Sub
+
+
+
+
+
+

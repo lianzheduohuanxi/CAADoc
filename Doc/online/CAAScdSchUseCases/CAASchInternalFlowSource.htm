@@ -1,0 +1,194 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASchInternalFlow.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      Add/List/Remove internal flows to reference component. </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the schematic document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Detail02.CATProduct")
+
+<font color="#0000FF">    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF">    Dim </font>strMessage<font color="#0000FF"> As </font>String
+
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASchInternalFlow.CATScript" & vbCrLf
+
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font>
+<font color="#0000FF">    Dim </font>objPrdRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objSchRoot<font color="#0000FF"> As </font>SchematicRoot
+<font color="#0000FF">    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objSchDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>objLCompRefs<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objLCntr<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">    Dim </font>objCompRef<font color="#0000FF"> As </font>SchComponent
+<font color="#0000FF">    Dim </font>objCntbl<font color="#0000FF"> As </font>SchAppConnectable
+<font color="#0000FF">    Dim </font>objCompFlow<font color="#0000FF"> As </font>SchCompFlow
+<font color="#0000FF">    Dim </font>objSchTempListFact<font color="#0000FF"> As </font>SchTempListFactory
+
+<font color="#0000FF">    If </font>( Not ( objSchRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">       Set </font>objSchTempListFact = objSchRoot.GetTemporaryListFactory
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objSchRoot Is Nothing )  And _
+         Not (objSchTempListFact Is Nothing ) )<font color="#0000FF"> Then</font>
+
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+       <font color="#008000">' Find a list of reference component in the model</font>
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+<font color="#0000FF">       Set </font>objLCompRefs = objSchRoot.GetRefComponents
+
+<font color="#0000FF">       If </font>( Not ( objLCompRefs Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">          Set </font>objCompRef = objLCompRefs.Item (1,"CATIASchComponent")
+
+<font color="#0000FF">          If </font>( Not ( objCompRef Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">              Set </font>objCompFlow = objSchRoot.GetInterface ( _
+                "CATIASchCompFlow",objCompRef)
+
+<font color="#0000FF">              Set </font>objCntbl = objSchRoot.GetInterface ( _
+                "CATIASchAppConnectable",objCompRef)
+<font color="#0000FF">          End If </font>
+
+<font color="#0000FF">          If </font>( Not ( objCntbl Is Nothing ) And _             
+               Not ( objCompFlow Is Nothing ) )<font color="#0000FF"> Then</font>
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">' Find all the connectors associated with the reference </font>
+             <font color="#008000">' component</font>
+             <font color="#008000">'----------------------------------------------------------------- </font>
+<font color="#0000FF">             Dim </font>objLFilter<font color="#0000FF"> As </font>SchListOfBSTRs
+<font color="#0000FF">             Set </font>objLFilter = Nothing
+<font color="#0000FF">             Set </font>objLCntr = objCntbl.AppListConnectors (objLFilter)
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">' Add internal flow to the reference component.</font>
+             <font color="#008000">' 2 pairs:</font>
+             <font color="#008000">' Flow 1: connector 1 to connector 2</font>
+             <font color="#008000">' Flow 2: connector 1 to connector 3</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+<font color="#0000FF">             Dim </font>intNbCntr<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">             Dim </font>objFlow1<font color="#0000FF"> As </font>SchInternalFlow
+<font color="#0000FF">             Dim </font>objFlow2<font color="#0000FF"> As </font>SchInternalFlow
+<font color="#0000FF">             Dim </font>objCntr1<font color="#0000FF"> As </font>SchAppConnector
+<font color="#0000FF">             Dim </font>objCntr2<font color="#0000FF"> As </font>SchAppConnector
+<font color="#0000FF">             Dim </font>objCntr3<font color="#0000FF"> As </font>SchAppConnector
+<font color="#0000FF">             Dim </font>objLCntr1<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">             Dim </font>objLCntr2<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">             Dim </font>objLFlow<font color="#0000FF"> As </font>SchListOfObjects
+
+             intNbCntr = objLCntr.Count
+<font color="#0000FF">             Set </font>objLCntr1 = objSchTempListFact.CreateListOfObjects
+<font color="#0000FF">             Set </font>objLCntr2 = objSchTempListFact.CreateListOfObjects
+
+<font color="#0000FF">             Set </font>objCntr1 = Nothing
+<font color="#0000FF">             Set </font>objCntr2 = Nothing
+<font color="#0000FF">             Set </font>objCntr3 = Nothing
+
+<font color="#0000FF">             If </font>( intNbCntr &gt; 0 ) Then Set objCntr1 = objLCntr.Item(1,"CATIASchAppConnector")
+<font color="#0000FF">             If </font>( intNbCntr &gt; 1 ) Then Set objCntr2 = objLCntr.Item(2,"CATIASchAppConnector")
+<font color="#0000FF">             If </font>( intNbCntr &gt; 2 ) Then Set objCntr3 = objLCntr.Item(3,"CATIASchAppConnector")
+
+<font color="#0000FF">             Set </font>objFlow1 = Nothing
+<font color="#0000FF">             If </font>( Not objLCntr1 Is Nothing )<font color="#0000FF"> Then</font>
+<font color="#0000FF">                If </font>( Not ( objCntr1 Is Nothing ) And _
+                     Not ( objCntr2 Is Nothing ) )<font color="#0000FF"> Then</font>
+                   objLCntr1.Append (objCntr1)
+                   objLCntr1.Append (objCntr2)
+<font color="#0000FF">                   Set </font>objFlow1 = objCompFlow.AddInternalFlow (objLCntr1)
+<font color="#0000FF">                   If </font>( Not ( objFlow1 Is Nothing ) )<font color="#0000FF"> Then</font>
+                      strMessage = strMessage & _
+                        "Internal flow between connector 1 and 2 created " & vbCr
+<font color="#0000FF">                   End If </font>
+<font color="#0000FF">                End If </font>
+<font color="#0000FF">             End If </font><font color="#008000">'--- If ( Not objLCntr1 Is Nothing...</font>
+
+<font color="#0000FF">             Set </font>objFlow2 = Nothing
+<font color="#0000FF">             If </font>( Not objLCntr2 Is Nothing )<font color="#0000FF"> Then</font>
+<font color="#0000FF">                If </font>( Not ( objCntr1 Is Nothing ) And _
+                     Not ( objCntr3 Is Nothing ) )<font color="#0000FF"> Then</font>
+                   objLCntr2.Append (objCntr1)
+                   objLCntr2.Append (objCntr3)
+<font color="#0000FF">                   Set </font>objFlow2 = objCompFlow.AddInternalFlow (objLCntr2)
+<font color="#0000FF">                   If </font>( Not ( objFlow2 Is Nothing ) )<font color="#0000FF"> Then</font>
+                      strMessage = strMessage & _
+                        "Internal flow between connector 1 and 3 created " & vbCr
+<font color="#0000FF">                   End If </font>
+<font color="#0000FF">                End If </font>
+<font color="#0000FF">             End If </font><font color="#008000">'--- If ( Not objLCntr1 Is Nothing...</font>
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">' Return a list of all the internal flows </font>
+             <font color="#008000">' associated to the reference component. There should be 2.</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+
+<font color="#0000FF">             Set </font>objLFlow = objCompFlow.ListInternalFlows 
+
+<font color="#0000FF">             Dim </font>intNbFlow<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">             If </font>( Not ( objLFlow Is Nothing ) )<font color="#0000FF"> Then</font>
+                intNbFlow = objLFlow.Count
+                strMessage = strMessage & "Number of internal flows = " & intNbFlow & vbCr
+
+<font color="#0000FF">                If </font>( Not ( objFlow2 Is Nothing ) )<font color="#0000FF"> Then</font>
+                   <font color="#008000">'-----------------------------------------------------------------</font>
+                   <font color="#008000">' Remove "Flow 2" from the reference component</font>
+                   <font color="#008000">'-----------------------------------------------------------------</font>
+                   objCompFlow.RemoveInternalFlow objFlow2
+<font color="#0000FF">                End If</font>
+<font color="#0000FF">             End If </font>
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">' Return a list of all the internal flows </font>
+             <font color="#008000">' associated to the reference component. There should be 1.</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+<font color="#0000FF">             Set </font>objLFlow = Nothing
+<font color="#0000FF">             Set </font>objLFlow = objCompFlow.ListInternalFlows 
+<font color="#0000FF">             If </font>( Not ( objLFlow Is Nothing ) )<font color="#0000FF"> Then</font>
+                intNbFlow = objLFlow.Count
+                strMessage = strMessage & "Number of internal flows after calling RemoveInternalFlow" 
+                strMessage = strMessage & "  = " & intNbFlow & vbCr
+<font color="#0000FF">             End If</font>
+
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">       End If </font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objSchRoot Is Nothing )...</font>
+
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
+
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

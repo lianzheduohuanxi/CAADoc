@@ -1,0 +1,353 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Defining the Activated Workbench</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Defining the Activated Workbench</h3>
+      <em>Using CATIAfrActivateWorkbench</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the <em>CATIAfrActivateWorkbench </em>interface
+      to define the workbench to activate when an object is UI-activated.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrInitialWorkbench Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrInitialWorkbench Do</a></li>
+            <li><a href="#How">How to Launch CAA</a><a href="#How">AfrInitialWorkbench</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrInitialWorkbench Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use the <em>CATIAfrActivateWorkbench
+</em>interface to define the workbench [<a href="#References">1</a>] to launch
+when an object is UI-activated. An UI-active object [<a href="#References">2</a>]
+is editable thanks commands distributed in workbenches. When the end user double
+clicks such object, opens or creates a document, the application must choose a
+workbench among those of the current UI-active object. The choice for a given
+UI-active object is done according to this protocol:</p>
+<ul>
+  <li>For its first UI-activation, it is the last used workbench in the previous
+    session and kept in a setting file. If this setting file does not exist, it
+    is the first workbench in the list of the application.</li>
+  <li>For the next UI-activations, it is the last used workbench in the session.</li>
+</ul>
+<p>This interface enables you to modify this protocol. You have the possibility
+imposing such or such workbenches according to your criteria.</p>
+<p>This interface may be implemented on the following UI-active objects:</p>
+<ul>
+  <li><b>ASMProduct</b> for Product documents,</li>
+  <li><b>DrwDrawing</b> for Drawing,</li>
+  <li><b>MechanicalPart</b> for Part,</li>
+  <li><b>AnalysisManager</b> for Analysis.</li>
+</ul>
+<p>However, for the following UI-active objects it is useless since this
+UI-active object has no workbench, but only a workshop [<a href="#References">2</a>].</p>
+<ul>
+  <li>PRTSketch for a sketcher,</li>
+  <li>this of Material documents,</li>
+  <li>this of Catalog.</li>
+</ul>
+<p>This interface can be only once implemented for a given object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrInitialWorkbench Use Case</h3>
+<p>CAAAfrInitialWorkbench is a use case of the CAAApplicationFrame.edu framework
+that illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrInitialWorkbench Do</h4>
+<p>This article shows an implementation of the <em>CATIAfrActivateWorkbench </em>interface<em>
+</em>on the <b>MechanicalPart</b> object. The activated workbench, among the
+Part workbenches, is the <b>Part Design</b> workbench.
+<p><img border="0" src="images/CAAAfrInitialWkbPartDesign.gif" width="64" height="64">
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrInitialWorkbench</h4>
+<p>To launch CAAAfrInitialWorkbench, you will need to set up the build time
+environment, then compile CAAAfrInitialWorkbench along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">3</a>].</p>
+<p>But just before launching the execution, edit the
+CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary
+directory of the CAAApplicationFrame.edu framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the following
+line,</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#MechanicalPart      CATIAfrActivateWorkbench  libCAAAfrInitialWorkbench 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>and run mkCreateRuntimeView.</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:</p>
+<ol>
+  <li>On the <b>Start</b> menu, select <b>Shape</b> and click <b>FreeStyle</b></li>
+  <li>On the <b>Start</b> menu, select <b>Exit</b></li>
+  <li>Relaunch<b> CNEXT</b></li>
+  <li>On the <b>File</b> menu, click <b>New</b></li>
+  <li><b>New</b> Dialog box click <b>Part</b> and click <b>OK</b>, you are in
+    the <b>Part Design</b> workbench</li>
+  <p>Without the <em>CATIAfrActivateWorkbench </em>implementation, the current
+  workbench would have been <b>FreeStyle,</b> the last used workbench kept in a
+  setting file.</p>
+  <li>On the <b>Start</b> menu, select <b>Mechanical Design</b>, and click <b>Wireframe
+    and Surface Design</b></li>
+  <p>You have explicitly ask a workbench, it is the new current one.</p>
+  <li><b>New</b> Dialog box click <b>Part</b> and click <b>OK</b>, you are
+    always in the <b>Part Design</b> workbench</li>
+  <p>Without the <em>CATIAfrActivateWorkbench </em>implementation, the current
+  workbench would have been <b>Wireframe and Surface Design,</b> the last used
+  workbench in the session.</p>
+  <li>On the <b>File</b> menu, click <b>Open</b></li>
+  <li><b>File Selection</b> Dialog box click <b>CAAAfrProduct.CATProduct</b> (*)
+    and click <b>Open</b></li>
+  <li>Edit<b> Part1</b>, you are in the <b>Part Design</b> workbench</li>
+  <p>Without the <em>CATIAfrActivateWorkbench </em>implementation, the current
+  workbench would have been <b>Wireframe and Surface Design,</b> the last used
+  workbench for a Part.</p>
+  <li>On the <b>Start</b> menu, select <b>Mechanical Design</b>, and click <b>Wireframe
+    and Surface Design</b></li>
+  <p>You have explicitly ask a workbench, it is the new current one.</p>
+  <li>Edit<b> </b><b>Part2</b>, you are always in the <b>Part Design</b>
+    workbench</li>
+  <p>Without the <em>CATIAfrActivateWorkbench </em>implementation, the current
+  workbench would have been <b>Wireframe and Surface Design,</b> the last used
+  workbench for a Part.</p>
+</ol>
+<p>(*)The document is located in the InputData directory of the
+CAAApplicationFrame.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p align="left">where <code>InstallRootDirectory</code> is the directory where
+the CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrInitialWorkbench Code</h4>
+<p>The CAAAfrInitialWorkbench use case is made of one single class, the <i>CAAEAfrActivateWorkbenchOnPart</i>
+class, located in the CAAAfrInitialWorkbench.m module of the
+CAAApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrInitialWorkbench.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrInitialWorkbench.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To implement the <i>CATIAfrActivateWorkbench</i> interface, there are two
+steps:</p>
+<ol>
+  <li><a href="#Creating the Header File" name="Declare the methods of the CATIProgressTask interface in the header file">Creating
+    the Header File</a>
+  <li><a href="#Creating the Code File">Creating the Source File</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Header File"></a>Creating the Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// System framework
+#include &quot;CATBaseUnknown.h&quot;  
+#include &quot;CATString.h&quot;        
+
+class CAAEAfrActivateWorkbenchOnPart: public CATBaseUnknown
+{
+  CATDeclareClass;
+
+  public:
+
+    CAAEAfrActivateWorkbenchOnPart();
+    virtual ~CAAEAfrActivateWorkbenchOnPart();
+
+    CATString &amp; <b>GetInitialWorkbench</b>();
+
+  private:
+
+    CAAEAfrActivateWorkbenchOnPart(const CAAEAfrActivateWorkbenchOnPart &amp;iObjectToCopy);
+    CAAEAfrActivateWorkbenchOnPart &amp; operator = (const CAAEAfrActivateWorkbenchOnPart &amp;iObjectToCopy);
+
+  private:
+
+      CATString <b>_WbName</b> ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The <i>CAAEAfrActivateWorkbenchOnPart</i> class derives from <i>CATBaseUnkown</i>.
+The <code>GetInitialWorkbench</code> method is the only one method of the <i>CATIAfrActivateWorkbench</i>
+interface. The <code>CATDeclareClass</code> macro declares that the <i>CAAEAfrActivateWorkbenchOnPart</i>
+class belongs to a component. Note that the copy constructor and the assignment
+operator are set as private, and are not implemented in the source file. This
+prevents the compiler from creating them as public without you know. <b><code>_WbName</code></b>
+is the data returned by the <code>GetInitialWorkbench</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Code File"></a>Creating the Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAEAfrActivateWorkbenchOnPart.h&quot;
+
+#include &quot;TIE_CATIAfrActivateWorkbench.h&quot;              
+TIE_CATIAfrActivateWorkbench(CAAEAfrActivateWorkbenchOnPart); 
+
+CATImplementClass (CAAEAfrActivateWorkbenchOnPart,<b>DataExtension</b>, 
+                   CATBaseUnknown, <b>MechanicalPart</b>);
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAEAfrActivateWorkbenchOnPart</i> class states that it implements the
+<i>CATIAfrActivateWorkbench</i> interface thanks to the <code>TIE_CATIAfrActivateWorkbench</code>
+macro. The <code>CATImplementClass</code> macro declares that the <i>CAAEAfrActivateWorkbenchOnPart</i>
+class is a data extension, thanks to the <code>DataExtension</code> keyword,
+that extends <code>MechanicalPart</code>. The third argument must always be set
+as <i>CATBaseUnknown</i> or <i>CATNull</i> for any kind of extension.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAEAfrActivateWorkbenchOnPart::CAAEAfrActivateWorkbenchOnPart()
+                            
+{
+    _WbName = &quot;<b>PrtCfg</b>&quot; ;
+}
+CAAEAfrActivateWorkbenchOnPart::~CAAEAfrActivateWorkbenchOnPart()
+{
+}
+CATString &amp; CAAEAfrActivateWorkbenchOnPart::<b>GetInitialWorkbench</b>()
+{
+ 
+    return <b>_WbName</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In this implementation, the workbench is always the Part Design workbench.
+The name of this workbench is <b>PrtCfg</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to implement the <i>CATIAfrActivateWorkbench</i>
+interface.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrSampleWorkbench.htm">Creating a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Aug 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

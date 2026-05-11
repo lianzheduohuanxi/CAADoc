@@ -1,0 +1,151 @@
+Option Explicit
+
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrates how to use report
+'   Assumption: 1)Needs a report format text file->CAAPipingPartsReportFormat.txt
+'               2)As Distributive System document is opened    
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+'------------------------------------------------------------------------------
+Sub CATMain ()
+'------------------------------------------------------------------------------
+
+    Dim sDocPath As String 
+    Dim sDocFullPath As String 
+
+    Dim sSavePath As String 
+    Dim  strFormatFile As String
+    Dim  strReportOutputFile  As String
+    
+
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    
+    sSavePath=CATIA.SystemService.Environ("CATSavePath")
+
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    If (Not CATIA.FileSystem.FolderExists(sSavePath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Save Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+
+    Set objPspDoc = CATIA.ActiveDocument
+    
+    
+    strFormatFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		   "online\CAAScdPspUseCases\samples\CAAPipingPartsReportFormat.txt")
+
+    If (CATIA.FileSystem.FileExists(strFormatFile) = False) then 
+        MsgBox sDocFullPath & "  format file doesn't exist" 
+        Exit Sub
+    End IF
+
+
+    strReportOutputFile = CATIA.FileSystem.ConcatenatePaths(sSavePath, _
+		           "CAAOutAttrReport.html" )
+    
+
+
+    strMessage_g = _
+      "----------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspAttrReport.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+
+
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+  
+ 
+    Dim objSelection As Selection
+
+    Set objSelection = objPspDoc.Selection
+
+    ' ------------
+    ' Test the selection content
+    ' ------------
+    If objSelection.Count = 0 Then
+      ' ------------
+      ' The selection content is empty, the macro ends
+      ' ------------
+      MsgBox "Select the parts before running the macro.", vbOKOnly, "Warning"
+
+    Else
+  
+      Dim objPspAttrReport As PspAttributeReport
+
+  
+      Set objPspAttrReport = objPspWorkbench.GetInterface ( _
+                "CATIAPspAttributeReport", objPspDoc )
+
+      If (Not (objPspAttrReport Is Nothing)) Then        
+        strMessage_g = strMessage_g &  "OK getting objPspAttrReport" & vbCr
+
+      ' ------------
+      '  Generating report
+      ' ------------
+
+        Dim iRet As Integer
+        iRet = objPspAttrReport.GenerateReport( strFormatFile, _
+                                                     strReportOutputFile )
+
+
+        If ( iRet = 0 ) Then           
+        
+            strMessage_g = strMessage_g &  "Report Format file:" &  _
+                        strFormatFile & vbCr
+
+            strMessage_g = strMessage_g &  "Report output in file:" &  _
+                        strReportOutputFile & vbCr
+
+             strMessage_g = strMessage_g & _
+                  "Report Generation Complete"  & vbCr          
+        Else
+           strMessage_g = strMessage_g & _
+                  "Report Generation Failed"  & vbCr          
+        End If
+
+      Else        
+        strMessage_g = strMessage_g & _
+                  "Failed in getting objPspAttrReport"   & vbCr          
+       
+    
+      End If
+
+    End If  
+
+    strMessage_g = strMessage_g & _
+      "------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+  
+End Sub '/////////////////////////////////////////////////////////// StartCATIAV5
+
+

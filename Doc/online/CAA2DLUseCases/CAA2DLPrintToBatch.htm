@@ -1,0 +1,759 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating 2D Layout Views from FTA Components</title>
+ <style>
+<!--
+div.Section1
+	{page:Section1;}
+-->
+</style>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>2D Layout for 3D Design</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a><a href="CAA2DLPrintToBatch.htm">Print 2D Layout by 
+		Generating a Drawing Document</a></h3>
+     <p>How to create 2DL Views from View or Capture created in 3D Functional 
+		Tolerancing &amp; Annotation Application</td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>&nbsp;&nbsp;&nbsp; This article explains how to print a 2D Layout by 
+		creating previously a drawing. the print is executed by a batch launched 
+		by a CAA command accessible in the 2D Layout workbench. By launching a 
+		batch the CATIA is not frozen during the treatment.</p>
+		<p><u><b>Note:</b></u> the use case is only available on Windows 
+		Operating System but there is no block point to create an equivalent 
+		command on Unix Operating System.</p>
+		<p>&nbsp;&nbsp;&nbsp; <b>2DL</b> means: 2D Layout for 3D Design, this is 
+		the name of the CATIA application.</p>
+		<ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The Architecture of the Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAA2DLAddin Do</a></li>
+         <li><a href="#What1">What Does CAA2DLPrintToDrafting Do</a></li>
+         <li><a href="#What2">What Does CAA2DLConvertToDraw Do</a></li>
+         <li><a href="#How">How to Launch the Use Case</a></li>
+			<li><a href="#How">Where to Find the Use Case Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show:</p>
+	<ul>
+		<li>How to add a CAA command in the 2DL workbench.</li>
+		<li>How to launch a batch from an interactive command by using the CAA 
+		batch infrastructure.</li>
+		<li>How to create a Drawing from a 2DLayout.</li>
+		<li>How to print the current sheet of the Drawing</li>
+		<li>How to launch the created print to the printer</li>
+	</ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The <a href="#UseCase"><strong>Architecture of the Use Case</strong></a></h3>
+ <p>This use case is shared on several modules, all these modules are defined in the CAADrafting2DLInterfaces.edu framework that 
+ illustrates Drafting2DLInterfaces framework capabilities.</p>
+	<p>&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <table height="403" width="100%" id="table2">
+   <tr>
+     <td height="31">
+     <p align="center">Fig. 1: Overview of the use case</td>
+   </tr>
+   <tr>
+     <td height="365">
+     <p align="center">
+     <img border="0" src="images/CAA2DLPrintToBatch3.jpg" width="894" height="585"></td>
+   </tr>
+   </table>
+ <p>&nbsp;</p>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAA2DLAddin Do?</h4>
+	<p>This module contains the code to add a CAA command in the 2DL workbench 
+	by using the <i>CATI2DLMainWkbAddin</i><code> </code>interface defined in 
+	Drafting2DLInterface framework.</p>
+	<p>&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <table height="403" width="100%">
+   <tr>
+     <td height="31">
+     <p align="center">Fig. 2: the 2DL workbench with the CAA toolbar containing 
+		the &quot;print To Batch&quot; command</td>
+   </tr>
+   <tr>
+     <td height="365">
+     <p align="center">
+     <img border="0" src="images/CAA2DLPrintToBatch1.jpg" width="674" height="344"></td>
+   </tr>
+   </table>
+ <p>&nbsp;</p>
+ <p align="right"><a href="#Top">Top</a>]</p>
+ <h4><a name="What1"></a>What Does CAA2DPrintToDrafting Do?</h4>
+	<p>This module contains the code of the command. This command has only one 
+	step implemented in the <code>Activate</code> method of the <i>CATCommand</i>. 
+	The command save the current CATPart document in the temporary file by using
+	<code>SaveAsNew</code> method defined in CATDocumentServices class, then the 
+	CAA Batch is launched. When the batch is ended a popup window is displayed 
+	to inform the user the document is printed. </p>
+	<p>&nbsp;</p>
+ <table height="261" width="100%" id="table1">
+   <tr>
+     <td height="31">
+     <p align="center">Fig. 3: The display windows </td>
+   </tr>
+   <tr>
+     <td height="224">
+     <p align="center">
+     <img border="0" src="images/CAA2DLPrintToBatch2.jpg" width="670" height="203"></td>
+   </tr>
+   </table>
+ <p>The first window is displayed when the batch is correctly ended. The second 
+	window is displayed when printer environment variables are not set.</p>
+ <p align="right"><a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What2"></a>What Does CAA2DConvertToDraw Do?</h4>
+	<p>This module contains the code of the batch launched by the command. This 
+	batch is based on CAA batch infrastructure [<a href="#References">1</a>]. 
+	The batch opens the Part document saved in temporary directory by the 
+	command, retrieves the 2DL Layout root, extract a drawing document from the 
+	2D Layout root, creates a print file from the drawing and launches the print 
+	file to the printer. The details of the batch is explained in the topic
+	<a href="#Step">Step-by-step</a></p>
+ <p align="right"><a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch the print 2DL Command </h4>
+ <p>To launch print 2DL command, you will need to set up the build time environment, 
+ then compile CAA2DLAddin, CAA2DLConvertToDraw.m and CAA2DLPrintToDrafting.m 
+	modules along with its prerequisites, set up the run time 
+ environment, and then start CATIA.</p>
+	<p><b><u>Do not forget to set printer name and printer server name and 
+	licensing file before 
+	launching CATIA</u></b></p>
+	<p>Set CAT_CAA2DLPrinterName=MyPrinterName<br>
+	Set CAT_CAA2DLPrinterServerName=MyPrinterServerName<br>
+	Set CAT_CAA2DL_LICENSING =C:\tmp\<b>LicenseSetup.txt</b></p>
+	<p>see Launching the batch step to get information about LicenseSetup.txt 
+	file.<br>
+&nbsp;</p>
+ <p>When you launch CATIA you can open the Part document delivered in the following path: 
+ CAADrafting2DLInterfaces.edu\CNext\resources\graphic\CAA2DLPrintToBatch.CATPart.
+ </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAA2DLCreate2DLViewFromFTA&nbsp; Code</h4>
+ <p>The use case is made of a several module named CAA2DLPrintToBatch, 
+	CAA2DLAddin and CAA2DLConvertToDraw located in the 
+ CAADrafting2DLInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAADrafting2DLInterfaces.edu</code></td>
+   </tr>
+   </table>
+	<p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>Batch launching: </p>
+ <ol>
+   <li><a href="#Opening">Launching the batch </a></li>
+ </ol>
+ <p>Batch execution:</p>
+ <ol>
+   <li value="2"><a href="#Retrieving the arguments from the XML file">Retrieving 
+	the arguments from the XML file</a></li>
+   <li><a href="#Retrieves the 2DL Root">Retrieving the 2D Layout Root from the 
+	Part Document</a></li>
+   <li><a href="#Retrieves the 2DL standard and Format">Retrieving the 2D Layout 
+	Standard and Format of the Active Sheet</a></li>
+   <li><a href="#Creating and Initializing the Drawing">Creating and 
+	Initializing the new Drawing Document</a></li>
+   <li><a href="#Printing the Drawing Document">Printing the Drawing Document by 
+	using the EPS print format</a></li>
+   <li><a href="#Launching the print file to the printer">Launching the print 
+	file to the printer</a></li>
+   <li><a href="#Removing Document and Exiting">Removing Document and Exiting</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Opening"></a><a href="#Opening">Launching the batch </a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> //Here we generate the XML parameter file corresponding to the batch: 
+CATBatchParameters input_param;
+input_param.BeginBuffer(&quot;batchConvertToDraw&quot;, &quot;ParamTest.xml&quot;,NULL,NULL,NULL,NULL,clicfile); 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A <b>ParamTest.xml</b> file containing all information for the batch execution is 
+	created in the temporary file. batchConvertToDraw descriptor is the 
+	delivered in the following path: CAADrafting2DLInterfaces.edu/CNext/resources/batchdesc/batchConvertToDraw.xml</p>
+	<p><b>clicfile</b> is initialized from an environment variable 
+	(CAT_CAA2DL_LICENSING ) containing the access path to a specific file : <b>
+	LicenseSetup.txt</b>. This file contains the name of the batch and name<span lang="fr">s</span> 
+	of a configuration license<span lang="fr"> and mandatory product for the 
+	batch execution</span>. For example if the HD2.slt license is declared 
+	in your environment, you have to edit the file and insert the following 
+	keywords: <b>CAA2DLConvertToDraw|HD2.slt<span lang="fr">|LO1.prd. </span></b>
+	<span lang="fr">LO1 product allows to the 2D Layout root access by CAA API.</span></p>
+	<p>&nbsp;</p>
+	<p><br>
+	<br>
+	<br>
+&nbsp;</p>
+	<p>&nbsp;</p>
+ <table height="261" width="100%" id="table4">
+   <tr>
+     <td height="31">
+     <p align="center">Fig. 4: The batchConvertToDraw.xml file</td>
+   </tr>
+   <tr>
+     <td height="224">
+     <p align="center">
+     <img border="0" src="images/CAA2DLPrintToBatch4.jpg" width="486" height="173"></td>
+   </tr>
+   </table>
+ <p>This XML file contains the name of the batch and the dll. there is also 
+	information as catutil=&quot;0&quot; to specify the batch is not accessible accross 
+	catutil tool.</p>
+	<p>&nbsp;</p>
+ <table class="code" id="table3">
+   <tr>
+     <td>
+     <pre>input_param.BeginInput();
+input_param.InsertFile(&quot;file1&quot;,storageNameDocument, &quot;&quot;, COMM_FILE_BINARY);
+
+// The batch works with the parent standard of standard used by the 2D Layout
+// To work with a specific standard replace ParentStd by the DRAWING standard name.
+// Drawing standard and 2D Layout standard must be compatible:
+// - Identical parent standards
+// - Identical dimension formats: (Tolerance and Value)
+
+// Drawing standard name (Optional)
+const char* cDrawingStdName = CATGetEnv(&quot;CAT_CAA2DLDrawingStandardName&quot;);
+if (cDrawingStdName)
+{
+CATUnicodeString sPrinterSrvName (cDrawingStdName);
+input_param.InsertSimpleArg(&quot;drwStandard&quot;, sPrinterSrvName);
+}
+// If the environment variable is not set. The Drawing will be created with the parent standard of the 2DLayout Standard
+else
+input_param.InsertSimpleArg(&quot;drwStandard&quot;, &quot;ParentStd&quot;);
+
+// Sheet Print Mode (Optional)
+const char* cSheetPrintMode = CATGetEnv(&quot;CAT_CAA2DLSheetPrintMode&quot;);
+if (cSheetPrintMode)
+{
+CATUnicodeString sSheetPrintMode (cSheetPrintMode);
+input_param.InsertSimpleArg(&quot;SheetPrintMode&quot;, sSheetPrintMode);
+}
+// If the environment variable is not set. Only ActiveSheet is printed
+else
+input_param.InsertSimpleArg(&quot;SheetPrintMode&quot;, &quot;ActiveSheet&quot;);
+
+// Printer Name initialization
+input_param.InsertSimpleArg(&quot;PrinterName&quot;, sPrinterName);
+
+// Printer Server name initialization
+input_param.InsertSimpleArg(&quot;PrinterServerName&quot;, sPrinterSrvName);
+input_param.EndInput();
+
+// Here we describe the output directory for BatchSample.
+const char* batch_home = CATGetEnv(&quot;BATCH_HOME&quot;);
+const char* out_folder = batch_home; // we choose to write the outputs in $BATCH_HOME. 
+input_param.BeginOutput();
+input_param.EndOutput();
+input_param.EndBuffer();
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section shows how to save input arguments for the batch in a XML file.</p>
+	<p>&nbsp;</p>
+ <table class="code" id="table5">
+   <tr>
+     <td>
+     <pre>//Retrieve the ClientMonitor, main interface to start and monitor batches
+CATBatClientMonitorCAA* cliMonitor = CATBatClientMonitorCAA::GetTheClientMonitorCAA();
+if (!cliMonitor) return CATStatusChangeRCAborted;
+
+//Monitor V5 batches initialization
+int batchMode = 0;
+HRESULT hr = cliMonitor-&gt;InitializeV5Monitoring(batchMode);
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section launches the batch.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Retrieving the arguments from the XML file"></a>
+	<a href="#Retrieving the arguments from the XML file">Retrieving the 
+	arguments from the XML file</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+int batchmain (int argc, char** argv)
+{
+
+  int Error_code = 0;
+
+  // 0/ CREATE THE SESSION AND READ THE INFORMATION IN THE XML FILE ASSOCIATED TO THE BATCH
+  // ======================================================================================
+  CATSession *pSampleSession = NULL;
+  HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+  if (FAILED(hr)) return 60;
+
+  //Retrieve the CATBatStatePub object used to publish a completion state for the batch
+  CATBatStatePubCAA* pub = CATBatStatePubCAA::GetCAAStatePub();
+  if (!pub) return 61;
+
+  //Retrieve CATIBatch the main interface to access XML parameter file from the batch 
+  CATIBatchCAA* batch = GetCATIBatchCAA();
+  if (!batch) return 62;
+
+  //Retrieves InputParameters section from the XML parameter file
+  CATIBatchElementCAA* inputParameters = NULL;
+  hr = batch-&gt;get_InputParametersCAA(inputParameters);
+  if ( FAILED(hr) || !inputParameters )
+  return 63;
+
+  // Standard Name
+  CATIBatchElementCAA* oDrwStd = NULL;
+  CATUnicodeString usId = &quot;drwStandard&quot;;
+  CATUnicodeString stdName;
+  if (SUCCEEDED(inputParameters-&gt;ParameterCAA(usId, oDrwStd)) &amp;&amp; oDrwStd)
+  {
+    hr = oDrwStd-&gt;StringArg(stdName);
+    oDrwStd-&gt;Release();oDrwStd = NULL;
+    if ( FAILED(hr) ) return 64;
+  }
+
+  // Printer name
+  CATIBatchElementCAA* oPrtName = NULL;
+  usId = &quot;PrinterName&quot;;
+  CATUnicodeString sPrinterName;
+  if (SUCCEEDED(inputParameters-&gt;ParameterCAA(usId, oPrtName)) &amp;&amp; oPrtName)
+  {
+    hr = oPrtName-&gt;StringArg(sPrinterName);
+    oPrtName-&gt;Release();oPrtName = NULL;
+    if ( FAILED(hr) ) return 65;
+  }
+
+  // Printer server name
+  CATIBatchElementCAA* oPrtSrvName = NULL;
+  usId = &quot;PrinterServerName&quot;;
+  CATUnicodeString sPrinterSrvName;
+  if (SUCCEEDED(inputParameters-&gt;ParameterCAA(usId, oPrtSrvName)) &amp;&amp; oPrtSrvName)
+  {
+    hr = oPrtSrvName-&gt;StringArg(sPrinterSrvName);
+    oPrtSrvName-&gt;Release();oPrtSrvName = NULL;
+    if ( FAILED(hr) ) return 66;
+  }
+
+  // Sheet Print Mode
+  CATIBatchElementCAA* oSheetPrt = NULL;
+  usId = &quot;SheetPrintMode&quot;;
+  CATUnicodeString sSheetPrintMode;
+  if (SUCCEEDED(inputParameters-&gt;ParameterCAA(usId, oSheetPrt)) &amp;&amp; oSheetPrt)
+  {
+    hr = oSheetPrt-&gt;StringArg(sSheetPrintMode);
+    oSheetPrt-&gt;Release();oSheetPrt = NULL;
+    if ( FAILED(hr) ) return 66;
+  }
+
+  //Retrieves all the &lt;file&gt; tags included in the inputParameters section
+  // If the batch is launched from the command PrintToDraftingCmd, there is only one occurence.
+  CATIBatchElementsCAA* inputFiles = NULL;
+  hr = inputParameters-&gt;get_FileListCAA(inputFiles);
+  if ( FAILED(hr) || !inputFiles )
+    return 67;
+
+  // Scans the list of &lt;file&gt; 
+  long childrenCount = 0;
+  hr = inputFiles-&gt;get_Count(childrenCount);
+  CATIBatchElementCAA * elem = NULL;
+
+  for ( int i = 0; i&lt;childrenCount; i++ )
+  {
+    hr = inputFiles-&gt;ItemCAA( i, elem );
+    if ( hr != S_OK )
+    return 68;
+    // for each &lt;file&gt; retrieve the file path corresponding to the attribute &quot;filePath&quot; of the 
+    // &lt;file&gt; tag.
+    CATUnicodeString usfile_path;
+    elem-&gt;get_Path(usfile_path); 
+
+    elem-&gt;Release();
+    elem = NULL;
+    // Writes this path in the log of the batch available in $BATCH_HOME/uuid/uuidLog.txt 
+    // at the end of the execution. Default for BATCH_HOME is /tmp or C:\temp and uuid is a
+    // generated identifier for each batch execution.
+
+    // Checks the file existence and the right to read it.
+    if (CATFileAccess(usfile_path.CastToCharPtr() , 04) != CATLibSuccess)
+      return 69;
+  }
+
+  // Retrieves the directory name in the usfile_path path
+  char in_filename[CATMaxPathSize];
+  char in_dirname[CATMaxPathSize];
+  memset(in_filename, '\0', CATMaxPathSize);
+  memset(in_dirname, '\0', CATMaxPathSize);
+  CATSplitPath( usfile_path.CastToCharPtr(), in_dirname, in_filename);
+  CATUnicodeString dirToWork = in_dirname;
+  CATUnicodeString partName = in_filename;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The section describes the code to read input arguments store in the XML 
+	file.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <h4><a name="Retrieves the 2DL Root"></a>
+	<a href="#Retrieving the arguments from the XML file">Retrieving the 2D 
+	Layout Root from the Part Document</a></h4>
+ <table class="code" id="table6">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// 1/ Opens the Part document containing the 2DLayout to convert
+// ============================================================
+CATDocument *pDocPart = NULL;
+CATInit_var spInitOnDoc;
+if( SUCCEEDED(CATDocumentServices::OpenDocument(usfile_path, pDocPart)) &amp;&amp; pDocPart)
+{
+  // To Prevent the destruction
+  CATLockDocument(*pDocPart);
+  spInitOnDoc = pDocPart;
+}
+
+// 2/ Retrieves the Mechanical Part
+// ================================
+CATIPrtPart_var spPart;
+CATIPrtContainer * piPrtCont = (CATIPrtContainer*) spInitOnDoc-&gt;GetRootContainer(&quot;CATIPrtContainer&quot;); 
+if (piPrtCont)
+{
+  // Gets the part feature of the container.
+  spPart = piPrtCont-&gt;GetPart();
+  if (NULL_var != spPart)
+  else
+  {
+    Error_code = 70;
+  }
+  piPrtCont-&gt;Release();piPrtCont=NULL;
+}
+
+// 3/ Gets the 2DLayout Root
+// =========================
+CATI2DLayoutLayout *pi2DLayout = NULL;
+if (NULL_var != spPart)
+{
+  CAT2DLayoutServices::GetLayout2DL(spPart,&amp;pi2DLayout);
+  if (pi2DLayout)
+  else
+    Error_code = 71;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section describes the standard way to retrieve the 2DLayout root from 
+	the Part document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <p align="right">&nbsp;</p>
+ <h4><a name="Retrieves the 2DL standard and Format"></a>
+	<a href="#Retrieving the arguments from the XML file">Retrieves the 2D 
+	Layout Standard and Format of the Active Sheet</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// 4/ Retrieves the 2D Layout standard and format of the active sheet
+// ==================================================================
+if (pi2DLayout)
+{
+  CATUnicodeString fmtName;
+  CATBoolean sheetDisplay = FALSE;
+  CATSheetOrientation sheetOrt;
+  double fmtWidth=0.0;
+  double fmtHeight=0.0;
+  int indiceSheet = 0;
+  hr = CAA2DLConvertToDrawServices::Get2DLStandardAndFormat(pi2DLayout, stdName,fmtWidth,fmtHeight,sheetOrt,sheetDisplay,indiceSheet);
+  if (SUCCEEDED(hr))
+  else
+  {
+    Error_code = 72;
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p><i>CAA2DLConvertToDrawServices</i> class contains a set of services 
+	dedicated to this batch. <code>Get2DLStandardAndFormat</code> retrieves a 
+	set of characteristics of the 2D Layout for the drawing creation.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating and Initializing the Drawing"></a>
+	<a href="#Creating and Initializing the Drawing">Creating&nbsp; and 
+	Initializing the new Drawing Document</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre> // 5/ Creates the new Drawing Document
+// ===================================
+CATDocument* pDocDraw = NULL;
+hr = CATDocumentServices::New(&quot;CATDrawing&quot;, pDocDraw);
+if (SUCCEEDED(hr))
+else
+{
+  Error_code = 73;
+}</pre>
+		<pre>// 6/ Drawing document initialisation: Standard, Sheet format and 2DLayout extraction
+// ==================================================================================
+hr = CAA2DLConvertToDrawServices::InitDrawingDocument(pDocDraw, stdName,fmtWidth,fmtHeight,sheetOrt,sheetDisplay,pi2DLayout);
+if (SUCCEEDED(hr))
+else
+  Error_code = 74;
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>InitDrawingDocument</code> method defined in <i>
+	CAA2DLConvertToDrawServices</i> class uses <code>Extract2DLayoutToDrawing</code> 
+	method defined in <i>CAT2DLDrawingServices</i> class to create drawing 
+	corresponding to the 2D Layout.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Printing the Drawing Document"></a>
+	<a href="#Retrieving the arguments from the XML file">Printing the Drawing 
+	Document by using the EPS print format</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>CATUnicodeString printfmt = &quot;EPS&quot;;
+CATUnicodeString drwfileName = dirToWork + &quot;\\DrawingToPrint.CATDrawing&quot;;
+CATUnicodeString printfileName = dirToWork + &quot;\\PrintDrawing.ps&quot;;
+
+// 7/ Print the Drawing document (Sheet number = indiceSheet)
+// ==========================================================
+// To print the active Sheet
+int startLoop = indiceSheet;
+int endLoop = indiceSheet+1;
+
+// All the sheets are printed
+CATUnicodeString AllSheets(&quot;AllSheets&quot;);
+if (sSheetPrintMode == AllSheets)
+{
+  startLoop = 0;
+  CATIUnknownList * pi2DLSheetList = NULL;
+  if (SUCCEEDED(pi2DLayout-&gt;GetSheets(&amp;pi2DLSheetList)) &amp;&amp; pi2DLSheetList)
+  {
+    unsigned int piListSize = 0;
+    pi2DLSheetList-&gt;Count(&amp;piListSize);
+    pi2DLSheetList-&gt;Release();pi2DLSheetList=NULL;
+    endLoop = piListSize;
+  }
+}
+for (int numSheet = startLoop; numSheet &lt; endLoop; numSheet++)
+{
+  hr = CAA2DLConvertToDrawServices::PrintDrawingDocument(pDocDraw, printfileName, printfmt,numSheet);
+  if (SUCCEEDED(hr))
+  else
+   Error_code = 75;
+}
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>PrintDrawingDocument</code> method defined in <i>
+	CAA2DLConvertToDrawServices</i> class use the method <code>Print</code> 
+	defined in <i>CATPrintFileDevice</i> class to create the &quot;print file&quot;. </p>
+ <h4><a name="Launching the print file to the printer"></a>Launching the print 
+	file to the printer </h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// 8/ Launches the print to the printer
+// ====================================
+if (SUCCEEDED(hr))
+{
+#ifdef _WINDOWS_SOURCE
+
+// Creates the .bat file to execute the print to the printer
+const char* batFileName;
+const char* tempDir = CATGetTempDirectory();
+char* tempBatFileNameChar = _tempnam(tempDir, &quot;printbatch&quot;);
+CATUnicodeString tempBatFileName;
+if (tempBatFileNameChar != NULL)
+{
+  tempBatFileName = tempBatFileNameChar;
+  free(tempBatFileNameChar); 
+}
+tempBatFileName.Append(&quot;.bat&quot;);
+batFileName = tempBatFileName.CastToCharPtr();
+
+unsigned int batFileDesc;
+HRESULT rc = CATFOpen(&amp;tempBatFileName, &quot;wt&quot;, &amp;batFileDesc);
+if ( SUCCEEDED(rc) )
+{
+  CATUnicodeString sSlash(&quot;\\&quot;);
+  CATUnicodeString sBlanc(&quot; &quot;);
+  CATUnicodeString slineString = &quot;Copy /b &quot;;
+  slineString += printfileName;
+  slineString += sBlanc;
+  slineString += sSlash;
+  slineString += sSlash;
+  slineString += sPrinterSrvName;
+  slineString += sSlash;
+  slineString += sPrinterName;
+  int nCharWritten = 0;
+  rc = CATFPuts(slineString.ConvertToChar(), batFileDesc, &amp;nCharWritten);
+  rc = CATFClose(batFileDesc);
+}
+char* argv[2];
+argv[0] = (char*) batFileName;
+argv[1] = NULL;
+int iPid,exitStatus;
+CATLibStatus status = CATStartProcess(argv[0], argv, 0, &amp;iPid, &amp;exitStatus);
+if (CATLibSuccess == status)
+  Error_code = 0;
+else
+  Error_code = 76;
+#else
+// This step is not implemented on UNIX operating system
+#endif
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section is only implemented for Windows operating system. The method
+	<code>CATStartProcess</code> allows to start the printbatch.bat file</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Removing Document and Exiting"></a>Removing Document and Exiting</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// 9/ Removes Drawing Document
+// ===========================
+  CATDocumentServices::Remove (*pDocDraw);
+  }
+  pi2DLayout-&gt;Release();pi2DLayout=NULL;
+}
+
+// 10/ Remove Part Document
+// ========================
+hr = CATUnLockDocument(*pDocPart);
+CATDocumentServices::Remove (*pDocPart);
+}
+if (inputFiles) inputFiles-&gt;Release(),inputFiles = NULL;
+if (inputParameters) inputParameters-&gt;Release(),inputParameters = NULL;
+
+//11/ ENDS SESSION
+//================
+::Delete_Session(&quot;SampleSession&quot;);
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence to remove document of the 
+	session. The Part document must be unlocked before. In batch mode, it is 
+	very important to lock document when the batch works with several documents 
+	because the document could be released at any time.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the way to :</p>
+ <ol>
+   <li>Add a CAA command in the 2DL workbench.</li>
+   <li>Launch a CAA Batch from an interactive command.</li>
+   <li>Retrieving the 2DLayout root from the part document.</li>
+	<li>Creating and Initializing a drawing document from a 2D Layout.</li>
+   <li>Printing the drawing document in a &quot;print file&quot;.</li>
+	<li>Starting a &quot;.bat&quot; file to launch the print to the printer.</li>
+   <li>Unlock the document and&nbsp; close the session .</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top" width="5%">[1]</td>
+     <td width="94%">
+     <a href="../CAABatUseCases/CAABatBatchSample.htm">Creating a CAA V5 Batch</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [April 2008]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2008, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

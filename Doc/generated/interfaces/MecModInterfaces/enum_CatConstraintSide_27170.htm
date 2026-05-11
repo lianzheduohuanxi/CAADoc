@@ -1,0 +1,144 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Enumeration CatConstraintSide</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CatConstraintSide"; } 
+	function getCurrentType() { 
+ 	return "enum"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CatConstraintSide <font size=-1>(Enumeration)</font></h1>
+<pre>
+enum <b>CatConstraintSide</b> {
+  catCstSidePositive,
+  catCstSideNegative,
+  catCstSideSameAsValue,
+  catCstSideOppositeToValue,
+  catCstSideUndefined
+}
+</pre>
+<b><i> Constrained elements relative side.</i></b><br>
+
+ <br>
+ When two geometrical elements are constrained, there is often a variety 
+ of relative positions and orientations of these elements that respect 
+ the constraint. For instance,   
+ if a distance constraint is placed on two planes, 
+ the second plane can lie on both sides of first plane while maintaining
+ the requested distance: the constraint is respected, but 
+ geometry remains unresolved. Furthermore, even if the side is fixed,
+ second plane still can be oriented so that its normal points towards the
+ first plane or in the opposite direction, without breaking the constraint.
+ <br>
+ Managing such indetermination requires control over two variables:
+ <dl>
+ <dt><b>Side</b>
+   <dd>determines, when relevant, on which side of each other constrained
+       elements should be positionned
+ <dt><b>Orientation</b>
+   <dd>determines, when relevant, how to orient constrained elements,  
+       whith respect to each other.  
+ </dl>
+ 
+ This enum deals with possibles options for dealing with the <b>Side</b>
+ variable (see <script type="text/javascript"> activateLinkAnchor('CatConstraintOrientation','','CatConstraintOrientation') </script> for possibles options for <b>Orientation</b>).  
+ <p>
+ This enum is based on the notion of characteristic vector. A
+ characteristic vector is a vector which is associated with a constrained
+ element each time it can be assimilated to a line or a plane. The vector
+ represents the direction of the line, or the direction normal to the 
+ plane. 
+ 
+ 
+<dl>
+  <dt> <b>Values:</b>
+  <dd>
+    <dl>
+    <dt><tt> catCstSidePositive</tt>
+   <dd>   First constrained element characteristic vector points towards 
+   second constrained element.<br>
+   Arithmetic sign of constraint value is ignored, only its absolute 
+   value is taken into account. 
+ </dd>
+    <dt><tt> catCstSideNegative</tt>
+   <dd>   First constrained element characteristic vector points opposite to  
+   second constrained element.<br>
+   Arithmetic sign of constraint value is ignored, only its absolute 
+   value is taken into account. 
+ </dd>
+    <dt><tt> catCstSideSameAsValue</tt>
+   <dd>   Arithmetic sign of constraint value specifies where second element 
+   lies with regard to first one: a positive value means in the direction
+   of first constrained element characteristic vector, a negative value in 
+   the opposite direction.
+ </dd>
+    <dt><tt> catCstSideOppositeToValue</tt>
+   <dd>   Arithmetic sign of constraint value specifies where second element 
+   lies with regard to first one: a negative value means in the direction
+   of first constrained element characteristic vector, a positive value in 
+   the opposite direction.
+ </dd>
+    <dt><tt> catCstSideUndefined</tt>
+   <dd>   Relative positionning of constrained elements is not defined.</dd>
+</dl>
+</dl>
+<hr>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,1026 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Dialog Boxes Automatically Resizable</title>
+</head>
+
+<body>
+
+<table width=100%>
+  <tr>
+    <td valign="top" >
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top" >
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Dialog Boxes Automatically Resizable</h3>
+      Arranging Dialog Objects Using Tabulations</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2" >Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create extendable dialog boxes.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADlgTabulation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADlgTabulation Do</a></li>
+            <li><a href="#How">How to Launch CAADlgTabulation</a></li>
+            <li><a href="#Where">Where to Find the CAADlgTabulation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create Dialog boxes with dynamic
+frames. The frames appear and disappear and the dimensions of the dialog box are
+automatically redefined. For such behavior the frame positioning must be done by
+a tabulation
+layout [<a href="#References">1</a>] and not by a grid layout [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADlgTabulation Use Case</h3>
+<p>CAADlgTabulation is a use case of the CAADialog.edu framework that
+illustrates Dialog framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADlgTabulation Do</h4>
+<p>CAADlgTabulation use case creates three Dialog boxes:
+<ol>
+  <li><p>The &quot;<b>More/Less Push Button Demonstrato</b>r&quot; Dialog box</p></li>
+  <table border="0">
+    <tr>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 1a:">Fig. 1a:</a> Original Size</i> </td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationMoreLess1.jpg"></td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 1b:">Fig. 1b:</a> Extended Size</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationMoreLess2.jpg"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>When the end user clicks the &quot;More&quot; button, the Dialog box is
+  expanded and when it clicks on the &quot;Less&quot; button, the dialog box
+  retrieves its original size.</p>
+  <li><p>The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</p></li>
+  <table border="0">
+    <tr>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 2a:">Fig. 2a:</a> Without frame</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationRadio1.jpg"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>When the end user select the &quot;without frame&quot; radio button, no
+  frame is displayed.&nbsp;</p>
+  <table border="0">
+    <tr>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 2b:">Fig. 2b:</a> With more frame A</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationRadio2.jpg"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>When the end user selects the &quot;With more frame A&quot; radio button,
+  the frame entitled &quot;Frame A&quot; is displayed on the right side.</p>
+  <table border="0">
+    <tr>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 2c:">Fig. </a></i><a name="Fig 2c:"><i> 2c:</i></a><i><a name="Fig 2c:">
+              </a>With more frame B</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationRadio3.jpg"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>When the end user selects the &quot;With more frame B&quot; radio button,
+  the frame entitled &quot;Frame B&quot; is displayed on the right side.&nbsp;</p>
+  <li>The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</li>
+  <p>According to the selected value in the combo, the frame under the
+  &quot;Combo Frame&quot; frame is not
+  the same: &quot;Coordinates Frame&quot;, &quot;Circle Frame&quot; or &quot;
+  Between Frame&quot;.&nbsp;</p>
+
+  <table border="0">
+    <tr>
+      <td valign="top">
+        <table border="0">
+          <tr>
+            <td><a name="Fig 3a"><i>Fig. 3a</i></a><i>:Coordinates</i></td>
+          </tr>
+          <tr>
+            <td valign="top"><img border="0" src="images/CAADlgTabulationFrameReplace2.jpg" width="197" height="178"></td>
+          </tr>
+        </table>
+      </td>
+      <td valign="top">
+        <table border="0">
+          <tr>
+            <td valign="top"><i><a name="Fig 3b:">Fig. 3b:</a> Circle Center</i></td>
+          </tr>
+          <tr>
+            <td valign="middle"><img border="0" src="images/CAADlgTabulationFrameReplace1.jpg" width="197" height="143"></td>
+          </tr>
+        </table>
+      </td>
+      <td valign="top">
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 3c:">Fig. 3c:</a> Between</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationFrameReplace3.jpg"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</ol>
+<p align="left">To obtain such behavior, the frames must be attached in their
+container by a tabulation layout. On the pictures below, the tabulations are
+represented by thick lines and the frame's attachments are represented by a
+green rectangular box.</p>
+<ol>
+  <li>
+    <p>The &quot;<b>More/Less Push Button Demonstrato</b>r&quot; Dialog box</p></li>
+  <table border="0" width="597">
+    <tr>
+      <td width="245">
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 4.a">Fig. 4a</a>:</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationMoreLessTech1.jpg" width="190" height="261"></td>
+          </tr>
+        </table>
+      </td>
+      <td width="340">
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig 4.b">Fig. 4b</a>:</i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationMoreLessTech2.jpg" width="337" height="262"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>The &quot;Left More Frame&quot; frame is always visible and attached to the
+  first (0) vertical line. The &quot;Right More Frame&quot; frame is&nbsp;</p>
+  <ul>
+  <li>Invisible and detached when the dialog box has its original size. <a href="#Fig 1a:">
+    Fig.1a</a> and <a href="#Fig 4.a">Fig.4a</a></li>
+  <li><p>Visible and attached to the second (10) vertical line when the dialog box
+    is extended. <a name="Fig.1b" href="#Fig 1b:"> Fig.1b</a> and <a href="#Fig 4.b">Fig.4b</a></p></li>
+  </ul>
+    <li>
+    <p>The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</p></li>
+  <p>It is similar to the previous dialog box:</p>
+  <table border="0">
+    <tr>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig. 5a">Fig. 5a</a></i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationRadioTech1.jpg" width="182" height="266"></td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <table border="0">
+          <tr>
+            <td><i><a name="Fig. 5b">Fig. 5b</a></i></td>
+          </tr>
+          <tr>
+            <td><img border="0" src="images/CAADlgTabulationRadioTech2.jpg" width="314" height="266"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <p>The &quot;Radio Button Frame&quot; frame is always visible and attached to
+  the first (0) vertical line.&nbsp;</p>
+  <ul>
+  <li>If the &quot;Without frame&quot; radio button is checked -&nbsp; <a href="#Fig 2a:">Fig.
+    2a&nbsp;</a></li>
+  <p>The &quot;Frame A&quot; and the &quot;Frame B&quot; are invisible and
+  detached.&nbsp;<a href="#Fig. 5a">Fig. 5a</a></p>
+  <li>If the &quot;With more frame A&quot;&nbsp; radio button is checked -&nbsp;
+    <a href="#Fig 2b:">Fig. 2b&nbsp;</a></li>
+  <p>The &quot;Frame A&quot; is visible and attached to the second (10) vertical line,
+  and the &quot;Frame B&quot; is still invisible and detached. <a href="#Fig. 5b">Fig.
+  5b</a></p>
+
+  <li>If the &quot;With more frame B&quot;&nbsp; radio button is checked -&nbsp;<a href="#Fig 2c:">
+    Fig. 2c</a></li>
+    <p>The &quot;Frame B&quot; is visible and attached to the second (10) vertical line,
+  and the &quot;Frame A&quot; is yet invisible and detached. <a href="#Fig. 5b">Fig.
+    5b</a></p>
+  </ul>
+  <li>
+    <p>The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</p></li>
+    <p>In this case the attachments are horizontal.</p>
+  <table border="0">
+    <tr>
+      <td><i><a name="Fig. 6">Fig. 6</a></i></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/CAADlgTabulationFrameReplaceTech1.jpg" width="425" height="226"></td>
+    </tr>
+  </table>
+  <p>The &quot;Combo Frame&quot; frame is always visible and attached to
+  the first (0) horizontal line.&nbsp;The frame attached to the second (5)
+  horizontal line is the frame entitled either &quot;Coordinates Frame&quot; (<a href="#Fig 3a">Fig.
+  3a</a>) or
+  &quot;Circle Frame&quot; (<a href="#Fig 3b:">Fig. 3b</a>) or ''Between Frame&quot;
+  (<a href="#Fig 3c:">Fig. 3c</a>) . When one of these three
+  frames is attached and visible, the two others are invisible and detached.</p>
+</ol>
+<p align="left">Inside the frames entitled&nbsp; &quot;Left More Frame&quot;,
+&quot;Right More Frame&quot;, &quot;Frame A&quot; and so on, you can use the
+grid layout [<a href="#References">2</a>] to locate the different
+components.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADlgTabulation</h4>
+<p>To launch the use case, you will need to set up the build time environment,
+then compile CAADlgDialogDemonstrator along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">3</a>].</p>
+<p><code>mkrun -c CAADlgDialogDemonstrator&nbsp;</code></p>
+<p>When the <code>CAADlgDialogDemonstrator</code> application is launched:</p>
+<ul>
+  <li>On the <b>Tabulation</b> menu click <b>More &amp; Radio Button</b></li>
+  <li>Click <b>With more frame A</b></li>
+  <li>Click<b>  With more frame B</b></li>
+  <li>Click <b>Without frame</b></li>
+  <li>Click <b>OK </b>or<b> Cancel</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>More/Less Push Button</b></li>
+  <li>Click <b>More</b></li>
+  <li>Click<b> Less</b></li>
+  <li>Click <b>OK </b>or<b> Cancel</b></li>
+  <li>On the <b>Tabulation</b>&nbsp; menu click <b>Frame Replacement</b></li>
+  <li>Click <b>Circle Center </b>in the combo</li>
+  <li>Click <b>Between </b>in the combo</li>
+  <li>Click <b>Coordinates </b>in the combo</li>
+  <li>Click <b>OK </b>or<b> Cancel</b></li>
+  <li>On the<b> File</b> menu click<b> Exit</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADlgTabulation Code</h4>
+<p>The CAADlgTabulation use case is made of several classes located in
+the CAADlgDialogDemonstrator.m module of the CAADialog.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADialog.edu\CAADlgDialogDemonstrator.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADialog.edu/CAADlgDialogDemonstrator.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In the LocalInterfaces and src directory, you will find the following files:</p>
+<ul>
+  <li>CAADlgDemoApplication.h/CAADlgDemoApplication.cpp: The <i>&quot;DialogDemonstrator&quot;</i> application definition. ( a <i>CATInteractiveApplication</i>
+  )</li>
+  <li>CAADlgDemoWindow.h/CAADlgDemoWindow.cpp : The <i>CATDlgDocument</i> definition.</li>
+  <li>CAADlgMoreButtonDlg.h/CAADlgMoreButtonDlg.cpp: The &quot;More Button Demonstrator&quot; dialog box definition.&nbsp;</li>
+  <li>CAADlgFrameReplaceDlg.h/CAADlgFrameReplaceDlg.cpp : The &quot;Frame
+    Replacement Demonstrator&quot; dialog box definition</li>
+  <li>CAADlgMoreRadioDlg.h/CAADlgMoreRadioDlg.cpp : The &quot;More Radio Demonstrator&quot; dialog box definition.&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three main steps to define the three Dialog boxes of the CAADlgTabulation
+use case:</p>
+<ol>
+  <li><a href="#Defining the Class Constructor">Defining
+    the Class Constructor</a></li>
+  <li><a href="#Defining the Build Method">Defining
+    the Build Method&nbsp;</a></li>
+  <li><a href="#Defining the Callback Method">Defining
+    the Callback Method</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Defining the Class Constructor"></a>Defining
+the Class Constructor&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADlgMoreButtonDlg::CAADlgMoreButtonDlg(CATDialog * pParentDlg) :
+  <b>CATDlgDialog</b> (pParentDlg,&quot;CAADlgMoreButtonDlg&quot;, <b>CATDlgWndBtnOKCancel</b> |
+                                                  <b>CATDlgWndAutoResize</b> |
+                                                  <b>CATDlgWndNoResize</b> ),
+  ...
+{
+   ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Each Dialog box is a class deriving from the <i>CATDlgDialog</i> class. <font face="Arial" size="2">The
+arguments of the constructor are as follows:</font></p>
+<ul>
+  <li><code>pParentDlg</code> , the Dialog object which is the parent of the
+    Dialog box.</li>
+  <li><code>CAADlgMoreButtonDlg, </code>the identifier of the Dialog box. This
+    identifier is not used for the resources.</li>
+  <li>The style is the concatenation of three values:
+    <ul>
+      <li><code>CATDlgWndBtnOKCancel:</code> The recommended option to have the
+        OK and Cancel buttons</li>
+      <li><code>CATDlgWndAutoResize:</code> The Dialog box is automatically
+        resized with respect of its content's modifications.</li>
+      <li><code>CATDlgWndNoResize</code><code>:</code> The Dialog Box can not be
+        resized by the end user. It is recommended option with the <code>CATDlgWndAutoResize</code>
+        style</li>
+      <li>The <code>CATDlgGridLayout</code> style has not been used, and <b>must
+        not be used</b>, to benefit of the attachment.</li>
+    </ul>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Defining the Build Method"></a>Defining
+the Build Method&nbsp;</h4>
+<p>The contents of this section depends on the Dialog box.&nbsp;</p>
+<ol>
+  <li><a href="#Build 1">The &quot;<b>More/Less Push Button Demonstrato</b>r&quot; Dialog box</a></li>
+  <li><a href="#Build 2">The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</a></li>
+  <li><p><a href="#Build 3">The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</a></p></li>
+</ol>
+
+<ol>
+  <li><a name="Build 1"></a>The &quot;<b>More/Less Push Button Demonstrato</b>r&quot; Dialog box</li>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgMoreButtonDlg::Build()
+{
+   <a href="#Creating Dialog Object 1">a/ Creating Dialog Objects</a>
+   
+   <a href="#Arranging Dialog Objects 1">b/ Arranging Dialog Objects</a>
+   
+   <a href="#The Callback Definition">c/ Defining Callbacks</a>
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  
+<p><b><a name="Creating Dialog Object 1"></a>Creating Dialog Objects</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   CATDlgFrame * pFrameLeftMore = new CATDlgFrame(this, &quot;<b>FrameLeftMore</b>&quot;, 
+                                                        CATDlgGridLayout );
+                                           
+      CATDlgFrame * pFrameBase = new CATDlgFrame(pFrameLeftMore, &quot;<b>FrameBase</b>&quot;, 
+                                                                 CATDlgGridLayout );
+                                                     
+         ... The FrameBase contents is not detailed
+
+      CATDlgPushButton * pPushButtonMore = new CATDlgPushButton(pFrameLeftMore, 
+                                                &quot;<b>PushButtonMore</b>&quot;);
+      
+      _MoreMsg = CATMsgCatalog::BuildMessage(&quot;CAADlgMoreButtonDlg&quot;,&quot;ButtonMore&quot;,
+                                                    NULL,0,&quot;More&gt;&gt;&quot;);
+      _LessMsg = CATMsgCatalog::BuildMessage(&quot;CAADlgMoreButtonDlg&quot;,&quot;ButtonLess&quot;,
+                                                    NULL,0,&quot;Less&gt;&gt;&quot;);                                       
+      pPushButtonMore-&gt;SetTitle(_MoreMsg);
+
+   _pFrameRightMore = new CATDlgFrame(this, &quot;<b>FrameRightMore</b>&quot;, CATDlgGridLayout );
+   
+      ... The FrameRightMore<b> </b>contents is not detailed
+...</pre>
+    </td>
+  </tr>
+</table>
+  <ul>
+  <li><p>The &quot;Left More Frame&quot; frame is <code>pFrameLeftMore</code> a <i>CATDlgFrame</i>
+    pointer; the argument of the constructor are the following:</p></li>
+  <ul>
+  <li><code>this: </code>The frame is positioned in the Dialog box&nbsp;</li>
+  <li><code>FrameLeftMore </code>is the identifier of frame. It will be useful
+    to set resources [<a href="#References">4</a>]&nbsp;</li>
+    <li><p>The <code> CATDlgGridLayout</code>  style enables to position its contents by a grid layout&nbsp;</p></li>
+  </ul>
+  <li><p>The &quot;Base Options Frame&quot; frame is <code>pFrameBase</code> a <i>CATDlgFrame</i>
+    pointer; the argument of the constructor are the following:</p></li>
+  <ul>
+  <li><code>pFrameLeftMore: </code>The frame is positioned in the &quot;Left More Frame&quot; frame&nbsp;</li>
+  <li><code>FrameBase</code> is the identifier of frame. It will be useful
+    to set resources [<a href="#References">4</a>]&nbsp;</li>
+    <li><p>The <code> CATDlgGridLayout</code>  style enables to position its
+      contents by a grid layout</p></li>
+  </ul>
+  <li>The push button is <code>pPushButtonMore</code> a <i>CATDlgPushButton</i>
+    pointer</li>
+  <p><code>PushButtonMore</code> is the identifier of the push button. Its title
+  is assigned by retrieving the &quot;More&quot; and &quot;Less&quot; NLS
+  strings in the CAADlgMoreButtonDlg.CATNLs file [<a href="#References">4</a>].&nbsp;</p>
+  <li><p>The &quot;Right More Frame&quot; frame is <code> _pFrameRightMore</code> a <i>CATDlgFrame</i>
+    pointer; the argument of the constructor are the following:</p></li>
+  <ul>
+  <li><code>this: </code>The frame is positioned in the Dialog box&nbsp;</li>
+  <li><code>FrameRightMore </code>is the identifier of frame. It will be useful
+    to set resources [<a href="#References">4</a>]&nbsp;</li>
+    <li><p>The <code> CATDlgGridLayout </code>style enables to position its
+      contents by a grid layout&nbsp;</p></li>
+  </ul>
+  </ul>
+  <p><a name="Arranging Dialog Objects 1"></a><b>Arranging Dialog Objects</b></p>
+<p align="left">For the &quot;More/Less&quot; Dialog box, the
+layout is the following:</p>
+<table border="0">
+    <tr>
+    <td><img border="0" src="images/CAADlgTabulationMoreLessTech3.jpg" width="376" height="342"></td>
+  </tr>
+</table>
+<p>Inside the &quot;Left More Frame&quot; there are always a frame entitled
+&quot;Base Options Frame&quot; located in (0,0) and a push button located in
+(1,0). In the &quot;Base Options Frame&quot; frame you set all the options
+always available whereas in the &quot;Right More Frame&quot; you set only the
+&quot;more&quot; options.&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>SetVerticalAttachment</b>(<b>0</b>, CATDlgTopOrLeft, pFrameLeftMore,NULL);
+   pFrameBase -&gt; <b>SetGridConstraints</b>(<b>0</b>,<b> 0</b>, 1, 1, CATGRID_4SIDES);
+   pPushButtonMore -&gt; <b>SetGridConstraints</b>(<b>1</b>, <b>0</b>, 1, 1, CATGRID_RIGHT);
+   _pFrameRightMore-&gt;<b>SetVisibility</b>(CATDlgHide);
+...
+</pre>
+    </td>
+  </tr>
+</table>
+  <ul>
+  <li><p>The <code>pFrameLeftMore</code>  frame is always attached to the first
+    (0) tabulation of the Dialog box. It is done with the <code>SetVerticalAttachment</code>
+    method:&nbsp;</p></li>
+  <ul>
+  <li><code>0</code>: The index value. Note that the value of the index is not important. You must just
+  respect an increasing order from left to right.</li>
+  <li><code>CATDlgTopOrLeft:</code> the frame is attached to the left side.See <a href="#Fig 4.a">Fig.
+    4a</a></li>
+  <li><code>pFrameLeftMore</code>: The frame's pointer attached to the tabulation</li>
+  <li><p><code>NULL</code>: To end the list of attachments. ( It is a method with no constant
+    argument)</p></li>
+  </ul>
+  <li> <code>pFrameBase</code> is located in (0,0) in the &quot;Left More Frame&quot; frame.</li>
+  <li><code>pPushButtonMore</code> is located in (1,0) in the &quot;Left More Frame&quot; frame and is
+  right justified.</li>
+  <li><code>_pFrameRightMore</code> is not attached and is not visible.&nbsp;</li>
+  </ul>
+  <p><a name="The Callback Definition"><b>The Callback Definition</b></a></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>AddAnalyseNotificationCB</b>  (pPushButtonMore, 
+                              pPushButtonMore-&gt;<b>GetPushBActivateNotification</b>(),
+     (CATCommandMethod)&amp;CAADlgMoreButtonDlg::<a href="#CB 1">OnPushButtonMorePushBActivateNotification</a>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                   NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>To be advised that the end user has clicked on the More button you set a
+  callback thanks to the <code>AddAnalyseNotificationCB</code> method:</p>
+  <ul>
+  <li><code>pPushButtonMore </code>is the <i>CATDlgPushButton</i> class
+  pointer on the More Button. </li>
+  <li> <code>GetPushBActivateNotification</code>
+    is method returning the notification class when a push button is pushed. </li>
+  <li><p><code>OnPushButtonMorePushBActivateNotification</code>
+    is the method explained in the &quot;<a href="#Defining the Callback Method">Defining
+  the Callback Methods</a>&quot; section.&nbsp;</p></li>
+  </ul>
+  <li><a name="Build 2"></a>The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgMoreRadioDlg::Build()
+{
+  <a href="#Creating Dialog Object 2">a/ Creating Dialog Objects</a>
+
+  <a href="#Arranging Dialog Object 2">b/ Arranging Dialog Objects</a>
+  
+  <a href="#The Callbacks Definition 2">c/ Defining Callbacks</a> 
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Creating Dialog Object 2"></a><b>Creating Dialog Objects</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+  CATDlgFrame * pFrameMain = new CATDlgFrame(this, &quot;<b>FrameMain</b>&quot;, CATDlgGridLayout );
+  
+     ... FrameMain contents not explained
+
+  _pFrameDetailA = new CATDlgFrame(this, &quot;<b>FrameDetailA</b>&quot;, CATDlgGridLayout);
+  
+     ... FrameDetailA contents not explained
+     
+  _pFrameDetailB = new CATDlgFrame(this, &quot;<b>FrameDetailB</b>&quot;, CATDlgGridLayout);
+ 
+     ... FrameDetailB contents not explained
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The three frames, <code>pFrameMain, _pFrameDetailA </code>
+ and <code> _pFrameDetailB</code>
+  are created in the same way:</p>
+  <ul>
+  <li>&nbsp; <code>this: </code>the frame is positioned in the Dialog box</li>
+  <li><code>&quot;FrameMain&quot;, &quot;FrameDetailA&quot;</code>
+ or <code> &quot;FrameDetailB&quot;</code>
+    are the frame's identifiers. It will be useful
+    to set resources [<a href="#References">4</a>]&nbsp;</li>
+  <li>The <code> CATDlgGridLayout</code>  style enables to position their contents by a grid layout&nbsp;</li>
+  </ul>
+  <p><a name="Arranging Dialog Object 2"></a><b>Arranging Dialog Objects</b>
+  -&nbsp; <a href="#Fig. 5a">Fig. 5a</a></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>SetVerticalAttachment</b>(<b>0</b>, CATDlgTopOrLeft,pFrameMain,NULL);
+  _pFrameDetailB-&gt;SetVisibility(CATDlgHide); 
+  _pFrameDetailA-&gt;SetVisibility(CATDlgHide);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <ul>
+  <li><p>The <code> &quot;FrameMain&quot;</code>  frame, pointed by <code>pFrameMain</code>, is visible and attached to the first
+    (0) vertical tabulation. It is done thanks to the&nbsp;<code>
+    SetVerticalAttachment</code>  method:</p></li>
+    <ul>
+  <li><code>0</code>: The index value. Note that the value of the index is not important. You must just
+  respect an increasing order from left to right.</li>
+  <li><code>CATDlgTopOrLeft:</code> the frame is attached to the left side.</li>
+  <li><code>pFrameMain</code>: The frame's pointer attached to the tabulation</li>
+  <li><p><code>NULL</code>: To end the list of attachments. ( It is a method with no constant
+    argument)</p></li>
+    </ul>
+  <li><p>The <code> &quot;FrameDetailA&quot;</code>
+ and <code> &quot;FrameDetailB&quot;</code>
+    frames, pointed by <code>_pFrameDetailA</code> and <code>_pFrameDetailB</code>
+    respectively, are hidden and not attached.&nbsp;</p></li>
+  </ul>
+  <p><a name="The Callbacks Definition 2"><b>The Callbacks Definition</b></a></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   AddAnalyseNotificationCB (<b>pRadioButtonND</b>, 
+                               pRadioButtonND-&gt;<b>GetRadBModifyNotification</b>(),
+     (CATCommandMethod)&amp;CAADlgMoreRadioDlg::OnRadioButtonNDRadBModifyNotification,
+                               NULL);
+   AddAnalyseNotificationCB (<b>pRadioButtonDB</b>, 
+                               pRadioButtonDB-&gt;<b>GetRadBModifyNotification</b>(),
+     (CATCommandMethod)&amp;CAADlgMoreRadioDlg::<a href="#CB 2">OnRadioButtonDBRadBModifyNotification</a>,
+                               NULL);
+
+   AddAnalyseNotificationCB (<b>pRadioButtonDA</b>, 
+                               pRadioButtonDA-&gt;<b>GetRadBModifyNotification</b>(),
+     (CATCommandMethod)&amp;CAADlgMoreRadioDlg::<a href="#CB 2">OnRadioButtonDARadBModifyNotification</a>,
+                               NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>To be advised that the end user has clicked on a radio button you set callbacks thanks to the <code>AddAnalyseNotificationCB</code> method:</p>
+  <ul>
+  <li> <code>pRadioButtonND </code>is the <i>CATDlgRadioButton</i> class
+  pointer on the first radio button. </li>
+  <li> <code>GetRadBModifyNotification</code><b>
+  </b>
+    is the method returning the notification class when the radio button state changes:
+  when the end user clicks on the button and when it chooses another radio
+  button. </li>
+  <li><p><b><code>OnRadioButtonNDRadBModifyNotification</code> </b>
+    is the method explained in the &quot;<a href="#Defining the Callback Method">Defining
+  the Callback Methods</a>&quot; section.&nbsp;</p></li>
+  </ul>
+
+  <p>Same thing for the two other radio buttons.</p>
+
+  <li><a name="Build 3"></a>The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgFrameReplaceDlg::Build()
+{
+   <a href="#Creating Dialog Objects 3">a/ Creating Dialog objects</a> 
+
+   <a href="#Arranging Dialog Objects 3">b/ Arranging the Dialog Objects</a>
+   
+   <a href="#Defining Callback 3">c/ Defining Callback</a> 
+}</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Creating Dialog Objects 3"></a><b>Creating Dialog Objects</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   CATDlgFrame * pFrameCombo = new CATDlgFrame(this, &quot;<b>FrameCombo</b>&quot;,
+                                                     CATDlgGridLayout );                                        
+      ... FrameCombo contents not explained
+      
+   CATDlgFrame * pFrameCoord = new CATDlgFrame(this, &quot;<b>FrameCoord</b>&quot;, 
+                                                     CATDlgGridLayout );                                          
+      ... FrameCoord contents not explained
+
+   CATDlgFrame * pFrameCircleCenter = new CATDlgFrame(this, &quot;<b>FrameCircleCenter</b>&quot;, 
+                                                            CATDlgGridLayout );                                            
+   _pListFrame[CircleCenter] = pFrameCircleCenter ;
+   
+      ... FrameCircleCenter contents not explained
+
+   CATDlgFrame * pFrameBetween = new CATDlgFrame(this, &quot;<b>FrameBetween</b>&quot;, 
+                                                       CATDlgGridLayout );                                     
+   _pListFrame[Between] = pFrameBetween ;
+   
+      ... FrameBetween contents not explained
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The four <code>pFrameCombo, pFrameCoord, pFrameCircleCenter</code> and
+  <code>pFrameBetween</code> frames are created on the same way:</p>
+  <ul>
+  <li><code>this: </code>The frame is positioned in the Dialog box</li>
+  <li><code>&quot;FrameCombo&quot;, &quot;FrameCoord&quot;, &quot;FrameCircleCenter&quot; or &quot;FrameBetween&quot;</code>
+    are the frame's identifiers. It will be useful
+    to set resources [<a href="#References">4</a>]&nbsp;</li>
+  <li>The <code> CATDlgGridLayout</code>  style enables to position their contents by a grid layout</li>
+  </ul>
+  <p><code>_pListFrame</code> is an array of <i>CATDlgFrame</i>  instances declared as data
+  member of the <i>CAADlgFrameReplaceDlg</i> class. It keeps the list of frames
+  to switch. See its usage in the &quot;<a href="#CB 3">Defining
+the Callback Method</a>&quot; section&nbsp;</p>
+  <p><a name="Arranging Dialog Objects 3"></a><b>Arranging Dialog Objects</b>  -
+  <a href="#Fig. 6">Fig. 6</a></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+   <b>SetHorizontalAttachment</b>(0,CATDlgTopOrLeft,pFrameCombo,NULL);
+   _CurrentSelection = 0 ;
+   ... 
+   pFrameCoord-&gt;SetVisibility(CATDlgHide);
+   pFrameCircleCenter-&gt;SetVisibility(CATDlgHide);
+   pFrameBetween-&gt;SetVisibility(CATDlgHide);
+   
+   <b>SetHorizontalAttachment</b>(<b>5</b>,CATDlgTopOrLeft,_pListFrame[_CurrentSelection],NULL);
+   _pListFrame[_CurrentSelection]-&gt;SetVisibility(<b>CATDlgShow</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <ul>
+  <li><code><p>The &quot;FrameCombo&quot;</code>  frame, pointed by <code>pFrameCombo</code>, is visible and attached to the first
+    (0) horizontal tabulation thanks to the <code>SetHorizontalAttachment</code>
+    method:<code>&nbsp;</code></p></li>
+    <ul>
+  <li><code>0</code>: The index value.&nbsp;</li>
+  <li><code>CATDlgTopOrLeft:</code> the frame is attached to the top side.</li>
+  <li>pFrameCombo: The frame's pointer attached to the tabulation</li>
+  <li><p><code>NULL</code>: To end the list of attachments.&nbsp;</p></li>
+    </ul>
+  <li><code>_pListFrame</code> is a data member of the <i>CAADlgFrameReplaceDlg</i>
+  class which keeps the list of frames to switch. See the <a href="#Creating Dialog Object 1">previous</a>
+    section&nbsp;</li>
+  <li> <code>_CurrentSelection</code>
+  is also a data member to keep the current attached frame on the second
+  horizontal tabulation.&nbsp;</li>
+  <li> The three frames are set invisible.&nbsp;&nbsp;</li>
+  <li><p>The current frame (one among the three possible) is set visible and attached to the second
+    (5) horizontal tabulation thanks to the <code>SetHorizontalAttachment</code>
+    method:</p></li>
+    <ul>
+      <li><code>5</code>: The index value.&nbsp;</li>
+      <li><code>CATDlgTopOrLeft:</code> the frame is attached to the top side.</li>
+      <li><code>pFrameCombo</code>: The frame's pointer attached to the tabulation</li>
+      <li>
+        <p><code>NULL</code>: To end the list of attachments.&nbsp;&nbsp;</p>
+          </ul>
+  </ul>
+
+  <p><a name="Defining Callback 3"><b>Defining Callback</b></a></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   AddAnalyseNotificationCB (<b>_pComboPointType</b>, 
+                 _pComboPointType-&gt;<b>GetComboSelectNotification</b>(),
+          (CATCommandMethod)&amp;CAADlgFrameReplaceDlg::<b><a href="#CB 3">OnComboSelectNotification</a></b>,
+                               NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>To be advised that the end user has select a new item in the combo list, you set
+  a callback thanks to the <code>AddAnalyseNotificationCB</code> method:</p>
+  <ul>
+  <li> <code>_pComboPointType</code><b> </b>is the <i>CATDlgCombo</i> class
+  pointer.&nbsp; It is a pointer to an object located in the &quot;FrameCombo&quot;
+  frame but not explained here.&nbsp; </li>
+  <li> <code>GetComboSelectNotification</code><b> </b>
+    is the method returning the notification class when
+  a selection in the combo occurs. </li>
+  <li><p><code>OnComboSelectNotification</code><b>
+  </b>
+    is the method explained in the &quot;<a href="#Defining the Callback Method">Defining
+  the Callback Methods</a>&quot; section.&nbsp;</p></li>
+  </ul>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Defining the Callback Method"></a>Defining
+the Callback Method&nbsp;</h4>
+<p>In this section, we describe the methods which are called when the frame
+layout must be changed.&nbsp;&nbsp;</p>
+<ol>
+  <li><a href="#CB 1">The &quot;<b>More/Less Push Button Demonstrato</b>r&quot; Dialog box</a></li>
+  <li><a href="#CB 2">The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</a></li>
+  <li><p><a href="#CB 3">The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</a></p></li>
+</ol>
+<ul>
+</ul>
+<ol>
+  <li><a name="CB 1"></a>The &quot;<b>More/Less Push Button Demonstrator</b>&quot; Dialog box</li>
+  <p>The <code>OnPushButtonMorePushBActivateNotification</code> method is called when the end user clicks on the
+  More/Less push 
+  button.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgMoreButtonDlg::OnPushButtonMorePushBActivateNotification(CATCommand* cmd, 
+                                   CATNotification* evt, CATCommandClientData data)
+{
+   CATDlgPushButton * pButton = (CATDlgPushButton *) cmd ;
+   if ( (NULL != pButton ) &amp;&amp; (NULL !=_pFrameRightMore) )
+   {
+      if( TRUE == _IsMoreWindowOpen)
+      {
+         <b>ResetAttachment</b>(_pFrameRightMore);         
+         _pFrameRightMore-&gt;SetVisibility(<b>CATDlgHide</b>);         
+
+         pButton-&gt;<b>SetTitle</b> (_MoreMsg);
+
+         _IsMoreWindowOpen= FALSE;
+      }else
+      {
+         <b>SetVerticalAttachment(10,</b> CATDlgTopOrLeft, _pFrameRightMore, NULL);
+         _pFrameRightMore-&gt;SetVisibility(<b>CATDlgShow</b>);         
+
+         pButton-&gt;<b>SetTitle</b> (_LessMsg);
+
+         _IsMoreWindowOpen = TRUE;
+      }
+   }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>_IsMoreWindowOpen</code> is a data member of the <i>CAADlgMoreButtonDlg</i>
+  class. It is a <i>CATBoolean</i> value set TRUE when the right frame is opened
+  and FALSE otherwise. The value is initialized to FALSE in the class constructor.</p>
+  <ul>
+  <li>To hide the right frame ( <code>_IsMoreWindowOpen</code> = TRUE)</li>
+  <p><code>_pFrameRightMore</code> the right frame is detached from its tabulation and
+  hidden. The title of the push button becomes &quot;More&quot;.</p>
+  <li>To show the right frame ( <code>_IsMoreWindowOpen</code> = FALSE)</li>
+  <p><code>_pFrameRightMore </code>the right frame is attached to the second vertical
+  tabulation and shown. See <a href="#Fig 4.b">Fig. 4b</a>. The title of the
+  push button becomes &quot;Less&quot;.</p>
+
+  </ul>
+  <li><a name="CB 2"></a>The &quot;<b>More &amp; Radio Button Demonstrator</b>&quot;&nbsp;Dialog box</li>
+  <p>The <code>OnRadioButtonDARadBModifyNotification</code> method is called
+  when the end user selects or deselects the &quot;With more frame A&quot; radio
+  button.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgMoreRadioDlg::OnRadioButtonDARadBModifyNotification(CATCommand* cmd, 
+                                CATNotification* evt, CATCommandClientData data)
+{
+  CATDlgRadioButton * pRadioButton = (CATDlgRadioButton *) cmd ;
+  if ( (NULL != _pFrameDetailA) &amp;&amp; ( NULL != pRadioButton) )
+  {
+     if (pRadioButton-&gt;GetState() == <b>CATDlgCheck</b>) 
+     {
+        S<b>etVerticalAttachment(10,</b> CATDlgTopOrLeft, _pFrameDetailA, NULL);
+        _pFrameDetailA-&gt;SetVisibility(<b>CATDlgShow</b>);         
+     } 
+     else 
+     {
+        <b>ResetAttachment</b>(_pFrameDetailA);         
+       _pFrameDetailA-&gt;SetVisibility(CATDlgHide);         
+     }
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>When the state of the button is:</p>
+   <ul>
+   <li><code>CATDlgCheck: </code>The frame is attached to the second (10) vertical tabulation and the frame
+   is shown- <a href="#Fig. 5b">See Fig 5b&nbsp;</a></li>
+  <li>Otherwise <code>(CATDlgUncheck): </code>The current frame is detached and hidden.</li>
+
+  </ul>
+
+  <p>The <code>OnRadioButtonDBRadBModifyNotification</code> method is called
+  when the end user selects or deselects the &quot;With more frame B&quot; radio
+  button. The contents of this method is similar to the previous one.&nbsp;</p>
+
+  <p>The <code>OnRadioButtonNA</code><code>RadBModifyNotification</code> method
+  is called when the end user selects or deselects the &quot;Without frame&quot;
+  radio button. The contents of this method is empty once there is no frame to
+  attach.&nbsp;</p>
+
+  <li><a name="CB 3"></a>The &quot;<b>Frame Replacement Demonstrator</b>&quot; Dialog box</li>
+  <p>The&nbsp;<code>OnComboSelectNotification</code> method is called when the
+  end user selects a new element in the combo list.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgFrameReplaceDlg::OnComboSelectNotification(CATCommand* cmd, CATNotification* evt, CATCommandClientData data)
+{
+   if ( NULL != _pComboPointType )
+   {
+      <b>ResetAttachment</b>(_pListFrame[_CurrentSelection]);
+      _pListFrame[_CurrentSelection]-&gt;SetVisibility(<b>CATDlgHide</b>);
+      
+      int NewCurrentSelection = _pComboPointType-&gt;GetSelect() ;
+      <b>SetHorizontalAttachment</b>(<b>5</b>, CATDlgTopOrLeft
+                                     , _pListFrame[NewCurrentSelection], NULL);
+      _pListFrame[NewCurrentSelection]-&gt;SetVisibility(<b>CATDlgShow</b>);
+      
+      _CurrentSelection = NewCurrentSelection ;
+   }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The code is the following:&nbsp;See <a href="#Fig. 6">Fig. 6</a></p>
+<ol>
+  <li>Retrieving the frame to detach :&nbsp;The <code> _CurrentSelection</code> frame in the <code> _pListFrame</code>
+    table.&nbsp;See the <a href="#Creating Dialog Objects 3">Build</a> method</li>
+  <li>Detaching the old frame (<code>_CurrentSelection</code>) from its
+    tabulation and hidding it&nbsp;</li>
+  <li>Retrieving the frame to attach: The current value in the combo list, <code>NewCurrentSelection</code>&nbsp;</li>
+  <li>Attaching the <code>NewCurrentSelection </code>frame to the
+    fit tabulation and showing it</li>
+</ol>
+  <p><code>NewCurrentSelection </code>becomes the new current index value kept
+  in the <code>_CurrentSelection </code>data member.&nbsp;</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the tabulation layout to create dynamic
+dialog boxes, such as a more and less dialog box.&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgTabLayout.htm">Arranging
+      Dialog Objects Using Tabulations</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgGridLayout.htm">Arranging
+      Dialog Objects Using Grid</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgResources.htm">Assigning
+      Resources to a Dialog Box</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

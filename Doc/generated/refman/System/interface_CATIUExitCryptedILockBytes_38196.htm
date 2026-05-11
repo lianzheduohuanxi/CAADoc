@@ -1,0 +1,564 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Interface CATIUExitCryptedILockBytes</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATIUExitCryptedILockBytes"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System Interface CATIUExitCryptedILockBytes</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIUExitCryptedILockBytes_38196','CATIUExitCryptedILockBytes','0');</script>
+<p><b>Usage: you can freely reimplement this interface.</b></p>
+<hr>
+<p>
+ interface <b>CATIUExitCryptedILockBytes</b>
+</p>
+<p>
+<b><i> Interface to enable customer specific actions on files.</i></b><br>
+
+ <b>Role</b>: This interface is a user exit, that allows a customer in 
+ particular to audit files usage, manage data integrity or data 
+ confidentiality for all files manipulated by the V5-code. 
+ <br>You should implement it on the <tt>CATUExitCryptedILockBytes</tt> 
+ component by creating a data extension.
+ This interface inherits from <script type="text/javascript"> activateLinkAnchor('CATILockBytes','','CATILockBytes') </script>. When implementing the  inheritated methods note that :
+ <ol>
+ <li>All the given offsets and lengths are those of the document before taking
+     any action. This is a key point in order to get a correct
+     behaviour of the 
+<script type="text/javascript"> activateLinkAnchor('','ReadAt','ReadAt') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','WriteAt','WriteAt') </script> methods with the V5     composite documents.</li><p>
+
+ <li>The size returned by the 
+<script type="text/javascript"> activateLinkAnchor('','Stat','Stat') </script> method must reflect the size of the     document before taking any action. This means if your 
+     implementation is bufferized, that you must take into account the 
+     current physical size of the array and the size of the unflushed memory
+     buffers. This size is used to determine where the next write can occur.
+     </li><p>
+
+ <li>In addition to the already defined in 
+<script type="text/javascript"> activateLinkAnchor('CATILockBytes','','CATILockBytes') </script> error codes      the reading and writing methods have to returned STG_E_DOCFILECORRUPT
+     when the action has failed.</li><p>
+
+ <li>From the methods that are not inheritated from 
+<script type="text/javascript"> activateLinkAnchor('CATILockBytes','','CATILockBytes') </script> only     
+<script type="text/javascript"> activateLinkAnchor('','Open','Open') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','Close','Close') </script> will be used for manipulating V5 documents. </li><p>
+
+ <li>As the sharing mode of the array is specified in the 
+<script type="text/javascript"> activateLinkAnchor('','Open','Open') </script>, it     is not necessary to implement the 
+<script type="text/javascript"> activateLinkAnchor('','LockRegion','LockRegion') </script> and      
+<script type="text/javascript"> activateLinkAnchor('','UnlockRegion','UnlockRegion') </script>.</li><p> 
+
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Close()"><b>Close</b></a>()
+<dd>  Closes the CATILockBytes.
+ <dt> o 
+    <a href="#Open(CATUnicodeString*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)"><b>Open</b></a>(CATUnicodeString*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)
+<dd>  Defines the way to open the CATILockbytes
+ <br><b>Role</b>:Defines the way to open the CATILockBytes.
+ <dt> o 
+    <a href="#OpenW(CATUC2Bytes*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)"><b>OpenW</b></a>(CATUC2Bytes*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)
+<dd>  Defines the way to open the CATILockbytes
+ <br><b>Role</b>:Defines the way to open the CATILockBytes.
+ <dt> o 
+    <a href="#Read(void*,ULONG,ULONG*)"><b>Read</b></a>(void*,ULONG,ULONG*)
+<dd>  Reads and retrieves a block of data.
+ <dt> o 
+    <a href="#ReadLine(char*,ULONG,int&amp;)"><b>ReadLine</b></a>(char*,ULONG,int&amp;)
+<dd>  Reads in the file and returns a line.
+ <dt> o 
+    <a href="#ReadLineW(CATUnicodeString*,ULONG,int&amp;)"><b>ReadLineW</b></a>(CATUnicodeString*,ULONG,int&amp;)
+<dd>  Reads in the file and returns a line of unicode characters.
+ <dt> o 
+    <a href="#ReadLineWchar(CATUC2Bytes*,ULONG,int&amp;)"><b>ReadLineWchar</b></a>(CATUC2Bytes*,ULONG,int&amp;)
+<dd>  Reads in the file and returns a line of unicode characters.
+ <dt> o 
+    <a href="#Write(void*,ULONG,ULONG*)"><b>Write</b></a>(void*,ULONG,ULONG*)
+<dd>  Applies action and writes a block of data.
+ <dt> o 
+    <a href="#WriteLine(char*)"><b>WriteLine</b></a>(char*)
+<dd>  Applies action and writes a line for text files.
+ <dt> o 
+    <a href="#WriteLineW(CATUnicodeString*)"><b>WriteLineW</b></a>(CATUnicodeString*)
+<dd>  Applies action and writes a line of unicode characters.
+ <dt> o 
+    <a href="#WriteLineWchar(CATUC2Bytes*)"><b>WriteLineWchar</b></a>(CATUC2Bytes*)
+<dd>  Applies action and writes a line of unicode characters.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Close"></a><a name="Close()"></a> <dt> o <b>Close</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Close</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Closes the CATILockBytes.
+ <br><b>Role</b>: Closes the CATILockBytes.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>S_OK :</tt>   on Success
+</dl>
+</dl>
+<a name="Open"></a><a name="Open(CATUnicodeString*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)"></a> <dt> o <b>Open</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Open</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('DWORD','DWORD')</script> <td><tt>iMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysOpenMode','CATSysOpenMode')</script> <td><tt>iOpenMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysSharing','CATSysSharing')</script> <td><tt>iSharingMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysCreateMode','CATSysCreateMode')</script> <td><tt>iOpenFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysCloseMode','CATSysCloseMode')</script> <td><tt>iCloseFlag</tt><td><tt>= CATSys_Close</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the way to open the CATILockbytes
+ <br><b>Role</b>:Defines the way to open the CATILockBytes.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>      The global opening mode used by the V5 documents. This mode is not to
+      be analysed, but should be stored to be returned in the grfMode field
+      of a STATSTG structure upon a call to the Stat method.
+      For non V5-documents it will be 0 and never used.
+ </dd>
+    <dt><tt> iOpenMode</tt>
+   <dd>       Opening mode 
+ </dd>
+    <dt><tt> iSharingMode</tt>
+   <dd>      Sharing mode
+ </dd>
+    <dt><tt>  iOpenFlag</tt>
+   <dd>        flag for specifying the open processing 
+ </dd>
+    <dt><tt>  iSpecialFlag</tt>
+   <dd>       flag for specifying special behavior.
+	<b>Legal values</b>:
+	<br><tt>1 :</tt> the file is deleted on close.
+	 <br><tt>0 :</tt> Nothing
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_INVALIDNAME :</tt> invalid name for the document.
+   <br><tt> STG_E_ACCESSDENIED:</tt> access to the document not granted.
+   <br><tt> STG_E_LOCKVIOLATION :</tt> document locked by another process.
+   <br><tt> STG_E_NOMOREFILES :</tt> too many opened files
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrect.
+   <br><tt> STG_E_DOCFILECORRUPT :</tt> document can not be read.
+   <br><tt> STG_E_FILENOTFOUND :</tt> document can not be found.
+   <br><tt> STG_E_PATHNOTFOUND :</tt> The path of the document could 
+                                      not be found.
+   <br><tt> STG_E_INSUFFICIENTMEMORY :</tt> no more memory to make the open.
+   <br><tt>STG_E_DISKISWRITEPROTECTED:</tt> open in write impossible on a 
+					      write-protected disk.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="OpenW"></a><a name="OpenW(CATUC2Bytes*,DWORD,CATSysOpenMode,CATSysSharing,CATSysCreateMode,CATSysCloseMode)"></a> <dt> o <b>OpenW</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>OpenW</b>(<td> const <script type="text/javascript"> activateLink('CATUC2Bytes','CATUC2Bytes*')</script> <td><tt>iPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('DWORD','DWORD')</script> <td><tt>iMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysOpenMode','CATSysOpenMode')</script> <td><tt>iOpenMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysSharing','CATSysSharing')</script> <td><tt>iSharingMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysCreateMode','CATSysCreateMode')</script> <td><tt>iOpenFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSysCloseMode','CATSysCloseMode')</script> <td><tt>iCloseFlag</tt><td><tt>= CATSys_Close</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the way to open the CATILockbytes
+ <br><b>Role</b>:Defines the way to open the CATILockBytes. This method must
+ be thread safe. The other open method with 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script> argument can not be used in a threading context.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>      Pointer to the wide char string null terminated defining the path.
+ </dd>
+    <dt><tt> iMode</tt>
+   <dd>      The global opening mode used by the V5 documents. This mode is not to
+      be analysed, but should be stored to be returned in the grfMode field
+      of a STATSTG structure upon a call to the Stat method.
+      For non V5-documents it will be 0 and never used.
+ </dd>
+    <dt><tt> iOpenMode</tt>
+   <dd>       Opening mode 
+ </dd>
+    <dt><tt> iSharingMode</tt>
+   <dd>      Sharing mode
+ </dd>
+    <dt><tt>  iOpenFlag</tt>
+   <dd>        flag for specifying the open processing 
+ </dd>
+    <dt><tt>  iSpecialFlag</tt>
+   <dd>       flag for specifying special behavior.
+	<b>Legal values</b>:
+	<br><tt>1 :</tt> the file is deleted on close.
+	 <br><tt>0 :</tt> Nothing
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_INVALIDNAME :</tt> invalid name for the document.
+   <br><tt> STG_E_ACCESSDENIED:</tt> access to the document not granted.
+   <br><tt> STG_E_LOCKVIOLATION :</tt> document locked by another process.
+   <br><tt> STG_E_NOMOREFILES :</tt> too many opened files
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrect.
+   <br><tt> STG_E_DOCFILECORRUPT :</tt> document can not be read.
+   <br><tt> STG_E_FILENOTFOUND :</tt> document can not be found.
+   <br><tt> STG_E_PATHNOTFOUND :</tt> The path of the document could 
+                                      not be found.
+   <br><tt> STG_E_INSUFFICIENTMEMORY :</tt> no more memory to make the open.
+   <br><tt>STG_E_DISKISWRITEPROTECTED:</tt> open in write impossible on a 
+					      write-protected disk.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="Read"></a><a name="Read(void*,ULONG,ULONG*)"></a> <dt> o <b>Read</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Read</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iBuff</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>iLengthToRead</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG*')</script> <td><tt>oLengthRead</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads and retrieves a block of data.
+ <br><b>Role</b>: Reads a block of data in a  ILockBytes from the 
+ current offset in the file and returns the intial data before action.
+ This method will be only used for non V5 documents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  iBuff</tt>
+   <dd> [in]  Buffer where the modified data where will be stored.
+ </dd>
+    <dt><tt> iLengthToRead</tt>
+   <dd> [i]   the size of of the requested data.
+ </dd>
+    <dt><tt> oLengthRead</tt>
+   <dd> [out]   the actual length of read data.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_READFAULT :</tt> problem while reading.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DOCFILECORRUPT  :</tt> document can not be retrieved.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="ReadLine"></a><a name="ReadLine(char*,ULONG,int&amp;)"></a> <dt> o <b>ReadLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ReadLine</b>(<td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>ioLine</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>iNb</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oEof</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads in the file and returns a line.
+ <br><b>Role</b>: Reads in file and return data as before applying the action
+ up to the number of bytes specified by iNb parameter minus 1, or until a 
+ new-line character and transfers that character to the ioLine parameter, or 
+ until it encounters an end-of-file condition. The method then build a 
+ CATUnicodeString.
+ This method will never be called for V5 documents. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  ioLine</tt>
+   <dd> [inout]  line Buffer of at least iNb size.
+ </dd>
+    <dt><tt> iNb</tt>
+   <dd> [i]   max number of character to read.
+ </dd>
+    <dt><tt> oEof[o]</tt>
+   <dd>   to indicate if the end of the file as been reached.
+   <br><tt> 1 :</tt> End of file has been reached. In this case the return
+   is S_OK.
+   <br><tt> 0 :</tt> End of file has not been reached
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <br><tt> S_OK :</tt>on Success .
+   <br><tt> STG_E_READFAULT :</tt> problem while reading.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DOCFILECORRUPT  :</tt> document can not be retrieved.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="ReadLineW"></a><a name="ReadLineW(CATUnicodeString*,ULONG,int&amp;)"></a> <dt> o <b>ReadLineW</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ReadLineW</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>ioLine</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>iNb</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oEof</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads in the file and returns a line of unicode characters.
+ <br><b>Role</b>: Reads in file and return data as before applying the action
+ up to the number of bytes specified by iNb parameter minus 1, or until a 
+ new-line character and transfers that character to the ioLine parameter, or 
+ until it encounters an end-of-file condition. The method then build a 
+ CATUnicodeString.
+ This method will never be called for V5 documents. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  ioLine</tt>
+   <dd> [inout]  line Buffer of at least iNb size.
+ </dd>
+    <dt><tt> iNb</tt>
+   <dd> [i]   max number of character to read.
+ </dd>
+    <dt><tt> oEof[o]</tt>
+   <dd>   to indicate if the end of the file as been reached.
+   <br><tt> 1 :</tt> End of file has been reached. In this case the return
+   is S_OK.
+   <br><tt> 0 :</tt> End of file has not been reached
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <br><tt> S_OK :</tt>on Success .
+   <br><tt> STG_E_READFAULT :</tt> problem while reading.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> incorrect arguments.
+   <br><tt> STG_E_DOCFILECORRUPT  :</tt> document can not be retrieved.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="ReadLineWchar"></a><a name="ReadLineWchar(CATUC2Bytes*,ULONG,int&amp;)"></a> <dt> o <b>ReadLineWchar</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ReadLineWchar</b>(<td><script type="text/javascript"> activateLink('CATUC2Bytes','CATUC2Bytes*')</script> <td><tt>ioLine</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>iNb</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oEof</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads in the file and returns a line of unicode characters.
+ <br><b>Role</b>: Reads in the file and return data as before applying the 
+ action up to the number of bytes specified by iNb parameter minus 1, or until
+ a new-line character and transfers that character to the ioLine parameter, or
+ until it encounters an end-of-file condition. 
+ This method will never be called for V5 documents. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  ioLine</tt>
+   <dd> [inout]  line Buffer of at least iNb size.
+ </dd>
+    <dt><tt> iNb</tt>
+   <dd> [i]   max number of character to read.
+ </dd>
+    <dt><tt> oEof[o]</tt>
+   <dd>   to indicate if the end of the file as been reached.
+   <br><tt> 1 :</tt> End of file has been reached. In this case the return
+   is S_OK.
+   <br><tt> 0 :</tt> End of file has not been reached
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <br><tt> S_OK :</tt>on Success .
+   <br><tt> STG_E_READFAULT :</tt> problem while reading.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> incorrect arguments.
+   <br><tt> STG_E_DOCFILECORRUPT  :</tt> document can not be retrieved.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="Write"></a><a name="Write(void*,ULONG,ULONG*)"></a> <dt> o <b>Write</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Write</b>(<td> const <script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iDataSource</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>iLengthToWrite</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('ULONG','ULONG*')</script> <td><tt>LengthWritten</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Applies action and writes a block of data.
+ <br><b>Role</b>: Writes a block of data at the current offset, after applying
+ the action. This method  will be only used for non V5 documents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  iDataSource</tt>
+   <dd> [in]  Buffer of not initial data to write.
+ </dd>
+    <dt><tt> iLengthToWrite</tt>
+   <dd> [in]   the size of of the data to write.
+ </dd>
+    <dt><tt> oLengthWriten</tt>
+   <dd> [out]   the actual length of written data. Should be equal to iLengthToWrite if 
+   no problem has occurred.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_WRITEFAULT :</tt> problem while writing.
+   <br><tt> STG_E_MEDIUMFULL :</tt> disk full error.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DISKISWRITEPROTECTED :</tt> disk write protected.
+   <br><tt> STG_E_INVALIDFUNCTION:</tt> unable to apply action on data.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="WriteLine"></a><a name="WriteLine(char*)"></a> <dt> o <b>WriteLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>WriteLine</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iBuff</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Applies action and writes a line for text files.
+ <br><b>Role</b>: Applies action and writes the null-terminated string pointed
+ to by the iBuff parameter. The method does not apply action and write the 
+ terminating null character.
+ This method  will be only used for non V5 documents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBuff</tt>
+   <dd> [in]  initial Line to write.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_WRITEFAULT :</tt> problem while writing.
+   <br><tt> STG_E_MEDIUMFULL :</tt> disk full error.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DISKISWRITEPROTECTED :</tt> disk write protected.
+   <br><tt> STG_E_INVALIDFUNCTION:</tt> unable to apply action on data.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="WriteLineW"></a><a name="WriteLineW(CATUnicodeString*)"></a> <dt> o <b>WriteLineW</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>WriteLineW</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iBuff</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Applies action and writes a line of unicode characters.
+ <br><b>Role</b>: Applies action  and writes the null-terminated string 
+ pointed to  by the iBuff parameter. The method does not apply action and 
+ write the terminating null character.
+ This method  will be only used for non V5 documents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBuff</tt>
+   <dd> [in]  initial Line to write.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_WRITEFAULT :</tt> problem while writing.
+   <br><tt> STG_E_MEDIUMFULL :</tt> disk full error.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DISKISWRITEPROTECTED :</tt> disk write protected.
+   <br><tt> STG_E_INVALIDFUNCTION:</tt> unable to apply action on data.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<a name="WriteLineWchar"></a><a name="WriteLineWchar(CATUC2Bytes*)"></a> <dt> o <b>WriteLineWchar</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>WriteLineWchar</b>(<td> const <script type="text/javascript"> activateLink('CATUC2Bytes','CATUC2Bytes*')</script> <td><tt>iBuff</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Applies action and writes a line of unicode characters.
+ <br><b>Role</b>: Applies action  and writes the null-terminated string 
+ pointed to  by the iBuff parameter. The method does not apply action and 
+ write the terminating null character.
+ This method  will be only used for non V5 documents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBuff</tt>
+   <dd> [in]  initial Line to write.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>:
+   <br><tt> S_OK :</tt>on Success.
+   <br><tt> STG_E_WRITEFAULT :</tt> problem while writing.
+   <br><tt> STG_E_MEDIUMFULL :</tt> disk full error.
+   <br><tt> STG_E_INVALIDPARAMETER :</tt> arguments incorrects.
+   <br><tt> STG_E_DISKISWRITEPROTECTED :</tt> disk write protected.
+   <br><tt> STG_E_INVALIDFUNCTION:</tt> unable to appliy action on  data.
+   <br><tt> STG_E_UNKNOWN :</tt> unexpected error.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIUExitCryptedILockBytes.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>JS0GROUP</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

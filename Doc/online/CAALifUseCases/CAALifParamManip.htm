@@ -1,0 +1,303 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Using Manipulators</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Using Manipulators</h3>
+     <p><em>How to create a manipulator and associate it with a literal</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to associate a manipulator with a literal. </p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><a href="#Reminder"><b>Reminder About Parameter Edition</b></a></li>
+       <li><a href="#UseCase"><b>The CAALifParametersMani Use Case</b></a></li>
+       <ul>
+         <li><a href="#What">What Does CAALifParametersMani Do</a></li>
+         <li><a href="#How">How to Launch CAALifParametersMani</a></li>
+         <li><a href="#Where">Where to Find the CAALifParametersMani Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a><strong></li>
+       <li><a href="#InShort">In Short</a></li>
+       <li><strong><a href="#References">References</a><strong></li>
+     </ul>
+     </strong></strong></strong></strong></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>In this use case, you will learn to create a manipulator and specify its 
+ value range.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Reminder"></a>Reminder about Parameter Edition</h3>
+ <p>When editing a parameter, right-clicking the value field displays a 
+ contextual menu which provides you with commands to help you select the value 
+ to be assigned to a parameter.<br>
+ <img border="0" src="images/KwxManipul.gif" vspace="8" width="472" height="371"></p>
+ <p>When you modify the parameter value, you use the use the
+ <img border="0" src="images/KwxSpinner.gif" width="17" height="18"> arrows to 
+ increment or decrement the amount to be specified. This object which appears to 
+ the end user as up and down arrows is called a <i>spinner</i>. The object which 
+ describes how the spinner behaves is called a <i>manipulator</i>.</p>
+ <p>You can describe a manipulator as an object which has bounds, which 
+ increments or decrements its value by a certain number of the appropriate units 
+ etc., but a manipulator is only meaningful when applied to a parameter.</p>
+ <p>The manipulator dictates the lower and upper bounds of the parameter value 
+ (Range command in the contextual menu), the number of steps to be memorized by 
+ the system when you add a new step from the Change Step command or a list of 
+ authorized values for multiple-value parameters.</p>
+ <p>Other data related to parameters (tolerance, measure and comments) are not 
+ controlled by manipulators.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifParametersMani Use Case</h3>
+ <p>CAALifParametersMani is a use case of the CAALiteralFeatures.edu framework 
+ that illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifParametersMani Do</h4>
+ <p>The CAALifParametersMani sample:</p>
+ <ul>
+   <li>Creates a manipulator</li>
+   <li>Specifies its value range</li>
+   <li>Creates a parameter</li>
+   <li>Associates the manipulator with the parameter.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifParametersMani</h4>
+ <p>To launch CAALifParametersMani, you will need to set up the build time 
+ environment, then compile CAALifParametersMani along with its prerequisites, 
+ set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifParametersMani Code</h4>
+ <p>The CAALifParametersMani use case is located in:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifParameters.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifParameters.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>The CAALifParametersMani is in the CAALifParametersMani .cpp file. The main 
+ program related to this file is CAALifParametersMain.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>The CAALifParametersMani use case is made up of eight steps:</p>
+ <ol>
+   <li><a href="#Step1">Creating a Manipulator</a></li>
+   <li><a href="#Step2">Creating a Manipulator</a></li>
+   <li><a href="#Step3">Specifying the Manipulator Range</a></li>
+   <li><a href="#Step4">Creating a Length Type Parameter</a></li>
+   <li><a href="#Step5">Assigning a Value Length Type Parameter</a></li>
+   <li><a href="#Step6">Testing the Assigned Value</a></li>
+   <li><a href="#Step7">Testing Another Value</a></li>
+   <li><a href="#Step8">Assigning Other Values</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Creating a Manipulator</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>// Create a manipulator
+CATICkeParmFactory_var spFact = cont;
+CATIParmManipulator_var spManip = spFact-&gt;CreateParmManipulator ();</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A manipulator is created by using the 
+ CATICkeParmFactory::CreateParmManipulator method which returns a 
+ CATIParmManipulator.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Making a Manipulator Persistent</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre><b>Code to Provide
+      </pre>
+     </b></td>
+   </tr>
+ </table>
+ <p>A manipulator is not persistent. In a global application, you have to create 
+ it the first time you enter the editor.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Specifying the Manipulator Range</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>// Specify the manipulator range 
+spManip-&gt;SetAccurateRange (10,1,20,2);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The lower and upper bounds of the manipulator are specified.</p>
+ <p>The CATIParmManipulator::SetAccurateRange takes as its arguments:</p>
+ <ol>
+   <li>The lower bound of the value range (10)</li>
+   <li>A number which specifies whether the lower bound can be included in the 
+   parameter value range:</li>
+   <ol type="a">
+     <li>0, when no minimum is defined</li>
+     <li>1, when the lower bound can be one of the value of the defined range. 
+     This is the value specified in our example.</li>
+     <li>2, when the lower bound is to be excluded from the parameter value 
+     range.</li>
+   </ol>
+   </li>
+   <li>The upper bound of the value range (20)</li>
+   <li>A number which specifies whether the lower bound can be included in the 
+   parameter value range:</li>
+   <ol type="a">
+     <li>0, when no maximum is defined</li>
+     <li>1, when the upper bound can be one of the value of the defined range</li>
+     <li>2, when the upper bound is to be excluded from the parameter value 
+     range. This is the value specified in our example.</li>
+   </ol>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Creating a Length Type Parameter</h4>
+ <p>The &quot;lengthParam&quot; length type parameter is created [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Assigning a Value Length Type Parameter</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+s-&gt;ValuateStored (15);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The &quot;lengthParam&quot; parameter is assigned a value in model unit. Let's remind 
+ you that the model unit for length is the mm.</p>
+ <p>This means that the parameter value is 15 mm.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Testing the Assigned Value</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre><b>Code to Provide
+      </pre>
+     </b></td>
+   </tr>
+ </table>
+ <p>A test is performed to determine whether the value 10 is authorized. 
+ Normally, it should be.10 is the lower bound but the lower bound has been 
+ specified as a possible value. The value returned by the 
+ CATIParmManipulator::TestValue method is described by the enum below:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>enum TestRC
+{
+  Ok =0,
+  MinReached =1,
+  NotInEnum =3,    // only for enumerated type
+  NotAuthorized =4 // value type is wrong
+};</pre>
+     </td>
+   </tr>
+ </table>
+ <p>0 is returned.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Testing Another Value</h4>
+ <p>Another test is performed to determine whether the value 21 is authorized. 
+ Normally, it should not be as 21 is beyond the upper bound. The value returned 
+ by CATIParmManipulator::TestValue is 2 indicating that the upper bound has been 
+ overtaken.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step8"></a>Assigning Other Values</h4>
+ <p>Testing a value does not mean that the value is applied to the parameter. 
+ Now, the value 10 is assigned to &quot;lengthParam&quot;. Displaying the actual parameter 
+ value gives 10.</p>
+ <p>The value 20 is assigned to &quot;lengthParam&quot;. Displaying the actual parameter 
+ value gives 10, the last authorized value assigned to the parameter.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>A manipulator allows you to define how the parameter values can be specified 
+ in terms of bounds, increment/decrement amounts, steps to be memorized. A 
+ manipulator is to be associated with a parameter.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAALifParamPers.htm">Using Persistent Parameters</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jun 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

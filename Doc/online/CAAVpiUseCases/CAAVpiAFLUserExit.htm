@@ -1,0 +1,383 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Setting a Name to an Action at Creation Time</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="TOP">
+      <h2>Action Editor</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Setting a Name to an Action at Creation Time</h3>
+      <i>Implementing CATIVpmUEActionFlow</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The document is related to the use case CAAVpiAFLUserExit. It describes
+      how to implement a user-exit for constructing and setting names to Actions
+      when they are being created.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiAFLUserExit Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiAFLUserExit Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiAFLUserExit</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiAFLUserExit Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+user-exits. More particularly, it shows how to implement a user-exit that is
+called by the ActionFlow (AFL) modeler.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiAFLUserExit Use Case</h3>
+<p>CAAVpiAFLUserExit is a use case of the CAAVpiInterfaces.edu framework that
+illustrates VPMInterfaces framework functionalities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiAFLUserExit Do</h4>
+<p>The goal of CAAVpiAFLUserExit use case is to show how to implement a
+particular user-exit that is called by the ActionFlow modeler whenever an Action
+is created. This user-exit gives an application designer to set customized names
+for the Action being created.</p>
+<p>To do so, the use case goes through the following steps:</p>
+<ul>
+  <li>Create an Action of type &quot;Action_Design&quot;. This step is
+    implemented in the file CAAVpiAFLUserExit.cpp which also includes the main
+    program. Remember that it is the function which creates the Action which
+    will trigger the user-exit.</li>
+  <li>Implement the user-exit called &quot;GetActionName&quot; by performing the
+    following steps:</li>
+  <ul>
+    <li>get the action which being created</li>
+    <li>construct a name by concatenating the Action type
+      &quot;Action_Design&quot; and the current date.</li>
+    <li>Assign the constructed name to the new Action.</li>
+  </ul>
+</ul>
+<p>The actual implementation of the user-exit is contained in the file
+CAAVpiAFLUserExit_GetActionName.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiAFLUserExit</h4>
+<p>To launch CAAVpiAFLUserExit, you will need to set up the build-time
+environment, next compile CAAVpiAFLUserExit along with its prerequisites, then
+set up the run-time environment, and finally execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiAFLUserExit</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiAFLUserExit</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiAFLUserExit Code</h4>
+<p>The CAAVpiAFLUserExit use case is made of two source files named
+CAAVpiAFLUserExit.cpp and CAAVpiAFLUserExit_GetActionName.cpp, both located in
+the module CAACAAVpiAFLUserExit.m of the framework CAAVPMInterfaces.edu.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiAFLUserExit.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiAFLUserExit.m/</tt></td>
+  </tr>
+</table>
+<p>Where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six main steps in CAAVpiConfigurateStructure Code:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Step2">Getting a ActionFlow Manager</a></li>
+  <li><a href="#Step4">Creating an Action</a></li>
+  <li><a href="#Step5">Implementing the User Exit</a></li>
+  <li><a href="#Step6">Getting the Current Action from the AFL Pool</a></li>
+  <li><a href="#Step7">Constructing a Name and Passing it Back to the Modeler</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+CAAVpiAFLUserExit.cpp creates first an Action of type &quot;Action_Design&quot;.
+CAAVpiAFLUserExit_GetActionName implements the user-exit by constructing a name
+under the form &lt;ActionType&gt;_&lt;CurrentDate&gt;.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Getting a Configuration Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Get a session
+  VPMSession* session = VPMSession::OpenSession();
+...
+  // Get a factory manager from the session
+  CATIVpmFactoryManager_var factoryMgr = NULL_var;
+  session-&gt;GetVPMObjectFactory(factoryMgr);
+...
+  // Query an interface on CATIVpmAFLManager
+  CATIVpmAFLManager_var aflMgr(factoryMgr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The ActionFlow Manger manages some object creations as well as their
+lifecycles. Examples are Actions and AffecetedObjects. It also provides usefull
+functions to query various types of objects.
+<p>A session is needed to retrieve a smart pointer to the standard
+FactoryManager. An interface query on <i>CATIVpmAFLManager</i> is then performed
+to retrieve the specific ActionFlow manager.<br>
+<table>
+  <tr>
+    <td><i>CATIVpmAFLManager</i></td>
+    <td>The ActionFlow Manager interface</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating an Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Create an action of type Action_Design
+  CATIVpmAFLAction_var action;
+  CATUnicodeString actionType(&quot;Action_Design&quot;);
+  rc = aflMgr-&gt;CreateAction(actionType, action);
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>An Action of type <i>Action_Design</i> is created with no name specified. It
+is the function <i>CreateAction()</i> which will attempt to create a user-exit
+object with late-type &quot;<i>VPMUEAFL_GetActionName</i>&quot;. This means for
+a user-exit named XXX, the corresponding late-type must be called
+&quot;VPMUEAFL_XXX&quot;. Furthermore, this latetype must adhere to interface <i>CATIVpmUEActionFlow</i>.
+An implementation of the user-exit for this late-type must then implement the
+method<i> Run(CATListOfCATUnicodeString)</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Implementing the User Exit</h4>
+<p>As hinted above, to implement the user-exit, an implementation class must be
+defined for the latetype <i>VPMUEAFL_GetActionName.</i><br>
+This class must then adhere to the interface <i>CATIVpmUEActionFlow</i> to
+implement the method <i>Run()</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//-----------------------------------------------------------------------------
+// Implementation of CAAVpiAFLUserExit_GetActionName
+//-----------------------------------------------------------------------------
+CATImplementClass (CAAVpiAFLUserExit_GetActionName, DataExtension, CATBaseUnknown, VPMUEAFL_GetActionName);
+...
+#include &quot;TIE_CATIVpmUEActionFlow.h&quot;
+TIEchain_CATIVpmUEActionFlow (CAAVpiAFLUserExit_GetActionName);
+// Implementation of method CATIVpmUEActionFlow::Runt()
+HRESULT  CAAVpiAFLUserExit_GetActionName::Run(CATListOfCATUnicodeString&amp; ioList)
+{ ...
+  if (ioList[1]==&quot;CREATION&quot;)
+  {
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <i>Run()</i> takes one in-out parameter of a list of String. At
+the method call, the first element of the list indicates the type of the
+user-exit. In our case case, it must be &quot;CREATION&quot; to make sure the
+user-exit code will be executed upon an Action creation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  if (ioList[1]==&quot;CREATION&quot;)
+  {
+    // Get a session
+    VPMSession* session = VPMSession::OpenSession();
+    ...
+    // Get a factory manager from the session
+    CATIVpmFactoryManager_var factoryMgr = NULL_var;
+    session-&gt;GetVPMObjectFactory(factoryMgr);
+
+    // Query an interface on CATIVpmAFLManager
+    CATIVpmAFLManager_var aflMgr(factoryMgr);
+    ...
+    // Get the action from AFL pool
+    CATIVpmAFLAction_var currentAction;
+    aflMgr-&gt;GetActionFromAFLSimplePool(currentAction);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Getting the Current Action from the AFL Pool</h4>
+<p>Before calling the user-exit for naming Action, the ActionFlow modeler pushes
+the current Action being created in to a pool. This way, when the user-exit is
+triggered, the Action just created and to be named can be extracted from that
+pool. The following shows how to get an Action from the ActionFlow pool.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // Get a session
+    VPMSession* session = VPMSession::OpenSession();
+    ...
+    // Get a factory manager from the session
+    CATIVpmFactoryManager_var factoryMgr = NULL_var;
+    session-&gt;GetVPMObjectFactory(factoryMgr);
+
+    // Query an interface on CATIVpmAFLManager
+    CATIVpmAFLManager_var aflMgr(factoryMgr);
+    ...
+    // Get the action from AFL pool 
+    CATIVpmAFLAction_var currentAction;
+    aflMgr-&gt;^...
+  if (ioList[1]==&quot;CREATION&quot;)
+  {
+    // Get a session
+    VPMSession* session = VPMSession::OpenSession();
+    ...
+    // Get a factory manager from the session
+    CATIVpmFactoryManager_var factoryMgr = NULL_var;
+    session-&gt;GetVPMObjectFactory(factoryMgr);
+
+    // Query an interface on CATIVpmAFLManager
+    CATIVpmAFLManager_var aflMgr(factoryMgr);
+    ...
+    // Get the action from AFL pool 
+    CATIVpmAFLAction_var currentAction;
+    aflMgr-&gt;GetActionFromAFLSimplePool(currentAction);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After getting a session and the AFL factory manager, the function <i>GetActionFromAFLSimplePool()</i>
+is called.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Constructing a Name and Passing it Back to the Modeler</h4>
+<p>Since the naming convention is the concatenation of the Action type and the
+current date, the type of the Action being created is first retrieved using
+method <i>GetType()</i> defined in interface <i>CATIVpmAFLAction</i>. A date is
+then computed and appended to the Action type. Once the Action name is
+constructed, it must be pushed in to the in-out list parameter as first element.
+It is the <i>CreateAction()</i> method which after the user-exit returns will
+set the returned name to the Action being created.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // Declare the string to hold the final action name
+    CATUnicodeString actionName;
+
+    // First, get the action type and put it in the action name
+    currentAction-&gt;GetType(actionName);
+
+    // Get the current date and time and make it &quot;readable&quot;
+    CATTime date = CATTime::GetCurrentLocalTime();
+    CATUnicodeString strDate = date.ConvertToString(&quot;%c&quot;);
+    CATUnicodeString strDay = strDate.SubString(8,2);
+    if (strDay.SubString(0,1)==&quot; &quot;) strDay = &quot;0&quot;+strDay.SubString(1,1);
+
+    // Concatenate the stringefied date to the action type
+    actionName = actionName + &quot;_&quot; + strDate.SubString(4,3)+ strDay+ &quot;-&quot; +strDate.SubString(11,8)+ &quot;-&quot;+strDate.SubString(20,4);
+
+    // Reset the ioList. The returned list will contain the constructed name that 
+    // the AFL modeler will assign to the action being created
+    ioList.RemoveAll();
+
+    // Push the name into the list to be returned
+    ioList.Append(actionName);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates how the user-exit technique can be used in the
+ActionFlow modeler to implement customized behavior.<br>
+As an example, a user-exit for naming Action at their creation is described.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

@@ -1,0 +1,491 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving Selecting Object in Copied Feature</title>
+</head>
+
+<body>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving Selecting Object in Copied Feature</h3>
+		<p>Using CATIMmiBRepScanServices<em></em></td>
+  </tr>
+  <tr>
+    <td class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!-- -------------------------------comment---------------------------------- -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+This article discusses the<strong> CAAV5V6MmrBRepScanServices</strong> use case. 
+It is a copy of the&nbsp; CAAV5V6MmrBRepScanServices use case [<a href="#References">4</a>], rewritten with V6 backported interfaces.
+ In order to be V5/V6 compatible, some specific parts are coded inside #ifdef macros. 
+ We won't detail in this article any of the V6 specific code.   
+    <p>The CAAV5V6MmrBRepScanServices use case shows how to retrieve Selecting Objects in copied 
+		geometry.<ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The&nbsp; CAAV5V6MmrBRepScanServices Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does&nbsp; CAAV5V6MmrBRepScanServices Do</a></li>
+            <li><a href="#How">How to Launch&nbsp; CAAV5V6MmrBRepScanServices</a></li>
+            <li><a href="#Where">Where to Find the&nbsp; 
+			CAAV5V6MmrBRepScanServices Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+      </table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to retrieve Selecting Objects in 
+copied geometry. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="UseCase"></a>The&nbsp; CAAV5V6MmrBRepScanServices Use Case</h3>
+<p>&nbsp;CAAV5V6MmrBRepScanServices is a use case of the CAAV5V6MechanicalModeler.edu framework that 
+mainly illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="What"></a>What Does&nbsp; CAAV5V6MmrBRepScanServices Do</h4>
+<p>&nbsp;CAAV5V6MmrBRepScanServices begins by opening the following root Product Model (<a href="#*">*</a>)
+<p></p>
+<table border="0" id="table18">
+	<caption style="width: 399px"><a name="Fig.1">Fig.1</a> The Opened Root Product Model</caption>
+	<tr>
+		<td>
+		<img border="0" src="../CAAMmrUseCases/images/CAAMmrBRepScanServices_inputModel.png"></td>
+	</tr>
+</table>
+<p align="left">The root product, <code>&nbsp;CAAMmrBRepScanServicesRoot</code>, 
+aggregates two instances of products : <code>&nbsp;CAAMmrBRepScanServices_P1</code> 
+and <code>&nbsp;CAAMmrBRepScanServices_P2</code>. In turn, these two products 
+aggregate two Parts:</p>
+<ul>
+	<li>
+	<p align="left"><code>&nbsp;CAAMmrBRepScanServices_P1</code> is a Part&nbsp; whose the <code>PartBody</code> is empty,</p></li>
+	<li>
+	<p align="left"><code>&nbsp;CAAMmrBRepScanServices_P2</code> is a Part&nbsp; whose the <code>PartBody</code> forms the colored Part.</p></li>
+</ul>
+<p align="left">Then, the use case copies the <code>PartBody</code> of <code>&nbsp;CAAMmrBRepScanServices_P2</code> inside <code>&nbsp;CAAMmrBRepScanServices_P1</code> 
+with the following options:</p>
+<ul>
+	<li>
+	<p align="left">Copy with link (It means that  
+	in case of original feature modification, the copied result can be updated)</p></li>
+	<li>
+	<p align="left">outside the Product context (copy Part to Part)</p>
+	</li>
+</ul>
+<p align="left">The result will be the as follow:</p>
+<table border="0" id="table19">
+	<caption style="width: 390px"><a name="Fig.2">Fig.2</a> Model After the Copy</caption>
+	<tr>
+		<td>
+		<img border="0" src="../CAAMmrUseCases/images/CAAMmrBRepScanServices_OutputModel.png"></td>
+	</tr>
+</table>
+<p align="left">On this picture, simulated interactively, we have moved the 
+copied <code>PartBody</code> (inside <code>&nbsp;CAAMmrBRepScanServices_P1</code>) to 
+distinguish it from the original <code>PartBody</code> (inside <code>&nbsp;CAAMmrBRepScanServices_P2</code>).</p>
+<p align="left">Then, we are looking for the selecting objects associated with 
+the&nbsp; <code>EdgeFillet.1</code>. This picture illustrates these objects:</p>
+<table border="0" id="table20">
+	<caption style="width: 440px"><a name="Fig.3">Fig.3</a> Selecting Object</caption>
+	<tr>
+		<td>
+		<img border="0" src="../CAAMmrUseCases/images/CAAMmrBRepScanServices_SelEdges.png"></td>
+	</tr>
+</table>
+<p align="left">Interactively, if you select <code>EdgeFillet.1</code>, two 
+faces are highlighted. These two faces are selecting objects.</p>
+<p align="left">Finally, the use case retrieves these two faces in 
+the copied features. These two faces are selecting objects too. </p>
+<table border="0" id="table29">
+	<caption style="width: 388px"><a name="Fig.4">Fig.4</a> Selecting Object</caption>
+	<tr>
+		<td>
+		<img border="0" src="../CAAMmrUseCases/images/CAAMmrBRepScanServices_OutputModelAndSel.png"></td>
+	</tr>
+</table>
+<p align="left">Inside the white boxes you have the initial Selecting faces, and 
+in the dotted white boxes you have the same one in the result of the copy.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="How"></a>How to Launch&nbsp; CAAV5V6MmrBRepScanServices</h4>
+<p>To launch&nbsp; CAAV5V6MmrBRepScanServices , you will need to set up the build time environment,
+then compile&nbsp; CAAV5V6MmrBRepScanServices along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>mkrun -c &quot; CAAV5V6MmrBRepScanServices <i>InputPath</i>&quot; </p>
+<p>where InputPath is the directory containing the input model. </p>
+<p>(<a name="*">*</a>) The input model is the following:</p>
+<table id="table17" width="707">
+    <tr>
+      <td valign="top">Windows</td>
+      <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData\ 
+		CAAMmrBRepScanServicesRoot.CATProduct</code></td>
+    </tr>
+    <tr>
+      <td valign="top">Unix</td>
+      <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData/ 
+		CAAMmrBRepScanServicesRoot.CATProduct</code></td>
+    </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="Where"></a>Where to Find the&nbsp; CAAV5V6MmrBRepScanServices Code</h4>
+<p>The&nbsp; CAAV5V6MmrBRepScanServices use case is made of one file,&nbsp; 
+CAAV5V6MmrBRepScanServicesMain.cpp, located in
+the&nbsp; CAAV5V6MmrBRepScanServices.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\</code><code>CAAV5V6MechanicalModeler.edu\ 
+	CAAV5V6MmrBRepScanServices.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/</code><code>CAAV5V6MechanicalModeler</code><code>.edu/ 
+	CAAV5V6MmrBRepScanServices.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight logical steps in&nbsp; CAAV5V6MmrBRepScanServices:</p>
+<ol>
+	<li>Opening the Input Root Product</li>
+	<li>Retrieving the Two Sub-Products</li>
+	<li>Retrieving Useful Objects for the Copy</li>
+	<li>Copying PartBody </li>
+	<li><a href="#Getting the Initial BrepAccess From EdgeFillet.1">Getting EdgeFillet.1 
+	Faces inside PartBody Result</a></li>
+	<li><a href="#Getting the BrepAccess within Copied PartBody">Getting the BrepAccess within Copied PartBody
+	</a></li>
+	<li><a href="#Checking">Getting the BrepAccess within initial Part </a></li>
+	<li><a href="#Checking Step">Checking Step</a></li>
+</ol>
+
+<p> The first part of the scenario that&nbsp; concerns document initialization, 
+product navigation and copying the PartBody, is written with V5 specific code. 
+Indeed, these aspects are directly impacted by the difference of data model 
+between V5 and V6. More specifically for Mechanical Modeler, the copy function 
+is specific to V5 or V6 levels (new V6 API <em>CATIMmiUseCreateImport</em> has not 
+been backported).<br>
+Therefore, the first four steps are exactly the same as in the reference use case [<a href="#References">4</a>], 
+so we will not detail them here and start directly with step 5 .</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -------------------------------comment---------------------------------- -->
+
+
+<h4><a name="Getting the Initial BrepAccess From EdgeFillet.1"></a>Getting 
+EdgeFillet.1 Faces inside PartBody</h4>
+<p>This step consists in to retrieve the selecting object associated with the 
+geometry of the EdgeFillet.1 feature inside the PartBody of <code>&nbsp;CAAV5V6MmrBRepScanServices_P2.</code> 
+The two faces represented [<a href="#Fig.3">Fig.3</a>]</p>
+<p>First the geometry of EdgeFillet.1 feature.</p>
+
+<table class="code" id="table23">
+  <tr>
+    <td>
+      <pre>...
+<strong>CATIMmiUseGeometryAccess</strong>_var spGeomAccessOnEdgeFillet = spOnEdgeFilletOfP2;
+CATListValCATIMmiUseBRepAccess_var LBrepAccess;
+rc = spGeomAccessOnEdgeFillet-&gt;<strong>GetBReps</strong>(LBrepAccess);  
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="left">The <code>GetBReps </code>method of the <i>CATIMmiUseGeometryAccess</i> 
+interface retrieves the BRep objects associated with a feature. <code>
+spOnEdgeFilletOfP2</code> is a <i>CATBaseUnknown</i> smart pointer on the 
+EdgeFillet.1 of the <code>CAAMmrBRepScanServices_P2</code> PLM Representation  Reference.  </p>
+
+<p>Then, for each CATIMmiUseBRepAccess interface pointer, we look for the equivalent 
+face(s) in the result of the PartBody of <code>CAAMmrBRepScanServices_P2.</code></p>
+
+<table class="code" id="table28">
+  <tr>
+    <td>
+      <pre>...
+int n_face = LBrepAccess.Size();
+CATListValCATIMmiUseBRepAccess_var ListBreps;
+for (int i_face=1; i_face &lt;= n_face; i_face++)
+{
+  <strong>CATIMmiUseBRepAccess</strong>_var Unk = LBrepAccess[i_face];
+  if (NULL_var != Unk)
+  {
+    <strong>CATIMmiUseBRep</strong>_var spBrep=Unk;
+    if (NULL_var == spBrep) 
+      continue;
+		   
+		  
+    CATListValCATIMmiUseBRepAccess_var ListTemp;
+    rc = spBrep-&gt;<strong>GetBreps</strong>(ListTemp, CATMmrDefaultLimitationType, spResultPartBody2Feat); 
+    if (ListTemp.Size())
+      ListBreps.Append(ListTemp);
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+
+
+<p align="left">The argument of the <code>GetBreps</code> method of <i>
+CATIMmiUseBRep</i> interface is the solid feature, the result of the PartBody [<a href="#References">4</a>].
+<code> spResultPartBody2Feat</code> is retrieved such as :</p>
+
+<table class="code" id="table33">
+  <tr>
+    <td>
+      <pre>...
+    <b>CATIBodyRequest</b>_var spBodyRequestOnBodyOfP2 = spOnBodyOfP2;
+  
+    CATLISTV(CATBaseUnknown_var) ListResult ;
+    rc = spBodyRequestOnBodyOfP2-&gt;<b>GetResults</b>(&quot;&quot;,ListResult);
+ 
+    CATBaseUnknown_var spResultPartBody2 = ListResult[<b>1</b>];
+    <strong>CATIMmiMechanicalFeature</strong>_var spResultPartBody2Feat = spResultPartBody2;
+   
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="left">The result of a PartBody is always the first element of the 
+list. </p>
+<p align="left"><code>ListBreps</code> contains the faces of EdgeFillet.1. ( 
+here two faces) </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Getting the BrepAccess within Copied PartBody"></a>Getting the BrepAccess 
+within Copied PartBody </h4>
+<p>We have retrieved the list of selecting objects of the &quot;original&quot;&nbsp; 
+feature. This list is <code>ListBreps</code> .&nbsp; Now we can try to retrieve 
+the equivalent selecting objects in the result of the copy.&nbsp; </p>
+
+<table class="code" id="table24">
+  <tr>
+    <td>
+      <pre>...
+  <strong>CATIMmiBRepScanServices</strong> *piScanServices = NULL;  
+  rc = CATInstantiateComponent(Component_BRepScanServices,CATIMmiBRepScanServices::ClassId(),(void **)&piScanServices);  
+  if (FAILED(rc) || piScanServices == NULL)
+    return 1;
+    
+  CATListValCATIMmiUseBRepAccess_var ListBRepsRef;
+  CATListValCATIMmiUseBRepAccess_var ListBRepsDual;
+  
+ for (i_face = 1; i_face &lt;= n_face; i_face++)
+ {
+   CATIMmiUseBRepAccess_var spBRepIn = ListBreps[i_face]; 
+   CATIMmiMechanicalFeature_var spFeatRef=NULL_var;
+   CATIMmiUseBRepAccess_var spBRepOut = NULL_var;
+
+    rc = piScanServices-&gt;<strong>FindDualBRepAccess</strong>(spFeatRef, spResult, spBRepIn, spBRepOut);
+    if (FAILED(rc) || NULL_var == spBRepOut) 
+      continue;
+
+    ListBRepsRef.Append(spBRepIn);
+    ListBRepsDual.Append(spBRepOut);
+  } 
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>We use the <code>FindDualBRepAccess</code> method of the <i>
+CATIMmiBRepScanServices</i> class. In this case the inputs of this method are the 
+following:</p>
+<ul>
+	<li><code>spFeatRef</code>:&nbsp; a <i>CATIMmiMechanicalFeature</i> interface smart pointer 
+	on the reference feature. The value can be <code>NULL</code> because the 
+	input will be not used in this case.</li>
+	<li><code>spResult</code> : a <i>CATIMmiMechanicalFeature</i> interface smart pointer on the 
+	copied feature. It is the feature 
+	result of the copy of the <code>PartBody</code> feature of <code>CAAMmrBRepScanServices_P2</code> 
+	inside <code>CAAMmrBRepScanServices_P1</code> </li>
+	<li>spBRepIn : a<i> CATIMmiUseBRepAccess</i> interface 
+	smart pointer on one selecting object of EdgeFillet.1</li>
+	<li>spBRepOut : it is the ouput argument of the method, a smart pointer on 
+	the equivalent selecting object inside the result. </li>
+</ul>
+<p><code>ListBRepsDual</code> contains the list of selecting objects inside the result. 
+On [<a href="#Fig.4">Fig.4</a>] you can seen the two selecting objects in the 
+dotted white boxes.</p>
+
+
+
+<h4><a name="Checking"></a>Getting the BrepAccess within initial Part </h4>
+<p>For each selecting objects found in the 
+result, you try to retrieve the selecting object in the original feature. In 
+mathematical term we are looking for the Bi-Dual objects. </p>
+
+<table class="code" id="table30">
+  <tr>
+    <td>
+      <pre>...
+  CATListValCATIMmiUseBRepAccess_var ListBRepsBiDual; 
+  n_face = ListBRepsDual.Size();
+  for( i_face = 1; i_face &lt;= n_face; i_face++)
+  {
+    CATIMmiMechanicalFeature_var spFeatRef = spOnBodyOfP2;
+    //spResult = The edgefillet copied in comp1
+    CATIMmiUseBRepAccess_var spBRepIn = NULL_var;  
+    CATIMmiUseBRepAccess_var spBRepOut = ListBRepsDual[i_face];;
+    
+    rc = piScanServices-&gt;<strong>FindDualBRepAccess</strong>(spFeatRef, spResult, spBRepIn , spBRepOut); 
+    if (FAILED(rc) || NULL_var == spBRepIn ) 
+      continue;
+    ListBRepsBiDual.Append(spBRepIn);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>We use the <code>FindDualBRepAccess</code> method of the <i>
+CATIMmiBRepScanServices</i> class. In this case the inputs of this method are the 
+following:</p>
+<ul>
+	<li><code>spFeatRef</code>:&nbsp; a <i>CATIMmiMechanicalFeature</i> interface smart pointer 
+	on the feature where the selecting Objects will be looked for. The value cannot be <code>NULL</code>. 
+	It is the <code>PartBody</code> of the <code>CAAMmrBRepScanServices_P2</code>. </li>
+	<li><code>spResult</code> : a <i>CATIMmiMechanicalFeature</i> interface smart pointer on the 
+	copied feature. It is the feature 
+	result of the copy of the <code>PartBody</code> feature of <code>CAAMmrBRepScanServices_P2</code> 
+	inside <code>CAAMmrBRepScanServices_P1</code> </li>
+	<li>spBRepOut&nbsp;: it is a pointer on the selecting object inside the result. </li>
+	<li>spBRepIn&nbsp; : it is the ouput argument of the 
+	method, a<i> CATIMmiUseBRepAccess</i> interface 
+	smart pointer on one selecting object of EdgeFillet.1 inside 
+	<code>CAAMmrBRepScanServices_P2. </code></li>
+</ul>
+
+
+<h4><a name="Checking Step"></a>Checking Step</h4>
+<p>All the elements of <code>ListBrepsBiDual</code> must be one of the initial 
+list, <code>ListBrepsRef</code>. Both are list containing faces of EdgeFillet.1 
+inside <code>&nbsp;CAAV5V6MmrBRepScanServices_P2.</code> But&nbsp; <code>ListBrepsRef</code> 
+can contains more elements. </p>
+
+<table class="code" id="table31">
+  <tr>
+    <td>
+      <pre>...
+for( i_face = 1; i_face &lt;= n_face; i_face++)
+{
+  CATIMmiUseBRep_var spBRepIn = ListBRepsBiDual[i_face];
+  if (NULL_var == spBRepIn) 
+    continue;
+    
+  CATBoolean Found = FALSE;
+  int j=1;
+  while ((Found==FALSE) &amp;&amp; (j&lt;=ListBRepsRef.Size()))
+  {
+    CATIMmiUseBRep_var spBRepOut = ListBRepsRef[j];
+    CATBoolean IsSame=FALSE;
+    rc = spBRepIn-&gt;<strong>IsSameBRep</strong>(spBRepOut, IsSame);
+    if (IsSame)
+      Found = TRUE;
+    j++;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+
+<ul>
+	<li><font SIZE="2"><code>ListBrepsRef</code> </font>is the list of selecting 
+	object of <code>&nbsp;CAAV5V6MmrBRepScanServices_P2 </code>for which we have found an 
+	equivalence in<code>&nbsp; CAAV5V6MmrBRepScanServices_P1</code> </li>
+	<li><code>ListBrepsBiDual</code> is the list of selecting object of <code>&nbsp;CAAV5V6MmrBRepScanServices_P2</code></li>
+</ul>
+<p>To compare two BRep object, use the <code>IsSameBRep</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The use case has shown that </p>
+<ul>
+	<li>Using <i>CATIMmiUseGeometryAccess</i> you retrieve the 
+	selecting objects of a feature.</li>
+	<li>Using the <code>FindDualBRepAccess</code> method of <i>
+	CATIMmiBRepScanServices</i> you can retrieve the equivalent selecting objects 
+	in the copied feature. </li>
+</ul>
+
+<p><font size="2">These selecting object can be the target of a Publication. (Do not 
+featurize a selecting object to be the target of a Publication)</font></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>
+	<a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont0.htm">The 
+	Contents of the Specification Container - The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td>
+	<a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">
+	Specification/Result Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrBRepScanServices.htm">
+    V5 reference Use Case : Retrieving Selecting Object in Copied Feature </a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright &#169; 2012, Dassault Syst&#232;mes. All rights reserved.</i><br>
+
+</body>
+
+</html>

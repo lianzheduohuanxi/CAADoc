@@ -1,0 +1,182 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <title>Check-Out Scenario</title>
+      <meta http-equiv="Content-Language" content="en-us">
+      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+      <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+      <meta name="ProgId" content="FrontPage.Editor.Document">
+      <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+         <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+         </script>
+   </head>
+   <body>
+      <table width="100%">
+         <tr>
+            <td valign="top">
+               <h1>3D PLM PPR Hub Open Gateway</h1>
+            </td>
+            <td valign="top">
+               <h2>DRM</h2>
+            </td>
+            <td rowspan="2" align="right" valign="top">
+               <h3>DRM Rights Description<a name="Top"></a></h3>
+               <em>Description of all DRM rights</em></td>
+         </tr>
+         <tr>
+            <td class="tech" colspan="2">Technical Article</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <table class="abstract">
+         <tr>
+            <td>
+               <h3>Abstract</h3>
+               <p>This article explains all&nbsp;DRM rights available in CATIA.<br>
+               </p>
+               <UL>
+                  <li>
+                     <b><a href="#Right1">Read</a></b>
+                  <li>
+                     <b><a href="#Right2">Save</a></b>
+                  <LI>
+                     <b><a href="#Right3">SaveAs (keep rights)</a></b>
+                  <LI>
+                     <b><a href="#Right4">SaveAs (change rights)</a></b>
+                  <LI>
+                     <b><a href="#Right5">Export</a></b>
+                  <LI>
+                     <b><a href="#Right6">Copy/Cut</a></b>
+                  <LI>
+                     <b><a href="#Right7">Duplicate Specifications</a></b>
+                  <LI>
+                     <b><a href="#Right8">Collaborate</a></b>
+                  <LI>
+                     <b><a href="#Right9">Duplicate Geometry</a></b>
+                  <LI>
+                     <b><a href="#Right10">Change Rights</a></b>
+                  <li>
+                     <strong><a href="#InShort">In Short</a></strong>
+                  <li>
+                     <strong><a href="#References">References</a></strong></li></UL>
+            </td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="Right1"></a>Read (CATDRM_READ)</h3>
+      <P>Most simple right, you allow to open&nbsp;file. Open could be done through 
+         interactive&nbsp;File/Open, File/SendTo or CAA APIs like 
+         CATDocumentServices::Open.<BR>
+         Without this right, there is no way to access to content of file (either 
+         interactively or through APIs).</P>
+      <h3><a name="Right2"></a>Save (CATDRM_SAVE)</h3>
+      <P>Through this right, you can forbid save of a file. It insure that this file 
+         will not be modified.<BR>
+         Protection is applied interactively and through CAA APIs 
+         (CATDocumentServices::Save).</P>
+      <H3><A name="Right3"></A>Save As, keep rights (CATDRM_INHERIT_SAVEAS)</H3>
+      <P>Through this right, you can forbid Save As. If you want to forbid all Save, you 
+         have also to revoke SaveAs Inherit.<BR>
+         Allowing this right is safe because DRM protection is kept on new created file, 
+         there is no risk for your IP.<BR>
+         You should never provide SaveAs and SaveAs inherit to same user.</P>
+      <H3><A name="Right4"></A>Save As, change rights (CATDRM_SAVEAS)</H3>
+      <P>Through this right, you can forbid Save As. If you want to forbid all Save, you 
+         have also to revoke SaveAs Inherit.<BR>
+         This right is a very specific one: each save of file with change file 
+         protection to default one defined by user exit.<BR>
+         In order to be able to resave a document without any DRM 
+         protection, this right must be granted to a user. As the CATDRM_EDITRIGHT, for security purpose, it should also be reserved for the 
+         document owner and some Data administrator.<BR>
+         You should never provide SaveAs and SaveAs inherit to same user.</P>
+      <H3><A name="Right5"></A>Export (CATDRM_EXPORT)</H3>
+      <P>This right allow to forbid Save to another format (STEP, IGES...). This right 
+         is necessary as all these formats don't support CATIA DRM protection.<BR>
+         Protection is applied interactively and through CAA APIs 
+         (CATDocumentServices::SaveAs).</P>
+      <P><STRONG>Specific case: </STRONG>Save as of CATProduct<BR>
+         CATProduct contains lot of file.&nbsp;Save As&nbsp;of CATProduct will be 
+         allowed only if all files included in CATProduct (sub CATProduct, CATPart...) 
+         allow Save As.</P>
+      <P><STRONG>Specific case:</STRONG> Save as CGR<BR>
+         CGR files are V5 files, so they support DRM protection.<BR>
+         When you Save as cgr a CATPart with DRM protection (if you have this right), 
+         CATIA automatically propagate CATPart rights to cgr file.<BR>
+         When you Save as cgr a CATProduct with DRM protection (if you have this right), 
+         CATIA will apply default DRM right to created cgr.</P>
+      <H3><A name="Right6"></A>Copy/Cut (CATDRM_COPY)</H3>
+      <P>This right allow to forbid all Copy, Cut and Drag&amp;Drop commands on 
+         protected files. All copy format are protected.<BR>
+         To protect specification exchange, you have to associate three rights 
+         Collaborate, Duplicate Specs and Copy.<BR>
+         To protect geometry exchange, you have to associate three rights Duplicate 
+         Geometry and Copy.</P>
+      <H3><A name="Right7"></A>Duplicate Specifications (CATDRM_DUPLICATE_SPECS)</H3>
+      <P>This right allow to forbid advanced specification duplication through PowerCopy 
+         and UserFeature instantiation.<BR>
+         To protect specification exchange, you have to associate three rights 
+         Collaborate, Duplicate Specs and Copy.</P>
+      <H3><A name="Right8"></A>Collaborate (CATDRM_COLLABORATION)</H3>
+      <P>This right allow to forbid design collaboration on specifications.<BR>
+         To protect specification exchange, you have to associate three rights 
+         Collaborate, Duplicate Specs and Copy.
+         <H3><A name="Right9"></A>Duplicate Geometry (CATDRM_COPY_GEOMETRY)</H3>
+      <P>This right allow to protect export of&nbsp; geometry from one CATPart to 
+         another one. This protection is applied to Copy/Paste As Result and&nbsp;As 
+         Result with link, to import in Product context, to DF1 tool to generate result 
+         CATPart.<BR>
+         You should allow this right if you want to be able to perform contextual 
+         design. It allow to import geometry in Product context (through selection in 3D 
+         or in tree).<BR>
+         To protect geometry exchange, you have to associate three rights Duplicate 
+         Geometry and Copy.</P>
+      <H3><A name="Right10"></A>Change Rights (CATDRM_EDITRIGHT)</H3>
+      <P>This right is a little different. It is not directly used in CATIA as DRM right 
+         edition in managed only by DRM implementation. It has been defined on CATIA 
+         side to help CAA implementation (it is easier to manage it in same way than 
+         other rights).<BR>
+         The only CATIA impact is to enable or disable 'Edit Right' button in 
+         File/Document Property/DRM Protection tab.<BR>
+      </P>
+      <P>
+         <hr>
+      <!---------------------------------comment------------------------------------->
+      <P></P>
+      <h3><a name="InShort"></a>In Short</h3>
+      <P>This article describes DRM rights available in CATIA.</P>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="References"></a>References</h3>
+      <table width="100%" id="Table1">
+         <tr>
+            <td valign="top">[1]</td>
+            <td></td>
+         </tr>
+         <tr>
+            <td valign="top">[2]</td>
+            <td></td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <h3><a name="History"></a>History</h3>
+      <table width="100%" id="Table2">
+         <tr>
+            <td valign="top">Version: <strong>1</strong> [Jan 2007]</td>
+            <td valign="top">Document created</td>
+         </tr>
+         <tr>
+            <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+         </tr>
+      </table>
+      <hr>
+      <!---------------------------------comment------------------------------------->
+      <p><i>Copyright © 1994-2007, Dassault Systèmes. All rights reserved.</i></p>
+   </body>
+</html>

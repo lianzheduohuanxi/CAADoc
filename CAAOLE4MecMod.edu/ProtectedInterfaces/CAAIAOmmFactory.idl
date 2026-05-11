@@ -1,0 +1,37 @@
+// COPYRIGHT DASSAULT SYSTEMES 1994-2000
+//===================================================================
+//
+// CAAIOmmFactory.idl
+// Automation interface for the OmmFactory element 
+//
+//===================================================================
+#ifndef CAAIOmmFactory_IDL
+#define CAAIOmmFactory_IDL
+
+#include "CATIAFactory.idl"
+#include "CATIAReference.idl"
+
+#include "CAAIAOmmVerticalLine.idl"
+
+
+// Interface enabling objects creation such as the CAAOmmVerticalLine
+interface CAAIAOmmFactory : CATIAFactory 
+{
+    // Creates a CAAOmmVerticalLine from 2 points, the second one defining the
+	// line limits along the Y axis
+	// Those points are given as references : they could be vertices 
+    HRESULT AddNewVerticalLine( 
+          in                 CATIAReference         ipiReferenceOnPoint1,
+          in                 CATIAReference         ipiReferenceOnPoint2,
+          out /*IDLRETVAL*/  CAAIAOmmVerticalLine   opiVerticalLineOnLine);
+};
+
+// Interface name : CAAIOmmFactory
+#pragma ID CAAIAOmmFactory "DCE:c726e680-1538-11d4-9eea00508b675465"
+#pragma DUAL CAAIAOmmFactory
+
+// VB object name : OmmFactory (Id used in Visual Basic)
+#pragma ID OmmFactory "DCE:c726e681-1538-11d4-9eea00508b675465"
+#pragma ALIAS CAAIAOmmFactory OmmFactory
+
+#endif

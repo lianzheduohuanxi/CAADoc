@@ -1,0 +1,315 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Multi Patch NURBS Surface</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating a Multi Patch NURBS Surface</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A NURBS can be dressed by using the CATICGMTopSkin operator. You can 
+		do this operation either on a single patch or a multi patch NURBS. This 
+		article explains how to proceed for a multi patch NURBS.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsNurbsSurfMultiPatch Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsNurbsSurfMultiPatch 
+				Do?</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsNurbsSurfMultiPatch</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsNurbsSurfMultiPatch 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you create a multi patch NURBS surface, then 
+transform one of its patches into a skin.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsNurbsSurfMultiPatch Use Case</h2>
+<p>CAAGMOperatorsNurbsSurfMultiPatch is a use case of the CAAGMOperatorsInterfaces.edu 
+framework that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsNurbsSurfMultiPatch Do?</h3>
+<p>The CAAGMOperatorsNurbsSurfMultiPatch use case:</p>
+<ul>
+	<li>Creates the geometry factory.</li>
+	<li>Creates the knot vectors along U and V.</li>
+	<li>Creates the grid of poles to be used for the NURBS surface.</li>
+	<li>Creates a rational NURBS surface and modifies one of the pole weight.</li>
+	<li>Creates a skin relying on the NURBS</li>
+	<li>Writes the model and closes the container.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsNurbsSurfMultiPatch</h3>
+<p>To launch CAAGMOperatortsNurbsSurfMultiPatch , you will need to set up the build 
+time environment, then compile CAAGMOperatorsNurbsSurfMultiPatch.m along with its 
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>If you simply type CAAGMOperatorsNurbsSurfMultiPatch with no argument, the use 
+case executes, but doesn&#39;t save the result in an NCGM file. If you want to save 
+this result, provide the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsNurbsSurfMultiPatch e:\NurbsSurfMultiPatch .NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsNurbsSurfMultiPatch Code</h3>
+<p>The CAAGMOperatorsNurbsSurfMultiPatch use case is made of a main named CAATopNurbsSurfMultiPatch.cpp 
+located in the CAAGMOperatorsNurbsSurfMultiPatch .m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsNurbsSurfMultiPatch.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are six steps in CAATopNurbsSurfMultiPatch.cpp:</p>
+<ol>
+	<li><a href="#Step1">Creating the Geometry Factory</a></li>
+	<li><a href="#Step2">Creating the Knot Vector</a></li>
+	<li><a href="#Step3">Creating the Grid of Poles</a></li>
+	<li><a href="#Step4">Creating the Nurbs Surface</a></li>
+	<li><a href="#Step5">Creating the Skin</a></li>
+	<li><a href="#Step6">Writing the Model and Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step1"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
+This creation is done by the global function <code>::CATCreateCGMContainer</code>. 
+Notice that the factory can be defined by reading a NCGM file that was previously 
+stored. In that case, the global function <code>::CATLoadCGMContainer</code> must 
+be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step2"></a>Creating the Knot Vector</h3>
+<p>Note that CATIA Version 5 does not support periodic NURBS. You can create a periodic 
+NURBS but the geometric modeler does not guarantee that the operations that can 
+be applied to such NURBS surface later on will be performed properly.</p>
+<pre class="code">long IsPeriodic= 0;
+long Degree= 3;
+long IndexOffset= 1;
+    
+// a - Create the knot vector along U
+//
+long KnotsCount1= 4;                    // 4 knots -&gt; 3 arcs/patches along U
+double Knots1[]= {0., 2., 3., 4.};
+long Multiplicities1[]= {4, 2, 1, 4};
+    
+CATKnotVector NonUniformU(Degree,IsPeriodic,KnotsCount1,Knots1,
+        Multiplicities1,IndexOffset);
+    
+// b - Create the knot vector along V
+//
+long KnotsCount2= 3;                    // 3 knots -&gt; 2 arcs/patches along V
+double Knots2[]= {0.,10.,11.};
+    
+long Multiplicities2[]= {4,2,4};
+    
+CATKnotVector NonUniformV(Degree,IsPeriodic,KnotsCount2,Knots2,
+        Multiplicities2,IndexOffset);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step3"></a>Creating the Grid of Poles</h3>
+<p>Before going any further, do not skip the warning below:</p>
+<table class="Remark">
+	<tr>
+		<td class="remark"><span class="run-in">Warning</span>: When creating a 
+		knot vector in CATIA, the number of knots to be specified in the CATKnotVector 
+		constructor is the number of knots <strong>with different values</strong>. 
+		The total number of nodes is deduced from the multiplicity array. Given 
+		this:<br>
+		<code><strong>Total </strong>number of nodes (including nodes with same 
+		value) = number of poles + degree + 1</code><br>
+		<code>Number of poles = sum of multiplicities - last multiplicity</code><br>
+		<code>Number of poles = sum of multiplicities - (degree + 1)</code></td>
+	</tr>
+</table>
+<p>In the CAAGMOperatorsNurbsSurfMultiPatch sample, a multi patch (4 nodes along 
+U and 3 nodes along V) NURBS is to be created. The following sets of data is choosen 
+for the NURBS vectors:</p>
+<ul>
+	<li>along U:<br>
+	degree of the basis functions = 3<br>
+	number of knots with different value = 4&nbsp; giving three patches<br>
+	array of multiplicities = {degree+1, 2, 1, degree+1} = {4, 2, 1, 4}</li>
+	<li>along V:<br>
+	degree of the basis functions = 3<br>
+	number of knots with different value = 3 giving two patches<br>
+	array of multiplicities = {degree+1, 2, degree+1} = {4, 2, 4}</li>
+</ul>
+<p>Therefore the number of poles to be specified along U is&nbsp; 7 while the number 
+of poles along V is 6 and the total number of poles is nbPolesU* nbPolesV = 42.</p>
+<pre class="code">int nbPoleU = 7;
+int nbPoleV = 6;
+    
+CATMathGridOfPoints gridOfPoints(nbPoleU,nbPoleV);
+    
+// Row 0
+//
+gridOfPoints.SetPoint(CATMathPoint( 0., 0., 0.),0,0);
+...
+
+// Display the control points
+//
+for (int i = 0; i &lt; nbPoleU; i++)
+    {
+        for (int j = 0; j &lt; nbPoleV; j++)
+        {
+            CATMathPoint ptToBeDisplayed = gridOfPoints.GetPoint(i,j);
+            CATCartesianPoint* piCartPt = piGeomFactory-&gt;CreateCartesianPoint(ptToBeDisplayed);
+        }
+    }</pre>
+<p>Displaying the control points allows you to check their position with respect 
+to the NURBS.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step4"></a>Creating the NURBS Surface</h3>
+<p>Prior to creating the NURBS, the control point weights are initialized.</p>
+<pre class="code">long isRational=1;    
+double * aWeights=new double[nbPoleU*nbPoleV];
+for (i = 0; i &lt; nbPoleU*nbPoleV; i++) 
+  {
+      aWeights[i] = 1.;   // Initialize the control point weights
+  }
+    
+// NURBS Surface creation
+//
+CATNurbsSurface * piSurf1 = piGeomFactory-&gt;
+        CATCreateNurbsSurface(NonUniformU, NonUniformV,isRational,gridOfPoints,aWeights);</pre>
+<p>Then the weight of the (5, 5) and (3,5) control point is modified.</p>
+<pre class="code">piSurf1-&gt;SetOneWeight(5,5,150);
+piSurf1-&gt;SetOneWeight(3,5,150);
+    </pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step5"></a>Creating the Skin</h3>
+<p>For how to create a skin, see the CAAGMOperatorsOverview
+use case[<a href="#References">2</a>]. You have to define the limits on which the 
+skin is to be applied. To specify the limits of a given patch, you must use the 
+GetInternalMaxLimits of the CATSurface class which takes as its arguments the numbers 
+allowing to locate the patch on the surface.</p>
+<pre class="code">/ Retrieve the (1,0) patch limits
+CATSurLimits surMaxLimits ;
+piSurf1-&gt;GetInternalMaxLimits(1,0,surMaxLimits) ;
+    
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATTopData topdata(pConfig);
+    
+CATICGMTopSkin * pSkinOpe =::CATCGMCreateTopSkin(piGeomFactory,
+        &amp;topdata,
+        piSurf1,
+        &amp;surMaxLimits);
+...</pre>
+<p>The resulting skin looks something like this (the green bullets are the control 
+points): </p>
+<p>
+<img alt="Resulting Skin" src="images/CAACgmTopmultipatch.gif" width="341" height="359"></p>
+<p>This is to be compared with the global surface (rational with a weight of 150 
+applied to pole [5,5] and [3,5])<br>
+</p>
+<p>
+<img alt="Global Surface" src="images/CAACgmTopmultirational.gif" width="307" height="359"></p>
+<p>For your information, this would be the corresponding rational surface:</p>
+<p>
+<img alt="Ratioanl Surface" src="images/CAACgmTopmultinonrational.gif" width="320" height="371"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step6"></a>Writing the Model and Closing the Container</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>Here are a few relations to remember when creating a NURBS</p>
+<p><code><strong>Total</strong> number of nodes = number of poles + degree + 1</code><br>
+<code>Number of poles = sum of multiplicities - last multiplicity</code><br>
+<code>Number of poles = sum of multiplicities - (degree + 1)</code></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaGobAboutNurbs.htm">
+		About NURBS</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

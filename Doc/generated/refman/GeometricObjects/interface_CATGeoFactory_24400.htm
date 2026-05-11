@@ -1,0 +1,2470 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATGeoFactory</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATGeoFactory"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATGeoFactory</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATGeoFactory_24400','CATGeoFactory','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATGeoFactory</b>
+</p>
+<p>
+<b><i> Interface representing the factory of all geometric elements.</i></b><br>
+
+<br><b>Role</b>: The CATGeoFactory creates the geometric elements. It manages the AddRef mechanism.
+ To suppress a geometric element, you must use <tt>CATICGMContainer::Remove</tt> method, 
+ that also takes in charge the AddRef mechanism.
+<br> The creation of a container implies the creation of two factories,
+ an explicit one and an implicit one.
+ All the methods described here
+ work on both, except the <tt>Next</tt> method, that only works on
+ the explicit factory. 
+<br>At the container creation, 7 implicit objects (called Datums)
+ are created and represent the canonical geometric objects: the space
+ origin <tt>CATGeoFactory::O</tt>, the infinite lines in the three directions,
+ <tt>CATGeoFactory::OI</tt>, <tt>CATGeoFactory::OJ</tt>, <tt>CATGeoFactory::OK</tt>, and the three
+ infinite planes passing through these lines 
+ <tt>CATGeoFactory::OIJ</tt>, <tt>CATGeoFactory::OJK</tt>, <tt>CATGeoFactory::OKI</tt>.
+<br>The description and the use of the entities created by the factory 
+ are described in each entity class.
+ <br><b>Lifecyle rules</b>: a CATGeoFactory is created by using the  <tt>CATCreateCGMContainer</tt> 
+ global function or
+ loaded from a stream with the  <tt>CATLoadCGMContainer</tt> global function. 
+ It can be saved on a given stream (<tt>CATLoadCGMContainer</tt>).When you do not need 
+ it anymore, you must close it
+ <tt>CATCloseCGMContainer</tt>. All these global functions can be found in the <tt>CATCGMContainerMngt.h</tt>
+ file.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATCreateNurbsCurve(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)"><b>CATCreateNurbsCurve</b></a>(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)
+<dd>  Creates a NURBS curve.
+ <dt> o 
+    <a href="#CATCreateNurbsSurface(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"><b>CATCreateNurbsSurface</b></a>(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)
+<dd>  Creates a geometric NURBS surface.
+ <dt> o 
+    <a href="#CATCreatePNurbs(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)"><b>CATCreatePNurbs</b></a>(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)
+<dd>  Creates a NURBS curve defined in the space of a surface.
+ <dt> o 
+    <a href="#Compare(CATMathPoint&amp;,CATMathPoint&amp;)"><b>Compare</b></a>(CATMathPoint&amp;,CATMathPoint&amp;)
+<dd>  Tests the confusion of 2 points.
+ <dt> o 
+    <a href="#CreateBody()"><b>CreateBody</b></a>()
+<dd>  Creates  an empty topological body.
+ <dt> o 
+    <a href="#CreateBody(CATBodyMode,char[],char*,int)"><b>CreateBody</b></a>(CATBodyMode,char[],char*,int)
+<dd>  Creates  an empty topological body.
+ <dt> o 
+    <a href="#CreateCartesianPoint(CATMathPoint&amp;)"><b>CreateCartesianPoint</b></a>(CATMathPoint&amp;)
+<dd>  Creates a geometric point from a mathematical point.
+ <dt> o 
+    <a href="#CreateCartesianPoint(double,double,double)"><b>CreateCartesianPoint</b></a>(double,double,double)
+<dd>  Creates a geometric point from its cartesian
+ coordinates.
+ <dt> o 
+    <a href="#CreateCircle(double,CATMathPlane&amp;)"><b>CreateCircle</b></a>(double,CATMathPlane&amp;)
+<dd>  Creates a geometric circle.
+ <dt> o 
+    <a href="#CreateCircle(double,CATMathPlane&amp;,CATAngle,CATAngle)"><b>CreateCircle</b></a>(double,CATMathPlane&amp;,CATAngle,CATAngle)
+<dd>  Creates a geometric circle arc.
+ <dt> o 
+    <a href="#CreateCompositeLaw(CATLONG32,double*,CATMathFunctionX**)"><b>CreateCompositeLaw</b></a>(CATLONG32,double*,CATMathFunctionX**)
+<dd>   Constructs a composite law.
+ <dt> o 
+    <a href="#CreateCone(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,double,double)"><b>CreateCone</b></a>(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,double,double)
+<dd>  Creates a frustum of a geometric cone.
+ <dt> o 
+    <a href="#CreateConstantLaw(CATConstantLaw*)"><b>CreateConstantLaw</b></a>(CATConstantLaw*)
+<dd>   Duplicates <tt>this</tt> law.
+ <dt> o 
+    <a href="#CreateConstantLaw(double,double,double)"><b>CreateConstantLaw</b></a>(double,double,double)
+<dd>   Creates a constant law.
+ <dt> o 
+    <a href="#CreateCylinder(CATMathAxis&amp;,double&amp;,double&amp;,double&amp;,CATAngle&amp;,CATAngle&amp;)"><b>CreateCylinder</b></a>(CATMathAxis&amp;,double&amp;,double&amp;,double&amp;,CATAngle&amp;,CATAngle&amp;)
+<dd>  Creates a piece of a geometric cylinder.
+ <dt> o 
+    <a href="#CreateEllipse(double,double,CATMathPlane&amp;)"><b>CreateEllipse</b></a>(double,double,CATMathPlane&amp;)
+<dd>  Creates a geometric ellipse.
+ <dt> o 
+    <a href="#CreateEllipse(double,double,CATMathPlane&amp;,CATAngle,CATAngle)"><b>CreateEllipse</b></a>(double,double,CATMathPlane&amp;,CATAngle,CATAngle)
+<dd>  Creates a geometric ellipse arc.
+ <dt> o 
+    <a href="#CreateForeignCurve(CATForeignCurveData*)"><b>CreateForeignCurve</b></a>(CATForeignCurveData*)
+<dd>  Creates a foreign curve.
+ <dt> o 
+    <a href="#CreateForeignPCurve(CATForeignPCurveData*,CATSurface*)"><b>CreateForeignPCurve</b></a>(CATForeignPCurveData*,CATSurface*)
+<dd>  Creates a foreign Pcurve.
+ <dt> o 
+    <a href="#CreateForeignSurface(CATForeignSurfaceData*)"><b>CreateForeignSurface</b></a>(CATForeignSurfaceData*)
+<dd>  Creates a foreign surface.
+ <dt> o 
+    <a href="#CreateHelix(CATMathLine&amp;,CATMathPoint&amp;,CATAngle,CATAngle,double,CATLONG32,double)"><b>CreateHelix</b></a>(CATMathLine&amp;,CATMathPoint&amp;,CATAngle,CATAngle,double,CATLONG32,double)
+<dd>  Creates a geometric helix.
+ <dt> o 
+    <a href="#CreateLine(CATPoint*,CATPoint*)"><b>CreateLine</b></a>(CATPoint*,CATPoint*)
+<dd>  Creates a trimmed geometric line from two geometric points.
+ <dt> o 
+    <a href="#CreateLine(CATMathPoint&amp;,CATMathPoint&amp;)"><b>CreateLine</b></a>(CATMathPoint&amp;,CATMathPoint&amp;)
+<dd>  Creates a trimmed geometric line from two mathematical points.
+ <dt> o 
+    <a href="#CreateLine(CATPoint*,CATPoint*,CATCrvLimits&amp;)"><b>CreateLine</b></a>(CATPoint*,CATPoint*,CATCrvLimits&amp;)
+<dd>  Creates an untrimmed geometric line from 2 geometric points.
+ <dt> o 
+    <a href="#CreateLine(CATMathPoint&amp;,CATMathDirection&amp;)"><b>CreateLine</b></a>(CATMathPoint&amp;,CATMathDirection&amp;)
+<dd>  Creates an untrimmed geometricl line from a mathematical point and a direction.
+ <dt> o 
+    <a href="#CreateLine(CATMathPoint&amp;,CATMathPoint&amp;,CATCrvLimits&amp;)"><b>CreateLine</b></a>(CATMathPoint&amp;,CATMathPoint&amp;,CATCrvLimits&amp;)
+<dd>  Creates an untrimmed geometric line from 2 mathematical points.
+ <dt> o 
+    <a href="#CreateLinearLaw(CATLinearLaw*)"><b>CreateLinearLaw</b></a>(CATLinearLaw*)
+<dd>   Duplicates <tt>this</tt> law.
+ <dt> o 
+    <a href="#CreateLinearLaw(double,double,double,double)"><b>CreateLinearLaw</b></a>(double,double,double,double)
+<dd>   Creates a linear law.
+ <dt> o 
+    <a href="#CreateMacroPoint()"><b>CreateMacroPoint</b></a>()
+<dd>  Creates an empty CATMacroPoint.
+ <dt> o 
+    <a href="#CreateMacroPoint(CATLISTP(CATPoint)&amp;)"><b>CreateMacroPoint</b></a>(CATLISTP(CATPoint)&amp;)
+<dd>  Creates a geometric point aggregating several geometric points.
+ <dt> o 
+    <a href="#CreateNurbsCurve(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)"><b>CreateNurbsCurve</b></a>(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)
+<dd>  
+ <dt> o 
+    <a href="#CreateNurbsSurface(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"><b>CreateNurbsSurface</b></a>(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)
+<dd>  
+ <dt> o 
+    <a href="#CreateOffsetSurface(double,CATSurface*,CATSurLimits&amp;)"><b>CreateOffsetSurface</b></a>(double,CATSurface*,CATSurLimits&amp;)
+<dd>  Creates a geometric offseted surface.
+ <dt> o 
+    <a href="#CreatePCircle(double,CATSurParam&amp;,CATSurface*)"><b>CreatePCircle</b></a>(double,CATSurParam&amp;,CATSurface*)
+<dd>  Creates an untrimmed geometric circle defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePCircle(double,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"><b>CreatePCircle</b></a>(double,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)
+<dd>  Creates a trimmed geometric circle defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePCircle(CATSurParam&amp;,CATSurParam&amp;,CATSurParam&amp;,CATSurface*)"><b>CreatePCircle</b></a>(CATSurParam&amp;,CATSurParam&amp;,CATSurParam&amp;,CATSurface*)
+<dd>   Creates a trimmed geometric circle defined in the space of a surface
+ from 3 points.
+ <dt> o 
+    <a href="#CreatePEllipse(CATMathAxis2D&amp;,double&amp;,double&amp;,CATSurface*)"><b>CreatePEllipse</b></a>(CATMathAxis2D&amp;,double&amp;,double&amp;,CATSurface*)
+<dd>  Creates an untrimmed ellipse defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePEllipse(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATSurface*)"><b>CreatePEllipse</b></a>(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATSurface*)
+<dd>  Creates an untrimmed ellipse defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePEllipse(CATMathAxis2D&amp;,double&amp;,double&amp;,CATAngle,CATAngle,CATSurface*)"><b>CreatePEllipse</b></a>(CATMathAxis2D&amp;,double&amp;,double&amp;,CATAngle,CATAngle,CATSurface*)
+<dd>  Creates a trimmed ellipse defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePEllipse(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"><b>CreatePEllipse</b></a>(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)
+<dd>  Creates a trimmed ellipse defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePHyperbola(CATMathAxis2D&amp;,double,double,CATSurface*)"><b>CreatePHyperbola</b></a>(CATMathAxis2D&amp;,double,double,CATSurface*)
+<dd>  Creates an untrimmed hyperbola defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePHyperbola(CATMathAxis2D&amp;,double,double,double,double,CATSurface*)"><b>CreatePHyperbola</b></a>(CATMathAxis2D&amp;,double,double,double,double,CATSurface*)
+<dd>  Creates a trimmed hyperbola defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePLine(CATSurParam&amp;,CATSurParam&amp;,CATSurface*)"><b>CreatePLine</b></a>(CATSurParam&amp;,CATSurParam&amp;,CATSurface*)
+<dd>  Creates a trimmed geometric line defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePNurbs(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)"><b>CreatePNurbs</b></a>(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)
+<dd>  
+ <dt> o 
+    <a href="#CreatePParabola(CATMathAxis2D&amp;,double,CATSurface*)"><b>CreatePParabola</b></a>(CATMathAxis2D&amp;,double,CATSurface*)
+<dd>  Creates an untrimmed parabola defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePParabola(CATMathAxis2D&amp;,double,double,double,CATSurface*)"><b>CreatePParabola</b></a>(CATMathAxis2D&amp;,double,double,double,CATSurface*)
+<dd>  Creates a trimmed parabola defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePSpline(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,double*,CATSurface*)"><b>CreatePSpline</b></a>(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,double*,CATSurface*)
+<dd>  Creates a cubic spline curve defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePSpline(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATSurface*)"><b>CreatePSpline</b></a>(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATSurface*)
+<dd>  Creates a quintic spline curve defined in the space of a surface.
+ <dt> o 
+    <a href="#CreatePlane(CATMathPlane&amp;)"><b>CreatePlane</b></a>(CATMathPlane&amp;)
+<dd>  Creates a geometric plane from a mathematical plane.
+ <dt> o 
+    <a href="#CreatePlane(CATMathDirection&amp;,double&amp;)"><b>CreatePlane</b></a>(CATMathDirection&amp;,double&amp;)
+<dd>  Creates a geometric plane at a distance to a CATMathPlane.
+ <dt> o 
+    <a href="#CreatePlane(CATMathPoint&amp;,CATMathPoint&amp;,CATMathPoint&amp;)"><b>CreatePlane</b></a>(CATMathPoint&amp;,CATMathPoint&amp;,CATMathPoint&amp;)
+<dd>  Creates a geometric plane from 3 mathematical points.
+ <dt> o 
+    <a href="#CreatePointOnCurve(CATCrvParam&amp;,CATCurve*)"><b>CreatePointOnCurve</b></a>(CATCrvParam&amp;,CATCurve*)
+<dd>  Creates a geometric point lying on a geometric curve from its parameter
+ on the curve.
+ <dt> o 
+    <a href="#CreatePointOnEdgeCurve(CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)"><b>CreatePointOnEdgeCurve</b></a>(CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)
+<dd>  Creates a geometric point lying on a CATEdgeCurve from its parameter
+ on one of the aggregated curves.
+ <dt> o 
+    <a href="#CreatePointOnEdgeCurve(CATLONG32,CATCurve*[],CATCrvParam[],CATEdgeCurve*)"><b>CreatePointOnEdgeCurve</b></a>(CATLONG32,CATCurve*[],CATCrvParam[],CATEdgeCurve*)
+<dd>  Creates a geometric point lying on a CATEdgeCurve from its parameters
+ on a given number of the aggregated curves.
+ <dt> o 
+    <a href="#CreatePointOnEdgeCurve(CATCurve*,CATCrvParam&amp;,CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)"><b>CreatePointOnEdgeCurve</b></a>(CATCurve*,CATCrvParam&amp;,CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)
+<dd>  Creates a geometric point lying on a CATEdgeCurve from its parameters
+ on two of the aggregated curves.
+ <dt> o 
+    <a href="#CreatePointOnSurface(CATSurParam&amp;,CATSurface*)"><b>CreatePointOnSurface</b></a>(CATSurParam&amp;,CATSurface*)
+<dd>  Creates a geometric point lying on a surface.
+ <dt> o 
+    <a href="#CreateRevolutionSurface(CATCurve*,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;)"><b>CreateRevolutionSurface</b></a>(CATCurve*,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;)
+<dd>  Creates a trimmed geometric revolution surface.
+ <dt> o 
+    <a href="#CreateRevolutionSurface(CATCurve*,CATCrvLimits&amp;,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;,CATBoolean&amp;)"><b>CreateRevolutionSurface</b></a>(CATCurve*,CATCrvLimits&amp;,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;,CATBoolean&amp;)
+<dd>  Creates a CATRevolutionSurface.
+ <dt> o 
+    <a href="#CreateSimCurve(CATLISTP(CATCurve)&amp;,CATLISTP(CATCrvLimits)&amp;,CATListOfInt&amp;,double)"><b>CreateSimCurve</b></a>(CATLISTP(CATCurve)&amp;,CATLISTP(CATCrvLimits)&amp;,CATListOfInt&amp;,double)
+<dd>  Creates the curve that aggregates identical curves.
+ <dt> o 
+    <a href="#CreateSphere(CATMathAxis&amp;,double)"><b>CreateSphere</b></a>(CATMathAxis&amp;,double)
+<dd>  Creates a geometric sphere.
+ <dt> o 
+    <a href="#CreateSphere(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)"><b>CreateSphere</b></a>(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)
+<dd>  Creates a piece of a geometric sphere.
+ <dt> o 
+    <a href="#CreateSplineCurve(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,double*)"><b>CreateSplineCurve</b></a>(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,double*)
+<dd>  Creates a cubic Spline curve.
+ <dt> o 
+    <a href="#CreateSplineCurve(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATLONG32)"><b>CreateSplineCurve</b></a>(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATLONG32)
+<dd>  Creates a quintic 3d spline curve.
+ <dt> o 
+    <a href="#CreateSplineLaw(CATSplineLaw*)"><b>CreateSplineLaw</b></a>(CATSplineLaw*)
+<dd>   Duplicates <tt>this</tt> law.
+ <dt> o 
+    <a href="#CreateSplineLaw(CATLONG32,double*,double*)"><b>CreateSplineLaw</b></a>(CATLONG32,double*,double*)
+<dd>   Creates a spline law.
+ <dt> o 
+    <a href="#CreateTabulatedCylinder(CATCurve*,CATMathDirection&amp;,double&amp;,double&amp;)"><b>CreateTabulatedCylinder</b></a>(CATCurve*,CATMathDirection&amp;,double&amp;,double&amp;)
+<dd>  Creates a trimmed tabulated cylinder.
+ <dt> o 
+    <a href="#CreateTabulatedCylinder(CATCurve*,CATCrvLimits&amp;,CATMathDirection&amp;,double&amp;,double&amp;,CATBoolean&amp;)"><b>CreateTabulatedCylinder</b></a>(CATCurve*,CATCrvLimits&amp;,CATMathDirection&amp;,double&amp;,double&amp;,CATBoolean&amp;)
+<dd>  Creates a CATTabulatedCylinder.
+ <dt> o 
+    <a href="#CreateTorus(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATBoolean)"><b>CreateTorus</b></a>(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATBoolean)
+<dd>  Creates a piece of a geometric self-intersecting torus.
+ <dt> o 
+    <a href="#CreateTorus(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATAngle,CATAngle)"><b>CreateTorus</b></a>(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATAngle,CATAngle)
+<dd>  Creates a piece of a geometric torus.
+ <dt> o 
+    <a href="#GetDatum(CATGeoFactory::CATDatumId)"><b>GetDatum</b></a>(CATGeoFactory::CATDatumId)
+<dd>  Returns a constant pointer to a given datum.
+ <dt> o 
+    <a href="#GetImplicitGeoFactory()"><b>GetImplicitGeoFactory</b></a>()
+<dd>  Returns a pointer to the implicit geometric factory.
+ <dt> o 
+    <a href="#GetInfinite()"><b>GetInfinite</b></a>()
+<dd>  Retrieves the size of the box centered at origin which contains all the objects, including infinite objects.
+ <dt> o 
+    <a href="#GetModelSize()"><b>GetModelSize</b></a>()
+<dd>  Returns the model size associated with <tt>this</tt> CATGeoFactory.
+ <dt> o 
+    <a href="#GetResolution(CATResolutionType)"><b>GetResolution</b></a>(CATResolutionType)
+<dd>  Returns the minimum length of a valid object.
+ <dt> o 
+    <a href="#GetUnit()"><b>GetUnit</b></a>()
+<dd>  Retrieves the model unit.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATDatumId"><b>CATDatumId</b></a>
+<dd>  The canonical (implicit) objects.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CATCreateNurbsCurve"></a><a name="CATCreateNurbsCurve(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>CATCreateNurbsCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATNurbsCurve','CATNurbsCurve*')</script>  <b>CATCreateNurbsCurve</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPoints','CATMathSetOfPoints&amp;')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization</tt>)<script type="text/javascript"> activateLink('=0',' =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a NURBS curve.
+ <br>Please refer to the enclycopedia to have a detailed
+ description of the NURBS representation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKnotVector</tt>
+   <dd> The nodal vector.
+ </dd>
+    <dt><tt> iIsRational</tt>
+   <dd> <b>Legal values</b>: 1 if the NURBS is rational, 0 otherwise.
+ </dd>
+    <dt><tt> iVertices</tt>
+   <dd> The list of the vertices.
+ </dd>
+    <dt><tt> iWeigths</tt>
+   <dd> The array of the weights.
+ </dd>
+    <dt><tt> iParameterizationOption</tt>
+   <dd> The option of parameterization. By default, the parameterization of the NURBS is modified to better
+ fit internal criteria. In this case, you can recover the initial parameterization 
+ with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATNurbsCurve','GetOriginalParametrisationDATA','CATNurbsCurve.GetOriginalParametrisationDATA') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created curve.
+</dl>
+</dl>
+</dl>
+<a name="CATCreateNurbsSurface"></a><a name="CATCreateNurbsSurface(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>CATCreateNurbsSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATNurbsSurface','CATNurbsSurface *')</script>  <b>CATCreateNurbsSurface</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVectorU</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVectorV</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathGridOfPoints','CATMathGridOfPoints&amp;')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric NURBS surface. 
+ Please refer to the enclycopedia to have a detailed
+ description of the NURBS representation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKnotVectorU</tt>
+   <dd> The nodal vector in the first direction.
+ </dd>
+    <dt><tt> iKnotVectorV</tt>
+   <dd> The nodal vector in the second direction.
+ </dd>
+    <dt><tt> iIsRational</tt>
+   <dd> <b>Legal values</b>: 1 if the NURBS is rational, 0 otherwise.
+ </dd>
+    <dt><tt> iVertices</tt>
+   <dd> The grid of the vertices.
+ </dd>
+    <dt><tt> iWeigths</tt>
+   <dd> The array of the weights.
+ </dd>
+    <dt><tt> iParameterizationOption</tt>
+   <dd> The option of parameterization. By default, the parameterization of the NURBS is modified to better
+ fit internal criteria. In this case, you can recover the initial parameterization 
+ with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATNurbsSurface','GetOriginalParametrisationDATA','CATNurbsSurface.GetOriginalParametrisationDATA') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created surface.
+</dl>
+</dl>
+</dl>
+<a name="CATCreatePNurbs"></a><a name="CATCreatePNurbs(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)"></a> <dt> o <b>CATCreatePNurbs</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPNurbs','CATPNurbs *')</script>  <b>CATCreatePNurbs</b>(<td><script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a NURBS curve defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKnotVector</tt>
+   <dd> The nodal vector.
+ </dd>
+    <dt><tt> iIsRational</tt>
+   <dd> <b>Legal values</b>: 1 if the NURBS is rational, 0 otherwise.
+ </dd>
+    <dt><tt> iVertices</tt>
+   <dd> The list of the vertices. The vertices (control points) coordinates are given as surface parameters in the
+ following order: <tt>u1, v1, u2, v2,...</tt>. Please refer to the enclycopedia to have a detailed
+ description of the NURBS representation.
+ </dd>
+    <dt><tt> iWeigths</tt>
+   <dd> The array of the weights.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the nurbs is created.
+ </dd>
+    <dt><tt> iParameterizationOption</tt>
+   <dd> The option of parameterization. By default, the parameterization of the NURBS is modified to better
+ fit internal criteria. In this case, you can recover the initial parameterization 
+ with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPNurbs','GetOriginalParametrisationDATA','CATPNurbs.GetOriginalParametrisationDATA') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created curve.
+</dl>
+</dl>
+</dl>
+<a name="Compare"></a><a name="Compare(CATMathPoint&amp;,CATMathPoint&amp;)"></a> <dt> o <b>Compare</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>Compare</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint2</tt>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests the confusion of 2 points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoint1</tt>
+   <dd> The first point to compare.
+ </dd>
+    <dt><tt> iPoint2</tt>
+   <dd> The second point to compare.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl><dt><tt>FALSE</tt>    <dd> if the distance between the 2 points is 
+                            smaller than the resolution.
+     <dt><tt>TRUE</tt>    <dd> if the distance between the 2 points is 
+                            larger than the resolution.
+ </dl>
+</dl>
+</dl>
+<a name="CreateBody"></a><a name="CreateBody()"></a> <dt> o <b>CreateBody</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>CreateBody</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates  an empty topological body.
+<br> This object is mainly used by the TopologicalObjects framework.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created body.
+</dl>
+</dl>
+<a name="CreateBody"></a><a name="CreateBody(CATBodyMode,char[],char*,int)"></a> <dt> o <b>CreateBody</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>CreateBody</b>(<td><script type="text/javascript"> activateLink('CATBodyMode','CATBodyMode')</script> <td><tt>iMode</tt><td><tt>= CatBodyMode_Working </tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char[]')</script> <td><tt>iRole</tt><td><tt>= "Unknown"</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iTracability</tt><td><tt>= NULL </tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iLine</tt><td><tt>= 0 </tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates  an empty topological body.
+<br> This object is mainly used by the TopologicalObjects framework.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>   Option for initial working mode (to reconsider only in case of specific PCS smart management case study). 
+   By default, data structure are set for best working conditions with core operations (Boolean,Tessellation).
+ </dd>
+    <dt><tt> iRole</tt>
+   <dd>   Helpers for support. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The pointer to the created body.
+</dl>
+</dl>
+<a name="CreateCartesianPoint"></a><a name="CreateCartesianPoint(CATMathPoint&amp;)"></a> <dt> o <b>CreateCartesianPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCartesianPoint','CATCartesianPoint *')</script>  <b>CreateCartesianPoint</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iMathPointToCopy</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point from a mathematical point.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMathPointToCopy</tt>
+   <dd> The mathematical point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateCartesianPoint"></a><a name="CreateCartesianPoint(double,double,double)"></a> <dt> o <b>CreateCartesianPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCartesianPoint','CATCartesianPoint *')</script>  <b>CreateCartesianPoint</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iFirstCoord</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iSecondCoord</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iThirdCoord</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point from its cartesian
+ coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFirstCoord</tt>
+   <dd> The first coordinate of the point.
+ </dd>
+    <dt><tt> iSecondCoord</tt>
+   <dd> The second coordinate of the point.
+ </dd>
+    <dt><tt> iThirdCoord</tt>
+   <dd> The third coordinate of the point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateCircle"></a><a name="CreateCircle(double,CATMathPlane&amp;)"></a> <dt> o <b>CreateCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCircle','CATCircle *')</script>  <b>CreateCircle</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iMathPlane</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric circle.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRadius</tt>
+   <dd> The radius.
+ </dd>
+    <dt><tt> iMathPlane</tt>
+   <dd> The plane defining the center and axis of the circle.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created circle.
+</dl>
+</dl>
+<a name="CreateCircle"></a><a name="CreateCircle(double,CATMathPlane&amp;,CATAngle,CATAngle)"></a> <dt> o <b>CreateCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCircle','CATCircle *')</script>  <b>CreateCircle</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iMathPlane</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric circle arc.
+<br> The circle center is the origin of the plane.
+<br><b>Note</b> <tt> 0 <= iStart < CAT2PI</tt>, 
+ <tt>iStart < iEnd <= iStart + CAT2PI</tt>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRadius</tt>
+   <dd> The radius.
+ </dd>
+    <dt><tt> iMathPlane</tt>
+   <dd> The plane defining the center and axis of the circle.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first angle limitation (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last angle limitation (in Radians).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created circle.
+</dl>
+</dl>
+<a name="CreateCompositeLaw"></a><a name="CreateCompositeLaw(CATLONG32,double*,CATMathFunctionX**)"></a> <dt> o <b>CreateCompositeLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCompositeLaw','CATCompositeLaw *')</script>  <b>CreateCompositeLaw</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbrOfFunctions</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iBorders</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX**')</script> <td><tt>iFunctions</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Constructs a composite law.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbrOfFunctions</tt>
+   <dd> The number of CATMathFunctionX intended to be used in the composite law.
+ </dd>
+    <dt><tt> iBorders</tt>
+   <dd> The array of the CATMathFunctionX borders.
+ </dd>
+    <dt><tt> iFunctions</tt>
+   <dd> The array of pointers to the CATMathFunctionX intended to be used in the
+ composite law.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateCone"></a><a name="CreateCone(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,double,double)"></a> <dt> o <b>CreateCone</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCone','CATCone *')</script>  <b>CreateCone</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iConeAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iStartRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iConeAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStartAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEndAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iStartRuleLength</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iEndRuleLength</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a frustum of a geometric cone.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iConeAxis</tt>
+   <dd> The cone axis: 
+ <ul>
+ <li>The third direction is the rotation axis. </li>
+ <li>The first direction is the angle reference. Start and end angles are counted from 
+ this direction.</li>
+ <li>The first and second directions define a plane which supports the base radius.</li>
+ </ul>
+ </dd>
+    <dt><tt> iStartRadius</tt>
+   <dd> The radius on the plane defined by the first and second directions of iConeAxis.
+ </dd>
+    <dt><tt> iConeAngle</tt>
+   <dd> The external angle of the cone in radians (angle between the cone and the plane supporting the base radius).
+ The validity range of the cone angle is: <br>
+ <tt>0 < ConeAngle < Pi/2</tt>.
+ </dd>
+    <dt><tt> iStartAngle</tt>
+   <dd> The start angle in radians, counted from the first direction of iConeAxis.
+ When standing along the third direction of iConeAxis, 
+ on the plane defined by the first and second directions of iConeAxis, positive angles
+ are counter-clockwise(right-hand rule). 
+ If angle values are too large or inconsistent, the cone is created around 2*Pi.
+ </dd>
+    <dt><tt> iEndAngle</tt>
+   <dd> The end angle in radians, counted from the first direction of iConeAxis.
+ When standing along the third direction of iConeAxis, 
+ on the plane defined by the first and second directions of iConeAxis, positive angles
+ are counter-clockwise(right-hand rule). 
+ If angle values are too large or inconsistent, the cone is created around 2*Pi.
+ </dd>
+    <dt><tt> iStartRuleLength</tt>
+   <dd> The start limit of the cone <b>slant height</b> (the length is not
+ counted along the third direction of iConeAxis but along the cone surface).
+ </dd>
+    <dt><tt> iEndRuleLength</tt>
+   <dd> The end limit of the cone <b>slant height</b> (the length is not
+ counted along the third direction of iConeAxis but along the cone surface).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created cone.
+</dl>
+</dl>
+<a name="CreateConstantLaw"></a><a name="CreateConstantLaw(CATConstantLaw*)"></a> <dt> o <b>CreateConstantLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATConstantLaw','CATConstantLaw *')</script>  <b>CreateConstantLaw</b>(<td><script type="text/javascript"> activateLink('CATConstantLaw','CATConstantLaw*')</script> <td><tt>iToCopy</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Duplicates <tt>this</tt> law.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToCopy</tt>
+   <dd> The pointer to the law to copy.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateConstantLaw"></a><a name="CreateConstantLaw(double,double,double)"></a> <dt> o <b>CreateConstantLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATConstantLaw','CATConstantLaw *')</script>  <b>CreateConstantLaw</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iTMin</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iTMax</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iConstant</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Creates a constant law.
+ <br>A law is a function <tt>L</tt> of one parameter <tt>iT</tt> on a given 1D interval
+ <tt>[iTmin,iTmax]</tt>. A constant law is such that <tt>L(iT)=iConstant</tt> on the
+ definition interval.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTMin</tt>
+   <dd> The lower bound of the definition interval.
+ </dd>
+    <dt><tt> iTMax</tt>
+   <dd> The upper bound of the definition interval.
+ </dd>
+    <dt><tt> iConstant</tt>
+   <dd> The constant value on the interval.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateCylinder"></a><a name="CreateCylinder(CATMathAxis&amp;,double&amp;,double&amp;,double&amp;,CATAngle&amp;,CATAngle&amp;)"></a> <dt> o <b>CreateCylinder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCylinder','CATCylinder *')</script>  <b>CreateCylinder</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iAxisStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iAxisEnd</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iAngleStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iAngleEnd</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a piece of a geometric cylinder.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The axis of the cylinder: 
+ <ul>
+ <li>The third direction is the rotation axis. </li>
+ <li>The first direction is the angle reference. Start and end angles are counted from 
+ this direction.</li>
+ </ul>
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd> The radius of the cylinder on the plane defined by the first 
+ and second directions of iAxis.
+ </dd>
+    <dt><tt> iAxisStart</tt>
+   <dd> The start limit along the rotation axis (third direction of iAxis).
+ </dd>
+    <dt><tt> iAxisEnd</tt>
+   <dd> The end limit along the rotation axis (third direction of iAxis)
+ </dd>
+    <dt><tt>  iAngleStart</tt>
+   <dd> The start angle in radians, counted from the first direction of iAxis.
+ When standing along the third direction of iAxis, 
+ on the plane defined by the first and second directions of iAxis, positive angles
+ are counter-clockwise (right-hand rule). 
+ If angle values are too large or inconsistent, a 2*Pi surface is created.
+ </dd>
+    <dt><tt>  iAngleEnd</tt>
+   <dd> The end angle in radians, counted from the first direction of iAxis.
+ When standing along the third direction of iAxis, 
+ on the plane defined by the first and second directions of iAxis, positive angles
+ are counter-clockwise (right-hand rule).
+ If angle values are too large or inconsistent, a 2*Pi surface is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created cylinder.
+</dl>
+</dl>
+<a name="CreateEllipse"></a><a name="CreateEllipse(double,double,CATMathPlane&amp;)"></a> <dt> o <b>CreateEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATEllipse','CATEllipse *')</script>  <b>CreateEllipse</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iMathPlane</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric ellipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The half length of the major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The half length of the minor axis.
+ </dd>
+    <dt><tt> iMathPlane</tt>
+   <dd> The origin and axis of the ellipse.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created ellipse.
+</dl>
+</dl>
+<a name="CreateEllipse"></a><a name="CreateEllipse(double,double,CATMathPlane&amp;,CATAngle,CATAngle)"></a> <dt> o <b>CreateEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATEllipse','CATEllipse *')</script>  <b>CreateEllipse</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iMathPlane</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric ellipse arc.
+ <br>Refer plese to the encyclopedia for the description of the angle limitations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The half length of the major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The half length of the minor axis.
+ </dd>
+    <dt><tt> iMathPlane</tt>
+   <dd> The origin and axis of the ellipse.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first angle limitation (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last angle limitation (in Radians).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created ellipse.
+</dl>
+</dl>
+<a name="CreateForeignCurve"></a><a name="CreateForeignCurve(CATForeignCurveData*)"></a> <dt> o <b>CreateForeignCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIForeignCurve','CATIForeignCurve *')</script>  <b>CreateForeignCurve</b>(<td><script type="text/javascript"> activateLink('CATForeignCurveData','CATForeignCurveData*')</script> <td><tt>iForeignCurveData</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a foreign curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iForeignCurveData</tt>
+   <dd> The pointer to the data defining the foreign curve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created curve.
+</dl>
+</dl>
+<a name="CreateForeignPCurve"></a><a name="CreateForeignPCurve(CATForeignPCurveData*,CATSurface*)"></a> <dt> o <b>CreateForeignPCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIForeignPCurve','CATIForeignPCurve *')</script>  <b>CreateForeignPCurve</b>(<td><script type="text/javascript"> activateLink('CATForeignPCurveData','CATForeignPCurveData*')</script> <td><tt>iForeignPCurveData</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSurface</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a foreign Pcurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iForeignPCurveData</tt>
+   <dd> The pointer to the data defining the foreign Pcurve.
+ </dd>
+    <dt><tt> iSurface</tt>
+   <dd> The pointer to the surface on which the curve is defined.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created Pcurve.
+</dl>
+</dl>
+<a name="CreateForeignSurface"></a><a name="CreateForeignSurface(CATForeignSurfaceData*)"></a> <dt> o <b>CreateForeignSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIForeignSurface','CATIForeignSurface *')</script>  <b>CreateForeignSurface</b>(<td><script type="text/javascript"> activateLink('CATForeignSurfaceData','CATForeignSurfaceData*')</script> <td><tt>iForeignSurfaceData</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a foreign surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iForeignSurfaceData</tt>
+   <dd> The pointer to the data defining the foreign surface.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created surface.
+</dl>
+</dl>
+<a name="CreateHelix"></a><a name="CreateHelix(CATMathLine&amp;,CATMathPoint&amp;,CATAngle,CATAngle,double,CATLONG32,double)"></a> <dt> o <b>CreateHelix</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATHelix','CATHelix *')</script>  <b>CreateHelix</b>(<td> const <script type="text/javascript"> activateLink('CATMathLine','CATMathLine&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iStartingPoint</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iPitch</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTrigonometricOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadiusEvolution</tt><td><tt>= 0.</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric helix.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The helix axis.
+ </dd>
+    <dt><tt> iStartingPoint</tt>
+   <dd> The origin point of the helix.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limitation of the helix from iStartingPoint. 
+ This angle is considered on the helix itself, rotating about 
+ iAxis according to the iTrigonometricOrientation parameter. 
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last limitation of the helix from the origin point.
+ This angle is considered on the helix itself, rotating about iAxis according 
+ to the iTrigonometricOrientation parameter. 
+ </dd>
+    <dt><tt> iPitch</tt>
+   <dd> The height between two turns.
+ </dd>
+    <dt><tt> iTrigonometricOrientation</tt>
+   <dd> The orientation of the rotation about the axis oriented 
+ by iHelixAxisOrientation: 1 to turn counterclockwise, -1 to turn clockwise.
+ </dd>
+    <dt><tt> iRadiusEvolution</tt>
+   <dd> The coefficient of linear variation for the radius. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created helix.
+</dl>
+</dl>
+<a name="CreateLine"></a><a name="CreateLine(CATPoint*,CATPoint*)"></a> <dt> o <b>CreateLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLine','CATLine *')</script>  <b>CreateLine</b>(<td> const <script type="text/javascript"> activateLink('CATPoint','CATPoint*')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPoint','CATPoint*')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed geometric line from two geometric points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The pointer to the first limiting point.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The pointer to the last limiting point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreateLine"></a><a name="CreateLine(CATMathPoint&amp;,CATMathPoint&amp;)"></a> <dt> o <b>CreateLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLine','CATLine *')</script>  <b>CreateLine</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed geometric line from two mathematical points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The first limiting point.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last limiting point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreateLine"></a><a name="CreateLine(CATPoint*,CATPoint*,CATCrvLimits&amp;)"></a> <dt> o <b>CreateLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLine','CATLine *')</script>  <b>CreateLine</b>(<td> const <script type="text/javascript"> activateLink('CATPoint','CATPoint*')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPoint','CATPoint*')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioLimits</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed geometric line from 2 geometric points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The pointer to the first point
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The pointer to the second point
+ </dd>
+    <dt><tt> oLimits</tt>
+   <dd> The parameters of the corresponding points on the line.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreateLine"></a><a name="CreateLine(CATMathPoint&amp;,CATMathDirection&amp;)"></a> <dt> o <b>CreateLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLine','CATLine *')</script>  <b>CreateLine</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>iDirection</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed geometricl line from a mathematical point and a direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoint</tt>
+   <dd> The mathematical point
+ </dd>
+    <dt><tt> iDirection</tt>
+   <dd> The direction
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreateLine"></a><a name="CreateLine(CATMathPoint&amp;,CATMathPoint&amp;,CATCrvLimits&amp;)"></a> <dt> o <b>CreateLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLine','CATLine *')</script>  <b>CreateLine</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioLimits</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed geometric line from 2 mathematical points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The first point
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The second point
+ </dd>
+    <dt><tt> oLimits</tt>
+   <dd> The parameters of the corresponding points on the line.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreateLinearLaw"></a><a name="CreateLinearLaw(CATLinearLaw*)"></a> <dt> o <b>CreateLinearLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLinearLaw','CATLinearLaw *')</script>  <b>CreateLinearLaw</b>(<td><script type="text/javascript"> activateLink('CATLinearLaw','CATLinearLaw*')</script> <td><tt>iToCopy</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Duplicates <tt>this</tt> law.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToCopy</tt>
+   <dd> The pointer to the law to copy.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateLinearLaw"></a><a name="CreateLinearLaw(double,double,double,double)"></a> <dt> o <b>CreateLinearLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLinearLaw','CATLinearLaw *')</script>  <b>CreateLinearLaw</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iTMin</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValueAtTMin</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iTMax</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValueAtTMax</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Creates a linear law.
+ <br>A law is a function <tt>L</tt> of one parameter <tt>iT</tt> on a given 1D interval
+ <tt>[iTmin,iTmax]</tt>. A linear law is line segment between <tt>L(iTmin)=iValueAtTMin</tt>
+ and <tt>L(iTmax)=iValueAtTMax</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTMin</tt>
+   <dd> The lower bound of the definition interval.
+ </dd>
+    <dt><tt> iValueAtTMin</tt>
+   <dd> The law value on the lower bound of the definition interval.
+ </dd>
+    <dt><tt> iTMax</tt>
+   <dd> The upper bound of the definition interval.
+ </dd>
+    <dt><tt> iValueAtTMax</tt>
+   <dd> The law value on the upper bound of the definition interval.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateMacroPoint"></a><a name="CreateMacroPoint()"></a> <dt> o <b>CreateMacroPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMacroPoint','CATMacroPoint *')</script>  <b>CreateMacroPoint</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an empty CATMacroPoint.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateMacroPoint"></a><a name="CreateMacroPoint(CATLISTP(CATPoint)&amp;)"></a> <dt> o <b>CreateMacroPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMacroPoint','CATMacroPoint *')</script>  <b>CreateMacroPoint</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATPoint)','CATLISTP(CATPoint)&amp;')</script> <td><tt>iPoints</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point aggregating several geometric points.
+ <br><b>Role</b>:
+ A CATMacroPoint is the geometry of a CATVertex and is used in a topological context.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoints</tt>
+   <dd> The list of points to define the CATMacroPoint.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateNurbsCurve"></a><a name="CreateNurbsCurve(CATKnotVector&amp;,CATLONG32&amp;,CATMathSetOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>CreateNurbsCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATNurbsCurve','CATNurbsCurve*')</script>  <b>CreateNurbsCurve</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPoints','CATMathSetOfPoints&amp;')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization</tt>)<script type="text/javascript"> activateLink('=0',' =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R14 CATCreateNurbsCurve
+</dl>
+</dl>
+<a name="CreateNurbsSurface"></a><a name="CreateNurbsSurface(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>CreateNurbsSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATNurbsSurface','CATNurbsSurface *')</script>  <b>CreateNurbsSurface</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVectorU</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVectorV</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathGridOfPoints','CATMathGridOfPoints&amp;')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R14 CATCreateNurbsSurface
+</dl>
+</dl>
+<a name="CreateOffsetSurface"></a><a name="CreateOffsetSurface(double,CATSurface*,CATSurLimits&amp;)"></a> <dt> o <b>CreateOffsetSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATOffsetSurface','CATOffsetSurface *')</script>  <b>CreateOffsetSurface</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iReference</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurLimits','CATSurLimits&amp;')</script> <td><tt>iLimits</tt>)<script type="text/javascript"> activateLink('=0',' =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric offseted surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffset</tt>
+   <dd> The offset value, relative to the normalized normal to the surface 
+ (cross product of the first derivative with respect to the first direction with the first
+ derivative in the second direction).
+ </dd>
+    <dt><tt> iReference</tt>
+   <dd> The pointeur to the surface to offset.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> The limits on <tt>iReference</tt> to take into account in the offset operation.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created surface.
+</dl>
+</dl>
+<a name="CreatePCircle"></a><a name="CreatePCircle(double,CATSurParam&amp;,CATSurface*)"></a> <dt> o <b>CreatePCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPCircle','CATPCircle *')</script>  <b>CreatePCircle</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iCenter</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed geometric circle defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRadius</tt>
+   <dd> The radius of the circle.
+ </dd>
+    <dt><tt> iCenter</tt>
+   <dd> The coordinates of the center
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the circle is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created circle.
+</dl>
+</dl>
+<a name="CreatePCircle"></a><a name="CreatePCircle(double,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"></a> <dt> o <b>CreatePCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPCircle','CATPCircle *')</script>  <b>CreatePCircle</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iCenter</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed geometric circle defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRadius</tt>
+   <dd> The radius of the circle.
+ </dd>
+    <dt><tt> iCenter</tt>
+   <dd> The coordinates of the center
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first angle limitation (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last angle limitation (in Radians).
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the circle is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created circle.
+</dl>
+</dl>
+<a name="CreatePCircle"></a><a name="CreatePCircle(CATSurParam&amp;,CATSurParam&amp;,CATSurParam&amp;,CATSurface*)"></a> <dt> o <b>CreatePCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPCircle','CATPCircle *')</script>  <b>CreatePCircle</b>(<td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iMiddle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Creates a trimmed geometric circle defined in the space of a surface
+ from 3 points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The first point
+ </dd>
+    <dt><tt> iMiddle</tt>
+   <dd> The second point
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The third point
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the circle is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created circle, oriented as the surface, whatever the points are ordered.
+</dl>
+</dl>
+<a name="CreatePEllipse"></a><a name="CreatePEllipse(CATMathAxis2D&amp;,double&amp;,double&amp;,CATSurface*)"></a> <dt> o <b>CreatePEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPEllipse','CATPEllipse *')</script>  <b>CreatePEllipse</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed ellipse defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The ellipse axis system (center, major axis, minor axis), positively oriented.
+ </dd>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The length of the half major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The length of the half minor axis.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the ellipse is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created ellipse.
+</dl>
+</dl>
+<a name="CreatePEllipse"></a><a name="CreatePEllipse(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATSurface*)"></a> <dt> o <b>CreatePEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPEllipse','CATPEllipse *')</script>  <b>CreatePEllipse</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iOffsetAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iCenter</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed ellipse defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The length of the half major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The length of the half minor axis.
+ </dd>
+    <dt><tt> iOffsetAngle</tt>
+   <dd> The angle between the first direction <tt>u</tt> of the surface and the
+ major axis of the ellipse.
+ </dd>
+    <dt><tt> iCenter</tt>
+   <dd> The intersection between the minor axis and the major axis.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the ellipse is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created ellipse.
+</dl>
+</dl>
+<a name="CreatePEllipse"></a><a name="CreatePEllipse(CATMathAxis2D&amp;,double&amp;,double&amp;,CATAngle,CATAngle,CATSurface*)"></a> <dt> o <b>CreatePEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPEllipse','CATPEllipse *')</script>  <b>CreatePEllipse</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed ellipse defined in the space of a surface.
+ <br>Please refer to the encyclopedia to the detailed definition of the start and end angle.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The ellipse axis system (center, major axis, minor axis), positively oriented.
+ </dd>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The length of the half major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The length of the half minor axis.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The angle low limitation measured from the major axis (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The angle high limitation measured from the major axis (in Radians).
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the ellipse is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created ellipse.
+</dl>
+</dl>
+<a name="CreatePEllipse"></a><a name="CreatePEllipse(double&amp;,double&amp;,double&amp;,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"></a> <dt> o <b>CreatePEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPEllipse','CATPEllipse *')</script>  <b>CreatePEllipse</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iOffsetAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iCenter</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed ellipse defined in the space of a surface.
+ <br>Please refer to the encyclopedia to the detailed definition of the start and end angle.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The length of the half major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The length of the half minor axis.
+ </dd>
+    <dt><tt> iOffsetAngle</tt>
+   <dd> The angle between the first direction <tt>u</tt> of the surface and the
+ major axis of the ellipse.
+ </dd>
+    <dt><tt> iCenter</tt>
+   <dd> The intersection between the minor axis and the major axis.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The angle low limitation measured from the major axis (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The angle high limitation measured from the major axis (in Radians).
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the ellipse is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created ellipse.
+</dl>
+</dl>
+<a name="CreatePHyperbola"></a><a name="CreatePHyperbola(CATMathAxis2D&amp;,double,double,CATSurface*)"></a> <dt> o <b>CreatePHyperbola</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPHyperbola','CATPHyperbola *')</script>  <b>CreatePHyperbola</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iA</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iB</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed hyperbola defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The system of 2D axis of the hyperbola. In this system, the hyperbola is the branch
+ along the positive X corresponding to the implicit equation
+       <tt>X^2/(iA^2) - Y^2/(iB^2) = 1</tt>.
+ </dd>
+    <dt><tt> iA</tt>
+   <dd> The length between the center and the vertex.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt>; eccentricity <tt>e = c/iA > 1</tt>.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the parabola is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created hyperbola.
+</dl>
+</dl>
+<a name="CreatePHyperbola"></a><a name="CreatePHyperbola(CATMathAxis2D&amp;,double,double,double,double,CATSurface*)"></a> <dt> o <b>CreatePHyperbola</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPHyperbola','CATPHyperbola *')</script>  <b>CreatePHyperbola</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iA</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iB</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed hyperbola defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The system of 2D axis of the hyperbola. In this system, the hyperbola is the branch
+ along the positive X corresponding to the implicit equation
+       <tt>X^2/(iA^2) - Y^2/(iB^2) = 1</tt>
+ </dd>
+    <dt><tt> iA</tt>
+   <dd> The length between the center and the vertex.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt>; eccentricity <tt>e = c/iA > 1</tt>.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limit.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last limit.
+ These parameters correspond to the current limits of the parabola with respect to
+ the parameterization 
+   <tt>X(t) = a*cosh(t), Y(t) = b*sinh(t)</tt>  , where  X and Y are relative to <tt>iAxis</tt>.
+  <br>Notice that this parameterization is not the internal parameterization.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the parabola is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created hyperbola.
+</dl>
+</dl>
+<a name="CreatePLine"></a><a name="CreatePLine(CATSurParam&amp;,CATSurParam&amp;,CATSurface*)"></a> <dt> o <b>CreatePLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPLine','CATPLine*')</script>  <b>CreatePLine</b>(<td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed geometric line defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStart</tt>
+   <dd> The first limitation of the line.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last limitation of the line.
+ </dd>
+    <dt><tt> iSurface</tt>
+   <dd> The pointer to the surface on which the line is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created line.
+</dl>
+</dl>
+<a name="CreatePNurbs"></a><a name="CreatePNurbs(CATKnotVector&amp;,CATLONG32&amp;,double*,double*,CATSurface*,CATParameterizationOption)"></a> <dt> o <b>CreatePNurbs</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPNurbs','CATPNurbs *')</script>  <b>CreatePNurbs</b>(<td><script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iWeights</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R16 CATCreatePNurbs
+</dl>
+</dl>
+<a name="CreatePParabola"></a><a name="CreatePParabola(CATMathAxis2D&amp;,double,CATSurface*)"></a> <dt> o <b>CreatePParabola</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPParabola','CATPParabola *')</script>  <b>CreatePParabola</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>ip</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an untrimmed parabola defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The system of 2D axis of the parabola. In this system, the implicit equation is
+       <tt>Y^2 = 2*p*X</tt>
+ </dd>
+    <dt><tt> iP</tt>
+   <dd> Twice the length from the vertex of the parabola to its focus .
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the parabola is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created parabola.
+</dl>
+</dl>
+<a name="CreatePParabola"></a><a name="CreatePParabola(CATMathAxis2D&amp;,double,double,double,CATSurface*)"></a> <dt> o <b>CreatePParabola</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPParabola','CATPParabola *')</script>  <b>CreatePParabola</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iP</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed parabola defined in the space of a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The system of 2D axis of the parabola. In this system, the implicit equation is
+       <tt>Y^2 = 2*iP*X</tt>.
+ </dd>
+    <dt><tt> iP</tt>
+   <dd> Twice the length from the vertex of the parabola to its focus.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limit of the parabola.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The last limit of the parabola.
+ These parameters correspond to the current limits of the parabola with respect to
+ the parametrization 
+   <tt>X(t) = t^2/(2*p),  Y(t) = t </tt>  , where X and Y are relative to <tt>iAxis</tt>.
+  <br>Notice that this parameterization is not the internal paramaterization.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the surface on which the parabola is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created parabola.
+</dl>
+</dl>
+<a name="CreatePSpline"></a><a name="CreatePSpline(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,double*,CATSurface*)"></a> <dt> o <b>CreatePSpline</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPSpline','CATPSpline *')</script>  <b>CreatePSpline</b>(<td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iPoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iFirstCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iSecondCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iParameters</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a cubic spline curve defined in the space of a surface.
+<br>This is particulary usefull for creating intersection curves. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoints</tt>
+   <dd> The pointer to a CATMathSetOfPointsND, with N>=2. The points are supposed
+ to belong to the surface.
+ </dd>
+    <dt><tt> iFirstCoordIndex</tt>
+   <dd> The coordinate index of the ND points to be taken as the first coordinate  
+ of the constructing points of the spline.
+ </dd>
+    <dt><tt> iSecondCoordIndex</tt>
+   <dd> The coordinate index of the ND points to be taken as the second coordinate  
+ ofthe constructing points of the spline.
+ </dd>
+    <dt><tt> iParameters</tt>
+   <dd> The array of parameters defining a user parametrization. 
+ If <tt>NULL</tt>, the
+ parametrization is automatically defined. The size of the array is the 
+ number of points of the CATMathSetOfPointsND.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The surface to which the curve belongs to.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created curve.
+</dl>
+</dl>
+<a name="CreatePSpline"></a><a name="CreatePSpline(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATSurface*)"></a> <dt> o <b>CreatePSpline</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPSpline','CATPSpline *')</script>  <b>CreatePSpline</b>(<td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iParams</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iPoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iTangents</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iSecondDerivatives</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iFirstCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iSecondCoordIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a quintic spline curve defined in the space of a surface.
+<br>This enables to create precise intersection curves with a low number of arc.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParams</tt>
+   <dd> The pointer to a CATMathSetOfPointsND of dimension 1  defining a user parameterization.
+ </dd>
+    <dt><tt> iPoints</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing points of a PSpline
+ </dd>
+    <dt><tt> iTangents</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing tangents of a PSpline
+ </dd>
+    <dt><tt> iSecondDerivatives</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing second derivatives of a PSpline
+ </dd>
+    <dt><tt> iFirstCoordIndex</tt>
+   <dd> This index is such that the points, tangents and second derivatives of the
+ first coordinate of the spline are the values of index <tt>iFirstCoordIndex</tt>.
+ </dd>
+    <dt><tt> iSecondCoordIndex</tt>
+   <dd> Same as iFirstCoordIndex but for the second coordinate of the spline.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The surface to which the curve belongs to.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created curve.
+</dl>
+</dl>
+<a name="CreatePlane"></a><a name="CreatePlane(CATMathPlane&amp;)"></a> <dt> o <b>CreatePlane</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPlane','CATPlane *')</script>  <b>CreatePlane</b>(<td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iMathPlane</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric plane from a mathematical plane.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMathPlane</tt>
+   <dd> The mathematical point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The pointer to the created plane.
+</dl>
+</dl>
+<a name="CreatePlane"></a><a name="CreatePlane(CATMathDirection&amp;,double&amp;)"></a> <dt> o <b>CreatePlane</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPlane','CATPlane *')</script>  <b>CreatePlane</b>(<td> const <script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>iMathPlaneNormal</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iDistance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric plane at a distance to a CATMathPlane.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMathNormal</tt>
+   <dd> The normal to the plane.
+ </dd>
+    <dt><tt> iDistance</tt>
+   <dd> The distance along the normal direction.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The created plane.
+</dl>
+</dl>
+<a name="CreatePlane"></a><a name="CreatePlane(CATMathPoint&amp;,CATMathPoint&amp;,CATMathPoint&amp;)"></a> <dt> o <b>CreatePlane</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPlane','CATPlane *')</script>  <b>CreatePlane</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iMathOrigin</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iFirstDirection</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iSeconddirection</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric plane from 3 mathematical points.
+ <br>The directions are ortho-normalized.
+</dl>
+<a name="CreatePointOnCurve"></a><a name="CreatePointOnCurve(CATCrvParam&amp;,CATCurve*)"></a> <dt> o <b>CreatePointOnCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPointOnCurve','CATPointOnCurve *')</script>  <b>CreatePointOnCurve</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iCurve</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point lying on a geometric curve from its parameter
+ on the curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter on <tt>iCurve</tt>
+ </dd>
+    <dt><tt> iCurve</tt>
+   <dd> The pointer to the curve on which the point is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreatePointOnEdgeCurve"></a><a name="CreatePointOnEdgeCurve(CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)"></a> <dt> o <b>CreatePointOnEdgeCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPointOnEdgeCurve','CATPointOnEdgeCurve*')</script>  <b>CreatePointOnEdgeCurve</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iSpecCurve</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iSpecParam</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATEdgeCurve','CATEdgeCurve*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point lying on a CATEdgeCurve from its parameter
+ on one of the aggregated curves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSpecCurve</tt>
+   <dd> The pointer on one of the aggregated curves of the CATEdgeCurve 
+ <tt>iSupport</tt>, may be the CATEdgeCurve itself.
+ </dd>
+    <dt><tt> iSpecparam</tt>
+   <dd> The parameter on <tt>iSpecCurve</tt> of the PointOnEdgeCurve to create. 
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The CATEdgeCurve pointer.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreatePointOnEdgeCurve"></a><a name="CreatePointOnEdgeCurve(CATLONG32,CATCurve*[],CATCrvParam[],CATEdgeCurve*)"></a> <dt> o <b>CreatePointOnEdgeCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPointOnEdgeCurve','CATPointOnEdgeCurve*')</script>  <b>CreatePointOnEdgeCurve</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbOfSpecs</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*[]')</script> <td><tt>iSpecCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam[]')</script> <td><tt>iSpecParams</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATEdgeCurve','CATEdgeCurve*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point lying on a CATEdgeCurve from its parameters
+ on a given number of the aggregated curves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbOfSpecs</tt>
+   <dd> The number of aggregated curves on which the parameters of the point
+ are given.
+ </dd>
+    <dt><tt> iSpecCurve</tt>
+   <dd> The array of pointers to <tt>iNbOfSpecs</tt> aggregated curves of the CATEdgeCurve 
+ <tt>iSupport</tt>. Can contain a pointer to the CATEdgeCurve itself.
+ </dd>
+    <dt><tt> iSpecparam</tt>
+   <dd> The corresponding parameters on the <tt>iSpecCurve</tt> aggregated curves
+ of the PointOnEdgeCurve to create. 
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The CATEdgeCurve pointer.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreatePointOnEdgeCurve"></a><a name="CreatePointOnEdgeCurve(CATCurve*,CATCrvParam&amp;,CATCurve*,CATCrvParam&amp;,CATEdgeCurve*)"></a> <dt> o <b>CreatePointOnEdgeCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPointOnEdgeCurve','CATPointOnEdgeCurve*')</script>  <b>CreatePointOnEdgeCurve</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iSpecCurve1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iSpecParam1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iSpecCurve2</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iSpecParam2</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATEdgeCurve','CATEdgeCurve*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point lying on a CATEdgeCurve from its parameters
+ on two of the aggregated curves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSpecCurve1</tt>
+   <dd> The pointer ton one of the aggregated curves of the CATEdgeCurve 
+ <tt>iSupport</tt>, may be the CATEdgeCurve itself.
+ </dd>
+    <dt><tt> iSpecparam1</tt>
+   <dd> The parameter on <tt>iSpecCurve1</tt> of the PointOnEdgeCurve to create.
+ </dd>
+    <dt><tt> iSpecCurve2</tt>
+   <dd> The pointer to one of the aggregated curves of the CATEdgeCurve 
+ <tt>iSupport</tt>, may be the CATEdgeCurve itself.
+ </dd>
+    <dt><tt> iSpecparam2</tt>
+   <dd> The parameter on <tt>iSpecCurve2</tt> of the PointOnEdgeCurve to create.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The CATEdgeCurve pointer.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreatePointOnSurface"></a><a name="CreatePointOnSurface(CATSurParam&amp;,CATSurface*)"></a> <dt> o <b>CreatePointOnSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPointOnSurface','CATPointOnSurface *')</script>  <b>CreatePointOnSurface</b>(<td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSurface</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric point lying on a surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameters on <tt>iSurface</tt> of the point to create.
+ </dd>
+    <dt><tt> iSurface</tt>
+   <dd> The pointer to the surface on which the point is created.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateRevolutionSurface"></a><a name="CreateRevolutionSurface(CATCurve*,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;)"></a> <dt> o <b>CreateRevolutionSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATRevolutionSurface','CATRevolutionSurface *')</script>  <b>CreateRevolutionSurface</b>(<td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iProfile</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iRefAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed geometric revolution surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iProfile</tt>
+   <dd> The pointer to the profile.
+ </dd>
+    <dt><tt> iRefAxis</tt>
+   <dd> The axis sytem. The profile is rotated around the Z axis, and must not intersect this axis, except
+ at it first or last limits.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The low limitation of the rotation (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The high limitation of the rotation (in Radians).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created revolution surface.
+</dl>
+</dl>
+<a name="CreateRevolutionSurface"></a><a name="CreateRevolutionSurface(CATCurve*,CATCrvLimits&amp;,CATMathAxis&amp;,CATAngle&amp;,CATAngle&amp;,CATBoolean&amp;)"></a> <dt> o <b>CreateRevolutionSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATRevolutionSurface','CATRevolutionSurface *')</script>  <b>CreateRevolutionSurface</b>(<td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iProfile</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iProfileLimits</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iRefAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>ioIsOrientationChanged</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a CATRevolutionSurface.
+ <br>If the input profile is a CATPCurve, this method tries to optimize the resulting surface
+ by replacing as far as possible the PCurve by a 3D Curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iProfile</tt>
+   <dd> The pointer to the profile.
+ </dd>
+    <dt><tt> iProfileLimits</tt>
+   <dd> The profile limitations.
+ </dd>
+    <dt><tt> iRefAxis</tt>
+   <dd> The axis sytem. The profile is rotated around the Z axis, and must not intersect this axis, except
+ at it first or last limits.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The low limitation of the rotation (in Radians).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The high limitation of the rotation (in Radians).
+ </dd>
+    <dt><tt> OrientationChanged</tt>
+   <dd> In case of the optimization, the relative orientation between <tt>iProfile</tt> and the generated
+ 3D curve.
+ <br><b>Legal values </b>:
+ <tt>TRUE</tt> for the same orientation, <tt>TRUE</tt> for the opposite.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created revolution surface.
+</dl>
+</dl>
+<a name="CreateSimCurve"></a><a name="CreateSimCurve(CATLISTP(CATCurve)&amp;,CATLISTP(CATCrvLimits)&amp;,CATListOfInt&amp;,double)"></a> <dt> o <b>CreateSimCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSimCurve','CATSimCurve *')</script>  <b>CreateSimCurve</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATCurve)','CATLISTP(CATCurve)&amp;')</script> <td><tt>iCurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATCrvLimits)','CATLISTP(CATCrvLimits)&amp;')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfInt','CATListOfInt&amp;')</script> <td><tt>iOrns</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iGap</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates the curve that aggregates identical curves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurves</tt>
+   <dd> The list of curve pointers.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> The list of limitations of the curves.
+ </dd>
+    <dt><tt> iOrns</tt>
+   <dd> The list of relative orientation of the curves. 
+ <br><b>Legal values</b>: 
+ <dl><dt>1</dt><dd>same orientation
+ <dt>-1</dt><dd>opposite orientation
+ </dl>
+ </dd>
+    <dt><tt> iGap</tt>
+   <dd> The maximum allowed gap between the curves.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created curve.
+</dl>
+</dl>
+<a name="CreateSphere"></a><a name="CreateSphere(CATMathAxis&amp;,double)"></a> <dt> o <b>CreateSphere</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSphere','CATSphere *')</script>  <b>CreateSphere</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a geometric sphere.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The axis of the sphere.
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd> The radius of the sphere.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created sphere.
+</dl>
+</dl>
+<a name="CreateSphere"></a><a name="CreateSphere(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)"></a> <dt> o <b>CreateSphere</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSphere','CATSphere *')</script>  <b>CreateSphere</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMeridianStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMeridianEnd</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iParallelStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iParallelEnd</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a piece of a geometric sphere.
+ A sphere is defined by an axis and a radius. 
+ A piece of the full sphere is defined by limiting the meridian and parallel angles. 
+ The meridian planes pass through the axis third direction, 
+ the parallel planes are orthogonal to the axis third direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The sphere axis.
+ <ul>
+ <li>The third direction is the rotation axis. </li>
+ <li>The first direction is the angle reference. Start and end meridian angles are counted from 
+ this direction.</li>
+ </ul>
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd> The sphere radius.
+ </dd>
+    <dt><tt> iMeridianStart</tt>
+   <dd> The low angle value of the meridians. Positive angles are defined by the right-hand rule. <br>
+ <tt>iMeridianStart < iMeridianEnd</tt><br>
+ If specified angles are too large, the surface is swept around 2*Pi.
+ </dd>
+    <dt><tt> iMeridianEnd</tt>
+   <dd> The high angle value of the meridians. Positive angles are defined by the right-hand rule.
+ <tt>iMeridianStart < iMeridianEnd</tt><br>
+ If specified angles are too large, the surface is swept around 2*Pi.
+ </dd>
+    <dt><tt> iParallelStart</tt>
+   <dd> The low angle value of the parallels.<br>
+ Positive angles are in the 
+ direction of the sphere axis. Angles are counted from 
+ the radius in the plane
+ defined by the first and second direction of the sphere axis. 
+ <tt>iParallelStart >= -Pi/2 </tt>; <tt>iParallelStart < iParallelEnd </tt>
+ </dd>
+    <dt><tt> iParallelEnd</tt>
+   <dd> The high angle value of the parallels. <br>
+ Positive angles are in the 
+ direction of the sphere axis. Angles are counted from 
+ the radius in the plane
+ defined by the first and second direction of the sphere axis. 
+ <tt>iParallelEnd <= Pi/2 </tt>; <tt>iParallelStart < iParallelEnd </tt>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created sphere.
+</dl>
+</dl>
+<a name="CreateSplineCurve"></a><a name="CreateSplineCurve(CATMathSetOfPointsND*,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,double*)"></a> <dt> o <b>CreateSplineCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSplineCurve','CATSplineCurve *')</script>  <b>CreateSplineCurve</b>(<td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iPoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iFirstCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iSecondCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iThirdCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iParameters</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a cubic Spline curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoints</tt>
+   <dd> The pointer to a CATMathSetOfPointsND, with N>=3.
+ </dd>
+    <dt><tt> iFirstCoordIndex</tt>
+   <dd> The coordinate index of the ND points to be taken as the first coordinate  
+ of the constructing points of the spline.
+ </dd>
+    <dt><tt> iSecondCoordIndex</tt>
+   <dd> The coordinate index of the ND points to be taken as the second coordinate  
+ ofthe constructing points of the spline.
+ </dd>
+    <dt><tt> iThirdCoordIndex</tt>
+   <dd> The coordinate index of the ND points to be taken as the third coordinate  
+ of the constructing points of the spline.
+ </dd>
+    <dt><tt> iParameters</tt>
+   <dd> The array of parameters defining a user Parameterization. 
+ If <tt>NULL</tt>, the
+ Parameterization is automatically defined. The size of the array is the 
+ number of points of the CATMathSetOfPointsND.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created point.
+</dl>
+</dl>
+<a name="CreateSplineCurve"></a><a name="CreateSplineCurve(CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATMathSetOfPointsND*,CATLONG32,CATLONG32,CATLONG32)"></a> <dt> o <b>CreateSplineCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSplineCurve','CATSplineCurve *')</script>  <b>CreateSplineCurve</b>(<td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iParams</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iPoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iTangents</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathSetOfPointsND','CATMathSetOfPointsND*')</script> <td><tt>iSecondDerivatives</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iFirstCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iSecondCoordIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iThirdCoordIndex</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a quintic 3d spline curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParams</tt>
+   <dd> The pointer to a CATMathSetOfPointsND of dimension 1 containing a user parameterization.
+ </dd>
+    <dt><tt> iPoints</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing points of a 3d Spline
+ </dd>
+    <dt><tt> iTangents</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing tangents of a 3d Spline
+ </dd>
+    <dt><tt> iSecondDerivatives</tt>
+   <dd> The pointer to a CATMathSetOfPointsND containing second derivatives of a 3d Spline
+ </dd>
+    <dt><tt> iFirstCoordIndex</tt>
+   <dd> This index is such that the points, tangents and second derivatives of the
+ first coordinate of the spline are the values of index iFirstCoordIndex
+ </dd>
+    <dt><tt> iSecondCoordIndex</tt>
+   <dd> Same as iFirstCoordIndex but for the second coordinate of the spline.
+ </dd>
+    <dt><tt> iThirdCoordIndex</tt>
+   <dd> Same as iFirstCoordIndex but for the third coordinate of the spline.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created curve.
+</dl>
+</dl>
+<a name="CreateSplineLaw"></a><a name="CreateSplineLaw(CATSplineLaw*)"></a> <dt> o <b>CreateSplineLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSplineLaw','CATSplineLaw *')</script>  <b>CreateSplineLaw</b>(<td><script type="text/javascript"> activateLink('CATSplineLaw','CATSplineLaw*')</script> <td><tt>iToCopy</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Duplicates <tt>this</tt> law.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToCopy</tt>
+   <dd> The pointer to the law to copy.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateSplineLaw"></a><a name="CreateSplineLaw(CATLONG32,double*,double*)"></a> <dt> o <b>CreateSplineLaw</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSplineLaw','CATSplineLaw *')</script>  <b>CreateSplineLaw</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbrOfConstraint</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iT</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Creates a spline law.
+ <br>A law is a function <tt>L</tt> of one parameter <tt>iT</tt> on a given 1D interval
+ <tt>[iTmin,iTmax]</tt>. A spline law is a spline interpolation function between points with
+ imposed tangents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbrOfConstraint</tt>
+   <dd> The number of interpolation points.
+ </dd>
+    <dt><tt> iT</tt>
+   <dd> The array of the parameters of the interpolation points.
+ </dd>
+    <dt><tt> iTMax</tt>
+   <dd> The array of the spline law value at the interpolation points.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created law.
+</dl>
+</dl>
+<a name="CreateTabulatedCylinder"></a><a name="CreateTabulatedCylinder(CATCurve*,CATMathDirection&amp;,double&amp;,double&amp;)"></a> <dt> o <b>CreateTabulatedCylinder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATTabulatedCylinder','CATTabulatedCylinder *')</script>  <b>CreateTabulatedCylinder</b>(<td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iProfile</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>iDirection</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a trimmed tabulated cylinder.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iProfile</tt>
+   <dd> The pointer to the profile.
+ </dd>
+    <dt><tt> iDirection</tt>
+   <dd> The direction along which the profile is swept.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limit along <tt>iDirection</tt> (can be negative ).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The end limit along <tt>iDirection</tt>.  It can be negative , but <tt>iStart <= iEnd </tt>.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created tabulated cylinder.
+</dl>
+</dl>
+<a name="CreateTabulatedCylinder"></a><a name="CreateTabulatedCylinder(CATCurve*,CATCrvLimits&amp;,CATMathDirection&amp;,double&amp;,double&amp;,CATBoolean&amp;)"></a> <dt> o <b>CreateTabulatedCylinder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATTabulatedCylinder','CATTabulatedCylinder *')</script>  <b>CreateTabulatedCylinder</b>(<td><script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iProfile</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iProfileLimits</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>iDirection</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>ioIsOrientationChanged</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a CATTabulatedCylinder.
+ <br>If the input profile is a CATPCurve, this method tries to optimize the resulting surface
+ by replacing as far as possible the PCurve by a 3D Curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iProfile</tt>
+   <dd> The pointer to the profile.
+ </dd>
+    <dt><tt> iProfileLimits</tt>
+   <dd> The profile limitations.
+ </dd>
+    <dt><tt> iDirection</tt>
+   <dd> The direction along which the profile is swept.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limit along <tt>iDirection</tt> (can be negative ).
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The end limit along <tt>iDirection</tt>.  It can be negative , but <tt>iStart <= iEnd </tt>.
+ </dd>
+    <dt><tt> OrientationChanged</tt>
+   <dd> In case of the optimization, the relative orientation between <tt>iProfile</tt> and the generated
+ 3D curve.
+ <br><b>Legal values </b>:
+ <tt>TRUE</tt> for the same orientation, <tt>TRUE</tt> for the opposite.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created tabulated cylinder.
+</dl>
+</dl>
+<a name="CreateTorus"></a><a name="CreateTorus(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATBoolean)"></a> <dt> o <b>CreateTorus</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATTorus','CATTorus *')</script>  <b>CreateTorus</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iTorusAxis</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMajorStartAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMajorEndAngle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iCoreSide</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a piece of a geometric self-intersecting torus.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTorusAxis</tt>
+   <dd> The axis of the torus.
+ </dd>
+    <dt><tt> iMajorRadius</tt>
+   <dd> The radius of the major circle, inferior to minor radius.
+ </dd>
+    <dt><tt> iMajorStartAngle</tt>
+   <dd> The start limit of the major ring in radians, counted from the first direction of iTorusAxis.
+ Positive angles are defined by the right-hand rule around the torus axis.
+ The major start angle must be less than the major end angle. <br>
+ <tt>iMajorEndAngle - iMajorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+    <dt><tt> iMajorEndAngle</tt>
+   <dd> The end limit of the major ring in radians, counted from the first direction of iTorusAxis.
+ Positive angles are defined by the right-hand rule around the torus axis.
+ The major start angle must be less than the major end angle. <br>
+ <tt>iMajorEndAngle - iMajorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+    <dt><tt> iMinorRadius</tt>
+   <dd> The radius of the minor circle, superior to major radius.
+ </dd>
+    <dt><tt> iCorePart</tt>
+   <dd> The side to keep.
+ <br><b>Legal values</b>:
+ <tt>TRUE</tt> to keep the internal part of the self-intersecting torus,
+ the result is shaped like a lemon.
+ <tt>FALSE</tt> to keep the external part, the result is shaped like an apple. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created torus.
+</dl>
+</dl>
+<a name="CreateTorus"></a><a name="CreateTorus(CATMathAxis&amp;,double,CATAngle,CATAngle,double,CATAngle,CATAngle)"></a> <dt> o <b>CreateTorus</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATTorus','CATTorus *')</script>  <b>CreateTorus</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iTorusAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMajorStartAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMajorEndAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMinorStartAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMinorEndAngle</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a piece of a geometric torus.
+ A torus is defined by an axis and two radii. 
+ The major ring sweeps a circle in the plane which is 
+ defined by the first and second direction of iTorusAxis.
+ Its radius is iMajorRadius and it is centered at the origin of iTorusAxis.
+ The minor ring sweeps a circle of radius iMinorRadius, centered at some point 
+ on the major ring and lying in the plane containing this center point,
+ the origin of iTorusAxis, and the vector defined by the third direction of iTorusAxis.
+ A piece of the full torus is defined by limiting the angles 
+ through which the major ring sweeps and those through which every minor ring sweeps. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTorusAxis</tt>
+   <dd> The axis of the torus: 
+ <ul>
+ <li>The third direction is the rotation axis. </li>
+ <li>The first direction is the major angle reference. Start and end major angles are counted from 
+ this direction.</li>
+ </ul>
+ </dd>
+    <dt><tt> iMajorRadius</tt>
+   <dd> The radius of the major ring.
+ </dd>
+    <dt><tt> iMajorStartAngle</tt>
+   <dd> The start limit of the major ring in radians, counted from the first direction of iTorusAxis.
+ Positive angles are defined by the right-hand rule around the torus axis.
+ The major start angle must be less than the major end angle. 
+ <tt>iMajorEndAngle - iMajorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+    <dt><tt> iMajorEndAngle</tt>
+   <dd> The end limit of the major ring in radians, counted from the first direction of iTorusAxis.
+ Positive angles are defined by the right-hand rule around the torus axis.
+ The major end angle must be greater than the major start angle.<br>
+ <tt>iMajorEndAngle - iMajorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+    <dt><tt> iMinorRadius</tt>
+   <dd> The radius of the minor ring.
+ </dd>
+    <dt><tt> iMinorStartAngle</tt>
+   <dd> The first limit of the minor circle in radians. Positive angles are in the 
+ direction of the torus axis. Angles are counted from 
+ the external minor radius in the plane
+ defined by the first and second direction of the torus axis. 
+ The minor start angle must be less than the minor end angle. 
+ <tt>iMinorEndAngle - iMinorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+    <dt><tt> iMinorEndAngle</tt>
+   <dd> The end limit of the minor circle in radians. Positive angles are in the direction
+ of the torus axis. Angles are counted from the external minor radius in the plane
+ defined by the first and second direction of the torus axis.
+ The minor end angle must be greater than the minor start angle.
+ <tt>iMinorEndAngle - iMinorStartAngle</tt> must not be greater than 2*Pi.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created torus.
+</dl>
+</dl>
+<a name="GetDatum"></a><a name="GetDatum(CATGeoFactory::CATDatumId)"></a> <dt> o <b>GetDatum</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATGeometry','const CATGeometry*')</script>  <b>GetDatum</b>(<td> const <script type="text/javascript"> activateLink('CATGeoFactory::CATDatumId','CATGeoFactory::CATDatumId')</script> <td><tt>iIdent</tt>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a constant pointer to a given datum.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIdent</tt>
+   <dd> The type of datum.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The constant pointer to the required datum.
+</dl>
+</dl>
+<a name="GetImplicitGeoFactory"></a><a name="GetImplicitGeoFactory()"></a> <dt> o <b>GetImplicitGeoFactory</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script>  <b>GetImplicitGeoFactory</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the implicit geometric factory.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the implicit CATGeoFactory.
+</dl>
+</dl>
+<a name="GetInfinite"></a><a name="GetInfinite()"></a> <dt> o <b>GetInfinite</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetInfinite</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the size of the box centered at origin which contains all the objects, including infinite objects.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The geometric infinity.
+</dl>
+</dl>
+<a name="GetModelSize"></a><a name="GetModelSize()"></a> <dt> o <b>GetModelSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetModelSize</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the model size associated with <tt>this</tt> CATGeoFactory.
+<br> The model size defines a cubic box which contains all the objects you
+ want to create within this factory. According to the model size, the
+ resolution will be more or less accurate.
+</dl>
+<a name="GetResolution"></a><a name="GetResolution(CATResolutionType)"></a> <dt> o <b>GetResolution</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetResolution</b>(<td> const <script type="text/javascript"> activateLink('CATResolutionType','CATResolutionType')</script> <td><tt>iResolutionType</tt><td><tt>=CatC0</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the minimum length of a valid object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iResolutionType</tt>
+   <dd> <dl><dt>CatC0</dt><dd> To retrieve the minimum length of a valid object.
+<br>Any object smaller than the resolution should not be created.
+ <dt>CatC1</dt><dd> To retrieve the minimum angle value  
+ defining a sharp angle.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetUnit"></a><a name="GetUnit()"></a> <dt> o <b>GetUnit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetUnit</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the model unit.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The unit, that is to say, the dimension in meter of 1. in the model.
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATDatumId"> <dt> o <b>CATDatumId</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATDatumId</b> {
+  O,
+  OI,
+  OJ,
+  OK,
+  OIJ,
+  OJK,
+  OKI
+}
+</pre>
+ The canonical (implicit) objects.
+
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> CATGeoFactory::O</tt>
+   <dd> The origin point <tt>(0,0,0)</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OI</tt>
+   <dd> The infinite line <tt>y=0,z=0</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OJ</tt>
+   <dd> The infinite line <tt>x=0,z=0</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OK</tt></tt>
+   <dd> The infinite line <tt>x=0,y=0</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OIJ</tt>
+   <dd> The infinite plane <tt>z=0</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OJK</tt>
+   <dd> >The infinite plane <tt>x=0</tt>
+</dd>
+    <dt><tt> CATGeoFactory::OKI</tt>
+   <dd> The infinite plane <tt>y=0</tt></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATGeoFactory.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

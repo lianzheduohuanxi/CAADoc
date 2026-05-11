@@ -1,0 +1,150 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATIArrWorkbench Interfaces Use Case</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%" border="0">
+   <tr>
+     <td>
+     <h2>Arrangement</h2>
+     </td>
+     <td valign="top" align="right">
+     <h2><a name="Top"></a>CATIArrWorkbench Interfaces Use Case</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment--------------------------------->
+ <table width="100%" border="0">
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/atarget.gif" border="0" width="32" height="32"></td>
+     <td width="93%">This example shows how to create a .feat 
+     file, read the file, create Nomenclatures and other data and save the file. 
+     Help is taken of a macro. This macro has a reference to CATIArrWorkbench 
+     Interface (referred to as Workbench in the reference Visual Basic 
+     document). </td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ainfo.gif" border="0" width="32" height="32"></td>
+     <td width="93%">PslNomenBuildFeat is launched after CATIA is up and the 
+     reference document is opened.
+     <p>PslNomenBuildFeat.CATScript is located in the runtime directory 
+     Operating System (say intel_a)\code\command</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ascenari.gif" border="0" width="32" height="32"></td>
+     <td width="93%">CAAPslNomenBuildFeat includes the following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Create">Create the Feat Document</a></li>
+       <li><a href="#Get">Get Nomenclature data from new document, ArrWorkbench, 
+       Save the Feat Document</a></li>
+       <li><a href="#Epilog">Epilog</a> </li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>  ...
+  a) Open the Input Document with Arrangement objects. 
+  b) Run the macro.	
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Create"></a>Create the Feat Document</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   Dim objCATIAV5Document0 As Document
+   Dim objCATIAV5FeatDocument As Document
+   Dim objCATIAV5ArrWorkbench0 As Workbench
+   Set objCATIAV5Document0 = CATIA.ActiveDocument
+<font color="#008000">   '//---------- Get Arrworkbench from current document
+</font>   Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench  ( &quot;ArrWorkbench&quot; ) 
+<font color="#008000">   '//---------- Create a new .feat document 
+</font>   Set objCATIAV5FeatDocument = objCATIAV5ArrWorkbench0.CreateFeatDocument (&quot;CATfct&quot;)
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Get"></a>Get Nomenclature data from new document, 
+     ArrWorkbench, Save the Feat Document. </h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   Dim objCATIAV5ArrWorkbench1 As Workbench
+   Dim objCATIAV5ArrNomTree1 As ArrNomenclatureTree
+   Dim objCATIAV5ArrNomTopNode As ArrNomenclatures
+<font color="#008000">   '//---------- Get Arrworkbench from the new &quot;.feat&quot; document
+   </font>Set objCATIAV5ArrWorkbench1 = objCATIAV5FeatDocument.GetWorkbench  ( &quot;ArrWorkbench&quot; ) 
+   <font color="#008000">'//---------- Add a nomenclature hierachy tree to the .feat document 
+ </font>  Set objCATIAV5ArrNomTree1 = objCATIAV5ArrWorkbench1.AddNomenclatureTree
+   <font color="#008000">'//---------- Access the root of the tree
+</font>   Set objCATIAV5ArrNomTopNode = objCATIAV5ArrNomTree1.BaseNomenclatures
+<font color="#008000">   '//----------  Create nomenclature</font>
+   Set objCATIAV5oArrNom = objCATIAV5ArrNomTopNode.AddUserNomenclature
+            (strFeatIntSysName, strFeatIconName, strFeatNLSName, strFeatSuperTypeName)
+   <font color="#008000">'---------- Save the .feat document
+</font>   strOutputFileName = strCATIAV5FeatOutputFileName + &quot;.CATfct&quot;
+ <font color="#008000">  '---------- Use the workbench save, so as to remove LifeCycleObject also</font>
+   objCATIAV5ArrWorkbench1.SaveFeatDocument strOutputFileName, objCATIAV5FeatDocument
+ ...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Epilog"></a>Epilog</h4>
+     <p>Thus we saw how to read a CATProduct document, retrieve the interface&nbsp; 
+     we are interested in and generate a report on these objects</p>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+End Sub</pre>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <!null ---------------------------------comment------------------------->
+ <p align="center">
+ <img src="../CAAScrBase/images/aendtask.gif" border="0" width="64" height="32"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!null ---------------------------------comment------------------------->
+ <h4>In Short</h4>
+ <p>Thus we saw how to read a CATProduct document, retrieve the interface we are 
+ interested in and generate a report on these objects.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!null ---------------------------------comment------------------------->
+ <h4>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>Replaying a macro</td>
+   </tr>
+   <tr>
+     <td align="right" colSpan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

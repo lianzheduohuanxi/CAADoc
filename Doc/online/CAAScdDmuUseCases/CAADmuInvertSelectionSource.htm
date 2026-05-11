@@ -1,0 +1,33 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Invert the selection.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active and some components selected.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Retrieve the Groups collection</font>
+<font color="#0000FF">    Dim </font>cGroups<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+
+    <font color="#008000">' Create a group with selected products</font>
+<font color="#0000FF">    Dim </font>oGroup<font color="#0000FF"> As </font>Group
+<font color="#0000FF">    Set </font>oGroup = cGroups.AddFromSel
+
+    <font color="#008000">' Fill the selection</font>
+    oGroup.FillSelWithInvert
+
+    <font color="#008000">' Delete the group</font>
+    cGroups.Remove 1
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

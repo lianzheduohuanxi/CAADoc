@@ -1,0 +1,394 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Boolean Operators</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Boolean Operators</h3>
+      <em>Best Practices</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The Boolean operators are the base operations of a topological modeler:
+      they allow the user to add, subtract or intersect topological objects,
+      called bodies. They are very sensitive to the geometry of overlapping
+      areas, that is, the place where the skins of the two objects are the same
+      or nearly the same. This article presents best practices to handle the
+      overlapping areas, in order to optimize the use of the Boolean operators.
+      <ul>
+        <li><a href="#Basic Boolean Operators"><strong>Basic Boolean Operators</strong></a></li>
+        <li><strong><a href="#Confusion configuration">Overlapping
+          Configurations</a></strong></li>
+        <li><a href="#Methodology"><strong>Methodology</strong></a>
+          <ul>
+            <li><a href="#Use a different object for the same result">Use
+              Another Object for the Same Result</a></li>
+            <li><a href="#Match the faces">Match Faces</a></li>
+            <li><a href="#Share geometric elements as much as possible">Share
+              Geometry</a></li>
+            <li><a href="#Process Several Boolean Operation in one shot">Process
+              Several Boolean Operations in a Single Operator</a>
+              <ul>
+                <li><a href="#Split: CATDynSplit">Split Operator</a></li>
+                <li><a href="#Sewing:">Sewing Operator</a></li>
+                <li><a href="#Trim:">Trim Operator</a></li>
+              </ul>
+            </li>
+            <li><a href="#Use a Logical Way to Describe Primitives">Use a
+              Logical Way to Describe Primitives</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Basic Boolean Operators"></a>Basic Boolean Operators</h3>
+<p>The Boolean operators add, subtract or intersect topological objects (called
+bodies, see [<a href="#References">1</a>]). Moreover, these basic operations can
+be combined to perform more complex one such a split, sewing or trim.</p>
+<p>The Boolean operators proceed in three steps:
+<ol>
+  <li>Compute the intersection paths between all the boundaries of one body and
+    the boundaries of the other body. This splits each body into parts that
+    belong to only one body, or to the both;</li>
+  <li>Assign an attribute of &quot;Keep&quot; or &quot;Remove&quot; to each
+    part, according to the operation;</li>
+  <li>Build the resulting body.</li>
+</ol>
+<table width="100%">
+  <caption><a name="Fig. 1">Fig. 1</a>: The Difference Operator</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean1.gif" alt="Boolean1.gif (3659 bytes)" width="360" height="270"></td>
+    <td width="50%"><a href="#Fig. 1">Fig. 1</a> illustrates the way Boolean
+      operators proceed, by taking the example of the difference operator.
+      <p>The specificity of each operator are taken into account during the
+      second step:
+      <ul>
+        <li><strong>Difference or Subtract operator</strong>: the matter of B is
+          subtract from A. The parts only belonging to A are kept</li>
+        <li><strong>Union operator</strong>: the parts belonging to A, or to B,
+          or both, are kept</li>
+        <li><strong>Intersection operator</strong>: the parts common to both A
+          and B are kept.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>When parts (such as &quot;A and B&quot; in <a href="#Fig. 1">Fig. 1</a>),
+common to both input bodies, have to be kept, they are &quot;<strong>simplified</strong>&quot;:
+they are taken as a single part in the final result.</p>
+<p>The basic Boolean operators are exposed through the <tt>CATDynBoolean</tt>
+class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Confusion configuration"></a>Overlapping Configurations</h3>
+<p>The Boolean operators perform intersections to compute the paths, and then
+split the input bodies into different parts. When the intersections between the
+two bodies are frank, the operator is easily executed: it finds a point, if two
+edges are intersected, an edge if two faces are intersected, or a face if two
+volumes are intersected.</p>
+<p>But imagine now that the two bodies have part of their boundaries that are
+geometrically confused. In this case, the intersection may give an edge when
+intersecting two edges, or a face when intersecting two faces.</p>
+<p>These case are sensitive: they slow down the execution, and may lead to
+results of lesser quality: creation of small numerous elements, as an example.</p>
+<p><a href="#Fig. 2">Fig. 2</a> depicts some overlapping cases.</p>
+<table width="100%">
+  <caption><a name="Fig. 2"></a>Fig. 2: Overlapping situations</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean2.gif" alt="Boolean2.gif (3591 bytes)" width="360" height="270"></td>
+    <td width="50%">
+      <ul>
+        <li><u>Case1</u>: the geometry is the same: either the topology refers
+          the same underlying geometry (most favorable case), or the geometry
+          type (such as plane) is the same and the parameters too.</li>
+        <li><u>Case2</u>: The geometry is the same, but was computed with an
+          interpolation between a list of points. In this case, the intersection
+          may lead to numerous small elements</li>
+        <li><u>Case 3</u>: The first step of a Boolean operator computes the
+          intersections between all the boundaries of one body and all the
+          boundaries of the other one. Here, are computed the intersections
+          between A1 and B1, A2 and B2, but also intersections between A1 and
+          B2, A2 and B1 leading to a patchwork of overlapping areas, and
+          increasing the risk to create small elements.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>But the overlapping areas can be often avoided, by following some rules that
+are described in the next section.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Methodology"></a>Methodology</h3>
+<p>Some simple rules can help you to optimize your use of the Boolean operators:
+<ul>
+  <li>Use another object for the same result</li>
+  <li>Match the faces of the two bodies that you know they are on the same
+    geometry</li>
+  <li>Share geometric elements as much as possible</li>
+  <li>Use Boolean operators that process several operation in one execution.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Use a different object for the same result"></a>Use a Different
+Object for the Same Result</h4>
+<p>The idea is to change the shape of one of the operands (or both) to suppress
+the overlapping, without changing the final result.</p>
+<table width="100%">
+  <caption><a name="Fig. 3"></a>Fig. 3: Use a different object for the same
+    result</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean3.gif" alt="Boolean3.gif (6766 bytes)" width="479" height="359"></td>
+    <td width="50%" valign="top">
+      <p>In the first example, operating with a bigger B object leads to
+      suppress the overlap.</p>
+      <p>&nbsp;</p>
+      <p>In the second example, B is taken smaller to suppress the overlap.</p>
+      <p>&nbsp;</p>
+      <p>In the last example, a bigger B again leads to suppress the overlap.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Share geometric elements as much as possible"></a>Share Geometric
+Elements as Much as Possible</h4>
+<p>A geometric element is shared if several cells directly refer it. In this
+case the intersections between the cells referring the same geometric element
+are not run and the overlap is treated as a logical information.</p>
+<p>A logical information can also be put directly by specialized operators, that
+precisely know the build of their object. It is the goal of the next section.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Match the faces"></a>Match the Faces</h4>
+<p>If you write your own operator, match the cells that you know they will refer
+the same geometry. The matching can be down by the means of transient
+attributes, see [<a href="#References">2</a>] to learn how to use them.</p>
+<table width="100%">
+  <caption><a name="Fig. 4"></a>Fig. 4: The shell operator uses attributes to
+    avoid computation of overlapping areas</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean4.gif" alt="Boolean4.gif (5064 bytes)" width="479" height="359"></td>
+    <td width="50%">The principle of the shell operator is to create a new body
+      by digging matter inside an initial body: a thickness is given for each
+      face. If the thickness is null, the face is an opening, leading to a
+      overlapping area. There are three openings in the beside figure.
+      <p>Now, the shell operator exactly knows that F1_B and F1_A, F2_B and
+      F2_A, F3_B and F3_A respectively match, and put attributes to keep this
+      logical information.</p>
+      <p>Hence, the intersection between the geometry of these faces are not
+      run, but directly determined.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Process Several Boolean Operation in one shot"></a>Process Several
+Boolean Operations in One Shot</h4>
+<p>The idea is to use operator of higher level, instead of chaining several
+basic Boolean operators, and creating overlap situations.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Split: CATDynSplit"></a>Split Operator</h5>
+<p>The split operator removes matter that is on a given side of the object to
+split.</p>
+<p>The split operator offers you two versions, according to the type of object
+you want to split:
+<ul>
+  <li>To split a volume by a skin, use the CATDynSplit class</li>
+  <li>To split a shell by a wire, or a wire by a vertex, use the CATHybOperator
+    class, which instances are created by the <tt>CreateHybSplit</tt> global
+    function.</li>
+</ul>
+<p>Both ask for the side on each operand, on which the matter has to be kept.</p>
+<table width="100%">
+  <caption><a name="Fig. 5"></a>Fig. 5: Splitting a Volume by a Surface</caption>
+  <tr>
+    <td width="50%"><img src="images/BooleanDefineOper.gif" alt="BooleanDefineOper.gif (10527 bytes)" width="359" height="193"></td>
+    <td width="50%">Take for example the split of the light blue Pad by the
+      orange Surface.</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="images/BooleanSplitResult.gif" alt="BooleanSplitResult.gif (7523 bytes)" width="331" height="171"></td>
+    <td width="50%">The intersection between the Pad and the Surface lets marks
+      on both objects. In the case of the beside figure, the Split operator
+      removes the matter of the Pad that is upside the Surface (the surface
+      itself is hidden to better show the result).</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="images/BooleanSplitInverse.gif" alt="BooleanSplitInverse.gif (4653 bytes)" width="331" height="163"></td>
+    <td width="50%">On the contrary, the Split operator removes here the matter
+      of the Pad that is below the Surface (The surface itself is again hidden
+      to better show the result).</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Sewing:"></a>Sewing Operator</h5>
+<p>Sewing means joining together a surface and a body. This capability consists
+in computing the intersection between a given surface and a body while removing
+useless material (such as a split operation). Moreover, material is added to the
+body if the intersection paths define closed contours. This operator is managed
+by the CATSewing class.</p>
+<table width="100%">
+  <caption><a name="Fig. 6"></a>Fig. 6: Sewing a Surface on a Body.</caption>
+  <tr>
+    <td width="50%"><img src="images/BooleanDefineOper.gif" alt="BooleanDefineOper.gif (10527 bytes)" width="359" height="193"></td>
+    <td width="50%">Take the example of <a href="#Fig. 5">Fig. 5</a>, that is
+      again displayed besides.</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="images/BooleanSewResult.gif" alt="BooleanSewResult.gif (10108 bytes)" width="343" height="185"></td>
+    <td width="50%">The Pad material that is upside the Surface is removed.
+      Moreover, the intersection path on the upper face is closed. So that the
+      dome is that is defined by this way is added to the initial Pad.
+      <p>Notice that in this case, choosing to remove the matter that is below
+      the Surface does not lead to a correct result: it would twist the
+      resulting body.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Trim:"></a>Trim Operator</h5>
+<p>The Trim operation is a way to shrewdly tune the parts to be kept or removed
+after the computation of the intersection paths. Three majors rules govern this
+operator:
+<ol>
+  <li>If at least one face is stamped &quot;keep&quot;, all the volumes that do
+    not have faces stamped &quot;keep&quot; are removed</li>
+  <li>A volume which one face is stamped &quot;remove&quot; is removed.</li>
+</ol>
+<p>The &quot;keep&quot; and &quot;remove&quot; stamps can be put on both input
+bodies, but must be consistent. The common parts are always kept.</p>
+<table width="100%">
+  <caption><a name="Fig. 7"></a>Fig. 7 The rules of the Trim operator</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean6.gif" alt="Boolean6.gif (3401 bytes)" width="360" height="270"></td>
+    <td width="50%" valign="top">
+      <ul>
+        <li><u>Rule 1</u><br>
+          The top face of Body B is stamped &quot;keep&quot;. All the volumes of
+          this body that do not own this face are removed, except the common
+          parts between Body A and Body B. As nothing is said about Body A, all
+          its volumes are kept.</li>
+        <li><u>Rule 2</u><br>
+          A bottom face of body B is stamped &quot;remove&quot;. All is kept
+          except the volume that owns this face.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>There are two classes to handle the trim operation:
+<ul>
+  <li>To trim two volumes, use the <tt>CATTopologicalOperator::Trim</tt> method.</li>
+  <li>To trim two shells, or two wires, use the <tt>CATHybOperator</tt> class,
+    which instances are created by the <tt>CreateHybTrim</tt> global function.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Use a Logical Way to Describe Primitives"></a>Use a Logical Way to
+Describe Primitives</h4>
+<p>Some primitives such as Pad or Revolute are defined as the extrusion or
+rotation of a contour. You can define the height of a Pad by giving a numerical
+number or by defining it logically: the Pad ends as it encounters a given
+surface. In this last case, the operator that creates the Pad (<tt>CATTopPrism</tt>)
+uses the logical information and does not compute useless intersections.
+Moreover, it allows you to directly chain the Boolean operation in a single
+execution (<tt>SetBooleanResult</tt> method).</p>
+<table width="100%">
+  <caption><a name="Fig. 8"></a>Fig. 8 : Definition of a Pad &quot;Until&quot;</caption>
+  <tr>
+    <td width="50%"><img src="images/Boolean5.gif" alt="Boolean5.gif (3171 bytes)" width="360" height="270"></td>
+    <td width="50%">The Case &quot;b&quot; is a better way to proceed: it allows
+      you to give a logical information to the prism operator, that is used to
+      avoid useless computations.</td>
+  </tr>
+</table>
+<hr>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>The Boolean operators are basic topological tools to add and subtract
+    matter. They are very sensitive to overlapping areas of the boundaries of
+    the input bodies, and these situations must be avoided.</li>
+  <li>Some simples rules can help you to get rid of overlaps, by modifying
+    operands, using logical information or operators that process several
+    operations in one shot, such as the split, the sewing or the trim operator.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concepts</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAAGobTechArticles/Attribute.htm">The
+      Management of Foreign Data</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

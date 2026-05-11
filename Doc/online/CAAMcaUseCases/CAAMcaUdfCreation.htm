@@ -1,0 +1,636 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a User Feature Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a User Feature Reference</h3>
+      <em>Using CATIUdfFactory, CATIUdfFeature, and CATIUdfFeatureSet&nbsp;</em>
+      </td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a User Feature reference.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMcaUdfCreation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMcaUdfCreation Do</a></li>
+            <li><a href="#How">How to Launch CAAMcaUdfCreation</a></li>
+            <li><a href="#Where">Where to Find the CAAMcaUdfCreation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a user feature reference.
+Its main intent is to give you the key steps for a successful
+creation. A user feature reference may be instantiated [<a href="#References">1</a>]
+only
+if its creation is correct.</p>
+<p>Before reading this article, see the technical article about Power Copy and User
+Feature [<a href="#References">2</a>].
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMcaUdfCreation Use Case</h3>
+<p>CAAMcaUdfCreation is a use case of the CAAMechanicalCommands.edu framework that
+illustrates MechanicalCommands framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMcaUdfCreation Do</h4>
+<p>The use case creates a user feature reference, <code>CAAUserFeatureSample</code>, in using
+data from the <code>CAALoft.CATPart</code> document. The new user feature
+reference is compulsorily
+created in the document which contains data which composes it.</p>
+<p>The part contains two Open Bodies:
+<ul>
+<li>The <b>&quot;LoftWith2Circles&quot;</b> surfacic features set. It is a loft (<code>Loft.2</code>) defined by two
+circles ( <code>Circle.3</code> and <code>Circle.4</code>). These circles are placed on two planes,
+respectively <code>Plane.1</code> and <code>Plane.2</code>. These two planes are
+  perpendicular to a line,
+<code>Line.2</code>, at each of its end points. </li>
+<li>The <b>&quot;Inputs&quot;</b>  surfacic features set. It contains <code>Point.1</code> and <code>Point.2</code>. The <code>Line.2</code> 
+  is built using&nbsp; these two points.
+</li>
+</ul>
+<p>The user feature reference will be created in selecting the &quot;LoftWith2Circles&quot;
+surfacic features set. 
+<p> &quot;LoftWith2Circles&quot; is the component selected to compose the user feature reference, and the &quot;Inputs&quot; contains all the features, and only them, 
+which are necessary for the component. These features are the inputs, which is where the
+surfacic features set's name comes from.</p>
+<p>This separation between components and inputs is strongly recommended to enhance the 
+understanding of the user feature reference. In the technical article [<a href="#References">2</a>],&nbsp;
+the chapter &quot;Useful Tips&quot; describes how to organize the Part document in
+the best way.</p>
+<table>
+<caption><i><a name="Fig.1">Fig.1</a>: The CAALoft Part Document</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfCreation1.jpg" width="544" height="598">
+</td>
+</tr>
+</table>
+<p> The modified document, which contains the new user feature reference, is
+saved under the name
+<code>CAAUdfLoft.CATPart</code>.</p>
+<table>
+<caption><i><a name="Fig.2">Fig.2</a>: The CAAUdfLoft Part Document</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfCreation2.jpg" width="527" height="455">
+</td>
+</tr>
+</table>
+
+<p>You can notice that the new user feature reference is into a set,
+Userfeatures,&nbsp;dedicated to the user feature references.</p>
+<p><a name="published parameter in spec tree"></a>This new user feature
+reference contains a lot of parameters but we have published only
+two among them: the radius of the two circles. We have changed the name
+(role) of the first parameter, to show the importance of an explicit name.</p>
+<table>
+<caption><i><a name="Fig.3">Fig.3</a>: The Published Parameters</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfCreation3.jpg" width="553" height="453">
+</td>
+</tr>
+</table>
+<p>The two published parameters appear under the user feature reference in the specification tree.</p>
+<p><b>The interactive scenario:</b></p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li>In the <b>File Selection</b> Dialog box
+    click&nbsp; <b>CAALoft.CATPart</b> [<a href="#How">see how to find this part</a>
+    ] and click <b>Open</b></li>
+  <li>On the <b>Insert</b> menu, point to <b>UserFeature</b> and click <b>UserFeature
+    Creation</b></li>
+  <li>A <b>UserFeature Definition</b> dialog box appears
+    <ul>
+      <li>Click&nbsp; the <b> Definition</b> tab &nbsp;
+        <ul>
+          <li>Click&nbsp; <b>Loft.2&nbsp;</b></li>
+          <li>Enter <b>CAAUserFeatureSample</b> in the <b> Name</b> field</li>
+        </ul>
+      </li>
+      <li>Click the <b> Inputs</b> tab, notice&nbsp; the two points&nbsp;</li>
+      <li>Click the <b> Parameters</b> tab &nbsp;
+        <ul>
+          <li>Click LoftWith2Circle\Circle.3\Circle center-radius ,&nbsp; click <b>Published Name</b> and give a new name
+            such as &quot;Radius of the circle placed at the first input&quot;</li>
+          <li>Click LoftWith2Circle\Circle.4\Circle center-radius and click <b>Published Name</b> &nbsp;</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMcaUdfCreation</h4>
+<p>To launch CAAMcaUdfCreation, you will need to set up the build time environment,
+then compile CAAMcaUdfCreation along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">3</a>].To
+launch the use case execute the command:</p>
+<p>mkrun -c CAAMcaUdfCreation&nbsp; InputPath  [OutputPath]</p>
+<p>Where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of the file <code>CAALoft.CATPart</code> included in the
+    directory <code>CAAMechanicalCommands.edu/InputData</code>
+    <ul>
+    <li>Unix : <code>InstallRootDirectory/CAAMechanicalCommands.edu/InputData</code></li>
+    <li>Windows : <code>InstallRootDirectory\CAAMechanicalCommands.edu\InputData</code></li>
+    </ul>
+  </li>
+  <li><b>OutputPath</b>: The path to write the output file <code>CATUdfLoft.CATPart</code>. If this path is empty, the output file is created
+    in the current directory.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMcaUdfCreation Code</h4>
+<p>The CAAMcaUdfCreation use case is made of a main program located in
+the CAAMcaUdfCreation.m module of the CAAMechanicalCommands.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalCommands.edu\CAAMcaUdfCreation.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalCommands.edu/CAAMcaUdfCreation.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In the CAAMcaUtilities.m module of the same framework, there is a global function
+to retrieve data from the input Part, named CAAMcaGetGeometry. It is located in <code>CAAMcaGetGeometry.cpp</code>. 
+The header of this function, <code>CAAMcaGetGeometry.h, </code>is set in the PrivateInterfaces directory of the
+framework.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The main steps of&nbsp; CAAMcaUdfCreation are:</p>
+<ol>
+  <li><a href="#Step Prolog">Prolog</a></li>
+  <li><a href="#Step 0">Retrieving the CATIUdfFactory Interface Pointer on the
+Root Container</a></li>
+  <li><a href="#Step 2">Creating the New User Feature Reference</a></li>
+  <li><a href="#Changing the Default Icon">Changing the Default Icon</a></li>
+  <li><a href="#Step 3">Retrieving the Component from the CAALoft Part</a></li>
+  <li><a href="#Step 5">Verifying the Component</a></li>
+  <li><a href="#Step 6">Filling the New User Feature Reference</a></li>
+  <li><a href="#Step 7">Renaming the Inputs</a></li>
+  <li><a href="#Step 8">Publishing the Parameters</a></li>
+  <li><a href="#Step RenamingPublishedParameter">Renaming the Published Parameters</a></li>
+  <li><a href="#Step 9">Putting the User Feature Reference in the UserFeatures Set</a></li>
+  <li><a href="#Step Epilog">Epilog</a></li>
+
+</ol>
+<p align="right">[<a href="#Top">Top</a></p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step Prolog"></a>Prolog</h4>
+<p>CAAMcaUdfCreation begins by creating a session, and opening the CAALoft Part document. Next it retrieves the root container of 
+this Part as a pointer to <i>CATIPrtContainer</i>, <code>pIPrtCon.</code> This is the usual sequence for loading a
+Part document [<A href="#References">4</A>].<p>Thanks
+to&nbsp; the <code>GetPart</code> method on the root container we retrieve the
+Mechanical Part. This part is handled by the smart pointer <code>spSpecObjectCAALoftPart</code>.&nbsp;
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 0"></a>Retrieving the CATIUdfFactory Interface Pointer on the
+Root Container</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATIUdfFactory</b> *pIUdfFactory = NULL ;
+  rc = pIPrtCont-&gt;QueryInterface(IID_CATIUdfFactory,(void **) &amp;pIUdfFactory);
+  if ( FAILED(rc) )return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The root container, <code>pIPrtCont</code>, of the Part document implements <i>CATIUdfFactory</i>.
+Thanks to this interface you can create a User Feature reference.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 2"></a>Creating the New User Feature Reference</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATUnicodeString UserFeatureName = &quot;<b>CAAUserFeatureSample</b>&quot; ;
+  <b>CATIUdfFeature</b>_var spIUdfFeature = pIUdfFactory-&gt;<b>CreateUserFeature</b>(UserFeatureName);
+  if ( NULL_var == spIUdfFeature )return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>In the Part document, handled by <code>pIUdfFactory</code>, a new User Feature
+reference is created thanks to the <code>CreateUserFeature</code> method.&nbsp;</p> 
+
+<p>But this feature is empty and not really recognized as a User Feature reference as
+long as it is not put in the User Feature Set (<a href="#Step 9">see Putting the User Feature Reference in the UserFeatures Set</a>).
+The following piece of code proves it:&nbsp; the list returned by <code>GetUserFeatureList</code>,
+<code>pUserFeatureList</code> , is NULL.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATListValCATISpecObject_var * pUserFeatureList = NULL ;
+  pUserFeatureList = pIUdfFactory-&gt;<b>GetUserFeatureList</b>();
+  if ( NULL != pUserFeatureList ) return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This new feature implements <i>CATIUdfFeature</i>. That interface enables the contents of the
+User Feature reference to be defined. It is described in the next
+steps.</p>
+<p align="right">[<a href="#Top">Top</a>]
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Changing the Default Icon"></a>Changing the Default Icon</h4>
+
+<p>This part of code is set in comment in the code. Remove the comment to have 
+the functionality. </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ... 
+  CATIIcon_var Icon = spIUdfFeature ;
+  if ( NULL_var != Icon )
+  {
+     Icon-&gt;<b>SetIconName</b>(&quot;I_CombinedCurve&quot;);
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>It is possible to associate an icon with the created reference. This icon 
+will be displayed in front of&nbsp; the reference, and in front of each instance 
+of this reference. Here is an image of a reference, and one instance:</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMcaIconOnRefInst.jpg" width="269" height="297"></td>
+  </tr>
+</table>
+<p>You recognize the icon of the combined curve [<a href="#References">6</a>]. </p>
+
+<p align="right">[<a href="#Top">Top</a>]
+
+<!---------------------------------comment------------------------------------->
+
+</p>
+
+<h4><a name="Step 3"></a>Retrieving the Component from the CAALoft Part</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATBaseUnknown * pLoftOpenBody = NULL ;
+  rc = <b>::CAAMcaGetGeometry</b>(spSpecObjectCAALoftPart,&quot;<b>LoftWith2Circles</b>&quot;,&amp;pLoftOpenBody);
+  if ( FAILED(rc) )return 1 ;
+
+  CATBaseUnknown_var spLoftOpenBody = pLoftOpenBody ;
+  pLoftOpenBody-&gt;Release();
+  pLoftOpenBody = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the <code>CAALoft</code> Part document we search for the <code>LoftWith2Circles</code> 
+surfacic features set thanks
+to a global function <a href="#Where">CAAMcaGetGeometry</a>  created for the use case.
+This surfacic set will be the single component of the User Feature reference.</p>
+<p><b>Note: </b>The best way, in this use case, is to select the surfacic set. But you have the same result if you select all the components of the
+surfacic set.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 5"></a>Verifying the Component</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATUnicodeString  message ;
+  CATListValCATBaseUnknown_var * pComponentList = NULL ;
+  pComponentList  = new  CATLISTV(CATBaseUnknown_var);
+  pComponentList-&gt;<b>Append</b>(spLoftOpenBody);
+  
+  rc = spIUdfFeature-&gt;<b>VerifyComponents</b>(pComponentList,message);
+  if ( FAILED(rc) ) return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step is mandatory. First fill in a list, <code>pComponentList</code>, with your component <code>spLoftOpenBody</code>. 
+<code>VerifyComponents</code> of <i>CATIUdfFeature</i> checks that an instantiation of the
+User Feature reference will be possible.</p>
+<p>In fact, <code>VerifyComponents</code> checks, among other things, that all external links for each component implement the <i>CATIReplace</i> interface.
+For more details, 
+read the chapter "Technologies Used"  of the technical article
+about Power Copy and User Feature [<a href="#References">2</a>]. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 6"></a>Filling the New User Feature Reference</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = spIUdfFeature-&gt;<b>SetComponents</b>(pComponentList);
+  delete pComponentList ;
+  pComponentList = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now the User Feature reference <b>CAAUserFeatureSample, </b>handled by the
+<i>CATIUdfFeature</i> interface pointer <code>spIUdfFeature</code>, is&nbsp; filled. The component list is no more useful. <code>pComponentList </code> can be
+deleted.</p>
+<p>The main role of the <code>SetComponents</code> method is to determine the inputs. 
+The User Feature reference is a "black box" containing components. Each input is defined by the external links of this black box.
+For more details, 
+read the chapter "Technologies Used"  of the technical article
+about Power Copy and User Feature [<a href="#References">2</a>].</p>
+<p><b>Note</b>: In this use case we have checked the component <b>before</b>
+ calling <code>SetComponents</code>. Calling <code>VerifyComponents</code> first is strongly recommended. You can
+nevertheless call it
+after <code>SetComponents</code> and in this case the first argument of <code>VerifyComponents</code>
+must be NULL. But caution, the 
+<code>SetComponents</code> can not be
+called twice on the same feature. So if the check fails,
+you must delete the User Feature to recreate a new one. </p>
+<p>Once the User Feature is checked and filled, you can use all methods of <i>CATIUdfFeature</i> to
+analyze or modify the inputs and the parameters. It is the goal of the two following steps.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 7"></a>Renaming the Inputs</h4>
+<p>Renaming the inputs is strongly recommended to make them speak to the end
+user.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  int Nbinput = 0;
+  rc = spIUdfFeature-&gt;<b>GetInputsNumber</b>( Nbinput );
+  if ( SUCCEEDED(rc) )
+  {
+      CATUnicodeString TheRoleOfTheFirstInput =&quot;The top point of the loft&quot; ;
+      rc = spIUdfFeature-&gt;<b>SetInputRole</b>( 1, TheRoleOfTheFirstInput );
+      ... </pre>
+    </td>
+  </tr>
+</table>
+<p>In the use case, <code>Nbinput</code> is also equal to 2, because the User Feature
+reference has two points as inputs. </p>
+<p>When you interactively instantiate a User Feature reference, the following dialog box appears: </p>
+<img border="0" src="images/CAAMcaUdfCreation4.jpg" width="329" height="421">
+<p>Notice the list of inputs. The second input <code>Point.2</code> is not explicit, but the first input is clearer: <i>The top point of the loft</i>. 
+To change the role of an input, use the <code>SetInputRole</code> method. The first argument is the input number.</p> 
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 8"></a>Publishing the Parameters</h4>
+<p>The contents of the User Feature reference defines a set of knowledge parameters. For more details, 
+read the chapter &quot;Published Parameters&quot;  of the technical article
+about Power Copy and User Feature [<a href="#References">2</a>]. Among them, it is possible to
+publish some. It means that at each instantiation, or 
+during an edition [<a href="#References">5</a>], you can modify these parameters on the
+User Feature instance.
+A published parameter is a parameter which has a signification for your User Feature
+reference.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+  CATListValCATBaseUnknown_var * pInternalParametersList = NULL ;
+
+  rc = spIUdfFeature-&gt;<b>GetInternalParameters</b>( pInternalParametersList );
+  if ( SUCCEEDED(rc) )
+  {
+     ...
+     CATBaseUnknown_var FirstPublishedParam = (*pInternalParametersList)[5] ;
+     rc = spIUdfFeature-&gt;<b>AddParameter</b>(FirstPublishedParam);
+     ...
+
+     CATBaseUnknown_var SecondPublishedParam = (*pInternalParametersList)[8] ;
+     rc = spIUdfFeature-&gt;<b>AddParameter</b>(SecondPublishedParam);
+     ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We have published two parameters thanks to the <code>AddParameter</code> method.&nbsp;
+<code>FirstPublishedParam</code> is the fifth parameter returned by the&nbsp; <code>GetInternalParameters</code> method and <code>SecondPublishedParam</code> is the eighth parameter
+returned&nbsp; by this method. The fifth and the eighth parameters are the radius of the Circle.3 (top) and Circle.4 (bottom) circles respectively.
+(We have found these
+two values 5 and 8 interactively.)</p>
+
+<p>All published parameters appear under the User Feature reference in the specification tree,
+as shown in <a href="#Fig.3">Fig 3</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step RenamingPublishedParameter"></a>Renaming the Published Parameters</h4>
+<p>Like the inputs, it is recommended to change the role of the published parameters to
+make them speak to the end user.
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATUnicodeString Name= &quot;Radius of the circle placed at the first input&quot; ;
+  rc = spIUdfFeature-&gt;<b>SetParameterRole</b>(FirstPublishedParam,Name);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We have changed the role of the first published parameter thanks to the <code>SetParameterRole</code> 
+method.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 9"></a>Putting the User Feature Reference in the UserFeatures Set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATIUdfFeatureSet_var  spIUdfFeatureSet = pIUdfFactory-&gt;<b>GetFeatureSet</b>(<b>1</b>);
+
+  if ( NULL_var != spIUdfFeatureSet )
+  {
+     spIUdfFeatureSet-&gt;<b>AppendFeature</b>(spIUdfFeature);
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>At last you put the new User Feature reference into the <code>UserFeatures</code>
+set dedicated to them.
+The <code>GetFeatureSet</code>  method with <b>1</b> as argument retrieves it. (<b>0</b>
+is for the Power Copy set.)<p>Now we check, with the following piece of code, that the list
+of User Feature references returned by the&nbsp; <code>GetUserFeatureList</code>  method,
+<code>pUserFeatureList</code> , is
+not NULL and contains one element.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  pUserFeatureList = pIUdfFactory-&gt;<b>GetUserFeatureList</b>();
+  if ( NULL == pUserFeatureList ) return 1 ;
+  if ( pUserFeatureList-&gt;Size() != 1 ) return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step Epilog"></a>Epilog</h4>
+<p>The last actions of the CAAMcaUdfCreation use case are the following: save the
+CAALoft.CATPart as CAAUdfLoft.CATPart, close it and 
+delete the session. It is also described in the Loading a Document use case [<A href="#References">4</A>].
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create a User Feature reference:</p>
+
+<ul>
+  <li>Retrieves a <i>CATIUdfFactory</i> interface pointer, thanks
+    to a <code> QueryInterface</code> on the root container of the part</li>
+  <li>Creates a new User Feature reference with the <code>CreateUserFeature</code> method
+    of <i>CATIUdfFactory</i>  . This new feature implements the <i>CATIUdfFeature</i>.&nbsp;</li>
+  <li>Retrieves the component(s)</li>
+  <li>Verifies the component with the <code>VerifyComponents</code> method of <i>CATIUdfFeature</i> </li> 
+  <li>Fills the User Feature reference with the component thanks to the
+    <code>SetComponents</code> method of <i>CATIUdfFeature</i></li>
+  <li>Renames the inputs thanks to the <code>SetInputRole</code> method of <i>CATIUdfFeature</i></li>
+  <li>Publishes two parameters thanks to the <code>AddParameter</code> method of
+    <i>CATIUdfFeature</i></li>
+  <li>Renames one of the published parameters thanks to the <code>SetParameterRole</code> method
+    of <i>CATIUdfFeature</i></li>
+  <li>Puts the new User Feature in the User Feature Set. First retrieves the User Feature
+    set thanks to the <code>GetFeatureSet</code> 
+    method of <i>CATIUdfFactory</i>. This set implements <i>CATIUdfFeatureSet</i>.&nbsp;
+    At last, adds to the set&nbsp; the new feature thanks to the <code>AppendFeature</code> method
+    of the CATIUdfFeatureSet.&nbsp;</li>
+  
+</ul>
+
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+    <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMcaUdfInstantiation.htm">Instantiating a User Feature Reference</a></td>
+  </tr>
+     <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">Power
+      Copy
+      and User Features Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+     <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading a Document</a></td>
+  </tr>
+    <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMcaUdfEdition.htm">Editing a User Feature Reference</a></td>
+  </tr>
+
+    <tr>
+    <td valign="top">[6]</td>
+    <td>
+    <a href="../CAAMmrUseCases/CAAMmrCombinedCurveSamplesOverview.htm">
+    Creating a New Geometrical Feature: the Combined Curve</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%" height="55">
+  <tr>
+    <td valign="top" height="17">Version: <strong>1</strong>  [Nov 2001]</td>
+    <td valign="top" height="17">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" height="16">Version: <strong>2</strong>  [Feb 2005]</td>
+    <td valign="top" height="16">Document Updated to modify the default icon</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="16">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

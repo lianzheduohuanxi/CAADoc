@@ -1,0 +1,235 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATInstantCollabDesignCAAItf Interface CATIColMergeable</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATInstantCollabDesignCAAItf.htm" href="../CATInstantCollabDesignCAAItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATInstantCollabDesignCAAItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIColMergeable"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATInstantCollabDesignCAAItf Interface CATIColMergeable</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIColMergeable_51145','CATIColMergeable','0');</script>
+<p><b>Usage: you can reimplement this interface by deriving the supplied <a href="../CATInstantCollabDesignCAAItf/class_CATColIMergeableAdapter_62054.htm">CATColIMergeableAdapter</a> adapter class.</b></p>
+<hr>
+<p>
+ interface <b>CATIColMergeable</b>
+</p>
+<p>
+<b><i>	Interface to be implemented by the objects which are to be streamed/unstreamed by the collaborative engine <br>
+	The merge step is composed by 2 steps :
+		<li>Preprocess step : objects in the briefcase are compared with the destination model.</i></b><br>
+ If the colaboration <br>
+		id can be retreived, the associated feature will be replaced by the one inside the briefcase. If not, <br>
+		the feature inside the briefcase will be instantiated.</li>
+		<li>Merge step : this step is composed by 3 steps which are done for all the feature (loop on all before merge <br>
+		then loop on all merge then loop on all afterMerge)
+				<li>BeforeMerge : this method is called before the unstream. </li>
+				<li>Merge : this method is called just after the unstream </li>
+				<li>AfterMerge : this method is called when all the features are unstreamed and merged</li>
+		</li>
+	IMPORTANT : this interface MUST not be manipulated directly. A feature can be mergeable thanks to the adhesion of this
+	CAA interface OR the internal DS interface. Use the CATCollabWrapper  methods instead	<br>
+	<u>When do I implement this interface ?</u><br>
+	1- I own a feature which inherits from a DS feature implementing itself the collaborative interfaces and I want <br>
+		to add applicative rule during the merge step.
+	2- I have created a feature which does not inherit from a known collaborative feature and I have no access to the DS <br>
+	internal interfaces. IMPORTANT : in that case I have to inherit my component from the provide adapter : 
+<script type="text/javascript"> activateLinkAnchor('CATColIMergeableAdapter','','CATColIMergeableAdapter') </script>  <p><b>BOA  information</b>:  this  interface  can  be  implemented 
+  using  the  BOA  (Basic  Object  Adapter). 
+  To  know  more  about  the  BOA,  refer  to  the  CAA  Encyclopedia  home  page.   
+  Click  Middleware  at  the  bottom  left,  then  click  the  Object  Modeler  tab  page. 
+  Several  articles  deal  with  the  BOA.</p>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AfterMerge(CATIColMergeContextTable*,CATIColMergeItem*)"><b>AfterMerge</b></a>(CATIColMergeContextTable*,CATIColMergeItem*)
+<dd> 	Method called just after the mergeOne may implement to post-process the merge :
+	<li>Replug some missing links or link which have been marked IGNORED during share step</li>
+	<li>Post-process the feature to guarantee the applicative model integrity
+	
+ <dt> o 
+    <a href="#BeforeMerge(CATIColMergeContextTable*,CATIColMergeItem*,CATBaseUnknown*&amp;,CATBoolean)"><b>BeforeMerge</b></a>(CATIColMergeContextTable*,CATIColMergeItem*,CATBaseUnknown*&amp;,CATBoolean)
+<dd> 	Method called before the merge.
+ <dt> o 
+    <a href="#ComputeMergeFlagFromContext(CATIColMergeItem*,CATIColMergeItem::MergeFlag,CATIColMergeItem::MergeFlag&amp;)"><b>ComputeMergeFlagFromContext</b></a>(CATIColMergeItem*,CATIColMergeItem::MergeFlag,CATIColMergeItem::MergeFlag&amp;)
+<dd> 	This method is the first called by the collaboration engine during the preprocess step<br>
+	The feature can change its merge flag depending on the context.
+ <dt> o 
+    <a href="#Merge(CATIColMergeContextTable*)"><b>Merge</b></a>(CATIColMergeContextTable*)
+<dd> 	Method called just after the unstream.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AfterMerge"></a><a name="AfterMerge(CATIColMergeContextTable*,CATIColMergeItem*)"></a> <dt> o <b>AfterMerge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AfterMerge</b>(<td><script type="text/javascript"> activateLink('CATIColMergeContextTable','CATIColMergeContextTable*')</script> <td><tt>iMergeContextTable</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeItem','CATIColMergeItem*')</script> <td><tt>iMyMergeItem</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+	Method called just after the mergeOne may implement to post-process the merge :
+	<li>Replug some missing links or link which have been marked IGNORED during share step</li>
+	<li>Post-process the feature to guarantee the applicative model integrity
+	
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMergeContextTable</tt>
+   <dd>		feature's Context table created during the share step
+	</dd>
+    <dt><tt> iMyMergeItem</tt>
+   <dd>		current merge item being processed</dd>
+</dl>
+</dl>
+</dl>
+<a name="BeforeMerge"></a><a name="BeforeMerge(CATIColMergeContextTable*,CATIColMergeItem*,CATBaseUnknown*&amp;,CATBoolean)"></a> <dt> o <b>BeforeMerge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>BeforeMerge</b>(<td><script type="text/javascript"> activateLink('CATIColMergeContextTable','CATIColMergeContextTable*')</script> <td><tt>iMergeContextTable</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeItem','CATIColMergeItem*')</script> <td><tt>iMyMergeItem</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*&amp;')</script> <td><tt>oSubstitute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>HaveBeenCreated</tt><td><tt>=FALSE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+	Method called before the merge. One may implement this method for different reasons :<br>
+	<li>Caching some information of the destination feature if it already exists</li>
+	<li>Proposing a substitute feature for the merge.<br>
+	<u>Example</u><br>
+	A must be merged on A'. But responsible of feature A decides that if A' exists, A' must be replaced by B
+	</li>
+	
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMergeContextTable</tt>
+   <dd>		feature's Context table created during the share step
+	</dd>
+    <dt><tt> iMyMergeItem</tt>
+   <dd>		current merge item being processed
+	</dd>
+    <dt><tt> oSubstitute</tt>
+   <dd>		feature which will replace this during the merge
+	</dd>
+    <dt><tt> HaveBeenCreated</tt>
+   <dd>		HaveBeenCreated=true : skeleton has been created so the feature has not been retrieved in the destination model<br>
+		HaveBeenCreated=false : skeleton does not exist. Pointer "this" refers to the "real" feature which is going to be replaced.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ComputeMergeFlagFromContext"></a><a name="ComputeMergeFlagFromContext(CATIColMergeItem*,CATIColMergeItem::MergeFlag,CATIColMergeItem::MergeFlag&amp;)"></a> <dt> o <b>ComputeMergeFlagFromContext</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ComputeMergeFlagFromContext</b>(<td> const <script type="text/javascript"> activateLink('CATIColMergeItem','CATIColMergeItem*')</script> <td><tt>iMyMergeItem</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeItem::MergeFlag','CATIColMergeItem::MergeFlag')</script> <td><tt>iOldMergeFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeItem::MergeFlag','CATIColMergeItem::MergeFlag&amp;')</script> <td><tt>oNewMergeFlag</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+	This method is the first called by the collaboration engine during the preprocess step<br>
+	The feature can change its merge flag depending on the context.<br<
+	<b>Example</b><br>
+	Feature must be always discarded if it already exists in the destination part, even it it has been <br>
+	explicitely selected by a user or a batch.
+	==> Implement that method and set oNewMergeFlag=CATIColMergeItem::NO_MERGE
+	
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMyMergeItem</tt>
+   <dd>		the input collaborative object which is currently pre-processed
+	</dd>
+    <dt><tt> iOldMergeFlag</tt>
+   <dd>		the default flag computed by the collabration engine
+	</dd>
+    <dt><tt> oNewMergeFlag</tt>
+   <dd></dd>
+</dl>
+</dl>
+</dl>
+<a name="Merge"></a><a name="Merge(CATIColMergeContextTable*)"></a> <dt> o <b>Merge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Merge</b>(<td><script type="text/javascript"> activateLink('CATIColMergeContextTable','CATIColMergeContextTable*')</script> <td><tt>iMergeContextTable</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+	Method called just after the unstream.
+	
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMergeContextTable</tt>
+   <dd>		feature's Context table created during the share step</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIColMergeable.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATInstantCollabDesignItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

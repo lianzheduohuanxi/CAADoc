@@ -1,0 +1,601 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATSketcherUseItf Interface IDMCurve2D</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATSketcherUseItf.htm" href="../CATSketcherUseItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATSketcherUseItf";	}
+		function getCurrentObjectName() { 
+ 	return "IDMCurve2D"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATSketcherUseItf Interface IDMCurve2D</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_IDMCurve2D_21289','IDMCurve2D','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>IDMCurve2D</b>
+</p>
+<p>
+<b><i> OLE for Design and Modeling 2D Curve Definition.</i></b><br>
+
+ <b>Role</b>: This interface is the 2D counterpart of IDMCurve. It serves to
+ provide the Client with the information related to the geometric content of
+ the object that is applicable to 2D curves of all types. When this interface 
+ occurs on an EdgeUse object, all the arguments returned are within the 
+ context of the associated IDMEdgeUse, respectively (eg: the flow direction 
+ is that of the EdgeUse object).<br>
+ The curve may have discontinuities. In which case, an evaluation request at 
+ such locations on the curve may either yield a failure or, at best, an 
+ approximation of the requested quantity. For example -- a request to evaluate 
+ the curvature at a discontinuity may result in the Server returning a failure 
+ code. Whereas, a request to evaluate a tangent at a discontinuity may result 
+ in the Server returning an average of the 'before' and 'after' tangents at 
+ that point. This interface does not attempt to provide the detailed information 
+ at the discontinuity. This is left as the task of some other interface that may 
+ be supported by the object. However, this interface does provide sufficient 
+ information for a Client to learn that this curve may give problems that arise 
+ from such situations.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetContinuity(DWORD*)"><b>GetContinuity</b></a>(DWORD*)
+<dd>  This method returns the highest level of geometric continuity, the curve possesses.
+ <dt> o 
+    <a href="#GetCurvature(ULONG,double*,double*,double*)"><b>GetCurvature</b></a>(ULONG,double*,double*,double*)
+<dd>  Given an array of  parameters on the curve, this method computes the curvature of the 
+ curve at that point.
+ <dt> o 
+    <a href="#GetCurveType(GUID*)"><b>GetCurveType</b></a>(GUID*)
+<dd>  There is a specific type associated with the curve geometry.
+ <dt> o 
+    <a href="#GetDerivatives(ULONG,double*,double*,double*,double*)"><b>GetDerivatives</b></a>(ULONG,double*,double*,double*,double*)
+<dd>  Given an array of parameters on the curve, this method evaluates the derivatives of the curve 
+ at these points.
+ <dt> o 
+    <a href="#GetEndPoints(double*,double*)"><b>GetEndPoints</b></a>(double*,double*)
+<dd>  This method returns the end-points of the curve.
+ <dt> o 
+    <a href="#GetGeometryForm(DWORD*)"><b>GetGeometryForm</b></a>(DWORD*)
+<dd>  This method returns high-level geometric property information that characterizes this curve-based 
+ object.
+ <dt> o 
+    <a href="#GetLengthAtParam(double,double,double*)"><b>GetLengthAtParam</b></a>(double,double,double*)
+<dd>  This method outputs the length, measured along the curve,  from a given parameter to a given 
+ parameter.
+ <dt> o 
+    <a href="#GetParamAnomaly(double*,boolean*)"><b>GetParamAnomaly</b></a>(double*,boolean*)
+<dd>  Typically, a curve's parametric space can be expected to be finite.
+ <dt> o 
+    <a href="#GetParamAtLength(double,double,double*)"><b>GetParamAtLength</b></a>(double,double,double*)
+<dd>  This method outputs the parameter at a given length, measured along the curve,  starting from 
+ a given parameter.
+ <dt> o 
+    <a href="#GetParamAtPoint(ULONG,double*,double*,double*,double*,DWORD*)"><b>GetParamAtPoint</b></a>(ULONG,double*,double*,double*,double*,DWORD*)
+<dd>  Given an array of 2D points lying near the curve, in the local coordinate system 
+ (X, Y) of the curve,  this method computes the parameter on the curve that 
+ corresponds to them.
+ <dt> o 
+    <a href="#GetParamExtents(double*,double*)"><b>GetParamExtents</b></a>(double*,double*)
+<dd>  This method returns the parametric extents of the curve.
+ <dt> o 
+    <a href="#GetPointAtParam(ULONG,double*,double*)"><b>GetPointAtParam</b></a>(ULONG,double*,double*)
+<dd>  Given an array of parameters on the curve, this method computes the corresponding 2D 
+ space points (X, Y) in the curve's local coordinate system.
+ <dt> o 
+    <a href="#GetRangeBox(double*,double*)"><b>GetRangeBox</b></a>(double*,double*)
+<dd>  The range box (also known as bounding box) is axially-aligned within the local 
+ coordinate system of the Server.
+ <dt> o 
+    <a href="#GetTangent(ULONG,double*,double*)"><b>GetTangent</b></a>(ULONG,double*,double*)
+<dd>  Given an array of parameter values on the curve, this method computes the unit-vector 
+ tangent at each of the points.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetContinuity"></a><a name="GetContinuity(DWORD*)"></a> <dt> o <b>GetContinuity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetContinuity</b>(<td><script type="text/javascript"> activateLink('DWORD','DWORD*')</script> <td><tt>nLevel</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method returns the highest level of geometric continuity, the curve possesses. For example, 
+ if the curve is G1 continuous everywhere, but not G2 continuous at a specific location, this 
+ method returns the level as 1, indicating a G1 continuous curve.<br>
+ Typically, a curve will not bother to count itself as any higher than G3 continuous even if 
+ it is continuously differentiable beyond the 3rd derivative. Methods in this interface deal 
+ with derivatives only as high as the third. Moreover, if the Server cannot determine or finds 
+ it difficult to determine its true, highest continuity rating, it will return a lower level of 
+ which it is certain.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>DWORD</tt>
+   <dd> *nLevel</tt> [out] Outputs the maximum geometric continuity level, the Server can be certain this curve 
+ possesses.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCurvature"></a><a name="GetCurvature(ULONG,double*,double*,double*)"></a> <dt> o <b>GetCurvature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCurvature</b>(<td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>nParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pDirections</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pCurvatures</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Given an array of  parameters on the curve, this method computes the curvature of the 
+ curve at that point. It outputs the curvature direction as the unit-vector to the centre
+ of curvature. Curvature returned is always positive.<br>
+ <b>NOTE:</b>
+ Curvature direction and value at a point on a curve are defined by the osculating circle 
+ that passes through the point. The osculating circle is the limit of circles that pass 
+ through the point and two points on the curve close to the given point.<br>
+ The curvature direction is the direction of the vector from the point to the centre of 
+ the osculating circle. The curvature direction is always orthogonal to the tangent. 
+ Radius of curvature is 1/curvature. The value of curvature can be 0, indicating an 
+ infinite radius of curvature (line).<br>
+ <b>NOTE:</b>
+ If an input parametric point lies at a discontinuity in the curve (eg: at the cusp-forming, 
+ multiple knot-line on a B-Spline curve), the curvature is undefined and no approximations 
+ make sense. In this case, the method will fail. Even if one of the points to be evaluated 
+ fails, the method returns a failure code. See also the GetContinuity and GetPointAtParam 
+ methods of this interface -- these enable the Client to learn more about curve continuity.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>ULONG</tt>
+   <dd> nParams</tt> [in] Inputs the number of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pParams</tt> [in] Inputs the array of parameters at which to evaluate the curvatures.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pDirections</tt> [out] Outputs the array of unit vectors pointing toward the centre of curvature. Can 
+ be <tt>NULL</tt> if not required. Array, if passed in, must be able to hold nParams 2D vectors.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pCurvatures</tt> [out] Outputs the array of positive curvature values. The value returned may be 0, if 
+ the radius of curvature is infinite. Can be <tt>NULL</tt> if not required. Array, if passed in, must 
+ be allocated by the caller to hold nParams doubles.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCurveType"></a><a name="GetCurveType(GUID*)"></a> <dt> o <b>GetCurveType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCurveType</b>(<td><script type="text/javascript"> activateLink('GUID','GUID*')</script> <td><tt>pRefIID</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ There is a specific type associated with the curve geometry. This method 
+ returns the REFIID (GUID) of the interface that represents this type. The 
+ interfaces of the special types of the curve are defined elsewhere in this 
+ document. Examples of the type of curves are -- circle, ellipse, line, 
+ polyline, B-spline, etc. These specialized interfaces return the data that 
+ make up the underlying curve geometry.
+ It is possible that the Server decides not to expose it's underlying specific 
+ type. This may largely be due to the fact that the type is undocumented and 
+ proprietary. In this case, IID_IUnknown may be returned. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>CATClassId</tt>
+   <dd> &pRefIID</tt> [out] Outputs the REFIID of the specific geometry interface. IID_IUnknown 
+ may be output if a REFIID equivalent to the underlying specific type does 
+ not exist.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDerivatives"></a><a name="GetDerivatives(ULONG,double*,double*,double*,double*)"></a> <dt> o <b>GetDerivatives</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDerivatives</b>(<td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>nParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pFirstDerivs</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pSecondDerivs</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pThirdDerivs</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Given an array of parameters on the curve, this method evaluates the derivatives of the curve 
+ at these points. The derivatives upto the third order can be output. The caller can choose to 
+ not obtain any of the derivatives by simply specifying a <tt>NULL</tt> in place of the corresponding 
+ output argument.<br>
+ The derivatives are computed with respect to the raw curve geometry and without regard to the 
+ logical direction imposed by, say, the EdgeUse or any object that supports this interface. A 
+ Client can thus choose to operate in the raw geometry mode if it so wishes. Information as to 
+ whether the parametric sense of this underlying curve is opposed to the logical sense is 
+ available from this object's topology interface, if one exists, and can be applied at will to 
+ the resulting computations from this method. But Clients are encouraged to use the other methods 
+ of this interface that return "sensed" information directly, whenever applicable.<br>
+ <b>NOTE:</b>
+ If an input parameter lies at a discontinuity in the curve (eg: at the cusp-forming, multiple 
+ knot-line on a B-Spline curve), some or all of the derivatives may be undefined and no 
+ approximations make sense in the semantics of this method. In this case, the method will fail. 
+ Even if one of the parameters fail to evaluate a requested output, the method returns a failure 
+ code. See also the GetContinuity and GetPointAtParam methods of this interface -- these enable 
+ the Client to learn more about curve continuity.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>ULONG</tt>
+   <dd> nParams</tt> [in] Inputs the number of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pParams</tt> [in] Inputs the array of parameters at which to evaluate the curve.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pFirstDerivs</tt> [out] Inputs the array of parameters at which to evaluate the curve. Outputs the array of first
+ derivatives. Can be <tt>NULL</tt> if not required. Array, if passed in, must be allocated by the caller
+ to hold <tt>nParams</tt> 2D vectors.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pSecondDerivs</tt> [out] Outputs the array of second derivatives. Can be <tt>NULL</tt> if not required. Array, 
+ if passed in, must be allocated by the caller to hold <tt>nParams</tt> 2D vectors.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pThirdDerivs</tt> [out] Outputs the array of third derivatives. Can be <tt>NULL</tt> if not required. Array, 
+ if passed in, must be allocated by the caller to hold <tt>nParams</tt> 2D vectors.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEndPoints"></a><a name="GetEndPoints(double*,double*)"></a> <dt> o <b>GetEndPoints</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEndPoints</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pStartPoint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pEndPoint</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method returns the end-points of the curve. The start point and the end 
+ point are decided with  respect to the logical flow imposed on the curve by 
+ the object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> *pStartPoint</tt> [out] Outputs the start point of the curve.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pEndPoint</tt> [out] Outputs the end point of the curve.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetGeometryForm"></a><a name="GetGeometryForm(DWORD*)"></a> <dt> o <b>GetGeometryForm</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetGeometryForm</b>(<td><script type="text/javascript"> activateLink('DWORD','DWORD*')</script> <td><tt>pForm</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method returns high-level geometric property information that characterizes this curve-based 
+ object. The DWORD returned consists of properties that this object exhibits. The properties are 
+ selected out of the <tt>enum DMCVGEOMETRYFORM</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>DWORD</tt>
+   <dd> *pForm</tt> [out] Outputs the union of the properties the Client might encounter on the object. The 
+ properties are selected from the <tt>enum DMCVGEOMETRYFORM</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetLengthAtParam"></a><a name="GetLengthAtParam(double,double,double*)"></a> <dt> o <b>GetLengthAtParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetLengthAtParam</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>FromParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>ToParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pLength</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method outputs the length, measured along the curve,  from a given parameter to a given 
+ parameter.<br>
+ If either of the input parameters are out of the bounds of the curve's parametric range, the 
+ function 'snaps' the value to the closest end point, before performing the computation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> FromParam</tt> [in] Inputs the parameter from which the length is to be measured.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> ToParam</tt> [in] Inputs the parameter to which the length is to be measured.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pLength</tt> [out] Outputs the length between the parameters.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetParamAnomaly"></a><a name="GetParamAnomaly(double*,boolean*)"></a> <dt> o <b>GetParamAnomaly</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParamAnomaly</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pPeriodicity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean*')</script> <td><tt>pIsSingular</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Typically, a curve's parametric space can be expected to be finite. That is, there is a one-to-one,
+ unique mapping between a point in the parametric space to a point in the 2D space. But in several 
+ situations a Server might find it best to implement a curve with a parameter space that does not 
+ conform to this rule. Parametric spaces with periodicity is the case in point. This method returns 
+ information to the Client, indicating any such periodicity that might exist.<br>
+ In the case of curves that degenerate to a point, the entire parametric space maps to the same 
+ 2D point. Such a singularity, if it exists, is indicated by an output Boolean flag.
+ <b>NOTE:</b>
+ A curve regarded as periodic will have the end-points of its primary parametric range, map to 
+ identical points in model space AND have the derivatives match up. The parameter space of such a 
+ curve can now be considered as infinite, formed by repeating the primary range, indefinitely. 
+ The length of the primary range is called the period of the curve. The curve continues to be 
+ defined for all values in this infinite space by reducing a given parameter modulo the period 
+ into this primary range. This method will return the period (0 if the parameter space is not 
+ periodic) and the origin of the primary periodic range (typically, 0).
+ HRESULT GetParamAnomaly (double pPeriodicity [2], boolean* pIsSingular)
+   pPeriodicity	
+   pIsSingular	Outputs TRUE if the parametric space is singular and the entire range maps to the 
+               same point.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> *pPeriodicity</tt> [out] Outputs the period in the first element of the array, when the curve is periodic.
+ The value will be identically 0 if the curve is non-periodic. The second element contains the origin
+ of the primary periodic range.
+ </dd>
+    <dt><tt> <tt>boolean</tt>
+   <dd> *pIsSingular</tt> [out] Outputs <tt>TRUE</tt> if the parametric space is singular and the entire range maps to the 
+ same point.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetParamAtLength"></a><a name="GetParamAtLength(double,double,double*)"></a> <dt> o <b>GetParamAtLength</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParamAtLength</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>FromParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>Length</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParam</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method outputs the parameter at a given length, measured along the curve,  starting from 
+ a given parameter. The direction of measurement is always in the direction of the logical flow 
+ of the curve. If no inherent logical flow can be assigned, the direction is the direction of 
+ increasing parameterization.<br>
+ If the input starting parameter is out of the bounds of the curve's parametric range, the 
+ function 'snaps' the value to the closest end point, before performing any computation. If the 
+ length being measured exceeds the bounds of the curve, the end point parameter is returned.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> FromParam</tt> [in] Inputs the parameter from which the Length needs to be measured.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> Length</tt> [out] Inputs the length of the curve to ne measured from pFromParam in the logical flow 
+ direction of the curve.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pParam</tt> [out] Outputs the computed parameter.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetParamAtPoint"></a><a name="GetParamAtPoint(ULONG,double*,double*,double*,double*,DWORD*)"></a> <dt> o <b>GetParamAtPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParamAtPoint</b>(<td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>nParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pPoints</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pGuessParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pMaxDeviations</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('DWORD','DWORD*')</script> <td><tt>pFlags</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Given an array of 2D points lying near the curve, in the local coordinate system 
+ (X, Y) of the curve,  this method computes the parameter on the curve that 
+ corresponds to them. It also returns the maximum deviation from the ideal that 
+ this computation may have involved. This can be regarded as the tolerance that 
+ the Server used in calculating the parameter.
+ It is possible that there are more than one possible parameters for a given point
+ that satisfy this criterion or perhaps infini€tely many (e.g.: if the centre of 
+ the circle is input). But this method will return just one such solution. A status 
+ indicator is output for each point evaluated, which tells the caller if there was 
+ any ambiguity. The caller should attempt to provide the input points ON or VERY 
+ NEAR the curve to prevent such ambiguity from arising.
+ The Client can provide initial guess parametric points, if these are known. This 
+ would speed up the computation in several cases. If such a guess is not known, the 
+ argument should be passed in as NULL. If the Client decides to provide a guess, it 
+ should do so for ALL the points or none at all.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>ULONG</tt>
+   <dd> nParams</tt> [in] Inputs the number of points to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pPoints</tt> [in] Inputs the array of 2D points lying close to the curve.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pGuessParams</tt> [in] Inputs array of parameters that are the initial guesses from the caller. Can be NULL if not
+ known. Array, if passed in, must correspond to the <tt>pPoints</tt> array.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pMaxDeviations</tt> [out] Outputs the array of maximum deviation that has been allowed from the true point. Can be
+ <tt>NULL</tt> if not required. Array to be allocated by the caller to hold nPoints doubles.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pParams</tt> [out] Outputs the array of computed parameters. Array to be allocated by the caller to hold nPoints
+ parameters.
+ </dd>
+    <dt><tt> <tt>DWORD</tt>
+   <dd> * pFlags</tt> [in] Outputs the array of computed parameters. Array to be allocated by the caller to hold <tt>nPoints</tt>
+ parameters. Outputs the array of flags indicating if there was any ambiguity about the computation.
+ Can be <tt>NULL</tt> if not required. Array, if passed in, must be able to hold <tt>nPoints</tt> <tt>DWORD</tt>s.
+ Possible values of the flag are:
+ <dl>
+ <dt> <tt>0</tt>    <dd> the parameter is unique.
+ <dt> <tt>1</tt>    <dd> there are distinctly many solutions.
+ <dt> <tt>2</tt>    <dd> there are infinitely many solutions.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetParamExtents"></a><a name="GetParamExtents(double*,double*)"></a> <dt> o <b>GetParamExtents</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParamExtents</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pStartParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pEndParam</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method returns the parametric extents of the curve. This is the parametric 
+ equivalent of the end-points.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> *pStartParam</tt> [out] Outputs the parameter associated with the start point of the curve.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pEndParam</tt> [out] Outputs the parameter associated with the end point of the curve.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetPointAtParam"></a><a name="GetPointAtParam(ULONG,double*,double*)"></a> <dt> o <b>GetPointAtParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetPointAtParam</b>(<td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>nParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pPoints</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Given an array of parameters on the curve, this method computes the corresponding 2D 
+ space points (X, Y) in the curve's local coordinate system.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>ULONG</tt>
+   <dd> nParams</tt> [in] Inputs the number of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pParams</tt> [in] Inputs the array of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pPoints</tt> [out] Outputs the array of computed 2D space points. Array must be able to hold <tt>nParams</tt>
+ 2D points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetRangeBox"></a><a name="GetRangeBox(double*,double*)"></a> <dt> o <b>GetRangeBox</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRangeBox</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pMinPoint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pMaxPoint</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ The range box (also known as bounding box) is axially-aligned within the local 
+ coordinate system of the Server. The range box returned bounds the curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>double</tt>
+   <dd> *pMinPoint</tt> [out] Outputs the minimum x,y point of the range box.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> *pMaxPoint</tt> [out] Outputs the maximum x,y point of the range box.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetTangent"></a><a name="GetTangent(ULONG,double*,double*)"></a> <dt> o <b>GetTangent</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTangent</b>(<td><script type="text/javascript"> activateLink('ULONG','ULONG')</script> <td><tt>nParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>pTangents</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Given an array of parameter values on the curve, this method computes the unit-vector 
+ tangent at each of the points. The tangent is alway pointed in the direction of the 
+ logical flow of the curve. If no inherent logical flow can be assigned, the direction 
+ is the direction of increasing parameterization.
+ <b>NOTE:</b>
+ If an input parameter lies at a discontinuity in the curve (eg: at the cusp-forming, 
+ multiple knot on a B-Spline curve), there may not be a unique tangent to output. The 
+ Server outputs an average tangent, rather than fail. The computation is the average of 
+ the unique 'before' and 'after' tangent at that point. 'Before' being the limit of the 
+ tangent as one approaches the discontinuity and 'after' being the limit as one departs 
+ it. See also the GetContinuity and GetPointAtParam methods of this interface -- these 
+ enable the client to learn more about curve continuity.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>ULONG</tt>
+   <dd> nParams</tt> [in] Inputs the number of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> * pParams</tt> [in] Inputs the array of parameters to be evaluated.
+ </dd>
+    <dt><tt> <tt>double</tt>
+   <dd> * pTangents</tt> [out] Outputs the array of unit tangent vectors in the logical flow direction. 
+ Array to be allocated by the caller to hold nParams 2D vectors.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>IDMCurve2D.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATSketcherUseItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

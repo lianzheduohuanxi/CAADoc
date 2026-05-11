@@ -1,0 +1,342 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Compute the Inertia Data of Products</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Product Synthesis &amp; Knowledgeware</h1>
+    </td>
+    <td valign="top">
+      <h2>Space Analysis</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Compute the Inertia Data of Products</h3>
+      <em>From document to computation</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This paper discusses the CAASpaComputeInertia use case. This use case
+      explains how to open a CATProduct document and explore its content from an
+      inertia analysis perspective.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAASpaComputeInertia Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAASpaComputeInertia Do</a></li>
+          <li><a href="#How">How to Launch CAASpaComputeInertia</a></li>
+          <li><a href="#Where">Where to Find the CAASpaComputeInertia Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the CATIA analysis tools. Its main intent is to introduce the analysis API, and
+a way to use it.</p>
+<p>The scenario is based on an industrial need : users want to export the mass
+of each sub-assemblies from a product. To perform the user will use a batch
+utility to compute the masses and to output them.</p>
+<p>The target of this use case is to learn how to build such utility.</p>
+<p><img src="images/CAASpaComputeInertia.jpg" height="450" width="630"></p>
+<p>This picture represents a CATProduct document containing some products.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASpaComputeInertia Use Case</h3>
+<p>CAASpaComputeInertia is a use case of the CAASPAInterfaces.edu framework that
+illustrates SpaceAnalysisInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASpaComputeInertia Do</h4>
+<p>The goal of CAASpaComputeInertia is to open a CATProduct document, navigate
+on products to compute the inertia data and print them. Namely, it:</p>
+<ul>
+  <li>Opens a CATProduct document, whose pathname is passed in argument</li>
+  <li>Search the products in the document</li>
+  <li>Compute the inertia data for each product</li>
+  <li>Print these data.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAASpaComputeInertia</h4>
+<p>To launch CAASpaComputeInertia, you will need to set up the build time
+environment, then compile CAASpaComputeInertia along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt; CAASpaComputeInertia inputDirectory inputFile.CATProduct</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAASpaComputeInertia inputDirectory inputFile.CATProduct</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>inputDirectory</code></td>
+    <td>The directory in which <code>inputFile.CATProduct</code> is located</td>
+  </tr>
+  <tr>
+    <td><code>inputFile.CATProduct</code>
+    <td>The file that contains the use case CATProduct document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASpaComputeInertia Code</h4>
+<p>The CAASpaComputeInertia use case is made of a single class named <i>CAASpaComputeInertia</i>
+whose header and source files are located in the CAASpaComputeInertia.m module
+of the CAASPAInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASPAInterfaces.edu\CAASpaComputeInertia.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASPAInterfaces.edu/CAASpaComputeInertia.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The <i>CAASpaComputeInertia</i> class derives from <i>CATInteractiveApplication</i>.
+The described code is located in the <code>BeginApplication</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four main steps in CAASpaComputeInertia:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Searching">Searching the Products</a></li>
+  <li><a href="#Printing">Computing and Printing the Inertia Data</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is the <i>CAASpaComputeInertia</i> class that derives from <i>CATInteractiveApplication</i>
+and that is simply instantiated. It runs in one shot and the described code is
+located in the <code>BeginApplication</code> method. It begins by creating a
+session, and by opening the use case CATProduct document passed as an argument: <code>pDocument</code>
+refers to it. This is the usual sequence for creating a CATIA document [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Searching"></a>Searching the Products</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //==========================================================================================
+  // 3 - Search the products
+  //==========================================================================================
+  CATIProduct* piProduct = NULL;
+  CATIDocRoots* piDocRootsOnDocument = NULL;
+  HR = pDocument-&gt;QueryInterface(IID_CATIDocRoots,(void**)&amp;piDocRootsOnDocument);
+  if (SUCCEEDED(HR) &amp;&amp; NULL != piDocRootsOnDocument)
+  {
+    // Search the root product
+    CATIProduct* piRootProduct = NULL;
+    CATListValCATBaseUnknown_var* pRootList = piDocRootsOnDocument-&gt;GiveDocRoots();
+    int nRoots = pRootList-&gt;Size();
+    for (int i = 1; i &lt;= nRoots &amp;&amp; NULL == piRootProduct; i++)
+    {
+      HR = (*pRootList)[i]-&gt;QueryInterface(IID_CATIProduct,(void**)&amp;piRootProduct);
+    }
+    // Search all children of the root product
+    if (NULL != piRootProduct)
+    {
+      CATListValCATBaseUnknown_var* pProductList = piRootProduct-&gt;GetChildren(&quot;CATIProduct&quot;);
+      int nProducts = pProductList-&gt;Size();
+      for (int j = 1; j &lt;= nProducts; j++)
+      {
+        HR = (*pProductList)[j]-&gt;QueryInterface(IID_CATIProduct,(void**)&amp;piProduct);
+        if (SUCCEEDED(HR))
+        {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first step is to find all the roots of the document using <code>CATIDocRootsCATSession::GiveDocRoots</code>
+method.
+<p>The root product is the one of the roots which mates the interface <code>CATIProduct</code>.
+<p>The <code>CATIProduct::GetChildren</code> method gives a list of all the
+chidren of any product.
+<p>Then the use case loops on all these children.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Printing"></a>Computing and Printing the Inertia Data</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          //================================================================================
+          // 4 - Print the inertia data
+          //================================================================================
+          CATIInertia* piInertiaOnProduct = NULL;
+          HR = piProduct-&gt;QueryInterface(IID_CATIInertia,(void**)&amp;piInertiaOnProduct);
+          if (SUCCEEDED(HR))
+          {
+            double density = 0.;
+            double mass = -1.;
+            double position[3];
+            double matrix[9];
+            double components[9];
+            double values[3];
+            HR = piInertiaOnProduct-&gt;GetInertia (&amp;density,&amp;mass, position, matrix, components, values);
+            if (SUCCEEDED(HR))
+            {
+              CATIAlias* piAliasOnProduct = NULL;
+              HR = piProduct-&gt;QueryInterface(IID_CATIAlias,(void**)&amp;piAliasOnProduct);
+              if (SUCCEEDED(HR))
+              {
+                cout &lt;&lt; &quot;Product &quot; &lt;&lt; piAliasOnProduct-&gt;GetAlias().ConvertToChar() &lt;&lt; &quot; : mass = &quot; &lt;&lt; mass;   
+                piAliasOnProduct-&gt;Release();
+                piAliasOnProduct = NULL;
+                if (density &lt;= 0.)
+                {
+                  cout &lt;&lt;&quot; with non homogeneous density&quot; &lt;&lt;endl;
+                }
+                else
+                {
+                  cout &lt;&lt; &quot; with density = &quot; &lt;&lt; density &lt;&lt;endl;
+                }
+              }  
+            }
+            // Release the reference to the inertia
+            piInertiaOnProduct-&gt;Release(); 
+            piInertiaOnProduct = NULL;
+          }
+          // Release the reference to the product  
+          piProduct-&gt;Release();
+          piProduct = NULL;
+        } 
+      }
+      // Clean the product list
+      delete pProductList;
+      pProductList = NULL;
+      // Release the reference to the root product
+      piRootProduct-&gt;Release();
+      piRootProduct = NULL;
+    }
+    // Clean the root list
+    delete pRootList;
+    pRootList = NULL;
+    // Release the reference to the doc roots
+    piDocRootsOnDocument-&gt;Release();
+    piDocRootsOnDocument = NULL;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>For each product the <code><a href="#" onclick="javascript:CAAlink('CPP', 'SpaceAnalysisInterfaces', 'interface', 'CATIInertia');return false;">CATIInertia</a></code>
+interface is queried, then the <code><a href="#" onclick="javascript:CAAlink('CPP', 'SpaceAnalysisInterfaces', 'interface', 'CATIInertia', 'GetInertia');return false;">CATIInertia::GetInertia</a></code>
+method computes all inertia data.
+<p>The <code>CATIAlias</code> interface is used to retrieve the name of the
+product and to print it in front of the corresponding mass.
+<p>The next step consist in cleaning the environment and releasing all
+resources.
+<p>The technique is fairly simple : all references to interfaces have to be
+released using <code>CATBaseUnknown::Release()</code> and then the list is
+deleted. All pointer are nullified.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The document is closed using its <code>LifeCycleObject</code> interface and
+more specifically the <code>remove</code>method. The environment is cleaned, and
+the session is deleted by the <code>Delete_Session</code> global function, which
+is passed the same identifier that was used to open it. This is the usual
+sequence for closing a document, and for deleting the session [<a href="#References">2</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to programmatically navigate a
+CATProduct document and computes the inertia data of its' products.</p>
+<p>More specifically, you have learn how to access:</p>
+<ul>
+  <li><i>Products</i> in a CATProduct document</li>
+  <li><i>Inertia data</i> associated to each product.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

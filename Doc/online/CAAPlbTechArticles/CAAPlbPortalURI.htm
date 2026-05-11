@@ -1,0 +1,608 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The URL Mechanism for the ENOVIA Portal</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The URL Mechanism for the ENOVIA Portal</h3>
+      <em>The URL mechanism used for the communication in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article describes how URL can be used with the ENOVIA Portal.</p>
+      <ul>
+        <li><a href="#Why"><b>Why URLs?</b></a></li>
+        <li><a href="#URLStructure"><b>Structure of an URL for the Enovia Portal</b></a></li>
+        <li><a href="#Protocols"><b>The Different Protocols Used Inside the
+          Portal</b></a></li>
+        <li><a href="#Bean"><b>A Special Protocol, the bean:// Protocol</b></a></li>
+        <li><a href="#Inter"><b>URL and Internationalization</b></a></li>
+        <li><a href="#Action"><b>Associating an Action with an URL</b></a></li>
+        <li><a href="#Inner"><b>Inner Mechanism and API</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Why"></a>Why URLs?</h3>
+<p>In a distributed environment where you have to exchange data between
+applications or publish data, it is often necessary not to exchange or publish
+the whole data but rather a persistent link toward these data. This link should
+have the same syntax whatever the kind of data, be easily understandable, tell
+the type of data it represents to launch application to handle them, identify
+uniquely the data, tell the kind of protocol to use to retrieve the data and be
+extensible so that user can add in this link other information about the data.</p>
+<p>To meet all these requirements, we can use Universal Resource Locators (URL).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="URLStructure"></a>Structure of an URL for the Enovia Portal</h3>
+<p><b><i>The protocol to access data</i></b><br>
+The URL first begins with the kind of protocol to use to retrieve the data. In
+the Enovia Portal, data can be stored in different locations. They can be stored
+under a http server, in which case the protocol to retrieve them is http://,
+they can be store under a ftp server, in which case the protocol is ftp:/, they
+can be stored locally on disk on the client side, in which case the protocol is
+file:/ or they can be stored in a database, in a vault or somewhere under the
+user home directory, in short somewhere not accessible through a classical
+protocol (http, ftp, file ...). In these cases, the Enovia applications are the
+only one to know how to retrieve the data so for these kind of locations. For
+the Portal scope, we can have three data locations that are not accessible
+through the standard protocols (http, ftp ...). This is when the data are stored
+either in an Enovia database, in a file system not accessible through a http or
+ftp server but through a CORBA server or in a CDM-A database. For these three
+kinds of locations, the protocols should be enovia://, remotefile:// and cdma://
+<p><b><i>The server for distributed protocol</i></b><br>
+When the data are not stored locally, the protocol will need to know the server
+on which to connect to retrieve the data. This server name is usually placed
+just after the protocol (ftp:/server_name, http://server_name or
+enovia://server_name).<br>
+However, sometimes the protocol needs to be authentified (essentially for ftp
+when not anonymous and for enovia protocols). In this case, the string
+username:password@ is included between the protocol and the server name. For
+ftp, the password is not encrypted but for obvious security reasons for the
+enovia protocol the password will be encrypted giving a syntax that looks like
+protocol://username:encryptedpassword@hostname.<br>
+In the Portal application, this username and password will be retrieved from the
+URL to establish a authenticated connection between the client and the server.
+If no username and password is provided, the current session connection (if any)
+will be used but with no guarantee that the security level is sufficient (access
+right) to retrieve the data in which case an access error may occur.<br>
+The connection on the server is usually done through a default port number (80
+for http://, 1570 for enovia://, remotefile:// and cdm://) but for some reasons
+this port number may be different. In this case, the port number to use for the
+connection is appended after the hostname : protocol://hostname:portnumber
+<p><b><i>The data origin</i></b><br>
+Data need to be represented by a unique string. This string must contain all the
+information needed to localize the data and retrieve them. This string can take
+several form. If the data are stored in a file, this string looks like
+filepath/filename but if the data is a V4 CATIA model stored in CDM-A this
+string is just a concatenation of the dbname, the catab, the caenv, the coid and
+the compid of the model, these information being sufficient to retrieve the
+model.<br>
+In short, this string can take any form given that it contains all the needed
+information. In the URL, this string is appended after the server_name giving
+something like protocol://server_name/data_origin
+<p><b><i>The data type</i></b><br>
+Finally, the URL must contains an information about the type of data it
+represents. Usually this information is given by the suffix extension of the
+data_origin string. But this is valid only if the data is stored as a file. For
+most other storage format, there is no extension in the data_origin string. In
+these cases, a suffix is added after the data_origin string to specify the kind
+of data the URL represent (for example .model for a CDM-A model). So the URL now
+looks like protocol://server_name/data_origin.data_extension
+<p><b><i>Extension of the URL</i></b><br>
+For many reasons, users may want to add other information about the data in the
+URL. These information can be a command to apply on the data (print, browse,
+edit ...), the instance name of the application to handle the data or a pointer
+on something inside the data (html anchor).<br>
+The syntax of the information is
+?arg1=value1&amp;arg2=value2&amp;...&amp;argn=valuen . The string is added at
+the end of the URL which looks now like
+protocol://server_name/data_origin.data_extension?arg1=value1&amp;arg2=value2<br>
+For the Portal purpose, we will reserve several argument names:
+<ul>
+  <li>Command will be used to specify the kind of application that will handle
+    the data. For example, a V4 CATIA model can be handled by the Local3DViewer
+    or Local2DViewer CATlets. By adding in the URL the argument Command with the
+    value Local3D or Local2D, the data pointed by the URL will loaded in the
+    Local3DViewer CATlet or in the Local2DViewerCATlet.</li>
+  <li>InstanceName will be used to specify the instantiated application which
+    you want to handle the data. For example, if inside the Portal you already
+    have a Local3DViewer CATlet instantiated named Local3D-1 and you want to
+    load the data inside this CATlet instance and not in another one, just add
+    in the URL the argument InstanceName with the value Local3D-1</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Protocols"></a>The Different Protocols Used Inside the Portal</h3>
+<p>Right now, the Portal can access data coming from different environments. A
+different protocol is associated to each environment. We describe here the
+format of the URL for data coming from these environment:
+<p><b><i>Data located under an http server</i></b><br>
+http://charango/models/CUBES.model
+<p><b><i>Data located on the local disk</i></b><br>
+file:/u/users/ddl/model/CUBES.model<br>
+file:/e:/users/ddl/model/CUBES.model
+<p><b><i>Data located in a unix file tree under a Portal server :</i></b><br>
+The URL structure is : remotefile://server_name/filepath<br>
+remotefile://charango/u/users/ddl/model/CUBES.model
+<p><b><i>Data pointed by the CATIA V4 declarative under a Portal server :</i></b><br>
+The URL structure is : declarative://server_name/dsname/title.type<br>
+where type is either model, session or reporter<br>
+declarative://charango/MODEL_DEMO/CUBES.model<br>
+declarative://charango/DB/DC0.session
+<p><b><i>Data stored in a CDM-a data base under a Portal server:</i></b><br>
+The URL structure is :
+cdma://server_name/data_origin.type?m0=0.0&amp;m1=0.0&amp;...&amp;m11=0.0<br>
+where data_origin is a string of 50 characters or a concatenation of dbname,
+catab,caenv,compid and coid<br>
+where type is kind of the data (usually model)<br>
+where m0,m1 ,...,m11 are the model matrix value
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Bean"></a>A Special Protocol, the bean:// Protocol</h3>
+<p>It is possible to describe a bean inside the Portal through an URL. The
+protocol used for this kind of representation is bean:// and the URL structure
+is bean://classname where classname is the class name of the Java bean.<br>
+Arguments can be appended to this URL and they will describe properties values
+of this bean : bean://classname?propertyName=value. For clear reasons, you can
+only put inside the URL properties of basic java type (string, int, float ...).
+You can also specify indexed properties by giving as the argument name the value
+propertyName.indexValue.<br>
+If your bean implements the PersistableAsXML interface, you can append in the
+URL an argument called serializedData with as value an xml file describing the
+serialized content of the bean<br>
+When the Portal comes on an URL with the bean:// protocol, it will instantiate
+the bean, set its properties if any have been specified, restore the bean state
+from the serialized data, and add this brand new bean inside the Portal (in the
+WebInfo part or the WebSpace part).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Inter"></a>URL and Internationalization</h3>
+<p>URL are coded with 7-bit ASCII characters. Characters that cannot be encode
+on 7 bits must be replaced by the % sign followed by two hexadecimal digits
+giving the ISO Latin 1 code for this character.<br>
+Some characters are also forbidden from URL as they are reserved by the syntax.
+These characters are '&amp;', '%', '/', '#', '?', '*' and '!'. These characters
+have to be encoded with the % sign followed by the ISO Latin 1 code in
+hexadecimal.<br>
+Of course a service will be provided to developers to automatically encode their
+URL so that they do not have to mind about this conversion.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Action"></a>Associating an Action with an URL</h3>
+<p>When an URL is selected, an application is usually launched or reused if
+already instantiated to handle the data. This association data / application is
+based on the type of the data pointed by the URL and sometimes on information
+contained in the URL (Command argument for example). This association is
+described in the file MIMEtypes.xml.<br>
+This file describes the type of each extension as well as a short text
+description of this type, the default application and the others applications
+which could be applied on the data:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;MIME&gt;
+  &lt;Type&gt;
+    application/catia
+    &lt;Command value=&quot;default&quot;&gt;
+      com.dassault_systemes.catweb.local3D.controller.LocalCATlet3D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Local3D&quot;&gt;
+      com.dassault_systemes.catweb.local3D.controller.LocalCATlet3D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Local2D&quot;&gt;
+      com.dassault_systemes.catweb.local2D.controller.LocalCATlet2D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Remote2D&quot;&gt;
+      com.dassault_systemes.catweb.local2D.controller.RemoteCATlet2D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Remote3D&quot;&gt;
+      com.dassault_systemes.catweb.remote.controller.RemoteCATlet3D
+    &lt;/Command&gt;
+    &lt;Command value=&quot;Reporter&quot;&gt;
+      com.dassault_systemes.catweb.bommy.BOMCATlet
+    &lt;/Command&gt;
+  &lt;/Type&gt;
+
+  &lt;Desc&gt;
+    CATIA model
+  &lt;/Desc&gt;
+
+  &lt;Extension&gt;
+    model
+  &lt;/Extension&gt;
+
+&lt;/MIME&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Inner"></a>Inner Mechanism and API</h3>
+<p>Each time an URL is selected inside a CATlet, the CATlet must instantiate a
+PortalURL object containing the URL then fire a PortalURLEvent on the Hookup.
+This event is received directly by the Portal which analyses the URL, launches a
+CATlet and call it back through the PortalURLHandler interface on the
+handlePortalURL method.<br>
+When a CATlet wants to know all the commands available for a data extension, it
+calls the PortalRegistry (See PortalRegistry use [<a href="#References">1</a>])
+on the getMIMETypesForExtension method which returns a PortalMIMETypes object
+that contains the data type, a short NLS description of the type, the list of
+commands available for this type with their name and a NLS description.<br>
+If a CATlet wants to know all the instantiated CATlets that can handle a type,
+it calls the PortalRegistry on the getInstancesNameForType method which returns
+an array of strings containing the CATlets instance name.
+<p>More details can be given through the following APIs:</p>
+<p><b><i>PortalURL</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class PortalURL
+{
+ /**
+  * Reserved argument name for command instance name: &quot;InstanceName&quot;
+  */
+  public static final String COMMAND_INSTANCE_NAME = &quot;InstanceName&quot;;
+
+ /**
+  * Reserved InstanceName value in order to specify the creation of a new instance
+  */
+  public static final String NEW_INSTANCE_NAME = &quot;NewInstance&quot;;
+
+ /**
+  * Reserved argument name for command class name: &quot;Command&quot;
+  */
+  public static final String COMMAND_NAME = &quot;Command&quot;;
+
+ /**
+  * Reserved argument name for MIME Type name: &quot;MIMEType&quot;
+  */
+  public static final String MIME_TYPE = &quot;MIMEType&quot;;
+
+ /**
+  * PortalURL constructor. The url is given as a String. Throws a
+  * MalformedURLException if the given String is not a PortalURL
+  */
+  public PortalURL(String portalURL) throws MalformedURLException;
+
+ /**
+  * PortalURL constructor. The url is given element by element. In some cases,
+  * some elements may be null or -1 (for port number : default port taken)
+  * The password, if specified, is given encrypted.
+  */
+  public PortalURL(String protocol, String hostname, int portNumber,
+                   String dataOrigin, String dataExtension, String username,
+                   String password, Hashtable argumentsTable) throws MalformedURLException
+
+ /**
+  * Returns the protocol used to retrieve the data (http, enovia, cdm, remotefile ...)
+  * Inherited from java.net.URL
+  */
+  public String getProtocol();
+
+ /**
+  * Returns the username used for authentication. May be null.
+  */
+  public String getUsername();
+
+ /**
+  * Returns the password used for authentication. The password is not encrypted
+  */
+  public String getPassword();
+
+ /**
+  * Returns the port number used for the connection.
+  * Inherited from java.net.URL
+  */
+  public int getPort();
+
+ /**
+  * Returns the hostname of the server on which reside the data
+  * Inherited from java.net.URL
+  */
+  public String getHost();
+
+ /**
+  * Returns the data origin. In some cases, the data origin may also
+  * contains the data extension.
+  * Same function as java.net.URL.getFile method
+  */
+  public String getDataOrigin();
+
+ /**
+  * Returns the data extension.
+  */
+  public String getDataExtension();
+
+ /**
+  * Returns the list of all arguments contained in the URL
+  */
+  public String[] getArgumentList();
+
+ /**
+  * Returns the value associated to an argument. Return null if the argument
+  * is not present inside the URL
+  */
+  public String getValueOfArgument(String argument);
+
+ /**
+  * returns the arguments as a query String &quot;arg1=val1&amp;arg2=val2&quot;
+  */
+  public String getQuery();
+
+ /**
+  * Returns the command name associated to this URL
+  * the reserved argument name is: &quot;CommandName&quot;
+  * if no one specified, return null.
+  */
+  public String getCommandName();
+
+ /**
+  * Returns the instance name of the command associated to this URL
+  * the reserved argument name is: &quot;CommandInstanceName&quot;
+  * if no one specified, return null.
+  */
+  public String getCommandInstanceName();
+
+ /**
+  * Returns the application type associated to the extension data
+  */
+  public String getMIMEType();
+
+ /**
+  * Opens a connection to this URL. For some protocol, always throws an IOException as there
+  * are no meaning or no way to retrieve the data on the client (enovia protocol essentially)
+  * Inherited from java.net.URL
+  */
+  public final InputStream openStream() throws IOException;
+
+ /**
+  * returns the string representation of the PortalURL without specific Portal arguments if
+  * portalArguments = true, and without the specified list of argument
+  */
+  public String toStringWithoutSpecifiedArguments(boolean portalArgumentsFlag, String[] arguments);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><i>Comment : The PortalURL embeds the java.net.URL class and implements the
+URL mechanism provided by Java and will be able to integrate dynamically new
+protocols without API modification. But this imply the creation of specific
+classes to support each protocol. These classes are not presented here as they
+are not exposed, but they all inherits from URLStreamHandler. See
+java.net.URL.URL() comments in the JDK API documentation for more details.</i>
+<p><b><i>PortalURLEvent</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class PortalURLEvent extends EventObject
+{
+  public static final int PORTAL_URL_SELECTED;
+
+  public PortalURLEvent(Object source,PortalURL url,int id);
+
+ /**
+  * returns the PortalURL contained in this event
+  */
+  public PortalURL getPortalURL();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b><i>PortalURLListener</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public interface PortalURLListener extends EventListener
+{
+  public void portalURLSelected(PortalURLEvent event);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b><i>PortalURLHandler</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public interface PortalURLHandler
+{
+ /**
+  * This interface is usually implemented by a CATlet or a component
+  * that is able to handle PortalURL
+  */
+  public void handlePortalURL(PortalURL[] urls);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b><i>PortalRegistry</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public PortalRegistry
+{
+ /**
+  * Returns the MIME type declared in the registry for this extension
+  */
+  public static PortalMIMETypes getMIMETypesForExtension(String extension);
+
+ /**
+  * Returns the list of extension declared and recognized by the PortalRegistry
+  */
+  public String[] getSupportedExtensions();
+
+ /**
+  * Returns all the already instanciated CATlet name that can handle
+  * the specified type
+  */
+  public static String[] getInstancesNameForType(String type);
+
+ /**
+  * Returns all instance name of the already instanciated CATlet that can
+  * handle the specified type and they have the description desc
+  */
+  public static String[] getInstancesNameForType(String type, String desc);
+
+ /**
+  * Returns the command class name for the specified type and description
+  * if no description, return the default command of this type
+  */
+  public static String getCommandForType(String type, String desc);
+
+ /**
+  * Returns the PortalMIMECommand for the specified type and description
+  * if no description, return the default command of this type
+  */
+  public PortalMIMECommand getMIMECommandForType(String type, String desc);
+
+ /**
+  * Returns the Icon Path declared in the registry for this MIME types.
+  */
+  public String getIconPathForMIMETypes(PortalMIMETypes mimeTypes);
+
+ /**
+  * Returns the Icon Path declared in the registry for this extension.
+  */
+  public String getIconPathForExtension(String extension);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b><i>PortalMIMETypes</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class PortalMIMETypes
+{
+ public PortalMIMETypes(String type,String description,String[] extensions,PortalMIMECommand[] commands);
+ 
+ /**
+  * Returns the type of the data (ex: image/bmp)
+  */
+  public String getType();
+
+ /**
+  * Returns a description of the data type
+  */
+ public String getTypeDescription();
+
+ /**
+  * Returns&nbsp; alist of extension for this type
+  */
+  public String[] getExtensionsList();
+
+ /**
+  * Returns the list of commands that are supported by this type (Open, Print ...)
+  */
+  public PortalMIMECommand[] getCommandsList();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b><i>PortalMIMECommand</i></b>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class PortalMIMECommand
+{
+ /**
+  * The list of value of the creation status
+  * ALWAYS  --&gt; always create a new instance
+  * NEVER   --&gt; always use the same instance
+  * DEFAULT --&gt; use the instance specified in the url or the last created
+  */
+  public static final String DEFAULT = &quot;DEFAULT&quot;;
+  public static final String ALWAYS  = &quot;ALWAYS&quot;;
+  public static final String NEVER   = &quot;NEVER&quot;;
+
+ /**
+  * This class contains the name of the command to launch for a given MIMEtype.
+  * sample:
+  *  CommandName = &quot;com.dassault_systemes.catweb.Local3DCATlet&quot;
+  *  CommandDescription = &quot;Local3D&quot;
+  */
+  public PortalMIMECommand(String name,String description);
+  public PortalMIMECommand(String name,String description, String instanceFlag);
+
+ /**
+  * returns the class name of the command to launch.
+  */
+  public String getCommandName();
+
+ /**
+  * returns the description of the command.
+  */
+  public String getCommandDescription();
+
+ /**
+  * returns the newInstance fag value (status for the creation).
+  */
+  public String getNewInstanceFlag();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPlbPortalRegistry.htm">Using PortalRegistry</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

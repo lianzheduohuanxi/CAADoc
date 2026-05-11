@@ -1,0 +1,159 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0014)about:internet -->
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding StartUp Catalog</title>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding StartUp Catalog</h3>
+      <p><em>Where are stored (persisted) the StartUp</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Applications create feature objects by instantiating feature startups 
+		stored in catalogs. This article explains the properties of these 
+		catalogs.</p>
+		<ul>
+			<li><a href="#what">What is a Catalog?</a><ul>
+			<li><a href="#how">How is a Catalog Defined?</a></li>
+			<li><a href="#loc">Catalog Location</a></li>
+			<li><a href="#clientid">Catalog Client ID</a></li>
+			<li><a href="#updatepattern">Catalog Update Pattern</a></li>
+			<li><a href="#types">Catalog Types</a></li>
+		</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="what"></a>What is a Catalog?</h2>
+<p>It is assumed that you are already familiar with the concepts of the Feature 
+Modeler [<a href="#References">1</a>].</p>
+<p>A catalog is a file containing StartUps so that an application can load and 
+instantiate it into features. The features get stored in a persistent structure 
+called container. Catalogs are very similar to shared libraries 
+except that they contain data models instead of executable code.</p>
+<p>
+<img src="images/CAAOsmCatalog1.png" border="0" height="198" width="335"></p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="how"></a>How is a Catalog Defined?</h3>
+<p>Just like shared libraries that are compiled from C++ or other languages, 
+catalogs get created from <b>OSM</b> [<a href="#References">2</a>] files. OSM is 
+the language that is used to describe the contents of catalogs. Catalogs are 
+produced at build-time with the help of a tool named <b>CATfctEditorAssistant</b> 
+[<a href="#References">3</a>].</p>
+<p>It is always possible to obtain the OSM equivalent of a catalog, if you have 
+sufficient rights.</p>
+<p><img border="0" src="images/CAAOsmCatalog2.png" width="328" height="167"></p>
+<h3><a name="loc"></a>Catalog Location</h3>
+<p>For a catalog to be accessible by applications, it must be placed in the run-time view, 
+in the
+<code><i>OS_directory</i>/resources/graphic</code> directory (as defined by the
+<code>CATGraphicPath </code>environment variable). It is he <code>
+mkCreateRuntimeView </code>command 
+that sets up the run-time view by copying files from several directories of your workspace. 
+Catalogs are copied from the <code>CNext/resources/graphic</code> directory: this is where 
+your catalogs should be saved.</p>
+<p>This is why catalogs are never specified using their path but only with their 
+name.</p>
+<p>Since all catalogs share the same run-time view directory, their names must be chosen 
+to avoid any conflict.</p>
+<h3><a name="clientid"></a>Catalog Client ID</h3>
+<p>A catalog is protected by a key called <b>Client ID</b>. When a catalog is created, a string must be supplied to be used as the Client ID 
+of the catalog. From then on, access to the catalog will only be allowed it this 
+client ID is correctly provided by the application code or to the CATfctEditorAssistant 
+[<a href="#References">3</a>] tool.</p>
+<p>Note that the client ID cannot be changed once the catalog is created.</p>
+<h3><a name="updatepattern"></a>Catalog Update Pattern</h3>
+<p>A catalog is never converted directly from an OSM file. The contents of the 
+OSM file are first analyzed and then only the changes are added to the catalog. 
+The reason of this pattern is to prevent changes that break already created 
+features. Incompatible changes include StartUp and attribute removal for 
+example.</p>
+<p>Catalogs are thus created only once, <b>empty</b> and then <b>upgraded 
+</b>by incorporating changes from the successive versions of the OSM.</p>
+<h3><a name="types"></a>Catalog Types</h3>
+<p>There are two types of catalog: the ones that are delivered by Dassault 
+Systèmes and the ones that are created by CAA customers. Each kind of catalog 
+has a different file extension: <b>.feat</b> for Dassault Systèmes' and <b>
+.CATfct</b> for the others.</p>
+<p>Both types of catalog have the same purpose, i.e. containing StartUps that 
+can be instantiated or derived from. The differences lie in the way the catalogs 
+get accessed:</p>
+<ul>
+	<li>No <a href="#clientid">client ID</a> is needed to access a .feat catalog 
+	whereas one is required for a .CATfct.</li>
+	<li>.feat catalogs are not handled by the CATfctEditorAssistant [<a href="#References">3</a>] 
+	tool, thus forbidding operations that are possible on .CATfct's like 
+	upgrading or obtaining the OSM.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>In this article, we have introduced the catalog, the document where the 
+StartUps are stored.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="CAAOsmOverview.htm">Feature Modeler Concepts</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="CAAOsmTaModelingStartUps.htm">Modeling Feature StartUps</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[3]</td>
+		<td><a href="CAAOsmTaMaintainingCatalogs.htm">Managing Feature StartUp 
+		Catalogs</a></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Aug 2007]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

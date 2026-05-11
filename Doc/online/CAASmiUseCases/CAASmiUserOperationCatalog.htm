@@ -1,0 +1,437 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>Creating a Surface Machining Operation StartUp</title>
+</head>
+<body>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                <h1>
+                    Machining</h1>
+            </td>
+            <td valign="top">
+                <h2>
+                    3 Axis Surface Machining</h2>
+            </td>
+            <td rowspan="2" align="right" valign="top">
+                <h3>
+                    <a name="Top"></a>Creating a Surface Machining Operation StartUp</h3>
+                <i>Define your own surface machining operation StartUp and store it in a library</i>
+            </td>
+        </tr>
+        <tr>
+            <td class="use" colspan="2">
+                Use Case
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <table class="abstract">
+        <tr>
+            <td>
+                <h3>
+                    Abstract</h3>
+                <p>
+                    This article discusses the CAASmiUserOperationCatalog use case and explains how
+                    to generate a library file including the CAA SMG Operation Initial Definition: its
+                    StartUp. This step is the preliminary one for all NC Operation creation.</p>
+                <ul>
+                    <li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+                    <li><a href="#UseCase">The CAASmiUserOperationCatalog Use Case</a>
+                        <ul>
+                            <li><a href="#What">What Does CAASmiUserOperationCatalog Do</a></li>
+                            <li><a href="#How">How to Launch CAASmiUserOperation</a><a href="#What">Catalog</a></li>
+                            <li><a href="#Where">Where to Find the CAASmiUserOperationCatalog Code</a></li>
+                        </ul>
+                        <li><a href="#Step">Step-by-Step</a></li>
+                        <li><a href="#InShort">In Short</a></li>
+                        <li><a href="#References">References</a></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="Learn"></a>What You Will Learn With This Use Case</h3>
+    <p>
+        This use case is intended to help you to generate a new library containing <b>Surface
+            Machining Operation StartUps</b>.</p>
+    <p>
+        This involves the following:</p>
+    <ul>
+        <li>Creating a new library of activities.</li>
+        <li>Add StartUps in this library.</li>
+        <li>Add strategy parameters on StartUps.</li>
+    </ul>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="UseCase"></a>The CAASmiUserOperationCatalog Use Case</h3>
+    <p>
+        CAASmiUserOperationCatalog is a use case of the CAASurfaceMachiningItf.edu framework
+        that illustrates Surface Machining capabilities.</p>
+    <p>
+        It is the first step of the sample described in the technical article [<a href="#References">1</a>].</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4>
+        <a name="What"></a>What Does CAASmiUserOperationCatalog Do</h4>
+    <p>
+        CAASmiUserOperationCatalog enables the customer to generate a new catalog containing
+        two new StartUps :</p>
+    <ul>
+        <li>The startup of CAA Plunge Operation is <b>CAASmgOperation</b>. It uses its own machining
+            feature: <b>CAASmgMachiningFeature</b> and has three parameters: CAAStep, CAAToolAngle
+            and CAAApproachDistance.</li>
+        <li>The startup of CAA Box Operation is <b>CAASmgOperationWithMA</b>. It uses machining
+            areas and has one parameter CAAOffset.</li>
+    </ul>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4>
+        <a name="How"></a>How to Launch CAASmiUserOperationCatalog</h4>
+    <p>
+        To launch CAASmiUserOperationCatalog, you will need to set up the runtime environment
+        and then execute the CATfctEditorAssistant tool as indicated.</p>
+    <table class="code" id="table1">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+$ mkrun -c sh
+$ cd <i>your_workspace_root</i>
+$ # Make sure that no previous catalog exists in the runtime view, including in the concatenation
+$ rm <i>OS_directory</i>//resources/graphic/CAAUserOperationCatalog.CATfct
+
+$ # Create empty catalog in the runtime view and empty osm (the absolute path for the catalog is MANDATORY)$
+$ <b>CATfctEditorAssistant -create-new-catalog -catalog-name $PWDb&gt;/<i>OS_directory</i>/r/resources/graphic/CAAUserOperationCatalog.CATfct
+    -with-client-id CLIENT -using-template delmia</b>
+$
+$ # Modify the body of container of empty OSM CAAUserOperationCatalog.osm with the osm: InputData/CAAUserOperationCatalog.osm. 
+$
+$ # Updage the empty calalog Note that the upgraded catalog will be output in the current directory
+$ <b>CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct
+    -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm</b>
+
+$ # the mkrun shell
+$ exit </pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        To have more explanation on the usage of the CATFctEditorAssistant tool, please
+        refer to the Creating Startups in Catalogs use case.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h4>
+        <a name="Where"></a>Where to Find the CAASmiUserOperationCatalog Code</h4>
+    <p>
+        The CAASmiUserOperationCatalog.osm file is located in the InputData directory of
+        the CAASurfaceMachiningItf.edu framework:</p>
+    <p>
+        <code>InstallRootDirectory/CAASurfaceMachiningItf.edu/InputData</code></p>
+    <p>
+        where <code>InstallRootDirectory</code> is the root directory of your CAA installation.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="Step"></a>Step-by-Step</h3>
+    <p>
+        There are five logical steps in CAAUserOperationCatalog for the creation of a new
+        activities catalog:</p>
+    <ol>
+        <li><a href="#Step1">Creating a new activities catalog </a></li>
+        <li><a href="#Step2">Creating a startup in this catalog</a></li>
+        <li><a href="#Step3">Adding strategy parameters to the startup</a></li>
+        <li><a href="#Step4">Upgrading the activities catalog</a></li>
+    </ol>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step1"></a>Creating a new activities catalog</h3>
+    <p>
+        To create a catalog, run the CATfctEditorAssistant with the <b>-create-new-catalog</b>
+        option and the <b>-using-template</b> option. This option with the "delmia" argument
+        allows to create a specific "process" container named <i>SPPLibCont</i> that will
+        contain the activities startup.</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>CATfctEditorAssistant -create-new-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -using-template delmia</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Once the above command has been executed, you will find two new files:</p>
+    <ol>
+        <li>CAAUserOperationCatalog.CATfct </li>
+        <li>CAAUserOperationCatalog.osm </li>
+    </ol>
+    <p>
+        Both files represent the same version of an empty catalog with a root container.
+        The only difference is that the <code>.osm</code> file is readable while the <code>.CATfct</code>
+        catalog is not:</p>
+    <table class="code" id="table2">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+/**
+* Copyright Dassault Systemes 2006
+* delmia.osm catalog skeleton
+* use this skeleton to create Machining catalog
+*/
+document `CAAUserOperationCatalog.CATfct` {
+	history("xxx","","xxxx-xx-xx 12:38",0., xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx)
+	check_revision(xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx)
+	
+	container `SPPLibCont` #root #isa(SPPLibCont) #uuid(xxxxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx) {
+		
+// insert here your startups
+
+	}
+}</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step2"></a>Creating a startup in this Catalog</h3>
+    <p>
+        To define the startup of a new User Defined Operation, the new startup must derive
+        from the startup "MfgUserDefinedMO" which is defined in the ManufacturingActivities.feat
+        catalog. In the new catalog, we create a new startup of type "CAASmgOperation".
+    </p>
+    <p>
+        This is done with the following lines in CAAUserOperationCatalog.osm:</p>
+    <table class="code" id="table3">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+        ...
+		// User Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
+			Representation="I_CAASmgOperation"		
+			synchronize()
+		}
+		
+		// Second user Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
+			Representation="I_CAASmgOperationWithMA"		
+				
+			synchronize()
+		}
+        ...
+</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Note that the "AuthorizedItems" attribute holds a list of string so that it is possible
+        to add several type of features.</p>
+    <p>
+        The call to the <code>synchronize</code> method is necessary to be sure that any
+        modification on the mother startup MfgUserDefinedMO is propagated on the new startup.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step3"></a>Adding Strategy Parameters to the startup</h3>
+    <p>
+        Then we add four new strategy parameters "CAAStep", "CAAToolAngle", "CAAApproachDistance"
+        and "Box Offset" to the startup.</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>
+        ...
+		// User Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationSU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperation) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CAAISmiUserMachFeature"]
+			Representation="I_CAASmgOperation"		
+			synchronize()
+		    
+			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+			this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,10.)
+			this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)	
+			this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,20.)	
+		}
+		
+		// Second user Startup deriving from MfgUserDefinedMO
+		// --------------------------------------------------
+		feature CAASmgOperationWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(CAASmgOperationWithMA) {
+			AuthorizedItems=["CATIMfgMachiningFeature","CATIM3xFeature"]
+			Representation="I_CAASmgOperationWithMA"		
+				
+			synchronize()
+		    
+			// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+			this->StrategyParameters->AddStrategyParameter(`Box Offset`,LENGTH,0.0)	
+		}
+        ...
+</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        The <font face="Courier New" size="2">AddStrategyParameter</font>is a method to
+        be called on the StrategyParameters feature that creates a new literal feature and
+        adds it to the strategy block of parameters. It takes 3 input arguments:</p>
+    <ul>
+        <li>a <b>name</b> : this is the name of the attribute that will contain the strategy
+            parameter to be created</li>
+        <li>a <b>dimension</b> : this is the dimension of the parameter to be created.
+            <br>
+            It can be regular types (<code>String, Integer, Real, Boolean</code>) or magnitudes
+            (<code>LENGTH, ANGLE, ...</code>). For the complete list of available magnitudes,
+            look at the Magnitudes Reference article.</li>
+        <li>a <b>value</b>: this is the default value that the parameter will hold once it is
+            created</li>
+    </ul>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <!-- ------------------------------comment---------------------------------- -->
+    <h3>
+        <a name="Step4"></a>Upgrading the activities catalog</h3>
+    <p>
+        Now that the OSM file has been updated with the required startup and attributes,
+        you can use CATfctEditorAssistant to create the corresponding catalog. This is done
+        by upgrading the empty catalog created <a href="#Step2">previously</a>. This catalog
+        must be in the runtime view.</p>
+    <table class="code" id="table5">
+        <tbody>
+            <tr>
+                <td>
+                    <pre>CATfctEditorAssistant -update-catalog -catalog-name CAAUserOperationCatalog.CATfct -with-client-id CLIENT -with-osm CAAUserOperationCatalog.osm</pre>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        Keep in mind that CATfctEditorAssitant will look up the catalog in the run-time
+        view but will output to the location specified on the command-linee.</p>
+    <p>
+        Note that the catalog can be upgraded as many times as necessary using the same
+        methodology. First you modify the osm file then you launch the CATFctEditorAssistant
+        with the appropriate arguments.</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="InShort"></a>In Short</h3>
+    <p>
+        This article provides an example on how to generate and upgrade a catalog of User
+        Defined Machining Operations thanks to the osm language.</p>
+    <p>
+        In this example we generate a catalog named "CAAUserOperationCatalog.CATfct" that
+        contains one startup of a User Defined Operation with the CATFctEditorAssistant
+        on line tool. It derives from the late type "MfgUserDefinedMO" as every user defined
+        operation should do. The "MfgUserDefinedMO" is a standard user defined operation.
+        The corresponding startup of this operation is defined in the ManufacturingActivities.feat
+        catalog.</p>
+    <p>
+        For this user defined activity we authorized a "CATIMfgMachiningFeature" machining
+        feature, which is a standard machining feature defined in the Manufacturing.feat
+        catalog.</p>
+    <p>
+        We also add several strategy parameters on this startup in several steps to illustrate
+        the upgrade mechanism.</p>
+    <p>
+        This use case has demonstrated how to create Operations StartUps in the newly created
+        &quot;CAAUserOperationCatalog.CATFct library. It derives from the late type &quot;MfgUserDefinedMO&quot;
+        as every user defined operation should do it.</p>
+    <p>
+        This StartUp will later be used in the next use case [<a href="#References">3</a>].</p>
+    <p align="right">
+        [<a href="#Top">Top</a>]</p>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="References"></a>References</h3>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                [1]
+            </td>
+            <td>
+                <a href="../CAASmiTechArticles/CAASmiOperationSampleOverview.htm">Surface
+                    Machining Operation Sample Overview</a>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                [2]
+            </td>
+            <td>
+                <a href="../CAADocUseCases/CAADocRunSample.htm">Building
+                    and Launching a CAA V5 Use Case</a>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                [3]
+            </td>
+            <td>
+                <a href="CAASmiUserOperationUI.htm">Customizing the Surface Machining Operation Editor</a>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">
+                [<a href="#Top">Top</a>]
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <h3>
+        <a name="History"></a>History</h3>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                Version: <strong>1</strong> [Mar 2002]
+            </td>
+            <td valign="top">
+                Document created
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" align="right" colspan="2">
+                [<a href="#Top">Top</a>]
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <p>
+        <i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+    <p>
+        &nbsp;</p>
+</body>
+</html>

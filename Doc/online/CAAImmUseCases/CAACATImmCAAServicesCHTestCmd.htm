@@ -1,0 +1,530 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Working with Configuration Handler</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>VPM Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Configuration Handler</h3>
+      <em>Working with Configuration Handler</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" width="845">
+  <tr>
+    <td width="837">
+      <h3>Abstract</h3>
+      <p>This article discuses the <b><code>CAAImmCAAServicesCHTestCmd</code></b> use case. The use case mainly focuses on
+      the public interface <b> <code><i> CATImmCAAServices</i></code></b> 
+      APIs implemented to achieve the following :
+      <ul>
+        <li>Retrieving the current Applied Configuration Handler on PRC,</li>
+        <li>Retrieving All the Configuration Handler associated with the PRC,</li>
+        <li>Applying the Configuration Handler on the PRC and expanding the Product
+          assembly up to the specified level.</li>
+          </ul>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAImmCAAServicesCHTestCmd Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the CAAImmCAAServicesCHTestCmd Use
+              Case Do</a></li>
+			<li><a href="#How">How to Launch the CAAImmCAAServicesCHTestCmd Use
+              Case</a></li>
+            <li><a href="#Where">Where to Find the CAAImmCAAServicesCHTestCmd
+              Use Case Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The primary objective of this use case is to familiarize the user with the <b><code><i>
+CATImmCAAServices</i></code></b> public interface APIs meant for dealing with the Configuration
+Handler. The use case introduces the user with the following three APIs :</p>
+<ul>
+  <li>
+    <p>The <b> <code> SetPRCConfigHandler</code></b> API to apply the ConfigHandler on a PRC
+    and Expand the assembly up to specified level.</li>
+  <li>
+    <p>The <b> <code> GetPRCConfigHandler</code></b> API to retrieve the current ConfigHandler
+    applied on the PRC.</li>
+  <li>
+    <p>The <b><code>GetAllPRCConfigHandlers</code></b> API to retrieve All the ConfigHandlers
+    associated with the PRC.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAImmCAAServicesCHTestCmd Use Case</h3>
+<p>The <b><code>CAAImmCAAServicesCHTestCmd</code></b>&nbsp; is a use case of the <b><code>CAACATImmENOVIAProvider</code>.edu</b> framework that 
+ illustrates <b><code><i> CATImmCAAServices</i></code></b> interface capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the  CAAImmCAAServicesCHTestCmd Use Case Do</h4>
+<p>The<code><b> CAAImmCAAServicesCHTestCmd</b> </code> is a test command which seeks the
+associated Configuration Handler/s and Sets as well as Resets the Configuration
+Handler on the Root object existing in the current VPM Navigator window
+providing the liberty to expand the product assembly up to the specified level..</p>
+<ul>
+  <li><p>The Input model shown below [<a href="#Fig.1">Fig.1</a>] represents PRC and the assembly
+    beneath it in the VPMNav tree on which the <b><code> CAAImmCAAServicesCHTestCmd</code></b> command
+    is to be run.&nbsp;The Use Case is illustrated with a Product assembly , but
+    it works with other Data model, as well.</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.1"></a>Fig.1 Input Model</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_InputModel.jpg" width="528" height="571"></td>
+      </tr>
+    </table>
+  </li>
+  </ul>
+<ul>
+  <li><p>Click on the icon <img border="0" src="images/CAAImmCAAServicesCH_Icon.jpg" width="28" height="22">
+    to run the command <b><code> CAAImmCAAServicesCHTestCmd</code></b> included in the
+    <b><code> CAAImmIdAcqAgentTestCmd</code></b> toolbar  as
+    shown below [<a href="#Fig.2">Fig.2</a>].</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.2"></a>Fig.2 Toolbar</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Toolbar.jpg" width="36" height="103"></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<ul>
+  <li><p>The use case retrieves the identifier name, its value and the root type of
+    the Root object existing in the current VPM navigator window and displays this
+    information in a notification window as shown below [<a href="#Fig.3">Fig.3</a>].</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.3"></a>Fig.3</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Fig3.jpg" width="339" height="133"></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<ul>
+  <li><p>The user has the liberty to retrieve the Configuration Handler/s associated
+    with the PRC, he/she can retrieve all the ConfigHandlers associated with PRC
+    by pressing &quot;<b>Yes</b>&quot; button in the notification window as&nbsp; [<a href="#Fig.4">Fig.4]</a> 
+    shown below or else only the current ConfigHandler can also be retrieved by
+    pressing &quot;<b>No</b>&quot;.&nbsp;</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.4"></a>Fig.4</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Fig4.jpg" width="404" height="126"></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<ul>
+  <li><p>As per the user selection, use case retrieves the ConfigHandler/s
+    associated with the PRC and displays them in the notification window as
+    shown below [<a href="#Fig.5">Fig.5</a>]. The figure below shows the list of
+    All the
+    ConfigHandlers associated with the PRC .</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.5"></a>Fig.5</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Fig5.jpg" width="254" height="133"></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<ul>
+  <li><p>Once done with retrieving the associated ConfigHandleres next step is to
+    either set the first ConfigHandler from the list of handlers
+    on the PRC or Reset it. The use case hence asks the user to choose to
+    Set/Reset the ConfigHandler to proceed ahead [<a href="#Fig.6">Fig.6</a>  ]
+    .</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.6"></a>Fig.6</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Fig6.jpg" width="480" height="126"></td>
+      </tr>
+    </table>
+  </li>
+  </ul>
+<ul>
+  <li><p>If the users happens to Press &quot;<b>OK</b>&quot; , the first Confighandler gets
+    applied on the PRC and the assembly gets expanded to the specified level
+    otherwise the first handler gets removed from the PRC.
+    The <a href="#Fig.7">Fig.7</a> below shows the Output model expanded to
+    level One after setting the ConfigHandler on the PRC and the notification
+    window indicating the successful execution of the command.</p>
+    <table border="1" width="100%">
+      <caption><a name="Fig.7"></a>Fig.7 Output Model</caption>
+      <tr>
+        <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_OutputModel.jpg" width="472" height="266"></td>
+      </tr>
+    </table>
+  </li>
+  </ul>
+<ul><li>
+If the user chooses to go for current ConfigHandler by Pressing &quot;<b>No</b>&quot; button
+in the notify window [<a href="#Fig.4">Fig.4]</a> , use case retrieves
+only the current ConfigHandler applied on PRC and displays it in the
+notification window.
+<p>Since this option has been provided to retrieve the Current ConfigHandler,
+the PRC must have an existing Handler applied on it for this command to work
+successfully. Otherwise a notification message pops up indicating PRC has no
+ConfigHandler applied on it currently, as shown below [<a href="#Fig.8">Fig.8</a>].</p>
+<table border="1" width="100%">
+  <caption><a name="Fig.8"></a>Fig.8</caption>
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAImmCAAServicesCH_Fig8.jpg" width="194" height="126"></td>
+  </tr>
+</table>
+  </li>
+  </ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the CAAImmCAAServicesCHTestCmd command</h4>
+<p>To launch <b><code> CAAImmCAAServicesCHTestCmd</code></b> , the user needs to set up the build time environment,
+then compile <b><code> CAAImmCAAServicesCHTestCmd</code></b> along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] in the following way: </p>
+<UL>
+  <LI>Run CNEXT on the command line.
+  <LI>Connect to Enovia using the command on Enovia V5 Toolbar.
+  <LI>Enter Login, Password and Enovia Server information and click OK to login.
+  <LI>Open a PRC from the VPM Navigator window.
+  <LI>Run the <b><code> CAAImmCAAServicesCHTestCmd</code></b> shown in <a href="#Fig.2">Fig.2</a> available from VPM Navigator
+    workbench. This command has been included in <b><code> CAAImmIdAcqAgentTestCmd</code></b> toolbar.</LI>
+  <LI>To proceed further refer to the <a href="#What">What does the use case do</a>
+    section explained above.</LI></UL>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAImmCAAServicesCHTestCmd Code</h4>
+<p>The test command is made up of a single class named <b><code>CAAImmCAAServicesCHTestCmd</code></b> 
+      located in the <b><code>CAAImmCAAServicesCHTestCmd</code></b><i>.</i><b><code>m</code></b><i> </i> module of the
+<b><code>CAACATImmENOVIAProvider</code></b><i>.</i><b><code>edu</code></b><i> </i> framework :</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATImmENOVIAProvider.edu\CAAImmCAAServicesCHTestCmd.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAACATImmENOVIAProvider.edu/CAAImmCAAServicesCHTestCmd.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The following are the main steps in <b><code>CAAImmCAAServicesCHTestCmd</code></b> use
+case :</p>
+<ol>
+  <li><a href="#Instantiate the CATImmCAAServices object">Instantiate the CATImmCAAServices object</a></li>
+  <li><a href="#Get Current Root and its Identifiers">Get Current Root and its Identifiers</a></li>
+  <li><a href="#Get the ConfigHandler(s) associated with PRC">Get the
+    Configuration Handler(s) associated with PRC</a><p style="line-height: 100%; margin-top: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3a.
+    <a href="#Get All the applied ConfigHandlers">Get All the applied
+    Configuration Handlers</a><p style="line-height: 100%; margin-top: 0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b.
+    <a href="#Get Current ConfigHandler">Get Current Configuration Handler</a></li>
+  <li><a href="#Set/Reset the ConfigHandler">Set/Reset the Configuration
+    Handler</a></li>
+  <li><a href="#Release the CATImmCAAServices object">Release the CATImmCAAServices object</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Instantiate the CATImmCAAServices object"></a>Instantiate the CATImmCAAServices object</h4>
+<p>The <b><code> CAAImmCAAServicesCHTestCmd</code></b> command has been derived from <b><code> CATCommand</code></b>. The
+constructor of the command class has a call to the <b> <code> CAAImmCAAServicesCHTestCmd</code> ::<code>Initialise</code></b> method
+which retrieves the
+current root object and its associated information and then seeks the
+Configuration Handler/s associated with that root object. Depending upon the user
+choice to Set/Reset the ConfigHandler on PRC the constructor makes&nbsp; a call
+to the <b> <code> CAAImmCAAServicesCHTestCmd</code>
+::<code>Activate</code></b> method for further operation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CAAImmCAAServicesCHTestCmd::CAAImmCAAServicesCHTestCmd</b>(void* arg):CATCommand(NULL,&quot;CAAServicesTestCmd&quot;)
+{
+  ...
+  int a = <b>Initialise</b>();
+  if ( a == 2 )
+    <b>Activate</b>(NULL,NULL);
+  ...  
+ }</pre>
+    </td>
+  </tr>
+</table>
+<p> The <b><code><i> CATImmCAAServices</i></code></b> object is instantiated in the <code><b>Initialise</b></code> 
+method as shown below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int CAAImmCAAServicesCHTestCmd::<b>Initialise</b>()
+{
+  ...
+  _ImmServiceObj = new <b>CATImmCAAServices</b>();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>In addition some other private members of the type CATUnicodeString and CATListOfCATUnicodeString are defined which contain the information about the root identifiers and their names, configuration filters and their names.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Get Current Root and its Identifiers"></a>Get the Current Root and its Identifiers in the VPMNAV window</h4>
+<p>&nbsp;The <i><b><code>CATImmCAAServices</code></b></i><b>::<code>GetCurrentRootIdentifiers</code></b>
+method retrieves the current Root Identifier from the current VPM Navigator
+window. This method retrieves the Identifier of the root object, its value and
+the root type.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  hr = _ImmServiceObj-&gt;<b>GetCurrentRootIdentifiers</b>(_oIdentifierNames,_oIdentifierValues,
+     					         _oRootType);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>On the failure of this method a failure message is displayed and the execution of the command ends.
+Whereas on success, the&nbsp; identifier name of the PRC, its value and the root type is
+displayed in the notification dialog box [<a href="#Fig.3">Fig.3</a>].
+ </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Get the ConfigHandler(s) associated with PRC"></a>Get the
+Configuration Handler(s) associated with the PRC</h4>
+<p>Once the current root object identifier and the corresponding information is retrieved, the next step is to seek the Configuration Handler(s) associated with
+it. Since the use case provides the choice to the user to retrieve either All the ConfigHandlers or the
+Current ConfigHandlers associated with PRC.&nbsp; 
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATUnicodeString type_message = CATMsgCatalog::BuildMessage(&quot;CAAImmCAAServicesCHTestCmd&quot;,&quot;ChooseConfigHandler&quot;);
+  
+  CATUnicodeString title = CATMsgCatalog::BuildMessage(&quot;CAAImmCAAServicesCHTestCmd&quot;, &quot;title&quot;);
+  CATDlgNotify* pRunDlg = new CATDlgNotify(CATApplicationFrame::GetFrame()-&gt;GetMainWindow (),
+       				           &quot;VPM_Identification8&quot;,CATDlgNfyInformation |
+     					   CATDlgNfyYesNoCancel |CATDlgWndModal);
+  int CHType = pRunDlg-&gt;DisplayBlocked(type_message, title);
+  ...  </pre>
+    </td>
+  </tr>
+</table>
+<p>Depending upon the user selection and the return value (<b><code>CHType</code></b>)
+of the <b><code>CATDlgNotify</code></b>::<b><code>DisplayBlocked</code></b>
+ method, use case makes a call to the either of <b><code>GetAllPRCConfigHandlers
+</code></b>or
+<b><code>GetPRCConfigHandler</code>&nbsp;</b> these two methods.</p>
+<p><b><a name="Get All the applied ConfigHandlers"></a>Get All the applied Configuration
+Handlers</b> 
+</p>
+<p>Here a call to the <b><code><i>CATImmCAAServices</i></code>::<code>GetAllPRCConfigHandlers</code></b> retrieves the PRC
+name(<b><code>_oIdentifierValues</code></b>[<b><code>1</code></b>])
+and the list of ConfigHandlers (<b><code>_oCHdsValues</code></b>) associated with it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>if (CHType == 3)</b>
+  {
+    hr = _ImmServiceObj-&gt;<b>GetAllPRCConfigHandlers</b>(_oIdentifierValues[1],_oCHdsValues);
+    ...
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><b><a name="Get Current ConfigHandler"></a>Get the Current Configuration
+Handler</b>
+</p>
+<p>A call to the <b><i><code>CATImmCAAServices</code></i>::<code>GetPRCConfigHandler</code> </b>retrieves
+only the current ConfigHandler(<b><code>_oCHdsValues[1]</code>)</b>  applied on
+the PRC among the list of all the configuration handlers associated with it.. </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  <b>else</b> <b>if(CHType == 4)</b>
+  {
+    hr = _ImmServiceObj-&gt;<b>GetPRCConfigHandler</b>(_oIdentifierValues[1],_oCHdsValues[1]);
+    ...
+  }
+ }</pre>
+    </td>
+  </tr>
+</table>
+<p>If any of the above two methods fails or no configuration handler is associated with the PRC is found then an appropriate
+failure message is displayed and the execution of the command
+ends. Whereas on success, the name/s of the configuration handler/s associated with the PRC
+get displayed. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Set/Reset the ConfigHandler"></a>Set/Reset the Configuration Handler</h4>
+<p>If there are one or more configuration handlers associated with the PRC then
+the use case sets the first configuration handler from the list of available configuration
+handlers on the PRC. 
+This is achieved through the <b><code><i> CATImmCAAServices</i></code></b>
+::<b><code>SetPRCConfigHandler</code> </b>API, as explained below.</p>
+<table class="code" width="825">
+  <tr>
+    <td width="817">
+      <pre>CATStatusChangeRC CAAImmCAAServicesCHTestCmd::<b>Activate</b>(CATCommand*  iFromClient,
+      						       CATNotification*  iNotification )
+{  
+   ...
+   CATDlgNotify* pRunDlg = new CATDlgNotify(CATApplicationFrame::GetFrame()-&gt;GetMainWindow (),
+     					    &quot;VPM_Identification&quot;,CATDlgNfyOKCancel|CATDlgWndModal);
+   <b>int a = pRunDlg-&gt;DisplayBlocked(type_message, title);</b>
+   pRunDlg-&gt;RequestDelayedDestruction();
+   pRunDlg = NULL;
+  
+   CATListOfCATUnicodeString CHdsValues;
+   
+   if( a == 2 )
+      CHdsValues.Append(&quot;&quot;);
+   else 
+      CHdsValues.Append(_oCHdsValues[1]);
+   
+   int b = <b>Set</b>( _oIdentifierValues[1],CHdsValues[1]);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>On the successful execution of the <b><code>GetAllPRCConfigHandlers </code></b> method,
+use case makes a call to the <b><code>CAAImmCAAServicesCHTestCmd::Activate</code>
+</b>to proceed ahead with Setting/Resetting the ConfigHandler on PRC.&nbsp;</p>
+<p>A call to <b><code>CAAImmCAAServicesCHTestCmd</code>::<code>Set </code></b>function
+internally calls the<code> </code><b><code><i> CATImmCAAServices</i></code></b>::<b><code>SetPRCConfigHandler</code></b> API. The API has been specifically designed to set
+or reset, as per the user selection, the
+ConfigHandler on the PRC and then to control the level of expansion of the
+Product assembly instead of expanding the whole assembly unnecessarily.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int <b>CAAImmCAAServicesCHTestCmd</b>::<b>Set</b>(const CATUnicodeString&amp; iPRCIdentifiersValue,
+                                    CATUnicodeString&amp; iCHdsValue)
+{
+  ...
+  int iExpandLevel = 1;
+  int iCheckFlag = 1;
+  hr = _ImmServiceObj-&gt;<b>SetPRCConfigHandler</b>(iPRCIdentifiersValue,iCHdsValue,
+      				           iExpandLevel,iCheckFlag);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Here the third argument (<b><code>iExpandLevel</code></b>) to specify the expand level has been
+set to One .</p>
+
+<p>This API also allows the user to check/confirm if the applied
+Configuration Handler has been actually attached to the PRC or not. The fourth argument (<b><code>iCheckFlag</code></b> )
+serves this purpose if set to One .If the flag is set to one, the <b><code>SetPRCConfigHandler</code></b> 
+method internally makes a call to the <b><i><code>CATImmCAAServices</code></i>::<code>GetPRCConfigHandler
+</code> </b>API to confirm the same.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Release the CATImmCAAServices object"></a>Release the CATImmCAAServices object</h4>
+<p>It is recommended to deallocate the <b><code><i> CATImmCAAServices</i></code></b> object at the end of the command, or when its use is finished in the following way,</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   if(_ImmServiceObj)
+   {
+      delete _ImmServiceObj;
+      _ImmServiceObj=NULL;
+   }	
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This <b><code> CAAImmCAAServicesCHTestCmd</code></b> use case mainly focuses on
+<b><code><i> CATImmCAAServices</i></code></b>
+interface APIs designed to work with the Configuration Handler. </p>
+<p>The use case demonstrates how to retrieve the Configuration Handlers
+associated with the current root object in the VPM Navigator window. Whereas it
+provides the liberty to the user to retrieve All or only the Current
+ConfigHandler/s associated with the PRC. </p>
+<p>It familiarizes the user with the API meant to Set/Reset the ConfigHandler on
+the PRC and allows the user to restrict the expansion of the product assembly up
+to the specified Expand level. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+    <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [July 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

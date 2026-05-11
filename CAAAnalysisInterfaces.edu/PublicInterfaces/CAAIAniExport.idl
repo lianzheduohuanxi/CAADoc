@@ -1,0 +1,59 @@
+// COPYRIGHT Dassault Systemes 2004
+//===================================================================
+//
+// CAAIAniExport.idl
+// Automation interface for the AniExport element 
+//
+//===================================================================
+#ifndef CAAIAniExport_idl
+#define CAAIAniExport_idl
+
+#include "CATIABase.idl"
+interface CATIAAnalysisCase;
+
+/**  
+ * The interface to access a CAAIAniExport. 
+ * This interface will allow to design export capability in VB.
+ * This VB Object is accessed from the AnalysisModel. 
+ * In order to have recordable software in your interactive command, the software should look like:<br>
+ * CATIAAnalysisModel_var spModelVB (piModel);
+ *
+ *  CATUnicodeString String ("CAAIAniExportVBExt");
+ *  CATBSTR Bstr;
+ *  String.ConvertToBSTR(&Bstr);
+ *  CATBaseDispatch * piDispa = NULL;
+ *  spModelVB -> GetItem(Bstr,piDispa);
+ *  CAAIAniExport * piIdlObject =  NULL;
+ *
+ *  if (piDispa)
+ *  {
+ *    piDispa -> QueryInterface(IID_CAAIAniExport,(void **)& piIdlObject);
+ *    piDispa -> Release();
+ *  }
+ *  if (piIdlObject)
+ *  {
+ *    String = "MyFilePath";
+ *    String.ConvertToBSTR(&Bstr);
+ *    piIdlObject -> Export(NULL,Bstr);
+ *    piIdlObject -> Release();
+ *  }
+ */
+interface CAAIAniExport : CATIABase 
+{
+/**  
+ * Launch the export. 
+ * @param ipiCase The Analysis Case to Export.
+ * @param iFullFileName Identifier of the created file.
+ */
+   HRESULT Export(in CATIAAnalysisCase ipiCase, in CATBSTR iFullFileName); 
+};
+
+// Interface name : CAAIAniExport
+#pragma ID CAAIAniExport "DCE:B77591D7-4020-4c71-B5CE140650A7F8FD"
+#pragma DUAL CAAIAniExport
+
+// VB object name : CAAIAniExport (Id used in Visual Basic)
+#pragma ID AniExport "DCE:74371CA8-AC08-486a-B2FF433436DECE66"
+#pragma ALIAS CAAIAniExport AniExport
+
+#endif

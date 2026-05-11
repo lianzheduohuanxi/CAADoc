@@ -1,0 +1,275 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspApplication.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspWorkbench, CATIAPspApplication, CATIAPspClass,</font>
+<font color="#008000">'                 CATIAPspAppFactory and CATIAPspResource</font>
+<font color="#008000">'                 </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspApplication.CATScript" & vbCrLf
+
+    <font color="#008000">' Find the top node of the Distribute System object tree - .</font>
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+<font color="#0000FF">    Dim </font>objPspClass      <font color="#0000FF"> As </font>PspClass
+  
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication and PspClass</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getting objPspApplication" & vbCr      
+        objPspApplication.Initialization()         
+<font color="#0000FF">        Set </font>objPspClass = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspClass",objPspApplication )
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+
+<font color="#0000FF">    If </font>( objPspClass Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get objPspClass" & vbCr             
+    Else
+      strMessage_g = strMessage_g & "Success in  getting objPspClass"  & vbCr           
+      QueryPspClass objPspClass
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspAppFactory</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+        Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory",objPspApplication )      
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+
+<font color="#0000FF">   If </font>( objPspAppFactory Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get objPspAppFactory" & vbCr             
+    Else
+      strMessage_g = strMessage_g & "Success in  getting objPspAppFactory"  & vbCr           
+      QueryPspAppFactory objPspAppFactory, objPrdRoot
+<font color="#0000FF">    End If</font>
+
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspResource</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objPspResource<font color="#0000FF"> As </font>PspResource
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+        Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspResource = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspResource", _
+                                      objPspApplication )      
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+
+<font color="#0000FF">    If </font>( Not( objPspResource Is Nothing ) )<font color="#0000FF"> Then      </font>
+      QueryPspResource objPspResource
+<font color="#0000FF">    End If</font>
+
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Query QueryPspResource methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspResourceArg: PspResoure object</font>
+<font color="#008000">' | </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+Private Sub QueryPspResource (objPspResourceArg<font color="#0000FF"> As </font>PspResoure )  
+<font color="#0000FF">    Dim </font>strCatalogPartName<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>strResNamePipingParts<font color="#0000FF"> As </font>String
+
+    strResNamePipingParts = "PipingPartsCatalog"
+
+<font color="#0000FF">    If </font>( Not ( objPspResourceArg Is Nothing ) )<font color="#0000FF"> Then  </font>
+      strCatalogPartName = objPspResourceArg.GetResourcePath( _
+               strResNamePipingParts)      
+      
+      strMessage_g = strMessage_g & _
+             "PipingPartsCatalog= " & _
+              strCatalogPartName & vbCr    
+      
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Query PspClass methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspClassArg: PspClass object</font>
+<font color="#008000">' | </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+Private Sub QueryPspClass (objPspClassArg<font color="#0000FF"> As </font>PspClass )  
+
+<font color="#0000FF">    Dim </font>objLStrPhysicals<font color="#0000FF"> As </font>PspListOfBSTRs
+<font color="#0000FF">    Dim </font>intNbPhysicals  <font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">    Dim </font>objLStrFunctions<font color="#0000FF"> As </font>PspListOfBSTRs
+<font color="#0000FF">    Dim </font>intNbFunctions  <font color="#0000FF"> As </font>Integer    
+
+<font color="#0000FF">    Dim </font>objLStrConnectors<font color="#0000FF"> As </font>PspListOfBSTRs
+<font color="#0000FF">    Dim </font>intNbConnectors  <font color="#0000FF"> As </font>Integer    
+
+
+<font color="#0000FF">    If </font>( Not ( objPspClassArg Is Nothing ) )<font color="#0000FF"> Then</font>
+
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+      <font color="#008000">' Get StartUpPhysicals</font>
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLStrPhysicals = objPspClassArg.StartUpPhysicals
+
+<font color="#0000FF">      If </font>( Not ( objLStrPhysicals Is Nothing ) )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbPhysicals = objLStrPhysicals.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpPhysicals=" & intNbPhysicals & vbCr      
+      
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">      Set </font>objLStrFunctions = objPspClassArg.StartUpFunctions
+<font color="#0000FF">      If </font>( Not ( objLStrFunctions Is Nothing ) )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbFunctions = objLStrFunctions.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpFunctions=" & intNbFunctions & vbCr      
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">      Set </font>objLStrConnectors = objPspClassArg.StartUpConnectors
+<font color="#0000FF">      If </font>( Not ( objLStrConnectors Is Nothing ) )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbConnectors = objLStrConnectors.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of StartUpConnectors=" & intNbConnectors & vbCr      
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">    End If  </font><font color="#008000">' Not ( objPspClassArg Is Nothing )</font>
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Query PspAppFactory methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspAppFactoryArg: PspAppFactory object</font>
+<font color="#008000">' |        objRootPrdArg:       Product       object</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+
+Private Sub QueryPspAppFactory (objPspAppFactoryArg<font color="#0000FF"> As </font>PspAppFactory,_
+          objRootPrdArg<font color="#0000FF"> As </font>Product )  
+
+<font color="#0000FF">    Dim </font>objLPhysicals   <font color="#0000FF"> As </font>PspListOfObjects    
+<font color="#0000FF">    Dim </font>objLLogLines    <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLGroups      <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>iNbPhysicals    <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>iNbLogLines     <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>iNbGroups       <font color="#0000FF"> As </font>Integer
+    
+
+<font color="#0000FF">    If </font>( Not ( objPspAppFactoryArg Is Nothing ) )<font color="#0000FF"> Then</font>
+
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+      <font color="#008000">' Get ListPhysicals</font>
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLPhysicals = objPspAppFactoryArg.ListPhysicals (objRootPrdArg, catPspIDLNone)
+
+<font color="#0000FF">      If </font>( Not ( objLPhysicals Is Nothing ) )<font color="#0000FF"> Then</font>
+        iNbPhysicals = objLPhysicals.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Physicals=" & iNbPhysicals & vbCr              
+      
+<font color="#0000FF">      End If </font>
+
+      <font color="#008000">'------------------------------------------------------------</font>
+      <font color="#008000">' Get ListLogicalLines</font>
+      <font color="#008000">'------------------------------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLLogLines = objPspAppFactoryArg.ListLogicalLines (objRootPrdArg)
+<font color="#0000FF">      If </font>( Not ( objLLogLines Is Nothing ) )<font color="#0000FF"> Then</font>
+        iNbLogLines = objLLogLines.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Logical Lines=" & iNbLogLines & vbCr              
+<font color="#0000FF">      End If       </font>
+
+<font color="#0000FF">      Set </font>objLGroups = objPspAppFactoryArg.ListGroups (objRootPrdArg)
+<font color="#0000FF">        If </font>( Not ( objLGroups Is Nothing ) )<font color="#0000FF"> Then          </font>
+        iNbGroups = objLGroups.Count
+
+        strMessage_g = strMessage_g & _
+                  "Number of Groups=" & iNbGroups & vbCr              
+<font color="#0000FF">      End If       </font>
+          
+<font color="#0000FF">    End If  </font><font color="#008000">' Not ( objPspClassArg Is Nothing )</font>
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

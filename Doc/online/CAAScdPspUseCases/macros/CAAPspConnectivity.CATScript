@@ -1,0 +1,333 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspConnector, CATIAPspConnectable and CATIAPspCntrFlow
+'    Assumption:   Looks for document CAAPspEduIn.CATProduct
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+        
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspConnectivity.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    Dim objPspPhysical    As PspPhysical
+    Dim objPspPhyID       As PspID
+    Dim objPspCntbl       As PspConnectable
+    
+    Dim ePspIDLDomainID   As CatPspIDLDomainID    
+    Dim intIdx            As Integer
+
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( objPspApplication Is Nothing  ) Then
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+
+    '-----------------------------------------------------------------------
+    ' Get  a PspPhysical object in the Piping domain
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      
+
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+        Dim objLPhysicals     As PspListOfObjects
+        Set objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+        If ( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count > 0 ) ) Then      
+          Set objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+        End If
+        
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    ' Get objPspCntbl
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) ) Then  
+    
+      Set objPspPhyID = objPspWorkbench.GetInterface("CATIAPspID", _
+                                                    objPspPhysical )      
+      Set objPspCntbl = objPspWorkbench.GetInterface("CATIAPspConnectable", _
+                                                    objPspPhysical )
+
+      If ( Not (objPspPhyID Is Nothing) ) Then
+        strMessage_g = strMessage_g & "Physical object ID =" &  objPspPhyID.GetID & vbCr               
+      End If 
+
+    End If
+
+    '-----------------------------------------------------------------------
+    ' Get connected objects to this object
+    '-----------------------------------------------------------------------
+    
+    If( Not ( objPspCntbl Is Nothing )) Then
+      Dim objLClassFilter        As CATIAPspListOfBSTRs
+      Dim objLCntbles            As PspListOfObjects
+      Dim objLCntrsOnThisObj     As PspListOfObjects
+      Dim objLCntrsOnConnected   As PspListOfObjects     
+      Dim objAIDCntbl            As PspID
+      Dim objPspCntr        As PspConnector
+      Dim objPspCntrFlow    As PspCntrFlow
+      
+      
+      Set objLClassFilter = Nothing
+      objPspCntbl.ListConnectables objLClassFilter, objLCntbles, _
+                           objLCntrsOnThisObj,  objLCntrsOnConnected 
+        
+
+      If ( Not ( objLCntbles Is Nothing ) ) Then       
+        strMessage_g = strMessage_g & _
+          "Number of Connected objects= " &  objLCntbles.Count & vbCr          
+
+        For intIdx = 1 To objLCntbles.Count 
+          Set objAIDCntbl = objLCntbles.Item (intIdx, "CATIAPspID")          
+          If ( Not (objAIDCntbl Is Nothing) ) Then
+            strMessage_g = strMessage_g & "Connected object ID =" & objAIDCntbl.GetID & vbCr               
+          End If 
+          
+        Next      
+      End If
+
+      
+      '-----------------------------------------------------------------------
+      ' Getting connector and flow information
+      '-----------------------------------------------------------------------
+    
+
+      If ( Not ( objLCntrsOnThisObj Is Nothing ) ) Then       
+      
+        strMessage_g = strMessage_g & _
+          "Number of Connectors used to connect other objects= " &  objLCntrsOnThisObj.Count & vbCr          
+        For intIdx = 1 To objLCntrsOnThisObj.Count
+        
+          Set objPspCntr = objLCntrsOnThisObj.Item (intIdx, "CATIAPspConnector")          
+          Set objPspCntrFlow = objLCntrsOnThisObj.Item (intIdx, "CATIAPspCntrFlow")          
+        
+          '-----------------------------
+          ' Query connector information
+
+          If ( Not (objPspCntr Is Nothing) ) Then
+            QueryConnector objPspCntr            
+          End If           
+        
+          '-----------------------------
+          ' Query Connector flow information
+          If ( Not (objPspCntrFlow Is Nothing) ) Then
+            QueryCntrFlow objPspCntrFlow            
+          End If           
+        Next 
+      End If
+        
+    End if
+ 
+    '-----------------------------------------------------------------------
+    ' Get List of connectors
+    '-----------------------------------------------------------------------
+
+    If( Not ( objPspCntbl Is Nothing )) Then      
+      Dim objLCntrs            As PspListOfObjects            
+                     
+      Set objLCntrs = objPspCntbl.Connectors 
+        
+
+      If ( Not ( objLCntrs Is Nothing ) ) Then       
+        strMessage_g = strMessage_g & _
+          "Number of Connectors= " &  objLCntrs.Count & vbCr          
+
+      End If
+        
+    End if
+
+    '-----------------------------------------------------------------------
+    ' Get List of Valid connector types
+    '-----------------------------------------------------------------------
+
+
+    If( Not ( objPspCntbl Is Nothing )) Then      
+      Dim objLStrValidCntrTypes   As PspListOfBSTRs            
+                     
+      Set objLStrValidCntrTypes = objPspCntbl.ValidConnectorTypes 
+        
+      If ( Not ( objLStrValidCntrTypes Is Nothing ) ) Then       
+        strMessage_g = strMessage_g & _
+          "Number of Valid Connector types= " &  objLStrValidCntrTypes.Count & vbCr          
+
+      End If        
+    End if
+
+  
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+' -----------------------------------------------------------------------------
+' | QueryConnector methods 
+' | 
+' | Input: objPspCntrArg        : PspConnector object
+' |        
+' |        
+' -----------------------------------------------------------------------------
+
+
+Private Sub QueryConnector (objPspCntrArg As PspConnector)      
+
+    Dim objPspAssocCntbl       As PspConnectable
+    Dim strCntrName            As String
+    Dim objLStrAttrNames      As PspListOfBSTRs            
+
+    If ( Not ( objPspCntrArg Is Nothing ) ) Then         
+      ' ---------------------------
+      ' Get Associated connectable
+
+      Set objPspAssocCntbl = objPspCntrArg.GetAssociatedConnectable
+      
+      strCntrName =objPspCntrArg.ConnectorName 
+      strMessage_g = strMessage_g & _
+          "Connector name = " &  strCntrName & vbCr   
+          
+      Set objLStrAttrNames = objPspCntrArg.AttrNames       
+
+      If ( Not ( objLStrAttrNames Is Nothing ) ) Then         
+        strMessage_g = strMessage_g & _
+          "Number of connector attributes = " &  objLStrAttrNames.Count & vbCr   
+      End If
+
+    End If
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | QueryCntrFlow methods 
+' | 
+' | Input: objPspCntrFlowArg        : PspCntrFlow object
+' |        
+' |        
+' -----------------------------------------------------------------------------
+
+
+Private Sub QueryCntrFlow (objPspCntrFlowArg As PspCntrFlow)      
+    Dim eFlowCapability As CatPspIDLFlowCapability 
+    Dim eFlowReality    As CatPspIDLFlowReality  
+          
+    If ( Not ( objPspCntrFlowArg Is Nothing ) ) Then         
+      ' ---------------------------
+      ' Flow Capability information
+    
+      eFlowCapability = objPspCntrFlowArg.FlowCapability
+      Select Case eFlowCapability 
+        Case catPspIDLFlowCapability_Undefined
+          strMessage_g = strMessage_g & "Flow Capability in undefined" & vbCr               
+        Case catPspIDLFlowCapability_InDirection
+          strMessage_g = strMessage_g & "Flow Capability is in inward direction" & vbCr               
+        Case catPspIDLFlowCapability_OutDirection
+          strMessage_g = strMessage_g & "Flow Capability is in outward direction" & vbCr               
+        Case catPspIDLFlowCapability_InOutDirection
+          strMessage_g = strMessage_g & "Flow Capability is in bi-directional" & vbCr               
+      End Select
+
+      ' ---------------------------
+      ' Flow Reality information
+
+      eFlowReality = objPspCntrFlowArg.FlowReality
+      Select Case eFlowReality
+        Case catPspIDLFlowReality_Undefined
+          strMessage_g = strMessage_g & "Flow in undefined" & vbCr               
+        Case catPspIDLFlowReality_InDirection
+          strMessage_g = strMessage_g & "Flow is in inward direction" & vbCr               
+        Case catPspIDLFlowReality_OutDirection
+          strMessage_g = strMessage_g & "Flow is in outward direction" & vbCr               
+        Case catPspIDLFlowReality_InOutDirection
+          strMessage_g = strMessage_g & "Flow is in bi-directional" & vbCr               
+      End Select
+
+      ' ---------------------------
+      ' Set Flow Reality information
+      If ( eFlowReality = catPspIDLFlowReality_Undefined ) Then
+         eFlowReality = catPspIDLFlowReality_InDirection
+         objPspCntrFlowArg.FlowReality = eFlowReality
+      End If
+                    
+    End If 
+End Sub
+
+

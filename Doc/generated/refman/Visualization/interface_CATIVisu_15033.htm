@@ -1,0 +1,373 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Visualization Interface CATIVisu</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../Visualization.htm" href="../Visualization.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "Visualization";	}
+		function getCurrentObjectName() { 
+ 	return "CATIVisu"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>Visualization Interface CATIVisu</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIVisu_15033','CATIVisu','0');</script>
+<p><b>Usage: you cannot implement this base interface directly. You must first derive it and then implement the derived interface. </b></p>
+<hr>
+<p>
+ interface <b>CATIVisu</b>
+</p>
+<p>
+<b><i>  Basic class of any visualization interface used to make objects visualized.</i></b><br>
+
+ <b>Role</b>: This is the basic class that any visualization interface has to C++ 
+ derive from. 
+ <br>Components that implement any specialized <tt>CATIVisu</tt> interface 
+ are able to be visualized and  highlighted. 
+ <br><br>All visualization mecanisms are controlled by the <script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script>.  <br><br><b>How to create the specialized interface:</b>
+ <br> The new interface is named IMyNewVisu. 
+ <ul>
+ <li>The new interface must C++ derives from <tt>CATIVisu</tt> </li>
+ <br>Extract from IMyNewVisu.h
+ <pre>
+    .....
+    class  IMyNewVisu : public <b>CATIVisu</b>
+    {
+      CATDeclareInterface;
+      public: 
+         ....
+    } ; 
+
+ </pre>
+ <li>The new interface must OM-derives from 
+<script type="text/javascript"> activateLinkAnchor('CATBaseUnknown','','CATBaseUnknown') </script> </li> <br>Extract from IMyNewVisu.cpp
+ <pre>
+    CATImplementInterface(IMyNewVisu, <b>CATBaseUnknown</b>);
+ </pre>
+ </ul>
+ This allows you to make a given component implement several visualization 
+ interfaces.
+ <br><br><b>Caution:</b>A specialized interface must never derive from an another one. The  interface must always 
+ derive from <tt>CATIVisu</tt>. In particular, do not derive from 
+<script type="text/javascript"> activateLinkAnchor('CATI3DGeoVisu','','CATI3DGeoVisu') </script> or  
+<script type="text/javascript"> activateLinkAnchor('CATI2DGeoVisu','','CATI2DGeoVisu') </script> to create a 3D ou 2D visualization interface. <br><br>To implement the specialized interface used the 
+<script type="text/javascript"> activateLinkAnchor('CATExtIVisu','','CATExtIVisu') </script> adapter.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#BuildHighlightLook(CATPathElement&amp;,CATRepPath&amp;)"><b>BuildHighlightLook</b></a>(CATPathElement&amp;,CATRepPath&amp;)
+<dd>  Adds the graphical representation of one visualization extension into the output path of graphical representations.
+ <dt> o 
+    <a href="#BuildRep()"><b>BuildRep</b></a>()
+<dd>  Builds the graphical representation.
+ <dt> o 
+    <a href="#BuildRepPath(CATPathElement&amp;,CATRepPath&amp;)"><b>BuildRepPath</b></a>(CATPathElement&amp;,CATRepPath&amp;)
+<dd>  Adds the graphical representation of one visualization extension into the output path of graphical representations.
+ <dt> o 
+    <a href="#DecodeGraphic(CATPickPath&amp;,CATPathElement&amp;)"><b>DecodeGraphic</b></a>(CATPickPath&amp;,CATPathElement&amp;)
+<dd>  Adds the component of the current visualization extension into the output path of components.
+ <dt> o 
+    <a href="#GiveRep()"><b>GiveRep</b></a>()
+<dd>  Returns the pointer of the graphical representation.
+ <dt> o 
+    <a href="#IsHighlightValid(CATPathElement&amp;)"><b>IsHighlightValid</b></a>(CATPathElement&amp;)
+<dd>  Tests if the elements of a CATPathElement are valid for highlight.
+ <dt> o 
+    <a href="#IsRepUpToDate()"><b>IsRepUpToDate</b></a>()
+<dd>  Tests whether or not the graphical representation of the current component is uptodate.
+ <dt> o 
+    <a href="#ModifyRep(CATNotification&amp;)"><b>ModifyRep</b></a>(CATNotification&amp;)
+<dd>  Processes visualization notifications.
+ <dt> o 
+    <a href="#SetRepNotUpToDate()"><b>SetRepNotUpToDate</b></a>()
+<dd>  Sets the graphical representation of this component to an not uptodate state.
+ <dt> o 
+    <a href="#UnreferenceRep()"><b>UnreferenceRep</b></a>()
+<dd>  Makes visualization extension not point to their graphical representation anymore and conversely.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="BuildHighlightLook"></a><a name="BuildHighlightLook(CATPathElement&amp;,CATRepPath&amp;)"></a> <dt> o <b>BuildHighlightLook</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>BuildHighlightLook</b>(<td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement&amp;')</script> <td><tt>iPathElt</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATRepPath','CATRepPath&amp;')</script> <td><tt>ioPathRep</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds the graphical representation of one visualization extension into the output path of graphical representations.
+ <br><b>Role</b>:
+ The same as 
+<script type="text/javascript"> activateLinkAnchor('','BuildRepPath','BuildRepPath') </script> but it is for (pre)highlight purposes only. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPathElt</tt>
+   <dd>  path of components from which the current component is extracted.
+ </dd>
+    <dt><tt> ioPathRep</tt>
+   <dd> output path of graphical representations to fill in.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   an HRESULT value.
+ <br><b>Legal values</b>:
+ <ul>
+ <li>S_OK if the operation succeeds </li>
+ <li>E_FAIL otherwise </li>.
+ </ul>
+</dl>
+</dl>
+<a name="BuildRep"></a><a name="BuildRep()"></a> <dt> o <b>BuildRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATRep','CATRep *')</script>  <b>BuildRep</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds the graphical representation.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   A pointer to the graphical representation of one extension of any visualization interface.
+</dl>
+</dl>
+<a name="BuildRepPath"></a><a name="BuildRepPath(CATPathElement&amp;,CATRepPath&amp;)"></a> <dt> o <b>BuildRepPath</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>BuildRepPath</b>(<td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement&amp;')</script> <td><tt>iPathElt</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATRepPath','CATRepPath&amp;')</script> <td><tt>ioPathRep</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds the graphical representation of one visualization extension into the output path of graphical representations.
+ <br><b>Role</b>:
+ This method is part of the usual mechanism of generating a path of graphical representations from a path of
+ components. And this mechanism is managed by the 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script>.  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPathElt</tt>
+   <dd> path of components from which the current component is extracted.
+ </dd>
+    <dt><tt> ioPathRep</tt>
+   <dd> output path of graphical representations to fill in.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   an HRESULT value.
+ <br><b>Legal values</b>:
+ <ul>
+ <li>S_OK if the operation succeeds </li>
+ <li>E_FAIL otherwise </li>
+ </ul>
+</dl>
+</dl>
+<a name="DecodeGraphic"></a><a name="DecodeGraphic(CATPickPath&amp;,CATPathElement&amp;)"></a> <dt> o <b>DecodeGraphic</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>DecodeGraphic</b>(<td> const <script type="text/javascript"> activateLink('CATPickPath','CATPickPath&amp;')</script> <td><tt>iPickPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement&amp;')</script> <td><tt>ioPathElt</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds the component of the current visualization extension into the output path of components.
+ <br><b>Role</b>:
+ This method is part of the usual mechanism of generating a path of components from a path of graphical
+ representations. And this mechanism is managed by the 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script>.  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPickPath</tt>
+   <dd> input path of graphical representations from which the graphical representation of the current extension is extracted.
+ </dd>
+    <dt><tt> ioPathElt</tt>
+   <dd> output path of components to fill in.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   an HRESULT value.
+ <br><b>Legal values</b>:
+ <ul>
+ <li>S_OK if the operation succeeds </li>
+ <li>E_FAIL otherwise </li>.
+ </ul>
+</dl>
+</dl>
+<a name="GiveRep"></a><a name="GiveRep()"></a> <dt> o <b>GiveRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATRep','CATRep *')</script>  <b>GiveRep</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer of the graphical representation.
+ <br><b>Role</b>: With this method you get the graphic representation for this interface. But in most
+ case to get it you must use the 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','GenerateRepPathFromPathElement','CATVisManager.GenerateRepPathFromPathElement') </script>.
+</dl>
+<a name="IsHighlightValid"></a><a name="IsHighlightValid(CATPathElement&amp;)"></a> <dt> o <b>IsHighlightValid</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsHighlightValid</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement&amp;')</script> <td><tt>iPathElt</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests if the elements of a CATPathElement are valid for highlight.
+ <br><b>Role</b>: in the default implementation, calls recursively the method IsHighlightValid
+ on the elements of the CATPathElement that implement CATIVisu.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPathElt</tt>
+   <dd> input path of components from which the current component is extracted.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   an HRESULT value.
+ <br><b>Legal values</b>:
+ <ul>
+ <li>S_OK if the component is to be highlighted </li>
+ <li>E_FAIL otherwise </li>.
+ </ul>
+</dl>
+</dl>
+<a name="IsRepUpToDate"></a><a name="IsRepUpToDate()"></a> <dt> o <b>IsRepUpToDate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>IsRepUpToDate</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether or not the graphical representation of the current component is uptodate.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <ol>
+ <li>1 if the graphical representation of the component is uptodate</li>
+ <li>0 if the graphical representation of the component is not uptodate</li>
+ </ol>
+
+</dl>
+</dl>
+<a name="ModifyRep"></a><a name="ModifyRep(CATNotification&amp;)"></a> <dt> o <b>ModifyRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ModifyRep</b>(<td> const <script type="text/javascript"> activateLink('CATNotification','CATNotification&amp;')</script> <td><tt>iInfo</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Processes visualization notifications.
+ <br><b>Role</b>: 
+ It is the usual method called by the 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script> for processing  all types of visu notifications concerning 
+ any graphical change of one component. Such visu notifications have to derive from 
+<script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script>.  For instance
+ when the color of one component is changed, a visualization event 
+<script type="text/javascript"> activateLinkAnchor('CATModifyVisProperties','','CATModifyVisProperties') </script> is  sent, then received by the 
+ 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script> and finally processed by any visualization extension of the component through  the <tt>ModifyRep</tt> method. 
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInfo</tt>
+   <dd> the input visu event deriving from </dd>
+<script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script> 
+ 
+  <dt> <b>Returns:</b> 
+  <dd>  status of processing:
+ <ul>
+ <li> 0 when the input visu event has not been processed </li>
+ <li> 1 when the input visu event has been procesed </li>
+ </ul>
+</dl>
+</dl>
+</dl>
+<a name="SetRepNotUpToDate"></a><a name="SetRepNotUpToDate()"></a> <dt> o <b>SetRepNotUpToDate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetRepNotUpToDate</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the graphical representation of this component to an not uptodate state.
+
+</dl>
+<a name="UnreferenceRep"></a><a name="UnreferenceRep()"></a> <dt> o <b>UnreferenceRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>UnreferenceRep</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Makes visualization extension not point to their graphical representation anymore and conversely.
+ <br><b>Role</b>:
+ When one graphical representation is deleted, the 
+<script type="text/javascript"> activateLinkAnchor('CATVisManager','','CATVisManager') </script> provides a mechanism which ensures to find the component and the visualization interface to which the deleting graphical representation is linked. This operation
+ can be done thanks to the model identifier enclosed into the graphical representation.
+ Then it is possible to update the corresponding visualization extension: this is typically where   
+ the 
+<script type="text/javascript"> activateLinkAnchor('','UnreferenceRep','UnreferenceRep') </script> method is useful.
+</dl>
+<hr>
+ This object is included in the file: <b>CATIVisu.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATVisualization</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

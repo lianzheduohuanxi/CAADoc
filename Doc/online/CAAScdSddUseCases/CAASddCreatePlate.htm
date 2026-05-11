@@ -1,0 +1,365 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Plates</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Plates</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create plates and 
+		advanced plates of different categories.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddCreatePlate is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddCreatePlate.CATPart in the samples directory.</p>
+		<p><a href="CAASddCreatePlateSource.htm" target="Source">CAASddCreatePlate.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddCreatePlate.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddCreatePlate includes eleven steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Adding a Hull</a></li>
+			<li><a href="#Step5">Creating a Shell Plate by Defining the Support</a></li>
+			<li><a href="#Step6">Adding Limits to the Shell Plate</a></li>
+			<li><a href="#Step7">Generating Geometry for the Shell Plate</a></li>
+			<li><a href="#Step8">Creating a Shell Plate on PortSide</a></li>
+			<li><a href="#Step9">Creating a Deck Plate</a></li>
+			<li><a href="#Step10">Creating an Advanced Transverse Bulkhead Plate</a></li>
+			<li><a href="#Step11">Updating the Part Document</a></li>
+		</ol>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASddCreatePlate.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre><span class="keyword">Sub</span> CATMain()
+  <span class="keyword">Dim</span> ObjPart <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This Step describes how to get Structure Functional Modeler factory. The 
+		SfmFactory object will be used for creating Structure Functional Modeler objects.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory(&quot;SfmFactory&quot;)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>The Manager object is obtained by the GetManager method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj <span class="keyword">As</span> SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Adding a Hull</a></h4>
+		<p>A hull is added to current part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Adding Hull</span>
+  ManagerObj.AddHull
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Creating a Shell Plate by Defining the Support</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> ShellSupport <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellSupport = ObjPart.FindObjectByName(&quot;Hull1234&quot;)
+  <span class="keyword">Dim</span> ShellSupportRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellSupportRef = ObjPart.CreateReferenceFromObject(ShellSupport)
+  <span class="keyword">Dim</span> ShellSuperplate1 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSuperplate1 = FactoryObj.AddSuperPlate(&quot;ShellPanel&quot;, ShellSupportRef, Nothing)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Adding Limits to the Shell Plate</a></h4>
+		<p>Add limits to the shell plate by selecting a reference. Also, define orientation 
+		of the limit, so <span class="keyword">As</span> to keep desired side.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Defining First Limit and its orientation</span>
+  <span class="keyword">Dim</span> ShellPlateLimit1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlateLimit1 = ObjPart.FindObjectByName(&quot;CROSS.40&quot;)
+  <span class="keyword">Dim</span> ShellPlateLimitRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlateLimit1)
+  <span class="keyword">Dim</span> ShellPlateOrnt1 <span class="keyword">As</span> Long
+  ShellPlateOrnt1 = 8
+  ShellSuperplate1.AddLimit ShellPlateLimitRef1, ShellPlateOrnt1
+
+ <span class="comment"> &#39; Defining Second Limit and its orientation</span>
+  <span class="keyword">Dim</span> ShellPlateLimit2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlateLimit2 = ObjPart.FindObjectByName(&quot;CROSS.140&quot;)
+  <span class="keyword">Dim</span> ShellPlateLimitRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlateLimit2)
+  <span class="keyword">Dim</span> ShellPlateOrnt2 <span class="keyword">As</span> Long
+  ShellPlateOrnt2 = 9
+  ShellSuperplate1.AddLimit ShellPlateLimitRef2, ShellPlateOrnt2
+
+ <span class="comment"> &#39; Defining Third Limit and its orientation</span>
+  <span class="keyword">Dim</span> ShellPlateLimit3 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlateLimit3 = ObjPart.FindObjectByName(&quot;LONG.0&quot;)
+  <span class="keyword">Dim</span> ShellPlateLimitRef3 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlateLimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlateLimit3)
+  <span class="keyword">Dim</span> ShellPlateOrnt3 <span class="keyword">As</span> Long
+  ShellPlateOrnt3 = 5
+  ShellSuperplate1.AddLimit ShellPlateLimitRef3, ShellPlateOrnt3
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Generating Geometry for the Shell Plate</a></h4>
+		<p>To generate geometry, build is done for Shell Plate by Run.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  ShellSuperplate1.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Creating a Shell Plate on PortSide</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> ShellSuperplate2 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSuperplate2 = FactoryObj.AddSuperPlate(&quot;ShellPanel&quot;, ShellSupportRef, Nothing)
+  <span class="keyword">Dim</span> ShellPlate2Limit1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlate2Limit1 = ObjPart.FindObjectByName(&quot;CROSS.40&quot;)
+  <span class="keyword">Dim</span> ShellPlate2LimitRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlate2LimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit1)
+  <span class="keyword">Dim</span> ShellPlate2Ornt1 <span class="keyword">As</span> Long
+  ShellPlate2Ornt1 = 8
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef1, ShellPlate2Ornt1
+  <span class="keyword">Dim</span> ShellPlate2Limit2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlate2Limit2 = ObjPart.FindObjectByName(&quot;CROSS.140&quot;)
+  <span class="keyword">Dim</span> ShellPlate2LimitRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlate2LimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit2)
+  <span class="keyword">Dim</span> ShellPlate2Ornt2 <span class="keyword">As</span> Long
+  ShellPlate2Ornt2 = 9
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef2, ShellPlate2Ornt2
+  <span class="keyword">Dim</span> ShellPlate2Limit3 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlate2Limit3 = ObjPart.FindObjectByName(&quot;LONG.0&quot;)
+  <span class="keyword">Dim</span> ShellPlate2LimitRef3 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlate2LimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit3)
+  <span class="keyword">Dim</span> ShellPlate2Ornt3 <span class="keyword">As</span> Long
+  ShellPlate2Ornt3 = 4
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef3, ShellPlate2Ornt3
+  ShellSuperplate2.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Creating a Deck Plate</a></h4>
+		<p>Create a deck plate on the Deck.3 plane <span class="keyword">As</span> support,
+		and then limit it by the shell plates CROSS.40 and CROSS.140.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Defining Support</span>
+  <span class="keyword">Dim</span> DeckSupport <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> DeckSupport = ObjPart.FindObjectByName(&quot;DECK.3&quot;)
+  <span class="keyword">Dim</span> DeckSupportRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> DeckSupportRef = ObjPart.CreateReferenceFromObject(DeckSupport)
+  
+  <span class="keyword">Dim</span> DeckSuperplate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> DeckSuperplate = FactoryObj.AddSuperPlate(&quot;DeckPanel&quot;, DeckSupportRef, Nothing)
+ <span class="comment"> &#39; Applying Limits</span>
+  <span class="keyword">Dim</span> DeckPlateLimit1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> DeckPlateLimit1 = ObjPart.FindObjectByName(&quot;CROSS.40&quot;)
+  <span class="keyword">Dim</span> DeckPlateLimitRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> DeckPlateLimitRef1 = ObjPart.CreateReferenceFromObject(DeckPlateLimit1)
+   
+  <span class="keyword">Dim</span> DeckPlateOrnt1 <span class="keyword">As</span> Long
+  DeckPlateOrnt1 = 2
+  DeckSuperplate.AddLimit DeckPlateLimitRef1, DeckPlateOrnt1
+  
+  <span class="keyword">Dim</span> DeckPlateLimit2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> DeckPlateLimit2 = ObjPart.FindObjectByName(&quot;CROSS.140&quot;)
+  <span class="keyword">Dim</span> DeckPlateLimitRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> DeckPlateLimitRef2 = ObjPart.CreateReferenceFromObject(DeckPlateLimit2)
+   
+  <span class="keyword">Dim</span> DeckPlateOrnt2 <span class="keyword">As</span> Long
+  DeckPlateOrnt2 = 3
+  DeckSuperplate.AddLimit DeckPlateLimitRef2, DeckPlateOrnt2
+  
+ <span class="comment"> &#39; Limiting DeckPlate by ShellPlate</span>
+  <span class="keyword">Dim</span> DeckPlateOrnt3 <span class="keyword">As</span> Long
+  DeckPlateOrnt3 = 8
+  DeckSuperplate.AddLimit ShellSupportRef, DeckPlateOrnt3
+
+ <span class="comment"> &#39; SETTING MATERIAL,GRADE AND THICKNESS OF DECKPLATE</span>
+  <span class="keyword">Dim</span> DeckPlateObj <span class="keyword">As</span> SfmObject
+  <span class="keyword">Set</span> DeckPlateObj = DeckSuperplate
+  DeckPlateObj.Material = &quot;Steel&quot;
+  DeckPlateObj.Grade = &quot;A45&quot;
+  DeckSuperplate.Thickness = &quot;25.0&quot;
+  DeckSuperplate.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step10">Creating an Advanced Transverse Bulkhead Plate</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment"> &#39; Defining Support for Transverse Bulkhead Plate</span>
+  <span class="keyword">Dim</span> TrnsPlateSupport <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> TrnsPlateSupport = ObjPart.FindObjectByName(&quot;CROSS.90&quot;)
+  <span class="keyword">Dim</span> TrnsPlateSupportRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TrnsPlateSupportRef = ObjPart.CreateReferenceFromObject(TrnsPlateSupport)
+
+ <span class="comment"> &#39; Creating SuperPlate</span>
+  <span class="keyword">Dim</span> TrnsSuperplate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> TrnsSuperplate = FactoryObj.AddAdvSuperPlate(&quot;TransversePanel&quot;, TrnsPlateSupportRef, Nothing)
+
+ <span class="comment"> &#39; Applying Limits</span>
+ <span class="comment"> &#39; First Limiting by ShellPlates</span>
+  <span class="keyword">Dim</span> TrnsPlateLimitRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TrnsPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellSuperplate1)
+  <span class="keyword">Dim</span> TrnsPlateOrnt1 <span class="keyword">As</span> Long
+  TrnsPlateOrnt1 = 4
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef1, TrnsPlateOrnt1
+  <span class="keyword">Dim</span> TrnsPlateLimitRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TrnsPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellSuperplate2)
+  <span class="keyword">Dim</span> TrnsPlateOrnt2 <span class="keyword">As</span> Long
+  TrnsPlateOrnt2 = 5
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef2, TrnsPlateOrnt2
+
+ <span class="comment"> &#39; Second Limiting by DeckPlate</span>
+  <span class="keyword">Dim</span> TrnsPlateLimitRef3 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> TrnsPlateLimitRef3 = ObjPart.CreateReferenceFromObject(DeckSuperplate)
+  <span class="keyword">Dim</span> TrnsPlateOrnt3 <span class="keyword">As</span> Long
+  TrnsPlateOrnt3 = 7
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef3, TrnsPlateOrnt3
+  TrnsSuperplate.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step11">Updating the Part Document</a></h4>
+		<p>Update the Part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+<span class="comment"> &#39; To Update CATIA Part Document</span>
+ ObjPart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create plate objects.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

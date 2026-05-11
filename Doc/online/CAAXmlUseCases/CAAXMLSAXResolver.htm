@@ -1,0 +1,509 @@
+<html>
+
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Resolving external entities with SAX</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Fetching an External Entity with SAX</h3>
+			<em>Using a SAX entity resolver to fetch an external entity</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article shows how to specify an entity resolver and how to
+			use it with a SAX parser. Entity resolvers are invoked by the XML
+			parser to obtain the source of external entities they cannot find by
+			themselves.</p>
+			<ul>
+				<li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#UseCase"><strong>The CAAXMLSAXResolver Use Case</strong></a>
+				<ul>
+					<li><a href="#What">What Does CAAXMLSAXResolver Do</a></li>
+					<li><a href="#How">How to Launch CAAXMLSAXResolver</a></li>
+					<li><a href="#Where">Where to Find the CAAXMLSAXResolver Code</a></li>
+				</ul>
+				</li>
+				<li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to specify an entity resolver and how to use
+it with a SAX parser. You will learn to create two different kinds of
+event handlers for SAX: <b>error handlers</b> are invoked to process
+errors raised by the parser if the XML input is not well-formed or is
+invalid; <b>entity resolvers</b> are invoked when the parser encounters
+an external entity reference it cannot find by itself. You will learn
+how to register your handlers with the parser. Finally, the use case
+will show you how to run the SAX parser configurated with your handlers
+to parse a file with validation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAXMLSAXResolver Use Case</h3>
+<p>The CAAXMLSAXResolver Use Case is a use case of the CAAXMLParser.edu
+framework that illustrates XMLParser framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAXMLSAXResolver Do</h4>
+<p>This use case reads an existing XML file using SAX and validates it
+with a DTD stored in a database. The SAX parser has to use an entity
+resolver to fetch the DTD from the database. For the sake of simplicity,
+the database is just a directory somewhere on the disk. The system ID of
+the DTDs must begin with the string: "sql://". If the document is not
+well formed or invalid, the program displays an error message in the
+console.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAXMLSAXResolver</h4>
+<p>To launch CAAXMLSAXResolver, you will need to set up the build time
+environment, then compile CAAXMLSAXResolver along with its
+prerequisites, set up the run time environment, and then execute the use
+case [<a href="#References">1</a>].</p>
+
+
+<p>The use case should be launched as follows from the command line:</p>
+<pre>CAAXMLSAXResolver &lt;databasedir> &lt;filepath></pre>
+<p>where <code>&lt;databasedir></code> is the path of the directory,
+which contains the DTDs and <code>&lt;filepath></code> is the path of
+the XML file, which will be parsed.</p>
+<p>A sample XML file and a sample DTD are provided with the use case. To
+use them, launch the following command from the command line:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>CAAXMLSAXResolver
+			InstallRoot\OS\resources\xml\CAAXMLSAXResolver\database
+			InstallRoot\OS\resources\xml\CAAXMLSAXResolver\car.xml</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>CAAXMLSAXResolver
+			InstallRoot/OS/resources/xml/CAAXMLSAXResolver/database
+			InstallRoot/OS/resources/xml/CAAXMLSAXResolver/car.xml</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where:</p>
+<ul>
+	<li><code>InstallRoot</code> is the directory in which you have
+	installed the run time part or the product line</li>
+	<li><code>OS</code> is the directory containing the installed code
+	<ul>
+		<li><code>aix_a</code> for 32-bit AIX</li>
+		<li><code>hpux_b</code> for HP-UX</li>
+		<li><code>solaris_a</code> for Solaris</li>
+		<li><code>intel_a</code> for 32-bit Windows</li>
+		<li><code>win_b64</code> for 64-bit Windows</li>
+	</ul>
+	</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAXMLSAXResolver Code</h4>
+<p>The CAAXMLSAXResolver use case is made of several classes located in
+the CAAXMLSAXResolver.m module of the CAAXMLParser.edu framework:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>InstallRootDirectory\CAAXMLParser.edu\CAAXMLSAXResolver.m\</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>InstallRootDirectory/CAAXMLParser.edu/CAAXMLSAXResolver.m/</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the
+CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a SAX parser, create and register event handlers with this
+parser, and parse a file, there are six main steps:</p>
+<table width="100%">
+	<tbody>
+		<tr>
+			<th>#</th>
+			<th>
+			<p align="left">Step</p>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step1">1</a></td>
+			<td valign="top">Implement a V5 Entity Resolver and Error Handler
+			component</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step2">2</a></td>
+			<td valign="top">Create a V5 SAX Component</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step3">3</a></td>
+			<td valign="top">Create and Configure a V5 SAX Parser</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step4">4</a></td>
+			<td valign="top">Create the Entity Resolver and Error Handler
+			Components and Register Them With the Parser</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step5">5</a></td>
+			<td valign="top">Parse the XML File</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step6">6</a></td>
+			<td valign="top">Manage Errors</td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1">Implement a V5 Entity Resolver and Error Handler
+Component</a></h4>
+<p>The SAX API uses an event-oriented API to process XML documents. The
+XML SAX parser reads XML documents sequentially and invokes callback
+functions to indicate the XML construct it comes across. Each invocation
+is called a SAX event. The SAX API defines V5 interfaces, which specify
+the signature of the SAX callback functions and group them per theme.
+The <i>CATISAXEntityResolver</i> interface defines the <code>ResolveEntity</code>
+function. This function is invoked by the parser when it encounters an
+external entity reference it cannot find by itself. The function must
+fetch the external entity and return it to the parser in the form of a
+SAX input source. Other SAX interfaces (<i>CATISAXDTDHandler</i>, <i>CATISAXErrorHandler</i>,
+<i>CATISAXDocumentHandler</i>) define additional events. To make the
+work easier for the developer, the SAX API provides a <i>CATSAXHandlerBase</i>
+component, which already provides an empty implementation of all the SAX
+interfaces. <img src="images/saxhandlerbase.png" alt='saxhandlerbase.png (3148 bytes)' width="304" height="269">.</p>
+<p>Therefore, to write a SAX document handler, all you need to do is to
+create a new V5 component which inherits from <i>CATSAXHandlerBase</i>
+and override the methods to answer to the events, which are relevant to
+your application. The following code declares and defines a <i>CAAXMLSAXResolverHandlers</i>
+V5 component which inherits from <i>CATSAXHandlerBase</i> and
+re-implements <i>CATISAXEntityResolver</i> and <i>CATISAXErrorHandler</i>.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+// CAAXMLSAXResolverHandlers.h
+#include "CATSAXHandlerBase.h"
+class CAAXMLSAXResolverHandlers : <b>public CATSAXHandlerBase</b> {
+    <b>CATDeclareClass;</b>
+    public:
+        ...
+        // Override the default implementation of the
+        // CATISAXEntityResolver interface.
+        virtual HRESULT <b>ResolveEntity</b>(
+            const CATUnicodeString & iPublicId, 
+            const CATUnicodeString & iSystemId, 
+            CATISAXInputSource_var& oInputSource);
+
+        // Override part of the default implementation of the
+        // CATISAXErrorHandler interface.
+        virtual HRESULT <b>Error</b>( 
+            CATSAXParseException* iException);
+        virtual HRESULT <b>FatalError</b>( 
+            CATSAXParseException* iException);
+        ...
+};
+ 			</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+// CAAXMLSAXResolverHandlers.cpp
+#include "CAAXMLSAXResolverHandlers.h"
+
+// Declare the class as a V5 component derived from CATSAXHandlerBase
+<b>CATImplementClass( CAAXMLSAXResolverHandlers, Implementation, CATSAXHandlerBase, CATnull );</b>
+
+// Implement the CATISAXEntityResolver interface
+<b>#include "TIE_CATISAXEntityResolver.h"
+TIE_CATISAXEntityResolver(CAAXMLSAXResolverHandlers);</b>
+
+// Implement the CATISAXErrorHandler interface
+<b>#include "TIE_CATISAXErrorHandler.h"
+TIE_CATISAXErrorHandler(CAAXMLSAXResolverHandlers);</b>
+			</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>The next step is to provide an implementation for each of the SAX
+events you want to catch. The following code shows how the <code>ResolveEntity</code>
+event callback function is implemented. This method receives the name of
+the external entity to resolve as a <i>CATUnicodeString</i>. In the
+use case, the method will be invoked when the parser reads the document
+type declaration an cannot find the entity called <code>"sql://automotive.dtd"</code>.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+&lt;!DOCTYPE car SYSTEM <b>"sql://automotive.dtd"</b>>
+			</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>The method must return the source of the corresponding entity in the
+form of a <i>CATISAXInputSource</i> object. In this case, the entity
+consist of a DTD file stored in the database directory of the disk.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+// CAAXMLSAXResolverHandlers.cpp
+HRESULT CAAXMLSAXResolverHandlers::ResolveEntity(
+    const CATUnicodeString & iPublicId, 
+    const CATUnicodeString & iSystemId, 
+    CATISAXInputSource_var& oInputSource) {
+
+    ...
+    // All system IDs must begin with this prefix
+    CATUnicodeString prefix = "sql://";
+
+    CATIXMLSAXFactory_var factory;
+    HRESULT hr2 = <b>::CreateCATIXMLSAXFactory</b>(factory);
+    if (SUCCEEDED(hr2) && (factory != NULL_var)) {
+        // Compute the file path where the DTD is located.
+        CATUnicodeString filePath = _databaseDir;
+#ifdef _WINDOWS_SOURCE
+        filePath.Append("\\");
+#else // _WINDOWS_SOURCE
+        filePath.Append("/");
+#endif // _WINDOWS_SOURCE
+        filePath.Append(iSystemId.SubString(prefix.GetLengthInChar(), iSystemId.GetLengthInChar() - prefix.GetLengthInChar()));
+            
+        // Create a SAX input source
+        hr = factory-><b>CreateInputSourceFromFile</b>(filePath, "", oInputSource);
+    }
+    ...
+}
+</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To create an input source for this file, invoke the <code>CreateInputSourceFromFile</code>
+of the <i>CATIXMLSAXFactory</i> object. To get a <i>CATIXMLSAXFactory</i>
+object, use the global function <b>CreateCATIXMLSAXFactory</b> (more on
+this in the next section).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2">Create a V5 SAX Component</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+// CAAXMLSAXResolverMain.cpp
+CATIXMLSAXFactory_var factory;
+HRESULT hr = <b>::CreateCATIXMLSAXFactory<b />(factory);
+...</b></b></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To work with SAX, you need to instantiate the V5 SAX component. The
+V5 SAX component can be created by calling the <code>CreateCATIXMLSAXFactory</code>
+global function. This function returns a V5 handler on the <i>CATIXMLSAXFactory</i>
+interface, which is the main interface for the V5 SAX component. Using
+this interface you will be able to create SAX1 and SAX2 parsers and to
+create input source to feed XML to the parser. Note that the code above
+does not specify the CLSID of the component to use, so the default SAX
+component (XML4C3) will be used. See <a href="#Ref3">[3] and <a
+	href="#Ref4">[4]</a> if you want to use another V5 SAX component.</a></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3">Create and Configure a V5 SAX Parser</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATISAXParser_var parser;
+hr = factory-><b>CreateParser</b>(parser);
+...</pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>To create a SAX1 parser, one simply invokes the <code>CreateParser</code>
+on the <i>CATIXMLSAXFactory</i> object. There are two kinds of SAX1
+parsers, non-validating SAX1 parsers and validating SAX1 parsers. If you
+do specify optional arguments to your <code>CreateParser</code> call, a
+validating parser will be created. See <a href="#Ref3">[3] and <a
+	href="#Ref4">[4]</a> if you want to use another V5 SAX component.</a></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4">Create the Entity Resolver and Error Handler
+Components and Register Them With the Parser</a></h4>
+<p>The SAX1 parser created in the previous section is not yet usable as
+it does not yet know any other objects to which it can send the events
+it generates. The SAX1 parser can accept up to four event handlers (one
+for each event interface), as shown in the diagram below. <img src="images/saxparser.png" alt='saxsaxparser.png (3115 bytes)' width="348" height="188"></p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CAAXMLSAXResolverHandlers *handlersImpl = new CAAXMLSAXResolverHandlers(databaseDir);
+CATISAXEntityResolver_var entityHandler = handlersImpl;
+CATISAXErrorHandler_var errHandler = handlersImpl;
+handlersImpl->Release();
+handlersImpl = NULL;</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To instantiate the entity resolver and the error handler you have
+defined in the previous section, simply do a <code>new</code> of the main
+implementation class, then get interface handles of the right type on
+the component.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+hr = parser-><b>SetEntityResolver</b>(entityHandler);
+...
+hr = parser-><b>SetErrorHandler</b>(errHandler);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To register your entityResolver handler, call the <code>SetEntityResolver</code>
+method of the <i>CATISAXParser</i> interface. To register your error
+handler, call the <code>SetErrorHandler</code> method of the <i>CATISAXParser</i>
+interface. Passing <code>NULL_var</code> to these methods unregisters the
+previously registered handlers.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5">Parse the XML File</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+hr = parser-><b>Parse</b>(filePath);</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To parse the XML file, call the <code>Parse</code> method of the <i>CATISAXParser</i>
+interface. Pass the path of the file to read as a parameter. The method
+will read the file from top to bottom and generate the corresponding
+events, calling your event handlers for all the events you want to
+manage.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6">Manage Errors</a></h4>
+<p>The XMLParser framework uses the <i>HRESULT</i> / <i>CATError</i> mechanism to
+manage errors. Make sure to use the <code>CATError::CATGetLastError</code>
+to obtain all the available error diagnostics when using XMLParser. More
+information about V5 error management is available here <a href="#Ref2">[2]</a>
+and <a href="#Ref4">[4]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows you how to parse XML documents using the SAX API.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+			and Launching a CAA V5 Use Case</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</td>
+			<td><a href="../CAASysTechArticles/CAASysErrors.htm">
+			Managing Errors Using HRESULT</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref3"></a>[3]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlV5Overview.htm"> Using
+			XML in V5</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref4"></a>[4]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm">XML
+			Tips and Tricks</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [May 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

@@ -1,0 +1,1467 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Most Recent Used Command Header</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Most Recent Used Command Header</h3>
+      <em>How to create a command header class whose the representation is a
+      dynamic list of items in a menu</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create a specialized command header. This
+      command header has a customized graphic representation. In place of a push
+      item into a menu, the graphic representation is a dynamic list of push
+      items.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrMRUHeader Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrMRUHeader Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrMRUHeader</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrMRUHeader Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates the creation of a customized command header. In a
+menu, its graphic representation is a dynamic list of push items in place of a
+push item, the default representation. You will learn how to create a command
+header such as those which displays the most recent used document in the File
+menu. There are three steps:</p>
+<ul>
+  <li>Create the component representing the command header&nbsp;</li>
+</ul>
+<blockquote>
+  <p>It is a component which must derive from the <i>CATAfrDialogCommandHeader</i>
+  class.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>Create the component instantiating the graphic representation</li>
+</ul>
+<blockquote>
+  <p>It is a component which must derive from the <i>CATAfrCommandHeaderRep</i>
+  class and which instantiates one or more <i>CATDlgPushItem</i> class<i> </i>instances.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>Create the component controlling the data used by the graphic
+    representation</li>
+</ul>
+<blockquote>
+  <p>The data is a list of strings. This list is independent of an instance of a
+  V5 document.&nbsp;It means that whatever the current document, or even if any
+  document is opened, the list of strings is the same.&nbsp;</p>
+</blockquote>
+<p>You can also read the CAAAfrComboColorHeader use case [<a href="#References">1</a>]
+which presents another customized command header. In this case, the graphic
+representation is a combo in a toolbar. Contrarily to the current use case, the
+data (the current color) is dependent of the document.&nbsp;</p>
+<p>To take full advantage of this article, you can first read &quot;The Command
+Headers&quot; technical article [<a href="#References">2</a>], and precisely the
+&quot;Creating Customized Command Headers&quot; section.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrMRUHeader Use Case</h3>
+<p>CAAAfrMRUHeader is a use case of the CAAApplicationFrame.edu framework that
+illustrates ApplicationFrame framework capabilities</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrMRUHeader Do</h4>
+<p>CAAAfrMRUHeader creates a command header whose the graphic representation is
+a list of push items in the File menu. Before to explain the construction of
+such a command header, see the following scenario which shows the end user
+view.&nbsp;</p>
+<ol>
+  <li>Launch CNEXT</li>
+  <li>Select <b>File</b> menu&nbsp;</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUFileMenu11.jpg" width="187" height="159"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUFileMenu12.jpg" width="190" height="204"></td>
+      <td>Above <b>Exit</b>, you have a separator, and just above it the
+        &quot;standard&quot; most recent used documents.</td>
+    </tr>
+  </table>
+  <li>Launch <b>Add Item in MRU </b>in the <b>General</b> toolbar</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrGeneralWksAddinToolbar2.jpg" width="106" height="57"></td>
+      <td>This toolbar comes from an Add-in of the General workshop. Refer to
+        the referenced use case to display this toolbar [<a href="#References">3</a>].
+        <p>The <b>Add Item in MRU </b>command is a <i>CATDlgDialog</i>
+        command.&nbsp;</p>
+      </td>
+    </tr>
+  </table>
+  <li><a name="Add Item in MRU Dlg">The following Dialog box appears</a></li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUItem1.jpg" width="151" height="88"></td>
+      <td>In the editor, enter <b>Item 1</b>, then click <b>OK</b></td>
+    </tr>
+  </table>
+  <li>Select <b>File</b> menu&nbsp;</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUFileMenu22.jpg" width="183" height="150"></td>
+      <td>Now, after <b>Exit</b>, you have a new push item, <b>Item 1</b></td>
+    </tr>
+  </table>
+  <li>Launch <b>Add Item in MRU </b>(<img border="0" src="images/CAAAfrSampleMRUMAddItem.jpg" width="30" height="31">)<b>
+    </b>in the <b>General</b> toolbar</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUItem2.jpg" width="155" height="87"></td>
+      <td>In the editor, enter <b>Item 2</b>, then click <b>OK</b></td>
+    </tr>
+  </table>
+  <li>Select <b>File</b> menu&nbsp;</li>
+  <table border="0">
+    <tr>
+      <td><a name="File Menu"><img border="0" src="images/CAAAfrSampleMRUFileMenu32.jpg" width="185" height="172"></a></td>
+      <td>Now, after <b>Exit</b>, you have two push items:
+        <ul>
+          <li>In first position<b> Item 2</b>: the last created (used)
+            item,&nbsp;</li>
+          <li>In second position <b>Item 1</b>: <b></b>the oldest created (used)
+            item</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <li>Select <b>Item 1</b>&nbsp;in <b>File</b> menu</li>
+  <table border="0">
+    <tr>
+      <td><a name="Select Item Dlg"><img border="0" src="images/CAAAfrSampleMRUMSelItem1.jpg" width="125" height="87"></a></td>
+      <td>The <b>Selected item</b> dialog box appears. It displays the selected
+        item (<b>Item 1</b>).<b> </b>Close the dialog box.</td>
+    </tr>
+  </table>
+  <li>Select <b>File</b> menu&nbsp;</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrSampleMRUFileMenu42.jpg" width="185" height="171"></td>
+      <td>Now, after <b>Exit</b>, you always have two push items, but observe
+        the new order:
+        <ul>
+          <li>In first position<b> Item 1:</b> the last used item,&nbsp;</li>
+          <li>In second position <b>Item 2: </b>the oldest used item</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <li>On the <b>File</b> menu&nbsp;click <b>New&nbsp;</b></li>
+  <li><b>New</b> Dialog box click any kind document type and click <b>OK</b></li>
+  <li>Select <b>File</b> menu, you have the same list of items.</li>
+</ol>
+<p>In this scenario, you can see that there is a <b>list of strings </b>(or
+item). About this list :</p>
+<ul>
+  <li>It is always empty at the beginning of the session (no file save in this
+    use case)</li>
+  <li>It is filled up by the Add Item in MRU command</li>
+  <li>It is reorder to set in first position the selected string</li>
+  <li>It is independent of the document. Whatever the opened document, and even
+    if no document is opened, the displayed list is the same.</li>
+</ul>
+<p>This list (named MRU list) is kept by a component called CAAAfrMRUManager. It
+controls data (list of strings)<b> </b>which are displayed in the push items of
+a menu through the <i>CAAIAfrMRUManagement</i> interface.&nbsp;Since, the MRU
+list is unique, this component is unique during the session.&nbsp;</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> Manager of the MRU List&nbsp;</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrSampleMRU_UMLMgt.jpg" width="409" height="161"></td>
+  </tr>
+</table>
+<p>The <b>MRU header</b> is an instance of a class deriving from the <i>CATAfrDialogCommandHeader
+</i>class<i>,</i> like any command header whose the graphic representation is
+customized. The following UML diagram describes in detail the schema of classes:</p>
+<table border="0">
+  <caption><a name="Fig.2">Fig.2</a> MRU Header UML Diagram</caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAAfrSampleMRU_UMLHdr.jpg" width="624" height="325"></td>
+    </tr>
+  </tbody>
+</table>
+<p>CAAAfrMRUHeader is a component which must implement the <i>CATIAfrCommandHeaderRep
+</i>interface to provide the customized graphic representation<i>. </i>This
+interface contains three methods:</p>
+<ul>
+  <li><code>CreateCtxMenuRep</code> and <code>CreateToolbarRep</code> which
+    return nothing
+  <li><code>CreateMenuRep</code>:
+    <p>It instantiates an instance of the <i>CAAAfrMRURep</i> class describes
+    just below.</p>
+  </li>
+  <table>
+    <caption><a name="Fig.3">Fig.3</a> Command Header Graphic Representation UML
+      Diagram</caption>
+    <tbody>
+      <tr>
+        <td><img src="images/CAAAfrSampleMRU_UMLRep.jpg" width="317" height="257"></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The <i>CAAAfrMRURep</i> class creates one or more <i>CATDlgPushItem</i> [<a href="#References">4</a>]
+  class instance according to the contents of the list managed by the
+  CAAAfrMRUManager component. The <i>CAAAfrMRURep</i> class also sets a callback
+  method to be informed when this list changes.&nbsp;</p>
+</ul>
+<p>The MRU header is instantiated in an Add-in of the General workshop [<a href="#References">3</a>].
+The last step of the <a href="#Step">Step by Step</a> section explains this
+instantiation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrMRUHeader</h4>
+<p>To launch CAAAfrMRUHeader, you will need to set up the build time
+environment, then compile CAAAfrMRUHeader and CAAAfrGeneralWksAddin[<a href="#References">3</a>]
+along with their prerequisites, set up the run time environment, and then
+execute the use case [<a href="#References">5</a>].</p>
+<p>But just before launching the execution, edit the
+CAAApplicationFrame.edu.dico interface dictionary file located in the dictionary
+directory of the CAAApplicationFrame.edu framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+#CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+#CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="left">and then run mkCreateRuntimeView.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrMRUHeader Code</h4>
+<p>The CAAAfrMRUHeader use case is made of several classes located in four
+modules of the CAAApplicationFrame.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The <code>CAAAfrCustCommandHdrModel.m</code> module contains&nbsp;classes to
+define the <b>CAAAfrMRUManager component</b> and the <b>notification</b> sent by
+this component.</p>
+<ul>
+  <li>CAAAfrMRUManagerNotification.h (LocalInterfaces) and
+    CAAAfrMRUManagerNotification.cpp (src)
+</ul>
+<blockquote>
+  <p>The notification sent when an element is added in the list, or when an
+  element is selected (to become the first in the list)</p>
+</blockquote>
+<ul>
+  <li>CAAIAfrMRUManagement.cpp (src), CAAIAfrMRUManagement.h (PublicInterfaces),
+    and TIE_CAAIAfrMRUManagement.tsrc (src)
+</ul>
+<blockquote>
+  <p>Interface to add an element, select one, retrieve the list.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>CAAAfrMRUManager.h (LocalInterfaces) and CAAAfrMRUManager.cpp (src)
+</ul>
+<blockquote>
+  <p>The CAAAfrMRUManager component itself which implements the <i>CAAIAfrMRUManagement
+  </i>interface.</p>
+</blockquote>
+<ul>
+  <li>CAAAfrGetMRUManager.cpp (src), CAAAfrGetMRUManager.h (PublicInterfaces)</li>
+</ul>
+<blockquote>
+  <p>The global function to retrieve the unique CAAAfrMRUManager component
+  during the session.</p>
+</blockquote>
+<p>The <code>CAAAfrCustomizedCommandHeader.m</code> module contains classes to
+define the <b>MRU heade</b>r:</p>
+<ul>
+  <li>CAAAfrMRURep.h (LocalInterfaces) and CAAAfrMRURep.cpp (src)
+  <li>CAAEAfrCommandHeaderRepForMRU.h (LocalInterfaces) and
+    CAAEAfrCommandHeaderRepForMRU.cpp (src)
+  <li>CAAAfrMRUHeader.cpp (src),&nbsp; CAAAfrMRUHeader.h (PrivateInterfaces)</li>
+</ul>
+<p>The <code>CAAfrGeoCommands.m</code> <b></b>module contains <b><i>CATCommand</i>
+</b>classes&nbsp;</p>
+<ul>
+  <li>CAAAfrMRUAddElementCmd.h (LocalInterfaces) and CAAAfrMRUAddElementCmd.cpp
+    (src)
+</ul>
+<blockquote>
+  <p>It is a <i>CATDlgDialog</i> class (<a href="#Add Item in MRU Dlg">see image</a>)&nbsp;
+  executed when the end user clicks the &quot;Add Item in MRU&quot; command in
+  the General toolbar.</p>
+</blockquote>
+<ul>
+  <li>CAAAfrMRUSelElementCmd.h (LocalInterfaces) and CAAAfrMRUSelElementCmd.cpp
+    (src)
+</ul>
+<blockquote>
+  <p>It is a C<i>ATDlgDialog</i> class (<a href="#Select Item Dlg">see image</a>)
+  executed when the end user selects an item among the MRU list.</p>
+</blockquote>
+<p>The <code>CAAAfrGeneralWksAddin.m</code> module contains an Add-in of the
+General workshop&nbsp;</p>
+<ul>
+  <li>CAAAfrGeneralWksAdn.h (LocalInterfaces) and CAAAfrGeneralWksAdn.cpp (src)</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAAAfrMRUHeader:</p>
+<ol>
+  <li><a href="#Creating the CAAAfrMRUManager Component">Creating the
+    CAAAfrMRUManager Component</a>
+  <li><a href="#Creating the Component Representing the MRU Command Header">Creating
+    the Component Representing the MRU Command Header&nbsp;</a>
+  <li><a href="#Creating the Class Instantiating the Graphic Representation">Creating
+    the Class Instantiating the Graphic Representation</a>
+  <li><a href="#Instantiating the MRU Header Class">Instantiating the MRU Header
+    Class</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the CAAAfrMRUManager Component"></a>Creating the
+CAAAfrMRUManager Component</h4>
+<p>The CAAAfrMRUManager component controls the MRU list to display in a menu.
+This list is managed through the <i>CAAIAfrMRUManagement</i> interface<i>.</i>
+The explanations about the creation of this interface are not given in this
+article, refer to the Creating Interfaces use case for more details [<a href="#References">6</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+#define MRU_MAX_SIZE 5 
+
+class  CAAAfrMRUManager : public CATBaseUnknown
+{
+   CATDeclareClass;
+
+   public:
+ 
+   CAAAfrMRUManager();
+   virtual ~CAAAfrMRUManager(); 
+
+   static HRESULT <b>GetMRUManager</b>(CAAAfrMRUManager ** oManager);
+
+   virtual HRESULT <b>AddElement</b>(CATUnicodeString &amp;iNewElement) ;
+   virtual HRESULT <b>GetElementList</b>(CATListOfCATUnicodeString &amp;ElementList) const  ;
+   virtual HRESULT <b>SelectElement</b>(int iPosition) ;
+
+ private:
+   
+   CAAAfrMRUManager(const CAAAfrMRUManager &amp;iObjectToCopy);
+   CAAAfrMRUManager &amp; operator = (const CAAAfrMRUManager &amp;iObjectToCopy);
+
+ private:
+   static <b>CATIniCleanerSettingCtrl</b> _Cleaner ;
+
+   CATListOfCATUnicodeString       _NameList;
+};</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The <i>CAAAfrMRUManager</i> class derives from CATBaseUnknown - <a href="#Fig.1">Fig.1</a>
+    -</li>
+  <li>The <code>CATDeclareClass</code> macro declares that it belongs to a CAA
+    component.</li>
+  <li><b><code>GetMRUManager</code></b> is a static method to have only one
+    CAAAfrMRUManager component during the session. The list is unique whatever
+    the opened document, or even if no document is opened.</li>
+  <li><code>AddElement</code>, <code>GetElementList</code> and <code>SelectElement</code>
+    are methods of the<b> </b><i>CAAIAfrMRUManagement</i> interface</li>
+  <li><code>Copy constructor</code> and the <code>assignment operator</code> are
+    not implemented in the source file. This prevents the compiler from creating
+    them as public without you know.</li>
+  <li><code>_Cleaner</code> keeps the pointer on the unique CAAAfrMRUManager
+    component instance. When the session is killed, the <code>_Cleaner</code>
+    instance is removed, and the <i>CAAAfrMRUManager</i> class pointer is
+    released. It avoids to have &quot;MLK&quot;. In your own code, the static
+    data can be directly the pointer on the <i>CAAAfrMRUManager</i> class
+    instance.&nbsp;</li>
+  <li><code>_NameList</code> is a list of <i>CATUnicodeString</i>. This list is
+    limited to five elements (<code>MRU_MAX_SIZE = 5</code>)</li>
+</ul>
+<p>The source file of the <i>CAAAfrMRUManager</i> class is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+<b>CATIniCleanerSettingCtrl</b> CAAAfrMRUManager::_Cleaner ;
+
+<b>CATImplementClass</b>(CAAAfrMRUManager, <b>Implementation</b>, CATBaseUnknown , CATNull);
+
+#include &lt;TIE_CAAIAfrMRUManagement.h&gt;
+TIE_<b>CAAIAfrMRUManagement</b>(CAAAfrMRUManager);
+
+
+CAAAfrMRUManager::CAAAfrMRUManager() {}
+CAAAfrMRUManager::~CAAAfrMRUManager(){}
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li><code>_Cleaner</code> is initialized</li>
+  <li>The <code>CATImplementClass</code> macro makes the class <i>CAAAfrMRUManager</i>
+    a component main class (<code>Implementation</code>) that OM-derives [<a href="#References">11</a>]
+    from <i>CATBaseUnknown.</i></li>
+  <li>The <i>CAAAfrMRUManager</i>&nbsp; class states that it implements the <a name="CATIAfrCommandHeaderRep implementation"><i>CAAIAfrMRUManagement</i></a><i>
+    </i>interface thanks to the <code>TIE_CAAIAfrMRUManagement</code><code> </code>macro.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+HRESULT CAAAfrMRUManager::GetMRUManager(CAAAfrMRUManager ** oManager)
+{
+ ...
+      CATBaseUnknown * pManager = _Cleaner.<b>GetController</b>();
+      if ( NULL == pManager )
+      {
+          CAAAfrMRUManager * Obj = NULL;
+          Obj = new <b>CAAAfrMRUManager</b>();
+          if ( NULL == Obj )
+          {
+             rc = E_OUTOFMEMORY ;
+          }else
+          {
+            <b>*oManager</b> = Obj ; 
+            _Cleaner.<b>SetController</b>(Obj);
+          }
+       }else  
+       {
+          <b>*oManager</b> = (CAAAfrMRUManager *) pManager ;
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetMRUManager</code> method creates the only one instance of the <i>CAAAfrMRUManager</i>
+class or retrieves the existing one. <code>_Cleaner</code> is a static data
+member, a&nbsp; <i>CATIniCleanerSettingCtrl</i> class instance. If the <code>GetController</code>
+method of the <i>CATIniCleanerSettingCtrl</i> class returns a null pointer, a <i>CAAAfrMRUManager</i>
+class instance is created, and kept by <code>_Cleaner</code> through the <code>SetController</code>
+method. Otherwise the <code>GetMRUManager</code> method returns the pointer kept
+by <code>_Cleaner</code> and retrieved thanks to the <code>GetController</code>
+method.&nbsp;</p>
+<p>Now, lets us see the three methods of the <a name="CATIAfrCommandHeaderRep implementation"><i>CAAIAfrMRUManagement</i></a><i>
+</i>interface.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+HRESULT CAAAfrMRUManager::AddElement(CATUnicodeString &amp;iNewElement) 
+{
+    if ( MRU_MAX_SIZE == _NameList.Size() )
+    {
+        // The list is full, the last element is removed
+       _NameList.<b>RemovePosition</b>(MRU_MAX_SIZE);
+    }
+    // At the first position
+    _NameList.<b>InsertBefore</b>(1,iNewElement);
+    
+    CATCallbackManager * pCBManager = ::<b>GetDefaultCallbackManager</b>(this) ;
+    if ( NULL != pCBManager )
+    {
+         CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification();
+         pCBManager-&gt;<b>DispatchCallbacks</b>(pNotification,this);
+         pNotification-&gt;Release();
+    }
+
+    return S_OK ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>While there are less than <code>MRU_MAX_SIZE</code> elements in the list,
+represented by <code>_NameList</code> the data member, the <code>AddElement</code>
+method just adds the new element (<code>iNewElement</code>) at the first
+position (<code>InsertBefore(1,...)</code>). But when there are already <code>MRU_MAX_SIZE</code>
+elements in the list, before adding the new element at the first position, the
+last element of the list is removed.&nbsp;</p>
+<p>The second part of the <code>AddElement</code> method consists in to send a
+notification thanks to the callback manager [<a href="#References">7</a>]. So,
+all objects which will subscribe for this event, published by the MRU manager,
+will be informed and awaked. Refer to the callback use case [<a href="#References">8</a>],
+for explanations about the creation of a notification such as the <i>CAAAfrMRUManagerNotification</i>
+class, and how to send a notification using the default callback manager.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+HRESULT CAAAfrMRUManager::GetElementList(CATListOfCATUnicodeString &amp; oElementList) const  
+{
+    for ( int i = 1 ; i &lt;= _NameList.Size() ; i++)
+    {
+       oElementList.<b>Append</b>(_NameList[i]);
+    }
+
+    return S_OK ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetElementList</code> method returns the contents of the list of
+item kept by <code>_NameList</code> the data member. This method will be called
+by the MRU header to build its graphic representation. See the <a href="#Creating the Class Instantiating the Graphic Representation">Creating
+the Class Instantiating the Graphic Representation</a> step.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+HRESULT CAAAfrMRUManager::SelectElement(int iPosition) 
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (iPosition &gt;= 1) &amp;&amp; (iPosition &lt;= MRU_MAX_SIZE) )
+    {
+        CATUnicodeString Sel = _NameList[iPosition] ;
+
+       _NameList.<b>RemovePosition</b>(iPosition);
+
+       _NameList.<b>InsertBefore</b>(1,Sel);
+
+       CATCallbackManager * pCBManager = ::<b>GetDefaultCallbackManager</b>(this) ;
+       ...
+          CAAAfrMRUManagerNotification * pNotification = new CAAAfrMRUManagerNotification();
+          
+          pCBManager-&gt;<b>DispatchCallbacks</b>(pNotification,this);
+          
+          pNotification-&gt;Release();
+          pNotification = NULL ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SelectElement</code> method consists in to set at the first
+position the <code>iPosition</code> element of the list. So the element is first
+removed from the list (<code>RemovePosition</code>),<b> </b>and then reinserted
+at the first position (<code>InsertBefore</code><code>)</code>.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Component Representing the MRU Command Header"></a>Creating
+the Component Representing the MRU Command Header</h4>
+<p>The MRU header is a component which must Object Modeler and C++ derive from <i><a href="#combo hdr Component Creation">CATAfrDialogCommandHeader</a></i>
+and must implement the <i><a href="#CATIAfrCommandHeaderRep implementation">CATIAfrCommandHeaderRep</a></i>
+interface (<a href="#Fig.2">Fig.2</a>).</p>
+<h5><a name="combo hdr Component Creation"><b>Component Creation</b></a></h5>
+<p>Here the CAAAfrMRUHeader header file:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>//ApplicationFrame framework
+#include &quot;CATAfrDialogCommandHeader.h&quot;
+
+class ExportedByCAAAfrCustomizedCommandHeader CAAAfrMRUHeader: public <b>CATAfrDialogCommandHeader</b>
+{
+  CATDeclareClass ;
+
+  public:
+    CAAAfrMRUHeader(const CATString &amp; iHeaderName);
+
+    virtual ~CAAAfrMRUHeader();
+    CATCommandHeader * <b>Clone</b>() ;
+      
+  private:
+    <b>CAAAfrMRUHeader(CATCommandHeader *iHeaderToCopy);</b>
+    CAAAfrMRUHeader(const CAAAfrMRUHeader &amp; iObjectToCopy);
+    CAAAfrMRUHeader&amp; operator = (const CAAAfrMRUHeader &amp; iObjectToCopy);
+
+};</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><i>CAAAfrMRUHeader</i> derives from <i>CATAfrDialogCommandHeader</i>. It is
+mandatory for a command header whose the graphic representation is customized.
+The <code>CATDeclareClass</code> macro declares that it belongs to a CAA
+component. The <code>CATDeclareHeaderResources</code> macro inserts the methods
+to manage the command header resources.&nbsp;</p>
+<p>About the mandatory public methods:</p>
+<ul>
+  <li>A <code>constructor</code> with a reference to a <nobr><code>const
+    CATString</code></nobr> as parameter,&nbsp;
+  <li>A <code>destructor</code>,
+  <li>The <code>Clone</code> method inherited from <i>CATCommandHeader </i>and
+    used to duplicate the command header instance. Refer to the &quot;Customized
+    Command Header Class Structure&quot; section of the technical article about
+    the command headers [<a href="#References">2</a>]. You will have all the
+    details about the <code>Clone</code> method.&nbsp;</li>
+</ul>
+<p>About the mandatory private methods:</p>
+<ul>
+  <li>A <code>constructor</code> taking a pointer to a <i>CATCommandHeader</i>
+    is dedicated to the <code>Clone</code> method.&nbsp;
+  <li>Two other <code>constructor</code> are declared in the private part, and
+    are not implemented in the source file. This prevents the compiler from
+    creating them as public without you know.</li>
+</ul>
+<p>Here the CAAAfrMRUHeader header file:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>#include &quot;CAAAfrMRUHeader.h&quot;
+
+CATImplementClass(CAAAfrMRUHeader, 
+                  Implementation,
+                  CATAfrDialogCommandHeader, 
+                  CATNull);    
+
+CAAAfrMRUHeader::CAAAfrMRUHeader(const CATString &amp; iHeaderName) : 
+    <b>CATAfrDialogCommandHeader</b>(iHeaderName){}
+
+CAAAfrMRUHeader::CAAAfrMRUHeader(){}
+
+CATCommandHeader * CAAAfrMRUHeader::<b>Clone</b> ()                                  
+{ 
+    return new CAAAfrMRUHeader(this); 
+}   
+
+CAAAfrMRUHeader::CAAAfrMRUHeader(CATCommandHeader * iHeaderToCopy):
+                          <b>CATAfrDialogCommandHeader</b>(iHeaderToCopy)
+{}	                  </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li>A customized command header is a CAA component. The <code>CATImplementClass</code>
+    macro makes the class <i>CAAAfrMRUHeader</i> a component main class (<code>Implementation</code>)
+    that OM-derives [<a href="#References">11</a>] from <i>CATAfrDialogCommandHeader</i>.&nbsp;
+  <li>The <code>Clone</code> method returns a copy construction instance of
+    this.</li>
+</ul>
+Note: There is no <code>CATDeclareHeaderResources</code> macro in the header
+file, and neither <code>CATImplementHeaderResources</code> macro in the source
+file. There is no NLS resources for this header [<a href="#References">10</a>].&nbsp;
+<p>&nbsp;</p>
+<p><b><i><a name="CATIAfrCommandHeaderRep implementation">CATIAfrCommandHeaderRep</a></i><a name="CATIAfrCommandHeaderRep implementation">
+implementation</a></b></p>
+<p>This interface of the ApplicationFrame framework must be implemented by all
+command header whose the graphic representation is customized. On <a href="#Fig.2">Fig.2</a>,
+you see that the <i>CAAEAfrCommandHeaderRepForMRU</i> class is the
+implementation of this interface for the CAAAfrMRUHeader component.&nbsp;</p>
+<p>Here the CAAEAfrCommandHeaderRepForMRU header file</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+class CAAEAfrCommandHeaderRepForMRU : public CATBaseUnknown
+{
+  CATDeclareClass;
+  
+public:
+  CAAEAfrCommandHeaderRepForMRU ();
+  virtual ~CAAEAfrCommandHeaderRepForMRU();
+  
+  virtual HRESULT  <b>CreateToolbarRep</b> (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  virtual HRESULT  <b>CreateMenuRep</b>    (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  virtual HRESULT  <b>CreateCtxMenuRep</b> (const CATDialog * iParent,
+                                            CATAfrCommandHeaderRep ** oHdrRep) ;
+  
+private:
+  CAAEAfrCommandHeaderRepForMRU (const CAAEAfrCommandHeaderRepForMRU &amp;iObjectToCopy);
+  CAAEAfrCommandHeaderRepForMRU &amp; operator = (const CAAEAfrCommandHeaderRepForMRU &amp;iObjectToCopy);
+
+};      </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The <code>CATDeclareClass</code> macro declares that <i>CAAEAfrCommandHeaderRepForMRU</i>
+belongs to a component. <code>CreateToolbarRep</code>, <code>CreateMenuRep</code>,
+and <code>CreateCtxMenuRep</code> are methods of the <a name="CATIAfrCommandHeaderRep implementation"><i>CATIAfrCommandHeaderRep</i></a>
+interface.</p>
+<p>Here the CAAEAfrCommandHeaderRepForMRU<i> </i>source file</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+#include &lt;TIE_CATIAfrCommandHeaderRep.h&gt;
+TIE_<b>CATIAfrCommandHeaderRep</b>(CAAEAfrCommandHeaderRepForMRU);
+
+CATImplementClass(CAAEAfrCommandHeaderRepForMRU, 
+                  DataExtension,
+                  CATBaseUnknown, 
+                  CAAAfrMRUHeader);
+};
+CAAEAfrCommandHeaderRepForMRU::
+           CAAEAfrCommandHeaderRepForMRU():CATBaseUnknown(){}
+
+CAAEAfrCommandHeaderRepForMRU::~CAAEAfrCommandHeaderRepForMRU){}
+...      </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The <i>CAAEAfrCommandHeaderRepForMRU</i> class states that it implements the <a name="CATIAfrCommandHeaderRep implementation"><i>CATIAfrCommandHeaderRep</i></a><i>
+</i>interface thanks to the <code>TIE_CATIAfrCommandHeaderRep </code>macro. The <code>CATImplementClass</code>
+macro declares that the <i>CAAEAfrCommandHeaderRepForMRU </i>class is a data
+extension, thanks to the <code>DataExtension</code> keyword, that extends
+CAAAfrMRUHeader. The third argument must always be set as <i>CATBaseUnknown</i>
+or <i>CATNull</i> for any kind of extension.&nbsp; The class constructor and the
+class destructor are empty.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEAfrCommandHeaderRepForMRU::<b>CreateMenuRep</b>
+         (const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+   HRESULT rc = E_FAIL ;
+
+   if ( oHdrRep != NULL )
+   {
+      CATString Name = &quot;CAAAfrMRURepId&quot;  ;
+      CAAAfrMRURep * pMRURep = new <b>CAAAfrMRURep</b>(iParent,Name);
+
+      *oHdrRep = (CATAfrCommandHeaderRep *) pMRURep ;
+      rc = S_OK ;
+   }
+
+   return rc ;
+}
+...      </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The <code>CreateMenuRep</code> method provides the class instantiating the
+graphic representation of the MRU header. This method is called each time the
+header command must be represented in a menu.</p>
+<p>The <i>CAAAfrMRURep</i> class is a CATCommand class [<a href="#Fig.3">Fig.3</a>],
+which instantiates the graphic representation of the MRU header (<i>CATDlgPushItem</i>
+instances). It is detailed in the <a href="#Creating the Class Instantiating the Graphic Representation">Creating
+the Class Instantiating the Graphic Representation</a> section, just
+below.&nbsp;&nbsp;</p>
+<p><code>iParent</code> is a <i>CATDialog</i> component. It will be the dialog
+parent of all <i>CATDlgPushItem</i> instances. <code>Name</code> is the command
+name of the <i>CAAAfrMRURep</i> class instance. You can set the same identifier
+for all <i>CAAAfrMRURep</i> class instances.&nbsp;</p>
+<p>You do not have to take care of the <i>CAAAfrMRURep</i> class instance
+destruction, the returned value, <code>oHdrRep</code> is kept by the frame
+application, and the deletion of this pointer is automatically done.&nbsp;&nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEAfrCommandHeaderRepForMRU::
+             <b>CreateToolbarRep</b>(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+  return  <b>E_FAIL</b> ;
+}
+
+HRESULT CAAEAfrCommandHeaderRepForMRU::
+          <b>CreateCtxMenuRep </b>(const CATDialog * iParent,CATAfrCommandHeaderRep ** oHdrRep)
+{
+  return <b>E_FAIL</b>;
+}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The MRU header has no representation in the menu bar or in a contextual menu,
+so <code>CreateToolbarRep</code> and <code>CreateCtxMenuRep</code> return
+E_FAIL.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Creating the Class Instantiating the Graphic Representation"></a>Creating
+the Class Instantiating the Graphic Representation</h4>
+<p align="left">This class is the <i>CAAAfrMRURep</i> class. Its main roles are:</p>
+<ul>
+  <li>
+    <p align="left">Set a callback to be informed when the contents or the order
+    of the MRU list change</li>
+  <li>
+    <p align="left">Create <i>CATDlgPushItem</i> instances depending on the MRU
+    list</li>
+  <li>
+    <p align="left">Launch a command to display in a Dialog box (see <a href="#Select Item Dlg">picture</a>)
+    the selected item.&nbsp;</li>
+</ul>
+<p align="left">Here the CAAAfrMRURep header file:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+#define MRU_MAX_SIZE 5
+class CAAAfrMRURep : public <b>CATAfrCommandHeaderRep</b>
+{
+public:
+  CAAAfrMRURep (const CATDialog * iParent, CATString &amp; iCommandName);
+  virtual ~CAAAfrMRURep();
+
+  HRESULT <b>Build</b>();
+
+private:
+  void <b>SelectCB</b>(CATCommand * iPublishingCommand, 
+                CATNotification * iNotification, 
+                CATCommandClientData iData);
+
+  void <b>ModifiedCB</b>(CATCallback       iEvent, 
+                  void            *       , 
+                  CATNotification * iNotification, 
+                  CATCallbackEvent  iData,
+	         CATSubscriberData iCallBack);
+	         
+  HRESULT <b>ModifyListItem</b>() ;
+
+  CAAAfrMRURep (const CAAAfrMRURep &amp;iObjectToCopy);
+  CAAAfrMRURep &amp; operator = (const CAAAfrMRURep &amp;iObjectToCopy);
+
+private:
+     CATDlgPushItem         * _pItemList[MRU_MAX_SIZE];
+     CAAIAfrMRUManagement   * _pIAfrMRUManagement ;
+};</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li>
+    <p align="left">The <i>CAAAfrMRURep</i> class derives from the <i>CATAfrCommandHeaderRep</i>
+    class.&nbsp;<a href="#Fig.3">Fig.3</a></p>
+  <li>
+    <p align="left">The <code>Build</code> method is a method of the <i>CATAfrCommandHeaderRep</i>
+    class. You must overwrite this method. In the <i>CATAfrCommandHeaderRep</i>
+    class it is a pure virtual method. This method is called by the frame
+    application just after the <i>CAAAfrMRURep</i> class instantiation, in other
+    words just after the <code><a href="#CATIAfrCommandHeaderRep implementation">CreateMenuRep</a></code>
+    method call.</p>
+  <li>
+    <p align="left">In private part:
+    <ul>
+      <li>The <code>SelectCB</code> method is a callback method when the end
+        user selects an item in the dynamic list.</li>
+      <li>The <code>ModifiedCB</code> method is a callback method called when
+        the data model sent a <i>CAAAfrMRUNotification</i> notification. see the
+        first step.&nbsp;</li>
+      <li>The <code>ModifyListItem</code> <b></b>is called by <code>Build</code>
+        and <code>ModifiedCB</code> methods to create or update the list of <i>CATDlgPushItem</i>
+        instances.&nbsp;&nbsp;&nbsp;</li>
+    </ul>
+  <li>
+    <p align="left">In data member
+    <ul>
+      <li><code>_pItemList</code> a list of <i>CATDlgPushItem</i> class
+        instances created in the <code>ModifyListItem </code>method.</li>
+      <li><code>_pIAfrMRUManagement</code> is a <i>CAAIAfrMRUManagement</i>
+        interface pointer on the <i>CAAAfrMRUManager</i> component.&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p align="left">Here the CAAAfrMRURep source file:</p>
+<ul>
+  <li>
+    <p align="left"><a name="The constructor class">The <b>constructor</b> class</a>&nbsp;
+    <p>First <code>_pItemList, </code>the data member which holds all pointers
+    on <i>CATDlgPushItem</i> class instances, is initialized.&nbsp;</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>...
+CAAAfrMRURep::CAAAfrMRURep(const CATDialog * iParent,CATString &amp; iCommandName): 
+                 CATAfrCommandHeaderRep(iParent,iCommandName)
+                ,_pIAfrMRUManagement(NULL)
+{
+   for ( int i = 0 ; i &lt; MRU_MAX_SIZE ; i++ )
+   {
+      _pItemList[i] = NULL ;
+   }
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The second step consists in to retrieve the component which holds the MRU
+    list. In the use case, it is the unique CAAAfrMRUManager component that you
+    retrieve with the <i>CAAAfrGetMRUManager</i> global function. The second
+    argument of this method is a pointer on an interface implemented by the
+    CAAAfrMRUManager component.&nbsp;</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>...
+   HRESULT rc = ::<b>CAAAfrGetMRUManager</b>(IID_CAAIAfrMRUManagement, 
+                     (void**)&amp;_pIAfrMRUManagement);
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The last step&nbsp;consists in to set a callback method to be informed
+    when the CAAAfrMRUManager component will send a <i>CAAAfrMRUManagerNotification</i>
+    notification, in other words when an element will be added in the list or an
+    element will be selected.&nbsp;</p>
+    <table class="code" width="570">
+      <tbody>
+        <tr>
+          <td width="562">
+            <pre>...
+   if ( SUCCEEDED(rc) )
+   {
+      ::<b>AddCallback</b>(this,
+               _pIAfrMRUManagement,
+	           &quot;CAAAfrMRUManagerNotification&quot;,
+	            (CATSubscriberMethod)&amp;CAAAfrMRURep::ModifiedCB,
+	            NULL);
+   }
+}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><code>AddCallback</code> is a static global function&nbsp;whose the
+    parameters are:</p>
+    <ul>
+      <li><code>this:</code> The subscriber
+      <li><code>_pIAfrMRUManagement</code>: The publisher&nbsp;
+      <li><code>CAAAfrMRUManagerNotification:</code>The notification class sent
+        by the publisher
+      <li><code>ModifiedCB:</code>The method of this which is called when a <i>CAAAfrMRUManagerNotification
+        </i>notification <i>is sent</i>
+      <li><code>NULL<b>:</b></code>No parameters for the callback method<br>
+      </li>
+    </ul>
+  <li>
+    <p align="left">The <b>destructor</b> class&nbsp;
+    <table class="code" width="570">
+      <tr>
+        <td width="562">
+          <pre>...
+CAAAfrMRURep::~CAAAfrMRURep()
+{
+   if ( NULL != _pIAfrMRUManagement )
+   {
+       ::<b>RemoveSubscriberCallbacks</b>(this, _pIAfrMRUManagement);
+       _pIAfrMRUManagement-&gt;Release();
+       _pIAfrMRUManagement = NULL ;
+   }
+
+   for ( int i=0 ; i &lt; MRU_MAX_SIZE ; i++)
+   {  
+       if ( NULL != _pItemList[i] )
+       {
+           _pItemList[i]-&gt;<b>RequestDelayedDestruction</b>();
+           _pItemList[i] = NULL ;
+ ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>At the end, the callback set in the constructor must be removed from the
+    callback manager [<a href="#References">7</a>], and all the <i>CATDlgPushItem</i>
+    instances must be released.&nbsp;</p>
+  <li>
+    <p align="left"><a name="The Build method">The <b>Build</b> method</a></li>
+  <p>You must overwrite this method. The goal of this method is to create the
+  graphic representation and to initialize it. The <code>ModifyListItem</code>
+  method does the work.</p>
+  <table class="code" width="570">
+    <tbody>
+      <tr>
+        <td width="562">
+          <pre>...
+HRESULT  CAAAfrMRUoRep::Build()
+{
+ ModifyListItem() ;
+}
+...</pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <li>
+    <p align="left"><a name="The ModifyCB method">The <b>ModifyCB</b> method</a>
+    <p>The <code>ModifyCB</code> method is called when the CAAAfrMRUManager
+    component sends the <i>CAAAfrMRUManagerNotification</i> notification. It
+    informs the <i>CAAAfrMRURep</i> class instance, that either a new item has
+    been added, or an element has been selected. In both cases, the <code>ModifyListItem</code>
+    method does the work.</p>
+    <table class="code" width="570">
+      <tbody>
+        <tr>
+          <td width="562">
+            <pre>...
+void CAAAfrMRURep::ModifiedCB(CATCallback, 
+                              void *, 
+                              CATNotification * iNotification,
+			   CATCallbackEvent, 
+                              CATSubscriberData)
+{
+   ModifyListItem();
+}
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <li>
+    <p align="left">T<a name="he ModifyListItem method">he <b>ModifyListItem</b>
+    method</a>
+    <p>This method can be called by the <code>Build</code> Method, in this case
+    any push item has already been created, or by the <code>ModifyCB</code>
+    method and in this case some push items can already exist. This method
+    consists in to:
+    <ul>
+      <li>Retrieve from the CAAAfrMRUManager component the list of items to
+        display,</li>
+      <li>Check that there are as many instances of <i>CATDlgPushItem</i> in the
+        <code>_pItemList</code> list as in the list of items to display,</li>
+      <li>Associate the title to each <i>CATDlgPushItem</i> &nbsp;</li>
+    </ul>
+    <p>The first step consists in to retrieve the Dialog parent of the graphic
+    representation to create. This information is kept by the <i>CATAfrCommandHeaderRep</i>
+    class, and retrieved by its <code>GetDialogParent</code> method.&nbsp;</p>
+    <table class="code" width="570">
+      <tr>
+        <td width="562">
+          <pre>...
+HRESULT CAAAfrMRURep::ModifyListItem()
+{
+  const CATDialog * pParent = NULL ;
+  <b>GetDialogParent</b>(&amp;pParent);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Then, the list of item to displayed is retrieved from the
+    CAAAfrMRUManager thanks to the <code>GetElementList</code> method&nbsp; of
+    the <i>CAAIAfrMRUManagement</i> interface. <code>List</code> is this list,
+    and <code>SizeList</code> is the count of element in this list.</p>
+    <table class="code" width="570">
+      <tr>
+        <td width="562">
+          <pre>...
+      CATListOfCATUnicodeString List ;
+      _pIAfrMRUManagement-&gt;<b>GetElementList</b>(List);
+      int SizeList = List.<b>Size</b>();
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Then, for the ith element of the list, if there is no <i>CATDlgPushItem </i>instance
+    at the ith position in <code>_pItemList</code>, the data member of the <i>CAAAfrMRURep</i>
+    class, a new instance is created:</p>
+    <ul>
+      <li><code>CATDlgPushItem</code></li>
+      <p>The last argument of the <i>CATDlgPushItem</i> class is the identifier
+      of the dialog object. It is recommended to set as value a string with an
+      index value. Here it is <code>MRUItem_num</code> where num is the index in
+      the loop.&nbsp;</p>
+      <li><code>AddAnalyseNotificationCB</code></li>
+      <p>When an item in the menu is selected by the end user, the push item
+      sends a <i>GetMenuIActivateNotification</i> notification which will be
+      processed in the <a href="#The SelectCB method">SelectCB</a> method to
+      launch the command which displays the name of the selected item.</p>
+      <p><code>CATINT32ToPtr</code> is the way to be 64 bits compliant.&nbsp;</p>
+      <li><code>SetFather</code></li>
+      <p>Finally, the <i>CATCommand</i> parent of the push item is changed. By
+      default, the command parent is the dialog parent, so it is <code>pParent</code>,
+      the container in which the push item will be inserted. If you do not
+      change the command parent, this, the current <i>CAAAfrMRURep</i> instance,
+      will do not receive the <i>GetMenuIActivateNotification</i><b> </b>notification.
+      Refer to the referenced article about the command tree [<a href="#References">9</a>].</p>
+    </ul>
+    <table class="code" width="570">
+      <tbody>
+        <tr>
+          <td width="562">
+            <pre>...
+      for ( int i= 0 ; i &lt; SizeList ; i++ )
+      {
+         CATUnicodeString num;
+         num.BuildFromNum(i+1);
+         if ( _pItemList[i] == NULL )
+         { 
+            CATUnicodeString ItemName(&quot;<b>MRUItem_</b>&quot;);
+            <b>ItemName += num</b> ;
+             
+            _pItemList[i] = new <b>CATDlgPushItem</b>((CATDialog *)pParent,
+                                                ItemName.CastToCharPtr());
+              
+            <b>AddAnalyseNotificationCB</b>(_pItemList[i],
+                                     _pItemList[i]-&gt;<b>GetMenuIActivateNotification</b>(),
+                                    (CATCommandMethod)&amp;CAAAfrMRURep::<a href="#The SelectCB method">SelectCB</a>,
+                                    (CATCommandClientData) <b>CATINT32ToPtr</b>(i));
+
+            _pItemList[i]-&gt;<b>SetFather</b>(this);
+         }
+
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Finally, for the ith element of <code>List,</code> the list kept by the
+    CAAAfrMRUManager component and retrieved just above, there is a <i>CATDlgPushItem</i>
+    class instance into the <code>_pItemList</code> list, the data member of the
+    <i>CAAAfrMRURep</i> class. The title of the push item is the concatenation
+    of the position of the element in the list and the name of the item.
+    exemple: <code>2 MyItemName.</code> See the <a href="#File Menu">File Menu
+    picture</a> in the&nbsp;</p>
+    <table class="code" width="570">
+      <tr>
+        <td width="562">
+          <pre>...
+         num += &quot; &quot;;
+         num += List[i+1] ;
+         _pItemList[i]-&gt;<b>SetTitle</b>(num);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>
+    <p align="left"><a name="The SelectCB method">The <b>SelectCB</b> method</a>
+    <p>The <code>SelectCB</code> method is called when the end user has selected
+    an item among the displayed items. When an element of <code>_pItemList</code>
+    sends a notification, this callback method is called.&nbsp;The goal of this
+    method is double:
+    <ul>
+      <li>Retrieve the selected item&nbsp;</li>
+      <p>The <code>CATPtrToINT32</code><b> </b>macro enables us to translate the
+      data which is the argument of the <code>AddAnalyseNotificationCB</code>
+      method. See just above.&nbsp;</p>
+      <li>Inform CAAAfrMRUManager that a given item has been selected</li>
+      <p><code>_pIAfrMRUManagement</code> is a CAAIAfrMRUManagement interface
+      pointer on the unique CAAAfrMRUManager&nbsp; component of the session.
+      This pointer, initialized in the constructor class, is a data member of
+      the <i>CAAAfrMRURep</i> class.</p>
+      <p>The <code>SelectElement</code> method, with <code>SelElement</code> as
+      argument,&nbsp; informs CAAAfrMRUManager that the element at the <code>SelElement
+      </code>position has been selected. It can reorder its own list of items,
+      and sends a notification. All <i>CAAAfrMRURep</i> which have set a
+      callback for a such notification, will may update their list of push
+      items.</p>
+      <li>Launch the command which displays in a Dialog box&nbsp; the selected
+        item</li>
+      <p>The <code>CATAfrStartCommand</code> is a global function which enables
+      us to launch a command header. This command header is identified by its
+      name, <code>CAAAfrMRUSelElementHdr</code>. This command header instance
+      has been created in the Add-in of the General workshop, see the next
+      section for complete details about this command header instance.&nbsp;</p>
+    </ul>
+    <table class="code" width="570">
+      <tbody>
+        <tr>
+          <td width="562">
+            <pre>...
+void CAAAfrMRURep::SelectCB(CATCommand      * iPublishingCommand, 
+                            CATNotification * iNotification,
+			                CATCommandClientData iData)
+{
+  int SelElement = <b>CATPtrToINT32</b>(iData) + 1;
+ 
+  _pIAfrMRUManagement-&gt;<b>SelectElement</b>(SelElement);
+
+  CATCommand * pCmd = NULL ;
+  ::<b>CATAfrStartCommand</b>(&quot;CAAAfrMRUSelElementHdr&quot;,pCmd);
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Instantiating the MRU Header Class"></a>Instantiating
+the MRU Header Class</h4>
+<p align="left">The MRU header is independent of the document, so this header is
+instantiated in an Add-in of the General workshop <a href="#References">[3</a>].
+Here is an extract of the <i>CAAAfrGeneralWksAdn</i> class which is an
+implementation of the <i>CATIAfrGeneralWksAddin</i> interface.&nbsp;</p>
+<table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+void CAAAfrGeneralWksAdn::CreateCommands()
+{
+  CATCommandHeader * pHdr = (CATCommandHeader*) new <b>CAAAfrMRUHeader</b>(&quot;CAAAfrMRUHdr&quot;);
+  pHdr-&gt;<b>SetVisibility</b>(0);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The MRU command header is created using the constructor class. The most
+important thing in the usage of the <code>SetVisibility</code> method. This
+method of the <i>CATCommandHeader</i> class allows us to hide the command header
+instance in the Tools/Customize command. This command displays a dialog box
+containing tab pages. One of them, the Command tab page, displays by category,
+all the &quot;visible&quot; command header instances. The two following pictures
+explains the difference when the <code>SetVisibility</code> method is used or
+not.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrSampleMRUToolsCusto1.jpg" width="437" height="185"></td>
+    <td>This picture shows the Command tab page of the Tools/Customize command.
+      In the All Commands category, you see that the CAAAfrMRUHdr appears. To do
+      that we have set a comment before the <code>SetVisibility</code>&nbsp;
+      instruction. The MRU header is without NLS resources [<a href="#References">10</a>],
+      so the displayed name is the internal name of the command header instance
+      (the argument of the constructor class).</td>
+  </tr>
+</table>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrSampleMRUToolsCusto2.jpg" width="438" height="172"></td>
+    <td>Now, using <code>SetVisibility</code> with <code>0</code> as argument,
+      you can see that between Bulk Loading... and Capture,&nbsp; CAAAfrMRUHdr
+      is not there.</td>
+  </tr>
+</table>
+<p>The advantage to hidde a command header, is that the end user cannot drag and
+drop the command in a toolbar, or it cannot launch it from the power input since
+it do not know its name. But caution, <code>SetVisibility</code> method do not
+prohibit to launch the command header in the power input, if you know the name
+of the command header. For the MRU header, there is no effect since there is no <i>CATCommand</i>
+associated with the MRU Header.</p>
+<table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+  pHdrMRU = (CATCommandHeader*) new CAAAfrGeneralWksAddinHeader(&quot;<b>CAAAfrMRUSelElementHdr</b>&quot;, 
+                             &quot;CAAAfrGeoCommands&quot;, 
+                             &quot;CAAAfrMRUSelElementCmd&quot;,
+                             (void *) NULL);
+  pHdrMRU-&gt;<b>SetVisibility</b>(0);
+  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The next header instance name is <code>CAAAfrMRUSelElementHdr</code>.
+This header is a standard command header. So the <i>CAAAfrGeneralWksAddinHeader</i>
+command header class is used to create an instance <a href="#References">[3</a>].
+This instance launches the <i>CAAAfrMRUSelElementCmd</i> command which is
+defined in the CAAAfrGeoCommands module of the CAAApplicationFrame.edu
+framework. This instance of command header is also hidden in Tools/Customize,
+because the use case want only to launch this command when the end user selects
+an item in the File Menu. But if you try to enter <code>CAAAfrMRUSelElementHdr</code>
+in the power input the Dialog command is lauched and the current item is
+displayed.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrSampleMRUPowerCopy.jpg" width="392" height="58"></td>
+  </tr>
+</table>
+<p align="left">The last header about the MRU use case is the <code>CAAAfrMRUAddElementHdr</code>.
+It is a standard command header which launches the <i>CAAAfrMRUAddElementCmd</i>
+command which is defined in the CAAAfrGeoCommands module of the
+CAAApplicationFrame.edu framework.&nbsp;</p>
+<table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+new CAAAfrGeneralWksAddinHeader(&quot;CAAAfrMRUAddElementHdr&quot;, 
+                             &quot;CAAAfrGeoCommands&quot;, 
+                             &quot;CAAAfrMRUAddElementCmd&quot;,
+                             (void *) NULL);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">In the CNext/resources/msgcatalog directory [10] you will find
+in the CAAAfrGeneralWksAddinHeader.CATNls file the following lines:</p>
+<table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.Category  = &quot;File&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.Title     = &quot;Add Item in MRU&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.ShortHelp = &quot;Add Item in MRU&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.Help      = &quot;Add Item in MRU&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.LongHelp  = &quot;Add Item in MRU
+This command adds a new item in the MRU list.&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">and in the CAAAfrGeneralWksAddinHeader.CATRsc file&nbsp;</p>
+<table class="code" width="570">
+  <tr>
+    <td width="562">
+      <pre>...
+CAAAfrGeneralWksAddinHeader.CAAAfrMRUAddElementHdr.Icon.Normal = &quot;I_CAAMRUAddItem&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">where I_CAAMRUAddItem is the following icon: <img border="0" src="images/CAAAfrSampleMRUMAddItem.jpg" width="30" height="31">
+and that you retrieve in the CNext/resources/graphic/icons/normal directory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has explained how to create a command header whose the graphic
+representation is customized:</p>
+<ul>
+  <li>The command header is a component which OM and C++ derives from <i>CATAfrDialogCommandHeader</i>
+    and implements <i>CATIAfrCommandHeaderRep</i>
+  <li>The customized graphic representation is created by a class which must
+    derive from <i>CATAfrCommandHeaderRep</i></li>
+</ul>
+<p>The data model is kept by an unique instance during the session.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrSampleComboHdr.htm">Creating a Combo Command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAAfrSampleGeneralWksAddin.htm">Making Your Document
+      Independent Command Available in All Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgCATDlgPushItem.htm">CATDlgPushItem</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMCreatingInt.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbacks.htm">The
+      Callback Mechanism</a> (Technical Article)</td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleCallbacks.htm">The
+      Callback Mechanism</a> (Use Case)</td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrI18NHeader.htm">Creating
+      Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[11]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

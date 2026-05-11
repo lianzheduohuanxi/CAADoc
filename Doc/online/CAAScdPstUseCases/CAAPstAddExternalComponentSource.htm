@@ -1,0 +1,52 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPstAddExternalComponent.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:       Create A Product Structure document containing</font>
+<font color="#008000">'                        an external component.</font>
+<font color="#008000">'   Assumtions:   Opens CAAPstHull.CATPart in the CATDocView   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:        English </font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' -----------------------------------------------------------------------------------------------</font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">     Dim </font>sDocPath<font color="#0000FF"> As </font>String
+     sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">     If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+       Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">     End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------------------------------ </font>
+   
+    <font color="#008000">'Create a new product document object by adding a document with the Product</font>
+    <font color="#008000">'type to the document collection of the CATIA application. </font>
+<font color="#0000FF">    Dim </font>oProductDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oProductDoc = CATIA.Documents.Add("Product") 
+
+    <font color="#008000">'Retrieve the root product.</font>
+<font color="#0000FF">    Dim </font>oRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>oRoot = oProductDoc.Product
+
+    <font color="#008000">'Retrieve the root product collection of products.</font>
+<font color="#0000FF">    Dim </font>oRootCol<font color="#0000FF"> As </font>Products
+<font color="#0000FF">    Set </font>oRootCol = oRoot.Products
+
+    <font color="#008000">'Open the Part Document</font>
+<font color="#0000FF">    Dim </font>oPartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>oPartDoc = CATIA.Documents.Open(sDocPath & "CAAPstHull.CATPart")
+
+    <font color="#008000">'Add a new component from the already opened part document.</font>
+<font color="#0000FF">    Dim </font>oNewComponent<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>oNewComponent = oRootCol.AddExternalComponent(oPartDoc)
+   
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>
+
+

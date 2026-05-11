@@ -1,0 +1,303 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- Mirrored from dsweb2e/caaV5/V5R14/online/CAAOsmQuickRefs/CAAOsmFaq.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 15 Oct 2004 13:03:02 GMT -->
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+  
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+
+  
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+
+  
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+
+  
+  <title>Frequently Asked Questions</title>
+</head>
+
+
+
+  <body>
+
+
+   
+<table width="100%">
+
+     <tbody>
+    <tr>
+
+       <td valign="top">
+       
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+
+       </td>
+
+       <td>
+       
+      <h2>Feature Modeler</h2>
+
+       </td>
+
+       <td rowspan="2" align="right" valign="top">
+       
+      <h3><a name="Top"></a>Frequently Asked Questions</h3>
+
+       <em></em></td>
+
+     </tr>
+
+     <tr>
+
+       <td class="quick" colspan="2">Quick Reference</td>
+
+     </tr>
+
+   
+  </tbody>
+</table>
+
+   
+<hr>
+   <!---------------------------------comment------------------------------------->
+   
+<table class="abstract">
+
+     <tbody>
+    <tr>
+
+       <td>
+       
+      <h3>Abstract</h3>
+
+       
+      <p>Here is a quick-access list of all the FAQs we have received from CAA 
+       partners as well as DS internal developers. In answers, links to the 
+       relevant documents or use cases are provided for a more detailed 
+       information.</p>
+
+       
+      <p><a href="#DeleteFeature">What interfaces should I use to delete a 
+       feature?</a></p>
+
+       
+      <p><a href="#PointingFeature">When deleting a feature, how can I know if 
+       there are other features already pointing to it?</a> </p>
+
+       
+      <p><a href="#ccp">The CCP/Delete options in the contextual menu are not 
+       enabled for my feature. What must I do to enable them?</a> </p>
+
+       
+      <p><a href="#ChgName">How can I change the name of a feature?</a></p>
+
+       
+      <p><a href="#IntegrateFeature">I have created a new feature in my 
+       document but I cannot visualize its geometry nor see it in the 
+       specification tree. What do I need to do?</a></p>
+      <p><a href="#ExtensionInGraph">I use Extension Feature on mechanical feature. I see them in the graph for surfacic item but not for solid item, why?</a><br>
+
+       </p>
+      </td>
+
+     </tr>
+
+   
+  </tbody>
+</table>
+
+   
+<hr>
+   <!---------------------------------comment------------------------------------->
+   
+<p><b><a name="DeleteFeature"></a>What interfaces should I use to delete a 
+   feature?</b></p>
+
+   
+<p>Use the <i>LifeCycleObject</i>::<code>remove</code> method when the 
+   feature to be deleted is not aggregated by another feature. However, if it 
+   itself aggregates other features, these will be deleted as well. Use the <i>
+   CATISpecObject</i>::<code>GetFather</code> method to know if the feature is 
+   aggregated or not.</p>
+
+   
+<p>Use <i>CATISpecObject</i>::<code>Remove</code>(<i>CATISpecObject_var</i>) 
+   to delete an aggregated feature. This method is executed on the aggregating 
+   feature with the aggregated feature to be destroyed passed as an input 
+   parameter.</p>
+
+   
+<p>Use <i>CATICutAndPastable</i>::<code>Remove</code> on any feature, whether 
+   aggregated or aggregating.&nbsp;<p:colorscheme colors="#FFFFFF,#3365FB,#3365FB,#081D58,#00DFCA,#EAEC5E,#00DFCA,#A2C1FE">
+   </p:colorscheme>
+   </p>
+
+   
+<p><b><a name="PointingFeature"></a>When deleting a feature, how can I know 
+   if there are other features already pointing to it?</b></p>
+
+   
+<p>Either one of two methods can be used to know if the feature you want to 
+   delete is currently being pointed at: </p>
+
+   
+<ol>
+
+     <li><i>CATISpecObject</i>::<code>InverseAttrLink.</code></li>
+
+     <li><i>CATISpecAttrAccess</i>::<code>ListPointingObjects</code>.&nbsp;</li>
+
+   
+</ol>
+
+   
+<p>If the returned list of either method is not NULL, this means that other 
+   features are pointing to the feature you want to delete through a <code>
+   tk_component</code> or <code>tk_specobject</code> link&nbsp;</p>
+
+   
+<p><b><a name="ccp"></a></b><b>The CCP/Delete options in the contextual menu 
+   are not enabled for my feature. What must I do to enable them?</b></p>
+
+   
+<p>You need to re-implement the CATICsoFilter interface of ApplicationFrame. 
+   However, you must first be sure that if the current UIActive object also 
+   implements this interface, it allows its re-implementation by others. This is 
+   the case in a Product document, but it may not be true in another context.
+   </p>
+
+   
+<p><b><a name="ChgName"></a>How can I change the name of a feature?</b></p>
+
+   
+<p>There are two ways to do this:&nbsp;</p>
+
+   
+<ol>
+
+     <li>Use <i>CATISpecObject</i>::<code>SetDisplayName</code>. This method 
+     changes the name of the feature seen in the specs tree. It is not a 
+     persistent change, i.e., if the document is saved and re-opened, the 
+     feature's old name will appear in the specs tree again.</li>
+
+     <li>Use the <i>CATIAlias</i>::<code>SetAlias</code> method to permanently 
+     change the name of a feature. If the feature is not a DS or DS-derived 
+     feature, you must&nbsp; override this interface in order to provide a 
+     persistent storage location for the new name.</li>
+
+   
+</ol>
+
+   
+<p>It may be important to understand how the default implementations actually 
+   work:</p>
+
+   
+<ul>
+
+     <li>The default specs tree navigation process uses <i>CATIAlias</i>::<code>GetAlias</code> 
+     to retrieve the name of a feature.&nbsp;</li>
+
+     <li>Initially, <i>CATIAlias</i>::<code>GetAlias</code> returns the name 
+     calculated by <i>CATISpecObject</i>::<code>GetDisplayName</code>: this is a 
+     name based on the NLS text available for the feature.</li>
+
+     <li>Executing <i>CATIAlias</i>::<code>SetAlias</code> on a feature also 
+     updates its display name which means that the NLS name is lost.</li>
+
+   
+</ul>
+
+   
+<p><b><a name="IntegrateFeature"></a>I have created a new feature in my 
+   document but I cannot visualize its geometry nor see it in the specification 
+   tree. What do I need to do?</b></p>
+
+   
+<p>First of all, it is necessary for your feature to implement the <i>
+   CATI3DGeoVisu</i> interface (or equivalent, deriving from <i>CATIVisu</i>) 
+   for geometry visualization and the <i>CATINavigateObject</i> interface for 
+   visualization and navigation in the specification tree. If this has been 
+   done, then it is only necessary to refresh the visualization process and the 
+   specification tree. This is done using the <i>CATIModelEvents</i> interface. 
+   Here is a code example you can follow:</p>
+
+   
+<pre>CATIModelEvents *piModelEventNewFeat = NULL;<br><br>rc = piNewFeat-&gt;<b>QueryInterface</b> (IID_CATIModelEvents, (void**)&amp;piModelEventNewFeat);<br><br>if (SUCCEEDED(rc))<br>{<br>   CATCreate notif (piNewFeat, piParentFeat);<br><br>   piModelEventNewFeat-&gt;<b>Dispatch</b>(notif);<br><br>   piModelEventNewFeat-&gt;<b>Release</b>();<br>   piModelEventNewFeat=NULL;<br></pre>
+
+   
+<div style="text-align: left;">
+     }</div>
+
+   
+<p>In the above code, you can see that, first of all, you need to retrieve a
+   <i>CATIModelEvents</i> pointer on your new feature. Then, you initialize a <i>
+   CATCreate</i> notification with the parent feature of the new feature and 
+   then execute the <code>Dispatch</code> method of <i>CATIModelEvents</i> to 
+   dispatch the notification. Next, for visualization in the specification tree, 
+   simply use the <i>CATIRedrawEvents</i>::<code>Redraw</code> method on the 
+   parent node of your new feature.</p>
+<p><b><a name="ExtensionInGraph"></a></b><span style="font-weight: bold;">I
+use Extension Features onMechanical Features. I see them in the
+specifications tree for surfacic item but not for solid item, why?</span></p>
+
+   Behaviors such as visualisation in the specifications tree or
+parameter display in f(x) are dependant of the extended feature.You
+should always refer to the corresponding documentation of the extended
+feature to confirm that the behaviors you experienced are specified and
+supported. If not documented, it means the behavior is not supported.<br>
+<hr>
+   <!---------------------------------comment------------------------------------->
+   
+<h3><a name="History"></a>History</h3>
+
+   
+<table width="100%">
+
+     <tbody>
+    <tr>
+
+       <td valign="top">Version: <strong>1</strong> [February 2002]</td>
+
+       <td valign="top">Document created</td>
+
+     </tr>
+
+     <tr>
+
+       <td>Version: <strong>2</strong> [November 2004]</td>
+
+       <td>Extension clean up<br>
+
+       </td>
+
+     </tr>
+
+     <tr>
+      <td>Version: <strong>3</strong> [November 2005]</td>
+      <td>Extension, graph question</td>
+    </tr>
+    <tr>
+
+       <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+
+     </tr>
+
+   
+  </tbody>
+</table>
+
+   
+<hr>
+   <!---------------------------------comment------------------------------------->
+   
+<p><i>Copyright &copy; 2002, Dassault Syst&egrave;mes. All rights reserved.</i></p>
+
+   <!-- Mirrored from dsweb2e/caaV5/V5R14/online/CAAOsmQuickRefs/CAAOsmFaq.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 15 Oct 2004 13:03:02 GMT -->
+
+  
+</body>
+</html>

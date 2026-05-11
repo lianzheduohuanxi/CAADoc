@@ -1,0 +1,280 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgSlider</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgSlider</h3>
+      <em>Selects numeric values</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgSlider</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Slider</caption>
+  <tr>
+    <td><img src="images/CATDlgSlider.gif" alt="CATDlgSlider.gif (4634 bytes)" width="183" height="168"></td>
+    <td>The slider enables the end user to select a value among a discrete list
+      of values ranging from a start value to an end value. The value can be
+      incremented or decremented by dragging along with the mouse, or clicking
+      in the sliding area. You set the start and end values as floats, while you
+      set the step number as an int. The step value is the difference between
+      start and end values, divided by the number of steps. A slider can be
+      horizontal or vertical.</td>
+  </tr>
+</table>
+<p>Use sliders whenever you propose to the end user to select a numerical value
+from a discrete list in a given range.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgCtrHorizontal</td>
+    <td>The slider is horizontal. This is the default.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCtrVertical</td>
+    <td>The slider is vertical.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSldNoValue.</td>
+    <td>The slider doesn't display the current value.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgSliderModifyNotification</td>
+    <td><code>GetSliderModifyNotification</code></td>
+    <td>Whenever the end user clicks in the scrollable field. If the click is
+      right or above the slider, the value increments of one step, and
+      decrements of one step otherwise. The end user can press the left mouse
+      key continuously and then the current value increments or decrements
+      accordingly as long as the left mouse key is pressed, or the start or end
+      value is reached.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSliderDragNotification</td>
+    <td><code>GetSliderDragNotification</code></td>
+    <td>As long as the slider is dragged.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The slider has default values: They range from 1 to 10 with 10 steps. The
+start and end values, and the step count, can be set as you need. For example,
+the slider in the figure below has a start value of 100, and end value of 200
+and 10 steps. Possible values are then 100, 110, 120, 130, and so forth up to
+200.</p>
+<table width="100%">
+  <caption><em>The Slider Range</em></caption>
+  <tr>
+    <td align="center"><img src="images/CATDlgSlider1.jpg" alt="CATDlgSlider1.jpg (1123 bytes)" width="100" height="31"></td>
+    <td align="center"><img src="images/CATDlgSlider2.jpg" alt="CATDlgSlider2.jpg (1103 bytes)" width="97" height="31"></td>
+    <td align="center"><img src="images/CATDlgSlider3.jpg" alt="CATDlgSlider3.jpg (1110 bytes)" width="105" height="30"></td>
+  </tr>
+  <tr>
+    <td align="center">Start value</td>
+    <td align="center">A possible value</td>
+    <td align="center">End value</td>
+  </tr>
+</table>
+<p>The start value is placed left or bottom, and the end value is placed right
+or top.</p>
+<table width="100%">
+  <caption>The Slider Decimal Point Position</caption>
+  <tr>
+    <td><img src="images/CATDlgSlider4.jpg" alt="CATDlgSlider4.jpg (1117 bytes)" width="97" height="31"></td>
+    <td>The current value display is affected by the position of the decimal
+      point. This position is set as the number of decimals after the point. The
+      slider beside features two decimal after the point. The default is zero.</td>
+  </tr>
+</table>
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30">
+Pay attention to the fact that the range and the number of steps must be
+consistent with the decimal point position. For example, a slider ranging from 0
+to 10 with 10 steps and a decimal point position of 0 leaves 11 values
+available. Setting the number of steps to 100 with the same decimal point
+position does not increase the number of values available, but additionally
+setting the decimal point to 1 gives 100 available values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing a Slider</h4>
+<p>Construct sliders as follows:</p>
+<table width="100%">
+  <tr>
+    <td width="20%" valign="top"><em>Horizontal</em></td>
+    <td class="code">
+      <pre>_pHSlider = new CATDlgSlider (IParent, &quot;HSliderId&quot;);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top"><em>Vertical</em></td>
+    <td class="code">
+      <pre>_pVSlider = new CATDlgSlider (IParent, &quot;VSliderId&quot;,
+                              <strong>CATDlgCtrVertical</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top"><em>Vertical and no value displayed</em></td>
+    <td class="code">
+      <pre>_pVNoValueSlider = new CATDlgSlider (IParent, &quot;VNVSliderId&quot;,
+<strong>                       CATDlgCtrVertical|CATDlgSldNoValue</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Value Range</h4>
+<p>You can retrieve and set the value range with the methods GetRange and <code>SetRange</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>float Start, End;
+int Step;
+_pSlider-&gt;GetRange(Start, End, Step);
+...
+iStart = 0:
+iEnd = 100;
+iStep = 20;
+_pSlider-&gt;SetRange(Start, End, Step);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Value Display</h4>
+<p>You can retrieve the decimal point position in the current value displayed
+with the method <code>GetDecimalPoint</code>, and set it with the method <code>SetDecimalPoint</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int DecimalPoint;
+DecimalPoint = _pSlider-&gt;GetDecimalPosition();
+...
+DecimalPoint = 2;
+_pSlider-&gt;SetDecimalPosition(DecimalPoint);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Selection or Current Value</h4>
+<p>You can retrieve the current value using the method <code>GetCurrentValue</code>,
+and set it with the method <code>SetCurrentValue</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>float CurrentValue = _pSlider-&gt;GetCurrentValue();
+...
+CurrentValue = 40.0;
+int Notify=1;
+pSlider-&gt;SetCurrentValue(CurrentValue, Notify);
+</pre>
+    </td>
+  </tr>
+</table>
+<p>Set the first parameter to the current value you require, and the parameter <code>Notify</code>
+to a non null value if you want the corresponding notification to be sent.
+Otherwise set to 0, no notification is sent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Slider</h4>
+<p>When constructing and using a slider, you need to take into account that you
+don’t know how the user will set the value, either by dragging the slider or
+clicking. You thus need always to set two callbacks for the two possible
+notifications sent.</p>
+<table width="100%">
+  <tr>
+    <td width="20%" valign="top"><em>Retrieve the user selection notification</em></td>
+    <td class="code">
+      <pre>AddAnalyseNotificationCB(
+  _pSlider,                                   // slider 
+  _pSlider-&gt;<code>GetSliderModifyNotification</code>(),    // modify notification
+  (CATCommand)&amp;Container::MethodToExecute,        // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%" valign="top"><em>Retrieve the user drag notification</em></td>
+    <td class="code">
+      <pre>AddAnalyseNotificationCB(
+  _pSlider,                                   // slider 
+  _pSlider-&gt;<code>GetSliderDragNotification</code>(),      // drag notification
+  (CATCommand)&amp;Container::MethodToExecute,        // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p>The same method <code>MethodToExecute</code> can of course be called by these
+two callbacks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Slider</h4>
+<p>The slider title should be set by the resource file using a key built with
+the identifier you declare as the second parameter of the push button
+constructor. This title is never displayed. If you want to comment the choice
+available from the slider in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

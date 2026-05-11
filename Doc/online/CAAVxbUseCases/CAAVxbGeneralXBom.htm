@@ -1,0 +1,626 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Working with Objects and their Attributes</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Database</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Objects and their Attributes</h3>
+      <em>Performing basic operations on a new object and its attributes</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use interfaces in the VPMXBom framework to
+      create and work with a new data base object and its attributes.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAA</strong></a><a href="#UseCase"><strong>VxbGeneralXBom</strong></a><a href="#UseCase"><strong>
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVxbGeneralXBom Do?</a></li>
+            <li><a href="#How">How to Launch CAAVxbGeneralXBom</a></li>
+            <li><a href="#Where">Where to Find the CAAVxbGeneralXBom Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use some of the basic operations
+available with VPMXBom interfaces. These include: creating a new login session,
+retrieving a list of available modelers, creating a new object in one of the
+modelers, retrieving and valuating the attributes of this new object and
+finally, saving the new object in the data base.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVxbGeneralXBom Use Case</h3>
+<p>CAAVxbGeneralXBom is a use case of the CAAVPMXBom.edu framework that
+illustrates VPMXBom framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVxbGeneralXBom Do?</h4>
+<p>CAAVxbGeneralXBom first of all creates a new login session in the current
+application. Then it retrieves a list of all the available modelers and creates
+a new object of type &quot;ENOVIA_Part&quot; in the &quot;INDEX&quot; modeler.
+It then retrieves a list of all the attributes of this object and proceeds, for
+each, to valuate it, to validate the valuation, to retrieve its definition, and
+print out its name. Finally, the object is saved in the data base and the
+session is closed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVxbGeneralXBom</h4>
+<p>To launch CAAVxbGeneralXBom, you will need to set up the build time
+environment, then compile CAAVxbGeneralXBom along with its prerequisites, set up
+the run time environment, and then execute the use case. [<a href="#References">1</a>]
+The required interfaces can be found in the VPMXBom and VPMPersistency
+frameworks. Launch the use case by executing the following command:</p>
+<p><code>mkrun -c &quot;CAAVxbGeneralXBom&quot;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVxbGeneralXBom Code</h4>
+<p>The CAAVxbGeneralXBom use case is made of a single file located in the
+CAAVxbGeneralXBom.m module of the CAAVPMXBom.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMXBom.edu\CAAVxbGeneralXBom</code><code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMXBom.edu/CAAVxbGeneralXBom.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p><b>Before launching this use case, check for <a href="../CAAVpiUseCases/CAAVpiEventsCommonDoc.htm#PreReq">its
+prerequisites.</a></b></p>
+<p>For demonstration purposes, the code from the CAAVxbGeneralXBom use case is
+shown here. There are nine logical steps in the CAAVxbGeneralXBom use case:</p>
+<ol>
+  <li><a href="#Login">Creating a Login Session</a></li>
+  <li><a href="#GetModelers">Retrieving a List of Available Modelers</a></li>
+  <li><a href="#GetModeler">Retrieving a Specific Modeler from the List</a></li>
+  <li><a href="#VPMObject">Creating a New ENOVIA Object</a></li>
+  <li><a href="#RetrieveAttr">Retrieving the Object's Attributes</a></li>
+  <li><a href="#ValuateAttr">Valuating the Object's Attributes</a></li>
+  <li><a href="#RetrieveDef">Retrieving the Attribute's Definition Object</a></li>
+  <li><a href="#SaveLogin">Saving the Login Session in the Data Base</a></li>
+  <li><a href="#CloseSession">Closing the Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Login"></a>Creating a Login Session</h4>
+<p>1. Retrieve the current ENOVIA application.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>cout &lt;&lt; &quot;Create an ENOVIA Application&quot; &lt;&lt; endl;
+ENOVIApplication * piApplication = NULL;
+HRESULT rc = ::<b>ENOVGetApplication</b> (&amp;piApplication);
+if (FAILED(rc) || NULL == piApplication)
+{
+   cout &lt;&lt; &quot;Failed to retrieve ENOVIA application.&quot; &lt;&lt; endl;
+   <b>return</b> 1;
+}
+cout &lt;&lt; &quot;ENOVIA application retrieved successfully&quot; &lt;&lt; endl;  
+
+...        </pre>
+    </td>
+  </tr>
+</table>
+<p>The first step in working with the XBom is retrieving an ENOVIA application.
+Use the <code>ENOVGetApplication</code> global function which returns an <i>ENOVIApplication</i>
+pointer. The ENOVIA application supports a secured multi-user mode. The
+interface may be shared by different users and is used to gain access to a login
+session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Create a new login session.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>cout &lt;&lt; &quot;Create a login session&quot; &lt;&lt; endl;
+const int networkCommunication = 1;
+ENOVILoginSession *piLoginSession = NULL;
+rc = piApplication -&gt; <b>login</b>(&quot;MySelf&quot;,
+                            &quot;MyEncodedPsswd&quot;,
+		       	    &quot;MyRole&quot;,
+		            networkCommunication,
+			    &amp;piLoginSession);
+
+piApplication -&gt; <b>Release</b>();
+piApplication = NULL;
+
+if(FAILED(rc) || NULL == piLoginSession)
+{
+    cout &lt;&lt; &quot;Failed to create Login session.&quot; &lt;&lt; endl;
+    <b>return</b> 2;
+}
+cout &lt;&lt; &quot;Login session creation successful&quot; &lt;&lt; endl;  	</pre>
+      <pre>...    </pre>
+    </td>
+  </tr>
+</table>
+<p>In order to create a new login session, use the <code>login</code> method of
+ENOVIApplication. This method is used to get the login session corersponding to
+a specific user or to create one if none exists. The input arguments are:</p>
+<ul>
+  <li>&quot;MySelf&quot; - User Id</li>
+  <li>&quot;MyEncodedPasswd&quot; - User Password</li>
+  <li>&quot;MyRole&quot; - User Role</li>
+  <li>networkCommunication -Type of network communication. 0: a local session;
+    no communication bus will be created. 1: a distributed session a
+    communication bus will be created.</li>
+</ul>
+<p>The method returns an <i>ENOVILoginSession</i> pointer to the login session.
+This is the entry point for all user dependant actions: once a pointer to this
+interface has been obtained, it is assumed that the user has been authenticated
+and that the implementation of the interface keeps track of the user's
+permissions.</p>
+<p>Note that the <i>ENOVIApplication</i> pointer is now released as it will no
+longer be used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="GetModelers"></a>Retrieving a List of Available Modelers</b></p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>cout &lt;&lt; &quot;Retrieve the list of modelers&quot; &lt;&lt; endl;
+ENOVIModelers *piModelerList = NULL;
+rc = piLoginSession -&gt; <b>get_Modelers</b> (&amp;piModelerList);
+if (FAILED(rc) || NULL == piModelerList)
+{
+    cout &lt;&lt; &quot;Failed to retrieve the list of modelers.&quot; &lt;&lt; endl;
+    piLoginSession -&gt; <b>Release</b>();
+    piLoginSession = NULL;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 3;
+}
+cout &lt;&lt; &quot;List of modelers retrieved OK&quot; &lt;&lt; endl;</pre>
+      <pre>...&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the <i>ENOVILoginSession</i> pointer retrieved previously, retrieve the
+list of available modelers. The role of a modeler is to manage a set of
+persistent object types. It is sometimes referred to as a &quot;domain&quot;.
+The <code>get_Modelers</code> method returns a pointer to the <i>ENOVIModelers</i>
+interface. This interface has a double role:</p>
+<ul>
+  <li>it can be used to iterate through all previously accessed modelers
+  <li>it can be used to instantiate a modeler which has not been accessed before</li>
+</ul>
+<p>In short, if a modeler which is accessed by name has not been accessed
+before, it will be instantiated, but only the previously accessed (and,
+therefore, instantiated) modeler can be accessed by index.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="GetModeler"></a>Retrieving a Specific Modeler from the List</b></p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>cout &lt;&lt; &quot;Retrieve INDEX modeler&quot; &lt;&lt; endl;
+ENOVIModeler *piModeler = NULL;
+rc = piModelerList -&gt; <b>Item</b> (&quot;INDEX&quot;,
+                            &amp;piModeler);
+
+piModelerList -&gt; <b>Release</b>();
+piModelerList = NULL;
+
+if (FAILED(rc) || NULL == piModeler)
+{
+    cout &lt;&lt; &quot;Failed to retrieve the INDEX modeler.&quot; &lt;&lt; endl;
+    piLoginSession -&gt; <b>Release</b>();
+    piLoginSession = NULL;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 4;
+}
+cout &lt;&lt; &quot;INDEX modeler retrieved OK&quot; &lt;&lt; endl;</pre>
+      <pre>...&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The &quot;INDEX&quot; modeler is retrieved from the list of
+modelers by specifying its name in the <code>Item</code> method of the <i>ENOVIModelers</i>
+interface. As explained above, the modeler is thus instantiated and could later
+be accessed by index. Note that the <i>ENOVIModelers</i> pointer is now released
+since it will no longer be needed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="VPMObject"></a>Creating a New ENOVIA Object</b></p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>cout &lt;&lt; &quot;Create a new ENOVIA object&quot; &lt;&lt; endl;
+CATUnicodeString type (&quot;ENOVIA_Part&quot;);
+ENOVIObject *piObject = NULL;
+rc = piModeler -&gt; <b>CreateObject</b> (&amp;type,
+                                &amp;piObject);
+
+piModeler -&gt; <b>Release</b>();
+piModeler = NULL;
+
+if (FAILED(rc) || NULL == piObject)
+{
+    cout &lt;&lt; &quot;Failed to create a new ENOVIA object.&quot; &lt;&lt; endl;
+    piLoginSession -&gt; <b>Release</b>();
+    piLoginSession = NULL;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 5;
+}
+cout &lt;&lt; &quot;ENOVIA object created OK&quot; &lt;&lt; endl;</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to create a new instance of one of the object types managed by this
+modeler, use the <code>CreateObject</code> method of the <i>ENOVIModeler</i>
+interface. The list of types which can be passed in the first parameter can be
+retrieved using the <code>get_ListOfObjectTypeNames</code> method of the same
+interface. In this case, a new &quot;ENOVIA_Part&quot; object is created in the
+&quot;INDEX&quot; modeler. The <code>CreateObject</code> method takes the type
+of object to be created as input and returns an <i>ENOVIObject</i> pointer to
+the newly-created object. Note that the <i>ENOVIModeler</i> pointer is now
+released as it will no longer be used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="RetrieveAttr"></a>Retrieving the Object's Attributes</b></p>
+<p>1. Retrieve a list of the object's attributes.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...    </pre>
+      <pre>cout &lt;&lt; &quot;Get attributes&quot; &lt;&lt; endl;
+ENOVIAttributeValues * piAttrList = NULL;
+rc = piObject -&gt; <b>get_Attributes</b>(&amp;piAttrList);
+
+piObject -&gt; <b>Release</b>();
+piObject = NULL;
+
+if (FAILED(rc) || NULL == piAttrList)
+{
+    cout &lt;&lt; &quot;Failed to get Attributes&quot; &lt;&lt; endl;
+    piLoginSession -&gt; <b>Release</b>();
+    piLoginSession = NULL;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 6;
+}
+cout &lt;&lt; &quot;Attributes retrieved: OK&quot; &lt;&lt; endl;</pre>
+      <pre>...		</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">A list of the object's attributes is retrieved using the <code>get_Attributes</code>
+method of the ENOVIBase interface, from which <i>ENOVIObject </i>derives. This
+method retrieves an <i>ENOVIAttributeValues</i> pointer to the list of
+attributes. Note that the <i>ENOVIObject</i> pointer is now released as it will
+no longer be needed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Get the number of attributes belonging to the object.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>long nbAttr;
+cout &lt;&lt; &quot;Get the number of attributes&quot; &lt;&lt; endl;
+ret = piAttrList -&gt; <b>get_Count</b>(&amp;nbAttr);
+if (ret != S_OK)
+{
+    cout &lt;&lt; &quot;Failed to get count of Attributes<b>&quot; &lt;&lt; </b>endl<b>;
+    </b>piLoginSession -&gt; <b>Release</b>();
+    piLoginSession = NULL;<b>
+    </b>piAttrList<b> -&gt; Release</b>();
+    piAttrList = NULL;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 7;
+}	
+cout &lt;&lt; &quot;Number of Attributes = &quot;&lt;&lt; nbAttr &lt;&lt; endl;</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the <i>ENOVIAttributeValues</i> pointer, execute the <code>get_Count</code>
+method of the <i>ENOVIBase</i> interface from which <i>ENOVIAttributeValues</i>
+derives, to find out how many attributes are defined for the given object type.
+The output comment reads:</p>
+<p><code>Number of Attributes = 3</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>3. Retrieve each attribute from the list.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...</pre>
+      <pre>CORBAAny putData, getData;
+ENOVIAttributeValue * piAttribute = NULL;
+for (long iAttr = 1; iAttr &lt;= nbAttr; iAttr++)
+{
+   // Get the Attribute
+   rc = piAttrList -&gt; <b>Item</b>(iAttr,
+	                   &amp;piAttribute);
+
+   if (rc != S_OK)
+   {
+      cout &lt;&lt; &quot;Failed to get attribute for Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; Attribute&quot; &lt;&lt; endl;
+      piLoginSession -&gt; <b>Release</b>();
+      piLoginSession = NULL;
+      piAttrList -&gt; <b>Release</b>();
+      piAttrList = NULL;
+      VPMSession::<b>CloseSession</b>();
+      <b>return</b> 8;
+    }
+    else 
+      cout &lt;&lt; &quot;Attribute for Index &quot; &lt;&lt; iAttr &lt;&lt; &quot;: OK&quot; &lt;&lt; endl;</pre>
+      <pre>    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Retrieve the attribute corresponding to the current index from the list of
+attributes using the <code>Item</code> method of <i>ENOVIAttributeValues</i>.
+This method returns an <i>ENOVIAttributeValue</i> pointer to the attribute
+corresponding to the inputted index value.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="ValuateAttr"></a>Valuating the Object's Attributes</b></p>
+<p>1. Set a new attribute value.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>    ...</pre>
+      <pre>    putData &lt;&lt; &quot;Howdy&quot;;
+    cout &lt;&lt; &quot;Put data value in an attribute&quot; &lt;&lt; endl;
+    rc = piAttribute -&gt; <b>put_Data</b>(&amp;putData); 
+    if (FAILED(rc))
+    {
+	cout &lt;&lt; &quot;put_Data for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; failed &quot; &lt;&lt; endl;
+        piLoginSession -&gt; <b>Release</b>();
+	piLoginSession = NULL;
+	piAttrList -&gt; <b>Release</b>();
+	piAttrList = NULL;
+	piAttribute -&gt; <b>Release</b>();
+	piAttribute = NULL;
+	VPMSession::<b>CloseSession</b>();
+	<b>return</b> 9;
+    }
+    cout &lt;&lt; &quot;put_Data for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; : OK&quot; &lt;&lt; endl;</pre>
+      <pre>    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Set a new value to an attribute by using the <code>put_Data</code> method of <i>ENOVIAttributeValue</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Retrieve the attribute value.</p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>    ...</pre>
+      <pre>    cout &lt;&lt; &quot;Get data value from an attribute&quot; &lt;&lt; endl;
+    rc = piAttribute -&gt; <b>get_Data</b>(&amp;getData); 
+    if (FAILED(rc))
+    {
+        cout &lt;&lt; &quot;get_Data for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; failed&quot; &lt;&lt; endl;
+        piLoginSession -&gt; <b>Release</b>();
+	piLoginSession = NULL; 
+        piAttrList -&gt; <b>Release</b>();
+	piAttrList = NULL;
+	piAttribute -&gt; <b>Release</b>();
+	piAttribute = NULL;
+	VPMSession::<b>CloseSession</b>();
+	<b>return</b> 10;
+    }
+    cout &lt;&lt; &quot;Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; Attribute get_Data OK&quot; &lt;&lt; endl;
+    if (putData != getData) cout &lt;&lt; &quot;Attribute values not equal KO&quot; &lt;&lt; endl;
+    else cout &lt;&lt; &quot;Attribute values are equal OK&quot; &lt;&lt; endl;
+		
+    ...   </pre>
+    </td>
+  </tr>
+</table>
+<p>Retrieve the value of an attribute by using the <code>get_Data</code> method
+of <i>ENOVIAttributeValue</i>. Compare it to the value just set on the same
+attribute to confirm that the attribute has been correctly valuated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="RetrieveDef"></a>Retrieving the Attribute's Definition Object</b></p>
+<p>1. Retrieve the attribute's definition object.</p>
+<table class="code" width="761">
+  <tr>
+    <td width="753">
+      <pre>    ...</pre>
+      <pre>    ENOVIAttributeDefinition * piAttrDef = NULL;
+    cout &lt;&lt; &quot;Get definition for an attribute&quot; &lt;&lt; endl;
+    rc = piAttribute -&gt; <b>get_Definition</b>(&amp;piAttrDef); 
+    if (FAILED(rc) || NULL == piAttrDef)
+    {
+	cout &lt;&lt; &quot;get_Definition for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; failed&quot; &lt;&lt; endl;
+        piLoginSession -&gt; <b>Release</b>();
+	piLoginSession = NULL; 
+	piAttrList -&gt; <b>Release</b>();
+	piAttrList = NULL;
+	piAttribute -&gt; <b>Release</b>();
+	piAttribute = NULL;
+	VPMSession::<b>CloseSession</b>();
+	<b>return</b> 11;
+    }
+    cout &lt;&lt; &quot;get_Definition for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; : OK&quot; &lt;&lt; endl;
+		
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>get_Definition</code> method of <i>ENOVIAttributeValue</i> to
+retrieve the attribute's definition object. This method returns an <i>ENOVIAttributeDefinition</i>
+pointer. This pointer can be used to set or retrieve various information
+concerning the attribute: its name, its type, its mandatory or unique flags, its
+authorized values, its default value, etc.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Retrieve the attribute's name from its definition object.</p>
+<table class="code" width="761">
+  <tr>
+    <td width="753">
+      <pre>    ...</pre>
+      <pre>    CATUnicodeString attributeName(&quot;&quot;);
+    rc = piAttrDef -&gt; <b>get_AttributeName</b> (&amp;attributeName);
+    if (FAILED(rc))
+    {
+	cout &lt;&lt; &quot;get_AttributeName for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; failed&quot; &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;get_AttributeName for attribute at Index &quot; &lt;&lt; iAttr &lt;&lt; &quot; = &quot; &lt;&lt; attributeName.CastToCharPtr() &lt;&lt; endl;
+
+    piAttrDef -&gt; <b>Release</b>();
+    piAttrDef = NULL;
+    piAttribute -&gt; <b>Release</b>();
+    piAttribute = NULL;
+	
+} // end for each Attribute	
+
+piAttrList -&gt; <b>Release</b>();
+piAttrList = NULL;
+	
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The attribute's name is retrieved using the <code>get_AttributeName</code>
+method of the <i>ENOVIAttributeDefinition</i> interface. The output comment
+reads, for each attribute in turn:</p>
+<p><code>get_AttributeName for attribute at Index 1 = id<br>
+get_AttributeName for attribute at Index 2 = name<br>
+get_AttributeName for attribute at Index 3 = description</code></p>
+<p>Note that the <i>ENOVIAttributeDefinition</i> pointer, piAttrDef, and the <i>ENOVIAttributeValue</i>
+pointer, piAttribute, are released for each attribute. After exiting the loop,
+the <i>ENOVIAttributeValues</i> pointer, piAttrList, retrieved from the <code>get_Attributes</code>
+method, is also released, as it will no longer be used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="SaveLogin"></a>Saving the Login Session in the Data Base</b></p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...   </pre>
+      <pre>cout &lt;&lt; &quot;Save new object in DataBase&quot; &lt;&lt; endl;
+rc = piLoginSession -&gt; <b>Save</b>();
+if (FAILED(rc))
+{
+    cout &lt;&lt; &quot;Save: KO&quot; &lt;&lt; endl;
+    VPMSession::<b>CloseSession</b>();
+    <b>return</b> 13;
+}
+cout &lt;&lt; &quot;Save OK&quot; &lt;&lt; endl;
+
+piLoginSession -&gt; <b>Release</b>();
+piLoginSession = NULL;</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Save the login session including the new object created by executing the <code>Save</code>
+method of the <i>ENOVILoginSession</i> interface. Also do not forget to release
+the <i>ENOVILoginSession</i> pointer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="CloseSession"></a>Closing the Session</b></p>
+<table class="code" width="637">
+  <tr>
+    <td width="629">
+      <pre>...  </pre>
+      <pre>cout &lt;&lt; &quot;CloseSession&quot; &lt;&lt; endl;
+rc = VPMSession::<b>CloseSession</b>();
+if (FAILED(rc))
+{
+    cout &lt;&lt; &quot; Close Session failed.  &quot; &lt;&lt; endl;
+    <b>return</b> 14;
+}
+cout &lt;&lt; &quot;Close Session successful. &quot; &lt;&lt; endl;
+ 	
+<b>return</b> 0;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Close the session using the <code>CloseSession</code> method of <i>VPMSession</i>.
+Then return a 0 value for a successful completion.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has illustrated how create a new ENOVIA object in a login
+session and how to retrieve and valuate the attributes of the new object.
+Initially, the login session is created using <i>ENOVGetApplication</i>::<code>login</code>.
+A list of available modelers is returned using the <i>ENOVILoginSession</i>::<code>get_Modelers</code>
+method. Then, a specific modeler is instantiated using the <i>ENOVIModelers</i>::<code>Item</code>
+method. The new ENOVIA object is created using the <i>ENOVIModeler</i>::<code>CreateObject</code>
+method. Using the <i>ENOVIObject</i> pointer which derives from <i>ENOVIBase</i>,
+execute the <code>get_Attributes</code> method to retrieve a list of the
+object's attributes. Using the <i>ENOVIAttributeValues</i>::<code>Item</code>
+method, retrieve an <i>ENOVIAttributeValue</i> pointer to each attribute.
+Perform the <code>put_Data</code> and <code>get_Data</code> methods of this
+interface in order to valuate and validate each attribute. Finally, retrieve an <i>ENOVIAttributeDefinition</i>
+pointer using the <i>ENOVIAttributeValue</i>::<code>get_Definition</code> method
+in order to access various attribute characteristics. Use the <code>Save</code>
+method of the <i>ENOVILoginSession</i> interface to save the new object in the
+data base.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

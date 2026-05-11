@@ -1,0 +1,1126 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Overview of the Topological Operators</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Overview of the Topological Operators</h3>
+      <em>How to use them to create bodies</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Build on a common scheme, the topological operators are transient
+      objects used to create bodies. The use case illustrates their use in
+      chaining them to create bodies: primitive creation (<tt>CATSolidCylinder</tt>,
+      <tt>CATSolidCuboid</tt>), skin body creation (<tt>CATTopSkin</tt>), prism
+      (<tt>CATTopPrism</tt>), Boolean operation (<tt>CATDynBoolean</tt>),
+      filleting (<tt>CATDynFillet</tt>) and shelling (<tt>CATDynShell</tt>). The
+      volume of the resulting body is also computed (<tt>CATDynMassProperties3D</tt>).</p>
+      <p>The use of the journal, describing the topological modifications from
+      the input bodies to the resulting body, is not described here. See the
+      dedicated use case &quot;Managing the Journal&quot; [<a href="#References">1</a>]
+      to have more information on this point.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#General features on Mathematical Classes"><strong>The
+          General Scheme</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAATopOverview Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAATopOverview Do</a></li>
+            <li><a href="#How">How to Launch CAATopOverview</a></li>
+            <li><a href="#Where">Where to Find theCATopOverview Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case, the general scheme of the topological operators is
+explained.
+<p>Using topological operators is an easy way to create new consistent
+topological objects. There are two types of operators:
+<ul>
+  <li>The operators building topology from geometry. They derive from the <tt>CATGeoToTopOperator</tt>
+    class ( to create wire bodies or skin bodies) or from <tt>CATSolidPrimitive</tt>
+    (to create basic primitives such as cylinder, box, sphere).</li>
+  <li>The operators only operating on topological objects. They derive from the <tt>CATTopOperator</tt>
+    class. Some of them allows you to create simple bodies (point, line and
+    spline bodies), see the <tt>CAATopSpline</tt> use case [<a href="#References">9</a>].</li>
+</ul>
+<p>All these operators follow the smart concept [<a href="#References">3</a>]:
+they never modify the input bodies. They always create new topological objects,
+which share topological cells to reduce the model size.</p>
+<p>The operators can log, under request, the follow-up of the faces and free
+edges from the input bodies to the resulting body. This data is written, under
+request, on a topological journal [<a href="#References">4</a>] attached to each
+operator. Hence, the topological journal offers the developer the means to
+develop procedural applications, such as feature based modeling, but this point
+in not detailed here. See the dedicated use case [<a href="#References">1</a>]
+to have more information on the use of the journal.</p>
+<p>The topological operators are transient objects used to define topological
+operations, and cannot be streamed.</p>
+The AdvancedTopologicalOpe framework provides advanced topological operators in
+surface design. They follow the general scheme of the topological operators, but
+are not described here.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="General features on Mathematical Classes"></a>The General Scheme</h3>
+<p>All the operators are based on the same scheme as follow that:
+<ol>
+  <li>Creates an operator
+    <ul>
+      <li>by calling a global method for the operators deriving from <tt>CATTopOperator</tt></li>
+      <li>during this step, the operation is not run</li>
+    </ul>
+  </li>
+  <li>If needed, specifies or modifies additional information such as the
+    definition of a ribbon of a draft or a fillet, the type of trim
+    <ul>
+      <li>during this step, the operation is not run</li>
+    </ul>
+  </li>
+  <li>Runs the operator: <tt>Run</tt>
+    <ul>
+      <li>the operation is run</li>
+    </ul>
+  </li>
+  <li>Gets the result: <tt>GetResult</tt>
+    <ul>
+      <li>the topological result is always retrieved as a <tt>CATBody</tt></li>
+    </ul>
+  </li>
+  <li>Deletes the operator instance.</li>
+</ol>
+<p>Unlike the geometric operators, the topological operators do not provide a
+BASIC and an ADVANCED modes. The topological operators are always set in
+ADVANCED mode: the run is always mandatory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAATopOverview Use Case</h3>
+<p>CAATopOverview is a use case of the CAATopologicalOperators.edu framework
+that illustrates TopologicalOperators framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAATopOverview Do</h4>
+<p>The use case creates the body of <a href="#Fig. 1">Fig.1</a> by chaining
+topological operators.</p>
+<table width="100%">
+  <caption><a name="Fig. 1"></a>Fig. 1: The Resulting Body</caption>
+  <tr>
+    <td><img border="0" src="images/CAATopOverview1.gif" width="309" height="343"></td>
+    <td>
+      <ul>
+        <li>A skin is created from a profile and extruded to produce a prism</li>
+        <li>A box primitive is added and a cylinder subtracted</li>
+        <li>The edges of the external loop of the upper face of the prism are
+          filleted. This face is characterized by two holes: one for the path of
+          the cylinder, on for the path of the box</li>
+        <li>A shelling operation is applied with one opening face, the bottom
+          face of the prism.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAATopOverview</h4>
+<p>To launch CAATopOverview, you will need to set up the build time environment,
+then compile CAATopOverview.m along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">8</a>].</p>
+<font FACE="Helv" SIZE="2" COLOR="#000000">
+<p>If you simply type CAATopOverview with no argument, the use case executes,
+but doesn't save the result in an NCGM file. If you want to save this result,
+provide the full pathname of the NCGM file to create. For example:</p>
+</font><font FACE="Courier New" SIZE="2" COLOR="#000000">
+<p>With Windows <code>CAATopOverview e:\Overview.NCGM</code></p>
+<p>With UNIX <code>CAATopOverview /u/Overview.NCGM</code></p>
+</font><font FACE="Helv" SIZE="2" COLOR="#000000">
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+</font>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAATopOverview Code</h4>
+<p>The CAATopOverview use case is made of a main named CAATopOverview.cpp
+located in the CAATopOverview.m module of the CAATopologicalOperators.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAATopologicalOperators.edu\CAATopOverview.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAATopologicalOperators.edu/CAATopOverview.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The main program:
+<ol>
+  <li><a href="#Creates the Geometry Factory">Creates the Geometry Factory</a></li>
+  <li><a href="#Creates a Skin Body">Creates a Skin Body (CATTopSkin)</a></li>
+  <li><a href="#Creates a Prism">Creates a Prism (CATTopPrism)</a></li>
+  <li><a href="#Creates a Box and a Cylinder Primitives">Creates a Box Primitive
+    (CATDynSolidCuboid) and a Cylinder Primitive (CATDynSolidCylinder)</a></li>
+  <li><a href="#Adds and Subtracts">Adds and Subtracts (CATDynBoolean)</a></li>
+  <li><a href="#Fillets">Fillets (CATDynFillet)</a></li>
+  <li><a href="#Shells">Shells (CATDynShell)</a></li>
+  <li><a href="#Computes the Volume">Computes the Volume
+    (CATDynMassProperties3D)</a></li>
+  <li><a href="#Writes the Model and Closes the Factory">Writes the Model and
+    Closes the Container</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h4>
+<p>The geometry factory (CATGeoFactory) creates and manages all the <tt>CATICGMObject</tt>
+: it creates the points, curves, surfaces and bodies and remove them [<a href="#References">7</a>].</p>
+<p>The CATGeoFactory creation itself is done by the global function <tt>::CATCreateCGMContainer</tt>.</p>
+<p>Notice that the factory can be defined by reading a NCGM file that was
+previously stored. In that case, the global function <tt>::CATLoadCGMContainer</tt>
+must be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates a Skin Body"></a>Creating a Skin Body</h4>
+<p>This section illustrates the use of the type of topological operators that
+derive from <tt>CATGeoToTopOperator</tt>. There are two ways to create a skin
+body:</p>
+<ul>
+  <li>Define it on the boundary of a surface</li>
+  <li>Define it with a list of ordered curves defining the boundary of the face
+    on the surface. This second way is illustrated here. Hence the following
+    steps are needed:
+    <ul>
+      <li>Creating the surface, here the xy plane</li>
+      <li>Creating the curves on the surface (<tt>CATPLine</tt> and <tt>CATPCircle</tt>)</li>
+      <li>Defining the orientation of each curve: in fact, the <tt>CreatePCircle</tt>
+        method always creates circles in the direct sense, even if the limits
+        are given clockwise while <tt>CATTpoSkin</tt> requires to have curves
+        such that the end of one curve (after orientation) is the end of the
+        next curve</li>
+      <li>Using <tt>CATTopSkin</tt>.</li>
+    </ul>
+</ul>
+<ol type="a">
+  <li><i><a name="Creating the Surface"></a>Creating the Surface</i>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>  CATPlane * piPlane = piGeomFactory-&gt;CreatePlane(<b>CATMathOIJ</b>);  <i>// xy plane</i>
+    if (NULL == piPlane)
+    {
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+    }</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><i><a name="Creating the Curves On the Surface"></a>Creating the Curves On
+    the Surface</i>
+    <p>Now, using the characteristics of the plane (<tt>CATPlane::GetAxis</tt>),
+    the <tt>CATPLine</tt> and <tt>CATPCircle</tt> of the contour are created.</p>
+    <table>
+      <caption>Fig. 2: The Skin Body</caption>
+      <tr>
+        <td>
+          <p align="center"><img border="0" src="images/CAATopOverview2.gif" width="308" height="219"></td>
+      </tr>
+    </table>
+    <p>The lines and circles are created with the corresponding <tt>CATGeoFactory::CreatePLine</tt>
+    and <tt>CATGeoFactory::CreatePCircle</tt> methods. As these lines and
+    circles are defining on the surface, they can only be created from surface
+    parameters. However, no assumption can be done on the parameterization of
+    the geometric objects. The parameters on the plane are evaluated with the <tt>CATSurface::GetParam</tt>
+    method, from 3D points that are known to be on the plane. This method can be
+    called because the plane is a canonical object, and the points are already
+    on it. If one of these conditions were not filled, it would be mandatory to
+    call the <tt>CATProjectionPtSur</tt> geometric operator.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>// ----------- Retrieves the mathematical definition of the geometrical plane</em>
+CATMathPoint mathOrigin;
+CATMathDirection mathU, mathV;
+piPlane-&gt;<strong>GetAxis</strong>(mathOrigin,mathU,mathV);
+	
+<em>// ----------- <a name="Defines points on the plane"></a>Defines points on the plane
+// Notice that we do not make any assumption on the plane parameterization.
+// The use of GetParam is allowed here, because the 3D points belong to the plane
+// by construction</em>
+CATSurParam p1, p2, p3, p4, c1, c2;
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin, p1);
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin - 20*mathU                      , p2);
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin - 10*mathU +    10*sqrt(3)  *mathV, p3);
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin            +    10*sqrt(3)  *mathV, p4);
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin - 20*mathU +    10          *mathV, c1);
+piPlane-&gt;<strong>GetParam</strong>(mathOrigin - 10*mathU + (10+10*sqrt(3))*mathV, c2);
+
+<em>// ----------- <a name="Defines the curves of the profile"></a>Defines the curves of the profile</em>
+const int nbPCurves = 5;
+CATPCurve *  aPCurves[nbPCurves];
+CATCrvLimits aLimits[nbPCurves];
+
+aPCurves[0]=  piGeomFactory-&gt;<strong>CreatePLine</strong>   (p1, p2, piPlane );
+aPCurves[0] -&gt;GetLimits(aLimits[0]);
+aPCurves[1]=  piGeomFactory-&gt;<strong>CreatePCircle</strong> (10,        <i>// radius</i>
+                                            c1,        <i>// center</i>
+                                            CATPI/3,   <i>// first limit  (may be reordered)</i>
+                                            3*CATPI/2, <i>// second limit (may be reordered)</i>
+                                            piPlane);  <i>// surface</i>
+aPCurves[1] -&gt;GetLimits(aLimits[1]);
+aPCurves[2]=  piGeomFactory-&gt;CreatePCircle (10, c2, 4*CATPI/3, 3*CATPI/2, piPlane);
+aPCurves[2] -&gt;GetLimits(aLimits[2]);
+
+aPCurves[3]=  piGeomFactory-&gt;CreatePLine   (p3, p4, piPlane );
+aPCurves[3] -&gt;GetLimits(aLimits[3]);
+
+aPCurves[4]=  piGeomFactory-&gt;CreatePLine   (p4, p1, piPlane );
+aPCurves[4] -&gt;GetLimits(aLimits[4]);
+for (int i=0; i&lt;nbPCurves; i++)
+{
+  if (NULL==aPCurves[i])
+  {
+    ::CATCloseCGMContainer(piGeomFactory);
+    return (1);
+  }
+}				</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><i><a name="Defining the Orientations Of the Curves In the Profile"></a>Defining
+    the Orientations Of the Curves In the Profile</i>
+    <p><tt>CATTopSkin</tt> needs
+    <ul>
+      <li>An ordered list of curves: contiguous curves must be contiguous in the
+        list. The limits to take into account for each curve must be detailed.
+        In this use case, the intersection between the lines and circles are
+        easily computed, but if it were not the case, they would be computed
+        with the <tt>CATIntersectionCrvCrv</tt> geometric operator.</li>
+      <li>The orientation of each curve in the profile: the curve must be taken
+        in its natural orientation (increasing parameter, +1 value) or in the
+        opposite orientation (decreasing parameter, -1 value), so that the end
+        (after orientation) of a curve must be linked to the beginning (after
+        orientation) of the next curve. The computation of the orientations
+        gives the opportunity to show how to evaluate a parameter on a curve:
+        this is done by the <tt>CATCurve::Eval</tt> method. Again, do never make
+        any assumption on the parameterization of the geometric objects.</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>// Defines the orientations of the curves</em>
+short aOrientations[nbPCurves];
+aOrientations[0] = 1;
+aOrientations[1] = 1;
+aOrientations[2] = 1;
+aOrientations[3] = 1;
+aOrientations[4] = 1;
+
+CATCrvParam low,high;
+CATMathPoint m1start, m1end, aPoints[2];
+
+<em>// <a name="first checks the first two curves"></a>first checks the first two curves</em>
+aLimits[0].GetExtremities(low,high);
+aPCurves[0]-&gt;<strong>Eval</strong>(low , CATCrvEvalCommand::EvalPoint, &amp;m1start);
+aPCurves[0]-&gt;Eval(high, CATCrvEvalCommand::EvalPoint, &amp;m1end);
+
+aLimits[1].GetExtremities(low,high);
+aPCurves[1]-&gt;Eval(low , CATCrvEvalCommand::EvalPoint, &amp;(aPoints[0]));
+aPCurves[1]-&gt;Eval(high, CATCrvEvalCommand::EvalPoint, &amp;(aPoints[1]));
+
+int index1, index2;
+double d1 = m1start.<strong><a name="DistanceTo"></a>DistanceTo</strong>(aPoints, <i>// array of 2 points</i>
+                               2,       <i>// count of points of aPoints</i>
+                               index1); <i>// index (beginning at 0) of a point of aPoints</i>
+                                        <i>// closest to this</i>
+double d2 =   m1end.DistanceTo(aPoints,2,index2);
+
+if (d1 &lt; d2 )     <em>// the orientation of the first curve is inverted</em>
+{
+  aOrientations[0] = -1; 
+  if (1==index1) aOrientations[1] = -1; <em>// inverts the orientation of the second curve </em>
+}
+else
+{
+  if (1==index2) aOrientations[1]= -1;  <em>// inverts the orientation of the second curve</em>
+}
+
+<em>// Checks now the other curves</em>
+for (i=2;i&lt;5;i++)
+{ 
+  m1end   = aPoints [1];
+  if (-1==aOrientations[i-1]) m1end   = aPoints [0];
+
+  aLimits[i].GetExtremities(low,high);
+  aPCurves[i]-&gt;Eval(low , CATCrvEvalCommand::EvalPoint, &amp;(aPoints[0]));
+  aPCurves[i]-&gt;Eval(high, CATCrvEvalCommand::EvalPoint, &amp;(aPoints[1]));
+
+  d2 =   m1end.DistanceTo(aPoints,2,index2);
+  if (1==index2) aOrientations[i]= -1;
+}						</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The principle of the algorithm is
+    <ul>
+      <li>To compare the limits of the first two curves to know their
+        orientation. This also gives the geometric location of the end of the
+        second curve</li>
+      <li>For each next curve
+        <ul>
+          <li>To compare its limits with the end of the preceeding curve, in
+            order to get its orientation.</li>
+        </ul>
+      </li>
+    </ul>
+    <p>The use of the <tt>CATMathPoint::DistanceTo</tt> method to compute the
+    minimum distance between a point (<tt>this</tt> calling <tt>DistanceTo</tt>
+    ) and an array of points: the method retrieves the index (beginning at 0) in
+    the input array of the point realizing the minimum distance.</p>
+  </li>
+  <li><i><a name="Using CATSkinOperator"></a>Using <tt>CATTopSkin</tt></i>
+    <p>The geometry being created, the <tt>CATTopSkin</tt> can now be invoked
+    according to the general scheme that:
+    <ul>
+      <li>Creates with the global function <code>CATCreateTopSkin</code></li>
+      <li>Runs</li>
+      <li>Gets the resulting skin body. This body is created by <tt>CATTopSkin</tt>
+        using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+        objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+        method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+      <li>Deletes.</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>// Creates the operator</em>
+<i>//</i> <i>first defines an open configuration for the operator</i>
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+<i>// defines the data of the operator: configuration + journal</i>
+CATTopData topdata(pConfig,NULL);
+<i>// now creates the operator</i>
+CATTopSkin * pSkinOp = <b>::CATCreateTopSkin</b> (piGeomFactory,
+                                           &amp;topdata,
+                                           piPlane,
+		                           nbPCurves, 
+					   aPCurves,
+                                           aLimits,
+                                           aOrientations);
+if (NULL==pSkinOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Runs</em>
+pSkinOp-&gt;<strong>Run</strong>();
+
+<em>// Gets the resulting body</em>
+CATBody * piSkinBody = pSkinOp-&gt;<strong>GetResult</strong>();
+if (NULL==piSkinBody)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+    
+<em>// Deletes the operator</em>
+<strong>delete</strong> pSkinOp;
+pSkinOp = NULL;								</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The operator configuration is the level of software you want to use to
+    run this operator. By default, define an open configuration as in this use
+    case to run with the current level. Moreover here, the pointer to the
+    journal is set to <code>NULL</code> in the operator data. So that the
+    journal is not filled.&nbsp;</p>
+    <p>The configuration must be released after use. Here, it is <a href="#Writes the Model and Closes the Factory">released</a>
+    after the call to the last operator.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates a Prism"></a>Creating a Prism</h4>
+<p>The created <tt>SkinBody</tt> is now extruded to create a prism with <tt>CATTopPrism</tt>.
+To use it:
+<ul>
+  <li>Create it with the corresponding <tt>::CATTopCreatePrism</tt> global
+    function, by declaring the body to extrude (<tt>SkinBody</tt>), the
+    direction of the extrusion, the start and end limits of the prism from <tt>SkinBody</tt></li>
+  <li>Run it</li>
+  <li>Get the resulting body (<tt>MainBody1</tt>). This body is created by <tt>CATTopOperator</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathDirection   zDir(0., 0., 1.);
+double startOffset = 10.;
+double endOffset   = 30.;
+CATTopPrism       *pPrismOp = <strong>::CATTopCreatePrism</strong> (piGeomFactory,
+                                                   &amp;topdata
+                                                   piSkinBody,
+                                                   &amp;zDir,
+                                                   startOffset,
+                                                   endOffset);
+
+if (NULL==pPrismOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+// Runs
+pPrismOp-&gt;<strong>Run</strong>();
+    
+// Gets the resulting body 
+CATBody * piMainBody1=NULL;
+piMainBody1 = pPrismOp-&gt;<strong>GetResult</strong>();
+if (NULL==piMainBody1)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+// Deletes the operator
+<strong>delete</strong> pPrismOp;
+pPrismOp = NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p>As the body to extrude is a skin body, <tt>MainBody1</tt> is a volume body.
+If the body to extrude were a wire body, the result would be a skin body. Other
+types of prism operations can be defined, especially &quot;until&quot;
+operations: the limits of the prism are reached when encountering another body.
+This case is detailed in the <tt>CAATopJournal</tt> use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates a Box and a Cylinder Primitives"></a>Creating a Box and a
+Cylinder Primitives</h4>
+<p>This section illustrates the use of <tt>CATSolidPrimitive</tt> operators: no
+run is called to do the operation, that is done at the operator creation.</p>
+<p>To create a box, use <tt>CATSolidCuboid</tt>:
+<ul>
+  <li>Create it with the global function <code>CATCreateSolidCuboid</code>. The
+    points that are given are four corners of the box. The operation is
+    automatically run.</li>
+  <li>Get the resulting body (<tt>CuboidBody</tt>). This body is created by <tt>CATSolidCuboid</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathPoint vO( -2., 2., 28.),  vOI(-2., 15., 28.), 
+             vOJ(-15., 2., 28.),  vOK(-2., 2., 35.);
+	
+CATSolidCuboid *pCuboidOp = <b>::CATCreateSolidCuboid</b>( piGeomFactory, &amp;topdata, vO, vOI, vOJ, vOK);
+
+if (NULL==pCuboidOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Gets the result (the operator is run at is creation)</em>
+CATBody *piCuboidBody=NULL;
+piCuboidBody = pCuboidOp-&gt;<strong>GetResult</strong>();
+if (NULL==piCuboidBody)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Deletes the operator</em>
+<strong>delete</strong> pCuboidOp;
+pCuboidOp = NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p>To create a cylinder, use <tt><a name="CATSolidCylinder"></a>CATSolidCylinder</tt>
+:
+<ul>
+  <li>Create it with the global function <code>CATCreateSolidCylinder</code>.
+    The two points defines the axis of the cylinder. The operation is
+    automatically run</li>
+  <li>Get the resulting body (<tt>CylinderBody</tt>). This body is created by <tt>CATSolidCylinder</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathPoint axisStart ( -20,  10,  20 ),  axisEnd( -20,  10, 32 );
+double       radius = 4.0; 
+	
+CATSolidCylinder *pCylinderOp = ::<strong>CATCreateSolidCylinder</strong>(piGeomFactory, 
+                                                         &amp;topdata
+                                                         axisStart, 
+                                                         axisEnd, 
+                                                         radius);
+if (NULL==pCylinderOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Gets the resulting body (the operator is run at its creation)</em>
+CATBody *piCylinderBody = NULL;
+piCylinderBody = pCylinderOp-&gt;<strong>GetResult</strong>();
+if (NULL==piCylinderBody)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Deletes the operator</em>
+<strong>delete</strong> pCylinderOp;
+pCylinderOp = NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p>See the <tt>CAATopJournal</tt> use case [<a href="#References">1</a>] to see
+how to create a skin body cylinder.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Adds and Subtracts"></a>Adding and Subtracting</h4>
+<p>To use CATDynBoolean:
+<ul>
+  <li>Create it with the corresponding <tt>::CATCreateDynBoolean</tt> global
+    function, by declaring the bodies to union (<tt>MainBody1, CuboidBody</tt>)</li>
+  <li>Run it</li>
+  <li>Get the resulting body (<tt>MainBody2</tt>). This body is created by <tt>CATDynBoolean</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<p>This code also shows an example of use the <tt>CATICGMContainer::Remove</tt>
+method to suppress the no more used bodies: the <tt>RemoveDependancies</tt>
+option declares that not only the body, but also its domains, cells and geometry
+are removed, except if they were used by other CGM entities.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDynBoolean* pBoolOp = <strong>::CATCreateDynBoolean</strong> (piGeomFactory, 
+                                                &amp;topdata,                     
+                                                <strong>CATBoolUnion</strong>, 
+                                                piMainBody1, 
+                                                piCuboidBody);
+if (NULL==pBoolOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Runs</em>
+pBoolOp-&gt;Run();
+
+<em>// Gets the resulting body</em> 
+CATBody * piMainBody2 = NULL;
+piMainBody2 = pBoolOp-&gt;<strong>GetResult</strong>();
+if (NULL==piMainBody2)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Deletes the operator</em>
+<strong>delete</strong> pBoolOp;
+pBoolOp = NULL;</pre>
+      <pre>
+<em>// Asks the factory <a name="to proceed the deletion"></a>to proceed the deletion (CATBody)</em>
+piGeomFactory-&gt;<strong>Remove</strong>(piCuboidBody, <strong>CATICGMContainer::RemoveDependancies</strong>);  
+piCuboidBody = NULL;
+piGeomFactory-&gt;Remove(piMainBody1, CATICGMContainer::RemoveDependancies);
+piMainBody1 = NULL;     </pre>
+    </td>
+  </tr>
+</table>
+<p>The same is done for a Boolean subtract: the option <tt>CATBoolRemoval</tt>
+is used. <tt>MainBody3</tt> contains the result of all the operations, while the
+no-more used bodies (<tt>MainBody</tt>2 , <tt>CylinderBody</tt>) are removed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>pBoolOp = <strong>::CATCreateDynBoolean</strong> (piGeomFactory,
+                                 &amp;topdata, 
+                                 <strong>CATBoolRemoval</strong>, 
+			         piMainBody2, 
+			         piCylinderBody);
+if (NULL==pBoolOp)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Runs</em>
+pBoolOp-&gt;<strong>Run</strong>();
+
+<em>// Gets the resulting body</em>
+CATBody * piMainBody3 = NULL;
+piMainBody3 = pBoolOp-&gt;<strong>GetResult</strong>();
+if (NULL==piMainBody3)
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);
+}
+
+<em>// Deletes the operator</em>
+<strong>delete</strong> pBoolOp;
+pBoolOp = NULL;
+
+piGeomFactory-&gt;<strong>Remove</strong>(piCylinderBody);
+piCylinderBody = NULL;
+piGeomFactory-&gt;Remove(piMainBody2);
+piMainBody2 = NULL;    </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Fillets"></a>Filleting</h4>
+<p>First define the edges to fillet. These edges are the external boundary of
+the upper face of the prism after the two Boolean operations, in other words in
+our case, the face with 2 holes (the paths of the cylinder and the box). To
+retrieve them:
+<ul>
+  <li>Get all the faces (the dimension of a face is 2, see [<a href="#References">2</a>])
+    of the body <tt>MainBody3</tt> with the<tt> CATBody::GetAllCells</tt> method</li>
+  <li>Select the face with two holes (i.e. three domains) (use of <tt>CATCell::GetNbDomains</tt>)</li>
+  <li>For each domain of the selected face, count the number of edges: the loop
+    with five edges is the external one. One can also ask for the location of
+    the domain to directly have the external domain. Get the edges.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATLISTP(CATCell) listC;
+CATLISTP(CATCell) listFaces;
+piMainBody3 -&gt;<strong>GetAllCells</strong>(listFaces,  <i>// the output list of cells</i>
+                          <b>2</b> );        <i>// the dimension of the retrieved cells (2 for faces)</i>
+int nbFaces=listFaces.Size();	
+CATCell * piFace = NULL;
+
+<em>// ---------- <a name="Recovers the only face with 2 internal loops"></a>Recovers the only face with 2 internal loops</em>
+for ( i=1;i&lt;=nbFaces;i++)
+{
+	if ( 3== (listFaces[i]-&gt;<strong>GetNbDomains</strong>()) ) piFace = listFaces[i];
+}
+
+<em>// ---------- and the loop with 5 edges</em>
+CATDomain * piLoop = NULL;	
+CATLISTP(CATEdge) listEdges;	
+int numberOfEdges;
+
+if (NULL != piFace)
+{
+   for (i=1;i&lt;=3;i++)
+   {
+	piLoop = piFace-&gt;<strong>GetDomain</strong>(i);
+        piLoop-&gt;<strong>GetAllCells</strong>(listC, 1);      
+	numberOfEdges = listC.Size();
+	if (5==listC.Size())
+	{
+          for (int j=1;j&lt;=numberOfEdges;j++)
+		{listEdges.<strong>Append</strong>((CATEdge *)listC[j]);}
+	}
+   }
+}
+else <em>// problem in the definition of the body</em>
+{
+      ::CATCloseCGMContainer(piGeomFactory);
+   return (2);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>A <a name="filleting operation"></a>filleting operation is defined by
+affecting (possibly variable) radius to edges:
+<ul>
+  <li>The definition of the radius law is contained in the <tt>CATDynFilletRadius</tt>
+    object: in the use case, the radius is chosen constant along the edges</li>
+  <li>The definition of the edges to fillet according to a given radius law is
+    called ribbon and managed by the <tt>CATDynFilletRibbon</tt> object: there
+    can be several ribbons in one fillet operation, but in the use case, only
+    one is defined.<br>
+    The <tt>CATDynFilletRibbon::SetSegmentationMode</tt> option indicates that
+    the computed ribbon must be delimited on the main part.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>// for a constant radius, only the first argument is useful</em>
+CATDynFilletRadius * pRadius = new 
+                       <strong>CATDynFilletRadius</strong>(1.,    <em>// radius value</em>
+                       NULL,  <em>// the cell on which the radius is defined</em>
+                       NULL,  <em>// The ratio of the edge length defining the point</em>
+                       NULL); <em>// must be kept to NULL</em>
+if (NULL==pRadius)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+
+CATLISTP(CATDynFilletRadius)	listRadius;		
+listRadius.Append(pRadius);
+
+<em>// ribbon definition</em>		
+CATDynEdgeFilletRibbon * pRibbon = new <strong>CATDynEdgeFilletRibbon</strong>(listEdges, listRadius);
+if (NULL==pRibbon)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+
+pRibbon -&gt;SetSegmentationMode(CATDynTrim);</pre>
+    </td>
+  </tr>
+</table>
+<p>The fillet operation can now be defined and run. To use it
+<ul>
+  <li>Create it (with the corresponding <tt>::CATCreateDynFillet</tt> global
+    function) by declaring the body to fillet (<tt>MainBody3, CuboidBody</tt>)</li>
+  <li>Append the ribbon</li>
+  <li>Run it</li>
+  <li>Get the resulting body (<tt>MainBody4</tt>). This body is created by <tt>CATDynFillet</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<p>Also deletes the no more used object (radius, ribbon) and removes the old
+body (<tt>MainBody3</tt>).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDynFillet * pFilletOp = <strong>CATCreateDynFillet</strong>(piGeomFactory,&amp;topdata,piMainBody3);
+if (NULL==pFilletOp)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+
+
+// Appends the ribbon
+pFilletOp -&gt;<strong>Append</strong>(pRibbon);
+
+// Runs
+pFilletOp -&gt;<strong>Run</strong>(); 
+
+// Gets the resulting body
+CATBody * piMainBody4 = NULL;
+piMainBody4 = pFilletOp-&gt;<strong>GetResult</strong>();
+
+if (NULL==piMainBody4)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+
+// Deletes the operator
+<strong>delete</strong> pFilletOp;
+pFilletOp = NULL;
+
+if (NULL != pRadius) <strong>delete</strong> pRadius;
+pRadius = NULL;
+if (NULL != pRibbon) <strong>delete</strong> pRibbon;
+pRibbon = NULL;
+
+piGeomFactory-&gt;<strong>Remove</strong>(piMainBody3);
+piMainBody3 = NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Shells"></a>Shelling</h4>
+<p>Take two offset bodies of one initial body. The shelling operation digs a
+volume by removing one offset body (internal) from the other one (external).
+Some faces can also be not offset: these faces are called openings. In the use
+case, the opening face is the bottom face of the prism: it is the unique face
+with five edges and one domain. The way to retrieve it is similar to the way
+used in the section <a href="#Fillets">Fillets</a>. First void the list (<tt>RemoveAll</tt>),
+and remember that the list begins at 1!</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>listEdges.<strong>RemoveAll</strong>();
+piFace = NULL;
+for (i=1;i&lt;=nbFaces;i++)
+{
+ if ( 1== (listFaces[i]-&gt;<strong>GetNbDomains</strong>()) ) 
+ {
+   piLoop = listFaces[i]-&gt;<strong>GetDomain</strong>(1);
+   piLoop -&gt;<strong>GetAllCells</strong>(listC, 1);      
+   numberOfEdges = listC.<strong>Size</strong>();
+   if (5==listC.Size())
+   {
+     piFace=listFaces[i];
+   }
+ }
+}
+
+if (NULL == piFace) return (3);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a name="shelling operation"></a>shelling operation can now be defined
+and run. To use it:
+<ul>
+  <li>Create it (with the corresponding <tt>::CATCreateDynShell</tt> global
+    function) by declaring the body to shell (<tt>MainBody4</tt>) and the offset
+    values defined the factory unit</li>
+  <li>Define the openings (<tt>Append</tt>)</li>
+  <li>Run it</li>
+  <li>Get the resulting body (<tt>MainBody5</tt>). This body is created by <tt>CATDynShell</tt>
+    using <tt>CATGeoFactory</tt>, that manages the life cycle of the CGM
+    objects: in fact, if you want to delete the created body, call the <tt>CATICGMContainer::Remove</tt>
+    method with the <tt>CATICGMContainer::RemoveDependancies</tt> option.</li>
+  <li>Delete it.</li>
+</ul>
+<p>Also removes the old body (<tt>MainBody4</tt>).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDynShell* pShellOp = <strong>CATCreateDynShell</strong> (piGeomFactory,
+                                           &amp;topdata,      <i>// the configuration and the journal</i>
+                                           piMainBody4,   <i>// the body to shell</i>
+                                           -1.,   <i>// first offset value (inside the body)</i>
+                                           0.);   <i>// second offset value (initial body)</i>
+if (NULL==pShellOp)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}	
+<em>// Sets the opening faces</em>
+CATLISTP(CATFace) openings;
+openings.Append((CATFace*)piFace);
+pShellOp-&gt; <strong>Append</strong>(openings); 
+    
+<em>// Runs</em>
+pShellOp-&gt;<strong>Run</strong>();
+
+<em>// Gets the resulting body</em>
+CATBody * piMainBody5 = NULL;
+piMainBody5 = pShellOp-&gt;<strong>GetResult</strong>();
+if (NULL==piMainBody5)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+
+<em>// Deletes the operator</em>
+<strong>delete</strong> pShellOp;
+pShellOp = NULL;
+
+piGeomFactory-&gt;<strong>Remove</strong>(piMainBody4,CATICGMContainer::RemoveDependancies);
+piMainBody4 = NULL;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Computes the Volume"></a>Computing the Volume</h4>
+<p><tt>CATDynMassProperties3D</tt> is an operator to analyze a body. Here we ask
+for the computation of the volume of the body, result of all the operations. To
+use it:
+<ul>
+  <li>Create it with the <tt>::CATDynCreateMassProperties3D</tt> global function</li>
+  <li>Get the needed characteristics</li>
+  <li>Delete it.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDynMassProperties3D *pPropOp = <strong>CATDynCreateMassProperties3D</strong> (piMainBody5);
+if (NULL != pPropOp)
+{
+   cout &lt;&lt; &quot;Volume of the final object&quot; &lt;&lt; pPropOp-&gt;<strong>GetVolume</strong>() &lt;&lt; endl;
+   <strong>delete</strong> pPropOp;
+   pPropOp = NULL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Writes the Model and Closes the Factory"></a>Writing the Model and
+Closing the Factory</h4>
+<p>Before ending, we must first release the software configuration.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><i>// Releases the configuration</i>
+    pConfig-&gt;Release();</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>To save the model in a file, the <tt>::CATSaveCGMContainer</tt> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <tt>::CATCloseCGMContainer</tt>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <em>//
+ // Closes the container
+ //</em>
+	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case creates a body by chaining several types of topological
+operations, such Boolean, Filleting or Shelling, and primitive creation. The
+journal is not detailed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAATopJournal.htm">How to Use the Topological Journal</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concepts</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAATobTechArticles/TopoModel.htm">The
+      CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="../CAATopTechArticles/TopoJournal.htm">The CGM
+      Journal</a></td>
+  </tr>
+  <tr>
+    <td>[5]</td>
+    <td><a href="../CAAGopUseCases/CAAGopIntersect.htm">The
+      Geometric Operators</a></td>
+  </tr>
+  <tr>
+    <td>[6]</td>
+    <td><a href="../CAATopTechArticles/TopoBoolean.htm">The Boolean
+      Operators</a></td>
+  </tr>
+  <tr>
+    <td>[7]</td>
+    <td><a href="../CAATopTechArticles/TopoBoolean.htm">The Objects
+      of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[8]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td>[9]</td>
+    <td><a href="CAATopSpline.htm">Basic Topological Operators</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.1</strong> [Oct 2000]</td>
+    <td valign="top">Operator configuration</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

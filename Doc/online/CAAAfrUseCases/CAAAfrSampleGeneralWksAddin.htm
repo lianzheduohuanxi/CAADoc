@@ -1,0 +1,729 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Making Your Document Independent Command Available in All Workbenches</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Making Your Document Independent Command Available in All Workbenches</h3>
+      <em>Using CATIAfrGeneralWksAddin</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to insert a document independent command in all
+      workbenches of a V5 application.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrGeneralWksAddin Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrGeneralWksAddin Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrGeneralWksAddin</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrGeneralWksAddin Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a toolbar and modify the
+menu bar to integrate your document independent command in all workbenches. You
+will learn to implement an interface, the <em> CATIAfrGeneralWksAddin interface,</em>
+which is an Add-in [<a href="#References">1</a>] of the &quot;General&quot;
+workshop [<a href="#References">2</a>]. This workshop contains the commands
+which are always available even if no document is open: New, Open,
+Cut,....&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrGeneralWksAddin Use Case</h3>
+<p>CAAAfrGeneralWksAddin is a use case of the CAAApplicationFrame.edu framework that
+illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrGeneralWksAddin Do</h4>
+<p>The CAAAfrGeneralWksAddin creates an add-in to the <strong>General</strong>
+workshop. Is is made up of:
+<ul>
+  <li>a single toolbar</li>
+  <table border="0">
+    <tr>
+      <td ><img border="0" src="images/CAAAfrGeneralWksAddinToolbar.jpg" width="105" height="57"></td>
+    </tr>
+  </table>
+  <p>The <b>General</b> toolbar. It contains in first position the Search
+        Demonstrator [<a href="#References">3</a>] command, then the Viewer
+        Feedback demonstrator [<a href="#References">9</a>] command, and at last
+  the &quot;Add Item in MRU&quot; command [<a href="#References">11</a>].</p>
+  <li>menu items&nbsp;</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAAfrGeneralWksAddinmenubar.jpg" width="299" height="291"></td>
+      <td valign="top"><img border="0" src="images/CAAAfrGeneralWksAddinmenubar2.jpg" width="216" height="94"></td>
+    </tr>
+  </table>
+  <p>The Search
+        Demonstrator command is included in the Edit menu, just before Search,
+  whereas the Viewer
+        Feedback demonstrator command is set in the View menu.</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrGeneralWksAddin</h4>
+<p>To launch CAAAfrGeneralWksAddin , you will need to set up the build time environment,
+then compile CAAAfrGeneralWksAddin along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>But just before launching the execution, edit the CAAApplicationFrame.edu.dico
+interface dictionary file located in the dictionary directory of the
+CAAApplicationFrame.edu framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+#CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">and run mkCreateRuntimeView.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrGeneralWksAddin Code</h4>
+<p>The CAAAfrGeneralWksAddin use case is made of a single class named <i>CAAAfrGeneralWksAdn</i>
+located in the CAAAfrGeneralWksAddin.m module of the CAAApplicationFrame.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the add-in, you should create the module directory to store the
+add-in code along with its two subdirectories LocalInterfaces and src. For this
+example, this directory is named CAAAfrGeneralWksAddin.m and can be found in the
+CAAApplicationFrame.edu framework. Then you will need to create the following
+files.</p>
+<table width="100%" cellpadding="2">
+  <tbody>
+    <tr>
+      <td colSpan="2">In the CAAAfrGeneralWksAddin.m\LocalInterfaces directory:</td>
+    </tr>
+    <tr>
+      <td vAlign="top">
+        <ul>
+          <li>CAAAfrGeneralWksAdn.h</li>
+        </ul>
+      </td>
+      <td vAlign="top">The header file of the add-in description class</td>
+    </tr>
+    <tr>
+      <td colSpan="2">In the CAAAfrGeneralWksAddin.m\src directory:</td>
+    </tr>
+    <tr>
+      <td vAlign="top">
+        <ul>
+          <li>CAAAfrGeneralWksAdn.cpp</li>
+        </ul>
+      </td>
+      <td vAlign="top">The header file of the add-in description class</td>
+    </tr>
+    <tr>
+      <td colSpan="2">In the dictionary, that is the CNext\code\dictionary
+        directory, referenced at run time using the CATDictionaryPath
+        environment variable, create or update:</td>
+    </tr>
+    <tr>
+      <td vAlign="top">
+        <ul>
+          <li>CAAApplicationFrame.edu.dico</li>
+        </ul>
+      </td>
+      <td vAlign="top">The interface dictionary</td>
+    </tr>
+    <tr>
+      <td colSpan="2">In the CNext\resources\msgcatalog directory, referenced at
+        run time using the CATMsgCatalogPath environment variable:</td>
+    </tr>
+    <tr>
+      <td vAlign="top">
+        <ul>
+          <li>CAAAfrGeneralWksAdn.CATNls</li>
+        </ul>
+      </td>
+      <td vAlign="top">The add-in message file</td>
+    </tr>
+    <tr>
+      <td vAlign="top">
+        <ul>
+          <li>CAAAfrGeneralWksAddinHeader.CATNls and<br>
+            &nbsp; CAAAfrGeneralWksAddinHeader.CATRsc</li>
+        </ul>
+      </td>
+      <td vAlign="top">The command header resource files</td>
+    </tr>
+  </tbody>
+</table>
+<p>There are four logical steps in CAAAfrGeneralWksAddin:</p>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td vAlign="top"><a href="#Step1">1</a></td>
+    <td vAlign="top">Create the add-in description class</td>
+    <td vAlign="top">LocalInterfaces and src</td>
+  </tr>
+  <tr>
+    <td vAlign="top"><a href="#Step2">2</a></td>
+    <td vAlign="top">Create the command headers</td>
+    <td vAlign="top"><code>CreateCommands</code> method</td>
+  </tr>
+  <tr>
+    <td vAlign="top"><a href="#Step3">3</a></td>
+    <td vAlign="top">Create the add-in and arrange the commands</td>
+    <td vAlign="top"><code>CreateToolbars</code> method</td>
+  </tr>
+  <tr>
+    <td vAlign="top"><a href="#Step4">4</a></td>
+    <td vAlign="top">Provide the resources</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Create the add-in description class</h4>
+<ol>
+  <li>Create the CAAAfrGeneralWksAdn.h file
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;
+
+class CATCmdContainer;
+
+class CAAAfrGeneralWksAdn : public CATBaseUnknown
+{
+  CATDeclareClass;
+  
+  public:
+     CAAAfrGeneralWksAdn();
+     virtual ~CAAAfrGeneralWksAdn();
+  
+     // Creates the command headers
+     void CreateCommands();
+
+     // Arranges the commands in toolbars and menubar
+     CATCmdContainer * CreateToolbars();
+
+  private :
+
+     // Copy constructor, not implemented
+     // Set as private to prevent from compiler automatic creation as public.
+     CAAAfrGeneralWksAdn(const CAAAfrGeneralWksAdn &amp;iObjectToCopy);
+
+     // Assigment operator, not implemented
+     // Set as private to prevent from compiler automatic creation as public.
+     CAAAfrGeneralWksAdn &amp; operator = (const CAAAfrGeneralWksAdn &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Create the CAAAfrGeneralWksAdn.cpp file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// Local Framework
+#include &quot;CAAAfrGeneralWksAdn.h&quot;
+
+// ApplicationFrame Framework 
+#include &lt;CATCreateWorkshop.h&gt;    // To use NewAccess - SetAccess - SetAccessChild ...
+
+// Declaration of a new Command Header Class 
+#include &quot;CATCommandHeader.h&quot;        // See <a href="#Step2">Creating the Command Headers</a>
+MacDeclareHeader(CAAAfrGeneralWksAddinHeader);  
+
+CATImplementClass(CAAAfrGeneralWksAdn, DataExtension,
+                  CATBaseUnknown, <b>CAAAfrGeneralWksAddin</b>);
+
+#include &lt;TIE_<b>CATIAfrGeneralWksAddin</b>.h&gt;
+TIE_CATIAfrGeneralWksAddin(CAAAfrGeneralWksAdn);</pre>
+        <pre>
+CAAAfrGeneralWksAdn::CAAAfrGeneralWksAdn()
+{}
+
+CAAAfrGeneralWksAdn::CAAAfrGeneralWksAdn()
+{}
+
+void CAAAfrGeneralWksAdn::CreateCommands()
+{
+  ... // See <a href="#Step2">Creating the Command Headers</a>
+}
+
+CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars()
+{
+  ... // See <a href="#Step3">Creating the Toolbar and Arranging the Commands</a>
+}
+</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAAfrGeneralWksAdn</i> class states that it implements the <i>CATIAfrGeneralWksAddin</i>
+  interface thanks to the <code>TIE_</code><code>CATIAfrGeneralWksAddin</code> macro. The
+  <code>CATImplementClass</code> macro declares that the <i>CAAAfrGeneralWksAdn</i>
+  class is a data extension, thanks to the <code>DataExtension</code> keyword,
+  that extends <i>CAAAfrGeneralWksAddin</i>. The third argument must always
+  be set as <i>CATBaseUnknown</i> or <i>CATNull</i> for any kind of extension.</p>
+  <li>Updating the Dictionary<p>Update the interface dictionary, that is a file named, for example,
+    CAAApplicationFrame.dico, whose directory's pathname is concatenated at run
+    time in the CATDictionaryPath environment variable, and containing the
+    following declaration to state that the <i>CAAAfrGeneralWksAddin </i>component implements the
+    <i>CATIAfrGeneralWksAddin</i> interface, and
+    whose code is located in the libCAAAfrGeneralWksAddin shared library or
+    DLL.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><code>CAAAfrGeneralWksAddin</code> <code>CATIAfrGeneralWksAddin</code> libCAAAfrGeneralWksAddin</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Note that the component main class name is used to refer to the component
+    in the interface dictionary, and never the extension class names. Note also
+    that the shared library or DLL to associate with the component/interface
+    pair is the one that contains the code created by the call to the TIE macro
+    (This is generally the same library than the one that contains the interface
+    implementation code, since the TIE macro is usually included in the
+    extension class source file.) This is because when a client asks a component
+    for an interface pointer, the TIE class is instantiated first, and it either
+    retrieves the existing instance of the appropriate extension class, or
+    otherwise instantiates it.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Create the command headers</h4>
+<p>Before reading this section, you can you refer to the &quot;The Command
+Headers&quot; article [<a href="#References">5</a>] to have an overview of the
+command header concepts, and more precisely you have the &quot;Defining Headers
+in CATIAfrGeneralWksAddin implementations&quot; section, which details the
+specificities of command headers created in this general add-in.&nbsp;&nbsp;</p>
+<p>This is done by the <code>CreateCommands</code> method. Each command
+available in your add-in should be represent by a command header. A command header is an
+instance of a command header class.</p>
+<p>The command header class, named
+CAAAfrGeneralWksAddinHeader, is created using the <code>MacDeclareHeader</code> macro.
+<ol>
+  <li>Create the CAAAfrGeneralWksAddinHeader command header class. To do this,
+    add the following lines in CAAAfrGeneralWksAdn.cpp:
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>#include &quot;CATCommandHeader.h&quot;
+MacDeclareHeader(CAAAfrGeneralWksAddinHeader);</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The <code>MacDeclareHeader</code> macro creates the header file and the
+    source file for the CAAAfrGeneralWksAddinHeader class, and associates with
+    this class the resource files CAAAfrGeneralWksAddinHeader.CATNls and
+    CAAAfrGeneralWksAddinHeader.CATRsc. See <a href="#Step4">Providing the
+    Resources</a>.</p>
+  <li>Create the command headers in the <code>CreateCommands</code>
+    method. This method should contain one instantiation statement of the
+    command header class per command header. Each statement has the following
+    form.
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>void CAAAfrGeneralWksAdn::CreateCommands()
+{
+  ...
+   new <b>CAAAfrGeneralWksAddinHeader</b>(&quot;<b>CAAAfrSearchHdr</b>&quot;, 
+                             &quot;CAACafSearch&quot;, 
+                             &quot;CAACafSearchCmd&quot;, (void *)NULL);
+  ...
+}  </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The command header constructor has the following arguments:
+    <ul>
+      <li><code>CAAAfrSearchHdr</code> is the identifier you need to assign to the command
+        header. It will be used afterwards:
+        <ul>
+          <li>To associate the command starters you will define to put the
+            command in a menu and in toolbars with the command header. This is
+            done for this add-in in <a href="#Step3">Creating the Toolbar and
+            Arranging the Commands</a>.
+          <li>To build the variables that define the command header resources,
+            such as the help messages seen by the end user in his/her own
+            language, or the icon to display in the toolbar. This is explained
+            in <a href="#Step4">Providing the Resources</a></li>
+        </ul>
+      <li><code>CAACafSearch</code> is the name of the shared library or DLL containing the
+        Search Demonstrator command's code, without the prefix lib, and without
+        the suffix depending on the operating system.
+      <li><code>CAACafSearchCmd</code> is the name of the Search Demonstrator command class
+      <li>the last argument is the possible pointer to the object to pass to the
+        command when executing it.&nbsp;</li>
+    </ul>
+  </li>
+</ol>
+<p>The command header associated with the Viewer Feedback demonstrator - see <a href="#What">What Does CAAAfrGeneralWksAddin Do</a>
+- is described in the use case [<a href="#References">10</a>].</p>
+<p>The command header associated with the Most Recent Used header is described
+in the use case [<a href="#References">11</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<h4><a name="Step3"></a>Create the add-in and arrange the commands</h4>
+<p>Finally, we'll create the toolbar and arrange the commands. This is the job
+of the <code>CreateToolbars</code> method.</p>
+<ul>
+  <li>Creating the toolbar
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars()
+{
+  NewAccess(CATCmdContainer, pCAAAfrGeneralWksTlb, CAAAfrGeneralWksTlb);
+  
+  NewAccess(CATCmdStarter, pCAAAfrSearchStr, CAAMmrGeneralSearchStr);
+  SetAccessCommand(pCAAAfrSearchStr, &quot;<b>CAAAfrSearchHdr</b>&quot;);
+  SetAccessChild(pCAAAfrGeneralWksTlb, pCAAAfrSearchStr);
+  
+  NewAccess(CATCmdStarter, pCAAAfrViewerFeedbackStr, CAAAfrViewerFeedbackStr);
+  SetAccessCommand(pCAAAfrViewerFeedbackStr, &quot;<b>CAAAfrViewerFeedbackHdr</b>&quot;);
+  SetAccessNext(pCAAAfrSearchStr, pCAAAfrViewerFeedbackStr);
+  
+  NewAccess(CATCmdStarter, pCAAAfrMRUAddElementStr, CAAAfrMRUAddElementStr);
+  SetAccessCommand(pCAAAfrMRUAddElementStr, &quot;CAAAfrMRUAddElementHdr&quot;);
+  SetAccessNext(pCAAAfrViewerFeedbackStr, pCAAAfrMRUAddElementStr);
+  
+  <b>AddToolbarView</b>(pCAAAfrGeneralWksTlb, 1, Right); 
+		 
+  ...
+}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Here is what's happen:
+    <ul>
+      <li>The General toolbar is created as an instance of the <i> CATCmdContainer</i>
+        class using the <code>NewAccess</code> macro. <code>pCAAAfrGeneralWksTlb</code>
+        is the
+        variable used to handle the General toolbar command container instance
+        pointer, and <code>CAAAfrGeneralWksTlb</code> is the identifier used to refer to it in
+        the add-in resource files. This identifier must be unique among all the
+        toolbar identifiers that can be found within the application [<a href="#References">6</a>].
+        The General toolbar default location is defined using the <code>AddToolbarView</code>
+        macro, where <code>1</code> means that the toolbar is visible by
+        default (-<code>1</code> means invisible), and <code>Right</code> means
+        that the toolbar is docked at the right side of the application window.
+      <li>Three macros are required for each command.&nbsp;
+        <ol>
+          <li>First, the command starter is created as a <i> CATCmdStarter</i> instance
+            using the <code>NewAccess</code> macro. <code>pCAAAfrSearchStr</code>
+            is the
+            variable used to handle a pointer to that instance, and <code>CAAMmrGeneralSearchStr</code>
+            is its identifier.
+          <li>Then the command header is associated with this command
+            starter using the <code>SetAccessCommand</code> macro. The second
+            parameter is the command header identifier defined as the
+            first parameter of the command header constructor. Refer to <a href="#Step2">Creating
+            the Command Headers</a>
+          <li>Finally the command starter is set as the child of the General
+            toolbar thanks to the <code>SetAccessChild </code>macro or next of
+            the previous starter with the <code>SetAccessNext</code> macro.</li>
+        </ol>
+      </li>
+    </ul>
+  <li>Creating the menu items
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars()
+{
+  ...
+  NewAccess(CATCmdContainer,pCAAAfrGeneralWksMbr,CAAAfrGeneralWksMbr);
+
+  NewAccess(CATCmdContainer,pCAAAfrGeneralEditMnu,<b>CATAfrEditMnu</b>);
+       SetAccessChild(pCAAAfrGeneralWksMbr,pCAAAfrGeneralEditMnu);
+
+       NewAccess(CATCmdStarter,pCAAAfrGeneralEditSearchStr,CAAAfrGeneralEditSearchStr);
+       SetAccessChild(pCAAAfrGeneralEditMnu,pCAAAfrGeneralEditSearchStr);
+       SetAccessCommand(pCAAAfrGeneralEditSearchStr,&quot;<b>CAAAfrSearchHdr</b>&quot;);
+       <b>SetAccessAnchorName</b>(pCAAAfrGeneralEditSearchStr,&quot;CATAfrEditSearchStr&quot;);
+       
+  NewAccess(CATCmdContainer,pCAAAfrGeneralView,<b>CATAfrView</b>);
+     SetAccessNext(pCAAAfrGeneralEditMnu,pCAAAfrGeneralView);
+
+       NewAccess(CATCmdStarter,pCAAAfrGeneralViewFBStr,CAAAfrGeneralViewFBStr);
+       SetAccessChild(pCAAAfrGeneralView,pCAAAfrGeneralViewFBStr);
+       SetAccessCommand(pCAAAfrGeneralViewFBStr,&quot;<b>CAAAfrViewerFeedbackHdr</b>&quot;);
+       
+  <b>SetAddinMenu</b>(pCAAAfrGeneralWksTlb,pCAAAfrGeneralWksMbr);
+  ...
+}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Here is what's happen:
+    <ul>
+      <li>A container,<code>pCAAAfrGeneralWksMbr,</code> is created to receive two
+        menus:
+        <ul>
+      <li>pCAAAfrGeneralEditMnu for which the name is <code>CATAfrEditMnu</code>, the name of the
+        Edit menu. pCAAAfrGeneralEditMnu is a child of <code>pCAAAfrGeneralWksMbr</code> 
+      <li> pCAAAfrGeneralView for which the name is <code>CATAfrView</code>, the name of the View
+        menu. pCAAAfrGeneralView is the next of pCAAAfrGeneralEditMnu.&nbsp;
+             </ul>
+                <li>Three macros are required for each command.&nbsp;
+        <ol>
+          <li>First, the command starter is created as a CATCmdStarter instance
+            using the <code>NewAccess</code> macro. <code>pCAAAfrGeneralEditSearchStr</code>
+            is the
+            variable used to handle a pointer to that instance, and <code>CAAAfrGeneralEditSearchStr</code>
+            is its identifier.
+          <li>Then the command header is associated with this command
+            starter using the <code>SetAccessCommand</code> macro. The second
+            parameter is the command header identifier defined as the
+            first parameter of the command header constructor. Refer to <a href="#Step2">Creating
+            the Command Headers</a>
+          <li>Finally the command starter is set as the child of the Menu bar</li>
+        </ol>
+              <p>In this case, a last macro has been used: <code>NewAccessAnchorName
+              </code>which enables you to locate the Search Demonstrator command
+              just before the Search command (<code>CATAfrEditSearchStr</code>)
+              [<a href="#References">5</a>]</p>
+      <li>
+        <p>The container, <code>pCAAAfrGeneralWksMbr</code>, declared as menu
+        thanks to the <code>SetAddinMenu</code> method. The first argument of
+        this method, <code>pCAAAfrGeneralWksTlb</code>, is the first chained
+        toolbar, those returned by the method- see the next section. The second
+        argument is the container itself <code>pCAAAfrGeneralWksMbr</code>.&nbsp;</p>
+      </li>
+    </ul>
+  <li>Returning the toolbar
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>CATCmdContainer * CAAAfrGeneralWksAdn::CreateToolbars()
+{
+  ...
+		 
+  return pCAAAfrGeneralWksTlb;
+}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The first chained toolbar, <code>pCAAAfrGeneralWksTlb</code>,&nbsp; is
+    returned by this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Provide the resources</h4>
+<p>You should provide the resources for the toolbar, the menu and for all its
+commands. They are classified into the following:
+<ul>
+  <li>The toolbar's title. The&nbsp;Creating Resources for Workshops and
+    Workbenches article details all the resources [<a href="#References">7</a>].
+    <p>The CAAAfrGeneralWksAdn.CATNls:</p>
+    <table class="code">
+        <tr>
+          <td>
+            <pre>CAAAfrGeneralWksTlb.Title   = &quot;General&quot; ;</pre>
+          </td>
+        </tr>
+    </table>
+    <p></p>
+  <li>The command header resources in the command header resource files: titles,
+    messages, icons, and the accelerators associated with the commands. This is
+    described in Creating Resources for Command Headers [<a href="#References">8</a>]</li>
+  <p>The CAAAfrGeneralWksAddinHeader.CATNls:</p>
+    <table class="code">
+        <tr>
+          <td>
+            <pre>CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Category  = &quot;Edit&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Title     = &quot;Search Demonstrator...&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.ShortHelp = &quot;Search Demonstrator&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Help      = &quot;Demonstrator of the Search CAA API&quot; ;
+CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.LongHelp  = &quot;Search Demonstrator 
+This Command launches some queries on the current document. The result is put
+into the HSO.&quot; ;</pre>
+          </td>
+        </tr>
+    </table>
+     <p>The CAAAfrGeneralWksAddinHeader.CATRsc:</p>
+     <table class="code">
+        <tr>
+          <td>
+            <pre>CAAAfrGeneralWksAddinHeader.CAAAfrSearchHdr.Icon.Normal    = &quot;I_CAASearch&quot; ;</pre>
+          </td>
+        </tr>
+    </table>
+
+
+</ul>
+<blockquote>
+  <p align="left">For the resources of the CAAAfrViewerFeedbackHdr command
+  header, refer to the CAAAfrViewerFeedbackHdr use case [<a href="#References">10</a>].</p>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how by implementing the <i>CATIAfrGeneralWksAddin</i>
+interface you can add your document independent command in all workbenches.&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%" height="154">
+  <tr>
+    <td valign="top" height="18">[1]</td>
+    <td height="18"><a href="CAAAfrSampleAddin.htm">Creating an Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[2]</td>
+    <td height="18"><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">ApplicationFrame
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[3]</td>
+    <td height="18"><a href="../CAACafUseCases/CAACafSampleSearch.htm">Creating Search Queries&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[4]</td>
+    <td height="18"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[5]</td>
+    <td height="18"><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[6]</td>
+    <td height="18"><a href="../CAADocQuickRefs/CAADocCppNamingRulesChecklist.htm">Checklist
+      for CAA V5 C++ Naming Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[7]</td>
+    <td height="18"><a href="../CAAAfrTechArticles/CAAAfrI18NWorkshop.htm">Creating
+      Resources for Workshop and Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[8]</td>
+    <td height="18"><a href="../CAAAfrTechArticles/CAAAfrI18NHeader.htm">Creating
+      Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[9]</td>
+    <td height="18"><a href="../CAAVisUseCases/CAAVisViewerFeedback.htm">Viewer
+      Feedback</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[10]</td>
+    <td height="18"><a href="CAAAfrCheckHeader.htm">Creating Check Button</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="18">[11]</td>
+    <td height="18"><a href="CAAAfrSampleMRUHdr.htm">Creating a Most Recent Used
+      command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [May 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

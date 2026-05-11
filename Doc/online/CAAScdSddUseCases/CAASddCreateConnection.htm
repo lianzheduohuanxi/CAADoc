@@ -1,0 +1,494 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Connections</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Connections</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create connections.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddCreateConnection is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddCreateConnection.CATPart in the samples directory.</p>
+		<p><a href="CAASddCreateConnectionSource.htm" target="Source">CAASddCreateConnection.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddCreateConnection.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddCreateConnection includes eleven steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Plates, Super Stiffeners, and Super Members</a></li>
+			<li><a href="#Step5">Retrieving the Operation Factory</a></li>
+			<li><a href="#Step6">Getting the Endcut Manager from the Operation Factory</a></li>
+			<li><a href="#Step7">Applying Endcuts to a Stiffener</a></li>
+			<li><a href="#Step8">Applying Endcuts to a Member</a></li>
+			<li><a href="#Step9">Creating a Slot on a Plate Using a Stiffener</a></li>
+			<li><a href="#Step10">Creating a Slot on a Profile Using a Stiffener</a></li>
+			<li><a href="#Step11">Updating the Part Document</a></li>
+		</ol>
+		<p><img alt="" src="images/CAASddCreateConnection.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASddCreateConnection.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain()
+  <span class="keyword">Dim</span> ObjPart  <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>This step describes how to get the SfmManager object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj  <span class="keyword">As</span>  SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Plates, Super Stiffeners, and Super Members</a></h4>
+		<p>This step describes how to get the collections of plates, stiffeners,
+		and members and how to get one specific element in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Stiffeners, Plates and Members</span>
+  <span class="keyword">Dim</span> StiffenerReferencesObj <span class="keyword">As</span> References
+  <span class="keyword">Set</span> StiffenerReferencesObj = ManagerObj.GetSuperStiffeners
+  <span class="keyword">Dim</span> PlateReferencesObj <span class="keyword">As</span> References
+  <span class="keyword">Set</span> PlateReferencesObj = ManagerObj.GetSuperPlates
+  <span class="keyword">Dim</span> MemberReferencesObj <span class="keyword">As</span> References
+  <span class="keyword">Set</span> MemberReferencesObj = ManagerObj.GetSuperMembers
+  <span class="keyword">Dim</span> SuperPlate1, SuperPlate2 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> SuperPlate1 = PlateReferencesObj.Item(1)
+  <span class="keyword">Set</span> SuperPlate2 = PlateReferencesObj.Item(2)
+  <span class="keyword">Dim</span> SuperStiffener1, SuperStiffener2, SuperStiffener3 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> SuperStiffener1 = StiffenerReferencesObj.Item(1)
+  <span class="keyword">Set</span> SuperStiffener2 = StiffenerReferencesObj.Item(2)
+  <span class="keyword">Set</span> SuperStiffener3 = StiffenerReferencesObj.Item(3)
+  <span class="keyword">Dim</span> SuperMember1, SuperMember2 <span class="keyword">As</span> SfmMember
+  <span class="keyword">Set</span> SuperMember1 = MemberReferencesObj.Item(1)
+  <span class="keyword">Set</span> SuperMember2 = MemberReferencesObj.Item(2)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Retrieving the Operation Factory</a></h4>
+<p>This step describes how to get SfmOperationFactory Object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> EndCutFactoryObj <span class="keyword">As</span> SfmOperationFactory
+  <span class="keyword">Set</span> EndCutFactoryObj = ObjPart.GetCustomerFactory ("SfmOperationFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Getting the Endcut Manager from the Operation Factory</a></h4>
+		<p>The SfmEndcutManager object is obtained using the GetEndcutManager method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the EndcutManager Object</span>
+  <span class="keyword">Dim</span> EndCutManagerObj <span class="keyword">As</span> SfmEndcutManager
+  <span class="keyword">Set</span> EndCutManagerObj = EndCutFactoryObj.GetEndcutManager
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Applying Endcuts to a Stiffener</a></h4>
+		<p>Applying Endcut on end extremity of Stiffener2.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'APPLYING ENDCUTS ON STIFFENER2</span>
+  <span class="comment">'Checking list of available Endcuts for a given family and type</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames1 <span class="keyword">As</span> Variant
+  ListOfEndCutNames1 = EndCutManagerObj.GetAvailableEndcuts ("Tee", "Snipe")
+
+  <span class="comment">'Gets the Specifications required to define a particular Endcut</span>
+  <span class="keyword">Dim</span> ListOfContextNames1(), ListOfParamNames1() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters1 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames1, ListOfUDFParameters1, ListOfParamNames1
+
+  <span class="comment">'Read the Name of Contexts</span>
+  <span class="keyword">Dim</span> SizeOfContextNames <span class="keyword">As</span> Long
+  SizeOfContext = UBound(ListOfContextNames1)
+  <span class="keyword">Dim</span> i <span class="keyword">As</span> Integer
+  <span class="keyword">For</span> i = 0 <span class="keyword">To</span> SizeOfContext
+    <span class="keyword">Dim</span> ContextName <span class="keyword">As</span> String
+    ContextName = ListOfContextNames1(i)
+  <span class="keyword">Next</span>
+
+  <span class="comment">'Checking the UDFParameters and Setting their values</span>
+  <span class="keyword">Dim</span> NbOfUDFParams <span class="keyword">As</span> Long
+  <span class="keyword">Dim</span> ParamName() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> UDFParamName <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> UDFParam <span class="keyword">As</span> Parameter
+  <span class="keyword">Dim</span> UDFParamValue <span class="keyword">As</span> String
+  NbOfUDFParams = ListOfUDFParameters1.Count
+  <span class="keyword">For</span> i = 1 <span class="keyword">To</span> NbOfUDFParams
+    UDFParamName = ListOfParamNames1(i - 1)
+    <span class="keyword">Set</span> UDFParam = ListOfUDFParameters1.Item(i)
+    UDFParamValue = UDFParam.ValueAsString
+    UDFParam.ValuateFromString("50mm")
+  <span class="keyword">Next</span>
+
+  <span class="comment">'Defining Limit</span>
+  <span class="keyword">Dim</span> FirstLimit <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> FirstLimit = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+
+  <span class="comment">'Get FunctionFactory Object</span>
+  <span class="keyword">Dim</span> FactoryRef <span class="keyword">As</span> SfmFunctionFactory
+  <span class="keyword">Set</span> FactoryRef = ObjPart.GetCustomerFactory("SfmFunctionFactory")
+  <span class="keyword">Dim</span> ListOfContexts1 <span class="keyword">As</span> SfmReferences
+  <span class="keyword">Set</span> ListOfContexts1 = FactoryRef.SfmReferences
+
+  <span class="comment">'Adding Limit</span>
+  ListOfContexts1.Add FirstLimit
+
+  <span class="comment">'Creating EndCut</span>
+  <span class="keyword">Dim</span> EndCutObj1 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj1 = SuperStiffener2.AddEndcut (2, "Snipe", "T-CTX-SHAPE", ListOfContexts1, ListOfUDFParameters1)
+
+  <span class="comment">'Update the Connection Set</span>
+  EndCutObj1.UpdateConnectionsSet
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+<p>Similarly, applying Endcut on start extremity of Stiffener2 with default parameter values.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Checking list of available Endcuts</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames2 <span class="keyword">As</span> Variant
+  ListOfEndCutNames2 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Weld")
+
+  <span class="comment">'Gets the Specifications required to define Endcut</span>
+  <span class="keyword">Dim</span> ListOfContextNames2(), ListOfParamNames2() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters2 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Weld", "Metal To Metal", ListOfContextNames2, ListOfUDFParameters2, ListOfParamNames2
+
+  <span class="comment">'In this case there are No UDFParameters</span>
+  <span class="comment">'Define Limit</span>
+  <span class="keyword">Dim</span> SecondLimit <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SecondLimit = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  <span class="keyword">Dim</span> ListOfContexts2 <span class="keyword">As</span> SfmReferences
+  <span class="keyword">Set</span> ListOfContexts2 = FactoryRef.SfmReferences
+  ListOfContexts2.Add SecondLimit
+
+  <span class="comment">'Creating EndCut</span>
+  <span class="keyword">Dim</span> EndCutObj2 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj2 = SuperStiffener2.AddEndcut(1, "Weld", "Metal To Metal", ListOfContexts2, Nothing)
+  <span class="comment">'Update the Connection Set</span>
+  EndCutObj2.UpdateConnectionsSet
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+<p>Applying Endcut to Stiffener1.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'APPLYING ENDCUTS ON STIFFENER1</span>
+  <span class="comment">'Checking list of available Endcuts for a given family and type</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames3 <span class="keyword">As</span> Variant
+  ListOfEndCutNames3 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+
+  <span class="comment">'Gets the Specifications required to define Endcut</span>
+  <span class="keyword">Dim</span> ListOfContextNames3(), ListOfParamNames3() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters3 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-E70LSH", ListOfContextNames3, ListOfUDFParameters3, ListOfParamNames3
+
+  <span class="comment">'Creating Endcut</span>
+  <span class="keyword">Dim</span> EndCutObj3 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj3 = SuperStiffener1.AddEndcut(1, "Snipe", "T-E70LSH", Nothing, ListOfUDFParameters3)
+
+  <span class="comment">'Update the Connection Set</span>
+  EndCutObj3.UpdateConnectionsSet
+
+  <span class="comment">'Applying Endcut at End Extremity with Default Parameter values</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames4 <span class="keyword">As</span> Variant
+  ListOfEndCutNames4 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  <span class="keyword">Dim</span> ListOfContextNames4(), ListOfParamNames4() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters4 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", ListOfContextNames4, ListOfUDFParameters4, ListOfParamNames4
+  <span class="keyword">Dim</span> EndCutObj4 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj4 = SuperStiffener1.AddEndcut(2, "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", Nothing, ListOfUDFParameters4)
+
+  <span class="comment">'Update the Connection Set</span>
+  EndCutObj4.UpdateConnectionsSet
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Applying Endcuts to a Member</a></h4>
+		<p>Applying Endcut at start extremity of Member1.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Checking list of available Endcuts for a given family and type</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames5 <span class="keyword">As</span> Variant
+  ListOfEndCutNames5 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Weld")
+  <span class="keyword">Dim</span> ListOfContextNames5(), ListOfParamNames5() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters5 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Weld", "Weld", ListOfContextNames5, ListOfUDFParameters5, ListOfParamNames5
+
+  <span class="comment">'In this case there are No UDFParameters</span>
+  <span class="keyword">Dim</span> ThirdLimit <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ThirdLimit = ObjPart.CreateReferenceFromObject(SuperStiffener2)
+  <span class="keyword">Dim</span> ListOfContexts5 <span class="keyword">As</span> SfmReferences
+  <span class="keyword">Set</span> ListOfContexts5 = FactoryRef.SfmReferences
+  ListOfContexts5.Add ThirdLimit
+  <span class="keyword">Dim</span> EndCutObj5 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj5 = SuperMember1.AddEndcut(1, "Weld", "Weld", ListOfContexts5, Nothing)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+<p>Applying Endcut at end extremity of Member1.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> ListOfEndCutNames6 <span class="keyword">As</span> Variant
+  ListOfEndCutNames6 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Snipe")
+  <span class="keyword">Dim</span> ListOfContextNames6(), ListOfParamNames6() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters6 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Snipe", "HP_P27", ListOfContextNames6, ListOfUDFParameters6, ListOfParamNames6
+
+  <span class="comment">'In this case there are no Contexts</span>
+  <span class="keyword">Dim</span> EndCutObj6 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj6 = SuperMember1.AddEndcut(2, "Snipe", "HP_P27", Nothing, ListOfUDFParameters6)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+<p>Applying Endcuts to Member2.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Applying Endcut at Start Extremity</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames7 <span class="keyword">As</span> Variant
+  ListOfEndCutNames7 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  <span class="comment">'Gets the Specifications required to define a particular Endcut</span>
+  <span class="keyword">Dim</span> ListOfContextNames7(), ListOfParamNames7() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters7 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames7, ListOfUDFParameters7, ListOfParamNames7
+  <span class="comment">'Creating Endcut with Default Parameter values</span>
+  <span class="keyword">Dim</span> EndCutObj7 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj7 = SuperMember2.AddEndcut(1, "Snipe", "T-CTX-SHAPE", ListOfContexts5, ListOfUDFParameters7)
+
+  <span class="comment">'Applying Endcut at End Extremity</span>
+  <span class="keyword">Dim</span> ListOfEndCutNames8 <span class="keyword">As</span> Variant
+  ListOfEndCutNames8 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  <span class="keyword">Dim</span> ListOfContextNames8(), ListOfParamNames8() <span class="keyword">As</span> Variant
+  <span class="keyword">Dim</span> ListOfUDFParameters8 <span class="keyword">As</span> SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "BuiltIn-B4-B4O1-B3-B3O2", ListOfContextNames8, ListOfUDFParameters8, ListOfParamNames8
+  <span class="keyword">Dim</span> EndCutObj8 <span class="keyword">As</span> SfmEndcut
+  <span class="keyword">Set</span> EndCutObj8 = SuperMember2.AddEndcut(2, "Trim", "BuiltIn-B4-B4O1-B3-B3O2", Nothing, ListOfUDFParameters8)
+
+  <span class="comment">'Update the Connection Set</span>
+  EndCutObj7.UpdateConnectionsSet
+  EndCutObj8.UpdateConnectionsSet
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Creating a Slot on a Plate Using a Stiffener</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get OperationFactory Object</span>
+  <span class="keyword">Dim</span> SlotFactoryObj <span class="keyword">As</span> SfmOperationFactory
+  <span class="keyword">Set</span> SlotFactoryObj = ObjPart.GetCustomerFactory("SfmOperationFactory")
+
+  <span class="comment">'Gets the list of available Slots from catalog for a given Profile(Stiffener/Member)</span>
+  <span class="keyword">Dim</span> ListOfAvailableSlots() <span class="keyword">As</span> Variant
+  ListOfAvailableSlots = SlotFactoryObj.GetAvailableSlotsFromCatalog(SuperStiffener3)
+
+  <span class="comment">'Gets the Slot Parameters and Names for a particular slot from catalog</span>
+  <span class="keyword">Dim</span> ListSlotParams1 <span class="keyword">As</span> SfmConnectionParameters
+  <span class="keyword">Dim</span> ListSlotPramNames1() <span class="keyword">As</span> Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "Tee_Slot_thru_Plate", ListSlotParams1, ListSlotPramNames1
+
+  <span class="comment">'Get the object of SfmSlots</span>
+  <span class="keyword">Dim</span> SlotOnPlate <span class="keyword">As</span> SfmSlots
+  <span class="keyword">Set</span> SlotOnPlate = SuperPlate2.GetSlotsOnPlate
+
+  <span class="comment">'Create References for Penetrated and Penetrating Objects</span>
+  <span class="keyword">Dim</span> PenetratedRef1, PenetratingRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> PenetratedRef1 = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  <span class="keyword">Set</span> PenetratingRef1 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+ 
+ <span class="comment">'Create Slot on Plate Using a Stiffener</span>
+  <span class="keyword">Dim</span> SfmSlotObj <span class="keyword">As</span> SfmSlot
+  <span class="keyword">Set</span> SfmSlotObj = SlotOnPlate.AddSlot(PenetratedRef1, PenetratingRef1, "Tee_Slot_thru_Plate", ListSlotParams1)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step10">Creating a Slot on a Profile Using a Stiffener</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Gets the Slot Parameters and Names for a particular slot from catalog</span>
+  <span class="keyword">Dim</span> ListSlotParams2 <span class="keyword">As</span> SfmConnectionParameters
+  <span class="keyword">Dim</span> ListSlotPramNames2() <span class="keyword">As</span> Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "CC-10-2Tee_thru_Shape", ListSlotParams2, ListSlotPramNames2
+
+  <span class="comment">'Get the object of SfmSlots</span>
+  <span class="keyword">Dim</span> SlotsonProfile <span class="keyword">As</span> SfmSlots
+  <span class="keyword">Set</span> SlotsonProfile = SuperStiffener1.GetSlotsOnProfile
+  <span class="keyword">Dim</span> PenetratedRef2, PenetratingRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> PenetratedRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+  <span class="keyword">Set</span> PenetratingRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+  
+  <span class="comment">'Create Slot on Profile Using a Stiffener</span>
+  <span class="keyword">Dim</span> SfmSlotObj2 <span class="keyword">As</span> SfmSlot
+  <span class="keyword">Set</span> SfmSlotObj2 = SlotsonProfile.AddSlot(PenetratedRef2, PenetratingRef2, "CC-10-2Tee_thru_Shape", ListSlotParams2)
+
+  <span class="comment">'Update the Connection Sets</span>
+  SfmSlotObj.UpdateConnectionsSet
+  SfmSlotObj2.UpdateConnectionsSet
+  
+  <span class="comment">'For Endcuts and Slots to appear in 3D</span>
+  SuperStiffener1.Run
+  SuperStiffener2.Run
+  SuperMember1.Run
+  SuperMember2.Run
+  SuperPlate2.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step11">Updating the Part Document</a></h4>
+		<p>Update the Part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'To Updating CATIA Part Document</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create connections.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,586 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Managing Variables and Operation States for Behavior Command</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM Enterprise Architecture</h1>
+     </td>
+     <td valign="top">
+     <h2>Business Process Knowledge Template</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Managing Variables and Operation States for Behavior
+     Command</h3>
+     <p><em>Managing Variables of BKT Objects and Operation States for a 
+     Behavior Command launching a CAA Command.</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This Use Case shows how to code a CAA command launched by a behavior 
+     command and also how to manipulate the variables of 
+     BKT Objects (behaviors or types). </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAAOBMInterfacesCmd Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAAOBMInterfacesCmd Do</a></li>
+         <li><a href="#How">How to Launch CAAOBMInterfacesCmd</a></li>
+         <li><a href="#Where">Where to Find the CAAOBMInterfacesCmd Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show how to control the execution of a 
+ behavior command. It is illustrated through a CAA command called by a behavior command. 
+ The control of the states of the behavior will guaranty the synchronicity of 
+ the behavior and the CAA command in order to avoid any side effects. It also 
+ demonstrates how to access to the variables (attributes) of a behavior or of a 
+ technological object and how to manage them.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<a href="#Top">Top</a>]</p>
+ <h3><a name="UseCase"></a>The CAAOBMInterfacesCmd Use Case</h3>
+ <p>CAAOBMInterfacesCmd is a use case of the CAAOBMInterfaces.edu 
+ framework that illustrates the CATOBMInterfaces and the CATBehaviorInterfaces frameworks capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAOBMInterfacesCmd Do</h4>
+ <p>First, the CAAOBMInterfacesCmd Use Case is based on pre-existing data:</p>
+ <p>&nbsp;&nbsp;&nbsp; - a catalog (.CATfct) where is defined a BKT type (also 
+ called technological object) with 
+ its variables (attributes) and its behaviors. A behavior has also its own 
+ variables.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="Images/CAABeh1.gif"></p>
+ <p>&nbsp;&nbsp;&nbsp; - a product containing a part with publications.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="Images/CAABehProduct.jpg"></p>
+ <p>First, you will have to type the product with the BKT type/technological 
+ object.</p>
+ <p>The BKT type has a main behavior called &quot;<b>SequentialCombination</b>&quot; 
+ containing itself one behavior command called &quot;<b>Command</b>&quot; which is dedicated 
+ to launch a CAA Command. The CAAOBMInterfacesCmd use case implements this 
+ command which launches a simple dialog dedicated to valuate some variables of 
+ the BKT type and of its behavior.</p>
+ <p>In the command code, you will see how to control the execution of the 
+ behavior once it has launched the CAA Command in order to synchronize both so 
+ that the behavior doesn't finish before the end of its command.&nbsp; </p>
+ <p>In the dialog code, you will see what kind of action you can have on the 
+ attributes of BKT Objects.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAOBMInterfacesCmd Code</h4>
+ <p>The CAAOBMInterfacesCmd use case is made of classes and resources 
+ located in the CAAOBMInterfacesCmd.m module and in the CNext\resources\graphic 
+ directory of the CAAOBMInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAAOBMInterfaces.edu\CAAOBMInterfacesCmd.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAAOBMInterfaces.edu/CAAOBMInterfacesCmd.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>These classes and interfaces are:</p>
+ <table width="100%">
+   <tr>
+     <td><i>CAAOBMInterfacesCommand</i></td>
+     <td>CAA Command description class</td>
+   </tr>
+   <tr>
+     <td><i>CAAOBMInterfacesDlg</i></td>
+     <td>Dialog description class</td>
+   </tr>
+   <tr>
+     <td><i>CAAOBMInterfaces.CATfct</i></td>
+     <td>Catalog describing a BKT type with its attributes and behaviors</td>
+   </tr>
+   <tr>
+     <td><i>CAAOBMInterfacesProduct.CATProduct</i></td>
+     <td>Product to be typed</td>
+   </tr>
+   <tr>
+     <td><i>CAAOBMInterfacesPart.CATPart</i></td>
+     <td>Part contained in the Product</td>
+   </tr>
+   </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="How"></a>How to Launch CAAOBMInterfacesCmd</h4>
+ <p>Open the catalog CAAOBMInterfaces.CAFct and create the associated workbench 
+ with the dedicated command in the BKT toolbar.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="Images/CAABehHammer.jpg" width="41" height="383">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="Images/CAABehWkb.jpg" width="305" height="239"></p>
+ <p>Open the CAAOBMInterfacesProduct.CATProduct.</p>
+ <p>Select the product and click on this icon
+ <img border="0" src="Images/CAABehFinger.jpg" width="35" height="39"> to initialize the BKT context.</p>
+ <p>Select the product and click on this icon
+ <img border="0" src="Images/CAABehType.jpg" width="49" height="37"> to type the product with the BKT type.</p>
+ <p>As a result you can see : 
+ <img border="0" src="Images/CAABehTypedProduct.jpg" width="387" height="265"></p>
+ <p>The product is now typed by the technological object.</p>
+ <p>&nbsp;</p>
+ <p>To launch the execution of the use case itself , executes the sequence of 
+ behaviors of the extended product. To do so, from its submenu, 
+ select the command Type-&gt;SequentialCombination</p>
+ <p><img border="0" src="Images/CAABehExeSequence.jpg" width="445" height="365"></p>
+ <p>&nbsp;</p>
+ <p>It opens the following dialog dedicated to manipulate variables:&nbsp;&nbsp;
+ <img border="0" src="Images/CAABehDialog.jpg" width="435" height="175"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top"><a href="#Step1">1</a></td>
+     <td valign="top">Create a CAA Command dedicated to be launched by a 
+     behavior command</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step2">2</a></td>
+     <td valign="top">Manage the states of the behavior command from the CAA 
+     command</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><a href="#Step3">3</a></td>
+     <td valign="top">Manage the variables of BKT Objects</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Create a CAA Command dedicated to be launched by a 
+ Behavior</h4>
+ <p>A BKT type may have behaviors of different types. One of them is the 
+ behavior Command which launches a CAA command. This one is a CATStateCommand 
+ and in argument of its constructor you must absolutely precise the behavior. 
+ This is to allow the communication between the behavior and its command in 
+ order to be synchronous during the execution of the command.</p>
+ <p>Its header file CAAOBMInterfacesCommand.h is as follows<br></p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>class CAAOBMInterfacesCommand: public CATStateCommand
+{
+
+DeclareResource( CAAOBMInterfacesCommand, CATStateCommand )
+
+public:
+CAAOBMInterfacesCommand();
+CAAOBMInterfacesCommand(CATBaseUnknown *iBehavior);
+virtual ~CAAOBMInterfacesCommand();
+</pre>
+     <pre>...</pre>
+     <pre>}</pre></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Manage the States of the Command Behavior from the CAA 
+ Command</h4>
+ <p>Most of the time, the behaviors &nbsp;of a technological object are executed 
+ sequentially. In this Use Case, one of the behaviors is a behavior command 
+ launching a CAA command. If we don't take the control of the execution of the 
+ behavior command during the execution of the CAA command, the behavior engine 
+ will continue to execute the sequence of behaviors. This can be problematic if 
+ one of the behavior following the behavior command is waiting as 
+ an input, an output of the CAA command.</p>
+ <p>That's why we strongly advise you to control the operations thanks to the <i>
+ CATIBehOperationManagement</i> interface.</p>
+ <p>First, the constructor of the CAA command has to look like this:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CAAOBMInterfacesCommand::CAAOBMInterfacesCommand(CATBaseUnknown *iBehavior) :
+CATStateCommand (&quot;CAAOBMInterfacesCommand&quot;, CATCommandMsgRequestSharedMode) 
+{
+_Behavior = iBehavior;
+
+CATIBehOperationManagement_var Manage = _Behavior;
+
+Manage-&gt;Start();
+
+...
+
+Manage-&gt;Suspend();
+}</pre></td>
+   </tr>
+ </table>
+ <p>The behavior in argument must be stored in a data member of the command to 
+ be always accessible. From the behavior, get a handler on the 
+ <i>CATIBehOperationManagement</i>. With this api, you will be able to start, suspend, 
+ cancel or finish the behavior. In the constructor, start the behavior at the 
+ beginning and suspend it at the end.</p>
+ <p>Do exactly the same in the BuildGraph, Activate and Desactivate methods and 
+ in any other methods you will create in your own command.</p>
+ <p>The call to the <font face="Courier New">Start</font> and<i> </i>
+ <font face="Courier New">Suspend</font> methods of the <i>
+ CATIBehOperationManagement</i> interface have to bracket the code of these 
+ methods.</p>
+ <p>The 
+ <font face="Courier New">BuildGraph</font> method defines the state chart of the command and instanciates the 
+ dialog to manage the attributes of the BKT Objects. The behavior Command is 
+ passed in argument of the dialog constructor.</p>
+ <p>The Cancel method of the command is called at the end, just before its 
+ destruction.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATStatusChangeRC CAAOBMInterfacesCommand::Cancel( CATCommand * iFromClient, CATNotification * iEvtDat)
+{
+CATIBehOperationManagement_var Manage = _Behavior;
+...
+Manage-&gt;Start();
+...
+
+if(_OK-&gt;IsOutputSet())
+Manage-&gt;Done();
+
+if(_Cancel-&gt;IsOutputSet())
+Manage-&gt;Cancel();
+...
+}</pre></td>
+   </tr>
+ </table>
+ <p>The command may have stopped of different manners. At the beginning of the 
+ Cancel method, we start the behavior. At the end, the state of the behavior 
+ depends on the interaction of the user to finish the command. If the user has 
+ clicked on the OK button, the behavior is stopped properly (status Done). If the user 
+ has cancelled the dialog, the behavior is cancelled. As a consequence, the 
+ behavior command is in an error state and the behavior sequence will be 
+ interrupted</p>
+ <p><b>
+ <font face="Courier New" style="font-size: 110%">_OK</font> </b>and <b>
+ <font face="Courier New" style="font-size: 110%">_Cancel</font> </b>are dialog 
+ agents associated to the OK and Cancel button of the dialog.</p>
+ <p>You don't have to manage the state of the behavior in the destructor, 
+ because it has been done in the 
+ <font face="Courier New" style="font-size: 110%; font-weight: 700">Cancel
+ </font>method.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Manage the Variables of BKT Objects.</h4>
+ <p>The Dialog opened thanks to the CAA Command allows some actions on the 
+ variables of the extended product and of the behavior:</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="Images/CAABehDialog.jpg" width="435" height="175"></p>
+ <ol>
+   <li>Valuation of the string variable &quot;Beh_Out2&quot; of the behavior command.</li>
+   <li>Creation of a link between the variable &quot;Beh_In1&quot; of the behavior command 
+   and the variable &quot;AttOnType&quot; of the extended product. </li>
+   <li>Modification of the type of the attribute &quot;P1&quot; of the behavior command.</li>
+   <li>Valuation of the attribute &quot;P1&quot; of the behavior with a publication.</li>
+ </ol>
+ <p>The management of those variables is done with the <i>CATIVariableManagement</i> 
+ api.</p>
+ <h4><span style="font-weight: 400">1. Valuation of a behavior variable.</span></h4>
+ <p>In the panel, modify the value &quot;Default&quot; of the variable Beh_Out2 and then 
+ click on the Apply button close to the field. </p>
+ <p>As a resut, if you put the mouse on the attribute Beh_Out2 in the 
+ specification tree, a tooltip appears containing the new value.</p>
+ <p>The executed code is the following: </p>
+ <table class="code" id="table1">
+   <tr>
+     <td>
+     <pre>
+CATICkeParmFactory_var <b>CkeParmFactory</b> = CATCkeGlobalFunctions::GetVolatileFactory();</pre>
+     </td>
+   </tr>
+ </table>
+ <p>First, we get the volatile factory to create values from 
+ KnowledgeInterfaces.</p>
+ <table class="code" id="table2">
+   <tr>
+     <td>
+     <pre>CATICkeParm_var hValueParmReal;
+
+hValueParmReal =<b>CkeParmFactory</b>-&gt;CreateString(&quot;StringOnBeh&quot;,EdtValue);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Then, we create a string parameter with the value
+ <font face="Courier New" style="font-size: 110%">EdtValue</font> entered in the 
+ edit field of the panel.</p>
+ <table class="code" id="table3">
+   <tr>
+     <td>
+     <pre>
+CATIValue* <b>ValueParm</b> = NULL;
+
+HRESULT rc = hValueParmReal-&gt;QueryInterface(IID_CATIValue, (void**) &amp;<b>ValueParm</b>);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>From the parameter <font face="Courier New" style="font-size: 110%">
+ hValueParmReal</font><i> </i>which is a <i>CATICkeParm</i>, we query a <i>
+ CATIValue</i>, necessary for the <i>CATIVariableManagement</i> api.</p>
+ <table class="code" id="table4">
+   <tr>
+     <td>
+     <pre>CATIVariableManagement_var hVarMngt = _Behavior;
+CATUnicodeString VarName = &quot;Beh_Out2&quot;;
+...
+hVarMngt-&gt;<b>SetVariableValue</b>(&amp;VarName,tio_OUT,<b>ValueParm</b>);</pre></td>
+   </tr>
+ </table>
+ <p>We get the CATIVariableManagement handler from the behavior (<font face="Courier New" style="font-size: 110%">_Behavior</font> 
+ was initialized during the dialog constructor), and we valuate its attribute 
+ &quot;Beh_Out2&quot; with the <i>CATIValue</i>
+ <font face="Courier New" style="font-size: 110%">ValueParm</font> created just 
+ before.</p>
+ <h4><span style="font-weight: 400">2. Creation of a Link between 2 variables.</span></h4>
+ <p>In the panel, click on the Apply button to link the AttonType and the 
+ Beh_In1 attributes.</p>
+ <p>As a resut, if you put the mouse on the attribute Beh_In1 in the 
+ specification tree, a tooltip appears containing the name of the linked 
+ attribute AttonType.</p>
+ <p>The executed code is the following: </p>
+ <p><a name="root product"></a></p>
+ <table class="code" id="table5">
+   <tr>
+     <td>
+     <pre>CATFrmEditor * editor = CATFrmEditor::GetCurrentEditor();
+CATDocument * pDoc = editor-&gt;GetDocument();
+
+CATIDocRoots *piDocRootsOnDoc = NULL;
+...
+HRESULT rc = pDoc -&gt; QueryInterface(IID_CATIDocRoots,(void**)&amp;piDocRootsOnDoc);
+
+CATListValCATBaseUnknown_var* pRootProducts = piDocRootsOnDoc -&gt; GiveDocRoots();
+...</pre>
+     <pre>CATIProduct_var <b>root_product</b>;
+<b>root_product</b> = (*pRootProducts)[1];
+...</pre></td>
+   </tr>
+ </table>
+ <p>First, we query the list of document roots and we retrieve its first item 
+ which is the root product.</p>
+ <table class="code" id="table6">
+   <tr>
+     <td>
+     <pre>CATIVariableManagement_var ProdVarMngt = <b>root_product</b>;
+CATIVariableManagement_var BehVarMngt = _Behavior;</pre></td>
+   </tr>
+ </table>
+ <p>Then, we get both CATIVariableManagement handler from the extended product 
+ and its behavior command (<font face="Courier New" style="font-size: 110%">_Behavior</font> 
+ was initialized during the dialog constructor).</p>
+ <table class="code" id="table7">
+   <tr>
+     <td>
+     <pre>CATBaseUnknown* pAttOnType = NULL;
+CATUnicodeString VarNameType = &quot;AttonType&quot;;
+
+HRESULT hr = ProdVarMngt-&gt;<b>GetVariable</b>(&amp;VarNameType, tio_IN,&amp;pAttOnType);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>From the extended product, we get its attribute AttonType.</p>
+ <table class="code" id="table8">
+   <tr>
+     <td>
+     <pre>CATUnicodeString VarNameBeh = &quot;Beh_In1&quot;;
+
+hr = BehVarMngt-&gt;<b>LinkVariables</b>(&amp;VarNameBeh,tio_IN,pAttOnType);</pre></td>
+   </tr>
+ </table>
+ <p>We link the variable Beh_In1 of the behavior with the variable AttonType of 
+ the extended product.</p>
+ <h4><span style="font-weight: 400">3. Modification of the type of a variable.</span></h4>
+ <p>In the panel, select in the combo box a new type for the variable P1 of the 
+ behavior command and click on the Apply button close to the combo. P1 is a 
+ variable of type pointer. A pointer variable can point on an object of any kind 
+ of knowledgeware type. In our example, the available types are <b>Part</b>, <b>
+ Product</b> and <b>ObjectType</b>. ObjectType is a generic type for all kind of 
+ values and objects.</p>
+ <p>As a resut, if you put the mouse on the attribute P1 in the specification 
+ tree, a tooltip appears containing the waited type for the object pointed by 
+ P1.</p>
+ <p>The executed code is the following: </p>
+ <table class="code" id="table9">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">CATITypeDictionary_var 
+     dico = CATGlobalFunctions::GetTypeDictionary();</font><p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>First, we get the dictionary of type.</p>
+ <table class="code" id="table10">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">CATIType_var TheType = 
+     dico-&gt;FindType(SelectedType, <b>TheType</b>);</font><p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>Then, we get the new type to associate to P1.
+ <font face="Courier New" style="font-size: 110%; font-weight: 700">TheType</font> 
+ is the value selected in the combo box.</p>
+ <table class="code" id="table11">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">
+     CATIVariableManagement_var BehVarMngt = _Behavior;</font><p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>We get the CATIVariableManagement interface from the behavior.</p>
+ <table class="code" id="table12">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">CATUnicodeString 
+     VarName = &quot;P1&quot;;<br>
+     <br>
+     HRESULT HR = BehVarMngt-&gt;<b>SetVariableType</b>(&amp;VarName,tio_IN,<b>TheType</b>);</font></td>
+   </tr>
+ </table>
+ <p>We change the type of the variable P1.</p>
+ <h4><span style="font-weight: 400">4. Valuation of a behavior variable with a 
+ publication.</span></h4>
+ <p>In the panel, enter the name of the publication which will be pointed by the 
+ variable P1 and click on the Apply button close to the text field.</p>
+ <p>In this use case, the available publications are in the part <i>
+ CAAOBMInterfacesPart.CATPart </i>: <b>&quot;My Face&quot;</b> and <b>&quot;Hole&quot;</b>.</p>
+ <p>The variable P1 has to have the type ObjectType to be able to point one of 
+ these publication.</p>
+ <p>As a resut, if P1 is of the correct type, if you put the mouse on it in the 
+ specification tree, a tooltip appears containing the path of the document 
+ containing the publication.</p>
+ <p>The executed code is the following: </p>
+ <table class="code" id="table17">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">
+     CATIPrdObjectPublisher_var RootPrd_Publications = root_product;<br>
+     <br>
+     CATBaseUnknown* RetrievedPub = RootPrd_Publications-&gt;GetFinalObject(<b>PubName</b>);<br>
+&nbsp;</font></td>
+   </tr>
+ </table>
+ <p>First we get the root product as done before (<font face="Courier New" style="font-size: 110%"><a href="#root product">root_product</a>).
+ </font>And then we get the publications manager on the root product in order to 
+ search the publication <font face="Courier New">PubName</font> specified in the 
+ valuation field.</p>
+ <table class="code" id="table18">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">CATIConnector_var 
+     Connector = RetrievedPub;</font><p>
+     <font face="Courier New" style="font-size: 110%"><br>
+     CATILinkableObject_var <b>LinkObj</b> = Connector-&gt;GiveReferenceObject();</font></td>
+   </tr>
+ </table>
+ <p>We get the object in the publication.</p>
+ <table class="code" id="table19">
+   <tr>
+     <td><font face="Courier New" style="font-size: 110%">CATICkeParmFactory_var 
+     CkeParmFactory = CATCkeGlobalFunctions::GetVolatileFactory();<br>
+&nbsp;<br>
+     CATICkeParm_var PubRef = CkeParmFactory-&gt;CreateObjectReference(<b>LinkObj</b>);</font><p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>We get the volatile factory to create a parameter feature reference from the 
+ published object.</p>
+ <table class="code" id="table20">
+   <tr>
+     <td>
+     <pre>
+CATIValue* <b>ValuePub</b> = NULL;
+
+HRESULT rc = <font face="Courier New" style="font-size: 110%">PubRef </font>-&gt;QueryInterface(IID_CATIValue, (void**) &amp;<b>ValuePub</b>);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>From the parameter <font face="Courier New" style="font-size: 110%">PubRef
+ </font>which is a <i>CATICkeParm</i>, we query a <i>CATIValue</i>, necessary 
+ for the <i>CATIVariableManagement</i> api.</p>
+ <table class="code" id="table21">
+   <tr>
+     <td>
+     <pre>
+CATIVariableManagement_var hVarMngt = _Behavior;
+...
+CATUnicodeString VarName = &quot;P1&quot;;
+rc = hVarMngt-&gt;SetVariableValue(&amp;VarName, tio_IN,ValuePub);</pre></td>
+   </tr>
+ </table>
+ <p>We get the CATIVariableManagement handler from the behavior (<font face="Courier New" style="font-size: 110%">_Behavior</font> 
+ was initialized during the dialog constructor), and we valuate its attribute 
+ &quot;P1&quot; with the <i>CATIValue</i> <font face="Courier New" style="font-size: 110%">
+ ValuePub</font> created just before.</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>When using a behavior command launching a CAA command, don't forget to 
+ control the state of the behavior during the execution of the command thanks to 
+ the <i>CATIBehOperationManagement</i> interface. With the <i>
+ CATIVariableManagement</i> interface, you are able to access and control the 
+ variables of behaviors and types.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jul 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

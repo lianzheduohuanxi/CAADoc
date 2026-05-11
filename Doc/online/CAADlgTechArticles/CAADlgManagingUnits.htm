@@ -1,0 +1,278 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Magnitudes and Units</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Magnitudes and Units</h3>
+      <em>How to make combo, editor, and spinner numerical fields match real
+      values</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The figures that are displayed and entered in combos, editors, and
+      spinners of your application, are usually values that represent
+      magnitudes. These magnitudes are expressed according to a unit system that
+      must match the country, the business, or the customer habits or rules.
+      <ul>
+        <li><a href="#100000"><strong>How Does CATIA Manages Magnitudes and
+          Units</strong></a></li>
+        <li><a href="#200000"><strong>Managing Magnitudes and Units for the
+          Application</strong></a></li>
+        <li><a href="#300000"><strong>Managing Magnitudes and Units for a
+          Control</strong></a></li>
+        <li><a href="#400000"><strong>Converting a Magnitude Value for Display
+          in the End User Unit System</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>How Does CATIA Manages Magnitudes and Units</h3>
+<p>CATIA manages the magnitudes required by a number of applications, such as
+length, mass, or speed. The values of these magnitudes that the end user may
+enter or select, or that the application may display for modification, can be
+entered using either combos[<a href="#References">1</a>], editors[<a href="#References">2</a>],
+or spinners[<a href="#References">3</a>]. These values can be expressed in a
+wide range of units, allowing the end user to work with the units that are usual
+to the task, business, or country habits. This is only a façade that hides the
+internal value storage made according to the International Unit System (SI). By
+default, values are also expressed using this system in combos, editors, and
+spinners. If you choose to use a different unit for a given magnitude, you need
+to specify it. Then, conversions are made whenever a value is displayed between
+the SI unit of the storage and the chosen unit, and conversely when a value is
+entered.</p>
+<p>Magnitudes and units [<a href="#References">4</a>] to use throughout an
+application are declared at the application level. The CATInteractiveApplication
+class supplies two methods, <code>SetMagnitudeCurrentUnit</code> and <code>GetMagnitudeCurrentUnit</code>
+to respectively set and get the unit associated with a given magnitude to use in
+all the combos, editors, and spinners of the application. If an application
+doesn't specify anything, the default unit system is SI.</p>
+<p>Then, for each combo, editor, or spinner, you should set the magnitude to
+which this control is dedicated. If you want to use for a given control a
+different unit than the one used for the application, you should set this unit
+to the control instead of the magnitude. In addition, you can set a precision to
+the control, that is, the number of digits displayed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Managing Magnitudes and Units for the Application</h3>
+<p>You can assign a given unit to a magnitude to be used throughout the
+application using the <code>SetMagnitudeCurrentUnit</code> method. Suppose you
+want to express the lengthes in feet.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+IntAppliInstance.SetMagnitudeCurrentUnit(CATDlgControl::Length,
+                                         CATDlgControl::Foot);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>You can get the application current unit for a given magnitude using the <code>GetMagnitudeCurrentUnit</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDlgControl::Unit = CurrentLengthUnit;
+CurrentLengthUnit == IntAppliInstance.SetMagnitudeCurrentUnit(CATDlgControl::Length);
+if (CurrentLengthUnit == CATDlgControl::Meter)
+  ...  // System used is SI
+else if (CurrentLengthUnit == CATDlgControl::Foot)
+  ...  // System used is Imperial</pre>
+    </td>
+  </tr>
+</table>
+<p>When you set a unit associated with a given magnitude, all the controls that
+will be created afterwards for this magnitude will express values using this
+unit. Nevertheless, any control created for this magnitude prior to the unit
+modification keeps the unit that was current when it was created. It is
+therefore recommended to set all the units for the magnitude you will use when
+initializing the application, except if you use the SI unit system which is the
+default.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Managing Magnitudes and Units for a Control</h3>
+<p>For each control you create that displays and/or is used to enter a value,
+you must assign it the corresponding magnitude using the <code>SetMagnitude</code>
+or the <code>SetUnit</code> method.</p>
+<p><img src="images/CATDlgUnit1.gif" alt="CATDlgUnit1.gif (4686 bytes)" width="438" height="152"></p>
+<p>The example given uses a combo which is assigned a length magnitude. The
+length unit is set to inch&nbsp; for the application.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDlgCombo * pCombo;
+pCombo = new CATDlgCombo (pParent, &quot;ComboId&quot;,
+                          CATDlgCmbDropDown|CATDlgCmbDouble|CATDlgCmbEntry);
+pCombo-&gt;SetMagnitude(CATDlgControl::Length);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The combo can then be used to enter and display length units expressed in
+inches. You cannot reset this unit afterwards. When the end user enters a length
+using the combo, for example 400,000.95 inches, the internal value handled by
+CATIA, namely for the combo the value returned&nbsp; as a double by the <code>GetValue</code>
+method, is converted to the SI unit for lengthes, that is, meters, here 10,135.2
+meters. If you want to use a different unit than the one defined at the
+application level, use the <code>SetUnit</code> method instead of <code>SetMagnitude</code>.
+For example, you can choose to express the length assigned to the four editors
+in millimeters.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDlgEditor * pEditor1;
+pEditor1 = new CATDlgEditor(pParent, &quot;EditorId&quot;, CATDlgEdtDouble);
+pEditor1-&gt;SetUnit(CATDlgControl::Millimeter);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>You can also choose the precision used to display the entered values. The
+precision can range from 1 to 15 inclusively, the default being five digits. The
+four editors have their precisions set to 1, 4, 8, an twelve respectively. This
+is possible thanks to the <code>SetPrecision</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pEditor1-&gt;SetPrecision(1);
+pEditor2-&gt;SetPrecision(4);
+pEditor3-&gt;SetPrecision(8);
+pEditor4-&gt;SetPrecision(12);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>These three methods <code>SetMagnitude</code>, <code>SetUnit</code>, and <code>SetPrecision</code>,
+have their getter companion methods.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDlgControl::Magnitude EditorCurrentMagnitude;
+CATDlgControl::Unit      EditorCurrentUnit;
+int                      EditorCurrentPrecision;
+EditorCurrentMagnitude = pEditor1-&gt;GetMagnitude();
+EditorCurrentUnit      = pEditor1-&gt;GetUnit();
+EditorCurrentPrecision = pEditor1-&gt;GetPrecision();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Converting a Magnitude Value for Display in the End
+User Unit System</h3>
+<p>You may want to display a magnitude value according to the end units
+elsewhere than in a combo, and editor, or a spinner. This is usually the case if
+you want to show one or several values in a notification window, possibly in an
+information, warning, or error message. In this case, no automatic conversion is
+made from the SI unit system and the end user unit system. You must use the <code>GetDoubleValueString</code>
+method of the interactive application to perform this conversion.</p>
+<p>For example, the following code converts a length whose value is stored or
+retrieved as a double in DoubleValue into a CATUnicodeString that can be used to
+create a message.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>double DoubleValue = ...; // Value expressed in SI
+CATUnicodeString ucValue; // Value expressed in the end user unit system
+                          // ready for use in a message
+ucValue = IntAppliInstance.GetDoubleValueString(DoubleValue, CATDlgControl::Length);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The interactive application instance holds a set a magnitudes expressed in
+the SI units. These magnitude can be used in combos, editors, and spinners to
+enter or display values representing these magnitudes. CATIA stores the values
+in the SI unit system, but you can change the unit used for a given magnitude at
+the application level. Then, all controls to which this magnitude is assigned
+will use this unit. You can also change the unit for a given magnitude and for a
+given control at the control level.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgCATDlgCombo.htm">Combo</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgCATDlgEditor.htm">Editor</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgCATDlgSpinner.htm">Spinner</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADlgQuickRefs/CAADlgMagnitudesAndUnits.htm">Magnitudes
+      And Units</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

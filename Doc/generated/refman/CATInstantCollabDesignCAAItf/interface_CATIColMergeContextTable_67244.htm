@@ -1,0 +1,326 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATInstantCollabDesignCAAItf Interface CATIColMergeContextTable</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATInstantCollabDesignCAAItf.htm" href="../CATInstantCollabDesignCAAItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATInstantCollabDesignCAAItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIColMergeContextTable"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATInstantCollabDesignCAAItf Interface CATIColMergeContextTable</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIColMergeContextTable_67244','CATIColMergeContextTable','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIColMergeContextTable</b>
+</p>
+<p>
+<b><i>	This interface defines the semantics used to represent all the linked feature of a collaborative feature.</i></b><br>
+<br>
+	The table contains a set of rows, each of them describing ONE link :<br>
+	<u>Example : context table for a pad aggregated under an hybrid body</u><br><br>
+	----------------------------------------------------------------------------<br>
+	ROLE NAME | Pointed Object | ContextRole                  | ContextFlag		<br>
+	----------------------------------------------------------------------------<br>
+	Myfather  | HybridBody	   | CATCol_PROTECTED_AGGREGATOR  | CATCol_OPTIONAL<br>
+	Myprofile | sketch   	   | CATCol_FORCED_DEPENDENCY	  | CATCol_OPTIONAL<br>
+	<br>
+	<li>RoleName : string chosen by the developer to identify a link</li>
+	<li>Pointed object : the feature </li>
+	<li>Context role : the collaborative semantic</li>
+	<li>ContextFlag : not used .Default is CATCol_OPTIONAL</li>
+	<br>
+	The table is built during the share step by a low level adapter which guarantees the feature model integrity.<br>
+	The goal is to have a closed set of features.<br>
+	The folowing methods provide access to the rows and the columns of the table and the possibility to add string property<br>
+	inside the table. These properties are streamed whith the table.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateLink(CATIColMergeContextRole,CATUnicodeString&amp;,CATBaseUnknown*,CATIColMergeContextFlag,int&amp;)"><b>CreateLink</b></a>(CATIColMergeContextRole,CATUnicodeString&amp;,CATBaseUnknown*,CATIColMergeContextFlag,int&amp;)
+<dd> 	Add a new entry inside the table.
+ <dt> o 
+    <a href="#CreateProperty(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>CreateProperty</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd> 	Add a string property (key,value) inside the table
+ <dt> o 
+    <a href="#GetContextFlag(int,CATIColMergeContextFlag&amp;)"><b>GetContextFlag</b></a>(int,CATIColMergeContextFlag&amp;)
+<dd> 	NOT USED : Get the ContextFlag column value of the row iIndex
+ <dt> o 
+    <a href="#GetContextRole(int,CATIColMergeContextRole&amp;)"><b>GetContextRole</b></a>(int,CATIColMergeContextRole&amp;)
+<dd> 	Get the context role column value of the row iIndex
+ <dt> o 
+    <a href="#GetLink(int,CATIColMergeContextRole&amp;,CATUnicodeString&amp;,CATBaseUnknown*&amp;,CATIColMergeContextFlag&amp;)"><b>GetLink</b></a>(int,CATIColMergeContextRole&amp;,CATUnicodeString&amp;,CATBaseUnknown*&amp;,CATIColMergeContextFlag&amp;)
+<dd> 	Get the entire entry iIndex from the table
+ <dt> o 
+    <a href="#GetObject(int,CATBaseUnknown*&amp;)"><b>GetObject</b></a>(int,CATBaseUnknown*&amp;)
+<dd> 	Get the object column value of the row iIndex
+
+ 
+ <dt> o 
+    <a href="#GetProperty(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>GetProperty</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd> 	Return the value of a property from a key
+ <dt> o 
+    <a href="#GetRoleName(int,CATUnicodeString&amp;)"><b>GetRoleName</b></a>(int,CATUnicodeString&amp;)
+<dd> 	Get the role name column value of the row iIndex
+ <dt> o 
+    <a href="#GetRoleNumber(int&amp;)"><b>GetRoleNumber</b></a>(int&amp;)
+<dd> 	Get the number of entries inside the table
+ <dt> o 
+    <a href="#ListPropertyKeys(CATListOfCATUnicodeString&amp;)"><b>ListPropertyKeys</b></a>(CATListOfCATUnicodeString&amp;)
+<dd> 	List all the properties key
+ <dt> o 
+    <a href="#LocateObject(CATBaseUnknown*)"><b>LocateObject</b></a>(CATBaseUnknown*)
+<dd> 	Find an entry inside the table from an input object
+	
+ <dt> o 
+    <a href="#RemoveLink(int)"><b>RemoveLink</b></a>(int)
+<dd> 	Remove an entry from the table
+ <dt> o 
+    <a href="#RemoveProperty(CATUnicodeString&amp;)"><b>RemoveProperty</b></a>(CATUnicodeString&amp;)
+<dd> 	Remove a property from a key
+ <dt> o 
+    <a href="#SetContextFlag(int,CATIColMergeContextFlag)"><b>SetContextFlag</b></a>(int,CATIColMergeContextFlag)
+<dd> 	NOT USED :Valuate the context flag column of the row iIndex
+ <dt> o 
+    <a href="#SetContextRole(int,CATIColMergeContextRole)"><b>SetContextRole</b></a>(int,CATIColMergeContextRole)
+<dd> 	Valuate the ContextRole column of the row iIndex
+ <dt> o 
+    <a href="#SetObject(int,CATBaseUnknown*)"><b>SetObject</b></a>(int,CATBaseUnknown*)
+<dd> 	Valuate the object column of the row iIndex.
+ <dt> o 
+    <a href="#SetRoleName(int,CATUnicodeString&amp;)"><b>SetRoleName</b></a>(int,CATUnicodeString&amp;)
+<dd> 	Valuate the rolename column of the row iIndex
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateLink"></a><a name="CreateLink(CATIColMergeContextRole,CATUnicodeString&amp;,CATBaseUnknown*,CATIColMergeContextFlag,int&amp;)"></a> <dt> o <b>CreateLink</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateLink</b>(<td><script type="text/javascript"> activateLink('CATIColMergeContextRole','CATIColMergeContextRole')</script> <td><tt>iRole</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iRoleName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iValue</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextFlag','CATIColMergeContextFlag')</script> <td><tt>iFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oIndex</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Add a new entry inside the table.
+	
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd> 		The index inside the table of the new entry
+</dl>
+</dl>
+<a name="CreateProperty"></a><a name="CreateProperty(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>CreateProperty</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateProperty</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>value</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Add a string property (key,value) inside the table
+</dl>
+<a name="GetContextFlag"></a><a name="GetContextFlag(int,CATIColMergeContextFlag&amp;)"></a> <dt> o <b>GetContextFlag</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetContextFlag</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextFlag','CATIColMergeContextFlag&amp;')</script> <td><tt>oFlag</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	NOT USED : Get the ContextFlag column value of the row iIndex
+</dl>
+<a name="GetContextRole"></a><a name="GetContextRole(int,CATIColMergeContextRole&amp;)"></a> <dt> o <b>GetContextRole</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetContextRole</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextRole','CATIColMergeContextRole&amp;')</script> <td><tt>oCtxRole</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Get the context role column value of the row iIndex
+</dl>
+<a name="GetLink"></a><a name="GetLink(int,CATIColMergeContextRole&amp;,CATUnicodeString&amp;,CATBaseUnknown*&amp;,CATIColMergeContextFlag&amp;)"></a> <dt> o <b>GetLink</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetLink</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextRole','CATIColMergeContextRole&amp;')</script> <td><tt>oRole</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oRoleName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*&amp;')</script> <td><tt>oValue</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextFlag','CATIColMergeContextFlag&amp;')</script> <td><tt>oFlag</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Get the entire entry iIndex from the table
+</dl>
+<a name="GetObject"></a><a name="GetObject(int,CATBaseUnknown*&amp;)"></a> <dt> o <b>GetObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetObject</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*&amp;')</script> <td><tt>oValue</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Get the object column value of the row iIndex
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd> [in]   The parameter role...
+ </dd>
+    <dt><tt> oValue</tt>
+   <dd> [out, CATBaseUnknown#Release]   The parameter role...
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <code>S_OK</code> if everything ran ok, otherwise...
+
+</dl>
+</dl>
+<a name="GetProperty"></a><a name="GetProperty(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>GetProperty</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetProperty</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>ikey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>ovalue</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Return the value of a property from a key
+</dl>
+<a name="GetRoleName"></a><a name="GetRoleName(int,CATUnicodeString&amp;)"></a> <dt> o <b>GetRoleName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRoleName</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oName</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Get the role name column value of the row iIndex
+</dl>
+<a name="GetRoleNumber"></a><a name="GetRoleNumber(int&amp;)"></a> <dt> o <b>GetRoleNumber</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRoleNumber</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oNumber</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Get the number of entries inside the table
+</dl>
+<a name="ListPropertyKeys"></a><a name="ListPropertyKeys(CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>ListPropertyKeys</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListPropertyKeys</b>(<td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>list</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+	List all the properties key
+</dl>
+<a name="LocateObject"></a><a name="LocateObject(CATBaseUnknown*)"></a> <dt> o <b>LocateObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>LocateObject</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Find an entry inside the table from an input object
+	
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd>		feature to find inside the table
+	</dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 		the index inside the table of the link which contains iObject or -1 if not found
+</dl>
+</dl>
+<a name="RemoveLink"></a><a name="RemoveLink(int)"></a> <dt> o <b>RemoveLink</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveLink</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Remove an entry from the table
+</dl>
+<a name="RemoveProperty"></a><a name="RemoveProperty(CATUnicodeString&amp;)"></a> <dt> o <b>RemoveProperty</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveProperty</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>ikey</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Remove a property from a key
+</dl>
+<a name="SetContextFlag"></a><a name="SetContextFlag(int,CATIColMergeContextFlag)"></a> <dt> o <b>SetContextFlag</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetContextFlag</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextFlag','CATIColMergeContextFlag')</script> <td><tt>iFlag</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	NOT USED :Valuate the context flag column of the row iIndex
+</dl>
+<a name="SetContextRole"></a><a name="SetContextRole(int,CATIColMergeContextRole)"></a> <dt> o <b>SetContextRole</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetContextRole</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIColMergeContextRole','CATIColMergeContextRole')</script> <td><tt>iCtxRole</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Valuate the ContextRole column of the row iIndex
+</dl>
+<a name="SetObject"></a><a name="SetObject(int,CATBaseUnknown*)"></a> <dt> o <b>SetObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetObject</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Valuate the object column of the row iIndex. If an object was already set, it is released
+</dl>
+<a name="SetRoleName"></a><a name="SetRoleName(int,CATUnicodeString&amp;)"></a> <dt> o <b>SetRoleName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetRoleName</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+	Valuate the rolename column of the row iIndex
+</dl>
+<hr>
+ This object is included in the file: <b>CATIColMergeContextTable.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATInstantCollabDesignItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

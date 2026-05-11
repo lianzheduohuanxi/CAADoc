@@ -1,0 +1,774 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Instantiating a User Feature Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Instantiating a User Feature Reference</h3>
+      <em>Using CATIUdfFactory and CATIUdfInstantiate</em>
+    </td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to instantiate a User Feature reference.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMcaUdfInstantiation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMcaUdfInstantiation Do</a></li>
+            <li><a href="#How">How to Launch CAAMcaUdfInstantiation</a></li>
+            <li><a href="#Where">Where to Find the CAAMcaUdfInstantiation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>Thanks to the use case &quot;Creating a User Feature Reference&quot;&nbsp; [<a href="#References">1</a>], you have
+learned to successfully create a User Feature reference. With this article you will learn how
+to instantiate it. An instantiation follows a strict process whose depends its
+success.&nbsp;</p>
+<p>Before reading this article, see the technical article about Power Copy and
+User Feature [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMcaUdfInstantiation Use Case</h3>
+<p>CAAMcaUdfInstantiation is a use case of the CAAMechanicalCommands.edu framework that
+illustrates MechanicalCommands framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMcaUdfInstantiation Do</h4>
+<p>In the <code>CAAUdfLoft Part</code> document we have a User Feature reference <b><code>CAAUserFeatureSample</code></b> created by the&nbsp;
+&quot;Creating a User Feature Reference&quot;&nbsp; use case [<a href="#References">1</a>].
+It is a loft which needs two inputs (two green points) for each instantiation.</p>
+<table>
+<caption><i><a name="Fig.1">Fig.1</a>: The CAAUdfLoft Part Document</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfCreation2.jpg" width="527" height="455">
+</td>
+</tr>
+</table>
+
+<p>This User Feature reference is a surfacic features set which implements <i>CATIUdfInstantiate</i>. Thanks to this interface
+it is possible to instantiate it.</p>
+<p>In this use case we describe two instantiations. These two instantiations are set in the <code>CAAUdfModel</code>
+Part document. 
+This Part contains at the beginning three points which will be used as input (Point.1, Point.2, Point.3).</p>
+<table>
+<caption><i><a name="Fig.2">Fig.2</a>: The CAAUdfModel Part Document</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfInstantiation1.jpg" width="357" height="323"> 
+</td>
+</tr>
+</table>
+<p>The first instantiation is a feature named <code><b>CAAUserFeatureSample.1</b></code>. 
+For the first input we have chosen the point <code>Point.3</code> and for the second the point <code>Point.1</code>.</p>
+<p>The second instantiation is a feature where we have explicitly given a name: <code><b>TheLoftWithPoint2and3</b></code>. For the first input we have
+chosen the point <code>Point.3</code>. 
+For the second input we have used the <i>UseIdenticalName</i>  method of <i>CATIUdfInstantiate</i>
+to valuate it. At
+last, for this new User Feature, we have changed the value of each circle's radius. Each radius is
+a published parameter. (See&nbsp; the step &quot;Publishing Parameters&quot; in
+the &quot;Creating a User Feature Reference&quot;&nbsp; use case
+[<a href="#References">1</a>] )</p>
+<p><a name="The model with 2 instances"></a>The Part, with these two instantiations, is saved as <code>CAAUdfModelWithInstances </code>
+Part document. In green is the <code>CAAUserFeatureSample.1</code> and in pink the <code>TheLoftWithPoint2and3.</code></p>
+<table>
+<caption><i><a name="Fig.3">Fig.3</a>: The CAAUdfModelWithInstances Part
+  Document: the Part with the two New Instances of User Features</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfInstantiation2.jpg" width="514" height="317">
+</td>
+</tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p><b>The interactive scenario:</b></p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b>
+  <li>In the<b> File Selection </b>Dialog box click&nbsp; <b>CAAUdfModel.CATPart</b>
+    [<a href="#How">see how to find this part</a> ] and click <b>Open</b>
+  <li>On the <b>Insert</b> menu, click <b>Instantiate From Document</b>.&nbsp;
+  <li>In the <b>File Selection </b><b></b>Dialog box click <b>CAAUdfLoft.CATPart</b>
+    [<a href="#How">see how to find this part</a> ] and click <b>Open</b></li>
+  <li>A <b>Insert Object</b> dialog box appears
+    <ul>
+      <li>Click&nbsp; <b>Point.3 </b>and <b>Point.1 </b>in the specifications
+        tree
+      <li>Click <b>OK. </b>The new instance appears in the specifications tree</li>
+    </ul>
+  </li>
+  <li>In the <b>File Selection </b>Dialog box click <b>CAAUdfLoft.CATPart</b> [<a href="#How">see
+    how to find this part</a> ] and click <b>Open</b></li>
+  <li>A <b>Insert Object</b> dialog box appears
+    <ul>
+      <li>Click&nbsp; <b>Use Identical Name. </b>The second input is valuated,
+        but not the first.
+    </ul>
+    <ul>
+      <li>Click&nbsp; <b>Point.3 </b>in the specifications tree to valuate the
+        first input</li>
+      <li>Enter <b>The Loft With Point2 and Point3</b> in the <b>Name</b> field</li>
+      <li>Click the <b>Parameters</b> tab and change in the editor values
+        parameters.</li>
+      <li>Click <b>OK</b><b> </b>The new instance appears in the specifications
+        tree</li>
+    </ul>
+  </li>
+</ul>
+<h4><a name="How"></a>How to Launch CAAMcaUdfInstantiation</h4>
+<p>To launch CAAMcaUdfInstantiation, you will need to set up the build time environment,
+then compile CAAMcaUdfInstantiation along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">3</a>]. To
+launch the use case execute the command:</p>
+<p>mkrun -c CAAMcaUdfInstantiation InputPath [OutputPath]</p>
+<ol>
+  <li><b>InputPath</b>:&nbsp; The path of the  <code>CAAUdfLoft.CATPart</code> and
+    <code>CAAUdfModel.CATPart </code> files included in the
+    directory <code>CAAMechanicalCommands.edu/InputData</code> </li>
+    <ul>
+    <li>Unix : <code>InstallRootDirectory/CAAMechanicalCommands.edu/InputData</code></li>
+    <li>Windows : <code>InstallRootDirectory\CAAMechanicalCommands.edu\InputData</code></li>
+    </ul>
+  <li><b>OutputPath</b>: The path to write the output file <code>CAAUdfModelWithInstances.CATPart</code>. If this path is empty, the output file is created
+    in the current directory.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMcaUdfInstantiation Code</h4>
+<p>The CAAMcaUdfInstantiation use case is made of one main  located in
+the CAAMcaUdfInstantiation.m module of the CAAMechanicalCommands.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalCommands.edu\CAAMcaUdfInstantiation.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalCommands.edu/CAAMcaUdfInstantiation.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+In the CAAMcaUtilities.m module of the same framework, there is a global 
+function to retrieve data from the input Part, named CAAMcaGetGeometry. It is 
+located in <CODE>CAAMcaGetGeometry.cpp</CODE>. The header of this function, 
+<CODE>CAAMcaGetGeometry.h, </CODE>is set in the PrivateInterfaces directory of 
+the framework. <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We do not explain step by step the first instantiation and next the second
+instantiation. We have chosen to show step by step how to instantiate a User Feature
+reference. In each&nbsp; section we detail the part concerning the first
+and/or the second instantiation. With this presentation you can see the main
+methods to succeed an instantiation and mainly the order of each step. Each
+instantiation begins from the step &quot;<a href="#Step 3">Setting the Destination
+Path</a>&quot; until the step &quot;<a href="#Step 8">Ending the Instantiation</a>&quot; . </p>
+<ol>
+  <li><a href="#Step 0">Opening Documents</a></li>
+  <li><a href="#Step 1">Retrieving the Mechanical Part of CAAUdfModel and the Root Container of CAAUdfLoft</a></li>
+  <li><a href="#Step 2">Retrieving the User Feature Reference to Instantiate</a></li>
+  <li><a href="#Step 3">Setting the Destination Path</a></li>
+  <li><a href="#Step 4">Valuating the Inputs</a></li>
+  <li><a href="#Step 5">Changing Parameter Values</a></li>
+  <li><a href="#Step 6">Instantiating the User Feature Reference</a></li>
+  <li><a href="#Step 7">Changing the Name of the New Instance</a></li>
+  <li><a href="#Step 8">Ending the Instantiation</a></li>
+  <li><a href="#Step Update">Updating the New Instantiations</a></li>
+  <li><a href="#Step 9">Closing Documents</a></li>
+
+</ol>
+<p align="right">[<a href="#Top">Top</a></p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 0"></a>Opening Documents</h4>
+<p>First document to open, <code>CAAUdfModel.CATPart</code> which contains three
+points:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATString InputData = iArgv[1] ;
+  CATDocument *pCAAUdfModel = NULL;
+  CATString CAAUdfModelDocName =InputData + Slash + &quot;CAAUdfModel.CATPart&quot;
+
+  rc = CATDocumentServices::<b>Open</b>(CAAUdfModelDocName.CastToCharPtr(), pCAAUdfModel);   
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Second document to open, <code>CAAUdfLoft.CATPart</code> which contains the User Feature
+reference <code>CAAUserFeatureSample</code> to instantiate:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATDocument *pCAAUdfLoft = NULL;
+  CATString CAAUdfLoftDocName =InputData + Slash + &quot;CAAUdfLoft.CATPart&quot;;
+
+  rc = CATDocumentServices::<b>Open</b>(CAAUdfLoftDocName.CastToCharPtr(), pCAAUdfLoft);
+
+  if (SUCCEEDED(rc) )
+  {
+     <b>::CATLockDocument</b>(*pCAAUdfLoft);
+     ...
+  }  
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We have detailed these opening operations to show the lock of the second document. <code>CATLockDocument</code> enables to increase the 
+count of references of a document, and  <code>CATUnLockDocument</code>  decreases this counter. </p> 
+In this case the lock is mandatory because as soon as the first instantiation&nbsp;
+of <code>CAAUserFeatureSample</code> in <code>CAAUdfModel </code>is done, a link
+from <code>CAAUdfModel</code>  to <code>CAAUdfLoft</code> is set. 
+(this link is temporary). So when <code>CAAUdfModel</code> is closed all models linked with it are closed too. So if you
+do not lock <code>CAAUdfLoft</code>, the attempt to close it will fail.
+<p>See the opposite operation &quot;<a href="#Step 9">Closing Documents"</a>.<p><b>Note:
+</b>If you write a code for an interactive command, the  <code>CATLockDocument</code> call is necessary only if your command keeps a
+pointer to the 
+model which contains the User Feature to instantiate. Otherwise, you open it and after the instantiation you close it,
+using the <code>Remove</code> 
+method.</p>
+<p align="right">[<a href="#Top">Top</a></p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 1"></a>Retrieving the Mechanical Part of CAAUdfModel and the Root Container of CAAUdfLoft</h4>
+<p>For <code>CAAUdfModel</code> we need the Mechanical Part which contains the
+surfacic features set with
+three points:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATInit *pInitOnDoc = NULL ;
+  rc = pCAAUdfModel-&gt;QueryInterface(IID_CATInit,(void **) &amp;pInitOnDoc);
+  if ( FAILED(rc) )return 1 ;
+
+  CATIPrtContainer *pIPrtContOnCAAUdfModel= NULL ;
+  pIPrtContOnCAAUdfModel= (CATIPrtContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+  if ( NULL == pIPrtContOnCAAUdfModel) return 1 ;
+  
+  pInitOnDoc-&gt;Release();
+  pInitOnDoc = NULL ;
+  
+  CATISpecObject_var spSpecObjectCAAUdfModelPart = pIPrtContOnCAAUdfModel-&gt;<b>GetPart</b>();
+
+  CATBaseUnknown_var spCAAUdfModelPart = spSpecObjectCAAUdfModelPart ;
+  CATBaseUnknown* <b>pCAAUdfModelPart</b>= (CATBaseUnknown*)spCAAUdfModelPart;
+ 
+  pIPrtContOnCAAUdfModel-&gt;Release();
+  pIPrtContOnCAAUdfModel = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pCAAUdfModelPart</code> is a pointer on the <code>CAAUdfModel</code> 
+Mechanical Part.
+<p>For <code>CAAUdfLoft, </code>only the root container is necessary:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = pCAAUdfLoft-&gt;QueryInterface(IID_CATInit,(void **) &amp;pInitOnDoc);
+  if ( FAILED(rc) )return 1 ;
+
+  CATIPrtContainer *pIPrtContOnCAAUdfLoft = NULL ;
+  pIPrtContOnCAAUdfLoft = (CATIPrtContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+  if ( NULL == pIPrtContOnCAAUdfLoft ) return 1 ;
+  
+  pInitOnDoc-&gt;Release();
+  pInitOnDoc = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 2"></a>Retrieving the User Feature Reference to Instantiate</h4>
+<p>First, we retrieve a pointer to <i>CATIUdfFactory</i>  implemented by the root container of
+the <code>CAAUdfLoft</code> document:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATIUdfFactory</b> *pIUdfFactory = NULL ;
+  rc = pIPrtContOnCAAUdfLoft-&gt;QueryInterface(IID_CATIUdfFactory,(void **) &amp;pIUdfFactory);
+  if ( FAILED(rc) )  return 1 ;
+
+  pIPrtContOnCAAUdfLoft-&gt;Release();
+  pIPrtContOnCAAUdfLoft = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, we can retrieve the User Feature reference, the only one, of this Part:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...  
+  <b>CATIUdfInstantiate</b> * pIUdfInstantiate = NULL ;      
+  CATListValCATISpecObject_var * pListUserFeature = NULL ;
+  pListUserFeature = pIUdfFactory-&gt;<b>GetUserFeatureList()</b>;
+
+  if  ( (NULL != pListUserFeature) &amp;&amp; (pListUserFeature-&gt;Size() ==1 ) &amp;&amp;
+	    (NULL_var != (*pListUserFeature)[1]) )
+  {
+     rc = (*pListUserFeature)[1]-&gt;QueryInterface(IID_CATIUdfInstantiate,(void **)&amp;pIUdfInstantiate);
+     if ( FAILED(rc) ) return 1 ;
+     ...
+  }
+
+  pIUdfFactory-&gt;Release();
+  pIUdfFactory = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>GetUserFeatureList</code> returns the list of all User Feature references
+existing in the User Feature Set. Each User Feature reference 
+implements <i>CATIUdfInstantiate.</i></p>
+<p>Now we can begin the instantiation steps.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 3"></a>Setting the Destination Path</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATPathElement PathFirstInstantiate1(pCAAUdfModelPart); 
+  CATPathElement * FirstUIactiveObject1 = NULL ;
+  CATBaseUnknown_var FirstDest1 = NULL_var ; 
+
+  rc = pIUdfInstantiate-&gt;<b>SetDestinationPath</b>(&amp;PathFirstInstantiate1,
+                                             FirstUIactiveObject1,FirstDest1); 
+  if ( FAILED(rc) ) return 1;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This piece of code is common for the two instantiations. The source&nbsp; ended by 1 for the first instantiation and ended by 2 for the
+second one.</p>
+<p>The first role of this method is to initialize the instantiation process. Each instantiation must begin by this call. The second role of this 
+method is to give the Part where the instantiation will be set.</p>
+<p>The first argument of <code>SetDestinationPath</code> is <code>PathFirstInstantiate.
+</code>It is the complete path of
+the CAAUdfModel Part.
+The second and third (outputs) arguments are not used in this use case.</p>
+<p><b>Note</b>: When the first argument of <code>SetDestinationPath</code> is the complete path of a
+Part, the two last output arguments
+remain to NULL. When the path is the complete path of 
+a product, a part is automatically created. The second argument is the path of the UI object to activate,
+to use in
+an interactive command, and the last argument returns a pointer to this new part.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 4"></a>Valuating the Inputs</h4>
+<p> For the first instantiation, we set the point <code>Point.3</code> and the point <code>Point.1</code> 
+ for the first and second input respectively: </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATBaseUnknown * pInput1 = NULL ;
+  rc = <b>::CAAMcaGetGeometry</b>(spSpecObjectCAAUdfModelPart,&quot;<b>Point.3</b>&quot;,&amp;pInput1);
+  if ( FAILED(rc) )return 1 ;
+
+  CATPathElement * pPathFirstInput1 = new CATPathElement(pInput1);
+  rc = pIUdfInstantiate-&gt;<b>SetNewInput</b>(1,pPathFirstInput1);
+  if ( FAILED(rc) )return 1 ;
+
+  ...
+
+  rc = <b>::CAAMcaGetGeometry</b>(spSpecObjectCAAUdfModelPart,&quot;<b>Point.1</b>&quot;,&amp;pInput1);
+  if ( FAILED(rc) ) return 1 ;
+ 
+  CATPathElement * pPathSecondInput1 = new CATPathElement(pInput1);
+  rc = pIUdfInstantiate-&gt;<b>SetNewInput</b>(2,pPathSecondInput1);
+  if ( FAILED(rc) ) return 1 ;
+ 
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>CAAMcaGetGeometry</code> is a global function which retrieves in a Part
+given in first argument, a feature whose <i>CATIAlias</i> name is the same as the second argument. So the returned feature is associated with the input thanks
+to the SetNewInput<b> method.</b></p>
+<p>For the second instantiation, at first the<i> UserIdenticalName</i> 
+method is used to valuate the inputs. The role of this method is to find for each input
+a feature whose <i>CATIAlias</i>  name is equal to the role of the input. The
+features are searched for from a root given as argument of the method. In this
+case the root is <code>spCAAUdfModelPart</code>, the pointer to the CAAUdfModel
+Part.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = pIUdfInstantiate-&gt;<b>UseIdenticalName</b>(spCAAUdfModelPart);
+  if ( FAILED(rc) ) return 1 ;     
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>After calling&nbsp; <code>UseIdenticalName</code>, it is necessary to check that all inputs are valuated because the
+search can fail. Even if&nbsp; <code>UseIdenticalName</code> returns&nbsp; S_OK&nbsp;
+you must use 
+the <code>GetNewInput</code> method for each input. If the returned value is NULL_var the input is not
+valuated. </p>
+<p>In this case, for the first input, we have a failure, <code>spOnFirstInput2</code> is
+NULL_var. It is normal. The role of this input 
+is "The top point of the loft", and in the CAAUdfModel, no point has a such <i>CATIAlias</i> name.</p>
+<p>But for the second input, <code>spOnSecondInput2 </code> is not NULL_var. The role of the second input is  <code>Point.2</code>, so we have 
+found the feature <code>Point.2</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATBaseUnknown_var spOnFirstInput2 = pIUdfInstantiate-&gt;<b>GetNewInput</b>(1);
+  if ( NULL_var != spOnFirstInput2 )
+  {     
+     return 1 ;
+  }
+
+  CATBaseUnknown_var spOnSecondInput2 = pIUdfInstantiate-&gt;GetNewInput(2);
+  if (  NULL_var == spOnSecondInput2 )
+  {
+     return 1 ;
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+<p><b>Note: </b>The <code>GetOldInputs</code> method, not used here, returns the input's list of the
+User Feature reference, so the size of this list 
+gives you the count of input to valuate, and returns the role for each input.</p>
+<p>So now, we valuate the first input explicitly with the <code>Point.3</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+<pre>  ... 
+  CATBaseUnknown * pInput2 = NULL ;
+  rc = <b>::CAAMcaGetGeometry</b>(spSpecObjectCAAUdfModelPart,&quot;Point.3&quot;,&amp;pInput2);
+  if ( FAILED(rc) )  return 1 ;
+  
+  CATPathElement * pPathFirstInput2 = new CATPathElement(pInput2);
+  rc = pIUdfInstantiate-&gt;<b>SetNewInput</b>(1,pPathFirstInput2);
+  if ( FAILED(rc) )  return 1 ;
+
+  pPathFirstInput2-&gt;Release();
+  pPathFirstInput2 = NULL ;
+
+  pInput2-&gt;Release();
+  pInput2 = NULL ;  
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note: </b>It is strongly recommended to valuate the inputs during the instantiation. You
+can nevertheless change them after the instantiation thanks to the
+<i> CATIUdfFeatureInstance</i> interface.&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 5"></a>Changing Parameter Values</h4>
+<p>For this use case, we have just done it for the second instantiation. </p>
+<p>The User Feature reference <code>CAAUserFeatureSample</code> contains a lot of
+parameters. Only two
+have been published. You can modify 
+only the published parameters. In the following picture you can see the two
+published parameters:&nbsp; the
+ radius of the top circle and the radius of the bottom circle.</p>
+ <table>
+<caption><i><a name="Fig.4">Fig.4</a>: The Published Parameters Displayed in the Specifications Tree</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAAMcaUdfCreation3.jpg" width="553" height="453">
+ 
+</td>
+</tr>
+</table>
+
+<p></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATListValCATBaseUnknown_var * pListParam = NULL ;
+  CATListOfCATUnicodeString    * pListParamRole = NULL ;
+  rc = pIUdfInstantiate-&gt;<b>GetParameters</b>(pListParam,pListParamRole);
+
+  if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pListParam) &amp;&amp; ( NULL != pListParamRole ) )
+  {
+     int nbparam = pListParam-&gt;Size();
+     if ( 2 == nbparam )
+     {
+         for ( int i=1 ; i &lt;= 2 ; i++ )
+        {
+           <b>CATICkeParm</b>_var spCkeParm = (*pListParam)[i] ;
+           if ( NULL_var != spCkeParm)
+           {
+              ...
+              spCkeParm-&gt;Valuate(i*0.010f);
+              ...
+           }
+     }
+   ...
+  }  
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetParameters</code> returns the published parameters, <code>pListParam</code>,
+and their respectical role <code>pListParamRole</code>. 
+These two list have the same size. With the <i>CATICkeParm</i> interface (LiteralFeatures
+Framework), the value of the parameters are changed. In this case,
+each radius is divided by 100.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 6"></a>Instantiating the User Feature Reference</h4>
+<p>This piece of code is the same for the two instantiations: </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   ...  
+  rc = pIUdfInstantiate-&gt;<b>Instantiate</b>(NULL_var);
+  if ( FAILED(rc) ) return 1 ;
+  
+  CATBaseUnknown_var spFirstInstance = NULL_var ;
+  spFirstInstance = pIUdfInstantiate-&gt;<b>GetInstantiated</b>(pIUdfInstantiate);
+  if ( NULL_var == spFirstInstance )  return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Thanks to the <code>Instantiate</code> method, the new instance is created in the current
+surfacic features set of the
+Part
+specified by the <code>SetDestinationPath</code> method. So the argument of the <code>Instantiate</code>
+method can be NULL_var. </p>
+<p>We can have a pointer to this instance thanks to the <code>GetInstantiated</code> method. <code>spFirstInstance </code> is 
+the smart pointer for the first instantiation.
+ The argument of this method is the User Feature reference itself.</p>
+<p><b>But caution</b>, after the <code>Instantiate</code> call, it is not possible to modify the inputs and the parameters. When the instantiation 
+process will be totally ended, you can use the <i>CATIUdfFeatureInstance</i> 
+interface to edit it [<a href="#References">4</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 7"></a>Changing the Name of the New Instance</h4>
+<p>Before ending the instantiation process, and after the instance creation, it is possible to change the default name of the new instance. The
+default name is the name of the User Feature reference to which an index is
+appended.</p>
+<p>For the first instance, the name is thus:&nbsp; "<b>CAAUserFeatureSample.1</b>". For the second instance, we
+change it to "<b>The Loft With Point2 and Point3</b>". <p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...    
+  CATUnicodeString NewName = &quot;The Loft With Point2 and Point3&quot;&quot;
+  rc = pIUdfInstantiate-&gt;<b>SetDisplayName</b>(NewName);
+  if ( FAILED(rc) ) return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>You can see the result in <a href="#Fig.3"> Fig.3</a> <p><b>Note: </b>The <code>GetDisplayName</code> method, not used here, returns the name of the
+User Feature reference, so after <code>SetDisplayName</code>, the
+result of <code>GetDisplayName</code>  is always <code>&quot;CAAUserFeatureSample&quot;</code> </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 8"></a>Ending the Instantiation</h4>
+<p>This piece of code is the same for the two instantiations: </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  rc = pIUdfInstantiate-&gt;<b>EndInstantiate</b>();
+  if ( FAILED(rc) )  return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The instantiation process is ended. To restart a new instantiation, you must go to the
+&quot;<a href="#Step 3">Setting The Destination Path</a>&quot; step. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step Update"></a>Updating the New Instantiations</h4>
+<p>The goal of this step is to update the new instances. In batch like here, the <i>
+CATISpecObject</i> 
+interface must be used. If your 
+instantiation is inside an interactive command, it is better to use the <i>CATPrtUpdateCom</i> class&nbsp;
+[<a href="#References">5</a>] .</p>
+<p>The code for the first instance is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATISpecObject_var spSpecObj1= spFirstInstance ;
+  CATTry
+  {
+     spSpecObj1-&gt;<b>Update</b>();
+  }
+  CATCatch(CATError,error)
+  {
+     ...
+  	 return 1 ;
+  }
+  CATEndTry 
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spFirstInstance</code> is a pointer to the first instance. We retrieved
+it using the <code>GetInstantiated </code> method. Refer to the <a href="#Step 6">Instantiating
+the User Feature Reference</a> step. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 9"></a>Closing Documents</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ... 
+  rc = CATDocumentServices::<b>Remove</b>(*pCAAUdfModel);
+  if (FAILED(rc)) return 1
+  pCAAUdfModel = NULL ; 
+
+  rc = ::<b>CATUnLockDocument</b>(*pCAAUdfLoft);
+  if (FAILED(rc)) return 1
+  pCAAUdfLoft = NULL ; 
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CAAUdfModel</code> model is removed from the current session using the <code>Remove</code> method. 
+This also closes the <code>CAAUdfModel</code> and decreases the count of references on <code>CAAUdfLoft</code>. 
+<code>CATUnLockDocument</code> decreases the counter too, and closes the document because the counter is now zero. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to instantiate a User Feature reference:
+<ul>
+  <li>Retrieves the User Feature reference to instantiate. For this use case, it
+    is the first User Feature reference in the User Feature Set of the
+    CAAUdfLoft Part document. This feature implements the <code>CATIUdfInstantiate</code>
+    interface</li>
+  <li>Sets the path of the Part where the User Feature reference will be
+    instantiated using the <code>SetDestinationPath</code>  method</li>
+  <li>Valuates the inputs thanks to the <code>SetNewInput</code> or <code>UseIdenticalName</code>
+    methods</li>
+  <li>Valuates the published parameters (optional) retrieved thanks to
+    the <code>GetParameters</code>&nbsp; method, and modified using the <i>CATICkeParm</i>
+    interface</li>
+  <li>Instantiates the new instance thanks to the <code>Instantiate </code>method</li>
+  <li>Changes the name of the new instance (optional) thanks to the <code>SetDisplayName&nbsp;</code>method</li>
+  <li>Ends the instantiation with the call to the <code>EndInstantiate </code>method</li>
+</ul>
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMcaUdfCreation.htm">Creating a User Feature Reference</a></td>
+  </tr>
+    <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">Power
+      Copy and User Features Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMcaUdfEdition.htm">Editing a User Feature</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIEdit.htm">Editing
+      Combined Curves</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

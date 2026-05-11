@@ -1,0 +1,417 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating and Manipulating Formulas</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating and Manipulating Formulas</h3>
+     <p><em>How to do some basic operations with formulas</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to create, modify, and display formulas. To 
+     keep up with the material presented in this article, it is better if you 
+     have a prerequisite knowledge of formulas from an end user point of view. 
+     If need be, refer to the <i>Knowledge Advisor User's Guide</i>.</p>
+     <ul>
+       <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+       <li><a href="#UseCase"><b>The CAALifFormula Use Case</b></a></li>
+       <ul>
+         <li><a href="#What">What Does CAALifFormula Do</a></li>
+         <li><a href="#How">How to Launch CAALifFormula</a></li>
+         <li><a href="#Where">Where to Find the CAALifFormula Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+       <li><strong><a href="#InShort">In Short</a></strong> </li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>In this use case, you will learn how to:</p>
+ <ul>
+   <li>Create and modify a formula</li>
+   <li>Test the formula activity, then reactivate a formula after it has been 
+   deactivated.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifFormula Use Case</h3>
+ <p>CAALifFormula is a use case of the CAALiteralFeatures.edu framework that 
+ illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifFormula Do</h4>
+ <p>The CAALifFormula use case:</p>
+ <ol>
+   <li>Creates three parameters of string type:
+   <ul>
+     <li>ModuleName - with an initial value of CAALifRelations</li>
+     <li>ProjectKey - with no initial value specified</li>
+     <li>Topic - with no initial value specified</li>
+   </ul>
+   </li>
+   <li>Creates a formula specifying that the ProjectKey parameter value is 
+   determined from the six first characters of the ModuleName parameter. To 
+   extract this sub-string from ModuleName, we use the Extract function. The 
+   extract function is provided by default as a string function in the 
+   dictionary which is displayed in the &quot;Formulas&quot; dialog box when you create a 
+   formula as an end user. For information on how to use this function, see the
+   <i>Knowledge Advisor Programming Guide</i>.</li>
+   <li>Modifies the formula expression. The initial formula 
+   ExtractForm:ProjectKey=ModuleName.Extract(0,6) is replaced with 
+   ExtractForm:ProjectKey=Topic.Extract(0.5) tests the formula activity. When a 
+   formula is modified, it is deactivated. In this step, we check that the 
+   formula is deactivated. </li>
+   <li>Re-activates the formula. </li>
+ </ol>
+ <p><i>Reminder</i></p>
+ <p>The ExtractForm:ProjectKey=ModuleName.Extract(0,6) notation the one used to 
+ display a formula in the specification tree. ExtractForm is the formula name, 
+ ProjectKey is the parameter to be constrained by the formula, ModuleName is the 
+ parameter the Extract method applied to.</p>
+ <p>In this article, we use the same notation as in the specification tree.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifFormula</h4>
+ <p>To launch CAALifFormula, you will need to set up the build time environment, 
+ then compile CAALifFormula along with its prerequisites, set up the run time 
+ environment, and then execute the use case which main program is 
+ CAALifRelationMain. This program encompasses two use cases [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifFormula Code</h4>
+ <p>The CAALifFormula use case is made of CAALifFormula.cpp file located in the CAALifRelations.m module of the 
+ CAALiteralFeatures.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifRelations.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifRelations.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>The main program related to this 
+ file is CAALifRelationMain. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>CAALifFormula is divided into seven steps:</p>
+ <ol>
+   <li><a href="#Step1">Creating the Parameters</a></li>
+   <li><a href="#Step2">Creating the Parameter List</a></li>
+   <li><a href="#Step3">Creating the Formula</a></li>
+   <li><a href="#Step4">Displaying the Extracted String</a></li>
+   <li><a href="#Step5">Modifying the Formula Expression</a></li>
+   <li><a href="#Step6">Testing the Formula Activity</a></li>
+   <li><a href="#Step7">(Re)-Activating the Formula</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Creating the Parameters</h4>
+ <p>Three parameters are created [<a href="#References">2</a>] [<a href="#References">3</a>]. 
+ Note that in a usual application, these parameters are already created. You 
+ just have to retrieve them and append them within a list. </p>
+ <p>The CATParmDictionary::VisibleParms method can be used to retrieve list of 
+ parameters below a published feature.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// -------------------------
+// 1 - Create the parameters
+// -------------------------
+
+  // Create the &quot;ModuleName&quot; parameter
+  // Initial value = &quot;CAALifRelations&quot;
+  CATICkeParm_var 
+    spString1=spFact-&gt;CreateString(&quot;ModuleName&quot;,&quot;CAALifRelations&quot;);
+  
+  // Create the &quot;ProjectKey&quot; parameter
+  // No initial value specified
+  CATICkeParm_var 
+    spString2=spFact-&gt;CreateString(&quot;ProjectKey&quot;,&quot;&quot;); 
+  
+  // Create the &quot;Topic&quot; parameter
+  // Initial value is &quot;Formulas&quot;
+  CATICkeParm_var 
+    spString3=spFact-&gt;CreateString(&quot;Topic&quot;,&quot;Formulas&quot;); 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating the Parameter List</h4>
+ <p>Before creating a formula or any other relation, you must create a parameter 
+ list containing at least, all the parameters to be used in the formula. The 
+ parameter to be constrained by the formula and the parameters used as the 
+ arguments in the formula expression must be appended to the list.</p>
+ <p>Note that you can create a list with more parameters that required.</p>
+ <p>Objects can be appended in any order but you should bear in mind that the 
+ order they are declared in the list (that is their rank) is reused when you 
+ create the formula.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// -----------------------------
+// 2 - Create the parameter list
+// -----------------------------
+
+  // Create the parameter list
+  CATCkeListOf(Parm) pList;
+
+  // Append ModuleName to the created list
+  pList.Append (spString1);  // a1 = &quot;ModuleName&quot;
+
+  // Append ProjectKey to the created list 
+  pList.Append (spString2);  // a2 = &quot;ProjectKey&quot; 
+
+  // Append Topic to the created list
+  pList.Append (spString3);  // a3 = &quot;Topic&quot;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>If you modify the parameter list, pay attention to the relations which rely 
+ on this parameter list.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Creating the Formula</h4>
+ <p>The CATICkeParmDictionary::CreateFormula method allows you to create a 
+ formula. The formula created specifies that the ProjectKey parameter equals the 
+ first six characters of the ModuleName parameter value. </p>
+ <dl>
+   <dt><i>About the Extract Method (see the Knowledge Advisor Programming Guide)</i>
+   </dt>
+   <dt>&nbsp; </dt>
+   <dd>Extract is to be used as a method applying to ProjectKey. It returns the 
+   sub-string starting at a given position with a specified length. The first 
+   argument of Extract is the index of the sub-string first character. The 
+   second argument is the sub-string length.</dd>
+ </dl>
+ <p>The formula which would be displayed <nobr>
+ ExtractForm:ProjectKey.Extract(0,6)</nobr> in the specification-tree is 
+ specified &quot;a1.Extract(0,6)&quot; in the CreateFormula method.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>// -------------------------------------------------------------
+// 3 - Create the ExtractForm formula which extracts
+//     the first six characters from the ModuleName parameter
+// -------------------------------------------------------------
+CATICkeRelation_var
+  spFormula1 = spFact-&gt;CreateFormula (&quot;ExtractForm&quot;,
+                                                 &quot;&quot;,
+                                                 &quot;&quot;,
+                                          spString2,
+                                              &amp;list,
+                                  &quot;a1.Extract(0,6)&quot;,
+                                           NULL_var,
+                                     CATCke::False);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Here is the description of the arguments:</p>
+ <ul>
+   <li><i>argument 1:</i> specify the name of the formula to be created (&quot;ExtractForm&quot;)</li>
+   <li><i>argument 2:</i> should be a blank string</li>
+   <li><i>argument 3:</i> should be a blank string</li>
+   <li><i>argument 4:</i> specify the parameter to be constrained (&quot;ProjectKey&quot;)</li>
+   <li><i>argument 5: </i>specify the list of parameters to be used in the 
+   formula</li>
+   <li><i>argument 6:</i> specify the expression defining the constrained 
+   parameter.<br>
+   The a<sub>i</sub> notation allows you specify a relation argument from its 
+   rank in the parameter list.<br>
+   &quot;ModuleName&quot; is the first parameter appended to the list. It is denoted a1 in 
+   the CreateFormula method.</li>
+   <li><i>argument 7:</i> should be NULL_var </li>
+   <li><i>argument 8:</i> should be CATCke::False.</li>
+ </ul>
+ <p>
+ <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"> 
+ If the syntax of the formula expression is wrong, the CreateFormula method 
+ returns NULL_var.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Displaying the Extracted String</h4>
+ <p>The expected value for ProjectKey parameter is CAALif. To check this value, 
+ we use the CATICkeInst::AsString method.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// -------------------------------------------------------------
+// 3 - Retrieving and displaying the new ProjectKey value
+// -------------------------------------------------------------
+cout &lt;&lt; &quot;The ProjectKey value is: &quot; ;
+cout &lt;&lt; (spString2-&gt;Value()-&gt;AsString()).CastToCharPtr() &lt;&lt; endl; 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>At run-time, the statements above display in the standard output the message 
+ below:</p>
+ <pre>The ProjectKey value is: CAALif</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Modifying the Formula Expression</h4>
+ <p>The CATICkeRelationExp::Modify method is to be used to modify the expression 
+ of a formula. Note that modifying a formula deactivates it. If you display the 
+ value of the constrained parameter before the relation has been reactivated, 
+ you don't get the new value.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// ------------------------------------------------
+// 4 - Modify the formula
+//     Replace a1.Extract(0,6) with a3.Extract(0.5)
+// ------------------------------------------------
+CATICkeRelationExp_var spExpform = spFormula1 ;
+spExpform-&gt;Modify(&amp;list,&quot;a3.Extract(0,5)&quot;, NULL_var, CATCke::False);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Here is the description of the arguments:</p>
+ <ul>
+   <li><i>argument 1: </i>specify the parameter list where the parameters used 
+   to specify the formula expression are appended.</li>
+   <li><i>argument 2:</i> specify the new formula expression</li>
+   <li><i>argument 3:</i> should be NULL_var</li>
+   <li><i>argument 4:</i> should be CATCke::False</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Testing the Formula Activity</h4>
+ <p>A formula which is modified is deactivated. We check that ExtractForm is no 
+ longer active.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// ------------------------------------------------
+// 5 - Test the formula activity
+// ------------------------------------------------
+cout &lt;&lt; spFormula1-&gt;IsActivated() &lt;&lt; endl;
+...
+cout &lt;&lt; &quot;The ProjectKey value is: &quot; ;
+cout &lt;&lt; (spString2-&gt;Value()-&gt;AsString()).CastToCharPtr() &lt;&lt; endl;</pre>
+     </td>
+   </tr>
+ </table>
+ <p>At run-time, the statements above display in the standard output the 
+ messages below</p>
+ <pre>0
+The ProjectKey value is: CAALif</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>(Re)-Activating the Formula</h4>
+ <p>The CATICkeRelation::Activate() method allows you to reactivate a formula 
+ which has just been modified (this also applies to rules and checks).</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// ------------------------------------------------
+// 6 - Re-activate the formula
+// ------------------------------------------------
+spFormula1-&gt;Activate();
+cout &lt;&lt; &quot;The ProjectKey value is: &quot; ;
+cout &lt;&lt; (spString2-&gt;Value()-&gt;AsString()).CastToCharPtr() &lt;&lt; endl;</pre>
+     </td>
+   </tr>
+ </table>
+ <p>At run time, the statements above display in the standard output the 
+ messages below:</p>
+ <pre align="left">The ProjectKey value is: Formu</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The following programming steps are typically required when writing 
+ formulas:</p>
+ <ol>
+   <li>Create the parameter list to be passed as the argument 5 of the 
+   CATICkeParmFactory::CreateFormula method</li>
+   <li>Create the formula itself. The a<sub>i</sub> notation method relies on 
+   the parameter rank in the parameter list.</li>
+   <li>If need be, modify the formula by using the CATIRelationExp::Modify 
+   method. Modifying a formula deactivates this formula.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAALifParamPers.htm">Using Persistent Parameters</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td><a href="CAALifParamVolat.htm">Using Volatile Parameters</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>

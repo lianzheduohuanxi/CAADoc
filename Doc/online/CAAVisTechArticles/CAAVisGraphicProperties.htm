@@ -1,0 +1,771 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Graphical Properties</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>&nbsp;3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Graphical Properties</h3>
+      How to use or implement the <i>CATIVisProperties</i> Interface</td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The first objective of this article is to understand what are the
+      graphical properties. The second is to explain how they are integrated in
+      the visualization process. Three interfaces are important: <i>CATIVisProperties</i>,
+      <i>CATIVisu</i> and <i>CATIProperty</i>. The first enables to associate
+      with a feature a set of graphical properties, the second uses the <i>CATIVisProperties
+      </i>interface to update the graphic attributes of the graphic
+      representations, and the last stores the data. <i>CATIVisProperties </i>is
+      the main interface of this system.</p>
+      <ul>
+        <li><b><a href="#Principe des Prop Grap">Principe of the Graphical
+          Properties&nbsp;</a></b>
+          <ul>
+            <li><a name="Des Properties Par Type de Geometrie" href="#The graphical Properties are attributes">The
+              Graphical Properties are Graphical Attributes</a></li>
+            <li><a href="#Les Types de Geometry">The Types of Geometry</a></li>
+            <li><a href="#les Prop grap par type de geometrie">The Graphical
+              Properties by Geometry Type</a></li>
+            <li><a href="#Integration des Prop Grap dans le process de visu">Integration
+              of the Graphical Properties in the Visualization Process</a>
+              <ul>
+                <li><a href="#generalites">Generalites</a></li>
+                <li><a href="#SetxxxGraphicAttribute">Default behaviors of the
+                  SetxxxGraphicAttribute methods</a></li>
+              </ul>
+            </li>
+            <li><a name="tableau resume des prop grap par type de geom" href="#tableau resume des prop grap par type de geom">In
+              short the Standard Graphical Properties by Type of Geometry</a></li>
+            <li><a href="#Automation">Automation</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Les commandes interactives">The Interactive Commands</a></b>
+          <ul>
+            <li><a href="#Edit properties">The Properties Command</a></li>
+            <li><a href="#Toolbar">The Graphic Properties Toolbar</a></li>
+            <li><a href="#Commande show/ no show">The Hide/Show Command</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Utiliser CATIVisProperties">Using CATIVisProperties</a></b></li>
+        <li><b><a href="#Implementer CATIVisProperties">Implementing
+          CATIVisProperties</a></b></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Principe des Prop Grap"></a>Principe of the Graphical Properties</h3>
+<p>Before to go into all the details, a little example to set the subject.
+Suppose a cube feature [<a href="#Fig.1">Fig.1 </a>] which is composed of two
+types of geometry: faces (6) and edges (12). On this feature, for the set of
+faces and for the set of edges, graphical properties are put. For faces, it is
+possible to set a color, a degree of opacity and for the lines, a color, a type
+and a thickness.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Graphical Properties on the Cube
+    Feature</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisPropGrapCube.jpg" width="437" height="214"></td>
+  </tr>
+</table>
+<p>The principe of the graphical properties lies on the fact that an element (a
+feature) contains one or several sub-types. A sub-type is sorted by type of
+geometry: point, line, surfacic etc.... and for each sub-type a set of graphical
+properties is associated. To integrate them in the visualization process, there
+is three main interfaces: <i>CATIVisProperties</i>, <i>CATIProperty</i> et <i>CATIVisu</i>.&nbsp;</p>
+<ul>
+  <li><i>CATIVisProperties</i> enables to associate graphical properties to a
+    feature,</li>
+  <li>it uses the <i>CATIProperty</i> to perpetuate the data,</li>
+  <li>it is used by the <i>CATIVisu</i> to update the graphical properties of
+    the graphical representations.</li>
+</ul>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: Relationship Between the Three
+    Interfaces</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisPropGrapSchema.jpg" width="554" height="309"></td>
+  </tr>
+</table>
+<p>On this shema, you can see that:</p>
+<ul>
+  <li>The feature implements the three interfaces&nbsp;</li>
+  <li><i>CATIVisProperties </i>is the central interface.</li>
+  <li>The feature doesn't implement the <i>CATIVisu </i>interface, but an
+    interface which C++ derives from <i>CATIVisu</i>. But to generalize the
+    subject, in this article, only the <i>CATIVisu </i>interface will be
+    mentioned.</li>
+</ul>
+<p>You can notice that if the componant is not a feature, it can't have
+graphical properties because the <i>CATIProperty</i> is to use AsIs.</p>
+<h4><a name="The graphical Properties are attributes"></a>The Graphical
+Properties are Graphical Attributes</h4>
+<p>The graphical properties are visual properties, it means that the properties
+can be directly use by the visualization processus. These attributs, classified
+by storage way, are the following:</p>
+<ol>
+  <li>The graphic attribute, the <i>CATGraphicAttributeSet</i></li>
+  <ul>
+    <li>The color,&nbsp;</li>
+    <li>The type of the line (solid, dashed, ...),</li>
+    <li>The thickness of the line,</li>
+    <li>The degree of opacity,&nbsp;</li>
+  </ul>
+  <ul>
+    <li>The visibility state (show/no show)</li>
+    <li>The selectionabilite state (pick/no pick)</li>
+    <li>The flag for the lowint color</li>
+  </ul>
+  <p>The &quot;Using Graphic Attributes&quot; [<a href="#References">1</a>]
+  article enables to familiarize you with this class.&nbsp;</p>
+  <li>The Graphic Primitive, a <i>CATGraphicPrimitive</i></li>
+  <p>The marker of the point is set at the <i>CAT3DMarkeGP</i> or <i>CAT2DMarkerGP</i>
+  construction class.</p>
+  <li>Other:</li>
+  <p>The number of the layer .</p>
+</ol>
+<p>To specify the type of the graphical properties, there is the <i>CATVisPropertyType
+</i>enum.</p>
+<ul>
+  <li><code>CATVPColor </code>for the color&nbsp;</li>
+  <li><code>CATVPOpacite </code>for the opacity</li>
+  <li><code>CATVPWidth </code>for the line width (thickness)</li>
+  <li><code>CATVPLineType </code>for the line type</li>
+  <li><code>CATVPSymbol </code>for the symbol of the marker</li>
+  <li><code>CATVPShow </code>for the show/no show flag</li>
+  <li><code>CATVPPick </code>for the pick/no pick flag&nbsp;</li>
+  <li><code>CATVPInheritance</code> for the inheritance flag</li>
+  <li><code>CATVPLowInt</code> for the lowint color flag</li>
+  <li><code>CATVPLayer</code> for the layer</li>
+</ul>
+<p>At these values, an another one which doesn't represent a property but a set
+of properties: <code>CATVPAllProperties.</code> &nbsp;</p>
+<p>The data for the graphical properties (the color, the flag) will be write
+(read) on a <i>CATVisPropertiesValues. </i>It's detailed in the &quot;<a href="#Utiliser CATIVisProperties">Using
+CATIVisProperties</a>&quot; section.</p>
+<h4><a name="Les Types de Geometry"></a>The Types of Geometry</h4>
+<p>The information stored on the <i>CATIVisProperties</i> is the type (s) of
+geometry supported by the feature.</p>
+<p>CATIA V5 supplies some types of geometry, those in relationship with the
+dimension of the sub-type are:</p>
+<ul>
+  <li><code>CATVPPoint</code> (O D)</li>
+  <li><code>CATVPLine</code>&nbsp;for a wire and <code>CATVPEdge</code> for a
+    line on a surface (1D)</li>
+  <li><code>CATVPMesh</code> for a surface (2D)</li>
+</ul>
+<p>an another is for the assembling models:</p>
+<ul>
+  <li><code>CATVPAsm</code>&nbsp;</li>
+</ul>
+<p>At these five values, there is a last <code>CATVPGlobalType. </code>This type
+regroups together the graphical properties independant of the sub-types: the
+visibility state, the selectionnability state, the lowint color flag and the
+number of the layer. Actually in fact, it is not possible to set the points of a
+wire on a layer, and set its curves on an other layer. It is the globally the
+element which is on a layer.&nbsp;</p>
+<p>These six types, <code>CATVPPoint</code>, <code>CATVPLine</code>&nbsp; ,<code>CATVPEdge</code>
+,<code>CATVPMesh</code>, <code>CATVPAsm</code>&nbsp; and <code>CATVPGlobalType </code>are
+<i>CATVisGeomType</i></p>
+<h4><a name="les Prop grap par type de geometrie"></a>The Graphical Properties
+by Geometry Type</h4>
+<p>To associate graphical properties for a type of geometry, there is the <i>CATVisPropertiesValues
+</i>class. On an instance of this class, you set the color, the type of point
+and so on.</p>
+<p>On the <i>CATIProperty</i> interface, a copy of this instance is stored. So,
+a priori, you can set any graphical properties for any type of geometry. But at
+last, only the graphic properties&nbsp; interpretable by the process
+visualization are important. It means that you can set a degree of opacity for
+your lineic feature, but the visualization process could not translate that. The
+next section describes that.</p>
+<h4><a name="Integration des Prop Grap dans le process de visu"></a>Integration
+of the Graphical Properties in the Visualization Process</h4>
+<h5><a name="generalites"></a>Generalites</h5>
+<p>In the visualization process, there are two cases to distinguish, even though
+they join together at the end. The total and the partial revisualization of the
+model. But at first, it is important to give the methods of the <i>CATExtIVisu</i>
+adapter class of the <i>CATIVisu</i> interface in relationship with the
+properties:</p>
+<ul>
+  <li><code>virtual CATRep * <b>BuildRep</b>()</code></li>
+  <li><code>virtual void <b>SetGraphicAttribut</b>()</code></li>
+  <li><code>virtual int <b>ModifyRep</b>(const CATNotification &amp; iNotif)</code></li>
+  <li><code>virtual void <b>SetPointGraphicAttribute</b>(CATRep * iRep,
+    CATVisPropertyType iPropertyType, CATVisPropertiesValues &amp;
+    iPropertyValues)</code></li>
+  <li><code>virtual void <b>SetMeshGraphicAttribute</b>(CATRep * iRep,
+    CATVisPropertyType iPropertyType, CATVisPropertiesValues &amp;
+    iPropertyValues)</code></li>
+  <li><code>virtual void <b>SetLineGraphicAttribute</b>(CATRep * iRep,
+    CATVisPropertyType iPropertyType, CATVisPropertiesValues &amp;
+    iPropertyValues</code></li>
+  <li><code>virtual void <b>SetEdgeGraphicAttribute</b>(CATRep * iRep,
+    CATVisPropertyType iPropertyType, CATVisPropertiesValues &amp;
+    iPropertyValues)</code></li>
+  <li><code>virtual void <b>SetAsmGraphicAttribute</b>(CATRep * iRep,
+    CATVisPropertyType iPropertyType, CATVisPropertiesValues &amp;
+    iPropertyValues)</code></li>
+</ul>
+<ol>
+  <li>The total revisualization of the model</li>
+  <p>After the construction of the graphic representation (<i>CATRep </i>class),
+  realized by the <code>BuildRep</code> method, the <code>SetGraphicAttribut </code>method
+  is called. The default implementation of this method, those of the <i>CATExtIVisu
+  </i>adapter class, calls successively (*) the following methods:<i>&nbsp;</i></p>
+  <ol>
+    <li>Method not exposed to process the independent properties of the
+      sub-elements : visibility, selectionability, layer and lowint&nbsp;(<code>CATVPGlobalType</code>)</li>
+    <li>SetPointGraphicAttribute (<code>CATVPPoint</code>)</li>
+    <li>SetLineGraphicAttribute&nbsp; (<code>CATVPLine</code>)</li>
+    <li>SetMeshGraphicAttribute (<code>CATVPMesh</code>)</li>
+    <li>SetEdgeGraphicAttribute (<code>CATVPEdge</code>)</li>
+    <li>SetAsmGraphicAttribute (<code>CATVPAsm</code>)</li>
+  </ol>
+  <p>(*) These methods are called only if the type of geometry,&nbsp; set in
+  bracket in the previous list, is defined by the feature.&nbsp;</p>
+  <p>The <code>SetGraphicAttribut </code>method calls these methods with <code>CATVPAllProperties
+  </code>as second argument. It means that all the graphical properties are set
+  on the graphic representation for the given type of geometry. <code>&nbsp;</code></p>
+  <li>The partial revisualization of the model</li>
+  <p>After a <i>CATModifyVisProperties </i>notification, a partial
+  revisualization of the model is done. In fact only the graphical properties
+  are changed. This notification contains the type of the geometry and its new
+  graphical properties. The <code>ModifyRep</code> analyzes the input's
+  notification, and calls one of the six methods concerned by the type of
+  geometry. The difference between the total revisualization is the second
+  argument of these methods: it is not necessary <code>CATVPAllProperties, </code>but
+  can be one of the <i>CATVisPropertyType </i>enumeration as<i> </i><code>CATVPColor</code>
+  for example.&nbsp;</p>
+</ol>
+<p>In the two cases, the process converges towards the same methods. Their goal
+is to modify the graphic representation (and their associated graphic
+attributes) in taken account of the graphic properties set on the <code>CATVisPropertiesValues
+</code>instance<code>,</code> the third argument of these methods. It is
+important to know what do they do in their default implementation, because if
+the default behavior doesn't fit your need, you will do reimplement those
+concerned by the type of geometry defined by your feature. See &quot;<a href="#Implementer CATIVisProperties">Implementing
+CATIVisProperties</a>&quot;.&nbsp;</p>
+<p>Before to detail them, we have described the second and the third argument of
+these six methods, there is still the first. It is a <code><i>CATRep</i> </code>pointer
+which comes from the visualization process. Indeed, it is the graphic
+representation created in your <code>BuildRep</code> extension.&nbsp;</p>
+<h5><a name="SetxxxGraphicAttribute"></a>Default Behaviors of the
+SetxxxGraphicAttribute methods</h5>
+<ul>
+  <li><b>SetPointGraphicAttribute</b></li>
+  <p>The graphical properties processed are the color and the symbol of the
+  marker. The method takes care only the <i>CAT3DPointRep</i> or the <i>CAT2DPointRep
+  </i>class. If your graphic representation is a <i>CAT3DCustomRep,</i> it will
+  be necessary to reimplement it.</p>
+  <li><b>SetLineGraphicAttribute</b></li>
+  <p>See SetEdgeGraphicAttribute</p>
+  <li><b>SetMeshGraphicAttribute</b></li>
+  <p>The graphical properties processed are the color and the degree of opacity.
+  If the graphic representation is a <i>CATSurfacicRep, </i>the graphic
+  attributes of each faces will be modified, and also the graphic attributes
+  associated to each level of detail [<a href="#References">2</a>]. Otherwise,
+  the graphic attribute of the graphic representation is changed.&nbsp;</p>
+  <li><b>SetEdgeGraphicAttribute</b></li>
+  <p>The graphical properties processed are the color, the type and the
+  thickness of the line. If the graphic representation is:
+  <ul>
+    <li>a <i>CATSurfacicRep, </i>the graphic attributes of each edges will be
+      modified,</li>
+    <li>a CAT3DCustomRep or a CAT2DCustomRep, all the graphic attributes will be
+      modified&nbsp;</li>
+    <li>otherwise, the graphic attribute of the graphic representation is
+      changed</li>
+    &nbsp;
+  </ul>
+  <li><b>SetAsmGraphicAttribute</b></li>
+  <p>The graphical properties processed are the color, the type of the line, the
+  thickness, the degree of opacity and the inheritance.</p>
+</ul>
+<h4><a name="tableau resume des prop grap par type de geom"></a>In short the
+Standard Graphical Properties by Type of Geometry</h4>
+<p>This section describes in table form [<a href="#Tab.1">Tab.1</a>] for each
+type of geometry, the graphical properties taken account by the <i>CATExtIVisu</i>
+methods that we have detailed just above.&nbsp;</p>
+<table>
+  <caption><i><a name="Tab.1">Tab.1</a>: The Graphic Properties for Each Type of
+    Geometry&nbsp;</i></caption>
+  <tr>
+    <td width="200">
+      <table border="1" width="408">
+        <tr>
+          <td width="143"><b>The type&nbsp;of the Geometry</b></td>
+          <td width="249"><b>Graphic Properties&nbsp;</b></td>
+        </tr>
+        <tr>
+          <td width="143">CATVPGlobalType</td>
+          <td width="249" align="left">
+            <ul>
+              <li>Show/no show state</li>
+              <li>Number of&nbsp; layer</li>
+              <li>Pick/no pick state</li>
+              <li>Lowint color state</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td width="143">CATVPPoint</td>
+          <td width="249" align="left">
+            <ul>
+              <li>Color</li>
+              <li>Symbol of the marker</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td width="143">CATVPLine</td>
+          <td width="249" align="left">
+            <p align="left">as edge</p>
+          </td>
+        </tr>
+        <tr>
+          <td width="143">CATVPEdge</td>
+          <td width="249" align="left">
+            <ul>
+              <li>Color</li>
+              <li>Thickness</li>
+              <li>Linetype&nbsp;</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td width="143">CATVPMesh</td>
+          <td width="249" align="left">
+            <ul>
+              <li>Color&nbsp;</li>
+              <li>Degree of opacity</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td width="143">CATVPAsm</td>
+          <td width="249" align="left">
+            <ul>
+              <li>Inheritance</li>
+              <li>Color&nbsp;</li>
+              <li>Degree of opacity</li>
+              <li>Linetype&nbsp;</li>
+              <li>Thickness</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h4><a name="Automation"></a>Automation</h4>
+<p>In implementing the <i>CATIVisProperties</i> interface on your feature, you
+benefit automatically of the <i>CATIAVisPropertySet </i>automation interface
+.&nbsp;</p>
+<h3><a name="Les commandes interactives"></a>The interactive Commands</h3>
+<h4><a name="Edit properties"></a>The Properties Command</h4>
+<p>If your feature implements <i>CATIVisProperties, </i>when you launch the
+Properties Commands, the Graphic tab page appears. Its contents depends on the
+type of geometry defined by the feature. There are three possible cases:</p>
+<ol>
+  <li>In the case where the type of&nbsp; geometry is&nbsp; <code>CATVPPoint</code>
+    and/or <code>CATVPLine</code> and/or <code>CATVPEdge</code> and/or <code>CATVPMesh</code>
+    (with or without <code>CATVPGlobalType</code>):</li>
+  <table>
+    <caption><i><a name="Fig.3">Fig.3</a>: The Properties Dialog Box - Case 1</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAVisPropGrapEditProperties.jpg" width="374" height="405"></td>
+    </tr>
+  </table>
+  <p>This is a sample with a feature which are the types <code>CATVPGlobalType</code>
+  and <code>CATVPPoint</code>.&nbsp;This page contains two frames:</p>
+  <ul>
+    <li>The first is without title, but it contains the sub-frames:&nbsp; Fill,
+      Edges, Lines and Curves and Points. This frame appears if one of the
+      following type of geometry is defined by the feature: <code>CATVPPoint,
+      CATVPLine, CATVPEdge </code>or <code>CATVPMesh</code>. If the type is not
+      supported by the feature, its options are disable. In this example, only
+      the point properties (color and symbol) are available.&nbsp;</li>
+    <li>The second whose the title is Show Pick and Layers, appears only if
+      the&nbsp; <code>CATVPGlobalType</code> type is supported by the
+      feature.&nbsp;</li>
+  </ul>
+  <li>In the case where the type of&nbsp; geometry is <code>CATVPAsm</code>
+    (with or without <code>CATVPGlobalType</code>):</li>
+  <table>
+    <caption><i><a name="Fig.4">Fig.4</a>: The Properties Dialog Box - Case 2</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAVisPropGrapEditProperties2.jpg" width="405" height="290"></td>
+    </tr>
+  </table>
+  <p>This is an example where the feature defined the types <code>CATVPAsm</code>&nbsp;and
+  <code>CATVPGlobalType</code>. This page contains two frames:</p>
+  <ul>
+    <li>The first has for title &quot;Graphic Properties&quot;&nbsp;</li>
+    <li>The second, Show Pick and Layers, appears only if the&nbsp; <code>CATVPGlobalType</code>
+      type is supported by the feature.&nbsp;</li>
+  </ul>
+  <li>In the case where the type of&nbsp; geometry is only <code>CATVPGlobalType</code></li>
+  <table>
+    <caption><i><a name="Fig.5">Fig.5</a>: The Properties Dialog Box - Case 3</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAVisPropGrapEditProperties3.jpg" width="342" height="219"></td>
+    </tr>
+  </table>
+</ol>
+<p>Only the &quot;Show Pick and Layers&quot;&nbsp;appears.</p>
+<h4><a name="Toolbar"></a>The Graphic Properties Toolbar</h4>
+<p>The Graphic Properties toolbar, [<a href="#Fig.5">Fig. 6</a>] is the
+following:</p>
+<table>
+  <caption><i><a name="Fig.6">Fig.6</a>: The Graphic Properties Toolbar</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisPropGrapToolbarWithCom.jpg" width="411" height="258"></td>
+  </tr>
+</table>
+<p>When a feature is selected, the toolbar is updated in taken account of the
+feature's properties. If several features are selected, the behavior is the
+following:</p>
+<ul>
+  <li>If there are several possible values for a combo, the combo displays
+    undefined (like the combo color in the previous picture [<a href="#Fig.5">Fig.
+    6</a>])</li>
+  <li>If there are more than N features selected, all combos are undefined. The
+    value N is customizable through the Tools/Options/Display/Navigation page,
+    in the &quot;Limit Display to Manipulators&quot; option .</li>
+</ul>
+<p>You can notice that in this toolbar, there is only one combo for each type of
+property. Assume that your feature defined the <code>CATVPPoint</code> and the <code>CATVPLine</code>
+types. These two types have in common the color property. So a choice must be
+done to define the type concerned by the color property. It is the goal of the <code>GetSubTypefromPath
+</code>method of the <i>CATIVisProperties</i> interface. This point will be
+detailed in the <a href="#Implementer CATIVisProperties">Implementing
+CATIVisProperties</a>&quot; section.</p>
+<h4><a name="Commande show/ no show"></a>The Hide/Show Command</h4>
+<p>The Hide/Show command enables to hide or show the selected features. But to
+benefit of this functionality on your feature, it must implement the <i>CATISelectShow&nbsp;</i>
+interface. It uses the <i>CATIVisProperties</i> to modify the visibility state
+of the feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Utiliser CATIVisProperties"></a>Using CATIVisProperties</h3>
+<p>If this section detailed the usage of the <i>CATIVisProperties</i> interface,
+the &quot;Modifying Object Graphical Properties&quot; article [<a href="#References">3</a>]
+exposes a concrete use case.&nbsp;</p>
+<p>This interface contains five main methods:</p>
+<ol>
+  <li><code><b>GetPropertiesAtt</b>(CATVisPropertiesValues &amp; oValues,
+    CATVisPropertyType iPropType, CATVisGeomType iGeomType )</code>
+  <li><code><b>SetPropertiesAtt</b></code>(<code>CATVisPropertiesValues &amp;
+    iValues, CATVisPropertyType iPropType, CATVisGeomType iGeomType )</code>
+    <p>The first retrieves the properties from the <i>CATIProperty</i> interface
+    and the second modifies them on the <i>CATIProperty</i> interface</p>
+    <p>These two methods function on the same principle: the property values are
+    on the <i>CATVisPropertiesValues</i> instance and&nbsp; two keys</p>
+    <ul>
+      <li><code>iGeomType, </code>precises<code> </code>the type of the geometry
+        concerned by the property
+      <li><code>iPropType, </code>precises<code> </code>the type of the property
+        valid on the <i>CATVisPropertiesValues</i> instance &nbsp;</li>
+    </ul>
+    <p>Example: Lets change the color (<code>CATVPColor</code> for the property
+    type)&nbsp; of a line (<code>CATVPLine</code> for the geometry type)
+    represented by the <code>pLine</code> pointer.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+<b>CATIVisProperties</b> * pIVisPropertiesOnLine = NULL;
+HRESULT rc = <code>pLine</code> -&gt;<b>QueryInterface</b>(IID_CATIVisProperties, (void **) &amp; pIVisPropertiesOnLine );
+if ( SUCCEEDED(rc) )
+{
+   CATVisPropertiesValues MyPropertyOnLine ;
+   MyPropertyOnPoint.<b>SetColor</b>(255,0,0);
+   rc = pIVisPropertiesOnLine -&gt;<b>SetPropertiesAtt</b>(MyPropertyOnLine, <code>CATVPColor</code> ,<code>CATVPLine</code> ); 
+}                                                                                                 
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>At first, the <i>CATVisPropertiesValues</i> instance, <code>MyPropertyOnLine</code>,
+    is valuated with the color thanks to the <code>SetColor</code> method. Next
+    calling the <code>SetPropertiesAtt</code> method modifies on the <i>CATIProperty</i>
+    interface only the color of the line geometry because the second argument is
+    <code>CATVPColor</code> and the third is <code>CATVPLine</code>.&nbsp;</p>
+  <li><code><b>ResetPropertiesAtt</b></code>(<code>CATVisPropertyType iPropType,
+    CATVisGeomType iGeomType )</code>
+    <p>This methods enables to invalidate the property set on the <i>CATIProperty</i>.
+    It means that at the next <code>GetPropertiesAtt </code>calls, <code></code>the
+    returned properties values will be the standard values. The returned code of
+    the <code>GetPropertiesAtt </code>method, S_AUTOMATIC, precises that the
+    returned properties values is the standard. To set new specific properties,
+    a new <code>SetPropertiesAtt</code> will be necessary.</p>
+    <p>Example: Always with the line, pointed by&nbsp; <code>pIVisPropertiesOnLine</code>,
+    the color of the <code>CATVPLine</code> geometry type is reseted.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT rc = pIVisPropertiesOnLine -&gt;<b>ResetPropertiesAtt</b>(<code>CATVPColor</code> ,<code>CATVPLine</code>);
+if ( SUCCEEDED(rc) )
+{
+   CATVisPropertiesValues MyPropertyOnLine ;
+   rc = pIVisPropertiesOnLine -&gt;<b>GetPropertiesAtt</b>(MyPropertyOnLine, <code>CATVPColor</code> ,<code>CATVPLine</code> ); 
+   if ( S_AUTOMATIC == rc ) 
+   {
+      
+   }else cout &lt;&lt;&quot; error&quot; &lt;&lt; endl;
+}                                                                                                 
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In this example, you can see that after the <code>ResetPropertiesAtt </code>call<code>,
+    </code>for the same key<code> </code><code>CATVPColor</code> and <code>CATVPLine,
+    </code>the <code>GetPropertiesAtt </code>method returns the<code> </code><code>S_AUTOMATIC
+    </code>value<code>. </code>It means that the color sets on the <code>MyPropertyOnLine</code>
+    instance, is the standard color, so the same value as those returned by the <code>GetStandardProperties
+    </code>method with the same keys<code>.&nbsp;</code></p>
+    <p>Note: if any <code>SetPropertiesAtt</code> call has been&nbsp; done on
+    the feature, it has standard values.</p>
+  <li><code><b>GetStandardProperties</b>(CATVisPropertiesValues &amp; oValues,
+    CATVisPropertyType iPropType, CATVisGeomType iGeomType )</code>
+    <p>This method retrieves the standard properties. These values are the
+    values managed by the <i>CATIVisProperties</i> implementation [<a href="#Tab.2">Tab.
+    2</a>] and are not the standard of creation that you can manage with the
+    &quot;Standards...&quot; command.&nbsp;</p>
+    <table>
+      <caption><i><a name="Tab.2">Tab.2</a>: The standard values for each type
+        of property&nbsp;</i></caption>
+      <tr>
+        <td width="200">
+          <table border="1" width="294">
+            <tr>
+              <td width="143"><b>The type&nbsp;of the property</b></td>
+              <td width="135"><b>The standard value</b></td>
+            </tr>
+            <tr>
+              <td width="143">Color</td>
+              <td width="135" align="center">white (255,255,255)</td>
+            </tr>
+            <tr>
+              <td width="143">Symbol&nbsp;</td>
+              <td width="135" align="center">Cross</td>
+            </tr>
+            <tr>
+              <td width="143">Thickness of a line</td>
+              <td width="135" align="center">1</td>
+            </tr>
+            <tr>
+              <td width="143">Type of a line</td>
+              <td width="135" align="center">Solid</td>
+            </tr>
+            <tr>
+              <td width="143">Degree of opacity</td>
+              <td width="135" align="center">0</td>
+            </tr>
+            <tr>
+              <td width="143">Number of the layer</td>
+              <td width="135" align="center">0</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <p>Caution: The contents of this table can be different between two
+    implementations of the <i>CATIVisProperties </i>interface. The DS features,
+    implementing the <code>GetStandardProperties </code>methods<code>, </code>have
+    perhaps another standard values. Here the standard values defined by the <i>CATExtIVisProperties
+    </i>methods are exposed.&nbsp;</p>
+  <li><code><b>IsGeomTypeDefined</b>(CATVisGeomType iGeomType)</code></li>
+  <p>Tells if&nbsp; a given type of geometry is recognized by the feature.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Implementer CATIVisProperties"></a>Implementing
+CATIVisProperties&nbsp;</h3>
+<p>If this section detailed the implementation of the <i>CATIVisProperties</i>
+interface, the &quot;Implementing CATIVisProperties&quot; article exposes a
+concrete use case. You will find this article in the Product Process Resouce
+(PPR) part of the CAA encyclopedie.</p>
+<p>To implement this interface you use the <i>CATExtVisProperties </i>adapter
+class. <i></i>There are two methods to overwrite:</p>
+<ul>
+  <li><code>IsGeomTypeDefined</code></li>
+  <p>It is the method to define one or several type of geometry for the feature.
+  Here is an example for a feature which defined the <code>CATVPPoint</code> and
+  the <code>CATVPGlobalType</code> types.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEPstVisPropertiesPoint::<b>IsGeomTypeDefined</b>(CATVisGeomType &amp; iGeomType)
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (<b>CATVPPoint</b> == iGeomType) || (<b>CATVPGlobalType</b> == iGeomType) )
+        rc =  S_OK ;
+    return rc ;
+}                                                                                              
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>This method returns S_OK when the type is valid otherwise E_FAIL.</p>
+  <p><b>Overwrite or not the methods of the <i>CATExtIVisu</i> adapter class of
+  the <i>CATIVisu</i> interface</b></p>
+  <p>You have chosen one or several types among the following types: <code>CATVPPoint</code>,
+  <code>CATVPLine</code>, <code>CATVPEdge</code>,&nbsp;<code>CATVPAsm</code>, <code>CATVPMesh.
+  </code>But in studying the default behavior of the methods of the <i>CATExtIVisu</i>
+  class, associated at each type you have chosen, you note that their process
+  don't fit your need: the graphic representation of your feature will not be
+  correctly modified.&nbsp;</p>
+  <p>Take an example, the feature is a wire which contains lineic sub-elements
+  (lines) and points. The type of geometry are <code>CATVPPoint</code> and <code>CATVPLine.
+  </code>So the methods of the <i>CATExtIVisu</i> are <i>SetPointGraphicAttribute</i>
+  to modify the points attributes and <i>SetLineGraphicAttribute </i>for those
+  of the lines. The graphic representation of the feature is a <i>CAT3DCustomRep</i>
+  with one <i>CAT3DMarkerGP</i> for all the points and one <i>CAT3DLineGP</i>
+  for all the lines. It is necessary to overwrite these two methods because:</p>
+  <ul>
+    <li>The <code>SetPointGraphicAttribute</code> method doesn't process the <i>CAT3DCustomRep</i>
+      as graphic representation.</li>
+    <li>The <code>SetLineGraphicAttribute</code> method modifies all its graphic
+      attributes, so the attribute for the point will be also changed.</li>
+  </ul>
+</ul>
+<ul>
+  <li><code>GetSubTypeFromPath</code></li>
+  <p>This method enables to define the type of geometry concerned by the graphic
+  properties displayed in the Graphic Properties toolbar. See the section &quot;<a href="#Toolbar">The
+  Graphic Properties Toolbar&quot;</a></p>
+  <p>Here an example for the point feature:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEPstVisPropertiesPoint::GetSubTypeFromPath(CATPathElement &amp; iPathElement, 
+                                                      CATVisPropertyType iPropertyType, 
+                                                      CATVisGeomType &amp; oGeomType, 
+                                                      unsigned int &amp; oPropertyNumber)
+    HRESULT rc = E_FAIL ;
+
+    switch ( iPropertyType )
+    {
+    case <b>CATVPColor</b>:
+    case <b>CATVPSymbol</b>:
+        oGeomType = <b>CATVPPoint</b> ;
+   
+        rc = S_OK ;
+        break;
+    }
+    oPropertyNumber = 0 ;
+    return rc ;
+}                                                                                    
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>In the toolbar, the color and the symbol are associated to the <code>CATVPPoint</code>
+  geometry.</p>
+  <p>You can note that <code>oPropertyNumber</code> should be always set to zero
+  and that the graphic properties associated to the <code>CATVPGlobalType</code>
+  type are not processed (<code>CATVPShow</code>, <code>CATVPLayer</code>, <code>CATVPPick</code>,<code>CATVPLowint</code>),
+  it is by default done.</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article describes how the graphic properties are integrated in the
+visualization process. The principle is that a feature can have a set of graphic
+properties for each of its component's geometry. Each component is defined as a
+geometry type. Three interface are essentials:</p>
+<ul>
+  <li><i>CATIProperty</i></li>
+  <p>It stores permanently the data. A feature natively implements this
+  interface.&nbsp;</p>
+  <li><i>CATIVisProperties</i></li>
+  <p>It kepts the type of geometry defined on the feature. Its implementation
+  asks sometimes to overwrite some methods of the <i>CATExtIVisu</i> class
+  adapter of the <i>CATIVisu</i> interface.</p>
+  <li><i>CATIVisu</i></li>
+  <p>It uses the <i>CATIVisProperties</i> to know the properties to associate to
+  the graphic representation.&nbsp;</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAVisUseCases/CAAVisSampleGraphicAtt.htm">Using
+      Graphic Attributes</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVisUseCases/CAAVisSampleLOD.htm">Creating
+      Levels of Details</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAVisUseCases/CAAVisSampleUseCATIVisProperties.htm">Modifying
+      Object Graphical Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

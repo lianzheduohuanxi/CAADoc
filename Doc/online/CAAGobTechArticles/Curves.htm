@@ -1,0 +1,715 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Curves of CATIA Geometric Modeler</title>
+
+</head>
+
+<body>
+
+<table width="100%">
+   <tr>
+      <td valign="top">
+
+      <h1>Geometric Modeler</h1>
+
+      </td>
+      <td valign="top">
+
+      <h2>Geometry</h2>
+
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Curves of CATIA Geometric Modeler</h3>
+      <em>Properties and Detailed Description</em></td>
+   </tr>
+   <tr>
+      <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+   <tr>
+      <td>
+      <h3>Abstract</h3>
+      <p>This article describes the common properties as well as the particular features of the CGM
+      curves.
+      <ul>
+         <li>
+            <strong><a href="#Introduction">Introduction</a></strong></li>
+         <li>
+            <a href="#Properties of the CGM surfaces"><strong>Properties</strong></a>
+            <ul>
+               <li>
+                  <a href="#General validity criteria">General Validity Criteria</a></li>
+               <li>
+                  <a href="#Class for handling surface parameters">Curve Parameters</a></li>
+               <li>
+                  <a href="#Limits and bounding box of a surface">Limits and Bounding Box</a></li>
+               <li>
+                  <a href="#Evaluation">Evaluation</a></li>
+               <li>
+                  <a href="#Equations">Equations</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#Various types of surfaces"><strong>Various Types of Curves</strong></a>
+            <ul>
+               <li>
+                  <a href="#Resolved curves">Resolved Curves</a></li>
+               <li>
+                  <a href="#Edge curves">Edge Curves</a></li>
+               <li>
+                  <a href="#P-curves">PCurves</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#InShort"><strong>In Short</strong></a></li>
+         <li>
+            <strong><a href="#References">References</a></strong></li>
+      </ul>
+      </td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>A curve is a function from a closed interval of R to R^3. Hence, it is defined by three scalar
+functions of one variable. The variable is usually called <strong>parameter</strong> of a point on
+the curve and denoted through <strong>W</strong>, while the scalar functions represent the mapping,
+for each point of the curve, between the Cartesian coordinates, usually called X, Y, Z, and the
+corresponding parameter W.</p>
+
+<table>
+   <caption>Fig. 1: The mapping between the parameter and the Cartesian coordinates</caption>
+   <tr>
+      <td><img src="images/Curves1.gif" alt="Curves1.gif (3198 bytes)" width="479" height="359"></td>
+      <td>Three scalar functions FX, FY and FZ map the W parameter into the Cartesian coordinates
+      (X, Y, Z) for each point P of the curve.</td>
+   </tr>
+</table>
+
+<p>Multi-arcs curves are defined as a set of n_w connected pieces, each piece, called arc, having
+its own parameterization. Hence, a point belonging to the curve can be expressed in terms of:
+<ul>
+   <li>
+      Local parameters: w parameter on a given arc, independently of the other arcs</li>
+   <li>
+      Global parameters: W parameter taking into account the preceeding arcs parameterization.</li>
+</ul>
+
+<table border="0" width="100%">
+   <caption>Fig. 1b: Local and global parameters on a 2 arcs curve</caption>
+   <tr>
+      <td width="50%"><img src="images/Curves1b.gif" alt="Curves1b.gif (4787 bytes)" width="479" height="359"></td>
+      <td width="50%">The Cartesian coordinates of the point P can be evaluated using the global
+      parameter W, or the local parameter w_2 on the 2nd arc.</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Properties of the CGM surfaces"></a>Properties of the CGM Curves</h3>
+<p>The CGM curves implement the CATCurve interface, which behavior is now described. The CATCurve
+interface inherits all the behavior of the CATGeometry interface. Therefore, the factory of the CGM
+objects (CATGeoFactory) handles the creation, stream, unstream and remove of the CGM curves. The
+geometric transformation and/or duplication of CGM curves is managed by specific processes through
+CATTransfoManager and CATCloneManager instances [<a href="#References">3</a>]. For more details
+about the CGM objects general properties, see [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="General validity criteria"></a>Validity Criteria</h4>
+<ol>
+   <li>
+      CGM curves <strong>must be C2 continuous</strong>. Hence, the curves are many infinitely
+      differentiable with respect to the W parameter on each arc, and only twice continuously
+      differentiable between two arcs. CGM directly generates objects satisfying this criterion. If
+      you want to introduce foreign curves, you have to insure that they satisfy it. If they do not
+      satisfy it, you can cut them where they are not C2 continuous, and use topological objects to
+      assemble the parts.
+
+      <table border="0" width="100%">
+         <caption>Fig. 2: Valid (C) and invalid (A, B) curves</caption>
+         <tr>
+            <td width="50%">
+            <p align="center"><img src="images/Curves2.gif" alt="Curves2.gif (2699 bytes)" width="479" height="359"></td>
+            <td width="50%">In addition, the curves must not be self intersecting, except if they
+            are closed curves.</td>
+         </tr>
+      </table>
+
+   <li>
+      Finally, the curvilinear length must be greater than the resolution of the factory. The
+      resolution defines the minimum length of a valid object, see [<a href="#References">1</a>].
+   <li>
+      The derivatives at a point within the curve must not be null. This condition implies that you
+      have no cusps.</li>
+   <li>
+      The derivatives at the curve extremities must neither be null (strongly recommended).</li>
+   <li>
+      The curvature radius at any point of the curve must be greater that the resolution.</li>
+   <li>
+      Each curve arc must have a length greater than the resolution.</li>
+   <li>
+      <span class="st"><span class="ft">The parameterization must be close to 
+		the <em>curvilinear</em> abscissa </span></span>(3D tangent norm between 0.1
+      and 10).</li>
+</ol>
+<p>Specific objects</p>
+<ol>
+   <li>
+      Canonical objects such as circles and ellipses must be included in the geometric infinite.</li>
+   <li>
+      CATEllipses and CATPEllipses: the ratio between min radius and max radius must be greater than
+      resolution.</li>
+   <li>
+      NURBS: 
+		<ul>
+						<li>the distance between two control points must be greater than the resolution.</li>
+						<li>weights must be strictly positive.</li>
+		</ul>
+	</li>
+   <li>
+      PCurves: the maximum limits of a PCurve must stay within the maximum limits of its support.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Class for handling surface parameters"></a>Class for Handling Curve Parameter</h4>
+<p>The curve parameter only has sense if it is associated with the curve it parameterizes. This
+parameter is handled through a CATCrvParam instance, which is a transient object containing the
+parameter and a reference to the curve. In particular, it transforms a global parameter into a local
+parameter and an arc, and vice versa. The CATCrvParamReference transient instance can not directly
+be created; the curve is responsible for retrieving a CATCrvParam instance under your request.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Limits and bounding box of a surface"></a>Limits and Bounding Box of a Curve</h4>
+<p>A curve has a maximal limitation, outside which it is not defined, or cannot be extrapolated.
+This limitation is expressed in terms of a CATCrvLimits transient instance, containing two
+CATCrvParam instances.</p>
+<p>Geometric operators can be run on a part of the whole curve, therefore defining a current
+limitation. This current limitation is also handled by the CATCrvLimit class.</p>
+<p>Each curve is able to retrieve the definition of a space that surrounds it: the bounding box.
+This information is very useful, especially if you want to have a first diagnostic of intersection
+for example.<br>
+The bounding box contains two points, and can be a CATMathBox instance, if expressed with Cartesian
+coordinates, or a CATCrvParam instance, if expressed with the curve parameter.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Evaluation"></a>Evaluation</h4>
+<p>The main behavior of a curve is to evaluate the Cartesian coordinates from the parameter of a
+point lying on it and, conversely, the parameter from Cartesian coordinates:
+<ul>
+   <li>
+      From the parameter to Cartesian coordinates. This is called evaluation (<tt>CATCurve::Eval</tt>),
+      and is done to obtain the Cartesian coordinates of the point, or the vector of the curve
+      derivatives at a given point. Multiple evaluation can be used to save CPU by the means of a
+      CATCrvEvalCommand instance.</li>
+   <li>
+      From Cartesian coordinates to the parameter. The <tt>CATCurve::GetParam</tt> method computes
+      (if possible) the curve parameter of a given Cartesian point, and details if the point really
+      is on the curve or not, and if there are several solutions.</li>
+</ul>
+<p>The curve is responsible for the mapping between the (X, Y, Z) Cartesian coordinates and the W
+parameter, so that no assumptions must be maid about this mapping, except for a few objects that
+have published their own parameterization.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Equations"></a>Equations</h4>
+<p>It is useful to retrieve the equations representing the curve, especially when you want to
+operate the geometry. You can retrieve these equations as CATMathFunctionXY instances, that are
+transient and created under request.</p>
+<p>All curve modification changes the equations. Thus, it is necessary to precisely define the use
+of the geometry equations. There are 3 main methods for using equations.
+<ul>
+   <li>
+      <code>CATCurve::Lock()</code>: <u>Locks the geometric object before asking for its equation.</u>
+      This operation:</li>
+   <ul>
+      <li>
+         Declares a reference on the object, so that it cannot be deleted anymore.</li>
+      <li>
+         Increments the number of customers that wants to prevent the object from future
+         modifications, except the relimitation.</li>
+      <li>
+         Does not compute anything.</li>
+   </ul>
+   <li>
+      <code>CATCurve::GetEquation()</code>: <u>Asks for the equation.</u> This operation:</li>
+   <ul>
+      <li>
+         Throws an exception if the object is not locked.</li>
+      <li>
+         Allocate the memory (if needed).</li>
+      <li>
+         Computes the equations (if needed).</li>
+      <li>
+         Returns a constant pointer to the required equation.</li>
+   </ul>
+   <li>
+      <code>CATCurve::Unlock()</code>: <u>Unlocks the geometric object when you do not need to use
+      its equation no more</u>. This operation:</li>
+   <ul>
+      <li>
+         Releases the reference</li>
+      <li>
+         Decrements the number of customers which want to prevent the object from future
+         modifications, except the relimitation.</li>
+      <li>
+         Keeps the allocated memory and computed equations as long as the object is not modified.</li>
+   </ul>
+</ul>
+<p>In case of a curve modification,
+<ul>
+   <li>
+      If there remains at least one lock on the curve, an error is thrown</li>
+   <li>
+      Otherwise, the memory is freed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="Various types of surfaces"></a>Various Types of Curves</h3>
+<p>You find three major curve types in the CGM offering: the resolved curves, the edge curves, the
+PCurves. You can also introduce your own class of curve, and use it as any CGM curve in all the CGM
+operators or as the underlying geometry of a topological object. For a detailed description of this
+mechanism, see [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Resolved curves"></a>Resolved Curves</h4>
+<p>These curves have a mathematical form: line, conic (circle, ellipse, parabola, hyperbola), NURBS,
+Spline belong to this type. Evaluations are made directly from the mathematical equations. The
+following array describes, for each resolved curve, its definition parameters, and the validity
+range of the definition parameters which come in addition to general validity criteria that have
+already been described.</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>
+      <p align="center">CATLine<br>
+      <img src="images/CurvesLine.gif" alt="CurvesLine.gif (1524 bytes)" width="159" height="159"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathPoint</td>
+            <td><tt>O</tt></td>
+            <td>The origin point</td>
+         </tr>
+         <tr>
+            <td>CATMathDirection</td>
+            <td><tt>Dir</tt></td>
+            <td>The direction</td>
+         </tr>
+         <tr>
+            <td>CATCrvParam</td>
+            <td><tt>Start</tt></td>
+            <td>The low limitation</td>
+         </tr>
+         <tr>
+            <td>CATCrvParam</td>
+            <td><tt>End</tt></td>
+            <td>The high limitation</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATCircle<br>
+      <img src="images/CurvesCircle.gif" alt="CurvesCircle.gif (1700 bytes)" width="159" height="159"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathPlane</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis system of origin the circle center</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>R</tt></td>
+            <td>The radius</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low angle limitation</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high angle limitation</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters::
+      <ul>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            The angles are measured from the first direction of the plane.<br>
+         </li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATEllipse<br>
+      <img src="images/CurvesEllipse.gif" alt="CurvesEllipse.gif (1517 bytes)" width="160" height="160"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathPlane</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis system (center, major axis, minor axis)</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>A</tt></td>
+            <td>The half length of the major axis</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>B</tt></td>
+            <td>The half length of the minor axis</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low angle limitation</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high angle limitation</td>
+         </tr>
+      </table>
+
+      <p>The direction of the major axis is the first direction of the plane. The angles are
+      measured from the major axis.<br>
+      The parametric equation of the ellipse on its plane is:<br>
+      <center><code>X=a*cos(theta), Y=b*sin(theta)</code></center><br>
+      The ellipse equation in its axis system is<br>
+      <center><code>X²/A² + Y²/B² = 1</code></center></p>
+      <p>Validity range of the definition parameters:
+      <ul>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            B&lt;=A</li>
+         <li>
+            The angles are measured from the first direction of the plane.<br>
+         </li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>CATNurbsCurve</td>
+      <td>NURBS definition of a curve, see [<a href="#References">5</a>]</td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATSplineCurve<br>
+      <img src="images/CurvesSpline.gif" alt="CurvesSpline.gif (1401 bytes)" width="159" height="159"></td>
+      <td>Spline interpolation between a list of points. The points are not restricted to be on a
+      given surface. The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfPoints</tt></td>
+            <td>The points of the Spline</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfPoints</tt></td>
+            <td>The tangents at the point (for a quintic interpolation)</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfTangents</tt></td>
+            <td>The second derivatives at the points (for a quintic interpolation)</td>
+         </tr>
+         <tr>
+            <td>double[]</td>
+            <td><tt>param</tt></td>
+            <td>Optional: a user parameterization.<br>
+            The difference of the parameters between a point and its consecutive point.</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="Edge curves"></a>Edge Curves</h4>
+<p>An edge curve is the geometric curve, that can be seen under several representation. [<a href="#Edge curves">4</a>]
+describes in details this geometric curve. It is in particular used to define the geometry of a
+topological edge.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+<h4><a name="P-curves"></a>PCurves</h4>
+<p>These geometric objects are used to define curves in the parameter space of a surface. For
+example, a PLline is a curve which mathematical representation in the space of the surface is a
+line. Hence, in the 3D space, this object can be a line, a circle, or a much more complex curve, if
+it lays on a CATNurbs surface for example.</p>
+<p>Additional methods are available on PCurves: the equations, the derivatives and the boundng box
+can be retrieved in the (U,V) space of the underlying surface.</p>
+<p>figures</p>
+<p>All the resolved curves are available as PCurves on any type of CGM surfaces.</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>
+      <p align="center">CATPLine<br>
+      <img src="images/CurvesPLine.gif" alt="CurvesPLine.gif (1768 bytes)" width="159" height="159"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Sur</tt></td>
+            <td>The underlying surface</td>
+         </tr>
+         <tr>
+            <td>CATMathPoint2D</td>
+            <td><tt>O</tt></td>
+            <td>The origin point in the underlying surface space</td>
+         </tr>
+         <tr>
+            <td>CATMathDirection2D</td>
+            <td><tt>Dir</tt></td>
+            <td>The direction in the underlying surface space</td>
+         </tr>
+         <tr>
+            <td>CATSurParam</td>
+            <td><tt>Start</tt></td>
+            <td>The low limitation</td>
+         </tr>
+         <tr>
+            <td>CATSurParam</td>
+            <td><tt>End</tt></td>
+            <td>The high limitation</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATPCircle<br>
+      <img src="images/CurvesPCircle.gif" alt="CurvesPCircle.gif (1809 bytes)" width="159" height="159"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Sur</tt></td>
+            <td>The underlying surface</td>
+         </tr>
+         <tr>
+            <td>CATSurParam</td>
+            <td><tt>C</tt></td>
+            <td>The circle center</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>R</tt></td>
+            <td>The radius</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low angle limitation</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high angle limitation</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters:
+      <ul>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            The angles are measured from the first direction of the underlying surface.</li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATPEllipse<br>
+      <img src="images/CurvesPEllipse.gif" alt="CurvesPEllipse.gif (1968 bytes)" width="160" height="160"></td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Sur</tt></td>
+            <td>The underlying surface</td>
+         </tr>
+         <tr>
+            <td>CATSurParam</td>
+            <td><tt>C</tt></td>
+            <td>The ellipse center</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>A</tt></td>
+            <td>The half length of the major axis</td>
+         </tr>
+         <tr>
+            <td>CATPositiveLength</td>
+            <td><tt>B</tt></td>
+            <td>The half length of minor axis</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>OffsetAngle</tt></td>
+            <td>The angle between the surface first direction and the major axis</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low angle limitation</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high angle limitation</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters:
+      <ul>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            B&lt;=A</li>
+         <li>
+            StartAngle and EndAngle are measured from the major axis.<br>
+         </li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>
+      <p align="center">CATPSpline<br>
+      <img src="images/CurvesPSpline.gif" alt="CurvesPSpline.gif (1634 bytes)" width="159" height="159"></td>
+      <td>Spline interpolation between a list of points of a surface. The points are given with
+      their (U,V) surface parameters. The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Sur</tt></td>
+            <td>The underlying surface</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfPoints</tt></td>
+            <td>The points of the points</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfPoints</tt></td>
+            <td>The tangents at the point (for a quintic interpolation)</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>SetOfTangents</tt></td>
+            <td>The second derivatives at the points (for a quintic interpolation)</td>
+         </tr>
+         <tr>
+            <td>double[]</td>
+            <td><tt>param</tt></td>
+            <td>Optional: a user parameterization.<br>
+            The difference of the parameters between a point and its consecutive point.</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATPNurbs</td>
+      <td>NURBS definition in the parameter space of a surface. See [<a href="#References">5</a>]
+      for a description of the NURBS model.</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+   <li>
+      CGM curves are C2 continuous. They offer you evaluators to evaluate point parameters and
+      derivatives, and equations to use in geometric operations for example.</li>
+   <li>
+      Three major types of curves are available: resolved curves, edge curves and PCurves. Foreign
+      curves can also be introduced in CGM.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+
+<table width="100%">
+   <tr>
+      <td>[1]</td>
+      <td><a href="GeoObjects.htm">The Objects of CATIA Geometric Modeler</a></td>
+   </tr>
+   <tr>
+      <td>[2]</td>
+      <td><a href="Attribute.htm">The Management of Foreign Data</a></td>
+   </tr>
+   <tr>
+      <td>[3]</td>
+      <td><a href="Clone.htm">The Cloning and Transformation Managers</a></td>
+   </tr>
+   <tr>
+      <td>[4]</td>
+      <td>About Edge Curves</td>
+   </tr>
+   <tr>
+      <td>[5]</td>
+      <td><a href="Nurbs.htm">About NURBS</a></td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+      <td valign="top">Document created</td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+      <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

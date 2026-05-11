@@ -1,0 +1,187 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATxPDMInterfaces Interface CATIxPDMSession</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATxPDMInterfaces.htm" href="../CATxPDMInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATxPDMInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIxPDMSession"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATxPDMInterfaces Interface CATIxPDMSession</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIxPDMSession_27844','CATIxPDMSession','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIxPDMSession</b>
+</p>
+<p>
+<b><i> Interface to retrieve an item associated with a document in the current editor.</i></b><br>
+
+ <b>Role</b>: This interface is used to retrieve an item from a document (a file) which is in 
+  relationship with the current editor: 
+ <ul>
+ <li>The <b>root</b> file.
+ <p> The root file is those associated with the editor. An 
+ editor, a <tt>CATFrmEditor</tt> class instance, has only one document (a file). It is 
+  those returned by the <tt>GetDocument</tt> method of the <tt>CATFrmEditor</tt> class. </p>
+ <li>The <b>current selected</b> file. </li>
+ <p>The current selected file is a file pointed by the root file, and selected (in the specification tree) 
+  by the end user. </p> 
+ </ul>  
+ <p>Refer to the <tt>ApplicationFrame</tt> framework API for more details about the editor and its associated files. </p>
+ <p>This interface is implemented on the unique <tt>CATApplicationFrame</tt> instance. Use it only
+  into an CATIA V5 interactive command. </p>
+ <!-- @sample -->
+ <dl>
+ <dt><b>Example:</b>
+ <dd>
+ This example returns the root item of the current editor
+ <pre>
+ CATApplicationFrame *pApplication = CATApplicationFrame::GetFrame();
+ CATIxPDMItem_var xPDMItem;
+ CATIxPDMSession_var xPDMSession(pApplication);
+ if ( NULL_var != xPDMSession )
+ {
+    xPDMSession->GetRootItem(xPDMItem);
+    ....
+ </pre>
+ </dl>
+ <p>All the methods pre-requisites the PX1 license </p>
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIxPDMItem','','CATIxPDMItem') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetCurrentItem(CATIxPDMItem_var&amp;)"><b>GetCurrentItem</b></a>(CATIxPDMItem_var&amp;)
+<dd>  Retrieves the item associated with the current selected file of the current editor.
+ <dt> o 
+    <a href="#GetRootItem(CATIxPDMItem_var&amp;)"><b>GetRootItem</b></a>(CATIxPDMItem_var&amp;)
+<dd>  Retrieves the item associated with the document (root file) of the current editor.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetCurrentItem"></a><a name="GetCurrentItem(CATIxPDMItem_var&amp;)"></a> <dt> o <b>GetCurrentItem</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCurrentItem</b>(<td><script type="text/javascript"> activateLink('CATIxPDMItem_var','CATIxPDMItem_var&amp;')</script> <td><tt>oCurrentItem</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the item associated with the current selected file of the current editor.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oxPDMItem</tt>
+   <dd>   The item created (or retrieved) from the current selected document associated with the current editor. If no document is
+   selected the root item is returned. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <ul>
+  <li>S_OK: The item is successfully retrieved. </li>
+	<li>E_FAIL: No editor in the session.</li>
+  </ul>
+</dl>
+</dl>
+<a name="GetRootItem"></a><a name="GetRootItem(CATIxPDMItem_var&amp;)"></a> <dt> o <b>GetRootItem</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRootItem</b>(<td><script type="text/javascript"> activateLink('CATIxPDMItem_var','CATIxPDMItem_var&amp;')</script> <td><tt>oRootItem</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the item associated with the document (root file) of the current editor.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oxPDMItem</tt>
+   <dd>   The item created (or retrieved) from the document associated with the current editor. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <ul>
+  <li>S_OK: The root item is successfully retrieved. </li>
+	<li>E_FAIL: No editor in the session.</li>
+  </ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIxPDMSession.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATxPDMInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

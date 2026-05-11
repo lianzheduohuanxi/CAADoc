@@ -1,0 +1,130 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Fill</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Fill</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A fill is a two-dimensional region whose boundaries are defined by a set of closed wire bodies. 
+By default, the fill satisfies G0 continuity with the wires, but if a corresponding set of support bodies is specified,
+G1 continuity with these bodies may be requested. </p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a fill, use the CATICGMPowerFill operator found in GMOperatorsInterfaces. 
+This operator has to be created by the CATCGMCreatePowerFill global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsPowerFill.m module in CAAGMOperatorsInterfaces.edu illustrates how to create a fill. 
+This use case is to be run with the PowerFill.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. 
+If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> Fill Operation: Input Data</caption>
+  <tr>
+    <td><img alt="Fill inputs" src="images/CGM_fill_0.png"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMPowerFill* pPowerFillOp =
+	CATCGMCreatePowerFill(piGeomFactory, &topdata, wires, supports);
+...
+double layDownTolerance = 0.001;
+pPowerFillOp->SetLayDownRequest(layDownTolerance);
+CATLONG32 whichWire = 1; 
+CATLONG32 transitionContinuity = 1;
+pPowerFillOp->SetTransitionContinuity(whichWire, transitionContinuity);
+pPowerFillOp->Run();
+CATBody* pResultBody = pPowerFillOp->GetResult();
+pPowerFillOp->Release(); 
+pPowerFillOp = NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0">
+  <caption><a name="Fig.2">Fig.2</a> Fill Operation: Output Data</caption>
+  <tr>
+    <td><img alt="Fill output" src="images/CGM_fill_1.png"></td>
+  </tr>
+</table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

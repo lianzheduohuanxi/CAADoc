@@ -1,0 +1,741 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Geometric Modeler Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Geometric Modeler </h3>
+      <em>Using the CGM Data Checker</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+
+
+   <table class="abstract">
+     <tr>
+       <td style="padding:.75pt .75pt .75pt .75pt">
+       <h3><!---------------------------------comment------------------------------------->
+       Abstract</h3>
+       <p>CGM objects are valid if they fulfill a certain number of rules. When 
+       a given object is created, it can be checked for a given rule. If any 
+       problem is found, a core dump is issued and the developer has to take a 
+       look at the core dump traces to get some clue about why the object is 
+       invalid. The rule checker itself is a detection tool which does not 
+       repair any object. If no core dump has been issued, this only means that 
+       the CGM object to be validated complies with a specified rule. Other 
+       rules may not be fulfilled making the object invalid. </p>
+       <ul type="disc" style="margin-bottom: 0in">
+         <li class="MsoNormal">
+         <a  href="#_The_Rules_to">
+         <strong>The Rules to be Satisfied</strong></a></li>
+         <li class="MsoNormal">
+         <a  href="#_How_to_Activate">
+         <strong>How to Activate the Rules</strong></a></li>
+         <li class="MsoNormal">
+         <a  href="#_The_Topological_Checks">
+         <strong>The Topological Checks</strong></a></li>
+         <li class="MsoNormal">
+         <a  href="#_The_Geometrical_Checks">
+         <strong>The Geometrical Checks</strong></a></li>
+       </ul>
+       <p>&nbsp;</td>
+     </tr>
+   </table>
+   
+   <h3><a name="Summary_of_the_Rules_to_be_Satisfied"><!---------------------------------comment------------------------------------->
+   </a><a name="_The_Rules_to"></a>The Rules to be Satisfied</h3>
+   <p>Each rule is defined by an identifier. This identifier is used to activate 
+   the data checker as described in
+   <a style="color: blue; text-decoration: underline; text-underline: single" href="#_How_to_Activate">
+   How to Activate the Rules</a>.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" style="width: 100.0%; border-collapse: collapse; border: medium none" height="100%">
+     <tr style="height:24.0pt">
+       <td width="870" valign="top" style="width: 652.5pt; height: 24.0pt; border: .75pt inset #EAEAEA; padding: .75pt; background: #E8E8E8">
+       <p class="MsoNormal"><b><i>Rules to be checked</i></b></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: .75pt inset #EAEAEA; border-bottom: .75pt inset #EAEAEA; padding: .75pt; background: #E8E8E8">
+       <p class="MsoNormal"><b><i>Identifiers</i></b></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Body_should_not">
+       A body should not contain any touched topology</a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">TRE_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#Closed_wire">
+       A closed wire should be made up of at least two edges</a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">CWE_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#Edge_sharpness">
+       A topologically smooth edge should be geometrically smooth </a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">ESH_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#Loop_closed">
+       A loop should not be closed in 3D and open in 2D</a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">SCE_0</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#CATPointOnEdgeCurve">
+       A CATPointOnEdgeCurve should be on its EdgeCurve</a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">PCE_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span class="comment1"><span style="color:black">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#POECCATCrvParam">
+       Any CATCrvParam of a POEC should be in the maximum limits of its spec 
+       curve.</a></span></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">PPO_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#CATINTCurve">
+       The gap between the curves making up a CATINTCurve should be less than 
+       the resolution</a></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">ICG_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Limit_Box_of">
+       Limit Box of a PCurve curve should be inside the Support's limits box. 
+       (Check for PCurve :: CloneAndMove service)</a><span class="comment1"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">PSS_0</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Check_that_PCurve">
+       Limit Box of a PCurve curve should be inside the Support's limits box. 
+       (Check for PCurve :: SetSurface service)</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">PSS_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Curve_continuity_should">
+       Curve continuity should be at least C1</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">CCC_0</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span class="MsoHyperlink">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Surface_continuity_should">
+       Surface continuity should be at least C1</a></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">CCC_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_SetOfPointsMapping_for_curve">
+       SetOfPointsMapping for curve limits inclusion for CATSetOfPointsMapX for 
+       ref/co curves of an edge curve should be within the resolution</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">SPM_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_The_internal_gap">
+       The internal gap in a macro point should be less than the resolution.</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">MPG_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Check_for_ref">
+       Check for ref curve and curve from MapX for an edge curve, that curve 
+       useful limits are included in it's max limits.</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">ULO_0</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Curve_continuity_OK">
+       Curve continuity OK in V5 (at least C2)</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">CGC_0</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_Surface_continuity_OK">
+       Surface continuity OK in V5 (at least C2)</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">CGC_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_The_EdgeCurve_Should">
+       The EdgeCurve should not have identical PCurves in the same tree</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">EIP_1</span></td>
+     </tr>
+     <tr style="height:24.0pt">
+       <td valign="top" style="height: 24.0pt; border-left: .75pt inset #EAEAEA; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal">
+       <a style="color: blue; text-decoration: underline; text-underline: single" href="#_The_MathRep_of">
+       The MathRep of canonical curves (Circle &amp; Ellipse) should be in the model 
+       infinite</a><span class="MsoHyperlink"></span></td>
+       <td width="113" valign="top" style="width: 84.7pt; height: 24.0pt; border-left: medium none; border-right: .75pt inset #EAEAEA; border-top: medium none; border-bottom: .75pt inset #EAEAEA; padding: .75pt">
+       <p class="MsoNormal"><span style="font-family:Courier">INF_2</span></td>
+     </tr>
+   </table>
+   <p align="right" style="text-align:right">[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h2><a name="How_to_Activate_the_Rules"></a><a name="_How_to_Activate"></a>
+   How to Activate the Rules</h2>
+   <p>Here are the preliminary steps to follow prior to activating the data 
+   checker:</p>
+   <p><b><u>Step 1</u></b></p>
+   <ul type="disc" style="margin-bottom: 0in">
+     <li class="MsoNormal">either create a CATIA environment CATIA, edit it and 
+     modify the value of the CATICPath variable.</li>
+   </ul>
+   <p style="margin-left:.5in">
+   <span style="font-size: 10.0pt; font-family: Courier New; background: #E8E8E8">
+   &lt;install_CATIA&gt;\intel_a\code\productIC</span></p>
+   <p style="margin-right:.5in;margin-left:.5in">should be modified in</p>
+   <p style="margin-right:.5in;margin-left:.5in">
+   <span style="font-size: 10.0pt; font-family: Courier New; background: #E8E8E8">
+   &lt;install_CATIA&gt;\intel_a\code\productIC;&lt;install RADE&gt;\intel_a\code\productIC</span></p>
+   <p style="margin-right:.5in;margin-left:.5in">&nbsp;Note that from CATIA V5R14, 
+   you can install RADE and CATIA at the same place.</p>
+   <ul type="disc" style="margin-bottom: 0in">
+     <li class="MsoNormal">or copy the contents of
+     <span style="background: #E8E8E8">&lt;install RADE&gt;\intel_a\code\productIC</span><span style="font-size:10.0pt;font-family:Arial"> 
+     into <span style="background: #E8E8E8">
+     &lt;install_CATIA&gt;\intel_a\code\productIC</span></span></li>
+   </ul>
+   <p><b><u>Step 2</u></b></p>
+   <ul type="disc" style="margin-bottom: 0in">
+     <li class="MsoNormal">Activate CDC licence in the&nbsp; Tools/Option 
+     Licencing Menu.</li>
+   </ul>
+   <p><b><u>Step 3</u></b></p>
+   <ol start="1" type="1" style="margin-bottom: 0in">
+     <li class="MsoNormal">Exit CATIA, activate the CATCAADataChecker variable 
+     plus the appropriate rule variables as described below:</li>
+   </ol>
+   <p style="margin-left:.5in"><span style="background: #E8E8E8">set 
+   CATCAADataChecker=1 </span><br>
+   to activate all the rules</p>
+   <p style="margin-left:.5in"><span style="background: #E8E8E8">set 
+   CATCAADataChecker=1<br>
+   set CATCGMCleanerRules=<i>XXX_1;YYY_1 ;... </i></span><i><br>
+   </i>to activate only a set of rules<br>
+   XXX_1, YYYY_1 are the rule identifiers </p>
+   <p style="text-indent: -.25in; margin-left: .5in; margin-top: 29">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   </span>Restart CATIA.</p>
+   <p align="right" style="text-align:right"><!---------------------------------comment------------------------------------->
+   [<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h3><a name="_The_Topological_Checks"></a>
+   </a>The Topological Checks</h3>
+   <h4><a name="Touched_topology"></a><a name="_Body_should_not"></a>Body should 
+   not contain any touched topology</h4>
+   <p>A cell is touched when it is intended to be used in some specific 
+   operations like the &quot;smart duplication&quot; (see the CATSmartBodyDuplicator in 
+   the CAA Encyclopedia). Note there is other operators that require touched 
+   objects as their input data. After the operation has completed the touched 
+   cells should return to an untouched status. If they remain touched, further 
+   operations on the initial body may lead to unexpected results. A valid 
+   topology should not contain any touched cells. </p>
+   <p>The CD traces are similar to the ones below:</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : TRE_1</b><br>
+       Short msg : &quot;Residual touched cells checking failed.&quot;;<br>
+       Extended msg : &quot;Residual touched cells on ... checking failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <h4><a name="Closed_wire">A closed wire should be made up of at least two 
+   edges</a></h4>
+   <p>An edge cannot be closed on itself, in other words any closed wire should 
+   be made up of at least two edges. </p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : CWE_1</b><br>
+       Short msg :&nbsp; &quot;Closed wire with edgecount &gt; 1 checking failed.&quot;;<br>
+       Extended msg :&nbsp;&nbsp; &quot;Closed wire with edgecount &gt; 1 on ... 
+       checking failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <h4><a name="Edge_sharpness">A topologically smooth edge should be 
+   geometrically smooth </a></h4>
+   <p>The edges that are considered as smooth should not have a geometrical 
+   sharpness greater than 2.3 deg. If there is no consistency between 
+   topological and geometrical sharpness, operations such as fillets and offset 
+   cannot succeed. </p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : ESH_1</b><br>
+       Short msg :&nbsp; = &quot;Edge sharpness checking failed.&quot;;<br>
+       Extended msg: &quot;Edge sharpness on /p1 checking failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <h4><a name="Loop_closed">A loop should not be closed in 3D and open in 2D</a></h4>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" style="width: 100.0%; border-collapse: collapse; border: medium none" id="AutoNumber1">
+     <tr>
+       <td width="253" valign="top" style="width:189.75pt;border:inset #111111 .75pt;
+  padding:4.5pt 4.5pt 4.5pt 4.5pt">
+       <p class="MsoNormal">A loop relying on a surface should not be closed on 
+       itself. For example, a cylinder should not be made up of one single loop. 
+       In the right-hand side figures, the first one exhibits an invalid loop.</td>
+       <td width="230" style="width: 172.5pt; border-left: medium none; border-right: .75pt inset white; border-top: .75pt inset white; border-bottom: .75pt inset white; padding: 4.5pt">
+       <p class="MsoNormal">
+       <img border="0" width="230" height="208" id="_x0000_i1027" src="images/cyl0.jpg"></td>
+       <td width="227" style="width: 170.25pt; border-left: medium none; border-right: .75pt inset white; border-top: .75pt inset white; border-bottom: .75pt inset white; padding: 4.5pt">
+       <p class="MsoNormal">
+       <img border="0" width="226" height="206" id="_x0000_i1028" src="images/cyl2.jpg"></td>
+     </tr>
+   </table>
+   <p>The CD traces are similar to the ones below:</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule: SCE_0</b><br>
+       On CGM Object: ...<br>
+       From Feature: ...<br>
+       Short msg:&nbsp; &quot;Surface closure for Loop checking failed.&quot;;<br>
+       Extended msg: &quot;Surface closure for Loop ... checking failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <h4><a name="CATPointOnEdgeCurve">A CATPointOnEdgeCurve should be on its 
+   EdgeCurve</a></h4>
+   <p>Reminder: An CATPointOnEdgeCurve is specified by couples of data including 
+   a CATCrvParam and the CATCurve associated with this CATCrvParam. The list of 
+   data couples is referred to as a &quot;spec&quot;. The &quot;spec&quot; defines a&nbsp; 
+   CATPointOnEdgeCurve. The EdgeCurve itself is made up of several curves. When 
+   scanning and analyzing each spec curve of a CATPointOnEdgeCurve by using 
+   CATPointOnEdgeCurve::GetSpec for example, one should find that each retrieved 
+   CATCurve is contained into the CATEdgeCurve.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : PCE_1</b><br>
+       On CGM Object : ...<br>
+       From Feature : ...<br>
+       Short msg :&nbsp; &quot;POEC curve in edge curve checking failed.&quot;;<br>
+       Extended msg: &quot;POEC curve in edge curve on ... checking failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <h4><a name="POECCATCrvParam">Any CATCrvParam of a POEC should be in the 
+   maximum limits of its spec curves</a></h4>
+   <p>When scanning and analyzing each spec curve of a CATPointOnEdgeCurve, one 
+   should find that each retrieved CATCrvParam is within the limits of the 
+   reference curve. </p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : </b>PP0_1<br>
+       On CGM Object : ...<br>
+       From Feature : ...<br>
+       Short msg :&nbsp; &quot;POEC spec param inside spec curve limits checking 
+       failed.&quot;;<br>
+       Extended msg: &quot;POEC spec param inside spec curve limits on /p1 checking 
+       failed.&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]
+   </p>
+   <h3><a name="The_Geometrical_Checks"></a><a name="_The_Geometrical_Checks">
+   </a>The Geometrical Checks</h3>
+   <h4>The gap between the curves making up a CATINTCurve should be less than 
+   the resolution</h4>
+   <p>Checks the Gap between the corresponding points of component curves of a 
+   CATIntCurve. </p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : ICG_1</b><br>
+       On CGM Object : CATIntCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp; &quot;IntCurve gap less than resolution checking failed.&quot;;<br>
+       Extended msg: &quot;IntCurve gap less than resolution on /p1 checking 
+       failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4><a name="_Limit_Box_of"></a>Limit Box of a PCurve curve should be inside 
+   the Support's limits box. (Check for PCurve :: CloneAndMove service)</h4>
+   <p class="MsoNormal">Checks whether the limits of PCurve are included in the 
+   limits of its support. The check is called from <b>PCurve :: CloneAndMove</b> 
+   method</p>
+   <p class="MsoNormal"><b>&nbsp;</b></p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : PSS_0</b><br>
+       On CGM Object : CATPCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot;PCurve outside its support.&quot;;<br>
+       Extended msg: &quot;PCurve outside its ... support..&quot;;</td>
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+     <tr style="height:13.8pt">
+       <td style="height:13.8pt;border:none" width="0" height="18"></td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="CATINTCurve">[</a><a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4><a name="_Check_that_PCurve"></a>Limit Box of a PCurve curve should be 
+   inside the Support's limits box. (Check for PCurve :: SetSurface service)</h4>
+   <p class="MsoNormal">Checks whether the limits of PCurve are included in the 
+   limits of its support. The check is called from <b>PCurve :: SetSurface</b> 
+   method</p>
+   <p class="MsoNormal">&nbsp;</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : PSS_1</b><br>
+       On CGM Object : CATPCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot;PCurve outside its support.&quot;;<br>
+       Extended msg: &quot;PCurve outside its ... support..&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_Curve_continuity_should"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>Curve continuity should be at least C1</h4>
+   <p>Checks whether the Curve is C1 continuous </p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : CCC_0</b><br>
+       On CGM Object : CATCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Curve continuity is at least C1 checking 
+       failed.&quot;;<br>
+       Extended msg: &quot; Curve continuity is at least C1 on /p1 checking failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_Surface_continuity_should"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>Surface continuity should be at least C1</h4>
+   <p>Checks whether the Surface is C1 continuous</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : CCC_1</b><br>
+       On CGM Object : CATSurfaceType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Surface continuity is at least C1 checking 
+       failed.&quot;;<br>
+       Extended msg: &quot; Surface continuity is at least C1 on /p1 checking 
+       failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_SetOfPointsMapping_for_curve"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>SetOfPointsMapping for curve limits inclusion for CATSetOfPointsMapX for 
+   ref/co curves of an edge curve should be within the resolution</h4>
+   <p>For every point in SetOfPointsMapping, the geometrical distance between 
+   the reference curve and the other curves of the map should be less than the 
+   factory resolution.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : SPM_1</b></p>
+       <p style="margin:0in;margin-bottom:.0001pt">On CGM Object: 
+       CATEdgeCurveType<br>
+       From Feature: ...<br>
+       Short msg :&nbsp;&nbsp; &quot; EdgeCurve SetOfPointsMappingLimits checking 
+       failed.&quot;;<br>
+       Extended msg: &quot; EdgeCurve SetOfPointsMappingLimits on /p1 checking 
+       failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_The_internal_gap"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>The internal gap in a macro point should be less than the resolution.</h4>
+   <p>Checks the Gap between the component POECs of the MacroPoint. The distance 
+   is measured between one reference point and other points.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : MPG_1</b></p>
+       <p class="MsoNormal">On CGM Object : CATMacroPointType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Macro Point has a too big gap between its 
+       internal points.&quot;;<br>
+       Extended msg: &quot; Gap inside Macro Point on /p1 checking failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4><a name="_Check_for_ref"></a>Check for ref curve and curve from MapX for 
+   an edge curve, that curve useful limits are included in its max limits.</h4>
+   <p>The useful limits of the RefCurve and curves of an EdgeCurve should be 
+   included in the maxlimit of edge curve.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : ULO_1</b></p>
+       <p class="MsoNormal">On CGM Object : CATEdgeCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Curve Limits - Useful Outside Max checking 
+       failed.&quot;;<br>
+       Extended msg: &quot; Curve Limits - Useful Outside Max on /p1 checking 
+       failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_Curve_continuity_OK"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>Curve continuity should be at least C2 in V5</h4>
+   <p>The curve should be at least C2 continuous in V5.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : CGC_0</b></p>
+       <p class="MsoNormal">On CGM Object : CATCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Curve continuity checking failed.&quot;;<br>
+       Extended msg: &quot; Curve continuity on /p1 checking failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_Surface_continuity_OK"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>Surface continuity should be at least C2 in V5 </h4>
+   <p>The surface should be at least C2 continuous&nbsp; in V5.</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : CGC_1</b></p>
+       <p class="MsoNormal">On CGM Object : CATSurfaceType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; Surface continuity checking failed.&quot;;<br>
+       Extended msg: &quot; Surface continuity on /p1 checking failed.&quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_The_EdgeCurve_Should"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>The edge curve should not have identical PCurves in the same tree</h4>
+   <p>The edge curve should not contain identical PCurves in the same tree. But 
+   they can exist in different trees. </p>
+   <table>
+     <tr>
+       <td>
+       <img border="0" src="images/EIP_1.jpg"></td>
+       <td>
+       <p>The EdgeCurve-EC has one PCurve (PC) and one Merged Curve (MC) which 
+       again has two component PCurves.</p>
+       <p>The First case is OK because PC1 is in different trees.</p>
+       <p>The second case is KO because both PC2 s are in the same tree.</td>
+     </tr>
+   </table>
+   <p>&nbsp;</p>
+   <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+     <tr style="height:13.8pt">
+       <td valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+       <p class="MsoNormal"><b>CGM Rule : EIP_1</b></p>
+       <p class="MsoNormal">On CGM Object : CATEdgeCurveType<br>
+       From Feature : ...<br>
+       Short msg :&nbsp;&nbsp; &quot; The EdgeCurve Should Not Have Identical PCurves 
+       In The Same Tree checking failed.&quot;;<br>
+       Extended msg: &quot; The EdgeCurve Should Not Have Identical PCurves In The 
+       Same Tree on /p1 checking failed. &quot;;</td>
+     </tr>
+   </table>
+   <p class="MsoNormal" align="right" style="text-align:right">
+   <a name="_The_MathRep_of"></a>[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</p>
+   <h4>The MathRep of the canonical curves (Circle &amp; Ellipse) should be in the 
+   model infinite</h4>
+   <table border="1" cellspacing="0" cellpadding="0" width="66%" style="width: 66.68%; border-collapse: collapse; border: medium none">
+     <tr>
+       <td width="50%" valign="top" style="width:50.0%;border:solid windowtext .75pt;
+  padding:0in 5.4pt 0in 5.4pt">
+       <p class="MsoNormal"><b><i>Authorized</i></b><i>:</i> the mathematical 
+       circle (in dashed green) is in the infinite.</p>
+       <p align="center" style="text-align:center">&nbsp;</td>
+       <td width="50%" valign="top" style="width: 50.0%; border-left: medium none; border-right: .75pt solid windowtext; border-top: .75pt solid windowtext; border-bottom: .75pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+       <p class="MsoNormal"><b><i>Not authorized</i></b>: the complete 
+       mathematical circle (in dashed green) is not in the infinite.</p>
+       <p class="MsoNormal">
+       <span style="font-family: Arial Unicode MS; display: none">&nbsp;</span></p>
+       <div style="mso-line-spacing:&quot;100 50 0&quot;">
+       </div>
+       <p class="MsoNormal" style="text-indent:.5in">&nbsp;</td>
+     </tr>
+     <tr>
+       <td width="50%" valign="top" style="width: 50.0%; border-left: .75pt solid windowtext; border-right: .75pt solid windowtext; border-top: medium none; border-bottom: .75pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+       <p align="center" style="text-align:center">
+       <img border="0" src="images/INF_2_OK.jpg" width="214" height="205"></td>
+       <td width="50%" valign="top" style="width: 50.0%; border-left: medium none; border-right: .75pt solid windowtext; border-top: medium none; border-bottom: .75pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+       <p align="center" style="text-align:center">
+       <img border="0" src="images/INF_2_KO2.jpg" width="214" height="205"></td>
+     </tr>
+   </table>
+   <p>Definition of Model Infinite &amp; Model space</p>
+   <table border="1" >
+     <tr>
+       <td width="197" valign="top" >
+       <p class="MsoNormal">&nbsp;</td>
+       <td width="235" valign="top">
+       <p class="MsoNormal">Until CATIA V5 R13</td>
+       <td width="228" valign="top">
+       <p class="MsoNormal">From CATIA V5 R14</td>
+     </tr>
+     <tr>
+       <td >
+       <p class="MsoNormal">Model Size</p>
+       </td>
+       <td width="235" valign="top" >
+       <p class="MsoNormal"><span lang="EN-GB">[-100 meters, + 100 meters]<br>
+       on each coordinate </p>
+       </span>
+       </td>
+       <td width="228" valign="top" >
+       <p class="MsoNormal"><span lang="EN-GB">[-1 000 meters, + 1 000 meters]<br>
+       on each coordinate </p>
+       </span>
+       </td>
+     </tr>
+     <tr>
+       <td width="197" valign="top" >
+       <p class="MsoNormal">Model infinite </p>
+      
+       <p class="MsoNormal"></p>
+       <div style="mso-line-spacing:&quot;100 20 0&quot;">
+       </div>
+       &nbsp;</p>
+       </td>
+       <td width="235" valign="top" >
+       <p class="MsoNormal">[-1 000 meters, + 1 000 meters]<br>
+       on each coordinate </p>
+      
+       <p class="MsoNormal"></p>
+       <div style="mso-line-spacing:&quot;100 20 0&quot;">
+         </p>
+       </div>
+       </td>
+       <td width="228" valign="top" >
+       <p class="MsoNormal">[-10 000 meters, + 10 000 meters]<br>
+       on each coordinate</p>
+       </td>
+     </tr>
+   </table>
+   <p class="MsoNormal">
+   <span style="font-size: 10.0pt; font-family: Arial Unicode MS; display: none">
+   &nbsp;</span></p>
+   <span lang="FR" style="font-size: 10.0pt">
+   <div style="mso-line-spacing:&quot;100 20 0&quot;">
+     <div style="mso-line-spacing:&quot;100 20 0&quot;">&nbsp;</span></p>
+     </div>
+     <table border="1" cellspacing="0" cellpadding="0" width="100%" bgcolor="white" style="width: 100.0%; border-collapse: collapse; border: medium none; background: white">
+       <tr style="height:13.8pt">
+         <td rowspan="2" valign="top" style="height: 13.8pt; border: .75pt inset #111111; padding: 3.0pt; background: #EAEAEA">
+         <p class="MsoNormal"><b></p>
+         <div style="mso-line-spacing:&quot;100 20 0&quot;">CGM Rule : INF_2</b><br>
+           On CGM Object : CATCircleType, CATEllipseType<br>From Feature : ...<br>
+           Short msg :&nbsp; &quot; Circle/Ellipse - MathRep Inside Model Infinite 
+           checking failed. &quot;;<br>Extended msg: &quot; Circle/Ellipse - MathRep 
+           Inside Model Infinite on /p1 checking failed. &quot;;</p>
+         </div></td>
+         <td style="height:13.8pt;border:none" width="0" height="18"></td>
+       </tr>
+       <tr style="height:13.8pt">
+         <td style="height:13.8pt;border:none" width="0" height="18"></td>
+       </tr>
+     </table>
+     <p class="MsoNormal">&nbsp;</p>
+     <p class="MsoNormal">&nbsp;</p>
+     <p class="MsoNormal">&nbsp;</p>
+     <div class="MsoNormal" align="center" style="text-align:center">
+       <hr size="2" width="100%" align="center">
+     </div>
+     <h3><!---------------------------------comment------------------------------------->
+     <a name="History"></a>History</h3>
+     <table border="0" cellpadding="0" width="100%" style="width: 100.0%">
+       <tr>
+         <td valign="top" style="padding:.75pt .75pt .75pt .75pt">
+         <p class="MsoNormal">Version: <strong>1</strong> [Aug 2004]</td>
+         <td valign="top" style="padding:.75pt .75pt .75pt .75pt">
+         <p class="MsoNormal">Document created</td>
+       </tr>
+       <tr>
+         <td valign="top" style="padding:.75pt .75pt .75pt .75pt">
+         <p class="MsoNormal">Version: <b>2</b> [July 2005]</td>
+         <td valign="top" style="padding:.75pt .75pt .75pt .75pt">
+         <p class="MsoNormal">Document modified</td>
+       </tr>
+       <tr>
+         <td colspan="2" valign="top" style="padding:.75pt .75pt .75pt .75pt">
+         <p class="MsoNormal" align="right" style="text-align:right">[<a style="color: blue; text-decoration: underline; text-underline: single" href="#Top">Top</a>]</td>
+       </tr>
+     </table>
+     <div class="MsoNormal" align="center" style="text-align:center">
+       <hr size="2" width="100%" align="center">
+     </div>
+     <p><i><!---------------------------------comment------------------------------------->
+     Copyright © 2004, Dassault Systèmes. All rights reserved.</i></div></div>
+
+ </body>
+
+</html>

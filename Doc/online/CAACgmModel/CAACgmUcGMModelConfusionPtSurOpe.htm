@@ -1,0 +1,204 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Checking the Confusion of Points on a Surface</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Checking the Confusion of Points on a Surface</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CAAGMModelConfusionOpe use case illustrates how to detect whether 
+		two points located on a surface are overlapping by using the <em>CATICGMConfusionPtOnSurPtOnSur</em> 
+		operator.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMModelConfusionOpe Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelConfusionOpe Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelConfusionOpe</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelConfusionOpe Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case [<a href="#References">1</a>] is intended to help you to use the
+<em>CATICGMConfusionPtOnSurPtOnSur </em>operator. See [<a href="#References">2</a>] 
+for an overview of this type of operators.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelConfusionOpe Use Case</h2>
+<p>CAAGMModelConfusionOpe is a use case of the CAAGMModelInterfaces.edu framework. 
+The second part of the use case illustrates how to use CATICGMConfusionPtOnSurPtOnSur.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelConfusionOpe Do</h3>
+<table>
+	<tr>
+		<td>
+		<img alt="Use Case Data" src="images/CAACgmGMConfusion1.gif" width="382" height="311"></td>
+		<td>This use case creates the input data to be passed to the <em>CATICGMConfusionPtOnSurPtOnSur
+		</em>operator:<ul>
+			<li>A cylinder.</li>
+			<li>The two points to be compared.</li>
+		</ul>
+		<p>It creates the operator and performs the geometric tests. The result 
+		can be optionally saved into an NCGM container and displayed using the CAAGMModelGemBrowser 
+		use case [<a href="#References">3</a>]. However, if you want to display 
+		the circle on which the two points are created, the object which is highlighted 
+		on the figure, you must adjust the use case and convert the CATCylinder 
+		into a CATICGMTopSkin.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelConfusionOpe </h3>
+<p>To launch CAAGMModelConfusionOpe, you will need to set up the build time environment, 
+then compile CAAGMModelConfusionOpe.m along with its prerequisites, set up the run 
+time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMModelConfusionOpe with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p>CAAGMModelConfusionOpe <code>e:\confusion.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case [<a href="#References">3</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelConfusionOpe Code</h3>
+<p>The CAAGMModelConfusionOpe use case is made of a main named CAAGMModelConfusionOpe.cpp 
+located in the CAAGMModelConfusionOpe.m module of the CAAGMModelInterfaces.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelConfusionOpe.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The initial step which consists in creating the geometry factory as well as the 
+last step which consists in writing the model and closing the factory are described 
+in [<a href="#References">1</a>]. The coding steps dedicated to the CATICGMLocalAnalysis1D 
+operator are explained below:</p>
+<ol>
+	<li>Creating the Geometry Factory [<a href="#References">1</a>].</li>
+	<li><a href="#Creates the Line and Cylinder to Intersect">Creating the Surface 
+	and the Points to be Analyzed</a></li>
+	<li><a href="#Basic Mode">Creating and Using the CATICGMConfusionPtOnSurPtOnSur 
+	operator</a></li>
+	<li>Writing the Model and Closing the Factory [<a href="#References">1</a>].</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Line and Cylinder to Intersect"></a>Creating the Surface 
+and the Points to Be Analyzed</h3>
+<pre class="code">// a - Create a cylinder
+CATMathAxis IJK;
+double Radius = 2., h = 2.;
+CATSurface * pSurf = piGeomFactory-&gt;CreateCylinder(IJK, Radius, -h, h, -CATPI, CATPI);
+CATSurLimits limits2 = pSurf-&gt;GetLimits();
+
+// b - Create two points on this cylinder
+const double alpha = 0.37;
+double vparam = 0.5;
+CATSurParam param3(alpha, vparam, limits2);
+CATPointOnSurface * Pt3 = piGeomFactory-&gt;CreatePointOnSurface(param3, pSurf);
+//double uparam = 0.371; // confusion not achieved
+double uparam = 0.3705; 
+CATSurParam param4(uparam, vparam, limits2);
+CATPointOnSurface * Pt4 = piGeomFactory-&gt;CreatePointOnSurface(param4, pSurf);</pre>
+<p>The geometry is created by the <code>CATGeoFactory</code> with the CreateCylinder 
+method and the geometric points by the CreatePointOnSurface method.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Basic Mode"></a>Creating and Using the CATICGMConfusionPtOnSurPtOnSur 
+Operator</h3>
+<p>The CATCGMConfusion global function is used to create the operator. The specified 
+tolerance being 0.0001 (to be compared with the distance between points), the confusion 
+is expected to be achieved.</p>
+<pre class="code">// c - Create the CATICGMConfusionPtOnSurPtOnSur operator
+CATICGMConfusionPtOnSurPtOnSur * pConfusionOpe1 =::CATCGMCreateConfusion(piGeomFactory, pConfig, Pt1, Pt2, Resolution*0.1);
+...
+cout &lt;&lt; &quot;Tolerance &quot; &lt;&lt; Resolution*0.1 &lt;&lt; endl;
+
+// d - Check the confusion
+if (pConfusionOpe1-&gt;GetConfusion())
+  cout &lt;&lt; &quot;Confusion is achieved &quot; &lt;&lt; endl;
+else
+  cout &lt;&lt; &quot;Confusion is not achieved &quot; &lt;&lt; endl;</pre>
+<p>Here are the messages on the standard output:</p>
+<pre>=========================================================
+Check the overlapping of two points created on a surface
+Tolerance 0.01
+Distance between points 0.00628319
+Confusion is achieved</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>CATICGMConfusionPtOnSurPtOnSur is a geometric operator which follows the same 
+scheme as all geometric operators: it is a transient object and its execution does 
+not modify the input operands. It must be operated within a single container. Its 
+purpose is to detect whether two points on a surface are confused.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmUcGMModelUseCaseOverw.htm">An Introduction to Geometric Modeler 
+		Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmUcGemBrowser.htm">Browsing the 
+		Geometric Container</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

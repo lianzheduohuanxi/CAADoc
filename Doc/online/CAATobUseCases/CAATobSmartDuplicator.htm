@@ -1,0 +1,301 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Using the Smart Duplicator</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Geometric Modeler</h1>
+     </td>
+     <td valign="top">
+     <h2>Topology</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a> Using the Smart Duplicator</h3>
+     <p><em>How to Modify a &quot;Touched&quot; Topology </em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+		<p>Right after its creation a topology is modifiable. But when the body which contains this topology is frozen,
+		 you can no longer modify this topology.</p>
+		<p>With the smart duplicator, you can modify only a part of a body. The part to be modified has to be "touched".
+		This results in a new body sharing the untouched topologies with the initial body. This use case illustrates the smart mechanism with
+		a skin body which has a holed face. Touching the holed face allows you to remove the internal domain to fill in the hole.
+		 </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAATobSmartDuplicator Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAATobSmartDuplicator Do?</a></li>
+         <li><a href="#How">How to Launch CAATobSmartDuplicator </a></li>
+         <li><a href="#Where">Where to Find the CAATobSmartDuplicator Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to help you use the CATSmartBodyDuplicator operator.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAATobSmartDuplicator Use Case</h3>
+ <p>CAATobSmartDuplicator is a use case of the CAATopologicalObjects.edu framework 
+ that illustrates the NewTopologicalObjects framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAATobSmartDuplicator Do?</h4>
+ <p>The CAATobSmartDuplicator use case:</p>
+ <ul>
+   <li>loads the container and retrieves the skin body to be duplicated</li>
+   <li>retrieves the holed face and the inner loop of that face</li>
+   <li>specifies the cell to be modified in the smart
+ duplication operation</li>
+   <li>creates a smart duplicator in order to modify  
+ the holed face and retrieves the duplicated face associated with the holed face.</li>
+  <li>removes the internal loop in the duplicated face.</li>   
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAATobSmartDuplicator </h4>
+ <p>To launch CAATobSmartDuplicator , you will need to set up the build time 
+ environment, then compile CAATobSmartDuplicator.m along with its prerequisites, 
+ set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>With Windows CAATobSmartDuplicator <code>e:\partwithhole.NCGM</code></p>
+ <p>With UNIX CAATobSmartDuplicator <code>/u/partwithhole.NCGM</code></p>
+ <p>where partwithhole.NCGM is an input 
+ file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData file.
+ </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAATobSmartDuplicator Code</h4>
+ <p>The CAATobSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp located in the CAATobSmartDuplicator.m module of the 
+ CAATopologicalObjects.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAATopologicalObjects.edu\</code>CAATobSmartDuplicator<code>.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAATopologicalOjects.edu/</code>CAATobSmartDuplicator<code>.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are six main steps in CAATopSmartDuplicator.cpp:</p>
+ <ol>
+   <li><a href="#Creates the Geometry Factory">Loading the container and 
+   retrieving the body to be checked</a></li>
+   <li><a href="#KV">Retrieving the holed 
+	face</a></li>
+   <li><a href="#Displaying the Diagnosis">Touching the topology 
+	to be modified</a></li>
+   <li><a href="#Writes the Model and Closes the Factory">Creating a 
+	smart duplicated
+	body</a></li>
+   <li><a href="#Modifying the Touched Topology">Modifying the touched
+	topology</a></li>
+    <li><a href="#Writes the Model and Closes the Factory">Writing the 
+	model and closing the 
+	factory</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creates the Geometry Factory">Loading the container and 
+ retrieving the body to be checked</a></h4>
+ <p>The geometry factory (CATGeoFactory) creates and manages all the 
+ CATICGMObject (and the curves and surfaces in particular). In this use case, 
+ the factory is defined by reading a NCGM file that was previously stored, 
+ the global function <code>::CATLoadCGMContainer</code> must be used to retrieve 
+ the factory. The body is retrieved by using the 
+ CATICGMContainer::FindObjectFromTag method. There is only one body in the 
+ container which is loaded. 10990 is the body tag.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
+...
+CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag(10990 ); </pre>
+     </td>
+   </tr>
+ </table>
+ <p>The initial body looks something like this:</p>
+ <p>
+ <img alt="Initial Body" src="images/smartDup1.gif" width="480" height="307"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="KV">Retrieving the Holed Face</a></h4>
+ <p>To retrieve the holed face, all the faces of the body are 
+	scanned and for each cell, the number of internal domains is computed. For 
+	the cells which have internal domains, the domains are scanned. The internal 
+	loop is detected by using CATDomain::GetLocation.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>for (int k = 1; k &lt; faceList.Size()+1; k++)
+    {
+	CATCell * pLocalCell = faceList[k];
+        if (pLocalCell &amp;&amp; pLocalCell-&gt;GetNbInternalDomains() &gt; 0)
+        {       
+            int NbDomains=pLocalCell-&gt;GetNbDomains();
+            for(int j=1;j<=NbDomains;j++)
+            {
+                CATDomain *pDomain=pLocalCell->GetDomain(j);
+                CATLocation Location=pDomain-&gt;GetLocation();
+                if(Location==CATLocationInner)
+                {
+                    pInnerLoop=pDomain;                    <span style="color:green">// the inner loop</span>
+                    holedFace = (CATFace *) faceList[k] ;  <span style="color:green">// the holed face</span>
+                    break; 
+                }
+            }
+        }
+    }</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>] </p>
+ <h4><a name="Displaying the Diagnosis">Touching 
+	the Topology to be Modified</a></h4>
+ <p>The CATTopology::Touch method is used to specify which topology is going to be modified.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> holedFace-&gt;Touch(piBody);</pre>
+     </td>
+   </tr>
+ </table>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Writes the Model and Closes the Factory">Creating a Smart Duplicated Body</a></h4>
+ <p>First, you must create an empty body from CATGeoFactory. The CATSmartBodyDuplicator operator is created from this new body. It must be run.
+ </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> CATBody * copBody = piGeomFactory-&gt;CreateBody();
+    CATSmartBodyDuplicator * smartDuplicator = 
+        copBody-&gt;CreateSmartDuplicator(piBody, topdata);
+    if (smartDuplicator == NULL) return (1); 
+    smartDuplicator-&gt;Run();
+    CATFace * duplicatedFace = (CATFace *)smartDuplicator-&gt;GetDuplicatedCell(holedFace);</pre>
+     </td>
+   </tr>
+ </table>
+ The cell which has been initially touched is retrieved by using the CATSmartBodyDuplicator::GetDuplicatedCell method.
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Modifying the Touched Topology">Modifying the Touched Topology</a></h4>
+ <p>The face inner loop is retrieved by scanning its domains. A domain which is an internal domain is removed.  
+ </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> int NbD=duplicatedFace-&gt;GetNbDomains();
+    for(int j=1;j<=NbD;j++)
+    {
+        CATDomain *pDom=duplicatedFace->GetDomain(j);
+        CATLocation Loc=pDom-&gt;GetLocation();
+        if(Loc==CATLocationInner)
+        {
+           duplicatedFace-&gt;RemoveDomain(pDom);
+        }
+    }</pre>
+     </td>
+   </tr>
+ </table>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Writes the Model and Closes the Factory">Writing the Model and
+Closing the Factory</a></h4>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>::CATCloseCGMContainer</code>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <span style="color:green"><em>//
+ // Closes the container
+ //</em></span>
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+The resulting body looks something like this:
+<br>
+ <img alt="Resulting Body" src="images/smartDup2.gif" width="480" height="307"><p align="right">[<a href="#Top">Top</a>]</p>
+
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References">References</a></h3>
+ <table width="100%">
+   <tr>
+     <td>[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   </table>
+ <table width="100%">
+   <tr>
+     <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2009]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2009, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

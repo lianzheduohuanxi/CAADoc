@@ -1,0 +1,111 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAAniPostProSelection.catvbs</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre>
+<font color="#008000">&#39; COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">&#39; ***********************************************************************</font>
+<font color="#008000">&#39;   Purpose:      Select groups and mesh part for visualization of image</font>
+<font color="#008000">&#39;   Assumptions:   Octree tetrahedron mesh part exists in the model</font>
+<font color="#008000">&#39;   Author:       bmw</font>
+<font color="#008000">&#39;   Languages:    VBScript</font>
+<font color="#008000">&#39;   Locales:      English </font>
+<font color="#008000">&#39;   CATIA Level:  V5R16</font>
+<font color="#008000">&#39; ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+
+
+<font color="#008000">&#39; Open the CATAnalysis Document</font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<font color="#008000">&#39; Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set </font>oAnalysisManager = oAnalysisDocument.Analysis
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+
+<font color="#008000">&#39; Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)
+
+<font color="#008000">&#39; Retrieve the analysis sets and analysis set by its name</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisCase.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisSets.Item(&quot;Restraints.1&quot;, catAnalysisSetSearchAll)
+
+<font color="#0000FF">Set </font>analysisEntities1 = oAnalysisSet.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity1 = analysisEntities1.Item(1)
+
+<font color="#008000">&#39;add selection (specificationgroups)  clamp on Image Von Mises Stress (nodal values) (no selection before ReplaceMode=True)</font>
+<font color="#008000">&#39;============================================================================</font>
+
+<font color="#0000FF">Set </font>reference1 = oAnalysisManager.CreateReferenceFromObject(analysisEntity1)
+
+<font color="#0000FF">Set </font>analysisSet2 = oAnalysisSets.Item(&quot;Frequency Case Solution.1&quot;, catAnalysisSetSearchAll)
+<font color="#0000FF">Set </font>analysisImages1 = analysisSet2.AnalysisImages
+<font color="#0000FF">Set </font>analysisImage1 = analysisImages1.Item(&quot;Von Mises Stress (nodal values).1&quot;)
+analysisImage1.SetSelection reference1, True
+analysisImage1.Update 
+
+<font color="#008000">&#39;add selection (usergroups) SurfaceGroup.1 on Image Von Mises Stress (nodal values) (ReplaceMode=False)</font>
+<font color="#008000">&#39;=====================================================================</font>
+
+<font color="#008000">&#39; Get the list of groups and create reference from first group</font>
+<font color="#0000FF">Set </font>analysisSets2 = oAnalysisModel.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet3 = analysisSets2.ItemByType(&quot;GroupSet&quot;)
+<font color="#0000FF">Set </font>analysisEntities2 = analysisSet3.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity2 = analysisEntities2.Item(1)
+<font color="#0000FF">Set </font>reference2 = oAnalysisManager.CreateReferenceFromObject(analysisEntity2)</pre>
+<pre>
+<font color="#008000">&#39; Set the created reference for Selection in Von Mises Stress Image</font>
+analysisImage1.SetSelection reference2, False
+analysisImage1.Update 
+
+<font color="#008000">&#39;remove all selections on Image Von Mises Stress (nodal values)</font>
+<font color="#008000">&#39;======================================</font>
+
+<font color="#008000">&#39; Remove all the selections and update</font>
+analysisImage1.ResetSelection 
+analysisImage1.Update 
+
+<font color="#008000">&#39;add selection (meshparts) OctreeTetrahedronMesh.1:Part1 on Image Von Mises Stress (nodal values) (ReplaceMode=True)</font>
+<font color="#008000">&#39;==========================================================================</font>
+
+<font color="#008000">&#39; Retrieve the mesh part OCTREE Tetrahedron Filler</font>
+<font color="#0000FF">Set </font>analysisSets3 = oAnalysisModel.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisMeshManager = analysisSets3.ItemByType(&quot;MSHMeshSet&quot;)
+<font color="#0000FF">Set </font>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+<font color="#0000FF">Set </font>analysisMeshPart1 = oAnalysisMeshParts.Item(&quot;OCTREE Tetrahedron Mesh.1 : Part1&quot;)</pre>
+<pre>
+
+<font color="#008000">&#39;Create reference from the mesh part and set the selection</font>
+<font color="#0000FF">Set </font>reference3 = oAnalysisManager.CreateReferenceFromObject(analysisMeshPart1)
+analysisImage1.SetSelection reference3, True
+analysisImage1.Update 
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

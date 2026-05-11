@@ -1,0 +1,306 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating Dialog Objects</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM Enterprise Architecture</h1>
+     </td>
+     <td valign="top">
+     <h2>User Interface - Dialogs</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating Dialog Objects</h3>
+     <p><em>How to create and manage dialog objects</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>All the Dialog framework classes share the way to get their behavior, 
+     and attributes. The behavior is set in the object constructor using by 
+     assigning a parent object and a style. Attributes are the visibility, and 
+     the sensitivity to the end user interactions. Dialog windows and objects 
+     can be dynamically created and modified with respect to their changing 
+     environment, and dialog objects can thus be deleted or created in an 
+     existing dialog window. </p>
+     <ul>
+       <li><a href="#100000"><strong>Constructing Dialog Objects</strong></a></li>
+       <li><a href="#200000"><strong>Managing Visibility and Sensitivity</strong></a>
+       <ul>
+         <li><a href="#210000">Managing Visibility</a></li>
+         <li><a href="#220000">Managing Sensitivity</a></li>
+       </ul>
+       </li>
+       <li><a href="#300000"><strong>Deleting Dialog Objects</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="100000"></a>Constructing Dialog Objects</h3>
+ <p>Most of the dialog classes can be used as is, that is instantiated, such as 
+ the controls, or the containers. Some others must be derived to create 
+ specialized objects, such as the dialog windows. Each class has a constructor 
+ which requires at least two parameters, and sometimes three: </p>
+ <ol>
+   <li><b>The parent</b> [<a href="#References">1</a>]. It is altogether:
+   <ul>
+     <li>The parent in the dialog object containment structure. It is the 
+     container object. Some rules exist on the parent object. For example, a 
+     control cannot be a parent object, since it cannot contain other dialog 
+     objects. A
+     <a href="../CAADlgQuickRefs/CAADlgCATDlgTabContainer.htm">
+     CATDlgTabContainer</a> instance can contain only
+     <a href="../CAADlgQuickRefs/CAADlgCATDlgTabPage.htm">
+     CATDlgTabPage</a> instances, and conversely, a
+     <a href="../CAADlgQuickRefs/CAADlgCATDlgTabPage.htm">
+     CATDlgTabPage</a> instance can only be contained by
+     <a href="../CAADlgQuickRefs/CAADlgCATDlgTabContainer.htm">
+     CATDlgTabContainer</a>, but can contain in turn other containers, such as
+     <a href="../CAADlgQuickRefs/CAADlgCATDlgFrame.htm">CATDlgFrame</a> 
+     instances, and controls.</li>
+     <li>The parent in the command tree structure. Since
+     <a href="../CAADlgQuickRefs/CAADlgCATDialog.htm">CATDialog</a> 
+     derives from <i>CATCommand</i>, each dialog object instance is seen as a 
+     command for the event management mechanisms, such as the send/receive [<a href="#References">2</a>] 
+     and the callback [<a href="#References">3</a>] mechanisms.</li>
+   </ul>
+   <p>This parent must of course be an instance of a class that derives from <i>
+   CATCommand</i>, but in addition, it must be either another dialog object 
+   instance: its container, or a <i>CATInteractiveApplication</i> instance [<a href="#References">4</a>]. 
+   Then you can set the parent object for the command tree structure and event 
+   transmission to another object that derives from <i>CATCommand</i> using the
+   <code>CATCommand::SetFather</code> method. This modifies only the command 
+   tree structure, but the parent in containment tree structure doesn't change. 
+   The method <code>GetFatherWindow</code> allows you to retrieve a pointer to 
+   the parent window, usually the dialog object that sits at the top of the 
+   containment tree structure</li>
+   <li><b>The instance identifier</b>: this is an internal character string, 
+   instance of the <i>CATString</i> class, which can be used for your internal 
+   management, but which is never shown to the end user and thus does not 
+   require to be translated. It is generally used to retrieve resources set to 
+   the dialog object, such as the title displayed on a push button, a menu item, 
+   or a label, or the icon displayed for a push item in a toolbar [<a href="#References">5</a>]. 
+   Blank characters are not allowed. The <code>GetName</code> method allows you 
+   to retrieve this identifier.</li>
+   <li><b>The style</b>: always defaulted to NULL, the style available values 
+   depend on the dialog object type, and cannot be modified afterwards. For 
+   example, it can set the option style for a combo or request that the text 
+   keyed in in an editor should be an integer. The method <code>GetStyle</code> 
+   allows to retrieve the style of a dialog object.</li>
+ </ol>
+ <p>As an example, the construction of a <i>
+ <a href="../CAADlgQuickRefs/CAADlgCATDlgCombo.htm">CATDlgCombo</a></i> 
+ instance could be as follows:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATDlgCombo * pMyCombo;
+pMyCombo = new CATDlgCombo(this,                  // parent
+                           &quot;MyNiceCombo&quot;,         // identifier
+                           CATDlgCmbOptionStyle); // style</pre>
+     </td>
+   </tr>
+ </table>
+ <p>When the style can be composite, use the pipe | to concatenate the style 
+ attributes. For example, if you want to create a combo with the drop down style 
+ and with an editable field, construct it as follows:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>CATDlgCombo * pMyCombo;
+pMyCombo = new CATDlgCombo(this,
+                           &quot;MyNiceCombo&quot;,
+                           CATDlgCmbDropDown | CATDlgCmbEntry);</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="200000"></a>Managing Visibility and Sensitivity</h3>
+ <p>The other generic attributes of a dialog object are the ability to be seen 
+ or hidden, and to be sensitive to user interaction or not, that is the user can 
+ select or click it or not.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="210000"></a>Managing Visibility</h4>
+ <p>A given dialog object can be set visible or invisible by means of its 
+ visibility attribute which takes the values <code>CATDlgShow</code> and <code>
+ CATDlgHide</code>. When creating a main container, such as a <i>
+ <a href="../CAADlgQuickRefs/CAADlgCATDlgDocument.htm">CATDlgDocument</a></i> 
+ or a <i><a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">
+ CATDlgDialog</a></i> instance, you need to set it visible using the following 
+ method:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>SetVisibility(CATDlgShow);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>By default, all the dialog objects contained in this main container are also 
+ shown.</p>
+ <p>The <code>GetVisibility</code> method allows you to know whether a given 
+ object is visible:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>if (pObject-&gt;GetVisibility() == CATDlgShow)
+  ... //Do what is required if the object is visible
+else
+  ... //Do what is required if the object is not visible</pre>
+     </td>
+   </tr>
+ </table>
+ <p>To hide a part of a window, set the visibility attribute of the container(s) 
+ making up this part to <code>CATDlgHide </code>rather than deleting the 
+ involved dialog objects. This avoids to recreate them if you need them again. 
+ Just set their visibility attribute to <code>CATDlgShow</code>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="220000"></a>Managing Sensitivity</h4>
+ <p>Another key attribute is the sensitivity of the dialog object to the user 
+ interactions. This is usually dedicated usually to controls. You can request a 
+ control to be sensitive to user interactions by assigning it the state <code>
+ CATDlgEnable</code>, or the reverse using the state <code>CATDlgDisable</code>, 
+ by means of the <code>SetSensitivity</code> method, as follows:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>Control-&gt;SetSensitivity(CATDlgEnable);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A disabled control is displayed dimmed and cannot be selected. Below are 
+ some examples of controls shown as disabled and enabled.</p>
+ <table>
+   <thead>
+     <tr>
+       <th></th>
+       <th align="center">CATDlgDisable</th>
+       <th align="center">CATDlgEnable</th>
+     </tr>
+   </thead>
+   <tr>
+     <td>Radio buttons</td>
+     <td align="center">
+     <img src="images/Disable1.jpg" alt="Disable1.jpg (1404 bytes)" width="119" height="22"></td>
+     <td align="center">
+     <img src="images/Enable1.jpg" alt="Enable1.jpg (1742 bytes)" width="132" height="26"></td>
+   </tr>
+   <tr>
+     <td>Combo</td>
+     <td align="center">
+     <img src="images/Disable2.jpg" alt="Disable2.jpg (1875 bytes)" width="153" height="24"></td>
+     <td align="center">
+     <img src="images/Enable2.jpg" alt="Enable2.jpg (2049 bytes)" width="152" height="23"></td>
+   </tr>
+   <tr>
+     <td>Menu items</td>
+     <td align="center">
+     <img src="images/Disable3.jpg" alt="Disable3.jpg (4214 bytes)" width="121" height="98"></td>
+     <td align="center">
+     <img src="images/Enable3.jpg" alt="Enable3.jpg (4415 bytes)" width="110" height="97"></td>
+   </tr>
+   <tr>
+     <td>Push items</td>
+     <td align="center">
+     <img src="images/Disable4.jpg" alt="Disable4.jpg (1229 bytes)" width="35" height="70"></td>
+     <td align="center">
+     <img src="images/Enable4.jpg" alt="Enable4.jpg (1529 bytes)" width="36" height="70"></td>
+   </tr>
+ </table>
+ <p>The ThickSurface and CloseSurface menu items are enabled in both cases.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="300000"></a>Deleting Dialog Objects</h3>
+ <p>To delete a dialog object in a dialog window while the dialog window remains 
+ active, you can use the RequestDelayedDestruction method, especially in a 
+ callback method. Using RequestDelayedDestruction, you can delete the dialog 
+ object from a callback method set onto this dialog object. The delete operation 
+ is delayed, and executed after the callback end.</p>
+ <p>When you delete a dialog window, you just need to delete the upper 
+ container. The contained dialog objects are then recursively and automatically 
+ deleted. If you want to delete a contained container, use 
+ RequestDelayedDestruction on this container. Its contained dialog objects are 
+ then also recursively and automatically deleted.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The behavior of a dialog object is set using its parent to anchor it in the 
+ command tree structure, and using its style, possibly composite. Its visibility 
+ and its sensitivity to end user interactions can be managed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAADlgQuickRefs/CAADlgDialogSummary.htm">Dialog 
+     Class Usage and Link Reference</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAASysTechArticles/CAASysSendReceive.htm">
+     The Send/Receive Communication Protocol</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td>
+     <a href="../CAASysTechArticles/CAASysCallbacks.htm">
+     The Callback Mechanism</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td><a href="CAADlgInteractiveApplication.htm">Designing Your Interactive 
+     Application</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[5]</td>
+     <td><a href="CAADlgResources.htm">Assigning Resources</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

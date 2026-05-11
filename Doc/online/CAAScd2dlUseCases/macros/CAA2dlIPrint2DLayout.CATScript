@@ -1,0 +1,87 @@
+' COPYRIGHT DASSAULT SYSTEMES 2006
+
+' ***********************************************************************
+'   Purpose     : This macro allows you to print the part 2D layout         
+'   Author      : TBU
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R17
+' ***********************************************************************
+
+Sub CATMain()
+
+  ' Define the application default printer
+  CATIA.ActivePrinter = CATIA.Printers.Item("Printer TIF")
+  Dim oDocument As Document
+  ' Retrieve the active document
+  Set oDocument = CATIA.ActiveDocument
+  ' Look for the document type, if it is not a product document the macro stops
+  If TypeName(oDocument) = "ProductDocument" Then
+    Dim oProductDocument As ProductDocument
+    Set oProductDocument = oDocument
+  Else
+    MsgBox "This macro can be run with a product document only."
+    Exit Sub
+  End If
+  ' Call the procedure to search the parts in document
+  Call SearchPartsInProduct(oProductDocument.Product)
+
+End Sub
+
+Sub SearchPartsInProduct(ProductParent As Object)
+
+  Dim oProduct As Product
+  Dim oProductReference As Product
+  Dim oShapeRepresentation As CATBaseDispatch
+  Dim oPart As Part
+  Dim oLayout2DRoot As Layout2DRoot
+  Dim oLayout2DSheets As Layout2DSheets
+  Dim oLayout2DSheet As Layout2DSheet
+        
+  ' Search for the parts in the product structure
+  For Each oProduct In ProductParent.Products
+    ' Look for product children
+    If oProduct.Products.Count <> 0 Then
+      ' Call the procedure to search the parts in document
+      Call SearchPartsInProduct(oProduct)
+    Else
+      ' Retrieve the reference product
+      Set oProductReference = oProduct.ReferenceProduct
+      ' Look for the product existence
+      If Not oProductReference Is Nothing Then
+          ' Look for the product shape representation
+          If oProduct.HasAMasterShapeRepresentation Then
+            ' Retrieve the shape representation
+            Set oShapeRepresentation = oProduct.GetMasterShapeRepresentation(False)
+            ' Look for the shape representation document type
+            If Right(oShapeRepresentation.Name, 7) = "CATPart" Then
+              ' Retrieve the part
+              Set oPart = oShapeRepresentation.Part
+              ' Retrieve the 2D Layout
+              Set oLayout2DRoot = oPart.GetItem("CATLayoutRoot")
+              ' Look for the 2D Layout existence
+              If Not oLayout2DRoot Is Nothing Then
+                ' Retrieve the sheet collection
+                Set oLayout2DSheets = oLayout2DRoot.Sheets
+                ' Retrieve the sheets contained in the collection
+                For iSheet = 1 To oLayout2DSheets.Count
+                  ' Retrieve the sheet
+                  Set oLayout2DSheet = oLayout2DSheets.Item(iSheet)
+                  ' Print the sheet in a TIFF file
+                  oLayout2DSheet.PrintToFile "F:\tmp\2D3DDesign\print\" + oLayout2DSheet.Name + ".tif", _
+                    catRenderQuickHiddenLinesRemovalWithHiddenEdgesWithOutlinesWithoutVertices
+                  Set oLayout2DSheet = Nothing
+                  Set oLayout2DSheets = Nothing
+                Next
+                Set oLayout2DRoot = Nothing
+                Set oShapeRepresentation = Nothing
+            End If
+            Set oPart = Nothing
+          End If
+        End If
+      End If
+      Set oProductReference = Nothing
+    End If
+  Next
+  
+End Sub

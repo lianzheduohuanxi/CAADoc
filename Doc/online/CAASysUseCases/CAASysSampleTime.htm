@@ -1,0 +1,310 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Time</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Time</h3>
+      <em>Creating and using timestamps and durations</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and use timestamp and duration
+      objects.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysTime Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysTime Do</a></li>
+            <li><a href="#How">How to Launch CAASysTime</a></li>
+            <li><a href="#Where">Where to Find the CAASysTime Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and use timestamps and
+durations.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysTime Use Case</h3>
+<p>CAASysTime is a set of&nbsp; use cases of the CAASystem.edu framework that
+illustrates the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysTime Do</h4>
+<p>This use case creates timestamp and duration object instances, check that
+they are valid, and perform operations on them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysTime</h4>
+<p>To launch CAASysTime, you will need to set up the build time environment,
+then compile CAASysTime along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysTime Code</h4>
+<p>The CAASysTime use case is made of a several classes located in the
+CAASysTime.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysTime.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysTime.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>wherwe <code>InstallRootDirectory</code> is the directory where the CAA
+CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The time management capabilities are shown using seven steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>
+      <p align="left">Step</p>
+    </th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create a timestamp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Retrieve the hours from the timestamp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create a duration</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Add two durations</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Retrieve the total number of hours from a duration</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Subtract a duration from a timestamp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Compare two durations</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a Timestamp</h4>
+<p>The <i>CAATime</i> class is dedicated to timestamps.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int iYear  = 1997;
+  int iMonth = 11;
+  int iDay   = 20;
+  int iHour  = 16;
+  int iMin   = 23;
+  int iSec   = 15;
+  <b>CATTime</b> MyTime1(iYear, iMonth, iDay, iHour, iMin, iSec);
+  if ( 1 == MyTime1.GetStatus() )
+  {  ... // MyTime1 is a valid instance and can be used
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>MyTime1</code> is initialized at <code>Thursday, 20 November 1997
+16:23:15</code>. The <code>GetStatus</code> method should return 1 if <code>MyTime1</code>
+is valid, and 0 otherwise.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Retrieving the Hours from the Timestamp</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int hour = 0;
+  hour = MyTime1.<b>GetHour</b>();
+  if ( -1 != hour )
+    cout &lt;&lt; &quot;The hour of MyTime1 is: &quot; &lt;&lt; hour &lt;&lt; endl&lt;&lt;endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The hour variable contains the value 16. If the returned value were invalid,
+-1 would be returned.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating a Duration</h4>
+<p>The <i>CATTimeSpan</i> class is dedicated to durations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  long iDays = 9;
+  int iHours = 16;
+  int iMins  = 45;
+  int iSecs  = 54;
+
+  CATTimeSpan MyTimeSpan1(iDays, iHours, iMins, iSecs);
+  if ( 1 == MyTimeSpan1.GetStatus() )
+  { ... // MyTimeSpan1 is a valid instance and can be used
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>MyTimeSpan1</code> is initialized at <code>9 days 16:45:54</code>. The <code>GetStatus</code>
+method should return 1 if <code>MyTimeSpan1</code> is valid, and 0 otherwise.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Adding Two Durations</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATTimeSpan MyTimeSpan2(3, 5, 11, 47 );	
+
+  if ( 1 == MyTimeSpan2.GetStatus() )
+  {
+    MyTimeSpan1 <b>+=</b> MyTimeSpan2;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A second instance of the <i>CATTimeSpan</i> class is created, whose value is <code>3
+days 5 hours 11 minutes 47 secondes</code>, and the operator <code>+=</code> is
+used to add it to <code>MyTimeSpan1</code>. The new value of <code>MyTimeSpan1</code>
+is now <code>12 days 21 hours 57 minutes 41 secondes</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Retrieving the Total Number of Hours from a Duration</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int span = MyTimeSpan1.<b>GetTotalHours</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>span</code> variable contains 309 hours, that is <code>(12 x 24) +
+21</code>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Subtracting a Duration from a Timestamp</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  MyTime1 <b>-=</b> MyTimeSpan1;
+  if ( 1 == MyTime1.GetStatus() )
+  { ... // MyTime1 is a valid instance and can be used
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The duration <code>MyTimeSpan1</code> is subtracted from the timestamp <code>MyTime1</code>
+that new value is <code>Friday, 07 November 1997 18:25:34</code>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Comparing Two Durations</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATTime MyTime2(2000, 7, 14, 15, 41, 32);
+  if ( 1 == MyTime2.GetStatus() )
+  {
+    if ( MyTime2 <b>&lt;</b> MyTime1 )
+      cout &lt;&lt; &quot;MyTime2 &lt;  MyTime1 is TRUE.&quot; &lt;&lt; endl&lt;&lt; endl;
+    else
+      cout &lt;&lt; &quot;MyTime2 &lt;  MyTime1 is FALSE.&quot; &lt;&lt; endl&lt;&lt; endl; 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A new <i>CATTime</i> instance is created with the value <code>Friday, 14 July
+2000 15:41:32</code>, and the second&nbsp; trace is displayed on the console
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create and use timestamp and duration objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

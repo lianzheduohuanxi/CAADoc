@@ -1,0 +1,80 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshSelectFEEntity.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">&#39;COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">&#39;***********************************************************************</FONT>
+<FONT COLOR="#008000">&#39;  Purpose:      Open an analysis document</FONT>
+<FONT COLOR="#008000">&#39;                Select a mesh element  </FONT>
+<FONT COLOR="#008000">&#39;                Select a mesh node</FONT>
+<FONT COLOR="#008000">&#39;  Assumptions:   Looks for AllElementsAndNode.CATAnalysis in the directory</FONT>
+<FONT COLOR="#008000">&#39;  Author:       jgw</FONT>
+<FONT COLOR="#008000">&#39;  Languages:    VBScript</FONT>
+<FONT COLOR="#008000">&#39;  Locales:      English </FONT>
+<FONT COLOR="#008000">&#39;  CATIA Level:  V5R21</FONT>
+<FONT COLOR="#008000">&#39;***********************************************************************</FONT>
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39;Optional: allows to find the sample wherever it&#39;s installed</FONT>
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+
+<FONT COLOR="#008000">&#39;Open the Analysis document </FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+<FONT COLOR="#008000">&#39;Retrieve the Selection object</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oSelection = oAnalysisDocument.Selection
+
+<FONT color="#0000FF">Dim </FONT>InputObjectType(0)
+
+<FONT COLOR="#008000">&#39;Set the selection type</FONT>
+InputObjectType(0) = &quot;AnalysisMeshElement&quot;
+
+<FONT COLOR="#008000">&#39;Get the status</FONT>
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh element&quot;, True )
+
+<FONT COLOR="#008000">&#39;Get the object in the selection</FONT>
+<FONT color="#0000FF">Set </FONT>oMeshElement = oSelection.Item(1).Value
+
+<FONT COLOR="#008000">&#39;Display message</FONT>
+MsgBox "Selected element: " & oMeshElement.Name
+
+<FONT COLOR="#008000">&#39;Clear selection</FONT>
+oSelection.Clear
+
+<FONT COLOR="#008000">&#39;Set the selection type</FONT>
+InputObjectType(0) = &quot;AnalysisMeshNode&quot;
+
+<FONT COLOR="#008000">&#39;Get the status</FONT>
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh node&quot;, True )
+
+<FONT COLOR="#008000">&#39;Get the object in the selection</FONT>
+<FONT color="#0000FF">Set </FONT>oMeshNode = oSelection.Item(1).Value
+
+<FONT COLOR="#008000">&#39;Display message</FONT>
+MsgBox "Selected node: " & oMeshNode.Name
+
+<FONT COLOR="#008000">&#39;Clear selection</FONT>
+oSelection.Clear 
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

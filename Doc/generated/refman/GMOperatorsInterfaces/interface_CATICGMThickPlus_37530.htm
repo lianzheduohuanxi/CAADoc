@@ -1,0 +1,349 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMThickPlus</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMThickPlus"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMThickPlus</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMThickPlus_37530','CATICGMThickPlus','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMThickPlus</b>
+</p>
+<p>
+<b><i> Operator to blow or shrink the faces of a volume.</i></b><br>
+
+ Each face may have its own offset value. The offset values
+ may be negative: the body is shrunk.
+ This operator can also be used to offset a shell. In this case, it is recommended to use the
+ SetSharpBorderMode API with the optimization parameter.
+ As all the topological operators, the input objects are not modified. The resulting body is
+ a new one to retrieve by using the <tt> CATICGMThickPlus::GetResult</tt> method.
+ To use it:
+ <ul>
+ <li>Create it with the <tt> CATICGMCreateThickPlus </tt> global function.
+ <li>Tune it with appropriate options, using the <tt>SetXxx</tt> methods. 
+ <li>Run it
+ <li>Get the result in body with the <tt>GetResult</tt> method. If you do not want 
+ to keep these resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove them from the  geometric factory, after the operator deletion.
+ <li>Release the operator with the <tt>Release</tt> method after use.
+ </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Append(CATFace*,CATLength)"><b>Append</b></a>(CATFace*,CATLength)
+<dd>  Appends a face to offset.
+ <dt> o 
+    <a href="#Append(CATLISTP(CATFace)&amp;,CATLength)"><b>Append</b></a>(CATLISTP(CATFace)&amp;,CATLength)
+<dd>  Appends a list of faces to offset by a common offset value.
+ <dt> o 
+    <a href="#GetResult()"><b>GetResult</b></a>()
+<dd>  Returns the pointer to the resulting body.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetDefaultOffsetValue(CATLength)"><b>SetDefaultOffsetValue</b></a>(CATLength)
+<dd>  Defines the default offset value for all the faces of the input body.
+ <dt> o 
+    <a href="#SetDeviationAllowed(CATLength)"><b>SetDeviationAllowed</b></a>(CATLength)
+<dd>  Sets the deviation allowed by the user.
+ <dt> o 
+    <a href="#SetDeviationMode(CATBoolean)"><b>SetDeviationMode</b></a>(CATBoolean)
+<dd>  Sets the deviation mode.
+ <dt> o 
+    <a href="#SetJournalTypeForFaceOffset(CATCGMJournal::Type,CATCGMJournalInfo*)"><b>SetJournalTypeForFaceOffset</b></a>(CATCGMJournal::Type,CATCGMJournalInfo*)
+<dd>  Modifies the type of the journal items created during <tt>this</tt> CATICGMThickPlus operation.
+ <dt> o 
+    <a href="#SetLocalRegularization(CATBoolean)"><b>SetLocalRegularization</b></a>(CATBoolean)
+<dd>  Activates/Deactivates local regularisation treatment (which may split faces) to
+ smooth subparts of the non offsetable faces.
+ <dt> o 
+    <a href="#SetOffsetMixte(CATBoolean,CATBoolean)"><b>SetOffsetMixte</b></a>(CATBoolean,CATBoolean)
+<dd>  Sets the OffsetMixte options.
+ <dt> o 
+    <a href="#SetPropagationOff()"><b>SetPropagationOff</b></a>()
+<dd>  Deactivates tangent propagation of offset values.
+ <dt> o 
+    <a href="#SetSharpBorderMode(short)"><b>SetSharpBorderMode</b></a>(short)
+<dd>  Defines how borders are transformed in the neighborhood of sharp edges.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Append"></a><a name="Append(CATFace*,CATLength)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Append</b>(<td><script type="text/javascript"> activateLink('CATFace','CATFace*')</script> <td><tt>iFaceToOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffsetValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a face to offset.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFace</tt>
+   <dd> The pointer to the face to offset with <tt>iOffsetValue</tt>.
+ </dd>
+    <dt><tt> iOffsetValue</tt>
+   <dd> The offset value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Append"></a><a name="Append(CATLISTP(CATFace)&amp;,CATLength)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Append</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>iFacesToOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffsetValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a list of faces to offset by a common offset value.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFacesToOffset</tt>
+   <dd> The list of pointers to faces to offset with <tt>iOffsetValue</tt>.
+ </dd>
+    <dt><tt> iOffsetValue</tt>
+   <dd> The offset value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult()"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetResult</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer to the resulting body.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the resulting body, <tt>NULL</tt> if the operation failed. 
+ If you do not want to keep the resulting body, 
+ use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory, after the operator deletion.
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs <tt>this</tt> operator.
+</dl>
+<a name="SetDefaultOffsetValue"></a><a name="SetDefaultOffsetValue(CATLength)"></a> <dt> o <b>SetDefaultOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDefaultOffsetValue</b>(<td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffsetValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the default offset value for all the faces of the input body.
+ <br>The <tt>Append</tt> methods can still be used after this method to
+ locally modify the default on some faces.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffsetValue</tt>
+   <dd> The default offset value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDeviationAllowed"></a><a name="SetDeviationAllowed(CATLength)"></a> <dt> o <b>SetDeviationAllowed</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDeviationAllowed</b>(<td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the deviation allowed by the user. <br> 
+ <b>Legal Values</b>:<br>
+	<ul>
+	<li> <tt>iDeviation</tt> : represents the value of the deviation.This
+	value must be positive.			
+	</ul>
+ <b>NOTE</b> : If you use this method, the distribution of the tolerances is
+	determined by the value containing in the file : CATFuzzyOffsetManagerConst.h
+
+</dl>
+<a name="SetDeviationMode"></a><a name="SetDeviationMode(CATBoolean)"></a> <dt> o <b>SetDeviationMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDeviationMode</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iWithDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the deviation mode. <br> 
+ <b>Legal Values</b>:<br>
+	<ul>
+	<li> <tt>iWithDeviation</tt>: If it's TRUE, then the regularisator uses the derivation value of the user.
+	If it's FALSE, then the regularisator does not use the derivation value of the user.			
+	</ul>
+ <b>NOTE</b> : By default the DeviationMode is false.
+
+</dl>
+<a name="SetJournalTypeForFaceOffset"></a><a name="SetJournalTypeForFaceOffset(CATCGMJournal::Type,CATCGMJournalInfo*)"></a> <dt> o <b>SetJournalTypeForFaceOffset</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetJournalTypeForFaceOffset</b>(<td><script type="text/javascript"> activateLink('CATCGMJournal::Type','CATCGMJournal::Type')</script> <td><tt>iTypeForFaceCreation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCGMJournalInfo','CATCGMJournalInfo*')</script> <td><tt>iAdditionalInfo</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the type of the journal items created during <tt>this</tt> CATICGMThickPlus operation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeForFaceCreation</tt>
+   <dd> The item type.
+ </dd>
+    <dt><tt> iAdditionalInfo</tt>
+   <dd> The pointer to an additional information. If <tt>NULL</tt>, no additional information is added.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLocalRegularization"></a><a name="SetLocalRegularization(CATBoolean)"></a> <dt> o <b>SetLocalRegularization</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLocalRegularization</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iLocalRegul</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Activates/Deactivates local regularisation treatment (which may split faces) to
+ smooth subparts of the non offsetable faces.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLocalRegul</tt>
+   <dd>	<ul>
+	<li><tt>TRUE</tt>:  Activates local regularisation.
+	<li><tt>FALSE</tt>: Deactivates local regularisation.
+	</ul>
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetMixte"></a><a name="SetOffsetMixte(CATBoolean,CATBoolean)"></a> <dt> o <b>SetOffsetMixte</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOffsetMixte</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iWithRegul</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iRemoveTrickyOnlyThenRegul</tt><td><tt>= FALSE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the OffsetMixte options. <br> 
+ <b>Legal Values</b>:<br>
+	<ul>
+	<li><tt>iWithRegul</tt>: Activates the regularisation of tricky faces with a regularisation diagnosis <br>
+ <li><tt>iRemoveTrickyOnlyThenRegul</tt> : Default value: FALSE.
+ If this option is activated, it changes the behaviour of GetTrickyFaces().
+ If there are non regularisable tricky faces, the method
+ GetTrickyFaces() gives only the non regularisable tricky
+ faces. If there are not non regularisable tricky faces,
+ then GetTrickyFaces gives regularisable tricky faces that
+ fail.<br>
+	</ul>
+ <b>NOTE</b>: iRemoveTrickyOnlyThenRegul should be activated just if you use
+ CATICGMThickPlus in iterative mode with remove faces.
+
+
+</dl>
+<a name="SetPropagationOff"></a><a name="SetPropagationOff()"></a> <dt> o <b>SetPropagationOff</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPropagationOff</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Deactivates tangent propagation of offset values.
+</dl>
+<a name="SetSharpBorderMode"></a><a name="SetSharpBorderMode(short)"></a> <dt> o <b>SetSharpBorderMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSharpBorderMode</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iSharpBorderOptimisation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines how borders are transformed in the neighborhood of sharp edges.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSharpBorderOptimisation</tt>
+   <dd> <br><b>Legal values:</b>
+ <dl><dt>0</dt><dd>Optimization not required
+ <dt>1</dt><dd>Optimization required (Skin handled like a Volume)
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMThickPlus.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

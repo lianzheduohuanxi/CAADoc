@@ -1,0 +1,389 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspFunctional, CATIAPspPhysical and CATIAPspSpatial
+'   Assumption:   Looks for document CAAPspEduIn.CATProduct'  
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspQueryFunctionPhysical.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    Dim objPspResource    As PspResource
+    
+
+    Dim objPspPhysical    As PspPhysical
+    Dim objPspSpatial     As PspSpatial
+    Dim objPspFunctional  As PspFunctional
+
+    Dim objPspPhyID       As PspID
+    Dim objPhyPspObject   As PspObject
+
+
+    
+    Dim objLPhysicals     As PspListOfObjects
+    Dim intNbPhysical     As Integer
+    Dim ePspIDLDomainID   As CatPspIDLDomainID
+    Dim objLStrAttrNames  As PspListOfBSTRs
+
+    Dim intIndex          As Integer
+    Dim intNbAttr         As Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( objPspApplication Is Nothing  ) Then
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getting objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+
+    '-----------------------------------------------------------------------
+    ' Get  a PspPhysical object in the Piping domain
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      Set objPspResource = objPspWorkbench.GetInterface("CATIAPspResource", _
+                                                objPspApplication )      
+
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+
+        Set objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+        If ( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count > 0 ) ) Then      
+          Set objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+        End If
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    ' Get Spatial object and Functional Object
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) ) Then  
+
+      Set objPspSpatial = objPspPhysical.GetSpatial     
+      Set objPspFunctional = objPspPhysical.GetFunctional           
+      Set objPspPhyID = objPspWorkbench.GetInterface("CATIAPspID", _
+                                                    objPspPhysical )      
+      Set objPhyPspObject = objPspWorkbench.GetInterface("CATIAPspObject", _
+                                                    objPspPhysical )
+
+      If ( Not (objPspPhyID Is Nothing) ) Then
+        strMessage_g = strMessage_g & "Physical object ID =" &  objPspPhyID.GetID & vbCr               
+      End If 
+
+    End If
+
+    '-----------------------------------------------------------------------
+    ' Query Spatial Information
+    '-----------------------------------------------------------------------
+    
+    If( Not ( objPspSpatial Is Nothing )) Then
+        QuerySpatial objPspSpatial
+    End if
+
+    '-----------------------------------------------------------------------
+    ' Query Functional-Physical Information
+    '-----------------------------------------------------------------------
+    If( Not ( objPspFunctional Is Nothing ) And _
+        Not ( objPspPhysical Is Nothing ) And _
+        Not ( objPspResource Is Nothing )   ) Then
+            
+      QueryFunctionalPhysical objPspPhysical, objPhyPspObject, _
+                              objPspFunctional, objPspResource
+    End if
+
+ 
+
+    strMessage_g = strMessage_g & _
+      "---------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | QuerySpatial methods 
+' | 
+' | Input: objPspSpatialArg        : PspSpatial object
+' |        
+' |        
+' -----------------------------------------------------------------------------
+
+Private Sub QuerySpatial (objPspSpatialArg As PspSpatial)  
+    Dim objLPhysAssocSpatial  As PspListOfObjects
+    Dim intNbPhysicals        As Integer
+        
+    Dim bIsIDGenerated   As Boolean
+    
+    If ( Not ( objPspSpatialArg Is Nothing ) ) Then         
+      '--------------
+      ' Get list of physical objects associate with spatial object
+      Set objLPhysAssocSpatial = objPspSpatialArg.Physicals
+
+      If ( Not ( objLPhysAssocSpatial Is Nothing ) ) Then
+        intNbPhysicals = objLPhysAssocSpatial.Count
+        
+        strMessage_g = strMessage_g & _
+           "Number of Physicals Associate with spatial=" & intNbPhysicals & vbCr                 
+      
+      End If       
+    End If 
+End Sub
+
+' -----------------------------------------------------------------------------
+' | QueryFunctionalPhysical : Query Functional physical integration
+' | 
+' | Input: objPspPhysicalArg    :  PspPhysical object
+' |        objPspPhysicalArg    :  PspObject object
+' |        objPspFunctionalArg  :  PspFunctional object
+' |        objPspResourceArg    :  PspResource object  
+' -----------------------------------------------------------------------------
+
+
+Private Sub QueryFunctionalPhysical (objPspPhysicalArg As PspPhysical, _
+                               objPhysicalPspObjArg    As PspObject, _
+                               objPspFuncArg As PspFunctional, _
+                               objPspResourceArg As PspResource )  
+
+    Dim objLPhysicals           As PspListOfObjects
+
+    Dim objLStrCompPartTypes    As PspListOfBSTRs
+        
+
+    Dim  strStdName             As String
+    Dim  strPartType            As String
+    Dim  strPartNumber          As String
+    Dim  strResNamePipingParts  As String
+
+    Dim  strCatalogPartName     As String
+    Dim  strPartCatName         As String
+
+    Dim  bIsSpecDriven          As CATBoolean
+    Dim  bIsRealized            As CATBoolean
+    Dim  bIsOkToIntegrate       As CATBoolean
+
+    Dim  iNbCompPTypes          As Integer
+    Dim  intIdx                 As Integer
+    Dim  strCompPType           As String
+    
+
+    strStdName = "ASTL"
+    strResNamePipingParts = "PipingPartsCatalog"
+
+    If ( Not ( objPspFuncArg Is Nothing ) And _
+         Not ( objPspPhysicalArg Is Nothing ) ) Then               
+      '--------------------------
+      ' Check if the function object IsSpecDriven
+      
+      bIsSpecDriven = objPspFuncArg.IsSpecDriven
+
+      If ( bIsSpecDriven ) Then
+        strMessage_g = strMessage_g & _
+               "Function object is Spec driven" & vbCr                         
+      Else 
+        strMessage_g = strMessage_g & _
+               "Function object is not Spec driven" & vbCr                         
+      End If 
+
+      '-------------------------------------------------------
+      ' Check if Function object is associated with a placed
+      ' physial part
+
+      bIsRealized = objPspFuncArg.IsRealized
+
+      
+      If ( bIsSpecDriven ) Then
+        strMessage_g = strMessage_g & _
+               "Function object is Realized" & vbCr                         
+      Else 
+        strMessage_g = strMessage_g & _
+               "Function object is not Realized" & vbCr                         
+      End If 
+
+      '-----------------------------------------
+      ' Get Compatible part types
+      '-----------------------------------------
+
+      Set objLStrCompPartTypes = objPspFuncArg.GetCompatiblePartTypes (strStdName)
+
+      If ( Not ( objLStrCompPartTypes Is Nothing ) ) Then  
+        iNbCompPTypes = objLStrCompPartTypes.Count
+        If ( iNbCompPTypes > 10 ) Then
+           iNbCompPTypes = 10
+       End If
+          
+        strMessage_g = strMessage_g & _
+               "Number of compatible part types =" &  iNbCompPTypes & vbCr    
+        For intIdx = 1 To iNbCompPTypes 
+          strCompPType = objLStrCompPartTypes.Item (intIdx)
+          strMessage_g = strMessage_g & _
+               "Compatible part type = " &  strCompPType & vbCr    
+          
+        Next 
+      End If
+
+      '-----------------------------------------
+      ' Get Physical startup type
+      '-----------------------------------------
+
+      If ( Not ( objPhysicalPspObjArg Is Nothing ) ) Then  
+        strPartType = objPhysicalPspObjArg.StartupType
+        strMessage_g = strMessage_g & _
+               "Compatible Startup part type = " &  strPartType & vbCr    
+
+      End If
+
+      '-----------------------------------------
+      ' Get PipingPartsCatalog full path 
+      '-----------------------------------------
+      If ( Not ( objPspResourceArg Is Nothing ) ) Then  
+        strCatalogPartName = objPspResourceArg.GetResourcePath( strResNamePipingParts)      
+        If ( strPartType <> "" ) Then
+          strMessage_g = strMessage_g & _
+               "PipingPartsCatalog= " & _
+                strCatalogPartName & vbCr    
+        End If
+
+      End If
+      
+      Set objLPhysicals = objPspFuncArg.Physicals
+
+      If ( Not ( objLPhysicals Is Nothing ) ) Then  
+        strMessage_g = strMessage_g & _
+          "Number of associated Physicals = " &  objLPhysicals.Count & vbCr          
+      End If
+
+      '-----------------------------------------
+      ' Get Part Type of the associated physical object
+      '-----------------------------------------
+
+
+      strPartType   = objPspFuncArg.PartType 
+
+      If ( strPartType <> "" ) Then
+        strMessage_g = strMessage_g & _
+               "Part type of physical object that realized this function = " & _
+                strPartType & vbCr    
+      End If
+
+      '-----------------------------------------
+      ' Get Part Number of the associated physical object
+      '-----------------------------------------
+
+      strPartNumber = objPspFuncArg.PartNumber
+      If ( strPartNumber <> "" ) Then
+        strMessage_g = strMessage_g & _
+               "Part Number of physical object that realized this function = " & _
+                strPartNumber & vbCr    
+      End If
+
+      '-----------------------------------------
+      ' Get Catalog Part name of the associated physical object
+      '-----------------------------------------
+
+      strCatalogPartName= objPspFuncArg.CatalogPartName
+      If ( strCatalogPartName <> "" ) Then
+        strMessage_g = strMessage_g & _
+               "CatalogPartName of physical object that realized this function = " & _
+                strCatalogPartName & vbCr    
+      End If
+
+      
+    
+
+      '-----------------------------------------
+      ' Check if the associated Physical object is OK to integrate
+      '-----------------------------------------
+
+      bIsOkToIntegrate = objPspFuncArg.IsOKToIntegrate
+
+      If ( bIsOkToIntegrate) Then
+        strMessage_g = strMessage_g & _
+               "Function object is ok to integrate." & vbCr
+                
+      Else
+        strMessage_g = strMessage_g & _
+               "Function object is not ok to integrate" & vbCr
+      End If
+
+      '-----------------------------------------
+      ' Function status
+      '-----------------------------------------
+
+      Dim eFunctionStatus As CatPspIDLFunctionStatus 
+      eFunctionStatus = objPspFuncArg.FunctionStatus       
+          
+    End If 
+End Sub
+
+

@@ -1,0 +1,445 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Hatching Pattern On 2D Geometry</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Drafting</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Hatching Pattern On 2D Geometry</h3>
+      <em>How to use area fill interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADrwCreatePattern.cpp use case. This use
+      case explains how to create a hatching pattern on 2D geometry.</p>
+      <ul>
+        <li><a href="../CAADriBase/CAADriHome.htm"><strong>What You
+          Will Learn With This Use Case</strong></a>
+        <li><a href="#UseCase"><strong>The CAADrwCreatePattern Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADrwCreatePattern Do</a>
+            <li><a href="#How">How to Launch CAADrwCreatePattern</a></li>
+            <li><a href="#Where">Where to Find the CAADrwCreatePattern Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case you will learn how to create a hatching pattern on 2D
+geometry.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADrwCreatePattern Use Case</h3>
+<p>CAADrwCreatePattern is a use case of the CAADraftingInterfaces.edu framework
+that illustrates DraftingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADrwCreatePattern Do</h4>
+<p>This sample creates a hatching pattern on 2Dgeometry in batch mode:</p>
+<table width="100%">
+  <caption>Fig. 1: The Start Up Model containing 2D geometry&nbsp;</caption>
+  <tr>
+    <td>
+      <p align="center"><img border="0" src="images/CAADrwAreaFill1.jpg" width="657" height="592"></p>
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center">Fig. 2: The Start Up Model processed by
+      CAADrwCreatePattern batch.</td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center"><img border="0" src="images/CAADrwAreaFill2.jpg" width="657" height="592"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADrwCreatePattern</h4>
+<p>To launch CAADrwCreatePattern, you will need to set up the build time
+environment, then compile CAADrwCreatePattern along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>When you launch the use case, pass the full pathname of the file into which
+you you want to store the created document as argument: for example
+Result.CATDrawing. The input file CAADrwCreatePattern.CATDrawing containing the
+2D geometry&nbsp; is stored on CAADraftingInterfaces.edu/CNext/resources/graphic
+directory.
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt; CAADrwCreatePattern CAADrwCreatePattern.CATDrawing Result.CATDrawing</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAADrwCreatePattern /u/users/CAADrwCreatePattern.CATDrawing Result.CATDrawing</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADrwCreatePattern Code</h4>
+<p>The CAADrwCreatePattern use case is made of one source file named
+CAADrwCreatePattern.cpp located in the CAADrwCreatePattern.m module of the
+CAADraftingInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreatePattern.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreatePattern.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five steps in CAADRWCreatePattern:</p>
+<ol>
+  <li><a href="#Step1">Reading a Drawing Document</a></li>
+  <li><a href="#Step2">Accessing the Drawing in the Document</a></li>
+  <li><a href="#Step3">Reading 2D Geometry&nbsp; in the Main Vie on which Area
+    Fill will be created</a>
+  <li><a href="#Step4">Hatching Pattern Creation</a>
+  <li><a href="#Step5">Break Elements Creation</a>
+  <li><a href="#Step5">Area Fill Creation</a>
+  <li><a href="#Step6">Saving the Document and Exiting</a>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Reading the Drawing Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATDrawing document
+{
+   // Check arguments
+   if(3 != iArgc) return 1;
+   const char *pfileName = iArgv[1];
+   const char *pfileNameOut = iArgv[2];
+
+
+   // CREATE THE SESSION
+   // ==================
+
+   CATSession *pSampleSession = NULL;
+   HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+   if (FAILED(hr)) return 1;
+
+
+   // READ THE DRAWING DOCUMENT
+   // =========================
+
+   CATIDrawing *piDrawing = NULL;
+   CATIDftDocumentServices *piDftDocServices = NULL;
+   CATDocument* pDoc = NULL;
+   CATIContainer_var spDrwcont;
+   CATISpecObject_var spSpecObj;
+   CATIDrwFactory_var spDrwFact;
+   if (FAILED(CATDocumentServices::OpenDocument(pfileName, pDoc)))
+   {
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 2;
+   }
+
+   ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for creating a CATIA document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Accessing the Drawing in the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  if (SUCCEEDED(pDoc-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+   {
+      piDftDocServices-&gt;GetDrawing(IID_CATIDrawing, (void **)&amp;piDrawing);
+      piDftDocServices-&gt;Release();
+      spSpecObj=piDrawing;
+      spDrwcont = spSpecObj-&gt;GetFeatContainer();
+      spDrwFact = spDrwcont;
+   }
+   else 
+   {
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 3;  
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The root feature of a drawing document is the Drawing that is the feature
+that implements the CATIDrawing interface. We can get a pointer to CATIDrawing
+using the CATIDftDocumentServices interface, which is implemented by the
+document. The GetDrawing method first argument is the interface you want to get
+on the drawing.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Reading 2D geometry on which Area fill will be created</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  // MAIN VIEW RETRIEVAL
+   // ===================
+   
+   // We are working in main view of the current sheet
+   CATISheet_var spSheet = piDrawing-&gt;GetCurrentSheet();
+   piDrawing-&gt;Release();
+   CATIView_var spMainView = spSheet-&gt;GetMainView();
+   
+   
+   // GEOMETRY READING IN THE MAIN VIEW
+   // =================================
+   // The drawing startup model contains a profile made of lines and circles. So these
+   // elements are arranged.
+
+   spSheet-&gt;SetCurrentView(spMainView);
+   CATISketch_var spSketch = spMainView;
+   CATLISTV(CATISpecObject_var) ListValidElem;
+   CATListValCATI2DWFGeometry_var spListElem;
+   CATUnicodeString namealias;
+   hr = spSketch-&gt;GetComponents(CATI2DCurve::ClassName(),spListElem);
+   for (int i=1; i&lt;=spListElem.Size(); i++)
+   {
+      // Get all geometric elements containing the string &quot;area&quot; in their external name. 
+      namealias = CATIAlias_var(spListElem[i])-&gt;GetAlias();
+      if (namealias.SearchSubString(&quot;area&quot;) != -1)
+      {
+         ListValidElem.Append(spListElem[i]);
+      }
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The 2D geometry in the Start Up CATDrawing Document is identified by external
+name applied on each element. These elements are automatically arranged by the
+way to used to create it: Profile command in Geometry Creation Toolbar. If these
+elements are not arranged, the area fill will be created with a wrong display.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Hatching Pattern Creation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+ CATIDftHatchingPattern *iHatching = NULL;
+	
+	if (SUCCEEDED( spDrwFact-&gt;CreateHatchingPattern(IID_CATIDftHatchingPattern, (void **) &amp;iHatching) ))
+   {
+      hr = iHatching-&gt;SetOffset(15.0);
+      hr = iHatching-&gt;SetAngle ((double)  ( CATRadianToDegree * CATPIBY4));
+      hr = iHatching-&gt;SetPitch (8.0);
+      hr = iHatching-&gt;SetTexture (1);
+      hr = iHatching-&gt;SetThikness(1);
+      hr = iHatching-&gt;SetColor(4);
+      
+   }  
+   else 
+   {
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 4;
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To create geometric elements in a view, the view has to be current.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Break Elements Creation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+   // BreakElem are relimited elements to create the area fill domain.
+   
+   // Gets the BreakElem factory
+   CATIDrwBreakElemFactory_var spBreakElemfact;
+   if (spDrwcont != NULL_var) 
+      spBreakElemfact = spDrwcont;
+   else
+   {
+      if (iHatching) iHatching-&gt;Release();
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 5;
+   }
+   CATLISTV(CATISpecObject_var) ListBreakElem;
+   CATI2DCurve_var spCurveElm;
+   double pStartParam, pEndParam, pInter ;
+   int index=0, creation=0, containment=0;
+   
+   // Loop on geometry elements 
+   for (i=1; i&lt;=spListElem.Size(); i++)
+   {
+      spCurveElm = spListElem[i];
+      spCurveElm-&gt;GetParamExtents(&amp;pStartParam,&amp;pEndParam);
+      
+      if (pStartParam &gt; pEndParam)
+      {
+         pInter = pStartParam;
+         pStartParam = pEndParam;
+         pEndParam = pInter;						
+      }
+      
+      CATIDrwBreakElem_var spBreakElem = spBreakElemfact-&gt; CreateBreakElem(spCurveElm,pStartParam,pEndParam,&quot;&quot;,index,creation,containment);
+      ListBreakElem.Append(spBreakElem);
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Area Fill Creation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+   // AREA FILL CREATION 
+   // =================
+   
+   // Notes: The area fill object will be correctly created if BreakElem elements are
+   // arranged in the ListeBreakElem list.
+
+   // Gets the annotation factory
+   CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
+
+   CATIDrwAreaFill_var AreaFill;
+   
+   CATISpecObject *piSpecObj = NULL;
+   if (SUCCEEDED(iHatching-&gt;QueryInterface(IID_CATISpecObject, (void **)&amp;piSpecObj)))
+   {
+      AreaFill = spAnnFactory -&gt; CreateDrwAreaFill(ListBreakElem, piSpecObj, &quot;&quot;);
+      piSpecObj-&gt;Release();
+   }
+   else
+   {
+      if (iHatching) iHatching-&gt;Release();
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 5;   
+   }
+
+   // memory cleaning
+   if (iHatching) iHatching-&gt;Release(); 
+   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step6"></a>Saving the Document and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  // Save the result
+  CATDocumentServices::SaveAs(*pDoc, (char *)pfileNameOut);
+   CATDocumentServices::Remove (*pDoc);
+   //Ends session and drops document	
+   ::Delete_Session(&quot;SampleSession&quot;);
+   
+   return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for saving a newly created CATIA
+document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects and interfaces used when creating an area
+fill in a main view of a CATDrawing document. The Area fill&nbsp; is created
+using the <i>CATIDftAnnotationFactory</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Lauching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Open
+      a Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p align="right"><a name="History"></a>History</p>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

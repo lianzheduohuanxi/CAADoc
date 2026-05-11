@@ -1,0 +1,671 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+<title>CAA V5 Automation Documentation Rules</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top"><a name="Top"></a>
+      <h2>CAA V5 Automation Documentation Rules</h2>
+      <em>Hints and tips to tag and write comments in your IDL files</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical article</td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you information on how you can document your IDL
+      interface header files using specific comments that are processed to build
+      html files.
+      <ul>
+        <li><a href="#What"><strong>What Do You Need to Document?</strong></a></li>
+        <li><a href="#How"><strong>How Do You Document?</strong></a></li>
+        <li><a href="#SimpleSample"><strong>A Simple Sample</strong></a></li>
+        <li><a href="#WritingComments"><strong>Writing Comments</strong></a>
+          <ul>
+            <li><a href="#WritingInterfaceComments">Writing IDL Interface
+              Comments</a></li>
+            <li><a href="#WritingIDLFunctionComments">Writing IDL Method
+              Comments</a></li>
+            <li><a href="#WritingIDLPropertyComments">Writing IDL Property
+              Comments</a></li>
+            <li><a href="#WritingIDLCollectionComments">Writing IDL Collection
+              Comments</a></li>
+            <li><a href="#WritingEnumComments">Writing IDL Enumeration Comments</a></li>
+          </ul>
+        </li>
+        <li><a href="#JavadocTags"><strong>mkdcidl Tag Reference</strong></a></li>
+        <li><a href="#NamedFields"><strong>Named Field Reference</strong></a></li>
+        <li><a href="#htmlTags"><strong>html Tag Reference</strong></a></li>
+        <li><a href="#Hyperlinks"><strong>Setting Hyperlinks</strong></a></li>
+        <li><a href="#CreatinghtmlFiles"><strong>Creating the html Files</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+
+<h3><a name="What"></a>What Do You Need to Document?</h3>
+<p>Each of the following entity declared as L1 must be documented.
+<ul>
+  <li>IDL Interface</li>
+  <li>IDL Method (Function and Subroutine)</li>
+  <li>IDL Property</li>
+  <li>IDL Collection</li>
+  <li>IDL Enumeration</li>
+</ul>
+<p>This applies to L1 entities that are located in the PublicInterfaces directories of the exposed frameworks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h3><a name="How"></a>How Do You Document?</h3>
+<p>Interfaces and all the stuff they include, are documented thanks to
+information enclosed into specific comments inserted in the idl files. The idl
+statements and the comments are then processed to produce an organized set of
+html files in which you and the users of your interfaces can navigate. These
+comments are as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#CC0000"><b>/**</b></font>
+ <strong><font color="#CC0000">*</font></strong> This is a comment.
+ <strong><font color="#CC0000">*/</font></strong></pre>
+    </td>
+  </tr>
+</table>
+<p>They must begin by <strong><font color="#CC0000"><code>/**</code></font></strong>
+and end by <strong><font color="#CC0000"><code>*/</code></font></strong>. Each
+intermediate line must begin by a leading <font color="#CC0000"><strong><code>*</code></strong></font>.
+Never use such a comment for any other purpose than documentation, otherwise
+your internal comments will be processed and clearly readable, and moreover may
+pollute automatically generated lists and index.</p>
+<p>A comment must be placed just before the line containing the declaration of
+the interface, method, etc., it is intended to describe.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/**
+ * Represents the document.
+ * The document is the object handled by the operating system as a whole
+ * that stores your data in files and databases.
+ * It is assigned a type determined by its contents. It may contain other
+ * documents with a different type. For example,
+ * a PartDocument contains a part and can be contained in a ProductDocument.
+ * A workshop is associated with a document to gather all the commands
+ * that can be used to create, modify, and edit the objects making up the
+ * the document. These commands are arranged in menus and toolbars.
+ * @see CATIAPartDocument, CATIAProductDocument, CATIADrawingDocument
+ */
+interface CATIADocument : CATIABase
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h3><a name="SimpleSample"></a>A Simple Sample</h3>
+<p><img border="0" src="images/CAAScrInterface1.gif" width="599" height="561"> <img border="0" src="images/CAAScrInterface2.gif" width="565" height="387">
+<p><img border="0" src="images/CAAScrInterface3.gif" width="697" height="486"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h3><a name="WritingComments"></a>Writing Comments</h3>
+<p>You will find below some tips to write comments for <a href="#WritingInterfaceComments">interfaces</a>,
+<a href="#WritingIDLFunctionComments">methods</a>, <a href="#WritingIDLPropertyComments">properties</a>,
+<a href="#WritingIDLCollectionComments">collections</a>, and <a href="#WritingEnumComments">enumerations</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="WritingInterfaceComments"></a>Writing IDL Interface Comments</h4>
+<p>Do:
+<ul>
+  <li>Begin with the short role. End it using a period
+    <ul>
+      <li>Write short roles for IDL interfaces: &quot;<b>Represents the xxx
+        object</b>&quot;</li>
+    </ul>
+  </li>
+  <li>Write the interface role, beginning with <b>Role</b>. This describes the
+    interface mission, for what purpose you have created it. It can also include
+    a brief description of the interface usage, namely using its main methods.
+    You can also, and better, write this role in a technical article in
+    dedicated to the object represented by this interface and in which a small
+    object diagram centered on this object can be inserted</li>
+  <li>You can add a <b>See also</b> section to create hyperlinks to objects that
+    are related to the interface.</li>
+</ul>
+<p>Don't:
+<ul>
+  <li>Forget the period at the end of the short role</li>
+  <li>Create hyperlinks to the base interfaces, since the inheritance tree is
+    automatically built with such hyperlinks</li>
+</ul>
+<table>
+  <tr>
+    <th>IDL File</th>
+    <th>html File</th>
+  </tr>
+  <tr>
+    <td><a href="CAAScrCATIAApplicationIdl.htm">CATIAApplication.idl</a></td>
+    <td><a href="CAAScrCATIAApplicationHtm.htm">Application.htm</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="WritingIDLFunctionComments"></a>Writing IDL Method Comments</h4>
+<p>Do:
+<ul>
+  <li>Begin with the short role. End it using a period
+    <ul>
+      <li>Begin the short role using an action verb, such as <strong>Analyzes</strong>,
+        <strong>Processes</strong>, <strong>Adds</strong>, <strong>Computes</strong>,
+        etc.</li>
+      <li>If the method returns a value using the IDLRETVAL keyword, use <b>Returns</b></li>
+      <li>If the method retrieves a value, or an array, in an output parameter
+        that doesn't use the IDLRETVAL keyword, use <b>Retrieves</b></li>
+    </ul>
+  </li>
+  <li>Write additional comments, if the short role is not enough, in the <strong>Role</strong>
+    section</li>
+  <li>Build the list of parameters using the <strong>@param</strong> tag. Follow
+    the CNext rules for input, output, and input/outpout parameters, and CNext
+    parameter naming conventions. Do not include the parameter returned using
+    the IDLRETVAL keyword
+    <p>Begin an argument definition using the definite article <strong>The</strong>.
+    For example, write <strong>The point coordinates</strong>, or <strong>The
+    dialog agent</strong>. You can use <strong>A</strong> instead of <strong>The</strong>
+    if there is a part of indetermination, such as <strong>An object of the
+    collection</strong>.</p>
+  </li>
+  <li>Use <strong>Legal values</strong> for each parameter, if this is
+    meaningful and describe the default value, if any</li>
+  <li>If needed, you can add a <b>See also</b> section to create hyperlinks to
+    objects or methods that are related to the function or subroutine</li>
+  <li>Add a <strong>Returns</strong> section using the <strong>@return</strong>
+    tag if the method returns a value, except for a getter for which it is
+    obvious</li>
+  <li>Use <strong>Legal values</strong> to describe <strong>each</strong>
+    possible returned value</li>
+  <li>Create an <b>Example</b> section that illustrates the method common usage.
+    Write first a short description of the example before the code in which you
+    highlight the function or subroutine name in red.</li>
+</ul>
+<p>Don't:
+<ul>
+  <li>Forget the period at the end of the short role</li>
+  <li>Create hyperlinks to the classes or enums used as types for parameters,
+    since these links are automatically set up</li>
+</ul>
+<table>
+  <tr>
+    <th>IDL File</th>
+    <th>html File</th>
+  </tr>
+  <tr>
+    <td><a href="CAAScrSubIdl.htm">Sub.idl</a></td>
+    <td><a href="CAAScrSubHtm.htm">Sub.htm</a></td>
+    <td>Shows a Sub</td>
+  </tr>
+  <tr>
+    <td><a href="CAAScrFuncIdl.htm">Func.idl</a></td>
+    <td><a href="CAAScrFuncHtm.htm">Func.htm</a></td>
+    <td>Shows a Func</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="WritingIDLPropertyComments"></a>Writing IDL Property Comments</h4>
+<p>Do:
+<ul>
+  <li>Begin with the short role. End it using a period</li>
+  <li>The short role must begins with <b>Returns</b> for a read-only property,
+    and with <b>Returns or sets</b> for a read-write property.</li>
+  <li>Write additional comments, if the short role is not enough, in the <strong>Role</strong>
+    section</li>
+  <li>Create an <b>Example</b> section that illustrates the property common
+    usage. Write first a short description of the example before the code in
+    which you highlight the property name in red.</li>
+</ul>
+<p>Don't:
+<ul>
+  <li>Forget the period at the end of the short role</li>
+</ul>
+<p>Refer to the following examples:</p>
+<table>
+  <tr>
+    <th>IDL File</th>
+    <th>html File</th>
+  </tr>
+  <tr>
+    <td><a href="CAAScrROPropertyIDL.htm">ActiveViewer.idl</a></td>
+    <td><a href="CAAScrROPropertyHtm.htm">ActiveViewer.htm</a></td>
+    <td>Read only property</td>
+  </tr>
+  <tr>
+    <td><a href="CAAScrRWPropertyIDL.htm">WindowState.idl</a></td>
+    <td><a href="CAAScrRWPropertyHtm.htm">WindowState.htm</a></td>
+    <td>Read/write property</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="WritingIDLCollectionComments"></a>Writing IDL Collection Comments</h4>
+<p>Do:
+<ul>
+  <li>Begin with the short role. End it using a period.</li>
+  <li>The short role must begin with <b>A collection of</b></li>
+  <li>Write additional comments, if the short role is not enough, in the <strong>Role</strong>
+    section</li>
+  <li>If needed, you can add a <b>See also</b> section to create hyperlinks to
+    objects or methods that are related to the collection</li>
+</ul>
+<p>Don't:</p>
+<ul>
+  <li>Forget the period at the end of the class role</li>
+</ul>
+<p>Refer to the following examples:</p>
+<table>
+  <tr>
+    <th>IDL File</th>
+    <th>html File</th>
+  </tr>
+  <tr>
+    <td><a href="CAAScrCATIACamerasIdl.htm">CATIACameras.idl</a></td>
+    <td><a href="CAAScrCATIACamerasHtm.htm">Cameras.htm</a></td>
+    <td>Collection with Item and Remove methods</td>
+  </tr>
+  <tr>
+    <td><a href="CAAScrCATIALightSourcesIdl.htm">CATIALightSources.idl</a></td>
+    <td><a href="CAAScrCATIALightSourcesHtm.htm">LightSources.htm</a></td>
+    <td>Collection with Add, Item, and Remove methods</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="WritingEnumComments"></a>Writing Enumeration Comments</h4>
+<p>Do:
+<ul>
+  <li>Begin with the short role. End it using a period</li>
+  <li>Use only a name, or a qualified name, not a sentence.</li>
+  <li>Write additional comments, if the short role is not enough, in the <strong>Role</strong>
+    section</li>
+  <li>Build the list of values using the <strong>@param</strong> tag. Insert a
+    @param tag for each enumerated value</li>
+  <li>If needed, you can add a <b>See also</b> section to create hyperlinks to
+    objects or methods that are related to the enum</li>
+</ul>
+<p>Don't:
+<ul>
+  <li>Forget the period at the end of the short role</li>
+</ul>
+<p>Refer to the following example:</p>
+<table>
+  <tr>
+    <th>IDL File</th>
+    <th>html File</th>
+  </tr>
+  <tr>
+    <td><a href="CAAScrCatNavigationStyleIdl.htm">CatNavigationStyle.idl</a></td>
+    <td><a href="CAAScrCatNavigationStyleHtm.htm">CatNavigationStyle.htm</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="JavadocTags"></a>mkdcidl Tag Reference</h3>
+<p>Some specific tags are used to denote specific entities and generate html
+tags to present this information consistently. These tags begin with the
+&quot;at&quot; sign, or @. These tags are:</p>
+<table width="100%">
+  <tr>
+    <th bgcolor="#66FFFF">Tag</th>
+    <th bgcolor="#66FFFF">Definition</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#nodoc">@nodoc</a></td>
+    <td>To denote each entity that you don't want to see in the extracted html
+      file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#param">@param</a></td>
+    <td>To denote each method or global function parameter, enum value, struct
+      member, and possibly typedef value</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#see">@see</a></td>
+    <td>To create a <b>See also</b> section that contains hyperlinks to other
+      documented entities, usually located at the end of the role of a class or
+      method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#ref">@href</a></td>
+    <td>To create a hyperlink to other documented entities anywhere in the text</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#return">@return</a></td>
+    <td>To create a Returns section to describe the returned value of a method</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="nodoc"></a>@nodoc</h4>
+<p>To denote each entity that you don't want to see in the extracted html file.</p>
+<pre>/**
+ * <font color="#CC0000"><strong>@nodoc</strong></font>
+ */
+#pragma PROPERTY Windows
+    HRESULT get_Windows(out /*IDLRETVAL*/ CATIAWindows oWindows);
+    
+/** <strong><font color="#CC0000">@nodoc</font></strong> */
+#pragma PROPERTY Windows
+    HRESULT get_Windows(out /*IDLRETVAL*/ CATIAWindows oWindows);
+
+/**
+ * <font color="#CC0000"><strong>@nodoc</strong></font>
+ * Returns the collection of windows currently managed by the application.
+ * &lt;dl&gt;
+ * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+ * &lt;dd&gt;
+ * This example retrieves in &lt;tt&gt;WinCollection&lt;/tt&gt; the collection of
+ * windows currently managed by the &lt;tt&gt;CATIA&lt;/tt&gt; application.
+ * &lt;pre&gt;
+ * Dim WinCollection As Windows
+ * Set WinCollection = CATIA.&lt;font color=&quot;red&quot;&gt;Windows&lt;/font&gt;
+ * &lt;/pre&gt;
+ * &lt;/dl&gt;
+ */
+#pragma PROPERTY Windows
+    HRESULT get_Windows(out /*IDLRETVAL*/ CATIAWindows oWindows);</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="param"></a>@param</h4>
+<p>To denote each sub or func parameter, except the parameter returned as an
+IDLRETVAL.</p>
+<pre>/**
+ * Sets the origin point which the hole is anchored to.&lt;br&gt; 
+ * If mandatory, the entry point will be projected onto a tangent plane.
+ * <strong><font color="#CC0000">@param</font></strong> <b>iX</b>
+ *   Origin point x absolute coordinate
+ * <strong><font color="#CC0000">@param</font></strong> <b>iY</b>
+ *   Origin point y absolute coordinate
+ * <strong><font color="#CC0000">@param</font></strong> <b>iZ</b>
+ *   Origin point z absolute coordinate
+ * &lt;dl&gt;
+ * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+ * &lt;dd&gt;The following example sets the coordinates of
+ * hole &lt;tt&gt;firstHole&lt;/tt&gt; to 10., 20., -5. :
+ * &lt;pre&gt;
+ * firstHole.&lt;font color=&quot;red&quot;&gt;SetOrigin&lt;/font&gt; 10., 20., 5.
+ *&lt;/pre&gt;
+ * &lt;/dl&gt;
+ */
+ HRESULT	SetOrigin ( in double <b>iX</b>,
+                     in double <b>iY</b>,
+                     in double <b>iZ</b> );</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="see"></a>@see</h4>
+<p>To create a See also section that contains hyperlinks to other documented
+entities, usually located at the end of the role of a class or method. Use the
+comma to separate two successive entity.</p>
+<pre>/**
+ * Represents the document.
+ * The document is the object handled by the operating system as a whole
+ * that stores your data in files and databases.
+ * It is assigned a type determined by its contents. It may contain other
+ * documents with a different type. For example,
+ * a PartDocument contains a part and can be contained in a ProductDocument.
+ * A workshop is associated with a document to gather all the commands
+ * that can be used to create, modify, and edit the objects making up the
+ * the document. These commands are arranged in menus and toolbars.
+ * <strong><font color="#CC0000">@see</font></strong> <b>CATIAPartDocument</b>, <b>CATIAProductDocument</b>, <b>CATIADrawingDocument</b>
+ */
+interface CATIADocument : CATIABase</pre>
+<p>You can also refer to a method or property using <code>@see</code>.</p>
+<pre>/**
+ * ...
+ * <strong><font color="#CC0000">@see</font> CATIADocuments#Add, CATIADocuments#Item</strong>
+ */
+ interface CATIADocument : CATIABase</pre>
+<p>See <a href="#Hyperlinks">Using Hyperlinks</a> to know which hyperlinks you
+can use.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="ref"></a>@href</h4>
+<p>To create a hyperlink to other documented entities anywhere in the text</p>
+<pre>/**
+ * Represents the camera.
+ * The camera is the object that stores a viewpoint saved from a viewer
+ * at a given moment using the <font color="#CC0000"><strong>@href</strong></font> <b>CATIAViewer#NewCamera</b> method of
+ * the <font color="#CC0000"><strong>@href</strong></font> <b>CATIAViewer</b> object.
+ * The viewpoint stored in the camera can then be applied to another viewer
+ * to display the document in this viewer according to this viewpoint.
+ */
+ interface CATIACamera : CATIABase</pre>
+<p>Do not use <code>@href</code> in the short role of any entity. Do not use
+tags for monospace fonts (<code>&lt;tt&gt;</code> or <code>&lt;code&gt;</code>)
+in hyperlinks. See <a href="#Hyperlinks">Using Hyperlinks</a> to know which
+hyperlinks you can use.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="return"></a>@return</h4>
+<p>To create a Returns section to describe the value returned by a Func using
+IDLRETVAL.</p>
+<pre>/**
+ * Returns a document using its index or its name from the documents
+ * collection. 
+ * ...
+ * <font color="#CC0000"><strong>@return</strong></font>
+ *   The retrieved document
+ * ...
+ */
+ HRESULT Item(in CATVariant iIndex, out /*IDLRETVAL*/ CATIADocument oDocument);</pre>
+<p>Use the <strong>Legal values</strong> named field whenever possible. If the
+returned value can take all the values of an enum, the hyperlink set by mkdcidl
+to the enum documentation can be enough. Nevertheless, if a only subset of these
+values can be returned, or if the meaning of is context-dependent, you must use
+the <strong>Legal values</strong> named field.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="NamedFields"></a>Named Field Reference</h3>
+<p>Some comments may appear repeatitively, such as the parameter legal values.
+Use named fields to describe them. Available named fields are:</p>
+<table width="100%">
+  <tr>
+    <th bgcolor="#66FFFF">Named Field html Tags</th>
+    <th bgcolor="#66FFFF">Definition</th>
+  </tr>
+  <tr>
+    <td valign="top"><code>&lt;b&gt;Role&lt;/b&gt;:</code></td>
+    <td>To describe the role of a class, an interface, a global function, an
+      enum, a macro, a typedef</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>&lt;br&gt;&lt;b&gt;Role&lt;/b&gt;:</code></td>
+    <td>To describe the role of a method or data member</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>&lt;br&gt;&lt;b&gt;Precondition&lt;/b&gt;:</code></td>
+    <td>To describe the valid system context or state required before calling
+      the method. Applies to methods</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>&lt;br&gt;&lt;b&gt;Postcondition&lt;/b&gt;:</code></td>
+    <td>To describe the system context or state that the method leaves or should
+      leave when returning. Applies to methods</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>&lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:</code></td>
+    <td>To describes parameter range of valid values, including the default
+      value. Applies to method parameters</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="htmlTags"></a>html Tag Reference</h3>
+<p>You can use html tags in your comments, except tags, such as &lt;h1&gt;,
+&lt;h2&gt;, as any other structuring tags. Main html tags you can use are:</p>
+<table width="100%">
+  <tr>
+    <th bgcolor="#66FFFF" valign="top">Tag</th>
+    <th bgcolor="#66FFFF">Definition</th>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;br&gt;</tt></td>
+    <td>To insert a line break</td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;p&gt;</tt></td>
+    <td>To create a new paragraph</td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;b&gt;</tt><b>bold</b><tt>&lt;/b&gt;</tt></td>
+    <td>To enclose a text that should be rendered in boldface: <strong>bold</strong></td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;i&gt;</tt><i>italic</i><tt>&lt;/i&gt;</tt></td>
+    <td>To enclose a text that should be rendered in italic font: <em>italic</em></td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;tt&gt;monospace&lt;/tt&gt;</tt></td>
+    <td>To enclose a text that should be rendered in <tt>monospace</tt> font.
+      You can also use <code>&lt;code&gt;</code> and <code>&lt;/code&gt;</code>.
+      Use these tags to enclose class names, method names, enum values, etc.
+      that you don't use as hyperlinks, that is that do not follow a &lt;a
+      href=&quot;#see&quot;&gt;see&lt;a&gt; or a &lt;a
+      href=&quot;#href&quot;&gt;href&lt;a&gt; tag</td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;pre&gt;</tt> and <tt>&lt;/pre&gt;</tt></td>
+    <td>To enclose lines that should be rendered with existing line breaks and
+      using monospace font. It forces a line break</td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;ul&gt;</tt> and <tt>&lt;/ul&gt;</tt></td>
+    <td>To specify that the following block of text is a bulleted (or unordered)
+      list. Each item begins with a <tt>&lt;li&gt;</tt></td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;ol&gt;</tt> and <tt>&lt;/ol&gt;</tt></td>
+    <td>To specify that the following block of text is an ordered list. Each
+      item begins with a <tt>&lt;li&gt;</tt></td>
+  </tr>
+  <tr>
+    <td valign="top"><tt>&lt;dl&gt;</tt> and <tt>&lt;/dl&gt;</tt></td>
+    <td>To specify that the following block of text is a definition list. Each
+      defined term is denoted with <tt>&lt;dt&gt;</tt>, and each associated
+      definition is denoted using <tt>&lt;dd&gt;</tt></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="Hyperlinks"></a>Setting Hyperlinks</h3>
+<p>Hyperlink anchors are automatically generated on the following entities:
+<ul>
+  <li>For any documented interface or enum mkdcidl creates an html file. This
+    file can&nbsp;be used as a target for any hyperlink sets in any class or
+    interface of the same framework, or of any prerequiring framework. Example:
+    mkdcidl generates Application.htm from CATIAApplication.idl, which can be
+    used as a target in an hyperlink created using <code>@see</code> or <code>@href</code>,
+    such as in:
+    <pre>... @href CATIAApplication ...
+...
+@see CATIAApplication </pre>
+    <p>Note that the htm suffix must not be used.</p>
+  </li>
+  <li>For each method or property, a simple anchor is created with just the
+    method or property name, that you can use as a target of an hyperlink set in
+    any class or interface of the same framework, or of any prerequiring
+    framework.
+    <pre>Use @href CATIAApplication#Documents to retrieve the document collection associated with the application.</pre>
+    <p>that sets the same hyperlinks as:</p>
+    <pre>&lt;a href=&quot;../InfInterfaces/CATIAApplication.htm#Documents&quot;&gt;CATIAApplication.Documents&lt;/a&gt;</pre>
+    <p>which reads in the html file as follows:</p>
+    <p>Use <a href="#" onclick="javascript:dummylink();return false;">CATIAApplication.Documents</a>
+    to retrieve the document collection associated with the application.</li>
+</ul>
+<p>Hyperlink syntax:
+<ul>
+  <li><code>@see CATIAApplication</code> or <code>@href CATIAApplication</code>
+    sets an hyperlink to the interface CATIAApplication. It can only be used
+    from any entity that <strong>IS NOT</strong> a CATIAApplication member</li>
+  <li><code>@see CATIAApplication#Documents</code> or <code>@href
+    CATApplication#Documents</code> sets an hyperlink to the
+    CATIAApplication.Documents property. It can only be used from any entity
+    that <strong>IS NOT</strong> a CATIAApplication member</li>
+  <li><code>@see #Documents</code> or <code>@href #Documents</code> sets an
+    hyperlink to the Documents property.&nbsp; It can only be used from any
+    entity that <strong>IS</strong> a CATIAApplication member.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="CreatinghtmlFiles"></a>Creating the html Files</h3>
+<p>Run mkdcidl for the IDL interfaces and enum of your framework. If you have
+interfaces in ProtectedInterfaces, run <code>mkdcidl -protected</code></p>
+<p>When mkdcidl runs, errors are issued as lines beginning with <code>#
+mkdcidl-ERROR</code> and a short explanation of the error found.</p>
+<p>html files are generated in the Doc\generated\interfaces directory located in
+your workspace root directory. Doc is at the same level than your framework
+directories.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/CAAScrIDLGenFiles.gif" width="182" height="147"></td>
+    <td><strong>interfaces</strong> contains:
+      <ul>
+        <li>A directory and a file per framework:
+          <ul>
+            <li>The directory contains a html file for each existing IDL file,
+              that contains the documentation extracted from the IDL file and
+              that has the same name than the interface or enum file, but is
+              suffixed with htm. For example, the <b>InfInterfaces</b> directory
+              is for the InfInterfaces framework</li>
+            <li>A file per framework that contains the framework interface and
+              enum lists. For example, the <b>InfInterfaces.htm</b> file is for
+              the InfInterfaces framework</li>
+          </ul>
+        </li>
+        <li>Three files:
+          <ul>
+            <li><strong>AllNames.htm</strong> contains an index of all the
+              interfaces, properties, methods, and enums</li>
+            <li><strong>main.htm</strong> contains the list of frameworks</li>
+            <li><strong>tree.htm</strong> contains the interfaces arranged using
+              their inheritance tree structure</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>You cannot run mkdcidl for a single interface or framework. It applies to the
+whole workspace, but it's fast.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

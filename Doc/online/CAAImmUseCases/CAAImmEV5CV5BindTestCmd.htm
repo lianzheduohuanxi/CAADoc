@@ -1,0 +1,474 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Manipulating a persistent ENOVIA V5 VPM object from within the ENOVIA V5 VPM Navigator environment</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1><span lang="en-us">CATIA VPLM</span></h1>
+    </td>
+    <td valign="top">
+      <h2><span lang="en-us">ENOVIA V5 VPM Navigator</span></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><span lang="en-us"><a name="Top"></a>API's to execute ENOVIA V5 VPM commands 
+		from ENOVIA V5 VPM Navigatorigator</span></h3>
+      <span lang="en-us">
+      <em>Manipulating an ENOVIA Item Instance from within the ENOVIA V5 VPM Navigator environment</em></span></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><span lang="en-us">Abstract</span></h3>
+      <p>
+      <span lang="en-us">This article shows the way, from within the ENOVIA V5 VPM Navigator environment, to 
+		retrieve an ItemInstance from ENOVIA V5 database that has been 
+      selected in VPM Navigator window and to launch the execution of an ENOVIA V5 service involving this same ItemInstance. It also 
+		describes how the ItemInstance retrieved from the database can be loaded 
+		in CATIA. 
+      These capabilities are managed by several APIs that are presented into a global command in the coming sections.
+		</span>
+      <ul>
+        <li><span lang="en-us"><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></span></li>
+        <li><span lang="en-us"><a href="#UseCase"><strong>The EV5 CV5 Bind test Command Use Case</strong></a>
+          </span>
+          <ul>
+            <li><span lang="en-us"><a href="#What">What Does the EV5 CV5 Bind test Command Do</a></span></li>
+			<li><span lang="en-us"><a href="#How">How to Launch the EV5 CV5 Bind test Command</a></span></li>
+            <li><span lang="en-us"><a href="#Where">Where to Find the EV5 CV5 Bind test Command Code</a></span></li>
+          </ul>
+        </li>
+        <li><span lang="en-us"><a href="#Step"><strong>Step-by-Step</strong></a></span></li>
+        <li><span lang="en-us"><a href="#InShort"><strong>In Short</strong></a></span></li>
+        <li><span lang="en-us"><a href="#References"><strong>References</strong></a></span></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a><span lang="en-us">What You Will Learn With This Use Case</span></h3>
+<p><span lang="en-us">This use case is intended... 
+</span> 
+<ul>
+    <li><span lang="en-us">firstly, to explain how to retrieve a selected 
+	Instance in EV5 VPM Navigator window, using the Acquisition Agent;</span></li>
+    <li><span lang="en-us">secondly, to explain how to ensure the correspondence between the ENOVIA V5 VPM Navigator Instance and its related 
+    ENOVIA ItemInstance, using a CATIPLMIdentificator object and the APIs of CATPDMNavServices;</span></li>
+    <li><span lang="en-us">thirdly, to explain how to trigger, on the ENOVIA server, a user-exit involving the ItemInstance, 
+    using the CATPDMCSServices::RunObjectService API;</span></li>
+    <li><span lang="en-us">and finally, to explain how to open an ENOVIA ItemInstance from within the EV5 VPM Navigator environment to CATIA, 
+    using the CATAfrStartCommand API and the Open command.</span></li>
+ </ul>
+ </p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h3><span lang="en-us"><a name="UseCase"></a>The EV5 CV5 Bind test Command Use Case</span></h3>
+<p><span lang="en-us">The EV5-CV5 Bind test Command is a use case of the CAACATImmENOVIAProvider.edu framework that 
+ illustrates <i>ENOVIA V5 VPM Navigator Architecture Enhancement & CAA API</i> highlight capabilities.</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="What"></a>What Does the EV5 CV5 Bind test Command Do</span></h4>
+<p><span lang="en-us">CAAImmEV5CV5BindTestCmd is a command which starts triggering the execution, on the ENOVIA V5 server, 
+of a user-exit involving the ENOVIA ItemInstance related to the Instance selected from within 
+the ENOVIA V5 VPM Navigator window. Then, the command opens in CATIA the Instances returned by the user-exit 
+that has succeeded. </span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="How"></a>How to Launch the EV5 CV5 Bind test Command</span></h4>
+<p><span lang="en-us">To launch CAAImmEV5CV5BindTestCmd, you will need to set up the build time environment,
+then compile CAAImmEV5CV5BindTestCmd along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] in the following way: 
+</span> </p>
+<UL>
+  <LI><span lang="en-us">Run CNEXT on the command line. </span>
+  <LI><span lang="en-us">Connect to Enovia using the command on Enovia V5 Toolbar.
+	</span>
+  <LI><span lang="en-us">Enter Login, Password and Enovia Server information and click OK to login.
+	</span>
+  <LI><span lang="en-us">Run Search command for a product on Enovia V5 Toolbar.
+	</span>
+  <LI><span lang="en-us">Right-Click on a Product and run Send To ENOVIA V5 VPM Navigator.
+  </span>
+  <LI><span lang="en-us">Click on an ItemInstance and run the CAAImmEV5CV5BindTestCmd available from EV5 VPM Navigator workbench. 
+	</span> </LI></UL>
+  
+<p><span lang="en-us"><img src="images/CAAImmEV5CV5BindTestCmd.jpg" alt="CAAImmEV5CV5BindTestCmd.jpg "></span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<span lang="en-us">
+
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="Where"></a>Where to Find the EV5 CV5 Bind test Command Code</span></h4>
+<p><span lang="en-us">The EV5 CV5 Bind test command is made up of a single class named <i>CAAImmEV5CV5BindTestCmd</i> 
+      located in the <i> CAAImmIdAcqAgentTestCmd.m </i> module of the <i> CAACATImmENOVIAProvider.edu </i> framework :</span></p>
+<table>
+  <tbody>
+    <tr>
+      <td><span lang="en-us">Windows</span></td>
+      <td><span lang="en-us"><code>InstallRootDirectory\CAACATImmENOVIAProvider.edu\CAAImmIdAcqAgentTestCmd.m\</code></span></td>
+    </tr>
+    <tr>
+      <td><span lang="en-us">Unix</span></td>
+      <td><span lang="en-us"><code>InstallRootDirectory/CAACATImmENOVIAProvider.edu/CAAImmIdAcqAgentTestCmd.m/</code></span></td>
+    </tr>
+  </tbody>
+</table>
+<p><span lang="en-us">where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h3><span lang="en-us"><a name="Step"></a>Step-by-Step</span></h3>
+<p><span lang="en-us">There are 4 main steps in the CAAImmEV5CV5BindTestCmd use case:</span></p>
+<table width="100%">
+  <tr>
+    <th><span lang="en-us">#</span></th>
+    <th><span lang="en-us">Step</span></th>
+    <th><span lang="en-us">Where</span></th>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us"><a href="#Step1">1</a></span></td>
+    <td valign="top"><span lang="en-us">Retrieving the selected ItemInstance using the Identification Acquisition Agent</span></td>
+    <td valign="top"><span lang="en-us">Header File and<code> BuildGraph</code> method</span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us"><a href="#Step2">2</a></span></td>
+    <td valign="top"><span lang="en-us">Retrieving the CATIPLMIdentificator of the selected Item Instance</span></td>
+    <td valign="top"><span lang="en-us">Transition action method <code>OnSelectionDone</code> method</span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us"><a href="#Step3">3</a></span></td>
+    <td valign="top"><span lang="en-us">Triggering the user-exit execution involving the ENOVIA ItemInstance on server</span></td>
+    <td valign="top"><span lang="en-us">Transition action method <code>OnSelectionDone</code> method</span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us"><a href="#Step4">4</a></span></td>
+    <td valign="top"><span lang="en-us">Opening an Iteminstance from ENOVIA V5 VPM Navigator to CATIA</span></td>
+    <td valign="top"><span lang="en-us">Transition action method <code>OnSelectionDone</code> method</span></td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="Step1"></a>Retrieving the selected ItemInstance using the Identification Acquisition Agent</span></h4>
+<p><span lang="en-us">Refer to the Step by Step explanations given by the use case 
+<a href="CAAImmIdAcqAgentTest.htm#Step">Extending EV5 VPM Navigator capabilities</a>.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">void CAAImmEV5CV5BindTestCmd::BuildGraph()
+{
+    ...
+    _ImmIdentifierAcquisition = new CATImmIdentifierAcquisitionAgent();
+    ...</span></pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="Step2"></a>Retrieving the CATIPLMIdentificator of the selected Item Instance</span></h4>
+<p><span lang="en-us">The CATIPLMidentificator ensure the correspondence between a ENOVIA V5 VPM Navigator client persistent object and 
+an ENOVIA server persistent object. The CATIPLMIdentificator of the selected ENOVIA V5 VPM Navigator ItemInstance 
+is retrieved from the Acquisition Agent. It has to be released once it is not needed anymore.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">CATBoolean CAAImmEV5CV5BindTestCmd::OnSelectionDone( void *data )
+{
+    ...
+    CATIPLMIdentificator* opId = NULL;
+    rc = _ImmIdentifierAcquisition->GetIdentificator(&opId);
+    if (SUCCEEDED(rc) && opId != NULL)
+    {
+        ...
+        opId->Release(); opId = NULL;
+        ...</span></pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="Step3"></a>Triggering the user-exit execution involving the ENOVIA ItemInstance on server</span></h4>
+<p><span lang="en-us">Giving the CATIPLMIdentificator of the selected ENOVIA V5 VPM Navigator ItemInstance in input of the API 
+<code>CATPDMCSServices::RunObjectService</code>, it is then possible to trigger the execution 
+of a server treatment involving the ENOVIA ItemInstance corresponding to our selected ENOVIA V5 VPM Navigator ItemInstance.
+The triggered server treatment is given by the implementation of the <code>ENOVIObjectServiceCode::RunObjectServiceCode</code> 
+user-exit. Refer to the use case <i>Using the ENOVIObjectServiceCode user-exit to get the ItemInstances 
+that share the same PartVersion in a ProductRootClass</i> (See reference [<a href="#References">3</a>]) to see how it have to be implemented.</span></p>
+
+<p><span lang="en-us">First thing to do is to compute correctly the arguments given to the API...</span></p>
+
+<p><span lang="en-us"><b>1.</b> Compute a list that contains all CATIPLMIdentificator of the object we want to interact with. 
+Here the CATIPLMidentificator of the selected ItemInstance is the only one added to the list.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">  ...
+CATIPLMIdentificator_var spPLMIdentifs = opId;
+opId->Release(); opId = NULL;
+
+if (spPLMIdentifs != NULL_var)
+{
+    ...
+    CATListOfCATIPLMIdentificator lstPLMIdent;
+    lstPLMIdent.Append(spPLMIdentifs);
+    ...</span></pre>
+    </td>
+  </tr>
+</table>
+<p><span lang="en-us"><b>2.</b> Give in a CATString the service name to be invoke on the server. First, it has to be composed of the 
+LateType of the implementation that will be executed on the EV5 server calling the 
+<code>ENOVIObjectServiceCode::RunObjectServiceCode</code> user-exit. Then, it has to be prefixed with 
+the PDM environment name, for ENOVIA V5, it is "ENOVIA5". 
+Here is mentioned the latetype of the user-exit implementation exposed in use case <i>Using the 
+ENOVIObjectServiceCode user-exit to get the ItemInstances that share the same PartVersion in a 
+ProductRootClass</i> (See reference [<a href="#References">3</a>]).</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+CATString iServName = "ENOVIA5_GetII";
+...</span></pre>
+    </td>
+  </tr>
+</table>
+<p><span lang="en-us"><b>3.</b> It is possible to give in input additional informations computed in a char*. Here we choose to add
+the V_Id of the VPMProductRootClass opened in the ENOVIA V5 VPM Navigator window.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+CATListOfCATUnicodeString   lstIdsNames;
+CATListOfCATUnicodeString   lstIdsValues;
+CATUnicodeString    stRootType;
+
+rc = CATImmCAAServices::GetCurrentRootIdentifiers(lstIdsNames,lstIdsValues,stRootType);
+...
+const char* ipString = lstIdsValues[1];
+...</span></pre>
+    </td>
+  </tr>
+</table>
+<p><span lang="en-us"><b>4.</b> Call the API once the declaration of the output arguments is done.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+char* opString = NULL;
+CATListOfCATIPLMIdentificator olstPLMIdent;
+
+HRESULT rc = CATPDMCSServices::RunObjectService(iServName, lstPLMIdent, ipString, olstPLMIdent, &opString);
+...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h4><span lang="en-us"><a name="Step4"></a>Opening an Iteminstance from ENOVIA V5 VPM Navigator to CATIA</span></h4>
+<p><span lang="en-us">In this use case, the <code>CATPDMCSServices::RunObjectService</code> API returns a list of CATIPLMIdentificators
+that correspond to the ENOVIA ItemInstances retrieved on the server by the user-exit 
+command. Below is listed in 5 steps 
+the way to load these ItemInstances in CATIA.</span></p>
+
+<p><span lang="en-us"><b>1.</b> Get the list of the currently selected object in ENOVIA V5 VPM Navigator and Empty it.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">  ...
+// Retrieve current window
+CATFrmEditor * pEditor = GetEditor(); 
+
+if (pEditor != NULL)
+{
+  // Current selection, only one per window !
+  CATCSO * pCSO = pEditor->GetCSO(); 
+
+  if (pCSO != NULL)
+  {
+    pCSO->Empty();
+  ...</span></pre>
+    </td>
+  </tr>
+</table>
+<p><span lang="en-us"><b>2.</b> Build an empy list of object. It will later contain the ItemInstances to 
+be loaded.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">  ...
+CATSO * pSO = new CATSO();  
+  ...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us"><b>3.</b> Get the ENOVIA V5 VPM Navigator ItemInstances from the list of CATIPLMIdentificators returned by the 
+the API <code>CATPDMCSServices::RunObjectService</code>.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">  ...
+for (int i=1; i&lt;=countIDs; i++)
+{
+  CATIPLMIdentificator * piPLMID = olstPLMIdent[i];
+  if (piPLMID != NULL)
+  {
+    // Bind the Nav Object from its PLMIDs
+    CATBaseUnknown * pBase = NULL;
+    tempRC = CATPDMNavServices::BindEnoviaIdToNav(piPLMID, &pBase);  
+    ...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us"><b>4.</b> Add the ENOVIA V5 VPM Navigator ItemInstances to the list of object and then insert the list in the CSO previously recovered.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+for (int i=1; i<=countIDs; i++)
+{
+  ...
+  if (SUCCEEDED(tempRC) && pBase)
+  {
+    // Add Nav Object in SO
+    CATPathElement * pathElem =new CATPathElement(pBase);
+    if (pathElem) 
+    {
+      tempRC =pSO->AddElement(pathElem);
+      ...
+    }
+  }
+}
+
+// Add SO in CSO
+pCSO->AddSO(pSO, CATCSO::Replace);
+    ...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us"><b>5.</b> Open in CATIA the ENOVIA V5 VPM Navigator ItemInstances contained in the CSO.</span></p>
+<table class="code" style="color : #FF8040;">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+CATCommand * pConnectCmd = NULL;
+tempRC = ::CATAfrStartCommand("Open", pConnectCmd); 
+...</span></pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<hr>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+
+</span>
+
+<h3><span lang="en-us"><a name="InShort"></a>In Short</span></h3>
+<p><span lang="en-us">This use-case shows how the new API's can be used to 
+implement business behaviors on ENOVIA V5 server that can be executed from ENOVIA V5 VPM 
+Navigator client. It is imported to emphasize that these services are handled as 
+short transactions, in the sense that persistent objects which are 
+created/modified/deleted are saved/committed into the database, and hence, 
+should be in any case launched within long transactions (Save In ENOVIA V5).
+</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<hr>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+</span>
+<h3><span lang="en-us"><a name="References"></a>References</span></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><span lang="en-us">[1]</span></td>
+    <td><span lang="en-us"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us">[2]</span></td>
+    <td><span lang="en-us"><a href="CAAImmIdAcqAgentTest.htm">Extending EV5 VPM Navigator capabilities</a></span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us">[3]</span></td>
+    <td><span lang="en-us">Server Use case Implementing ENOVIObjectServiceCode in <i>CAAVPMInterfacesDoc.edu/CAAVpiUseCases.doc/src/CAAVpmPsEnovGetII.htm</i></span></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2"><span lang="en-us">[<a href="#Top">Top</a>]</span></td>
+  </tr>
+</table>
+<hr>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+</span>
+<h3><span lang="en-us"><a name="History"></a>History</span></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><span lang="en-us">Version: <strong>1</strong> [May 2007]</span></td>
+    <td valign="top"><span lang="en-us">Document created</span></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2"><span lang="en-us">[<a href="#Top">Top</a>]</span></td>
+  </tr>
+</table>
+<hr>
+<span lang="en-us">
+<!---------------------------------comment------------------------------------->
+</span>
+<p><span lang="en-us"><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></span></p>
+
+</body>
+
+</html>

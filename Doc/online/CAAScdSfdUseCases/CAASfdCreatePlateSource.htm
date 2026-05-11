@@ -1,0 +1,200 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASfdCreatingPlate.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create plates and advanced plates of different categories</font>
+<font color="#008000">'                in the SFD workbench.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASfdCreatePlate.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author: </font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English </font>
+<font color="#008000">' CATIA Level:   V5R21 </font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+
+  <font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+
+  <font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+
+  <font color="#008000">'Adding Hull</font>
+  ManagerObj.AddHull
+
+<font color="#0000FF">  Dim </font>Hull<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Hull = ManagerObj.GetHull
+
+  <font color="#008000">'CREATING SHELL PLATES</font>
+  <font color="#008000">'Defining Shell Plate Support</font>
+<font color="#0000FF">  Dim </font>ShellSupport<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellSupport = ObjPart.FindObjectByName("Hull1234")
+<font color="#0000FF">  Dim </font>ShellSupportRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellSupportRef = ObjPart.CreateReferenceFromObject(ShellSupport)
+
+<font color="#0000FF">  Dim </font>ShellSuperplate1<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSuperplate1 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing)
+
+  <font color="#008000">'Applying Limits</font>
+  <font color="#008000">'Defining First Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateLimit1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlateLimit1 = ObjPart.FindObjectByName("CROSS.40")
+<font color="#0000FF">  Dim </font>ShellPlateLimitRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlateLimit1)
+
+  <font color="#008000">'Defining Orientation of First Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateOrnt1<font color="#0000FF"> As </font>Long
+  ShellPlateOrnt1 = 8
+  ShellSuperplate1.AddLimit ShellPlateLimitRef1, ShellPlateOrnt1
+
+  <font color="#008000">'Defining Second Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateLimit2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlateLimit2 = ObjPart.FindObjectByName("CROSS.140")
+<font color="#0000FF">  Dim </font>ShellPlateLimitRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlateLimit2)
+
+  <font color="#008000">'Defining Orientation of Second Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateOrnt2<font color="#0000FF"> As </font>Long
+  ShellPlateOrnt2 = 9
+  ShellSuperplate1.AddLimit ShellPlateLimitRef2, ShellPlateOrnt2
+
+  <font color="#008000">'Defining Third Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateLimit3<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlateLimit3 = ObjPart.FindObjectByName("LONG.0")
+<font color="#0000FF">  Dim </font>ShellPlateLimitRef3<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlateLimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlateLimit3)
+
+  <font color="#008000">'Defining Orientation of Third Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateOrnt3<font color="#0000FF"> As </font>Long
+  ShellPlateOrnt3 = 5
+  ShellSuperplate1.AddLimit ShellPlateLimitRef3, ShellPlateOrnt3
+
+  <font color="#008000">'To Create the SuperPlate,RUN is used</font>
+  ShellSuperplate1.Run
+
+  <font color="#008000">'Creating Second ShellPlate</font>
+<font color="#0000FF">  Dim </font>ShellSuperplate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSuperplate2 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing)
+
+<font color="#0000FF">  Dim </font>ShellPlate2Limit1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlate2Limit1 = ObjPart.FindObjectByName("CROSS.40")
+<font color="#0000FF">  Dim </font>ShellPlate2LimitRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlate2LimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit1)
+
+<font color="#0000FF">  Dim </font>ShellPlate2Ornt1<font color="#0000FF"> As </font>Long
+  ShellPlate2Ornt1 = 8
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef1, ShellPlate2Ornt1
+
+<font color="#0000FF">  Dim </font>ShellPlate2Limit2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlate2Limit2 = ObjPart.FindObjectByName("CROSS.140")
+<font color="#0000FF">  Dim </font>ShellPlate2LimitRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlate2LimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit2)
+
+<font color="#0000FF">  Dim </font>ShellPlate2Ornt2<font color="#0000FF"> As </font>Long
+  ShellPlate2Ornt2 = 9
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef2, ShellPlate2Ornt2
+
+<font color="#0000FF">  Dim </font>ShellPlate2Limit3<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlate2Limit3 = ObjPart.FindObjectByName("LONG.0")
+<font color="#0000FF">  Dim </font>ShellPlate2LimitRef3<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlate2LimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit3)
+
+<font color="#0000FF">  Dim </font>ShellPlate2Ornt3<font color="#0000FF"> As </font>Long
+  ShellPlate2Ornt3 = 4
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef3, ShellPlate2Ornt3
+
+  <font color="#008000">'To Create the SuperPlate,Run is used</font>
+  ShellSuperplate2.Run
+
+  <font color="#008000">'CREATING DECK PLATE</font>
+  <font color="#008000">'Defining Support</font>
+<font color="#0000FF">  Dim </font>DeckSupport<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>DeckSupport = ObjPart.FindObjectByName("DECK.3")
+<font color="#0000FF">  Dim </font>DeckSupportRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>DeckSupportRef = ObjPart.CreateReferenceFromObject(DeckSupport)
+
+<font color="#0000FF">  Dim </font>DeckSuperplate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>DeckSuperplate = FactoryObj.AddSuperPlate("DeckPanel", DeckSupportRef, Nothing)
+  <font color="#008000">'Applying Limits</font>
+<font color="#0000FF">  Dim </font>DeckPlateLimit1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>DeckPlateLimit1 = ObjPart.FindObjectByName("CROSS.40")
+<font color="#0000FF">  Dim </font>DeckPlateLimitRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>DeckPlateLimitRef1 = ObjPart.CreateReferenceFromObject(DeckPlateLimit1)
+
+<font color="#0000FF">  Dim </font>DeckPlateOrnt1<font color="#0000FF"> As </font>Long
+  DeckPlateOrnt1 = 2
+  DeckSuperplate.AddLimit DeckPlateLimitRef1, DeckPlateOrnt1
+
+<font color="#0000FF">  Dim </font>DeckPlateLimit2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>DeckPlateLimit2 = ObjPart.FindObjectByName("CROSS.140")
+<font color="#0000FF">  Dim </font>DeckPlateLimitRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>DeckPlateLimitRef2 = ObjPart.CreateReferenceFromObject(DeckPlateLimit2)
+
+<font color="#0000FF">  Dim </font>DeckPlateOrnt2<font color="#0000FF"> As </font>Long
+  DeckPlateOrnt2 = 3
+  DeckSuperplate.AddLimit DeckPlateLimitRef2, DeckPlateOrnt2
+
+  <font color="#008000">'Limiting DeckPlate by ShellPlate</font>
+<font color="#0000FF">  Dim </font>DeckPlateOrnt3<font color="#0000FF"> As </font>Long
+  DeckPlateOrnt3 = 8
+  DeckSuperplate.AddLimit ShellSupportRef, DeckPlateOrnt3
+
+  <font color="#008000">'SETTING MATERIAL,GRADE AND THICKNESS OF DECKPLATE</font>
+
+<font color="#0000FF">  Dim </font>DeckPlateObj<font color="#0000FF"> As </font>SfmObject
+<font color="#0000FF">  Set </font>DeckPlateObj = DeckSuperplate
+  DeckPlateObj.Material = "Steel"
+  DeckPlateObj.Grade = "A45"
+  DeckSuperplate.Thickness = "25.0"
+
+  DeckSuperplate.Run
+
+  <font color="#008000">'CREATING ADVANCED TRANSVERSE PLATE AND LIMITED BY SHELLPLATE AND DECKPLATE</font>
+  <font color="#008000">'Defining Support for Transverse Bulkhead Plate</font>
+<font color="#0000FF">  Dim </font>TrnsPlateSupport<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>TrnsPlateSupport = ObjPart.FindObjectByName("CROSS.90")
+<font color="#0000FF">  Dim </font>TrnsPlateSupportRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TrnsPlateSupportRef = ObjPart.CreateReferenceFromObject(TrnsPlateSupport)
+
+  <font color="#008000">'Creating SuperPlate</font>
+<font color="#0000FF">  Dim </font>TrnsSuperplate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>TrnsSuperplate = FactoryObj.AddAdvSuperPlate("TransversePanel", TrnsPlateSupportRef, Nothing)
+
+  <font color="#008000">'Applying Limits</font>
+  <font color="#008000">'First Limiting by ShellPlates</font>
+<font color="#0000FF">  Dim </font>TrnsPlateLimitRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TrnsPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellSuperplate1)
+<font color="#0000FF">  Dim </font>TrnsPlateOrnt1<font color="#0000FF"> As </font>Long
+  TrnsPlateOrnt1 = 4
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef1, TrnsPlateOrnt1
+
+<font color="#0000FF">  Dim </font>TrnsPlateLimitRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TrnsPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellSuperplate2)
+<font color="#0000FF">  Dim </font>TrnsPlateOrnt2<font color="#0000FF"> As </font>Long
+  TrnsPlateOrnt2 = 5
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef2, TrnsPlateOrnt2
+
+  <font color="#008000">'Second Limiting by DeckPlate</font>
+<font color="#0000FF">  Dim </font>TrnsPlateLimitRef3<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TrnsPlateLimitRef3 = ObjPart.CreateReferenceFromObject(DeckSuperplate)
+<font color="#0000FF">  Dim </font>TrnsPlateOrnt3<font color="#0000FF"> As </font>Long
+  TrnsPlateOrnt3 = 7
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef3, TrnsPlateOrnt3
+
+  TrnsSuperplate.Run
+
+  <font color="#008000">'To Update the Part</font>
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

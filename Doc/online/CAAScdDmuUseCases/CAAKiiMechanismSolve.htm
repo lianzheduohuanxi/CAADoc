@@ -1,0 +1,158 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Solving a Mechanism for a Command Set</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Kinematics Simulator</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Solving a Mechanism for a Command Set</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to retrieve motion for a
+      moving part of a mechanism, after applying new command values. The macro
+      assumes that a CATProduct has been loaded, with one mechanism having at
+      least two commands.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>After running the macro, the moving part has been moved to its position
+      with the new command values.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAAKiiMechanismSolve is launched in CATIA [<a href="#References">1</a>].
+      You need to previously open the provided document.</p>
+      <p><a href="CAAKiiMechanismSolveSource.htm" target="Source">CAAKiiMechanismSolve.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAAKiiMechanismSolve.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAAKiiMechanismSolve includes five steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#MovingPart">Retrieve a moving part</a></li>
+        <li><a href="#CommandValues">Retrieve the current command values</a></li>
+        <li><a href="#Solve">Solve for other command values</a></li>
+        <li><a href="#Motion">Retrieve motion after solving and apply it</a></li>
+      </ol>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>Some variables are defined:</p>
+      <p>&nbsp;<i>dValcmd</i>: array of double to contain the command values.</p>
+      <p>&nbsp;<i>dMotion</i>: array of double to contain the part's motion as a
+      3x4 matrix.</p>
+      <p>&nbsp;<i>oRootProduct</i>: it represents the root of the product graph.</p>
+      <p>&nbsp;<i>cTheMechanisms</i>: it represents the mechanism collection for
+      this product. This collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Mechanisms&quot;</code>.</p>
+      <p>&nbsp;<i>oFirstMechanism</i>: it represents the first mechanism in the
+      collection.</p>
+      <h4>&nbsp;</h4>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="MovingPart"></a>Retrieve the number of moving parts, and the
+      first one</h4>
+      <p>The number of parts in a mechanism is obtained through the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'NbProducts'); return false;">NbProducts</a></code>
+      property.</p>
+      <p>The parts in a mechanism are obtained through the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'GetProduct'); return false;">GetProduct</a></code>
+      function, using an index ranging from 1 to <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'NbProducts'); return false;">NbProducts</a></code>
+      .</p>
+      <h4>&nbsp;</h4>
+ 	     <!----------------------------------comment------------------------------------->
+      <h4><a name="CommandValues"></a>Retrieve the current command values for
+      the mechanism</h4>
+      <p>The current command values of a mechanism are obtained as an array of
+      double, through the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'GetCommandValues'); return false;">GetCommandValues</a></code>
+      function.</p>
+      <p>The array to contain the command values must be declared with a
+      dimension equal to the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'NbCommands'); return false;">NbCommands</a></code>
+      property of the mechanism.</p>
+      <h4>&nbsp;</h4>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Solve"></a>Solve for other command values</h4>
+      <p>The command values array can be changed to other values using standard
+      operations.
+      <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'PutCommandValues'); return false;">PutCommandValues</a></code>
+      method allows to trigger solver operation for the new command values.</p>
+      <p>&nbsp;</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Motion"></a>Retrieve motion after solving and apply it</h4>
+      <p>The transformation for a moving part is obtained using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'GetProductMotion'); return false;">GetProductMotion</a></code>
+      method. The moving part given as input must be a product given by the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'GetProduct'); return false;">GetProduct</a></code>
+      function.</p>
+      <p>The transformation is a 3x4 matrix, coherent with expectations from the
+      <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Move', 'Apply'); return false;">Apply</a></code>
+      method of the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Move'); return false;">Move</a></code>
+      object.</p>
+
+      <!----------------------------------comment------------------------------------->
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to solve a mechanism, retrieve the motion for one
+part, and apply it. Specifically, it has illustrated how to :</p>
+<ul>
+  <li>retrieve the parts involved in a mechanism</li>
+  <li>retrieve the current command values</li>
+  <li>solve for new command values</li>
+  <li>retrieve the motion of a part</li>
+</ul>
+<p>You can derive a macro to apply the motion to all parts of a
+mechanism.However, solving a mechanism after applying motion to the parts is not
+supported in this release.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocKin.htm">DMU
+      Kinematics automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

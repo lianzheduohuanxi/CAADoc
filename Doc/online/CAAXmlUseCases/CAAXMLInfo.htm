@@ -1,0 +1,261 @@
+<html>
+
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Determining available parsers</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Determining Available Parsers</h3>
+			<em>Listing DOM and SAX parsers installed on a machine</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article shows how to determine at runtime if a given V5 XML
+			parser component is available.</p>
+			<ul>
+				<li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#UseCase"><strong>The CAAXMLInfo Use Case</strong></a>
+				<ul>
+					<li><a href="#What">What Does CAAXMLInfo Do</a></li>
+					<li><a href="#How">How to Launch CAAXMLInfo</a></li>
+					<li><a href="#Where">Where to Find the CAAXMLInfo Code</a></li>
+				</ul>
+				</li>
+				<li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to determine at runtime if a given V5 XML
+parser component is available.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAXMLInfo Use Case</h3>
+<p>The CAAXMLInfo Use Case is a use case of the CAAXMLParser.edu
+framework that illustrates XMLParser framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAXMLInfo Do</h4>
+<p>This use case gathers information about the parsers installed on the
+machine and prints a report in the console.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+DOM parsers on the host:
+XML4C version 5.0 : Installed
+XML4C version 3.0.1 : Installed
+MSXML version 5.0 : Installed
+MSXML version 4.0 : Installed
+MSXML version 3.0 : Installed
+SAX parsers on the host:
+XML4C version 5.0 : Installed
+XML4C version 3.0.1 : Installed
+MSXML version 5.0 : Installed
+MSXML version 4.0 : Installed
+MSXML version 3.0 : Installed
+</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAXMLInfo</h4>
+<p>To launch CAAXMLInfo, you will need to set up the build time
+environment, then compile CAAXMLInfo along with its prerequisites, set
+up the run time environment, and then execute the use case [<a
+	href="#References">1</a>].</p>
+<p>The use case should be launched as follows from the command line:</p>
+<pre>CAAXMLInfo </pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAXMLInfo Code</h4>
+<p>The CAAXMLInfo use case is made of one class located in the
+CAAXMLInfo.m module of the CAAXMLParser.edu framework:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>InstallRootDirectory\CAAXMLParser.edu\CAAXMLInfo.m\</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>InstallRootDirectory/CAAXMLParser.edu/CAAXMLInfo.m/</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the
+CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To check the availability of XML parsers, there are two main steps:</p>
+<table width="100%">
+	<tbody>
+		<tr>
+			<th>#</th>
+			<th>
+			<p align="left">Step</p>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step1">1</a></td>
+			<td valign="top">Check the Availability of V5 DOM Components</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step2">2</a></td>
+			<td valign="top">Check the Availability of V5 SAX Components</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1">Check the Availability of V5 DOM Components</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+HRESULT hr = ::DetectCATIXMLDOMDocumentBuilder(&domClsidArray[i], 1, implIndex);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To test the availability of V5 DOM components, use the <code>DetectCATIXMLDOMDocumentBuilder</code>
+function. This function takes the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>&domClsidArray[i]</code></td>
+			<td>An array of CLSID identifying the parsers you want to test for
+			availability.</td>
+		</tr>
+		<tr>
+			<td><code>1</code></td>
+			<td>The size of this array.</td>
+		</tr>
+		<tr>
+			<td><code>implIndex</code></td>
+			<td>The array index of the first available parser successfully
+			detected, returned by reference by the function.</td>
+		</tr>
+	</tbody>
+</table>
+<p>The function returns E_FAIL if no suitable parser has been found. For
+more details on V5 DOM components, see <a href="#Ref2">[2]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2">Check the Availability of V5 SAX Components</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+HRESULT hr = ::DetectCATIXMLSAXFactory(&saxClsidArray[i], 1, implIndex);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To test the availability of V5 SAX components, use the <code>DetectCATIXMLSAXFactory</code>
+function. This function takes the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>&saxClsidArray[i]</code></td>
+			<td>An array of CLSID identifying the parsers you want to test for
+			availability.</td>
+		</tr>
+		<tr>
+			<td><code>1</code></td>
+			<td>The size of this array.</td>
+		</tr>
+		<tr>
+			<td><code>implIndex</code></td>
+			<td>The array index of the first available parser successfully
+			detected, returned by reference by the function.</td>
+		</tr>
+	</tbody>
+</table>
+<p>The function returns E_FAIL if no suitable parser has been found. For
+more details on V5 DOM components, see <a href="#Ref2">[2]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows you how o determine at runtime if a given V5 XML
+parser component is available.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+			and Launching a CAA V5 Use Case</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlV5Overview.htm"> Using
+			XML in V5</a></td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [May 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

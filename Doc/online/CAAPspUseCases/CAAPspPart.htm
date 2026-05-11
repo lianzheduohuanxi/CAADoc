@@ -1,0 +1,389 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Part Connector Data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Part Connector Data</h3>
+      <em>How to access part connector data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspPart use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPspPart Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPspPart Do</a></li>
+            <li><a href="#How">How to Launch CAAPspPart</a></li>
+            <li><a href="#Where">Where to Find the CAAPspPart Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to obtain a physical part's
+connectors, add and remove a part connector to a physical part, and query the connectors.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspPart Use Case</h3>
+<p>CAAPspPart is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspPart Do</h4>
+<p>The goal of&nbsp; CAAPspPart is to show you how to use the
+CATPlantShipInterfaces methods to query and obtain part connector information.&nbsp;</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspPart</h4>
+<p>To launch CAAPspPart, you will need to set up the build time
+environment, then compile CAAPspPart along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspPart Code</h4>
+<p>CAAPspPart code is located in the CAAPspPart.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspPart.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspPart.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspPartMain.cpp and CAAPspPart.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in CAAPspPart:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Get Connectors">Retrieving a List of Part Connectors</a></li>
+  <li><a href="#Get Connector Data">Retrieving Part Connector Data</a></li>
+  <li><a href="#Remove/Add Connector">Removing and Adding a Part Connector</a></li>
+  <li><a href="#Modify Connector">Modifying Part Connector Data</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspPart code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.&nbsp;&nbsp;
+Initializing the environment involves the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv
+CAAPspBaseEnv::ApplicationInit</pre>
+    </td>
+  </tr>
+</table>
+<p>This method performs the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+  <li>Initializing the application using the <i>CATIPspApplication</i>
+    interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Connectors"></a>Retrieving a List of Part Connectors</h4>
+<p>The <i>CATIPspPhysicalProduct </i>interface is used to get the number of
+technological connectors belonging to a physical part and to retrieve a list of
+its connectors.&nbsp;&nbsp; In this sample, the <i>CATIPspPhysicalProduct </i>interface
+pointer is obtained from a physical part in the document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>if ( SUCCEEDED(piPhysProd-&gt;GetNumberOfConnectors(NumOfCtrs)) )
+          cout &lt;&lt; &quot;Number of connectors on part: &quot; &lt;&lt; NumOfCtrs &lt;&lt; endl;
+</pre>
+      <pre>if ( SUCCEEDED(piPhysProd-&gt;ListConnectors(NULL,&amp;piUnkList))
+            &amp;&amp; NULL != piUnkList )
+....</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Connector Data"></a>Retrieving Part Connector Data</h4>
+<p>The&nbsp; <i>CATIPspPartConnector</i> interface pointer is obtained from one
+of the technological connectors and used to get the following information:</p>
+<ul>
+  <li>Mechanical face connector associated to this technological connector</li>
+  <li>Mechanical alignment connector associated to this technological connector</li>
+  <li>Mechanical orientation connector associated to this technological
+    connector</li>
+  <li>Mechanical datum connector associated to this technological connector</li>
+  <li>Connector number in the context of the physical part it belongs to.</li>
+  <li>Connector position as a CATMathPoint</li>
+  <li>Connector align direction (outward normal to the face plane position associated with this connector)</li>
+  <li>Connector up direction (upward normal to the up plane position associated with this connector)</li>
+  <li>Plane containing the connector position, alignment and up directions</li>
+  <li>Connector face type</li>
+  <li>Connector alignment type</li>
+  <li>Connector clocking type</li>
+  <li>List of connector attribute names (nominal size, end style, rating, etc.)</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>       //----------------------------------------------------------------------
+       //  Get face connector pointer
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetFaceConnector(&amp;piUKFaceCtr)) )
+          cout &lt;&lt; &quot;Get face connector succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get alignment connector pointer
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetAlignmentConnector(&amp;piUKAlignCtr)) )
+          cout &lt;&lt; &quot;Get alignment connector succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get orientation connector pointer
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetOrientationConnector(&amp;piUKOrientCtr)) )
+          cout &lt;&lt; &quot;Get orientation connector succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get datum connector pointer
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetDatumConnector(&amp;piUKDatumCtr)) )
+          cout &lt;&lt; &quot;Get datum connector succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector number
+       //----------------------------------------------------------------------
+       if ( SUCCEEDED(piPartCntr-&gt;GetConnectorNumber(CtrNum)) )
+          cout &lt;&lt; &quot;Connector number: &quot; &lt;&lt; CtrNum &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector position
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetPosition(NULL,Position)) )
+          cout &lt;&lt; &quot;Get connector position succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector alignment direction
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetAlignmentDirection(NULL,Direction)) )
+          cout &lt;&lt; &quot;Get connector alignment direction succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector up direction
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetUpDirection(NULL,Direction)) )
+          cout &lt;&lt; &quot;Get connector up direction succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector math plane
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetConnectorMathPlane(NULL,MathPlane)) )
+          cout &lt;&lt; &quot;Get connector math plane succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector face type
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetFaceType(FaceCntrType)) )
+          cout &lt;&lt; &quot;Get connector face type succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector alignment type
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetAlignType(AlignCntrType)) )
+          cout &lt;&lt; &quot;Get connector alignment type succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector clocking type
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;GetClockType(ClockCntrType)) )
+          cout &lt;&lt; &quot;Get connector clocking type succeeded&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get connector attribute names
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piPartCntr-&gt;ListAttrNames(pAttrNameList))
+            &amp;&amp; NULL != pAttrNameList )
+       {
+          int iNum = pAttrNameList-&gt;Size();
+          cout &lt;&lt; &quot;Number of connector attributes: &quot; &lt;&lt; iNum &lt;&lt; endl;
+          for ( int i = 1; i &lt;= iNum; i++ )
+          {
+             CATUnicodeString AttrName = (*pAttrNameList)[i];
+             cout &lt;&lt; AttrName.ConvertToChar() &lt;&lt; endl;
+          }
+       }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Remove/Add Connector"></a>Removing and Adding a Part Connector</h4>
+<p>The <i>CATIPspPhysicalProduct </i>interface is also used to remove a
+technological connector from a physical part and to add a technological
+connector to a part.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>       //----------------------------------------------------------------------
+       //  Remove part connector on physical object
+       //----------------------------------------------------------------------   
+       if ( SUCCEEDED(piPhysProd-&gt;RemoveConnector(CtrNum)) )
+          cout &lt;&lt; &quot;Removed connector on part&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Add a new part connector to physical object
+       //----------------------------------------------------------------------   
+       if ( SUCCEEDED(piPhysProd-&gt;AddConnector(PartCtrType,
+            CtrNum, piUKFaceCtr, FaceCntrType, piUKAlignCtr,
+            AlignCntrType, piUKOrientCtr, ClockCntrType, &amp;piPartCntr)) )
+          cout &lt;&lt; &quot;Added a connector to part&quot; &lt;&lt; endl;
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Modify Connector"></a>Modifying Part Connector Data</h4>
+<p>The&nbsp; <i>CATIPspPartConnector</i> interface pointer is used to modify the
+part connector data:</p>
+<ul>
+  <li>Associate a mechanical face connector to a technological connector</li>
+  <li>Associate a mechanical alignment connector to a technological connector</li>
+  <li>Associate a mechanical orientation connector to a technological
+    connector</li>
+  <li>Associate a mechanical datum connector to a technological connector</li>
+  <li>Save a list of connector attribute names</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>     //-------------------------------------------------------------------
+     //  Set face connector pointer
+     //------------------------------------------------------------------- 
+     if ( SUCCEEDED(piPartCntr-&gt;SetFaceConnector(piUKFaceCtr,FaceCntrType)) )
+          cout &lt;&lt; &quot;Set face connector succeeded&quot; &lt;&lt; endl;
+
+     //-------------------------------------------------------------------
+     //  Set alignment connector pointer
+     //-------------------------------------------------------------------
+     if ( SUCCEEDED(piPartCntr-&gt;SetAlignmentConnector(piUKAlignCtr,AlignCntrType)) )
+          cout &lt;&lt; &quot;Set alignment connector succeeded&quot; &lt;&lt; endl;
+
+     //-------------------------------------------------------------------
+     //  Set orientation connector pointer
+     //-------------------------------------------------------------------
+     if ( SUCCEEDED(piPartCntr-&gt;SetOrientationConnector(piUKOrientCtr,ClockCntrType)) )
+        cout &lt;&lt; &quot;Set orientation connector succeeded&quot; &lt;&lt; endl;
+
+     //-------------------------------------------------------------------
+     //  Set datum connector pointer
+     //-------------------------------------------------------------------
+     if ( (NULL != piUKDatumCtr) &amp;&amp;
+	   SUCCEEDED(piPartCntr-&gt;SetDatumConnector(piUKDatumCtr)) )
+        cout &lt;&lt; &quot;Set datum connector succeeded&quot; &lt;&lt; endl;
+
+     //-------------------------------------------------------------------
+     //  Set connector attribute names
+     //-------------------------------------------------------------------
+     if ( SUCCEEDED(piPartCntr-&gt;SetAttrNames(pAttrNameList)) )
+        cout &lt;&lt; &quot;Set connector attribute names succeeded&quot; &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to obtain and
+modify part
+technological connector information.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Listing the technological connectors on a physical part</li>
+  <li>Adding and removing a technological connector</li>
+  <li>Querying and modifying technological connector information and attributes</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [March 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

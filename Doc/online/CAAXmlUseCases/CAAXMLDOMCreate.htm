@@ -1,0 +1,510 @@
+<html>
+
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating XML documents with DOM</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Creating XML Documents with DOM</h3>
+			<em>Creating a new XML document from scratch using the DOM API</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article shows how to create a new DOM tree from scratch using
+			the DOM API and how to save it to disk as an XML file.</p>
+			<ul>
+				<li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#UseCase"><strong>The CAAXMLDOMCreate Use Case</strong></a>
+				<ul>
+					<li><a href="#What">What Does CAAXMLDOMCreate Do</a></li>
+					<li><a href="#How">How to Launch CAAXMLDOMCreate</a></li>
+					<li><a href="#Where">Where to Find the CAAXMLDOMCreate Code</a></li>
+				</ul>
+				</li>
+				<li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to create XML documents from scratch using
+the DOM API. You will learn to create the most common XML constructs:
+document type declarations, elements, attributes, comments, and text
+nodes. You will learn how to save these constructs to disk to obtain an
+XML file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAXMLDOMCreate Use Case</h3>
+<p>The CAAXMLDOMCreate Use Case is a use case of the CAAXMLParser.edu
+framework that illustrates XMLParser framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAXMLDOMCreate Do</h4>
+<p>This use case creates a new XML document in memory, then saves it to
+disk under the specified name. Upon completion, you will obtain an XML
+file describing a car, created programmatically through DOM, with the
+following content:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;car>
+ &lt;!--list of parts for a convertible car-->
+ &lt;part name="seat" quantity="2">&lt;/part>
+ &lt;part name="wheel" quantity="4"/>
+ &lt;part name="engine" quantity="1">low consumption engine&lt;/part>
+ &lt;part name="body" quantity="1">weight must be &lt; 1200 kg&lt;/part>
+&lt;/car></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAXMLDOMCreate</h4>
+<p>To launch CAAXMLDOMCreate, you will need to set up the build time
+environment, then compile CAAXMLDOMCreate along with its prerequisites,
+set up the run time environment, and then execute the use case [<a
+	href="#References">1</a>].</p>
+<p>The use case should be launched as follows from the command line:</p>
+<pre>CAAXMLDOMCreate &lt;outfilepath></pre>
+<p>where <code>&lt;outfilepath></code> is the path of the XML file,
+which will be created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAXMLDOMCreate Code</h4>
+<p>The CAAXMLDOMCreate use case is made of one file located in the
+CAAXMLDOMCreate.m module of the CAAXMLParser.edu framework:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMCreate.m\</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMCreate.m/</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the
+CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a blank XML document, populate it and save it to disk,
+there are seven main steps:</p>
+<table width="100%">
+	<tbody>
+		<tr>
+			<th>#</th>
+			<th>
+			<p align="left">Step</p>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step1">1</a></td>
+			<td valign="top">Create the V5 DOM Component</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step2">2</a></td>
+			<td valign="top">Obtain the DOM Implementation</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step3">3</a></td>
+			<td valign="top">Use the DOM Implementation to Create a Document With
+			the Proper Document Type</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step4">4</a></td>
+			<td valign="top">Use the Document to Create Elements, Texts, and
+			Comments</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step5">5</a></td>
+			<td valign="top">Create the Tree Structure by Positionning the
+			Elements, Texts, and Comments with Respect to Each Other</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step6">6</a></td>
+			<td valign="top">Save the Document as an XML File</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step7">7</a></td>
+			<td valign="top">Manage Errors</td>
+		</tr>
+	</tbody>
+</table>
+<p>Please note that most of the APIs from the XMLParser framework return
+a <i>HRESULT</i>. To avoid excessive indentation of the code, which
+would cause poor readibility, the following coding style has been used:
+the whole code is put in a <code>do {} while(0)</code> loop; if one of the
+APIs returns a bad HRESULT, the execution is stopped with a <code>break</code>
+and the error handler is invoked.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+HRESULT hr = E_FAIL;
+do {
+    hr = XMLParserAPI_1();
+    if (FAILED(hr)) { break; }
+    hr = XMLParserAPI_2();
+    if (FAILED(hr)) { break; }
+    ...
+    hr = XMLParserAPI_N();
+    if (FAILED(hr)) { break; }
+} while(0);
+if (FAILED(hr)) {
+    // Error handling code.
+}</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1">Create the V5 DOM Component</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATIXMLDOMDocumentBuilder_var builder;
+HRESULT hr = <b>::CreateCATIXMLDOMDocumentBuilder</b>(builder);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>The first step to work with DOM is to instantiate the V5 DOM
+component. The V5 DOM component can be created by calling the <code>CreateCATIXMLDOMDocumentBuilder</code>
+global function. This function returns a V5 handler on the <i>CATIXMLDOMDocumentBuilder</i>
+interface, which is the main interface for the V5 DOM component. Using
+this interface you will be able to create documents (either from
+scratch, as here, or by parsing an existing XML file) and save existing
+documents to disk. Note that the code above does not specify the CLSID
+of the component to use, so the default DOM component (XML4C3) will be
+used. See <a href="#Ref3">[3] and <a href="#Ref4">[4]</a> if you want to
+use another V5 DOM component.</a></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2">Obtain the DOM Implementation</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATIDOMImplementation_var implementation;
+hr = builder-><b>GetDOMImplementation</b>(implementation);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To create document types and documents, one uses an object, which
+implements the <i>CATIDOMImplementation</i> interface. This object is
+obtained from the <i>CATIXMLDOMDocumentBuilder</i> by invoking its <code>GetDOMImplementation</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3">Use the DOM Implementation to Create a Document with
+the Proper Document Type</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATIDOMDocumentType_var docType;
+hr = implementation-><b>CreateDocumentType</b>("car", "", "automotive.dtd", docType);
+...
+
+CATIDOMDocument_var document;
+hr = implementation-><b>CreateDocument</b>("", "car", docType, document);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>The <i>CATIDOMImplementation</i> interface acts as a factory to
+create DOM document types and DOM documents. The <code>CreateDocumentType</code>
+creates a new document type declaration and accepts the following
+parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>"car"</code></td>
+			<td>The name of the root element</td>
+		</tr>
+		<tr>
+			<td><code>""</code></td>
+			<td>A public id (not used here)</td>
+		</tr>
+		<tr>
+			<td><code>"automotive.dtd"</code></td>
+			<td>The name of an external file, which contains all the grammatical
+			constructs</td>
+		</tr>
+		<tr>
+			<td><code>docType</code></td>
+			<td>the resulting document type returned by reference.</td>
+		</tr>
+	</tbody>
+</table>
+<p>Note that the <code>CreateDocumentType</code> method only creates the
+document type declaration (ie: the line <code>&lt;!DOCTYPE car SYSTEM
+"automotive.dtd">)</code>, not the external DTD file. Since such a file
+is not in XML, it is usually created by other means (a text editor or a
+more powerful tool) by the developer in charge of creating the grammar
+to describe the targeted domain.</p>
+<p>The <code>CreateDocument</code> method creates a new DOM document. It
+accepts the following parameters:</p>
+<table>
+	<tbody>
+		<tr>
+			<td><code>""</code></td>
+			<td>The namespace of root element</td>
+		</tr>
+		<tr>
+			<td><code>"car"</code></td>
+			<td>The name of the root element</td>
+		</tr>
+		<tr>
+			<td><code>docType</code></td>
+			<td>The previously created document type. Passing <code>NULL_var</code>
+			will cause the document type declaration to be omitted in the
+			generated XML</td>
+		</tr>
+		<tr>
+			<td><code>document</code></td>
+			<td>the resulting document returned by reference.</td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4">Use the Document to Create Elements, Texts, and
+Comments</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATIDOMElement_var car;
+hr = document-><b>CreateElement</b>("car", car);
+...
+CATIDOMElement_var seat;
+hr = document-><b>CreateElement</b>("part", seat);
+...
+CATIDOMElement_var engine;
+hr = document-><b>CreateElement</b>("part", engine);
+...
+hr = engine->SetAttribute("name", "engine");
+...
+hr = engine->SetAttribute("quantity", "1");
+...
+CATIDOMText_var engineText;
+hr = document-><b>CreateTextNode</b>("low consumption engine", engineText);
+...
+CATIDOMComment_var comment;
+hr = document-><b>CreateComment</b>("list of parts for a convertible car", comment);
+...</pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>The <i>CATIDOMDocument</i> interface acts as a factory to create
+all the other XML constructs: elements, text nodes, comments, processing
+instructions, etc. Elements can be created with the <code>CreateElement</code>
+method; text nodes can be created with the <code>CreateText</code> method;
+comments can be created with the <code>CreateComment</code> method. Each of
+these method returns a object, which implements the corresponding DOM
+interface (<i>CATIDOMElement</i>, <i>CATIDOMText</i>, <i>CATIDOMComment</i>).
+Using these interfaces, the created DOM nodes can then be further
+customized: for instance, calling the <code>SetAttribute</code> method of a
+<i>CATIDOMElement</i> lets you set the value of this element's
+attributes.</p>
+
+<p>Note that the DOM nodes, which we have created are just isolated
+building blocks at this stage. They are not yet attached to the DOM
+document. If we were to save the document at this point, they would not
+appear in the resulting XML file, since only the nodes, which are
+children of the document are actually saved.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5">Create the Tree Structure by Positionning the
+Elements, Texts, and Comments with Respect to Each Other</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+hr = document-><b>AppendChild</b>(car);
+...
+hr = car-><b>AppendChild</b>(seat);
+...
+hr = car-><b>AppendChild</b>(engine);
+...
+hr = engine-><b>AppendChild</b>(engineText);
+...
+hr = car-><b>InsertBefore</b>(comment, seat);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>In this step, we assemble the building blocks we have created in the
+previous step to create a DOM tree. The DOM API views XML documents as a
+tree of XML nodes. The root element of the XML document corresponds to
+the root of the DOM tree. The sub-elements of the root element are the
+children of this root node. We use the <code>AppendChild</code> and <code>InsertBefore</code>
+methods to nest the nodes with respect to one another.</p>
+
+<p>Note that the DOM API will perform tests on the fly to ensure that
+the resulting document is well-formed. If you try to perform the
+following operation, you will get a FAILED HRESULT with an associated
+CATDOMException warning you that the operation is impossible since it
+would break the DOM hierarchy.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>hr = comment->AppendChild(seat);
+// Will return E_FAIL since this would result in a not well-formed document</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>However, DOM does not guarantee validity. Nothing will prevent you to
+perform the following operation, which will result in a well-formed, but
+invalid XML document (a part element cannot contain car element as per
+the <code>automotive.dtd</code> grammar).</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>hr = seat->AppendChild(car);
+// Will return S_OK since DOM does not verify validity.</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6">Save the Document as an XML File</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+hr = builder-><b>WriteToFile</b>(document, outputFile);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To create the XML document, which corresponds to the DOM tree, call
+the <code>WriteToFile</code> method. It takes as a parameter the path of the
+XML document to be created.</p>
+
+<p>By default, the resulting document will use the default (UTF-8)
+encoding. Note that the "encoding" attribute will not be specified in
+the XML declaration. However, the XML specification indicates that if
+the encoding attribute is not specified, XML parsers should consider the
+document uses the UTF-8 encoding. See <a href="#Ref2">[2]</a> and <a
+	href="#Ref4">[4]</a> for more information on XML encodings.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7">Manage Errors</a></h4>
+<p>The XMLParser framework uses the <i>HRESULT</i> / <i>CATError</i> mechanism to
+manage errors. Make sure to use the <code>CATError::CATGetLastError</code>
+to obtain all the available error diagnostics when using XMLParser. More
+information about V5 error management is available here <a href="#Ref2">[2]</a>
+and <a href="#Ref4">[4]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows you how to create XML documents from scratch
+using the DOM API.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+			and Launching a CAA V5 Use Case</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</td>
+			<td><a href="../CAASysTechArticles/CAASysErrors.htm">
+			Managing Errors Using HRESULT</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref3"></a>[3]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlV5Overview.htm"> Using
+			XML in V5</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref4"></a>[4]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm">XML 
+            Tips and Tricks</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [May 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

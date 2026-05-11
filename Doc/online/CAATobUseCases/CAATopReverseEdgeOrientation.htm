@@ -1,0 +1,299 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Geometric Modeler</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Geometric Modeler</h1>
+		</td>
+		<td valign="top">
+		<h2>Topology</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Reversing the Orientation of an Edge</h3>
+		<p><em>How to Modify the Topology</em></p>
+		</td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This use case illustrates how to use the smart duplicator to modify the 
+		orientation of an edge.</p>
+		<p><strong>Note that it is not recommended to modify the orientation of 
+		an edge. As explained in this article, in order to modify the orientation 
+		of an edge, you must actually re-create an edge with a new orientation and 
+		re-adjust all the topology around this edge. It is not easy and requires 
+		a deep knowledge of the geometric modeler. The geometric modeler is not 
+		designed to be used that way. Topological operators create bodies with a 
+		consistent topology, it is far better to stick to topological operators 
+		when creating topology.</strong></p>
+		<ul>
+			<li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+			<li><a href="#UseCase"><strong>The CAATobReverseEdgeOrientation Use 
+			Case</strong></a>
+			<ul>
+				<li><a href="#What">What Does CAATobReverseEdgeOrientation Do?</a></li>
+				<li><a href="#How">How to Launch CAATobReverseEdgeOrientation
+				</a></li>
+				<li><a href="#Where">Where to Find the CAATobReverseEdgeOrientation 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+			<li><a href="#References"><strong>References</strong></a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn">What You Will Learn With This Use Case</a></h3>
+<p>This use case is intended to make you understand how to modify a topology by 
+using the CATSmartBodyDuplicator operator. It also illustrates how to manipulate 
+topological objects to change parameters such as matter sides or orientations.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAATobReverseEdgeOrientation Use Case</h3>
+<p>CAATobReverseEdgeOrientation is a use case of the CAATopologicalObjects.edu framework 
+that illustrates the NewTopologicalObjects framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAATobReverseEdgeOrientation Do?</h4>
+<p>The CAATobReverseEdgeOrientation use case:</p>
+<ul>
+	<li>loads the container and retrieves the edge to be reversed </li>
+	<li>reverses the edge orientation</li>
+	<li>writes the model and closes the factory. Note that, in this use case the 
+	output model is the same as the input model.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How">How to Launch CAATobReverseEdgeOrientation</a> </h4>
+<p>To launch CAATobReverseEdgeOrientation , you will need to set up the build time 
+environment, then compile CAATobReverseEdgeOrientation.m along with its prerequisites, 
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>With Windows CAATobReverseEdgeOrientation <code>e:/tobereversed.NCGM&quot; e:\outputFile.NCGM</code></p>
+<p>With UNIX CAATobReverseEdgeOrientation <code>/u/</code>tobereversed<code>.NCGM 
+e:\outputFile.NCGM</code></p>
+<p>where tobereversed.NCGM is an input file delivered in the CAATopologicalObjects.edu/FunctionTests/InputData 
+file and outputFile.NCGM the file where you want to store the created data.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>WWhere to Find the CAATobReverseEdgeOrientation Code</h4>
+<p>The CAATobReverseEdgeOrientation use case is made of a main named ReverseEdgeOrientationOpe.cpp 
+located in the CAATobReverseEdgeOrientation .m module of the CAATopologicalObjects.edu 
+framework:</p>
+<table>
+	<tr>
+		<td>Windows</td>
+		<td><code>InstallRootDirectory\CAATopologicalObjects.edu\CAATobReverseEdgeOrientation	.m\</code></td>
+	</tr>
+	<tr>
+		<td>Unix</td>
+		<td><code>InstallRootDirectory/CAATopologicalObjects.edu/CAATobReverseEdgeOrientation	.m/</code></td>
+	</tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step">Step-by-Step</a></h3>
+<p>There are three main steps in ReverseEdgeOrientation.cpp: </p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Loading the container and retrieving 
+	the edge to be reversed </a></li>
+	<li><a href="#Analyzing">Reversing the edge orientation</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the model 
+	and closing the factory</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates the Geometry Factory">Loading the Container and Retrieving 
+the Edge to Be Reversed </h4>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular). In this use case, the factory is defined 
+by reading a NCGM file that was previously stored, the global function
+<code>::CATLoadCGMContainer</code> must be used to retrieve the factory. The edge 
+is retrieved by using the CATICGMContainer::FindObjectFromTag method. 456 is the 
+edge tag.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);...
+CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag( 456  ); 
+CATEdge* piEdge = (CATEdge *) piCGMObj1;
+</pre>
+		</td>
+	</tr>
+</table>
+<p>Here is the input model. The edge to be reversed is highlighted.</p>
+<p><img alt="" src="images/reverseEdge.gif" width="361" height="304"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Analyzing">Reversing the edge orientation</a></h4>
+<p>If the edge is modified, the loop which contents this edge as well as the face 
+on which this edge relies on have to be modified. The consistency of the whole topology 
+must be achieved.</p>
+<p>This is what you have to do:</p>
+<ol>
+	<li>Touch the edge to be reversed, &quot;smart duplicate&quot; the initial body and retrieve 
+	the duplicated edge, face and loop. You can turn to
+	<a href="CAATobSmartDuplicator.htm">Using the Smart Duplicator</a> for more 
+	information on how to use the CATSmartBodyDuplicator operator.
+	<table class="code">
+		<tr>
+			<td>
+			<pre>  
+CATBody * copBody = piGeomFactory-&gt;CreateBody();
+CATSmartBodyDuplicator * smartDuplicator = 
+copBody-&gt;CreateSmartDuplicator(piBody, topdata);
+if (smartDuplicator == NULL) return (1); 
+smartDuplicator-&gt;SetFullDuplication(1);  <span class="style1">// you duplicate the link</span>
+smartDuplicator-&gt;Run();
+// Retrieve the duplicated edge
+CATEdge * duplicatedEdge= (CATEdge *)smartDuplicator-&gt;GetDuplicatedCell(piEdge);
+...
+CATFace * duplicatedFace= (CATFace *)smartDuplicator-&gt;GetDuplicatedCell(piFace);
+...
+CATLoop * duplicatedLoop= (CATLoop *)smartDuplicator-&gt;GetDuplicatedDomain(piLoop);
+...
+     </pre>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>Create a new edge with an opposite direction (for more information on how 
+	to create edges and associate geometry with topology, refer to
+	<a href="CAATobTetra.htm">Using the TopologicalObjects</a>).
+	<table class="code">
+		<tr>
+			<td>
+			<pre>  
+// Create a new edge
+CATEdge * ReplEdg = copBody -&gt; CreateEdge();
+// Associate the new edge with a geometry and reversed curve orientation
+ReplEdg -&gt; SetCurve(ecrv, -EdgVsECrv); // Associate the new edge with a geometry and reversed orientation
+...
+for ( k=0; k&lt;2; k++) {
+	ReplEdg -&gt; AddBoundingCell(EndVtx[1-k], NaturalSide[k], 0, OldEndPoec[1-k]);
+}
+EndVtx[0] -&gt; SetGeometryOnEdge(ReplEdg, CATSideRight, OldEndPoec[0]);
+EndVtx[1] -&gt; SetGeometryOnEdge(ReplEdg, CATSideLeft,  OldEndPoec[1]);
+     </pre>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>Replace the old edge with the new edge in the duplicated loop by adding 
+	a new edge and removing the old one.<pre>CATLONG32 Rank = duplicatedLoop -&gt; GetCellRank(duplicatedEdge, &amp;ori);
+// Insert the new edge at the same rank
+duplicatedLoop -&gt; InsertEdge(ReplEdg, Rank, -ori);
+// Remove the old edge
+duplicatedLoop -&gt; RemoveCell(duplicatedEdge); 
+ </pre>
+	</li>
+	<li>Invert the matter side with respect to the face
+	<pre>CATSide curside = piEdge-&gt;GetSideOnFace(piFace) ;  // the previous side
+// Invert the side
+if(curside  ==  CATSideRight) 
+{ newside = CATSideLeft;}
+else if (curside  ==  CATSideLeft) 
+{ newside = CATSideRight;}
+... 
+ReplEdg -&gt; SetSideOnFace(duplicatedFace, newside);
+ </pre>
+	</li>
+	<li>Reset the new edge orientation vs the underlying PCurve
+	<pre>CATEdgeCurveIterator EdgeCurveIterator(ecrv);
+CATCurve * CurCurve = NULL;
+CATPCurve  * CurPCurve = NULL;
+while ( ( CurCurve = EdgeCurveIterator.Next() )  )
+	{
+	...
+	ReplEdg -&gt; SetGeometryOnFace(duplicatedFace,
+		newside,
+		CurPCurve); 
+		}</pre>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>] </p>
+<h4><a name="Writes the Model and Closes the Factory">Writing the Model and Closing 
+the Factory</a></h4>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pFileName1, ios::binary ) ;
+#else
+   ofstream filetowrite(pFileName1,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <em>//
+ // Close the container
+ //</em>
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References">References</a></h3>
+<table width="100%">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Jan 200 9 ]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2009, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

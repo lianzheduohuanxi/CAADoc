@@ -1,0 +1,322 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a CAA V5 Use Case for Automation</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Rules and Standards</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a CAA V5 Use Case for Automation</h2>
+      <em>How to write, document and test a sample for automation.</em></td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td class="use">CAA V5 Generic Use Cases</td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------------------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td bgcolor="#F0F0FF">
+      <h3>Abstract</h3>
+      <p>This article shows how to create a CAA V5 Automation use case. Such use
+      cases are aimed to help understanding the use of CAA V5 automation
+      objects.
+      <ul>
+        <li><a href="#100000"><strong>What You Will Learn in this Use Case</strong></a></li>
+        <li><a href="#FileTree"><b>File Tree description</b></a></li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------------------------------------------------->
+
+<h3><a name="100000"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to write, document and test a CAA
+V5 automation use case. It will then discuss integration in CAA V5 as well as in
+interactive products documentation.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------------------------------------------------->
+
+<h3><a name="FileTree"></a>File Tree description</h3>
+<p>As for C++, use cases are created in specific modules. Only two frameworks
+will be created:</p>
+<p align="center"><img border="0" src="images/FileTreeSample.jpg" width="572" height="456"></p>
+<p align="left">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------------------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>Prior to the creation of your sample, a suitable doc module must exist, as
+described in the File Tree. A sample is then created in 5 steps:</p>
+<blockquote>
+  <ol>
+    <li><a href="#CATScript">Create the CAScript file</a></li>
+    <li><a href="#ViewSource">Generate an html view</a></li>
+    <li><a href="#Document">Document the CATScript file</a></li>
+    <li><a href="#Plantest">Create a test case</a></li>
+    <li><a href="#Integrate">Integrate it in the tocs</a></li>
+  </ol>
+</blockquote>
+<h5><a name="CATScript">1. Create the CATScript file</a></h5>
+<p>&nbsp;The CATScript file must follow the CAA V5 rules for automation code [<a href="#References">1</a>]
+and must be as much as possible stand alone.&nbsp;</p>
+<p>That means that prerequisite models may have to be loaded by the sample (no
+effect if they are already loaded) and for that purpose picked in the doc view.
+The doc view is retrieved in the CATDocView environment variable.&nbsp;</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...<font color="#008000">
+' -----------------------------------------------------------
+' Optional: allows to find the sample wherever it's installed</font> <font color="#0000ff">
+Dim </font>sDocPath<font color="#0000ff"> As </font>String
+sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000ff">If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000ff"> Then
+   </font> Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000ff">End If</font> <font color="#008000">
+' -----------------------------------------------------------
+' Open the Part document </font>
+<font color="#0000ff"> Dim </font>oPartToDraw<font color="#0000ff"> As </font>PartDocument 
+<font color="#0000ff">Dim </font>sFilePath<font color="#0000ff"> As </font>String
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAADriScriptUseCases\samples\Cube.CATPart&quot;)
+<font color="#0000ff">Set </font>oPartToDraw = CATIA.Documents.Open(sFilePath)
+...</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+&nbsp;
+<p>the address of the CATPart is the concatenation of the value of CATDocView
+and its relative address in the documentation view.&nbsp;For this purpose use
+the <code>FileSystemObjet::ConcatenatePaths</code> method that allows to get a
+valid path on any platform (some automation services can't deal with path
+containing at the same time &quot;/&quot; and &quot;\&quot; characters).</p>
+<p>Depending on your targeted platforms, test your macro on NT and/or Unix. To
+do that, you will need to correct the value of CATDocView which is not correctly
+set by mkrun:</p>
+<p>on Unix:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>&gt; mkrun -c ksh
+&gt; SETCATENV -k CATDocView=&lt;myWorkspace/Doc&gt;</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;On windows:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>&gt; mkrun -c cmd
+&gt; SETCATENV -k CATDocView=&lt;myWorkspace\Doc&gt;</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>This macro has to be delivered in the src/sample directory of your module.</p>
+<h5><a name="ViewSource">2. Generate an html view</a></h5>
+<p>Once the CATScript macro works, use the CAAScrColorizeVBMacro utility to
+create a html version of your CATScript:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>&gt; CAAScrColorizeVBMacro mySample.CATScript</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>This html version is created in the same directory as the macro, and its name
+is mySample<b>Source.htm</b>. To deliver it, move it to the src directory. You
+wil then be able to copy/paste part of its content in the use case
+documentation.</p>
+<h5><a name="Document">3. Document the CATScript file</a></h5>
+<p>You will then create a mySample.htm file explaining the sample. Its content
+is about the same as a C++ sample, the presentation slightly changes to fit
+requirements of interactive products documentation:</p>
+<p><img border="0" src="images/scrdcosampleC1.jpg" width="719" height="333"></p>
+<p>When commenting a piece of source code:</p>
+<ul>
+  <li>indicate cut in sequence of lines with continuation point: ...</li>
+  <li>explain what are variables whose declaration is not visible</li>
+  <li>use a bold font for object, methods and properties names.&nbsp;</li>
+  <li>Create hyperlinks <b>once in the file on the main objects targeted by the
+    use case</b>. This link can be of two kinds:
+    <p>either an object description exists (for example:
+    CAADriTechArticles.doc/src/CAADriObjDrawingView.htm) and you can directly
+    point on this file.</p>
+    <p>if no such description exists, point to the mkdcidl generated
+    documentation using the following syntax for your hyperlink href field:</li>
+  <pre>    href=&quot;#&quot; onclick=&quot;javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDocument'); return false;&quot;</pre>
+  for a method, just add the name of the method as a new argument:
+  <pre>    href=&quot;#&quot; onclick=&quot;javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDocument', 'Sheets'); return false;&quot;</pre>
+</ul>
+<p><img border="0" src="images/scrdcosampleC2.jpg" width="719" height="307"></p>
+<h5><a name="Plantest">4. Create a test case</a></h5>
+<p>You must deliver a test case for your macro. As there is no test framework
+associated to CAA automation, you must create it in a CAA C++ test framework.</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>################################################################
+# Look for the documentation built directory that contains the
+# samples and Correct the misdefinition of DocView by SetCATENV ... 
+################################################################
+
+DOC_SAMPLE_PATH=$(WhichDir Doc/online/CAAScdDriUseCases)
+[ ! -d $DOC_SAMPLE_PATH ] &amp;&amp; type CNEXT &amp;&amp; exit $?
+...</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>First, find where the data you need to access (CATScript, CATPart, ...) are.
+Your sample data should be located in a single module or in modules of dependant
+frameworks.&nbsp;At Release Project level, a DocView is often not available when
+running ODTs, the second line so tests for the existence of this directory, <code>type
+CNEXT</code>&nbsp; allows to keep the test case pertinent.</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...
+<font color="#000000">ONLINE=$(dirname $DOC_SAMPLE_PATH)
+DOC_VIEW=$(dirname $ONLINE)
+SETCATENV -k CATDocView=$DOC_VIEW -e $CATDefaultEnvironment
+</font>...</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>If your macro is using files form the documentation view, you need to find
+this documentation view and correct the mkrun environment. For this purpose we
+use the <i>whichdir</i> utility that comes with <i>mkodt</i>. And then the <i>SETCATENV</i>
+administration utility.</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...
+CAAScrPreproVBMacro ${DOC_SAMPLE_PATH}${ADL_ODT_SLASH}macros${ADL_ODT_SLASH}CAADriCreateView.CATScript 
+${ADL_ODT_OUT}${ADL_ODT_SLASH}CAADriCreateView.CATScript
+...</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>If your sample is using MsgBox or InputBox or does not close all files, which
+is generally the case, you will need to preprocess your macro in order to avoid
+the batch execution to hang up on an end user interaction.</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...
+################################################################
+# Execute CNEXT in batch mode with a possible initial mode
+################################################################
+
+CNEXT -batch -macro ${ADL_ODT_OUT}${ADL_ODT_SLASH}CAADriCreateView.CATScript
+exit $?</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>You can then lauch <i>CNEXT</i> and request the execution of the macro. The
+-batch option is required, it will end the <i>CNEXT</i> session after the
+execution of your macro.&nbsp;</p>
+<p>If your macro does not load all files that it needs for execution, you can
+request them to be loaded prior to the execution of the macro:</p>
+<table bgcolor="#E0E0E0" width="100%">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...
+################################################################
+# Execute CNEXT in batch mode with a possible initial mode
+################################################################
+
+CNEXT -batch ${DOC_SAMPLE_PATH}${ADL_ODT_SLASH}samples${ADL_ODT_SLASH}myPart.CATPart 
+-macro ${ADL_ODT_OUT}${ADL_ODT_SLASH}CAADriCreateView.CATScript
+exit $?</pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p>If your sample is requiring interactive selection, this does'nt apply and you
+will need to create a record.</p>
+<h5><a name="Integrate">5. Integrate it in the tocs</a></h5>
+<p>Your sample must be integrated in a table of content of CAA V5
+(CAAScriptDoc.edu/CAAScdBase.doc) <b>and</b> in a table of content of the
+interactive documentation (xxxEnglish/xxxjg.doc).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<! ---------------------------------------------------------------------------->
+
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to write, document and test a CAA V5 automation
+sample.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------------------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><font size="2"><a name="[1]">[1]</a></font></td>
+    <td><font size="2"><a href="../CAAScrTechArticles/CAAScrScriptCodePresentation.htm">CAA
+      V5 Code Presentation Rules for Automation</a>, <a href="../CAAScrTechArticles/CAAScrScriptCodingRules.htm">CAA
+      V5 Coding rules for Automation</a></font></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------------------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>1.1</strong> [Sep 2002]</font></td>
+    <td valign="top"><font size="2">• Update with use&nbsp; of <code>ConcatenatePaths</code>
+      for Unix/Windows portability</font></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>1</strong> [Apr 2000]</font></td>
+    <td valign="top"><font size="2">• Document created</font></td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

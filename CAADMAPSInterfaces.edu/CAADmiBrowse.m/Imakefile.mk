@@ -1,0 +1,10 @@
+#
+# COPYRIGHT DASSAULT SYSTEMES 1999
+#
+
+BUILT_OBJECT_TYPE= LOAD MODULE
+
+LINK_WITH= CATProcessInterfaces \
+           CATObjectModelerBase \
+           JS0GROUP
+

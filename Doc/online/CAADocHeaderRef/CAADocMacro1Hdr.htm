@@ -1,0 +1,156 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATMacForIUnknown</title>
+</head>
+
+<body>
+
+<pre>
+#ifndef __CATMacForIUnknown
+#define __CATMacForIUnknown
+
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U1
+ */
+
+#include <stdio.h>
+#include "JS0CORBA.h"
+#include "CATFillDictionary.h"
+#include "CATMetaClass.h"
+
+#ifdef _WINDOWS_SOURCE
+#define Exported __declspec(dllexport)
+#define Imported __declspec(dllimport)
+#else
+#define Exported 
+#define Imported 
+#endif
+
+...
+/**
+ * Continues an extension declaration sequence.
+ * &lt;b&gt;Role&lt;/b&gt;: Declares that the current class is an extension of the <tt>impl</tt> class.
+ * To be used in conjunction with the @href CATBeginImplementClass macro to begin
+ * the extension declaration sequence and
+ * @href CATEndImplementClass macro to end it.
+ * Use this macro in the class source (.cpp) file.
+ * Do not end it with a semicolon.
+ * @param impl
+ *   The implementation class for which the current class is an extension
+ */
+#define CATAddClassExtension(impl)					\
+meta_object->SetExtensionOf(fct_FindMetaObject(#impl))
+
+
+/**
+ * Declares an implementation or extension class.
+ * &lt;b&gt;Role&lt;/b&gt;: Declares that the current class is either
+ * an implementation or an extension class.
+ * The class must derive from @href CATBaseUnknown.
+ * Use this macro in the class header file in conjunction with @href CATImplementClass
+ * in the class source (.cpp) file.
+ * End it with a semicolon.
+ */
+#define CATDeclareClass							\
+...
+
+/**
+ * Begins an extension declaration sequence.
+ * &lt;b&gt;Role&lt;/b&gt;: Begins a macro sequence for &lt;tt&gt;Class&lt;/tt&gt; to declare that it implements
+ * interfaces as an extension of the &lt;tt&gt;Impmeta&lt;/tt&gt; class.
+ * Replaces the @href CATImplementClass macro when &lt;tt&gt;Class&lt;/tt&gt; extends several
+ * implementation classes.
+ * To be used in conjunction with the @href CATAddClassExtension macro to declare other
+ * extended implementation classes and 
+ * @href CATEndImplementClass macro to end the extension declaration sequence.
+ * Use this macro in the &lt;tt&gt;Class&lt;/tt&gt; source (.cpp) file.
+ * Do not end it with a semicolon.
+ * @param Class
+ *   The current extension class
+ * @param Typeofclass
+ *   The extension type
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: it can be set to &lt;tt&gt;DataExtension&lt;/tt&gt;,
+ *   &lt;tt&gt;CodeExtension&lt;/tt&gt; or &lt;tt&gt;CacheExtension&lt;/tt&gt;
+ * @param Basemeta
+ *   The class from which &lt;tt&gt;Class&lt;/tt&gt; OM-derives.
+ *   &lt;br&gt;&lt;b&gt;Legal values:&lt;/b&gt;: must be set to @href CATBaseUnknown or &lt;tt&gt;CATNull&lt;/tt&gt;
+ * @param Impmeta
+ *   The implementation class for which &lt;tt&gt;Class&lt;/tt&gt; is an extension
+ */
+#define CATBeginImplementClass(Class,Typeofclass,Basemeta,Impmeta)	\
+...
+
+/**
+ * Ends an extension declaration sequence.
+ * &lt;b&gt;Role&lt;/b&gt;: Ends the declaration sequence for the &lt;tt&gt;Class&lt;/tt&gt; class which implements
+ * interfaces as an extension of several other implementation classes.
+ * To be used in conjunction with @href CATBeginImplementClass macro to begin
+ * the extension declaration sequence and
+ * @href CATAddClassExtension macro to declare other
+ * extended implementation classes.
+ * Use this macro in the &lt;tt&gt;Class&lt;/tt&gt; source (.cpp) file.
+ * Do not end it with a semicolon.
+ * @param Class
+ *   The current extension class
+ */
+#define CATEndImplementClass(Class)					\
+...
+
+/**
+ * Continues an extension declaration sequence.
+ * &lt;b&gt;Role&lt;/b&gt;: Declares that the current class is an extension of the &lt;tt&gt;impl&lt;/tt&gt; class.
+ * To be used in conjunction with the @href CATBeginImplementClass macro to begin
+ * the extension declaration sequence and
+ * @href CATEndImplementClass macro to end it.
+ * Use this macro in the class source (.cpp) file.
+ * Do not end it with a semicolon.
+ * @param impl
+ *   The implementation class for which the current class is an extension
+ */
+#define CATAddClassExtension(impl)					\
+meta_object-&gt;SetExtensionOf(fct_FindMetaObject(#impl))
+
+
+/**
+ * Declares an implementation or extension class.
+ * &lt;b&gt;Role&lt;/b&gt;: Declares that the current class is either
+ * an implementation or an extension class.
+ * The class must derive from CATBaseUnknown.
+ * Use this macro in the class source (.cpp) file in conjunction with @href CATDeclareClass
+ * in the class header file.
+ * End it with a semicolon.
+ * @param Class
+ *   The name of the class
+ * @param Typeofclass
+ *   The class type.
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: it can be set to &lt;tt&gt;Implementation&lt;/tt&gt;, &lt;tt&gt;DataExtension&lt;/tt&gt;,
+ *   &lt;tt&gt;CodeExtension&lt;/tt&gt; or &lt;tt&gt;CacheExtension&lt;/tt&gt;
+ * @param Basemeta
+ *   The class from which &lt;tt&gt;Class&lt;/tt&gt; OM-derives.
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: it makes sense for implementation classes only.
+ *   Set it to the name of the base class for an implementation, and to
+ *   @href CATBaseUnknown or &lt;tt&gt;CATNull&lt;/tt&gt; for the three extension types
+ * @param Impmeta
+ *   The class for which &lt;tt&gt;Class&lt;/tt&gt; is an extension.
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: it makes sense for extension classes only.
+ *   Set it to the implementation class name for the three extension types,
+ *   and to &lt;tt&gt;CATNull&lt;/tt&gt; for an implementation
+ */
+#define CATImplementClass(Class,Typeofclass,Basemeta,Impmeta)		\
+CATBeginImplementClass(Class,Typeofclass,Basemeta,Impmeta);		\
+CATEndImplementClass(Class)
+
+#endif
+</pre>
+
+</body>
+
+</html>

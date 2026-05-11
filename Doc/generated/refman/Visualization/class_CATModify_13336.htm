@@ -1,0 +1,260 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Visualization Class CATModify</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../Visualization.htm" href="../Visualization.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "Visualization";	}
+		function getCurrentObjectName() { 
+ 	return "CATModify"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>Visualization <script type="text/javascript" > writeClassCharacteristic(); </script> CATModify</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATModify_13336','CATModify','0');</script>
+<p><b>Usage: you can derive this class.</b></p>
+<hr>
+<p>
+ public class <b>CATModify</b>
+</p>
+<p>
+<b><i> Class representing basic type of visualization event concerning any type of modification of one object.</i></b><br>
+
+ 
+ <b>Role</b>: this event describes the object you want to modify and also the way you want it to processed thru
+ the IID of a given interface. When one object is modified and needs to regenerate its graphical representations, it just
+ has to send a <script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script> event to warn all its visualized graphical representations. And the visualization  architecture provides two ways to process any 
+<script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script> event: <ul>
+  <li>A default one whose result is that all its graphical representations will be destroyed and then rebuilt thru 
+ the 
+<script type="text/javascript"> activateLinkAnchor('CATIVisu','BuildRep','CATIVisu.BuildRep') </script> method of the visualization extensions of the object </li>  <li>A customized one: before any processing of a CATModify event, each visualization extension of the object is first called  thru the 
+<script type="text/javascript"> activateLinkAnchor('CATExtIVisu','ModifyRep','CATExtIVisu.ModifyRep') </script> method. If no processing is done by this method, the default processing is performed. Then you can take hand within the 
+<script type="text/javascript"> activateLinkAnchor('CATExtIVisu','ModifyRep','CATExtIVisu.ModifyRep') </script> method of your visualization extension to process the object the way you want and take advantage of the IID enclosed in the 
+<script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script> event to distinguish your specific event from the other 
+<script type="text/javascript"> activateLinkAnchor('CATModify','','CATModify') </script> events. </li> </ul>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATExtIVisu','','CATExtIVisu') </script>, <script type="text/javascript"> activateLinkAnchor('CATIVisu','','CATIVisu') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATModify(void*,int)"><b>CATModify</b></a>(void*,int)
+<dd>  Constructs the class from a pointer.
+ <dt> o 
+    <a href="#CATModify(CATBaseUnknown*,IID&amp;,int)"><b>CATModify</b></a>(CATBaseUnknown*,IID&amp;,int)
+<dd>  Constructs the class from a pointer to one object and an IID.
+ <dt> o 
+    <a href="#~CATModify()"><b>~CATModify</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Clone()"><b>Clone</b></a>()
+<dd>   Returns a pointer to a new CATModify event which is the clone of the current one.
+ <dt> o 
+    <a href="#GetInterfaceIID()"><b>GetInterfaceIID</b></a>()
+<dd>  Returns the interface IID.
+ <dt> o 
+    <a href="#IsRepWillDie()"><b>IsRepWillDie</b></a>()
+<dd>  Returns an integer used to optimize the processing of this event
+ if no graphical representations are to be destroyed.
+</dl>
+<dl>
+</dl>
+<dl>
+ <h2>Data Member Index</h2> <br>
+ <dt> o 
+    <a href="#_interfaceIID"><b>_interfaceIID</b></a>
+<dd>  interface IID.
+ <dt> o 
+    <a href="#_repWillDie"><b>_repWillDie</b></a>
+<dd>  integer used to optimize the processing of this event if no graphical representations are to be destroyed.
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATModify"></a><a name="CATModify(void*,int)"></a> <dt> o <b>CATModify</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATModify</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iModelId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iRepWillDie</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs the class from a pointer.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iModelId</tt>
+   <dd>    the pointer.
+ </dd>
+    <dt><tt> iRepWillDie</tt>
+   <dd> <br><b> Legal Values </b> : 
+ <ol>
+ <li> 0 : if no graphical representation will be destroyed </li>
+ <li> 1 : if one or several graphical representations will be destroyed when the current event is processed</li>
+</ol>
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATModify"></a><a name="CATModify(CATBaseUnknown*,IID&amp;,int)"></a> <dt> o <b>CATModify</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATModify</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iObject</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('IID','IID&amp;')</script> <td><tt>iInterfaceName</tt><td><tt>=CATBaseUnknown::ClassId()</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iRepWillDie</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs the class from a pointer to one object and an IID.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iObject</tt>
+   <dd>   the pointer to one object.
+
+ </dd>
+    <dt><tt> iInterfaceName</tt>
+   <dd>   the interface iid.
+
+ </dd>
+    <dt><tt> iRepWillDie</tt>
+   <dd> an integer using to optimize the processing of this event if no graphical representations are to be destroyed.
+ Default value is 1.
+ <br><b> Legal Values </b> : 
+ <ol>
+ <li> 0 : if no graphical representation will be destroyed </li>
+ <li> 1 : if one or several graphical representations will be destroyed when the current event is processed</li>
+</ol>
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATModify"></a><a name="~CATModify()"></a> <dt> o <b>~CATModify</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATModify</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Clone"></a><a name="Clone()"></a> <dt> o <b>Clone</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATModelNotification','CATModelNotification*')</script>  <b>Clone</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns a pointer to a new CATModify event which is the clone of the current one.
+</dl>
+<a name="GetInterfaceIID"></a><a name="GetInterfaceIID()"></a> <dt> o <b>GetInterfaceIID</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('IID','const IID &')</script>  <b>GetInterfaceIID</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the interface IID.
+</dl>
+<a name="IsRepWillDie"></a><a name="IsRepWillDie()"></a> <dt> o <b>IsRepWillDie</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>IsRepWillDie</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns an integer used to optimize the processing of this event
+ if no graphical representations are to be destroyed.
+ <br><b> Legal Values </b> : 
+ <ol>
+ <li> 0 : if no graphical representation will be destroyed </li>
+ <li> 1 : if one or several graphical representations will be destroyed when the current event is processed</li>   
+</ol>
+</dl>
+ <h2>Data Members</h2> <br>
+<a name="_interfaceIID"></a> <dt> o <b>_interfaceIID</b>
+<pre>
+  protected const IID &_interfaceIID</dt>
+</pre>
+<dl>
+  <dd>
+ interface IID.
+</dl>
+<a name="_repWillDie"></a> <dt> o <b>_repWillDie</b>
+<pre>
+  protected int _repWillDie</dt>
+</pre>
+<dl>
+  <dd>
+ integer used to optimize the processing of this event if no graphical representations are to be destroyed.
+</dl>
+<hr>
+ This object is included in the file: <b>CATModify.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATVisualization</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

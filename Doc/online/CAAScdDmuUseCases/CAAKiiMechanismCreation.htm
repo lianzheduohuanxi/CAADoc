@@ -1,0 +1,465 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Simple Mechanism</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Kinematics Simulator</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Simple Mechanism</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to create a very simple
+      mechanism, including joint, fixed part and commands, so that you can
+      simulate it afterwards. The macro assumes that a CATProduct has been
+      loaded, with 2 parts, each containing a line object .</p>
+      <p align="center"><img border="0" src="images/CAAKiiMechanismCreation1-sm.gif"></p>
+      <!----------------------------------comment------------------------------------->
+      <p>After running the macro, the document contains a mechanism, with one
+      joint, one fixed part, and two commands.</p>
+      <p align="center"><img border="0" src="images/CAAKiiMechanismCreation2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAAKiiMechanismCreation is launched in CATIA [<a href="#References">1</a>].
+      You need to previously open the provided document.</p>
+      <p><a href="CAAKiiMechanismCreationSource.htm" target="Source">CAAKiiMechanismCreation.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAAKiiMechanismCreation.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAAKiiMechanismCreation includes five steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Mechanism">Creation of the mechanism</a></li>
+        <li><a href="#FixedPart">Creation of the fixed part</a></li>
+        <li><a href="#Joint">Creation of the joint</a></li>
+        <li><a href="#Command">Creation of the commands</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>Some constants are initialized :&nbsp;</p>
+      <p><i>oRootProduct</i>: it represents the root of the product graph.&nbsp;</p>
+      <p><i>oFixedProduct</i>: one of the parts of the assembly. It is
+      initialized with the first child of the root product through <i>RootProduct.Product.Item(1)</i>.</p>
+      <p>Two references are created using a string describing the path from the
+      root product to a geometric object. The syntax for references is described
+      in the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Reference'); return false;">Reference</a>
+      </code>object documentation.</p>
+      <p>&nbsp;</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Mechanism"></a>Creation of the mechanism</h4>
+      <p>&nbsp;<i>cTheMechanisms</i>: it represents the mechanism collection for
+      this product. This collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Mechanisms&quot;</code>,</p>
+      <p>&nbsp;The <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanisms', 'Add'); return false;">Add</a></code>
+      method is used on the <i>cTheMechanisms</i> collection to create the <i>oNewMechanism</i>
+      object.</p>
+      <p>&nbsp;Some properties and side methods for collections are demonstrated
+      at this level: <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanisms', 'Count'); return false;">Count</a></code>,
+      <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanisms', 'Item'); return false;">Item</a></code>.</p>
+      <h4>&nbsp;</h4>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="FixedPart"></a>Creation of the fixed part</h4>
+      <p>A product is used to define the fixed part of the mechanism, using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'FixedPart'); return false;">FixedPart</a></code>
+      property.</p>
+      <h4>&nbsp;</h4>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Joint"></a>Creation of the joint</h4>
+      <p>Creating a joint is done by using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'AddJoint'); return false;">AddJoint</a></code>
+      method on the mechanism. The method requires a string representing the
+      type of joint to be created, and an array of <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Reference'); return false;">References</a></code>
+      to geometric objects to be used to locate the joint.</p>
+      <p>The following table summarizes the strings and geometric objects to be
+      used for the supported joint types.</p>
+      <p>Note that for example &quot;Line (1)&quot; means that the geometry type
+      must be a line and must belong to the 1st product of the joint.</p>
+      <table>
+        <tr>
+          <td>
+            <table border="1">
+              <tr>
+                <th>Joint type</th>
+                <th>Degree of freedom</th>
+                <th>Type string</th>
+                <th>Reference.1</th>
+                <th>Reference.2</th>
+                <th>Reference.3</th>
+                <th>Reference.4</th>
+                <th>Reference.5</th>
+                <th>Reference.6</th>
+                <th>Reference.7</th>
+                <th>Reference.8</th>
+              </tr>
+              <tr>
+                <td>Prismatic</td>
+                <td>1T</td>
+                <td>CATKinPrismaticJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>Plane (1)</td>
+                <td>Plane (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Revolute</td>
+                <td>1R</td>
+                <td>CATKinRevoluteJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>Plane (1)</td>
+                <td>Plane (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Rigid</td>
+                <td>-</td>
+                <td>CATKinRigidJoint</td>
+                <td>Product (1)</td>
+                <td>Product (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Spherical</td>
+                <td>3R</td>
+                <td>CATKinSphericalJoint</td>
+                <td>Point (1)</td>
+                <td>Point (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>PointCurve</td>
+                <td>3R+1T</td>
+                <td>CATKinPointCurveJoint</td>
+                <td>Point (1)</td>
+                <td>Curve (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>RollCurve</td>
+                <td>1R+1T</td>
+                <td>CATKinRollCurveJoint</td>
+                <td>Curve (1)</td>
+                <td>Curve (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>SlideCurve</td>
+                <td>1R+1T</td>
+                <td>CATKinSlideCurveJoint</td>
+                <td>Curve (1)</td>
+                <td>Curve (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Cylindrical</td>
+                <td>1R+1T</td>
+                <td>CATKinCylindricalJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Screw</td>
+                <td>1T or 1R</td>
+                <td>CATKinScrewJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Universal</td>
+                <td>3R</td>
+                <td>CATKinUJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>Line (1 or 2), optional</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>CVJoint</td>
+                <td>5R</td>
+                <td>CATKinCVJoint</td>
+                <td>Line (1)</td>
+                <td>Line (2)</td>
+                <td>Line (3)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>PointSurface</td>
+                <td>3R+2T</td>
+                <td>CATKinPointSurfaceJoint</td>
+                <td>Point (1)</td>
+                <td>Surface (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Planar</td>
+                <td>1R+2T</td>
+                <td>CATKinPlanarSurfaceJoint</td>
+                <td>Plane (1)</td>
+                <td>Plane (2)</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Gear</td>
+                <td>2R (coupled)</td>
+                <td>CATKinGearJoint</td>
+                <td>Line (1)</td>
+                <td>Line (3)</td>
+                <td>Plane (1)</td>
+                <td>Plane (3)</td>
+                <td>Line (2)</td>
+                <td>Line (3)</td>
+                <td>Plane (2)</td>
+                <td>Plane (3)</td>
+              </tr>
+              <tr>
+                <td>Rack</td>
+                <td>1R + 1T (coupled)</td>
+                <td>CATKinRackJoint</td>
+                <td>Line (1)</td>
+                <td>Line (3)</td>
+                <td>Plane (1)</td>
+                <td>Plane (3)</td>
+                <td>Line (2)</td>
+                <td>Line (3)</td>
+                <td>Plane (2)</td>
+                <td>Plane (3)</td>
+              </tr>
+              <tr>
+                <td>Cable</td>
+                <td>2T (coupled)</td>
+                <td>CATKinCableJoint</td>
+                <td>Line (1)</td>
+                <td>Line (3)</td>
+                <td>Plane (1)</td>
+                <td>Plane (3)</td>
+                <td>Line (2)</td>
+                <td>Line (3)</td>
+                <td>Plane (2)</td>
+                <td>Plane (3)</td>
+              </tr>
+            </table>
+            <br>
+            <b>Notes :</b><br>
+            <dir>
+              <li>for Prismatic Joint : Plane 1 must contain Line 1 and Plane 2
+                must contain Line 2
+              <li>for Revolute Joint : Line 1 must be normal to Plane 1 and Line
+                2 must be normal to Plane2
+              <li>for Universal Joint : Connector 3 is the cross-pin axis. It
+                must belong to product 1 or 2 and must be orthogonal to Line (1)
+                or Line (2). <b>it is optional.</b>
+              <li>for CV Joint : the angle between Line (1) and Line (2) must be
+                the same as the angle between Line (2) and Line (3)
+              <li>for Gear Joint : it is seen as a Revolute joint between
+                Product 1 and Product 3, and a Revolute joint between Product 2
+                and Product 3
+              <li>for Rack Joint : it is seen as a Prismatic joint between
+                Product 1 and Product 3, and a Revolute Joint between Product 2
+                and Product 3
+              <li>for Cable Joint : it is seen as a Prismatic joint between
+                Product 1 and Product 3, and a Prismatic Joint between Product 2
+                and Product 3
+            </dir>
+            <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'NbJoints'); return false;">NbJoints</a></code>
+            property of the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism'); return false;">Mechanism</a></code>
+            allows to get the count of joints.</p>
+            <p>&nbsp;</p>
+            <!----------------------------------comment------------------------------------->
+            <h4><a name="Command"></a>Creation of the commands</h4>
+            <p>In the example, a single cylindrical joint is created. Two
+            commands are required to simulate this mechanism.</p>
+            <p>The type name for commands is <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'MechanismCommand'); return false;">MechanismCommand</a></code>.
+            <p>Creating a command is done by using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'AddCommand'); return false;">AddCommand</a></code>
+            method on the mechanism. The method requires a string representing
+            the type of command to be created, and the joint that must be
+            driven.</p>
+            <p>The following table summarizes the strings and joints objects to
+            be used for the supported command types:</p>
+            <table border="1">
+              <tr>
+                <th>Joint type</th>
+                <th>CATKinAngleCommand</th>
+                <th>CATKinLengthCommand</th>
+              </tr>
+              <tr>
+                <td>Revolute</td>
+                <td>YES</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Prismatic</td>
+                <td>-</td>
+                <td>YES</td>
+              </tr>
+              <tr>
+                <td>Spherical</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Cylindrical</td>
+                <td>YES</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Planar</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Rigid</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>PointCurve</td>
+                <td>-</td>
+                <td>YES</td>
+              </tr>
+              <tr>
+                <td>RollCurve</td>
+                <td>-</td>
+                <td>YES</td>
+              </tr>
+              <tr>
+                <td>SlideCurve</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </table>
+            <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Mechanism', 'NbCommands'); return false;">NbCommands</a></code>
+            property of the mechanism allows to get the count of commands.</p>
+            <p>&nbsp;</p>
+            <!----------------------------------comment------------------------------------->
+      </table>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+      <!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a very simple mechanism, so that it can
+be simulated. Specifically, it has illustrated how to:</p>
+<ul>
+  <li>retrieve the mechanisms' collection</li>
+  <li>create a mechanism, its joints, commands and fixed part</li>
+  <li>analyze structural properties of the mechanism</li>
+</ul>
+<p>You can derive a standard mechanism creation for any mechanism structure from
+this use case plus some knowledge on wireframe and/or knowledgeware macro
+resources.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocKin.htm">DMU
+      Kinematics Automation Objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

@@ -1,0 +1,568 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>About NURBS</title>
+
+</head>
+
+<body>
+
+<table width="100%">
+   <tr>
+      <td valign="top">
+
+      <h1>Geometric Modeler</h1>
+
+      </td>
+      <td valign="top">
+
+      <h2>Geometry</h2>
+
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>About NURBS</h3>
+      <em>Concepts and CGM Implementation</em></td>
+   </tr>
+   <tr>
+      <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+   <tr>
+      <td>
+      <h3>Abstract</h3>
+      <p>The NURBS model is now widely used in the CAD word to define curves and surfaces. It is the
+      result of a continuous improvement of the curve and surface mathematical models. We first
+      introduce the NURBS model and the objects it manages: knot vector, basis of functions, control
+      points. Then, we describe how the Bézier points and Bernstein basis, uniform B-Splines,
+      non-uniform B-Splines models can be seen as particular cases of the general NURBS model. We
+      finally show how to use NURBS curves and surfaces in CGM.
+      <ul>
+         <li>
+            <a href="#Introduction"><strong>Introduction</strong></a></li>
+         <li>
+            <a href="#The NURBS Model"><strong>The NURBS Model</strong></a>
+            <ul>
+               <li>
+                  <a href="#NURBS Curve Definition">NURBS Curve Definition</a></li>
+               <li>
+                  <a href="#Knot Vector">Knot Vector</a></li>
+               <li>
+                  <a href="#Properties">Properties</a></li>
+               <li>
+                  <a href="#NURBS Surfaces">NURBS Surfaces</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#From the General NURBS Model to Particular Cases"><strong>From the General
+            NURBS Model to Particular Cases</strong></a>
+            <ul>
+               <li>
+                  <a href="#Non Uniform Polynomial B-Splines (NUPBS)">Non Uniform Polynomial
+                  B-Splines: NUPBS</a></li>
+               <li>
+                  <a href="#Uniform Polynomial B-Spline (UPBS)">Uniform B-Splines: UPBS</a></li>
+               <li>
+                  <a href="#Bernstein Basis and Bézier Points">Bernstein Basis and Bézier Points</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#The NURBS in CGM"><strong>The NURBS in CGM</strong></a>
+            <ul>
+               <li>
+                  <a href="#CATKnotVector">CATKnotVector</a></li>
+               <li>
+                  <a href="#CATNurbsCurve">CATNurbsCurve</a></li>
+               <li>
+                  <a href="#CATNurbsSurface">CATNurbsSurface</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#InShort"><strong>In Short</strong></a></li>
+         <li>
+            <strong><a href="#References">References</a></strong></li>
+      </ul>
+      </td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>The mathematical model of a curve is the description of the geometric form that the user wants to
+design in a way that can be handled by a CAD system. Ideally, a totally free curve in the 3D space
+has many infinitely degrees of freedom: it is the juxtaposition of an infinite number of points, and
+this is unusable for a CAD system. The mathematical model allows the CAD system to handle curves
+with a finite number of data. But it also put constraints on the objects it models: all the curves
+cannot be expressed with one model. We see here a key point of the mathematical model: it has to be
+judiciously chosen to be able to model as many types of curve representations as possible, with as
+less data as possible, in a as simple manner as possible.</p>
+<p>A curve is a mono-parameterized element: the three Cartesian coordinates of a point of the curve
+are functions of one variable called parameter. The mathematical model for a line is simple: the
+coordinate functions are linear with the parameter. To model more complex curves, mathematical
+models use polynomial functions basis to expressed the coordinates functions. The way the polynomial
+function basis is chosen greatly influences the properties of the curves such as their continuity.
+The NURBS definition results of a continuous improvement of the development of these basis.</p>
+<p>What has been described on curves also applies to surfaces. It the reason why, for a matter of
+simplicity, we present here the case of the curves. A specific discussion on the surfaces is
+proposed, but the general scheme is not run again for them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="The NURBS Model"></a>The NURBS Model</h3>
+<p>The NURBS (Non Uniform Rational B-Spline) model proposes the definition of a curve as a piecewise
+rational polynomial function of the <strong>parameter</strong> <em>u</em>. See <a href="#References">[1]</a>
+for a complete description of this model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="NURBS Curve Definition"></a>NURBS Curve Definition</h4>
+<p>A NURBS curve is defined by <strong>control points</strong> <em>Pi, i=0..n</em>, which influence
+is weighted by <strong>rational polynomial functions</strong> <em>Ri, i=0..n</em> (dependent on the
+parameter) and <strong>weights</strong> <em>wi, i=0..n</em> (independent on the parameter). The
+rational polynomial functions <em>Ri</em> are defined by the means of a <strong>basis</strong>,
+called B-Spline basis, set of piecewise polynomial functions <em>Nik, i=0..n</em>, of same <strong>degree</strong>
+<em>k</em>. The degree of the NURBS curve is the degree of the polynomial functions.</p>
+<p><img src="images/NurbsEquations1.gif" alt="NurbsEquations1.gif (2585 bytes)" width="479" height="119"></p>
+<p>The definition of the basis <em>Nik</em> is uniquely determined by a <strong>knot vector</strong>.
+The pieces of the basis polynomial functions are called <strong>arcs</strong>. They represent an
+interval for the parameter values to calculate a segment of shape.</p>
+<p>The control points are not, in general, points of the NURBS curve. By convention however, the
+first and last control points are the begin and end point of the curve respectively, except for the
+periodic NURBS curves. These control points can be seen as an attracting zone for the curve, which
+influence is weighted as seen previously.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Knot Vector"></a>Knot Vector</h4>
+<p>The knot vector is the way to state the definition of the basis. In particular, it manages the
+continuity between the different arcs of the basis functions, and, hence, the curves that use it.
+The knot vector is a set of non decreasing parameter values <em>(t_0,..,t_m)</em>, called <strong>knot
+values</strong> or <strong>knots</strong>. The B-Spline basis is recursively defined as follows,
+with <em>i=0,..,n</em>:</p>
+<p><img src="images/NurbsEquations2.gif" alt="NurbsEquations2.gif (2205 bytes)" width="479" height="119"></p>
+<p>with the following conventions:</p>
+<p><img src="images/NurbsEquations6.gif" alt="NurbsEquations6.gif (1919 bytes)" width="479" height="119"></p>
+<p>The relation between the number of knots (<em>m+1</em>), the degree (<em>k</em>) of <em>Nik</em>
+and the number of control points (<em>n+1</em>) is given as follows:</p>
+<p align="center"><em>m = (n+1) + k</em></p>
+<p>Knot values are non-decreasing, so a knot vector can have knots with the same value. In this
+case, the knot is called <strong>multiple</strong>, and its multiplicity is the number of
+repetitions of the same value. There are as many arcs as knots of different values plus one. If the
+increment is always 1, the knot vector is called <strong>uniform</strong>.</p>
+<p>The multiplicity is a way to specify the <strong>continuity order</strong> between the arcs.
+Hence, there is a relation between the multiplicity and this continuity order:
+<ol>
+   <li>
+      For an internal knot value (neither the first, nor the last), the continuity order is the
+      degree minus the multiplicity. As a consequence, the multiplicity of a knots cannot be
+      strictly greater then the degree.</li>
+   <li>
+      By convention, for a non periodic basis (open curve), each extreme knot value has a
+      multiplicity equal to the degree plus one.</li>
+   <li>
+      For a periodic basis (they are used to model closed curves), the first point applies for all
+      knots. Moreover, the first and last multiplicities are the same.</li>
+</ol>
+<p>The following table summarizes these relations:</p>
+
+<table>
+   <tr>
+      <td></td>
+      <td>Multiplicity (<tt>m</tt>)</td>
+      <td>Continuity order</td>
+   </tr>
+   <tr>
+      <td>internal knot values</td>
+      <td><tt>1 &lt;= m &lt;= degree</tt></td>
+      <td><tt>Degree-m</tt></td>
+   </tr>
+   <tr>
+      <td>extreme knot values for a non periodic basis</td>
+      <td><tt>degree+1 </tt>(by convention)</td>
+      <td><tt>(-1)</tt></td>
+   </tr>
+   <tr>
+      <td>same first and last multiplicities for a periodic basis</td>
+      <td><tt>1 &lt;= m &lt;= degree</tt></td>
+      <td><tt>Degree-m</tt></td>
+   </tr>
+</table>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Example 1</td>
+      <td>Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1<br>
+      In this case, there are 4 control points</td>
+   </tr>
+</table>
+
+<table border="0" width="100%">
+   <caption><a name="Fig 1"></a>Fig. 1: Illustration of Example 1</caption>
+   <tr>
+      <td width="50%"><img src="images/Nurbs2.gif" alt="Nurbs2.gif (4065 bytes)" width="479" height="359"></td>
+      <td width="50%">The green curve has four control points (CP1 to CP4).
+      <p>If you move CP3 to CP3', the curve is attracted by this new points.</p>
+      <p>Notice two important properties of this kind of NURBS, called Bezier arc:
+      <ul>
+         <li>
+            The curve is inside the convex hull of the control points</li>
+         <li>
+            The curve is tangent to the segment joigning the first and second control points at the
+            beginning of the curve, and to the segment joining the last and next to last control
+            points at its end.</li>
+      </ul>
+      </td>
+   </tr>
+</table>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Example 2</td>
+      <td>Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9<br>
+      In this case, there are 6 control points</td>
+   </tr>
+</table>
+
+<table border="0" width="100%">
+   <caption><a name="Fig. 2"></a>Fig. 2: Illustration of Example 2</caption>
+   <tr>
+      <td width="50%"><img src="images/Nurbs1.gif" alt="Nurbs1.gif (4942 bytes)" width="479" height="359"></td>
+      <td width="50%">The green curve is an example of non uniform polynomial B-Spline curve, having
+      the knot vector of the example 2. The weight of each control point is 1.
+      <p>If you assign (1,1,10,20,5,1) to the control points, it gives the red curve. This curve is
+      attracted by the control points CP3 and CP4, that are more weighted than the others.</p>
+      <p>These curves have three arcs: CP1-K1, K1-K2, K2-CP2.</td>
+   </tr>
+</table>
+
+<p>According to the definition, it is possible to create NURBS curves that are only C0 or C1
+continuous. Despite of this fact, remember that the CGM geometric operators suppose that the
+geometry is at least C2 continuous.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Properties"></a>Properties</h4>
+<ul>
+   <li>
+      The NURBS provides a unified mathematical model for representing
+      <ul>
+         <li>
+            analytic shapes (such as conics or quadric surfaces, that cannot be handled by the
+            Bézier model, by uniform B-Splines or non uniform B-Splines)</li>
+         <li>
+            free form entities, used to design car bodies for example.</li>
+      </ul>
+   </li>
+   <li>
+      Their model easily manages the continuity between the arcs, and their algorithm are fast and
+      numerically stable.</li>
+   <li>
+      Their are invariant under common geometric transformations such as translations and rotations.</li>
+   <li>
+      They generalize the concepts of uniform B-Splines and Bézier curves and surfaces.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="NURBS Surfaces"></a>NURBS Surfaces</h4>
+<p>A NURBS surface is defined in a similar way, by moving from one parameter to two parameters. The
+arcs become <strong>patches</strong>. The parametric definition of the surface is:</p>
+<p><img src="images/NurbsEquations3.gif" alt="NurbsEquations3.gif (2134 bytes)" width="479" height="119"></p>
+<p>As for the curve, the NURBS surface model handles the continuity, through the multiplicity of the
+knots, but now, two knot vectors are needed, one for each direction of the surface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="From the General NURBS Model to Particular Cases"></a>From the General NURBS Model to
+Particular Cases</h3>
+<p>The NURBS model is the result of a continuous improvement of the function basis definition. We
+recall here the evolution of the different models that leads to the generalized concept of NURBS.
+Only definitions for curves are given, the definitions for surfaces being defined in a similar way.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Non Uniform Polynomial B-Splines (NUPBS)"></a>Non Uniform Polynomial B-Splines (NUPBS)</h4>
+<p>A NUPBS curve is defined by <strong>control points</strong> <em>Pi, i=0..n</em>, which influence
+is directly (and only) weighted by the polynomial functions <em>Nik, i=0..n</em> (dependent on the
+parameter). These polynomial functions are still defined by the knot vector.</p>
+<p><img src="images/NurbsEquations4.gif" alt="NurbsEquations4.gif " width="479" height="119"></p>
+<p>As for the NURBS, this gives a flexible way to define arcs and the continuity between them. But
+now, NUPBS cannot model the conics as for the NURBS.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Uniform Polynomial B-Spline (UPBS)"></a>Uniform Polynomial B-Spline (UPBS)</h4>
+<p>This is a particular case of NUPBS:
+<ul>
+   <li>
+      the internal knots multiplicity is 1</li>
+   <li>
+      the extreme knots multiplicity is the degree plus 1</li>
+   <li>
+      the difference between two internal knots is always 1.</li>
+</ul>
+<p>In this case, the basis becomes uniform. The continuity between the arcs cannot be changed: it is
+always the degree minus 1, and there is now a direct relation between the number of arcs (<em>l</em>)
+and the number of control points (<em>n+1</em>)</p>
+<p align="center"><em>l = n - k</em></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Bernstein Basis and Bézier Points"></a>Bernstein Basis and Bézier Points</h4>
+<p>NURBS, NUPS, UPBS have a common feature: the continuity between arcs is managed, with more or
+less flexibility, by the model with the knot vector. The arcs definitions are linked together. Now,
+the Bernstein-Bézier model defines a basis for one arc. To define a curve with several arcs, you
+have to connect arcs, each arc being independent on its neighbors. Hence, the continuity is not
+managed by the model, you have to put constraints between the different arcs to insure it.</p>
+<p>The parametric equation of an arc of degree <em>k</em> and the functions of the basis are as
+follows:</p>
+<p><img src="images/NurbsEquations5.gif" alt="NurbsEquations5.gif " width="479" height="119"></p>
+<p>The control points <em>Pi</em> are called Bézier points.</p>
+<p>The transformation of a NURBS curve into a Bernstein-Bézier curve amounts to increase the
+multiplicity of the knots until having a C0 continuity. Conversely, the transformation of a
+Bernstein-Bézier curve into a NURBS curve amounts to build a knot vector for which the knots have a
+multiplicity equal to the degree.</p>
+<p><a href="#Fig 1">Fig. 1</a> displays examples of Bézier arcs.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The NURBS in CGM"></a>The NURBS in CGM</h3>
+<p>Two interfaces and a class manage the NURBS model in CGM: the CATNurbsCurve and CATNurbsSurface
+interfaces and the CATKnotVector class.</p>
+<p>Note: Periodic NURBS are not supported.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATKnotVector"></a>CATKnotVector</h4>
+<p>This class handles the knot vector definition. Instances of this class are transient, they cannot
+be directly stored. However, they are saved as private data of the curve and surface, of which they
+are the B-Spline basis definition. The knot vector is defined as compressed, that is to say that,
+for evident numerical reasons, all the knots have different values and their multiplicity is managed
+by a specific array. Hence, a CATKnotVector has the following definition:</p>
+
+<table border="2" width="100%">
+   <tr>
+      <td>long</td>
+      <td>Degree</td>
+      <td>The degree of the B-Spline basis functions</td>
+   </tr>
+   <tr>
+      <td>CATBoolean</td>
+      <td>IsPeriodic</td>
+      <td>1 for a periodic basis (not supported): the parameter domain is unlimited. If <tt>Delta=
+      LastKnotValue - FirstKnotValue</tt>, the evaluations at <tt>Parameter + Delta</tt> and <tt>Parameter</tt>
+      are the same.<br>
+      0 otherwise</td>
+   </tr>
+   <tr>
+      <td>CATBoolean</td>
+      <td>IsUniform</td>
+      <td>1 in case of equally spaced knot values.<br>
+      0 otherwise.</td>
+   </tr>
+   <tr>
+      <td>long</td>
+      <td>NbOfKnots</td>
+      <td>The size of the compressed knot vector ( <tt>=NbOfArcs + 1)</tt></td>
+   </tr>
+   <tr>
+      <td>long</td>
+      <td>Knots</td>
+      <td>The array of the knots</td>
+   </tr>
+   <tr>
+      <td>long</td>
+      <td>Multiplicities</td>
+      <td>The array of the multiplicity of a knot value</td>
+   </tr>
+</table>
+
+<p>In the case of the two previous examples, this leads to:</p>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Example 1</td>
+      <td>Knot vector of one arc of degree 3: 0 0 0 0 1 1 1 1</td>
+   </tr>
+</table>
+
+<table border="2" cellspacing="0">
+   <tr>
+      <td>Degree</td>
+      <td>IsPeriodic</td>
+      <td>IsUniform</td>
+      <td>NbOfKnots</td>
+      <td>Knots</td>
+      <td>Multiplicities</td>
+   </tr>
+   <tr>
+      <td align="center">3</td>
+      <td align="center">0</td>
+      <td align="center">1</td>
+      <td align="center">2</td>
+      <td align="center">0 1</td>
+      <td align="center">4 4</td>
+   </tr>
+</table>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Example 2</td>
+      <td>Non uniform knot vector, 3 arcs of degree 3, C2 continuity: 0 0 0 0 2 8 9 9 9 9<br>
+      In this case, there are 6 control points</td>
+   </tr>
+</table>
+
+<table border="2" cellspacing="0">
+   <tr>
+      <td>Degree</td>
+      <td>IsPeriodic</td>
+      <td>IsUniform</td>
+      <td>NbOfKnots</td>
+      <td>Knots</td>
+      <td>Multiplicities</td>
+   </tr>
+   <tr>
+      <td align="center">3</td>
+      <td align="center">0</td>
+      <td align="center">0</td>
+      <td align="center">4</td>
+      <td align="center">0 2 8 9</td>
+      <td align="center">4 1 1 4</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATNurbsCurve"></a>CATNurbsCurve</h4>
+<p>Note: Periodic NURBS are not supported.</p>
+<p>This interface manages the NURBS curves in CGM. As a NURBS curve is a kind of curve, it inherits
+all the properties of the CGM curves (CATCurve, see [<a href="#References">2</a>]). It is defined as
+follows:</p>
+
+<table border="2" width="100%">
+   <tr>
+      <td>CATKnotVector</td>
+      <td><tt>KnotVector</tt></td>
+      <td>The knot vector for the polynomial basis definition</td>
+   </tr>
+   <tr>
+      <td>CATMatSetOfPoints</td>
+      <td><tt>Vertices</tt></td>
+      <td>The set of control points</td>
+   </tr>
+   <tr>
+      <td>CATBoolean</td>
+      <td><tt>IsRational</tt></td>
+      <td>1 if the NURBS is rational, else 0</td>
+   </tr>
+   <tr>
+      <td>double[]</td>
+      <td><tt>Weigths</tt></td>
+      <td>The weigths array if <tt>IsRational</tt></td>
+   </tr>
+</table>
+
+<p>By default, the CATNurbsCurve constructor adapts the parametrization of the knots, according to
+the length of the curve. Hence, if you ask for the CATKnotVector of a NURBS curve you have just
+created, you find different data for the knots. If you want that your curve keeps the initial
+parameterization, set the <tt>CATParameterizationOption</tt> to <tt>CatKeepParameterization</tt>
+(optional argument).</p>
+<p>To design NURBS curves defined in the space of a surface, use the CATPNurbsCurve interface: in
+this case, a control point has two coordinates, its parameter values in the space of the surface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATNurbsSurface"></a>CATNurbsSurface</h4>
+<p>Note: Periodic NURBS are not supported.</p>
+<p>This interface manages the NURBS surfaces in CGM. As a NURBS surface is a kind of surface, it
+inherits all the properties of the CGM surfaces (CATSurface, see <a href="#References">[3]</a>). It
+is defined as follows:</p>
+
+<table border="2" cellspacing="0">
+   <tr>
+      <td>CATKnotVector</td>
+      <td><tt>UKnotVector</tt></td>
+      <td>The knot vector for the polynomial basis definition on the surface first direction</td>
+   </tr>
+   <tr>
+      <td>CATKnotVector</td>
+      <td><tt>VKnotVector</tt></td>
+      <td>The knot vector for the polynomial basis definition on the surface second direction</td>
+   </tr>
+   <tr>
+      <td>CATMatSetOfPoints</td>
+      <td><tt>Vertices</tt></td>
+      <td>The set of control points</td>
+   </tr>
+   <tr>
+      <td>CATBoolean</td>
+      <td><tt>IsRational</tt></td>
+      <td>1 if the NURBS is rational, else 0</td>
+   </tr>
+   <tr>
+      <td>double[]</td>
+      <td><tt>Weigths</tt></td>
+      <td>The weigths array if <tt>IsRational</tt></td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+   <li>
+      The NURBS model is an industry standard tool for the representation and design of geometry.</li>
+   <li>
+      They are the result of a continuous improvement of the polynomial function basis definition.</li>
+   <li>
+      CGM handles the NURBS curves through the CATNurbsCurve interface, the NURBS surfaces through
+      the CATNurbsSurface interface and the knot vector definition with the CATKnotVector class.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+
+<table width="100%">
+   <tr>
+      <td>[1]</td>
+      <td>The NURBS book- Les Piegl, Wayne Tiller- Springer 1995</td>
+   </tr>
+   <tr>
+      <td>[2]</td>
+      <td><a href="Curves.htm">The Curves of CATIA Geometric Modeler</a></td>
+   </tr>
+   <tr>
+      <td>[3]</td>
+      <td><a href="Surfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+      <td valign="top">Document created</td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

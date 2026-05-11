@@ -1,0 +1,279 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating and Modifying an Assembly Hole</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Assembly</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating and Modifying an Assembly Hole</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create an assembly hole
+      and valuate its parameters.</p>
+      <p>This macro opens the <a href="samples/AssemblyHole.CATProduct">AssemblyHole.CATProduct</a>
+      document that contains three parts: a skeletton, Skeletton.CATPart, and
+      two plates, Plaque1.CATPart and Plaque2.CATPart.<br>
+      It retrieves each <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a>
+      object corresponding to the product instances in the assembly and the <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'Sketch');return false;"><i>Sketch</i></a>
+      object which will define the position of the assembly hole. It creates an <a href="#" onclick="javascript:CAAlink('IDL', 'CATAssemblyInterfaces', 'AssemblyHole');return false;"><i>AssemblyHole</i></a>
+      object in the assembly. It sets the main parameters of the new <a href="#" onclick="javascript:CAAlink('IDL', 'CATAssemblyInterfaces', 'AssemblyHole');return false;"><i>AssemblyHole</i></a>
+      object. To finish the whole assembly is updated.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAAsmCreateAssyHole is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAAsmCreateAssyHoleSource.htm">CAAAsmCreateAssyHole.CATScript</a>
+      is located in the CAAScdAsmUseCases module. <a href="macros/CAAAsmCreateAssyHole.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p align="center">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAAsmCreateAssyHole includes the following steps:</p>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Create">Creating Assembly Hole</a></li>
+        <li><a href="#Parameters">Setting Assembly Hole parameters</a></li>
+      </ol>
+      <h4><a name="prolog"></a>Prolog</h4>
+      <p>The macro first loads AssemblyHole.CATProduct that contains three
+      parts: a skeletton, Skeletton.CATPart, and two plates, Plaque1.CATPart and
+      Plaque2.CATPart.</p>
+      <p align="center"><img border="0" src="images/AssyHoleBefore.jpg" width="673" height="470"></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------</font>
+<font color="#008000">' Get the different products</font>
+<font color="#008000">' --------------------------</font>
+
+<font color="#0000FF">Dim </font>oRootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oRootProduct = CATIA.ActiveDocument.Product
+
+<font color="#0000FF">Dim </font>oSkeletton<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oSkeletton = oRootProduct.Products.Item  ( &quot;Skeletton.1&quot; ) 
+
+<font color="#0000FF">Dim </font>oPlaque1<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oPlaque1 = oRootProduct.Products.Item  ( &quot;Plaque1.1&quot; ) 
+
+<font color="#0000FF">Dim </font>oPlaque2<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oPlaque2 = oRootProduct.Products.Item  ( &quot;Plaque2.1&quot; ) 
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Once the product document has been loaded, the <code>oSkeletton</code>,
+      <code>oPlaque1</code> and <code>oPlaque2</code> variables are declared to
+      receive the instances of Skeletton, Plaque1 and Plaque2. Those instances
+      are fetched in the <i>Products</i> collection [<a href="#References">2</a>]
+      of the root <i>Product</i> [<a href="#References">2</a>] using their
+      names.</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' -----------------------------------------</font>
+<font color="#008000">' Get the positioning sketch to create hole </font>
+<font color="#008000">' -----------------------------------------</font>
+
+<font color="#0000FF">Dim </font>oSkelDocument<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">Set </font>oSkelDocument = CATIA.Documents.Item(&quot;Skeletton.CATPart&quot;)
+
+<font color="#0000FF">Dim </font>oBody<font color="#0000FF"> As </font>Body
+<font color="#0000FF">Set </font>oBody = oSkelDocument.Part.Bodies.Item(&quot;PartBody&quot;)
+
+<font color="#0000FF">Dim </font>oPosSketch<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">Set </font>oPosSketch = oBody.Sketches.Item(&quot;Positioning sketch for assembly hole&quot;)
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>oPosSketch</code> object will be used to determine the
+      positioning point of the hole. The sketch only needs to contain one point.</p>
+      <h4><a name="Create">Creating Assembly Hole</a>.</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' -----------------------------------------</font>
+<font color="#008000">' Get the AssemblyFeatures technical object </font>
+<font color="#008000">' -----------------------------------------</font>
+
+<font color="#0000FF">Dim </font>oAssemblyFeatures<font color="#0000FF"> As </font>AssemblyFeatures
+<font color="#0000FF">Set </font>oAssemblyFeatures = oRootProduct.GetTechnologicalObject(&quot;AssemblyFeatures&quot;)
+
+<font color="#008000">' -------------------------------------------------------------</font>
+<font color="#008000">' Create assembly hole</font>
+<font color="#008000">'   positioning sketch : oPosSketch</font>
+<font color="#008000">'   instance containing the positioning sketch : oSkeletton</font>
+<font color="#008000">'   instance defining the positioning of the hole : oSkeletton</font>
+<font color="#008000">'   depth : 10 mm</font>
+<font color="#008000">' -------------------------------------------------------------</font>
+
+<font color="#0000FF">Dim </font>oAssemblyHole<font color="#0000FF"> As </font>AssemblyHole
+<font color="#0000FF">Set </font>oAssemblyHole = oAssemblyFeatures.AddAssemblyHole(oPosSketch, oSkeletton, 10.000000, oSkeletton)
+
+<font color="#008000">' ------------------------------------------------------------</font>
+<font color="#008000">' Affects parts to the assembly hole : Plaque1.1 and Plaque2.1</font>
+<font color="#008000">' ------------------------------------------------------------</font>
+
+oAssemblyHole.AddAffectedComponent oPlaque1
+oAssemblyHole.AddAffectedComponent oPlaque2
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <i>AssemblyFeatures</i> collection [<a href="#References">2</a>] <code>oAssemblyFeatures</code>
+      is retrieved from the root <i>Product</i> using the method <code>GetTechnologicalObject</code>.
+      This object allows you to retrieve all the assembly features of <code>oRootProduct</code>
+      and to create new ones.</p>
+      <p>A new <i>AssemblyHole</i> object [<a href="#References">2</a>] is
+      created using the <code>AddAssemblyHole</code> method.</p>
+      <p>The first and second arguments define the positioning <i>Sketch</i> [<a href="#References">2</a>]
+      and one <i>Product</i> containing it; is could be any instance of
+      Skeletton.CATPart. The third argument is the depth of the hole as a
+      double. The fourth argument is a <i>Product</i> instance of
+      Skeletton.CATPart defining the real position of the hole in the assembly
+      context.</p>
+      <p>The two <i>product</i> Plaque1.1 and Plaque2.1 are affected using the <code>AddAffectedComponent</code>
+      method.</p>
+      <h4><a name="Parameters"></a>Setting Assembly Hole parameters</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------------------------</font>
+<font color="#008000">' modify the hole parameters</font>
+<font color="#008000">'   - diameter 10 mm</font>
+<font color="#008000">'   - counterbored</font>
+<font color="#008000">'   - V-bottom</font>
+<font color="#008000">'   - length</font>
+<font color="#008000">' --------------------------------------------</font>
+
+<font color="#0000FF">Dim </font>oDiameter<font color="#0000FF"> As </font>Length
+<font color="#0000FF">Set </font>oDiameter = oAssemblyHole.Diameter
+oDiameter.Value = 10.000000
+
+oAssemblyHole.Type = catCounterboredHole
+oAssemblyHole.AnchorMode = catExtremPointHoleAnchor
+
+<font color="#0000FF">Dim </font>oHeadDiameter<font color="#0000FF"> As </font>Length
+<font color="#0000FF">Set </font>oHeadDiameter = oAssemblyHole.HeadDiameter
+oHeadDiameter.Value = 15.000000
+
+<font color="#0000FF">Dim </font>oHeadDepth<font color="#0000FF"> As </font>Length
+<font color="#0000FF">Set </font>oHeadDepth = oAssemblyHole.HeadDepth
+oHeadDepth.Value = 5.000000
+
+<font color="#0000FF">Dim </font>oBottomLimit<font color="#0000FF"> As </font>Limit
+<font color="#0000FF">Set </font>oBottomLimit = oAssemblyHole.BottomLimit
+oBottomLimit.LimitMode = catOffsetLimit
+
+<font color="#0000FF">Dim </font>oDepth<font color="#0000FF"> As </font>Length
+<font color="#0000FF">Set </font>oDepth = oBottomLimit.Dimension
+oDepth.Value = 30.000000
+
+oAssemblyHole.BottomType = catVHoleBottom
+
+<font color="#0000FF">Dim </font>oBottomAngle<font color="#0000FF"> As </font>Angle
+<font color="#0000FF">Set </font>oBottomAngle = oAssemblyHole.BottomAngle
+oBottomAngle.Value = 120.000000
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The diameter of the hole is set using the <code>Diameter</code>
+      property and the <i>Length</i> object [<a href="#References">2</a>].</p>
+      <p>The type is set using <code>Type</code> property; hole types are
+      defined in the <i>CatHoleType</i> enum [<a href="#References">2</a>]. In
+      the case of a counter bored hole the anchor mode is set by <code>AnchorMode</code>;
+      hole anchor modes are defined in the <i>CatHoleAnchorMode</i> enum [<a href="#References">2</a>].
+      The head depth is valuated using <code>HeadDiameter</code> property and
+      the <i>Length</i> object.</p>
+      <p>The Limit is defined by <code>BottomLimit</code> property and <i>Limit</i>
+      object [<a href="#References">2</a>].</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------------------</font>
+<font color="#008000">' Update the Product</font>
+<font color="#008000">' --------------------------------------</font>
+
+oRootProduct.Update 
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The root <i>Product</i> is then updated; it propagates the Update to
+      the affected parts so that the resulting holes appears in the CATParts.</p>
+      <p align="center"><img border="0" src="images/AssyHoleAfter.jpg" width="678" height="500"></p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create an assembly hole and set its parameters
+using macros.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Products');return false;"><i>Products</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATAssemblyInterfaces', 'AssemblyFeatures');return false;"><i>AssemblyFeatures</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATAssemblyInterfaces', 'AssemblyHole');return false;"><i>AssemblyHole</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'SketcherInterfaces', 'Sketch');return false;"><i>Sketch</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'CatHoleType', '', 'enum');return false;"><i>CatHoleType
+      </i></a><i>,</i> <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'CatHoleAnchorMode', '', 'enum');return false;"><i>CatHoleAnchorMode
+      </i></a><i>,</i> <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Limit');return false;"><i>Limit</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Length');return false;"><i>Length</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Angle');return false;"><i>Angle</i></a><i>.</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,325 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperatorsLight Class CATTopSkin</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperatorsLight.htm" href="../TopologicalOperatorsLight.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperatorsLight";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopSkin"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperatorsLight <script type="text/javascript" > writeClassCharacteristic(); </script> CATTopSkin</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTopSkin_37150','CATTopSkin','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTopSkin</b>
+</p>
+<p>
+<b><i>  Class representing the operator that creates a skin body from one surface.</i></b><br>
+ 
+ The resulting body has one face in a shell domain, and can be build from
+ <ul><li>the surface boundaries
+ <li>a list of curves defining a closed loop on the surface
+ <li>the intersection of a plane and a canonical box.
+ </ul>
+ Moreover, the operator allows the faces to have inside loops (holes).
+ <br>To use the CATTopSkin:
+ <ul><li>Create it the <tt>CATCreateTopSkin</tt> global function. 
+ <li>If needed, tune some parameters with the <tt>SetXxx</tt> methods. In particular, closure or internal
+ loops can be described at this time.
+ <li> <tt>Run</tt> the operator
+ <li>Retrieve the created body (frozen by default) with the <tt>GetResult</tt> method. 
+ <li>Delete with the usual C++ <tt>delete</tt> operator after use.</ul>
+ If the surface is closed, the operator creates a shell with 2 or 4 faces.</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATTopSkin()"><b>~CATTopSkin</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddInternalLoop(int,CATPCurve**,CATCrvLimits*)"><b>AddInternalLoop</b></a>(int,CATPCurve**,CATCrvLimits*)
+<dd>  
+ <dt> o 
+    <a href="#AddInternalLoop(int,CATPCurve**,CATCrvLimits*,short*)"><b>AddInternalLoop</b></a>(int,CATPCurve**,CATCrvLimits*,short*)
+<dd>  
+ <dt> o 
+    <a href="#ForceSkinClosureInU()"><b>ForceSkinClosureInU</b></a>()
+<dd>  Asks for the closure of the skin in the first surface direction.
+ <dt> o 
+    <a href="#ForceSkinClosureInV()"><b>ForceSkinClosureInV</b></a>()
+<dd>  Asks for the closure of the skin in the second surface direction.
+ <dt> o 
+    <a href="#GetLimits(CATSurLimits&amp;)"><b>GetLimits</b></a>(CATSurLimits&amp;)
+<dd>   Retrieves the limits on the surface taken into account by <tt>this</tt> operator.
+ <dt> o 
+    <a href="#GetShell()"><b>GetShell</b></a>()
+<dd>  Returns the pointer to the shell of the resulting skin body.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>   Runs <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetInternalLoop(int,CATPCurve**,CATCrvLimits*,short*)"><b>SetInternalLoop</b></a>(int,CATPCurve**,CATCrvLimits*,short*)
+<dd>  Defines an internal loop in the face of a skin body.
+ <dt> o 
+    <a href="#SetLimits(CATSurLimits&amp;)"><b>SetLimits</b></a>(CATSurLimits&amp;)
+<dd>   Defines limits on the surface to be taken into account by <tt>this</tt> operator.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATTopSkin"></a><a name="~CATTopSkin()"></a> <dt> o <b>~CATTopSkin</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>~CATTopSkin</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddInternalLoop"></a><a name="AddInternalLoop(int,CATPCurve**,CATCrvLimits*)"></a> <dt> o <b>AddInternalLoop</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddInternalLoop</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNbPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPCurve','CATPCurve**')</script> <td><tt>iPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits*')</script> <td><tt>iLimits</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R20
+ Use 
+SetInternalLoop instead Defines an internal loop in the face of a skin body.
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbPcurves</tt>
+   <dd> The number of curves to build the internal loop.
+ </dd>
+    <dt><tt> iPcurves</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of pointers to the curves on the surface used to define the skin.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of the limits for each curve.
+ These specifications must insure that the end of
+ one curve is the beginning of the following.
+ Every created edge is positively oriented in the loop.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddInternalLoop"></a><a name="AddInternalLoop(int,CATPCurve**,CATCrvLimits*,short*)"></a> <dt> o <b>AddInternalLoop</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddInternalLoop</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNbPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPCurve','CATPCurve**')</script> <td><tt>iPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits*')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short*')</script> <td><tt>iOrientations</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R20
+ Use 
+SetInternalLoop instead Defines an internal loop in the face of a skin body.
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbPcurves</tt>
+   <dd> The number of curves to build the internal loop.
+ </dd>
+    <dt><tt> iPcurves</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of pointers to the curves on the surface used to define the skin.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of the limits for each curve.
+ </dd>
+    <dt><tt> iOrientations</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of the relative orientation for each curve.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>1</tt></dt><dd>The curve is used in is original orientation.
+ <dt><tt>-1</tt></dt><dd>The curve is used with an opposite orientation.
+ </dl>
+ Combine with <tt>iLimits</tt>, these specifications must insure that the end of
+ one curve (possibly reversed) is the beginning of the following.
+ Every created edge is positively oriented in the loop.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ForceSkinClosureInU"></a><a name="ForceSkinClosureInU()"></a> <dt> o <b>ForceSkinClosureInU</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>ForceSkinClosureInU</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for the closure of the skin in the first surface direction.
+ <br> The geometry must be compatible with this closure.
+</dl>
+<a name="ForceSkinClosureInV"></a><a name="ForceSkinClosureInV()"></a> <dt> o <b>ForceSkinClosureInV</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>ForceSkinClosureInV</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for the closure of the skin in the second surface direction.
+ <br> The geometry must be compatible with this closure.
+</dl>
+<a name="GetLimits"></a><a name="GetLimits(CATSurLimits&amp;)"></a> <dt> o <b>GetLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetLimits</b>(<td><script type="text/javascript"> activateLink('CATSurLimits','CATSurLimits&amp;')</script> <td><tt>iSurLim</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves the limits on the surface taken into account by <tt>this</tt> operator. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioSurLim</tt>
+   <dd> The surface limits taken into account.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetShell"></a><a name="GetShell()"></a> <dt> o <b>GetShell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATShell','CATShell*')</script>  <b>GetShell</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer to the shell of the resulting skin body.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the shell of the resulting skin body. Remember that the whole body is retrieved with
+ the <tt>GetResult</tt> method, and you must manage its deletion if you do not want to keep it.
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Runs <tt>this</tt> operator.
+</dl>
+<a name="SetInternalLoop"></a><a name="SetInternalLoop(int,CATPCurve**,CATCrvLimits*,short*)"></a> <dt> o <b>SetInternalLoop</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetInternalLoop</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNbPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPCurve','CATPCurve**')</script> <td><tt>iPcurves</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits*')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short*')</script> <td><tt>iOrientations</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines an internal loop in the face of a skin body. To be called before <tt>Run</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbPcurves</tt>
+   <dd> The number of curves to build the internal loop.
+ </dd>
+    <dt><tt> iPcurves</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of pointers to the curves on the surface used to define the skin.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of the limits for each curve.
+ </dd>
+    <dt><tt> iOrientations</tt>
+   <dd> The array <tt>[iNbPcurves]</tt> of the relative orientation for each curve.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>1</tt></dt><dd>The curve is used in is original orientation.
+ <dt><tt>-1</tt></dt><dd>The curve is used with an opposite orientation.
+ </dl>
+ Combine with <tt>iLimits</tt>, these specifications must insure that the end of
+ one curve (possibly reversed) is the beginning of the following.
+ Every created edge is positively oriented in the loop.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLimits"></a><a name="SetLimits(CATSurLimits&amp;)"></a> <dt> o <b>SetLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLimits</b>(<td> const <script type="text/javascript"> activateLink('CATSurLimits','CATSurLimits&amp;')</script> <td><tt>ioSurLim</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Defines limits on the surface to be taken into account by <tt>this</tt> operator. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSurLim</tt>
+   <dd> The surface limits to take into account.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopSkin.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalOperatorsLight</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,476 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding a Contextual Sub-Menu</title>
+</head>
+
+<body>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding a Contextual Sub-Menu</h3>
+      <em>Implementing CATIContextualSubMenu</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+      a New Geometrical Feature: The Combined Curve</a> <b>&gt; Adding a Contextual Sub-Menu</b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to insert commands in the contextual menu when
+      selecting a combined curve instance.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrContextualSubMenu Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrContextualSubMenu Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrContextualSubMenu</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrContextualSubMenu Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how insert commands in the contextual
+menu associated with the combined curve [<a href="#References">1</a>]. Once this
+mechanical feature implements the <i>CATIEdit</i> interface [<a href="#References">2</a>],
+the commands will be added in a sub-menu of its contextual menu. So in other
+words, this article explains how to implement the <i>CATIContextualSubMenu</i>  (ApplicationFrame)
+interface.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrContextualSubMenu Use Case</h3>
+<p>CAAMmrContextualSubMenu is a use case of the CAAMechanicalModeler.edu framework that
+illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrContextualSubMenu Do</h4>
+<p>CAAMmrContextualSubMenu enables you to add commands in the sub-menu of the 
+contextual menu associated with the Combined Curve feature. The picture below 
+shows the sub-menu of the Combined Curve. There are two pictures because, the 
+last command can be either Deactivate or Activate. You will see how the switch 
+can be done.</p>
+<table border="0">
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCombCrvContextualMenuDeac.jpg" width="351" height="101"></td>
+    <td>
+    <img border="0" src="images/CAAMmrCombCrvActivated.jpg" width="345" height="105"></td>
+  </tr>
+</table>
+<p>Once the Combined Curve implements <i>CATIEdit, </i>its contextual menu
+contains at the end the &quot;CombineCrv object&quot; item. This items contains
+a sub-menu which, by default, contains only the <code>Definition</code> item. In implementing the <i>CATIContextualSubMenu</i> 
+interface on the Combined Curve you can insert other commands after the <code>Definition</code>
+ item.</p>
+<p>The new commands are <code>Parent/Children</code>, <code>Reset Properties,</code>
+<code>Deactivate</code> or <code>Activate</code>. Four Dassault Systèmes commands. To reuse it, you should retrieve their command header
+identifiers [<a href="#References">3</a>].&nbsp; The &quot;Workshop
+Exposition&quot; command enables you to find them.</p>
+<p>Launch CATIA, when the application is ready:</p>
+<ul>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the <b>File New&nbsp; </b>Dialog box select <b>Part</b> and click <b>OK</b></li>
+  <li>On the <b>Tools</b> menu click <b>Customize</b></li>
+  <li>The<b> Customize </b>Dialog Box appears
+    <ul>
+      <li>Click the <b>Command</b> page</li>
+      <li>Click the <b>XCAA2</b> category</li>
+      <li>Drag and Drop the <b>Workshop Exposition </b>command into a toolbar</li>
+      <li>Click <b>Close</b>&nbsp;</li>
+    </ul>
+  </li>
+  <li>Launch the <b>Workshop Exposition</b> command
+    <table border="0">
+      <tr>
+        <td><img border="0" src="images/CAAMmrCombCrvWorkExpo.jpg" width="303" height="260"></td>
+      </tr>
+    </table>
+    <ul>
+      <li>Select the <b>CATMmrPartWks</b> workshop ( the Part Workshop)</li>
+      <li>Enter a Path in the Directory editor</li>
+      <li>Click <b>Print&nbsp;- </b>The <b> CATMmrPartWks.txt</b> file is generated</li>
+
+      <li>Click<b> OK</b></li>
+    </ul>
+  </li>
+</ul>
+<p>In the <b> CATMmrPartWks.txt</b>  find out the &quot;Parent/Children&quot;, &quot;Reset Properties&quot;, 
+&quot;Deactivate&quot; and &quot;Activate&quot; strings:&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrCombCrvParentChild.jpg" width="241" height="106"></td>
+    <td><img border="0" src="images/CAAMmrCombCrvResetProp.jpg" width="273" height="107"></td>
+  </tr>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCombCrvDeactivateCmd.jpg" width="261" height="109"></td>
+    <td>
+    <img border="0" src="images/CAAMmrCombCrvActivateCmd.jpg" width="263" height="109"></td>
+  </tr>
+</table>
+<p>The identifiers of the command header instances are the <b>Id</b> strings, so
+<b>CATParentChildrenHdr, CATMmrPrtResetPropHdr, CATPrtInactiveHdr</b> and
+<b>CATPrtActiveHdr</b>&nbsp; for the &quot;Parent/Children&quot;, &quot;Reset Properties&quot;, 
+&quot;Deactivate&quot; and &quot;Activate&quot; commands respectively. These four identifiers
+will be associated with the starters of the menu.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrContextualSubMenu</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+a New Geometrical Feature: The Combined Curve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrContextualSubMenu Code</h4>
+<p>The CAAMmrContextualSubMenu use case is made of one single class, the <i>CAAEMmrCombinedCurveContSubMenu</i>
+class, located in
+the CAAMmrCombinedCurveUI.m module of the CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrCombinedCurveUI.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrCombinedCurveUI.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To implement the <i>CATIContextualSubMenu</i> interface, there are two
+steps:&nbsp;</p>
+<ol>
+  <li><a name="Declare the methods of the CATIProgressTask interface in the header file" href="#Creating the Sub Menu Description Class">Creating
+    the Sub-Menu Description Class</a></li>
+  <li><a href="#Creating the Sub-Menu">Creating the Sub-Menu</a>&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Sub Menu Description Class"></a><a name="Declare the methods of the CATIProgressTask interface in the header file">Creating
+</a>the Sub-Menu Description Class</h4>
+<ol>
+  <li>Create the CAAEMmrCombinedCurveContSubMenu.h file</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;
+
+class CATCmdAccess;
+
+class CAAEMmrCombinedCurveContSubMenu : public CATBaseUnknown
+{
+  CATDeclareClass;
+
+  public:
+
+    CAAEMmrCombinedCurveContSubMenu();
+    virtual ~CAAEMmrCombinedCurveContSubMenu();
+
+    virtual CATCmdAccess * <b>GetContextualSubMenu</b>() ;
+ 
+  private :
+
+    CAAEMmrCombinedCurveContSubMenu(const CAAEMmrCombinedCurveContSubMenu &amp;iObjectToCopy);
+    CAAEMmrCombinedCurveContSubMenu &amp; operator = (const CAAEMmrCombinedCurveContSubMenu &amp;iObjectToCopy);
+
+
+  private :
+
+    <b>CATCmdAccess</b>  *  _pMenu ;
+    <b>CATCmdStarter</b> *  _pCAAMmrSwapActiveStr ;
+};</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>GetContextualSubMenu</code> method returns <code>_pMenu</code>
+  created in the constructor class.&nbsp;<code>_pCAAMmrSwapActiveStr</code> is 
+  the starter associated with the Activate or the Deactivate command, also 
+  created in the constructor class.&nbsp; </p>
+  <li>Create the CAAEMmrCombinedCurveContSubMenu.cpp file</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAEMmrCombinedCurveContSubMenu.h&quot;
+#include &quot;CATCreateWorkshop.h&quot;
+
+<b>CATImplementClass</b>(CAAEMmrCombinedCurveContSubMenu,DataExtension,
+                       CATBaseUnknown,<b>CombinedCurve</b>);
+
+#include &quot;TIE_CATIContextualSubMenu.h&quot;
+TIE_<b>CATIContextualSubMenu</b>(CAAEMmrCombinedCurveContSubMenu);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAEMmrCombinedCurveContSubMenu class states that it implements the <em>CATIContextualSubMenu</em>
+ interface thanks to the <code>TIE_CATIContextualSubMenu</code> macro. The <code>CATImplementClass</code>
+macro declares that the CAAEMmrCombinedCurveContSubMenu class is a data
+extension, thanks to the <code>DataExtension</code> keyword, that extends <em>CombinedCurve</em>.
+The third argument must always be set as <i>CATBaseUnknown</i> or <i>CATNull</i>
+for any kind of extension.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAEMmrCombinedCurveContSubMenu::CAAEMmrCombinedCurveContSubMenu():<b>_pMenu</b>(NULL,<b>_pCAAMmrSwapActiveStr</b>(NULL)	
+                      				   
+{
+    <a href="#Creating the Sub-Menu">Creating the Sub-Menu</a>
+}
+
+CAAEMmrCombinedCurveContSubMenu::~CAAEMmrCombinedCurveContSubMenu()
+{
+  
+  if ( NULL != _pMenu) _pMenu-&gt;<b>Release</b>() ;
+  _pMenu = NULL ;
+}
+
+
+CATCmdAccess *  CAAEMmrCombinedCurveContSubMenu::<b>GetContextualSubMenu</b>()
+{
+   <a href="#Checking the Activate/Deactivate command">Checking the Activate/Deactivate Command</a>
+   return (<b>_pMenu</b>);
+}</pre>
+    </td>
+  </tr>
+</table>
+  <p>In this implementation,  the structure of menu is constant, <code>_pMenu</code> is created in the constructor
+  and released in the destructor. Otherwise, you can
+  create it in the <code>GetContextualMenu </code>method. But in this case, you should
+  release it in the destructor and at the beginning of the <code>GetContextualMenu</code>
+  method.</p>
+
+  <li>Updating the Interface Dictionary</li>
+  <p>Update the interface dictionary, that is a file named, for example, CAAMechanicalModeler.dico,
+  whose directory's pathname is concatenated at run time in the
+  CATDictionaryPath environment variable, and containing the following
+  declaration to state that the <em>CombinedCurve</em> component implements the <em>CATIContextualSubMenu</em>
+  interface, and whose code is located in the libCAAMmrCombinedCurveUI shared
+  library or DLL.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CombinedCurve CATIContextualSubMenu libCAAMmrCombinedCurveUI</pre>
+    </td>
+  </tr>
+</table>
+
+</ol>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Sub-Menu"></a>Creating the Sub-Menu&nbsp;</h4>
+<table class="code" height="174">
+  <tr>
+    <td height="170">
+      <pre> 
+   <b>NewAccess</b>(CATCmdStarter,pCAAMmrResetPropertiesStr,CAAMmrResetPropertiesStr);
+   NewAccess(CATCmdStarter,pCAAMmrParentChildrenStr,CAAMmrParentChildrenStr);
+
+
+   CATIMechanicalProperties * pMechProp = NULL ;
+   HRESULT rcMechProp = QueryInterface(IID_CATIMechanicalProperties, (void**) &amp; pMechProp);
+   if ( SUCCEEDED(rcMechProp) )
+   {
+      NewAccess(CATCmdStarter,pCAAMmrSwapActiveStr,CAAMmrSwapActiveStr);
+     <b>_pCAAMmrSwapActiveStr</b> = pCAAMmrSwapActiveStr ;
+   }
+    
+   _pMenu = pCAAMmrParentChildrenStr ;
+   <b>SetAccessNext</b>(pCAAMmrParentChildrenStr,pCAAMmrResetPropertiesStr);
+
+   if ( NULL != _pCAAMmrSwapActiveStr )
+   { 
+      SetAccessNext(pCAAMmrResetPropertiesStr,_pCAAMmrSwapActiveStr);
+   }
+   &nbsp;
+   <b>SetAccessCommand</b>(pCAAMmrResetPropertiesStr,&quot;<b>CATMmrPrtResetPropHdr</b>&quot;);
+&nbsp;&nbsp;&nbsp;SetAccessCommand(pCAAMmrParentChildrenStr,&quot;<b>CATParentChildrenHdr</b>&quot;);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The menu is created thanks macros contained in the <code>CATCreateWorkshop</code> 
+file. For each item there are three macros. Here are the explanations for the 
+Reset Properties and the Activate/Deactivate commands:</p>
+<ul>
+  <li>NewAccess</li>
+  <p>First, the command starter is created as a <i>CATCmdStarter</i> instance using the
+  <code>NewAccess</code> macro. <code>pCAAMmrResetPropertiesStr</code> is the
+  variable used to handle a pointer to that instance, and <code>CAAMmrResetPropertiesStr</code>
+  is its identifier.  </p>
+  <p>The command starter for the Activate/Deactivate command is 
+  created only if the combined curve implements the <i>CATIMechanicalProperties</i> 
+  interface. This starter,
+     <b><code>_pCAAMmrSwapActiveStr,</code> </b>is kept as data member to be 
+  used in the <code>GetContextualMenu</code> method. </p>
+      <li>SetAccessNext.</li>
+  <p>The Reset Properties command starter is set as the Next of the
+  Parent/Children item. If the
+     <b><span style="font-weight: 400"><code>_pCAAMmrSwapActiveStr</code></span><code>
+  </code><span style="font-weight: 400">starter exists, it is located after the 
+  &quot;Reset Properties&quot; starter. </span></b></p>
+      <li>SetAccessCommand,</li>
+  <p>The Reset Properties command header is associated with this command
+  starter using the <code>SetAccessCommand</code> macro. The second parameter is
+  the Reset Properties command header identifier defined as the first parameter
+  of the command header constructor. For the Activate/Deactivate command, the 
+  association is done when the contextual menu must be displayed: in the <code>
+  GetContextualMenu</code> method. </p>
+  </ul>
+  <p>In a contextual menu or in a contextual sub menu implementation, it is not
+  recommended to create command headers. So you should reuse command header
+  identifiers created previously. To be sure that the command header will be
+  created when the menu will be invoked, you should use an identifier created in
+  a workshop, or in Add-ins of the workshop. The Workshop Exposition command can
+  help you to retrieve the Dassault Systèmes identifiers.</p>
+  <p>Refer to the technical article entitled &quot;Command Headers&quot; [<a href="#References">3</a>]
+  for complete details about the re-usage of the command header
+  identifiers.&nbsp;</p>
+ 
+<p>The picture below shows the relationship between the starters and shows that <code>
+_pMenu</code> is the first starter of the chain.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrCombCrvContextualMenuChain.jpg" width="693" height="102"></td>
+  </tr>
+</table>
+<p>where <code>pXXX1</code> and <code>pXXX2 </code>are starters that you will
+have added so in the code:</p>
+<table class="code" >
+  <tr>
+    <td >
+      
+   <pre> ...  
+   <b>NewAccess</b>(CATCmdStarter,<code>pXXX1</code> ,<code>XXX1</code>);
+   NewAccess(CATCmdStarter,<code>pXXX2 </code>,<code>XXX2</code>);
+
+   <b>SetAccessCommand</b>(<code>pXXX1</code> ,&quot;<b>XXX1Hdr</b>&quot;);
+   SetAccessCommand(<code>pXXX2 </code>,&quot;<b>XXX2Hdr</b>&quot;);
+
+   <b>SetAccessNext</b>(pCAAMmrResetPropertiesStr,<code>pXXX1</code> );<b>
+   SetAccessNext</b>(<code>pXXX1</code> ,<code>pXXX2</code> );
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;<img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">The <code>_pMenu</code> destruction deletes also the chained <i>CATCmdAccess</i>
+ class instances.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Checking the Activate/Deactivate command"></a>Checking the Activate/Deactivate 
+Command</h4>
+<table class="code" height="174">
+  <tr>
+    <td height="170">
+      <pre> 
+    if ( NULL != _pCAAMmrSwapActiveStr )
+    {
+       CATIMechanicalProperties * pMechProp = NULL ;
+       HRESULT rcMechProp = QueryInterface(IID_CATIMechanicalProperties, (void**) &amp; pMechProp);
+       if ( SUCCEEDED(rcMechProp) )
+       {
+          int IsFeatureDeactivate = pMechProp-&gt;<b>IsInactive</b>();
+
+          if ( 0 == IsFeatureDeactivate )
+          { 
+             <b>SetAccessCommand</b>(_pCAAMmrSwapActiveStr,&quot;<b>CATPrtInactiveHdr</b>&quot;);
+          }else
+          {
+             SetAccessCommand(_pCAAMmrSwapActiveStr,&quot;<b>CATPrtActiveHdr</b>&quot;);
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetContextualMenu</code> method is called each time the contextual 
+menu must be displayed. So it is at this moment that you must set the right 
+command to the <code>_pCAAMmrSwapActiveStr</code> starter.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to implement the <i>CATIContextualSubMenu</i>
+interface and how to retrieve Dassault Systèmes command header identifiers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating a New Geometrical Feature: the Combined Curve</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrCombinedCurveCATIEdit.htm">Editing the Combined Curve</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">Command
+      Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>    [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong>    [Jan 2005]</td>
+    <td valign="top">Document updated to take the CATIMechanicalProperties 
+    interface into account</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

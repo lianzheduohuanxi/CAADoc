@@ -1,0 +1,490 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Graphic Attributes</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Graphic Attributes</h3>
+      <em>Setting colors, linetypes, and thicknesses to representations, and
+      understanding graphic attribute inheritance</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVisRep use case. This use case explains
+      how to use graphic attributes.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVisRep Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVisRep Do</a></li>
+            <li><a href="#How">How to Launch CAAVisRep</a></li>
+            <li><a href="#Where">Where to Find the CAAVisRep Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to set graphic attributes to graphic
+representations, how to manage graphic attribute inheritance, and describes some
+of these attributes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVisRep Use Case</h3>
+<p>CAAVisRep is a use case of the CAAVisualization.edu framework that
+illustrates Vizualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVisRep Do</h4>
+<p>CAAVisRep creates two line representations, and two cuboid representations,
+and sets graphic attributes to these representations to display them as shown in
+Fig. 1.</p>
+<table>
+  <caption><a name="Fig1"></a><i>Fig. 1: The CAAVisRep Representations</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleGraphicAtt1.jpg" width="465" height="415"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch the CAAVisRep</h4>
+<p>To launch CAAVisRep, you will need to set up the build time environment, then
+compile CAAVisRep along with its prerequisites, set up the run time environment,
+and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVisRep Code</h4>
+<p>The CAAVisRep use case is made of two classes named <i>CAAVisRepApplication</i>
+and <i>CAAVisRepWindow</i> located in the CAAVisRep code is located in the
+CAAVisRep.m use case module of the CAAVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisRep.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisRep.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To manage graphic attributes, there are four main steps:</p>
+<ol>
+  <li><a href="#Step1">Creating a 3D Navigation Viewer Instance</a></li>
+  <li><a href="#Step2">Creating a 3D Representation Bag</a></li>
+  <li><a href="#Step3">Creating a Green Dotted Line with Two Yellow Points at
+    Its Ends</a></li>
+  <li><a href="#Step4">Creating a Magenta Solid Line with Two Magenta Points at
+    Its Ends</a></li>
+  <li><a href="#Step5">Creating a Red Cube without Top Face and with Faces
+    Lighted on One Side</a></li>
+  <li><a href="#Step6">Creating a White Cube with Faces Lighted on Their Two
+    Sides</a></li>
+  <li><a href="#Step7">Displaying the Representation in the Viewer</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a 3D Navigation Viewer Instance</h4>
+<p>The 3D navigation viewer is an instance of the <i>CATNavigation3DViewer</i>
+class. It is created in the <code>CreateViewer</code> method of the <i>CAAVisBaseView</i>
+class that is called when the application is launched.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisRepWindow::CreateViewer()
+{
+  _p3DViewer = new CATNavigation3DViewer(this,
+                                         &quot;Navigation3DId&quot;,
+                                         CATDlgFraNoTitle,
+                                         800, 450);
+  _p3DViewer-&gt;SetBackgroundColor(0.2f,0.2f,0.6f);
+  Attach4Sides( _p3DViewer);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>_pViewer</code> pointer to the 3D navigation viewer is kept as a
+data member of the <i>CAAVisBaseView</i> class. Its parameter are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>this</code></td>
+    <td valign="top">The viewer parent in the dialog containment tree structure
+      and in the command tree structure [a]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>Navigation3DId</code></td>
+    <td valign="top">The viewer identifier</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATDlgFraNoTitle</code></td>
+    <td valign="top">The viewer has no title [b]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>850, 450</code></td>
+    <td valign="top">The viewer width and height expressed in pixels</td>
+  </tr>
+</table>
+<p>The <code>SetBackgroundColor</code> method changes the viewer background
+color. The <code>Attach4Sides</code> method attaches the four sides of the
+viewer to those of the window. This makes the viewer occupy the whole window
+space.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a 3D Representation Bag</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisRepWindow::CreateModelRepresentation()
+{
+  _pTheModelToDisplay = new CAT3DBagRep() ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This is done at the beginning of the <code>CreateModelRepresentation</code>
+method of <i>CAAVisRepWindow</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating a Green Dotted Line with Two Yellow Points at
+Its Ends</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAT3DCustomRep * pLineOnXAxis = NULL ;
+
+  CATMathPoint PositionXPoint1(20.f,0.f,0.f ) ;
+  CATMathPoint PositionXPoint2(200.f,0.f,0.f ) ;
+
+  int NONE = 0 ;
+  pLineOnXAxis = CreateLineEndedByTwoPoints(PositionXPoint1,PositionXPoint2,NONE);
+
+  if ( NULL != pLineOnXAxis )
+  {
+    _pTheModelToDisplay-&gt;<b>AddChild</b>(*pLineOnXAxis);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first line is carried by the X axis. It begins at the abscissa 20 and
+ends at the abscissa 200. The <code>CreateLineEndedByTwoPoints</code> method of <i>CAAVisRepWindow</i>
+creates the line and sets its graphic attributes. If the custom representation
+is successfully created, it is added to the representation bag. <code>CreateLineEndedByTwoPoints</code>
+is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAT3DCustomRep * CAAVisRepWindow::CreateLineEndedByTwoPoints(const CATMathPoint &amp;iStartPoint,
+                                                             const CATMathPoint &amp;iEndPoint,
+                                                             int                 iEdgeType)
+{
+  CAT3DCustomRep * pTheRepToReturn = NULL;
+  pTheRepToReturn = new <b>CAT3DCustomRep</b>();
+
+  // Creates a green dotted line
+  float coord[6] ;
+  coord[0] = (float) iStartPoint.GetX();	  	  
+  coord[1] = (float) iStartPoint.GetY();
+  coord[2] = (float) iStartPoint.GetZ();
+  coord[3] = (float) iEndPoint.GetX();	  	  
+  coord[4] = (float) iEndPoint.GetY();
+  coord[5] = (float) iEndPoint.GetZ();
+
+  CAT3DLineGP * pLineGP = new <b>CAT3DLineGP</b>(coord, 2);
+  <b>CATGraphicAttributeSet</b> LineGA;
+  LineGA.<b>SetColor</b>(GREEN); 
+  LineGA.<b>SetThickness</b>(4);  // Thickness ranges from 1 to 16
+  LineGA.<b>SetLineType</b>(2);   // Line type ranges from 1 to
+  LineGA.<b>SetType</b>(iEdgeType); 
+
+  pTheRepToReturn-&gt;<b>AddGP</b>(pLineGP,LineGA);
+
+  // Creates two yellow points  
+  CAT3DMarkerGP * pPointGP = new <b>CAT3DMarkerGP</b>(coord, 2, CROSS);
+  <b>CATGraphicAttributeSet</b> PointGA;
+  PointGA.<b>SetColor</b>(YELLOW);
+
+  pTheRepToReturn-&gt;<b>AddGP</b>(pPointGP,PointGA);
+
+  // Computes the BoundingSphere and sets it to the representation 
+  CATMathPoint Center =  iStartPoint + ((iEndPoint-iStartPoint) / 2.f);
+  float Radius = (float) iStartPoint.DistanceTo(Center);
+  <b>CAT3DBoundingSphere</b> BoundingSphere(Center,Radius);
+  pTheRepToReturn-&gt;<b>SetBoundingElement</b>(BoundingSphere) ;
+
+  return (pTheRepToReturn);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The line and points are created as graphic primitives (GPs) added to a <i>CAT3DCustomRep</i>
+with their respective graphic attributes using the <code>AddGP</code> method.
+The line GP is a <i>CAT3DLineGP</i> instance created using the points passed as
+parameters. Its attribute set is an instance of the <i>CATGraphicAttributeSet</i>
+class to which the following attribute values are set:</p>
+<ul>
+  <li><code>SetColor</code> sets its color to green</li>
+  <li><code>SetThickness</code> sets the line thickness to 4. The thickness
+    ranges from 1 to 16, 1 being the thinnest and 16 the thickest</li>
+  <li><code>SetLineType</code> sets the line type to 2. The line type ranges
+    from 1 to 63. 2 means dotted</li>
+  <li><code>SetType</code> sets its graphic type to 0. This means that the line
+    is always seen, even if other representations are displayed in front of it.</li>
+</ul>
+<p>The two points are created using a single instance of the <i>CAT3DMarkerGP</i>
+class, and their color is set as yellow. Then, the bounding element associated
+with the custom representation is computed as a <i>CAT3DBoundingSphere</i>
+instance, and set to the custom representation using the <code>SetBoundingElement</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating a Magenta Solid Line with Two Magenta Points at
+Its Ends</h4>
+<p>The second line and its endpoints are also created using the <code>CreateLineEndedByTwoPoints</code>
+method, but uses the graphic attribute inheritance to get the attributes set to
+the GPs, and reset other graphic attributes.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAT3DCustomRep * pLineOnYAxis = NULL ;
+
+  CATMathPoint PositionYPoint1(0.f,20.f,0.f );
+  CATMathPoint PositionYPoint2(0.f,200.f,0.f ) ;
+
+  int EDGE = 1 ;
+  pLineOnYAxis = CreateLineEndedByTwoPoints(PositionYPoint1,PositionYPoint2,EDGE);
+
+  if ( NULL != pLineOnYAxis )
+  {
+    pLineOnYAxis-&gt;<b>SetInheritanceMode</b>(LINEWIDTH_INHERITANCE | COLOR_INHERITANCE);
+    pLineOnYAxis-&gt;<b>SetThickness</b>(1);
+    pLineOnYAxis-&gt;<b>SetColor</b>(MAGENTA);
+
+    _pTheModelToDisplay-&gt;<b>AddChild</b>(*pLineOnYAxis);
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second line is carried by the Y axis. Once the custom representation is
+created, its graphic attributes are those of the GPs, that is, the line color is
+green, its thikness is set to 2, its line type is dotted, its type set to 1
+makes it hidden by representations in front of it, and the endpoints are yellow,
+but keep the default type set to 0. The graphic attribute set associated with
+the custom representation is now used to reset some of the GP graphic
+attributes. The <code>SetInheritanceMode</code> method enables the GPs that make
+up the custom representation to inherit graphic attribute values set to the
+representation itself, namely the line thickness (<code>LINEWIDTH_INHERITANCE</code>
+) and the color (<code>COLOR_INHERITANCE</code>). The line thickness is reset to
+1, that is to solid, and the color is reset to magenta. These graphic attribute
+values are reset for all the GPs: the line GP and the marker GP are both
+magenta. (The line thickness makes no sense for markers.) If the custom
+representation is successfully created, it is added to the representation bag.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating a Red Cube without Top Face and with Faces
+Lighted on One Side</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAT3DCustomRep * pRedCube = NULL ;
+  CATMathPoint RedCubePosition(50.f,50.f,0.f);
+  int VOLUME = 3 ;
+  pRedCube = CreateOpenCube(RedCubePosition,VOLUME);
+
+  if ( NULL != pRedCube )
+  {
+    pRedCube-&gt;<b>SetInheritanceMode</b>(COLOR_INHERITANCE);
+    pRedCube-&gt;<b>SetColor</b>(RED);
+
+    _pTheModelToDisplay-&gt;<b>AddChild</b>(*pRedCube);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first cube has its corner located at <code>RedCubePoint</code>. The <code>CreateOpenCube</code>
+method of <i>CAAVisRepWindow</i> creates the cube and sets its graphic
+attributes. If the custom representation is successfully created, it is added to
+the representation bag. <code>CreateOpenCube</code> is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAT3DCustomRep * CAAVisRepWindow::CreateOpenCube(const CATMathPoint &amp;iStartPoint,
+                                                 int iTypeFace)
+{
+  CAT3DCustomRep * pTheRepToReturn = NULL ;
+  ... // Creates Point1 to Point8 from iStartPoint
+  // Creates a cube with 6 faces
+  pTheRepToReturn = new CAT3DCustomRep();
+  CAT3DPlanarFaceGP * pPlanGP = NULL ; 
+
+    // Top face is not shown 
+  <b>CATGraphicAttributeSet</b> FaceNoShowGA;
+  FaceNoShowGA.<b>SetShowMode</b>(1);
+  pPlanGP = CreateFaceGP(Point5,Point6,Point8,Point7);
+  pTheRepToReturn-&gt;<b>AddGP</b>(pPlanGP,<b>FaceNoShowGA</b>);
+
+    // Bottom face 
+    // -----------
+  <b>CATGraphicAttributeSet</b> FaceShowGA;
+  FaceShowGA.<b>SetType</b>(iTypeFace);
+  pPlanGP = CreateFaceGP(Point4,Point3,Point1,Point2);                                     
+  pTheRepToReturn-&gt;AddGP(pPlanGP,<b>FaceShowGA</b>);
+
+  ... // and so on for the other faces
+
+  ... // Computes and sets the bounding element
+
+  return pTheRepToReturn;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>As with the lines and points, the cube is created as a <i>CAT3DCustomRep</i>
+instance. It is made up of eight instances of <i>CAT3DPlanarFaceGP</i> created
+using the <code>CreateFaceGP</code> method of <i>CAAVisRepWindow</i> that are
+associated with a graphic attribute set when added to the custom representation.
+The top face is set as invisible using the <code>SetShowMode</code> method to
+which 1 is passed. (0 is the default and means shown.) The other faces share the
+same graphic attribute set and are considered as part of a volume, since 3 is
+passed to <code>SetType</code>. Each of these faces is displayed only if it is
+seen from the outside of the cube.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Creating a White Cube with Faces Lighted on Their Two
+Sides</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathPoint WhiteCubePosition(50.f,150.f,0.f );
+  CAT3DCustomRep * pWhiteCube = NULL ;
+
+  int SKIN = 2 ;
+  pWhiteCube = CreateOpenCube(WhiteCubePosition,SKIN);
+   
+  if ( NULL != pWhiteCube )
+  {
+    _pTheModelToDisplay-&gt;AddChild(*pWhiteCube);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The second cube is created with the default color, that is, white, and with
+its type set to 2, that is the faces are lighted on both sides.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Displaying the Representation in the Viewer</h4>
+<p>The <code>AddRepToViewer</code> method displays the created representation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisRepWindow::VisualizeModel()
+{
+  if ( (NULL != _p3DViewer) &amp;&amp; ( NULL != _pTheModelToDisplay) )
+  {    
+    _p3DViewer-&gt;<b>AddRep</b>((CAT3DRep*)_pTheModelToDisplay);
+    _p3DViewer-&gt;<b>Draw</b>();
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The 3D representation bag created to contain all the created representations
+is added to the 3D navigation viewer using the <code>AddRep</code> method, and
+the viewer is drawn using the <code>Draw</code> method. <code>AddRep</code> is
+called one for all, but <code>Draw</code> must be called whenever the
+representation bag is modified.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create and manage graphic attribute on graphic
+representation. It also has shown how to make graphic representations inherit
+from the graphic attributes set to the custom representation that holds them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

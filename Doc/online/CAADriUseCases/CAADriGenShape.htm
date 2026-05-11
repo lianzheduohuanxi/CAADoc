@@ -1,0 +1,446 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Editing Generated Shapes in Generative Views</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Drafting</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Editing Generated Shapes in Generative Views</h3>
+     <p><em>How to access generated shapes in generative views</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAADrwGenShape use case. This use case 
+     explains how to retrieve generated shapes in a generative view. A generated 
+     shape is the feature aggregating a pattern. For example, when a section 
+     view is created, a pattern is created to show the cut. Such a pattern is 
+     aggregated by a generated shape.</p>
+     <p>Note: Generated Shape is called GenShape is a synonym for Generated 
+     Shape.</p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAADrwGenShape Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAADrwGenShape Do</a></li>
+         <li><a href="#How">How to Launch CAADrwGenShape</a></li>
+         <li><a href="#Where">Where to Find the CAADrwGenShape Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to access generated shapes in 
+ generative views.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAADrwGenShape Use Case</h3>
+ <p>CAADrwGenShape is a use case of the CAADraftingInterfaces.edu framework that 
+ illustrates DraftingInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAADrwGenShape Do?</h4>
+ <table width="100%">
+   <caption>Fig. 1: Initial Document</caption>
+   <tr>
+     <td>
+     <p align="center">
+     <img border="0" src="images/CAADrwGenShape.jpg" width="520" height="401"></td>
+   </tr>
+   <tr>
+     <td>
+     <p align="center">Fig. 1 represents the Drawing document used by the use 
+     case. </td>
+   </tr>
+ </table>
+ <p>This Use Case shows how to retrieve contours of GenShape. In the section 
+ view of Fig 1, there are 6 contours.</p>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAADrwGenShape</h4>
+ <p>To launch CAADrwGenShape, you will need to set up the build time 
+ environment, then compile CAADrwGenShape along with its prerequisites, set up 
+ the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>When you launch the use case, pass the full pathname of the Drawing file as 
+ argument. A Drawing file is delivery in the following path: 
+ CAADraftingInterfaces.edu\CNext\resources\graphic\DrawingForGenShapeUseCase.CATDrawing.
+ </p>
+ <ul>
+   <li>With Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:&gt; mkrun -c cmd
+CAADrwGenShape c:\...\DrawingForGenShapeUseCase.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ mkrun -c cmd
+CAADrwGenShape /u/users/.../DrawingForGenShapeUseCase.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAADrwGenShape Code</h4>
+ <p>The CAADrwGenShape use case is made of a single source file named 
+ CAADrwGenShape.cpp located in the CAADrwGenShape.m module of the 
+ CAADraftingInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwGenShape.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwGenShape.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are seven steps in CAADrwGenShape:</p>
+ <ol>
+   <li><a href="#Opening">Opening a Drawing Document</a></li>
+   <li><a href="#Acces">Accessing the Drawing Root in the Document</a></li>
+   <li><a href="#GettingGenShape">Getting all the Generated Shapes in the Active 
+   View</a></li>
+   <li><a href="#ReadingPoints">Reading all the Points Defining the Contours of 
+   a Generated Shape</a></li>
+   <li><a href="#GettingPartInst">Retrieving Part Instance Name from a Generated 
+   Shape</a></li>
+   <li><a href="#GettingPattern">Retrieving Pattern Associated with a Generated 
+   Shape</a></li>
+   <li><a href="#CloseSession">Closing the Session</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Opening"></a>Opening a Drawing Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATDrawing document
+{
+ // Check arguments
+if(2 != iArgc) return 1;
+const char *pfileNameDrawing = iArgv[1];
+
+// return code error
+int rc =0;
+
+// CREATE THE SESSION
+// ==================
+
+CATSession *pSampleSession = NULL;
+HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+if (FAILED(hr)) return 1;</pre>
+     <pre>CATDocument* pDocDrawing = NULL;</pre>
+     <pre>if (FAILED(CATDocumentServices::OpenDocument(pfileNameDrawing, pDocDrawing)))
+{
+  // Ends session
+  ::Delete_Session(&quot;SampleSession&quot;);
+  return 2;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for loading a CATIA document [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Acces"></a>Accessing the Drawing in the Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATIDftDrawing *piDrawing = NULL;
+CATIDftDocumentServices *piDftDocServices = NULL;
+
+if (SUCCEEDED(pDocDrawing-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+{
+  if (SUCCEEDED(piDftDocServices-&gt;GetDrawing(IID_CATIDftDrawing, (void **)&amp;piDrawing)))
+  {
+    piDftDocServices-&gt;Release();
+    piDftDocServices=NULL;
+  }
+  else
+  {
+    piDftDocServices-&gt;Release();
+    piDftDocServices=NULL;
+
+    // Ends session
+    ::Delete_Session(&quot;SampleSession&quot;);
+    return 3;
+  }
+}
+else 
+{
+  // Ends session
+  ::Delete_Session(&quot;SampleSession&quot;);
+  return 3; 
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The root feature of a drawing document is the Drawing, that is, the feature 
+ that implements the <i>CATIDftDrawing</i> interface. We can get a pointer to <i>
+ CATIDftDrawing</i> using the <i>CATIDftDocumentServices</i> interface, which is 
+ implemented by the document. The <code>GetDrawing</code> method first argument 
+ is the <i>CATIDftDrawing</i> interface IID.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="GettingGenShape"></a>Getting all the Generated Shape in the Active 
+ View</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Active view retrieval from the drawing root
+  // ===========================================
+  if (piDrawing)
+  {
+    CATIDftView *piCurrentView = NULL;
+    if (SUCCEEDED(piDrawing-&gt;GetActiveView(&amp;piCurrentView)))
+    {
+      // RETRIEVE GENERATED SHAPES IN THE VIEW
+      // ==========================================
+      if (NULL != piCurrentView) 
+      {
+        CATIUnknownList * piList = NULL;
+        if (SUCCEEDED( piCurrentView-&gt;GetComponents(IID_CATIDrwGenDrawShape,&amp;piList)))
+        {
+          if (piList)
+          {
+            unsigned int piListSize = 0;
+            piList-&gt;Count(&amp;piListSize);
+ 
+            CATIDrwGenDrawShape * piGenShape = NULL;
+            IUnknown * item = NULL;
+            CATUnicodeString PartName;
+
+            // Loop on all Generated shapes of the view.
+            for(unsigned int i=0 ; i&lt;piListSize ; i++)
+            {
+              if( SUCCEEDED( piList-&gt;Item(i, &amp;item) ) )
+              {
+                if(SUCCEEDED( item-&gt;QueryInterface(IID_CATIDrwGenDrawShape, (void**) &amp; piGenShape) ) )
+                {</pre>
+     <pre>...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>A Drawing may contain several sheets, but only one is current at a time. The 
+ current sheet is the sheet containing the active view, that is the view 
+ currently edited. GetActiveView method defined in CATIDftDrawing interface 
+ returns the active view of active sheet in the drawing document. GetComponents 
+ method is a generic method to retrieve all elements identified by an IID. These 
+ elements are returned in a CATIUnknownList.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="ReadingPoints"></a>Reading all points Defining Contours of a 
+ Generated Shape</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATListOfInt ListOfNbPtPerContour;
+CATListPtrCATMathPoint2D ListOfPoints;
+int NbContour=0;
+if (piGenShape &amp;&amp; SUCCEEDED(piGenShape-&gt;GetDescription(NbContour, ListOfNbPtPerContour, ListOfPoints)))
+{
+  // Check geometry
+  for (int numcont=1 ; numcont&lt;=NbContour ; numcont++)
+  {
+    int NbPtcnt = ListOfNbPtPerContour[numcont];
+    for (int numpt=1 ; numpt&lt;=NbPtcnt ; numpt++)
+    {
+      // Get coordinates of the shape
+      CATMathPoint2D *tmpt = ListOfPoints[numpt];
+      if (tmpt) 
+      {
+        cerr &lt;&lt; &quot; Number point = &quot; &lt;&lt; numpt &lt;&lt; &quot; X= = &quot;&lt;&lt; tmpt-&gt;GetX() &lt;&lt; &quot;Y = &quot; &lt;&lt; tmpt-&gt;GetY() &lt;&lt; endl;
+        // Memory clean
+        delete tmpt , tmpt=NULL;
+      }
+    }
+  }
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This sample show how to retrieve points defining the contours by using 
+ GetDescription method.<br>
+ </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="GettingPartInst"></a>Getting Part Instance Name from a Generated 
+ Shape</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+IUnknown *piUnk=NULL;
+if (SUCCEEDED(piGenShape-&gt;GetProduct(IID_CATIProduct,&amp;piUnk)))
+{
+  CATIProduct *piProd =NULL;
+  if (SUCCEEDED(piUnk-&gt;QueryInterface(IID_CATIProduct,(void **)&amp;piProd)))
+  {
+    CATUnicodeString instanceName;
+
+    // Get part instance name on which generated shape is associated.
+    if (SUCCEEDED (piProd-&gt;GetPrdInstanceName( instanceName ) ))
+    {
+      cerr &lt;&lt; &quot;Part instance name&quot;&lt;&lt; instanceName.CastToCharPtr() &lt;&lt;endl;
+    }
+    piProd-&gt;Release();piProd=NULL;
+  }
+  piUnk-&gt;Release();piUnk=NULL;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="GettingPattern"></a>Getting Pattern used by a Generated Shape</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// Get Pattern used by the generated shape,
+CATIDftPattern *piDftPattern=NULL;
+if (SUCCEEDED(piGenShape-&gt;GetPattern(&amp;piDftPattern)))
+{ 
+  int patternType=0;
+  piDftPattern-&gt;GetPatternType(&amp;patternType);
+  if (patternType == 1) 
+  cerr &lt;&lt; &quot;Hatching Pattern found&quot; &lt;&lt; endl;
+  piDftPattern-&gt;Release(),piDftPattern=NULL;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">This section represents the usual sequence to retrieve the 
+ Pattern [<a href="#References">3</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="CloseSession"></a>Close the Session</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Save the result
+  rc = CATDocumentServices::<b>SaveAs</b>(*pDoc, (char *)fileName);
+  ... // Check rc
+  rc = CATDocumentServices::<b>Remove</b> (*pDoc);
+  ... // Check rc
+  // Ends session and drops document	
+  rc = ::<b>Delete_Session</b>(&quot;SampleSession&quot;);
+  ... // Check rc
+
+  return 0;
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for saving a newly created CATIA 
+ document [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the way to :</p>
+ <ol>
+   <li>Open a Drawing document.</li>
+   <li>Get all Generated Shape in the current view.</li>
+   <li>Get Geometry defining the Generated Shape.</li>
+   <li>Get the Part Instance pointed by the Generated Shape.</li>
+   <li>Get the Pattern associated by the Generated Shape.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Lauching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">
+     Load an existing Document</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td><a href="CAADriCreatePattern.htm">Creating a Pattern</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [May 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

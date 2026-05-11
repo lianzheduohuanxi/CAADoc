@@ -1,0 +1,231 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAA V5 XML Code Presentation</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 XML Code Presentation</h3>
+      <em>Presentation conventions to improve the readability of XML code</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives information on how to edit XML Schema as regards to
+      the document layout. CAA Use Cases are expected to meet these conventions.
+      <ul>
+        <li><a href="#Global layout"><strong>Global layout</strong></a>
+        <li><a href="#ElementLayout"><strong>Type and element declaration layout</strong></a>
+        <li><strong><a href="#Naming Conventions">Naming Conventions</a></strong>
+        <li><a href="#Comments"><strong>Comments</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Global layout"></a>Global layout</h3>
+<p>The XML Schema documents presentation must obey the following order:</p>
+<ul>
+  <li>XML header with a UNICODE (UTF-8 recommended) encoding:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Copyright:
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000FF">&lt;!--</font> COPYRIGHT DASSAULT SYSTEMES 2001 <font color="#0000FF">--&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Not mandatory, an historical account of the modifications:
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000FF">&lt;!--</font> 04 Jan 2001 creation <font color="#0000FF">--&gt;</font>
+<font color="#0000FF">&lt;!--</font> 10 Mar 2001 modification, added the weight attribute. <font color="#0000FF">--&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The schema element, with namespace declarations:
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:schema</font><font color="#ff0000"> targetNamespace</font><font color="#0000ff">=&quot;</font>http://dassaultsystemes.com/CATFwk-Product<font color="#0000ff">&quot;
+</font>            <font color="#ff0000">xmlns</font><font color="#0000ff">=&quot;</font>http://dassaultsystemes.com/CATFwk-Product<font color="#0000ff">&quot;
+</font>            <font color="#ff0000">xmlns:xsd</font><font color="#0000ff">=&quot;</font>http://www.w3.org/2001/XMLSchema<font color="#0000ff">&quot;</font><font color="#ff0000">
+            elementFormDefault</font><font color="#0000ff">=&quot;</font>qualified<font color="#0000ff">&quot;&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Import and or include elements, if needed:
+    <table class="code" height="35">
+      <tr>
+        <td height="31">
+          <pre><font color="#0000ff">&lt;</font><font color="#800000">import</font><font color="#ff0000"> namespace</font><font color="#0000ff">=&quot;</font>http://dassaultsystemes.com/CATFwk-Product<font color="#0000ff">&quot;</font><font color="#ff0000">
+        schemaLocation</font><font color="#0000ff">=&quot;</font>CATFwProduct.xsd<font color="#0000ff">&quot;/&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+    <ul>
+      <li>Always import each used type and element definition even if it belongs
+        to the current namespace
+      <li>Group import and include elements by namespace
+      <li>Explain for what each one is used<br>
+      </li>
+    </ul>
+  </li>
+  <li>Type or element declaration:
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:complexType</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>productType<font color="#0000ff">&quot;&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Type/element documentation using the <code>annotation</code> and <code>documentation</code>
+    elements (see the <a href="#Comments">Comments</a> section):
+    <table class="code">
+      <tr>
+        <td>
+          <pre>  <font color="#0000ff">&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+</font>    <font color="#0000ff">&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>Use this type when a product description is needed.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;
+</font>  <font color="#0000ff">&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>All elements declared inside a type or inside an element must be
+    documented using the <code>annotation</code> and <code>documentation</code>
+    elements.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="ElementLayout"></a>Type and element declaration layout</h3>
+<ul>
+  <li>
+    <p align="left">Indentation
+    <ul>
+      <li>Always use the same type of indentation (2 or 4 spaces)
+      <li>Use spaces, not tabs.<br>
+      </li>
+    </ul>
+  <li>Line Length &lt; 80 characters
+    <p>When a declaration would not fit on a single line, break it into another
+    line at a location allowed by the XML syntax.<br>
+    Align the new line with the beginning of the declaration at the same level
+    on the previous line, or if it is too far on the right, use an indentation
+    twice as big as usual.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:element</font> <font color="#ff0000">name</font><font color="#0000ff">=&quot;</font>position<font color="#0000ff">&quot;</font> <font color="#ff0000">type</font><font color="#0000ff">=&quot;</font>Positionning3DMatrixType<font color="#0000ff">&quot;</font><font color="#ff0000">
+             minOccurs</font><font color="#0000ff">=&quot;</font>0<font color="#0000ff">&quot; </font><font color="#FF0000">nillable</font><font color="#0000ff">=&quot;false&quot;&gt;
+
+</font>  <font color="#0000ff">&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+</font>    <font color="#0000ff">&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>The positioning matrix, relative to the assembly root.
+        If this element is not set, then the identity matrix is assumed.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;
+</font>  <font color="#0000ff">&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+  <li>At most one declaration per Line
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:element </font><font color="#ff0000">name</font><font color="#0000ff">=&quot;</font>x<font color="#0000ff">&quot; </font><font color="#ff0000">type</font><font color="#0000ff">=&quot;</font>xsd:float<font color="#0000ff">&quot;&gt;&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>X value.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+&lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>y<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:float<font color="#0000ff">&quot;</font><font color="#0000ff">&gt;&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>Y value.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+&lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>z<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>xsd:float<font color="#0000ff">&quot;</font><font color="#0000ff">&gt;&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>Z value.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Naming Conventions"></a>Naming Conventions</h3>
+<ul>
+  <li>Type and element names should begin in lower case. Element names should be
+    short, especially if they are to be repeated possibly a great number of
+    times in XML document instances.
+  <li>Type names in XML Schema should end with 'Type'. For example:
+    <table class="code">
+      <tr>
+        <td>
+          <pre><font color="#0000FF">&lt;</font><font color="#800000">xsd:complexType</font> <font color="#FF0000">name</font>=<font color="#0000FF">&quot;</font>productType<font color="#0000FF">&quot;&gt;</font> ... <font color="#0000FF">&lt;/</font><font color="#800000">xsd:complexType</font><font color="#0000FF">&gt;</font></pre>
+        </td>
+      </tr>
+    </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3 align="left"><a name="Comments"></a>Comments</h3>
+<p>All exposed entities in XML Schema, i.e., global and local types and
+elements, must be documented using the <code>annotation</code> and <code>documentation</code>
+elements. For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:element</font><font color="#ff0000"> name</font><font color="#0000ff">=&quot;</font>product<font color="#0000ff">&quot;</font><font color="#ff0000"> type</font><font color="#0000ff">=&quot;</font>productType<font color="#0000ff">&quot;&gt;
+</font>  <font color="#0000ff">&lt;</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+</font>    <font color="#0000ff">&lt;</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;</font>Use this element to exchange product data.<font color="#0000ff">&lt;/</font><font color="#800000">xsd:documentation</font><font color="#0000ff">&gt;
+</font>  <font color="#0000ff">&lt;/</font><font color="#800000">xsd:annotation</font><font color="#0000ff">&gt;
+&lt;/</font><font color="#800000">xsd:element</font><font color="#0000ff">&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>Note that since English language is assumed for XML documentation, CAA rules
+does not require the use of the <code>xml:lang</code> attribute with <code>documentation</code>
+elements.</p>
+<p>If documentation in multiple languages were needed, using the <code>xml:lang </code>attributes
+with <code>documentation</code> element would be required.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Sep 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

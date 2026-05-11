@@ -1,0 +1,267 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Class CATICGMTopSweep</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMTopSweep"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces <script type="text/javascript" > writeClassCharacteristic(); </script> CATICGMTopSweep</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATICGMTopSweep_33400','CATICGMTopSweep','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATICGMTopSweep</b>
+</p>
+<p>
+<b><i> Class representing the topological operator that sweeps a profile.</i></b><br>
+ 
+ <br>The operator extrudes 
+ <ul><li>either a wire body, and creates a skin body
+ <li>or a skin body, and creates a volume body.
+ </ul>
+ <br> In addition to the sweep creation, this operator provides the capability
+ to use a Boolean operation between a body (called trimming body), and the 
+ created sweep. To obtain such result, use the <script type="text/javascript"> activateLinkAnchor('CATICGMTopExtrude','SetOperation','CATICGMTopExtrude.SetOperation') </script> and 
+<script type="text/javascript"> activateLinkAnchor('CATICGMTopExtrude','SetTrim','CATICGMTopExtrude.SetTrim') </script> mehods of the parent class.<br>
+ The CATICGMTopSweep operator follows the global frame of the topological operators 
+ and satisfies the smart mechanism: the
+ input body is not modified. A new resulting body is created, 
+ possibly sharing data with the input body. A CATICGMTopPrism operator is not streamable.
+ To use it:
+<ul>
+ <li>Create it with the <tt>CATCGMCreateTopSweep</tt> global function.
+ <li>Tune it with appropriate options, using the <tt>SetXxx</tt> methods. In particular,
+ define the type of limitations, and, if needed, the Boolean operation.
+ <li>Run it
+ <li>Get the resulting extrusion with the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMTopExtrude','GetResult','CATICGMTopExtrude.GetResult') </script> method, and the result of the Boolean operation with the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMTopExtrude','GetBooleanResult','CATICGMTopExtrude.GetBooleanResult') </script> method. If you do not want  to keep these resulting bodies, use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove them from the  geometric factory, after the operator deletion.
+<li>Release the operator with the <tt>Release</tt> method after use.
+</ul>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATICGMTopSweep()"><b>CATICGMTopSweep</b></a>()
+<dd>  Constructor
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#SetExtrudeLimit(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATLength)"><b>SetExtrudeLimit</b></a>(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATLength)
+<dd>  Defines the type of limitation of each extremity along the extrusion (center curve) direction.
+ <dt> o 
+    <a href="#SetLimit(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATBoolean)"><b>SetLimit</b></a>(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATBoolean)
+<dd>  
+ <dt> o 
+    <a href="#SetPullingDirection(CATMathVector*)"><b>SetPullingDirection</b></a>(CATMathVector*)
+<dd>  Defines the pulling direction to replace the previously specified spine.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATICGMTopSweep"></a><a name="CATICGMTopSweep()"></a> <dt> o <b>CATICGMTopSweep</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATICGMTopSweep</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructor
+</dl>
+ <h2>Methods</h2> <br>
+<a name="SetExtrudeLimit"></a><a name="SetExtrudeLimit(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATLength)"></a> <dt> o <b>SetExtrudeLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetExtrudeLimit</b>(<td><script type="text/javascript"> activateLink('CATTopLimit','CATTopLimit')</script> <td><tt>iId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopLimitType','CATTopLimitType')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iIsAxisReverted</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script> <td><tt>iLimit</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iPropagationBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopPropagationType','CATTopPropagationType')</script> <td><tt>iPropagationFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iThickness</tt><td><tt>= CATLength(0.0)</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the type of limitation of each extremity along the extrusion (center curve) direction.
+ <br>To be called for each extremity, if you do not want to keep
+ the default options of the global creation function.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd> The first or last extremity.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd> The type of limit on the extremity.
+ </dd>
+    <dt><tt> iIsAxisReverted</tt>
+   <dd> The orientation.
+ <br><b>Legal values</b>: <tt>TRUE</tt> for the same orientation as the direction defined at the operator
+ creation, <tt>FALSE</tt> for an opposite orientation. In general, use <tt>TRUE</tt> for the start limit,
+ and <tt>FALSE</tt> for the end limit.
+ </dd>
+    <dt><tt> iOffset</tt>
+   <dd> The value of the offset if <tt>iType</tt> has the value <tt>CatLimOffsetFromProfile</tt>.
+ </dd>
+    <dt><tt> iLimit</tt>
+   <dd> The pointer to the geometry or the topology that stops the extrusion.
+ </dd>
+    <dt><tt> iPropagationBody</tt>
+   <dd> The pointer to the body which contains <tt>iLimit</tt>, thus allowing the
+ propagation of the trimming specification. To use if <tt>iType = CatLimUntil</tt> and
+ <tt>iPropagationFlag = CatPropagClosing</tt>  or if <tt>iType = CatLimNextAlongAxis</tt>
+ or <tt>iType = CatLimLastAlongAxis</tt> 
+ </dd>
+    <dt><tt> iPropagationFlag</tt>
+   <dd> The management of the propagation.  
+ </dd>
+    <dt><tt> iThickness</tt>
+   <dd> defines the value of any thickness which must be applied to the considering relimitation</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLimit"></a><a name="SetLimit(CATTopLimit,CATTopLimitType,CATBoolean,CATLength,CATGeometry*,CATBody*,CATTopPropagationType,CATBoolean)"></a> <dt> o <b>SetLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLimit</b>(<td><script type="text/javascript"> activateLink('CATTopLimit','CATTopLimit')</script> <td><tt>iId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopLimitType','CATTopLimitType')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iIsAxisReverted</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script> <td><tt>iLimit</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iPropagationBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopPropagationType','CATTopPropagationType')</script> <td><tt>iPropagationFlag</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iIsThickness</tt><td><tt>= CATBoolean(0)</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R21 SetExtrudeLimit
+ Defines the type of limitation of each extremity along the extrusion (center curve) direction.
+ <br>To be called for each extremity, if you do not want to keep
+ the default options of the global creation function.
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd> The first or last extremity.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd> The type of limit on the extremity.
+ </dd>
+    <dt><tt> iIsAxisReverted</tt>
+   <dd> The orientation.
+ <br><b>Legal values</b>: <tt>TRUE</tt> for the same orientation as the direction defined at the operator
+ creation, <tt>FALSE</tt> for an opposite orientation. In general, use <tt>TRUE</tt> for the start limit,
+ and <tt>FALSE</tt> for the end limit.
+ </dd>
+    <dt><tt> iOffset</tt>
+   <dd> Either the value of the offset if <tt>iType</tt> is valued to <tt>CatLimOffsetFromProfile</tt>, 
+ or the value of the thickness if <tt>iIsThickness</tt>	is valued to <tt>CATBoolean(1)</tt> 
+ </dd>
+    <dt><tt> iLimit</tt>
+   <dd> The pointer to the geometry or the topology that stops the extrusion.
+ </dd>
+    <dt><tt> iPropagationBody</tt>
+   <dd> The pointer to the body which contains <tt>iLimit</tt>, thus allowing the
+ propagation of the trimming specification. To use if <tt>iType = CatLimUntil</tt> and
+ <tt>iPropagationFlag = CatPropagClosing</tt>  or if <tt>iType = CatLimNextAlongAxis</tt>
+ or <tt>iType = CatLimLastAlongAxis</tt> 
+ </dd>
+    <dt><tt> iPropagationFlag</tt>
+   <dd> The management of the propagation.  
+ </dd>
+    <dt><tt> iIsThickness</tt>
+   <dd> Defines whether a thickness is applied from the body <tt>iPropagationBody</tt> to define the relimitation. 
+ In this case, the value of the the thickness is <tt>iOffset</tt></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPullingDirection"></a><a name="SetPullingDirection(CATMathVector*)"></a> <dt> o <b>SetPullingDirection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPullingDirection</b>(<td><script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iPullingDirection</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the pulling direction to replace the previously specified spine.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPullingDirection</tt>
+   <dd> The direction defining an implicit spine to be the projection of the guide onto a plane
+ normal to this direction.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMTopSweep.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,390 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Enabling the Visualization of New Features in a Product Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Enabling the Visualization of New Features in a
+      Product Document</h3>
+      <em>Integrating new features in the visualization process</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures</a> &gt; <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</a>
+      &gt; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a> &gt; <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</a>
+      &gt; <b>CAAPstINFVisu</b> &gt;&nbsp; <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp;
+      &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</a> &gt; <a href="CAAPstINFDelete.htm">CAAPstINFDelete</a>
+      &gt; <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPstINFVisu use case. This use case
+      explains how to allow new features created &quot;from scratch&quot; to be
+      visualized in a Product document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstINFVisu Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstINFVisu Do</a></li>
+            <li><a href="#How">How to Launch CAAPstINFVisu</a></li>
+            <li><a href="#Where">Where to Find the CAAPstINFVisu Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate how new features created &quot;from
+scratch&quot; in an applicative container of a Product document can be
+integrated in the visualization process of a Product document. The native CATIA
+visualization process takes into account the different containers and features
+that are&nbsp; native to a particular document type. However, it has no
+knowledge of features created in user-defined applicative containers. The
+purpose of this use case is to show how these types of features can nevertheless
+be visualized in a viewer of a Product document.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstINFVisu Use Case</h3>
+<p>The CAAPstINFVisu is a use case of the CAAProductStructure.edu framework that
+illustrates the integration of ObjectSpecsModeler,&nbsp; Visualization and
+ProductStructure capabilities in the scope of a Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the CAAPstINFVisu Use Case Do</h4>
+<p>This use case illustrates the integration in the visualization process of new
+features created in an applicative container within a Product document.
+Following are the contents of the applicative container we will be working with
+in the CAAPstINFDocument.CATProduct document supplied with this use case.</p>
+<b>Fig. 1: Contents of the CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDocStructure.jpg" width="428" height="438"></td>
+  </tr>
+</table>
+<p>As you can see, initially, we are basically working with 5 features: two
+&quot;CAAPstINFRoot&quot; features, two &quot;CAAPstINFPoint&quot; features and
+one &quot;CAAPstINFLine&quot; feature. Only the &quot;CAAPstINFPoint&quot; and
+&quot;CAAPstINFLine&quot; features need to have a geometric visualization.
+However, because these features are created in an applicative container, the
+native visualization process would normally not take into account their
+visualization procedures. What must be done in order for the visualization
+process to take them into account, is to create a provider implementation that
+will be called during the visualization process and that will return a list of
+the features whose visualization must be constructed.</p>
+<p>In our example, the visualization provider algorithm returns a list
+containing the two &quot;CAAPstINFPoint&quot; features and the
+&quot;CAAPstINFLine&quot; feature. Then, the visualization process can call the <i>CATI3DGeoVisu</i>
+implementations of each of these features in order to be able to visually
+display their geometry in the viewer.</p>
+<p>This use case will explain how to program the visualization provider (<i>CATIVisuProvider</i>
+implementation) as well as the CATI3DGeoVisu implementation of the
+&quot;CAAPstINFPoint&quot; and &quot;CAAPstINFLine&quot; features.</p>
+<p>What is very important to remember is that provider implementations are
+runtime mechanisms. In order to activate them at runtime, it is necessary to
+declare them to the document during its initiation. Because our features are all
+created in the same applicative container, a natural place for declaring our
+providers would be during the initialization of the applicative container. This
+means implementing the CATInit::Init method for our applicative container. This
+code is described in the &quot;Creating New Features 'From Scratch' in a Product
+Document&quot; article [2] related to this use case which illustrates the
+initial construction of the Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch the CAAPstINFVisu Use Case</h4>
+<p>To launch the CAAPstINFVisu use case, you will need to set up the build time
+environment, then compile CAAPstINFModeler.m shared library along with its
+prerequisites [<a href="#References">3</a>]. Then, you can execute use case
+simply by launching a new CATIA session and loading (<code>File + Open</code>)
+the <b>CAAPstINFDocument.CATProduct</b> document that has been supplied with
+this use case in the <code>CAAProductStructure.edu/CNext/resources/graphic</code>
+file directory. The Product document&nbsp; will be displayed and you will be
+able to visualize the geometry of the new features in the current viewer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Where"></a>Where to Find the CAAPstINFVisu Code</h4>
+<p>The CAAPstINFVisu use case is made of a several modules of the
+CAAProductStructure.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAProductStructure.edu\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAProductStructure.edu/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><a name="StepByStep"></a><b>Step-by-Step</b></p>
+<p>There are two logical steps to CAAPstINFVisu:</p>
+<ol>
+  <li><a href="#CodingProvider">Coding a Visualization Provider Implementation
+    of <i>CATIVisuProvider</i></a></li>
+  <li><a href="#VisuImpl">Implementing <i>CATI3DGeoVisu</i> to Visualize New
+    Features</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p><b><a name="CodingProvider"></a>Coding a Visualization Provider
+Implementation of <i>CATIVisuProvider</i></b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>HRESULT CAAPstINFVisuProviderRoot::GetChildren(CATBaseUnknown *pObj, CATLISTP(CATBaseUnknown) **pListChildren) 
+{
+  cout &lt;&lt; &quot;***** CAAPstINFVisuProviderRoot::GetChildren&quot; &lt;&lt; endl;
+
+  HRESULT rc = E_FAIL;
+
+//------------------------------------------------------
+// Verify that the caller is actually the Product root.
+//------------------------------------------------------
+
+  // Retrieve a CATIProduct handle on the caller object
+  CATIProduct *piProductOnObj = NULL;
+  rc = pObj -&gt; QueryInterface (IID_CATIProduct, 
+                               (void**) &amp;piProductOnObj);
+  if (SUCCEEDED(rc))
+  {
+     // Retrieve the father of the product: if it has none, this must be the root.
+     CATIProduct *piFatherProd = piProductOnObj -&gt; GetFatherProduct();
+     piProductOnObj -&gt; Release();
+     piProductOnObj = NULL;
+     if (piFatherProd != NULL) 
+     {
+         cout &lt;&lt; &quot;The caller is not the aggregating root product.&quot; &lt;&lt; endl &lt;&lt; flush;
+	 piFatherProd -&gt; Release();
+	 piFatherProd = NULL;
+	 return S_OK;
+     }
+     else cout &lt;&lt; &quot;The caller is the aggregating root product: continue&quot; &lt;&lt; endl;
+		   
+//---------------------------------------------------------------------------
+// Retrieve the applicative container containing the features to be returned
+//---------------------------------------------------------------------------
+     // Retrieve a pointer to the current document
+     CATILinkableObject *piLinkableOnObj = NULL;
+     rc = pObj -&gt; QueryInterface (IID_CATILinkableObject,
+	                          (void**) &amp;piLinkableOnObj);
+     if (FAILED(rc)) return E_FAIL;
+
+     CATDocument* pDoc = piLinkableOnObj-&gt;GetDocument();
+     piLinkableOnObj -&gt; Release();
+     piLinkableOnObj = NULL;
+		
+     // Retrieve a pointer to the applicative container
+     CATUnicodeString appliContIdentifier(&quot;PstINFContainer&quot;);
+     CATBaseUnknown *pApplicativeContainer = NULL;
+
+     rc = ::CATGetApplicativeContainer (&amp;pApplicativeContainer,   
+                                        pDoc,                     
+	  			        IID_CATIContainer,  
+                                        appliContIdentifier);     
+     if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Applicative container retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+     else
+     {
+        cout &lt;&lt; &quot;ERROR in retrieving applicative container&quot; &lt;&lt; endl &lt;&lt; flush;
+        return E_FAIL;
+     }
+
+     // Retrieve a pointer to CATIClientContainer in order to list the members
+     // of the applicative container.
+     CATIClientContainer *piClientOnAppliCont = NULL;
+     rc = pApplicativeContainer -&gt; QueryInterface(IID_CATIClientContainer,
+                                                  (void**) &amp;piClientOnAppliCont);
+     pApplicativeContainer -&gt; Release();
+     pApplicativeContainer = NULL;
+
+     if (NULL == piClientOnAppliCont)
+     { 
+        cout &lt;&lt; &quot;ERROR in retrieving container pointer&quot; &lt;&lt; endl &lt;&lt; flush;
+        return E_FAIL;
+     }
+     else cout &lt;&lt; &quot;CATIClientContainer pointer retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+
+//------------------------------------------------------------
+// Retrieve the list of features in the applicative container
+//------------------------------------------------------------
+     CATUnicodeString clientId(&quot;CAAPstINFClientId&quot;); 
+     CATListPtrCATBaseUnknown *pMemberList = NULL;
+     rc = piClientOnAppliCont -&gt; ListMembers(IID_CATISpecObject,
+                                             clientId,  
+                                             &amp;pMemberList);
+     piClientOnAppliCont -&gt; Release();
+     piClientOnAppliCont = NULL;
+
+     if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Member list retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+     else
+     { 
+        cout &lt;&lt; &quot;ERROR in retrieving member list&quot; &lt;&lt; endl;
+  	return E_FAIL;
+     }
+
+     cout &lt;&lt; &quot;Number of members in applicative container: &quot; &lt;&lt; pMemberList-&gt;Size() &lt;&lt; endl &lt;&lt; flush;
+      
+//----------------------------------------------------------------------------
+// Scan through the list in order to retrieve the &quot;CAAPstINFRoot&quot; feature and
+// return the features it aggregates through the &quot;ListOfComponents&quot; attribute.
+//----------------------------------------------------------------------------
+     CATUnicodeString rootType(&quot;&quot;);
+     CATISpecObject *piSpecMember = NULL;
+     for(int i=1;i&lt;=pMemberList-&gt;Size();i++)
+     {
+         piSpecMember = (CATISpecObject *) (*pMemberList)[i];
+	 rootType = piSpecMember -&gt; GetType();
+	 if (rootType == &quot;CAAPstINFRoot&quot;)
+	 {
+             CATISpecAttrAccess *piAttrAccessOnRoot = NULL;
+	     rc = piSpecMember -&gt; QueryInterface(IID_CATISpecAttrAccess,
+	                                         (void**) &amp;piAttrAccessOnRoot);
+	     if (FAILED(rc))
+	     {
+		 delete pMemberList;
+		 pMemberList = NULL;
+		 return rc;
+    	     }
+				
+    	     CATISpecAttrKey *piListComponentKey = NULL;
+	     piListComponentKey = piAttrAccessOnRoot -&gt; GetAttrKey (&quot;ListOfComponents&quot;);
+	     if (!piListComponentKey)
+	     {
+		 delete pMemberList;
+		 pMemberList = NULL;
+		 return rc;
+	     }
+				
+	     CATISpecObject *piComponent = NULL;
+	     piAttrAccessOnRoot -&gt; Beginning(piListComponentKey);
+	     while (piAttrAccessOnRoot -&gt; Next(piListComponentKey))	
+	     {
+		 piComponent = piAttrAccessOnRoot -&gt; GetSpecObject(piListComponentKey);	            
+		 if (NULL == piComponent)
+		 {
+		     cout &lt;&lt; &quot;Error in retrieving component&quot; &lt;&lt; endl;
+		     piAttrAccessOnRoot -&gt; Release();
+		     piAttrAccessOnRoot = NULL;
+		     piListComponentKey -&gt; Release();
+		     piListComponentKey = NULL;
+		     delete pMemberList;
+		     pMemberList = NULL;
+		     return E_FAIL;  
+		 }
+		 (*pListChildren) -&gt; Append(piComponent);
+		 piComponent = NULL;
+             }
+	     piSpecMember = NULL;
+             piAttrAccessOnRoot -&gt; Release();
+	     piAttrAccessOnRoot = NULL;
+	     piListComponentKey -&gt; Release();
+	     piListComponentKey = NULL;
+
+         }
+     }
+     delete pMemberList;
+     pMemberList = NULL;	    
+  }
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="VisuImpl"></a>Implementing <i>CATI3DGeoVisu</i> to Visualize New
+Features</b></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p align="left">&nbsp;</p>
+<ul>
+  <li>
+  
+    <!---------------------------------comment------------------------------------->
+</ul>
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAPstINFVisu use case has shown you how to integrate new features
+created &quot;from scratch&quot; in an applicative container in the
+visualization process of a Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td>Feature Modeler Overview</td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The Product
+        Structure Model</a></td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [May 2002]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

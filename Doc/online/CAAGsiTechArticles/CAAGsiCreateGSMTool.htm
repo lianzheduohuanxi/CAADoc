@@ -1,0 +1,359 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating an Open Body</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Shape Design &amp; Styling</h1>
+    </td>
+    <td valign="top">
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating an Open Body</h3>
+      <em>How to create a GSMTool in a Part document</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the Open Body The class CAAGsiUserTools Objec
+      explains how to create an open body feature that is bound to imbed Shape
+      Design Features.
+      <ul>
+        <li><b><a href="#Learn">What is an Open Body</a></b></li>
+        <li><b><a href="#UseCase">The CAAGsiUserTools Object - Creating an
+          OpenBody</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAGsiUserTools Do</a></li>
+            <li><a href="#Where">Where to Find the CAAGsiUserTools Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What is an Open Body</h3>
+<p>An &quot;Open Body&quot; is a mechanical modeler object required as father for
+any GSD feature to be insert in a part document.</p>
+This article is intended to help you make your first steps in programming with
+CATIA Shape Design [<a href="#References">1</a>]. Its main intent is to
+practically describe the creation of the open body
+<p> Before creating this open body,
+you will have to navigate through the feature model of CATIA V5 to find the
+objects that will enable you to create this open body (also called a GSMTool
+object) under the part feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="UseCase"></a>The CAAGsiUserTools Object - Creating an OpenBody</h3>
+<p>CAAGsiUserTools is a usefull class in CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework that
+illustrates GSMInterfaces framework object standard use.</p>
+<p>CAAGsiUserTools is a toolkit object that encapsulate three aspects of CAA development
+in Wireframe and Shape Design</p>
+<ul>
+<li>Creating an OpenBody
+<li>Inserting a Wireframe and Shape Design feature in an OpenBody 
+<li>Creating Wireframe and shape Design feature using GSMInterface framework Interfaces
+</ul>
+<p>Two first aspects are general behaviors to re-use to instanciate any GSD
+features of GSMInterfaces in CATIA V5 frame.</p>
+<p>The first aspect is presented in this article</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAGsiUserTools Do</h4>
+The goal of CAAGsiUserTools Object is to show how to create an open body
+feature, which is the first common step before creating shape design features in
+a part document. We enrich the sample code CAAGsiUserTools.cpp(.h) and
+illustrates some backbone concepts thats are shared by all Mechanical
+Applications.
+<p>CAAGsiUserTools is used in CAAGsiNozzle sample</p>
+<p align="right">[<a href="#Top">Top</a>]<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGsiUserTools Code</h4>
+<p>The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools
+located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps illustrated in CAAGsiUserTools for creating
+an Open Body :</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#PartContainer">Retrieving the Part Container Feature</a></li>
+  <li><a href="#CurrentTool">Retrieving the Current Tool</a></li>
+  <li><a href="#Locate">Locating the Tool Under The Part Feature</a></li>
+  <li><a href="#Create">Creating a GSMTool Feature Instance</a></li>
+  <li><a href="#Set">Setting the Created Tool as Current</a></li>
+</ol>
+<p>We will now first comment the Part document creation and intialization in the
+method <code>CAAGsiUserTools::Init</code> in the prolog, and then each of these
+steps by looking at the code of the method <code>CAAGsiUserTools::CreateGSMTool</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>We first have created a Part document handled using the <code>_pDoc</code>
+smart pointer. We have stored the <code>_pFact</code> pointer in the <i>CAAGsiUserTools</i>
+class in the method <code>Init</code> that has to be called before doing
+anything with a <i>CAAGsiUserTools</i> object.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAGsiUserTools::Init(char *&amp; iSessionName) 
+{
+  HRESULT rc = S_OK;
+  ...  // Create the CATPart document
+  CATInit_var spInit = <b>_pDoc</b>;
+  spInit-&gt;Init(TRUE);
+
+  CATIPrtContainer * piPartContainer = (CATIPrtContainer*) spInit-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+  ... // Process piPartContainer == NULLL
+  rc = piPartContainer -&gt; QueryInterface(IID_CATIGSMFactory, (void**)&amp;<b>_pFact</b>);
+  ... // Process rc == E_xxx
+}    </pre>
+    </td>
+  </tr>
+</table>
+<p>Once the Part document is created, it must be initialized thanks to the <code>Init</code>
+method of the <i>CATInit</i> interface. This method creates the document's root
+container. Then, the root container is retrieved as a pointer to the <i>CATIPrtContainer</i>
+interface using the <code>GetRootContainer</code> method of the the <i>CATInit</i>
+interface. This root container implements also the <i>CATIGSMFactory</i>
+interface. A pointer to <i>CATIGSMFactory</i> is retrieved from on root
+container and stored as a data member to be used later.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="PartContainer"></a>Retrieving the Part Container Feature</h4>
+<p>We need a <i>CATIPrtPart</i> interface pointer onto the Part Container
+feature to be able to get the current Tool Feature.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIGSMTool_var CAAGsiUserTools::<b>CreateGSMTool</b>(const CATUnicodeString &amp;iName,
+                                               int                    iSetAsCurrent,
+                                               int                    iTopLevel)
+{
+  CATIContainer_var    spCont     = <b>_pFact</b>;
+  CATIPrtContainer_var spPartCont = spCont;
+  CATIPrtPart_var      spPart     = <b>spPartCont -&gt; GetPart()</b>;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We first get a smart pointer to <i>CATIPrtContainer</i> from the stored
+pointer <code>_pFact</code>, then we get the Part <b>root</b> feature from the
+Part container as a smart pointer to the <i>CATIPrtPart</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CurrentTool"></a>Retrieving the Current Tool</h4>
+<p>Now that we have retrieved the Part feature, we can retrieve the current
+tool, that can be a MechanicalTool or a GSMTool.</p>
+<p><img src="../CAAIcons/images/warning.gif" border="0" width="30" height="30">A
+GSMTool can be created only under another GSMTool or directly under the part <b>root</b>
+feature, but not under a MechanicalTool.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATIGSMTool_var spTool = NULL_var;
+  if ( NULL_var != spPart )
+  {
+    CATIBasicTool_var spCurrentTool = spPart-&gt;<b>GetCurrentTool</b>();
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIPrtPart</i> interface enables us to retrieve the current tool (One
+always exists.) Then, we try to get a <i>CATIGSMTool</i> smart pointer from the <code>spCurrentTool</code>
+<i>CATIBasicTool</i> smart pointer.</p>
+<p>At this stage, we have to check that the tool retrieved is not the open body
+dedicated to store external references (Multi-model links) If it is the case, we
+set <code>spTool</code> to <code>NULL_var</code> which means that we need to
+create another GSMTool feature for our need.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Locate"></a>Locating the Tool Under the Part Feature</h4>
+<p><img src="../CAAIcons/images/key.gif" border="0" width="31" height="17">We
+show here how to get the position of a feature in the descendants' list of the
+part feature, using the <i>CATIDescendants</i> interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    ...
+    int Position = 0;
+    CATISpecObject_var spCurrentFeat = spPart-&gt;<b>GetCurrentFeature</b>();
+    CATISpecObject_var <b>spParentForGSMTool</b> = spPart; 
+
+    if (spCurrentFeat != spCurrentTool &amp;&amp; 0 == iTopLevel)	
+    {
+      spParentForGSMTool  = spCurrentTool;
+      CATISpecObject_var spExternalRef = spPart-&gt;<b>GetBodyForExternalReferences</b>();
+      if (NULL_var != spExternalRef &amp;&amp; spCurrentTool == spExternalRef)
+      {
+        spParentForGSMTool = spPart;
+      }
+      else 
+      {
+        CATIDescendants_var spRoot = spCurrentTool;
+        Position = spRoot -&gt; <b>GetPosition</b>( spCurrentFeat);
+      }
+    }
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We use a again the <i>CATIPrtPart</i> interface to get the current feature.
+This feature can be a Tool or a mechanical feature. A GSMTool has to be created
+with a parent, and the parent candidate must be the part itself or another
+GSMTool.</p>
+<p><code>spParentForGSMTool</code> is initialized to the part feature and the
+retrieved <code>Position</code> is 0.</p>
+<p>In case of a current feature that is different from the current tool and if <code>iTopLevel</code>
+equals 0, then we will compute the position of the current tool in order to
+create the new one just after the current feature in the procedural view and
+under the current tool. In order to get the position of the current feature with
+respect to the current tool, we use the <i>CATIDescendants</i> implementation of
+the current tool <code>spRoot</code>.</p>
+<p>Note: In retrieving the require tool it is needed to check that the body is
+not a body used for &quot;ExternalReferences&quot; generated in assembly context
+when selecting geometry in a different part as of the current one.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create"></a>Creating a GSMTool Feature Instance</h4>
+<p>We can now create a new GSMTool feature instance by giving its name, parent
+reference and position under its parent.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    if (NULL_var != spParentForGSMTool)
+    {
+      <b>CATIMechanicalRootFactory</b>_var spMechRoot = spCont;
+      spTool = spMechRoot -&gt; <b>CreateGSMTool(iName,spParentForGSMTool,Position)</b>;
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We get the <i>CATIMechanicalRootFactory</i> interface from the <code>spCont</code>
+smart pointer. The GSMTool is created by giving the smart pointer of its parent,
+that is, either the part feature or a GSMTol instance, and the position of the
+new tool under its parent. 0 will create the Tool directly under <code>spParentForGSMTool</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Set"></a>Setting the Created Tool as Current</h4>
+<p><img src="../CAAIcons/images/information.gif" border="0" width="31" height="30">Now
+that we have created this new tool, we have to set it as the current tool, if we
+want to automatically create skin and wireframe features under this open body.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    if (NULL_var != spTool &amp;&amp; 0 != iSetAsCurrent)
+    {
+      <b>CATIPrtManagement</b>_var spPartManage = spPart;
+      if (NULL_var != spPartManage)
+        spPartManage-&gt;<b>SetCurrentFeature</b>(spTool);
+    }
+  }
+  return spTool;</pre>
+    </td>
+  </tr>
+</table>
+<p>We check that we want to set the spTool smart pointer as the current tool by
+testing <code>iSetAsCurrent</code>. To set a tool as current we have to retrieve
+the <i>CATIPrtManagement</i> interface on the part feature, and call the <code>SetCurrentFeature</code>
+method with <code>spTool</code> as argument.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has demonstrated the way to create an open body in a part
+document. We illustrate how some management interfaces on the part feature can
+be used like <i>CATIPrtPart</i>, <i>CATIPrtManagement</i>, <i>CATIMechanicalRootFactory</i>.
+We also illustrate the way to get the feature position in the descendant list of
+its parent using <i>CATIDescendants</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAGsiShapeDesignFeature.htm">About
+      Generative Shape Design Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAGsiUseCases/CAAGsiNozzleSample.htm">CAAGsiNozzle Use case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [June 2003]</td>
+    <td valign="top">Document set as a technical article</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

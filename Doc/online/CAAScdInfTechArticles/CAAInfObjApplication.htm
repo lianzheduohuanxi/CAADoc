@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Application Object</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<h1><a name="Top"></a>Application Object</h1>
+<div align="left">
+  <table border="0">
+    <tr>
+      <td width="90">See Also</td>
+      <td width="90">Use Cases</td>
+      <td width="90"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Application', 'PropertyIndex'); return false;">Properties</a></td>
+      <td width="90"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Application', 'MethodIndex'); return false;">Methods</a></td>
+    </tr>
+  </table>
+</div>
+<p>&nbsp;</p>
+<table cellpadding="0" cellspacing="0">
+<tr>
+<td class="auto">
+<a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Application');return false;"><img src="../CAAScrAutomationImages/images/applicat.gif" alt="Application object" border="0" width="183" height="18"></a><br>
+<img border="0" src="../CAAScrAutomationImages/images/parmult.gif" width="17" height="25"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Documents');return false;"><img border="0" src="../CAAScrAutomationImages/images/docs.gif" width="183" height="18"></a><br>
+<img border="0" src="../CAAScrAutomationImages/images/parmult.gif" width="17" height="25"><a href="CAAInfObjWindows.htm"><img border="0" src="../CAAScrAutomationImages/images/windows.gif" width="183" height="18"></a><br>
+<img border="0" src="../CAAScrAutomationImages/images/parmult.gif" width="17" height="25"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Printers');return false;"><img border="0" src="../CAAScrAutomationImages/images/printers.gif" width="183" height="18"></a><br>
+<img border="0" src="../CAAScrAutomationImages/images/parmult.gif" width="17" height="25"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'FileSystem');return false;"><img border="0" src="../CAAScrAutomationImages/images/filesys.gif" width="183" height="18"></a><br>
+<img border="0" src="../CAAScrAutomationImages/images/parchild.gif" width="17" height="25"><a href="#" onclick="javascript:CAAlink('IDL', 'System', 'SystemService');return false;"><img border="0" src="../CAAScrAutomationImages/images/sysserv.gif" width="183" height="18"></a>
+</td>
+</tr>
+</table>
+<p><b><i>Represents the current CNext application and its frame window.</i></b></p>
+<p>CATIA products. The root object is the <b>Application</b>, which aggregates,
+or includes, <b>Documents</b>, a <b>Document</b> collection, and <b>Windows</b>,
+a <b>Window</b> collection. A collection is an object that gathers objects of
+the same type and is denoted as a plural name. <b>Documents</b> gathers <b>Document</b>
+objects and provides methods for managing individual documents in the
+collection.The documents belong to one of the four types, that is the <b>PartDocument</b>,
+the <b>ProductDocument,</b> the <b>DrawingDocument</b> and the <b>AnalysisDocument</b>.
+<b>Windows</b> gathers <b>Window</b> objects, and provides methods for managing
+individual windows in the collection.</p>
+<p>In addition to this functional view, we can superimpose another view to help
+understand some basic mechanisms:</p>
+<img src="images/baspp1-2.gif" width="402" height="313">
+<p>All objects, and not only those shown in this diagram, except collections,
+derive from the <b>AnyObject</b> abstract object which supplies the <b>Application</b>,
+<b>Name</b>, and <b>Parent</b> properties. You can then use these properties and
+this method against any object, since any object features them. All collections
+derive from the <b>Collection</b> abstract object which supplies in addition the
+<b>Count</b> property.</p>
+<p>The <b>Application</b> property returns the application to which an object
+belongs. When running in-process macros, there is only one application named <b>CATIA</b>.
+The <b>Name</b> property allows any object to be assigned a name. The <b>Parent</b>
+property allows the parent object to be retrieved, the parent object being the
+object which aggregates the current one. The <b>Count</b> property of the <b>Collection</b>
+object returns the number of items in the collection. In addition, a <b>Collection</b>
+object can supply an Item, an <b>Add</b>, and a <b>Remove</b> method.</p>
+<p>The root object for all CATIA macros is <b>Application</b> . This corresponds
+to the CATIA frame window. The CATIA application is always named <b>CATIA</b>
+for in-process access, and you should only refer to it since it already exists
+when you run an in-process macro. The application aggregates, or includes, a
+document collection accessed using the <b>Documents</b> property, and a
+&gt;window collection accessed using the <b>Windows</b> property. The document
+collection stores the currently opened documents and the window collection
+stores the currently opened windows for these documents. The active document is
+the document opened in the active window, that is the window in which the
+end-user is currently working. They are accessed using the <b>ActiveDocument</b>
+and the <b>ActiveWindow</b> properties respectively.</p>
+<p>The <b>Application</b> object has other properties, such as <b>FileSearchOrder</b>
+which allows a pathname concatenation searched for when opening files to be set
+or retrieved. As the application represents the frame window, you can set the
+frame dimensions and location using the properties <b>Width</b>, <b>Height</b>, <b>Left</b>
+and <b>Top</b> respectively, with values expressed in screen pixels.</p>
+<p>The <b>Application</b> object aggregates also a <b>SystemService</b> object
+which provides for example the <b>Environ</b> method to get the value of a given
+environment variable.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

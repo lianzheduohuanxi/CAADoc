@@ -1,0 +1,359 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Directories and Files</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Directories and Files</h3>
+      <em>Creating, opening, and closing directories and files, and managing
+      access permissions</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to manage directories and files.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysFileOperations Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysFileOperations Do</a></li>
+            <li><a href="#How">How to Launch CAASysFileOperations</a></li>
+            <li><a href="#Where">Where to Find the CAASysFileOperations Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to manage directories and files.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysFileOperations Use Case</h3>
+<p>CAASysFileOperations is a use cases of the CAASystem.edu framework that
+illustrates System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysFileOperations Do</h4>
+<p>This use case creates a directory in a directory passed as input, and creates
+ten files in this created directory. It checks the directory access permissions
+beforehand, and if the directory to create doesn't exist. It then scan the
+created directory and makes a list of the created files. It should be launched
+as follows from the command line:</p>
+<pre>CAASysFileOperations WorkingDir NewDir</pre>
+<p>where <code>WorkingDir</code> is the directory in which <code>NewDir</code>
+should be created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysFileOperations</h4>
+<p>To launch CAASysFileOperations, you will need to set up the build time
+environment, then compile CAASysFileOperations along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysFileOperations Code</h4>
+<p>The CAASysFileOperations use case is made of a several classes located in the
+CAASysFileOperations.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysFileOperations.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysFileOperations.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a directory, create files in it, scan the created directory, and
+close the directory, there are six main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>
+      <p align="left">Step</p>
+    </th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Checking the Operating System</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create a directory path</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the directory and the files</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Scan the created directory</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Close the directory</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!--  IR-208388V5-6R2014 - This setp is replaced with computer OD check
+
+<h4><a name="Step1"></a>Checking the Access Permissions</h4>
+<p>The two command line parameters are retrieved in <code>WrkDir</code> and <code>DirName</code>
+respectively.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATLibStatus</b> status = ::<b>CATFileAccess</b>(WrkDir, <b>W_OK</b>);
+  if (<b>CATLibError</b> == status)
+  {
+    exit(-1);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The access permissions to the <code>WrkDir</code> directory in which a new
+one should be created are checked using the <code>CATFileAccess</code> global
+function, with the parameter <code>W_OK</code>, that makes <code>CATFileAccess</code>
+checks for writing permission. If this permission is not available, the status
+returned is <code>CATLibError</code>, and the program ends.
+-->
+<h4><a name="Step1"></a>Checking the Operating System</h4>
+<p>The two variables <code>Platform</code> and <code>OS</code> contain the UNIX 
+or Windows platform type and the operating system respectively.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  unsigned short Platform=0;
+  unsigned short OS=0;
+  
+  OS = ::CATGetOperatingSystem( &amp;Platform);
+  
+  if ( CATWindowsPlatform == Platform )
+    cout &lt;&lt; "Windows Platform and ";
+  else
+    cout &lt;&lt; "Unix  Platform and ";
+    
+  switch (OS)
+  {
+    case CATOsAIX :
+      cout &lt;&lt; " Operating System is AIX \n";
+      break;
+    case CATOsSOLARIS :
+      cout &lt;&lt; " Operating System is SOLARIS \n";
+      break;
+    ...
+    case CATOsWindowsNT :
+      cout &lt;&lt; " Operating System is WindowsNT\n";
+      break;
+    ...
+    case CATUnknownOS :
+      cout&lt;&lt; " Operating System is Unknown\n ";
+      break;
+    default:
+      cout &lt;&lt; "Error: Unknown platform!\n";
+      exit (-2);
+      break;
+  }
+  cout &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The UNIX or Windows platform type and the operating system are first 
+retrieved using the <code>CATGetOperatingSystem</code> global function. Then the 
+operating system value is checked against the supported ones, and the program 
+exits if the operating system found is not supported.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a Directory Path</h4>
+<!--  IR-208388V5-6R2014 - This setp is replaced with computer OD check
+<p>The access permissions enables the creation of a directory in <code>WrkDir</code>.</p>
+-->
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  char Path[1024];
+  ::<b>CATMakePath</b>(WrkDir, DirName, Path);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATMakePath</code> global function creates a path name for the
+directory <code>DirName</code> in <code>WrkDir</code>. This pathname is returned
+in <code>Path</code>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the Directory and the Files</h4>
+<p>The access permissions enables the creation of a directory in <code>WrkDir</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  else
+  {
+    status = ::<b>CATCreateDirectory</b>(Path);
+    if (CATLibError == status)
+    {
+      cout &lt;&lt; &quot; Can't create &quot; &lt;&lt; Path &lt;&lt;endl;
+      exit (-1);
+    }
+    for (int i=0; i&lt; 10; i++)
+    {
+      char name[14];
+      sprintf(name, &quot;FILE%x&quot;, i);
+      char FilePath[1024];
+      ::<b>CATMakePath</b>(Path, name, FilePath); 
+      FILE *fd = fopen(FilePath, &quot;w+b&quot;);
+      fclose(fd);  
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATCreateDirectory</code> global function creates a directory with
+the path name <code>Path</code>. Then the <code>CATMakePath</code> global
+function creates in the <code>Path</code> directory as many files as requested
+with the names <code>FILE0</code>, <code>FILE1</code>, and so on up to <code>FILE9</code>.
+<code>w+b</code> means that these files are in write mode, and have the binary
+format.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Scanning the Created Directory</h4>
+<p>The files created are now scanned, and their file names displayed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATDirectory Dir;
+    status = ::<b>CATOpenDirectory</b>(Path, &amp;Dir);
+    if (CATLibError == status)
+    {
+      cout &lt;&lt; &quot; Can't open directory &quot; &lt;&lt; Path &lt;&lt; endl;
+      exit (-1);
+    }
+    int EndOfDir=0;
+    <b>CATDirectoryEntry</b> Entry;
+    cout &lt;&lt; &quot;Listing of the Directory &quot; &lt;&lt; Path &lt;&lt; endl;
+    while ((EndOfDir != 1) &amp;&amp; (CATLibSuccess == status))
+    {
+      status = ::<b>CATReadDirectory</b>(&amp;Dir, &amp;Entry, &amp;EndOfDir);
+      if ((CATLibError == status) &amp;&amp; (EndOfDir !=1))
+      {
+        cout &lt;&lt; &quot; Can't read next entry in &quot; &lt;&lt; Path &lt;&lt; endl;
+        exit (-1);
+      }
+      cout &lt;&lt; Entry.name &lt;&lt; endl;
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATOpenDirectory</code> global function opens the created
+directory, and if this opening is successful, the directory is scanned using the
+<code>CATReadDirectory</code> global function that returns the file name in <code>Entry</code>,
+and whether the end of the directory is reached by returning 1 or 0 in <code>EndOfDir</code>,
+1 meaning that the end is reached.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Closing the Directory</h4>
+<p>The directory can now be closed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    status = ::<b>CATCloseDirectory</b>(&amp;Dir);
+    if (CATLibError == status)
+    {
+      cout &lt;&lt; &quot; Can't close the directory &quot; &lt;&lt; Path &lt;&lt; endl;
+      exit (-1);
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATCloseDirectory</code> global function closes the directory.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a directory, create files in it, scan the
+created directory, and close the directory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

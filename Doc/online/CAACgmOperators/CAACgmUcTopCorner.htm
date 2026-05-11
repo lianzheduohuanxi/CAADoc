@@ -1,0 +1,170 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Corner</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Corner</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Corners are circle arcs tangent to two wires. A corner must 
+		be created on a support. The two input wires must lie on the support. </p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a corner, use the CATICGMTopCorner operator in GMOperatorsInterfaces. 
+This operator has to 
+be created by the CATCGMCreateTopCorner global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsCornerCreation.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to create a corner on support. This use case is to be run with 
+the CornerInputs.NCGM input file which is delivered in 
+CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> Corner Operation: Input Data</caption>
+  <tr>
+    <td><img alt="Corner on support" src="images/CGM_corner_0.png"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopCorner* pCornerOpe = ::CATCGMCreateTopCorner(piGeomFactory, 
+        &topdata, 
+        pBodyWire1,    // inner wire
+        pBodyWire2,    // bounding wire
+        pBodySupport,  // supporting shell 
+        11.0) ;        // corner radius
+...
+pCornerOpe -> SetOffsetOrientation(-1,-1); 
+int ResultTrimmingMode1 = pCornerOpe -> SetCircleMode(Direct); // shortest portion kept
+int ResultTrimmingMode2 = pCornerOpe -> SetSupportTrimmingSideAndMode(0,0); // no merge
+pCornerOpe->Run();
+CATBody *piCornerBody = pCornerOpe->GetResult();  
+pCornerOpe->Release();
+pCornerOpe = NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Result of Corner Operation </caption>
+  <tr>
+    <td><img alt="Corner-SetOffsetOrientation(-1,-1)" src="images/CGM_corner_minus1_minus1.png"></td>
+    <td><img alt="Corner-SetOffsetOrientation(1,-1)" src="images/CGM_corner_plus1_minus1.png"></td>
+    <td><img alt="Corner-SetCircleMode(Complementary)" src="images/CGM_corner_plus1_minus1_comp.png"></td>
+  </tr>
+  <tr>
+    <td>SetOffsetOrientation(-1,-1)</td>
+    <td>SetOffsetOrientation(1,-1) </td>
+    <td>SetOffsetOrientation(1,-1) </td>
+  </tr> 
+  <tr>
+    <td>SetCircleMode(Direct)</td>
+    <td>SetCircleMode(Direct)</td>
+    <td>SetCircleMode(Complementary)</td>
+  </tr> 
+</table>
+<p><strong>Merging the created corner with input wires</strong></p>
+<p>The created corner can be assembled or not with one input body or both input bodies. The input bodies are trimmed for this operation. </p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.3">Fig.3</a> Merging the corner with the input wires<br>
+	SetOffsetOrientation(1,-1)&nbsp; and SetCircleMode(Direct)</caption>
+  <tr>
+    <td><img alt="Corner-SetOffsetOrientation(-1,-1)" src="images/CGM_corner_minus1_minus1.png"></td>
+    <td><img alt="Corner-SetOffsetOrientation(1,-1)" src="images/CGM_corner_trim_0.png"></td>
+    <td><img alt="Corner-SetCircleMode(Complementary)" src="images/CGM_corner_plus1_minus1_comp.png"></td>
+  </tr>
+  <tr>
+    <td>SetOffsetOrientation(-1,-1)</td>
+    <td>
+	SetSupportTrimmingSideAndMode(0,1)<br>
+	Result = Created corner + input wires
+	 </td>
+    <td>SetOffsetOrientation(1,-1) </td>
+  </tr> 
+  </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

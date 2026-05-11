@@ -1,0 +1,460 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+  </script>
+  <title>CATIA V5 and External PDM System Integration Principles</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>CATIA V5 and External PDM System Integration Principles</h3>
+       <em>Concepts and rules to implement integration scenarios</em></td>
+     </tr>
+     <tr>
+       <td class="tech" colspan="2">Technical Article</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article is the first one to read to start on an integration 
+       between CATIA V5 and an external PDM system. It first explains in what an 
+       integration consists in. Then to understand the details of this 
+       integration, it presents CATIA V5 concepts on the data that will be 
+       exchanged between the two applications, e.g. V5 documents. Finally, the 
+       article finishes by a set of rules to be strictly respected in order to 
+       succeed an integration with CATIA V5.</p>
+       <ul>
+         <li><b><a href="#Extrenal PDM System">External PDM System</a> </b>
+         <ul>
+           <li><b><a href="#External PDM System Definition">Definition</a> </b>
+           </li>
+           <li><b><a href="#External PDM System Integration with CATIA V5">
+           Integration with CATIA V5 </a></b></li>
+           <li><b><a href="#Document Management Capability">Document Management 
+           Capability</a></b></li>
+         </ul>
+         </li>
+         <li><b><a href="#CATIA V5 Concepts">CATIA V5 Concepts</a></b><ul>
+           <li><b><a href="#Document Properties">V5 Document Links</a></b></li>
+           <li><b><a href="#Consistent Set of Documents">Consistent Set of 
+           Documents</a></b></li>
+           <li><b><a href="#Document Properties">Document Properties</a></b></li>
+         </ul>
+         </li>
+         <li><b><a href="#Integration Specifications">Integration Specifications</a></b><ul>
+           <li><b><a href="#Scenario Cases">Scenario Cases</a></b></li>
+           <li><b><a href="#Rules to Respect">Rules to be Followed</a></b></li>
+         </ul>
+         </li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Extrenal PDM System"></a><b>External PDM System</b></h3>
+   <p>This section succinctly defines what is a PDM and what is its role either 
+   in the CATIA V5 integration, or intrinsically. </p>
+   <h4><a name="External PDM System Definition"></a>Definition </h4>
+   <p>A product data management (PDM) system is a software that enables 
+   manufacturers to store, archive, manage and control engineering information, 
+   specifically, data surrounding new product designs and engineering processes.
+   </p>
+   <p>The data is:</p>
+   <ul>
+     <li><b>Files</b>: CATIA V5 document files and their associated files. </li>
+     <li><b>Meta data</b>: document attributes and document relationship 
+     information. </li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="External PDM System Integration with CATIA V5"></a>Integration 
+   with CATIA V5</h4>
+   <p>The purpose of the integration between an external PDM System and CATIA V5 
+   is to enable the management of the data from CATIA V5 within the PDM. It 
+   consists in implementing a communication channel between them through which 
+   the data are transferred under the PDM control.&nbsp; </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber2">
+     <caption><a name="Fig.1">Fig.1</a> Integration Functional View</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainSchema.jpg" width="629" height="317"></td>
+     </tr>
+   </table>
+   <p>The data which are stored into the PDM are always created 
+   in a CATIA V5 session. These data, V5 documents, must be saved on disk to be 
+   persistent. It is this persistent view which will be stored in the PDM. Once 
+   the documents are in the PDM it can be encrypted into a secure vault, but in 
+   all cases the PDM must give back the same V5 documents as those provided by 
+   CATIA V5. </p>
+   <p>The scenario consisting in transfering CATIA V5 documents 
+   to the external PDM system is named <b>Check-In</b> scenario. In opposite, 
+   the scenario consisting in extracting CATIA V5 documents from the external 
+   PDM system is named <b>Check-Out</b> scenario. They are main scenarios that 
+   you should implement for this integration.</p>
+   <p>The <b>Client Integration</b> is the CATIA software used 
+   by the integration scenario to:</p>
+   <ul>
+     <li>Control the consistency of the persistent documents</li>
+     <li>Make easier the file transfer&nbsp; to the PDM</li>
+     <li>Provide information to fill up the PDM meta data.</li>
+   </ul>
+   <p>The purpose of the external PDM system is to manage V5 
+   documents in its file repository. However, CATIA, and <b>only</b> <b>CATIA, 
+   ensures</b> the <b>V5 document consistency</b> by this software layer. This 
+   software layer is the APIs of the CATxPDMInterfaces framework, and which 
+   requires the <b>PX1</b> license. </p>
+   <p>The <b>user Work</b> area is the dedicated directory to 
+   store the persistent files accessible by CATIA. This directory is the 
+   exchange area for files transfer between the two applications. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Document Management Capability"></a>Document Management 
+   Capability</h4>
+   <p>The document into the external PDM system can be seen as a set of 
+   information that we can sum up like this:</p>
+   <ul>
+     <li>Key Attributes</li>
+     <li>Meta Data</li>
+     <li>Revision Status ( Release, In work )</li>
+     <li>Edition Status (Lock or unlock)</li>
+     <li>Representation 1 (the V5 document file)</li>
+     <li>Representation 2 (the Preview file of the V5 document)</li>
+   </ul>
+   <p>The PDM system should propose a <b>Document Management</b> capability. It 
+   means provide services to be able to do:</p>
+   <ul>
+     <li>Document Registration: Initialize a reference to a document into the 
+     PDM</li>
+     <li>Document Identification by key attributes </li>
+     <li>Document Check-In:&nbsp; Store a document into the PDM vault</li>
+     <li>Document Check-Out: Extract a document from the PDM vault</li>
+     <li>Document Encryption: Secure the document&nbsp;&nbsp; </li>
+     <li>Document Revision status Management: Release, In work </li>
+     <li>Document Edition Status Management: Lock or unlock a document (check 
+     out a document locks a document, but it can be another reasons)</li>
+   </ul>
+   <p>The Check-In and Check-Out scenarios use these base services. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h3><a name="CATIA V5 Concepts"></a>CATIA V5 Concepts</h3>
+   <p>This section presents the main concepts of the CATIA V5 in the domain of 
+   the documents. </p>
+   <h4><b>V5 Document Links</b></h4>
+   <p>As you perform design operations within a CATIA session, CATIA creates 
+   internal links between documents. In the following example [<a href="#Fig.2">Fig.2</a>], 
+   the publication &quot;Face&quot; belonging to Part1 has been copied and pasted &quot;as 
+   result with link&quot; in Part2 in the Product1 context. </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber3">
+     <caption><a name="Fig.2">Fig.2</a> Copy and Paste in Assembly Context</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainLinksDoc.jpg" width="197" height="205"></td>
+     </tr>
+   </table>
+   <p>Within the interactive session, the end user can use the <b>Links</b> 
+   command (in the Edit menu) to understand the type of links, in other words 
+   their semantic. This information can only be visible into an interactive 
+   session, since only CATIA application can provide the link's information. The
+   <a href="#Fig.3">Fig.3</a> is the snapshot of the Links command describing 
+   the links semantic from Product1.</p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber4">
+     <caption><a name="Fig.3">Fig.3</a> Edit/Links Command For Product1</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainEditLinksProduct1.jpg" width="331" height="93"></td>
+     </tr>
+   </table>
+   <p>The<a href="#Fig.4"> Fig.4</a> is the snapshot describing the links 
+   semantic from Part2.</p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber5">
+     <caption><a name="Fig.4">Fig.4</a> Edit/Links Command For Part2</caption>
+     <tr>
+     </tr>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainEditLinksPart2.jpg" width="453" height="105"></td>
+     </tr>
+   </table>
+   <p>The following picture, <a href="#Fig.5">Fig.5</a>, is a schematic view of 
+   these links with their semantic. </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber6" width="358">
+     <caption><a name="Fig.5">Fig.5</a> </caption>
+     <tr>
+       <td width="351"><img border="0" src="images/CAAXpiMainLinksSchema.jpg" width="257" height="221"></td>
+     </tr>
+   </table>
+   <p>You can also use the <b>Desk</b> command (in the File menu) to display the 
+   network of documents in session [<a href="#Fig.6">Fig.6</a>]. </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber7">
+     <caption><a name="Fig.6">Fig.6</a></caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainFileDesk.jpg" width="569" height="87"><p>&nbsp;</td>
+     </tr>
+   </table>
+   <p>The graph is organized in such way that <b>root documents</b> appear on 
+   the left [<a href="#Fig.6">Fig.6</a>]. A root document is the document 
+   associated with the object which manages the visualization of this document, 
+   and its components. This object is an editor. Refer to the Wintop Frame 
+   articles for more details about the editor. </p>
+   <p>The document are interactively made persistent on disk using the <b>Save 
+   Management </b>command. But once the document are outside a CATIA Session, an 
+   external PDM system does not have access to the relationship between the 
+   documents, and consequently does not have access also to the type of links 
+   between document. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><b><a name="Consistent Set of Documents"></a>Consistent Set of Documents</b></h4>
+   <p>The Consistent Set Of Documents is a group of documents. These documents 
+   may have dependencies (links) on other documents. The group becomes a 
+   Consistent Set of Documents when all theses dependencies are solved within 
+   the group. This means that the whole CATIA design intent is captured in this 
+   group of documents, and, then by modifying, moving, renaming theses documents 
+   in this special context ensures that the knowledge is kept consistent and 
+   secure.</p>
+   <p>The Integration scenarios should never process a document as single 
+   document but should always consider this document in the context of the 
+   Consistent Set of Document this document belongs to. </p>
+   <p>The identification of a Consistent Set of Document must be performed among 
+   the persistent files saved on disk. The integration must ensure that the V5 
+   documents still in session are saved in the user Work area before computing 
+   the Consistent Set.</p>
+   <p>We recommend the following methodology to identify the consistent set</p>
+   <ol>
+     <li>First, identify the root documents contained in the user Work area. A 
+     root document is a document being at the top of the dependency hierarchy&nbsp;
+     </li>
+     <li>For a root document, compute the document dependencies and check that 
+     there is no missing document that would break the consistency of the group&nbsp;
+     </li>
+     <li>Among the several Consistent Set of documents you have retrieved from 
+     the Root documents, locate in which Set your document belongs to</li>
+   </ol>
+   <p>Applying this methodology, you are able to identify to which set every 
+   document of the user Work area belongs to. Refer to the &quot;Checking the 
+   Consistent Set of Files for V5 Documents&quot; [<a href="#References">6</a>] use 
+   case for details about the consistent set of documents and the root 
+   documents. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Document Properties"></a>Document Properties</h4>
+   <p>A CATIA V5 document contains properties:</p>
+   <ul>
+     <li><b>Standard</b> properties
+     <ul>
+       <li>CN_PART_NUMBE</li>
+       <li>CN_REVISON</li>
+       <li>CN_DEFINITION</li>
+       <li>CN_NOMENCLATURE</li>
+       <li>CN_DESCRIPTIONREF</li>
+       <li>CN_SOURCE</li>
+       <li>CN_VOLUME</li>
+       <li>CN_MASS</li>
+       <li>CN_SURFACE</li>
+     </ul>
+     </li>
+     <li><b>User </b>properties </li>
+   </ul>
+   <p>Interactively you modify or create new user properties using the <b>
+   Properties</b> command ( Contextual menu) , or using the <b>Fx</b> command [<a 
+   href="#Fig.7">Fig.7</a>]. </p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber8">
+     <caption><a name="Fig.7">Fig.7</a> Command to Create &amp; Modify Document 
+     Properties</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiMainPropertiesFxNormal.gif" width="453" height="279"></td>
+     </tr>
+   </table>
+   <p>The <i>CATIxPDMItem</i> interface enables you to retrieve or modify the 
+   document properties. <br>
+   </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h3><a name="Integration Specifications"></a>Integration 
+   Specifications</h3>
+   <p>This section first presents four identified scenarios to 
+   implement. Then it points the main rules to be followed to ensure a 
+   successful integration. </p>
+   <h4><a name="Scenario Cases"></a>Scenario Cases</h4>
+   <p>In the first section, two scenarios have been identified [<a 
+   href="#Fig.1">Fig.1</a>] </p>
+   <ul>
+     <li><b>Check-In</b> Scenario [<a href="#References">1</a>]
+     <p>Check-In is a scenario whereby CATIA session information 
+     and persistent documents are used to create new or modify existing PDM 
+     system data. Check-In enables save a consistent set of documents from CATIA 
+     V5 in the external PDM system with the appropriate document links exposure. 
+     These document links information must be sufficient for the Integration to 
+     compute the right consistent set of documents once the documents are stored 
+     in the PDM, and not anymore under CATIA control. </p>
+     </li>
+     <li><b>Check-Out</b> Scenario [<a href="#References">2</a>]
+     <p>Check-Out is a scenario whereby CATIA V5 documents are extracted from 
+     the PDM system repository to be opened in the interactive CATIA session. 
+     Check-Out enables extract a consistent set of documents that has been 
+     checked-In previously. It reuses the document link information, stored at 
+     Check-In step, to compute the consistent set of documents in order to 
+     ensure the CATIA session consistency.</p>
+     </li>
+     </ul>
+   <p>Beside these two base scenarios, two others can be 
+   implemented:</p>
+   <ul>
+     <li><b>Rename</b> scenario [<a href="#References">3</a>]
+     <p>Rename is a scenario whereby a document already stored in 
+     PDM system is renamed. The consistent set of document this document belongs 
+     to must be updated accordingly in order to keep links integrity. </p>
+     </li>
+     <li><b>Derivative Design Copy</b> Scenario [<a href="#References">4</a>]
+     <p>Derivative Design Copy is a scenario whereby a consistent 
+     set of documents stored in a PDM system is duplicated to allow manage a 
+     derivative design variant of this set.</p>
+     </li>
+     </ul>
+   <p>These four scenarios, detailed step by step in dedicated 
+   articles, referenced by the number in brackets, can be implemented by an 
+   interactive or a batch command. For interactive commands, it can be 
+   recommended to insert these commands in an Add-in of the General workshop. It 
+   enables the end user to benefit these commands whatever the active document 
+   type. Refer to the frame article [<a href="#References">5</a>] to have 
+   complete information about this specific Add-in. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Rules to Respect"></a>Rules to be Followed</h4>
+   <p>The integration implementation must enforce the following 
+   rules: </p>
+   <ol>
+     <li><b>Work </b>with consistent set of documents
+       <p>Even you want to rename, to store, or to display one document, you 
+       must work with the consistent set of documents belonging to the selected 
+       document. It is the only one way to ensure the document links 
+       consistency.&nbsp;&nbsp; </p>
+       <p>In the same way, you should never save one document, but always a 
+       consistent set of documents. Interactively, the end user should invoke 
+       the Save management command, and by code you have the <code>
+       SaveSessionToDirectory</code> method of the <i>CATxPDMSessionServices</i> 
+       class. </p>
+      </li>
+     <li><b>Let </b>the Product Structure operations under the 
+     CATIA V5</li> control</p>
+       <p>You must not modify the structure of a Product document outside an 
+       CATIA V5 Session, otherwise you are sure to lost the document links 
+       consistency. It is valid for any kind of V5 document type. CATIA V5 
+       controls, and then guarantees the data consistency. </p>
+     </li>
+     <li><b>Use</b> the User Work area 
+     [<a href="#Fig.1">Fig.1</a>]
+       <p>It is a dedicated directory to transfer the V5 documents between the 
+       two applications. </p>
+       <ul>
+         <li>The PDM system extracts document from its secure repository, and 
+         copies them into the dedicated directory</li>
+         <li>The Save operation driven by a CATIA session is done in this same 
+         directory</li>
+       </ul>
+       <p>You must be sure that this directory</p>
+       <ul>
+         <li>Cannot be shared by several users ( one directory for one user)</li>
+         <li>Is under CATIA control&nbsp; </li>
+         <li>Is not used for any purpose than Save management, Check-In and 
+         Check-Out operations. </li>
+         </li>
+       </ul>
+       <p>It is mandatory that the documents, once copied into the user Work 
+       area, have their original CATIA document names. Moreover, if the document 
+       is loaded in session it must not be removed from the user Work directory.</li>
+       </p>
+     </li>
+     <li><b>Ensure</b> CATIA V5 Document identification within the 
+     PDM
+       <p>Every CATIA document name must be unique inside the PDM system. </p>
+     </li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>The integration consists mainly in implementing two scenarios:</p>
+   <ul>
+     <li>Check-In </li>
+     <li>Check-Out</li>
+   </ul>
+   <p>These scenarios, such as all integration scenarios must never process one 
+   document, but the consistent set of documents&nbsp; this document belong to. 
+   It is the only mean to ensure the document links consistency. By using the 
+   specific CATIA V5 software layer (PX1 APIs - <i>CATxPDMInterfaces</i> 
+   framework) in your scenarios, it guarantees that the exchange between the two 
+   applications will be safely done.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td><a href="CAAXpiCheckInScenario.htm">Check-In Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td><a href="CAAXpiCheckOutScenario.htm">Check-Out Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[3]</td>
+       <td><a href="CAAXpiRenameScenario.htm">Rename Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[4]</td>
+       <td><a href="CAAXpiDerivativeDesignCopyScenario.htm">Derivative Design 
+       Copy Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[5]</td>
+       <td>Making Your Document Independent Command Available in All Workbenches</td>
+     </tr>
+     <tr>
+       <td valign="top">[6]</td>
+       <td><a href="../CAAXpiUseCases/CAAxPDMConsistentSet.htm">
+       Checking the Consistent Set of Files for V5 Documents</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2005]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

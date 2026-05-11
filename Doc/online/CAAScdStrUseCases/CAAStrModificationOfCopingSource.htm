@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAAStrEditCoping.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+<pre>
+<font color="#0000FF">Sub</font> CATMain()
+
+<font color="#0000FF">Dim</font> StrWorkbench <font color="#0000FF">As</font> StrWorkbench
+<font color="#0000FF">Dim</font> strFactory <font color="#0000FF">As</font> StrObjectFactory
+
+<font color="#0000FF">Set</font> doc = CATIA.ActiveDocument
+<font color="#0000FF">Dim</font> rootProduct <font color="#0000FF">As</font> Product
+<font color="#0000FF">Set</font> rootProduct = doc.Product
+   
+<font color="#0000FF">Set</font> StrWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+    
+<font color="#0000FF">Dim</font> strPlates <font color="#0000FF">As</font> strPlates
+<font color="#0000FF">Set</font> strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
+   
+<font color="#0000FF">Dim</font> strMembers <font color="#0000FF">As</font> strMembers
+<font color="#0000FF">Set</font> strMembers = rootProduct.GetTechnologicalObject(&quot;StructureMembers&quot;)
+
+<font color="#0000FF">Dim</font> selection1 <font color="#0000FF">As</font> Selection
+<font color="#0000FF">Set</font> selection1 = doc.Selection
+
+selection1.Search &quot;Name='Coping.1',all&quot;
+
+<font color="#0000FF">Dim</font> NibblingToEdit <font color="#0000FF">As</font> StrNibblingFeature
+<font color="#0000FF">Set</font> NibblingToEdit = selection1.Item(1).Value
+
+<font color="#0000FF">Dim</font> SubTypeOFNibbling <font color="#0000FF">As</font> String
+SubTypeOFNibbling = NibblingToEdit.SubType
+
+NibblingToEdit.SubType = &quot;CurrCurr&quot;
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

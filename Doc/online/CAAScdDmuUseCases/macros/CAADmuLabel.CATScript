@@ -1,0 +1,52 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create a label on a product.
+'   Assumptions : A CATProduct document should be active and a component selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' Retrieve the selected component
+    Dim oSelection As Selection
+    Set oSelection = CATIA.ActiveDocument.Selection
+    Dim oProduct As AnyObject
+    On Error Resume Next
+    Set oProduct = oSelection.FindObject("CATIAProduct")
+    If (Err.Number <> 0) Then
+        MsgBox "No selected product"
+    Else
+        On Error Goto 0
+
+        ' Read information on the component
+        Dim dPosition(11)
+        oProduct.Position.GetComponents dPosition
+        Dim sTextString As String
+        sTextString = oProduct.Name & " / " & oProduct.PartNumber
+
+        ' Retrieve the marker3Ds collection
+        Dim cMarker3Ds As AnyObject
+        Set cMarker3Ds = oProduct.GetTechnologicalObject("Marker3Ds")
+
+        ' Create the marker3D
+        Dim dPosition1(2)
+        dPosition1(0) = dPosition(0)
+        dPosition1(1) = dPosition(1)
+        dPosition1(2) = dPosition(2)
+        Dim dPosition2(2)
+        dPosition2(0) = dPosition(0) + 100.
+        dPosition2(1) = dPosition(1) + 100.
+        dPosition2(2) = dPosition(2) + 100.
+        Dim oMarker3D As Marker3D
+        Set oMarker3D = cMarker3Ds.Add3DText (dPosition2, sTextString, dPosition1, oProduct)
+        oMarker3D.TextSize = 6.
+        oMarker3D.Update
+
+    End If
+
+End Sub

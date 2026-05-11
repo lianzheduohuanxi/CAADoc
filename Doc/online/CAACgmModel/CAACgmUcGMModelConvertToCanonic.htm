@@ -1,0 +1,155 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extracting the Canonical Representation of a Curve</title>
+<style type="text/css">
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Extracting the Canonical Representation of a Curve</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Given a curve representing a line or a circle but not defined as a 
+		line or a circle, you can extract the canonical definition of the curve 
+		or circle.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+
+<p>Use the CATICGMConvertCurveToCanonic 
+operator in GMModelInterfaces. 
+This operator is created by the CATCGMCreateConvertCurveToCanonic global 
+function.
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelConvertToCanonic.m module in CAAGMModelInterfaces.edu 
+illustrates how to extract the canonical definition of a line which is basically 
+created as a spline. This use case creates its own input data: a spline curve. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+const double Scale = 100.;
+const CATLONG32 NbPoints = 10;
+CATMathSetOfPointsND Points(3,NbPoints);
+double eps = 0.01*piGeomFactory->GetResolution();
+Points.Reset();
+for (CATLONG32 k=0; k < NbPoints; k++)
+   {
+	  double lambda =double(k)/double(NbPoints);
+	  double p[3];
+	  p[0] =Scale*lambda;
+	  p[1] =Scale*lambda;
+	  p[2] =eps*sin(2.2*lambda);
+	   Points.AddPoint(p);
+	}
+CATSplineCurve * pSpline1 =piGeomFactory->CreateSplineCurve(&Points, 0, 1, 2, 0);
+...
+	</pre>
+	</TD>
+    </TR>
+</TABLE>
+<p>a spline is created. This spline passes through the points which are all 
+aligned:</p>
+<ul>
+				<li>[0,&nbsp;&nbsp; 0,&nbsp; &#949;]</li>
+				<li>[10, 10, &#949;]</li>
+				<li>[20, 20, &#949;]</li>
+				<li>[..., ...,&nbsp; &#949;]</li>
+				<li>[90, 90, &#949;]</li>
+</ul>
+The code below creates a curve whose type is CATLineType
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMConvertCurveToCanonic * pCrvToCanonicOpe1 = NULL;
+pCrvToCanonicOpe1 =::CATCGMCreateConvertCurveToCanonic(piGeomFactory,pConfig,pSpline1,Lim1);
+...
+pCrvToCanonicOpe1->Run();
+CATCurve * pCrv1 = pCrvToCanonicOpe1->GetResult(oCrvLim1);
+if (pCrv1==NULL ||!pCrv1->IsATypeOf(CATLineType))
+	{
+	...
+	}
+		</pre>
+	</TD>
+    </TR>
+</TABLE>
+<br>
+Replacing the coordinates of Points[3] with {40,40,0.05} makes impossible the extraction of the canonical
+line definition as the new point is not aligned with the others.
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Dec 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

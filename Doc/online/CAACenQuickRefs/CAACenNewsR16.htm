@@ -1,0 +1,239 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>CAA V5R16 News Highlights</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>CAA V5 Encyclopedia</h1>
+    </td>
+    <td valign="top">
+    <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>CAA V5R16 News Highlights</h3>
+    <p><em>News in CAA V5R16 C++ and Java</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>Here are the CAA V5R16 news highlighted per solution and modeler. This article 
+    lists them, and points to the corresponding documentation. </p>
+    <ul>
+      <li><a href="#NewsV5R16"><b>CAA V5R16 Detailed News</b></a>
+        <ul>
+          <li><a href="#Web">Web Services</a></li>
+          <li><a href="#EA">Enterprise Architecture</a></li>
+          <li><a href="#PPR">PPR Hub</a></li>
+            <!--<li><a href="#MD">Mechanical Design</a></li>
+          <li><a href="#Shape">Shape Design &amp; Styling</a></li>--></li>
+          <li><a href="#Know">Product Synthesis &amp; Knowledgeware</a></li>
+          <li><a href="#Analysis">Analysis</a></li>
+          <li><a href="#ES">Equipment &amp; Systems</a></li>
+          <li><a href="#RADE">RADE</a></li>
+        </ul>
+      </li>
+      <li><a href="#References"><b>References</b></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="NewsV5R16"></a>CAA V5R16 News</h3>
+<p>The following is new with CAA V5R16.</p>
+<h4><a name="Web"></a>Web Services</h4>
+<ul>
+  <li>Web services. Refer to the
+    <a href="../CAACenWeb/CAACenWSHome.htm">Web Services home page</a>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="EA"></a>Enterprise Architeture</h4>
+<ul>
+  <li>XML API enhancements
+    <p>In CAA V5R15, there were only two ways to feed XML to the DOM or SAX parsers: 
+    either the XML had to be in a file, or it had to be in a buffer in memory. CAA 
+    V5R16 introduces a third form of customizable input source which enables you 
+    to inject XML in a DOM or SAX parser without the overhead of copying the whole 
+    content to a previously allocated memory buffer. This user-defined input sources 
+    are instantiated by calling the
+    <a href="#" onclick="javascript:CAAlink('CPP', 'XMLParser', 'interface', 'CATIXMLSAXFactory', 'CATCreateSkinExtrapolation');return false;">
+    CreateInputSourceFromStream</a> method from the already CAA
+    <a href="#" onclick="javascript:CAAlink('CPP', 'XMLParser', 'interface', 'CATIXMLSAXFactory');return false;">
+    CATIXMLSAXFactory</a> interface.</p>
+    <p>New detection functions enables you to know at runtime if a particular XML 
+    API implementation is available.</p>
+    <ol>
+      <li>
+        <a href="#" onclick="javascript:CAAlink('CPP', 'XMLParser', 'function', 'DetectCATIXMLDOMDocumentBuilder');return false;">
+        DetectCATIXMLDOMDocumentBuilder</a> to find out DOM implementations</li>
+      <li>
+        <a href="#" onclick="javascript:CAAlink('CPP', 'XMLParser', 'function', 'DetectCATIXMLSAXFactory');return false;">
+        DetectCATIXMLSAXFactory</a> to find out SAX implementations</li>
+    </ol>
+    <p>Using these functions, you can then devise a strategy for a web browser plug-in, 
+    in which you first attempt to use a pre-installed implementation if available 
+    (MSXML5.0), and fall back to the default implementation if this fails. The CLSID 
+    for MSXML5.0 and the detection functions for parsers are declared in the CATIXMLSAXFactory 
+    and CATIXMLDOMDocumentBuilder headers which are already CAA.</p>
+    <p>New articles and use cases are created to support the XMLParser framework 
+    usage and are available from the
+    <a href="../CAACenWeb/CAACenV5MiddlewareXML.htm">XML home page</a>.
+    </p>
+  </li>
+  <li>Settings
+    <p>Backface culling mode setting is enriched to manage new values. An algorithm 
+    called &#8220;back face culling&#8221; has been created to enhance rendering performance 
+    by not drawing the internal faces of solids. This algorithm is systematically 
+    applied on solids but, for stand-alone faces and surfaces, the choice is left 
+    to the end user through a setting. In V5R16, a new setting provides a way to 
+    disable the use of the &#8220;back face culling&#8221; algorithm for all the objects so 
+    that, even when navigating inside the model and entering solid objects, these 
+    ones are rendered with all their faces. This new possibility will help customers 
+    during interactive navigation and product analysis by displaying all the faces 
+    associated to objects. This is managed thanks to the
+    <a href="#" onclick="javascript:CAAlink('CPP', 'VisualizationBase', 'interface', 'CATIVizVisualizationSettingAtt');return false;">
+    CATIVizVisualizationSettingAtt</a> interface.</p>
+  </li>
+  <li>Workbench ordering in the Start menu
+    <p>Your workbenches can now be ordered in the Start menu according to your own 
+    criteria, and sub menus can be created. For example, workbenches of the Equipment 
+    &amp; Systems solution have used this capability. This facilitates the access to 
+    a workbench since it will be logically classified and positioned. The enhancement 
+    enables you to:</p>
+    <ol>
+      <li>Classify items inside a menu</li>
+      <li>Create sub-menus</li>
+      <li>Automatically rearrange the Tools/Options graph according to the changes 
+        of the Start menu presentation.</li>
+    </ol>
+    <p>This is done in the workbench resource file.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="PPR"></a>PPR Hub</h4>
+<ul>
+  <li>Send to C++ API
+    <p></p>
+    Send to enables you to copy a V5 document, along with all the other V5 documents 
+    it is linked to, to another folder, keeping link consistency, for example, to 
+    send that set of documents to a supplier. The Send to capability was up to now 
+    provided using an IDL interface to be used from Automation. A C++ counterpart,
+    <a href="#" onclick="javascript:CAAlink('CPP', 'CATxPDMInterfaces', 'interface', 'CATIxPDMSendToService');return false;">
+    CATIxPDMSendToService</a>, is delivered in V5R16 to be used with the existing 
+    interfaces and classes of the CATxPDMInterfaces framework. This capability requires 
+    a CATIA - PPR PDM Gateway 1 Product (PX1) license.<p></p>
+  </li>
+  <li>New style for native parameter editor
+    <p></p>
+    Thanks to the style customization available through the interface
+    <a href="#" onclick="javascript:CAAlink('CPP', 'KnowledgeInterfaces', 'interface', 'CATIParameterEditor');return false;">
+    CATIParameterEditor</a>, you will be able to unset a parameter with the contextual 
+    menu of the parameter editor.<p></p>
+  </li>
+  <li>Settings: Search command
+    <p></p>
+    The Search and Power Input functionnalities offer new capabilities for a better 
+    operability, in particular for most common queries in order to enhance productivity. 
+    This is managed through two new settings interfaces:
+    <a href="#" onclick="javascript:CAAlink('CPP', 'CATIAApplicationFrame', 'interface', 'CATICafSearchSettingAtt');return false;">
+    CATICafSearchSettingAtt</a> and
+    <a href="#" onclick="javascript:CAAlink('CPP', 'InteractiveInterfaces', 'interface', 'CATIIniSearchSymbolCriterion');return false;">
+    CATIIniSearchSymbolCriterion</a>.<p></p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Know"></a>Product Synthesis &amp; Knowledgeware</h4>
+<p>In Business Knowledge Templates (BKT), two new interfaces to manage and access 
+characteristics of main BKT objects:</p>
+<ol>
+  <li>
+    <a href="#" onclick="javascript:CAAlink('CPP', 'CATOBMInterfaces', 'interface', 'CATIVariableManagement');return false;">
+    CATIVariableManagement</a> is available on the BKT types, the typed objects 
+    and the behaviors. It contains a set of methods to access the variables of these 
+    objects</li>
+  <li>
+    <a href="#" onclick="javascript:CAAlink('CPP', 'CATBehaviorInterfaces', 'interface', 'CATIBehOperationManagement');return false;">
+    CATIBehOperationManagement</a> manages the different states of a behavior (Done, 
+    Started, Suspended, and Canceled).</li>
+</ol>
+<p>These two interfaces will allow clients to create they own commands and use them 
+in a BKT process.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Analysis"></a>Analysis</h4>
+<p>DS command reusability in customers&#39; workbenches: you can now programmatically 
+insert identified DS commands into your own workbenches. This is restricted to commands 
+and workbenches of the Analysis solution. See
+<a href="../CAAAniQuickRefs/CAAAniCommandAccess.htm">
+Command Access</a> for additional information and the list of commands you can reuse.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ES"></a>Equipement &amp; Systems</h4>
+<p>To help DMU review of Electrical Harness by configuration, it is currently possible 
+to interactively filter a 150% harness (also named the maximum configuration) by 
+implementing some User Interface Program (UIP) than enables the end user to get, 
+for a given harness, the list of criteria (can be a configuration) and to retrieve 
+from a particular criteria the list of active wires. The new filtering interface
+<a href="#" onclick="javascript:CAAlink('CPP', 'ElecRoutingItf', 'interface', 'CATIEwrFilter');return false;">
+CATIEwrFilter</a> enables you now to do this from a program.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="RADE"></a>RADE</h4>
+<p>When creating Web applications, you can use input and output parameters to interact 
+with Modular 3d com. 
+Creating an Application to be Integrated to Modular 3Dcom</a> </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAACenWhatsNew.htm">What&#39;s New</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></li>
+</p>
+
+</body>
+
+</html>

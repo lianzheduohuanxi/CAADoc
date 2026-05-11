@@ -1,0 +1,2377 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>FeatureModelerExt Class CATFmFeatureFacade</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../FeatureModelerExt.htm" href="../FeatureModelerExt.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "FeatureModelerExt";	}
+		function getCurrentObjectName() { 
+ 	return "CATFmFeatureFacade"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>FeatureModelerExt <script type="text/javascript" > writeClassCharacteristic(); </script> CATFmFeatureFacade</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATFmFeatureFacade_30240','CATFmFeatureFacade','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATFmFeatureFacade</b>
+</p>
+<p>
+<b><i> Class representing a Feature.</i></b><br>
+
+ <b>Role</b>: This class is a Facade object providing access to a Feature, according to the provided Accreditations.
+ <br>It gathers in a single place all operations defined at the Feature Modeler level that can be performed on a Feature.
+ <p>LifeCycle information.<br>
+   The recommended usage is to create Facades as local variables in functions and methods bodies.<br>
+   Facades expose methods such as <script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','DeleteSelf','CATFmFeatureFacade.DeleteSelf') </script> and 
+<script type="text/javascript"> activateLinkAnchor('CATFmStartUpFacade','Instantiate','CATFmStartUpFacade.Instantiate') </script> that can explicitly change the life   cycle of objects they reference, but the mere existence of a Facade should not implicitely influence the life cycle (either logical or C++) of
+   the object it is bound to. Consequently Facades use weak references to ensure secure operation: attempts to access deleted objects will safely fail.
+   Facades are then not really intended to be used as global variables or class member data. The life cycle of Facades should not extend
+   beyond the scope of the function in which they have been created, and cannot be used safely to store a reference to an object over an extended
+   duration. Most notably, while the correct comparison (see 
+<script type="text/javascript"> activateLinkAnchor('CATBaseUnknown','IsEqual','CATBaseUnknown.IsEqual') </script> ) of 2 <tt>AddRef</tt>'d pointers can descriminate   between two pointers to the same Logically deleted object and two pointers to the distinct Logically deleted objects,the comparison of 2 Facades
+   does not provide this ability.<br>
+   Refer to the CAA Encyclopedia Feature Modeler pages to learn how to manage the Life Cycle of your objects.</p>
+ <p><b>Access Control</b> information.<br>
+   Interactions with Feature Modeler entities, either read-only or read+write, are subject to authorization.<br>
+   On a Facade with no (or insufficient) Accreditations only the methods related to the Facade binding will succeed.
+   Such a Facade can most notably be used as an output parameter for a method like 
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','GetExtension','CATFmFeatureFacade.GetExtension') </script>   to retrieve immediatly a pointer to the Feature Extension through 
+<script type="text/javascript"> activateLinkAnchor('','GetFeature','GetFeature') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','QueryInterfaceOnFeature','QueryInterfaceOnFeature') </script> .   All other methods, i.e. those for wich E_ACCESSDENIED is a legal return value, will fail.<br>
+   To be allowed to interact with a Feature, an application must be registered as the owner of the Feature Catalog defining the Feature.</p>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATFmCredentials','','CATFmCredentials') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATFmFeatureFacade()"><b>CATFmFeatureFacade</b></a>()
+<dd>  Constructs an empty Feature Facade.
+ <dt> o 
+    <a href="#CATFmFeatureFacade(CATFmCredentials&amp;)"><b>CATFmFeatureFacade</b></a>(CATFmCredentials&amp;)
+<dd>  Constructs a Feature Facade.
+ <dt> o 
+    <a href="#CATFmFeatureFacade(CATFmFeatureFacade&amp;)"><b>CATFmFeatureFacade</b></a>(CATFmFeatureFacade&amp;)
+<dd>  Copy constructor.
+ <dt> o 
+    <a href="#CATFmFeatureFacade(CATFmCredentials&amp;,CATBaseUnknown*)"><b>CATFmFeatureFacade</b></a>(CATFmCredentials&amp;,CATBaseUnknown*)
+<dd>  Constructs a Feature Facade.
+ <dt> o 
+    <a href="#CATFmFeatureFacade(CATFmCredentials&amp;,CATFmAttributeValue&amp;)"><b>CATFmFeatureFacade</b></a>(CATFmCredentials&amp;,CATFmAttributeValue&amp;)
+<dd>  Constructs a Feature Facade.
+ <dt> o 
+    <a href="#~CATFmFeatureFacade()"><b>~CATFmFeatureFacade</b></a>()
+<dd>  Destructor.
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddExtension(CATString&amp;,CATFmAttributeValue&amp;)"><b>AddExtension</b></a>(CATString&amp;,CATFmAttributeValue&amp;)
+<dd>  Creates a Feature Extension.
+ <dt> o 
+    <a href="#AppendValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"><b>AppendValue</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)
+<dd>  Appends a value at the end of a list attribute.
+ <dt> o 
+    <a href="#Clear()"><b>Clear</b></a>()
+<dd>  Unbinds the Facade from its bound Feature.
+ <dt> o 
+    <a href="#CompareFeatureWith(CATFmFeatureFacade&amp;)"><b>CompareFeatureWith</b></a>(CATFmFeatureFacade&amp;)
+<dd>  Compares the bound Feature(s) of two Facades.
+ <dt> o 
+    <a href="#DeleteSelf()"><b>DeleteSelf</b></a>()
+<dd>  Deletes a Feature.
+ <dt> o 
+    <a href="#DetachComponent(CATFmAttributeName&amp;,int)"><b>DetachComponent</b></a>(CATFmAttributeName&amp;,int)
+<dd>  Breaks an aggregation relation without deleting aggregated object.
+ <dt> o 
+    <a href="#GetAttributeValuationInfo(CATFmAttributeName&amp;,CATFmAttributeValuationInfo&amp;)"><b>GetAttributeValuationInfo</b></a>(CATFmAttributeName&amp;,CATFmAttributeValuationInfo&amp;)
+<dd>  Retrieves valuation informations of attribute iAttributeName.
+ <dt> o 
+    <a href="#GetAutoNumberingProvider(CATFmAttributeValue&amp;)"><b>GetAutoNumberingProvider</b></a>(CATFmAttributeValue&amp;)
+<dd>  Retrieves the Auto-Numbering Provider of a Feature.
+ <dt> o 
+    <a href="#GetBaseFeature(CATFmAttributeValue&amp;)"><b>GetBaseFeature</b></a>(CATFmAttributeValue&amp;)
+<dd>  Retrieves the Base Feature of a Feature Extension.
+ <dt> o 
+    <a href="#GetContainerFacade(CATFmContainerFacade&amp;)"><b>GetContainerFacade</b></a>(CATFmContainerFacade&amp;)
+<dd>  Retrieves the Container of a Feature.
+ <dt> o 
+    <a href="#GetDisplayName(CATUnicodeString&amp;)"><b>GetDisplayName</b></a>(CATUnicodeString&amp;)
+<dd>  Retrieves the Display Name of a Feature.
+ <dt> o 
+    <a href="#GetExtension(CATString&amp;,CATFmAttributeValue&amp;)"><b>GetExtension</b></a>(CATString&amp;,CATFmAttributeValue&amp;)
+<dd>  Retrieves a Feature Extension from a Base Feature.
+ <dt> o 
+    <a href="#GetExtensionId(CATString&amp;)"><b>GetExtensionId</b></a>(CATString&amp;)
+<dd>  Retrieves a Feature Extension Id.
+ <dt> o 
+    <a href="#GetExtensionUuid(CATUuid&amp;)"><b>GetExtensionUuid</b></a>(CATUuid&amp;)
+<dd>  Retrieves the Uuid of a Feature Extension.
+ <dt> o 
+    <a href="#GetFeature()"><b>GetFeature</b></a>()
+<dd>  Returns the bound Feature through a CATBaseUnknown smart pointer.
+ <dt> o 
+    <a href="#GetFeatureAsValue()"><b>GetFeatureAsValue</b></a>()
+<dd>  Returns the bound Feature as a value.
+ <dt> o 
+    <a href="#GetKnowledgeParameter(CATFmAttributeName&amp;,IID&amp;,void**,int)"><b>GetKnowledgeParameter</b></a>(CATFmAttributeName&amp;,IID&amp;,void**,int)
+<dd>  Retrieves a an interface pointer on a Knowledge parameter.
+ <dt> o 
+    <a href="#GetParentFeature(CATFmAttributeValue&amp;)"><b>GetParentFeature</b></a>(CATFmAttributeValue&amp;)
+<dd>  Retrieves the Parent of a Feature.
+ <dt> o 
+    <a href="#GetRedirectedValuation(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)"><b>GetRedirectedValuation</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)
+<dd>  Retrieves target feature and attribute of a redirected attribute.
+ <dt> o 
+    <a href="#GetReference(CATFmAttributeValue&amp;)"><b>GetReference</b></a>(CATFmAttributeValue&amp;)
+<dd>  Retrieves the Reference of a Feature.
+ <dt> o 
+    <a href="#GetRootParentFeature(CATFmAttributeValue&amp;)"><b>GetRootParentFeature</b></a>(CATFmAttributeValue&amp;)
+<dd>  Retrieves the Root Parent of a Feature.
+ <dt> o 
+    <a href="#GetStartUpFacade(CATFmStartUpFacade&amp;)"><b>GetStartUpFacade</b></a>(CATFmStartUpFacade&amp;)
+<dd>  Retireves the Feature Definition (StartUp) of a Feature.
+ <dt> o 
+    <a href="#GetType(CATUnicodeString&amp;)"><b>GetType</b></a>(CATUnicodeString&amp;)
+<dd>  Retrieves the Late Type of a Feature.
+ <dt> o 
+    <a href="#GetValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"><b>GetValue</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)
+<dd>  Retrieves value of attribute iAttributeName.
+ <dt> o 
+    <a href="#GetValueAtIndex(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"><b>GetValueAtIndex</b></a>(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)
+<dd>  Retrieves value of attribute iAttributeName at a specified index.
+ <dt> o 
+    <a href="#InsertValue(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"><b>InsertValue</b></a>(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)
+<dd>  Inserts a value at a given index of a list attribute.
+ <dt> o 
+    <a href="#InstantiateIn(CATFmContainerFacade&amp;,CATFmAttributeValue&amp;)"><b>InstantiateIn</b></a>(CATFmContainerFacade&amp;,CATFmAttributeValue&amp;)
+<dd>  Instantiates a Feature.
+ <dt> o 
+    <a href="#InstantiateUnder(CATFmContainerFacade&amp;,CATFmFeatureFacade&amp;,CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"><b>InstantiateUnder</b></a>(CATFmContainerFacade&amp;,CATFmFeatureFacade&amp;,CATFmAttributeName&amp;,CATFmAttributeValue&amp;)
+<dd>  Instantiates a Feature.
+ <dt> o 
+    <a href="#IsSynchronized(CATFmAttributeName&amp;,CATBoolean&amp;)"><b>IsSynchronized</b></a>(CATFmAttributeName&amp;,CATBoolean&amp;)
+<dd>  Retrieves the synchronization status of a Feature.
+ <dt> o 
+    <a href="#IsUpToDate()"><b>IsUpToDate</b></a>()
+<dd>  Retrieves a Feature update status.
+ <dt> o 
+    <a href="#IsValid()"><b>IsValid</b></a>()
+<dd>  Checks the Facade validity.
+ <dt> o 
+    <a href="#LocateValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,int&amp;,int,int)"><b>LocateValue</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,int&amp;,int,int)
+<dd>  Locates a value in an attribute.
+ <dt> o 
+    <a href="#MoveInPosition(CATFmAttributeName&amp;,int,int)"><b>MoveInPosition</b></a>(CATFmAttributeName&amp;,int,int)
+<dd>  Moves an index in the list to another position.
+ <dt> o 
+    <a href="#QueryInterfaceOnFeature(IID&amp;,void**)"><b>QueryInterfaceOnFeature</b></a>(IID&amp;,void**)
+<dd>  Retrieves the bound Feature through a user specified interface pointer.
+ <dt> o 
+    <a href="#RemoveExtension(CATFmAttributeValue&amp;)"><b>RemoveExtension</b></a>(CATFmAttributeValue&amp;)
+<dd>  Deletes a Feature Extension.
+ <dt> o 
+    <a href="#RemovePosition(CATFmAttributeName&amp;,int)"><b>RemovePosition</b></a>(CATFmAttributeName&amp;,int)
+<dd>  Removes an index from a list attribute.
+ <dt> o 
+    <a href="#RemoveRedirectedValuation(CATFmAttributeName&amp;)"><b>RemoveRedirectedValuation</b></a>(CATFmAttributeName&amp;)
+<dd>  Breaks the redirection to another attribute.
+ <dt> o 
+    <a href="#ReplaceValueAtIndex(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"><b>ReplaceValueAtIndex</b></a>(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)
+<dd>  Replaces value of attribute iAttributeName at a given index.
+ <dt> o 
+    <a href="#RestoreInheritance(CATFmAttributeName&amp;)"><b>RestoreInheritance</b></a>(CATFmAttributeName&amp;)
+<dd>  Restores inheritance on an attribute.
+ <dt> o 
+    <a href="#ScanExtensions(CATFmFeatureIterator&amp;)"><b>ScanExtensions</b></a>(CATFmFeatureIterator&amp;)
+<dd>  Scans the model for Feature Extensions related to a Base Feature.
+ <dt> o 
+    <a href="#ScanExtensionsInContainer(CATString&amp;,CATFmFeatureIterator&amp;)"><b>ScanExtensionsInContainer</b></a>(CATString&amp;,CATFmFeatureIterator&amp;)
+<dd>  Scans a Feature Container for Feature Extensions related to a Base Feature.
+ <dt> o 
+    <a href="#ScanPointingFeatures(CATFmPointingFeatureIterator&amp;)"><b>ScanPointingFeatures</b></a>(CATFmPointingFeatureIterator&amp;)
+<dd>  Scans the model for Features pointing the bound Feature.
+ <dt> o 
+    <a href="#SetAutoNumberingProvider(CATFmAttributeValue&amp;)"><b>SetAutoNumberingProvider</b></a>(CATFmAttributeValue&amp;)
+<dd>  Set the Auto-Numbering Provider of a Feature.
+ <dt> o 
+    <a href="#SetRedirectedValuation(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)"><b>SetRedirectedValuation</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)
+<dd>  Creates a redirection from one attribute to another.
+ <dt> o 
+    <a href="#SetUpdateBehavior(CATFmAttributeName&amp;,CATFmAttributeUpdateBehavior)"><b>SetUpdateBehavior</b></a>(CATFmAttributeName&amp;,CATFmAttributeUpdateBehavior)
+<dd>  Sets the update behavior of an attribute.
+ <dt> o 
+    <a href="#SetValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"><b>SetValue</b></a>(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)
+<dd>  Sets value of attribute iAttributeName.
+ <dt> o 
+    <a href="#SwapPositions(CATFmAttributeName&amp;,int,int)"><b>SwapPositions</b></a>(CATFmAttributeName&amp;,int,int)
+<dd>  Swaps two index in a list attribute.
+ <dt> o 
+    <a href="#Synchronize(CATFmAttributeName&amp;)"><b>Synchronize</b></a>(CATFmAttributeName&amp;)
+<dd>  Synchronizes a Feature.
+ <dt> o 
+    <a href="#UnsetValue(CATFmAttributeName&amp;)"><b>UnsetValue</b></a>(CATFmAttributeName&amp;)
+<dd>  Unsets the value of an attribute.
+ <dt> o 
+    <a href="#Update()"><b>Update</b></a>()
+<dd>  Updates a Feature.
+ <dt> o 
+    <a href="#operator!()"><b>operator!</b></a>()
+<dd>  Logical-negation (or logical-NOT) operator.
+ <dt> o 
+    <a href="#operator=(CATBaseUnknown*)"><b>operator=</b></a>(CATBaseUnknown*)
+<dd>  Binds the Facade to a Feature.
+ <dt> o 
+    <a href="#operator=(CATFmFeatureFacade&amp;)"><b>operator=</b></a>(CATFmFeatureFacade&amp;)
+<dd>  Assignment operator.
+ <dt> o 
+    <a href="#operator=(CATFmAttributeValue&amp;)"><b>operator=</b></a>(CATFmAttributeValue&amp;)
+<dd>  Binds the Facade to a Feature.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATFmFeatureFacade"></a><a name="CATFmFeatureFacade()"></a> <dt> o <b>CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFmFeatureFacade</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an empty Feature Facade.
+ <br><b>Role</b>: This constructor creates a Facade with no Accreditation and not bound to any Feature.
+ <br>Only the assignment operator can affect the Accreditations Set of a Facade after its construction.
+</dl>
+<a name="CATFmFeatureFacade"></a><a name="CATFmFeatureFacade(CATFmCredentials&amp;)"></a> <dt> o <b>CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFmFeatureFacade</b>(<td> const <script type="text/javascript"> activateLink('CATFmCredentials','CATFmCredentials&amp;')</script> <td><tt>iAccreditations</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a Feature Facade.
+ <br><b>Role</b>: Creates a Facade with the provided Accreditations Set and not bound to any Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAccreditations</tt>
+   <dd> [in]   The Accreditations Set obtained by the application.
+   Refer to the Access Control section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation.   <br>Only the assignment operator can affect the Accreditations Set of a Facade after its construction.
+   <br><b>Lifecycle</b>: A Facade keeps a copy of the Accreditations Set. Any change in <tt>iAccreditations</tt>
+   (RegisterAsCatalogOwner ...) performed after the Facade creation will not affect the Facade.
+</dl>
+</dl>
+</dl>
+<a name="CATFmFeatureFacade"></a><a name="CATFmFeatureFacade(CATFmFeatureFacade&amp;)"></a> <dt> o <b>CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFmFeatureFacade</b>(<td> const <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade&amp;')</script> <td><tt>iFeatureFacade</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Copy constructor.
+ <br><b>Role</b>: This method creates an exact copy of a Feature Facade.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeatureFacade</tt>
+   <dd> [in]   The Facade to copy.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATFmFeatureFacade"></a><a name="CATFmFeatureFacade(CATFmCredentials&amp;,CATBaseUnknown*)"></a> <dt> o <b>CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFmFeatureFacade</b>(<td> const <script type="text/javascript"> activateLink('CATFmCredentials','CATFmCredentials&amp;')</script> <td><tt>iAccreditations</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a Feature Facade.
+ <br><b>Role</b>: Creates a Facade with the provided Accreditations Set and bound to a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAccreditations</tt>
+   <dd> [in]   The Accreditations Set obtained by the application.
+   Refer to the Access Control section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation.   <br>Only the assignment operator can affect the Accreditations Set of a Facade after its construction.
+   <br><b>Lifecycle</b>: A Facade keeps a copy of the Accreditations Set. Any change in <tt>iAccreditations</tt>
+   (RegisterAsCatalogOwner ...) performed after the Facade creation will not affect the Facade.
+ 
+    <dt><tt> iFeature</tt>
+   <dd> [in]   Any interface pointer to the Feature as a <tt>CATBaseUnknown</tt> pointer.
+   <br><b>Legal values</b>:<ul>
+     <li>NULL</li>
+     <li>Any interface pointer on a Feature.</li></ul>
+   Any other value, such as an interface pointer to a Feature Container, will be handled like a NULL pointer.
+   <br><b>Lifecycle</b>: Refer to the Lifecycle section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation.
+</dl>
+</dl>
+</dl>
+<a name="CATFmFeatureFacade"></a><a name="CATFmFeatureFacade(CATFmCredentials&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFmFeatureFacade</b>(<td> const <script type="text/javascript"> activateLink('CATFmCredentials','CATFmCredentials&amp;')</script> <td><tt>iAccreditations</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a Feature Facade.
+ <br><b>Role</b>: Creates a Facade with the provided Accreditations Set and bound to a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAccreditations</tt>
+   <dd> [in]   The Accreditations Set obtained by the application.
+   Refer to the Access Control section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation.   <br>Only the assignment operator can affect the Accreditations Set of a Facade after its construction.
+   <br><b>Lifecycle</b>: A Facade keeps a copy of the Accreditations Set. Any change in <tt>iAccreditations</tt>
+   (RegisterAsCatalogOwner ...) performed after the Facade creation will not affect the Facade.
+ 
+    <dt><tt> iFeature</tt>
+   <dd> [in]   An Feature Modeler Value.
+   <br><b>Legal values</b>:<ul>
+     <li>An empty (i.e. of CATFmKind_void type) Attribute Value.</li>
+     <li>An Attribute Value of type CATFmKind_feature and of cardinality 1.</li></ul>
+   Any other value, such as an integer or a list with two or more elements, will be handled like a empty Attribute Value.
+   <br><b>Lifecycle</b>: Refer to the Lifecycle section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation.
+</dl>
+</dl>
+</dl>
+<a name="~CATFmFeatureFacade"></a><a name="~CATFmFeatureFacade()"></a> <dt> o <b>~CATFmFeatureFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>~CATFmFeatureFacade</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Destructor.
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddExtension"></a><a name="AddExtension(CATString&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>AddExtension</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddExtension</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iExtensionId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oExtension</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a Feature Extension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iExtensionId</tt>
+   <dd> [in]   The name of the Feature Extension that must be added to the bound Base Feature.
+   <br><b>Legal values</b>:
+   <ul>
+    <li>"`StartUpIdentifier`@`Catalog.CATfct`"</li>
+    <li>"`StartUpIdentifier`#<number>@`Catalog.CATfct`"</li>
+    <li>"0u???????-????-????-????????????????@`Catalog.CATfct`"</li>
+   </ul>
+   <br><b>Deprecated value (V5-6R2015 / 3DEXPERIENCER2015x)</b>:
+    <ul>
+    <li>"StartUpLateType"</li>
+   </ul>
+ </dd>
+    <dt><tt> oExtension</tt>
+   <dd> [out]   A (caller provided) value that will contain the Feature Extension.
+   No Feature Extension will be created if an Extension with this Extension Id exists,
+   in such a case this method simply retrieves the existing Feature Extension.
+   <br>If the method fails <tt>oExtension</tt> is not modified, it is otherwise overwritten.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>A new Feature Extension has been successfuly added.</dd>
+     <dt>S_FALSE</dt>
+     <dd>The existing Feature Extension has been successfuly retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to the Feature Extension Type Definition.</dd>
+     <dt>LCC_E_FAIL</dt>
+     <dd>The currently used license does not authorize the requested operation.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="AppendValue"></a><a name="AppendValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>AppendValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AppendValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a value at the end of a list attribute.
+ <br><b>Role</b>:This method allows to append a value at the end of a list attribute.
+ <br>It is a shortcut for 
+<script type="text/javascript"> activateLinkAnchor('','InsertValue','InsertValue') </script> at index size+1 and has the same behavior and restrictions. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>   The attribute on which a value must be inserted.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd>   The value to append.
+   <br>This value must have the same type as the attribute and cardinality 1.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br>Return code values are the same as for 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> .
+</dl>
+</dl>
+<a name="Clear"></a><a name="Clear()"></a> <dt> o <b>Clear</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade &')</script>  <b>Clear</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Unbinds the Facade from its bound Feature.
+ <br>This method does not affect the Accreditations Set of the Facade.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    This Facade.
+</dl>
+</dl>
+<a name="CompareFeatureWith"></a><a name="CompareFeatureWith(CATFmFeatureFacade&amp;)"></a> <dt> o <b>CompareFeatureWith</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>CompareFeatureWith</b>(<td> const <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade&amp;')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Compares the bound Feature(s) of two Facades.
+ <br><b>Role</b>: compares the bound Feature(s) of two Facades without taking the Accreditations into account.
+ <br>An Feature is valid if and only if it has neither been Logically deleted nor unloaded.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> [in]   The Feature Facade to be compared to this.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An integer value.
+   <br><b>Legal values</b>:
+   <ul><li><tt>TRUE</tt>: if the Facades are either both invalid or both bound to the same valid Feature.</li>
+       <li><tt>FALSE</tt>: in any other case.</li></ul>
+</dl>
+</dl>
+<a name="DeleteSelf"></a><a name="DeleteSelf()"></a> <dt> o <b>DeleteSelf</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>DeleteSelf</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Deletes a Feature.
+ <br><b>Role</b>: This method invokes the deletion of this Feature.
+ <br>This method handles the deletion of aggregated Features as well as "root" (i.e. not aggregated) Features,
+ as long as the provided accreditations allow the modification of the aggregation link on the Parent Feature.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>This Feature has been removed.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature and/or the aggregating Feature attribute if any.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="DetachComponent"></a><a name="DetachComponent(CATFmAttributeName&amp;,int)"></a> <dt> o <b>DetachComponent</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>DetachComponent</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Breaks an aggregation relation without deleting aggregated object.
+ <br><b>Role</b>: This method allows to remove a feature from an aggregation attribute without calling its deletion.
+ <br>It can be used in order to change the father of a feature.
+ <dl>
+   <dt>For a single attribute:<dt/>
+    <dl>
+      <dt>It will replace target feature by a NULL value.<dt/>
+    </dl>
+   <dt>For a list attribute:
+    <dl>
+     <dt>If array mode is on,  it will replace target feature by a NULL value.<dt/>
+     <dt>If array mode is off, it will remove the index.<dt/>
+    </dl>
+   </dt>
+ </dl>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which a component must be detached.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd> [in]   The index of the component to detach. Must be in the range [1,size] for a list attribute, equal to 1 for a single attribute.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Component has been detached.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMOUTOFBOUND</dt>
+     <dd>Index is not in the correct range.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd>Attribute is not an aggregation attribute.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetAttributeValuationInfo"></a><a name="GetAttributeValuationInfo(CATFmAttributeName&amp;,CATFmAttributeValuationInfo&amp;)"></a> <dt> o <b>GetAttributeValuationInfo</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttributeValuationInfo</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValuationInfo','CATFmAttributeValuationInfo&amp;')</script> <td><tt>oAttributeValuationInfo</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves valuation informations of attribute iAttributeName.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute name for which attribute valuation info must be retrieved.
+ </dd>
+    <dt><tt> oAttributeValuationInfo</tt>
+   <dd> [out]   Data structure containing attribute valuation informations.
+   <br>Notice that it contains informations on immediate or inherited value, not on the target of a redirected value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Attribute valuation informations has been retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetAutoNumberingProvider"></a><a name="GetAutoNumberingProvider(CATFmAttributeValue&amp;)"></a> <dt> o <b>GetAutoNumberingProvider</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAutoNumberingProvider</b>(<td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Auto-Numbering Provider of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oFeature</tt>
+   <dd> [out]   A (caller provided) value that will contain the Auto-Numbering Provider of this Feature,
+   or nothing (an empty Attribute Value) if the bound Feature has no Auto-Numbering Provider.
+   <br>If the method fails <tt>oFeature</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oFeature</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetBaseFeature"></a><a name="GetBaseFeature(CATFmAttributeValue&amp;)"></a> <dt> o <b>GetBaseFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetBaseFeature</b>(<td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oFeature</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Base Feature of a Feature Extension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oFeature</tt>
+   <dd> [out]   A (caller provided) value that will contain the Base Feature of this Feature Extension.
+   <br>If the method fails <tt>oFeature</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oFeature</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature Extension.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to either this Feature Extension or the Base Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetContainerFacade"></a><a name="GetContainerFacade(CATFmContainerFacade&amp;)"></a> <dt> o <b>GetContainerFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetContainerFacade</b>(<td><script type="text/javascript"> activateLink('CATFmContainerFacade','CATFmContainerFacade&amp;')</script> <td><tt>oContainer</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Container of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oContainer</tt>
+   <dd> [out]   A (caller provided) Facade that will be bound to the Container of this Feature.
+   <br>Notice that the Credentials of the provided Facade will not be used nor be modified.
+   <br>If the method fails <tt>oContainer</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oContainer</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetDisplayName"></a><a name="GetDisplayName(CATUnicodeString&amp;)"></a> <dt> o <b>GetDisplayName</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDisplayName</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oDisplayName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Display Name of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDisplayName</tt>
+   <dd> [out]   A (caller provided) string in which the Display Name of the Feature will be stored.
+   <br>If the method fails <tt>oDisplayName</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Late Type has been successfuly retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetExtension"></a><a name="GetExtension(CATString&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>GetExtension</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetExtension</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iExtensionId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oExtension</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a Feature Extension from a Base Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iExtensionId</tt>
+   <dd> [in]   The name of the Feature Extension that must be retrieved from this Base Feature.
+   <br><b>Legal values</b>:
+   <ul>
+    <li>"`StartUpIdentifier`@`Catalog.CATfct`"</li>
+    <li>"`StartUpIdentifier`#<number>@`Catalog.CATfct`"</li>
+    <li>"0u???????-????-????-????????????????@`Catalog.CATfct`"</li>
+   </ul>
+   <br><b>Deprecated value (V5-6R2015 / 3DEXPERIENCER2015x)</b>:
+    <ul>
+    <li>"StartUpLateType"</li>
+   </ul>
+ </dd>
+    <dt><tt> oExtension</tt>
+   <dd> [out]   A (caller provided) value that will contain the Feature Extension.
+   <br>If method fails, <tt>oExtension</tt> is not modified.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oExtension</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to either this Base Feature or the searched Feature Extension.</dd>
+     <dt>E_FAIL</dt>
+     <dd>No such Extension has been found on the Base Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetExtensionId"></a><a name="GetExtensionId(CATString&amp;)"></a> <dt> o <b>GetExtensionId</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetExtensionId</b>(<td><script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>oExtensionId</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a Feature Extension Id.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oExtensionId</tt>
+   <dd> [out]   A string containing the ExtensionId of the Feature Extension.
+   <br>If the method fails <tt>oExtensionId</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oExtensionId</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature Extension.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature Extension.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetExtensionUuid"></a><a name="GetExtensionUuid(CATUuid&amp;)"></a> <dt> o <b>GetExtensionUuid</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetExtensionUuid</b>(<td><script type="text/javascript"> activateLink('CATUuid','CATUuid&amp;')</script> <td><tt>oExtensionUuid</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Uuid of a Feature Extension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oExtensionUuid</tt>
+   <dd> [out]   A string containing the UUID of the Feature Extension.
+   <br>If the method fails <tt>oExtensionUuid</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oExtensionUuid</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature Extension.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature Extension.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetFeature"></a><a name="GetFeature()"></a> <dt> o <b>GetFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script>  <b>GetFeature</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the bound Feature through a CATBaseUnknown smart pointer.
+ <br><b>Role</b>: Use to retrieve an Applicative Modeler level interface on the bound Feature through smart pointers.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    A smart pointer to the Feature.
+   <br>Warning: the exact type of the interface returned as a <tt>CATBaseUnknown</tt> pointer
+   is not part of the specification and may vary. Do not make any assumption about it.
+</dl>
+</dl>
+<a name="GetFeatureAsValue"></a><a name="GetFeatureAsValue()"></a> <dt> o <b>GetFeatureAsValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue')</script>  <b>GetFeatureAsValue</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the bound Feature as a value.
+ <br><b>Role</b>: Useful to use the bound Feature as the value of a SpecObject or Component attribute.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    A Feature Modeler Value.
+</dl>
+</dl>
+<a name="GetKnowledgeParameter"></a><a name="GetKnowledgeParameter(CATFmAttributeName&amp;,IID&amp;,void**,int)"></a> <dt> o <b>GetKnowledgeParameter</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetKnowledgeParameter</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('IID','IID&amp;')</script> <td><tt>iIID</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('void','void**')</script> <td><tt>oPtr</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt><td><tt>= -1</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a an interface pointer on a Knowledge parameter.
+ <br><b>Role</b>: This method allow to retrieve a knowledge parameter held by an attribute.
+ <br>A knowledge parameter can be:
+ <ul>
+   <li>A simple attribute with its sharp_type facet set to a valid Knowledge type.</li>
+   <li>An object created through Knowledge interfaces ( 
+<script type="text/javascript"> activateLinkAnchor('CATICkeParmFactory','','CATICkeParmFactory') </script> )       and referenced by a 
+CATFmKind_feature attribute.</li> </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute name.
+ </dd>
+    <dt><tt> iIID</tt>
+   <dd> [in]   The interface identifier for which a pointer is requested (for example </dd>
+<script type="text/javascript"> activateLinkAnchor('CATICkeParm','','CATICkeParm') </script> ). 
+    <dt><tt> oPtr</tt>
+   <dd> [out, CATBaseUnknown#Release]   The address where the returned pointer to the interface is located.
+   <br>In case of success, this pointer must be released after use.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd> [in]   The optional index where the parameter must be retrieved.
+   <br>If the attribute is not a list, default value of <tt>iIndex</tt> must be used,
+       else <tt>iIndex</tt> must be inside the bounds [1,size] of the attribute value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>A valid knowledge parameter has been retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd><tt>oPtr</tt> is NULL or attribute is not a list and <tt>iIndex</tt> is not equal to -1.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMNOTAPARAMETER</dt>
+     <dd>An object can be found at this place but it is not a Knowledge parameter.</dd>
+     <dt>E_NOINTERFACE</dt>
+     <dd>A Knowledge parameter can be retrieved but it does not implement requested interface.</dd>
+     <dt>E_FAIL</dt>
+     <dd>A NULL object has been found at this place.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetParentFeature"></a><a name="GetParentFeature(CATFmAttributeValue&amp;)"></a> <dt> o <b>GetParentFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParentFeature</b>(<td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oParent</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Parent of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oParent</tt>
+   <dd> [out]   A (caller provided) value that will contain the Parent of this Feature,
+   or nothing (an empty Attribute Value) if the bound Feature has no aggregating Feature.
+   <br>If the method fails <tt>oParent</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oParent</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_FMNOTLOADED</dt>
+     <dd>The Parent Feature cannot be reached because it is not loaded.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to either the bound Feature or the Parent Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetRedirectedValuation"></a><a name="GetRedirectedValuation(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)"></a> <dt> o <b>GetRedirectedValuation</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRedirectedValuation</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oRedirectedFeature</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>oRedirectedAttributeName</tt>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves target feature and attribute of a redirected attribute.
+ <br><b>Role</b>: This method allows to retrieve the target feature and attribute of an attribute which has been redirected by 
+<script type="text/javascript"> activateLinkAnchor('','SetRedirectedValuation','SetRedirectedValuation') </script> . <br>Notice that redirected attribute can be inherited.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which redirection target must be retrieved.
+ </dd>
+    <dt><tt> oRedirectedFeature</tt>
+   <dd> [out]   The target feature of the redirected attribute.
+ </dd>
+    <dt><tt> oRedirectedAttributeName</tt>
+   <dd> [out]   The target attribute of the redirected attribute.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Redirection target have been successfully retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>E_FAIL</dt>
+     <dd>Attribute is not redirected.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetReference"></a><a name="GetReference(CATFmAttributeValue&amp;)"></a> <dt> o <b>GetReference</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetReference</b>(<td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oReference</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Reference of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oReference</tt>
+   <dd> [out]   A (caller provided) value that will contain the Reference of the bound Feature,
+   or nothing (an empty Attribute Value) if the bound Feature has been instantiated from a Feature Definition (StartUp).
+   <br>If the method fails <tt>oReference</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oReference</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_FMNOTLOADED</dt>
+     <dd>The Reference Feature cannot be reached because it is not loaded.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to the bound Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetRootParentFeature"></a><a name="GetRootParentFeature(CATFmAttributeValue&amp;)"></a> <dt> o <b>GetRootParentFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRootParentFeature</b>(<td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oRootParent</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Root Parent of a Feature.
+ <br><b>Role</b>: This method is quite similar to iterative calls to GetParentFeature.
+ <br>It only differs from successive calls to GetParentFeature by its credential requirements,
+ no accreditations related to the intermediate Features between this and the Root Features are needed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oRootParent</tt>
+   <dd> [out]   A (caller provided) value that will contain the Root Parent of this Feature,
+   or nothing (an empty Attribute Value) if the bound Feature has no aggregating Feature.
+   <br>If the method fails <tt>oRootParent</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd><tt>oRootParent</tt> has been successfuly valuated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_FMNOTLOADED</dt>
+     <dd>The Root Parent Feature cannot be reached because it is not loaded.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to either the bound Feature or to the Root Parent Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetStartUpFacade"></a><a name="GetStartUpFacade(CATFmStartUpFacade&amp;)"></a> <dt> o <b>GetStartUpFacade</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetStartUpFacade</b>(<td><script type="text/javascript"> activateLink('CATFmStartUpFacade','CATFmStartUpFacade&amp;')</script> <td><tt>oDefinition</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retireves the Feature Definition (StartUp) of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDefinition</tt>
+   <dd> [out]   A (caller provided) Facade that will be bound to the Feature Definition.
+   <br>Notice that the Credentials of the provided Facade will not be used nor be modified.
+   <br>If the method fails <tt>oDefinition</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Type Definition has been successfuly retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetType"></a><a name="GetType(CATUnicodeString&amp;)"></a> <dt> o <b>GetType</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetType</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oLateType</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the Late Type of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLateType</tt>
+   <dd> [out]   A (caller provided) string in which the Late Type of the Feature will be stored.
+   <br>If the method fails <tt>oLateType</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Late Type has been successfuly retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetValue"></a><a name="GetValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>GetValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oAttributeValue</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves value of attribute iAttributeName.
+ <br><b>Role</b>: This method allows to retrieve the whole value held by a feature attribute of any type and cardinality.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which value must be retrieved.
+ </dd>
+    <dt><tt> oAttributeValue</tt>
+   <dd> [out]   Retrieved attribute value.
+   <br>If method fails, <tt>oAttributeValue</tt> is not modified.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been retrieved.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Value has been retrieved but attribute is unset, oAttributeValue will contain a default value (0 for numerical values, empty string for string values, empty list for lists).</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMREDIRECTED</dt>
+     <dd>Attribute is redirected but is target cannot be retrieved.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="GetValueAtIndex"></a><a name="GetValueAtIndex(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"></a> <dt> o <b>GetValueAtIndex</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetValueAtIndex</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oAttributeValue</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves value of attribute iAttributeName at a specified index.
+ <br><b>Role</b>:This method is similar to 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script>, the difference is that it allows to retrieve only a specific item in a list. <br>Notice that you should preferably use 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> for iterations on list attributes. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which value must be retrieved.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd> [in]   Index of the item of the list to retrieve. Must be in the range [1,size].
+ </dd>
+    <dt><tt> oAttributeValue</tt>
+   <dd> [out]   Retrieved attribute value.
+   <br>If method fails, oAttributeValue is not modified.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been retrieved.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMOUTOFBOUND</dt>
+     <dd>Index is not in the correct range.</dd>
+     <dt>E_FMNOTALIST</dt>
+     <dd>Attribute is not a list.</dd>
+     <dt>E_FMREDIRECTED</dt>
+     <dd>Attribute is redirected but is target cannot be retrieved.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="InsertValue"></a><a name="InsertValue(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"></a> <dt> o <b>InsertValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InsertValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Inserts a value at a given index of a list attribute.
+ <br><b>Role</b>:This method allows to insert an element at a given index in a list attribute.
+ <br>This method has the same restrictions as 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> . <br>Notice that <tt>iIndex</tt> can be equal to size+1 in which case <tt>iValue</tt> is appended at the end of the list.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>   The attribute on which a value must be inserted.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd>   The index to modify. Must be in the range [1,size+1].
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd>   The value to insert.
+   <br>This value must have the same type as the attribute and cardinality 1.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br>Return code values are the same as for 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> .
+</dl>
+</dl>
+<a name="InstantiateIn"></a><a name="InstantiateIn(CATFmContainerFacade&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>InstantiateIn</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InstantiateIn</b>(<td> const <script type="text/javascript"> activateLink('CATFmContainerFacade','CATFmContainerFacade&amp;')</script> <td><tt>iContainer</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oInstance</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Instantiates a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainer</tt>
+   <dd> [in]   A valid Facade bound to the container in which an Instance of this Feature must be created.
+ </dd>
+    <dt><tt> oInstance</tt>
+   <dd> [out]   A (caller provided) value that will contain the created Instance.
+   <br>If the method fails <tt>oInstance</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The instantiation succeeded.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature or the container.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>This Facade is not bound to a valid Base Feature.</dd>
+     <dt>LCC_E_FAIL</dt>
+     <dd>The currently used license does not authorize the requested operation.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="InstantiateUnder"></a><a name="InstantiateUnder(CATFmContainerFacade&amp;,CATFmFeatureFacade&amp;,CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>InstantiateUnder</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InstantiateUnder</b>(<td> const <script type="text/javascript"> activateLink('CATFmContainerFacade','CATFmContainerFacade&amp;')</script> <td><tt>iContainer</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade&amp;')</script> <td><tt>iParent</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>oInstance</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Instantiates a Feature.
+ <br><b>Role</b>: Instantiates a Feature and aggregates the new instance under an existing Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainer</tt>
+   <dd> [in]   A valid Facade bound to the container in which an Instance of this Feature must be created.
+ </dd>
+    <dt><tt> iParent</tt>
+   <dd> [in]   A valid Facade bound to the Feature that will agregate the new Instance.
+ </dd>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The name of the component (or list of components) typed attribute that will be used for aggregation.
+   In case of a list, the new Feature is added at the end of the list. The attribute value must otherwise be empty.
+ </dd>
+    <dt><tt> oInstance</tt>
+   <dd> [out]   A (caller provided) value that will contain the created Instance.
+   <br>If the method fails <tt>oInstance</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The instantiation succeeded.</dd>
+     <dt>E_ABORT</dt>
+     <dd>The attribute is not a list and there is already a component.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to the bound Feature, the target Container, the target Feature or its attribute.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>This Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd>Attribute is not an aggregation attribute.</dd>
+     <dt>LCC_E_FAIL</dt>
+     <dd>The currently used license does not authorize the requested operation.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="IsSynchronized"></a><a name="IsSynchronized(CATFmAttributeName&amp;,CATBoolean&amp;)"></a> <dt> o <b>IsSynchronized</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsSynchronized</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oSynchronized</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the synchronization status of a Feature.
+ <br><b>Role</b>: Checks whether a synchronization is needed on this Feature to match its Reference.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute name.
+ </dd>
+    <dt><tt> oSynchronized</tt>
+   <dd> [out]   The synchronization status of a Feature
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The synchronization status has been computed or retrieved sucessfully and been stored in oSynchronized parameter.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd>Attribute is not an aggregation attribute.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="IsUpToDate"></a><a name="IsUpToDate()"></a> <dt> o <b>IsUpToDate</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsUpToDate</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a Feature update status.
+ <br><b>Role</b>: This method allows to retrieve the update status of feature.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Feature is up to date.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Feature is not up to date.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_FMUPDATEERROR</dt>
+     <dd>An exception has been raised. Exception can be retrieved through 
+<script type="text/javascript"> activateLinkAnchor('CATFmGetLastError','','CATFmGetLastError') </script> .</dd>     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="IsValid"></a><a name="IsValid()"></a> <dt> o <b>IsValid</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsValid</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks the Facade validity.
+ <br>A Feature Facade is valid if and only if it is bound to a Feature that has neither been Logically deleted nor unloaded.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An boolean value.
+   <br><b>Legal values</b>:
+   <ul><li><tt>TRUE</tt>: if the Facade is valid.</li>
+       <li><tt>FALSE</tt>: if the Facade is invalid.</li></ul>
+</dl>
+</dl>
+<a name="LocateValue"></a><a name="LocateValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,int&amp;,int,int)"></a> <dt> o <b>LocateValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>LocateValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iValue</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFirstIndex</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iLastIndex</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Locates a value in an attribute.
+ <br><b>Role</b>:This method allows to locate the <b>first</b> occurence of a value in an attribute value.
+ <br>You can specify the range and the direction of the search thanks to optional parameters <tt>iFirstIndex</tt> and <tt>iLastIndex</tt>.
+ <br>by default the list is scanned starting from its first element to its last element.
+ <br>Notice that a <b>linear search</b> is performed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute to scan.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd> [in]   The value to locate.
+ </dd>
+    <dt><tt> oIndex</tt>
+   <dd> [out]   The index where the value has been found.
+ </dd>
+    <dt><tt> iFirstIndex</tt>
+   <dd> [in]   Starting index of the search.
+   <br>Must be in the range [0,size]
+   <br>Specific value 0 means last item of the list.
+   <br><tt>iFirstIndex</tt> can be less than <tt>iLastIndex</tt> in which case search is made downward.
+ </dd>
+    <dt><tt> iLastIndex</tt>
+   <dd> [in]   Last index of the search.
+   <br>Must be in the range [0,size]
+   <br>Specific value 0 means last item of the list.
+   <br><tt>iFirstIndex</tt> can be less than <tt>iLastIndex</tt> in which case search is made downward.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been found at index <tt>oIndex</tt>.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Value has not been found. 0 has been assigned to <tt>oIndex</tt>.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd>iValue is a list or iValue is of type CATFmKind_void or CATFmKind_any.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMOUTOFBOUND</dt>
+     <dd><tt>iFirstIndex</tt> or <tt>iLastIndex</tt> is not in the correct range.</dd>
+     <dt>E_FMNOTALIST</dt>
+     <dd>Attribute is not a list.</dd>
+     <dt>E_FMREDIRECTED</dt>
+     <dd>Attribute is redirected but is target cannot be retrieved.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="MoveInPosition"></a><a name="MoveInPosition(CATFmAttributeName&amp;,int,int)"></a> <dt> o <b>MoveInPosition</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>MoveInPosition</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSourceIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iTargetIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Moves an index in the list to another position.
+ <br><b>Role</b>:This method allows to move the content of an index of a list attribute to another index.
+<br>For instance:
+ <pre>List is [ A B C D E ].</pre>
+ after a call to MoveInPosition(4,2),
+ <pre>List is [ A D B C E ], D has been moved to position 2.</pre>
+ whereas
+ <br>after a call to MoveInPosition(2,4),
+ <pre>List is [ A C D B E ], B has been moved to position 4.</pre>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which an item must be moved.
+ </dd>
+    <dt><tt> iSourceIndex</tt>
+   <dd> [in]   The index of the item to move. Must be in the range [1,size].
+ </dd>
+    <dt><tt> iTargetIndex</tt>
+   <dd> [in]   The index where the item must be moved. Must be in the range [1,size].
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br>Return code values are the same as for 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> .   <br>Notice that if <tt>iSourceIndex</tt> and <tt>iTargetIndex</tt> are equal and the value is immediate, then S_FALSE will be returned.
+</dl>
+</dl>
+<a name="QueryInterfaceOnFeature"></a><a name="QueryInterfaceOnFeature(IID&amp;,void**)"></a> <dt> o <b>QueryInterfaceOnFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>QueryInterfaceOnFeature</b>(<td> const <script type="text/javascript"> activateLink('IID','IID&amp;')</script> <td><tt>iIID</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('void','void**')</script> <td><tt>oPPV</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the bound Feature through a user specified interface pointer.
+ <br><b>Role</b>: Use to query Applicative Modeler level interfaces on the bound Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIID</tt>
+   <dd> [in]   The interface identifier for which a pointer is requested.
+ </dd>
+    <dt><tt> oPPV</tt>
+   <dd> [out, CATBaseUnknown#Release]   The address where the returned pointer to the interface is located.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The query succeeds.</dd>
+     <dt>E_NOINTERFACE</dt>
+     <dd>The interface does not exist.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>The object is not valid.</dd>
+     <dt>E_OUTOFMEMORY</dt>
+     <dd>A memory allocation failed.</bb>
+     <dt>E_UNEXPECTED</dt>
+     <dd>The query failed for any other reason.</dd>
+   </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATBaseUnknown','QueryInterface','CATBaseUnknown.QueryInterface') </script>
+</dl>
+</dl>
+<a name="RemoveExtension"></a><a name="RemoveExtension(CATFmAttributeValue&amp;)"></a> <dt> o <b>RemoveExtension</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveExtension</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iExtension</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Deletes a Feature Extension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iExtension</tt>
+   <dd> [in]   A value containing the Feature Extension that must be removed from its Base Feature.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Feature Extension has been successfuly deleted.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Base Feature or the Feature Extension to be removed.</dd>
+     <dt>E_FAIL</dt>
+     <dd>iExtension has not been found on the Base Feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="RemovePosition"></a><a name="RemovePosition(CATFmAttributeName&amp;,int)"></a> <dt> o <b>RemovePosition</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemovePosition</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes an index from a list attribute.
+ <br><b>Role</b>:This method allows to remove a given index in a list attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>   The attribute for which an index must be removed.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd>   The index to remove. Must be in the range [1,size].
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br>Return code values are the same as for 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> .
+</dl>
+</dl>
+<a name="RemoveRedirectedValuation"></a><a name="RemoveRedirectedValuation(CATFmAttributeName&amp;)"></a> <dt> o <b>RemoveRedirectedValuation</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveRedirectedValuation</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Breaks the redirection to another attribute.
+ <br><b>Role</b>:This method allows to break a redirection link created by 
+<script type="text/javascript"> activateLinkAnchor('','SetRedirectedValuation','SetRedirectedValuation') </script> . <br>After a call to this method, attribute value will become immediate (according to 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeValuationInfo','GetAttributeValuationInfo') </script> ). <br>Depending on the attribute type, attribute will take the following value:
+ <ul>
+   <li>For simple types immediate value will become unset.</li>
+   <li>For list of complex types, an empty list will be assigned.</li>
+   <li>For single complex types, a NULL pointer will be assigned.</li>
+ </ul>
+ <br>This method can be used only on a redirected attribute.
+ <br>RemoveRedirectedValuation can cause the propagation of an update impact.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which redirection must be broken.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Redirection has been broken.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FAIL</dt>
+     <dd>Attribute is not redirected.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="ReplaceValueAtIndex"></a><a name="ReplaceValueAtIndex(CATFmAttributeName&amp;,int,CATFmAttributeValue&amp;)"></a> <dt> o <b>ReplaceValueAtIndex</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ReplaceValueAtIndex</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Replaces value of attribute iAttributeName at a given index.
+ <br><b>Role</b>: This method allows to replace a given index of a list attribute by a new value.
+ <br>This method can be used only on list attributes (for single attributes, use 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> ). <br>This method cannot be used on a redirected attribute (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection). <br>New value type and attribute value type must be strictly equal (for example, 
+CATFmKind_int and 
+CATFmKind_byte are incompatible). <br>ReplaceValueAtIndex can cause the propagation of an update impact.
+ <br>For aggregation attributes:
+ <ul>
+   <li>Aggregation rules will be checked.</li>
+   <li>Objects becoming not aggregated will be destroyed ( 
+<script type="text/javascript"> activateLinkAnchor('','DetachComponent','DetachComponent') </script> can be used as an alternative).</li> </ul>
+ <br>In case of failure, attribute will keep its old value.
+ <br>Notice that in order to change all the elements of a list, you should preferably use 
+<script type="text/javascript"> activateLinkAnchor('','SetValue','SetValue') </script> . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute on which a value must be replaced.
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd> [in]   The index to modify. Must be in the range [1,size].
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd> [in]   The value which must be set.
+   <br>This value must have the same type as the attribute and cardinality 1.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been modified.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMOUTOFBOUND</dt>
+     <dd>Index is not in the correct range.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd><tt>iValue</tt> has type 
+CATFmKind_void or a cardinality not equal to 1.</dd>     <dt>E_FMNOTALIST</dt>
+     <dd>Attribute is not a list.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd><tt>iValue</tt> type is not strictly equal to the one of the attribute.</dd>
+     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd>The operation is not allowed because:
+       <ul>
+         <li>Attribute is redirected (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection).</li>         <li>Input value contains a NULL feature and attribute is not using array mode.</li>
+         <li>Input value contains a feature which belongs to another stream unit.</li>
+         <li>Operation leads to an obvious update cyle.</li>
+       </ul>
+      </dd>
+     <dt>E_FMAGGREGATIONERROR</dt>
+     <dd>Operation leads to an aggregation rule violation:
+       <ul>
+         <li>Target feature is yet aggregated by another feature.</li>
+         <li>Target feature is yet aggregated by another attribute of this feature.</li>
+         <li>Target feature is yet aggregated by this attribute at another index.</li>
+         <li>Target feature is a direct or indirect father of this feature.</li>
+         <li>Target feature is this feature.</li>
+       </ul>
+     </dd>
+     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="RestoreInheritance"></a><a name="RestoreInheritance(CATFmAttributeName&amp;)"></a> <dt> o <b>RestoreInheritance</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RestoreInheritance</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores inheritance on an attribute.
+ <br><b>Role</b>:This method removes immediate value so that further calls to 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','GetValueAtIndex','GetValueAtIndex') </script> will return the value inherited from reference feature. <br>After a call to this method, attribute value will become inherited (according to 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeValuationInfo','GetAttributeValuationInfo') </script> ). <br>This method does not work on aggregation attributes (use 
+<script type="text/javascript"> activateLinkAnchor('','Synchronize','Synchronize') </script> ). <br>RestoreInheritance can cause the propagation of an update impact.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which inheritance must be restored.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Attribute value is now inherited.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMPARAMETER</dt>
+     <dd>Attribute represents a Knowledge parameter.</dd>
+     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd>Attribute represents an aggregation relation.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="ScanExtensions"></a><a name="ScanExtensions(CATFmFeatureIterator&amp;)"></a> <dt> o <b>ScanExtensions</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ScanExtensions</b>(<td><script type="text/javascript"> activateLink('CATFmFeatureIterator','CATFmFeatureIterator&amp;')</script> <td><tt>oExtensionsIterator</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Scans the model for Feature Extensions related to a Base Feature.
+ <br><b>Role</b>: This method allows to scan the Feature Extensions found of this Base Feature.
+ <br>If the Credentials provided to the Facade grant access to the Base feature the iterator will expose all Extensions,
+ <br>the iterator will otherwise only expose the Feature Extensions the provided Credentials grant access to.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oExtensionsIterator</tt>
+   <dd> [out]   A (caller provided) Iterator that will be filled with the Feature Extensions related to the bound Base Feature.
+   <br>If the method fails <tt>oExtensionsIterator</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Iterator has been successfuly populated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATFmFeatureIterator','','CATFmFeatureIterator') </script>
+</dl>
+</dl>
+<a name="ScanExtensionsInContainer"></a><a name="ScanExtensionsInContainer(CATString&amp;,CATFmFeatureIterator&amp;)"></a> <dt> o <b>ScanExtensionsInContainer</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ScanExtensionsInContainer</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iContainerName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmFeatureIterator','CATFmFeatureIterator&amp;')</script> <td><tt>oExtensionsIterator</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Scans a Feature Container for Feature Extensions related to a Base Feature.
+ <br><b>Role</b>: This method combines a call to: 
+ScanExtensions with additionnal filtering performed on the container name.
+ The accreditation requirements for this method are consquently the same as those for 
+ScanExtensions . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainerName</tt>
+   <dd> [in]   The name of the container, as in the resource file describing an extension or
+   in </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmContainerServices','CreateApplicativeContainer','CATFmContainerServices.CreateApplicativeContainer') </script> <tt>(... iName ...)</tt>. 
+    <dt><tt> oExtensionsIterator</tt>
+   <dd> [out]   A (caller provided) Iterator that will be filled with the Feature Extensions related to the bound Base Feature.
+   <br>If the method fails <tt>oExtensionsIterator</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATFmFeatureIterator','','CATFmFeatureIterator') </script>
+</dl>
+</dl>
+<a name="ScanPointingFeatures"></a><a name="ScanPointingFeatures(CATFmPointingFeatureIterator&amp;)"></a> <dt> o <b>ScanPointingFeatures</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ScanPointingFeatures</b>(<td><script type="text/javascript"> activateLink('CATFmPointingFeatureIterator','CATFmPointingFeatureIterator&amp;')</script> <td><tt>oIterator</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Scans the model for Features pointing the bound Feature.
+ <br><b>Role</b>: This method fills an iterator with the Features pointing the bound Feature.
+ <br>If the Accreditations set on the Facade grant access to the bound feature the iterator will contain all pointing objects,
+ <br>the iterator will otherwise only include the objects the Accreditations grant access to.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oIterator</tt>
+   <dd> [out]   A (caller provided) Iterator that will be filled with the Feature Extensions related to this Base Feature.
+   <br>If the method fails <tt>oIterator</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Iterator has been successfuly populated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATFmPointingFeatureIterator','','CATFmPointingFeatureIterator') </script>
+</dl>
+</dl>
+<a name="SetAutoNumberingProvider"></a><a name="SetAutoNumberingProvider(CATFmAttributeValue&amp;)"></a> <dt> o <b>SetAutoNumberingProvider</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAutoNumberingProvider</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Set the Auto-Numbering Provider of a Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> [in]   A value containing the Auto-Numbering Provider for this Feature.
+   <br>An empty Attribute Value is valid and unsets any previously defined Provider.
+   <br><b>Legal values</b>:<ul>
+     <li>An empty (i.e. of CATFmKind_void type) Attribute Value.</li>
+     <li>An Attribute Value of type CATFmKind_feature and of cardinality 1.</li></ul>
+   Any other value, such as an integer or a list with two or more elements, will be handled like a empty Attribute Value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The Auto-Numbering Provider has been successfuly set.
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this Feature.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="SetRedirectedValuation"></a><a name="SetRedirectedValuation(CATFmAttributeName&amp;,CATFmAttributeValue&amp;,CATFmAttributeName&amp;)"></a> <dt> o <b>SetRedirectedValuation</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetRedirectedValuation</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iTargetFeature</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iTargetAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a redirection from one attribute to another.
+ <br><b>Role</b>:This method creates a redirection link to another attribute so that further calls to 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','GetValueAtIndex','GetValueAtIndex') </script> will return the value held by target attribute. <br>After a call to this method, attribute value will become redirected (according to 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeValuationInfo','GetAttributeValuationInfo') </script> ). <br>This method can be used on all types of attribute (list or not) with the exception of aggregation attributes (notice that target attribute can be an aggregation attribute) and external attributes. 
+ <br>Target attribute must be of the same type as the redirected attribute. They must also be both list attribute or both single attribute.
+ <br>SetRedirectedValuation can cause the propagation of an update impact.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute to redirect.
+ </dd>
+    <dt><tt> iTargetFeature</tt>
+   <dd> [in]   The target feature of the redirection.
+ </dd>
+    <dt><tt> iTargetAttributeName</tt>
+   <dd> [in]   The target attribute of the redirection.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been modified.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute or target attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature or target attribute does not exist on target feature.</dd>
+     <dt>E_FMPARAMETER</dt>
+     <dd>Attribute represents a Knowledge parameter.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd><tt>iTargetFeature</tt> does not contain one non NULL feature or <tt>iTargetAttributeName</tt> is empty.</dd>
+     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd>Operation is not allowed because:
+       <ul>
+         <li>Attribute represents an aggregation or an external link.</li>
+         <li>Redirected and target attribute have incompatible types.</li>
+         <li>Redirection leads to an obvious redirection cycle.</li>
+       </ul>
+     </dd>
+     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="SetUpdateBehavior"></a><a name="SetUpdateBehavior(CATFmAttributeName&amp;,CATFmAttributeUpdateBehavior)"></a> <dt> o <b>SetUpdateBehavior</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetUpdateBehavior</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFmAttributeUpdateBehavior','CATFmAttributeUpdateBehavior')</script> <td><tt>iUpdateBehavior</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the update behavior of an attribute.
+ <br><b>Role</b>:By default update behavior of an attribute is inherited from the startup, it is nevertheless possible to change it
+ dynamically on instances through this method.
+ <br>This operation should be used preferably for upgrade purpose.
+ <br>Changing the behavior to 
+<script type="text/javascript"> activateLinkAnchor('','CATFmIn','CATFmIn') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','CATFmOut','CATFmOut') </script> is forbidden during update algorithms and has an update impact on this feature or linked features. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute on which update behavior must overriden.
+ </dd>
+    <dt><tt> iUpdateBehavior</tt>
+   <dd> [in]   The update behavior to assign.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Update behaviour has been overriden.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd> 
+<script type="text/javascript"> activateLinkAnchor('','Update','Update') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','IsUpToDate','IsUpToDate') </script> algorithm is currently called on this feature.</dd>     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="SetValue"></a><a name="SetValue(CATFmAttributeName&amp;,CATFmAttributeValue&amp;)"></a> <dt> o <b>SetValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iAttributeValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets value of attribute iAttributeName.
+ <br><b>Role</b>:This method allows to set the value of an attribute.
+ <br>After a call to this method, attribute value will become immediate (according to 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeValuationInfo','GetAttributeValuationInfo') </script> ). <br>This method can be used for all types of attributes, list or not.
+ <br>This method cannot be used on a redirected attribute (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection). <br>New value type and attribute value type must be <b>strictly</b> equal (for example, CATFmKind_int and CATFmKind_byte are incompatible).
+ <br>SetValue can cause the propagation of an update impact.
+ <br>For aggregation attributes:
+ <ul>
+   <li>Aggregation rules will be checked.</li>
+   <li>Objects becoming not aggregated will be destroyed ( 
+<script type="text/javascript"> activateLinkAnchor('','DetachComponent','DetachComponent') </script> can be used as an alternative).</li> </ul>
+ In case of failure, attribute will keep its old value.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which value must be set.
+ </dd>
+    <dt><tt> iAttributeValue</tt>
+   <dd> [in]   The value which must be set.
+   <br>This value must have the same type as the attribute and a cardinality compatible with attribute cardinality.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been modified.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd>iAttributeValue has type CATFmKind_void.</dd>
+     <dt>E_FMPARAMETER</dt>
+     <dd>Attribute represents a Knowledge parameter. Use 
+<script type="text/javascript"> activateLinkAnchor('','GetKnowledgeParameter','GetKnowledgeParameter') </script> and Knowledge API to modify its value.</dd>     <dt>E_FMNOTALIST</dt>
+     <dd>Attribute is not a list but iAttributeValue has a size different of 1.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd><tt>iAttributeValue</tt> type is not strictly equal to the one of the attribute.</dd>
+     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd>Operation is not allowed because:
+       <ul>
+         <li>Attribute is redirected (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection).</li>         <li>Input value contains a NULL feature and attribute is not using array mode.</li>
+         <li>Input value contains a feature which belongs to another stream unit.</li>
+         <li>Operation leads to an obvious update cycle or to an update error.</li>
+       </ul>
+     </dd>
+     <dt>E_FMAGGREGATIONERROR</dt>
+     <dd>Operation leads to an aggregation rule violation:
+       <ul>
+         <li>A target feature is yet aggregated by another feature.</li>
+         <li>A target feature is yet aggregated by another attribute of this feature.</li>
+         <li>A target feature is duplicated in input value.</li>
+         <li>A target feature is a direct or indirect father of this feature.</li>
+         <li>A target feature is this feature.</li>
+       </ul>
+     </dd>
+     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="SwapPositions"></a><a name="SwapPositions(CATFmAttributeName&amp;,int,int)"></a> <dt> o <b>SwapPositions</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SwapPositions</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex2</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Swaps two index in a list attribute.
+ <br><b>Role</b>:This method allows to swap the content of two index of a list attribute.
+ <br>For instance:
+ <pre>list is [ A B C D ].</pre>
+ after a call to SwapPositions(2,4),
+ <pre>list is [ A D C B ].</pre>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which index must be swapped.
+ </dd>
+    <dt><tt> iIndex1</tt>
+   <dd> [in]   First index. Must be in the range [1,size].
+ </dd>
+    <dt><tt> iIndex2</tt>
+   <dd> [in]   Second index. Must be in the range [1,size].
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br>Return code values are the same as for 
+<script type="text/javascript"> activateLinkAnchor('','ReplaceValueAtIndex','ReplaceValueAtIndex') </script> .   <br>Notice that if <tt>iIndex1</tt> and <tt>iIndex2</tt> are equal and the value is immediate, then S_FALSE will be returned.
+</dl>
+</dl>
+<a name="Synchronize"></a><a name="Synchronize(CATFmAttributeName&amp;)"></a> <dt> o <b>Synchronize</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Synchronize</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Synchronizes a Feature.
+ <br><b>Role</b>: When a Feature is instantiated, all its components (i.e. the content of all attributes typed as "component")
+ are (recursively) instantiated.
+ <br>If a component is added on the Reference after the Instance has been created, there is no such component under the instance,
+ opposite to what would be seen on a new instance. Similarly, components deleted from the reference still have alive instances.
+ <br>The Synchronization will add missing components to and remove extraneous components from the instance with respect to its reference.
+ <br><b>Limitation</b>: this method is not recursive on components, as attributes meaningful for a given Feature type and
+ acess rights needed to modify that Feature may likely not be applicable to its components.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute name.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The synchronization of this feature succeeded.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid Base Feature.</dd>
+     <dt>E_FMTYPEMISMATCH</dt>
+     <dd>Attribute is not an aggregation attribute.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="UnsetValue"></a><a name="UnsetValue(CATFmAttributeName&amp;)"></a> <dt> o <b>UnsetValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UnsetValue</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeName','CATFmAttributeName&amp;')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Unsets the value of an attribute.
+ <br><b>Role</b>: This method allows to unset the value of a "primitive" attribute.
+ <br>After a call to this method, attribute value will become immediate and will not be seen as set anymore (according to 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeValuationInfo','GetAttributeValuationInfo') </script> ). <br>This method can be used only on attributes (list or not) of primitive types:
+ <ul>
+   <li>CATFmKind_boolean</li>
+   <li>CATFmKind_byte</li>
+   <li>CATFmKind_int</li>
+   <li>CATFmKind_double</li>
+   <li>CATFmKind_string</li>
+ </ul>
+ <br>This method cannot be used on a redirected attribute (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection). <br>UnsetValue can cause the propagation of an update impact.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> [in]   The attribute for which value must be unset.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Value has been modified.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Operation has been successfully performed but let the feature unchanged.<br>No update impact has been propagated.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_ACCESSDENIED</dt>
+     <dd>Credentials do not grant access to this attribute.</dd>
+     <dt>E_FMKEYNOTFOUND</dt>
+     <dd>Attribute <tt>iAttributeName</tt> does not exist on this feature.</dd>
+     <dt>E_FMPARAMETER</dt>
+     <dd>Attribute represents a Knowledge parameter. Use 
+<script type="text/javascript"> activateLinkAnchor('','GetKnowledgeParameter','GetKnowledgeParameter') </script> and Knowledge API to unset its value.</dd>     <dt>E_FMOPERATIONNOTALLOWED</dt>
+     <dd>The operation is not allowed because:
+       <ul>
+         <li>Attribute is redirected (use 
+<script type="text/javascript"> activateLinkAnchor('','RemoveRedirectedValuation','RemoveRedirectedValuation') </script> to break redirection).</li>         <li>Attribute is not primitive and does not support unset.</li>
+       </ul>
+     </dd>
+     <dt>E_FMPRIVATEVALUE</dt>
+     <dd>Value is private on an inherited feature.</dd>
+     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+  
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATFmAttributeAndValueKind','','CATFmAttributeAndValueKind') </script>
+</dl>
+</dl>
+<a name="Update"></a><a name="Update()"></a> <dt> o <b>Update</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Update</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Updates a Feature.
+ <br><b>Role</b>: This method allows to update a Feature.
+ <br>In case of success 
+<script type="text/javascript"> activateLinkAnchor('','IsUpToDate','IsUpToDate') </script> will return S_OK. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>Feature has been succesfully updated and is now up to date.</dd>
+     <dt>S_FALSE</dt>
+     <dd>Feature was yet up to date.</dd>
+     <dt>E_FMINVALIDFEATURE</dt>
+     <dd>Facade is not bound to a valid feature.</dd>
+     <dt>E_FMUPDATEERROR</dt>
+     <dd>An exception has been raised. Exception can be retrieved through 
+<script type="text/javascript"> activateLinkAnchor('CATFmGetLastError','','CATFmGetLastError') </script> .</dd>     <dt>Other</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="operator!"></a><a name="operator!()"></a> <dt> o <b>operator!</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator!</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Logical-negation (or logical-NOT) operator.
+ <br><b>Role</b>: Checks if the Facade is invalid.
+ <br>A Feature Facade is valid if and only if it is bound to a Feature that has neither been Logically deleted nor unloaded.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An integer value.
+   <br><b>Legal values</b>:
+   <ul><li><tt>1</tt>: if the Facade is invalid.</li>
+       <li><tt>0</tt>: if the Facade is valid.</li></ul>
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(CATBaseUnknown*)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade &')</script>  <b>operator=</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Binds the Facade to a Feature.
+ <br>This method does not affect the Accreditations Set of the Facade.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> [in]   Any interface pointer to the Feature as a <tt>CATBaseUnknown</tt> pointer.
+   <br><b>Legal values</b>:<ul>
+     <li>NULL</li>
+     <li>Any interface pointer on a Feature.</li></ul>
+   Any other value, such as an interface pointer to a Feature Container, will be handled like a NULL pointer.
+   <br><b>Lifecycle</b>: Refer to the Lifecycle section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation. 
+  <dt> <b>Returns:</b> 
+  <dd>    This Facade.
+</dl>
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(CATFmFeatureFacade&amp;)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade &')</script>  <b>operator=</b>(<td> const <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade&amp;')</script> <td><tt>iFeatureFacade</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Assignment operator.
+ <br><b>Role</b>: This method transforms this Facade to an exact copy of another Feature Facade.
+ <br>Both the Accreditations Set and the bound Feature are copied.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeatureFacade</tt>
+   <dd> [in]   The Facade to copy.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    This Facade.
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(CATFmAttributeValue&amp;)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATFmFeatureFacade','CATFmFeatureFacade &')</script>  <b>operator=</b>(<td> const <script type="text/javascript"> activateLink('CATFmAttributeValue','CATFmAttributeValue&amp;')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Binds the Facade to a Feature.
+ <br>This method does not affect the Accreditations Set of the Facade.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> [in]   An Feature Modeler Value.
+   <br><b>Legal values</b>:<ul>
+     <li>An empty (i.e. of CATFmKind_void type) Attribute Value.</li>
+     <li>An Attribute Value of type CATFmKind_feature and of cardinality 1.</li></ul>
+   Any other value, such as an integer or a list with two or more elements, will be handled like a empty Attribute Value.
+   <br><b>Lifecycle</b>: Refer to the Lifecycle section of the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFmFeatureFacade','','CATFmFeatureFacade') </script> class documentation. 
+  <dt> <b>Returns:</b> 
+  <dd>    This Facade.
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATFmFeatureFacade.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>FeatureModelerExt</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,806 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working with Feature Extensions</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style2 {
+}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Feature Extensions</h3>
+      <p><em>Feature Extensions management</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6OsmExtensionManagement</code> 
+		use case. It deals with working with feature extensions. These feature 
+		extensions are those defined in the Catalogs&nbsp;<code>CAAOsmExt1Catalog</code> 
+		&amp; <code>CAAOsmExt2Catalog</code>.</p>
+		<p>A prerequisite is an understanding of the Feature Extensions [<a href="#References">1</a>].</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6OsmExtensionManagement Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6OsmExtensionManagement Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6OsmExtensionManagement</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6OsmExtensionManagement Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p> <strong>Note: </strong>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct and CAAOsmExt1Catalog, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The UC teaches users to work with Feature Extensions. The key learnings are 
+listed below:</p>
+<ul>
+	<li>Adding, retrieving and deleting a Feature Extensions to a Base feature</li>
+	<li>Retrieving the base feature of any feature extension</li>
+	<li>Understanding the minimal credentials for methods managing extension&nbsp; 
+	[<a href="#References"><span class="style2">2</span></a>]</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6OsmExtensionManagement Use Case</h2>
+<p><code>CAAV5V6OsmExtensionManagement</code> is a use case of the <code>
+CAAV5V6ObjectSpecsModeler.edu</code> framework 
+that illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="What"></a>What Does CAAV5V6OsmExtensionManagement Do</h3>
+<p>The use case starts with creating Applicative Containers [<a href="#References"><span class="style2">3</span></a>] 
+whose names are <code>'CAAOsmBaseFeature'</code>, <code>'CAAOsmApplication1'</code> &amp; <code>'CAAOsmApplication2'</code>. 
+Then it proceeds to&nbsp;instantiate the <code>CAAOsmNovel</code>'s 
+StartUp. The new instance, named <code>Novel</code> or base feature further, is 
+created inside this new container <code>'CAAOsmApplication1'</code>.</p>
+<p>The &quot;<code>CAAOsmNovel</code>&quot; StartUp is defined in the feature 
+catalog <code>'CAAOsmCatalogSU'</code>. 
+[<a href="#Fig.1">Fig.1</a>], just below, depicts the StartUp with its associated attributes. 
+</p>
+<table>
+	<caption><a name="Fig.1"></a>Fig.1 The &quot;CAAOsmNovel&quot; base feature</caption>
+	<tr>
+		<td>
+		<img src="images/CAAOsmExtensionsSUCat.gif" width="307" height="132"></td>
+	</tr>
+</table>
+<p>
+		After the <code>Novel</code> creation we proceed to add it extensions.</p>
+<p>
+		We first add&nbsp;it the &quot;<code>CAAOsmHistoricalNovel&quot; </code>
+		extension<code>.</code> This feature extension is defined in 
+		the &quot;<code>CAAOsmExt1Catalog</code>&quot; catalog. The [<a href="#Fig.2">Fig.2</a>] 
+		below depicts the &quot;<code>CAAOsmHistoricalNovel</code>&quot; StartUp. It has an attribute &quot;<code>Epoch</code>&quot;, of type string, default valuated to 
+&quot;Middle Ages&quot;, associated with it.</p>
+<table>
+	<caption><a name="Fig.2"></a>Fig.2 The &quot;CAAOsmHistoricalNovel&quot; feature</caption>
+	<tr>
+		<td>
+		<img src="images/CAAOsmExtensions1.1Cont.gif" width="430" height="51"></td>
+	</tr>
+</table>
+<p>The new extension is automatically instantiated inside the applicative 
+container whose the name, &quot;<code>CAAOsmApplication1</code>&quot;, is defined 
+in the osm file of respective Catalog. </p>
+<p>Then we add to <code>Novel</code> the &quot;<code>CAAOsmBiographicalNovel</code>&quot; 
+extension. 
+This feature extension deriving from &quot;<code>CAAOsmHistoricalNovel&quot;</code> is 
+also defined in the &quot;<code>CAAOsmExt1Catalog</code>&quot; catalog .&nbsp;[<a href="#Fig.3">Fig.3</a>] depicts the &quot;<code>CAAOsmBiographicalNovel</code>&quot; StartUp. It has an attribute &quot;<code>Domain</code>&quot; of type string, default valuated to 
+&quot;Music&quot; associated with it. In addition it also inherits the attribute 
+<code>Epoch</code>, of 
+type string, from its parent feature (<code>CAAOsmHistoricalNovel).</code></p>
+<table>
+	<caption><a name="Fig.3"></a>Fig.3 The &quot;CAAOsmBiographicalNovel&quot; feature</caption>
+	<tr>
+		<td>
+		<img src="images/CAAOsmExtensions1.2Cont.gif" width="462" height="77"></td>
+	</tr>
+</table>
+<p>The new extension is also automatically instantiated inside the applicative 
+container &quot;<code>CAAOsmApplication1</code>&quot;&nbsp; as defined in the osm 
+file of respective Catalog. </p>
+<p>Finally a third extension, &quot;<code>CAAOsmChildrensNovel</code>&quot; is added 
+to the <code>Novel</code> feature. This feature extensions is defined in the 
+&quot;<code>CAAOsmExt2Catalog</code>&quot; feature catalog. [<a href="#Fig.4">Fig.4</a>] depicts the &quot;CAAOsmChildrensNovel&quot; 
+StartUp. It 
+has an attribute &quot;<code>AgeGroup</code>&quot; of type integer, default valuated to 12, associated with 
+it. </p>
+<table>
+	<caption><a name="Fig.4"></a>Fig. 4 The &quot;CAAOsmChildrensNovel&quot; feature</caption>
+	<tr>
+		<td>
+		<img src="images/CAAOsmExtensions2.1Cont.gif" width="431" height="48"></td>
+	</tr>
+</table>
+<p>The new extension is automatically instantiated inside the applicative 
+container whose the name, &quot;<code>CAAOsmApplication2</code>&quot;,&nbsp; in the 
+osm file of respective Catalog. </p>
+<p>The [<a href="#Fig.5">Fig.5</a>] above depicts the final output of this UC at 
+a glance.</p>
+<table>
+	<caption><a name="Fig.5"></a>Fig.5 An Overview of the UC Output</caption>
+	<tr>
+		<td><img src="images/CAAOsmExtensions.gif"></td>
+	</tr>
+</table>
+<p>Once data are created, we make some different tests with retrieval methods:</p>
+<ul>
+	<li>We retrieve the <code>CAAOsmChildrensNovel </code>extension, and we 
+	displays the value of the <code>AgeGroup</code> attribute, using a <em>CATFmFeatureFacade</em> on 
+	the extension</li>
+	<li>We retrieve the <code>CAAOsmBiographicalNovel </code>extension, and we 
+	displays the value of the <code>Epoch</code> &amp; <code>Domain</code> attributes, using an interface 
+	implemented by the extension</li>
+	<li>We retrieve the base feature (Novel) from <code>CAAOsmChildrensNovel 
+	and CAAOsmBiographicalNovel,</code> you will see that according to the 
+	credentials you can get or not the base feature</li>
+</ul>
+<p>The Use Case then proceeds to scan through the features extended by the Novel feature, instantiated in the Applicative Container 
+&quot;<code>CAAOsmApplication1</code>&quot;. It outputs the two feature extensions (types
+<code>CAAOsmHistoricalNovel</code> 
+and 
+<code>CAAOsmBiographicalNovel</code>). It next removes these two feature extensions. So, 
+finally out of three feature extension instances, we are left only with one.</p>
+<p>Finally it scans through features extended by the &quot;Novel&quot; feature 
+across all Applicative Containers. The count output is one, since we have a 
+single instance of the &quot;<code>CAAOsmChildrensNovel</code>&quot; feature extension, 
+inside the Applicative Container &quot;<code>CAAOsmApplication2</code>&quot;.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6OsmExtensionManagement</h3>
+<p>To launch <code>CAAV5V6OsmExtensionManagement</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6OsmExtensionManagement</code> along with its 
+prerequisites, set up the run time environment, and then execute the use case. To launch the use case, execute 
+the following command:</p>
+<p>mkrun -c &quot;<i>CAAV5V6OsmExtensionManagement CatalogName DocumentStorage.CATPart</i>&quot;</p>
+
+
+<p><b>Note</b>: The catalog's (<code>CAAOsmCatalogSU</code>, 
+<code>CAAOsmExt1Catalog</code>,<code>CAAOsmExt2Catalog</code>) must be found under the run-time directory :current 
+workspace + os_directory + resources + graphic directory. In order 
+for the catalog to be accessible from the run-time directory, it should be located 
+in the CNext + resources + graphic directory of the CAAV5V6ObjectSpecsModeler.edu framework 
+then when updating the run-time view (mkrtv), the catalog will be automatically 
+moved to the run-time directory.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Where"></a>Where to Find the CAAV5V6OsmExtensionManagement Code</h3>
+<p>The main <code>CAAV5V6OsmExtensionManagement</code> code is 
+located in the <code>CAAV5V6OsmExtensionManagement.m</code>, module of the <code>
+CAAV5V6ObjectSpecsModeler.edu</code> framework. These modules are at the location</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6ObjectSpecsModeler.edu\</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA installation.</p>
+<p>The <code>CAAV5V6OsmExtensionManagement.m</code> module consists of primarily the two files 
+listed below, which constitute the UC Main</p>
+<ul>
+	<li><code>CAAV5V6OsmMainManageExt.cpp</code> which has the main routine</li>
+	<li><code>CAAV5V6OsmIllustrateExtensions.cpp</code> which has the global routine
+	<code>CAAV5V6OsmIllustrateExtensions</code>. This has all calls which constitute working with 
+	feature extensions. The Main calls this global routine</li>
+	<li>Please note that the routine <code>CAAV5V6FmExtIllustrateExtensions.cpp</code> 
+	is for V6 environment. This routine will be called only when in V6 
+	environment. </li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are ten logical steps in CAAV5V6OsmExtensionManagement:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Create credential">Create a Credential Object</a></li>
+	<li><a href="#Create the Base Feature">Create the Base Feature</a></li>
+	<li><a href="#Create the Base Feature">Instantiate Feature Extensions&nbsp;to a Base Feature</a></li>
+	<li><a href="#Retrieve an Extension to use it through a Feature Facade">Retrieve an Extension 
+	to use it through a Feature Facade </a></li>
+	<li><a href="#Retrieve base feat from feat extn">Retrieve Base Feature from 
+	Feature Extension</a></li>
+	<li><a href="#Scan feat extn 1">Scan Feature Extensions to the Base Feature inside 
+	an 
+	Applicative Container </a></li>
+	<li><a href="#Remove feat extn">Remove Feature Extensions</a></li>
+	<li><a href="#Scan feat extn 2">Scan Feature Extensions to the Base Feature 
+	whatever their Applicative Container</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description you may see CAAObjectSpecsModeler.edu 
+UC documentation. It further creates the <strong>Credentials</strong> [<a href="#References">2</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU, CAAOsmExt1Catalog 
+&amp; CAAOsmExt2Catalog </strong>catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Create credential"></a>Create a Credential Object</h3>
+<p>To instantiate a feature, a client should own the catalog in which this 
+feature is defined. The instantiated features are:</p>
+<ul>
+	<li>&quot;<code>CAAOsmNovel</code>&quot; (base feature)&nbsp; defined in the &quot;<code>CAAOsmCatalogSU</code>&quot; 
+	catalog. </li>
+	<li>&quot;<code>CAAOsmHistoricalNovel</code>&quot; and &quot;<code>CAAOsmBiographicalNovel</code>&quot; , both feature 
+	extensions defined 
+	in the &quot;<code>CAAOsmExt1Catalog</code>&quot; whose the client Id is <code>CAAOsmClientId1</code> </li>
+	<li>&quot;<code>CAAOsmChildrensNovel</code>&quot;, a feature extension defined in the catalog &quot;<code>CAAOsmExt2Catalog</code>&quot; 
+	whose the client Id is <code>CAAOsmClientId2</code></li>
+</ul>
+<p>A unique credential object,<code> MyCredentials</code>, a <em>CATFmCredentials</em><code> </code>
+class instance, is created to fit all the needs of the use case. </p>
+
+<table class="code">
+	<tr>
+		<td><pre><strong>CATFmCredentials</strong> MyCredentials;
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>This is followed by declaring that we are an application based on Feature 
+modeler infrastructure:</p>
+
+<pre class="code">...
+rc = MyCredentials.<strong>RegisterAsApplicationBasedOn</strong>(CATFmFeatureModelerID<strong>,&quot;</strong>CAAV5V6FmExtFeatureModeler&quot;<strong>)</strong></pre>
+<p>And finally followed by declaring that we are an owner of different catalogs.</p>
+
+<pre  class="code">...
+CATUnicodeString clientId("CAAOsmClientId");
+CATUnicodeString iCatalogName("CAAOsmCatalogSU");
+MyCredentials<strong>.RegisterAsCatalogOwner</strong>(iCatalogName,clientId);
+...
+CATUnicodeString clientId1("CAAOsmClientId1");
+CATUnicodeString iCatalogName1("CAAOsmExt1Catalog");
+MyCredentials<strong>.RegisterAsCatalogOwner</strong>(iCatalogName1,clientId1);
+...
+CATUnicodeString clientId2("CAAOsmClientId2");
+CATUnicodeString iCatalogName2("CAAOsmExt2Catalog");
+MyCredentials<strong>.RegisterAsCatalogOwner</strong>(iCatalogName2,clientId2);
+</pre>
+	 		<p>The
+<code>RegisterAsCatalogOwner</code> method of the 
+<code>CATFmCredentials</code> 
+class, appends the client credentials in steps, authorizing the client access to 
+the StartUps defined in various catalogs. </p>
+	<p>Users will have a better understanding about Credentials on studying the TA &quot;<strong>Understanding 
+Credentials</strong>&quot; [<a href="#References">2</a>]. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create the Base Feature"></a>Create the Base Feature</h3>
+
+<pre class="code">...
+CATFmStartUpFacade MyStartUpFacade(MyCredential,"CAAOsmNovel&quot;);
+
+CATFmAttributeValue AttrValue;
+CATFmFeatureFacade FeatFacadeOnNovelInstBaseFeat(<strong>MyCredential</strong>);
+rc = MyStartUpFacade.<strong>InstantiateIn</strong>(MyContFacade,FeatFacadeOnNovelInstBaseFeat);
+...</pre>
+<p><code>FeatFacadeOnNovelInstBaseFeat</code> is the facade of the <code>Novel</code> feature 
+newly instantiated within the <code>CAAFmExtBaseFeatureCont </code>container 
+(handled by <code>MyContFacade</code>). Note the credential associated with the 
+new facade: <code>MyCredential</code> : it will allow us to introspect the base 
+feature as to add it the three extensions. </p>
+<p>The steps of instantiation are detailed in the UC &quot;<strong>Creating Features</strong>&quot; [<a href="#References"><span class="style2">5</span></a>]. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3>Instantiate Feature Extensions</h3>
+<p>We proceed to instantiate the feature extensions 
+to the &quot;<code>Novel</code>&quot; feature (base feature).&nbsp; The feature 
+facade bound to the &quot;<code>Novel</code>&quot; feature is <code>FeatFacadeOnNovelInstBaseFeat</code> 
+created just above. In our use case the credential associated with the base 
+feature contains the right to access the base feature catalog and the extension 
+catalog. But usually you only have the credential for the extension catalogs. 
+And it 
+is enough to add an extension for any kind of base feature. So the facade of the 
+base feature must be bound to a credential where you are at least declared as 
+owner of the extension catalog. </p>
+<p>We start with the <code>CAAOsmHistoricalNovel </code>extension.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>CATString strHistoricExtNovel("CAAOsmHistoricalNovel");
+rc =  FeatFacadeOnNovelInstBaseFeat<strong>.AddExtension(</strong>strHistoricNovel<strong>,AttrValue)</strong>;
+CATFmFeatureFacade FeatFacadeOnHistNovelExtn(MyCredential,AttrValue);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>AddExtension</code> method of the 
+<i>CATFmFeatureFacade</i> class instantiates a Feature Extension to a base 
+feature. The arguments are:</p>
+<ul>
+	<li><code>strHistoricExtNovel</code>, a <em>CATString</em> type representing the name of the 
+	feature extension</li>
+	<li><code>FeatFacadeOnHistNovelExtn</code>, a 
+	<i>CATFmFeatureFacade</i> type on the Feature Extension created. Note that 
+	this facade is without credential. It is without effect on the result of the 
+	AddExtension method. It is the facade of the base feature (<code>FeatFacadeOnNovelInstBaseFeat</code> 
+	) which must at least contain the right to access the extension catalog.</li>
+</ul>
+<p>Then we do the same thing for <code>CAAOsmBiographicalNovel </code>extension.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+CATString strBiographicalExtNovel("CAAOsmBiographicalNovel");
+rc =  FeatFacadeOnNovelInstBaseFeat<strong>.AddExtension(</strong>strBiographicalExtNovel<strong>,AttrValue)</strong>;
+CATFmFeatureFacade FeatFacadeOnBiogNovelExtn(MyCredential,AttrValue);
+...</pre>
+	</td>
+	</tr>
+</table>
+<p>And finally the <code>CAAOsmChildrensNovel</code> extension:</p>
+<table class="code">
+		<tr>
+			<td>
+			<pre>CATString strChildrensExtNovel("CAAOsmChildrensNovel");
+rc = FeatFacadeOnNovelInstBaseFeat.<strong>AddExtension</strong>(strChildrensExtNovel,<strong>AttrValue</strong>);</pre>
+CATFmFeatureFacade FeatFacadeOnChildrensNovelExtn(MyCredential,AttrValue);
+			</td>
+		</tr>
+	</table>
+	<p>Before leaving this step we should add four things:</p>
+<ul>
+	<li>The three extension addition are possible because the credential used to 
+	create <code>FeatFacadeOnNovelInstBaseFeat </code> contains the privilege 
+	to handle each feature extension catalog.&nbsp; </li>
+	<li>Feature extension as any kind of feature are instantiated within an 
+	applicative container. But you don't provide the name of the container in your code, because Feature 
+	modeler engine retrieves the information from the Catalog.CATfct file associated 
+	with the extension feature (in this case it is CAAOsmExt1Catalog). And this 
+	information is present on the Creation::parameter() line and it can be read 
+	in the osm file of the corresponding catalog. The stream containing the applicative container 
+	is deducted from the base feature. Indeed, the base feature and its 
+	extension must be in the same stream [<a href="#References"><span class="style2">3</span></a>].</li>
+	<li>When the applicative container does not exist&nbsp; (it 
+	is the case for <code>CAAOsmHistoricalNovel &amp; CAAOsmChildrensNovel)</code>, 
+	Feature modeler automatically creates it. </li>
+	<li>The returned facade for the newly extension features are without 
+	credential. It is the use case choice.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Retrieve an Extension to use it through a Feature Facade"></a>Retrieve an Extension to use it through a Feature Facade</h3>
+<p>This step consists in retrieving the extension (<code>CAAOsmChildrensNovel)</code> from 
+the base feature in order to handle it through a feature facade.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>
+rc = FeatFacadeOnNovelInstBaseFeat<strong>.GetExtension(</strong>strChildrensExtNovel<strong>, AttrValue)</strong>;
+CATFmFeatureFacade FeatFacadeOnChildrenNovelExt(MyCredential,AttrValue);
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>GetExtension</code> method of the
+<i>CATFmFeatureFacade </i>returns an extension feature. The arguments include</p>
+<ul>
+	<li><code>strChildrensExtNovel</code>, a <em>CATString</em> type, representing the name of the 
+	feature extension</li>
+	<li><code>FeatFacadeOnChildrenNovelExt</code>, a
+	<i>CATFmFeatureFacade</i> type, representing 
+	the facade over the &quot;<code>CAAOsmChildrensNovel</code>&quot; 
+	feature extension output. </li>
+</ul>
+<p>The <code>GetExtension</code> succeeds because FeatFacadeOnNovelInstBaseFeat, 
+the facade on the base feature, contains at least the right to handle the 
+catalog defining CAAOsmChildrensNovel StartUp.&nbsp; </p>
+<p>Since FeatFacadeOnChildrenNovelExt is created with <code>MyCredential</code> 
+as credential we can introspect the feature extension (<code>MyCredential</code> 
+contains the privilege to handle the feature catalog of <code>CAAOsmChildrensNovel)</code> </p>
+
+<table class="code">
+	<tr>
+		<td><pre>CATFmAttributeName AgeGroupAsName("AgeGroup");
+CATFmAttributeValue AgeGroupAsValue ;
+rc = FeatFacadeOnChildrenNovelExt.<strong>GetValue</strong>(AgeGroupAsName,AgeGroupAsValue);
+if (FAILED(rc)) return 1;
+int AgeGroup = 0 ;
+AgeGroupAsValue.GetInteger(AgeGroup);</pre>
+	</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3>Retrieve an Extension to use it through an Interface</h3>
+<p><b>Note: </b>This step of using through interface is not included in the use-case. But you can 
+also use the interface methods to work upon the feature extension attributes. 
+The below steps are just the illustrations of how to work with the interface methods</p>
+<p>This step consists in retrieving a feature extension (<code>CAAOsmBiographicalNovel)</code> from a base feature in order to handle it through an 
+interface implemented by the feature extension. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+rc = <strong>FeatFacadeOnNovelInstBaseFeat.GetExtension</strong>(strBiographicalExtNovel,AttrValue);
+CATFmFeatureFacade FeatFacadeOnBiogNovelExt(MyCredential,AttrValue);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>To begin with we retrieve the &quot;<code>CAAOsmBiographicalNovel</code>&quot; feature on similar 
+lines, as in the previous step. It is retrieved as <code>FeatFacadeOnBiogNovelExt</code>, a
+<i>CATFmFeatureFacade</i> type. But note that here the facade is created 
+without credential. It does not matter. We will work with the feature extension 
+pointer, a data that you can always freely retrieved from a facade.</p>
+<p>Our feature extension exposes its services through the <em>CAAIFmExtBiogNovel</em> 
+Interface. So the next step is to retrieve this interface and subsequently 
+invoke its services.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...	
+CAAIFmExtBiogNovel *piBiogNovelOnFeatExt = NULL;
+rc = <strong>FeatFacadeOnBiogNovelExt.QueryInterfaceOnFeature</strong>(IID_CAAIFmExtBiogNovel ,(void**)&amp;piBiogNovelOnFeatExt);
+...</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>QueryInterfaceOnFeature</code> call of the
+<i>CATFmFeatureFacade</i> class, returns an 
+interface type, of user choice, on the underlying feature. In the current case, 
+we retrieve <code>piBiogNovelOnFeatExt</code>, a&nbsp;
+<i>CAAIFmExtBiogNovel</i> interface pointer on our feature extension. We 
+proceed to call various services exposed by our feature extension.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...	
+CATUnicodeString epoch("");
+rc = <strong>piBiogNovelOnFeatExt -&gt; GetEpoch</strong>(&amp;epoch);
+
+epoch = "Renaissance";
+rc = <strong>piBiogNovelOnFeatExt -&gt; SetEpoch</strong>(epoch);
+...</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>GetEpoch()</code> method of the <i>CAAIFmExtBiogNovel</i> 
+Interface, simply retrieves the 
+&quot;Epoch&quot; attribute value of our &quot;<code>CAAOsmBiographicalNovel</code>&quot; 
+feature while the <code>SetEpoch()</code> method sets the &quot;Epoch&quot; attribute 
+value.</p>
+<p>On similar lines, we 
+can retrieve and valuate the &quot;Domain&quot; attribute, as well. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Retrieve base feat from feat extn"></a>Retrieve the Base Feature </h3>
+<p>The objective is to retrieve from an extension feature its base feature 
+(Novel).</p>
+<p>First we try with the <code>CAAOsmBiographicalNovel </code>extension<code> </code>from its 
+facade, <code>FeatFacadeOnBiogNovelExt.</code></p>
+
+<table class="code">
+	<tr>
+		<td><pre>...	
+CATFmAttributeValue TheBaseFeatureAsValue ; 
+rc = FeatFacadeOnBiogNovelExt.<strong>GetBaseFeature</strong>(TheBaseFeatureAsValue);
+if ( SUCCEEDED(rc) ) return 1 ;
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>GetBaseFeature</code> fails because <code>FeatFacadeOnBiogNovelExt</code>is without credential.</p>
+<p>Then we try with the <code>CAAOsmChildrensNovel </code>extension<code> </code>from its facade, <code>FeatFacadeOnChildrenNovelExt</code>, retrieved at the previous step </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...	
+TheBaseFeatureAsValue.Clear();
+rc = FeatFacadeOnChildrenNovelExt.<strong>GetBaseFeature</strong>(TheBaseFeatureAsValue);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>This case, the <code>GetBaseFeature</code> is successful because 
+<code>FeatFacadeOnChildrenNovelExt </code>contains the credential as owner of the 
+catalog defining the <code>CAAOsmChildrensNovel </code>StartUp.</p>
+<p>The <code>Clear</code> method has been added to be sure that <code>TheBaseFeatureAsValue</code> does 
+not contain an underlying feature. ( it should not be the case since the 
+previous <code>GetBaseFeature</code> has failed)</p>
+
+<table class="code">
+	<tr>
+		<td><pre>...	
+CATBaseUnknown_var MyBaseFeatureAsFeature = TheBaseFeatureAsValue.<strong>GetFeature</strong>() ;
+...</pre>
+	</td>
+	</tr>
+</table>
+<p>This last section just confirms that the retrieved base feature is a 
+CAAOsmNovel feature.&nbsp;From the facade containing the base feature, <code>MyBaseFeatureAsFeature</code>, 
+we get the underlying feature, <code>pBaseFeatureAsIFmExtNovel</code> , and then 
+we call </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Scan feat extn 1"></a>Scan Feature Extensions to the Base Feature&nbsp; within 
+an Applicative Container </h3>
+<p>We next retrieve extensions to our base feature (<code>CAAOsmNovel</code>), those 
+which exist inside the Applicative Container &quot;<code>CAAOsmApplication1&quot;</code>. 
+We are expecting 2 (<code>CAAOsmBiographicalNovel.1 &amp; CAAOsmHistoricalNovel.1)</code></p>
+
+<table class="code">
+	<tr>
+		<td><pre>.....
+CATFmFeatureIterator oExtensionsIterator;
+CATString CAAFmExtApplication1ID ("CAAFmExtApplication1");
+rc = <strong>FeatFacadeOnNovelInstBaseFeat.ScanExtensionsInContainer</strong>(CAAFmExtApplication1ID,oExtensionsIterator);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>ScanExtensionsInContainer</code> method of the 
+<i>CATFmFeatureFacade</i> class, called on the base feature<code> FeatFacadeOnNovelInstBaseFeat</code>, retrieves its feature 
+extensions inside the Applicative Container whose the Identifier is provided as 
+input.&nbsp; </p>
+<p>The return is in the form of a feature iterator 
+(<code>oExtensionsIterator)</code>, a <em>CATFmFeatureIterator</em> type. The 
+<code>Next</code> method of the
+<em>CATFmFeatureIterator</em> allows us to scan through the 
+iterator to retrieve the feature extensions. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+int iCountOfExtns = 0;
+CATFmFeatureFacade FeatFacadeOnExtn (MyCredential);
+rc =<strong> oExtensionsIterator.Next</strong>(FeatFacadeOnExtn);
+while (SUCCEEDED(rc))
+{
+   CATUnicodeString oDisplayName;
+   rc = FeatFacadeOnExtn.<strong>GetDisplayName</strong>(oDisplayName);
+   if ( SUCCEEDED(rc) )
+   {
+      iCountOfExtns++;
+      rc = <strong>oExtensionsIterator.Next</strong>(FeatFacadeOnExtn);
+      ...
+}
+if (2 != iCountOfExtns) return 1;
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>GetDisplayName</code> method of the 
+<i>CATFmFeatureFacade</i> retrieves the display name [<a href="#References">6</a>] of the 
+feature extension.</p>
+<p>About credentials:</p>
+<ul>
+	<li> <code>ScanExtensionsInContainer</code> is always successful, but the 
+	returned extension can be more or less. Here since the credentials of 
+	<code>FeatFacadeOnNovelInstBaseFeat </code>(the base feature) contains at least the 
+	privilege to handle the base feature, you will get all extensions of this 
+	base feature. If the credential is without 
+	the privilege to work with the base feature, the iterator only returns the 
+	extension whose you are granted to handle. [<a href="#References">2</a>]</li>
+	<li> <code>GetDisplayName</code> is successful because <code>FeatFacadeOnExtn</code> 
+	contains the privilege to handle any feature of our use case.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Remove feat extn"></a>Remove Feature Extensions</h3>
+<p>We selectively remove the feature extensions instantiated in the Applicative 
+Container &quot;<code>CAAOsmApplication1</code>&quot;. </p>
+
+<table class="code">
+	<tr>
+		<td><pre><strong>CATFmFeatureIterator</strong> ListExtensionToDelete;
+rc = FeatFacadeOnNovelInstBaseFeat.<strong>ScanExtensionsInContainer</strong>(CAAFmExtApplication1ID,ListExtensionToDelete);
+... 
+CATFmFeatureFacade FeatFacadeOnExtensionToDelete;  
+while ( SUCCEEDED(rc) &amp;&amp; SUCCEEDED(ListExtensionToDelete.<strong>Next</strong>(FeatFacadeOnExtensionToDelete)) )
+{
+   rc = FeatFacadeOnNovelInstBaseFeat.<strong>RemoveExtension</strong>(FeatFacadeOnExtensionToDelete.GetFeatureAsValue());
+}
+</pre>
+	</td>
+	</tr>
+</table>
+<p>First we got the list of extension from the base feature (we could have 
+re-used the iterator of the previous step). Then for each extension of the list 
+we delete them. Here you can see that the facade used to retrieved each 
+extension from the list (<code>FeatFacadeOnExtensionToDelete</code>) is without 
+credential. It is useless, since <code>FeatFacadeOnNovelInstBaseFeat</code>&nbsp; 
+contains credential of the base feature. So whatever the credential of the 
+extension facade, the&nbsp; <code> RemoveExtension</code> will be successful.</p>
+<p>This results in removing the two feature extensions each of types 
+<code>CAAOsmHistoricalNovel</code> and <code>CAAOsmBiographicalNovel</code>.</p>
+<p><strong>Remember about credentials</strong>: if you are only owner of the Extension StartUp, when calling <code>RemoveExtension</code> 
+on a base feature, you could only delete this kind of Extension on the feature. 
+One facade, the base or the extension, must at least contain the right 
+credential. </p>
+ <script type="text/javascript">insertLinkToTop();</script>
+ 
+<h3><a name="Scan feat extn 2"></a>Scan Feature Extensions to the Base Feature 
+whatever their Applicative Container </h3>
+<p>We next retrieve the extensions to our base feature (<code>Novel</code>). In all we 
+had instantiated three feature extensions. Of which, in the earlier step, we 
+removed the two feature extensions inside the Applicative Container 
+&quot;<code>CAAFmExtApplication1</code>&quot;. Thus, we are now left with only a single feature extension 
+of type &quot;<code>CAAOsmChildrensNovel</code>&quot;, inside the Applicative Container 
+&quot;<code>CAAFmExtApplication2</code>&quot;.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>CATFmFeatureIterator oExtensionsIterator1;
+rc =  <strong>FeatFacadeOnNovelInstBaseFeat.ScanExtensions</strong>(oExtensionsIterator1);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>ScanExtensions</code> method of the <em>CATFmFeatureFacade</em> class called 
+on the base feature (<code>FeatFacadeOnNovelInstBaseFeat</code>) retrieves all its feature 
+extensions. </p>
+<p>The return is in the form of a feature iterator 
+(<code>oExtensionsIterator1</code>, a <i>CATFmFeatureIterator</i> type. The Next method of the
+<i>CATFmFeatureIterator</i> allows us to scan through the 
+iterator to retrieve the feature extensions. </p>
+
+<table class="code">
+	<tr>
+		<td><pre>...
+iCountOfExtns = 0;
+CATFmFeatureFacade FeatFacadeOnExtn1;
+rc =  <strong>oExtensionsIterator1.Next</strong>(FeatFacadeOnExtn1);
+while (SUCCEEDED(rc))
+{
+	CATUnicodeString oDisplayName1;
+	rc = FeatFacadeOnExtn1.GetDisplayName(oDisplayName1);
+	iCountOfExtns++;
+	rc = <strong>oExtensionsIterator1.Next</strong>(FeatFacadeOnExtn1);
+}
+	
+if (1 != iCountOfExtns) return 1;<strong>
+...	</strong></pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>GetDisplayName</code> method of the 
+<em>CATFmFeatureFacade</em> retrieves the name of the 
+feature extension.</p>
+<p>We confirm that the count of the feature extensions is one.</p>
+<p>About credentials:</p>
+<ul>
+	<li> <code>ScanExtensions</code> is always successful, but the 
+	returned extension can be more or less. Here since the credentials of 
+	<code>FeatFacadeOnNovelInstBaseFeat </code>(the base feature) contains at least the 
+	privilege to handle the base feature, you will get all extensions of this 
+	base feature. If the credential is without 
+	the privilege to work with the base feature, the iterator only returns the 
+	extension whose you are granted to handle. </li>
+	<li> <code>GetDisplayName</code> is successful because <code>FeatFacadeOnExtn</code> 
+	contains the privilege to handle any feature of our use case. </li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>Lastly the document is saved and the Session is closed</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>The CAA services of the  
+<em>CATFmFeatureFacade</em> class 
+inside the <code>FeatureModelerExt</code> framework invoked in 
+this UC, are listed below:</p>
+<ul>
+	<li><code>AddExtension</code>, to add an extension to a base feature</li>
+	<li><code>GetExtension</code>, to retrieve an extension to a base feature, the 
+	extensionID being an input</li>
+	<li><code>ScanExtensionsInContainer</code>, to scan through the extensions to a base 
+	feature, within a specified container</li>
+	<li><code>RemoveExtensionsInContainer</code>, to remove extensions to a base feature, 
+	within a specified container</li>
+	<li><code>ScanExtensions</code>, to scan through all extensions to a base feature</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureExtension.htm">Understanding Feature Extensions</a>
+		</td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+			<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials 
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaApplicativeContainer.htm">Understanding Applicative Container</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAAV5V6OsmUcAppliCont.htm">Working with Applicative Container</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td>
+			<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcInstantiation.htm">Instantiating Features
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaNamingFeatures.htm">Understanding Feature Naming</a>
+		</td>
+	</tr>
+</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: <b>1</b> [Aug 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+
+

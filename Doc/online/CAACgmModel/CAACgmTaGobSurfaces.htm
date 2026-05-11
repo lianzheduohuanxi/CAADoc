@@ -1,0 +1,962 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>About NURBS</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>The Surfaces of CATIA Geometric Modeler</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+
+<body>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+   <tr>
+      <td>
+      <h3>Abstract</h3>
+      <p>CGM offers a great variety of surfaces. This paper describes their common properties as
+      well as their particular features.
+      <ul>
+         <li>
+            <a href="#Introduction"><strong>Introduction</strong></a></li>
+         <li>
+            <a href="#Properties of the CGM surfaces"><strong>Properties</strong></a>
+            <ul>
+               <li>
+                  <a href="#General validity criteria">General Validity Criteria</a></li>
+               <li>
+                  <a href="#Class for handling surface parameters">Surface Parameters</a></li>
+               <li>
+                  <a href="#Limits and bounding box of a surface">Limits and Bounding Box</a></li>
+               <li>
+                  <a href="#Evaluation">Evaluation</a></li>
+               <li>
+                  <a href="#Equations">Equations</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#Various types of surfaces"><strong>Various Types of Surfaces</strong></a>
+            <ul>
+               <li>
+                  <a href="#Resolved surfaces">Resolved Surfaces</a></li>
+               <li>
+                  <a href="#Sampled surfaces">Sampled Surfaces</a></li>
+               <li>
+                  <a href="#Multi-represented surfaces">Multi-represented Surfaces</a></li>
+               <li>
+                  <a href="#Procedural surfaces">Procedural Surfaces</a></li>
+            </ul>
+         </li>
+         <li>
+            <a href="#InShort"><strong>In Short</strong></a></li>
+         <li>
+            <strong><a href="#References">References</a></strong></li>
+      </ul>
+      </td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Introduction">Introduction</a></h3>
+<p>A surface is a function from a closed interval of R^2 to R^3. Hence, it is defined by three
+scalar functions of two variables. The variables are usually called <strong>parameters</strong> of a
+point on the surface and denoted through <strong>U</strong> and <strong>V</strong>, while the scalar
+functions represent the mapping, for each point of the surface, between the Cartesian coordinates,
+usually called X, Y, Z, and the corresponding parameters U and V.</p>
+
+<table>
+   <caption>Fig. 1: The mapping between the parameters and the Cartesian coordinates</caption>
+   <tr>
+      <td><img src="images/CAACgmGobSurfaces1.gif" alt="Surfaces1.gif (3848 bytes)" width="479" height="359"></td>
+      <td>Three scalar functions FX, FY and FZ map the (U,V) parameters into the Cartesian
+      coordinates (X, Y, Z) for each point P of the surface.</td>
+   </tr>
+</table>
+
+<p>Multi-patches surfaces are defined as a set of (n_u*n_v) connected pieces, each piece, called
+patch, having its own parameterization. Hence, a point belonging to the surface can be expressed in
+terms of:
+<ul>
+   <li>
+      Local parameters: (u,v) parameters on a given patch, independently of the other patches</li>
+   <li>
+      Global parameters: (U,V) parameters taking into account the preceding patches
+      parameterization.</li>
+</ul>
+
+<table width="100%">
+   <caption>Fig. 1b: Local and global parameters on a 3*2 patches surface</caption>
+   <tr>
+      <td width="50%"><img src="images/CAACgmGobSurfaces1b.gif" alt="Surfaces1b.gif (5335 bytes)" width="479" height="359"></td>
+      <td width="50%">The Cartesian coordinates of the point P can be evaluated using the global
+      parameter (U,V), or the local parameter (u_3,v_2) on the (3,2)th patch.</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Properties of the CGM surfaces"></a>Properties of the CGM Surfaces</h3>
+<p>The CGM surfaces implement the CATSurface interface, which behavior is now described. The
+CATSurface interface inherits all the behavior of the CATGeometry interface. Therefore, the factory
+of the CGM objects (CATGeoFactory) handles the creation, stream, unstream and remove of the CGM
+surfaces. The geometric transformation and/or duplication of CGM surfaces is managed by specific
+processes through CATTransfoManager and CATCloneManager instances [<a href="#References">3</a>]. For
+more details about the CGM objects general properties, see [<a href="#Various types of surfaces">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="General validity criteria"></a>General Validity Criteria</h4>
+<ol>
+   <li>
+      CGM surfaces <strong>must be C2 continuous</strong>. Hence, the surfaces are many infinitely
+      differentiable with respect to the (U,V) parameters on each patch, and only twice continuously
+      differentiable between two patches. CGM directly generates objects satisfying this criterion.
+      If you want to introduce foreign surfaces, you have to insure that they satisfy it. If they do
+      not satisfy it, you can cut them where they are not C2 continuous, and use topological objects
+      to assemble the parts.
+
+      <table border="0" width="100%">
+         <caption>Fig. 2: Validity criteria for surfaces</caption>
+         <tr>
+            <td width="50%"><br>
+            <img src="images/CAACgmGobSurfaces4.gif" alt="Surfaces4.gif (7022 bytes)" width="479" height="359"></td>
+            <td width="50%">In addition, the surfaces must not be self intersecting, except if they
+            are closed (as for a cylinder for example).
+            <p>On the other hand, they can be degenerated, but only on one or two boundaries that
+            are not adjacent.</td>
+         </tr>
+      </table>
+
+   <li>
+      In each direction, (U and V), the curvilinear length must be greater than the resolution of
+      the factory. The resolution defines the minimum length of a valid object, see [<a href="#Various types of surfaces">1</a>].</li>
+   <li>
+      The normal to the surface must not be null (except possibly at a point on the surface
+      boundary). This applies to degenerate isoparametric curves.</li>
+   <li>
+      The normal can only be null on a degenerate boundary (of a sliver face for example).</li>
+   <li>
+      The surface curvature radius must be greater than the resolution.</li>
+   <li>
+      Each patch must have a 3D length greater than the resolution&nbsp; along U and V.</li>
+   <li>
+      <span class="st"><span class="ft">The parameterization must be close to 
+		the curvilinear abscissa </span></span>&nbsp;(the norm of the
+      partial derivatives must be around 1 and always in the 0.1-10 range).</li>
+</ol>
+<p>Specific objects</p>
+<ol>
+   <li>
+      Nurbs Surfaces: control points should be in the geometric infinite
+   <li>
+      Nurbs Surfaces: control points should be distant from more than the resolution</li>
+   <li>
+      Nurbs Surfaces: degree must be less than 15</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Class for handling surface parameters"></a>Class for Handling Surface Parameters</h4>
+<p>The surface parameters only have sense if they are associated with the surface they parameterize.
+These parameters are handled through the CATSurParam instances, which are transient objects
+containing the parameters in each directions and a reference to the surface. In peculiar, they
+transform global parameters into local parameters and patches, and vice versa. The
+CATSurParamReference transient instance can not directly be created; the surface is responsible for
+retrieving a CATSurParam instance under your request.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Limits and bounding box of a surface"></a>Limits and Bounding Box of a Surface</h4>
+<p>A surface has a maximal limit, outside which it is not defined, or cannot be extrapolated. 
+This limit is expressed in terms of a CATSurLimits transient instance, containing two
+CATSurParam instances.</p>
+<p>Geometric operators can be run on a part of the whole surface, therefore defining a current
+limit. This current limit is also handled by the CATSurLimit class.</p>
+<p>Each surface is able to retrieve the definition of a space that surrounds it: the bounding box.
+This information is very useful, especially if you want to have a first diagnostic of intersection
+for example.<br>
+The bounding box contains two points, and can be a CATMathBox instance, if expressed with Cartesian
+coordinates, or a a CATSurParam instance, if expressed with parameters.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Evaluation"></a>Evaluation</h4>
+<p>The main behavior of a surface, for a point lying on this surface, is to evaluate the Cartesian
+coordinates from its parameters and, conversely, the parameters from Cartesian coordinates:
+<ul>
+   <li>
+      From parameters to Cartesian coordinates. This is called evaluation, and can be done to obtain
+      the Cartesian coordinates of the point, or the vector of the surface derivatives at a given
+      point. Multiple evaluation can be used to save CPU by the means of a CATSurEvalCommand
+      instance.</li>
+   <li>
+      From Cartesian coordinates to parameters. The CATSurface::GetParam method computes (if
+      possible) the surface parameters of a given Cartesian point, and details if the point really
+      is on the surface or not, and if there are several solutions.</li>
+</ul>
+<p>The surface is responsible for the mapping between the (X, Y, Z) Cartesian coordinates and the
+(U, V) parameters, so that no assumptions must be maid about this mapping, except for a few objects
+that have published their own parameterization.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Equations"></a>Equations</h4>
+<p>It is useful to retrieve the equations representing the surface, especially when you want to
+operate the geometry. You can retrieve these equations as CATMathFunctionXY instances, that are
+transient and created under request.</p>
+<p>All surface modification changes the equations. Thus, it is necessary to precisely define the use
+of the geometry equations. There are 3 main methods for using equations.
+<ul>
+   <li>
+      <code>CATSurface::Lock()</code>: <u>Locks the geometric object before asking for its equation.</u>
+      This operation:</li>
+   <ul>
+      <li>
+         Declares a reference on the object, so that it cannot be deleted anymore.</li>
+      <li>
+         Increments the number of customers that wants to prevent the object from future
+         modifications, except the relimitation.</li>
+      <li>
+         Does not compute anything.</li>
+   </ul>
+   <li>
+      <code>CATSurface::GetEquation()</code>: <u>Asks for the equation.</u> This operation:</li>
+   <ul>
+      <li>
+         Throws an exception if the object is not locked.</li>
+      <li>
+         Allocate the memory (if needed).</li>
+      <li>
+         Computes the equations (if needed).</li>
+      <li>
+         Returns a constant pointer to the required equation.</li>
+   </ul>
+   <li>
+      <code>CATSurface::Unlock()</code>: <u>Unlocks the geometric object when you do not need to use
+      its equation no more</u>. This operation:</li>
+   <ul>
+      <li>
+         Releases the reference</li>
+      <li>
+         Decrements the number of customers which want to prevent the object from future
+         modifications, except the relimitation.</li>
+      <li>
+         Keeps the allocated memory and computed equations as long as the object is not modified.</li>
+   </ul>
+</ul>
+<p>In case of a modification of a surface,
+<ul>
+   <li>
+      If there remains at least one lock on the surface, an error is thrown</li>
+   <li>
+      Otherwise, the memory is freed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h3><a name="Various types of surfaces"></a>Various Types of Surfaces</h3>
+<p>You find four major surface types in the CGM offering: the resolved surfaces, the sampled
+surfaces, the multi-represented surfaces and the procedural surfaces.You can also introduce your own
+class of surface, and use it as any CGM surface in all the CGM operators or as the underlying
+geometry of a topological object. For a detailed description of this mechanism, see [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Resolved surfaces"></a>Resolved Surfaces</h4>
+<p>These surfaces are only available on a mathematical form: NURBS, canonical surface (plane, cone,
+sphere, cylinder, torus) belongs to this type. Evaluations are made directly from the mathematical
+equations. The following array describes, for each resolved surface, its definition parameters, and
+the validity range of the definition parameters which come in addition to general validity criteria
+that have already been described.</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>CATCylinder</td>
+      <td>obtained by parallel displacement of a circle, or a part of a circle, along an axis.<br>
+      The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathAxis</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis whose third direction is the cylinder axis</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>Radius</tt></td>
+            <td>The cylinder radius</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low limit counted from the first direction of the cylinder 
+			axis. Positive angles according to the right-hand rule.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high limit counted from the first direction of the cylinder 
+			axis. Positive angles according to the right-hand rule.</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>StartLength</tt></td>
+            <td>The low limit in the third direction of the cylinder axis.</td>
+         </tr>
+         <tr>
+            <td style="height: 19px">double</td>
+            <td style="height: 19px"><tt>EndLength</tt></td>
+            <td style="height: 19px">The high limit in the third direction of 
+			the cylinder axis.</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters:
+      <ul>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            StartLength &lt; EndLength</li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>CATCone</td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathAxis</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis, whose third direction is the cone direction</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>StartRadius</tt></td>
+            <td>The circle radius on the plane defined by the first and second 
+			directions of the cone axis. </td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>ConeAngle</tt></td>
+            <td>The external cone angle. The angle is counted from the plane 
+			defined from the first and second directions of the axis.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low limit of the circle arc, measured from the axis first direction. 
+			Positive angles follow the right-hand rule.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The high limit of the circle arc, measured from the axis first direction. 
+			Positive angles follow the right-hand rule.</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>StartRuleLength</tt></td>
+            <td>The start limit of the cone length. This start limit is a slant height (the length is not
+	counted along the third direction of the cone axis but along the cone surface).</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>EndRuleLength</tt></td>
+            <td>The end limit of the cone length. This end limit is a slant height (the length is not
+	counted along the third direction of the cone axis but along the cone surface).</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters::
+      <ul>
+         <li>
+            0 &lt; ConeAngle &lt; Pi/2</li>
+         <li>
+            0 &lt;= StartAngle &lt;= 2*Pi, StartAngle &lt;=EndAngle &lt;= StartAngle +2*Pi</li>
+         <li>
+            StartRuleLength &lt; EndRuleLength . They may be negative, if they do not exceed the Z
+            abscissa of the cone apex.</li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>CATTorus</td>
+      <td>The full torus is defined by an axis and two radii. The major ring sweeps a full circle in
+      the plane defined by the first and second directions of the axis. The 
+		major ring is centered at the origin of the axis. The minor
+      ring sweeps a full circle of radius MinorRadius, centered at some point on the major ring and
+      lying in the plane containing this center point, the origin O, and the vector 
+		defined by the axis third direction. A piece of
+      the full torus is given by limiting the angles through which the major ring sweeps and those
+      through which every minor ring sweeps. The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathAxis</td>
+            <td><tt>Axis</tt></td>
+            <td>The torus axis, whose third direction is the torus direction.</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>Major</tt><span class="style1">Radius</span></td>
+            <td>The major ring radius on the plane defined by the first and 
+			second directions of the axis.</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>Minor</tt><span class="style1">Radius</span></td>
+            <td>The minor ring radius.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MajorStartAngle</tt></td>
+            <td>The start limit of the major ring in radians, counted from the first direction of the torus axis.
+	Positive angles are defined by the right-hand rule around the torus axis.
+	The major start angle must be less than the major end angle. </td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MajorEndAngle</tt></td>
+            <td>The end limit of the major ring in radians, counted from the first direction of the torus axis.
+	Positive angles are defined by the right-hand rule around the torus axis.
+	The major end angle must be greater than the major start angle.<br></td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MinorStartAngle</tt></td>
+            <td>The first limit of the minor circle in radians. Positive angles are in the 
+	direction of the torus axis. Angles are counted from 
+	the external minor radius in the plane
+	defined by the first and second direction of the torus axis.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MinorEndAngle</tt></td>
+            <td>The end limit of the minor circle in radians. Positive angles are in the 
+	direction of the torus axis. Angles are counted from 
+	the external minor radius in the plane
+	defined by the first and second direction of the torus axis.</td>
+         </tr>
+      </table>
+
+      <p>Validity range of the definition parameters:
+      <ul>
+         <li>
+            0 &lt;= MajorStartAngle &lt;= 2*Pi<br>
+            MajorStartAngle &lt;=MajorEndAngle &lt;=MajorStartAngle +2*Pi</li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>CATSphere</td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathAxis</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis whose center is the sphere center</td>
+         </tr>
+         <tr>
+            <td>double</td>
+            <td><tt>Radius</tt></td>
+            <td>The sphere radius</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MeridianStart</tt></td>
+            <td>The low limit of the meridians existence.</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>MeridianEnd</tt></td>
+            <td>The high limit of the meridians existence.</td>
+         </tr>
+         <tr>
+            <td>CATLength</td>
+            <td><tt>ParallelStart</tt></td>
+            <td>The low limit of the parallels existence</td>
+         </tr>
+         <tr>
+            <td>CATLength</td>
+            <td><tt>ParallelEnd</tt></td>
+            <td>The high limit of the parallels existence</td>
+         </tr>
+      </table>
+
+      <p>The meridian planes are passing through the axis third direction, the parallel planes are
+      orthogonal to the axis third direction. Validity range of the definition parameters:
+      <ul>
+         <li>
+            -Pi/2 &lt;= ParallelStart &lt;=Pi/2, ParallelStart &lt; ParallelEnd&lt;=
+            Pi/2+ParallelStart</li>
+         <li>
+            0 &lt;= MeridianStart &lt;=2*Pi, MeridianStart &lt; MeridianEnd&lt;= 2*Pi+ MeridianStart</li>
+      </ul>
+      </td>
+   </tr>
+   <tr>
+      <td>CATPlane</td>
+      <td>The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathPoint</td>
+            <td><tt>Origin</tt></td>
+            <td>The plane origin</td>
+         </tr>
+         <tr>
+            <td>CATMathDirection</td>
+            <td><tt>FirstDirection</tt></td>
+            <td>The first normalized direction</td>
+         </tr>
+         <tr>
+            <td>CATMathDirection</td>
+            <td><tt>secondDirection</tt></td>
+            <td>The second normalized direction, orthogonal to the first one</td>
+         </tr>
+         <tr>
+            <td>CATSurLimits</td>
+            <td><tt>Limits</tt></td>
+            <td>The limits if needed</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATNurbsSurface</td>
+      <td>NURBS definition of a curve, see [<a href="#References">4</a>]</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Sampled surfaces"></a>Sampled Surfaces</h4>
+<p>These surfaces result from a computation that does not lead to a canonical form. For example, a
+fillet with variable radius cannot be expressed in terms of a cylinder or another canonical surface.
+Moreover, the limiting curves in this case are defined by a Spline interpolation between marching
+points, obtained by a progressive algorithm. It is the reason why this type of surface is called
+sampled surface. For example, the CATGenericFilletSurface interface manages the behavior of a fillet
+surface that is not canonical, while the CATGenericRuledSurface interface manages the behavior of a
+draft surface that is not canonical.</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>CATGenericFillet</td>
+      <td>Surface generated by the smallest circle arcs of <tt>CenterPoints</tt> centers and passing
+      through <tt>Limit1</tt> and <tt>Limit2</tt> sets of points. The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>CenterPoints</tt></td>
+            <td>The center of the circles</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>Limit1</tt></td>
+            <td>Corresponding passing points on the first limitation curve</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>Limit2</tt></td>
+            <td>Corresponding passing points on the second limitation curve</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATGenericRuledSurface</td>
+      <td>Surface generated by lines passing through and delimited by <tt>Limit1</tt> and <tt>Limit2</tt>
+      sets of points. The definition parameters are:<br>
+
+      <table>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>Limit1</tt></td>
+            <td>Corresponding passing points on the first limitation curve</td>
+         </tr>
+         <tr>
+            <td>CATMathSetOfPointsND</td>
+            <td><tt>Limit2</tt></td>
+            <td>Corresponding passing points on the second limitation curve</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Multi-represented surfaces"></a>Multi-represented Surfaces</h4>
+<p>The multi-represented surface simply delegates, without computation, its evaluation to a pointed
+surface.This model allows CGM to keep as long as possible the object canonicity: for example, an
+object implementing the CATFilletSurface interface point to an objet implementing a canonical
+surface (such as CATCylinder, CATCone) or to an object implementing the CATGenericFillet if the
+resulting fillet is not canonical. The canonical representation, if it exists, is returned by the <tt>CATSurface::GetGeometricRep</tt>
+method.</p>
+
+<table>
+   <caption>Fig. 3: The multi-represented surfaces</caption>
+   <tr>
+      <td><img src="images/CAACgmGobSurfaces2.gif" alt="Surfaces2.gif (5852 bytes)" width="479" height="359"></td>
+      <td>CATFilletSurface, CATDraftSurface, CATSweepSurface, CATOffsetSurface are interfaces for
+      various multi-represented surfaces. Each of these surface refers to another one for the
+      evaluation process. The referred surface is preferably a canonical surface. If it is not
+      possible, sampled or procedural surfaces are chosen.</td>
+   </tr>
+</table>
+
+<p>Multi-represented surfaces are often created with geometric operators that are dedicated to this
+creation. The following array displays the geometric operator or the method of the CATGeoFactory to
+use for the creation of each type of multi-represented surface:</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>Surface</td>
+      <td>Creation</td>
+      <td>Definition parameters</td>
+   </tr>
+   <tr>
+      <td>CATFilletSurface</td>
+      <td>CATConnect<br>
+      operator</td>
+      <td>Connection of two or three surfaces.<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Surface1</tt></td>
+            <td>The first surface to connect</td>
+         </tr>
+         <tr>
+            <td>long</td>
+            <td><tt>Orientation1</tt></td>
+            <td>The <tt>Surface1 </tt>orientation to take into account</td>
+         </tr>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Surface2</tt></td>
+            <td>The second surface to connect</td>
+         </tr>
+         <tr>
+            <td>long</td>
+            <td><tt>Orientation2</tt></td>
+            <td>The <tt>Surface2 </tt>orientation to take into account</td>
+         </tr>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Surface3</tt></td>
+            <td>The third surface to connect (optional)</td>
+         </tr>
+         <tr>
+            <td>long</td>
+            <td><tt>Orientation3</tt></td>
+            <td>The <tt>Surface3 </tt>orientation to take into account (optional)</td>
+         </tr>
+         <tr>
+            <td>CATConnectTool</td>
+            <td><tt>RadiusLaw</tt></td>
+            <td>The definition of the radius law: constant: CATConstantFilletTool or variable:
+            CATVariableFilletTool</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATChamfer</td>
+      <td>CATConnect<br>
+      operator</td>
+      <td>Defines a surface such that the surface normal has a constant angle with a given direction
+      (called draft direction)<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Surface1</tt></td>
+            <td>The first surface to connect</td>
+         </tr>
+         <tr>
+            <td>long</td>
+            <td><tt>Orientation1</tt></td>
+            <td>The <tt>Surface1 </tt>orientation to take into account</td>
+         </tr>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Surface2</tt></td>
+            <td>The second surface to connect</td>
+         </tr>
+         <tr>
+            <td>long</td>
+            <td><tt>Orientation2</tt></td>
+            <td>The <tt>Surface2 </tt>orientation to take into account</td>
+         </tr>
+         <tr>
+            <td>CATChamferTool</td>
+            <td><tt>ChamferDef</tt></td>
+            <td>The chamfer is defined:<br>
+            either with a distance on each surface,<br>
+            or with a distance and an angle</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATDraftSurface</td>
+      <td>CATGeoFactory::<br>
+      CreateDraftSurface</td>
+      <td>&nbsp;</td>
+   </tr>
+   <tr>
+      <td>CATOffsetSurface</td>
+      <td>CATGeoFactory::<br>
+      CreateOffsetSurface</td>
+      <td>&nbsp;</td>
+   </tr>
+   <tr>
+      <td>CATSweepSurface</td>
+      <td>CATExtruder<br>
+      operator</td>
+      <td>&nbsp;</td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+
+<h4><a name="Procedural surfaces"></a>Procedural Surfaces</h4>
+<p>The procedural surface uses the evaluation of another surface, call the reference, for the
+computation of its own evaluation. The reference can be any type of surface, even a procedural one.
+But in this last case, this will be more time consuming: two evaluations are done, one for each
+level. In case of a CATProcOffsetSurface referring another CATProcOffsetSurface however, the offset
+values are directly cumulated at the surface creation, so that only one evaluation is done.</p>
+
+<table>
+   <caption>Fig. 4: The evaluation mechanism and the special case of procedural offset surface</caption>
+   <tr>
+      <td><img src="images/CAACgmGobSurfaces3.gif" alt="Surfaces3.gif (7309 bytes)" width="479" height="359"></td>
+      <td valign="top">When you ask for an evaluation of a procedural surface, the procedural
+      surface uses the evaluation of its reference. This process is recursive if the reference is a
+      procedural surface itself, so that it could be time consuming, because each procedural surface
+      do computations at each level.
+      <p>This is not the case for a procedural offset surface of another procedural offset surface:
+      here, the offset are cumulated, eliminating the recursivity.</td>
+   </tr>
+</table>
+
+<p>We detail now the various procedural surfaces.</p>
+
+<table border="1" cellspacing="0">
+   <tr>
+      <td>CATProcOffsetSurface</td>
+      <td>Generated by offsetting each point of a reference surface in the direction of the
+      reference surface normal and of length a given offset that may be positive or negative.<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Reference</tt></td>
+            <td>The surface to offset. Is any type of surface. In case of another
+            CATProcOffsetSurface, the offsets are added and the reference surface becomes the
+            reference surface of the CATProcOffsetSurface to offset.</td>
+         </tr>
+         <tr>
+            <td>CATLength</td>
+            <td><tt>Offset</tt></td>
+            <td>The value of the offset</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATTabulatedCylinder</td>
+      <td>Generated by the translation of a generative curve.<br>
+
+      <table>
+         <tr>
+            <td>CATCurve</td>
+            <td><tt>Profile</tt></td>
+            <td>The curve to translate</td>
+         </tr>
+         <tr>
+            <td>CATMathDirection</td>
+            <td><tt>Dir</tt></td>
+            <td>The translation direction</td>
+         </tr>
+         <tr>
+            <td>CATLength</td>
+            <td><tt>Start</tt></td>
+            <td>The low limit of the surface on the translation direction</td>
+         </tr>
+         <tr>
+            <td>CATLength</td>
+            <td><tt>End</tt></td>
+            <td>The high limit of the surface on the translation direction</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATRevolutionSurface</td>
+      <td>Generated by the revolution of a generative curve around a direction.<br>
+
+      <table>
+         <tr>
+            <td>CATCurve</td>
+            <td><tt>Profile</tt></td>
+            <td>The curve to rotate</td>
+         </tr>
+         <tr>
+            <td>CATMathAxis</td>
+            <td><tt>Axis</tt></td>
+            <td>The axis whose third direction is the rotation direction</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>StartAngle</tt></td>
+            <td>The low limit of the rotation</td>
+         </tr>
+         <tr>
+            <td>CATAngle</td>
+            <td><tt>EndAngle</tt></td>
+            <td>The end limit of the rotation</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATLinearTransfoSurface</td>
+      <td>Generated by transforming each point of a reference surface with a given geometric linear
+      transformation.<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Reference</tt></td>
+            <td>The surface to transform</td>
+         </tr>
+         <tr>
+            <td>CATMathTransformation</td>
+            <td><tt>Transformation</tt></td>
+            <td>The applied transformation</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+   <tr>
+      <td>CATNonLinearTransfoSurface</td>
+      <td>Generated by transforming each point of a reference surface with a given non linear
+      transformation.<br>
+
+      <table>
+         <tr>
+            <td>CATSurface</td>
+            <td><tt>Reference</tt></td>
+            <td>The surface to transform</td>
+         </tr>
+         <tr>
+            <td>CATMathNonLinearTransformation</td>
+            <td><tt>Transformation</tt></td>
+            <td>The applied transformation</td>
+         </tr>
+      </table>
+
+      </td>
+   </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+   <li>
+      CGM surfaces are C2 continuous. They offer you evaluators to evaluate point parameters and
+      derivatives, and equations to use in geometric operations for example.</li>
+   <li>
+      Four major types of surfaces are available: resolved surfaces, sampled surfaces,
+      multi-represented surfaces and procedural surfaces. Foreign surfaces can also be introduced in
+      CGM.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+      <!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+
+<table width="100%">
+   <tr>
+      <td>[1]</td>
+      <td><a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric Modeler</a></td>
+   </tr>
+   <tr>
+      <td>[2]</td>
+      <td><a href="CAACgmTaGobAttribute.htm">The Management of Foreign Data</a></td>
+   </tr>
+   <tr>
+      <td>[3]</td>
+      <td><a href="CAACgmTaGobClone.htm">The Cloning and Transformation Managers</a></td>
+   </tr>
+   <tr>
+      <td>[4]</td>
+      <td><a href="CAACgmTaGobAboutNurbs.htm">About NURBS</a></td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+      <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+      <td valign="top">Document created</td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+      <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Querying Function/Physical/Spatial Integration Data</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Querying Function/Physical/Spatial Integration Data</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="100%">
+      <p><a name="Learn"></a>This use case is intended to show you how to obtain 
+      integration data from function, physical and spatial objects using a 
+      macro.</p>
+      <p>This macro opens the document CAAPspEduIn.CATProduct. Using the root
+      node of the document, it then finds a Physical object and then it
+      gets associated Function and Spatial object to it to get integration data.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="100%">
+      <p><a name="How"></a>CAAPspFunctionsPhysical is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPspQueryFunctionPhysicalSource.htm">CAAPspFunctionPhysical.CATScript</a>
+      is located in the CAAScdPspUseCases module. <a href="macros/CAAPspQueryFunctionPhysical.CATScript">Execute
+      macro </a>(windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="100%">
+      <p><a name="Step"></a>CAAPspFunctionsPhysical includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Get a Physical object">Get a Physical Object</a></li>
+        <li><a href="#Get PspSpatial and PspFunctional Object">Retrieving
+          Spatial and Functional Object Associated with a Physical Object</a>
+        <li><a href="#Query Spatial  information">Query Spatial Information</a>
+        <li><a href="#Query Function-Physical integration  information">Query
+          Function-Physical Integration Information</a>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>The macro first loads Distributive System document
+      CAAPspEduIn.CATProduct containing Equipment and Piping Design objects.</p>
+      <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i>
+      to point to the directory and <i>sDocFullPath</i> to point to full path
+      name of the document.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">    ' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct&quot; )
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i>PspWorkbench</i> object from the 
+      document using the top node of the object tree in a Distributive 
+      System document.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspApplication</i> object corresponding to
+      Piping application and initializes the application data.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+<font color="#0000ff">    </font><font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspAppFactory</i> and <i> PspRsource</i> object on the
+      application object.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000ff">    </font><font color="#0000FF"> If </font>( Not ( objPspWorkbench Is Nothing ) And _
+          Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAppFactory&quot;, _
+                                                objPspApplication )      
+<font color="#0000FF">      Set </font>objPspResource = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspResource&quot;, _
+                                                objPspApplication )            
+    <font color="#008000">...</font></pre>
+      <h4></a><a name="Get a Physical object"></a>Get a Physical Object</h4>
+      <p>Using the <i>PspAppFactory</i> method <i>ListPhysicals</i>, it
+      obtains a list of physical objects in the Piping domain under the root
+      product. Note that the output of this method is a list of objects. The
+      member of this list can be retrieved using the Item method. The second
+      argument of this method specifies a particular interface to be returned on
+      this object.</p>
+      <p>It then uses the first physical object and obtains a CATIAPSpPhysical
+      interface handle on the object</p>
+      <pre><font color="#008000">  ...</font>
+<font color="#0000FF">    If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">        Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">        If </font>( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">          Set </font>objPspPhysical =  objLPhysicals.Item( 1, &quot;CATIAPspPhysical&quot; )
+  <font color="#008000">...</font></pre>
+      <h4><a name="Get PspSpatial and PspFunctional Object"></a>Retrieving
+          Spatial and Functional Object Associated with a Physical Object</h4>
+      <p>It calls functions <i>GetSpatial</i> and <i>GetFunctional
+      </i>on the <i> PspPhysical</i> object<i> </i>to obtain <i> PspSpatial</i> object and
+      <i>PspFunctional</i> object associated with it.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get Spatial object and Functional Object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+
+<font color="#0000FF">      Set </font>objPspSpatial = objPspPhysical.GetSpatial     
+<font color="#0000FF">      Set </font>objPspFunctional = objPspPhysical.GetFunctional           
+    <font color="#008000">...</font></pre>
+      <h4><a name="Query Spatial  information"></a>Query Spatial Information</h4>
+      <p>This macro calls local private subroutine QuerySpatial to get
+      information on the <i> PspSpatial</i> object.</p>
+      <pre> <font color="#008000">   ...</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Query Spatial Information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    
+    If( Not ( objPspSpatial Is Nothing ))<font color="#0000FF"> Then</font>
+        QuerySpatial objPspSpatial
+<font color="#0000FF">    End if</font>
+   <font color="#008000"> ...</font>
+
+    Private Sub QuerySpatial (objPspSpatialArg<font color="#0000FF"> As </font>PspSpatial)  
+    <font color="#008000">...   </font></pre>
+      <p>A spatial object can be associated to multiple physical objects. In the
+      subroutine <i>QuerySpatial</i>, the macro calls <i>Physicals</i>
+      property on the <i> PspSpatial</i> object to obtain information about the physical
+      objects that are associated with this Spatial object.</p>
+      <pre><font color="#008000">   ...   </font>
+<font color="#0000FF">    If </font>( Not ( objPspSpatialArg Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#008000">'--------------</font>
+      <font color="#008000">' Get list of physical objects associate with spatial object</font>
+<font color="#0000FF">      Set </font>objLPhysAssocSpatial = objPspSpatialArg.Physicals
+
+<font color="#0000FF">      If </font>( Not ( objLPhysAssocSpatial Is Nothing ) )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbPhysicals = objLPhysAssocSpatial.Count   
+        strMessage_g = strMessage_g &amp; _
+           &quot;Number of Physicals Associate with spatial=&quot; &amp; intNbPhysicals &amp; vbCr
+<font color="#008000">   ...</font></pre>
+      <h4><a name="Query Function-Physical integration  information"></a>Query
+      Function-Physical Integration Information</h4>
+      <p>This macro calls local private subroutine <i>QueryFunctionalPhysical</i>
+      to get Function-physical integration data.</p>
+      <pre><font color="#008000">  ...   </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Query Functional-Physical Information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    If( Not ( objPspFunctional Is Nothing ) And _
+        Not ( objPspPhysical Is Nothing ) And _
+        Not ( objPspResource Is Nothing )   )<font color="#0000FF"> Then</font>
+            
+      QueryFunctionalPhysical objPspPhysical, objPhyPspObject, _
+                              objPspFunctional, objPspResource
+<font color="#008000">  ...</font></pre>
+      <p>Local private Subroutine <i>QueryFunctionalPhysical</i> is used
+      to retrieve the following information from a function object:</p>
+      <ul>
+        <li>Is function specification driven
+        <li>Is function realized by a physical object, i.e. the function is
+          associated to a placed physical part (with 3D representation and
+          position information)</li>
+      </ul>
+      <pre><font color="#008000">  ...   </font>
+<font color="#0000FF">     </font> <font color="#008000">'--------------------------</font>
+      <font color="#008000">' Check if the function object IsSpecDriven</font>
+      
+      bIsSpecDriven = objPspFuncArg.IsSpecDriven
+<font color="#008000">  ...   </font>
+<font color="#008000">      '-------------------------------------------------------</font>
+      <font color="#008000">' Check if Function object is associated with a placed</font>
+      <font color="#008000">' physial part</font>
+
+      bIsRealized = objPspFuncArg.IsRealized
+<font color="#008000">  ...</font></pre>
+      <ul>
+        <li>It gets a List of physical part types that are compatible with
+          function
+      </ul>
+        <pre><font color="#008000">  ...   </font>
+<font color="#008000">      '-----------------------------------------</font>
+      <font color="#008000">' Get Compatible part types</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLStrCompPartTypes = objPspFuncArg.GetCompatiblePartTypes (strStdName)
+
+<font color="#0000FF">      If </font>( Not ( objLStrCompPartTypes Is Nothing ) )<font color="#0000FF"> Then </font>
+<font color="#008000">  ...</font></pre>
+      <ul>
+        <li>It gets a List physical objects associated to function
+      </ul>
+      <pre><font color="#008000">   ...   </font></pre>
+      <pre><font color="#008000">      </font><font color="#0000FF">Set </font>objLPhysicals = objPspFuncArg.Physicals
+
+<font color="#0000FF">      If </font>( Not ( objLPhysicals Is Nothing ) )<font color="#0000FF"> Then  </font></pre>
+      <pre><font color="#008000">   ...   </font></pre>
+      <p></p>
+      <ul>
+        <li>It gets Information about the physical object (part type, and
+          part number) that realizes the function
+      </ul>
+      <pre><font color="#008000">   ...   </font>
+<font color="#008000">      </font>strPartType   = objPspFuncArg.PartType 
+
+<font color="#0000FF">      If </font>( strPartType &lt;&gt; &quot;&quot; ) Then
+        strMessage_g = strMessage_g &amp; _
+               &quot;Part type of physical object that realized this function = &quot; &amp; _
+                strPartType &amp; vbCr    
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Part Number of the associated physical object</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      strPartNumber = objPspFuncArg.PartNumber
+<font color="#008000">  ...</font></pre>
+      <ul>
+        <li>The part catalog resource name of the physical object associated to
+          the function
+      </ul>
+      <pre><font color="#008000"> ...       </font>
+<font color="#0000FF">    </font>
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Catalog Part name of the associated physical object</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      strCatalogPartName= objPspFuncArg.CatalogPartName
+<font color="#008000">  ...</font></pre>
+      <ul>
+        <li>It check if it is OK to associate the function with a
+          physical object
+      </ul>
+      <pre><font color="#008000">  ...   </font>
+<font color="#008000">      '-----------------------------------------</font>
+      <font color="#008000">' Check if the associated Physical object is OK to integrate</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      bIsOkToIntegrate = objPspFuncArg.IsOKToIntegrate
+<font color="#008000">  ...</font></pre>
+      <ul>
+        <li>It gets the Function status
+       </ul>
+         <pre><font color="#008000">  ...   </font>
+<font color="#008000">      '-----------------------------------------</font>
+      <font color="#008000">' Function status</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">      Dim </font>eFunctionStatus<font color="#0000FF"> As </font>CatPspIDLFunctionStatus 
+      eFunctionStatus = objPspFuncArg.FunctionStatus
+<font color="#008000">  ...</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case how to obtain integration data from function, physical and
+spatial objects using a macro. A message logging the status of the critical
+steps is displayed at the end of the use case.</p>
+<p>
+<img border="0" src="images/CAAPspQueryFuncPhysical_01.jpg" width="631" height="396"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspQueryFunctionPhysicalSource.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

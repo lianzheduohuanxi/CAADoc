@@ -1,0 +1,738 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Allowing Third Party or Home-Made Post-Processors to Be Used</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Allowing Third Party or Home-Made Post-Processors to
+      Be Used</h3>
+      <em>Implementing the CATIMfgExternalPPDefinition interface and an
+      interface derived from CATIMfgExternalPPManagement</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiUserPostProcessorIntegration use case
+      and explains how to implement the <i>CATIMfgExternalPPDefinition</i>
+      manufacturing interface, and an interface derived from the <i>CATIMfgExternalPPManagement</i>
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiUserPostProcessorIntegration
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiUserPostProcessorIntegration Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiUserPostProcessorIntegation</a></li>
+            <li><a href="#Where">Where to Find the
+              CAAMaiUserPostProcessorIntegration Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the list of available
+Post-Processors, by implementing the <i>CATIMfgExternalPPDefinition</i>
+manufacturing interface, and an interface derived from the <i>CATIMfgExternalPPManagement</i>
+manufacturing interface.</p>
+<p>This involves the following:</p>
+<ul>
+  <li>Create an extension class to implement the <i>CATIMfgExternalPPDefinition</i>
+    interface</li>
+  <li>Implement on this extension class the <code>GetListOfExternalPostProcessorProviders</code>
+    method of <i>CATIMfgExternalPPDefinition</i> to return the list of
+    post-processors providers.</li>
+  <li>Create for each provider an interface derived from the <i>CATIMfgExternalPPManagement</i>
+    interface</li>
+  <li>Create for each provider an extension class to implement this interface</li>
+  <li>Implement on this extension class:
+    <ul>
+      <li>the <code>GetProviderNames</code> method of <i>CATIMfgExternalPPManagement</i>
+        to define for the post-processor provider:
+        <ul>
+          <li>the NLS provider name</li>
+          <li>a keyword allowing to identify the provider in all the following
+            treatments</li>
+        </ul>
+      </li>
+      <li>the <code>GetListOfPPs</code> method of <i>CATIMfgExternalPPManagement</i>
+        to define:
+        <ul>
+          <li>the NLS list of postprocessor names</li>
+          <li>the list of keywords allowing to identify each post-processor in
+            all the following treatments</li>
+        </ul>
+      </li>
+      <li>the <code>RunHelp</code> method of <i>CATIMfgExternalPPManagement</i>
+        to allow for each post-processor to run a HTML browser or any executable
+        to display documentation.</li>
+      <li>the <code>RunPP</code> method of <i>CATIMfgExternalPPManagement</i> to
+        allow execution of each post-processor.</li>
+    </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiUserPostProcessorIntegration Use Case</h3>
+<p>CAAMaiUserPostProcessorIntegration is a use case of the
+CAAManufacturingItf.edu framework that illustrates ManufacturingInterfaces
+framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiUserPostProcessorIntegration Do</h4>
+<p>CAAMaiUserPostProcessorIntegration runs with a default Process document as
+shown on <a href="#Fig1">Fig.1</a> that contains the program to use. The use
+case shows that the tool path computation can be processed, including the NC
+code generation using a home-made or a third party post-processor.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The PP selection in CATMFG submission
+    panel</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMaiUserPostProcessorIntegration3.jpg" width="376" height="375"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiUserPostProcessorIntegration</h4>
+<p>To launch CAAMaiUserPostProcessorIntegration, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiUserPostProcessorIntegration.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following lines by removing the '#'
+    character:</p>
+    <pre>CATMfgExtPPManagement CATIMfgExternalPPDefinition                           libCAAMaiUserPostProcessorIntegration</pre>
+    <pre>CATMfgExtPPManagement CAAIMaiUserPostProcessorIntegrationExternalPPClient1  libCAAMaiUserPostProcessorIntegration</pre>
+    <pre>CATMfgExtPPManagement CATICreateInstance                                    libCAAMaiUserPostProcessorIntegration</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Using the Tools menu, select the Options... item
+    <p>In the left part of the Options panel, select the Machining
+    workshop</p>
+    <p>In the right part of the Options panel, select the Output tab page</p>
+    <p>This displays the following panel:</p>
+    <p><img border="0" src="images/CAAMaiUserPostProcessorIntegration1.jpg" width="705" height="524">
+    <p>Then, select the 'Other PP' check button in the top of the tab page (Post
+    Processor section), and select 'My Post Processors' in the list of the
+    possible PP providers</p>
+    <p>This will set 'My Post Processors' as current PP provider</p>
+  </li>
+  <li>Using the File menu, open the CAAMaiUserPostProcessorIntegration
+    CATProcess located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed.</p>
+  <li>Using the Start menu, select any workbench in the Machining
+    workshop (NC Review for instance)</li>
+  <li>In the PPR Tree, select Manufacturing Program.1 and select the 'Generate
+    NC code in batch mode' icon
+    <p>This displays a panel on the top of the PPR document:</p>
+    <p><img border="0" src="images/CAAMaiUserPostProcessorIntegration2.jpg" width="735" height="539"></p>
+  </li>
+  <li>Select the NC Code tab page
+    <p><img border="0" src="images/CAAMaiUserPostProcessorIntegration3.jpg" width="376" height="375"></p>
+    <p>The text MyPP is a keyword associated to the PP provider.</p>
+    <p>Select a post processor in the list of available post processors. In the
+    example, the provider has defined 2 post processors called My PP 1 and My PP
+    2</p>
+    <p>The selected post processor will be used to generate NC code</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiUserPostProcessorIntegration
+Code</h4>
+<p>The CAAMaiUserPostProcessorIntegration use case is made of:
+<ul>
+  <li>a class named <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i></li>
+  <li>a class named <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i></li>
+</ul>
+located in the CAAMaiUserPostProcessorIntegration.m module of the
+CAAManufacturingItf.edu framework:
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiUserPostProcessorIntegration.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiUserPostProcessorIntegration.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are five logical steps in CAAMaiUserPostProcessorIntegration:</p>
+<ol>
+  <li><a href="#Step1">Create an extension class to implement the <i>CATIMfgExternalPPDefinition</i>
+    interface</a></li>
+  <li><a href="#Step2">Implement on this extension class the method to return
+    the list of post-processors providers.</a></li>
+  <li><a href="#Step3">Create for each provider an interface derived from the <i>CATIMfgExternalPPManagement</i>
+    interface</a></li>
+  <li><a href="#Step4">Create for each provider an extension class to implement
+    this interface</a></li>
+  <li><a href="#Step5">Implement the methods on this extension class</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Create an extension class to implement the <i>CATIMfgExternalPPDefinition</i>
+interface</h4>
+<p>The extension class that will implement <i>CATIMfgExternalPPDefinition</i> is
+named <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i>.</p>
+<p>The creation of this class is done is three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i> class
+    header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATListPV.h&quot;
+
+class CAAEMaiUserPostProcessorIntegrationExtPPProviders : public CATBaseUnknown
+{
+public:
+  CATDeclareClass;
+  
+  CAAEMaiUserPostProcessorIntegrationExtPPProviders ();
+
+  virtual ~CAAEMaiUserPostProcessorIntegrationExtPPProviders ();
+  
+  virtual HRESULT GetListOfExternalPostProcessorProviders (CATListPV&amp; oListOfPostProcessorProviders);
+  
+private:
+  CAAEMaiUserPostProcessorIntegrationExtPPProviders(const CAAEMaiUserPostProcessorIntegrationExtPPProviders &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i> C++-class
+    derives from <i>CATBaseUnknown</i>.</p>
+    <p>The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i>
+    belongs to a component.</p>
+    <p>The class has a constructor, a destructor, the <code>GetListOfExternalPostProcessorProviders</code>
+    method of <i>CATIMfgExternalPPDefinition</i>, and a copy constructor.<br>
+    Note that the copy constructor is set as private. This is very important for
+    extensions. Since extensions must never be directly instantiated by client
+    applications, this prevents the compiler from creating the copy constructor
+    as public without you know.<br>
+    This copy constructor is not implemented in the source file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i> class
+    source file.<br>
+    It begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgExternalPPDefinition.h&quot;
+<b>CATImplementClass(CAAEMaiUserPostProcessorIntegrationExtPPProviders,CodeExtension,CATBaseUnknown,CATMfgExtPPManagement);</b>
+<b>TIEchain_CATIMfgExternalPPDefinition (CAAEMaiUserPostProcessorIntegrationExtPPProviders);</b>
+...
+HRESULT CAAEMaiUserPostProcessorIntegrationExtPPProviders::<b>GetListOfExternalPostProcessorProviders</b> (CATListPV&amp; oListOfPostProcessorProviders)
+{
+  HRESULT rc = S_OK;
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i> class states
+    that it implements the <i>CATIMfgExternalPPDefinition</i> interface thanks
+    to the <code>TIEchain_CATIMfgExternalPPDefinition</code> macro.</p>
+    <p>The <code>CATImplementClass</code> macro declares that the <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i>
+    class is code extension class, thanks to the <code>CodeExtension</code>
+    keyword, and that it extends the object whose type is <i>CATMfgExtPPManagement</i>.
+    The third parameter must always be set to <i>CATBaseUnknown</i>, makes no
+    sense, and is unused for extensions.</p>
+    <p>Extending the <i>CATMfgExtPPManagement</i> object using the <i>CAAEMaiUserPostProcessorIntegrationExtPPProviders</i>
+    class that implements <i>CATIMfgExternalPPDefinition</i> means fitting this
+    object with your customized behavior for PP provider definition which will
+    replace the default one.</p>
+    <p>The <code>GetListOfExternalPostProcessorProviders</code> method
+    implementation is shown in the next steps. It has no input parameters and a
+    pointer to the list of pointers of implementation classes ID corresponding
+    to post-processors providers as output parameter.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>CATMfgExtPPManagement</i>
+    object implements the <i>CATIMfgExternalPPDefinition</i> interface, and
+    whose code is located in the libCAAMaiUserPostProcessorIntegration shared
+    library or DLL. Pay attention to remove the comment (#) in the supplied
+    dictionary.</p>
+    <pre>CATMfgExtPPManagement  CATIMfgExternalPPDefinition  libCAAMaiUserPostProcessorIntegration</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implement on this extension class the method to return
+the list of post-processors providers</h4>
+<p>Each post-processor provider will have to create an implementation class for
+an interface derived from the <i>CATIMfgExternalPPManagement</i> interface</p>
+<p>The list of post-processors providers is retrieved through the <code>GetListOfExternalPostProcessorProviders</code>
+method with instructions as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+     oListOfPostProcessorProviders.Append ((void*) &amp;<b>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</b>::ClassId ());
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Create for each provider an interface derived from the <i>CATIMfgExternalPPManagement</i>
+interface</h4>
+<p>The interface derived from <i>CATIMfgExternalPPManagement</i> is named <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>.</p>
+<p>The creation of this interface is done is four sub steps:</p>
+<ol>
+  <li>Create the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    interface header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+class ExportedByCAAMaiPostProcessorEnv CAAIMaiUserPostProcessorIntegrationExternalPPClient1 : public CATIMfgExternalPPManagement
+{
+  CATDeclareInterface ;  
+
+  public:
+
+};
+
+CATDeclareHandler (CAAIMaiUserPostProcessorIntegrationExternalPPClient1,CATBaseUnknown) ;
+...
+		   </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CATDeclareInterface</code> macro declares that the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    class is an interface</p>
+    <p><code>ExportedByCAAMaiPostProcessorEnv</code> means that the interface
+    will be exported by the module CAAMaiPostProcessorEnv</p>
+  </li>
+  <li>Create the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    class source file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATMetaClass.h&quot;
+#include &quot;CAAIMaiUserPostProcessorIntegrationExternalPPClient1.h&quot;
+...
+CATImplementInterface (CAAIMaiUserPostProcessorIntegrationExternalPPClient1,CATBaseUnknown);
+CATImplementHandler (CAAIMaiUserPostProcessorIntegrationExternalPPClient1,CATBaseUnknown);
+...
+		   </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CATImplementInterface</code> macro declares that the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    class is an interface</p>
+  </li>
+  <li>Create the <i>TIE_CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    tsrc file<br>
+    This file only includes the following instruction:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAIMaiUserPostProcessorIntegrationExternalPPClient1.h&quot;
+		   </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Create the <i>CAAMaiPostProcessorEnv</i> header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#ifdef	_WINDOWS_SOURCE
+#ifdef	__CAAMaiUserPostProcessorIntegration
+#define	ExportedByCAAMaiPostProcessorEnv	__declspec(dllexport)
+#else
+#define	ExportedByCAAMaiPostProcessorEnv	__declspec(dllimport)
+#endif
+#else
+#define	ExportedByCAAMaiPostProcessorEnv
+#endif
+		   </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+   
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Create for each provider an extension class to implement
+this interface</h4>
+<p>The extension class that will implement <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+is named <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i>.</p>
+<p>The creation of this class is done is three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i> class
+    header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;
+          
+...
+
+class CAAEMaiUserPostProcessorIntegrationExtPPClient1 : public CATBaseUnknown
+{
+public:
+  CATDeclareClass;
+  
+  CAAEMaiUserPostProcessorIntegrationExtPPClient1 ();
+
+  virtual ~CAAEMaiUserPostProcessorIntegrationExtPPClient1 ();
+  
+  virtual HRESULT GetProviderNames ( CATUnicodeString&amp;        oNLSName     ,
+				                       CATString&amp;               oKeywordName );
+  virtual HRESULT GetListOfPPs     ( CATListOfCATUnicodeString&amp; oNLSList     , 
+				                       CATListOfCATString&amp;        oKeywordList );
+  virtual HRESULT RunHelp          ( CATString&amp;                 iPPKeyword );
+  virtual HRESULT RunPP            ( CATListOfCATUnicodeString&amp; iPPParams );
+
+private:
+  CAAEMaiUserPostProcessorIntegrationExtPPClient1(const CAAEMaiUserPostProcessorIntegrationExtPPClient1 &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i> C++-class
+    derives from <i>CATBaseUnknown</i>.</p>
+    <p>The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i>
+    belongs to a component.</p>
+    <p>The class has a constructor, a destructor, the methods of <i>CATIMfgExternalPPManagement</i>,
+    and a copy constructor.<br>
+    Note that the copy constructor is set as private. This is very important for
+    extensions. Since extensions must never be directly instantiated by client
+    applications, this prevents the compiler from creating the copy constructor
+    as public without you know.<br>
+    This copy constructor is not implemented in the source file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i> class
+    source file.<br>
+    It begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CAAIMaiUserPostProcessorIntegrationExternalPPClient1.h&quot;
+<b>CATImplementClass (CAAEMaiUserPostProcessorIntegrationExtPPClient1,CodeExtension,CATBaseUnknown,CATMfgExtPPManagement);</b>
+<b>TIEchain_CAAIMaiUserPostProcessorIntegrationExternalPPClient1 (CAAEMaiUserPostProcessorIntegrationExtPPClient1);</b>
+...
+HRESULT CAAEMaiUserPostProcessorIntegrationExtPPProviders::<b>GetListOfExternalPostProcessorProviders</b> (CATListPV&amp; oListOfPostProcessorProviders)
+{
+  HRESULT rc = S_OK;
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i> class states
+    that it implements the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    interface thanks to the <code>TIEchain_CAAIMaiUserPostProcessorIntegrationExternalPPClient1</code>
+    macro.</p>
+    <p>The <code>CATImplementClass</code> macro declares that the <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i>
+    class is code extension class, thanks to the <code>CodeExtension</code>
+    keyword, and that it extends the object whose type is <i>CATMfgExtPPManagement</i>.
+    The third parameter must always be set to <i>CATBaseUnknown</i>, makes no
+    sense, and is unused for extensions.</p>
+    <p>Extending the <i>CATMfgExtPPManagement</i> object using the <i>CAAEMaiUserPostProcessorIntegrationExtPPClient1</i>
+    class that implements <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    means fitting this object with your customized behavior for post-processors
+    definition which will replace the default one.</p>
+    <p>The methods implementation is shown in the next steps.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>CATMfgExtPPManagement</i>
+    object implements the <i>CAAIMaiUserPostProcessorIntegrationExternalPPClient1</i>
+    interface, and whose code is located in the
+    libCAAMaiUserPostProcessorIntegration shared library or DLL. Pay attention
+    to remove the comment (#) in the supplied dictionary.</p>
+    <pre>CATMfgExtPPManagement  CAAIMaiUserPostProcessorIntegrationExternalPPClient1  libCAAMaiUserPostProcessorIntegration</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+   
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Implement the methods on this extension class</h4>
+<ul>
+  <li><code>GetProviderNames</code> method<br>
+    <p>This method has no input parameters and two strings as output parameters.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAAEMaiUserPostProcessorIntegrationExtPPClient1::GetProviderNames ( CATUnicodeString&amp; oNLSName     ,
+					                                                           CATString&amp;        oKeywordName )
+{
+   HRESULT RC = S_OK;
+
+   oNLSName     = &quot;My Post Processors&quot;;
+   oKeywordName = &quot;MyPP&quot;;
+   
+   return RC;
+}
+          </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The first string (<code>oNLSName</code>) defines the NLS name of the
+    post-processors provider.</p>
+    <p>The second string (<code>oKeywordName</code>) defines a keyword which
+    will be used in internal treatments to identify the post-processors
+    provider. It may be the Company name, for instance</p>
+  </li>
+  <li><code>GetListOfPPs</code> method<br>
+    <p>This method has no input parameters and two lists of strings as output
+    parameters.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAAEMaiUserPostProcessorIntegrationExtPPClient1::GetListOfPPs ( CATListOfCATUnicodeString&amp; oNLSList     ,
+					                                                       CATListOfCATString&amp;        oKeywordList )
+{
+   HRESULT RC = S_OK;
+
+   oNLSList.Append (&quot;My PP 1&quot;);
+   oNLSList.Append (&quot;My PP 2&quot;);
+
+   oKeywordList.Append (&quot;PP1&quot;);
+   oKeywordList.Append (&quot;PP2&quot;);
+
+   return RC;
+}
+          </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The first list of strings (<code>oNLSList</code>) defines the NLS names
+    of the post-processors.</p>
+    <p>The second list of strings (<code>oKeywordList</code>) defines a list of
+    keywords which will be used in internal treatments to identify the
+    post-processors.</p>
+  </li>
+  <li><code>RunHelp</code> method<br>
+    <p>This method has a single input parameter and no output parameter.</p>
+    <p>The input parameter (<code>iPPKeyword</code>) is the keyword linked to
+    the post-processor for which documentation is required.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAAEMaiUserPostProcessorIntegrationExtPPClient1::RunHelp ( CATString&amp; iPPKeyword )
+{
+   HRESULT RC = S_OK;
+
+   // Definition of the path and of the file containing the documentation of the Post-processor
+   // which has iPPKeyword as associated keyword
+   CATUnicodeString path (&quot;/xx/xxx/xxx&quot;) , file (&quot;PP1.html&quot;);
+   char cFile [256];
+   CATMakePath (path.ConvertToChar(),file.ConvertToChar(),cFile);
+
+   // Execute the browser to open the html file
+   CATCommandHeader* header = NULL;
+
+   header = CATCommandHeader::GetHeaderFromList (&quot;CATContextualHelpCommand&quot;);
+
+   if (NULL != header)
+     {
+       header -&gt; SetArgument (CATString (cFile));
+       header -&gt; StartCommand ();
+       header -&gt; SetArgument (CATString (&quot;&quot;));
+     }
+
+   return RC;
+}
+          </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>RunPP</code> method<br>
+    <p>This method has a single input parameter and no output parameter.</p>
+    <p>The input parameter is a list of strings. It contains three strings which
+    are:
+    <ul>
+      <li><code>iPPParams[1]</code>: keyword defining the post-processor to be
+        run</li>
+      <li><code>iPPParams[2]</code>: NC file to be treated (APT source,
+        clfile,...)</li>
+      <li><code>iPPParams[3]</code>: ISO file to be generated</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>          
+HRESULT CAAEMaiUserPostProcessorIntegrationExtPPClient1::RunPP ( CATListOfCATUnicodeString&amp; iPPParams )
+{
+   HRESULT RC = S_OK;
+
+   cout &lt;&lt; &quot;    PP Name to run      : &quot; &lt;&lt; iPPParams[1].ConvertToChar() &lt;&lt; endl;
+   cout &lt;&lt; &quot;    NC file             : &quot; &lt;&lt; iPPParams[2].ConvertToChar() &lt;&lt; endl;
+   cout &lt;&lt; &quot;    ISO file            : &quot; &lt;&lt; iPPParams[3].ConvertToChar() &lt;&lt; endl;
+
+   ...
+
+   // Here has to be written the code for the post-processor submission code, using the input parameters
+
+   ...
+   return RC;
+}
+          </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, and has illustrated them on user defined post-processor customization.
+It shows how to implement the <i>CATIMfgExternalPPDefinition</i> interface and
+an interface derived from <i>CATIMfgExternalPPManagement</i> to allow third
+party post-processors or home-made post-processors to be used.</p>
+<p>The post-processors provider can be selected in the list of available
+providers (through the Options item of the Tools menu), thanks to a C++-class
+implementing the <i>CATIMfgExternalPPDefinition</i> interface.</p>
+<p>The post-processor can be selected when submitting the toolpath computation,
+thanks to a C++-class implementing an interface derived from the <i>CATIMfgExternalPPManagement</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

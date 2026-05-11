@@ -1,0 +1,337 @@
+<html>
+
+<head>
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta content="Microsoft FrontPage 12.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<title>Administrating Assembly Design Workbench Settings with Automation</title>
+<link href="../CAAScrBase/caav5.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Assembly</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Administrating Assembly Design Workbench Settings 
+		with Automation</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td valign="top" width="7%">
+		<img border="0" height="32" src="../CAAScrBase/images/atarget.gif" width="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>In addition to using the <strong>Tools-&gt;Options...</strong> 
+		command, many settings can be managed and administrated using Automation, 
+		thanks to Automation objects. This enables you to record the current settings, 
+		modify the settings values or lock the settings you feel appropriate, and 
+		apply this setting customization just running macros without entering all 
+		the property pages the modified settings belong to.</p>
+		<p>This macro shows you how to modify setting value and lock settings for 
+		general and constraints property pages in assembly design workbench. If 
+		a setting is locked in admin mode, its value won&#8217;t be editable in 
+		user mode.</p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" width="7%">
+		<img border="0" height="32" src="../CAAScrBase/images/ainfo.gif" width="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAAAsmModifyOptions.catvbs is launched in CATIA
+		<strong>run in admin mode</strong> [<a href="#References">1</a>]. No open 
+		document is needed.</p>
+		<p><a href="CAAAsmModifyOptionsSource.htm">CAAAsmModifyOptions.catvbs</a> 
+		is located in the CAAScdAsmUseCases module.
+		<a href="macros/CAAAsmModifyOptions.catvbs">Execute macro</a> (Windows only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" width="7%">
+		<img border="0" height="32" src="../CAAScrBase/images/ascenari.gif" width="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAAAsmModifyOptions includes the following steps:</p>
+		<ol>
+			<li><a href="#Step1">Getting the Settings Controller for the General Property 
+			Page</a></li>
+			<li><a href="#Step2">Assigning Setting Values for the General Property Page</a></li>
+			<li><a href="#Step3">Locking Settings for the General Property Page</a></li>
+			<li><a href="#Step4">Getting the Settings Controller for the Constraints 
+			Property Page</a></li>
+			<li><a href="#Step5">Assigning Setting Values for the Constraints Property 
+			Page</a></li>
+			<li><a href="#Step6">Locking Settings for the Constraints Property Page</a></li>
+			<li><a href="#Step7">Saving Setting Values and Other Data for Property 
+			Pages</a></li>
+		</ol>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step1"></a>Getting the Settings Controller for the General Property 
+		Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+<font color="#008000">' ----------------------------</font>
+<font color="#008000">' Get the settings controller</font>
+<font color="#008000">' ----------------------------</font>
+
+<font color="#0000FF">Set</font> settingControllers1 = CATIA.SettingControllers
+
+<font color="#008000">' ----------------------------</font>
+<font color="#008000">' Assembly / General options</font>
+<font color="#008000">' ----------------------------</font>
+
+<font color="#0000FF">Set</font> asmGeneralSetting = settingControllers1.Item(&quot;CATAsmGeneralSettingCtrl&quot;) 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The first object retrieved is the SettingControllers collection object 
+		in the settingControllers1 variable. Since the setting controller collection 
+		is aggregated to the Application object, simply calling CATIA.SettingControllers 
+		returns this collection. The next line retrieves a setting controller in 
+		the asmGeneralSetting variable thanks to the Item method of the setting 
+		controller collection to which the setting controller identifier CATAsmGeneralSettingCtrl 
+		is passed as argument.</p>
+		<table>
+			<caption>General Property Page</caption>
+			<tr>
+				<td>
+				<img alt="Tools Option Dialog Window for Assembly Design" height="529" src="images/CAAAsmOptions001.png" width="710">
+				</td>
+			</tr>
+		</table>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step2"></a>Assigning Setting Values for the General Property Page.</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Get/Set the options values</font>
+<font color="#008000">' ------------------------------</font>
+
+asmGeneralSetting.AutoUpdateMode = catManualUpdate
+
+autoUpdt = asmGeneralSetting.AutoUpdateMode
+
+msgbox "Automatic Update mode = " &amp; autoUpdt</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Here first line sets the value &quot;Manual&quot; for Update setting 
+		attribute in the general property page of the assembly design workbench and 
+		the second 
+		line reads the set value. In the third line the setting value read is displayed 
+		in a message box.</p>
+		<p>Similarly the macro sets values for other setting attributes in the General property 
+		page.</p>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step3"></a>Locking Settings for the General Property Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmGeneralSetting.SetAutoUpdateModeLock True
+
+isModified = asmGeneralSetting.GetAutoUpdateModeInfo (adminlevel, locked)
+
+msgbox "Automatic Update : administrator level = " &amp; adminlevel &amp; " - lock status = " &amp; locked
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>In the first line, as asmGeneralSetting.SetAutoUpdateModeLock is True so 
+		setting for Update setting attribute is locked. The second line reads the status 
+		of the lock which is displayed in the third line in a message box.</p>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmGeneralSetting.SetUpdateStatusModeLock False
+
+isModified = asmGeneralSetting.GetUpdateStatusModeInfo (adminlevel, locked)
+
+msgbox "Update Status computation : administrator level = " &amp; adminlevel &amp; " - lock status = " &amp; locked
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>As the value for asmGeneralSetting.SetUpdateStatusModeLock is False in 
+		thefirst 
+		line, so &quot;Compute exact update status at open&quot; setting attribute 
+		is unlocked.</p>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step4"></a>Getting the Settings Controller for the Constraints Property 
+		Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+<font color="#0000FF">Set</font> asmConstraintSetting = settingControllers1.Item("CATAsmConstraintSettingCtrl")
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>This line retrieves a setting controller in the asmConstraintSetting 
+		variable thanks to the Item method of the setting controller collection 
+		to which the setting controller identifier CATAsmConstraintSettingCtrl is 
+		passed as argument.</p>
+		<table>
+			<caption>Constraints Property Page after Running Macro</caption>
+			<tr>
+				<td>
+				<img alt="Tools Option Dialog Window for Assembly Design" height="529" src="images/CAAAsmOptions002.png" width="710">
+				</td>
+			</tr>
+		</table>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step5"></a>Assigning Setting Values for the Constraints Property 
+		Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmConstraintSetting.PasteComponentMode = catPasteWithCstOnCopyAndCut
+
+paste = asmConstraintSetting.PasteComponentMode
+
+msgbox "Component constraints creation after a Paste = " &amp; paste
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Here the first line sets value &quot;Always with the assembly constraints&quot; 
+		for the setting attribute &quot;Paste components&quot;. The second line reads it 
+		which is displayed in a message box in the third line.</p>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmConstraintSetting.QuickConstraintMode = catVerifiedConstraintFirst
+
+<font color="#0000FF">Dim</font> newArray(5)
+newArray(0) = "CATAsmPerpendType"
+newArray(1) = "CATAsmSurfContactType"
+newArray(2) = "CATAsmAngleType"
+newArray(3) = "CATAsmDistanceType"
+newArray(4) = "CATAsmCoincidenceType"
+newArray(5) = "CATAsmParallelType"
+
+asmConstraintSetting.SetQuickConstraintOrderedList newArray
+
+quick = asmConstraintSetting.QuickConstraintMode
+
+<font color="#0000FF">Dim</font> array	
+array = asmConstraintSetting.GetQuickConstraintOrderedList()
+
+msgbox "Quick Constraint creation mode = " &amp; quick
+
+msgbox "ordered list : " &amp; array(0) &amp; " - " &amp; array(1) &amp; " - " &amp; array(2) &amp; " - " &amp; array(3) &amp; " - " &amp; array(4) &amp; " - " &amp; array(5) 
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Here the first line is the setting value for the setting attribute &quot;create 
+		verified constraints first&quot;. Setting value in first line is equivalent 
+		to check the box for the attribute. In the second line, we are creating array 
+		of (5+1) 6 elements and we are setting values to each array element subsequently. 
+		In the next line, we are setting order of constraint types to be listed for &quot;Quick 
+		Constraint&quot; setting attribute as per order of elements in newArray. 
+		Order of constraints will be read and saved in the quick variable in the next line. 
+		After that we are creating a new array and valuating it with the ordered list. 
+		The first message box will display the ordered list as it is saved in 
+		the quick variable 
+		and the second message box will display elements of the array which is again 
+		the ordered 
+		list of constraints.</p>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step6"></a>Locking Settings for the Constraints Property Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmConstraintSetting.SetPasteComponentModeLock False
+
+isModified = asmConstraintSetting.GetPasteComponentModeInfo (adminlevel, locked)
+
+msgbox "Component constraints creation after a Paste : admin level = " &amp; adminlevel &amp; " - locked = " &amp; locked
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>In the first line, as asmConstraintSetting.SetPasteComponentModeLock is False 
+		so setting for Update setting attribute is unlocked. The second line reads the 
+		status of the lock which is displayed in the third line in a message box.</p>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmConstraintSetting.SetConstraintCreationModeLock True
+
+isModified = asmConstraintSetting.GetConstraintCreationModeInfo (adminlevel, locked)
+
+msgbox "Selectable elements to create a constraint : admin level = " &amp; adminlevel &amp; " - locked = " &amp; locked
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>As the value for asmConstraintSetting.SetConstraintCreationModeLock is True 
+		in the first line, so setting for the &quot;Compute exact update status at open&quot; 
+		setting attribute is locked.</p>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="Step7"></a>Saving Setting Values and Other Data for Property 
+		Page</h4>
+		<table class="code">
+			<tr>
+				<td>
+				<pre>...
+asmConstraintSetting.SaveRepository
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>This will save the changed setting values admin level and lock status.</p>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to modify setting values and lock settings for 
+the General 
+and Constraints property pages in the Assembly Design workbench using macros.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfTechArticles/CAAInfSettings.htm">Administrating 
+		Settings with Automation a Macro</a></td>
+	</tr>
+	<tr>
+		<td align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2017, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

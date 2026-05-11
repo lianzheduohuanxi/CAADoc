@@ -1,0 +1,286 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Mechanical Modeler Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Mechanical Modeler Overview</h3>
+      <em>Presentation, objectives and architecture&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article presents the Mechanical Modeler in term of&nbsp;objectives,
+      architecture and functionality. It enables you to have an
+      overview of the mechanical concepts developed in further technical
+      articles. A prerequisite knowledge of the Feature Modeler&nbsp; [<a href="#References">1</a>]
+      and the
+      Topological Modeler [<a href="#References">2</a>] is recommended to take
+      full benefits from these articles.&nbsp;</p>
+      <ul>
+        <li><strong><a href="#Objectives">Objectives</a></strong></li>
+        <li><strong><a href="#Architecture">Architecture</a></strong>
+          <ul>
+            <li><strong><a href="#FW">Frameworks</a></strong></li>
+            <li><strong><a href="#Scalability">Scalability</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Objectives"></a>Objectives</h3>
+<p>The objectives of the Mechanical Modeler are multiple:</p>
+<ol>
+  <li>Provide an <b> infrastructure</b>  for all the mechanical
+    applications.</li>
+  <p>This infrastructure is the <b> Part</b> document and the set of interfaces to
+  browse or create it. The article entitled &quot;The Structure of a Part
+  Document&quot; [<a href="#References">3</a>] details the different containers
+  of this V5 document and presents the links between them.&nbsp;One of which is the
+  specification container. This container contains the <b>mechanical features</b>. There are
+  three kinds of
+  mechanical features:</p>
+  <ul>
+    <li>The <b>Part</b> feature: the main feature containing the design of the
+      object to be built, and in particular geometrical features sets.
+    <li>The <b>geometrical</b> <b>features sets</b>: the features containing
+      either other geometrical features sets, or geometrical features.
+    <li>The <b>geometrical</b> <b>features</b>: those which hold a topological
+      result.</li>
+  </ul>
+  <p>The &quot;Contents of the Specification Container&quot; article first
+  details the Part feature [<a href="#References">15</a>], then the geometrical features
+  sets [<a href="#References">5</a>], and finally the
+  geometrical features [<a href="#References">6</a>]</p>
+  <li>Define the <b>Specification/Result </b>mechanism for the geometrical
+    feature.</li>
+  <p>The Feature Modeler [<a href="#References">1</a>] is a Specification/Result
+  Modeler in that it allows the creation of a network of inter-related data
+  objects in order to be able to automatically update the &quot;result&quot; of
+  an object whose &quot;specification&quot; has been modified. The Feature Modeler
+  provides an infrastructure for Spec/Result management, also called the
+  Build/Update mechanism.&nbsp;
+  The &quot;Specification/Result Mechanism Applied to Mechanical Features&quot;
+  article [<a href="#References">7</a>] describes the internal view of the
+  geometrical features in order to understand what is a mechanical result.</p>
+  <li>Enable having an <b>associative</b> geometrical result.</li>
+  <p>During the design, it can be useful to select an edge, or a face. These topological objects will be the inputs of a
+  mechanical feature. But a feature cannot directly reference a topological
+  object as
+  specification. The main reason is that it can be deleted and rebuilt during an update. Consequently topological objects are unstable. The solution
+  implemented in V5 to overcome this problem is to use a name instead of a
+  direct reference to the topology. Such a name is called a <b>generic name</b>
+  [<a href="#References">8</a>]. It provides a stable way to reference a
+  topological cell.</p>
+  <li>Create <b>new</b> mechanical features.</li>
+  <p>In case the Part Design features or the Generative Shape
+  Design features do not fit all your needs, you have the possibility to create
+  your own mechanical feature by deriving from a mechanical StartUp [<a href="#References">1</a>].
+  The following articles can help you to follow all the necessary steps:
+  <ul> 
+  <li>&quot;Creating a New StartUp Deriving from a Mechanical StartUp&quot;
+  [<a href="#References">9</a>]. This article describes from which Mechanical
+    StartUp you should derive, and how to create the StartUp.</li>
+  <li> &quot;Integrating a New Mechanical Feature in V5&quot; [<a href="#References">10</a>].
+    In deriving from a Mechanical StartUp, your feature automatically benefits
+    from Mechanical behaviors that you do not have to redefine. But there is a
+    set of interfaces which are to take into account for a full integration of
+    the feature in the V5. This article presents the main V5 behaviors and gives
+    the interfaces implied in these behaviors. They are classified
+    by importance: the mandatory interfaces, the interfaces to be standard or the
+    interfaces to implement only for specific cases.&nbsp;</li>
+  <li>&quot;Integrating The New Geometrical Feature to the Update Mechanism&quot; [<a href="#References">11</a>].
+    This article explains the <i>CATIBuild</i> interface implementation.&nbsp; </li>
+  <li>&quot;Verifying the Validity of a Geometrical Feature&quot;&nbsp; [<a href="#References">12</a>].
+    For a new geometrical feature, the last step is the validation step. After the
+    StartUp creation and the <i>CATIBuild</i> implementation, you should verify
+    the feature modelization and check the result. The mechanical infrastructure
+    provides a tool to realize this verification. This article describes how to
+    use it and gives you some recommendations to correct errors if any. </li>
+  </ul>
+  <p>Refer to the &quot;Creating a new Geometrical Feature: The Combined
+  Curve&quot;&nbsp; article for a concrete use case [<a href="#References">13</a>].&nbsp;</p>
+  <li>Provide Tools and Interfaces to <b>interact</b> with the Part document.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Architecture"></a>Architecture</h3>
+<h4><a name="FW"></a>Frameworks</h4>
+<p>The Mechanical Modeler is based on several frameworks.</p>
+<ul>
+  <li><b>MecModInterfaces / MechanicalModeler</b></li>
+  <p>These two frameworks provide interfaces and classes to manage the
+  model of the mechanical applications.</p>
+  <li><b>MechanicalCommands</b></li>
+  <p>This framework contains the interfaces to manage and create user features
+  and power copies. They are &quot;black box&quot; features which are built on
+  other mechanical features. The technical article entitled &quot;An Overview of
+  the Power Copies and User Features&quot; [<a href="#References">14</a>] gives
+  you details about these powerful features.</p>
+  <li><b>MechanicalModerUI</b></li>
+</ul>
+<blockquote>
+  <p>This framework contains tools and interfaces to manage the user interface of the
+  mechanical applications.</p>
+</blockquote>
+<p>For example, the Part Design, Shape Design and Sketcher applications are
+based on these frameworks.</p>
+<p><img border="0" src="images/CAAMmrArchiFW.jpg" width="598" height="473"></p>
+<h4><a name="Scalability"></a>Scalability</h4>
+<p>The Mechanical Modeler offers several usage levels which are by increasing
+complexity order the following:</p>
+<ol>
+  <li>The first level enables you to consult the contents of a Part document
+    in order to realize analysis or to do data transfers. A knowledge of the
+    Part document and of the objects linked to the mechanical world is sufficient.
+    [<a href="#References">3</a>][<a href="#References">5</a>][<a href="#References">6</a>].</li>
+  <li>The second level enables you to create your application by using supplied
+    features, the Part Design and the Generative Shape Design
+    features.&nbsp;</li>
+  <li>The third level enables you to create new
+    mechanical features from existing one. It is possible thanks to the Power
+    Copy or the User feature mechanism. [<a href="#References">14</a>]</li>
+  <li>The fourth and last level enables you to create your own mechanical features. This advanced step requires to read the articles
+    included in the &quot;The
+    Build/Update Protocol&quot;, &quot;Accessing Sub-Elements&quot; and &quot;Creating
+    a New Mechanical Feature&quot; sections of the Mechanical Modeler
+    home page.</li>
+</ol>
+<p>The following picture summarizes the last three steps:</p>
+<img border="0" src="images/CAAMmrScalability.jpg" width="623" height="361">
+<p>In most cases the Part Design and the Generative Shape
+Design features are sufficient for your applications. In the last level, you have
+always the possibility to create your own mechanical features, but it is rarely
+useful. The User features are an excellent compromise when the supplied features
+cannot fit your need.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="864" height="301">
+  <tr>
+    <td valign="top" width="52" height="15">[1]</td>
+    <td width="798" height="15"><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[2]</td>
+    <td width="798" height="18"><a href="../CAATobTechArticles/TopoConcepts.htm">Topologic
+      Concept</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[3]</td>
+    <td width="798" height="18"><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[4]</td>
+    <td width="798" height="18"><a href="../CAATobTechArticles/TopoModel.htm">The CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[5]</td>
+    <td width="798" height="18"> <a href="CAAMmrContentsSpecCont1.htm"> The Contents of the Specification
+      Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[6]</td>
+    <td width="798" height="18"> <a href="CAAMmrContentsSpecCont2.htm"> The Contents of the Specification
+      Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[7]</td>
+    <td width="798" height="18"><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[8]</td>
+    <td width="798" height="18"><a href="CAAMmrGenericNaming.htm">Generic Naming
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[9]</td>
+    <td width="798" height="18"><a href="CAAMmrCreatingNewFeat.htm">Creating a New
+      StartUp from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[10]</td>
+    <td width="798" height="18"><a href="CAAMmrFeatureIntegration.htm">Integrating
+      a New Mechanical Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[11]</td>
+    <td width="798" height="18"><a href="CAAMmrBuildIntegrating.htm">Integrating
+      a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[12]</td>
+    <td width="798" height="18"><a href="CAAMmrVerifyUpdate.htm">Verifying the
+      Validity of a Geometrical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="14">[13]</td>
+    <td width="798" height="14"><a href="../CAAMmrUseCases/CAAMmrCombinedCurveSamplesOverview.htm">Creating
+      a New Geometrical Feature: The Combined Curve</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[14]</td>
+    <td width="798" height="18"><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">An Overview of the Power Copies and
+      User Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="52" height="18">[15]</td>
+    <td width="798" height="18"><a href="CAAMmrContentsSpecCont0.htm"> The Contents of the Specification
+      Container - The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="856" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

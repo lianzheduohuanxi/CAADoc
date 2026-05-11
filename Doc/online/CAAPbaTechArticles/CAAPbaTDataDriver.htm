@@ -1,0 +1,302 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Data Driver</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Portal Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>3d com Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Data Driver</h3>
+      <em>Accessing simply your data</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The goal of this document is to help you understand what is a Data
+      Driver , what is its added value and the cost implied.</p>
+      <ul>
+        <li><strong><a href="#100000">Data Driver Overview</a></strong></li>
+        <li><strong><a href="#900000">Low Implementation Cost</a></strong>
+          <ul>
+            <li><strong><a href="#910000">Scalability</a></strong></li>
+            <li><strong><a href="#920000">Technology</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#200000">Implementation of the Core of a Driver</a></strong></li>
+        <li><strong><a href="#350000">The Driver Interface</a></strong></li>
+        <li><strong><a href="#300000">The SecurityIF Interface</a></strong></li>
+        <li><strong><a href="#400000">The EnvironmentIF Interface</a></strong></li>
+        <li><strong><a href="#500000">The MetadataIF Interface</a></strong></li>
+        <li><strong><a href="#600000">The DataIF Interface</a></strong></li>
+        <li><strong><a href="#700000">Extended Services</a></strong>
+          <ul>
+            <li><strong><a href="#710000">PersistantDataIF</a></strong></li>
+            <li><strong><a href="#720000">ExtractToPortalServerIF</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#800000">Deployment</a></strong></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Data Driver Overview</h3>
+<p>A Data Driver is the piece of code that helps the Portal and your legacy
+system to talk together. It has been designed to be very simple. In order to
+implement the basic functionalities of a data driver, you have to know about
+three interfaces and three objects. Then you will be able to query, navigate,
+access, view and report on your data.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="900000"></a>Low Implementation Cost</h3>
+<p>The cost of a driver implementation is low for two reasons:
+<ol>
+  <li>It is based on simple technologies</li>
+  <li>The driver scalability: a first driver can be coded very quickly then
+    extended according to the needs.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="910000"></a>Scalability</h4>
+<p>Some of our customers want to have basic functionalities on their data, but
+they want a quick development within one month on a lot of systems. Others
+accept to spend more time because they want advanced functionalities. In order
+to address the first, a driver is made of a core composed of 3 interfaces, which
+are about:</p>
+<ul>
+  <li>Enabling the security</li>
+  <li>Describing the data</li>
+  <li>Querying and Navigating the data</li>
+</ul>
+<p>Afterwards, you can implement other optional interfaces in order to add
+functionalities such as Bookmaking and Editing.</p>
+<p>Hence you can quickly get the functionalities you need most. After
+considering the success of your implementation and your new needs, you can
+extend the basic features. You only have to invest for what you need, the
+&quot;entry barrier&quot; is not high.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="920000"></a>Technologies</h4>
+<p>Another factor that makes the learning curve high for an integration project
+is the technology, all the technologies that you have to learn.<br>
+For us, the only requirement is Java. This language is clearly simple compared
+to C++. It is portable and comes with a lot of built-in libraries. The best
+known for database access is JDBC.<br>
+For the middleware, you can choose what you want from among CORBA, HTTP, JDBC,
+etc.</p>
+<p>We have built the Data Driver from a scalable perspective. If you want just a
+few things, your investment will be small. If you want more, you will invest
+more. And compared to other propositions, the cost is in every case low because</p>
+<ul>
+  <li>we do not multiply hot technologies</li>
+  <li>we let you implement the minimum necessary.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Implementation of the Core of a Driver</h3>
+<p>Building a driver consists in implementing several mandatory interfaces which
+compose the core of the driver.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="350000"></a>Driver Interface</h3>
+<p>It is the main interface which must give access give access to the
+implementations of the other ones and manages the three following aspects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000"></a>Life Cycle</h4>
+<p>A driver is instantiated through the traditional java <code><b>forName</b></code>.When
+it is launched, the driver is called on the start method with an argument: an <code><b>InformationObject</b></code>
+which provides all the information it needs during its life: the username, the
+cache where it can store files, etc.<br>
+At the end of the session, it is called on the <code><b>stop</b></code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Identity</h4>
+<p>Just after the <code><b>start</b></code> method, the driver is asked to give
+its User identity and then its System identity. The System identity will be used
+when some persistent information about a data must be stored. So be careful,
+don't change it after you have released the driver into production.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>Licensing</h4>
+<p>Then the Portal checks the licensing. It is up to you to tell us if the
+licensing for this driver is OK. The Portal does not own the licensing because,
+in fact, you can prerequisite another licensing system (for example, the PDM
+System when you run some of its libraries) and we will not be aware of this. For
+this, you are called on <code><b>isLicensingOK</b></code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>The SecurityIF Interface</h3>
+<p>After, we ask your driver for its SecurityIF interface. With this interface,
+we will understand if you have authorized the access of the user attempting to
+access the data.</p>
+<p>There are three calls on this interface.</p>
+<ol>
+  <li><code><b>isUserChecked</b></code> is called first. Here you have all the
+    basic information through the <code><b>informationObject</b></code>. So it
+    can be sufficient for you to determine the access right and you will be
+    called on <code><b>getDisplayableInformation</b></code></li>
+  <li>In the other case, we will call you on <code><b>showDialog</b></code>.
+    This method returns nothing. In fact, you can implement whatever you want in
+    this method. Remember you have a Frame Object, you can launch the panel. The
+    only thing we ask you is that when you will return on this method, that you
+    will tell us <code><b>isUserChecked</b></code>.
+  <li>If it is true, we will continue. In the other case we will stop the
+    processing of your driver. In the two cases, we will call you on <code><b>getDisplayableInformation</b></code>.
+    You will return a String Object, that we will display. Just remember that
+    each time you are called, we pass you a <code><b>Contb</b></code></li>
+</ol>
+<p>If you do not care about security because you rely on Enovia Portal security
+(if the user can access Portal, then he can access my data), then you can use a <code><b>defaultSecurityIfImpl</b></code>.</p>
+<p>At this point, we have launched your driver, we have checked the licensing
+and the authentication. Now for the functionalities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>The EnvironmentIF Interface</h3>
+<p>The environmentIF interface lets you organize your data.</p>
+<p>With each data you are returning, you need to associate a Uuid.<br>
+A Uuid is a unique identifier. It is composed of an environment and an
+identifier. The environment acts like a container for your data: i.e. a
+container for manufacturing, one container for the design. And in each
+environment, a type of object can have different attributes.</p>
+<p>If you do not need this feature, if your PDM system doesn't support it, you
+can use <b><code>defaultEnvironmentIFImpl</code></b>. Then your uuid will have
+to return the value &quot;default&quot;.</p>
+<p>In the other case, this interface has three calls:</p>
+<ol>
+  <li><code><b>getEnvironmentList</b></code> is called first. You return all the
+    environments available and that will be displayed for the query of an
+    object. If you return a null array, you will be called on the following
+    method</li>
+  <li><code><b>showDialog</b></code> enables you to launch a panel and to let
+    the user choose an environment</li>
+  <li>You will be called on <code><b>getDisplayableInformation</code></b>. You
+    will return a String Object that we will display. Just remember that each
+    time you are called, we pass you a <code><b>Context</b></code> object on
+    which you can obtain a <code><b>basicDriverServicesIF</b></code> with a <code><b>setText</b></code>
+    method. It is another way to proceed.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>The MetadataIF Interface</h3>
+<p>It contains one method <code><b>getTypes</b></code>, which returns all the
+types that the driver is able to access.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>The DataIF Interface</h3>
+<p>This interface has two purposes: one for querying data, one for navigating on
+basic parent-child relationship.</p>
+<p>The first method enables the query of data. It is called <code><b>QueryRoot</b></code>.</p>
+<p>It takes as Input the types requested, a query criteria and an environment.</p>
+<p>At this time, two types of query criteria are defined:</p>
+<ul>
+  <li>A java.lang.String which is passed with Search String queries</li>
+  <li>An array of ElementOfQuery objects, an ElementOfQuery contains three
+    Objects:
+    <ul>
+      <li>A PEAttribute, which is the attribute</li>
+      <li>A String, which is the Operator</li>
+      <li>A String, which is the Operand</li>
+    </ul>
+  </li>
+</ul>
+<p>The second method is aimed at Navigation.</p>
+<p>It contains only one method <code><b>openNode</b></code>, which means return
+all the children of this object. It models the basic parent-child relation. As
+entry, <code><b>openNode</b></code> takes a PELeaf.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>Extended Services </o:p> </h3>
+<h4><a name="710000"></a>PersistantDataIF</h4>
+<p>The goal of this interface is to enable the book marking of the object, i.e.
+to be able to store in a persistent way an identifier of an object, a
+uuid.Later, we are able to request this object by giving this uuid. The method
+that enables this is <code><b>restoreFromUuid</b></code>.</p>
+<p>The other method <code><b>isRestorableByUuid</b></code> asks the driver if
+the portal can store the uuid. If false is returned, it means that we are not
+able to store persistently an identifier of the object. So the portal will not
+enable book marking on this object.</p>
+<h4><a name="720000"></a>ExtractToPortalServerIF</h4>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="800000"></a>Deployment</h3>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The Data Driver enables you to access your data. In order to implement one,
+you have to implement 4 interfaces which manages the life cycle, the security,
+the metadata definition and the data access.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPbaTDriverOverview.htm">Driver Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

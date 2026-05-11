@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE>Creating Octree Tetrahedron Mesh Parts</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link href="../CAAScrBase/caav5.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Creating Octree Tetrahedron Mesh Parts</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This macro shows you how to create an octree tetrahedron 
+		mesh parts.</P>
+		<P>This macro opens an Analysis document and creates an octree tetrahedron 
+		mesh part. Global specifications associated with this mesh part are set. 
+		The local specification: <I>MSHLocalMeshSize</I> is created at one of the 
+		edges of the part. This scenario requires "FEM Solid (FMD) product".</P>
+		<P ALIGN="center">
+		<img height="220" src="images/OctreeMesh.gif" width="500" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniMeshOctTetra is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniMeshOctTetraSource.htm">CAAAniMeshOctTetra.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniMeshOctTetra.catvbs">Execute macro</A> (Windows only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniMeshOctTetra includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting the Product and Publications for 
+			Meshing</A></LI>
+			<LI><A HREF="#Navigate">Creating Mesh Part and Assigning Values to its 
+			Attributes</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Optional: allows to find the sample wherever it's installed</FONT>
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path has already been stored in the
+		<CODE>sDocPath</CODE> variable. In the collection of documents, two documents 
+		can be retrieved; the Analysis document and the Part document.</P>
+		<H4><A NAME="Reference"></A><B>Extracting the Product and Publications for 
+		Meshing</B></H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39; Retrieve the Analysis Manager and Analysis Model</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisManager = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">&#39; Retrieve the part document from Analysis manager</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set</FONT> partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set</FONT> product = partDocument.Product</PRE>
+				<PRE>
+
+<FONT COLOR="#008000">&#39; Retrieve the analysis model from the list of models</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModel = oAnalysisManager.Item(1)
+
+<FONT COLOR="#008000">&#39; Retrieve mesh manager and mesh part </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+<FONT COLOR="#008000">&#39; Retrieve publications from product and retrieve the published face.</FONT>
+<FONT COLOR="#0000FF">Set</FONT> publications1 = product.Publications
+<FONT COLOR="#0000FF">Set</FONT> pubEdge = publications1.Item("Edge")
+<FONT COLOR="#0000FF">Set</FONT> pubPartBody = publications1.Item("PartBody")
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, the <B>Analysis Models</B> and 
+		the <B>Mesh Manager Objects</B>. The extraction of pre-defined geometric 
+		elements is done with the help of Reference interface. This is equivalent 
+		to the selection of a B-Rep elements inside the interactive application. 
+		In this macro reference is created from published body and published edge.</P>
+		<H4><A NAME="Navigate"></A>Creating Mesh Part and Assigning Values to its 
+		Attributes</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+ </PRE>
+				<PRE><FONT COLOR="#008000">&#39; Add the new Octree tetrahedron mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>octreePart = meshParts.Add ("MSHPartOctree3D")
+
+<FONT COLOR="#008000">&#39; Add reference previously created</FONT>
+octreePart.AddSupportFromPublication product, pubPartBody
+
+octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+octreePart.SetGlobalSpecification "AbsoluteSagValue", "3.0 mm"
+octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
+octreePart.SetGlobalSpecification "MaxInteriorSize", "1.2 mm"
+octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
+octreePart.SetGlobalSpecification "MinGeometrySize", "0.5 mm"
+octreePart.SetGlobalSpecification "AbsoluteSag", 1
+octreePart.SetGlobalSpecification "MaxWarpAngle", "1.0 rad"
+octreePart.SetGlobalSpecification "Criteria", "Skewness"
+octreePart.SetGlobalSpecification "MeshGeometryViolation", 1
+octreePart.SetGlobalSpecification "InteriorSize", 1
+octreePart.SetGlobalSpecification "MinJacobian", 0.3
+octreePart.SetGlobalSpecification "MaxAttempts", 2
+octreePart.SetGlobalSpecification "MeshViolationValue", "0.5 mm"
+octreePart.SetGlobalSpecification "ProportionalSag", 1
+octreePart.SetGlobalSpecification "ProportionalSagValue", "0.5 mm"
+
+<FONT COLOR="#008000">&#39; Add the Mesh local size as local specifications and assign it attributes</FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+<FONT COLOR="#0000FF">Set </FONT>spec1 = meshspecs1.Add("MSHLocalMeshSize")
+spec1.SetAttribute "MSHMeshSizeMag", "1.5 mm"
+spec1.AddSupportFromPublication "ConnectorList", product, pubedge
+
+<FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+octreePart.Update
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variable must be defined. After running the macro the mesh may not be immediately visible,
+                the user has to go to the Afvanced meshing tools workbench to see the mesh.</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create octree tetrahedron mesh parts and how to 
+assign its local and global specifications.</P>
+<P>&nbsp;</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Analyzing the Parameters of a Point on a Surface</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Analyzing the Parameters of a Point on a Surface</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CAAGMModelAnalysisOpe use case illustrates how to analyze the parameters 
+		(normals, curvature and torsion) of a point on a surface by using the
+		<em>CATICGMLocalAnalysis2D </em>operator. This is the second part of the 
+		use case, the first part is dedicated to the <em>CATICGMLocalAnalysis1D</em>
+		operator.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMModelAnalysisOpe Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelAnalysisOpe Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelAnalysisOpe</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelAnalysisOpe Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case [<a href="#References">1</a>] is intended to help you to use the 
+CATICGMLocalAnalysis2D operator. See [<a href="#References">2</a>] for an overview 
+of this type of operators.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelAnalysisOpe Use Case</h2>
+<p>CAAGMModelAnalysisOpe is a use case of the CAAGMModelInterfaces.edu framework.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelAnalysisOpe Do</h3>
+<table>
+	<tr>
+		<td>
+		<img alt="Use Case Data" src="images/CAACgmGMAnalysis.gif" width="342" height="222"></td>
+		<td>This use case creates the input data to be passed to the CATICGMLocalAnalysis2D 
+		operator (a cylinder with a radius of 45.2mm), creates the operator and 
+		performs the geometric analyzes. The result can be optionally saved into 
+		an NCGM container and displayed using the CAAGMModelGemBrowser use case 
+		[<a href="#References">3</a>].</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelAnalysisOpe </h3>
+<p>To launch CAAGMModelAnalysisOpe, you will need to set up the build time environment, 
+then compile CAAGMModelAnalysisOpe.m along with its prerequisites, set up the run 
+time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMModelAnalysisOpe with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p>CAAGMModelAnalysisOpe <code>e:\analysis2D.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case [<a href="#References">3</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelAnalysisOpe Code</h3>
+<p>The CAAGMModelAnalysisOpe use case is made of a main named CAAGMModelAnalysisOpe.cpp 
+located in the CAAGMModelAnalysisOpe .m module of the CAAGMModelInterfaces.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\</code>CAAGMModelAnalysisOpe
+<code>.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The initial step which consists in creating the geometry factory as well as the 
+last step which consists in writing the model and closing the factory are described 
+in [<a href="#References">1</a>]. The coding steps dedicated to the CATICGMLocalAnalysis2D 
+operator are explained below: </p>
+<ol>
+	<li>Creating the Geometry Factory [<a href="#References">1</a>].</li>
+	<li><a href="#Creates the Line and Cylinder to Intersect">Creating the Surface 
+	and the Point to be analyzed</a></li>
+	<li><a href="#Basic Mode">Creating and Using the CATICGMLocalAnalysis2D operator</a></li>
+	<li>Writing the Model and Closing the Factory [<a href="#References">1</a>].</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Line and Cylinder to Intersect"></a>Creating the Surface 
+and the Point to Be Analyzed</h3>
+<p>The surface on which is located the point to be analyzed is a cylinder.</p>
+<pre class="code">CATCylinder * pCyl = piGeomFactory-&gt;CreateCylinder(axis,radius1,
+StartHeight,EndHeight,
+StartAngle,EndAngle);
+...
+CATSurParam paramcyl = pCyl-&gt;CreateParam(0.,0.);
+paramcyl.SetLocalParamU(0.5);
+paramcyl.SetLocalParamV(0.5);
+CATSurface * pSurface = pCyl;</pre>
+<p>The geometry is created by the <code>CATGeoFactory</code> with the CreateCylinder 
+method. No geometric point is created, the point to be analyzed is specified by 
+its parameter.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Basic Mode"></a>Creating and Using the CATICGMLocalAnalysis2D Operator</h3>
+<p>The CATCGMCreateLocalAnalysis2D global function is used to create the operator. 
+The fundamental forms along with the mean and gaussian curvature are retrieved.</p>
+<pre class="code">CATICGMLocalAnalysis1D * pAnalysisCircle =:: <strong>CATCGMCreateLocalAnalysis1D</strong>(pConfig,pCircle,paramcircle); 
+...
+// c - Retrieve the main normal and the binormal and check 
+// that the angle between them must be equal to PI/2
+//
+CATMathVector mainnormal = pAnalysisCircle-&gt;GetMainNormal();
+CATMathVector binormal = pAnalysisCircle-&gt;GetBiNormal();
+...
+// d - Retrieve the curvature and check that it is equal to 1
+//
+double curvature = pAnalysisCircle-&gt;GetCurvature();
+cout &lt;&lt; &quot;curvature &quot; &lt;&lt; fabs(curvature*radius) &lt;&lt; endl;
+...
+// e - Retrieve the torsion and check that it is equal to 0
+//
+double torsion = pAnalysisCircle-&gt;GetTorsion(); 
+cout &lt;&lt; &quot;torsion &quot; &lt;&lt; fabs(torsion) &lt;&lt; endl;
+...
+// f - Test whether the specified point is regular
+//
+CATLONG32 regular = pAnalysisCircle-&gt;IsARegularParam();
+cout &lt;&lt; &quot;IsARegularParam &quot; &lt;&lt; regular &lt;&lt; endl;
+...</pre>
+<p>Here are the messages on the standard output:</p>
+<pre>Mean curvature 0.0110619
+Gaussian curvature 0
+IsARegularParam 1</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>CATICGMLocalAnalysis2D is a geometric operator which follows the same scheme 
+as all geometric operators: it is a transient object and its execution does not 
+modify the input operands. It must be operated within a single container. Its purpose 
+is to analyze the parameters (derivatives) around a point on a surface.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmUcGMModelUseCaseOverw.htm">An Introduction to Geometric Modeler 
+		Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmUcGemBrowser.htm">Browsing the 
+		Geometric Container</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

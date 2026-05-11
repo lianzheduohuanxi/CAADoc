@@ -1,0 +1,74 @@
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create Translation mesh
+'                 assign the Surface Mesh as support
+'                 specify the global specifications
+'   Assumtions:   Looks for surface.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Pad.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+' Retrieve the analysis Manager 
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+' Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+'Retrieve the publications
+Set publications = product.Publications
+Set pubBody = publications.Item("PartBody")
+Set pubTopFace = publications.Item("Top")
+Set pubBotFace = publications.Item("Bottom")
+
+' Retreive the analysis model
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+'Retrieve the mesh manager and list of mesh parts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+'Add Sweep 3D mesh part to the list of mesh parts
+Set sweep3D = oAnalysisMeshParts.Add ("MSHPartSweep3D") 
+
+'Add support from the published body
+sweep3D.AddSupportFromPublication product, pubBody
+
+sweep3D.SetSpecificationFromPublication "Top", product, pubTopFace, 0
+
+sweep3D.SetSpecificationFromPublication "Bottom", product, pubBotFace, 0
+
+'Set the global specification
+sweep3D.SetGlobalSpecification "ElementOrder", "Linear"
+sweep3D.SetGlobalSpecification "GuideAngle", 60
+sweep3D.SetGlobalSpecification "NbElements", 10
+sweep3D.SetGlobalSpecification "DistributionType", "Arithmetic"
+sweep3D.SetGlobalSpecification "Ratio", 5.0
+sweep3D.SetGlobalSpecification "CaptureTol", 1.0
+
+sweep3D.Update
+
+End Sub
+

@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extrema of a Solid</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Extrema of a Solid</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Given a point located in a solid, the extrema are the point(s) which 
+		are the furthest or the closest from this input point in a given 
+		direction.&nbsp; </p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To compute the extrema of a solid, use the CATICGMTopBodyExtremum operator in GMOperatorsInterfaces. 
+This operator has to 
+be created by the CATCGMCreateDirBodyExtremum global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsBodyExtremum.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to compute the extrema of a solid. This use case creates the 
+data to be passed to the operator. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Extrema Computation : Input Data</caption>
+  <tr>
+    <td><img alt="Extrema Input" src="images/CGM_extrema_0.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATMathPoint Origin(0,0,0);
+CATMathVector VAxeX(1,0,0);
+CATMathVector VAxeY(0,1,0);
+CATMathVector VAxeZ(0,0,1);
+
+CATBody* pBodyXMin = NULL;
+...
+
+// a - Compute the minimum along X
+//
+CATICGMTopBodyExtremum  *pOpXMin  =  CATCGMCreateDirBodyExtremum(piGeomFactory,    
+    &topdata,piBody,CATMinimum,VAxeX,Origin)  ;              
+  if  (pOpXMin)  
+  {  
+    pOpXMin->Run();  
+    pBodyXMin =  pOpXMin->GetResult();  
+    pOpXMin->Release();  
+    pOpXMin  =  NULL;  
+  }  
+...
+// f - Compute the maximum along Z
+//
+CATICGMTopBodyExtremum  *pOpZMax  =  CATCGMCreateDirBodyExtremum(piGeomFactory,    
+    &topdata,piBody,CATMaximum,VAxeZ,Origin)  ;              
+if  (pOpZMax)  
+  {  
+    pOpZMax->Run();  
+    pBodyZMax =  pOpZMax->GetResult();   
+    pOpZMax->Release();  
+    pOpZMax  =  NULL;  
+  }  
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Extrema Computation: Result</caption>
+  <tr>
+    <td><img alt="Extrema Result" src="images/CGM_extrema_1.png"></td>
+     </tr>
+ </table>
+<p>&nbsp;Four extrema are returned as edges and two extrema (along Z) as faces.
+</p>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

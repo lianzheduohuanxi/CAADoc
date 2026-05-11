@@ -1,0 +1,336 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating an Electrical Schematic Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Wire Routing</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Listing conductors going through a Route Segment</h3>
+      <em>How to list the conductors (wires and/or wire groups) going through a 
+      route segment</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEwrListWiresInBundleSegment</i> use case. This use
+      case explains how to list conductors (wires and/or wire groups) going 
+      through a route segment using the CATIEwrRouteSegment interface.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEwrListWiresInBundleSegment Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEwrListWiresInBundleSegment Do</a></li>
+            <li><a href="#How">How to Launch CAAEwrListWiresInBundleSegment</a></li>
+            <li><a href="#Where">Where to Find the 
+            CAAEwrListWiresInBundleSegment Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The following operations are detailed is this use case:
+<ul>
+  <li>How to create a CATIA V5 session</li>
+  <li>How to open a CATIA V5 document</li>
+  <li>How to Initialize the Electrical  Environment</li>
+  <li>How to scan for geobundle and bundle segments in a CATIA V5 document</li>
+  <li>How to list conductors going through route segment</li>
+  <li>How to close the Document and the session.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEwrListWiresInBundleSegmentUse Case</h3>
+<p>CAAEwrListWiresInBundleSegment is a use case of the CAAElecRoutingItf.edu framework
+that illustrates the use of the CATIEwrRouteSegment interface capabilities of 
+the ElecRoutingItf framework .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEwrListWiresInBundleSegment Do</h4>
+<p>The goal of CAAEwrListWiresInBundleSegment is to list the conductors going 
+through a route segment.</p>
+<table width="614">
+  <tr>
+    <td width="609">
+    <img border="0" src="images/CAAEwr11.jpg" width="1200" height="900"></td>
+  </tr>
+</table>
+<p>Above is a CATIA V5 image of the data used in this sample.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEwrListWiresInBundleSegment</h4>
+<p>To launch CAAEwrListWiresInBundleSegment, you will need to set up the build time
+environment, then compile CAAEwrListWiresInBundleSegment.cpp along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">1</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEwrListWiresInBundleSegment input_data.CATProduct&quot;</pre>
+<ul>
+  <li><b>input_data.CATProduct</b> - the path where the file is stored and
+    the name of the CATProduct document to be opened.<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-width: 0" bordercolor="#111111" width="100%" id="AutoNumber1">
+    <tr>
+      <td width="5%" style="border-style: none; border-width: medium">Unix</td>
+      <td width="95%" style="border-style: none; border-width: medium"><code>InstallRootDirectory/CAAElecRoutingItf.edu/CNext/resources/graphic/CAAEwrListWiresInBundleSegment/Electrical-External-data-start.CATProduct</code></td>
+    </tr>
+    <tr>
+      <td width="5%" style="border-style: none; border-width: medium">Windows</td>
+      <td width="95%" style="border-style: none; border-width: medium"><code>InstallRootDirectory\CAAElecRoutingItf.edu\CNext\resources\graphic\CAAEwrListWiresInBundleSegment\Electrical-External-data-start.CATProduct</code></td>
+    </tr>
+  </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEwrListWiresInBundleSegment</i> Code</h4>
+<p>CAAEwrListWiresInBundleSegment code is located in the 
+CAAEwrListWiresInBundleSegment.m use case
+module of the CAAElecRoutingItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecRoutingItf.edu/CAAEwrListWiresInBundleSegment.m/src/CAAEwrListWiresInBundleSegment.cpp</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecRoutingItf.edu\CAAEwrListWiresInBundleSegment.m\src\CAAEwrListWiresInBundleSegment.cpp</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>
+CAAEwrListWiresInBundleSegment.cpp</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six steps in <i>CAAEwrListWiresInBundleSegment</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#InitElecEnv">Initializing Electrical Environment</a></li>
+  <li><a href="#RetrieveGBN">Retrieving all Geometrical Bundle under the Root 
+  Product and Selecting one to analyze </a></li>
+  <li><a href="#RetrieveBNS">Retrieving all Bundle Segments under the 
+  Geometrical Bundle and Selecting one to analyze </a></li>
+  <li><a href="#ListWires">List the Wires going through the bundle segment</a></li>
+  <li><a href="#Epilog">Epilog</a>.</li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Creating a session. For more detail see<a href="#References">[2]</a>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      </pre>
+      <pre>int main (int argc, char * argv[] )
+{ ...</pre>
+      <pre>CATSession *pSession = NULL;
+
+char *sessionName = &quot;CAAEwrListWiresInBundleSegment_Session&quot;;
+HRESULT rc = ::Create_Session(sessionName,pSession);
+...
+
+  CATDocument *pDoc = NULL;
+  RC = CATDocumentServices::Open(argv[1], pDoc);
+...</pre>
+      <pre>CATIProduct* piRootProduct = NULL;// piRootProduct is a handle to document root product
+
+CATIDocRoots * pDocRoots = NULL;
+rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,(void**) &amp;pDocRoots);
+if ( FAILED(rc) || (NULL==pDocRoots) ) return 3;
+CATListValCATBaseUnknown_var* pListRootProduct = pDocRoots-&gt;GiveDocRoots();</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="InitElecEnv">Initializing Electrical Environment</a></h4>
+<p>To initialize the electrical environment, use the CATIElecDocServices 
+interface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIEleDocServices * piElecDocServices = NULL;
+
+rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="RetrieveGBN"></a>Retrieving all Geometrical Bundle under the 
+Root Product and Selecting one to analyze</h4>
+<p>Use the CATIProduct::GetAllChildren method to retrieve the geobundles.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ CATListValCATBaseUnknown_var *pListGeoBundle = piRootProduct-&gt;GetAllChildren(CATIEhiGeoBundle::ClassName());
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="RetrieveBNS"></a>Retrieving all Bundle Segments under the 
+Geometrical Bundle and Selecting one to analyze</h4>
+<p>To retrieve the bundle segments in a geobundle use the 
+CATIGeoBundle::ListBundleSegments method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATListValCATBaseUnknown_var* pListBundleSegment = NULL;
+rc = piGeoBundle-&gt;ListBundleSegments(&amp;pListBundleSegment);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ListWires"></a>List the Wires going through the bundle segment</h4>
+<p>Bundle segments and back shells bind to the CATIEwrRouteSegment interface. 
+Use the method ListConductors to list the wires and/or the group wires going 
+through the route segment</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIEwrRouteSegment *piEwrRouteSegment = NULL;
+rc = piBundleSegment-&gt;QueryInterface(IID_CATIEwrRouteSegment, (void **)&amp;piEwrRouteSegment);
+</pre>
+      <pre>...</pre>
+      <pre>CATListValCATBaseUnknown_var* pListConductors = NULL;
+rc = piEwrRouteSegment-&gt;ListConductors(pListConductors);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = CATDocumentServices::Remove(*pDoc);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To remove the document,&nbsp; use the CATDocumentServices::Remove&nbsp; method. For more
+detail on managing documents see [<a href="#References">2</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The session is deleted before exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown you how to create a schematic document, how to create
+in-line references of schematic entities, how to place those references on a
+sheet, how to assemble, and connect those entities and how to save the document.</p>
+<p>Following operations have been detailed is this use case:
+<ul>
+  <li>How to initialize the electrical environment</li>
+  <li>How to scan all the geobundles in a document</li>
+  <li>How to list all the bundle segments in a geobundle</li>
+  <li>How to list all the conductors in a route segment</li>
+  <li>How to remove the document and the session.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>
+
+

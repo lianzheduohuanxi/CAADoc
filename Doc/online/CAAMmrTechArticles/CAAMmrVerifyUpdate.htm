@@ -1,0 +1,721 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Verifying the Validity of a Geometrical Feature</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Verifying the Validity of a Geometrical Feature</h3>
+      <em>Using the CATMmrVerifyUpdate Application&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the usage of the
+      <em> CATMmrVerifyUpdate</em> application. This application enables you to
+      validate a new geometrical feature [<a href="#References">1</a>] or to
+      verify the feature update's stability after code modifications.&nbsp;</p>
+      <ul>
+        <li><strong><a href="#Principes">CATMmrVerifyUpdate Application Principles</a></strong></li>
+        <li><strong><a href="#How to launch">How to Launch the CATMmrVerifyUdate Application</a></strong></li>
+        <li><strong><a href="#Checks in details">Checks in Details</a></strong>
+          <ul>
+            <li><strong><a href="#update">Update</a></strong></li>
+            <li><strong><a href="#spec">Specifications</a></strong></li>
+            <li><strong><a href="#topo">Topological Report</a></strong></li>
+            <li><strong><a href="#naming">Generic Naming</a></strong></li>
+            <li><strong><a href="#stability">Update S</a><a href="#stability">tability</a></strong></li>
+          </ul>
+        <li><strong><a href="#Output Files in details">Output Files in Details</a></strong>
+          <ul>
+            <li><b><a href="#CheckSummary.txt / CheckSummary.html">CheckSummary.txt /
+              CheckSummary.html</a></b></li>
+            
+            <li><b><a href="#PartSummary.txt / PartSummary.htm">PartSummary.txt /
+              PartSummary.html</a> </b></li>
+            
+                <li><b><a href="#CheckSpecifications.txt">CheckSpecifications.txt</a></b></li>
+    <li><b><a href="#CheckNaming.html">CheckNaming.html</a></b></li>
+<li><b><a href="#CheckJournalVerdict.html">CheckJournalVerdict.html</a></b></li>
+<li><b><a href="#CheckJournalMoreInformation.html">CheckJournalMoreInformation.html</a></b></li>
+
+  
+    
+<li><b><a href="#CheckStability.html">CheckStability.html</a></b></li>
+
+  
+    
+             </ul>
+        </li>
+        <li><strong><a href="#Return Codes of the CATMmrVerifyUpdate Application">Return
+          Codes of&nbsp;the </a></strong><a href="#Return Codes of the CATMmrVerifyUpdate Application"><strong> CATMmrVerifyUdate Application</strong></a></li>
+                <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Principes"></a>CATMmrVerifyUpdate Application Principles</h3>
+<p>The <i>CATMmrVerifyUpdate</i> Application can be used in two steps:</p>
+<ol>
+  <li>When you are developing a new feature.</li>
+  <p>At first, it enables Feature Modeler [<a href="#References">2</a>] rules verification.
+  Next, the application allows you to verify that the result provided by the <i>CATIBuild</i>
+  implementation on the feature is correct [<a href="#References">3</a>].</p>
+  <li>When the code creating a feature is modified.</li>
+  <p>The application allows you to check the update's stability of the feature for
+  which the contents of the <i>CATIBuild</i> implementation [<a href="#References">3</a>]
+  (or its included methods) has
+  been changed.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="How to launch"></a>How to Launch the CATMmrVerifyUpdate Application</h3>
+<p>To launch <i>CATMmrVerifyUpdate</i>, you will need to set up the build time
+environment, set up the run time environment, and then execute the command [<a href="#References">8</a>]
+such as:</p>
+<p><code>mkrun -c &quot;CATMmrVerifyUpdate [InputPart&nbsp;|-<b>L </b>PartList]
+[-<b>specs</b>] [-<b>valid</b>] [-<b>stab</b>]
+[-<b>o</b>   OutputPath]&nbsp;[-<b>feat</b>   FeatureName]
+[-<b>cat</b>
+ CatalogName] [-<b>noforce</b>] [-<b>h</b>]&quot;</code></p>
+<p>or if you have only the run time environment, you can use the catstart
+command to launch <code> CATMmrVerifyUpdate</code>&nbsp;&nbsp;</p>
+<p><span style="font-weight: 400">catstart -run &quot;</span><code>CATMmrVerifyUpdate
+[InputPart&nbsp;|-<b>L </b>PartList]
+[-<b>specs</b>] [-<b>valid</b>] [-<b>stab</b>]
+[-<b>o</b>    OutputPath]&nbsp;[-<b>feat</b>    FeatureName]
+[-<b>cat</b>
+ CatalogName] [-<b>noforce</b>] [-<b>h</b>]&quot;</code></p>
+<p>The usage of <span style="font-weight: 400">catstart</span> is explained in
+the interactive documentation. Refer to
+CATIA Infrastructure &gt; CATIA Infrastructure User Guide &gt; Basic Tasks
+&gt; Starting Version 5 &gt; <span style="FONT-WEIGHT: 400">Starting a Session
+on Windows </span><span style="font-weight: 400">(method 5) or </span><span style="FONT-WEIGHT: 400">Starting
+a Session on </span><span style="font-weight: 400">Unix (method 2)</span></p>
+<p>The <i>CATMmrVerifyUpdate </i>application carries out checks on Part
+documents. You can online set one document (<code>InputPart)</code>, or you can
+specify a list of documents in a text file (<code>PartList)</code>. This file is
+pre-fixed with the -<b>L</b> option. If a txt file is given, the <code> InputPart</code><code>
+</code>argument is not taken into account. In two cases, the Part document
+format is the complete path with the .CATPart suffix.</p>
+<p>Whatever
+  the options, <i> CATMmrVerifyUpdate</i> checks the <a href="#update">update</a> 
+ of the Part features.&nbsp;</p>
+<p>The options are the following, the first three being afterwards named the
+&quot;check options&quot;:</p>
+<ul>
+  
+  
+  <li>-<code><b>specs</b></code></li>
+ 
+  <p>In addition to
+  the <a href="#update"> update</a>   check, <i> CATMmrVerifyUpdate</i>   also checks
+  for each feature some Feature Modeler [<a href="#References">2</a>] rules and some others rules: <a href="#spec">Specifications</a>  </p>
+  
+  <li><code><b>-valid</b></code></li>
+  <p>In addition to
+  the <a href="#update"> update</a>   check, <i> CATMmrVerifyUpdate</i>  also
+  checks for each feature:</p>
+</ul>
+<ul>
+  
+  <ul>
+  <li>The validity of the scope [<a href="#References">4</a>]: <a href="#naming">Generic Naming</a></li>
+  </ul>
+  
+  <ul>
+  <li><p>The contents of the topological report: <a href="#topo">Topological Report</a></p></li>
+  </ul>
+  <p>This option enables you to check the <i>CATIBuild</i> result [<a href="#References">3</a>].&nbsp;</p>
+  <p>Caution, this check option is available only if the -<b>cat</b> option is
+  set.</p>
+  <li><code><b>-stab</b></code></li>
+</ul>
+<blockquote>
+  <p>In addition to
+  the <a href="#update"> update</a>   check, <i> CATMmrVerifyUpdate</i>   also
+  makes a comparison, between some specific values, before and after the
+  feature's update: <a href="#stability">Update
+  Stability</a>.</p>
+  <p>This option enables you to check the validity of the modifications done in
+  a <i>CATIBuild</i>  implementation [<a href="#References">3</a>].</p>
+</blockquote>
+<ul>
+  
+<li><code><b>-o</b> OutputPath</code></li>
+<p><i>CATMmrVerifyUpdate</i> generates some TXT files and HTML files according
+to check option's requested. This option allows you to specify the path 
+  of these files, otherwise there are created in the directory indicated by the <code> CATTemp</code> environment variable.</p>
+<p>There are files to sum up for each processed Part the check results.</p>
+<ul>
+<li>Whatever the check option there is the <a href="#CheckSummary.txt / CheckSummary.html">CheckSummary.txt</a>
+        file.&nbsp;</li>
+<li>If at least one check option is specified (-<b>specs</b>, -<b>valid</b>,
+        -<b>stab</b>) there is also the <a href="#CheckSummary.txt / CheckSummary.html"> CheckSummary.html
+  </a> file</li>
+</ul>
+<p>For each Part to analyze, a sub-directory, named with the Part name, is
+created inside the result directory. This sub-directory contains:</p>
+<p>&nbsp;&nbsp;&nbsp; *) Files to sum up for each processed Part's feature the
+check outputs.&nbsp;</p>
+  <ul>
+  <li>Whatever the check option there is the <a href="#PartSummary.txt / PartSummary.htm">PartSummary.txt</a>
+    file
+         </li>
+  <li>If at least one check option is specified (-<b>specs</b>, -<b>valid</b>,
+        -<b>stab</b>) there is also the <a href="#PartSummary.txt / PartSummary.htm">PartSummary.htm</a>
+    &nbsp;
+         </li>
+  </ul>
+&nbsp;<p> &nbsp;&nbsp;&nbsp; * ) Either the errors, the files below can be
+    also generated. They contain the details of check outputs.&nbsp;</p>
+    <ul>
+      <li>(with -specs)&nbsp; <a href="#CheckSpecifications.txt">CheckSpecifications.txt</a></li>
+      <li>(with -valid)&nbsp;&nbsp;&nbsp; <a href="#CheckNaming.html">CheckNaming.html</a>,</li>
+      <li>(with -valid)&nbsp;&nbsp;&nbsp; <a href="#CheckJournalVerdict.html">CheckJournalVerdict.html</a>,</li>
+      <li>(with -valid)&nbsp;&nbsp;&nbsp; <a href="#CheckJournalMoreInformation.html">CheckJournalMoreInformation.html</a>,</li>
+      <li><p>(with -stab)&nbsp;&nbsp;&nbsp; <a href="#CheckStability.html">CheckStability.html</a></p></li>
+    </ul>
+    </ul>
+<ul>
+  <li><code><b>-feat</b> FeatureName</code></li>
+  <p>This option enables you to check only one feature contained in the <code> InputPart</code>
+  Part document. <code>FeatureName</code> can be:</p>
+  <ul>
+  <li>The alias name of the feature (<i>CATIAlias- GetAlias</i>)</li>
+  <li>The display name of the feature (<i>CATISpecObject- GetDisplayName</i>)</li>
+  <li>The (internal) name of the feature (<i>CATISpecObject-GetName</i>) [<a href="#References">2</a>]</li>
+  
+  </ul>
+  <p>This option is not taken into account if there are several Parts</p>
+<li><code>-<b>cat</b> CatalogName</code></li>
+<p>This option, only available for the <b>-valid </b>and<b> -stab</b>
+ check options,&nbsp; enables you to filter the
+  features to analyze. Thanks to this option, you can select a specific feature catalog to filter your
+  features among the features of the Part document. <code> CatalogName</code> is the name of the feature catalog without
+  the storage path and with the &quot;.CATfct&quot; suffix.&nbsp;</p>
+  
+<p>This table summarizes by check option type the feature taken into account:</p>
+  
+<table border="1">
+  <tr>
+    <td>&nbsp;</td>
+    <td>with <b>-cat</b></td>
+    <td>without <b>-cat</b></td>
+  </tr>
+  <tr>
+    <td> -<b>spec</b></td>
+    <td>All the features are
+      checked</td>
+    <td>All the features are
+      checked</td>
+  </tr>
+  <tr>
+    <td>-<b>valid</b></td>
+    <td>Only the features of the catalog are checked</td>
+    <td>No check</td>
+  </tr>
+  <tr>
+    <td> -<b>stab</b></td>
+    <td>Only the features of the catalog are checked</td>
+    <td>All the features are
+      checked</td>
+  </tr>
+</table>
+<p>When there are several Parts, this option is applied to all.&nbsp;</p>
+  <li><code><b>-noforce</b></code></li>
+  
+  <p>If the Part is up to date, this option must not be set, and the application
+  will launch an update (force update) on all its features. Otherwise, if the
+  Part is not up to date, -noforce must be set, and in this case a simple update
+  will be launched. In other words:</p>
+  <ul>
+  <li>if -noforce is not set</li>
+  <ul>
+  <li>The Part is Up to Date : a force update is done</li>
+   <li>The Part is Not Up to Date: an error is generated</li>
+  </ul>
+  <li>if -noforce is set</li>
+    <ul>
+  <li>The Part is Up to Date: an error is generated</li>
+   <li><p>The Part is Not Up to Date: a simple update is done (only the none up to date features
+    are updated)</p></li>
+  </ul>
+  
+  </ul>
+  <p>When there are several Parts, this option is applied to all.&nbsp;</p>
+    <li><code><b>-h</b> </code></li>
+<p>This option displays the valid options for the command.</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Checks in details"></a>Checks in Details</h3>
+<p>In this section, you will find in details the check meaning and the list of tests
+done for each of them.&nbsp;</p>
+<h4><a name="update"></a>Update</h4>
+<p>This check enables you to validate the update of the geometrical features. In other words, it tests that the construction of the
+result associated with
+the feature is generated without error [<a href="#References">5</a>].&nbsp;</p>
+<p>There are two reasons for an update error:</p>
+<ul>
+  <li>A bad input specification for the feature. If it is possible, change
+    the input</li>
+  <li>A topological error.&nbsp; By using the -<b>valid</b> options you could analyze
+    the error.&nbsp;</li>
+</ul>
+<p>The results are displayed in the <a href="#PartSummary.txt / PartSummary.htm">PartSummary</a>
+files and&nbsp;</p>
+<h4><a name="spec"></a>Specifications</h4>
+<p>This check allows you to validate the Feature Modeler rules: attributes without
+valuation, feature not aggregated and other rules such as links to document not resolved and so on. To
+do that, <i>CATMmrVerifyUpdate</i> uses the Data Upward Assistant. Refer to
+CATIA Infrastructure &gt; CATIA Infrastructure User Guide &gt; Advanced Tasks
+&gt; Using the Data Upward Assistant for complete details about this tool and
+how to analyze the output errors.&nbsp;</p>
+<p><i>CATMmrVerifyUpdate</i> launches the <i>CATDUAV5</i> command with the two
+first priorities:</p>
+<ul>
+  <li>Priority One Return Code: Upwarding action may lead to data deletion</li>
+  <li>Priority Two Return Code :Upwarding action may lead to data modification
+    (without deletion)</li>
+</ul>
+<p>The results are displayed in the <a href="#CheckSpecifications.txt">CheckSpecifications.txt</a>
+file</p>
+<h4><a name="topo"></a>Topological Report</h4>
+<p>This check tests that the topological journal is valid. Refer to the CGM
+Journal article [<a href="#References">7</a>] for more details about the
+journal.</p>
+<p>The results are displayed in the <a href="#CheckJournalVerdict.html">CheckJournalVerdict.html
+</a>and <a href="#CheckJournalMoreInformation.html">CheckJournalMoreInformation.html</a>
+files.&nbsp;</p>
+<h4><a name="naming"></a>Generic Naming</h4>
+<p>The update mechanism builds the result of the geometrical features. This
+result is a topological object (a <i>CATBody</i>) and an internal object (the
+scope).
+This scope ensures the access stability of each cell of the <i>CATBody</i>. It
+must contain a node for each followed
+cell [<a href="#References">4</a>].</p>
+<p>There are several kinds of check:</p>
+<ol>
+  <li><p>Test that each feature has a scope and its scope has a link to a <i>CATBody.</i></p></li>
+  <li><p>Test the bijection between nodes and followed cells, in other words:</p></li>
+  <ul>
+    <li>Each node represents a followed cell [<a href="#References">4</a>]</li>
+    <li><p>Each followed cell [<a href="#References">4</a>] has a node</p></li>
+  </ul>
+  <li>Test that each cell is selectable.</li>
+  <p>The &quot;Journal Debug&quot; interactive command can help you to check
+  such error. [<a href="#References">6</a>]</p>
+</ol>
+<p>The results are displayed in the <a href="#CheckNaming.html"> CheckNaming.html</a> file.&nbsp;</p>
+  <h4><a name="stability"></a>Update Stability</h4>
+  
+<p>The aim of this check is to verify the update stability of a given Part. The
+Part, created at the creation feature step, has been stored to be the reference.
+At each code modification:</p>
+  
+<ul>
+  <li>In the <i>CATIBuild</i> or <i>CATIBuildShape</i> implementation code,</li>
+  <li>In your topological operator,</li>
+  <li>In the journal management</li>
+</ul>
+<p>it is important to test that the feature is stable from the update viewpoint.
+A none update stability can break another feature which have for input a cell (a
+BRep feature [<a href="#References">4</a>]) of the modified feature.</p>
+<p>There are several kinds of check:</p>
+<ol>
+  <li>No regression in the topological cell naming (only if -<b>cat</b> option)</li>
+    <p>It is important to guaranty the naming stability, so that the following
+  features, that are laid on the feature geometry, will continue to update
+  themselves even if the feature is modified.</p>
+  <li><p>No addition nor suppression of nodes (only if -<b>cat</b> option)</p></li>
+  <li><p>The geometrical results are still the same:</p></li>
+
+  <ul>
+    <li>Test the volume - There is an error if the difference represents 0,1 % of
+      difference with the initial volume.</li>
+    <li> Test the gravity center - There is an error if the difference is larger than
+      0,01 mm&nbsp;</li>
+  </ul>
+</ol>
+<p>The results are displayed in the <a href="#CheckStability.html"> CheckStability.html</a> file.&nbsp;</p>
+  
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Output Files in details"></a>Output Files in Details</h3>
+<p>This section describes in details the contents of each output files. It
+enables you to see their presentation, and the most important, to understand the
+check result signification.</p>
+<h4><a name="CheckSummary.txt / CheckSummary.html"></a>CheckSummary.txt /
+CheckSummary.html&nbsp;</h4>
+<p>These files sum up on a row and for each processed Part the result of each
+specified checks. The TXT file is always provided whenever the HTML file is only
+provided when at least one check option is given (-<b>specs</b>, -<b>valid</b>,
+        -<b>stab</b>).</p>
+<p>These files contain three parts:</p>
+<ol>
+<li> <p><b>The list of processed Parts</b> and for each of them the name of the
+  sub-directory containing their specific results:</p></li>
+    <table border="0">
+      <tr>
+        <td><img border="0" src="images/CAAMmrVerifyUpdateCheckSumPart1.jpg"></td>
+      </tr>
+    </table>
+
+<li> <p><b>The global result of each check in table form</b>.&nbsp;</p></li>
+<p>It can have three kinds of output presentations:</p>
+<ol>
+
+<li>The <b> CheckSummary.html</b> file</li>
+<p><img border="0" src="images/CAAMmrVerifyUpdateCheckSumPart2_c.jpg"></p>
+<p>The CheckSummary.html gives the link of each PartSummary.html file in the
+first column. The Update column is always here, whenever the Specs, Naming,
+Journal and Stability column are displayed only if the dedicated option is
+specified.</p>
+
+<li>The <b> CheckSummary.txt</b> file <b> with at least one check option</b> always displays seven columns.&nbsp;</li>
+<p><img border="0" src="images/CAAMmrVerifyUpdateCheckSumPart2_b.jpg"></p>
+
+<li>The <b> CheckSummary.txt file without check option</b> always displays three columns:</li>
+<p><img border="0" src="images/CAAMmrVerifyUpdateCheckSumPart2_a.jpg"></p>
+
+</ol>
+<p>In the three cases, the meaning of each cell of these tables are the following:</p>
+<p>&nbsp;</p>
+<li><p><b>The List of Parts where an error has been detected</b></p></li>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateCheckSumPart3.jpg"></td>
+  </tr>
+</table>
+<p>There are several kinds of errors:</p>
+<ul>
+<li>Files not opened&nbsp;</li>
+<li>Files opened and updated, with update error</li>
+<li>....</li>
+</ul>
+<p>This last part can be empty if no error occurs.</p>
+</ol>
+
+<h4><a name="PartSummary.txt / PartSummary.htm"></a>PartSummary.txt /
+PartSummary.html</h4>
+<p>These files sum up for each processed Part's feature the result of each
+specified checks. The TXT file is always provided whenever the HTML file is only
+provided when at least one check option is given (-<b>specs</b>, -<b>valid</b>,
+        -<b>stab</b>).&nbsp;</p>
+<p>These files contain three parts:</p>
+<ol>
+<li><p>The first<b> error update </b>detected (if any)</p></li>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVUpdateSumtxtError1.jpg"></td>
+  </tr>
+</table>
+<p>These files give the feature in error (<code>Combine.7</code>
+    here) and displays the same NLS error message that you will find in the
+    Update Diagnosis Dialog Box [<a href="#References">5</a>] in an interactive
+    session:</p>
+    <table border="0">
+      <tr>
+        <td><img border="0" src="images/CAAMmrVUpdateSumtxtError2.jpg" width="519" height="211"></td>
+      </tr>
+    </table>
+<p>This part can be empty if the build of all the features is all right.</p>
+<li>The <b>global result</b> for each requested check.</li>
+<p>This part is displayed only if a check option is specified.&nbsp;</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAMmrVerifyUpdateFIRESumUp1.jpg"></td>
+    </tr>
+  </table>
+  <p>If one result is KO, a link
+    to the detailed file is generated too.</p>
+<li>The <b> check's status</b> for each feature in table form&nbsp;</li>
+
+<p>It can have three kinds of output presentations:</p>
+
+<ol>
+<li>The <b> PartSummary.html</b></li>
+<p><img border="0" src="images/CAAMmrVUpdateSumhtml2.jpg" width="655" height="414"></p>
+<p>The PartSummary.html file gives the name of each feature in the 
+first column. The Update column is always here, whenever the Specs, Naming, 
+Journal and Stability column are displayed only if the dedicated option is 
+specified.</p>
+<li>The <b> PartSummary.txt</b> file <b> with at least one check option</b> always displays six
+columns:</li>
+<p><img border="0" src="images/CAAMmrVerifyUpdatePartSumPart3_a.jpg"></p>
+
+<li>The <b> PartSummary.txt</b> file <b> without check option</b> always displays three columns:</li>
+<p><img border="0" src="images/CAAMmrVerifyUpdatePartSumPart3_b.jpg"></p>
+
+</ol>
+
+<p>In the three cases, the contains of each column is the following:</p>
+<p>For the <b> Update</b> check column, each cell value signifies:</p>
+        <ul>
+    <li><b>OK</b>  : The update of the feature has been correctly done, no error has
+    occured during its build step.</li>
+    <li><b>KO </b>: Only one KO can appear in the column. The message associated
+    with the error is displayed in the CheckSummary file.&nbsp;</li>
+    <li>-&nbsp;&nbsp;&nbsp;&nbsp; : The feature has not been built for three
+    reasons: it is not a
+    geometrical feature, it is a geometrical feature without build, or a
+    previous error has stopped the update step, and the current feature has not
+    been reached.</li>
+    </ul>       <p>For the <b> Specs</b> check column, each cell value signifies:</p>
+    <ul>
+    <li><b>OK</b> :The check is correct&nbsp;</li>
+    <li><b>KO</b> :The check is wrong&nbsp;</li>
+    <li><b>-&nbsp;&nbsp;&nbsp; </b>: The check has not be done on this feature</li>
+    </ul>     
+  <p>For the <b>Naming</b> and <b>Journal</b>&nbsp; check columns, each cell
+  value signifies:</p>
+    <ul>
+    <li><b>OK</b> :The check is correct&nbsp;</li>
+    <li><b>KO</b> :The check is wrong&nbsp;</li>
+    <li><b>-&nbsp;&nbsp;&nbsp; </b>: The check has not be done on this feature</li>
+    <li><b>W&nbsp;&nbsp;</b>: The check has detected a warning, and not an
+      error.&nbsp;</li>
+        </ul>     
+  <p>For the <b>S</b><b>tability</b> check column, the following table shorts in
+  the cell value signification:</p>
+  <table border="1">
+    <tr>
+      <td><b><font color="#FF00FF">Before</font>/<font color="#008000">After</font></b></td>
+      <td align="center"><b><font color="#008000">Update OK</font></b></td>
+      <td align="center"><b><font color="#008000">Update not Done</font></b></td>
+      <td align="center"><b><font color="#008000">Update KO</font></b></td>
+    </tr>
+    <tr>
+      <td><b><font color="#FF00FF">Update OK</font></b></td>
+      <td align="center">
+        <p align="center">OK</td>
+      <td align="center">KO</td>
+      <td align="center">KO</td>
+    </tr>
+    <tr>
+      <td><b><font color="#FF00FF">Update not Done</font></b></td>
+      <td align="center">W</td>
+      <td align="center">OK</td>
+      <td align="center">KO</td>
+    </tr>
+    <tr>
+      <td><b><font color="#FF00FF">Update KO</font></b></td>
+      <td align="center">W</td>
+      <td align="center">KO</td>
+      <td align="center">OK</td>
+    </tr>
+  </table>
+</ol>
+    
+<h4 align="left"><a name="CheckSpecifications.txt"></a>CheckSpecifications.txt</h4>
+    
+<p align="left"> Refer to
+CATIA Infrastructure &gt; CATIA Infrastructure User Guide &gt; Advanced Tasks
+&gt; Using the Data Upward Assistant for complete details about this tool and
+how to analyze the output errors given in this txt file.&nbsp;&nbsp;</p>
+    
+<h4 align="left"><a name="CheckNaming.html"></a>CheckNaming.html</h4>
+    
+<p align="left">This file is generated if the -<b>valid</b> check option is
+requested. The structure of this file is the following:</p>
+    
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateGenNamFile1.jpg" width="258" height="118"></td>
+  </tr>
+</table>
+    
+<p align="left">Between these two lines you can found such messages:</p>
+    
+<ol>
+  <li>
+    <p align="left">When the check is OK -&nbsp;</li>
+    <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateGenNamFile2.jpg" width="340" height="52"></td>
+  </tr>
+</table>
+  <li>
+    <p align="left">When the check is K0 - &nbsp;</li>
+    <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateGenNamFile3.jpg" width="481" height="53"></td>
+  </tr>
+</table>
+  <li>
+    <p align="left">When the feature has no scope nor body</li>
+    <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateGenNamFile4.jpg" width="354" height="109"></td>
+  </tr>
+</table>
+</ol>
+    
+<h4 align="left"><a name="CheckJournalVerdict.html"></a>CheckJournalVerdict.html</h4>
+    
+<p align="left">This file is generated if the -<b>valid</b> check option is
+requested. The structure of this file is the following:</p>
+    
+<h4 align="left"><a name="CheckJournalMoreInformation.html"></a>CheckJournalMoreInformation.html</h4>
+    
+<p align="left">This file is generated if the -<b>valid</b> check option is
+requested. The structure of this file is the following:</p>
+    
+<h4 align="left"><a name="CheckStability.html"></a>CheckStability.html</h4>
+    
+<p align="left">This file is generated if the -<b>stab</b> check option is
+requested. The structure of this file is the following:</p>
+    
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateUpStabFile1.jpg" width="337" height="95"></td>
+  </tr>
+</table>
+<p>Between these two lines you can found such messages:</p>
+<ol>
+  <li>When the update comparison is OK</li>
+  <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateUpStabFile2.jpg" width="402" height="64"></td>
+  </tr>
+</table>
+  <p> <code>Curve.1</code>
+  and <code>Surface.2(*SKI2)</code> are the alias names of the features.&nbsp;</p>
+  <li>When the Update was KO before and successful now</li>
+   <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateUpStabFile4.jpg" width="352" height="73"></td>
+  </tr>
+</table>
+  <p>In this case, the Stability check column displays a warning for the <code>Sketch.5</code> feature.</p>
+  <li>New nodes have been created&nbsp;</li>
+  <table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrVerifyUpdateUpStabFile3.jpg" width="352" height="130"></td>
+  </tr>
+</table>
+  <p>The scope associated with the <code>Sketch.4</code> feature contains two
+  new nodes with the new code.&nbsp;</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3 align="left"><a name="Return Codes of the CATMmrVerifyUpdate Application">&nbsp;</a>Return
+Codes of the CATMmrVerifyUpdate Application</h3>
+<p align="left">If you make objects of test (odt) you can check the returned
+code of the application:</p>
+<ul>
+  <li>
+    <p align="left"><b>0</b> : all is OK</li>
+  <li>
+    <p align="left"><b>1</b> : Specification check has failed</li>
+  <li>
+    <p align="left"><b>2</b>:&nbsp; Naming check has failed</li>
+  <li>
+    <p align="left"><b>3</b>: Journal check has failed</li>
+  <li>
+    <p align="left"><b>4</b> : At least one feature has an update error.</li>
+  <li>
+    <p align="left"><b>5</b> : Stability Check has failed</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CATMmrVerifyUpdate application enables you to check a new geometrical
+feature or to validate code modifications.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrCreatingNewFeat.htm">Creating a New StartUp deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrBuildIntegrating.htm">Integrating a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrGenericNaming.htm">Generic Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMmrErreurUpdateDescription.htm">A Description of Update
+      Error</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrDebugJournal.htm"> Verifying the
+      Combined Curve's Sub-Element Selectability</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAATopTechArticles/TopoJournal.htm">The
+      CGM Journal</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Sep 2003]</td>
+    <td valign="top">Launching Update</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

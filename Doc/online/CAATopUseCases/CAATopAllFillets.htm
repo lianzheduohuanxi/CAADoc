@@ -1,0 +1,404 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Fillets</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Fillets</h3>
+      <em>How to create constant and variable radius fillets</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create constant fillets, variable fillets
+      and fillets with rolling edges.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAATopAllFillets Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAATopAllFillets Do?</a></li>
+            <li><a href="#How">How to Launch CAATopAllFillet</a></li>
+            <li><a href="#Where">Where to Find the CAATopFillet Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you use fillets in geometric modeler
+applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="UseCase"></a>The CAATopAllFillets Use Case</h3>
+<p>CAATopAllFillets is a use case of the CAATopologicalOperators.edu framework
+that illustrates TopologicalOperators framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAATopAllFillets Do?</h4>
+<p>CAATopAllFillets creates two solid cuboids, performs a boolean union of the
+cubes, then creates fillets on the resulting solid.</p>
+<table width="100%">
+  <tr>
+    <td width="50%"><img border="0" src="images/filletconstant.gif" width="304" height="217"></td>
+    <td width="50%" valign="top">The CAATopConstantFillets function which is
+      defined in the CAATopConstantFillets.cpp folder creates a constant fillet
+      along the edges common to both cubes.</td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="images/rollingedges.gif" width="310" height="215"></td>
+    <td width="50%" valign="top">The CAATopRollingEdges function which is
+      defined in the&nbsp; CAATopRollingEdges.cpp folder creates a fillet along
+      the common edges and specifies rolling edges.</td>
+  </tr>
+  <tr>
+    <td width="50%"><img border="0" src="images/variableradius.gif" width="307" height="213"></td>
+    <td width="50%" valign="top">The CAATopVariableFillets function which is
+      defined in the CAATopVariableFillets.cpp folder creates a variable radius
+      fillet on one edge of the solid.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAATopAllFillets</h4>
+<p>To launch CAATopAllFillets, you will need to set up the build time
+environment, then compile CAATopAllFillets.m along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>If you simply type CAATopAllFillets with no argument, the use case executes,
+but doesn't save the result in an NCGM file. If you want to save this result,
+provide the full pathname of the NCGM file to create. For example:</p>
+<p>With Windows <code>CAATopAllFillets</code><code> e:\Fillets.NCGM</code></p>
+<p>With UNIX <code>CAATopAllFillets</code><code> /u/Fillets.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAATopAllFillets Code</h4>
+<p>The CAATopAllFillets use case is made of a main named CAATopAllFillets.cpp
+located in the CAATopAllFillets.m module of the CAATopologicalOperators.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAATopologicalOperators.edu\CAATopAllFillets.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAATopologicalOperators.edu/CAATopAllFillets.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six steps in CAATopAllFillets.cpp:</p>
+<ol>
+  <li><a href="#Creates the Geometry Factory">Creating the geometry factory</a></li>
+  <li><a href="#Direct Creation">Creating the solid cuboids</a></li>
+  <li><a href="#Use of  a Basic Topological Operator">Performing a boolean union
+    on the cuboids</a></li>
+  <li><a href="#Constant">Creating a constant fillet around the edges common to
+    both cubes</a></li>
+  <li><a href="#rolling">Creating a constant fillet by specifying rolling edges</a></li>
+  <li><a href="#variable">Creating a variable radius fillet.</a></li>
+  <li><a href="#Writes the Model and Closes the Factory">Writing the model and
+    closing the Container</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h4>
+<p>The geometry factory (CATGeoFactory) creates and manages all the
+CATICGMObject. This creation is done by the global function <code>::CATCreateCGMContainer</code>.
+Notice that the factory can be defined by reading a NCGM file that was
+previously stored. In that case, the global function <code>::CATLoadCGMContainer</code>
+must be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Direct Creation"></a>Creating the solid cuboids</h4>
+<p>See [<a href="#References">2</a>] which illustrates how to create a solid
+cuboid.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Use of  a Basic Topological Operator"></a>Performing a boolean
+union on the cuboids</h4>
+<p>See also [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Constant">Creating a constant radius fillet</a></h4>
+<p>To create a constant radius fillet, you must:</p>
+<ol>
+  <li>define your CATDynFilletRadius.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>double * ratio= NULL;
+CATDynFilletRadius * pRadius = new CATDynFilletRadius(3.,    <font color="#008000">// radius value</font>
+            NULL,  
+            ratio,  
+            NULL); <em> </em></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The arguments two, three and four of the constructor are only to be
+    specified when the fillet to be created is of variable radius. The cells to
+    be filleted with a constant radius are specified in the
+    CATDynEdgeFilletRibbon constructor.</li>
+  <li>define the CATDynEdgeFilletRibbon object whereby you specify what cells
+    are to be filleted. If you create a constant radius fillet, the list to be
+    passed as the second argument of the CATDynEdgeFilletRibbon is a single item
+    list.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(CATDynFilletRadius) listRadius;		
+listRadius.Append(pRadius);		
+CATDynEdgeFilletRibbon * pRibbon = new CATDynEdgeFilletRibbon(listEdges, listRadius);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>if need be, set the parameters of the CATDynFilletRibbon
+    <table class="code">
+      <tr>
+        <td>
+          <pre>pRibbon -&gt;SetSegmentationMode(CATDynTrim);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>create the CATDynFillet operator by using the CATCreateDynFillet operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDynFillet * pFilletOp1 = CATCreateDynFillet(iFactory,iTopData,iBody);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>append the CATDynEdgeFilletRibbon to the operator instance
+    <table class="code">
+      <tr>
+        <td>
+          <pre>pFilletOp1 -&gt;Append(pRibbon);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="rolling">Creating a constant radius fillet with rolling edges</a></h4>
+<p>To create a variable radius fillet, you must:</p>
+<ol>
+  <li>proceed as you would do for a constant radius fillet.</li>
+  <li>in the CATDynEdgeFilletRibbon constructor, specify the list of rolling
+    edges as well as the fillet behavior (CATDynRolling).
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDynEdgeFilletRibbon * pRibbon = new CATDynEdgeFilletRibbon(listEdges, listRadius,
+            CATBody::CATEdgePropagAuto,
+            listRollingEdges,   <font color="#008000">// the rolling edges</font>
+            CATDynRolling);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>&nbsp;</h4>
+<h4><a name="variable">Creating a variable radius fillet</a></h4>
+<p>To create a variable radius fillet, you must:</p>
+<ol>
+  <li>define the CATDynFilletRadius necessary to define the fillet shape. You
+    must specify:
+    <ul>
+      <li>&nbsp;the radius value (in mm),</li>
+      <li>the pointer to the cell on which the fillet is to be applied,</li>
+      <li>&nbsp;the pointer to the ratio of the edge length which defines the
+        point where the radius is defined</li>
+      <li>&nbsp;and the pointer to the tangency angle at the point where the
+        radius is specified. Note that either a NULL pointer or a NULL angle are
+        supported so far. If a NULL pointer is passed, the radius law is not
+        constrained and the resulting fillet looks something like a
+        &quot;linear&quot; one. If a NULL value is passed for the extremities,
+        the resulting fillet looks something like a &quot;cubic&quot; one.&nbsp;</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>double * ratio0= new double(0.0);
+CATDynFilletRadius * pRadius0 = new CATDynFilletRadius(4.,  <font color="#008000">// radius value</font>
+            listCells[2],  
+            ratio0,  
+            NULL);  <font color="#008000">// &quot;free&quot; tangency at this extremity</font>
+...
+double * ratio1= new double(0.25);
+CATDynFilletRadius * pRadius1 = new CATDynFilletRadius(0.2,  // radius value
+            listCells[2],  
+            ratio1,  
+            NULL);  <font color="#008000">// &quot;free&quot; tangency for this location</font></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The second and third arguments of the constructor must be specified when
+    the fillet to be created is of variable radius.</li>
+  <li>define the CATDynEdgeFilletRibbon object whereby you specify the list of
+    radii to be applied along the edge to be filleted. The list of edges to be
+    filleted is to be set to NULL.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(CATDynFilletRadius) listRadius;		
+listRadius.Append(pRadius0);
+listRadius.Append(pRadius1);
+listRadius.Append(pRadius2);
+listRadius.Append(pRadius3);
+         
+<font color="#008000">// Create the CATDynEdgeFilletRibbon
+//</font>
+CATDynEdgeFilletRibbon * pRibbon = new CATDynEdgeFilletRibbon(NULL, listRadius);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>if need be, set the parameters of the CATDynFilletRibbon
+    <table class="code">
+      <tr>
+        <td>
+          <pre>pRibbon -&gt;SetSegmentationMode(CATDynTrim);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>create the CATDynFillet operator by using the CATCreateDynFillet operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDynFillet * pFilletOp1 = CATCreateDynFillet(iFactory,iTopData,iBody);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>append the CATDynEdgeFilletRibbon to the operator instance
+    <table class="code">
+      <tr>
+        <td>
+          <pre>pFilletOp1 -&gt;Append(pRibbon);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Writes the Model and Closes the Factory"></a>Writing the Model and
+Closing the Factory</h4>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>::CATCloseCGMContainer</code>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <font color="#008000"><em>//
+ // Closes the container
+ //</em>	</font>
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>To create fillets, you must specify a list of radii as well as a list of
+edges to be filleted. For a constant radius, the list of radii contains a single
+item that you can apply to one or more edges. When creating a variable fillet,
+you must specify the list of radii. The edge to be filleted is then specified in
+the radius definition.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="CAATopOverview.htm">Overview of the Topological Operators</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

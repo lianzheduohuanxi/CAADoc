@@ -1,0 +1,526 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding Components to a Product Structure</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding Components to a Product Structure</h3>
+      <em>Importing new and existing components</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAPstAddComponent</i> use case. This use
+      case explains how to add new and existing components to a product
+      structure.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The <i>CAAPstAddComponent</i> Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does <i>CAAPstAddComponent</i> Do</a></li>
+            <li><a href="#How">How to Launch <i>CAAPstAddComponent</i></a></li>
+            <li><a href="#Where">Where to Find the <i>CAAPstAddComponent</i>
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you understand how to program adding new
+parts and products to a product structure. But before we get to the use case
+itself, it is important to get an understanding of the Product Structure model
+by reading the referenced article [<a href="#References">1</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The <i><b>CAAPstAddComponent</b></i> Use Case</h3>
+<p><i>CAAPstAddComponent</i> is a use case of the <b>CAAProductStructure.edu</b>
+framework that illustrates the CATIA <b>ProductStructure</b> framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does <b><i>CAAPstAddComponent</i></b> Do</h4>
+<p>The goal of <i>CAAPstAddComponent</i> is to add new and existing components
+to a product structure. It creates a new CATProduct document and adds three
+types of components to the root product in order to develop the product
+structure: an existing part, a new part and a new product.
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/CAAPstAddComponent.jpg" width="731" height="591"></td>
+  </tr>
+</table>
+<p>In the CATIA image above, the initial CATProduct document has a root product
+called &quot;Product1&quot;. We imported the existing CATPart document called
+&quot;ImpSample&quot; and instantiated it as &quot;ImpSample.1&quot;. We also
+added a new CATPart document &quot;CAAPstPart&quot; that is instantiated as
+&quot;CAAPstPart.1&quot; and a new CATProduct document &quot;CAAPstProduct&quot;
+that is instantiated as &quot;CAAPstProduct.1&quot;. These new CATPart and
+CATProduct documents are created in place and are saved along with the
+CATProduct document they have been instantiated in.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch <i>CAAPstAddComponent</i></h4>
+<p>To launch <i>CAAPstAddComponent</i>, you will need to set up the build time
+environment, then compile <i>CAAPstAddComponent</i> along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">2</a>]. To launch the use case,
+execute the following command:</p>
+<pre>mkrun -c &quot;CAAPstAddComponent input.CATPart PartName ProductName pathNewPart pathNewProduct output.CATProduct&quot;</pre>
+<ul>
+  <li><b>input.CATPart</b> - the path to the existing external CATPart that will
+    be imported. You may reference the supplied CATPart document called
+    &quot;CAAPstImport.CATPart&quot; found in
+    &nbsp;<table id="table1">
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CNEXT/resources/graphic</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CNEXT\resources\graphic</code></td>
+  </tr>
+</table>
+	<p>where <code>InstallRootDirectory</code> is the root directory of your CAA 
+	V5 installation.</li>
+  <li><b>PartName</b> - the part number to give to the new part that will be
+    created and imported</li>
+  <li><b>ProductName</b> - the part number to give to the new product that will
+    be created and imported</li>
+  <li><b>pathNewPart</b> - the path where the newly-created part with name
+    PartName will be saved</li>
+  <li><b>pathNewProduct</b> - the path where the newly-created product with name
+    ProductName will be saved</li>
+  <li><b>output.CATProduct</b> - the path of the CATProduct document containing
+    the new product structure.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAPstAddComponent</i> Code</h4>
+<p><i>CAAPstAddComponent</i> code is located in the <b>CAAPstAddComponent.m</b>
+use case module of the <b>CAAProductStructure.edu </b>framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstAddComponent.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstAddComponent.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAPstAddComponent.cpp.</b>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in <i>CAAPstAddComponent</i>:</p>
+<ol>
+  <li><a href="#Create_product">Creating a New CATProduct Document and an
+    Initial Product Structure</a></li>
+  <li><a href="#Add_existing">Adding an Existing &quot;Part&quot; Component to
+    the Product Structure</a></li>
+  <li><a href="#Add_part">Adding a New &quot;Part&quot; Component to the Product
+    Structure</a></li>
+  <li><a href="#Add_product">Adding a New &quot;Product&quot; Component to the
+    Product Structure</a></li>
+  <li><a href="#Save_components">Saving the New CATPart and CATProduct Documents</a></li>
+  <li><a href="#Save_product">Saving the Product Structure in a CATProduct
+    Document and Closing the Session</a></li>
+</ol>
+<p>We will now comment each of these steps by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create_product"></a>Creating a New CATProduct Document and Initial
+Product Structure</h4>
+<ol>
+  <li>Create session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT rc = 0;
+...
+CATSession *pSession = NULL;
+rc = <b>::Create_Session</b>(&quot;CAA2_Sample_Session&quot;, pSession );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Generally, the first thing that is necessary in a batch program is the
+    creation of a new session. This is done using the <code>Create_Session</code>
+    global function. It is important not to forget to delete the session at the
+    end of your batch program.</p>
+  </li>
+  <li>Create CATProduct document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(&quot;Product&quot;,
+		            pDoc);
+if ( FAILED(rc) || (NULL==pDoc) ) <b>return</b> 2;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now that we have a current session, we can create the CATProduct
+    document. This is done using the <code>New </code>method of <i>CATDocumentServices</i>
+    with type &quot;Product&quot; as input parameter. Note that
+    &quot;Product&quot; is not the extension of the document (which is
+    &quot;CATProduct&quot;), but rather its type, a name which appears in the
+    list of document types available seen in the <code>File/New</code> menu of
+    an interactive session.</p>
+  </li>
+  <li>Retrieve root product
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIDocRoots *piDocRootsOnDoc = NULL;
+rc = pDoc-&gt;<b>QueryInterface</b>(IID_CATIDocRoots,
+		        (void**) &amp;piDocRootsOnDoc);
+if ( FAILED(rc) ) <b>return</b> 3;
+	
+CATListValCATBaseUnknown_var *pRootProducts =
+   piDocRootsOnDoc-&gt;<b>GiveDocRoots</b>();
+
+CATIProduct_var spRootProduct = NULL_var;
+if (pRootProducts)
+   if (pRootProducts-&gt;<b>Size</b>())
+   {
+      spRootProduct = <b>(*pRootProducts)[1]</b>;
+      <b>delete</b> pRootProducts;
+      pRootProducts = NULL;
+  }
+
+piDocRootsOnDoc-&gt;<b>Release</b>();
+piDocRootsOnDoc=NULL;
+// Get CATIProduct handle on the root product.
+CATIProduct *piProductOnRoot = NULL;
+rc = spRootProduct-&gt;<b>QueryInterface</b>(IID_CATIProduct,
+		                 (void**) &amp;piProductOnRoot);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to initiate a new product structure within the CATProduct
+    document, it is now necessary to access the <b>root product.</b> This is
+    done using the <code>GiveDocRoots</code> method of <i>CATIDocRoots</i> which
+    returns a list of all of the roots within the document, the first one being
+    the root product we are looking for. From this root product, we get a <i>CATIProduct</i>
+    handle which will be needed later in order to add new components.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Add_existing"></a>Adding an Existing &quot;Part&quot; Component to
+the Product Structure</h4>
+<ol>
+  <li>Load an existing CATPart document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pDocPart = NULL;
+CATIProduct *piInstanceProd = NULL;
+// load the given CATPart
+rc = <b>CATDocumentServices::Open</b>(argv[1],
+		             pDocPart);
+if ( FAILED(rc) || (NULL==pDocPart) ) <b>return</b> 4;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to add an existing &quot;Part&quot; component to the product
+    structure, the corresponding CATPart document must be loaded into the
+    session. This is done with the <code>Open</code> method of <i>CATDocumentServices</i>.</p>
+  </li>
+  <li>Import the CATPart document under root
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>::AddExternalComponent</b>(piProductOnRoot,
+		          pDocPart,
+			 &amp;piInstanceProd);
+if ( FAILED(rc) ) <b>return 5</b>;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now that we have the part in the session, in order to add it to our
+    product structure as a component, we use the <code>AddExternalComponent </code>global
+    function. See the referenced article [<a href="#References">3</a>] for a
+    description of this function. We pass the following parameters to this
+    function:</p>
+    <ul>
+      <li><b>piProductOnRoot</b> - the root product of the importing CATProduct
+        document</li>
+      <li><b>pDocPart</b> - the document to be imported</li>
+      <li><b>piInstanceProd</b> - the product instance of the imported document.</li>
+    </ul>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Add_part"></a>Adding a New &quot;Part&quot; Component to the
+Product Structure</h4>
+<ol>
+  <li>Import a new CATPart under root
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIProduct *piInstanceProd2 = NULL;
+CATUnicodeString partName (argv[2]);
+
+// creates a new part document and imports it under the product
+rc = <b>::AddNewExternalComponent</b>(piProductOnRoot,
+		             &quot;Part&quot;,
+			    partName,
+		             &amp;piInstanceProd2);
+if ( FAILED(rc) ) <b>return</b> 6;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Adding a new external &quot;Part&quot; component to a product structure
+    is performed when there is a need for creating and working with a new part.
+    The actual CATPart document is created automatically at the same time as the
+    new &quot;Part&quot; component is imported into the product structure. This
+    is done by using the <code>AddNewExternalComponent </code>global function.
+    See the referenced article [<a href="#References">4</a>] for a description
+    of this function. We pass the following parameters to this function:</p>
+    <ul>
+      <li><b>piProductOnRoot</b> - the root product of the importing CATProduct
+        document</li>
+      <li><b>&quot;Part&quot; </b>- the type of document to create and import</li>
+      <li><b>partName</b> - the name of the document to create and import</li>
+      <li><b>piInstanceProd2</b> - the product instance of the imported
+        document.</li>
+    </ul>
+  </li>
+  <li>Get CATDocument document pointer to the new CATPart.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pPartDoc2 = NULL;
+CATUnicodeString partDocName = partName + &quot;.CATPart&quot;;
+rc = <b>CATDocumentServices::GetDocumentInSession </b>(partDocName,
+                                                pPartDoc2);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A <i>CATDocument </i>pointer to the new CATPart will be needed later on
+    in order to be save the document. We use the <code>GetDocumentInSession</code>
+    method of <i>CATDocumentServices</i> in order to get this pointer.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Add_product"></a>Adding a New &quot;Product&quot; Component to the
+Product Structure</h4>
+<ol>
+  <li>Import a new CATProduct document under root
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIProduct *piInstanceProd3 = NULL;
+CATUnicodeString productName (argv[3]);
+...
+rc = <b>::AddNewExternalComponent</b>(piProductOnRoot,
+		             &quot;Product&quot;,
+		             productName,
+		 	    &amp;piInstanceProd3);
+if ( FAILED(rc) ) <b>return</b> 6;
+piProductOnRoot -&gt; <b>Release</b>();
+piProductOnRoot = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Adding a new external &quot;Product&quot; component to the product
+    structure is done in exactly the same way as for a &quot;Part&quot;
+    component. We use the same <code>AddNewExternalComponent</code> function
+    (see the referenced article [<a href="#References">4</a>]) ass before.</p>
+  </li>
+  <li>Get CATProduct document pointer.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pProdDoc = NULL;
+CATUnicodeString productDocName = productName + &quot;.CATProduct&quot;;
+rc = <b>CATDocumentServices::GetDocumentInSession</b> (productDocName ,
+		                              pProdDoc);</pre>
+          <pre>if ( FAILED(rc) ) <b>return</b> 7;</pre>
+          <pre>piInstanceProd2 -&gt; <b>Release</b>();
+piInstanceProd2 = NULL;
+piInstanceProd3 -&gt; Release();
+piInstanceProd3 = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We must also perform a <code>GetDocumentInSession</code> following the
+    addition of this new component in order to get a <i>CATDocument</i> <code></code>pointer
+    to the CATProduct document just created, in view of saving it later on.</p>
+    <p>Do not forget to release the pointers to the product instances returned
+    by <code>AddNewExternalComponent!</code></p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Save_components"></a>Saving the New CATPart and CATProduct
+Documents</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATUnicodeString partPath( argv[4]);
+rc = <b>CATDocumentServices::SaveAs</b>(*pPartDoc2, 
+		               partPath);
+if ( FAILED(rc) ) <b>return </b>8;</pre>
+      <pre>CATUnicodeString prodPath( argv[5]);
+rc = <b>CATDocumentServices::SaveAs</b>(*pProdDoc, 
+                                 prodPath );
+if ( FAILED(rc) ) <b>return </b>8;</pre>
+    </td>
+  </tr>
+</table>
+<p>Before exiting the session, it is necessary to save the new documents
+(CATPart and CATProduct). The pathnames used for the CATPart and CATProduct
+documents are passed to the use case program as fourth and fifth arguments
+respectively. We use the <code>SaveAs</code> method of <i>CATDocumentServices</i>
+to save these documents.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Save_product"></a>Saving the Product Structure in a CATProduct
+Document and Closing the Session</h4>
+<ol>
+  <li>Save the CATProduct document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>CATDocumentServices::SaveAs</b>(*pDoc,
+		               argv[6]);
+if ( FAILED(rc) ) return 8;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We can now save our new CATProduct document containing a new product
+    structure under the name specified in the sixth input argument to this use
+    case program.</p>
+  </li>
+  <li>Remove the CATProduct document from the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>CATDocumentServices::Remove</b> (*pDocPart);
+if ( FAILED(rc) ) <b>return</b> 9;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It is good practice to remove any opened documents before exiting the
+    session.</p>
+  </li>
+  <li>Delete the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre><b>rc = ::Delete_Session</b>(&quot;CAA2_Sample_Session&quot;);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Do not forget to delete the session before exiting using the <code>Delete_Session</code>
+    global function.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to import new and existing components into
+a product structure. Specifically, it has illustrated:</p>
+<ul>
+  <li>Creating a new CATProduct document using the <code>New</code> method of <i>CATDocumentServices</i></li>
+  <li>Retrieving the root product of the document using the <code>GiveDocRoots</code>
+    method of <i>CATIDocRoots</i></li>
+  <li>Loading an existing external component using the <code>Open</code> method
+    of <i>CATDocumentServices</i></li>
+  <li>Importing an existing external component using the <code>AddExternalComponent</code>
+    global function</li>
+  <li>Importing a new external component using the <code>AddNewExternalComponent</code>
+    global function</li>
+  <li>Retrieving a <i>CATDocument</i> pointer for a new external component using
+    the <code>GetDocumentInSession</code> method of <i>CATDocumentServices</i></li>
+  <li>Saving the new external component and the new product document using the <code>SaveAs</code>
+    method of <i>CATDocumentServices</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The Product
+      Structure Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAPstAddExtComponent.htm">Adding Existing External Components
+      Utility</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAPstAddNewExtComponent.htm">Adding New External Components
+      Utility</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using the Smart Duplicator</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using the Smart Duplicator</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Right after its creation a topology is modifiable. But when the body 
+		which contains this topology is frozen, you can no longer modify this topology.</p>
+		<p>With the smart duplicator, you can modify only a part of a body. The 
+		part to be modified has to be &quot;touched&quot;. This results in a new body sharing 
+		the untouched topologies with the initial body. This use case illustrates 
+		the smart mechanism with a skin body which has a holed face. Touching the 
+		holed face allows you to remove the internal domain to fill in the hole.
+		</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMModelSmartDuplicator Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelSmartDuplicator Do?</a></li>
+				<li><a href="#How">How to Launch CAAGMModelSmartDuplicator </a>
+				</li>
+				<li><a href="#Where">Where to Find the CAAGMModelSmartDuplicator 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you use the CATICGMSmartBodyDuplicator operator.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelSmartDuplicator Use Case</h2>
+<p>CAAGMModelSmartDuplicator is a use case of the CAAGMModelInterfaces.edu framework 
+that illustrates the GMModelInterfaces framework capabilities.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelSmartDuplicator Do?</h3>
+<p>The CAAGMModelSmartDuplicator use case:</p>
+<ul>
+	<li>Loads the container and retrieves the skin body to be duplicated.</li>
+	<li>Retrieves the holed face and the inner loop of that face.</li>
+	<li>Specifies the cell to be modified in the smart duplication operation.</li>
+	<li>Creates a smart duplicator in order to modify the holed face and retrieves 
+	the duplicated face associated with the holed face.</li>
+	<li>Removes the internal loop in the duplicated face.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelSmartDuplicator </h3>
+<p>To launch CAAGMModelSmartDuplicator, you will need to set up the build time environment, 
+then compile CAAGMModelSmartDuplicator.m along with its prerequisites, set up the 
+run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>CAAGMModelSmartDuplicator <code>e:\partwithhole.NCGM</code></p>
+<p>where <code>partwithhole.NCGM</code> is an input file delivered in the CAAGMModelInterfaces.edu/FunctionTests/InputData 
+file.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelSmartDuplicator Code</h3>
+<p>The CAAGMModelSmartDuplicator use case is made of a main named CAATopSmartDuplicator.cpp 
+located in the CAAGMModelSmartDuplicator.m module of the CAAGMModelInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelSmartDuplicator.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are six main steps in CAATopSmartDuplicator.cpp:</p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Loading the Container and Retrieving 
+	the Body to Be Checked</a></li>
+	<li><a href="#KV">Retrieving the Holed Face</a></li>
+	<li><a href="#Displaying the Diagnosis">Touching the Topology to Be Modified</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Creating a Smart Duplicated 
+	Body</a></li>
+	<li><a href="#Modifying the Touched Topology">Modifying the Touched Topology</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model and 
+	Closing the Factory</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Loading the Container and Retrieving 
+the Body to Be Checked</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular). In this use case, the factory is defined 
+by reading a NCGM file that was previously stored, the global function <code>::CATLoadCGMContainer</code> 
+must be used to retrieve the factory. The body is retrieved by using the CATICGMContainer::FindObjectFromTag 
+method. There is only one body in the container which is loaded. 10990 is the body 
+tag.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
+...
+CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag(10990 ); </pre>
+<p>The initial body looks something like this:</p>
+<p><img alt="" src="images/CAACgmTobsmartDup1.gif" width="480" height="307"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="KV"></a>Retrieving the Holed Face</h3>
+<p>To retrieve the holed face, all the faces of the body are scanned and for each 
+cell, the number of internal domains is computed. For the cells which have internal 
+domains, the domains are scanned. The internal loop is detected by using CATDomain::GetLocation.</p>
+<pre class="code">for (int k = 1; k &lt; faceList.Size()+1; k++)
+{
+  CATCell * pLocalCell = faceList[k];
+  if (pLocalCell &amp;&amp; pLocalCell-gt;GetNbInternalDomains() &gt; 0)
+  {       
+    int NbDomains=pLocalCell-&gt;GetNbDomains();
+    for(int j=1;j&lt;=NbDomains;j++)
+    {
+      CATDomain *pDomain=pLocalCell-&gt;GetDomain(j);
+      CATLocation Location=pDomain-&gt;GetLocation();
+      if (Location==CATLocationInner)
+      {
+        pInnerLoop=pDomain;                    <span class="comment">// the inner loop </span>
+        holedFace = (CATFace *) faceList[k] ;  <span class="comment">// the holed face</span>
+        break; 
+      }
+    }
+  }
+}</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Displaying the Diagnosis"></a>Touching the Topology to Be Modified</h3>
+<p>The CATTopology::Touch method is used to specify which topology is going to be 
+modified.</p>
+<pre class="code"> holedFace-&gt;Touch(piBody);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Creating a Smart Duplicated 
+Body</h3>
+<p>First, you must create an empty body from CATGeoFactory. The CATICGMSmartBodyDuplicator 
+operator is created from this new body. It must be run.</p>
+<pre class="code">CATBody * copBody = piGeomFactory-&gt;CreateBody();
+CATICGMSmartBodyDuplicator * smartDuplicator = 
+  copBody-&gt;CreateISmartDuplicator(piBody, topdata);
+if (smartDuplicator == NULL) return (1); 
+smartDuplicator-&gt;Run();
+CATFace * duplicatedFace = (CATFace *)smartDuplicator-&gt;GetDuplicatedCell(holedFace);</pre>
+<p>The cell which has been initially touched is retrieved by using the CATICGMSmartBodyDuplicator::GetDuplicatedCell 
+method.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Modifying the Touched Topology"></a>Modifying the Touched Topology</h3>
+<p>The face inner loop is retrieved by scanning its domains. A domain which is an 
+internal domain is removed.</p>
+<pre class="code">int NbD=duplicatedFace-&gt;GetNbDomains();
+for(int j=1;j&lt;=NbD;j++)
+{
+  CATDomain *pDom=duplicatedFace-&gt;GetDomain(j);
+  CATLocation Loc=pDom-&gt;GetLocation();
+  if(Loc==CATLocationInner)
+  {
+    duplicatedFace-&gt;RemoveDomain(pDom);
+  }
+}</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <span class="comment">//
+ // Closes the container
+ //</span>
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<p>The resulting body looks something like this:</p>
+<p><img alt="" src="images/CAACgmTobsmartDup2.gif" width="480" height="307"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2009]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

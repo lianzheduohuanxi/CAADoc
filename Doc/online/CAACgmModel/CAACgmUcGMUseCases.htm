@@ -1,0 +1,243 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>An Introduction to Geometric Modeler Use Cases</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>About Geometric Modeler Use Cases</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The purpose of geometric modeler use cases is to explain how to use 
+		CGM public APIs.&nbsp; Geometric modeler use cases are intended to be 
+		used in a purely geometric modeler environment. The NCGM format is 
+		specifically dedicated to geometric modeler data. Most use cases require 
+		input data which are either created directly in the use case or retrieved from an NCGM file.
+		
+		Most use cases share the same code structure, are launched the same way 
+		and use operators sharing the same behavior. All this is described in 
+		this article.
+		
+		<ul>
+						<li><a href="#Use_Case_Code_Structure">Use Case Code Structure</a>
+						<ul>
+										<li><a href="#Create">Creating Data Directly from the Geometry Factory</a></li>
+										<li><a href="#Retrieve">Retrieving Data from a Loaded NCGM Container</a></li>
+										<li>
+										<a href="#Writes the Model and Closes the Factory">Writing the Model 
+			and Closing the Factory</a></li>
+						</ul>
+						</li>
+						<li><a href="#Building_and_Launching_a_Use_case">Building and Launching a Use Case</a>
+						<li><a href="#UsingOpe">Using Geometric Modeler Operators</a>
+						<li><a href="#Viewing_Use_Case">Viewing Use Case Results</a></ul>
+		</td>
+	</tr>
+</table>
+<h2><a name="Use_Case_Code_Structure">Use Case Code Structure
+</a>
+</h2>
+<p>There are different steps in a use case:</p>
+<ol>
+				<li>Data creation from the geometry factory or data loading from 
+				an input NCGM file</li>
+				<li>Data creation or operator creation, option setting, run, access to the 
+				generated result</li>
+				<li>Model saving/data writing.</li>
+</ol>
+<h3><a name="Create"></a>Creating Data Directly from the Geometry Factory</h3>
+<p>To create data directly, you must:</p>
+<ol>
+	<li>Create the CATGeoFactory. The geometry factory (CATGeoFactory) creates and 
+	manages all the CATICGMObject (and the curves and surfaces in particular). This 
+	creation is done by using the global function <code>::CATCreateCGMContainer</code>.
+	<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>()</pre>
+	</li>
+	<li>Create the geometric objects by using the geometry factory, for example:
+	<pre class="code">CATLine * piLine = piGeomFactory-&gt;<strong>CreateLine</strong>(CATMathO,     // (0,0,0) math point
+                                             CATMathVector(1.,1.,0.) );
+...
+CATCylinder* piCylinder = piGeomFactory-&gt;<strong>CreateCylinder</strong>(CATMathOIJK, // canonical axis system
+                                                        radius,
+                                                        axisStart,
+                                                        axisEnd,
+                                                        angleStart,
+                                                        angleEnd);</pre>
+	</li>
+</ol>
+<p><strong>Note</strong>: Although geometric objects are handled by the mean of 
+interfaces, such as <code>CATCartesianPoint</code>, <code>CATLine</code>, or
+<code>CATBody</code>, the pointers on these objects must not be released. In fact, 
+they are released at the closure of the factory (the <code>CATCloseCGMContainer</code> 
+global function).</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Retrieve"></a>Retrieving Data from a Loaded NCGM Container</h3>
+<p>To retrieve input data from an already existing container, you must:</p>
+<ol>
+	<li>Retrieve the CATGeoFactory from the input file by using the global function
+	<code>::CATLoadCGMContainer</code>. In most use cases the input file is specified 
+	as an argument of the main program, so that the code to load it looks something 
+	like this:
+	<pre class="code">char *pFileName = NULL;
+pFileName = iArgv[1];
+
+ifstream filetoread(pFileName, ios::binary ) ;
+
+CATGeoFactory* piGeomFactory = <strong>::CATLoadCGMContainer</strong>(filetoread) </pre>
+	</li>
+	<li>Retrieve specific objects by using the CATICGMContainer::FindObjectFromTag 
+	method. This method requires a prerequisite knowledge of the persistent tag 
+	born by the object to be retrieved.
+	<pre class="code">CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag(667827);</pre>
+	</li>
+	<li>You can also retrieve objects with a given type by scanning the container.<pre class="code">cout &lt;&lt; &quot;Scanning the geometry... &quot; &lt;&lt; endl; 
+CATGeometry * piCurG = NULL;
+CATULONG32 curtag;
+for (piCurG = piGeomFactory-&gt;Next(NULL,CATPLineType);
+     piCurG != NULL;
+     piCurG = piGeomFactory-&gt;Next(piCurG)) 
+{
+<strong>// Find the PLine from its persistent tag
+//</strong>
+curtag = piCurG-&gt;GetPersistentTag();
+CATICGMObject * piCGMObj = piGeomFactory-&gt;FindObjectFromTag(curtag);
+...
+}</pre>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the use case result in a file, the <code>::CATSaveCGMContainer</code> 
+global function is used. Notice that in most use cases, the save is conditioned 
+by an input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UsingOpe"></a>Using Geometric Modeler Operators</h2>
+<p>Operators are objects to be used not only for 3D modeling operations but also 
+for surfacic or wireframe operations. They can also be used for other operations 
+which do not modify the input data (analysis for example). Operators are 
+delivered in the GMModelInterfaces and GMOperatorsInterfaces frameworks.</p>
+<p>Refer to <a href="../CAACgmModel/CAACgmUcGMModelOpeOverw.htm">How to Use 
+Geometric Operators</a> and
+<a href="CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a>.</p>
+<h2><a name="Building_and_Launching_a_Use_case">Building and Launching a Use 
+case</a></h2>
+<p>To launch a use case, you need to set up the build time environment, then 
+compile the module which contains the use case along with its prerequisites, set 
+up the run time environment, and then execute the use case. This is explained in 
+detail in <a href="../CAADocUseCases/CAADocRunSample.htm">Building and Launching a Use Case</a>. </p>
+<ul>
+				<li>If the use case creates its own data, you have to type the 
+				command name&nbsp; (module name) with one argument, the name of 
+				the .NCGM output file.<br>
+Example:<br>
+				<code>CAAGMOperatorsOverview e:\OverviewResult.NCGM</code> </li>
+				<li>If the use case loads data from an NCGM file, you have to type the command 
+name&nbsp;with two arguments: the input file&nbsp; and the output file.<br>
+Example:<br>
+				<code>CAAGMOperatorsChamfer e:\ChamferInputs.NCGM 
+e:\ChamferResult.NCGM</code> </li>
+</ul>
+<p>Very few use cases load two or more input files or generate two or more 
+files. Check the instructions and comments in the use case code for more 
+information on how to launch the use case if this were to happen.</p>
+<p>The input files are delivered in the FunctionTests/InputData folder of the 
+framework in which the use case is delivered.&nbsp; </p>
+<h2><a name="Viewing_Use_Case">Viewing Use Case Results</a></h2>
+<p>Results produced by use cases can be stored in an NCGM container which 
+		is displayable by using the CAAGMModelGemBrowser use case.&nbsp; Only 
+topological objects can be displayed. To start the browser, just type the 
+CAAGMModelGemBrowser command to display the application below:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.1">Fig.1</a> NCGM Browser </caption>
+  <tr>
+    <td><img alt="NCGM Browser" src="images/CGM_ncgm_browser_0.png"></td>
+  </tr>
+ </table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a></h2>
+<p><a name="References"></a>Not all objects can be displayed in the browser. For more information, refer to
+<a href="CAACgmUcGemBrowser.htm">Browsing the Geometric Container</a>.</p>
+<h2>References</h2>
+<table class="reference">
+	<tr>
+		<td style="width: 15px">[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td style="width: 15px">[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMModelOpeOverw.htm">How to Use 
+Geometric Operators</a></td>
+	</tr>
+    <tr>
+		<td style="width: 15px">[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">
+How to Use Topological Operators</a></td>
+	</tr>
+
+	<tr>
+		<td style="width: 15px">[4]</td>
+		<td>
+<a href="CAACgmUcGemBrowser.htm">Browsing the Geometric Container</a></td>
+	</tr>
+
+	</table>
+<h2>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

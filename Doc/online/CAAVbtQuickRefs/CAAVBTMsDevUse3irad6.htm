@@ -1,0 +1,309 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Working with the RADE Dashboards - Part 2</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>C++ Interactive Dashboard</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Working with the RADE Dashboards - Part 2</h3>
+     <p><em>C++ Code generator features</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article describes the use of Code Generator commands that can be 
+     found in IBM Rational Software Development 
+		Platform. The Code Generator is a suite of commands designed to 
+     assist you in developing your own code, integrated in the V5 development 
+     platform. To compile your code, you will need to use the mkmk tools 
+     explained in: &quot;<a href="CAAVBTMsDevUseirad6.htm">Principles of use - How to 
+     open and build a CAA V5 workspace</a>&quot;.</p>
+     <p>We advise you to read Customizing IBM 
+		Rational Software Development Platform [<a href="#References">1</a>] 
+     to set up your environment and to migrate a CAA V5 File Tree to a format 
+     which is recognized by IBM Rational Software 
+     Development Platform.</p>
+     <p>Before using any of the commands available through the Code Generator, 
+     it is imperative that you have a clear understanding of the CAA V5 
+     Workspace File Tree. You may also have a knowledge of V5 object modeler 
+     principles.</p>
+     <ul>
+       <li><strong><a href="#Getting Started">Getting 
+       Started</a></strong>
+       <ul>
+         <li><a href="#Running the First Command">Running the First Command</a></li>
+         <li><a href="#How_to_open_a_workspace">Opening a Workspace</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#overview">Overview</a></strong></li>
+       <li><a href="#Generating_a_CNext_directory_structure"><strong>Generating 
+       a V5 Directory Structure</strong></a>
+       <ul>
+         <li><a href="#Creating_new_Cnext_framework">Creating 
+         New V5 Frameworks</a></li>
+         <li><a href="#Creating_an_interface_framework">Creating 
+         an Interface Framework</a></li>
+         <li><a href="#Creating_new_module">Creating New Modules</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Generating V5 Source Code">Generating V5 Source 
+       Code</a></strong>
+       <ul>
+         <li><a href="#Test-case">Creating a V5 Test Case</a></li>
+       </ul>
+       </li>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Getting Started"></a>Getting Started</h3>
+ <h4><a name="Running the First Command"></a>Running the First Command</h4>
+ <p>Even if they appear in IRAD, Code 
+ Generator commands will not work until you open a CAA V5 workspace.</p>
+ <table>
+   <tr>
+     <td valign="top">If you try to use them before opening a 
+     workspace you will get the following message:</td>
+     <td><img src="images/MsDevNoMkmk.gif" width="215" height="100"></td>
+   </tr>
+ </table>
+ <p>In order to remedy the situation, open or create a V5 workspace. Below is a 
+ short summary on how to open a V5 workspace. For more information, see &quot;<a href="CAAVBTMsDevUseirad6.htm">Principles 
+ of use - How to open and build a CAAV5 workspace</a>&quot;.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How_to_open_a_workspace"></a>Opening a Workspace</h4>
+ <ol>
+   <li>In the <code><font color="#008040">Navigator</font></code> view, 
+   right-click a project and select <code><font color="#008040">Open V5 
+   Workspace</font></code>.</li>
+   <li>Select the tool you want to use in the<code><font color="#008040"> Create 
+   with </font></code>combo box.</li>
+   <li>Enter the path of the workspace root directory using a drive letter. You 
+   can also click the <code><font color="#008040">...</font></code> button to 
+   open a directory browser. </li>
+   <li>Select the mkmk level in the Tool level combo box. If there is only one 
+   level available, <code><font color="#008040">Default</font></code> should be 
+   displayed in the combo box.</li>
+ </ol>
+ <p align="center">
+ <img src="images/MsDevOpenMkmkirad6.gif" width="851" height="396"></p>
+ <p>Once you have filled in the workspace information, click <code>
+ <font color="#008040">OK</font></code>. A log window appears while your 
+ environment is updated and the workspace opened and you are ready to work. 
+ To find out more, see
+ <a href="CAAVBTJavaDashboardirad6.htm#Work_with_Workspace">Java Interactive 
+ Dashboard</a>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3>Overview <a name="overview"></a></h3>
+ <p>The commands available in the Code Generator are a set of wizards where you 
+ specify a series of parameters and that generate code for you. Before creating 
+ the code, a report window appears so that you can check that the code generated 
+ is as expected.</p>
+ <p align="center">
+ <img src="images/MsDevWizConfirmirad6.gif" width="553" height="628"></p>
+ <table width="100%">
+   <tr>
+     <td width="4%" valign="top">
+     <img src="images/MsDevCaution.gif" width="32" height="32"></td>
+     <td width="96%" valign="top">Some of the generated source files contain 
+     commented out statements such as <code>DO NOT EDIT :: THE CAA2 WIZARDS WILL 
+     INSERT CODE HERE</code>. Do not modify what you find between these 
+     commented lines or the wizards will no longer insert code into the source 
+     file.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Generating_a_CNext_directory_structure"></a>Generating a V5
+ Directory Structure</h3>
+ <p>Code Generator commands enable you to create the necessary V5 directory 
+ structure. The wizard will assist you in creating new frameworks and modules 
+ using the available tools. You can then start populating your directories by 
+ using the available wizards, or by creating new objects, or editing mode 
+ methodology</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating_new_Cnext_framework"></a>Creating New V5 Frameworks</h4>
+ <ol>
+   <li>From the File menu, select <code><font color="#008040">New-&gt;Other</font></code>.</li>
+   <li>Expand the <code><font color="#008040">CAA Elements</font></code> node 
+   and select <code><font color="#008040">CAAV5 Framework</font></code>. Click
+   <code><font color="#008040">Next</font></code>. The New Framework dialog box 
+   is displayed.</li>
+   <li>Enter the framework name.</li>
+   <li>Select the framework type and the framework function and click <code>
+   <font color="#008040">OK</font></code>.</li>
+ </ol>
+ <p align="center">
+ <img src="images/MsDevNewFrameworkirad6.gif" width="783" height="370"></p>
+ <p>The wizard creates the following directories structure (see below.)</p>
+ <p align="center"><a name="fw_figure"></a>
+ <img src="images/MsDevGeneratedFwirad6.gif" border="1"></p>
+ <p>Education type frameworks are suffixed .edu and Test frameworks are suffixed 
+ .tst. The wizard appends these suffixes to the name of the framework.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating_an_interface_framework"></a>Creating an Interface 
+ Framework</h4>
+ <p>An interface framework is a framework that contains (mainly) interfaces in 
+ both Java or IDL language. The structure of this interface is very specific. V5 
+ naming conventions require that these interfaces be distinguishable through an 
+ Interfaces suffix. Therefore if you type in Bird in the framework name, the 
+ generated framework will be called BirdInterfaces. The generated structure is 
+ the following:</p>
+ <p align="center">
+ <img src="images/MsDevGeneratedItfFwirad6.gif" border="1"></p>
+ <p>In the <em>Java Interactive Dashboard</em>, you will see the new framework 
+ in the Navigator view. Note that the framework is set as the currently active 
+ project.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating_new_module"></a>Creating New Modules</h4>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> menu, select the
+   <code><font color="#008040">New-&gt;Other</font></code> command.</li>
+   <li>Expand the <code><font color="#008040">CAA Elements</font></code> node 
+   and select <code><font color="#008040">CAAV5 Module</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. The New Java Module dialog 
+   box is displayed.</li>
+   <li>Enter the module name.</li>
+   <li>Select the framework type and the framework function and click <code>
+   <font color="#008040">OK</font></code>.
+     <table>
+       <tr>
+         <td valign="top">
+         <img src="images/MsDevCaution.gif" width="32" height="32"></td>
+         <td valign="top">Click <code><font color="#008040">Generate 
+         a directory in PublicInterfaces</font></code> when the module contains 
+         JAVA classes exposed in CAA. In this case, classes should be located in
+         <code><font color="#008040">PublicInterfaces</font></code>.</td>
+       </tr>
+     </table>
+   </li>
+ </ol>
+ <p align="center">
+ <img src="images/MsDevNewModuleirad6.gif" width="534" height="288"></p>
+ <p>When you click <code><font color="#008040">OK</font></code> a report window 
+ is displayed to show you the files and directories that will be created. If you 
+ accept, the following file structure will be created:</p>
+ <p align="center">
+ <img src="images/MsDevGeneratedModirad6.gif" border="1" width="461" height="394"></p>
+ <p>Note that the newly created module is set as the currently active one.</p>
+ <p align="right">[<a href="#Top">Top</a>]
+ </p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Generating V5 Source Code"></a>Generating V5 Source Code</h3>
+ <h4><a name="Test-case"></a>Creating a V5 Test-Case</h4>
+ <p>You may create interactively a new test case script inside a test-dedicated 
+ framework.</p>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> menu, select
+   <code><font color="#008040">New-&gt;Other</font></code>.</li>
+   <li>Expand the<code><font color="#008040"> CAA Elements</font></code> node 
+   and select <code><font color="#008040">CAAV5 TestCase</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. The Insert TestCase dialog 
+   box is displayed.</li>
+   <li>Enter the TestCase name.</li>
+   <li>Select the scenario type. </li>
+   <li>Select the operating systems on which you want to run the test case.</li>
+   <li>Specify the maximum time for the test case to run.</li>
+   <li>Enter the executable name to launch the test case.</li>
+   <li>Enter the arguments required.</li>
+   <li>Check <code><font color="#008040">Switch test case</font></code> if you 
+   want the test case to be considered as switch sensitive.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/MsDevNewTestCase2irad6b.gif"></p>
+ <ol start="3">
+   <li>Select the operating systems on which you want to run your test case.</li>
+   <li>Enter the maximum time allowed.</li>
+   <li>Enter the executable to replay. If need be, enter the 
+   required arguments.</li>
+ </ol>
+ <p>A new test case script is created in your framework. This test case can be 
+ run using <font color="#008040"><code>Replay Test-Cases</font></code> found in 
+ the <font color="#008040"><code>CAA Project</font></code> menu.</p>
+ <p align="center">
+ <img border="1" src="images/MsDevGeneratedTestCaseirad6.gif"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="CAAVBTJavaDashboardirad6.htm">Customizing
+     IBM Rational Software Development Platform</a> </td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAAVBTMsDevUseirad6.htm">Working with the RADE Dashboards - 
+     Part 1</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td><a href="CAAVBTMsDevMapirad6.htm">Workbench Commands Mapping</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td><a href="CAAJIDtroubleshooting.htm">
+     JID Troubleshooting</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [May 2003]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [May 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

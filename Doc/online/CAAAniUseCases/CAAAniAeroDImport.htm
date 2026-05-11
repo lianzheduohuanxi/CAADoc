@@ -1,0 +1,949 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+
+ <title>Creating Analysis Features - Part 2</title>
+ <link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right">
+     <h3><a name="Top"></a>Creating Analysis Features - Part 2</h3>
+     <p><em>Import an external format inside an Analysis document</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------------------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article accompanies the
+    <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+    Analysis New FeatureOverview</a> technical article.</p>
+    <p>It will focus on the implementation of an Analysis data import inside an 
+    analysis document. This step is not necessary, it can be fulfilled by using CATIA meshing and preprocessing capability. Also this scenario will propose 
+    an alternative solution for importing some external data inside the analysis 
+    document.</p>
+    <ul>
+      <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+      <li><a href="#AboutImport"><strong>About Import</strong></a></li>
+      <li><a href="#UseCase"><strong>The CAAAniAeroDTransition Use Case</strong></a>
+      <ul>
+        <li><a href="#What">What Does CAAAniAeroDTransition Do</a></li>
+        <li><a href="#How">How to Launch CAAAniAeroDTransition</a></li>
+        <li><a href="#Where">Where to Find the CAAAniAeroDTransition Code</a></li>
+      </ul>
+      </li>
+      <li><a href="#Step"><strong>Step-by-Step</strong></a><ul>
+      <li><a href="#CATIPersistent">Defining a CATIPersistent Implementation of the 
+  &quot;fif&quot; File Format</a></li>
+      <li><a href="#ImpLib">Defining a CATISamImportDefine Implementation</a></li>
+      <li><a href="#DefineCAAIAniAeroImport">Defining a CAAIAniAeroImport Implementation</a></li>
+      <li><a href="#Import method.">Coding the Import Method</a></li>
+      <li><a href="#PutFeature">Putting in Place the Feature Structure</a></li>
+      <li><a href="#CreatingMesh">Implementing the CATIMSHMesher Interface</a></li>
+		<li><a href="#AddCBRenaming">
+		<font color="#FB7203">Adding Callbacks to be warned by the CATAnalysis 
+		Renaming or by your own document Renaming</font></a><font color="#FB7203">
+		</font><font color="#800080"><b>&nbsp;NEW R18</b></font></li>
+    </ul>
+      </li>
+      <li><strong><a href="#InShort">In Short</a></strong></li>
+      <li><strong><a href="#References">References</a></strong></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to import a mesh and preprocessing 
+entities inside the Analysis document.</p>
+<p>More specifically, the CAAAniAeroDTransition.m use case shows how to: </p>
+<ul>
+  <li>Implement <i>CATIPersistent</i> interface on the input file type in order 
+  to manipulate it and store a link on it.</li>
+  <li>Implement <i>CATISamImportDefine</i> Interface to import from your file 
+  into the analysis document and to customize interaction user if wanted.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h2 align="left"><a name="AboutImport"></a><small>About Import.</small></h2>
+<p>All import capabilities are associated inside Analysis environment to the 
+Links Manager object. This feature is dedicated to keep the links from the 
+Analysis document that is used to manage the import. In order to integrate a new 
+format, the following sequence of interfaces have to be implemented.</p>
+<ul>
+  <li>CATIPersitent on your file format. In order to be able to put a link from 
+  the link manager to your input file, the file has to simulate a CATDocument 
+  behavior. That is why you have to implement on your file the CATIPersistent 
+  Interface. All the methods have to be implemented even with empty software. To 
+  simulate a CATDocument, use the <b>CATDocumentServices::Open</b> method that 
+  will return a CATDocument pointer. This pointer can be used to store links by 
+  using tk_external feature attributes which will manage dynamic file location. 
+  Without tk_external, use tk_sring attribute if the path and name of the file 
+  needs to be kept inside the analysis document.</li>
+  <li>CATISamImportDefine will on one hand launch the import for a file 
+  extension. The goal is to put&nbsp; in place all the model structure to have 
+  integrated data for the update mechanism. On the other hand this interface 
+  will define a new import type and will customize the import with a user interface if wanted. In our scenario 
+  &quot;AeroDynamicImport&quot; will allow to access the &quot;.fif&quot; files with 
+  no user interface. </li>
+</ul>
+<p>If a new CATISamImportDefine is implemented, by using the contextual menu on 
+the Links manager object, user interface will looks like:</p>
+<p align="center">
+<img border="2" src="images/AeroImport.jpg" width="526" height="353"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAniAeroDTransition Use Case</h3>
+<p>CAAAniAeroDTransition is a use case of the CAAAnalysisInterfaces.edu 
+framework that illustrates CATIA Analysis frameworks capabilities.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAAniAeroDTransition Do</h4>
+<p>The goal of this Use Case is to implement the import capability that will 
+produce the image seen previously.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAniAeroDTransition</h4>
+<p>To launch CAAAniAeroTransition, you will need to set up the build time 
+environment, then compile CAAAniAeroTransition along with its prerequisites, set 
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where&nbsp;to Find the CAAAniAeroDTransition Code</h4>
+<p>The code for this use case is contained in module <b>CAAAniAeroDTransition.m</b> 
+of the framework <b>CAAAnalysisInterfaces.edu.</b> The module generated is a 
+shared library or DLL that contains: </p>
+<ul>
+  <li>The <i>CAAAniFifDoc</i> class that implements the <i>CATIPersistent</i> 
+  interface for the input file.</li>
+  <li>The <i>CAAAniImportDefine</i> class that implements the <i>
+  CATISamImportDefine</i> interface.</li>
+  <li>The <i>CAAAniADImport class </i>that implements the <i>CAAIAniAeroImport</i> 
+  interface which will integrate data for the update mechanism.</li>
+</ul>
+<p>We will see the different implementations and focus on the&nbsp;<i>CAAAniADImport</i> 
+methods and internal tools.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>Implementing a transition includes six main steps:</p>
+<ol>
+  <li><a href="#CATIPersistent">Defining a CATIPersistent Implementation of the 
+  &quot;fif&quot; File Format</a></li>
+  <li><a href="#ImpLib">Defining a CATISamImportDefine Implementation</a></li>
+  <li><a href="#DefineCAAIAniAeroImport">Defining a CAAIAniAeroImport Implementation</a></li>
+  <li><a href="#Import method.">Coding the Import Method</a></li>
+  <li><a href="#PutFeature">Putting in Place the Feature Structure</a></li>
+  <li><a href="#CreatingMesh">Implementing the CATIMSHMesher Interface</a></li>
+	<li><a href="#AddCBRenaming"><font color="#FB7203">
+	Adding Callbacks to be warned by the CATAnalysis Renaming or by your own 
+	document Renaming</font></a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CATIPersistent"></a>Defining a CATIPersistent Implementation of the 
+&quot;fif&quot; File Format</h4>
+<p><i>CATIPersistent</i> is implemented by the <i>CAAAniFifFile</i> class.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+CATImplementClass(CAAAniFifDoc,DataExtension,CATBaseUnknown,fif);
+ 
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CATIPersistent.h&quot;
+TIE_CATIPersistent(CAAAniFifDoc);
+
+//=====================================================================
+// All methods needs to be implemented with dummy software
+//=====================================================================
+CATBoolean CAAAniFifDoc::Dirty ()
+{ return FALSE ; }
+//=====================================================================
+void CAAAniFifDoc::Save()
+{}
+//=====================================================================
+void CAAAniFifDoc::SaveAs (char * storagePrintableName,CATBoolean becameCurrent)
+{}
+//=====================================================================
+void CAAAniFifDoc::SaveAs_B (SEQUENCE(octet) storageName, CATBoolean becameCurrent)
+{}
+//=====================================================================
+void CAAAniFifDoc::Load (char * storagePrintableName, CATBoolean readOnlyFlag)
+{}
+//=====================================================================
+void CAAAniFifDoc::Load_B (SEQUENCE(octet) storageName, CATBoolean readOnly)
+{}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Associated with this setup of code, the implementation must be defined inside 
+the Object Modeler Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file 
+defined in CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This 
+definition line associates the implementation of <b><i>CATIPersistent</i></b> 
+interface for the fif file format inside the shared library <b><i>
+libCAAAniAeroDTransition</i></b></p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+fif  CATIPersistent  libCAAAniAeroDTransition
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ImpLib"></a>Defining a CATISamImportDefine Implementation</h4>
+<p><i>CATISamImportDefine</i> is implemented by the <i>CAAAniImportDefine</i> 
+class which is derivated from <i>CATESamImportDefineAdaptor</i>. </p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+CATImplementClass(CAAAniImportDefine,DataExtension,CATBaseUnknown,AeroDynamicImport);</pre>
+    <pre>//-----------------------------------------------------------------------------
+// CAAAniImportDefine : constructor
+//-----------------------------------------------------------------------------
+CAAAniImportDefine::CAAAniImportDefine():CATESamImportDefineAdaptor()
+{ 
+}
+
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CATISamImportDefine.h&quot;
+TIE_CATISamImportDefine(CAAAniImportDefine);
+
+//-----------------------------------------------------------------------------
+// CAAAniImportDefine : GetFileTypes
+//-----------------------------------------------------------------------------
+
+HRESULT CAAAniImportDefine::GetFileTypes(CATListValCATString&amp; oTypes)
+{
+  oTypes.Append(CATString(&quot;fif&quot;));
+  return S_OK;
+}
+//-----------------------------------------------------------------------------
+// CAAAniImportDefine : GetCommentForType
+//-----------------------------------------------------------------------------
+
+HRESULT CAAAniImportDefine::GetCommentForType(const CATString       iType,
+                                               CATUnicodeString&amp; oComment)
+{
+  if(iType == &quot;fif&quot;)
+    oComment = &quot;Aerodynamic Mesh File&quot;;
+  else
+     return E_FAIL;
+
+  return S_OK;
+}</pre>
+    <pre>//-----------------------------------------------------------------------------
+// CAAAniImportDefine : Import 
+//-----------------------------------------------------------------------------</pre>
+    <pre>HRESULT CAAAniImportDefine::Import (CATDocument * iImportedDoc, CATDocument * iAnalysisDoc)
+{
+  HRESULT HR = E_FAIL;
+
+  CATAssert(iImportedDoc);
+  CATAssert(iAnalysisDoc);
+
+  if (iImportedDoc-&gt;GetType() == &quot;fif&quot;) {
+    CAAIAniAeroImport_var spAeroImport(iImportedDoc);
+    if (!!spAeroImport)
+      HR = spAeroImport-&gt;Import((iImportedDoc-&gt;StorageName()).ConvertToChar(), iAnalysisDoc);
+  }
+  return HR;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Associated with this setup of code, the implementation must be defined inside 
+the Object Modeler Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file 
+defined in CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This 
+definition line associates the <b><i>AeroDynamicImport</i></b> implementation of
+<b><i>CATISamImportDefine</i></b> interface inside the shared library <b><i>
+libCAAAniAeroDTransition</i></b></p>
+<table class="code" width="100%" height="69">
+  <tr>
+    <td height="65">
+    <pre>...
+AeroDynamicImport  CATISamImportDefine  libCAAAniAeroDTransition
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>At least three methods need to be implemented: </p>
+<ol>
+  <li><code><b>GetFileTypes</b></code> that defines the list of types associated 
+  with the file for the import dialog box customization.</li>
+  <li><code><b>GetCommentForType</b></code> that associates a comment for the 
+  openFile box.</li>
+  <li><code><b>Import</b></code> that launches the execution from the input file 
+  to the current CATAnalysis document. This method has as input two CATDocument* 
+  pointers one for the imported file and the second one to the current CATAnalysis document.</li>
+</ol>
+<p>In order to associate an user interface with the file import four methods 
+have to be implemented :</p>
+<ol start="4">
+  <li><code><b>GetUserFrame</b></code> that generates the 
+  user dialog frame.</li>
+  <li><code><b>Accept</b></code><font face="Times New Roman"> 
+  that is called when the Ok button of the main panel is pressed.</font></li>
+  <li><code><b>GetValues</b></code><b><font face="Times New Roman">
+  </font></b><font face="Times New Roman">that fills a CATSafeArrayVariant to 
+  store wanted values for Visual Basic. </font></li>
+  <li><code><b>SetValues</b></code><b><font face="Courier New"> </font></b>
+  <font face="Times New Roman">that updates wanted values from a 
+  CATSafeArrayVariant for Visual Basic.</font></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="DefineCAAIAniAeroImport"></a>Defining a CAAIAniAeroImport 
+Implementation</h4>
+<p><i>CAAIAniAeroImport</i> is implemented by the <i>CAAAniImport</i> class on 
+the document extension fif.</p>
+<table class="code" width="100%" height="69">
+  <tr>
+    <td height="65">
+    <pre>...
+CATImplementClass( CAAAniADImport, DataExtension, CATBaseUnknown, fif);
+...</pre>
+    <pre>// Tie the implementation to its interface
+// ----------------------------------------
+#include &quot;TIE_CAAIAniAeroImport.h&quot;
+TIE_CAAIAniAeroImport(CAAAniADImport);</pre>
+    </td>
+  </tr>
+</table>
+<p>Associated with this setup of code, the implementation must be defined inside 
+the Object Modeler Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file 
+defined in CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This 
+definition line associates the <b>fif</b> implementation of <b><i>
+CAAIAniAeroImport</i></b> interface inside the shared library <b><i>
+libCAAAniAeroDTransition</i></b></p>
+<table class="code" width="100%" height="69">
+  <tr>
+    <td height="65">
+    <pre>...
+fif  		CAAIAniAeroImport		libCAAAniAeroDTransition
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Three methods have to be implemented :</p>
+<ol>
+  <li><code><b>Import</b></code> that launches the execution from the input file 
+  to the current CATAnalysis document. This method has as an input a pointer to 
+  the current CATAnalysis document defined as a CATDocument*.</li>
+  <li><code><b>ImportFif</b></code><font face="Times New Roman"> 
+  that </font>will open the file and create the node and finite elements<font face="Times New Roman">.&nbsp;&nbsp;&nbsp;&nbsp;
+  </font></li>
+  <li><code><b>TranslateToFieldModel</b></code> that will 
+  generate the field model associated to our imported file.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="Import method."></a>Coding the Import Method</h4>
+<p>The aim of this method is to import the content of the file by creating 
+Analysis features. As seen previously, this includes:</p>
+<ul>
+  <li>Keep the link to the file.</li>
+  <li>Create the meshing feature in order to create the mesh. This feature will 
+  have the link to the file as support.</li>
+  <li>Reference the solution file for the Aero Dynamic Set. This set can also be 
+  done in interactive mode by implementing a specific edition panel.</li>
+  <li>Some checking about the field model structure if required.</li>
+</ul>
+<p>A lot of this software is already described in the previous uses cases. Refer 
+to them for more explanations. At the end of the import, some steps are 
+required:</p>
+<ul>
+  <li>Renumber Model will assign Sequential numbers for all entities of the 
+  field model. This step is required to build the CharacCollector object for 
+  which the values are stored in arrays using this same sequential numbering.</li>
+  <li>Check the validity of imported data (This is not a mandatory step but can 
+  generate some information messages that will prevent from future troubles.)</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="PutFeature"></a>Putting in Place the Feature Structure</h4>
+ <ul>
+   <li>The first step is to<b> retrieve the Analysis manager </b>as for all analysis 
+document. In this step we retrieve also the AnalysisModelFactory for feature 
+creation.</li>
+ </ul>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+//=================================================================================================
+// Get the Analysis Container
+//=================================================================================================
+CATISamAccess_var  spSamAccess (idocument);
+if( NULL_var == spSamAccess) return E_FAIL;
+CATIContainer     *piSpecContainer=NULL;
+CATISamAnalysisContainer_var spAnalysisContainer;
+
+hr = spSamAccess -&gt; GetSpecContainer(piSpecContainer);
+CATISamAnalysisModelFactory_var spFactory;
+if (piSpecContainer)
+{
+  spAnalysisContainer = piSpecContainer;
+  spFactory           = piSpecContainer;
+  piSpecContainer -&gt; Release();
+  piSpecContainer = NULL;
+}
+else
+{
+  if (piSpecContainer) piSpecContainer -&gt; Release();
+  piSpecContainer = NULL;
+  return E_FAIL;
+}
+if (NULL_var == spAnalysisContainer) return E_FAIL;
+ 
+//=================================================================================================
+// Get the AnalysisManager
+//=================================================================================================
+CATISamAnalysisManager_var spAnalysisManager;
+hr = spAnalysisContainer-&gt;GetAnalysisManager(spAnalysisManager);
+if (FAILED(hr)) return E_FAIL;
+...</pre>
+    </td>
+  </tr>
+</table>
+ <ul>
+   <li>From the Analysis Manager, <b>retrieve the Document manager</b> to create a link on 
+the file:</li>
+ </ul>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+//=================================================================================================
+// Get the DocumentManager To plug the document.
+//=================================================================================================
+CATISamDocumentManager_var spDocManager;
+hr = spAnalysisManager -&gt;GetDocumentManager(spDocManager);
+if (FAILED(hr)) return E_FAIL;
+//
+CATISpecObject * piLink= NULL;
+// Create a link from the document manager to the external file
+if (NULL_var != spDocManager)
+{
+  if (NULL_var != spFactory)  piLink = spFactory -&gt; CreateAnalysisLink(&quot;fif&quot;);
+  CATDocument * pDocToLink = (CATDocument*) (this);
+  if (NULL != pDocToLink)
+    spDocManager -&gt;InsertDocument(pDocToLink,&quot;fif&quot;,piLink);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+ <ul>
+   <li>From the Analysis Manager, <b>retrieve the Analysis Model and the CATIMSHMeshManager</b> to create the mesh part. Note that as meshing specifications 
+are in a specific container, you need to load the catalog on the meshing 
+container.</li>
+ </ul>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+//=================================================================================================
+ 
+CATIMSHMeshManager * piManager  = NULL;
+CATISpecObject* piAnalysisModel = NULL;
+// Retrieve the AnalysisModel
+hr = spAnalysisManager -&gt;GetCurrentModel(piAnalysisModel);
+if (NULL != piAnalysisModel)
+{
+  CATISamExplicit *piExplicitFeat = NULL;
+  // Retrieve the AnalysisModel Field model Object
+  piAnalysisModel -&gt; QueryInterface(IID_CATISamExplicit,(void**)&amp;piExplicitFeat);
+  if (NULL!= piExplicitFeat)
+  {
+    piExplicitFeat-&gt; GetExplicitObject(MeshSet);
+    piExplicitFeat -&gt; Release();
+  }
+  CATISamAnalysisModel *piAnalysisMod = NULL ;
+  piAnalysisModel -&gt; QueryInterface(IID_CATISamAnalysisModel,(void**)&amp;piAnalysisMod);
+  if (NULL != piAnalysisMod)
+  {
+    // Retrieve the Case created in the transition and its field modele version
+    CATISamAnalysisCase* piFoundCase = NULL;
+    piAnalysisMod-&gt;GetNamedCase(&quot;Aero Case&quot;,piFoundCase);
+    if (piFoundCase)
+    {
+      piExplicitFeat = NULL;
+      piFoundCase -&gt; QueryInterface(IID_CATISamExplicit,(void**)&amp;piExplicitFeat);
+      if (NULL!= piExplicitFeat)
+      {
+        piExplicitFeat -&gt; GetExplicitObject(ExpCase);
+        piExplicitFeat -&gt; Release();
+      }
+      spScan = piFoundCase;
+      piFoundCase-&gt; Release();
+      piFoundCase=NULL;
+    }
+    // Retrieve the CATIMSHMeshManager associated to the Analysis Model.
+    CATBaseUnknown* piBaseMesh=NULL;
+    piAnalysisMod-&gt;GetMesh(piBaseMesh);
+    if (piBaseMesh!= NULL)
+    {
+      piBaseMesh -&gt; QueryInterface(IID_CATIMSHMeshManager,(void**)&amp;piManager);
+      piBaseMesh -&gt; Release();
+      piBaseMesh =  NULL;
+    }
+    piAnalysisMod -&gt; Release();
+    piAnalysisMod =  NULL;
+  }
+  piAnalysisModel-&gt; Release();
+  piAnalysisModel=NULL;
+}
+//
+if (piManager == NULL || MeshSet == NULL_exp  || ExpCase == NULL_exp )
+  return E_NOINTERFACE;
+//==========================================================================
+// Catalog For Meshing at the level of the container of the manager
+CATISpecObject* piMshMESH = NULL;
+piManager -&gt; QueryInterface(IID_CATISpecObject,(void**)&amp;piMshMESH);
+if (piMshMESH != NULL)
+{
+  CATIContainer_var spMCont = piMshMESH -&gt; GetFeatContainer();
+  piMshMESH -&gt; Release ();
+  piMshMESH=NULL;
+  CATICatalogManager_var spCataManager = spMCont;
+  if (NULL_var !=  spCataManager)
+  {
+    CATICatalog * pcatalog = NULL;
+    CATUnicodeString CataName (&quot;CAAAniCatalog.CATfct&quot;);
+    CATUnicodeString CataId   (&quot;CAAAniCatalog&quot;);
+
+    AccessCatalog(&amp;CataName,&amp;CataId,spMCont,&amp;pcatalog);
+    if (pcatalog)   pcatalog   -&gt; Release();
+    pcatalog = NULL;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+ <ul>
+   <li><b>Create the mesh part</b> (Instantiate from the catalog startup and set the mesh 
+part support the the link that was previously created. Note that the Update of the Mesh part will launch the mesher 
+which is 
+implemented by this meshpart. This step is&nbsp;required but can be done later 
+by using the compute command.)</li>
+ </ul>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+// Create the MeshPart associated with the import.
+CATIMSHMeshPart* piMshPart = piManager -&gt; CreateMeshPart(&quot;AeroMeshPart&quot;);
+if (piMshPart &amp;&amp; piLink)
+{
+  CATILinkableObject * piLinkable= NULL;
+  piLink -&gt; QueryInterface (IID_CATILinkableObject,(void **)&amp;piLinkable);
+  if (piLinkable)
+  {
+     piMshPart -&gt; SetSupport (NULL,piLinkable);
+     piLinkable -&gt; Release();
+  }
+/*CATISpecObject* piMPObject = NULL;
+  piMshPart -&gt; QueryInterface (IID_CATISpecObject,(void **)&amp;piMPObject);
+  if (piMPObject)
+  {
+    piMPObject -&gt; Update();
+    piMPObject -&gt; Release();
+  } */
+}
+if (NULL != piMshPart) piMshPart -&gt; Release();
+if (NULL != piLink)    piLink -&gt; Release();
+ //=================================================================================================
+if (piManager) piManager -&gt; Release(); piManager = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>At this step, the global structure of the specification is set-up.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatingMesh"></a>Implementing the CATIMSHMesher Interface</h4>
+<p><i>CATIMSHMesher</i> is implemented by the <i>CAAAniAeroMesher </i>class. 
+Note that the Mesher identifier is build automatically by the software as the 
+late type of the feature plus &quot;_mesher&quot; string.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+CATImplementClass(CAAAniAeroMesher,DataExtension,CATBaseUnknown,AeroMeshPart_mesher);
+
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CATIMSHMesher.h&quot;
+TIE_CATIMSHMesher(CAAAniAeroMesher);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Associated with this setup of code, the implementation must be defined inside 
+the Object Modeler Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file 
+defined in CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This 
+definition line associates the <code>AeroMeshPart_mesher </code>implementation 
+of <b>CATIMSHMesher</b> interface inside the shared library <b><i>
+libCAAAniAeroDTransition.</i></b></p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+AeroMeshPart_mesher  CATIMSHMesher  libCAAAniAeroDTransition
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now the implementation of the methods:</p>
+<p><b><code>IsOfType</code></b> is a Query the mesher about its type. The String 
+representing the query made to the mesher. The Legal values can be:</p>
+<ul>
+  <li><b>&quot;1D&quot;</b> Is the mesher generating 1D finite elements?</li>
+  <li><b>&quot;2D&quot; </b>Is the mesher generating 2D finite elements?</li>
+  <li><b>&quot;3D&quot; </b>Is the mesher generating 3D finite elements?</li>
+  <li><b>&quot;Connection&quot;</b> Is the mesher generating connecting elements between 
+  meshes?</li>
+</ul>
+<p>The result of the query may be set to<b> 1</b> if the answer is yes, else set 
+it to<b> 0</b>. In our case, this is always <b>0</b>.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+int CAAAniAeroMesher::IsOfType (const CATUnicodeString &amp;iType)
+{
+  if ( Type == &quot;Other&quot; ) return 1;
+  return 0;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><b><code>CheckSuppport</code></b> allows the mesher to validate the support 
+assigned to the mesh part. In our scenario, this is the link to the file.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+HRESULT CAAAniAeroMesher::CheckSupport(CATIMSHMeshPart*       MeshPart,
+                                       int &amp;              NbParents,
+                                       CATIMSHMeshPart** &amp;ParentMeshParts)
+{
+  HRESULT hr = S_OK;
+
+  NbParents = 0;
+  ParentMeshParts = NULL;
+
+  CATDocument* pBaseDoc  = NULL;
+  hr = GetLinkedDoc (MeshPart,pBaseDoc);
+  if (!SUCCEEDED(hr)) return E_FAIL;
+  if (NULL == pBaseDoc) return E_FAIL;
+
+  return hr;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+	<p><b>Mesh</b> will effectively launch the meshing algorithm. The generated Finite 
+Elements will be automatically&nbsp; associated to a domain. 
+This domain is identified by an integer. The created elements method is working 
+in the current opened domain or open a new one if no one is open. The mesher has 
+to create a new domain in which each finite element will be created. To do so, 
+use the method of the CATIMSHMesh interface to create a new domain. Several 
+domains can be created if the elements have to be grouped in several areas. In 
+our case we choose to have only one domain. At the opening of a new domain, the 
+previous one will be automatically closed.</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+HRESULT CAAAniAeroMesher::Mesh (CATIMSHMeshPart* iMeshPart)
+{
+  // Initialize Output Data
+  HRESULT hr =S_OK;
+  NbDomains = 0;
+  Domains   = NULL;
+  CATUnicodeString ifile_name;
+  //=================================================================================================&lt;
+  // Check Input Argument
+  //=================================================================================================
+  if (NULL == MeshPart) return E_FAIL;
+  CATIMSHMeshManager *piManager = MeshPart -&gt; GetMeshManager ();
+  if (NULL == piManager) return E_FAIL;
+  CATIMSHMesh * pimesh = piManager -&gt; GetMesh ();
+  if (NULL == pimesh) return E_FAIL;
+  //=================================================================================================
+  // Retrieve the support  for the name of file
+  //=================================================================================================
+  CATDocument* pBaseDoc  = NULL;
+  hr = GetLinkedDoc (MeshPart,pBaseDoc);
+  if (!SUCCEEDED(hr) || NULL == pBaseDoc) return E_FAIL;
+  ifile_name = pBaseDoc -&gt;StorageName();
+  //=================================================================================================
+  // Retrieve the current document
+  //=================================================================================================
+  CATILinkableObject *piLinkable= NULL;
+  hr = MeshPart -&gt; QueryInterface(IID_CATILinkableObject,(void **)&amp;piLinkable);
+  if (NULL == piLinkable) return E_NOINTERFACE;
+  CATDocument  *pCurrDoc = piLinkable-&gt; GetDocument();
+  piLinkable -&gt; Release();piLinkable=NULL;
+  //=================================================================================================
+  // Get the CATAnalysisExplicitModel
+  //=================================================================================================
+  CATAnalysisExplicitModel* modelExpli = NULL;
+  modelExpli = CATAnalysisExplicitModel::GetDocumentModel(pCurrDoc);
+  //=================================================================================================
+  // Get the Analysis Model
+  //=================================================================================================
+  CATISamAnalysisSet* piSet = NULL;
+  CATAnalysisExplicitSet MeshSet,ExpCase;
+  hr = MeshPart -&gt; QueryInterface(IID_CATISamAnalysisSet,(void **)&amp;piSet);
+  if (NULL == piSet) return E_NOINTERFACE;
+  CATISamAnalysisModel* piFEMModel = NULL;
+  piSet -&gt; GetFEMModel(piFEMModel);
+  if (piFEMModel)
+  {
+    CATISamExplicit *piExplicitFeat = NULL;
+    // Retrieve the AnalysisModel Field modele Object
+    piFEMModel -&gt; QueryInterface(IID_CATISamExplicit,(void**)&amp;piExplicitFeat);
+    if (NULL != piExplicitFeat)
+    {
+      piExplicitFeat-&gt; GetExplicitObject(MeshSet);
+      piExplicitFeat -&gt; Release();
+    }
+    //=================================================================================================
+    // Retrieve the Case created in the transition and its field model version
+    //=================================================================================================
+    CATISamAnalysisCase* piFoundCase = NULL;
+    piFEMModel-&gt;GetNamedCase(&quot;Aero Case&quot;,piFoundCase);
+    if (piFoundCase)
+    {
+      piExplicitFeat = NULL;
+      piFoundCase -&gt; QueryInterface(IID_CATISamExplicit,(void**)&amp;piExplicitFeat);
+      if (NULL!= piExplicitFeat)
+      {
+        piExplicitFeat -&gt; GetExplicitObject(ExpCase);
+        piExplicitFeat -&gt; Release();
+      }
+      piFoundCase-&gt; Release();
+      piFoundCase=NULL;
+    }
+    piFEMModel -&gt; Release();
+  }
+  piSet -&gt; Release();
+  //=================================================================================================
+  // Start Meshing
+  //=================================================================================================
+  hr = ImportFif (ifile_name.ConvertToChar(),piManager,modelExpli,MeshSet,ExpCase);
+  if (pimesh) pimesh-&gt; Release();
+  if (piManager) piManager -&gt; Release();
+  return hr;
+}...</pre>
+    </td>
+  </tr>
+</table>
+	<p align="right">[<a href="#Top">Top</a>]</p>
+	<p><b>ImportFif</b> will open the file and create the nodes and finite elements. 
+According to nodes and elements information ridden from the file, the 
+corresponding entities have to be created inside the analysis Document. For 
+this, we have to create the nodes and elements inside the meshing container by 
+using the services on the CATIMSHMesh interface and reference the meshing 
+information inside the field model. For this, use the CATAnalysisExplicitNode 
+and CATAnalysisExplicitElement Objects. Because no specific properties are 
+declared in the input file, some generic behavior for triangles and quadrangles 
+will be chosen.</p>
+<p>For Nodes:</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+//===================================================================================
+// Node Creation inside the Mesh container
+CATMSHNode ** m_nodes = new CATMSHNode * [nbnode];
+CATAnalysisExplicitNode Node = NULL_exp;;
+mesh -&gt; CreateNodes (xyz,nbnode,m_nodes);
+//===================================================================================
+// Node as explicit entity creation:
+for (int iele = 0 ; iele &lt; nbnode; iele ++)
+{
+  Node.CreateNode(nodes,m_nodes[iele],NODE);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>For Elements:</p>
+<table class="code" width="100%">
+  <tr>
+    <td>
+    <pre>...
+//===================================================================================
+// Retrieve the Basic Shell Physical Type
+modelExpli-&gt;GetPhysicalTypeNumber(&quot;ELEMENT_DRAWING_QUAD4&quot;,QD4);
+char *connec = &quot;QD4&quot;;
+CATAnalysisExplicitElement Element = NULL_exp;
+
+if (nbelemQD4)
+{
+  // Elements Creation inside the Mesh contenair
+  mesh -&gt; CreateElements(connec,4,linkednodesQD4,nbelemQD4,m_elem);
+  for (j= 0 ; j &lt; nbelemQD4 ; j++)
+    Element.CreateElement(elements,m_elem[j],QD4);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="AddCBRenaming"><font color="#FB7203">Adding Callbacks to be warned 
+	by the CATAnalysis Renaming or by your own document Renaming</font></a></h4>
+	<p><b>Callback on the CATAnalysis</b></p>
+	<p>You want to be warned when the Analysis document is renamed, add a 
+	callback where <i>idocument</i> is the Analysis document and <i>OnRenameCB</i> 
+	is the method that will be called at each modification of the Analysis 
+	document's name.</p>
+<table class="code" width="100%" id="table1">
+  <tr>
+    <td>
+    <pre>...</pre>
+	<pre>CATCallback RenameCB = ::AddCallback ( this , idocument , &quot;CATSamDocNotification&quot; ,
+(CATSubscriberMethod)&amp;CAAAniADImport::OnRenameCB );
+...</pre>
+    </td>
+  </tr>
+</table>
+ <p><b>Callback on your own document</b></p>
+	<p>You want to be warned when your document is renamed, add a callback 
+	thanks to CATSamDocumentTools::AddRenameCB where <i>pDocToLinkis</i> your 
+	own document, <i>idocument</i> is the Analysis document and <i>OnRenameCB2</i> 
+	is the method that will be called at each modification of your document's 
+	name.</p>
+<table class="code" width="100%" id="table2">
+  <tr>
+    <td>
+    <pre>...</pre>
+	<pre>CATCallback RenameCB2 = CATSamDocumentTools::AddRenameCB(pDocToLink, idocument, (CATSubscriberMethod)&amp;CAAAniADImport::OnRenameCB2);
+...</pre>
+    </td>
+  </tr>
+</table>
+ <p><b>Implementation of the call method</b></p>
+	<p>You have to implement the method on which you will be call to make some 
+	treatments if needed. Below you will find some example about how to retrieve 
+	the old and new name of the document thanks to the notification.</p>
+<table class="code" width="100%" id="table3">
+  <tr>
+    <td>
+    <pre>void CAAAniADImport::OnRenameCB(CATCallbackEvent,void*,CATNotification *notif, CATSubscriberData,CATCallback)
+{ 
+   CATSamDocNotification * pNotif = (CATSamDocNotification *) notif;
+   if ( !pNotif ) return;
+   CATSamDocActionType type = pNotif -&gt; GetActionType ();
+   if (type != SamRename) return;
+
+   cout&lt;&lt;&quot;GiveOldName &quot; &lt;&lt;(pNotif-&gt;GiveOldName()).ConvertToChar() &lt;&lt;endl;
+   cout&lt;&lt;&quot;GiveNewName &quot; &lt;&lt;(pNotif-&gt;GiveNewName()).ConvertToChar() &lt;&lt;endl;
+ 
+   return;
+}</pre>
+    </td>
+  </tr>
+</table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case has demonstrated how to import some external data inside the 
+ CATAnalysis.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td valign="top">
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td valign="top">
+     <a href="../CAAOsmQuickRefs/CAAOsmHome.htm">
+     Feature Modeler documentation</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+     Analysis Modeler Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+     Integrate new Feature inside Analysis.</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [Jun 2004]</td>
+     <td valign="top">Document modified</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>3</strong> [Feb 2007]</td>
+     <td valign="top">Document modified</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>
+

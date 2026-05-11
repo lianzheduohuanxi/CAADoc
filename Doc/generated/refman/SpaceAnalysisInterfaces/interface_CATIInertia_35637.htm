@@ -1,0 +1,474 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>SpaceAnalysisInterfaces Interface CATIInertia</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../SpaceAnalysisInterfaces.htm" href="../SpaceAnalysisInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "SpaceAnalysisInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIInertia"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>SpaceAnalysisInterfaces Interface CATIInertia</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIInertia_35637','CATIInertia','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIInertia</b>
+</p>
+<p>
+<b><i> Get inertia data of a product controlling the density.</i></b><br>
+
+ <p>
+ This interface enables to get the inertia data of a product:
+ <ul>
+ <li> mass
+ <li> position of the center of gravity
+ <li> inertia matrix
+ <li> components of principal axes
+ <li> principal moments values
+ </ul>
+ All the coordinates are expressed with respect to the product axis system.
+ <p>
+ The density is managed :
+ <ul>
+ <li> as input the density is not null : this value is used for the computation.
+ <li> as input the density is null and a density is attached to the product : it is used and ouput.
+ <li> as input the density is null and the product has no density : a default value is used and ouput.
+ </ul>
+ If the product is made of non homogeneous material the output density is set to -1.
+ <p>
+ UNITS : 
+ <ul>
+ <li> Mass                      Kg     ( Kilogram )
+ <li> InertiaWetArea            M^2    ( square meter )
+ <li> InertiaVolume             M^3    ( cubic meter )
+ <li> COGPosition               M      ( meter )
+ <li> InertiaMatrix             KgM2   ( square Kilogram meter )
+ <li> PrincipalMoments          KgM2   ( square Kilogram meter )
+ <li> Density                   Kg/M^3 ( kilogram per cubic meter )
+ </ul></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetCOGPosition(double[3])"><b>GetCOGPosition</b></a>(double[3])
+<dd>  Get the position of the center of gravity of a product.
+ <dt> o 
+    <a href="#GetEquivalent(int*)"><b>GetEquivalent</b></a>(int*)
+<dd>  Get equivalent of a product
+ 
+ <dt> o 
+    <a href="#GetEquivalentMode(int*)"><b>GetEquivalentMode</b></a>(int*)
+<dd>  Get equivalent mode of a product
+ 
+ <dt> o 
+    <a href="#GetInertia(double*,double*,double[3],double[9],double[9],double[3])"><b>GetInertia</b></a>(double*,double*,double[3],double[9],double[9],double[3])
+<dd>  Get inertia data of a product controlling the density.
+ <dt> o 
+    <a href="#GetInertia(double*,double*,double[3],double[9],double[9],double[3],double*,double*)"><b>GetInertia</b></a>(double*,double*,double[3],double[9],double[9],double[3],double*,double*)
+<dd>  Get inertia data ( with inertia volume and area) of a product controlling the density.
+ <dt> o 
+    <a href="#GetInertiaArea(double*)"><b>GetInertiaArea</b></a>(double*)
+<dd>  Get inertia area of a product
+ 
+ <dt> o 
+    <a href="#GetInertiaMatrix(double*,double[9])"><b>GetInertiaMatrix</b></a>(double*,double[9])
+<dd>  Get inertia matrix of a product controlling the density.
+ <dt> o 
+    <a href="#GetInertiaVolume(double*)"><b>GetInertiaVolume</b></a>(double*)
+<dd>  Get inertia volume of a product
+ 
+ <dt> o 
+    <a href="#GetMass(double*,double*)"><b>GetMass</b></a>(double*,double*)
+<dd>  Get mass of a product controlling the density.
+ <dt> o 
+    <a href="#GetPrincipalAxes(double[9])"><b>GetPrincipalAxes</b></a>(double[9])
+<dd>  Get principal axes of a product.
+ <dt> o 
+    <a href="#GetPrincipalMoments(double*,double[3])"><b>GetPrincipalMoments</b></a>(double*,double[3])
+<dd>  Get principal moments of a product controlling the density.
+ <dt> o 
+    <a href="#SetEquivalentMode(int)"><b>SetEquivalentMode</b></a>(int)
+<dd>  Set equivalent mode of a product
+ 
+ <dt> o 
+    <a href="#SetGranularityMode(int)"><b>SetGranularityMode</b></a>(int)
+<dd>  Set granularity mode of a product ( with Part )
+ 
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetCOGPosition"></a><a name="GetCOGPosition(double[3])"></a> <dt> o <b>GetCOGPosition</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCOGPosition</b>(<td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oPosition</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get the position of the center of gravity of a product.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oPosition</tt>
+   <dd>    Position of the center of gravity with respect to the product axis system.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetEquivalent"></a><a name="GetEquivalent(int*)"></a> <dt> o <b>GetEquivalent</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEquivalent</b>(<td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>oIsEquivalent</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get equivalent of a product
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oEquivalentMode</tt>
+   <dd>    1 -- If the computation of a product have some Equivalent
+    0 -- no equivalent in computation
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetEquivalentMode"></a><a name="GetEquivalentMode(int*)"></a> <dt> o <b>GetEquivalentMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEquivalentMode</b>(<td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>oEquivalentMode</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get equivalent mode of a product
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oEquivalentMode</tt>
+   <dd>    1 -- If a product have some Equivalent, the computation work with
+    0 -- no equivalent in computation
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetInertia"></a><a name="GetInertia(double*,double*,double[3],double[9],double[9],double[3])"></a> <dt> o <b>GetInertia</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInertia</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioDensity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oMass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oPosition</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oMatrix</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oComponents</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oValues</tt>)<script type="text/javascript"> activateLink('const=0','const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get inertia data of a product controlling the density.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oMass</tt>
+   <dd>    The mass of the product.
+ </dd>
+    <dt><tt> oPosition</tt>
+   <dd>    Position of the center of gravity with respect to the product axis system.
+ </dd>
+    <dt><tt> oMatrix</tt>
+   <dd>    Inertia matrix.
+ </dd>
+    <dt><tt> oComponents</tt>
+   <dd>    Components of principal axes.
+ </dd>
+    <dt><tt> oValues</tt>
+   <dd>    Principal moments values.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetInertia"></a><a name="GetInertia(double*,double*,double[3],double[9],double[9],double[3],double*,double*)"></a> <dt> o <b>GetInertia</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInertia</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioDensity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oMass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oPosition</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oMatrix</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oComponents</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oValues</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oInertiaVolume</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oInertiaArea</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get inertia data ( with inertia volume and area) of a product controlling the density.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oMass</tt>
+   <dd>    The mass of the product.
+ </dd>
+    <dt><tt> oPosition</tt>
+   <dd>    Position of the center of gravity with respect to the product axis system.
+ </dd>
+    <dt><tt> oMatrix</tt>
+   <dd>    Inertia matrix.
+ </dd>
+    <dt><tt> oComponents</tt>
+   <dd>    Components of principal axes.
+ </dd>
+    <dt><tt> oValues</tt>
+   <dd>    Principal moments values.
+ </dd>
+    <dt><tt> oInertiaVolume</tt>
+   <dd>    The inertia volume of the product.
+ </dd>
+    <dt><tt> oInertiaArea</tt>
+   <dd>    The inertia area of the product.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetInertiaArea"></a><a name="GetInertiaArea(double*)"></a> <dt> o <b>GetInertiaArea</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInertiaArea</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oInertiaArea</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get inertia area of a product
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oInertiaArea</tt>
+   <dd>    The inertia area of the product.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetInertiaMatrix"></a><a name="GetInertiaMatrix(double*,double[9])"></a> <dt> o <b>GetInertiaMatrix</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInertiaMatrix</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioDensity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oMatrix</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get inertia matrix of a product controlling the density.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oMatrix</tt>
+   <dd>    Inertia matrix.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetInertiaVolume"></a><a name="GetInertiaVolume(double*)"></a> <dt> o <b>GetInertiaVolume</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInertiaVolume</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oInertiaVolume</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get inertia volume of a product
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oInertiaVolume</tt>
+   <dd>    The inertia volume of the product.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetMass"></a><a name="GetMass(double*,double*)"></a> <dt> o <b>GetMass</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetMass</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioDensity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oMass</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get mass of a product controlling the density.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oMass</tt>
+   <dd>    The mass of the product.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetPrincipalAxes"></a><a name="GetPrincipalAxes(double[9])"></a> <dt> o <b>GetPrincipalAxes</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetPrincipalAxes</b>(<td><script type="text/javascript"> activateLink('double[9','double[9]')</script> <td><tt>oComponents</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get principal axes of a product.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oComponents</tt>
+   <dd>    Components of principal axes.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="GetPrincipalMoments"></a><a name="GetPrincipalMoments(double*,double[3])"></a> <dt> o <b>GetPrincipalMoments</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetPrincipalMoments</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioDensity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double[3','double[3]')</script> <td><tt>oValues</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get principal moments of a product controlling the density.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioDensity</tt>
+   <dd>    The density of the product.
+ </dd>
+    <dt><tt> oValues</tt>
+   <dd>    Principal moments values.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="SetEquivalentMode"></a><a name="SetEquivalentMode(int)"></a> <dt> o <b>SetEquivalentMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetEquivalentMode</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iEquivalentMode</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Set equivalent mode of a product
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEquivalentMode</tt>
+   <dd>    1 -- If a product have some Equivalent, the computation work with
+    0 -- no equivalent in computation
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<a name="SetGranularityMode"></a><a name="SetGranularityMode(int)"></a> <dt> o <b>SetGranularityMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetGranularityMode</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iGranularityMode</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Set granularity mode of a product ( with Part )
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iGranularityMode</tt>
+   <dd>    0 -- Only the main body in Inertia computation
+    1 -- All body for Inertia computation
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     HRESULT
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIInertia.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATSaiSpaceAnalysisItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

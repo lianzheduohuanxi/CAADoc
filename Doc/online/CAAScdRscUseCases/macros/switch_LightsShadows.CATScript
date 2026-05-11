@@ -1,0 +1,129 @@
+Option Explicit
+
+' COPYRIGTH DASSAULT SYSTEMES 2003
+
+' ***********************************************************************
+'   Purpose:		Switch on and off all the ligths' shadows of a product
+'
+'   Version:		1.0
+'   Author:			bmb
+'   Languages:		VBScript 
+'   Locales:		English 
+'   CATIA Level:	V5R12 
+' ***********************************************************************
+
+
+' Main 
+Sub CATMain()
+
+	' Get the documents collection
+	Dim oCollection As Documents
+	Set oCollection = CATIA.Documents
+
+	' test if no document is open
+	If 0=oCollection.Count Then 
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch On Lights"
+		Exit Sub
+	End If
+
+	 ' Get material library
+	Dim oProductDocument As Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	' test if the active document is a material library (CATMaterial)
+	If 0=InStr(oProductDocument.Name, ".CATProduct") Then
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch Off Shadows"
+		Exit Sub
+	End If
+
+	' Accessing the Root Product
+	Dim oRootProduct As Document
+	Set oRootProduct = oProductDocument.Product
+
+	' Accessing the collection of rendering lights
+	Dim oLights As RenderingLights
+	Set oLights = oRootProduct.GetItem("CATRscRenderingLightVBExt")
+
+	' Declarations
+	Dim I As Int
+	Dim oLight As RenderingLight
+	Dim oTab(3) As CATSafeArrayVariant
+
+	' Create the parameter
+	Dim oParams As Parameters
+	Dim oReadParam As Parameter
+	Dim oParam As Parameter
+	Dim sParamValue As String
+	Set oParams = oProductDocument.Product.Parameters
+
+	On Error Resume Next
+	Set oParam = oParams.Item("LightsShadowsStatus")
+
+	If Err <> 0 Then ''''''''' switch OFF '''''''''
+
+		' Ligths loop
+		For I=1 To oLights.Count
+			Set oLight = oLights.Item(I)
+
+			' Create sParamValue
+			If I>1 Then
+				sParamValue = sParamValue & "&"
+			End If
+			sParamValue = sParamValue & oLight.Name & "="
+			
+			If oLight.HardwareShadowStatus = 1 Then
+				oLight.HardwareShadowStatus = 0
+				sParamValue = sParamValue & "1"
+			Else
+				sParamValue = sParamValue & "0"
+			End If
+
+			sParamValue = sParamValue & "/"
+
+			If oLight.ShadowObjectStatus = 1 Then
+				oLight.ShadowObjectStatus = 0
+				sParamValue = sParamValue & "1"
+			Else
+				sParamValue = sParamValue & "0"
+			End If
+		Next
+
+		' Create the parameter
+		oParams.CreateString "LightsShadowsStatus", sParamValue
+		oParams.Item("LightsShadowsStatus").Hidden = True
+
+
+	Else ''''''''' switch ON '''''''''
+
+		' Parse the parameter value
+		Dim aLights As Array
+		Dim aLight As Array
+		sParamValue = oParam.ValueAsString ' read the parameter value
+		aLights = Split(sParamValue, "&")
+
+		' Ligths loop
+		For I=0 To UBound(aLights)
+
+			aLight = Split(aLights(I), "=")
+			Err.Clear
+			Set oLight = oLights.Item(aLight(0))
+			If Err <> 0 Then ' light not exist
+				msgbox "Impossible to find the light '" & aLight(0) & "'", vbOKOnly, "Switch On Lights' Shadows"
+			Else
+				If oLight.Type = 3 Then ' 1=directional light
+					oLight.HardwareShadowStatus = Mid(aLight(1), 1, 1)
+				End If
+				If oLight.Type = 1 Then ' 1=spot light
+					oLight.ShadowObjectStatus = Mid(aLight(1), 3, 1)
+				End If
+			End If
+		Next
+
+		' Remove parameter
+		oParams.Remove "LightsShadowsStatus"
+
+	End If
+
+End Sub
+
+

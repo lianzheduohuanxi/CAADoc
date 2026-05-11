@@ -1,0 +1,176 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script type="text/javascript" language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>DMC Troubleshooting</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>DMC Troubleshooting</h3>
+     <p><em>DMC Troubleshooting</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Quick Reference Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article describes the problems you may encounter when using RADE 
+	 tools in Rational Software Architect Designer and the corresponding workarounds.</p>
+	 <ul>
+       <li>
+       <a href="#Icons Are not Displayed Properly in the Menus"><strong>CAA Plugins are 
+	   not Displayed or Do Not Work Properly</strong></a></li>
+             <li><a href="#New plugins version can not be installed"><strong>A New 
+			 Version of CAA 
+			 Plugins Cannot Be Installed</strong></a></li>
+       </ul>
+       </td>
+   </tr>
+ </table>
+ <hr>
+ <h2><a name="Icons Are not Displayed Properly in the Menus"></a>CAA Plugins are not Displayed 
+ or Do Not Work Properly</h2>
+     Sometimes, when RADE tools are installed on top of Rational Software 
+ Architect Designer IDE, CAA 
+ plugins are not displayed. To enable CAA plug-ins:<ul>
+     <li>Create a temporary directory.</li>
+     <li>Move all CAA plug-ins installed for CAA-RADE 
+     <code>INSTALL_RADE\intel_a\resources\CATVBTServer\CAAExtensionSiteRSx\eclipse\plugins\com.dassault_systemes.*
+		</code> to this temporary directory.</li>
+     <li>Launch  Rational Software Architect Designer with 
+	 option<code> </code> <code>-clean</code>.</li>
+     <li>Launch Rational Software Architect Designer IDE. CAA plugins are not referenced any longer.</li>
+     <li>Move back CAA plugins from the temporary directory to 
+     <code>INSTALL_RADE\intel_a\resources\CATVBTServer\CAAExtensionSiteRSx\eclipse\plugins</code>.</li>
+     <li>Launch Rational IDE. CAA plugins are still not displayed.</li>
+     <li>Exit Rational IDE and relaunch a second time. CAA plug-ins are 
+	 displayed.</li>
+     </ul>
+
+     Another cleanup can be done also:
+     <ul>
+     <li>Go in directory C:/Users/<em>Your_Username</em>/.eclipse, and rename 
+	 directory <em>org.eclipse.platform_xxx</em> to <em>
+	 sav.org.eclipse.platform_xxx</em></li>
+     <li>Start Rational Software Architect Designer. Restart could take a little longer since this directory will 
+	 be recreated from scratch</li>
+     </ul>
+
+ <h2><a name="New plugins version can not be installed"></a>A New Version of CAA Plugins 
+ Cannot Be Installed</h2>
+
+     <p>
+         <strong>if you  cannot install the DMC plugin, with following error message : </strong>
+         <br /> <em>The items selected for install include a software feature (com.ibm.rcp.dombrowser.feature.feature.jar) that requires install procedures from the older Eclipse Update Manager. The installation cannot continue. </em>
+     </p>
+     <ul>
+         <li>
+             This problem is due to an IBM Rational Software 9.0 issue. Please refer to this article for more information and how to solve the problem.
+             <br />
+             <a href="http://www-01.ibm.com/support/docview.wss?uid=swg21640442">
+                 http://www-01.ibm.com/support/docview.wss?uid=swg21640442
+             </a>
+         </li>
+     </ul>
+
+
+     <p>
+         <strong>For any other error, please read the following :</strong>
+     </p>
+     Sometimes, when trying to install a new version of RADE plugins in 
+ Rational Software Architect Designer, an 
+ error message may occurs in the installation wizard and the plugin cannot be 
+ installed. In order to solve this problem you can try to clean the .eclipse 
+ directory as described before, or you can also try to launch Rational Software 
+ Architect Designer with the 
+ -clean option. In order to do that, proceed as follow:
+     <ul>
+     <li>Select Rational Software Architect Designer icon on your desktop or in the Start menu, and click 
+	 &quot;Properties&quot;</li>
+     <li>Copy the &quot;Target&quot; field value</li>
+     <li>Open a &quot;cmd&quot; window</li>
+     <li>Paste the value in the cmd window and add the option &quot;-clean&quot;, press 
+	 enter</li>
+     <li>Once Rational Software Architect Designer is launched, retry to install RADE plugins using &quot;Help/Install 
+	 New Software&quot; menu</li>
+     </ul>
+     <strong>Warning: It is important to understand some mecanisms for plugins 
+ installation in Rational Software Architect Designer:</strong> 
+ <br>Depending on the way Rational Software Architect Designer is launched (&#8220;Run as Administrator&#8221; or as a 
+ simple user), there could be an impact from installation and runtime 
+ perspectives:
+     <ul>
+     <li>If a plugin is installed as Administrator, then the plugin directory is 
+	 copied in the Rational Software Architect Designer Installation (ie: <em>C:\Program Files\IBM\SDP\plugins</em>). 
+	 It means that the installed plugin will be taken into account at runtime 
+	 for all users.</li>
+     <li>If a plugin is installed as a simple user, then the plugin directory is 
+	 copied in a .eclipse directory for that user (i.e.: <em>
+	 C:\Users\theUsername\.eclipse</em>) and are not copied in the in the 
+	 Rational Software Architect Designer 
+	 Installation. It means that the installed plugin will be taken into account 
+	 at runtime only for that user.</li>
+     </ul>
+     <p>As a consequence, the following behavior happens:</p> 
+     <ul>
+     <li>As a simple user, if you encounter an issue when trying to update a new 
+	 version of a plugin previously installed by yourself (in the 
+	 C:\Users\theUsername\.eclipse directory) then you can try to rename the 
+	 .eclipse directory prior to run the plugin installation. It should allow 
+	 installing the new plugin version with no error. Of course, be careful if 
+	 several plugins were installed in this .eclipse directory.</li>
+     </ul>
+     <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="CAADmcENOVIACusto.htm">DMC for ENOVIA LCA</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [May 2006]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

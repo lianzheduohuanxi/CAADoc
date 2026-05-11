@@ -1,0 +1,521 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Creating a Schematic Route between two Schematic Equipments</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Creating a Schematic Route between two Schematic 
+     Equipments</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment--------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to create a 
+     Schematic route between two Schematic component instances. The ends of the 
+     route are then connected to a connector to each of the component instance.
+     <p>Through special naming convention, the macro knows how to identity the 
+     two component instances to use for routing. The Schematic component 
+     instances with the word &quot;_RouteFrom&quot; or the word &quot;_RouteTo&quot; embedded in 
+     their instance names will be used.</p>
+     <p>
+     <img border="0" src="images/CAASchRouteBetween2Equip_01.jpg" width="801" height="591"></td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchRouteBetween2Equip is launched in 
+     CATIA [<a href="#References">1</a>]. No open document is needed.<p>Special 
+		environment must be available to successfully run this macro:</p>
+		<ul>
+			<li>Prerequisites:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>RADE must be installed.</li>
+				<li>CAASchPlatformModeler.edu must exist in CAADoc folder.</li>
+			</ol>
+		</blockquote>
+		<ul>
+			<li>Setup:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>Build CAASchAppBase.m and CAASchAppUtilities.m, located in 
+				CAASchPlatformModeler.edu (RADE is required). </li>
+				<li>Copy generated DLLs, CAASchAppBase.dll and 
+				CAASchAppUtilities.m, respectively, to the run-time environment 
+				folder &quot;intel_a\code\bin.&quot;</li>
+				<li>Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, 
+				to the run-time environment folder &quot;intel_a\resources\graphic.&quot;</li>
+				<li>Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico 
+				to the run-time environment folder &quot;intel_a\code\dictionary.&quot;</li>
+			</ol>
+		</blockquote>
+		<p>
+     <a href="CAASchRouteBetween2EquipSource.htm">
+     CAASchRouteBetween2Equip.CATScript </a>is located in the CAAScdSchUseCases 
+     module. <a href="macros/CAASchRouteBetween2Equip.CATScript">Execute macro</a> 
+     (Windows only).</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchRouteBetween2Equip includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Find 2 component to route between">Find the two Schematic 
+       component instances to route between.</a></li>
+       <li><a href="#Create a route instance between two component">Create a 
+       Schematic Route connecting to the two Schematic Component instances.</a></li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first loads the CAASCH_RouteBetween2Equip.CATProduct document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Open the schematic document </font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>sFilePath<br>
+&nbsp;&nbsp;&nbsp; sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "online\CAAScdSchUseCases\samples\CAASCH_RouteBetween2Equip.CATProduct")<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Next, the macro acquires the schematic root object from the document. 
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objPrdRoot<font color="#0000ff"> As </font>Product<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objSchRoot<font color="#0000ff"> As </font>SchematicRoot<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objPrdRoot = objSchDoc.Product
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Find 2 component to route between"></a>Find the two Schematic 
+     component instances to route between</h4>
+     <p>This macro provides the internal Find2ComponentInst subroutine to find 
+     the Schematic component instance to start the route with and the Schematic 
+     component instance to end the route with.</p>
+     <p>Find2ComponentInst uses the GetComponents method to obtain a list of all 
+     the Schematic component instances in the document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#008000">' -----------------------------------------------------------------------------</font><br>
+<font color="#008000">' | Find 2 components and their images. The user need to designate specific</font><br>
+<font color="#008000">' | specific component instances by naming them specially.</font><br>
+<font color="#008000">' | From - component : should have &quot;_Routefrom&quot; embedded in the name</font><br>
+<font color="#008000">' | To - component : should have &quot;_Routeto&quot; embedded in the name</font><br>
+<font color="#008000">' |</font><br>
+<font color="#008000">' | Input: objSchRootArg:&nbsp; the root of the document.</font><br>
+<font color="#008000">' | Returns: objLCompat_g: a list of component instance objects</font><br>
+<font color="#008000">' |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objLGRRComp_g: a list of component instance image objects</font><br>
+<font color="#008000">' -----------------------------------------------------------------------------</font><br>
+         Private Sub Find2ComponentInst (objSchRootArg<font color="#0000FF"> As </font>SchematicRoot)<br>
+         <br>
+&nbsp;&nbsp;&nbsp;
+
+    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objLCompInst = objSchRootArg.GetComponents<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Then it searches for two components that match the name requirement. 
+     Notice that when looping through each member in the component instance 
+     list, the macro uses the method GetInterface to get two specific interface 
+     on the same member object.</p>
+     <ol>
+       <li>SchCompatible - to be use latter in the route.</li>
+       <li>Product - for the Name method. The macro uses this method to obtain 
+       the name of the current instance so that it can match it with &quot;_Routeto&quot; 
+       and &quot;_Routetrom&quot;</li>
+     </ol>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      For </font>intIndex = 1 To<font color="#0000FF"> int</font>NbComp<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strInstName = &quot;&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#0000FF">&nbsp;int</font>Found = 0<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objCompCompat = objLCompInst.Item (intIndex,&quot;CATIASchCompatible&quot;)<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        If </font>( Not ( objCompCompat Is Nothing ) )<font color="#0000FF"> Then</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Set </font>objPrd = objSchRootArg.Ge<font color="#0000FF">tInt</font>erface ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;CATIAProduct&quot;, objCompCompat)<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>( Not ( objPrd Is Nothing ) )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strInstName = objPrd.Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <font color="#0000FF">&nbsp;int</font>Found&nbsp; = Instr (1, strInstName, strTgtFrom, 1)
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              If </font>(<font color="#0000FF"> int</font>Found &lt; 1 )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#0000FF">&nbsp;int</font>Found&nbsp; = Instr (1, strInstName, strTgtTo, 1)
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                <font color="#0000FF">&nbsp;int</font>StoreIndex = 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#0000FF">&nbsp;int</font>StoreIndex = 1<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If&nbsp;&nbsp;   </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>If a match is found, the interface SchCompatible interface handle will 
+     be stored in a local variable: objCompCompatFrom or objCompCompatTo. The 
+     macro also uses the internal GetComponentImage function to find the 
+     graphical image of the current instance. The function returns a 
+     SchCompGraphic handle which will be store in the local variable: 
+     objSchCompGraph.</p>
+     <p>The loop exists when intNbFound is two.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>(<font color="#0000FF"> int</font>Found &gt; 0 )<font color="#0000FF"> Then</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             Dim </font>ObjSchCompGraph<font color="#0000FF"> As </font>SchCompGraphic<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             Set </font>objSchCompGraph = objSchRootArg.Ge<font color="#0000FF">tInt</font>erface ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;CATIASchCompGraphic&quot;,objCompCompat)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             Set </font>objGRRComp = GetComponentImage (objSchCompGraph)<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             If </font>( ( Not objGRRComp Is Nothing ) )<font color="#0000FF"> Then</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                If </font>(<font color="#0000FF"> int</font>StoreIndex = 1 )<font color="#0000FF"> Then</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  Set </font>objCompCompatFrom = objCompCompat<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  Set </font>objGRRCompFrom = objGRRComp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  Set </font>objCompCompa<font color="#0000FF">tTo </font>= objCompCompat<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  Set </font>objGRRCompTo = objGRRComp<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <font color="#0000FF">&nbsp;int</font>NbFound&nbsp; =<font color="#0000FF"> int</font>NbFound + 1<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>(<font color="#0000FF"> int</font>NbFound &gt; 1 ) Then&nbsp; Exit For&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><font color="#008000">'--- If ( Not ( objCompCompat Is Nothing ) ...</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Next</font></td>
+       </tr>
+     </table>
+     <p>The local varaibles are stored in two global lists which are accessible 
+     to the main subroutine.</p>
+     <ol>
+       <li>objLCompat_g - for the list of SchCompat handles of the &quot;RouteFrom&quot; 
+       and the &quot;RouteTo&quot; component instances.</li>
+       <li>objLGRRComp_g - for the list of GRRComp handles for the corresponding 
+       members in the objLCompat_g list.</li>
+     </ol>
+     <table class="code">
+       <tr>
+         <td width="100%"><font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objCompCompatFrom Is Nothing ) And _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objGRRCompFrom Is Nothing ) )<font color="#0000FF"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objLCompat_g.Append objCompCompatFrom<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objLGRRComp_g.Append objGRRCompFrom<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objCompCompa<font color="#0000FF">tTo </font>Is Nothing ) And _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objGRRCompTo Is Nothing ) )<font color="#0000FF"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objLCompat_g.Append objCompCompatTo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objLGRRComp_g.Append objGRRCompTo<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Create a route instance between two component"></a>Create a 
+     Schematic Route connecting to the two Schematic Component instances</h4>
+     <p>This macro provides the internal RouteLineBetween2Component subroutine 
+     to create the Schematic route. Two global lists populated in previous steps 
+     are accessible to this subroutine. They are the objLCompat_g and the 
+     objLGRRComp_g lists. Each member is that list is used for calling the 
+     following methods.</p>
+     <ol>
+       <li>IsTargetOKForRoute - checks whether the component instance is 
+       compatible with the type of Schematic route to make a connection. In type 
+       is specified by the connector type at the end of the route. In this case, 
+       it the &quot;CAASCHEDUConnector&quot;.</li>
+       <li>GetBestCntrForRoute - returns the x-y coordinates of the position of 
+       a connector that the route can connect to. The position is used as the 
+       start or the end point of the Schematic route. This position is based on 
+       an input point. The position of the connector closest to the input point 
+       will be returned.</li>
+     </ol>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;   For </font>intIndex = 1<font color="#0000FF"> To </font>2<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objCompCompat = objLCompat_g.Item (intIndex,&quot;CATIASchCompatible&quot;)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objGRRComp = objLGRRComp_g.Item (intIndex,&quot;CATIASchGRRComp&quot;)<br>
+         <br>
+&nbsp;&nbsp;&nbsp;
+
+    <font color="#008000">...</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objGRRComp Is Nothing ) And _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objCompCompat Is Nothing ) )<font color="#0000FF"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'&nbsp; IsTargetOKRoute returns a list of compatible connectors</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'&nbsp; on the target component is the component is compatible to</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'&nbsp; to connected to the start point of the route.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objCompCompat.IsTargetOKForRoute &quot;CAASCHEDUConnector&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objGRRComp, objLCntrs, bCompatible<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         Set </font>objSchGRR = objSchRootArg.Ge<font color="#0000FF">tInt</font>erface (&quot;CATIASchGRR&quot;,objGRRComp)
+         <br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         If </font>( Not ( objLCntrs Is Nothing ) And&nbsp; _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objSchGRR Is Nothing ) And bCompatible )<font color="#0000FF"> Then</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            If </font>(<font color="#0000FF"> int</font>Index = 1 )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(0) = 62.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(1) = 62.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(0) = 170.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(1) = 100.0<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <font color="#008000">'------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'&nbsp; GetBestCntrForRoute returns a connector from</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'&nbsp; the output list that is closest </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'&nbsp; to a user selection point.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <font color="#008000">'------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objCompCompat.GetBestCntrForRoute db2SelectPt, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchGRR, objLCntrs, objLDbOut, objAppCntrBest<br>
+&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
+           <font color="#0000FF">&nbsp;Int</font>NbCoord = objLDbOut.Count<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            If </font>(IntNbCoord &gt; 1)<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt(0) = objLDbOut.Item(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt(1) = objLDbOut.Item(2)<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              If </font>(<font color="#0000FF"> int</font>Index = 1 )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt1(0) =&nbsp; db2CntrPt(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt1(1) =&nbsp; db2CntrPt(1)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                 Set </font>objAppCntrCompBest1 = objAppCntrBest<br>
+         <br>
+&nbsp;&nbsp;&nbsp;
+
+    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt2(0) =&nbsp; db2CntrPt(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt2(1) =&nbsp; db2CntrPt(1)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                 Set </font>objAppCntrCompBest2 = objAppCntrBest<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><font color="#008000">'--- If (IntNbCoord &gt; 1) Then</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><font color="#008000">'--- If ( Not ( objLCntrs Is Nothing ) And&nbsp; _</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If </font><font color="#008000">'--- If ( Not ( objGRRComp Is Nothing ) ...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;   Next </font><font color="#008000">'--- For intIndex</font></td>
+       </tr>
+     </table>
+     <p>The beginning and the ending route points of the Schematic routes are 
+     the connector positions from above. The macro uses the AppCreateRoute to 
+     create an application specific route object, this is an input to the next 
+     method to be called. Next, the method CreateSchRouteByPoints is used to 
+     create the Schematic Route.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp; dbPtArray(0) = db2CntrPt1(0)<br>
+&nbsp;&nbsp; dbPtArray(1) = db2CntrPt1(1)<br>
+         <br>
+&nbsp;&nbsp; dbPtArray(2) = (db2CntrPt1(0) + db2CntrPt2(0)) * 0.5<br>
+&nbsp;&nbsp; dbPtArray(3) = db2CntrPt1(1)<br>
+         <br>
+&nbsp;&nbsp; dbPtArray(4) = dbPtArray(2)<br>
+&nbsp;&nbsp; dbPtArray(5) = db2CntrPt2(1)<br>
+         <br>
+&nbsp;&nbsp; dbPtArray(6) = db2CntrPt2(0)<br>
+&nbsp;&nbsp; dbPtArray(7) = db2CntrPt2(1)<br>
+         <br>
+&nbsp;&nbsp;
+
+   <font color="#008000">'---------------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;
+   <font color="#008000">' Ask application to create a route reference</font><br>
+&nbsp;&nbsp;
+   <font color="#008000">'---------------------------------------------------------------------------</font><br>
+&nbsp;&nbsp; strLogLineID = &quot;U1-P101-2in-CS150R-FG&quot;<br>
+         <br>
+&nbsp;&nbsp; objAppObjFact.AppCreateRoute &quot;CAASCHEDUFuncString&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp; objAppRouteRef, strLogLineID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;   If </font>( Not ( objAppRouteRef Is Nothing ) )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;
+   <font color="#008000">...</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp; objSchBaseFact.CreateSchRouteByPoints objAppRouteRef, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray, objSchRoute&nbsp; <br>
+         <br>
+&nbsp;&nbsp;&nbsp;  
+
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>The macro provides the internal FindConnectorAtPosition function to 
+     return an interface handle on the connectors at each ends of the newly 
+     created Schematic route. </p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">' Find the connector of the route matching the </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">' component connector position at each end</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objAppCntrRouteBest1 = FindConnectorAtPosition ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt1(0), db2CntrPt1(1), objRouteCntbl, objSchRootArg)<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objAppCntrRouteBest2 = FindConnectorAtPosition ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPt2(0), db2CntrPt2(1), objRouteCntbl, objSchRootArg)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Finally, the macro uses the AppConnect method to connect the newly 
+     created route instance to the two existing component instances through 
+     their connectors.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          Set </font>objAppConnection = objAppCntrCompBest1.AppConnect _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (objAppCntrRouteBest1)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to create a Schematic route between two Schematic 
+ component instances. A message logging the status of the critical steps is 
+ displayed at the end of the use case.</p>
+ <p>
+ <img border="0" src="images/CAASchRouteBetween2Equip_02.jpg" width="807" height="501"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

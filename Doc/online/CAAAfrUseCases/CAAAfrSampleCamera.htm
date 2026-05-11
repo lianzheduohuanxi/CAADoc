@@ -1,0 +1,332 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Cameras</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Cameras</h3>
+      <em>Creating a single command seen as several end user commands</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a command that can be passed a
+      parameter. It uses a camera to modify the current window viewpoint, the
+      parameter being the selected viewpoint.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrGeoCommands Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrGeoCommands Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrGeoCommands</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrGeoCommands Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to pass a parameter to a command, and
+how to use a camera to modify the current window viewpoint.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="UseCase"></a>The CAAAfrGeoCommands Use Case</h3>
+<p>CAAAfrGeoCommands is a use case of the CAAApplicationFrame.edu framework that
+illustrates the ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the CAAAfrGeoCommands Use Case Do</h4>
+<p>The CAAAfrGeoCommands use case includes several commands. The
+CAAAfrChangeViewNormalCmd command that changes the current window viewpoint is
+the only command described here. This command that belongs to the
+CAAAfrGeometryWshop changes the current window viewpoint to one of the
+following.</p>
+<table>
+  <tr>
+    <td><img src="images/CAA3DCameraYZ.jpg" alt="CAA3DCameraYZ.jpg (3195 bytes)" width="122" height="130"></td>
+    <td>See the yz plane from left. Select View-&gt;Normal View-&gt;NormalX</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAA3DCameraZX.jpg" alt="CAA3DCameraZX.jpg (2825 bytes)" width="122" height="130"></td>
+    <td>See the zx plane from right. Select View-&gt;Normal View-&gt;NormalY</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAA3DCameraXY.jpg" alt="CAA3DCameraXY.jpg (2313 bytes)" width="121" height="129"></td>
+    <td>See the xy plane from top. Select View-&gt;Normal View-&gt;NormalZ</td>
+  </tr>
+</table>
+<p>This command is instantiated from the workshop using as many command headers
+as there are end user commands, that is, as there are push items in menus or
+push buttons in toolbars that trigger this command,</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrGeoCommands</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>Select File-&gt;New</li>
+  <li>In the New box, select CAAGeometry and click OK</li>
+  <li>Select View-&gt;Normal View. Three commands are proposed: NormalX,
+    NormalY, and NormalZ, setting the viewpoint to see the YZ plane, the ZX
+    plane, and the XY plane respectively.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrGeoCommands Code</h4>
+<p>The CAAAfrGeoCommand use case is made of a single class named <i>CAAAfrChangeViewNormalCmd</i>
+located in the CAAAfrGeoCommands.m module of the CAAApplicationFrame.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeoCommands.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeoCommands.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In addition, the command header that stands for this command in the
+CAAAfrGeometryWshop and that passes the parameter to the command is described
+with the workshop.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the command that changes the current window viewpoint, there are
+three steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the command and storing the argument</td>
+    <td valign="top">constructor</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Set the camera axes</td>
+    <td valign="top"><code>Activate</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the camera and assign it to the current window</td>
+    <td valign="top"><code>Activate</code> method</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Command and Storing the Argument</h4>
+<p>The command constructor is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrChangeViewNormalCmd::CAAAfrChangeViewNormalCmd(void *iArgument)
+                         : CATCommand(&quot;ViewNormalId&quot;,<strong>CATCommandModeExclusive</strong>)
+{
+   _ArgumentCmd = <b>CATPtrToINT32</b>(iArgument) ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The command headers call the constructor with an argument that indicates the
+plane that should be normal to the sight direction. This argument is:</p>
+<ul>
+  <li>1 to see the YZ plane</li>
+  <li>2 to see the ZX plane</li>
+  <li>3 to see the XY plane.</li>
+</ul>
+<p>This argument is kept in the data member <code>_ArgumentCmd</code>. It is an
+integer. The <code>CATPtrToINT32</code> macro enables you to safely convert in
+64 bits a pointer to an INT. See the referenced article [<a href="#References">1</a>]
+to see instantiations of a command header class using the <i>CAAAfrChangeViewNormalCmd</i> class.</p>
+<p> The
+command is set as exclusive thanks to <code>CATCommandModeExclusive</code>.
+Since it doesn't modify the document, it could be also set as shared, but since
+it is a one-shot command, there is no possibility of selecting another command
+before it completes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Setting the Camera Axes</h4>
+<p>The <code>Activate</code> method first sets the camera axes depending on the
+argument value.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStatusChangeRC CAAAfrChangeViewNormalCmd::<strong>Activate</strong>(CATCommand * iFromClient,
+                                                      CATNotification * iEvtData)
+{
+  CATMathDirection direction, zenith;
+  CATMathPoint origin(0.f, 0.f, 0.f);
+
+  switch (_ArgumentCmd)
+  {
+    case 1 : direction.SetCoord(-1.f,0.f,0.f);
+             zenith.SetCoord(0.f,0.f,1.f);
+             break ;
+    case 2 : direction.SetCoord(0.f,-1.f,0.f);
+             zenith.SetCoord(0.f,0.f,-1.f);
+             break ;
+    case 3 : direction.SetCoord(0.f,0.f,-1.f);
+             zenith.SetCoord(0.f,1.f,0.f);
+             break ;
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The argument takes the value of 1 for a plane normal to the x axis, 2 for a
+plane normal to the y axis, and 3 for a plane normal to the z axis. The camera
+axes are made up of a sight direction axis that joins the eye and the target,
+and a zenith axis perpendicular to the sight direction. <img src="images/CAAAfr3DCamera.gif" alt="CAAAfr3DCamera.gif (3610 bytes)" width="564" height="269">
+<ul>
+  <li>The camera that sees the yz plane has a sight direction opposed to the x
+    axis (-1,0,0) and a zenith direction parallel to the z axis.</li>
+  <li>The camera that sees the zx plane has a sight direction opposed to the y
+    axis (0,-1,0) and a zenith direction opposed to the z axis (0,0,-1)</li>
+  <li>The camera that sees the xy plane has a sight direction opposed to the z
+    axis (0,0,-1) and a zenith direction parallel to the y axis.</li>
+</ul>
+<p>These direction as set as <i>CATMathDirection</i> instances is the switch.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Camera and Assigning it to the Current
+Window</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATFrmLayout *pCurrentLayout = <b>CATFrmLayout::GetCurrentLayout</b>();
+  if ( pCurrentLayout )
+  {
+    CATFrmWindow *pCurrentWindow = pCurrentLayout-&gt;<b>GetCurrentWindow</b>();
+    if ( pCurrentWindow )
+    {
+      CATFrm3DCamera * pCameraImpl = new <b>CATFrm3DCamera</b>(&quot;cam3d&quot;,
+                                                        origin,
+                                                        direction,
+                                                        zenith);
+      <b>CATI3DCamera</b> *pCamera = NULL;                
+      HRESULT rc = pCameraImpl-&gt;QueryInterface(IID_CATI3DCamera, (void**)&amp;pCamera);
+      if (SUCCEEDED(rc))
+      {
+        pCurrentWindow-&gt;<b>SetCurrentCamera</b>(pCamera);
+	pCamera-&gt;Release();
+      }
+      pCameraImpl-&gt;Release();
+    }
+  }  
+  return CATStatusChangeRCCompleted;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To set the camera axes as those of the viewpoint of the current window, the
+layout is first retrieved thanks to the static <code>CATFrmLayout::GetCurrentLayout</code>
+method, and then the current window is retrieved from this layout using <code>GetCurrentWindow</code>.
+Then a 3D camera is instantiated with the eye location, sight and zenith
+directions determined with respect to the argument passed, that is, with respect
+to the View-&gt;Normal View item selected by the end user, and a pointer to the <em>CATI3DCamera</em>
+interfaces is retrieved from this camera. This pointer is assigned to the
+current window whose viewpoint changes to match the camera thanks to the <code>SetCamera</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A command can be passed a parameter to enable a single command to act as if
+several commands were offerred to the end user. These end user commands should
+nevertheless be close to each other. There is a command header for each end user
+command that instantiates the command and passes the parameter value appropriate
+to the end user intent, and the command tests this value to do the corresponding
+task.</p>
+<p>A camera is an object that can be assigned to a window to set or reset the
+viewpoint characteristics of the window, that is, the eye location, and the
+sight and zenith directions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrSampleStdCommandHeader.htm">Creating Standard Command
+      Headers</a></td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>1</strong> [Jan 2000]</font></td>
+    <td valign="top"><font size="2">Document created</font></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>2</strong> [Mar 2004]</font></td>
+    <td valign="top"><font size="2">64 bits&nbsp;</font></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

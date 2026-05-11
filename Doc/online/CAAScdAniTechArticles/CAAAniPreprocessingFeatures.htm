@@ -1,0 +1,2221 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <title>The Physical Types for Structural Analysis</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>The Physical Types for Structural Analysis</h3>
+     <p><em>All the physical types you can use</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article describes the physical types that are defined for 
+     structural Analysis applications. At first, we explain the basic principles 
+     of analysis entities. Then, we classify the preprocessing features of the 
+     analysis specification tree, and for each we indicate the command that 
+     generate it in our application, the type of the analysis entity and the 
+     basic components included for defining the physics. This includes the 
+     arguments definition for their valuation. This list is useful for C++ 
+     programming and Visual Basic Macro generation.</p>
+     <p>You will find in this chapter the following sections:</p>
+     <ul>
+       <li><strong><a href="#What">About entities</a></strong></li>
+       <li><b><a href="#Connection">AnalysisConnectionDesign</a></b></li>
+       <li><b><a href="#Material">AnalysisMaterial</a></b></li>
+       <li><b><a href="#Property">AnalysisProperty</a></b></li>
+       <li><b><a href="#Restraint">AnalysisRestraint</a></b></li>
+       <li><b><a href="#Load">AnalysisLoad</a></b></li>
+       <li><b><a href="#Mass">AnalysisMass</a></b></li>
+       <li><b><a href="#Sensor">AnalysisSensor</a></b></li>
+       <li><b><a href="#Specified">Specified Group</a></b></li>
+       <li><b><a href="#FreeG">Free Group</a></b></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="What"></a>About Entities</h3>
+ <p>The basic automation type for all the preprocessing data objects is
+ <font color="#FF0000">AnalysisEntity. </font>Their parameters are
+ <font color="#FF0000">Basic component</font>. An analysis entity is created by 
+ using the Add method of the collection. This collection is given by the 
+ appropriate set (ex: load set for creating loading condition). The basic 
+ component is retrieved using the <font color="#FF0000">Item</font> method of the collection. 
+ To valuate attributes with units, if you need to be independent of the current 
+ user settings, you can valuate the parameters with strings including the 
+ current unit system. This is essential if you need to generate macros what will 
+ not depend on a user settings. For this, see next example:</p>
+  <table class="code">
+   <tr>
+     <td>
+     <pre>...
+' To valuate by forcing the unit system:
+basicComponent2.SetValue &quot;&quot;, 1, 1, 1, <font color="#FF0000">&quot;</font>5000.0<font color="#FF0000">lbf_ft&quot;</font>
+
+' To take into account the current unit system: 
+basicComponent2.SetValue &quot;&quot;, 1, 1, 1, 5000.0
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>&nbsp;Remember that 
+ the basic components are mainly created automatically when the entity itself is 
+ created. For this the Add method makes non sense, as in the following example:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>' To Create an analysis entity:
+<font color="#0000FF">Dim</font> analysisEntities <font color="#0000FF">As</font> AnalysisEntities
+<font color="#0000FF">Dim</font> ThisAnalysisEntity <font color="#0000FF">As</font> AnalysisEntity
+<font color="#0000FF">Set</font> <font color="#008000">ThisAnalysisEntity</font> = analysisEntities.<font color="#FF0000">Add</font>(&quot;Analysis Entity Type&quot;)
+
+' To retrieve the parameter &quot;Param&quot;: First Retrieve the collection on the Entity
+<font color="#0000FF">Dim</font> BasicComponents1 <font color="#0000FF">As</font> BasicComponents
+<font color="#0000FF">Set</font> BasicComponents1 = ThisAnalysisEntity.BasicComponents
+
+<font color="#0000FF">Dim</font> BasicComponent1 <font color="#0000FF">As</font> BasicComponent
+<font color="#0000FF">Set</font> <font color="#008000">BasicComponent1</font> = BasicComponents1.<font color="#FF0000">Item</font>(&quot;Param&quot;)
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="left">Note that the basic components concept can be used also on an 
+ analysis set. In this case, use also the &quot;BasicComponents&quot; collection returned by 
+ the set.</p>
+ <p align="left">To valuate a support on an analysis entity and for some Basic 
+ components, the following methods may be used:</p>
+ <ul>
+   <li>
+   <p align="left">To use a Brep element or a mechanical feature</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>' To valuate a support from a mechanical feature or a Brep element: The product object will manage
+' the instance of the Part Document.
+<font color="#008000">' Retrieve the Part from this document</font>
+<font color="#0000ff">Dim </font>part1<font color="#0000ff"> As </font>Part
+<font color="#0000ff">Set </font>part1 = PartDocument.Part
+
+<font color="#0000ff">Dim </font>product1<font color="#0000ff"> As </font>Product
+<font color="#0000ff">Set </font>product1 = PartDocument.Product
+
+<font color="#008000">' Retrieve the References for Brep's</font>
+<font color="#0000ff">Dim </font>referenceBound<font color="#0000ff"> As </font>Reference
+<font color="#0000ff">Set </font>referenceBound = <font color="#FF0000">part1.CreateReferenceFromName</font>(&quot;Selection_RSur:(Face:(Brp:(GSMxxx))&quot;) // <b>Brep Case</b>
+
+<font color="#008000">' Retrieve the References for Mechanical Features</font>
+<font color="#0000ff">Dim </font>bodies1 <font color="#0000ff">As </font>Bodies
+<font color="#0000FF">Set</font> bodies1 = part1.Bodies
+<font color="#0000ff">Dim </font>body1 <font color="#0000ff">As </font>Body
+<font color="#0000FF">Set</font> body1 = bodies1.<font color="#FF0000">Item</font>(&quot;PartBody&quot;)
+<font color="#0000ff">Dim </font>shapes1 <font color="#0000ff">As </font>Shapes 
+<font color="#0000FF">Set</font> shapes1 = body1.ShapeS
+<font color="#0000ff">Dim </font>split1 <font color="#0000ff">As </font>Split 
+<font color="#0000FF">Set</font> split1 = shapes1.<font color="#FF0000">Item</font>(&quot;Split.1&quot;)
+<font color="#0000ff">Dim </font>reference1<font color="#0000ff"> As </font>Reference
+Set reference1 = part1.<font color="#FF0000">CreateReferenceFromObject</font>(split1)               // Create the reference thanks to the part
+
+<font color="#008000">ThisAnalysisEntity</font>.<font color="#FF0000">AddSupportFromProduct</font> product1, reference1 
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <ul>
+   <li>
+   <p align="left">To use a publication</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>' To valuate a support from a publication: From the product feature (in a product or part document)
+
+<font color="#0000FF">Dim</font> product1 <font color="#0000FF">As</font> Product
+<font color="#0000ff">Set </font>product1 = TheProductDoc.<font color="#FF0000">Product</font>
+<font color="#0000FF">Dim</font> publications1 <font color="#0000FF">As</font> Publications
+<font color="#0000ff">Set </font>publications1 = product1.Publications    // Extract the collection of publications.
+<font color="#0000FF">Dim </font>publication1 <font color="#0000FF">As</font> Publication
+<font color="#0000ff">Set </font>publication1 = publications1.Item(&quot;ClampFace&quot;)
+
+<font color="#008000">ThisAnalysisEntity</font>.<font color="#FF0000">AddSupportFromPublication</font> product1, publication1 // product1 is the publisher object.
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <ul>
+   <li>
+   <p align="left">To use an assembly constraints</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>' To valuate a support from an assembly constraints:
+<font color="#0000FF">Dim</font> product1 <font color="#0000FF">As</font> Product
+<font color="#0000ff">Set </font>product1 = TheProductDoc.<font color="#FF0000">Product</font>
+<font color="#0000FF">Dim</font> constraints1 <font color="#0000FF">As</font> Constraints
+<font color="#0000ff">Set </font>constraints1 = product1.<font color="#ff0000">Connections</font>(&quot;<font color="#008000">CATIAConstraints</font>&quot;)// Extract the collection of constraints.
+<font color="#0000FF">Dim </font>constraint1 <font color="#0000FF">As</font> Constraint
+<font color="#0000ff">Set </font>constraint1 = constraints1.<font color="#FF0000">Item</font>(&quot;Surface contact.2&quot;)
+
+<font color="#008000">ThisAnalysisEntity</font>.<font color="#ff0000">AddSupportFromConstraint</font> product1, constraint1 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <ul>
+   <li>
+   <p align="left">To use another Analysis feature</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>' To valuate a support from another analysis feature: 
+' Consider analysisSets2 is the Collection of AnalysisSet returned by AnalysisModel
+
+<font color="#0000FF">Dim</font> analysisSet4  <font color="#0000FF">As</font> AnalysisSet 
+<font color="#0000ff">Set </font>analysisSet4 = analysisSets2.<font color="#ff0000">ItemByType</font>(&quot;PropertySet&quot;) // Extract the property set 
+<font color="#0000FF">Dim</font> analysisEntities1 <font color="#0000FF">As</font> AnalysisEntities
+<font color="#0000ff">Set </font>analysisEntities1 = analysisSet4.AnalysisEntities
+<font color="#0000FF">Dim</font> analysisEntity1<font color="#0000FF"> As</font> AnalysisEntity
+<font color="#0000ff">Set </font>analysisEntity1= analysisEntities1.<font color="#FF0000">Item</font>(&quot;MyRigidVirPart&quot;)  // Extract the entity to consider as a support 
+
+<font color="#0000ff">Set </font>reference2 = analysisManager1.<font color="#ff0000">CreateReferenceFromObject</font>(analysisEntity1) // Create the Reference Object
+<font color="#008000">ThisAnalysisEntity</font>.<font color="#ff0000">AddSupportFromReference</font> reference2, reference2
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Connection"></a>AnalysisConnectionDesign</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisConnectionDesign.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ConnDesignGene.jpg" width="22" height="22"> 
+     SAMGenericConnDesign</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner1.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner2.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PointForGeneConn</font></td>
+     <td width="25%">SAMSlavePointPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ConnDesignPoint.jpg" width="22" height="22"> 
+     SAMPointConnDesign</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner1.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner2.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PointsPtr</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ConnDesignPointWOP.jpg" width="22" height="22"> 
+     SAMPointConnDesignWOP</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner1.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner2.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PointsPtr.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ConnDesignLine.jpg" width="22" height="22"> 
+     SAMLineConnDesign</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner1.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner2.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">LinesPtr</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ConnDesignLineWOP.jpg" width="22" height="22"> 
+     SAMLineConnDesignWOP</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner1.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConnectionDesigner2.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">LinesPtr.1</font></td>
+     <td width="25%">SAMMultiGeomPtr</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Material"></a>AnalysisMaterial</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisMaterial.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">    
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMIsotropicMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMOrthotropicMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_11</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_22</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio_12</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_1Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_2Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_X</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Y</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStrainLimit_X</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStrainLimit_Y</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStrainLimit_X</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStrainLimit_Y</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMFiberMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_11</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_22</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio_12</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_2Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_X</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Y</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_23</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMHoneyCombMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_33</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_1Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_2Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_33</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_13</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+ 	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_23</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMOrthotropic3DMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_11</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_22</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMYoungModulus_33</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio_12</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio_13</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPoissonRatio_23</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_13</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_23</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_X</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Y</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Z</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_X</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit_Y</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_13</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit_23</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">
+     <img border="0" src="images/I_Sphere.jpg" width="22" height="22"> 
+     SAMAnisotropicMaterial</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_11</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_12</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_1Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_22</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_2Z</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearModulus_33</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDensity</font></td>
+     <td width="25%">DENSITY</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_X</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Y</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThermalExpansion_Z</font></td>
+     <td width="25%">INVERSE_TEMRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTensileStressLimit</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCompressiveStressLimit</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+	<tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMShearStressLimit</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Property"></a>AnalysisProperty</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisProperty.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Prop1D.jpg" width="22" height="22"> SAMBeam</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr.1</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">CustoBeamBC</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PointForBeamAxis</font></td>
+     <td width="25%">SAMSlavePointPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVariableBeamFactors</font></td>
+     <td width="25%">SAMBindComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMScalingFactorStart</font></td>
+     <td width="25%">Real [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMScalingFactorEnd</font></td>
+     <td width="25%">Real [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_MshTr3.jpg" width="16" height="16"> SAMShell</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr.1</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThickness</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_MshTet.jpg" width="16" height="16"> 
+     SAM3DSolid</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr.1</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">SAMConnection</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SliderConnection.jpg" width="16" height="16"> 
+     SAMFaceFaceSlider</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ContactConnection.jpg" width="16" height="16"> 
+     SAMFaceFaceContact</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMContactClearance</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 0 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_FastenedConnection.jpg" width="16" height="16"> 
+     SAMFaceFaceFastened</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_RigidConnection.jpg" width="16" height="16"> 
+     SAMDistantRigid</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDOFDistantConn</font></td>
+     <td width="25%">SAMBindComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMConnAxisSytemDOF.1</font></td>
+     <td width="25%">SAMAxisSystem [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMConnDOF.1</font></td>
+     <td width="25%">SAMDOFBoolean [ 6 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SmoothConnection.jpg" width="16" height="16"> 
+     SAMDistantSmooth</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDOFDistantConn</font></td>
+     <td width="25%">SAMBindComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMConnAxisSytemDOF.1</font></td>
+     <td width="25%">SAMAxisSystem [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMConnDOF.1</font></td>
+     <td width="25%">SAMDOFBoolean [ 6 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">SAMVirtualPart</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SmoothVirtualPart.jpg" width="16" height="16"> 
+     SAMVirPartSmooth</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSmoSlavePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ContactVirtualPart.jpg" width="16" height="16"> 
+     SAMVirPartContact</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMConSlavePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVPartContClr</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_RigidVirtualPart.jpg" width="16" height="16"> 
+     SAMVirPartRigid</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRigSlavePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_RigidSpringVirtualPart.jpg" width="16" height="16"> 
+     SAMVirPartRigidSpring</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRigSprSlavePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRigStifAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRigStifTranslation</font></td>
+     <td width="25%">TSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRigStifRotation</font></td>
+     <td width="25%">RSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SmoothSpringVirtualPart.jpg" width="16" height="16"> 
+     SAMVirPartSmoothSpring</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSmoSprSlavePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSmoStifAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSmoStifTranslation</font></td>
+     <td width="25%">TSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSmoStifRotation</font></td>
+     <td width="25%">RSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_FittingConnection.jpg" width="16" height="16"> 
+     SAMPressureFitting</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPresFittingOverlap</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_TighteningConnection.jpg" width="16" height="16"> 
+     SAMBoltTightening</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBoltTighteningForce</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBoltTighOrientation</font></td>
+     <td width="25%">Enumere</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_VirtualBoltTighConnection.jpg" width="16" height="16"> 
+     SAMVirtBoltTightening</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVirtBoltTighteningForce</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SamVirtualSpringBoltTighConnect.jpg" width="16" height="16"> 
+     SAMVirtSpringBoltTigh</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVirtSpringBoltTighForce</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVirtSpringBoltTighStifTrans</font></td>
+     <td width="25%">TSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVirtSpringBoltTighStifRot</font></td>
+     <td width="25%">RSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SamSpotWeldingConnection.jpg" width="16" height="16"> 
+     SAMSpotWeldingConnect</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCustoWeld</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_MshTr3.jpg" width="16" height="16"> 
+     SAMShellLocal</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr.1</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMThickness</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_PeriodicConnection.jpg" width="16" height="16"> 
+     SAMPeriodicConnection</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SamSeamWeldConnection.jpg" width="16" height="16"> 
+     SAMSeamWeldConnect</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCustoSeamWeld</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GenericConnection.jpg" width="22" height="22"> 
+     SAMGenericDistant</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCustoStartComb</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCustoMiddleComb</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMCustoEndComb</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_FastenedSpringConnection.jpg" width="22" height="22"> 
+     SAMFaceFaceFastenedSpring</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">AxisSystem</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">StifTranslation</font></td>
+     <td width="25%">TSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">StifRotation</font></td>
+     <td width="25%">RSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Prop1D.jpg" width="22" height="22"> 
+     SAMBeamLocal</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMAnalysisMaterialPtr.1</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">CustoBeamBC.1</font></td>
+     <td width="25%">SAMListManager</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PointForBeamAxis.1</font></td>
+     <td width="25%">SAMSlavePointPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVariableBeamFactors</font></td>
+     <td width="25%">SAMBindComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMScalingFactorStart</font></td>
+     <td width="25%">Real [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMScalingFactorEnd</font></td>
+     <td width="25%">Real [ 1 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Restraint"></a>AnalysisRestraint</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisRestraint.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Clamp.jpg" width="16" height="16"> SAMClamp</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMClampDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Pivot.jpg" width="16" height="16"> 
+     SAMPivot</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPivotAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPivotDirection</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPivotDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Slider_Pivot.jpg" width="16" height="16"> 
+     SAMSlidingPivot</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSlidingPivotAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSlidingPivotDirection</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSlidingPivotDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Surface_Slider.jpg" width="16" height="16"> 
+     SAMSurfaceSlider</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSurfaceSliderDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Slider.jpg" width="16" height="16"> 
+     SAMSlider</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSliderAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSliderDirection</font></td>
+     <td width="25%">Real</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSliderDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Rigid.jpg" width="16" height="16"> SAMPinned</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPinnedDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Ball_Join.jpg" width="16" height="16"> 
+     SAMBallJoin</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBallJoinDOF</font></td>
+     <td width="25%">SAMDOFBinary</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Analysis_Restraint.jpg" width="16" height="16"> 
+     SAMRestraint</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRestrainAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRestrainDOF</font></td>
+     <td width="25%">SAMDOFBasicComponent</td>
+     <td width="25%">[ 6 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_IsostaticRestraint.jpg" width="16" height="16"> 
+     SAMRestIsostatic</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Load"></a>AnalysisLoad</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisLoad.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Pressure.jpg" width="16" height="16"> 
+     SAMPressure</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMPressureMag</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrPressure</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_LineicForce.jpg" width="16" height="16"> 
+     SAMLineicForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMLineicForceAxis</font></td>
+     <td width="25%">SAMGUIAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMLineicForceVector</font></td>
+     <td width="25%">TSTIFNES</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrLinForce</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SurfacicForce.jpg" width="16" height="16"> 
+     SAMSurfacicForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSurfacicForceAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSurfacicForceVector</font></td>
+     <td width="25%">PRESSURE</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrSurfForce</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_VolumicForce.jpg" width="16" height="16"> 
+     SAMVolumicForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVolumicForceAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMVolumicForceVector</font></td>
+     <td width="25%">VOLFORCE</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optionnal</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrVolForce</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Traction.jpg" width="16" height="16"> 
+     SAMDistributedForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMForceAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMForceVector</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDistForcePoint</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Moment.jpg" width="16" height="16"> SAMMoment</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMMomentAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMMomentVector</font></td>
+     <td width="25%">MOMENT</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_RotationForce.jpg" width="16" height="16"> 
+     SAMRotationForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRotForceGeomPtr</font></td>
+     <td width="25%">SAMSingleGeomPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRotVelocity</font></td>
+     <td width="25%">ANGULARSPINDLESPEED</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMRotAcceleration</font></td>
+     <td width="25%">ANGACCELRTN</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Gravity.jpg" width="16" height="16"> 
+     SAMTransAcceleration</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTransAccelAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTransAccelVector</font></td>
+     <td width="25%">ACCELRTN</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Rigid.jpg" width="16" height="16"> 
+     SAMEnforcedDisp</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispEntityPtr</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispTransX</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispTransY</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispTransZ</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispRotX</font></td>
+     <td width="25%">ANGLE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispRotY</font></td>
+     <td width="25%">ANGLE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMEnfDispRotZ</font></td>
+     <td width="25%">ANGLE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Bearing.jpg" width="16" height="16"> 
+     SAMBearingLoad</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBearForceAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBearForceVector</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBearAngle</font></td>
+     <td width="25%">ANGLE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBearOrientation</font></td>
+     <td width="25%">Enumere</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBearProfile</font></td>
+     <td width="25%">BasicComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMBearProfileType</font></td>
+     <td width="25%">Enumere [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#008000">SAMBearProfileLaw.1</font></td>
+     <td width="25%">SAMSingleEntityPtr [ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_TemperatureField.jpg" width="16" height="16"> 
+     SAMTemperatureField</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMTemperatureMag</font></td>
+     <td width="25%">TEMPRTRE</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center"><font color="#FF0000">Optional</font>
+     <p>&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrTemperatureField</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ImportedForce.jpg" width="22" height="22"> 
+     SAMImportedForce</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">AxisSystem</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrImportedForceDesignTable</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ImportedMoment.jpg" width="22" height="22"> 
+     SAMImportedMoment</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">AxisSystem</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMDTPtrImportedMomentDesignTable</font></td>
+     <td width="25%">SAMSingleEntityPtr</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_ForceDensity.jpg" width="22" height="22"> 
+     SAMForceDensity</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMForceDensityAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMForceDensityVector</font></td>
+     <td width="25%">FORCE</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Mass"></a>AnalysisMass</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisMass.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_Mass.jpg" width="16" height="16"> 
+     SAMDistributedMass</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMMassMag</font></td>
+     <td width="25%">MASS</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_LineicMass.jpg" width="16" height="16"> 
+     SAMLineicMass</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMLineicMassMag</font></td>
+     <td width="25%">LINEMASS</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_SurfacicMass.jpg" width="16" height="16"> 
+     SAMSurfacicMass</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSurfacicMassMag</font></td>
+     <td width="25%">SURFACICMASS</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_InertiaMass.jpg" width="22" height="22"> 
+     SAMInertiaMass</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMInertiaMassAxis</font></td>
+     <td width="25%">SAMAxisSystem</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMInertiaMassMass</font></td>
+     <td width="25%">MASS</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMInertiaMassVector</font></td>
+     <td width="25%">INERTIAMOMENT</td>
+     <td width="25%">[ 3 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Sensor"></a>AnalysisSensor</h4>
+ <p>This section presents all the preprocessing features derived from 
+ AnalysisSensor.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_AnalysisMeasure.jpg" width="16" height="16"> 
+     SAMGlobalSensor</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMOccSolutionFilter</font></td>
+     <td width="25%">SAMOccurrencesFilter</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_AnalysisMeasure.jpg" width="16" height="16"> 
+     SAMImageSensor</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMOccSolutionFilter</font></td>
+     <td width="25%">SAMOccurrencesFilter</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMImagePointer.1</font></td>
+     <td width="25%">BasicComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">PostProType</font></td>
+     <td width="25%">Enumere</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">Parameters</font></td>
+     <td width="25%">Enumere</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="Specified"></a>SAMSpecifiedGroup</h4>
+ <p>This section presents all the preprocessing features derived from 
+ SAMSpecifiedGroup. They are dedicated to finite element grouping based on 
+ geometry definition.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupVertexSp.jpg" width="22" height="23"> 
+     SAMVertexGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupEdgeSp.jpg" width="22" height="23"> 
+     SAMEdgeGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupSurfaceSp.jpg" width="22" height="23"> 
+     SAMSurfaceGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupBodySp.jpg" width="22" height="23"> 
+     SAMBodyGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <h4><a name="FreeG"></a>SAMFreeGroup</h4>
+ <p>This section presents all the preprocessing features derived from 
+ SAMFreeGroup. They are dedicated to pure finite element grouping.</p>
+ <table border="1" width="100%">
+   <tr>
+     <th width="25%">Analysis Entity Name</th>
+     <th width="25%">Parameter Name</th>
+     <th width="25%">Value Type</th>
+     <th width="25%">Line Column Layer Number</th>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupBoxSp.jpg" width="22" height="23"> 
+     SAMBoxFEGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMBoxFE</font></td>
+     <td width="25%">LENGTH</td>
+     <td width="25%">[ 3 , 4 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">Extremum</font></td>
+     <td width="25%">BasicComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">
+     <img border="0" src="images/I_GroupSphereSp2.jpg" width="22" height="23"> 
+     SAMSphereFEGroup</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+     <td width="25%">&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">SAMSphereFE</font></td>
+     <td width="25%">BasicComponent</td>
+     <td width="25%">[ 4 , 1 , 1 ]</td>
+   </tr>
+   <tr>
+     <td width="25%">&nbsp;</td>
+     <td width="25%"><font color="#0000FF">Extremum</font></td>
+     <td width="25%">BasicComponent</td>
+     <td width="25%">[ 1 , 1 , 1 ]</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>History</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2001]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

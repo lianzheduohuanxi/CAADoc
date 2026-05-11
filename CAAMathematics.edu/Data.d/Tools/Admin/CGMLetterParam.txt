@@ -1,0 +1,805 @@
+[framework]
+AdvancedMathematics                 AdvMathematics          GM_Model // Basic framework; it can remain in IdentityCard.h
+GeometricObjects                    GeometricObj            GM_Model // Basic framework; it can remain in IdentityCard.h
+GeometricObjectsCGM                 GeomObjCGM              GM_Model // Basic framework; it can remain in IdentityCard.h
+GeometricOperators                  GeometricOpe            GM_Model
+NewTopologicalObjects               NewTopoObj              GM_Model+GM_Operators
+NewTopologicalObjectsCGM            NewTopoObjCGM           GM_Model
+Tessellation                        Tessellation            GM_Model // Special: it can't be removed from IdentityCard.h
+
+AdvancedTopologicalOpe              AdvTopoOpe              GM_Operators+GM_AdvancedOperators
+AdvancedTopologicalOpeLight         AdvTopoOpeLight         GM_Operators
+FreeFormOperators                   FreeFormOpe             GM_Operators
+TopologicalOperators                TopologicalOpe          GM_Operators+GM_AdvancedOperators // PAY ATTENTION: GM_AdvancedOperators only for CATTrimByThick
+TopologicalOperatorsLight           TopoOpeLight            GM_Operators
+SurfacicGeoOperators                SurfacicGeoOpe          GM_Operators
+SurfacicTopoOperators               SurfTopoOpe             GM_Operators
+HybridSceneServices                 HybSceneSrv             GM_Operators
+GMPolyOperators                     GMPolyOper              GM_Operators
+
+DeclarativeOperators                DeclOpe                 CDM_Operators
+
+BasicTopologicalOpe                 BasicTopoOpe            GM_Model+GM_Operators+GM_AdvancedOperators
+CATClassATopoOperators              ClassATopoOpe           GM_AdvancedOperators
+CATSubdivisionAdvTopOper            SubdAdvTopOpe           GM_AdvancedOperators
+CATSubdivisionGeoOperators          SubdivGeoOpe            GM_AdvancedOperators
+CATSubdivisionOperators             SubdivisionOpe          GM_AdvancedOperators // Special: it can't be removed from IdentityCard.h
+CATSubdivisionTopOperators          SubdivTopOpe            GM_AdvancedOperators
+CATSubdivisionTopTopoOpe            SubdivTopTopoOpe        GM_AdvancedOperators
+CurveBasedGeoOperators              CurvBsdGeoOpe           GM_AdvancedOperators
+CurveBasedTopoOperators             CurvBsdTopoOpe          GM_AdvancedOperators
+EnergyDeformationToolkit            EnerDefToolkit          GM_AdvancedOperators
+FunctionalTopologicalOpe            FuncTopoOpe             GM_AdvancedOperators
+SurfacicAdvancedTopoOpe             SurfAdvTopoOpe          GM_AdvancedOperators
+
+ICMOperatorTop                      ICMOpeTop               CATIA_ICEM_Topological_Operator_Interfaces
+
+// ===================================================
+// ===================================================
+// CGM internal classes interfaced as COM interfaces
+// Example:
+// CATFrFTopologicalSweep             Public
+// -> CATICGMFrFTopologicalSweep (CAA) + CATIPGMFrFTopologicalSweep (Protected)
+// CATGeodesicDistanceTool            Protected
+// -> CATIPGMGeodesicDistanceTool (Protected)
+// ===================================================
+// ===================================================
+
+[interfaced]
+
+// ---------------------
+// AdvancedMathematics
+// ---------------------
+
+// ---------------------
+// AdvancedTopologicalOpe
+// ---------------------
+CATTopWireContinuity               Public
+CATFrFTopologicalSweep             Public
+CATSkinExtrapolation               Public
+CATThickenOp                       Public
+CATTopBlend                        Public
+CATTopCleanCrvOperator             Public
+CATTopMostContinuousGeoInWireOperator   Public
+CATTopShellOrientation             Public
+CATTopSimilarCurve                 Public
+CATTopSpine                        Public
+CATTopSweep                        Public
+CATTopologicalBlendCurve           Public
+// Deleted CATTopologicalFilletBlend          Protected
+CATTopologicalMatch                Public
+CATGeometrySizeOptimization        Public
+CATTopSilhouette                   Public
+
+// ---------------------
+// AdvancedTopologicalOpeLight
+// ---------------------
+
+// ---------------------
+// BasicTopologicalOpe
+// ---------------------
+CATBodyFromLengthOnWire            Public
+CATDynAdvancedChamfer              Public
+CATDynAdvancedDraft                Public
+CATDynAdvancedFillet               Public
+CATThickPlus                       Public
+CATTopExtractFace                  Public
+CATTopPolarExtremumOperator        Public
+CATComputePointOnWire              Public
+CATLengthFromBodyOnWire            Public
+CATTopCrvToNurbsCrvOperator        Public
+CATTopCurveOperator                Public
+CATTopGeodesicLineOperator         Public
+CATTopHelixOperator                Public
+CATTopLineOperator                 Public
+CATTopLineTangentCrvCrvOperator    Public
+CATTopLineTangentPtCrvOperator     Public
+CATTopPointOperator                Public
+CATTopSplineOperator               Public
+CATTopSurToNurbsSurOperator        Public
+CATShellOperatorPlus               Public
+CATThickSurfacePlus                Public
+CATAdvancedRemoveFaceOpe           Public
+
+// ---------------------
+// CATClassATopoOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionAdvTopOper
+// ---------------------
+
+// ---------------------
+// CATSubdivisionOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionTopOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionTopTopoOpe
+// ---------------------
+
+// ---------------------
+// CurveBasedTopoOperators
+// ---------------------
+
+// ---------------------
+// DeclarativeOperators
+// ---------------------
+
+// ---------------------
+// EnergyDeformationToolkit
+// ---------------------
+
+// ---------------------
+// FreeFormOperators
+// ---------------------
+// No more interfaced but moved - CATSectionSolverEngine             Protected
+// No more interfaced but moved - CATSweepSolverEngine               Protected
+CATCrvDegreeModification           Public
+CATCrvFittingToNurbsCrv            Public
+CATInterproxCrv                    Public
+CATInterproxSur                    Public
+CATLiss                            Public
+CATSurDegreeModification           Public
+CATSurFittingToNurbsSur            Public
+CATFrFSmoothingOper                Public
+
+// ---------------------
+// FunctionalTopologicalOpe
+// ---------------------
+
+// ---------------------
+// GeometricObjects
+// ---------------------
+CATCGMOperator                     Public
+
+// ---------------------
+// GeometricOperators
+// ---------------------
+CATConfusionPtOnCrvPtOnCrv         Public
+CATConfusionPtOnSurPtOnSur         Public
+CATConvertCurveToCanonic           Public
+CATCurveCurvilinearParameterization     Public
+CATDistanceMinCrvCrv               Public
+CATDistanceMinPtCrv                Public
+CATDistanceMinPtSur                Public
+CATDistanceTool                    Public
+CATDynMassProperties1D             Public
+CATEdgeCurveComputation            Public
+CATGeoOperator                     Public
+CATInclusionPtCrv                  Public
+CATInclusionPtSur                  Public
+CATIntersectionCrvCrv              Public
+CATIntersectionCrvSur              Public
+CATIntersectionSurSur              Public
+CATLocalAnalysis1D                 Public
+CATLocalAnalysis2D                 Public
+CATMathNurbsCurveTools             Public
+CATMathNurbsSurfaceTools           Public
+CATNurbsCurveTools                 Public
+CATNurbsSurfaceTools               Public
+CATProjectionCrvSur                Public
+CATProjectionPtCrv                 Public
+CATProjectionPtSur                 Public
+CATReflectCurve                    Public
+CATSurTo2DGlobalMapping            Public
+CATSurTo2DGlobalPlanarMapping      Public
+CATCurveUserParameterization       Public
+
+
+// ---------------------
+// Mathematics
+// ---------------------
+CATCGMVirtual                       Public
+
+// ---------------------
+// NewTopologicalObjects
+// ---------------------
+CATTopPropagationEdge              Public
+CATTopRelimitByVolume              Public
+CATPositionPtFaceOperator          Public
+CATPositionPtVolOperator           Public
+CATRecomposeShells                 Public
+CATSmartBodyDuplicator             Public
+CATTopCAACompliantJournalChecker   Public
+CATTopMultiResult                  Public
+CATTopOperator                     Public
+CATTopSewSkin                      Public
+CATTopCompatible                   Public
+CATTopEdgePropagation              Public
+CATTopClashOperator                Public
+CATPersistentOperator              Public
+CATTopPositionPtFaceOperator       Public
+CATDRepOperator                    Public
+
+// ---------------------
+// SurfacicAdvancedTopoOpe
+// ---------------------
+
+// ---------------------
+// SurfacicGeoOperators
+// ---------------------
+
+// ---------------------
+// SurfacicTopoOperators
+// ---------------------
+CATPowerFill                       Public
+CATHealGaps                        Public
+
+// ---------------------
+// Tessellation
+// ---------------------
+CATBodyTessellator                 Public
+CATCellTessellator                 Public
+CATCurveTessellator                Public
+CATSurfaceTessellator              Public
+
+// ---------------------
+// TopologicalOperators
+// ---------------------
+CATRemoveFace                      Public
+CATRemoveFacesInShell              Public
+CATTopPattern                      Public
+CATBodyChecker                     Public
+CATCloseOperator                   Public
+CATDynBoolean                      Public
+CATDynChamfer                      Public
+CATDynDraft                        Public
+CATDynFillet                       Public
+CATDynMassProperties3D             Public
+CATDynOperator                     Public
+CATDynShell                        Public
+CATDynSplit                        Public
+CATDynThickness                    Public
+CATDynTransformation               Public
+CATExtrapolateBody                 Public
+CATSkinExtrapol                    Public
+CATSolidCuboid                     Public
+CATSolidCylinder                   Public
+CATSolidPyramid                    Public
+CATSolidTorus                      Public
+CATTopBodyExtremum                 Public
+CATTopCorner                       Public
+CATTopDevelop                      Public
+CATTopExtrapolWireOnShell          Public
+CATTopExtrude                      Public
+CATTopPrism                        Public
+CATTopReflectLine                  Public
+CATTopRevol                        Public
+CATTopSimplify                     Public
+CATTopSweepSkinSkinSegment         Public
+CATTopSweepWireSkin                Public
+CATTopSweepWireSkinCircle          Public
+CATTopSweepWireSkinSegment         Public // = CATTopSweepWireSkin
+CATTopTangentCurveOperator         Public
+CATWireExtrapolationOp             Public
+CATTopSweepSegmentTangent          Public // = CATTopSweepWireSkinSegment
+CATRemoveEdge                      Public
+CATTopFaceReplaceSurface           Public
+CATTopExtrapolWireOpe              Public
+CAT2DBoxComputation                Public
+CATTopSilhOperator                 Public
+
+// ---------------------
+// TopologicalOperatorsLight
+// ---------------------
+CATDistanceBodyBody                Public
+CATSketchGeodesic                  Public
+CATSketchOperators                 Public
+CATDistanceMinBodyBody             Public
+CATExtrapolParallelTool            Public
+CATGeoToTopOperator                Public
+CATHybAssemble                     Public
+CATHybBoolean                      Public
+CATHybBoundary                     Public
+CATHybDisconnect                   Public
+CATHybIntersect                    Public
+CATHybOperator                     Public
+CATHybOperatorImp                  Public
+CATHybProject                      Public
+CATHybSplit                        Public
+CATHybTrim                         Public
+CATLayDownOperator                 Public
+CATSolidPrimitive                  Public
+CATSolidSphere                     Public
+CATTopParallel                     Public
+CATTopSkin                         Public
+CATTopVertex                       Public
+CATTopWire                         Public
+CATTopGeodesicPtPt                 Public
+CATDistancePointBody               Public
+
+// ---------------------
+// AdvancedTopologicalOpeLight
+// ---------------------
+CATTopologicalFill                 Public
+
+// ---------------------
+// ICMOperatorTop
+// ---------------------
+
+// ---------------------
+// HybridSceneServices
+// ---------------------
+CATHLROperator                     Public
+
+// ---------------------
+// GMPolyOperators
+// ---------------------
+
+// ===================================================
+// ===================================================
+// CGM internal classes interfaced as derived classes, and CGM services to be renamed either CATCGMxxx or CATPGMxxx.
+// Example:
+// CATFrFTopologicalSweepR12Adapter   Protected
+// -> class CATFrFTopologicalSweepR12Adapter: public CATPGMFrFTopologicalSweepR12Adapter
+// CATCreateTopologicalFillOp         Public
+// -> GMOperatorsInterfaces\PublicInterfaces\CATCGMCreateTopologicalFillOp.h
+// ===================================================
+// ===================================================
+
+[renamed]
+
+// ---------------------
+// GeometricOperators
+// ---------------------
+
+// ---------------------
+// AdvancedTopologicalOpe
+// ---------------------
+// CATFrFTopologicalSweepR12Adapter   Protected
+CATCreateTopologicalFillOp         Public
+
+// ---------------------
+// BasicTopologicalOpe
+// ---------------------
+CATPickOperator                    Public
+
+// ---------------------
+// CATClassATopoOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionTopOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionTopTopoOpe
+// ---------------------
+
+// ---------------------
+// FreeFormOperators
+// ---------------------
+
+// ---------------------
+// FunctionalTopologicalOpe
+// ---------------------
+
+// ---------------------
+// GeometricOperators
+// ---------------------
+
+// ---------------------
+// NewTopologicalObjects
+// ---------------------
+CATCreateRelimitByVolume           Public
+
+// ---------------------
+// SurfacicGeoOperators
+// ---------------------
+
+// ---------------------
+// SGMOperatorsInterfaces
+// ---------------------
+
+// ---------------------
+// Tessellation
+// ---------------------
+CATTessBody                        Public
+CATTessBodyEdgeSerializer          Public
+CATTessBodyFaceSerializer          Public
+CATTessBodySerializer              Public
+CATTessBodyVertexSerializer        Public
+CATTessEdgeIter                    Public
+CATTessFanIter                     Public
+CATTessPointIter                   Public
+CATTessPointPolyIter               Public
+CATTessPolyIter                    Public
+CATTessStripeIter                  Public
+CATTessTrianIter                   Public
+CATTessVertexIter                  Public
+
+// ---------------------
+// TopologicalOperators
+// ---------------------
+
+// ---------------------
+// TopologicalOperatorsLight
+// ---------------------
+CATCreateTopEuclidianDistanceTool  Public
+
+// ---------------------
+// DeclarativeOperators
+// ---------------------
+
+// ===================================================
+// ===================================================
+
+[letter_no_subst]
+
+CATCGMVirtual
+CATCGMOperator
+
+// ===================================================
+// ===================================================
+// String replacements for migrating client sources.
+// The pattern to be replaced must begin with a C++ keyword. You can append ".h", "::xxx"...
+// If you want the tool to perform a different substitution for public migration and protected migration,
+// you have to put one line with the public substitution followed by one line with the protected
+// substitution.
+// Example: xxx   CATCGMxxx
+//          xxx   CATPGMxxx
+// ===================================================
+// ===================================================
+
+[subst]
+
+// ---------------------
+// AdvancedTopologicalOpe
+// ---------------------
+CATTopologicalFill::CATFillType                 CATTopologicalFillType
+CATTopologicalFill::analytic                    CATTopologicalFillType_analytic
+CATTopologicalFill::power                       CATTopologicalFillType_power
+CATTopologicalFill::automatic                   CATTopologicalFillType_automatic
+CATTopologicalFill::powerfill                   CATTopologicalFillType_powerfill
+CATTopologicalFill::powerplane                  CATTopologicalFillType_powerplane
+CATTopologicalFill::autofillnosingular          CATTopologicalFillType_autofillnosingular
+CATTopologicalFill::autofill_level1             CATTopologicalFillType_autofill_level1
+CATTopologicalFill::autofill_level2             CATTopologicalFillType_autofill_level2
+
+CATCreateFrFTopologicalCircleSweep CATCGMCreateFrFTopologicalCircleSweep
+CATCreateFrFTopologicalConicSweep  CATCGMCreateFrFTopologicalConicSweep
+CATCreateFrFTopologicalSegmentSweep     CATCGMCreateFrFTopologicalSegmentSweep
+CATCreateGeodesicPointDir          CATCGMCreateGeodesicPointDir
+CATCreateTopGeodesicDistanceTool   CATCGMCreateTopGeodesicDistanceTool
+CATCreateTopSweepWireSkinCircleVariable CATCGMCreateTopSweepWireSkinCircleVariable
+CreateGeodesicPointDir             CATCGMCreateGeodesicPointDir
+CreateTopCorner                    CATCGMCreateTopCorner
+CreateTopCornerBiTgt               CATCGMCreateTopCornerBiTgt
+CreateTopSweepCircleWireSkin       CATCGMCreateTopSweepCircleWireSkin
+
+CATTopBlend::CATTopBlendCouplingMode          CATTopBlendCouplingMode
+CATTopBlend::CATTopBlendCouplingMode_DomainG0 CATTopBlendCouplingMode_DomainG0
+CATTopBlend::CATTopBlendCouplingMode_DomainG1 CATTopBlendCouplingMode_DomainG1
+CATTopBlend::CATTopBlendCouplingMode_DomainG2 CATTopBlendCouplingMode_DomainG2
+CATTopBlend::CATTopBlendCouplingMode_Edge     CATTopBlendCouplingMode_Edge
+CATTopBlend::CATTopBlendCouplingMode_Spine    CATTopBlendCouplingMode_Spine
+CATTopBlend::CATTopBlendCouplingMode_Develop  CATTopBlendCouplingMode_Develop
+CATTopBlend::CATTopBlendCouplingMode_NoTwist  CATTopBlendCouplingMode_NoTwist
+
+
+CATTopBlend::CATTopBlendBehaviour_Mode                          CATTopBlendBehaviour_Mode
+CATTopBlend::CATTopBlendBehaviour_AllDefaultBehaviour           CATTopBlendBehaviour_AllDefaultBehaviour
+CATTopBlend::CATTopBlendBehaviour_TopologicalDefaultOrientation CATTopBlendBehaviour_TopologicalDefaultOrientation
+CATTopBlend::CATTopBlendBehaviour_GeometricalDefaultOrientation CATTopBlendBehaviour_GeometricalDefaultOrientation
+CATTopBlend::CATTopBlendBehaviour_AutorizeNonG0ConstraintOnMonoPCurveWire     CATTopBlendBehaviour_AutorizeNonG0ConstraintOnMonoPCurveWire
+
+
+
+CATDeclarativeManifoldCGM.h      CATDeclarativeManifold.h
+
+// ---------------------
+// AdvancedTopologicalOpeLight
+// ---------------------
+CATTopologicalFillLight.h           CATICGMTopologicalFillLight.h
+
+// ---------------------
+// BasicTopologicalOpe
+// ---------------------
+CATBodyFromLengthOnShell::CATLengthType  CATLengthType
+CATBodyFromLengthOnShell::ABSOLUTE_L     CATLengthType_ABSOLUTE_L
+CATBodyFromLengthOnShell::RELATIVE_L     CATLengthType_RELATIVE_L
+CATBodyFromLengthOnWire::CATLengthType   CATLengthType
+CATBodyFromLengthOnWire::ABSOLUTE_L      CATLengthType_ABSOLUTE_L
+CATBodyFromLengthOnWire::RELATIVE_L      CATLengthType_RELATIVE_L
+CATTopUnFoldedAeroOperator::SensReport   CATSensReport
+CATTopUnFoldedAeroOperator::Undefined    CATSensReportUndefined
+CATTopUnFoldedAeroOperator::FoldedToFlatten   CATSensReportFoldedToFlatten
+CATTopUnFoldedAeroOperator::FlattenToFolded   CATSensReportFlattenToFolded
+
+CATCreateGeodesicLinePtPt          CATCGMCreateGeodesicLinePtPt
+CATCreateTopGeodesicLineOperatorFromDirection     CATCGMCreateTopGeodesicLineOperatorFromDirection
+CATCreateTopHelix                  CATCGMCreateTopHelix
+CATCreateTopInfiniteLineFromDirection   CATCGMCreateTopInfiniteLineFromDirection
+CATCreateTopLineAngledTangentToWire     CATCGMCreateTopLineAngledTangentToWire
+CATCreateTopLineFromDirection      CATCGMCreateTopLineFromDirection
+CATCreateTopLineFromPoints         CATCGMCreateTopLineFromPoints
+CATCreateTopLineInfiniteOperatorFromDirection     CATCGMCreateTopLineInfiniteOperatorFromDirection
+CATCreateTopLineNormalToShell      CATCGMCreateTopLineNormalToShell
+CATCreateTopLineOperatorAngledTangentToWire  CATCGMCreateTopLineOperatorAngledTangentToWire
+CATCreateTopLineOperatorFromDirection   CATCGMCreateTopLineOperatorFromDirection
+CATCreateTopLineOperatorFromPoints CATCGMCreateTopLineOperatorFromPoints
+CATCreateTopLineOperatorNormalToShell   CATCGMCreateTopLineOperatorNormalToShell
+CATCreateTopLineOperatorTangentToWire   CATCGMCreateTopLineOperatorTangentToWire
+CATCreateTopLineTangentToWire      CATCGMCreateTopLineTangentToWire
+CATCreateTopLnTgtPtCrvOperator     CATCGMCreateTopLnTgtPtCrvOperator
+CATCreateTopPointOnSurface         CATCGMCreateTopPointOnSurface
+CATCreateTopPointOnWire            CATCGMCreateTopPointOnWire
+CATCreateTopPointUV                CATCGMCreateTopPointUV
+CATCreateTopPointXYZ               CATCGMCreateTopPointXYZ
+CATCreateTopPointsTgtOnWire        CATCGMCreateTopPointsTgtOnWire
+CATCreateTopSpline                 CATCGMCreateTopSpline
+CATCreateTopStableSpline           CATCGMCreateTopStableSpline
+CATCreateTopStableSplineOperator   CATCGMCreateTopStableSplineOperator
+
+CreateTopPolarExtremumOperator     CreateTopPolarExtremumOperator // -> No substitution
+CreateTopSpiralOperator            CreateTopSpiralOperator // -> No substitution
+
+CATFuzzySurfaceOffsetOperError::Code         CATFuzzySurfaceOffsetOperErrorCode
+CATFuzzySurfaceOffsetOperError::NoError      CATFuzzySurfaceOffsetOperNoError
+CATFuzzySurfaceOffsetOperError::ToleranceTooSmall CATFuzzySurfaceOffsetOperToleranceTooSmall
+CATFuzzySurfaceOffsetOperError::ToleranceTooLarge CATFuzzySurfaceOffsetOperToleranceTooLarge
+CATFuzzySurfaceOffsetOperError::TessellationError CATFuzzySurfaceOffsetOperTessellationError
+CATFuzzySurfaceOffsetOperError::VRepError    CATFuzzySurfaceOffsetOperVRepError
+CATFuzzySurfaceOffsetOperError::IsoSurfaceExtractionError CATFuzzySurfaceOffsetOperIsoSurfaceExtractionError
+CATFuzzySurfaceOffsetOperError::PolyFuzzyOffsetError      CATFuzzySurfaceOffsetOperPolyFuzzyOffsetError
+CATFuzzySurfaceOffsetOperError::DecimationError   CATFuzzySurfaceOffsetOperDecimationError
+CATFuzzySurfaceOffsetOperError::FittingError CATFuzzySurfaceOffsetOperFittingError
+CATFuzzySurfaceOffsetOperError::MemoryError  CATFuzzySurfaceOffsetOperMemoryError
+CATFuzzySurfaceOffsetOperError::Interrupted  CATFuzzySurfaceOffsetOperInterrupted
+
+CATFuzzySurfaceOffsetOperError::MemoryAllocGuessDiag  CATFuzzySurfaceOffsetOperMemAllocDiag
+CATFuzzySurfaceOffsetOperError::MemAlloc_SECURE       CATFuzzySurfaceOffsetOperMemAlloc_SECURE
+CATFuzzySurfaceOffsetOperError::MemAlloc_NOT_SECURE   CATFuzzySurfaceOffsetOperMemAlloc_NOT_SECURE
+CATFuzzySurfaceOffsetOperError::MemAlloc_DEADLOCK     CATFuzzySurfaceOffsetOperMemAlloc_DEADLOCK
+
+CATFuzzySurfaceOffset::ErrorCode   CATFuzzySurfaceOffsetErrorCode
+CATFuzzySurfaceOffset::NoError     CATFuzzySurfaceOffsetNoError
+CATFuzzySurfaceOffset::Interrupted CATFuzzySurfaceOffsetInterrupted
+
+CATDistanceBodyBody::CATDistanceType        CATDistanceBodyBodyType
+CATDistanceBodyBody::CATDistanceTypeDev     CATDistanceBodyBodyTypeDev
+CATDistanceBodyBody::CATDistanceTypeMax     CATDistanceBodyBodyTypeMax
+CATDistanceBodyBody::CATDistanceTypeMin     CATDistanceBodyBodyTypeMin
+CATDistanceBodyBody::CATDistanceMode        CATDistanceBodyBodyMode
+CATDistanceBodyBody::CATDistanceModePer     CATDistanceBodyBodyModePer
+CATDistanceBodyBody::CATDistanceModeDir     CATDistanceBodyBodyModeDir
+CATDistanceBodyBody::CATDistanceModeGen     CATDistanceBodyBodyModeGen
+
+
+// ---------------------
+// CATClassATopoOperators
+// ---------------------
+CATHashTableOfClaFlangeOp          CATHashTableOfCGMProClaFlangeOp
+
+// ---------------------
+// CATSubdivisionAdvTopOper
+// ---------------------
+
+// ---------------------
+// CATSubdivisionGeoOperators
+// ---------------------
+// Impossible: UpdateMesh                         CATPGMUpdateMesh
+
+// ---------------------
+// CATSubdivisionOperators
+// ---------------------
+
+// ---------------------
+// CATSubdivisionTopOperators
+// ---------------------
+CATStoRemoveGeometry               CATCGMStoRemoveGeometry
+
+// ---------------------
+// CurveBasedTopoOperators
+// ---------------------
+
+// ---------------------
+// EnergyDeformationToolkit
+// ---------------------
+
+// ---------------------
+// FreeFormOperators
+// ---------------------
+
+
+
+
+
+// ---------------------
+// FunctionalTopologicalOpe
+// ---------------------
+CATTopWallThickness3D::MethodType      CATThicknessAnalysisMethodType
+CATTopWallThickness3D::SphereMethod    CATThicknessAnalysisSphereMethod
+CATTopWallThickness3D::NormalRayMethod CATThicknessAnalysisNormalRayMethod
+CATAutoBaseScan::ScanType              CATAutoBaseScanType
+CATAutoBaseScan::BitangentFillet       CATAutoBaseScanTypeBitangentFillet
+CATAutoBaseScan::NeutralDraftWire      CATAutoBaseScanTypeNeutralDraftWire
+CATAutoBaseScan::ReflectDraftWire      CATAutoBaseScanTypeReflectDraftWire
+CATAutoBaseScan::LimitingWire          CATAutoBaseScanTypeLimitingWire
+CATAutoBaseScan::Undetermined          CATAutoBaseScanTypeUndetermined
+
+// ---------------------
+// GeometricOperators
+// ---------------------
+CreateConfusionPtOnCrvPtOnCrv       CATCGMCreateConfusionPtOnCrvPtOnCrv
+CreateSurTo2DCanonicalMapping.h     CATCGMCreateSurTo2DCanonicalMapping.h
+CreatePlanarMapping                 CATCGMCreatePlanarMapping
+CATExtrapolSurface::CATSurfaceSide  CATExtrapolSurfaceSide
+CATExtrapolSurface::SideUMin        CATExtrapolSurfaceSideUMin
+CATExtrapolSurface::SideUMax        CATExtrapolSurfaceSideUMax
+CATExtrapolSurface::SideVMin        CATExtrapolSurfaceSideVMin
+CATExtrapolSurface::SideVMax        CATExtrapolSurfaceSideVMax
+CATExtrapolSurface::SideUMinVMin    CATExtrapolSurfaceSideUMinVMin
+CATExtrapolSurface::SideUMaxVMin    CATExtrapolSurfaceSideUMaxVMin
+CATExtrapolSurface::SideUMinVMax    CATExtrapolSurfaceSideUMinVMax
+CATExtrapolSurface::SideUMaxVMax    CATExtrapolSurfaceSideUMaxVMax
+
+CATSurTo2DMapping::CATMappingValidity         CATMappingValidity
+CATSurTo2DMapping::ValidOnDomain              CATMappingValidOnDomain
+CATSurTo2DMapping::PartiallyValidOnDomain     CATMappingPartiallyValidOnDomain
+CATSurTo2DMapping::NotValidOnDomain           CATMappingNotValidOnDomain
+
+CATConcatenateNurbsCurves          CATCGMConcatenateNurbsCurves
+CATConcatenateNurbsSurfaces        CATCGMConcatenateNurbsSurfaces
+CATCreateConfusion                 CATCGMCreateConfusion
+CATCreateDistanceMin               CATCGMCreateDistanceMin
+CATCreateInclusion                 CATCGMCreateInclusion
+CATCreateIntersection              CATCGMCreateIntersection
+CATCreateLocalAnalysis             CATCGMCreateLocalAnalysis
+CATCreatePlanarMapping             CATCGMCreatePlanarMapping
+CATCreateProjection                CATCGMCreateProjection
+CATDynCreateMassProperties1D       CATCGMDynCreateMassProperties1D
+// Impossible: CreateConfusion                    CATPGMCreateConfusion
+CreatePlanarMapping                CATCGMCreatePlanarMapping
+// Impossible: CreateProjection                   CATPGMCreateProjection
+// Impossible: Distance                            CATPGMDistance
+CATCreateInclusionPtSur            CATCGMCreateInclusionPtSur
+CATConcatenateNurbsTool.h          CATCGMConcatenateNurbsTool.h
+CATConcatenateNurbsCurves          CATCGMConcatenateNurbsCurves
+CATConcatenateNurbsSurfaces        CATCGMConcatenateNurbsSurfaces
+
+CATCurveAffineSupport::AffineSpace      CATCurveAffineSupport_AffineSpace
+CATCurveAffineSupport::POINT            CATCurveAffineSupport_POINT
+CATCurveAffineSupport::LINE             CATCurveAffineSupport_LINE
+CATCurveAffineSupport::PLANE            CATCurveAffineSupport_PLANE
+CATCurveAffineSupport::SPACE            CATCurveAffineSupport_SPACE
+
+
+CATSurfaceRecognizer::SurfaceType    CATSurfReco_SurfaceType
+
+// ---------------------
+// NewTopologicalObjects
+// ---------------------
+ListPOfCATTopPropagationEdge        CATListPtrCATICGMTopPropagationEdge
+CATTopTools::GapCheckMode           CATTopToolsGapCheckMode
+CATTopTools::G0GapCheckMode         CATTopToolsG0GapCheckMode
+CATTopTools::SharpEdgeCheckMode     CATTopToolsSharpEdgeCheckMode
+CATTopTools::SmoothSharpEdgeCheckMode     CATTopToolsSmoothSharpEdgeCheckMode
+CATTopBodyTools::FreezeMode         CATTopBodyToolsFreezeMode
+CATTopBodyTools::FreezeOff          CATTopBodyToolsFreezeOff
+CATTopBodyTools::FreezeOn           CATTopBodyToolsFreezeOn
+CATTopCheckJournal::JournalCheckRule      CATJournalCheckRule
+CATTopCheckJournal::JCRuleNameDimension   CATJCRuleNameDimension
+CATTopCheckJournal::JCRuleValidCellTypes  CATJCRuleValidCellTypes
+CATTopCheckJournal::JCRuleOnlyExistingBorderCells  CATJCRuleOnlyExistingBorderCells
+CATTopRelimitByVolume::SelectionType     CATTopRelimitByVolumeSelectionType
+CATTopRelimitByVolume::None              CATTopRelimitByVolumeSelTypeNone
+CATTopRelimitByVolume::InsideVolume      CATTopRelimitByVolumeSelTypeInsideVolume
+CATTopRelimitByVolume::OutsideVolume     CATTopRelimitByVolumeSelTypeOutsideVolume
+CATTopRelimitByVolume::OnVolumeBoundary  CATTopRelimitByVolumeSelTypeOnVolumeBoundary
+
+CATCheckTopology                    CATCGMCheckTopology
+CATCreatePropagationEdge            CATCGMCreatePropagationEdge
+CATCreateSewSkin                    CATCGMCreateSewSkin
+
+CATTopSplitBySkin::SelectionMode    CATTopSplitBySkinSelectionMode
+CATTopSplitBySkin::Keep             CATTopSplitBySkinSelModeKeep
+CATTopSplitBySkin::Remove           CATTopSplitBySkinSelModeRemove
+CATTopSplitBySkin::PositionVsPlane  CATTopSplitBySkinSelModePositionVsPlane
+CATTopSplitBySkin::SelectionSide    CATTopSplitBySkinSelectionSide
+CATTopSplitBySkin::OverSkin         CATTopSplitBySkinSelSideOverSkin
+CATTopSplitBySkin::UnderSkin        CATTopSplitBySkinSelSideUnderSkin
+CATTopSplitBySkin::UnSet            CATTopSplitBySkinSelSideUnSet
+
+
+
+
+
+CATTopBodyTools::FreezeMode         CATBodyFreezeMode
+CATTopBodyTools::FreezeOff          CATBodyFreezeOff
+CATTopBodyTools::FreezeOn           CATBodyFreezeOn
+CATTopBodyTools::FreezeOrCompletionInvalid   CATBodyFreezeOrCompletionInvalid
+
+// ---------------------
+// SurfacicGeoOperators
+// ---------------------
+
+// ---------------------
+// SurfacicTopoOperators
+// ---------------------
+CATHealing::HealingControlMode      CATHealingControlMode
+CATHealing::global                  CATHealingControlMode_global
+CATHealing::local                   CATHealingControlMode_local
+CATHealing::strict                  CATHealingControlMode_strict
+
+
+// ---------------------
+// TopologicalOperators
+// ---------------------
+CATBodyChecker::CheckMode           CATCGMBodyCheckMode
+CATBodyChecker::BodyChkModeLight    CATCGMBodyChkModeLight
+CATBodyChecker::BodyChkModeFull     CATCGMBodyChkModeFull
+CATBodyChecker::BodyChkModeUser     CATCGMBodyChkModeUser
+CATBodyChecker::BodyChkModeLightPlus             CATCGMBodyChkModeLightPlus
+CATBodyChecker::BodyChkRuleUndefined             CATCGMBodyChkRuleUndefined
+CATBodyChecker::BodyChkRuleCurvatureCurve        CATCGMBodyChkRuleCurvatureCurve
+CATBodyChecker::BodyChkRuleCurvatureSurface      CATCGMBodyChkRuleCurvatureSurface
+CATBodyChecker::BodyChkRuleSelfIntersectionShell CATCGMBodyChkRuleSelfIntersectionShell
+CATBodyChecker::BodyChkRuleSelfIntersectionWire  CATCGMBodyChkRuleSelfIntersectionWire
+CATBodyChecker::BodyChkRuleTopologicalEdgeLength CATCGMBodyChkRuleTopologicalEdgeLength
+CATDynDraft::StepDraftMode          CATDynDraftStepDraftMode
+CATDynDraft::Perpendicular          CATDynDraftPerpendicular
+CATDynDraft::Tapered                CATDynDraftTapered
+CATDynTransformation::CATDynReportMode           CATCGMDynTransformationReportMode
+CATDynTransformation::CATDynModification         CATCGMDynTransformationModification
+CATDynTransformation::CATDynCreation             CATCGMDynTransformationCreation
+
+CATCreateDirBodyExtremum           CATCGMCreateDirBodyExtremum
+CATCreateDistanceMinTopo           CATCGMCreateDistanceMinTopo
+CATCreateNewTopAssemble            CATCGMCreateNewTopAssemble
+CATCreateTopAssemble               CATCGMCreateTopAssemble
+CATCreateTopBoundary               CATCGMCreateTopBoundary
+CATCreateTopDisconnect             CATCGMCreateTopDisconnect
+CATCreateTopDisconnectShell        CATCGMCreateTopDisconnectShell
+CATCreateTopDisconnectWire         CATCGMCreateTopDisconnectWire
+CATCreateTopEuclidianDistanceTool  CATCGMCreateTopEuclidianDistanceTool
+CATCreateTopIntersect              CATCGMCreateTopIntersect
+CATCreateTopLayDown                CATCGMCreateTopLayDown
+CATCreateTopProject                CATCGMCreateTopProject
+CATCreateTopSplit                  CATCGMCreateTopSplit
+CATCreateTopSplitOnSupport         CATCGMCreateTopSplitOnSupport
+CATCreateTopSplitShell             CATCGMCreateTopSplitShell
+CATCreateTopSplitShellWithKeepRemove    CATCGMCreateTopSplitShellWithKeepRemove
+CATCreateTopSplitWire              CATCGMCreateTopSplitWire
+CATCreateTopSplitWireWithKeepRemove     CATCGMCreateTopSplitWireWithKeepRemove
+CATCreateTopTrim                   CATCGMCreateTopTrim
+CATCreateTopTrimOnSupport          CATCGMCreateTopTrimOnSupport
+CATCreateTopTrimShell              CATCGMCreateTopTrimShell
+CATCreateTopTrimShellWithKeepRemove     CATCGMCreateTopTrimShellWithKeepRemove
+CATCreateTopTrimWire               CATCGMCreateTopTrimWire
+CATCreateTopTrimWireWithKeepRemove CATCGMCreateTopTrimWireWithKeepRemove
+CATDynCreateMassProperties3D       CATCGMDynCreateMassProperties3D
+// Impossible: CheckFace                          CATPGMCheckFace
+// Impossible: ComputeGap                         CATPGMComputeGap
+// Impossible: CreateBodyMonoShellMonoFace        CATPGMCreateBodyMonoShellMonoFace
+// Impossible: CreateBodyMonoVertex               CATPGMCreateBodyMonoVertex
+// Impossible: CreateBodyMonoWireMonoEdge         CATPGMCreateBodyMonoWireMonoEdge
+// Impossible: CreateEdge                         CATPGMCreateEdge
+// Impossible: Get2DBoundingBox                   CATPGMGet2DBoundingBox
+// Impossible: GetAdjacentEdge                    CATPGMGetAdjacentEdge
+// Impossible: GetAllAdjacentFaces                CATPGMGetAllAdjacentFaces
+// Impossible: GetBorderCells                     CATPGMGetBorderCells
+// Impossible: GetDomainOfBorderCell              CATPGMGetDomainOfBorderCell
+// Impossible: GetLimits                          CATPGMGetLimits
+// Impossible: GetSkinFaces                       CATPGMGetSkinFaces
+// Impossible: IsCovered                          CATPGMIsCovered
+// Impossible: MergeEdges                         CATPGMMergeEdges
+// Impossible: SetSimplifyTool                    CATPGMSetSimplifyTool
+// Impossible: UnMergeEdge                        CATPGMUnMergeEdge
+CATCreateTopBoolean                CATCGMCreateTopBoolean
+
+// ---------------------
+// TopologicalOperatorsLight
+// ---------------------
+
+// ---------------------
+// DeclarativeOperators
+// ---------------------
+
+// ---------------------
+// ICMOperatorTop
+// ---------------------

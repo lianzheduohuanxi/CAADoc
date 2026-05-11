@@ -1,0 +1,254 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Constraints on Published Elements</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Assembly</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating Constraints on Published Elements</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create constraints on
+      published elements.</p>
+      <p>This macro opens the <a href="samples/CstOnPublish.CATProduct">CAAAsmCstOnPublish.CATProduct</a>
+      document that contains two parts: a plate, Plate.CATPart, and two
+      instances of a screw, Screw.CATPart. It retrieves on each <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a>
+      object the <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Publication');return false;"><i>Publication</i></a>
+      objects corresponding to published elements identifying for example the
+      position of the holes in the plate and the axis of the screws. It creates <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'Constraints');return false;"><i>Constraint</i></a>
+      objects to position those elements regarding one another. It then uses the
+      <code>ReplaceComponent</code> method of the <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Products');return false;"><i>Products</i></a>
+      collection to replace Screw.CATPart with NewScrew.CATPart, automatically
+      reconnecting the constraints on the published elements of the new part.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAAsmCstOnPublish is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAAsmCstOnPublishSource.htm">CAAAsmCstOnPublish.CATScript</a>
+      is located in the CAAScdAsmUseCases module. <a href="macros/CAAAsmCstOnPublish.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p align="center">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAAsmCstOnPublish includes the following steps:</p>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Create">Creating Constraints</a></li>
+        <li><a href="#Replace">Replacing the Screw by Another Screw</a></li>
+      </ol>
+      <h4><a name="prolog"></a>Prolog</h4>
+      <p>The macro first loads CAAAsmCstOnPublish.CATProduct that contains two
+      Part: Plate.CATPart and Screw.CATPart for which two instances have been
+      created: Screw.1 and Screw.2.</p>
+      <p>Those objects use the Publication capability of CATIA V5 to expose some
+      of their elements using a stable name. The plate published as
+      &quot;Top&quot; its top face and as &quot;Hole1&quot; and
+      &quot;Hole2&quot; the center points of the two holes. The screw publishes
+      as &quot;HeadBottom&quot; the bottom face of its head and as
+      &quot;Axis&quot; its axis.</p>
+      <p align="center"><img border="0" src="images/CstOnPubBefore.jpg" width="673" height="470"></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+<font color="#008000">' --------------------------</font>
+<font color="#008000">' Get the different products</font>
+<font color="#008000">' --------------------------</font>
+<font color="#0000FF">Dim </font>oRootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oRootProduct=CATIA.ActiveDocument.Product
+
+<font color="#0000FF">Dim </font>oPlate<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oPlate = CATIA.ActiveDocument.Product.Products.Item  ( &quot;Plate.1&quot; ) 
+
+<font color="#0000FF">Dim </font>oScrew1<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oScrew1 = CATIA.ActiveDocument.Product.Products.Item  ( &quot;Screw.1&quot; ) 
+
+<font color="#0000FF">Dim </font>oScrew2<font color="#0000FF"> As </font>Product
+<font color="#0000FF">Set </font>oScrew2 = CATIA.ActiveDocument.Product.Products.Item  ( &quot;Screw.2&quot; ) 
+   ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Once the new product document has been loaded, the <code>oPlate</code>,
+      <code>oScrew1</code> and <code>oScrew2</code> variables are declared to
+      receive the instance of the plate and the two instances of the screw.
+      Those instances are fetched in the <i>Products</i> collection of the Root <i>Product</i>
+      using their names.</p>
+      <p>Other variables, <code>oPlatePub</code>, <code>PlateRef</code>, <code>oScrewPub</code>
+      and <code>oScrewRef</code> are declared and will be used in the following
+      to receive plate and screws publications and the underlying published
+      elements. Those published elements will be manipulated as <i>Reference</i>
+      objects.</p>
+      <h4><a name="Create">Creating Constraints</a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------------------</font>
+<font color="#008000">' Create offset constraint between plate  </font>
+<font color="#008000">' top face and screws heads bottom faces</font>
+<font color="#008000">' --------------------------------------</font>
+<font color="#0000FF">set </font>oPlatePub = oPlate.Publications.Item(&quot;Top&quot;)
+<font color="#0000FF">Set </font>oPlateRef = oPlatePub.Valuation
+
+<font color="#008000">'  ---&gt; Plate/Top Screw1/HeadBottom </font>
+
+<font color="#0000FF">Set </font>oScrewPub = oScrew1.Publications.Item(&quot;HeadBottom&quot;)
+<font color="#0000FF">Set </font>oScrewRef = oScrewPub.Valuation
+
+<font color="#0000FF">Dim </font>oConstraint1<font color="#0000FF"> As </font>Constraint
+<font color="#0000FF">Set </font>oConstraint1 = oConstraints0.AddBiEltCst  ( catCstTypeDistance, oPlateRef, oScrewRef ) 
+
+oConstraint1.Dimension.Value = 2.000000
+oConstraint1.Orientation = catCstOrientOpposite
+...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <i>Publication</i> object corresponding to the top surface of the
+      plate is fetched in the <i>Publications</i> collection of tthe <code>oPlate</code>
+      <i>Product</i> object using its name: &quot;Top&quot;. A reference on the
+      underlying published object is then obtained using the <code>Valuation</code>
+      method of the <i>Publication</i> object. We proceed the same way for the
+      bottom face of the head of the screw.</p>
+      <p>Using those 2 references an offset constraint is created using the <code>AddBiEltCst</code>
+      method of the <i>Constraints</i> collection. <code>AddBiEltSct</code> is
+      used to create constraints involving two elements, valuating the first
+      argument to catCstTypeDistance creates a distance (or offset) constraint
+      between the two objects passed as second and third arguments. Constraint
+      types are defined in the <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'CatConstraintType', '', 'enum');return false;"><i>CatConstraintType</i></a>
+      enum.</p>
+      <p>The <code>Dimension</code> method is used on the resulting <i>Constraint</i>
+      object to specify the value of the distance (here 2 mm) and the <code>Orientation</code>
+      method allows to specify the orientation for the second geometric element
+      with regard to the first one. Constraint orientations are defined in the <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'CatConstraintOrientation', '', 'enum');return false;"><i>CatConstraintOrientation</i></a>
+      enum.</p>
+      <p>Three other constraints are created the same way: offset between the
+      top face of the plate and the bottom face of the second screw and
+      coincidence between the axis of each screw and the center of the
+      corresponding home of the plate.</p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------------------</font>
+<font color="#008000">' Update the Product ..</font>
+<font color="#008000">' --------------------------------------</font>
+oRootProduct.Update
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Root <i>Product</i> is then updated to move the parts in a position
+      respecting the contraints to newly created constraint giving the following
+      result.</p>
+      <p align="center"><img border="0" src="images/CstOnPubAfter.jpg" width="678" height="500"></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+MsgBox &quot;Click OK to replace the screw by another standard screw ...&quot; 
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A message box is displayed allowing to see the intermediary result
+      before going on. On Unix the result will only be visible at the end of the
+      macro.</p>
+      <h4><a name="Replace"></a>Replacing the Screw by Another Screw</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' --------------------------------------</font>
+<font color="#008000">' Replace the screw by another one: constraints on </font>
+<font color="#008000">' published elements are autoatically reconnected ...</font>
+<font color="#008000">' --------------------------------------</font>
+<font color="#0000FF">Set </font>oScrew1 = oRootProduct.Products.ReplaceComponent ( _
+      oScrew1,                                                         _
+      sDocPath &amp; &quot;\online\CAAScdAsmUseCases\samples\NewScrew.CATPart&quot;, _
+      True)
+
+<font color="#008000">' --------------------------------------</font>
+<font color="#008000">' Update the Product with the new Parts</font>
+<font color="#008000">' --------------------------------------</font>
+oRootProduct.Update 
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>ReplaceComponent</code> method of the <i>Products</i>
+      collection of the Root Product allows to replace all instances of the
+      reference product of <code>oScrew1 </code>(Screw.CATPart) by instances of
+      a new reference product whose full Path is passed as second argument (here
+      NewScrew.CATPart).</p>
+      <p>All constraints on published elements are automatically reconnected and
+      updating the Root Product automatically positions the new instances in the
+      assembly:</p>
+      <p align="center"><img border="0" src="images/CstOnPubReplaced.jpg" width="677" height="459"></p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create and use constraints on published
+elements using macros.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Publication');return false;"><i>Publication</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'Constraints');return false;"><i>Constraint</i></a><i>,</i>
+      <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Products');return false;"><i>Products</i></a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'CatConstraintType', '', 'enum');return false;"><i>CatConstraintType</i></a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'CatConstraintOrientation', '', 'enum');return false;"><i>CatConstraintOrientation</i></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,1049 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Analysis Modeler Overview</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td>
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Analysis Modeler Overview</h3>
+     <p><em>Some general concepts about Analysis data</em></td>
+   </tr>
+   <tr>
+     <td colspan="2" class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>The aim of this document is to introduce the different concepts on which 
+     the Analysis Infrastructure relies.</p>
+     <p>Any program that manipulates an Analysis document must provide code that 
+     navigates through its structure, so this roadmap is useful to produce or 
+     understand such code. It focuses on entities that are shown to the end 
+     user, introducing vocabulary common to all analysis programmers.</p>
+     <p>Fully imbedded inside the V5 philosophy, the Analysis model is based on 
+     a specification versus result approach. Beside model entities that are 
+     shown to the end user, an Analysis document contains other modeling objects 
+     that will be introduced (Field model and Meshing Model) for the result 
+     view.</p>
+     <p>Having a hands-on experience of the Structural Analysis interactive 
+     products is necessary to take full benefits from this article.</p>
+     <ul>
+       <li><a href="#Document"><b>The Analysis Document</b></a></li>
+       <li><a href="#Features"><b>Analysis Features</b></a>
+       <ul>
+         <li><a href="#User">The End User View</a></li>
+         <li><a href="#scan">Programming with Analysis Features</a></li>
+         <li><a href="#interface">Interfaces for Analysis Features</a></li>
+       </ul>
+       </li>
+       <li><a href="#FieldModel"><b>Field Model</b></a>
+       <ul>
+         <li><a href="#PtypeStruct">Physical Types for Structural Analysis</a></li>
+         <li><a href="#PhysicalTypes">Getting Access to the Physical Types (CharacCollector) 
+         Available for an Analysis Feature</a></li>
+       </ul>
+       </li>
+       <li><a href="#MeshingModel"><b>Meshing Model</b></a>
+       <ul>
+         <li><a href="#MeshAccess">Accessing the Meshing Model</a></li>
+         <li><a href="#MeshConnectivity">The Meshing Model  Connectivity's</a></li>
+         <li><a href="#MeshField">Integrating the Meshing Inside the Field Model</a></li>
+       </ul>
+       </li>
+       <li><a href="#Explicit"><b>From Features to Field Model Generation</b></a>
+       <ul>
+         <li><a href="#UpdSc">General update Scheme.</a></li>
+         <li><a href="#FieldModelProg">Programming with Field Model Objects</a></li>
+         <li><a href="#ExExistprepro">Example for Existing Preprocessing Sets 
+         and Entities</a></li>
+         <li><a href="#ExExistSolution">Example for Existing Solution Sets</a></li>
+       </ul>
+       </li>
+     </ul>
+     <ul>
+       <li><a href="#NewSolution"><b>Implement New features</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Document"></a>The Analysis Document</h3>
+ <p>All Analysis data are stored inside the Analysis document. The extension of 
+ this document is &quot;CATAnalysis&quot;. The data are stored in different containers.</p>
+ <p>The figure shows the contents of the CATAnalysis document in term of 
+ containers. All are created at the document initialization.</p>
+ <p align="center">
+ <img border="2" src="images/CATAnalysis.jpg" width="366" height="303"></p>
+ <ol>
+   <li>The &quot;Analysis Feature&quot; container groups the Specifications. It is based 
+   on features and literals in order to capture as much as possible the user's 
+   design intent. After, the Spec objects build an analysis model supported by 
+   finite element entities by using standard physical type description.</li>
+   <li>The &quot;Field Model&quot; container groups the concrete classes that define the 
+   view of the physics based on finite element entities.</li>
+   <li>The &quot;Meshing&quot; container is the result view of the mesh specifications. It 
+   groups concrete classes.</li>
+   <li>The &quot;Images&quot; container groups the Specifications that define the display 
+   of the analysis model. The Images container allows the physical types to be 
+   displayed once the are defined on finite element entities.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]
+ <!---------------------------------comment------------------------------------->
+ </p>
+ <h3><a name="Features"></a>Analysis Features</h3>
+ <p>The Analysis features are the support for the specifications of the user. 
+ They support the V5 basic behaviors (Copy/Paste, update, navigation, selection, 
+ etc.).</p>
+ <p align="right">[<a href="#Top">Top</a>]
+ <!---------------------------------comment------------------------------------->
+ </p>
+ <h4><a name="User"></a>The End User View</h4>
+ <p>The figure below shows a typical CATIA V5 work session within the Structural 
+ Analysis application. This Analysis document contains a reference to a design 
+ document (in this case, a Part document) on which a stress analysis is 
+ computed. This feature tree summarizes the different kinds of analysis features 
+ that are manipulated by the user interface. This same structure is used in 
+ order to scan the model when programming. What is the role of the different 
+ Analysis feature objects:</p>
+ <table width="100%">
+   <tr>
+     <td><img border="0" src="images/Modele.jpg" width="301" height="341"></td>
+     <td>An Analysis model is made of some different features. The <b><i>
+     Analysis Manager</i></b> is the root feature that manages:
+     <ul>
+       <li>The <b><i>Links Manager</i></b> role is to keep the link to the 
+       referenced design document. It can be a Part for single part analysis, a 
+       Product for analysis of a design assembly or other external documents. It 
+       is here a rod Part</li>
+       <li>The <b><em>Finite Element Model</em> </b>is dedicated to the 
+       discretization (meshing global and local specifications) and idealization 
+       (behavior of the part as physical properties). By default it contains a 
+       meshing set called <i>Nodes and Elements</i>, a property set, a material 
+       set, and an axis set.</li>
+       <li>Relative to a <i>Finite Element Model</i>, some <b><i>Analysis Cases</i></b> 
+       are created in order to group all kinds of external data applied on the 
+       idealization. (In this case, Boundaries, Loads and the solution set that 
+       will give access to all the physical data that can be computed by the 
+       solver.)</li>
+       <li>The <b><i>Analysis Case</i></b> is defined for a given solver and for 
+       a specific computation. (In this case, static linear.) It is made of <i>
+       <b>Analysis Sets</b></i> that groups some <b><i>Analysis Entities</i></b>, 
+       which represent some physical preprocessing actions applied to the 
+       design. (For this example, apply a <b>clamp</b> or a <b>momentum</b> to 
+       B-rep elements of the part.)</li>
+       <li>In order to have the result visualization, <b><i>images</i></b> 
+       appear in the tree. They are connected in the tree under the set that 
+       provides the values for the display. In this example, they are connected 
+       under the <i>Static Case Solution.1</i>.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="scan"></a>Programming with Analysis Features</h4>
+ <p>By default, after the document initialization, the Analysis document 
+ contains the Analysis Manager, the Links Manager and one FEM model. The 
+ following graph explains the dependency between the features and the interfaces 
+ implemented on the features.</p>
+ <p><a name="Gspec"></a></p>
+ <p align="center">
+ <img border="2" src="images/FeaturesRose.jpg" width="616" height="607"></p>
+ <p>From a pointer to the Analysis document, query a pointer to the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAccess');return false;">
+ CATISamAccess</a></b> interface in order to retrieve the root container thanks 
+ to the <code>GetSpecContainer</code> method. This enables you to access the 
+ features. From the CATIContainer pointer returned, query a pointer to the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisContainer');return false;">
+ CATISamAnalysisContainer</a></b> interface.</p>
+ <p>From this <b>CATISamAnalysisContainer</b> pointer, you can use the <code>
+ GetAnalysisManager</code> method to retrieve the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisManager');return false;">
+ CATISamAnalysisManager</a></b> or query a pointer to the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisModelFactory');return false;">
+ CATISamAnalysisModelFactory</a></b> interface that manages all the methods for 
+ the analysis feature creation.</p>
+ <p>The <b>CATISamAnalysisManager</b> interface provides the methods to access 
+ the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamDocumentManager');return false;">
+ CATISamDocumentManager</a> </b>in order to manage the document linked to the 
+ current Analysis document, and access the different <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisModel');return false;">
+ CATISamAnalysisModel</a></b> methods implemented by the feature set called 
+ FEMModel.</p>
+ <p>The <b>CATISamAnalysisModel</b> interface provides the methods to access the 
+ analysis cases that apply to it using a pointer to <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisCase');return false;">
+ CATISamAnalysisCase</a></b> interface. Both implement the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisScan');return false;">
+ CATISamAnalysisScan</a></b> interface that allows the analysis sets that make 
+ up the analysis model to be retrieved as pointers to the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisSet');return false;">
+ CATISamAnalysisSet</a></b> interface. At the document initialization, an empty
+ <b>analysis model</b> is created and contains the following sets:</p>
+ <ul>
+   <li>MeshSet for Meshing definition (This set implements also the <b>
+   <a href="#CATIMSHMeshManager">CATIMSHMeshManager</a></b> interface in order 
+   to access the meshing information)</li>
+   <li>MaterialSet for Material definition</li>
+   <li>AxisSet for local axes definition</li>
+   <li>PropertySet for physical properties definition.</li>
+ </ul>
+ <p>By default for structural analysis and static linear displacement 
+ computation, the Analysis Case is made of the following sets:</p>
+ <ul>
+   <li>RestraintSet for boundary's definition</li>
+   <li>LoadSet for external load definition</li>
+   <li>StaticSet for the computation management. This set is dedicated to an <i>
+   <b>ELFINI</b></i> computation and will support its implementations of <b>
+   CATIEdit</b> for interactive edition capability, <b>CATIBuild</b> for 
+   launching the solver, and <b>CATICharacCollector</b> for extracting the 
+   available solver results.</li>
+ </ul>
+ <p>By default for structural analysis and modal computation, the Analysis Case 
+ is made of the following sets:</p>
+ <ul>
+   <li>RestraintSet for boundary's definition</li>
+   <li>MassSet for &quot;non-structural&quot; mass definition</li>
+   <li>DymaniqueSet for the computation management. This set is dedicated to an
+   <i><b>ELFINI</b></i> computation and will support its implementations of <b>
+   CATIEdit</b> for interactive edition capability, <b>CATIBuild</b> for 
+   launching the solver, and <b>CATICharacCollector</b> for extracting the 
+   available solver results.</li>
+ </ul>
+ <p><b>CATISamAnalysisSet</b> provides methods to create and access the analysis 
+ entities that make up the analysis set. These entities implement
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisEntity');return false;">
+ <b>CATISamAnalysisEntity</b></a>.</p>
+ <p>Any analysis entity is made of Physical data that implement
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamBasicComponent');return false;">
+ <b>CATISamBasicComponent</b></a> (that accesses the physical data under literal 
+ [<a href="#References">1</a>] format in order to take benefit of
+ <img border="1" src="images/I_FormulaP2.gif" width="24" height="24"> ) and 
+ implement by itself <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisSupport');return false;">
+ CATISamAnalysisSupport</a></b> (that manages the selection of finite element 
+ entities based on geometrical data). From the analysis entity, you can use the 
+ CATISamAnalysisEntity interface to retrieve its basic components or use 
+ CATISamAnalysisSupport for its analysis support by querying a pointer to the 
+ appropriate interface.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="interface"></a>Interfaces for Analysis Features</h4>
+ <p>This part will describe the recommanded way of using CAA interfaces on 
+ Analysis features.</p>
+ <ul>
+   <li><b>CATIEdit</b> is used for the edition of a feature from tree selection. 
+   If your feature is build by derivation of &quot;AnalysisSet&quot; or &quot;AnalysisEntity&quot; 
+   and made of Basic components, a default implementation is provided. This 
+   default implementation manages the model and the Visual Basic of the object. 
+   This implementation can be overloaded. </li>
+   <li><b>CATIBuild </b>&nbsp;is used for updating a feature. It is recommended not 
+   to implement this interface and to prefer the implementation of <b>
+   CATISamExplicitation</b>.</li>
+   <li><b>CATI3DGeoVisu</b> is used to associate a 3D rep to a feature. By 
+   default it is implemented for all analysis features. To customize an analysis 
+   entity visualization implement <b>CATISamEntityVisu </b>and let the default 
+   adapter managing the connection to the visualization manager, pre-highlight 
+   of the support, and impact between entities in the feature tree.</li>
+   <li>&nbsp;</li>
+ </ul>
+ <table border="1" width="100%">
+   <tr>
+     <td width="13%"><b>Analysis Interfaces</b></td>
+     <td width="30%"><b>Feature Type</b></td>
+     <td width="20%"><b>Role</b></td>
+     <td width="37%"><b>Default or adapter</b></td>
+   </tr>
+   <tr>
+     <td width="13%">CATISamExplicit</td>
+     <td width="30%">Analysis feature (any analysis feature with physical type)</td>
+     <td width="20%">Link Field Model</td>
+     <td width="37%">Analysis modeler Implementation not to be overloaded. Main 
+     objective is to manage the life cycle of the Field model objects (Including 
+     Undo_Redo, Warm- Start ...)</td>
+   </tr>
+   <tr>
+     <td width="13%">CATISamExplicitation</td>
+     <td width="30%">Analysis Set</td>
+     <td width="20%">Generate Field Model</td>
+     <td width="37%">Default Implementation generates an Explicit Set according 
+     to Physical type attribute of the feature. Main objective is the connection 
+     of preprocessing entities.</td>
+   </tr>
+   <tr>
+     <td width="13%">CATISamExplicitation</td>
+     <td width="30%">CATObject defined on<p>STRUCTURAL_LateType</td>
+     <td width="20%">Generate Field Model</td>
+     <td width="37%">To be implemented</td>
+   </tr>
+   <tr>
+     <td width="13%">CATICharacCollector</td>
+     <td width="30%">Analysis Set
+     <p>Analysis Entity</td>
+     <td width="20%">Generate the associated CharacCollector</td>
+     <td width="37%">To be implemented by using <b>
+     <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisResources', 'class', 'CATECharacCollector');return false;">
+     CATECharacCollector</a></b> Adapter.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="FieldModel"></a>Field Model</h3>
+ <p>This model is designed in order to support the finite element view of the 
+ specification. Specification means pre-processing and post-processing model and 
+ data access. The field model is made of concrete classes that must not be 
+ derived and of a dictionary that defines the physical types list and category, 
+ and the rules for the model as well. Note that when manipulating those classes, 
+ you are using a class close to an handler and not a pointer. The pointer of an 
+ explicit class is typed as <b>CATSamExplicitPtr</b> define. To store locally 
+ arrays of explicit objects, use the <b>CATAnalysisExplicitListUsr</b> or arrays 
+ of <b>CATSamExplicitPtr</b>.</p>
+ <p>The main field model components are:</p>
+ <ul>
+   <li><b>CATAnalysisExplicitModel</b> that supports the general access.</li>
+   <li><b>CATAnalysisExplicitRulesData</b> that supports the physical type 
+   definition and the rules for the model.</li>
+   <li><b>CATAnalysisExplicitSet</b> is the image in the field model of an 
+   analysis set, analysis model or analysis case Spec Object.</li>
+   <li><b>CATAnalysisExplicitEntity</b> is the image in the field model of an 
+   analysis Entity Spec Object.</li>
+   <li><b>CATAnalysisExplicitNode</b> is the image in the field model of a 
+   meshing node.</li>
+   <li><b>CATAnalysisExplicitElement</b> is the image in the field model of a 
+   meshing element.</li>
+   <li><b>CATAnalysisExplicitCharac</b> is the physical data that support the 
+   numerical values once they are converted from the specification to its finite 
+   element support. The kinds of values that are supported are char, short, int, 
+   float, CATMathComplexf, double, CATMathComplex or CATSamExplicitPtr. The 
+   values are returned as cont pointer to an array stored in the data-member of 
+   the characteristic or as a duplication of the array. </li>
+   <li><b>CATAnalysisCharacCollector</b> manage the characteristics obtained by 
+   combining the information of basics characteristics over several entities. It 
+   support also the data returned by computation for post-processing. This 
+   object is defined by a
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'typedef', 'catsamphysicaltype');return false;">
+   Physical Type</a>, a
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'catsamcharacversion');return false;">
+   version</a>, and a <b>position</b>.
+   <p>In order to build a collector characteristic, you must use the following 
+   methods in this order:
+   <ul>
+     <li><b>SetContext</b> to retrieve the Explicit object parent of the 
+     CharacCollector.</li>
+     <li><b>SetDefinition</b> to initialize its physical type, version, position 
+     and occurrences parameters.</li>
+     <li><b>SetNbEntities</b> to initialize the number of entities that may have 
+     values (currently, it is the number of nodes or element of the model).</li>
+     <li><b>SetEntities</b> to initialize the entities that will have values.</li>
+     <li><b>SetDimension</b> to initialize the dimensions parameters.</li>
+     <li><b>SetValues</b> to initialize the values. The kinds of values that are 
+     supported are the same as for the <b>CATAnalysisExplicitCharac</b> object.</li>
+     <li><b>SetPositionUVWCoordinates</b>, <b>SetCoordinateSystems</b> 
+     (optionally) to initialize specific position to define where the values are 
+     applied.</li>
+   </ul>
+   </li>
+ </ul>
+ <p>A physical type is defined by the <b>CATSamPhysicalType</b> <i>typedef</i>. 
+ It can be considered as an enumeration that can be converted into an identifier 
+ during programming, or into a string for printing. All methods required to 
+ manipulate them are defined by using the
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'CATAnalysisExplicitRulesData');return false;">
+ CATAnalysisExplicitRulesData</a> class with the help of 
+ CATAnalysisExplicitDefinition enumerates.</p>
+ <p>A version is defined by the
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'catsamcharacversion');return false;">
+ CATSamCharacVersion</a> object. This object is built according to the 
+ information list:</p>
+ <table border="1" width="67%">
+   <tr>
+     <td width="25%" align="center"><strong>Public Data</strong></td>
+     <td width="25%" align="center"><strong>Enumerate for filling</strong></td>
+     <td width="24%" align="center"><strong>Comment</strong></td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">ValueType</td>
+     <td width="25%" align="center">CATSamValue</td>
+     <td width="24%" align="center">Type of data of the values</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">Math Type</td>
+     <td width="25%" align="center">CATSamMathType</td>
+     <td width="24%" align="center">Mathematical type</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">Math Dimension</td>
+     <td width="25%" align="center">int</td>
+     <td width="24%" align="center">from one to six</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">Ref Frame</td>
+     <td width="25%" align="center">CATSamRefFrame</td>
+     <td width="24%" align="center">Reference frame</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">Category</td>
+     <td width="25%" align="center">CATSamValue</td>
+     <td width="24%" align="center">Type of data on which it relies.</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">ValuesAreCombined</td>
+     <td width="25%" align="center">boolean</td>
+     <td width="24%" align="center">Defined if data are combined or not.</td>
+   </tr>
+   <tr>
+     <td width="25%" align="center">SubType</td>
+     <td width="25%" align="center">CATString</td>
+     <td width="24%" align="center">Complete the physical type definition</td>
+   </tr>
+ </table>
+ <p>A <b>Position</b> is a CATString instance. It defines the positions on which 
+ field data entities can be applied. Existing position list is:</p>
+ <ul>
+   <li>NONE for general data like set parameters.</li>
+   <li>NODE for data attached to nodes.</li>
+   <li>DOF for data attached to degrees of freedom (See
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'enum', 'CATSamDof');return false;">
+   CATSamDof</a> for their description).</li>
+   <li>ELEMENT for data attached to finite elements.</li>
+   <li>EDGE for data attached to finite element edges.</li>
+   <li>FACE for data attached to finite element faces.</li>
+   <li>CENTER for data attached to the center of finite elements.</li>
+   <li>NODE_OF_ELEMENT for data attached to the nodes of finite elements.</li>
+   <li>GAUSS for data attached to the gauss points of finite elements.</li>
+ </ul>
+ <p>The general graph of the model can be summarized in the following image. It 
+ shows the principal object used for programming and the way they are 
+ implemented inside the field model. The instantiation of the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'CATAnalysisExplicitModel');return false;">
+ CATAnalysisExplicitModel</a></b> launches in memory the dictionary (an external 
+ file called &quot;mechanical&quot;) that provides the list of physical types and the 
+ rules for the object design and relationship. According to this file, the 
+ Structural Analysis defines a default format for linear mechanical analysis.</p>
+ <p>To access the data inside the CATAnalysisCharacCollector object, use the <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'CATSamDimension');return false;">
+ CATSamDimension</a></b> object. Some additional information are describe in the
+ <a href="../CAAAniQuickRefs/CAAAniFaq.htm">FAQ Quick Reference</a>.</p>
+ <p>The following diagram summarize the relationships of the field model 
+ objects:</p>
+ <p align="center">
+ <img border="1" src="images/FieldRoseComplete.jpg" width="698" height="566"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="PtypeStruct"></a>Physical Types for Structural Analysis</h4>
+ <!---------------------------------comment------------------------------------->
+ <h5>The Sets Definition</h5>
+ <p>For programming help the following array shows the correspondences between a 
+ feature late type, it's name is displayed on the screen (NLS) and the Physical 
+ type associated. This physical type is also the one of the Set that represent 
+ the feature in the field model.</p>
+ <div align="center">
+   <center>
+   <table border="1" width="80%">
+     <tr>
+       <td width="33%"><b>Feature Late Type</b></td>
+       <td width="33%"><b>Feature NLS Name</b></td>
+       <td width="34%"><b>Physical Type</b></td>
+     </tr>
+     <tr>
+       <td width="33%">AnalysisManager</td>
+       <td width="33%">Analysis Manager</td>
+       <td width="34%">ANALYSIS</td>
+     </tr>
+     <tr>
+       <td width="33%">AnalysisModel</td>
+       <td width="33%">Finite Element Model</td>
+       <td width="34%">ANALYSIS_MODEL</td>
+     </tr>
+     <tr>
+       <td width="33%">AnalysisCase</td>
+       <td width="33%">Analysis Case</td>
+       <td width="34%">ANALYSIS_CASE</td>
+     </tr>
+     <tr>
+       <td width="33%">MSHMeshSet</td>
+       <td width="33%">Nodes and Elements</td>
+       <td width="34%">MESH</td>
+     </tr>
+     <tr>
+       <td width="33%">PropertySet</td>
+       <td width="33%">Properties</td>
+       <td width="34%">PROPERTIES</td>
+     </tr>
+     <tr>
+       <td width="33%">MaterialSet</td>
+       <td width="33%">Materials</td>
+       <td width="34%">MATERIALS</td>
+     </tr>
+     <tr>
+       <td width="33%">AxisSet</td>
+       <td width="33%">Axes</td>
+       <td width="34%">AXES</td>
+     </tr>
+     <tr>
+       <td width="33%">RestraintSet</td>
+       <td width="33%">Restraints</td>
+       <td width="34%">RESTRAINTS</td>
+     </tr>
+     <tr>
+       <td width="33%">LoadSet</td>
+       <td width="33%">Loads</td>
+       <td width="34%">LOADS</td>
+     </tr>
+     <tr>
+       <td width="33%">MassSet</td>
+       <td width="33%">Masses</td>
+       <td width="34%">MASSES</td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h5>The Preprocessing Entities Definition</h5>
+ <p>They are described in the following reference [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h5><a name="LocalAxis">Local Axis Definition</a></h5>
+ <p>Six kinds of local axes can be defined in the field model. They can be 
+ identified by explicit coordinates or nodes in order to define rectangular, 
+ cylindrical, and spherical axes as follows:</p>
+ <p><b>Physical Type list:</b></p>
+ <ul>
+   <li>AXIS_RECTANGULAR_3D_NODE</li>
+   <li>AXIS_RECTANGULAR_3D_COORDINATE</li>
+   <li>AXIS_CYLINDRICAL_3D_NODE</li>
+   <li>AXIS_CYLINDRICAL_3D_COORDINATE</li>
+   <li>AXIS_SPHERICAL_3D_NODE</li>
+   <li>AXIS_SPHERICAL_3D_COORDINATE</li>
+ </ul>
+ <p><b>With Associated Characteristics:</b></p>
+ <div align="center">
+   <center>
+   <table border="1" width="80%">
+     <tr>
+       <td width="50%" align="center">AXIS_XXX_3D_COORDINATE</td>
+       <td width="50%" align="center">AXIS_XXX_3D_NODE</td>
+     </tr>
+     <tr>
+       <td width="50%" align="center">
+       <img border="0" src="images/LocalAxis.jpg" width="333" height="202"></td>
+       <td width="50%" align="center">
+       <img border="0" src="images/LocalAxisNode.jpg" width="282" height="201"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="PhysicalTypes"></a>Getting Access to the Physical Types (CharacCollector) 
+ Available for an Analysis Feature</h4>
+ <p>The access the different physical types of an existing feature can be 
+ retrieved by using implement the CATICharacCollector interface. For all the 
+ Preprocessing features (sets and entities) an implementation is provided. By 
+ using the reference [<a href="#References">3</a>], see how to extract this 
+ physics.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="MeshingModel"></a>Meshing Model</h3>
+ <p>The meshing model is stored in the meshing container and contains the finite 
+ element discretisation data.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="MeshAccess"></a>Accessing the Meshing Model</h4>
+ <p>The access to the meshing container is done by using the general feature 
+ tree. The feature set &quot;Nodes and Elements&quot; implements an interface that allow 
+ to work with the feature object included in the meshing container:
+ <a name="CATIMSHMeshManager"></a>CATIMSHMeshManager. This feature is build by 
+ derivation of the AnalysisSet startup, So it supports all the 
+ CATISamAnalysisSet behavior.</p>
+ <p>From this interface, you can retrieve:</p>
+ <ul>
+   <li>The <b>Mesh Part Management</b>. This interface should be used to access 
+   all data associated to a Mesh Part, such as global and local mesh 
+   specifications or geometry to be meshed (supports). A Mesh Part is an 
+   Analysis Set which has some specific attributes (global specifications and 
+   supports and can contain Analysis Entities which represent local mesh 
+   specifications. Associated to each Mesh Part, there is a mesher which is 
+   called to check the supports and to build the mesh by using the CATIMSHMesh 
+   interface.</li>
+   <li>The <b>Meshing container</b> CATIMSHMesh interface that allows you to 
+   create/scan CATMSHNode, CATMSHElement, and access CATIMSHConnectivity. For 
+   the meshing modeler point of view, a CATMSHElement is defined at least by its 
+   connectivity (geometrical shape) and linked nodes (CATMSHNode object).</li>
+   <li>The manager of <b>A</b><b>ssociativity</b> with design data. 
+   CATIMSHAssociativity interface to retrieve the finite element entities that 
+   are linked to geometrical entities.</li>
+   <li>The <b>Connectivity's</b> information (Geometrical definition of the 
+   finite element, integration scheme, etc.).</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="MeshConnectivity"></a>The Meshing Model  Connectivity's</h4>
+ <p>The following
+ <a href="../CAAAniQuickRefs/CAAAniConnectivitiesRef.htm">reference 
+ article</a> shows the ways the connectivity's are provided  by the 
+ meshing model. It defines the way to scan faces, edges and nodes of the 
+ elements.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="MeshField"></a>Integrating the Meshing Inside the Field Model</h4>
+ <p align="justify">The CATMSHNode and CATMSHElement are represented inside the 
+ field model as Explicit Entities. The entity for CATMSHNode has a physical type 
+ NODE. For CATMSHElement, the physical type is defined as <code>
+ ELEMENT_&quot;Elementtype&quot;_Dimension_Geometry</code>. This offers the capability to 
+ complete the geometrical information by adding some physical data and to make a 
+ distinction between a physical BAR (ELEMENT_BAR_3D_BAR2) and a BEAM 
+ (ELEMENT_BEAM_3D_BAR2) defined on the same BAR connectivity. For programming 
+ facilities, the specific classes <b>CATAnalysisExplicitNode</b> and 
+ <b>CATAnalysisExplicitElement</b> may be used.</p>
+ <p align="center">
+ <img border="2" src="images/FieldMeshBis.jpg" width="498" height="377"></p>
+ <p>For example, a large number of the connections defined for the Structural 
+ Assembly application are for a meshing point of view multi-nodes elements 
+ defined with a SPIDER connectivity. For the field model, the physic types of 
+ the elements can be:</p>
+ <ul>
+   <li>ELEMENT_CONSTRAINT_3D_BAR</li>
+   <li>ELEMENT_CONSTRAINT_3D_BEAM</li>
+   <li>ELEMENT_CONSTRAINT_3D_MEAN</li>
+   <li>ELEMENT_CONSTRAINT_3D_JOIN</li>
+ </ul>
+ <p>All the preprocessing data are applied to this explicit entities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Explicit"></a>From Features to Field Model Generation</h3>
+ <p>The interfaces for this are CATISamExplicit and CATISamExplicitation.</p>
+ <ul>
+   <li>CATISamExplicit role is to manage the Field model object(s) associated to 
+   a feature.</li>
+   <li>CATISamExplicitation role is to generate the Field model object(s).</li>
+ </ul>
+ <p>According to the <a href="#Gspec">figure</a> presenting the analysis 
+ features:</p>
+ <ul>
+   <li>
+   <p align="justify">By default, all the analysis sets implement the <b>
+   CATISamExplicit</b> and <b>CATISamExplicitation </b>interfaces. The 
+   implementations create a single <b><i>CATAnalysisExplicitSet</i></b>. To do 
+   this, use CATSamCatalogFactory::SetPhysicalType&nbsp; to valuate on the feature StartUp 
+   an attribute named &quot;<b>PhysicalType</b>&quot; with an appropriated string defined in the field model dictionary. 
+   The explicit Object is created when the Feature set is associated to its 
+   parent by the use of the AddSet method of the 
+   CATISamAnalysisScan interface. This interface is implemented on AnalysisModel, 
+   AnalysisCase and AnalysisSet (to build Set of Sets). This set will be retrieved using the <b><i>GetExplicitObject</i></b> method. 
+   The interface <b>CATISamExplicitation&nbsp; </b>have to be re-implemented if its default behavior is not 
+   satisfactory. For example, you can re-implement it in order to have one 
+   ExplicitSet associated to some ExplicitCharac that represent some additional 
+   physics (for example, the variable data that manages the different steps 
+   associated to a set). </li>
+   <li>
+   <p align="justify">The same behavior can be applied en entities. All the 
+   analysis entities provided by <i>Dassault Systèmes</i> products implement the
+   <b>CATISamExplicit</b> interface that create a single explicit entity <b><i>
+   CATAnalysisExplicitEntity</i></b>. This entity is created in the field model 
+   when the AddEntity method of the CATISamAnalysisSet is called. After its 
+   build, the entity will be completed with some <i><b>CATAnalysisExplicitCharac
+   </b></i>and will be applied to the corresponding finite element entities.</li>
+   <li>
+   <p align="justify">By association of this Explicit Object, the <b>
+   CATICharacCollector</b> interface is implemented on each analysis set and 
+   analysis entity provided by <i>Dassault Systèmes</i> products and the 
+   CATAnalysisCharacCollector will be attached under the corresponding object in 
+   the field model. It is called the parent of the CharacCollector.</li>
+ </ul>
+ <h4><a name="UpdSc"></a>General Update scheme.</h4>
+ <p>The following graph show how the analysis features are plug together in 
+ order to have a convenient update behavior. </p>
+ <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+   <tr>
+     <td width="60%">
+     <p align="left">According to this graph, if you need to generate the finite 
+     element model associated to the specifications, use the update of the 
+     Analysis Case object, this will launch the build of the mesh (by calling 
+     the messing algorithm), then the build of all the preprocessing data by 
+     using the CATISamExplicitation implementation of each preprocessing data. 
+     The Update of a solution set will first Update the Case, then launch the 
+     build of the Solution Set.</p>
+     <p>&nbsp;</td>
+     <td width="40%">
+     <p align="center">
+     <img border="2" src="images/Update.jpg" width="380" height="468"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="ExExistprepro"></a>Example for Existing Preprocessing Set and 
+ Entities</h4>
+ <p>&nbsp;</p>
+ <table border="0" width="100%">
+   <tr>
+     <td width="60%">
+     <img border="2" src="images/MomentSpec.jpg" width="486" height="465"></td>
+     <td width="40%">This preprocessing feature applies a momentum on a face of 
+     a design &quot;Part&quot;. The specifications are made up of a vector definition 
+     (Basic Component) called &quot;Moment Vector&quot; (that can be expressed according 
+     to a particular axis system) and a face support (that can be a 
+     multi-selection of B-rep elements of the Part).
+     <p>This feature implements the <b>CATISamEntityVisu </b>interface in order 
+     to display the 3D representation at the right location (highlighted on the 
+     face).</p>
+     <p>The <b>CATISamExplicitation</b> interface will generate in the field 
+     model a distribution of forces applied onto nodes linked with the support 
+     as displayed in the next image</td>
+   </tr>
+   <tr>
+     <td width="60%">
+     <img border="2" src="images/MomentField.jpg" width="450" height="452"></td>
+     <td width="40%">
+     <p align="justify">The dump of the field model shows the Load set 
+     associated with the LOAD feature, and the Explicit entity that represents a 
+     3D nodal force made up of one explicit characteristic that manages one 
+     vector per node on which the force entity is computed by the distribution.
+     </p>
+     <p align="justify">The charac-collector implemented on this feature will 
+     retrieve the Physical type “Point force vector” associated with the 
+     versions “Local”, “Global” or “None” according to the reference frame in 
+     which the vector is expressed and a position “Node” (that is, the only 
+     position to express the vectors).</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="FieldModelProg"></a>Programming with Field Model Objects.</h4>
+ <p align="justify">This chapter describes the different ways of designing a 
+ field model associated to a preprocessing entity. Typical model is made of an 
+ entity, parent of some characteristics and applied on finite element support. Some capabilities can be used 
+ to distribute values according to where they are applied. This model structures 
+ are used by the preprocessing feature provided by DASSAULT SYSTEMES 
+ applications and insure the generation of charac-collectors. If you need to 
+ complete the model, you may generate structures that respects those rules. </p>
+ <p align="justify">To understand more, you have to refer to :</p>
+ <ul>
+   <li>
+   <p align="justify">The different ApplyTo methods of the
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'class', 'CATAnalysisExplicitEntity');return false;">
+   explicit entity.</a> The most general method is described here:</li>
+ </ul>
+ <table border="1" bordercolor="#111111" width="100%">
+   <tr>
+     <td width="10%"><b>ApplyTo </b>(</td>
+     <td width="15%">int</td>
+     <td width="15%">iNumber</td>
+     <td width="60%">Size of the following arrays.</td>
+   </tr>
+   <tr>
+     <td width="10%">&nbsp;</td>
+     <td width="15%">const CATSamExplicitPtr* </td>
+     <td width="15%">iApplyTo</td>
+     <td width="60%">Pointers to the explicit node or element on which the apply 
+     is done.</td>
+   </tr>
+   <tr>
+     <td width="10%">&nbsp;</td>
+     <td width="15%">CATSamPosition</td>
+     <td width="15%">iPosition</td>
+     <td width="60%">Kind of apply (Ex: Node, Element, face of Element...)</td>
+   </tr>
+   <tr>
+     <td width="10%">&nbsp;</td>
+     <td width="15%">const int* </td>
+     <td width="15%">iPositionNumber</td>
+     <td width="60%">Position number. (Ex: if CATSamPosition == 
+     CATSamPositionFace, represent the face number).</td>
+   </tr>
+   <tr>
+     <td width="10%">&nbsp;</td>
+     <td width="15%">const CATSamApplyQualifier* </td>
+     <td width="15%">iQualifier )</td>
+     <td width="60%">Additionnal information for the position. (Ex: if 
+     CATSamPosition == CATSamPositionFace, specify iQualifier to 
+     CATSamApplyQualifierUpper informs that the data is applied on the upper of 
+     the face.</td>
+   </tr>
+ </table>
+ <ul>
+   <li>The object that allow to manage values on according to the apply of an 
+   entity is the CATAnalysisExplicitCharac. For this refer to the SetDefinition 
+   Method, or the CreateCharac Method with full definition parameters. The 
+   recommendation for proper initialization of a characteristic definition, is 
+   to use the CATAnalysisExplicitRulesData -&gt; GetPhysicalTypeMathematicalInfo 
+   that will initialize all the parameters. Then for a iValueType defined as 
+   default as float, you can change it as double, complex float or complex, 
+   double. You can change the iRepeat and the iDistributionMode.</li>
+ </ul>
+ <table border="1" bordercolor="#111111" width="100%" height="91">
+   <tr>
+     <td width="10%" height="16"><b>SetDefinition</b>(</td>
+     <td width="15%" height="16">CATSamMathType</td>
+     <td width="15%" height="16">iMathematicalType</td>
+     <td width="60%" height="16">The mathematical type of the characteristic.</td>
+   </tr>
+   <tr>
+     <td width="10%" height="13"></td>
+     <td width="15%" height="13">CATSamValue </td>
+     <td width="15%" height="13">iValueType</td>
+     <td width="60%" height="13">The kind of value.</td>
+   </tr>
+   <tr>
+     <td width="10%" height="16"></td>
+     <td width="15%" height="16">int</td>
+     <td width="15%" height="16">iMathematicalDimension</td>
+     <td width="60%" height="16">Methematical dimension (for vector, tensor);</td>
+   </tr>
+   <tr>
+     <td width="10%" height="16"></td>
+     <td width="15%" height="16">int </td>
+     <td width="15%" height="16">iRepeat</td>
+     <td width="60%" height="16">Total number of values to store (in the 
+     matematical type).</td>
+   </tr>
+   <tr>
+     <td width="10%" height="16"></td>
+     <td width="15%" height="16">CATSamValuesDistributionMode</td>
+     <td width="15%" height="16">iDistributionMode)</td>
+     <td width="60%" height="16">The way the values will be distributed on the 
+     apply (or not: we called the repeated).</td>
+   </tr>
+ </table>
+ <p>Some examples of model definition:</p>
+ <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+   <tr>
+     <td width="50%" align="center">
+     <p align="center"><b>Model Definition</b></td>
+     <td width="50%" align="center"><b>How it will be collected ?</b></td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field1.gif" width="570" height="96"></td>
+     <td width="50%">Each node has the same force vector applied on it. This 
+     force is defined by a vector expressed in a global reference frame. In this 
+     case, the number of values of POINT FORCE is 3.</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field2.gif" width="570" height="96"></td>
+     <td width="50%">Each node has the different force vector applied on it. 
+     This force is defined by a vector expressed in a global reference frame. n 
+     this case, the number of values of POINT FORCE is 6.</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field3.gif" width="570" height="295"></td>
+     <td width="50%">Each node has the same force vector applied on it. This 
+     force is defined by a vector expressed in one single <a href="#LocalAxis">
+     local reference frame</a>. In this case, the number of values of POINT 
+     FORCE is 3.</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field4.gif" width="570" height="390"></td>
+     <td width="50%">Each node has the same force vector applied on it. This 
+     force is defined by a vector expressed in two different
+     <a href="#LocalAxis">local reference frame</a>. In this case, the number of 
+     values of POINT FORCE is 3. the number of values for each of the 
+     characteristics of the Local axis is 6.
+     <p><b>Note</b> that another way of building the same model is to define the 
+     local axis with a distributed mode, and a repeat set to 2. Then, the local 
+     axis references to reference frames with standard definition (Repeated 
+     mode, and number of repeat set to one).</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field5.gif" width="570" height="388"></td>
+     <td width="50%">Each node has the different force vector applied on it. 
+     This force is defined by a vector expressed in two different
+     <a href="#LocalAxis">local reference frame</a>. In this case, the number of 
+     values of POINT FORCE is 6. the number of values for each of the 
+     characteristics of the Local axis is 6.
+     <p><b>Note</b> that another way of building the same model is to define the 
+     local axis with a distributed mode, and a repeat set to 2. Then, the local 
+     axis references to reference frames with standard definition (Repeated 
+     mode, and number of repeat set to one).</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field6.gif" width="570" height="187"></td>
+     <td width="50%">Objective is to assign a temperature distribution at finite elements. In Addition, we 
+ want to have a gradient between upper and lower face. Each element receives 
+     twice a temperature, (by making twice the apply) and the usage of CATSamApplyQualifier specify 
+     witch value is 
+     associated to each face of the element.</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <img border="0" src="images/Field7.gif" width="570" height="96"></td>
+     <td width="50%">Objective is to assign a nodal forces at the node of the 
+     finite elements. In this case, apply is done on elements. in order to have 
+     variable forces for the each elements. The size of values for the force 
+     characteristic is the somme of the number of nodes for each elements 
+     applied on. This model can be also completed with local axes. Note that:<ul>
+       <li><b>CATSamValuesDistributionModeRepeatedOnVertexOfElements</b> means 
+       that values are distributed on each Vertex Nodes of the elements, and 
+       repeated on each element.</li>
+       <li><b>CATSamValuesDistributionModeDistributedOnVertexOfElements</b> 
+       means that values are distributed on each vertex node of the elements and 
+       on each element.</li>
+     </ul>
+     <p>In this scenario, values are collected at the elements and the position 
+     of the charac-collector is NODE_OF_ELEMENT.<p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#00CC99,#3333CC,#CCCCFF,#B2B2B2" /></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p>As other example, to assign the same loading force at a specific same 
+ position to all elements of a loading entity:</p>
+ <p><img border="0" src="images/Pos1.gif" width="369" height="102"></p>
+ <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="64%">
+   <tr>
+     <td width="18%" align="center">Characteristic</td>
+     <td width="7%" align="center">Dimension</td>
+     <td width="10%" align="center">Repeat</td>
+     <td width="31%" align="center">Distribution Mode</td>
+     <td width="24%" align="center">SetValues</td>
+   </tr>
+   <tr>
+     <td width="18%" align="center">NB_POSITIONS</td>
+     <td width="7%" align="center">1</td>
+     <td width="10%" align="center">1</td>
+     <td width="31%" align="center">CATSamValuesDistributionModeRepeated</td>
+     <td width="24%" align="center">3</td>
+   </tr>
+   <tr>
+     <td width="18%" align="center">POSITIONS</td>
+     <td width="7%" align="center">1</td>
+     <td width="10%" align="center">1</td>
+     <td width="31%" align="center">CATSamValuesDistributionModeRepeated</td>
+     <td width="24%" align="center">0.3&nbsp;&nbsp; 0.5&nbsp;&nbsp; 0.7</td>
+   </tr>
+   <tr>
+     <td width="18%" align="center">FORCE VECTOR</td>
+     <td width="7%" align="center">3</td>
+     <td width="10%" align="center">1</td>
+     <td width="31%" align="center">
+     CATSamValuesDistributionModeRepeatedOnPositions</td>
+     <td width="24%" align="center">[0&nbsp; -1&nbsp; 0] </td>
+   </tr>
+ </table>
+ <p>Note that in this case the loading condition is applied on a ONE dimension 
+ element, in this case set up the dimension of the position to 1. When using 
+ GetPositionUVWCoordinates, only the U will be set Up (consider you are in the 
+ local reference frame of the finite element. To do the same on a 2D element set 
+ up the dimension of the position characteristic to 2 and enter couple of values 
+ as values of POSITIONS. In this case, UV coordinates will be set up.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="left">&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="ExExistSolution"></a>Example for Existing Solution Sets</h4>
+ <p>This set is defined as the output set of Cases. All the implementations 
+ presented are related to the CATIA-ELFINI <i>©</i> solver. The following 
+ example is relevant to Frequency Solution. From a feature view, the set have 
+ some parameters and a link to an external file (called external storage) that 
+ is of the ELFINI<i>©</i> proprietary format. By implementing the 
+ CATICharacCollector interface, this format is translated into the standard 
+ Charac-Collector format. The associated field model is made up of an explicit 
+ set (with the physical type &quot;MECHANICAL_MODAL&quot;) to which are attached the 
+ Charac-Collector(s) that the solver can retrieve inside its database or compute 
+ dynamically.</p>
+ <table border="0" width="100%">
+   <tr>
+     <td><img border="1" src="images/SpecSolution.jpg" width="280" height="406"></td>
+     <td>
+     <img border="1" src="images/FieldSolution.jpg" width="539" height="406"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NewSolution"></a>Implementing New features</h3>
+ <p>For an example of implementation and more details on the methods to 
+ implement, see the <a href="#Ref4">reference [4]</a>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This document presented some of the high level concepts of CATIA Analysis 
+ Interfaces. The other technical articles and the use cases will demonstrate how 
+ to use them with concrete scenario.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td valign="top">
+     <a href="../CAALifQuickRefs/CAALifHome.htm">
+     Knowledge Modeler Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td valign="top"><a href="CAAAniPreprocessingFeatures.htm">The Physical 
+     Types for Structural Analysis</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td valign="top">
+     <a href="../CAAAniUseCases/CAAAniSampleExport.htm#output">Sample 
+     of Export</a>. See the <code>CAAAniSelectPhysics</code> method.</td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref4"></a>[4]</td>
+     <td valign="top"><a href="CAAAniNewfeatureOverview.htm">Creating New 
+     Analysis Features</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top"><a name="Ref5"></a>[5]</td>
+     <td valign="top">
+     <a href="../CAAAniQuickRefs/CAAAniFaq.htm#Charac15">Frequently 
+     Asked Questions</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+ <p>&nbsp;</p>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+
+

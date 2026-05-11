@@ -1,0 +1,483 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Using Errors</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating and Using Errors</h3>
+      <em>Informing your clients when your program fails</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create, instantiate, retrieve, and decode an
+      error.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysError Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysError Do</a></li>
+            <li><a href="#How">How to Launch CAASysError</a></li>
+            <li><a href="#Where">Where to Find the CAASysError Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create, instantiate, retrieve,
+and decode an error.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysError Case</h3>
+<p>CAASysError is a set of use cases of the CAASystem.edu framework that
+illustrates the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysError Do</h4>
+<p>This use case creates an error class [<a href="#References">1</a>] intended
+to go with a failure returned by methods of the sample class <i>CAASysError</i>.
+The <code>SquareRoot</code> method computes a square root, and the <code>Subtract</code>
+method computes a subtraction. The square root makes sense if the number used to
+compute the square root is greater than or equal to zero, otherwise the method
+fails. Assume that the subtraction makes sense only if the first operand is
+greater than or equal to the second, and otherwise the method fails.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysError</h4>
+<p>To launch CAASysError, you will need to set up the build time environment,
+then compile CAASysError along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysError Code</h4>
+<p>The CAASysError use case is made of a a class and a main porgram located in
+the CAASysError.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysError.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysError.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create and use an error, there are three main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create an error class</td>
+    <td valign="top"><i>CAASysError</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Return a failure without using an error class</td>
+    <td valign="top"><i>CAASysOperator</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Return a failure using an error class and a simple error
+      message</td>
+    <td valign="top"><i>CAASysOperator</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Return a failure using an error class and a composite error
+      message</td>
+    <td valign="top"><i>CAASysOperator</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Retrieve and decode an error in a client application</td>
+    <td valign="top">CAASysMain.cpp</td>
+  </tr>
+</table>
+<p align="left">The <i>CAASysOperator</i> class is used to implement the methods
+used as examples.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Error Class</h4>
+<p>A error class derives from <i>CATError</i>, or from one of its derived class,
+such as <i>CATInputError</i>. The <i>CAASysError</i> class header file is as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATInputError.h&quot;
+
+class CATSysError: public <b>CATInputError</b>
+{
+  public:
+    <b>CATDeclareError</b>(CATSysError, <b>CATIntputError</b>)
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATDeclareError</code> macro declares that the class <i>CAASysError</i>
+declares an error class that derives from <i>CATInputError</i>. The macro
+creates the class constructor and method signatures. Let's have a look at the
+class source file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysError.h&quot;
+
+<b>CATImplementError</b>(CATSysError, CATInputError);
+<b>CATImplementNLSErrorClass</b>(CATSysError);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementError</code> macro creates the body of the methods
+declared by <code>CATDeclareError</code>. The <code>CATImplementNLSErrorClass</code>
+macro enables the error class for error messages.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Returning a Failure Without Using an Error Class</h4>
+<p>The <code>Divide</code> method divides two real numbers passed as its first
+two parameters and return the result uinsg the third one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysOperator::Divide(float iDividend, float iDivisor, float * oResult)
+{
+  if ( 0.0 == iDivisor )
+  {
+    return(<b>CATReturnFailure</b>);
+  } else 
+  {
+    *oResult = iDividend/iDivisor;
+    return(<b>CATReturnSuccess</b>);
+  };
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>When the divisor is equal to zero, the result is undetermined. The method
+simply returns the failure using the <code>CATReturnFailure</code> return code.
+Otherwise, as long as the method can return a valid result, it returns <code>CATReturnSuccess</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Returning a Failure Using an Error Class and a Simple
+Message</h4>
+<p>The <code>SquareRoot</code> method computes the square root of the real
+number passed as its first parameter, and returns the result in its second one.
+Nevertheless, the first parameter must be greater than or equal to zero,
+otherwise the square root doesn't exist and an error is returned.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysOperator::SquareRoot(float iValue, float * oResult) 
+{
+  if ( iValue &lt; 0.0 ) 
+  {
+    CAASysError * pError = new <b>CAASysError</b>(&quot;SquareRootERR_1001&quot;, &quot;CAASysError&quot;);
+    CATUnicodeString param;
+    param.BuildFromNum(iValue);
+  
+    int nbparameter = 1;
+    pError-&gt;<b>SetNLSParameters</b>(nbparameter, &amp;param);
+  
+    return(<b>CATReturnError(pError)</b>);
+  }
+  else 
+  {
+    *oResult= CATSqrt(iValue);
+    return(<b>CATReturnSuccess</b>);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>When <code>iValue</code> is less than zero, an instance of the <i>CAASysError</i>
+class is created, and the message with the <code>SquareRootERR_1001</code> key
+in the <code>CAASysError</code> message catalog is associated with it. This
+message is stored in the error message file as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font face="Courier New" size="2">SquareRootERR_1001 = &quot;Cannot compute the square root of the negative number /p1&quot;;</font></pre>
+    </td>
+  </tr>
+</table>
+<p>This message includes a parameter <code>/p1</code> that must be valued at run
+time to display the invalid negative value for which the square root computation
+is&nbsp; requested. This float value is first converted to a <i>CATUnicodeString</i>
+instance thanks to the <code>BuildFromNum</code> method, and then the <code>SetNLSRequestParams</code>
+method associates it with the error message. Then the method returns using the
+macro <code>CATReturnError</code>, taking the error class instance as parameter.
+The calling client application can use the returned error along with the message
+to decide what to do. If the square root can be computed, <code>CATReturnSuccess</code>
+is returned.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Returning a Failure Using an Error Class and a Composite
+Message</h4>
+<p>The <code>Subtract</code> method and subtracts <code>iSecond</code>&nbsp;
+from <code>iFirst</code> and must return a positive or null result, otherwise an
+error is returned.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysOperator::Subtract(float iFirst, float iSecond, float * oResult) 
+{
+  if ( iSecond &lt;= iFirst ) 
+  {
+     *oResult = iFirst - iSecond;
+     return(<b>CATReturnSuccess</b>);   
+  }
+  else
+  {
+    CAASysError * pError = new <b>CAASysError</b>(&quot;SubtractERR_1002&quot;, &quot;CAASysError&quot;);
+
+//  The is no parameter for the Request part of the message
+//  pError-&gt;<b>SetNLSRequestParams</b>(nbparameter, &amp;param);
+  
+    int nbparameter = 2;
+    CATUnicodeString param1, param2;
+    param1.BuildFromNum(iFirst);
+    param2.BuildFromNum(iSecond);
+    pError-&gt;<b>SetNLSDiagnosticParams</b>(nbparameter, &amp;param1, &amp;param2);
+
+    nbparameter = 1;
+    CATUnicodeString param3;
+    param3.BuildFromNum(iFirst - iSecond);
+    pError-&gt;<b>SetNLSAdviceParams</b>(nbparameter, &amp;param3);
+
+    return(<b>CATReturnError(pError)</b>);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>If the subtraction can be computed, <code>CATReturnSuccess</code> is
+returned. When <code>iSecond</code> is greater than <code>iFirst</code>, an
+instance of the <i>CAASysError</i> class is created, and the message with the <code>SubtractERR_1002</code>
+key in the <code>CAASysError</code> message catalog is associated with it. This
+message is stored in the error message file as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SubtractERR_1002.Request = &quot;Attempt to subtract two numbers using a subtraction operation
+where the first number must be greater than or equal to the second one.&quot;;
+      
+SubtractERR_1002.Diagnostic = &quot;The first number /p1 is smaller than the second one /p2.
+The subtraction can't be computed&quot;;
+     
+SubtractERR_1002.Advice = &quot;Check the two numbers, or invert them and multiply
+the subtraction result by -1. This gives /p1&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>This is a composite message made of three parts: a Request part, a Diagnostic
+part, and an Advice part. It includes three parameters that must be valued at
+run time to display the two integers to subtract in the diagnostic part, and a
+result obtained thanks to a by-pass in the Advice part. The three parameters are
+first converted to <i>CATUnicodeString</i> instances thanks to the <code>BuildFromNum</code>
+method. Then the <code>SetNLSDiagnosticParams</code> method associates the first
+two parameters with the Diagnostic part of the error message, and the <code>SetNLSAdviceParams</code>
+method associates the possible result with the Advice part. Then the method
+returns using the macro <code>CATReturnError</code>, taking the error class
+instance as parameter. The calling client application can use the returned error
+along with the message to decide what to do.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Retrieving and Decoding and Error in a Client
+Application</h4>
+<p>The <i>CAAOperator</i> class implements the&nbsp; <code>Subtract</code>
+method. A call to <code>Subtract</code> should be made as follows, and the
+program should go on if <code>Subtract</code> returns <code>CATReturnSuccess</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CAASysoperator MyOperator;
+  float x, y;
+  ... // Value x and y
+  float PositiveResult = 0;
+  HRESULT status = MyOperator.Subtract(x, y, &amp;PositiveResult);
+  if (SUCCEEDED(status)) 
+    ... OK, go on working
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Otherwise, if a failure is returned, two cases can arise, whether an error
+class instance is associated with the failure or not.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  else 
+  {
+    CATError * pError = <b>CATError::CATGetLastError</b>(status);
+    if ( NULL != pError )
+    {
+      HRESULT hres = pError-&gt;<b>GetReturnCode</b>();
+        cout &lt;&lt;&quot;  HRESULT   : &quot; &lt;&lt;  hres &lt;&lt; endl;
+      
+      if ( NULL != pError-&gt;<b>GetMsgCatalog</b>() )         // Message catalog name: CAASysError
+        cout &lt;&lt;&quot;  Catalog   : &quot; &lt;&lt;  pError-&gt;GetMsgCatalog() &lt;&lt; endl;
+
+      if ( NULL != pError-&gt;<b>GetMsgId</b>() )              // Message key: SubstractERR_1002
+        cout &lt;&lt;&quot;  Key       : &quot; &lt;&lt;  pError-&gt;GetMsgId() &lt;&lt; endl;
+
+      if ( NULL != pError-&gt;<b>GetId</b>() )                 // Error identifier: 1002      
+        cout &lt;&lt;&quot;  GetId     : &quot; &lt;&lt;  pError-&gt;GetId() &lt;&lt; endl;
+
+      // Retrieves the full message
+      CATUnicodeString ErrorMessage      = pError-&gt;<b>GetNLSMessage</b>();
+      cout &lt;&lt;&quot;  Complete Message   : &quot; &lt;&lt; endl &lt;&lt; ErrorMessage.ConvertToChar()&lt;&lt;endl&lt;&lt;endl;
+        
+      // Retrieves the Request message
+      CATUnicodeString RequestMessage    = pError-&gt;<b>GetNLSRequest</b>();
+      cout &lt;&lt;&quot;  Request Message    : &quot; &lt;&lt;  RequestMessage.ConvertToChar() &lt;&lt; endl;
+        
+      // Retrieves the Diagnostic message
+      CATUnicodeString DiagnosticMessage = pError-&gt;<b>GetNLSDiagnostic</b>();
+      cout &lt;&lt;&quot;  Diagnostic Message : &quot; &lt;&lt;  DiagnosticMessage.ConvertToChar() &lt;&lt; endl;
+
+        // Retrieves the Advice message
+      CATUnicodeString AdviceMessage     = pError-&gt;<b>GetNLSAdvice</b>();
+      cout &lt;&lt;&quot;  Advice Message     : &quot; &lt;&lt;  AdviceMessage.ConvertToChar() &lt;&lt; endl;
+
+      pError-&gt;<b>Release</b>();
+    }
+    else
+      cout &lt;&lt; &quot;No error class to retrieve&quot;&lt;&lt; endl;
+  else
+    ... // Subtract OK, go on working
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>First, the possible error class instance is asked to the error manager using
+the static method <code>GetLastError</code> of the <i>CATError</i> class. If an
+error class is returned, the returned code can be retrieved thanks to the <code>GetReturnCode</code>
+method. Then the error is asked for a possible message, for example using the <code>GetMsgCatalog</code>
+method. If a message catalog is found, then the error message key and identifier
+can be retrieved, and the full error message itself, parameterized using the
+parameter values, can be retrieved and used for display, on the console, or
+better in a dialog box. Since this is a composite message, each part can be
+individually retrieved, thanks to the methods <code>GetNLSRequest</code>, <code>GetNLSDiagnostic</code>,
+and <code>GetNLSAdvice</code>. Note that to display a <i>CATUnicodeString</i>
+instance on the console, the <code>ConvertToChar</code> method must be used.
+When the error is not any longer needed, it can be released.</p>
+<p>For example, assume that the two parameters passed to <code>Subtract</code>
+are 7 and 10 respectively.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Try to subtract 7 to 10
+  HRESULT   : -2147467259
+  Catalog   : CAASysError
+  Key       : SubtractERR_1002
+  GetId     : 1001
+  Complete Message   :
+Substract 2 parameters,
+but the first parameter must be greater than the second parameter,
+so the result is positive
+The first parameter, 7, is smaller than the second, 10
+Inverse the 2 parameters and multiply the result by -1: that gives -3
+
+  Request Message    : Substract 2 parameters,
+but the first parameter must be greater than the second parameter,
+so the result is positive
+  Diagnostic Message : The first parameter, 7, is smaller than the second, 10
+  Advice Message     : Inverse the 2 parameters and multiply the result by -1: that gives -3</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create how to create, instantiate, retrieve, and
+decode an error.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysErrors.htm">Managing
+      Errors</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

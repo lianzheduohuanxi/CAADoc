@@ -1,0 +1,167 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extract a Face from a Solid</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Reflect Line</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>There are two kinds of reflect lines: </p>
+		<ol>
+						<li>The conical reflect lines:<br>
+						given a point O, conical reflect lines are the set 
+						of points P for which the tangent to the surface in each 
+						point P presents the same angle with OP.<br>
+						</li>
+						<li>The cylindrical reflect lines:<br>
+						given a direction D, cylindrical 
+		reflect lines are the set of points P for which the tangent to the 
+						surface in each point P presents the same angle with D.</li>
+		</ol>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To generate reflect lines on a surface, use the CATICGMTopReflectLine operator in GMOperatorsInterfaces. This operator has to be created using the 
+CATCGMCreateTopReflectLine
+global function. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsReflectLine.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how create reflect lines on a surface. This use case creates its own input 
+data.</p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: Conical Reflect Line with 140 
+Degree Angle</h3>
+
+<p>With the input data below<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Reflect Line Inputs: surface, point </caption>
+   <tr>
+    <td>
+	<img alt="Reflect line: Input Data" src="images/CGM_reflect_line_0.png" width="250" height="220">&nbsp;</td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopReflectLine *pConicalReflectLineOp = CATCGMCreateTopReflectLine( pGeomFactory, &topdata, 
+                  pSkin, pOriginBody, 140*CATDegreeToRadian);
+...
+pConicalReflectLineOp->Run();
+CATBody * pConicalReflectLineBody = pConicalReflectLineOp->GetResult();
+pConicalReflectLineOp->Release();
+pConicalReflectLineOp = 0;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Conical Reflect Line Result </caption>
+   <tr>
+    <td>
+	<img alt="Conical Reflect Line Result" src="images/CGM_reflect_line_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+<h3>Case 2: Cylindrical Reflect Line with 40 Degree Angle with x Axis</h3>
+<p>With the same input data and the code below:&nbsp;</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATMathDirection ReflectDir( 1, 0, 0);
+CATICGMTopReflectLine *pCylReflectLineOp = CATCGMCreateTopReflectLine( pGeomFactory, pSkin,
+                      ReflectDir, 40*CATDegreeToRadian, &topdata);
+...
+pCylReflectLineOp->Run();
+CATBody * pCylReflectLineBody = pCylReflectLineOp->GetResult();
+pCylReflectLineOp->Release();
+pCylReflectLineOp = 0;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.3</a> Cylindrical Reflect Line Result </caption>
+   <tr>
+    <td>
+	<img alt="Conical Reflect Line Result" src="images/CGM_reflect_line_2.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Nov 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

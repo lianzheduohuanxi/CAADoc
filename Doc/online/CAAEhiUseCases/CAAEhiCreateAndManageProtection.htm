@@ -1,0 +1,380 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Protections on Bundle Segments</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Harness Installation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Protections on Bundle Segments</h3>
+      <em>How to create and manage protections on bundle segments</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEhiCreateAndManageProtection</i> use
+      case. This use case explains how to create a protection on a bundle
+      segment, and how to manage it.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEhiCreateAndManageProtection Use
+          Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEhiCreateAndManageProtection Do</a></li>
+            <li><a href="#How">How to Launch </a><a href="#What">CAAEhiCreateAndManageProtection</a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#What">CAAEhiCreateAndManageProtection</a><a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create protections on bundle
+segments, and how to manage them.
+<p>Following operations are detailed is this use case:
+<ul>
+  <li>How to initialize the electrical environment .</li>
+  <li>How to create a protection on a bundle segment.</li>
+  <li>How to manage a protection.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEhiCreateAndManageProtection Use Case</h3>
+<p>CAAEhiCreateAndManageProtection is a use case of the CAAElecHarnessItf.edu
+framework that illustrates the ElecHarnessItf framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEhiCreateAndManageProtection Do</h4>
+<p>The goal of CAAEhiCreateAndManageProtection is to create a protection on a
+bundle segment, and to manage it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEhiCreateAndManageProtection?</h4>
+<p>To launch CAAEhiCreateAndManageProtection, you will need to set up the build
+time environment, then compile CAAEhiCreateAndManageProtection.cpp along with
+its prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">2</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEhiCreateAndManageProtection InPathDir OutPathDir MainName ProtName&quot;</pre>
+<ul>
+  <li><b>InPathDir</b> - the path where the input document are read.</li>
+  <li><b>OutPathDir</b> - the path where the output documents are saved.</li>
+  <li><b>MainName</b> - the name of the main document saved</li>
+  <li><b>ProtName</b> - the part number of the protection part</li>
+</ul>
+<p>The input documents can be found in:</p>
+	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic\CAA_EHIMultiBranchableSample </pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">2</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEhiCreateAndManageProtection</i>
+Code?</h4>
+<p>CAAEhiCreateAndManageProtection code is located in the
+CAAEhiCreateAndManageProtection.m use case module of the CAAElecHarnessItf.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAElecHarnessItf.edu/</code>CAAEhiCreateAndManageProtection<code>.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAElecHarnessItf.edu\</code>CAAEhiCreateAndManageProtection<code>.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEhiCreateAndManageProtection</b><b>.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven main logical steps in <i>CAAEhiCreateAndManageProtection</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Init_Elec">Initializing Electrical Environment.</a></li>
+  <li><a href="#Create_GBN">Retrieving the Geometrical Bundle.</a></li>
+  <li><a href="#Create_BNS">Retrieving the bundle segments to protect.</a></li>
+  <li><a href="#GetExtr_BNS">Adding a protection on the bundle segments.</a></li>
+  <li><a href="#GetExtr_BNS">Managing the created protection</a></li>
+  <li><a href="#Close">Epilog.</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The root product of the document is retrieved . piRootProduct is a
+CATIProduct handle to the root product .</p>
+<p>After, the CATPart document containing the protection is loaded into the
+session. pProtDoc is a pointer to this document.</p>
+<p>Then, the root product of the protection document is retrieved,
+piProtRootProduct is a pointer to this document.</p>
+<p>Methodology describing how to create a CATProduct document and how to
+retrieve the root product is described in <a href="#References">[1]</a>.</p>
+<p>&nbsp;</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Init_Elec"></a>Initialize Electrical Environment</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATIEleDocServices * piElecDocServices = NULL;
+  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to
+electrical objects or electrical attributes .</p>
+<p>&nbsp;</p>
+<h4><a name="Create_GBN"></a>Retrieving the Geometrical Bundle</h4>
+<p>Geometrical Bundle is retrieved using a query interface on CATIEhiGeoBundle
+on all the products. Only one geometrical bundle is retrieved in the document.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATListValCATBaseUnknown_var* pListProduct = NULL;
+   pListProduct = piRootProduct-&gt;GetAllChildren(CATIProduct::ClassName());
+
+   int NumberOfProduct = pListProduct?pListProduct-&gt;Size():0;</pre>
+      <pre>   CATListValCATBaseUnknown_var* pListGeoBundle=new CATLISTV(CATBaseUnknown_var);
+
+
+   CATIEhiGeoBundle* piEhiGbn=NULL;
+
+   for ( i =1; i&lt;=NumberOfProduct; i++ )
+   { 
+     if (NULL_var != (*pListProduct)[i])
+     {
+        (*pListProduct)[i]-&gt;QueryInterface(IID_CATIEhiGeoBundle,(void**) &amp;piEhiGbn);
+        if ( NULL != piEhiGbn) 
+        {
+           CATBaseUnknown_var hUnk=piEhiGbn;
+
+           if (NULL_var != hUnk) pListGeoBundle-&gt;Append(hUnk);
+        }
+
+     }
+
+   }
+
+
+   // we keep the geometrical bundle</pre>
+      <pre>   CATIEhiGeoBundle * piGeoBundle = NULL;
+   if (NULL_var != (*pListGeoBundle)[1])
+   {
+       (*pListGeoBundle)[1]-&gt;QueryInterface(IID_CATIEhiGeoBundle,(void**) &amp;piGeoBundle);
+   }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>piGeoBundle is the pointer on the geometrical bundle.</p>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Create_BNS"></a>Retrieving the bundle segments to protect.</h4>
+<p>&nbsp;</p>
+<p><u>First step consists in retrieving all the bundle segments under the
+geometrical bundle.</u></p>
+<p>Seven bundle segments are retrieved under the geometrical bundle.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+  CATListValCATBaseUnknown_var* pListBundleSegments=new CATLISTV(CATBaseUnknown_var);
+
+  rc = piGeoBundle-&gt;ListBundleSegments(&amp;pListBundleSegments);  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>pListBundleSegments is a pointer on the list of bundle segments.</p>
+<p>&nbsp;</p>
+<p><u>Second step consists in filling the list containing the bundle segments to
+protect</u>.</p>
+<p>We choose to protect only the first bundle segment found in the previous
+list.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListBnsToProtect = new CATLISTV(CATBaseUnknown_var);
+
+
+  // we fill the stack
+  pListBnsToProtect-&gt;Append((*pListBundleSegments)[1]);  </pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h4><a name="GetExtr_BNS"></a>Adding a protection on the bundle segment.</h4>
+<p>To add a protection on the bundle segment, we use the method
+InstanciateProtection of CATIEhiGeoBundle interface :</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATIEhiProtection * piProtection = NULL;
+   double L1 = 0.1;
+   double L2 = 0.8;
+   rc = piGeoBundle-&gt;InstanciateProtection(piProtRootProduct,pListBnsToProtect,L1,L2,piProtection);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><img border="0" src="images/warning.gif" width="30" height="30">&nbsp; in the
+sample, the protection reference is a CATPart and an instance of this CATPart is
+created every time the methode InstanciateProtection is used.</p>
+<p>In fact, the reference of the protection&nbsp; must be stored in a catalog
+and you have to instantiate a new part from this reference every time you want
+to create a protection from this reference . Methodology describing how to store
+CATParts in a catalog and how to retrieve them from it is documented in <a href="#References">[3]</a>.</p>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="GetExtr_BNS"></a>Managing a protection on bundle segment.</h4>
+<p>To manage protections on bundle segment, you can use the methods of
+CATIEhiProtection interface . The code sample shows how to set the extremities
+of a protection :</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   L1 = 0.1;
+   L2 = 0.1;
+   rc = piProtection-&gt;SetProtectionExtremities(L1,L2);  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="images/CAAEhi14.jpg" width="900" height="850"></p>
+<p>&nbsp;</p>
+<p><span style="font-weight: 400">Above is a CATIA image showing the protection
+(yellow) covering the bundle segment..</span></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Close">Epilog</a></h4>
+<p>The main document&nbsp; is saved at the end.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATUnicodeString oFileRoot(argv[3]);
+  rc = CATDocumentServices::SaveAs (*pMainDoc , oFileRoot );
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Document is removed and session is deleted before exit.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  rc = CATDocumentServices::Remove(*pGbnDoc);
+  ...
+  rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case is has demonstrated how to create and manage protections on
+bundle segments.
+<p>Following operations have been detailed is this use case :
+<ul>
+  <li>How to activate electrical environment using <code>Initialize </code>method
+    of <i>CATIEleDocServices</i>.</li>
+  <li>How to create a protection on a&nbsp; bundle segment using <code>InstanciateProtection</code>
+    method of <i>CATIEhiGeoBundle.</i></li>
+  <li>How to manage protections of bundle segment using <i>CATIEhiProtection
+    interface</i> .</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstUseCases/CAAPstAddComponent.htm">Adding
+      Components to a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCatalogCombCrvInst.htm">Instantiating
+      a component from a catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

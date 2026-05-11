@@ -1,0 +1,107 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMesh1D.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">'COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+<FONT COLOR="#008000">'  Purpose:  	Create User Material</FONT>
+<FONT COLOR="#008000">'               Retrieve the material from material catalog</FONT>
+<FONT COLOR="#008000">'               Apply analysis properties to the material.</FONT>
+<FONT COLOR="#008000">'  Assumptions:  The material catalog is not empty</FONT>
+<FONT COLOR="#008000">'  Author:       bmw</FONT>
+<FONT COLOR="#008000">'  Languages:    CATScript</FONT>
+<FONT COLOR="#008000">'  Locales:      English </FONT>
+<FONT COLOR="#008000">'  CATIA Level:  V5R18</FONT>
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">'Optional: allows to find the sample wherever it&#39;s installed</FONT>
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+<FONT COLOR="#0000FF">If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">End If</FONT>
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+
+
+<FONT COLOR="#008000">'Open the CATAnalysis Document</FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Beam.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">&#39;Retrieve the Analysis Managar and Analysis Model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManager = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">&#39;Retrieve the analysis model from list of models</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)</PRE>
+<PRE>
+<font color="#008000">'Retrieve the material set from list of analysis sets</font>
+<font color="#0000FF">Set</font> oAnalysisSets = oAnalysisModel.AnalysisSets 
+<font color="#0000FF">Set</font> oAnalysisSet = oAnalysisSets.ItemByType(&quot;MaterialSet&quot;)
+
+
+<font color="#008000">'Add an new user material</font>
+<font color="#0000FF">Set</font> oAnalysisEntities = oAnalysisSet.AnalysisEntities
+<font color="#0000FF">Set</font> oAnalysisEntity1 = oAnalysisEntities.Add(&quot;SAMUserMaterial&quot;)
+<font color="#008000">
+'Load the catalog of materials
+</font>MaterialFile = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\CatalogForAutomation.CATMaterial&quot;)
+Set oMaterial_document = CATIA.Documents.Open(MaterialFile)
+
+<font color="#008000">'Load the catalog of materials</font>
+<font color="#0000FF">Set</font> cFamilies_list = oMaterial_document.Families
+
+<font color="#008000">'Retrieve the first family of the library
+</font><font color="#0000FF">Dim</font><font color="#008000"> </font>ifamily_no<font color="#0000FF"> As</font> Integer
+ifamily_no = 1
+<font color="#0000FF">Set</font> oFirst_family = cFamilies_list.Item(iFamily_no)
+
+<font color="#008000">'Retrieve the list of materials from the family</font>
+<font color="#0000FF">Set</font> cMaterials_list = oFirst_family.Materials
+
+<font color="#0000FF">Dim</font> imaterial_no <font color="#0000FF">As </font>Integer
+imaterial_no = 1
+
+<font color="#0000FF">Set</font> oMaterial1 = cMaterials_list.Item(imaterial_no)
+
+<font color="#008000">'Retrieve a material from the list and create analysis material </font>
+imaterial_no = 1
+<font color="#0000FF">Set</font> oMaterial1 = cMaterials_list.Item(imaterial_no)
+<font color="#0000FF">Set</font> anlysisMaterial = oMaterial1.CreateAnalysisData(&quot;SAMAnisotropicMaterial&quot;)
+
+anlysisMaterial.PutValue &quot;SAMShearModulus_11&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMShearModulus_12&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMShearModulus_1Z&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMShearModulus_22&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMShearModulus_2Z&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMShearModulus_33&quot;, &quot;1e+10&quot;
+anlysisMaterial.PutValue &quot;SAMDensity&quot;, &quot;7860&quot;
+anlysisMaterial.PutValue &quot;SAMThermalExpansion_X&quot;, &quot;1-e5&quot;
+anlysisMaterial.PutValue &quot;SAMThermalExpansion_Y&quot;, &quot;1-e5&quot;
+anlysisMaterial.PutValue &quot;SAMThermalExpansion_Z&quot;, &quot;1-e5&quot;
+anlysisMaterial.PutValue &quot;SAMTensileStressLimit&quot;, &quot;1e+11&quot;
+anlysisMaterial.PutValue &quot;SAMCompressiveStressLimit&quot;, &quot;2e+11&quot;
+anlysisMaterial.PutValue &quot;SAMShearStressLimit&quot;, &quot;1e+10&quot;<font color="#008000">
+</font>
+<font color="#008000">'Apply the material on the User Material</font>
+linkMode = 0
+Set oManager = oAnalysisManager.GetItem(&quot;CATMatManagerVBExt&quot;)
+oManager.ApplyMaterialOnUserMaterial oAnalysisEntity1, oMaterial1, linkMode 
+
+End <font color="#0000FF">Sub</font>
+</PRE>
+
+</BODY>
+
+</HTML>

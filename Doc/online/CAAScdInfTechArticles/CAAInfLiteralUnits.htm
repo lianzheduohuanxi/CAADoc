@@ -1,0 +1,86 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>About Numbers, Literals, and Units</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>About Numbers, Literals, and Units</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>Except when explicitly documented, numerical values stored and internally
+handled for computations are expressed using the MKSA unit system except for two
+dimensions:</p>
+<ul>
+  <li>Length are expressed in mm</li>
+  <li>Angles are expressed in decimal degrees</li>
+</ul>
+<p>This means that dimensions returned <b>may not be homogeneous</b>: surfaces
+are not returned in mm2 (by homogeneity with length in mm) but in m2 (MKSA).</p>
+<p>The user interface can be set to display and get values from the end user
+according to another unit system which better match your needs or habits.</p>
+<p>The parameter values you can set using macros must be expressed using the
+same unit system, since the user interface filter does not exist when you run
+macros. This also ensures your macros portability. There is one exception: the
+literals.</p>
+<p>Literals are specific objects that represent a parameter with a given type.
+For example, the <b>Length</b> object is dedicated to store a length, but its
+state of object brings more that the simple value storage. The <b>Length</b>
+object derives from the <b>Dimension</b> object, and thus inherits from it the <b>ValuateFromString</b>
+method. This method allows the value stored in the <b>Length</b> object to be
+valuated using a figure and a unit. For example, valuate the radius of a face
+fillet using the <b>Radius</b> property of the <b>FaceFillet</b> object which
+aggregates a <b>Length</b> object to store this radius:</p>
+<pre>MyFaceFillet.Radius.ValuateFromString(&quot;5.08mm&quot;)</pre>
+<p>The character string is interpreted as a value of 5.08 expressed in mm. You
+can enter a decimal value since the <b>Dimension</b> object derives from the <b>RealParam</b>
+object which allows for real values to be set. You may want to enter inches
+instead. Simply write:</p>
+<pre>MyHole.Diameter.ValuateFromString(&quot;2in&quot;)</pre>
+<blockquote>
+  <dl>
+    <div align="center">
+      <center>
+      <table border="0" width="70%">
+        <tr>
+          <td width="8%"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+          <td width="92%"><b>&nbsp;</b>To be compatible with formulas syntax, if
+            you don't specify a Unit for the argument of <b>ValuateFromString</b>,
+            the MKSA units are used:&nbsp; length are expressed in meters and
+            angles in radians.&nbsp;<br>
+            As a thumb rule, always specify the unit when using <b>ValuateFromString</b>
+            or formulas.</td>
+        </tr>
+      </table>
+      </center>
+    </div>
+    <dt>&nbsp;</dt>
+  </dl>
+</blockquote>
+<p>The available unit symbols you can use are those listed in the Units tab-page
+of the <b>Tools-&gt;Options</b> menu. The <b>RealParam</b> and the <b>IntParam</b>
+objects provide to their derived objects the <b>Value</b> method which sets or
+returns the value expressed in the MKSA unit system, except for length expressed
+in millimeters and angles expressed in decimal degrees.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

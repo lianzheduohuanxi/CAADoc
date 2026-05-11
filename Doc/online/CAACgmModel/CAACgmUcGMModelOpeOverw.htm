@@ -1,0 +1,275 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>How to Use Geometric Operators</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Use Geometric Operators</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Geometric operators are transient objects that allow you to create new 
+		objects from existing ones or to analyze them. These operators all follow 
+		the same scheme which is described in this article.</p>
+		<ul>
+			<li><a href="#The Geometric Operators">Introduction</a></li>
+			<li><a href="#How to Use a Geometric Operator">How to Create and Use 
+			a Geometric Operator</a>
+			<ul>
+				<li><a href="#Basic Mode">The BASIC Mode</a></li>
+				<li><a href="#ADVANCED Mode">The ADVANCED Mode</a></li>
+			</ul>
+			</li>
+			<li><a href="#DELETE">How to Delete a Geometric Operator</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="The Geometric Operators"></a>Introduction</h2>
+<p>Using geometric operators is an easy way to create or analyze geometric objects. 
+While the geometric objects provide basic services, that are easily computed by 
+the objects themselves, the geometric operators do more complex operations using 
+advanced mathematics tools. As an example, evaluations from parameters to Cartesian 
+coordinates is offered by the geometric curve or surface, whereas the torsion or 
+curvature are computed by a geometric operator.</p>
+<p>All these operators never modify the input objects, they create new ones.</p>
+<p>The geometric operators work inside one geometric container: the input and output 
+objects must belong to the same geometric container.</p>
+<p>Here are some examples of operators creating geometric objects:</p>
+<ul>
+	<li>Intersection between:
+	<ul>
+		<li>Two curves (<code>CATICGMIntersectionCrvCrv</code>).</li>
+		<li>Two surfaces (<code>CATICGMIntersectionSurSur</code>).</li>
+		<li>A curve and a surface (<code>CATICGMIntersectionCrvSur</code>).</li>
+	</ul>
+	</li>
+	<li>Projection of:
+	<ul>
+		<li>A curve on a surface (<code>CATICGMProjectionCrvSur</code>).</li>
+		<li>A point on a curve (<code>CATICGMProjectionPtCrv</code>) or a surface 
+		(<code>CATICGMProjectionPtSur</code>).</li>
+	</ul>
+	</li>
+	<li>Creation of reflect lines (<code>CATICGMReflectCurve</code>).</li>
+	<li>Creation of edge curves (<code>CATICGMEdgeCurveComputation</code>).</li>
+</ul>
+<p>Here are some examples of operators dedicated to geometric analysis:</p>
+<ul>
+	<li>Confusion of:
+	<ul>
+		<li>Two points of a curve (<code>CATICGMConfusionPtOnCrvPtOnCrv</code>).</li>
+		<li>Two points of a surface (<code>CATICGMConfusionPtOnSurPtOnSur</code>).</li>
+	</ul>
+	</li>
+	<li>Inclusion of:
+	<ul>
+		<li>A point on a curve (<code>CATICGMInclusionPtCrv</code>).</li>
+		<li>A point on a surface (<code>CATICGMInclusionPtSur</code>).</li>
+	</ul>
+	</li>
+	<li>Minimum distance between:
+	<ul>
+		<li>Two curves (<code>CATICGMDistanceMinCrvCrv</code>).</li>
+		<li>A point and a curve (<code>CATICGMDistanceMinPtCrv</code>).</li>
+		<li>A point and a surface (<code>CATICGMDistanceMinPtSur</code>).</li>
+	</ul>
+	</li>
+	<li>Local analysis of a point on a curve (<code>CATICGMLocalAnalysis1D</code>), 
+	or a surface (<code>CATICGMLocalAnalysis2D</code>).</li>
+	<li>Global analysis of a point a a curve (<code>CATICGMMassProperties1D</code>).</li>
+</ul>
+<p>The geometric operators are generic: the <code>CATICGMIntersectionCrvSur</code> 
+operator, for example, computes the intersection of any type of curves with any 
+type of surfaces.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="How to Use a Geometric Operator"></a>How to Create and Use a Geometric 
+Operator</h2>
+<p>All the geometric operators are based on the same scheme. The geometric operator 
+instances, created by a global function (CATCGMCreate...), are transient (that is 
+to say, they are not streamed when streaming the geometric factory). They are used 
+to declare an operation, to run it, and to retrieve the resulting objects.</p>
+<p>The geometric operators can be used in two modes, BASIC (the default mode) or 
+ADVANCED.</p>
+<ul>
+	<li>In the BASIC mode, data given when creating the operator is sufficient to 
+	execute it, and the operation is automatically run.</li>
+	<li>In the ADVANCED mode, the operator can be tuned after its creation with 
+	advanced options. You have then to explicitly ask for its execution. In any 
+	cases, the resulting objects are not created during the execution step. They 
+	are created when you ask for them, by calling the <code>GetXxx</code> methods. 
+	These methods are often presented as iterators and the following methods are 
+	provided:
+	<ul>
+		<li>A method to retrieve the number of solutions.</li>
+		<li>An initialization of the iterator.</li>
+		<li>A method to increment the iterator.</li>
+		<li>A method to retrieve (and, hence create) the geometric result.</li>
+	</ul>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Basic Mode"></a>The BASIC Mode</h3>
+<p>To operate in this mode, you must:</p>
+<ol>
+	<li>Create the operator with the appropriate global function (<code>for example 
+	CATCGMCreateIntersection</code>), and specify the BASIC mode (or without specifying 
+	any mode: by default, the operator is created with the BASIC mode). The global 
+	function executes the requested operation and returns the corresponding operator 
+	instance.</li>
+	<li>Get the result(s)</li>
+	<li>Delete the operator instance (see <a href="#DELETE">How to Delete a Geometric 
+	Operator</a>).</li>
+</ol>
+<pre class="code"><strong>//  creation and run</strong>
+CATICGMIntersectionCrvSur* pIntOp = <strong>::CATCGMCreateIntersection</strong>(
+                       piGeomFactory,   // geometric factory 
+                       piLine,          // geometric line
+                       piCylinder,      // geometric cylinder
+                       <strong>BASIC</strong>);          // the mode (default value)
+...
+CATLONG32 nbPoints = pIntOp-&gt;GetNumberOfPoints();
+...</pre>
+<p>The <code>CATICGMContainer::Remove</code> method removes geometric objects from 
+the geometry factory. Any object which is not removed is streamed when the factory 
+is streamed. When using geometric operators, you will usually have to remove unnecessary 
+objects by using the <code>CATICGMContainer::Remove</code> method.</p>
+<p><strong>Note</strong>: Although geometric objects are handled by the mean of 
+interfaces, such as <code>CATCartesianPoint</code>, <code>CATLine</code>, or
+<code>CATBody</code>, the pointers on these objects must not be released. In fact, 
+they are released at the closure of the factory (the <code>CATCloseCGMContainer</code> 
+global function).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ADVANCED Mode"></a>The ADVANCED Mode</h3>
+<p>This mode can be used when you want to set parameters (for example limits on 
+the geometry), or run again an operator with different input data.</p>
+<p>To operate in this mode, you have to:</p>
+<ol>
+	<li>Create the operator with the appropriate global function (<code>for example 
+	CATCGMCreateIntersection</code>), and specify the ADVANCED mode. The global 
+	function returns the corresponding operator instance, but does not run the operation.</li>
+	<li>Specify additional information or advanced options to the operator by calling 
+	one of its <code>SetXxx</code> methods.</li>
+	<li>Execute the operation: <code>Run</code> method.</li>
+	<li>Get the result with the desired iterator.</li>
+	<li>Optionally, set new options, run again the operator, and retrieve the new 
+	results.</li>
+	<li>Remove the operator instance from the memory (see <a href="#DELETE">How 
+	to Delete a Geometric Operator</a>).</li>
+</ol>
+<pre class="code">CATICGMIntersectionCrvSur* pIntOp = <strong>::CATCGMCreateIntersection</strong>(
+                                piGeomFactory,    // geometric factory
+                                piLine,           // geometric line
+                                piCylinder,       // geometric cylinder
+                                <strong>ADVANCED</strong>);        // MODE
+
+// set  limits. These limits were previously defined or computed
+pIntOp-&gt;<strong>SetLimits</strong>(crvLimits);
+
+// run
+pIntOp-&gt;<strong>Run</strong>();
+
+// set another line and new limits
+
+pIntOp-&gt;<strong>SetCurve</strong>(piNewLine);    // piNewLine was previously created
+pIntOp-&gt;SetLimits(newCrvLimits); // newCrvLimits was previously defined
+
+// run again 
+pIntOp-&gt;<strong>Run</strong>();
+
+// get the results
+nbPoints = pIntOp-&gt;GetNumberOfPoints();
+cout &lt;&lt; &quot; Number of intersection points: &quot;&lt;&lt; nbPoints &lt;&lt; endl;
+long nbCurves= pIntOp-&gt;GetNumberOfCurves();
+cout &lt;&lt; &quot;Number of intersection curves: &quot;&lt;&lt; nbCurves &lt;&lt; endl;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="DELETE"></a>How to Delete a Geometric Operator</h2>
+<p>Geometric operators should be deleted by using the <strong>Release</strong> method.</p>
+<pre class="code">CATICGMIntersectionCrvSur* pIntOp = <strong>::CATCGMCreateIntersection</strong>(
+                                piGeomFactory,    // geometric factory
+                                piLine,           // geometric line
+                                piCylinder,       // geometric cylinder
+                                <strong>ADVANCED</strong>);        // MODE
+...
+<strong>// delete the operator</strong>
+<strong>pIntOp-&gt;Release();
+pIntOp=NULL;</strong></pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>The geometric operators are transient objects used to create or analyze 
+	geometric objects. They do not modify the input operands.</li>
+	<li>All the geometric operators are based on the same scheme: creation, optionally 
+	set of advanced options, run, read of the results, deletion. They work inside 
+	one container.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="CAACgmTaGobCurves.htm">The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="CAACgmTaGobSurfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

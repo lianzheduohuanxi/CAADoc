@@ -1,0 +1,502 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Objects of CATIA Geometric Modeler</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Objects of CATIA Geometric Modeler</h3>
+      <em>An Introduction to CGM Objects</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>CGM mainly offers objects that have a geometric or topological meaning
+      such as curves, surfaces or topological bodies. It also provides objects
+      to manage and operate them. This paper introduces the objects you can use
+      in the CGM offering, and goes in more details through the persistent
+      objects and their environment.
+      <ul>
+        <li><a href="#Introduction"><strong>Introduction</strong></a></li>
+        <li><a href="#Container, factory and document"><strong>Container,
+          Factory, and Document</strong></a>
+          <ul>
+            <li><a href="#Properties of the CGM Container and Factory">Properties
+              of the CGM Container and Factory</a>
+              <ul>
+                <li><a href="#A CGM Container is Complete">A CGM Container Is
+                  Complete</a></li>
+                <li><a href="#Persistent Tag">Persistent Tag</a></li>
+                <li><a href="#Implicit and Explicit Factories">Implicit and
+                  Explicit Factories</a></li>
+              </ul>
+            </li>
+            <li><a href="#Use of the CGM Container and Factory">Use of the CGM
+              Container and Factory</a>
+              <ul>
+                <li><a href="#Document">Document</a></li>
+                <li><a href="#Viewer and Workshop">Viewer and Workshop</a></li>
+                <li><a href="#Integration into CATIA V5">Integration into CATIA
+                  V5</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#Persistent CGM objects: CATICGMObjects"><strong>Persistent
+          CGM Objects: CATICGMObject</strong></a>
+          <ul>
+            <li><a href="#Base interface of the geometrical objects: CATGeometry">Base
+              Interface of the Geometric Objects: CATGeometry</a></li>
+            <li><a href="#C2 continuity">C2 Continuity</a></li>
+            <li><a href="#Points">Points: CATPoint</a></li>
+            <li><a href="#Curves in CGM">Curves: CATCurve</a></li>
+            <li><a href="#Surfaces in CGM">Surfaces: CATSurface</a></li>
+            <li><a href="#Topology">Topology</a></li>
+          </ul>
+        </li>
+        <li><a href="#Units and Tolerances"><strong>Units and Tolerance</strong></a>
+          <ul>
+            <li><a href="#Unit">Unit</a></li>
+            <li><a href="#ModelSize: the bounding box of the CGM model">Model
+              Size</a></li>
+            <li><a href="#Resolution: the lower valid length of an object of the CGM model">Resolution</a></li>
+            <li><a href="#Numerical tolerance">Numerical tolerance</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>CGM offers a large variety of objects, allowing a developer to build its own
+geometric or topological applications. We find :
+<ul>
+  <li><em>persistent objects</em>. Federated by the <strong>CATICGMObject</strong>
+    interface, they group all the objects of the CGM offering that can be
+    streamed. The main part of these objects are the <strong>CATGeometry</strong>
+    objects, which group the usually called geometric objects (such as points,
+    curves, surfaces of all kinds), and the topological objects (such as
+    vertices, edges, faces, volumes and bodies), that also are subtypes of
+    geometric objects.</li>
+  <li><em>the managers of the persistent objects</em>. The <strong>CATICGMContainer</strong>
+    interface manages the membership of the CATICGMObject instances to a given
+    container (a set containing the elements) while the <strong>CATGeoFactory</strong>
+    interface creates the geometric instances inside a container.
+    CATICGMContainer and CATGeoFactory instances can of course be streamed.</li>
+  <li><em>non persistent (or transient) objects</em>, that roughly are:
+    <ul>
+      <li><em>mathematical objects</em>: used for mathematical computations,
+        they are often employed by the geometric objects. Vectors, matrices,
+        equations, transformations are examples of mathematical objects. See
+        Using Mathematics</li>
+      <li><em>operators</em> on CATGeometry objects. Federated by the <strong>CATCGMOperator</strong>
+        class, they build new geometric objects or topological objects from
+        existing one. Examples of geometric operators are the intersection of
+        curves and/or surfaces, the projection on curves or surfaces or the
+        search for geometric coincidence. Examples of topological operators are
+        the Boolean operations, the creation of a topological prism or the
+        filleting of a body. See Operating geometric objects, Operating
+        topological objects.</li>
+      <li>objects that manages the <em>parameters</em> on curves and surfaces,
+        and the mapping between theses parameters and the global coordinates.</li>
+    </ul>
+  </li>
+  <li><em>attributes</em>, allowing a programmer to add data on exiting
+    CATICGMObjects, this data may be transient (<strong>CATCGMAttribute</strong>)
+    or persistent (<strong>CATCGMStreamAttribute</strong>). See [<a href="#References">2</a>].</li>
+</ul>
+<table>
+  <caption>Fig. 1: The main families of CGM objects</caption>
+  <tr>
+    <td><img src="images/GeoObjects1.gif" alt="GeoObjects1.gif (6951 bytes)" width="479" height="359"></td>
+    <td>Into the right angle boxes are shown the main permanent objects, as
+      described upper.
+      <p>Inside the round angle boxes are written the transient objects.</p>
+      <p>We only represent the main objects families. For a full detail of the
+      composition of each family, see the <a href="#References">References</a>
+      item, which links you to the adequate paper according to the object you
+      want to study.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Container, factory and document"></a>Container, Factory and
+Document</h3>
+<p>A container is a set containing and managing objects. Hence, the
+CATICGMContainer interface represents the behavior of the CGM container, that
+manages the CATICGMObject instances. It gives a persistent tag to each instance
+it creates and follows the links between the CATICGMObject instances. It allows
+the developer:
+<ul>
+  <li>to scan the CATICGMObject instances that it contains</li>
+  <li>to remove any CATICGMObject instance</li>
+  <li>to find an instance from its persistent tag</li>
+  <li>to stream its contents.</li>
+</ul>
+<p>The CATGeoFactory gives another view of a CATICGMContainer. It is a kind of
+CATICGMContainer that manages:
+<ul>
+  <li>the definition of the unit</li>
+  <li>the validity range (minimum length, maximum length) of the CATGeometry
+    instances</li>
+  <li>the creation of the CATGeometry instances.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Properties of the CGM Container and Factory"></a>Properties of the
+CGM Container and Factory</h4>
+<p>As seen previously, the CATICGMContainer contains and the CATGeoFactory
+creates. We described here some other properties of these objects.</p>
+<h5><a name="A CGM Container is Complete"></a>A CGM Container Is Complete</h5>
+<p>All the objects needed for the definition of a topological and geometric
+instance must be created inside the container of this instance.</p>
+<h5><a name="Persistent Tag"></a>Persistent Tag</h5>
+<p>When an instance is created inside a (explicit or implicit) factory, it gets
+an unique identifier called &quot;persistent tag&quot;. This tag remains the
+same as long as the instance is not removed. Hence, it is not modify even if
+<ul>
+  <li>other instances are created or removed from the factory</li>
+  <li>the factory is streamed or unstreamed</li>
+  <li>data of this instance are modified.</li>
+</ul>
+<p>but it is canceled with the removal of the instance.</p>
+<h5><a name="Implicit and Explicit Factories"></a>Implicit and Explicit
+Factories</h5>
+<p>The creation of a CATGeoFactory instance really triggers the creation of two
+factories (called explicit factory and implicit factory), with the same unit and
+validity range. All methods we have described are available for both factories,
+except the <tt>CATICGMContainer::Scan</tt> method, that only scans the explicit
+factory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Use of the CGM Container and Factory"></a>Use of the CGM Container
+and Factory</h4>
+<p>Given the CATGeoFactory, you already can write your own applications,
+visualize the data by your own viewer and save the data using our own
+repository. If you do not have such viewer or repository, you can use these
+offered by CGM</p>
+<h5><a name="Document"></a>Document</h5>
+<p>No specific document is required to store the persistent CGM objects. Each
+application writes the CGM objects in its own document but have to put them
+consistently inside a geometric container (CATGeoFactory).</p>
+<p>Now, if you are not owner of any document, but you want to store your data,
+CGM puts a .NCGM document to your disposal.</p>
+<p>The reference of CGM instances from a document to another one is offered by
+the ObjectModeler hyperlinks.</p>
+<h5><a name="Viewer and Workshop"></a>Viewer and Workshop</h5>
+<p>Moreover, a viewer and a workshop, associated with the .NCGM document, are
+provided to illustrate the CGM use. In this implementation, the viewer only
+displays the objects of the explicit factory, but it is its own choice.</p>
+<h5><a name="Integration into CATIA V5"></a>Integration into CATIA V5</h5>
+<p>To let CGM possibly be independent of the CATIA V5 environment, the
+CATGeoFactory does not require all the properties of a CATIA V5 container. In
+fact, if you examine the behavior of the CATGeoFactory interface, you can see
+that is not a CATIA V5 container, because it does not adhere to the
+CATIContainer interface. In particular, it does not allow an application to
+include other container in itself.</p>
+<p>However, CATIA V5 brings a higher level object, created by the CATIA V5
+factory of containers, that is a CATIA container, and also adheres to
+CATGeoFactory. In this environment, you take advantages of the CATIContainer
+interface and the CATGeoFactory interface.</p>
+<table>
+  <caption>Fig. 2: Available interfaces according to the offering</caption>
+  <tr>
+    <td><img src="images/GeoObjects2.gif" alt="GeoObjects2.gif (4177 bytes)" width="479" height="359"></td>
+    <td>The CATGeoFactory interface is different from the CATIContainer
+      interface. CGM proposes an object adhering to the CATGeoFactory interface,
+      while CATIA V5 offers an object also adhering to the CATIContainer
+      interface.</td>
+  </tr>
+</table>
+<p>As an example, this object will be seen when you use a Part document, that
+contains a SpecModeler/Part container, a Generic Naming container, and a
+geometric container.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Persistent CGM objects: CATICGMObjects"></a>Persistent CGM Objects:
+CATICGMObjects</h3>
+<p>CATICGMObject is the basis interface for all the persistent objects of the
+CGM offering. The CATICGMObject instances are explicit or implicit according to
+the factory they belong to and are identified through a persistent tag. They
+offer more behaviors:
+<ul>
+  <li>They can support attributes. Attributes allow an application programmer to
+    put data on a CATICGMObject. See [<a href="#References">2</a>].</li>
+  <li>They can be cloned, (i.e., duplicated with or without the instances that
+    are forward linked) by the use of a <tt>CATCloneManager</tt>. The clone
+    process is detailed in [<a href="#References">7</a>].</li>
+</ul>
+<p>Most of the CATICGMObject have a geometric meaning. They are grouped under
+the CATGeometry interface. Up to now, there is only one CATICGMObject that is
+not a CATGeometry: the CATLaw, that models the variation of a parameter on an
+interval.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Base interface of the geometrical objects: CATGeometry"></a>Base
+Interface of the Geometric Objects: CATGeometry</h4>
+<p>The added value of the CATGeometry interface is its geometric meaning. Hence,
+a CATGeometry object offers:
+<ul>
+  <li>The ability to return the definition of a portion of the space (called
+    bounding box) that contains it</li>
+  <li>The ability to be moved</li>
+</ul>
+<p>and many other behaviors, depending on the kind of CATGeometry.</p>
+<p>The CATGeometry interface groups
+<ul>
+  <li>the usually called geometric objects: points (dimension 0), curves
+    (dimension 1) and surfaces (dimension 2).</li>
+  <li>the topological objects (bodies, cells and domains), that are fully
+    documented in [<a href="#References">5</a>] for the concepts and [<a href="#References">6</a>]
+    for the CGM implementation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="C2 continuity"></a>C2 Continuity</h4>
+<p>The main assumption made on the geometric objects is that <strong>they must
+be C2 continuous</strong>. CGM directly generates objects satisfying this
+criterion. If you want to introduce foreign curves or surfaces, you have to
+insure they satisfy it. If they do not satisfy it, you can cut them where they
+are not C2 continuous, and use topological objects to assemble the parts.</p>
+<p>Before dealing with the curves (base class CATCurve) and the surfaces (base
+class CATSurface), we briefly presents the geometric points (CATPoint).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Points"></a>Points</h4>
+<p>There mainly are three geometric point interfaces:
+<ul>
+  <li>CATCartesianPoint, allowing to modify the Cartesian coordinates</li>
+  <li>CATPointOnCurve and CATPointOnSurface, representing the behavior of points
+    on a curve and on a surface respectively. Hence, they give the mapping
+    between the Cartesian coordinates and the parameters on the curve or the
+    surface</li>
+  <li>CATMacroPoint, used to define the geometry of a vertex (the vertex the is
+    topological object of the lowest dimension)</li>
+  <li>CATPointOnEdgeCurve, representing a point on a specific curve called edge
+    curve, used to define the geometry of a topological edge [<a href="#References">8</a>].</li>
+</ul>
+<p>Do not confuse CATPoint and CATMathPoint!
+<ul>
+  <li>CATPoint is a geometric interface. Instances are created with the
+    CATGeoFactory and can be streamed.</li>
+  <li>CATMathPoint is a mathematical class. Instances are created with the class
+    constructor and are transient: they cannot be streamed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Parameters on curves or surfaces"></a>Parameters on Curves or
+Surfaces</h4>
+<p>A point on a curve may be represented with 3 coordinates, as a point in a 3D
+space, or with 1 parameter (usually called <tt>w</tt>) in the space of the
+curve.</p>
+<p>In the same way, a point on a surface may be represented as a 3D point or
+with two parameters (usually called <tt>u</tt> and <tt>v</tt>) in the space of
+the surface.</p>
+<p>These parameters have only sense if they are associated with the curve or the
+surface they parameterize. Hence, the object is responsible for the mapping
+between the 3D coordinates and the parameter(s), and the user of these objects
+must never make any assumptions about this mapping.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Surfaces in CGM"></a>Surfaces in CGM</h4>
+<p>CGM offers several types of surfaces:
+<ul>
+  <li>Elementary surfaces: canonical (cylinder, cone, sphere, torus, plane) or
+    NURBS surfaces</li>
+  <li>Sampled surfaces: their limiting curves are computed by Spline
+    interpolation between points from a marching algorithm</li>
+  <li>Multi-represented surfaces: These surfaces delegate the evaluation to
+    another one, which is as much as possible canonical.</li>
+  <li>Procedural surfaces. The procedural surface use the evaluation of another
+    one to compute its own evaluation (more than a simple delegation).</li>
+</ul>
+<p>All the CGM surfaces are precisely descried in [<a href="#References">4</a>]</p>
+<p>If you have specific surfaces that no CGM surface fits, CGM allows you to
+define your own surface, and use it as it is a CGM surface. See [<a href="#References">2</a>]
+for a precise description of this capability.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Curves in CGM"></a>Curves in CGM</h4>
+<p>CGM offers several types of curves
+<ul>
+  <li>Resolved curves: These curves have a mathematical form: line, conic
+    (circle, ellipse, parabola, hyperbola), NURBS, Spline belong to this type.
+    Evaluations are made directly from the mathematical equations.</li>
+  <li>Edge curves: They are geometric curves, that can be seen under several
+    representation. They are in particular used to define the geometry of a
+    topological edge [<a href="#References">8</a>].</li>
+  <li>P-curves: They are used to define curves in the parameter space of a
+    surface. For example, a P-line is a curve which mathematical representation
+    in the space of the surface is a line, but can be a line, a circle or a much
+    more complex curve in the 3D space.</li>
+</ul>
+<p>All the CGM curves are precisely descried in [<a href="#References">5</a>].</p>
+<p>If you have specific curves that no CGM curve fits, CGM allows you to define
+your own curve, and use it as it is a CGM curve. See [<a href="#References">2</a>]
+for a precise description of this capability.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Topology"></a>Topology</h4>
+<p>The topological objects are geometric objects, and managed in the same
+container. These topological objects are bodies, cells (vertex, edge, face,
+volume) and domains (loop, shell, wire, lump). See [<a href="#References">5</a>]
+for the topological concepts and [<a href="#References">6</a>] for their
+implementation in CGM.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Units and Tolerances"></a>Units and Tolerance</h3>
+<p>This section explains how CGM deals with the units and the tolerances for its
+objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Unit"></a>Unit</h4>
+<p>The geometric factory is the object that creates any geometric objects. The
+unit of the geometric factory is the mm.</p>
+<p>The angles are defined in radians in the whole CGM offering. Constants (<tt>CATRadianToDegree</tt>,
+<tt>CATDegreeToRadian</tt>) allows you to convert degrees to radians and the
+converse.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="ModelSize: the bounding box of the CGM model"></a>Model Size: the
+Bounding Box of the CGM Model</h4>
+<p>The factory defines the maximum box inside which the geometric objects must
+be. This box is defined by the <i>Model Size</i>, fixed to 10^6mm (10^5mm before 
+R14).
+As the unit is the millimeter, all the objects must be inside the box [-1000m, 
++1000m] ([-100m,
++100 m] before R14).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Resolution: the lower valid length of an object of the CGM model"></a>Resolution:
+the Lower Valid Length of an Object of the CGM Model</h4>
+<p>The <i>Resolution</i> defines the minimum length of a valid object. It is
+fixed to <tt>10^-3.unit</tt>. As the unit is mm, lines of length smaller than <tt>1micro-m</tt>
+are not valid.</p>
+<p>The management of confusions (&quot;Do two objects have the same
+geometry?&quot;) is a direct consequence of the resolution: if the distance
+between to geometric points is less than the resolution, the two points are
+considered to be geometrically at the same location.</p>
+<p>However, the resolution is not a maximum gap (between ajacent surfaces for
+example). In fact, the topology captures the design intend, and the gap between
+the geometry of two faces sharing the same edge can be greater than the factory
+resolution: the modeler is tolerant.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Numerical tolerance"></a>Numerical Tolerance</h4>
+<p>All the algorithms use a numerical tolerance, much more precise than the
+resolution.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>CGM offers persistent objects to model geometry and topology</li>
+  <li>These objects are created inside a factory called CATGeoFactory.</li>
+  <li>Non persistent objects are used to do mathematical computations or
+    operations on geometric or topological objects</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td>About Mathematics</td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="Attribute.htm">The Management of Foreign Data</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="Curves.htm">The Curves of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="Surfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[5]</td>
+    <td>Topology Concepts</td>
+  </tr>
+  <tr>
+    <td>[6]</td>
+    <td>The CGM Topological Model</td>
+  </tr>
+  <tr>
+    <td>[7]</td>
+    <td><a href="Clone.htm">Cloning and Transformation Managers</a></td>
+  </tr>
+  <tr>
+    <td>[8]</td>
+    <td>About Edge Curves</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

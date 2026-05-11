@@ -1,0 +1,144 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgPushItem</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgPushItem</h3>
+      <em>Executes commands</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgMenuItem.htm">CATDlgMenuItem</a>
+        |
+        +---CATDlgPushItem</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Push Item</caption>
+  <tr>
+    <td><img src="images/ListPushItem2.jpg" alt="ListPushItem2.jpg (1582 bytes)" width="118" height="20">or
+      <img src="images/ListPushItem1.jpg" alt="ListPushItem1.jpg (963 bytes)" width="22" height="22"></td>
+    <td>The push item is dedicated to execute a command when the user pushes, or
+      clicks, it, in a menu or a submenu, as depicted on the first image, or in
+      a toolbar or in an icon box, as depicted on the second image. As soon as
+      the user pushes on the push item using the mouse key one, a notification
+      is sent that you can catch by means of the callback mechanism and trigger
+      then the appropriate command.</td>
+  </tr>
+</table>
+<p>Use push items whenever you propose to the end user an action to execute in a
+menu, a submenu, a toolbar, or an icon box.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The default push item style</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgMenuIActivateNotification</td>
+    <td><code>GetMenuIActivateNotification</code></td>
+    <td>Whenever the push item is clicked</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The push item is dedicated to executing a command when it is clicked.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Push Item</h4>
+<p>The push item should have for parent either the menu, submenu, toolbar, or
+icon box in which it appears:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pPushItem = new CATDlgPushItem (iParent, &quot;PushItemId&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Callback on a Push Item</h4>
+<p>Set a callback on a push item for the click interaction as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pPushItem,                                     // push item 
+  _pPushButton-&gt;GetMenuIActivateNotification(),   // notification
+  (CATCommand)&amp;Container::MethodToExecute,        // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title to a Push Item</h4>
+<p>The push item title should be set by the resource file using a key built with
+the identifier you declare as the second parameter of the push item constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

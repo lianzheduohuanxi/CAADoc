@@ -1,0 +1,429 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Spatial Integration Data</title>
+<style type="text/css">
+  .highlight { color: #FF0000; }
+  .comment { color: #009900; }
+  .pre { color: #000099; }
+  .string { color: #990000; }
+  .char { color: #009900; }
+  .float { color: #996600; }
+  .int { color: #999900; }
+  .bool { color: #000000; font-weight: bold; }
+  .type { color: #0000FF; }
+  .flow { color: #0000FF; }
+  .keyword { color: #000000; font-weight: bold; }
+  .operator { color: #000000; font-weight: bold; }
+  div.abstract { background-color: #F0F0FF; width: 100%; margin-bottom: 2mm; margin-top: 2mm}
+  ul.NoMarker {list-style-type: none}
+  ul.code {list-style-type: none; background-color: #E0E0E0; width: 100%; margin-bottom: 2mm; margin-top: 2mm}
+  div.code { background-color: #E0E0E0; width: 100%; margin-bottom: 2mm; margin-top: 2mm; font-family: Courier New, Courier; font-size: 110%; font-weight: normal;}
+  span.code { background-color: #E0E0E0; font-family: Courier New, Courier; font-size: 110%; font-weight: normal;}
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top" width="40%">
+      <h3><a name="Top"></a>Accessing Spatial Integration Data</h3>
+      <em>How to access integration data.</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<div class="abstract">
+  <h3>Abstract</h3>
+  <p>This article discusses the CAACloPspSpatialPhysical use case.</p>
+  <ul>
+    <li><strong><a href="#Overview">Overview</a></strong>
+      <ul>
+        <li><a href="#What You Will Learn">What You Will Learn</a></li>
+        <li><a href="#What CAACloPspSpatialPhysical Does">What CAACloPspSpatialPhysical Does</a></li>
+        <li><a href="#How to Launch CAACloPspSpatialPhysical">How to Launch CAACloPspSpatialPhysical</a></li>
+        <li><a href="#Where to Find CAACloPspSpatialPhysical Files">Where to Find CAACloPspSpatialPhysical Files</a></li>
+      </ul>
+    </li>
+    <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+      <ul>
+        <li><a href="#Initialization.">Initialization.</a></li>
+        <li><a href="#Use Case Execution.">Use Case Execution.</a></li>
+        <li><a href="#Retrieving Physical Objects Associated to a Spatial Object.">Retrieving Physical Objects Associated to a Spatial Object.</a></li>
+      </ul>
+    <li><strong><a href="#InShort">In Short</a></strong></li>
+    <li><strong><a href="#References">References</a></strong></li>
+  </ul>
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Overview"></a>Overview</h3>
+<p>
+  CAACloPspSpatialPhysical is a use case of the CAACommonLayoutItf.edu framework. It illustrates a CATPlantShipInterfaces interface that is implemented by CATCommonLayout.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What You Will Learn"></a>What You Will Learn</h4>
+<p>This use case is intended to show you how to obtain integration data from spatial object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What CAACloPspSpatialPhysical Does"></a>What CAACloPspSpatialPhysical Does</h4>
+  <p>
+    CAACloPspSpatialPhysical retrieves the physical objects and corresponding connectors associated at the extremity of the spatial object. 
+  </p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How to Launch CAACloPspSpatialPhysical"></a>How to Launch CAACloPspSpatialPhysical</h4>
+<p>
+To launch CAACloPspSpatialPhysical, you will need to set up the build time environment, then compile CAACloPspSpatialPhysical along with its prerequisites, set up the run time environment, and then execute the sample. This is fully described in the referenced article [<a href="#Reference 1">1</a>].
+ When launching the use case, you must pass the following arguments:</p>
+<ul>
+  <li><b> CAACloPspEduIn.CATProduct </b> - the entire pathname, name and extension
+    (.CATProduct) of the input product. Normally, it should be stored in the
+  CNext/resources/graphic/CAACloPspEduIn directory of the CAACommonLayoutItf.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where to Find CAACloPspSpatialPhysical Files"></a>Where to Find CAACloPspSpatialPhysical Files</h4>
+<p> CAACloPspSpatialPhysical code is located in the CAACloPspSpatialPhysical.m use case module of
+the CAACommonLayoutItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACommonLayoutItf.edu\CAACloPspSpatialPhysical.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACommonLayoutItf.edu/CAACloPspSpatialPhysical.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAACloPspSpatialPhysicalMain.cpp and CAACloPspSpatialPhysical.cpp.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The remainder of this document describes the various parts of CAACloPspSpatialPhysicalMain.cpp and CAACloPspSpatialPhysical.cpp.</p>
+<ul>
+  <li><a href="#Initialization.">Initialization.</a></li>
+  <li><a href="#Use Case Execution.">Use Case Execution.</a></li>
+  <li><a href="#Retrieving Physical Objects Associated to a Spatial Object.">Retrieving Physical Objects Associated to a Spatial Object.</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initialization."></a>Initialization.</h4>
+<p>
+  CAACloPspSpatialPhysicalMain.cpp contains the main method that initiates processing. It reads the command line argument to find the path of the data file to be processed. It also creates the CAACloPspSpatialPhysical class and calls the DoSample method of CAACloPspSpatialPhysical.</p>
+<div class="code">
+<pre><span class="comment">// COPYRIGHT DASSAULT SYSTEMES 2011
+//=============================================================================
+//
+// CAACloPspSpatialPhysicalMain 
+// This sample illustrates how to use the CAA Plant Ship interfaces to:
+// 1.Query spatial objects.
+//
+//
+//  Prerequisite: 
+//  -------------------
+//  This sample uses the input product CAACloPspEduIn.CATProduct.
+//
+//  Running the program:
+//  -------------------
+//  To run this program, you can use the command:
+//  
+//       mkrun -c "CAACloPspSpatialPhysical CAACloPspEduIn.CATProduct" 
+//        
+//  where "CAACloPspEduIn.CATProduct" is the full path name of the input product.
+//
+//=============================================================================
+//
+
+</span><span class="pre">#include &lt;iostream.h&gt;
+#include &lt;string.h&gt;
+
+</span><span class="comment">
+// This framework
+</span><span class="pre">#include "CAACloPspSpatialPhysical.h"
+</span><span class="comment">
+// System
+</span><span class="pre">#include "CATErrorMacros.h"
+#include "CATUnicodeString.h"
+</span><span class="comment">
+//=============================================================================
+//   Main
+//=============================================================================
+</span><span class="type">int</span><span class="keyword"> main</span><span class="operator"> (</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> **</span>argv<span class="operator">)
+{</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"Start main CAACloPspSpatialPhysical" </span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+  CATUnicodeString FileToBeLoaded<span class="operator"> =</span> NULL<span class="operator">;</span>
+  <span class="type">
+  int</span> rc<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+
+  CATTry<span class="operator">  
+  {</span><span class="flow">
+    if</span><span class="operator"> (</span>argc<span class="operator"> &gt;</span><span class="int"> 1</span><span class="operator">)
+    {</span>
+      FileToBeLoaded<span class="operator"> =</span> argv<span class="operator">[</span><span class="int">1</span><span class="operator">];
+    }</span><span class="flow">
+
+    if</span><span class="operator"> (</span>FileToBeLoaded<span class="operator">.</span>GetLengthInChar<span class="operator">())
+    {</span>
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> "**** must input the file name of "</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> "a CATProduct with Piping application objects "</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;
+    }</span><span class="flow">
+    
+    else</span><span class="operator">
+    {</span>
+      CAACloPspSpatialPhysical myObject<span class="operator">;</span>
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> "FileToBeLoaded = "</span><span class="operator"> &lt;&lt;</span> FileToBeLoaded<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+      rc<span class="operator"> =</span> myObject<span class="operator">.</span>DoSample<span class="operator">(</span>FileToBeLoaded<span class="operator">);
+    }
+  }</span>
+
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> "error in main "</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+    cout <span class="operator"> &lt;&lt;</span><span class="string"> "error message : "</span> <span class="operator"> &lt;&lt;</span>
+      <span class="operator">(</span> error<span class="operator"> -&gt;</span>GetNLSMessage<span class="operator">()).</span>ConvertToChar<span class="operator">()&lt;&lt;</span>endl<span class="operator">;</span>
+     
+    delete error<span class="operator">;</span>
+    rc <span class="operator">=</span> 999<span class="operator">;
+  } </span>
+  CATEndTry<span class="operator">;</span>
+
+  cout <span class="operator"> &lt;&lt;</span><span class="string"> "End main CAACloPspSpatialPhysical" </span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+  return</span> rc<span class="operator">;
+}</span>
+</pre>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Use Case Execution."></a>Use Case Execution.</h4>
+<p>
+The CAACloPspSpatialPhysical DoSample method runs the use cases. It starts by calling CreateCATProductEnv to load the input data model and create a CATIA product environment. CreateCATProductEnv is part of the CAAPspBaseEnvProtected class which is defined in these files.</p>
+  <div class="code">
+    InstallRootDirectory/CAAPlantShipInterfaces.edu/PublicInterfaces/<span class="highlight">CAAPspBaseEnvProtected.h</span><br>
+    InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspUtilities.m/src/<span class="highlight">CAAPspBaseEnvProtected.cpp</span><br>
+  </div>
+<p>After CAACloPspSpatialPhysical calls CreateCATProductEnv it calls ApplicationInit to initialize the Piping application. ApplicationInit is also a part of the CAAPspBaseEnvProtected class. With the data model and application properly initialized DoSample runs the use case. The code for DoSample is shown below.
+</p>
+<div class="code">
+<pre><span class="comment">//=============================================================================
+//  Execute the CAACloPspSpatialPhysical sample code.
+//=============================================================================
+</span>HRESULT CAACloPlacePart<span class="operator">::</span>DoSample<span class="operator">(</span><span class="keyword">const</span> CATUnicodeString<span class="operator"> &amp;</span>iuFileToBeLoaded<span class="operator">)
+{</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"============================================================"</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"===       CAACloPspSpatialPhysical::DoSample             ==="</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>  
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"============================================================"</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">" File: "</span><span class="operator"> &lt;&lt;</span> iuFileToBeLoaded<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+  HRESULT rc<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span><span class="comment">
+
+  // Interface pointer variables used below in the try section.
+</span>
+  CATTry<span class="operator"> 
+  {</span><span class="comment">
+    //  Load input document
+   </span> CreateCATProductEnv<span class="operator">(</span>iuFileToBeLoaded<span class="operator">);</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> "Product environment created."</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="comment">
+
+    //  Initialize Piping Design application
+</span>    ApplicationInit<span class="operator">(</span><span class="string">"CATPiping"</span><span class="operator">);</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> "Piping application initialized."</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span> 
+
+
+    <span class="comment">// Retrieve a list of physical objects and connectors associated at the extremity of the spatial object.</span>
+    HRESULT rcListCntrPhy<span class="operator"> =</span> ListConnectedPhysicalsToSpatial<span class="operator">();</span>    
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> "rcListCntrPhy = "</span><span class="operator"> &lt;&lt;</span> rcListCntrPhy<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="comment">
+    // Set return code.</span><span class="flow">
+    if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcListCntrPhy<span class="operator">))</span>
+    rc<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+  }</span><span class="comment">  // end CATTry
+ </span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> "CAACloPspSpatialPhysical::DoSample *** Error Caught ***"</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+    cout<span class="operator"> &lt;&lt;</span> pError<span class="operator">;</span>
+
+    rc<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span><span class="comment"> // end CATCatch
+</span>
+
+  CATEndTry<span class="operator">;</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> "CAACloPspSpatialPhysical::DoSample rc = "</span><span class="operator"> &lt;&lt;</span> rc<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+  return</span> rc<span class="operator">;
+}</span></pre>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Physical Objects Associated to a Spatial Object."></a>Retrieving Physical Objects Associated to a Spatial Object.</h4>
+<p>
+The CATIPspPhysical interface is used to retrieve pointer associated to the spatial object.   In this sample, the CATIPspPhysical interface pointer is obtained from a physical part in the document.
+Using the spatial object associated to the previous physical object, we find its CATIPspSpatial interface. 
+The physical objects and corresponding connectors associated at the extremity of the spatial object can be retrieved using the CATIPspSpatial interface.
+   
+</p>
+<div class="code">
+<pre><span class="comment">//===============================================================================================================
+// Retrieve all physical objects and corresponding connectors associated at the extremity of the spatial object.
+//===============================================================================================================
+</span> HRESULT CAACloPspSpatialPhysical<span class="operator">::</span>ListConnectedPhysicalsToSpatial<span class="operator">()
+{</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"======================================================================"</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"===   CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial    ==="</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">"======================================================================"</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+
+  HRESULT rc<span class="operator"> =</span> E_FAIL<span class="operator">;</span>
+
+  CATIPspPhysical    <span class="operator"> *</span>piPhysical <span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspSpatial     <span class="operator"> *</span>piSpatial <span class="operator"> =</span> NULL<span class="operator">;</span>
+  IUnknown           <span class="operator"> *</span>piUnknown <span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIArrSegmentsString <span class="operator"> *</span>pRun <span class="operator"> =</span> NULL<span class="operator">;</span> 
+
+  CATIArrNode_var ospEndPoint1 <span class="operator"> =</span> NULL_var<span class="operator">;</span> 
+  CATIArrNode_var ospEndPoint2 <span class="operator"> =</span> NULL_var<span class="operator">;</span> 
+  CATIArrNode_var spArrNode <span class="operator"> =</span> NULL_var<span class="operator">;</span> 
+
+  CATIUnknownList <span class="operator"> *</span>piListOfPhysicals <span class="operator"> =</span> NULL<span class="operator">;</span> 
+  CATIUnknownList <span class="operator"> *</span>piListOfConnectors	<span class="operator"> =</span> NULL<span class="operator">;</span> 
+
+  CATTry<span class="operator"> 
+  {</span><span class="comment">
+    //-------------------------------------------------------------------------
+    //  CATIPspPhysical methods
+    //-------------------------------------------------------------------------
+    </span>piPhysical <span class="operator"> =</span> GetAPhysicalObject<span class="operator">();</span><span class="flow"> 
+    if</span><span class="operator"> (</span> NULL<span class="operator"> !=</span> piPhysical<span class="operator"> )
+    {</span><span class="comment">
+      //----------------------------------------------------------------------
+      //  Get the spatial object associated to the physical object
+      //----------------------------------------------------------------------</span><span class="flow">    
+      if </span><span class="operator">(</span> SUCCEEDED<span class="operator">(</span>piPhysical<span class="operator">-&gt;</span>GetSpatial<span class="operator">(</span>piUnknown<span class="operator">)) &amp;&amp;</span> NULL <span class="operator">!=</span> piUnknown <span class="operator">)
+      {</span><span class="comment">
+        //  Find CATIPspSpatial interface</span>
+        piUnknown<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATIPspSpatial<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piSpatial<span class="operator">);</span>
+        piUnknown<span class="operator">-&gt;</span>Release<span class="operator">();</span>
+        piUnknown <span class="operator">=</span> NULL<span class="operator">;
+      }</span><span class="comment">
+      //-------------------------------------------------------------------------
+      //  CATIPspSpatial methods
+      //-------------------------------------------------------------------------</span><span class="flow">
+      if </span><span class="operator">(</span> NULL <span class="operator">!=</span> piSpatial <span class="operator">)
+      {</span><span class="comment">
+        //----------------------------------------------------------------------------------------------------
+        //  Get a list of physical objects and connectors associated at the extremity of the spatial object.
+        //----------------------------------------------------------------------------------------------------</span><span class="flow">  
+        if</span><span class="operator"> (</span>SUCCEEDED<span class="operator"> (</span>piSpatial<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATIArrSegmentsString<span class="operator">, (</span><span class="type">void</span><span class="operator">**)&amp;</span>pRun<span class="operator">)))
+        {</span>
+          pRun<span class="operator">-&gt;</span>GetEndPoints<span class="operator">(</span>ospEndPoint1<span class="operator">,</span>ospEndPoint2<span class="operator">);</span><span class="flow">
+          if</span><span class="operator">(!!</span>ospEndPoint1<span class="operator">)</span>
+            spArrNode <span class="operator">=</span> ospEndPoint1<span class="operator">;</span><span class="flow">
+
+          if </span><span class="operator">(</span> SUCCEEDED<span class="operator">(</span>piSpatial<span class="operator">-&gt;</span>ListConnectedPhysicals<span class="operator">(</span> spArrNode<span class="operator">,</span> piListOfPhysicals<span class="operator">,</span> piListOfConnectors<span class="operator"> ))
+            &amp;&amp;</span> NULL <span class="operator">!=</span> piListOfPhysicals  <span class="operator">&amp;&amp;</span> NULL <span class="operator">!=</span> piListOfConnectors <span class="operator">)
+          {</span>
+            unsigned int ListSize <span class="operator">=</span> 0<span class="operator">;</span>
+            piListOfPhysicals<span class="operator">-&gt;</span>Count<span class="operator">(&amp;</span>ListSize<span class="operator">);</span>
+            cout <span class="operator">&lt;&lt;</span> <span class="string">"Number of physical objects associated to the first extremity of the spatial object: "</span> <span class="operator">&lt;&lt; (</span><span class="type">int</span><span class="operator">)</span>ListSize <span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+            piListOfPhysicals<span class="operator">-&gt;</span>Release<span class="operator">();</span>  piListOfPhysicals <span class="operator">=</span> NULL<span class="operator">;</span>
+
+            piListOfConnectors<span class="operator">-&gt;</span>Count<span class="operator">(&amp;</span>ListSize<span class="operator">);</span>
+            cout <span class="operator">&lt;&lt;</span><span class="string"> "Number of connectors connected to the first extremity of the spatial object: "</span> <span class="operator">&lt;&lt; (</span><span class="type">int</span><span class="operator">)</span>ListSize <span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+            piListOfConnectors<span class="operator">-&gt;</span>Release<span class="operator">();</span>  piListOfConnectors <span class="operator">=</span> NULL<span class="operator">;</span>
+            rc <span class="operator">=</span> S_OK<span class="operator">;
+          }
+        }</span><span class="flow">
+        if</span><span class="operator"> (</span> NULL <span class="operator">!=</span> pRun <span class="operator">)
+        { </span>
+          pRun<span class="operator">-&gt;</span>Release<span class="operator">();</span> 
+          pRun <span class="operator">= </span>NULL<span class="operator">;
+        }</span>
+        piSpatial<span class="operator">-&gt;</span>Release<span class="operator">();</span>
+        piSpatial <span class="operator">=</span> NULL<span class="operator">;
+      }</span><span class="comment"> // end piSpatial</span>      
+      piPhysical<span class="operator">-&gt;</span>Release<span class="operator">();</span>
+      piPhysical<span class="operator"> =</span> NULL<span class="operator">;
+    }</span> <span class="comment">// end piPhysical</span><span class="operator">
+  }</span> <span class="comment">// end CATTry</span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> error<span class="operator">)
+  {</span><span class="flow">
+    if </span><span class="operator">(</span> NULL <span class="operator">!=</span> piPhysical <span class="operator">) { </span>piPhysical<span class="operator">-&gt;</span>Release<span class="operator">();</span> piPhysical <span class="operator">=</span> NULL<span class="operator">; }</span><span class="flow">
+    if </span><span class="operator">(</span> NULL <span class="operator">!=</span> piSpatial <span class="operator">) { </span>piSpatial<span class="operator">-&gt;</span>Release<span class="operator">();</span> piSpatial <span class="operator">=</span> NULL<span class="operator">; }</span><span class="flow">
+    if </span><span class="operator">(</span> NULL <span class="operator">!=</span> piUnknown <span class="operator">) { </span> piUnknown<span class="operator">-&gt;</span>Release<span class="operator">();</span> piUnknown <span class="operator">=</span> NULL<span class="operator">; }</span>
+    cout <span class="operator">&lt;&lt;</span><span class="string"> "CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial *** CATRethrow" </span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+    CATRethrow<span class="operator">;
+  }</span> 
+  CATEndTry<span class="operator">;</span> 
+  cout <span class="operator">&lt;&lt;</span><span class="string"> "CAACloPspSpatialPhysical::ListConnectedPhysicalsToSpatial rc = "</span> <span class="operator">&lt;&lt;</span> rc <span class="operator">&lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+  return</span> rc<span class="operator">;
+}</span></pre>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>
+  This use case has demonstrated how to use the Psp interfaces to obtain object integration data.  Specifically, it has illustrated:
+</p>
+<ul>
+  <li>Initialize the CATIA product environment and piping application.</li>
+  <li>Obtaining the necessary Psp Interfaces.</li>
+  <li>Listing the physical parts and corresponding connectors associated at the extremity of the spatial object.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Reference 1"></a>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Footnotes"></a>Footnotes</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <a name="Footnote 1"></a>1. This documents uses Unix-style forward slash (/) to separate directory names. 
+         Windows users should use backslash (\) instead of forward slash (/).
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [February 2011]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

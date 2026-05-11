@@ -1,0 +1,381 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using the Mathematical Classes</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Mathematics</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using the Mathematical Classes</h3>
+      <em>The basic mathematical classes</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMthBase use case and explains how to use
+      the mathematical classes.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#General features on Mathematical Classes"><strong>General
+          Features of Mathematical Classes</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMthBase Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMthBase Do</a></li>
+            <li><a href="#How">How to Launch CAAMthBase</a></li>
+            <li><a href="#Where">Where to Find the CAAMthBase Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use the mathematical classes. It
+first gives general features on these classes, then proposes examples of use:
+<ul>
+  <li>Creation of mathematical points, lines, vectors; use of operators</li>
+  <li>Search for the eigen values and vectors of a 3x3 matrix</li>
+  <li>Define a transformation of axis systems.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="General features on Mathematical Classes"></a>General Features of
+Mathematical Classes</h3>
+<p>The Mathematics framework provides the basic mathematical classes (such as
+planes, 2D/3D vectors, 2D/3D points, 2D/3D matrices) and their associated usual
+behavior: for example, the norm of a vector, the determinant, the trace or the
+inverse of a matrix.</p>
+<p>These mathematical classes are concrete (as opposed to the interfaces), and
+are optimized to give the best performance. Their instances cannot be streamed.
+In fact, they are not dedicated to be stored but only to be used in a transient
+way.</p>
+<p>The mathematical classes use the operators (+, *, ^), when this makes sense:
+hence, you can add two vectors with the <em>+</em> operator, or define a vector
+by subtracting a point to another one.</p>
+<p>The methods of the mathematical classes always consider that their outputs
+are allocated by the caller: in that way, the caller completely manages the
+memory, and can optimize its use. Now, following the CAA naming conventions of
+the arguments, all their arguments must be named with the <em>i</em> prefix,
+even the outputs (resource allocated and deallocated by the caller). This is not
+very significant for distinguishing which is really modified. Hence, the
+&quot;output&quot; arguments are denoted with an <em>io</em> prefix.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMthBase Use Case</h3>
+<p>CAAMthBase is a use case of the CAAMathematics.edu framework that illustrates
+Mathematics framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMthBase Do</h4>
+<table width="100%">
+  <caption>Fig. 1: The Objects Used In the CAAMthBase Use Case</caption>
+  <tr>
+    <td width="50%"><img src="images/Math1.gif" alt="Math1.gif (3569 bytes)" width="480" height="384"></td>
+    <td width="50%">In this use case, you use the <tt>CATMathPoint</tt>, <tt>CATMathVector</tt>,
+      <tt>CATMathLine</tt>, <tt>CATMathAxis</tt> and <tt>CATMathTransformation</tt>
+      classes.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMthBase</h4>
+<p>To launch CAAMthBase, you will need to set up the build time environment,
+then compile CAAMthBase.m along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMthBase Code</h4>
+<p>The CAAMthBase use case is made of a main named CAAMthBase.cpp located in the
+CAAMthBase.m module of the CAAMathematics.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMathematics.edu\CAAMthBase.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMathematics.edu/CAAMthBase.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical sections in <tt>CAAMthBase</tt>:
+<ol>
+  <li><a href="#Creating Points, Vectors, Lines">Creating Instances Points,
+    Vectors, Lines</a> directly or by the means of operators</li>
+  <li><a href="#Searching For the Eigen Values and Vectors of a 3x3 Matrix">Searching
+    For the Eigen Values and Vectors Of a 3x3 Matrix</a></li>
+  <li><a href="#Defining a transformation of axis systems">Defining a
+    Transformation of Axis Systems</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating Points, Vectors, Lines"></a>Creating Points, Vectors,
+Lines</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><a name="CATMathPoint"></a>CATMathPoint 	O, A(20. ,10. ,0.) ;<em> // Default constructor, O is (0.,0.,0.)
+	
+</em><a name="CATMathVector"></a>CATMathVector u(10., 20. ,0.);
+u.<a name="Normalize"></a>Normalize();                   <em>  // Normalize u;
+	
+// H: Orthogonal projection of A on the line (O,u): 
+// Use the operators 
+// A-O is a vector, (A-O)*u the dot product
+//
+</em>CATMathVector OA = <strong>A - O</strong> ;
+CATMathPoint  H  = O + ( <strong><a name="OA*u"></a>OA*u</strong><a name="OA*u"> </a>) * u;<em>
+ 
+// Computes the normal of the two vectors (A-O) and u: ^ is the cross product
+</em>CATMathVector n  = <strong><a name="OA ^ u"></a>OA ^ u</strong>; <em>     
+	
+//
+// Another way to project to get H: 
+// use the Project method of the CATMathLine class. 
+//
+</em><a name="CATMathLine"></a>CATMathLine  line(O,u);
+CATMathPoint projection;
+line.<a name="Project"></a>Project( A , projection );<em>
+	 
+// Returns the <a name="SquareDistanceTo"></a>distance between the two computed points. 
+//If non nul, it is an error.
+		
+</em>if ( H.SquareDistanceTo( projection ) != 0.  ) return (1);<em>
+	
+// Outputs the coordinates of the projected points
+</em><strong>double aCoord[3]</strong>;<em>
+</em>H.GetCoord( aCoord );
+cout &lt;&lt; &quot;coordinates of the projected point : &quot; 
+		&lt;&lt; aCoord[0] &lt;&lt; &quot;\t&quot; 
+		&lt;&lt; aCoord[1] &lt;&lt; &quot;\t&quot;
+		&lt;&lt; aCoord[2] &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p>Notice:
+<ul>
+  <li>The use of the operators: <em>A-O </em>is a vector<em>, (A-O)*u </em>the
+    dot product<em>, ^ </em>is the cross product.</li>
+  <li>The allocation of the memory by the caller; the <tt>aCoord</tt> array for
+    example.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Searching For the Eigen Values and Vectors of a 3x3 Matrix"></a>Searching
+For the Eigen Values and Vectors of a 3x3 Matrix</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>// M=  0. 12.  13.
+//    21.  0.  23.
+//    31.  32.  0.</em> 
+	
+<a name="CATMath3x3Matrix"></a>CATMath3x3Matrix M ( 0.,  0.,  0., 
+		    21.,  0.,  0.,
+	            31., 32.,  0.);
+	
+<em>// It is not invertible</em>
+CATMath3x3Matrix N;
+if ( M.<a name="Inverse"></a>Inverse( N ) ) return (2);
+	
+<em>// Retrieves the eigen vectors and values</em>
+int	      nbValues;
+double	      aEigenValues [3];
+CATBoolean    aHasAssociatedVector[3];
+CATMathVector aEigenVectors[3];
+CATBoolean    isDiagonal;
+	
+M.<a name="EigenVectors"></a>EigenVectors( nbValues , 
+		aEigenValues , 
+		<strong>aHasAssociatedVector</strong> , 
+		aEigenVectors , 
+		isDiagonal );
+
+for(int i = 0 ; i &lt; nbValues ; i++ )
+{
+	cout &lt;&lt; &quot;Eigen value number &quot; &lt;&lt; i+1 &lt;&lt; &quot; : &quot; &lt;&lt; aEigenValues[i];
+	if (aHasAssociatedVector[i]) 
+	{
+	   cout &lt;&lt; &quot; eigen vector &quot;	&lt;&lt; aEigenVectors[i].GetX() &lt;&lt; &quot;\t&quot;
+		&lt;&lt; aEigenVectors[i].GetY() &lt;&lt; &quot;\t&quot;
+		&lt;&lt; aEigenVectors[i].GetZ() &lt;&lt; endl;
+	}
+	else
+	{
+	   cout &lt;&lt; &quot; no associated eigen vector &quot; &lt;&lt; endl;
+	}
+		
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The method to search the eigen values and vectors takes into account the case
+where there is no vector associated with an eigen value, that is to say when the
+dimension of the associated eigenspace is less than the multiplicity of the
+eigenvalue. Hence, the <tt>aHasAssociated</tt> array allows the caller to test
+whether this vector exists.</p>
+<p>Notice also that all the arrays are allocated by the caller.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Defining a transformation of axis systems"></a>Defining a
+transformation of axis systems</h4>
+<p>To define the tranformation of an axis system into another one, one has to
+combine two transformations:
+<ul>
+  <li>the first from the final axes system to the canonical</li>
+  <li>the second from the canonical axes system to the initial.</li>
+</ul>
+<p>The constructor of <a name="CATMathAxis"></a><tt><i>CATMathAxis</i></tt>
+takes a point and three vectors as input arguments. If these arguments are
+omitted, default values are used.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%">CATMathAxis axis(A,U,V,W);</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="50%">CATMathAxis axis(A,U,V);</td>
+    <td width="50%">W is by default the third canonical direction</td>
+  </tr>
+  <tr>
+    <td width="50%">CATMathAxis axis(A,U);</td>
+    <td width="50%">W is by default the third canonical direction<br>
+      V is by default the second canonical direction</td>
+  </tr>
+  <tr>
+    <td width="50%">CATMathAxis axis(A);</td>
+    <td width="50%">W is by default the third canonical direction<br>
+      V is by default the second canonical direction<br>
+      U is by default the first canonical direction</td>
+  </tr>
+  <tr>
+    <td width="50%">CATMathAxis axis;</td>
+    <td width="50%">W is by default the third canonical direction<br>
+      V is by default the second canonical direction<br>
+      U is by default the first canonical direction<br>
+      A is by default the canonical origin</td>
+  </tr>
+</table>
+<p>The constructor uses the three input vectors as follows:
+<ul>
+  <li><tt>U</tt> is normalized (if needed) to become the axis first direction.</li>
+  <li>The axis second direction belongs to the plane (<tt>U, V</tt>) and is
+    orthogonal to <tt>U</tt>.</li>
+  <li><tt>W</tt> is used to give the orientation of the axis system.</li>
+</ul>
+<p>Although the input vectors can be not normalized and orthogonal, there
+resulting axis has three normalized and orthogonal directions.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathAxis <strong>fromAxis</strong> ( O , OA , u );    
+CATMathAxis toAxis   ( A , u , H-A);
+<a name="CATMathTransformation"></a>CATMathTransformation transfo2;
+
+<em>// the transformation is defined as the composition 
+//of two transformation as follows:</em>
+transfo2 = CATMathTransformation ( toAxis,<a name="CATMathOIJK"></a>CATMathOIJK ) 
+	 * CATMathTransformation ( CATMathOIJK, fromAxis);
+
+<em>// <a name="apply it on a point"></a>apply it on a point:</em>
+CATMathPoint transfoOfO = transfo2 <strong>*</strong> O;
+
+<em>// the first coordinate of O in fromAxis is negative in toAxis.
+</em>if ( transfo2OfO.GetX()&gt;0) return (4) ; 
+
+<em>// the second coordinate of O in fromAxis is positive in toAxis.</em>
+ if ( transfo2OfO.GetY()&lt;0) return (4) ; 
+</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li><tt>fromAxis</tt> is the axes system defined as follows:
+    <ul>
+      <li>The point <tt>O</tt> is the origin,</li>
+      <li>The vector <tt>OA</tt> is normalized to become the first direction ,</li>
+      <li>The second direction is orthogonal to OA, and in the (OA,u) plane.</li>
+      <li>The third argument is taken by default to the third direction of the
+        canonical axes system. <tt>fromAxis</tt> third direction is orthogonal
+        to the two firsts, in the orientation defined by the third argument</li>
+    </ul>
+  </li>
+  <li><tt>CATMathOIJK</tt> represents the canonical axis system.</li>
+  <li>Notice the use of the * operator.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has proposed milestones to use the mathematical classes, and has
+illustrated them on some examples.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    <td>Building and Launching a CAA V5 Use Case</a>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

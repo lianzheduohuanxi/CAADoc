@@ -1,0 +1,428 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Action Manager Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Action Manager Interface</h3>
+      <em>Creating and deleting Actions and ECRs</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the ENOVICWActionManager interface of the
+      ENOVInterfaces framework to create and remove Actions and Engineering
+      Change Requests in the Change Management domain.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEviActionManager Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAAEviActionManager Do?</a></li>
+          <li><a href="#How">How to Launch CAAEviActionManager</a></li>
+          <li><a href="#Where">Where to Find the CAAEviActionManager Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and delete two of the
+basic objects of the Change Management domain: Actions and Engineering Change
+Requests. These objects are used to request and accomplish the modification or
+development of a product. The ENOVInterfaces framework contains the
+ENOVICWActionManager interface which allow you to directly create the business
+objects which may then be manipulated as desired.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEviActionManager Use Case</h3>
+<p>CAAEviActionManager is a use case of the CAAENOVInterfaces.edu framework that
+illustrates the creation of the Actions and Engineering Change Requests.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEviActionManager Do?</h4>
+<p>CAAEviActionManager begins by opening a VPM session and creating a login a
+session. Then the Action Manager is retrieved. The necessary parameters are
+created and the managers are directly used to create the business objects.
+<p>The ENOVInterfaces interfaces/methods shown are as follows:</p>
+<ul>
+  <li><b>ENOVIBOActionManager.h - CreateNewAction</b></li>
+  <li><b>ENOVIBOActionManager.h - UpdatecustomAttribute</b></li>
+  <li><b>ENOVIBOActionManager.h - CreateNewEcr</b></li>
+  <li><b>ENOVIBOActionManager.h - RemoveAction</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEviActionManager</h4>
+<p>To launch CAAEviActionManager, you will need to set up the build time
+environment, then compile CAAEviActionManager.cpp along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>]. The required
+interfaces can be found in the ENOVInterfaces, VPMInterfaces, VPMPersistency,
+and System frameworks.</p>
+<p>When the use case is built and the run time environment set, from the directory where the executable file is stored, 
+type the following to execute the use case:</p>
+<p><code>CAAEviActionManager EnoviaUserLoginId EnoviaUserPasswd Role</code></p>
+<p>Where:</p>
+<ul>
+	<li><code>CAAEviActionManager</code> is the use case executable name.</li>
+	<li><code>EnoviaUserLoginId</code> is the login identifier of the 
+		ENOVIA user you intend use to run the use case.</li>
+	<li><code>EnoviaUserPasswd</code> is the password of this user.</li>
+	<li><code>Role</code> is the role of this user, such as 
+		VPMADMIN.ADMIN.DEFAULT.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEviActionManager Code</h4>
+<p>The CAAEviActionManager use case is made of a single file located in the
+CAAEviActionManager.m module of the CAAENOVInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVInterfaces.edu\CAAEviActionManager.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVInterfaces.edu/CAAEviActionManager.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAEviActionManager use case is
+shown here. There are five logical steps in the CAAEviActionManager use case:</p>
+<ol>
+  <li><a href="#Step1">Get the Action manager</a></li>
+  <li><a href="#Step2">Create an Action</a></li>
+  <li><a href="#Step3">Create an Engineering Change Request</a></li>
+  <li><a href="#Step4">Update a custom attribute</a></li>
+  <li><a href="#Step5">Delete Action/ECR</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Get the Action manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;ENOVIBOActionManager.h&quot; </pre>
+    </td>
+  </tr>
+</table>
+<p>This include statement gives access to the interface demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+ //--- Get the ENOVIBOActionManager
+
+    ENOVIBOActionManager_var spActMgr = GetBOActManager(); 
+    if ( spActMgr == NULL_var ) 
+    {  
+    	cout &lt;&lt; &quot;ERROR in getting Action Manager.&quot; &lt;&lt; endl &lt;&lt; flush; 
+    	VPMSession::CloseSession();
+       	return 2;
+    }
+    cout &lt;&lt; &quot;Got Action Manager successfully.&quot; &lt;&lt; endl &lt;&lt; flush; </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>After the VPM session is opened, you can simply retrieve the action
+    manager with a call to <b>GetBOActManager</b>().</li>
+  <li>Here, the Action Manager is called <b>spActMgr</b>.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Create an Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;CATIAFLAction.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    #include &quot;ENOVIBOActionManager.h&quot;
+       </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//--- Create a new Action 
+
+    CATIVpmAFLAction_var Action = NULL_var;
+    CATUnicodeString ActType(&quot;Action_Design&quot;);
+    CATUnicodeString ActName(&quot;MyDesignAction&quot;);
+    CATUnicodeString ActPriority(&quot;Routine&quot;);
+    CATUnicodeString ActInitialAbstract(&quot;This is a CAA Design Action.&quot;);
+    
+    rc = spActMgr-&gt;CreateNewAction( ActType, 
+                                  Action,
+                                  ActName,
+                                  ActPriority,
+                                  ActInitialAbstract );
+                                  
+    if ( !SUCCEEDED(rc) || Action==NULL_var )
+    {   
+    	cout &lt;&lt; &quot;ERROR in creating Action.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 3;
+    }    
+    cout &lt;&lt; &quot;Created new Action successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>With the Action manager <b>spActMgr,</b> a call to member method <b>CreateNewAction
+    </b>is made. The arguments passed are <b>ActType</b>
+    (&quot;Action_Design&quot;), <b>ActName</b> (&quot;MyDesignAction&quot;), <b>ActPriority</b>
+    (&quot;Routine&quot;), and <b>ActInitialAbstract</b> (&quot;This is a CAA
+    Design Action&quot;).</li>
+  <li>The method creates a CATIVpmAFLAction object (<b>Action</b>) and returns
+    S_OK when successfully completed. E_FAIL is returned if the create is not
+    successful.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Create an Engineering Change Request</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      #include &quot;CATIVpmAFLAction.h&quot;
+      #include &quot;CATUnicodeString.h&quot;
+      #include &quot;ENOVIBOActionManager.h&quot;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//--- Create a new Engineering Change Request 
+
+    CATIVpmAFLAction_var Ecr = NULL_var;
+    CATUnicodeString EcrType(&quot;ECR&quot;);
+    CATUnicodeString EcrName(&quot;MyEcr&quot;);
+    CATUnicodeString EcrPriority(&quot;Routine&quot;);
+    CATUnicodeString EcrInitialAbstract(&quot;This is a CAA Engineering Change Request.&quot;);
+    CATUnicodeString EcrTypeCode(&quot;Release&quot;);
+    
+    rc = spActMgr-&gt;CreateNewECR( EcrType, 
+                                 Ecr,
+                                 EcrName,
+                                 EcrPriority,
+                                 EcrInitialAbstract,
+                                 EcrTypeCode );
+                                  
+    if ( !SUCCEEDED(rc) || Ecr==NULL_var )
+    {  
+    	cout &lt;&lt; &quot;ERROR in creating Engineering Change Request.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 4;
+    }    
+    cout &lt;&lt; &quot;Created new Engineering Change Request successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>With the Action manager <b>spActMgr</b> a call to member method <b>CreateNewECR</b>
+    is made. The arguments passed are <b>EcrType</b> (&quot;Routine&quot;), <b>EcrName</b>
+    (&quot;MyEcr&quot;), <b>EcrPriority</b> (&quot;Routine&quot;), <b>EcrInitialAbstract</b>
+    (&quot;This is a CAA Engineering Change Request&quot;), and <b>EcrTypeCode</b>
+    (&quot;Release&quot;).</li>
+  <li>The method creates a CATIVpmAFLAction object (<b>Ecr</b>) and returns S_OK
+    when successfully completed. E_FAIL is returned if the create is not
+    successful.</li>
+</ol>
+<p>&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Update a custom attribute</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      #include &quot;CATIVpmFactoryObject.h&quot;
+      #include &quot;CATUnicodeString.h
+      #include &quot;ENOVIBOActionManager.h&quot;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//--- Update Custom Attribute 'ServiceLife' on the Action
+
+    CATIVpmFactoryObject_var ActFactObj(Action);
+    CATUnicodeString attName(&quot;ServiceLife&quot;);
+    CATUnicodeString attValue(&quot;20 years&quot;);
+    
+    rc = spActMgr-&gt;UpdatecustomAttribute(ActFactObj,
+    					 attName,
+    					 attValue);
+
+    if ( !SUCCEEDED(rc) )
+    {  
+    	cout &lt;&lt; &quot;ERROR in Updating Custom Attribute.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 5;
+    }    
+    cout &lt;&lt; &quot;Updated Custom Attribute successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>First, the action object (<b>Action</b>) is cast as a CATIVpmFactoryObject
+    type, <b>ActFactObj</b>.</li>
+  <li>Then the custom attribute <b>attName </b>(&quot;ServiceLife&quot;) and its
+    value <b>attValue</b> (&quot;20 years&quot;) are set. This would be a
+    customer defined attribute.</li>
+  <li>With the Action manager <b>spActMgr</b> a call to member method <b>UpdatecustomAttribute</b>
+    is made.</li>
+  <li>The method returns S_OK when successfully completed. E_FAIL is returned if
+    the create is not successful.</li>
+</ol>
+<p>&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step5"></a>Delete Action/ECR</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      #include &quot;CATIVpmAFLAction.h&quot;
+      #include &quot;ENOVIBOActionManager.h&quot;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//--- Delete Action
+
+    rc = spActMgr-&gt;RemoveAction(Action);
+                                  
+    if ( !SUCCEEDED(rc))
+    {  
+    	cout &lt;&lt; &quot;ERROR in Deleting Action.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 6;
+    }    
+    cout &lt;&lt; &quot;Deleted Action successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+
+//--- Delete Engineering Change Request
+
+    rc = spActMgr-&gt;RemoveAction(Ecr);
+                                  
+    if ( !SUCCEEDED(rc))
+    {  
+    	cout &lt;&lt; &quot;ERROR in Deleting Engineering Change Request.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 7;
+    }    
+    cout &lt;&lt; &quot;Deleted Engineering Change Request successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>With the Action manager <b>spActMgr</b>, a call to member method <b>RemoveAction</b>
+    is made.
+  <li>To delete the Action, the Action object (<b>Action</b>) is the argument.
+    To delete the ECR object, (<b>Ecr</b>) is the argument.</li>
+  <li>The method deletes the object and returns S_OK when successfully
+    completed. E_FAIL is returned if the delete is not successful.</li>
+</ol>
+<p>&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The ENOVIBOActionManager interface available in the ENOVInterfaces framework
+can be used to create and delete Actions and ECRs. Action manager is also used
+to update customer defined attributes on Actions. You can retrieve the Action
+manager with <b>GetBOActManager</b>().</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,536 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:g_vml_="urn:schemas-microsoft-com:vml" xmlns:g_o_="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Introduction to Multiprocessing</title>
+<style type="text/css">
+.source-cpp .br0 {color: #47478F;}
+.source-cpp .me1 {color: #993300;}
+.source-cpp .nu0 {color: #A30000;}
+.source-cpp .co1 {color: #006600; font-style: italic;}
+.printfooter {
+	display: none;
+}
+.source-cpp .kw1 {color: #0000ff;}
+.source-cpp .kw4 {color: #0000ff;}
+.source-cpp .kw2 {color: #0000ff;}
+.source-cpp .kw3 {color: #0000dd;}
+.source-cpp .coMULTI {color: #006600; font-style: italic;}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Introduction to Multiprocessing</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>CGM contains a multiprocessing infrastructure called MProc.
+		 With it one can utilize available processors of a system to 
+		 improve performance of compute intensive operations, 
+		 or to compute tasks in the background leaving the foreground process responsive.
+		 Because the technology is based on multiple processes with inter-process
+		 communication, it does not require code to be thread-safe or reentrant. 
+		 The MProc system handles the complexities of process management, 
+		 communication, and scheduling, leaving a simple client implementation based 
+		 on a minimal and structured interface. While the MProc system can be used for most any multi-process purpose, it has functionality to optimize the transfer of CGM objects between processes. This specialization provides an advantage that cannot be equaled with other multiprocessing tools. 
+
+</p>
+		<ul>
+			<li><a href="#Overview">Overview</a></li>
+			<li><a href="#Synchronous Multiprocessing">Synchronous 
+			Multiprocessing</a></li>
+			<li><a href="#Asynchronous_Multiprocessing">Asynchronous Multiprocessing</a></li>
+			<li><a href="#Sequential_Tasks">Sequential Tasks</a></li>
+			<li><a href="#Object Relationships">Object Relationships</a></li>
+			<li><a href="#Task Manager Construction">Task Manager Construction</a></li>
+			<li><a href="#Stream Optimizations">Stream Optimizations</a></li>
+			<li><a href="#Process Specific Data">Process Specific Data</a></li>
+			<li><a href="#Enabling Multiprocessing">Enabling Multiprocessing</a></li>
+			<li>
+			<a href="#Resource Utilization">Resource Utilization</a></li>
+			<li>
+			<a href="#Debugging Techniques">Debugging Techniques</a></li>
+			<li><a href="#In Short">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Overview">Overview</a></h2>
+<p>Adding multiprocessing to an algorithm requires several fundamental steps: 
+operations must be divided into independent tasks, tasks must be distributed 
+to available processes, and then computed, and finally the results accumulated. 
+This requires process management, task management, and task containment. 
+
+<p>Process management is handled internally by the MProc Infrastructure. 
+It interacts with the task manager, manages the lifetimes of processes, 
+controls inter-process communications, and much more. 
+
+<p>Task management is handled by the CATMProcTaskManagerCGM class.
+This class provides functionality for creating new tasks and for processing completed tasks. 
+Custom implementations derive from this class to add task division and accumulation logic.<p>Task containment, which defines a container to hold operational data,
+is handled by the CATMProcTaskContainerCGM class.
+It provides functionality to format computational data into buffers that are used for inter-process communication, and to compute tasks.
+Custom implementations derive from this class to add data in the form of inputs and outputs,
+and operators to compute the results. 
+
+<p>Additionally, an algorithm must be modified or newly developed to contain multiprocessing code,
+i.e. a parallel region. The code must handle situations where multiprocessing is not possible,
+on a single core machine for instance, by computing operations sequentially without introducing unnecessary complexities such as multiple code paths. 
+
+<p>The &#8216;parallel region&#8217; is handled effectively by the MProc infrastructure.
+It takes care of processor utilization and the CATMProcTaskManagerCGM has provisions to run the tasks sequentially when necessary. The client implementation does not need to provide special code for either scenario since it is handled transparently. 
+
+<p>An example of MProc implementation is located in the CAAGMModelTesMProcImpl.m 
+and CAAGMModelTesMProcMain.m modules of CAAGMModelInterfaces.edu. This article 
+refers to this use case.<h2><a name="Synchronous Multiprocessing">Synchronous Multiprocessing</a></h2>
+<p>In the typical case, multiprocessing is used to compute particular operations
+as quickly as possible. Consider for instance the classic example of tessellating 
+a multi-body model (aka assembly). In the sequential workflow, the bodies are 
+tessellated one after the other. One can easily envision a loop, iterating over a list of bodies,
+tessellating and rendering each one in turn.  </p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp"><span class="kw1">for</span> <span class="br0">(</span><span class="kw4">int</span> i = <span class="nu0">1</span>; i &lt;= BodyList.<span class="me1">Size</span><span class="br0">()</span>; ++i<span class="br0">)</span>
+<span class="br0">{</span>   
+    CATBody* Body = BodyList<span class="br0">[</span>i<span class="br0">]</span>;
+    TessData* Data = Tessellate<span class="br0">(</span>Body<span class="br0">)</span>;
+    Render<span class="br0">(</span>Data<span class="br0">)</span>;
+<span class="br0">}</span></pre>
+  </TD>
+    </TR>
+</TABLE>
+
+<p>
+In the parallel case, the loop will be replaced with a custom CATMProcTaskManagerCGM 
+implementation, containing the list of bodies. This task manager is responsible for
+distributing the bodies, and for rendering them as each operation completes.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CustomTessellator MyTessellator<span class="br0">(</span>BodyList<span class="br0">)</span>;
+MyTessellator.<span class="me1">Run</span><span class="br0">()</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<p>
+The base class Run method initiates the parallel transaction
+and hands control over to the process manager.
+When additional processes are not available, 
+the Run method retains control and runs the tasks sequentially on the master process.
+In either case, the custom task manager is queried for tasks in the 
+Virtual NextTask method and is presented with completed task in the virtual EndTask
+method until none remain. </p>
+<p>
+The NextTask method receives a pointer to a CATMProcProcessDataCGM class object. 
+This class is used to attach process specific data to slave processes. Once attached, the objects remain associated with the particular slave processes until
+the end of the parallel region. Custom implementations can use this to attach custom data to specific processes.</p>
+<p>
+It is up to the custom implementation to track progress in order to know 
+when all the tasks have been created. In this case the next body to tessellate
+is tracked with the variable Scheduled, as a class data member along
+with the body list. Appropriate constructors and destructors are omitted to simplify the example.
+However, these are discussed in the Object Relationships section.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp"><span class="kw2">class</span> CustomTessellator&nbsp;: <span class="kw2">public</span> CATMProcTaskManagerCGM
+<span class="br0">{</span>
+    ListPOfCATBody BodyList;
+    <span class="kw4">int</span> Scheduled;
+    <span class="kw4">int</span> Completed;
+&nbsp;
+<span class="kw2">public</span>:
+&nbsp;
+    <span class="kw2">virtual</span> CATMProcTaskContainerCGM* NextTask<span class="br0">(</span>CATMProcProcessDataCGM*&amp; ioProcessData<span class="br0">)</span>
+    <span class="br0">{</span>
+        <span class="kw1">if</span> <span class="br0">(</span>Scheduled &lt; BodyList.<span class="me1">Size</span><span class="br0">())</span>
+          <span class="kw1">return</span> <span class="kw3">new</span> CustomTask<span class="br0">(</span>BodyList<span class="br0">[</span>++Scheduled<span class="br0">])</span>;
+        <span class="kw1">else</span>
+          <span class="kw1">return</span> <span class="kw2">NULL</span>;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT EndTask<span class="br0">(</span>CATMProcTaskContainerCGM* iTask, CATMProcProcessDataCGM* iProcessData<span class="br0">)</span>
+    <span class="br0">{</span>
+        CustomTask* Task = <span class="br0">(</span>CustomTask*<span class="br0">)</span>iTask;
+        Render<span class="br0">(</span> Task-&gt;<span class="me3">GetTessData</span><span class="br0">())</span>;
+        <span class="kw3">delete</span> Task;
+        ++Completed; <span class="co1">// Increment our counter of completed tasks.</span>
+        <span class="kw1">return</span> S_OK;
+    <span class="br0">}</span>
+<span class="br0">}</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<p>The individual tasks are defined in a custom class derived from CATMProcTaskContainerCGM. 
+This class contains all the operational data, the inputs and outputs, and the operational
+task to be performed in the virtual Run method. In this example, the input is the body to
+tessellate and the output is the tessellation data.</p>
+<p>The derived class must also implement four methods needed to stream the operational data 
+for inter-process communication. The inputs are streamed on the master side with StreamInput 
+and un-streamed on the slave side with UnstreamInput. The outputs (results) are streamed 
+on the slave side with StreamOutput and un-streamed on the master with UnstreamOutput. 
+The streaming is necessary to place the data into a contiguous buffer. The buffer is
+then transferred between processes.</p>
+<p>In our example we use the CGM functions WriteGeometry to stream the body and ReadGeometry 
+to un-stream the body. We also use the CATCGMStream methods WriteBoolean and ReadBoolean
+to indicate whether or not we have streamed tessellation data. The CATCGMStream class 
+has a rich set of methods to stream all types of data.
+The Functions used in the example to stream and un-stream tessellation
+data do not exist as such in CGM. They are simplifications, 
+left to be implemented in client code using the CATCGMStream methods.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp"><span class="kw2">class</span> CustomTask&nbsp;: <span class="kw2">public</span> CATMProcTaskContainerCGM
+<span class="br0">{</span>
+    CATBody* Body;
+    TessData* Data;
+&nbsp;
+<span class="kw2">public</span>:
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT Run<span class="br0">()</span>
+    <span class="br0">{</span>
+        Data = Tessellate<span class="br0">(</span>Body<span class="br0">)</span>;
+        <span class="kw1">return</span> S_OK;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT StreamInput<span class="br0">(</span>CATCGMStream&amp; iStream<span class="br0">)</span>
+    <span class="br0">{</span>
+        <span class="kw1">return</span> WriteGeometry<span class="br0">(</span>iStream, Body<span class="br0">)</span>;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT UnstreamInput<span class="br0">(</span>CATCGMStream&amp; iStream<span class="br0">)</span>
+    <span class="br0">{</span>
+        <span class="kw1">return</span> ReadGeometry<span class="br0">(</span>iStream, Body<span class="br0">)</span>;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT StreamOutput<span class="br0">(</span>CATCGMStream&amp; iStream, HRESULT iResult<span class="br0">)</span>
+    <span class="br0">{</span>
+        HRESULT Result = iResult;
+        <span class="kw1">if</span> <span class="br0">(</span>Data &amp;&amp; Result == S_OK<span class="br0">)</span>
+        <span class="br0">{</span>
+            iStream.<span class="me1">WriteBoolean</span><span class="br0">(</span><span class="kw2">TRUE</span><span class="br0">)</span>;
+            Result = MyStreamTessellationData<span class="br0">(</span>iStream, Data<span class="br0">)</span>;
+        <span class="br0">}</span>
+        <span class="kw1">else</span> <span class="co1">// No tessellation data.</span>
+        <span class="br0">{</span>
+            iStream.<span class="me1">WriteBoolean</span><span class="br0">(</span><span class="kw2">FALSE</span><span class="br0">)</span>;
+        <span class="br0">}</span>
+        <span class="kw1">return</span> Result;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT UnstreamOutput<span class="br0">(</span>CATCGMStream&amp; iStream, HRESULT iResult<span class="br0">)</span>
+    <span class="br0">{</span>
+        HRESULT Result = iResult;
+        <span class="kw1">if</span> <span class="br0">(</span>Result == S_OK<span class="br0">)</span>
+        <span class="br0">{</span>
+            CATBoolean HaveData = <span class="kw2">FALSE</span>;
+            iStream.<span class="me1">ReadBoolean</span><span class="br0">(</span>HaveData<span class="br0">)</span>;
+            <span class="kw1">if</span> <span class="br0">(</span>HaveData<span class="br0">)</span>
+            <span class="br0">{</span>
+                Result = MyUnstreamTessellationData<span class="br0">(</span>iStream, Data<span class="br0">)</span>;			<span class="br0">}</span>
+            <span class="br0">}</span>
+        <span class="br0">}</span>
+        <span class="kw1">return</span> Result;
+    <span class="br0">}</span>
+<span class="br0">}</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<p>The four streaming methods are not utilized in the single process case, 
+only when multiple processes are used.
+This allows a single implementation to be used in both cases, 
+which greatly simplifies the code. A final important method to mention is Release.
+This purpose of this method is to clean up unnecessary data after the computational
+task is complete. For example, it is imperative to delete all newly created CGMObjects on slave
+processes because of potential conflicts with persistent identifiers. 
+CGMObjects streamed to slave processes must retain their identifiers, 
+which would not be possible if the identifiers are already used by other objects. 
+Ideally, only the streamed CGMObjects are retained after the operations are complete,
+as these are used for stream optimizations.</p>
+<p>In summary, adding a simple parallel region with the MProc system requires
+custom implementations of two classes: CATMProcTaskMangerCGM and CATMProcTaskContainerCGM. 
+The NextTask and EndTask methods are required in the former - and the Run, Release,
+and four streaming methods are required in the later. The rest is handled by the MProc system.</p>
+<h3><a name="Asynchronous_Multiprocessing">Asynchronous Multiprocessing</a></h3>
+<p>
+In some cases it may be beneficial to compute operations in the background, giving priority to the task running in the foreground. Here tasks are scheduled asynchronously, and results collected when needed. With very few changes, we can modify our tessellation example to run asynchronously. This for example, will allow the end-user to interact fluidly with the application while the tessellation is computed in the background. Instead of calling the Run method we call the base class StartAsyncTasks and EndAsyncTasks methods respectively. Nothing else needs to be changed.
+</p>
+<p>
+The behavior of these methods is not as straightforward as the Run method. 
+The StartAsyncTasks method will continue to call NextTask until no more tasks exist 
+(until it returns NULL). During this scheduling phase, 
+EndTask may be called to complete tasks. It will also block when all processors are busy 
+and more tasks remain. In blocking, it waits for processes to complete tasks so that more 
+can be scheduled. The EndAsyncTasks method will block until all tasks are complete. 
+This default use is best suited for scenarios with few tasks, to avoid excessive blocking.
+</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CustomTessellator MyTessellator<span class="br0">(</span>BodyList<span class="br0">)</span>;
+MyTessellator.<span class="me1">StartAsyncTasks</span><span class="br0">()</span>;
+<span class="co1">// Do something else ...</span>
+MyTessellator.<span class="me1">EndAsyncTasks</span><span class="br0">()</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<p>
+With a slightly more complex implementation it is possible to avoid blocking. 
+Both StartAsyncTasks and EndAsyncTasks take an optional &#8220;no block&#8221; argument. 
+When set, StartAsyncTasks returns when no slave processes are available to accept tasks.
+In this mode, StartAsyncTasks may have to be called more than once to get all tasks scheduled.
+Similarly, EndAsyncTasks returns when no completed tasks are available to be received,
+also leaving it to be called more than once in some cases. Note, calling StartAsyncTasks
+after calling EndAsyncTasks is not supported, since the parallel transaction is automatically
+terminated once EndAsyncTasks has been called and all scheduled tasks complete.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CustomTessellator MyTessellator<span class="br0">(</span>BodyList<span class="br0">)</span>;
+<span class="kw1">while</span> <span class="br0">(</span>MyTessellator.<span class="me1">HasTasks</span><span class="br0">())</span> <span class="coMULTI">/* Scheduled &lt; BodyList.Size() */</span>
+<span class="br0">{</span>
+    MyTessellator.<span class="me1">StartAsyncTasks</span><span class="br0">()</span>;
+    <span class="co1">// Do something else ...</span>
+<span class="br0">}</span>
+...
+<span class="kw1">while</span> <span class="br0">(</span>MyTessellator.<span class="me1">NotComplete</span><span class="br0">())</span> <span class="coMULTI">/* Completed &lt; BodyList.Size() */</span>
+<span class="br0">{</span>
+    MyTessellator.<span class="me1">EndAsyncTasks</span><span class="br0">()</span>;
+    <span class="co1">// Do something else ...</span>
+<span class="br0">}</span></pre>
+  </TD>
+    </TR>
+</TABLE>
+<h3><a name="Sequential_Tasks">Sequential Tasks</a></h3>
+<p>
+In some scenarios it makes sense to schedule certain tasks on the master process instead 
+of on a slave process. These tasks may be simple and quick to compute,
+and not warrant the overhead of streaming the computational data to and 
+from slave processes. As an example, tessellating analytic bodies is very fast.
+The streaming overhead might be less efficient. These can be computed on the master,
+while more complex shapes are scheduled on slave processes. </p>
+<p>Sequential operations in the master process can be scheduled by setting the appropriate
+values in the optional task manager method IsNextTaskSequential. 
+Specifically, setting the output argument oIsSequential to true will result 
+in the operator being run on the master process.
+When implementing this method, it is essential to set the output argument oNextTaskExists
+correctly, whether or not the operator is sequential, as this may release slave processes
+for the remainder of the parallel transaction. The remaining arguments are described in
+the reference material.</p>
+<p>The ability to schedule tasks sequentially in our tessellator 
+example is added by implementing the IsNextTaskSequential and 
+by setting oIsSequential when the next body to tessellate is &#8220;simple&#8221;.
+In the example code we call IsSimple, which is not CGM functionality. 
+This must be implemented by the client.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp"><span class="kw2">class</span> CustomTessellator&nbsp;: <span class="kw2">public</span> CATMProcTaskManagerCGM
+<span class="br0">{</span>
+    ListPOfCATBody BodyList;
+    <span class="kw4">int</span> Scheduled;
+    <span class="kw4">int</span> Completed;
+&nbsp;
+<span class="kw2">public</span>:
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT IsNextTaskSequential<span class="br0">(</span> 
+        CATMProcProcessDataCGM* iParallelProcessData,
+        CATMProcProcessDataCGM* iSequentialProcessData,
+        CATBoolean&amp;             oIsSequential,
+        CATBoolean&amp;             oNextTaskExists<span class="br0">)</span>
+    <span class="br0">{</span>
+        <span class="kw1">if</span> <span class="br0">(</span>Scheduled &lt; BodyList.<span class="me1">Size</span><span class="br0">())</span>
+        <span class="br0">{</span>
+            oNextTaskExists = <span class="kw2">TRUE</span>;
+            CATBody* Body = BodyList<span class="br0">[</span>Scheduled<span class="br0">]</span>;
+            <span class="kw1">if</span> <span class="br0">(</span> IsSimple<span class="br0">(</span>Body<span class="br0">)</span> <span class="br0">)</span>
+                oIsSequential = <span class="kw2">TRUE</span>;
+         <span class="br0">}</span>
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> CATMProcTaskContainerCGM* NextTask<span class="br0">(</span>CATMProcProcessDataCGM*&amp; ioProcessData<span class="br0">)</span>
+    <span class="br0">{</span>
+        <span class="kw1">if</span> <span class="br0">(</span>Scheduled &lt; BodyList.<span class="me1">Size</span><span class="br0">())</span>
+            <span class="kw1">return</span> <span class="kw3">new</span> CustomTask<span class="br0">(</span>BodyList<span class="br0">[</span>Scheduled++<span class="br0">])</span>;  
+        <span class="kw1">else</span>
+            <span class="kw1">return</span> <span class="kw2">NULL</span>;
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw2">virtual</span> HRESULT EndTask<span class="br0">(</span>CATMProcTaskContainerCGM* iTask, CATMProcProcessDataCGM* iProcessData<span class="br0">)</span>
+    <span class="br0">{</span>
+        CustomTask* Task = <span class="br0">(</span>CustomTask*<span class="br0">)</span>iTask;
+        Render<span class="br0">(</span> Task-&gt;<span class="me3">GetTessData</span><span class="br0">())</span>;
+        <span class="kw3">delete</span> Task;
+        ++Completed; <span class="co1">// Increment our counter of completed tasks.</span>
+        <span class="kw1">return</span> S_OK;
+    <span class="br0">}</span>
+<span class="br0">}</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+
+<h3><a name="Object Relationships">Object Relationships</a></h3>
+<p>The MProc system requires the relationships between the task managers and 
+task containers be stated explicitly. This information is used by slave 
+processes to instantiate the appropriate derived class objects. Use the 
+CATMProcRelationCGM macro to associate the custom CATMProcTaskManagerCGM class 
+with the custom CATMProcTaskContainerCGM class. The named relationship is needed 
+by the CATMProcTaskManagerCGM constructor and is passed on to slave processes.
+</p>
+<p>The macro, among other things, defines exported functions that instantiate 
+the custom classes. The first argument is simply a name used as an identifier. 
+It must begin with &quot;CATMProcRelationCGM&quot; in order to distinguish it from legacy 
+implementations. Also, it should be unique in order to avoid duplicates. The 
+second argument is the name of the custom task manager, the third the name of 
+the custom task container. </p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CATMProcRelationCGM<span class="br0">(</span> CATMProcRelationCGMTessellator, CustomTessellator, CustomTask<span class="br0">)</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<h3><a name="Task Manager Construction">Task Manager Construction</a></h3>
+<p>Custom task managers derive from CATMProcTaskManagerCGM. The base class has 
+mandatory construction arguments. The first is the name of the custom 
+CATMProcRelationCGM, the second is the name of the library that contains the 
+custom implementation. The third argument is the current factory. The library 
+name is needed by the slave processes in order to load the exported functions 
+that instantiate the custom classes. </p>
+<p>To correct our example, we add the appropriate use of the CATMProcRelationCGM 
+macro and additional arguments to the task manager constructor. </p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CATMProcRelationCGM<span class="br0">(</span> CATMProcRelationCGMTessellator, CustomTessellator, CustomTask<span class="br0">)</span>;
+&nbsp;
+CustomTessellator MyTessellator<span class="br0">(</span>&#8220;CATMProcRelationCGMTessellator&#8221;,&#8221;MyDll&#8221;, Factory, BodyList<span class="br0">)</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<h3><a name="Stream Optimizations">Stream Optimizations</a></h3>
+<p>The MProc system has a built-in optimization that avoids duplicate 
+inter-process transmissions of fundamental CGM objects. A model and its 
+supporting structures, having been sent once to a process, will not be sent 
+again in subsequent communications. This can significantly reduce the overhead 
+of sending data to slave processes. All objects streamed with the WriteGeometry 
+functions participate in this optimization. </p>
+<h3><a name="Process Specific Data">Process Specific Data</a></h3>
+<p>Process specific data is optionally attached to slaves in the NextTask method 
+using custom derived CATMProcProcessDataCGM implementations. For each slave 
+process utilized, the pointer to the argument passed to the NextTask method will 
+originally be NULL. Here the custom implementation can attach a derived object 
+by setting the pointer appropriately. The specific processes can then be 
+identified by querying the passed in pointer. This provides the ability to 
+customize tasks for specific processes. Custom implementations must use standard 
+new to create these objects, since they are automatically deleted by the MProc 
+system at the end of the parallel transactions. </p>
+<h3><a name="Enabling Multiprocessing">Enabling Multiprocessing</a></h3>
+<p>Ideally, one would either enable or disable multiprocessing only once during 
+the lifetime of an application, based upon end-user input. Applications that 
+support multiprocessing typically expose some means of selecting the number of 
+processors to use on a given system. The selection can then be set in the MProc 
+system with the static function <b>CATMProcSystem::EnableMProc</b>. </p>
+<p>Calling this function will by default enable the use of all available 
+processes. Specifying a 1 through the optional number-of-processes-to-use 
+argument, disables multiprocessing altogether. Specifying a positive value 
+greater than one will result in the use of that many processes, maxing out at 
+the number of physically available processors. Since this is a global setting, 
+it affects all parallel regions. Turning it on, in other words, enables all 
+parallel regions to utilize multiple processes when possible. </p>
+<p>The state of the MProc system can be changed at any time, except during 
+parallel operations. For example, the end-user might chose to use fewer 
+processors at some point in the lifecycle of the application. This can easily be 
+accommodated by calling <b>CATMProcSystem::EnableMProc</b> appropriately. The 
+change will affect all subsequent parallel transactions. </p>
+<p>
+It should be noted that the MProc system does <b>not</b> support nested 
+parallelism. Parallel regions encountered within an already active parallel 
+region, will not have access to additional proceses and will run sequentially.
+</p>
+<h3><a name="Resource Utilization">Resource Utilization</a></h3>
+<p>Client implementations can customize the number of processes to use in the 
+parallel transaction by setting a minimum and/or maximum value in their derived 
+task manager class. This should be used at the client code level, where it's 
+possible to define an optimal number of processes to be used for a given 
+computation, regardless of the number of physically available processors. </p>
+<p>Setting a minimum value makes sense when multiprocessing is viable only when 
+a certain number of processors are available. Setting a maximum value makes 
+sense when an algorithm scales poorly past a certain number of processors. Note, 
+the parallel transaction will fail and the Run method will return the failure, 
+when the minimum number of requested processors cannot be acquired. </p>
+<p>Asynchronous multiprocessing implies a minimum number of processes to use of 
+1. As a consequence, <b>StartAsyncTasks</b> will fail when an additional 
+processor is not available. Otherwise, the effects of setting minimum and 
+maximum values is the same as synchronous multiprocessing. </p>
+<p>To show this in an example, we can update our tessellator case to use a 
+minimum of two and a maximum of four slave processes. </p>
+<TABLE class="code">
+    <TR>
+        <TD>
+<pre class="source-cpp">CustomTessellator MyTessellator<span class="br0">(</span>&#8220;CATMProcRelationCGMTessellator&#8221;,&#8221;MyDll&#8221;, Factory, BodyList<span class="br0">)</span>;
+MyTessellator.<span class="me1">SetMinNbProcessesToUse</span><span class="br0">(</span><span class="nu0">2</span><span class="br0">)</span>; <span class="co1">// Use at least two</span>
+MyTessellator.<span class="me1">SetMaxNbProcessesToUse</span><span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span>; <span class="co1">//  at most four.</span>
+MyTessellator.<span class="me1">Run</span><span class="br0">()</span>;</pre>
+  </TD>
+    </TR>
+</TABLE>
+<h3><a name="Debugging Techniques">Debugging Techniques</a></h3>
+<p>Debugging operations that run on different processes can be challenging. To 
+help make this easier and to help assure a correct implementation, the MProc 
+systems provides an operational mode called MonoProcMode. Running parallel 
+transactions with this mode enabled causes all operations that normally execute 
+on slave processes to be exercised on the master process. This provides a 
+straightforward debugging technique to help verify proper implementations. 
+Enable MonoProcMode with the static method <b>CATMProcSystem::EnableMonoProcMode</b>. 
+Once enabled, this mode cannot be disabled in the current session. </p>
+<h3><a name="In Short">In Short</a></h3>
+<ul>
+				<li>Use the MProc system to speed up compute intensive 
+				operations with concurrent operations on multiple processes.
+				</li>
+				<li>Compute tasks in the background with asynchronous 
+				multiprocessing. </li>
+				<li>Take advantage of stream optimizations to avoid the overhead 
+				of inter-process communication. </li>
+				<li>Schedule tasks additionally on the master process to 
+				optimize efficiency. </li>
+</ul>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="History">History</a></h3>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

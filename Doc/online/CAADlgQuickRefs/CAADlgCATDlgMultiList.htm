@@ -1,0 +1,591 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgMultiList</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgMultiList</h3>
+      <em>Select one or several compound items in a list</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgMultiList</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Multiple List</caption>
+  <tr>
+    <td><img src="images/ListMultilist.jpg" alt="ListMultilist.jpg (3022 bytes)" width="123" height="46"></td>
+    <td>
+      <p align="left">The multiple list allows the end user to select one or
+      several compound items among a discrete list of predefined compound items.
+      The values are generally character strings. Scrollbars are added if the
+      list is longer or wider than the list display area. The selected value(s)
+      is (are) highlighted. The end user cannot enter values and can only select
+      among those proposed.</td>
+  </tr>
+</table>
+<p>Use multiple list whenever you propose to the end user to select compound
+items from a predefined list.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>A single compound item can be selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgLstMultisel</td>
+    <td>Several compound items can be selected using the Shift and Ctrl keys.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgListSelectNotification</td>
+    <td><code>GetListSelectNotification</code></td>
+    <td>Whenever a line is selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgListActivateNotification</td>
+    <td><code>GetListActivateNotification</code></td>
+    <td>Whenever a line is double clicked.</td>
+  </tr>
+  <tr>
+    <td>CATDlgListColumnActivateNotification</td>
+    <td><code>GetListColumnActivateNotification</code></td>
+    <td>Whenever a column is double clicked.</td>
+  </tr>
+  <tr>
+    <td>CATDlgListCellModifyNotification</td>
+    <td><code>GetListCellModifyNotification</code></td>
+    <td>Whenever a cell is modified.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The multiple list is dedicated to selection.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing a Multiple List</h4>
+<p>These following kinds of multiple list can be constructed.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>default</em></td>
+    <td class="code">
+      <pre>_pMultiList  = new CATDlgMultiList (iParent, iName);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Multiselection</em></td>
+    <td class="code">
+      <pre>_pMMultiList = new CATDlgMultiList (iParent, iName,
+                                    <strong>CATDlgListMultisel</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Line Content</h4>
+<p>You can do the following to manage the lines displayed in a multiple list:
+<ul>
+  <li>get the number of lines in the list with the GetLineCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfLines;
+NumberOfLines = _pMultiList-&gt;GetLineCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the number of columns in the list with the GetColumnCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfColumns;
+NumberOfColumns = _pMultiList-&gt;GetColumnCount ();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set the column titles with the SetColumnTitle method:
+    <table class="code">
+      <tr>
+        <td class="code">
+          <pre>int iNumberOfColumns = 5;
+CATUnicodeString _iColumnTitles[5];
+ColumnTitles[0] = ...
+...
+_pMultiList-&gt;SetColumnTitles(iNumberOfColumns,_iColumnTitles);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get and set or modify the contents of a given cell with the methods
+    GetColumnItem, SetColumnItem, and SetColumnItems:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get the contents of a cell</em></td>
+        <td class="code">
+          <pre>CATUnicodeString oCellContents;
+int iRowNumber = 3;
+int iColumnNumber = 2;
+_pMultiList-&gt;GetColumnItem(iColumnNumber,
+                           oCellContents,
+                           iRowNumber);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>and modify it with another contents</em></td>
+        <td class="code">
+          <pre>CATUnicodeString iCellContents;
+iCellContents = ...
+int RowIndex; // index of the updated row
+RowIndex = _pMultiList-&gt;SetColumnItem(iColumnNumber,
+                                      iCellContents,
+                                      iRowNumber,
+                                      CATDlgDataModify);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Two modes are available: CATDlgDataAdd to add a row and set the contents
+    of its iColumnNumberth cell, which is the default, and CATDlgDataModify to
+    modify the iColumnNumberth cell contents in the iRowNumberth existing row.
+    If iRowNumber is omitted or set to -1, the row is appended to the list. The
+    returned value is the number of the added or modified row. You can also set
+    or modify a group of contiguous cells in the same column:</p>
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>modify 5 cells in column 2 starting from row 3</em></td>
+        <td class="code">
+          <pre>CATUnicodeString _iCellContents[5]
+_iCellContents[0] = ...
+...
+int iSize = 5
+int iRowNumber =2;
+int iRowNumber = 3;
+int FirstRowIndex;
+FirstRowIndex = _pMultiList-&gt;SetColumnItems(iColumnNumber,
+                                             _iCellContents,
+                                             iSize,
+                                             iRowNumber,
+                                             CATDlgDataModify);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The value returned is the index of the first row modified or added. If
+    iRowNumber is omitted or set to -1, the rows are appended to the list.</p>
+  </li>
+  <li>reorder columns with the ReorderColumns method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int _iNewNumberArray [5] = { 5, 4, 3, 2, 1 };
+int iArraySize = 5;
+int iFirstColumn = 1;
+_pMultiList-&gt;ReorderColumns(_iNewNumberArray,
+                             iArraySize,
+                             iFirstColumn);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This example inverts the five first columns.</p>
+  </li>
+  <li>delete one or several rows with the ClearLine:method:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>delete row 5</em></td>
+        <td class="code">
+          <pre>int iRowNumber = 5;
+_pMultiList-&gt;ClearLine(iRowNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>delete rows 1,3,6</em></td>
+        <td class="code">
+          <pre>int iRowNum[3] = { 1,3,6 };
+int iRowNumSize=3;
+_pMultiList-&gt;ClearLine(iRowNum, iRowNumSize);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>delete all rows</em></td>
+        <td class="code">
+          <pre>_pMultiList-&gt;ClearLine();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Line Display</h4>
+<p>You can manage the line display with the following methods:
+<ul>
+  <li>get or set the overall visible text width the methods SetVisibleTextWidth
+    and GetVisibleTextWidth:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set number of<br>
+          visible char</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleChar = 20;
+_pMultiList-&gt;SetVisibleTextWidth(NumberOfVisibleChar);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>get number of<br>
+          visible char</em></td>
+        <td class="code">
+          <pre>...
+NumberOfVisibleChar = _pMultiList-&gt;GetVisibleTextWidth();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The value returned by the method GetVisibleTextWidth makes sense only if
+    it has been set by the method SetVisibleTextWidth. The method
+    SetVisibleTextWidth is taken into account only if the method
+    SetVisibleColumnCount is not used.</p>
+  </li>
+  <li>get or set the width of a given column with the methods
+    Get-ColumnTextWidth and SetColumnTextWidth:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get visible column width</em></td>
+        <td class="code">
+          <pre>int ColumnTextWidth;
+ColumnTextWidth = _pMultiList-&gt;GetColumnTextWidth();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set visible column width</em></td>
+        <td class="code">
+          <pre>ColumnTextWidth = 10;
+_pMultiList-&gt;GetColumnTextWidth(ColumnTextWidth)</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the number of visible rows with the methods GetVisibleLineCount
+    and SetVisibleLineCount:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get the number of visible rows</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleRows;
+NumberOfVisibleRows = _pMultiList-&gt;GetVisibleLineCount();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set the number of visible rows</em></td>
+        <td class="code">
+          <pre>NumberOfVisibleRows = 10;
+_pMultiList-&gt;SetVisibleLineCount(NumberOfVisibleRows);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the number of visible columns with the methods
+    GetVisibleColumnCount and SetVisibleColumnCount:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st line position</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleColumns;
+NumberOfVisibleColumns = _pMultiList-&gt;GetVisibleColumnCount();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set number of visible columns</em></td>
+        <td class="code">
+          <pre>...
+NumberOfVisibleColumns = 5;
+_pMultiList-&gt;SetVisibleColumnCount(NumberOfVisibleColumns);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the position of the first visible row with the methods
+    GetFirstLine and SetFirstLine:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st visible row position</em></td>
+        <td class="code">
+          <pre>int FirstRow;
+FirstRow = _pMultiList-&gt;GetFirstLine();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set 1st visible row position</em></td>
+        <td class="code">
+          <pre>...
+FirstRow = 3;
+_pMultiList-&gt;SetFirstLine(FirstRow);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set column visibility with the methods GetColumnVisibility and
+    GetColumnVisibility:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set column 2 visible</em></td>
+        <td class="code">
+          <pre>int iColumnNumber = 2;
+_pyMultiList-&gt;SetColumnVisibility(iColumnNumber, CATDlgShow);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>query column 3 visibility</em></td>
+        <td class="code">
+          <pre>...
+iColumnNumber = 3;
+if (_pyMultiList-&gt;GetColumnVisibility(iColumnNumber) == CATDlgHidden)
+ ...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>synchronize the vertical scrolling between two instances of
+    CATDlgMultiList:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pyMultiList-&gt;Synchronize(_iMultiListToSynchronize);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Selection in the List</h4>
+<p>To help manage the selection in the list displayed, you can use the following
+methods:
+<ul>
+  <li>retrieve the number of rows selected using the GetSelectCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfRowsSelected;
+NumberOfRowsSelected= _pMultiList-&gt;GetSelectCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>retrieve the indices or contents of the rows selected with the GetSelect
+    method:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get selected rows as a table of int</em></td>
+        <td class="code">
+          <pre>int _oSelectedRows[10];
+int oArraySize;
+int NumberOfSelectedRows;
+NumberOfSelectedRows = _pMultiList-&gt;GetSelect(
+_oSelectedRows,
+oArraySize);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or as a table of CATUnicodeString</em></td>
+        <td class="code">
+          <pre>...
+CATUnicodeString _oSelectedRows[10];
+NumberOfSelectedRows = _pMultiList-&gt;GetSelect(_oSelectedRows, oArraySize);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Pay attention to properly allocate and deallocate the tables.</p>
+  </li>
+  <li>set the rows selected with the SetSelect method:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set selected rows as a table of int</em></td>
+        <td class="code">
+          <pre>int _iSelectedRows[10];
+int iArraySize = 10;
+int iNotify = 1;
+int NumberOfSelectedRows;
+NumberOfSelectedRows = _pMultiList-&gt;SetSelect(
+_iSelectedRows,
+iArraySize, iNotify);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or as a table of<br>
+          CATUnicodeString</em></td>
+        <td class="code">
+          <pre>CATUnicodeString * iContentsOfSelectedLines[10];
+iContentsOfSelectedLines[0] = ...
+int iColumnNumber;
+NumberOfSelectedRows = _pMultiList-&gt;SetSelect(iColumnNumber,
+                                             iContentsOfSelectedLines,
+                                             iArraySize, iNotify);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The lines with the line numbers contained in iNumberOfSe-lectedLines or
+    with the contents contained in Set the parameter <code>iNotify</code> to a
+    non null value if you want the corresponding notification to be sent.
+    Otherwise set to 0, no notification is sent.</p>
+  </li>
+  <li>deselect all selected rows with the ClearSelect method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pMultiList-&gt;ClearSelect();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>query whether a given row is selected:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>query whether a<br>
+          row is selected given its number</em></td>
+        <td class="code">
+          <pre>CATBool RowIsSelected;
+int RowNumber = 5;
+RowIsSelected= _pMultiList-&gt;IsSelect(RowNumber );
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or its contents</em></td>
+        <td class="code">
+          <pre>CATUnicodeString RowContents;
+RowContents = ...;
+int ColumnNumber;
+RowIsSelected = _pMultiList-&gt;IsSelect(ColumnNumber, RowContents);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A CATBool is a short.</p>
+  </li>
+  <li>set or query for column sensitivity with the methods SetColumnSensitivity
+    and IsSetColumnSensitivity:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set column 2 sensitive</em></td>
+        <td class="code">
+          <pre>int ColumnNumber = 2;
+_pMultiList-&gt;SetColumnSensitivity(ColumnNumber, CATDlgEnable);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>query column 3 sensitivity</em></td>
+        <td class="code">
+          <pre>ColumnNumber = 3;
+if (_pMultiList-&gt;IsSetColumnSensitivity(ColumnNumber) == CATDlgDisable)
+   ...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<ul>
+  <li>get the row number of the selected row under the mouse when the end user
+    displays the contextual menu:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int RowNumber;
+RowNumber= _pMultiList-&gt;GetContextualLine();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Multiple List</h4>
+<p>Set a callback on a multiple list to be informed whenever the end user
+selects a line as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pMultiList,                                   // multiple list 
+  _pMultiList-&gt;<code>GetListSelectNotification</code>(),      // notification
+  (CATCommand)&amp;MultiList::MethodToExecute,       // method to execute 
+  CATCommandClientData iUsefulData);             // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Multiple List</h4>
+<p>The multiple list title should be set by the resource file using a key built
+with the identifier you declare as the second parameter of the multiple list
+constructor. This title is never displayed. If you want to comment the choices
+available from the multiple list in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.
+In addition, each column in a multiple list can have a title. Refer to <a href="#Prog1">Managing
+the Line Content</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,334 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowledgeInterfaces Interface CATICkeMKSUnit</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowledgeInterfaces.htm" href="../KnowledgeInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowledgeInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICkeMKSUnit"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>KnowledgeInterfaces Interface CATICkeMKSUnit</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICkeMKSUnit_30005','CATICkeMKSUnit','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICkeMKSUnit</b>
+</p>
+<p>
+<b><i>    Interface dedicated to MKS equivalent management.</i></b><br>
+
+ <b>Role</b>: Magnitudes are equivalent to a combination of primitive magnitudes<br>
+ (for example : a speed is equivalent to Length divided by time).<br>
+ This class gives the list of exponent (positive or negative) for each primitive magnitude<br>
+<br>
+ The primitives are :<br>
+     M : Length<br>
+     K : Mass <br>
+     S : Time<br>
+     A : Ampere<br>
+     T : Temperature<br> 
+     C : Candela <br>
+     O : Mole<br>
+     P : Price<br>
+     R : Angle<br>
+     E : Solid angle<br>
+     Scalar : scalar<br>
+<br>
+  Usage :<br>   
+    <br>
+   #include "CATICkeParmFactory.h"<br>
+   #include "CATICkeMKSUnit.h"<br>
+<br>
+   //------------------------------------------------<br>
+   // MKS Units<br>
+   //------------------------------------------------<br>
+   // you can create mks unit equivalent to a scalar<br>
+   CATICkeMKSUnit_var mk1 = fact->CreateMKSUnit ();<br>
+   Assume (mk1->Get(MKSUnitM) == 0);<br>
+<br>
+   // you can create mks unit equivalent to a simple standard unit<br>
+   CATICkeMKSUnit_var area = fact->CreateMKSUnit (MKSUnitM,2);<br>
+   Assume (area->Get(MKSUnitM) == 2);<br>
+     <br>
+   // you can create mks unit equivalent to a combination of units<br>
+   CATICkeMKSUnit_var density = fact->CreateMKSUnit (-3,1,0,0,0,0,0,0,0,0);<br>
+   Assume (density->Get(MKSUnitM) == -3);<br>
+ <p>
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATICkeMagnitude','','CATICkeMagnitude') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Compare(CATICkeMKSUnit_var&amp;)"><b>Compare</b></a>(CATICkeMKSUnit_var&amp;)
+<dd>  Compares one mks with another.
+ <dt> o 
+    <a href="#Divide(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)"><b>Divide</b></a>(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)
+<dd>  Divides 2 mks unit (example a Length divided by a Length produces a scalar).
+ <dt> o 
+    <a href="#Get(CATICkeMKSUnit::Basic)"><b>Get</b></a>(CATICkeMKSUnit::Basic)
+<dd>  Reads the exponent of a basic primitive.
+ <dt> o 
+    <a href="#Multiply(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)"><b>Multiply</b></a>(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)
+<dd>  Multiply 2 MKSunit (example a Length multiplied with a Length produces an area).
+ <dt> o 
+    <a href="#Power(int,CATICkeMKSUnit_var&amp;)"><b>Power</b></a>(int,CATICkeMKSUnit_var&amp;)
+<dd>  Power  (example a Length power 3 produces a volume).
+ <dt> o 
+    <a href="#Set(CATICkeMKSUnit::Basic,int)"><b>Set</b></a>(CATICkeMKSUnit::Basic,int)
+<dd>  Sets a basic primitive exponent.
+ <dt> o 
+    <a href="#Show()"><b>Show</b></a>()
+<dd>  Shows a view of the MKS equivalent in NLS.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#Basic"><b>Basic</b></a>
+<dd>   List of existing MKS primitive magnitudes
+ <br><b>Legal values</b>: 
+ <tt>M</tt> for meter
+ <tt>K</tt> for kilogram 
+ <tt>S</tt> for second
+ <tt>A</tt> for amper
+ <tt>T</tt> for temperature
+ <tt>C</tt> for candela
+ <tt>O</tt> for number of mole
+ <tt>P</tt> for price
+ <tt>R</tt> for radian
+ <tt>E</tt> for steradian
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Compare"></a><a name="Compare(CATICkeMKSUnit_var&amp;)"></a> <dt> o <b>Compare</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>Compare</b>(<td> const <script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>iMKSToCompare</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Compares one mks with another.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMKSToCompare</tt>
+   <dd> MKS to compare </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:  <tt>CATCke::True</tt> if same MKS
+ <tt>CATCke::False</tt> if not
+</dl>
+</dl>
+<a name="Divide"></a><a name="Divide(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)"></a> <dt> o <b>Divide</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>Divide</b>(<td> const <script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>iMKSDividedBy</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Divides 2 mks unit (example a Length divided by a Length produces a scalar). 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMKSDividedBy</tt>
+   <dd>  the unit that must divide the current unit </dd>
+    <dt><tt> oResult</tt>
+   <dd> the resulting unit </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:  <tt>CATCke::True</tt> if division Ok
+ <tt>CATCke::False</tt> if error in MKS division
+</dl>
+</dl>
+<a name="Get"></a><a name="Get(CATICkeMKSUnit::Basic)"></a> <dt> o <b>Get</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Get</b>(<td> const <script type="text/javascript"> activateLink('CATICkeMKSUnit::Basic','CATICkeMKSUnit::Basic')</script> <td><tt>iPrimitiveMagnitude</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads the exponent of a basic primitive.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPrimitiveMagnitude</tt>
+   <dd>  primitive magnitude</dd>
+</dl>
+</dl>
+</dl>
+<a name="Multiply"></a><a name="Multiply(CATICkeMKSUnit_var&amp;,CATICkeMKSUnit_var&amp;)"></a> <dt> o <b>Multiply</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>Multiply</b>(<td> const <script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>iMKSMultipliedWith</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Multiply 2 MKSunit (example a Length multiplied with a Length produces an area). 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMKSMultipliedWith</tt>
+   <dd> the parameter with which the multiplication occurs.   </dd>
+    <dt><tt> oResult</tt>
+   <dd> The resulting unit. </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:  <tt>CATCke::True</tt> if multiplication Ok
+ <tt>CATCke::False</tt> if error in MKS multiplication
+</dl>
+</dl>
+<a name="Power"></a><a name="Power(int,CATICkeMKSUnit_var&amp;)"></a> <dt> o <b>Power</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>Power</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iCoeff</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATICkeMKSUnit_var','CATICkeMKSUnit_var&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Power  (example a Length power 3 produces a volume). 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCoeff</tt>
+   <dd> exponent (positive or negative) </dd>
+    <dt><tt> oResult</tt>
+   <dd> the resulting unit </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:  <tt>CATCke::True</tt> if operation Ok
+ <tt>CATCke::False</tt> if error in MKS operation
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(CATICkeMKSUnit::Basic,int)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('CATICkeMKSUnit::Basic','CATICkeMKSUnit::Basic')</script> <td><tt>iPrimitiveMagnitude</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iCoeff</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a basic primitive exponent.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPrimitiveMagnitude</tt>
+   <dd> primitive magnitude </dd>
+    <dt><tt> iCoeff</tt>
+   <dd> exponent</dd>
+</dl>
+</dl>
+</dl>
+<a name="Show"></a><a name="Show()"></a> <dt> o <b>Show</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>Show</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Shows a view of the MKS equivalent in NLS.
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="Basic"> <dt> o <b>Basic</b>
+<dl>
+  <dd>
+<pre>
+enum <b>Basic</b> {
+  M,
+  K,
+  S,
+  A,
+  T,
+  C,
+  O,
+  P,
+  R,
+  E,
+  Scalar
+}
+</pre>
+  List of existing MKS primitive magnitudes
+ <br><b>Legal values</b>: 
+ <tt>M</tt> for meter
+ <tt>K</tt> for kilogram 
+ <tt>S</tt> for second
+ <tt>A</tt> for amper
+ <tt>T</tt> for temperature
+ <tt>C</tt> for candela
+ <tt>O</tt> for number of mole
+ <tt>P</tt> for price
+ <tt>R</tt> for radian
+ <tt>E</tt> for steradian
+</dl>
+<hr>
+ This object is included in the file: <b>CATICkeMKSUnit.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>KnowledgeItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

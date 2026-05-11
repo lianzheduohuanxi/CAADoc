@@ -1,0 +1,261 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATPParabola</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATPParabola"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATPParabola</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATPParabola_22815','CATPParabola','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATPParabola</b>
+</p>
+<p>
+<b><i> Interface representing a parabola in the space of a surface.</i></b><br>
+
+<br> The CATPParabola is created by the <tt>CreatePParabola</tt>
+ method of the <tt>CATGeoFactory</tt> interface  and deleted with the <tt>Remove</tt> method. 
+ It is defined with:
+<table>
+ <tr><td>CATMathAxis2D</td><td><tt> iAxis </tt></td>
+                <td> The axis of the parabola in the space of the surface .
+ In this system, the implicit equation is
+       <tt>Y^2 = 2*iP*X</tt>.</td></tr>
+ <tr><td>CATSurface</td><td><tt> iSupport </tt></td>
+                <td> The surface on which the parabola is defined. </td></tr>
+ <tr><td>double</td><td><tt> iP</tt></td>
+                <td> Twice the length from the vertex of the parabola to its focus.</td></tr>
+</table>
+ To define limits of the parabola, consider the parameter <tt>t</tt> such that:
+   <tt>X(t) = t^2/(2*p),  Y(t) = t </tt>  , where X and Y are relative to <tt>iAxis</tt>.
+  <br>Notice that this parameterization is not the internal paramaterization.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetExtremities(double&amp;,double&amp;)"><b>GetExtremities</b></a>(double&amp;,double&amp;)
+<dd>  Returns the low and high limitations of <tt>this</tt> CATPParabola.
+ <dt> o 
+    <a href="#GetFocalParam()"><b>GetFocalParam</b></a>()
+<dd>  Returns the focal parameter of a CATPParabola.
+ <dt> o 
+    <a href="#GetReferenceAxis(CATMathAxis2D&amp;)"><b>GetReferenceAxis</b></a>(CATMathAxis2D&amp;)
+<dd>  Returns the axis system of <tt>this</tt> CATPParabola.
+ <dt> o 
+    <a href="#Set(CATMathAxis2D&amp;,double&amp;,double*,CATSurface*)"><b>Set</b></a>(CATMathAxis2D&amp;,double&amp;,double*,CATSurface*)
+<dd>  Modifies the characteristics of <tt>this</tt> CAPParabola.
+ <dt> o 
+    <a href="#SetExtremities(double&amp;,double&amp;)"><b>SetExtremities</b></a>(double&amp;,double&amp;)
+<dd>  Modifies the low and high Limimitations of <tt>this</tt> CATPParabola.
+ <dt> o 
+    <a href="#SetFocalParam(double&amp;)"><b>SetFocalParam</b></a>(double&amp;)
+<dd>   Modifies the focal length of <tt>this</tt> CATPParabola.
+ <dt> o 
+    <a href="#SetReferenceAxis(CATMathAxis2D&amp;)"><b>SetReferenceAxis</b></a>(CATMathAxis2D&amp;)
+<dd>   Modifies the reference axis of <tt>this</tt> CATPParabola.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetExtremities"></a><a name="GetExtremities(double&amp;,double&amp;)"></a> <dt> o <b>GetExtremities</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetExtremities</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioLowLimitation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioHighLimitation</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low and high limitations of <tt>this</tt> CATPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioLowLimitation</tt>
+   <dd> The parameter value of the first limitation of <tt>this</tt> CATPParabola.
+ </dd>
+    <dt><tt> ioHighLimitation</tt>
+   <dd> The parameter value of the second limitation of <tt>this</tt> CATPParabola.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFocalParam"></a><a name="GetFocalParam()"></a> <dt> o <b>GetFocalParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetFocalParam</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the focal parameter of a CATPParabola.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Twice the length from the vertex of the parabola to its focus.
+</dl>
+</dl>
+<a name="GetReferenceAxis"></a><a name="GetReferenceAxis(CATMathAxis2D&amp;)"></a> <dt> o <b>GetReferenceAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetReferenceAxis</b>(<td><script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>ioAxis2D</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the axis system of <tt>this</tt> CATPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioAxis2D</tt>
+   <dd> The axis system of the parabola in the surface space.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(CATMathAxis2D&amp;,double&amp;,double*,CATSurface*)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis2D</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iFocalParameter</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the characteristics of <tt>this</tt> CAPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis2D</tt>
+   <dd> The axis system of the parabola in the surface space.
+ </dd>
+    <dt><tt> iFocalParameter</tt>
+   <dd> Twice the length from the vertex of the parabola to its focus.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> An array [2] of the parameter values definining the limitations. If <tt>NULL</tt>, the parabola is unlimited.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> A pointer to the surface on which the parabola is defined.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetExtremities"></a><a name="SetExtremities(double&amp;,double&amp;)"></a> <dt> o <b>SetExtremities</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetExtremities</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iLowParam</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iHighParam</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the low and high Limimitations of <tt>this</tt> CATPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLowParam</tt>
+   <dd> The parameter value of the first limitation of <tt>this</tt> CATPParabola.
+ </dd>
+    <dt><tt> iHighParam</tt>
+   <dd> The parameter value of the second limitation of <tt>this</tt> CATPParabola.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFocalParam"></a><a name="SetFocalParam(double&amp;)"></a> <dt> o <b>SetFocalParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFocalParam</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iFocalParameter</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the focal length of <tt>this</tt> CATPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFocalParameter</tt>
+   <dd> Twice the length from the vertex of the parabola to its focus.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetReferenceAxis"></a><a name="SetReferenceAxis(CATMathAxis2D&amp;)"></a> <dt> o <b>SetReferenceAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetReferenceAxis</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis2D</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the reference axis of <tt>this</tt> CATPParabola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The axis of the parabola in the surface space.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPParabola.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

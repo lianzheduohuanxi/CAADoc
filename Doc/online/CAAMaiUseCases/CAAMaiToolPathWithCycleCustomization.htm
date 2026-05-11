@@ -1,0 +1,557 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Tool Path Computation on Axial Operations (2)</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Tool Path Computation on Axial
+      Operations (2)</h3>
+      <em>Implementing the CATIMfgComputeToolPathCustom interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiToolPathWithCycleCustomization use
+      case.</p>
+      <ul>
+        <li><a href="#What"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#The Use Case"><strong>The
+          CAAMaiToolPathWithCycleCustomization Use Case</strong></a>
+          <ul>
+            <li><a href="#What2">What Does CAAMaiToolPathWithCycleCustomization
+              Do</a></li>
+            <li><a href="#How">How to Launch
+              CAAMaiToolPathWithCycleCustomization</a></li>
+            <li><a href="#Where">Where to Find the
+              CAAMaiToolPathWithCycleCustomization Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="What"></a>What You Will Learn With This Use Case</h3>
+<p>As CAAMaiToolPathCustomization [<a href="#3">3</a>] use case, this use case
+shows you how to create a tool path with the <i>CATIMfgComputeToolPathCustom</i>
+interface.</p>
+<p>This use case shows how to create a machining cycle and to insert a &quot;PP
+command&quot; inside the tool path:</p>
+<ul>
+  <li>The operation on which the interface <i>CATIMfgComputeToolPathCustom </i>is
+    implemented is a &quot;Drilling Dwell Delay&quot; operation</li>
+  <li>The instruction for the cycle is &quot;NC_DRILLING_DWELL_DELAY&quot;
+    (generation of CYCLE/... in APT file for &quot;Output CYCLE mode&quot; =
+    &quot;yes&quot; on operation)</li>
+  <li>A PP command &quot;NC_DELAY&quot; during the machining of the hole
+    (generation of DELAY/... in APT file for &quot;Output CYCLE mode&quot; =
+    &quot;no&quot; on operation).</li>
+</ul>
+<p>This use case focuses on tool path creation. To see more details about the
+use case, how to create and replay an operation, you should refer to the
+CAAMaiToolPathCustomization [<a href="#3">3</a>] use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="The Use Case"></a>The CAAMaiToolPathWithCycleCustomization Use Case</h3>
+<p>CAAMaiToolPathWithCycleCustomization is a use case of the
+CAAManufacturingItf.edu framework that illustrates ManufacturingInterfaces
+framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="What2"></a>What Does CAAMaiToolPathWithCycleCustomization Do</h4>
+<p>Refer to CAAMaiToolPathCustomization [<a href="#3">3</a>] use case, to have
+more details about creation and replay of the operation.</p>
+<p><img border="0" src="images/CAAMaiDrillingDwellDelayReplay1.jpg" width="798" height="747"></p>
+<p>You can also generate APT file.</p>
+<p>With default options , the APT file is the following :</p>
+<pre>$$ Manufacturing Program.1
+$$ Part Operation.1
+$$*CATIA0
+$$ Manufacturing Program.1
+$$ 1.00000 0.00000 0.00000 0.00000
+$$ 0.00000 1.00000 0.00000 0.00000
+$$ 0.00000 0.00000 1.00000 0.00000
+PARTNO PART TO BE MACHINED
+COOLNT/ON
+CUTCOM/OFF
+PPRINT OPERATION NAME : Tool Change.1
+$$ Start generation of : Tool Change.1
+TLAXIS/ 0.000000, 0.000000, 1.000000
+$$ TOOLCHANGEBEGINNING
+RAPID
+GOTO / 0.00000, 0.00000, 100.00000
+CUTTER/ 10.000000, 0.000000, 5.000000, 2.886751, 30.000000,$
+0.000000, 50.000000
+TOOLNO/1, 10.000000
+TPRINT/T1 Drill D 10
+LOADTL/1
+$$ End of generation of : Tool Change.1
+PPRINT OPERATION NAME : Drilling Dwell Delay.1
+$$ Start generation of : Drilling Dwell Delay.1
+<b>CYCLE/DRILL, 50.000000, 1.000000
+GOTO / 100.00000, 0.00000, 50.00000
+GOTO / 50.00000, 0.00000, 50.00000
+GOTO / 0.00000, 0.00000, 50.00000
+GOTO / -50.00000, 0.00000, 50.00000
+GOTO / -100.00000, 0.00000, 50.00000
+CYCLE/OFF</b></pre>
+<p>If you modify the &quot;Output CYCLE Syntax&quot; value</p>
+<p><img border="0" src="images/CAAMaiDrillingDwellDelayOperation.jpg" width="478" height="749"></p>
+<p>and generate the APT file again, you obtain:</p>
+<pre>$$ Manufacturing Program.1
+$$ Part Operation.1
+$$*CATIA0
+$$ Manufacturing Program.1
+$$ 1.00000 0.00000 0.00000 0.00000
+$$ 0.00000 1.00000 0.00000 0.00000
+$$ 0.00000 0.00000 1.00000 0.00000
+PARTNO PART TO BE MACHINED
+COOLNT/ON
+CUTCOM/OFF
+PPRINT OPERATION NAME : Tool Change.1
+$$ Start generation of : Tool Change.1
+TLAXIS/ 0.000000, 0.000000, 1.000000
+$$ TOOLCHANGEBEGINNING
+RAPID
+GOTO / 0.00000, 0.00000, 100.00000
+CUTTER/ 10.000000, 0.000000, 5.000000, 2.886751, 30.000000,$
+0.000000, 50.000000
+TOOLNO/1, 10.000000
+TPRINT/T1 Drill D 10
+LOADTL/1
+$$ End of generation of : Tool Change.1
+PPRINT OPERATION NAME : Drilling Dwell Delay.1
+$$ Start generation of : Drilling Dwell Delay.1
+LOADTL/1,1
+FEDRAT/ 1000.0000,MMPM
+SPINDL/ 70.0000,RPM,CLW
+GOTO / 100.00000, 0.00000, 51.00000
+GOTO / 100.00000, 0.00000, 0.00000
+DELAY/ 2.000000,REV
+GOTO / 100.00000, 0.00000, 51.00000
+RAPID
+GOTO / 50.00000, 0.00000, 51.00000
+GOTO / 50.00000, 0.00000, 0.00000
+DELAY/ 2.000000,REV
+GOTO / 50.00000, 0.00000, 51.00000
+RAPID
+GOTO / 0.00000, 0.00000, 51.00000
+GOTO / 0.00000, 0.00000, 0.00000
+DELAY/ 2.000000,REV
+GOTO / 0.00000, 0.00000, 51.00000
+RAPID
+GOTO / -50.00000, 0.00000, 51.00000
+GOTO / -50.00000, 0.00000, 0.00000
+DELAY/ 2.000000,REV
+GOTO / -50.00000, 0.00000, 51.00000
+<b>RAPID
+GOTO / -100.00000, 0.00000, 51.00000
+GOTO / -100.00000, 0.00000, 0.00000
+DELAY/ 2.000000,REV
+GOTO / -100.00000, 0.00000, 51.00000</b>
+$$ End of generation of : Drilling Dwell Delay.1
+SPINDL/OFF
+REWIND/0
+END</pre>
+<h4 align="right">[<a href="#Top">Top</a>]</h4>
+<h4><a name="How"></a>How to Launch CAAMaiToolPathWithCycleCustomization</h4>
+<p>To launch CAAMaiToolPathWithCycleCustomization, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiToolPathWithCycleCustomization.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and de-comment the following line by removing the '#'
+    character:</p>
+    <pre>DrillingDwellDelay CATIMfgComputeToolPathCustom libCAAMaiToolPathWithCycleCustomization</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiToolPathCustomization.CATPart file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h4 align="right">[<a href="#Top">Top</a>]</h4>
+<h4><a name="Where"></a>Where to Find the CAAMaiToolPathWithCycleCustomization
+Code</h4>
+<p>The CAAMaiToolPathWithCycleCustomization use case is made of a class named <i>CAAEMaiToolPathDrillingDwellDelayCustomization</i>
+located in the CAAMaiToolPathWithCycleCustomization.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiToolPathWithCycleCustomization.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiToolPathWithCycleCustomization.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>Only the creation of the tool path is detailed here.</p>
+<p>Please refer to CAAMaiToolPathCustomization use case [<a href="#3">3</a>] to
+have more details about:</p>
+<ol>
+  <li>The creation of an extension class to implement
+    CATIMfgComputeToolPathCustom for an operation</li>
+  <li>The reading of the manufacturing activity parameters</li>
+  <li>The reading of the tool parameters.</li>
+</ol>
+<p>There are several steps in the tool path creation:</p>
+<ul>
+  <li>The creation of the tool path element</li>
+  <li>Its initialization</li>
+  <li>The description of the machining cycle</li>
+  <li>The description of tool motions</li>
+  <li>The save of the tool path in the model.</li>
+</ul>
+
+<!---------------------------------comment------------------------------------->
+<table class="code">
+  <tr>
+    <td>
+      <pre>  // =======================================================================================
+  // - Building The Tool Path
+  // The structure of the tool path is as follows :
+  //  Drilling Dwell Delay Operation --&gt; CompoundTraject
+  //                                                    --&gt; MfgToolPathCycle
+  //                                                             --&gt; MultipleMotion
+  //  &quot;MfgToolPathCycle&quot; models the &quot;Drilling Dwell Delay&quot; cycle
+  //      --&gt; storage of the NC_Command NC_DRILLING_DWELL_DELAY   
+  //      --&gt; storage of the tool motions (&quot;MultipleMotion&quot;)
+  //  &quot;MultipleMotion&quot;
+  //      --&gt; For each hole
+  //          * Rapid path from previous hole to current one
+  //          * Downward machining path of the hole 
+  //          * Insertion of a NC_DELAY instruction
+  //          * Upward machining path of the hole
+  //      
+  // =======================================================================================
+
+
+  <b>CATIMfgToolPathFactory</b> *piToolPathFactoryOnContainer = NULL;
+  RC= <b>spContainer</b>-&gt;QueryInterface(IID_CATIMfgToolPathFactory,
+	                             (void**) &amp;piToolPathFactoryOnContainer);
+  if (FAILED (RC)) return E_FAIL;
+  
+  //
+  // Creation of tool path element
+  //
+  <b>CATIMfgCompoundTraject_var</b> spCompoundTraject = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgCompoundTraject</b>();
+  if (NULL_var == spCompoundTraject) return E_FAIL;
+  <b>CATIMfgToolPathComponents_var</b> spToolPathComponentsOnCompound(spCompoundTraject); 
+  if (NULL_var == spToolPathComponentsOnCompound) return E_FAIL;</pre>
+    </td>
+  </tr>
+</table>
+<p>The tool path is created and returned as a <i>CATIMfgCompoundTraject</i>
+smart pointer using the <code>CreateMfgCompoundTraject</code> method of the <i>CATIMfgToolPathFactory
+</i>interface.<i> </i>This interface is implemented by the Process document
+manufacturing container passed as input parameter.</p>
+<p>The interface <i>CATIMfgToolPathComponents</i> (obtained from the <i>CATIMfgCompoundTraject
+</i>interface) allows you to add elements to the tool path.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  //
+  // Initialization of tool path from activity (copy of feedrates, spindle, ....)
+  //
+  spCompoundTraject-&gt;<b>Init</b>(spActivity);
+
+  //
+  // Initialization of tool axis on tool path
+  //
+  <b>CATIMfgToolPathConstantToolAxis_var</b> spToolAxis = piToolPathFactoryOnContainer
+	  -&gt;<b>CreateMfgToolPathConstantToolAxis</b>(machiningToolAxis);
+  if (NULL_var == spToolAxis) return E_FAIL;
+  spCompoundTraject-&gt;<b>SetToolAxis</b>(spToolAxis);
+
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>Init </code>of the interface <i>CATIMfgCompoundTraject</i>
+is used to initialize the tool path from the operation (feedrate values, spindle
+speed value, tool or tool assembly, ...)</p>
+<p>The tool axis is created thanks to the <code>CreateMfgToolPathConstantToolAxis</code>
+method of <i>CATIMfgToolPathFactory.</i>This tool axis is set to the tool path
+using the <code>SetToolAxis</code> method of <i>CATIMfgCompoundTraject</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  //
+  // Description of machining cycle
+  //
+  CATUnicodeString <b>NC_Command (&quot;NC_DRILLING_DWELL_DELAY&quot;)</b>;
+  <b>CATIMfgToolPathCycle_var</b> ToolPathCycle = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgToolPathCycle</b>(NC_Command);
+  if (NULL_var == ToolPathCycle) return E_FAIL;
+  spToolPathComponentsOnCompound-&gt;<b>AddElement</b>(ToolPathCycle);
+
+  // Location points for the cycle description
+  CATMathSetOfPoints LocationPoints;
+  LocationPoints.SetNumberOfPoints (nbOfPts);
+  for (int I = 1;I&lt;=nbOfPts; I++)
+  {
+	  CATMathPoint LocationPoint = pointsInPattern.GetPoint(I-1);
+	  LocationPoints.SetPoint (LocationPoint,I-1);
+  }
+  ToolPathCycle-&gt;<b>SetCycleLocationPoints</b> (LocationPoints);</pre>
+    </td>
+  </tr>
+</table>
+<p>The machining cycle (<i>CATIMfgToolPathCycle </i>interface) is created with
+the method <code>CreateMfgToolPathCycle </code>of the <i>CATIMfgToolPathFactory</i>
+interface. It is stored on the tool path with the <code>AddElement</code>
+method.</p>
+<p>The following data are stored on the object which implements the interface <i>CATIMfgToolPathCycle:</i></p>
+<ul>
+  <li>The name of NC_Command relative to the machining cycle
+    (&quot;NC_DRILLING_DWELL_DELAY&quot;)</li>
+  <li>The location points (the points where to apply the cycle) which are the
+    points of the pattern</li>
+  <li>A <i>CATIMfgTPMultipleMotion </i>object to store motions and PP Command.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  // Description of tool motions for the machining cycle
+  CATIMfgToolPathComponents_var spToolPathComponentsOnCycle (ToolPathCycle);
+  if (NULL_var == spToolPathComponentsOnCycle) return E_FAIL;
+  <b>CATIMfgTPMultipleMotion_var</b> MultipleMotion = 
+	  piToolPathFactoryOnContainer-&gt;<b>CreateMfgTPMultipleMotion</b>();
+  if (NULL_var == MultipleMotion) return E_FAIL;
+  spToolPathComponentsOnCycle-&gt;<b>AddElement</b>(MultipleMotion);
+
+  CATMathPoint previousClearPoint;
+  for (I = 1; I&lt;=nbOfPts; I++)      
+  {
+	  CATMathPoint point = pointsInPattern.GetPoint(I-1);
+	  CATMathPoint clearPoint = point + machiningToolAxis * clearTipValue;
+	  CATMathPoint depthPoint = point - machiningToolAxis * depthValue;
+	  CATListOfDouble X,Y,Z;
+	  //
+	  // Linking path in rapid feedrate between clearance points
+	  //
+	  if (I&gt;1)
+	  {
+		  X.RemoveAll(); Y.RemoveAll(); Z.RemoveAll();
+		  X.Append (previousClearPoint.GetX()); 
+		  Y.Append (previousClearPoint.GetY()); 
+		  Z.Append (previousClearPoint.GetZ());
+		  X.Append (clearPoint.GetX()); 
+		  Y.Append (clearPoint.GetY()); 
+		  Z.Append (clearPoint.GetZ());
+		  MultipleMotion-&gt;<b>AddPolyline</b> (TPLinkingTraject,TPRapidFeedrate,X,Y,Z);
+	  }
+	  //
+	  // Downward machining path to machine the hole
+	  //
+	  X.RemoveAll(); Y.RemoveAll(); Z.RemoveAll();
+	  X.Append (clearPoint.GetX()); 
+	  Y.Append (clearPoint.GetY()); 
+	  Z.Append (clearPoint.GetZ());
+	  X.Append (depthPoint.GetX()); 
+	  Y.Append (depthPoint.GetY()); 
+	  Z.Append (depthPoint.GetZ());
+	  MultipleMotion-&gt;<b>AddPolyline</b> (TPMachiningTraject,TPMachiningFeedrate,X,Y,Z);
+	  
+	  //
+	  // NC_DELAY Command
+	  //
+	  CATUnicodeString <b>NCCommandName (&quot;NC_DELAY&quot;)</b>;
+	  MultipleMotion-&gt;<b>AddPPCommand</b> (NCCommandName);
+	  
+	  //
+	  //Downward machining path to machine the hole
+	  // 
+	  X.RemoveAll(); Y.RemoveAll(); Z.RemoveAll();
+	  X.Append (depthPoint.GetX()); 
+	  Y.Append (depthPoint.GetY()); 
+	  Z.Append (depthPoint.GetZ());
+	  X.Append (clearPoint.GetX()); 
+	  Y.Append (clearPoint.GetY()); 
+	  Z.Append (clearPoint.GetZ());
+	  MultipleMotion-&gt;<b>AddPolyline</b> (TPMachiningTraject,TPMachiningFeedrate,X,Y,Z);
+	  
+	  previousClearPoint = clearPoint;
+  }
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMfgTPMultipleMotion </i>object is created with the method <code>CreateMfgTPMultipleMotion
+</code>of the <i>CATIMfgToolPathFactory</i> interface.</p>
+<p>For each point of the pattern, this object contains successively:</p>
+<ul>
+  <li>If there are at least two points in the pattern, a linking path (<code>TPLinkingTraject</code>)
+    in rapid feedrate (<code>TPRapidFeedrate</code>) between the previous hole
+    to the current one</li>
+  <li>A downward machining path (<code>TPMachiningTraject</code>) in machining
+    feedrate (<code>TPMachiningFeedrate</code>).</li>
+  <li>A PP Command (&quot;NC_Delay&quot;)</li>
+  <li>An upward machining path (<code>TPMachiningTraject</code>) in machining
+    feedrate (<code>TPMachiningFeedrate</code>).</li>
+</ul>
+<p>Note that the keywords such as TPMachiningFeedrate, TPMachiningTraject,
+........ , used for tool path computation are located in the
+CATMfgToolPathDefs.h file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  //
+  // Save tool path in model
+  //
+  <b>CATIMfgTPSaveData_var</b> spSaveData (spToolPathComponentsOnCompound);
+  if (NULL_var == spSaveData) return E_FAIL;
+  spSaveData-&gt;<b>SaveData</b>();
+
+  //
+  // Return
+  //
+  <b>spToolPath</b> = spToolPathComponentsOnCompound;
+  if (NULL_var == spToolPath) return E_FAIL;
+  
+  piToolPathFactoryOnContainer-&gt;Release();
+  piToolPathFactoryOnContainer = NULL;
+  
+  return RC;</pre>
+    </td>
+  </tr>
+</table>
+<p>The tool path is saved in the model using the method <code>SaveData </code>of
+its CATIMfgTPSaveData interface.</p>
+<p>Then, the tool path is passed to the output parameter as a pointer to <i>CATIMfgToolPath
+</i>interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interfaces,
+and has illustrated them on an axial tool path customization. It shows how to
+implement the <i>CATIMfgComputeToolPath</i> interface to compute the tool path
+of a &quot;drilling dwell delay&quot; operation in a process document that
+includes this operation as an activity. This document also includes the part to
+be machined, and the tool resources.</p>
+<p>The use case focuses on the tool path creation and describes how to model a
+machining cycle inside a tool path : the object , which implements the interface
+<i>CATIMfgToolPathCycle,</i> contains the name of the cycle
+(&quot;NC_DRILLING_DWELL_DELAY&quot;), the location points to apply the cycle,
+and the related tool motions by using an object which implements the interface <i>CATIMfgTPMultipleMotion</i>.</p>
+<p>The object which implements the <i>CATIMfgTPMultipleMotion </i>interface,
+contains the linear tool motions and a PP Command &quot;NC_DELAY&quot;.</p>
+<p>Depending on the attribute &quot;Output CYCLE Syntax&quot;, the APT file
+contains:</p>
+<ul>
+  <li>Either the CYCLE syntax:</li>
+</ul>
+<pre>CYCLE/DRILL, 50.000000, 1.000000
+GOTO / ..............
+..........
+CYCLE/OFF</pre>
+<ul>
+  <li>Or the discretization in GOTO/ with the DELAY command:</li>
+</ul>
+<pre>RAPID
+GOTO / .......
+GOTO / .......
+DELAY/ 2.000000,REV
+GOTO / .......</pre>
+<font face="Courier New" size="2"></font>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table>
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a name="3"></a><a href="CAAMaiToolPathCustomization.htm">CAAMaiToolPathCustomization
+      use case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,375 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving 3D Annotations Applied on Geometry</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Functional Tolerancing &amp; Annotation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving 3D Annotations Applied on Geometry</h3>
+      Retrieving all 3D annotations which are applied on a selected geometry and
+      highlight them</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAATpiRetrieveAnnotation use case. This use
+      case explains how to retrieve all 3D annotations applied to a selected
+      geometry and how to highlight them.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAATpiRetrieveAnnotation Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAATpiRetrieveAnnotation Do</a>
+            <li><a href="#How">How to Launch CAATpiRetrieveAnnotation</a></li>
+            <li><a href="#Where">Where to Find the CAATpiRetrieveAnnotation Code</a>
+          </ul>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use Technological Product
+Specifications (TPS) interfaces [<a href="#References">1</a>]. The use case
+demonstrates <i>CATITPSRetrieveServices</i> interface usage to retrieve the 3D
+annotations linked on a selected geometry. It also illustrates how to highlight
+the retrieved annotations by using <i>CATIBuildPath</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAATpiRetrieveAnnotation Use Case</h3>
+<p>CAATpiRetrieveAnnotation is a use case of the CAATPSInterfaces.edu framework
+that illustrates CATTPSInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAATpiRetrieveAnnotation Do</h4>
+<p>The use case is an interactive command that prompt the user to select a
+geometrical element and then retrieve annotations which are applied to the
+selection. The retrieved 3D annotations are highlighted and their names are
+displayed in a panel.</p>
+<p><img border="0" src="images/CAATpiRetrieveAnnotationResult.gif" width="679" height="356"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAATpiRetrieveAnnotation</h4>
+<p>The use case command is available in the toolbar &quot;CAA Sample&quot; of
+the workbench Functionnal &amp; Tolerancing &amp; Annotation.</p>
+<p>To launch CAATpiRetrieveAnnotation, you will need to set up the build time
+environment, then compile CAATPSInterfaces.edu framework along with its
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>Load an existing Part document.
+  <li>Select Start-&gt;Mechanical Design -&gt; Functionnal Tolerancing &amp;
+    Annotation.</li>
+  <li>By default the CAA Sample toolbar is not displayed, right click on a
+    toolbar and select it in the contextual menu to make it appear.
+  <li>Press the Retrieve Annotation icon to start the command.</li>
+</ul>
+<blockquote>
+  <blockquote>
+    <p><img border="0" src="images/CAATpiToolbar.gif" width="107" height="58"></p>
+  </blockquote>
+</blockquote>
+<p>Notice that the toolbar CAA Sample is also available in other workbenches :</p>
+<ul>
+  <li>Mechanical Design / Product Functionnal Tolerancing &amp; Annotation to
+    use sample commands in product document context.</li>
+  <li>DPM Powertrain / Process Tolerancing &amp; Annotation to use sample
+    commands in process document context.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAATpiRetrieveAnnotation Code</h4>
+<p>The CAATpiRetrieveAnnotation use case is located in the
+CAATpiRetrieveAnnotation.m module of the CAATPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAATPSInterfaces.edu\CAATpiRetrieveAnnotation.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAATPSInterfaces.edu/CAATpiRetrieveAnnotation.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAATpiRetrieveAnnotation:
+<ol>
+  <li><a href="#Prolog">Prolog</a>
+  <li><a href="#Retrieving Annotations">Retrieving Annotations from Selection</a>
+  <li><a href="#Retrieving HSO">Iterating on the Annotations List to Retrieve
+    Their Names</a>
+  <li><a href="#Retrieving HSO">Retrieving and Initializing Highlight Set of
+    Object (HSO)</a>
+  <li><a href="#Highlighting HSO">Building CATPathElement for Each Annotation
+    and Place it in HSO</a>
+  <li><a href="#Highlighting HSO">Highlighting HSO</a>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is the class CAATpiRetrieveAnnotationCmd which is a
+CATStateCommand that implement the following statechart diagram.</p>
+<p><img border="0" src="images/CAATpiRetrieveAnnotationStatechartDiagram.gif" width="615" height="181"></p>
+<p>The Buildgraph method of the command implements this statechart diagram.
+There are 2 agents associated to the state <code>SelectState</code>. <code>SelectionAgent</code>
+is a <i>CATPathElementAgent</i> that accept all kinds of objects, when valuated
+the transition method <code>SomethingSelected</code> is called. <code>ClosePanelAgent</code>
+is a <i>CATDialogAgent</i> that listen the Close button of the panel to
+terminate the command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Annotations"></a>Retrieving Annotations From Selection</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre style="margin-top: 0; margin-bottom: 0">boolean CAATpiRetrieveAnnotationCmd::<b>SomethingSelected</b> (void * ipData)
+{
+...
+  // Retrieve the selection
+  CATPathElement * <b>pPathSelected</b> = _pSelectionAgent -&gt; <b>GetValue</b> ();
+  if ( pPathSelected )
+  {
+    // Retrieve CATITPSRetrieveServices interfaces
+    <b>CATITPSRetrieveServices</b> * piRetServ = NULL;
+    rc = <b>CATTPSInstantiateComponent</b> (DfTPS_ItfRetrieveServices,
+                                     (void**) &amp; piRetServ);
+    if ( SUCCEEDED(rc) )
+    {
+      // Retrieve the list of TPS (3D Annotations) linked on selected Path
+      <b>CATITPSList</b> * piTPSList = NULL;
+      rc = piRetServ -&gt; <b>RetrieveTPSsFromPath</b> (<b>pPathSelected</b>, NULL, &amp;<b>piTPSList</b>);
+      if ( SUCCEEDED(rc) )
+      {</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	...</pre>
+      <pre>        piTPSList -&gt; Release();
+        piTPSList = NULL;
+      }
+      piRetServ -&gt; Release();
+      piRetServ = NULL;
+    }
+    pPathSelected = NULL;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When selection agent is valuated the transition method <code>SomethingSelected</code>
+is called. The <i>CATPathElement</i> selected <code>pPathSelected</code> is
+retrieved by calling <code>GetValue</code> on the selection agent. <i>CATITPSRetrieveServices</i>
+interface is obtained from the global service <code>CATTPSInstantiateComponent</code>.
+The method <code>RetrieveTPSsFromPath</code> is called with <code>pPathSelected</code>
+as input argument. The retrieved 3D annotations are returned as a <i>CATITPSList</i>
+pointer <code>piTPSList</code> .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Iterate On The Annotations List"></a>Iterating On The Annotations
+List to Retrieve Their Names</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  CATListValCATUnicodeString AliasList;
+...
+        unsigned int Count = 0;
+        <b>piTPSList</b> -&gt; <b>Count</b>(&amp;Count);
+        if ( Count )
+        {
+...
+              CATITPSComponent * piItem = NULL;
+
+              <b>CATIAlias</b> * piAlias = NULL;
+              CATUnicodeString Alias;
+...
+              // Iterate on the list of 3D annotations 
+              for ( unsigned int Idx = 0 ; Idx &lt; Count ; Idx ++)
+              {
+                rc = piTPSList -&gt; <b>Item</b> (Idx, &amp;piItem);
+                if ( SUCCEEDED(rc) )
+                {
+                  // Append it's alias to the list of Alias
+                  rc = piItem -&gt; QueryInterface (IID_CATIAlias, 
+                                                 (void**)&amp;piAlias); 
+                  if ( SUCCEEDED(rc) )
+                  {
+                    Alias = piAlias -&gt; <b>GetAlias</b>();
+                    AliasList.Append(Alias);
+
+                    piAlias -&gt; Release();
+                    piAlias = NULL;
+                  }
+                  piItem -&gt; Release();
+                  piItem = NULL;
+                }
+              }
+...
+        }
+...
+  // Send AliasList to the panel for Display
+  _pPanel -&gt; <b>SetAliasList</b> (AliasList);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>AliasList</code> that contains the names of retrieved 3D
+Annotations is constructed by iterating on <code>piTPSList</code> with <code>Count</code>
+and <code>Item</code> methods. The name of each 3D Annotations is obtained by <i>CATIAlias</i>::<code>GetAlias</code>
+method. And last, the <code>SetAliasList</code> method is used to inform the
+panel of the new <code>AliasList</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving HSO"></a>Retrieving and Initializing Highlight Set of
+Object (HSO)</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>          // Retrieve HSO from editor and Empty it
+          CATFrmEditor * pEdt = <b>GetEditor</b>();
+          if ( pEdt ) 
+          {
+            CATHSO * <b>pHSO</b> = pEdt -&gt; <b>GetHSO</b>();
+            if ( pHSO ) 
+            {
+              pHSO -&gt; <b>Empty</b>();
+              // Add selected PathElement in the HSO, it will be highlighted
+              pHSO -&gt; <b>AddElements</b> (<b>pPathSelected</b>);</pre>
+    </td>
+  </tr>
+</table>
+<p>In a <i>CATStateCommand</i>, the editor can be retrieved thanks to <code>GetEditor</code>
+method. That allows to retrieved the HSO which manage highlight. HSO is reseted
+by <code>Empty</code> method. The selected path <code>pPathSelected</code> is
+placed in HSO with <code>AddElements</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Building CATPathElement"></a>Building CATPathElement for Each
+Annotation and Place it in HSO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>              <b>CATIBuildPath</b> * piBuildPath = NULL;
+              CATPathElement * pPath = NULL;
+...
+                  // Highlight the retrieved TPS by placing its PathElement
+                  // in the HSO.
+                  rc = <b>piItem</b> -&gt; QueryInterface (IID_CATIBuildPath, 
+                                                 (void**)&amp;piBuildPath);  
+                  if ( SUCCEEDED(rc) )
+                  {
+                    rc = piBuildPath -&gt; <b>ExtractPathElement</b>(<b>pPathSelected</b>, &amp;<b>pPath</b>);
+                    if ( SUCCEEDED(rc) )
+                    {
+                      <b>pHSO</b> -&gt; <b>AddElements</b> (<b>pPath</b>);
+
+                      pPath -&gt; Release();
+                      pPath = NULL;
+                    }
+                    piBuildPath -&gt; Release();
+                    piBuildPath = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>For each 3D annotation (<code>piItem</code>) <i>CATIBuildPath</i> interface
+is used to generated the <i>CATPathElement</i> <code>pPath</code>. <code>ExtractPathElement</code>
+method must be called with a context path which is used in product environment
+to known which instance of the product containing the Annotation must be
+highlighted. Here the selected path <code>pPathSelected</code> is used as
+context.</p>
+<p>The HSO is filled with the generated path by calling <code>AddElements</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Highlighting HSO"></a>Highlighting HSO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>              // No more elements to Add in the HSO, notification is send
+              // and HSO content can be highlighted.
+              pHSO -&gt; <b>EndAddElements</b> ();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>EndAddElements</code> method is used to inform the HSO that it can
+display and highlight it's content.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The use case finishes when the command ended by pressing the close button in
+the panel.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to retrieve 3D Annotations linked to a
+geometry and how to highlight them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="RefTPSOverview">[1]</a></td>
+    <td><a href="../CAATpiTechArticles/CAATpiTPSOverview.htm">Technological
+      Product Specification Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[2]</a></td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

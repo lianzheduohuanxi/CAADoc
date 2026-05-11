@@ -1,0 +1,381 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspPlacePart.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+      <style type="text/css"> 
+      <!-- 
+       .rem {color: Green;}
+	     .kw {color: Blue;}
+	    -->
+	    </style>
+  </head>
+  <body>
+    <pre>
+<span class="kw">Option Explicit</span>
+<span class="rem">' COPYRIGHT DASSAULT SYSTEMES 2007</span>
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'   Purpose:      This sample illustrats the use of IDL interface</span>
+<span class="rem">'                 CATIAPspPlacePart</span>
+<span class="rem">'  </span>
+<span class="rem">'                 </span>
+<span class="rem">'                 </span>
+<span class="rem">'   Languages:    VBScript</span>
+<span class="rem">'   Locales:      English </span>
+<span class="rem">'   CATIA Level:  V5R17 </span>
+<span class="rem">' *****************************************************************************</span>
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'--- Global variables</span>
+<span class="rem">' *****************************************************************************</span>
+<span class="kw">Dim </span>gTraceOutput<span class="kw"> As </span>String
+<span class="kw">Set </span>gTraceOutput = ""
+<span class="kw">Dim </span>gObjListFactory<span class="kw"> As </span>PspTempListFactory
+<span class="kw">Set </span>gObjListFactory = Nothing
+<span class="kw">Dim </span>gObjPspDoc<span class="kw"> As </span>Document
+<span class="kw">Set </span>gObjPspDoc = Nothing
+<span class="kw">Dim </span>gObjPrdRoot       <span class="kw"> As </span>Product
+<span class="kw">Set </span>gObjPrdRoot = Nothing
+<span class="kw">Dim </span>gObjRootProduct   <span class="kw"> As </span>Product
+<span class="kw">Set </span>gObjRootProduct = Nothing
+<span class="kw">Dim </span>gObjPspWorkbench  <span class="kw"> As </span>PspWorkbench
+<span class="kw">Set </span>gObjPspWorkbench = Nothing
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'--- Support routines</span>
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">' Show a trace output line.</span>
+<span class="kw">Sub </span>ShowTraceOutputLine(iTraceOutput<span class="kw"> As </span>String)
+  <span class="rem">'Add message to output string for sending to message box at end of run.</span>
+  gTraceOutput = gTraceOutput & iTraceOutput & vbCr               
+  <span class="rem">'Show message right away. May cause a lot of message boxes if used interactively.</span>
+  <span class="rem">'CATIA header and lots of stuff is added to every MsgBox.</span>
+  <span class="rem">'MsgBox iTraceOutput</span>
+  <span class="rem">' Print doesn't work in CATIA VB</span>
+  <span class="rem">'Print iTraceOutput & vbCr   </span>
+<span class="kw">End Sub</span>
+
+<span class="rem">' Dump all traces.</span>
+<span class="kw">Sub </span>DumpTraces()
+  MsgBox gTraceOutput
+<span class="kw">End Sub</span>
+
+<span class="rem">' Get the ID of an object.</span>
+<span class="kw">Function </span>GetObjectID(iObject<span class="kw"> As </span>CATIABase)<span class="kw"> As </span>String
+<span class="kw">  Dim </span>objPspPhyID      <span class="kw"> As </span>PspID
+  GetObjectID = ""
+<span class="kw">  If </span>( Not ( gObjPspWorkbench Is Nothing ) And _
+        Not ( iObject Is Nothing ) )<span class="kw"> Then  </span>
+  
+<span class="kw">    Set </span>objPspPhyID = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspID", iObject )      
+
+<span class="kw">    If </span>( Not (objPspPhyID Is Nothing) )<span class="kw"> Then</span>
+      GetObjectID = objPspPhyID.GetID
+<span class="kw">    End If </span>
+
+<span class="kw">  End If</span>
+<span class="kw">End Function</span>
+
+<span class="rem">' Show the ID of an object.</span>
+<span class="kw">Sub </span>ShowObjectID(iObjectComment<span class="kw"> As </span>String, iObject<span class="kw"> As </span>CATIABase)
+  ShowTraceOutputLine iObjectComment &  " ID = " & GetObjectID(iObject)
+<span class="kw">End Sub</span>
+
+
+<span class="rem">' Empty list of doubles.</span>
+<span class="kw">Sub </span>ClearDoubles(iListDoubles<span class="kw"> As </span>PspListOfDoubles)
+<span class="kw">  If </span>( Not iListDoubles Is Nothing )<span class="kw"> Then</span>
+<span class="kw">    Dim </span>ii<span class="kw"> As </span>Integer
+<span class="kw">    For </span>ii = iListDoubles.Count<span class="kw"> To </span>1 Step -1
+      iListDoubles.RemoveByIndex ii
+<span class="kw">    Next</span>
+<span class="kw">  End If</span>
+<span class="kw">End Sub</span>
+
+<span class="rem">' Convert list of three doubles to string.</span>
+<span class="kw">Function </span>DumpVector(iVector<span class="kw"> As </span>PspListOfDoubles)<span class="kw"> As </span>String
+  DumpVector = ""
+  
+<span class="kw">  If </span>( Not iVector Is Nothing )<span class="kw"> Then</span>
+<span class="kw">    If </span>(iVector.Count = 3)<span class="kw"> Then</span>
+      DumpVector = "("
+<span class="kw">      Dim </span>iiCoord<span class="kw"> As </span>Integer
+<span class="kw">      For </span>iiCoord = 1<span class="kw"> To </span>3
+<span class="kw">        Dim </span>coord<span class="kw"> As </span>Double
+        coord = iVector.Item(iiCoord)
+        DumpVector = DumpVector & coord
+<span class="kw">        if </span>(iiCoord &lt; 3) Then DumpVector = DumpVector & ","
+<span class="kw">      Next</span>
+      DumpVector = DumpVector & ")"
+<span class="kw">    End If</span>
+
+<span class="kw">  End If</span>
+<span class="kw">End Function</span>
+
+<span class="rem">' Convert a four vector transform matrix to a string</span>
+<span class="kw">Function </span>DumpTransform(iTransform<span class="kw"> As </span>CATSafeArray)<span class="kw"> As </span>String
+  DumpTransform = ""
+  
+<span class="kw">  Dim </span>vector<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">  Set </span>vector = gObjListFactory.CreateListOfDoubles()
+<span class="kw">  Dim </span>iiVector<span class="kw"> As </span>Integer
+<span class="kw">  For </span>iiVector = 1<span class="kw"> To </span>4
+<span class="kw">    Dim </span>ii1<span class="kw"> As </span>Integer
+    ii1 = 3 * iiVector
+    vector.Append iTransform(ii1 - 3)
+    vector.Append iTransform(ii1 - 2)
+    vector.Append iTransform(ii1 - 1)
+    DumpTransform = DumpTransform & DumpVector(vector)
+<span class="kw">    if </span>(iiVector &lt; 4) Then DumpTransform = DumpTransform & " "
+    ClearDoubles vector
+<span class="kw">  Next</span>
+<span class="kw">End Function</span>
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'--- Main routine</span>
+<span class="rem">' *****************************************************************************</span>
+<span class="kw">Sub </span>CATMain()
+
+    <span class="rem">' ------------------------------------------------------------------------- </span>
+    <span class="rem">' Setup the Environment</span>
+    <span class="rem">' ------------------------------------------------------------------------- </span>
+    <span class="rem">' Open the Distributive system document </span>
+<span class="kw">    dim </span>sDocPath<span class="kw"> As </span>String 
+<span class="kw">    dim </span>sDocFullPath<span class="kw"> As </span>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<span class="kw">    If </span>(Not CATIA.FileSystem.FolderExists(sDocPath))<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<span class="kw">    End If</span>
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+
+    
+<span class="kw">    Set </span>gObjPspDoc = CATIA.Documents.Open(sDocFullPath)
+<span class="kw">    If </span>(gObjPspDoc Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"No Document Open"
+<span class="kw">    End If</span>
+
+    ShowTraceOutputLine "Output traces from CAAPspPlacePart.CATScript"
+
+    <span class="rem">' Find the top node of the Distributive System object tree - .  </span>
+<span class="kw">    Set </span>gObjPrdRoot = gObjPspDoc.Product 
+<span class="kw">    If </span>(gObjPrdRoot Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get root product object"
+<span class="kw">    End If</span>
+    
+<span class="kw">    Set </span>gObjPspWorkbench = gObjPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<span class="kw">    If </span>(gObjPspWorkbench Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get PspWorkbench"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Success in getting PspWorkbench"
+
+<span class="kw">    Set </span>gObjRootProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", gObjPrdRoot )      
+<span class="kw">    If </span>(gObjRootProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get root product"
+<span class="kw">    End If</span>
+
+<span class="kw">    Dim </span>objPspApplication<span class="kw"> As </span>PspApplication
+<span class="kw">    Dim </span>objPspAppFactory <span class="kw"> As </span>PspAppFactory
+    
+<span class="kw">    Dim </span>objPspPhysicalPrd<span class="kw"> As </span>PspPhysicalProduct
+    
+<span class="kw">    Dim </span>ePspIDLDomainID  <span class="kw"> As </span>CatPspIDLDomainID    
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    <span class="rem">' Get Application</span>
+<span class="kw">    Set </span>objPspApplication = gObjPspWorkbench.GetApplication(catPspIDLCATPiping)
+<span class="kw">    If </span>(objPspApplication Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get PspApplication"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Success in getthing objPspApplication"
+    objPspApplication.Initialization()             
+    
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Get Data for Part Placement</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Get gObjListFactory</span>
+<span class="kw">    Set </span>gObjListFactory = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspTempListFactory", objPspApplication )      
+<span class="kw">    If </span>(gObjListFactory Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get list factory"
+<span class="kw">    End If</span>
+    
+    <span class="rem">' Get root product children and parent product for placed part</span>
+<span class="kw">    Dim </span>ParentProductRef<span class="kw"> As </span>CATIABase
+<span class="kw">    Set </span>ParentProductRef = Nothing
+<span class="kw">    Dim </span>ParentProduct<span class="kw"> As </span>Product
+<span class="kw">    Set </span>ParentProduct = Nothing
+    ShowTraceOutputLine "Number of root children = " & gObjRootProduct.Products.Count
+<span class="kw">    Dim </span>Prod<span class="kw"> As </span>CATIABase
+<span class="kw">    For </span>Each Prod<span class="kw"> in </span>gObjRootProduct.Products
+      ShowTraceOutputLine "Root child product name = " & Prod.Name
+<span class="kw">      If </span>(Prod.Name = "CAAPsp3DEduIn.1") Then 
+<span class="kw">        Set </span>ParentProductRef = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIABase", Prod )      
+<span class="kw">        Set </span>ParentProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", Prod )      
+<span class="kw">      End If</span>
+<span class="kw">    Next</span>
+<span class="kw">    If </span>(ParentProductRef Is Nothing Or ParentProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get parent product"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Part place parent product name = " & ParentProductRef.Name
+ 
+    <span class="rem">' Get PspPhysicalProduct object</span>
+<span class="kw">    Dim </span>objLPhysicals    <span class="kw"> As </span>PspListOfObjects                  
+<span class="kw">    Set </span>objPspAppFactory = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspAppFactory", objPspApplication )      
+  
+<span class="kw">    Set </span>objLPhysicals = objPspAppFactory.ListPhysicals ( gObjPrdRoot , catPspIDLCATPIP)
+<span class="kw">    If </span>( Not ( objLPhysicals Is Nothing ) And _
+        ( objLPhysicals.Count &gt; 0 ) )<span class="kw"> Then      </span>
+<span class="kw">      Set </span>objPspPhysicalPrd =  objLPhysicals.Item( 1, "CATIAPspPhysicalProduct" )
+<span class="kw">    End If</span>
+<span class="kw">    If </span>(objPspPhysicalPrd Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get physcial part for reference product input"
+<span class="kw">    End If</span>
+    ShowObjectID "Physical Product object", objPspPhysicalPrd
+ 
+    <span class="rem">' Get object reference part and parent.</span>
+<span class="kw">    Dim </span>objPhysicalProduct<span class="kw"> As </span>Product
+<span class="kw">    Dim </span>objReferenceProduct<span class="kw"> As </span>Product
+<span class="kw">    Dim </span>objParentProduct<span class="kw"> As </span>Product
+<span class="kw">    Set </span>objPhysicalProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", objPspPhysicalPrd )      
+  
+<span class="kw">    If </span>( Not (objPhysicalProduct Is Nothing) )<span class="kw"> Then</span>
+<span class="kw">      Set </span>objReferenceProduct = objPhysicalProduct.ReferenceProduct
+
+      <span class="rem">'Just for info: got parent for part place above.</span>
+<span class="kw">      Set </span>objParentProduct = objPhysicalProduct.Parent
+<span class="kw">      If </span>(Not (objParentProduct Is Nothing))<span class="kw"> Then</span>
+        ShowTraceOutputLine "Parent part name = " & objParentProduct.Name
+<span class="kw">      End If</span>
+<span class="kw">    End If </span>
+<span class="kw">    If </span>(objReferenceProduct Is Nothing)<span class="kw"> Then</span>
+      Err.Raise 9999,sDocPath,"Unable to get reference product input"
+<span class="kw">    End If</span>
+    ShowTraceOutputLine "Reference part number = " & objReferenceProduct.PartNumber
+    ShowObjectID "Reference Product object", objReferenceProduct
+ 
+    <span class="rem">' Get logical line</span>
+<span class="kw">    Dim </span>LogicalLine<span class="kw"> As </span>PspLogicalLine
+<span class="kw">    Set </span>LogicalLine = Nothing
+<span class="kw">    Dim </span>PhysicalProductGroupable<span class="kw"> As </span>PspGroupable
+<span class="kw">    Set </span>PhysicalProductGroupable = Nothing
+<span class="kw">    Set </span>PhysicalProductGroupable = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspGroupable", objPspPhysicalPrd )      
+<span class="kw">    If </span>( Not ( PhysicalProductGroupable Is Nothing ) )<span class="kw"> Then</span>
+      ShowTraceOutputLine "Number of groups = " & PhysicalProductGroupable.Groups.Count
+<span class="kw">      Dim </span>iiGroup<span class="kw"> As </span>Integer
+<span class="kw">      For </span>iiGroup = 1<span class="kw"> to </span>PhysicalProductGroupable.Groups.Count
+<span class="kw">        Dim </span>Group<span class="kw"> As </span>CATIABase
+<span class="kw">        Set </span>Group = PhysicalProductGroupable.Groups.Item(iiGroup, "CATIABase")
+        ShowTraceOutputLine "Group name = " & Group.Name
+<span class="kw">        Set </span>LogicalLine = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspLogicalLine", Group ) 
+<span class="kw">        If </span>( Not ( LogicalLine Is Nothing ) )<span class="kw"> Then</span>
+          ShowTraceOutputLine "Part place logical line name = " & LogicalLine.Name
+<span class="kw">          Exit For</span>
+<span class="kw">        End If</span>
+<span class="kw">      Next</span>
+<span class="kw">    End If</span>
+ 
+    
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Place Part</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+<span class="kw">    Dim </span>Standard<span class="kw"> As </span>String
+    Standard = "ASTL"
+<span class="kw">    Dim </span>FunctionType<span class="kw"> As </span>String
+    FunctionType = "CATPspValveFunction"
+<span class="kw">    Dim </span>PlacedPartID<span class="kw"> As </span>String
+    PlacedPartID = "" 'Null string uses name generated by PP engine
+    <span class="rem">' Up direction for part = (0,0,1)</span>
+<span class="kw">    Dim </span>UpDirection<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>UpDirection = gObjListFactory.CreateListOfDoubles()
+    UpDirection.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+    UpDirection.Append 0.0
+    UpDirection.Append 1.0
+    <span class="rem">' Horizontal alignment for part = (1,0,0)</span>
+<span class="kw">    Dim </span>HorizontalOrientation<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>HorizontalOrientation = gObjListFactory.CreateListOfDoubles()
+    HorizontalOrientation.Append 1.0 <span class="rem">'Align horizontal parallel to x-axis.</span>
+    HorizontalOrientation.Append 0.0
+    HorizontalOrientation.Append 0.0
+    <span class="rem">' Part position = (1000,2000,4000) (mm)</span>
+<span class="kw">    Dim </span>Position<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">    Set </span>Position = gObjListFactory.CreateListOfDoubles()
+    Position.Append 1000.0 <span class="rem">'Position part at (1000, 2000, 3000)</span>
+    Position.Append 2000.0
+    Position.Append 4000.0
+<span class="kw">    Dim </span>PlacePartRef<span class="kw"> As </span>CATIABase
+<span class="kw">    Set </span>PlacePartRef = Nothing
+<span class="kw">    Dim </span>objPlacePart<span class="kw"> As </span>PspPlacePart                  
+<span class="kw">    Set </span>objPlacePart = Nothing
+<span class="kw">    Set </span>objPlacePart = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspPlacePart", objPspApplication )      
+<span class="kw">    If </span>( Not ( objPlacePart Is Nothing ) )<span class="kw"> Then      </span>
+<span class="kw">      Set </span>PlacePartRef = objPlacePart.PlacePartInSpace(Standard, _
+                                                       FunctionType, _
+                                                       objReferenceProduct, _
+                                                       ParentProductRef, _
+                                                       LogicalLine, _
+                                                       PlacedPartID, _
+                                                       UpDirection, _
+                                                       HorizontalOrientation, _
+                                                       Position)
+<span class="kw">    End If</span>
+<span class="kw">    If </span>( PlacePartRef Is Nothing )<span class="kw"> Then      </span>
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+<span class="kw">    End If</span>
+ 
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' View and Test Part Data</span>
+    <span class="rem">'-----------------------------------------------------------------------</span>
+    <span class="rem">' Placed part position</span>
+<span class="kw">    Dim </span>objPlacePartProduct<span class="kw"> As </span>Product
+    <span class="rem">'Set objPlacePartProduct = PlacePartRef</span>
+<span class="kw">    Set </span>objPlacePartProduct = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAProduct", PlacePartRef )      
+<span class="kw">    If </span>( objPlacePartProduct Is Nothing )<span class="kw"> Then      </span>
+      Err.Raise 9999,sDocPath,"Bad placed product"
+<span class="kw">    End If</span>
+<span class="kw">    Dim </span>placePartPositArray(12)<span class="kw"> As </span>CATSafeArray
+    objPlacePartProduct.Position.GetComponents(placePartPositArray)
+    ShowTraceOutputLine "Product posit = " & DumpTransform(placePartPositArray)
+    
+    <span class="rem">' Placed part connectors</span>
+<span class="kw">    Dim </span>objPlacePartPhysical<span class="kw"> As </span>CATIAPspPhysicalProduct                  
+<span class="kw">    Set </span>objPlacePartPhysical = Nothing
+<span class="kw">    Set </span>objPlacePartPhysical = gObjPspWorkbench.Ge<span class="kw">tInt</span>erface("CATIAPspPhysicalProduct", PlacePartRef )      
+<span class="kw">    If </span>( Not ( objPlacePartPhysical Is Nothing ) )<span class="kw"> Then</span>
+      ShowTraceOutputLine "Number of connectors = " & objPlacePartPhysical.Connectors.Count
+<span class="kw">      If </span>( objPlacePartPhysical.Connectors.Count &lt;&gt; 2 )<span class="kw"> Then      </span>
+        Err.Raise 9999,sDocPath,"Wrong number of connectors"
+<span class="kw">      End If</span>
+<span class="kw">      Dim </span>iiCtr<span class="kw"> As </span>Integer
+<span class="kw">      For </span>iiCtr = 1<span class="kw"> to </span>objPlacePartPhysical.Connectors.Count
+        ShowTraceOutputLine "iiCtr = " & iiCtr
+<span class="kw">        Dim </span>Ctr<span class="kw"> As </span>PspPartConnector
+<span class="kw">        Set </span>Ctr = objPlacePartPhysical.Connectors.Item(iiCtr, "CATIAPspPartConnector")
+<span class="kw">        If </span>( Ctr Is Nothing )<span class="kw"> Then      </span>
+          Err.Raise 9999,sDocPath,"Bad connector"
+<span class="kw">        End If</span>
+        ShowTraceOutputLine "Ctr name = " & Ctr.Name
+<span class="kw">        Dim </span>CtrPosit<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrPosit = Nothing
+<span class="kw">        Set </span>CtrPosit = Ctr.GetPosition(ParentProduct)
+        ShowTraceOutputLine "Ctr posit = " & DumpVector(CtrPosit)
+<span class="kw">        Dim </span>CtrAlign<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrAlign = Nothing
+<span class="kw">        Set </span>CtrAlign = Ctr.GetAlignmentDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr align = " & DumpVector(CtrAlign)
+<span class="kw">        Dim </span>CtrUp<span class="kw"> As </span>PspListOfDoubles
+<span class="kw">        Set </span>CtrUp = Nothing
+<span class="kw">        Set </span>CtrUp = Ctr.GetUpDirection(ParentProduct)
+        ShowTraceOutputLine "Ctr up = " & DumpVector(CtrUp)
+<span class="kw">      Next</span>
+<span class="kw">    End If</span>
+    
+    <span class="rem">' Dump messages.</span>
+    DumpTraces
+
+<span class="kw">End Sub</span>
+
+
+
+</pre></body></html>

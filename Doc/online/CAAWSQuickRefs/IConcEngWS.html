@@ -1,0 +1,279 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface IConcEngWS</title>
+ </head>
+ <body>
+ <h2>Interface IConcEngWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSConcEngCpp.html">ENOVWSConcEngCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSConcEngIntf:ENOVWSConcEngIntf_ws:IConcEngWS</p>
+ <p><b>Role:</b> Interface for concurrent engineering. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSConcEngIntf\ENOVWSConcEngIntf_ws\IConcEngWS.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#GetLock"><b>GetLock()</b></a></dt>
+  <dd>Get Lock status and owner information of objects specified by their object identifiers.</dd>
+  <dt>o <a href="#Lock"><b>Lock()</b></a></dt>
+  <dd>Locks objects specified by their object identifiers.</dd>
+  <dt>o <a href="#TransferOwnership"><b>TransferOwnership()</b></a></dt>
+  <dd>Transfer ownership of objects specified by their object identifiers.</dd>
+  <dt>o <a href="#Unlock"><b>Unlock()</b></a></dt>
+  <dd>Unlocks objects specified by their object identifiers.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="GetLock"><b>GetLock()</b></a></dt>
+  <dd>Get Lock status and owner information of objects specified by their object identifiers. If multiple objects are passed in, and any one fails, the service will return a fault.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Active Enovia session Token that caller use for connection to the corresponding Enovia session.</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifiers of the target part/document objects.</td>
+     </tr>
+     <tr>
+      <td>oLockInfos</td>
+      <td><a href="ObjectLockInfoArrayType.html">{urn:com:dassault_systemes:ENOVWSConcEngIntf}ObjectLockInfoArrayType</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Returns object lock information including status and owner information in the holder.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation, success or failure.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="Lock"><b>Lock()</b></a></dt>
+  <dd>Locks objects specified by their object identifiers. If multiple object identifiers are passed in, and any one fails on lock, the service will return a fault. However, any objects which were locked before the failure remain locked.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifiers of the target part/document objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="TransferOwnership"><b>TransferOwnership()</b></a></dt>
+  <dd>Transfer ownership of objects specified by their object identifiers. If multiple object identifiers are passed in, and any one fails on transfer ownership, the service will return a fault. The already transferred ownership can not be rollbacked.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Active Enovia session Token that caller use for connection to the corresponding Enovia session.</td>
+     </tr>
+     <tr>
+      <td>iObjOwners</td>
+      <td><a href="ObjectLockInfoArrayType.html">{urn:com:dassault_systemes:ENOVWSConcEngIntf}ObjectLockInfoArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Input object lock informations including identifiers and new owner information</td>
+     </tr>
+     <tr>
+      <td>iSendEmail</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#boolean');return false;">{http://www.w3.org/2001/XMLSchema}boolean</a></td>
+      <td>in</td>
+      <td>false</td>
+      <td>Input Flag - email to be sent out or not to notify the previous owner that ownership has been transferred.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation, success or failure.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="Unlock"><b>Unlock()</b></a></dt>
+  <dd>Unlocks objects specified by their object identifiers. If multiple object identifiers are passed in, and any one fails on unlock, the service will return a fault. However, any objects which were unlocked before the failure remain unlocked.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifiers of the target part/document objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

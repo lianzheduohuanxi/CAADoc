@@ -1,0 +1,526 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Getting Started with Automation</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Getting Started with Automation</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>This article will show you how to use a scripting language to access CAA V5
+automation objects to capture your own know-how and to increase your
+productivity. You can customize V5 applications to automate repetitive tasks,
+and to make it fit your own process.</p>
+<p>The products that make up the CATIA and DELMIA applications share the same
+object model which can be accessed, as well as their own objects, by scripts
+written in Visual Basic with Windows, and scripts written in Basic Script for
+UNIX.</p>
+<p>You can write your scripts from scratch, but you can also use the journalling
+facility from the <b>Macros ...&nbsp;</b> command in the <b>Tools</b> menu that
+records end-user scenarios in scripts you can then use as is or modify.&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="0" width="70%">
+    <tr>
+      <td width="10%">
+        <p align="left"><img border="0" src="../CAAScrBase/images/awarning.gif" width="32" height="32"></td>
+      <td width="90%">Recording macros is not available in all workbenches.</td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>We put here a simple script <b><a href="#Record">example</a></b>, to show
+what is scripting, which are the different things to do to script, present
+briefly the scripting environment and dialog window, and what is journaling.
+This example is divided into the following parts:</p>
+<ul>
+  <li><a href="#Record">1-Recording the Scenario</a>, where we'll record the
+    creation of a cylindric pad.</li>
+  <li><a href="#Understand">2-Understanding the recorded macro</a>, where we'll 
+  explain the content of the resulting recorded macro</li>
+  <li><a href="#Modify">3-Modifying the Generated Macro</a>, where we'll modify
+    the generated macro to create five similar pads</li>
+  <li><a href="#Run">4-Replaying the Modified Macro</a></li>
+</ul>
+<p>You will then find information about the scripting languages and
+environments, and some keys for you if you are not familiar with writing macros
+in <a href="../CAAScdInfTechArticles/CAAInfInvoking.htm">Invoking
+CATIA from a Scripting Language</a>.</p>
+<h2><a name="Record"></a>1-Recording the Scenario</h2>
+<table>
+  <tr>
+    <td><img border="0" src="images/atarget.gif" width="32" height="32"></td>
+    <td rowspan="1" colspan="2">
+      <p>This scenario creates a circle in a sketch, and uses this sketch to
+      create a cylindric pad.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/ainfo.gif" width="32" height="32"></td>
+    <td rowspan="1" colspan="2">
+      <p>The recorded macro is stored in a file, and not in the document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="images/ascenari.gif" width="32" height="32"></td>
+    <td colspan="2">
+      <ol>
+        <li>
+        <p align="left">Select the <b>Tools-&gt;Macro-&gt;Start
+          Recording ...&nbsp;</b> command to display the Record Macro dialog 
+        box:</li>
+      </ol>
+      <blockquote>
+        <p align="center">
+        <img border="0" src="images/CAAInfRecord2.jpg" width="461" height="171"></p>
+        <p>A default macro library is provided. Macro libraries are places where 
+        a macro can be stored, they can be folders, VBA project or Documents.
+        </p>
+        <p>Depending in the library, you can select different recording 
+        languages. Select CATScript to have a result similar to what you will 
+        find below. </p>
+      </blockquote>
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <ol>
+        <li value="2">
+        <p align="left">Click <b>Start</b> in the <b>Record Macro</b> dialog box
+          to start recording the macro. The <b>Stop Recording</b> dialog box 
+        appears.</li>
+      </ol>
+      <p align="center">&nbsp;<img border="0" src="images/CAAInfRecord3.jpg" width="52" height="58"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td rowspan="1" colspan="2">
+      <ol>
+        <li value="3">In the <b>File </b>menu, click on <b>New,</b> or click on
+          the</li>
+        <img border="0" src="images/I_NewP2.gif" width="24" height="24"> icon,
+        and double-click Part to create a new part. A new part is created and a
+        window for this part is opened.
+      </ol>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol>
+        <li value="4">Select the xy plane in the specification tree, and select
+          the sketcher icon</li>
+        <img border="0" src="images/I_SketcherP2.gif" width="24" height="24"> to
+        create a sketch.
+      </ol>
+    </td>
+    <td><img border="0" src="images/CAAInfRecord4.jpg" width="500" height="336"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol>
+        <li value="5">In the sketcher toolbar, select the circle icon</li> <img border="0" src="images/I_CircleCtrRadP2.gif" width="24" height="24">
+        and click twice to successively&nbsp; indicate the center of the circle
+        and a current point on the circle.
+      </ol>
+    </td>
+    <td><img border="0" src="images/CAAInfRecord5.jpg" width="500" height="337"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td rowspan="1" colspan="2">
+      <ol>
+        <li value="6">Click on the sketcher exit icon <img border="0" src="images/I_CloseP2.gif" width="24" height="24"></li>
+      </ol>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td rowspan="1" colspan="2">
+      <ol>
+        <li value="7">Select the pad icon <img border="0" src="images/I_PadP2.gif" width="24" height="24">
+          to create a pad on the sketch.</li>
+      </ol>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol>
+        <li value="8">In the Pad Definition dialog box, choose a length of 20 mm
+          and click OK. The pad is created.</li>
+      </ol>
+    </td>
+    <td><img border="0" src="images/CAAInfRecord6.jpg" width="241" height="271"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol>
+        <li value="9">The pad creation is now complete.</li>
+      </ol>
+    </td>
+    <td><img border="0" src="images/CAAInfRecord7.jpg" width="500" height="333"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <ol>
+        <li value="10">Click <b>Stop Recording</b> in the <b>Stop Recording</b> 
+        dialog box, or select the <b>Tools-&gt;Macro-&gt;Stop Recording</b> command. Your macro is now stored in the file
+          you have selected.</li>
+      </ol>
+      <p align="center">
+      <img border="0" src="images/CAAInfRecord3.jpg" width="52" height="58"></p>
+      <p align="center">
+      &nbsp;</p>
+      </td>
+  </tr>
+  <tr>
+    <td rowspan="1" colspan="3" align="center"><img border="0" src="images/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2><br>
+<a name="Understand"></a>2-Understanding the recorded macro</h2>
+<p>We detail below, line by line, what has been recorded, following the
+interactive steps. How to access the macro generated source is explained in the 
+next step (<a href="#Modify">Modifying the Generated Macro</a>):</p>
+<ol>
+  <li value="2">Starting to record a macro creates the macro file and generates the first
+    instruction stating the scripting language used and the macro entry point,
+    the <i>CATMain</i> sub:
+    </li>
+</ol>
+    <blockquote>
+    <blockquote>
+    <pre>Language=&quot;VBSCRIPT&quot;
+
+<font color="#0000FF">Sub </font>CATMain()</pre>
+    </blockquote>
+  </blockquote>
+<ol>
+  <li value="3">Click on the<b> New </b>item of the <b>File </b>menu<b>, </b>or click on
+    the <img border="0" src="images/I_NewP2.gif" width="24" height="24"> icon<b>
+    , </b>and double-click Part to create a new part generates the following
+    instructions:
+    <blockquote>
+    <pre><font color="#0000FF">Dim</font> documents1 <font color="#0000FF">As</font> Documents
+<font color="#0000FF">Set</font> documents1 = CATIA.Documents
+
+Dim partDocument1 As Document
+Set partDocument1 = documents1.Add(&quot;Part&quot;)
+</pre>
+    </blockquote>
+    <p>A new document with the Part type is created. To do this, such a document
+    is added to the <i>Documents</i> collection of the <code>CATIA</code>
+    application.&nbsp;</p>
+  </li>
+  <li>Select the xy plane and click on the sketcher icon <img border="0" src="images/I_SketcherP2.gif" width="24" height="24">
+    to create a sketch:
+    <blockquote>
+    <pre><font color="#0000FF">Dim</font> part1 <font color="#0000FF">As</font> Part
+<font color="#0000FF">Set</font> part1 = partDocument1.Part
+
+<font color="#0000FF">Dim</font> bodies1 <font color="#0000FF">As</font> Bodies
+<font color="#0000FF">Set</font> bodies1 = part1.Bodies
+
+<font color="#0000FF">Dim</font> body1 <font color="#0000FF">As</font> Body
+<font color="#0000FF">Set</font> body1 = bodies1.Item(&quot;PartBody&quot;)</pre>
+    <pre><font color="#0000FF">Dim</font> sketches1 <font color="#0000FF">As</font> Sketches
+<font color="#0000FF">Set</font> sketches1 = body1.Sketches
+
+<font color="#0000FF">Dim</font> originElements1 <font color="#0000FF">As</font> OriginElements
+<font color="#0000FF">Set</font> originElements1 = part1.OriginElements
+
+<font color="#0000FF">Dim</font> reference1 <font color="#0000FF">As</font> AnyObject
+<font color="#0000FF">Set</font> reference1 = originElements1.PlaneXY
+
+<font color="#0000FF">Dim</font> sketch1 <font color="#0000FF">As</font> Sketch
+<font color="#0000FF">Set</font> sketch1 = sketches1.Add(reference1)
+
+<font color="#0000FF">Dim</font> arrayOfVariantOfDouble1(8)
+arrayOfVariantOfDouble1(0) = 0.000000
+arrayOfVariantOfDouble1(1) = 0.000000
+arrayOfVariantOfDouble1(2) = 0.000000
+arrayOfVariantOfDouble1(3) = 1.000000
+arrayOfVariantOfDouble1(4) = 0.000000
+arrayOfVariantOfDouble1(5) = 0.000000
+arrayOfVariantOfDouble1(6) = 0.000000
+arrayOfVariantOfDouble1(7) = 1.000000
+arrayOfVariantOfDouble1(8) = 0.000000
+sketch1.SetAbsoluteAxisData arrayOfVariantOfDouble1
+
+<font color="#0000FF">Dim</font> factory2D1 <font color="#0000FF">As</font> Factory2D
+<font color="#0000FF">Set</font> factory2D1 = sketch1.OpenEdition()</pre>
+    </blockquote>
+    <p>A <i>Sketch</i> object named <code>Sketch1</code> is added to the <i>Sketches</i>
+    collection using the <code>reference1</code> <i>Reference</i> corresponding
+    to the XY plane as a support. Using a reference allows to create a sketch
+    either on an element, as here the XY plane, or on a solid planar face that
+    is not directly accessible as a VB object.&nbsp;</p>
+    <p>The <code>SetAbsoluteAxisData</code> method is used to define the
+    orientation of the sketch axis, that can be on either side and can rotate
+    inside of the support plane. A <i>Factory2D</i> object is created by opening
+    the sketch editor against the created sketch. This <i>Factory2D</i> object
+    features methods to create 2D objects.</p>
+  </li>
+</ol>
+<blockquote>
+  <blockquote>
+    <pre><font color="#0000FF">Dim</font> geometricElements1 <font color="#0000FF">As</font> GeometricElements
+<font color="#0000FF">Set</font> geometricElements1 = sketch1.GeometricElements
+
+<font color="#0000FF">Dim</font> axis2D1 <font color="#0000FF">As</font> GeometricElement
+<font color="#0000FF">Set</font> axis2D1 = geometricElements1.Item(&quot;AbsoluteAxis&quot;)
+
+<font color="#0000FF">Dim</font> line2D1 <font color="#0000FF">As</font> AnyObject
+<font color="#0000FF">Set</font> line2D1 = axis2D1.GetItem(&quot;HDirection&quot;)
+
+line2D1.ReportName = 1
+
+<font color="#0000FF">Dim</font> line2D2 <font color="#0000FF">As</font> AnyObject
+<font color="#0000FF">Set</font> line2D2 = axis2D1.GetItem(&quot;VDirection&quot;)
+
+line2D2.ReportName = 2</pre>
+    </blockquote>
+</blockquote>
+    <p>When the sketch is created, an axis, that is the aggregation of a center
+    point, and horizontal line and vertical line (directions), is created.&nbsp;</p>
+    <p>The axis is retrieved in the <i>GeometricElements</i> collection of the <i>Sketch</i>
+    object, the directions are retrieved as objects aggregated by the axis. The
+    two lines are here assigned an identifier using their <code>ReportName</code>
+    property that will be used by the 3D modeling services to retrieve those
+    elements inside of the sketch. They have no end-user meaning.</p>
+<ol>
+  <li value="5">In the sketcher toolbar, select the circle icon <img border="0" src="images/I_CircleCtrRadP2.gif" width="24" height="24">
+    and click twice to indicate successively the center of the circle and a
+    current point on the circle
+    </li>
+</ol>
+<blockquote>
+  <blockquote>
+    <pre><font color="#0000FF">Dim</font> circle2D1 <font color="#0000FF">As</font> Circle2D
+<font color="#0000FF">Set</font> circle2D1 = factory2D1.CreateClosedCircle(0.000000, 0.000000, 10.000000)
+    
+<font color="#0000FF">Dim</font> point2D1 <font color="#0000FF">As</font> AnyObject
+<font color="#0000FF">Set</font> point2D1 = axis2D1.GetItem(&quot;Origin&quot;)
+    
+circle2D1.CenterPoint = point2D1
+    
+circle2D1.ReportName = 3
+    </pre>
+    </blockquote>
+    <p>The <code>CreateCloseCircle</code> method of the <i>Factory2D</i> object
+    is used to create the circle. It is first created as centered at the point
+    (0,0) with a radius of 10 mm. It is then constraint on the axis center point
+    using the <code>CenterPoint</code> property.&nbsp;</p>
+</blockquote>
+<ol>
+  <li value="6">Click on the sketcher exit icon <img border="0" src="images/I_CloseP2.gif" width="24" height="24">
+    <pre>    CATIASketch3.CloseEdition
+    part1.Update 
+</pre>
+    <p>The sketch editor is closed and the part udapted.</p>
+  </li>
+  <li>Select the pad icon <img border="0" src="images/I_PadP2.gif" width="24" height="24">
+    to create a pad, and in the Pad Definition dialog box, choose a length of 10
+    mm and click OK. The pad is created.
+    <pre><font color="#0000FF">    Dim</font> shapeFactory1 <font color="#0000FF">As </font>Factory
+    <font color="#0000FF">Set</font> shapeFactory1 = part1.ShapeFactory
+    
+    <font color="#0000FF">Dim</font> pad1 <font color="#0000FF">As </font>Pad
+    <font color="#0000FF">Set</font> pad1 = shapeFactory1.AddNewPad(sketch1, 20.000000)
+    
+    part1.Update  </pre>
+    <p>The <code>AddNewPad</code> method of the <i>ShapeFactory</i> object is
+    used to create the pad. It is created using the sketch and the length of
+    20mm. The part is updated.<br>
+&nbsp;</p>
+  </li>
+  <li value="10">Click <b>Stop Recording</b> in the <b>Stop Recording</b> dialog box, or
+    point to <b>Stop Recording</b> in the Macro item of the Tools menu.</li>
+</ol>
+<p>This closes the macro recording sequence and saves the macro in the selected
+file.</p>
+<p>This is all what you performed interactively in the previous chapter.</p>
+<h2><a name="Modify"></a>3-Modifying the Generated Macro</h2>
+<table width="901">
+  <tr>
+    <td width="58"><img border="0" src="images/atarget.gif" width="32" height="32"></td>
+    <td colspan="2" width="839">This task explains how to modify the generated
+      macro to make it loop on the creation of five identical cylindric pads.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="58"><img border="0" src="images/ascenari.gif" width="32" height="32"></td>
+    <td width="839" colspan="2">
+      <ol>
+        <li>Select the <b>Tools-&gt;Macro-&gt;Macros... command </b>to display the <b>Macros</b> dialog box.</li>
+      </ol>
+      <p align="center">
+      <img border="0" src="images/CAAInfEdit1.jpg" width="441" height="266"></p>
+      <p align="left">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="58">&nbsp;</td>
+    <td width="839" colspan="2" rowspan="2">
+      <ol>
+        <li value="2">Select the name of the macro you have just created and 
+        click on <b>Edit</b> to display the <b>Macro Editor</b> window.</li>
+      </ol>
+      <p align="center">
+      <img border="0" src="images/CAAInfEdit2.jpg" width="520" height="682"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="58">&nbsp;</td>
+    <! td colspan="2" width="60%"> 
+  </tr>
+  <tr>
+    <td width="58">&nbsp;</td>
+    <td width="66" valign="top">
+    <p align="center"><img border="0" src="../CAAScrBase/images/tips.gif" width="32" height="32"></td>
+    <td width="769">You can choose your own text editor to edit the macro by&nbsp; setting
+      the <b>CATMacroEditor</b> environment variable prior to launching CATIA
+      with the name of the editor program:<pre>    set CATMacroEditor=NOTEPAD</pre>
+      <p>or using <b>Control Panel/System/Environment</b> on Windows, or:</p>
+      <pre>   export CATMacroEditor=vi</pre>
+      <p>On Unix. This editor must be accessible through the <b>PATH</b>
+      environment variable. Consult your administrator for more information on
+      how to proceed.
+      <p align="center">&nbsp;</p>
+    <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="58">&nbsp;</td>
+    <td width="835" colspan="2">
+      <ol>
+        <li value="3">The instructions written using the bold typeface are
+          those you need to add or modify while the others already exist in the
+          macro:
+          <pre>Language=&quot;VBSCRIPT&quot;
+<b>'My macro creates five cylinders</b></pre>
+          <pre>Sub CATMain()
+<b>...</b>
+Dim refer1 As AnyObject
+Set refer1 = originElements1.PlaneXY
+
+<b>x = 0</b>
+
+Dim arrayOfVariantOfDouble1(8)
+arrayOfVariantOfDouble1(0) = 0.000000
+...
+arrayOfVariantOfDouble1(8) = 0.000000
+
+<b>For I = 1 To 5</b>
+
+  Dim sketch1 As Sketch
+  Set sketch1 = sketches1.Add(refer1)
+  <b>...</b>
+  Dim circle2D1 As Circle2D
+  Set circle2D1 =                   _
+     factory2D1.CreateClosedCircle( _
+                          <b>x</b>,        _
+                          0.000000, _
+                          10.000000)
+
+  circle2D1.ReportName = 3
+  <b>...</b>
+  part1.Update 
+
+  <b>x = x + 25
+Next
+</b>End Sub  
+</pre>
+          <p>You simply need to initialize a variable, here x, to allow for the
+          sketch position in the plane to vary, and create a loop beginning with
+          the <code>For</code> keyword and ending with the <b><code>Next</code></b>
+          keyword. The <code>For</code> keyword specifies the counter variable <code>I</code>
+          which will take all values between 1 and 5 inclusively. Move the array
+          declaration and valuation outside of the loop:&nbsp; those values do
+          not change. Change the first parameter of the <code>CreateCloseCircle</code>
+          method to <code>x</code>. Increment the value of the <code>x</code>
+          variable to move the next center of 25mm from the previous one.&nbsp;</p>
+        </li>
+      </ol>
+      </td>
+  </tr>
+  <tr>
+    <td width="58">&nbsp;</td>
+    <td width="839" colspan="2">
+      <ol>
+        <li value="4">Save the macro using the <b>File-&gt;Save</b> command of the 
+        Macro Editor and exit the editor using the <b>File-&gt;Exit</b> command.</li>
+      </ol>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="1" colspan="3" width="899">The source of the modified macro, <a href="CAAInfGettingStartedSource.htm" target="Source">CAAInfGettingStarted.CATScript</a>,
+      is available in the CAAScdInfUseCases module. <a href="macros/CAAInfGettingStarted.CATScript">Execute
+      macro</a> (windows only).<p>&nbsp;</p>
+      <p><center><img border="0" src="images/aendtask.gif" width="64" height="32"></center></p>
+    </td>
+  </tr>
+</table>
+<h2><a name="Run"></a>4-Running the Macro</h2>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/atarget.gif" width="32" height="32"></td>
+    <td rowspan="1">
+      <p>This task explains how to run the modified macro.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="images/ascenari.gif" width="32" height="32"></td>
+    <td>
+      After exiting the Macro Editor, you're back in the Macros window:<p align="center">
+      <img border="0" src="images/CAAInfEdit1.jpg" width="441" height="266"></p>
+      Your macro should be the current one. You just have to
+          click <b>Run</b> to run this macro. Here is the result.<p align="center"><img border="0" src="images/CAAInfReplay2.jpg" width="500" height="335"></p>
+      <p align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td rowspan="1" colspan="2" align="center"><img border="0" src="images/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<p align="right">&nbsp;</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to record a macro, modify it and then launch its
+execution.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="100%"><a href="CAAInfAddingMacroInToolbar.htm">Adding a Macro as
+      a Command in a Toolbar</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+</table>
+
+</body>
+
+</html>

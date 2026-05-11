@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATEllipse</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATEllipse"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATEllipse</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATEllipse_20899','CATEllipse','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATEllipse</b>
+</p>
+<p>
+<b><i> Interface representing an ellipse.</i></b><br>
+
+<br>A CATEllipse is created by the <tt>CreateEllipse</tt>
+ method of the <tt>CATGeoFactory</tt> interface 
+ and deleted with the <tt>Remove</tt> method. 
+<br>A CATEllipse is defined with:
+<table>
+ <tr><td>CATMathPlane</td><td><tt>(O,U,V) </tt></td>
+                 <td> The axis system</td></tr>
+ <tr><td>double</td><td><tt>A</tt></td>
+                 <td> The half length of the major axis</td></tr>
+ <tr><td>double</td><td><tt>B</tt></td>
+                 <td> The half length of the minor axis</td></tr>
+ <tr><td>CATAngle</td><td><tt> iStart </tt></td>
+                 <td> The low angle limitation </td></tr>
+ <tr><td>CATAngle</td><td><tt> iEnd </tt></td>
+                 <td> The high angle limitation</td></tr>
+</table>
+ with <tt> 0 <= iStart < CAT2PI</tt>, 
+ <tt>iStart < iEnd <= iStart + CAT2PI</tt>, <tt>B <= A</tt>.
+ The direction of the major axis is the first direction of the plane.
+ The angles are measured from the major axis.<br> 
+ The parametric equation of the ellipse on its plane is:
+ <tt>X=a*cos(theta), Y=b*sin(theta)</tt>.
+ Notice that the CATSurParam (on the ellipse plane) associated with (X,Y) 
+ may not correspond to <tt>theta</tt>. So, do not make any assumption on the
+ internal ellipse parameterization.<br>
+ The ellipse equation
+ in its axis system is <tt>X&sup2;/A&sup2; + Y&sup2;/B&sup2; = 1</tt>.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetEndAngle()"><b>GetEndAngle</b></a>()
+<dd>  Returns the end limitation of the ellipse arc angle.
+ <dt> o 
+    <a href="#GetMajorAxis()"><b>GetMajorAxis</b></a>()
+<dd>  Returns the half length of the ellipse major axis.
+ <dt> o 
+    <a href="#GetMinorAxis()"><b>GetMinorAxis</b></a>()
+<dd>  Returns the half length of the ellipse minor axis.
+ <dt> o 
+    <a href="#GetStartAngle()"><b>GetStartAngle</b></a>()
+<dd>  Returns the start limitation of the ellipse arc angle.
+ <dt> o 
+    <a href="#Set(double,double,CATMathPlane&amp;,CATAngle,CATAngle)"><b>Set</b></a>(double,double,CATMathPlane&amp;,CATAngle,CATAngle)
+<dd>  Modifies the ellipse characteristics.
+ <dt> o 
+    <a href="#SetMajorAxis(double)"><b>SetMajorAxis</b></a>(double)
+<dd>  Modifies the half length of the ellipse major axis.
+ <dt> o 
+    <a href="#SetMinorAxis(double)"><b>SetMinorAxis</b></a>(double)
+<dd>  Modifies the half length of the ellipse minor axis.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetEndAngle"></a><a name="GetEndAngle()"></a> <dt> o <b>GetEndAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetEndAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the end limitation of the ellipse arc angle.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The last limitation angle.
+</dl>
+</dl>
+<a name="GetMajorAxis"></a><a name="GetMajorAxis()"></a> <dt> o <b>GetMajorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMajorAxis</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the half length of the ellipse major axis.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The half length of the major axis
+</dl>
+</dl>
+<a name="GetMinorAxis"></a><a name="GetMinorAxis()"></a> <dt> o <b>GetMinorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMinorAxis</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the half length of the ellipse minor axis.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The half length of the minor axis
+</dl>
+</dl>
+<a name="GetStartAngle"></a><a name="GetStartAngle()"></a> <dt> o <b>GetStartAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetStartAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the start limitation of the ellipse arc angle.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The first limitation angle.
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(double,double,CATMathPlane&amp;,CATAngle,CATAngle)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the ellipse characteristics.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The half length of the major axis.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The half length of the minor axis.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> The new plane. The ellipse center will be at the origin of <tt>iSupport</tt>.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first angle (in radian) limitation, measured from the first direction of the plane.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The end angle (in radian) limitation, measured from the first direction of the plane.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMajorAxis"></a><a name="SetMajorAxis(double)"></a> <dt> o <b>SetMajorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMajorAxis</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewMajorAxis</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the half length of the ellipse major axis.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewMajorAxis</tt>
+   <dd> The half length of the major axis.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMinorAxis"></a><a name="SetMinorAxis(double)"></a> <dt> o <b>SetMinorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMinorAxis</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewMinorAxis</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the half length of the ellipse minor axis.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewMinorAxis</tt>
+   <dd> The half length of the minor axis.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATEllipse.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,710 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Editing Object During a Command</title>
+</head>
+
+<body>
+
+<a name="Top"></a>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interfaces - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Editing Object During a Command</h3>
+      How to stack a workbench using CATEditAgent class</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the <i>CATEditAgent</i> class to stack a
+      workbench during a state command. In particular, it details how to edit a
+      sketch during a Part command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAPriEditSketch Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPriEditSketch Do</a></li>
+            <li><a href="#How">How to Launch CAAPriEditSketch</a></li>
+            <li><a href="#Where">Where to Find the CAAPriEditSketch Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use the <i>CATEditAgent</i>
+class to stack a workbench during a state command in order to edit an object.
+Activate this agent launches the specified workbench, and the end user comes
+back to the interrupted command by exiting the stacked workbench. After the
+edition, the edited object is set in the selection set (<i>CATCSO</i>). This use
+case explains how to:</p>
+<ul>
+  <li>Create a <i>CATEditAgent</i>,</li>
+  <li>Specify the workbench,</li>
+  <li>Specify and manage the object to edit,&nbsp;</li>
+  <li>Specify available commands in the stacked workbench thanks to the <i>CATStackableCommandSet</i>
+    class.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAPriEditSketch Use Case</h3>
+<p>CAAPriEditSketch is a use case of the CAAPartInterfaces.edu framework that
+illustrates DialogEngine and ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPriEditSketch Do</h4>
+<p>CAAPriEditSketch is a use case which edits a Pad. This command is integrated
+in a Part Design add-in.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>: The Part Design Add-in</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAADegEditAgentToolbar.jpg" width="304" height="225"></td>
+    
+  </tr>
+</table>
+<p>This add-in contains one toolbar (the &quot;Frame tools&quot; toolbar)
+      which has one command the &quot;Part Modification&quot; command <img border="0" src="images/CAADegCATEditAgentIcon.jpg" width="22" height="22">.
+This command enables the end user to edit a pad which has a sketch as profile.</p>
+<table border="0">
+<caption><i><a name="Fig.2">Fig.2</a>: The Part Modification Command</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAADegEditAgentDlg.jpg" width="512" height="288"></td>
+      </tr>
+</table>
+The &quot;Pad Modification&quot; command ( <img border="0" src="images/CAADegCATEditAgentIcon.jpg" width="22" height="22">
+) launches the &quot;Pad
+      Modification&quot; dialog box. This dialog object contains the sketch
+      icon (<img border="0" src="images/CAADegEditAgentSketchIcon.jpg" width="22" height="22">)
+to edit the profile of the selected Pad. The name of the profile is
+      displayed just beside the sketch icon. (here is it Sketch.1). The use case
+explains how the state command is awaked when the end user
+      clicks the sketch icon, and how the Sketcher workbench can be launched.&nbsp;
+<p>When the sketch icon&nbsp; is pushed, the Sketcher workbench is launched. Only a set of commands
+are available.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.3">Fig.3</a>: The Sketcher Workbench</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAADegEditAgentStack.jpg" width="316" height="360"></td>
+      </tr>
+</table>
+The Sketcher workbench is active until the end user clicks the exit ( <img border="0" src="images/CAADegEditAgentExitIcon.jpg" width="29" height="33">)
+command.
+      The sketch associated with the Pad can be modified. The available commands
+      are some global commands, such as Exit, Center Graph, Print ..., but only three specific
+commands to the Sketcher workbench:
+      <ul>
+        <li><img border="0" src="images/CAADegEditAgentSktIcon1.jpg" width="25" height="25">&nbsp;
+          , Constraint&nbsp;</li>
+        <li><img border="0" src="images/CAADegEditAgentSktIcon2.jpg" width="30" height="26">,
+          Auto Constraint</li>
+        <li><img border="0" src="images/CAADegEditAgentSktIcon3.jpg" width="28" height="26">,
+          Animate Constraint</li>
+      </ul>
+<p align="left">The &quot;Part Modification&quot; command is a state command which uses the <i>CATEditAgent</i>. Its&nbsp;UML
+statechart diagram [<a href="#References">1</a>] is the following:</p>
+<table border="0">
+<caption><i><a name="Fig.4">Fig.4</a>: The UML state chart for the Part Modification Command</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAADegCATEditAgentUML.jpg" width="464" height="424"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPriEditSketch</h4>
+<p>To launch CAAPriEditSketch , you will need to set up the build time environment,
+then compile CAAPriEditSketch along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>But just before launching the execution, edit the CAAPartInterfaces.edu.dico 
+interface dictionary file located in the dictionary directory of the 
+CAAPartInterfaces.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\</code><code>CAAPartInterfaces.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>UNIX</td>
+    <td><code>InstallRootDirectory/</code><code>CAAPartInterfaces.edu/CNext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+#CAAPriPrtCfgAddin     CATIPrtCfgAddin             libCAAPriPrtCfgAddin
+#CAAPriPrtCfgAddin     CATIWorkbenchAddin          libCAAPriPrtCfgAddin
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b>
+  <li><b>File Selection</b> Dialog box select <b>CAAPriEditSketch.CATPart</b>&nbsp;
+    and click <b>Open</b>
+  <li>On the <b>Tools </b>menu, click <b>Pad Modification...</b>
+  <li>Select the green Pad</li>
+  <li>In the&nbsp;<b>Pad </b><b>Modification </b>Dialog box click&nbsp;<img border="0" src="images/CAADegEditAgentSketchIcon.jpg" width="22" height="22"></li>
+  <li>Modify the sketch</li>
+  <li>click <img border="0" src="images/CAADegEditAgentExitIcon.jpg" width="29" height="33"></li>
+  <li>click <b>OK</b> in the <b>Pad Modification</b>
+    dialog box</li>
+</ul>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPriEditSketch Code</h4>
+<p>The CAAPriEditSketch use case is made of several classes located&nbsp;</p>
+<ul>
+<li> <p>In the <b>CAAPriCommands</b>.m module of the CAAPartInterfaces.edu framework:</p></li>
+  <ul>
+  <li><i>CAAPriEditSketchCmd</i>: The state command to modify a Pad.
+    This command uses the <i>CATEditAgent</i> class to edit the profile of the
+    selected Pad.</li>
+  <li><i>CAAPriEditSketchDlg</i>: The dialog box associated with the <i>CAAPriEditSketchCmd</i>
+    command.</li>
+  <li><p><i>CAAPriEditSketchNotification</i>: The notification class to inform
+    the <i>CAAPriEditSketchCmd </i>command that the sketch icon has been pushed.</p></li>
+  </ul>
+<ul>
+  <table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCommands.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCommands.m/</code></td>
+  </tr>
+</table>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+  is installed</p>
+
+</ul>
+
+<li><p> In the <b>CAAPriPrtCfgAddin</b>.m module of the CAAPartInterfaces.edu framework</p>
+  <ul>
+  <li><p><i>CAAPriPrtCfgAdn</i>: The implementation class of the <i>CATIPrtCfgAddin</i>
+    interface. Refer to the use case [<a href="#References">3</a>] for
+    details.</p></li>
+  </ul>
+<ul>
+  <table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPartInterfaces.edu\CAAPriPrtCfgAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPartInterfaces.edu/CAAPriPrtCfgAddin.m/</code></td>
+  </tr>
+</table>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM</p>
+
+</ul>
+
+</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAAPriEditSketch:</p>
+<ol>
+  <li><a href="#Creating the Edit Agent">Creating the Edit Agent</a>&nbsp;</li>
+  <li><a href="#Creating the Agent to Trigger the Sketcher Workbench Activation">Creating
+    Agent to
+    Trigger the Sketcher Workbench Activation</a></li>
+  <li><a href="#Creating States">Creating States</a></li>
+  <li><a href="#Creating Transitions">Creating Transitions</a></li>
+  <li><a href="#Providing the Object To Edit">Providing the Object to Edit</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Edit Agent"></a>Creating the Edit Agent&nbsp;</h4>
+<p>The edit agent is a dialog agent created as usual in the <code>BuildGraph</code>
+method [<a href="#References">4</a>] of a state command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   _pEditAgent = new CATEditAgent(&quot;EditAgentId&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li><code>_pEditAgent,</code> a data member of the <i>CAAPriEditSketchCmd</i> 
+class, is a <i>CATEditAgent</i> class instance . It is created in the <code>BuildGraph</code>
+method, and released in the class destructor thanks to the <code>RequestDelayedDestruction</code>
+method.&nbsp;</li>
+  <li><code>EditAgentId</code> is the agent identifier. This name is used to retrieve
+the undo/redo titles in the command resource file. This file is located in the
+CNext/resources/msgcatalog directory of the CAAPartInterfaces.edu
+framework.&nbsp;&nbsp;</li>
+</ul>
+<p>Once the edit agent is created, you have to specify the following
+information:</p>
+<ul>
+  <li><a href="#SetPanel">The dialog box associated with the state command</a>,</li>
+  <li><a href="#The name of the workbench">The name of the workbench to launch</a>,</li>
+  <li><a href="#SetCommandSet">The list of available commands</a>,</li>
+  <li><a href="#SetElementProvider">The name of the method which returns the
+    object to edit</a>.</li>
+</ul>
+<p>All these methods can be called outside the <code>BuildGraph</code> method,
+and can be called several times once the edit agent is created. There are
+information used each time the edit agent is activated.&nbsp;</p>
+<ul>
+  <li><code><a name="SetPanel"></a></code>The dialog box associated with the state command</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   _pEditAgent-&gt;<b>SetPanel</b>(_pDialogBox);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>_pDialogBox</code> is the <i>CAAPriEditSketchDlg</i> 
+class instance pointer associated with the <i>CAAPriEditSketchCmd</i>  class. It
+  is the &quot;Pad modification&quot; dialog box <a href="#Fig.2">Fig.2</a>
+  . When the stacked workbench is
+launched, the edit agent disables the sensitivity of this dialog box. The <code>SetPanel</code>
+method enables you to specify to the edit agent the dialog box pointer. However
+  hiding the dialog
+  box is of your responsibility. See
+the&nbsp;<a href="#Creating Transitions">Creating Transitions</a> section.&nbsp;</p>
+<li><a name="The name of the workbench"></a>The name of the workbench to launch</li>
+  <p>The name of the workbench should be
+set with the <code>SetWorkbench</code> method. But the Sketcher is a specific
+case because it has only one workbench, so the UI activation [<a href="#References">5</a>]
+of the Sketch launches the Sketcher workbench. It is not necessary to specify
+this information.</p>
+<li><a name="SetCommandSet"></a>The list of available commands</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       CATStackableCommandSet * pCommandSet = new <b>CATStackableCommandSet</b>();
+        pCommandSet-&gt;<b>AddCommand</b>(&quot;2DConstraint&quot;);
+        pCommandSet-&gt;AddCommand(&quot;2DAutoCst&quot;);
+        pCommandSet-&gt;AddCommand(&quot;2DAnimateCst&quot;);
+ 
+        _pEditAgent-&gt;<b>SetCommandSet</b>(pCommandSet);
+        pCommandSet-&gt;Release();
+        pCommandSet = NULL ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATStackableCommandSet</i> class is a set
+of <i>CATCommandHeader</i> class instance identifiers. The default constructor
+creates a non-empty list of commands: Hide/Show, Exit, ...... You should add the
+available commands of the workbench.&nbsp;</p>
+
+<p>The <code>2DConstraint</code>, <code>2DAutoCst</code> and <code>2DAnimateCst</code>
+(<a href="#Fig.3">Fig.3</a>) are commands of the Sketcher workbench. To be
+exact, they are identifiers of <i>CATCommandHeader</i> class instances. Refer to
+&quot;How to (Re-)Use Command Header Identifiers&quot; section of the &quot;The
+Command Headers&quot; technical article [<a href="#References">6</a>] to
+retrieve the name of identifiers.&nbsp;&nbsp;</p>
+<p><code>pCommandSet</code>  must be released, since the <code>SetCommandSet</code>
+method addref's the class pointer.</p>
+
+<li><a name="SetElementProvider"></a>The name of the method which returns the object to edit</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   _pEditAgent-&gt;<b>SetElementProvider</b>(this, 
+                        (<b>CATEditAgent::ElementProvider</b>)&amp;CAAPriEditSketchCmd::ProvideProfileToEdit);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>With the <code>SetElementProvider</code> method, you specify which is the
+method to call, and on which object this method should be called. Here the
+object is <code>this</code>, the <i>CAAPriEditSketchCmd</i>  class instance
+pointer itself. The <code>ProvideProfileToEdit</code> method is explained in the
+  <a href="#Providing the Object To Edit">Providing the Object to Edit</a> section.&nbsp;</p>
+
+ </ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creating the Agent to Trigger the Sketcher Workbench Activation"></a>Creating
+Agent to
+Trigger the Sketcher Workbench Activation</h4>
+<p>You are always in the <code>BuildGraph</code> method of the <i>CAAPriEditSketchCmd</i> 
+ state command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        _pTriggerAgent = new CATDialogAgent(&quot;TriggerAgentid&quot;);
+        _pTriggerAgent-&gt;<b>AcceptOnNotify</b>(_pDialogBox,&quot;CAAPriEditSketchNotification&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_pTriggerAgent,</code> a data member of the <i>CAAPriEditSketchCmd</i> 
+class, is a <i>CATDialogAgent</i> class instance . It is created in the <code>BuildGraph</code>
+method, and released in the class destructor thanks to the <code>RequestDelayedDestruction</code>
+method.&nbsp;</p>
+<p><code>TriggerAgentid</code> is the agent identifier. This name is used to retrieve
+the undo/redo titles in the command resource file. This file is located in the
+CNext/resources/msgcatalog directory of the CAAPartInterfaces.edu
+framework.&nbsp; This agent is valuated when the <i>CAAPriEditSketchDlg</i> 
+dialog box sends a <i>CAAPriEditSketchNotification</i> notification.&nbsp;</p>
+<p>This agent is important as it is explained in the next sections.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Creating States"></a>Creating States</h4>
+
+<p align="left">After the agent creations, the second step of a <code>BuildGraph</code>
+method is to create the states. The<a href="#Fig.4"> Fig.4</a> shows the UML diagram of the <i>CAAPriEditSketchCmd</i> 
+state command. There are two important states:</p>
+
+<ul>
+  <li>
+    <p align="left"> <code><a href="#DialogState">DialogState</a></code>: the
+    state to click OK, Cancel to finish the command or click the Sketch icon to
+    edit the profile.&nbsp;</li>
+  <li>
+    <p align="left"><a href="#EditSketchState">EditSkethState</a>: the state to
+    activate the edit agent</li>
+</ul>
+<p align="left">
+The first one, InputPadState, which enables the end user to select a
+Pad, is outside the scope of this use case and therefore, not explained.</p>
+<p align="left"><a name="DialogState"></a>DialogState</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        CATPanelState * pDialogState = new <b>CATPanelState</b>(this,&quot;<b>DialogStateId</b>&quot;,_pDialogBox);
+        if ( NULL != pDialogState )
+        {
+           <b>AddDialogState</b>(pDialogState);
+           pDialogState-&gt;<b>AddDialogAgent</b>(<b>_pTriggerAgent</b>); 
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The <code>DialogStateId</code> state is a <i>CATPanelState</i>
+class. This class creates agents to react to the end user action on&nbsp;Ok and
+Cancel buttons of the dialog box given as argument. Refer to the
+specific article to understand this class [<a href="#References">7</a>]. On this
+state, <code>_pTriggerAgent</code> has been added. <code>pDialogState</code>
+must be released at the end of the <code>BuildGraph</code> method.</p>
+
+<p align="left"><a name="EditSketchState"></a>EditSketchState</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        CATDialogState * pEditSketchState = <b>AddDialogState</b>(&quot;<b>EditSketchStateId</b>&quot;);
+        if ( NULL != pEditSketchState )
+        {
+           pEditSketchState-&gt;<b>AddDialogAgent</b>(<b>_pEditAgent</b>);
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The <code>EditSketchStateId </code>is a simple <i>CATDialogState</i>
+class created by the <code>AddDialogState</code> method. The only one agent
+associated with this state is <code>_pEditAgent</code> the edit agent.<b>&nbsp;</b><code>pEditSketchState</code>
+will be automatically released at the end of the command.</p>
+
+<p align="left"><b><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></b>The
+<i>CATEditAgent</i> dialog agent is itself a <i>CATStateCommand</i> class. A
+state command used as agent must always be the unique agent of a state.&nbsp; It
+is the reason for which the <code>_pTriggerAgent</code> is important. It enables
+to activate the <code>EditSketchState</code> state, since it will be not
+possible to associate with the <code>DialogState</code> state the <code>_pEditAgent</code>
+agent.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4 align="left"><a name="Creating Transitions"></a>Creating Transitions</h4>
+
+<p align="left">The last step of a <code>BuildGraph</code> method is to create
+transitions. There
+are the following transitions <a href="#Fig.4">Fig.4</a>:</p>
+
+<ul>
+  <li>
+    <p align="left">From DialogState <code> </code>
+to final state:&nbsp; They are managed by the <i>CATPanelState</i> class and
+not by the <code>BuildGraph</code> method of the <i>CAAPriEditSketchCmd </i>class<i>. </i> [<a href="#References">7</a>]</li>
+  <li>
+    <p align="left">From <code>InputPadState</code> to <code>DialogState</code>:
+    Out of the scope of this use case, therefore not detailed.</li>
+  <li>
+    <p align="left"><a href="#From DialogStatestate to EditSketchState">From
+    DialogState to<b> </b>EditSketchState</a>: when the Sketch icon is pushed</li>
+  <li>
+    <p align="left"><a href="#From EditSketch to DialogState">From EditSketchState to
+    DialogState</a>: when the stacked workbench is closed.</li>
+</ul>
+<p align="left"><a name="From DialogStatestate to EditSketchState"></a>From
+DialogState to<b> </b>EditSketchState</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+           CATDialogTransition * pEditSketchTransition = AddTransition(pDialogState,pEditSketchState,
+                    IsOutputSetCondition(_pTriggerAgent),
+                    Action((ActionMethod) &amp; CAAPriEditSketchCmd::<b>TriggerEditSketch</b>));   
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p align="left"><code>pEditSketchTransition</code> comes from the&nbsp; <code>DialogState</code>&nbsp;
+state to the <code>EditSketchState </code>state. This transition is triggered
+as soon as the sketch icon is pushed, in other words when a <i>CAAPriEditSketchNotification</i>
+notification is sent by the <i>CAAPriEditSketchDlg</i> dialog box.</li>
+  <li>
+    <p align="left">The <code>pEditSketchTransition</code>  transition is managed by the state command,
+    it will be automatically released at the end
+of the command.</li>
+  <li>
+    <p align="left">The <code>TriggerEditSketch </code>method is called just before
+the edit agent activation.&nbsp;</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean CAAPriEditSketchCmd::TriggerEditSketch(void *iDummy)
+{
+      _pDialogBox-&gt;SetVisibility(<b>CATDlgHide</b>) ;
+...
+      _pTriggerAgent-&gt;<b>InitializeAcquisition</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>_pDialogBox,</code>
+the <i> CAAPriEditSketchDlg</i> dialog box is hidden, and <code>_pTriggerAgent</code>
+ is
+reinitialized for a next re-usage.&nbsp;</p>
+</ul>
+
+<p align="left"><a name="From EditSketch to DialogState"></a>From EditSketchState to
+DialogState</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+           CATDialogTransition * pBackTransition = AddTransition(pEditSketchState,pDialogState,
+                    IsOutputSetCondition(_pEditAgent),
+                    Action((ActionMethod) &amp; CAAPriEditSketchCmd::<b>EditSketch</b>)); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p align="left"><code>pBackTransition</code> comes from the <code>EditSketchState</code>
+    state to the <code>DialogState</code> state. This transition is triggered
+as soon as the end user clicks the exit button.&nbsp;</li>
+  <li>
+    <p align="left">The <code>EditSketch </code>method is called when the <code>_pEditAgent</code>,
+a state command, reaches the final state. The Sketcher workbench is
+&quot;unloaded&quot; and the previous workbench becomes the current one again.</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean CAAPriEditSketchCmd::EditSketch(void *iDummy)
+{
+       _pDialogBox-&gt;SetVisibility(<b>CATDlgShow</b>) ;
+ ...
+       _pEditAgent-&gt;<b>InitializeAcquisition</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p><code>_pDialogBox,</code>
+the <i> CAAPriEditSketchDlg</i> dialog box is shown, and <code>_pEditAgent</code> is
+reinitialized for a next re-usage.</p>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Providing the Object To Edit"></a>Providing
+the Object To Edit</h4>
+
+<p>The <code>ProvideProfileToEdit</code> method is called each time the edit
+agent is activated.&nbsp;The goal of this method is to provide the object to
+edit by the edit agent. This object will be set in the selection set (<i>CATCSO</i>)
+when the edit agent will reach the final state. The value returned by this
+method is released by the edit agent. Once the <code>ProvideProfileToEdit</code> 
+method is called, the <code>GetValue</code> method of the <i>CATEditAgent</i>
+class returns it.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATPathElement * CAAPriEditSketchCmd::<b>ProvideProfileToEdit</b>(CATClassId iDummy)
+{
+   CATPathElement * pPathToReturn = NULL ;
+
+   if ( (NULL == GetEditor()) || (NULL == _pFeatureAgent) ) return NULL ;
+
+   CATBaseUnknown * pSelectedElt= _pFeatureAgent-&gt;<b>GetElementValue</b>();
+
+   CATISpecObject * pISpecObjectOnProfile = NULL ;
+   HRESULT rc = <b>FindProfile</b>(pSelectedElt,&amp;pISpecObjectOnProfile) ;
+
+   if ( SUCCEEDED(rc) &amp;&amp; (NULL!=pISpecObjectOnProfile))
+   {
+      <b>CATIBuildPath</b> *piBuildPath = NULL;
+      rc = pISpecObjectOnProfile-&gt;QueryInterface( IID_CATIBuildPath, (void**) &amp;piBuildPath );
+                                                       
+      if ( SUCCEEDED(rc) )
+      {
+         CATPathElement Context = GetEditor()-&gt;GetUIActiveObject();
+         rc = piBuildPath-&gt;<b>ExtractPathElement</b>(&amp;Context,&amp;pPathToReturn);
+
+         piBuildPath-&gt;Release();
+         piBuildPath = NULL ;
+      }
+      
+      pISpecObjectOnProfile-&gt;Release();
+      pISpecObjectOnProfile = NULL ;
+   }
+
+   return pPathToReturn ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In this use case, the object to return is the sketch associated with the
+selected pad. In fact, to be exact it is the complete path of this sketch: from
+the root (the MechanicalPart) to the sketch itself.</p>
+<p>&nbsp;<code>_pFeatureAgent</code> is the agent to select a Pad. It is a <i>CATFeatureImportAgent
+</i>filtered with the <i>CATIPad</i> interface. The <code>GetElementValue</code>
+method retrieves the selected pad. The local <code>FindProfile </code>method
+extracts from the pad its sketch. Refer to the code for details. <code>pISpecObjectOnProfile</code>
+is a <i>CATISpecObject</i> interface pointer on a sketch ( an object
+implementing <i>CATISketch</i>). The <i>CATIBuildPath</i> interface enables you
+to build the path from the root ( the context) to the sketch.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to create a dialog agent to stack a workbench into
+a state command. This agent is a <i>CATEditAgent</i> .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing State Dialog Command Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td>Creating an Add-in of the Part Design Workbench</td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAADegSampleGraph.htm">Implementing the Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAADegSampleDialogWithPanelState.htm">Associating a Dialog Box
+      with a State</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Aug 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

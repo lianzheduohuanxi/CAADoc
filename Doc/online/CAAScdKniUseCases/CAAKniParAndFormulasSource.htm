@@ -1,0 +1,186 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniParAndFormulas.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro:</font>
+<font color="#008000">'                 1 - Checks whether the active document is a CATPart</font>
+<font color="#008000">'                 2 - Retrieves the Relations collection. This is required    </font>
+<font color="#008000">'                     to create formulas</font>
+<font color="#008000">'                 3 - Retrieves the Parameters collection. This is required</font>
+<font color="#008000">'                     to create parameters</font>
+<font color="#008000">'                 4 - Creates parameters  </font>
+<font color="#008000">'                 5 - Creates formulas                              </font>
+<font color="#008000">'                 6 - Displays the list of relations         </font>
+<font color="#008000">'                 7 - Displays the list of parameters         </font>
+<font color="#008000">'                 Notes: a) The parameter list which is displayed contains </font>
+<font color="#008000">'                           all the document parameters (i.e. the user parameters </font>
+<font color="#008000">'                           and the others as well)</font>
+<font color="#008000">'                        b) If you replay the macro - you create new parameters</font>
+<font color="#008000">'                           and formulas, but parameter names are not those specified.  </font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE, Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6  </font>
+<font color="#008000">'   revision V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\CAAKniSamplePartR13.CATPart")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#008000">' Set the CATIA popup file alerts to False</font>
+<font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+CATIA.DisplayFileAlerts = False
+
+<font color="#008000">' Retrieve your active document - CATIA is your application </font>
+<font color="#008000">' You get the active document by using the ActiveDocument property</font>
+<font color="#008000">' on your application object</font>
+<font color="#0000FF">Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF">Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+<font color="#008000">' Check whether the document is a CATPart</font>
+<font color="#0000FF">If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document relations.</font>
+        <font color="#008000">' The statements below are only valid when the active</font>
+        <font color="#008000">' document is a CATPart</font>
+<font color="#0000FF">        Dim </font>oRelations<font color="#0000FF"> As </font>Relations
+<font color="#0000FF">        Set </font>oRelations = oActiveDoc.Part.Relations
+
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document parameters</font>
+<font color="#0000FF">        Dim </font>oParameters<font color="#0000FF"> As </font>Parameters 
+<font color="#0000FF">        Set </font>oParameters = oActiveDoc.Part.Parameters        
+
+        <font color="#008000">' Remove the SphereRadius parameter </font>
+        <font color="#008000">' if it exists in the Parameters collection </font>
+<font color="#0000FF">        Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">        For </font>i = 1<font color="#0000FF"> to </font>oParameters.Count
+<font color="#0000FF">          if </font>(oParameters.Item(i).Name = "SphereRadius") then
+            oParameters.Remove "SphereRadius"  
+<font color="#0000FF">          end if</font>
+<font color="#0000FF">        Next</font>
+
+        <font color="#008000">' Create the ProjectId parameter</font>
+        <font color="#008000">' This parameter is a string type parameter </font>
+        <font color="#008000">' Its initial value is CATLifKnowledgeAdvisor</font>
+<font color="#0000FF">        Dim </font>oString1<font color="#0000FF"> As </font>Parameter 
+<font color="#0000FF">        Set </font>oString1 = oParameters.CreateString("ProjectId","CATLifKnowledgeAdvisor")
+
+        <font color="#008000">' Create the ProjectKey parameter </font>
+        <font color="#008000">' This parameter is a string type parameter</font>
+        <font color="#008000">' Its initial value is a blank string </font>
+<font color="#0000FF">        Dim </font>oString2<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">        Set </font>oString2 = oParameters.CreateString("ProjectKey","")
+
+        <font color="#008000">' Create an integer type parameter</font>
+        <font color="#008000">' Its name is Stringlength - its initial value is 0</font>
+<font color="#0000FF">        Dim </font>oStringLength<font color="#0000FF"> As </font>Parameter 
+<font color="#0000FF">        Set </font>oStringLength = oParameters.CreateInteger("StringLength",0)
+
+        <font color="#008000">' Create a Length type parameter</font>
+        <font color="#008000">' Its initial name is blank</font>
+        <font color="#008000">' Its initial value is 0</font>
+        <font color="#008000">' Note that units are specified in internal units</font>
+        <font color="#008000">' i.e the units used by the geometric modeler (mm for Length) </font>
+<font color="#0000FF">        Dim </font>oSphereRadius<font color="#0000FF"> As </font>Parameter 
+<font color="#0000FF">        Set </font>oSphereRadius = oParameters.CreateDimension("","LENGTH", 0) 
+
+        <font color="#008000">' Rename the created parameter and assigns a value to it</font>
+        <font color="#008000">' Note: this cannot be done if a parameter </font>
+        <font color="#008000">' already named SphereRadius exists in the document</font>
+        <font color="#008000">' This is why a search for a SphereRadius parameter has</font>
+        <font color="#008000">' been performed above.</font>
+        oSphereRadius.Rename "SphereRadius"
+        oSphereRadius.Value = 50 
+        
+        <font color="#008000">' Display the minum tolerance for "SphereRadius"</font>
+        msgbox "Min Tolerance for the LENGTH parameter " & oSphereRadius.MinimumTolerance
+
+        <font color="#008000">' Create a Volume type parameter </font>
+        <font color="#008000">' Its name is SphereVolume</font>
+        <font color="#008000">' Its initial value is 0 m3</font>
+<font color="#0000FF">        Dim </font>oSphereVol<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">        Set </font>oSphereVol = oParameters.CreateDimension("SphereVolume","VOLUME",0)
+
+        <font color="#008000">' Create a formula which specifies that the ProjectKey parameter value</font>
+        <font color="#008000">' equals the three first characters of ProjectId</font>
+        <font color="#008000">' To do so we use the CreateFormula method of the "Relations" collection</font>
+        <font color="#008000">' object - the constrained parameter is passed as the third argument of the</font>
+        <font color="#008000">' method - The formula expression is passed as the fourth argument.</font>
+        <font color="#008000">' Note that the Extract function is provided by the Knowledge Advisor</font>
+        <font color="#008000">' string function dictionary </font>
+ 
+<font color="#0000FF">        Dim </font>oFormula1<font color="#0000FF"> As </font>Formula
+<font color="#0000FF">        Set </font>oFormula1 = oRelations.CreateFormula("Formula1", "", oString2,_
+                                               "ProjectId.Extract(0,3)" ) 
+
+        <font color="#008000">' Create a formula which also applies to the ProjectKey parameter</font>
+        <font color="#008000">' This formula will be created as inactive</font>
+<font color="#0000FF">        Dim </font>oFormula2<font color="#0000FF"> As </font>Formula
+<font color="#0000FF">        Set </font>oFormula2 = oRelations.CreateFormula("Formula2", "", oString2,_
+                "ProjectId.Extract(4,3)" ) 
+
+        <font color="#008000">' Create a formula which applies to the StringLength parameter</font>
+        <font color="#008000">' The formula expression passed as the fourth argument </font>
+        <font color="#008000">' uses the Length function which is provided with the string functions of the</font>
+        <font color="#008000">' Knowledge Advisor dictionary</font>
+<font color="#0000FF">        Dim </font>oFormula3<font color="#0000FF"> As </font>Formula
+<font color="#0000FF">        Set </font>oFormula3 = oRelations.CreateFormula("Formula3", "", oStringLength,_
+                                   "ProjectId.Length()" )  
+ 
+        <font color="#008000">' Create a formula which applies to the SphereVolume parameter</font>
+        <font color="#008000">' It just calculates the volume from the radius</font>
+<font color="#0000FF">        Dim </font>oFormula4<font color="#0000FF"> As </font>Formula
+<font color="#0000FF">        Set </font>oFormula4 = oRelations.CreateFormula("Formula4", "", oSphereVol,_
+                                 "(4/3)*PI*SphereRadius**3") 
+
+        <font color="#008000">' Display the list of relations </font>
+        <font color="#008000">' The formula names and expressions are displayed in a message box</font>
+<font color="#0000FF">        Dim </font>ostrRel<font color="#0000FF"> As </font>String
+        ostrRel = "Here is the list of relations" & vbCrLf
+<font color="#0000FF">        For </font>i = 1<font color="#0000FF"> to </font>oRelations.Count
+          ostrRel = ostrRel & vbCrLf & oRelations.Item(i).Name &_
+                    "   " & oRelations.Item(i).Value
+<font color="#0000FF">        Next</font>
+        MsgBox ostrRel       
+   
+<font color="#0000FF">        Dim </font>ostrPar<font color="#0000FF"> As </font>String
+<font color="#0000FF">        For </font>i = 1<font color="#0000FF"> to </font>oParameters.Count
+          ostrPar = ostrPar & vbCrLf & oParameters.Item(i).Name 
+<font color="#0000FF">        Next</font>
+        MsgBox ostrPar       
+<font color="#008000">' Update the document</font>
+CATIA.ActiveDocument.Part.Update 
+
+else 
+   MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

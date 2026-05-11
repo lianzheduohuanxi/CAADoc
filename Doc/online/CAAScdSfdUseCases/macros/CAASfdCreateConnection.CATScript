@@ -1,0 +1,288 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create connections: endcuts and slots.
+'
+' Assumptions:   The Part document CAASfdCreateConnection.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  'Get the Manager Object
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'Get the Stiffeners,Plates and Members
+  Dim StiffenerReferencesObj As References
+  Set StiffenerReferencesObj = ManagerObj.GetSuperStiffeners
+
+  Dim PlateReferencesObj As References
+  Set PlateReferencesObj = ManagerObj.GetSuperPlates
+  
+  Dim MemberReferencesObj As References
+  Set MemberReferencesObj = ManagerObj.GetSuperMembers
+  
+  Dim SuperPlate1, SuperPlate2 As SfmSuperPlate
+  Set SuperPlate1 = PlateReferencesObj.Item(1)
+  Set SuperPlate2 = PlateReferencesObj.Item(2)
+
+  Dim SuperStiffener1, SuperStiffener2, SuperStiffener3 As SfmStiffener
+  Set SuperStiffener1 = StiffenerReferencesObj.Item(1)
+  Set SuperStiffener2 = StiffenerReferencesObj.Item(2)
+  Set SuperStiffener3 = StiffenerReferencesObj.Item(3)
+  
+  Dim SuperMember1, SuperMember2 As SfmMember
+  Set SuperMember1 = MemberReferencesObj.Item(1)
+  Set SuperMember2 = MemberReferencesObj.Item(2)
+  
+  'Get the OperationFactory Object
+  Dim EndCutFactoryObj As SfmOperationFactory
+  Set EndCutFactoryObj = ObjPart.GetCustomerFactory("SfmOperationFactory")
+
+  'Get the EndcutManager Object
+  Dim EndCutManagerObj As SfmEndcutManager
+  Set EndCutManagerObj = EndCutFactoryObj.GetEndcutManager
+  
+  'APPLYING ENDCUTS ON STIFFENER2
+  'Checking list of available endcuts for a given family and type
+  Dim ListOfEndCutNames1 As Variant
+  ListOfEndCutNames1 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  
+  'Gets the Specifications required to define a particular Endcut
+  Dim ListOfContextNames1(), ListOfParamNames1() As Variant
+  Dim ListOfUDFParameters1 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames1, ListOfUDFParameters1, ListOfParamNames1
+  'Read the Name of Context
+  Dim SizeOfContext As Long
+
+  SizeOfContext = UBound(ListOfContextNames1)
+  Dim i As Integer
+  For i = 0 To SizeOfContext
+    Dim ContextName As String
+    ContextName = ListOfContextNames1(i)
+  Next
+  
+  'Checking the UDFParameters and Setting their values
+  Dim NbOfUDFParams As Long
+  Dim ParamName() As Variant
+  Dim UDFParamName As String
+  Dim UDFParam As Parameter
+  Dim UDFParamValue As String
+  NbOfUDFParams = ListOfUDFParameters1.Count
+  For i = 1 To NbOfUDFParams
+    UDFParamName = ListOfParamNames1(i - 1)
+    Set UDFParam = ListOfUDFParameters1.Item(i)
+    UDFParamValue = UDFParam.ValueAsString
+    UDFParam.ValuateFromString ("50mm")
+  Next
+
+  'Defining Limit
+  Dim FirstLimit As Reference
+  Set FirstLimit = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+
+  'Get FunctionFactory Object
+  Dim FactoryRef As SfmFunctionFactory
+  Set FactoryRef = ObjPart.GetCustomerFactory("SfmFunctionFactory")
+  
+  Dim ListOfContexts1 As SfmReferences
+  Set ListOfContexts1 = FactoryRef.SfmReferences
+
+  'Adding Limit
+  ListOfContexts1.Add FirstLimit
+
+  'Creating EndCut
+  Dim EndCutObj1 As SfmEndcut
+  Set EndCutObj1 = SuperStiffener2.AddEndcut(2, "Snipe", "T-CTX-SHAPE", ListOfContexts1, ListOfUDFParameters1)
+  
+  'Update the Connection Set
+  EndCutObj1.UpdateConnectionsSet
+
+  'Applying EndCut at Start Of Stiffener with Default Parameter values
+  'Checking list of available endcuts
+  Dim ListOfEndCutNames2 As Variant
+  ListOfEndCutNames2 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Weld")
+  'Gets the Specifications required to define Endcut
+  Dim ListOfContextNames2(), ListOfParamNames2() As Variant
+  Dim ListOfUDFParameters2 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Weld", "Metal To Metal", ListOfContextNames2, ListOfUDFParameters2, ListOfParamNames2
+
+  'In this case there are No UDFParameters
+  'Define Limit
+  Dim SecondLimit As Reference
+  Set SecondLimit = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  Dim ListOfContexts2 As SfmReferences
+  Set ListOfContexts2 = FactoryRef.SfmReferences
+  ListOfContexts2.Add SecondLimit
+  'Creating EndCut
+  Dim EndCutObj2 As SfmEndcut
+  Set EndCutObj2 = SuperStiffener2.AddEndcut(1, "Weld", "Metal To Metal", ListOfContexts2, Nothing)
+  
+  'Update the Connection Set
+  EndCutObj2.UpdateConnectionsSet
+  
+  'APPLYING ENDCUTS ON STIFFENER1
+  'Applying Endcut at Start Extremity with Default Parameter values
+  'Checking list of available endcuts for a given family and type
+  Dim ListOfEndCutNames3 As Variant
+  ListOfEndCutNames3 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+  'Gets the Specifications required to define Endcut
+  Dim ListOfContextNames3(), ListOfParamNames3() As Variant
+  Dim ListOfUDFParameters3 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-E70LSH", ListOfContextNames3, ListOfUDFParameters3, ListOfParamNames3
+
+  'Creating Endcut
+  Dim EndCutObj3 As SfmEndcut
+  Set EndCutObj3 = SuperStiffener1.AddEndcut(1, "Snipe", "T-E70LSH", Nothing, ListOfUDFParameters3)
+  
+  'Update the Connection Set
+  EndCutObj3.UpdateConnectionsSet
+  
+  'Applying Endcut at End Extremity with Default Parameter values
+  Dim ListOfEndCutNames4 As Variant
+  ListOfEndCutNames4 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  
+  Dim ListOfContextNames4(), ListOfParamNames4() As Variant
+  Dim ListOfUDFParameters4 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", ListOfContextNames4, ListOfUDFParameters4, ListOfParamNames4
+  
+  Dim EndCutObj4 As SfmEndcut
+  Set EndCutObj4 = SuperStiffener1.AddEndcut(2, "Trim", "Trim-Edge-A1-A2-B-D1-D2-G-L1-L2", Nothing, ListOfUDFParameters4)
+  
+  'Update the Connection Set
+  EndCutObj4.UpdateConnectionsSet
+
+  'APPLYING ENDCUTS ON MEMBER1
+  'Applying Endcut at Start Extremity
+  'Checking list of available endcuts for a given family and type
+  Dim ListOfEndCutNames5 As Variant
+  ListOfEndCutNames5 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Weld")
+  
+  Dim ListOfContextNames5(), ListOfParamNames5() As Variant
+  Dim ListOfUDFParameters5 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Weld", "Weld", ListOfContextNames5, ListOfUDFParameters5, ListOfParamNames5
+
+  'In this case there are No UDFParameters
+  Dim ThirdLimit As Reference
+  Set ThirdLimit = ObjPart.CreateReferenceFromObject(SuperStiffener2)
+  Dim ListOfContexts5 As SfmReferences
+  Set ListOfContexts5 = FactoryRef.SfmReferences
+  ListOfContexts5.Add ThirdLimit
+  
+  Dim EndCutObj5 As SfmEndcut
+  Set EndCutObj5 = SuperMember1.AddEndcut(1, "Weld", "Weld", ListOfContexts5, Nothing)
+  
+  'Update the Connection Set
+  EndCutObj5.UpdateConnectionsSet
+
+  'Applying Endcut at End Extremity
+  Dim ListOfEndCutNames6 As Variant
+  ListOfEndCutNames6 = EndCutManagerObj.GetAvailableEndcuts("Bulb", "Snipe")
+  
+  Dim ListOfContextNames6(), ListOfParamNames6() As Variant
+  Dim ListOfUDFParameters6 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Bulb", "Snipe", "HP_P27", ListOfContextNames6, ListOfUDFParameters6, ListOfParamNames6
+
+  'In this case there are no Contexts
+  Dim EndCutObj6 As SfmEndcut
+  Set EndCutObj6 = SuperMember1.AddEndcut(2, "Snipe", "HP_P27", Nothing, ListOfUDFParameters6)
+  
+  'Update the Connection Set
+  EndCutObj6.UpdateConnectionsSet
+  
+  'APPLYING ENDCUTS ON MEMBER2
+  'Applying Endcut at Start Extremity
+  Dim ListOfEndCutNames7 As Variant
+  ListOfEndCutNames7 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Snipe")
+
+  'Gets the Specifications required to define a particular Endcut
+  Dim ListOfContextNames7(), ListOfParamNames7() As Variant
+  Dim ListOfUDFParameters7 As SfmConnectionParameters
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Snipe", "T-CTX-SHAPE", ListOfContextNames7, ListOfUDFParameters7, ListOfParamNames7
+
+  'Creating Endcut with Default Parameter values
+  Dim EndCutObj7 As SfmEndcut
+  Set EndCutObj7 = SuperMember2.AddEndcut(1, "Snipe", "T-CTX-SHAPE", ListOfContexts5, ListOfUDFParameters7)
+  
+  'Update the Connection Set
+  EndCutObj7.UpdateConnectionsSet
+  
+  'Applying Endcut at End Extremity
+  Dim ListOfEndCutNames8 As Variant
+  ListOfEndCutNames8 = EndCutManagerObj.GetAvailableEndcuts("Tee", "Trim")
+  
+  Dim ListOfContextNames8(), ListOfParamNames8() As Variant
+  Dim ListOfUDFParameters8 As SfmConnectionParameters
+  
+  EndCutManagerObj.GetEndcutSpecifications "Tee", "Trim", "BuiltIn-B4-B4O1-B3-B3O2", ListOfContextNames8, ListOfUDFParameters8, ListOfParamNames8
+  Dim EndCutObj8 As SfmEndcut
+  Set EndCutObj8 = SuperMember2.AddEndcut(2, "Trim", "BuiltIn-B4-B4O1-B3-B3O2", Nothing, ListOfUDFParameters8)
+  
+  'Update the Connection Set
+  EndCutObj8.UpdateConnectionsSet
+  
+  '********CREATING SLOTS*********
+  'Get OperationFactory Object
+  Dim SlotFactoryObj As SfmOperationFactory
+  Set SlotFactoryObj = ObjPart.GetCustomerFactory("SfmOperationFactory")
+  'Gets the list of available Slots from catalog for a given Profile(Stiffener/Member)
+  Dim ListOfAvailableSlots As Variant
+  ListOfAvailableSlots = SlotFactoryObj.GetAvailableSlotsFromCatalog(SuperStiffener3)
+  
+  'Gets the Slot Parameters and Names for a particular slot from catalog
+  Dim ListSlotParams1 As SfmConnectionParameters
+  Dim ListSlotPramNames1() As Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "Tee_Slot_thru_Plate", ListSlotParams1, ListSlotPramNames1
+  
+  'Get the object of SfmSlots
+  Dim SlotOnPlate As SfmSlots
+  Set SlotOnPlate = SuperPlate2.GetSlotsOnPlate
+  'Create References for Penetrating and Penetrating Objects
+  Dim PenetratedRef1, PenetratingRef1 As Reference
+  Set PenetratedRef1 = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  Set PenetratingRef1 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+  
+  'Create Slot on Plate Using a Stiffener
+  Dim SfmSlotObj As SfmSlot
+  Set SfmSlotObj = SlotOnPlate.AddSlot(PenetratedRef1, PenetratingRef1, "Tee_Slot_thru_Plate", ListSlotParams1)
+ 
+ 'Update the Connection Set
+  SfmSlotObj.UpdateConnectionsSet
+  
+  'Gets the Slot Parameters and Names for a particular slot from catalog
+  Dim ListSlotParams2 As SfmConnectionParameters
+  Dim ListSlotPramNames2() As Variant
+  SlotFactoryObj.GetSlotParameters SuperStiffener3, "CC-10-2Tee_thru_Shape", ListSlotParams2, ListSlotPramNames2
+  'Get the object of SfmSlots
+  Dim SlotsonProfile As SfmSlots
+  Set SlotsonProfile = SuperStiffener1.GetSlotsOnProfile
+  
+  Dim PenetratedRef2, PenetratingRef2 As Reference
+  Set PenetratedRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener1)
+  Set PenetratingRef2 = ObjPart.CreateReferenceFromObject(SuperStiffener3)
+  
+  'Create Slot on Profile Using a Stiffener
+  Dim SfmSlotObj2 As SfmSlot
+  Set SfmSlotObj2 = SlotsonProfile.AddSlot(PenetratedRef2, PenetratingRef2, "CC-10-2Tee_thru_Shape", ListSlotParams2)
+
+ 'Update the Connection Set
+  SfmSlotObj2.UpdateConnectionsSet
+
+  'To Update the Part
+  ObjPart.Update
+End Sub

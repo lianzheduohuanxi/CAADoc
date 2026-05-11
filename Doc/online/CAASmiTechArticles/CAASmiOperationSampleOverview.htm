@@ -1,0 +1,284 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Surface Machining Operations Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td>
+      <h2>3 Axis Surface Machining</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Surface Machining Operations Overview</h3>
+      <em>A full example showing you how to add your own surface machining
+      operations</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAASmiUserOperationCatalog,
+      CAASmiUserOperationUI, CAASmiUserOperationWithMA,
+      CAASmiUserOperationWithMAToolPath, CAASmiUserOperationWithUserMF and
+      CAASmiUserOperationWithUserMFToolPath use cases.
+      <p>These use cases explain how to create and integrate <b>new surface
+      machining operations</b> into CAA V5.
+      <ul>
+        <li><strong><a href="#What">What You Will Learn With These Use Cases</a></strong></li>
+        <li><a href="#scenario"><b>Scenarios</b></a></li>
+        <li><a href="#Use Case"><strong>The Use Cases</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Use Cases Do</a></li>
+            <li><a href="#How">How to Launch the Use Cases</a></li>
+            <li><a href="#Where">Where to Find the Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="What"></a>What You Will Learn With These Use Cases</h3>
+<p>These use cases are intended to help you make your first steps in creating 
+new <b>Surface Machining Operations</b>.
+<p>The main intent is to explain:</p>
+<ul>
+  <li>How to <b>define a surface machining operation </b>and how to store this
+    definition (StartUp) in a file.</li>
+  <li>How to <b>customize</b> its dialog panel.</li>
+  <li>How to <b>manage its geometry</b> using surface machining geometry
+    attributes.</li>
+  <li>How to connect it with <b>machining areas</b>.</li>
+  <li>How to <b>compute its tool path</b>.</li>
+</ul>
+<p>These use cases include some knowledge from various V5 Frameworks, such as
+the Object Specs Modeler framework, or the Dialog and Dialog Engine Frameworks.
+Their intent is to focus on the use of the Surface Machining Infrastructure
+frameworks. A prerequisite knowledge of other Frameworks may be required to
+fully understand this use case, some links with other CAA<sup> </sup>use cases
+will help you navigate among them.
+<p>Notice that some of these use cases can be put into practice in others
+Manufacturing Frameworks, like Prismatic Machining.
+<p>Before getting to the tutorials, it is important to get an understanding of <b>the
+use case scenarios</b>. This is the goal of the next section.</p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="scenario"></a> Scenarios</h3>
+<p>Two scenarios are available:</p>
+<p><b>Scenario 1</b>: Define a &quot;Plunge&quot; operation associated with a custom machining feature.</p>
+<p>The goal of this scenario is to create a <b>new operation</b>
+CAASmgOperation. It has 3 parameters and it is connected with a <b>new machining
+feature</b> CAASmgMachiningFeature, linked to <b>geometry</b> by an <b>attribute</b>
+: CAASmgGuide. It computes a kind of &quot;plunge roughing&quot; tool path.</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%">
+      <p align="left"><img border="0" src="images/CAASmiSampleOverview1.gif" width="505" height="271"></td>
+    <td width="50%">
+      <p align="left"><img border="0" src="images/CAASmiSampleOverview3.jpg" width="429" height="299"></td>
+  </tr>
+</table>
+<p><b>Scenario 2</b>: Define a &quot;Box&quot; operation using machining areas.</p>
+<p>The goal of this scenario is to create a second <b>operation</b> CAASmgOperationWithMA, illustrating the use of <b>machining
+areas</b>. It <b></b>computes a tool path following the
+bounding boxes of the geometrical elements of a machining area.</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%">
+      <p align="left"><img border="0" src="images/CAASmiSampleOverview5.gif" width="439" height="199"></td>
+    <td width="50%">
+      <p align="left"><img border="0" src="images/CAASmiSampleOverview2.jpg" width="570" height="289"></td>
+  </tr>
+</table>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Use Case"></a>The Use Cases</h3>
+<p>This section will describe the different tasks to perform to achieve this
+sample.</p>
+<h4><a name="What does this Use Cases do"></a>What Do These Use Cases Do</h4>
+<p>The final intent of these use cases is to create some new surface machining
+operations. This is an <b>end-to-end integration</b>. At the end of this use
+case &quot;Tour&quot;, you should hardly notice any difference between these
+operations and an original V5 surface machining operation.</p>
+<p>The sample is divided into several steps. Following them leads to full
+defined surface machining operations:</p>
+<ol>
+  <li>Generates the Startups library. This is done in <a href="../CAASmiUseCases/CAASmiUserOperationCatalog.htm">CAASmiUserOperationCatalog</a>
+    use case.</li>
+  <li>Designs a command to create them. This is fully described in the referenced
+    article [<a href="#References">1</a>].</li>
+  <li>Customizes their editing panel. See <a href="../CAASmiUseCases/CAASmiUserOperationUI.htm">CAASmiUserOperationUI</a>
+    use case.</li>
+  <li>For the first operation only:
+    <ol>
+      <li>Generates the CAASmgMachiningFeature Startup catalog. This is fully
+        described in the referenced article [<a href="#References">2</a>].</li>
+      <li>Manages its geometry. See <a href="../CAASmiUseCases/CAASmiUserOperationWithUserMF.htm">CAASmiUserOperationWithUserMF</a>
+        use case.</li>
+      <li>Computes its tool path. See <a href="../CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm">CAASmiUserOperationWithUserMFToolPath</a>
+        use case.</li>
+    </ol>
+  </li>
+  <li>For the second operation only:
+    <ol>
+      <li>Manages machining areas. See <a href="../CAASmiUseCases/CAASmiUserOperationWithMA.htm">CAASmiUserOperationWithMA</a>
+        use case.</li>
+      <li>Computes its tool path. See <a href="../CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm">CAASmiUserOperationWithMAToolPath</a>
+        use case.</li>
+    </ol>
+  </li>
+</ol>
+<!---------------------------------comment------------------------------------->
+
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<h4><a name="How"></a>How to Launch the Use Cases</h4>
+<p>To launch the use cases, you will need to set up the build time environment,
+then uncomment the lines of the interface dictionary, then compile all the
+modules of CAASurfaceMachiningItf.edu framework along with their prerequisites,
+and execute the use cases [<a href="#References">3</a>].</p>
+<p>Be sure that use cases catalogs are stored in the CNext + resources + graphic directory of the runtime view. See <a href="../CAASmiUseCases/CAASmiUserOperationCatalog.htm">CAASmiUserOperationCatalog</a> use case.</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="48%">
+      <p>When CATIA is opened,</p>
+      <ul>
+        <li>In the <b>Start</b> menu choose <b>Machining </b>and click <b>Surface
+          Machining</b></li>
+        <li>Enable the &quot;CAA SMG Tool Bar&quot;</li>
+        <li>Click on the &quot;CAA Plunge operation&quot; command</li>
+        <li>The <b>first CAA SMG operation</b> is created and its dialog panel is displayed</li>
+        <li>Set parameters and select an edge</li>
+        <li>Click on &quot;Replay&quot; button. The tool path is created !</li>
+        <li>Click on the &quot;CAA Box operation&quot; command</li>
+        <li>The <b>second CAA SMG operation</b> is created and its dialog panel is displayed</li>
+        <li>Set parameters and select geometry</li>
+        <li>Click on &quot;Replay&quot; button. The tool path is created !</li>
+      </ul>
+    </td>
+    <td width="52%"><img border="0" src="images/CAASmiSampleOverview4.jpg" width="744" height="506"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Code</h4>
+<p>The sample is made of a several modules of the CAASurfaceMachiningItf.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ul>
+  <li>CAASmiUserOperationCatalog.m</li>
+  <li>CAASmiUserOperationCommand.m</li>
+  <li>CAASmiUserOperationUI.m</li>
+  <li>CAASmiUserMachFeatureCatalog.m</li>
+  <li>CAASmiUserOperationGeomUI.m</li>
+  <li>CAASmiUserOperationToolPathReplay.m</li>
+  <li>CAASmiConnectUserOperationWithMA.m</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAASurfaceMachiningItf.edu sample shows how to add new operations inside
+<i>Surface Machining</i> Infrastructure, using either an exisiting machining
+area, either a new user machining feature.</p>
+<p>You can now successively go to:</p>
+<ul>
+  <li><a href="../CAASmiUseCases/CAASmiUserOperationCatalog.htm">Creating
+    a Surface Machining Operation Startup</a></li>
+  <li><a href="../CAASmiUseCases/CAASmiUserOperationUI.htm">Customizing
+    the Surface Machining Operation Editor</a></li>
+  <li>Operation 1:
+    <ul>
+      <li><a href="../CAASmiUseCases/CAASmiUserOperationWithUserMF.htm">Managing
+        Geometry with User Machining Features</a></li>
+      <li><a href="../CAASmiUseCases/CAASmiUserOperationWithUserMFToolPath.htm">Computing
+        Tool Path with User Machining Features</a></li>
+    </ul>
+  </li>
+  <li>Operation 2:
+    <ul>
+      <li><a href="../CAASmiUseCases/CAASmiUserOperationWithMA.htm">Managing
+        Geometry with Machining Areas</a></li>
+      <li><a href="../CAASmiUseCases/CAASmiUserOperationWithMAToolPath.htm">Computing
+        Tool Path with Machining Areas</a></li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">Creating
+      an Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td valign="top"><a href="../CAAOsmUseCases/CAAOsmAppliCont.htm">Creating
+      Features in an Applicative Container</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

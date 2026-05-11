@@ -1,0 +1,1237 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Lists of Pointers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Lists of Pointers</h3>
+      <em>Managing pointers to instances of the same class</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>You often need to manage several objects at the same time rather than a
+      single one, either to handle them as a whole or to pass them as an
+      argument of a method. The list of pointers enables you to gather pointers
+      to instances of the same class in a list and provides many methods to
+      handle them.
+      <ul>
+        <li><a href="#100000"><strong>About Lists of Pointers</strong></a></li>
+        <li><a href="#200000"><strong>Programmer's Guide</strong></a></li>
+        <li><a href="#300000"><strong>Programmer's Reference</strong></a>
+          <ul>
+            <li><a href="#310000">Constructing a List of Pointers</a></li>
+            <li><a href="#320000">Copying a List of Pointers</a></li>
+            <li><a href="#330000">Adding Items to a List of Pointers</a></li>
+            <li><a href="#340000">Removing Items from a List of Pointers</a></li>
+            <li><a href="#350000">Retrieving and Setting the List Size</a></li>
+            <li><a href="#360000">Retrieving and Locating Items</a></li>
+            <li><a href="#370000">Replacing, Swapping, and Sorting Items</a></li>
+            <li><a href="#380000">Applying Operations to Pointed Objects</a></li>
+            <li><a href="#390000">Comparing Items</a></li>
+            <li><a href="#3A0000">Doing More</a></li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>About Lists of Pointers?</h3>
+<p>The following applies to list of pointers:
+<ul>
+  <li>The macro <code>CATLISTP(T)</code> refers to a class-collection of
+    pointers to instances of type T (T is mostly a class)</li>
+  <li>You will generate it very easily, using other macros</li>
+  <li>The collection class you will obtain will gain benefits of C++ strong type
+    checking, but is designed to reduce executable code size and to fasten
+    heavily used operations usin inline definitions</li>
+  <li><code>NULL</code> pointers can be inserted in the collection, and
+    duplicate pointers are allowed. The collection class can be managed as a
+    dynamic array through resizing, or as a stack or queue</li>
+  <li>You may get only the desired services. Minimal functionalities are
+    provided, and if you require some more, you specify it through additional
+    preprocessor flags.</li>
+</ul>
+<p>Do not use<em> </em><code>CATLISTP(T) </code>with T as a non-class (<em>int</em>
+or <em>double</em> for example), it is doesn't make sense.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Programmer's Guide</h3>
+<p>To create a class for a list a pointers to MyClass, with the two methods <code>Append</code>
+and <code>RemoveValue</code>, create the following header file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class MyClass;                     // Declare the class
+
+#include &quot;CATLISTP_Clean.h&quot;        // Clean previous method requests
+
+#define CATLISTP_Append            // Request the methods to create
+#define CATLISTP_RemoveValue
+
+#include &quot;CATLISTP_Declare.h&quot;      // Include macros
+
+CATLISTP_DECLARE(MyClass);         // Declare the collection class
+
+typedef CATLISTP(MyClass) MyClassCollection; // Define a handy name</pre>
+    </td>
+  </tr>
+</table>
+<p>The source file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;MyClass.h&quot;
+#include &quot;MyClassCollection.h&quot;
+
+#include &quot;CATLISTP_Define.h&quot;
+
+CATLISTP_DEFINE(MyClass);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Programmer's Reference</h3>
+<p>All the methods that you can set yo a list of pointers class are declared in
+CATLISTP_AllFunc.h.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#define	CATLISTP_CtorFromArrayPtrs
+#define	CATLISTP_Append
+#define	CATLISTP_AppendList
+#define	CATLISTP_InsertAt
+#define	CATLISTP_ReSize
+#define	CATLISTP_Locate
+#define	CATLISTP_RemoveValue
+#define	CATLISTP_RemoveList
+#define	CATLISTP_RemovePosition
+#define	CATLISTP_RemoveAll
+#define	CATLISTP_RemoveNulls
+#define	CATLISTP_RemoveDuplicates
+#define	CATLISTP_Compare
+#define	CATLISTP_Swap
+#define	CATLISTP_QuickSort
+#define	CATLISTP_FillArrayPtrs
+#define	CATLISTP_NbOccur
+#define	CATLISTP_Intersection</pre>
+    </td>
+  </tr>
+</table>
+<p>Including first CATLISTP_Clean.h ensures that no previously declared method
+remains.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Constructing a List of Pointers</h4>
+<p>You can construct a list of pointers using the following constructors.
+<ul>
+  <li>Constructs an empty list of pointers.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(T)::CATLISTP(T) ( int iInitAlloc = 0);</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iInitAlloc</code></dt>
+          <dd>The amount of memory to be initially pre-allocated (forecasted
+            number of items)</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>By default, when no argument is specified, no pre-allocation is done.</p>
+  </li>
+  <li>Copy constructor
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(T)::CATLISTP(T) ( const CATLISTP(T)&amp; iCopy );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Constructs a new list as a copy of <code>iCopy</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iCopy</code></dt>
+          <dd>The list of pointers to copy</dd>
+        </dl>
+      </dd>
+    </dl>
+  </li>
+  <li>Constructs a list of pointers from a C-style array of pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(T)::CATLISTP(T) ( T** iArray,
+                           int iSize );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Constructs a list of <code>iSize</code> items from the <code>iArray</code>
+        array.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iArray</code></dt>
+          <dd>The C-style array of pointers</dd>
+          <dt><code>iSize</code></dt>
+          <dd>The number of items of the array</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_CtorFromArrayPtrs</code> preprocessor flag if
+    you need this function.</p>
+  </li>
+  <li>Constructs a list of pointers from a C-style array of values
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(T)::CATLISTP(T) ( T* iArray,
+                           int iSize );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Constructs a list of <code>iSize</code> items from the <code>iArray</code>
+        array.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iArray</code></dt>
+          <dd>The C-style array of values</dd>
+          <dt><code>iSize</code></dt>
+          <dd>The number of items of the array</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_CtorFromArrayVals</code> preprocessor flag if
+    you need this function.</p>
+  </li>
+</ul>
+<p>Note that the destructor doesn't delete the pointed objects. Refer to the
+ApplyDelete method</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Copying a List of Pointers</h4>
+<p>You can copy a list a pointers in an existing one as follows.
+<ul>
+  <li>Assignment operator.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATLISTP(T)&amp; CATLISTP(T)::operator= ( const CATLISTP(T)&amp; iCopy );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iCopy</code></dt>
+          <dd>The list of pointers to copy</dd>
+        </dl>
+      </dd>
+    </dl>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Adding Items to a List of Pointers</h4>
+<p>You can add items to a list of pointers as follows.
+<ul>
+  <li>Add a pointer at the end of the list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CATLISTP(T)::Append ( T* iAdd );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Appends the item <code>iAdd</code> to the end of the list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iAdd</code></dt>
+          <dd>The item to append to the end of the list</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_Append</code> preprocessor flag if you need
+    this function.</p>
+  </li>
+  <li>Copy the pointers of another list to the end of the list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CATLISTP(T)::Append ( const CATLISTP(T)&amp; iConcat );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Appends a copy of the <code>iConcat</code> list to to the end of the
+        self list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iConcat</code></dt>
+          <dd>The list of pointers to append</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_AppendList</code> preprocessor flag if you need
+    this function.</p>
+  </li>
+  <li>Insert a pointer at a given position
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CATLISTP(T)::InsertAt ( int iPos,
+                             T* iAdd );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Inserts the object pointed to by <tt>iAdd</tt> at the index position <tt>iPos</tt>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The position where <tt>iAdd</tt> is to be inserted<br>
+            <b>Legal values</b>: This position must be between one and the
+            number of items in the list plus one.</dd>
+          <dt><code>iAdd</code></dt>
+          <dd>The item to insert</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_InsertAt</code> preprocessor flag if you need
+    this function.</p>
+  </li>
+  <li>Insert a pointer before a given position
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CATLISTP(T)::InsertBefore ( int iPos,
+                                 T* iAdd );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Inserts the item <tt>iAdd</tt> before the index position <tt>iPos</tt>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The position before which <tt>iAdd</tt> is to be inserted<br>
+            <b>Legal values</b>: This position must be between one and the
+            number of items in the list plus one. S being the size of the list,
+            inserting an object before the S + 1 position means to append the
+            item to the end of the list.</dd>
+          <dt><code>iAdd</code></dt>
+          <dd>The item to insert</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_InsertBefore</code> preprocessor flag if you
+    need this function.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="340000"></a>Removing Items from a List of Pointers</h4>
+<p>You can remove items to a list of pointers as follows.
+<ul>
+  <li>Removing the first pointer matching a given one
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::RemoveValue ( T*  iRemove );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes the first item which is equal to <code>iRemove</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iRemove</code></dt>
+          <dd>The pointer whose first occurrence is to be removed</dd>
+        </dl>
+      </dd>
+      <dt><b>Returns</b>:</dt>
+      <dd>1 if one item was found and then removed, and 0 otherwise</dd>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveValue</code> preprocessor flag if you
+    need this function.</p>
+  </li>
+  <li>Removing the pointers that are in another list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::Remove ( const CATLISTP(T)&amp;  iSubstract );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes the items of the <code>iSubstract</code> list from the list</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iSubstract</code></dt>
+          <dd>The list of pointers to remove</dd>
+        </dl>
+      </dd>
+      <dt><b>Returns</b>:</dt>
+      <dd>The number of removed items</dd>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveList</code> preprocessor flag if you need
+    this function.</p>
+  </li>
+  <li>Indexed removal
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CATLISTP(T)::RemovePosition ( int  iPos );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes the item at the index position <code>iPos</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The position at which the item is to be removed<br>
+            <b>Legal values</b>: This position must be between zero and the
+            number of items in the list (included).</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_RemovePosition</code> preprocessor flag if you
+    need this function.</p>
+  </li>
+  <li>Removing all pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::RemoveAll ( CATCollec::MemoryHandling  iMH  
+                               = CATCollec::ReleaseAllocation );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removing all the items from the list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iMH</code></dt>
+          <dd>Use <code>iMH</code> to specify if memory allocation is to be
+            freed (the default) or kept.<br>
+            <b>Legal values</b>: <code>CATCollec::ReleaseAllocation</code> to
+            free, and <code>CATCollec::KeepAllocation</code> to keep the memory
+            allocation.</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveAll</code> preprocessor flag if you need
+    this function.</p>
+  </li>
+  <li>Removing the NULL pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::RemoveNulls();</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes all the NULL pointers from the list.</dt>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveNulls</code> preprocessor flag if you
+    need this function.</p>
+  </li>
+  <li>Removing duplicates pointers (returning count)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::RemoveDuplicates ();</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes duplicates from the list.</dt>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveDuplicatesCount</code> preprocessor flag
+    if you need this function.</p>
+  </li>
+  <li>Removing duplicated pointers (appending removed items in another list)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::RemoveDuplicates ( CATLISTP(T)&amp;  ioExtract );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Removes duplicates from the list and appends the removed items to the <code>ioExtract</code>
+        list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>ioExtract</code></dt>
+          <dd>The list to which duplicates items are to appended</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Define the <code>CATLISTP_RemoveDuplicatesExtract</code> preprocessor
+    flag if you need this function.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="350000"></a>Retrieving and Setting the List Size</h4>
+<p>You can retrieve and set the size of a list of pointers as follows.
+<ul>
+  <li>Retrieving the size of a list of pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::Size() const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns the number of items in the list.</dt>
+    </dl>
+    <p>This method is provided by default and doesn't require a specific <code>#define</code>
+    statement.</p>
+  </li>
+  <li>Setting the size of a list of pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::Size ( int  iSize );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Sets the number of items of a list of pointers.<br>
+        If the list size is smaller than <code>iSize</code>, NULL pointers are
+        appended to match the requested size. Otherwise, the items whose index
+        is greater from <code>iSize</code> are removed.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iSize</code></dt>
+          <dd>The size to assign to the list</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ReSize</code> if you need this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="360000"></a>Retrieving and Locating Items</h4>
+<p>You can retrieve items from and locate items in a list of pointers as
+follows.
+<ul>
+  <li>Retrieving an item using its index in a constant list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>T*  CATLISTP(T)::operator[] ( int  iPos)  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns the <code>iPos</code>th item of the list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The index of the item to return<br>
+            <b>Legal values</b>: This index ranges from 1 to n, where n is the
+            list size, as returned by the <code>Size</code> method</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>This method is provided by default and doesn't require a specific <code>#define</code>
+    statement.</p>
+  </li>
+  <li>Retrieving an item using its index in a non constant list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>T*&amp;  CATLISTP(T)::operator[] ( int  iPos);</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns the <code>iPos</code>th item of the list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The index of the item to return<br>
+            <b>Legal values</b>: This index ranges from 1 to n, where n is the
+            list size, as returned by the <code>Size</code> method</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>This method is provided by default and doesn't require a specific <code>#define</code>
+    statement.</p>
+  </li>
+  <li>Locating an item in a list
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::Locate ( T*   iLocate,
+                           int  iFrom = 1 )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns the index of the item equal to <code>iLocate</code>. By
+        default, this function scans the list of pointers from the first item
+        down to the end of the list.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLocate</code></dt>
+          <dd>The pointer to locate in the list</dd>
+          <dt><code>iFrom</code></dt>
+          <dd>The index from which the search must begin.<br>
+            <b>Legal values</b>: This index can range from 1 to n, where n is
+            the list size, as returned by the <code>Size</code> method. The
+            default value is 1.</dd>
+        </dl>
+      </dd>
+      <dt><b>Returns</b>:</dt>
+      <dd>If 0 is returned, it means that the pointer does not exist in the
+        list.</dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_Locate</code> if you need this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="370000"></a>Replacing, Swapping, and Sorting Items</h4>
+<p>You can replace, swap, and sort items in a list of pointers as follows.</p>
+<ul>
+  <li>Replacing the value of an item
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::Replace ( int  iPos,
+                             T*   iReplace);</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Replaces the item at the index position <code>iPos</code> with the <code>iReplace</code>
+        value.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos</code></dt>
+          <dd>The index of the item to replace<br>
+            <b>Legal values</b>: This index ranges from 1 to n, where n is the
+            list size, as returned by the <code>Size</code> method</dd>
+          <dt><code>iReplace</code></dt>
+          <dd>The replacing item</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_Replace</code> if you need this method.</p>
+  </li>
+  <li>Swapping two items
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::Swap ( int  iPos1,
+                          int  iPos2 );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Swaps the items at index positions <code>iPos1</code> and <code>iPos2</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPos1</code></dt>
+          <dd>The index of the first item to swap<br>
+            <b>Legal values</b>: This index ranges from 1 to n, where n is the
+            list size, as returned by the <code>Size</code> method</dd>
+          <dt><code>iPos2</code></dt>
+          <dd>The index of the second item to swap<br>
+            <b>Legal values</b>: This index ranges from 1 to n, where n is the
+            list size, as returned by the <code>Size</code> method</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_Swap</code> if you need this method.</p>
+  </li>
+  <li>Quick sorting
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::QuickSort ( int (*iPFCompare) (const T*, const T*) );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Sorts the items of the list according to a user-defined function
+        pointed to by <code>iPFCompare</code>. This <code>QuickSort</code>
+        function is similar to the <code>qsort</code> utility of the <stdlib.h>           
+        stdlib.h library.</dt>
+      <dt><b>Returns</b>: in <code>iPFCompare</code>:</dt>
+      <dd>
+        <ul>
+          <li>A negative value if the first argument is smaller than the second
+            argument</li>
+          <li>A positive value if the first argument is greater than the second
+            argument</li>
+          <li>Zero if arguments are equal.</li>
+        </ul>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_QuickSort</code> if you need this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="380000"></a>Applying Operations to Pointed Objects</h4>
+<p>You can apply the following operations to items of a list of pointers as
+follows.
+<ul>
+  <li>To run a method on items (NULL ignored)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>typedef  int  (T::*PtrMbrFunct) ();
+int  CATLISTP(T)::ApplyMemberFunct ( PtrMemberFunct  iPF,
+                                     int      iFrom = 1,  
+                                     int      iTo   = 0,
+                                     T**      iPLast = NULL,
+                                     int*     iPRC   = NULL )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Calls the method pointed to by <code>iPF</code> on items of the
+        list&nbsp; (NULLs ignored).<br>
+        Starts from the <code>iFrom</code> item up to the <code>iTo</code> item.
+        (if <code>iTo</code> equals 0, it means up to the end of the list)<br>
+        Each call to <code>iPF</code> returns an <code>int</code>. If it is
+        equal to 0, calls continue on next items, else the index of the item on
+        which the process stops is returned.<br>
+        Optional argument <code>iPLast</code> is a pointer to a T pointer. If
+        provided, it will contain the the value of the last item (a pointer)
+        processed by the function.<br>
+        Optional argument <code>iPRC</code> is a pointer to an <code>int</code>.
+        If provided, it will contain the value returned by the last call made by
+        the function.<br>
+        If default values are used (i.e. only the first argument is given),
+        apply the user-defined function pointed to by <code>iPF</code> to all
+        items of the list (if each call returns 0).</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPF</code></dt>
+          <dd>The pointer to the method</dd>
+          <dt><code>iFrom</code></dt>
+          <dd>The index of the first item onto which the method is called</dd>
+          <dt><code>iTo</code></dt>
+          <dd>The index of the last item onto which the method is called</dd>
+          <dt><code>iPLast</code></dt>
+          <dd>The pointer to the last processed item</dd>
+          <dt><code>iPRC</code></dt>
+          <dd>The pointer to the last method returned value</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ApplyMemberFunct</code> if you need this
+    method.</p>
+  </li>
+  <li>To run a const method on items (NULL ignored)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>typedef  int  (T::*PtrMbrFunctConst) ()  const;
+int  CATLISTP(T)::ApplyMemberFunctConst ( PtrMemberFunctConst  iPF,
+                                          int      iFrom = 1,   
+                                          int      iTo   = 0,
+                                          T**      iPLast = NULL,
+                                          int*     iPRC   = NULL )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Calls the const method pointed to by <code>iPF</code> on items of the
+        list&nbsp; (NULLs ignored).<br>
+        Starts from the <code>iFrom</code> item up to the <code>iTo</code> item.
+        (if <code>iTo</code> equals 0, it means up to the end of the list)<br>
+        Each call to <code>iPF</code> returns an <code>int</code>. If it is
+        equal to 0, calls continue on next items, else the index of the item on
+        which the process stops is returned.<br>
+        Optional argument <code>iPLast</code> is a pointer to a T pointer. If
+        provided, it will contain the the value of the last item (a pointer)
+        processed by the function.<br>
+        Optional argument <code>iPRC</code> is a pointer to an <code>int</code>.
+        If provided, it will contain the value returned by the last call made by
+        the function.<br>
+        If default values are used (i.e. only the first argument is given),
+        apply the user-defined function pointed to by <code>iPF</code> to all
+        items of the list (if each call returns 0).</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPF</code></dt>
+          <dd>The pointer to the const method</dd>
+          <dt><code>iFrom</code></dt>
+          <dd>The index of the first item onto which the method is called</dd>
+          <dt><code>iTo</code></dt>
+          <dd>The index of the last item onto which the method is called</dd>
+          <dt><code>iPLast</code></dt>
+          <dd>The pointer to the last processed item</dd>
+          <dt><code>iPRC</code></dt>
+          <dd>The pointer to the last method returned value</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ApplyMemberFunctConst</code> if you need this
+    method.</p>
+  </li>
+  <li>To run a global function on items (NULL ignored)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>typedef  int  (*PtrGlbFunct) ( T* );
+int  CATLISTP(T)::ApplyGlobalFunct ( PtrGlbFunct  iPF,
+                                     int      iFrom = 1,
+                                     int      iTo   = 0,
+                                     T**      iPLast = NULL,
+                                     int*     iPRC   = NULL )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>&nbsp;</dt>
+      <dt>Calls the gloabl function pointed to by <code>iPF</code> on items of
+        the list&nbsp; (NULLs ignored).<br>
+        Starts from the <code>iFrom</code> item up to the <code>iTo</code> item.
+        (if <code>iTo</code> equals 0, it means up to the end of the list)<br>
+        Each call to <code>iPF</code> returns an <code>int</code>. If it is
+        equal to 0, calls continue on next items, else the index of the item on
+        which the process stops is returned.<br>
+        Optional argument <code>iPLast</code> is a pointer to a T pointer. If
+        provided, it will contain the value of the last item (a pointer)
+        processed by the function.<br>
+        Optional argument <code>iPRC</code> is a pointer to an <code>int</code>.
+        If provided, it will contain the value returned by the last call made by
+        the function.<br>
+        If default values are used (i.e. only the first argument is given),
+        apply the user-defined function pointed to by <code>iPF</code> to all
+        items of the list (if each call returns 0).</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iPF</code></dt>
+          <dd>The pointer to the global function</dd>
+          <dt><code>iFrom</code></dt>
+          <dd>The index of the first item onto which the method is called</dd>
+          <dt><code>iTo</code></dt>
+          <dd>The index of the last item onto which the method is called</dd>
+          <dt><code>iPLast</code></dt>
+          <dd>The pointer to the last processed item</dd>
+          <dt><code>iPRC</code></dt>
+          <dd>The pointer to the last method returned value</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ApplyGlobalFunct</code> if you need this
+    method.</p>
+  </li>
+  <li>To delete pointed instances (must have been dynamically allocated)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::ApplyDelete ( CATCollec::Direction  iDir
+                                = CATCollec::FromFirstToLast) const;
+enum CATCollec::Direction { CATCollec::FromFirstToLast,
+                            CATCollec::FromLastToFirst };</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Deletes all the instances pointed by the list. By default, will start
+        deletion from the last element to the first one. But you may specify a
+        more appropriate direction if you need so (i.e. a component removes
+        itself from the container)</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iDir</code></dt>
+          <dd>The deletion direction</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ApplyDelete</code> if you need this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="390000"></a>Comparing Items</h4>
+<p>You can compare items of two lists of pointers as follows.
+<ul>
+  <li>Equality operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator== (const CATLISTP(T)&amp; iLP) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to the current list. Returns 1 when lists
+        are equal.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>This method is provided by default and doesn't require a specific <code>#define</code>
+    statement.</p>
+  </li>
+  <li>Inequality operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator!= (const CATLISTP(T)&amp; iLP) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to the current list. Returns 1 when lists
+        are different.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>This method is provided by default and doesn't require a specific <code>#define</code>
+    statement.</p>
+  </li>
+  <li>Less-than or equal operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator&lt;= (const CATLISTP(T)&amp; iLP) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to to the current list. Returns 1 when to
+        the current list is less or equal to <code>iLP</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_leOP</code> if you need this method.</p>
+  </li>
+  <li>Greater-than or equal operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator&gt;= (const CATLISTP(T)&amp; iLP) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to to the current list. Returns 1 when to
+        the current list is greater or equal to <code>iLP</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_geOP</code> if you need this method.</p>
+  </li>
+  <li>Less-than operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator&amp;le; (const CATLISTP(T)&amp; iLP) const;
+</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to the current list. Returns 1 when the
+        current list is less than <code>iLP</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ltOP</code> if you need this method.</p>
+  </li>
+  <li>Greater-than operator
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CATLISTP(T)::operator&gt; (const CATLISTP(T)&amp; iLP) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Compares <code>iLP</code> to the current list. Returns 1 when&nbsp;
+        the current list is greater than <code>iLP</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP</code></dt>
+          <dd>The list to compare with the current one</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_gtOP</code> if you need this method.</p>
+  </li>
+  <li>Parameterized compare of two lists
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+int  CATLISTP(T)::Compare ( const CATLISTP(T)&amp;  iLP1,
+                            const CATLISTP(T)&amp;  iLP2,
+                            int (*iPFCompare) (const T*, const T*) );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns 1 if <code>iLP1</code> is greater, -1 if <code>iLP2</code> is
+        greater, or 0 if they are equal. The first discriminator is the size,
+        then each element is compared using the function pointed by <code>iPFCompare</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP1</code></dt>
+          <dd>The first list to compare</dd>
+          <dt><code>iLP2</code></dt>
+          <dd>The second list to compare</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_Compare</code> if you need this method.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="3A0000"></a>Doing More</h4>
+<p>You can do the following:
+<ul>
+  <li>Copy the pointers of the list inside a C-style array of pointers
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::FillArray ( T** ioArray, int iMaxSize ) const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Copies each item of the list to the <code>ioArray</code> array of
+        pointers. (It should have the same size than the list.)</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>ioArray</code></dt>
+          <dd>The array of pointers to which the list of pointers is to be
+            copied</dd>
+          <dt><code>iMaxSize</code></dt>
+          <dd>The common size of the list and of the array</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_FillArrayPtrs</code> if you need this method.</p>
+  </li>
+  <li>Compute the intersection of two lists
+    <table class="code">
+      <tr>
+        <td>
+          <pre>static
+void  CATLISTP(T)::Intersection ( const CATLISTP(T)&amp;  iLP1,
+                                  const CATLISTP(T)&amp;  iLP2,
+                                  CATLISTP(T)&amp;        ioResult );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Appends in the <code>ioResult</code> list the intersection of <code>iLP1</code>
+        and <code>iLP2</code> list. If <code>iLP1</code> contains duplicates,
+        the <code>ioResult</code> may also contain duplicates.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iLP1</code></dt>
+          <dd>The first list to intersect</dd>
+          <dt><code>iLP2</code></dt>
+          <dd>The second list to intersect</dd>
+          <dt><code>ioResult</code></dt>
+          <dd>The resulting intersection list</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_Intersection</code> if you need this method.</p>
+  </li>
+  <li>Number of occurrences of a pointer
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int  CATLISTP(T)::NbOccur ( T*  iTest );</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Returns the number of items (duplicates, if any, are counted) in the
+        list that are equal to <code>iTest</code>.</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>iTest</code></dt>
+          <dd>The item to test</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_NbOccur</code> if you need this method.</p>
+  </li>
+  <li>ostream <code>OPERATOR&lt;&lt;</code> output pointed instances on a
+    ostream
+    <table class="code">
+      <tr>
+        <td>
+          <pre>ostream&amp;  ::operator&lt;&lt; ( ostream&amp;            ioOS,
+                         const CATLISTP(T)&amp;  iLP )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Uses <code>::operator&lt;&lt;</code> defined for type T on each
+        instance pointed by the list</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>ioOS</code></dt>
+          <dd>The ostream</dd>
+          <dt><code>iLP</code></dt>
+          <dd>The list to output to the stream</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_ostreamOP</code> if you need this method.</p>
+  </li>
+  <li>Print pointers values (for debug purposes)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void  CATLISTP(T)::PrintAddr ( ostream&amp;  ioOS )  const;</pre>
+        </td>
+      </tr>
+    </table>
+    <dl>
+      <dt>Writes the list items on the ioOS ostream. (displays pointers values,
+        i.e. addresses)</dt>
+      <dt><b>Parameters</b>:</dt>
+      <dd>
+        <dl>
+          <dt><code>ioOS</code></dt>
+          <dd>The item to append to the end of the list</dd>
+        </dl>
+      </dd>
+    </dl>
+    <p>Add <code>#define CATLISTP_PrintAddr</code> if you need this method.</p>
+  </li>
+</ul>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

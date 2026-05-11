@@ -1,0 +1,435 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Tool Path Display in &quot;Tool Path Replay&quot; Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Tool Path Display in &quot;Tool Path
+      Replay&quot; Command</h3>
+      <em>Implementing the CATIMfgReplayToolPathCustom interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiReplayToolPathCustomization use case
+      and explains how to implement the <i>CATIMfgReplayToolPathCustom</i>
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiToolPathCustomization Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiToolPathCustomization Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiToolPathCustomization</a></li>
+            <li><a href="#Where">Where to Find the CAAMaiToolPathCustomization
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the display of the tool path
+in the &quot;tool path replay&quot;, by adding to the standard display your own
+graphic representation.</p>
+<p>To customize the display of tool path, you will have to implement the <i>CATIMfgReplayToolPathCustom</i>
+manufacturing interface.</p>
+<p>This involves to create an extension class to implement <i>CATIMfgReplayToolPathCustom</i>
+interface on the <i>MfgTPMultipleMotion </i>object which is the object
+describing the tool path.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiReplayToolPathCustomization Use Case</h3>
+<p>CAAMaiReplayToolPathCustomization is a use case of the
+CAAManufacturingItf.edu framework that illustrates ManufacturingInterfaces
+framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiReplayToolPathCustomization Do</h4>
+<p>CAAMaiReplayToolPathCustomization runs with the Process document shown on
+figure below that contains a &quot;Facing&quot; operation.</p>
+<p>With this use case, tool tip points of the tool path are graphically
+represented by a set of square points when submitting &quot;tool path
+replay&quot; command.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/CAAMaiReplayToolPathCustomization1.jpg" width="697" height="759"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiReplayToolPathCustomization</h4>
+<p>To launch CAAMaiReplayToolPathCustomization, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiReplayToolPathCustomization.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#'
+    character:</p>
+    <pre>MfgTPMultipleMotion   CATIMfgReplayToolPathCustom	libCAAMaiReplayToolPathCustomization</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiReplayToolPathCustomization.CATProcess file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>Submit &quot;tool path replay&quot; command on &quot;Facing.1&quot;
+    operation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiReplayToolPathCustomization Code</h4>
+<p>The CAAMaiReplayToolPathCustomization use case is made of a class named <i>CAAEMaiReplayToolPathCustomization.</i>
+located in the CAAMaiReplayToolPathCustomization.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiReplayToolPathCustomization.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiReplayToolPathCustomization.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are two logical steps in CAAMaiReplayToolPathCustomization:</p>
+<ol>
+  <li><a href="#Step1">Creating an Extension Class to Implement
+    CATIMfgReplayToolPathCustom interface</a></li>
+  <li><a href="#Step2">Creating graphic representation to add to standard
+    display of tool path</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Extension Class to Implement
+CATIMfgReplayToolPathCustom interface</h4>
+<p>The extension class that will implement <i>CATIMfgReplayToolPathCustom</i> is
+named <i>CAAEMaiReplayToolPathCustomization</i>.</p>
+<p>Creating this class is done in three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiReplayToolPathCustomization</i> class header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#ifndef CAAEMaiReplayToolPathCustomization_h
+#define CAAEMaiReplayToolPathCustomization_h
+
+// COPYRIGHT DASSAULT SYSTEMES 2002
+
+//===========================================================================
+//  Abstract of the sample:
+//  -----------------------
+//
+//  Implementation of CATIMfgReplayToolPathCustom.
+//     
+//===========================================================================
+//  Abstract of the class:
+//  ----------------------
+//
+//  Data extension of the &quot;MfgTPMultipleMotion&quot; Late Type. 
+//
+//===========================================================================
+//  Usage:
+//  ------
+//
+//  Launch CATIA V5, Create a &quot;Facing&quot; operation inside Prismatic
+//       Machining Programmer, then replay it. 
+//  
+//===========================================================================
+//  Inheritance:
+//  ------------
+//
+//  CATBaseUnknown (System Framework)
+//
+//===========================================================================
+//  Main Method:
+//  ------------
+//
+//  CustomizeToolPathRep
+//
+//===========================================================================
+
+// Infrastructure interfaces
+#include &quot;CATBaseUnknown.h&quot;
+
+// Visualization classes
+class CATRep;
+
+class CAAEMaiReplayToolPathCustomization : public CATBaseUnknown
+{
+  // Used in conjonction with CATImplementClass in the .cpp file
+	CATDeclareClass;
+  
+public:
+    CAAEMaiReplayToolPathCustomization();
+    virtual ~CAAEMaiReplayToolPathCustomization();
+ 
+    // CustomizeToolPathRep
+	//=====================
+	// Creates a graphic representation for the &quot;MfgTPMultipleMotion&quot; object
+	// to add to the standard graphic representation in the &quot;Tool Path Replay&quot;
+	// command.
+	//
+	//  iOperation  : Current machining operation
+	//  iStartPoint : First point of the &quot;MfgTPMultipleMotion&quot; object to take
+	//         into account
+	//  iEndPoint   : Last point of the &quot;MfgTPMultipleMotion&quot; object to take
+	//         into account
+	CATRep* CustomizeToolPathRep (const CATBaseUnknown_var&amp; iOperation,int iStartPoint,int iEndPoint);
+
+  private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiReplayToolPathCustomization
+		(const CAAEMaiReplayToolPathCustomization &amp;iObjectToCopy);
+ 
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiReplayToolPathCustomization &amp; operator  = 
+		(const CAAEMaiReplayToolPathCustomization &amp;iObjectToCopy);
+ 
+};
+#endif
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiReplayToolPathCustomization</i> class C++-derives from <i>CATBaseUnknown</i>.
+    The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiReplayToolPathCustomization</i>
+    belongs to a component. The class has a constructor, a destructor, and the <i>CustomizeToolPathRep</i>
+    method of <i>CATIMfgReplayToolPathCustom.</i></p>
+  </li>
+  <li>Create the <i>CAAEMaiReplayToolPathCustomization</i> class source file. It
+    begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgReplayToolPathCustom.h&quot;
+<b>TIE_CATIMfgReplayToolPathCustom(CAAEMaiReplayToolPathCustomization);</b>
+<b>CATImplementClass (CAAEMaiReplayToolPathCustomization,
+				   DataExtension,
+				   CATBaseUnknown,
+				   MfgTPMultipleMotion);</b><b>
+</b>...
+//-----------------------------------------------------------------------------
+// CustomizeToolPathRep
+//-----------------------------------------------------------------------------
+CATRep* CAAEMaiReplayToolPathCustomization::<b>CustomizeToolPathRep</b> (const CATBaseUnknown_var&amp; iOperation,int iStartPoint,int iEndPoint)
+{
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiReplayToolPathCustomization</i> class states that it
+    implements the <i>CATIMfgReplayToolPathCustom</i> interface thanks to the <code>TIE_CATIMfgReplayToolPathCustom</code>
+    macro. The <code>CATImplementClass</code> macro declares that the <i>CAAEMaiReplayToolPathCustomization</i>
+    class is data extension class, thanks to the <code>DataExtension</code>
+    keyword, and that it extends the tool path object whose type is <i>MfgTPMultipleMotion</i>.
+    The third parameter must always be set to <i>CATBaseUnknown</i>, makes no
+    sense, and is unused for extensions.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>MfgTPMultipleMotion</i>
+    feature implements the <i>CATIMfgReplayToolPathCustom</i> interface, and
+    whose code is located in the libCAAMaiReplayToolPathCustomization shared
+    library or DLL. Pay attention to remove the comment (#) in the supplied
+    dictionary.</p>
+    <pre>MfgTPMultipleMotion   CATIMfgReplayToolPathCustom	libCAAMaiReplayToolPathCustomization</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating graphic representation to add to standard
+display of tool path</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> //-----------------------------------------------------------------------------
+// CustomizeToolPathRep
+//-----------------------------------------------------------------------------
+CATRep* CAAEMaiReplayToolPathCustomization::CustomizeToolPathRep (const CATBaseUnknown_var&amp; <b>iOperation</b>,</pre>
+      <pre>                                                                  int <b>iStartPoint</b>,int <b>iEndPoint</b>)</pre>
+      <pre>{
+	// In this sample, no test is done on &quot;iOperation&quot; (current operation)
+	// By testing &quot;iOperation&quot;, it is possible to have a different behaviour for
+	// each machining operation
+
+	// Retrieves an handler on the current MfgTPMultipleMotion object
+	<b>CATIMfgTPMultipleMotion_var</b> MultipleMotion (GetImpl());
+	if (NULL_var == MultipleMotion) return NULL;
+
+	// Creates a bag to store the several reps 
+	<b>CAT3DBagRep*</b> <b>BagRep </b>= new CAT3DBagRep ();
+	if (NULL == BagRep) return NULL;
+
+	// Associates a graphic point to each tip point if the MfgTPMultipleMotion object
+	CATMathPoint Pt;
+	double x,y,z;
+	for (int i=iStartPoint;i&lt;=iEndPoint;i++)
+	{
+		if (MultipleMotion-&gt;<b>GetTipPoint</b> (i,x,y,z))
+		{
+			Pt.SetCoord (x,y,z);
+			CAT3DPointRep* RepPoint = <b>new CAT3DPointRep (Pt,FULLSQUARE);</b>
+			if (NULL != RepPoint) <b>BagRep-&gt;AddChild (*RepPoint);</b>
+		}
+	}
+
+	// Returns bag rep
+	<b>return BagRep</b>;
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>With this sample, the graphic representation added to the standard display of
+the tool path consist of a set of graphic points associated to tool tip points.
+This behavior is the same for each type of operation. Note that it is possible
+to have a different behavior for each type of operation by testing <i>iOperation</i>
+which is an handler on the current operation.</p>
+<p>The other inputs, <i>iStartPoint </i>and <i>iEndPoint</i>, indicate the first
+and the last point of the <i>MfgTPMultipleMotion</i> object currently taken into
+account in the &quot;tool path replay&quot; command.</p>
+<p><i>CATIMfgTPMultipleMotion</i> is an interface on the <i>MfgTPMultipleMotion</i>
+object: it allows to read data on the object:</p>
+<ul>
+  <li>Coordinates of tool tip points</li>
+  <li>Value of feedrate for a sub-motion</li>
+  <li>Characteristics like center, radius, ... for circle arc sub-motion.</li>
+  <li>.............</li>
+</ul>
+<p><i>CAT3DBagRep</i> is a visualization object in which it is possible to store
+several basic &quot;reps&quot; like <i>CAT3DPointRep</i>, ...: a pointer on this
+object is returned by <i>CustomizeToolPathRep</i> method.</p>
+<p>For each tool tip point from index <i>iStartPoint </i>to <i>iEndPoint</i>,
+its coordinates are read on the <i>MfgTPMultipleMotion</i> object with <i>GetTipPoint</i>
+method of the <i>CATIMfgTPMultipleMotion </i>interface, a graphic point is then
+created (<i>CAT3DPointRep</i> object) and this graphic point is stored in the <i>BagRep</i>
+object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, and has illustrated them on a tool path display customization. It shows
+how to implement the <i>CATIMfgReplayToolPathCustom</i> interface to customize
+the display of tool path in &quot;tool path replay&quot; command by adding its
+own graphic representations.</p>
+<p>The display of tool path is modified by implementing <i>CATIMfgReplayToolPath</i>
+in a data extension class. The only method to implement is <code>CustomizeToolPathRep.</code></p>
+<p>To retrieve parameters on the <i>MfgTPMultipleMotion </i>object which models
+the tool path, you have to use the <i>CATIMfgTPMultipleMotion</i> interface.</p>
+<p>To create graphic objects, you have to use <i>Visualization</i> framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

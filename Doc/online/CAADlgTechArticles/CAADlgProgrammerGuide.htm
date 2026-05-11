@@ -1,0 +1,531 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Dialog Programmer's Guide</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Dialog Programmer's Guide</h3>
+      <em>Programming step-by-step</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article provides a canvas of the steps to perform to create a
+      dialog window or box, exposes the main options you can take, and points to
+      the appropriate articles dealing with each of these steps. To have full
+      information about a given object, refer to the <a href="../CAADlgQuickRefs/CAADlgObjectList.htm">Dialog
+      Class Catalog</a>.
+      <ul>
+        <li><a href="#100000"><strong>Designing Your Dialog</strong></a></li>
+            <li><a href="#200000"><b>Designing Your Dialog Classes</b></a></li>
+            <li><a href="#300000"><b>Coding the Dialog Class Main Methods</b></a>
+              <ul>
+                <li><a href="#310000">Coding the Constructor</a></li>
+                <li><a href="#320000">Coding the Build Method</a></li>
+                <li><a href="#330000">Coding the Callback Methods</a></li>
+                <li><a href="#340000">Coding the Destructor</a></li>
+              </ul>
+            </li>
+            <li><a href="#400000"><b>Creating the Resource Files</b></a></li>
+            <li><a href="#Trouble"><strong>Troubleshooting</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Designing Your Dialog</h3>
+<p>You should first spend a bit of your time on designing what is your dialog
+for, and what it should contain. It roughly falls in the following categories:
+<ul>
+  <li>It is a dialog window or a dialog box. This is the most common case,
+    whether the window contains one or several presentations of a document, or
+    it is a dialog box. You should create a class that derives from <a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">CATDlgDialog</a>.
+    This is the case that&nbsp; is taken in this article to describe what you
+    should do</li>
+  <li>It is a message pop-up. You just need to instantiate the <a href="../CAADlgQuickRefs/CAADlgCATDlgNotify.htm">CATDlgNotify</a>
+    class</li>
+  <li>It is a file selection box. You just need to instantiate the <a href="../CAADlgQuickRefs/CAADlgCATDlgFile.htm">CATDlgFile</a>
+    class</li>
+  <li>It is an application main window. This will not happen often. In this
+    case, create a class that derives from <a href="../CAADlgQuickRefs/CAADlgCATDlgDocument.htm">CATDlgDocument</a>.
+    You need to determine whether the application is MDI or SDI, plan for a menu
+    bar, a status bar, and so many other things that are provided by the Dialog
+    framework, but that are also provided customized for this need by the
+    ApplicationFrame framework. This is not described here.</li>
+</ul>
+<p>Once you have determined the type of dialog window you need, try to figure
+out what it should contain. A dialog window or box contains, from the end user
+standpoint, only controls, but you can add structuring objects to help&nbsp;
+controls that have something in common to be displayed together. To do this, you
+often use frames, sometimes tab containers and tag pages, and possibly containers
+or splitters. In addition, you can add labels to name controls that have no
+implicit titles, such as spinners or sliders, and horizontal and vertical
+separators to clearly separate areas, for example in a frame. Controls are
+sensitive to end user interactions, and you must supply to each of them the
+expected behavior using methods that will be triggered when the end user will
+push on the push button, click the spinner arrow, or select a combo line. These
+methods are contained in, or called from, callback methods set to react to the
+notifications sent by the controls when they are activated by the end user. When
+this is done, you should provide the resources of your dialog box, used to set
+the text and graphics to dial, and to enable translation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Designing Your Dialog Classes</h3>
+<p>Most of the time, you create your own dialog class by deriving the <i>
+CATDlgDialog</i> class.
+<ul>
+  <li>You can set the style explicitly, or let the caller set it.</li>
+  <li>Set a pointer to each control, or more generally to each object that can
+    send notifications, as a data member. You may need to use this pointer in
+    one or several methods. Nevertheless, the pointer to an object that sends a
+    notification is passed as an argument of the callback method.</li>
+  <li>Declare as local variables other objects that you use only when building
+    the window or box, such as frames, labels, and separators. They don't sent
+    any notification, and are not used in other methods</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Coding the Dialog Class Main Methods</h3>
+<p>The methods of a dialog class are:
+<ul>
+  <li><a href="#310000">The constructor</a></li>
+  <li><a href="#320000">The <code> Build</code> method</a></li>
+  <li><a href="#330000">The methods called by the callbacks set onto its control</a>s</li>
+  <li><a href="#340000">The destructor.</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Coding the Constructor</h4>
+<p>The constructor must just provide a NULL pointer for each dialog object or
+control referred to using a pointer stored as a data member, but must not
+allocate. This avoids having objects created without their associated resources
+being loaded. The <code> Build</code> method, which must be called just after the constructor,
+will instantiate these objects. The constructor just set the dialog window or
+box parent, its identifier, and its style. The style is here not explicitly set.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogWindow::DialogWindow(pParent, pIdentifier, Style)
+            : CATDlgDialog(pParent, pIdentifier, Style),
+              _pFirstDataMember(NULL), ...
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p>Since the caller can set the style as a concatenation of the available style
+parameters, you need to provide callback methods for the OK, Apply, and Cancel
+push buttons, plan that the dialog box can be set to modal or to non resizable.
+If you want to explicitly set the style without leaving the caller set it for
+you, do not provide a style parameter in your constructor, and pass the style in
+the <i> CATDlgDialog</i> parent class constructor.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogWindow::DialogWindow(pParent, pIdentifier)
+            : CATDlgDialog(pParent, pIdentifier,
+                           CATDlgWndOKCancel| CATDlgGridLayout),
+              _pFirstDataMember(NULL), ...
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p><strong><a href="../CAADocTechArticles/CAADocErgoTopic1.htm#1.6.1.3">Rule
+1.6.1.3.2:</a></strong> the forth recommended styles for the buttons are:&nbsp;</p>
+<ul>
+  <li>CATDlgWndBtnOKCancel: <strong>OK + Cancel</strong></li>
+  <li>CATDlgWndBtnOKCancelPreview: <strong>OK + Cancel + Preview</strong></li>
+  <li>CATDlgWndBtnOKApplyClose: <strong>OK + Apply + Close</strong></li>
+  <li>CATDlgWndBtnClose : <strong>Close</strong></li>
+</ul>
+<p>Let's take the example of the CATIA Macro dialog box to go on with a concrete
+example.</p>
+<p><img src="images/CATDlgProgramming0.jpg" alt="CATDlgProgramming0.jpg (22048 bytes)" width="360" height="220"></p>
+<p>This dialog box is non resizable, and features the Help button in the title
+bar. Its constructor is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MacroBox::MacroBox(pParent, pIdentifier)
+        : CATDlgDialog(pParent, pIdentifier,
+                       CATDlgWndNoResize | CATDlgWndHELP |
+                       CATDlgWndTitleBarHelp | CATDlgGridLayout),
+              _pMacroNameFrame(NULL), ...
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Coding the Build Method</h4>
+<p>The <code> Build</code> method instantiates the objects making up the dialog box, manages
+their layout, and sets the callbacks to the control notification you want to
+react to.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void MacroBox::Build()
+{
+  // <a href="#Instantiate boxes, indicators, and controls">1. Instantiate boxes, indicators, and controls</a>
+  // <a href="#Arrange the dialog objects">2. Arrange the dialog objects</a>
+  // <a href="#Set Callbacks">3. Set callbacks</a>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To make sure that the parent/child relations between the objects you create
+are properly set, instantiate each object at the place it lies on in the dialog
+box, possibly using line indentation. For example, assume you want to create the
+following dialog box. Its parent child tree structure is shown beside.</p>
+<table>
+  <tr>
+    <td><img src="images/CATDlgProgramming1.jpg" alt="CATDlgProgramming1.jpg (16115 bytes)" width="317" height="333"></td>
+    <td>All the dialog objects instances making up the dialog box are declared
+      as pointers to the appropriate classes. These pointers are stored as data
+      members of the dialog box class. The containment parent/child structure is
+      shown beside. It is used to set the parent of each object as the first
+      argument of the constructors.</td>
+  </tr>
+</table>
+<p>The specifications of the dialog box are shown below.</p>
+<p><img src="images/CATDlgProgramming.jpg" alt="CATDlgProgramming.jpg (30550 bytes)" width="553" height="321"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="Instantiate boxes, indicators, and controls"></a>Instantiate boxes,
+indicators, and controls</h5>
+<p>The Build method of such as dialog box could be as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  _pMacroNameFrame   = new CATDlgFrame(this, &quot;MacroNameFrameId&quot;, CATDlgGridLayout);
+    _pMacroNameCombo   = new CATDlgCombo(_pMacroNameFrame, &quot;MacroNameComboId&quot;);
+	_pMacroNameCombo-&gt;SetVisibleTextWidth(31);
+	_pMacroNameCombo-&gt;SetVisibleTextHeight(5);
+  _pMacroInFrame     = new CATDlgFrame(this, &quot;MacroInFrameId&quot;, CATDlgGridLayout);
+    _pMacroInLabel     = new CATDlgLabel(_pMacroInFrame, &quot;MacroInFrameId&quot;);
+    _pMacroInCombo     = new CATDlgCombo(_pMacroInFrame, &quot;MacroInFrameId&quot;);
+    _pMacroInCombo-&gt;SetVisibleTextWidth(17);
+	
+    CATUnicodeString ucMacroInComboString ;
+    ucMacroInComboString  = <b>CATMsgCatalog::BuildMessage</b>(&quot;MacroBox&quot;,
+	                                     &quot;MacroInComboText&quot;,NULL,0,
+	                                     &quot;External File&quot;);
+	
+   _pMacroInCombo-&gt;SetLine(ucMacroInComboString);
+   _pMacroInCombo--&gt;SetField(ucMacroInComboString);
+   
+  _pDescriptionFrame = new CATDlgFrame(this, &quot;DescriptionFrameId&quot;, CATDlgGridLayout);
+    _pDescriptionLabel = new CATDlgLabel(_pDescriptionFrame, &quot;DescriptionLabelId&quot;);
+    _pDescriptionLabel-&gt;SetTitle(&quot;                                          &quot;);
+
+  _pButtonFrame      = new CATDlgFrame(this, &quot;ButtonFrameId&quot;, CATDlgGridLayout);
+    _pRunButton        = new CATDlgPushButton(_pButtonFrame, &quot;RunButtonId&quot;); 
+    _pCancelButton     = new CATDlgPushButton(_pButtonFrame, &quot;CancelButtonId&quot;); 
+    _pEditButton       = new CATDlgPushButton(_pButtonFrame, &quot;EditButtonId&quot;); 
+    _pCreateButton     = new CATDlgPushButton(_pButtonFrame, &quot;CreateButtonId&quot;); 
+    _pSelectButton     = new CATDlgPushButton(_pButtonFrame, &quot;SelectButtonId&quot;); 
+    _pDeleteButton     = new CATDlgPushButton(_pButtonFrame, &quot;DeleteButtonId&quot;); 
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To assign the resources to the combo lines use the <i>CATMsgCatalog</i> class
+[<a href="#References">1</a>]. Where <code>MacroBox</code> is the CATNls file
+which contains the following lines:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+MacroInComboText.Title =&quot;...&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="Arrange the dialog objects"></a>Arrange the dialog objects</h5>
+<p>To arrange boxes, indicators, and controls, use the grid layout [<a href="#References">2</a>]. You can manage object arrangement as the objects are instantiated,
+and thus mix object instantiation and object layout code lines. You can also, if
+you prefer, clearly separate object instantiation from object layout. Each box
+layout in separately described:
+<ul>
+  <li>Main window
+    <p><img src="images/CATDlgProgramming2.jpg" alt="CATDlgProgramming2.jpg (24684 bytes)" width="410" height="252"></p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  _pMacroNameFrame-&gt;SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+  _pMacroNameFrame-&gt;SetGridRowResizable(0,1);
+  _pMacroNameFrame-&gt;SetGridColumnResizable(0,1);
+
+  _pMacroInFrame-&gt;SetGridConstraints(1, 0, 1, 1, CATGRID_4SIDES);
+  _pMacroInFrame-&gt;SetGridRowResizable(0,1);
+  _pMacroInFrame-&gt;SetGridColumnResizable(0,1);
+
+  _pDescriptionFrame-&gt;SetGridConstraints(2, 0, 1, 1, CATGRID_4SIDES);
+
+  _pButtonFrame-&gt;SetGridConstraints(0, 1, 1, 1, CATGRID_4SIDES);
+  _pButtonFrame-&gt;SetGridRowResizable(0,1);
+  _pButtonFrame-&gt;SetGridRowResizable(1,1);
+  _pButtonFrame-&gt;SetGridRowResizable(2,1);
+  _pButtonFrame-&gt;SetGridRowResizable(3,1);
+  _pButtonFrame-&gt;SetGridRowResizable(4,1);
+  _pButtonFrame-&gt;SetGridRowResizable(5,1);
+  _pButtonFrame-&gt;SetGridColumnResizable(0,1);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Macro Name frame
+    <p><img src="images/CATDlgProgramming3.jpg" alt="CATDlgProgramming3.jpg (23791 bytes)" width="406" height="252"></p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...	
+_pMacroNameCombo-&gt;SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Macro in frame
+    <p><img src="images/CATDlgProgramming4.jpg" alt="CATDlgProgramming4.jpg (24233 bytes)" width="426" height="231"></p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+_pMacroInLabel-&gt;SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+_pMacroInCombo-&gt;SetGridConstraints(0, 1, 1, 1, CATGRID_4SIDES);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Description frame
+    <p><img src="images/CATDlgProgramming5.jpg" alt="CATDlgProgramming5.jpg (24164 bytes)" width="426" height="249"></p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+_pDescriptionLabel-&gt;SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Push button frame
+    <p><img src="images/CATDlgProgramming6.jpg" alt="CATDlgProgramming6.jpg (25229 bytes)" width="420" height="255"></p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+_pRunButton   -&gt;SetGridConstraints(0, 0, 1, 1, CATGRID_4SIDES);
+_pCancelButton-&gt;SetGridConstraints(1, 0, 1, 1, CATGRID_4SIDES);
+_pEditButton  -&gt;SetGridConstraints(2, 0, 1, 1, CATGRID_4SIDES);
+_pCreateButton-&gt;SetGridConstraints(3, 0, 1, 1, CATGRID_4SIDES);
+_pSelectButton-&gt;SetGridConstraints(4, 0, 1, 1, CATGRID_4SIDES);
+_pDeleteButton-&gt;SetGridConstraints(5, 0, 1, 1, CATGRID_4SIDES);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<h5><a name="Set Callbacks"></a>Set Callbacks</h5>
+<p>The callbacks are set for the controls to specify the appropriate method to
+call when a given control is activated, that is, send a given notification. For
+example, this is the callback set for the Run push button:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+AddAnalyseNotificationCB(_pRunButton,
+                         _pRunButton-&gt;<b>GetPushBActivateNotification</b>(),
+                         (CATCommandMethod)&amp;MacroBox::RunButton
+                          NULL);
+...
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The arguments to pass are a pointer to the push button, a pointer to the
+notification sent, retrieved thanks to a method of the push button class that
+retrieves such expected notifications from the push button, and the method to
+execute when such a notification is sent by that push button. This method is
+described in <a href="#330000">Coding the Callback Methods</a>. The fourth
+argument is set to NULL, but could contain data, namely a void * pointer, to
+pass to the <code> RunButton</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Coding the Callback Methods</h4>
+<p>The callbacks methods are usually methods of the dialog box class, and should
+be as follows, for example for the Run push button.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MacroBox::RunButton(CATCommand           * pSendingCommand,
+                    CATNotification      * pNotification,
+                    CATCommandClientData   UsefulData)
+{
+...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>You can retrieve the activated control from the first parameter, and the
+notification instance sent by this control from the second parameter. The third
+argument lets you retrieve the data you possibly pass as the fourth argument of
+the AddAnalyseNotificationCB method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="340000"></a>Coding the Destructor</h4>
+<p>As a C++ rule, the destructor should delete the pointed data members. For
+pointed dialog objects that are descendants of the dialog window class,&nbsp;
+you shouldn't deal with it, since the children are recursively retrieved form
+the dialog window instance, and are automatically deleted. You have only to set
+a NULL pointer to each dialog object member. Usually, a dialog
+window destructor looks like this:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MacroBox::~MacroBox()
+{
+  _pFirstDataMember = NULL ;
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Of course, if you have added data members as pointers to other objects, you
+must take care of their deletion and set a NULL pointer to each of them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Creating the Resource Files</h3>
+<p>This is explained in the referenced article [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Trouble"></a>Troubleshooting</h3>
+<h4>The Frames or Controls Are not Arranged as I Expect</h4>
+<table>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/symptom.gif" alt="symptom.gif (111 bytes)" width="10" height="29"></td>
+    <td valign="top">I use a grid layout, and the grid rows, columns, and span
+      numbers I assigned seem to be OK. Nevertheless, in the window, or in some
+      of its container, a controls doesn't appear.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/diagnos.gif" alt="diagnos.gif (130 bytes)" width="17" height="27"></td>
+    <td valign="top">The grid layout parameters aren't set for this control.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/solution.gif" alt="solution.gif (218 bytes)" width="28" height="30"></td>
+    <td valign="top">Set the grid layout parameters using the SetGridConstraints
+      method for this control.</td>
+  </tr>
+</table>
+<h4>The Titles or Icons of My Controls Are not Taken into Account</h4>
+<table>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/symptom.gif" alt="symptom.gif (111 bytes)" width="10" height="29"></td>
+    <td valign="top">I have created the resources for my controls in the
+      appropriate files, but they don't display.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/diagnos.gif" alt="diagnos.gif (130 bytes)" width="17" height="27"></td>
+    <td valign="top">The resources are not found at run time.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="../CAAIcons/images/solution.gif" alt="solution.gif (218 bytes)" width="28" height="30"></td>
+    <td valign="top">launch mkCreateRuntimeView
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Creating a dialog window or a dialog box implies to code a constructor and a
+destructor that are quite empty, and to create a Build method that contains the
+control creations and layout, as well as the callback declaration. Then you need
+to create the callback methods. The last step is to create the resource file to
+associate text and images to your controls.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADlgResources.htm">Assigning Resources to a Dialog Box</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADlgGridLayout.htm">Arranging Dialog Objects Using Grid&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Fev 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

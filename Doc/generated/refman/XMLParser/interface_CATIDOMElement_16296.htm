@@ -1,0 +1,780 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>XMLParser Interface CATIDOMElement</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../XMLParser.htm" href="../XMLParser.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "XMLParser";	}
+		function getCurrentObjectName() { 
+ 	return "CATIDOMElement"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>XMLParser Interface CATIDOMElement</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIDOMElement_16296','CATIDOMElement','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIDOMElement</b>
+</p>
+<p>
+<b><i> Interface representing by far the vast majority of objects nodes (apart from text) that authors 
+ encounter when traversing a document.</i></b><br>
+
+
+ Assume the following XML document:
+ <br>
+ <br>&lt;elementExample id="demo"&gt; 
+ <br>&lt;subelement1/&gt; 
+ <br>&lt;subelement2&gt;&lt;subsubelement/&gt;&lt;/subelement2&gt;
+ <br>&lt;/elementExample&gt;
+
+ <p>When represented using DOM, the top node is a <tt>CATIDOMElement</tt> node 
+ for "elementExample", which contains two child <tt>CATIDOMElement</tt> nodes, 
+ one for "subelement1" and one for "subelement2". "subelement1" contains no 
+ child nodes.
+ <p>Elements may have attributes associated with them; since the 
+ <tt>CATIDOMElement</tt> interface inherits from <script type="text/javascript"> activateLinkAnchor('CATIDOMNode','','CATIDOMNode') </script>, the generic 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNode','','CATIDOMNode') </script> interface method 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNode','GetAttributes','CATIDOMNode.GetAttributes') </script> may be used  to retrieve the set of all attributes for an element.
+ <br>There are methods on the <tt>CATIDOMElement</tt> interface to retrieve 
+ either a 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> object by name or an attribute value by name.  In XML, where an attribute value may contain entity references, 
+ a 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> object should be  retrieved to examine the possibly fairly complex sub-tree representing the 
+ attribute value. On the other hand, in HTML, where all attributes have 
+ simple string values, methods to directly access an attribute value can 
+ safely be used as a convenience.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetAttribute(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>GetAttribute</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Retrieves an attribute value by name.
+ <dt> o 
+    <a href="#GetAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>GetAttributeNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Retrieves an attribute value by local name and namespace URI.
+ <dt> o 
+    <a href="#GetAttributeNode(CATUnicodeString&amp;,CATIDOMAttr_var&amp;)"><b>GetAttributeNode</b></a>(CATUnicodeString&amp;,CATIDOMAttr_var&amp;)
+<dd>  Retrieves a <tt>CATIDOMAttr</tt> node by name.
+ <dt> o 
+    <a href="#GetAttributeNodeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMAttr_var&amp;)"><b>GetAttributeNodeNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMAttr_var&amp;)
+<dd>  Retrieves a <tt>CATIDOMAttr</tt> node by local name and namespace URI.
+ <dt> o 
+    <a href="#GetElementsByTagName(CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)"><b>GetElementsByTagName</b></a>(CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)
+<dd>  Returns a <tt>CATIDOMNodeList</tt> of all descendant elements with a given tag name.
+ <dt> o 
+    <a href="#GetElementsByTagNameNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)"><b>GetElementsByTagNameNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)
+<dd>  Returns a <tt>CATIDOMNodeList</tt> of all the <tt>CATIDOMElement</tt>s
+ with a given local name and namespace URI in the order in which they
+ would be encountered in a preorder traversal of the
+ <tt>CATIDOMDocument</tt> tree, starting from this node.
+ <dt> o 
+    <a href="#GetTagName(CATUnicodeString&amp;)"><b>GetTagName</b></a>(CATUnicodeString&amp;)
+<dd>  Retrieves the name of the element.
+ <dt> o 
+    <a href="#HasAttribute(CATUnicodeString&amp;,CATBoolean&amp;)"><b>HasAttribute</b></a>(CATUnicodeString&amp;,CATBoolean&amp;)
+<dd>  Returns <tt>TRUE</tt> when an attribute with a given name is 
+ specified on this element or has a default value, <tt>FALSE</tt> 
+ otherwise.
+ <dt> o 
+    <a href="#HasAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean&amp;)"><b>HasAttributeNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean&amp;)
+<dd>  Returns <tt>TRUE</tt> when an attribute with a given local name and 
+ namespace URI is specified on this element or has a default value, 
+ <tt>FALSE</tt> otherwise.
+ <dt> o 
+    <a href="#RemoveAttribute(CATUnicodeString&amp;)"><b>RemoveAttribute</b></a>(CATUnicodeString&amp;)
+<dd>  Removes an attribute by name.
+ <dt> o 
+    <a href="#RemoveAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>RemoveAttributeNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Removes an attribute by local name and namespace URI.
+ <dt> o 
+    <a href="#RemoveAttributeNode(CATIDOMAttr_var&amp;)"><b>RemoveAttributeNode</b></a>(CATIDOMAttr_var&amp;)
+<dd>  Removes the specified attribute.
+ <dt> o 
+    <a href="#SetAttribute(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>SetAttribute</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Adds a new attribute.
+ <dt> o 
+    <a href="#SetAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>SetAttributeNS</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Adds a new attribute.
+ <dt> o 
+    <a href="#SetAttributeNode(CATIDOMAttr_var&amp;)"><b>SetAttributeNode</b></a>(CATIDOMAttr_var&amp;)
+<dd>  Adds a new attribute.
+ <dt> o 
+    <a href="#SetAttributeNodeNS(CATIDOMAttr_var&amp;,CATIDOMAttr_var&amp;)"><b>SetAttributeNodeNS</b></a>(CATIDOMAttr_var&amp;,CATIDOMAttr_var&amp;)
+<dd>  Adds a new attribute.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetAttribute"></a><a name="GetAttribute(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>GetAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttribute</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves an attribute value by name.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the attribute to retrieve.
+ </dd>
+    <dt><tt> oValue</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> value as a string, or the empty string if    that attribute does not have a specified or default value.
+</dl>
+</dl>
+</dl>
+<a name="GetAttributeNS"></a><a name="GetAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>GetAttributeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttributeNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLocalName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves an attribute value by local name and namespace URI.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd> The namespace URI of
+   the attribute to retrieve. When it is an empty
+   </dd>
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script>, this method behaves like 
+<script type="text/javascript"> activateLinkAnchor('','GetAttribute','GetAttribute') </script>. 
+    <dt><tt> iLocalName</tt>
+   <dd> The local name of the
+    attribute to retrieve.
+ </dd>
+    <dt><tt> oValue</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> value as a string, or an empty string if    that attribute does not have a specified or default value.
+</dl>
+</dl>
+</dl>
+<a name="GetAttributeNode"></a><a name="GetAttributeNode(CATUnicodeString&amp;,CATIDOMAttr_var&amp;)"></a> <dt> o <b>GetAttributeNode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttributeNode</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>oAttributeNode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a <tt>CATIDOMAttr</tt> node by name.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> The name of the attribute to retrieve.
+ </dd>
+    <dt><tt> oAttributeNode</tt>
+   <dd> The retrieved </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node with the specified attribute name or    <tt>NULL_var</tt> if there is no such attribute.
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script>
+</dl>
+</dl>
+</dl>
+<a name="GetAttributeNodeNS"></a><a name="GetAttributeNodeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMAttr_var&amp;)"></a> <dt> o <b>GetAttributeNodeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttributeNodeNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLocalName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>oAttribute</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a <tt>CATIDOMAttr</tt> node by local name and namespace URI.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd> The namespace URI of
+    the attribute to retrieve. When it is or an empty
+    </dd>
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script>, this method behaves like 
+<script type="text/javascript"> activateLinkAnchor('','GetAttributeNode','GetAttributeNode') </script>. 
+    <dt><tt> iLocalName</tt>
+   <dd> The local name of the
+    attribute to retrieve.
+ </dd>
+    <dt><tt> oAttribute</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node with the specified attribute local    name and namespace URI or <tt>NULL_var</tt> if there is no such attribute.
+</dl>
+</dl>
+</dl>
+<a name="GetElementsByTagName"></a><a name="GetElementsByTagName(CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)"></a> <dt> o <b>GetElementsByTagName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetElementsByTagName</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iElementsName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIDOMNodeList_var','CATIDOMNodeList_var&amp;')</script> <td><tt>oListOfElements</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a <tt>CATIDOMNodeList</tt> of all descendant elements with a given tag name.
+ The elements are returned in the order in which they would be encountered in a preorder 
+ traversal of the <tt>CATIDOMElement</tt> tree.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElementsName</tt>
+   <dd> The name of the tag to match on. The special value "*" matches all tags.
+ </dd>
+    <dt><tt> oListOfElements</tt>
+   <dd> A list of matching </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMElement','','CATIDOMElement') </script> nodes.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIDOMNodeList','','CATIDOMNodeList') </script>
+</dl>
+</dl>
+</dl>
+<a name="GetElementsByTagNameNS"></a><a name="GetElementsByTagNameNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIDOMNodeList_var&amp;)"></a> <dt> o <b>GetElementsByTagNameNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetElementsByTagNameNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLocalName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIDOMNodeList_var','CATIDOMNodeList_var&amp;')</script> <td><tt>oElementList</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a <tt>CATIDOMNodeList</tt> of all the <tt>CATIDOMElement</tt>s
+ with a given local name and namespace URI in the order in which they
+ would be encountered in a preorder traversal of the
+ <tt>CATIDOMDocument</tt> tree, starting from this node.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd>  The namespace URI of
+    the elements to match on. The special value "*" matches all
+    namespaces. When it is an empty </dd>
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script>, this    method behaves like 
+<script type="text/javascript"> activateLinkAnchor('','GetElementsByTagName','GetElementsByTagName') </script> . 
+    <dt><tt> iLocalName</tt>
+   <dd>  The local name of the
+    elements to match on. The special value "*" matches all local names.
+ </dd>
+    <dt><tt> oElementList</tt>
+   <dd> A new </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeList','','CATIDOMNodeList') </script> object containing all the matched   instances of 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMElement','','CATIDOMElement') </script>.
+</dl>
+</dl>
+</dl>
+<a name="GetTagName"></a><a name="GetTagName(CATUnicodeString&amp;)"></a> <dt> o <b>GetTagName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTagName</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oTagName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the name of the element.
+
+ For example, in:
+ <br>&lt;elementExample 
+ id="demo"&gt;  ... &lt;/elementExample&gt; , 
+ <br><tt>tagName</tt> has 
+ the value <tt>"elementExample"</tt>. Note that this is 
+ case-preserving in XML, as are all of the operations of the DOM.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTagName</tt>
+   <dd> The retrieved name of the element.</dd>
+</dl>
+</dl>
+</dl>
+<a name="HasAttribute"></a><a name="HasAttribute(CATUnicodeString&amp;,CATBoolean&amp;)"></a> <dt> o <b>HasAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>HasAttribute</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns <tt>TRUE</tt> when an attribute with a given name is 
+ specified on this element or has a default value, <tt>FALSE</tt> 
+ otherwise.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the attribute to look for.
+ </dd>
+    <dt><tt> oResult</tt>
+   <dd> <tt>TRUE</tt> if an attribute with the given name is 
+   specified on this element or has a default value, <tt>FALSE</tt>
+    otherwise.</dd>
+</dl>
+</dl>
+</dl>
+<a name="HasAttributeNS"></a><a name="HasAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATBoolean&amp;)"></a> <dt> o <b>HasAttributeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>HasAttributeNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLocalName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oResult</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns <tt>TRUE</tt> when an attribute with a given local name and 
+ namespace URI is specified on this element or has a default value, 
+ <tt>FALSE</tt> otherwise. HTML-only DOM implementations do not 
+ need to implement this method.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd> The namespace URI of the attribute to look for.
+ </dd>
+    <dt><tt> iLocalName</tt>
+   <dd> The local name of the attribute to look for.
+ </dd>
+    <dt><tt> oResult</tt>
+   <dd> <tt>TRUE</tt> if an attribute with the given local name 
+   and namespace URI is specified or has a default value on this 
+   element, <tt>FALSE</tt> otherwise.</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttribute"></a><a name="RemoveAttribute(CATUnicodeString&amp;)"></a> <dt> o <b>RemoveAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttribute</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes an attribute by name. 
+
+ If the removed attribute has a default 
+ value it is immediately replaced.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> The name of the attribute to remove.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+   </table>
+ </dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttributeNS"></a><a name="RemoveAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>RemoveAttributeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttributeNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLocalName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes an attribute by local name and namespace URI. If the
+ removed attribute has a default value it is immediately replaced.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd>  The namespace URI of
+    the attribute to remove. When it is an empty
+    </dd>
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script>, this method behaves like 
+<script type="text/javascript"> activateLinkAnchor('','RemoveAttribute','RemoveAttribute') </script>. 
+    <dt><tt> iLocalName</tt>
+   <dd>  The local name of the
+    attribute to remove.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+   </table>
+ </dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttributeNode"></a><a name="RemoveAttributeNode(CATIDOMAttr_var&amp;)"></a> <dt> o <b>RemoveAttributeNode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttributeNode</b>(<td> const <script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>iAttributeNodeToRemove</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes the specified attribute.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeNodeToRemove</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node to remove from the attribute    list. If the removed 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> has a default value it is    immediately replaced.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2208</td>
+        <td class="errtd">NOT_FOUND_ERR: Raised if <tt>iAttributeNodeToRemove</tt> is not an attribute 
+   of the element.</td>
+     </tr>
+   </table>
+ </dd>
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script>
+</dl>
+</dl>
+</dl>
+<a name="SetAttribute"></a><a name="SetAttribute(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>SetAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAttribute</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAttributeValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a new attribute. 
+ 
+ If an attribute with that name is already present 
+ in the element, its value is changed to be that of the value parameter. 
+ This value is a simple string, it is not parsed as it is being set. So 
+ any markup (such as syntax to be recognized as an entity reference) is 
+ treated as literal text, and needs to be appropriately escaped by the 
+ implementation when it is written out. In order to assign an attribute 
+ value that contains entity references, the user must create an 
+ 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node plus any 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMText','','CATIDOMText') </script> and  
+<script type="text/javascript"> activateLinkAnchor('CATIDOMEntityReference','','CATIDOMEntityReference') </script> nodes, build the appropriate subtree, and  use 
+<script type="text/javascript"> activateLinkAnchor('','SetAttributeNode','SetAttributeNode') </script> to assign it as the value of an  attribute.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd> The name of the attribute to create or alter.
+ </dd>
+    <dt><tt> iAttributeValue</tt>
+   <dd> Value to set in string form.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2205</td>
+        <td class="errtd">INVALID_CHARACTER_ERR: Raised if the specified name contains an 
+   invalid character.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+   </table>
+ </dd>
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script>, <script type="text/javascript"> activateLinkAnchor('CATIDOMText','','CATIDOMText') </script>
+</dl>
+</dl>
+</dl>
+<a name="SetAttributeNS"></a><a name="SetAttributeNS(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>SetAttributeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAttributeNS</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNamespaceURI</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iQualifiedName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a new attribute. If an attribute with the same local name and
+ namespace URI is already present in the element, its prefix is changed
+ to be that of the <tt>qualifiedName</tt> parameter,
+ and its value is changed to be that of the <tt>value</tt> parameter.
+ This value is a simple string, it is
+ not parsed as it is being set. So any markup (such as syntax to be
+ recognized as an entity reference) is treated as literal text, and
+ needs to be appropriately escaped by the implementation when it is
+ written out. In order to assign an attribute value that contains entity
+ references, the user must create a 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node plus any 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMText','','CATIDOMText') </script> and 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMEntityReference','','CATIDOMEntityReference') </script> nodes, build the appropriate subtree, and use 
+<script type="text/javascript"> activateLinkAnchor('','SetAttributeNodeNS','SetAttributeNodeNS') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','SetAttributeNode','SetAttributeNode') </script> to assign it as the value of an attribute.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNamespaceURI</tt>
+   <dd>  The namespace URI of
+    the attribute to create or alter. When it is an empty
+    </dd>
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script>, this method behaves like 
+<script type="text/javascript"> activateLinkAnchor('','SetAttribute','SetAttribute') </script>. 
+    <dt><tt> iQualifiedName</tt>
+   <dd>  The qualified name of the attribute to create or alter.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd>  The value to set in string form.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2205</td>
+        <td class="errtd">INVALID_CHARACTER_ERR: Raised if the specified name contains an 
+   invalid character.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+   </table>
+ </dd>
+</dl>
+</dl>
+</dl>
+<a name="SetAttributeNode"></a><a name="SetAttributeNode(CATIDOMAttr_var&amp;)"></a> <dt> o <b>SetAttributeNode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAttributeNode</b>(<td> const <script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>iAttributeNode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a new attribute. 
+ 
+ If an attribute with that name is already present 
+ in the element, it is replaced by the new one.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeNode</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node to add to the attribute list.
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2204</td>
+        <td class="errtd">WRONG_DOCUMENT_ERR: Raised if <tt>iAttributeNode</tt> was created from a 
+   different document than the one that created the element.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2210</td>
+        <td class="errtd">INUSE_ATTRIBUTE_ERR: Raised if <tt>iAttributeNode</tt> is already an 
+   attribute of another 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMElement','','CATIDOMElement') </script> object. The DOM user must    explicitly clone 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> nodes to re-use them in other    elements.</td>
+     </tr>
+   </table>
+ </dd>
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script>
+</dl>
+</dl>
+</dl>
+<a name="SetAttributeNodeNS"></a><a name="SetAttributeNodeNS(CATIDOMAttr_var&amp;,CATIDOMAttr_var&amp;)"></a> <dt> o <b>SetAttributeNodeNS</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAttributeNodeNS</b>(<td> const <script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>iNewAttribute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIDOMAttr_var','CATIDOMAttr_var&amp;')</script> <td><tt>oPreviousAttr</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a new attribute. 
+ 
+ If an attribute with that local name and namespace URI is already present 
+ in the element, it is replaced by the new one.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewAttribute</tt>
+   <dd> The </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node to add to the attribute list.    When the node has no <tt>namespaceURI</tt>, this method behaves like
+    
+<script type="text/javascript"> activateLinkAnchor('','SetAttributeNode','SetAttributeNode') </script>. 
+    <dt><tt> oPreviousAttr</tt>
+   <dd> If the <tt>newAttr</tt> attribute replaces an existing
+    attribute with the same local name and namespace URI,
+    the previously existing </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> node is    returned, otherwise <tt>NULL_var</tt> is returned.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2204</td>
+        <td class="errtd">WRONG_DOCUMENT_ERR: Raised if <tt>iNewAttribute</tt> was created from a 
+   different document than the one that created the element.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2207</td>
+        <td class="errtd">NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATDOMException','','CATDOMException') </script> </td>        <td class="errtd">XMLParserERR_2210</td>
+        <td class="errtd">INUSE_ATTRIBUTE_ERR: Raised if <tt>iNewAttribute</tt> is already an 
+   attribute of another 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMElement','','CATIDOMElement') </script> object. The DOM user must    explicitly clone 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMAttr','','CATIDOMAttr') </script> nodes to re-use them in other    elements.</td>
+     </tr>
+   </table>
+ </dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIDOMElement.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATXMLParserItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

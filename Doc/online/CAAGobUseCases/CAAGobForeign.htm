@@ -1,0 +1,531 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Foreign Surfaces</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Foreign Surfaces</h3>
+      <em>How to introduce foreign surfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The GeometricObjects framework exposes the interfaces for the geometry:
+      points, curves, surfaces, and some related classes (such as knot vector or
+      surface and curve parameters for example). Moreover, it offers the
+      programmer the capability to introduce its own definition of curve and
+      surface. Such &quot;foreign&quot; definition is then taken into account as
+      any CATIA curve and surface.</p>
+      <p>The use cases illustrates the introduction of a new kind of surface.
+      The way to use the geometry (and the foreign geometry in particular) is
+      detailed in the CAAGobCreation use case.</p>
+      <p>The same methodology can be used to introduce foreign curves, only
+      differing by the parent class to derive.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAGobForeign Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAGobForeign Do</a></li>
+            <li><a href="#How">How to Launch CAAGobForeign</a></li>
+            <li><a href="#Where">Where to Find the CAAGobForeign Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">Reference</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains the introduction of a new kind of geometric surface by
+describing all the steps of its introduction on a concrete case. The
+mathematical definition of the new surface is given by the
+CAAAmtForeignFunctionXY class, already presented in the CAAAmtForeign use case [<a href="#References">6</a>]
+of the CAAAdvancedMathematics.edu framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAGobForeign Use Case</h3>
+<p>CAAGobForeign is a use case of the CAAGeometricObjects.edu framework that
+illustrates GeometricObjects framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAGobForeign Do</h4>
+<p>The use case creates a new type of surface, which mathematical definition
+uses the CAAAmtForeignFctXY mathematical function class.
+<p>The principle of the introduction of a new kind of surface is fully described
+in [<a href="#References">1</a>]. Once defined the mathematical definition <code>CAAAmtForeignFctXY</code>,
+one must create a persistent attribute to be the data of <code>CATIForeignSurface</code>.
+For that:
+<ul>
+  <li>Defines the class attribute deriving from CATForeignSurfaceData class:
+    CAAGobForeignSurfaceData</li>
+  <li>Defines the correspondence between the physical module name
+    (CAAGobForeign) and a logical one (CAAGobFS)</li>
+  <li>Defines the dictionary.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAGobForeign</h4>
+<p>As CAAGobForeign only provides the definition of the new surface, it cannot
+be run alone: you must launch CAAGobCreation to execute the CAAGobForeign code.</p>
+<p>To launch CAAGobCreation, you will need to set up the build time environment,
+then compile CAAGobForeign.m and CAAGobCreation.m along with their prerequisites
+(such as CAAAmtForeignFct.m), set up the run time environment, and then execute
+the use case [<a href="#References">7</a>]. Do not forget to run the <code>mkCreateRuntimeView</code>
+command to update the runtime dictionary.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGobForeign Code</h4>
+<p>The CAAGobForeign use case contains the definition of the new class located:</p>
+<ul>
+  <li>In the ProtectedInterfaces directory of the CAAGeometricObjects.edu
+    framework for the header CAAGobForeignSurfaceData.h</li>
+  <li>In the CAAGobForeign.m module of the CAAGeometricObjects.edu framework for
+    the corresponding source code CAAGobForeignSurfaceData.cpp</li>
+</ul>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGeometricObjects.edu\CAAGobForeign.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGeometricObjects.edu/CAAGobForeign.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>Moreover, in order to register this new class,&nbsp;</p>
+<ul>
+  <li>The correspondence between the physical module name (CAAGobForeign) and a
+    logical one (CAAGobFS) is defined by CAAGobApplicationName.cpp of the
+    CAAGobForeign.m module of the CAAGeometricObjects.edu framework</li>
+  <li>The dictionary must be defined in the CNext directory of the
+    CAAGeometricObjects.edu framework.</li>
+</ul>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGeometricObjects.edu\CNext\code\dictionary\CAAGeometricObjects.edu.dico</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGeometricObjects.edu/CNext/code/dictionary/CAAGeometricObjects.edu.dico</code></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The use case is divided into the following steps:</p>
+<ul>
+  <li><a href="#The CAAGobForeignSurfaceData. Header h">The
+    CAAGobForeignSurfaceData.h Header</a></li>
+  <li><a href="#The CAAGobForeignSurfaceData.cpp Code">The
+    CAAGobForeignSurfaceData.cpp Source Code</a>
+  <li><a href="#The&nbsp; CAAGobApplicationName.cpp Code and Dictionary">The
+    CAAGobApplicationName.cpp Code and Dictionary</a></li>
+</ul>
+<p>Following the described scheme, first define the header of the surface
+attribute.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="The CAAGobForeignSurfaceData. Header h"></a>The
+CAAGobForeignSurfaceData.h Header</h4>
+<p>The new attribute class CAAGobForeignSurfaceData derived from the
+CATForeignSurfaceData class, which is a special streamable attribute dedicated
+to the foreign surface introduction.</p>
+<p>Methods are overridden to declare the specific behavior of the new class
+(only some of them are displayed below).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class <b>ExportedByCAAGobForeign</b> CAAGobForeignSurfaceData : public <strong>CATForeignSurfaceData</strong>
+{
+  public :
+
+<em>// Mandatory macro for inheriting from CATCGMAttribute .</em>
+  <strong>CATCGMDeclareAttribute</strong> (CAAGobForeignSurfaceData,CATForeignSurfaceData);
+
+
+<em>// Constructs the surface data.
+// S(u,v) = iOrigin + u*iUDirection 
+//                  + v*iVDirection 
+//                  + iHeight*cos(u)*cos(v)*iUDirection^iVDirection, 
+// uMin&lt;=u&lt;=uMax, vMin&lt;=v&lt;=vMax. &lt;/pre&gt;</em>
+  CAAGobForeignSurfaceData(const CATMathPoint  &amp; iOrigin,
+                           const CATMathVector &amp; iUDirection,
+                           const CATMathVector &amp; iVDirection,
+                           const double          iHeight,
+                           const double          iUMin,
+                           const double          iUMax,
+                           const double          iVMin,
+                           const double          iVMax       ) ;
+ <em>//------------------------------------------------------------------------------ 
+ // Mandatory methods for CATCGMAttribute
+ //------------------------------------------------------------------------------ 
+// Default constructor.</em>
+  CAAGobForeignSurfaceData();
+
+<em>// Streams the data.</em>
+  void   <b>Stream</b>(CATCGMStream &amp; iStr) const ;
+
+<em>// Unstreams the data.</em>
+  void <b>UnStream</b>(CATCGMStream &amp; iStr) ;
+
+ <em>//------------------------------------------------------------------------------ 
+ // Mandatory methods for CATForeignGeometryData
+ //------------------------------------------------------------------------------ 
+// Clones &lt;tt&gt;this&lt;/tt&gt; CAAAForeignSurfaceSample.</em>
+  CATForeignGeometryData* <b>Clone</b>(CATCloneManager &amp; iCloning) const ;
+
+<em>// Moves &lt;tt&gt;this&lt;/tt&gt; CAAAForeignSurfaceSample.</em>
+  void <b>Move3D</b>(CATTransfoManager &amp; iTransfo) ;
+             
+// ... //
+
+<em>// Retrieves the mathematical equation associated with a patch.</em>
+  void CreateLocalEquation(const long iPatchU, const long iPatchV, 
+                           const CATMathFunctionXY* &amp; oFx, 
+                           const CATMathFunctionXY* &amp; oFy, 
+                           const CATMathFunctionXY* &amp; oFz) ; 
+  
+  private :
+  
+<em>  // <strong>Data</strong>
+  // S(u,v) = Origin + u*dU + v*dV + Height*cos(u)*cos(v)*dU^dV, 
+  // uMin&lt;=u&lt;=uMax, vMin&lt;=v&lt;=vMax.</em>
+  double _uMin      ;
+  double _uMax      ;
+  double _vMin      ;
+  double _vMax      ;
+  double _Origin[3] ;
+  double _Height    ;
+  double _dU[3]     ;
+  double _dV[3]     ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The <code>ExportedByCAAGobForeign</code> variable is defined in the <code>CAAGobForeign.h</code>
+    header.</li>
+  <li>The <code>CATCGMDeclareAttribute</code> macro is also mandatory to declare
+    the derivation.</li>
+  <li>Private data contains the definition of the surface parameters.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="The CAAGobForeignSurfaceData.cpp Code"></a>The
+CAAGobForeignSurfaceData.cpp Source Code</h4>
+<p>This section emphasizes on some methods of the .cpp:</p>
+<ol>
+  <li><a href="#Declaring">Declaring the Derivation between the
+    CAAGobForeignSurfaceData Class and the CATForeignSurfaceDATA Base Class</a></li>
+  <li><a href="#Streaming">Streaming and Unstreaming</a></li>
+  <li><a href="#Cloning">Cloning</a></li>
+  <li><a href="#Applying">Applying a Geometric Transformation</a></li>
+  <li><a href="#Creating">Creating the Corresponding Mathematical Equations</a></li>
+</ol>
+<ol>
+  <li><a name="Declaring"></a>Declaring the Derivation between the
+    CAAGobForeignSurfaceData Class and the CATForeignSurfaceData Base Class
+    <p>Once again, a macro must be declared: <code>CATCGMImplAttribute</code>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>// CAAGobFS is the application name that you will find in the dictionary.
+// This application name is declared in the CAAGobApplicationName.cpp file.
+// 1 must not be changed. </em>
+<strong>CATCGMImplAttribute</strong>(CAAGobForeignSurfaceData, CATForeignSurfaceData, CAAGobFS, 1);			</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><a name="Streaming"></a>Streaming and Unstreaming
+    <p>Stream and unstream methods are mandatory to allow your data to be saved
+    and read. In this use case, the foreign surface is standalone: it does not
+    point to any other CGM objects. If it were not, use the <code>CATCGMStreamAttribute::AddLink</code>
+    method. In this case, the stream and unstream processes will automatically
+    take the links into account, so that you do not worry about them.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>//-----------------------------------------------------------------------------------</em>
+void CAAGobForeignSurfaceData::<strong>Stream</strong>(CATCGMStream &amp; iStr) const 
+<em>//-----------------------------------------------------------------------------------</em>
+{
+  iStr.WriteDouble( _uMin      ) ;
+  iStr.WriteDouble( _uMax      ) ;
+  iStr.WriteDouble( _vMin      ) ;
+  iStr.WriteDouble( _vMax      ) ;
+  iStr.WriteDouble( _Origin, 3 ) ;   <em>// streams the origin (array of 3 doubles)
+  </em>iStr.WriteDouble( _Height    ) ;   <em>// streams the other values
+  </em>iStr.WriteDouble( _dU    , 3 ) ;   <em>// streams the first vector (array of 3 doubles)</em>
+  iStr.WriteDouble( _dV    , 3 ) ;   <em>// streams the second vector (array of 3 doubles)</em>
+}
+<em>//-----------------------------------------------------------------------------------</em>
+void CAAGobForeignSurfaceData::<strong>UnStream</strong>(CATCGMStream &amp; iStr) 
+<em>//-----------------------------------------------------------------------------------</em>
+{
+  iStr.ReadDouble( _uMin      ) ;
+  iStr.ReadDouble( _uMax      ) ;
+  iStr.ReadDouble( _vMin      ) ;
+  iStr.ReadDouble( _vMax      ) ;
+  iStr.ReadDouble( _Origin, 3 ) ;   <em>// unstreams the origin (array of 3 doubles)</em>
+  iStr.ReadDouble( _Height   ) ;    <em>// unstreams the other values
+  </em>iStr.ReadDouble( _dU    , 3 ) ;   <em>// unstreams the first vector (array of 3 doubles)</em>
+  iStr.ReadDouble( _dV    , 3 ) ;   <em>// unstreams the second vector (array of 3 doubles)</em>
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><a name="Cloning">Cloning</a>
+    <p>The clone process [<a href="#References">2</a>] is managed by the <code>CATCloneManager</code>,
+    that duplicates the <code>CATIForeignSurface</code> instance. It remains to
+    provide the clone of the attribute, as below:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>//---------------------------------------------------------------------------------------</em>
+CATForeignGeometryData* CAAGobForeignSurfaceData::<strong>Clone</strong>(<strong>CATCloneManager</strong> &amp; iCloning) const 
+<em>//---------------------------------------------------------------------------------------</em>
+{ <em>// only duplicates the attribute. 
+  // The duplication of the CATIForeignSurface is made by the clone manager</em>
+  return new CAAGobForeignSurfaceData(CATMathPoint(_Origin), 
+                                      CATMathVector(_dU),
+                                      CATMathVector(_dV),
+                                      _Height,
+                                      _uMin,
+                                      _uMax,
+                                      _vMin,
+                                      _vMax) ;
+}				</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><a name="Applying"></a>Applying a Geometric Transformation
+    <p>The transformation process [<a href="#References">2</a>] is managed by
+    the <code>CATTransfoManager,</code> that coaches the <code>CATIForeignSurface</code>
+    instance. It remains to provide the transformation of the parameters, as
+    below:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>//------------------------------------------------------------------------------------
+void CAAGobForeignSurfaceData::<strong>Move3D</strong>(<strong>CATTransfoManager</strong> &amp; iTransfo) 
+//------------------------------------------------------------------------------------
+{ <em>// manages the attribute values. 
+  // The duplication of the CATIForeignSurface is made by the clone manager</em>
+
+  if ( FALSE == iTransfo.IsIdentity() )    <em>// in case of a non-identity tranformation</em>
+  { 
+      CATMathTransformation* pMathTransfo = NULL;
+      iTransfo.GetMathTransformation( pMathTransfo ) ;
+
+      if ( NULL != pMathTransfo )
+      {
+		     
+        double determinant = pMathTransfo-&gt;GetMatrix().Determinant() ;
+        if (  determinant &gt; 0. )           // only direct tranformations
+        {
+                  
+          CATMathVector Vector ;
+<em>// Gets the value before the transformation
+</em>//  --&gt; reads the values of _dU and affects them to Vector
+          Vector.SetCoord(_dU) ;                
+          Vector = (*pMathTransfo) * Vector ; <em>// Uses the operator for the math. transf.
+// Sets the value after the transformation
+</em>//  --&gt; reads the values of Vector and affects them to _dU
+          Vector.GetCoord(_dU) ;              <em>    </em>
+
+          Vector.SetCoord(_dV) ;              <em>// Gets the value before the transformation</em>
+          Vector = (*pMathTransfo) * Vector ;
+          Vector.GetCoord(_dV) ;              <em>// Sets the value after the transformation</em>
+
+          CATMathPoint Point ;
+
+          Point.SetCoord(_Origin) ;           <em>// Gets the value before the transformation</em>
+          Point = (*pMathTransfo) * Point ;
+          Point.GetCoord(_Origin) ;           <em>// Sets the value after the transformation</em>
+
+<i>// determinant is the scale factor of the transformation</i>
+          _Height /= determinant ;            <em>// Sets the height after the transformation</em>
+        }
+      }
+  }
+}				</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><a name="Creating"></a>Creating the Corresponding Mathematical Equations
+    <p>The equations of a surface can be accessed thanks to the following <code>CATSurface</code>
+    methods, that must be called in this order:
+    <ul>
+      <li><code>CATSurface::Lock</code>: locks the surface modifications during
+        the edition of the equations</li>
+      <li><code>CATSurface::GetEquation</code>: retrieves the corresponding
+        mathematical equations.</li>
+      <li><code>CATSurface::Unlock</code>: frees the surface.</li>
+    </ul>
+    <p>To perform the<code> GetEquation</code> step, the <code>CATIForeignSurface</code>
+    needs to recover the mathematical equations of the foreign surface: this is
+    the goal of the <code>CreateLocalEquation</code> method. The <code>CATIForeignSurface</code>
+    deletes the allocated equations when unlock the surface.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre><em>//--------------------------------------------------------------------------------</em>
+void CAAGobForeignSurfaceData::<strong>CreateLocalEquation</strong>(
+                          const long iPu,  // useless, only one patch 
+                          const long iPv,  // useless, only one patch
+                          const CATMathFunctionXY* &amp; oFx, 
+                          const CATMathFunctionXY* &amp; oFy, 
+                          const CATMathFunctionXY* &amp; oFz)  
+<em>//---------------------------------------------------------------------------------</em>
+{ <em>// Creates the mathematical equations relative to the egg box
+  // S(u,v) = Origin + u*dU + v*dV + Height*cos(u)*cos(v)*dU^dV.</em>
+  oFx = new CAAAmtForeignFctXY(_dU[0],_dV[0],
+                               _Height*(_dU[1]*_dV[2]-_dU[2]*_dV[1]),
+                               _Origin[0]) ;
+  oFy = new CAAAmtForeignFctXY(_dU[1],_dV[1],
+                               _Height*(_dU[2]*_dV[0]-_dU[0]*_dV[2]),
+                               _Origin[1]) ;
+  oFz = new CAAAmtForeignFctXY(_dU[2],_dV[2],
+                               _Height*(_dU[0]*_dV[1]-_dU[1]*_dV[0]),
+                               _Origin[2]) ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="The&nbsp; CAAGobApplicationName.cpp Code and Dictionary"></a>The
+CAAGobApplicationName.cpp Code and Dictionary</h4>
+<p>This file defines the logical name (here <code>CAAGobFS</code>) of the load
+module containing the <code>CAAGobForeignSurfaceData</code> definition, by the
+mean of the <code>AppDef</code> macro.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>// GeometricObjects</em>
+#include &quot;AppDef.h&quot;  <em>// to use in next line</em>
+
+<em>// CAAGobFS is the unique name identifying the application</em>
+<strong>AppDef</strong>(<strong>CAAGobFS</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p>The dictionary keeps track of the correspondance between the logical
+application name and the physical load module <code>libCAAGobForeig</code>n.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><strong>CAAGobFS</strong> 		CATICGMDomainBinder 		<strong>libCAAGobForeign</strong></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates a concrete case of introduction of a new type of
+foreign surfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAAGobTechArticles/Attribute.htm">The Management
+      of Foreign Data</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAAGobTechArticles/Clone.htm">The Clone and
+      Transformation Managers</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAAGobTechArticles/GeoObjects.htm">The Objects of
+      the CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="../CAAGobTechArticles/Curves.htm">The Curves of the
+      CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td>[6]</td>
+    <td><a href="../CAAAmtUseCases/CAAAmtForeign.htm">Foreign
+      Mathematical Functions</a></td>
+  </tr>
+  <tr>
+    <td>[7]</td>
+    <td><a href="CAAGobCreation.htm">How to Create and Transform Geometry</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

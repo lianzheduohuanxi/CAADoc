@@ -1,0 +1,775 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>XMLParser Interface CATISAXXMLReader</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../XMLParser.htm" href="../XMLParser.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "XMLParser";	}
+		function getCurrentObjectName() { 
+ 	return "CATISAXXMLReader"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>XMLParser Interface CATISAXXMLReader</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATISAXXMLReader_18502','CATISAXXMLReader','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATISAXXMLReader</b>
+</p>
+<p>
+<b><i> Interface for reading an XML document using callbacks.</i></b><br>
+
+
+ <p>CATISAXXMLReader is the interface that an XML parser's SAX2 driver must
+ implement.  This interface allows an application to set and
+ query features and properties in the parser, to register
+ event handlers for document processing, and to initiate
+ a document parse.</p>
+
+ <p>All SAX interfaces are assumed to be synchronous: the
+ <script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','Parse','CATISAXXMLReader.Parse') </script> methods must not return until parsing is complete, and readers must wait for an event-handler callback
+ to return before reporting the next event.</p>
+
+ <p>This interface replaces the SAX 1.0 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> interface.   The 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> interface contains two important enhancements over the old 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> interface:</p>
+
+ <ol>
+ <li>it adds a standard way to query and set features and 
+  properties; and
+ </li>
+ <li>it adds Namespace support, which is required for many
+  higher-level XML standards.</li>
+ </ol>
+ <p>There are adapters available to convert a SAX1 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> to a SAX2 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> and vice-versa.</p>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATISAXEntityResolver','','CATISAXEntityResolver') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXDTDHandler','','CATISAXDTDHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXContentHandler','','CATISAXContentHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXErrorHandler','','CATISAXErrorHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXInputSource','','CATISAXInputSource') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetContentHandler(CATISAXContentHandler_var&amp;)"><b>GetContentHandler</b></a>(CATISAXContentHandler_var&amp;)
+<dd>  Retrieves the current content event handler.
+ <dt> o 
+    <a href="#GetDTDHandler(CATISAXDTDHandler_var&amp;)"><b>GetDTDHandler</b></a>(CATISAXDTDHandler_var&amp;)
+<dd>  Retrieves the current DTD event handler.
+ <dt> o 
+    <a href="#GetEntityResolver(CATISAXEntityResolver_var&amp;)"><b>GetEntityResolver</b></a>(CATISAXEntityResolver_var&amp;)
+<dd>  Retrieves the current entity resolver.
+ <dt> o 
+    <a href="#GetErrorHandler(CATISAXErrorHandler_var&amp;)"><b>GetErrorHandler</b></a>(CATISAXErrorHandler_var&amp;)
+<dd>  Retrieves the current error event handler.
+ <dt> o 
+    <a href="#GetFeature(CATUnicodeString&amp;,CATBoolean&amp;)"><b>GetFeature</b></a>(CATUnicodeString&amp;,CATBoolean&amp;)
+<dd>  Retrieves the value of a feature.
+ <dt> o 
+    <a href="#GetProperty(CATUnicodeString&amp;,CATVariant&amp;)"><b>GetProperty</b></a>(CATUnicodeString&amp;,CATVariant&amp;)
+<dd>  Retrieves up the value of a property.
+ <dt> o 
+    <a href="#Parse(CATUnicodeString&amp;)"><b>Parse</b></a>(CATUnicodeString&amp;)
+<dd>  Parses an XML document from a system identifier (URI).
+ <dt> o 
+    <a href="#Parse(CATISAXInputSource_var&amp;)"><b>Parse</b></a>(CATISAXInputSource_var&amp;)
+<dd>  Parses an XML document.
+ <dt> o 
+    <a href="#SetContentHandler(CATISAXContentHandler_var&amp;)"><b>SetContentHandler</b></a>(CATISAXContentHandler_var&amp;)
+<dd>  Allows an application to register a content event handler.
+ <dt> o 
+    <a href="#SetDTDHandler(CATISAXDTDHandler_var&amp;)"><b>SetDTDHandler</b></a>(CATISAXDTDHandler_var&amp;)
+<dd>  Allows an application to register a DTD event handler.
+ <dt> o 
+    <a href="#SetEntityResolver(CATISAXEntityResolver_var&amp;)"><b>SetEntityResolver</b></a>(CATISAXEntityResolver_var&amp;)
+<dd>  Allows an application to register a custom entity resolver.
+ <dt> o 
+    <a href="#SetErrorHandler(CATISAXErrorHandler_var&amp;)"><b>SetErrorHandler</b></a>(CATISAXErrorHandler_var&amp;)
+<dd>  Allows an application to register an error event handler.
+ <dt> o 
+    <a href="#SetFeature(CATUnicodeString&amp;,CATBoolean)"><b>SetFeature</b></a>(CATUnicodeString&amp;,CATBoolean)
+<dd>  Sets the value of a feature.
+ <dt> o 
+    <a href="#SetProperty(CATUnicodeString&amp;,CATVariant&amp;)"><b>SetProperty</b></a>(CATUnicodeString&amp;,CATVariant&amp;)
+<dd>  Sets the value of a property.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetContentHandler"></a><a name="GetContentHandler(CATISAXContentHandler_var&amp;)"></a> <dt> o <b>GetContentHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetContentHandler</b>(<td><script type="text/javascript"> activateLink('CATISAXContentHandler_var','CATISAXContentHandler_var&amp;')</script> <td><tt>oContentHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the current content event handler.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oContentHandler</tt>
+   <dd> The content handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetContentHandler','SetContentHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXContentHandler','','CATISAXContentHandler') </script>
+</dl>
+</dl>
+<a name="GetDTDHandler"></a><a name="GetDTDHandler(CATISAXDTDHandler_var&amp;)"></a> <dt> o <b>GetDTDHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDTDHandler</b>(<td><script type="text/javascript"> activateLink('CATISAXDTDHandler_var','CATISAXDTDHandler_var&amp;')</script> <td><tt>oDTDHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the current DTD event handler.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDTDHandler</tt>
+   <dd> The DTD handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetDTDHandler','SetDTDHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXDTDHandler','','CATISAXDTDHandler') </script>
+</dl>
+</dl>
+<a name="GetEntityResolver"></a><a name="GetEntityResolver(CATISAXEntityResolver_var&amp;)"></a> <dt> o <b>GetEntityResolver</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetEntityResolver</b>(<td><script type="text/javascript"> activateLink('CATISAXEntityResolver_var','CATISAXEntityResolver_var&amp;')</script> <td><tt>oEntityResolver</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the current entity resolver.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oEntityResolver</tt>
+   <dd> The entity resolver.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetEntityResolver','SetEntityResolver') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXEntityResolver','','CATISAXEntityResolver') </script>
+</dl>
+</dl>
+<a name="GetErrorHandler"></a><a name="GetErrorHandler(CATISAXErrorHandler_var&amp;)"></a> <dt> o <b>GetErrorHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetErrorHandler</b>(<td><script type="text/javascript"> activateLink('CATISAXErrorHandler_var','CATISAXErrorHandler_var&amp;')</script> <td><tt>oErrorHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the current error event handler.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oErrorHandler</tt>
+   <dd> The error event handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetErrorHandler','SetErrorHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXErrorHandler','','CATISAXErrorHandler') </script>
+</dl>
+</dl>
+<a name="GetFeature"></a><a name="GetFeature(CATUnicodeString&amp;,CATBoolean&amp;)"></a> <dt> o <b>GetFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetFeature</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oFeature</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a feature.
+
+ <p>The feature name is any fully-qualified URI.  It is
+ possible for an 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> to recognize a feature name but to be unable to return its value; this is especially true
+ in the case of an adapter for a SAX1 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script>, which has no way of knowing whether the underlying parser is
+ performing validation or expanding external entities.</p>
+
+ <p>All 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> s are required to recognize the <tt>http://xml.org/sax/features/namespaces</tt> and the
+ <tt>http://xml.org/sax/features/namespace-prefixes</tt> feature names.</p>
+
+ <p>Some feature values may be available only in specific
+ contexts, such as before, during, or after a parse.</p>
+
+ <p>Typical usage is something like this:</p>
+
+ <pre>
+ CATISAXReader_var r;
+ hr = factory->CreateReader(r);
+ if (SUCCEEDED(hr) && (r != NULL_var)) {
+     hr = r->SetFeature("http://xml.org/sax/features/validation", TRUE);
+     if (FAILED(hr)) {
+         cerr << "Cannot activate validation." << endl;
+     } else {
+         CATISAXContentHandler_var myContentHandler;
+         MyContentHandler* myContentHandlerImpl = new MyContentHandler();
+         myContentHandler = myContentHandlerImpl;
+         myContentHandlerImpl->Release();
+         myContentHandlerImpl = NULL;
+ 
+         CATISAXErrorHandler_var myErrorHandler;
+         MyErrorHandler* myErrorHandlerImpl = new MyErrorHandler();
+         myErrorHandler = myErrorHandlerImpl;
+         myErrorHandlerImpl->Release();
+         myErrorHandlerImpl = NULL;
+ 
+         r->SetContentHandler(myContentHandler);
+         r->SetErrorHandler(myErrorHandlerImpl);
+         hr = Parse("http://www.foo.com/mydoc.xml");
+         if (FAILED(hr)) {
+             CATError *error = CATError::CATGetLastError();
+             if (error != NULL) {
+                 cerr << error->GetNLSMessage().CastToCharPtr() << endl;
+                 error->Release();
+                 error = NULL;
+             } else {
+                 cerr << "Unknown error." << endl;
+             }
+         }
+     }
+ }
+ </pre>
+ 
+ <p>Implementors are free (and encouraged) to invent their own features,
+ using names built on their own URIs.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The feature name, which is a fully-qualified URI.
+ </dd>
+    <dt><tt> oFeature</tt>
+   <dd> The current state of the feature (<tt>TRUE</tt> or <tt>FALSE</tt>).
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotRecognizedException','','CATSAXNotRecognizedException') </script> </td>        <td class="errtd">XMLParserERR_2302</td>
+        <td class="errtd">If the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> does not recognize the feature name.</td>     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotSupportedException','','CATSAXNotSupportedException') </script> </td>        <td class="errtd">XMLParserERR_2303</td>
+        <td class="errtd">When the XMLReader recognizes the feature name but cannot determine its value at this time.</td>
+     </tr>
+   </table>
+ </dd>
+ 
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetFeature','SetFeature') </script>
+</dl>
+</dl>
+</dl>
+<a name="GetProperty"></a><a name="GetProperty(CATUnicodeString&amp;,CATVariant&amp;)"></a> <dt> o <b>GetProperty</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetProperty</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATVariant','CATVariant&amp;')</script> <td><tt>oProperty</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves up the value of a property.
+ 
+ <p>The property name is any fully-qualified URI.  It is
+ possible for a 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> to recognize a property name but to be unable to return its state; this is especially true
+ in the case of an adapter for a SAX1 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> .</p>
+ <p>
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> s are not required to recognize any specific property names, though an initial core set is documented for
+ SAX2.</p>
+
+ <p>Some property values may be available only in specific
+ contexts, such as before, during, or after a parse.</p>
+
+ <p>Implementors are free (and encouraged) to invent their own properties,
+ using names built on their own URIs.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The property name, which is a fully-qualified URI.
+ </dd>
+    <dt><tt> oProperty</tt>
+   <dd> The current value of the property.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotRecognizedException','','CATSAXNotRecognizedException') </script> </td>        <td class="errtd">XMLParserERR_2300</td>
+        <td class="errtd">If the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> does not recognize the feature name.</td>     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotSupportedException','','CATSAXNotSupportedException') </script> </td>        <td class="errtd">XMLParserERR_2301</td>
+        <td class="errtd">When the XMLReader recognizes the feature name but cannot determine its value at this time.</td>
+     </tr>
+   </table>
+ </dd>
+ 
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetProperty','SetProperty') </script>
+</dl>
+</dl>
+</dl>
+<a name="Parse"></a><a name="Parse(CATUnicodeString&amp;)"></a> <dt> o <b>Parse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Parse</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iSystemId</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Parses an XML document from a system identifier (URI).
+
+ <p>This method is a shortcut for the common case of reading a
+ document from a system identifier. If the system identifier is a URL, it must be fully resolved
+ by the application before it is passed to the parser.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSystemId</tt>
+   <dd> The system identifier (URI).
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">If an error (such as a not well formed XML document) occurs during parse</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2001</td>
+        <td class="errtd">If an I/O error occurs during parse</td>
+     </tr>
+   </table>
+ </dd>
+ 
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','Parse','Parse') </script>
+</dl>
+</dl>
+</dl>
+<a name="Parse"></a><a name="Parse(CATISAXInputSource_var&amp;)"></a> <dt> o <b>Parse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Parse</b>(<td> const <script type="text/javascript"> activateLink('CATISAXInputSource_var','CATISAXInputSource_var&amp;')</script> <td><tt>iInputSource</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Parses an XML document.
+
+ <p>The application can use this method to instruct the SAX parser
+ to begin parsing an XML document from any valid input
+ source (a character stream, a byte stream, or a URI).</p>
+
+ <p>Applications may not invoke this method while a parse is in
+ progress (they should create a new 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> instead for each additional XML document).  Once a parse is complete, an
+ application may reuse the same reader object, possibly with a
+ different input source.</p>
+
+ <p>During the parse, the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> will provide information about  the XML document through the registered event handlers.</p>
+
+ <p>This method is synchronous: it will not return until parsing has ended. 
+ If a client application wants to terminate parsing early, it should raise an error.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInputSource</tt>
+   <dd>  The input source for the top-level of the XML document.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">If an error (such as a not well formed XML document) occurs during parse</td>
+     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2001</td>
+        <td class="errtd">If an I/O error occurs during parse</td>
+     </tr>
+   </table>
+ </dd>
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATISAXInputSource','','CATISAXInputSource') </script>, <script type="text/javascript"> activateLinkAnchor('','SetEntityResolver','SetEntityResolver') </script>, <script type="text/javascript"> activateLinkAnchor('','SetDTDHandler','SetDTDHandler') </script>, <script type="text/javascript"> activateLinkAnchor('','SetContentHandler','SetContentHandler') </script>, <script type="text/javascript"> activateLinkAnchor('','SetErrorHandler','SetErrorHandler') </script>
+</dl>
+</dl>
+</dl>
+<a name="SetContentHandler"></a><a name="SetContentHandler(CATISAXContentHandler_var&amp;)"></a> <dt> o <b>SetContentHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetContentHandler</b>(<td> const <script type="text/javascript"> activateLink('CATISAXContentHandler_var','CATISAXContentHandler_var&amp;')</script> <td><tt>iContentHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows an application to register a content event handler.
+
+ If the application does not register a content handler, all
+ content events reported by the SAX parser will be silently
+ ignored (this is the default behaviour implemented by
+ 
+<script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script> ).
+ Applications may register a new or different handler in the
+ middle of a parse, and the SAX parser must begin using the new
+ handler immediately.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContentHandler</tt>
+   <dd> The content handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','GetContentHandler','GetContentHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXContentHandler','','CATISAXContentHandler') </script>
+</dl>
+</dl>
+<a name="SetDTDHandler"></a><a name="SetDTDHandler(CATISAXDTDHandler_var&amp;)"></a> <dt> o <b>SetDTDHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetDTDHandler</b>(<td> const <script type="text/javascript"> activateLink('CATISAXDTDHandler_var','CATISAXDTDHandler_var&amp;')</script> <td><tt>iDTDHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows an application to register a DTD event handler.
+
+ If the application does not register a DTD handler, all DTD
+ events reported by the SAX parser will be silently ignored (this
+ is the default behaviour implemented by 
+<script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script> ).
+ Applications may register a new or different handler in the middle
+ of a parse, and the SAX parser must begin using the new handler
+ immediately.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDTDHandler</tt>
+   <dd> The DTD handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','GetDTDHandler','GetDTDHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXDTDHandler','','CATISAXDTDHandler') </script>
+</dl>
+</dl>
+<a name="SetEntityResolver"></a><a name="SetEntityResolver(CATISAXEntityResolver_var&amp;)"></a> <dt> o <b>SetEntityResolver</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetEntityResolver</b>(<td> const <script type="text/javascript"> activateLink('CATISAXEntityResolver_var','CATISAXEntityResolver_var&amp;')</script> <td><tt>iEntityResolver</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows an application to register a custom entity resolver.
+
+ If the application does not register an entity resolver, the
+ SAX reader will resolve system identifiers and open connections
+ to entities itself (this is the default behaviour implemented in
+ 
+<script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script> ).
+ Applications may register a new or different entity resolver
+ in the middle of a parse, and the SAX parser must begin using
+ the new resolver immediately.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEntityResolver</tt>
+   <dd> The object for resolving entities.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','GetEntityResolver','GetEntityResolver') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXEntityResolver','','CATISAXEntityResolver') </script>
+</dl>
+</dl>
+<a name="SetErrorHandler"></a><a name="SetErrorHandler(CATISAXErrorHandler_var&amp;)"></a> <dt> o <b>SetErrorHandler</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetErrorHandler</b>(<td> const <script type="text/javascript"> activateLink('CATISAXErrorHandler_var','CATISAXErrorHandler_var&amp;')</script> <td><tt>iErrorHandler</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows an application to register an error event handler.
+
+ If the application does not register an error event handler,
+ all error events reported by the SAX parser will be silently
+ ignored, except for 
+<script type="text/javascript"> activateLinkAnchor('CATISAXErrorHandler','FatalError','CATISAXErrorHandler.FatalError') </script>, which will raise a 
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> error (this is the default behaviour implemented by 
+<script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script> ).
+ Applications may register a new or different handler in the
+ middle of a parse, and the SAX parser must begin using the new
+ handler immediately.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iErrorHandler</tt>
+   <dd>  The error handler.
+
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','GetErrorHandler','GetErrorHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXErrorHandler','','CATISAXErrorHandler') </script>, <script type="text/javascript"> activateLinkAnchor('CATSAXDefaultHandler','','CATSAXDefaultHandler') </script>
+</dl>
+</dl>
+<a name="SetFeature"></a><a name="SetFeature(CATUnicodeString&amp;,CATBoolean)"></a> <dt> o <b>SetFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetFeature</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iFeature</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a feature.
+
+ <p>The feature name is any fully-qualified URI.  It is
+ possible for an 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> to recognize a feature name but to be unable to set its value; this is especially true
+ in the case of an adapter for a SAX1 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> , which has no way of affecting whether the underlying parser is
+ validating, for example.</p>
+ 
+ <p>All 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> s are required to support setting <tt>http://xml.org/sax/features/namespaces</tt> to <tt>TRUE</tt> and
+ <tt>http://xml.org/sax/features/namespace-prefixes</tt> to <tt>FALSE</tt>.</p>
+ 
+ <p>Some feature values may be immutable or mutable only 
+ in specific contexts, such as before, during, or after 
+ a parse.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The feature name, which is a fully-qualified URI.
+ </dd>
+    <dt><tt> oFeature</tt>
+   <dd> The requested state of the feature (<tt>TRUE</tt> or <tt>FALSE</tt>).
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotRecognizedException','','CATSAXNotRecognizedException') </script> </td>        <td class="errtd">XMLParserERR_2302</td>
+        <td class="errtd">If the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> does not recognize the feature name.</td>     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotSupportedException','','CATSAXNotSupportedException') </script> </td>        <td class="errtd">XMLParserERR_2303</td>
+        <td class="errtd">When the XMLReader recognizes the feature name but cannot determine its value at this time.</td>
+     </tr>
+   </table>
+ </dd>
+ 
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetFeature','SetFeature') </script>
+</dl>
+</dl>
+</dl>
+<a name="SetProperty"></a><a name="SetProperty(CATUnicodeString&amp;,CATVariant&amp;)"></a> <dt> o <b>SetProperty</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetProperty</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATVariant','CATVariant&amp;')</script> <td><tt>iProperty</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a property.
+ 
+ <p>The property name is any fully-qualified URI.  It is
+ possible for a 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> to recognize a property name but to be unable to return its state; this is especially true
+ in the case of an adapter for a SAX1 
+<script type="text/javascript"> activateLinkAnchor('CATISAXParser','','CATISAXParser') </script> .</p>
+ <p>
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> s are not required to recognize any specific property names, though an initial core set is documented for
+ SAX2.</p>
+
+ <p>Some property values may be available only in specific
+ contexts, such as before, during, or after a parse.</p>
+
+ <p>Implementors are free (and encouraged) to invent their own properties,
+ using names built on their own URIs.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The property name, which is a fully-qualified URI.
+ </dd>
+    <dt><tt> iProperty</tt>
+   <dd> The requested value for the property.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotRecognizedException','','CATSAXNotRecognizedException') </script> </td>        <td class="errtd">XMLParserERR_2300</td>
+        <td class="errtd">If the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script> does not recognize the feature name.</td>     </tr>
+     <tr>
+        <td class="errtd">
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotSupportedException','','CATSAXNotSupportedException') </script> </td>        <td class="errtd">XMLParserERR_2301</td>
+        <td class="errtd">When the XMLReader recognizes the feature name but cannot determine its value at this time.</td>
+     </tr>
+   </table>
+ </dd>
+ 
+
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','GetProperty','GetProperty') </script>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATISAXXMLReader.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATXMLParserItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

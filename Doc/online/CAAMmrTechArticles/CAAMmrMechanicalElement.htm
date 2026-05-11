@@ -1,0 +1,381 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>MechanicalElement StartUp and Feature</title>
+<!--[if !mso]>
+<style>span.LittleTitle
+	{text-shadow:auto;
+	font-weight:bold;
+	font-style:italic;
+	text-decoration:underline;
+	text-underline:single}
+</style>
+<![endif]-->
+</head>
+
+<body>
+
+<table width="100%" id="table19">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Contents of the Specification Container - Non 
+		Geometrical Features</h3>
+      <em>How to design a non Geometrical Feature - MechanicalElement StartUp 
+		and Feature</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" id="table20">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>A new StartUp, specially designed to define Non Geometrical Features, 
+		was born.&nbsp; It is named &quot;<b>MechanicalElement</b>&quot; and derivate from 
+		&quot;<b>MechanicalFeatur</b>&quot; .</p>
+		<p>In the following article, we are going to introduce it.</p>
+		<ul>
+        <li><b><a href="#MechanicalElementDefinition">What is a 
+		MechanicalElement?</a></b></li>
+		<li><b><a href="#HowToUseMechanicalElement">How To Use MechanicalElement 
+		Structure?</a></b></li>
+        <li><b><a href="#Field of Application">Field of Application</a></b></li>
+        <li><b><a href="#Default Behaviors">Default Behaviors</a></b></li>
+        <li><b><a href="#BuSu Mode">BackUp/StartUp mode</a></b></li>
+        <li><b><a href="#Use MechanicalElements">How to use MechanicalElements?</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="MechanicalElementDefinition"></a>What is a MechanicalElement?</h3>
+<p class="MsoNormal">In internal view, <b>MechanicalElement </b>derives directly from <b>
+MechanicalFeature</b>, just like other Mechanical Features.</p>
+<p class="MsoNormal">&nbsp;</p>
+<div align="center">
+	<table border="1" width="54%" id="table26">
+		<tr>
+			<td align="center">
+			<img border="0" src="images/CAAMmrMechanicalElementStruct.jpg" width="616" height="151"></td>
+		</tr>
+		<tr>
+			<td align="center"><b>&#8220;MechanicalElement&#8221; is a StartUp derivate from MechanicalFeature</b></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="HowToUseMechanicalElement"></a>How To Use MechanicalElement 
+Structure?</h3>
+<p><b>MechanicalElement</b> has to be used to design <b>features without geometry</b>.<br>
+It&#8217;s a StartUp which cannot be instantiated directly: it is <b>only derivable</b>.</p>
+<p>Consequently, to use a kind of MechanicalElement, you will have to create a 
+new StartUp, derived from &#8220;<b>MechanicalElement</b>&#8221;, in your feature catalog, 
+just like you do when you want to create a StartUp deriving from a Mechanical 
+Feature [<a href="#References">1</a>].</p>
+<p>For example, let&#8217;s create a StartUp &#8220;<i>CAAMechaElem</i>&#8221;, derived from 
+MechanicalElement, in the catalog &#8220;CAAMechanicalUseCase.CATfct&#8221;:<br>
+&nbsp;</p>
+<table class="code" width="739" id="table27">
+		<tr>
+			<td width="731">
+			<pre>
+document `<b>CAAMechanicalUseCase.CATfct</b>`{
+   container CATFeatCont {
+      catalog_manager `MechMod.feat`
+      Feature CAAMechaElem <b>MechanicalElement@`MechMod.feat&#8217; #startup</b> {
+      }
+   }
+}</pre></td>
+		</tr>
+	</table>
+	<p class="MsoNormal">By default, <b>MechanicalElement</b> does not have any 
+	3DVizualisation.<br>
+	However, it is possible to add manually Visualisation to your derivate 
+	feature implementing correctly specific APIs for Visualization (<b><i>CATIVisProperties</i></b>,
+	<b><i>CATI3DGeoVisu</i></b>) .<br>
+	<br>
+	Moreover, your feature will be included in traditional mechanisms like 
+	Update, or UI with its visualization under the SpecTree.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Field of Application"></a>Field of Application</h3>
+<p><b>MechanicalElement</b> can be used, for instance, to design <b>&quot;Analysis 
+Features&quot;</b>, or <b>&quot;Measure Features&quot;</b> which don't have geometrical result 
+but which could have visual result.<br>
+&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Default Behaviors"></a>Default Behaviors</h3>
+<p>In this section, we are going to list all behaviors supported initially by 
+MechanicalElement's derivates.</p>
+<ol>
+	<li><i><b>Insertion in Graph / Aggregation Rules:</b></i><br>
+&nbsp;<p class="MsoNormal">&nbsp;&nbsp; A &#8220;<b>MechanicalElement</b>&#8221; can be 
+	aggregated under the <b>MechanicalPart</b>, <b>a Hybrid Body</b>, <b>a GS
+	</b>or a <b>kind of MechanicalSet derivate</b>[<a href="#References">1</a>].<br>
+	<br>
+	It cannot be instantiated directly: to use it, you must create a <b>derivate</b> 
+	StartUp. (For instance, &quot;CAAMechaElem&quot; defined in &quot;CAAMechanicalUseCase.CATfct&quot;)<br>
+&nbsp;</li>
+	<li><b><i>Copy / Paste:</i></b><br>
+&nbsp;<p>In front of &quot;Cut/Copy/Paste&quot;, MechanicalElement (and its derivates) has 
+	the same default behavior as MechanicalFeature.<br>
+&nbsp;</li>
+<li><b><i>Replace:</i></b><br>
+<br>
+&quot;<b>CATIReplace</b>&quot; has to be implemented specifically on your own feature. In 
+deed, this implementation must agree with your feature design defining which 
+types of attribute have to be replaced.<br>
+<br>
+&nbsp;</li>
+<li><b><i>Reorder:</i></b><p>MechanicalElement supports reorder, according to 
+aggregation rules<br>
+&nbsp;</li>
+<li><b><i>Drag 'n Drop:</i></b><br>
+<br>
+MechanicalElement supports &#8220;Drag and Drop&#8221;, according to aggregation rules, 
+using CCP protocol.<br>
+&nbsp;</li>
+<li><b><i>Define in Work Object:</i></b><br>
+<br>
+MechanicalElement can <b>only</b> be defined In Work Object (<b>DIWO</b>) if it 
+is aggregated under an <b>ordered </b>set.<br>
+<br>
+As a consequence, under a MechanicalSet, a MechanicalElement cannot be defined In Work 
+Object.<br>
+<br>
+<i><b><br>
+&nbsp;</b></i></li>
+<li><b><i>CATIContextualSubMenu:</i></b><br>
+<br>
+A default implementation of this interface define this default contextual 
+SubMenu:<p><br>
+&nbsp;</p>
+<div align="center">
+	<table border="1" width="33%" id="table28">
+		<tr>
+			<td height="77">
+			<p align="center">
+			<img border="0" src="images/CAAMmrMechanicalElementSubMenu.jpg" width="141" height="53"></td>
+		</tr>
+		<tr>
+			<td align="center">Default MechanicalElement&#39;s Contextual Sub Menu</td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal">&nbsp;</li>
+<li><b><i>Update Mechanism:</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; <b>MechanicalElement</b> supports Update mechanism according 
+to Feature Modeler's rules (Attr IN, OUT, NEUTRAL).<br>
+<br>
+Please note that aggregating a feature using CATIDescendants:: Append () <b>will not
+</b>change MechanicalElement &#8217;s Update status !!!<br>
+<br>
+<i>Note:</i> This is the totally opposite of Sets (GSMTool, MechanicalTool, 
+HybridBody, MechanicalSet &#8230;) where aggregating a feature with 
+CATIDescendants::Append() change Set&#8217;s Update Status...<br>
+<br>
+<br>
+&nbsp;</li>
+<li><b><i>CATINavigateObject &#8211; Visualization in the SpecTree</i></b>:<br>
+<br>
+&nbsp;&nbsp;&nbsp; A default implementation of this interface is provided.<br>
+<br>
+It consists in showing <b>all authorised</b> features <b>aggregated </b>under MechanicalElement
+<b>with CATIDescendants::Append()</b>. <br>
+<br>
+In other words, all features retrieved by <b>
+CATIDescendants::GetDirectChildren() </b>and which are not filtered by <b>
+CATINavigateFilter::IsShown() </b>are shown under the MechanicalElement Node in 
+the SpecTree.<br>
+<br>
+&nbsp;</li>
+<li><b><i>CATIParmPublisher:</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; A default implementation of this interface shows parameters 
+(&quot;<b>CATICkeParms</b>&quot;) aggregated with <b>CATIDescendants::Append()</b>.<br>
+If you want to see parameters aggregated under specific attributes, this 
+interface must be re-implemented.<br>
+<br>
+&nbsp;</li>
+<li><b><i>3D Visualisation:</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; By default, MechanicalElement <b>does not</b> have any visualization.<br>
+In deed as <b>MechanicalElement</b> is dedicated to design <b>non Geometrical 
+Feature</b>, we decided to provide the littlest implementation for Visualisation (No 
+3DRep, No Graphic Properties, no Hide/Show)<br>
+<br>
+However, it is possible to implement directly visualization on your own feature, 
+using correct A.P.I and services (<b><i>CATIVisProperties</i></b>, <b><i>
+CATI3DGeoVisu</i></b>)<br>
+<br>
+&nbsp;</li>
+<li><b><i>CATISelectShow&nbsp; &amp; CATIVisProperties - Hide/Show Command:</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; As <b>MechanicalElement</b> does not have, by default, any 3D 
+Representation, we provide a default implementations of <b>CATISelectShow </b>and <b>
+CATIVisProperties </b>interface which disable <b>Hide/Show </b>command. <br>
+<br>
+This means that nothing occurs when &#8220;user&#8221; clicks on Hide/Show defined in the 
+contextual menu.<br>
+<br>
+However, it is possible to implement directly those behavior on your own 
+feature, using correct A.P.I and services<br>
+<br>
+&nbsp;</li>
+<li><b><i>User Feature / PowerCopy:</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; MechanicalElement supports &quot;User Feature&quot; and PowerCopy. [<a href="#References">3</a>] <br>
+&nbsp;</li>
+<li><b><i>Parent / Children</i></b><br>
+<br>
+&nbsp;&nbsp;&nbsp; Relations between features are linked to attributes and 
+qualities.<br>
+To have a Parent/Children mechanism on MechanicalElement, it is mandatory to 
+create a new attribute on your own StartUp deriving from &quot;MechanicalElement&quot;, and to value it with its parents.<br>
+<br>
+Let's take the example described in the table below:<br>
+<br>
+&nbsp;<div align="center">
+	<table border="1" width="1%" id="table29">
+		<tr>
+			<td>
+			<img border="0" src="images/CAAMmrMechanicalElementDiagForParentChildren.jpg" width="655" height="265"></td>
+		</tr>
+		<tr>
+			<td align="center">Structure Example for Parent / Children</td>
+		</tr>
+	</table>
+</div>
+<p><br>
+&nbsp;&nbsp;&nbsp; In this example, Feature F.1 will be seen as a Parent of the 
+applicative Feature deriving from MechanicalElement StartUp. <br>
+Moreover, Feature Feat.1 will be seen as one of its children.<br>
+&nbsp;</li>
+</ol>
+<p>&nbsp;</p>
+
+<h3><a name="BuSu Mode"></a>BackUp/StartUp mode</h3>
+<p>A BackUp/StartUp [<a href="#References">5</a>] has been defined to 
+support basic behaviours for Mechanical Element subtypes if code is not present.
+In BackUp / StartUp mode, <b>MechanicalElement</b> instances are replaced by <b>&nbsp;</b>instances 
+of its backup StartUp. </p>
+<p>Most of default behaviors, defined in the last part of this documentation, 
+works in BackUp/StartUp mode. However, some behaviors are specifically 
+restricted in order to prevent data's corruption.</p>
+<p><i>Default Behaviours restricted in BackUp / StartUp:</i></p>
+<ul>
+	<li>
+	<p class="MsoNormal"><b><i>Update Mechanism / Update Error:</i></b><br>
+	An Update Error is raised when you try to update a kind of 
+	MechanicalElement&#8217;s instance without its dedicated code or catalogue.</li>
+	<li>
+	<p class="MsoNormal"><b><i>Visualization 3D View:<br>
+	</i></b>In BackUp / StartUp Mode, visualization won&#8217;t be available under 
+    backup<b>
+	</b>instance.</li>
+	<li>
+	<p class="MsoNormal"><i><b>CATIReplace:<br>
+	</b></i>In BackUp / StartUp Mode, replace is allowed. In this specific mode, 
+	Replace operation consists in unsetting the attribute value replaced.</li>
+	<li>
+	<p class="MsoNormal"><b><i>Cut / Copy / Paste:<br>
+	</i>
+	</b>The backup instances can be deleted but it cannot be pasted.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Use MechanicalElements"></a>How to use Mechanical Elements?</h3>
+<p>To have a look at the use of MechanicalElement, please refer to specified 
+article [<a href="#References">4</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p><b>MechanicalElement </b>is a derivable StartUp designed to define <b>non geometrical 
+features.</b> </p>
+<p>This feature can be aggregated under the <b>MechanicalPart</b>, <b>a Hybrid Body</b>, <b>a GS
+	</b>or a <b>kind of MechanicalSet derivate</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="1241" id="table21">
+  <tr>
+    <td valign="top" width="50">[1]</td>
+    <td width="1186">
+	<a href="CAAMmrMechanicalSet.htm">MechanicalSet StartUp and Feature</a></td>
+  </tr>
+	<tr>
+    <td valign="top" width="50">[2]</td>
+    <td width="1186"><a href="CAAMmrCreatingNewFeat.htm">Deriving Mechanical Feature</a></td>
+  </tr>
+	<tr>
+    <td valign="top" width="50">[3]</td>
+    <td width="1186">
+	<a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">
+	An Overview of Power Copies and User Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50" height="21">[4]</td>
+    <td width="1186" height="21">
+	<a href="../CAAMmrUseCases/CAAMmrMultiMeasureAndMeasureSetSamplesOverview.htm">MechanicalElement / MechanicalSet Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[5]</td>
+    <td width="1186">
+	<a href="CAAMmrBackupStartUp.htm">Backup Startup Principles</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="1239">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%" id="table22">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Mar 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong>   [June 2007]</td>
+    <td valign="top">Document updated: Use Case added</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2007, Dassault Syst&#232;mes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

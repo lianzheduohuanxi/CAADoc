@@ -1,0 +1,335 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspConnectivity.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspConnector, CATIAPspConnectable and CATIAPspCntrFlow</font>
+<font color="#008000">'    Assumption:   Looks for document CAAPspEduIn.CATProduct</font>
+<font color="#008000">'                 </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+        
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspConnectivity.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+    
+<font color="#0000FF">    Dim </font>objPspPhysical   <font color="#0000FF"> As </font>PspPhysical
+<font color="#0000FF">    Dim </font>objPspPhyID      <font color="#0000FF"> As </font>PspID
+<font color="#0000FF">    Dim </font>objPspCntbl      <font color="#0000FF"> As </font>PspConnectable
+    
+<font color="#0000FF">    Dim </font>ePspIDLDomainID  <font color="#0000FF"> As </font>CatPspIDLDomainID    
+<font color="#0000FF">    Dim </font>intIdx           <font color="#0000FF"> As </font>Integer
+
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get  a PspPhysical object in the Piping domain</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      
+
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">        Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">        Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">        If </font>( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">          Set </font>objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+<font color="#0000FF">        End If</font>
+        
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get objPspCntbl</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+    
+<font color="#0000FF">      Set </font>objPspPhyID = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspID", _
+                                                    objPspPhysical )      
+<font color="#0000FF">      Set </font>objPspCntbl = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspConnectable", _
+                                                    objPspPhysical )
+
+<font color="#0000FF">      If </font>( Not (objPspPhyID Is Nothing) )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Physical object ID =" &  objPspPhyID.GetID & vbCr               
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get connected objects to this object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    
+    If( Not ( objPspCntbl Is Nothing ))<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>objLClassFilter       <font color="#0000FF"> As </font>CATIAPspListOfBSTRs
+<font color="#0000FF">      Dim </font>objLCntbles           <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">      Dim </font>objLCntrsOnThisObj    <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">      Dim </font>objLCntrsOnConnected  <font color="#0000FF"> As </font>PspListOfObjects     
+<font color="#0000FF">      Dim </font>objAIDCntbl           <font color="#0000FF"> As </font>PspID
+<font color="#0000FF">      Dim </font>objPspCntr       <font color="#0000FF"> As </font>PspConnector
+<font color="#0000FF">      Dim </font>objPspCntrFlow   <font color="#0000FF"> As </font>PspCntrFlow
+      
+      
+<font color="#0000FF">      Set </font>objLClassFilter = Nothing
+      objPspCntbl.ListConnectables objLClassFilter, objLCntbles, _
+                           objLCntrsOnThisObj,  objLCntrsOnConnected 
+        
+
+<font color="#0000FF">      If </font>( Not ( objLCntbles Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g & _
+          "Number of Connected objects= " &  objLCntbles.Count & vbCr          
+
+<font color="#0000FF">        For </font>intIdx = 1<font color="#0000FF"> To </font>objLCntbles.Count 
+<font color="#0000FF">          Set </font>objAIDCntbl = objLCntbles.Item (intIdx, "CATIAPspID")          
+<font color="#0000FF">          If </font>( Not (objAIDCntbl Is Nothing) )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g & "Connected object ID =" & objAIDCntbl.GetID & vbCr               
+<font color="#0000FF">          End If </font>
+          
+<font color="#0000FF">        Next      </font>
+<font color="#0000FF">      End If</font>
+
+      
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+      <font color="#008000">' Getting connector and flow information</font>
+      <font color="#008000">'-----------------------------------------------------------------------</font>
+    
+
+<font color="#0000FF">      If </font>( Not ( objLCntrsOnThisObj Is Nothing ) )<font color="#0000FF"> Then       </font>
+      
+        strMessage_g = strMessage_g & _
+          "Number of Connectors used to connect other objects= " &  objLCntrsOnThisObj.Count & vbCr          
+<font color="#0000FF">        For </font>intIdx = 1<font color="#0000FF"> To </font>objLCntrsOnThisObj.Count
+        
+<font color="#0000FF">          Set </font>objPspCntr = objLCntrsOnThisObj.Item (intIdx, "CATIAPspConnector")          
+<font color="#0000FF">          Set </font>objPspCntrFlow = objLCntrsOnThisObj.Item (intIdx, "CATIAPspCntrFlow")          
+        
+          <font color="#008000">'-----------------------------</font>
+          <font color="#008000">' Query connector information</font>
+
+<font color="#0000FF">          If </font>( Not (objPspCntr Is Nothing) )<font color="#0000FF"> Then</font>
+            QueryConnector objPspCntr            
+<font color="#0000FF">          End If           </font>
+        
+          <font color="#008000">'-----------------------------</font>
+          <font color="#008000">' Query Connector flow information</font>
+<font color="#0000FF">          If </font>( Not (objPspCntrFlow Is Nothing) )<font color="#0000FF"> Then</font>
+            QueryCntrFlow objPspCntrFlow            
+<font color="#0000FF">          End If           </font>
+<font color="#0000FF">        Next </font>
+<font color="#0000FF">      End If</font>
+        
+<font color="#0000FF">    End if</font>
+ 
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get List of connectors</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+    If( Not ( objPspCntbl Is Nothing ))<font color="#0000FF"> Then      </font>
+<font color="#0000FF">      Dim </font>objLCntrs           <font color="#0000FF"> As </font>PspListOfObjects            
+                     
+<font color="#0000FF">      Set </font>objLCntrs = objPspCntbl.Connectors 
+        
+
+<font color="#0000FF">      If </font>( Not ( objLCntrs Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g & _
+          "Number of Connectors= " &  objLCntrs.Count & vbCr          
+
+<font color="#0000FF">      End If</font>
+        
+<font color="#0000FF">    End if</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get List of Valid connector types</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+
+    If( Not ( objPspCntbl Is Nothing ))<font color="#0000FF"> Then      </font>
+<font color="#0000FF">      Dim </font>objLStrValidCntrTypes  <font color="#0000FF"> As </font>PspListOfBSTRs            
+                     
+<font color="#0000FF">      Set </font>objLStrValidCntrTypes = objPspCntbl.ValidConnectorTypes 
+        
+<font color="#0000FF">      If </font>( Not ( objLStrValidCntrTypes Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g & _
+          "Number of Valid Connector types= " &  objLStrValidCntrTypes.Count & vbCr          
+
+<font color="#0000FF">      End If        </font>
+<font color="#0000FF">    End if</font>
+
+  
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryConnector methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspCntrArg        : PspConnector object</font>
+<font color="#008000">' |        </font>
+<font color="#008000">' |        </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+
+Private Sub QueryConnector (objPspCntrArg<font color="#0000FF"> As </font>PspConnector)      
+
+<font color="#0000FF">    Dim </font>objPspAssocCntbl      <font color="#0000FF"> As </font>PspConnectable
+<font color="#0000FF">    Dim </font>strCntrName           <font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>objLStrAttrNames     <font color="#0000FF"> As </font>PspListOfBSTRs            
+
+<font color="#0000FF">    If </font>( Not ( objPspCntrArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Get Associated connectable</font>
+
+<font color="#0000FF">      Set </font>objPspAssocCntbl = objPspCntrArg.GetAssociatedConnectable
+      
+      strCntrName =objPspCntrArg.ConnectorName 
+      strMessage_g = strMessage_g & _
+          "Connector name = " &  strCntrName & vbCr   
+          
+<font color="#0000FF">      Set </font>objLStrAttrNames = objPspCntrArg.AttrNames       
+
+<font color="#0000FF">      If </font>( Not ( objLStrAttrNames Is Nothing ) )<font color="#0000FF"> Then         </font>
+        strMessage_g = strMessage_g & _
+          "Number of connector attributes = " &  objLStrAttrNames.Count & vbCr   
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryCntrFlow methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspCntrFlowArg        : PspCntrFlow object</font>
+<font color="#008000">' |        </font>
+<font color="#008000">' |        </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+
+Private Sub QueryCntrFlow (objPspCntrFlowArg<font color="#0000FF"> As </font>PspCntrFlow)      
+<font color="#0000FF">    Dim </font>eFlowCapability<font color="#0000FF"> As </font>CatPspIDLFlowCapability 
+<font color="#0000FF">    Dim </font>eFlowReality   <font color="#0000FF"> As </font>CatPspIDLFlowReality  
+          
+<font color="#0000FF">    If </font>( Not ( objPspCntrFlowArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Flow Capability information</font>
+    
+      eFlowCapability = objPspCntrFlowArg.FlowCapability
+      Select Case eFlowCapability 
+        Case catPspIDLFlowCapability_Undefined
+          strMessage_g = strMessage_g & "Flow Capability in undefined" & vbCr               
+        Case catPspIDLFlowCapability_InDirection
+          strMessage_g = strMessage_g & "Flow Capability is in inward direction" & vbCr               
+        Case catPspIDLFlowCapability_OutDirection
+          strMessage_g = strMessage_g & "Flow Capability is in outward direction" & vbCr               
+        Case catPspIDLFlowCapability_InOutDirection
+          strMessage_g = strMessage_g & "Flow Capability is in bi-directional" & vbCr               
+<font color="#0000FF">      End Select</font>
+
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Flow Reality information</font>
+
+      eFlowReality = objPspCntrFlowArg.FlowReality
+      Select Case eFlowReality
+        Case catPspIDLFlowReality_Undefined
+          strMessage_g = strMessage_g & "Flow in undefined" & vbCr               
+        Case catPspIDLFlowReality_InDirection
+          strMessage_g = strMessage_g & "Flow is in inward direction" & vbCr               
+        Case catPspIDLFlowReality_OutDirection
+          strMessage_g = strMessage_g & "Flow is in outward direction" & vbCr               
+        Case catPspIDLFlowReality_InOutDirection
+          strMessage_g = strMessage_g & "Flow is in bi-directional" & vbCr               
+<font color="#0000FF">      End Select</font>
+
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Set Flow Reality information</font>
+<font color="#0000FF">      If </font>( eFlowReality = catPspIDLFlowReality_Undefined )<font color="#0000FF"> Then</font>
+         eFlowReality = catPspIDLFlowReality_InDirection
+         objPspCntrFlowArg.FlowReality = eFlowReality
+<font color="#0000FF">      End If</font>
+                    
+<font color="#0000FF">    End If </font>
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

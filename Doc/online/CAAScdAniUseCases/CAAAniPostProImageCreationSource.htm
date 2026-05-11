@@ -1,0 +1,87 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAAniPostProImageCreation.catvbs</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre>
+<font color="#008000">&#39; COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">&#39; ***********************************************************************</font>
+<font color="#008000">&#39;   Purpose:      To create demonstrate how images are created</font>
+<font color="#008000">&#39;                 under analysis sets and restraints.</font>
+<font color="#008000">&#39;   Assumptions:   </font>
+<font color="#008000">&#39;   Author:       bmw</font>
+<font color="#008000">&#39;   Languages:    VBScript</font>
+<font color="#008000">&#39;   Locales:      English </font>
+<font color="#008000">&#39;   CATIA Level:  V5R16</font>
+<font color="#008000">&#39; ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+
+
+<font color="#008000">&#39; Open the CATAnalysis Document</font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<font color="#008000">&#39; Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set </font>oAnalysisManager = oAnalysisDocument.Analysis
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis sets and analysis set by its name</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisCase.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisSets.Item(&quot;Frequency Case Solution.1&quot;, catAnalysisSetSearchAll)
+
+<font color="#0000FF">Set </font>oAnalysisImages = oAnalysisSet.AnalysisImages
+
+<font color="#008000">&#39;Image creation  under Frequency Case Solution.1 imagename=Disp_Symbol,  hide existing image=no, showmesh = no, duplicate=yes </font>
+<font color="#008000">&#39;=================================================================================</font>
+
+<font color="#0000FF">Set </font>analysisImage1 = oAnalysisImages.Add(&quot;Disp_Symbol&quot;, False, False, True)
+
+<font color="#008000">&#39;Image creation  under Frequency Case Solution.1 imagename=Mesh_Deformed,  hide existing image=yes, showmesh = no, duplicate=yes </font>
+<font color="#008000">&#39;====================================================================================</font>
+
+<font color="#0000FF">Set </font>analysisImage2 = oAnalysisImages.Add(&quot;Mesh_Deformed&quot;, True, False, True)
+
+<font color="#0000FF">Set </font>analysisSet2 = oAnalysisSets.Item(&quot;Restraints.1&quot;, catAnalysisSetSearchAll)
+
+<font color="#008000">&#39; Retrieve list of Analysis Images from Restraint set</font>
+<font color="#0000FF">Set </font>analysisEntities1 = analysisSet2.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity1 = analysisEntities1.Item(1)
+<font color="#0000FF">Set </font>analysisImages2 = analysisEntity1.AnalysisImages
+
+<font color="#008000">&#39;Image creation  under Clamp imagename=Restraint,  hide existing image=yes, showmesh = yes, duplicate=no </font>
+<font color="#008000">&#39;=================================================================================</font>
+
+<font color="#0000FF">Set </font>analysisImage3 = analysisImages2.Add(&quot;Restraint&quot;, True, True, False)
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Share Data Catalog and Logica Line</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Share Data Catalog and Logical Line
+      From/To Objects</h3>
+      <em>How to access logical line catalog and from/to objects</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspLogicalLine use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPspLogicalLine Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPspLogicalLine Do</a></li>
+            <li><a href="#How">How to Launch </a><a href="#What">CAAPspLogicalLine</a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#What">CAAPspLogicalLine</a><a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to obtain a list of logical line
+ids from the catalog and the objects at the start and end of a logical line.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspLogicalLine Use Case</h3>
+<p>CAAPspLogicalLine is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspLogicalLine Do</h4>
+<p>The goal of&nbsp; CAAPspLogicalLine is to show you how to use the
+CATPlantShipInterfaces methods to get a list of logical lines from a catalog and
+to query the from/to objects of the logical line.&nbsp;</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspLogicalLine</h4>
+<p>To launch CAAPspLogicalLine, you will need to set up the build time
+environment, then compile CAAPspLogicalLine along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspLogicalLine Code</h4>
+<p>CAAPspLogicalLine code is located in the CAAPspLogicalLine.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspLogicalLine.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspLogicalLine.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspLogicalLineMain.cpp and CAAPspLogicalLine.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAAPspLogicalLine:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Retrieve LogicalLine">Retrieving a List of Logical Line IDs from
+    the Logical Line Share Data Catalog</a></li>
+  <li><a href="#Retrieve From/To">Retrieving Logical Line From/To Objects&nbsp;</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspLogicalLine code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.&nbsp;&nbsp;
+Initializing the environment involves the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv
+CAAPspBaseEnv::ApplicationInit</pre>
+    </td>
+  </tr>
+</table>
+<p>These methods perform the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+  <li>Initializing the application using the <i>CATIPspApplication</i>
+    interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve LogicalLine"></a>Retrieving a List of Logical Line IDs
+from the Logical Line Share Data Catalog</h4>
+<p>The <i>CATIPspShareData </i>interface is used to get a list of logical line
+IDs from the share data catalog.&nbsp; In this sample, the <i>CATIPspShareData </i>interface
+pointer is obtained from the root container of the document.&nbsp; The resource
+name for the Piping Line Catalog is obtained by calling <i>CATIPspResource</i>
+interface method GetLineCatalogPath (refer to use case CAAPspApplication).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    //  Find CATIPspShareData interface
+    rc = piRootCont-&gt;QueryInterface(IID_CATIPspShareData,(void **)&amp;piShareData);
+    
+    CATObject *piApplObj = new CATObject(&quot;CATPiping&quot;);
+    if ( NULL != piApplObj )
+    {
+       //  Find CATIPspResource interface from application object
+       rc = piApplObj-&gt;QueryInterface(IID_CATIPspResource,(void **)&amp;piResource);
+       piApplObj-&gt;Release();
+       piApplObj = NULL;
+    }
+
+    //-------------------------------------------------------------------------
+    //  CATIPspShareData methods
+    //-------------------------------------------------------------------------
+    if ( NULL != piShareData )
+    {
+       CATUnicodeString ResourceName;
+       CATUnicodeString ClassType = &quot;CATPspPipingLine&quot;;
+
+       if ( NULL != piResource )
+       {
+          CATUnicodeString Path;
+          rc = piResource-&gt;GetLineCatalogPath(ClassType,Path,ResourceName);
+          piResource-&gt;Release();
+          piResource = NULL;
+       }
+
+       //----------------------------------------------------------------------
+       //  Get a list of logical line IDs from the share data catalog.
+       //---------------------------------------------------------------------- 
+       if ( ResourceName.GetLengthInChar() &gt; 0 )
+       {
+          cout &lt;&lt; &quot;CAAPspLogicalLine: &quot;
+               &lt;&lt; &quot;Succeeded in getting resource name for the PipingLine catalog&quot; &lt;&lt; endl;
+          CATUnicodeString ShareDataType;
+          if ( SUCCEEDED(piShareData-&gt;List(ResourceName,ShareDataType,&amp;pShareDataList)) )
+             cout &lt;&lt; &quot;CAAPspLogicalLine: &quot;
+                  &lt;&lt; &quot;Succeeded in getting a list of Piping Line IDs from the PipingLine catalog&quot; &lt;&lt; endl;     
+       }
+       
+
+       if ( NULL != pShareDataList )
+       {
+          delete pShareDataList;  pShareDataList = NULL;
+       }
+
+       piShareData-&gt;Release();
+       piShareData = NULL;
+    }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve From/To"></a>Retrieving Logical Line From/To Objects</h4>
+<p>A logical line is a logical grouping of components (parts and strings) that
+share common attributes.&nbsp; The members of a logical line could be connected
+to equipment or nozzle objects.&nbsp; These equipments and nozzles are not
+included in the logical line membership.&nbsp; To retrieve these connected
+equipment and nozzles, the <i>CATIPspLogicalLine</i> interface method GetFromTo
+is used.&nbsp; In this sample, the <i>CATIPspLogicalLine</i> interface pointer
+is obtained from a Piping Line (logical line) in the input document.</p>
+<p>The GetFromTo method of the <i>CATIPspLogicalLine</i> interface returns six
+output lists.&nbsp; The first output argument is a list of 'From' equipments
+(Major objects) and the second output argument is a list of 'From' nozzles
+(Minor objects).&nbsp; The third and fourth output arguments are lists of 'To'
+equipments and 'To' nozzles respectively.&nbsp; The fifth and sixth output
+arguments are list of 'From' and 'To' connection pointers (connection between
+the equipment or nozzle and a member of the logical line).&nbsp; These 'From'
+and 'To' lists are based on the flow direction of the logical line members. If
+the logical line member is connected directly to an equipment object then the
+Major and Minor lists will contain the equipment object.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    //  Find a logical line in the document;
+    piLogLine = GetALogicalLine();
+    if ( NULL != piLogLine )
+    {
+       //----------------------------------------------------------------------
+       //  Get a logical line 'from-to' information.
+       //----------------------------------------------------------------------    
+       if ( SUCCEEDED(piLogLine-&gt;GetFromTo(&amp;piFromMajorsList,&amp;piFromMinorsList,
+                              &amp;piToMajorsList,&amp;piToMinorsList,
+                              &amp;piFromConnectionsList,&amp;piToConnectionsList)) )
+          cout &lt;&lt; &quot;CAAPspLogicalLine: &quot;
+               &lt;&lt; &quot;GetFromTo Succeeded&quot; &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p>For example, using this use case input document, the flow direction of the
+logical line goes from EQ-111_ to EQ-112_.&nbsp; The following will be the
+output of GetFromTo:</p>
+<ul>
+  <li>FromMajorList contains EQ-111_</li>
+  <li>FromMinorList contains Nozzle connected to EQ-111_</li>
+  <li>ToMajorList contains EQ-112_</li>
+  <li>ToMinorList contains EQ-112_</li>
+  <li>FromConnectionsList contains connection between nozzle and pipe</li>
+  <li>ToConnectionsList contains connection between EQ-112_ and pipe</li>
+</ul>
+<p><font SIZE="2"><img src="images/CAAPspEdu.gif" width="569" height="420"></font></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to obtain
+information related to logical lines.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Listing the logical line IDs from a catalog</li>
+  <li>Querying for logical line from/to objects</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [March 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

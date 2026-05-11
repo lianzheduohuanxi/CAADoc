@@ -1,0 +1,246 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperators Interface CATTopPattern</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperators.htm" href="../TopologicalOperators.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperators";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopPattern"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperators Interface CATTopPattern</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATTopPattern_32208','CATTopPattern','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATTopPattern</b>
+</p>
+<p>
+<b><i> Class dedicated to pattern operations.</i></b><br>
+ 
+ The pattern operation consists in creating multiple instances of an object
+ according to a transformation. 
+ A pattern can be a:
+ <ul>
+ <li>user pattern: the way the object is repeated is defined by a list of transformations
+ which is specified in the operator creation function.
+ <li>a rectangular pattern which is created by repeating an object along two directions. 
+ <li>a circular pattern is created by repeating an object around an axis at various distances.
+ </ul>
+ <p>
+ Whatever the pattern type, the list of tranformations is to be specified. 
+ For rectangular and circular patterns, it is recommended to use the <tt>SetRectPattern<\tt>
+ and <tt>SetCirPattern<\tt> settings in addition to the list of transformations passed to the creation function.
+ This prevents the operator algorithm to launch useless computations. The performances are then enhanced.
+ <p>
+ The <tt>CATTopPattern</tt> operator follows the global frame of topological operators and satisfies the smart mechanism: 
+ the input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input body.
+ <ul>
+ <li>A <tt>CATTopPattern</tt> operator is created with the <tt>CATCreateTopPattern</tt> global method:
+ It must be directly <tt>delete</tt>d after use. It is not streamable. 
+ <li>Options can be precised with the <tt>SetXxx</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method
+ <li>The result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory. 
+ </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetNumberOfInvalidTransformation(CATListOfInt&amp;)"><b>GetNumberOfInvalidTransformation</b></a>(CATListOfInt&amp;)
+<dd>  Get the number of invalid transformation in case when partial result mode is active for pattern faces
+
+ This service is useful after "Run" only in case of "SetPartialResultAllowed".
+ <dt> o 
+    <a href="#SetCirPattern(int,CATMathTransformation*,int,CATMathTransformation*)"><b>SetCirPattern</b></a>(int,CATMathTransformation*,int,CATMathTransformation*)
+<dd>  Defines a canonical circular pattern.
+ <dt> o 
+    <a href="#SetPartialResultAllowed()"><b>SetPartialResultAllowed</b></a>()
+<dd>  Allows partial result in case of pattern faces mode.
+ <dt> o 
+    <a href="#SetRectPattern(int,CATMathTransformation*,int,CATMathTransformation*)"><b>SetRectPattern</b></a>(int,CATMathTransformation*,int,CATMathTransformation*)
+<dd>  Defines a canonical rectangular pattern.
+ <dt> o 
+    <a href="#SimplifyTool()"><b>SimplifyTool</b></a>()
+<dd>  Removes the internal faces between the body to be patterned and the support body.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetNumberOfInvalidTransformation"></a><a name="GetNumberOfInvalidTransformation(CATListOfInt&amp;)"></a> <dt> o <b>GetNumberOfInvalidTransformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>GetNumberOfInvalidTransformation</b>(<td><script type="text/javascript"> activateLink('CATListOfInt','CATListOfInt&amp;')</script> <td><tt>oListTransfoStatus</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get the number of invalid transformation in case when partial result mode is active for pattern faces
+
+ This service is useful after "Run" only in case of "SetPartialResultAllowed".
+ If partial result situation detected , the service the numbers of invalid transformation.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oListTransfoStatus</tt>
+   <dd> The list will be filled for a value for each transformation :
+ <ul>
+ <li> CATPatternOKWithSewing      : if instance OK ( made by sewing , specific case ).
+ <li> CATPatternOKWithDuplication : if instance OK ( made by model duplication , standard case ).
+ <li> CATPatternKO                : if instance KO ( close to the body but in non isotopological / geometrical situation ).
+ <li> CATPatternKOAndFar          : if instance KO ( totally out of the body bounding box ).
+ <li> CATPatternOKWithBoolean     : if instance OK ( made by boolean , specific case for non isotopologicaul / geometrical situation in "FullResult" mode).
+ </ul></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCirPattern"></a><a name="SetCirPattern(int,CATMathTransformation*,int,CATMathTransformation*)"></a> <dt> o <b>SetCirPattern</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCirPattern</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>NumberOfRows</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation*')</script> <td><tt>RowTransfo</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>NumberOfColumns</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation*')</script> <td><tt>ColumnsTransfo</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a canonical circular pattern. This method is to be used
+ in addition to the list of transformations (better performances).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> NumberOfRows</tt>
+   <dd> The number of circular rows.
+ </dd>
+    <dt><tt> RowTransfo</tt>
+   <dd> The anguler transformation to be applied to the object to pattern in the circular rows. It must not be
+ set to <tt>NULL</tt> except if there is only one row.
+ </dd>
+    <dt><tt> NumberOfColumns</tt>
+   <dd> The number of columns. The columns are sets of instances located along the circle radii.
+ </dd>
+    <dt><tt> ColumnsTransfo</tt>
+   <dd> The radius transformation to be applied to the object to pattern. It must not be
+ set to <tt>NULL</tt> except if there is only one column.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPartialResultAllowed"></a><a name="SetPartialResultAllowed()"></a> <dt> o <b>SetPartialResultAllowed</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPartialResultAllowed</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allows partial result in case of pattern faces mode.
+ In this case the result body may contain only the result of some transformation because 
+ transformation works only when faces can be sew in invariant geometric / topological mode.
+ Note : however , even in this mode , if all transformation failed , the operator will return an error.
+</dl>
+<a name="SetRectPattern"></a><a name="SetRectPattern(int,CATMathTransformation*,int,CATMathTransformation*)"></a> <dt> o <b>SetRectPattern</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetRectPattern</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>NumberOfRows</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation*')</script> <td><tt>RowTransfo</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>NumberOfColumns</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation*')</script> <td><tt>ColumnsTransfo</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a canonical rectangular pattern. This method is to be used
+ in addition to the list of transformations (better performances).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> NumberOfRows</tt>
+   <dd> The number of rows.
+ </dd>
+    <dt><tt> RowTransfo</tt>
+   <dd> The transformation to be applied to the object to pattern in the rows. It must not be
+ set to <tt>NULL</tt> except if there is only one row.
+ </dd>
+    <dt><tt> NumberOfColumns</tt>
+   <dd> The number of columns.
+ </dd>
+    <dt><tt> ColumnsTransfo</tt>
+   <dd> The transformation to be applied to the object to pattern in the columns. It must not be
+ set to <tt>NULL</tt> except if there is only one column.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SimplifyTool"></a><a name="SimplifyTool()"></a> <dt> o <b>SimplifyTool</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SimplifyTool</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes the internal faces between the body to be patterned and the support body. This operation
+ is performed prior to creating new instances.
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopPattern.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalOperators</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

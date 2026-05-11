@@ -1,0 +1,477 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>XML Tag Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>mkodt</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>XML Tag Reference</h3>
+      <em>Test object XML tags and attributes</em></td>
+  </tr>
+  <tr>
+    <td class="quick">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p class="header">This article lists the XML tags and their attributes to 
+		create the test object XML file.</p>
+		<ul>
+			<li><a href="#Structure">XML File Structure</a></li>
+			<li><a href="#Definition">The Definition Section</a></li>
+			<li><a href="#Execution">The Execution Section</a></li>
+			<li><a href="#OS">The Operating Systems</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Structure"></a>XML File Structure</h2>
+<p>The test object XML file has the following structure:</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;	
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    ...
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    ...
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>The ODT is made up a definition section described using the <kbd>Definition</kbd> 
+tag, and an execution section described using the <kbd>Execution</kbd> tag.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Definition"></a>The Definition Section</h2>
+<p>This section sets data useful for the test object replay, such as the maximum 
+elapsed replay time, the required licenses, and the operating systems to use,
+</p>
+<table class="fill">
+	<tr>
+		<th>Tag</th>
+		<th>Usage</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>Definition</code></td>
+		<td>Required</td>
+		<td>Encloses the definition section. It has no attributes.</td>
+	</tr>
+	<tr>
+		<td><code>Target</code></td>
+		<td>Optional</td>
+		<td>Describes the test object target, that is, what you intend to test with 
+		this test object. This target is like a comment in your XML file and is 
+		not used by mkodt.
+		<p><strong>Attribute</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>desc</code></td>
+				<td>String</td>
+				<td>None</td>
+				<td>None</td>
+				<td>Required</td>
+				<td>A character string describing the test object intent. Write 
+				it concise and meaningful.</td>
+			</tr>
+		</table>
+		<p><strong>Example</strong>:</p>
+		<pre>&lt;Target desc=&quot;This test object validates the function xxxx&quot; /&gt;</pre>
+		</td>
+	</tr>
+	<tr>
+		<td><code>MaxTime</code></td>
+		<td>Optional</td>
+		<td>Sets the maximum elapsed time allowed to the test object to replay, 
+		expressed in minutes. If the test object replay is not completed during 
+		this time, its run is stopped.
+		<p><strong>Attribute</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>value</code></td>
+				<td>Integer</td>
+				<td>Max: 60</td>
+				<td>5</td>
+				<td>Required</td>
+				<td>An integer expressing the maximum elapsed time you allow the 
+				test object to run, expressed in minutes. </td>
+			</tr>
+		</table>
+		<p><strong>Default</strong>: If this tag is omitted, the maximum replay 
+		elapsed time is five minutes.</p>
+		<p><strong>Example</strong>: The test object replay elapsed time must not 
+		exceed 10 minutes.</p>
+		<pre>&lt;MaxTime value=&quot;10&quot; /&gt;</pre>
+		<p>Note that you can also set this maximum elapsed time using the <code>
+		ODT_MAX_TIME</code> environment variable [<a href="#References">1</a>].</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>RequestedProduct</code></td>
+		<td>Optional</td>
+		<td>Sets the configuration and/or product licenses required to run the test 
+		object, if any. mkodt uses these licenses to set the <code>ODT_REQUESTED_PRODUCT</code> 
+		environment variable during the test object replay [<a href="#References">1</a>].
+		<p><strong>Attribute</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>value</code></td>
+				<td>String</td>
+				<td>None</td>
+				<td>None</td>
+				<td>Required</td>
+				<td>An combination of configuration and/or product licenses, separated 
+				using a semicolon (;). </td>
+			</tr>
+		</table>
+		<p><strong>Example</strong>:</p>
+		<pre>&lt;RequestedProduct value=&quot;_MD2.slt+;GPS.prd&quot; /&gt;</pre>
+		</td>
+	</tr>
+	<tr>
+		<td><code>Replayed</code></td>
+		<td>Optional</td>
+		<td>Sets the operating system(s) with which the test object must or must 
+		not be replayed.
+		<p><strong>Attributes</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>value</code></td>
+				<td>Boolean</td>
+				<td>true or false&nbsp;</td>
+				<td>None</td>
+				<td>Required</td>
+				<td>A Boolean that indicates whether the test object must be run 
+				for the operating system(s) listed using the osConstraint attribute.
+				</td>
+			</tr>
+			<tr>
+				<td><code>osConstraint</code></td>
+				<td>String</td>
+				<td>None</td>
+				<td>None</td>
+				<td>Optional</td>
+				<td>An identifier describing the operating system(s). See&nbsp; [<a href="#References">2</a>]. 
+				The ! character can be used to exclude a given operating system.</td>
+			</tr>
+		</table>
+		<p><strong>Default</strong>: If this tag is not used, the test object is 
+		replayed with all the available operating systems.</p>
+		<p><strong>Examples</strong>:</p>
+		<ul>
+			<li>The test object must not be replayed using any Windows 32-bit operating 
+				systems:
+				<pre>&lt;Replayed value=&quot;false&quot; osConstraint=&quot;intel_a&quot; /&gt;</pre>
+			</li>
+			<li>The test object must not be replayed using any Windows and AIX 32-bit 
+				operating systems:
+				<pre>&lt;Replayed value=&quot;false&quot; osConstraint=&quot;intel_a&quot; /&gt;
+&lt;Replayed value=&quot;false&quot; osConstraint=&quot;aix_a&quot; /&gt;</pre>
+			</li>
+			<li>The test object must not be replayed using any Windows operating 
+				systems:
+				<pre>&lt;Replayed value=&quot;false&quot; osConstraint=&quot;Window_NT&quot; /&gt;</pre>
+			</li>
+			<li>The test object must be replayed using any Windows operating systems 
+				only:
+				<pre>&lt;Replayed value=&quot;false&quot; osConstraint=&quot;!Window_NT&quot; /&gt;</pre>
+			</li>
+			<li>The test object must not be replayed using any operating systems:
+				<pre>&lt;Replayed value=&quot;false&quot; /&gt;</pre>
+			</li>
+			<li>The test object must not be replayed using any operating systems, except Windows 64 bit:
+				<pre>&lt;Replayed value=&quot;false&quot; /&gt;
+&lt;Replayed value=&quot;true&quot; osConstraint=&quot;win_b64&quot; /&gt;</pre>
+				<p>First disable the replay using any operating systems, then 
+				set it for only Windows 64 bit.</p>
+			</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td><code>Environment</code></td>
+		<td>Optional</td>
+		<td>Encloses the definition section. It has no attributes and contains the
+		<code>Record</code> tag.</td>
+	</tr>
+	<tr>
+		<td><code>Record</code></td>
+		<td>Optional</td>
+		<td>Indicates that the test object is a record.
+		<p><strong>Attribute</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>enable</code></td>
+				<td>Boolean</td>
+				<td>true or false</td>
+				<td>false</td>
+				<td>Required</td>
+				<td>A Boolean that indicates whether the test object is a record.
+				</td>
+			</tr>
+		</table>
+		<p><strong>Default</strong>: If this tag is omitted, the test object is 
+		run as a standard test object.</p>
+		<p><strong>Example</strong>:</p>
+		<p>The test object is replayed as a record.</p>
+		<pre>&lt;Environment&gt;
+  &lt;Record enable=&quot;true&quot; /&gt;
+&lt;/Environment&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Execution"></a>The Execution Section</h2>
+<p>This section sets the actual scripts or executable to launch to replay the test 
+object.</p>
+<table class="fill">
+	<tr>
+		<th>Tag</th>
+		<th>Usage</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>Execution</code></td>
+		<td>Required</td>
+		<td>Encloses the execution section. It has no attributes.</td>
+	</tr>
+	<tr>
+		<td><code>Command</code></td>
+		<td>Required</td>
+		<td>Sets the script or executable to launch to replay the test object for 
+		one or several operating systems. Several tags can be used.
+		<p><strong>Attribute</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Legal<br />
+				Values</th>
+				<th>Default<br />
+				Value</th>
+				<th>Usage</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><code>value</code></td>
+				<td>String</td>
+				<td>None</td>
+				<td>None</td>
+				<td>Required</td>
+				<td>The script, executable, or command to launch, with its possible 
+				arguments.</td>
+			</tr>
+			<tr>
+				<td><code>osConstraint</code></td>
+				<td>String</td>
+				<td>None</td>
+				<td>None</td>
+				<td>Optional</td>
+				<td>A identifier describing the operating system(s) [<a href="#References">2</a>]. 
+				The ! character can be used to exclude a given operating system.</td>
+			</tr>
+		</table>
+		<p>Several <kbd>Command</kbd> tags can coexist in the XML file, providing 
+		they refer to different operating systems. Otherwise, an error is issued.</p>
+		<p><strong>Examples</strong>:</p>
+		<ul>
+			<li>The executable MyTestModule is launched on any available operating 
+				systems.
+				<pre>&lt;Command value=&quot;MyTestModule arg1 arg2&quot; /&gt;</pre>
+			</li>
+			<li>The script file MyODT.bat is launched for Windows and the file MyODT.sh 
+				for UNIX.
+				<pre>&lt;Command value=&quot;CMD /C MyODT.bat&quot; osConstraint=&quot;win_b64&quot;/&gt;
+&lt;Command value=&quot;/bin/ksh MyODT.sh&quot; osConstraint=&quot;aix_a64&quot;/&gt;</pre>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OS"></a>The Operating Systems</h2>
+<p>The operating systems with which your test objects can run are:</p>
+<table class="fill">
+<tr>
+<th>Operating System Group</th>
+<th>Identifier</th>
+<th>Family</th>
+<th>Type</th>
+</tr>
+<tr>
+<td>AIX 32-bit</td>
+<td>aix_a</td>
+<td rowspan="2">AIX</td>
+<td rowspan="6">Unix</td>
+</tr>
+<tr>
+<td>AIX 64-bit</td>
+<td>aix_a64</td>
+</tr>
+<tr>
+<td>Sun Solaris 32-bit</td>
+<td>solaris_a</td>
+<td rowspan="4">SunOS</td>
+</tr>
+<tr>
+<td>Sun Solaris 64-bit</td>
+<td>solaris_a64</td>
+</tr>
+<tr>
+<td>32-bit Solaris</td>
+<td>solaris_b</td>
+</tr>
+<tr>
+<td>64-bit Solaris</td>
+<td>solaris_b64</td>
+</tr>
+<!--
+<tr>
+<td>Red Hat Linux 32-bit</td>
+<td>linux_a</td>
+<td rowspan="4">Linux</td>
+</tr>
+<tr>
+<td>Red Hat Linux 64-bit</td>
+<td>linux_a64</td>
+</tr>
+<tr>
+<td>SuSE Linux 32-bit</td>
+<td>linux_b</td>
+</tr>
+<tr>
+<td>SuSE Linux 64-bit</td>
+<td>linux_b64</td>
+</tr>
+<tr>
+<td>MacOS 32-bit</td>
+<td>macos_a</td>
+<td rowspan="2">Darwin</td>
+</tr>
+<tr>
+<td>MacOS 64-bit</td>
+<td>macos_a64</td>
+</tr>
+-->
+<tr>
+<td>Windows 32-bit</td>
+<td>intel_a</td>
+<td rowspan="2">Windows_NT</td>
+<td rowspan="2">Windows_NT</td>
+</tr>
+<tr>
+<td>Windows 64-bit</td>
+<td>win_b64</td>
+</tr>
+</table>
+<p>A given operating system, such as Windows XP or Windows 7, is represented in 
+a group given their bit modes. Windows XP 32-bit and Windows 7 32-bit belong to 
+the same group named Windows 32-bit. Each group is assigned an identifier, such 
+as intel_a for Windows 32-bit, that you can use to designate this group in the 
+<code>osConstraint</code> attribute of the tags <code>Replayed</code>, and
+<code>Command</code>.</p>
+<p>You can designate all the operating systems belonging to the same family 
+using, for example SunOS for all the Sun operating systems. You can also 
+designate all the operating systems of a given type using either Unix or 
+WINDOWS_NT.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

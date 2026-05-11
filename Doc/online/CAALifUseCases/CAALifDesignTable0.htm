@@ -1,0 +1,454 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Programming with Design Tables</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Programming with Design Tables</h3>
+     <p><em>How to create and modify a design table</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAALifDesignTableCreate use case. This use 
+     case illustrates how to create a design table from an external text file, 
+     how to specify associations and select a current configuration. </p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><b><a href="#UseCase">The CAALifDesignTableCreate Use Case</a></b></li>
+       <ul>
+         <li><a href="#What">What Does CAALifDesignTableCreate Do</a></li>
+         <li><a href="#How">How to Launch CAALifDesignTableCreate</a></li>
+         <li><a href="#Where">Where to Find the CAALifDesignTableCreate Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to teach you how to create a design table from an 
+ external .txt file, do automatic associations as well as one-by-one 
+ associations and manage configurations.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifDesignTableCreate Use Case</h3>
+ <p>CAALifDesignTableCreate is a use case of the CAALiteralFeatures.edu 
+ framework that illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifDesignTableCreate Do</h4>
+ <p>This use case:</p>
+ <ul>
+   <li>Creates a design table from the CAALifDesignTable00.txt external file 
+   below:
+   <table width="90%">
+     <tr>
+       <th width="15%">Column1 </th>
+       <th width="15%">Column2 </th>
+       <th width="15%">Column3 </th>
+       <th width="15%">Column4 </th>
+       <th width="15%">Column5 </th>
+       <th width="15%">Column6(deg) </th>
+     </tr>
+     <tr>
+       <td align="center">7</td>
+       <td align="center">7.5</td>
+       <td align="center">Test design table</td>
+       <td align="center">False</td>
+       <td align="center">15mm</td>
+       <td align="center">10</td>
+     </tr>
+     <tr>
+       <td align="center">7.29</td>
+       <td align="center"></td>
+       <td align="center">I hope it works</td>
+       <td align="center">True</td>
+       <td align="center">15</td>
+       <td align="center">100</td>
+     </tr>
+   </table>
+   </li>
+   <li>Does automatic associations as well as one by one (also called manual) 
+   associations</li>
+   <li>Retrieves and displays the number of associations</li>
+   <li>Displays the current configuration</li>
+   <li>Modifies the current configuration</li>
+   <li>Checks the new parameter values after the configuration has been changed.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifDesignTableCreate</h4>
+ <p>To launch CAALifDesignTableCreate, you will need to set up the build time 
+ environment, then compile CALifDesignTableMain along with its prerequisites, 
+ set up the run time environment, and then execute the use case which main 
+ program is CALifDesignTableMain [<a href="#References">1</a>] with a string 
+ argument containing the path of the graphic directory in the runtimeview where 
+ the text file of the design table can be found (&quot; ...../intel_a(or solaris_a)/resources/graphic&quot;).</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifDesignTableCreate Code</h4>
+ <p>The CAALifDesignTableCreate use case is made of single source file named 
+ CAALifDesignTableCreate.cpp which is called by its CAALifDesignTableMain.cpp 
+ main program. Both files are located in the CAALifDesignTable.m module of the 
+ CAALiteralFeatures.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifDesignTable.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifDesignTable.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>Here is the step-by-step description of the program:</p>
+ <ol>
+   <li><a href="#Step1">Prolog</a><br>
+   This step which is performed in CAALifDesignTableMain creates a session, 
+   retrieves a pointer to be used to create parameters from the document root 
+   container .</li>
+   <li><a href="#Step2">Creating the Parameters</a><br>
+   Six parameters are created. These parameters are intended to be associated 
+   with the values of the design table to be created later on. </li>
+   <li><a href="#Step3">Creating the Design Table</a><br>
+   The DesignTable.1 design table is created from the CAALifDesignTable.txt 
+   file.</li>
+   <li><a href="#Step4">Doing Associations</a><br>
+   Only one parameter (&quot;Column1&quot;) is associated automatically. Other 
+   associations are done one-by-one.</li>
+   <li><a href="#Step5">Retrieving the Current Configuration</a><br>
+   The current configuration(0) is displayed by using the 
+   CATIDesignTable::ConfigurationRow method</li>
+   <li><a href="#Step6">Setting a New Configuration</a><br>
+   Configuration1 is declared as active by using the 
+   CATIDesignTable::SetCurrentConfiguration method. You can check that the first 
+   line of the CAALifDesignTable00.txt file is applied to DesignTable.1</li>
+   <li><a href="#Step7">Removing an Association</a><br>
+   The association created with Column4 is removed by using the 
+   CATIDesignTable::RemoveAssociation method. Configuration2 is now selected as 
+   active configuration. The parameter values are displayed again. They all 
+   match the second line of the CAALifDesignTable00.txt file except the first 
+   and the fourth parameter values.<br>
+   When a cell is empty in the input design table or when an association has 
+   been removed, the value assigned to the corresponding parameter is the last 
+   which has been assigned to it.</li>
+   <li><a href="#Step8">Epilog</a><br>
+   This step closes the document and the session.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Prolog</h4>
+ <p>Before going any further, you must initialize your environment.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main()
+{
+  CAALifServices services;
+  // Initialize the session
+  int rc = 0;
+  rc = services.<b>CAALifInitSession</b> ();
+  if( rc != CAALifOk )
+    return rc;
+
+  // Retrieve the parameter factory 
+  CATIContainer* container = NULL;		
+  rc = services.<b>CAALifCreateInstanceContainer</b>( &amp;container );
+  if( rc != CAALifOk )
+    return rc;
+
+  CATICkeParmFactory_var spFact = container;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This task consists in:</p>
+ <ol>
+   <li>Creating a session<br>
+   This is done by the <code>CAALifInitSession</code> method of the <i>
+   CAALifServices</i> class defined in the CAALifBasis.m module. </li>
+   <li>Creating a document and retrieving its root container through a literal 
+   factory interface.<br>
+   This is done by the <code>CAALifCreateInstanceContainer</code> method of the
+   <i>CAALifServices</i> class that is also defined in the CAALifBasis.m module 
+   and that returns a <i>CATIContainer</i> interface smart pointer, cast into a
+   <i>CATICkeParmFactory</i> smart pointer. There are two important points about 
+   this interface:
+   <ol type="a">
+     <li>It is implemented by any root container </li>
+     <li>It provides you with all the literal and relation creation methods.</li>
+   </ol>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating Parameters</h4>
+ <p>Six parameters are created using the <i>CATICkeParmFactory</i> smart pointer 
+ [<a href="#References">2</a>].</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATICkeParm_var spPp1 = spFact-&gt;CreateInteger (&quot;Column1&quot;,0);
+CATICkeParm_var spPp2 = spFact-&gt;CreateReal (&quot;r&quot;,0.0);
+CATICkeParm_var spPp3 = spFact-&gt;CreateString (&quot;s&quot;,&quot;&quot;);
+CATICkeParm_var spPp4 = spFact-&gt;CreateBoolean (&quot;b&quot;,CATCke::True);
+CATICkeParm_var spPp5 = spFact-&gt;CreateLength (&quot;l&quot;,0);
+CATICkeParm_var spPp6 = spFact-&gt;CreateAngle (&quot;a&quot;,0);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Note that in a usual application, these parameters are retrieved from a 
+ document by using the CATParmDictionary::VisibleParms method.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Creating the Design Table</h4>
+ <p>The DesignTable.1 design table is created using the <i>CATICkeParmFactory</i> 
+ smart pointer. The CreateDesignTable method of the <i>CATICkeParmFactory</i> 
+ interface is used. This method takes as its first argument the design table 
+ name, as its second argument a comment and as its third argument the path of 
+ the external file.</p>
+ <p>The CreateDesignTable method returns NULL_var when:</p>
+ <ul>
+   <li>the file format is neither a .txt nor an .xls file</li>
+   <li>the Excel® application cannot be accessed.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Doing Associations</h4>
+ <p>This task is done in three sub steps:</p>
+ <ol>
+   <li>Creating the list of parameters to be associated automatically with the 
+   design table values. Only the parameters with the same name in the document 
+   and in the design table can be associated. &quot;Column1&quot; is the only parameter 
+   which fulfills this condition.
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATLISTV(CATBaseUnknown_var) spList;
+spList.Append(spPp1);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>Creating the automatic associations themselves<br>
+   The AutomaticAssociations method of the <i>CATIDesignTable</i> interface is 
+   used. This method takes as its first argument the <i>CATIParmPublisher</i> 
+   root (the root container is a <i>CATIParmPublisher</i>), as its second 
+   argument the NULL_var smart pointer, and as its third argument the list of 
+   parameters to be associated with the design table values.
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+spDesign-&gt;AutomaticAssociations(iCont, NULL_var, &amp;spList);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The list passed as the third argument of the AutomaticAssociations method 
+   contains only a single item: &quot;Column1&quot;. The spP1 value is automatically added 
+   to the design table. If you make the input list longer by adding all the 
+   other parameters, the AutomaticAssociations method won't give you a different 
+   result as the names of the other parameters differs from the design table 
+   column names. If you want to associate a parameter with a column with a 
+   different name, you must use the AddAssociation method of the <i>
+   CATIDesignTable</i> interface and perform the associations one-by-one as in 
+   the step below.</li>
+   <li>Creating other Associations One-by-One The <code>AddAssociation</code> 
+   method of the <i>CATIDesignTable</i> interface is used. This method takes as 
+   its first argument the name of the design table column and as its second 
+   argument the document parameter to be associated with the design table 
+   column.
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+spDesign-&gt;AddAssociation(&quot;Column2&quot;, spPp2);
+spDesign-&gt;AddAssociation(&quot;Column3&quot;, spPp3);
+spDesign-&gt;AddAssociation(&quot;Column4&quot;, spPp4);
+spDesign-&gt;AddAssociation(&quot;Column5&quot;, spPp5); 
+// 11 is expected
+cout&lt;&lt; spDesign-&gt;AddAssociation(&quot;Column16&quot;, spPp6) &lt;&lt; endl;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Here is the list of errors that can be returned by the <code>
+   AddAssociation</code> method: </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>  NoError,
+  ColumnNamesNotUnique,
+  BadCellType,
+  BadColumnType,
+  NotAMagnitude,
+  ParameterNotAssociated,
+  AttributeProblem,
+  BadConfiguration,
+  ParseSheetError,
+  ParameterAlreadyAssociated,
+  ColumnAlreadyAssociated,
+  ColumnDoesntExist</pre>
+       </td>
+     </tr>
+   </table>
+   <p>This list is described by an enum. When there is no error, 0 is returned. 
+   When the column does not exist, 11 is returned.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Retrieving the Number of Associations</h4>
+ <p>The <code>Associations</code> method of the <i>CATIDesignTable</i> interface 
+ returns the list of associations that have been done for a document.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// 5 is expected
+cout &lt;&lt; &quot;The number of associations is: &quot;;     
+cout &lt;&lt; spDesign-&gt;Associations()-&gt;Size() &lt;&lt; endl;</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The number of associations is displayed. One associations has been done 
+ automatically, four others have been done one-by-one by using the <code>
+ AddAssociation</code> method of the <i>CATIDesignTable</i> interface.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Retrieving the Current Configuration</h4>
+ <p>After a design table has been created and associations done between the 
+ design table values and the document parameters, there is no current 
+ configuration. The design table configuration must be specified by using the 
+ SetCurrentConfiguration method of the <i>CATIDesignTable</i> interface. </p>
+ <p>The ConfigurationRow method of the <i>CATIDesignTable</i> interface returns 
+ the configuration number. 0 means that there is no active configuration.</p>
+ <table clas="code">
+   <tr>
+     <td>
+     <pre>...
+cout &lt;&lt; &quot;The current configuration is (0 expected): &quot; ;
+cout &lt;&lt; spDesign-&gt;ConfigurationRow() &lt;&lt; endl;
+
+spDesign-&gt;SetCurrentConfiguration(1); 
+
+cout &lt;&lt; &quot;The new current configuration is (1 expected): &quot; ;
+cout &lt;&lt; spDesign-&gt;ConfigurationRow() &lt;&lt; endl;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Redisplaying the parameter values allows to check that the first row of the 
+ CAALifDesignTable00.txt file is applied to DesignTable.1</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Removing an Association</h4>
+ <p>The association created with Column4 is removed by using the 
+ RemoveAssociation method of the <i>CATIDesignTable</i> interface. The new 
+ number of associations is now 4.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step8"></a>Epilog</h4>
+ <table clas="code">
+   <tr>
+     <td>
+     <pre>  ...
+  rc = services.<b>CAALifCloseSession</b>();
+  return rc;
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>CAALifCloseSession</code> method of the <i>CAALifServices</i> 
+ class defined in the CAALifBasis.m module removes the Part document and deletes 
+ the session.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>The following programming steps are typically required when creating a 
+ design table: </p>
+ <ul>
+   <li>Retrieve the <i>CATICkeParmFactory</i> interface.</li>
+   <li>Create the design table by using the CreateDesignTable method of <i>
+   CATICkeParmFactory</i> interface. .</li>
+   <li>Do the required associations by using either the AutomaticAssociations or 
+   the AddAssociation methods of <i>CATIDesignTable</i>.</li>
+   <li>Specify the configuration to be used as active configuration.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAALifParamPers.htm">Using Persistent Parameters</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,207 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Openings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Openings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to edit openings.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASfdEditOpening is launched in CATIA [<a href="#References">1</a>].
+		First open CAASfdEditOpening.CATPart in the samples directory.</p>
+		<p><a href="CAASfdEditOpeningSource.htm" target="Source">CAASfdEditOpening.CATScript</a>
+		 is located in the CAAScdSfdUseCases.
+		<a href="macros/CAASfdEditOpening.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASfdEditOpening includes three steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Opening Objects</a></li>
+			<li><a href="#Step3">Editing the Opening Objects</a></li>
+		</ol>
+		<p><img alt="" src="images/CAASfdEditOpening.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASfdEditOpening.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+Sub CATMain()
+  Dim part1 As Part
+  Set part1 = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Opening Objects</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Get the OpeningObject for Opening_038
+  Dim Opening1 As SfmOpening
+  Set Opening1 = part1.FindObjectByName("Opening_038")
+
+  Dim Sel1 As Selection
+  Set Sel1 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening1
+
+  Dim OpeningObject1 As SfmOpening
+  Set OpeningObject1= Sel1.FindObject("CATIASfmOpening")
+
+  'Get the OpeningObject for Opening_040
+  Dim Opening2 As SfmOpening
+  Set Opening2 = part1.FindObjectByName("Opening_040")
+
+  Dim Sel2 As Selection
+  Set Sel2 = CATIA.ActiveDocument.Selection
+  Sel2.Add Opening2
+
+  Dim OpeningObject2 As SfmOpening
+  Set OpeningObject2= Sel2.FindObject("CATIASfmOpening")
+
+  'Get the OpeningObject for Opening_043
+  Dim Opening3 As SfmOpening
+  Set Opening3 = part1.FindObjectByName("Opening_043")
+
+  Dim Sel3 As Selection
+  Set Sel3 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening3
+
+  Dim OpeningObject3 As SfmOpening
+  Set OpeningObject3= Sel3.FindObject("CATIASfmOpening")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Editing the Opening Objects</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  'Get the mode in which Opening_038 and Opening_040 is created
+  Dim CreationMode1 As Long
+  CreationMode1 = OpeningObject1.CreationMode
+  MsgBox CreationMode1
+
+  Dim CreationMode2 As Long
+  CreationMode2 = OpeningObject2.CreationMode
+  MsgBox CreationMode2
+
+  'Get the Intersecting Element for Opening_038
+  Dim IntersectingElem1 As Reference
+  Set IntersectingElem1 = OpeningObject1.IntersectingElement
+
+  'Modify the creation mode to Sketch Mode for Opening_040.
+  'Then assign a sketch as intersecting element to this opening
+  OpeningObject2.CreationMode = 1
+
+  Dim Sketch As Sketch
+  Set Sketch = part1.FindObjectByName("Sketch.11")
+  Dim sketchref As Reference
+  Set sketchref = part1.CreateReferenceFromObject(Sketch)
+  OpeningObject2.IntersectingElement = sketchref
+
+  'Get the current Direction of Opening_043 and then set a new direction
+  Dim GetDir As Reference
+  Set GetDir = OpeningObject3.Direction
+
+  Dim SketchAsDir As Sketch
+  Set SketchAsDir = part1.FindObjectByName("Sketch.14")
+  Dim PutDir As Reference
+  Set PutDir = part1.CreateReferenceFromObject(SketchAsDir)
+  OpeningObject3.Direction  = PutDir
+
+  'GetMathDirection for Opening_043. This will return the direction in Vector Form.
+
+  Dim GetMathDir(3)
+  GetMathDir(3) = OpeningObject3.GetDirection
+  Dim x1, y1, z1 As Double
+  x1 = GetMathDir(0)
+  y1 = GetMathDir(1)
+  z1 = GetMathDir(2)
+
+  part1.Update
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit openings.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

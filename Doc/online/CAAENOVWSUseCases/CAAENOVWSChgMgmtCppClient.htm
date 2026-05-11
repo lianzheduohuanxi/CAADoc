@@ -1,0 +1,1357 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Consuming the ENOVWSChgMgmtImpl CAA Web Service</title>
+</head>
+<body>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>CAA Web Services Home</h1>
+			</td>
+			<td valign="top">
+			<h2>&nbsp;</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Consuming the ENOVWSChgMgmtCpp CAA Web Service</h3>
+			<em>Using the ENOVWSChgMgmtCpp CAA Web service For Change Mangement</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article discusses <strong>CAAENOVWSChgMgmtAxis1_3CppClient</strong> use
+			case. It describes how to use the Java client binding that is generated using
+			the Axis WSDL2Java emitter in order to consume <strong> ENOVWSChgMgmtAxis1_3Cpp CAA
+			Web Service</strong>. It provides a sample usage scenario that demonstrates
+			how to retrieve Affected Objects from ENOVIA LCA V5.</p>
+			<ul>
+				<li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#2"><strong>The CAAENOVWSChgMgmtAxis1_3CppClient Use Case</strong></a>
+				<ul>
+					<li><a href="#2.1">What Does CAAENOVWSChgMgmtAxis1_3CppClient use case do</a></li>
+					<li><a href="#2.2">Where To Find the CAAENOVWSChgMgmtAxis1_3CppClient Code</a></li>
+					<li><a href="#2.3">How to Launch CAAENOVWSChgMgmtCAxis1_3ppClient</a></li>
+				</ul>
+				</li>
+				<li><a href="#3"><strong>Step-by-step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to demonstrate how to write a client application
+that consumes the ENOVWSChgMgmtCpp CAA Web service. It uses the createAction, 
+addAffectedObject, removeAffectedObject, getAffectedObjects, addAssociatedObject, 
+removeAssociatedObject and getAssociatedObjects
+methods within this service as an example. More specifically, you will learn how
+to:</p>
+<ul>
+	<li>Generate the Java client binding for the ENOVWSChgMgmtCpp CAA Web service,</li>
+	<li>Write a wrapper class that instantiates the generated proxy, configures it,
+	and uses it to remotely invoke methods on the CAA Web service,</li>
+	<li>Write a class that demonstrates a sample usage scenario for
+	ENOVWSChgMgmtCpp CAA Web service, using the wrapper class mentioned above.</li>
+</ul>
+<p>This article also provides guidance on how to build and run the sample client
+application using <strong>IRAD (IBM Rational Application Developer) 6.0</strong>,
+although any other Java IDE (Integrated Development Environment) or stand-alone
+JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that
+purpose.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="2"></a>The CAAENOVWSChgMgmtCppClient Use Case</h3>
+<p>CAAENOVWSChgMgmtAxis1_3CppClient is a use case in the CAAENOVWS.edu framework. It
+illustrates capabilities of the ENOVWSChgMgmtCpp CAA Web service.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.1"></a>What Does CAAENOVWSChgMgmtCppClient use case do</h4>
+<p>This use case calls following methods:</p>
+<ul>
+	<li><code>createAction method to create an action.</code></li>
+	<li><code>createDocument </code>method from
+	ENOVWSCntMgmtCpp CAA&nbsp;Web service to create a 
+	document.</li>
+	<li>createPartRef method from 
+	ENOVWSProdStructCpp web service to create 
+	a part version.</li>
+	<li>addAffectedObject method to add the document and part version to the 
+	action.</li>
+	<li>getAffectedObejects method to retrieve the affected objects for the 
+	given action.</li>
+	<li>removeAffectedObject method to remove the affected objects from the 
+	action. </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.2"></a>Where To Find the CAAENOVWSChgMgmtCppClient Code</h4>
+    <p>
+      The CAAENOVWSChgMgmtCppAxis1_3Client use case is made of several classes located in the
+      <strong>CAAENOVWSAxis1_3Client.mj</strong> module of the <strong>CAAENOVWS.edu</strong> framework:
+    </p>
+    <table class="code" id="table1">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Windows</strong>:
+            <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code><br>
+
+            <strong>Unix</strong>:
+            <code><em>&lt;Install&gt;</em>/CAAENOVWS.edu/CAAENOVWSAxis1_3Client.mj/src</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory
+      (<strong>Windows</strong>):
+    </p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code><i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\CATServiceExceptionType.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\ENOVWSChgMgmtCpp.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\ENOVWSChgMgmtCppLocator.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\IChgMgmtWS.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\IChgMgmtWSBindingStub.java<i><br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\Identifier.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\IdentifierArrayType.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\Status.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\ENOVIA.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\SelectExpression.java<br>
+			<i>&lt;&lt;Source&gt;\&lt;Output-package&gt;&gt;</i>\holders\ENOVIAHolder.java</i></code></td>
+		</tr>
+	</tbody>
+</table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>:
+        <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src</code>,
+      </li>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Output-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client\generated
+        (based on the output package value specified when using the WSDL2Java emitter).
+      </li>
+    </ul>
+    <p>The CAAENOVWSAxis1_3Client.mj module contains the other following resources:</p>
+    <table class="code" id="table2">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSClient.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSChgMgmtCppUseCase.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOVWSChgMgmtCppWrapper.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Root-package&gt;</em></code>: com\dassault_systemes\caaenovws\caaenovwsaxis1_3client.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOVWSChgMgmtCppWrapper</strong> class describes how to configure the generated 
+      proxy and how to invoke its methods. The <strong>CAAENOVWSChgMgmtCppUseCase</strong> class 
+      demonstrates a sample use case scenario of the ENOVWSChgMgmtCpp CAA Web service. 
+      The <strong>CAAENOVWSClient</strong> class contains the main program. It parses the 
+      command line inputs and starts up the use case.
+    </p>
+    <p>
+      This use case has a dependency on the <strong>CustomSessionHandler</strong> class which is available in the 
+      <strong>CAAJAXRPCHTTPSessionHandler.mj</strong> module of the <strong>CAAWebServices.edu</strong> 
+      framework. Please refer to [<a href="#References">1</a>] for details on HTTP session management and where
+      to find the related class.
+    </p>
+    <p>
+      This use case has also a dependency on the CAAENOPosAppBinderImplAxis1_3Client use case in order to manage
+      a session with ENOVIA LCA V5. Please refer to [<a href="#References">2</a>] for details on where to find
+      the related code.
+    </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="2.3"></a>How to Launch CAAENOVWSChgMgmtCppCommandLineClient</h4>
+    <p>
+      To launch the CAAENOVWSQueryCppAxis1_3Client use case, you will need to set up a buildtime environment,
+      build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You
+      can see [<a href="#References">3</a>] for details on how to perform these steps within the IRAD 6 environment.
+    </p>
+    <p>
+      There is no prerequisites to running this use case.
+    </p>
+    <p>
+      The sample usage scenario delivered within this use case is launched from the CAAENOVWSClient class. It defines
+      a main method that takes several options as parameters, as described below:
+    </p>   
+    <table class="code" id="table3">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em> -t ENOVWSChgMgmtCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the ENOPosApplicationBinderImpl
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code" id="table4">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t ENOVWSChgMgmtCpp</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h3><a name="3"></a>Step-by-step</h3>
+<p>The following section first explains how to generate the Java client binding
+for the ENOVWSChgMgmtCpp CAA Web service demonstrated. The remaining sections
+then describe the code that must be written in order to consume this Web
+service:</p>
+<ol>
+	<li><a href="#3.1">Creating the Java Client Binding</a></li>
+	<li><a href="#3.2">Instantiating the Generated Proxy</a></li>
+	<li><a href="#createAction">Creating Action</a></li>
+	<li><a href="#addAffectedObject">Adding Affected Objects</a></li>
+	<li><a href="#removeAffectedObject">Removing Affected Objects</a> </li>
+	<li><a href="#getAffectedObjects">Retrieving Affected Objects</a> </li>
+	<li><a href="#addAssociatedObject">Adding Associated Objects</a></li>
+	<li><a href="#removeAssociatedObject">Removing Associated Objects</a> </li>
+	<li><a href="#getAssociatedObjects">Retrieving AssociatedObjects</a> </li>
+	<li><a href="#3.5">Sample Usage Scenario</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.1"></a>Creating the Java Client Binding</h4>
+    <p>
+      Please refer to [<a href="#References">4</a>] for details on how to generate the Java client binding using the
+      Axis WSDL2Java emitter.
+    </p>
+    <p>
+      Here follows a sample command in order to generate the Java client binding for the ENOVWSQueryCpp CAA
+      Web service:
+    </p>
+    <table class="code" id="table5">
+      <tbody>
+        <tr>
+          <td>
+            <code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C:\CAAENOVWS\src -p
+            com.dassault_systemes.caaenovws/caaenovwsaxis1_3client.generated
+            http://karindsy.dsy.ds:9080/B17/wsdl?service=</code><code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">urn:com:dassault_systemes:ENOVWSChgMgmtImpl:ENOVWSChgMgmtImpl:ENOVWSChgMgmtCpp</code></td>
+        </tr>
+      </tbody>
+    </table>
+<p>The server name, port, and context root URI information must be updated to
+match the server where the CAA Web service has been deployed. The list of
+generated resources is available from the above section: "<a href="#2.2">Where
+To Find the CAAENOVWSChgMgmtCppClient Code</a>".</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="3.2"></a>Instantiating the Generated Proxy</h4>
+<p>In order to be able to consume the ENOVWSChgMgmtCpp CAA Web service
+implementation that has been deployed on a target server, you need to retrieve
+an instance of the <code>IChgMgmtWSBindingStub</code> generated class (also
+often referred to as the <b>proxy</b>). It's a common best practice to
+manipulate an instance through its dedicated interface whenever available. The
+WSDL2Java emitter produces an interface that is implemented by the <code>IChgMgmtWSBindingStub</code>
+class: <code>IChgMgmtWS</code>. It describes the methods available on the remote
+CAA Web service.</p>
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">&nbsp; Although the <code>IChgMgmtWSBindingStub</code>
+class can be directly instantiated using its own set of constructors, the Axis
+User's Guide recommends to discard this approach. Instead, the recommended
+approach is to use another generated class for that purpose: <code>
+ENOVWSChgMgmtImplLocator</code>. It implements the <code>ENOVWSChgMgmtCpp</code>
+interface.</p>
+<p>In order to be able to consume the ENOVWSChgMgmtCpp CAA Web service
+implementation that has been deployed on a target server, you need to retrieve
+an instance of the <code>IChgMgmtWSBindingStub</code> generated class (also
+often referred to as the <b>proxy</b>). It's a common best practice to
+manipulate an instance through its dedicated interface whenever available. The
+WSDL2Java emitter produces an interface that is implemented by the <code>IChgMgmtWSBindingStub</code>
+class: <code>IChgMgmtWS</code>. It describes the methods available on the remote
+CAA Web service.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because otherwise it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {
+    private String SERVICE_ID = &quot;urn:com:dassault_systemes:ENOVWSChgMgmtImpl:ENOVWSChgMgmtImpl:ENOVWSChgMgmtCpp&quot;;
+    private IChgMgmtWS proxy = null;</pre>
+			<pre>    /**
+     * Creates a new proxy for the ENOVWSChgMgmtCpp CAA Web service
+     * implementation and configures it.
+     * 
+     * @param clientId the client identifier used to maintain the session state
+     * accross distinct proxies
+     * @param uri the root URI of the Web application hosting the implementation
+     * of the ENOVWSChgMgmtCpp CAA Web service
+     * @param timeOut the proxy timeout
+     */ 
+    public CAAENOVWSChgMgmtCppWrapper(String clientId, String uri, int timeOut) {
+        // Compute the SOAP endpoint URI value that bounds to the deployed
+        // implementation of the ENOVWSChgMgmtCpp CAA Web service
+        String endpoint = uri + &quot;servicerouter?service=&quot; + SERVICE_ID;</pre>
+			<pre>        // Retrieve proxy instance
+        ENOVWSChgMgmtCppLocator locator = new ENOVWSChgMgmtCppLocator();
+        try {
+            proxy = locator.getENOVWSChgMgmtCppPort(new URL(endpoint));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(
+                    &quot;Invalid SOAP endpoint URI specified for the ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            throw new RuntimeException(
+                    &quot;Unable to instantiate the ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+        }</pre>
+			<pre>        // Required for HTTP session state management on the current proxy
+        ((IChgMgmtWSBindingStub) proxy).setMaintainSession(true);</pre>
+			<pre>        if (clientId != null) {
+            // Used to maintain the HTTP session state accross distinct proxies
+            HandlerInfo info = new HandlerInfo();
+            info.setHandlerClass(CustomSessionHandler.class);
+            Map handlerConfig = new HashMap();
+            handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);
+            info.setHandlerConfig(handlerConfig);</pre>
+			<pre>            HandlerRegistry registry = locator.getHandlerRegistry();
+            String portName = locator.getENOVWSChgMgmtCppPortWSDDServiceName();
+            QName name = new QName(portName);
+            List chain = registry.getHandlerChain(name);
+            chain.add(info);
+        }</pre>
+			<pre>        // Increase the default client time-out
+        ((IChgMgmtWSBindingStub) proxy).setTimeout(timeOut);
+    }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p><strong>(1)</strong>: in order to maintain the HTTP session state between
+successive calls performed using the same proxy instance, the <code>setMaintainSession</code>
+method must be used. This is mandatory in the context of ENOVIA LCA V5 CAA Web
+services,<br>
+<strong>(2)</strong>: the default timeout is set to 60 seconds. This value can
+be increased in order to avoid potential issues at runtime, such as losing the
+HTTP connection before receiving the SOAP response. For security, the timeout is
+set to 360 seconds (the value specified in the code is in milliseconds),<br>
+<strong>(3)</strong>: when security is enabled, it is mandatory to set the <code>username</code>
+and <code>password</code> attributes on the generated proxy. The values
+specified must match a valid set of credentials for the Basic Authentication
+mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="createAction"></a>Creating Action</h4>
+<p>To create action in ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><code>Status createAction(ENOVIA iobjects,<br>
+			&nbsp;ENOVIAHolder oObjects) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<p>This method accepts the following parameters:</p>
+<table id="table25">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjects</code></td>
+			<td>&nbsp;List of actions to be created</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oObjects</code></td>
+			<td>&nbsp;The successfully created objects are returned</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>createAction</code>
+method:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public ENOVIA createAction(String[] actionNumbers,
+				String domain,
+				String priority) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'createAction' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (actionNumbers == null) {
+			throw new IllegalArgumentException(&quot;Action number array is null&quot;);
+		} else if (domain == null) {
+			throw new IllegalArgumentException(&quot;Environment domain is null&quot;);
+		} 
+		System.out.println(&quot;Environment domain: &quot; + domain);</pre>
+			<pre>		for (int i = 0; i &lt; actionNumbers.length; i++) {
+			System.out.println(&quot;Action number[&quot; + i + &quot;]: &quot; + actionNumbers[i]);
+		}
+		</pre>
+			<pre>		// Create input data
+		ENOVIA_Action_Design[] actionDesign = new ENOVIA_Action_Design[actionNumbers.length];
+		for (int i = 0; i &lt; actionNumbers.length; i++) {
+			actionDesign[i] = new ENOVIA_Action_Design();
+			actionDesign[i].setDomain(domain);
+			actionDesign[i].setENOVIA_AFLActionV_name(actionNumbers[i]);
+			actionDesign[i].setENOVIA_AFLActionV_priority(priority);
+		}</pre>
+			<pre>		ENOVIA input = new ENOVIA();
+		input.setENOVIA_Action_Design(actionDesign);
+		ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.createAction(input,resultSet);
+			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to create action(s)&quot;, t);
+		}</pre>
+			<pre>		// Process output data
+		if (resultSet == null || resultSet.value == null) {
+			throw new Exception(&quot;Failed to create action(s)&quot;);
+		}
+		return resultSet.value;
+	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="addAffectedObject"></a>Adding Affected Objects</h4>
+<p>To add 'affected objects' in ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<font SIZE="2"></font>
+<table class="code" id="table7">
+	<tbody>
+		<tr>
+			<td><code>Status addAffectedObjects(</code><font SIZE="2">dIentifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iInputObjectIds</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iOutputObjectIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table8">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="710">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iInputObjectIds</code></td>
+			<td width="710">&nbsp;List of Input affected objects identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iOutputObjectIds</code></td>
+			<td width="710">&nbsp;List of output affected Object identifier</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>addAffectedObjects</code>
+method:</p>
+<table class="code" id="table9">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public ENOVIA getAffectedObjects(String ecoUUID,
+					String[] objTypes,
+					String selectExpression) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'getAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (ecoUUID == null) {
+			throw new IllegalArgumentException(&quot;ECO UUID is null&quot;);
+		}
+		System.out.println(&quot;ECO UUID: &quot; + ecoUUID);</pre>
+			<pre>		// Create input data
+		Identifier ecoId = CAAENOVWSUtils.toIdentifier(ecoUUID);
+		SelectExpression selectExp = new SelectExpression();
+		selectExp.setValue(selectExpression);
+		ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.getAffectedObjects(ecoId,
+								 selectExp,
+								 objTypes,
+								 resultSet);
+			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to get affected object(s)&quot;, t);
+		}</pre>
+			<pre>		// Process output data
+		if (resultSet == null || resultSet.value == null) {
+			throw new Exception(&quot;Failed to get affected object(s)&quot;);
+		}
+		return resultSet.value;
+	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="removeAffectedObject"></a>Removing Affected Objects</h4>
+<p>To remove 'affected objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table10">
+	<tbody>
+		<tr>
+			<td><code>Status removeAffectedObjects(Identifier iActionId,<br>
+			&nbsp;&nbsp;Identifier[] iObjIds) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table11">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="730">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjfIds</code></td>
+			<td width="730">The list of to be removed affected object 
+			identifiers</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>removeAffectedObjects</code>
+method:</p>
+<table class="code" id="table12">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public void removeAffectedObject(	String actionUUID,
+						String[] affectedObjUUIDs) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'removeAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (actionUUID == null) {
+			throw new IllegalArgumentException(&quot;Action UUID is null&quot;);
+		}
+		System.out.println(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>		// Create input data
+		Identifier actionID = CAAENOVWSUtils.toIdentifier(actionUUID);
+		Identifier[] affectedObjIDs = CAAENOVWSUtils.toIdentifierArray(affectedObjUUIDs);
+		</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.removeAffectedObject(actionID,
+								affectedObjIDs);</pre>
+			<pre>			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to remove affected object(s)&quot;, t);
+		}
+		</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="getAffectedObjects"></a>Retrieving Affected Objects</h4>
+<p>To get 'affected objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table16">
+	<tbody>
+		<tr>
+			<td><code>Status getAffectedObjects(Identifier iObjectId,<br>
+			&nbsp;&nbsp;SelectExpression iSelect,<br>
+			&nbsp;&nbsp;StringArrayType iObjTypes,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table17">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="716">&nbsp;The identifier of the target EC object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iSelect</code></td>
+			<td width="716">&nbsp;Select Expression subscribing to the attributes to be&nbsp;
+			returned on the result set 'affected objects'. See [<a href="#References">5</a>]
+			for details on SelectExpression</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjTypes</code></td>
+			<td width="716">&nbsp;List of affected object types (eg., Documents, Part Instance, Part
+			Version, Product) to be returned. If this list is empty all affected objects
+			will be returned</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td width="716">&nbsp;Return affected object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>getAffectedObjects</code>
+method:</p>
+<table class="code" id="table18">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public ENOVIA getAffectedObjects(String ecoUUID,
+					String[] objTypes,
+					String selectExpression) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'getAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (ecoUUID == null) {
+			throw new IllegalArgumentException(&quot;ECO UUID is null&quot;);
+		}
+		System.out.println(&quot;ECO UUID: &quot; + ecoUUID);</pre>
+			<pre>		// Create input data
+		Identifier ecoId = CAAENOVWSUtils.toIdentifier(ecoUUID);
+		SelectExpression selectExp = new SelectExpression();
+		selectExp.setValue(selectExpression);
+		ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.getAffectedObjects(ecoId,
+								 selectExp,
+								 objTypes,
+								 resultSet);
+			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to get affected object(s)&quot;, t);
+		}</pre>
+			<pre>		// Process output data
+		if (resultSet == null || resultSet.value == null) {
+			throw new Exception(&quot;Failed to get affected object(s)&quot;);
+		}
+		return resultSet.value;
+	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="addAssociatedObject"></a>Adding Associated Objects</h4>
+<p>To add associated objectsin ENOVIA LCA V5 use the following method, which is 
+available through the generated <code> IChgMgmtWS</code> proxy interface:&nbsp;</p>
+<table class="code" id="table28">
+	<tbody>
+		<tr>
+			<td><code>Status addAssocitedObjects(I</code><font SIZE="2">dentifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">dentifier iObjectId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">IIdentifier[] iModIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table29">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="710">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iInputObjectIds</code></td>
+			<td width="710">&nbsp;List of Input associated objects identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iModIds</code></td>
+			<td width="710">&nbsp;List of mods</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>addAssociatedObjects</code>
+method:</p>
+<table class="code" id="table21">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public void addAssociatedObject(String actionUUID,
+					String toAssociateObjUUID,
+					String[] modUUIDs) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'addAssociatedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (actionUUID == null) {
+			throw new IllegalArgumentException(&quot;Action UUID is null&quot;);
+		}
+		System.out.println(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>		// Create input data
+		Identifier actionID = CAAENOVWSUtils.toIdentifier(actionUUID);
+		Identifier toAssociateObjIDs = CAAENOVWSUtils.toIdentifier(toAssociateObjUUID);
+		Identifier[] modIDs = CAAENOVWSUtils.toIdentifierArray(modUUIDs);
+		</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.addAssociatedObject(actionID,
+								toAssociateObjIDs,
+								modIDs);</pre>
+			<pre>			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to add associated object(s)&quot;, t);
+		}
+		</pre>
+			<pre>	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="removeAssociatedObject"></a>Removing Associated Objects</h4>
+<p>To remove associated objects from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<font SIZE="2"></font>
+<table class="code" id="table22">
+	<tbody>
+		<tr>
+			<td><code>Status removeAssociatedObjects(</code><font SIZE="2">Identifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iObjectIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table23">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="720">&nbsp;The identifier of the action object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjectIds</code></td>
+			<td width="720">&nbsp;Return associated object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>removeAssociatedObject</code>
+method:</p>
+<table class="code" id="table24">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public void removeAssociatedObject(	String actionUUID,
+						String[] objsToRemove) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'addAssociatedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (actionUUID == null) {
+			throw new IllegalArgumentException(&quot;Action UUID is null&quot;);
+		}
+		System.out.println(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>		// Create input data
+		Identifier actionID = CAAENOVWSUtils.toIdentifier(actionUUID);</pre>
+			<pre>		Identifier[] objsToRemoveIDs = CAAENOVWSUtils.toIdentifierArray(objsToRemove);
+		</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.removeAssociatedObject(actionID,
+								objsToRemoveIDs);</pre>
+			<pre>			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to remove associated object(s)&quot;, t);
+		}
+		</pre>
+			<pre>	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="getAssociatedObjects"></a>Retrieving Associated Objects</h4>
+<p>To get 'associated objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table13">
+	<tbody>
+		<tr>
+			<td><code>Status getAssociatedObjects(Identifier iObjectId,<br>
+			&nbsp;&nbsp;SelectExpression iSelect,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table14">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="712">&nbsp;The identifier of the target EC object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iSelect</code></td>
+			<td width="712">&nbsp;Select Expression subscribing to the attributes to be&nbsp;
+			returned on the result set 'affected objects'. See [<a href="#References">5</a>]
+			for details on SelectExpression</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td width="712">&nbsp;Return associated object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>getAssociatedObjects</code>
+method:</p>
+<table class="code" id="table15">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>	public ENOVIA getAssociatededObjects(String actionUUID,
+					tring selectExpression) throws Exception {
+		System.out.println(&quot;&gt;&gt;&gt; Invoking 'getAssociatededObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+		if (actionUUID == null) {
+			throw new IllegalArgumentException(&quot;ECO UUID is null&quot;);
+		}
+		System.out.println(&quot;ACTION UUID: &quot; + actionUUID);</pre>
+			<pre>		// Create input data
+		Identifier actionId = CAAENOVWSUtils.toIdentifier(actionUUID);
+		SelectExpression selectExp = new SelectExpression();
+		selectExp.setValue(selectExpression);
+		ENOVIAHolder resultSet = new ENOVIAHolder();</pre>
+			<pre>		// Invoke method on remote CAA Web service
+		try {
+			Status status = proxy.getAssociatedObjects(actionId,
+								selectExp,
+								 resultSet);
+			System.out.println(&quot;Status: &quot; + status.getStatus());
+		} catch (CATServiceExceptionType e) {
+			throw e;
+		} catch (Throwable t) {
+			throw new Exception(&quot;Failed to get associated object(s)&quot;, t);
+		}</pre>
+			<pre>		// Process output data
+		if (resultSet == null || resultSet.value == null) {
+			throw new Exception(&quot;Failed to get associated object(s)&quot;);
+		}
+		return resultSet.value;
+	}</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="3.5"></a>Sample Usage Scenario</h4>
+    <p>
+      The following code depends on:
+    </p>
+    <ul>
+      <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">2</a>] 
+		for details 
+      </li>
+      <li>the CAAENOVWSChgMgmtCppWrapper class to manage change management</li>
+		<li>the CAAENOVWSProdStructCppWrapper[<a href="#References">6</a>]
+		class to create part reference</li>
+		<li>the CAAENOVWSCntMgmtCppWrapper [<a href="#References">7</a>]class to create document</li>
+    </ul>
+    <p>
+      It demonstrates a sample usage scenario for the ENOVWSChgMgmtCpp CAA Web service:
+    </p>
+<table class="code">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppUseCase {
+    private String uri = null;
+    private String credUser = null;
+    private String credPwd = null;</pre>
+			<pre>    public CAAENOVWSChgMgmtCppUseCase(String uri,
+                                      String credUser,
+                                      String credPwd) {
+        this.uri = uri;
+        this.credUser = credUser;
+        this.credPwd = credPwd;
+    }</pre>
+			<pre>    public void runSampleUsageScenario(String enoviaUser) {
+        // Prerequisites:
+        // From an LCA Client:
+        // - create a configured Product,
+        // - create an Engineering Change Order (ECO) named
+        // &quot;GetAffectedObjectsUseCase_ECO&quot;,
+        // - add an Action Item to the ECO,
+        // - associate the configured Product to the Action, assign Effectivity
+        // (say '1 - infinity')
+        // - associate the Action to the configured Product,
+        // - insert two Instances (of Items) under the Product,
+        // The two Item Instances are automatically included as Associated
+        // Objects on the ECO</pre>
+			<pre>        boolean success = false;
+        Exception exception = null;
+        CAAENOPosApplicationBinderImplWrapper binderWrapper = null;
+        SessionToken sessionToken = null;</pre>
+			<pre>        try {
+</pre>
+			<blockquote>
+				<pre>	// ------------------------------------------------------------
+	// Step 1 - Instantiate and configure the proxy
+	// ------------------------------------------------------------
+	</pre>
+				<pre>	System.out.println(&quot;STEP 1: Instantiating and configuring CAA Web service proxy&quot;);
+	</pre>
+				<pre>	String clientId = new Long(System.currentTimeMillis()).toString();
+	int timeOut = 360000;
+	</pre>
+				<pre>	// Instantiate the wrapper client classes
+	binderWrapper = new CAAENOPosApplicationBinderImplWrapper(clientId,
+	        uri, credUser, credPwd, timeOut);
+	CAAENOVWSQueryCppWrapper queryWrapper = new CAAENOVWSQueryCppWrapper(
+	        clientId, uri, timeOut);
+	CAAENOVWSChgMgmtCppWrapper chgMgmtWrapper = new CAAENOVWSChgMgmtCppWrapper(
+	        clientId, uri, timeOut);
+	CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper = new CAAENOVWSCntMgmtCppWrapper(
+			clientId, uri, timeOut);
+	CAAENOVWSProdStructCppWrapper prodStructWrapper = new CAAENOVWSProdStructCppWrapper(
+			clientId, uri, timeOut);
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 2 - Open session with ENOVIA LCA V5
+	// ------------------------------------------------------------
+	</pre>
+				<pre>	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 2: Opening session with ENOVIA LCA V5&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	String[] userContexts = binderWrapper.getUserContexts(enoviaUser);
+	</pre>
+				<pre>	System.out.println(&quot;Found &quot; + userContexts.length + &quot; context(s) in database&quot;);
+	System.out.println(&quot;Displaying list of available contexts:&quot;);
+	for (int i = 0; i &lt; userContexts.length; i++) {
+	    System.out.println(&quot;Context[&quot; + i + &quot;]: &quot; + userContexts[i]);
+	}
+	if (userContexts.length == 0) {
+		throw new Exception(&quot;No context found for the user specified&quot;);
+	}
+	sessionToken = binderWrapper.login(userContexts[0]);
+	// ------------------------------------------------------------
+	// Step 3 - Change management use case : Create Action
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 3: Creating Action&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	String carAction = &quot;Action design CAR&quot; + clientId;
+	String[] actionID = {carAction};
+	actionID[0] = carAction;
+	String actionDomain = &quot;APLAFL&quot;;
+	String actionPriority = &quot;Routine&quot;;
+	</pre>
+				<pre>	ENOVIA newAction = chgMgmtWrapper.createAction(	actionID,
+													actionDomain,
+													actionPriority);
+													</pre>
+				<pre>	String[] newActionUUIDs = chgMgmtWrapper.getENOVIA_Action_DesignUUIDs(newAction);
+	if (newActionUUIDs.length != 1) {
+		throw new Exception(&quot;Failed to create action&quot; + newActionUUIDs);
+	}
+	</pre>
+				<pre>	// keep this for now ///
+	String newActionUUID = newActionUUIDs[0];
+	// keep this for now ///
+	</pre>
+				<pre>	CAAENOVWSUtils.displayResults(newAction, 1);
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 4 - Change management use case : Create Document
+	// ------------------------------------------------------------
+	</pre>
+				<pre>	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 4: Creating  document&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	
+	String docId1 = &quot;CAR Owners manual&quot; + clientId;
+	String docName1 = &quot;CAA Client&quot; + docId1;
+	String docDomain = &quot;DOCDIR&quot;;
+	</pre>
+				<pre>	ENOVIA createDocResultSet1 = cntMgmtWrapper.createDocument(	docId1,
+															   	docName1,
+																docDomain);
+	</pre>
+				<pre>	String[] docUUIDs1 = cntMgmtWrapper.getENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+	if (docUUIDs1.length &gt; 1) {
+		throw new Exception(
+				&quot;Invalid state: more than 1 document was returned&quot;);
+	} else if (docUUIDs1.length != 1) {
+		throw new Exception(&quot;Failed to create the document&quot;);
+	}
+	String docUUID1 = docUUIDs1[0];
+	</pre>
+				<pre>	CAAENOVWSUtils.displayResults(createDocResultSet1, 1);
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 5 - Change management use case : Create PV
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 5: Creating  PV&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	String envDomain = &quot;PRODUCT&quot;;
+	</pre>
+				<pre>	String configurable = &quot;FALSE&quot;;
+	String partNumber1 = &quot;CAR Axle&quot; + clientId;
+	</pre>
+				<pre>	String[] partNumbers = { partNumber1 };
+	</pre>
+				<pre>	// Create the one part references
+	ENOVIA createPartRefResultSet = prodStructWrapper.createPartRef(partNumbers,
+																	envDomain,
+																	configurable);
+	</pre>
+				<pre>	String[] partRefUUIDs = prodStructWrapper.getENOVIA_VPMPartVersionUUIDs(createPartRefResultSet);
+	if (partRefUUIDs.length &gt; 1) {
+		throw new Exception(
+				&quot;Invalid state: more than 1 part references were returned&quot;);
+	} else if (partRefUUIDs.length != 1) {
+		throw new Exception(&quot;Failed to create the 1 part references&quot;);
+	}
+	String partRefUUID1 = partRefUUIDs[0];
+	</pre>
+				<pre>	CAAENOVWSUtils.displayResults(createPartRefResultSet, 1);			
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 6 - Change management use case : Add Affected Object
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 6: Add Affected Object&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	String[] inputAO = {partRefUUID1};
+	String[] outputAO = {docUUID1};
+	</pre>
+				<pre>	chgMgmtWrapper.addAffectedObject(newActionUUID,inputAO,outputAO);	
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 7 - Get affected objects
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 7: Getting affected objects&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	String[] objTypes = null;
+	</pre>
+				<pre>	ENOVIA affectedObjectsResultSet = chgMgmtWrapper.getAffectedObjects(newActionUUID,
+	                                                                    objTypes,
+	                                                                    null);
+	</pre>
+				<pre>	CAAENOVWSUtils.displayResults(affectedObjectsResultSet, 2);
+	</pre>
+				<pre>	String[] affectedObjectUUID = chgMgmtWrapper.getENOVIA_Input_Associated_ObjectUUIDs(affectedObjectsResultSet);
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 8 - Change management use case : Remove  Affected Object
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 8: Remove Affected Object&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	chgMgmtWrapper.removeAffectedObject(newActionUUID,affectedObjectUUID);	       
+	</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 9 - Get affected objects
+	// ------------------------------------------------------------
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	System.out.println(&quot;STEP 9: Getting affected objects&quot;);
+	System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+	</pre>
+				<pre>	//String[] objTypes = null;
+	</pre>
+				<pre>	ENOVIA affectedObjectsResultSet1 = chgMgmtWrapper.getAffectedObjects(newActionUUID,
+																		objTypes,
+																		null);
+	CAAENOVWSUtils.displayResults(affectedObjectsResultSet1, 1);
+	success = true;</pre>
+			</blockquote>
+			<pre>        } catch (CATServiceExceptionType e) {
+            exception = e;
+        } catch (Exception e) {
+            exception = e;
+        } finally {
+            // ------------------------------------------------------------
+            // Step Final - Terminate opened session
+            // ------------------------------------------------------------</pre>
+			<pre>            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            System.out.println(&quot;STEP Final : Terminating opened session with ENOVIA LCA V5&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>            // The session must be closed even if a call to a method on the
+            // ENOVWSChgMgmtCpp CAA Web service fails
+            try {
+                binderWrapper.logout(sessionToken);
+            } catch (Exception e) {
+                System.err.println(&quot;Failed to logout gracefully&quot;);
+            }
+        }</pre>
+			<pre>        if (success) {
+            System.out.println(&quot;================================================================================&quot;);
+            System.out.println(&quot;Use case execution successful&quot;);
+        } else {
+            System.out.println(&quot;================================================================================&quot;);
+            System.out.println(&quot;Use case execution failed&quot;);
+            System.out.println(&quot;--------------------------------------------------------------------------------&quot;);
+            if (exception instanceof CATServiceExceptionType) {
+                CATServiceExceptionType e = (CATServiceExceptionType) exception;
+                System.out.println(&quot;Error code: &quot; + e.getCode());
+                System.out.println(&quot;Error message: &quot; + e.getMessage());
+                if (e.getErrorArguments() != null) {
+                    String[] errorArguments = e.getErrorArguments();
+                    System.out.println(&quot;Error arguments: &quot; + errorArguments.length);
+                    for (int i = 0; i &lt; errorArguments.length; i++) {
+                        System.out.println(&quot;\tArgument[&quot; + i + &quot;]: &quot; + errorArguments[i]);
+                    }
+                }
+            } else {
+                System.out.println(exception.getMessage());
+                if (exception.getCause() != null) {
+                    // Handle nested exceptions launched from the use case
+                    System.out.println(&quot;Exception details:&quot;);
+                    exception.getCause().printStackTrace();
+                } else if (exception.getStackTrace() != null &amp;&amp; exception.getStackTrace().length != 0) {
+                    // Handle unexpected exceptions
+                    System.out.println(&quot;Exception details:&quot;);
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+}</pre>
+			<code><br>
+			</code></td>
+		</tr>
+	</tbody>
+</table>
+    <p>
+      The <code>CAAENOVWSUtils.displayResults</code> method can be found at:
+    </p>
+    <table class="code" id="table6">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\<em>&lt;Source&gt;</em>\<em>&lt;Package&gt;</em>\CAAENOVWSUtils.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: \CAAENOVWS.edu\CAAENOVWSAxis1_3Client.mj\src,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em>\com\dassault_systemes\caaenovws\caaenovwsaxis1_3client</code>.
+      </li>
+    </ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the Java client binding generated using the
+Axis WSDL2Java emitter in order to consume the ENOVWSChgMgmtCpp CAA Web service.
+It also gives an overview of the methods available for ENOVWSChgMgmtCpp web 
+services:</p>
+<ul>
+	<li><code><a href="#createAction">createAction</a></code>: Creates action(s) 
+	from input replica and returns the created action Attributes-Values in 
+	output replica. </li>
+	<li><a href="#addAffectedObject">addAffectedObjects</a>:Add objects as input 
+	or output affected objects manually under a given action, so that all the 
+	modifications are controlled through the Action. ECOs are not supported. </li>
+	<li><a href="#removeAffectedObject">removeAffectedObjects</a>:Remove the 
+	links to the objects that are controlled by Action as affected objects. ECOs 
+	are not supported. </li>
+	<li><code><a href="#getAffectedObjects">getAffectedObjects</a></code>: 
+	Returns a list of objects that are affected by an Engineering Change/Action. </li>
+	<li><a href="#addAssociatedObject">addAssociatedObjects</a>:Associates an 
+	Enovia object like Documents,Part version etc to a given action object and 
+	existing Enovia Modification. </li>
+	<li><a href="#removeAssociatedObject">removeAssociatedObjects</a>:Remove the 
+	association of configured objects or Enovia Parts, Documents etc, from a 
+	given input action. </li>
+	<li><a href="#getAssociatedObjects">getAssociatedObjects</a>:Returns a list 
+	of configured objects with their attributes-values and uuid of the Enovia 
+	object like Documents, Part version etc, that are associated to an Action.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+    <table border="0" width="100%" id="table31">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining the
+            Session State</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm">Consuming the
+            ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building
+            and Launching a CAA Web Service Use Case</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [4]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating a
+            Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [5]
+          </td>
+          <td>
+            <a href="../CAAENOVWSTechArticles/SelectExpression.htm">Using SelectExpression</a>
+          </td>
+        </tr>
+      </tbody>
+    </table><!-- ========================================================================= -->
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top" width="5%">[6]</td>
+			<td width="95%"><a href="CAAENOVWSProdStructCppClient.htm">Consuming ENOVWSProdStructCpp
+			CAA Web Service</a></td>
+		</tr>
+		<tr>
+			<td valign="top" width="5%">[7]</td>
+			<td width="95%"><a href="CAAENOVWSCntMgmtCppClient.htm">Consuming ENOVWSCntMgmtCpp
+			CAA Web Service</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [June 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<p><i>Copyright &#169; 1994-2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+

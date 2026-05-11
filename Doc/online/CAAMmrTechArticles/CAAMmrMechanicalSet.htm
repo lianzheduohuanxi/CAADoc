@@ -1,0 +1,411 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>MechanicalSet Feature</title>
+</head>
+
+<body>
+
+<table width="100%" id="table19">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Contents of the Specification Container - Non 
+		Geometrical Features Set</h3>
+      <em>How to design a Set dedicated to Non Geometrical Feature - 
+		MechanicalSet StartUp and Feature</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" id="table20">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>A new Sort of Set, specially designed to aggregate Non Geometrical 
+		Features (i.e. MechanicalElement instances [<a href="#References">1</a>]) 
+		was born: The MechanicalSet.</p>
+		<p>In this article, we are going to define it's field of application and 
+		it's default behaviors.</p>
+		<ul>
+        <li><b><a href="#MechanicalSet">What is a MechanicalSet?</a></b></li>
+        <li><b><a href="#How To Use MechanicalSet Structure">How To Use 
+		MechanicalSet Structure?</a></b></li>
+		<li><b><a href="#Field Of Application">Field Of Application</a></b></li>
+        <li><b><a href="#Default Behaviors">Default Behaviors</a></b></li>
+        <li><b><a href="#BackUpStartUp Mode">BackUp / StartUp Mode</a></b></li>
+		<li><b><a href="#HowToUse">How to use MechanicalSet?</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    	<p><i><b>Note:</b> Before going further in this article, it might be 
+		interesting to have a look at the article dealing with MechanicalElement
+		</i>[<a href="#References">1</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="MechanicalSet"></a>What is a MechanicalSet?</h3>
+<p class="MsoNormal"><span lang="EN-GB">In internal view, <b>MechanicalSet</b> 
+derives from <b>MechanicalRoot</b>, just like other already-defined sets (<b>HybridBody, 
+GSMTool</b> etc&#8230;).<br>
+&nbsp;</span></p>
+<div align="center">
+	<table border="1" width="55%" id="table27">
+		<tr>
+			<td align="right">
+			<img border="0" src="images/CAAMmrMechanicalSetStruct.jpg" width="713" height="299"></td>
+		</tr>
+		<tr>
+			<td>
+			<p class="MsoCaption" align="center" style="text-align: center; font-size: 10.0pt; font-family: Verdana; font-weight: bold; margin-left: .3in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: 6.0pt">
+&nbsp;&#8220;MechanicalSet&#8221; is 
+a StartUp derivate from MechanicalRoot</p></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoCaption" align="center" style="font-size: 10.0pt; font-family: Verdana; font-weight: bold; margin-left: .3in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: 6.0pt">&nbsp;</p>
+<p class="MsoNormal">In user view, this set is defined to
+<b>ONLY</b> aggregate <b>MechanicalSet</b>, <b>
+MechanicalElement and their derivatives</b>.<br>
+Please, note this aggregation is done <b>without any order !</b></p>
+<p class="MsoNormal">&nbsp;</p>
+<div align="center">
+	<table border="1" width="13%" id="table28" height="272">
+		<tr>
+			<td align="center" height="235">
+			<img border="0" src="images/CAAMmrMechanicalSetAggr.gif"></td>
+		</tr>
+		<tr>
+			<td height="38">
+			<p class="MsoCaption" align="center" style="text-align: center; font-size: 10.0pt; font-family: Verdana; font-weight: bold; margin-left: .3in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: 6.0pt">
+&nbsp;MechanicalSet's aggregation rules</p></td>
+		</tr>
+	</table>
+</div>
+<p class="MsoCaption" align="center" style="font-size: 10.0pt; font-family: Verdana; font-weight: bold; margin-left: .3in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: 6.0pt">&nbsp;</p>
+<p class="MsoNormal"><b><i>Consequently, MechanicalSet can be defined as a non 
+ordered set designed to only aggregate MechanicalSets an MechanicalElements.</i></b></p>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="How To Use MechanicalSet Structure"></a>How To Use MechanicalSet 
+Structure?</h3>
+<p>&nbsp;&nbsp;&nbsp; <b>MechanicalSet</b> is a &#8220;base StartUp&#8221; defined to 
+aggregate, without any order, <b>MechanicalElements</b> or <b>MechanicalSets</b>.<br>
+It cannot be instantiated directly: it is only a <b>derivable StartUp</b>.<br>
+<br>
+Consequently, to use a kind of MechanicalSet, you will have to create a new 
+StartUp, derived from <b>MechanicalSet</b>, in your feature catalog, just like 
+you do when you want to create a StartUp deriving from a Mechanical Feature [<a href="#References">2</a>].</p>
+<p>&nbsp;</p>
+<p>For example, let&#8217;s create a StartUp &#8220;<i>CAAMechaSet</i>&#8221;, derived from 
+MechanicalSet, in the catalog &#8220;CAAMechanicalUseCase.CATfct&#8221;:<br>
+&nbsp;</p>
+<table class="code" width="739" id="table26">
+		<tr>
+			<td width="731">
+			<pre>
+document `<b>CAAMechanicalUseCase.CATfct</b>`{
+   container CATFeatCont {
+      catalog_manager `MechMod.feat`
+      Feature CAAMechaSet <b>MechanicalSet@`MechMod.feat&#8217; #startup</b> {
+      }
+   }
+}</pre></td>
+		</tr>
+	</table>
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Field Of Application"></a>Field Of Application</h3>
+<p><b>MechanicalSet</b> can be used, for instance, to design an <b>&quot;Analysis 
+Set&quot;</b>, or a <b>&quot;Measure Set&quot;</b> which aggregates analysis features designed 
+with MechanicalElement StartUp.<br>
+&nbsp;</p>
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Default Behaviors"></a>Default Behaviors</h3>
+<p>In this section, we are going to list all behaviors supported initially by 
+MechanicalSet 's derivates.</p>
+<ol>
+	<li><i><b>Insertion in Graph / Aggregation Rules:</b></i><br>
+&nbsp;<ul>
+		<li><b><i>Insertion in Graph:</i></b><p class="MsoNormal">&nbsp;&nbsp;&nbsp; 
+		A &#8220;MechanicalSet&#8221; can <b>ONLY</b> be aggregated under the MechanicalPart 
+		or under MechanicalSet instances.<br>
+		<br>
+		It cannot be instantiated directly: to use it, you must create a <b>
+		derivate </b>StartUp (For instance, &quot;CAAMechaSet&quot; defined in &quot;CAAMechanicalUseCase.CATfct&quot;).<br>
+&nbsp;</li>
+		<li>
+		<p class="MsoNormal"><b><i>Aggregation Rules:</i></b></p>
+		<p class="MsoNormal">&nbsp;&nbsp;&nbsp; MechanicalSet is a specific set 
+		designed to aggregate, <b>without any order</b>, non geometrical 
+		features, derived from &#8220;<b>MechanicalElement</b>&#8221; or &#8220;<b>MechanicalSet</b>&#8221;.<br>
+		<br>
+		It can <b>ONLY</b> aggregate those types, or subtypes, of features.<br>
+&nbsp;</li>
+	</ul>
+	</li>
+	<li><b><i>Copy / Paste:</i></b><br>
+&nbsp;<p>In front of &quot;Cut/Copy/Paste&quot;, MechanicalSet (and its derivates) has the 
+	same default behavior as GSMTool.<br>
+	<br>
+	This means that, cutting a MechanicalSet, all aggregated features are cut. 
+	Moreover, pasting a MechanicalSet, all aggregated structure is pasted.<br>
+&nbsp;</li>
+<li><b><i>Reorder:</i></b><p>MechanicalSet supports reorder, according to 
+aggregation rules&#8230;</p>
+<p class="MsoNormal">This means that MechanicalSet can be reordered under the 
+MechanicalPart and that it can also be reordered under another MechanicalSet.<br>
+&nbsp;</li>
+<li><b><i>Reorder Children:<br>
+<br>
+</i></b>Even if MechanicalSet is a non ordered Set, it support <b><i>&quot;ReorderChildren&quot;</i></b> 
+command. This means that it is possible to &quot;reorder&quot; its children which consists 
+in changing the index of aggregated feature (i.e Features aggregated with <b>
+CATIDescendants::Append() </b>).<br>
+&nbsp;</li>
+<li><b><i>Drag 'n Drop:</i></b><br>
+<br>
+MechanicalSet supports &#8220;Drag and Drop&#8221;, according to aggregation rules, using 
+CCP protocol.<br>
+&nbsp;</li>
+<li><b><i>Define in Work Object:</i></b><br>
+<br>
+MechanicalSet can be defined In Work Object (<b>DIWO</b>).<br>
+However, MechanicalElements, aggregated under MechanicalSet, cannot be defined 
+In Work Object.<br>
+<i><b><br>
+&nbsp;</b></i></li>
+<li><b><i>CATIContextualSubMenu:</i></b><br>
+<br>
+A default implementation of this interface define this default contextual 
+SubMenu:<p><br>
+&nbsp;</p>
+<div align="center">
+	<table border="1" width="33%" id="table29">
+		<tr>
+			<td height="77">
+			<p align="center">
+			<img border="0" src="images/CAAMmrMechanicalSetSubMenu.gif" width="172" height="52"></td>
+		</tr>
+		<tr>
+			<td align="center">Default MechanicalSet &#39;s Contextual Sub Menu</td>
+		</tr>
+	</table>
+</div>
+<p class="MsoNormal">&nbsp;</li>
+<li><b><i>Update Mechanism:</i></b><br>
+<br>
+MechanicalSet supports Update mechanism according to Feature Modeler's rules (Attr 
+IN, OUT, NEUTRAL).<p class="MsoNormal"><b>As other Sets, </b>MechanicalSet 's Update Status depends on aggregated 
+features ones. This means that its update Status depends on its aggregated 
+features (i.e Features aggregated with <b>CATIDescendants::Append()</b>).</p>
+<p class="MsoNormal">As we provided a global standard Update Mechanism, please, 
+do not re-implement &quot;CATIOsmUpdate&quot; Interface.</p>
+<p class="MsoNormal">&nbsp;</li>
+<li><b><i>CATINavigateObject</i>:</b><br>
+<br>
+MechanicalSet has the same behaviour as GSMTool in showing aggregated components 
+in the spec tree.<br>
+This means that MechanicalSets and MechanicalElements aggregated a root MechanicalSet 
+using <b>CATIDescendants::Append()</b> will be seen in the SpecTree.<br>
+<br>
+&nbsp;</li>
+<li><b><i>CATIParmPublisher:</i></b><br>
+<br>
+MechanicalSet has the same behaviour as GSMTool in showing aggregated parameters 
+in f(x) <br>
+Indeed, f(x) will show all parameters aggregated under the MechanicalSet, using 
+specified implementation of CATIParmPublisher defined on aggregated features.<br>
+Moreover, traditional parameters aggregated directly under the MechanicalSet 
+will be seen.<br>
+<br>
+&nbsp;</li>
+<li><b><i>3D Visualisation:</i></b><br>
+<br>
+MechanicalSet doesn&#8217;t have any visualization behaviour. Indeed, as it is 
+designed to aggregate non geometrical feature, its default Visu is restricted to 
+its minimum (i.e. no visu displayed, no Graphic properties, no Hide/Show).<br>
+However, it is possible to implement directly visualization on startup derivate.<br>
+<br>
+&nbsp;</li>
+<li><b><i>CATISelectShow&nbsp; &amp; CATIVisProperties - Hide/Show Command:</i></b><br>
+<br>
+As MechanicalSet doesn&#8217;t have any 3D Representation, default implementations of 
+CATISelectShow and CATIVisProperties interface disable Hide/Show command. This 
+means that nothing occurs when &#8220;end-user&#8221; clicks on Hide/Show defined in the 
+contextual menu.<br>
+<br>
+&nbsp;</li>
+<li><b><i>UDF / PowerCopy:</i></b><br>
+<br>
+Currently, UDF / PowerCopy are not supported by MechanicalSets <br>
+<br>
+&nbsp;</li>
+<li><b><i>Parent / Children</i></b><br>
+<br>
+Relations between features are linked to attributes and qualities. Default 
+design of MechanicalSet doesn&#8217;t have any attribute valuating parents.<br>
+To have a Parent/Children mechanism, it is mandatory to create a new attribute, 
+on your own StartUp deriving from &quot;MechanicalSet&quot;, and to value it with its parents.<br>
+&nbsp;<p>Let's take the example described in the table below:<br>
+<br>
+&nbsp;</p>
+<div align="center">
+	<table border="1" width="1%" id="table30">
+		<tr>
+			<td>
+			<img border="0" src="images/CAAMmrMechanicalSetDiagForParentChildren.jpg" width="624" height="262"></td>
+		</tr>
+		<tr>
+			<td align="center">Structure Example for Parent / Children</td>
+		</tr>
+	</table>
+</div>
+<p><br>
+&nbsp;&nbsp;&nbsp; In this example, Feature F.1 will be seen as a Parent of the 
+applicative Feature deriving from MechanicalSet StartUp. <br>
+Moreover, Feature Feat.1 will be seen as one of its children.</p>
+<p>&nbsp;</li>
+<li><i><b>CATIReplace:</b></i><br>
+<br>
+CATIReplace has to be implemented specifically on your own Set, if you want to 
+allow replace mechanism. In deed, this implementation must agree with your 
+feature design defining which types of attribute have to be replaced&#8230;<br>
+&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="BackUpStartUp Mode"></a>BackUp StartUp Mode</h3>
+<p>A BackUp StartUp [<a href="#References">4</a>] has been defined to support basic behaviors 
+if code is not present. In this case, the MechanicalSet feature is 
+replaced by an instance of its backup Startup.</p>
+<p>In <b>BackUpStartUp</b> mode, icons, in the spec 
+tree, are replaced by this one: 
+<img border="0" src="images/CAAMmrMechanicalSetBuSu.gif" width="27" height="27">. Most of default behaviors, defined in the last part of this documentation, 
+works in BackUp/StartUp mode. However, some behaviors are specifically 
+restricted in order to prevent data's corruption.</p>
+<p class="MsoNormal">Default Behaviours restricted in BackUpStartUp mode:</p>
+<ul>
+	<li>
+	<p class="MsoNormal"><b><i>Update Mechanism / Update Error:</i></b><br>
+	An Update Error is raised when you try to update a kind of MechanicalSet&#8217;s 
+	instance without its dedicated code or catalogue.</li>
+	<li>
+	<p class="MsoNormal"><b><i>Cut/ Copy/ Paste :<br>
+	</i></b>The backup feature can be cut but it cannot be pasted. It also 
+	can be removed from the part. In those cases, all features aggregated under 
+    the backup feature 
+	will be removed or cut, just like in nominal mode.</p></li>
+	<li>
+	<p class="MsoNormal"><b><i>Replace:</i><br>
+	</b>The backup feature allows replace mechanism. It consists in 
+	devaluating pointing attributes.</li>
+	<li>
+	<p class="MsoNormal"><b><i>Reorder:<br>
+	</i></b>The backup feature allows reorder mechanism but it raises an 
+	Update Error.</li>
+	<li>
+	<p class="MsoNormal"><i><b>Visualization in Spec. Tree :</b></i><b><br>
+    </b>The backup feature uses default implementation of CATINavigateObject 
+	coded for MechanicalSets i.e. Features aggregated under MechanicalSet 
+	derivate, will be shown under its node, 
+	even if it&#8217;s in BackUpStartUp mode </li>
+	<li>
+	<p class="MsoNormal"><b><i>Visualization 3D View:<br>
+	</i></b>In BackUpStartUp Mode, visualization won&#8217;t be available under the 
+    backup instances.</li>
+	<li>
+	<p class="MsoNormal"><b><i>Parameters in </i>f(x):<br>
+    </b>The backup feature<b> </b>uses default implementation of CATINavigateObject 
+	coded for MechanicalSets i.e. in BackUpStartUp mode, parameters aggregated 
+	under the MechanicalSet Instance (using CATIDesndants::Append()) will be shown in <b>f(x).</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="HowToUse"></a>How to use MechanicalSet?</h3>
+<p>To have a look at the use of MechanicalElement, please refer to specified 
+article [<a href="#References">3</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>MechanicalSet is a derivable StartUp designed to aggregate <b>non geometrical 
+features</b> (i.e. <b>ONLY</b> MechanicalElement or MechanicalSet' s instance) 
+with specific default behavior.<br>
+&nbsp;</p>
+<p>It aggregates non geometrical features without any order: it is a non ordered 
+set.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="1241" id="table21">
+  <tr>
+    <td valign="top" width="50">[1]</td>
+    <td width="1186">
+	<a href="CAAMmrMechanicalElement.htm">MechanicalElement StartUp and Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[2]</td>
+    <td width="1186"><a href="CAAMmrCreatingNewFeat.htm">Deriving Mechanical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[3]</td>
+    <td width="1186">
+	<a href="../CAAMmrUseCases/CAAMmrMultiMeasureAndMeasureSetSamplesOverview.htm">MechanicalElement / MechanicalSet Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[4]</td>
+    <td width="1186">
+	<a href="CAAMmrBackupStartUp.htm">Backup StartUp Principles</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="1239">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%" id="table22">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Mar 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong>   [June 2007]</td>
+    <td valign="top">Document updated: Use Case added</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2007, Dassault Syst&#232;mes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,748 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface IProdStructWS</title>
+ </head>
+ <body>
+ <h2>Interface IProdStructWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSProdStructCpp.html">ENOVWSProdStructCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSProdStructIntf:ENOVWSProdStructIntf_ws:IProdStructWS</p>
+ <p><b>Role:</b> Interface for accessing Product Structures. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSProdStructIntf\ENOVWSProdStructIntf_ws\IProdStructWS.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#AddChildPart"><b>AddChildPart()</b></a></dt>
+  <dd>Adds a list of children to a given parent.</dd>
+  <dt>o <a href="#CreatePart"><b>CreatePart()</b></a></dt>
+  <dd>Creates new Parts with the attribute values passed in and returns successfully created part objects and attributes.</dd>
+  <dt>o <a href="#CutPartInstance"><b>CutPartInstance()</b></a></dt>
+  <dd>Cuts an existing Part instance in the assembly.</dd>
+  <dt>o <a href="#DeleteChildPart"><b>DeleteChildPart()</b></a></dt>
+  <dd>Deletes a list of child Parts passed in iChildIds under the one given Parent which may be a part instance or a product root class.</dd>
+  <dt>o <a href="#DeletePart"><b>DeletePart()</b></a></dt>
+  <dd>Allows deletion of a Part that is in a deleteable state.</dd>
+  <dt>o <a href="#ExpandProductStructure"><b>ExpandProductStructure()</b></a></dt>
+  <dd>Allows the user to navigate Product Structures that are either configured or unconfigured.</dd>
+  <dt>o <a href="#MovePartInstance"><b>MovePartInstance()</b></a></dt>
+  <dd>Allows a part instance to be moved in CATIA due to designed transformation matrix.</dd>
+  <dt>o <a href="#ReplacePart"><b>ReplacePart()</b></a></dt>
+  <dd>Replaces the part reference of an existing part instance in the assembly with the part reference of an object that exists in Enovia.</dd>
+  <dt>o <a href="#UpdatePart"><b>UpdatePart()</b></a></dt>
+  <dd>Updates the attribute values for each Part in iObjects and returns successfully updated parts.</dd>
+  <dt>o <a href="#UpdatePartInstance"><b>UpdatePartInstance()</b></a></dt>
+  <dd>Updates the attribute values for each Part Instance in iObjects.</dd>
+  <dt>o <a href="#VersionPart"><b>VersionPart()</b></a></dt>
+  <dd>Creates a new version of a Part.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="AddChildPart"><b>AddChildPart()</b></a></dt>
+  <dd>Adds a list of children to a given parent. The parent can either be Part Instance or ProductRootClass. The children are Part Versions. Any locking requirements will be handled by this service. Synchronization is not addressed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iParentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Part Instance or ProductRootClass identifier.</td>
+     </tr>
+     <tr>
+      <td>iChildIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Child Part Version identifiers.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Return instance(s) objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreatePart"><b>CreatePart()</b></a></dt>
+  <dd>Creates new Parts with the attribute values passed in and returns successfully created part objects and attributes. If it is possible that the same web service user will be creating both configured and unconfigured parts the create configured part setting for the ENOVIA user session should be set to unconfigured. If iConfigurable is set to FALSE, and the user's session is setup to create configured parts, then the create(s) will fail. If multiple part versions are passed in iObjects, all will be created using the same iConfigurable value. If any create fails, all fail. A fault will be returned, and no creates will be committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Part Versions to be created.</td>
+     </tr>
+     <tr>
+      <td>iConfigurable</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>TRUE or FALSE (default of FALSE).</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>all the successfully created objects are returned.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CutPartInstance"><b>CutPartInstance()</b></a></dt>
+  <dd>Cuts an existing Part instance in the assembly. This service will not delete the object. There will be unresolved operations which can be resolved by GetOperations WebService. Enovia equivalent: Cut Part.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iPIParentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Part Instance or PRC identifier (UUID) of an existing Parent.</td>
+     </tr>
+     <tr>
+      <td>iPIChildIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Part Instance Identifiers (UUID) of existing Children to be Cut.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="DeleteChildPart"><b>DeleteChildPart()</b></a></dt>
+  <dd>Deletes a list of child Parts passed in iChildIds under the one given Parent which may be a part instance or a product root class. DeleteChildPart should basically perform a "Cut". In case of an unconfigured assembly, this will be equivalent to a physical delete. Any actions on configured product structure will be done using session effectivity, and will have to be resolved/applied manually via Product Editor and the operations panel. Any synchronization will also have to be done manually. Any locking requirements will be handled by this service. If any attempt to delete fails, a fault is returned and no deletes are committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iParentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Parent part or product identifier.</td>
+     </tr>
+     <tr>
+      <td>iChildIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Child part instance identifiers.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="DeletePart"><b>DeletePart()</b></a></dt>
+  <dd>Allows deletion of a Part that is in a deleteable state. Multiple Parts can be deleted in one call. Only parts that have not been instantiated will be deleted. Any locking requirements will be handled by this service. If a part has been instantiated, then all the instances should be deleted before the part can be deleted. If any attempt to delete fails, a fault is returned and no deletes are committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers for parts to be deleted.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="ExpandProductStructure"><b>ExpandProductStructure()</b></a></dt>
+  <dd>Allows the user to navigate Product Structures that are either configured or unconfigured. User can specify a combination of attribute filters and a config handler. The results of this service can also include any document metadata if the user chooses to ask for it. The depth of the expand is defined by input int iDepth. If it is -1, the method will return all levels, a value of zero ( 0 ) will return only the parent identified by iObjectId, and optionally all attached documents per ATTACHMENT_TYPE in iSelect (see CAA Documentation on SelectExpression for details); and an iDepth value of one ( 1 ) will return first level children.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>It can be Product , Part Instance or a GCO.</td>
+     </tr>
+     <tr>
+      <td>iSelect</td>
+      <td><a href="SelectExpression.html">{urn:com:dassault_systemes:PPRGenericWS}SelectExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>This SelectExpression is the query language used to communicate the criteria for the expand. Through this parameter, the user can communicate filters (attribute, config) and identify the values needed in result. The structure of SelectExpression is dictated through FilterXML.xsd.</td>
+     </tr>
+     <tr>
+      <td>iDepth</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#int');return false;">{http://www.w3.org/2001/XMLSchema}int</a></td>
+      <td>in</td>
+      <td>false</td>
+      <td>depth of the structure that needs to be returned (it is -1|0|1).</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Result of the expand. The resulting product structure is dictated by ENOVIA.xsd.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="MovePartInstance"><b>MovePartInstance()</b></a></dt>
+  <dd>Allows a part instance to be moved in CATIA due to designed transformation matrix. It updates the matrix in the Enovia. All twelve attributes must be passed in, even if only one is changed. Other Instance attributes will not be updated even if they are provided.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iInstances</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Data structure with proposed Instance(s) position matrix updated.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="ReplacePart"><b>ReplacePart()</b></a></dt>
+  <dd>Replaces the part reference of an existing part instance in the assembly with the part reference of an object that exists in Enovia. When replace part reference in an un-configured product, the reference will be replaced throughout the assembly as there are no effectivities on the part. When you replace a part reference with an existing part reference in a configured product, add and cut operations are created for the part and the product specification instance. These operations can be queried by GetOperations service and resolved by ResolveOperations service. The synchronization issue will not be addressed, a Web Service user needs to log on to native LCA to resolve any synchronization issues. Enovia equivalent: Replace Part.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iPIToReplaceId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Part identifier (UUID) in an existing Part Instance whose reference is to be replaced (cut).</td>
+     </tr>
+     <tr>
+      <td>iPIReplacementId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td></td>
+     </tr>
+     <tr>
+      <td>oReplica</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Output object containing metadata and identifier (uuid) of the part Instance that has the replaced part reference.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="UpdatePart"><b>UpdatePart()</b></a></dt>
+  <dd>Updates the attribute values for each Part in iObjects and returns successfully updated parts. If any single update fails, a fault is returned and no updates are saved. Any locking requirements will be handled by this service.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Parts to be updated.</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing the updated objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="UpdatePartInstance"><b>UpdatePartInstance()</b></a></dt>
+  <dd>Updates the attribute values for each Part Instance in iObjects. Returns successfully updated part instances. If any single update fails, a fault is returned and no updates are saved. Any locking requirements will be handled by this service.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Active Enovia session Token that caller use for connection to the corresponding Enovia session.</td>
+     </tr>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Parts to be updated.</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing the updated objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="VersionPart"><b>VersionPart()</b></a></dt>
+  <dd>Creates a new version of a Part. Also makes them applicable from iApplicabilityDate. Any locking requirements will be handled by this service. Each part must be in a "versionable" state. When a part is versioned using this service - all the instances pointing to the older version will be "out of sync". If any attempt to version fails, a fault is returned and no updates are saved.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers for PartVersions to be versioned.</td>
+     </tr>
+     <tr>
+      <td>iApplicabilityDate</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Date from which these versions are applicable (optional, if not allowed to be null, will default to current date).</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing the new Part versions.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

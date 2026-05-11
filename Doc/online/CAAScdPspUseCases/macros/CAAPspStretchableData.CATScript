@@ -1,0 +1,175 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspStretchableData
+'    Assumption:  Looks for document CAAPsp3DEduIn.CATProduct
+'                 Looks for object P-074. 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct" )
+    
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspStretchableData.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+
+    ' ---------------
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      'Set objPrdRoot = CATIA.ActiveDocument.Product
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory    
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+    
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( Not( objPspApplication Is Nothing )  ) Then        
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...    
+
+    '
+    ' ----------------------------------------------------
+    ' Get the Bendable pipe whose instance name is P-074
+    ' and then get handler to PspStretchableData
+    ' ----------------------------------------------------
+    Dim objBendablePipe As Product
+    Dim objPspStretchableData   As PspStretchableData
+    
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPrdRoot Is Nothing ) ) Then
+    
+      Set objBendablePipe = objPrdRoot.Products.Item("P-074")                    
+      Set objPspStretchableData = objPspWorkbench.GetInterface("CATIAPspStretchableData", _
+                                                objBendablePipe )                  
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    ' Get PspStretchableData object information
+    '-----------------------------------------------------------------------
+
+    Dim objRelAxisPrd  As Product
+    Dim objLDefPoints  As PspListOfDoubles
+    Dim objLBendRadii  As PspListOfDoubles
+    Dim intIdx         As Integer
+    Dim iNbPts         As Integer
+
+    Dim dbX            As Double
+    Dim dbY            As Double
+    Dim dbZ            As Double
+    Dim dbRadius       As Double
+    Dim iCoordNum      As Double
+
+    Set objRelAxisPrd = Nothing
+    If ( Not ( objPspStretchableData Is Nothing ) ) Then         
+
+      strMessage_g = strMessage_g & "Success in getting PspStretchableObject" & vbCr      
+      Set objLDefPoints = objPspStretchableData.ListDefinitionPoints ( _       
+                            objRelAxisPrd )      
+
+      '-----------------------------------------
+      ' Display information on Definition points
+      '-----------------------------------------
+      If ( Not ( objLDefPoints Is Nothing ) ) Then        
+        iNbPts =  objLDefPoints.Count / 3
+        strMessage_g = strMessage_g & _
+               "Number of definition points =" &  iNbPts & vbCr    
+        For intIdx = 1 To objLDefPoints.Count Step 3                   
+          dbX = objLDefPoints.Item( intIdx )
+          dbY = objLDefPoints.Item( intIdx + 1 )
+          dbX = objLDefPoints.Item( intIdx + 2 )
+  
+          strMessage_g = strMessage_g & "Definition pt " &  vbCr                                 
+          strMessage_g = strMessage_g & "      X= " & dbX & vbCr                                 
+          strMessage_g = strMessage_g & "      Y= " & dbY & vbCr                                 
+          strMessage_g = strMessage_g & "      Z= " & dbZ & vbCr                                 
+          
+        Next 
+
+      End If
+
+           
+      Set objLBendRadii = objPspStretchableData.ListBendData 
+
+      '-----------------------------------------
+      ' Display Bend radii information
+      '-----------------------------------------
+      If ( Not ( objLBendRadii Is Nothing ) ) Then        
+        iNbPts =  objLDefPoints.Count / 3
+        strMessage_g = strMessage_g & _
+               "Number of bend radii =" &  objLBendRadii.Count & vbCr    
+        For intIdx = 1 To objLBendRadii.Count 
+          dbRadius = objLBendRadii.Item( intIdx )          
+          strMessage_g = strMessage_g & _
+               "   Bend radius = " & dbRadius & vbCr                                   
+        Next 
+
+      End If
+
+
+    End If ' End of  If ( Not ( objPspStretchableData is Nothing...
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+

@@ -1,0 +1,389 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>BasicTopologicalOpe Class CATTopSplineOperator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../BasicTopologicalOpe.htm" href="../BasicTopologicalOpe.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "BasicTopologicalOpe";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopSplineOperator"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>BasicTopologicalOpe <script type="text/javascript" > writeClassCharacteristic(); </script> CATTopSplineOperator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTopSplineOperator_38636','CATTopSplineOperator','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTopSplineOperator</b>
+</p>
+<p>
+<b><i> Class defining a topological operator that creates a spline body.</i></b><br>
+
+ WARNING - If we build a spline on a support shell and part of it isn't G1 continuous, i.e.
+           the normals to the faces aren't continous at the boundaries of the faces, the 
+           result will be unpredictable.
+
+<br> This operator follows the general scheme of the topological operators.
+ For a basic use, use directly the global function
+ <tt>CATCreateTopSpline</tt>, that directly returns the resulting body.
+ If you need to tune specific parameters, use the advanced scheme:
+ <ul>
+<li> Create the operator with the global function <tt>CATCreateTopSplineOperator</tt>
+<li> Set parameters
+<li> Run
+<li> Get the resulting body
+<li> Delete the operator with the usual C++ <tt>delete</tt> operator.
+</ul>
+<br> Constaints can be imposed on each points in the following way:
+<dl>
+<dt>0<dt><dd>no constraint, neither on the tangent, nor on the curvature.
+<dt>1<dt><dd>the direction of the tangent is imposed.
+<dt>2<dt><dd>the tangent is imposed.
+<dt>4<dt><dd>the tangent and the direction of the curvature are imposed.
+<dt>6<dt><dd>the tangent and the curvature are imposed.
+</dl></p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATTopSplineOperator()"><b>~CATTopSplineOperator</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetComputedCurvatureVectors(CATMathVector*)"><b>GetComputedCurvatureVectors</b></a>(CATMathVector*)
+<dd>   Retrieves, after a Run, the computed curvatures at each point.
+ <dt> o 
+    <a href="#GetComputedCurvatureVectors(CATMathVector*&amp;)"><b>GetComputedCurvatureVectors</b></a>(CATMathVector*&amp;)
+<dd>  <dt> o 
+    <a href="#GetComputedTangents(CATMathVector*&amp;)"><b>GetComputedTangents</b></a>(CATMathVector*&amp;)
+<dd>   Retrieves, after a Run, the computed tangents at each point.
+ <dt> o 
+    <a href="#GetImposedCurvatureVectors(CATMathVector*,CATLONG32*)"><b>GetImposedCurvatureVectors</b></a>(CATMathVector*,CATLONG32*)
+<dd>   Retrieves the tangent constraints, as put in the operator definition.
+ <dt> o 
+    <a href="#GetImposedCurvatureVectors(CATMathVector*&amp;,CATLONG32*&amp;)"><b>GetImposedCurvatureVectors</b></a>(CATMathVector*&amp;,CATLONG32*&amp;)
+<dd>  <dt> o 
+    <a href="#GetImposedTangents(CATMathVector*&amp;,CATLONG32*&amp;)"><b>GetImposedTangents</b></a>(CATMathVector*&amp;,CATLONG32*&amp;)
+<dd>   Retrieves the tangent constraints, as put in the operator definition.
+ <dt> o 
+    <a href="#GetNbPoints()"><b>GetNbPoints</b></a>()
+<dd>  Returns the number of points defined at the operator construction.
+ <dt> o 
+    <a href="#GetSplineMode(CATSplineMode&amp;)"><b>GetSplineMode</b></a>(CATSplineMode&amp;)
+<dd>  Returns the spline mode construction.
+ <dt> o 
+    <a href="#SetCurvatureVectors(CATMathVector*,CATLONG32*)"><b>SetCurvatureVectors</b></a>(CATMathVector*,CATLONG32*)
+<dd>  Sets new curvature contraints.
+ <dt> o 
+    <a href="#SetSplineMode(CATSplineMode)"><b>SetSplineMode</b></a>(CATSplineMode)
+<dd>   Sets the type of spline computation.
+ <dt> o 
+    <a href="#SetTangents(CATMathVector*,CATLONG32*)"><b>SetTangents</b></a>(CATMathVector*,CATLONG32*)
+<dd>  Sets new tangent contraints.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATTopSplineOperator"></a><a name="~CATTopSplineOperator()"></a> <dt> o <b>~CATTopSplineOperator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATTopSplineOperator</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetComputedCurvatureVectors"></a><a name="GetComputedCurvatureVectors(CATMathVector*)"></a> <dt> o <b>GetComputedCurvatureVectors</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetComputedCurvatureVectors</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>oCurvatures</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves, after a Run, the computed curvatures at each point.
+ <br>The array must not be deallocated.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oCurvatures</tt>
+   <dd> The computed curvatures.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A diagnosis .
+ <br><b>Legal values:</b>:
+ 0 if curvatures are computed, 1 otherwise.
+</dl>
+</dl>
+<a name="GetComputedCurvatureVectors"></a><a name="GetComputedCurvatureVectors(CATMathVector*&amp;)"></a> <dt> o <b>GetComputedCurvatureVectors</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetComputedCurvatureVectors</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*&amp;')</script> <td><tt>oCurvatures</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetComputedTangents"></a><a name="GetComputedTangents(CATMathVector*&amp;)"></a> <dt> o <b>GetComputedTangents</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetComputedTangents</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*&amp;')</script> <td><tt>oTangents</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves, after a Run, the computed tangents at each point.
+ <br>The array must not be deallocated.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTangents</tt>
+   <dd> The computed tangents. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A diagnosis .
+ <br><b>Legal values:</b>:
+ 0 if tangents are computed, 1 otherwise.
+</dl>
+</dl>
+<a name="GetImposedCurvatureVectors"></a><a name="GetImposedCurvatureVectors(CATMathVector*,CATLONG32*)"></a> <dt> o <b>GetImposedCurvatureVectors</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetImposedCurvatureVectors</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>oCurvatures</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32*')</script> <td><tt>oImposition</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves the tangent constraints, as put in the operator definition.
+ <br>The array must not be deallocated.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oCurvatures</tt>
+   <dd> The array of the curvature constraints at each point.
+ If some curvatures are constraints, all
+ the array is allocated.
+ </dd>
+    <dt><tt> oImposition</tt>
+   <dd> An array that defines the type of constraint for each point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A diagnosis .
+ <br><b>Legal values:</b>:
+ 0 if curvatures where defined, 1 otherwise.
+</dl>
+</dl>
+<a name="GetImposedCurvatureVectors"></a><a name="GetImposedCurvatureVectors(CATMathVector*&amp;,CATLONG32*&amp;)"></a> <dt> o <b>GetImposedCurvatureVectors</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetImposedCurvatureVectors</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*&amp;')</script> <td><tt>oCurvatures</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32*&amp;')</script> <td><tt>oImposition</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetImposedTangents"></a><a name="GetImposedTangents(CATMathVector*&amp;,CATLONG32*&amp;)"></a> <dt> o <b>GetImposedTangents</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetImposedTangents</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*&amp;')</script> <td><tt>oTangents</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32*&amp;')</script> <td><tt>oImposition</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves the tangent constraints, as put in the operator definition.
+ <br>The array must not be deallocated.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTangents</tt>
+   <dd> The array of tangential constraints at each point. 
+ If some tangents are constraints, all
+ the array is allocated.
+ </dd>
+    <dt><tt> oImposition</tt>
+   <dd> An array that defines the type of constraint for each point.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A diagnosis .
+ <br><b>Legal values:</b>:
+ 0 if tangents where defined, 1 otherwise.
+</dl>
+</dl>
+<a name="GetNbPoints"></a><a name="GetNbPoints()"></a> <dt> o <b>GetNbPoints</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetNbPoints</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of points defined at the operator construction.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The number of points.
+</dl>
+</dl>
+<a name="GetSplineMode"></a><a name="GetSplineMode(CATSplineMode&amp;)"></a> <dt> o <b>GetSplineMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetSplineMode</b>(<td><script type="text/javascript"> activateLink('CATSplineMode','CATSplineMode&amp;')</script> <td><tt>ioSplineConstruction</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the spline mode construction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioSplineConstruction</tt>
+   <dd> The spline mode.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCurvatureVectors"></a><a name="SetCurvatureVectors(CATMathVector*,CATLONG32*)"></a> <dt> o <b>SetCurvatureVectors</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>SetCurvatureVectors</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iCurvatures</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32*')</script> <td><tt>iImposition</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets new curvature contraints.
+<br> If a curvature is imposed, the tangent at the same point point must also be imposed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurvatures</tt>
+   <dd> The array of the curvature constraints at each point.
+ If some curvatures are constraints, all
+ the array must be allocated.
+ </dd>
+    <dt><tt> iImposition</tt>
+   <dd> An array that defines the type of constraint for each point.
+ <br>Legal values</b>:
+<dl>
+<dt>0<dt><dd>no constraint, neither on the tangent, nor on the curvature.
+<dt>1<dt><dd>the direction of the tangent is imposed.
+<dt>2<dt><dd>the tangent is imposed.
+<dt>4<dt><dd>the tangent and the direction of the curvature are imposed.
+<dt>6<dt><dd>the tangent and the curvature are imposed.
+</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSplineMode"></a><a name="SetSplineMode(CATSplineMode)"></a> <dt> o <b>SetSplineMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>SetSplineMode</b>(<td><script type="text/javascript"> activateLink('CATSplineMode','CATSplineMode')</script> <td><tt>iSplineConstruction</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets the type of spline computation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSplineConstruction</tt>
+   <dd> The type of interpolation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTangents"></a><a name="SetTangents(CATMathVector*,CATLONG32*)"></a> <dt> o <b>SetTangents</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>SetTangents</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iTangents</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32*')</script> <td><tt>iImposition</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets new tangent contraints.
+ <br>This method resets already existing results 
+ (obtained by <tt>GetComputedTangents</tt> and <tt>GetComputedCurvatureVectors</tt>)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTangents</tt>
+   <dd> The array of tangential constraints at each point. 
+ If some tangents are constraints, all
+ the array must be allocated.
+ </dd>
+    <dt><tt> iImposition</tt>
+   <dd> An array that defines the type of constraint for each point. 
+ <br>Legal values</b>:
+<dl>
+<dt>0<dt><dd>no constraint, neither on the tangent, nor on the curvature.
+<dt>1<dt><dd>the direction of the tangent is imposed.
+<dt>2<dt><dd>the tangent is imposed.
+<dt>4<dt><dd>the tangent and the direction of the curvature are imposed.
+<dt>6<dt><dd>the tangent and the curvature are imposed.
+</dl>
+ If 4 and 6, the methof checks that the curvatures are already been imposed.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopSplineOperator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATBasicTopologicalOpe</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

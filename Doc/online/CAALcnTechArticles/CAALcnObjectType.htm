@@ -1,0 +1,609 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Object Type Exposure in LCANavigator/3dcom</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>LCANavigator</h1>
+    </td>
+    <td valign="top">
+      <h2>Customization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Object Type Exposure in LCANavigator/3dcom</h3>
+      <em>Describing how to create and modify object types.</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Note</h3>
+      <p>In this document words in italic represent specific values or names which must be supplied for the customization process.
+      (Except in comments from Properties files)</p>
+      <ul>
+        <li><b><a href="#LCAWebTypeandLCATypeCustomization">LCA Web Type and LCA Type Customization</a></b></li>
+        <li><b><a href="#MiscellaneousCustomization">Miscellaneous Customization</a></b></li>
+        <li><b><a href="#CommandDefinitionandImplementation">Command Definition and Implementation</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="LCAWebTypeandLCATypeCustomization"></a>Thin Client User Interface</h3>
+<p>The LCA Navigator/3dcom environment is made up of two servers:</p>
+<ul>
+	<li><b>The web server (WebSphere) which generates and delivers the html user interface to the user&#8217;s browser on the user&#8217;s machine.</b></li>
+    <li><b>The ENOVIA V5 (LCA) server which is accessed by the web server to process and send back data based on the user&#8217;s request.</b></li>
+</ul>
+<p>The LCA server provides a rich data model to the LCA server applications.
+This data model can be extended by using the RADE Data Model Customizer tools.
+Detailed instructions on how to do this can be found in the CAA RADE documentation.
+The LCA Navigator/3dcom web application provides a filtered view of the data model provided by the LCA server.
+If a new data type is defined on the LCA server using the RADE tooling, then additional work must be performed to expose this new data in the LCA Navigator/3dcom user interface.
+The LCA Navigator/3dcom web application uses &#8220;web types&#8221;, which are merely nicknames or synonyms for data types on the LCA server.
+So for each data type on the LCA server which needs to be exposed on the web server, the following tasks need to be performed:
+</p>
+<ul>
+	<li><b>Define a unique web type that maps to the LCA server type.</b></li>
+    <li><b>Define the characteristics of the web type (inheritance, relationships)</b></li>
+    <li><b>Add this web type to the appropriate search groups for exposure on the PPR Access search panel and Quick Search banner.</b></li>
+</ul>
+<p align="center"><img border="0" src="images/Figure4.jpg" width="1200" height="562"></p>
+	<ul>
+		<li><b><a href="#DefiningAWebType">Defining a web type to map to a LCA server type</a></b></li>
+	    <li><b><a href="#DefiningTheWebType">Defining the web type characteristics</a></b></li>
+	    <li><b><a href="#ExposingTheWebType">Exposing the web type for search and quick search</a></b></li>
+	</ul>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="DefiningAWebType"></a>Defining a web type to map to a LCA server type</h3>
+<p>This section describes how to define a LCA Navigator/3dcom web type that maps to a LCA server data type.</p>
+<p>Runtime view subdirectories:
+	<b>	./resources/pprregistry/types/ENOVIA</b>
+</p>
+<p>Files:
+	<b>ENOVWebBO*.properties</b>
+</p>
+<p>
+Customization strategy:
+<ul>
+	<li><p>New files<p></li>
+	<li><p>No files copied from the product installation directories.</p></li>
+</ul>
+</p>
+<p>
+The web types are defined in ENOVWebBO*.properties files.  A web type is a unique nickname or synonym for a LCA server type.  For clarity, the web type should be the same as the server type.  If the server type name is not unique, then a unique web type name must be created.
+The format of the entries in the properties file is very simple.
+<pre>WebType=Modeler.ServerType</pre>
+where WebType is the unique web type string you are defining, the Modeler is the server domain in which the server type is defined,
+and ServerType is the name of the server type within the domain.
+The WebType and ServerType can often be the same value.
+There is one special case. When customizing a business object (which is comprised of two or more modeler data types),
+the custom business object must redefine within the same customer modeler each of the data types comprising that business object.
+ When defining a web type for this custom business object, the server type should be the original business object type, not the customized server type.
+ Example: The base Document web type maps to the DOCDIR.VPMDocFile business object.
+If a customized document business object CUSTOMDoc is defined in the CUSTOM modeler as the CUSTOM.CUSTOMDoc,
+then the custom document web type CUSTOMDoc needs to be defined as CUSTOMDoc =CUSTOM.VPMDocFile using the original business object type VPMDocFile rather than the custom server data type CUSTOMDoc.
+</p>
+<p>ENOVWebBO<em>CUSTOMDoc</em>.properties file:</p>
+<pre>
+#------------------------------------------------------------------------
+# Define the mappings from the web type to the server modeler names and
+# server type names.
+#    Syntax:
+#      &lt;web type name/&gt;=&lt;modeler name/&gt;.&lt;server type name/&gt;
+#------------------------------------------------------------------------
+
+# NOTE: For the special case of business object customization,
+#       the server type must be the original business object type.
+CUSTOMDoc=CUSTOM.VPMDocFile
+</pre>
+One (or more) new properties file should be created to hold the custom web type definitions.
+There is no need to override any of the shipped properties files by copying them to the customization directories.
+The naming convention for these properties files is ENOVWebBO<em>Xxxxx</em>.properties, where Xxxxx makes this file uniquely named.
+The Xxxxx could refer to the custom modeler on the server, or any other naming convention that is desired.
+The only requirement is that it is unique from any of the other custom properties files or base shipped properties files.
+</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="DefiningTheWebType"></a>Defining the web type characteristics</h3>
+<b>This section describes how to define the characteristics (inheritance, relationships, etc) for a LCA Navigator/3dcom web type.</b>
+<p>Runtime view subdirectories:
+	<b>	./resources/pprregistry/types/ENOVIA</b>
+</p>
+<p>Files:
+	<b>ENOVWebObject<em>WebType</em>.properties</b>
+	<b>ENOVWebLabels<em>WebType</em>_en.properties</b>
+<p>
+<p>
+Customization strategy:
+<ul>
+	<li><p>New files<p></li>
+	<li><p>No files copied from the product installation directories.</p></li>
+</ul>
+</p>
+<p>
+The detailed information about a web type is defined in the ENOVWebObject<em>WebType</em>.properties file, where WebType is the unique web type name.
+This properties files has many specialized sections that controls various functions in the web application.
+These sections of the properties file will be detailed in the appropriate sections of this customization document.
+The important information to put into the ENOVWebObject<em>WebType</em>.properties file is the Parent property.
+If the web type refers to a server type that has a supertype Yyyy, then the web type should have a Parent property that specifies the web type
+that maps to the server type Yyyy. The parent web type can be discovered by searching through the custom and shipped ENOVWebBO*.properties files.
+Example: The base   A new custom Action type CUSTOM.CUSTOMAction has been added to the LCA server and has APLAFL.AFLBaseAction as its supertype.
+Searching through the shipped ENOVWebBO*.properties files, it is determined that the Action web type refers to the APLAFL.AFLBaseAction server type.
+The following steps should be performed to correctly expose the new  CUSTOM.CUSTOMAction server type:
+<ul>
+	<li><p>1. A new web type CUSTOMAction should be defined (in a custom ENOVWebBO*. properties file) that maps to the CUSTOM.CUSTOMAction server type<p></li>
+	<li><p>2. In the ENOVWebObject<em>CUSTOMAction</em>.properties file, a Parent property should be added to set Parent=Action.</p></li>
+</ul>
+In addition to the base ENOVWebObject<em>WebType</em>.properties file, there is also a need to have a ENOVWebLabels<em>WebType</em>_en.properties file
+that defines the labels for the web type and its relationships.
+Although the subject of object relationships is not covered in this book, the file should still be defined.  The contents are very simple.
+<pre>
+#-----------------------------------------------------------------
+# This file defines the labels for the CUSTOMAction web type
+#-----------------------------------------------------------------
+Name=Priority Action
+
+#-----------------------------------------------------------------
+# Define the labels for any object relationships
+#   Syntax is Relationship.<em>Name</em>=Label
+#-----------------------------------------------------------------
+</pre>
+For languages other than US English, then properties files with the appropriate language extensions should be created.
+For example, the French properties file should be named ENOVWebObject<em>WebType</em>_fr.properties.
+</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="ExposingTheWebType"></a>Exposing the web type for search and quick search</h3>
+<b>This section will describe how to expose a new LCA Navigator Web Type on the user interface.</b>
+<p>Runtime view subdirectories:</p>
+<table>
+  <tr>
+	<b>./resources/pprregistry/search</b>
+	<p>Files:
+		<b><em>GroupFileName.WebType</em>.XMLSearchType</b>
+		<b><em>GroupFileName</em>.XMLSearchInfoGroup</b>
+	<p>
+	<b>./resources/msgcatalog</b>
+	<p>Files:
+		<b><em>Xxxxx</em>.CATNls</b>
+	<p>
+  </tr>
+</table>
+<p>
+Customization strategy:
+<ul>
+	<li><p>New files<p></li>
+	<li><p>No files copied from the product installation directories.</p></li>
+</ul>
+</p>
+<p>
+The LCA Navigator user interfaces uses the search group definition xml files to define the Environment and Type listings that are displayed in the user interface.
+This allows web types that represent server types from separate modelers to be presented in a single Environment on the user interface
+(such as the Change Management or Content Management environments that combine types from different modelers).
+However, this layer also prevents newly defined web types from being visible on the user interface.
+There are two strategies for adding new webs to the user interface:
+<ul>
+	<li><p>1. If the new web type should appear in an existing Environment group (for instance, adding a new Action subtype to the Change Management group), then a XMLSearchType file should be defined.
+	This file appends a new type to an existing group.<p></li>
+	<li><p>2. If the new web type should appear in a new Environment group, then a new XMLSearchInfoGroup file should be defined.
+	This file defines a new group and can contain a list of the types that belong to this group.</p></li>
+</ul>
+The contents of a XMLSearchType file are as follows:
+<pre>
+&lt;?xml version="1.0"?&gt;
+  &lt;DataType Name="WebType" Adapter="ENOVIA" Group="GroupName"
+   	MsgCatalog="Xxxxx"
+	QuickSearch="true"&gt;
+  &lt;QuickSearch attr="AttrID"/&gt;
+&lt;/DataType&gt;
+</pre>
+The DataType xml element attribute definitions are:
+<ul>
+	<li><p>Name the WebType value is the name of the web type being exposed on the search panel.<p></li>
+	<li><p>Adapter the value should always be ENOVIA, which is the internal name of the LCA adapter within the 3dcom infrastructure.</p></li>
+	<li><p>Group - the GroupName value is the internal group name of the group to which the type is being added.
+	This must match the Name attribute of the SearchGroup element in the XMLSearchInfoGroup file defining the group.</p></li>
+	<li><p>MsgCatalog - the Xxxxx value is the name of a CATNls file that contains the translated label for this web type.
+	Usually this is a new file created along with the search type file.  Multiple XMLSearchType files can share the same CATNls file.
+	The format of the entry in the CATNls file for this WebType is:
+// Provide translated labels for the search entities
+WebType = Label;
+</p></li>
+<li><p>QuickSearch this Boolean flag indicates if this type should be included in the Quick Search banner list of types.  Only the most frequently needed types should be included in the quick search list.
+If this value is true, then there must be at least one QuickSearch child elements under the DataType element.
+QuickSearch data element. The Quick Search banner provide the type selection and an input field to do the search, but provides no way to choose what attributes to do the search against.  So the QuickSearch elements represent the attributes against which a Quick Search banner search will be performed.
+The result will be a union of the searches for the user specified value against each of the specified attributes.
+<pre>attr</pre> attribute: This value is the name of an attribute on the webtype that will be compared to the user input value in the QuickSearch banner.
+<p></li>
+</ul>
+Example: The CUSTOMAction web type represents a new custom action object.   This new action subtype will be added to the Change Management environment (defined in LCAJChgMgmt.XMLSearchInfoGroup, group name is &#8220;ChgMgmt&#8221;).  The CUSTOMAction data type inherits a V_name field from the parent AFLBaseAction type.  There is also a custom V_keyword field that the user may do a quick search on.  The LCAJChgMgmt.CUSTOMAction.XMLSearchType file is defined as:
+
+<pre>
+&lt;?xml version="1.0"?&gt;
+  &lt;DataType Name="CUSTOMAction" Adapter="ENOVIA" Group="ChgMgmt"
+    MsgCatalog="CUSTOMLabels"
+	QuickSearch="true">
+  &lt;QuickSearch attr="V_name"/&gt;
+  &lt;QuickSearch attr="V_keyword"/&gt;
+&lt;/DataType&gt;
+</pre>
+
+The CUSTOMLabels.CATNls file provides translated labels for the search entities
+<pre>
+CUSTOMAction = Priority Action;
+</pre>
+When creating a new Environment group to contain the custom types, the steps are very similar.
+An outer SearchGroup xml element is used, with the same DataType xml elements to define the individual types.
+
+<pre>
+&lt;?xml version="1.0"?&gt;
+  &lt;SearchGroup Name="GroupName" Adapter="ENOVIA" MsgCatalog="Xxxxx"&gt;
+  &lt;DataType Name="WebType1" QuickSearch="true"&gt;
+  &lt;QuickSearch /&gt;
+  &lt;/DataType&gt;
+  &lt;DataType Name="WebType2" QuickSearch="false"/&gt;
+  &lt;DataType Name="WebType3" QuickSearch="false"/&gt;
+&lt;/SearchGroup&gt;
+</pre>
+
+The SearchGroup xml element attribute definitions are:
+<ul>
+	<li><p>Name: The GroupName value is the internal name of this group.  This name is the key value that will be looked up in the MsgCatalog to find the translated label for the Environment.<p></li>
+	<li><p>Adapter: The Adapter value should always be ENOVIA, which is the internal name of the LCA adapter within the 3dcom infrastructure.</p></li>
+	<li><p>MsgCatalog: The Xxxxx value is the name of a CATNls file that contains the translated label for this Environment group, as well as all of the data types declared in this group.
+	Usually this is a new file created along with the search group file.
+	The format of the entry in the CATNls file for this WebType is:
+		<pre>
+		// Provide a translated label for the Environment search group
+		GroupName = Label;
+
+		// Provide translated labels for the search entities
+		WebType1 = Label;
+		WebType2 = Label;
+		WebType3 = Label;
+		</pre></p>
+	</li>
+</ul>
+The DataType xml element is the same element that is used in the XMLSearchType files.
+Several attributes are defaulted from the SearchGroup parent element, such as the Group name and the MsgCatalog.
+If there is already a CATNls file that contain a label for the data type,
+then the DataType element can have a MsgCatalog value to reference this CATNls file.
+</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="MiscellaneousCustomization"></a>What is customization</h3>
+<p>This section contains several specific customizations that may be need to tailor the user interface to meet your customization requirements.</p>
+<ul>
+	<li><b><a href="#AddingANewSubtype">Adding a new subtype to the parent&#8217;s create panel</a></b></li>
+    <li><b><a href="#HidingARelationshipTab">Hiding a relationship tab in the Properties page</a></b></li>
+    <li><b><a href="#RELNavRelationships">RELNav Relationships</a></b></li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h3><a name="AddingANewSubtype"></a>Adding a new subtype to the parent&#8217;s create panel</h3>
+<b>This section describes how to add a new subtype to the parent type&#8217;s list of creatable types.</b>
+<p>Runtime view subdirectories:
+	<b>./docs/javacommon</b>
+</p>
+<p>Files:
+	<b>ENOVWebObject<em>Parent</em>.properties</b>
+</p>
+<p>
+Customization strategy:
+<ul>
+	<li><p>Copy properties file from the product installation directories.<p></li>
+	<li><p>Dual maintenance on this file is the responsibility of the customer.</p></li>
+</ul>
+</p>
+<p>The LCA Navigator user interface allows a create panel to list the various object subtypes that can be created.
+For instance, the Action create panel lists all of thee various Action subtypes and allows the user to select which one to create.
+When adding a new subtype to an object already exposed on the LCA Navigator user interface, this subtype can be added to the list
+on the parent type&#8217;s create.
+An alternative is to not add the new subtype to the parent create panel, but instead require the user to directly perform a create
+operation on the new subtype instead of the parent type.
+This avoids copying the parent type&#8217;s properties files from the original installation directories.
+Here are the steps to add a new subtype to the parent type&#8217;s create panel:
+<ul>
+	<li><p>1. If not already done, define the new subtype as a web type, and create a properties file to define the new subtype inheritance to the parent web type.<p></li>
+	<li><p>2. Copy the ENOVWebObjectParent.properties, where Parent is the parent web type, from the product installation directories to the customization directory.</p></li>
+    <li><p>3. Within this properties file, there is a &#8220;CreateTypes&#8221; property that defines the list of subtypes that will be displayed on the create panel.
+    	<ul>
+			<li><p>a. If this property does not exist in the file, then add it.
+			The list should contain both the parent type and the new subtype.
+			Whichever web type that appears first in the list will be the default type on the create panel.
+				<pre>
+				#----------------------------------------------------------------
+				# Create types
+				# Specify the subtypes that can be created
+				#    Syntax:
+				#      CreateTypes=Type;Type;Type
+				#----------------------------------------------------------------
+				CreateTypes=Document;CUSTOMDoc
+				</pre><p>
+			</li>
+			<li><p>b.	If the property already exists, then add the new subtype to the list. Whichever web type that appears first in the list will be the default type on the create panel.
+				<pre>
+				#----------------------------------------------------------------
+				# Create types
+				# Specify the subtypes that can be created
+				#    Syntax:
+				#      CreateTypes=Type;Type;Type
+				#----------------------------------------------------------------
+				CreateTypes=Action_Design;Action_Deliverable;Action_Manufacturing;Action_Maintenance;Action_Documentation;Action_SignOff;Action_PenetrationRequest;CUSTOMAction
+				</pre></p>
+			</li>
+		</ul>
+    <p></li>
+</ul>
+</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="HidingARelationshipTab"></a>Hiding a relationship tab in the Properties page</h3>
+<b>The Properties page for an object shows the object attributes as well as the related objects.
+Depending on the business process developed for use with LCA Navigator, there may be object relationship exposed on the Properties page that are never used by the end users.  In this case, the relationship can be hidden so that it will no longer appear on the Properties page.</b>
+<p>Runtime view subdirectories:
+	<b>./docs/javacommon</b>
+</p>
+<p>Files:
+	<b>ENOVWebObject<em>Xxxxx</em>.properties</b>
+</p>
+<p>
+Customization strategy:
+<ul>
+	<li><p>Update of custom web types in the customization directory.<p></li>
+	<li><p>Copy base web type properties file from the product installation directories.</p></li>
+	<li><p>Dual maintenance on base web type files is the responsibility of the customer.<p></li>
+</ul>
+</p>
+<p>
+The ENOVWebObject*.properties files define the object relationships for a web type.
+By default, the relationships are exposed on the Properties pages.
+However, an additional property can be added to the properties file in order to hide the relationship so that it does not appear.
+First, the web type for the displayed object must be determined.
+Then the internal relationship name must be determined that goes with the relationship tab that is to be hidden.
+The ENOVWebLabels*_en.properties file can be examined to see the relationship labels in order to find the internal relationship name.
+Once you know the web type and the internal relationship name, then perform the following steps:
+<ul>
+	<li><p>1. Copy the ENOVWebObjectWebType.properties, where WebType is the web type that needs to be modified,
+	from the product installation directories to the customization directory.<p></li>
+	<li><p>2. There may be a Relationship Flags section in the properties file.
+	If not create one at the bottom of the file and add the following information, where &#8216;Relationship&#8217; is the internal name of
+	the relationship that is to be hidden.
+		<pre>
+		#----------------------------------------------------------------
+		# Relationship Flags
+		# These property values allow you to hide a local or
+		# inherited relationship.
+		#    Syntax:
+		#      Rel.<Name>=Hide|Expose
+		#----------------------------------------------------------------
+		Rel.Relationship=Hide
+		</pre></p>
+	</li>
+</ul>
+</p>
+<ul>
+	<li><b><a href="#ENOVWebBOEnvironmentNameproperties">ENOVWebBOEnvironmentName.properties File</a></b></li>
+    <li><b><a href="#ChangingTheOrder">Changing the order in which the Properties tabs are presented</a></b></li>
+    <li><b><a href="#AddingAWebTypeToAnObject">Adding a web type to an object&#8217;s list of allowed attach types</a></b></li>
+    <li><b><a href="#ProgrammingUpdates">Programming updates to allow multi-select on attach</a></b></li>
+</ul>
+
+<h3><a name="ENOVWebBOEnvironmentNameproperties"></a>ENOVWebBOEnvironmentName.properties File</h3>
+<p>
+Defines Web Type to Type mapping:
+Files are located in ./resources/pprregistry/types/ENOVIA directory
+Format is:
+WebTypeName=ModelerName.ServerTypeName
+For custom BO types, the MODELER must be the custom modeler, but theTYPE must be the original BO type definition,
+not the custom type defined in the custom modeler.
+Example:  customDoc type would be: <em>CustomDoc=CUSTOM.ENOVIA_VPMDocFile</em>
+</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="ChangingTheOrder"></a>Changing the order in which the Properties tabs are presented</h3>
+Rel.display example:
+<em>Rel.display=AffectedObjects,Attachments,AllLinks,AssociatedObjects,History</em> (Names are internal names)
+<p align="center"><img border="0" src="images/Figure5.jpg" width="620" height="562"></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="AddingAWebTypeToAnObject"></a>Adding a web type to an object&#8217;s list of allowed attach types</h3>
+AttachTypes and AttachRelTypes example:
+Rel.n.AttachTypes= Part, DocRevision, Document, TOCFolder, Clash
+<em>Rel.n.AttachRelTypes= InputAffectedObject, OutputAffectedObject</em> (Names are internal names)
+<p align="center"><img border="0" src="images/Figure6.jpg" width="620" height="562"></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="ProgrammingUpdates"></a>Programming updates to allow multi-select on attach</h3>
+AttachCardinality example:
+<em>Rel.0.AttachCadinality=[MULTI]</em>
+<p align="center"><img border="0" src="images/Figure7.jpg" width="620" height="562"></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="RELNavRelationships"></a>RELNav Relationships</h3>
+<p>If a new type is added to LCANav or if new relationships are created for a given type, RELNav customization files
+must be updated for the new types to be displayed properly.</p>
+<p>
+RELNav uses domain files located in: <b>./resources/definitions/relgroups/</b>
+<ul>
+	<li><p>Adding a new type (or sub-type with different look) requires:
+		First a new file: MyRelNavCustoNameDefaultRelGroup.xml defining the new customized types.
+		In the file LCAMainRelGroup.xml add the corresponding entry:
+			<pre>
+			&lt;RelGroup Defn="MyRelNavCustoNameDefaultRelGroup" /&gt;
+			For each new type add in MyRelNavCustoNameDefaultRelGroup.xml the corresponding entry:
+
+     		&lt;!--  Relationship mapping for type TYPENAME  --&gt;
+			&lt;EntityMap MapName="TYPENAME"&gt;
+			&lt;EntityType Defn="LCAEntity"&gt;
+		  	&lt;EntityName>TYPENAME&lt;/EntityName&gt;
+		  	&lt;/EntityType&gt;
+			&lt;RelType Defn="LCARelationship" IsPrimary="true"&gt;
+		  	&lt;RelName&gt;RelationName0&lt;/RelName&gt;
+		  	&lt;/RelType&gt;
+			&lt;RelType Defn="LCACollectedRelationship"&gt;
+		  	&lt;RelName&gt;RelationName1&lt;/RelName&gt;
+		  	&lt;/RelType&gt;
+
+		    ...1 to n
+			&lt;RelType Defn="LCACollectedRelationship"&gt;
+		  	&lt;RelName&gt;RelationNameN&lt;/RelName&gt;
+			&lt;/RelType&gt;
+			</pre><p>
+	</li>
+	<li><p>Adding a new relationship requires a new entry like:
+			<pre>
+			&lt;RelType Defn="LCACollectedRelationship"&gt;
+		  	&lt;RelName&gt;RelationNameX&lt;/RelName&gt;
+  			&lt;/RelType&gt;
+			</pre></p>
+	</li>
+	<li><p>Adding a new subtype with exact same look as the parent requires a new entry like:
+  			<pre>
+  			&lt;EntityName&gt; TYPENAME &lt;/EntityName&gt;
+  			&lt;EntityName&gt;SubTypeName0&lt;/EntityName&gt;
+			...0 to N
+  			&lt;EntityName&gt;SubTypeNameN&lt;/EntityName&gt;
+  		 	</pre>
+			If necessary, assign the proper color to specific object status (See 3.1.1)
+			<p>
+	</li>
+</ul>
+
+</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="CommandDefinitionandImplementation"></a>What is customization</h3>
+<p>overview text</p>
+<ul>
+	<li><b><a href="#RegisteringCommandOnType">Registering Command on Type</a></b></li>
+    <li><b><a href="#CommandImplementation">Command Implementation</a></b></li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h3><a name="RegisteringCommandOnType"></a>Registering Command on Type</h3>
+<b>Registering new command commandName</b>
+<ul>
+	<li><p>Definition file located in: <b>./resources/pprregistry/command/definition</b>
+	This file named commandname.xml defines the following command basics:
+	-Name: 	The directory name where the specific java code for the command execution is located.
+	-Icon: 		The icon to be displayed in the toolbar or the contextual menu.
+	-Msgcatalog: The CATNls file where title and tooltip for this command are defined.
+	See example in 6.1
+	<p></li>
+	<li><p>3.3.1.2.	Assignment file (Command to Type mapping)
+	Assigning command commandName to type typeName
+	The command is assigned to a type through the assignment file (typename.xml).
+
+	Mapping entries consist of the following attributes:
+	-Name: 		Value is the above definition file name (commandname).
+	-multiRowEnabled:True or False.			Multi-row selection in list
+	-enablement:True, 	   False or Rule based. 	Command enablement for type
+	-listEnablement:True, False or Rule based. 	Cmd enablement type in list
+	-objEnablement:True, False or Rule based. 	Cmd enablement for type display
+	(In case of listEnablement or objEnablement value, enablement value is ignored).
+	-visibility:      True, False or Rule Based		Command visibility for type
+	-listVisibility: True, False or Rule Based 		Cmd visibility for type in list
+	-objVisibility: True, False or Rule Based 		Cmd visibility for type display
+	(In case of listVisibility or objVisibility value, visibility value is ignored).
+
+	The mapping follows the inheritance rule and a type derivedtypename , deriving from typename will be mapped the same way except if it redefines a different mapping (visibility,&#8230;) through an assignment file named derivedtypename.xml file and so on...
+	</p></li>
+	<li><p>3.3.1.3.	Rule file
+	In the rule based command case, the enablement or visibility attribute is the name of a the rule xml file  (RuleFileName.xml).
+	This file is the rule file definition:
+	xml rule files may either contain a predicate in the form of an attribute-value pair attributes, or specify a predicate java class or both (with AND operator).
+	The attribute-value pair is used for simple rules like
+	attr="isCompleted" value="false"
+	The predicate java class may do more complex checking
+
+	Predicate class definition
+	The new rule&#8217;s package name is (For code clarity purpose):
+	FwkName.ModuleName.custoruleName.
+	Rule class name is RuleFileName.java (For clarity purpose)
+
+
+	Example: actioncancelenable.xml
+		<pre>
+		&lt;Rule name="cancelenable"&gt;
+		&lt;Predicate operator="AND"&gt;
+  		&lt;Predicate attr="isCompleted" value="false" /&gt;
+  		&lt;Predicate class="com.ds.FwkName.ModuleName.custoruleName.CancelRuleClassName" /&gt;
+		&lt;/Predicate&gt;
+		&lt;/Rule&gt;
+		</pre><p>
+	</li>
+	<li><p>3.3.1.4.	Package file
+	The rule class is defined in a new package prefix of a new Java class
+		<pre>
+		&lt;Command Package&gt;
+		&lt;PackagePrefix Adapter="ENOVIA" Name="com.ds.FwkName.ModuleName " /&gt;
+		&lt;/CommandPackage&gt;
+		</pre><p>
+	</li>
+</ul>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="CommandImplementation"></a>Command Implementation</h3>
+<p>The command implementation consists of a new class in a new package.
+Package and class name must be:
+FwkName.ModuleName.command.commandname.ClassName
+
+commandname must be the xml file name (See above ) defining this command
+Either in:
+LCAJAppBase/cnext//resources/pprregistry/command/definition/commandname.xml. (Redefinition of an existing command for a subtype).
+Or in:
+FwrkName/cnext//resources/pprregistry/command/definition/commandname.xml, (New command for the new type).
+
+FwkName.ModuleName is defined in the package file
+
+There are two basic types of command:
+Commands which execute a server command.
+Commands which load a new screen(s) from which, a server command may be executed.
+
+For the first type the command definition suffices, but for the second one:
+-The command XMLDlg must be provided as well as the corresponding controller.
+-The corresponding CATNls file must also be created.
+</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has explained how to modify, create and expose object types.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

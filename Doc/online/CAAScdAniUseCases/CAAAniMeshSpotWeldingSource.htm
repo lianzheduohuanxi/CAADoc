@@ -1,0 +1,91 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshSpotWelding.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+<FONT COLOR="#008000">'   Purpose:      Open an analysis document</FONT>
+<FONT COLOR="#008000">'                 Create spot welding connection mesh part</FONT>
+<FONT COLOR="#008000">'                 assign the spot welding analysis connection as support</FONT>
+<FONT COLOR="#008000">'                 specify the global specifications</FONT>
+<FONT COLOR="#008000">'   Assumptions:   Looks for WeldConnection.CATAnalysis in the directory and surface Analysis Connection</FONT>
+<FONT COLOR="#008000">'   Author:       bmw</FONT>
+<FONT COLOR="#008000">'   Languages:    VBScript</FONT>
+<FONT COLOR="#008000">'   Locales:      English </FONT>
+<FONT COLOR="#008000">'   CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">' ***********************************************************************</FONT>
+
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">' Optional: allows to find the sample wherever it's installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">' ----------------------------------------------------------- </FONT>
+
+
+<FONT COLOR="#008000">' Open the Analysis document </FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">' Retrieve the analysis Manager </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManagar = oAnalysisDocument.Analysis
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+<FONT COLOR="#008000">' Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+<FONT COLOR="#008000">' Retrieve the analysis model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">'Retrieve the mesh manager and list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+<FONT COLOR="#008000">'Retrieve the connection design manager and connection</FONT>
+<FONT COLOR="#0000FF">Set </FONT>connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+<FONT COLOR="#0000FF">Set </FONT>connSet = connection.AnalysisSets
+<FONT COLOR="#0000FF">Set </FONT>conn = connSet.ItemByType("ConnectionDesignSet")
+<FONT COLOR="#0000FF">Set </FONT>entity = conn.AnalysisEntities
+<FONT COLOR="#0000FF">Set </FONT>surfConn  = entity.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
+
+<FONT COLOR="#008000">'Add new spot welding connection mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>spotWeldMesh = oAnalysisMeshParts.Add ("MSHPartConnWeldSpot") 
+
+<FONT COLOR="#008000">'Add assign the connection as reference</FONT>
+spotWeldMesh.AddSupportFromReference NOTHING, reference1
+
+<FONT COLOR="#008000">'Assign values to its global specifications</FONT>
+spotWeldMesh.SetGlobalSpecification "MaximalGap", "10.0 mm"
+spotWeldMesh.SetGlobalSpecification "MeshStep", "10.0 mm"
+spotWeldMesh.SetGlobalSpecification "StopUpdateOnError", 1
+spotWeldMesh.SetGlobalSpecification "SpotDiameter", "2.0 mm" 
+spotWeldMesh.SetGlobalSpecification "MiddleCombination", 3
+
+<FONT COLOR="#008000">'Update Mesh</FONT>
+spotWeldMesh.Update
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

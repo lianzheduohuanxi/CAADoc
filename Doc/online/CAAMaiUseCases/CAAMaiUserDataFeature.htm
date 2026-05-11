@@ -1,0 +1,343 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Implementing User Data Feature Editor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing User Data Feature Editor</h3>
+      <em>Implementing the CATIMfgUserDataFeature interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiUserDataFeature use case and explains
+      how to implement the <i>CATIMfgUserDataFeature</i> manufacturing
+      interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiUserDataFeature Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiUserDataFeature Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiUserDataFeature</a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#How">CAAMaiUserDataFeature</a><a href="#Where">
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b>In Short</b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the editor of a user data
+feature by implementing the <i>CATIMfgUserDataFeature</i> manufacturing
+interface. This involves the following:&nbsp;</p>
+<ul>
+  <li>Creating an extension class to implement <i>CATIMfgUserDataFeature</i> for
+    a user data feature</li>
+  <li>Implementing the GetEditor and GetNLSDescription methods of <i>CATIMfgUserDataFeature</i>
+    to:
+    <ul>
+      <li>Build the editor of the user data feature,</li>
+      <li>Retrieve its NLS description.</li>
+    </ul>
+    &nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiUserDataFeature Use Case</h3>
+<p>CAAMaiUserDataFeature is a use case of the CAAManufacturingItf.edu framework
+that illustrates ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiUserDataFeature Do</h4>
+<p>CAAMaiUserDataFeature runs with the Process document shown on <a href="#Fig1">Fig.1</a>
+that contains a Manufacturing Setup linked to a user data feature (through the
+interface CATIMfgUserDataAccess) and a Manufacturing Program linked to another
+user data feature.</p>
+<p>The use case builds the editor of this user data feature whose modelization
+is the following:</p>
+<ul>
+  <li>the late type is 'MyUserDataFeature'&nbsp;</li>
+  <li>&nbsp;it has one attribute of name 'MyAttribute' that is a Literal Feature
+    of type 'Mass'</li>
+</ul>
+<p>&nbsp;</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The CAAMaiUserDataFeature.CATProcess model</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMaiUserDataFeature.jpg" width="661" height="529"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiUserDataFeature</h4>
+<p>To launch CAAMaiUserDataFeature, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile CAAMaiUserDataFeature.m
+    module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiUserDataFeature.CATProcess file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>Using the Contextual Sub-menu the Part Operation.1 object, you retrieve a
+    'standards' menu item
+    <p><img border="0" src="images/CAAMaiUserDataFeature1.jpg" width="437" height="430">
+    <p>&nbsp;</li>
+  <li>This editor will appears as follows.
+    <p><img border="0" src="images/CAAMaiUserDataFeature2.jpg" width="168" height="117"></p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiUserDataFeature Code</h4>
+<p>The CAAMaiUserDataFeature use case is made of a class named <i>CAAEMaiUserDataFeature</i>
+located in the CAAMaiUserDataFeature.m module of the CAAManufacturingItf.edu
+framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiUserDataFeature.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiUserDataFeature.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are three logical steps in CAAMaiUserDataFeature:</p>
+<ol>
+  <li><a href="#Step1">Creating an Extension Class to Implement
+    CATIMfgUserDataFeature for a&nbsp; feature of type MyUserDataFeature</a></li>
+  <li><a href="#Step2">Implementing the GetEditor method</a></li>
+  <li><a href="#Step2">Implementing the GetNLSDescription method</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Extension Class to Implement
+CATIMfgUserDataFeature for a feature of type MyUserDataFeature</h4>
+<p>The extension class that will implement <i>CATIMfgUserDataFeature</i> is
+named <i>CAAEMaiUserDataFeature</i>. Creating this class is done is three sub
+steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiUserDataFeature</i> class header file:<br>
+    <table class="code">
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <pre>// System
+#include &quot;CATBaseUnknown.h&quot;</pre>
+          <pre>// Dialog
+#include &quot;CATDlgInclude.h&quot;
+
+class CAAEMaiUserDataFeature : public CATBaseUnknown
+{
+  // Used in conjonction with CATImplementClass in the .cpp file
+	CATDeclareClass;
+  
+public:</pre>
+          <pre>// Constructor and destructor</pre>
+          <pre>    CAAEMaiUserDataFeature();
+    virtual ~CAAEMaiUserDataFeature();
+ 
+// Implementation of the CATIMfgUserDataFeature interface</pre>
+          <pre>    HRESULT GetEditor (CATDialog *iFather, CATDlgFrame *&amp;oEditor);</pre>
+          <pre>    HRESULT GetNLSDescription (CATUnicodeString &amp;oNLSDescription);</pre>
+          <pre>  private:
+
+    // Copy constructor, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiUserDataFeature
+		(const CAAEMaiUserDataFeature&amp;iObjectToCopy);
+ 
+    // Assignment operator, not implemented
+    // Set as private to prevent from compiler automatic creation as public.
+    CAAEMaiUserDataFeature&amp; operator  = 
+		(const CAAEMaiUserDataFeature&amp;iObjectToCopy);
+ 
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserDataFeature</i> class C++-derives from <i>CATBaseUnknown</i>.
+    The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiUserDataFeature</i>
+    belongs to a component. The class has a constructor, a destructor, the
+    GetEditor and GetNLSDescription&nbsp; methods of&nbsp; <i>CATIMfgUserDataFeature</i>,
+    and a copy constructor. Note that the copy constructor is set as private.
+    This is very important for extensions. Since extensions must never be
+    directly instantiated by client applications, this prevents the compiler
+    from creating the copy constructor as public without you know. This copy
+    constructor is not implemented in the source file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiUserDataFeature</i> class source file. It begins as
+    follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgUserDataFeature.h&quot;
+<b>TIE_CATIMfgUserDataFeature(CAAEMaiUserDataFeature);</b>
+<b>CATImplementClass(</b><b>CAAEMaiUserDataFeature,
+                  DataExtension,
+                  CATBaseUnknown,
+                  MyUserDataFeature);
+</b>...
+HRESULT CAAEMaiUserDataFeature::<b>GetEditor</b>(CATDialog *iFather, CATDlgFrame * &amp;oEditor)
+{
+  HRESULT RC = S_OK;
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserDataFeature</i> class states that it implements the <i>CATIMfgUserDataFeature</i>
+    interface thanks to the <code>TIE_CATIMfgUserDataFeature</code> macro. The <code>CATImplementClass</code>
+    macro declares that the <i>CAAEMaiUserDataFeature</i> class is data
+    extension class, thanks to the <code>DataExtension</code> keyword, and that
+    it extends the feature whose type is <i>MyUserDataFeature</i>. The third
+    parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and
+    is unused for extensions.</p>
+  </li>
+  <li>Have a look on the dictionary
+    <p>The dictionary, that is a file named, for example in this case,
+    CAAManufacturingItf.edu.dico, whose directory's pathname is concatenated at
+    run time in the CATDictionaryPath environment variable, and containing the
+    following declaration to state that the <i>MyUserDataFeature</i>feature
+    implements the <i>CATIMfgUserDataFeature</i> interface, and whose code is
+    located in the libCAAMaiUserDataFeature shared library or DLL.&nbsp;</p>
+    <pre>MyUserDataFeature CATIMfgUserDataFeature libCAAMaiUserDataFeature</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the GetEditor method</h4>
+<p>The aim of this method is to create a frame and fill it with the editor of
+the feature. It creates a Frame, then looks for the attribute 'MyAttribute'
+thanks to the Object Specs Modeler interfaces, then&nbsp; reads the object that
+modelizes it (in this case a Literal Feature) and gets its editor thanks to the
+Literal Features interfaces.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+<font face="Courier New" size="2">// Creates a Frame</font></pre>
+      <pre><font face="Courier New" size="2">oEditor = new CATDlgFrame (iFather,CATString(&quot;Parameter 1&quot;));</font></pre>
+      <pre>  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a><a name="Step2"></a>Implementing the GetNLSDescription
+method</h4>
+<p>The aim of this method is to give the NLS string that will appear as name of
+the menu item (see figure above) and as name of the editor. In this use case,
+the string is hardcoded with 'Standards...'.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <font face="Courier New" size="2">
+      <p>// Builds the string that will appear in the menu item</p>
+      <p>&nbsp; oNLSDescription = CATUnicodeString(&quot;Standards...&quot;);</font></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,512 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating a Section View from a Plane</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Drafting</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating a Section View from a Plane</h3>
+     <p><i>How to create a section view with the cutting profile associative to 
+     a plane</i></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAADrwCreateSectionFromPlane use case. This 
+     use case explains how to create a generative section view defined by a 
+     cutting profile associative to a plane. Thus if the plane is moved, the 
+     section view will modified after update.</p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAADrwCreateSectionFromPlane Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAADrwCreateSectionFromPlane Do</a></li>
+         <li><a href="#How">How to Launch </a><a href="#What">
+         CAADrwCreateSectionFromPlane</a></li>
+         <li><a href="#Where">Where to Find the </a><a href="#What">
+         AADrwCreateViewFrom3D</a><a href="#Where"> Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to create a Drawing generative 
+ section view from a 3D Plane. </p>
+ <table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+   <tr>
+     <td width="100%">
+     <p align="center"><i>Fig 1: The part document containing the Plane 
+     &quot;PlaneForSection&quot;</i></td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <img border="0" src="images/CAADriCreateSectionFromPlane1.jpg" width="460" height="335"></td>
+   </tr>
+ </table>
+ <p align="left">The <i>PlaneForSection Plane (yellow plane in the viewer) </i>
+ allows you to manage the cutting profile of the Drawing Section View from the 
+ 3D document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAADrwCreateSectionFromPlane Use Case</h3>
+ <p>CAADrwCreateSectionFromPlane is a use case of the CAADraftingInterfaces.edu 
+ framework that illustrates DraftingInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAADrwCreateSectionFromPlane Do?</h4>
+ <table>
+   <caption>&nbsp;</caption>
+   <tr>
+     <td>
+     <p align="center"><i>Fig. 2: Drawing Document with the new Section view</i></td>
+   </tr>
+   <tr>
+     <td>
+     <img border="0" src="images/CAADriCreateSectionFromPlane2.jpg" width="348" height="206"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAADrwCreateSectionFromPlane</h4>
+ <p>To launch CAADrwCreateSectionFromPlane, you will need to set up the build 
+ time environment, then compile CAADrwCreateSectionFromPlane along with its 
+ prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>When you launch the use case, pass the full pathname of the Drawing file as 
+ argument. A Part file is delivery in the following path: 
+ CAADraftingInterfaces.edu\CNext\resources\graphic\PartWithPlaneAndSketchForSectionView.CATPart.
+ </p>
+ <ul>
+   <li>With Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:&gt; mkrun -c cmd
+CAADrwCreateSectionFromPlane c:\...\PartWithPlaneAndSketchForSectionView.CATPart c:\DrawingTestOutput.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ mkrun -c cmd
+CAADrwCreateSectionFromPlane /u/users/.../PartWithPlaneAndSketchForSectionView.CATPart /u/users/DrawingTestOutput.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAADrwCreateSectionFromPlane Code</h4>
+ <p>The CAADrwCreateSectionFromPlane use case is made of a single source file 
+ named CAADrwCreateSectionFromPlane.cpp located in the 
+ CAADrwCreateSectionFromPlane.m module of the CAADraftingInterfaces.edu 
+ framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateSectionFromPlane.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateSectionFromPlane.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are five steps in CAADrwCreatViewFrom3D:</p>
+ <ol>
+   <li><a href="#CreatingAndInitiliazing">Creating and Initializing the Document</a></li>
+   <li><a href="#Acces">Creating the Drawing in the Document</a></li>
+   <li><a href="#GettingPart">Retrieving the Part document and the yellow Plane 
+   &quot;PlaneForSection&quot;</a></li>
+   <li><a href="#CreateViewFromSkethInDrawingDoc">Creating the Section View from 
+   the Plane &quot;PlaneForSection&quot;</a></li>
+   <li><a href="#Saving">Saving the Document and Exiting</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="CreatingAndInitiliazing"></a>Creating and Initializing the 
+ Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main(int iArgc, // Number of arguments (2) 
+char** iArgv) // Path to the new *.CATDrawing document
+{
+// Check arguments
+if(3 != iArgc) return 1;
+const char *pfileNamePart = iArgv[1];
+const char *pfileNameOut = iArgv[2];
+int code_err = 1;
+
+
+// CREATE THE SESSION
+// ==================
+CATSession *pSampleSession = NULL;
+HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+if (FAILED(hr)) return 1;</pre>
+     <pre>...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for loading a CATIA document [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Acces"></a>Creating the Drawing in the Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+   // DRAWING DOCUMENT CREATION
+   // ===============================
+   CATDocument* pNewDoc = NULL;
+   CATDocumentServices::New(&quot;CATDrawing&quot;, pNewDoc); 
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The other steps to fully initialize the drawing document are included in the 
+ specific sub program, <i>CreateViewFrom3DInDrawingDoc</i>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="GettingPart"></a>Retrieving the Part Document and the Plane 
+ &quot;PlaneForSection&quot;</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// READ THE PART DOCUMENT AND GET THE APPROPRIATE SKETCH
+// =============================================================
+CATDocument *pDocPart = NULL;
+if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) &amp;&amp; pDocPart)
+{
+  CATInit_var spInitOnDoc(pDocPart);
+  if(NULL_var != spInitOnDoc)
+  {
+    // Retrieves the root container
+    CATIPrtContainer * piPrtCont = (CATIPrtContainer*) spInitOnDoc-&gt;GetRootContainer(&quot;CATIPrtContainer&quot;); 
+    if (piPrtCont)
+    {
+      // Get the part feature of the container.
+      CATIPrtPart_var spPart = piPrtCont-&gt;GetPart();
+
+      // Get the appropriate plane
+      CATIDescendants *piDescPart=NULL;
+      if (SUCCEEDED(spPart-&gt;QueryInterface(IID_CATIDescendants,(void**)&amp;piDescPart)))
+      {
+        CATListValCATISpecObject_var listFeatures;
+
+        piDescPart-&gt;GetAllChildren (&quot;CATPlane&quot;,listFeatures) ;
+
+        int nbChilds = listFeatures.Size();
+        CATISpecObject_var spFeat;
+        for (int i = 1; i &lt;= nbChilds; i++)
+        {
+          spFeat = listFeatures[i]; 
+          if (NULL_var != spFeat)
+          {
+            CATPlane* piPlane = NULL;
+            if (SUCCEEDED(spFeat-&gt;QueryInterface(IID_CATPlane, (void**)&amp;piPlane)))
+            {
+              CATIAlias *piPlaneAlias = NULL;
+              if (SUCCEEDED(piPlane-&gt;QueryInterface(IID_CATIAlias, (void**)&amp;piPlaneAlias)))
+              {
+                CATUnicodeString PlaneName = piPlaneAlias-&gt;GetAlias();
+	        const CATUnicodeString PlaneSection_UC = &quot;PlaneForSection&quot;;
+                if (PlaneName == PlaneSection_UC)
+                  hr = CreateSectionViewFromPlanInDrawingDoc(pNewDoc, piPlane);
+
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>All the planes in the Part document are retrieved by using the <code>
+ GetAllChildren</code> method of the <i>CATIDescendants</i> interface. The 
+ appropriate plane is extracted from the list thanks to the <code>GetAlias</code> 
+ method of the <i>CATIAlias</i> interface.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="CreateViewFromSkethInDrawingDoc"></a>Creating the Section View 
+ from the Plane &quot;PlaneForSection&quot;</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+     <pre>// -------------------------------------------------------------------------------------------------------------------------------------------------------
+// Sub program to create an associative section view from Plane.
+// -------------------------------------------------------------------------------------------------------------------------------------------------------
+HRESULT CreateSectionViewFromPlanInDrawingDoc(CATDocument *ipNewDoc, CATPlane*ipiPlane)
+{
+  HRESULT hr = E_FAIL;
+
+  if (ipNewDoc &amp;&amp; ipiPlane)
+  {
+    // DRAWING STANDARD CREATION
+    // ===============================
+
+    // Gets the drawing feature using the CATIDftDocumentServices interface
+    CATIDftDrawing *piDftDrawing = NULL;
+    CATIDftDocumentServices *piDftDocServices = NULL;
+    CATIContainer_var spDrwCont;
+    if (SUCCEEDED(ipNewDoc-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+    {
+      piDftDocServices-&gt;GetDrawing(IID_CATIDftDrawing, (void **)&amp;piDftDrawing);
+      piDftDocServices-&gt;Release(); 
+      piDftDocServices = NULL;
+      if (piDftDrawing)
+      {
+        CATISpecObject *piDrawingSO=NULL;
+        if (SUCCEEDED(piDftDrawing-&gt;QueryInterface(IID_CATISpecObject,(void **)&amp;piDrawingSO)))
+        {
+          spDrwCont = piDrawingSO-&gt;GetFeatContainer();
+          if (NULL_var != spDrwCont)
+          {
+            CATIDftStandardManager *piStdmgr = NULL;
+            hr = spDrwCont-&gt;QueryInterface(IID_CATIDftStandardManager,(void**)&amp;piStdmgr);
+            if (SUCCEEDED(hr))
+            {
+              // Find a standard in the list of allowed standards (ie. the list of .CATDrwSTD files in the reffiles directory)
+              CATIStringList *piListstd = NULL;
+              if ( SUCCEEDED(piStdmgr-&gt;GetAvailableStandards(&amp;piListstd)) &amp;&amp; piListstd )
+              {
+                unsigned int nbrstd = 0;
+                piListstd-&gt;Count(&amp;nbrstd);
+                for (unsigned int indice = 0; indice &lt; nbrstd; indice ++)
+                {
+                  wchar_t *wstd = NULL;
+                  if ( SUCCEEDED ( piListstd-&gt;Item ( indice, &amp;wstd ) ) &amp;&amp; wstd )
+                  {
+                    CATUnicodeString stdname;
+                    const CATUnicodeString ISO_UncS = &quot;ISO&quot;;
+		    stdname.BuildFromWChar(wstd);
+		    if ( stdname == ISO_UncS ) 
+                    {
+                      // Import the ISO standard in the document
+                      piStdmgr-&gt;ImportStandard (wstd);
+                      break;
+                    }
+                    delete[] wstd; wstd = NULL;
+                  }
+                }
+                piListstd-&gt;Release(); piListstd=NULL; 
+              }
+              piStdmgr-&gt;Release (); piStdmgr=NULL;
+            }
+          }
+
+          // Creation of new generative seection view from 3D Sketch in the active sheet of the Drawing Document
+          CATIDftView *piDftSectionViewFrom3D = NULL;
+          CATIDftSheet *piDftSheet = NULL;
+          piDftDrawing-&gt;GetActiveSheet(&amp;piDftSheet);
+
+          // View anchor point definition
+          double ptOrigin[2] = {150.0,150.0};
+          CATMathVector normalSketch;
+          CATI2DLine_var spFirstLine;
+
+          CATIDftGenViewFactory *piDftGenViewFact = NULL;
+          if (piDftSheet &amp;&amp; SUCCEEDED(piDftSheet-&gt;QueryInterface(IID_CATIDftGenViewFactory,(void **)&amp;piDftGenViewFact))) 
+          {
+            // vecPro argument compute:
+            // VecPro must be a direction perpandicular to the direction of the cutting profile defined by two extremities points and included in the plane.
+            CATIGeometricalElement *piGeomElem = NULL;
+            if (SUCCEEDED(ipiPlane-&gt;QueryInterface(CATIGeometricalElement::ClassId(), (void**) &amp;piGeomElem)))
+            {
+              CATCell_var spCell;
+              CATBody_var spBody;
+              spBody = piGeomElem-&gt;GetBodyResult();
+              spCell = piGeomElem-&gt;GetGeometryResult();
+              if (NULL_var == spCell &amp;&amp; NULL_var != spBody)
+              {
+                CATLISTP(CATCell) AllFaces;
+                spBody-&gt;GetAllCells(AllFaces, 2);
+                int FaceCount = AllFaces.Size();
+                for (int i = 1 ; i &lt;= FaceCount; i++)
+                {
+                  if (AllFaces[i])
+                  {
+                    spCell = CATCell_var(AllFaces[i]);
+                    break;
+                  }
+                }
+              }
+              CATMathPlane mathPlane;
+              ipiPlane-&gt;GetAxis(mathPlane);
+              CATMathPoint iLimitPoints[2];</pre>
+     <pre>              double Pt1Coord[2] = {-100.0,0.0};
+              double Pt2Coord[2] = {100.0,0.0};
+              mathPlane.EvalPoint(Pt1Coord[0],Pt1Coord[1],iLimitPoints[0]); 
+              mathPlane.EvalPoint(Pt2Coord[0],Pt2Coord[1],iLimitPoints[1]); 
+              CATMathVector vecProfile = iLimitPoints[1] - iLimitPoints[0];
+              CATMathVector vecNormalToPlane;
+              mathPlane.GetNormal (vecNormalToPlane);
+              CATMathVector ProVec = vecNormalToPlane^vecProfile;
+              CATMathDirection vecPro;
+              vecPro.SetCoord(ProVec.GetX(),ProVec.GetY(),ProVec.GetZ());
+
+              // Offset
+              int viewProfile = 0;
+
+              // Section View defined by a plane
+              CATISketch *ipi3DSketch = NULL;
+
+              // Plane defined in Part Document
+              CATIProduct *piProduct= NULL;
+              hr = piDftGenViewFact-&gt;CreateStandAloneSectionView(ptOrigin, DftSectionView, vecPro,viewProfile, ipi3DSketch,spCell,spBody,iLimitPoints, piProduct,
+ &amp;piDftSectionViewFrom3D);
+              piGeomElem-&gt;Release();piGeomElem=NULL;
+            }
+            piDftGenViewFact-&gt;Release();piDftGenViewFact=NULL;
+          }
+
+          piDrawingSO-&gt;Release();
+          piDrawingSO=NULL;
+        }
+        piDftDrawing-&gt;Release(); 
+        piDftDrawing = NULL;
+      }
+    }
+  } 
+  return hr;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The sub program <code>CreateSectionViewFromPlaneInDrawingDoc</code> create a 
+ Section View from a Plane by using the method <code>CreateStandAloneSectionView</code><i>
+ </i>of the <i>CATIDftGenViewFactory</i> interface. This interface is 
+ implemented by the Sheet. the Drawing Standard has to be initialized before the 
+ Drawing View creation.</p>
+ <p>Main arguments to initialize are:</p>
+ <ul>
+   <li><code>ptOrigin</code>: Anchor point of the section view</li>
+   <li><code>DftSectionView</code>: Type of the Section</li>
+   <li><code>VecPro</code>: <code>VecPro</code> must be a direction 
+   perpandicular to the direction of the cutting profile defined by two 
+   extremities points and included in the plane.<br>
+   The <code>Vecpro</code> orientation informs the system which part will be 
+   drawn in the section view.</li>
+   <li><code>spCell</code> and <code>spBody</code> characterize the plane in the 
+   Part document.</li>
+   <li><code>iLimitPoints</code>: the coordinates of 3D points to define the 
+   limits of the profile.</li>
+ </ul>
+ <p>The other arguments are useless in this sample.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Saving"></a>Saving the Document and Exiting</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// SAVE THE RESULT
+// =================
+if (pNewDoc)
+{
+  CATDocumentServices::SaveAs(*pNewDoc, (char *)pfileNameOut);
+  CATDocumentServices::Remove (*pNewDoc);
+}
+
+//ENDS SESSION AND DROPS DOCUMENT
+//===================================== 
+if (pDocPart)
+  CATDocumentServices::Remove (*pDocPart);
+
+::Delete_Session(&quot;SampleSession&quot;);
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for saving a newly created CATIA 
+ document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the way to :</p>
+ <ol>
+   <li>Open a Part document</li>
+   <li>Retrieve the appropriate sketch in the Part document</li>
+   <li>Create a Drawing document, and initialize the standard</li>
+   <li>Create a section view from the plane by using <code>
+   CreateStandAloneSectionView</code> method of the <i>CATIDftGenViewFactory</i></li>
+   <li>Save the Drawing document.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">
+     Loading a Document</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

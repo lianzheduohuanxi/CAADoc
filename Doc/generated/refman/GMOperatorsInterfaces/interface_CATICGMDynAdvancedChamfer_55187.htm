@@ -1,0 +1,197 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMDynAdvancedChamfer</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMDynAdvancedChamfer"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMDynAdvancedChamfer</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMDynAdvancedChamfer_55187','CATICGMDynAdvancedChamfer','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMDynAdvancedChamfer</b>
+</p>
+<p>
+<b><i> Class defining the operator to chamfer edges of a 3D body or a skin body.</i></b><br>
+
+ This operator offers more capabilities that <tt>CATICGMDynChamfer</tt> and 
+ generates a result in cases where <tt>CATICGMDynChamfer</tt> fails.
+ <br>Several chamfering operations (called ribbons, <tt>CATDynChamferRibbon</tt>) 
+ can be defined in the same operator. 
+ By default, a ribbon is automatically propagated by following the tangential
+ continuity of its support, but this propagation can be switched off.
+<br>
+ The <tt>CATICGMDynAdvancedChamfer</tt> operator follows the global frame of the topological 
+ operators and satisfies the smart mechanism: 
+ the input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input bodies.
+<ul>
+ <li>A <tt>CATICGMDynAdvancedChamfer</tt> operator is created with the <tt>CATCGMCreateDynAdvancedChamfer</tt> global function:
+ It must be directly released with the <tt>Release</tt> method after use. It is not streamable. 
+<li>Options can be precised (such as the faces or edges to chamfer) with the appropriate methods, before
+ asking for the computation with the <tt>Run</tt> method. 
+<li>The result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+</ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#SetApproxChamferMode()"><b>SetApproxChamferMode</b></a>()
+<dd>  Sets the approx mode - The chamfer distances will not be respected.
+ <dt> o 
+    <a href="#SetBadShapeTreatmentOn()"><b>SetBadShapeTreatmentOn</b></a>()
+<dd>  Turns on the mode for the treatment of bad shapes, if encountered.
+ <dt> o 
+    <a href="#SetContinuityLevel(CATFrFContinuity,CATPositiveLength)"><b>SetContinuityLevel</b></a>(CATFrFContinuity,CATPositiveLength)
+<dd>  Sets internal continuity level of chamfer ribbon
+ 
+ <dt> o 
+    <a href="#SetCornerCap()"><b>SetCornerCap</b></a>()
+<dd>  Activates "cap" shape of chamfer corners
+ <dt> o 
+    <a href="#SetKeepFeature(CATBoolean)"><b>SetKeepFeature</b></a>(CATBoolean)
+<dd>  To keep features that are entirely engulfed by the result of a chamfer operation the method SetKeepFeature should be used.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="SetApproxChamferMode"></a><a name="SetApproxChamferMode()"></a> <dt> o <b>SetApproxChamferMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetApproxChamferMode</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the approx mode - The chamfer distances will not be respected.
+ Useful to avoid twists and bad shapes.
+ Only D1D2 type chamfer supported currently.
+</dl>
+<a name="SetBadShapeTreatmentOn"></a><a name="SetBadShapeTreatmentOn()"></a> <dt> o <b>SetBadShapeTreatmentOn</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetBadShapeTreatmentOn</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Turns on the mode for the treatment of bad shapes, if encountered. 
+ It is recommended that you always call this method after creating this chamfer operator.
+</dl>
+<a name="SetContinuityLevel"></a><a name="SetContinuityLevel(CATFrFContinuity,CATPositiveLength)"></a> <dt> o <b>SetContinuityLevel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetContinuityLevel</b>(<td> const <script type="text/javascript"> activateLink('CATFrFContinuity','CATFrFContinuity')</script> <td><tt>iContinuityLevel</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPositiveLength','CATPositiveLength')</script> <td><tt>iTolerance</tt><td><tt>= 0.</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets internal continuity level of chamfer ribbon
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContinuityLevel</tt>
+   <dd> Continuity level requested. Use either CATFrFPointCont or CATFrFTangentCont. Default is CATFrFPointCont.
+ </dd>
+    <dt><tt> iTolerance</tt>
+   <dd> Maximum deformation allowed to achieve the continuity. Not used as of now.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCornerCap"></a><a name="SetCornerCap()"></a> <dt> o <b>SetCornerCap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCornerCap</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Activates "cap" shape of chamfer corners
+</dl>
+<a name="SetKeepFeature"></a><a name="SetKeepFeature(CATBoolean)"></a> <dt> o <b>SetKeepFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetKeepFeature</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iKeepFeature</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ To keep features that are entirely engulfed by the result of a chamfer operation the method SetKeepFeature should be used.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iKeepFeature</tt>
+   <dd> Keep feature option: CATTrue – feature kept; CATFalse – feature not kept. 
+ By default a chamfer operation does not keep any feature that isn’t interfering with the boundary of the chamfer.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMDynAdvancedChamfer.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

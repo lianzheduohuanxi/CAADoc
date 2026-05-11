@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperators Class CATTopSimplify</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperators.htm" href="../TopologicalOperators.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperators";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopSimplify"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperators <script type="text/javascript" > writeClassCharacteristic(); </script> CATTopSimplify</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTopSimplify_31051','CATTopSimplify','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTopSimplify</b>
+</p>
+<p>
+<b><i> Class representing the operator that "simplifies" a body or a part of a body.</i></b><br>
+
+ <br>
+ The simplification operation consists in removing the cells which are not needed 
+ for a consistent body topology. 
+ <br>
+ This operation applies to 3D, 2D and 1D bodies:
+ <ul>
+ <li>In a solid made up of several cells of CATVolume type, volumes can be merged. The faces between the volumes
+ to be simplified are then removed while some faces and edges are merged.
+ <li>In a skin made up of several cells of CATFace type, faces can be merged. The edges between the faces
+ to be simplified are then removed while some edges are merged.
+ <li>In a wire made up of several cells of CATEdge type, edges can be merged.
+ The vertices between the edges to be simplified are then removed. 
+ </ul>
+ The simplification is achieved as far as the geometric modeler rules are satisfied, for example, the C2 continuity
+ criteria must be fulfilled all over the faces to be simplified on a skin.
+ <br>The CATTopSimplify operator follows the global frame of the topological operators
+ and satisfies the smart mechanism: the
+ input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input bodies.
+ <ul>
+ <li>A CATTopSimplify operator is created with the <tt>CATCreateTopSimplify</tt> global function.
+ It must be directly deleted with the usual C++ <tt>delete</tt> operator after use. 
+ It is not streamable. 
+ <li>The computation is done by the <tt>Run</tt> function. 
+ <li>The result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric container, after the operator deletion.
+ </ul>
+ <ul>
+ <li>Volumes, faces or edges can be simplified.
+ <li>During the simplification, new cells are created to replace several adjacent cells 
+ linked to the same or equivalent geometry. For example, if a skin made up of two faces
+ relying on the same surface is simplified, a new face replacing the two initial faces is created
+ <li>The simplification can only be done between adjacent cells of the same domain
+ <li>The simplification of edges bordering faces can only be achieved from a 3D or 2D body whose 
+ volumes or faces have already been simplified. This case is unlikely to happen as
+ the simplication process operates for the cells of all dimensions in a body.
+ <li>To specify which part of the body is to be simplified, you can use either <tt>SetCellsToRemove</tt> or
+ <tt>SetCellsToSimplify</tt>. However these methods are mutually exclusive. For example, to simplify 
+ a solid, you must define either the faces to be removed or the volumes to be simplified.
+ <li>To enhance performance, it is strongly recommended to use the <tt>SetCellsToSimplify</tt> 
+ method, if you want to simplify only some cells and not the whole body.
+ </ul>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATTopSimplify()"><b>~CATTopSimplify</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#EnableMaximalSimplification()"><b>EnableMaximalSimplification</b></a>()
+<dd>  Enables the maximum simplification regime.
+ <dt> o 
+    <a href="#EnableTolerantSimplification(double)"><b>EnableTolerantSimplification</b></a>(double)
+<dd>  Turns on tolerant simplification.
+ <dt> o 
+    <a href="#GetResult()"><b>GetResult</b></a>()
+<dd>  Returns a pointer to the resulting body.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetCellsToRemove(CATLISTP(CATCell)&amp;)"><b>SetCellsToRemove</b></a>(CATLISTP(CATCell)&amp;)
+<dd>  Defines the cells to remove during simplification.
+ <dt> o 
+    <a href="#SetCellsToSimplify(CATLISTP(CATCell)&amp;)"><b>SetCellsToSimplify</b></a>(CATLISTP(CATCell)&amp;)
+<dd>  Defines the cells to simplify.
+ <dt> o 
+    <a href="#SetFreezeMode(short)"><b>SetFreezeMode</b></a>(short)
+<dd>  Defines the state of the resulting body.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATTopSimplify"></a><a name="~CATTopSimplify()"></a> <dt> o <b>~CATTopSimplify</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATTopSimplify</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="EnableMaximalSimplification"></a><a name="EnableMaximalSimplification()"></a> <dt> o <b>EnableMaximalSimplification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EnableMaximalSimplification</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Enables the maximum simplification regime. In some scenarious better simplification may 
+ be achieved at the expense of a slight performance degradation of the operator.
+</dl>
+<a name="EnableTolerantSimplification"></a><a name="EnableTolerantSimplification(double)"></a> <dt> o <b>EnableTolerantSimplification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EnableTolerantSimplification</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRelativeTolerance</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Turns on tolerant simplification.
+ The tolerance is specified as a multplier of the model resolution and is used solely
+ to compare the closeness of two surfaces.  Edge gaps may exceed this tolerance, but may
+ not be larger than 100 * model resolution.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRelativeTolerance</tt>
+   <dd> The value by which to multiply the model resolution.  The permissible values range from 1e-9 to 100.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult()"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody*')</script>  <b>GetResult</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the resulting body.
+ <br> Must be called after the <tt>Run</tt> method only once. A second call returns a <tt>NULL</tt>
+ pointer.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the resulting body. Use 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> if you do not want to keep it.
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs <tt>this</tt> operator.
+</dl>
+<a name="SetCellsToRemove"></a><a name="SetCellsToRemove(CATLISTP(CATCell)&amp;)"></a> <dt> o <b>SetCellsToRemove</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToRemove</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)&amp;')</script> <td><tt>iCellsToRemove</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the cells to remove during simplification.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCellsToRemove</tt>
+   <dd> The list of cells to remove. This restricts the simplification to the cells bounded
+ to these cells only.
+ This method can not be called together with the <tt>SetCellsToSimplify</tt> method.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCellsToSimplify"></a><a name="SetCellsToSimplify(CATLISTP(CATCell)&amp;)"></a> <dt> o <b>SetCellsToSimplify</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCellsToSimplify</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)&amp;')</script> <td><tt>iCellsToSimplify</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the cells to simplify.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCellsToSimplify</tt>
+   <dd> The list of cells to simplify. This restricts the simplification to these cells only.
+ This method can not be called together with the <tt>SetCellsToRemove</tt> method.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFreezeMode"></a><a name="SetFreezeMode(short)"></a> <dt> o <b>SetFreezeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFreezeMode</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iMode</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the state of the resulting body.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The state of the resulting body. 
+ <br><b>Legal values</b>:
+ <dl>
+ <dt>0</dt><dd>The resulting CATBody is not frozen: it can be modified afterwards.
+ <dt>1</dt><dd>The resulting CATBody is frozen: it cannot be modified afterwards.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopSimplify.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalOperators</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

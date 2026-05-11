@@ -1,0 +1,322 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Intersecting a Curve with a Surface</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Intersecting a Curve with a Surface</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CAAGMModelIntersect use case illustrates how to intersect a curve 
+		with a surface by using the <em>CATICGMIntersectionCrvSur</em> operator.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMModelIntersect Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelIntersect Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelIntersect</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelIntersect Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case [<a href="#References">1</a>] is intended to help you to use the 
+CATICGMIntersectionCrvSur operator. See [<a href="#References">2</a>] for an overview 
+of this type of operators.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelIntersect Use Case</h2>
+<p>CAAGMModelIntersect is a use case of the CAAGMModelInterfaces.edu framework.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelIntersect Do</h3>
+<p>This use case creates the input data to be passed to the CATICGMIntersectionCrvSur 
+operator (a line and a cylinder). The result can be optionally saved into an NCGM 
+container and displayed using the CAAGMModelGemBrowser use case [<a href="#References">3</a>].</p>
+<table>
+	<caption>Fig. 1: The Geometry of the CAAGMModelIntersect Use Case</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmGopIntersect1.gif" alt="Use Case Data" width="480" height="384"></td>
+		<td>This use case illustrates the global scheme of the geometric operators 
+		and takes the curve-surface intersection operator as example. The curve 
+		is a line, and the surface a cylinder. The operator being independent of 
+		the type of curve or surface, any kind of curve or surface can be used in 
+		the same way.</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelIntersect </h3>
+<p>To launch CAAGMModelIntersect, you will need to set up the build time environment, 
+then compile CAAGMModelIntersect.m along with its prerequisites, set up the run 
+time environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMModelIntersect with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p>CAAGMModelIntersect <code>e:\Intersection.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case [<a href="#References">3</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelIntersect Code</h3>
+<p>The CAAGMModelIntersect use case is made of a main named CAAGopIntersect.cpp 
+located in the CAAGMModelIntersect .m module of the CAAGMModelInterfaces.edu framework:</p>
+<p><code>InstallRootDirectory\CAAGMModelInterfaces.edu\CAAGMModelIntersect.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The initial step which consists in creating the geometry factory as well as the 
+last step which consists in writing the model and closing the factory are described 
+in . The coding steps dedicated to the CATICGMIntersectionCrvSur operator are explained 
+below:</p>
+<ol>
+	<li>Creating the Geometry Factory [<a href="#References">1</a>].</li>
+	<li><a href="#Creates the Line and Cylinder to Intersect">Creating the Line 
+	and Cylinder to Intersect</a>.</li>
+	<li><a href="#Basic Mode">Using the BASIC Mode</a> [<a href="#References">2</a>]
+	<ul>
+		<li>Creating the operator.</li>
+		<li>Getting the results by using the iterators.</li>
+		<li>Deleting the operator.</li>
+	</ul>
+	</li>
+	<li><a href="#ADVANCED Mode">Using the ADVANCED Mode</a> [<a href="#References">2</a>]
+	<ul>
+		<li>Creating the operator.</li>
+		<li>Running.</li>
+		<li>Getting the results.</li>
+		<li>Modifying input parameters.</li>
+		<li>Running again.</li>
+		<li>Deleting the operator.</li>
+	</ul>
+	</li>
+	<li>Writing the Model and Closing the Factory [<a href="#References">1</a>].</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Line and Cylinder to Intersect"></a>Creating the Line and 
+Cylinder to Intersect</h3>
+<pre class="code">// ------------ line passing thru (0,0,0), of direction (1.,1.,0)
+CATLine * piLine = piGeomFactory-&gt;<strong>CreateLine</strong>(CATMathO,     // (0,0,0) math point
+                                             CATMathVector(1.,1.,0.) );
+if (NULL==piLine) 
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}
+//
+// ------------ cylinder
+double radius = 10.;
+double axisStart = -50.;
+double axisEnd = 50.;
+double angleStart = 0.;
+double angleEnd = CAT2PI;
+CATCylinder* piCylinder = piGeomFactory-&gt;<strong>CreateCylinder</strong>(CATMathOIJK, // canonical axis system
+                                                        radius,
+                                                        axisStart,
+                                                        axisEnd,
+                                                        angleStart,
+                                                        angleEnd);
+if (NULL==piCylinder) 
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}</pre>
+<p>The geometry is created by the <code>CATGeoFactory</code> with the <code>CreateLine</code> 
+and <code>CreateCylinder</code> methods.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Basic Mode"></a>Using the BASIC Mode</h3>
+<p>In this mode, you must use the operator only once with the input parameters. 
+The results are retrieved with a point iterator which</p>
+<ul>
+	<li>Retrieves the number of solution points: <code>GetNumberOfPoints</code>.</li>
+	<li>Skips to the next point: <code>NextPoint</code>.</li>
+	<li>Creates the current geometric point: <code>GetCartesianPoint</code>.</li>
+</ul>
+<pre class="code">//  creation and run
+CATICGMIntersectionCrvSur* pIntOp = <strong>::CATCGMCreateIntersection</strong>(
+                       piGeomFactory,   // geometric factory 
+                       piLine,          // geometric line
+                       piCylinder,      // geometric cylinder
+                       <strong>BASIC</strong>);          // the mode (default value)
+//
+// <a name="get the results"></a>get the results
+if (NULL == pIntOp) return (3);
+long nbPoints = pIntOp-&gt;<strong>GetNumberOfPoints</strong>();
+
+cout &lt;&lt; &quot;Basic case: Number of intersection points: &quot;&lt;&lt; nbPoints 
+     &lt;&lt; endl;
+if (0 != nbPoints) 
+{
+  // iterator on the resulting points
+  pIntOp-&gt;<strong>BeginningPoint</strong>();	         // initialization
+  while(TRUE== (pIntOp-&gt;<strong>NextPoint</strong>()) )   // loop on the resulting points
+  {
+    // create the geometric point
+    CATCartesianPoint* piPoint=pIntOp-&gt;<strong>GetCartesianPoint</strong>(); 
+    double x,y,z;
+    if (NULL != piPoint)
+    {
+      piPoint-&gt;GetCoord(x,y,z);
+      cout &lt;&lt; &quot; X= &quot;&lt;&lt; x &lt;&lt; &quot; Y= &quot;&lt;&lt; y &lt;&lt; &quot; Z= &quot;&lt;&lt; z &lt;&lt;endl;
+      // remove the point if you do not want to keep it
+      piGeomFactory-&gt;<strong>Remove</strong>(piPoint); 
+    }                          
+  }
+}
+// delete the operator
+<strong>pIntOp-&gt;Release(); 
+pIntOp = NULL;</strong></pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ADVANCED Mode"></a>Using the ADVANCED Mode</h3>
+<p>This mode can be used, in case of the curve - surface intersection:</p>
+<ul>
+	<li>To set advanced parameters: the limits on the geometry to take into account 
+	for this operation.</li>
+	<li>To run again the operator on a different curve. This mode can be useful 
+	where performing intersections between a surface and a bunch of curves.</li>
+</ul>
+<pre class="code">CATTICGMIntersectionCrvSur* pIntOp = <strong>::CATCGMCreateIntersection</strong>(
+                                piGeomFactory,    // geometric factory
+                                piLine,           // geometric line
+                                piCylinder,       // geometric cylinder
+                                <strong>ADVANCED</strong>);        // MODE
+if (NULL==pIntOp) return (3);
+
+// set  limits. These limits were previously defined or computed
+pIntOp-&gt;<strong>SetLimits</strong>(<a href="#limits">crvLimits</a>);
+
+// run
+pIntOp-&gt;<strong>Run</strong>();
+
+// get the results
+// ... same way as in <a href="#get the results">BASIC</a> mode ..., but not same result! 
+// as the curve limits are more restrictive, only one solution is found
+
+// set another line and new limits
+
+pIntOp-&gt;<strong>SetCurve</strong>(piNewLine);     // piNewLine was previously created
+pIntOp-&gt;SetLimits(newCrvLimits); // newCrvLimits was previously defined
+
+// run again 
+pIntOp-&gt;<strong>Run</strong>();
+
+// get the results
+nbPoints = pIntOp-&gt;GetNumberOfPoints();
+cout &lt;&lt; &quot; Number of intersection points: &quot;&lt;&lt; nbPoints &lt;&lt; endl;
+long nbCurves= pIntOp-&gt;GetNumberOfCurves();
+cout &lt;&lt; &quot;Number of intersection curves: &quot;&lt;&lt; nbCurves &lt;&lt; endl;
+
+// delete
+<strong>pIntOp-&gt;Release();  
+pIntOp=NULL;</strong></pre>
+<p><strong>Notes</strong>:</p>
+<ol>
+	<li>If you only ask for the number of solutions, without getting the corresponding 
+	geometric objects, these objects are not created in the geometric factory. So 
+	you will not see them at the visualization of the NCGM document. In the use 
+	case, the <code>NewLine</code> curve is lying on the cylinder. There is a curve 
+	solution, that is not created, because the <code>GetPCurve</code> method is 
+	not called.</li>
+	<li>The <a name="limits"></a>limits are defined by two CATCrvParam. These CATCrvParam 
+	are directly computed by calling the <code>CATCurve::GetParam</code> method 
+	on two cartesian points. This is only possible, first because these points belong 
+	to the curve, and second because the line is a canonical entity. In other cases, 
+	you must use <code>CATProjectionPtCrv</code> to retrieve the <code>CATCrvParam</code> 
+	corresponding to a <code>CATPoint</code> on a given curve.</li>
+</ol>
+<pre class="code">CATCrvParam  startParam, endParam;
+
+// piLine is the line of origin CATMathO and of direction (1.,1.,0.)
+// The use of GetParam is only possible because the points belong to the line
+// and piLine is canonical.
+// In other cases use a CATProjectionPtCrv operator
+piLine-&gt;GetParam(CATMathO,startParam);
+
+// another point on the line  
+piLine-&gt;GetParam(CATMathPoint(35.,35.,0.),endParam);
+
+// the limits
+CATCrvLimits crvLimits(startParam,endParam);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>CATICGMIntersectionCrvSur is a geometric operator which follows the same 
+	scheme as all geometric operators: it is a transient object and its execution 
+	does not modify the input operands. It must be operated within a single container.</li>
+	<li>CATICGMIntersectionCrvSur can be used in BASIC and ADVANCED modes. The ADVANCED 
+	mode allows you to specify new parameters (new limits or a new curve to be intersected) 
+	and re-run the operator with these parameters.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmUcGMModelUseCaseOverw.htm">An Introduction to Geometric Modeler 
+		Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmUcGemBrowser.htm">Browsing the 
+		Geometric Container</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

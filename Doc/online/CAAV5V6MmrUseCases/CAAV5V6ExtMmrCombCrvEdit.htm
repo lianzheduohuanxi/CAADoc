@@ -1,0 +1,314 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Editing Combined Curves</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Editing Combined Curves</h3>
+      <em>Implementing CATIEdit through a dialog box and a state dialog command</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3">
+      <p><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating a New
+      Geometrical Feature : The V5V6ExtCombinedCurve</a>  <b>&gt; Editing 
+		V5V6ExtCombinedCurves</b></p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td style="width: 845px">
+      <h3>Abstract</h3>
+      <p>The main goal of this use case is to describe how to edit V5V6ExtCombinedCurve interactively. 
+      This use case is the same as the original CombinedCurve use case, "Editing Combined Curves" [<a href="#References">9</a>] 
+        rewritten to be V5/V6 compatible. Some specific parts are coded inside #ifdef/#endif macros, 
+        we won't detail in this article any of the V6 specific code.
+    
+        <ul>
+        <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+        <li><a href="#UseCase"><b>The CAAV5V6ExtMmrCombinedCurve Use Case</b></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve Do</a></li>
+            <li><a href="#V5R13 Modifications to Take the Ordered Set Into Account">V5R13
+              Modifications to Take the Ordered Set Into Account</a></li>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurve Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains how to edit V5V6ExtCombinedCurve interactively. You will
+learn to:</p>
+<ul>
+  <li>Implement the <i>CATIEdit</i> Interface so that an interactive V5V6ExtCombinedCurve edition 
+  command is launched when the end user double-clicks an
+    instance, that is either in 3D or in the specification tree,</li>
+  <li>Create a new state dialog command managing the successive steps of the
+    dialog,</li>
+  <li>Instantiate a V5V6ExtCombinedCurve edition dialog box,</li>
+  <li>Use an update command to build the V5V6ExtCombinedCurve.</li>
+</ul>
+<p>Moreover, the state command can be also used to create new instances. Consequently, this article gives you also explanations to create
+a command to instantiate V5V6ExtCombinedCurves interactively. However, to light the
+article, the piece of code which makes the instantiation has been off-set in the referenced article [<a href="#References">1</a>].</p>
+<p>The use case intent
+is to help you make your first step in the interactive edition world. Some more
+sophisticated examples are provided with Dialog and DialogEngine frameworks. The
+point of this use case is to show an example of an edition command taking full
+advantage of services provided by Mechanical Modeler Frameworks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates MechanicalModeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurve Do</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve use case enables you to edit an existing V5V6ExtCombinedCurve through a state 
+command and a dialog box. Here is a picture showing the
+edition of the V5V6ExtCombinedCurve included in the <code>CAAV5V6ExtCombinedCurve.CATPart</code>
+document. This file is located in the InputData directory of the
+CAAV5V6MechanicalModeler.edu framework.</p>
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a> The Combined Curve Edition</caption>
+  <tr>
+    <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveEdition.jpg" width="494" height="362"></td>
+  </tr>
+</table>
+<p>The next figure summarizes the architecture of the Combined Curve edition
+pattern.</p>
+<ul>
+  <li>Blue: new class names created in this Use Case.</li>
+  <li>Green: type of objects your are advise to reuse or derive from.</li>
+  <li>Red: Interface CombinedCurve implements in this Use Case.</li>
+</ul>
+<table>
+  <tr>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CombinedCurveInteractiveArchitecture.gif" width="560" height="507"></td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p>The <i>CATIEdit</i> interface links the Combined Curve to its <b>edition
+      state dialog command</b>, called <i>CAAMmrCombCrvPanelStCmd</i>. This
+      command can make the creation or the modification of an instance.</p>
+  </li>
+  <li>
+    <p>This command derives from <i>CATMMUIPanelStateCmd</i> to benefit from
+      command edition standard behaviors.</p>
+  </li>
+  <li>
+    <p>It uses specific import agents of type <i>CATFeatureImportAgent</i> to
+      acquire geometry in a multi-model context, and instantiates a <b>dialog
+      box</b> that recounts the Combined Curve's input modifications.</p>
+  </li>
+  <li>In order to achieve its integration in the Build mechanism, this
+      command uses the standard Update command of type <i>CATPrtUpdateCom</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="V5R13 Modifications to Take the Ordered Set Into Account"></a>V5R13
+Modifications to Take the Ordered Set Into Account</h4>
+<p align="left">The <i> CAAMmrCombCrvPanelStCmd</i> command class has been modified
+in V5R13 to take the ordered set [<a href="#References">2</a>][<a href="#References">3</a>] into account.
+There are three main modifications:</p>
+<ol>
+  <li>
+    <p align="left"><b>Current feature management</b>
+    <p>The&nbsp; specifications are the following:</p>
+    <ul>
+      <li>The edited feature is the current one during the command life. At the
+        end of the command the previous current feature is restored.</li>
+      <li>The created feature is set or stays (*) the current on at the end of
+        the command.</li>
+    </ul>
+    <p>(*) In the <i> CAAMmrCombCrvPanelStCmd</i> command the new feature is created at the
+end of the command, but generally the creation is done at the beginning. In the
+first case, the feature is <b>set</b> current at the end of the command,
+otherwise it <b>stays</b> current at the end.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveEdition2.jpg" width="342" height="317"></td>
+      </tr>
+</table>
+<p>On this above picture <code>CombinedCurve.2</code> is into an ordered set (an Ordered Geometrical Set). When it is being edited, you can
+see that it is the current feature since it is underlined.</p>
+
+<li><b>Aggregation management</b></li>
+  <p>When aggregating a feature into an ordered set you should take care of the
+  position of the current feature. The new feature is located after the current
+  feature. This management, specific to the creation mode, is detailed in the
+  referenced article [<a href="#References">1</a>] which deals with the
+  instantiation of the combined curve.&nbsp;</p>
+
+<li><b>Absorption management&nbsp; </b>&nbsp;</li>
+  <p>When a geometrical feature [<a href="#References">4</a>] is inserted into
+  an ordered set, or when a surfacic feature [<a href="#References">4</a>] is
+  modified into a such set, you must call the <code> Insert</code> method of the <i>CATIMmiUseLinearBodyServices</i>
+    class. This call has been integrated just after the update of the combined
+  curve, in the <code>OkAction</code> method.</p>
+
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6EXtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurve Code</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve use case is made of a several classes located in
+the CAAV5V6ExtMmrCombinedCurveUI.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurveUI.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurveUI.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The code for this use case is made of the following classes:</p>
+<ul>
+  <li>The extension of V5V6ExtCombinedCurve that implements <i>CATIEdit</i> is <i>CAAEV5V6ExtMmrCombinedCurveEdit</i></li>
+  <li>The state dialog command is <i>CAAV5V6ExtMmrCombCrvPanelStCmd</i></li>
+  <li>The V5V6ExtCombinedCurve edition dialog box is <i>CAAV5V6ExtMmrCombinedCurveDlg</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p> You can refer to the orginal CombinedCurve Use Case for the detail of the implementation, 
+it is exactly the same implementation as for V5V6ExtCombinedCurve [<a href="#References">4</a>]. 
+When you look into CAAV5V6ExtMmrCombCrvPanelStCmd.cpp and CAAEV5V6ExtMmrCombinedCurveEdit, you will see 
+that some part are in between #ifdef/#endif macros. Indeed, there are some evolutions in V6 that have not 
+been backported to V5.
+</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to manage interactively the V5V6ExtCombinedCurve feature.</p>
+<p>A pre-requisite is the implementation of the <i>CATIEdit</i> interface to activate
+V5V6ExtCombinedCurve edition.</p>
+<p>Then, the <code>CAAV5V6ExtMmrCombCrvPanelStCmd</code> state dialog command, enables to create or modify
+the V5V6ExtCombinedCurve feature. It's main points are to:</p>
+<ul>
+  <li>Derive from <i>CATMMUIPanelStateCommand</i>.</li>
+  <li>Use <i>CATFeatureImportAgent</i> acquisition agents to decode any type of
+    geometry in any context.</li>
+  <li>Manage the current feature if the V5V6ExtCombinedCurve is in an ordered set.</li>
+  <li>Launch an update command of type <i>CATPrtUpdateCom</i> to update the
+    V5V6ExtCombinedCurve.</li>
+  <li>Call the <code>Insert</code> method of the <i>CATIMmiUseLinearBodyServices</i>
+    interface if the V5V6ExtCombinedCurve is in an ordered set.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvInstantiation.htm">Instantiating V5V6ExtCombinedCurves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrOrderLinearBody.htm">Order
+      and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The
+      Contents of the Specification Container- Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleObjectEdit.htm">Editing
+      Objects</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvAddIn.htm">Creating an Add-in in the Shape
+      Design Workbench</a>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAV5V6ExtMmrCombinedCurveInterface.htm">Creating V5V6EXtCombinedCurve's Interface
+      of Type</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIEdit.htm">
+    Editing Combined Curves</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+ 
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+</body>
+

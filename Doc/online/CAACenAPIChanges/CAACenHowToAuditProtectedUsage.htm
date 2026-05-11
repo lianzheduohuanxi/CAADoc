@@ -1,0 +1,287 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>Auditing CAA Code on ProtectedInterfaces Usage</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>CAA V5 Encyclopedia</h1>
+     </td>
+     <td valign="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Auditing CAA Code on ProtectedInterfaces Usage</h3>
+     <p><em>How to effectively check ProtectedInterfaces usage in a CAA 
+     application</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>Your CAA application might use headers coming from the 
+     ProtectedInterfaces folders of the frameworks installed from the previous 
+     releases of CAA CD-ROMS. Refer to
+     <a href="../CAADocTechArticles/CAADocLxUsageRules.htm">
+     CAA V5 Authorized API Identification, Usage, Deprecation, and Stability</a> 
+     to understand why you shoud get rind of ProtetedInterfaces in your CAA 
+     applications.</p>
+     <p>This article describes a procedure allowing you to effectively check 
+     such header usage in your CAA application. This procedure uses a tool that 
+     is only available on Windows.</p>
+     <ul>
+       <li><a href="#Launching"><b>Launching the Audit Procedure</b></a></li>
+       <li><a href="#Analyzing"><b>Analyzing the Resulting Trace</b></a></li>
+       <li><a href="#Cleaning"><b>Cleaning-up the Application</b></a></li>
+     </ul>
+     <p><b>Notes</b>:</p>
+     <ul>
+       <li>The described process uses undocumented mkmk features that might not 
+       work anymore on coming releases</li>
+       <li>Please make sure to run this audit for actual code in production, not 
+       for prototypes.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Launching"></a>Launching the Audit Procedure</h3>
+ <ul>
+   <li>Create a workspace containing all the frameworks you want to assess. <br>
+   You can also use an existing workspace. No source will be modified. A few 
+   files will be created in a new framework called DummyFW and files called 
+   IdentityCard.mk will be created in the IdentityCard folders of the existing 
+   frameworks</li>.<br>
+   <br>
+   <b>Note</b>: The set of frameworks that you assess must only use Dassault 
+   Systèmes' frameworks. All frameworks that are not present in this workspace 
+   will be considered as Dassault Systèmes frameworks in the subsequent steps 
+   and usage of their ProtectedInterfaces will so generate traces and 
+   compilation errors.<br>
+&nbsp;</li>
+   <li>Set up a mkmk environment [<a href="#References">1</a>] and build the 
+   workspace prerequisites:<br>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>E:&gt; <b>&lt;mkmk_install&gt;</b>\intel_a\code\command\tck_init
+E:&gt; tck_profile <b>TCK</b>
+E:&gt; cd myWorkspace
+E:\myWorkspace&gt; mkGetPreq -p ...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Where:<ul>
+     <li><code><b>&lt;mkmk_install&gt;</b></code> is the root directory where the CAA 
+     RADE tools are installed</li>
+     <li><code><b>TCK</b></code> is the tool level to use. To know which <code>
+     <b>TCK</b></code> you can use, type <code><b>tck_list</b></code> after 
+     running <code>tck_init</code>, and choose the level that matches your 
+     installation among those available.</li>
+   </ul>
+   <p><b>Note</b>:</b> You can use the C++ Dashboard to perform those steps and 
+   then open a CAA command window (Tools/Open Command Window) to perform the 
+   following ones.<br>
+&nbsp;</li>
+   <li>Use the <b>CAACheckPro.bat </b>utility. It basically:
+   <ul>
+     <li>Removes any derived objects</li>
+     <li>Completely rebuilds the workspace</li>
+     <li>Launches the analyzer that creates a dummy framework and new 
+     IdentityCard.mk files</li>
+     <li>Changes all frameworks prerequisite modes into Public</li>
+     <li>Rebuilds on new prerequisites and generates dummy .h files, using a 
+     special mkmk mode</li>
+     <li>Generates a trace file called <b>trace_CAACheckPro.out</b> in the 
+     workspace root directory</li>
+   </ul>
+   <p>To run CAACheckPro, type:</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>E:\myWorkspace&gt; CAACheckPro</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Analyzing"></a>Analyzing the Resulting Trace</h3>
+ <p>The trace file is divided into the following parts.</p>
+ <ul>
+   <li>Standard mkRemoveDo/mkmk (first step) trace
+   <table class="code">
+     <tr>
+       <td>
+       <pre>10/11/2004 12:59:35 : Starting mkRemoveDo
+#mkmk-INFO: Command -&gt; All frameworks of the workspace will be treated.
+#mkmk-INFO: Start of the cleaning procedure.</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>Compilation errors issued by this first step must be ignored. Then starts 
+   the detection of included ProtectedInterfaces headers<table class="code">
+     <tr>
+       <td>
+       <pre># Analyzing framework named: E:\mkClos4\.\CAABlobUI
+#  NEW Identity card path name: E:\mkClos4\.\CAABlobUI\IdentityCard\IdentityCard.mk
+#  Loading dependencies databases named: E:\mkClos4\.\CAABlobUI\IdentityCard/Objects/iintel_a/Xref/Dependencies.mkXDB ...
+#   Analyzing dependencies ...
+# +  New direct prerequisite to DummyFW level Public added
+# +  New direct prerequisite to SpecialAPI level Public added
+# ++ <b>Using non public header</b> AdvancedTopologicalOpe\ProtectedInterfaces\CATCreateTopProjection.h
+# ++ <b>Using non public header</b> MechanicalModeler\ProtectedInterfaces\CATMfAlgoConfigServices.h
+# ++ <b>Using non public header</b> MechanicalModeler\ProtectedInterfaces\CATINamingPart.h</pre>
+       </td>
+     </tr>
+   </table>
+   <p>All the headers listed are the CAA ProtectedInterfaces files <b>
+   recursively </b>included by the application, meaning that they may either be 
+   directly included by the application headers or included by a CAA 
+   Protectednterfaces header included by the application.<br>
+&nbsp;</li>
+   <li>After detection of such headers, a second build starts with the created 
+   IdentityCard files that turn the prerequisites to Dassault Systèmes' 
+   frameworks to Public<table class="code">
+     <tr>
+       <td>
+       <pre>## start step: CIbuild   at 10/11/2004-14:28:53
+#make: CAABlobUI intel_a\code\productIC\CAABlobUIIC.script
+Redefinition line(54) :  AddPrereqComponent(&quot;SpecialAPI&quot;,Public,NotExported)
+Script Error &gt;&gt;&gt; file: E:\mkClos4\BlobUI\IdentityCard\IdentityCard.mk line: 0 compilation failed &lt;&lt;&lt;</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>Those IdentityCard compilation errors can be ignored. Then, whenever a 
+   ProtectedInterfaces header is <b>directly </b>included in the application, 
+   the following message appears:
+   <table class="code">
+     <tr>
+       <td>
+       <pre><b>CAAProtectedChecker <font color="#FF0000">INCLUDEPRO</font> MechanicalModeler/ProtectedInterfaces/CATMfAlgoConfigServices.h</pre>
+       </b></td>
+     </tr>
+   </table>
+   </li>
+   <li>And if this file is actually needed to compile, you will have related 
+   compilation errors:
+   <table class="code">
+     <tr>
+       <td>
+       <pre><b>E:\mkClos4\.\CAABlobUI\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(16) : error C2653: 'CATMfAlgoConfigServices' : is not a class or namespace name
+E:\mkClos4\.\CAABlob\CAABlobBlobizer.m\src\CAABlobBlobize.cpp(17) : error C2065: 'CreateConfigurationData' : undeclared identifier</b></pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p><b>Notes</b>:</p>
+ <ul>
+   <li>Error messages may also be issued because of modifications in the CAA API</li>
+   <li>Please ignore the errors about CATWarningPromote.h, TIE_CATISelectShow, 
+   and CATDataType.h. They will also be ignored by mkmk</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Cleaning"></a>Cleaning-up the Application</h3>
+ <p>You now have a list of all the ProtectedInterfaces headers your application 
+ is using. To clean-up your applications, you can process as follows:</p>
+ <ol>
+   <li><b>Remove unused headers</b> <br>
+   <code>INCLUDEPRO</code> messages that are not followed by a compilation error 
+   denote unused include files. Remove them from the corresponding sources.<br>
+&nbsp;</li>
+   <li><b>Replace headers with CAA V5R15 Authorized APIs whenever possible</b>
+   <p>For each remaining compilation error, check:<ol>
+     <li>Whether the error comes from an API change (refer to the
+     <a href="CAACenAPIChangeDetail.htm">C++ APIs Changes</a>) or is deprecated 
+     and now removed (refer to the current
+     <a href="#" onclick="javascript:CAAlink('CPP', 'Deprecated');return false;">
+     Deprecated Index</a>, and refer also to the Deprecated Indexes of the 
+     previous releases you may have online, or through the
+     <a href="#" onclick="javascript:CAAlinkUrl('http://www.3ds.com/alliances/');return false;">
+     CAA Internet Site</a>) to know how to replace that header in error</li>
+     <li>Whether the interfaces, classes, or functions in error could be 
+     replaced with one of those listed in <a href="CAACenAuditReplacingAPIs.htm">
+     CAA Authorized APIs Replacing ProtectedInterfaces</a></li>
+     <li>If an equivalent can be found in the
+     <a href="#" onclick="javascript:CAAlink('CPP');return false;">C++ API 
+     Reference</a>.<br>
+&nbsp;</li>
+   </ol>
+   </li>
+   <li><b>Report the actual ProtectedInterfaces header usage<br>
+   </b>Report the remaining problems through the local support that will execute 
+   the appropriate &quot;cleaning&quot; support process.</li>
+ </ol>
+ <p><b>Note:</b> When you have corrected some or all of the errors, you may want 
+ to check your corrections. Before rebuilding your CAA application in the 
+ workspace used above, to temporarily get rid of the modifications brought by 
+ the <b>CAACheckPro.bat </b>utility, set the following variables:</p>
+ <pre>E:\myWorkspace&gt; set MKMK_EXPNOINDIRECT=yes
+E:\myWorkspace&gt; set MKMK_IDCARDEXTEND=.mk</pre>
+ <p>Then rebuild your CAA application. To resume checking for 
+ PortectedInterfaces headers usage, run again the <b>CAACheckPro.bat </b>
+ utility.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td>[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td>[2]</td>
+     <td>
+     <a href="#" onclick="javascript:CAAlinkUrl('http://www.3ds.com/alliances/');return false;">
+     CAA Internet Site</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

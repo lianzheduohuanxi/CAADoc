@@ -1,0 +1,811 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspPlacePart.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+      <style type="text/css"> 
+      <!-- 
+       .rem {color: Green;}
+	     .kw {color: Blue;}
+	    -->
+	    </style>
+  </head>
+  <body>
+    <pre>
+<span class="kw">Option</span> <span class="kw">Explicit</span>
+<span class="rem">' COPYRIGHT DASSAULT SYSTEMES 2007</span>
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'   Purpose:      This sample illustrats the use of IDL interface</span>
+<span class="rem">'                 CATIAPspPlacePart to place string parts.</span>
+<span class="rem">'  </span>
+
+<span class="rem">'                 </span>
+<span class="rem">'                 </span>
+<span class="rem">'   Languages:    VBScript</span>
+<span class="rem">'   Locales:      English </span>
+<span class="rem">'   CATIA Level:  V5R17 </span>
+<span class="rem">' *****************************************************************************</span>
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'--- Global variables</span>
+
+<span class="rem">' *****************************************************************************</span>
+
+<span class="kw">Dim</span> gTraceOutput <span class="kw">As</span> <span class="kw">String</span>
+<span class="kw">Set</span> gTraceOutput = ""
+<span class="kw">Dim</span> gListFactory <span class="kw">As</span> PspTempListFactory
+
+<span class="kw">Set</span> gListFactory = <span class="kw">Nothing</span>
+<span class="kw">Dim</span> gPspDoc <span class="kw">As</span> Document
+<span class="kw">Set</span> gPspDoc = <span class="kw">Nothing</span>
+<span class="kw">Dim</span> gRootProduct    <span class="kw">As</span> Product
+
+<span class="kw">Set</span> gRootProduct = <span class="kw">Nothing</span>
+<span class="kw">Dim</span> gPspWorkbench   <span class="kw">As</span> PspWorkbench
+<span class="kw">Set</span> gPspWorkbench = <span class="kw">Nothing</span>
+<span class="rem">' *****************************************************************************</span>
+
+<span class="rem">'--- Support routines</span>
+<span class="rem">' *****************************************************************************</span>
+
+<span class="rem">' Show a trace output line.</span>
+<span class="kw">Sub</span> ShowTraceOutputLine(iTraceOutput <span class="kw">As</span> <span class="kw">String</span>)
+<span class="rem">  'Add message to output string for sending to message box at end of run.</span>
+
+  gTraceOutput = gTraceOutput & iTraceOutput & vbCr               
+<span class="rem">  'Show message right away. May cause a lot of message boxes if used interactively.</span>
+<span class="rem">  'CATIA header and lots of stuff is added to every MsgBox.</span>
+<span class="rem">  'MsgBox iTraceOutput</span>
+<span class="rem">  ' Print doesn't work in CATIA VB</span>
+<span class="rem">  'Print iTraceOutput & vbCr   </span>
+
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Dump all traces.</span>
+<span class="kw">Sub</span> DumpTraces()
+  MsgBox gTraceOutput
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Get the ID of an object.</span>
+<span class="kw">Function</span> GetObjectID(iObject <span class="kw">As</span> CATIABase) <span class="kw">As</span> <span class="kw">String</span>
+  <span class="kw">Dim</span> objPspPhyID       <span class="kw">As</span> PspID
+  GetObjectID = ""
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( gPspWorkbench <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">And</span> _
+        <span class="kw">Not</span> ( iObject <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>  
+  
+    <span class="kw">Set</span> objPspPhyID = gPspWorkbench.GetInterface("CATIAPspID", iObject )      
+
+    <span class="kw">If</span> ( <span class="kw">Not</span> (objPspPhyID <span class="kw">Is</span> <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+
+      GetObjectID = objPspPhyID.GetID
+    <span class="kw">End</span> <span class="kw">If</span> 
+
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Show the ID of an object.</span>
+<span class="kw">Sub</span> ShowObjectID(iObjectComment <span class="kw">As</span> <span class="kw">String</span>, iObject <span class="kw">As</span> CATIABase)
+  ShowTraceOutputLine iObjectComment &  " ID = " & GetObjectID(iObject)
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Empty list of doubles.</span>
+<span class="kw">Sub</span> ClearDoubles(iListDoubles <span class="kw">As</span> PspListOfDoubles)
+  <span class="kw">If</span> ( <span class="kw">Not</span> iListDoubles <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>
+
+    <span class="kw">Dim</span> ii <span class="kw">As</span> <span class="kw">Integer</span>
+    <span class="kw">For</span> ii = iListDoubles.Count <span class="kw">To</span> 1 <span class="kw">Step</span> -1
+      iListDoubles.RemoveByIndex ii
+    <span class="kw">Next</span>
+
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Empty list of objects.</span>
+<span class="kw">Sub</span> ClearObjects(iListObjects <span class="kw">As</span> PspListOfObjects)
+  <span class="kw">If</span> ( <span class="kw">Not</span> iListObjects <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>
+
+    <span class="kw">Dim</span> ii <span class="kw">As</span> <span class="kw">Integer</span>
+    <span class="kw">For</span> ii = iListObjects.Count <span class="kw">To</span> 1 <span class="kw">Step</span> -1
+      iListObjects.RemoveByIndex ii
+    <span class="kw">Next</span>
+
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Convert list of three doubles to string.</span>
+<span class="kw">Function</span> DumpVector(iVector <span class="kw">As</span> PspListOfDoubles) <span class="kw">As</span> <span class="kw">String</span>
+
+  DumpVector = ""
+  
+  <span class="kw">If</span> ( <span class="kw">Not</span> iVector <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>
+    <span class="kw">If</span> (iVector.Count = 3) <span class="kw">Then</span>
+
+      DumpVector = "("
+      <span class="kw">Dim</span> iiCoord <span class="kw">As</span> <span class="kw">Integer</span>
+      <span class="kw">For</span> iiCoord = 1 <span class="kw">To</span> 3
+        <span class="kw">Dim</span> coord <span class="kw">As</span> <span class="kw">Double</span>
+
+        coord = iVector.Item(iiCoord)
+        DumpVector = DumpVector & coord
+        if (iiCoord &lt; 3) <span class="kw">Then</span> DumpVector = DumpVector & ","
+      <span class="kw">Next</span>
+      DumpVector = DumpVector & ")"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Convert a four vector transform matrix to a string</span>
+<span class="kw">Function</span> DumpTransform(iTransform <span class="kw">As</span> CATSafeArray) <span class="kw">As</span> <span class="kw">String</span>
+
+  DumpTransform = ""
+  
+  <span class="kw">Dim</span> vector <span class="kw">As</span> PspListOfDoubles
+  <span class="kw">Set</span> vector = gListFactory.CreateListOfDoubles()
+  <span class="kw">Dim</span> iiVector <span class="kw">As</span> <span class="kw">Integer</span>
+
+  <span class="kw">For</span> iiVector = 1 <span class="kw">To</span> 4
+    <span class="kw">Dim</span> ii1 <span class="kw">As</span> <span class="kw">Integer</span>
+    ii1 = 3 * iiVector
+    vector.Append iTransform(ii1 - 3)
+    vector.Append iTransform(ii1 - 2)
+    vector.Append iTransform(ii1 - 1)
+    DumpTransform = DumpTransform & DumpVector(vector)
+    if (iiVector &lt; 4) <span class="kw">Then</span> DumpTransform = DumpTransform & " "
+    ClearDoubles vector
+  <span class="kw">Next</span>
+
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Get application </span>
+<span class="kw">Function</span> GetApplication(iApplicationID <span class="kw">As</span> CatPspIDLApplicationID) <span class="kw">As</span> PspApplication
+  <span class="kw">Set</span> GetApplication = gPspWorkbench.GetApplication(iApplicationID)
+  <span class="kw">If</span> (GetApplication <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+    Err.Raise 9999,sDocPath,"Unable to get PspApplication"
+  <span class="kw">End</span> <span class="kw">If</span>
+  ShowTraceOutputLine "Success in getting PspApplication"
+  GetApplication.Initialization()             
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Get PspPhysicalProduct object</span>
+<span class="kw">Function</span> GetPspPhysicalProduct(iApplicationObject <span class="kw">As</span> PspApplication, iDomainID <span class="kw">As</span> CatPspIDLDomainID, iName <span class="kw">As</span> <span class="kw">String</span>) <span class="kw">As</span> Product
+  <span class="kw">Set</span> GetPspPhysicalProduct = <span class="kw">Nothing</span>
+
+  <span class="kw">Dim</span> objLPhysicals     <span class="kw">As</span> PspListOfObjects                  
+  <span class="kw">Dim</span> objPspAppFactory  <span class="kw">As</span> PspAppFactory
+  <span class="kw">Dim</span> pspPhysical <span class="kw">As</span> PspPhysicalProduct
+  <span class="kw">Dim</span> pspPhysicalProd <span class="kw">As</span> Product
+  <span class="kw">Set</span> objPspAppFactory = gPspWorkbench.GetInterface("CATIAPspAppFactory", iApplicationObject)      
+
+  <span class="kw">Set</span> objLPhysicals = objPspAppFactory.ListPhysicals ( gRootProduct , iDomainID)
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( objLPhysicals <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>
+
+    <span class="kw">Dim</span> iiPhysical <span class="kw">As</span> <span class="kw">Integer</span>
+    <span class="kw">For</span> iiPhysical = 1 to objLPhysicals.Count
+      <span class="kw">Set</span> pspPhysical =  objLPhysicals.Item( iiPhysical, "CATIAPspPhysicalProduct" )
+      <span class="kw">Set</span> pspPhysicalProd = gPspWorkbench.GetInterface("CATIAProduct", pspPhysical)      
+      ShowTraceOutputLine "Physical product name = " & pspPhysicalProd.Name
+      <span class="kw">If</span> (pspPhysicalProd.Name = iName) <span class="kw">Then</span> 
+        <span class="kw">Set</span> GetPspPhysicalProduct = gPspWorkbench.GetInterface("CATIAProduct", pspPhysicalProd )
+        <span class="kw">Exit</span> <span class="kw">For</span>
+
+      <span class="kw">End</span> <span class="kw">If</span>
+    <span class="kw">Next</span>
+  <span class="kw">End</span> <span class="kw">If</span>
+  <span class="kw">If</span> (GetPspPhysicalProduct <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+    Err.Raise 9999,sDocPath,"Unable to get physcial part for reference product input"
+  <span class="kw">End</span> <span class="kw">If</span>
+  ShowObjectID "Physical Product object", GetPspPhysicalProduct
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Get the logical line that is a child of the input product</span>
+<span class="kw">Function</span> GetLogicalLine(iLineMember <span class="kw">As</span> Product) <span class="kw">As</span> PspLogicalLine
+  <span class="kw">Set</span> GetLogicalLine = <span class="kw">Nothing</span>
+
+  <span class="kw">Dim</span> PhysicalProductGroupable <span class="kw">As</span> PspGroupable
+  <span class="kw">Set</span> PhysicalProductGroupable = <span class="kw">Nothing</span>
+  <span class="kw">Set</span> PhysicalProductGroupable = gPspWorkbench.GetInterface("CATIAPspGroupable", iLineMember )      
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( PhysicalProductGroupable <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>
+
+    ShowTraceOutputLine "Number of groups = " & PhysicalProductGroupable.Groups.Count
+    <span class="kw">Dim</span> iiGroup <span class="kw">As</span> <span class="kw">Integer</span>
+    <span class="kw">For</span> iiGroup = 1 to PhysicalProductGroupable.Groups.Count
+      <span class="kw">Dim</span> Group <span class="kw">As</span> CATIABase
+      <span class="kw">Set</span> Group = PhysicalProductGroupable.Groups.Item(iiGroup, "CATIABase")
+      ShowTraceOutputLine "Group name = " & Group.Name
+      <span class="kw">Set</span> GetLogicalLine = gPspWorkbench.GetInterface("CATIAPspLogicalLine", Group ) 
+      <span class="kw">If</span> ( <span class="kw">Not</span> ( GetLogicalLine <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>
+
+        ShowTraceOutputLine "Logical line name = " & GetLogicalLine.Name
+        <span class="kw">Exit</span> <span class="kw">For</span>
+      <span class="kw">End</span> <span class="kw">If</span>
+    <span class="kw">Next</span>
+  <span class="kw">End</span> <span class="kw">If</span>
+
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Get reference part given instance.</span>
+<span class="kw">Function</span> GetReferencePart(iInstancePart <span class="kw">As</span> Product) <span class="kw">As</span> Product
+  <span class="kw">Set</span> GetReferencePart = <span class="kw">Nothing</span>
+
+  
+  <span class="kw">If</span> ( <span class="kw">Not</span> (iInstancePart <span class="kw">Is</span> <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+    <span class="kw">Set</span> GetReferencePart = iInstancePart.ReferenceProduct
+  <span class="kw">End</span> <span class="kw">If</span> 
+  <span class="kw">If</span> (GetReferencePart <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+    Err.Raise 9999,sDocPath,"Unable to get reference product input"
+  <span class="kw">End</span> <span class="kw">If</span>
+  ShowTraceOutputLine "Reference part number = " & GetReferencePart.PartNumber
+  ShowObjectID "Reference Part object", GetReferencePart
+<span class="kw">End</span> <span class="kw">Function</span>
+ 
+<span class="rem">' Find a product.</span>
+<span class="kw">Function</span> FindProduct(iParentProduct <span class="kw">As</span> Product, iProductName <span class="kw">As</span> <span class="kw">String</span>) <span class="kw">As</span> Product
+  <span class="kw">Set</span> FindProduct = <span class="kw">Nothing</span>
+
+  <span class="kw">Dim</span> ParentProducts <span class="kw">As</span> Products
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( iParentProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>  
+    <span class="kw">Set</span> ParentProducts = iParentProduct.Products
+    <span class="kw">If</span> ( <span class="kw">Not</span> (ParentProducts <span class="kw">Is</span> <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+
+      ShowTraceOutputLine "Number of children = " & ParentProducts.Count
+      <span class="kw">Dim</span> Prod <span class="kw">As</span> CATIABase
+      <span class="kw">For</span> <span class="kw">Each</span> Prod in ParentProducts
+<span class="rem">        'ShowTraceOutputLine "Child product name = " & Prod.Name</span>
+
+        <span class="kw">If</span> (Prod.Name = iProductName) <span class="kw">Then</span> 
+          <span class="kw">Set</span> FindProduct = gPspWorkbench.GetInterface("CATIAProduct", Prod )      
+          <span class="kw">Exit</span> <span class="kw">For</span>
+        <span class="kw">End</span> <span class="kw">If</span>
+
+      <span class="kw">Next</span>
+      ShowTraceOutputLine "Found product name = " & FindProduct.Name
+    <span class="kw">End</span> <span class="kw">If</span> 
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Function</span>
+
+<span class="rem">' Show point position</span>
+<span class="kw">Sub</span> ShowPointPosition(iPoint <span class="kw">As</span> HybridShapePointCoord)
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( iPoint <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>  
+    <span class="kw">Dim</span> OutString <span class="kw">As</span> <span class="kw">String</span>
+
+    OutString = "Point posit = ("
+    OutString = OutString & iPoint.X.ValueAsString2(0, FALSE)
+    OutString = OutString & ","
+    OutString = OutString & iPoint.Y.ValueAsString2(0, FALSE)
+    OutString = OutString & ","
+    OutString = OutString & iPoint.Z.ValueAsString2(0, FALSE)
+    OutString = OutString & ")"
+    ShowTraceOutputLine OutString
+  <span class="kw">End</span> <span class="kw">If</span>
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="kw">Sub</span> ShowProductPosition(iProduct <span class="kw">As</span> Product, iName <span class="kw">As</span> <span class="kw">String</span>)
+  <span class="kw">If</span> ( <span class="kw">Not</span> ( iProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>  
+    <span class="kw">Dim</span> positArray(11) <span class="kw">As</span> CATSafeArray
+    iProduct.Position.GetComponents(positArray)
+    ShowTraceOutputLine iName & " posit = " & DumpTransform(positArray)
+  <span class="kw">End</span> <span class="kw">If</span>
+
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+<span class="rem">' Show product info</span>
+<span class="kw">Sub</span> ShowProductInfo(iProduct <span class="kw">As</span> Product, iName <span class="kw">As</span> <span class="kw">String</span>, iRelativeAxis <span class="kw">As</span> Product)
+    
+    ShowProductPosition iProduct, iName
+    
+
+<span class="rem">    ' Placed part connectors</span>
+    <span class="kw">Dim</span> objPlacePartPhysical <span class="kw">As</span> CATIAPspPhysicalProduct                  
+    <span class="kw">Set</span> objPlacePartPhysical = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePartPhysical = gPspWorkbench.GetInterface("CATIAPspPhysicalProduct", iProduct )      
+    <span class="kw">If</span> ( <span class="kw">Not</span> ( objPlacePartPhysical <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>
+
+      ShowTraceOutputLine "Number of connectors = " & objPlacePartPhysical.Connectors.Count
+      <span class="kw">If</span> ( objPlacePartPhysical.Connectors.Count &lt;&gt; 2 ) <span class="kw">Then</span>      
+        Err.Raise 9999,sDocPath,"Wrong number of connectors"
+      <span class="kw">End</span> <span class="kw">If</span>
+      <span class="kw">Dim</span> iiCtr <span class="kw">As</span> <span class="kw">Integer</span>
+
+      <span class="kw">For</span> iiCtr = 1 to objPlacePartPhysical.Connectors.Count
+        ShowTraceOutputLine "iiCtr = " & iiCtr
+        <span class="kw">Dim</span> Ctr <span class="kw">As</span> PspPartConnector
+        <span class="kw">Set</span> Ctr = objPlacePartPhysical.Connectors.Item(iiCtr, "CATIAPspPartConnector")
+        <span class="kw">If</span> ( Ctr <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+          Err.Raise 9999,sDocPath,"Bad connector"
+        <span class="kw">End</span> <span class="kw">If</span>
+
+        ShowTraceOutputLine "Ctr name = " & Ctr.Name
+        <span class="kw">Dim</span> CtrPosit <span class="kw">As</span> PspListOfDoubles
+        <span class="kw">Set</span> CtrPosit = <span class="kw">Nothing</span>
+        <span class="kw">Set</span> CtrPosit = Ctr.GetPosition(iRelativeAxis)
+        ShowTraceOutputLine "Ctr posit = " & DumpVector(CtrPosit)
+        <span class="kw">Dim</span> CtrAlign <span class="kw">As</span> PspListOfDoubles
+        <span class="kw">Set</span> CtrAlign = <span class="kw">Nothing</span>
+
+        <span class="kw">Set</span> CtrAlign = Ctr.GetAlignmentDirection(iRelativeAxis)
+        ShowTraceOutputLine "Ctr align = " & DumpVector(CtrAlign)
+        <span class="kw">Dim</span> CtrUp <span class="kw">As</span> PspListOfDoubles
+        <span class="kw">Set</span> CtrUp = <span class="kw">Nothing</span>
+        <span class="kw">Set</span> CtrUp = Ctr.GetUpDirection(iRelativeAxis)
+        ShowTraceOutputLine "Ctr up = " & DumpVector(CtrUp)
+      <span class="kw">Next</span>
+
+    <span class="kw">End</span> <span class="kw">If</span>
+    
+<span class="kw">End</span> <span class="kw">Sub</span>
+
+
+<span class="rem">' *****************************************************************************</span>
+<span class="rem">'--- Main routine</span>
+<span class="rem">' *****************************************************************************</span>
+
+<span class="kw">Sub</span> CATMain()
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+<span class="rem">    ' Setup the Environment</span>
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+<span class="rem">    ' Open the Distributive system document </span>
+
+    dim sDocPath <span class="kw">As</span> <span class="kw">String</span> 
+    dim sDocFullPath <span class="kw">As</span> <span class="kw">String</span> 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    <span class="kw">If</span> (<span class="kw">Not</span> CATIA.FileSystem.FolderExists(sDocPath)) <span class="kw">Then</span>
+
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowTraceOutputLine "Doc path = " & sDocPath
+    
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\StringParts\CAAPspEduStringParts.CATProduct" )
+
+    ShowTraceOutputLine "Doc full path = " & sDocFullPath
+    
+    <span class="kw">Set</span> gPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <span class="kw">If</span> (gPspDoc <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"No Document Open"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowTraceOutputLine "Output traces from CAAPspPlacePart.CATScript"
+<span class="rem">    ' Find the top node of the Distributive System object tree - .  </span>
+
+    <span class="kw">Set</span> gRootProduct = gPspDoc.Product 
+    <span class="kw">If</span> (gRootProduct <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to get root product"
+    <span class="kw">End</span> <span class="kw">If</span>
+    
+<span class="rem">    ' Get Plant-ship modeler workbench</span>
+    <span class="kw">Set</span> gPspWorkbench = gRootProduct.GetTechnologicalObject ("PspWorkbench")
+    <span class="kw">If</span> (gPspWorkbench <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to get PspWorkbench"
+    <span class="kw">End</span> <span class="kw">If</span>
+    ShowTraceOutputLine "Success in getting PspWorkbench"
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+<span class="rem">    ' Setup application data </span>
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+
+<span class="rem">    ' Get tubing application</span>
+
+    <span class="kw">Dim</span> objPspApplicationTub <span class="kw">As</span> PspApplication
+    <span class="kw">Set</span> objPspApplicationTub = GetApplication(catPspIDLCATTubing)
+    
+<span class="rem">    ' Get piping application</span>
+
+    <span class="kw">Dim</span> objPspApplicationPip <span class="kw">As</span> PspApplication
+    <span class="kw">Set</span> objPspApplicationPip = GetApplication(catPspIDLCATPiping)
+    
+<span class="rem">    ' Get gListFactory</span>
+    <span class="kw">Set</span> gListFactory = gPspWorkbench.GetInterface("CATIAPspTempListFactory", objPspApplicationTub )      
+    <span class="kw">If</span> (gListFactory <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to get list factory"
+    <span class="kw">End</span> <span class="kw">If</span>
+    
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Get part parent products.</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Get root product children and parent products for placed part</span>
+
+    <span class="kw">Dim</span> ParentProductTub <span class="kw">As</span> Product
+    <span class="kw">Set</span> ParentProductTub = FindProduct(gRootProduct, "CAAPspEduTubes.1")
+    <span class="kw">If</span> (ParentProductTub <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to get tubing parent product"
+    <span class="kw">End</span> <span class="kw">If</span>
+    ShowTraceOutputLine "Tubing part place parent product name = " & ParentProductTub.Name
+
+    <span class="kw">Dim</span> ParentProductPip <span class="kw">As</span> Product
+    <span class="kw">Set</span> ParentProductPip = FindProduct(gRootProduct, "CAAPspEduPipes.1")
+    <span class="kw">If</span> (ParentProductPip <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to get parent product"
+    <span class="kw">End</span> <span class="kw">If</span>
+    ShowTraceOutputLine "Piping part place parent product name = " & ParentProductPip.Name
+ 
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+<span class="rem">    ' Add parts to hold points</span>
+<span class="rem">    ' Parts created under placement part parent because points are interpretted as relative to that parent.</span>
+
+<span class="rem">    ' ------------------------------------------------------------------------- </span>
+    <span class="kw">Dim</span> PartForPointsProductTub <span class="kw">As</span> Product
+    <span class="kw">Set</span> PartForPointsProductTub = <span class="kw">Nothing</span>
+    <span class="kw">Dim</span> PartForPointsTub <span class="kw">As</span> Part
+    <span class="kw">Set</span> PartForPointsTub = <span class="kw">Nothing</span>
+
+    <span class="kw">Dim</span> PartForPointsGeoSetTub <span class="kw">As</span> OrderedGeometricalSet
+    <span class="kw">Set</span> PartForPointsGeoSetTub = <span class="kw">Nothing</span>
+    <span class="kw">Dim</span> PartForPointsProductPip <span class="kw">As</span> Product
+    <span class="kw">Set</span> PartForPointsProductPip = <span class="kw">Nothing</span>
+
+    <span class="kw">Dim</span> PartForPointsPip <span class="kw">As</span> Part
+    <span class="kw">Set</span> PartForPointsPip = <span class="kw">Nothing</span>
+    <span class="kw">Dim</span> PartForPointsGeoSetPip <span class="kw">As</span> OrderedGeometricalSet
+    <span class="kw">Set</span> PartForPointsGeoSetPip = <span class="kw">Nothing</span>
+
+    
+    <span class="kw">Dim</span> PartForPointsDoc <span class="kw">As</span> Document
+    
+    <span class="kw">Set</span> PartForPointsProductTub = ParentProductTub.Products.AddNewComponent("Part", "PartForPointsTubing")
+    ShowTraceOutputLine "Part for tubing points product name = " & PartForPointsProductTub.Name
+    <span class="kw">If</span> (<span class="kw">Not</span> (PartForPointsProductTub is <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+
+      <span class="kw">Set</span> PartForPointsDoc = PartForPointsProductTub.GetMasterShapeRepresentation(TRUE)
+      <span class="kw">Set</span> PartForPointsTub = PartForPointsDoc.Part
+    <span class="kw">End</span> <span class="kw">If</span> 
+    ShowTraceOutputLine "Part for tubing points name = " & PartForPointsTub.Name
+    <span class="kw">Set</span> PartForPointsGeoSetTub = PartForPointsTub.OrderedGeometricalSets.Add
+    <span class="kw">If</span> (PartForPointsTub <span class="kw">Is</span> <span class="kw">Nothing</span> <span class="kw">Or</span> PartForPointsGeoSetTub <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to add part to hold tubing points"
+    <span class="kw">End</span> <span class="kw">If</span>
+    
+    <span class="kw">Set</span> PartForPointsProductPip = ParentProductPip.Products.AddNewComponent("Part", "PartForPointsPiping")
+    ShowTraceOutputLine "Part for tubing points product name = " & PartForPointsProductPip.Name
+    <span class="kw">If</span> (<span class="kw">Not</span> (PartForPointsProductPip is <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+
+      <span class="kw">Set</span> PartForPointsDoc = PartForPointsProductPip.GetMasterShapeRepresentation(TRUE)
+      <span class="kw">Set</span> PartForPointsPip = PartForPointsDoc.Part
+    <span class="kw">End</span> <span class="kw">If</span> 
+    ShowTraceOutputLine "Part for piping points name = " & PartForPointsPip.Name
+    <span class="kw">Set</span> PartForPointsGeoSetPip = PartForPointsPip.OrderedGeometricalSets.Add
+    <span class="kw">If</span> (PartForPointsPip <span class="kw">Is</span> <span class="kw">Nothing</span> <span class="kw">Or</span> PartForPointsGeoSetPip <span class="kw">Is</span> <span class="kw">Nothing</span>) <span class="kw">Then</span>
+
+      Err.Raise 9999,sDocPath,"Unable to add part to hold piping points"
+    <span class="kw">End</span> <span class="kw">If</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Define some part placement variables</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+
+    <span class="kw">Dim</span> objInstancePartOfReference <span class="kw">As</span> Product
+    <span class="kw">Dim</span> objReferencePart <span class="kw">As</span> Product
+    <span class="kw">Dim</span> LogicalLine <span class="kw">As</span> PspLogicalLine
+    <span class="kw">Dim</span> Standard <span class="kw">As</span> <span class="kw">String</span>
+
+    <span class="kw">Dim</span> FunctionType <span class="kw">As</span> <span class="kw">String</span>
+    <span class="kw">Dim</span> PlacedPartID <span class="kw">As</span> <span class="kw">String</span>
+    <span class="kw">Dim</span> UpDirectionFirstPoint <span class="kw">As</span> PspListOfDoubles
+    <span class="kw">Set</span> UpDirectionFirstPoint = gListFactory.CreateListOfDoubles()
+    <span class="kw">Dim</span> Point <span class="kw">As</span> HybridShapePointCoord
+    <span class="kw">Dim</span> ListPlacementPoints <span class="kw">As</span> PspListOfObjects                  
+    <span class="kw">Set</span> ListPlacementPoints = gListFactory.CreateListOfObjects()
+    <span class="kw">Dim</span> Location(2)
+    <span class="kw">Dim</span> ListBendRadii <span class="kw">As</span> PspListOfDoubles
+    <span class="kw">Set</span> ListBendRadii = gListFactory.CreateListOfDoubles()
+    <span class="kw">Dim</span> PlacePartRef <span class="kw">As</span> CATIABase
+    <span class="kw">Dim</span> objPlacePart <span class="kw">As</span> PspPlacePart                  
+    <span class="kw">Dim</span> objPlacePartProduct <span class="kw">As</span> Product
+
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Place Tube</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+
+    <span class="kw">Set</span> objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATTUB, "T-003")
+    <span class="kw">Set</span> objReferencePart = GetReferencePart(objInstancePartOfReference)
+    <span class="kw">Set</span> LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "SSTL"
+    FunctionType = "CATTubTubeFunction"
+    PlacedPartID = "TestTube" <span class="rem">'Null string uses name generated by PP engine</span>
+
+<span class="rem">    ' Up direction for part = (0,0,1)</span>
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+    
+<span class="rem">    ' Create points</span>
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(0.0, -1000.0, 0.0) 
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-1000.0, -1000.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 25.4 <span class="rem">'Bend radius in mm (1in).</span>
+
+    ListBendRadii.Append 25.4
+    <span class="kw">Set</span> PlacePartRef = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationTub )
+    <span class="kw">If</span> ( <span class="kw">Not</span> ( objPlacePart <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>      
+      <span class="kw">Set</span> PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductTub, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    <span class="kw">If</span> ( PlacePartRef <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    <span class="kw">Else</span>
+      ShowObjectID "Placed part", PlacePartRef
+    <span class="kw">End</span> <span class="kw">If</span>
+
+ 
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' View and Test Part Data</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Placed part position</span>
+    <span class="kw">Set</span> objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    <span class="kw">If</span> ( objPlacePartProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductTub
+    
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Place Tube with bends</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+
+    <span class="kw">Set</span> objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATTUB, "T-004")
+    <span class="kw">Set</span> objReferencePart = GetReferencePart(objInstancePartOfReference)
+    <span class="kw">Set</span> LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "SSTL"
+    FunctionType = "CATTubTubeFunction"
+    PlacedPartID = "TestTubeWithBends" <span class="rem">'Null string uses name generated by PP engine</span>
+<span class="rem">    ' Up direction for part = (0,0,1)</span>
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+    
+<span class="rem">    ' Create points</span>
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-1500.0, -1000.0, 0.0) 
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-2500.0, -1000.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-2500.0, 500.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-3500.0, 500.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 25.4 <span class="rem">'Bend radius in mm (1in).</span>
+
+    ListBendRadii.Append 25.4
+    ListBendRadii.Append 25.4
+    ListBendRadii.Append 25.4
+    <span class="kw">Set</span> PlacePartRef = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationTub )      
+    <span class="kw">If</span> ( <span class="kw">Not</span> ( objPlacePart <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>      
+      <span class="kw">Set</span> PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductTub, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    <span class="kw">If</span> ( PlacePartRef <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    <span class="kw">Else</span>
+      ShowObjectID "Placed part", PlacePartRef
+    <span class="kw">End</span> <span class="kw">If</span>
+
+ 
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' View and Test Part Data</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Placed part position</span>
+<span class="rem">    'Set objPlacePartProduct = PlacePartRef</span>
+    <span class="kw">Set</span> objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    <span class="kw">If</span> ( objPlacePartProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductTub
+    
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Place Pipe</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+
+    <span class="kw">Set</span> objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATPIP, "P-052")
+    <span class="kw">Set</span> objReferencePart = GetReferencePart(objInstancePartOfReference)
+    <span class="kw">Set</span> LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "ASTL"
+    FunctionType = "CATPspPipeFunction"
+    PlacedPartID = "TestPipe" <span class="rem">'Null string uses name generated by PP engine</span>
+<span class="rem">    ' Up direction for part = (0,0,1)</span>
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+    
+<span class="rem">    ' Create points</span>
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(0.0, 1000.0, 0.0) 
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(0.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 50.8 <span class="rem">'Bend radius in mm (2in).</span>
+    ListBendRadii.Append 50.8
+    <span class="kw">Set</span> PlacePartRef = <span class="kw">Nothing</span>
+
+    <span class="kw">Set</span> objPlacePart = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationPip )      
+    <span class="kw">If</span> ( <span class="kw">Not</span> ( objPlacePart <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>      
+      <span class="kw">Set</span> PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductPip, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    <span class="kw">If</span> ( PlacePartRef <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    <span class="kw">Else</span>
+      ShowObjectID "Placed part", PlacePartRef
+    <span class="kw">End</span> <span class="kw">If</span>
+
+ 
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' View and Test Part Data</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Placed part position</span>
+<span class="rem">    'Set objPlacePartProduct = PlacePartRef</span>
+    <span class="kw">Set</span> objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    <span class="kw">If</span> ( objPlacePartProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductPip
+    
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Place Pipe with bends</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+
+    <span class="kw">Set</span> objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATPIP, "P-053")
+    <span class="kw">Set</span> objReferencePart = GetReferencePart(objInstancePartOfReference)
+    <span class="kw">Set</span> LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "ASTL"
+    FunctionType = "CATPspPipeFunction"
+    PlacedPartID = "TestPipeWithBends" <span class="rem">'Null string uses name generated by PP engine</span>
+<span class="rem">    ' Up direction for part = (0,0,1)</span>
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 <span class="rem">'Align vertical parallel to z-axis.</span>
+
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+    
+<span class="rem">    ' Create points</span>
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(1000.0, 1000.0, 0.0) 
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(1000.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(2500.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    <span class="kw">Set</span> Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(2500.0, 1000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 50.8 <span class="rem">'Bend radius in mm (2in).</span>
+
+    ListBendRadii.Append 50.8
+    ListBendRadii.Append 50.8
+    ListBendRadii.Append 50.8
+    <span class="kw">Set</span> PlacePartRef = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = <span class="kw">Nothing</span>
+    <span class="kw">Set</span> objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationPip )      
+    <span class="kw">If</span> ( <span class="kw">Not</span> ( objPlacePart <span class="kw">Is</span> <span class="kw">Nothing</span> ) ) <span class="kw">Then</span>      
+      <span class="kw">Set</span> PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductPip, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    <span class="kw">If</span> ( PlacePartRef <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    <span class="kw">Else</span>
+      ShowObjectID "Placed part", PlacePartRef
+    <span class="kw">End</span> <span class="kw">If</span>
+
+ 
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' View and Test Part Data</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Placed part position</span>
+<span class="rem">    'Set objPlacePartProduct = PlacePartRef</span>
+    <span class="kw">Set</span> objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    <span class="kw">If</span> ( objPlacePartProduct <span class="kw">Is</span> <span class="kw">Nothing</span> ) <span class="kw">Then</span>      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    <span class="kw">End</span> <span class="kw">If</span>
+
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductPip
+    
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Clean up model</span>
+<span class="rem">    '-----------------------------------------------------------------------</span>
+<span class="rem">    ' Remove part that holds points</span>
+    <span class="kw">If</span> (<span class="kw">Not</span> (PartForPointsProductTub is <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+
+      ParentProductTub.Products.Remove(PartForPointsProductTub.Name)
+    <span class="kw">End</span> <span class="kw">If</span> 
+    <span class="kw">If</span> (<span class="kw">Not</span> (PartForPointsProductPip is <span class="kw">Nothing</span>) ) <span class="kw">Then</span>
+      ParentProductPip.Products.Remove(PartForPointsProductPip.Name)
+    <span class="kw">End</span> <span class="kw">If</span> 
+    
+
+<span class="rem">    ' Dump messages.</span>
+    DumpTraces
+
+<span class="kw">End</span> <span class="kw">Sub</span>
+    </pre>
+  </body>
+</html>

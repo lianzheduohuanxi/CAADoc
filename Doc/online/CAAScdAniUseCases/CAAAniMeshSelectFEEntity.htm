@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE>Selecting a mesh entity (node, element)</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 12.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link href="../CAAScrBase/caav5.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Selecting a mesh entity (node, element)</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to select a mesh entity (node, element) using the <B>Selection</B> object.
+		This scenario requires &quot;GPS&quot; product.</P>
+		<P>The macro open an Analysis document. User is prompted to select a mesh element then to select a mesh node.
+		After each selection a panel displays the mesh entity tag.</P>
+		<P ALIGN="center">
+		<img height="178" src="images/AllElementsModel.jpg" width="511" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniMeshSelectFEEntity is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniMeshSelectFEEntitySource.htm">CAAAniMeshSelectFEEntity.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniMeshSelectFEEntity.catvbs">Execute macro</A> (Windows only).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniMeshSelectFEEntity includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#MeshElement">Selecting a mesh element</A></LI>
+			<LI><A HREF="#MeshNode">Selecting a mesh node</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39;Optional: allows to find the sample wherever it&#39;s installed</FONT>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT></PRE>
+				<PRE><FONT COLOR="#008000">&#39;Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\AllElementsAndNode.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisDocument = CATIA.Documents.Open(sFilePath)</PRE>
+				<PRE><FONT COLOR="#008000">&#39;Get the Selection object</FONT> 
+<FONT COLOR="#0000FF">Set </FONT>oSelection = oAnalysisDocument.Selection</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path is already stored in the
+		<CODE>sDocPath</CODE> variable. If this variable is not valuated then error 
+		is raised. In the collection of documents, two documents can be retrieved; 
+		the Analysis document and the Part document.
+		The <B>Selection</B> object is retrieved from the Analysis document.</P>
+		<H4><A NAME="MeshElement"></A>Selecting a mesh element</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Set the selection type</FONT>
+InputObjectType(0) = &quot;AnalysisMeshElement&quot;
+
+<FONT COLOR="#008000">&#39;Get the status</FONT>
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh element&quot;, True )
+
+<FONT COLOR="#008000">&#39;Get the object in the selection</FONT>
+<FONT color="#0000FF">Set </FONT>oMeshElement = oSelection.Item(1).Value
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>User is prompted to select a mesh element. The filter <B>AnalysisMeshElement</B> allows to select
+		either a mesh element, a mesh edge or a mesh node.</P>
+		<H4><A NAME="MeshNode"></A>Selecting a mesh node.</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Set the selection type</FONT>
+InputObjectType(0) = &quot;AnalysisMeshNode&quot;
+
+<FONT COLOR="#008000">&#39;Get the status</FONT>
+oStatus = oSelection.SelectElement2 ( InputObjectType, &quot;Select a mesh node&quot;, True )
+
+<FONT COLOR="#008000">&#39;Get the object in the selection</FONT>
+<FONT color="#0000FF">Set </FONT>oMeshNode = oSelection.Item(1).Value
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><FONT COLOR="#000000"><SPAN STYLE="font-weight: 400">User is prompted to select a mesh node.
+		The filter <B>AnalysisMeshNode</B> allows to select a mesh node that does not belong to a mesh element.</SPAN></FONT></H4>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+ End Sub
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView environment 
+		variables must be defined.</P>
+		</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to use the <B>Selection</B> object in order to select mesh entites.</P>
+<P>&nbsp;</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

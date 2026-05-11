@@ -1,0 +1,257 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Driver Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Portal Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>3d com Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Driver Overview</h3>
+      <em>Introducing the various driver mechanisms</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This document explains what a driver is and why you may need to
+      implement a driver.
+      <ul>
+        <li><a href="#100000"><b>Definition</b></a></li>
+        <li><a href="#200000"><b>Advantages of a Driver</b></a>
+          <ul>
+            <li><a href="#210000">Reuse of a Previous Investment</a></li>
+            <li><a href="#220000">Easy Programming</a></li>
+          </ul>
+        </li>
+        <li><a href="#300000"><b>The Concepts Managed by each Type of Drivers</b></a>
+          <ul>
+            <li><a href="#400000">Data Driver</a></li>
+            <li><a href="#500000">Application Driver</a></li>
+          </ul>
+        </li>
+        <li><a href="#600000"><b>Two Ways of Considering a Driver</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Definition</h3>
+<p>A driver is a software piece which manages the access to specific data or to
+a specific application. The Portal provides you with an api which enables you to
+write a driver in order to insert your own data and applications with Portal.</p>
+<p>This API is divided into two pieces:</p>
+<ul>
+  <li>The first one is the Data Driver part. It enables you to build a Driver
+    for your Data Sources, for instance, to connect your PDM repository in the
+    Driver. Hence your data will be viewed through the 3D Com WebTree, the 3D
+    com Query Tool. You will be able to communicate for free with the 3D Com
+    viewers, with the Enovia DMU Navigator and with other applications. All
+    these services are available to your data. Your driver manages the access to
+    your data which requires your specific knowledge.</li>
+  <li>The second one is the Application Driver part. It enables you to add
+    Actions on types of objects. These types of objects may be your specific
+    data managed by your own data driver or any other types managed by others
+    drivers. For example you can connect your CAD Application to the data
+    managed by the Portal. Let's take a precise example. Suppose that you have
+    an application that reads tiff files and you want to supply a &quot;launch
+    in this application&quot; on each tiff document. You will defined an action
+    representing your application and you associate it with the file type. Each
+    time a user will select a tiff document from a PDM system, the Portal will
+    display the associated action to the user. When the user selects the action,
+    your driver will be called. It will retrieve the document and give it to
+    your application. The Application Driver side enables you to build
+    applications in the Portal that take advantage of the Portal without knowing
+    anything specific about a driver: This is how we have built 3D com WebTree,
+    3D com Query Tool, the communication with DMU… We are eating our own dog
+    food.</li>
+</ul>
+<p>In V5R6 Release of Enovia Portal, only the Data Driver will be covered and
+opened.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Advantages of a Driver</h3>
+<h4><a name="210000"></a>Reuse of previous investments</h4>
+<p>The Goal of the Portal is to leverage to a maximum your previous investments
+and to provide easy and seamless migration. For example, imagine you want to
+move from a PDM A to a PDM B. But the transition will not be done in one day,
+but perhaps in one year. Your users will need access to the data in the two
+repositories during this period. So you can build a driver to A and another to
+B. The users will access the both data sources. When all data will be migrated,
+you will remove the Driver to A, but the user interface will remain the same,
+the investments in the education of your users are protected. Hence you will
+have a smooth 12-month transition from the user point of view.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Easy Programming</h4>
+<p>Last but not least, using the Driver API does not involve complex
+technologies nor a high learning curve. You needn't prerequisite any complex
+middleware technologies. You code your driver in the Java Language. You use the
+tools you want to make the connection to your PDM or Data System. The Core
+Driver API contains about 10 call methods.</p>
+<p>The Driver API is built in order to give you transparency between
+applications and data sources, to help you to work on the services and the tools
+that are your strategic value.</p>
+<p>Without knowing anything about your product Data repositories, Dassault
+Systèmes enables you to integrate your legacy data.</p>
+<p>As a customer of Dassault Systèmes ENOVIA Portal Solutions, you do not want
+to re-implement a query tool user interface, a bookmark service, the connection
+with your DMU Tool, a product structure navigator. Just remember: &quot;The Line
+of code that costs the least is the line you don't write &quot; (Steve P. Jobs).
+It is not your added-value. Driver API provides a formalism on which the
+Portal's tools are built.</p>
+<p>Of course, as you have some legacy data sources, you have some legacy
+applications, for example your CAD System. Using Portal Solutions does not imply
+that you change it, you have only to code an application driver in order to
+integrate it into the Portal.
+<ul>
+  <li>Driver API enables you to code the access to your Data in a very simple
+    way</li>
+  <li>Dassault Systèmes builds for you tools and services on this Driver API
+    formalism</li>
+  <li>It enables you to integrate your existing applications</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>The concepts managing by each type of drivers</h3>
+<p>Before using the Portal, when you installed a new repository, you had to code
+the access to this repository for all applications that would use it. Now you
+have only to code the driver accessing your data and every application using or
+having an adapter to the Driver API Formalism will inherit the access.</p>
+<ul>
+  <li>Developing applications and Developing Repositories are two different
+    jobs. The Driver API formalism enables that there be no coupling between
+    them.</li>
+</ul>
+<p>Implementing a driver consists in implementing some tasks that are specifics
+to your applications or data. These tasks depend on the driver type because each
+driver type manages differents concepts presenting in the form of interfaces to
+implement.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a> Data Driver</h3>
+<p>The Data Driver manages the access to your data, and especially requires the
+implementation of interfaces corresponding to the following concepts:</p>
+<ul>
+  <li>Security: It's up to you to check the user's authorization on your data.</li>
+  <li>Metadata: You have to describe your data and their attributes</li>
+  <li>Data: By implementing this interface, you enable the query and the
+    navigation in your data.</li>
+</ul>
+<p>The three above interfaces are the core of the data driver.<br>
+As extended Services, you can add functionalities like:</p>
+<ul>
+  <li>Bookmarking: This implies that you are able to query an object by its uuid</li>
+  <li>Extract Data: If your data are stored in a secured vault, you need to give
+    the driver the ability to extract them if you want to read them.</li>
+</ul>
+<p>Afterwards, all the following portal services:</p>
+<ul>
+  <li>Query tool</li>
+  <li>Product structure Navigator</li>
+  <li>Bookmarking Services</li>
+  <li>Data Up-Downloader</li>
+  <li>Reporting tool</li>
+</ul>
+<p>are provided on your data thanks to your driver. See [<a href="#References">1</a>]
+for further's information.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Application driver</h3>
+<p>The Application driver enables you to register actions on an object. These
+actions can be displayed through a popup menu in the WebTree or displayed as an
+icon in an html page. The definitions of these actions are independent from the
+user interface.</p>
+<p>Hence, you can add an analysis tool on a selection of objects.</p>
+<p>On an object, you can register actions due to 3 reasons:</p>
+<ul>
+  <li>The possible document tied to the object: If a CATIA model document is
+    attached to the object, CATIA is launch able.</li>
+  <li>The type of an object: For example, a part can be promoted.</li>
+  <li>The location of the object in the tree: a node can be expanded unlike a
+    leaf</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>Two Ways of Considering the Drivers</h3>
+<ul>
+  <li><b>As a Driver Supplier:</b>
+    <p>You will code an access to your System or to a generic System, a data
+    Driver. Then you will inherit all the functionalities like Query,
+    Navigation, Book marking.</p>
+  </li>
+  <li><b>As a Portal Application Supplier:</b>
+    <p>You want to add the communication with your application. You will code an
+    application driver that will enable to feed your application with data
+    obtained by the Portal.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Application and Data Driver are a way for you to extend the Portal.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPbaTDataDriver.htm">Data Driver</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

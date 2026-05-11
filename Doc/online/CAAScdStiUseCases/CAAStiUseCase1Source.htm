@@ -1,0 +1,93 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAStiUseCase1.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Get CAIEngine</font>
+<font color="#0000FF">Dim </font>CAIEngine<font color="#0000FF"> As </font>StiEngine
+<font color="#0000FF">Set </font>CAIEngine = CATIA.GetItem("CAIEngine") 
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Decide to run without any user interaction</font>
+<font color="#0000FF">Dim </font>bUI<font color="#0000FF"> As </font>Boolean
+<font color="#0000FF">if </font>( CAIEngine.UseGraphicalUI )<font color="#0000FF"> Then</font>
+    CAIEngine.UseGraphicalUI = False
+    bUI = true
+<font color="#0000FF">End If</font>
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Connect to the database (if not already connected)</font>
+<font color="#0000FF">Dim </font>bConnect<font color="#0000FF"> As </font>Boolean
+bConnect = false
+<font color="#0000FF">If </font>Not CAIEngine.IsConnected()<font color="#0000FF"> Then</font>
+    CAIEngine.Connect "joe", ""
+    bConnect = true
+<font color="#0000FF">End If</font>
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Creating new CATPart document</font>
+<font color="#0000FF">Dim </font>PartDoc<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">Set </font>PartDoc = CATIA.Documents.Add("Part")
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Save document in SMARTEAM</font>
+<font color="#0000FF">Dim </font>PartDocDBItem<font color="#0000FF"> As </font>StiDBItem
+<font color="#0000FF">Set </font>PartDocDBItem = CAIEngine.GetStiDBItemFromAnyObject(PartDoc)
+CAIEngine.Save PartDocDBItem
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Once saved, retrieve corresponding SMARTEAM classid & objectid</font>
+<font color="#0000FF">Dim </font>cid<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">Dim </font>oid<font color="#0000FF"> As </font>Integer
+cid = CAIEngine.GetSMARTEAMClassID(PartDocDBItem)
+oid = CAIEngine.GetSMARTEAMObjectID(PartDocDBItem)
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Perform Check-In operation on the document</font>
+<font color="#008000">' (this will close the document from the CATIA session and</font>
+<font color="#008000">' file will be removed from the disk)</font>
+CAIEngine.LifeCycleCheckIn PartDocDBItem
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Create new Product</font>
+<font color="#0000FF">Dim </font>ProductDoc<font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">Set </font>ProductDoc = CATIA.Documents.Add("Product")
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Retrieve checked-in Part document from SMARTEAM database and</font>
+<font color="#008000">' get a local copy in the user work directory</font>
+<font color="#0000FF">Dim </font>CheckedInPartDBItem<font color="#0000FF"> As </font>StiDBItem
+<font color="#0000FF">Set </font>CheckedInPartDBItem = CAIEngine.BuildFileDBItemFromSmarTeamID(oid, cid)
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Insert the part in the new Product</font>
+<font color="#0000FF">Dim </font>tPath(1)
+tPath(0) = CheckedInPartDBItem.GetDocumentFullPath()
+ProductDoc.Product.Products.AddComponentsFromFiles tPath, "All"
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Save the Product in SMARTEAM</font>
+<font color="#0000FF">Dim </font>ProductDocDBItem<font color="#0000FF"> As </font>StiDBItem
+<font color="#0000FF">Set </font>ProductDocDBItem = CAIEngine.GetStiDBItemFromAnyObject(ProductDoc)
+CAIEngine.Save ProductDocDBItem
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Perform Release operation on the Product document</font>
+CAIEngine.LifeCycleRelease ProductDocDBItem
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Disconnect from the database in case we had to connect at the</font>
+<font color="#008000">' beginning of the script</font>
+<font color="#0000FF">If </font>bConnect<font color="#0000FF"> Then</font>
+    CAIEngine.Disconnect
+<font color="#0000FF">End If</font>
+
+<font color="#008000">' -----------------------------------------------------------</font>
+<font color="#008000">' Reset UseGraphicalUI option</font>
+<font color="#0000FF">If </font>bUI<font color="#0000FF"> Then</font>
+    CAIEngine.UseGraphicalUI = true
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

@@ -1,0 +1,166 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees 
+ Interfaces Use Case</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%" border="0">
+   <tr>
+     <td>
+     <h2>Arrangement</h2>
+     </td>
+     <td valign="top" align="right">
+     <h2><a name="Top"></a>CATIArrNomenclature, CATIArrNomenclatures, CATIArrNomenclatureTrees 
+     Interfaces Use Case</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment--------------------------------->
+ <table width="100%" border="0">
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/atarget.gif" border="0" width="32" height="32"></td>
+     <td width="93%">This example shows how to extract 
+     Bendable Data from BendableString objects (Pipe with bends, Tube with 
+     bends). Help is taken of a macro. This macro has a reference to 
+     CATIArrNomenclature , CATIArrNomenclatures and CATIAArrNomenclatureTrees 
+     Interfaces (referred to as ArrNomenclature, ArrNomenclatures and 
+     ArrNomenclatureTree in reference Visual Basic document).<p>This macro opens 
+     an existing Product document and retrieves the BaseNomenclatures from 
+     ArrNomenclatureTree. Then it obtains the ArrNomanclatures and 
+     ArrNomenclature recursively.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ainfo.gif" border="0" width="32" height="32"></td>
+     <td width="93%">PSLNomenAccessFeat is launched after CATIA is up and the 
+     reference document is opened.<p>PslNomenFeatAccess.CATScript is located in 
+     the runtime directory Operating System (say intel_a)\code\command</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ascenari.gif" border="0" width="32" height="32"></td>
+     <td width="93%">CAAPslNomenAccessFeat includes the following steps:<ol>
+       <li><a href="#Prolog">Prolog</a> </li>
+       <li><a href="#Obtain">Obtain the ArrNomenclatures object.</a> </li>
+       <li><a href="#Start">Start to get the information about ArrNomenclature 
+       object from ArrNomenclatures object recursively.</a> </li>
+       <li><a href="#Epilog">Epilog</a> </li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>  ...
+  a) Open the Input Document
+  b) Run the macro
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>Once the Product has been loaded, the macro is designed to read the 
+     relevant objects from the model.</p>
+     <h4><a name="Obtain"></a>Obtain the ArrNomenclatures object</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   <font color="#008000">'//---------- Get Arrworkbench from current document</font>
+   Dim objDocument0 As Object
+   Set objDocument0 = CATIA.ActiveDocument  
+   Dim objArrWorkbench1 As Workbench
+   Set objArrWorkbench1 = objDocument0.GetWorkbench  ( &quot;ArrWorkbench&quot; )
+<font color="#008000">   '//---------- Get ArrNomenclatureTree from ArrWorkbench</font>
+   Dim objArrNomTree1 As ArrNomenclatureTree
+   Set objArrNomTree1 = objArrWorkbench1.ArrNomenclatureTree</pre>
+         <p><font color="#008000">'//---------- Get ArrNomenclatures from 
+         ArrNomenclatureTree and get a count of the Nomenclatures</font> Dim 
+         objArrNomTopNode As ArrNomenclatures Set objArrNomTopNode = 
+         objArrNomTree1.BaseNomenclatures Dim intNBOfNom intNBOfNom = 
+         objArrNomTopNode.Count ...</p>
+         <pre></pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Start"></a>Start to get the information about ArrNomenclature 
+     object from ArrNomenclatures object recursively</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   Dim intK
+   Dim objKArrNom As ArrNomenclature
+   Dim strIntSysClassName
+   Dim strNLSInstanceName
+   Dim strIconName
+<font color="#008000">  '// -------- Recursively loop Through each Nomenclature and do the following</font>
+   Set objKArrNom = objArrNomTopNode.Item(intK)
+<font color="#000000">   strIntSysClassName = objKArrNom.IntSysClassName</font>
+   strNLSInstanceName = objKArrNom.NLSInstanceName
+   strIconName = objKArrNom.IconName
+   '// ArrNomenclature can contain various subtypes
+   Dim objArrSubTypes As ArrNomenclatures
+   Set objArrSubTypes = iobjArrNomen.SubTypes
+<font color="#000000">   intNBOfNom = objArrSubtypes.Count</font>
+<font color="#000000">   Dim objJArrNom As ArrNomenclature
+   For intJ=1 to intNBOfNom  
+   Set objJArrNom = objArrSubTypes.Item(intJ) </font>
+<font color="#000000">   </font><font color="#000000">strNLSInstanceName = objJArrNom.NLSInstanceName</font>
+<font color="#000000">   strIntSysClassName = objJArrNom.IntSysClassName</font>
+<font color="#000000">   strIconName = objJArrNom.IconName</font>
+<font color="#008000">   ' Call recursive function again on objJArrNom</font><font color="#000000"></font>
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Epilog"></a>Epilog</h4>
+     <p>Thus we saw how to read a CATProduct document, retrieve the objects we 
+     are interested in and get more information about the objects</p>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+End Sub</pre>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <!---------------------------------comment--------------------------------->
+ <p align="center">
+ <img src="../CAAScrBase/images/aendtask.gif" border="0" width="64" height="32"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment--------------------------------->
+ <h4>In Short</h4>
+ <p>Thus we saw how to read a CATProduct document, retrieve the objects we are 
+ interested in and get more information about the objects</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment------------------------------->
+ <h4>References</h4>
+ <table width="100%" border="0">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>Replaying a macro</td>
+   </tr>
+   <tr>
+     <td align="right" width="100%" colSpan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment--------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

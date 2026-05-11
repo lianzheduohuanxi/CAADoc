@@ -1,0 +1,256 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Accessing Logical Line and Group Membership</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Accessing Logical Line and Group Membership</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This use case is intended to show you how to obtain
+      a Logical line instance and access its group members.</p>
+      <p>This macro opens the document CAAPsp3DEduIn.CATProduct. Using the root
+      node of the document, it then finds a Logical line object with a
+      given instance name. It then accesses group members, adds and removes a
+      member.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAPspLogicalLine is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPspLogicalLineSource.htm">CAAPspLogicalLine.CATScript</a>
+      is located in the CAAScdPspUseCases module. <a href="macros/CAAPspLogicalLine.CATScript">Execute
+      macro</a> (windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAPspLogicalLine includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Get a Logical Line object">Get a Logical Line Object</a></li>
+        <li><a href="#List members">List Members of the Line</a></li>
+        <li><a href="#Groupable data">Groupable Data</a></li>
+        <li><a href="#Add and remove a member">Add and Remove a Member</a></li>
+        <li><a href="#Get From-to object information">Get From-To Object Information</a></li>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>The macro first loads Distributive System document
+      CAAPsp3DEduIn.CATProduct containing Equipment and Piping Design objects.</p>
+      <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i>
+      to point to the document directory and <i>sDocFullPath</i> to point to
+      full path name of the document.</p>
+      <pre>   <font color="#008000">...</font>
+<font color="#008000">    ' ----------------------------------------------------------------</font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct&quot; )
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i>PspWorkbench</i> object from the
+      document using the top node of the object tree in a Distributive
+      System document.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">'---------------------------------------------------------</font>
+    <font color="#008000">' Find the top node (PspWorkbench) of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product       
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get a Logical Line object"></a>Get a Logical Line Object</h4>
+      <p>From the <i>objPspWorkbench</i> object following objects can be obtained.</p>
+      <ol>
+        <li>Application (CATIAPspApplication) object using the <i>
+          GetApplication</i> method for the piping application.
+        <li>Application factory object (CATIAPspAppfactory) corresponding
+          to Piping Application by using the <i> GetInterface</i> method.</li>
+      </ol>
+      <pre><font color="#008000">    ...</font>
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+   <font color="#008000">...</font></pre>
+    <p>Application factory object is
+      then used to get a list of the logical line instances in the
+      document.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">    </font><font color="#0000FF">If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAppFactory&quot;, _
+                                                objPspApplication )      
+      
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) ) <font color="#0000FF">Then</font>
+<font color="#0000FF">        Set </font>objLLogLines = objPspAppFactory.ListLogicalLines (objPrdRoot)
+    <font color="#008000">...</font></pre>
+      <p>Then the macro gets <i>CATIAPspGroup</i>, <i> CATIAPspLogicalLine</i> and
+      <i> CATIAPspID</i>
+      handle on the first object in the list of logical lines.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">            Set </font>objPspGroup = objLLogLines.Item(1,&quot;CATIAPspGroup&quot;)
+<font color="#0000FF">            Set </font>objPspLogLine = objLLogLines.Item(1,&quot;CATIAPspLogicalLine&quot;)
+<font color="#0000FF">            Set </font>objPspID = objLLogLines.Item(1,&quot;CATIAPspID&quot;)
+<font color="#0000FF">            If </font>( Not (objPspID Is Nothing) )<font color="#0000FF"> Then</font>
+              strMessage_g = strMessage_g &amp; &quot;Logical line object ID =&quot; &amp;  objPspID.GetID &amp; vbCr
+<font color="#0000FF">            End If </font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="List members"></a>List Members</h4>
+      <p>Logical line is a logical grouping of components (parts and strings)
+      that share common attributes. This macros obtains a a list of
+      members by use of Property <i>Members</i> on the <i> PspGroup</i> object on
+      the logical line. Then for each member of the logical it gets a <i>PspGroupable</i>
+      object.</p>
+      <pre>      <font color="#008000">...</font>
+<font color="#0000FF">      Set </font>objLMembers = objPspGroup.Members         
+
+<font color="#0000FF">      If </font>( Not ( objLMembers Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g &amp; _
+          &quot;Number of Members= &quot; &amp;  objLMembers.Count &amp; vbCr
+    
+<font color="#0000FF">        For </font>intIdx = 1<font color="#0000FF"> To </font>objLMembers.Count
+<font color="#0000FF">          Set </font>objPspGroupable = objLMembers.Item (intIdx, &quot;CATIAPspGroupable&quot;)                   
+<font color="#0000FF">          Set </font>objPspIDMember = objLMembers.Item (intIdx, &quot;CATIAPspID&quot;)
+      <font color="#008000">...</font></pre>
+      <h4><a name="Groupable data"></a>Groupable Data</h4>
+      <p>Macro obtains a <i> PspGroupable</i> object obtained for the last member in the
+      List of members. It then calls local Subroutine <i>QueryGroupable</i>
+      by passing <i>objPspGroupable</i> as an argument.</p>
+      <pre>      <font color="#008000">...</font>
+        <font color="#008000">'-----------------------------------------</font>
+        <font color="#008000">' Query PspGroupable methods</font>
+        <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">        If </font>( Not ( objPspGroupable Is Nothing ) )<font color="#0000FF"> Then</font>
+          QueryGroupable objPspGroupable
+      <font color="#008000">...</font></pre>
+      <p>Subroutine <i>QueryGroupable</i> then calls property <i>Groups</i> on the
+      <i>PspGroupable</i> object to obtain information
+      on the Groups of which the <i>PspGroupable</i> object is a member.</p>
+      <pre> <font color="#008000">...</font>
+<font color="#008000"> </font>Private Sub QueryGroupable (objPspGroupableArg<font color="#0000FF"> As </font>PspGroupable)      
+
+<font color="#0000FF">    Dim </font>objPspGroups      <font color="#0000FF"> As </font>PspGroup
+
+<font color="#0000FF">    If </font>( Not ( objPspGroupableArg Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Get Groups</font>
+      <font color="#008000">' ---------------------------</font>
+
+<font color="#0000FF">      Set </font>objPspGroups = objPspGroupableArg.Groups
+
+<font color="#0000FF">      If </font>( Not ( objPspGroups Is Nothing ) )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g &amp; _
+          &quot;Number of Groups =&quot; &amp; objPspGroups.Count &amp; vbCr
+<font color="#008000">...</font></pre>
+      <h4><a name="Add and remove a member"></a>Add and Remove a Member</h4>
+      <p>It then calls <i> RemoveMember</i> on <i> PspGroup</i> object to remove a
+      <i>PspGroupable</i> object.</p>
+      <pre><font color="#008000">    ...</font>
+          <font color="#008000">'-------------------------------------</font>
+          <font color="#008000">' Remove member</font>
+          <font color="#008000">'-------------------------------------</font>
+<font color="#0000FF">          If </font>( Not ( objPspGroupable Is Nothing ) )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g &amp;   &quot;Removing member= &quot; &amp; _
+                objPspIDMember.GetID   &amp; vbCr              
+            objPspGroup.RemoveMember objPspGroupable
+<font color="#008000">    ...</font></pre>
+      <p>It then calls <i> AddMember</i> on <i> PspGroup</i> object to restore the member
+      back to the <i> PspGroup</i> object.</p>
+      <pre>    <font color="#008000">...</font>        
+            <font color="#008000">'-------------------------------------</font>
+            <font color="#008000">' Add member</font>
+            <font color="#008000">'-------------------------------------     </font>
+            
+            strMessage_g = strMessage_g &amp; _
+                &quot;Adding member= &quot; &amp;  objPspIDMember.GetID &amp; vbCr              
+            objPspGroup.AddMember objPspGroupable
+<font color="#008000">    ...</font></pre>
+      <h4><a name="Get From-to object information"></a>Get
+      From-to Object Information</h4>
+      <p>The macros uses <i> PspLogicalLine</i> object handle to call method
+      <i>
+      GetFromTo</i> to obtain From-To objects list.</p>
+      <pre>   <font color="#008000">...</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">'  GetFromTo information (CATIAPspLogicalLine)</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objLFromMajorMembers        <font color="#0000FF">As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLFromMinorMembers        <font color="#0000FF">As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLToMajorMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLToMinorMembers         <font color="#0000FF"> As </font>PspListOfObjects
+ <font color="#0000FF">   If </font>( Not ( objPspLogLine Is Nothing ))<font color="#0000FF"> Then</font>
+      objPspLogLine.GetFromTo objLFromMajorMembers, objLFromMinorMembers,  _
+                              objLToMajorMembers, objLToMinorMembers
+
+<font color="#0000FF">      If </font>( Not ( objLFromMajorMembers Is Nothing ))<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g &amp; _
+          &quot;Number of From-Major Members is: &quot; &amp; objLFromMajorMembers.Count  &amp; vbCr
+      <font color="#0000FF">Else</font>       
+        strMessage_g = strMessage_g &amp; _
+                &quot;Number of From-Major Members is 0&quot;  &amp; vbCr
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLFromMinorMembers Is Nothing ))<font color="#0000FF"> Then</font>
+
+      <font color="#0000FF">If</font> ( Not ( objLFromMinorMembers Is Nothing )) <font color="#0000FF">Then</font>
+<font color="#008000">    ...</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case shows how to access a Logical line instance of an
+existing document. A message logging the status of the critical steps is
+displayed at the end of the use case.</p>
+<p><img border="0" src="images/CAAPspLogicalLine_01.jpg" width="544" height="578"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspLightPart.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

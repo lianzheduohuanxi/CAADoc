@@ -1,0 +1,717 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a New Geometrical Feature: the Combined Curve</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler&nbsp;</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a New Geometrical Feature: the Combined Curve</h3>
+      <i>A full example to create and integrate your own geometrical features</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create and integrate a <b>new geometrical
+      feature</b> into CAA V5 and CAA V6: the <b>V5V6ExtCombinedCurve</b> feature.
+      
+       <p>It is a copy of the Combined Curve use case [<a href="#References">9</a>], rewritten with V6 
+		backported interfaces. All the resources attached to the Combined Curve use case are duplicated with the "V5V6Ext"
+		suffix. "V5V6" because the code is V5/V6 compatible and "Ext" to draw your attention to the fact that in V6, 
+		the Mechanical Modeler tools that enable to integrate a new feature are packaged in a specific 
+		extend framework called CATMecModExtItf [<a href="#References">10</a>].
+		  
+      
+      <ul>
+		<li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#CombinedCurve"><b>What Is a Combined Curve</b></a></li>
+        <li><a href="#UseCase"><strong>The Combined Curve Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Combined Curve Use Case Do</a></li>
+            <li><a href="#Overview of the Combined Curve Use Case Articles">Overview
+              of the Combined Curve Use Case Articles</a></li>
+            <li><a href="#How">How to Launch the Combined Curve Use Case</a></li>
+            <li><a href="#Where">Where to Find the Combined Curve Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step-by-Step">Step-by-Step</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates the sub-section entitled &quot;Creating a New
+Mechanical Feature&quot; that you can see in the &quot;Technical Articles&quot;
+section of the Mechanical Modeler home page. Its main intent is to help you make your first steps in creating a
+<b>new geometrical feature</b>. A geometrical feature being a mechanical
+feature with a geometrical result [<a href="#References">1</a>].&nbsp;&nbsp;</p>
+<p>You will learn to:</p>
+<ul>
+  <li><b>Create </b>a new geometrical feature.<b>&nbsp;</b>&nbsp;</li>
+</ul>
+<blockquote>
+  <p>How to create a new StartUp and how to
+  instantiate it. You can you refer to the &quot;Creating a New StartUp Deriving from a Mechanical StartUp&quot; technical article [<a href="#References">2</a>]
+  for details.</p>
+</blockquote>
+<ul>
+  <li><b>Integrate </b>it in standard DS behavior.</li>
+</ul>
+<blockquote>
+  <p>A feature is completely described by a set of behaviors, in other words
+  interfaces. Some are inherited from the mechanical feature StartUp, but some 
+	need to be implemented. The technical article entitled &quot;Integrating a New
+  Mechanical Feature in V5&quot; gives you an overview of these interfaces [<a href="#References">3</a>].</p>
+</blockquote>
+<p>The Combined Curve use case forms a set of articles, each describing 
+different steps of the new feature creation or integration. </p>
+  
+
+<p>Before getting to the use case, it is important to get an understanding of <b>what
+a Combined Curve is</b>. This is the goal of the next section. You can skip it
+if you are already familiar with this concept.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CombinedCurve"></a>What Is a Combined Curve</h3>
+<p><i><b>A Combined Curve is a curve resulting of the intersection of two
+surfaces,&nbsp;</b></i> each of them being extruded from a curve along a direction.</p>
+<p>Consequently, a Combined Curve has <b>two input curves</b> also named
+profiles and <b>two input
+directions</b>.</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>:Combined Curve Inputs</i></caption>
+  <tr>
+    <td>
+<img border="0" src="../CAAMmrUseCases/images/CombinedCurveDefinition.gif" loop="infinite" width="523" height="371"><br>
+	</td>
+  </tr>
+</table>
+
+<p> The two extruded surfaces are only <i>temporary</i>
+<i>hidden support </i>objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The V5V6ExtCombinedCurve Use Case</h3>
+<p>The V5V6ExtCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the V5V6ExtCombinedCurve Use Case Do</h4>
+<p>The final intent of this use case is to create a wireframe feature of
+the Shape Design Workbench. It can be divided into several steps:</p>
+<ol>
+  <li>Creating the new V5V6ExtCombinedCurve <b> StartUp</b> in a new <b>catalog</b>
+    - <a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating V5V6ExtCombinedCurve's
+    Catalog</a></li>
+    
+      <p>Here is the content of the V5V6ExtCombinedCurve StartUp in the CAAV5V6ExtMmrCombinedCurveCatalog file. 
+     You can note that compared to the CombinedCurve's original StartUp, there is an extra input specification 
+     called "V5V6Desactive". We will explain the use of this attribute in the 
+		article &quot;Enabling the Build Deactivation&quot;.&nbsp; </p>
+     <table class="code">
+  <tr>
+    <td>
+      <pre>...
+feature V5V6ExtCombinedCurve GeometricalElement3D@`MechMod.feat` #startup {
+	specobject V5V6Curve1 #in
+	specobject V5V6Dir1 #in
+	specobject V5V6Curve2 #in
+	specobject V5V6Dir2 #in
+	int V5V6Desactive #in 
+         }
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The CombinedCurve is a mechanical feature and more precisely a geometrical
+  feature, so the StartUp hierarchy is the
+  following:</p>
+  <table border="0">
+  <caption><i><a name="Fig.3">Fig.3</a>: The StartUps Hierarchy&nbsp;</i></caption>
+
+    <tr>
+      <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveStartUps.jpg" width="182" height="337"></td>
+    </tr>
+  </table>
+  <li>Creating an <b> interface to instantiate</b> the new Combined Curve StartUp
+    - <a href="CAAV5V6ExtMmrCombinedCurveFactory.htm">Creating V5V6ExtCombinedCurve's Factory Interface</a></li>
+  <p>To create instances of the V5V6ExtCombinedCurve StartUp, you should create and
+  implement a factory interface on the specification container [<a href="#References">8</a>]. This interface creates a new instance
+  but does not include it in a geometrical features set [<a href="#References">7</a>].&nbsp;</p>
+
+  
+
+	<img alt="" src="images/CAAV5V6ExtMmrCombinedCrvFactoryInterface.jpg" width="438" height="74">
+	
+	  <p>CATPrtCont is the container containing all the specifications of the Part 
+  document. This factory interface uses the &quot;CAAV5V6ExtMmrCombinedCurveCatalog&quot; catalog file
+  created in the first step.</p>
+  <li>Creating an interface to <b> modify or retrieve the input specifications</b> of
+    the Combined Curve instances.- <a href="CAAV5V6ExtMmrCombinedCurveInterface.htm">Creating V5V6ExtCombinedCurve's 
+    Interface of Type</a></li>
+  <p>In the <i>CATIFmFeaturebehaviorCustomization</i> implementation, or in the Combined Curve edition
+  command, it is mandatory to have an access to the input specifications of the
+  new feature. It is the role of the <i>CAAIV5V6ExtMmrCombinedCurve</i>
+  interface.&nbsp;</p>
+
+ 
+  <p>With this interface you can retrieve or modify the two curves and the two
+  directions.</p>
+  
+
+	
+
+
+
+	<img alt="" src="images/CAAV5V6ExtMmrCombinedCurveInterface.jpg" width="503" height="58">
+	
+  <li>Integrating the Combined Curve in the V5 </li>
+
+  <p>The technical article [<a href="#References">3</a>] explains
+that for a feature deriving from the GeometricalElement3D StartUp - <a href="#Fig.3">Fig.3</a> -
+the interfaces to take into account to integrate it in the V5 can be classified in three cases:</p>
+
+<ul>
+  <li><p>The mandatory interfaces</p>
+    <ul>
+     <li><b><i>CATIFmFeatureBehaviorCustomization </i></b>- <a href="CAAV5V6ExtMmrCombinedCurveBuild.htm">
+         Building V5V6ExtCombinedCurve's Result</a></li>
+         <p>This interface enables you to build the result of the feature. 
+         Reading this technical article [<a href="#References">4</a>] is 
+         strongly recommended before getting to the use case.&nbsp;
+
+   
+      <li><b><i>CATIReplace</i> </b>- <a href="CAAV5V6ExtMmrCombCrvReplace.htm">Modifying
+        the V5V6ExtCombinedCurve's Specifications</a></li>
+         <p>This interface enables you to define the available elements for a 
+         replacement, and makes the replacement. The way to implement it 
+         is to use the adaptor class CATMmrReplaceAdapter.
+
+     
+      </p>
+      <li><b><i>CATIMf3DBehavior</i> </b>- <a href="CAAV5V6ExtMmrCombCrvMf3DBehavior.htm">Defining
+        V5V6ExtCombinedCurve's Type</a></li>
+      <p>This interface enables you specify that the CombinedCurve StartUp is a
+      surfacic feature. Without this implementation, you will have wrong
+      behaviors for instances aggregated in a solid and surfacic features
+      set.&nbsp;&nbsp;</p>
+
+      <li><b><i>CATInputDescription</i> </b>- <a href="CAAV5V6ExtMmrCombCrvInputDescription.htm">Integrating
+        V5V6ExtCombinedCurve inside Ordered Sets</a></li>
+      <p>This interface enables you to aggregate the instances of the
+      V5V6ExtCombinedCurve StartUp into ordered sets: in other
+      words: Ordered Geometrical Set features and Body features.&nbsp;</p>
+
+    </ul>
+  </li>
+  <li><p>The Dassault Systèmes Behavior interfaces</p>
+    <ul>
+      <li><b><i>CATIMechanicalProperties</i></b> - 
+      <a href="CAAV5V6ExtMmrCombCrvMechProp.htm">Enabling V5V6ExtCombinedCurve's Result 
+      Deactivation</a></li>
+  <p>This interface enables you to manage the build's activation status of the 
+  combined curve. The <i>CATIFmFeatureBehaviorCustomization</i> implementation takes the activation 
+  status of the combined curve into account before generating the result. 
+  Interactively you can propose to the end user to choose the state, if you 
+  insert a switch into the contextual menu; It will be explained in the <a href="CAAV5V6ExtMmrCombCrvSubMenu.htm">Adding
+        a Contextual Sub-Menu</a></li> article. See <a href="#Fig.7">Fig.7</a></p>
+  <li>
+      <b><i>CATIEdit</i></b> - <a href="CAAV5V6ExtMmrCombCrvEdit.htm">Editing
+        V5V6ExtCombinedCurve</a></li>
+      <p>This interface of the ApplicationFrame framework enables editing a
+      V5V6ExtCombinedCurve instance. It launches&nbsp; the <code> CAAV5V6ExtMmrCombCrvPanelStCmd
+      </code>state dialog command. This command can be used in the creation mode
+      and in the edition mode. For this last mode, refer to the &quot;<a href="#Creating interactively instances">Creating
+      Interactively Instances&quot;</a> step.&nbsp;</p>
+      <p>The <code> CAAV5V6ExtMmrCombCrvPanelStCmd</code> state dialog command uses a dialog box to help the
+      end user enter/modify the input.&nbsp;</p>
+      <table border="0">
+      <caption><i><a name="Fig.6">Fig.6</a>: The Combined Curve Definition Dialog Box</i></caption>
+        <tr>
+          <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombinedCurveDlg.jpg" width="228" height="134"></td>
+        </tr>
+      </table>
+      <p></p>
+      <li><b><i>CATIContextualSubMenu - </i></b><a href="CAAV5V6ExtMmrCombCrvSubMenu.htm">Adding
+        a Contextual Sub-Menu</a></li>
+      <p>This interface of the ApplicationFrame framework enables you to add
+      commands after the Definition command. This command is in the sub-menu of
+      the contextual menu associated with the Combined Curve.&nbsp;</p>
+      <table border="0">
+      <caption><i><a name="Fig.7">Fig.7</a>: The Contextual Sub-Menu of the Combined Curve Object</i></caption>
+        <tr>
+          <td>
+          <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvContextualMenuDeac.jpg" width="351" height="101"></td>
+        </tr>
+      </table>
+      <p>This use case explains how to implement this interface and how to
+      retrieve Dassault Systèmes (or other) commands. </p>
+      <p>&nbsp;</p>
+     
+  <li><p>For specific case interfaces</p>
+    <ul>
+      <li><b><i>CATIReplaceUI</i></b></li>
+      <p>See the <a href="CAAV5V6ExtMmrCombCrvReplace.htm">Modifying
+    V5V6ExtCombinedCurve's Specifications</a> article.&nbsp;</p>
+      <li><b><i>CATIIcon</i></b></li>
+      <p>The MechanicalFeature feature - <a href="#Fig.1">Fig.1</a>- already
+      implements the <i>CATIIcon</i> interface. For a simple case as the
+      Combined Curve, you have only to provide an icon whose name is : <b>I_</b>StartUpName<b>.bmp</b>
+      where StartUpName is the name of the StartUp.
+      In the 
+	  CAAV5V6ExtMechanicalModelerEduRscCNext.m\src\CNext\resources\graphic directory of the CAAV5V6ExtMechanicalModeler.edu framework, you will thus find the <b>I_V5V6ExtCombinedCurve.bmp</b> file.</p>
+      <table border="0">
+      <caption style="width: 232px">
+      <i><a name="Fig.9">Fig.9</a>: The Combined Curve Icon</i>
+        <tr>
+          <td><img border="0" src="../CAAMmrUseCases/images/CAAMmr_I_CombinedCurve.jpg" width="22" height="22"></td>
+        </tr>
+      </table>
+    </ul>
+  </li>
+  
+</ul>
+ 
+  <li><b><a name="Creating interactively instances"></a>Creating Interactively
+    Instances</b> </li>
+  <p>To create new instances of the Combined Curve, you will create an add-in of the
+  Shape Design workbench into which you will add the Combined Curve Creation
+  command.&nbsp;<a href="CAAV5V6ExtMmrCombCrvAddIn.htm">Creating an Add-in in
+    the Shape Design Workbench</a></p>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4 align="left"><a name="Overview of the Combined Curve Use Case Articles"></a>Overview
+of the Combined Curve Use Case Articles</h4>
+
+<p align="left">The documentation of the Combined Curve use case contains the
+following articles:</p>
+
+<ul>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating V5V6ExtCombinedCurve's
+    Catalog</a>. This article describes the creation of the catalog containing
+    the new feature StartUp definition.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveFactory.htm">Creating V5V6ExtCombinedCurve's 
+    Factory Interface</a>. This article describes the creation and the
+    implementation of the new feature factory interface.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveInterface.htm">Creating V5V6ExtCombinedCurve's 
+    Interface of Type</a>. This article describes the creation and the
+    implementation of the interface which enables you to retrieve or modify the
+    input specifications of the new feature.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveBuild.htm">Building V5V6ExtCombinedCurve's Result</a>. 
+    This article describes the implementation of the&nbsp; <i>
+     CATIFmFeatureBehaviorCustomization</i>&nbsp;
+    interface on the new feature.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvMechProp.htm">Enabling V5V6ExtCombinedCurve's Result 
+      Deactivation</a>. This article describes the implementation of the <i>
+    CATIMechanicalProperties</i>
+    interface on the new feature.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvInputDescription.htm">Integrating V5V6ExtCombinedCurve 
+    inside Ordered Sets</a>. This describes the implementation of the <i>CATInputDescription</i>
+    interface on the new feature.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvMf3DBehavior.htm">Defining
+    V5V6ExtCombinedCurve's Type</a>. This describes the implementation of the <i>CATIMf3DBehavior</i>
+    interface on the new feature.</li>
+ 
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvReplace.htm">Modifying
+    V5V6ExtCombinedCurve's Specifications</a>. This article describes the
+    implementation of the replace mechanism on the new feature.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvEdit.htm">Editing V5V6ExtCombinedCurve</a>.
+    This article describes editing the new feature through a dialog box and
+    implementing the <i>CATIEdit</i> interface.</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvSubMenu.htm">Adding a
+    Contextual Sub-Menu</a>. This article describes the&nbsp; <i>CATIContextualSubMenu</i>
+    interface implementation&nbsp;</li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvAddIn.htm">Creating an Add-in in
+    the Shape Design Workbench</a>. This article describes creating an Add-in of
+    the Shape Design workbench to insert the new feature creation command.</li>
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="How"></a>How to Launch the Combined Curve Use Case</h4>
+  <p>To launch the Combined Curve use case, you will need to set up the build time
+environment, then compile the following modules of the CAAV5V6ExtMechanicalModeler.edu
+  framework along with their prerequisites:</p>
+<ul>
+  <li>CAAV5V6ExtMmrCombinedCurve.m,&nbsp;&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveAddIn.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveReplace.m,</li>
+  <li>CAAV5V6ExtMmrCombinedCurveSample.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveUI.m,&nbsp;</li>
+</ul>
+<p> Next, execute the use case [<a href="#References">6</a>]. </p>
+<ul>
+  <li>By batch, launch the following command:</li>
+  <p><code>mkrun -c &quot;CAAV5V6ExtMmrCombinedCurveSample FileName&quot;</code></p>
+  <p>where <code> FileName</code> is the saved name (with or without the CATPart
+  suffix) of
+  the Part created by this command. The created Part document contains one
+  Combined Curve. A &quot;CAAV5V6ExtCombinedCurve.CATPart&quot; file is stored in
+  the InputData directory of the CAAV5V6MechanicalModeler.edu framework.</p>
+  <li><p>Launch CATIA. When the application is ready, follow scenarios described
+    below:</p></li>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Creation</b> scenario:</p>
+</blockquote>
+<ul>
+   <ul>
+   <li>In the <b>Start</b> menu choose<strong> Shape</strong><b> </b>and click 
+	<b>Generative Shape Design</b></li>
+   <li>In the<b> Tools </b>menu<b> </b>click<b> Customize</b></li>
+   <li>Click the <b>Commands</b> tab</li>
+   <li>Click <b>All Commands </b>in the left list&nbsp;</li>
+   <li>Retrieve <b>V5V6ExtCombinedCurve</b> in the right list&nbsp;</li>
+   <li>Drag and Drop the command in a toolbar.&nbsp;</li>
+   <li>Close the <b>Customize</b> Dialog Box</li>
+   <li>Create four points with the <b>Point</b> Command</li>
+   <li>Create two lines with the <b>Line</b> Command</li>
+   <li>Create two splines with the <b>Spline</b> Command</li>
+   <li>Create a Combined Curve with the <b>V5V6ExtCombinedCurve</b> 
+   <b><img border="0" src="../CAAMmrUseCases/images/CAAMmr_I_CombinedCurve.jpg" width="22" height="22">
+    </b>command</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Edition</b> scenario</p>
+</blockquote>
+<ul>
+   <ul>
+   <li><b>Double</b> click the <b>V5V6ExtCombinedCurve</b>  instance</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Contextual-SubMenu</b> scenario</p>
+</blockquote>
+<ul>
+   <ul>
+   <li><b>Right</b>  click the <b>V5V6ExtCombinedCurve</b> and select <b>Parent/Children</b>
+    &nbsp;</li>
+   <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Deactivate</b></li>
+   <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Activate</b></li>
+   </ul>
+  <p>Once the Combined Curve is created, try the <b> Replace</b> scenario:</p>
+  <ul>
+    <li>In the <b>File</b> menu&nbsp;
+      <ul>
+        <li>click <b>Open</b>
+        <li>in the <b>File Selection</b> dialog box retrieve the <b>CAAV5V6ExtCombinedCurveForReplace.CATPart</b>
+      <a href="#(*)">
+      (*)</a> document and click <b>Open</b></li>
+      </ul>
+    <li>Select <b>Line.1 </b>(second direction)
+    <li>Choose the <b>Replace</b> item in the contextual menu
+      <ul>
+        <li>Select <b>Line.5</b>
+        <li>lick<b> OK </b>in the <b>Replace</b> Dialog box</li>
+      </ul>
+    <li>Select <b>Line.3&nbsp; </b>(second curve)
+    <li>Choose the <b>Replace</b> item in the contextual menu
+      <ul>
+        <li>Select <b>Line.6</b>
+        <li>Click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+      </ul>
+    <li>Select <b>Line.5&nbsp; </b>(new second direction)
+    <li>Choose the <b>Replace</b> item in the contextual menu
+      <ul>
+        <li>Select an edge of<b> Pad.1</b>
+        <li>click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+      </ul>
+    <li>Select <b>Line.6 </b>(new second curve)
+    <li>Choose the <b>Replace</b> item in the contextual menu
+      <ul>
+        <li>Select <b>Line.3</b>
+        <li>Click on the <b>green arrow </b>to invert <b>Line.3</b>
+        <li>click<b> OK </b>in the <b>Replace</b> Dialog box</li>
+      </ul>
+    </li>
+  </ul>
+  
+  <blockquote>
+  <p><a name="(*)">(*)</a> The files &quot;<b>CAAV5V6ExtCombinedCurveForReplace.CATPart</b>&quot; 
+	and &quot;<b>CAAV5V6ExtCombinedCurve.CATPart</b>&quot; are located in the directory
+	<code>CAAV5V6MechanicalModeler.edu/InputData</code></p>
+	<ul>
+		<li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code>
+		<li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+	</ul>
+	<p>where <code>InstallRootDirectory</code> is the directory where the CAA
+  CD-ROM is installed.</p>
+</blockquote>
+
+
+  </ul>
+
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the V5V6ExtCombinedCurve Code</h4>
+<p>The V5V6 compatible Combined Curve use case is made of a several modules of the
+CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ul>
+ 
+  <li><b>CAAV5V6ExtMmrCombinedSample.m</b> - This module contains one main program,
+    CAAV5V6ExtMmrCombinedSample.cpp. It is an executable batch program that was used to
+    create a Part document containing a Combined Curve. After its creation,
+    the&nbsp; new Combined curve is updated.&nbsp;
+  </li>
+  <p></p>
+  
+  <li><b>CAAV5V6ExtMmrCombinedCurve.m</b> - This module contains the 
+	implementations of&nbsp; <i>CATIFmFeatureBehaviorCustomization</i> (manages the build operation called during the
+    update of the Combined Curve), the definition and the implementation of the <i>CAAIV5V6ExtMmrCombinedCurveFactory</i>
+    (manages the Combined Curve StartUp instantiation), the <i>CAAIV5V6ExtMmrCombinedCurve</i>
+    (manages the access to the input specifications of the Combined Curve), the <i>CATInputDescription</i>,
+    the <i>CATIMechanicalProperties</i>, and the <i>CATIMf3DBehavior</i> interface.
+    
+    	<ul>
+			<li>CAAEV5V6ExtMmrCombinedCurveBehavior.cpp, the header file is in the LocalInterfaces directory</li>
+			<li>CAAEV5V6ExtMmrCombCrvFactory.cpp, the header file is in the LocalInterfaces 
+       directory</li>
+			<li>CAAEV5V6ExtMmrCombinedCurve.cpp, the header file is in the LocalInterfaces 
+       directory</li>
+			<li>CAAIV5V6ExtMmrCombCrvFactory.cpp, the header file is in the PublicInterfaces directory of the CAAV5V6MechanicalModeler.edu framework:</li>
+			<li>CAAIV5V6ExtMmrCombinedCurve.cpp, the header file is in the PublicInterfaces directory of the CAAV5V6MechanicalModeler.edu framework</li>
+			<li>CAAEV5V6ExtMmrCombCrvInputDescription.cpp, the header file is in the LocalInterfaces directory</li>
+			<li>CAAEV5V6ExtMmrCombinedCurveMechProp.cpp, the header file is in the LocalInterfaces directory</li>
+			<li>CAAEV5V6ExtMmrCombCrvMf3DBehavior.cpp, the header file is in the LocalInterfaces directory</li>
+       <li>CAAEV5V6ExtMmrCombCrvCkeFeature.cpp, the header file is in the LocalInterfaces directory</li>
+		</ul></li>
+<p></p>
+    
+   
+  <li><b>CAAV5V6ExtMmrCombinedCurveAddIn.m</b> -&nbsp;This module contains the
+    implementation of the <i>CATIShapeDesignWorkshopAddin</i> interface. In
+    other words, it defines an Add-in to the Shape Design workbench.
+    <ul>
+      <li>CAAEMmrCombinedCurveAdn.cpp, the header file is in the LocalInterfaces
+        directory</li>
+    </ul>
+  </li>
+  
+  <p></p>
+ 
+  <li><b>CAAV5V6ExtMmrCombinedCurveReplace.m - </b>This module contains the
+    implementation of the <i>CATIReplace </i>and <i>CATIReplaceUI</i> 
+	interfaces. It enables to integrate the Combined Curve in the replace
+    mechanism.
+    <ul>
+      <li>CAAEV5V6ExtMmrCombinedCurveReplace.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEV5V6ExtMmrCombinedCurveReplaceUI.cpp, the header file is in the LocalInterfaces
+        directory</li>
+     
+    </ul>
+  </li>
+ <p></p>
+  <li><b>CAAV5V6ExtMmrCombinedCurveUI.m</b> - This module contains the implementation
+    of the <i>CATIContextualSubMenu</i> and <i>CATIEdit</i> interfaces<i>.</i> 
+    The implementation of this
+    last interface launches a state
+    command with a Dialog box to create Combined Curve instances.
+    <ul>
+      <li>CAAEV5V6ExtMmrCombinedCurveEdit, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAV5V6ExtMmrCombCrvPanelStCmd, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEV5V6ExtMmrCombinedCurveDlg, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEV5V6ExtMmrCombinedCurveContSubMenu, the header file is in the LocalInterfaces
+        directory</li>
+    </ul>
+  </li>
+  
+  
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3 align="left"><a name="Step-by-Step"></a>Step-by-Step</h3>
+<p align="left">You can now successively get to:</p>
+<ul>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating V5V6ExtCombinedCurve's
+    Catalog</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveFactory.htm">
+    Creating V5V6ExtCombinedCurve's Factory Interface</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveInterface.htm">
+    Creating V5V6ExtCombinedCurve's Interface of Type</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombinedCurveBuild.htm">
+    Building V5V6ExtCombinedCurve's Result</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvMechProp.htm">
+    Enabling V5V6ExtCombinedCurve's Result Deactivation</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvMf3DBehavior.htm">Defining
+    V5V6ExtCombinedCurve's Type</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvInputDescription.htm">Integrating V5V6ExtCombinedCurve 
+    inside Ordered Sets</a></li>
+   <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvReplace.htm">Modifying
+    V5V6ExtCombinedCurve's Specifications</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvEdit.htm">Editing V5V6ExtCombinedCurve</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvSubMenu.htm">Adding a
+    Contextual Sub-Menu</a></li>
+  <li>
+    <p align="left"><a href="CAAV5V6ExtMmrCombCrvAddIn.htm">Creating an Add-in in
+    the Shape Design Workbench</a></li>
+ 
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAV5V6ExtMechanicalModeler.edu Combined Curve Sample shows how to create your own
+geometrical Feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" >[1]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The
+      Contents of the Specification Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[2]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating a New
+  StartUp Deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[3]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrFeatureIntegration.htm">Integrating
+      a New Mechanical Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[4]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">Integrating
+      a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[5]</td>
+    <td ><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[6]</td>
+    <td ><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[7]</td>
+    <td >
+    <a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container - Geometrical Features Set</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[8]</td>
+    <td >
+    <a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The 
+    Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveSamplesOverview.htm">
+    V5 reference Use Case : Creating a New Geometrical Feature: the Combined Curve</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAMmrTechArticles/CAAV5V6MmrMechModOverview.htm">
+    Preparing for V6 Mechanical Modeler - Overview</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2" >[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+ 
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+</body>
+
+</html>
+

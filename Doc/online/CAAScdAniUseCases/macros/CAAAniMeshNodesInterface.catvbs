@@ -1,0 +1,74 @@
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Open an analysis document
+'                 Create nodes interaface connection mesh part
+'                 assign the nodes interface analysis connection as support
+'                 specify the global specifications
+'   Assumtions:   Looks for WeldConnection.CATAnalysis in the directory and surface Analysis Connection
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+' Open the Analysis document 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+' Retrieve the analysis Manager 
+Set oAnalysisManagar = oAnalysisDocument.Analysis
+Set oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+' Retrieve the part document and product
+Set oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+Set partDocument = oAnalysisLinkedDocuments.Item(1)
+Set product = partDocument.Product
+
+' Retreive the analysis model
+Set oAnalysisModels = oAnalysisManagar.AnalysisModels
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+'Retrieve the mesh manager and list of mesh parts
+Set oAnalysisMeshManager = oAnalysisModel.MeshManager 
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+'Retrieve the connection design manager and connection
+Set connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+Set connSet = connection.AnalysisSets
+Set conn = connSet.ItemByType("ConnectionDesignSet")
+Set entity = conn.AnalysisEntities
+Set surfConn  = entity.Item(5)
+
+'Create reference from the surface analysis connection
+Set reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
+
+'Add nodes interface mesh part to the list of mesh  parts
+Set nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnHalfPoint") 
+
+'Assign previously create reference as support
+nodeMesh.AddSupportFromReference NOTHING, reference1
+
+'Assign values to its global specifications
+nodeMesh.SetGlobalSpecification "Tolerance", "6 mm"
+nodeMesh.SetGlobalSpecification "StopUpdateOnError", 2
+nodeMesh.SetGlobalSpecification "MiddleCombination", 1
+
+nodeMesh.Update
+
+End Sub

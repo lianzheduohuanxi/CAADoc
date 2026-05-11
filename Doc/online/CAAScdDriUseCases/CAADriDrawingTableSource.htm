@@ -1,0 +1,115 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAADriDrawingTable.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2002</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro allows you to create a title block </font>
+<font color="#008000">'                       from Drawing Table</font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:       English </font>
+<font color="#008000">'   CATIA Level: V5R10 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Variables declaration</font>
+<font color="#0000FF">    Dim </font>oDrwDocument<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Dim </font>oDrwSheets<font color="#0000FF"> As </font>DrawingSheets
+<font color="#0000FF">    Dim </font>oDrwSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Dim </font>oDrwView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Dim </font>oDrwTables<font color="#0000FF"> As </font>DrawingTables
+<font color="#0000FF">    Dim </font>oDrwTable<font color="#0000FF"> As </font>DrawingTable
+    
+    <font color="#008000">' Create a new drawing document</font>
+<font color="#0000FF">    Set </font>oDrwDocument = CATIA.Documents.Add(&quot;Drawing&quot;)
+
+    <font color="#008000">' Set the drawing document standard</font>
+    oDrwDocument.Standard = catISO
+    
+    <font color="#008000">' Retrieve the drawing document's sheets collection</font>
+<font color="#0000FF">    Set </font>oDrwSheets = oDrwDocument.Sheets
+
+    <font color="#008000">' Retrieve the active sheet</font>
+<font color="#0000FF">    Set </font>oDrwSheet = oDrwSheets.ActiveSheet
+
+    <font color="#008000">' Set the sheet properties</font>
+    oDrwSheet.PaperSize = catPaperA4
+    oDrwSheet.Orientation = catPaperLandscape
+    oDrwSheet.Scale2 = 1
+    
+    <font color="#008000">' Retrieve the active view of the sheet</font>
+<font color="#0000FF">    Set </font>oDrwView = oDrwSheet.Views.ActiveView
+    <font color="#008000">' Retrieve the view's tables collection</font>
+<font color="#0000FF">    Set </font>oDrwTables = oDrwView.Tables
+    
+    <font color="#008000">' Create a new drawing table</font>
+<font color="#0000FF">    Set </font>oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)
+    
+    <font color="#008000">' Set the drawing table's name</font>
+    oDrwTable.Name = &quot;Title Block&quot;
+
+    <font color="#008000">' Do not update drawing table modifications</font>
+    oDrwTable.ComputeMode = CatTableComputeOFF
+
+    <font color="#008000">' Merge drawing table's cells</font>
+    oDrwTable.MergeCells 1, 1, 2, 2
+    oDrwTable.MergeCells 1, 3, 1, 7
+    oDrwTable.MergeCells 2, 3, 2, 7
+    oDrwTable.MergeCells 4, 3, 1, 7
+    oDrwTable.MergeCells 5, 4, 1, 5
+    oDrwTable.MergeCells 6, 3, 2, 1
+    oDrwTable.MergeCells 6, 4, 2, 5
+    oDrwTable.MergeCells 6, 9, 2, 1
+    oDrwTable.MergeCells 7, 1, 2, 1
+    oDrwTable.MergeCells 7, 2, 2, 1
+    oDrwTable.MergeCells 8, 3, 2, 1
+    oDrwTable.MergeCells 8, 4, 2, 1
+    oDrwTable.MergeCells 8, 5, 2, 1
+    oDrwTable.MergeCells 8, 6, 2, 1
+    oDrwTable.MergeCells 8, 7, 2, 1
+    oDrwTable.MergeCells 8, 8, 2, 1
+    oDrwTable.MergeCells 8, 9, 2, 1
+
+    <font color="#008000">' Set the drawing table's row sizes</font>
+    oDrwTable.SetRowSize 1, 20
+    oDrwTable.SetRowSize 2, 4
+    oDrwTable.SetRowSize 3, 5
+    oDrwTable.SetRowSize 4, 7
+    oDrwTable.SetRowSize 5, 5
+    oDrwTable.SetRowSize 6, 7
+    oDrwTable.SetRowSize 7, 2
+    oDrwTable.SetRowSize 8, 3
+    oDrwTable.SetRowSize 9, 7
+
+    <font color="#008000">' Set the drawing table's column sizes</font>
+    oDrwTable.SetColumnSize 1, 45
+    oDrwTable.SetColumnSize 2, 20
+    oDrwTable.SetColumnSize 3, 15
+    oDrwTable.SetColumnSize 4, 15
+    oDrwTable.SetColumnSize 5, 27
+    oDrwTable.SetColumnSize 6, 18
+    oDrwTable.SetColumnSize 7, 20
+    oDrwTable.SetColumnSize 8, 15
+    oDrwTable.SetColumnSize 9, 15
+    
+    <font color="#008000">' Update drawing table modifications</font>
+    oDrwTable.ComputeMode = CatTableComputeON
+
+    CATIA.ActiveWindow.ActiveViewer.Reframe 
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

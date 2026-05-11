@@ -1,0 +1,13 @@
+#
+# COPYRIGHT DASSAULT SYSTEMES 2002
+#
+
+BUILT_OBJECT_TYPE=LOAD MODULE
+
+#
+# Add CATXMLParserItf to your LINK_WITH for modules
+# which make use of the CAA XMLParser API
+#
+
+LINK_WITH = JS0GROUP CATXMLParserItf
+

@@ -1,0 +1,698 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Interactive File Based Import</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>CATIA V5 - ENOVIA VPM V4 Interoperability</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Interactive File Based Import</h3>
+      <em>Implementing the CATIPDMUECreate Interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAPbiUECreate</i> use case which
+      illustrates how to implement the <tt>CATIPDMUECreate</tt> user exit. The
+      attributes of parts and documents created in CATIA V5 but stored in ENOVIA
+      VPM V4 are provided through this interface.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The <i>CAAPbiUECreate</i> Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does <i>CAAPbiUECreate</i> Do</a></li>
+            <li><a href="#How">How to Launch <i>CAAPbiUECreate</i></a></li>
+            <li><a href="#Where">Where to Find the <i>CAAPbiUECreate</i> Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Source Code Walk Through</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is an example of how to implement the <tt>CATIPDMUECreate</tt>
+user exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The <i><b>CAAPbiUECreate</b></i> Use Case</h3>
+<p><i>CAAPbiUECreate </i>&nbsp;is a use case of the <b>CAAPSNInteroperability.edu</b>
+framework that illustrates the <b>CATIA</b> <b>PDM</b> interoperability
+features.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does <i>CAAPbiUECreate</i> Do</h4>
+<p>The goal of <i>CAAPbiUECreate </i>&nbsp;is to provide mandatory attributes of
+parts and documents when they are created in CATIA V5 but stored in ENOVIA VPM V4. The
+following methods are called for each parts and documents:</p>
+<p>For a part:</p>
+<ul>
+  <li><tt>GetProductEnvironment</tt>: specifies the ENOVIA VPM V4 environment name
+    for the part.</li>
+  <li><tt>GetProductAttributesValue</tt>: returns the mandatory part attributes.</li>
+</ul>
+<p>For a document:</p>
+<ul>
+  <li><tt>GetDocumentEnvironment</tt>: specifies the ENOVIA VPM environment name
+    and the database table name for the document</li>
+  <li><tt>GetDocumentAttributesValue</tt>: returns the mandatory document
+    attributes</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch <i>CAAPbiUECreate</i></h4>
+<p>To launch <i>CAAPbiUECreate</i>, please follow these steps:</p>
+<ol>
+  <li>Change the default directory to <i>InstallRoot</i><tt>/CAAPSNInteroperability.edu</tt></li>
+  <li>Set up the build time environment using <tt>mkGetPreq</tt></li>
+  <li>Build the <tt>CAAPbiUECreate.m</tt> module <tt>(see </tt><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+    and Launching a CAA V5 Use Case</a>)</li>
+  <li>Modify the <tt>CNEXT/code/dictionary/CAAPSNInteroperability.edu.dic</tt>
+    dictionary by removing the leading '#' of the following line:
+    <pre>#CATUEPDMCreate CATIPDMUECreate libCAAPbiUECreate</pre>
+  </li>
+  <li>Set up your CATIA run-time environment using <tt>mkrtv</tt></li>
+  <li>Start ENOVIA VPM V4 and select the correct environment (VPMENV) by clicking
+    on the button next to &quot;Environment:&quot;.</li>
+  <li>Start CATIA V5with <tt>mkrun</tt> and create a new part.<br>
+    Next connect to ENOVIA VPM V4 using the <strong>Connect/Disconnect to/from VPM </strong><img border="0" src="images/I_VPMDeConnected.gif" width="22" height="22">
+    button of the ENOVIA VPM toolbar .<br>
+    <img border="0" src="images/UECreate6.jpg" width="722" height="540"></li>
+  <li>A database connection dialog box should appear.<br>
+    Select the same database as with ENOVIA VPM, fill in all necessary login
+    information and click on the <strong>Connect</strong> button. <img border="0" src="images/UECreate7.jpg" width="660" height="545"></li>
+  <li>Once the connection to ENOVIA VPM V4 is established, click on the <strong>Set
+    PDM Properties</strong> <img border="0" src="images/I_SetPDMProperties.gif" width="22" height="22">
+    button on the ENOVIA VPM toolbar.<br>
+    <img border="0" src="images/UECreate8.jpg" width="711" height="544"></li>
+  <li>The following dialog box should appear. Select the Part1 document and VPM1
+    as the destination PDM<br>
+    <img border="0" src="images/UECreate9.jpg" width="690" height="643"></li>
+  <li>Now save the Part1 document by selecting Save on the File menu. The
+    following status window should be displayed<br>
+    <img border="0" src="images/UECreateA.jpg" width="669" height="546"></li>
+  <li>Once the save is completed, you can bring up ENOVIA VPM V4 to verify that
+    your Part1 document has been sent from CATIA V5 with the mandatory attributes
+    as defined in the code. First select the VPMENV by clicking on the button
+    next to &quot;Environment:&quot;. This the default in the code.<br>
+    <img border="0" src="images/UECreateB.gif" width="700" height="350"></li>
+  <li>Next make the query &quot;Start with&quot; CAAPart1. You should then see
+    the attributes as defined by the sample code<br>
+    <img border="0" src="images/UECreateC.gif" width="700" height="300"></li>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAPbiUECreate</i> Code</h4>
+<p><i>CAAPbiUECreate</i> code is located in the <b>CAAPbiUECreate.m</b> use case
+module of the <b>CAAPSNInteroperability.edu </b>framework:</p>
+<table>
+  <tr>
+    <td><i>InstallRoot</i><code>/CAACATPBMBaseInterfaces.edu/CAAPbiUECreate.m</code></td>
+  </tr>
+</table>
+<p>where <i><code>InstallRoot</code></i> is the root directory of your CAA V5
+installation. There are two source files named <tt>CAAPbiUECreate.cpp</tt> and <tt>CAAPbiAttributes.cpp</tt></p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+</p>
+
+<h3><a name="Step"></a>Source Code Walk Through</h3>
+<ol>
+  <li><a href="#CAAPbiAttributes">CAAPbiAttributes.cpp</a>: supporting class</li>
+  <li><a href="#CAAPbiUECreate">CAAPbiUECreate.cpp</a>: implementation of the
+    CATIPDMUECreate interface</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CAAPbiAttributes"></a>CAAPbiAttributes.cpp</h4>
+<p>The purpose of this class is to manipulate the output attributes list. It
+simplifies the code of the <tt>CAAPbiUECreate.cpp</tt>.</p>
+<p>The constructor stores references to the output arguments (<tt>_names</tt>, <tt>_types</tt>,
+<tt>_values</tt> and <tt>_count</tt>) and the maximum attributes count (<tt>_maxCount</tt>)</p>
+<table class="code" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="0" width="100%">
+      <pre>CAAPbiAttributes::CAAPbiAttributes(CATListOfCATUnicodeString&amp; inames,
+                                   CATListOfCATUnicodeString&amp; itypes,
+                                   void**&amp; ivalues,
+                                   int&amp; icount,
+                                   int imaxCount) :
+        _names(inames), // attribute names
+        _types(itypes), // attribute types
+        _values(ivalues), // attribute values
+        _count(icount), // current count
+        _maxCount(imaxCount) // maximum count
+{
+        // disable adding new attribute until AllocateValues is called
+        _count = _maxCount;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>The <tt><a name="AllocateValues">AllocateValues</a></tt> method allocates an
+array of pointers. Each array position will hold a pointer to an attribute
+value.</p>
+<table class="code" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%">
+      <pre>HRESULT CAAPbiAttributes::AllocateValues()
+{
+        if (NULL == _values) {
+                _values = new void *[_maxCount];
+                if (NULL == _values)
+                        return E_FAIL;
+                else
+                        for (int i = 0; i &lt; _maxCount; i++)
+                                _values[i] = NULL;
+
+        }
+        _count = 0;
+        return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>The <tt><a name="AddAttribute">AddAttribute</a></tt> method updates the
+output parameters with a new attribute.</p>
+<table class="code" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" bgcolor="#C0C0C0">
+  <tr>
+    <td width="100%">
+      <pre>void CAAPbiAttributes::AddAttribute(const char *iAttrName,
+                                    const char *iAttrType,
+                                    const void *iAttrValue)
+{
+        if (_count &gt;= _maxCount)
+                return;
+        _names.Append(iAttrName);
+        _types.Append(iAttrType);
+        _values[_count] = (void*) iAttrValue;
+        _count++;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CAAPbiUECreate"></a>CAAPbiUECreate.cpp</h4>
+<ol>
+  <li><a href="#implink">Implementation linking</a></li>
+  <li><tt>CAAPbiUECreate</tt> <a href="#CAAPbiUECreate_ctor">Constructur</a>/<a href="#CAAPbiUECreate_dtor">destructor</a></li>
+  <li>Methods for a memory based part <tt><a href="#mempartenv">GetProductEnvironment</a></tt>,
+    <tt><a href="#mempartattr">GetProductAttributesValue</a></tt></li>
+  <li>Methods for a memory based document: <tt><a href="#memdocenv">GetDocumentEnvironment</a></tt>,
+    <tt><a href="#memdocattr">GetDocumentAttributesValue</a></tt></li>
+  <li>Methods for file based part and document: <tt><a href="#fildocenv">GetDocumentEnvironment</a></tt>,
+    <tt><a href="#fildocattr">GetDocumentAttributesValue</a></tt> and <tt><a href="#filpartattr">GetProductAttributesValue</a></tt></li>
+  <li>Supporting methods (not required by the interface): <tt><a href="#GetEnvironment">GetEnvironment</a></tt>,
+    <tt><a href="#GetRepository">GetRepository</a></tt>, <tt><a href="#GetDocNameAndExtension">GetDocNameAndExtension</a></tt>
+    and <tt><a href="#CopyUStringToChar">CopyUStringToChar</a></tt></li>
+</ol>
+<p><a name="implink"></a>The implementation is linked to the interface with this
+code.</p>
+<table class="code" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" bgcolor="#C0C0C0">
+  <tr>
+    <td>
+      <pre>#include &quot;TIE_CATIPDMUECreate.h&quot;
+TIE_CATIPDMUECreate(CAAPbiUECreate);
+
+CATImplementClass(CAAPbiUECreate,
+                  DataExtension,
+                  CATBaseUnknown,
+                  CATUEPDMCreate);</pre>
+    </td>
+  </tr>
+</table>
+<p>In addition to the code, a dictionary with the following line is required:.</p>
+<table class="code" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" bgcolor="#C0C0C0">
+  <tr>
+    <td>
+      <pre>CATUEPDMCreate CATIPDMUECreate libCAAPbiUECreate</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="CAAPbiUECreate_ctor"></a>The constructor initializes the cache
+storage for the environment name and database table name.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>CAAPbiUECreate::CAAPbiUECreate():
+        CATBaseUnknown()
+{
+        _environment = NULL;
+        _repository = NULL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="CAAPbiUECreate_dtor"></a>The destructor frees the cache storage that
+was allocated</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>CCAAPbiUECreate::~CAAPbiUECreate()
+{
+        if (NULL != _environment) {
+                free((void *) _environment);
+               _environment = NULL;
+        }
+        if (NULL != _repository) {
+               free((void *) _repository);
+               _repository = NULL;
+        }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="mempartenv"></a><tt>GetProductEnvironment</tt> for a memory base
+part returns the part environment name (see <a href="#GetEnvironment"><tt>GetEnvironment</tt></a>)</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetProductEnvironment (const CATBaseUnknown* iObj,
+                                               CATUnicodeString&amp; oEnv,
+                                               CATUnicodeString&amp; oType)
+{
+        oEnv = <a href="#GetEnvironment">GetEnvironment</a>();
+        return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="mempartattr"></a><tt>GetProductAttributes</tt> for a memory based
+part returns three attributes:</p>
+<ul>
+  <li><tt>S_PART_NUMBER</tt>,</li>
+  <li><tt>S_CHG_NUM</tt> and</li>
+  <li><tt>S_TYPE</tt>.</li>
+</ul>
+<p><tt>S_PART_NUMBER</tt> and <tt>S_TYPE</tt> values are obtained differently
+depending on whether the part is a <tt>CATDocument</tt> or not.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetProductAttributesValue (const CATBaseUnknown* iObj,
+                                                   const CATUnicodeString&amp; iType,
+                                                   int&amp; oNbAttr,
+                                                   CATListOfCATUnicodeString&amp; oAttrName,
+                                                   CATListOfCATUnicodeString&amp; oAttrType,
+                                                   void**&amp; oAttrValues,
+                                                   CATBoolean&amp; oCreateOrUpdate)
+{
+        if (NULL == iObj)
+                return E_FAIL;
+
+        oCreateOrUpdate = TRUE;
+        <a href="#CAAPbiAttributes">CAAPbiAttributes</a> attrs(oAttrName, oAttrType, oAttrValues, oNbAttr, 3);
+        HRESULT ret = attrs.<a href="#AllocateValues">AllocateValues</a>();
+        if (FAILED(ret))
+                return ret;
+
+        if (iObj-&gt;IsAKindOf(&quot;CATDocument&quot;)) {
+
+                //
+                // S_PART_NUMBER : &quot;Part&quot;+document name
+                // S_CHG_NUM : 0
+                // S_TYPE : document extension
+                //
+                CATUnicodeString docName;
+                CATUnicodeString docExt;
+                <a href="#GetDocNameAndExtension">GetDocNameAndExtension</a>(*(CATDocument*) iObj, docName, docExt);
+
+                CATUnicodeString partNum(&quot;Part&quot;);
+                partNum += docName;
+                const char *cPartNum = <a href="#CopyUStringToChar">CopyUStringToChar</a>(partNum, 32);
+                if (NULL == cPartNum)
+                        return E_FAIL;
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_PART_NUMBER&quot;, &quot;String&quot;, cPartNum);
+
+                CATUnicodeString chgNum("0");
+                const char *cNum = <a href="#CopyUStringToChar">CopyUStringToChar</a>(chgNum, 0);
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_CHG_NUM&quot;, &quot;Integer&quot;, num);
+
+                const char *cPartType = <a href="#CopyUStringToChar">CopyUStringToChar</a>(docExt, 15);
+                if (NULL == cPartType)
+                        return E_FAIL;
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_TYPE&quot;, &quot;String&quot;, cPartType);
+
+        } else {
+
+                //
+                // S_PART_NUMBER : part number
+                // S_CHG_NUM : 0
+                // S_TYPE : part type
+                //
+                CATUnicodeString partNum;
+                CATIProduct_var prod((CATBaseUnknown*)iObj);
+                if (NULL_var != prod) {
+                        partNum = prod-&gt;GetPartNumber(); 
+                } else {
+	                CATISpecObject_var spec((CATBaseUnknown*)iObj);
+                        if (NULL_var != spec) {
+                                partNum = spec-&gt;GetDisplayName();
+                        }
+                }
+                const char *cPartNum = <a href="#CopyUStringToChar">CopyUStringToChar</a>(partNum, 32);
+                if (NULL == cPartNum)
+                        return E_FAIL;
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_PART_NUMBER&quot;, &quot;String&quot;, cPartNum);
+                
+                CATUnicodeString chgNum("0");
+                const char *cNum = <a href="#CopyUStringToChar">CopyUStringToChar</a>(chgNum, 0);
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_CHG_NUM&quot;, &quot;Integer&quot;, num);
+
+                CATUnicodeString partType;
+                CATISpecObject_var spec((CATBaseUnknown*)iObj);
+                if (NULL_var != spec) {
+                        CATUnicodeString specType= spec->GetType();
+                        specType = specType.Strip();
+                        if (specType == "ASMPRODUCT") 
+                              partType = "PART";
+                        else if (specType == "DATABASEPRODUCT")
+                              partType = "PART";
+                        else
+                              partType = specType;
+                }
+
+                const char *cPartType = <a href="#CopyUStringToChar">CopyUStringToChar</a>(partType, 15);
+                if (NULL == cPartType)
+                        return E_FAIL;
+                attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_TYPE&quot;, &quot;String&quot;, cPartType);
+
+        }
+
+        return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="memdocenv"></a><tt>GetDocumentEnvironment</tt> for a memory document
+returns the environment name (see <a href="#GetEnvironment"><tt>GetEnvironment</tt></a>)
+and database table name. The database table name depends on the document type.
+It is &quot;CATIA_MODEL&quot; for &quot;model&quot;or &quot;CDMAmodel&quot;.
+Otherwise it is &quot;DOCUMENT&quot;.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetDocumentEnvironment (const CATDocument* iDoc,
+                                                CATUnicodeString&amp; oEnv,
+                                                CATUnicodeString&amp; oTable)
+{
+        oEnv = <a href="#GetEnvironment">GetEnvironment</a>();
+
+        const char *docNomadType = (NULL != iDoc ? iDoc-&gt;IsA() : NULL);
+
+        oTable = (NULL != docNomadType &amp;&amp; 
+                  strcmp(docNomadType, &quot;model&quot;) == 0 || 
+                  strcmp(docNomadType, &quot;CDMAmodel&quot;) == 0 ?
+                  &quot;CATIA_MODEL&quot; :
+                  &quot;DOCUMENT&quot;);
+
+        return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="memdocattr"></a><tt>GetDocumentAttributes</tt> for a memory based
+document returns five attributes:</p>
+<ul>
+  <li><tt>S_NAME</tt>,</li>
+  <li><tt>S_TYPE_REP</tt>,</li>
+    <LO><tt>S_FORMAT</tt>,
+  <li><tt>C_LAST_REPOSITORY</tt> and</li>
+  <li><tt>NOTE</tt>.</li>
+</ul>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetDocumentAttributesValue (const CATDocument* iDoc,
+                                                    int&amp; oNbAttr,
+                                                    CATListOfCATUnicodeString&amp; oAttrName,
+                                                    CATListOfCATUnicodeString&amp; oAttrType,
+                                                    void**&amp; oAttrValues,
+                                                    CATBoolean&amp; oCreateOrUpdate)
+{
+        if (NULL == iDoc)
+                return E_FAIL;
+
+        oCreateOrUpdate=TRUE;
+        <a href="#CAAPbiAttributes">CAAPbiAttributes</a> attrs(oAttrName, oAttrType, oAttrValues, oNbAttr, 5); 
+        HRESULT ret = attrs.<a href="#AllocateValues">AllocateValues</a>();
+        if (FAILED(ret))
+                return ret;
+
+        CATUnicodeString docName;
+        CATUnicodeString docExt;
+        <a href="#GetDocNameAndExtension">GetDocNameAndExtension</a>(*iDoc, docName, docExt);
+
+        docName = &quot;CAA&quot; + docName;
+        const char *cDocName = <a href="#CopyUStringToChar">CopyUStringToChar</a>(docName, 12);
+        if (NULL == cDocName)
+                return E_FAIL;
+        attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_NAME&quot;, &quot;String&quot;, cDocName);
+
+        const char *cDocType = <a href="#CopyUStringToChar">CopyUStringToChar</a>(docExt, 8);
+        if (NULL == cDocType)
+                return E_FAIL;
+        attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_TYPE_REP&quot;, &quot;String&quot;, cDocType);
+
+        CATUnicodeString userName(&quot;CAA&quot;);
+        const char *cUserName = <a href="#CopyUStringToChar">CopyUStringToChar</a>(userName, 5);
+        if (NULL == cUserName)
+                return E_FAIL;
+        attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;S_FORMAT&quot;, &quot;String&quot;, cUserName);
+
+        CATUnicodeString repository(<a href="#GetRepository">GetRepository</a>());
+        const char *cRepository = <a href="#CopyUStringToChar">CopyUStringToChar</a>(repository, 0);
+        if (NULL == cRepository)
+                return E_FAIL;
+        attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;C_LAST_REPOSITORY&quot;, &quot;String&quot;, cRepository);
+
+        CATUnicodeString notes(&quot;Created from CAA&quot;);
+        const char *cNotes = <a href="#CopyUStringToChar">CopyUStringToChar</a>(notes, 0);
+        if (NULL == cNotes)
+                return E_FAIL;
+        attrs.<a href="#AddAttribute">AddAttribute</a>(&quot;NOTES&quot;, &quot;String&quot;, cNotes);
+
+        return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Methods for file based parts and documents are not implemented: they all
+return <tt><b>E_NOTIMPL</b></tt>:</p>
+<p><a name="fildocenv"></a><tt>GetDocumentEnvironment</tt> for file based
+document:</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetDocumentEnvironment(const char* Filepath,
+                                               CATUnicodeString&amp; oEnv,
+                                               CATUnicodeString&amp; oTable)
+{
+        return E_NOTIMPL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="fildocattr"></a><tt>GetDocumentAttribusteValue</tt> for file based
+document</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HRESULT CAAPbiUECreate::GetDocumentAttributesValue(const char* iFilepath,
+                                                   int&amp; oNbAttr,
+                                                   CATListOfCATUnicodeString&amp; oAttrName,
+                                                   CATListOfCATUnicodeString&amp; oAttrType,
+                                                   void**&amp; oAttrValues)
+{
+        return E_NOTIMPL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="filpartattr"></a><tt>GetProductAttributesValue</tt> for file base
+part:</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>HHRESULT CAAPbiUECreate::GetProductAttributesValue(const char* iFilepath, 
+                                                   int&amp; oNbAttr, 
+                                                   CATListOfCATUnicodeString&amp; oAttrName, 
+                                                   CATListOfCATUnicodeString&amp; oAttrType, 
+                                                   void**&amp; oAttrValues)
+{
+        return E_NOTIMPL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="GetEnvironment"><tt>GetEnvironment</tt></a> returns the value of the
+environment variable CV5_VPM_ENV or &quot;VPMENV&quot; if it is not defined.
+This result is cached to avoid computation during subsequent calls.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>const char *CAAPbiUECreate::GetEnvironment()
+{
+        static const char *env = NULL;
+
+        if (NULL == env) {
+                if (CATGetEnvValue(&quot;CV5_VPM_ENV&quot;, (char **) &amp;_environment) == 
+                    CATLibSuccess) {
+                        env = _environment;
+                } else {
+                        env = &quot;VPMENV&quot;;
+                }
+        }
+        return env;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Similar to <tt>GetEnvironment</tt>, <a name="GetRepository"><tt>GetRepository</tt></a>
+returns the value of the environment variable CV5_VPM_REPOSITORY or
+&quot;DBLFAIX.BIN PATH $HOME/db/&quot; if it is undefined. The result is also
+cached.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>const char *CAAPbiUECreate::GetRepository()
+{
+        static const char *rep = NULL;
+
+        if (NULL == rep) {
+                if (CATGetEnvValue(&quot;CV5_VPM_REPOSITORY&quot;, (char **) &amp;_repository)
+                    == CATLibSuccess) {
+                        rep = _repository;
+                } else {
+                        rep = &quot;DBLFAIX.BIN PATH $HOME/db/&quot;;
+                }
+        }
+        return rep;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="GetDocNameAndExtension"><tt>GetDocNameAndExtension</tt></a> returns
+the storage path of a memory based <tt>CATDocument</tt>: split into two parts:
+the file name and the file extension.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>void CAAPbiUECreate::GetDocNameAndExtension (const CATDocument&amp; iDoc,
+                                             CATUnicodeString&amp; ioDocName,
+                                             CATUnicodeString&amp; ioDocExt)
+{
+        CATUnicodeString docStorageName = iDoc.StorageName();
+        char docDir[CATMaxPathSize];
+        char docFileName[CATMaxPathSize];
+        CATSplitPath(docStorageName.ConvertToChar(), docDir, docFileName);
+        char *dotpos = strrchr(docFileName, '.');
+        if (NULL != dotpos) {
+                *dotpos = 0;
+                ioDocName = docFileName;
+                dotpos++;
+                ioDocExt = dotpos;
+        } else {
+                ioDocName = docFileName;
+                ioDocExt = &quot;&quot;;
+        }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><a name="CopyUStringToChar"><tt>CopyUStringToChar</tt></a> converts a <tt>CATUnicodeString</tt>
+to an ASCII string of a given size. The resulting string is truncated or padded
+with spaces as necessary.</p>
+<table class="code" bgcolor="#C0C0C0" width="90%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <pre>const char *CAAPbiUECreate::CopyUStringToChar (CATUnicodeString&amp; iStr, 
+                                               int iSize)
+{
+        int len;
+
+        if (0 == iSize) {
+                // length is null, copy whole string
+                len = iStr.GetLengthInChar();
+        } else {
+                // only copy up to specified length
+                // padding with spaces if necessary
+                iStr.Resize(iSize);
+                len = iSize;
+        }
+        char *ptr = new char [len + 1];
+        if (NULL == ptr)
+                return NULL;
+        strcpy(ptr, iStr.ConvertToChar());
+        return ptr;
+}</pre>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to implement the CATIPDMUECreate
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.2</strong> [Oct 2005]</td>
+    <td valign="top">Document revised</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1.1</strong> [Sep 2003]</td>
+    <td valign="top">Document revised</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+<ul>
+</ul>
+</body>
+</html>
+

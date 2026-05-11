@@ -1,0 +1,53 @@
+<html>
+
+ <head>
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATIPrintable</title>
+ </head>
+
+ <body>
+
+ <pre>#ifndef CATIPRINTABLE_H
+#define CATIPRINTABLE_H
+
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U5
+ */
+
+#include &quot;CATPrint.h&quot;
+#include &quot;CATBaseUnknown.h&quot;
+class CATPrintImage;
+
+extern ExportedByCATPrint IID IID_CATIPrintable;
+
+/**
+ * Interface to make objects printable.
+ * &lt;b&gt;Role&lt;/b&gt;:
+ * Components that implement CATIPrintable are enabled for printing.
+ */
+class ExportedByCATPrint CATIPrintable : public CATBaseUnknown
+{
+    CATDeclareInterface;
+public:
+   /**
+    * Returns the implementing component printable image.
+    * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: The CATPrintImage instance returned should be ready to
+    * be passed to a print device.
+    */
+    virtual CATPrintImage* CreatePrintableImage( void ) = 0;
+};
+
+CATDeclareHandler(CATIPrintable, CATBaseUnknown);
+
+#endif
+</pre>
+
+ </body>
+
+</html>

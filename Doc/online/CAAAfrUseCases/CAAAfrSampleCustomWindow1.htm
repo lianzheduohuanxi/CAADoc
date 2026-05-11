@@ -1,0 +1,786 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Document's Window - Part 1</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Document's Window - Part 1</h3>
+      <em>Enabling a document to be displayed in the V5 application frame</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a new window class to display an
+      existing document and how to instantiate it from a command. In the other
+      hand, the use case described in the &quot;Creating a Document's Window -
+      Part 2&quot; article [<a href="#References">1</a>] explains more precisely
+      the specificity of a multi-viewers window.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrHistogramChartWindow Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrHistogramChartWindow Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrHistogramChartWindow</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrHistogramChartWindow
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>A document, visualized in the V5 application frame, implements the <i>CATIDocumentEdit</i>
+interface. This interface provides the default window to display it. This use
+case is intended to show how to create a new type of window for an existing
+document.&nbsp;</p>
+<p>You will learn all the steps to visualize a document with a none-standard
+way:</p>
+<ol>
+  <li>How to create the window class deriving from the <i>CATFrmWindow</i> ,</li>
+  <li>How to manage the MVC&nbsp; paradigm by using the <i>CATVisManager</i>,</li>
+  <li>How to create instances of the window.</li>
+</ol>
+<p>At last, before getting in this use case, refer to the technical article [<a href="#References">2</a>],
+to have a complete viewpoint of all the objects implicated in the V5
+layout.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrHistogramChartWindow Use Case</h3>
+<p>CAAAfrHistogramChartWindow is a use case of the CAAApplicationFrame.edu
+framework that illustrates the ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrHistogramChartWindow Do</h4>
+<p>The CAAAfrHistogramChartWindow use case creates a document window for
+CAAGeometry documents. This new window is launched from the &quot;Histogram
+Chart Window&quot; command.&nbsp;Refer to the use case entitled
+&quot;Associating a Dialog Box with a Dialog Agent-2&quot; [<a href="#References">3</a>].</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrHistoChart2.jpg" width="50" height="56"></td>
+    <td>The &quot;Histogram Chart Window&quot; command in the Chart Window
+      toolbar</td>
+  </tr>
+</table>
+<p>The top window on the picture below is the default window those created by
+the <i>CATIDocumentEdit</i> interface. The bottom window, named Model Histogram
+Chart, is those created by the &quot;Histogram Chart Window&quot; command.</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a>: The CAAGeometry Document Window's Types</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrCreateWindow11.jpg" width="629" height="561"></td>
+  </tr>
+</table>
+<p>The two windows displayed the same document (six points, one line and one
+plane) with two kinds of visualization:</p>
+<ul>
+  <li>In the top window, the elements of the model are visualized in 3D with the
+    <i>CATI3DGeoVisu</i> interface.</li>
+  <li>In the bottom window, the elements are visualized in 2D with the <i>CAAIVisHistogramChartVisu</i><b>
+    </b>interface.</li>
+</ul>
+<p>The CAAGeometry document implements the <i>CATIDocumentEdit</i> to create the
+default window. To create the <i>CAAAfrHistogramChartWindow</i> window we have
+chosen to create a new interface for this document. This interface, <i>CAAISysDocumentChartWindow</i>,
+enables you to have no link between the framework which contains the definition
+window (CAAApplicationFrame.edu) and those which contains the command to create
+a window's instance (CAADialogEngine.edu ).&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAfrHistogramChartWindow</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the New box, select CAAGeometry and click <b>OK</b></li>
+  <li>Select <b>Window</b>-&gt;<b>Histogram Chart Window</b>
+  <li>Click <b>OK</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrHistogramChartWindow Code</h4>
+<p>The CAAAfrHistogramChartWindow use case is made up of several classes and
+interfaces:</p>
+<ul>
+  <li><i>CAAAfrHistogramChartWindow</i>&nbsp;: The document's window class</li>
+  <li><i>CAAISysDocumentChartWindow : </i>The interface to create a document's
+    window class instance</li>
+  <li><i>CAAIVisHistogramChartVisu</i><b> </b>: The interface to visualized in
+    2D the document's elements&nbsp; (not explained here)</li>
+  <li><i>CAADegHistogramChartWindowCmd</i> : The state command to create a
+    document's window class instance thanks to the <i>CAAISysDocumentChartWindow&nbsp;</i></li>
+</ul>
+<p>There are respectively located in the CAAAfrGeoWindows.m,
+CAASysGeoModelInf.m, CAAVisGeoModelInt.m and CAADegGeoCommands.m modules of the
+CAAApplicationFrame.edu, CAASystem.edu, CAAVisualization.edu and
+CAADialogEngine.edu frameworks:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAxxx.edu\CAAyyy.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAxx.edu/CAAyyy.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the Histogram Chart window, there are two steps which can be
+divided in sub-steps:</p>
+<ol>
+  <li><b>Creating the Document's Window class</b></li>
+  <table width="100%">
+    <tr>
+      <td valign="top"><a href="#Step1">1</a></td>
+      <td valign="top"><a href="#Step1">Creating the Histogram Chart Window
+        class</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Step2">2</a></td>
+      <td valign="top"><a href="#Step2">Providing the dialog object behavior</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Step3">3</a></td>
+      <td valign="top"><a href="#Step3">Providing the MDI document window
+        behavior</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Step4">4</a></td>
+      <td valign="top"><a href="#Step4">Duplicating the window</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Step5">5</a></td>
+      <td valign="top"><a href="#Step5">Deleting the window</a></td>
+    </tr>
+  </table>
+  <li><b>Creating Document's Window class instances</b></li>
+  <table width="100%">
+    <tr>
+      <td valign="top"><a href="#Creating the CAAISysDocumentChartWindow interface">6</a></td>
+      <td valign="top"><a href="#Creating the CAAISysDocumentChartWindow interface">Creating
+        the <i>CAAISysDocumentChartWindow</i> interface&nbsp;</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Implementing the CAAISysDocumentChartWindow interface">7</a></td>
+      <td valign="top"><a href="#Implementing the CAAISysDocumentChartWindow interface">Implementing
+        the <i>CAAISysDocumentChartWindow</i> interface&nbsp;</a></td>
+    </tr>
+    <tr>
+      <td valign="top"><a href="#Using the CAAISysDocumentChartWindow interface">8</a></td>
+      <td valign="top"><a href="#Using the CAAISysDocumentChartWindow interface">Using
+        the <i>CAAISysDocumentChartWindow</i> interface</a></td>
+    </tr>
+  </table>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Histogram Chart Window Class</h4>
+<p>This document window includes one viewer. The class for this window is <em>CAAAfrHistogramChartWindow</em>,
+whose header file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class ExportedByCAAAfrGeoWindows CAAAfrHistogramChartWindow: public CATFrmWindow
+{
+  public:
+    CAAAfrHistogramChartWindow(const CATString &amp; iName, CATFrmEditor * iEditor=NULL);
+    virtual ~CAAAfrHistogramChartWindow();
+    void <b>Build</b>();
+
+    virtual CATFrmWindow * <b>DuplicateWindow</b>();
+
+    virtual void <b>DeleteWindow</b>();
+    ...
+  private:
+
+    CATNavigation2DViewer * _pViewer ;
+    CATPathElement        * _pRootObjectPath ;
+
+};</pre>
+    </td>
+  </tr>
+</table>
+<p><em>CAAAfrHistogramChartWindow</em>&nbsp; derives from the <i>CATFrmWindow</i>
+class. This base class manages the integration of the window in the V5
+application layout. The <em>CAAAfrHistogramChartWindow</em>&nbsp; class has:</p>
+<ul>
+  <li>A constructor and a <a href="#Step5">destructor</a></li>
+  <li>A <code><a href="#Step4">DuplicateWindow</a></code> method used by the New
+    Window command of the Window menu&nbsp;</li>
+  <li>A <code><a href="#Step5">DeleteWindow</a></code> to delete or release the
+    specific data of the window.&nbsp;</li>
+  <li>The <code><a href="#Step2">Build</a></code> method, as usual for a Dialog
+    class, creates and arranges the dialog objects, and for a document's window
+    manages the interactivity.&nbsp;</li>
+</ul>
+<p>This class keeps in data member the viewer and the root of the document to
+display.&nbsp;</p>
+<p>The constructor class is simple:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrHistogramChartWindow :: CAAAfrHistogramChartWindow 
+                         ( const CATString &amp;iName, CATFrmEditor * iEditor )
+                   : <b>CATFrmWindow</b>(iName,iEditor), _pViewer(NULL),_pRootObjectPath(NULL)
+{
+} </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Providing the Dialog Object Behavior</h4>
+<p>The dialog object behavior consists in:
+<ul>
+  <li><a href="#S21">Instantiating the viewer to display</a></li>
+  <li><a href="#S22">Arranging the viewer in the document window</a></li>
+  <li><a href="#S23">Setting the current viewer</a></li>
+</ul>
+<p>The <code>Build</code> method creates the viewer, arranges it in the window
+and sets it the current viewer.
+<ol>
+  <li><a name="S21"></a>Instantiating the viewer to display
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAAAfrHistogramChartWindow :: Build() 
+{
+   CATDlgFrame * pFrameWindow = <b>GetViewerFrame</b>() ;
+
+   CATString ViewerName = &quot;HistogramChar2DViewer&quot; ;
+   int width  = 200 ;
+   int height = 200 ;
+   CATDlgStyle DlgStyle = CATDlgFraNoTitle | CATDlgFraNoFrame ;
+   _pViewer = new <b>CATNavigation2DViewer</b>(pFrameWindow,ViewerName,
+                                               DlgStyle,width,height) ;
+   _pViewer-&gt;SetBackgroundColor(0.7f,0.7f,0.7f);
+   _pViewer-&gt;SetGraduatedBackground(0);
+...   </pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>_pViewer</code> is a <i>CATNavigation2DViewer</i> class instance:</p>
+    <ul>
+      <li>Its parent, <code>pFrameWindow</code> , is a <i>CATDlgFrame</i> object
+        created by the <i>CATFrmWindow</i> class [<a href="#References">2</a>].</li>
+      <li>Its size (<code>width</code> and <code>height</code>) is given in
+        pixels.</li>
+      <li>
+        <p>Its background color is white and not gratuaded. (<code>SetBackgroundColor</code>
+        and <code>SetGraduatedBackground</code> are <i>CATViewer</i> methods)</p>
+      </li>
+    </ul>
+  </li>
+  <li><a name="S22"></a>Arranging the viewer in the document window
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  FrameWindow-&gt;<b>Attach4Sides</b>(Frame);
+...      </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>Attach4Sides</code> method attaches <code>_pViewer</code> to
+    the four sides of the <code>pFrameWindow</code> frame.&nbsp;</p>
+  </li>
+  <li><a name="S23"></a>Setting the current viewer
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  _pViewer-&gt;<b>ReframeOn</b>(0.f,300.f,-20.f,300.f);
+  <b>SetViewer</b>(_pViewer);
+...      </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>Reframe</code> method ensures that the whole contents of <code>_pViewer</code>
+    is displayed, while the <code>SetViewer</code> method sets <code>_pViewer</code>
+    as the current viewer. We have now a nice document window, but few
+    interactive mechanisms are available. Let's assign them now.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Providing the MDI Document Window Behavior</h4>
+<p>The MDI document window behavior consists in:
+<ul>
+  <li><a href="#S31">Retrieving the visualization manager and the document root
+    object</a></li>
+  <li><a href="#S32">Requesting the document to create its graphics
+    representation and attaching them to the visualization manager</a></li>
+  <li><a href="#S33">Managing the links between these objects and all the other
+    objects enabling interactivity.</a></li>
+</ul>
+<ol>
+  <li><a name="S31"></a>Retrieving the visualization manager and the document
+    root object
+    <p>Still in the <code>Build</code> method, let's now the unique
+    visualization manager be aware of the document to display, under which
+    viewpoints, and with which tools, that is, which interfaces should be
+    queried onto the document objects to make them display.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  CATFrmEditor * pEditor = <b>GetEditor</b>();
+  CATVisManager * pVisuManager = CATVisManager::<b>GetVisManager</b>();
+
+  if ( (NULL != pEditor ) &amp;&amp; ( NULL != pVisuManager) )
+   {
+      CATDocument    * pDocument   =  pEditor -&gt;<b>GetDocument</b>();
+
+      CATBaseUnknown * pRootObject = NULL ;	
+      if ( NULL != pDocument )
+      {
+         CATPathElement path = pEditor -&gt;<b>GetUIActiveObject</b>();
+        _pRootObjectPath = new CATPathElement(path);
+      }
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>pEditor</code>, a pointer to the editor, is the argument of the
+    window constructor kept by the <i>CATFrmWindow</i> class. Then the
+    visualization manager is retrieved, and the root object. In this use case,
+    the root object is the current UI active object.&nbsp; A local <i>CATPathElement
+    ,</i> <code>_pRootObjectPath</code>, is created to keep &quot;a
+    pointer&quot; on the root object. This path will be released in the
+    destructor.&nbsp;</p>
+  </li>
+  <li><a name="S32"></a>Requesting the document to create its graphics
+    representation and attaching them to the visualization manager
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+    if ( NULL != _pRootObjectPath )      
+    {    	    
+         CATCommand * pCommandSelector = (CATCommand*) pEditor-&gt;<b>GetCommandSelector</b>();
+
+         list&lt;IID&gt; ListIVisu;
+         IID visu = IID_<b>CAAIVisHistogramChartVisu</b>;
+         ListIVisu.fastadd(&amp;visu);
+
+         CATViewpoint  * pViewPoint = NULL ;
+         pViewPoint = (CATViewpoint*) &amp;(_pViewer-&gt;<b>GetMain2DViewpoint</b>());
+
+         pVisuManager-&gt;<b>AttachTo</b>(_pRootObjectPath,pViewPoint,ListIVisu,pCommandSelector);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The command selector, that is, the command that stands at the top of the
+    command tree, is retrieved. This selector will be the father of a <i>CATSelector</i>
+    class instance created by the <code>AttachTo</code> [<a href="#References">4</a>].
+    The manipulators attached to the graphic representation of the model will be
+    linked to this <i>CATSelector</i> enabling the selection and the
+    pre-selection in the viewer.&nbsp;</p>
+    <p>The list with the interface implemented by the objects of the documents
+    is set up.&nbsp;</p>
+    <p>The main 2D viewpoint of the viewer is retrieved and attached to the
+    visualization manager along with the document's root object, the list of
+    interfaces to use, and the command selector.</p>
+  </li>
+  <li><a name="S33"></a>Managing the links between these objects and all the
+    other objects enabling interactivity
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+         CATPSO * pPSO = pEditor-&gt;<b>GetPSO</b>() ;   
+         pVisuManager-&gt;<b>AttachPSOTo</b>( pPSO,pViewPoint);
+
+         CATHSO * pHSO = pEditor-&gt;<b>GetHSO</b>() ; 
+         pVisuManager-&gt;<b>AttachHSOTo</b>( pHSO,pViewPoint);
+
+         CATISO * pISO = pEditor-&gt;<b>GetISO</b>()  ;  
+         pISO-&gt;<b>AddViewer</b>(_pViewer);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This piece of code retrieves the Preselected Set of Objects (PSO) and the
+    Highlighted Set of Objects (HSO) from the editor, and requests the
+    visualization controller to attach the&nbsp; viewpoint to the PSO and to the
+    HSO. Now, when the end user moves the mouse above a representation in a
+    viewer, the path element corresponding to this representation is put in the
+    PSO, is highlighted and put in the HSO.</p>
+    <p>The Interactive Set of Objects (ISO) is also retrieved. These objects are
+    those which don't belong to the document, but that are so handy to
+    manipulate representations in viewers, such as handles to move or deform
+    them. The ISO now knows the viewer.</p>
+    <p>The document window <code>Build</code> method is now complete.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Duplicating the Window</h4>
+<p>This is done thanks to the <code>Duplicate</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFrmWindow * CAAAfrHistogramChartWindow :: DuplicateWindow()
+{
+   CATString NameOfThis = <b>GetBaseName</b>().CastToCharPtr() ;
+   CAAAfrHistogramChartWindow * pWindowToReturn = NULL ;
+   pWindowToReturn  = new <b>CAAAfrHistogramChartWindow</b>(NameOfThis,GetEditor() )  ;
+   pWindowToReturn -&gt;<b>Build</b>();
+   pWindowToReturn-&gt;<b>SetBaseName</b>(GetBaseName());
+
+   return  pWindowToReturn ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Duplicate</code> method creates a window of the same type than the
+current one. This new window is managed by the editor dedicated to the document.
+This editor is those kept by the current window and retrieved by the <code>GetEditor</code>
+method of the <i>CATFrmWindow</i> base class.&nbsp;
+<p>The <code>SetBaseName</code> method enables you to manage the window's title.
+The <a href="#Fig.1">Fig.1</a> shows that the name of the window is &quot;Model
+Histogram Chart&quot;. Refer to the &quot;<a href="#CreateHistogramWindow">Implementing
+the <i>CAAISysDocumentChartWindow</i> interface</a>&quot; section.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCreateWindow13.jpg" width="300" height="110"></td>
+  </tr>
+</table>
+<p>The <code>SetBaseName</code> method enables to update the title of the first
+windows if only one exist.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCreateWindow14.jpg" width="344" height="143"></td>
+  </tr>
+</table>
+<p>The title of the first window becomes &quot;Model Histogram Chart:1&quot; and
+the title of the second window is &quot; Model Histogram Chart:2&quot;.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Deleting the Window</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAAAfrHistogramChartWindow :: DeleteWindow()
+{
+   if ((NULL != GetEditor() ) &amp;&amp; (NULL != _pViewer) )
+   {       
+      CATISO * pISO = NULL ;
+      pISO = GetEditor()-&gt;<b>GetISO</b>();
+
+      if  (NULL != pISO)   pISO-&gt;<b>RemoveViewer</b>(_pViewer);
+
+      CATViewpoint  * pViewPoint = NULL ;
+      pViewPoint = (CATViewpoint*) &amp;(_pViewer-&gt;<b>GetMain2DViewpoint</b>());
+
+      CATVisManager * pVisuManager = CATVisManager::<b>GetVisManager</b>();
+
+      if ( (NULL != pViewPoint) &amp;&amp;  ( NULL != pVisuManager) )
+      {
+         pVisuManager-&gt;<b>DetachPSOFrom</b>(pViewPoint) ;
+         pVisuManager-&gt;<b>DetachHSOFrom</b>(pViewPoint);
+ 
+         pVisuManager-&gt;<b>DetachFrom</b>(_pRootObjectPath,pViewPoint);
+      }
+   }
+   CATFrmWindow::<b>DeleteWindow</b>();
+
+}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>The document window is deleted thanks to the <code>DeleteWindow</code>
+method, that removes the viewer from the ISO, then retrieves the viewpoint and
+detaches it from the PSO and from the HSO, and&nbsp; that recursively calls the <code>DeleteWindow</code>
+method of the base class. This last line is mandatory to ensure the complete
+destruction of the window in the V5 layout.&nbsp;&nbsp;</p>
+<p>The destructor simply deletes the path to the root object. No need to delete
+the viewer, since as any dialog object, they will be automatically deleted when
+the window itself will be deleted.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrHistogramChartWindow :: ~CAAAfrHistogramChartWindow ()
+{
+   if ( NULL != _pRootObjectPath) _pRootObjectPath-&gt;Release() ;
+   _pRootObjectPath = NULL ;
+}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The document's window class is now complete. You will learn how
+to create instances.&nbsp;</p>
+<h4 align="left"><a name="Creating the CAAISysDocumentChartWindow interface"></a>Creating
+the <i>CAAISysDocumentChartWindow</i> interface&nbsp;</h4>
+<p>This new interface [<a href="#References">6</a>] has only one method, the <code>CreateHistogramWindow</code>
+method.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class ExportedByCAASysGeoModelInf CAAISysDocumentChartWindow : public CATBaseUnknown
+{
+  CATDeclareInterface;
+
+  public :
+  virtual HRESULT <b>CreateHistogramWindow</b>() = 0;
+
+};
+...    </pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Implementing the CAAISysDocumentChartWindow interface"></a>Implementing
+the <i>CAAISysDocumentChartWindow</i> interface</h4>
+<p>This interface is implemented on the CAAGeometry document. The last argument
+of the <code>CATImplementClass</code> macro is the suffix of the document. It is
+<code>CAAGeom</code> for&nbsp; the CAAGeometry&nbsp; and <code>CATPart</code>
+for a Part document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;TIE_CAAISysDocumentChartWindow.h&quot;              
+TIE_CAAISysDocumentChartWindow(CAAEAfrDocumentChartWindow); 
+
+CATImplementClass(CAAEAfrDocumentChartWindow, DataExtension, CATBaseUnknown,<b>CAAGeom</b>);
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>The constructor and the destructor are empty.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAEAfrDocumentChartWindow::CAAEAfrDocumentChartWindow(){}
+
+CAAEAfrDocumentChartWindow::~CAAEAfrDocumentChartWindow(){}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code><a name="CreateHistogramWindow">CreateHistogramWindow</a></code>
+method is similar to the <a href="#Step4">Duplicate</a> method of the <i>CAAAfrHistogramChartWindow</i>
+class.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEAfrDocumentChartWindow::CreateHistogramWindow()  
+{
+   // 1- Creating the new instance
+   CATUnicodeString <b>WindowName</b> = CATMsgCatalog::BuildMessage(&quot;CAAAfrHistogramChartWindow&quot;,
+                                        &quot;BaseName&quot;,NULL,0,&quot;Histogram Chart&quot;);
+   CATString WindowBaseName = WindowName.ConvertToChar();
+   
+   CATIEditor * pIEditor = NULL ;
+   HRESULT rc = QueryInterface(IID_CATIEditor, (void**)&amp;pIEditor);
+   if (SUCCEEDED(rc))
+   {
+      CATFrmEditor * pEditor = pIEditor-&gt;<b>GetEditor</b>();
+      CAAAfrHistogramChartWindow * pWindow = new <b>CAAAfrHistogramChartWindow</b>(WindowBaseName,pEditor);
+      pWindow-&gt;<b>Build</b>();
+      
+      //2- Managing the Window's Title
+      CATUnicodeString BaseName = pWindow-&gt;<b>GetBaseName</b>();
+      pWindow-&gt;<b>SetBaseName</b>(BaseName);
+
+      //3- Managing the current window
+      CATFrmLayout *currentLayout = CATFrmLayout::<b>GetCurrentLayout</b>();
+      currentLayout-&gt;<b>SetCurrentWindow</b>(pWindow);
+
+      pIEditor-&gt;Release();
+      pIEditor = NULL ;
+   }
+   return rc ;
+}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>This method is divided in three parts:</p>
+<ul>
+  <li>
+    <p>Create a <i>CAAAfrHistogramChartWindow</i> class instance</p>
+  </li>
+  <ul>
+    <li>The first identifier is a default name extracted from the
+      CAAAfrHistogramChartWindow.CATNls file. In most cases, this identifier is
+      the complete path of the document. ( the editor knows its document by the <code>GetDocument</code>
+      method).&nbsp;</li>
+    <p>In the CNext\Resources\msgcatalog directory of the
+    CAAApplicationFrame.edu framework you will find the
+    CAAAfrHistogramChartWindow.CATNls file which contains the following line:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+BaseName = &quot;Model Histogram Chart &quot;;
+...    </pre>
+        </td>
+      </tr>
+    </table>
+  </ul>
+  <li>
+    <p>The <code>GetBaseName</code> method retrieves the name of the document
+    without its complete path. The <code>SetBaseName</code> method enables to
+    modify the title of the already existing windows. Refer to the <a href="#Step4">Duplicate</a>
+    method.</p>
+  </li>
+  <li>
+    <p>Set the current window has current in the V5 application. In other words,
+    the new window has the focus. The windows management is the role of the
+    unique <i>CATFrmLayout</i> class instance [<a href="#References">2</a>].</p>
+  </li>
+</ul>
+<h4 align="left"><a name="Using the CAAISysDocumentChartWindow interface"></a>Using
+the <i>CAAISysDocumentChartWindow</i> interface</h4>
+<p>In the <i>CAADegHistogramChartWindowCmd</i> state command [<a href="#References">3</a>],
+there is a transition with the <code>CreateHistogramChartWindow</code> action
+method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean CAADegHistogramChartWindowCmd::CreateHistogramChartWindow(void *iDummy)
+{
+  CATFrmEditor * pEditor = <b>GetEditor</b>(); 
+  if ( NULL != pEditor )
+  {
+     <b>CATDocument</b> * pDocument = pEditor-&gt;<b>GetDocument</b>();
+     if ( NULL != pDocument )
+     {
+        <b>CAAISysDocumentChartWindow </b>* pIDocumentChartWnd = NULL ;
+        HRESULT rc = pDocument-&gt;QueryInterface(IID_CAAISysDocumentChartWindow, 
+			                        (void**)&amp;pIDocumentChartWnd);
+        if ( SUCCEEDED(rc) )
+        {
+           pIDocumentChartWnd-&gt;<b>CreateHistogramWindow</b>();
+          ...
+}
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Documents of the same type are always displayed in similar windows. You can
+instantiate the <i>CATFrmGraphAnd3DWindow</i> class and the <i>CATFrmGraphAnd2DWindow</i>
+class provided by CAA V5, or create your own window which should derive from the
+<i>CATFrmWindow</i> base class.&nbsp;</p>
+<p>Document windows are instantiated in the <code>CreateDefaultWindow</code>
+method of the <em>CATIDocumentEdit</em> interface when the end user clicks
+File-&gt;New or File-&gt;Open. For your own window you should provide a new
+interface which realizes the new window instantiation.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrSampleCustomWindow1.htm">Creating a Document's Window -
+      Part 2</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrLayoutV5.htm">Understanding
+      the Application Frame Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADegUseCases/CAADegSampleDialogWithAgent2.htm">Associating
+      a Dialog Box with a Dialog Agent - Part 2</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

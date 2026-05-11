@@ -1,0 +1,616 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Distributive Systemes</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+<!--[if !mso]>
+<style> table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	}
+</style>
+<![endif]-->
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>
+		<span style="font-size: 13.5pt; font-family: Verdana; color: #FF6600">
+		Distributive Systemes</span></h1>
+		</td>
+		<td valign="top">
+		<h2>
+		<span style="font-size: 12.5pt; font-family: Verdana; color: #FF6600">
+		Electrical Cable Route Management (ECV)</span></h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>
+		<span style="font-size: 11.5pt; font-family: Verdana; color: #FF6600">
+		Custom Computation of Cableway Percent Fill </span> </h3><i>
+		<span style="font-size: 9.5pt; font-family: Verdana">How the user can 
+		define the way percent fill shall be computed and used</span></i></td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">
+		<p class="MsoNormal"><span style="font-family: Verdana">Use Case</span></td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>
+		<span style="font-size: 11.5pt; font-family: Verdana; color: #FF6600">
+		Abstract</span></h3>
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		CAACloECVPercentFill is a use case of the CAACommonLayoutItf.edu 
+		framework. It illustrates a CATCommonLayoutInterfaces interface to be 
+		implemented to define custom computation of percent fill during cable 
+		routing. </span></p>
+		<ul>
+			<li><font face="Verdana" style="font-size: 9.5pt"><strong>
+			<a href="#What You Will Learn With This Use Case">
+			<font color="#FF6600">What You Will Learn With This Use Case</font></a></strong></font></li>
+			<li><font face="Verdana" style="font-size: 9.5pt"><strong>
+			<a href="#The CAACloECVPercentFill Use Case"><font color="#FF6600">
+			The CAACloECVPercentFill Use Case</font></a></strong><font color="#FF6600">
+			</font></font>
+			<ul>
+				<li><font face="Verdana" style="font-size: 9.5pt">
+				<a href="#What Does CAACloECVPercentFill Do">
+				<font color="#FF6600">What Does CAACloECVPercentFill Do</font></a></font></li>
+				<li><font face="Verdana" style="font-size: 9.5pt">
+				<a href="#How to Launch CAACloECVPercentFill">
+				<font color="#FF6600">How to Launch CAACloECVPercentFill</font></a></font></li>
+				<li><font face="Verdana" style="font-size: 9.5pt">
+				<a href="#Where to Find the CAACloECVPercentFill Code">
+				<font color="#FF6600">Where to Find the CAACloECVPercentFill 
+				Code</font></a></font></li>
+			</ul></li>
+			<li><font face="Verdana" style="font-size: 9.5pt"><strong>
+			<a href="#Step-by-Step"><font color="#FF6600">Step-by-Step</font></a></strong></font></li>
+			<li><font face="Verdana" style="font-size: 9.5pt"><strong>
+			<a href="#InShort"><font color="#FF6600">In Short</font></a></strong></font></li>
+			<li><font face="Verdana" style="font-size: 9.5pt">
+			<a href="#References"><strong><font color="#FF6600">References</font></strong></a></font></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><span style="font-size: 11.5pt; font-family: Verdana; color: #FB7203">
+<a name="What You Will Learn With This Use Case"></a>What You Will Learn With 
+This Use Case</span></h3>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">This 
+ECV product use case is intended to show how to invoke user implementation for 
+determining Node percent fill for Hanger and Node &amp; Arc percent fill for 
+Raceway/Conduit cableways using the CATIEcvPercentFill interface.</span></p>
+<p align="right"><font face="Verdana"><font size="2">[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h3><span style="font-size: 11.5pt; font-family: Verdana; color: #FB7203">
+<a name="The CAACloECVPercentFill Use Case"></a>The CAACloECVPercentFill Use 
+Case</span></h3>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAACloECVPercentFill is a use case of the CAACommonLayoutInterfaces.edu 
+framework that illustrates Electrical Cable Routing capabilities using custom 
+percent fill.</span></p>
+<p align="right"><font face="Verdana"><font size="2">[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h3><span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="What Does CAACloECVPercentFill Do"></a>What Does CAACloECVPercentFill 
+Do</span></h3>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">This 
+use case: </span></p>
+<p class="MsoNormal" style="text-indent: -.25in; margin-left: .5in">
+<span style="font-size: 9.5pt; font-family: Symbol">·<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style="font-size: 9.5pt; font-family: Verdana">Illustrates a 
+capability to have a user implementation automatically invoked when 
+CATIEcvPercentFill interface from CATCommonLayoutInterfaces is implemented on 
+CATEcwLightNwkNodeForPercentFill and / or CATEcwLightNwkArcForPercentFill 
+objects </span></p>
+<blockquote>
+	<blockquote>
+		<blockquote>
+			<blockquote>
+				<blockquote>
+					<blockquote>
+						<blockquote>
+							<blockquote>
+								<blockquote>
+									<blockquote>
+										<blockquote>
+											<blockquote>
+												<blockquote>
+													<blockquote>
+														<blockquote>
+															<blockquote>
+																<blockquote>
+																	<blockquote>
+																		<blockquote>
+																			<blockquote>
+																				<blockquote>
+																					<blockquote>
+																						<blockquote>
+																							<blockquote>
+																								<blockquote>
+																									<blockquote>
+																										<blockquote>
+																											<blockquote>
+																												<blockquote>
+																													<blockquote>
+																														<p align="right">&nbsp;<font face="Verdana"><font size="2"> [</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+																													</blockquote>
+																												</blockquote>
+																											</blockquote>
+																										</blockquote>
+																									</blockquote>
+																								</blockquote>
+																							</blockquote>
+																						</blockquote>
+																					</blockquote>
+																				</blockquote>
+																			</blockquote>
+																		</blockquote>
+																	</blockquote>
+																</blockquote>
+															</blockquote>
+														</blockquote>
+													</blockquote>
+												</blockquote>
+											</blockquote>
+										</blockquote>
+									</blockquote>
+								</blockquote>
+							</blockquote>
+						</blockquote>
+					</blockquote>
+				</blockquote>
+			</blockquote>
+		</blockquote>
+	</blockquote>
+</blockquote>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How to Launch CAACloECVPercentFill"></a>
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">How to 
+Launch CAACloECVPercentFill </span></h4>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">To 
+launch CAACloECVPercentFill, you will need to set up the build time environment, 
+then compile CAACloECVPercentFill.m along with its prerequisites, set up the run 
+time Enovia environment, and then follow the detailed sample steps.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+[<font face="Verdana"><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h4><span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Where to Find the CAACloECVPercentFill Code"></a>Where to Find the 
+CAACloECVPercentFill Code</span></h4>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAACloECVPercentFill code is located in the CAACloECVPercentFill.m use case 
+module of the CAACommonLayoutItf.edu framework:</span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" id="table1">
+	<tr>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">Windows</span></td>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		InstallRootDirectory\ CACommonLayoutItf.edu\CAACloECVPercentFill.m</span></td>
+	</tr>
+	<tr>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">Unix</span></td>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		InstallRootDirectory/ CAACommonLayoutItf.edu/CAACloECVPercentFill.m</span></td>
+	</tr>
+</table>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAACommonLayoutItf.edu framework contains dictionary file:</span></p>
+<table class="MsoNormalTable" border="0" cellpadding="0" id="table2">
+	<tr>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">Windows</span></td>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		InstallRootDirectory\CAACommonLayoutItf.edu\CNext\code\dictionary\CAACommonLayoutItf.edu.dico</span></td>
+	</tr>
+	<tr>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">Unix</span></td>
+		<td style="padding: .75pt">
+		<p class="MsoNormal">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		InstallRootDirectory/CAACommonLayoutItf.edu/CNext/code/dictionary/CAACommonLayoutItf.edu.dico</span></td>
+	</tr>
+</table>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">where 
+InstallRootDirectory is the root directory of your CAA V5 installation. </span>
+</p>
+<h4><span style="font-size: 9.5pt; font-family: Verdana; font-weight: 400">C++ 
+source files:</span></h4>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAAEPFforNetworkNode.cpp: This is the implementation of CATIEcvPercentFill&nbsp;on 
+CATEcwLightNwkNodeForPercentFill object. </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAAEPFforNetworkArc.cpp: This is the implementation of CATIEcvPercentFill&nbsp;on 
+CATEcwLightNwkArcForPercentFill. </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAAEPFforNetworkNode.h and CAAEPFforNetworkArc.h&nbsp;are the corresponding header 
+(.h) files.</span></p>
+<p align="right"><font face="Verdana"><font size="2">[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h3><span style="font-size: 11.5pt; font-family: Verdana; color: #FB7203">
+<a name="Step-by-Step"></a>Step-by-Step</span></h3>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">There 
+are three logical steps in CAACloECVPercentFill:</span></p>
+<ul type="disc" style="margin-bottom: 0in">
+	<li class="MsoNormal" style="color: #FF6600">
+	<span style="color: #FF6600; text-decoration: none; font-size: 9.5pt; font-family: Verdana">
+	<a href="#Prolog"><font color="#FF6600">Prolog</font></a></span></li>
+	<li class="MsoNormal" style="color: #FF6600">
+	<span style="color: #FF6600; text-decoration: none; font-size: 9.5pt; font-family: Verdana">
+	<a href="#Mechanism of Working"><font color="#FF6600">Mechanism of Working</font></a></span><ul type="circle" style="margin-bottom: 0in">
+		<li class="MsoNormal" style="color: #FF6600">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		<a href="#Hanger Cableway Network"><font color="#FF6600">Hanger Cableway 
+		Network</font></a></span></li>
+		<li class="MsoNormal" style="color: #FF6600">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		<a href="#Raceways/Conduits Cableway Network:"><font color="#FF6600">
+		Raceway/Conduit Cableway Network </font></a></span></li>
+	</ul>
+	</li>
+	<li class="MsoNormal" style="color: #FF6600">
+	<span style="font-size: 9.5pt; font-family: Verdana">
+	<a href="#Detailed Scenario"><font color="#FF6600">Detailed Scenario</font></a></span>
+ 	<ul type="circle" style="margin-bottom: 0in">
+		<li class="MsoNormal" style="color: #FF6600">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		<a href="#Sample 1 (Hanger Cableway Network)"><font color="#FF6600">
+		Sample 1 (Hanger Cableway Network)</font></a></span></li>
+		<li class="MsoNormal" style="color: #FF6600">
+		<span style="font-size: 9.5pt; font-family: Verdana">
+		<a href="#Sample 2 (Raceway/Conduit Cableway Network):">
+		<font color="#FF6600">Sample 2 (Raceway/Conduit Cableway Network)</font></a></span></li>
+	</ul>
+	</li>
+</ul>
+<p><font face="Verdana"><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font><!---------------------------------comment-------------------------------------></p>
+<h4><span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Prolog"></a>Prolog</span></h4>
+<p><font face="Verdana"><span style="font-size: 9.5pt">Prior to implementation 
+of this Use case, user should have knowledge about ECV product. Refer V5 
+documentation. </span></font></p>
+<p><font face="Verdana"><span style="font-size: 9.5pt">The user will have to 
+provide implementation depending on type of cableway network: </span></font></p>
+<p><font face="Verdana"><span style="font-size: 9.5pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1. Hanger Network: CATIEcvPercentFill on CATEcwLightNwkNodeForPercentFill<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Raceway / Conduit Network: 
+CATIEcvPercentFill on CATEcwLightNwkNodeForPercentFill and 
+CATEcwLightNwkArcForPercentFill<br>
+If no user implementation exists, then default implementation will get invoked.
+<br>
+<br>
+NOTE: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • For R19sp5+ level, environment 
+variable ECV_CAAPercentFill needs to be set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • For R20GA level and above, no 
+environment variable is needed.<br>
+<br>
+For *.h sample, refer image below:</span></font></p>
+<table class="code" id="table3" width="1266">
+	<tr>
+		<td bgcolor="#CCCCCC">
+		<pre><span style="font-size: 9.5pt">class CAAEPFforNetworkNode: public CATBaseUnknown
+
+{
+CATDeclareClass;
+
+public:
+
+// Standard constructors and destructors for an implementation class
+// -----------------------------------------------------------------
+CAAEPFforNetworkNode();
+virtual ~ CAAEPFforNetworkNode();
+
+/**
+* Implements a function from an interface.
+* @href CATIEcvPercentFill#ComputePercentFillValue
+*/
+HRESULT ComputePercentFillValue 
+		(CATEcwLightNwkNodeForPercentFill * pNwkNode, 
+		CATEcwLightNwkArcForPercentFill * pNwkArc, 
+		CATLISTP(CATEcwLightNwkArcForPercentFill) 
+		 	pListOfCATEcwLightNwkArcForPercentFill, 
+		CATEcwLightNwkCableForPercentFill * pNwkCable, 
+		CATLISTP(CATEcwLightNwkCableForPercentFill) 
+			pListOfCATEcwLightNwkCableForPercentFill,
+		int iRoutingMode, 
+		int iRouteToolsOptionStackCableOption, 
+		int iPFToBeSetOnNode,
+		double &amp; odComputedPercentFill);
+
+
+private: 
+};
+
+#endif
+</span></pre>
+		</td>
+	</tr>
+</table>
+<p align="right"><font face="Verdana"><font size="2">&nbsp;[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h4><span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Mechanism of Working"></a>Mechanism of Working</span></h4>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">The 
+implementation will have the routine ComputePercentFillValue in which user needs 
+to calculate Node percent fill for Hanger and Node &amp; Arc percent fill for 
+Raceway/Conduit cableways. This/these user implementation(s) shall be invoked 
+multiple times when user performs different operations such as</span></p>
+<p class="MsoNormal"><span style="font-family: Verdana; font-size: 9.5pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="font-size: 9.5pt"><font face="Verdana">1. Load the cable(s) 
+data from database <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. Different routing modes - Route a 
+cable, Delete a route, Delete a sub route, Validate a route.</font></span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">These 
+above operations are mapped to four types of Routing mode - the 6<sup>th</sup> 
+argument of ComputePercentFillValue routine. The percent fill needs to be 
+calculated according to the routing mode.</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Hanger Cableway Network"></a>Hanger Cableway Network:</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">Code 
+in CAACommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkNode.cpp 
+gets invoked. </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">Note:i) 
+The 2<sup>nd</sup> argument (CATEcwLightNwkArcForPercentFill *pNwkArc) will be 
+always NULL as hanger network does not have the physical arc.&nbsp; ii) The 3<sup>rd</sup> 
+argument CATLISTP(CATEcwLightNwkArcForPercentFill)&nbsp; &nbsp;pListOfCATEcwLightNwkArcForPercentFill 
+should not be used in the implementation.</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Raceways/Conduits Cableway Network:"></a>Raceways/Conduits Cableway 
+Network: </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">Code 
+in CAACommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkNode.cpp 
+and CAACommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkArc.cpp 
+gets invoked.</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">Here, 
+both CATEcwLightNwkNodeForPercentFill *&nbsp; pNwkNode and 
+CATEcwLightNwkArcForPercentFill *pNwkArc (1<sup>st</sup> and 2<sup>nd</sup> 
+argument of ComputePercentFillValue) will be valid as raceway network has both 
+nodes as well as arc.3<sup>rd</sup> argument 
+CATLISTP(CATEcwLightNwkArcForPercentFill)&nbsp; 
+pListOfCATEcwLightNwkArcForPercentFill is not used in the implementation.</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Example of 
+dictionary (***.dic)</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CATEcwLightNwkNodeForPercentFill&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATIEcvPercentFill&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; libXYZ (where 
+libXYZ is the library where the implementation resides)</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CATEcwLightNwkArcForPercentFill&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATIEcvPercentFill&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; libXYZ (where 
+libXYZ is the library where the implementation resides)</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">General 
+scenario:</span></p>
+<p class="MsoNormal" style="text-indent: -.25in">
+<font face="Verdana" style="font-size: 9.5pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1. Use “Electrical cable database Importer” command in VPM Nav workbench.<br>
+&nbsp;&nbsp;&nbsp; 2. Use “Set context Electrical cable database” in VPM Nav 
+workbench.<br>
+&nbsp;&nbsp;&nbsp; 3. Use Manage cables from database” command in Electrical 
+cableway routing workbench.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a. Load the cables <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b. Perform various 
+operations such as Auto Route, partial route, delete route, delete sub route and 
+validate route.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font face="Verdana"><font size="2"> [</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<!---------------------------------comment------------------------------------->
+<h4><span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Detailed Scenario"></a>Detailed Scenario:</span></h4>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Sample 1 (Hanger Cableway Network)"></a>Sample 1 (Hanger Cableway 
+Network):</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+Prerequisite: </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">This 
+sample uses the following products as work packages located in 
+CAACommonLayoutItf.edu\InputData\HangerModel:</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Hanger 
+Model work packages:</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+MWY1_ECV.CATProduct, LWY1_ECV.CATProduct, EQT1_ECV.CATProduct, EQT2_ECV.CATProduct, ELD1_ECV.CATProduct</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Code 
+invoked:</span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+CAACommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkNode.cpp</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Steps to be 
+followed:</span></p>
+<p class="MsoNormal" style="text-indent: -.25in; margin-left: .5in">
+<font face="Verdana" style="font-size: 9.5pt">&nbsp;&nbsp;&nbsp;&nbsp; 1. Insert 
+the work packages under PRC and save the PRC. <br>
+2. Use “Electrical cable database Importer” command in VPM Nav workbench.<br>
+3. Use “Set context Electrical cable database” in VPM Nav workbench.<br>
+4. Use “Manage cables from database” command in Electrical Cableway routing 
+workbench”.</font><br>
+&nbsp;</p>
+<p><span style="font-size: 10.0pt; font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<img border="0" src="images/image001.png" width="888" height="381"></span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+5. Load All Cables</span></p>
+<p><font size="2"><span style="font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+<img border="0" src="images/image003.png" width="888" height="381"></span></font></p>
+<p class="MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font face="Verdana" style="font-size: 9.5pt">6. AutoRoute 1st 3 cables - 1 
+cable each time 1027, 1028, 1030. Here the Routing mode will be 1. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+• Code at line no. 160 gets invoked.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+• User can save the percent fill report by the “Save As” option in the below 
+panel.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We get Electrical cable database result as follows which mentions about the 
+percent fill at each node: (say for cable-1027)<br>
+&nbsp;</font></p>
+<span style="font-size: 10.0pt; font-family: Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<img border="0" src="images/image005.png" width="754" height="464"></span><blockquote>
+	<p class="MsoNormal"><font style="font-size: 9.5pt" face="Verdana">7. Set 
+	Context again, Load all cables<br>
+	8. As the cables are already routed and we are again loading the same, it 
+	should Get percent fill for existing network, thus user implementation for 
+	load mode <br>
+	&nbsp;&nbsp;&nbsp;
+	CAAEPFforNetworkNode::ComputePercentFillValue gets invoked for first time.
+	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Here routing mode will be 3. Code 
+	at line no. 167 gets invoked <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using “Save As”.<br>
+	9. Delete partial route for 1030 from M30 to M33<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Here the Routing mode will be 2; 
+	Code at line no. 162 gets invoked. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using “Save As”.<br>
+&nbsp;</font></p>
+</blockquote>
+<p align="right"><font face="Verdana"><font size="2">&nbsp;[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+<a name="Sample 2 (Raceway/Conduit Cableway Network):"></a>Sample 2 
+(Raceway/Conduit Cableway Network):</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">
+Prerequisite: </span></p>
+<p class="MsoNormal"><font style="font-size: 9.5pt" face="Verdana">This sample 
+uses the following products as work packages located in <br>
+CAACommonLayoutItf.edu\InputData\ RacewayModel.</font><br>
+&nbsp;</p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Raceway 
+model work packages: </span></p>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">
+WKP_Raceway.CATProduct, WKP_EQT_RWY.CATProduct, WKP_ELD_RWY.CATProduc</span></p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Code 
+invoked:</span></p>
+<p class="MsoNormal">
+<span style="font-family: Verdana; font-size: 9.5pt; color: #FF6600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><font style="font-size: 9.5pt" face="Verdana">&nbsp;1. CAAC<font style="font-size: 9.5pt">ommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkNode.cpp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2. CAACommonLayoutItf.edu\CAACloECVPercentFill.m\src\CAAEPFforNetworkArc.cpp</font></font><br>
+&nbsp;</p>
+<p class="MsoNormal">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #FF6600">Steps to be 
+followed:</span></p>
+<blockquote>
+	<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">1. 
+	Insert the work packages under PRC and save the PRC. <br>
+	2. Use “Electrical cable database Importer” command in VPM Nav workbench.<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; •  Here the PRM resource "TypeofECVDataToBeImported" needs to be set to "2" in the active Project xml (available under Tools->Project Management->Select Browse).<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; •  Note that CNext xml cannot be used for this purpose.<br>
+	3. Use “Set context Electrical cable database” in VPM Nav workbench.<br>
+	4. Use “Manage cables from database” command in Electrical Cableway routing 
+	workbench”.<br>
+	5. Load All Cables <br>
+	6. AutoRoute 1st 2 cables – cable 01 and cable 02. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Here the Routing mode will be 1. 
+	Code at line no.158 in CAAEPFforNetworkArc.cpp gets invoked.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Percent fill calculation is 
+	different for stack option check. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • User can save the percent fill 
+	report by the “Save As” option in the above panel. <br>
+	7. Again set the context. Load the cables. <br>
+	8. As the cables are already routed and we are again loading the same, it 
+	should get percent fill for existing network, thus user implementation for 
+	load mode gets invoked for first time.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Here routing mode will be 3. Code 
+	mentioned in the step 6 gets invoked. <br>
+	9. Select Cable – 01, Select Delete sub route option, and select “FROM” Node 
+	63 to “TO” Node 75 so as to delete the sub route between these two nodes.
+	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • For deletion of the sub route the 
+	routing mode will be 2. Code at line 180 in CAAEPFforNetworkArc.cpp gets 
+	invoked.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using the “Save As” 
+	option. <br>
+	10. Select the Cable – 01, Select “Validate Route” option, and click ok to 
+	validate the route. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Code at line no. 206 in 
+	CAAEPFforNetworkArc.cpp gets invoked.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using the “Save As” 
+	option. <br>
+	11. Set the context again<br>
+	12. Load all the cables. <br>
+	13. Select Cable-01, select the partial route option and then select “FROM” 
+	Node 62 to “TO” Node 86. Click ok to generate reports. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Here, Routing mode will be 1 and 
+	code invoked will be same as at step 6 above. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using “Save As”.<br>
+	14. Go to previous dialog, Validate the cable -01 using “Validate” option.
+	<br>
+	15. The route gets validated and status gets changed to fully routed cable.
+	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; • Save the report using “Save As”.</span></p>
+</blockquote>
+<p align="right"><font face="Verdana"><font size="2">&nbsp;[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>
+<span style="font-size: 11.5pt; font-family: Verdana; color: #FB7203">In Short</span></h3>
+<p class="MsoNormal"><span style="font-size: 9.5pt; font-family: Verdana">This 
+use case has demonstrated how the user implementation to calculate node and Arc 
+percent fill shall be invoked for CATIEcvPercentFill interface.</span></p>
+<p align="right"><font face="Verdana"><font size="2">[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>
+<span style="font-size: 11.5pt; font-family: Verdana; color: #FB7203">References</span></h3>
+<table width="100%">
+
+  <tr>
+     <td><a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+		<td valign="top" align="right" colspan="2"><font face="Verdana">
+		<font size="2">&nbsp;[</font><a href="#Top"><font size="2">Top</font></a></font><font size="2" face="Verdana">]</font></td>
+  </tr>
+</table>
+<hr>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p>
+<!---------------------------------comment------------------------------------->
+</p>
+<p><i>Copyright © 2009, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

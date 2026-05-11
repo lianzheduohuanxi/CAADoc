@@ -1,0 +1,176 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Consuming the SORWebServicesImpl CAA Web Service</title>
+</head>
+
+<body>
+   <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming the SORWebServicesImpl CAA Web Service
+            </h3><em>Generating a Shop Order Instance (SOI) with the SORWebServicesImpl CAA Web service</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract" id="table20">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article describes how to use the various services provided by DNBSORWebServices in Shop Order Release product. The technology used in this use case is based on Microsoft C#.</p>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+         <li><a href="#UseCase"><strong>The DNBSORWebService Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does DNBSORWebService Do</a></li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a></li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case is intended to help you make your first steps in developing the client application to consume the various operations of DNBSORWebServices like Generation of Shop Order Instance (SOI), Get the list of Jobs that produces the given product, Update & Retrieve the Release table status. More specifically, you will learn: </p>
+   <ul>
+     <li>How to Consume DNBSORWebServices</li>
+   </ul>
+<p>This Use case explains  the sample client program available in CAASORWS.edu\DNBSORWSCreateSOI.mj\src\IDNBSORWebServicesClient.cs. </p>
+   <p align="right">[<a href="#Top">Top</a>] </p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The DNBSORWebService Use Case</h3>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does DNBSORWebService Do</h4>
+	<p>DNBSORWebServices basically provides five types of operations: </p>
+	<ul>
+		<li><b>generateSOI</b>: this functionality generates the SOI (Shop Order Instance). SOI is a zip file with Resolved WorkInstruction containing any or all of the following based on the given input.</li>
+		<ul>
+			<li>(1)	PackNGo data for the CATProcess</li>
+			<li>(2)	3DXML</li>
+			<li>(3)	Job XML file for the Work Instructions</li>
+			<li>(4)	Precedence XML</li>
+			<li>(5)	Image Captured for every activity</li>
+		</ul>	
+		<li><b>getSOIGenerationStatus</b>: returns the status of SOI Generation request sent earlier based on the Transaction ID of the request.</li>
+		<li><b>getJobList</b>: this functionality returns a list of JOBs that produces the given product.</li>
+		<li><b>setReleaseTableStatus</b>: Updates the Release table of a job with the given details.</li>
+		<li><b>getReleaseTableStatus</b>: Retrieves the Release table status of a particular job.</li>
+	</ul>
+</p>
+<p>The following topics show you how to send the input details from a C# client to the web services.</p>
+
+   <h3><a name="Step"></a>Step-by-Step</h3>
+
+<h4>Developing Client Application to consume the web service</h4>
+	<p>Prerequisites:Before you start your web service client project, you MUST have generated the client proxy for the web service.</p>
+	<p>Setting Up a New Visual Studio Project 
+Open Visual Studio 2005 (Start/All Programs/Microsoft Visual Studio 2005/Microsoft Visual Studio 2005)</p>
+<ul>
+	<li>File menu / New... / Project </li>
+	<li>choose a Console Application Project</li>
+</ul>
+<p>Visual Studio initializes a new class that will be your client main.</p>
+<ul>
+<li>Now, you have to import in your project, the proxy generated earlier (Menu Project / Add existing item)</li>
+<p><li>You are now ready to write your web service consumer.</li>
+The binding file generated using the wsdl.exe will have one "IDNBSORWebServicesBinding" class and a bunch of other classes that refer to the input details required.
+
+
+<p>The following descriptions explains the development of client application with the help of a sample program. Please refer the Program.cs file provided in the sample client.In this article, the flow of the program is explained only for generateSOI. The flow is almost same for all operations.</p>
+After entering the input xml, request type and other required details in the UI, and once the "Send Request" button is pressed, the input details are received by the function "requestSender"
+in the Program.cs file. The class properties like Root URI, Port no. and URL are set in this function.</p>
+
+<p><li>SORProxy.Url = "http://<b>host_name:port/rootURI</b>/servicerouter?<b>service</b>=urn!com!dassault_systemes!DNBSORWebServices!DNBSORWebServicesImpl_ws!SORWebServicesImpl";</li></p>
+
+<p><ul><b>=> host_name</b> is the name of the machine where the web service is deployed</ul></p>
+<p><ul><b>=> port</b> is the port no. on which the web service is listening for request</ul></p>
+<p><ul><b>=> rootURI</b> is the name given for the field root URI while deploying the web service using WASSetuoUI.exe</ul></p>
+
+<P>In the URL, <b>service</b> refers to the path of the implementation file with framework and module name where it resides. This should be mentioned as it is.</p>
+
+<p>Then, based on the type of request, the input xml is sent to appropriate function. In this article, we shall consider the generateSOI operation. So, the input will be sent to <b>callSOIgeneration</b>.</p>
+
+<p>Inside "callSOIGeneration", the input is sent to another function called <b>getSOIInput</b> which will parse the xml string for various details it contains, sets them in the SOIInput class and returns the object to "callSOIGeneration". SOIInput class itself refers to many other small classes inside that. Refer the sample code to see how the input details are stored in these classes.</p> 
+<p>Similar functions are written separately to parse the input of other operations.
+After setting the input details, an instance of the bindng class (IDNBSORWebServicesBinding) is created, its URL property is to be set, and the name of the web method (generateSOI) is called over the instance passing the object returned by <b>getSOIInput</b> as input parameter. 
+
+<ul>
+	<p>IDNBSORWebServiceBinding SORProxy = new IDNBSORWebServiceBinding();</p>
+	<p>SORProxy.Url = _Url;</p>
+	<p>retVal = SORProxy.generateSOI(soiInput);</p>
+</ul>
+
+<p>where soiInput is the instance of SOIInput[] which contains the input details.</p>
+
+<p>Depending on the operation which you are going to call, the input datatype will vary. For example,</p>
+
+<p>For generateSOI & getSOIGenerationStatus, the input details are to be set in the instance of SOIInput()</p>
+<p>For getJobList, the input details are to be set in the instance of JobOIDsInput()</p>
+<p>For getReleaseTableStatus & setReleaseTableStatus, the input details are to be set in the instance of ReleaseTableInput()</p>
+
+<p>All the datatypes mentioned above inturn have several userdefined datatypes within it. Please refer the sample C# client to gat a clear idea on how to instantiate and set the input details.
+The sample client is designed in the assumption that all the input details are given in the xml format through UI. The program will parse that xml and set the values appropriately.
+</p>
+
+<p>The names of various web methods available in this web service can be obtained from the IDNBSORWebServices.wsdl file.</p>
+<p>Please have a look at the wsdl file to know more about the input and output parameters of the web services.</p>
+
+
+
+
+<p><b>Build and Run the application</b></p>
+
+<p>After completion of the above task, build the application. You may get errors related to the "System" namespace. To solve this, add the reference through the menu Project->Add References...,
+select the "System.Web.Services" from the .NET tab.</p>
+<p>Once the application is built successfully, an exe will be created in the bin directory of your client project.</p>
+
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+	<p>This use case has explained how you can consume web services provided by DNBSORWebServices 
+		(such as generation of SOI, getting the list of Jobs, updating and retrieving the Release table status) using a C# client.
+	</p>
+
+	<p align="right">[<a href="#Top">Top</a>]</p><hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3><table width="100%" id="table36">
+	
+</table><hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3><table width="100%" id="table37">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [May 2007]</td><td valign="top">Document created</td></tr><tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td></tr></table><hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 1994-2006, Dassault Systèmes. All rights reserved.</i></p><!---------------------------------comment------------------------------------->
+
+</body>
+
+</html>

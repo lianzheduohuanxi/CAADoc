@@ -1,0 +1,380 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Configured Views Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Configured Views Interface</h3>
+      <em>Working with Effectivities and Product Views</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the ENOVICWConfiguredViews interface of
+      the ENOVInterfaces framework to add a configured view in Change
+      Management. A configured view is added to an Engineering Change Order as
+      an Effectivity and added to an Action as a Product View.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEviConfiguredViews Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAAEviConfiguredViews Do?</a></li>
+          <li><a href="#How">How to Launch CAAEvi</a><a href="#How">ConfiguredViews</a></li>
+          <li><a href="#Where">Where to Find the CAAEviConfiguredViews Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to add an existing configured view
+to Change Management objects. In this case, a product is added to an existing
+Engineering Change Order as an Effectivity and to an Action as a Product View.
+You would use this operation if for example you would like to direct the
+modification of a certain group of a product that was manufactured within a
+specified time range, has a specific configuration, or has certain serial
+numbers. The product is attached to the ECO as an Effectivity object and the ECO
+controls the modification of the specified group. The Product View ensures that
+the required action is performed on a specific set of products. The product must
+be a configurable object with a configured view. The ENOVInterfaces framework
+contains the interface ENOVICWConfiguredViews which allows you to directly add
+an Effectivity to an ECO and a Product View to an Action.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEviConfiguredViews Use Case</h3>
+<p>CAAEviConfiguredViews is a use case of the CAAENOVInterfaces.edu framework
+that illustrates how you use the ENOVICWAffectedObjects interface to add and
+remove an Effectivity for an existing Engineering Change Order. It also shows
+how to add and remove a Product View for an existing Action.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEviConfiguredViews Do?</h4>
+<p>CAAEviConfiguredViews begins by opening a VPM session and creating a login a
+session. Then the Eco Manager and Action Manager are retrieved. To set up the
+demonstration, an ECO and an Action are created with the necessary parameters as
+well as a product and configured view. For more information on how to create an
+ECO, refer to use case CAAEviEcoManager, and to CAAEviActionManager for
+information on how to create an Action. After the necessary objects are created,
+the subject interface is used to add the product's configured view to the ECO as
+an Effectivity and to the Action as a Product view. Then, the interface is used
+to remove the Effectivity and Product View.
+<p>The ENOVInterfaces interface/methods shown here are:</p>
+<ul>
+  <li><b>ENOVIBOCWConfiguredViews.h - AddNewEcoEffectivity</b></li>
+  <li><b>ENOVIBOCWConfiguredViews.h - RemoveEffectivity</b></li>
+  <li><b>ENOVIBOCWConfiguredViews.h - AddAFLProdView</b></li>
+  <li><b>ENOVIBOCWConfiguredViews.h - RemoveAFLProdView</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEviConfiguredViews</h4>
+
+<p>To launch CAAEviConfiguredViews, you will need to set up the build time
+environment, then compile CAAEviConfiguredViews.cpp along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>]. The required
+interfaces can be found in the ENOVInterfaces, VPMInterfaces, VPMPersistency,
+System, and VPMTpManager frameworks.</p>
+<p>When the use case is built and the run time environment set, from the directory where the executable file is stored, 
+type the following to execute the use case:</p>
+<p><code>CAAEviConfiguredViews EnoviaUserLoginId EnoviaUserPasswd Role</code></p>
+<p>Where:</p>
+<ul>
+	<li><code>CAAEviConfiguredViews</code> is the use case executable name.</li>
+	<li><code>EnoviaUserLoginId</code> is the login identifier of the 
+		ENOVIA user you intend use to run the use case.</li>
+	<li><code>EnoviaUserPasswd</code> is the password of this user.</li>
+	<li><code>Role</code> is the role of this user, such as 
+		VPMADMIN.ADMIN.DEFAULT.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEviConfiguredViews Code</h4>
+<p>The CAAEviConfiguredViews use case is made of a single file located in the
+CAAEviConfiguredViews.m module of the CAAENOVInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVInterfaces.edu\CAAEviConfiguredViews.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVInterfaces.edu/CAAEviConfiguredViews.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAEviConfiguredViews use case
+is shown here. After the preliminary set up of creating the ECO, Action, and
+product as a configured view, there are four logical steps:</p>
+<ol>
+  <li><a href="#Step1">Add an Effectivity to an ECO</a></li>
+  <li><a href="#Step2">Remove Effectivity from ECO</a></li>
+  <li><a href="#Step3">Add a Product View an Action</a></li>
+  <li><a href="#Step4">Remove Product View from Action</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Add an Effectivity to an ECO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWConfiguredViews.h&quot;
+    #include &quot;CATIEnovCMEffectivity.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//---Add a CMEffectivity to the ECO
+ 
+    CATUnicodeString prodName(&quot;MyProduct&quot;);
+    CATUnicodeString EffId(&quot;MyEffectivity&quot;);
+    CATIEnovCMEffectivity_var ecoEff = NULL_var;
+    ENOVICWConfiguredViews_var spCfgView(Eco);
+       
+    rc = spCfgView-&gt;AddNewEcoEffectivity(CV1, 
+    					 prodName,
+    					 EffId,
+    					 ecoEff);
+    
+    if (ecoEff==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in adding Effectivity to ECO.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 12;
+    }
+    cout &lt;&lt; &quot;Added Effectivity to ECO successfully.&quot; &lt;&lt; endl &lt;&lt; flush;   
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>After the VPM session is opened, and the ECO and product created, you can
+    use the ENOVICWConfiguredViews interface to add the configured view to the
+    ECO.</li>
+  <li>The existing configured view is the <b>CV1</b> variable. The ECO object, <b>Eco</b>,
+    is cast as a ENOVICWConfiguredViews type - <b>spCfgView</b>.</li>
+  <li>With the <b>prodName</b> set as &quot;MyProduct&quot; , the <b>EffId</b>
+    set as &quot;MyEffectivity&quot;, <b>spCfgView</b> calls method <b>AddNewEcoEffectivity</b>.</li>
+  <li>The method returns S_OK if successful and the Effectivity <b>ecoEff</b> is
+    created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step2"></a>Remove Effectivity from ECO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWConfiguredViews.h&quot;
+    #include &quot;CATIEnovCMEffectivity.h&quot;
+        </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interface demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//---Remove Effectivity from the ECO
+       
+    rc = spCfgView-&gt;RemoveEcoEffectivity(ecoEff);
+    
+    if (!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in removing Effectivity from ECO.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 13;
+    }
+    cout &lt;&lt; &quot;Removed Effectivity from ECO successfully.&quot; &lt;&lt; endl &lt;&lt; flush; 
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>With the ECO object, <b>Eco</b>, cast as a ENOVICWConfiguredViews type - <b>spCfgView</b>,
+    a call is made to method <b>RemoveEcoEffectivity</b>.</li>
+  <li>The method returns S_OK if successful and the Effectivity <b>ecoEff</b> is
+    removed from the ECO.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step3"></a>Add an Product View to an Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWConfiguredViews.h&quot;
+    #include &quot;CATIVpmAFLProductView.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interface demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+ //--- Add an AFLProdView to the Action 
+ 
+    CATIVpmAFLProductView_var AFLPV = NULL_var;
+    CATUnicodeString productName(&quot;MyProduct&quot;);
+    CATUnicodeString AddToObjType(&quot;ENOVIA_AFLAction&quot;);
+    ENOVICWConfiguredViews_var spCV(Action);
+
+    rc = spCV-&gt;AddAFLProdView(CV2, 
+    			      productName,
+    			      AddToObjType,
+    			      AFLPV);
+    
+    if (AFLPV==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in adding Product View to Action.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 14;
+    }
+    cout &lt;&lt; &quot;Added Product View to Action successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>After the VPM session is opened, and the Action and product created, you
+    can use the ENOVICWConfiguredViews interface to add the configured view to
+    the Action.</li>
+  <li>The existing configured view is the <b>CV2</b> variable. The Action
+    object, <b>Action</b>, is cast as a ENOVICWConfiguredViews type - <b>spCV</b>.</li>
+  <li>With the <b>productName</b> set as &quot;MyProduct&quot; and the <b>AddToObjType</b>
+    set to &quot;ENOVIA_AFLAction&quot;, <b>spCV</b> calls method <b>AddAFLProductView</b>.</li>
+  <li>The method returns S_OK if successful and the Product View, <b>AFLPV</b>
+    is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step4"></a>Remove Product View from Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWConfiguredViews.h&quot;
+    #include &quot;CATIVpmFactoryObject.h&quot;
+        </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//---Remove AFLProdView from the Action
+     
+    CATIVpmFactoryObject_var factObj(CV2);   
+    rc = spCV-&gt;RemoveAFLProdView(factObj);
+    
+    if (!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in removing Product View from Action.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 15;
+    }
+    cout &lt;&lt; &quot;Removed Product View from Action successfully.&quot; &lt;&lt; endl &lt;&lt; flush; 
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>First the configured view, <b>CV2</b>, is cast as a Factory Object, <b>factObj</b>.</li>
+  <li>Then, with the Action cast as a ENOVICWConfiguredViews type - <b>spCV</b>,
+    a call is made to <b>RemoveAFLProdView</b>.</li>
+  <li>The method returns S_OK if successful and the Product View is removed from
+    the Action.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Use the ENOVICWConfiguredViews interface available in the ENOVInterfaces
+framework to add an existing configured view object to an existing ECO as an
+Effectivity or to an Action as a Product View. The same interface is used for
+removal of the configured view.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

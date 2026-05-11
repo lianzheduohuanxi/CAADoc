@@ -1,0 +1,344 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>mkICE</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>mkICE</h3>
+      Edit XML ID cards</td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article explains how to use the mkICE command to edit your framework 
+		Identity Cards XML files.</p>
+		<ul>
+			<li><a href="#Synopsis">Synopsis</a></li>
+			<li><a href="#Usage">Usage</a></li>
+			<li><a href="#Options">Options</a></li>
+			<li><a href="#Examples">Example</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Synopsis"></a>Synopsis</h2>
+<p><strong>mkICE</strong> [<strong>-f</strong> XMLfile] [<strong>-F</strong> FW 
+] [<strong>-c</strong> Cmp] [<strong>-h</strong> | <strong>-help</strong> |
+<strong>-?</strong>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Usage"></a>Usage</h2>
+<p>mkICE (Identity Card Editor) is an IdentityCard.xml graphic editor, providing 
+contextual help and check.</p>
+<p>
+<img alt="mkICE dialog window" src="images/CAABtlmkICE01V5.png" width="632" height="512"/></p>
+<p>The mkICE window is made up of three panes:</p>
+<ol>
+	<li>A tree pane showing the XML element nesting as nodes in a tree.</li>
+	<li>A property pane displaying the&nbsp; properties of the selected element 
+	in the tree</li>
+	<li>An Error and warning pane</li>
+</ol>
+<p>mkICE allows you to add a new elements, at the bottom of the tree, or before 
+or after a given one. Depending on the context and the type of the IdentityCard, 
+a menu proposes the list of available keywords. When selecting an element, the property 
+panel displays all possible attributes for the selected element, with drop down 
+list when the possible values are constrained.</p>
+<p><strong>Notes</strong>:</p>
+<ol>
+	<li>Attributes with an empty value are not copied to the XML file. To specify 
+	an attribute, specify a non empty value. To remove an attribute, specify an 
+	empty value.</li>
+	<li>The model modification is only done when leaving the control area.</li>
+	<li>mkICE is level dependent. You need to use the editor from the proper level 
+	of tools to edit an IdentityCard. </li>
+</ol>
+<p>During edition, the XML document is checked against the XSD. If any error occurs, 
+the result can be seen in the <kbd>Error and warning</kbd> pane.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Opening1"></a>Opening an IdentityCard.xml File</h3>
+<p>To open an existing IdentityCard.xml, click on File&gt;Open or use the shortcut 
+Ctrl o</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Opening2"></a>Opening an IdentityCard.h File</h3>
+<p>You can open an IdentityCard.h (File&gt;Open from .h), this will transform the .h 
+to .xml (using mkIC2xml). The rest of the edition will be on the .xml only.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prerequisites"></a>Managing Prerequisites</h3>
+<p>You can add and remove prerequisite frameworks, or modify the access mode of 
+a prerequisite framework.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Adding a Prerequisite Framework at the Bottom of the Tree</h4>
+<ol class="task">
+	<li>
+	<p>Right click the <kbd>codeFramework</kbd> root node.</p>
+	</li>
+	<li>
+	<p>In the contextual menu, point to <kbd>Add children</kbd>, and click <kbd>
+	prerequisite</kbd>.</p>
+	<p>A prerequisite node is added in red at the bottom of the tree.</p>
+	</li>
+	<li>
+	<p>Click this added prerequisite node.</p>
+	<p>The right pane displays the possible attributes of a prerequisite framework.</p>
+	</li>
+	<li>
+	<p>In the <kbd>name</kbd> box, type the name of the framework to set as prerequisite.</p>
+	</li>
+	<li>
+	<p>In <kbd>access</kbd>, select the prerequisite framework access mode.</p>
+	<p>Valid values are <kbd>Public</kbd>, <kbd>Protected</kbd>, and <kbd>Private</kbd>.</p>
+	<p>Always select <kbd>Public</kbd> for an framework installed from the API CD-ROMs.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Adding a Prerequisite Framework Before or After a Given Node</h4>
+<ol class="task">
+	<li>
+	<p>Right click the node in the tree.</p>
+	</li>
+	<li>
+	<p>In the contextual menu, point to <kbd>Add sibling after</kbd> to add prerequisite 
+	framework after that node, or to <kbd>Add sibling before</kbd> to add it before 
+	that node, and click <kbd>prerequisite</kbd>.</p>
+	<p>A prerequisite node is added in red after or before the node depending on 
+	you choice.</p>
+	</li>
+	<li>
+	<p>Click this added prerequisite node.</p>
+	<p>The right pane displays the possible attributes of a prerequisite framework.</p>
+	</li>
+	<li>
+	<p>In the <kbd>name</kbd> box, type the name of the framework to set as prerequisite.</p>
+	</li>
+	<li>
+	<p>In <kbd>access</kbd>, select the prerequisite framework access mode.</p>
+	<p>Valid values are <kbd>Public</kbd>, <kbd>Protected</kbd>, and <kbd>Private</kbd>.</p>
+	<p>Always select <kbd>Public</kbd> for an framework installed from the API CD-ROMs.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Removing a Prerequisite Framework </h4>
+<ol class="task">
+	<li>
+	<p>Right click the node corresponding to the prerequisite framework to delete 
+	in the tree.</p>
+	</li>
+	<li>
+	<p>In the contextual menu, click <kbd>Delete</kbd>.</p>
+	<p>The prerequisite framework is removed from IdentityCard.xml file.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Modifying a Prerequisite Framework Access Mode</h4>
+<ol class="task">
+	<li>
+	<p>Click the node corresponding to the prerequisite framework to manage in the 
+	tree.</p>
+	</li>
+	<li>
+	<p>In <kbd>access</kbd>, select the new prerequisite framework access mode.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Build"></a>Managing Framework Build</h3>
+<p>You can declare a framework to be built or not, or to be not built for one or 
+several operating systems only.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Declaring a Framework Build</h4>
+<ol class="task">
+	<li>
+	<p>Right click the <kbd>codeFramework</kbd> root node, in the contextual menu, 
+	point to <kbd>Add children</kbd>, and click <kbd>built</kbd></p>
+	<p>or</p>
+	<p>Right click a node, in the contextual menu, point to <kbd>Add sibling after</kbd> 
+	to add the build directive after that node, or to <kbd>Add sibling before</kbd> 
+	to add it before that node, and click <kbd>built</kbd>.</p>
+	<p>A <kbd>built</kbd> node is added in red in the tree.</p>
+	</li>
+	<li>
+	<p>Click this added <kbd>built</kbd> node.</p>
+	<p>The right pane displays the possible attributes of a <kbd>built</kbd> node.</p>
+	</li>
+	<li>
+	<p>In the <kbd>value</kbd> box, select true to build the framework on all available 
+	operating systems, or false to prevent this framework from being built on any 
+	operating systems.</p>
+	</li>
+	<li>
+	<p>On the <kbd>File</kbd> menu, click <kbd>Save</kbd>.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4>Preventing a Framework from Being Built on Certain Operating Systems</h4>
+<ol class="task">
+	<li>
+	<p>Click the <kbd>built</kbd> node.</p>
+	</li>
+	<li>
+	<p>In the <kbd>value</kbd> list, select <kbd>false</kbd>.</p>
+	</li>
+	<li>
+	<p>In the <kbd>osConstraint</kbd> box, type the operating systems for which 
+	you do not want to build the frameworks.</p>
+	<p>See
+	<a href="../CAADocUseCases/CAADocRunSample.htm">
+	Building and Launching a Use Case</a> to know the list of supported operating 
+	systems and the possible values to add in the <kbd>osConstraint</kbd> box, such 
+	as intel_a for Windows 32-bit or win_b64 for Windows 64 bit.</p>
+	</li>
+	<li>
+	<p>On the <kbd>File</kbd> menu, click <kbd>Save</kbd>.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Validation"></a>XML validation</h3>
+<p>The XML file content is validated against the Identity Card xsd when you use 
+mkICE and uses the <kbd>Error and warning</kbd> pane to display errors. For example, 
+a single built element can exist. When attempting to add a second one, an error 
+is displayed in the the <kbd>Error and warning</kbd> pane, as shown below.</p>
+<p>
+<img alt="mkICE Error and warning" src="images/CAABtlmkICE02V5.png" width="872" height="562"/>
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Shortcuts"></a>Command Shortcuts</h3>
+<table class="fill">
+	<tr>
+		<th>Action</th>
+		<th>Shortcut</th>
+	</tr>
+	<tr>
+		<td>Open file</td>
+		<td>Ctrl+O</td>
+	</tr>
+	<tr>
+		<td>Save</td>
+		<td>Ctrl+S</td>
+	</tr>
+	<tr>
+		<td>Delete the selected element</td>
+		<td>backspace</td>
+	</tr>
+	<tr>
+		<td>Copy</td>
+		<td>Ctrl+C</td>
+	</tr>
+	<tr>
+		<td>Cut</td>
+		<td>Ctrl+X</td>
+	</tr>
+	<tr>
+		<td>Paste</td>
+		<td>Ctrl+V</td>
+	</tr>
+	<tr>
+		<td>Comment/uncomment selected element</td>
+		<td>Alt+C</td>
+	</tr>
+	<tr>
+		<td>Undo</td>
+		<td>Ctrl+Z</td>
+	</tr>
+	<tr>
+		<td>Redo</td>
+		<td>Ctrl+U</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Options"></a>Options</h2>
+<p>mkICE accepts the following options:</p>
+<table class="fill">
+	<tr>
+		<th>Option</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>-c </code>Cmp</td>
+		<td>Process a file the name of which is not IdentityCard.h. <strong>Internal</strong>.</td>
+	</tr>
+	<tr>
+		<td><code>-f XMLfile</code></td>
+		<td>Open the XML file XMLfile.</td>
+	</tr>
+	<tr>
+		<td><code>-F FW</code></td>
+		<td>Open the XML Identity Card of the framework FW. The command must be 
+		run at the workspace root.</td>
+	</tr>
+	<tr>
+		<td><code>-h|-help|-?</code></td>
+		<td>Display the command help.</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Examples"></a>Example</h2>
+<p>Open mkICE.</p>
+<pre class="code">
+&gt;cd MyWorkspace
+&gt;mkICE
+</pre>
+<p>Open mkICE with a framework Identity Card already in XML.</p>
+<pre class="code">
+&gt;cd MyWorkspace
+&gt;mkICE -F CAADialog.edu
+</pre>
+<p>Open mkICE with an explicitly designated IdentityCard XML file.</p>
+<pre class="code">
+&gt;cd MyWorkspace
+&gt;mkICE -f CAADialog.edu\IdentityCard\IdentityCard.xml
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article gives you mkICE usage instructions.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

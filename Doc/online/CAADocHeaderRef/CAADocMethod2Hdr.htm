@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Cyclic Reference</title>
+</head>
+
+<body>
+
+<pre>
+...
+ /**
+  * Adds an element to the set.
+  * @param iElementToAdd
+  *   The element to add to the set.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;b&gt;: A copy of &lt;tt&gt;iElementToAdd&lt;/tt&gt; is kept and
+  *   AddRef'ed. It is Released either when the element is removed from the set,
+  *   or by the CATSO destructor.
+  * @param iCheckIfThere
+  *   A flag to check if &lt;tt&gt;iElementToAdd&lt;/tt&gt; is already in the set.
+  *   &lt;br&gt;&lt;b&gt;Legal values&lt;b&gt;: A non null value to check if &lt;tt&gt;iElementToAdd&lt;/tt&gt;
+  *   is already in the set and to add it only if it is not,
+  *   and 0 to add it without check at the end of the set, which is faster.
+  */
+    virtual void AddElement(CATBaseUnknwon * iElementToAdd, int iCheckIfThere=1);
+
+ /**
+  * Creates a state.
+  * @param iId
+  *   The resource identifier used to retrieve the state prompt in the command
+  *   message file.
+  * @return 
+  *   The state.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;: A pointer to the state is kept and 
+  *   released at the end of the command before the command destructor call.
+  *   &lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;: This method doesn't AddRef the 
+  *   returned value.
+  */
+    virtual CATDialogState* AddDialogState(const CATString &iId);
+
+...
+</pre>
+
+</body>
+
+</html>

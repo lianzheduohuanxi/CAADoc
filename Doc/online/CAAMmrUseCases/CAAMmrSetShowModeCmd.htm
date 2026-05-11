@@ -1,0 +1,427 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving The UI Active Object And The Edited Root PLM Component</title>
+<script type="text/javascript" language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Swapping Show Mode</h3>
+      <em>Changing visualization properties of a feature within a Part document</em>
+		</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<!-- -------------------------------comment---------------------------------- -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article discusses the <strong>CAAMmrSetShowModeCmd</strong> use case.
+This use case is an interactive command that enables to swap Hide/Show mode of a 
+		geometrical feature in a Part Document. It 
+		illustrates the possibility to force the visualization synchronization within an 
+		interactive command.</p>
+		<ul>
+        <li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+        <li><a href="#UseCase">The CAAMmrSetShowModeCmd Use 
+		Case</a><b> </b>
+          <ul>
+            <li><a href="#What">What Does CAAMmrSetShowModeCmd do</a></li>
+            <li><a href="#How">How to Launch CAAMmrSetShowModeCmd</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrSetShowModeCmd Code</a></li>
+          </ul>
+        <li><a href="#Step">Step-by-Step</a></li>
+        <li><a href="#InShort">In Short</a></li>
+        <li><a href="#References">References</a></li>
+      </ul>
+      </td>
+      </tr>
+      </table>
+<!-- -------------------------------comment---------------------------------- -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The purpose of this Use Case is to show how to force visualization synchronization in 
+an interactive command that modifies the visualization properties of geometrical features, using the <em>
+CATIMmiPartModelEventManagement</em> interface.</p>
+<p>As a reminder, the model world and the visualization world are independent 
+and any geometry modification triggers a visualization update using the <em>
+CATIModelEvents</em> interface. The treatment of this update event is postponed 
+till the end of the command transaction.</p>
+<p>In some cases, it can be useful to get the result of the visualization 
+update immediately within the command. It's the purpose of the <em>
+CATIMmiPartModelEventManagement</em> interface.</p>
+<p>This visualization synchronization can also be useful when an 
+interactive command 
+creates a large number of geometries, for performance reasons. As an example, if 
+user creates hundreds of points in the same command, it will introduce 
+performance issues as each point creation sends a visualization event, 
+requesting to be drawn. In this particular case it is interesting to &#8220;flush&#8221; the 
+stored events after each point creation, as each point has to be drawn anyway, 
+and as storing events cost more and more, if you have many objects modified.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="UseCase"></a>The CAAMmrSetShowModeCmd Use Case</h2>
+<p><code>CAAMmrSetShowModeCmd</code> is a use case of the <code>CAAMechanicalModeler</code>.<code>edu</code> framework that mainly 
+illustrates the MecModInterfaces framework capabilities.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="What"></a>What Does CAAMmrSetShowModeCmd Do</h3>
+<p>This Use Case is an Interactive Exclusive State Command that enables user to swap the Hide/Show 
+status of a selected geometrical feature. 
+ To begin with, the Use Case integrates a <b>Hide/Show</b> State Command, 
+viewed as 
+<img alt="" src="images/CAAMmrShowModeCmd.jpg" width="19" height="18"> , in the
+&quot;<b>Spec Tree</b>&quot; 
+toolbar, a <b>Part Workshop Add-in</b> within <b>CATIA</b>, as depicted below. [<a href="#Fig. 1">Fig. 
+1</a>].</p>
+	<p><a name="Fig. 1"></a>Fig.1 &quot;<b>Spec Tree</b>&quot;<i>
+        </i>Toolbar, a Part Workshop Add-in</p>
+	<table border="0" id="table19">
+		<tr>
+			<td>
+		<img alt="" src="images/CAAMmrSpecTreeToolbar.jpg" width="41" height="121"></td>
+		</tr>
+	</table>
+When the command is activated, user selects a geometrical element and its show 
+mode is swapped. The fact that visualization update is done immediately or 
+not, is 
+checked within the command and shown in the output traces.<br>
+<br>
+The console outputs are described below:
+<p>CAAMmrSetShowModeCmd Activate<br>
+Selected feature is a geometrical feature<br>
+As expected, the feature is now hidden in the 3D</p>
+<p>CAAMmrSetShowModeCmd Activate<br>
+Selected feature is a geometrical feature<br>
+As expected, the feature isn't hidden</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a href="#Where" name="How"></a>How to Launch CAAMmrSetShowModeCmd</h3>
+<p>To launch <code>CAAMmrSetShowModeCmd</code>, you will need to set 
+up the build time environment, then compile <code>CAAMmrSetShowModeCmd</code> 
+along with its prerequisites, set up the run time environment, and then execute 
+the use case [<a href="#References">3</a>].</p>
+<ul>
+    <li>Launch CATIA
+	<li>Open or Create a Part Document 
+	with some geometry.</li>
+	<li>On the <strong>Tools</strong> menu click <strong>Customize</strong> and check that the <b>
+	Spec Tree</b> toolbar exists. User can set the visibility of this 
+	toolbar with the <b>View</b>-&gt;<b>Toolbars
+      </b>option.</li>
+	<li>Click on the Show Mode command.<img alt="" src="images/CAAMmrShowModeCmd.jpg" width="19" height="18"></li>
+	<li>Select a geometrical feature and check that the output traces give the 
+	expected result.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Addin"></a>Addin Access</h3>
+<p>The <b>Spec Tree</b> Add-in to the <b> Part Workshop</b> 
+within <b>CATIA</b>, is available thanks to a data extension of the <code>CAAMmrPartWksAddin</code> 
+component [<a href="#References">2</a>]. This requires the following 
+entries to be uncommented in the <code>CAAMechanicalModeler<b>.</b>edu<b>.</b>dico</code> 
+file.</p>
+<table class="code" id="table18">
+  <tr>
+    <td>
+      <pre>...
+CAAMmrPartWksAddin CATIWorkbenchAddin libCAAMmrPartWksAddin
+CAAMmrPartWksAddin CATIPrtWksAddin libCAAMmrPartWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Where"></a>Where to Find the CAAMmrSetShowModeCmd Code</h3>
+<p>The <code>CAAMmrSetShowModeCmd</code> use case is made of a class 
+defined in the <code>CAAMmrCommands.m</code><code><b> </b></code> 
+module of the
+<code>CAAMechanicalModeler<b>.</b>edu</code> framework:</p>
+<table>
+  <tr>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrCommands.m\</code></td>
+  </tr>
+</table>
+<ul>
+	<li><code>CAAMmrSetShowModeCmd.cpp</code> 
+	has the State Command implementation.</li>
+</ul>
+<p>The use case also pre-reqs the following module:</p>
+<table id="table10">
+  <tr>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\</code><code>CAAMmrPartWksAddin.m\</code></td>
+  </tr>
+  
+</table>
+<p>where <code>InstallRootDirectory</code>  [<a href="#References">3</a>] is the 
+directory where the CAA CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The steps in the <code>CAAMmrUcSetShowModeCmd</code> use case are:</p>
+<ol>
+	<li><a href="#Prolog">Building the State Command</a></li>
+	<li><a href="#Implementing a Callback">Implementing the Callback to an Incoming Transition 
+	Associated with this State Command</a><ul>
+		<li><a href="#Retrieving the selected feature">Retrieving the 
+		Feature from the Selection Agent</a></li>
+		<li><a href="#Seek its visualization status and switch it">Getting the Feature's 
+		Visualization Status and Changing It</a></li>
+		<li><a href="#Send a visualization event">Sending a Visualization Event 
+		</a></li>
+		<li><a href="#Synchronize visu">Synchronizing Visualization </a></li>
+	</ul>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Prolog"></a>Building the State Command</h3>
+<p>The first step implements a State Command [<a href="#References">1</a>]. This 
+implementation occurs in the State Command <code>BuildGraph</code> method.</p>
+<p>The State Command has a state prompting the end user to select a 
+geometrical feature. The selection is restricted to those entities that implement 
+<code><i>CATIGeometricalElement.</i></code></p>
+<table class="code" id="table19">
+  <tr>
+    <td>
+      <pre><b>	</b>CATPathElementAgent* _daObjectToSelect;</pre>
+		<pre>...
+	_daObjectToSelect = new CATPathElementAgent(&quot;SelMechanicalFeature&quot;);
+	_daObjectToSelect-&gt;AddElementType(IID_CATIGeometricalElement);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This state has an incoming transition to itself associated with it, as a 
+result of which it remains eternally prompting the end-user to select an entity 
+whose show mode will be swapted. An action associated with this incoming 
+transition, <code>CAAMmrSetShowModeCmd</code>::<code>SwapShowMode</code> 
+switches the show mode of the selected feature. <br>
+</p>
+
+<h3><a name="Implementing a Callback"></a>Implementing the Callback to an 
+Incoming Transition Associated with the State Command</h3>
+
+<p>Here we detail the implementation of the Callback associated with the State 
+Command. This callback is triggered in response to the user selecting a 
+geometrical feature, in the spec tree or in the geometry area of CATIA. It 
+retrieves the selected feature, seeks its current show mode and switches its state (hide/show).</p>
+
+<h4><a name="Retrieving the selected feature"></a>Retrieving the 
+		 Feature from the Selection Agent</h4>
+
+<p>To begin with, it 
+retrieves the chosen feature from the Selection Agent.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// Within the State Command Class
+<b>CATPathElementAgent</b>* _daObjectToSelect;</pre>
+		<pre>...
+<strong>CATPathElement</strong>* pathModel = _daObjectToSelect-&gt;GetValue();
+CATBaseUnknown* pSelectedObj = NULL;
+
+if ((NULL != pathModel) &amp;&amp; (pathModel-&gt;GetSize()&gt;0))
+{
+  // Seek the last element of the path. 
+  pSelectedObj = (*pathModel)[pathModel-&gt;GetSize()-1];
+  if (NULL == pSelectedObj)
+	return TRUE ;
+
+  // Seek the CATIGeometricalElement type on the selected feature
+  <strong>CATIGeometricalElement</strong>_var spMmiMechFeat = pSelectedObj;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>On selecting an entity within CATIA, the Selection Agent, a <code>CATPathElementAgent</code> object, <code>_daObjectToSelect</code> 
+is valuated. The call to <code>GetValue</code> of the Selection Agent 
+returns the chosen entity, as a <code>CATPathElement</code> object, *<code>pathModel</code>. </p>
+<p align="left">This object consists of the selected entity, with all its 
+ancestors up to the product model hierarchy until Root. We retrieve the last 
+element in this list, which is the selecteted feature, for further processing.</p>
+
+<h4><a name="Seek its visualization status and switch it"></a>
+Getting the Feature's Visualization Status and Changing It</h4>
+
+<p>We next seek 
+the show mode of the selected feature. If visible, it is switched to hidden mode and vice versa.</p>
+<table class="code" id="table16">
+  <tr>
+    <td>
+      <pre>...
+// Query the CATIVisProperties Interface
+<strong>CATIVisProperties</strong>_var MyFeatureProperties = spMmiMechFeat;
+
+if (NULL_var != MyFeatureProperties)
+{
+  <strong>CATVisPropertiesValues</strong> visValues;
+
+  // Get the current value of the show attribute
+  rc = MyFeatureProperties-&gt;<strong>GetPropertiesAtt</strong>(visValues,CATVPShow,CATVPGlobalType);  
+     
+  // Swap the value of show attribute
+  if (SUCCEEDED(rc))
+  {
+    CATShowAttribut ShowAttr  =  CATShowAttr;
+    visValues.GetShowAttr(ShowAttr); 
+ 
+    if (ShowAttr == <strong>CATShowAttr</strong>)
+      ShowAttr = CATNoShowAttr;
+    else if (ShowAttr == <strong>CATNoShowAttr</strong>)
+      ShowAttr = CATShowAttr;
+     
+    visValues.SetShow(ShowAttr);
+
+    // Modify the property
+    rc = MyFeatureProperties-&gt;<strong>SetPropertiesAtt</strong>(visValues,CATVPShow,CATVPGlobalType);  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATIVisProperties</code>::<code>GetPropertiesAtt</code> 
+call returns a <code>CATShowAttribut</code>, <code>ShowAttr</code> 
+(<code>CATShowAttr</code>, if visible, else <code>CATNoShowAttr</code>).</p>
+<p>We inverse the value of <code>ShowAttr</code> and change the mode of the feature 
+by calling the 
+<code>SetPropertiesAtt</code> method.</p>
+<p>The <code>CATIVisProperties</code>::<code>SetPropertiesAtt</code>
+call has modified the visu properties of the feature. A visualization update is 
+now necessary.</p>
+
+<h4><a name="Send a visualization event"></a>
+Sending a Visualization Event</h4>
+
+The visualization update is done by sending a visualization modification notification, 
+<code>CATModifyVisProperties</code>, using the <code>CATIModelEvents</code> interface.
+ <br>
+
+<table class="code" id="table17">
+  <tr>
+    <td>
+      <pre>...
+// Sending the visualization event to refresh the 3D
+<strong>CATIModelEvents</strong>_var MyFeatureModelEvents = spMmiMechFeat;
+if (SUCCEEDED(rc) &amp;&amp; NULL_var != MyFeatureModelEvents)
+{
+  <strong>CATModifyVisProperties</strong> ModifyNotification(spMmiMechFeat, NULL, CATVPGlobalType, CATVPShow, visValues); 
+  MyFeatureModelEvents-&gt;Dispatch(ModifyNotification);
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p> This visualization event will be processed at the end of the transaction, which is sufficient
+ for most commands and imperceptible to the end user.</p>
+ 
+<h4><a name="Synchronize visu"></a>
+Synchronizing Visualization</h4>
+
+The visualization event can be forced to be processed immediately thanks to  
+<em>CATIMmiPartModelEventManagement</em> interface.
+
+<table class="code" id="table18">
+  <tr>
+    <td>
+      <pre>...
+//ask for the immediate process of visu events
+CATIMechanicalFeature_var spMechFeat = spMmiMechFeat;
+if (NULL_var != spMechFeat)
+{
+  CATISpecObject_var spPart = spMechFeat-&gt;GetPart();
+
+  if (NULL_var != spPart)
+  {
+    <strong>CATIMmiPartModelEventManagement</strong> * PartModelEvtMgnt = NULL;
+    rc = spPart-&gt;QueryInterface(IID_CATIMmiPartModelEventManagement,(void**)&amp;PartModelEvtMgnt);
+    if (SUCCEEDED(rc)&amp;&amp; NULL != PartModelEvtMgnt)
+    {
+      PartModelEvtMgnt-&gt;<strong>CommitNow</strong>();
+      PartModelEvtMgnt-&gt;Release();
+      PartModelEvtMgnt = NULL;
+    }
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p> This event should be invoked on the Part Feature to which belongs the impacted geometrical feature. 
+The Part feature is obtained by calling the <code> GetPart</code> method of
+<em>CATIMechanicalFeature</em> interface. <br>
+The visualization synchronization is done by calling the <code>CommitNow</code> method of 
+<em>CATIMmiPartModelEventManagement</em> interface on the Part feature. 
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -------------------------------comment---------------------------------- -->
+<h2><a name="InShort"></a></h2>
+<h2>In Short</h2>
+<p>This use case shows, through an interactive command, how to modify the 
+visualization attributes of a geometrical feature in a 3D Shape. It shows how to 
+update the visualization of the modified feature and mostly how to 
+synchronize this visualization event immediately thanks to the <em>CATIMmiPartModelEventManagement
+</em>interface. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -------------------------------comment---------------------------------- -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+
+  
+  <tr>
+    <td>[1]</td>
+    <td>
+	<a href="../CAADegTechArticles/CAADegGettingStarted.htm">
+	Getting stated with State Dialog Commands</a>
+	</td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td>
+	<a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+	Creating an Add-in</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">
+	Building and Launching a CAA Use Case</a></td>
+  </tr>
+  </table>
+<!-- -------------------------------comment---------------------------------- -->
+<h2><a name="History"></a>History</h2>
+<table>
+  <tr>
+    <td>Version: 1 [Sep 2011]</td>
+    <td>Document created</td>
+  </tr>
+  </table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -------------------------------comment---------------------------------- -->
+<script type="text/javascript">insertCopyright();</script>
+</body>
+
+</html>
+
+

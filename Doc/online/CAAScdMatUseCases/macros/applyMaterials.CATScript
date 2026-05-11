@@ -1,0 +1,198 @@
+Option Explicit
+
+' COPYRIGTH DASSAULT SYSTEMES 2004
+
+' ***********************************************************************
+'   Purpose:		Apply and retrieve materials onto Product, Part or Body
+'   Assumptions     Looks for Product1.CATProduct, Part1.CATPart and MyCatalog.CATMaterial in the DocView 
+'   Version:		1.0
+'   Author:			AST
+'   Languages:		CATScript 
+'   Locales:		English 
+'   CATIA Level:	V5R14 
+' ***********************************************************************
+
+
+' Main 
+Sub CATMain()
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    '
+    Dim sDocPath As String 
+    sDocPath = CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    '
+    ' ----------------------------------------------------------- 
+    ' Open the CATMaterial document (material library)
+    ' ----------------------------------------------------------- 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 "\online\CAAScdMatUseCases\samples\MyCatalog.CATMaterial")
+
+    Dim oMaterial_document As Document
+    Set oMaterial_document = CATIA.Documents.Open(sFilePath)
+    Set oMaterial_document = CATIA.ActiveDocument
+    '
+    ' ----------------------------------------------------------- 
+    ' Read materials in this catalog (which contains 3 families and 5 materials in each family)
+    ' First retrieve the families of the library
+    ' ----------------------------------------------------------- 
+    '
+    Dim cFamilies_list As MaterialFamilies
+    Set cFamilies_list = oMaterial_document.Families
+
+    Dim iNb_families As Integer
+    iNb_families = cFamilies_list.Count
+    Dim sFamiliesName As String
+    sFamiliesName = cFamilies_list.Name
+    '
+    ' ----------------------------------------------------------- 
+    ' Retrieve the first family of the library
+    ' ----------------------------------------------------------- 
+    '
+    Dim oFirst_family As MaterialFamily
+    Dim ifamily_no As Integer
+    ifamily_no = 1
+    Set oFirst_family = cFamilies_list.Item(iFamily_no)
+    Dim sFamilyName As String
+    sFamilyName = oFirst_family.Name
+    '
+    ' -----------------------------------------------------------
+    ' Retrieve the material number 1,2 and 3 of the family
+    ' -----------------------------------------------------------
+    '
+    Dim cMaterials_list As Materials
+    Set cMaterials_list = oFirst_family.Materials
+
+    Dim iNb_materials As Integer
+    iNb_materials = cMaterials_list.Count
+
+    Dim imaterial_no As Integer
+    imaterial_no = 1
+    Dim oMaterial1 As Material
+    Set oMaterial1 = cMaterials_list.Item(imaterial_no)
+  
+    imaterial_no = 2
+    Dim oMaterial2 As Material
+    Set oMaterial2 = cMaterials_list.Item(imaterial_no)
+  
+    imaterial_no = 3
+    Dim oMaterial3 As Material
+    Set oMaterial3 = cMaterials_list.Item(imaterial_no)
+    '
+    ' -----------------------------------------------------------
+    ' Read product file
+    ' -----------------------------------------------------------
+    '
+    Dim oProductDocument As Document
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 "\online\CAAScdMatUseCases\samples\Product1.CATProduct")
+    Set oProductDocument = CATIA.Documents.Open(sFilePath)
+    Set oProductDocument = CATIA.ActiveDocument
+    '
+    ' -----------------------------------------------------------
+    ' Access on material manager on root product document
+    ' -----------------------------------------------------------
+    '
+    Dim oRootProduct As Product
+    Set oRootProduct = oProductDocument.Product
+      
+    Dim oManager As MaterialManager
+    Set oManager = oRootProduct.GetItem("CATMatManagerVBExt")
+    '
+    ' -----------------------------------------------------------
+    ' Apply the material on the Product (as a link)
+    ' -----------------------------------------------------------
+    '
+    Dim linkMode As Integer
+    linkMode = 1
+    oManager.ApplyMaterialOnProduct oRootProduct,oMaterial1,linkMode 
+    '
+    ' -----------------------------------------------------------
+    ' Retrieve the material applied on the Product 
+    ' -----------------------------------------------------------
+    '
+    Dim oAppliedMaterial As Material
+    oManager.GetMaterialOnProduct oRootProduct,oAppliedMaterial 
+    oProductDocument.Close
+    '
+    ' -----------------------------------------------------------
+    ' Open the Part document
+    ' -----------------------------------------------------------
+    '
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+                 "\online\CAAScdMatUseCases\samples\Part1.CATPart")
+    
+    Dim oPartDocument As Document
+    Set oPartDocument = CATIA.Documents.Open(sFilePath)
+    Set oPartDocument = CATIA.ActiveDocument
+    '
+    ' -----------------------------------------------------------
+    ' Access on material manager on root part document
+    ' -----------------------------------------------------------
+    '
+    Dim oRootPart As Part
+    Set oRootPart = oPartDocument.Part
+    
+    ' Retrieve the extension object associated to Y under the key "MyCATIVBExtensionImpl"
+    Set oManager = oRootPart.GetItem("CATMatManagerVBExt")
+    '
+    ' -----------------------------------------------------------
+    ' Apply the material on the Part
+    ' -----------------------------------------------------------
+    '
+    linkMode = 0
+    oManager.ApplyMaterialOnPart oRootPart,oMaterial2,linkMode 
+    '
+    ' -----------------------------------------------------------
+    ' Retrieve the material on the Part 
+    ' -----------------------------------------------------------
+    '
+    oManager.GetMaterialOnPart oRootPart,oAppliedMaterial 
+    '
+    ' -----------------------------------------------------------
+    '  Retrieve the Part Body
+    ' -----------------------------------------------------------
+    '
+    Dim oMainBody As Body
+    Set oMainBody = oRootPart.MainBody
+    '
+    ' -----------------------------------------------------------
+    ' Apply the material on the Part Body (as a link)
+    ' -----------------------------------------------------------
+    '
+    linkMode = 1
+    oManager.ApplyMaterialOnBody oMainBody,oMaterial3,linkMode 
+    '
+    ' -----------------------------------------------------------
+    ' Retrieve the material on the Part Body
+    ' -----------------------------------------------------------
+    '
+    oManager.GetMaterialOnBody oMainBody,oAppliedMaterial 
+    '
+    ' -----------------------------------------------------------
+    '  End of Script
+    ' -----------------------------------------------------------
+    '
+    ' Close the documents
+    '
+    oMaterial_document.Close
+    oPartDocument.Close
+
+  
+    Set oRootPart = Nothing
+    Set oMainBody = Nothing
+    Set oMaterial1 = Nothing
+    Set oMaterial2 = Nothing 
+    Set oMaterial3 = Nothing
+    Set oRootProduct = Nothing
+    Set oProductDocument = Nothing
+    Set oMaterial_document = Nothing
+    Set oManager = Nothing
+  
+End Sub
+
+

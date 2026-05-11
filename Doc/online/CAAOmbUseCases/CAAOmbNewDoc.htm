@@ -1,0 +1,337 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a New Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - File</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a New Document</h3>
+      <em>Working with standard-type documents</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAAOmbNewDoc use case. This use case
+      explains how to create and save a new document of a standard type.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#Important_Concepts"><strong>Some Important Concepts about
+          Documents</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAOmbNewDoc Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOmbNewDoc Do</a></li>
+            <li><a href="#How">How to Launch CAAOmbNewDoc</a></li>
+            <li><a href="#Where">Where to Find CAAOmbNewDoc Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in working with
+documents. Its main intent is to show how to create a new document of a standard
+type and how to save it. In interactive mode, this is equivalent to creating a
+new document by selecting File/New. Through this use case, you will also learn
+some important concepts about the underlying operations involved in creating a
+new document. Basically, you will learn how to:
+<ul>
+  <li>Create a new standard-type document</li>
+  <li>Retrieve its root container</li>
+  <li>Save and remove the document from the session</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of what documents are. This is the goal of the next section. You
+can skip it and get directly to the <a href="#UseCase">use case</a> if you are
+already familiar with these concepts.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Important_Concepts"></a>Some Important Concepts about Documents</h3>
+<p>The document concept allows users to gather objects which have something in
+common, to display them in a document window when in interactive mode, and to
+save them in a storage unit under a unique storage name for future retrieval.</p>
+<p>Objects that are created and manipulated in similar ways are grouped in the
+same type of document. In CATIA Version 5 interactive mode, to create and
+manipulate objects, you are provided with workshops. A document type is
+associated with one or more workshops. For example, when you create a Part
+document, you are provided with the Sketcher and PartDesign workshops by which
+you can create and manipulate objects named &quot;parts&quot;. All these parts
+are then regrouped within one or more graphic windows (when in interactive mode)
+which symbolize a Part document.</p>
+<p>CATIA documents are not only the places where related objects reside, they
+are also persistency units which can be exchanged between users.</p>
+<p>In batch code, there are some limitations:</p>
+<ul>
+  <li>Only use CATDocumentServices::SaveAs API</li>
+  <li>No thumbnail are generated or updated</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAOmbNewDoc Use Case</h3>
+<p>CAAOmbNewDoc is a use case of the CAAObjectModelerBase.edu framework that
+illustrates ObjectModelerBase framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAOmbNewDoc Do</h4>
+<p>The goal of CAAOmbNewDoc is to create a new document of a standard type,
+retrieve its root container and save and remove it from the session.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOmbNewDoc</h4>
+<p>To launch CAAOmbNewDoc, you will need to set up the build time environment,
+then compile CAAOmbNewDoc along with its prerequisites, set up the run time
+environment, and then execute the sample. This is fully described in the
+referenced article [<a href="#References">1</a>]. When launching the use case,
+you must pass the following arguments:</p>
+<ul>
+  <li><b>Output.CATPart</b> - entire pathname of the directory in which the
+    document is to be stored. The document can be of any standard type, not
+    necessarily CATPart.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAOmbNewDoc Code</h4>
+<p>CAAOmbNewDoc code is located in the CAAOmbNewDoc.m use case module of the
+CAAObjectModelerBase.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAObjectModelerBase.edu/CAAOmbNewDoc.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAObjectModelerBase.edu\CAAOmbNewDoc.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAAOmbNewDoc.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAAOmbNewDoc:</p>
+<ol>
+  <li><a href="#Create_doc">Creating a New Document</a></li>
+  <li><a href="#GetRootContainer">Retrieving the Document Root Container</a></li>
+  <li><a href="#Save_doc">Saving and Removing the Document</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create_doc"></a>Creating a New Document</h4>
+<ol>
+  <li>Create the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>char *sessionName = &quot;CAA2_Sample_Session&quot;;
+CATSession *pSession = NULL;
+HRESULT rc = <b>::Create_Session</b>(sessionName,
+                              pSession);
+if ((FAILED(rc)) || (NULL == pSession))
+{
+   cout &lt;&lt; &quot;ERROR in creating session&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return </b>1;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Since this is a batch program, it is first necessary to open a new
+    session before beginning to work with documents. Do not forget that this
+    session needs to be deleted at the end of the program. Never open more than
+    one session for any given batch program! To open a new session, use the <code>Create_Session</code>
+    global function.</p>
+  </li>
+  <li>Create the new document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument* pDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(&quot;Part&quot;,
+                              pDoc);
+if (NULL != pDoc) cout &lt;&lt; &quot;New document created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in creating New document&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now that the session is opened, you can create a new document using the <code>New
+    </code>static method of <i>CATDocumentServices</i>. This method creates a
+    document and initializes it, allowing it to be loaded and stored and making
+    it editable. In this use case, a pre-defined document type,
+    &quot;Part&quot;, is used as a document type. In interactive mode, this is
+    the name that appears when performing a <code>File/New</code> operation. It
+    is not the file extension, which, in this case, is &quot;CATPart&quot;.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GetRootContainer"></a>Retrieving the Document Root Container</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATInit *piInitOnDoc = NULL;
+rc = pDoc -&gt; <b>QueryInterface</b> (IID_CATInit,
+                             (void**) &amp;piInitOnDoc);
+if (FAILED(rc))
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATInit for doc&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 3;
+}
+
+const CATIdent idCATIContainer = &quot;CATIContainer&quot;;
+CATIContainer *piRootContainer = NULL;
+piRootContainer = (CATIContainer*)
+      piInitOnDoc -&gt; <b>GetRootContainer</b>(idCATIContainer);
+if (NULL == piRootContainer)
+{
+   cout &lt;&lt; &quot;ERROR in GetRootContainer&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 4;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The document root container is retrieved using the <i>CATInit</i><code>::GetRootContainer</code>
+method. The <i>CATIContainer</i> handle retrieved through <code>GetRootContainer</code>
+will be necessary whenever you want to create or manipulate objects in the
+document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Save_doc"></a>Save and Removing the Document</h4>
+<ol>
+  <li>Save the document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>CATDocumentServices::SaveAs</b> (*pDoc, 
+		                  argv[1]);
+if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Document saved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in saving document&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 5;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To save the new document, use the <code>SaveAs</code> static method of <i>CATDocumentServices</i>.
+    This method takes the pointer to the document created by <code>New</code> as
+    a first parameter, and the storage path name and document name under which
+    the document is to be stored as a second parameter. In this use case, we
+    pass the storage path name and document name as an argument to the program.</p>
+  </li>
+  <li>Remove the document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>CATDocumentServices::Remove </b>(*pDoc);
+if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Document removed OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in removing document&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 6;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>If you ever needed to re-open the document during this same session, it
+    would then be necessary to also remove it from the session after having
+    saved it. Otherwise, you need not worry about it since deleting the session
+    will automatically remove the document as well. To remove the document, you
+    should use the Remove static method of <i>CATDocumentServices</i>.</p>
+  </li>
+  <li>Delete the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>rc = <b>::Delete_Session</b>(sessionName);
+if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Session deleted OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+   cout &lt;&lt; &quot;ERROR in deleting session&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 7;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Do not forget to delete the session at the end of the program using the <code>Delete_Session</code>
+    global function!</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to:</p>
+<ul>
+  <li>Create a standard-type document using the <code>New</code> static method
+    of <i>CATDocumentServices</i></li>
+  <li>Retrieve its root container using the <code>GetRootContainer</code> method
+    of <i>CATInit</i></li>
+  <li>Save and remove the document from the session using the <code>SaveAs</code>
+    and <code>Remove</code> static methods of <i>CATDocumentServices</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

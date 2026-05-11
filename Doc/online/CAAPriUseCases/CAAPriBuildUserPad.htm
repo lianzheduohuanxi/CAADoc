@@ -1,0 +1,1491 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Implementing a Mechanical Design Feature Building</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Part Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing a Mechanical Design Feature Building</h3>
+      <em>Implementing the CATIBuild and CATIBuildShape interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPriUserPad use case. This use case
+      explains how to implement the <i>CATIBuild</i> and <i>CATIBuildShape </i> interfaces
+      for mechanical design features. A simplified pad feature is used as a
+      mechanical feature as example. A knowledge of the Mechanical Modeler [<a href="#References">1</a>]
+      is strongly recommended.&nbsp;</p>
+      <ul>
+        <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+        <li><b><a href="#UseCase">The CAAPriBuildUserPad Use Case</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAPriBuildUserPad Do</a></li>
+            <li><a href="#How">How to Launch CAAPriBuildUserPad</a></li>
+            <li><a href="#Where">Where to Find the CAAPriBuildUserPad Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#StepCATIBuild"><b>CATIBuild Implementation Step-by-Step</b></a></li>
+        <li><a href="#StepCATIBuildShape"><b>CATIBuildShape Implementation Step-by-Step</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with Part Design. Its main intent is to introduce important concepts about the
+way to implement the <i>CATIBuild</i>  and <i>CATIBuildShape</i>  interfaces of
+Mechanical Design feature. Specifically, you will learn how to:</p>
+<ul>
+  <li>Create the topological body associated to a feature</li>
+  <li>Report the operations.</li>
+</ul>
+<p>Before getting to this use case itself, refer to the article
+&quot;Integrating a New Geometrical Feature in the Update Mechanism&quot; [<a href="#References">2</a>]
+which explains in details how to implement the <i>CATIBuild</i>  and <i>CATIBuildShape</i> 
+interfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPriBuildUserPad Use Case</h3>
+<p>CAAPriBuildUserPad is a use case of the CAAPartInterfaces.edu framework that
+illustrates the PartInterfaces and MechanicalModeler frameworks capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPriBuildUserPad Do</h4>
+<p>The goal of CAAPriBuildUserPad is to show how to implement the <i>CATIBuild</i>
+and <i>CATIBuildShape</i> interfaces on a given form feature, namely a user pad.
+The user pad already exists as a StartUp in the CAAPriFormFeature catalog
+and has the type <i>CAAPriUserPad</i>. It is a form feature, in other words the <i>CAAPriUserPad
+</i>StartUp derives from the MechanicalFormFeature StartUp [<a href="#References">3</a>].</p>
+<table>
+<caption><a name="Fig.1"></a><i>Fig.1 The hierarchy of StartUps</i></caption>
+
+  <tr>
+    <td>
+    <img border="0" src="images/CAAPriUserPad3.jpg" width="188" height="480"></td>
+  </tr>
+</table>
+<p>The CAAPriBuildUserPadMain.m module contains a main program that creates a
+Part document, instantiates the <i>CAAPriUserPad</i>  StartUp, calls its Build
+method, saves the resulting Part document <a href="#Fig.2">Fig.2</a>, instantiates again the <i>CAAPriUserPad</i>
+StartUp with a new sketch, calls its Build method, and saves the resulting Part
+in a second Part document <a href="#Fig.3">Fig.3</a>.</p>
+<table>
+  <caption><a name="Fig.2"></a><i>Fig.2 The First Saved Pad</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAPriUserPad1.jpg" width="644" height="501"></td>
+  </tr>
+</table>
+<table>
+  <caption><a name="Fig.3"></a><i>Fig.3 The Second Saved Pad</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAPriUserPad2.jpg" width="644" height="501"></td>
+  </tr>
+</table>
+<p><b>The Build in Details</b></p>
+<p>Build a feature consists in to create a result. A result is:</p>
+<ul>
+  <li>An <b>associative geometric result</b> computed by objects coming from the
+    Geometric Modeler's Frameworks. This result is a <i>CATBody, </i>a
+    topological object.
+  <li><b>A scope</b> [<a href="#References">4</a>] : To ensure the User Pad's
+    life cycle and make it reusable by other mechanical features, the <code>Build</code>
+    method constructs an object which manages the access stability of the <i>CATCell</i>
+    of the <i>CATBody</i>.&nbsp; This object is a scope created by the <b>procedural
+    report</b> of the User Pad.&nbsp;</li>
+</ul>
+<p>The following schema explains in details the construction of a form feature.
+A form feature is a solid feature (in opposite to a surfacic feature) which is a
+chain link. These links are chained together by the <code>ResultIN </code>and <code>ResultOUT
+</code>attributes. The <code>ResultIN </code>attribute of a solid feature references the
+<code>ResultOUT </code>attribute of the previous feature in the chain. Refer to the article entitled
+&quot;Specification/Result Mechanism Applied to Mechanical Feature&quot; [<a href="#References">5</a>]
+for complete details about the <code>ResultIN</code> and <code>ResultOUT</code>
+attributes.</p>
+<table border="0">
+<caption><i><a name="Fig.4">Fig.4</a>: Form Feature Build</i></caption>
+
+  <tr>
+    <td><img border="0" src="../CAAMmrTechArticles/images/CAAMmrBuildSolid.jpg" width="484" height="345"></td>
+  </tr>
+</table>
+<ul>
+  <li>The <code><a href="#StepCATIBuildShape">BuildShape</a></code> method builds a scope and
+    a <i>CATBody</i> named Topo C - This result is associated with the form
+    feature itself - The User Pad in this example.</li>
+  <li>The <code><a href="#StepCATIBuild">Build</a></code> method builds a scope and
+    a <i>CATBody</i> named Topo B - This result is associated with the <code>SolidB</code>
+    feature. This feature is named the result feature of the form feature. <code>Topo
+    B</code> is computed by performing a logical operation between <code>Topo C</code>
+    and the geometry associated to the <code>Solid A</code> feature (<code>Topo
+    A)</code>.<code> </code><code>Solid A</code> being the previous shape before
+    the current feature in the chain.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPriBuildUserPad</h4>
+<p>To launch CAAPriBuildUserPad, you will need to set up the build time
+environment, then compile CAAPriBuildUserPad along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">6</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAPriBuildUserPadMain outputDirectory\CAAUserPad1.CATPart 
+                          outputDirectory\CAAUserPad2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAAPriBuildUserPadMain outputDirectory/CAAUserPad1.CATPart 
+                         outputDirectory/CAAUserPad2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>outputDirectory</code></td>
+    <td>The directory into which <code>CAAUserPad1.CATPart</code> and <code>CAAUserPad2.CATPart</code>
+      will be stored</td>
+  </tr>
+  <tr>
+    <td><code>CAAUserPad1.CATPart</code>
+    <td>The file that contains the pad created</td>
+  </tr>
+  <tr>
+    <td><code>CAAUserPad2.CATPart</code></td>
+    <td>The file that contains the pad after it is modified</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPriBuildUserPadMain Code</h4>
+<p>The CAAPriBuildUserPadMain use case is made of a main program named
+CAAPriBuildUserPad and located in the CAAPriBuildUserPadMain.m module of the
+CAAPartInterfaces.edu framework. The <i>CATIBuild</i> and <i>CATIBuildShape</i>
+interface implementations are located in the
+CAAPriBuildUserPad.m module of the same framework.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td>
+      <pre>InstallRootDirectory\CAAPartInterfaces.edu\CAAPriBuildUserPad.m\
+InstallRootDirectory\CAAPartInterfaces.edu\CAAPriBuildUserPadMain.m\</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td>
+      <pre>InstallRootDirectory/CAAPartInterfaces.edu/CAAPriBuildUserPad.m/
+InstallRootDirectory/CAAPartInterfaces.edu/CAAPriBuildUserPadMain.m/</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><i><a name="StepCATIBuild"></a></i>CATIBuild Implementation Step-by-Step</h3>
+<ul>
+</ul>
+<p><i>CATIBuild</i> is implemented using a class named <i>CAAPriEBuild</i> class
+that is a code extension of the late type <i>CAAPriUserPad</i>.&nbsp;<code>Build</code>,
+the unique method of this interface has always this structure:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAPriEBuild::Build ()
+{
+   HRESULT rc = E_FAIL ;
+   
+   <a href="#Declaring the Usefull pointer- build">Declaring the Useful Pointers</a>
+   
+   CATTry
+   {
+      <a href="#Computing the form of the feature">Computing the Form of the Feature</a> 
+      <a href="#Removing all Possible Update Errors- build">Removing all Possible Update Errors</a>
+      <a href="#Retrieving the Data for the PR- build">Retrieving Data for the Procedural Report</a>
+      <a href="#Creating the Procedural Report- build">Creating the Procedural Report</a>
+      <a href="#Running the Topological Operators- build">Running the Topological Operators </a>
+      <a href="#Stores PR build">Storing the Procedural Report</a>
+      <a href="#Cleaning the Useless Data - build">Cleaning the Useless Data</a>
+   }
+   
+   // <a href="#Managing the Errors- build">Managing the Errors</a>
+   
+   CATCatch(CATMfErrUpdate , pUpdateError)  
+   {
+      <a href="#Managing the CATMfErrUpdate Error- build">Managing the <i>CATMfErrUpdate</i> Error</a>
+   }
+   CATCatch(CATError , pError)
+   {
+      <a href="#Managing the CATError Error">Managing the <i>CATError </i>Error</a>
+   }
+   
+   CATEndTry
+   
+   return rc ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<p align="left">This method contains a <code>CATTry</code> and <code>CATCatch</code>
+sections because some methods can throw an error [<a href="#References">7</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Declaring the Usefull pointer- build"></a>Declaring the Useful Pointers</h4>
+<p>Before the <code>CATTry</code> section you declare all the pointers:</p>
+<ul>
+  <li>Used in the <code>CATTry</code> and <code>CATCatch</code> sections: such
+    as <code>piUpdateErrorOnThis</code> the <i>CATIUpdateError</i> interface
+    pointer on the user pad.
+  <li>Initialized in the <code>CATTry</code> section and not released before the
+    call of a method which can throw an error&nbsp;</li>
+</ul>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+    CATIUpdateError          * piUpdateErrorOnThis             = NULL;
+    CATIBuildShape           * piBuildShape                    = NULL;
+
+    CATIMfProcReport         * piProcReport                    = NULL;
+    CATGeoFactory            * piGeomFactory                   = NULL;
+    CATDynBoolean            * pOperatorBool                   = NULL;
+
+    CATSoftwareConfiguration * pSoftConfig                     = NULL ;
+    
+    rc = QueryInterface( IID_<b>CATIUpdateError</b> , (void**) &amp;piUpdateErrorOnThis);
+    if ( FAILED(rc) ) return rc ;
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>All this pointers will be explained in the next sections.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Computing the form of the feature"></a>Computing the&nbsp;Form
+of the Feature</h4>
+<p align="left">Before to compute the final result of the feature, its form is
+necessary. It is computed thanks to the <code><a href="#StepCATIBuildShape">BuildShape</a></code>
+method.&nbsp;</p>
+<table class="code">
+    <tr>
+      <td>
+        <pre>...
+       <b>CATIBuildShape</b> * piBuildShape = NULL;
+       rc = QueryInterface(IID_CATIBuildShape,(void**)&amp;piBuildShape);
+       if ( SUCCEEDED(rc) )
+       {
+           int val = piBuildShape-&gt;<b>BuildShape</b>();
+           if ( 0 == val )
+           {
+              rc = E_FAIL ;
+           }
+           piBuildShape-&gt;Release();
+           piBuildShape = NULL ;
+       }
+...</pre>
+      </td>
+    </tr>
+</table>
+<p align="left">The <code> BuildShape</code> method can throw an error or return an error.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Removing all Possible Update Errors- build"></a>Removing
+all Possible Update Errors</h4>
+<p>It is safer to remove all possible update error that may be associated to the
+current User Pad feature. To do so, use the <code>UnsetUpdateError</code> of the
+<i>CATIUpdateError</i> interface. Refer to the article entitled &quot;A
+Description of Update Errors&quot; [<a href="#References">8</a>] for details on
+this interface.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       rc = QueryInterface( IID_CATIUpdateError , (void**) &amp;piUpdateErrorOnThis);
+       if ( SUCCEEDED(rc) )
+       {
+          piUpdateErrorOnThis-&gt;<b>UnsetUpdateError</b>();
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The implementation of <i>CATIUpdateError</i> interface for the User Pad is
+provided by an extension of late type MechanicalFeature. Since UserPad late type
+derives from MechanicalFeature late type, see the<a href="#Fig.1"> Fig.1</a>, you automatically benefit from this
+implementation.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving the Data for the PR- build"></a>Retrieving the Data for
+the Procedural Report</h4>
+<p>This step consists in three sub-steps which are :</p>
+<ul>
+  <li><a href="#Retrieving the ResultIN feature">Retrieving the
+ResultIN feature</a></li>
+  <li><a href="#Retrieving the two CATBody">Retrieving the two <i>CATBody</i>
+&nbsp;(of <code>ResultIN</code>
+    and this)&nbsp;</a></li>
+  <li><a href="#Checking the Data">Checking the Data</a></li>
+</ul>
+<h5 align="left"><a name="Retrieving the ResultIN feature"></a>Retrieving the
+ResultIN feature</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       <b>CATIShapeFeatureBody</b> * pIShapeFeatureBodyOnThis = NULL ;
+       if ( SUCCEEDED(rc) )
+       {
+          rc = QueryInterface( IID_CATIShapeFeatureBody,(void**) &amp;pIShapeFeatureBodyOnThis);
+       }
+       
+       CATISpecObject_var  spResultIn ;
+       if ( SUCCEEDED(rc) )
+       {
+             CATListValCATISpecAttribute_var *pListSpecAttribute = NULL ;
+             pListSpecAttribute = pIShapeFeatureBodyOnThis-&gt;<b>GetBodyINAttributes</b>();
+             
+             if ( NULL != pListSpecAttribute )
+             {
+                CATISpecAttribute_var spSpecAttribute = (*pListSpecAttribute)[1];
+
+                if ( NULL_var != spSpecAttribute )
+                {
+                   spResultIn = spSpecAttribute-&gt;<b>GetSpecObject</b>();
+                }
+                ...
+             }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The form feature implements the <i>CATIShapeFeatureBody</i> (MechanicalModeler)
+interface. This interface enables you to retrieve the <code> ResultIN</code> attribute
+associated with the feature. This attribute, <code>spSpecAttribute</code>, is
+always the first element of the list returned by the <code>GetBodyINAttributes</code>
+method. As usual, to retrieve the feature referenced by the attribute use the <code>GetSpecObject</code>
+method of the <i>CATISpecAttribute</i> (ObjectSpecsModeler) interface. <code>spResultIn</code>
+will be one of the two elements following by the procedural report. The second
+is this.</p>
+<h5 align="left"><a name="Retrieving the two CATBody"></a>Retrieving the two <i>CATBody</i>
+&nbsp;(of <code>ResultIN</code>
+ and this)&nbsp;</h5>
+<p align="left">The first is those associated with the <code>ResultIN</code>
+feature. In the <a href="#Fig.4">Fig.4</a>, it is the <i>CATBody</i> named <code>TopoA</code>.
+You always use the <i>CATIShapeFeatureBody</i> (MechanicalModeler)
+interface. The first element of the list returned by the <code>GetBodyIN</code>
+method is the <i>CATBody</i> of the <code> ResultIN</code> feature, <code>spCATBodyOnResultIn</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       CATBody_var <b>spCATBodyOnResultIn</b>  ; 
+       if ( SUCCEEDED(rc) )
+       {
+          CATListValCATBaseUnknown_var *pListBodyIn = NULL ;
+          pListBodyIn = pIShapeFeatureBodyOnThis-&gt;<b>GetBodyIN</b>(&quot;CATBody&quot;);
+
+          if ( NULL != pListBodyIn )
+          {
+             <b>spCATBodyOnResultIn</b> = (*pListBodyIn)[1];
+             ...
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The second is those associated with this. It is the form
+computed by the <code> BuildShape</code> method.&nbsp;In the <a href="#Fig.4">Fig.4</a>, it is
+the <i>CATBody</i> named <code>TopoC. </code>You always use the <i>CATIShapeFeatureBody</i> (MechanicalModeler)
+interface. The first element of the list returned by the <code>GetShape</code><b>
+</b>method is the <i>CATBody</i> of this, <code>spCATBodyOnThis</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       CATBody_var  <b>spCATBodyOnThis</b> ;
+       if ( SUCCEEDED(rc) )
+       {
+          CATListValCATBaseUnknown_var *pListBody = NULL ;
+          pListBody = pIShapeFeatureBodyOnThis-&gt;<b>GetShape</b>(&quot;CATBody&quot;);
+
+          if ( NULL != pListBody )
+          {
+             <b>spCATBodyOnThis</b> = (*pListBody)[1];
+             ...
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left"><a name="Checking the Data"></a>Checking the Data</p>
+<p align="left">If the <code>ResultIN</code> feature does not exist and the form
+exists, the form feature is the first of the chain, so the build operation is
+done. The &quot;Creating the Procedural
+Report&quot;, &quot;Run the
+Topological Operators&quot; and &quot;Storing the Procedural Report&quot;
+sections are skipped.&nbsp;</p>
+<p align="left">If the form does not exist, it is an error, the returned code of
+the <code>Build</code> method will be E_FAIL.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creating the Procedural Report- build"></a>Creating the Procedural
+Report</h4>
+<p>The procedural report is the means to generate the scope of the feature by
+using the topological report to generate the name of the following cells. The
+procedural report is managed by the <i>CATIMfProcReport</i> interface.&nbsp;</p>
+<p>The first thing is to declare the following cells by the procedural journal
+during the Build operation. In the case of a form feature, the specifications to
+follow are always  this, and if the the body exists for ResultIN, ResultIN too. &nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+          CATLISTV(CATBaseUnknown_var) ListSpec;
+          CATListOfCATUnicodeString    ListKeys;
+          
+          ListSpec.Append( this ); 
+          ListKeys.Append( MfKeyNone  );
+          if (NULL_var != spCATBodyOnResultIn)
+          {
+                ListSpec.Append( spResultIn); 
+                ListKeys.Append( MfKeyNone );
+          }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><code>ListSpec</code> is the list of specifications to follow, and <code>ListKeys</code>
+is the list of associated keys. These two lists have the same size. The default
+value of a key is <code>MfKeyNone</code>. A different key value will indicate
+that the historical relationship of a node should be replaced with a user
+information.&nbsp;The value of the key must be in relationship with the
+information given by the topological report.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       if ( SUCCEEDED(rc) )
+       {
+          rc = QueryInterface( IID_CATIMfProcReport , (void**) &amp;piProcReport );
+          if ( SUCCEEDED(rc) )
+          {
+             int <b>BoolOper</b> = <b>1</b>;
+             piProcReport-&gt;<b>CreateProcReport</b>(ListSpec,ListKeys,BoolOper); 
+          }
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Once the <i>CATIMfProcReport</i> interface pointer on the User Pad is
+retrieved, <code>piProcReport</code>, you can create the procedural report
+thanks to the <code>CreateProcReport</code> method. The last argument of this
+method is <code>1</code> because the result ( the scope ) will be affected to
+the solid feature and not the user pad itself. On the <a href="#Fig.4">Fig.4 </a>this
+solid feature is named <code>SolidB</code>. Note
+that <code>piProcReport</code> is declared <a href="#Declaring the Usefull pointer- build"> at the top</a> of the <code>Build</code>
+method because it can be released in a <code>CATCatch</code> section.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Running the Topological Operators- build"></a>Running the
+Topological Operators</h4>
+<p>This step consists in three sub-steps which are always:</p>
+<ul>
+  <li>Retrieve a pointer on the <a href="#Retrieving the Geometrical Factory">geometrical
+    factory interface</a> to create the topological operators and the topology,
+  <li><a href="#Retrieving the Topological Journal">Retrieve the Topological
+    Journal </a>used by the procedural report,
+  <li><a href="#Creating the Resulting Geometry">Create the geometry</a> to
+    associate with the feature.&nbsp;</li>
+</ul>
+<h5><a name="Retrieving the Geometrical Factory"></a>Retrieving the Geometrical
+Factory Interface</h5>
+<p>The geometrical factory is handled by the <i>CATGeoFactory</i> interface.
+This interface is implemented by the geometrical container of the Part document
+[<a href="#References">9</a>]. You retrieve this container thanks to the <i>CATIContainerOfDocument</i>
+interface implemented on the Part document. The <i>CATILinkableObject</i>
+interface is the means for each feature to retrieve its containing document.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       if ( SUCCEEDED(rc) )
+       {
+          <b>CATILinkableObject</b> *piLinkableObjectOnUserPad= NULL;
+          rc = QueryInterface( IID_CATILinkableObject, 
+                               (void**)&amp; piLinkableObjectOnUserPad);
+          
+          if ( SUCCEEDED(rc) )
+          {
+             CATDocument * pDocument = NULL ;
+             pDocument = piLinkableObjectOnUserPad-&gt;<b>GetDocument</b>();
+   
+             if ( NULL != pDocument )
+             {
+                <b>CATIContainerOfDocument</b> * pIContainerOfDocument = NULL ;
+                rc = pDocument-&gt;QueryInterface(IID_CATIContainerOfDocument, 
+                                                   (void**)&amp; pIContainerOfDocument );
+                if ( SUCCEEDED(rc) )
+                {
+                   CATIContainer * pIContainerOnGeomContainer = NULL ;
+                   rc = pIContainerOfDocument-&gt;<b>GetResultContainer</b>
+                                                          (pIContainerOnGeomContainer);
+                   if ( SUCCEEDED(rc) )
+                   {
+
+                      rc = pIContainerOnGeomContainer-&gt;QueryInterface( IID_<b>CATGeoFactory</b> , 
+                                                               (void**) &amp;piGeomFactory );
+                      ...
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The <code>GetResultContainer</code> is the method of the <i>CATIContainerOfDocument</i>
+to retrieve the geometrical container. <code>piGeomFactory</code> is the pointer
+on the geometrical factory interface. This pointer is declared <a href="#Declaring the Usefull pointer- build">at
+the beginning</a> of the <code>Build</code> method because it can be released in
+a <code>CATCatch</code>  section.</p>
+<h5><a name="Retrieving the Topological Journal"></a>Retrieving the Topological
+Journal</h5>
+<p>The procedural report then provides a pointer on a new topological journal
+that will log all topological operations.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       CATTopData TopData ;
+       if ( SUCCEEDED(rc) )
+       {
+          <b>CATCGMJournalList</b> *pCGMJournalList = piProcReport-&gt;GetCGMJournalList();  
+          TopData.<b>SetJournal</b>(pCGMJournalList) ;
+
+          pSoftConfig = new <b>CATSoftwareConfiguration</b>();
+          TopData.<b>SetSoftwareConfiguration</b>(pSoftConfig) ;
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><code>pCGMJournalList</code> is the pointer on the topological journal. This
+pointer must not be released.&nbsp;<code>pSoftConfig</code> is a pointer
+declared <a href="#Declaring the Usefull pointer- build">at the beginning</a> of
+the <code>Build</code> method because it can be released in a <code>CATCatch </code>section.</p>
+<h5><a name="Creating the Resulting Geometry"></a>Creating the Resulting
+Geometry</h5>
+<p>This section consists in to valuate, <code>pResultBody</code>, a <i>CATBody</i> 
+instance. This pointer is declared locally, and is not declared at the top of the
+method. It is not necessary since its lifecycle is managed by the <code>DeletedProcReport</code>
+method in the <a name="CATCatch"><code>CATCatch</code></a> sections.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          CATBody   *pResultBody = NULL ;
+
+          ....
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>There are two cases two consider:</p>
+<ol>
+  <li>The user Pad is not the first solid feature of the set<p><code>spCATBodyOnResultIn
+  </code>is the <i>CATBody</i> associated with the ResultIN feature, if this 
+  smart pointer is not null, the user pad has a RESULTIN , so it is not the 
+  first solid feature of the body feature.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+             if (NULL_var != spCATBodyOnResultIn)
+             {
+             CATDynBooleanType internalOperType = CATBoolUnion;
+   
+             pOperatorBool = ::<b>CATCreateDynBoolean</b>(piGeomFactory,
+                                                &amp;TopData,
+                                                internalOperType,
+                                                spCATBodyOnResultIn,
+                                                spCATBodyOnThis);
+
+             if ( NULL != pOperatorBool )
+             {
+                pOperatorBool-&gt;<b>Run</b>();
+                pResultBody = pOperatorBool-&gt;<b>GetResult</b>();
+             }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A boolean operation is performed between the User Pad feature shape (<code>spCATBodyOnThis</code>)
+and the
+topological result of the previous feature (<code>spCATBodyOnResultIn</code>). The topological journal which is the
+second argument of the <code>CATDynCreateBoolean</code>  global function is also updated.
+<code>pOperatorBool</code> is a <i>CATDynBoolean</i> interface pointer declared <a href="#Declaring the Usefull pointer- build">at
+the top</a> of the <code>Build</code> method.&nbsp;<code>pResultBody</code> is
+the resulting topology, the <i>CATBody</i> named <code>TopoB</code> on the <a href="#Fig.4">Fig.4</a></p>
+<li>The User Pad is the first solid feature in the set</li>
+<p>The body associated with the result is the body created by the <i>
+CATIBuildShape</i> interface. But since a topological result can only be 
+associated with an unique geometrical feature, a new <i>CATBody</i> is created. 
+Nevertheless, if a <i>CATBody</i> is unique for a geometrical feature, cells can 
+be shared between two <i>CATBody</i>. So the resulting <i>CATBody</i> will be 
+created using the cells (the domains) of the body created by&nbsp; the <i>
+CATIBuildShape</i> interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          pResultBody = piGeomFactory-&gt;<b>CreateBody</b>();
+          if ( NULL != pResultBody )
+          {
+             CATDomain *Domain = NULL;
+             int NbDomain = spCATBodyOnThis-&gt;<b>GetNbDomains</b>();
+
+             for (int i = 1; i &lt;= NbDomain; i++)
+             {
+                Domain = spCATBodyOnThis-&gt;<b>GetDomain</b>(i);
+                pResultBody-&gt;<b>AddDomain</b>(Domain);
+              }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spCATBodyOnThis</code> is the smart pointer on the <i>CATBody</i> 
+created by the <i>
+CATIBuildShape</i> interface. The valuation of this pointer has been done in the <a href="#Retrieving the two CATBody">Retrieving the two <i>CATBody</i>
+&nbsp;(of <code>ResultIN</code>
+    and this</a>&nbsp; section.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Stores PR build"></a>Storing the Procedural Report</h4>
+<p>It is now high time to store (fill) the procedural report corresponding to
+the creation of the geometric result of the User Pad. That's the job of the <code>CATIMfProcReport::StoreProcReport</code>
+method.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>  ...
+          if ( SUCCEEDED(rc) )
+          {
+             if ( NULL != pResultBody )
+             {
+                int BoolOper = <b>1</b> ;  
+                piProcReport-&gt;<b>StoreProcReport</b>(pResultBody,Copy, BoolOper); 
+             }
+             else
+             {
+                CATMfErrUpdate *pErrorNoIntersection = new CATMfErrUpdate();
+                CATUnicodeString Diagnostic(&quot;Error during boolean operation.&quot;);
+                pErrorNoIntersection-&gt;SetDiagnostic(1,Diagnostic);
+
+                CATThrow(pErrorNoIntersection);
+             }
+          }
+       }
+  ...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The last argument of the <code>StoreProcReport</code> method, <code>BoolOper,</code>
+is the same as the value in the <code>CreateProcReport</code> method.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Cleaning the Useless Data - build"></a>Cleaning the Useless Data</h4>
+<p>In this last part&nbsp;of the <code>CATTry</code> section, you clean the data
+declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer- build">Declaring
+the Useful Pointers</a>&quot; and not released/deleted during the <code>CATTry</code> 
+section. For example, the <code>piBuildShape</code>  pointer is not released here, once if the <code>BuildShape</code>
+method do not throw an error, the pointer is released just after the <code>BuildShape</code>
+call. See the &quot;<a href="#Computing the form of the feature">Computing the
+Form of the Feature</a>&quot; section.</p>
+<p>Generally, you have to consider:&nbsp;</p>
+<ul>
+  <li>All the objects to <b>remove</b> from the topological container thanks to
+    the Remove method of the CATGeoFactory interface.&nbsp;(In
+    this use case there is nothing to do)
+  <li>
+    All the objects not yet <b>deleted</b>: <code>pOperatorBool</code>, the
+    topological operator
+  </li>
+  <li>
+    All the pointers not yet <b>released</b>&nbsp;: ( You should always have
+    these four pointers)
+  </li>
+  <ul>
+    <li><code>piUpdateErrorOnThis</code>
+    <li><code>piProcReport</code>
+    <li><code>pSoftConfig</code>
+    <li><code>piGeomFactory</code></li>
+  </ul>
+</ul>
+<h4><a name="Managing the Errors- build"></a>Managing the Error</h4>
+<p>Some errors may be thrown during these previous operations, the <code>CATTry</code>
+bloc catches them. The <code>CATCatch</code> blocks treats the error. There
+are two kinds of errors:</p>
+<ul>
+  <li><i><a href="#Managing the CATMfErrUpdate Error- build">CATMfErrUpdate</a></i>
+  <li><i><a href="#Managing the CATError Error">CATError</a></i></li>
+</ul>
+<p>Each <code>CATCatch</code> section processes the error and <a href="#Cleaning the Pointers- Build">cleans
+the pointers</a> declared at the top of the <code>Build</code> method.</p>
+<h5><a name="Managing the CATMfErrUpdate Error- build"></a>Managing the <i>CATMfErrUpdate</i>
+Error</h5>
+<p>The highest-level errors are of type <i>CATMfErrUpdate</i>. The error is
+re-thrown without modification.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+    CATCatch ( CATMfErrUpdate , pUpdateError)
+    {
+        if(NULL != piUpdateErrorOnThis) 
+        {
+            piUpdateErrorOnThis-&gt;SetUpdateError(pUpdateError);
+
+            piUpdateErrorOnThis-&gt;Release();
+            piUpdateErrorOnThis = NULL ;
+        }
+
+        // <a href="#Cleaning the Pointers- Build">Here the pointers declared at the top of the <code>Build</code> method are cleaned</a>
+        
+        <b>CATRethrow</b> ;
+     }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h5><a name="Managing the CATError Error"></a>Managing the <i>CATError</i> Error</h5>
+<p>All other types of errors derive from <i>CATError</i>. The following code
+associates the diagnostic and the error.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+    CATCatch ( CATError , pError) 
+    {
+
+        CATMfErrUpdate *pErrorToThrow = new CATMfErrUpdate();
+        pErrorToThrow-&gt;SetDiagnostic(1,pError-&gt;GetNLSMessage());
+
+        ::<b>Flush</b>(pError);
+
+        if(NULL != piUpdateErrorOnThis) 
+        {
+            piUpdateErrorOnThis-&gt;<b>SetUpdateError</b>(pErrorToThrow);
+
+            piUpdateErrorOnThis-&gt;Release();
+            piUpdateErrorOnThis = NULL ;
+        }
+
+        // <a href="#Cleaning the Pointers- Build">Here the pointers declared at the top of the <code>Build</code> method are cleaned</a>
+
+        <b>CATThrow</b>(pErrorToThrow);
+    }   
+    ...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>A new <i>CATMfErrUpdate</i> is created. <code>pError</code>, the <i>CATError</i>,
+must be released in the error process. The <code>Flush</code> global function do
+that.</p>
+<h5><a name="Cleaning the Pointers- Build">Cleaning the Pointers</a></h5>
+<p>In the two <code>CATCatch</code> sections it is important to :</p>
+<ul>
+  <li><b>Remove</b> the result: the newly <i>CATBody</i> associated with the
+    feature and its scope. It is done thanks to the <code>DeleteProcReport</code>
+    method.</li>
+</ul>
+<p>and for the data declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer- build">Declaring
+the Useful Pointers</a>&quot;:</p>
+<ul>
+  <li><b>Remove</b>, from the topological container from the topological
+    container thanks to the Remove method of the CATGeoFactory interface.&nbsp;(In
+    this use case there is nothing to do)
+  <li>
+    <b>Delete</b> the topological operators: <code>pOperatorBool</code>
+  <li><b>Release</b> all the pointers not released in the <code>CATTry</code>
+    section: ( You should always have, at least, these five pointers for a form
+    feature)</li>
+</ul>
+<blockquote>
+  <ul>
+    <li><code>piUpdateErrorOnThis&nbsp; </code>
+    <li><code>piProcReport</code>
+    <li><code>pSoftConfig</code>
+    <li><code>piGeomFactory</code></li>
+    <li><code>piBuildShape</code></li>
+  </ul>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="StepCATIBuildShape"></a>CATIBuildShape Implementation Step-by-Step</h3>
+<p><i>CATIBuildShape</i> is implemented using a class named <i>CAAPriEBuildShape</i>
+class that is a data extension of the late type <i>CAAPriUserPad</i>.&nbsp;<code>BuildShape</code>,
+the unique method of this interface has always this structure:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPriEBuildShape::BuildShape ()
+{
+   int rcode = 1 ; //OK
+   HRESULT rc = E_FAILD;
+   
+   <a href="#Declaring the Usefull pointer - BuildShape">Declaring the Useful Pointers</a>
+   
+   CATTry
+   {
+      <a href="#Removing all Possible Update Errors- Buildshape">Removing all Possible Update Errors</a>
+      <a href="#Retrieving the Data for the PR - buildshape">Retrieving Data for the Procedural Report</a>
+      <a href="#Creating the Procedural Report - buildshape">Creating the Procedural Report</a>
+      <a href="#Running the Topological Operators- buildshape">Running the Topological Operator</a>
+      <a href="#Stroring procedural - BuildShape">Storing the Procedural Report</a>
+      <a href="#Cleaning the Useless Data - BuildShape">Cleaning the Useless Data</a>
+   }
+   
+   // <a href="#Managing the Errors- buildshape">Managing the Errors</a>
+   
+   CATCatch(CATMfErrUpdate , pUpdateError)  
+   {
+      <a href="#Managing the Errors- build">Managing the <i>CATMfErrUpdate</i> Error</a>
+   }
+   CATCatch(CATError , pError)
+   {
+      <a href="#Managing the Errors- build">Managing the <i>CATError </i>Error</a>
+   }
+   
+   CATEndTry
+   
+   if ( FAILED(rc) )
+   {
+       rcode = 0 ;
+   }
+
+   return rcode ;
+}
+...<i>      </i></pre>
+    </td>
+  </tr>
+</table>
+<p align="left">This method contains a <code>CATTry</code> and <code>CATCatch</code>
+sections because some methods can throw an error [<a href="#References">7</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Declaring the Usefull pointer - BuildShape"></a>Declaring the
+Useful Pointers</h4>
+<p>Before the <code>CATTry</code> section you declare all the pointers:</p>
+<ul>
+  <li>Used in the <code>CATTry</code> and <code>CATCatch</code> sections: such
+    as <code>piUpdateErrorOnThis</code> the <i>CATIUpdateError</i> interface
+    pointer on the user pad.
+  <li>Initialized in the <code>CATTry</code> section and not released before the
+    call of a method which can throw an error&nbsp;</li>
+</ul>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+    CATIUpdateError          * piUpdateErrorOnThis        = NULL;
+
+    CATTopPrism              * pOperatorPrism             = NULL;
+    CATIPrtProfile           * pPrtProfile                = NULL;
+
+    CATIMfProcReport         * piProcReport               = NULL;
+    CATGeoFactory            * piGeomFactory              = NULL;
+    CATSoftwareConfiguration * pSoftConfig                = NULL ;
+
+    CATBody_var                spBodyOnProfile ;
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>All this pointers will be explained in the next sections.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="Removing all Possible Update Errors- Buildshape"></a>Removing
+all Possible Update Errors</h4>
+<p>It is safer to remove all possible update error that may be associated to the
+current user pad feature. To do so, use the <code>UnsetUpdateError</code> of the
+<i>CATIUpdateError</i> interface.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       rc = QueryInterface( IID_CATIUpdateError , (void**) &amp;piUpdateErrorOnThis);
+       if ( SUCCEEDED(rc) )
+       {
+          piUpdateErrorOnThis-&gt;<b>UnsetUpdateError</b>();
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving the Data for the PR - buildshape"></a>Retrieving the Data for the
+Procedural Report</h4>
+<p>This step consists in three sub-steps which are:</p>
+<ul>
+  <li><a href="#Retrieving the Profile&nbsp;">Retrieving the Profile&nbsp;</a></li>
+  <li><a href="#Retrieving and Checking the CATBody associated with the Profile">Retrieving and
+Checking the CATBody associated with the Profile</a></li>
+</ul>
+<h5><a name="Retrieving the Profile&nbsp;"></a>Retrieving the Profile&nbsp;</h5>
+<p>The profile is an attribute of the UserPad feature and referenced in the <code>&quot;Profile&quot;</code>
+string.&nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       CATMathDirection   ExtrusionDirection ;
+       CATISpecObject_var spSpecObjectOnProfileElt;
+
+       if ( SUCCEEDED(rc) )
+       {
+          CATISpecObject  * pSpecObjectOnThis = NULL;
+          rc = QueryInterface( IID_CATISpecObject , (void**) &amp;pSpecObjectOnThis );
+          if ( SUCCEEDED(rc) )
+          {
+              CATUnicodeString strProfile = &quot;<b>Profile</b>&quot;;
+              CATISpecAttribute * pProfileAtt = NULL ;
+              <b>pProfileAtt</b> = pSpecObjectOnThis-&gt;<b>GetAttribute</b>(strProfile);
+
+              pSpecObjectOnThis-&gt;Release();
+              pSpecObjectOnThis = NULL ;
+
+              if ( NULL != pProfileAtt )
+              {
+                 CATISpecObject  * pSpecObjectOnProfileAtt = NULL;
+                 <b>pSpecObjectOnProfileAtt</b> = pProfileAtt-&gt;<b>GetSpecObject</b>();
+
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><code>pProfileAtt</code> is the &quot;profile&quot; attribute of the User
+Pad. <code>pSpecObjectOnProfileAtt</code> is the feature associated with this
+attribute. The <i>CATIPrtProfile</i>
+interface applied to <code>pSpecObjectOnProfileAtt</code>  enables you to retrieve the direction of extrusion, <code>ExtrusionDirection</code>
+ and the profile itself, spSpecObjectOnProfileElt.&nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+                 if ( NULL != pSpecObjectOnProfileAtt )
+                 {
+                    rc = pSpecObjectOnProfileAtt-&gt;QueryInterface( IID_<b>CATIPrtProfile</b> , 
+                                                           (void**) &amp;pPrtProfile );
+
+                    pSpecObjectOnProfileAtt-&gt;Release();
+                    pSpecObjectOnProfileAtt = NULL ;
+                    
+                    if ( SUCCEEDED(rc) )
+                    {
+                       CATMathPlane SketchPlane ;
+                       rc = pPrtProfile-&gt;<b>GetPlane</b>(SketchPlane) ;
+                       if ( SUCCEEDED(rc) )
+                       {  
+                          CATMathVector normalDir;
+                          
+                          SketchPlane.<b>GetNormal</b>(normalDir);
+                          <b>ExtrusionDirection</b> = normalDir ;
+
+                          if ( SUCCEEDED(rc) )
+                          {
+                              pPrtProfile-&gt;<b>GetElement</b>(1,spSpecObjectOnProfileElt) ;                       
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The Pad direction, <code>ExtrusionDirection</code>, has been defined normal
+to the sketch plane. The profile, spSpecObjectOnProfileElt, retrieved by the <code>GetElement</code>
+method of the <i>CATIPrtProfile</i>
+ interface will be the feature followed by the procedural report.</p>
+<p>To be complete, if <code>spSpecObjectOnProfileElt, pSpecObjectOnProfileAtt</code>
+or&nbsp; <code>pProfileAtt</code> are NULL or NULL_var, an update error [<a href="#References">8</a>]
+is thrown like this:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+     <b>CATMfErrUpdate</b> *pError = new CATMfErrUpdate();
+     CATUnicodeString Diagnostic(&quot;xxxxx&quot;);
+     pError -&gt;<b>SetDiagnostic</b>(1,Diagnostic);
+   
+     <b>CATThrow</b>(pError );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In this case the <code>CATTry</code> section in interrupted.&nbsp;</p>
+<h5><a name="Retrieving and Checking the CATBody associated with the Profile"></a>Retrieving and
+Checking the CATBody associated with the Profile</h5>
+<p><code>pPrtProfile</code> is the <i>CATIPrtProfile</i> interface pointer on
+the feature referenced by the <code>Profile</code> attribute of the User Pad.
+This part consists in to compute the <i>CATBody</i> forming the profile to
+extrude, <i>spBodyOnProfile</i>. But previously some checks are necessary to
+validate the profile.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       if ( SUCCEEDED(rc) )
+       {
+          int nbContour = pPrtProfile-&gt;<b>GetContourCount</b>();
+          if (nbContour == 1)
+          {	
+              CATBody_var LocalBody ;
+              pPrtProfile-&gt;<b>GetBody</b>(0,LocalBody);
+
+              CATDomain * pDomain = LocalBody-&gt;GetDomain(1);
+              CATWire_var spWireOnDomain(pDomain);
+              if (spWireOnDomain != NULL_var)
+              {
+                 CATBoolean isClosed = spWireOnDomain-&gt;<b>IsClosed</b>();
+                 if(TRUE != isClosed) 
+                 {
+                    CATMfErrUpdate *pErrorNotClosedProfile = new CATMfErrUpdate();
+                    CATUnicodeString Diagnostic(&quot;The associated profile is not closed&quot;);
+                    pErrorNotClosedProfile-&gt;SetDiagnostic(1,Diagnostic);
+
+                    CATThrow(pErrorNotClosedProfile);
+                 } 
+...</pre>
+      </td>
+    </tr>
+    </table>
+<p>If the profile is wrong an error, <code>pErrorNotClosedProfile</code>, is
+generated and thrown to interrupt the process.</p>
+<p>Once the Profile is validated, <code>spBodyOnProfile</code> is computed by
+the <code>GetBody</code> method of the <i>CATIPrtProfile</i> interface. This <i>CATBody</i>
+should be removed from the topological container at the end of the method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+                    pPrtProfile-&gt;<b>GetBody</b>(1,spBodyOnProfile);
+
+                    if ( NULL_var == spBodyOnProfile )
+                    {
+                       <b>CATMfErrUpdate</b> *pErrorNoProfileToExtrude = new CATMfErrUpdate();
+                       CATUnicodeString Diagnostic(&quot;No elt to extrude&quot;);
+                       pErrorNoProfileToExtrude-&gt;SetDiagnostic(1,Diagnostic);
+   
+                       <b>CATThrow</b>(pErrorNoProfileToExtrude);
+...</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Creating the Procedural Report - buildshape"></a>Creating the
+Procedural Report</h4>
+<p>The procedural report is the means to generate the scope of the feature by
+using the topological report to generate the name of the following cells. The
+procedural report is managed by the <i>CATIMfProcReport</i> interface.&nbsp;The
+first thing is to declare the following cells by the procedural journal during
+the Build operation.&nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       CATLISTV(CATBaseUnknown_var) ListSpec;
+       CATListOfCATUnicodeString    ListKeys;
+       if ( SUCCEEDED(rc) )
+       {
+             ListSpec.Append( <b>spSpecObjectOnProfileElt</b> ); 
+             ListKeys.Append( MfKeyExtrudedFrom  );
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><code>ListSpec</code> is the list of specifications to follow, and <code>ListKeys</code>
+is the list of associated keys. There is only one specification, the profile, <code>spSpecObjectOnProfileElt</code>
+and the associated keyword is valuated to <code>MfKeyExtrudedFrom</code> .</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+       if ( SUCCEEDED(rc) )
+       {
+          rc = QueryInterface( IID_CATIMfProcReport , (void**) &amp;piProcReport );
+          if ( SUCCEEDED(rc) )
+          {
+             int <b>BoolOper</b> = 0;
+             piProcReport-&gt;<b>CreateProcReport</b>(ListSpec,ListKeys,BoolOper); 
+          }
+       }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>Once the <i>CATIMfProcReport</i> interface pointer on the User Pad is
+retrieved, <code>piProcReport</code>, you can create the procedural report
+thanks to the <code>CreateProcReport</code> method. The last argument of this
+method is <code>0</code>, the default value, because the result ( the scope )
+will be affected to the feature itself [<a href="#Fig.1">Fig.1</a>]. Note that <code>piProcReport</code>
+is declared at the top of the <code>Build</code> method because it can be
+released in a <code>CATCatch</code> section.</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Running the Topological Operators- buildshape"></a>Running the
+Topological Operators</h4>
+<p>This step consists in three sub-steps which are always:</p>
+<ul>
+  <li>Retrieve a pointer on the <a href="#Retrieving the Geometrical Factory - build shape">geometrical
+    factory interface</a> to create the topological operators and the topology,
+  <li><a href="#Retrieving the Topological Journal - buildshape">Retrieve the
+    Topological Journal </a>used by the procedural report,
+  <li><a href="#prism">Create the geometry</a> to
+    associate with the feature.&nbsp;</li>
+</ul>
+<h5><a name="Retrieving the Geometrical Factory - build shape"></a>Retrieving
+the Geometrical Factory</h5>
+<p>See the &quot;<a href="#Retrieving the Geometrical Factory">Retrieving the Geometrical
+Factory Interface</a>&quot; section in the Build
+implementation.&nbsp;</p>
+<h5><a name="Retrieving the Topological Journal - buildshape"></a>Retrieving the
+Topological Journal</h5>
+<p>See the &quot;<a href="#Retrieving the Topological Journal">Retrieving the Topological Journal</a>&quot; section in the Build
+implementation.&nbsp;</p>
+<h5><a name="prism"></a>Creating the Prism Operator</h5>
+<p>The prism operator is created with the following arguments:</p>
+<ul>
+  <li>piGeomFactory the geometrical factory - See the <a href="#Retrieving the Geometrical Factory">Retrieving the Geometrical Factory</a>
+    section&nbsp;</li>
+  <li><code>TopData</code> the topological jounal : See the <a href="#Retrieving the Topological Journal">Retrieving the Topological Journal</a>&nbsp;</li>
+  <li><code>spBodyOnProfile</code> the profile to extrude -See the <a href="#Retrieving and Checking the CATBody associated with the Profile">Retrieving and
+    Checking the <i> CATBody</i> associated with the Profile</a> section</li>
+  <li><code>ExtrusionDirection</code> the pad direction - See the<a href="#Retrieving the Profile&nbsp;">
+    Retrieving the Profile</a>&nbsp;section</li>
+  <li><code> startOffset </code>the offset value of the first limit. Valuated to 0, the pad
+    begins from the sketch plane</li>
+  <li><code> endOffset</code> the offset value of the last limit.&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      CATBody   *<b>pResultBody</b> = NULL ;
+
+       if ( SUCCEEDED(rc) )
+       {
+          CATLength endOffset = 30.;
+          CATLength startOffset = 0.;
+    
+          pOperatorPrism = <b>CATCreateTopPrism</b>(piGeomFactory,
+                                       &amp;TopData,
+                                       spBodyOnProfile, 
+                                       &amp;ExtrusionDirection, 
+                                       startOffset, 
+                                       endOffset);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<p>The pad operation creates a positive shape (negative in pocket case) and the <code>CatBoolUnion</code>
+argument is used to characterize the operation. The two <code>SetLimit</code>
+methods applied allow first and last limits to be defined.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>         if ( NULL != pOperatorPrism )
+          {
+             pOperatorPrism-&gt;<b>SetOperation</b>(CatBoolUnion);
+		
+	    <b>CATTopLimitType</b> startLimitType = CatLimOffsetFromProfile;   
+             <b>CATTopPropagationType</b> startPropagType = CatPropagSingle;
+
+             // Defines the first limit for the operator
+             pOperatorPrism-&gt;<b>SetLimit</b>(CatLimStart, 
+                             startLimitType,
+                             1, 
+                             startOffset, 
+                             NULL, 
+                             CATBody_var(NULL_var), 
+                             startPropagType,
+                             FALSE);
+	
+             // Defines the second limit for the operator
+             CATTopLimitType endLimitType = CatLimOffsetFromProfile;
+             CATTopPropagationType endPropagType = CatPropagSingle;
+
+             pOperatorPrism-&gt;<b>SetLimit</b>(CatLimEnd,
+                             endLimitType,
+                             0, 
+                             endOffset, 
+                             NULL, 
+                             CATBody_var(NULL_var),
+                             endPropagType,
+                             FALSE);
+                             
+            // Performs the operation
+            pOperatorPrism-&gt;<b>Run</b>();
+	
+            // Retrieves the performed body
+            <b>pResultBody</b> = pOperatorPrism-&gt;<b>GetResult</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">pResultBody is the <i>CATBody</i> named <code>TopoC</code> on the figure [<a href="#Fig.1">Fig.1</a>]
+associated with the form of the User Pad. Note that <code>pResultBody</code>&nbsp;
+is not declared at the top of the method. It is not necessary once its lifecycle
+is managed by the <code>DeletedProcReport</code> method in the <a name="CATCatch"><code>CATCatch</code></a>
+sections</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Stroring procedural - BuildShape"></a>Storing the Procedural Report</h4>
+<p>It is now high time to store (fill) the procedural report corresponding to
+the creation of the geometric result of the User Pad. That's the job of the <code>CATIMfProcReport::StoreProcReport</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+       if ( SUCCEEDED(rc) )
+       {
+          if ( NULL != pResultBody )
+          {
+             int BoolOper = 0 ; 
+             piProcReport-&gt;<b>StoreProcReport</b>(pResultBody,NoCopy,BoolOper); 
+          }
+          else
+          {
+             <b>CATMfErrUpdate</b> *pErrorBuildShape = new CATMfErrUpdate();
+             CATUnicodeString Diagnostic(&quot;Error during BuildShape operation&quot;);
+             pErrorBuildShape-&gt;SetDiagnostic(1,Diagnostic);
+
+             <b>CATThrow</b>(pErrorBuildShape);
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The last argument of the <code>StoreProcReport</code> method, <code>BoolOper,</code>
+is the same as the value in the <code>CreateProcReport</code> method.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Cleaning the Useless Data - BuildShape"></a>Cleaning the Useless
+Data</h4>
+<p>In this last part&nbsp;of the <code>CATTry</code> section, you clean the data
+declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer - BuildShape">Declaring the
+Useful Pointers</a>&quot; and not released/deleted during the <code>CATTry</code>
+section. For example, the <code>pPrtProfile</code>&nbsp;pointer is not released
+here, once it has been safer released in the <code>CATTry</code> section (not
+described in this article, refer to the code)&nbsp;</p>
+<ul>
+  <li>All the objects to <b> remove</b> from the topological container:&nbsp;here
+    there is only <code>spBodyOnProfile,</code>
+  <li>
+    All the objects not yet <b>deleted</b>: here only <code>pOperatorPrism</code> the
+    topological operator,
+  </li>
+  <li>
+    All the pointers not yet <b> released</b>&nbsp;:&nbsp;
+  </li>
+  <ul>
+    <li><code>piUpdateErrorOnThis</code>
+    <li><code>piProcReport</code>
+    <li><code>pSoftConfig</code>
+    <li><code>piGeomFactory</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+  </ul>
+</ul>
+<h4><a name="Managing the Errors- buildshape"></a>Managing the Error</h4>
+<p>This section is identical to the &quot;<a href="#Managing the Errors- build">Managing Error</a>&quot; section of the
+<code>
+Build</code> method. Depending on the data used during the method, only the
+&quot;cleaning
+useless data&quot; section is different. In the two <code>CATCatch</code> sections of the <code>BuildShape</code>
+method it is important to:</p>
+<ul>
+  <li><b>Remove</b> the result: the newly <i>CATBody</i> associated with the feature
+    and its scope. It is done thanks to the <code>DeleteProcReport</code>
+    method. See the &quot;<a href="#Managing the CATMfErrUpdate Error- build">Managing the <i>CATMfErrUpdate</i> Error</a>&quot;
+    section of the <a href="#StepCATIBuild">Build</a>  method.
+</ul>
+<p>and for the data declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer - BuildShape">Declaring the
+Useful Pointers</a>&quot;:</p>
+<ul>
+  <li><b>Remove</b>, from the topological container, the useless <i>CATBody:</i> <code>spBodyOnProfile</code>
+  <li>
+    <b>
+    Delete</b> the topological operator: <code>pOperatorPrism</code>
+  <li>
+    <b>Release</b> all the pointers not released in the <code>CATTry</code>
+    section:
+  </li>
+  <ul>
+    <li><code>piUpdateErrorOnThis&nbsp; </code>
+    <li><code>piProcReport</code>
+    <li><code>pSoftConfig</code>
+    <li><code>piGeomFactory</code></li>
+    <li><code>pPrtProfile</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+  </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to manage the build of a form feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPriTechArticles/CAAPriFormAndShapeFeature.htm">Mechanical
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">Integrating
+      a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating
+      a New StartUp Deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrGenericNaming.htm">Generic
+      Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAASysTechArticles/CAASysExceptions.htm">Managing
+      Errors Using Exceptions</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrErreurUpdateDescription.htm">A
+      Description of Update Errors</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      Structure of the Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jan 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+
+

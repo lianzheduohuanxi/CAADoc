@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowHow Interface CATIReportObject</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowHow.htm" href="../KnowHow.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowHow";	}
+		function getCurrentObjectName() { 
+ 	return "CATIReportObject"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>KnowHow Interface CATIReportObject</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIReportObject_18209','CATIReportObject','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIReportObject</b>
+</p>
+<p>
+<b><i> Interface dedicated to the behaviour of an element (t-uple) of a report.</i></b><br>
+
+
+ <b>Role</b> this interface describes what can be done on an object returned
+ by a report on an expert check. A report object is an object containing an
+ entry vector of a check and telling whether that entry vector makes the
+ check true or not (its validity).
+ <br>
+ Because of optimization, the entry vector may not contain as many elements
+ as the check variables declaration has. For instance, let's one define the
+ following check on holes "<Hole1:Hole>.Diameter > 10mm or <Draft1:Draft>.Angle < 5deg".
+ If it exists some drafts and a hole with a diameter of 12mm, then <it>whatever the drafts</it>,
+ the condition of the check, given this hole, will be true. So there will be a report object,
+ containing only this hole, with a validity of true.
+
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATICheck','','CATICheck') </script>, <script type="text/javascript"> activateLinkAnchor('CATICheckReport','','CATICheckReport') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddInstanceInTuple(CATIInstance_var&amp;)"><b>AddInstanceInTuple</b></a>(CATIInstance_var&amp;)
+<dd>  Adds the instance at the end of the report object instances list.
+ <dt> o 
+    <a href="#GetCheckReport()"><b>GetCheckReport</b></a>()
+<dd>  Gets the check report that generated this report object.
+ <dt> o 
+    <a href="#GetInstanceFromTuple(int)"><b>GetInstanceFromTuple</b></a>(int)
+<dd>  Gets the instance at the position <tt>index</tt> in the t-uple.
+ <dt> o 
+    <a href="#GetValidity()"><b>GetValidity</b></a>()
+<dd>  Gets the validity of the report object.
+ <dt> o 
+    <a href="#SetFromCheck(CATUnicodeString&amp;)"><b>SetFromCheck</b></a>(CATUnicodeString&amp;)
+<dd>  Do not use.
+ <dt> o 
+    <a href="#SetValidity(CATICheckReport::ReportEnum)"><b>SetValidity</b></a>(CATICheckReport::ReportEnum)
+<dd>  Sets the validity of the report object.
+ <dt> o 
+    <a href="#TupleReset()"><b>TupleReset</b></a>()
+<dd>  Clears the t-uple.
+ <dt> o 
+    <a href="#TupleSize()"><b>TupleSize</b></a>()
+<dd>  Gets the size of the t-uple.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddInstanceInTuple"></a><a name="AddInstanceInTuple(CATIInstance_var&amp;)"></a> <dt> o <b>AddInstanceInTuple</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddInstanceInTuple</b>(<td> const <script type="text/javascript"> activateLink('CATIInstance_var','CATIInstance_var&amp;')</script> <td><tt>spInstance</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds the instance at the end of the report object instances list.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> spInstance</tt>
+   <dd> an instance.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCheckReport"></a><a name="GetCheckReport()"></a> <dt> o <b>GetCheckReport</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATICheckReport','CATICheckReport_var')</script>  <b>GetCheckReport</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the check report that generated this report object.
+
+ 
+<dl>
+</dl>
+</dl>
+<a name="GetInstanceFromTuple"></a><a name="GetInstanceFromTuple(int)"></a> <dt> o <b>GetInstanceFromTuple</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIInstance','CATIInstance_var')</script>  <b>GetInstanceFromTuple</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the instance at the position <tt>index</tt> in the t-uple.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd> position of the instance.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  an instance.
+</dl>
+</dl>
+<a name="GetValidity"></a><a name="GetValidity()"></a> <dt> o <b>GetValidity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATICheckReport::ReportEnum','CATICheckReport::ReportEnum')</script>  <b>GetValidity</b>(<td>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the validity of the report object.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  validity of the report object.
+</dl>
+</dl>
+<a name="SetFromCheck"></a><a name="SetFromCheck(CATUnicodeString&amp;)"></a> <dt> o <b>SetFromCheck</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFromCheck</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCheckName</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Do not use.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCheckName</tt>
+   <dd> Check name</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetValidity"></a><a name="SetValidity(CATICheckReport::ReportEnum)"></a> <dt> o <b>SetValidity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetValidity</b>(<td><script type="text/javascript"> activateLink('CATICheckReport::ReportEnum','CATICheckReport::ReportEnum')</script> <td><tt>iValidity</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the validity of the report object.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iValidity</tt>
+   <dd> validity of the report object.</dd>
+</dl>
+</dl>
+</dl>
+<a name="TupleReset"></a><a name="TupleReset()"></a> <dt> o <b>TupleReset</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>TupleReset</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Clears the t-uple.
+</dl>
+<a name="TupleSize"></a><a name="TupleSize()"></a> <dt> o <b>TupleSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>TupleSize</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the size of the t-uple.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  size of the t-uple.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIReportObject.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATKWERule</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

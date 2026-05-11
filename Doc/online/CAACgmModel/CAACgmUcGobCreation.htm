@@ -1,0 +1,464 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating and Transforming Geometry</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating and Transforming Geometry</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The GeometricObjects framework exposes the interfaces for the geometry: 
+		points, curves, surfaces, and some related classes (such as knot vector 
+		or surface and curve parameters for example).</p>
+		<p>The use cases illustrates the creation of geometric objects. First surface 
+		is created. Then a CATPLine is created upon it, that is later cloned and 
+		transformed. The way to create CATPLine, to use the clone and transformation 
+		managers, as well as to use the surface parameter class or the surface evaluator 
+		classes is not particular to the foreign surface, but common to all the 
+		CATIA surfaces.</p>
+		<p>The same methodology can be used to introduce foreign curves, only differing 
+		by the parent class to derive. </p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMModelCreation Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelCreation Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelCreation</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelCreation Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The use case creates an instance (<code>piEggBox</code>) of a surface. This surface 
+is a &quot;foreign&quot; surface: its definition has been declared in another use case CAAGMModelForeign 
+[<a href="#References">5</a>], but this do not change any operation that can be 
+done on it. Once introduced according to the appropriate process, a foreign surface 
+can be used as any CATIA surface.</p>
+<table>
+	<caption>Fig 1: The &quot;Eggs Box&quot; Using the New Type of Surface</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmGobForeignSurface.gif" alt="Foreign Surface" width="480" height="336"></td>
+		<td>Using this instance, the use case defines a CATPLine on it (<code>piPLine</code>), 
+		transforms the created CATPLine (<code>piTransfLine</code>), retrieves the 
+		corresponding underlying surface (<code>piTransfEggBox</code>), evaluates 
+		the normal at the four corners of the transformed surface. All these operations 
+		are the same for any CATIA surfaces or geometry.</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelCreation Use Case</h2>
+<p>CAAGMModelCreation is a use case of the CAAGMModelInterfaces.edu framework that 
+illustrates GeometricObjects framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelCreation Do</h3>
+<p>This use case creates a surface and use it in several geometric operations. The 
+created surface is a foreign surface, but what is done for the foreign surface is 
+exactly the same as what must be done for any CATIA surface: the use is the same.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelCreation</h3>
+<p>To launch CAAGMModelCreation, you will need to set up the build time environment, 
+then compile CAAGMModelCreation.m and CAAGMModelForeign.m along with their prerequisites, 
+set up the run time environment, and then execute the use case [<a href="#References">6</a>].</p>
+<p>If you simply type CAAGMModelCreation with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMModelCreation e:\GeomObjectCreation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelCreation Code</h3>
+<p>The CAAGMModelCreation use case is made of a main named CAAGobCreation.cpp located 
+in the CAAGMModelCreation.m module of the CAAGMModelInterfaces.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelCreation.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">6</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<p>The use case uses a class defined in the CAAGMModelForeign use case [<a href="#References">5</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The main program peforms the following steps: </p>
+<ul>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Creates the CATIForeignSurface">Creating a CATIForeignSurface</a> 
+	with an attribute <code>CAAForeignSurfaceData</code></li>
+	<li><a href="#Creates a CATPLine">Creating a CATPLine</a> on the foreign surface</li>
+	<li><a href="#Clones the CATPLine">Cloning the CATPLine</a></li>
+	<li><a href="#Transforms the CATPLine">Applying a Transform to the CATPLine</a></li>
+	<li><a href="#Evaluates the Normals At the Four Corners">Evaluating the Normals</a> 
+	at the four corners of the transformed surface</li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model and 
+	Closing the Container</a></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular) [<a href="#References">3</a>]. This 
+creation is done by the global function <code>::CATCreateCGMContainer</code>. Notice 
+that the factory can be defined by reading a NCGM file that was previously stored. 
+In that case, the global function <code>::CATLoadCGMContainer</code> must be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the CATIForeignSurface"></a>Creating a CATIForeignSurface</h3>
+<p>The data is an attribute of the new type <code>CAAGMModelForeignSurfaceData</code>. 
+The attribute instance is allocated here, its deletion is directly managed by the 
+CATIForeignSurface.</p>
+<p>The foreign surface instance is created by the method <code>CreateForeignSurface</code> 
+of the CATGeoFactory, using the created attribute.</p>
+<p>If an error occurs, the program closes the factory and returns an error code.</p>
+<pre class="code">CATMathPoint origin(50.,-10.,5.);
+CATMathDirection directionU(1.,0.,0.), directionV(0.,1.,0.);
+double uPeriod = 3. ;
+double vPeriod = 5. ;
+double height  = 7. ;
+double uMin    = -10. ;
+double uMax    = 23. ;
+double vMin    = -11. ;
+double vMax    = 34. ;
+
+ // ------------ Creates the foreign data 
+CAAGMModelForeignSurfaceData* pData = 
+     new <strong>CAAGMModelForeignSurfaceData</strong>(origin, 
+                                  uPeriod*directionU,
+                                  vPeriod*directionV,
+                                  height/(uPeriod * vPeriod),
+                                  uMin,
+                                  uMax,
+                                  vMin,
+                                  vMax) ;
+if (NULL==pData)
+{
+  <strong>::CATCloseCGMContainer</strong>(piGeomFactory);
+  return (1);
+}
+
+// ------------ Creates the surface
+CATIForeignSurface* piEggBox = NULL;
+piEggBox = piGeomFactory -&gt;<strong>CreateForeignSurface</strong>(pData) ;
+if (NULL==piEggBox)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates a CATPLine"></a>Creating a CATPLine</h3>
+<p>A CATPLine is a line in the space of a surface [<a href="#References">4</a>], 
+whatever the surface is: directly a CATIA surface or a CATIForeignSurface. To create 
+a CATPLine, one must specifies the starting and end points: these points are expressed 
+in terms of parameters on the surface. No assumption must be made on the parameterization 
+of the surface. The ways to define a CATSurParameter are: </p>
+<ul>
+	<li>Projecting a 3D point on the surface with the geometric operator CATICGMProjectionPtSur.</li>
+	<li>Using the <code>CATSurface::GetParam</code> method (only for canonical surfaces 
+	and a point that is known to be on the surface).</li>
+	<li>Using the barycentric constructor, after retrieving the limits (<code>CATSurface::GetLimits</code>) 
+	of the surface: this way is illustrated below.</li>
+</ul>
+<p>Now, the CATPLine can be created by using the <code>CATGeoFactory::CreatePLine</code> 
+method.</p>
+<pre class="code"><em>// Retrieves the limits of the surface</em>
+CATSurLimits surLimits;
+piEggBox -&gt;<strong>GetLimits</strong>(surLimits);
+CATSurParam lowParam, highParam;
+surLimits.GetExtremities(lowParam, highParam); 
+
+// Defines the starting and end parameters
+double iLambdaU = 0.5;
+double iLambdaV = 0.2;
+// barycenter of surLimits affected with the 0.5 and 0.2 coefficients
+<strong>CATSurParam</strong> start <strong>(0.5,0.2,surLimits)</strong>; 
+iLambdaU = 0.8;
+iLambdaV = 0.3;
+CATSurParam end   (0.8,0.3,surLimits);
+
+<em>// Creates the Pline</em>
+CATPLine * piPLine = piGeomFactory-&gt;<strong>CreatePLine</strong>(start,end,piEggBox);
+if (NULL==piPLine)
+{
+  ::CATCloseCGMContainer(piGeomFactory);
+  return (1);
+}</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Clones the CATPLine"></a>Cloning the CATPLine</h3>
+<p>This operation is done by the CATCloneManager [<a href="#References">2</a>], 
+whose interest is in taking into account the links between the objects during the 
+duplication. The clone manager is used as any CGM operator. To follow the general 
+scheme:</p>
+<ul>
+	<li>Create it.</li>
+	<li>Set the parameters: here, <code>Add</code> the objects to clone</li>
+	<li><code>Run</code> it.</li>
+	<li>Retrieve the duplicated object: <code>ReadImage</code>.</li>
+	<li><code>delete</code> it.</li>
+</ul>
+<p>The clone manager can be used in two modes, defined at its creation:</p>
+<ul>
+	<li>The <code>CatCGMSingleDuplicate</code> default mode only duplicates the 
+	objects that are added to the clone manager.</li>
+	<li>The <code>CatCGMFullDuplicate</code> mode duplicates the added objects and 
+	their forward links.</li>
+</ul>
+<p>In the use case, the default mode is used: hence, the surface on which the CATPLine 
+is lying is not duplicated. This is tested by comparing the tags of the underlying 
+surface of the CATPLine before and after duplication. The tag is an unique numeric 
+identifier inside the geometry factory. Each CATICGMObject has a persistent tag, 
+that can be retrieved with the <code>CATICGMContainer::GetPersistentTag</code> method.</p>
+<p>Notice that this process is independent from the type of surface.</p>
+<pre class="code">// single duplication by default
+CATCloneManager * pCloneManager= <strong>new CATCloneManager</strong>(piGeomFactory,
+                                                     CatCGMSingleDuplicate);
+if (NULL==pCloneManager)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+
+// <a name="Asks for the duplication of the PLine"></a>Asks for the duplication of the PLine
+pCloneManager-&gt;<strong>Add</strong>(piPLine);
+
+// <a name="Runs the operator"></a>Runs the operator
+pCloneManager-&gt;<strong>Run</strong>();
+
+// <a name="Retrieves the object"></a>Retrieves the object corresponding to the transformation of the PLine
+CATICGMObject* piClonedPLine=NULL;
+piClonedPLine = pCloneManager-&gt;<strong>ReadImage</strong>(piPLine);
+if (NULL==piClonedPLine)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+   
+// Retrieves the <a name="persistent tags"></a>persistent tags of the underlying surface of the initial 
+// and duplicated Plines
+// as the duplication mode is single, the underlying surface must be the same
+unsigned long tagSurfCloned = 
+     ( ((CATPLine *)piClonedPLine )-&gt;<a name="GetSurface"></a>GetSurface())-&gt;GetPersistentTag();
+unsigned long tagSurfPLine  = 
+     (              piPLine        -&gt;GetSurface())-&gt;GetPersistentTag();
+
+if (<strong>tagSurfCloned != tagSurfPLine</strong>)    
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (3);
+}          
+<strong>delete</strong> pCloneManager;
+pCloneManager = NULL;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Transforms the CATPLine"></a>Applying a Transform to the CATPLine</h3>
+<p>This operation is done by the <code>CATTransfoManager</code> [<a href="#References">2</a>], 
+whose interest is in taking into account the links between the objects during the 
+transformation. The transfo manager is used as any CGM operator: To follow the general 
+scheme:</p>
+<ul>
+	<li>Create it.</li>
+	<li>Set the parameters: here, <code>Add</code> the objects to transform.</li>
+	<li><code>Run</code> it.</li>
+	<li>Retrieve the transformed object: <code>ReadImage</code>.</li>
+	<li><code>delete</code> it ( this deletion is delayed at the end of the next 
+	step, because the manager is still used to retrieve other information).</li>
+</ul>
+<p>The transfo manager can be used in three modes, defined at its creation:</p>
+<ul>
+	<li>The <code>CATTransfoManager::Duplicate</code> default mode duplicates and 
+	transforms the objects that are added to the manager. The forward linked objects 
+	are not duplicated if they are invariant by the transformation.</li>
+	<li>The <code>CATTransfoManager::FullDuplicate</code> mode duplicates and transforms 
+	the objects that are added to the manager. But now, the forward linked objects 
+	are duplicated, even if they are invariant by the transformation.</li>
+	<li>The <code>CATTransfoManager::Replace</code> mode replaces the objects added 
+	to the manager, and their forward linked objects if they are not invariant.</li>
+</ul>
+<p>In the use case, the default mode is used: hence, the CATPLine is duplicated 
+and the surface on which the CATPLine is lying is duplicated, because it is not 
+invariant. This is tested by comparing the tags of the underlying surface of the 
+CATPLine before and after transformation.</p>
+<p>Notice that this process is independent from the type of surface.</p>
+<pre class="code">CATMathTransformation mathTransf(CATMathVector(20.,10.,40.));
+
+// duplication of non-invariant objects by default
+CATTransfoManager * pTransfoManager = 
+                    new <strong>CATTransfoManager</strong>(mathTransf,piGeomFactory); 
+if (NULL==pTransfoManager)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+
+// <a name="Asks for the transformation of piPLine"></a>Asks for the transformation of piPLine
+pTransfoManager-&gt;<strong>Add</strong>(piPLine);
+
+// <a name="transfo run"></a>Runs the operator
+pTransfoManager-&gt;<strong>Run</strong>();
+
+// Retrieves the object corresponding to the <a name="transformation of the PLine"></a>transformation of the PLine
+CATICGMObject* piTransfPLine=NULL;
+piTransfPLine = pTransfoManager-&gt;<strong>ReadImage</strong>(piPLine);
+if (NULL==piTransfPLine)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+
+// In this case, the underlying surface is also duplicated.
+unsigned long tagSurfTransf = 
+            ( ((CATPLine *)piTransfPLine )-&gt;GetSurface())-&gt;GetPersistentTag();
+if (tagSurfTransf == tagSurfPLine)    
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (4);
+}     </pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Evaluates the Normals At the Four Corners"></a>Evaluating the Normals</h3>
+<p>The evaluation is independent from the type of surface. </p>
+<ul>
+	<li>The duplicated surface is first retrieved from the transfo manager.</li>
+	<li>Then, one gets the surface limits (<code>GetLimits</code>).</li>
+	<li>Using the barycentric constructor of the surface parameter, the parameters 
+	of a corner is computed.</li>
+	<li>The evaluation of this parameter as a 3D point is then done: notice that 
+	the parameterization of the surface cannot be assumed: the mapping must be done 
+	by the object, even for canonical objects such as planes or lines. The normal 
+	is also computed.</li>
+	<li>A geometric line representing the mathematical normal is created.</li>
+</ul>
+<pre class="code">// Retrieves the duplicated surface
+ CATSurface * piTransfEggBox = (CATSurface*)(pTransfoManager-&gt;<strong>ReadImage</strong>(piEggBox));
+ if (NULL==piTransfEggBox)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+
+ // Gets its limits
+ piTransfEggBox -&gt;<strong>GetLimits</strong>(surLimits); 
+
+ <a name="First corner"></a>// First corner
+ CATSurParam surParam(1.,1.,surLimits);
+ CATMathDirection normal;
+ CATMathPoint mPoint;
+ piTransfEggBox-&gt;<strong>EvalPoint</strong>(surParam, mPoint);
+ piTransfEggBox-&gt;<strong>EvalNormal</strong>(surParam, normal);
+ <em>// Creates the <a name="trimmed line"></a>trimmed line representing the tangent</em>
+ piGeomFactory-&gt;<strong>CreateLine</strong>(mPoint,mPoint+10*normal);
+// ... and so one for the three remaining corners
+<strong>delete</strong> pTransfoManager;
+pTransfoManager = NULL;</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Container</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The use case illustrates how to create and use geometry.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaGobAttribute.htm">The Management 
+		of Foreign Data</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmTaGobClone.htm">The Clone 
+		and Transformation Managers</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmTaGobGeoObjects.htm">The 
+		Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAACgmTaGobCurves.htm">The Curves 
+		of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAACgmUcGobForeign.htm">Creating Foreign Surfaces</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Apr 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

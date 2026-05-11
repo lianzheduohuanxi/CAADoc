@@ -1,0 +1,291 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>ObjectSpecsLegacy Class CATOsmCatalogAccessServices</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../ObjectSpecsLegacy.htm" href="../ObjectSpecsLegacy.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "ObjectSpecsLegacy";	}
+		function getCurrentObjectName() { 
+ 	return "CATOsmCatalogAccessServices"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>ObjectSpecsLegacy <script type="text/javascript" > writeClassCharacteristic(); </script> CATOsmCatalogAccessServices</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATOsmCatalogAccessServices_51137','CATOsmCatalogAccessServices','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATOsmCatalogAccessServices</b>
+</p>
+<p>
+<b><i> Class grouping Feature Modeler services related to Catalog access.</i></b><br>
+
+ <b>Role</b>: This class allows to manage links between container and StartUp Catalogs.<br>
+ <b>Note</b>: It can be useful to remove from a document useless persistent links to StartUp Catalogs due to the use of AccessCatalog method,  which is now deprecated. <br>
+ When opening a document holding a link to a StartUp Catalog, a warning message will be raised if this Catalog is not found. This warning
+ will appear even if there is no Feature instances in the document.
+
+ <ul>
+ <li> All methods taking startup late types as argument, such as 
+CATICatalog or 
+<script type="text/javascript"> activateLinkAnchor('CATIOsmExtendable','AddExtension','CATIOsmExtendable.AddExtension') </script>, actually use  the links between the container and StartUp Catalogs to find the startup in Catalogs. <br> 
+ Note that the more catalogs are linked to a container, the less efficient the search is. </li>
+
+ <li> These links are useless for StartUp Catalogs saved after release CXR18. In later releases, there is indeed a new mecanism allowing to 
+ find startups in a more efficient way. <br>
+ This mecanism is implemented by 
+<script type="text/javascript"> activateLinkAnchor('CATOsmSUHandler','','CATOsmSUHandler') </script> class and it is recommended to use it, giving the catalog name as input argument to  the 
+<script type="text/javascript"> activateLinkAnchor('CATOsmSUHandler','','CATOsmSUHandler') </script> constructor for maximum efficiency. </li>
+ <li> The patterns 
+AccessCatalog / 
+CATICatalog / 
+<script type="text/javascript"> activateLinkAnchor('CATISpecObject','Instanciate','CATISpecObject.Instanciate') </script>, and 
+AccessCatalog /  
+<script type="text/javascript"> activateLinkAnchor('CATIOsmExtendable','AddExtension','CATIOsmExtendable.AddExtension') </script> must be replaced by 
+<script type="text/javascript"> activateLinkAnchor('CATOsmSUHandler','Instanciate','CATOsmSUHandler.Instanciate') </script> and 
+<script type="text/javascript"> activateLinkAnchor('CATIOsmExtendable','AddExtension','CATIOsmExtendable.AddExtension') </script> methods. </li> </ul>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATOsmSUHandler','','CATOsmSUHandler') </script>, CATICatalog, <script type="text/javascript"> activateLinkAnchor('CATIOsmExtendable','','CATIOsmExtendable') </script>
+</dl>
+</p>
+<hr>
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#IsCatalogLinkedToContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,CATBoolean&amp;)"><b>IsCatalogLinkedToContainer</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,CATBoolean&amp;)
+<dd>  Checks if a StartUp Catalog is linked to a container.
+ <dt> o 
+    <a href="#LinkCatalogToContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,IID&amp;,void**)"><b>LinkCatalogToContainer</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,IID&amp;,void**)
+<dd>  Links a StartUp Catalog to a container.
+ <dt> o 
+    <a href="#UnlinkCatalogFromContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*)"><b>UnlinkCatalogFromContainer</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*)
+<dd>  Unlinks a StartUp Catalog from a container.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="IsCatalogLinkedToContainer"></a><a name="IsCatalogLinkedToContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,CATBoolean&amp;)"></a> <dt> o <b>IsCatalogLinkedToContainer</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsCatalogLinkedToContainer</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCatalogName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iClientId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>ipiContainer</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oIsLinked</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks if a StartUp Catalog is linked to a container.
+ <br><b>Role</b>: This method checks if there is a link between the StartUp Catalog and the container.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCatalogName</tt>
+   <dd> [in]   The name of the StartUp Catalog, with its extension.
+ </dd>
+    <dt><tt> iClientId</tt>
+   <dd> [in]   The client identifier of the StartUp Catalog.
+ </dd>
+    <dt><tt> ipiContainer</tt>
+   <dd> [in]   An input container. 
+ </dd>
+    <dt><tt> oIsLinked</tt>
+   <dd> [out]   A (caller provided) boolean value in which the result will be stored.
+   <br><b>Legal values</b>:
+   <ul><li><tt>TRUE</tt>: if the StartUp Catalog is linked with the container.</li>
+       <li><tt>FALSE</tt>: if the StartUp Catalog is not linked with the container.</li></ul>
+   <br>If the method fails <tt>oIsLinked</tt> is not modified, it is otherwise overwritten with the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The catalog is linked to the container.</dd>
+     <dt>S_FALSE</dt>
+     <dd>The catalog is not linked to the container.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd>The catalog is not a CAA catalog.</dd> 
+     <dt>E_POINTER</dt>
+     <dd>The input container is null.</dd> 
+     <dt>E_ACCESSDENIED</dt>
+     <dd>The client identifier is not valid.</dd>
+     <dt>E_UNEXPECTED</dt>
+     <dd>There is no current session.</dd>
+     <dt>E_FAIL</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="LinkCatalogToContainer"></a><a name="LinkCatalogToContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*,IID&amp;,void**)"></a> <dt> o <b>LinkCatalogToContainer</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>LinkCatalogToContainer</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCatalogName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iClientId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>ipiContainer</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('IID','IID&amp;')</script> <td><tt>iIID</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('void','void**')</script> <td><tt>oPtr</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Links a StartUp Catalog to a container.
+ <br><b>Role</b>: This method creates a link between the StartUp Catalog and the container, provided the right client identifier is supplied.
+ <br><b>Note</b>:
+   A container can be linked to several StartUp Catalogs.<br>
+   After its creation, the link will persist in the document until the method 
+<script type="text/javascript"> activateLinkAnchor('','UnlinkCatalogFromContainer','UnlinkCatalogFromContainer') </script> is called. It means that the    link will still exists even if there is no Feature instances in the document.<br>
+   The only way to remove the link is to call the method 
+<script type="text/javascript"> activateLinkAnchor('','UnlinkCatalogFromContainer','UnlinkCatalogFromContainer') </script> . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCatalogName</tt>
+   <dd> [in]   The name of the StartUp Catalog, with its extension.
+ </dd>
+    <dt><tt> iClientId</tt>
+   <dd> [in]   The client identifier of the StartUp Catalog.
+ </dd>
+    <dt><tt> ipiContainer</tt>
+   <dd> [in]   A container to which the StartUp Catalog will be linked. 
+ </dd>
+    <dt><tt> iIID</tt>
+   <dd> [in]   The interface identifier for which a pointer is requested.
+ </dd>
+    <dt><tt> oPtr</tt>
+   <dd> [out, CATBaseUnknown#Release]   The address where the returned pointer to the interface is located.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The catalog has been successfully linked to the container.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd>The catalog is not a CAA catalog.</dd> 
+     <dt>E_POINTER</dt>
+     <dd>The input container or the output pointer is null, or both.</dd> 
+     <dt>E_ACCESSDENIED</dt>
+     <dd>The client identifier is not valid.</dd>
+     <dt>E_UNEXPECTED</dt>
+     <dd>There is no current session.</dd>
+     <dt>E_FAIL</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<a name="UnlinkCatalogFromContainer"></a><a name="UnlinkCatalogFromContainer(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIContainer*)"></a> <dt> o <b>UnlinkCatalogFromContainer</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UnlinkCatalogFromContainer</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCatalogName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iClientId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>ipiContainer</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Unlinks a StartUp Catalog from a container.
+ <br><b>Role</b>: This method removes the link between the StartUp Catalog and the container if any, provided the right client identifier is supplied.
+ <br><b>Note</b>: This method must be used to remove the link created by the method 
+<script type="text/javascript"> activateLinkAnchor('','LinkCatalogToContainer','LinkCatalogToContainer') </script> . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCatalogName</tt>
+   <dd> [in]   The name of the Fetaure Catalog, with its extension.
+ </dd>
+    <dt><tt> iClientId</tt>
+   <dd> [in]   The client identifier of the StartUp Catalog.
+ </dd>
+    <dt><tt> ipiContainer</tt>
+   <dd> [in]   A container to which the StartUp Catalog is linked. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     An HRESULT value.
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The catalog has been successfully linked to the container.</dd>
+     <dt>E_INVALIDARG</dt>
+     <dd>The catalog is not a CAA catalog.</dd> 
+     <dt>E_POINTER</dt>
+     <dd>The input container is null.</dd> 
+     <dt>E_ACCESSDENIED</dt>
+     <dd>The client identifier is not valid.</dd>
+     <dt>E_UNEXPECTED</dt>
+     <dd>There is no current session.</dd>
+     <dt>E_FAIL</dt>
+     <dd>Another failure has occured.</dd>
+  </dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATOsmCatalogAccessServices.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATObjectSpecsModeler</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

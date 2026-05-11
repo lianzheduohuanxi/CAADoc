@@ -1,0 +1,342 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Geometry with Machining Areas</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>3 Axis Surface Machining</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Geometry with Machining Areas</h3>
+      <i>Customize the geometry tab page of a surface machining operation with
+      machining areas</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAASmiUserOperationWithMA use case. It
+      explains how to assign a surface machining operation to an existing
+      machining area.</p>
+      <p>This paper accompanies the second scenario of <i>Surface Machining
+      Operation Sample</i> [<a href="#References">1</a>].</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASmiUserOperationWithMA Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASmiUserOperationWithMA Do</a></li>
+            <li><a href="#How">How to Launch CAASmiUserOperationWithMA</a></li>
+            <li><a href="#Where">Where to Find the CAASmiUserOperationWithMA
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p><font face="arial, Arial, Helvetica">Machining areas are V5 SMG native
+features used to define different zones on a part.</font></p>
+<p>This use case is intended to help you to manage geometry of a machining area
+assigned to a surface machining operation.</p>
+<p>More specifically, the CAASmiUserOperationWithMA Use Case shows how to:</p>
+<ul>
+  <li>overload the geometry tab page of a surface machining operation.</li>
+  <li>create a machining area.</li>
+  <li>access to the user interactive of machining areas.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASmiUserOperationWithMA Use Case</h3>
+<p>CAASmiUserOperationWithMA is a use case of the CAASurfaceMachiningItf.edu
+framework that illustrates Surface Machining capabilities. It is a part of the
+sample described in the technical article [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASmiUserOperationWithMA Do</h4>
+<p>The goal of this use case is to define the geometry interactive of <b>CAASmgOperationWithMA</b>,
+using machining areas properties.</p>
+<p>In the geometry tab page of CAASmgOperationWithMA<b>, </b>you can select a existing
+machining area and set its geometrical components (parts, checks, limit line and
+forbidden area):</p>
+<p><img border="0" src="images/CAASmiOperationWithMAPanel.jpg" width="465" height="513"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASmiUserOperationWithMA</h4>
+<p>This use case is a part of <i>Surface Machining Operation Sample</i> [<a href="#References">1</a>].
+You should build all the modules of this sample at a time to be able to launch
+it [<a href="#References">2</a>].</p>
+<p>Don't forget to edit the interface dictionary located in:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed, and uncomment the appropriate lines by removing the '#' character.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASmiUserOperationWithMA Code</h4>
+<p>This use case is made of source files located in the
+CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu
+framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAASmiUserOperationWithMA is divided into the following steps:</p>
+<ul>
+  <li><a href="#Step1">Implementing CATIMfgGeometryActivity</a></li>
+  <li><a href="#Step2">Creating a geometry dialog frame</a></li>
+</ul>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing CATIMfgGeometryActivity</h4>
+<p>To overload the geometry tab page, we should create an extension class that
+will implement <i>CATIMfgGeometryActivity</i>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Tie the implementation to its interface
+#include &quot;TIE_CATIMfgGeometryActivity.h&quot;
+TIE_CATIMfgGeometryActivity( CAAESmiUserOperationWithMAGeometryEditor);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<!---------------------------------comment------------------------------------->
+
+<p>In <i>GetMainPanelEditor, </i>we create a machining area (with <i>CATISmgFactory</i>)
+and associate it with CAASmgOperationWithMA. Then, we call the geometry dialog frame
+described below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  if (!!spFeatCont)
+  {
+    CATISmgFactory * pSmgFactory = NULL;
+    oRC = spFeatCont-&gt;QueryInterface(IID_CATISmgFactory, (void**) &amp;pSmgFactory);
+    if (SUCCEEDED(oRC))
+    {
+      // Creates a empty machining area
+      oRC = pSmgFactory-&gt;<b>CreateMachiningArea</b>(spMachFeature);
+      if (SUCCEEDED(oRC))
+      {
+        // Link the machining area to the activity
+        pActivity-&gt;SetFeature(spMachFeature);
+      }
+      pSmgFactory-&gt;Release();
+      pSmgFactory = NULL;
+    }
+    ...
+  }
+
+  // Creates the geometry frame
+  oFrame = new CAASmiUserOperationWithMAGeometryPanel(iFather,this);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a geometry dialog frame</h4>
+<p><i>CAASmiUserOperationWithMAGeometryPanel</i> is the frame of the geometry
+tab page of CAASmgOperationWithMA.</p>
+<p>In the constructor class, we build a dialog combo filled with all the
+machining areas in the model and we add a event notification sent whenever a
+value is selected in the combo list. Then, we get the <b>default dialog frame </b>of
+the selected<b> machining area</b> with the <i>CATIEdit</i> interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  // Creates a combo box
+  _pDlgCombo = new CATDlgCombo(this,&quot;DlgCombo&quot;,CATDlgCmbDropDown);
+  if (_pDlgCombo)
+  {
+    ...	
+    // Fills the combo box
+    if (!!spFeatCont)
+    {
+      // Finds all machining areas inside the model
+      _pListOfMAs = spFeatCont-&gt;ListMembers(&quot;CATIM3xFeature&quot;);		
+      int NumbOfMAs = _pListOfMAs.Size();
+      for (int i=1;i&lt;=NumbOfMAs;i++)
+      {  				
+        CATUnicodeString Name;
+        CATBaseUnknown_var spMachArea = _pListOfMAs[i];
+        if (!!spMachArea)
+        {
+          CATIAlias * pAlias = NULL;
+          HRESULT RC = spMachArea-&gt;QueryInterface(IID_CATIAlias, (void**) &amp;pAlias);
+          if (SUCCEEDED(RC))
+          {
+            Name = pAlias-&gt;GetAlias();
+            _pDlgCombo-&gt;SetLine(Name);
+            pAlias-&gt;Release();
+            pAlias = NULL;
+          }
+
+          if (spMachArea-&gt;IsEqual(spCurrentMachArea) == 1)
+            _pDlgCombo-&gt;SetSelect(i-1,0);
+        }
+      }
+    }
+
+    // Adds a callback 
+    AddAnalyseNotificationCB(
+      _pDlgCombo,
+      _pDlgCombo-&gt;GetComboSelectNotification(),
+      (CATCommandMethod) &amp;CAASmiUserOperationWithMAGeometryPanel::SelectMachArea,NULL);
+
+    // Creates the Machining Area editor
+    if (!!spCurrentMachArea)
+    {
+      CATIEdit * pEdit = NULL;
+      RC = spCurrentMachArea-&gt;QueryInterface(IID_CATIEdit, (void**) &amp;pEdit);
+      if (SUCCEEDED(RC))
+      {
+        CATDlgFrame * pMAFrame = pEdit-&gt;<b>GetPanelItem</b>(this,&quot;<b>MAFrameID</b>&quot;);
+        if (pMAFrame) 
+          pMAFrame-&gt;SetGridConstraints( 1, 0, 2, 1, CATGRID_4SIDES);
+        pEdit-&gt;Release();
+        pEdit = NULL;
+      }
+    }		
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>SelectMachArea</i> method is called whenever a new machining area is
+selected in the combo list. Here, the default dialog frame is updated with the <i>CATIEdit</i>
+interface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  // Refresh Machining Area Editor
+  CATIEdit * pEdit = NULL;
+  RC = spMA-&gt;QueryInterface(IID_CATIEdit, (void**) &amp;pEdit);
+  if (SUCCEEDED(RC))
+  {
+    // As a frame called &quot;MAFrameID&quot; has already been created, the method GetPanelItem
+    // will refresh it
+    pEdit-&gt;<b>GetPanelItem</b>(this,&quot;<b>MAFrameID</b>&quot;);
+    pEdit-&gt;Release();
+    pEdit = NULL;
+  }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use machining areas with a surface
+machining operation.</p>
+<ul>
+  <li>It first shows how to implement the <i>CATIMfgGeometryActivity</i>
+    interface to overload default geometry tab page.</li>
+  <li>Then, it shows how to create a machining area.</li>
+  <li>Finally, it describes how to access to default user interactive of
+    machining areas.</li>
+</ul>
+<p>We will see now how to compute the tool path of our operation [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASmiTechArticles/CAASmiOperationSampleOverview.htm">Surface
+      Machining Operation Sample Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASmiUserOperationWithMAToolPath.htm">Computing a Tool Path
+      with Machining Areas</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

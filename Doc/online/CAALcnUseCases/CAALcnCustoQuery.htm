@@ -1,0 +1,308 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding a New Query Dialog</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3d com</h1>
+    </td>
+    <td valign="top">&nbsp;</td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>Adding a New Query Dialog</h3>
+    <em>How to add a new dialog and execute a query from it</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article shows how to add a new panel in the Portal transient area
+    and execute a Query from it.</p>
+    <ul>
+      <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+      <li><a href="#UseCase"><b>The CAALCANavCustoQuery Use Case</b></a>
+        <ul>
+          <li><a href="#What">What Does CAALCANavCustoQuery Do</a></li>
+          <li><a href="#How">How to Launch CAALCANavCustoQuery</a></li>
+          <li><a href="#Where">Where to Find CAALCANavCustoQuery Code</a></li>
+        </ul>
+      </li>
+      <li><a href="#Step"><b>Step-by-Step</b></a></li>
+      <li><a href="#InShort"><b>In Short</b></a></li>
+      <li><a href="#References"><b>References</b></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you add a new dialog in the Portal transient
+area. This dialog is created with the CATJDialog APIs. It is displayed by selecting one row in a list and clicking
+a new icon added to the Toolbar and the Contextual Menu.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALCANavCustoQuery Use Case</h3>
+<p>CAALCANavCustoQuery is a use case of the CAALCANavigator.edu framework
+that illustrates the LCANavigator customization capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALCANavCustoQuery Do</h4>
+<p>For CAALCANavCustoQuery create a new command named <b>custoquery</b> and associate a new icon with it.
+For the command to be executed, implement the <code>execute</code> function in a class extending <i>LCANavCommand</i>.
+Finally create a new CATJDialog panel named <b>CustoQuery</b> which controller is <code>CAALcnCustoqueryController.java</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALCANavCustoQuery</h4>
+<p>To launch CAALCANavCustoQuery, you will need to set up the build time environment,
+then compile CAALCANavCustoQuery along with its prerequisites, set up the run
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Customize the untime view: Replace in the runtime view CustoTestGeneric.xml and rename it to Generic.xml</p>
+<ul>
+	<li>Create one action and click the Q icon</li>
+    <p align="center"><img border="0" src="images/CustoQuery1.jpg" width="820" height="562"></p>
+    <li>The object name to be queried is displayed. Click the OK button</li>
+    <p align="center"><img border="0" src="images/CustoQuery2.jpg" width="820" height="562"></p>
+    <li>The result of the query is displayed in a list</li>
+    <p align="center"><img border="0" src="images/CustoQuery3.jpg" width="820" height="562"></p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALCANavCustoQuery Code</h4>
+<p>The CAALCANavCustoQuery use case is made of a single module
+CAALcnCustoQuery.mj module of the CAALCANavigator.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALCANavigator.edu\CAALcnCustoQuery.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALCANavigator.edu/CAALcnCustoQuery.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the <b>custoquery</b>
+command and its panel, there are four steps:</p>
+<ol>
+  <li><a href="#Step1">Creating a the New Command</a></li>
+  <li><a href="#Step2">Creating a New Icon for the Command</a></li>
+  <li><a href="#Step3">Implementing the execute Function</a></li>
+  <li><a href="#Step4">Creating the New CATJDialog Panel</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a the New Command</h4>
+<p>Name the new command: <b>custoquery</b>.</p>
+<p>To map the new command to the desired action defined in the new command class :</p>
+<p>Create/Update manually the properties files to be deployed in the runtime view.</p>
+<p>Name the new command: <b>custoquery</b>.</p>
+<p>Create:/resources/pprregistry/command/definition/custoquery.xml  with the following content:</p>
+<p><pre>&lt;Command name="custoquery" readonly="true" icon="$/I_CMD_custoquery.gif" msgcatalog="CustoQuery"/&gt;</pre></p>
+<p>Update (for this new command to apply to all LCA types): /resources/pprregistry/command/ENOVIA/assignment/Generic.xml</p>
+<p>Add the following line:
+    <pre>&lt;Command  name="custoquery"    multiRowEnabled="false" enablement="true"  visibility="true"/&gt;</pre>
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a New Icon for the Command</h4>
+<p>Create a new icon of 16x16 pixels identifying the new command on the Toolbar/Contextual
+menu:</p>
+<ul>
+  <li>Name it: <b>I_CMD_custoquery</b></li>
+  <li>Place it in: Resources/graphic/icons/small</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Implementing the execute Function</h4>
+<p>In the new class <code>CAALcnCustobase.CAALcnCustocmds.command.custoquery.Generic.java</code> extending <i>LCANavCommand</i> implements the <code>
+execute</code> function:</p>
+   <table class="code">
+      <tr>
+        <td>
+        <b> This new class implement the "custoquery" command for </b>
+		<b> the object type "Generic" (the parent of all types.)</b>
+		<ul>
+		   <li>Retrieve the UUIDs of the selected objects</li>
+		   <li>Check if one and only one object was selectd</li>
+		   <li>Stack the CustoproQuery panel with the UUID for which the object will be queried</li>
+        </ul>
+        <pre>...
+public class Generic extends LCANavCommand
+{
+  public void execute( CATSession iSession )
+  {
+    String[] uuids = getUUIDs( iSession );
+	if( uuids == null || uuids.length == 0 ) {
+	  MessageStack.pushInfoMessage( "custoQuery", "NoObjectSelected", null, iSession );
+	  showStatusMessage( iSession, false );
+	  return;
+	}
+	else if ( uuids.length > 1 )
+	{
+	  MessageStack.pushInfoMessage( "custoQuery", "MoreThenOneObjectSelected", null, iSession );
+	  showStatusMessage( iSession, false );
+	  return;
+	}
+	String parms = "UUIDPARAM="+uuids[0];
+	this.stackSingleObjectDialog( iSession, "CustoQuery", parms );
+  }
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the New CATJDialog Panel</h4>
+<p>Create the new CATJDialog panel <b>CustoProperties</b> to be displayed in the
+transient area. The new controller extends <i>LCANavDialogController</i></p>
+<table class="code">
+  <tr>
+    <td>
+    <p>Call super in Create for the controller to automatically retrieve the document:</p>
+    <pre>...
+  public void onCreate( CATDialog iDialog, CATNotification iNotification, Object iData )
+  {
+    super.onCreate( iDialog, iNotification, iData );
+  }
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Implement the onDocumentChanged method:</p>
+    <ul>
+	  <li>Retrieve the selected UUIDs</li>
+	  <li>Retrieve the object</li>
+	  <li>Display the object name on the Query panel</li>
+	</ul>
+    <pre>...
+  public void onDocumentChanged(CATDialog iDialog, CATNotification iNotification, Object iData) {
+    String uuid = (String)getParameter("UUIDPARAM");
+    _dob =  LCANavUtils.getDataObject( iDialog.getSession(), uuid, ENOVTypeMask.READ_MASK);
+    _key.setTitle(_dob.getObjectName());
+  }
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Callbak implementation for OK (Run Query):</p>
+    <ul>
+	  <li>Create the query</li>
+	  <li>Add the criteria</li>
+	  <li>Run the query and fill the table with the rsult</li>
+	</ul>
+    <pre>...
+  public void onOK(CATDialog iDialog, CATNotification iNotification, Object iData)
+  {
+	ENOVIQuery query = ENOVQueryFactory.getQueryEngine(LCANavUtils.getLogonToken(iDialog));
+	query.initialize(_dob.getObjectType());
+	String val = _dob.getObjectName();
+	query.addCriteria("V_name", val);
+	try
+	{
+	  query.runQuery();
+	  _queryResults = query.getQueryResults();
+	  fillTable();
+	}
+	catch (ENOVWebException e){;}
+  }
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Fill list table with query result:</p>
+    <ul>
+	  <li>Retrieve object type</li>
+	  <li>Retrieve logon token</li>
+	  <li>Create a ENOVDataPPRTablemodel</li>
+	  <li>Add the model to the table to display the list</li>
+	</ul>
+    <pre>...
+  private void fillTable()
+  {
+    if( _queryResults == null || _queryResults.length == 0 )
+	  return;
+	String type = _dob.getObjectType();
+	ENOVILogonToken token = LCANavUtils.getLogonToken(_tableResults);
+	_model = new ENOVDataPPRTableModel( _tableResults, type, _queryResults, token, true);
+	_model.setPreferencePrefix("custoquerylist");//List specific Preferences for the list
+	_tableResults.setKeyModel( _model );
+	_tableResults.setMultipleSelection( true );
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Create the <b>CustoQuery.CATNls</b> file with the following content for all new NLS values</p>
+
+<p>Title="My Customized Query";</p>
+<p>Frame1.FrameInfo.Info.Title="Click OK to query :";</p>
+<p>Command.custoquery.title = "Customized Query";</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows hwo to create a command that can be executed from a new CATJDialog
+panel in the Portal transient area. First a new comand is created thanks to RADE,
+and a new icon is associated with it. Then the command code is created by extending
+<i>LCANavCommand</i> to implement the <code>execute</code> function. The CATJDialog
+panel is finally created along with its different callbacks to allow for triggering
+the server command.&nbsp; </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

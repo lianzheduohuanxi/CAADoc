@@ -1,0 +1,59 @@
+---
+title: "Chamfer"
+category: "use case"
+module: "CAACgmOperators"
+tags: ["CAAGMOperatorsInterfaces", "CATICGMDynAdvancedChamfer", "CAAGMOperatorsChamfer"]
+source_file: "Doc\online\CAACgmOperators\CAACgmUcTopChamfer.htm"
+converted: "2026-05-11T17:33:49.109308"
+---
+
+Chamfer  
+---  
+Use Case  
+Abstract Chamfering consists in removing or adding a flat section from a selected edge to create a beveled surface between the two original faces common to that edge. A chamfer can be propagated along one or several edges.
+    * Operator to be Used
+    * Use Case Description
+    * References  
+---  
+Operator to be Used To create a chamfer, use the CATICGMDynAdvancedChamfer operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateDynAdvancedChamfer global function. Use Case Description The CAAGMOperatorsChamfer.m module in CAAGMOperatorsInterfaces.edu illustrates how to create chamfers. This use case is to be run with the ChamferInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already familiar with geometric modeler use cases, go to [About Geometric Modeler Uses Cases](../CAACgmModel/CAACgmUcGMUseCases.htm).  With the input data below in which there are six edges to be chamfered (five top edges, plus one lateral edge in pink on figures): Fig.1 Chamfer Operation: Input Data ![Chamfer0](images/CGM_chamfer_0.png) | ![Chamfer1](images/CGM_chamfer_01.png)  
+---|---  
+Front view | Rear view  
+and the code below:
+    
+    CATListPtrCATFace listFaces;
+    CATDynChamferRibbon* pRibbon =  new CATDynChamferRibbon(iEdges, 
+                       listFaces,
+                       CATDynd1a1,
+                       50,  // distance from edge to be chamfered to face 
+                       45); // angle 45 deg
+    ...
+    CATICGMDynAdvancedChamfer *pChamferOp = CATCGMCreateDynAdvancedChamfer(iFactory, iTopData, iBody);
+    ...
+    pChamferOp->Append(pRibbon);
+    
+    pChamferOp->SetCornerCap();
+    pChamferOp->Run(); 
+    CATBody * pChamferBody = NULL;
+    pChamferBody = pChamferOp->GetResult();
+    ...
+    pChamferOp->Release();
+    pChamferOp = NULL;
+    if (NULL != pRibbon) 
+    {
+      delete pRibbon;
+      pRibbon = NULL;
+    }
+      
+  
+---  
+you get this result: Fig.2 Result of Chamfer Operation  ![Chamfer Result Cap Corner Front View ](images/CGM_chamfer_1.png) | ![Chamfer Result No Cap Corner Front view ](images/CGM_chamfer_2.png) | ![Chamfer Result Cap Corner Rear View ](images/CGM_chamfer_3.png)  
+---|---|---  
+Front view: Chamfer result | Rear view: No corner cap setting | Rear view: SetCornerCap  
+References [1] |  [ Building and Launching a Use Case](../CAADocUseCases/CAADocRunSample.htm)  
+---|---  
+[2] |  [About Geometric Modeler Use Cases](../CAACgmModel/CAACgmUcGMUseCases.htm)  
+[3] |  [How to Use Topological Operators](../CAACgmModel/CAACgmTaUseTopoOperators.htm)  
+[4] |  [Understanding Boolean Operators](CAACgmTaTopBoolean.htm)  
+[5] |  [Overview of Topological Operators](CAACgmUcTopOverview.htm)  
+History Version: **1** [Sept 2011] | Document created  
+---|---

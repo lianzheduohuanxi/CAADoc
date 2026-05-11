@@ -1,0 +1,259 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATSphere</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATSphere"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATSphere</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATSphere_19906','CATSphere','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATSphere</b>
+</p>
+<p>
+<b><i> Interface representing a geometric sphere.</i></b><br>
+
+ <br> The CATSphere is created by the <tt>CreateSphere</tt>
+ method of the <tt>CATGeoFactory</tt> interface and deleted with the <tt>Remove</tt> method. 
+ A sphere is defined by an axis and a radius. The third direction of the axis is the rotation
+ axis.
+ A piece of a full sphere is defined by limiting the meridian and parallel angles. 
+ The meridian planes pass through the axis third direction, 
+ the parallel planes are orthogonal to the axis third direction. A piece of a sphere 
+ is defined by:
+ <ul>
+ <li>Meridian start angle: 
+ the low angle value of the meridians. Positive angles are defined by the right-hand rule. 
+ <tt>Meridian start angle < Meridian end angle</tt>. 
+ If specified angles are too large, the surface is swept around 2*Pi.</li>
+ <li>Meridian end angle: 
+ the high angle value of the meridians. Positive angles are defined by the right-hand rule.
+ <tt>iMeridianStart < iMeridianEnd</tt>. 
+ If specified angles are too large, the surface is swept around 2*Pi.</li>
+ <li>Parallel start angle: 
+ the low angle value of the parallels. Positive angles are in the 
+ direction of the sphere axis. Angles are counted from 
+ the radius in the plane
+ defined by the first and second direction of the sphere axis. 
+ <tt>iParallelStart >= -Pi/2 </tt>; <tt>iParallelStart < iParallelEnd </tt> </li>
+ <li>Parallel end angle: 
+ the high angle value of the parallels. Positive angles are in the 
+ direction of the sphere axis. Angles are counted from 
+ the radius in the plane
+ defined by the first and second direction of the sphere axis. 
+ <tt>iParallelEnd <= Pi/2</tt>; <tt>iParallelStart < iParallelEnd </tt></li>
+ </ul></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetMeridianEndAngle()"><b>GetMeridianEndAngle</b></a>()
+<dd>  Returns the high limitation of the meridians existence of <tt>this</tt> CATSphere.
+ <dt> o 
+    <a href="#GetMeridianStartAngle()"><b>GetMeridianStartAngle</b></a>()
+<dd>  Returns the low limitation of the meridians existence of <tt>this</tt> CATSphere.
+ <dt> o 
+    <a href="#GetParallelEndAngle()"><b>GetParallelEndAngle</b></a>()
+<dd>  Returns the high limitation of the parallels existence of <tt>this</tt> CATSphere.
+ <dt> o 
+    <a href="#GetParallelStartAngle()"><b>GetParallelStartAngle</b></a>()
+<dd>  Returns the low limitation of the parallels existence of <tt>this</tt> CATSphere.
+ <dt> o 
+    <a href="#GetRadius()"><b>GetRadius</b></a>()
+<dd>  Returns the radius of the CATSphere.
+ <dt> o 
+    <a href="#Set(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)"><b>Set</b></a>(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)
+<dd>  Modifies all the characteristics of <tt>this</tt> CATSphere.
+ <dt> o 
+    <a href="#SetRadius(double)"><b>SetRadius</b></a>(double)
+<dd>  Modifies the radius of <tt>this</tt> CATSphere.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetMeridianEndAngle"></a><a name="GetMeridianEndAngle()"></a> <dt> o <b>GetMeridianEndAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetMeridianEndAngle</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high limitation of the meridians existence of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The high angle value of the meridians.
+</dl>
+</dl>
+<a name="GetMeridianStartAngle"></a><a name="GetMeridianStartAngle()"></a> <dt> o <b>GetMeridianStartAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetMeridianStartAngle</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low limitation of the meridians existence of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The low angle value of the meridians.
+</dl>
+</dl>
+<a name="GetParallelEndAngle"></a><a name="GetParallelEndAngle()"></a> <dt> o <b>GetParallelEndAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetParallelEndAngle</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high limitation of the parallels existence of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The high angle value of the parallels.
+</dl>
+</dl>
+<a name="GetParallelStartAngle"></a><a name="GetParallelStartAngle()"></a> <dt> o <b>GetParallelStartAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetParallelStartAngle</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low limitation of the parallels existence of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The low angle value of the parallels.
+</dl>
+</dl>
+<a name="GetRadius"></a><a name="GetRadius()"></a> <dt> o <b>GetRadius</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetRadius</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the radius of the CATSphere. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The radius value.
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(CATMathAxis&amp;,double,CATAngle,CATAngle,CATAngle,CATAngle)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis','CATMathAxis&amp;')</script> <td><tt>iAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMeridianStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iMeridianEnd</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iParallelStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iParallelEnd</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies all the characteristics of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The new axes system.
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd> The new radius.
+ </dd>
+    <dt><tt> iMeridianStart</tt>
+   <dd> The low angle value of the meridians.
+ </dd>
+    <dt><tt> iMeridianEnd</tt>
+   <dd> The high angle value of the meridians.
+ </dd>
+    <dt><tt> iParallelStart</tt>
+   <dd> The low angle value of the parallels.
+ </dd>
+    <dt><tt> iParallelEnd</tt>
+   <dd> The high angle value of the parallels.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetRadius"></a><a name="SetRadius(double)"></a> <dt> o <b>SetRadius</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetRadius</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRadius</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the radius of <tt>this</tt> CATSphere.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRadius</tt>
+   <dd> The new radius value.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATSphere.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

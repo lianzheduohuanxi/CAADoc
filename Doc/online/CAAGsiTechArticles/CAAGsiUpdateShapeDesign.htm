@@ -1,0 +1,215 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Updating Shape Design Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Shape Design& Styling</h1>
+    </td>
+    <td valign="top">
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Updating Shape Design Features</h3>
+      <em>Update and check linearity for Shape Design features </em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" width="1115">
+  <tr>
+    <td width="1109">
+      <h3>Abstract</h3>
+      This article discusses the CAAGsiObjectUpdate service.<ul>
+        <li><b><a href="#Learn">What is new in the update of Shape Design feature </a></b></li>
+        <ul>
+        <li><a href="#What">The CAAGsiObjectUpdate service of CAAAGsiService.h  header - Update 
+        Shape Design features</a></li>
+        <li><a href="#Where">Where to Find the CAAGsiServices Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What is new in the update of Shape Design features </h3>
+<p>Shape Design features can now be inserted in Body, OGS and GS.<br> Body and OGS are new set of features in which shape design features can be inserted 
+<br>They proposed enhanced mechanisms for feature (Absorbed main input, 
+Current feature for Shapes ) that required additional actions at 
+update for feature in Body and OGS context (GS is the former "Ooen Body") </p>
+
+<h3><a name="What"></a>The CAAGsiObjectUpdate Service of CAAGsiService,h header - 
+Update Shape Design features </h3>
+<p>CAAGsiServices encapsulates generic sequences of code.
+<br>CAAGsiObjectUpdate is an update method available for Shape Design features, Part 
+Design features to be used when features are inserted in Body, OGS and GS </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGsiServices Code</h4>
+<p>The CAAGsiServices header export a list of self-contain tools , 
+is located in PublicInterfaces of CAAGSMInterfaces.edu and is implements in the 
+CAAGsiServices.m module of the CAAGSMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiServices.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiServices.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAAGsiServices , CAAGsiObjectUpdate Step by Step
+<ol>
+  <li><a href="#Update">Use standard Mechanical Modeler Update on feature </a></li>
+  <li><a href="#Linear">Check insert location set and manage linearity if needed </a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Update"></a>Use standard Mechanical Modeler Update on feature</h4>
+
+<p> Mechanical Modeler update standard mechanism </p> 
+<table class="code">
+<tr>
+<td>
+<pre>// Update 
+// ---------------------------------------------------------------------------
+ExportedByCAAGsiServices HRESULT 
+CAAGsiObjectUpdate(const CATISpecObject_var &amp; ispSpec)
+{
+   ... 
+   HRESULT rc = S_OK ; 
+   CATTry { 
+    iStat = ispSpec -&gt; Update();
+    ...
+    }
+   // This block is specific for Update Errors
+   CATCatch(CATMfErrUpdate,error) {
+       cerr &lt;&lt; &quot; Update Error: &quot; &lt;&lt; (error-&gt; GetDiagnostic()).ConvertToChar() &lt;&lt; endl; 
+       return E_FAIL; 
+   } 
+   // This block treats every other exception
+   CATCatch(CATError,error) {
+       cerr &lt;&lt; &quot; Error: &quot; &lt;&lt; (error-&gt;GetMessageText()).ConvertToChar() &lt;&lt; endl; 
+       return E_FAIL; 
+   }
+   CATEndTry;
+   return rc ; 
+}
+</pre>
+</td>
+</tr>
+</table>
+
+
+<h4><a name="Linear"></a>Check insert location set and manage linearity if needed </h4>
+<p>To be done after feature update </p>
+<table class="code">
+<tr>
+<td>
+<pre>...
+// check Linearity / useful for absorbent feature inserted in OGS 
+CATISpecObject_var spFather = ispSpec-&gt;GetFather();
+if ( NULL_var != spFather )
+{
+   spFather -&gt; Release();
+   CATIGSMTool *piGSMToolFather = NULL;
+   rc =spFather-&gt;QueryInterface ( IID_CATIGSMTool, (void**)&amp;piGSMToolFather);
+   if ( SUCCEEDED(rc) ) { 
+     int IsAnAbsorbantSet = -1 ;
+     piGSMToolFather-&gt;GetType(IsAnbsorbantSet) ;
+     if ( 1 == IsAnAbsorbantSet ) {
+        CATBaseUnknown_var spUnkwnSpec = ispSpec;
+        rc = CATMmrLinearBodyServices::Insert(spUnkwnSpec) ; 
+    } 
+   piGSMToolFather-&gt;Release() ; piGSMToolFather=NULL; 
+}
+... 
+</pre>
+</td>
+</tr>
+</table>
+<p>Most of the case, it is recommended in applicative code to call 
+afterwards SetCurrentFeature method of CATIPrtPart Interface on the just 
+updated object : in CATIAV5 interactive function : Object just created or just edited are set as 
+current (Body and OGS) </p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+This service demonstrated how to implement absorbent mechanism at feature update 
+for shape design and part design features inserted in Body and/or OGS
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAGsiShapeDesignFeature.htm">About Generative Shape Design
+      Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAGsiCreateGSMTool.htm">Creating an Open Body</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAGsiUseCases/CAAGsiNozzleSample.htm">CAAGsiNozzle
+      Use case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+</html>

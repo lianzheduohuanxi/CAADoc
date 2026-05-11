@@ -1,0 +1,169 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Dumping the Topological Journal</title>
+<style type="text/css">
+.style1 {
+	text-decoration: underline;
+}
+.style2 {
+	color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Dumping the Topological Journal</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The journal describes the topological modifications brought to the input 
+		bodies to get the resulting body during a topological operation. The journal 
+		is filled under request by the topological operators. To display a 
+		journal on the standard output, you can use the CAAGMOperatorsDumpJournal use 
+		case. <span class="style1">This use case can be customized by those of you who want to modify 
+		or re-arrange the format of the orders.</span></p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsDumpJournal Use Case</a><ul>
+				<li><a href="#What">What Does CAAGMOperatorsDumpJournal Do</a></li>
+				<li><a href="#How">How to Call It</a></li>
+				<li><a href="#Where">Where to Find Examples</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The primary goal of the use case is to help you dump the journal orders. It 
+is also an illustration of :</p>
+<ul>
+	<li>how to scan a journal by using the <tt>CATCGMJournalList::Next method</tt></li>
+	<li>how to determine the type of an event (creation, modification...) by 
+	using <tt>CATCGMJournalListItem::GetType</tt></li>
+	<li>how to retrieve the parent objects for a given statement by using <tt>CATCGMJournalListItem::GetFirstObjs</tt></li>
+	<li>or how to retrieve the children object by using <tt>CATCGMJournalListItem::GetLastObjs.</tt></li>
+</ul>
+
+<p>See &quot;Topological Journal Principles&quot; [<a href="#References">1</a>]&nbsp; 
+&quot;Topological Journal Methodology&quot; [<a href="#References">2</a>] for more information about this 
+subject.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsDumpJournal Use Case</h2>
+<p>CAAGMOperatorsDumpJournal is a use case to be used as a <strong>shared library</strong>. It is 
+delivered in the CAAGMOperatorsInterfaces.edu framework 
+that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsDumpJournal Do</h3>
+<p>It dumps the topological journal on the standard output.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Call It</h3>
+<p>CAAGMOperatorsDumpJournal is a <strong>shared library</strong> which has to be included in the 
+Imakefile.mk file of your application, then you call the global function 
+CAAGMTopDumpJournal to dump the journal:</p>
+<pre class="code">
+#include CAAGMDumpJournal.h
+...
+CATCGMJournalList* pJournalToDump = ...;
+CAAGMTopDumpJournal(pJournalToDump);
+</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find Examples</h3>
+<p>The topological journal is dumped in the use cases below:</p>
+<ul>
+	<li>CAAGMOperatorsCheckGnOK.m</li>
+	<li>CAAGMOperatorsCheckGnKO.m</li>
+	<li>CAAGMOperatorsClashIntersect.m</li>
+	<li>CAAGMOperatorsBoundaryCreation.m</li>
+</ul>
+<p>which are all in the CAAGMOperatorsInterfaces.edu framework.</p>
+<h2><a name="Step"></a>Step-by-Step</h2>
+<ol>
+	<li>Scan the journal:
+	<pre class="code">CATCGMJournalItem* pJournalItem = Next-&gt;CastToReportItem();
+</pre>
+	</li>
+	<li>For each journal statement:
+<ol>
+ <li>get the input cells ("parent cells"):
+	<pre class="code">CATLISTP(CATGeometry) parentList;
+pJournalItem-&gt;GetFirstObjs(parentList);
+</pre>
+	</li>
+	<li>get the event type:
+	<pre class="code">CATCGMJournal::Type CGMEventType = pJournalItem-&gt;GetType();
+switch (CGMEventType)
+   {  
+     case CATCGMJournal::Creation:
+       {
+         cout &gt;&gt; "-&gt;Creation";
+         ...
+</pre>
+	</li>
+	<li>get the output cells ("children cells"):
+	<pre class="code">CATLISTP(CATGeometry) childrenList;
+pJournalItem-&gt;GetLastObjs(childrenList);
+</pre>
+	</li>
+	<li>get the associated "info data":
+<pre class="code">
+const CATCGMJournalInfo * journalInfo = pJournalItem-&gt;GetAssociatedInfo();
+</pre></li>
+</ol>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+	<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaTopJournal.htm"><span class="style2">Topological 
+		Journal Principles</span></a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="CAACgmTaTopJournalMethodology.htm">
+		<span class="style2">Topological Journal Methodology</span></a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [May 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+
+
+</body>
+
+</html>

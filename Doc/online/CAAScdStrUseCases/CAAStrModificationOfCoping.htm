@@ -1,0 +1,132 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en_us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Modifying Copings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Modifying Copings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Target Icon" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to Edit existing coping between structure objects.</p>
+		<p>This macro modifies SubType of Existing Coping created using CreateCoping Macro.</p>
+		<p>
+		<img alt="Starting Product" src="images/CAAScdStrCoping02.png" width="559" height="427">
+		</p>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Information Icon" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAAStrEditCoping is launched in CATIA [<a href="#References">1</a>]. 
+		Some documents are needed.</p>
+		<ul>
+			<li><a href="CAAStrModificationOfCopingSource.htm" target="Source">CAAStrEditCoping.CATScript</a> 
+			is located in the CAAScdStrUseCases module.
+			<a href="macros/CAAStrEditCoping.CATScript">Execute macro</a> (Windows 
+			only).</li>
+			<li>The document Product1.CATProduct is located in the CAAScdStrUseCases module in the samples directory. Part1.CATPart is linked to the previous document and it contains the grid used by the macro.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Scenario Icon" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAAStrEditCoping includes two steps:</p>
+		<ol>
+			<li><a href="#Prolog">Prolog</a></li>
+			<li><a href="#Step1">Retrieving Existing Coping and Modifying its SubType</a></li>
+		</ol>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Prolog"></a>Prolog</h4>
+		<pre class="code">Sub CATMain()
+
+  Dim StrWorkbench As StrWorkbench
+  Dim strFactory As StrObjectFactory
+
+  Set doc = CATIA.ActiveDocument
+  Dim rootProduct As Product
+  Set rootProduct = doc.Product
+
+  Set StrWorkbench = doc.GetWorkbench("StrWorkbench")
+    
+  Dim strPlates As strPlates
+  Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+   
+  Dim strMembers As strMembers
+  Set strMembers = rootProduct.GetTechnologicalObject("StructureMembers")</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step1"></a>Retrieving Existing Coping and Modifying its SubType</h4>
+		<p>The Existing coping can be searched by using the search method on selection.&#8221;Coping.1&#8221; is searched for in the entire product.</p>
+		<p>The subtype of 1st coping feature  is modifed to "CurrCurr".</p>
+		<pre class="code">  Dim selection1 As Selection
+  Set selection1 = doc.Selection
+
+  selection1.Search "Name='Coping.1',all"
+
+  Dim NibblingToEdit As StrNibblingFeature
+  Set NibblingToEdit = selection1.Item(1).Value
+
+  Dim SubTypeOfNibbling As String
+  SubTypeOfNibbling = NibblingToEdit.SubType
+
+  NibblingToEdit.SubType = "CurrCurr"
+
+End Sub</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+</table>
+<!-- -------------------------------comment--------------------------------- -->
+<p align="center">
+<img alt="End Task Icon" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit coping between structure objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top" width="40">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a macro</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<p><i>Copyright © 1999-2010, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

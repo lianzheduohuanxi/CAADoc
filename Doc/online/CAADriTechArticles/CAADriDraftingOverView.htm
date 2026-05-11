@@ -1,0 +1,465 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Drafting Modeler Overview</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Drafting</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Drafting Modeler Overview</h3>
+     <p><em>Describing the foundations of the Drafting Modeler</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the Drafting modeler foundations. &nbsp;</p>
+     <ul>
+       <li><b><a href="#Overview">Drafting Modeler Overview</a></b></li>
+       <li><b><a href="#Prerequisites">Drafting Product Prerequisites</a></b></li>
+       <li><b><a href="#Structure">Drafting Structuring Objects</a></b></li>
+       <li><b><a href="#2DGeometry">Drafting 2D Geometry Objects</a></b></li>
+       <li><b><a href="#2DConstraint">Drafting 2D Constraint Objects</a></b></li>
+       <li><b><a href="#Annotation">Drafting Annotation Objects</a></b></li>
+       <li><b><a href="#DressUp">Drafting Dress-up Objects</a></b></li>
+       <li><b><a href="#Generative Views">Drafting Generative Views</a></b></li>
+       <li><b><a href="#Generated Objects">Drafting Generated Objects</a></b></li>
+       <li><b><a href="#Additional">Additional Notions</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Overview"></a>Drafting Modeler Overview</h3>
+ <p>The Drafting application is in relation with several domains. The Drafting 
+ modeler enables you to automate tasks linked to these domains. See below the 
+ added value of the Drafting modeler.</p>
+ <table width="100%">
+   <tr>
+     <td width="50%">
+     <p align="center">
+     <img border="0" src="images/DraftingEcosystem.gif" width="410" height="286"></td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <p align="center">Main domains linked to the Drafting application</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <p align="center">
+     <img border="0" src="images/DraftingAddedValue.gif" width="526" height="434"></td>
+   </tr>
+   <tr>
+     <td width="50%">
+     <p align="center">Added value of the Drafting modeler</p>
+     <p>&nbsp;</td>
+   </tr>
+ </table>
+ <p align="left">The Drafting modeler manages geometry, constraint, annotation, 
+ dress-up and structuring objects (Sheet, View, Detail Sheet, Ditto). All 
+ elements created by the Drafting modeler are fully integrated in the Drawing 
+ document. That means, they will recognized by internal mechanism such as 
+ sketcher picking assistant, dimensioning, associative orientation and 
+ positioning and&nbsp; constraints.</p>
+ <table width="100%">
+   <tr>
+     <td width="50%">
+     <p align="center">
+     <img border="0" src="images/DraftingWorkBench.gif" width="485" height="462"></td>
+     <td width="50%">
+     <p style="margin-left: 15; margin-right: 15" align="left">The Drafting 
+     workbench is loaded and the current drawing sheet (Sheet.1) opens. The 
+     drawing specification tree is displayed to the left of the sheet. This tree 
+     shows aggregations between structuring objects. &quot;Front View&quot; view&nbsp; of 
+     &quot;Sheet.1&quot; sheet is the active view of the active sheet: That means all 
+     elements created by indication will be aggregated on this view. At the top 
+     of the document, a tab page manages the active sheet.</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>A drawing document is a collection of sheets, along with information on the 
+ drafting standard (ISO, ANSI, ASME and JIS).</p>
+ <p>The sheet corresponds to the paper space, where the following elements are 
+ positioned:</p>
+ <ol>
+   <li>One main view: this view supports the geometries directly created in the 
+   sheet</li>
+   <li>One background view: this view is dedicated to frame,&nbsp; title block, 
+   revision blocks and bill of materials</li>
+   <li>Any number of interactive and generative views.</li>
+ </ol>
+ <p>The view may contain:</p>
+ <ul>
+   <li><b>2D geometry</b>: Geometry created by using the drafting interactive 
+   commands. The CAA Sketcher modeler is used to create 2D geometry.</li>
+   <li><b>Generative results</b>: Non modifiable geometry created from 3D 
+   documents and linked to them.</li>
+   <li><b>Constraints</b>: Sketcher modeler is used to create constraints.</li>
+   <li><b>Annotations</b>: All elements containing text information: dimensions, 
+   texts, roughness symbols, welding symbols.</li>
+   <li><b>Dress up</b>: Area fill axis lines, center lines, arrows, threads.</li>
+ </ul>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Prerequisites"></a>Drafting Product Prerequisites</h3>
+ <p>The drafting application is managed by two products: </p>
+ <ul>
+   <li>Interactive drafting product that addresses 2D design and drawing 
+   production requirements.</li>
+   <li>Generative drafting product that provides functionalities to generate 
+   drawings from 3D parts and assembly definitions.</li>
+ </ul>
+ <p>These two products are prerequisite to develop an application based on 
+ Drafting modeler.</p>
+ <p>Two frameworks contain the drafting modeler API:</p>
+ <ul>
+   <li>DraftingInterfaces: This framework contains all drafting API except 
+   Detail, 2D geometry and constraint objects.</li>
+   <li>SketcherInterfaces: This framework is dedicated to manage sketcher 
+   component: detail, 2D geometry and constraint objects.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Structure"></a>Drafting Structuring objects </h3>
+ <p>The drawing application data is included in an applicative container: the 
+ drawing container may be obtained from drawing root by using <code>
+ GetFeatContainer</code> method [<a href="../CAADriUseCases/CAADriStructure.htm#Step2">1</a>].
+ </p>
+ <p>When a drawing document is created, the following objects are created at the 
+ same time:</p>
+ <ul>
+   <li>the Drawing container.</li>
+   <li>the Drawing root</li>
+   <li>The first sheet.</li>
+   <li>A main view aggregated by the first sheet.</li>
+   <li>A background view aggregated by the first sheet.</li>
+ </ul>
+ <p>The following steps are necessary to complete the drawing creation:</p>
+ <ul>
+   <li>Import a drawing standard [<a href="../CAADriUseCases/CAADriStructure.htm#Step3">1</a>].</li>
+   <li>Get the available format from the standard and apply it to the first 
+   sheet [<a href="../CAADriUseCases/CAADriStructure.htm#Step4">1</a>].</li>
+ </ul>
+ <p>The <i>CATIDrwFactory</i> interface implemented on drawing container enables 
+ you to create views or sheets and any objects which are not aggregated by a 
+ view. for example sheet, view, pattern, detail or relations.</p>
+ <p><i>Note: To create a sheet, it is better to use <code>the AddSheet</code> 
+ method of the CATIDftDrawing interface to take into account the sheet page 
+ manager [<a href="../CAADriUseCases/CAADriStructure.htm#Step5">1</a>].</i></p>
+ <p>A sheet aggregates views and a view aggregates all objects instantiated in 
+ it. There is always an active view in a sheet. To create objects directly in a 
+ sheet, the main view of the sheet has to be activated.</p>
+ <table width="100%">
+   <tr>
+     <td width="66%">
+     <p align="center">
+     <img border="0" src="images/StructuringObjectUML.gif" width="390" height="293"></td>
+   </tr>
+   <tr>
+     <td width="66%">
+     <p align="center">This figure shows the UML diagram of drafting structuring 
+     objects.</td>
+   </tr>
+ </table>
+ <p>A view inherits from sketch to manages 2D geometry and 2D constraints. Two 
+ kinds of geometry coexist in a view:</p>
+ <ul>
+   <li>2D geometry: geometry managed by the CAA sketcher modeler.</li>
+   <li>Generative geometry: geometry created in a generative view from 3D data.</li>
+ </ul>
+ <p>Two kinds of interfaces allow to get information on geometry:</p>
+ <ul>
+   <li>IDMxxx interfaces: these interfaces are implemented by 2D geometry as 
+   well as generative geometry.</li>
+   <li>CATI2Dxxx interfaces: these interfaces are only available with 2D 
+   geometry.</li>
+ </ul>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <h3><a name="2DGeometry"></a>Drafting 2D Compoment Objects </h3>
+ <p>A <a name="2D component">2D component</a> is a re-usable set of geometry and 
+ annotations. This component is located in a sheet and can be edited like a 
+ view. This is why this component is called Detail View. The 2D component can be 
+ instantiated several times, each instance providing a component with a specific 
+ orientation, position and scale. The detail view can be either in the same 
+ drawing as the CATDrawing of the corresponding instances or in a separate 
+ CATDrawing.</p>
+ <p>The Catalog Browser command allows to instantiate a ditto from an external 
+ CATDrawing document <i>CATDrawing1</i> in a new Drawing document <i>
+ CATDrawing2. </i>To do that, a special copy of <i>Detail Ref</i> is created (<i>Detail 
+ Ref2</i>) and an instance of this copy (Ditto Inst 1). <i>Detail Ref2 </i>
+ Detail is a <b><u>no accessible local reference</u></b> of the Reference Detail 
+ (Detail Ref).<i> See figure 1.</i></p>
+ <table border="1" style="border-collapse: collapse" bordercolor="#111111" width="63%" id="AutoNumber5">
+   <tr>
+     <td width="100%">
+     <p align="center"><i>Figure 1</i></td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <img border="0" src="images/detailditto.jpg" width="708" height="293"></td>
+   </tr>
+ </table>
+ <p class="MsoNormal">Detail Ref 2 can not be directly modified. Only Detail Ref 
+ can be modified. When you instantiate for the second time the ditto (from 
+ Detail Ref) , in the new CATDrawing <i>CATDrawing 2</i>, a new instance of the 
+ &#8220;copied&#8221; detail (Detail Ref2) is created (Ditto Inst 2).</p>
+ <p class="MsoNormal">No object can be modified in Ditto instance except Text 
+ modifiable in instance.</p>
+ <p class="MsoNormal"><b><u>Text modifiable in instance:</u></b></p>
+ <p class="MsoNormal">A modifiable text in instance is a text with a specific 
+ attribute to inform the system to duplicate the text when a ditto is 
+ instantiated. See under the way to access to modifiable objects in instance:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>// GetModifiableObjects method allows to retrieve texts modifiable in ditto piDitto</pre>
+     <pre>CATIADrawingComponent * piMyDrawComp = NULL;
+HRESULT rc = piMyDitto -&gt; QueryInterface (IID_CATIADrawingComponent,(void**)&amp;piMyDrawComp);
+if ( SUCCEEDED(rc) )
+{
+  long Count = 0;
+  piMyDrawComp -&gt; GetModifiableObjectsCount (Count);
+  for ( int Idx = 1; Idx&lt;=Count; Idx++ )
+  {
+    CATVariant Variant;
+    rc = BuildVariant ((long)Idx, Variant);
+    if ( SUCCEEDED(rc) )
+    {
+      CATIABase * piABase = NULL;
+      rc = piMyDrawComp -&gt; GetModifiableObject (Variant, <b>piABase</b>);
+      if ( SUCCEEDED(rc) )
+     {</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <h3><a name="2DGeometry"></a>Drafting 2D Geometry Objects </h3>
+ <p>These objects are created by using 2D wire frame factory defined in 
+ SketcherInterface framework. A pointer on <i>CATI2DWFFactory</i> interface may 
+ be obtained by using a <code>QueryInterface</code> on the view [<a href="../CAADriUseCases/CAADriStructure.htm#Step7">1</a>].</p>
+ <p>Notes:</p>
+ <ol>
+   <li>The view has to be activated to deal with 2D geometry. When a view is 
+   activated, associated sketch is in open edition, so geometry may be created.</li>
+   <li>If an interactive command deals with geometry, at the end of the 2D 
+   geometry creation step, <code>SaveEdition</code> method defined on <i>
+   CATISketchEditor</i> interface has to be executed. <i>CATISketch</i> 
+   interface inherits from <i>CATISketchEditor</i>, so, <code>SaveEdtion
+   <font face="Arial" size="2">may be executed from</font>
+   <font face="Arial" size="2"><i>CATISketch</i></font>
+   <font face="Arial" size="2">interface.</font></code></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="2DConstraint"></a>Drafting 2D Constraint objects </h3>
+ <p>These objects are created by using 2D constraint factory defined in 
+ SketcherInterface framework. A pointer on <i>CATI2DConstraintFactory</i> 
+ interface may be obtained by using a <code>QueryInterface</code> on the view. 
+ In this factory <font face="Courier New" style="font-size: 9pt">
+ CreateConstraint</font> method allows to create constraint in the view.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Annotation"></a>Drafting Annotation objects </h3>
+ <p>These objects are created by using drawing annotation factory. A pointer on
+ <i>CATIDrwAnnotationFactory</i> interface may be obtained by using a <code>
+ QueryInterface</code> on the view [<a href="../CAADriUseCases/CAADriCreateDim.htm#Step5">2</a>]. 
+ All the annotations inherit from AnnotationComponent object which inherits from 
+ Annotation object. <i>CATIDrwAnnotation</i> interface manages associative 
+ position and associative orientation between annotations or annotation and 
+ geometry. CATIDrwAnnotationComponent is dedicated to manage global informations 
+ relative to the annotation text.</p>
+ <p>When an annotation is modified feature has to be rebuild to get the result [<a href="../CAADriUseCases/CAADriDimDressup.htm#References">3</a>].</p>
+ <table border="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+   <tr>
+     <td width="60%" align="center">
+     <p align="center">
+     <img border="0" src="images/AnnotationObjectUML.gif" align="left" width="558" height="737"></td>
+   </tr>
+   <tr>
+     <td width="60%" align="center">
+     <p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     This figure shows the UML diagram of annotation objects</p>
+     <p align="left">&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="DressUp"></a>Drafting Dress-up objects </h3>
+ <p>These objects are created by using drawing annotation factory. A pointer on
+ <i>CATIDrwAnnotationFactory</i> interface may be obtained by using a <code>
+ QueryInterface</code> on the view. Sometime these elements require geometry to 
+ be created. The Center Line Creation sample explains how to create center line 
+ from 2D geometry or Generative Geometry [<a href="../CAADriUseCases/CAADriCenterLine.htm">4</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Generative Views"></a>Drafting Generative Views</h3>
+ <p>These views are created&nbsp; from 3D data coming from Product or Part type 
+ documents. To create a Generative Front View, a view with makeUp first has to 
+ be created, then the view typed by using
+ <font face="Courier New" style="font-size: 9pt">the SetViewType</font> method 
+ defined in <i>CATIView</i> interface. The
+ <font face="Courier New" style="font-size: 9pt">SetDoc</font> method allows to 
+ create a link between the Generative View and the 3D document. At last, define 
+ a projection plane in the view using the
+ <font face="Courier New" style="font-size: 9pt">SetProjectionPlane </font>
+ method of the <i>CATIGenerSpec</i> interface. A pointer to <i>CATIGenerSpec</i> 
+ interface may be retrieved from <i>CATIView</i> interface by using
+ <font face="Courier New" style="font-size: 9pt">GetGenerSpec</font> method. As 
+ any view, a Generative View has to be aggregated to a sheet by using
+ <font face="Courier New" style="font-size: 9pt">AddView</font> method on <i>
+ CATIDftSheet</i> interface. To get the result of a 3D projection in the view, 
+ call the <font face="Courier New" style="font-size: 9pt">Update</font> method 
+ on <i>CATIView</i> interface.</p>
+ <p>Particular Generative views may be easily created by using the following 
+ interface: <i>CATIDftGenViewFactory</i> interface. This interface is 
+ implemented by the sheet object:</p>
+ <ol>
+   <li>CreateViewFrom3D: To Create a generative Drawing View from TPS view. (TPS 
+   view is a 3D view created in Functional, Tolerancing and Annotation 
+   workbench) [<a href="../CAADriUseCases/CAADriCreateViewFrom3D.htm">5</a>].</li>
+   <li>CreateSectionView: To create a section from a parent view and a profile 
+   defined in the parent view.</li>
+   <li>CreateStandAloneSectionView: To create a section view with a cutting 
+   profile associative to 3D element. This 3D element may be a a Planar Face, a 
+   3D Sketch [<a href="../CAADriUseCases/CAADriCreateSectionFrom3DSketch.htm">6</a>] 
+   or Plane[<a href="../CAADriUseCases/CAADriCreateSectionFromPlane.htm">7</a>]&nbsp; 
+   . The cutting profile is associative to the 3D element.</li>
+ </ol>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Generated Objects"></a>Drafting Generated Objects </h3>
+ <p>These objects are automatically created when a Generative View is created or 
+ updated. Generative Geometry is defined from 3D Document and associated on it. 
+ Generative Geometry can not be edited, only graphic properties may be modified&nbsp; 
+ [<a href="../CAADriUseCases/CAADriGenGeomAccess.htm#References">8</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Additional"></a>Additional Notions</h3>
+ <p>The <i>CATIDrwAddIn</i> interface enables you to add a new command in 
+ drafting workbench. Interactive commands defined in CAADraftingInterfaces.edu 
+ framework have been plugged in a toolbar [<a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">9</a>].</p>
+ <p>The <i>CATIDftMultiSheet</i> interface, implemented by the sheet enables to 
+ keep an interactive command active when the active sheet is changing [<a href="../CAADriUseCases/CAADriMultiSheetCmd.htm">10</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <p align="right">&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <!---------------------------------comment------------------------------------->
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ </caption>
+ <table width="1151">
+   <tr>
+     <td vAlign="top" width="35">[1]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriStructure.htm">Create Sheets 
+     and Views in a CATDrawing Document</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[2]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriCreateDim.htm">Create a 
+     Distance Dimension Between on Interactive Geometry</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[3]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriDimDressup.htm">Editing 
+     Dimension Dress-Up</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[4]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriCenterLine.htm">Creating a 
+     Center Line in CATDrawing Document</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[5]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriCreateViewFrom3D.htm">Creating
+     <i>a view from 3D</i></a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[6]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriCreateSectionFrom3DSketch.htm">
+     Creating a Section view from a 3D Sketch</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[7]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriCreateSectionFromPlane.htm">
+     Creating a Section view from Plane</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[8]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriGenGeomAccess.htm">Editing 
+     Generetated Geometry in a Generative View</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[9]</td>
+     <td width="1112">
+     <a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+     Creating an Add-in</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="35">[10]</td>
+     <td width="1112">
+     <a href="../CAADriUseCases/CAADriMultiSheetCmd.htm">Create a 
+     Multisheet Interactive Command</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top" align="right" colSpan="2" width="1149">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This article has explained the foundations of the Drafting Modeler.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

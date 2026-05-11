@@ -1,0 +1,178 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>ApplicationFrame Interface CATICSOFilter</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../ApplicationFrame.htm" href="../ApplicationFrame.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "ApplicationFrame";	}
+		function getCurrentObjectName() { 
+ 	return "CATICSOFilter"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>ApplicationFrame Interface CATICSOFilter</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICSOFilter_23592','CATICSOFilter','0');</script>
+<p><b>Usage: you can freely reimplement this interface.</b></p>
+<hr>
+<p>
+ interface <b>CATICSOFilter</b>
+</p>
+<p>
+<b><i> Interface to disable the contextual menu commands for the selected objects.</i></b><br>
+ 
+ <b>Role:</b> After a selection, the Select command analyzes if the current UI-Active
+ object (see <script type="text/javascript"> activateLinkAnchor('CATIUIActivate','','CATIUIActivate') </script> ) implements this interface. If it does, the implementation of this interface will  decide which commands are to be made available. If it does not, then all the commands of the 
+ contextual menu are available. Before implementing this interface on your object, you must verify 
+ the context you are working in:
+ <ul>
+ <li>if your object is in a CATProduct context, then the ASMProduct which is the UI-Active object 
+ for a CATProduct document already implements this interface and disables all the commands 
+ other than: Cut, Copy, Paste and Delete. For these four commands, the ASMProduct requests a 
+ specific feature implementation and if none is found, the four commands are disabled.</li>
+ <li>if your object is in a CATPart context, then the MechanicalPart which is the UI-Active object
+ for a CATPart document, does not already implement this interface, so all the commands of the
+ contextual menu are available.</li>
+ </ul>
+ In short, before implementing this interface, if your object is the UI-Active object,
+ then you can implement this interface. Otherwise, verify the context to know if your 
+ implementation will be called.
+ <br><br>Note that it is always possible for a 
+<script type="text/javascript"> activateLinkAnchor('CATCommandHeader','','CATCommandHeader') </script> to decide to disable or not the command by overriding the 
+<script type="text/javascript"> activateLinkAnchor('CATCommandHeader','BecomeAvailable','CATCommandHeader.BecomeAvailable') </script> and  
+<script type="text/javascript"> activateLinkAnchor('CATCommandHeader','BecomeUnavailable','CATCommandHeader.BecomeUnavailable') </script> methods.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AvailableElements(char*,CATCSO*,CATListValCATBaseUnknown_var**)"><b>AvailableElements</b></a>(char*,CATCSO*,CATListValCATBaseUnknown_var**)
+<dd>  Query for available objects from CSO.
+ <dt> o 
+    <a href="#CommandIsAvailable(char*,CATCSO*)"><b>CommandIsAvailable</b></a>(char*,CATCSO*)
+<dd>  Query for command availability.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AvailableElements"></a><a name="AvailableElements(char*,CATCSO*,CATListValCATBaseUnknown_var**)"></a> <dt> o <b>AvailableElements</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AvailableElements</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iHeaderID</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCSO','CATCSO*')</script> <td><tt>iCSO</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var**')</script> <td><tt>ioAvailableElements</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Query for available objects from CSO.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iHeaderID</tt>
+   <dd>   command identifier
+ </dd>
+    <dt><tt> iCSO</tt>
+   <dd>  CSO to filter
+ </dd>
+    <dt><tt> ioAvailableElements</tt>
+   <dd>  available objets for command. In entry it contains the CSO's objects.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     S_OK
+</dl>
+</dl>
+<a name="CommandIsAvailable"></a><a name="CommandIsAvailable(char*,CATCSO*)"></a> <dt> o <b>CommandIsAvailable</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CommandIsAvailable</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iHeaderID</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCSO','CATCSO*')</script> <td><tt>iCSO</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Query for command availability.
+ <br><b>Role:</b>This method is called each time the CSO change. So the 
+ command avaibility can change in according the selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iHeaderID</tt>
+   <dd>   command identifier
+ </dd>
+    <dt><tt> iCSO</tt>
+   <dd>  CSO to filter
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     S_OK if command available for provided objects otherwise S_FALSE.
+   <br>E_FAIL if unexpected internal problem
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICSOFilter.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATApplicationFrame</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

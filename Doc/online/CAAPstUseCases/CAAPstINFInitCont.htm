@@ -1,0 +1,632 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Initializing the Applicative Container at Runtime</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Initializing the Applicative Container at Runtime</h3>
+      <em>Performing runtime initialization tasks</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures</a> &gt; <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</a>
+      &gt; <b>CAAPstINFInitCont</b> &gt; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a>
+      &gt; <a href="CAAPstINFVisu.htm">CAAPstINFVisu</a> &gt; <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp;
+      &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</a> &gt; <a href="CAAPstINFDelete.htm">CAAPstINFDelete</a>
+      &gt; <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPstINFInitCont use case. This use case
+      explains what necessary initialization tasks must be performed in order
+      for the provider and visualization mechanisms to be correctly declared to
+      the document during the loading process.&nbsp;
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstINFInitCont Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstINFInitCont Do</a></li>
+            <li><a href="#Launch">How to Launch CAAPstINFInitCont&nbsp;</a></li>
+            <li><a href="#Where">Where to Find the CAAPstINFInitCont Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate how to program the necessary
+initialization tasks that must be performed in order for certain feature
+behaviors to function correctly at runtime. One of these initialization tasks
+concerns the declaration of providers. Because the features created in this use
+case are &quot;from scratch&quot; features, meaning that they do not derive from
+any existing feature that may already be known to the navigation, visualization
+or update processes, it is necessary to use providers in order to be able to
+take them into account. The declaration of providers is not persistent to the
+document. It is necessary, therefore, to declare them each time the document is
+opened.&nbsp; Since providers refer to &quot;from scratch&quot; features that
+are stored in applicative containers, it seems reasonable, then, to perform the
+declaration of providers in the initialization process of the applicative
+container, which is called whenever the Product document is loaded into the
+session.&nbsp;Likewise, visualization connections between objects is also a
+non-persistent mechanism that has to be renewed at document load-time.
+Therefore, in this use case, you will see how to program the provider
+declarations that handle the integration of your new features in the navigation,
+visualization and update processes as well as how to connect the root features
+to the Product root and the aggregated features to their feature root in order
+to correctly structure the document for visualization purposes.&nbsp;
+<p>You should already be familiar with the CAAPstIntegrateNewFeatures use case
+article [<a href="#References">1</a>] in order to more easily understand the
+context of this particular use case. A general pre-requisite knowledge of the
+Feature Modeler and of Providers may be required to fully understand this
+sample. You may want to review the basics of the Feature Modeler by looking over
+the &quot;Feature Modeler Overview&quot; technical article [<a href="#References">2</a>].
+You may also want to look at the &quot;Using the Provider Mechanism&quot; use
+case [<a href="#References">3</a>] which describes the basics of the Provider
+mechanism. Finally, it may be useful for you to look over the &quot;Product
+Structure Model&quot; technical article [<a href="#References">4</a>] as well.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstINFInitCont Use Case</h3>
+<p>The CAAPstINFInitCont a use case that is part of the
+CAAPstIntegrateNewFeatures use case defined in the CAAProductStructure.edu
+framework that illustrates the integration of ObjectSpecsModeler,
+ObjectModelerBase and ProductStructure framework capabilities in the scope of a
+Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the CAAPstINFInitCont Use Case Do</h4>
+<p>This use case essentially describes the applicative container's
+implementation of the <i>CATInit</i> interface in which the necessary provider
+declarations and feature inter-connections are performed.</p>
+<p>Let's take a look at the contents of the Product document. Initially, the
+Product document is created and the &quot;CAAPstINFCont&quot; applicative
+container is created within it. Next, two &quot;CAAPstINFRoot&quot; features are
+instantiated in the applicative container, the first that will aggregate the
+other features and the second that will be used during the interactive scenario
+to demonstrate CCP capabilities. Five &quot;CAAPstINFPoint&quot; features are
+then instantiated in the applicative container, each having different coordinate
+values. A &quot;CAAPstINFLine&quot; feature is instantiated next, whose
+attribute values reference the first two &quot;CAAPstINFPoint&quot; features.
+Finally, a &quot;CAAPstINFWire&quot; feature is instantiated, whose attribute
+value references a list containing the last three &quot;CAAPstINFPoint&quot;
+features. The &quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; and
+&quot;CAAPstINFWire&quot; features are then aggregated by the first
+&quot;CAAPstINFRoot&quot; feature. Here are the contents of the new Product
+document:</p>
+<b>Fig. 1: Contents of the CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFCatalog.jpg" width="336" height="296"></td>
+  </tr>
+</table>
+<p>As you can see, the &quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; and
+&quot;CAAPstINFWire&quot; types of features are the elements in the list of
+components of the &quot;CAAPstINFRoot1&quot; feature. Also, notice that the
+&quot;CAAPstINFLine1&quot; attributes point to &quot;CAAPstINFPoint1&quot; and
+&quot;CAAPstINFPoint2&quot; through a &quot;SpecObject&quot; link and that
+the&nbsp; &quot;CAAPstINFWire1&quot; attribute points to a list containing the
+&quot;CAAPstINFPoint3&quot;, &quot;CAAPstINFPoint4&quot;,
+&quot;CAAPstINFPoint5&quot; features also through a &quot;SpecObject&quot;
+link.&nbsp;</p>
+<p>You can see, in this case, that the &quot;CAAPstINFRoot1&quot; feature
+aggregates the other features, meaning that if &quot;CAAPstINFRoot1&quot; were
+to be deleted, all of the aggregated features would be deleted as well. The
+&quot;CAAPstINFLine&quot; object, on the other hand, only references the two
+points that make up its definition, meaning that if it is deleted, the two
+points continue to exist independently. Inversely, however, if ever one of the
+two points is deleted, it is necessary to delete the line as well, since its
+definition will no longer be valid.</p>
+<p>Note that nowhere in this document have we specified where the
+&quot;CAAPstINFRoot&quot; nodes themselves are to be structured. This operation
+will take place during the initialization of the applicative container, at
+runtime. When the Product document is opened in the CATIA interactive session,
+the implementation of the <i>CATInit</i>::<code>Init</code> method for the
+&quot;CAAPstINFCont&quot; applicative container is executed. This method
+declares the provider implementations that will need to be executed during the
+navigation and visualization processes in order to structure the
+&quot;CAAPstINFRoot&quot; features under the Product root in the specs tree and
+to be able to visualize the geometry of the point and line features. So, when
+the document is finally visualized, it looks like this:</p>
+<b>Fig. 2: Initial loading of CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDocument.jpg" width="545" height="447"></td>
+  </tr>
+</table>
+<p>As you can see, the &quot;CAAPstINFRoot1&quot; and &quot;CAAPstINFRoot2&quot;
+features are structured directly under the Product root. This is defined in the
+navigation provider implementation. Remember that the navigation provider
+mechanism has been implemented for all products in a Product document. This
+means that during the navigation process, for each product node, any navigation
+provider that is currently declared to the document will be executed. So, in
+order to structure the &quot;CAAPstINFRoot&quot; features under the product
+root, the navigation provider code retrieves the &quot;CAAPstINFRoot&quot; types
+of features from the &quot;CAAPstINFCont&quot; applicative container and returns
+them as children nodes whenever the provider is called by the Product root
+object during the navigation process.</p>
+<p>Note also that the geometry of the points, line and wire is also visualized,
+whereas these are applicative features stored in an applicative container and
+are not automatically taken into account during the visualization process. In
+order these objects to be treated, a visualization provider must also have been
+declared, which, when called, returns the list of the aggregating feature root
+nodes. Then, the <i>CATI3DGeoVisu</i> implementation for each feature root as
+well as for each aggreagted object in order to define the visualization.</p>
+<p>Remember that &quot;CAAPstINFLine1&quot; is defined based on
+&quot;CAAPstINFPoint1&quot; and &quot;CAAPstINFPoint2&quot;. If ever one of
+these point features were to be modified, the line feature would have to be
+updated. But, because any number of features could be dependent on the same
+point feature for their own definition, the update process is implemented at the
+Product root level. The Product root, however, does not have any knowledge of
+all of the different &quot;from scratch&quot; features that may exist in the
+document. It is necessary, therefore, to declare an update provider that will be
+called by the Product root whenever it is requested to update.</p>
+<p>The scope of this use case, however, is not to illustrate the provider
+mechanism for these processes, but rather to demonstrate the construction of the
+document and the declaration of the necessary providers. Other use cases dealing
+with navigation [<a href="#References">5</a>], visualization [<a href="#References">6</a>]
+and update [<a href="#References">7</a>] will detail each of these processes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="Launch"></a>How to Launch the CAAPstINFInitCont Use Case</h4>
+<p>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures
+Use Case&quot; in the &quot;<a href="CAAPstIntegrateNewFeatures.htm">Integrating
+New Features in a Product Structure</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p>Specifically, the code described in this article is executed upon loading the
+Product document (you can use the CAAPstINFDocument.CATProduct document that can
+be found in the CNext/resources/graphic directory of the CAAProductStructure.edu
+framework) into the CATIA session. It is during the loading process that the
+initialization of any applicative containers occurs.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPstINFInitCont Code</h4>
+<p>This use case describes the implementation class of the <i>CATInit</i>
+interface, called <i>CAAEPstINFInitCont</i>, which is found in the
+CAAEPstINFInitCont.cpp source file and CAAEPstINFInitCont.h header file of the
+CAAPstINFModeler.m shared library.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstINFModeler.m</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstINFModeler.m</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="StepByStep"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAAPstINFInitCont:</p>
+<ol>
+  <li><a href="#DeclareProv">Declaring Available Providers to the Document</a></li>
+  <li><a href="#ConnectFeatures">Connecting Features to their Visualization
+    Roots&nbsp;</a></li>
+  <li><a href="#CCPFormat">Declaring the CCP Format</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><a name="DeclareProv"></a><b>Declaring Available Providers to
+the Document</b></p>
+<p align="left">The necessary declarations related to the applicative container
+that must be performed at runtime can be made in the implementation of the <code>Init</code>
+method of <i>CATInit</i>. This method is executed at the time the document is
+loaded into the interactive session. It essentially contains the declarations of
+the provider implementations that have been supplied in order to integrate new
+features in various CATIA mechanisms. In this use case, we illustrate the
+navigation, visualization and update providers. Following is the code of the
+implementation class called <i>CAAEPstINFInitCont</i> of the <i>CATInit</i>
+interface for the &quot;CAAPstINFCont&quot; applicative container defined in
+this use case. The code of this implementation can be found in the
+CAAEPstINFInitCont.cpp source file of the CAAPstINFModeler.m module.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>void CAAEPstINFInitCont::Init (CATBoolean destroyExistingData)   </b>
+{
+    cout &lt;&lt; &quot;***** CAAPstINFCont: CAAEPstINFInitCont::Init&quot; &lt;&lt; endl;
+
+    // Retrieve the current document
+    CATILinkableObject *piLinkableOnCont = NULL;
+    HRESULT rc = this -&gt; <b>QueryInterface</b>(IID_CATILinkableObject,
+                                        (void**) &amp;piLinkableOnCont);
+    if (!SUCCEEDED(rc)) return;
+
+    CATDocument *pDoc = piLinkableOnCont -&gt; <b>GetDocument</b>();
+    piLinkableOnCont -&gt; <b>Release</b>();
+    piLinkableOnCont = NULL;
+    if (NULL == pDoc) <b>return</b>;
+    cout &lt;&lt; &quot;Document retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+
+
+    // Retrieve a CATIProviders pointer on the current document
+    CATIProviders *piProvidersOnDocument = NULL;
+    rc = pDoc -&gt; <b>QueryInterface</b>(IID_CATIProviders,
+                                (void**) &amp;piProvidersOnDocument);
+    if (!SUCCEEDED(rc)) <b>return</b>;
+
+    // Declare the navigation provider to list the feature root(s) 
+    CAAPstINFNavigProviderRoot *pNavigProviderRoot = <b>new</b> CAAPstINFNavigProviderRoot();
+    rc = piProvidersOnDocument -&gt; <b>AddProvider</b> (CATINavigateProvider::ClassId(),
+	                                       pNavigProviderRoot);
+    pNavigProviderRoot -&gt; <b>Release</b>();
+    pNavigProviderRoot = NULL;
+
+    if (!SUCCEEDED(rc)) <b>return</b>;
+    else cout &lt;&lt; &quot;Navigation provider for root declared OK&quot; &lt;&lt; endl &lt;&lt; flush; 
+
+    // Declare the visualization provider to list the children of the applicative container 
+    CAAPstINFVisuProviderRoot *pVisuProviderRoot = <b>new</b> CAAPstINFVisuProviderRoot();
+    rc = piProvidersOnDocument -&gt; <b>AddProvider</b> (CATI3DVisuProvider::ClassId(),
+	                                       pVisuProviderRoot);
+    pVisuProviderRoot -&gt; <b>Release</b>();
+    pVisuProviderRoot = NULL;
+
+    if (!SUCCEEDED(rc)) <b>return</b>;
+    else cout &lt;&lt; &quot;Visualization provider declared OK&quot; &lt;&lt; endl &lt;&lt; flush; 
+
+    // Declare the line and wire feature update provider to re-build line and wire after modification
+    // of points 
+    CAAPstINFUpdateProviderLine *pUpdateProviderLine = <b>new</b> CAAPstINFUpdateProviderLine();
+    rc = piProvidersOnDocument -&gt; <b>AddProvider</b> (CATIUpdateProvider::ClassId(),
+	                                       pUpdateProviderLine);
+    pUpdateProviderLine -&gt; <b>Release</b>();
+    pUpdateProviderLine = NULL;
+
+    piProvidersOnDocument -&gt; <b>Release</b>();
+    piProvidersOnDocument = NULL;
+
+    if (!SUCCEEDED(rc)) <b>return</b>;
+    else cout &lt;&lt; &quot;Line and wire update provider declared OK&quot; &lt;&lt; endl &lt;&lt; flush; 
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Essentially, this method performs the provider declarations for
+navigation, visualization and update. Remember that providers are declared to
+the document. Therefore, it is first necessary to retrieve a <code>CATDocument</code>
+pointer to the current document. This is done through the <i>CATILinkableObject</i>::<code>GetDocument</code>
+method. Then, a <i>CATIProviders</i> interface pointer can be retrieved on the
+document. Using this interface, we can execute the <code>AddProvider</code>
+method for each provider implementation. This method takes the following
+arguments:</p>
+<ul>
+  <li>
+    <p align="left">Provider interface name: this is the <i>CLSID</i> of the
+    provider interface.</li>
+  <li>
+    <p align="left">Provider implementation object: this is a pointer to the
+    provider implementation corresponding to the interface declared in the first
+    argument.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p><b><a name="ConnectFeatures"></a>Connecting Features to their Visualization
+Roots</b></p>
+<p>In this section you will see how each feature root is connected to the
+Product root and each aggregated feature is connected to its feature root. This
+connecting operation is necessary in order for the visualization process to work
+correctly.</p>
+<p>1. Retrieve the Product root.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>    // Retrieve the Product root
+
+    CATIProduct *piRootProduct = NULL;
+	
+    CATIDocRoots* piDocRootsOnDoc = NULL;
+    rc = pDoc -&gt; <b>QueryInterface</b>(IID_CATIDocRoots,
+                                (void**) &amp;piDocRootsOnDoc);
+    if (SUCCEEDED(rc))
+    {
+       // Retrieve the root product which is the first element of root elements
+       CATListValCATBaseUnknown_var* pRootProducts = piDocRootsOnDoc -&gt; <b>GiveDocRoots</b>();
+       piDocRootsOnDoc -&gt; <b>Release</b>();
+       piDocRootsOnDoc = NULL;
+       CATBaseUnknown *pBaseRootProduct = NULL;
+   
+       if (pRootProducts &amp;&amp; pRootProducts-&gt;<b>Size</b>())
+       {  
+	  pBaseRootProduct = (*pRootProducts)[1];
+	  delete pRootProducts;
+	  pRootProducts = NULL;
+	  rc = pBaseRootProduct -&gt; <b>QueryInterface</b>(IID_CATIProduct,
+	                                          (void**) &amp;piRootProduct);
+          if (FAILED(rc)) <b>return</b>;
+       }
+    }
+    else <b>return</b>;
+...  </pre>
+    </td>
+  </tr>
+</table>
+<p>It is necessary to first retrieve the Product document's root because all the
+feature roots will be connected to it. In order to retrieve the product roots,
+we first need to retrieve a <i>CATIDocRoots</i> pointer on the current document.
+Then, using the <code>GiveDocRoots</code> method, we retrieve a list of
+products, the first of which is the Product document's root. We then save this
+object in a <i>CATIProduct</i> pointer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Connect the features to their roots.</p>
+<p>2.1 Retrieve a list of the applicative container's features.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>...
+    CATUnicodeString appliContIdentifier(&quot;PstINFContainer&quot;);
+    CATBaseUnknown *pApplicativeContainer = NULL;
+
+    rc = ::<b>CATGetApplicativeContainer</b> (&amp;pApplicativeContainer,   
+                                       pDoc,                     
+	  			       IID_CATIClientContainer,  
+                                       appliContIdentifier);     
+    if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Applicative container retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+    {
+       cout &lt;&lt; &quot;ERROR in retrieving applicative container&quot; &lt;&lt; endl &lt;&lt; flush;
+       <b>return</b>;
+    }
+
+    // Retrieve a pointer to CATIClientContainer in order to list the members
+    // of the applicative container.
+
+    <b>CATIClientContainer *piClientOnAppliCont = (CATIClientContainer *) pApplicativeContainer;</b>
+    
+    // Retrieve the list of features in the applicative container
+    CATUnicodeString clientId(&quot;CAAPstINFClientId&quot;); 
+    CATListPtrCATBaseUnknown *pMemberList = <b>new</b> CATListPtrCATBaseUnknown();
+    rc = piClientOnAppliCont -&gt; <b>ListMembers</b>(IID_CATISpecObject,
+                                            clientId,  
+                                            &amp;pMemberList);
+    pApplicativeContainer -&gt; <b>Release</b>();
+    pApplicativeContainer = NULL;
+
+    if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Member list retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+    { 
+       cout &lt;&lt; &quot;ERROR in retrieving member list&quot; &lt;&lt; endl &lt;&lt; flush;
+       <b>return</b>;
+    }
+
+    cout &lt;&lt; &quot;Number of members in applicative container: &quot; &lt;&lt; pMemberList-&gt;<b>Size</b>() &lt;&lt; endl &lt;&lt; flush;
+      
+    // Retrieve a CATIModelEvents pointer to the Product root
+    CATIModelEvents *piModelEventsOnProductRoot = NULL;
+    rc = piRootProduct -&gt; <b>QueryInterface</b>(IID_CATIModelEvents,
+                                         (void**) &amp;piModelEventsOnProductRoot);
+    if (FAILED(rc)) <b>return</b>;
+	
+    piRootProduct -&gt; <b>Release</b>();
+    piRootProduct = NULL;
+...	</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to retrieve the contents of the applicative container, we first need
+to get a pointer to the applicative container itself, which can be done using
+the <code>CATGetApplicativeContainer</code> global function. Then, since the <i>CATIClientContainer</i>
+interface was requested in this call, we can simply cast the returned <i>CATBaseUnknown</i>
+pointer to <i>CATIClientContainer</i> in order to access the <code>ListMembers</code>
+method. This method returns a list of all of the features contained in the
+applicative container. Once we have retrieved all of our features, we can
+prepare to connect them first of all to the Product root by retrieving a <i>CATIModelEvents</i>
+pointer on the Product root itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2.2 Connect the feature roots to the Product root.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>...
+    CATUnicodeString rootType(&quot;&quot;);
+    CATISpecObject *piSpecMember = NULL;
+    for(int i=1;i&lt;=pMemberList-&gt;<b>Size</b>();i++)
+    {
+       piSpecMember = (CATISpecObject *) (*pMemberList)[i];
+       rootType = piSpecMember -&gt; <b>GetType</b>();
+       if (rootType == &quot;CAAPstINFRoot&quot;)
+       {
+ 	  // Connect the feature root to the Product root
+	  piModelEventsOnProductRoot -&gt; <b>ConnectTo</b>((*pMemberList)[i]);       
+...          </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The list is scanned for &quot;CAAPstINFRoot&quot; feature types.
+When one is found, it is connected to the Product root using the <code>ConnectTo</code>
+method of <i>CATIModelEvents</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">2.3 Connect every aggregated feature to its root.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>...
+          // Retrieve the list of aggregated or referenced features
+          CATISpecAttrAccess *piSpecAttrAccessOnFeatureRoot = NULL;
+	  rc = (*pMemberList)[i] -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                                   (void**) &amp;piSpecAttrAccessOnFeatureRoot);
+	  if (FAILED(rc)) <b>return</b>;
+
+          CATUnicodeString keyName = &quot;ListOfComponents&quot;;
+	
+          CATISpecAttrKey *piComponentKey = piSpecAttrAccessOnFeatureRoot -&gt; <b>GetAttrKey</b> (keyName);
+	  if (NULL == piComponentKey) <b>return</b>;
+	      	  
+	  CATIModelEvents *piModelEventsOnFeatureRoot = NULL;
+	  rc = (*pMemberList)[i] -&gt; <b>QueryInterface</b>(IID_CATIModelEvents,
+                                                   (void**) &amp;piModelEventsOnFeatureRoot);
+	  if (FAILED(rc)) <b>return</b>;
+          
+	  CATISpecObject *piFeatureComponent = NULL;
+          piSpecAttrAccessOnFeatureRoot -&gt; <b>Beginning</b>(piComponentKey);
+          while (piSpecAttrAccessOnFeatureRoot -&gt; <b>Next</b>(piComponentKey))	
+	  {
+	     // Connect each feature to its root
+	     piFeatureComponent = piSpecAttrAccessOnFeatureRoot -&gt; <b>GetSpecObject</b>(piComponentKey);	
+             piModelEventsOnFeatureRoot -&gt; <b>ConnectTo</b>((CATBaseUnknown *)piFeatureComponent);
+	     piFeatureComponent = NULL;
+          }
+
+          piSpecAttrAccessOnFeatureRoot -&gt; <b>Release</b>();
+          piSpecAttrAccessOnFeatureRoot = NULL;
+
+	  piComponentKey -&gt; <b>Release</b>();
+	  piComponentKey = NULL;
+
+	  piModelEventsOnFeatureRoot -&gt; <b>Release</b>();
+	  piModelEventsOnFeatureRoot = NULL;
+   
+      }
+      (*pMemberList)[i] -&gt; <b>Release</b>();
+      (*pMemberList)[i] = NULL;
+      piSpecMember = NULL;
+    }
+    piModelEventsOnProductRoot -&gt; <b>Release</b>();
+    piModelEventsOnProductRoot = NULL;
+    <b>delete</b> pMemberList;
+    pMemberList = NULL;
+...   </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">For each feature root, we would now like to retrieve every
+feature it aggregates and connect this feature to it. In order to do this, we
+first need to get a <i>CATISpecAttrAccess</i> pointer on the feature root. Then,
+using the <code>GetAttrKey</code> method, we can retrieve the attribute key
+pointing to the list of features. Next, we prepare to connect the aggregated
+features by retrieving a <i>CATIModelEvents</i> pointer on the feature root.
+Note that an implementation of this interface for the feature root must already
+have been provided. Now we can scan through the list of features using the <code>Beginning</code>
+and <code>Next</code> methods of <i>CATISpecAttrAccess</i> and retrieve a
+pointer to each feature using the <code>GetSpecObject</code> method. Finally,
+each aggregated feature can be connected to its root using the <code>ConnectTo</code>
+method of <i>CATIModelEvents</i>.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CCPFormat"></a>Declaring the CCP Format</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>...
+    // Declare the CCP Format
+    <b>::SpecBindNativeFormat(&quot;CAAPstINFCont&quot;);
+...</b>    </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">In order for the Cut/Copy/Paste mechanism to function correctly
+on the applicative container, it is necessary to declare it as the CCP format
+using the <code>SpecBindNativeFormat</code> global function.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAPstINFInitCont use case has shown you how to initialize the
+applicative container at runtime so that navigation, visualization and update
+processes can account for these new features through provider declarations and
+visualization connections.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="893">
+  <tbody>
+    <tr>
+      <td valign="top" width="40">[1]</td>
+      <td width="839"><a href="CAAPstIntegrateNewFeatures.htm">Integrating New
+        Features in a Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[2]</td>
+      <td width="839">Feature Modeler Overview</td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[3]</td>
+      <td width="839"><a href="CAAPstProviders.htm">Using the Provider Mechanism</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[4]</td>
+      <td width="839"><a href="../CAAPstTechArticles/CAAPstModel.htm">The
+        Product Structure Model</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[5]</td>
+      <td width="839"><a href="CAAPstINFNavigate.htm">Enabling the Navigation of
+        New Features in a Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[6]</td>
+      <td width="839">Enabling the Visualization of New Features in a Product
+        Document</td>
+    </tr>
+    <tr>
+      <td valign="top" width="40">[7]</td>
+      <td width="839"><a href="CAAPstINFUpdate.htm">Enabling New Features in a
+        Product Document to be Updated</a></td>
+    </tr>
+    <tr>
+      <td valign="top" width="40"></td>
+      <td width="839"></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2" width="885">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [June 2002]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

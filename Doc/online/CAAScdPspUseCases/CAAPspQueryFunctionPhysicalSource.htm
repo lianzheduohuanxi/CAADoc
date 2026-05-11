@@ -1,0 +1,391 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspQueryFunctionPhysical.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspFunctional, CATIAPspPhysical and CATIAPspSpatial</font>
+<font color="#008000">'   Assumption:   Looks for document CAAPspEduIn.CATProduct'  </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspQueryFunctionPhysical.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+<font color="#0000FF">    Dim </font>objPspResource   <font color="#0000FF"> As </font>PspResource
+    
+
+<font color="#0000FF">    Dim </font>objPspPhysical   <font color="#0000FF"> As </font>PspPhysical
+<font color="#0000FF">    Dim </font>objPspSpatial    <font color="#0000FF"> As </font>PspSpatial
+<font color="#0000FF">    Dim </font>objPspFunctional <font color="#0000FF"> As </font>PspFunctional
+
+<font color="#0000FF">    Dim </font>objPspPhyID      <font color="#0000FF"> As </font>PspID
+<font color="#0000FF">    Dim </font>objPhyPspObject  <font color="#0000FF"> As </font>PspObject
+
+
+    
+<font color="#0000FF">    Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">    Dim </font>intNbPhysical    <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>ePspIDLDomainID  <font color="#0000FF"> As </font>CatPspIDLDomainID
+<font color="#0000FF">    Dim </font>objLStrAttrNames <font color="#0000FF"> As </font>PspListOfBSTRs
+
+<font color="#0000FF">    Dim </font>intIndex         <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intNbAttr        <font color="#0000FF"> As </font>Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+    
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getting objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get  a PspPhysical object in the Piping domain</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+<font color="#0000FF">      Set </font>objPspResource = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspResource", _
+                                                objPspApplication )      
+
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then      </font>
+
+<font color="#0000FF">        Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">        If </font>( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">          Set </font>objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get Spatial object and Functional Object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+
+<font color="#0000FF">      Set </font>objPspSpatial = objPspPhysical.GetSpatial     
+<font color="#0000FF">      Set </font>objPspFunctional = objPspPhysical.GetFunctional           
+<font color="#0000FF">      Set </font>objPspPhyID = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspID", _
+                                                    objPspPhysical )      
+<font color="#0000FF">      Set </font>objPhyPspObject = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspObject", _
+                                                    objPspPhysical )
+
+<font color="#0000FF">      If </font>( Not (objPspPhyID Is Nothing) )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Physical object ID =" &  objPspPhyID.GetID & vbCr               
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Query Spatial Information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    
+    If( Not ( objPspSpatial Is Nothing ))<font color="#0000FF"> Then</font>
+        QuerySpatial objPspSpatial
+<font color="#0000FF">    End if</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Query Functional-Physical Information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    If( Not ( objPspFunctional Is Nothing ) And _
+        Not ( objPspPhysical Is Nothing ) And _
+        Not ( objPspResource Is Nothing )   )<font color="#0000FF"> Then</font>
+            
+      QueryFunctionalPhysical objPspPhysical, objPhyPspObject, _
+                              objPspFunctional, objPspResource
+<font color="#0000FF">    End if</font>
+
+ 
+
+    strMessage_g = strMessage_g & _
+      "---------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QuerySpatial methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspSpatialArg        : PspSpatial object</font>
+<font color="#008000">' |        </font>
+<font color="#008000">' |        </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+Private Sub QuerySpatial (objPspSpatialArg<font color="#0000FF"> As </font>PspSpatial)  
+<font color="#0000FF">    Dim </font>objLPhysAssocSpatial <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">    Dim </font>intNbPhysicals       <font color="#0000FF"> As </font>Integer
+        
+<font color="#0000FF">    Dim </font>bIsIDGenerated  <font color="#0000FF"> As </font>Boolean
+    
+<font color="#0000FF">    If </font>( Not ( objPspSpatialArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      <font color="#008000">'--------------</font>
+      <font color="#008000">' Get list of physical objects associate with spatial object</font>
+<font color="#0000FF">      Set </font>objLPhysAssocSpatial = objPspSpatialArg.Physicals
+
+<font color="#0000FF">      If </font>( Not ( objLPhysAssocSpatial Is Nothing ) )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbPhysicals = objLPhysAssocSpatial.Count
+        
+        strMessage_g = strMessage_g & _
+           "Number of Physicals Associate with spatial=" & intNbPhysicals & vbCr                 
+      
+<font color="#0000FF">      End If       </font>
+<font color="#0000FF">    End If </font>
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryFunctionalPhysical : Query Functional physical integration</font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspPhysicalArg    :  PspPhysical object</font>
+<font color="#008000">' |        objPspPhysicalArg    :  PspObject object</font>
+<font color="#008000">' |        objPspFunctionalArg  :  PspFunctional object</font>
+<font color="#008000">' |        objPspResourceArg    :  PspResource object  </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+
+Private Sub QueryFunctionalPhysical (objPspPhysicalArg<font color="#0000FF"> As </font>PspPhysical, _
+                               objPhysicalPspObjArg   <font color="#0000FF"> As </font>PspObject, _
+                               objPspFuncArg<font color="#0000FF"> As </font>PspFunctional, _
+                               objPspResourceArg<font color="#0000FF"> As </font>PspResource )  
+
+<font color="#0000FF">    Dim </font>objLPhysicals          <font color="#0000FF"> As </font>PspListOfObjects
+
+<font color="#0000FF">    Dim </font>objLStrCompPartTypes   <font color="#0000FF"> As </font>PspListOfBSTRs
+        
+
+<font color="#0000FF">    Dim </font> strStdName            <font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font> strPartType           <font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font> strPartNumber         <font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font> strResNamePipingParts <font color="#0000FF"> As </font>String
+
+<font color="#0000FF">    Dim </font> strCatalogPartName    <font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font> strPartCatName        <font color="#0000FF"> As </font>String
+
+<font color="#0000FF">    Dim </font> bIsSpecDriven         <font color="#0000FF"> As </font>CATBoolean
+<font color="#0000FF">    Dim </font> bIsRealized           <font color="#0000FF"> As </font>CATBoolean
+<font color="#0000FF">    Dim </font> bIsOkToIntegrate      <font color="#0000FF"> As </font>CATBoolean
+
+<font color="#0000FF">    Dim </font> iNbCompPTypes         <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font><font color="#0000FF"> int</font>Idx                <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font> strCompPType          <font color="#0000FF"> As </font>String
+    
+
+    strStdName = "ASTL"
+    strResNamePipingParts = "PipingPartsCatalog"
+
+<font color="#0000FF">    If </font>( Not ( objPspFuncArg Is Nothing ) And _
+         Not ( objPspPhysicalArg Is Nothing ) )<font color="#0000FF"> Then               </font>
+      <font color="#008000">'--------------------------</font>
+      <font color="#008000">' Check if the function object IsSpecDriven</font>
+      
+      bIsSpecDriven = objPspFuncArg.IsSpecDriven
+
+<font color="#0000FF">      If </font>( bIsSpecDriven )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & _
+               "Function object is Spec driven" & vbCr                         
+      Else 
+        strMessage_g = strMessage_g & _
+               "Function object is not Spec driven" & vbCr                         
+<font color="#0000FF">      End If </font>
+
+      <font color="#008000">'-------------------------------------------------------</font>
+      <font color="#008000">' Check if Function object is associated with a placed</font>
+      <font color="#008000">' physial part</font>
+
+      bIsRealized = objPspFuncArg.IsRealized
+
+      
+<font color="#0000FF">      If </font>( bIsSpecDriven )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & _
+               "Function object is Realized" & vbCr                         
+      Else 
+        strMessage_g = strMessage_g & _
+               "Function object is not Realized" & vbCr                         
+<font color="#0000FF">      End If </font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Compatible part types</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLStrCompPartTypes = objPspFuncArg.GetCompatiblePartTypes (strStdName)
+
+<font color="#0000FF">      If </font>( Not ( objLStrCompPartTypes Is Nothing ) )<font color="#0000FF"> Then  </font>
+        iNbCompPTypes = objLStrCompPartTypes.Count
+<font color="#0000FF">        If </font>( iNbCompPTypes &gt; 10 )<font color="#0000FF"> Then</font>
+           iNbCompPTypes = 10
+<font color="#0000FF">       End If</font>
+          
+        strMessage_g = strMessage_g & _
+               "Number of compatible part types =" &  iNbCompPTypes & vbCr    
+<font color="#0000FF">        For </font>intIdx = 1<font color="#0000FF"> To </font>iNbCompPTypes 
+          strCompPType = objLStrCompPartTypes.Item (intIdx)
+          strMessage_g = strMessage_g & _
+               "Compatible part type = " &  strCompPType & vbCr    
+          
+<font color="#0000FF">        Next </font>
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Physical startup type</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">      If </font>( Not ( objPhysicalPspObjArg Is Nothing ) )<font color="#0000FF"> Then  </font>
+        strPartType = objPhysicalPspObjArg.StartupType
+        strMessage_g = strMessage_g & _
+               "Compatible Startup part type = " &  strPartType & vbCr    
+
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get PipingPartsCatalog full path </font>
+      <font color="#008000">'-----------------------------------------</font>
+<font color="#0000FF">      If </font>( Not ( objPspResourceArg Is Nothing ) )<font color="#0000FF"> Then  </font>
+        strCatalogPartName = objPspResourceArg.GetResourcePath( strResNamePipingParts)      
+<font color="#0000FF">        If </font>( strPartType &lt;&gt; "" ) Then
+          strMessage_g = strMessage_g & _
+               "PipingPartsCatalog= " & _
+                strCatalogPartName & vbCr    
+<font color="#0000FF">        End If</font>
+
+<font color="#0000FF">      End If</font>
+      
+<font color="#0000FF">      Set </font>objLPhysicals = objPspFuncArg.Physicals
+
+<font color="#0000FF">      If </font>( Not ( objLPhysicals Is Nothing ) )<font color="#0000FF"> Then  </font>
+        strMessage_g = strMessage_g & _
+          "Number of associated Physicals = " &  objLPhysicals.Count & vbCr          
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Part Type of the associated physical object</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+
+      strPartType   = objPspFuncArg.PartType 
+
+<font color="#0000FF">      If </font>( strPartType &lt;&gt; "" ) Then
+        strMessage_g = strMessage_g & _
+               "Part type of physical object that realized this function = " & _
+                strPartType & vbCr    
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Part Number of the associated physical object</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      strPartNumber = objPspFuncArg.PartNumber
+<font color="#0000FF">      If </font>( strPartNumber &lt;&gt; "" ) Then
+        strMessage_g = strMessage_g & _
+               "Part Number of physical object that realized this function = " & _
+                strPartNumber & vbCr    
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Get Catalog Part name of the associated physical object</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      strCatalogPartName= objPspFuncArg.CatalogPartName
+<font color="#0000FF">      If </font>( strCatalogPartName &lt;&gt; "" ) Then
+        strMessage_g = strMessage_g & _
+               "CatalogPartName of physical object that realized this function = " & _
+                strCatalogPartName & vbCr    
+<font color="#0000FF">      End If</font>
+
+      
+    
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Check if the associated Physical object is OK to integrate</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+      bIsOkToIntegrate = objPspFuncArg.IsOKToIntegrate
+
+<font color="#0000FF">      If </font>( bIsOkToIntegrate)<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & _
+               "Function object is ok to integrate." & vbCr
+                
+      Else
+        strMessage_g = strMessage_g & _
+               "Function object is not ok to integrate" & vbCr
+<font color="#0000FF">      End If</font>
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Function status</font>
+      <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">      Dim </font>eFunctionStatus<font color="#0000FF"> As </font>CatPspIDLFunctionStatus 
+      eFunctionStatus = objPspFuncArg.FunctionStatus       
+          
+<font color="#0000FF">    End If </font>
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

@@ -1,0 +1,222 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Migrating an Existing Customization</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>RADE</h1>
+		</td>
+		<td valign="top">
+		<h2>Data Model Customizer for ENOVIA</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Migrating an Existing Customization</h3>
+		<p><em>Customizing ENOVIA</em></p>
+		</td>
+	</tr>
+	<tr>
+		<td class="quick" colspan="2">Quick Reference</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article explains how to migrate a customized data structure created 
+		through the RADE tools from an ENOVIA version N to a subsequent version 
+		of ENOVIA. This is a necessary step that needs to be done after you have 
+		applied the standard migration process provided with the new version of 
+		ENOVIA. </p>
+		<ul>
+			<li><a href="#Migrate_the_workspace"><strong>Migrating the ENOVIA
+			Customization</strong></a> </li>
+			<li><a href="#Publishing_the_workspace"><strong>Publishing the
+			Migrated Customization</strong></a>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Migrate_the_workspace">Migrating the ENOVIA Customization</a></h3>
+<p>Migrating an ENOVIA customization consists first in migrating the CAA workspace 
+defining this customization. </p>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="table3">
+	<tr>
+		<td width="100%" valign="top">
+		<ol>
+			<li>From the <code><font color="#008040">
+			File</font></code> menu, 
+			select <code><font color="#008040">
+			New-&gt;Project</font></code>.</li>
+			<li>In the <code><font color="#008040">
+			New Project</font></code> 
+			window, select <code><font color="#008040">
+			UML Project</font></code> and 
+			click <code><font color="#008040">
+			Next</font></code>.</li>
+			<li>Enter the name of the project in the <code>
+			<font color="#008040">Project name</font></code> 
+			field. Click <code><font color="#008040">
+			Next</font></code> and <code>
+			<font color="#008040">Finish</font></code>.</li>
+			<li>Select the new Project in the <code><font color="#008040">
+			Navigator</font></code> 
+			view.</li>
+			<li>Select <code><font color="#008040">
+			Open as a DMC Project</font></code> 
+			from the contextual menu.
+			<table border="0" width="100%" id="table5">
+				<tr>
+					<td>
+					<img alt="" src="../CAAVbtQuickRefs/images/5-CAAVbtMsDevMigrate.gif" width="247" height="471"></td>
+				</tr>
+			</table>
+			</li>
+			<li>From the <code><font color="#008040">DMC Project</font></code>&nbsp; 
+			menu, select <code><font color="#008040">Migrate the current Workspace</font></code>. 
+			The <code><font color="#008040">Migrate a workspace</font></code> window 
+			displays.<table border="0" width="100%" id="table4">
+				<tr>
+					<td>
+					<img alt="" src="../CAAVbtQuickRefs/images/4-CAAVbtMsDevMigrate.gif" width="540" height="219"></td>
+				</tr>
+			</table>
+			</li>
+			<li>In the <code><font color="#008040">Origin 
+			Workspace field</font></code>, enter or select the pathname 
+			of the workspace to migrate.</li>
+			<li>Click <code><font color="#008040">OK</font></code> to validate your selection. the new caa workspace is now available. 
+			to validate your selection. The new CAA V5 Workspace is now available.</li>
+		</ol>
+		</td>
+	</tr>
+</table>
+<p>After migrating the workspace and the database using the shell
+<code>Upgrade5518_Enovia.sh</code>
+($INSTALLENOVIA/$OS/code/command directory), see below to 
+publish the migrated customization.</p>
+<h3><a name="Publishing_the_workspace"></a>Publishing the Migrated
+Customization</h3>
+<p>&nbsp;You are now to ready to publish the data structure to the ENOVIA database. 
+Note that this publication only affects the data created previously through RADE.</p>
+<ol>
+	<li>In Rational Software Architect Designer, select <code>
+	<font color="#008040">File-&gt;New-&gt;Project-&gt;UML Project</font></code>. 
+	Click <code><font color="#008040">Next</font></code><font color="#008040"><code>&gt;</code>.</font></li>
+	<li>In the <code><font color="#008040">Project name</font></code> field, enter 
+	the name of the workspace you migrated above. Click
+	<code><font color="#008040">Next</font></code><font color="#008040"><code>&gt;</code>
+	</font>and<font color="#008040"> Finish.</font></li>
+	<li>In the <code><font color="#008040">Navigator</font></code> view, right-click 
+	your UML Project and select <code><font color="#008040">Open as a DMC project</font></code>. 
+	The <code><font color="#008040">Open a DMC Project</font></code> window opens.</li>
+	<li>If need be, enter the tool level and click <code><font color="#008040">Next&gt;</font></code>.</li>
+	<li>Click <code><font color="#008040">Close</font></code> in the <code>
+	<font color="#008040">Initializing Tools</font></code> window.</li>
+	<li>Select <code><font color="#008040">Access prerequisites from their origin 
+	location</font></code> and click <code><font color="#008040">Add</font></code> 
+	to select your prerequisites. Click <code><font color="#008040">Finish</font></code>. 
+	Click <code><font color="#008040">Close</font></code> in the <code>
+	<font color="#008040">Installing Prereqs</font></code> window.</li>
+	<li>In the <code><font color="#008040">Navigator</font></code> 
+	view, double-click the metadata located in the <code>Framework_to_migrate\CNext\Code\dictionary</code> 
+	directory.
+		<table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+			<tr>
+				<td width="31" valign="top">
+				<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+				<td valign="top">You must perform the above step for each framework 
+				and each metadata.</td>
+			</tr>
+		</table>
+	<li>Select <code><font color="#008040">DMC Project-&gt;Import VPM Dictionary file</font></code>. 
+	To find out more, see 
+	<a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm#Import Dictionary">
+	Importing Metadata</a>.</li>
+	<li>Optional: You can add a class to an existing customization. 
+	To find out more, see 
+	<a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm#Adding a new Object Modeler to an Existing Customization">
+	Adding a new Object Modeler to an Existing Customization</a>.</li>
+	<li>Optional: You can add an attribute to an existing object. 
+	To find out more, see 
+	<a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm#Adding an Attribute to an Existing Object">
+	Adding an Attribute to an Existing Object</a>.
+		<table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+			<tr>
+				<td width="31" valign="top">
+				<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+				<td valign="top">If you add a new class or an attribute, you have 
+				to
+				<a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm#Generate dictionary">
+				generate the PLM dictionary file</a>.</td>
+			</tr>
+		</table>
+<p>You can now create your customizations. After performing your customizations, 
+publish the migrated customization. To know more about the possible customizations, 
+see <a href="CAADmcUseCases.htm#100000">Creating a New Customization Application</a>.</p>
+
+	</li>
+	<li>Check if the settings are correctly valuated 
+	and <a href="../CAADmcQuickRefs/CAADmcENOVIACusto.htm#Publish">publish</a> 
+	the dictionary file. To do so, select <code><font color="#008040">DMC 
+	Project-&gt;Publish VPM Dictionary file in Database</font></code>.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="CAADmcUseCases.htm">Create a new ENOVIA customization</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Sep 2002]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top">Version: <strong>2</strong> [March 2006]</td>
+		<td valign="top">Document updated</td>
+	</tr>
+	<tr>
+		<td valign="top">Version: <strong>3</strong> [January 2007]</td>
+		<td valign="top">Document updated</td>
+	</tr>
+	<tr>
+		<td valign="top">Version: <strong>4</strong> [July	2007]</td>
+		<td valign="top">Document updated</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2007, Dassault Systèmes. All rights 
+reserved.</i></p>
+
+</body>
+
+</html>

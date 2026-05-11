@@ -1,0 +1,599 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Building and Launching a CAA V5 Use Case</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Rules and Standards</h1>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Building and Launching a CAA V5 Use Case</h3>
+     <p><em>How to set up the environment, compile and execute a use case</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="1">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article shows how to set up a CAA V5 build time environment for use 
+     case, compile one or several use case modules, then set up a run time 
+     environment, and finally launch the use case. </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+		<li><strong><a href="#OS">About the Operating Systems</a></strong></li>
+       <li><a href="#UseCase"><strong>The CAAUseCase Use Case</strong></a>
+       <ul>
+         <li><a href="#StepWindows">Step-by-Step with Windows</a></li>
+         <li><a href="#StepMsDev">Step-by-Step with Microsoft Visual Studio .NET</a></li>
+         <li><a href="#StepUNIX">Step-by-Step with UNIX</a></li>
+       </ul>
+       </li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to set up a CAA V5 build time 
+ environment, by copying the CAA frameworks containing the use cases in a 
+ workspace root directory of your own, get the prerequisite frameworks of the 
+ CAA frameworks, and build a use case along with its prerequisites. Then, it 
+ shows how to set up a run time environment, and finally launch the use case.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="OS"></a>About the Operating Systems</h3>
+ <p>The operating systems V5 currently supports are used thanks to an acronym in 
+	different directory paths to store dedicated files. These acronyms are:</p>
+	<table>
+	<tr>
+	<th>Acronyms</th>
+	<th>Operating Systems</th>
+	</tr>
+	<tr>
+	<td>intel_a</td>
+	<td>Windows XP 32-bit</td>
+	</tr>
+	<tr>
+	<td>win_b64</td>
+	<td>Windows XP 64-bit</td>
+	</tr>
+	<tr>
+	<td>aix_a</td>
+	<td>AIX 32-bit</td>
+	</tr>
+	<tr>
+	<td>aix_a64</td>
+	<td>AIX 64-bit </td>
+	</tr>
+	<tr>
+	<td>hpux_b</td>
+	<td>HP-UX</td>
+	</tr>
+	<tr>
+	<td>solaris_a</td>
+	<td>Solaris</td>
+	</tr>
+	</table>
+
+ <p>A typical usage of these acronyms is to name the directory path where the 
+	executable code is stored. For example, </p>
+	<p>InstallRootDirectory\<b>intel_a</b>\code\bin</p>
+	<p>Where InstallRootDirectory is the directory where you install the V5 run 
+	time.</p>
+
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAUseCase Use Case</h3>
+ <p>CAAUseCase is a generic name for the CAA V5 use cases. You should just 
+ replace CAAUseCase by the actual name of the CAA V5 use case module you want to 
+ build and launch. To leave your CD-ROM installation as a safe reference, create 
+ a separate root directory for the CAA use cases in which you can freely copy, 
+ build, run, and possibly modify the use cases. In the following, assume that <b>
+ InstallRootDirectory</b> is the directory where you install the V5 run 
+ time and the CAA V5 CD-ROMs, and that <b>ToolsRootDirectory</b> is the 
+ directory where you install the CAA-RADE V5 CD-ROM.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="StepWindows"></a>Step-by-Step with Windows</h4>
+ <p>To build and launch a CAA use case, first set up the build time environment 
+ by copying the CAA frameworks containing the use cases in a workspace root 
+ directory of your own, and build the use case associated module(s) along with 
+ their prerequisites using the Multi-Workspace Application Builder mkmk. Then 
+ set up the run time environment, and launch the use case. Assume the load 
+ module is CAAUseCase.m. Open a Command Prompt (DOS window) and:</p>
+ <ul>
+   <li>Copy the <b>InstallRootDirectory\CAADoc\CAA*.edu</b> frameworks in your 
+   workspace root directory <b>MyRootDirectory</b></li>
+   <li>Set up the build time environment
+   <pre class="code"><b>ToolsRootDirectory</b>\<b>OS_a</b>\code\command\tck_init
+tck_profile <b>TCK
+</b>chdir <b>MyRootDirectory\CAAFramework.edu</b>
+mkGetPreq -p <b>InstallRootDirectory</b></pre>
+   <p>Where <code>OS_a</code> is <code>intel_a</code> for Windows XP 32 bit, and
+	<code>win_b64</code> for Windows XP 64 bit.</p>
+	<p>To know which <code><b>TCK</b></code> you can use, type <code>tck_list</code>, 
+   and choose the level that matches your installation among those available.</p>
+   <p>If you want to build and run a given use case, or a subset of the supplied 
+   use cases, copy only the frameworks that contain these use case. Since some 
+   use cases request other use cases, run <code>mkCopyPreq</code> before <code>
+   mkGetPreq</code>, as follows:</p>
+   <pre class="code">mkCopyPreq -p <b>InstallRootDirectory\CAADoc</b></pre>
+   <p>This will retrieve all the prerequisite CAA frameworks of the use case 
+   frameworks that you have copied.</li>
+   <li>Build the modules
+   <ul>
+     <li>If there is only one module in the use case framework
+     <pre class="code">mkmk -u <b>CAAUseCase.m</b></pre>
+     </li>
+     <li>If there are several modules, build them at a time
+     <pre class="code">mkmk -au</pre>
+     </li>
+   </ul>
+   </li>
+   <li>For a CATIA or DELMIA use case:
+   <ul>
+     <li>Set up the run time environment
+     <pre class="code">mkCreateRuntimeView
+mkrun -c &quot;cmd&quot;</pre>
+     </li>
+     <li>Activate the trace output. Most of the use cases include traces to 
+     enable you to follow its different steps.
+     <pre class="code">set CNEXTOUTPUT=CONSOLE</pre>
+     </li>
+     <li>Launch the use case. Refer to the use case article, where a section 
+     entitled &quot;How to Launch the CAAUseCase&quot; may give additional information. 
+     You may find the three following cases:
+     <ol>
+       <li>If the use case is made up of a single exe launched without 
+       parameters, nothing special is indicated in the use case article. Simply 
+       type:
+       <pre class="code"><b>CAAUseCase</b></pre>
+       </li>
+       <li>If the use case is made up of a single exe launched with parameters, 
+       they are described in the use case article to which you should refer to 
+       know what they are and what to type, usually something like:
+       <pre class="code"><b>CAAUseCase arg1 arg2 ...</b></pre>
+       </li>
+       <li>If the use case is made up of a DLL, it is usually intended to be 
+       launched from CATIA. The full command sequence is described in the use 
+       case article to which you should refer. To launch CATIA, type:
+       <pre class="code"><b>CNEXT</b></pre>
+       </li>
+     </ol>
+     </li>
+   </ul>
+   </li>
+   <li>As regards ENOVIA Portal, there are two ways of launching a use case 
+   built on the client side:
+   <ol>
+     <li>The browser mode
+     <ul>
+       <li>Set up the run time environment
+       <pre class="code">mkCreateRuntimeView</pre>
+       </li>
+       <li>Set up the CAA_RTVS environment variable. In the <b>Start</b> menu, 
+       point to <b>Settings</b> and click <b>Control Panel</b> to display the <b>
+       System Properties</b> dialog box. In the <b>Environment</b> tab, type 
+       CAA_RTVS in the <b>Variable</b> box, and its value in the <b>Value</b> 
+       box:
+       <p>
+       <img border="0" src="images/CAADocSystemProperties.jpg" width="410" height="466"></li>
+       <li>Start your web browser. In the <b>Address</b> or <b>Location</b> box, 
+       depending on whether you use Internet Explorer or Netscape, type:
+       <pre class="code">http://<b>Http</b><b>PortalServer</b>/enovia_portal/indexCAA.html</pre>
+       </li>
+     </ul>
+     </li>
+     <li>The application mode
+     <ul>
+       <li>Set up the run time environment
+       <pre class="code">mkCreateRuntimeView
+mkrun<b> </b>-c &quot;cmd&quot;</pre>
+       </li>
+       <li>Launch the use case with the command <b>CAARunUseCase</b> provided in
+       <b>MyRootDirectory/CAAFramework.edu/</b>CNext/code/command.<br>
+       Each command is named after its use case. The commands all launch the 
+       same Java application but differ from each other by the option -DFilePrefix 
+       which specifies the prefix of the sample's configuration files.
+       <pre class="code"><b>MyRootDirectory\CAAFramework.edu\</b>CNext\code\command\<b>CAARunUseCase OrbixPortalServer</b> </pre>
+       </li>
+     </ul>
+     </li>
+   </ol>
+   </li>
+ </ul>
+ <p>where </p>
+ <table>
+ <col valign="top" span="1">
+   <tr>
+     <td><code>InstallRootDirectory</code></td>
+     <td>The pathname of the directory into which the CATIA V5 run time and 
+     CATIA-CAA V5 CD-ROMs were unloaded</td>
+   </tr>
+   <tr>
+     <td><code>ToolsRootDirectory</code></td>
+     <td>The pathname of the directory into which the CAA-RADE V5 CD-ROM were 
+     unloaded</td>
+   </tr>
+   <tr>
+     <td><code>MyRootDirectory</code></td>
+     <td>The pathname of the root directory where you can copy and build the use 
+     case</td>
+   </tr>
+   <tr>
+     <td><code>TCK</code></td>
+     <td>The Tool Configuration Key, such as V5R9 or V5R9_SP2</td>
+   </tr>
+   <tr>
+     <td><code>CAAFramework.edu</code></td>
+     <td>The CAA framework that contains the use case module</td>
+   </tr>
+   <tr>
+     <td><code>CAAUseCase.m</code></td>
+     <td>The use case module, or one of the modules that make up the use case</td>
+   </tr>
+   <tr>
+     <td><code>CAARunUseCase</code></td>
+     <td>The command which launches the use case, delivered in <b>
+     MyRootDirectory\CAAFramework.edu\</b>CNext\code\command</td>
+   </tr>
+   <tr>
+     <td><code>HttpPortalServer</code></td>
+     <td>The hostname of the server in the form: <b>server:http_port </b>or <b>
+     server</b> if the port is 80. ex: MyMachine:85</td>
+   </tr>
+   <tr>
+     <td><code>OrbixPortalServer</code></td>
+     <td>The hostname of the server in the form <b>server:orbix_port</b> or <b>
+     server</b> if the port is 1570. ex: MyMachine:1574</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="StepMsDev"></a>Step-by-Step with Microsoft Visual Studio .NET</h4>
+ <p>To use Visual Studio .NET with CAA V5, you need to set up the build time 
+ environment, and access the prerequisite frameworks.</p>
+ <ul>
+   <li>Start Visual Studio .NET.</li>
+   <li>Copy the <b>InstallRootDirectory\CAADoc\CAA*.edu</b> frameworks in your 
+   workspace root directory <b>MyRootDirectory</b> either from a Command prompt 
+   or using Windows Explorer.</li>
+   <li>Set up the build time environment
+   <ul>
+     <li>From the <b>File</b> menu, select <b>Open CAA V5 Workspace...</b> </li>
+     <li>In the <b>Open CAA V5 Workspace</b> box
+     <ol type="a">
+       <li>Select <b>Mkmk</b> in the <b>With</b> box.</li>
+       <li>Type or select the directory of your workspace <b>MyRootDirectory</b> 
+       in the <b>Workspace Directory</b> box.</li>
+       <li>Select the tool level that matches your installation in the <b>Tool 
+       Level</b> combo list, like R16 for example.</li>
+       <li>Click <b>OK</b>.</li>
+       <li>Click <b>Close</b> in the Initializing tools... window.</li>
+     </ol>
+     </li>
+     <li>Click <b>OK</b> in the prompt box that appears if <b>MyRootDirectory</b> 
+     was never used before by Visual Studio .NET as a project workspace.</li>
+     <li>In the <b>Select Modules to generate Developer Studio projects</b> 
+     window that automatically appears, check the CAA frameworks and modules you 
+     want to work with, and click <b>OK. </b>Click<b> OK </b>in the Runtime 
+     Environment Warning dialog box.</li>
+   </ul>
+   </li>
+   <li>Access the CAA use case frameworks prerequisites
+   <ul>
+     <li>From the <b>CAAV5 Workspace</b> menu, select <b>Locate Prerequisite 
+     Workspaces...</b>.
+     <ol type="a">
+       <li>In the <b>Mode</b> frame, check <b>Access prerequisites from their 
+       origin location</b>.</li>
+       <li>In the <b>Origin for prerequisite Frameworks</b> field, click <b>Add</b>, 
+       and select the CATIA-CAA V5 installation directory.</li>
+       <li>Click <b>OK</b> twice.</li>
+     </ol>
+     </li>
+     <li>Click <b>Close</b> in the prompt box.</li>
+   </ul>
+   </li>
+ </ul>
+ <p>You can now build and launch a CAA use case, that is, build the use case 
+ associated module(s) along with their prerequisites using mkmk. Then you set up 
+ the runtime environment, and launch the use case. Here we assume that the load 
+ module is CAAUseCase.m.</p>
+ <ul>
+   <li>If you have closed Visual Sutdio .NET, restart it.</li>
+   <li>From the <b>File</b> menu, click <b>Open CAA V5 Workspace...</b>.</li>
+   <li>In the <b>Open CAA V5 Workspace</b> box
+   <ol type="a">
+     <li>Select <b>Mkmk</b> in the <b>With</b> box</li>
+     <li>Type or select the directory of your workspace <b>MyRootDirectory</b> 
+     in the <b>Workspace Directory</b> box.</li>
+     <li>Select the tool level that matches your installation in the <b>Tool 
+     Level</b> box, like V5R16 for example.</li>
+     <li>Click <b>OK</b>.</li>
+   </ol>
+   </li>
+   <li>Build the modules
+   <ul>
+     <li>From the <b>Build</b> menu, select <b>mkmk</b>. The <b>Code Builder (mkmk)</b> 
+     box appears.
+     <ul>
+       <li>Check the <b>Update makefiles (-u) </b>option<b>.</b></li>
+       <li>Check the CAAUseCase module in its CAA framework.</li>
+       <li>Click <b>OK</b>.</li>
+     </ul>
+     </li>
+   </ul>
+   </li>
+   <li>From the <b>CAAV5 Workspace</b> menu, select <b>Create/Update Runtime 
+   View...</b>. The <b>Create RunTimeView</b> dialog box appears.
+   <ul>
+     <li>In the <b>Frameworks types to copy</b> box, click <b>all</b>.</li>
+     <li>Click <b>OK</b>.</li>
+   </ul>
+   </li>
+   <li>Launch the use case.
+   <ul>
+     <li>From the <b>Tools</b> menu, select <b>Execute a User Command</b>.</li>
+     <li>Refer to the use case article, where a section entitled &quot;How to Launch 
+     the CAAUseCase&quot; may give additional information. You may find the three 
+     following cases:
+     <ol>
+       <li>If the use case is made up of a single exe launched without 
+       parameters, nothing special is indicated in the use case article. Simply 
+       type or select the exe name in the <b>Command and executable</b> field, 
+       and click <b>OK</b>.</li>
+       <li>If the use case is made up of a single exe launched with parameters, 
+       they are described in the use case article to which you should refer to 
+       know what they are and what to type. Type or select the exe name in the
+       <b>Command and executable</b> field, and the arguments in the <b>
+       Arguments</b> field, and click <b>OK</b>.</li>
+       <li>If the use case is made up of a DLL, it is usually intended to be 
+       launched from CATIA. The full command sequence is described in the use 
+       case article to which you should refer. To launch CATIA, enter the full 
+       pathname of CNEXT.exe (InstallRootDirectory\intel_a\code\bin\CNEXT.exe) 
+       in the <b>Command and executable</b> box, and click <b>OK</b>. Replay the 
+       scenario described in the use case article.</li>
+     </ol>
+     </li>
+   </ul>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="StepUNIX"></a>Step-by-Step with UNIX</h4>
+ <p>To build and launch a CAA use case, first set up the build time environment 
+ by copying the CAA frameworks containing the use cases in a workspace root 
+ directory of your own, and build the use case associated module(s) along with 
+ their prerequisites using the Multi-Workspace Application Builder mkmk. Then 
+ set up the run time environment, and launch the use case. Assume the load 
+ module is CAAUseCase.m. Open a shell window and:</p>
+ <ul>
+   <li>Copy the <b>InstallRootDirectory/CAADoc/CAA*.edu</b> frameworks in your 
+   workspace root directory <b>MyRootDirectory</b></li>
+   <li>Set up the build time environment
+       <pre class="code">$ . <b>ToolsRootDirectory</b>/<b>OS_a</b>/code/command/tck_init
+$ tck_profile <b>TCK</b>
+$ cd  <b>MyRootDirectory</b><b>/CAAFramework.edu</b>
+$ mkGetPreq -p <b>InstallRootDirectory</b></pre>
+   <p>To know which <code><b>TCK</b></code> you can use, type <code>tck_list</code>, 
+   and choose the level that matches your installation among those available.</p>
+   <p>If you want to build and run a given use case, or a subset of the supplied 
+   use cases, copy only the frameworks that contain these use case. Since some 
+   use cases request other use cases, run <code>mkCopyPreq</code> before <code>
+   mkGetPreq</code>, as follows:</p>
+   <pre class="code">mkCopyPreq -p <b>InstallRootDirectory/CAADoc</b></pre>
+   <p>This will retrieve all the prerequisite CAA frameworks of those you 
+   copied.</li>
+   <li>Build the modules
+   <ul>
+     <li>If there is only one module in the use case framework
+     <pre class="code">$ mkmk -u <b>CAAUseCase.m</b></pre>
+     </li>
+     <li>If there are several modules, build them at a time
+     <pre class="code">$ mkmk -au</pre>
+     </li>
+   </ul>
+   </li>
+   <li>For a CATIA or DELMIA use case:
+   <ul>
+     <li>Set up the run time environment
+     <pre class="code">$ mkCreateRuntimeView
+$ mkrun -c &quot;/bin/ksh&quot;</pre>
+     </li>
+     <li>Launch the use case. Refer to the use case article, where a section 
+     entitled &quot;How to Launch the CAAUseCase&quot; may give additional information. 
+     You may find the three following cases:
+     <ol>
+       <li>If the use case is made up of a single module launched without 
+       parameters, nothing special is indicated in the use case article. Simply 
+       type:
+       <pre class="code"><b>CAAUseCase</b></pre>
+       </li>
+       <li>If the use case is made up of a single module launched with 
+       parameters, they are described in the use case article to which you 
+       should refer to know what they are and what to type, usually something 
+       like:
+       <pre class="code"><b>CAAUseCase arg1 arg2 ...</b></pre>
+       </li>
+       <li>If the use case is made up of a shared library, it is usually 
+       intended to be launched from CATIA. The full command sequence is 
+       described in the use case article to which you should refer. To launch 
+       CATIA, type:
+       <pre class="code"><b>CNEXT</b></pre>
+       </li>
+     </ol>
+     </li>
+   </ul>
+   </li>
+   <li>For an ENOVIA LCA use case
+   <ul>
+     <li>Set up the run time environment
+     <pre class="code">$ mkCreateRuntimeView
+$ mkrun -cf EnvFileFullPath -c &quot;/bin/ksh&quot;</pre>
+     <p>Where:<ul>
+       <li><code>EnvFileFullPath</code> is the full pathname of the environment 
+       file you want to use to launch the use case<br>
+       </li>
+     </ul>
+     </li>
+     <li>Launch the use case. Refer to the use case article, where a section 
+     entitled &quot;How to Launch the CAAUseCase&quot; may give additional information. 
+     You may find the two following cases:
+     <ol>
+       <li>If the use case is made up of a single module launched without 
+       parameters, nothing special is indicated in the use case article. Simply 
+       type:
+       <pre class="code"><b>CAAUseCase</b></pre>
+       </li>
+       <li>If the use case is made up of a single module launched with 
+       parameters, they are described in the use case article to which you 
+       should refer to know what they are and what to type, usually something 
+       like:
+       <pre class="code"><b>CAAUseCase arg1 arg2 ...</b></pre>
+       </li>
+     </ol>
+     </li>
+   </ul>
+   </li>
+   <li>As regards ENOVIA Portal, there are two ways of launching a sample built 
+   on the client side:
+   <ol>
+     <li>The browser mode
+     <ul>
+       <li>Set up the run time environment
+       <pre class="code">$ mkCreateRuntimeView</pre>
+       </li>
+       <li>Set up the CAA_RTVS environment variable
+       <pre class="code">$ export CAA_RTVS=<b>MyRootDirectory</b>/<b>OS_a</b>/docs/java</pre>
+       </li>
+       <li>Start your web browser. In the <b>Location</b> box, type:
+       <pre class="code">http://<b>Http</b><b>PortalServer</b>/enovia_portal/indexCAA.html</pre>
+       </li>
+     </ul>
+     </li>
+     <li>The application mode
+     <ul>
+       <li>Set up the run time environment
+       <pre class="code">$ mkCreateRuntimeView
+$ mkrun -c &quot;/bin/ksh&quot;</pre>
+       </li>
+       <li>Launch the use case with the command <b>CAARunUseCase</b> provided in
+       <b>MyRootDirectory/CAAFramework.edu/</b>CNext/code/command.<br>
+       Each command is named after its use case. The commands all launch the 
+       same Java application but differ from each other by the option -DFilePrefix 
+       which specifies the prefix of the sample's configuration files.
+       <pre class="code"><b>MyRootDirectory/CAAFramework.edu/</b>CNext/code/command/<b>CAARunUseCase OrbixPortalServer</b></pre>
+       </li>
+     </ul>
+     </li>
+   </ol>
+   </li>
+ </ul>
+ <p>where </p>
+ <table>
+ <col valign="top" span="1"> 
+  <tr>
+     <td><code>InstallRootDirectory</code></td>
+     <td>The pathname of the directory into which the CATIA V5 run time and 
+     CATIA-CAA V5 CD-ROMs were unloaded</td>
+   </tr>
+   <tr>
+     <td><code>ToolsRootDirectory</code></td>
+     <td>The pathname of the directory into which the CAA-RADE V5 CD-ROM were 
+     unloaded</td>
+   </tr>
+   <tr>
+     <td><code>MyRootDirectory</code></td>
+     <td>The pathname of the root directory where you can copy and build the use 
+     case</td>
+   </tr>
+   <tr>
+     <td><code>OS_a</code></td>
+     <td>The UNIX operating system dependent directory. Valid values are:
+     <ul>
+       <li><code>aix_a</code> for AIX</li>
+		<li><code>aix_a64</code> for AIX 64 bit</li>
+       <li><code>hpux_b</code> for HP-UX</li>
+       <li><code>solaris_a</code> for Solaris</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td><code>TCK</code></td>
+     <td>The Tool Configuration Key, such as V5R9 or V5R9_SP2</td>
+   </tr>
+   <tr>
+     <td><code>CAAFramework.edu</code></td>
+     <td>The CAA framework that contains the use case module</td>
+   </tr>
+   <tr>
+     <td><code>CAAUseCase.m</code></td>
+     <td>The use case module, or one of the modules that make up the use case</td>
+   </tr>
+   <tr>
+     <td><code>CAARunUseCase</code></td>
+     <td>The command which launches the use case, delivered in <b>
+     MyRootDirectory/CAAFramework.edu/</b>CNext/code/command</td>
+   </tr>
+   <tr>
+     <td><code>HttpPortalServer</code></td>
+     <td>The hostname of the server in the form: <b>server:http_port </b>or <b>
+     server</b> if the port is 80. ex: MyMachine:85</td>
+   </tr>
+   <tr>
+     <td><code>OrbixPortalServer</code></td>
+     <td>The hostname of the server in the form <b>server:orbix_port</b> or <b>
+     server</b> if the port is 1570. ex: MyMachine:1574</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows how to set up the environments, compile, and launch a 
+ CAA V5 use case with Windows and UNIX.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [July 2005]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2007, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm">CAA V5 CATIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm">CAA V5 DELMIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm">CAA V5 ENOVIA</a></p>
+
+ </body>
+
+</html>

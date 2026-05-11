@@ -1,0 +1,71 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAAniPostProOccurrence.catvbs</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre>
+<font color="#008000">&#39; COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">&#39; ***********************************************************************</font>
+<font color="#008000">&#39;   Purpose:      To Change the occurrence of an image</font>
+<font color="#008000">&#39;   Assumptions:   Frequency case is computed with at least 4 occurrences</font>
+<font color="#008000">&#39;   Author:       bmw</font>
+<font color="#008000">&#39;   Languages:    VBScript</font>
+<font color="#008000">&#39;   Locales:      English </font>
+<font color="#008000">&#39;   CATIA Level:  V5R16</font>
+<font color="#008000">&#39; ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+
+
+<font color="#008000">&#39; Open the CATAnalysis Document</font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+</pre>
+<pre>
+
+<font color="#008000">&#39; Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set </font>oAnalysisManager = oAnalysisDocument.Analysis
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)
+</pre>
+<pre>
+<font color="#008000">&#39; Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisCase.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisSets.Item(&quot;Frequency Case Solution.1&quot;, catAnalysisSetSearchAll)
+
+<font color="#0000FF">Set </font>oAnalysisImages = oAnalysisSet.AnalysisImages
+<font color="#0000FF">Set </font>oAnalysisImage = oAnalysisImages.Item(&quot;Von Mises Stress (nodal values).1&quot;)
+
+<font color="#008000">&#39;Modify current occurrence of Image Von Mises Stress (nodal values)</font>
+<font color="#008000">&#39;==================================================================</font>
+oAnalysisImage.SetCurrentOccurrence 4
+oAnalysisImage.Update
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

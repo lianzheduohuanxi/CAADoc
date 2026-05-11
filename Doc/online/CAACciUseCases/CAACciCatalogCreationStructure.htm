@@ -1,0 +1,1322 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Catalog</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Catalog</h3>
+      <em>Using CATICatalogChapterFactory, CATICatalogChapter, </em><i>CATILinkableObject</i>
+      ,<em>CATICatalogKeyword and CATICatalogDescription</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case shows how to 
+      create a catalog document.</p>     
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACciToolCatalogCreation Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACciToolCatalogCreation Do</a></li>
+            <li><a href="#How">How to Launch CAACciToolCatalogCreation</a></li>
+            <li><a href="#Where">Where to Find the CAACciToolCatalogCreation Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>Users often need a way of storing and classifying the many objects they have
+at their disposal, whether they be screws, ball bearings or computer parts.
+These objects may number tens of thousands, each with its own specific
+characteristics such as shape, color, size, diameter, length, etc. To facilitate
+fast and easy retrieval of such objects thus objects avoiding time-wasting
+redesign Version 5 offers the possibility of creating catalogs.&nbsp;</p>
+<p>A catalog is in the form of a tree structure made up of:&nbsp;</p>
+<ul>
+  <li><b>Chapters: </b> a chapter references others chapters or families thanks
+      descriptions. It is a
+      way of classifying the elements it refers to&nbsp;
+  <li><b>Families (end chapters):&nbsp;</b> a family is a set of components
+    &nbsp;
+  <li><b>Components: </b>an object integrated into the catalog such as as feature (e.g. Power copy, User feature) or V5 documents
+      (e.g. CATPart, CATProduct, etc)&nbsp;</li>
+  <li><b>Descriptions:</b>
+    <p> a description links a chapter with&nbsp;
+      <ul>
+        <li>an another chapter&nbsp;</li>
+        <li>a component&nbsp;</li>
+      </ul>
+      <p>and is described with keyword values</p>
+  <li><b>Keywords: </b> a keyword is an attribute describing the chapter and
+      family content. Each description may be assigned its own attribute value.
+      You can associate keywords to chapters and families and thus, perform
+      searches by attribute value to filter their content.</li>
+</ul>
+<p> The purpose of this
+use case is to create a catalog composed of:&nbsp;</p>
+<ul>
+  <li>Chapters (external and not external),&nbsp;&nbsp;</li>
+  <li>Families
+(external and not external),&nbsp;</li>
+  <li>Keywords with or without default value.</li>
+</ul>
+<p>&nbsp;For components, the
+following articles described them more in depth:</p>
+<ul>
+  <li>&quot;Creating a Catalog With Part Documents&quot; [<a href="#References">1</a>]</li>
+  <li>&quot;Creating a Catalog With Part Family&quot; [<a href="#References">2</a>]
+    - A Part family is a family whose all the components are parts generated
+    from configurations of design table.</li>
+  <li>&quot;Creating a Persistent Query&quot; [<a href="#References">3</a>]</li>
+</ul>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of Catalog. See the referenced article [<a href="#References">4</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACciToolCatalogCreation Use Case</h3>
+<p>CAACciToolCatalogCreation is a use case of the CAAComponentsCatalogs.edu framework that
+illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACciToolCatalogCreation Do</h4>
+<p>This use case creates the <code>CAATool</code>.catalog document [<a href="#Fig.1">Fig.1</a>].
+The scenario of its creation is explained through images created in editing the
+catalog thanks to the Catalog Editor workbench.&nbsp;At last, the interactive scenario to obtain the same result, is
+given.&nbsp;</p>
+
+<p>The goal of this catalog is to create a classification of Part documents
+which contain the design of Screws and Nuts.</p>
+
+  <table width="430">
+<caption><i><a name="Fig.1">Fig.</a>1 The CAATool.catalog Document</i></caption>
+<tr>
+<td width="422">
+<img border="0" src="images/CAACciCatalogTool1.jpg" width="291" height="205">
+</td>
+</tr>
+</table>
+  <p>The <code> Tools</code> chapter is the root chapter. It contains two
+  keywords [<a href="#Fig.2">Fig.2</a>]:</p>
+  <ul>
+  <li><code>ToolType</code> visible keyword with no default value (Unset in the
+    column Value)- This keyword will separate the chapters concerning the screws,
+    the nuts and you can imagine other kind of tools. 
+  <li><code>Suppliers </code>an invisible keyword with &quot;<code>MySupplierA</code>&quot; as default value.
+    This keyword is available for all the catalog and must not appear in the
+    Catalog Browser, it is a private information, so it is set&nbsp; invisible.&nbsp; </li>
+  </ul>
+    <table>
+<caption><i><a name="Fig.2">Fig.2</a>: The Tools's Keywords&nbsp;&nbsp;</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogTool2.jpg" width="326" height="234">
+</td>
+</tr>
+</table>
+
+  <p>The <code> Tools</code> chapter contains three sub-chapters:</p>
+  <ul>
+  <li><a href="#Tool - Screws chapter details">Screws</a>,&nbsp; an external chapter</li>
+  <li><a href="#tool- Nuts details">Nuts</a></li>
+  <li><a href="#Tool- NutsWithFiwexSizeHole details">NutsWithFixedSizeHole</a></li>
+  </ul>
+<p>The next picture [<a href="#Fig.3">Fig 3</a>] shows the three lines in the Reference tab page when the
+<code>
+  Tools</code> chapter is current in the specification tree:</p>
+    <table>
+<caption><i><a name="Fig.3">Fig.3</a>: The Tools's Reference
+  Tab Page</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogTool3.jpg" width="473" height="133">
+</td>
+</tr>
+</table>
+
+  <p>For each sub-chapter the &quot;<code>ToolType</code>&quot; keyword is
+  valuated with the following values:</p>
+
+    <table>
+<caption><i><a name="Fig.4">Fig.4</a>: The Tools's Keyword
+  Tab Page</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogTool7.jpg" width="325" height="125">
+</td>
+</tr>
+</table>
+
+
+<p><a name="Tool - Screws chapter details"></a>The <code>Screws</code> chapter is an external chapter see the column
+<code> Type</code> [<a href="#Fig.3">Fig
+  3</a>]. In fact it is the
+  root chapter of the<code>  CAAScrew </code> catalog created in the use case
+CAACciScrewCatalogCreation and detailed in the &quot;Creating a Catalog With
+Part Documents&quot; article [<a href="#References">1</a>]</p>
+
+<p><a name="tool- Nuts details"></a>The <code>Nuts </code>chapter<code> </code>is
+not an external chapter, see
+  the column <code> Type </code>[<a href="#Fig.3">Fig
+  3</a>], and contains the &quot;<code>SideNumber</code>&quot;
+  keyword. This keyword is an integer without default value (Unset in the column
+Value). The goal of this keyword is to separate the nuts with their number of
+sides.&nbsp;</p>
+   <table>
+<caption><i><a name="Fig.5">Fig.5</a>: The Nuts's Keywords</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogTool4.jpg" width="327" height="231">
+</td>
+</tr>
+</table>
+
+  <p>This <code>Nuts</code> chapter contains two sub-chapters: each a Part Family
+  [<a href="#References">2</a>]</p>
+  <ul>
+  <li><code><a href="#Tool- Nuts6SidesFamily details">Nuts6SidesFamily</a></code>,&nbsp;an external
+    family</li>
+  <li><code><a href="#Tool- Nuts4SidesFamily">NutsSidesFamily</a>, </code>an internal family</li>
+  </ul>
+  <p>The next picture [<a href="#Fig.6">Fig 6</a>] shows the two lines in the Reference tab page when the
+  <code>
+  Nuts</code> chapter is current in the specification tree:</p>
+    <table>
+<caption><i><a name="Fig.6">Fig.6</a>: The Nuts's Reference Tab
+  Page</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogTool5.jpg" width="479" height="130">
+</td>
+</tr>
+</table>
+
+  <p>For each sub-chapter, a value for the &quot;<code>SideNumber</code>&quot;
+  keyword is given:</p>
+   <table width="466">
+<caption><i><a name="Fig.7">Fig.7</a>: The Nuts's&nbsp; Keyword Tab
+  Page</i></caption>
+<tr>
+<td width="458">
+<img border="0" src="images/CAACciCatalogTool6.jpg" width="361" height="142">
+</td>
+</tr>
+</table>
+
+<p><a name="Tool- Nuts6SidesFamily details"></a>The <code> Nuts6SidesFamily</code> chapter is an external Part Family -see the column Type [<a href="#Fig.6">Fig
+  6]</a>. In fact it is a end chapter (Part family) of the<code> CAANuts6Sides </code>
+catalog
+created in the use case CAACciNuts6SidesCatalogCreation and explained in the
+&quot;Creating a Catalog With Part Family&quot; article [<a href="#References">2</a>]</p>
+
+<p><a name="Tool- Nuts4SidesFamily"></a>The <code> Nuts4SidesFamily</code> chapter is a Part
+Family whose the Part document, with a design table, is <code>CAANuts4Sides</code>.
+Its construction is the same
+  as the <code>Nuts6SidesFamily </code> Part family [<a href="#References">2</a>]<code>,</code>
+ so this article doesn't detail its creation. Nevertheless, the following picture [<a href="#Fig.8">Fig.8</a>]
+shows the descriptions for each configuration of its design table. In this same
+picture, notice that the Part configurations are not resolved: the value in the <code>Type</code>
+column is &quot;<code>Part family configuration</code>&quot; and not &quot;<code>Resolved
+part family configuration</code>&quot; and the value in the <code>Object Name </code>column
+is always <code>CAANuts4Sides</code>, the original Part.</p>
+<table width="466">
+<caption><i><a name="Fig.8">Fig.8</a>: The Nuts4SidesFamily's
+  Reference Tab
+  Page</i></caption>
+<tr>
+<td width="458">
+<img border="0" src="images/CAACciCatalogTool8.jpg" width="534" height="122">
+</td>
+</tr>
+</table>
+
+<p><a name="Tool- NutsWithFiwexSizeHole details"></a>The last chapter under the
+  <code> Tools</code>  chapter is <code>NutsWithFixedSizeHole</code>.&nbsp;This
+  chapter contains only one chapter the <code>Nuts6SidesHole10Family </code> chapter [<a href="#Fig.1">Fig 1</a>].
+This<code> </code>chapter is a end chapter (family) whose components will be defined by a persistent query inside
+  the <code>CAANuts6Sides </code>catalog. Refer to the
+&quot;Creating a Persistent Query&quot; article [<a href="#References">3</a>] to
+have a complete explanation of this family<code>.</code></p>
+
+  <p>The interactive scenario to obtain the same <code> CAATool.catalog</code> document is
+  the following:</p>
+  <p>Launch CATIA. When the application is ready:&nbsp;</p>
+  <ul>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the <b>File New&nbsp; </b>Dialog box select <b>CatalogDocument</b>&nbsp;
+    and click <b>OK</b></li>
+  <li>Select <b>Chapter.1</b> in the specification tree&nbsp;</li>
+  <li>Contextual menu, select <b>Chapter.1 object </b>item and <b>Definition</b>
+    item&nbsp;</li>
+  <li>In the dialog box, enter <b>Tools </b>in the<b> Name </b>field<b> </b>and click <b>OK</b></li>
+  <li>Launch the <b>Add Keyword <img border="0" src="images/CAACatalogAddKeyword.jpg" width="21" height="24">
+    </b>command</li>
+  <li>In the&nbsp; <b>Keyword&nbsp; Definition</b> dialog box
+    <ul>
+      <li>enter <b>ToolType</b> in the <b>Name</b> field</li>
+      <li>select <b>String</b> in the <b>Type</b> selectot list</li>
+       <li>click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add Keyword <img border="0" src="images/CAACatalogAddKeyword.jpg" width="21" height="24">
+    </b>command</li>
+  <li>In the&nbsp; <b>Keyword&nbsp; Definition</b> dialog box</li>
+     <ul>
+      <li>enter <b>Suppliers</b> in the <b>Name</b> field</li>
+      <li>select <b>String</b> in the <b>Type</b> selectot list</li>
+      <li>unselect <b>visibility</b>&nbsp;</li>
+      <li>enter <b>MySupplierA</b> in the <b>Default value</b> field&nbsp;</li>
+       <li>click <b>OK</b></li>
+       </ul>
+  <li>On the <b>File</b> menu click <b>Open</b></li>
+  <li>In the <b>File Selection </b>Dialog box select <b>CAAScrew.catalog </b>(*)
+    and click <b>Open</b></li>
+  <li>Reselect the <b>Tool</b> catalog&nbsp;</li>
+  <li>Launch the <b>Add link to other catalog <img border="0" src="images/CAACatalogAddLinkOtherCatalog.jpg" width="22" height="23">
+    </b>command</li>
+  <li>Select the <b>Screws</b> chapter in the specification tree in the <b>CAAScrew</b> catalog</li>
+  <li>Select the <b>Screws</b>  line in the <b>Keyword</b> tab Page</li>
+  <li>In the <b>Description Definition</b> Tab Page&nbsp;
+    <ul>
+      <li>Select the <b>Keyword values</b> tab page</li>
+      <li>select the <b>ToolType</b> line</li>
+      <li>enter <b>Screws</b> in the Value field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add chapter</b>&nbsp; <img border="0" src="images/CAACatalogFolder.gif" width="22" height="22">command</li>
+  <li>In the <b>Chapter </b><b>Defini</b><b>tion </b>Dialog box
+    <ul>
+      <li>enter <b>Nuts </b>in the Name field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Select the <b>Nuts</b> line in the <b>Keyword</b> tab Page</li>
+  <li>In the <b>Description Definition</b> Tab Page&nbsp;</li>
+    <ul>
+      <li>Select the <b>Keyword values</b> tab page</li>
+      <li>select the <b>ToolType</b> line</li>
+      <li>enter <b>Nuts</b> in the Value field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+   <li>Select <b>Nuts&nbsp;</b> in the specification tree&nbsp;</li>
+  <li>Launch the <b>Add Keyword <img border="0" src="images/CAACatalogAddKeyword.jpg" width="21" height="24">
+    </b>command</li>
+  <li>In the&nbsp; <b>Keyword&nbsp; Definition</b> dialog box</li>
+     <ul>
+      <li>enter <b>SideNumber</b> in the <b>Name</b> field</li>
+      <li>select <b>Integer</b> in the <b>Type</b>  selector list</li>
+      <li>click <b>OK</b></li>
+       </ul>
+  <li>On the <b>File</b> menu click <b>Open</b></li>
+  <li>In the <b>File Selection </b>Dialog box select <b>CAANuts6Sides.catalog </b>(*)
+    and click <b>Open</b></li>
+  <li>Reselect the <b>Tool</b> catalog&nbsp;</li>
+  <li>Launch the <b>Add link to other catalog <img border="0" src="images/CAACatalogAddLinkOtherCatalog.jpg" width="22" height="23">
+    </b>command</li>
+  <li>select the <b>Nuts6Sidesfamily</b> chapter in the <b>CAANuts6Sides </b>catalog</li>
+  <li>Launch the <b>Add Part Family <img border="0" src="images/CAACatalogAddFamilyFromDesignTable.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the <b>Part Family Definition</b> dialog box
+    <ul>
+      <li>Enter <b>Nuts4SidesFamily </b>in the <b>Name</b> field</li>
+      <li>Push <b>Select Document</b></li>
+      <li>in the <b>File Selection</b> dialog box retrieve the <b>CAANuts4Sides.CATPart</b>
+        (*) file and click <b>Open</b></li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </li>
+  <li>Select <b>Tools</b> in the specification tree&nbsp;</li>
+  <li>Launch the <b>Add chapter</b>&nbsp; <img border="0" src="images/CAACatalogFolder.gif" width="22" height="22">
+    command</li>
+  <li>In the <b>Chapter </b><b>Defini</b><b>tion </b>Dialog box
+    <ul>
+      <li>enter <b>NutsWithFixedSizeHole </b>in the Name field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+  </li>
+     <li>Select the <b>NutsWithFixedSizeHole </b>  line in the <b>Keyword</b> tab Page</li>
+     <li>In the <b>Description Definition</b> Tab Page&nbsp;</li>
+      <ul>
+      <li>Select the <b>Keyword values</b> tab page</li>
+      <li>select the <b>Tooltype</b> line</li>
+      <li>enter <b>NutsWithFixedSizeHole </b> in the Value field</li>
+      <li>click <b>OK</b></li>
+    </ul>
+   <li>Select <b>NutsWithFixedSizeHole </b> in the specification tree</li>
+    <li>In the <b>Chapter Definition</b> dialog box
+    <ul>
+      <li>Enter <b>Nuts6SidesHole10Family </b>in the <b>Name</b> field</li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </li>
+  <li>Select <b>Nuts6SidesHole10Family </b> in the specification tree</li>
+  <li>Launch the <b>Add Catalog resolved filter components <img border="0" src="images/CAACatalogAddComponentsFromFilter.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the <b>Resolved Filter Definition</b> dialog box
+    <ul>
+      <li>enter <b>QueryOn6Sides</b> in the <b>Name</b> field</li>
+      <li>click the <b>Browse</b> button, and in the <b>File Selection</b> dialog box retrieve the
+        <b>CAANuts6Sides.CATPart</b>
+        (*) file and click <b>Open</b></li>
+      <li>click the <b>Filter Smart Definition</b> button&nbsp;
+        <ul>
+          <li>on the <b>PartBody\Hole.1\Diameter</b> line select<b> == </b>and
+            enter <b>10mm&nbsp;</b></li>
+          <li>click <b>OK</b></li>
+        </ul>
+      </li>
+      <li>click<b> OK</b></li>
+    </ul>
+  </li>
+  <li>contextual menu, select <b>Resolve Query</b></li>
+  </ul>
+  <p>(*) The file are located in the directory <code>CAAComponentsCatalogs.edu/InputData</code></p>
+  <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+      </ul>
+  <p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACciCatalogToolsCreation</h4>
+<p>To launch CAACciToolCatalogCreation , you will need to set up the build time environment,
+then compile the CAACciCatalogCreate module along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">5</a>].&nbsp;</p>
+<p>mkrun -c <b>CAACciCatalogCreate</b> InputPath [OutputPath]</p>
+<p>Where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of files included in the directory <code>CAAComponentsCatalogs.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData</code></li>
+    </ul>
+    <p> where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+  <li><b>OutputPath</b>: The path to write the created catalogs. If this path is empty, the output files
+    are created in the current directory.</li>
+</ol>
+<p>The use case creates three documents:</p>
+<ul>
+  <li><code>CAAScrew.catalog</code>, explained in&nbsp; the &quot;Creating a Catalog With Part
+    Documents&quot;
+    article [<a href="#References">1</a>]&nbsp;</li>
+  <li><code>CAANuts6Sides.catalog</code>, explained in the &quot;Creating a Catalog With Part
+    Family&quot;
+    article [<a href="#References">2</a>]&nbsp;</li>
+  <li><code>CAATools.catalog</code>,&nbsp; explained in the current article</li>
+</ul>
+<p>After its execution, you can launch CATIA and open the created catalogs or
+execute the CAACciCatalogNavigation use case [<a href="#References">6</a>] for
+each. This use case displays the contents of a catalog.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACciToolCatalogCreation Code</h4>
+<p>The CAACciToolCatalogCreation use case is made of several source files located in the
+CAACciCatalogCreate.m module of the CAAComponentsCatalogs.edu framework:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the source file</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogCreateMain</td>
+    <td width="67%">Main source file&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciToolCatalogCreation&nbsp;</td>
+    <td width="67%">Global function to create the CAATool.catalog document</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogDocumentServices</td>
+    <td width="67%">Global functions&nbsp;to factorize the code</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td><code>Windows</code></td>
+    <td><code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\CAACciCatalogCreate.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/CAACciCatalogCreate.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are nine logical steps in the CAACciToolCatalogCreation use case:</p>
+<ol>
+  <li>
+
+<a href="#creating a new doc">
+
+Creating a New Catalog Document</a></li>
+  <li><a href="#Creating The root chapter">Creating the Root Chapter</a></li>
+  <li><a href="#Creating KW for the RC">Creating Keywords for the Root Chapte</a>r</li>
+  <li>
+
+<a href="#Creating an external chapter">
+Pointing an External Chapter</a></li>
+  <li>
+
+<a href="#Creating a Chapter to group together Part F">Creating a Chapter to Group Together the Part
+Family</a></li>
+  <li>
+
+<a href="#Creating KW for the New chapter">Creating&nbsp; Keyword for the
+New Chapter</a></li>
+  <li>
+
+<a href="#Creating an external family">
+Pointing an External Family</a></li>
+  <li>
+
+<a href="#Creating a Chapter to Group T the QP">
+Creating a Chapter to Group Together Sub-Chapters with Persistent Query</a></li>
+  <li>
+
+<a href="#Closing the doc">Closing the New Catalog</a></li>
+</ol>
+<p>Some operations like create a document, save a document, retrieve a chapter,...,
+have been factorized in global functions described in the &quot;<a href="#Services Functions">Global
+Functions</a>&quot; section.</p>
+<!---------------------------------comment------------------------------------->
+
+  <a name="NLS resources for dlg">
+  <p align="right">[</a><a href="#Top">Top</a>]</p>
+
+<h4><a name="creating a new doc"></a>
+
+Creating a New Catalog Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATDocument * pDocument = NULL ;
+    CATICatalogChapterFactory * pICatalogChapterFactory = NULL ;
+
+    rc = ::<b>CAACreateCatalogDocument</b>(&amp;pDocument,&amp;pICatalogChapterFactory);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="#CAACreateCatalogDoc">CAACreateCatalogDocument</a> global
+function creates a &quot;catalog&quot; document and returns <code>pICatalogChapterFactory</code>
+the <i>CATICatalogChapterFactory</i>
+interface pointer on its root container. This interface is necessary to create
+chapters.</p>
+<h4>
+<a name="Creating The root chapter"></a>Creating the Root Chapter&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATICatalogChapter * piToolChapter = NULL ;
+
+       CATUnicodeString <b>ChapterName</b> = &quot;Tools&quot; ;
+       CATBoolean <b>IsEndChapter</b> = FALSE ;
+       rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,<b>piToolChapter</b>);
+       ...
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Tools</code> chapter is created thanks to the <code>CreateChapter</code>
+method of the <i>CATICatalogChapterFactory</i> interface. The second parameter, <code>IsEndChapter</code>,
+specifies that the chapter is a not a family. The returned pointer, <code>piToolsChapter</code>,
+must be released as soon as it will be useless.</p>
+
+<p>The <code>Tools</code> chapter is the first chapter created in the
+document, so it is the root chapter. It means that you can retrieve it thanks to
+the <code>GetRootChapter </code>method of the same interface<code> </code><i>CATICatalogChapterFactory</i>
+.&nbsp;</p>
+<h4><a name="Creating KW for the RC"></a>Creating Keywords for the Root Chapter</h4>
+<h5><b>Creation&nbsp;</b></h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piToolChapter))
+       {
+          CATICatalogKeyword * piKeyword = NULL ;
+          rc = piToolChapter-&gt;<b>AddKeyword</b>(&quot;<b>ToolType</b>&quot;,&quot;String&quot;,piKeyword);
+          if ( SUCCEEDED(rc) )
+          {
+             piKeyword-&gt;Release();
+             piKeyword = NULL ;
+          }   
+          if ( SUCCEEDED(rc) )
+          {
+             rc = piToolChapter-&gt;<b>AddKeyword</b>(&quot;<b>Suppliers</b>&quot;,&quot;String&quot;,piKeyword);
+             if ( SUCCEEDED(rc) )
+             {
+                // Suppliers keyword will be invisible in the 
+                // catalog browser
+                piKeyword-&gt;<b>SetHidden</b>(TRUE);  
+                piKeyword-&gt;Release();
+                piKeyword = NULL ;
+             }
+          }
+       }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The &quot;<code>ToolType</code>&quot; string keyword&nbsp; is created thanks to the <code>AddKeyword</code>
+method of the <i>CATICatalogChapter</i> interface applied to <code>piToolChapter
+</code>the pointer on the <code>Tools</code> 
+ chapter.&nbsp;</p>
+<p>Same thing for the &quot;<code>Suppliers</code>&quot; keyword. Notice that
+this keyword is hidden from a Catalog Browser, in applying the <code>SetHidden</code>
+method on <code>piKeyword </code>the <i>CATICatalogKeyword</i> interface pointer
+of the keyword.</p>
+<p><b>Default valuation</b></p>
+<p>The default value for the &quot;<code>Suppliers</code>&quot; keyword is set thanks to the <code>SetDefaultValue</code>
+method of the <i>CATICatalogChapter</i> interface pointer on the <code>Tools</code>
+chapter, <code>piToolChapter</code>.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piToolChapter))
+       {
+          CATUnicodeString Value = &quot;MySupplierA&quot; ;
+          rc = piToolChapter-&gt;<b>SetDefaultValue</b>(&quot;Suppliers&quot;,Value);
+       }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>For the &quot;<code>ToolType</code>&quot; keyword there is not default value.
+On each description of the <code>Tools</code> chapter, a value will be set
+thanks to the <code>SetValue</code> method on a <i>CATICatalogDescription</i>
+interface pointer. Notice that if a keyword has a default value, its value can
+be nevertheless changed on each description.&nbsp;</p>
+<h4><a name="Creating an external chapter"></a>Pointing an External Chapter</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL !=piToolChapter) )
+       {
+          CATILinkableObject * piLinkOnChapter = NULL ;
+          CATUnicodeString ChapterName = &quot;Screws&quot;;
+          CATUnicodeString DocumentName = &quot;CAAScrew&quot; ;
+          rc = ::<b>CAAFindChapterInCatalog</b>(DocumentName,iOutputPath,ChapterName,IID_CATILinkableObject,
+                                              (void**)&amp;piLinkOnChapter);
+
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = piToolChapter-&gt;<b>AddDescription</b>(piDescription,piLinkOnChapter);
+             if ( SUCCEEDED(rc) &amp;&amp; ( NULL != piDescription) )
+             {
+                rc = piDescription-&gt;<b>SetValue</b>(&quot;ToolType&quot;,&quot;Screws&quot;);
+
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             } 
+             piLinkOnChapter-&gt;Release();
+             piLinkOnChapter = NULL ;                    
+           }
+       }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="#CAAFindChapterInCatalog">CAAFindChapterInCatalog<b></b></a><b> </b>global
+function retrieves inside the <code>CAAScrew.catalog</code>, the <code>Screws</code>
+chapter. The output of this function is, in this case, the <i>CATILinkableObject</i>
+interface pointer on this external chapter. This pointer is the input of the <code>AddDescription</code>
+method applied to <code>piToolChapter</code> , the <i>CATICatalogChapter</i>
+interface pointer of the <code>Tools</code> chapter. It means that the <code>piToolChapter</code>
+chapter has a new description which contains a link towards the external <code>Screws</code>
+chapter.&nbsp;<p>At last, the
+value of the &quot;ToolType&quot; keyword is set to &quot;Screws&quot; on the
+new description, <code>piDescription</code>, the description dedicated to the <code>Screws</code> chapter.<h4><a name="Creating a Chapter to group together Part F"></a>Creating a Chapter to Group Together the Part
+Families</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) )
+       {
+          CATUnicodeString <b>ChapterName</b> = &quot;Nuts&quot; ;
+          CATBoolean <b>IsEndChapter</b> = FALSE ;
+
+          rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piNutsChapter);
+          ...
+       }
+
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Nuts</code> chapter is
+created thanks to the <i>CATICatalogChapterFactory </i>interface.&nbsp;The new chapter is linked with
+a parent chapter thanks a new description
+created on its parent chapter. In this case the parent chapter is the <code>Tools</code>
+Chapter.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if (SUCCEEDED(rc) &amp;&amp; (NULL != piNutsChapter) &amp;&amp; (NULL != piToolChapter) )
+       {                  
+          <b>CATILinkableObject</b> * pLinkOnChapter = NULL ;
+          rc = piNutsChapter-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnChapter);     
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = piToolChapter-&gt;<b>AddDescription</b>(piDescription,pLinkOnChapter);
+             if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+             {
+                rc = piDescription-&gt;<b>SetValue</b>(&quot;ToolType&quot;,&quot;Nuts&quot;);
+
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             }
+
+             pLinkOnChapter-&gt;Release();
+             pLinkOnChapter = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Like any kind object to set in a description, the <i>CATILinkableObject</i>
+interface on the <code>Nuts</code> chapter, <code>pLinkOnChapter</code>, is
+necessary.&nbsp; The <code>AddDescription</code> method applied&nbsp; to the <code>Tools</code>
+chapter,&nbsp;the parent chapter pointed by <code>piToolChapter</code>, creates
+a new description with the <code>pLinkOnChapter</code><code> </code>interface
+pointer on the <code>Nuts</code> chapter.</p>
+
+<p>At last, the value of the &quot;ToolType&quot; keyword is set to
+&quot;Nuts&quot; on the
+new description, <code>piDescription</code>, the description dedicated to the <code>Nuts</code> chapter.</p>
+
+<h4><a name="Creating KW for the New chapter"></a>Creating&nbsp; Keyword for the
+New Chapter</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( SUCCEEDED(rc) &amp;&amp; (NULL != piNutsChapter) )
+       {                  
+          CATICatalogKeyword * piKeyword = NULL ;
+          rc = piNutsChapter-&gt;<b>AddKeyword</b>(&quot;<b>SideNumber</b>&quot;,&quot;Integer&quot;,piKeyword);
+          if ( SUCCEEDED(rc) )
+          {
+             piKeyword-&gt;Release();
+             piKeyword = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The integer &quot;<code>SideNumber</code>&quot; keyword is created on the <code>Nuts</code>
+chapter. <code>piNutsChapter </code>is the <i>CATICatalogChapter</i> interface
+pointer on the <code>Nuts</code> chapter.</p>
+<h4><a name="Creating an external family"></a>Pointing an External Family</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+        if ( SUCCEEDED(rc) &amp;&amp; (NULL != piNutsChapter))
+        {
+           <b>CATILinkableObject</b> * piLinkOnChapter = NULL ;
+           CATUnicodeString ChapterName = &quot;Nuts6SidesFamily&quot;;
+           CATUnicodeString DocumentName = &quot;CAANuts6Sides&quot;;
+           rc = ::<b>CAAFindChapterInCatalog</b>(DocumentName,iOutputPath,
+                                       ChapterName,IID_CATILinkableObject, 
+                                           (void**) &amp;piLinkOnChapter);
+        
+           if ( SUCCEEDED(rc) )
+           {
+              CATICatalogDescription * piDescription = NULL ;
+              rc = piNutsChapter-&gt;<b>AddDescription</b>(piDescription,piLinkOnChapter);
+              if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+              {
+                 ...
+                 rc = piDescription-&gt;<b>SetValue</b>(&quot;SideNumber&quot;,&quot;6&quot;);
+                 piDescription-&gt;Release();
+                 piDescription = NULL ;
+              }
+
+              piLinkOnChapter-&gt;Release();
+              piLinkOnChapter = NULL ;
+           }
+        }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a href="#CAAFindChapterInCatalog">CAAFindChapterInCatalog<b></b></a><b> </b>global
+function retrieves inside the <code>CAANuts6Sides.catalog</code>, the <code>Nuts6SidesFamily</code>
+chapter. The output of this function is, in this case, the <i>CATILinkableObject</i>
+interface pointer on this chapter. This pointer is the input of the <code>AddDescription</code>
+method applied to <code>piNutsChapter</code> , the <i>CATICatalogChapter</i>
+interface pointer on the <code>Nuts</code> chapter. It means that the <code>piNutsChapter</code>
+chapter has a new description which contains a links towards the external <code>Nuts6SidesFamily</code>
+chapter.<p>At last, the value of the &quot;<code>SideNumber</code>&quot; keyword is
+set to &quot;<code>6</code>&quot; on the
+new description, <code>piDescription</code>, the description dedicated to the <code>Nuts6SidesFamily</code>
+chapter.&nbsp;
+<h4><a name="Creating a Chapter to Group T the QP"></a>Creating a Chapter to Group Together
+Sub-Chapters with Persistent Query</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       CATICatalogChapter * piNutsWithFixedSizeHoleChapter = NULL ;
+
+       if ( SUCCEEDED(rc) )
+       { 
+          CATUnicodeString ChapterName = &quot;NutsWithFixedSizeHole&quot; ;
+          CATBoolean IsEndChapter = FALSE ;
+          rc = pICatalogChapterFactory-&gt;<b>CreateChapter</b>(ChapterName,IsEndChapter,piNutsWithFixedSizeHoleChapter);
+          ...
+       }
+       if ( SUCCEEDED(rc) &amp;&amp; ( NULL != piToolChapter) )
+       {
+          <b>CATILinkableObject</b> * pLinkOnChapter = NULL ;
+          rc = <b>piNutsWithFixedSizeHoleChapter</b>-&gt;QueryInterface(IID_CATILinkableObject,
+                                              (void **) &amp;pLinkOnChapter);     
+          if ( SUCCEEDED(rc) )
+          {
+             CATICatalogDescription * piDescription = NULL ;
+             rc = piToolChapter-&gt;<b>AddDescription</b>(piDescription,pLinkOnChapter);
+             if ( SUCCEEDED(rc) &amp;&amp; (NULL != piDescription) )
+             {  
+                // 2-6-3 Associating a value to the ToolType keyword
+                rc = piDescription-&gt;<b>SetValue</b>(&quot;<b>ToolType</b>&quot;,&quot;Nuts&quot;);
+
+                piDescription-&gt;Release();
+                piDescription = NULL ;
+             }
+
+             pLinkOnChapter-&gt;Release();
+             pLinkOnChapter = NULL ;
+          }
+       }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The same code as for the <code>Nuts</code> chapter. The&nbsp; <code>NutsWithFixedSizeHole</code>
+chapter is
+created thanks to the <i>CATICatalogChapterFactory </i>interface.&nbsp;
+The new chapter is linked with a parent chapter thanks a new description
+created on its parent chapter. In this case the parent chapter is the <code>Tools</code>
+Chapter.&nbsp;</p>
+
+<p>Like any kind object to set in a description, the <i>CATILinkableObject</i>
+interface on the <code>
+NutsWithFixedSizeHole</code> chapter, <code>pLinkOnChapter</code>, is
+necessary.&nbsp; The <code>AddDescription</code> method applied&nbsp; to the <code>Tools</code>
+chapter,&nbsp;the parent chapter pointed by <code>piToolChapter</code>, creates
+a new description with the <code>pLinkOnChapter </code>interface
+pointer on the <code>
+NutsWithFixedSizeHole</code> chapter.</p>
+
+<p>At last, the value of the &quot;ToolType&quot; keyword is set to &quot;<code>Nuts</code>&quot; on the
+new description, <code>piDescription</code>, the description dedicated to the <code>
+NutsWithFixedSizeHole</code> chapter.</p>
+
+<h4><a name="Closing the doc"></a>
+ Closing the New Catalog</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL != pDocument) )
+    {
+        CATUnicodeString DocumentName = &quot;<b>CAATool</b>&quot; ;
+        rc = <b>::CAACloseCatalogDocument</b>(DocumentName,*pDocument,iOutputPath);
+        pDocument = NULL ;
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The<a href="#CAAClosecatalogDocument"> CAACloseCatalogDocument</a> global
+function saves the new catalog&nbsp; under the name <code>CAATool</code></p>
+<h4><a name="Services Functions"></a>Global Functions</h4>
+<p>In the <i>CAACciCatalogServices.cpp</i> you will find the global functions
+used in this use case, but also in the CAACciScrewCatalogCreation [<a href="#References">1</a>],
+the&nbsp; CAACciNuts6SidesCatalogCreation [<a href="#References">2</a>] and the
+CAACciCatalogPersistentQuery [<a href="#References">3</a>] use cases.</p>
+<ul>
+<li>The necessary includes are:</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// ObjectModelerBase Framework
+#include &quot;CATDocumentServices.h&quot;         // Open/remove/new document
+#include &quot;CATDocument.h&quot;                 // to handle the CATDocument
+#include &quot;CATInit.h&quot;                     // To retrieve the root container
+
+// ObjectSpecsBase Framework
+#include &quot;CATLISTV_CATISpecObject.h&quot;     // To retrieve the list of design table
+#include &quot;CATIContainer.h&quot;               // for the root container of the document
+
+// ComponentsCatalogsInterfaces Framework
+#include &quot;CATICatalogChapterFactory.h&quot;      
+#include &quot;CATICatalogChapter.h&quot;
+
+//MecModInterfaces Framework
+#include &quot;CATIPrtContainer.h&quot;            // The Part root container
+
+//LiteralFeatures
+#include &quot;CATIParmPublisher.h&quot;
+#include &quot;CATIDesignTable.h&quot;
+
+// Standard C++ library
+#include &lt;iostream.h&gt;
+
+// System Framework
+#include &quot;CATUnicodeString.h&quot;</pre>
+    </td>
+  </tr>
+</table>
+
+<li><a name="CAACreateCatalogDoc"></a>CAACreateCatalogDocument</li>
+<p>This method creates a new catalog document and retrieves&nbsp; the <i>CATICatalogChapterFactory</i>
+interface implemented on the root container of the new document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> HRESULT CAACreateCatalogDocument(CATDocument ** opDocument, 
+                                 CATICatalogChapterFactory ** opCatalogChapterFactory) 
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( NULL == opDocument ) return rc ;
+    *opDocument = NULL ;
+    if ( NULL == opCatalogChapterFactory ) return rc ;
+    * opCatalogChapterFactory = NULL ;
+
+    <b>// 1- Creating a new document</b>
+    rc = <b>CATDocumentServices</b>::<b>New</b>(&quot;<b>catalog</b>&quot;,*opDocument);
+    if ( SUCCEEDED(rc) )
+    {
+        CATInit *pInitOnDoc = NULL ;
+        rc = (*opDocument)-&gt;<b>QueryInterface</b>(IID_<b>CATInit</b>,(void **) &amp;pInitOnDoc);
+        if ( FAILED(rc) )
+        {
+           cout &lt;&lt; &quot;Error in retrieving the CATInit interface&quot;&lt;&lt; endl;
+        }else
+        {
+           <b>//  2- Retrieving the root container</b>
+           CATIContainer *pIRootCont = NULL ;
+           pIRootCont = (CATIContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIContainer&quot;);
+
+           if ( NULL == pIRootCont )
+           {
+              cout &lt;&lt; &quot;The root container is NULL&quot;&lt;&lt; endl;
+              rc = E_FAIL ;
+           }else
+           {
+              <b>// 3- Retrieving the CATICatalogChapterFactory pointer on the root container</b>
+              rc = pIRootCont-&gt;QueryInterface(IID_CATICatalogChapterFactory,
+                                              (void **) opCatalogChapterFactory);
+              if ( FAILED(rc) )
+              {
+                  cout &lt;&lt; &quot;Error in retrieving the CATICatalogChapterFactory interface&quot;&lt;&lt; endl;
+              }
+              pIRootCont-&gt;Release();
+              pIRootCont = NULL ;
+           }
+           pInitOnDoc-&gt;Release();
+           pInitOnDoc = NULL ;
+        }
+    }
+
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>As usual, the document is created by the <code>New</code> static function of
+the <i>CATDocumentServices</i> class and a <i>CATInit</i> interface pointer is
+retrieved. Thanks to this interface, the root container is retrieved with the <code>GetRootContainer</code>
+method. The root container of a catalog document implements the <i>CATICatalogChapterFactory</i>
+interface to create chapters.</p>
+<li><a name="CAAClosecatalogDocument"></a>CAACloseCatalogDocument</li>
+<p>This method closes the document, handled by the iDocument pointed, and saves
+it under the name <code>iDocumentName </code>in the directory given by the last
+argument <code>iOutputPath.</code></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAACloseCatalogDocument(CATUnicodeString &amp; iDocumentName, 
+                                CATDocument      &amp; iDocument, 
+                                CATUnicodeString &amp; iOutputPath)
+{
+   HRESULT rc = E_FAIL ;
+
+   //<b>1- Saving the document</b> 
+   // ----------------------
+   CATUnicodeString DocumentSaveAsName = iDocumentName + &quot;.catalog&quot;;
+   CATUnicodeString EmptyString =&quot;&quot; ;
+   if ( EmptyString != iOutputPath )
+   {
+      DocumentSaveAsName = iOutputPath + Slash + DocumentSaveAsName ;
+   }
+ 
+   rc = CATDocumentServices::<b>SaveAs</b> (iDocument,DocumentSaveAsName.CastToCharPtr());
+   if (FAILED(rc))
+   {
+      cout &lt;&lt; &quot;Error in saving document &quot;&lt;&lt; DocumentSaveAsName.CastToCharPtr() &lt;&lt; endl;
+   }
+
+   //<b>2- Removing the document from the session</b>
+   // ------------------------------------------
+   rc = CATDocumentServices::<b>Remove</b>(iDocument);
+   if (FAILED(rc) )
+   {
+      cout &lt;&lt; &quot;Error in closing document &quot;&lt;&lt; DocumentSaveAsName.CastToCharPtr() &lt;&lt; endl;
+   }
+
+   return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The name of the catalog document is given by the caller. As usual, the <code>SaveAs</code>
+static function of the <i>CATDocumentServices</i> class is used to save the
+document in a directory.&nbsp;&nbsp;</p>
+<p>The second action consists in calling the <code>Remove</code> static function
+of the <i>CATDocumentServices</i> class. It results that the current catalog is
+closed and removed from the current session. The closure of a catalog implies
+that all documents pointed by this document are released (in fact unlocked).
+As usual, if the count of links on a pointed document becomes zero, the pointed
+document is also closed.</p>
+
+<li><a name="CAAFindChapterInCatalog"></a>CAAFindChapterInCatalog</li>
+<p>This function
+enables to find a chapter by its name, <code>ChapterName,</code>  in a
+given catalog, <code>DocumentName,</code> located in a given directory path, <code>DocumentPath.&nbsp;</code></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAFindChapterInCatalog(CATUnicodeString &amp; iDocumentName,
+                             CATUnicodeString &amp; iDocumentPath,
+                             CATUnicodeString &amp; iChapterName, 
+                             const IID &amp; iInterfaceIdentifier,
+                             void ** opInterface)
+{
+    HRESULT rc = E_FAIL ;
+    if (NULL == opInterface) return rc ;
+    *opInterface = NULL ;
+     
+    // <b>1-Building the storage name of the document</b>
+    // -------------------------------------------
+    CATDocument * pDocument = NULL ;
+    CATUnicodeString EmptyString =&quot;&quot; ;
+    CATUnicodeString ModelDocName = iDocumentName + &quot;.catalog&quot; ;
+    if ( EmptyString != iDocumentPath )
+    {
+       ModelDocName = iDocumentPath + Slash + ModelDocName ;
+    }
+ 
+    // <b>2-Opening the document</b>
+    // ----------------------
+    CATDocumentServices::<b>Open</b>(ModelDocName.CastToCharPtr(), pDocument);
+    if ( NULL == pDocument ) 
+    {
+       return rc ;
+    }
+
+    // <b>3-Retrieving the root container</b>
+    // --------------------------------
+    CATInit *pInitOnDoc = NULL ;
+    rc = pDocument-&gt;<b>QueryInterface</b>(IID_<b>CATInit</b>,(void **) &amp;pInitOnDoc);
+    if ( FAILED(rc) )
+    {
+       cout &lt;&lt; &quot;Error in retrieving the CATInit interface&quot;&lt;&lt; endl;
+    }else
+    {
+       CATIContainer *pIRootCont = NULL ;
+       pIRootCont = (CATIContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIContainer&quot;);
+
+       if ( NULL == pIRootCont )
+       {
+          cout &lt;&lt; &quot;The root container is NULL&quot;&lt;&lt; endl;
+          rc = E_FAIL ;
+       }else
+       {
+          // <b>4-Retrieving its CATICatalogChapterFactory interface pointer</b>
+          // -----------------------------------------------------------
+          CATICatalogChapterFactory * pICatalogChapterFactory = NULL ;
+          rc = pIRootCont-&gt;<b>QueryInterface</b>(IID_<b>CATICatalogChapterFactory</b>,
+                                              (void **) &amp;pICatalogChapterFactory);
+          if ( FAILED(rc) )
+          {
+             cout &lt;&lt; &quot;Error in retrieving the CATICatalogChapterFactory interface&quot;&lt;&lt; endl;
+          }else
+          {
+              // <b>5- Researching the chapter</b> 
+              // ---------------------------
+              CATICatalogChapter *pICatalogChapter = NULL ;
+              rc = pICatalogChapterFactory-&gt;<b>FindChapter</b>(iChapterName,pICatalogChapter);
+
+              if ( SUCCEEDED(rc) )
+              {
+                 rc = pICatalogChapter-&gt;QueryInterface(iInterfaceIdentifier,
+                                              (void **) opInterface);
+                
+                 pICatalogChapter-&gt;Release();
+                 pICatalogChapter = NULL ;
+              }
+              pICatalogChapterFactory-&gt;Release() ;
+              pICatalogChapterFactory = NULL ;
+          }
+          pIRootCont-&gt;Release();
+          pIRootCont = NULL ;
+       }
+       pInitOnDoc-&gt;Release();
+       pInitOnDoc = NULL ;
+    }
+    if ( (NULL != pDocument) &amp;&amp; ( NULL == piInterface ) )
+    {
+        rc = CATDocumentServices::Remove(pDocument);
+        if (FAILED(rc) )
+        {
+           cout &lt;&lt; &quot;Error in closing document &quot;&lt;&lt; DocumentSaveAsName.CastToCharPtr() &lt;&lt; endl;
+        }
+    }
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To retrieve a chapter by its name into a catalog, the <code>FindChapter</code>
+method of the <i>CATICatalogChapterFactory</i> interface is used. Refer to the
+use case &quot;Browsing a Catalog&quot; [<a href="#References">6</a>]
+for details about this method.&nbsp;</p>
+<p>In this function the <code>pDocument</code> document is opened, two cases can
+append:</p>
+<ul>
+  <li>The chapter is not found: the opened document must be closed here</li>
+  <li>The chapter has been found: The returned chapter will be used for two
+    reasons:&nbsp;
+    <ul>
+      <li>to create an external chapter in the <code>CAATool</code> catalog</li>
+      <li>to associate a chapter&nbsp; to a persistent query in the <code>CAATool</code>
+        catalog&nbsp; [<a href="#References">3</a>]</li>
+    </ul>
+    <p>In these two cases, the closure of the <code>CAATool </code>catalog will
+    close the document pointed by <code>pDocument</code>. You can always use the
+    <code>CATLockDocument </code>global function to keep a pointer on the
+    document. When the pointer will be useless, you will call the opposite
+    global function <code>CATUnLockDocument.&nbsp;</code></li>
+</ul>
+<li><a name="CAARetrieveDTinPartDocument"></a>CAARetrieveDTInPartDocument</li>
+<p>This method enables to retrieve the first design table of a Part document given
+by its complete name <code>iDocumentName</code>.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> HRESULT CAARetrieveDTInPartDocument(CATUnicodeString &amp; iDocumentName,
+                                     CATIDesignTable ** opDesignTable) 
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( NULL == opDesignTable ) return rc ; 
+    *opDesignTable = NULL ;
+    <b>// 1- Opening the document</b>
+    CATDocument * pDocument = NULL ;
+    rc = CATDocumentServices::<b>Open</b>(iDocumentName.CastToCharPtr(),pDocument);
+
+    if ( SUCCEEDED(rc) )
+    {
+        CATInit *pInitOnDoc = NULL ;
+        rc = pDocument-&gt;QueryInterface(IID_CATInit,(void **) &amp;pInitOnDoc);
+        if ( FAILED(rc) )
+        {
+           cout &lt;&lt; &quot;Error in retrieving the CATInit interface&quot;&lt;&lt; endl;
+        }else
+        {
+          <b> //  2- Retrieving the root container</b>
+           CATIPrtContainer *pIPrtCont = NULL ;
+           pIPrtCont = (CATIPrtContainer*)pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+
+           if ( NULL == pIPrtCont )
+           {
+              cout &lt;&lt; &quot;The root container is NULL&quot;&lt;&lt; endl;
+              rc = E_FAIL ;
+           }else
+           {
+              <b>// 3- Retrieving the MechanicalPart feature</b>
+              CATISpecObject_var spSpecObjectPart = pIPrtCont-&gt;<b>GetPart</b>();
+              if ( NULL_var == spSpecObjectPart )
+              {
+                 cout &lt;&lt; &quot;The MechanicalPart is NULL&quot;&lt;&lt; endl;
+                 rc = E_FAIL ;
+              }else
+              {
+                  <b>// 4-Retrieving the list of design table</b>
+                  <b>CATIParmPublisher</b> * pIParmPublisher = NULL ;
+                  rc = spSpecObjectPart-&gt;QueryInterface(IID_CATIParmPublisher,(void **) &amp;pIParmPublisher);
+                  if ( SUCCEEDED(rc) )
+                  {
+                     CATLISTV (CATISpecObject_var) DesignTableList ;
+                     pIParmPublisher-&gt;<b>GetAllChildren</b>(&quot;CATIDesignTable&quot;,DesignTableList);
+                     int NbDesignTable = DesignTableList.Size();
+                     if ( NbDesignTable &gt;= 1 )
+                     {
+                        CATISpecObject_var specObj = DesignTableList[1] ;
+                        rc = specObj-&gt;<b>QueryInterface</b>(IID_CATIDesignTable,(void**) <b>opDesignTable</b>);
+                     }       
+                     pIParmPublisher-&gt;Release();
+                     pIParmPublisher = NULL ;
+                  }
+              }
+
+              pIPrtCont-&gt;Release();
+              pIPrtCont = NULL ;
+           }
+           pInitOnDoc-&gt;Release();
+           pInitOnDoc = NULL ;
+        }
+    }
+
+    return rc ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The design table are retrieved thanks to the <code>GetAllChildren</code>
+method of the <i>CATIParmPublisher</i>. In this case, it is the <code>MechanicalPart</code>
+feature, those returned by the <code>GetPart</code> method on the root container, <code>pIPrtCont</code><b>,
+</b>which implements this interface.&nbsp;</p>
+<img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">The design table must contain a column named PartNumber . A test to control
+its presence should be added in this method.&nbsp;
+</ul>
+  <p align="right">[</a><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case illustrates how to create a catalog document in using the
+following interfaces:
+<ul>
+  <li><i>CATICatalogChapterFactory</i>, to create chapters</li>
+  <li><i>CATICatalogChapter</i>, to handle a chapter
+    <ul>
+      <li>Create keywords</li>
+      <li>Set default value to keywords</li>
+      <li>Create descriptions</li>
+    </ul>
+  </li>
+  <li><i>CATILinkableObject</i>, to associate an chapter to a description</li>
+  <li><i>CATICatalogKeyword</i>, to handle a keyword</li>
+  <li><i>CATICatalogDescription</i> to handle the description
+    <ul>
+      <li>Set value the keyword&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAACciCatalogCreationPart.htm">Creating a Catalog With Part Documents</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAACciCatalogCreationPartFamily.htm">Creating a Catalog With
+      Part Family</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAACciCatalogCreationQP.htm">Creating Persistent Query</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAACciCatalogBrowsing.htm">Browsing a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

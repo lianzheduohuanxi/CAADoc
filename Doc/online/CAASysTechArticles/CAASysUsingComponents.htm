@@ -1,0 +1,1125 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Components</h3>
+      <em>Creating component instances, asking for interface pointers, calling
+      interface methods, and managing component lifecycle</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Many CAA services are offered using CAA components hidden behind a
+      curtain of interfaces. We discuss here the ways for clients to create
+      instances of these components, to use them by means of pointers to
+      interfaces they implement, and to manage their lifecycles. This article is
+      divided into the following sections:
+      <ul>
+        <li><strong><a href="#100000">What Are Components and Interfaces?</a></strong>
+          gives a reminder about components and the interfaces they implement</li>
+        <li><strong><a href="#200000">Creating a Component Instance</a></strong>
+          shows two possible instantiation ways
+          <ul>
+            <li><a href="#210000">Using the CATInstantiateComponent Global
+              Function</a></li>
+            <li><a href="#220000">Using the new Operator</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#300000">Querying a Component for Interfaces</a></strong>
+          explains how you can make sure whether a component implements a given
+          interface and how to retrieve a pointer to this interface
+          <ul>
+            <li><a href="#310000">Using QueryInterface</a> shows how a client
+              application should use QueryInterface</li>
+            <li><a href="#320000">IUnknown and CATBaseUnknown</a> are the
+              foundations of components and interfaces, and are extensively used
+              in client applications</li>
+            <li><a href="#330000">Comparing Two Interface Pointers</a> provides
+              a safe way of determining whether two interface pointers refer to
+              the same component instance</li>
+          </ul>
+        </li>
+        <li><strong><a href="#400000">Managing Component Lifecycle</a></strong>
+          <ul>
+            <li><a href="#410000">Reference Counting</a></li>
+            <li><a href="#420000">When Using AddRef and Release</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#430000">Using Smart Interface Pointers</a></strong></li>
+        <li><strong><a href="#500000">Usage Recommendations</a></strong>
+          necessary to make full and good use of components and interfaces
+          <ul>
+            <li><a href="#510000">Usage Recommendations for Calling
+              QueryInterface</a> gives the rules to follow to get safe and
+              usable interface pointers</li>
+            <li><a href="#520000">Recommendations for Using AddRef and Release
+              in Client Applications</a> gives tips and rules to correctly
+              participate to component lifecycle depending on how you use the
+              component</li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Are Components and Interfaces?</h3>
+<p>A <em>component</em> is a reusable object provided in a binary form that can
+be instantiated and used by client applications to stand for a real object, such
+as a mathematical surface or a solid feature, or a software object, such as
+dialog box or an end user command, or finally a set of services, such as a model
+checker or a stress analyzer. A CAA component is modeled using a class or
+several classes linked together to provide the component type and the component
+behaviors.</p>
+<p>An <em>interface</em> represents either the type or the behavior, or a part
+of the behavior, of the implementing component. To allow for this, the interface
+is made of a set of operations that the implementing component is supposed to
+perform. When you get an interface pointer to a given component, you get in fact
+a handle to the component that enables you to request this component to behave
+accordingly, that is, to perform some of these operations. You can also ask the
+component to return another handle, that is, a pointer to another interface it
+implements, and you can thus skip from one handle to another, depending on what
+you want the component to do.</p>
+<p>An interface is also a contract between the interface designer, the component
+developer, and you, as a client application programmer. This contract includes
+the interface name and specifications, such as the interface mission, the
+operations, their signatures and purposes, and the compliance of the component
+to these specifications. This should not change with the time. Only additions to
+the specifications are allowed.</p>
+<p>The main advantage of interfaces is to enable client applications to use
+components using a standard and lasting protocol, hiding the implementation
+details and allowing the components to change with no impact on the client
+applications. In addition, this standard protocol hides the actual component
+location and makes the client application independent from the way the component
+is actually created and accessed, in the same process or in another process, on
+the same machine or on another machine.</p>
+<p>The handle to the component is a pointer to an interface that the component
+implements, that is, for which the component provides the code of the methods
+performing the operations.</p>
+<p>The interfaces are shown on the following figure as plug-in jacks used by
+clients to plug to the component as if it were an electronic component,
+following the UML notation and the way used by Microsoft to graphically
+represent interfaces in different publications.</p>
+<p><img border="0" src="images/CAASysInterfacePointer.jpg" width="438" height="168"></p>
+<p>As an example, imagine you are writing a client application which deals with
+points in a 2D space. We can assume that the what we expect from a 2D point is
+summarized in the following figure of a point component you will use by means of
+the interfaces it implements.</p>
+<p><img border="0" src="images/CAASysPointInterfaces.gif" width="428" height="324"></p>
+<p>This point component has a type interface and three behavioral interfaces:
+<ol>
+  <li>it is a point thanks to the CATIPoint interface that provides methods to
+    get and set its coordinates</li>
+  <li>it behaves as a movable object by means of the CATIMove interface with
+    which you translate or rotate it</li>
+  <li>it behaves as a graphic object due to the CATIAttributes interface to
+    manage its color, associated symbol, and pickability</li>
+  <li>it behaves as a displayable object through the CATIDraw interface to draw
+    it on the screen.</li>
+</ol>
+<p>Note that the last three interfaces could be shared by other geometric
+components, such as the 2D line or the 2D circle, and would be of course
+implemented differently for these components.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>Creating a Component Instance</h3>
+<p>Component instances can be created using:
+<ul>
+  <li>The <code>CATInstantiateComponent</code> global function. Using this
+    component factory function is the recommended solution since this doesn't
+    couple at build time your application with the component shared lib or DLL,
+    but this must be enabled by the component supplier</li>
+  <li>The <code>new</code> operator applied to the component main class.</li>
+</ul>
+<p>The component supplier should describe how its component can be instantiated.
+These two ways are discussed below.</p>
+<h4><a name="210000"></a>Using the CATInstantiateComponent Global Function</h4>
+<p>When a component enables the <code>CATInstantiateComponent</code> global
+function, create an instance of this component as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;<code>CATInstantiateComponent</code>.h&quot;
+...
+  // Create a CATCmp instance and retrieving a pointer to IUnknown from CATCmp
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  HRESULT rc = ::<code>CATInstantiateComponent</code>(&quot;CATCmp&quot;, IID_IUnknown, (void **) &amp;pIUnknownOnCATCmp);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>CATCmp</code> is the name of the component main class</li>
+  <li><code>IID_IUnknown</code> is the IID of the interface to which you want a
+    pointer from <i>CATCmp</i></li>
+  <li><code>pIUnknownOnCATCmp</code> is the retrieved pointer.</li>
+</ul>
+<p>When creating such as component, always handle it as an <i>IUnknown</i> or <i>CATBaseUnknown</i>
+pointer. Usually, CAA methods request a <i>CATBaseUnknown</i> pointer. Then you
+can ask for a pointer to any interface this component implements.</p>
+<p>There is no include statement to include the component main class header
+file, and doing so, there is no build time dependency between your application
+and the one that supplies the component.</p>
+<h4><a name="220000"></a>Using the new Operator</h4>
+<p>If the component doesn't enable its instantiation using the <code>CATInstantiateComponent</code>
+global function, you need to instantiate its main class using the <code>new</code>
+operator.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATCmp.h&quot;
+...
+  // Create a CATCmp instance
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  pIUnkownOnCATCmp = (IUnknown *) new CATCmp();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When creating such a component, always handle it as an <i>IUnknown</i> or <i>CATBaseUnknown</i>
+pointer. Usually, CAA methods request a <i>CATBaseUnknown</i> pointer.Then you
+can ask for a pointer to any interface this component implements.</p>
+<p>This way of doing binds your application with the one that supplies the
+component at build time. This means that if the latter is modified, your
+application must be rebuilt.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Querying a Component for Interfaces</h3>
+<p>When you write a client application, you should never handle pointers to the
+implementation objects that make up the component. Usually, you already have a
+pointer to an interface, either passed as a parameter to the method you are
+writing, or a pointer to <i>IUnknown</i> or <i>CATBaseUnknown</i> returned by
+the component factory function or <code>new</code> operator.</p>
+<p>Once you have got a pointer to an interface, you can request the component to
+execute operations among those exposed by the interface, that is execute the
+methods that provide the code to these operations. The component can of course
+implement other interfaces. Using the pointer you have already, you can
+determine whether this component implements a given interface, and get a pointer
+to this interface, by means of the <code>QueryInterface</code> method. <code>QueryInterface</code>
+has the following signature:</p>
+<pre>HRESULT __stdcall QueryInterface(const IID &amp; iid, void ** ppv);</pre>
+<p>The first parameter is the IID of the queried interface. IID stands for
+Interface IDentifier and is unique. It is defined by the interface supplier as a
+GUID [<a href="#References">1</a>]. The interface IID is an <code>extern</code>
+that is always built using the prefix IID_ concatenated to the interface name,
+such as <code>IID_IUnknown</code>, <code>IID_CATBaseUnknown</code>, or&nbsp; <code>IID_CATI3DGeoVisu</code>.</p>
+<p>If the component implements the interface, a pointer to this interface is
+returned in <code>ppv</code>, and <code>NULL</code> is returned otherwise.</p>
+<p><code>QueryInterface</code> returns an <code>HRESULT</code> [<a href="#References">2</a>],
+which is <code>S_OK</code> if the query is successful, <code>E_NOINTERFACE</code>
+if the query fails, or <code>E_UNEXPECTED</code> if an unknown error occurs.</p>
+<p><code>QueryInterface</code> is shared by all the interfaces. It can be used
+from any pointer to any interface a component implements to get a pointer to any
+other interface this component implements. This can also be expressed as: <code>QueryInterface</code>
+is reflexive, symmetric, and transitive.</p>
+<table width="100%">
+  <tr>
+    <td valign="top">Reflexive</td>
+    <td valign="top">From a pointer to an interface, you can always get a
+      pointer to the same interface</td>
+  </tr>
+  <tr>
+    <td valign="top">Symmetric</td>
+    <td valign="top">If you got a pointer to CATIYY from a pointer to CATIXX,
+      you can get a pointer to CATIXX from this pointer to CATIYY</td>
+  </tr>
+  <tr>
+    <td valign="top">Transitive</td>
+    <td valign="top">If you got a pointer to CATIYY from a pointer to CATIXX,
+      and if you got a pointer to CATIZZ from this pointer to CATIYY, you can
+      also get a pointer to CATIZZ from the pointer to CATIXX</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="310000"></a>Using QueryInterface</h4>
+<p>This example shows a very common case you'll meet often. You should code a
+method that creates a component instance from which you get a pointer to a given
+interface and execute methods this interface provides. To do this, use <code>QueryInterface</code>
+as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATInstantiateComponent.h&quot; <em>// To get the CATInstantiateComponent global function
+</em>#include &quot;CATErrorDef.h&quot;             <em>// To declare return code values and testing macros</em>
+#include &quot;CATIXX.h&quot;                  <i>// To get the CATIXX interface
+</i>...
+
+HRESULT ClientComponent::ClientMethod()
+{
+  HRESULT rc = E_FAIL;
+  <em>// Create a CATCmp instance</em>
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  rc = ::<strong>CATInstantiateComponent</strong>(&quot;CATCmp&quot;, IID_IUnknown, (void **) &amp;pIUnknownOnCATCmp);
+  if (SUCCEEDED(rc) &amp;&amp; NULL != pIUnknownOnCATCmp)
+  {
+    <em>// Initialize to NULL the pointer to the requested interface</em>
+    CATIXX * pIXXOnCATCmp = NULL;
+  
+    <em>// Is CATIXX supported by CATCmp</em>
+    rc = pIUnknownOnCATCmp-&gt;<strong>QueryInterface</strong>(IID_CATIXX, (void **) &amp; pIXXOnCATCmp);
+    pIUnkownOnCATCmp-&gt;Release();   <em>// OK with pIUnknownOnCATCmp</em>
+    if (SUCCEEDED(rc) &amp;&amp; NULL != pIXXOnCATCmp)
+    {
+      <em>// You can use the interface pointer</em>
+      rc = pIXXOnCATCmp-&gt;MXX1();
+      pIXXOnCATCmp-&gt;Release(); <em>// Release it as soon as you're finished with it</em>
+    }
+    else if (FAILED(rc))         ...           <em>// Process the error
+</em>  }<em>
+</em>  else if (FAILED(rc))         ...           <em>// Process the error</em>
+  return rc;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In this example, <code>pIUnknownOnCATCmp</code> is a pointer to the <i>IUnknown</i>
+interface implemented by a given component <i>CATCmp</i> for which you need a
+pointer to another interface, say the <i>CATIXX</i> interface. <code>pIUnknownOnCATCmp</code>
+is first initialized to <code>NULL</code> and its actual value is returned by
+the component factory function <code>CATInstantiateComponent</code>. Then the
+pointer to <i>CATIXX</i> is initialized to <code>NULL</code>, and <code>QueryInterface</code>
+is called using the interface IID passed as <code>IID_CATIXX</code>. Calling <code>QueryInterface</code>
+implies that the pointer you pass as the second argument is of the appropriate
+type to hold the address of the interface you query. For example, the pointer <code>pIXXOnCATCmp</code>
+should be created with the <i>CATIXX</i> type, or with a type from which <i>CATIXX</i>
+derives, otherwise, you get a core dump at run-time. Use the macros <code>SUCCEEDED</code>
+and <code>FAILED</code> to check the returned value, and never compare it
+directly with <code>S_OK</code> or <code>E_NOINTERFACE</code>. Include the <code>CATErrorDef.h</code>
+file to get the definition of these macros. If you're finished with <code>pIUnknownOnCATCmp</code>,
+release it (see <a href="#400000">Managing Component Lifecycle</a> to know about
+<code>Release</code>), and if the interface query was successful, use the
+returned pointer. Once you're finished with <code>pIXXOnCATCmp</code>, release
+it to enable the component to properly manage its lifecycle.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>IUnknown and CATBaseUnknown</h4>
+<p><i>IUnknown</i>, supplied by CAA for UNIX and by the Microsoft's Component
+Object Model (COM) for Windows, is the base interface. <i>CATBaseUnknown</i>
+derives from <i>IUnknown</i>. <i>CATBaseUnknown</i> is the base class for all
+CAA interfaces and CAA components.
+<ul>
+  <li><i>IUnknown</i> exposes the three methods you can request from any
+    interface: <code>QueryInterface</code>, <code>AddRef</code>, and <code>Release</code>.The
+    last two methods are described in <a href="#400000">Managing Component
+    Lifecycle</a>.</li>
+  <li><i>CATBaseUnknown</i> includes additional methods for internal interface
+    and component management. All the C++ CAA interfaces and all the CAA
+    component classes derive from <i>CATBaseUnknown</i>. In addition, <i>CATBaseUnknown</i>
+    provides a default C++ implementation of the <i>IUnknown</i> methods shared
+    by all classes used in CAA components. Any component inherits from these
+    implemented methods and should not overwrite them, thus ensuring a common
+    behavior to all CAA components..</li>
+</ul>
+<p>Since all the interfaces you will use derive from <i>IUnknown</i> and from <i>CATBaseUnknown</i>,
+any pointer to any interface can be seen as a pointer to <i>IUnknown</i> or to <i>CATBaseUnknown</i>.
+This implies that:
+<ul>
+  <li>Any pointer to any interface can be cast to a pointer to <i>IUnknown</i>
+    or to <i>CATBaseUnknown</i></li>
+  <li>Any pointer to any interface can be used to call <code>QueryInterface</code>
+    to retrieve a pointer to <i>IUnknown</i> or to <i>CATBaseUnknown</i>.</li>
+</ul>
+<p>In addition, for a given component, the pointer to <i>IUnknown</i> or to <i>CATBaseUnknown</i>
+is constant, that is the same value is returned by successive <code>QueryInterface</code>
+calls to the same component for the <i>IUnknown</i> interface, or for the <i>CATBaseUnknown</i>
+interface.</p>
+<p>This is very useful when you need to process polymorphically pointers to
+different interfaces for different components in the same variable. A pointer to
+<i>IUnknown</i> or to <i>CATBaseUnknown</i> is thus a universal handle to any
+component. Nevertheless, it gives you no information about the component which
+remains &quot;unknown&quot;. The only thing you can do is to query a pointer to
+another interface implemented by the component. In fact, you can also manage
+reference counting with a pointer to <i>IUnknown</i> or to <i>CATBaseUnknown</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Comparing Two Interface Pointers</h4>
+<p>You may often need to determine whether two interface pointers, pointing to
+the same interface or not, refer to the same component instance. If the two
+interface pointers point to the same interface, you might want to compare
+directly the two interface pointer values. Depending on the way the interface is
+implemented, the comparison can fail even if the component instance is the same.
+If the two interface pointers point to different interfaces, you cannot of
+course compare the two interface pointers.</p>
+<p>Here is the only valid and safe method that applies in any cases: from each
+interface pointer, use <code>QueryInterface</code> to retrieve a pointer to <i>IUnknown</i>,
+or possibly to <i>CATBaseUnknown</i>, and compare the two interface pointers.
+Since <code>QueryInterface</code> always returns, for any interface pointer to a
+given component instance, the same <i>IUnknown</i> pointer, or the same <i>CATBaseUnknown</i>
+pointer, you are sure that if the two values compare, the underlying component
+instance is the same. This is shown in the following example.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<em>// Assume we have two interface pointers pIXXOnCATCmp and pIYYOnCATCmp
+// Create two pointers to IUnknown</em>
+  IUnknown * pIUnknownOnCATCmpFromIXX = NULL;
+  IUnknown * pIUnknownOnCATCmpFromIYY = NULL;
+<em>// Retrieve the pointer to IUnknown from pIXXOnCATCmp</em>
+  HRESULT rc = pIXXOnCATCmp-&gt;<strong>QueryInterface</strong>(
+                IID_IUnknown, (void **) &amp; pIUnknownOnCATCmpFromIXX);
+  
+  if (SUCCEEDED(rc) &amp;&amp; NULL != pIUnknownOnCATCmpFromIXX)
+  {
+    <em>// Retrieve the pointer to IUnknown from pIYYOnCATCmp</em>
+    rc = pIYYOnCATCmp-&gt;<strong>QueryInterface</strong>(
+                IID_IUnknown, (void **) &amp; pIUnknownOnCATCmpFromIYY);
+    if (SUCCEEDED(rc) &amp;&amp; NULL != pIUnknownOnCATCmpFromIYY)
+    {
+      if (<b>pIUnknownOnCATCmpFromIXX</b><strong>==</strong><b>pIUnknownOnCATCmpFromIYY</b>)
+      {
+        <em>// The underlying component instance is the same for both interface pointers</em>
+      }
+      else
+      {
+        <em>// Different component instances are pointed to</em>
+      }
+    }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Managing Component Lifecycle</h3>
+<p>When you program a C++ application without using the CAA V5 Object Model, you
+usually create instances of your classes using the <code>new</code> operator if
+you want that the lifecycle of these instances should not be restricted by the
+scope in which you create them. <code>new</code> allocates on the heap the
+appropriate storage for the instance and returns a pointer to the instance
+created. Once you do not need an object anymore, you delete it using the <code>delete</code>
+operator which frees the storage and makes it available to other uses. To make
+an optimized usage of the storage, you need to carefully manage your <code>new</code>/<code>delete</code>
+pairs, and use <code>delete</code> at the appropriate moment, not too early and
+not too late.</p>
+<p>When you use the CAA V5 Object Model in your client application, you can use
+these operators, but you can also create components by means of component
+factory functions which instantiate the components and return a pointer to <i>IUnknown</i>.
+You can additionally get other pointers to interfaces these components implement
+by means of the <code>QueryInterface</code> method. You can also get a pointer
+to an interface a component implements without having yourself created the
+component. A given client application has thus no visibility on whether an
+existing component should be kept because it is used, or deleted because it is
+unused. The component lifecycle and the resulting storage management cannot thus
+be performed by the client application alone.</p>
+<p>To overcome this problem and rather than letting you struggle with the
+component lifecycle without having the required information to decide what to
+do, it seems to be better and easier to let you inform the component that you
+need to use one of its interfaces, and inform it when you don't need this
+interface anymore. Starting and ending using an interface are information you
+perfectly manage, and you leave the component decide to delete itself when it
+becomes useless to any client application. Reference counting is the way you'll
+use to inform components.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>Reference Counting</h4>
+<p>The client application knows which interfaces it uses, and which interfaces
+it doesn't use anymore. We will use this knowledge to manage interface reference
+counting using the <code>AddRef</code> and <code>Release</code> methods,
+declared by the <i>IUnknown</i> interface and implemented by the <i>CATBaseUnknown</i>
+class. When a client queries for an interface, and gets a pointer to this
+interface, <code>QueryInterface</code> increments the reference count by calling
+<code>AddRef</code>. As soon as the client application doesn't need the
+interface anymore, this client application decrements the reference count by
+calling <code>Release</code>. As long as client applications have interface
+pointers to the component, it can be reached and used, and its reference count
+is greater than 0. When the reference count for a given component reaches 0, it
+cannot be reached because all the interface pointers to this component are
+released, and it is automatically deleted. Let's reuse the previous example
+about <code>QueryInterface</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATInstantiateComponent.h&quot; <em>// To get the CATInstantiateComponent global function
+</em>#include &quot;CATErrorDef.h&quot;             <em>// To declare return code values and testing macros</em>
+#include &quot;CATIXX.h&quot;                  <i>// To get the CATIXX interface
+</i>...
+
+HRESULT ClientComponent::ClientMethod()
+{
+  HRESULT rc = E_FAIL;
+  <em>// Create a CATCmp instance</em>
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  rc = ::CATInstantiateComponent(&quot;CATCmp&quot;, IID_IUnknown, (void **) &amp;pIUnknownOnCATCmp);
+  if (SUCCEEDED(rc) &amp;&amp; NULL != pIUnknownOnCATCmp)
+  {
+    <em>// Initialize to NULL the pointer to the requested interface</em>
+    CATIXX * pIXXOnCATCmp = NULL;
+  
+    <em>// Is CATIXX supported by CATCmp</em>
+    rc = pIUnknownOnCATCmp-&gt;QueryInterface(IID_CATIXX, (void **) &amp; pIXXOnCATCmp);
+    pIUnkownOnCATCmp-&gt;<b>Release</b>();   <em>// OK with pIUnknownOnCATCmp</em>
+    if (SUCCEEDED(rc) &amp;&amp; NULL != pIXXOnCATCmp)
+    {
+      <em>// You can use the interface pointer</em>
+      rc = pIXXOnCATCmp-&gt;MXX1();
+      pIXXOnCATCmp-&gt;<b>Release</b>(); <em>// Release it as soon as you're finished with it</em>
+                               <i>// Cmp is deleted</i>
+    }
+    else if (FAILED(rc))         ...           <em>// Process the error
+</em>  }<em>
+</em>  else if (FAILED(rc))         ...           <em>// Process the error</em>
+  return rc;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATInstantiateComponent</code> global function creates an instance
+of the <i>CATCmp</i> component and returns a pointer to <i>IUnknown</i>. The
+global function calls <code>AddRef</code> to set the reference count to 1. Then <code>QueryInterface</code>
+is used to get a pointer to <i>CATIXX</i> and calls <code>AddRef</code> too to
+increment the reference count whose value is now 2. The <i>IUnknown</i> pointer
+becomes useless and is released. The reference count decrements to 1. As soon as
+<code>pIXXOnCATCmp</code> becomes useless, it is released and the reference
+count reaches 0. <i>CATCmp</i> cannot be reached anymore, since the client
+application has released all the handles it had onto the component. <i>CATCmp</i>
+is then automatically deleted.</p>
+<p>As a client application developer, you simply request the component
+instantiation using the component name and retrieve a pointer to <i>IUnknown</i>
+from this component, then query a pointer to another interface from this
+component, and finally inform the component that you do not need it any longer
+by releasing the interface pointers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>When Using AddRef and Release</h4>
+<p>You can fall into problems you will debug with difficulty if the reference
+count reaches 0 and if you still needs the interface pointer, meaning that there
+were less <code>AddRef</code> calls than <code>Release</code> calls. On the
+opposite, if the component still exists whereas it should be deleted, you will
+get memory leaks. So the following rules should always apply:
+<ul>
+  <li>Call <code>AddRef</code> whenever you create an interface pointer, except
+    when using the functions that return an interface pointer. These functions
+    must call <code>AddRef</code> before returning. For example, <code>CATInstantiateComponent</code>
+    and <code>QueryInterface</code> call <code>AddRef</code>, so you don't need
+    to call <code>AddRef</code> in your client application after you get an
+    interface pointer from such a global function or method that retrieve an
+    interface pointer</li>
+  <li>Call <code>AddRef</code> if you assign an existing interface pointer to
+    another interface pointer, for example using the assignment operator</li>
+  <li>Call <code>Release</code> when the interface pointer becomes useless to
+    you, and never use the <code>delete</code> operator with interface pointers,
+    or with <i>IUnknown</i> pointers you get using the <code>new</code> operator
+    when you create a component instance.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="430000"></a>Using Smart Interface Pointers</h3>
+<p>Sometimes, CAA functions or methods use smart interface pointers, also called
+handlers, instead of interface pointers, and you need to manage the coexistence
+between them, for example when you get a smart interface pointer from a function
+and need to pass it as an interface pointer to another function.</p>
+<p>Have a look at the following code. The pointer <code>pIXXOnCATCmp</code>,
+returned by <code>QueryInterface</code> for the <code>IID_CATIXX</code>
+interface identifier from an existing pointer to <i>IUnknown</i>, is used to
+execute the method <code>MXX1</code>, and then released to decrement the
+reference count, since the <code>QueryInterface</code> method has incremented it
+using the <code>AddRef</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIXX * pIXXOnCATCmp = NULL;
+  // QueryInterface makes pIXXOnCATCmp-&gt;AddRef() before returning pIXXOnCATCmp
+  HRESULT rc = pIUnknownOnCATCmp-&gt;QueryInterface(IID_CATIXX, (void**) &amp;pIXXOnCATCmp);
+  if (SUCCEEDED(rc) &amp;&amp; NULL != pIXXOnCATCmp)
+  {
+    pIXXOnCATCmp-&gt;MXX1();
+    pIXXOnCATCmp-&gt;Release();    // OK with pIXXOnCATCmp
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This can be simplified as follows using smart interface pointers.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIXX_var spIXXOnCATCmp(pIUnknownOnCATCmp);
+  if (NULL_var != spIXXOnCATCmp) spIXXOnCATCmp-&gt;MXX1();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIXX_var</i> class instance is used to create a reference to a <i>CATIXX</i>
+instance from <code>pIUnknownOnCATCmp</code> by calling <code>QueryInterface</code>.
+The smart interface pointer can be used as a pointer to execute <code>MXX1</code>,
+and doesn't require from you to manage reference counting since it does it by
+itself. As soon as the smart interface pointer goes out of scope, it is
+automatically released. When no smart pointer refers to the object any more,
+that is when the object cannot be reached by any application, it is deleted
+without you need to worry about it.</p>
+<p>The operators = (assignment operator) , ! (logical negation operator), ==
+(equality operator), and != (inequality operator) are redefined for smart
+interface pointers. For example, instead of writing this code to get a pointer
+to <i>CATIYY</i> from a pointer to <i>CATIXX</i> and use both:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIXX * pIXXOnCATCmp = NULL;
+  HRESULT rc = pCATBaseUnknownOnCATCmp-&gt;QueryInterface(
+                  IID_CATIXX, (void**) &amp;pIXXOnCATCmp);
+  pCATBaseUnknown-&gt;Release();
+  if (SUCCEEDED(rc) &amp;&amp; NULL != pIXXOnCATCmp)
+  {
+    pIXXOnCATCmp-&gt;MXX1();
+    CATIYY * pIYYOnCATCmp = NULL;
+    rc = pIXXOnCATCmp-&gt;QueryInterface(
+                  IID_CATIYY, (void**) &amp;pIYYOnCATCmp);
+    pIXXOnCATCmp-&gt;Release();
+    if (SUCCEEDED(rc) &amp;&amp; NULL != pIYYOnCATCmp)
+    {
+      pIYYOnCATCmp-&gt;MYY1();
+      pIYYOnCATCmp-&gt;Release();
+    }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>you can get another interface smart pointer on the same object using the
+assignment operator as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIXX_var spIXXOnCATCmp(pCATBaseUnknownOnCATCmp);
+  if (NULL_var != spIXXOnCATCmp)
+  {
+    spIXXOnCATCmp-&gt;MXX1();
+    ...
+    CATIYY_var spIYYOnCATCmp = spIXXOnCATCmp;
+    if (NULL_var != spIYYOnCATCmp)
+    {
+      spIYYOnCATCmp-&gt;MYY1();
+      ...</pre>
+    </td>
+  </tr>
+</table>
+<p>To summarize with getting smart interface pointers, you can:
+<ul>
+  <li>Construct a smart interface pointer from a pointer to the same or to
+    another interface implemented by the underlying object
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIXX_var spIXXOnCATCmp(pCATBaseUnknownOnCATCmp);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Construct a smart interface pointer from another smart interface pointer
+    to the same or to another interface implemented by the underlying object
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIYY_var spIYYOnCATCmp(spIXXOnCATCmp);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Create a smart interface pointer by assignment of another smart interface
+    pointer to the same or to another interface implemented by the underlying
+    object
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIYY_var spIYYOnCATCmp= spIXXOnCATCmp;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Check the created smart interface pointer validity: you cannot use <code>SUCCEEDED</code>
+    or <code>FAILED</code>, but compare it with the null smart interface pointer
+    <code>NULL_var</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>if (NULL_var != spCATIXX)</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Usage Recommendations</h3>
+<p>Here are described the main scenarios that can happen, and how to make
+reference counting safe applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="510000"></a>Usage Recommendations for Calling QueryInterface</h4>
+<p>Here are the recommendations on how to use <code>QueryInterface</code> for
+retrieving a given interface pointer from component, and how to use the returned
+interface pointer.</p>
+<p><img border="0" src="images/CAASysQueryInterface.gif" width="486" height="285">
+<ul>
+  <li>Create the pointer to the requested interface with the type of this
+    interface</li>
+  <li>Initialize this pointer to <code>NULL</code> before calling <code>QueryInterface</code></li>
+  <li>Use the IID_* external variable declaring the requested interface
+    identifier as first parameter of <code>QueryInterface</code></li>
+  <li>Never use a smart pointer as the returned interface pointer</li>
+  <li>Always test the returned code using the macros <code>SUCCEEDED</code> and <code>FAILED</code>,
+    and test that the retrieved pointer is not NULL, before using it. The
+    interface pointers returned as output parameters of functions such as <code>QueryInterface</code>
+    are valid and usable if and only if <code>SUCCEEDED</code> returns <code>TRUE</code>.
+    Never test the interface pointer itself</li>
+  <li>Release the interface pointer as soon as you're finished with it.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="520000"></a>Recommendations for Using AddRef and Release in Client
+Applications</h4>
+<p>These recommendations depends on whether, in a given method, you use
+interface pointers only, smart pointers only, or if interface pointers coexist
+with smart interface pointers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>You Use Interface Pointers Only</h5>
+<p>You need to call <code>AddRef</code> whenever you create an interface
+pointer, whatever the means you use. Nevertheless, the functions that return
+interface pointers call <code>AddRef</code> for you, such as <code>CATCreateExternalObject</code>
+and <code>QueryInterface</code>.</p>
+<p>When you must call <code>AddRef</code>:
+<ul>
+  <li>Call <code>AddRef</code> when you assign an interface pointer to a local
+    variable
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIXX * <strong>pIXXOnCATCmp2</strong> = pIXXOnCATCmp;
+<strong>pIXXOnCATCmp2-&gt;AddRef();</strong></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Call <code>AddRef</code> when you return an interface pointer as an out or
+    inout parameter of your method
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAAClientCmp::CAAClientMethod(CATIXX ** <strong>pIXXOnCATCmp)
+</strong>{
+  ...
+<strong>  pIXXOnCATCmp-&gt;AddRef();</strong>
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Call <code>AddRef</code> when you return an interface pointer as a method
+    return value
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIXX * <strong>pIXXOnCATCmp</strong> CAAClientCmp::CAAClientMethod()<strong>
+</strong>{
+  ...
+<strong>  pIXXOnCATCmp-&gt;AddRef();</strong>
+  return <strong>pIXXOnCATCmp</strong>;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Call <code>AddRef</code> when you store an interface pointer as a class
+    data member
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+<strong>  pIXXOnCATCmp-&gt;AddRef();</strong>
+  ClientCmp::IntPtr = <strong>pIXXOnCATCmp</strong>;
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>When you don't need to call <code>AddRef</code>:
+<ul>
+  <li>Don't call <code>AddRef</code> for an <i>IUnknown</i> pointer returned by <code>CATInstantiateComponent</code>,
+    such as <code>pIUnknownOnCATCmp</code> below. <code>CATInstantiateComponent</code>
+    has already done it.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  HRESULT rc = ::<strong>CATInstantiateComponent</strong>(&quot;CATCmp&quot;, IID_IUnknown, (void **) &amp;<strong>pIUnknownOnCATCmp</strong>);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Don't call <code>AddRef</code> for an <i>IUnknown</i> returned by the <code>new</code>
+    operator applied to a component class, such as <code>pIUnknownOnCATCmp</code>
+    below. <code>new</code> has already done it.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  IUnknown * pIUnknownOnCATCmp = NULL;
+  <strong>pIUnknownOnCATCmp</strong> = (IUnknown *) <strong>new</strong> CATCATCmp();
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Don't call <code>AddRef</code> for a pointer to an interface returned by <code>QueryInterface</code>,
+    such as <code>pIXXOnCATCmp</code> below. <code>QueryInterface</code> has
+    already done it.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT rc = pIUnknownOnCATCmp-&gt;QueryInterface(IID_CATIXX, (void**) &amp;<strong>pIXXOnCATCmp</strong>);
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>When you must calll <code>Release</code>:
+<ul>
+  <li>Call <code>Release</code> as soon as you're finished with an interface
+    pointer, and at least prior to leaving its scope
+    <table class="code">
+      <tr>
+        <td>
+          <pre>{
+  ...
+  CATIXX * <strong>pIXXOnCATCmp</strong> = NULL;
+  ... <em>// Get <strong>pIXXOnCATCmp</strong> using QueryInterface or any other method</em>
+<strong>  pIXXOnCATCmp</strong>-&gt;MXX1();    <em>// Use it</em>
+<strong>  pIXXOnCATCmp</strong>-&gt;MXX2();
+  ...
+<strong>  pIXXOnCATCmp-&gt;Release(); </strong><em>// Release it as soon as you're finished with it<strong>
+  ...
+</strong></em>}                          <em>// at least prior to leaving its scope</em></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Call <code>Release</code> before overwriting a local variable or data
+    member that contains an AddRef'ed interface pointer
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  CATIXX * <strong>pIXXOnCATCmp</strong> = NULL;
+  ... <em>// Get <strong>pIXXOnCATCmp</strong> using QueryInterface or any other method</em>
+<strong>  pIXXOnCATCmp</strong>-&gt;MXX1();    <em>// Use it</em>
+<strong>  pIXXOnCATCmp</strong>-&gt;MXX2();
+  ...
+<strong>  pIXXOnCATCmp-&gt;Release(); </strong><em>// Release it before overwriting it<strong>
+  </em>pIXXOnCATCmp</strong> =<strong> pIXXOnCATCmp2;<em>
+  </em>pIXXOnCATCmp-&gt;AddRef();<em>
+...</em></strong></pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Call <code>Release</code> before leaving the destructor of an object that
+    has an non-null interface pointer as a data member
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAAClientCmp::CAAClientCmp()
+{
+  ...
+<strong>  _pIXXOnCATCmp-&gt;Release(); </strong><em>// Release the interface pointer stored as a<strong>
+</strong></em>  ...                    <em>// data member before leaving the destructor<strong>
+</strong></em>}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>You Use Smart Interface Pointers Only</h5>
+<p>Some CAA functions use smart interface pointers. If for a given interface of
+a given component, you need to use a smart interface pointer and no interface
+pointer, you don't need to call <code>AddRef</code> when you create or retrieve
+the smart interface pointer, whatever the means you use, and you don't need to
+call <code>Release</code> when you're finished with it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>{
+  ...         // <em>spIXXOnCATCmp is automatically AddRef'ed when created</em>
+  CATIXX_var spIXXOnCATCmp = ::ReturnASmartPointer();
+  spIXXOnCATCmp-&gt;MXX1();                <em>// Use spIXXOnCmp
+</em>  ...
+}   <em>// spIXXOnCATCmp is automatically released when going out of scope</em></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5>You Make Interface Pointers and Smart Interface Pointers Coexist</h5>
+<p>This happens when a method you call uses an interface pointer onto a
+component, and another requests a smart interface pointer to the same interface
+onto the same component. In this case, the interface pointer should become a
+smart interface pointer before being passed to the second method. For example,
+assume that you call a CAA function that returns a smart interface pointer, and
+that you call after another function to which you need to pass this smart
+interface pointer, but that accepts only an interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIXX_var <strong>spIXXOnCATCmp</strong> = ::ReturnASmartPointerToCATIXX();
+...
+<strong>CATIXX * pIXXOnCATCmp = spIXXOnCATCmp;</strong>  <em>// Create an interface pointer</em>
+<strong>pIXXOnCATCmp-&gt;AddRef();</strong>                 <em>// Call AddRef</em>
+... 
+::UseAPointerToCATIXX(CATIXX * <strong>pIXXOnCATCmp</strong>);
+...
+<strong>pIXXOnCATCmp</strong>-&gt;Release();                <em>// Call Release when you're finished with it</em></pre>
+    </td>
+  </tr>
+</table>
+<p>The reverse can also happen.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIXX * <strong>pIXXOnCATCmp</strong> = ::ReturnAPointerToCATIXX();
+...
+<strong>CATIXX_var spIXXOnCATCmp = pIXXOnCATCmp;</strong>  <em>// Create a smart interface pointer</em>
+<strong>pIXXOnCATCmp-&gt;dRelease();</strong>                 <em>// Call Release when you're finished with pIXXOnCmp</em>
+... 
+::UseASmartPointerToCATIXX(<strong>spIXXOnCATCmp</strong>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Some trouble can happen when you get a pointer to an interface, or a smart
+interface pointer as a returned value, or as an output parameter, of a function
+you call. Let's examine the most common cases with the two following functions,
+one returning a pointer to an interface, the other returning a smart pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIXX     * ReturnAPointerToCATIXX();
+CATIXX_var   ReturnASmartPointerToCATIXX();</pre>
+    </td>
+  </tr>
+</table>
+<p>The two pointers returned have incremented the reference counter in the
+method that create them.
+<ul>
+  <li><strong>Never do this</strong>. You retrieve a pointer to an interface
+    while casting it to a smart pointer to the same interface
+    <table class="code">
+      <tr>
+        <td>
+          <pre>   ...
+   CATIXX_var spIXXOnCATCmp = ::ReturnAPointerToCATIXX();
+   ...                           <em>// Use spIXXOnCATCmp</em>
+}    <em>// spIXXOnCATCmp is automatically released when going out of scope</em></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The reference count is set to 1 by the function, and incremented to 2 by
+    the smart interface pointer creation. You use the smart interface pointer
+    that ais utomatically released when going out of scope. This decrements the
+    reference count once only. <strong>Never do that. Do this instead</strong>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>   ...
+   CATIXX_var spIXXOnCATCmp = ::ReturnAPointerToCATIXX();
+   <b>spIXXOnCATCmp-&gt;Release();</b>     <em>// Use spIXXOnCATCmp to release the returned interface pointer</em>
+   ...                           <em>// Use spIXXOnCATCmp</em>
+}    <em>// spIXXOnCATCmp is automatically released when going out of scope</em></pre>
+        </td>
+      </tr>
+    </table>
+    <p>As soon as you have retrieved the smart interface pointer, use it to call
+    <code>Release</code> to decrement the reference count. When going out of
+    scope, the smart interface pointer is automatically released and the
+    reference count decrements again. <strong>Avoid this</strong>. You can
+    easily skip from this case to the next.</p>
+  </li>
+  <li><strong>Never do this</strong>. You retrieve a pointer to an interface
+    while casting it as a smart pointer for another interface
+    <table class="code">
+      <tr>
+        <td>
+          <pre>   ...
+   CATIYY_var spIYYOnCATCmp = ::ReturnAPointerToCATIXX();
+   ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You cast the returned pointer to the interface <i>CATIXX</i> to a <i>CATIYY</i>
+    smart interface pointer. You will not be able to release the returned
+    pointer to <i>CATIXX</i>, since you have no variable to handle it. The
+    reference count will never reach 0, and the object will never be deleted. <strong>Never
+    do that. Do this instead</strong>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATIXX * pIXXOnCATCmp = ::ReturnAPointerToCATIXX();
+CATIYY_var spIYYOnCATCmp = pIXXOnCATCmp;
+pIXXOnCATCmp-&gt;Release();
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Never cast a smart interface pointer to an interface pointer</strong>.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATIXX * pIXXOnCATCmp = spIXXCATCmp;
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This is not smart, and you must call <code>AddRef</code> and <code>Release</code>
+    on the interface pointer.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATIXX * pIXXOnCATCmp = ::ReturnASmartPointerToCATIXX();
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The returned smart pointer is a volatile variable. This makes a core dump
+    with unchained TIEs, or with any TIE if the returned smart pointer is the
+    only handle on to the component.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!--------------------------------------------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>You access components through their interfaces and execute the methods these
+interfaces provide. You don't need to worry about how the interfaces are
+implemented.</p>
+<p>The interface is a contract between the interface developer and you as client
+application programmer. The interface should not change with the time, and your
+client applications which use these interfaces never need to be rebuilt when a
+new version of the code that contains the interface implementations is
+installed.&nbsp;</p>
+<p>The <code>QueryInterface</code> method enables you to know whether a
+component implements a given interface, and retrieve a pointer to this
+interface, from an existing pointer to another interface this component also
+implements.</p>
+<p><i>IUnknown</i> and <i>CATBaseUnknown</i> are the foundations of the
+interfaces. In addition, <i>CATBaseUnknown</i> provides the component basic
+behavior.</p>
+<p>Client applications have no means to manage component lifecycle by themselves
+since they have not enough visibility on the implementations of the components
+of which they use interfaces. Reference counting offers the ability for client
+applications to inform the components that they use them, or that they don't
+need it any more. The components can then remain as long as they are used, and
+can be deleted as soon as they are not used anymore.</p>
+<p>Using smart pointers seems to let you forget reference counting for interface
+pointers while keeping the reference count accurate. It's an illusion and raises
+more problems than it solves, and decreases performance. Be very careful if you
+need to make interface pointers and smart interface pointers coexist.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About Globally
+      Unique IDentifiers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysQuickRefs/CAASysHRESULT.htm">What Is
+      HRESULT?</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

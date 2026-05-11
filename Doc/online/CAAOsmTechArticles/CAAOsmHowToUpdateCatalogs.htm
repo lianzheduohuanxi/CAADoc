@@ -1,0 +1,1607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Feature Modeler/How to update catalogs - FMDOC</title>
+
+
+  <meta name="KEYWORDS" content="Feature Modeler/How to update catalogs" />
+
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+  <meta name="robots" content="index,follow" />
+
+  <style type="text/css">
+/*/*/ /*<![CDATA[*/
+@import "osm.css";
+/*]]>*/ /* */
+  </style>
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+
+</head>
+
+
+<body>
+
+<table width="100%">
+
+  <tbody>
+
+    <tr>
+
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+
+      </td>
+
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+
+      </td>
+
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="top"></a>Introduction to the OSM Language</h3>
+
+      <em>Using OSM and CATfctEditorAssistant</em></td>
+
+    </tr>
+
+    <tr>
+
+      <td class="tech" colspan="2">Technical Article</td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<hr />
+<div class="abstract_body"><a name="Abstract"></a>
+<h2> Abstract </h2>
+
+<p>This article explain how to create an update a catalog with
+osm language and the CATfctEditorAssistant compiler . </p>
+
+<table class="abstract">
+
+  <tbody>
+
+    <tr>
+
+      <td>
+      <ul>
+
+        <li><a href="#Introduction">Introduction</a></li>
+
+        <li><a href="#Getting_started">Getting
+started</a></li>
+
+        <ul>
+
+          <li><a href="#The_osm_modeling_langage_in_short">The
+osm modeling language in short</a></li>
+
+          <li><a href="#The_osmfeat_compiler">The
+CATfctEditorAssistant
+compiler</a></li>
+
+          <li><a href="#osmfeat_compiler_usage">CATfctEditorAssistant
+compiler usage</a></li>
+
+        </ul>
+
+        <li>How to manage features<a href="#How_to_create_a_new_feature.3F"><span class="tocnumber"></span><span class="toctext"></span></a></li>
+
+        <ul>
+
+          <li><a href="#How_to_create_a_new_feature.3F"><span class="toctext">How
+to create a new feature</span></a></li>
+
+          <li><a href="#How_to_define_the_instance_reference_or_the_startup_super_type_.3F"><span class="toctext">How
+to define the instance reference or the startup super type&nbsp;?</span></a>
+            <ul>
+
+              <li><a href="#Some_way_to_reference_an_existing_feature"><span class="tocnumber"></span><span class="toctext">Some
+way to reference an existing feature</span></a></li>
+
+            </ul>
+
+          </li>
+
+          <li><a href="#How_to_add_an_attribute_on_a_startup.3F"><span class="tocnumber"></span><span class="toctext">How
+to add an attribute on a startup</span></a></li>
+
+          <li><a href="#How_to_define_quality_and_access.3F"><span class="toctext">How
+to define quality</span></a></li>
+
+          <li><a href="#How_to_modify_an_attribute.3F"><span class="toctext">How
+to modify an attribute</span></a></li>
+
+          <li><a href="#How_to_set_a_value.3F"><span class="toctext">How
+to set a value</span></a></li>
+
+          <li><a href="#How_to_format_a_value_.3F"><span class="toctext">How
+to format a
+value</span></a></li>
+
+          <li><span class="toctext"><a href="#ExtensionFtr">How to define a startup extension</a><br />
+
+            </span></li>
+
+        </ul>
+
+        <li><a href="#What_to_do_when_something_goes_wrong.3F"><span class="tocnumber"></span><span class="toctext">What
+to do when something goes wrong</span></a></li>
+
+        <ul>
+
+          <li><a href="#Error_format.2C_source_and_severity"><span class="tocnumber"></span><span class="toctext">Error
+format, source and severity</span></a></li>
+
+          <li><a href="#Compilation_error"><span class="toctext">Compilation
+error</span></a></li>
+
+          <li><a href="#Runtime_errors"><span class="toctext">Runtime
+errors</span></a></li>
+
+        </ul>
+
+        <li><a href="#References"><span class="tocnumber"></span><span class="toctext">References</span></a>
+        </li>
+
+        <li><a href="#History"><span class="tocnumber"></span><span class="toctext">History</span></a></li>
+
+      </ul>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<p>
+<script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script></p>
+
+<p><br />
+
+</p>
+
+</div>
+
+<hr />
+<div style="text-align: right;">&nbsp;<br />
+
+</div>
+
+<h1><a name="Introduction"></a>Introduction</h1>
+
+The CATfctEditorAssistant is a batch tool that need a proper
+environment set up, please see the article Building and Launching a CAA
+V5 Use Case [<a href="#References">1</a>]
+<ul>
+
+  <li>Set up the run time environment&nbsp;
+    <table class="code">
+
+      <tbody>
+
+        <tr>
+
+          <td>
+          <pre>mkCreateRuntimeView<br />mkrun -c "cmd"</pre>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+  </li>
+
+</ul>
+
+<p style="text-align: right;"><span style="float: right;">[<a href="#top">Top</a>]</span></p>
+
+<h1><a name="Getting_started"></a>Getting
+started<br />
+
+</h1>
+
+<h2><a name="The_osm_modeling_langage_in_short"></a>The
+osm modeling language in short </h2>
+
+<p>Osm modeling language is an easy and compact way to define a
+feature
+data structure. </p>
+
+<p><a href="images/CAAOsmBook.gif" class="image" title="images/CAAOsmBook.gif"><img src="images/CAAOsmBook.gif" alt="CAAOsmBook.gif" longdesc="images/CAAOsmBook.gif" height="382" width="718"/></a>
+</p>
+
+<p>In this article we use an executable: the
+CATfctEditorAssistant to compile .CATfct file </p>
+
+CATfctEditorAssistant -help<br/>
+<ul>
+<li>CATfctEditorAssistant -create-new-catalog -catalog-name &lt;name_of_catalog&gt; 
+-with-client-id &lt;id&gt; [-author &lt;name&gt;] [-comment &lt;comment&gt;] [-using-template 
+&lt;template&gt;] [-into-directory &lt;output_path&gt;]</li>
+<li>
+CATfctEditorAssistant -update-catalog -catalog-name &lt;name_of_catalog&gt; 
+-with-client-id &lt;id&gt; [-with-osm &lt;path_of_osm&gt;] [-author &lt;name&gt;] [-comment 
+&lt;comment&gt;] [-into-directory<br/>
+&lt;output_path&gt;]</li>
+<li>
+CATfctEditorAssistant -describe-as-osm -catalog-name &lt;name_of_catalog&gt; 
+-with-client-id &lt;id&gt; [-in-version &lt;level&gt;] -as &lt;name_of_osm&gt; [-into-directory &lt;output_path&gt;]</li>
+<li>CATfctEditorAssistant -simulate-catalog-update -catalog-name &lt;name_of_catalog&gt; -withclient-id 
+&lt;id&gt; -in-version &lt;level&gt; -with-osm &lt;path_of_osm&gt; [-into-directory &lt;output_path&gt;]</li>
+</ul>
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where &lt;name_of_xxx&gt; stands for a 
+filename with its extension, but not a path<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and &lt;path_of_xxx&gt; stands for a file 
+path.</p>
+<p><strong>Details :</strong></p>
+<p>-create-new-catalog : create a new empty catalog and its associated osm file.</p>
+
+	<table class="style4" id="table13">
+	
+	<tr>
+		<td><code>-catalog-name (mandatory)</code></td>
+		<td>specify the name of the new catalog to create</td>
+	</tr>
+	<tr>
+		<td><code>-with-client-id (mandatory)</code></td>
+		<td>set the client identification key</td>
+	</tr>
+	<tr>
+		<td><code>-author</code></td>
+		<td>specify author's name in history</td>
+	</tr>
+	<tr>
+		<td><code>-comment</code></td>
+		<td>add a comment to history</td>
+	</tr>
+	<tr>
+		<td><code>-using-template</code></td>
+		<td>use another template (default is standard template)</td>
+	</tr>
+	<tr>
+		<td><code>-into-directory</code></td>
+		<td>indicate the output directory, where the output files are stored</td>
+	</tr>
+	
+	</table>
+<p>-update-catalog : update an existing catalog with an osm file.</p>
+
+	<table class="style4" id="table14">
+	
+	<tr>
+		<td><code>-catalog-name (mandatory)</code></td>
+		<td>specify the name of the new catalog to update</td>
+	</tr>
+	<tr>
+		<td><code>-with-client-id (mandatory)</code></td>
+		<td>give the client identification key</td>
+	</tr>
+	<tr>
+		<td><code>-with-osm</code></td>
+		<td>specify the osm file's path used for update</td>
+	</tr>
+	<tr>
+		<td><code>-comment</code></td>
+		<td>add a comment to history</td>
+	</tr>
+	<tr>
+		<td><code>-into-directory</code></td>
+		<td>indicate the output directory, where the output catalog is stored</td>
+	</tr>
+	
+	</table>
+<p>-describe-as-osm : describe a catalog by generating its associated osm file.</p>
+
+	<table class="style4" id="table15">
+	
+	<tr>
+		<td><code>-catalog-name (mandatory)</code></td>
+		<td>specify the name of the new catalog to describe</td>
+	</tr>
+	<tr>
+		<td><code>-with-client-id (mandatory)</code></td>
+		<td>give client identification key</td>
+	</tr>
+	<tr>
+		<td><code>-in-version</code></td>
+		<td>will produce a description that is a V5 only OR V6 only view of the catalog content. Consequently such an osm description cannot be used for an update.</td>
+	</tr>
+	<tr>
+		<td><code>-as (mandatory)</code></td>
+		<td>indicate the osm file to generate, containing the catalog description.</td>
+	</tr>
+	<tr>
+		<td><code>-into-directory</code></td>
+		<td>indicate the output directory, where the output osm file is stored</td>
+	</tr>
+	
+	</table>
+<p>-simulate-catalog-update : simulate a catalog update.</p>
+
+	<table class="style4" id="table16">
+	
+	<tr>
+		<td><code>-catalog-name (mandatory)</code></td>
+		<td>specify the name of the new catalog to simulate</td>
+	</tr>
+	<tr>
+		<td><code>-with-client-id  (mandatory)</code></td>
+		<td>give client identification key</td>
+	</tr>
+	<tr>
+		<td><code>-in-version (mandatory)</code></td>
+		<td>will produce a description that is a V5 only OR V6 only view of the catalog content. Consequently such an osm description cannot be used for an update.</td>
+	</tr>
+	<tr>
+		<td><code>-with-osm</code></td>
+		<td>specify the osm file's path used for simulation</td>
+	</tr>
+	<tr>
+		<td><code>-comment</code></td>
+		<td>add a comment to history</td>
+	</tr>
+	<tr>
+		<td><code>-into-directory</code></td>
+		<td>indicate the output directory, where the output osm file (with extension .V#osm) is stored</td>
+	</tr>
+	
+	</table>
+
+<p>Notes :<br/>
+- Catalogs have extension '.CATfct'.<br/>
+- OSM files have extension '.osm'.<br/>
+- All input catalogs must be located in 'CATGraphicPath' concatenation.</p>
+
+
+<table class="code">
+
+  <tbody>
+
+    <p>Lets start by creating an empty catalog and an empty osm
+file
+using CATfctEditorAssistant </p>
+
+    <pre>$ CATfctEditorAssistant -create-new-catalog -catalog-name CAAOsmCatalogSU.CATfct -with-client-id MyUserId<br /></pre>
+
+  </tbody>
+</table>
+
+<p>Once it is created, you have to move the
+CAAosmCatalogSU.CATfct from the current directory to&nbsp;the
+run-time directory:</p>
+
+<table width="100%">
+
+  <tbody>
+
+    <tr>
+
+      <td>Windows</td>
+
+      <td><code>InstallRootDirectory\intel_a\resources\graphic\</code></td>
+
+    </tr>
+
+    <tr>
+
+      <td>AIX</td>
+
+      <td><code>InstallRootDirectory/aix_a/resources/graphic/</code></td>
+
+    </tr>
+
+    <tr>
+
+      <td>HP-UX</td>
+
+      <td><code>InstallRootDirectory/hpux_b/resources/graphic/</code></td>
+
+    </tr>
+
+    <tr>
+
+      <td>Solaris</td>
+
+      <td><code>InstallRootDirectory/solaris_a/resources/graphic/</code></td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<p>You can do this using the mkCreateRuntimeView command.</p>
+
+<p>To modify this empty catalog you are going to upgrade it with
+a osm file.</p>
+
+<p>Here is an example of one of the simplest catalog you can
+define.<br />
+
+We&nbsp;create one startup CATOsmBook.
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre> /*<br /> * The bookshop catalog<br /> */<br /><b>document</b> `CAAOsmCatalogSU.CATfct` <img src="images/bulle1.png" alt="[1]"/><br />{<br /><b>container</b> RootCont <font color="darkgreen">#root</font> <img src="images/bulle2.png" alt="[2]"/><br /> {<br /><b>feature</b> CATOsmBook <font color="darkgreen">#startup</font> <img src="images/bulle3.png" alt="[3]"/><br /> {<br /><b>string</b> Title <img src="images/bulle4.png" alt="[4]"/> <img src="images/bulle5.png" alt="[5]"/><br /><b>specobject</b> BookPublisher<br /> }<br /> }<br />}<br /></pre>
+
+  </tbody>
+</table>
+
+An osm source file is an enumeration of hierarchical block delimited by
+curly braces like C++.
+The language supports C++ comments
+but they cannot be regenerated when using source CATfctEditorAssistant
+compiler
+generation option.
+<ol>
+
+  <li> define a document scope, named "catalog.CATfct". </li>
+
+  <ul>
+
+    <li> Identifiers containing special character has to be
+escaped by
+backquoting the identifier. You need to backquote if the
+identifier
+contains non alphanumerical character and does not begin with a letter,
+an underscore or the dollar sign ('a'-'z', 'A'-Z', '_' or '$'). </li>
+
+    <li>The language is case sensitive. </li>
+
+    <li>The documents name is always the basename of the
+filename (you should not specify any path). </li>
+
+    <li>Keep in mind that catalog names are case sensitive.</li>
+
+  </ul>
+
+  <li>define a container scope, named and typed RootCont.</li>
+
+  <ul>
+
+    <li>The "#root" token means that the container is a root
+container.&nbsp;</li>
+
+    <li>For osm language all token beginning by a sharp symbol
+are facets that
+alter statement behavior.&nbsp;</li>
+
+    <li>Facet are always prefixed by a sharp '#' and can be
+combined, order is
+not important.&nbsp;</li>
+
+    <li>When a facet take a value, it is set by surrounding the
+value by a
+parenthesis. example #external_link_meta_data(`MyMetaData`). </li>
+
+  </ul>
+
+  <ol>
+
+  </ol>
+
+  <li> define a feature scope, named and typed CATOsmBook. The
+"#startup" facet means that the feature is not an instance but
+a startup </li>
+
+  <ul>
+
+    <li>add a string attribute named Title on CATOsmBook.<br />
+
+    </li>
+
+    <li>Instead of C++, the statement delimiter is the
+&lt;CR&gt;
+character but you can use semicolon ';' to put several statement on the
+same line. </li>
+
+  </ul>
+
+  <ol>
+
+  </ol>
+
+</ol>
+
+<ol>
+
+</ol>
+
+<p>Now compile&nbsp;!
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre>$ CATfctEditorAssistant -update-catalog -catalog-name CAAOsmCatalogSU.CATfct -with-client-id MyUserId -with-osm directory\osmFile.osm <br /></pre>
+
+  </tbody>
+</table>
+
+<p>In current directory we have now a CAAOsmCatalogSU.CATfct file.<br />
+
+<span style="float: left;"><a href="images/Remember.gif" class="image" title="Remember:"><img src="images/Remember.gif" alt="Remember:" longdesc="images/Remember.gif" height="15" width="31"/></a></span><span style="font-weight: bold;"> &nbsp;Dont forget to move
+the new generated catalog from the current directory to&nbsp;the
+run-time directory.</span></p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="The_osmfeat_compiler"></a>
+<h2> The CATfctEditorAssistant compiler </h2>
+
+<ol>
+
+  <li> The CATfctEditorAssistant compiler enables you to check
+that your osm source file is syntaxically correct.<br />
+
+  </li>
+
+  <li>It embed your source file in the catalog file. </li>
+
+  <li>It can generate the osm source of an existing catalog. </li>
+
+</ol>
+
+<p><br />
+
+<br />
+
+Catalogs contains the data definition of all feature and are very
+similar to dynamic linked library (DLL).<br />
+
+Like DLL are located thru the PATH environment, a catalog is located
+thru a V5 official environment variable CATGraphicPath.<br />
+
+</p>
+
+<p>Keep in mind that CATGraphicPath environment variable is used
+to
+search existing catalog. CATfctEditorAssistant tool always load the
+first catalog found in your
+CATGraphicPath.&nbsp;
+</p>
+
+<p>When specified the directory path is used to save at the
+specified directory.
+If unspecified it save in current directory.
+</p>
+
+<br />
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="osmfeat_compiler_usage"></a>
+<h2> CATfctEditorAssistant compiler usage </h2>
+
+<p>Here is a description of the three most useful commands to handle catalogs:</p>
+<ol>
+	<li><b>Catalog creation</b><br/>
+		<code>CATfctEditorAssistant -create-new-catalog -catalog-name catalog.CATfct -with-client-id id</code><br/>
+		This command generates a new catalog along with its osm file.
+	</li>
+	<li><b>Catalog description</b><br/>
+		<code>CATfctEditorAssistant -describe-as-osm -catalog-name catalog.CATfct -with-client-id id -as catalog.osm</code><br/>
+		This command generates the osm description of a catalog.<br/>
+		The catalog must be located in CATGraphicPath.
+	</li>
+	<li><b>Catalog update</b><br/>
+		<code>CATfctEditorAssistant -update-catalog -catalog-name catalog.CATfct -with-client-id id [-with-osm directory\catalog.osm]</code><br/>
+		This command updates a catalog, it allows to:
+		<ul>
+			<li>add new features</li>
+			<li>update some part of feature definition</li>
+			<li>add new attributes</li>
+			<li>update attribute definition</li>
+			<li>set attribute value</li>
+		</ul>
+	</li>
+</ol>
+<p><b>Note that :</b></p>
+<ul>
+	<li>It is possible to update a catalog without specifying an osm file. In this case, an updated version of the catalog is generated on the current tool level.</li>
+	<li>When specifying an osm file, the modifications in the osm file will be applied during the update. Note that:
+		<ul>
+			<li>The generation of the osm file (see -describe-as-osm command) and the update of the catalog (see -update-catalog command) must be done on the same tool level.</li>
+			<li>The generation of the osm file must be done right before the catalog update. An osm file is to be generated before every catalog update.</li>
+		</ul>
+	</li>
+</ul>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>&nbsp;
+<a name="How_to_create_a_new_feature.3F"></a>
+<h2> How to create a new feature? </h2>
+
+<p>There are several ways to create features
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre><b>document</b> `CAAOsmCatalogSU.CATfct` <br />{<br /> <b>container</b> RootCont <font color="darkgreen">#root</font><br />{<br /><b>feature</b> CATOsmBook <font color="darkgreen">#startup</font> {} <img alt="[1]" src="images/bulle1.png"/><br /><b>feature</b> CATOsmNovel CATOsmBook <font color="darkgreen">#startup</font> {} <img alt="[2]" src="images/bulle2.png"/><br /><b>feature</b> `Book.1` CATOsmBook {} <img alt="[3]" src="images/bulle3.png"/></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li>Create CATOsmBook startup. Note the #startup facet. the
+late type is CATOsmBook. </li>
+
+  <li> This statement creates a sub startup of CATOsmBook named
+CATOsmNovel. </li>
+
+  <li>This creates an instance of CATOsmBook named Book.1 in the
+current container scope. </li>
+
+</ol>
+
+<p>You may have to create instance to initialize your startup. Or
+if you have to define predefined reference feature.
+</p>
+
+<p>After upgrading and re-generating the source code look like
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre><b>document</b> `CAAOsmCatalogSU.CATfct` {<br /> <b>container</b> RootCont <font color="darkgreen">#root</font> { <br /> <b>feature</b> CATOsmBook#1 <font color="darkgreen">#startup</font> { <img alt="[1]" src="images/bulle1.png"/><br />}<br /><b>feature</b> CATOsmNovel#2 CATOsmBook#1 <font color="darkgreen">#startup</font> {<br /> }<br /> <b>feature</b> `Book.1`#4 CATOsmBook#1 {<br /> }<br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li> The generator adds #nn tag after the declaration. </li>
+
+</ol>
+
+<p>This insure stability of persistant tag.
+This tag is required for an efficient feature lookup.
+</p>
+
+<p><br />
+
+</p>
+
+<p style="color: red;">
+<span style="padding: 0.2em; float: left;"><img src="images/Warning.gif" alt="Image:Warning.gif" longdesc="images/Warning.gif" height="30" width="30"/></span>/
+THE TAG IS A REQUIREMENT FOR CATALOG COMPATIBILITY.-create-new-catalog
+</p>
+
+<p><br />
+
+<br />
+
+</p>
+
+<p style="color: red;">
+<span style="padding: 0.2em; float: left;"><img src="images/Warning.gif" alt="Image:Warning.gif" longdesc="images/Warning.gif" height="30" width="30"/></span>/
+The tag is required when you want to create two instances with the same
+name.
+</p>
+
+<p><br />
+
+</p>
+
+<p> </p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="How_to_define_the_instance_reference_or_the_startup_super_type_.3F"></a>
+<h2> How to define the instance reference or the startup super
+type&nbsp;? </h2>
+
+<p>In previous section we have seen how to create a startup super
+class or reference in the same container.
+But suppose that we have to create the CATOsmDictionary startup in
+another catalog.
+We need also to create an instance of Book.1 and an instance of
+CATOsmBook&nbsp;:
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre><b>document</b> `AnotherSU.CATfct` {<br /> <b>container</b> RootCont <font color="darkgreen">#root</font> {<br /> <b>catalog_manager</b> `CAAOsmCatalogSU.CATfct` <img alt="[1]" src="images/bulle1.png"/><br /><b>feature</b> CATOsmDictionary CATOsmBook@`CAAOsmCatalogSU.CATfct` <font color="darkgreen">#startup</font> {} <img alt="[2]" src="images/bulle2.png"/><br /><b>feature</b> `Book.1` CATOsmBook@`CAAOsmCatalogSU.CATfct` {} <img alt="[3]" src="images/bulle3.png"/><br /><b>feature</b> `Book.2` `Book.1`@`CAAOsmCatalogSU.CATfct` {} <img alt="[4]" src="images/bulle4.png"/><br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li> Create CATOsmDictionary as a startup using CATOsmBook
+startup in CAAOsmCatalogSU.CATfct. </li>
+
+  <li> Create a first instance named Book.1 using CATOsmBook
+startup in CAAOsmCatalogSU.CATfct. </li>
+
+  <li> Create Book.2 an instance of Book.1 of
+CAAOsmCatalogSU.CATfct. </li>
+
+  <ol>
+
+  </ol>
+
+</ol>
+
+<pre> Note that there is two Book.1 instances one in CAAOsmCatalogSU and one in AnotherSU.<br /> <br /></pre>
+
+<p>Notice that defining a reference and subclassing use the same
+syntactical construction, the #startup facet change the behavior.
+</p>
+<p><b>Important note about catalog_manager</b></p>
+When describing an existing catalog, you may encounter the keyword catalog_manager in the osm description:
+<table class="code">
+	<tbody>
+		<pre>
+document `AnotherSU.CATfct`
+{
+container RootCont #root
+{
+catalog_manager `Catalog1.CATfct`
+catalog_manager `Catalog2.feat`
+…
+}
+}
+		</pre>
+	</tbody>
+</table>
+<p>Note that <b>catalog manager link are now obsolete:</b></p>
+<ul>
+	<li>it is possible to create a startup deriving from a startup in another catalog without specifying any catalog manager links.<br/>
+		<code><b>feature </b>CATOsmDictionary CATOsmBook@`CAAOsmCatalogSU.CATfct` #startup {}</code>
+	</li>
+	<li>it is forbidden to add new catalog manager links during a catalog update. However, existing catalog manager links are still tolerated.</li>
+	<li>a statement exist to remove an entry from the catalog manager: &lt;&gt; that 
+	can be used to remove an unused entry, or an entry to a catalog that do no 
+	exist (typo): e.g. &lt;&gt; as the right catalog is MechFeat.feat... Of course the 
+	matching &lt;&gt; line must be removed from the OSM file as
+it references a non-existing catalog and will cause the update to fail</li>
+</ul>
+<a name="Some_way_to_reference_an_existing_feature"></a>
+<h3> Some way to reference an existing feature </h3>
+
+<p>Here follows several way to specify an existing feature.
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre> <br />MyFeature <img alt="[1]" src="images/bulle1.png"/><br /><br />MyFeature@`Other.CATfct` <img alt="[3]" src="images/bulle3.png" style="width: 16px; height: 16px;"/><br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li>locating by name </li>
+
+  <li>locating in the root container in another document </li>
+
+</ol>
+
+<p> </p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>&nbsp;
+<a name="How_to_add_an_attribute_on_a_startup.3F"></a>
+<h2> How to add an attribute on a startup? </h2>
+
+<p>Suppose that we want create a catalog to describe book
+content.
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre>/*<br />* a naive book content modeling<br />*/<br /><b>document</b> `CATOsmBookContent.CATfct`<br />{<br /> <b>container</b> RootCont <font color="darkgreen">#root</font><br /> {<br /><b>feature</b> CATOsmBook <font color="darkgreen">#startup</font> {<br /> <b> component</b> style <font color="darkgreen">#list</font> <i><font color="darkblue">// list of style <img alt="[1]" src="images/bulle1.png"/> </font></i><br /> }<br /> <b>feature</b> CATOsmStyle <font color="darkgreen">#startup</font> {<br /> <b> string</b> font_name <img alt="[2]" src="images/bulle2.png" style="width: 16px; height: 16px;"/> <br /> <b> double</b> font_size<i><font color="darkblue"> <img alt="[3]" src="images/bulle3.png" style="width: 16px; height: 16px;"/> <br /></font></i><span style="font-weight: bold;">        boolean</span> underline <img alt="[4]" src="images/bulle4.png" style="width: 16px; height: 16px;"/>&nbsp;; <b>int</b> background; <b>int</b> foreground<br /> }<br /><br /> <b>feature</b> CATOsmItem <font color="darkgreen">#startup</font> {}<br /> <b>feature</b> CATOsmText CATOsmItem <font color="darkgreen">#startup</font> {<br /> <b> specobject</b> style <img alt="[5]" src="images/bulle5.png" style="width: 16px; height: 16px;"/> <br /> <b> string</b> text<br /> }<br /> <b>feature</b> CATOsmImage CATOsmItem <font color="darkgreen">#startup</font> {<br /> external image_link<br /> }<br /> }<br />}<br /></pre>
+
+  </tbody>
+</table>
+
+<p>Create an attribute typed as:
+</p>
+
+<ol>
+
+  <li>component list </li>
+
+  <li>string named font_name </li>
+
+  <li>double named font_size </li>
+
+  <li>boolean named underline and two int named background and
+foreground </li>
+
+  <li>specobject name private access </li>
+
+</ol>
+
+<p><br />
+
+</p>
+
+<table>
+
+  <tbody>
+
+    <tr>
+
+      <td> CATAttrKind </td>
+
+      <td> osm type </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_any</td>
+
+      <td>any </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_boolean</td>
+
+      <td>boolean </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_component</td>
+
+      <td>component </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_double</td>
+
+      <td>double </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_external</td>
+
+      <td>external </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_integer</td>
+
+      <td>int </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_list</td>
+
+      <td>#list facet </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_octet</td>
+
+      <td>octet </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_specobject</td>
+
+      <td>specobject </td>
+
+    </tr>
+
+    <tr>
+
+      <td>tk_string</td>
+
+      <td>string </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<a name="How_to_define_quality_and_access.3F"></a>
+<h2> How to define quality&nbsp;? </h2>
+
+<ul>
+
+  <li>The #in, #out enable you too specify the quality of an
+attribute. </li>
+
+</ul>
+
+<pre> The #in_external can also be set on external attribute to propagate update on pointed object.</pre>
+<p><br />
+
+</p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="How_to_modify_an_attribute.3F"></a>
+<h2> How to modify an attribute? </h2>
+
+<p>You should never modify attribute
+definition.<br />
+
+Removing or modifiying an attribute type or quality can leads to data
+upward compatibility or memory capacity issues.<br />
+
+As an unset attribute cost nothing, the solution is to create a new
+attribute.</p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="How_to_set_a_value.3F"></a>
+<h2> How to set a value? </h2>
+
+<p>You may have to set value after defining all
+feature.&lt;/br&gt;
+You can do that by assigning the value to an attribute.
+<br />
+
+Values are always constants, and must be set after all feature creation
+<br />
+
+Here is an example of an attribute we want to set to 5
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre><b>document</b> `catalog.CATfct` {<br /> <b>container</b> RootCont <font color="darkgreen">#root</font> {<br /> <b>catalog_manager</b> `ObjectSpecsModeler.feat`<br /> <b> feature</b> MyStartup#2 <font color="darkgreen">#startup</font> {<i><font color="darkblue"><img alt="[1]" src="images/bulle1.png"/></font></i> <br /> <b> double</b> X <br /> X = 5. <img alt="[2]" src="images/bulle2.png"/><br /> }<br /> }<br />}<br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li>The with construction is used for feature lookup.</li>
+
+  <ul>
+
+    <li>If it does not exist the with statement emit an error.</li>
+
+  </ul>
+
+  <li>set X to 5. See <a href="#How_to_format_a_value_.3F" class="new" title="How to format a value ?">How to
+format a value ?</a> </li>
+
+</ol>
+
+<p></p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="How_to_format_a_value_.3F"></a>
+<h2> How to format a value&nbsp;? </h2>
+
+<p><br />
+
+</p>
+
+<table>
+
+  <tbody>
+
+    <tr>
+
+      <td> type </td>
+
+      <td> value </td>
+
+    </tr>
+
+    <tr>
+
+      <td style=""> double </td>
+
+      <td> a real number containing a dot or an exponent </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> -2. 2.424e-5 3300041.e+40 </td>
+
+    </tr>
+
+    <tr>
+
+      <td style=""> int </td>
+
+      <td> an integer value in range -2**31, +2**31-1.
+      <p>Like C++, you can use octal (prefix 0), hexadecimal
+(prefix 0x). </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td>-2, 0x3f 63 in hexadecimal, 0377 255 in octal. </td>
+
+    </tr>
+
+    <tr>
+
+      <td> octet </td>
+
+      <td> like int but constrained in 0, 255 range </td>
+
+    </tr>
+
+    <tr>
+
+      <td> boolean </td>
+
+      <td> <b>true</b> or <b>false</b>
+keyword </td>
+
+    </tr>
+
+    <tr>
+
+      <td style=""> string </td>
+
+      <td> single (') or double quoted (") delimited string.<br />
+
+      <p>Like C++ some character can be escaped, strings may
+contain UTF8
+character. String can be prefixed by a u letter (u) to specify that the
+string is an UTF8 string, </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> "string1" </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> '5"1/4' a string containing a double quote </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> "I'm" a string containing a single quote </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> 'I\'m' another way of previous one </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> "\n" a string containing a &amp;lt.CR&amp;gt. </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> '\\' a string containing a backslash </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> "\t" a string containing a tab </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> "\"" a string containing double quote </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> u"pupil at school" an utf-8 string containing pupil at
+school </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> u"&eacute;l&egrave;ve &agrave;
+l'&eacute;cole" the same in french </td>
+
+    </tr>
+
+    <tr>
+
+      <td style=""> specobject<br />
+
+      <p>component<br />
+
+external </p>
+
+      </td>
+
+      <td> You can reference by feature name.
+      <p>You have to specify the container path or document if
+you reference a feature outside the current container (or document).
+See <a href="#Some_way_to_reference_an_existing_feature" title="">#Some way to reference an existing feature</a>
+for more details.
+Use the <b>null</b> keyword to set to null. </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> MyFeature<br />
+
+      <p>null </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> list </td>
+
+      <td> Enumeration are delimited by brackets ('[' and ']'),
+values are separated by comas (','). </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td>
+      <p>[ 1, 2, 3 ] list of 3 integer
+[ ] an empty list
+[ "str1" , "str2" ] list of 2 strings </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="">octet list </td>
+
+      <td>octet list can be initialized as an hexadecimal binary
+string.
+      <p>the number of hexadecimal digits must be odd.
+Dash character ('-') can be added in source file
+for clarity </p>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td> </td>
+
+      <td> b'0fabced000555555' undelimited binary<br />
+
+      <pre> b'0fabced0-00-555555' delimited binary<br /><br />[ 0xf, 0xab, 0xce, 0xd0, 0x00, 0x55, 0x55, 0x55 ]<br /></pre>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<p style="text-align: right;">[<a href="#top">Top</a>]</p>
+
+<h2><a name="ExtensionFtr"></a>How to define a startup extension</h2>
+
+<p>The catalog CAAOsmExt1Catalog.CATfct is depicted below. It defines the "CAAOsmHistoricalNovel" and
+"CAAOsmBiographicalNovel" startup extensions.</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre>
+document `CAAOsmExt1Catalog.CATfct` {
+	container RootCont #root {
+		feature <b>CAAOsmHistoricalNovel</b> #startup #<b>extension</b> {
+			<b>#creation::parameter</b>=metadata_NovelExtn
+			string Epoch
+			Epoch="Middle Ages"
+		}
+		feature <b>CAAOsmBiographicalNovel</b> CAAOsmHistoricalNovel #startup #<b>extension</b> {
+			string Domain
+			Domain="Music"
+		}
+	}
+...
+    </pre>
+
+  </tbody>
+</table>
+<p>The first point you might notice is the #extension facet, which specifies that the StartUp is an Extension StartUp and not a regular one. The
+other point is that a StartUp can be derived from another one, as in this case of CAAOsmBiographicalNovel inherits
+from CAAOsmHistoricalNovel.</p>
+<p>Also, the "CAAOsmHistoricalNovel" feature is associated with an attribute "Epoch" of type string, default valuated to "Middle Ages".<br/>
+While CAAOsmBiographicalNovel" feature is associated with an attribute "Domain" of type string, default valuated to "Music".</p>
+<p>Then, note the metadata declaration (<b>#creation::parameter</b>) for CAAOsmHistoricalNovel. CAAOsmBiographicalNovel deriving
+from CAAOsmHistoricalNovel inherits of the same metadata:</p>
+<table class="code">
+	<tbody>
+		<pre>
+metadata <b>metadata_NovelExtn</b> {
+	`ContType` = "CAAFmExtApplication1"
+	`Container` = "CAAFmExtApplication1"
+	`Extends` = ["CAAOsmNovel"]
+	`IsLocal` = true
+	}
+} // OSM end
+...		
+		</pre>
+	</tbody>
+</table>
+<p>The "CAAOsmHistoricalNovel" and CAAOsmBiographicalNovel can be thus a local feature extension to the "CAAOsmNovel" feature,
+instantiated inside the Applicative Container "CAAFmExtApplication1".</p>
+<b>Notes :</b>
+<ul>
+	<li>The metadata MUST contains the 4 lines (`ContType` /`Container` /`Extends` /`IsLocal` )</li>
+	<li>the `` can be omitted when you create/upgrade the osm file</li>
+</ul>
+<p></p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<a name="What_to_do_when_something_goes_wrong.3F"></a>
+<h2> What to do when something goes wrong? </h2>
+
+<a name="Error_format.2C_source_and_severity"></a>
+<h2>Error format, source and severity</h2>
+
+<p>Here is a typical CATfctEditorAssistant error message
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre>[E]<img alt="[1]" src="images/bulle1.png"/> OSM-CVT<img alt="[2]" src="images/bulle2.png"/>&nbsp;: created catalog is not the first in CATGraphicPath<img alt="[3]" src="images/bulle3.png"/> &nbsp;: { doc='catalog .feat', found='...\intel_a\resources\graphic\.' }<img alt="[4]" src="images/bulle4.png"/><br /></pre>
+
+  </tbody>
+</table>
+
+1.
+<pre> The error severity begin any message there is three level of severity&nbsp;: <br /> <br /></pre>
+
+&nbsp;&nbsp;&nbsp; [E] the error level class: an error is
+never revorable
+and the process will abort <br />
+
+&nbsp;&nbsp;&nbsp; [W] the warning level class: the
+CATfctEditorAssistant
+detect an
+anomaly adopt a default behavior, in most of case it ignore the
+statement <br />
+
+&nbsp;&nbsp;&nbsp; [I] the informational level: notify what
+the
+CATfctEditorAssistant is
+doing.
+<ul>
+
+</ul>
+
+<p><br />
+
+</p>
+
+2.
+<pre> This is the error source. It indicates which OSM components emites the error. <br /> Most of the errors source from CATfctEditorAssistant are&nbsp;:<br /> <br /></pre>
+
+&nbsp;&nbsp;&nbsp; OSM-PAR parser and runtime engine error <br />
+
+&nbsp;&nbsp;&nbsp; OSM-CVT CATfctEditorAssistant tools
+command line.
+<ul>
+
+</ul>
+
+<p>
+3. an human explaination of the error
+</p>
+
+<p>4. some usefull data that help to understand the context </p>
+
+<ol>
+
+</ol>
+
+<p><br />
+
+Omsfeat is a two pass compiler&nbsp;:
+</p>
+
+<table>
+
+  <tbody>
+
+    <tr>
+
+      <td>parse pass </td>
+
+      <td> this pass build a syntactical tree. During this pass
+compilation errors are emited, most of then are lexical or syntactical.
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td>evaluation pass </td>
+
+      <td>
+      <p>When the previous pass is successful an evaluation can
+be done.
+During this pass the syntactical tree is scanned and evaluated. Some
+runtime errors may occurs. </p>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<a name="Compilation_error"></a>
+<h2>Compilation error</h2>
+
+<p>Now suppose that we have wrote the following catalog source:
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre> <b>document</b> `catalog.CATfct` <br /> {<br /> <b>catalog_manager</b> `catalog.CATfct`<br /> <b>container</b> RootCont <font color="darkgreen">#root</font> <br /> {<br /> <b>feature</b> MyStartup <font color="darkgreen">#startup</font> <br /> {<br /> <b>double</b> X&nbsp;:<br /> }<br /> <b>feature</b> MyStartup2 MyStarup <font color="darkgreen">#starup</font><br />{<br /><b>double</b> y<br /> }<br /> }<br /> }<br /></pre>
+
+    <pre>$ CATfctEditorAssistant -client-id id -create-feat ...\intel_a\resources\graphic\catalog.CATfct catalog.osm<br />[E] OSM-PAR: catalog.osm:3:<img src="images/bulle1.png" alt="[1]"/> parse error, unexpected `OSMKCatalogManager', expect<br />ing `OSMKContainer' or `OSMKEnd' or `OSMKMetaDataDef' near 'catalog_manager'<img src="images/bulle2.png" alt="[2]"/><br />catalog_manager `catalog.CATfct` <img src="images/bulle3.png" alt="[3]"/><br />[E] OSM-PAR: catalog.osm: 1 error(s) found during parse<img src="images/bulle4.png" alt="[4]"/><br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li>Compilation errors indicate the source filename and the
+line number where the errors are detected </li>
+
+  <li>Parse errors occur during the first pass.</li>
+
+  <ul>
+
+    <li>The most important data is the "near 'catalog_manager'"
+which
+tell where in the line the syntax error is.&nbsp;</li>
+
+  </ul>
+
+  <ul>
+
+    <li>The error also enumerate the token type the parser
+expected&lt;/br&gt;
+Here it means that a OSMKCatalogManager token is unexpected (ie.
+catalog_manager keyword), the compiler expects a OSMKContainer (ie.
+container), a OSMKEnd (&lt;CR&gt; or ';') or an OSMKMetaDataDef.</li>
+
+  </ul>
+
+  <ol>
+
+  </ol>
+
+  <li>It prints the current line. This feature is disable when
+the source file is not available </li>
+
+  <li>Summary of errors and warnings. </li>
+
+</ol>
+
+<p>Ho, yes! the catalog_manager have to be in a container scope.
+corrected file&nbsp;:
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre> <b>document</b> `catalog.CATfct` <br /> {<br /> <b>container</b> RootCont <font color="darkgreen">#root</font> <br /> {<br /> <b>catalog_manager</b> `catalog.CATfct`<br /> <b>feature</b> MyStartup <font color="darkgreen">#startup</font> <br /> {<br /> <b>double</b> X&nbsp;:<br /> }<br /> <b>feature</b> MyStartup2 MyStarup <font color="darkgreen">#starup</font><br />{<br /><b>double</b> y<br /> }<br /> }<br /> }<br /></pre>
+
+    <pre>[E] OSM-PAR: catalog.osm:8: parse error, unexpected `$undefined.', expecting `OS<br />MKEnd' or `OSMKFacet' or `'='' near ':'<br /> double X&nbsp;:<img src="images/bulle1.png" alt="[1]"/><br />[E] OSM-PAR: catalog.osm:10: invalid facet name<img src="images/bulle2.png" alt="[2]"/><br />feature MyStartup2 MyStarup #starup<br />[E] OSM-PAR: catalog.osm: 2 error(s) found during parse<img src="images/bulle3.png" alt="[3]"/><br /></pre>
+
+  </tbody>
+</table>
+
+<ol>
+
+  <li>Here there is an extraneous ':' </li>
+
+  <li>Here startup is mistyped </li>
+
+  <li>Summary of errors and warnings. </li>
+
+</ol>
+
+<a name="Runtime_errors"></a>
+<h2> Runtime errors </h2>
+
+<p>Run again CATfctEditorAssistant compiler.
+</p>
+
+<table class="code">
+
+  <tbody>
+
+    <pre>[E] OSM-PAR: catalog.osm:10: cannot find reference&nbsp;: { feature='MyStartup2',<br />reference='MyStarup', container='RootCont', document='catalog.CATfct' }<br />feature MyStartup2 MyStarup #startup <img src="images/bulle1.png" alt="[1]"/><br />[E] OSM-PAR: catalog.osm: 1 error(s) found during evaluation<img src="images/bulle2.png" alt="[2]"/><br />[W] OSM-PAR: catalog.osm: 1 warning(s) found during evaluation<br /></pre>
+
+  </tbody>
+</table>
+
+<p>Here, the error occurs at line 5, with catalog.CATfct in
+container RootCont in document catalog.CATfct. </p>
+
+<ol>
+
+  <li> The message tell you that the reference is not found.
+MyStarup is mistyped </li>
+
+  <li> note that now we have evaluation error not parse error! </li>
+
+</ol>
+
+<p> </p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>&nbsp;
+<h2><a name="References"></a>References</h2>
+
+<table width="100%">
+
+  <tbody>
+
+    <tr>
+
+      <td>[1]</td>
+
+      <td><a href="../CAADocUseCases/CAADocRunSample.htm">CAADocRunSample
+use case</a></td>
+
+    </tr>
+
+    <tr>
+
+      <td colspan="2" align="right" valign="top">[<a href="#top">Top</a>]</td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<hr /><br />
+
+<h2><a name="History"></a> History </h2>
+
+<table>
+
+  <tbody>
+
+    <tr>
+
+      <td> Version </td>
+
+      <td> Date </td>
+
+      <td> Comment </td>
+
+    </tr>
+
+    <tr>
+
+      <td> <strong>1</strong></td>
+
+      <td> 2006-04-04 </td>
+
+      <td> Document created </td>
+
+    </tr>
+
+    <tr>
+
+      <td><span style="font-weight: bold;">2</span></td>
+
+      <td>2006-05-31</td>
+
+      <td>Document review</td>
+
+    </tr>
+
+    <tr>
+
+      <td style="font-weight: bold;">3</td>
+
+      <td>2006-06-20</td>
+
+      <td>Document review</td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<p> </p>
+
+<span style="float: right;">[<a href="#top">Top</a>]</span>
+<p><b><i>Copyright &copy; 2006, Dassault
+Syst&egrave;mes. All rights reserved.</i></b></p>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Setting the Print Area of a Drawing Sheet</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Interactive Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Setting the Print Area of a Drawing Sheet</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!--------------------------------------comment------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td>This macro shows you how to set the print area of the current sheet
+      using the mouse selection. You select a couple of drawing points to define
+      the print area rectangle. You can can select any drawing point into the
+      sheet, including those into a view.<br>
+      This macro is based on an active drawing document.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td>Open the drawing document: <a href="samples/CAADriSetPrintArea.CATDrawing">CAADriSetPrintArea.CATDrawing</a>
+      <p><a name="How"></a>Run CAADriISetPrintArea in CATIA [<a href="#References">1</a>].</p>
+      <p><a href="CAADriSetPrintAreaSource.htm">CAADriISetPrintArea</a> is
+      located in the CAADriUseCases module.&nbsp; <a href="macros/CAADriSetPrintArea.CATScript">Execute
+      macro</a> (Windows only).</td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td><a name="Step"></a>CAADriISetPrintArea includes seven steps:
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Retrieving the Active Sheet</a></li>
+        <li><a href="#Step3">Retrieving the Selection of the Drawing Document</a></li>
+        <li><a href="#Step4">Defining the Selection</a></li>
+        <li><a href="#Step5">Retrieving the Location of the First Point</a></li>
+        <li><a href="#Step6">Defining the Print Area</a></li>
+        <li><a href="#Step7">Visualizing the Print Area</a></li>
+        <li><a href="#InShort">InShort</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Retrieve the active document</font>
+<font color="#0000FF">Dim </font>oDocument<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Set </font>oDocument = CATIA.ActiveDocument
+
+<font color="#008000">' Test the document's type, if it is not a drawing document the macro stops</font>
+<font color="#0000FF">If </font>TypeName(oDocument) = &quot;DrawingDocument&quot; Then
+<font color="#0000FF">    Dim </font>oDrawingDocument<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingDocument = oDocument
+<font color="#0000FF">Else</font>
+    <font color="#0000FF">MsgBox</font> &quot;This macro can be run with a drawing document only.&quot;
+<font color="#0000FF">    Exit Sub</font>
+<font color="#0000FF">End If</font>
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The active document type is tested. If it is a <code>DrawingDocument</code>,
+      the <code>oDrawingDocument</code> is retrieved from the <code>oDocument</code>.
+      Otherwise the macro stops and prompts a warning message.</p>
+      <h4><a name="Step2"></a>Retrieving the Active Sheet</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Retrieve the active sheet of the document</font>
+<font color="#0000FF">Dim </font>oSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">Set </font>oSheet <font color="#0000FF">=</font> oDrawingDocument.Sheets.ActiveSheet  
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The active sheet object is retrieved from the <code>Sheets</code>
+      collection of the <code>oDrawingDocument</code> object, using the <code>ActiveSheet</code>
+      method.</p>
+      <h4><a name="Step3"></a>Retrieving the Selection of the Drawing Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Retrieve the selection of the document</font>
+<font color="#0000FF">Dim </font>oSelection <font color="#008000">'As Selection</font>
+<font color="#0000FF">Set </font>oSelection <font color="#0000FF">=</font> oDrawingDocument.Selection
+<font color="#008000">' Clear the selection</font>
+oSelection.Clear
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The selection object is retrieved from the <code>oDrawingDocument</code>
+      object using the <code>Selection</code> method.<br>
+      The selection is cleared.</p>
+      <h4><a name="Step4"></a>Defining the Selection</h4>
+      <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Define the object type allowed to be selected, here a drawing point</font>
+<font color="#0000FF">Dim </font>InputObjectType(0)
+InputObjectType(0) <font color="#0000FF">=</font> &quot;Point2D&quot;
+...
+<font color="#008000">' Retrieve the first point location to set the print area from the mouse selection</font>
+ReturnStatus <font color="#0000FF">= </font>oSelection.IndicateOrSelectElement2D(&quot;Select the first point&quot;, _
+InputObjectType, True, True, False, ObjectSelected, oFirstPointAbsolute)
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>Point2D</code> filtering string is defined in the <code>InputObjectType</code>
+      array.<br>
+      The first point location is retrieved from&nbsp; the <code>oSelection</code>
+      object using the <code>IndicateOrSelectElement2D</code> method.<br>
+      According to the <code>ObjectSelected</code> boolean value retrieved:</p>
+      <ul>
+        <li><code>True</code>: the selection contains a drawing point.</li>
+        <li><code>False</code>: any drawing point has been selected, but a
+          virtual point has been indicated. The coordinates of this location are
+          contained in the <code>oFirstPointAbsolute</code> array.</li>
+      </ul>
+      <h4><a name="Step5"></a>Retrieving the Location of the First Point</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Test of the selection content from the ObjectSelected value</font>
+<font color="#0000FF">If </font>ObjectSelected = True<font color="#0000FF"> Then</font>
+    ...
+<font color="#0000FF">    Set </font>iFirstPoint = oSelection.Item(1).Value
+    ...
+<font color="#0000FF">    Set </font>oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
+    ...
+    iFirstPoint.GetCoordinates oFirstPointRelative
+    ...
+    CatAbsoluteCoordinates oView, oFirstPointAbsolute, oFirstPointRelative
+<font color="#0000FF">End If
+</font>...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>According to the <code>ObjectSelected</code> boolean value retrieved as
+      <code>True</code>:</p>
+      <ul>
+        <li>The <code>iFirstPoint</code> object is retrieved from the <code>oSelection</code>
+          object using the value of the first item. There is only one item,
+          because the <code>IndicateOrSelectElement2D</code> method allows you
+          to select only one element.</li>
+        <li>The <code>oView</code> object is retrieved from the <code>oSelection</code>
+          object using the <code>Find Object</code> method and specifying the
+          object DrawingView&nbsp; type to be found: <code>CATIADrawingView</code>.
+          A drawing point is already contained into a drawing view, even for
+          those which are in the drawing sheet and not in any drawing views. In
+          fact, there is a hidden drawing view corresponding to the drawing
+          sheet, because you cannot create 2D geometry directly in the drawing
+          sheet.</li>
+        <li>The <code>oFirstPointRelative</code> array is retrieved from the <code>iFirstPoint</code>
+          object using the <code>GetCoordinates</code> method. This array
+          contains the coordinates of the selected point according to the
+          reference axis of its drawing view.</li>
+        <li>The <code>oFirstPointAbsolute</code> array is computed from the <code>oFirstPointRelative</code>
+          array using the <code>CatAbsoluteCoordinates</code> procedure. In this
+          procedure the drawing view location, angle and scale factor are
+          retrieved from the <code>oView</code> object.</li>
+      </ul>
+      <p>Otherwise, the <code>oFirstPointAbsolute</code> array already contains
+      the location of the virtual point.</p>
+      <ol>
+        <li>Select the first point. This point is located in the hidden view of
+          the sheet and not in the <code>Front view</code>.<br>
+          <img border="1" src="images/img021.gif" hspace="0" vspace="10" width="523" height="392"></li>
+        <li>Select the second point. This point is located in the hidden view of
+          the sheet and not in the <code>Isometric view</code>.<br>
+          <img border="1" src="images/img022.gif" hspace="0" vspace="10" width="523" height="392"></li>
+      </ol>
+      <h4><a name="Step6"></a>Defining the Print Area</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' Define the coordinates of the print area's point</font>
+<font color="#0000FF">Dim </font>XPrintArea<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>YPrintArea<font color="#0000FF"> As </font>Double
+
+<font color="#0000FF">If </font>oFirstPointAbsolute(0) &gt; oSecondPointAbsolute(0)<font color="#0000FF"> Then</font>
+    XPrintArea = oSecondPointAbsolute(0)
+<font color="#0000FF">Else</font>
+    XPrintArea = oFirstPointAbsolute(0)
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">If </font>oFirstPointAbsolute(1) &gt; oSecondPointAbsolute(1)<font color="#0000FF"> Then</font>
+    YPrintArea = oSecondPointAbsolute(1)
+<font color="#0000FF">Else</font>
+    YPrintArea = oFirstPointAbsolute(1)
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">Dim </font>WidthPrintArea<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>HeightPrintArea<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Define the width and height of the print area</font>
+WidthPrintArea = Abs(oSecondPointAbsolute(0) - oFirstPointAbsolute(0))
+HeightPrintArea = Abs(oSecondPointAbsolute(1) - oFirstPointAbsolute(1))
+
+<font color="#008000">' Define and activate the print area of the drawing document</font>
+<font color="#0000FF">Dim </font>oPrintArea<font color="#0000FF"> As </font>PrintArea
+<font color="#0000FF">Set </font>oPrintArea = oSheet.PrintArea
+
+oPrintArea.SetArea XPrintArea, YPrintArea, WidthPrintArea, HeightPrintArea
+oPrintArea.ActivationState = True
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The print area is defined from a starting point and from its width and
+      height. As this starting point must be in the left-bottom corner of the
+      print area, to ensure this rule, two tests are performed to find the
+      smallest abscissa and ordinate: <code>XPrintArea</code> and <code>YPrintArea</code>.<br>
+      The width and height are computed form the coordinates of the selected
+      points: <code>WidthPrintArea</code> and <code>HeightPrintArea</code>.<br>
+      The print area object is retrieved from the <code>oSheet</code> object
+      using the <code>PrintArea</code> method.<br>
+      The <code>oPrintArea</code> object is defined using the <code>SetArea</code>
+      method.<br>
+      The <code>oPrintArea</code> object is activated using the <code>ActivationState</code>
+      property set to <code>True</code>.</p>
+      <h4><a name="Step7"></a>Visualizing the Print Area</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+oSelection.Add oSheet
+CATIA.StartCommand &quot;CATDrwVisualizePrintAreaHdr&quot;
+oSelection.Clear
+ ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>To visualize the print area we have to run the specific command, but as
+      this command can be run only with a selected sheet, we have to select it
+      before: <code>oSelection.Add oSheet</code><br>
+      To run the command you can use its id or its alias. In English context,
+      the alias is the name of the command <code>&quot;Visualize Print
+      Area&quot;</code>, but to ensure the macro works in a non-language
+      context, we use its id <code>&quot;CATDrwVisualizePrintAreaHdr&quot;.</code></p>
+      <p><img border="1" src="images/img023.gif" hspace="0" width="523" height="392"></p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!--------------------------------------comment------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to define the print area using the new method <code>IndicateOrSelectElement2D</code>
+of the <code>Selection</code> object</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!--------------------------------------comment------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>,
+      <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a><i>,
+      </i><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm">DrawingView</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Selection');return false;">Selection</a></i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!--------------------------------------comment------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

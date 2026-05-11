@@ -1,0 +1,325 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding a New Edit Properties Dialog</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3d com</h1>
+    </td>
+    <td valign="top">&nbsp;</td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>Adding a New Edit Properties Dialog</h3>
+    <em>How to add a new dialog and execute a server command from it</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article shows how to add a new panel in the Portal transient area
+    and execute an Update Object command from it.</p>
+    <ul>
+      <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+      <li><a href="#UseCase"><b>The CAALCANavCustoProperties Use Case</b></a>
+        <ul>
+          <li><a href="#What">What Does CAALCANavCustoProperties Do</a></li>
+          <li><a href="#How">How to Launch CAALCANavCustoProperties</a></li>
+          <li><a href="#Where">Where to Find CAALCANavCustoProperties Code</a></li>
+        </ul>
+      </li>
+      <li><a href="#Step"><b>Step-by-Step</b></a></li>
+      <li><a href="#InShort"><b>In Short</b></a></li>
+      <li><a href="#References"><b>References</b></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you add a new dialog in the Portal transient
+area. This dialog is created with the CATJDialog APIs. It is displayed by selecting one row in a list and clicking
+a new icon added to the Toolbar and the Contextual Menu.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALCANavCustoProperties Use Case</h3>
+<p>CAALCANavCustoProperties is a use case of the CAALCANavigator.edu framework
+that illustrates the LCANavigator customization capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALCANavCustoProperties Do</h4>
+<p>For CAALCANavCustoProperties create a new command named <b>custoproperties</b> and associate a new icon with it.
+For the command to be executed, implement the <code>execute</code> function in a class extending <i>LCANavCommand</i>.
+Finally create a new CATJDialog panel named <b>CustoProperties</b> which controller is <code>CAALCnCustoPropertiesController.java</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALCANavCustoProperties</h4>
+<p>To launch CAALCANavCustoProperties, you will need to set up the build time environment,
+then compile CAALcnCustoPropertiesController along with its prerequisites, set up the run
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Customize the untime view: Replace in the runtime view CustoTestGeneric.xml and rename it to Generic.xml</p>
+<ul>
+	<li>Create one action and click the P icon</li>
+    <p align="center"><img border="0" src="images/CustoProperties1.jpg" width="820" height="562"></p>
+    <li>Enter a new description value and click OK</li>
+    <p align="center"><img border="0" src="images/CustoProperties2.jpg" width="820" height="562"></p>
+    <li>When returning the description value is changed</li>
+    <p align="center"><img border="0" src="images/CustoProperties3.jpg" width="820" height="562"></p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALCANavCustoProperties Code</h4>
+<p>The CAALCANavCustoProperties use case is made of a single module
+CAALcnCustoProperties.mj of the CAALCANavigator.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALCANavigator.edu\CAALcnCustoProperties.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALCANavigator.edu/CAALcnCustoProperties.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the <b>custoproperties</b>
+command and its panel, there are four steps:</p>
+<ol>
+  <li><a href="#Step1">Creating a the New Command</a></li>
+  <li><a href="#Step2">Creating a New Icon for the Command</a></li>
+  <li><a href="#Step3">Implementing the execute Function</a></li>
+  <li><a href="#Step4">Creating the New CATJDialog Panel</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a the New Command</h4>
+<p>Name the new command: <b>custoproperties</b>.</p>
+<p>To map the new command to the desired action defined in the new command class :</p>
+<p>Create/Update manually the properties files to be deployed in the runtime view.</p>
+<p>Create:/resources/pprregistry/command/definition/custoproperties.xml  with the following content:</p>
+<p><pre>&lt;Command name="custoproperties" readonly="true" icon="$/I_CMD_custoproperties.gif" msgcatalog="CustoProperties"/&gt;</pre></p>
+<p>Update (for this new command to apply to all LCA types): /resources/pprregistry/command/ENOVIA/assignment/Generic.xml</p>
+<p>Add the following line:
+	<pre>&lt;Command  name="custoproperties"    multiRowEnabled="false" enablement="true"  visibility="true"/&gt;</pre>
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a New Icon for the Command</h4>
+<p>Create a new icon of 16x16 pixels identifying the new command on the Toolbar and Contextual
+menu:</p>
+<ul>
+  <li>Name it: <b>I_CMD_custoproperties</b></li>
+  <li>Place it in: Resources/graphic/icons/small</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Implementing the execute Function</h4>
+<p>In the new class <code>CAALcnCustobase.CAALcnCustocmds.command.custoproperties.Generic.java</code> extending <i>LCANavCommand</i> implements the <code>
+execute</code> function:</p>
+   <table class="code">
+      <tr>
+        <td>
+        <b> This new class implement the "custoproperties" command for </b>
+		<b> the object type "Generic" (the parent of all types.)</b>
+		<ul>
+		   <li>Retrieve the UUIDs of the selected objects</li>
+		   <li>Check if one and only one object was selectd</li>
+		   <li>Stack the CustoproPerties panel and pass it the UUID for which the object properties will be displayed</li>
+        </ul>
+        <pre>...
+public class Generic extends LCANavCommand
+{
+  public void execute( CATSession iSession )
+  {
+    String[] uuids = getUUIDs( iSession );
+	if( uuids == null || uuids.length == 0 )
+	{
+	  MessageStack.pushInfoMessage( "custoProperties", "NoObjectSelected", null, iSession );
+	  showStatusMessage( iSession, false );
+	  return;
+	}
+	else if ( uuids.length > 1 )
+	{
+	  MessageStack.pushInfoMessage( "custoProperties", "MoreThenOneObjectSelected", null, iSession );
+	  showStatusMessage( iSession, false );
+	  return;
+	}
+	String parms = "UUIDPARAM="+uuids[0];
+	this.stackSingleObjectDialog( iSession, "CustoProperties", parms );
+  }
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the New CATJDialog Panel</h4>
+<p>Create the new CATJDialog panel <b>CustoProperties</b> to be displayed in the
+transient area. The new controller extends <i>LCANavDialogController</i></p>
+<table class="code">
+  <tr>
+    <td>
+    <p>Call super in Create for the controller to automatically retrieve the document.</p>
+    <pre>...
+  public void onCreate( CATDialog iDialog, CATNotification iNotification, Object iData ) {
+    super.onCreate( iDialog, iNotification, iData );
+  }
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Implement the onDocumentChanged method:</p>
+    <ul>
+	  <li>Retrieve the selected UUIDs</li>
+	  <li>Retrieve the object</li>
+	  <li>Loop in object attributes to display attribute name and value in the proper widget</li>
+	</ul>
+    <pre>...
+public void onDocumentChanged( CATDialog iDialog, CATNotification iNotification, Object iData ) {
+  String uuid = (String)getParameter("UUIDPARAM");
+  ENOVIDataResolutionObject dro = ENOVDataResolutionFactory.getDataResolutionEngine(LCANavUtils.getLogonToken(iDialog));
+  _dob = dro.getObjectFromUUID(uuid, ENOVTypeMask.EDIT_MASK);
+  Enumeration e = _dob.getAttributes();
+  while (e.hasMoreElements())  {
+    ENOVIAttribute attr = (ENOVIAttribute)e.nextElement();
+    ENOVAttributeType attType = attr.getType();
+    if (attType == ENOVAttributeType.STRING_TYPE) {
+      if (attr.isEditable() && attr.getName().equals("V_description")) {
+        _att = attr;
+        _label = new CATLabel(_mainFrame, "label", 3);
+        _label.setTitle( _att.getAlias() + ":" );
+        _mainFrame.setConstraints( _label, new GC(0, 0, 1, 1, GC.LEFT, GC.NOFILL) );
+        _textField = new CATTextField(_mainFrame, "textfield");
+        _mainFrame.setConstraints( _textField, new GC(1, 0, 1, 1, GC.LEFT, GC.FILLH) );
+        String val = _dob.getAttrString( _att );
+        _textField.setText(_att.getExternalValue(val));
+      }
+    }
+  }
+  if (_label == null)  {
+    _label = new CATLabel(_mainFrame, "label", 3);
+    _label.setTitle( "No Description Attribute on this object" );
+    _mainFrame.setConstraints( _label, new GC(0, 0, 1, 1, GC.LEFT, GC.NOFILL) );
+  }
+}
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>onOK callbak implementation (Update the object on the server):</p>
+     <ul>
+	   <li>Retrieve the new description value</li>
+	   <li>Update the object</li>
+	   <li>Create and execute the server command</li>
+	</ul>
+    <pre>...
+
+public void onOK( CATDialog iDialog, CATNotification iNotification, Object iData ){
+  if(_textField == null)
+    return;
+  String val = _textField.getText();
+  boolean ok = false;
+  if( val != null )//Update object
+    ok = _dob.setAttrValue( _att.getName(), val );
+  //Call server
+  if (ok) {
+    ENOVIClientCommand cmd = ENOVCommandFactory.createClientCommand( editCommandName(), LCANavUtils.getLogonToken(iDialog) );
+    cmd.setParameter( "object", _dob, false );
+    ok = cmd.execute();
+    MessageStack.pushMessages( cmd, _session );
+    if( ok ) {
+      ENOVIDataObject obj = cmd.getObjectResult( "object" );
+      raiseObjectUpdatedNotification( obj );
+      onCancel(iDialog, iNotification, iData);
+    }
+  }
+  showStatusMessage( ok );
+}
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Return the command name for the server method used to do the update call.:</p>
+    <pre>...
+    protected String editCommandName(){
+	  String noun = _dob.getObjectType();
+	  String cmd = ENOVWebType.getWebType( noun ).getCommandName( "lcaedit" );
+	  if( cmd == null ) cmd = "UpdateObjectCommand";
+		return cmd;
+	}
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Create the <b>CustoProperties.CATNls</b> file with the following content for all new NLS values</p>
+
+<p>Title="My Customized Properties";</p>
+<p>Command.custoproperties.title = "Customized Properties";</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows hwo to create a command that can be executed from a new CATJDialog
+panel in the Portal transient area. First a new comand is created and a new icon is associated with it. Then the command code is created by extending
+<i>LCANavCommand</i> to implement the <code>execute</code> function. The CATJDialog
+panel is finally created along with its different callbacks to allow for triggering
+the server command.&nbsp; </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

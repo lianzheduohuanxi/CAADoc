@@ -1,0 +1,88 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Type Libraries in C++ for Windows</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Type Libraries in C++ for Windows</h3>
+      <i>Support of type libraries import in C++ sources for Windows</i></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p>The <b>#import</b> directive is used to reference type libraries. It is
+possible to import files named &quot;<b>.olb</b>&quot; or &quot;<b>.tlb</b>&quot;.
+The C++ compiler will generate two files named &quot;<b>.tlh</b>&quot; and
+&quot;<b>.tli</b>&quot; for each <b>#import</b> directive found. Those two files
+are standard C++ header used to compile C++ source code.</p>
+<h4>1 - C++ sources named &quot;.tlbcpp&quot; that imports the type libraries
+are built and header files are generated.</h4>
+<p>During the &quot;grammar1st&quot; step of mkmk, files named &quot;<b>.tlbcpp&quot;</b>
+will be compiled as C++ sources. Because those sources use some <b>#import</b>
+directive, files named &quot;<b>.tlh</b>&quot; and &quot;<b>.tli</b>&quot; will
+be generated in addition to the &quot;<b>.obj</b>&quot;. All of these &quot;<b>.tlh</b>&quot;
+and &quot;<b>.tli</b>&quot; files will be moved to the generated interfaces
+directory according to a variable named <b>TLB_GENERATED_PATH,&nbsp; </b>defined
+in the Imakefile.mk, that specify the level of their exposition.</p>
+<ul>
+  <li><b>TLB_GENERATED_PATH = Public</b> to generated interfaces in
+    PublicGenerated of the framework.</li>
+  <li><b>TLB_GENERATED_PATH </b>= <b>Protected</b> to generated interfaces in
+    ProtectedGenerated of the framework.</li>
+  <li><b>TLB_GENERATED_PATH </b>= <b>Private</b> to generated interfaces in
+    PrivateGenerated of the framework.</li>
+  <li><b>TLB_GENERATED_PATH </b>= <b>Local</b> to generated interfaces in
+    LocalGenerated of the module, <b>the default.</b></li>
+</ul>
+<p>All the imported files, &quot;<b>.dll</b>&quot;, &quot;<b>.olb</b>&quot; and
+&quot;<b>.tlb</b>&quot;, must be delivered as header in interfaces directories
+(PublicInterfaces, ProtectedInterfaces, PrivateInterfaces, LocalInterfaces). The
+compiler will search for them as a standard include file. Then, as the #include
+directive, the #import must reference imported files without any path name (i.e.
+#import &quot;foo.olb&quot;).</p>
+<p><b>Attention</b>: Because this compilation occurs during the grammar1st step
+of mkmk, the &quot;<b>.tlbcpp&quot;</b> cannot contain more than the <b>#import</b>
+directives. Remember that many generated interfaces may not exist at this time.</p>
+<h4>2 -&nbsp; C++ sources that include the generated files are compiled</h4>
+<p>As &quot;<b>.tlh</b>&quot; and &quot;<b>.tli</b>&quot; files has been moved
+in generated interfaces directories, a &quot;.cpp&quot; file can #include these
+headers as other headers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMPowerFill</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMPowerFill"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMPowerFill</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMPowerFill_37391','CATICGMPowerFill','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMPowerFill</b>
+</p>
+<p>
+<b><i> Class defining the topological operator that fills a space defined by a set of wires.</i></b><br>
+
+ <br> The wires must define a closed area and be connected.
+ Continuity criteria can be specified: G0, G1, or G2 if the supporting surfaces of the wire
+ are given, G0 otherwise. The supporting surfaces must be coherent to allow the operator to
+ compute a G1 or G2 continuity.
+ If the given continuity constraints are not compatible, the fill result will not
+ satisfy the continuity contraints. 
+ If the given continuity constraints define a too scattered set of normals, the shape of
+ the fill result may not be correct.  It is also possible to have no result.  
+ 
+ <br>The CATICGMPowerFill operator creates the resulting filling skin body
+ separately from the inputs: the wires of the input bodies are not used to define the topology
+ of the resulting fill body.  
+<ul>
+ <li>A CATICGMPowerFill operator is created with the <tt>CATCGMCreatePowerFill</tt> global function.
+ It must be directly released with the Release method. It is is not streamable. 
+<li>Options can be specified with the <tt>SetXxx</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method 
+<li>The result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+ <li>The journal corresponding to the fill operation is not yet implemented.
+</ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddInnerWires(CATLISTP(CATBody) const&amp;,CATLISTP(CATBody) const&amp;,CATListOfInt&amp;)"><b>AddInnerWires</b></a>(CATLISTP(CATBody) const&amp;,CATLISTP(CATBody) const&amp;,CATListOfInt&amp;)
+<dd>   Sets one inner wire.
+ <dt> o 
+    <a href="#GetG0MaxAccuracy()"><b>GetG0MaxAccuracy</b></a>()
+<dd>  Returns the maximum admissible continuity gap in the result.
+ <dt> o 
+    <a href="#GetG0MaxDeviation()"><b>GetG0MaxDeviation</b></a>()
+<dd>  Returns the maximum continuity gap in the result.
+ <dt> o 
+    <a href="#GetG0MaxDeviation(CATEdge*,CATMathPoint*)"><b>GetG0MaxDeviation</b></a>(CATEdge*,CATMathPoint*)
+<dd>  Returns the maximum continuity gap with regard to a particular edge.
+ <dt> o 
+    <a href="#GetG1MaxAccuracy()"><b>GetG1MaxAccuracy</b></a>()
+<dd>  Returns the maximum admissible tangency gap (in radians) in the result.
+ <dt> o 
+    <a href="#GetG1MaxDeviation()"><b>GetG1MaxDeviation</b></a>()
+<dd>  Returns the maximum tangency gap (in radians) in the result.
+ <dt> o 
+    <a href="#GetG1MaxDeviation(CATEdge*,CATMathPoint*)"><b>GetG1MaxDeviation</b></a>(CATEdge*,CATMathPoint*)
+<dd>  Returns the maximum tangency gap (in radians) with regard to a particular edge.
+ <dt> o 
+    <a href="#GetG2MaxDeviation()"><b>GetG2MaxDeviation</b></a>()
+<dd>  Returns the maximum curvature gap in the result.
+ <dt> o 
+    <a href="#GetG2MaxDeviation(CATEdge*,CATMathPoint*)"><b>GetG2MaxDeviation</b></a>(CATEdge*,CATMathPoint*)
+<dd>  Returns the maximum curvature gap with regard to a particular edge.
+ <dt> o 
+    <a href="#OrientationByFirstEdge()"><b>OrientationByFirstEdge</b></a>()
+<dd>  Defines the orientation of the fill face.
+ <dt> o 
+    <a href="#SetCanonicalDetection()"><b>SetCanonicalDetection</b></a>()
+<dd>  Enables the replacement of the fill surface by a canonical surface when
+ it is detected that this is valid.
+ <dt> o 
+    <a href="#SetFlatFaceMode(CATLONG32)"><b>SetFlatFaceMode</b></a>(CATLONG32)
+<dd>  Activates the flat face mode.
+ <dt> o 
+    <a href="#SetLayDownRequest(double)"><b>SetLayDownRequest</b></a>(double)
+<dd>  Asks for a lay down of each input wire on the corresponding support.
+ <dt> o 
+    <a href="#SetPassingCurves(CATLISTP(CATBody) const&amp;)"><b>SetPassingCurves</b></a>(CATLISTP(CATBody) const&amp;)
+<dd>   Sets a list of passing curves.
+ <dt> o 
+    <a href="#SetPassingPoints(CATLISTP(CATBody) const&amp;)"><b>SetPassingPoints</b></a>(CATLISTP(CATBody) const&amp;)
+<dd>   Sets a list of passing points.
+ <dt> o 
+    <a href="#SetTransitionContinuity(CATLONG32,CATLONG32)"><b>SetTransitionContinuity</b></a>(CATLONG32,CATLONG32)
+<dd>  Defines the continuity criterion to use for a given wire.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddInnerWires"></a><a name="AddInnerWires(CATLISTP(CATBody) const&amp;,CATLISTP(CATBody) const&amp;,CATListOfInt&amp;)"></a> <dt> o <b>AddInnerWires</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddInnerWires</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATBody) const','CATLISTP(CATBody) const&amp;')</script> <td><tt>iListOfWires</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATBody) const','CATLISTP(CATBody) const&amp;')</script> <td><tt>iListOfSupports</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfInt','CATListOfInt&amp;')</script> <td><tt>iListOfInnerTransitionContinuity</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets one inner wire. An inner wire is an inner boundary of the fill result. 
+ To set N inner wires, the method AddInnerWires must be called N times. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListOfWires</tt>
+   <dd> The list of pointers to wire bodies representing the inner wire.
+ </dd>
+    <dt><tt> iListOfSupports</tt>
+   <dd> The list of pointers to shell bodies representing the supports associated with the wire bodies.
+ If a  wire  body has no support, the corresponding element of <tt> iListOfSupports</tt> must be
+ set to <tt> NULL</tt>.  
+ </dd>
+    <dt><tt> iListOfInnerTransitionContinuity</tt>
+   <dd> The list of the continuity criteria associated with the wire bodies.
+ The continuity criteria
+ <br><b>Legal values</b>: <tt>0</tt> for G0 continuity (default mode), <tt>1</tt> for G1 continuity,
+ or <tt>2</tt> for G2 continuity.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetG0MaxAccuracy"></a><a name="GetG0MaxAccuracy()"></a> <dt> o <b>GetG0MaxAccuracy</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG0MaxAccuracy</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum admissible continuity gap in the result.
+ This value is computed by taking into account some incompatibilities in the input model.
+ Hence, it can be larger than the factory resolution.
+</dl>
+<a name="GetG0MaxDeviation"></a><a name="GetG0MaxDeviation()"></a> <dt> o <b>GetG0MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG0MaxDeviation</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum continuity gap in the result.
+</dl>
+<a name="GetG0MaxDeviation"></a><a name="GetG0MaxDeviation(CATEdge*,CATMathPoint*)"></a> <dt> o <b>GetG0MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG0MaxDeviation</b>(<td> const <script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>iEdge</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>ioMaxPoint</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum continuity gap with regard to a particular edge. 
+ If ioMaxPoint is not null, then it will be filled with the coordinates
+ where the maximum has been reached.
+</dl>
+<a name="GetG1MaxAccuracy"></a><a name="GetG1MaxAccuracy()"></a> <dt> o <b>GetG1MaxAccuracy</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG1MaxAccuracy</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum admissible tangency gap (in radians) in the result.
+ This value is computed by taking into account some incompatibilities in the model.
+</dl>
+<a name="GetG1MaxDeviation"></a><a name="GetG1MaxDeviation()"></a> <dt> o <b>GetG1MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetG1MaxDeviation</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum tangency gap (in radians) in the result.
+</dl>
+<a name="GetG1MaxDeviation"></a><a name="GetG1MaxDeviation(CATEdge*,CATMathPoint*)"></a> <dt> o <b>GetG1MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetG1MaxDeviation</b>(<td> const <script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>iEdge</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>ioMaxPoint</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum tangency gap (in radians) with regard to a particular edge.
+ If ioMaxPoint is not null, then it will be filled with the coordinates
+ where the maximum has been reached.
+</dl>
+<a name="GetG2MaxDeviation"></a><a name="GetG2MaxDeviation()"></a> <dt> o <b>GetG2MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG2MaxDeviation</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum curvature gap in the result.
+</dl>
+<a name="GetG2MaxDeviation"></a><a name="GetG2MaxDeviation(CATEdge*,CATMathPoint*)"></a> <dt> o <b>GetG2MaxDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetG2MaxDeviation</b>(<td> const <script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>iEdge</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>ioMaxPoint</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum curvature gap with regard to a particular edge.
+ If ioMaxPoint is not null, then it will be filled with the coordinates
+ where the maximum has been reached.
+</dl>
+<a name="OrientationByFirstEdge"></a><a name="OrientationByFirstEdge()"></a> <dt> o <b>OrientationByFirstEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>OrientationByFirstEdge</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the orientation of the fill face. 
+ The fill face is oriented according to the orientation of the first
+ edge in the first wire.
+</dl>
+<a name="SetCanonicalDetection"></a><a name="SetCanonicalDetection()"></a> <dt> o <b>SetCanonicalDetection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCanonicalDetection</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Enables the replacement of the fill surface by a canonical surface when
+ it is detected that this is valid.
+ This method is effective only over rectangular regions, and supports
+ replacement by cylinders, spheres, and cones only.
+</dl>
+<a name="SetFlatFaceMode"></a><a name="SetFlatFaceMode(CATLONG32)"></a> <dt> o <b>SetFlatFaceMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFlatFaceMode</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iMode</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Activates the flat face mode.
+ In this mode, a planar face is created if the hole being filled is flat.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The flat mode.
+ <br><b>Legal values</b>: 
+ <dl><dt>1</dt><dd> to activate the flat face mode.
+ <dt>0</dt><dd> to deactivate the flat face mode.
+</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLayDownRequest"></a><a name="SetLayDownRequest(double)"></a> <dt> o <b>SetLayDownRequest</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLayDownRequest</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iLayDownTolerance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for a lay down of each input wire on the corresponding support.
+ If this method is not called, the wire is presumed to be already laid down on its support.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLayDownTolerance</tt>
+   <dd> The pointer to the lay down tolerance (maximum distance between wire to be laid down
+ and its support surface).</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPassingCurves"></a><a name="SetPassingCurves(CATLISTP(CATBody) const&amp;)"></a> <dt> o <b>SetPassingCurves</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPassingCurves</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATBody) const','CATLISTP(CATBody) const&amp;')</script> <td><tt>iListOfWires</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets a list of passing curves. The resulting fill surface must pass by the passing curves,
+ but the passing curves do not belong to the resulting topology. In particular, a passing curve
+ is not a boundary of the fill surface.  
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListOfWires</tt>
+   <dd> The list of bodies (wires) representing the passing curves.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPassingPoints"></a><a name="SetPassingPoints(CATLISTP(CATBody) const&amp;)"></a> <dt> o <b>SetPassingPoints</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPassingPoints</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATBody) const','CATLISTP(CATBody) const&amp;')</script> <td><tt>iListOfVertices</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets a list of passing points. The fill result must pass through these points.   
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListOfVertices</tt>
+   <dd>   The list of pointers to vertex bodies representing the passing points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTransitionContinuity"></a><a name="SetTransitionContinuity(CATLONG32,CATLONG32)"></a> <dt> o <b>SetTransitionContinuity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransitionContinuity</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iWhichWire</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTransitionContinuity</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the continuity criterion to use for a given wire.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWhichWire</tt>
+   <dd> The index (beginning at 1) of the input wire.
+ </dd>
+    <dt><tt> iTransitionContinuity</tt>
+   <dd> The continuity criterion.
+ <br><b>Legal values</b>: <tt>0</tt> for G0 continuity (default mode), <tt>1</tt> for G1 continuity,
+ or <tt>2</tt> for G2 continuity.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMPowerFill.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

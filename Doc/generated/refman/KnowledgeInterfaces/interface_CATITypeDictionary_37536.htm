@@ -1,0 +1,945 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowledgeInterfaces Interface CATITypeDictionary</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowledgeInterfaces.htm" href="../KnowledgeInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowledgeInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATITypeDictionary"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>KnowledgeInterfaces Interface CATITypeDictionary</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATITypeDictionary_37536','CATITypeDictionary','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATITypeDictionary</b>
+</p>
+<p>
+<b><i> Interface dedicated to accessing the unique repository of types shown to the user.</i></b><br>
+
+
+ <b>Role</b>: This interface allows the developper to create/remove/modifiy
+ "exposed" types. These types can be grouped into packages
+ (one type belongs to at most one package).<br>
+ <br>
+ A package may require other packages : this means that types gathered in this
+ package, refer to types belonging to those required packages (through supertype
+ relation or attribute relation).<br>
+ <br>
+ Note that all the types are not systematically loaded at run-time (for performance
+ concern) so one can force the load of a package. In order to work, the person creating
+ a package, has to create a CATRsc file called "CATPackage<Name of my package>.CATRsc" with
+ one line : "PackageImplementation = "<Name of my implementation of CATIAdd[Type]Library>";".<br>
+ <br>
+ The most basic types are:
+ <li>"Boolean"</li>
+ <li>"Integer"</li>
+ <li>"Real"</li>
+ <li>"String"</li>
+ <li>"Magnitude"</li>
+ <li>"Feature"</li><br>
+ <br>
+ "Feature" is the common supertype of all complex types. If no supertype is provided
+ when creating a type, "Feature" is assumed.<br>
+ <br>
+ The dictionary can be retrieved with the CATGlobalFunctions::GetTypeDictionary() service.
+
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIType','','CATIType') </script>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATITypeDictionaryListener','','CATITypeDictionaryListener') </script>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIAddTypeLibrary','','CATIAddTypeLibrary') </script>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIAddLibrary','','CATIAddLibrary') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddMethodForPackage(CATBaseUnknown_var&amp;,CATUnicodeString&amp;)"><b>AddMethodForPackage</b></a>(CATBaseUnknown_var&amp;,CATUnicodeString&amp;)
+<dd>  Adds a method/function in a dictionary package.
+ <dt> o 
+    <a href="#AddPackage(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)"><b>AddPackage</b></a>(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)
+<dd>  Creates a package in the dictionary.
+ <dt> o 
+    <a href="#AddTypeForPackage(CATIType_var&amp;,CATUnicodeString&amp;,int)"><b>AddTypeForPackage</b></a>(CATIType_var&amp;,CATUnicodeString&amp;,int)
+<dd>  Adds a created type in an existing package of the dictionary.
+ <dt> o 
+    <a href="#AdviseInstanciated(CATIType_var&amp;,CATIInstance_var&amp;)"><b>AdviseInstanciated</b></a>(CATIType_var&amp;,CATIInstance_var&amp;)
+<dd>  Indicates that a type from the dictionary was instanciated.
+ <dt> o 
+    <a href="#AdviseMethodAdded(CATBaseUnknown_var&amp;)"><b>AdviseMethodAdded</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Indicates that a method was added to the dictionary.
+ <dt> o 
+    <a href="#AdviseMethodRemoved(CATBaseUnknown_var&amp;)"><b>AdviseMethodRemoved</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Indicates that a method was removed from the dictionary.
+ <dt> o 
+    <a href="#AdviseTypeAdded(CATIType_var&amp;)"><b>AdviseTypeAdded</b></a>(CATIType_var&amp;)
+<dd>  Indicates that a type was added to the dictionary.
+ <dt> o 
+    <a href="#AdviseTypeRemoved(CATIType_var&amp;)"><b>AdviseTypeRemoved</b></a>(CATIType_var&amp;)
+<dd>  Indicates that a type was removed from the dictionary.
+ <dt> o 
+    <a href="#AdviseTypeUpdated(CATIType_var&amp;)"><b>AdviseTypeUpdated</b></a>(CATIType_var&amp;)
+<dd>  Indicates that a type was updated from the dictionary.
+ <dt> o 
+    <a href="#CreateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATUnicodeString&amp;)"><b>CreateType</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATUnicodeString&amp;)
+<dd>  Creates a type.
+ <dt> o 
+    <a href="#CreateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATInstanciationFunction)"><b>CreateType</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATInstanciationFunction)
+<dd>  Creates a type.
+ <dt> o 
+    <a href="#FindEvent(CATIInstance_var&amp;,CATUnicodeString&amp;,CATBaseUnknown_var&amp;)"><b>FindEvent</b></a>(CATIInstance_var&amp;,CATUnicodeString&amp;,CATBaseUnknown_var&amp;)
+<dd>  Returns an event found by its internal name.
+ <dt> o 
+    <a href="#FindNLSType(CATUnicodeString&amp;,CATIType_var&amp;)"><b>FindNLSType</b></a>(CATUnicodeString&amp;,CATIType_var&amp;)
+<dd>  Returns a type found by its NLS name.
+ <dt> o 
+    <a href="#FindNLSTypeInPackages(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATIType_var&amp;,boolean)"><b>FindNLSTypeInPackages</b></a>(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATIType_var&amp;,boolean)
+<dd>  Returns a type found in a certain package (and maybe in its required packages).
+ <dt> o 
+    <a href="#FindNLSTypes(CATUnicodeString&amp;,CATListValCATIType_var&amp;)"><b>FindNLSTypes</b></a>(CATUnicodeString&amp;,CATListValCATIType_var&amp;)
+<dd>  Returns a list of types corresponding to an NLS name.
+ <dt> o 
+    <a href="#FindNLSTypesInPackages(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"><b>FindNLSTypesInPackages</b></a>(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)
+<dd>  Returns a type found in a list of packages (and maybe in their required packages).
+ <dt> o 
+    <a href="#FindType(CATUnicodeString&amp;,CATIType_var&amp;)"><b>FindType</b></a>(CATUnicodeString&amp;,CATIType_var&amp;)
+<dd>  Returns a type found by its internal name.
+ <dt> o 
+    <a href="#FindTypeInPackage(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,boolean)"><b>FindTypeInPackage</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,boolean)
+<dd>  Returns a type found in a certain package (and maybe in its required packages).
+ <dt> o 
+    <a href="#FindTypeSafe(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;)"><b>FindTypeSafe</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;)
+<dd>   Returns a type found by its internal name and package name.
+ <dt> o 
+    <a href="#ListMethodsForPackage(CATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)"><b>ListMethodsForPackage</b></a>(CATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)
+<dd>  Returns the list of the methods contained in a package.
+ <dt> o 
+    <a href="#ListMethodsForPackages(CATListOfCATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)"><b>ListMethodsForPackages</b></a>(CATListOfCATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)
+<dd>  Returns the list of the methods contained in several packages.
+ <dt> o 
+    <a href="#ListPackages(CATListOfCATUnicodeString&amp;)"><b>ListPackages</b></a>(CATListOfCATUnicodeString&amp;)
+<dd>  Returns the list of loaded packages names.
+ <dt> o 
+    <a href="#ListPrerequisitesForPackage(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)"><b>ListPrerequisitesForPackage</b></a>(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)
+<dd>  Returns the list of required packages for a given package.
+ <dt> o 
+    <a href="#ListSubTypesOfTypeForPackage(CATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)"><b>ListSubTypesOfTypeForPackage</b></a>(CATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)
+<dd>  Returns the sub types list of the given type found in the given package.
+ <dt> o 
+    <a href="#ListSubTypesOfTypeForPackages(CATListOfCATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)"><b>ListSubTypesOfTypeForPackages</b></a>(CATListOfCATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)
+<dd>  Returns the sub types list of the given type found in the given packages.
+ <dt> o 
+    <a href="#ListTypesForPackage(CATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"><b>ListTypesForPackage</b></a>(CATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)
+<dd>  Returns the list of the types contained in a package.
+ <dt> o 
+    <a href="#ListTypesForPackages(CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"><b>ListTypesForPackages</b></a>(CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)
+<dd>  Returns the lists of the types contained in several packages.
+ <dt> o 
+    <a href="#LoadLibrary(char*)"><b>LoadLibrary</b></a>(char*)
+<dd>  Asks to load a library by its name.
+ <dt> o 
+    <a href="#LoadPackage(CATUnicodeString&amp;)"><b>LoadPackage</b></a>(CATUnicodeString&amp;)
+<dd>  Forces a package to be loaded.
+ <dt> o 
+    <a href="#RemovePackage(CATUnicodeString&amp;)"><b>RemovePackage</b></a>(CATUnicodeString&amp;)
+<dd>  Removes a package and all the types belonging to it from the dictionary.
+ <dt> o 
+    <a href="#RemoveType(CATIType_var&amp;)"><b>RemoveType</b></a>(CATIType_var&amp;)
+<dd>  Removes a type from the dictionary.
+ <dt> o 
+    <a href="#RemoveType(CATUnicodeString&amp;)"><b>RemoveType</b></a>(CATUnicodeString&amp;)
+<dd>  Removes a type from the dictionary.
+ <dt> o 
+    <a href="#Synchronize()"><b>Synchronize</b></a>()
+<dd>  This method can be called to ask dictionary listeners to synchronize their description
+ if needed.
+ <dt> o 
+    <a href="#UpdateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATListValCATAttributeInfos*)"><b>UpdateType</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATListValCATAttributeInfos*)
+<dd>  Updates the type by changing the list of its attributes.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddMethodForPackage"></a><a name="AddMethodForPackage(CATBaseUnknown_var&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>AddMethodForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddMethodForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iMethod</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a method/function in a dictionary package.
+
+ Note that a package can contain only types or packages, not both. A method/function is
+ created with the 
+<script type="text/javascript"> activateLinkAnchor('CATICkeFunctionFactory','CreateFunction','CATICkeFunctionFactory.CreateFunction') </script> service.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMethod</tt>
+   <dd> a method. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package the method is to be added to.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddPackage"></a><a name="AddPackage(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>AddPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>ilListOfPrerequisites</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a package in the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> ilListOfPrerequisites</tt>
+   <dd> List of required package names.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddTypeForPackage"></a><a name="AddTypeForPackage(CATIType_var&amp;,CATUnicodeString&amp;,int)"></a> <dt> o <b>AddTypeForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddTypeForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>isBrowsable</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a created type in an existing package of the dictionary. If this package name
+ equals "", then the type is stored in the dictionary but belongs to no package. A type created
+ but not added to the dictionary cannot be used.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Type to be added. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package the type has to be added to. </dd>
+    <dt><tt> isBrowsable</tt>
+   <dd> Is (1) or is not (0) seen in Knowledge type browsers.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseInstanciated"></a><a name="AdviseInstanciated(CATIType_var&amp;,CATIInstance_var&amp;)"></a> <dt> o <b>AdviseInstanciated</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseInstanciated</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIInstance_var','CATIInstance_var&amp;')</script> <td><tt>iInstance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a type from the dictionary was instanciated.
+
+ This service should be called when an object for which it exists a CATIInstance
+ implementation (and then a CATIType for this CATIInstance), is created.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Type. </dd>
+    <dt><tt> iInstance</tt>
+   <dd> Instance of the type iType that was instanciated.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseMethodAdded"></a><a name="AdviseMethodAdded(CATBaseUnknown_var&amp;)"></a> <dt> o <b>AdviseMethodAdded</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseMethodAdded</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iMethod</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a method was added to the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMethod</tt>
+   <dd> Added method.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseMethodRemoved"></a><a name="AdviseMethodRemoved(CATBaseUnknown_var&amp;)"></a> <dt> o <b>AdviseMethodRemoved</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseMethodRemoved</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iMethod</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a method was removed from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Removed method.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseTypeAdded"></a><a name="AdviseTypeAdded(CATIType_var&amp;)"></a> <dt> o <b>AdviseTypeAdded</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseTypeAdded</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a type was added to the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Added type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseTypeRemoved"></a><a name="AdviseTypeRemoved(CATIType_var&amp;)"></a> <dt> o <b>AdviseTypeRemoved</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseTypeRemoved</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a type was removed from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Removed type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AdviseTypeUpdated"></a><a name="AdviseTypeUpdated(CATIType_var&amp;)"></a> <dt> o <b>AdviseTypeUpdated</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AdviseTypeUpdated</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates that a type was updated from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Updated type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateType"></a><a name="CreateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATUnicodeString&amp;)"></a> <dt> o <b>CreateType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iTypeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSTypeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iSuperType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oTypeCreated</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListValCATAttributeInfos','CATListValCATAttributeInfos*')</script> <td><tt>iListOfAttributeInfos</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iInstanciatiorName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a type. Remember to add it to the dictionary in order to be able to use it
+ (
+<script type="text/javascript"> activateLinkAnchor('CATITypeDictionary','AddTypeForPackage','CATITypeDictionary.AddTypeForPackage') </script> ). The last (optional) argument the name of an implementation of the CATIInstanciation interface.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeName</tt>
+   <dd> Internal name of the type. </dd>
+    <dt><tt> iNLSTypeName</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> iSuperType</tt>
+   <dd> Supertype of the type. </dd>
+    <dt><tt> oTypeCreated</tt>
+   <dd> Created type. </dd>
+    <dt><tt> ilListOfAttributeInfos</tt>
+   <dd> List of the type attributes. </dd>
+    <dt><tt> iInstanciatiorName</tt>
+   <dd> Name of a CATIInstanciation implementation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateType"></a><a name="CreateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,CATIType_var&amp;,CATListValCATAttributeInfos*,CATInstanciationFunction)"></a> <dt> o <b>CreateType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iTypeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSTypeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iSuperType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oTypeCreated</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListValCATAttributeInfos','CATListValCATAttributeInfos*')</script> <td><tt>ilListOfAttributeInfos</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATInstanciationFunction','CATInstanciationFunction')</script> <td><tt>iInstanciationFunction</tt><td><tt>= NULL </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a type. Remember to add it to the dictionary in order to be able to use it
+ (
+<script type="text/javascript"> activateLinkAnchor('CATITypeDictionary','AddTypeForPackage','CATITypeDictionary.AddTypeForPackage') </script> ). The last (optional) argument is a pointer to function which can be used by the CATIInstanciation::Instanciate service.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeName</tt>
+   <dd> Internal name of the type. </dd>
+    <dt><tt> iNLSTypeName</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> iSuperType</tt>
+   <dd> Supertype of the type. </dd>
+    <dt><tt> oTypeCreated</tt>
+   <dd> Created type. </dd>
+    <dt><tt> ilListOfAttributeInfos</tt>
+   <dd> List of the type attributes. </dd>
+    <dt><tt> iInstanciationFunction</tt>
+   <dd> Instanciation function needed for Generative Knowledge (default to NULL).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindEvent"></a><a name="FindEvent(CATIInstance_var&amp;,CATUnicodeString&amp;,CATBaseUnknown_var&amp;)"></a> <dt> o <b>FindEvent</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindEvent</b>(<td> const <script type="text/javascript"> activateLink('CATIInstance_var','CATIInstance_var&amp;')</script> <td><tt>iSource</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iEvent</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>oEvent</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns an event found by its internal name. Note that the event must have been
+ added to the dictionary in order for this method to successfull.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Internal name of the event. </dd>
+    <dt><tt> oType</tt>
+   <dd> Type (or NULL_var if not found).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindNLSType"></a><a name="FindNLSType(CATUnicodeString&amp;,CATIType_var&amp;)"></a> <dt> o <b>FindNLSType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindNLSType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a type found by its NLS name. Note that the type must have been
+ added to the dictionary in order for this method to successfull.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNLSType</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> oType</tt>
+   <dd> Type (or NULL_var if not found).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindNLSTypeInPackages"></a><a name="FindNLSTypeInPackages(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATIType_var&amp;,boolean)"></a> <dt> o <b>FindNLSTypeInPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindNLSTypeInPackages</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iPackages</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a type found in a certain package (and maybe in its required packages).
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNLSType</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> oType</tt>
+   <dd> Found type (or NULL_var). </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes required packages (1, default) or not (0).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindNLSTypes"></a><a name="FindNLSTypes(CATUnicodeString&amp;,CATListValCATIType_var&amp;)"></a> <dt> o <b>FindNLSTypes</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindNLSTypes</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>olListOfTypes</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a list of types corresponding to an NLS name. Note that the type must have been
+ added to the dictionary in order for this method to successfull. Note that there may be
+ several types with the same NLS name (!).
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNLSType</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> olListOfTypes</tt>
+   <dd> List of types.</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindNLSTypesInPackages"></a><a name="FindNLSTypesInPackages(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"></a> <dt> o <b>FindNLSTypesInPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindNLSTypesInPackages</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNLSType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>ilListOfPackages</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>olListOfTypes</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a type found in a list of packages (and maybe in their required packages).
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNLSType</tt>
+   <dd> NLS name of the type. </dd>
+    <dt><tt> ilListOfPackages</tt>
+   <dd> List of packages names. </dd>
+    <dt><tt> olListOfTypes</tt>
+   <dd> Found types. </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes required packages (1, default) or not (0).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindType"></a><a name="FindType(CATUnicodeString&amp;,CATIType_var&amp;)"></a> <dt> o <b>FindType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a type found by its internal name. Note that the type must have been
+ added to the dictionary in order for this method to successfull.
+ See also FindTypeSafe method in this file.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Internal name of the type. </dd>
+    <dt><tt> oType</tt>
+   <dd> Type (or NULL_var if not found).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindTypeInPackage"></a><a name="FindTypeInPackage(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;,boolean)"></a> <dt> o <b>FindTypeInPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindTypeInPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a type found in a certain package (and maybe in its required packages).
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Name of the type. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> oType</tt>
+   <dd> Found type (or NULL_var). </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes required packages (1, default) or not (0).</dd>
+</dl>
+</dl>
+</dl>
+<a name="FindTypeSafe"></a><a name="FindTypeSafe(CATUnicodeString&amp;,CATUnicodeString&amp;,CATIType_var&amp;)"></a> <dt> o <b>FindTypeSafe</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FindTypeSafe</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>oType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns a type found by its internal name and package name.
+ The difference between FindType and FindTypeSafe is that if the type
+ is not found, FindTypeSafe will load the given package and retry to
+ find the type.
+ This method is interesting in CATIInstance::Type implementation.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Internal name of the type. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Internal name of the package. </dd>
+    <dt><tt> oType</tt>
+   <dd> Type (or NULL_var if not found).</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListMethodsForPackage"></a><a name="ListMethodsForPackage(CATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)"></a> <dt> o <b>ListMethodsForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListMethodsForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var&amp;')</script> <td><tt>olListOfMethods</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the methods contained in a package.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> olListOfMethods</tt>
+   <dd> List of methods.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListMethodsForPackages"></a><a name="ListMethodsForPackages(CATListOfCATUnicodeString&amp;,CATListValCATBaseUnknown_var&amp;)"></a> <dt> o <b>ListMethodsForPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListMethodsForPackages</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iPackages</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var&amp;')</script> <td><tt>oListOfTypes</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the methods contained in several packages.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListOfPackages</tt>
+   <dd> List of package names. </dd>
+    <dt><tt> olListOfMethods</tt>
+   <dd> List of methods.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListPackages"></a><a name="ListPackages(CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>ListPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListPackages</b>(<td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>olListOfPackages</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of loaded packages names.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> olListOfPackages</tt>
+   <dd></dd>
+</dl>
+</dl>
+</dl>
+<a name="ListPrerequisitesForPackage"></a><a name="ListPrerequisitesForPackage(CATUnicodeString&amp;,CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>ListPrerequisitesForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListPrerequisitesForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>olListOfPrerequisites</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of required packages for a given package.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> a package name. </dd>
+    <dt><tt> olListOfPrerequisites</tt>
+   <dd> the list of required package names.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListSubTypesOfTypeForPackage"></a><a name="ListSubTypesOfTypeForPackage(CATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)"></a> <dt> o <b>ListSubTypesOfTypeForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListSubTypesOfTypeForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iFatherType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>oListOfSubTypes</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the sub types list of the given type found in the given package.
+
+ The returned list can be restricted to the sub types found in the given package or be extended to
+ the sub types also belonging to required packages.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> iFatherType</tt>
+   <dd> The type from which we'll get the sub types list. </dd>
+    <dt><tt> olListOfSubTypes</tt>
+   <dd> List of wanted sub types. </dd>
+    <dt><tt> olListOfSubTypes</tt>
+   <dd> List of wanted sub types. 		 Notice that if you give a non empty list, 
+		 it will not be emptied before filling it with the wanted subtypes.
+ </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes (1) or not (0) types of required packages. Default is 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListSubTypesOfTypeForPackages"></a><a name="ListSubTypesOfTypeForPackages(CATListOfCATUnicodeString&amp;,CATIType_var&amp;,CATListValCATIType_var&amp;,boolean)"></a> <dt> o <b>ListSubTypesOfTypeForPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListSubTypesOfTypeForPackages</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iPackages</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iFatherType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>oListOfSubTypes</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the sub types list of the given type found in the given packages.
+
+ The returned list can be restricted to the sub types found in the given packages or be extended to
+ the sub types also belonging to required packages.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> iFatherType</tt>
+   <dd> The type from which we'll get the sub types list. </dd>
+    <dt><tt> olListOfSubTypes</tt>
+   <dd> List of wanted sub types. </dd>
+    <dt><tt> olListOfSubTypes</tt>
+   <dd> List of wanted sub types. 		 Notice that if you give a non empty list, 
+		 it will not be emptied before filling it with the wanted subtypes.
+ </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes (1) or not (0) types of required packages. Default is 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListTypesForPackage"></a><a name="ListTypesForPackage(CATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"></a> <dt> o <b>ListTypesForPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListTypesForPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>olListOfTypes</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the types contained in a package.
+
+ The returned list can be restricted to the types in the package or be extended to
+ the types also belonging to required packages.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> olListOfTypes</tt>
+   <dd> List of wanted types. </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes (1) or not (0) types of required packages. Default is 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ListTypesForPackages"></a><a name="ListTypesForPackages(CATListOfCATUnicodeString&amp;,CATListValCATIType_var&amp;,boolean)"></a> <dt> o <b>ListTypesForPackages</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ListTypesForPackages</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iPackages</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListValCATIType_var','CATListValCATIType_var&amp;')</script> <td><tt>olListOfTypes</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iIncludePrerequisites</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the lists of the types contained in several packages.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackages</tt>
+   <dd> List of package names. </dd>
+    <dt><tt> olListOfTypes</tt>
+   <dd> List of found types. </dd>
+    <dt><tt> iIncludePrerequisites</tt>
+   <dd> Includes (1) or not (0) types of required packages. Default is 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="LoadLibrary"></a><a name="LoadLibrary(char*)"></a> <dt> o <b>LoadLibrary</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>LoadLibrary</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iLibraryName</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks to load a library by its name.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLibraryName:</tt>
+   <dd> C++ class name of the library </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    : CATCke::True if succeeded
+</dl>
+</dl>
+<a name="LoadPackage"></a><a name="LoadPackage(CATUnicodeString&amp;)"></a> <dt> o <b>LoadPackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>LoadPackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Forces a package to be loaded.
+
+ This is mandatory to define types depending on other types.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package to be loaded.</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemovePackage"></a><a name="RemovePackage(CATUnicodeString&amp;)"></a> <dt> o <b>RemovePackage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemovePackage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a package and all the types belonging to it from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package to be removed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveType"></a><a name="RemoveType(CATIType_var&amp;)"></a> <dt> o <b>RemoveType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveType</b>(<td> const <script type="text/javascript"> activateLink('CATIType_var','CATIType_var&amp;')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a type from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd> Type to be removed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveType"></a><a name="RemoveType(CATUnicodeString&amp;)"></a> <dt> o <b>RemoveType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iTypeName</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a type from the dictionary.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeName</tt>
+   <dd> Internal name of the type.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Synchronize"></a><a name="Synchronize()"></a> <dt> o <b>Synchronize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Synchronize</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ This method can be called to ask dictionary listeners to synchronize their description
+ if needed.
+</dl>
+<a name="UpdateType"></a><a name="UpdateType(CATUnicodeString&amp;,CATUnicodeString&amp;,CATListValCATAttributeInfos*)"></a> <dt> o <b>UpdateType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UpdateType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iTypeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPackage</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListValCATAttributeInfos','CATListValCATAttributeInfos*')</script> <td><tt>ilListOfAttributeInfos</tt><td><tt>= NULL </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Updates the type by changing the list of its attributes.
+
+ You must give the full list of new attributes.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeName</tt>
+   <dd> Internal name of the type. </dd>
+    <dt><tt> iPackage</tt>
+   <dd> Name of the package. </dd>
+    <dt><tt> ilListOfAttributeInfos</tt>
+   <dd> List pointer of attributes (default = NULL).</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATITypeDictionary.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>KnowledgeItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

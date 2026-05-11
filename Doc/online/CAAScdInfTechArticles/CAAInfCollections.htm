@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>About Collections</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>About Collections</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>You will find below some tips to retrieve objects in collections.</p>
+    </td>
+  </tr>
+</table>
+<p>An item is retrieved from the collection using the <b>Item</b> method and the
+index of the item in the collection. Usually, the argument representing the
+index in the <b>Item</b> method is a Variant. This means that it can either
+represent the rank of the item in the collection or the name you assigned to
+this item using the <b>Name</b> property. The rank in a collection begins at 1.
+For example, assume that the document named <b>MyDocument</b> is the sixth
+document in the Documents collection. To retrieve this document in the <b>Doc</b>
+variable, write:</p>
+<pre>Dim Doc As Document
+Set Doc = CATIA.Documents.Item(6)</pre>
+<p>or write:</p>
+<pre>Dim Doc As Document
+Set Doc = CATIA.Documents.Item(&quot;MyDocument&quot;)</pre>
+<p>Each collection has a <b>Count</b> property that holds the number of items in
+the collection. This is a handy property to scan the whole collection. For
+example, to print the name of each document in the collection in a message box,
+write:</p>
+<pre><b>For I = 1 To CATIA.Documents.Count</b>
+  <b>msgbox CATIA.Documents.Item(I).Name</b>
+Next</pre>
+<p>or write:</p>
+<pre>I = 0
+Do
+  I = I + 1
+  <b>msgbox CATIA.Documents.Item(I).Name</b>
+Until I = <b>CATIA.Documents.Count</b></pre>
+<p>or you can use the <b>For Each</b> instruction to scan the collection, and
+get rid of the counter:</p>
+<pre>For Each Doc In CATIA.Documents
+  <b> msgbox Doc.Name</b>
+Next</pre>
+<p>In this case, the <b>Doc</b> variable is reinitialized using the current
+document, starting with the first one and ending with the last one.</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="6%"><img border="0" src="../CAAScrBase/images/awarning.gif" width="32" height="32"></td>
+    <td width="94%">The <b>For Each .. Next</b> syntax is available only with
+      Windows.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

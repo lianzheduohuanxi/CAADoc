@@ -1,0 +1,242 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATGSMUseItf Interface CATIGSMUseMultipleSolutionsManager</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATGSMUseItf.htm" href="../CATGSMUseItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATGSMUseItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIGSMUseMultipleSolutionsManager"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATGSMUseItf Interface CATIGSMUseMultipleSolutionsManager</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIGSMUseMultipleSolutionsManager_68085','CATIGSMUseMultipleSolutionsManager','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIGSMUseMultipleSolutionsManager</b>
+</p>
+<p>
+<b><i> Interface to manage multiple solutions for GSD features
+ <b>Role</b>: Implemented on GSD features that can manage multiple solutions such as
+ <ul>
+ <li> Corners </li>
+ <li> Circles (bi-tangent and radius, bi-tangent and point, tri-tangent, two points, center tangent) </li>
+ <li> Lines (bi-tangent,bisecting) </li>
+ <li> Sweeps (some sweep segment and sweep circle) </li>
+ </ul>
+ Allow to compute all the solutions, get number of solutions, get solution topological result
+ and set feature attributes corresponding to chosen solution.</i></b><br>
+
+ Interface is implemented as transient extension, data computed by ComputeAllSolutions method
+ are cleaned when interface pointer is released.
+
+ Build pSpecCorner first solution
+  <pre> 
+  CATIGSMUseMultipleSolutionsManager * pMultiSolMng=NULL;
+  if(SUCCEEDED(pSpecCorner->QueryInterface(IID_CATIGSMUseMultipleSolutionsManager,(void**)&pMultiSolMng))){
+    if(SUCCEEDED(pMultiSolMng->ComputeAllSolutions())){
+      if(SUCCEEDED(pMultiSolMng->SetCurrentSolution(1))){
+        CATTry{
+          pSpecCorner->Update();
+        }
+        CATCatch(CATError,pErr){
+          Flush(pErr);
+        }
+        CATEndTry
+      }
+    }
+    pMultiSolMng->Release(); pMultiSolMng=NULL;
+  }
+  </pre></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#ComputeAllSolutions()"><b>ComputeAllSolutions</b></a>()
+<dd>  Compute all solutions according to feature inputs
+ return E_FAIL in case of computation error
+ error can be retrieved by using CATError::CATGetLastError(hr)
+ 
+ <dt> o 
+    <a href="#GetCurrentSolution(int&amp;)"><b>GetCurrentSolution</b></a>(int&amp;)
+<dd>  Gets feature current solution index according to its stabilization attributes (orientations, indexes.
+ <dt> o 
+    <a href="#GetNumberOfSolutions(int&amp;)"><b>GetNumberOfSolutions</b></a>(int&amp;)
+<dd>  Gets the number of solutions
+ (ComputeAllSolutions must have been called before)
+ 
+ <dt> o 
+    <a href="#GetPreviewTopology(int,CATBaseUnknown_var&amp;)"><b>GetPreviewTopology</b></a>(int,CATBaseUnknown_var&amp;)
+<dd>  Gets the topology representing the solution iSolIndex
+ (ComputeAllSolutions must have been called before)
+ 
+ <dt> o 
+    <a href="#SetCurrentSolution(int)"><b>SetCurrentSolution</b></a>(int)
+<dd>  Sets feature stabilization attributes (orientations, indexes.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="ComputeAllSolutions"></a><a name="ComputeAllSolutions()"></a> <dt> o <b>ComputeAllSolutions</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ComputeAllSolutions</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Compute all solutions according to feature inputs
+ return E_FAIL in case of computation error
+ error can be retrieved by using CATError::CATGetLastError(hr)
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATError','CATGetLastError','CATError.CATGetLastError') </script>
+</dl>
+</dl>
+<a name="GetCurrentSolution"></a><a name="GetCurrentSolution(int&amp;)"></a> <dt> o <b>GetCurrentSolution</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCurrentSolution</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oSolIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets feature current solution index according to its stabilization attributes (orientations, indexes...) 
+ (ComputeAllSolutions must have been called before)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSolIndex</tt>
+   <dd>  solution index from 1 to 'number of solutions'</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetNumberOfSolutions"></a><a name="GetNumberOfSolutions(int&amp;)"></a> <dt> o <b>GetNumberOfSolutions</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetNumberOfSolutions</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oNbSols</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the number of solutions
+ (ComputeAllSolutions must have been called before)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oNbSols</tt>
+   <dd>  Number of Solutions</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetPreviewTopology"></a><a name="GetPreviewTopology(int,CATBaseUnknown_var&amp;)"></a> <dt> o <b>GetPreviewTopology</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetPreviewTopology</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSolIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>ospTopo</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the topology representing the solution iSolIndex
+ (ComputeAllSolutions must have been called before)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSolIndex</tt>
+   <dd>  solution index from 1 to 'number of solutions'
+ </dd>
+    <dt><tt> ospTopo</tt>
+   <dd>  solution topology
+  returned topology lifecycle is linked to extension lifecycle
+  i.e topology will be removed from CGM container when the interface pointer will be released or when the feature will be removed</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCurrentSolution"></a><a name="SetCurrentSolution(int)"></a> <dt> o <b>SetCurrentSolution</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetCurrentSolution</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSolIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets feature stabilization attributes (orientations, indexes...) in order to build
+ the solution corresponding to iSolIndex.
+ (ComputeAllSolutions must have been called before)
+ This method does not update the feature
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSolIndex</tt>
+   <dd>  solution index from 1 to 'number of solutions'</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIGSMUseMultipleSolutionsManager.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGSMUseItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

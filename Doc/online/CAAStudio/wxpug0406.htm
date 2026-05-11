@@ -1,0 +1,132 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/DSDoc.css" rel="stylesheet" type="text/css"/>
+<script src="../CAADocJavaScript/DSDocTocToc.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/DSDocHighlight.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/submit.js" type="text/javascript">/* */</script>
+<title>Adding a Comment</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Adding a Comment</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">The <kbd>Add Comments</kbd> command enables you to add 
+		a comment above a method in the currently opened header file.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span><ul>
+			<li>Open a workspace with at least a framework and a module.</li>
+			<li>Display the <kbd>Solution Explorer</kbd>.</li>
+			<li>Open a header file from the <kbd>Solution Explorer</kbd>.</li>
+			<li>To use keyboard shortcuts, such as CTRL+Shift+D, these shortcuts 
+				must have been enabled. See <a href="wxpugwd02.htm">Accessing and 
+				Customizing Settings</a>.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<ol class="task">
+	<li>
+		<p>In the currently edited header file, locate the cursor in the method 
+		for which you want to add a comment, or select this method.</p>
+		<table class="Remark">
+			<tr>
+				<td class="Remark"><span class="run-in">Warning</span>: Pay attention 
+				not to select beyond the method closing semicolon. </td>
+			</tr>
+		</table>
+	</li>
+	<li>
+		<p>On the <kbd>Edit</kbd> menu, point to <kbd>3DS Edit</kbd>, and click
+		<kbd>Add Comments</kbd>, or press CTRL+Shift+D.</p>
+		<p>A comment is added above this method. The method is collapsed. Click 
+		the + sign below the comment to expand it.</p>
+		<p>The comment is a template to document the method and looks as follows:</p>
+		<pre class="code">/**
+*
+* &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: 
+* @param oText
+* 
+* @return
+* &lt;dl&gt;
+* &lt;dt&gt;&lt;code&gt;S_OK&lt;/code&gt; &lt;dd&gt;
+* &lt;dt&gt;&lt;code&gt;E_FAIL&lt;/code&gt; &lt;dd&gt;
+* &lt;/dl&gt;
+*/
+virtual HRESULT GetData(char ** oText) = 0 ;</pre>
+		<p>It includes:</p>
+		<ul>
+			<li>A first empty line to describe in one short sentence what the method 
+				does.</li>
+			<li>A Role section to precisely detail what the method does and how.</li>
+			<li>As many @param sections as parameters in the method signature.</li>
+			<li>A @return section. </li>
+		</ul>
+		<p>Below is such a documented method using the example of the QueryInterface 
+		method.</p>
+		<pre class="code">/**
+ * Retrieves a pointer to a given interface.
+ * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: Using an interface pointer to a component and given the IID of another interface,
+ * QueryInterface searches whether this component implements this other interface. If the search is 
+ * successful, QueryInterface returns a pointer to that interface against the component. 
+ * @param iIID
+ *   The interface identifier for which a pointer is requested.
+ * @param oPPV
+ *   he address where the returned pointer to the interface is located.
+ * @return
+ *   An HRESULT value. 
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:
+ *   &lt;dl&gt;
+ *     &lt;dt&gt;S_OK&lt;/dt&gt;
+ *     &lt;dd&gt;The query succeeds.&lt;/dd&gt;
+ *     &lt;dt&gt;E_NOINTERFACE &lt;/dt&gt;
+ *     &lt;dd&gt;The interface does not exist.&lt;/dd&gt;
+ *     &lt;dt&gt;E_FAIL &lt;/dt&gt;
+ *     &lt;dd&gt;The object is not valid.&lt;/dd&gt;
+ *     &lt;dt&gt;E_OUTOFMEMORY &lt;/dt&gt;
+ *     &lt;dd&gt;One memory allocation fails&lt;/bb&gt;
+ *     &lt;dt&gt;E_UNEXPECTED &lt;/dt&gt;
+ *     &lt;dd&gt;The query fails for any other reason&lt;/dd&gt;
+ *   &lt;/dl&gt;
+ */
+virtual HRESULT __stdcall QueryInterface(const IID &amp;iIID, void **oPPV);</pre>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

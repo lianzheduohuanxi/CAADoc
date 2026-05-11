@@ -1,0 +1,334 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing User Defined Features in Axial Operations</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>Prismatic Machining</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing User Defined Features in Axial Operations</h3>
+      <em>Implementing the CATIMfgDesignHoleParameters interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2" width="499">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPmiUdfForMfgHole use case and explains
+      how to implement the <i>CATIMfgDesignHoleParameters</i> manufacturing
+      interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The <u>CAAPmiUdfForMfgHole U</u>se Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAPmiUdfForMfgHole Do</a></li>
+            <li><a href="#How">How to Use CAAPmiUdfForMfgHole</a></li>
+            <li><a href="#Where">Where to Find the CAAPmiUdfForMfgHole Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you apply an axial operation from a User
+Defined Feature, by implementing the <i>CATIMfgDesignHoleParameters</i>
+manufacturing interface. This involves the following:</p>
+<ul>
+  <li>Overviewing the User Defined Features functionality in a manufacturing
+    context</li>
+  <li>Implementing all the methods of <i>CATIMfgDesignHoleParameters</i> to:
+    <ul>
+      <li>Drill (all axial operations) a User Defined feature,</li>
+      <li>See how to use the methods of the <i>CATIUdfFeatureInstance</i>
+        interface in a manufacturing context.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPmiUdfForMfgHole Use Case</h3>
+<p>CAAPmiUdfForMfgHole is a use case of the CAAPrismaticMachiningItf.edu
+framework in the CAAPmiUserDefFeatureMappedWithMfgFeature.m module that
+illustrates ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPmiUdfForMfgHole Do</h4>
+<p>CAAPmiUdfForMfgHole illustrates an implementation of
+CATIMfgDesignHoleParameters interface for the User Defined Features identified
+by the UdfFeature type. This implementation enables to use all axial features
+functionalities, but it cannot answer to the all industrial cases. It
+corresponds to a default mapping of a User Defined Feature into an axial
+machining feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Use CAAPmiUdfForMfgHole</h4>
+<p>To use CAAPmiUdfForMfgHole, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAPmiUserDefFeatureMappedWithMfgFeature.m module along with its
+    prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the
+    CAAPrismaticMachiningItf.edu.dico file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAPrismaticMachiningItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAPrismaticMachiningItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#CAA#'
+    character:</p>
+    <pre>UdfFeature CATIMfgDesignHoleParameters libCAAPmiUserDefFeatureMappedWithMfgFeature</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAPmiUdfForMfgHoleInstance.CATProcess file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAPrismaticMachiningItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAPrismaticMachiningItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>Use all the drilling functionalities (Manufacturing feature View,
+    Machining Patterns, Drilling Operations, Drilling Machining Processes) and
+    note that you can drill the User Defined Feature</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPmiUdfForMfgHole Code</h4>
+<p>The CAAPmiUdfForMfgHole use case is made of a class named <i>CAAPmiUdfForMfgHole</i>
+located in the CAAPmiUserDefFeatureMappedWithMfgFeature.m module of the
+CAAPrismaticMachiningItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAPrismaticMachiningItf.edu\</code>CAAPmiUserDefFeatureMappedWithMfgFeature<code>.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAPrismaticMachiningItf.edu/</code>CAAPmiUserDefFeatureMappedWithMfgFeature<code>.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are three logical steps in CAAPmiUdfForMfgHole:</p>
+<ol>
+  <li><a href="#Step1">Implementing the CATIMfgDesignHoleParamaters Interface
+    for UdfFeature Types</a></li>
+  <li><a href="#Step2">Creating a User Defined Feature Template and Generating
+    Instances</a></li>
+  <li><a href="#Step3">Applying the &quot;Standard Drilling&quot; Machining
+    Process on a User Defined Feature Instance</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing the CATIMfgDesignHoleParameters Interface
+for UdfFeature Types</h4>
+<ol>
+  <li>
+    <p>The CAAPmiUdfForMfgHole.cpp file uses the
+    &quot;CATIUdfFeatureInstance.h&quot; interface to to access to the User
+    Defined Feature information. Then, the right data is accessed by its right
+    role name. For example, to define the drilling coordinates by the GetOrigin
+    method of the CATIMfgDesignHoleParameters interface, you scan all the User
+    Defined feature inputs to find the right one named
+    &quot;Drilling_Point&quot; <a href="#Step2">[2]</a>. See below a part of the
+    implementation</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+      // Read the Inputs number: this is the geometrical inputs of your Udf
+      //                         defined when creating the Udf template
+      //----------------------------------------------------------------------
+      int InputNb = 0;
+    RC = piUdfFeatureInstance-&gt;GetInputsNumber(InputNb);
+      //----------------------------------------------------------------------
+      // Scan all the Udf Inputs to find the right input, identified by its
+      // role name in our case: the right role name is &quot;Drilling_Point&quot;
+      // defined at the Udf definition. This is a means to easily access to
+      // the right input
+      //----------------------------------------------------------------------
+      for (int i =1; i &lt;= InputNb &amp;&amp; role != &quot;<b>Drilling_Point</b>&quot;; i++)
+	{
+	  RC = piUdfFeatureInstance-&gt;GetInputRole(i, role);
+	  if (role == &quot;<b>Drilling_Point</b>&quot;)
+	    {
+	      RC = piUdfFeatureInstance-&gt;GetInput(i,spInputGeom);
+	    }
+	}
+      //----------------------------------------------------------------------
+      // The right Input is found
+      //----------------------------------------------------------------------
+      if (role == &quot;<b>Drilling_Point</b>&quot;)
+	{
+	  //------------------------------------------------------------------
+	  // Extract the drilling point coordinates
+	  //------------------------------------------------------------------
+	  CATPoint *pPoint = NULL;
+	  RC = spInputGeom-&gt;QueryInterface(IID_CATPoint,(void **)&amp;pPoint);
+	  if (SUCCEEDED(RC))
+	    {
+	      oX = pPoint-&gt;GetX();
+	      oY = pPoint-&gt;GetY();
+	      oZ = pPoint-&gt;GetZ();
+	      RC = S_OK;
+	    }
+	  if (NULL != pPoint) pPoint-&gt;Release();
+	}
+    ...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAPrismaticMachiningItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>UdfFeature</i>
+    feature implements the <i>CATIMfgDesignHoleParameters</i> interface, and
+    whose code is located in the libCAAPmiUserDefFeatureMappedWithMfgFeature
+    shared library or DLL. Pay attention to remove the comment (#) in the
+    supplied dictionary.</p>
+    <pre>UdfFeature CATIMfgDesignHoleParameters libCAAPmiUserDefFeatureMappedWithMfgFeature</pre>
+    <p>The CAAPrismaticMachiningItf.edu.dico file is located in:</p>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAPrismaticMachiningItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAPrismaticMachiningItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a User Defined Feature Template and Generating
+Instances</h4>
+<p>Here, you will find specific informations according to the implementation of
+the <i>CATIMfgDesignHoleParameters</i> interface. You can access to the User
+Defined Feature Workbench under the Shape Design Workshop, then edit the
+UserFeature1 under the UserFeatures tree, and display the different tab-pages,
+specially Inputs, Outputs and Parameters one:</p>
+<ul>
+  <li>The User Defined Feature template Inputs are defined and identified to
+    easily access to the geometry and return the drilling point (a CATPoint) and
+    the drilling axis (extracted from the normal of a CATPlane)</li>
+  <li>The necessary attributes are published and identified by a specific name
+    (&quot;Hole_Diameter&quot; to identify a characteristic hole diameter)</li>
+</ul>
+<p>Note that the User Feature template is defined in the CAAPmiUdfForMfgHoleTemplate.CATPart 
+file, and you can instantiate it in any Part document containing 1 point on a 
+planar surface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Applying the &quot;Standard drilling&quot; Machining
+Process</h4>
+<ul>
+  <li>Open the &quot;Manufacturing Features View&quot;</li>
+  <li>Open the &quot;Drilling processes&quot; catalog, then select the
+    &quot;Standard Drilling&quot; process</li>
+  <li>Select either in the model, or in the Manufacturing View, the
+    &quot;UserFeature1.1&quot; User Defined Feature.</li>
+  <li>Select the &quot;OK&quot; command
+    <p>Note that a drilling operation is created in the Machining Program</p>
+  </li>
+  <li>Replay it, edit it and note that information are linked to the
+    &quot;UserFeature1.1&quot; User Defined Feature.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, to machine User Defined Features. It shows how to implement the <i>CATIMfgDesignHoleParameters</i>
+interface to be authorized to drill any geometry. This is an elementary step to
+do this.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [April 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

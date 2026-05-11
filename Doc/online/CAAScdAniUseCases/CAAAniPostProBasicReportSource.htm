@@ -1,0 +1,64 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAAniPostProBasicReport.catvbs</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      To generate basic report</font>
+<font color="#008000">'   Assumptions:   displacement symbol image exists in the document</font>
+<font color="#008000">'   Author:       bmw</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R16</font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' ----------------------------------------------------------- </font>
+<font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+  sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+<font color="#008000">' ----------------------------------------------------------- </font>
+
+
+<font color="#008000">' Open the CATAnalysis Document</font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF">Set </font>fileSystem1 = CATIA.FileSystem
+<font color="#0000FF">Set </font>folder1 = fileSystem1.GetFolder(sOut)
+</pre>
+<pre>
+<font color="#0000FF">Set </font>oAnalysisManager = oAnalysisDocument.Analysis
+
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+<font color="#0000FF">Set </font>oAnalysisPostManager = oAnalysisModel.PostManager
+
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)
+
+oAnalysisPostManager.AddExistingCaseForReport oAnalysisCase
+</pre>
+<pre>
+<font color="#008000">'basic report on frequency case saved in folder1, title=test1, no image added</font>
+<font color="#008000">'===============================================</font>
+oAnalysisPostManager.BuildReport folder1, "Test1", False
+</pre>
+<pre>
+<font color="#008000">'basic report on frequency case saved in folder1, title=test2, add created images</font>
+<font color="#008000">'=================================================</font>
+oAnalysisPostManager.BuildReport folder1, "test2", True
+</pre>
+<pre>
+
+<font color="#008000">'basic report on frequency case saved in folder1, title=test3, no image added (old method)</font>
+<font color="#008000">'======================================================</font>
+oAnalysisPostManager.ExtractHTMLReport folder1, "test3"
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

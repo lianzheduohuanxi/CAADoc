@@ -1,0 +1,424 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>ENOVIAPlugIn Class ENOVPublishStream</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../ENOVIAPlugIn.htm" href="../ENOVIAPlugIn.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "ENOVIAPlugIn";	}
+		function getCurrentObjectName() { 
+ 	return "ENOVPublishStream"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>ENOVIAPlugIn <script type="text/javascript" > writeClassCharacteristic(); </script> ENOVPublishStream</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_ENOVPublishStream_21315','ENOVPublishStream','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>ENOVPublishStream</b>
+</p>
+<p>
+<b><i> Class enabling to manage publishing stream.</i></b><br>
+
+
+ <b>Role</b>: This class enables to manage the publishing stream. The
+ publishing stream is a technique that enables, for an external application, 
+ to view, modify and keep an extract of some ENOVIA Objects.
+ For example, we use this technique in CATIA V4 integration in which
+ we expose, at CATIA model load time, information relative to document management
+ (such as Document Master, Revision and iteration). This enables the application to 
+ use this information as input for their design (for instance for title block)
+ and potentially to update it at any save time.
+ <br>Information is exposed as a tree structure of information where each node is typed
+ and on which you can valuate some tags. 
+ <br>Publishing Stream node is a root of this tree structure.
+ <br><b>Tags define on Publishing stream</b>:
+ <ul>
+ <li><tt>Version</tt> Software level used to generate the stream ("1" for the current version).</li>
+ <li><tt>Localization</tt> ENOVIA repository location (For future use).</li>
+ <li><tt>TimeStamp</tt> Date & time of the publishing stream.</li>
+ </ul>
+ This Publishing stream will also enable to expose back information to ENOVIA LCA.</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#ENOVPublishStream(char*)"><b>ENOVPublishStream</b></a>(char*)
+<dd>  Constructs a Publishing stream.
+ <dt> o 
+    <a href="#ENOVPublishStream(ENOVPublishStream&amp;)"><b>ENOVPublishStream</b></a>(ENOVPublishStream&amp;)
+<dd>  Copy constructor.
+ <dt> o 
+    <a href="#~ENOVPublishStream()"><b>~ENOVPublishStream</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetStream(char*&amp;,int&amp;)"><b>GetStream</b></a>(char*&amp;,int&amp;)
+<dd>  Builds a stream from published information.
+ <dt> o 
+    <a href="#GetTimeStamp(char*&amp;)"><b>GetTimeStamp</b></a>(char*&amp;)
+<dd>  Returns date & time of the publishing stream.
+ <dt> o 
+    <a href="#GetVersion(int&amp;)"><b>GetVersion</b></a>(int&amp;)
+<dd>  Returns software level used to generate this publishing stream.
+ <dt> o 
+    <a href="#LoadStream(char*,int)"><b>LoadStream</b></a>(char*,int)
+<dd>  Loads a stream from a buffer.
+ <dt> o 
+    <a href="#LoadStreamFromFile(char*,int)"><b>LoadStreamFromFile</b></a>(char*,int)
+<dd>  Loads a stream from a file.
+ <dt> o 
+    <a href="#Print(int)"><b>Print</b></a>(int)
+<dd>  Print a report on standard output.
+ <dt> o 
+    <a href="#SaveStreamAsFile(char*)"><b>SaveStreamAsFile</b></a>(char*)
+<dd>  Builds a stream from published information.
+ <dt> o 
+    <a href="#operator=(ENOVPublishStream&amp;)"><b>operator=</b></a>(ENOVPublishStream&amp;)
+<dd>  Assignment operator from another object node.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="ENOVPublishStream"></a><a name="ENOVPublishStream(char*)"></a> <dt> o <b>ENOVPublishStream</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>ENOVPublishStream</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>icLocalization</tt><td><tt>= NULL </tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a Publishing stream.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icLocalization</tt>
+   <dd> Define ENOVIA repository name (this information is optional and not
+ used in current version).</dd>
+</dl>
+</dl>
+</dl>
+<a name="ENOVPublishStream"></a><a name="ENOVPublishStream(ENOVPublishStream&amp;)"></a> <dt> o <b>ENOVPublishStream</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>ENOVPublishStream</b>(<td> const <script type="text/javascript"> activateLink('ENOVPublishStream','ENOVPublishStream&amp;')</script> <td><tt>ixStream</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Copy constructor.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ixStream</tt>
+   <dd> Object to be duplicated.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~ENOVPublishStream"></a><a name="~ENOVPublishStream()"></a> <dt> o <b>~ENOVPublishStream</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~ENOVPublishStream</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetStream"></a><a name="GetStream(char*&amp;,int&amp;)"></a> <dt> o <b>GetStream</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetStream</b>(<td> const <script type="text/javascript"> activateLink('char','char*&amp;')</script> <td><tt>ocContent</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>onLengthContent</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a stream from published information.
+
+ <br><b>Role</b>: Builds a stream from published information.
+ 
+ <br><b>Postcondition</b>: If operation does not succeed, the output text
+ will be unallocated and set to NULL.
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ocContent</tt>
+   <dd> Memory area allocated by this method and that contains a XML stream equivalent
+ to information defined in the Publishing Stream object.
+ 
+ </dd>
+    <dt><tt> onLengthContent</tt>
+   <dd> Length in byte of the XML publishing stream.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetTimeStamp"></a><a name="GetTimeStamp(char*&amp;)"></a> <dt> o <b>GetTimeStamp</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetTimeStamp</b>(<td> const <script type="text/javascript"> activateLink('char','char*&amp;')</script> <td><tt>ocTimeStamp</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns date & time of the publishing stream.
+
+ <br><b>Role</b>: Enables to know at what date this information has been
+ generated.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ocTimeStamp</tt>
+   <dd>  Date & time information.
+ <br><b>Legal values</b>: Date is expressed using one ISO 8601 format called
+ Extended format for ordinal date and time of the day (Application will used
+ Coordinated Universal Time UTC)  
+ <table>
+    <tr><td><b>CCYY-MM-DDThh:mm:ss</b></td> <td>"2000-00-01T00:00:01"</td></tr>
+    <tr><td><b>CCYY-MM-DDThh:mm</b></td>    <td>"2000-00-01T00:00"</td></tr>
+    <tr><td><b>CCYY-MM-DD</b></td>          <td>"2000-00-01" No time information set to 00:00:00</td></tr>
+    <tr><td><b>hh:mm:ss</b></td>            <td>"12:00:00" means today at noon</td></tr>
+    <tr><td><b>hh:mm</b></td>               <td>"14:00"  means today at 2 pm</td></tr>
+ </table>
+ <br>Where:
+ <table>
+    <tr><td><b>CC</b></td>  <td>represents the century component</td></tr>
+    <tr><td><b>YY</b></td>  <td>represents the year within century</td></tr>
+    <tr><td><b>MM</b></td>  <td>represents months starting with January [1, 12]</td></tr>
+    <tr><td><b>DD</b></td>  <td>represents the day in the month [1, 31]</td></tr>
+    <tr><td><b>hh</b></td>  <td>represents hours from beginning of days</td></tr>
+    <tr><td><b>mm</b></td>  <td>represents minutes</td></tr>
+    <tr><td><b>ss</b></td>  <td>represents seconds</td></tr>
+ </table>
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetVersion"></a><a name="GetVersion(int&amp;)"></a> <dt> o <b>GetVersion</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetVersion</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>onVersion</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns software level used to generate this publishing stream.
+
+ <br><b>Role</b>: Returns level of software used to build this object.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> onVersion</tt>
+   <dd>  Define software version of this Publishing stream (Current value is 1).</dd>
+</dl>
+</dl>
+</dl>
+<a name="LoadStream"></a><a name="LoadStream(char*,int)"></a> <dt> o <b>LoadStream</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>LoadStream</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>icContent</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>ilReplace</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Loads a stream from a buffer.
+
+ <br><b>Role</b>: Loads a stream from a buffer.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icContent</tt>
+   <dd> XML stream that contains information of the publishing stream.
+ 
+ </dd>
+    <dt><tt> ilReplace</tt>
+   <dd> Define what happens against previous information in this Publishing stream
+ <br><b>Legal values</b>: If lReplace is true, all children previously load are deleted.</dd>
+</dl>
+</dl>
+</dl>
+<a name="LoadStreamFromFile"></a><a name="LoadStreamFromFile(char*,int)"></a> <dt> o <b>LoadStreamFromFile</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>LoadStreamFromFile</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>icFilePath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>ilReplace</tt><td><tt>= 1 </tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Loads a stream from a file.
+
+ <br><b>Role</b>: Loads a stream from a file.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icFilePath</tt>
+   <dd> XML File to be read to load information of the publishing stream.
+ 
+ </dd>
+    <dt><tt> ilReplace</tt>
+   <dd> Define what happens against previous information in this Publishing stream
+ <br><b>Legal values</b>: If lReplace is true, all children previously load are deleted.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Print"></a><a name="Print(int)"></a> <dt> o <b>Print</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Print</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>inLevel</tt><td><tt>= 0 </tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Print a report on standard output.
+
+ <br><b>Role</b>: Print the content of this node and its children.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> inLevel</tt>
+   <dd> Enable to have an indented presentation according to the tree depth of the node.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SaveStreamAsFile"></a><a name="SaveStreamAsFile(char*)"></a> <dt> o <b>SaveStreamAsFile</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SaveStreamAsFile</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>icFilePath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Builds a stream from published information.
+
+ <br><b>Role</b>: Builds a stream from published information.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  Method return code 
+ <br><b>Legal values</b>: Returns 0 if operation runs well. 
+ 
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> icFilePath</tt>
+   <dd> File name where to store information of the publishing stream as 
+ an XML stream.</dd>
+</dl>
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(ENOVPublishStream&amp;)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('ENOVPublishStream','const ENOVPublishStream &')</script>  <b>operator=</b>(<td> const <script type="text/javascript"> activateLink('ENOVPublishStream','ENOVPublishStream&amp;')</script> <td><tt>ixStream</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Assignment operator from another object node.
+ 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ixStream</tt>
+   <dd> Object used as reference for the assignment.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>ENOVPublishStream.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>ENOVIAPubStream</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

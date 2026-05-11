@@ -1,0 +1,164 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Intersecting a Curve and a Surface</title>
+<style type="text/css">
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Intersecting a Curve and a Surface</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A curve and a surface can be intersected by using the CATICGMIntersectionCrvSur 
+		operator. The result is a set of geometrical objects (points, curves or 
+		a combination of these objects) that you have to scan.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>Use CATICGMIntersectionCrvSur. This operator is created by using the CATCGMCreateIntersection global function.
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelIntersectionOpe.m module in CAAGMModelInterfaces.edu 
+illustrates how to intersect a curve and a surface. This use case constructs its input data 
+and requires the CAAGMModelGeometryCreation.m module. You have to specify this module 
+in your Imakefile.mk file.&nbsp; If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Intersection:&nbsp; Input data are a curve and a 
+	surface</caption>
+  <tr>
+    <td>
+	<img alt="Intersect Curve and Surface" src="images/CGM_intersect_crvSur_0.png" width="250" height="220"></td>
+	 <td>
+	<img alt="Intersect Curve and Surface" src="images/CGM_intersect_crvSur_1.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMIntersectionCrvSur * pPtCrvSur =:: CATCGMCreateIntersection(
+		piGeomFactory,
+		pConfig,
+		piNurbsCurve, 
+		piTabulatedCyl1); 
+...
+CATLONG32 nbOfPoints = pPtCrvSur->GetNumberOfPoints();
+cout   &lt&lt "NumberOfPoints "   &lt&lt nbOfPoints   &lt&lt endl;
+CATPointOnSurface * Pt1= NULL;
+if(nbOfPoints)
+    {
+	while(pPtCrvSur->NextPoint())
+ 	{
+	     // Retrieve the resulting points 
+             // 4 points are expected 
+             Pt1 = pPtCrvSur->GetPointOnSurface();
+	     CATMathPoint p;
+	     ...
+	     Pt1->GetMathPoint(p);
+	     cout   &lt&lt "X="   &lt&lt p.GetX()   &lt&lt endl;
+	     cout   &lt&lt "Y="   &lt&lt p.GetY()   &lt&lt endl;
+             cout   &lt&lt "Z="   &lt&lt p.GetZ()   &lt&lt endl;
+	     ...
+	} 
+				</TD>
+    </TR>
+</TABLE>
+<p>returns 
+<pre>NumberOfPoints 4
+X=20
+Y=0
+Z=0
+X=27.4154
+Y=13.7707
+Z=0
+X=32.7227
+Y=12.7463
+Z=0
+X=42.7015
+Y=10.7434
+Z=0</pre>
+
+on the standard output.&nbsp; 
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.2</a> Intersection:&nbsp; Output data are four points</caption>
+  <tr>
+    <td>
+	<img alt="Intersect Curve and Surface" src="images/CGM_intersect_crvSur_2.png" width="250" height="220"></td>
+   </tr>
+</table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

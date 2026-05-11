@@ -1,0 +1,220 @@
+Language="VBSCRIPT"
+
+'*******************************************************************************************
+'*
+'* Procedure that allow the user to create a lathe sequential operation and tool motions
+'* 
+'*    Open CATProcess and load Lathe workbench
+'*    Execute the VB Script Macro
+'*
+'*******************************************************************************************
+
+'********************************* 
+'Global variables
+'********************************
+
+Dim MfgDoc1 As Document
+Dim ActivityRef As AnyObject
+Dim Setup1 As ManufacturingSetup
+Dim Program1 As ManufacturingProgram
+Dim PartMachined As Product     	         	    ' Product including the Design Part
+Dim documents1 As Documents
+Dim partDocument1 As Document
+
+'*******************************************************************************************
+'* 				Main Entry  Point
+'*******************************************************************************************
+
+Sub CATMain()
+	
+	Dim ProgramList As MfgActivities
+	Dim NumberOfPO As Integer
+	Dim childs As Activities
+	Dim child As Activity
+	Dim quantity As Integer
+	Dim Line1 As CATIABase
+	Dim Point1 As CATIABase
+	Dim Point2 As CATIABase
+	Dim Point3 As CATIABase
+	Dim Plane2 As CATIABase	
+	Dim Line2 As CATIABase
+	Dim Line3 As CATIABase
+
+
+	'*******************************************************************************************
+	'*** Retrieve the Open body of the part
+	'*******************************************************************************************
+
+	Set documents1 = CATIA.Documents
+	Set partDocument1 = documents1.Item("PartLathe_ToolMotion.CATPart")
+	Set part1 = partDocument1.Part
+	Set hybridBodies1 = part1.HybridBodies
+	Set hybridBody1 = hybridBodies1.Item("Open_body.1")
+	Set hybridShapes1 = hybridBody1.HybridShapes
+
+	'*******************************************************************************************
+	'*** Retrieve the tool motion's geometry
+	'*******************************************************************************************
+
+	Set PT1 = hybridShapes1.Item("PT1")
+	Set PT2 = hybridShapes1.Item("PT2")
+	Set PT3 = hybridShapes1.Item("PT3")
+
+	Set D1 = hybridShapes1.Item("D1")
+	Set D2 = hybridShapes1.Item("D2")
+	Set D3 = hybridShapes1.Item("D3")
+	Set D3 = hybridShapes1.Item("D3")
+	Set D4 = hybridShapes1.Item("D4")
+	Set D5 = hybridShapes1.Item("D5")
+	Set D6 = hybridShapes1.Item("D6")
+	Set D7 = hybridShapes1.Item("D7")
+
+
+	'*******************************************************************************************
+	'*** Retrieve current Process Root
+	'*******************************************************************************************
+
+	Set MfgDoc1 = CATIA.ActiveDocument
+	Set ActivityRef = MfgDoc1.GetItem("Process")
+
+	'*** Retrieve current SetUp
+	'***
+	If (ActivityRef.IsSubTypeOf("PhysicalActivity")) Then
+
+	Set childs = ActivityRef.ChildrenActivities
+	quantity = childs.Count
+
+	if quantity <= 0 then
+	  Exit Sub
+	End if
+	NumberOfPO = 0
+	For I=1 To quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf("ManufacturingSetup")) Then
+			Set Setup1 = child
+			NumberOfPO = NumberOfPO +1
+			Exit For
+		End If
+	Next
+     
+	End If
+
+
+	'*******************************************************************************************
+	'*** Retrieve current Program
+	'*******************************************************************************************
+
+	set ProgramList = Setup1.Programs
+	Set PartMachined = SetUp1.Product
+	Set Program1 = ProgramList.GetElement(1)
+
+	'*******************************************************************************************
+	' Create lathe horizontal machine
+	'*******************************************************************************************
+
+	Dim Machine1 As ManufacturingMachine
+ 	Set Machine1 = SetUp1.CreateMachine("MfgHorizontalLatheMachine")
+
+
+	'*******************************************************************************************
+	' Creation lathe sequential operation
+	'*******************************************************************************************
+
+	dim Mo1 As ManufacturingOperation
+	Set Mo1 = Program1.AppendOperation("MfgLatheSequentialOperation",1)
+	MO1.SetTool("T1 External Tool")
+	Dim Tm1 as ToolMotion
+	Dim Tm2 as ToolMotion
+	Dim Tm3 as ToolMotion
+	Dim Tm4 as ToolMotion
+	Dim Tm5 as ToolMotion
+
+	'*******************************************************************************************
+	' Creation of gostd tool motion and geometry assignment
+	'*******************************************************************************************
+
+    Set Tm1 = Mo1.InsertToolMotion("MfgSeqMotionLatheGoStd", 1)
+    Call Tm1.SetGeometry("Parts", PT1, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of Go GO tool motion
+	'*******************************************************************************************
+
+	Set Tm2 = Mo1.InsertToolMotion("MfgSeqMotionLatheGoStd",2)
+    Call Tm2.SetGeometry("Parts", D2, PartMachined, 0)
+    Call Tm2.SetGeometry("SecondRelimitingElement", D1, PartMachined, 0)
+
+
+	'*******************************************************************************************
+	' Creation of Indirv tool motion
+	'*******************************************************************************************
+
+	Set Tm3 = Mo1.InsertToolMotion("MfgSeqMotionLatheIndirv",3)
+    Call Tm3.SetGeometry("Parts", D4, PartMachined, 0)
+    Call Tm3.SetGeometry("FirstRelimitingElement", D3, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of Delta tool motion
+	'*******************************************************************************************
+ 
+    Set Tm4 = Mo1.InsertToolMotion("MfgSeqMotionLatheDelta", 4)
+    Dim DeltaMode As Variant
+    Set DeltaMode = Tm4.GetAttribute("MfgLatheEODeltaCheckMode")
+    DeltaMode.ValuateFromString ("MfgLatheDeltaPtPt")
+    Call Tm4.SetGeometry("FirstRelimitingElement", PT2, PartMachined,1)
+    Call Tm4.SetGeometry("FirstRelimitingElement", PT3,PartMachined, 2)
+
+	'*******************************************************************************************
+	' Creation of Go GO tool motion
+	'*******************************************************************************************
+
+	Set Tm5 = Mo1.InsertToolMotion("MfgSeqMotionLatheGoStd",5)
+    Call Tm5.SetGeometry("Parts", D6, PartMachined, 0)
+    Call Tm5.SetGeometry("SecondRelimitingElement", D5, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of Delta tool motion
+	'*******************************************************************************************
+    Set Tm6 = Mo1.InsertToolMotion("MfgSeqMotionLatheDelta", 6)
+    Set DeltaMode = Tm6.GetAttribute("MfgLatheEODeltaCheckMode")
+    DeltaMode.ValuateFromString ("MfgLatheDeltaLineDist")
+    Call Tm6.SetGeometry("FirstRelimitingElement", D5, PartMachined, 0)
+	Dim DeltaValue as Variant
+	Set DeltaValue = Tm6.GetAttribute("MfgLatheEOValueDistance")
+	DeltaValue.Value = 10
+
+	'*******************************************************************************************
+	' Creation of gostd tool motion and geometry assignment
+	'*******************************************************************************************
+
+    Set Tm7 = Mo1.InsertToolMotion("MfgSeqMotionLatheGoStd", 7)
+    Call Tm7.SetGeometry("Parts", D6, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of Follow tool motion and geometry assignment
+	'*******************************************************************************************
+
+    Set Tm8 = Mo1.InsertToolMotion("MfgSeqMotionLatheFollow", 8)
+    Call Tm8.SetGeometry("Parts", D7, PartMachined, 0)
+
+	'*******************************************************************************************
+	' Creation of PP Word tool motion and geometry assignment
+	'*******************************************************************************************
+
+	Set Tm5 = Mo1.InsertToolMotion("MfgSeqMotionPPWord",9)
+	
+
+	Dim TMList As MfgToolMotions
+	Set TMList = MO1.GetListOfToolMotions
+
+	NbMo = TMList.Count
+	'msgbox NbMo
+
+	Dim Test As ManufacturingToolMotion
+	Set Test = TMList.GetElement(1)
+	'msgbox(Test.Name)
+  
+
+End Sub
+
+

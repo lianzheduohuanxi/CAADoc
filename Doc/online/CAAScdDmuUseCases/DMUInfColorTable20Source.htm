@@ -1,0 +1,176 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>DMUInfColorTable20.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2002</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Change the color of products using a color randomly selected in a table.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Dim </font>iMax <font color="#008000">' Number of colors in the table minus one</font>
+iMax = 19
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Add a product in a group.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  oNode    Product     the product</font>
+<font color="#008000">'           oGroup   Product     the array of group</font>
+<font color="#008000">'           iIndex   Integer     the index of the product</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>TreatANode(ByRef oNode, ByRef oGroup, ByRef iIndex)
+
+<font color="#0000FF">    Dim </font>iNumberOfSubComponent<font color="#0000FF"> As </font>Integer
+    iNumberOfSubComponent = oNode.Products.Count
+
+<font color="#0000FF">    If </font>(iNumberOfSubComponent = 0)<font color="#0000FF"> Then</font>
+        <font color="#008000">' Add the leaf to the group</font>
+        oGroup(iIndex).AddExplicit oNode
+        <font color="#008000">' Prepare the next index</font>
+        iIndex = iIndex + 1
+<font color="#0000FF">        If </font>(iIndex &gt; iMax)<font color="#0000FF"> Then</font>
+            iIndex = 0
+<font color="#0000FF">        End If</font>
+    Else
+       <font color="#008000">' Treat the subcomponents</font>
+<font color="#0000FF">       Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">       For </font>I = 1<font color="#0000FF"> to </font>iNumberOfSubComponent
+           Call TreatANode(oNode.Products.Item(I), oGroup, iIndex)
+<font color="#0000FF">       Next</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub </font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Main.</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Build the color table (oColor(i,0) = Red, oColor(i,1) = Green, oColor(i,2) = Blue)</font>
+<font color="#0000FF">    Dim </font>oColor(19,2)
+    
+    <font color="#008000">'Red</font>
+    ocolor(0,0)=255
+    ocolor(0,1)=0
+    ocolor(0,2)=0
+    <font color="#008000">'Dark Red</font>
+    ocolor(1,0)=220
+    ocolor(1,1)=90
+    ocolor(1,2)=90
+    <font color="#008000">'Light Red</font>
+    ocolor(2,0)=255
+    ocolor(2,1)=150
+    ocolor(2,2)=150
+    <font color="#008000">'Fushia</font>
+    ocolor(3,0)=255
+    ocolor(3,1)=150
+    ocolor(3,2)=230
+    <font color="#008000">'Green</font>
+    ocolor(4,0)=60
+    ocolor(4,1)=255
+    ocolor(4,2)=30
+    <font color="#008000">'Dark Green</font>
+    ocolor(5,0)=30
+    ocolor(5,1)=190
+    ocolor(5,2)=30
+    <font color="#008000">'Light Green</font>
+    ocolor(6,0)=190
+    ocolor(6,1)=255
+    ocolor(6,2)=130
+    <font color="#008000">'Green-blue</font>
+    ocolor(7,0)=80
+    ocolor(7,1)=255
+    ocolor(7,2)=160
+    <font color="#008000">'Blue</font>
+    ocolor(8,0)=80
+    ocolor(8,1)=225
+    ocolor(8,2)=255
+    <font color="#008000">'Dark Blue</font>
+    ocolor(9,0)=90
+    ocolor(9,1)=140
+    ocolor(9,2)=255
+    <font color="#008000">'Light Blue</font>
+    ocolor(10,0)=180
+    ocolor(10,1)=255
+    ocolor(10,2)=255
+    <font color="#008000">'Yellow</font>
+    ocolor(11,0)=255
+    ocolor(11,1)=255
+    ocolor(11,2)=30
+    <font color="#008000">'Dark Yellow</font>
+    ocolor(12,0)=128
+    ocolor(12,1)=128
+    ocolor(12,2)=30
+    <font color="#008000">'Yellow-orange</font>
+    ocolor(13,0)=255
+    ocolor(13,1)=190
+    ocolor(13,2)=70
+    <font color="#008000">'Brown</font>
+    ocolor(14,0)=160
+    ocolor(14,1)=90
+    ocolor(14,2)=60
+    <font color="#008000">'Light Brown</font>
+    ocolor(15,0)=200
+    ocolor(15,1)=170
+    ocolor(15,2)=140
+    <font color="#008000">'Pink</font>
+    ocolor(16,0)=220
+    ocolor(16,1)=0
+    ocolor(16,2)=220
+    <font color="#008000">'Mauve</font>
+    ocolor(17,0)=190
+    ocolor(17,1)=90
+    ocolor(17,2)=255
+    <font color="#008000">'Grey</font>
+    ocolor(18,0)=128
+    ocolor(18,1)=128
+    ocolor(18,2)=128
+    <font color="#008000">'White</font>
+    ocolor(19,0)=200
+    ocolor(19,1)=200
+    oColor(19,2)=200
+
+    <font color="#008000">' Retrieve the root product</font>
+<font color="#0000FF">    Dim </font>oRoot_Product<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>oRoot_Product = CATIA.ActiveDocument.Product
+
+    <font color="#008000">' Retrieve the selection object</font>
+<font color="#0000FF">    Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelection = CATIA.ActiveDocument.Selection
+    
+    <font color="#008000">' Build the groups of products which will share the same color</font>
+<font color="#0000FF">    Dim </font>oGroup(20)
+<font color="#0000FF">    Dim </font>cGroups<font color="#0000FF"> As </font>Groups
+<font color="#0000FF">    Set </font>cGroups = oRoot_Product.GetTechnologicalObject("Groups")
+<font color="#0000FF">    Dim </font>I<font color="#0000FF"> as </font>integer
+<font color="#0000FF">    For </font>I = 0<font color="#0000FF"> to </font>19
+<font color="#0000FF">        Set </font>oGroup(I) = cGroups.Add
+<font color="#0000FF">    Next</font>
+
+    <font color="#008000">' Build the groups by exploring recursively all nodes in the product structure</font>
+<font color="#0000FF">    Dim </font>iIndex
+    iIndex = 0
+    Call TreatANode(oRoot_Product, oGroup, iIndex)
+
+    <font color="#008000">' Set the colors</font>
+<font color="#0000FF">    For </font>I = 0<font color="#0000FF"> to </font>19
+        oGroup(I).FillSelWithExtract
+        oSelection.VisProperties.SetRealColor oColor(I,0), oColor(I,1), oColor(I,2), 1
+        cGroups.Remove oGroup(I).Name
+<font color="#0000FF">        Set </font>oGroup(I) = Nothing
+<font color="#0000FF">    Next</font>
+    oSelection.Clear
+    
+<font color="#0000FF">    Set </font>oSelection = Nothing
+<font color="#0000FF">    Set </font>oRoot_Product = Nothing
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

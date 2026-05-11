@@ -1,0 +1,210 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface IApplicationBinder</title>
+ </head>
+ <body>
+ <h2>Interface IApplicationBinder </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOPosApplicationBinderImpl.html">ENOPosApplicationBinderImpl</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOPosWS:ENOPos_ws:IApplicationBinder</p>
+ <p><b>Role:</b> Interface to manage ENOVIA LCA V5 sessions. It enables web clients to retrieve user contexts, log on and log off the ENOVIA LCA V5 server. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOPosWS\ENOPos_ws\IApplicationBinder.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#bindToApplication"><b>bindToApplication()</b></a></dt>
+  <dd>Creates a new user session.</dd>
+  <dt>o <a href="#getUserContexts"><b>getUserContexts()</b></a></dt>
+  <dd>Retrieves the list of roles for the specified user.</dd>
+  <dt>o <a href="#releaseFromApplication"><b>releaseFromApplication()</b></a></dt>
+  <dd>Closes the specified session.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="bindToApplication"><b>bindToApplication()</b></a></dt>
+  <dd>Creates a new user session. Using this method, the user can log in the ENOVIA LCA V5 server with the role of his/her choice. Developers MUST always call this method prior to invoking other ENOVIA LCA V5 web services, since other service need the context of a session to execute properly.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSelectedUserContext</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The selected role</td>
+     </tr>
+     <tr>
+      <td>oSessionId</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>A session token which uniquely identifies the session.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>status of the operation. The status identifier is equal to <code>Success</code> upon success, or <code>Failure</code> upon failure (for instance if the user tries to login with an unknown or unauthorized role).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="getUserContexts"><b>getUserContexts()</b></a></dt>
+  <dd>Retrieves the list of roles for the specified user. Users are logged into ENOVIA LCA V5 servers with a specified role. The role determines what commands the user is able to launch in the server.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iUserName</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>the name of the user.</td>
+     </tr>
+     <tr>
+      <td>oUserContexts</td>
+      <td><a href="stringArrayType.html">{urn:com:dassault_systemes:CATJWSInfra}stringArrayType</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>the list of roles available for this user.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>status of the operation. The status identifier is equal to <code>Success</code> upon success, or <code>Failure</code> upon failure.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="releaseFromApplication"><b>releaseFromApplication()</b></a></dt>
+  <dd>Closes the specified session. Developers must always call this method once they have completed all their web service calls for the current user. This enables the removall of all the resources reserved for the session.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionId</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The session identifier (obtained by calling <code>bindToApplication</code>)</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>status of the operation. The status identifier is equal to <code>Success</code> upon success, or <code>Failure</code> upon failure.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

@@ -1,0 +1,688 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>Creating Analysis Features - Part3</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td valign="top">
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating Analysis Features - Part3</h3>
+     <p><em>Implement physics behavior</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This paper accompanies the
+     <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+     CAAAniNewfeatureOverview</a> technical article. This tutorial explains how 
+     to instantiate the <b>Aero-dynamicSet Feature's </b>StartUp inside 
+     an Analysis Document and implement all required interfaces in order to 
+     integrate it inside analysis Infrastructure. This tutorial will focus on 
+     the implementation of the interface that allow to access to the physics 
+     associated to the aero dynamic solver file and the way to display an image.</p>
+     <ul>
+       <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+       <li><a href="#About"><strong>About AnalysisCollector</strong></a></li>
+       <li><a href="#UseCase"><strong>The Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What does this Use Case do ?</a></li>
+         <li><a href="#How">How to launch the use case ?</a></li>
+         <li><a href="#Where">Where to Find the Tutorial</a> ?</li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a></strong> </li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to help you create an <b>Aero-Dynamic Set</b><b> 
+ Feature</b> that will be fully integrated inside Analysis Infrastructure. For 
+ this, we will see the implementation of&nbsp; <b>CATISamExplicitation</b> and <b>CATICharacCollector</b> interfaces. </p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="About"></a>About Analysis Collector</h3>
+ <p>The analysis Spec/Result approach generate inside the field model concrete 
+ classes and the feature have to manage the life cycle of these objects.</p>
+ <p>The AeroDynamic Set is created by derivation of the feature type 
+ SolutionSet. Il will use an implementation of CATISamExplicitation 
+ Method where you can insert your applicative software. This method generate inside the field model an Explicit Set that can be 
+ retrieved by using on the CATISamExplicit Interface the GetExplicitObject 
+ Method, and used to connect the physical data access by managing the 
+ CATAnalysisCharacCollector's. These Object are controlled by implementing a 
+ specific interface CATICharacCollector. </p>
+ <p align="center">
+ <img border="2" src="images/SolutionInterface.jpg" width="514" height="441"></p>
+ <p>This use case focuses on the interfaces to implement on the feature. For 
+ programming with CATAnalysisCharacCollector object, see in the reference [2] 
+ the
+ <a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm#FieldModel">
+ Field Model</a> Chapter.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAAniAeroDTransition Use Case</h3>
+ <p>CAAAniAeroDTransition is a use case of the CAAAnalysisInterfaces.edu 
+ framework that illustrates the CATIA Analysis infrastructure frameworks 
+ capabilities.</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAAniAeroDTransition Do</h4>
+ <p>The goal of this use case is to implement the access to the physics 
+ associated to the set. One this will be done, we can display the velocity 
+ vector by using an image. For this, copy the file called SPMUserImageDefinition 
+ in the &quot;reffiles&quot; directory:</p>
+ <ul>
+   <li>For Windows, the &quot;reffiles&quot; would be 
+   &quot;currentWS\\intel_a\\reffiles\\FEM\\SPMUserImageDefinition &quot;.</li>
+   <li>For UNIX, the &quot;reffiles&quot; would be 
+   &quot;currentWS/aix_a/reffiles/FEM/SPMUserImageDefinition &quot;.</li>
+ </ul>
+ <p>This file is the definition of some images based on the velocity physical 
+ type. For example, some iso-surface of the velocity display on the finite 
+ elements:</p>
+ <p align="center">
+ <img border="0" src="images/ImportOfVelocity.jpg" width="547" height="397"></p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAAniAeroDTransition</h4>
+ <p>To launch CAAAniAeroDTransition, you will need to set up the build time 
+ environment, then compile CAAAniAeroDTransition along with its prerequisites, 
+ set up the run time environment, and then execute the use case [<a href="#References">1</a>].
+ </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAAniAeroDTransition Code</h4>
+ <p>The CAAAniAeroDTransition use case is made of classes located in the 
+ CAAAniAeroDTransition.m module of the CAAAnalysisInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniAeroDTransition.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniAeroDTransition.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>It is made of two files CAAAniAeroDCharacCollector.cpp and 
+ CAAAniExplicitAeroSet.cpp and their associated header files. The module generated is 
+ a shared library. </p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>Implement a characcollector needs to perform the following steps: </p>
+ <ul>
+   <li><a href="#NewCCImpl">Defining a CharacCollector Implementation</a></li>
+   <li><a href="#Initalize_data">Initializing the Data Members</a></li>
+   <li><a href="#Get Available Physical Type">Getting Available Physical Types</a></li>
+   <li><a href="#GetVersion">Getting the Available Version</a></li>
+   <li><a href="#GetPosition">Getting the Available Position</a></li>
+   <li><a href="#Occurrence">Getting/Setting Current Occurrences</a></li>
+   <li><a href="#File Access">Accessing the File for Results</a></li>
+   <li><a href="#Get CC">GetCharacCollector</a></li>
+   <li><a href="#CATIBuild Implementation">Implementing CATISamExplicitation</a></li>
+ </ul>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="NewCCImpl"></a>Defining a CharacCollector Implementation</h4>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+CATImplementClass( CAAAniADCharacCollector,DataExtension,CATECharacCollector,<b>AeroDynamicSet</b>);
+  
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CATICharacCollector.h&quot;
+TIE_CATICharacCollector( CAAAniADCharacCollector);
+
+//-----------------------------------------------------------------------------
+// Implements CATICharacCollector::GetAvailablePhysicalTypes
+//-----------------------------------------------------------------------------
+HRESULT CAAAniADCharacCollector::GetAvailablePhysicalTypes (int                       &amp;oNumber,
+                                                            const CATSamPhysicalType *&amp;oPhysicalTypes,
+                                                            const CATString          *&amp;oUnits)
+{
+  ...
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Associated to this setup of code must be defined inside the Object Modeler 
+ Dictionary. See <b>CAAAnalysisInterfaces.edu.dico</b> file defined in 
+ CAAAnalysisInterfaces.edu<b>\</b>CNEXT\code\dictionary. This definition line 
+ associates the <b><i>AeroDynamicSet</i></b> implementation of <code>
+ CATICharacCollector </code>interface inside the shared library <i><b>
+ libCAAAniAeroDTransition.</b></i> The same remark can be done for implementing 
+ the <i>CATISamExplicitation</i> method. For the features, this definition is based on the 
+ late type of the feature.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>AeroDynamicSet   CATICharacCollector  libCAAAniAeroDTransition
+AeroDynamicSet   CATISamExplicitation libCAAAniAeroDTransition</pre>
+     </td>
+   </tr>
+ </table>
+ <p>We will see all the methods that need to be implemented. Note that the 
+ implementation is using a default Adapter <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisResources', 'class', 'CATECharacCollector');return false;">
+ CATECharacCollector</a></b> that provides default implementation of methods to 
+ manage life cycle of the CATAnalysisCharacCollector. Some data members are 
+ added on this interface and one method Init that will initialize the output for 
+ this implementation.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>HRESULT Init();
+      
+CATAnalysisExplicitModel *Model ;
+CATAnalysisExplicitSet _Context ;
+CATSamPhysicalType * _PhysicalTypes ;
+CATString * _Units, *_Positions ;
+CATSamCharacVersion *_Versions ;
+int _NbPhysicalType;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Initalize_data"></a>Initalizing the Data Members</h4>
+ <p>As seen before, there is one physical data included in the file, a velocity. 
+ this physical data is associated by the <b>physical type</b> called &quot;<code><b>TRANSLATIONAL_VELOCITY</b></code>&quot;. 
+ This data is a 3D vector of floats expressed at the nodes of the mesh. This 
+ will defined the <b>version</b> and the <b>Position</b>. The Field model set 
+ created by the feature is retrieved by using the CATISamExplicit. This set is 
+ considererd as a context for the creation of the CATAnalysisCharacCollector.</p>
+ <ul>
+   <li>Retrieve the context and Field Model Pointer</li>
+ </ul>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+_NbPhysicalType = 0 ;
+// Initialize the Context with the Explicit Object associated.
+CATISamExplicit*  piExplicit=NULL;
+hr = QueryInterface(IID_CATISamExplicit,(void**)&amp;piExplicit);
+if (piExplicit == NULL) return E_NOINTERFACE ;
+
+hr= piExplicit-&gt;GetExplicitObject(_Context);
+piExplicit-&gt; Release(); 
+piExplicit=NULL;
+if (! SUCCEEDED(hr)) return E_FAIL ;
+// Get a protection if the set is not yet in the field model.
+if (_Context == NULL_exp) return hr;
+// retrieve the Explcit Model
+_Model = _Context.GetModel();
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <ul>
+   <li>Initialize Physical type, version, position</li>
+ </ul>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>CATSamPhysicalType PhysType;
+const CATAnalysisExplicitRulesData *pRulesData = NULL;
+pRulesData = _Model-&gt;GetRulesData();
+if (NULL == pRulesData) return E_FAIL ;
+
+  hr = pRulesData-&gt; GetPhysicalTypeNumber(&quot;TRANSLATIONAL_VELOCITY&quot;,PhysType);
+  if (! SUCCEEDED(hr)) return E_FAIL ;
+
+  _PhysicalTypes = new CATSamPhysicalType[1];
+  _Units = new CATString[1];
+  _Versions = new CATSamCharacVersion[1];
+  _Positions = new CATString[1];
+
+  _PhysicalTypes[0] = PhysType;
+  _Units[0] = &quot; &quot;;
+  CATSamMathType oMathematicalType;
+  CATSamValue oValueType;
+  int oMathematicalDimension,oRepeat ;
+  
+  //Retreive the version information inside the definition of the physical type.
+  hr = aRulesData-&gt; GetPhysicalTypeMathematicalInfo(PhysType,
+                                                    oMathematicalType,
+                                                    oValueType,
+                                                    oMathematicalDimension,
+                                                    oRepeat);
+      
+  _Versions[0].ValueType     = oValueType ;
+  _Versions[0].MathType      = oMathematicalType ;
+  _Versions[0].MathDimension = oMathematicalDimension ;
+  _Versions[0].RefFrame      = CATSamRefFrameNone ;
+  _Versions[0].Category      = CATSamValueNode ;
+
+  _Positions[0] = &quot;NODE&quot; ;
+
+  _NbPhysicalType = 1;
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Get Available Physical Type"></a>Getting Available Physical Types</h4>
+ <p>Now we will see how to implement the required method. The data accessibility 
+ will be controlled by calling the Init method and the following method just 
+ have to returned the data members.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+HRESULT CAAAniADCharacCollector::GetAvailablePhysicalTypes (int &amp; oNumber,
+                                                            const CATSamPhysicalType* &amp; oPhysicalTypes,
+                                                            const CATString* &amp; oUnits)
+{
+  oNumber = 0;
+  if (!SUCCEEDED(Init())) return E_FAIL ;
+
+  oNumber = _NbPhysicalType;
+  if (_NbPhysicalType) oPhysicalTypes = _PhysicalTypes;
+  if (_NbPhysicalType) oUnits = _Units;
+  return S_OK;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="GetVersion"></a>Getting the Available Version</h4>
+ <p>Now we will see how to implement the required method. The data accessibility 
+ will be controlled by calling the Init method and the following method just 
+ have to returned the data members.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+HRESULT CAAAniADCharacCollector::GetAvailableVersions (const CATSamPhysicalType iPhysicalType,
+                                                       int &amp; oNumber,
+                                                       const CATSamCharacVersion* &amp; oVersions)
+{
+  oNumber = 0;
+  if (!SUCCEEDED(Init())) return E_FAIL ;
+  oNumber = _NbPhysicalType ;
+  if (_NbPhysicalType) oVersions = _Versions;
+  return S_OK;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="GetPosition"></a>Getting the Available Position</h4>
+ <p>Now we will see how to implement the required method. The data accessibility 
+ will be controled by calling the Init method and the following method just have 
+ to returned the data members.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+HRESULT CAAAniADCharacCollector::GetAvailablePositions (const CATSamPhysicalType iPhysicalType,
+                                                        const CATSamCharacVersion &amp; iVersion,
+                                                        int &amp; oNumber,
+                                                        const CATString* &amp; oPositions)
+{
+  oNumber = 0;
+  if (!SUCCEEDED(Init())) return E_FAIL ;
+  oNumber = _NbPhysicalType ;
+  if (_NbPhysicalType) oPositions = _Positions;
+  return S_OK;
+}
+      ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="Occurrence"></a>Getting/Setting Current Occurrences</h4>
+ <p>This kind of solution may not support occurrences (Variable data according 
+ to a parameter). For this the <b>GetNumberOfOccurrences</b> Method will 
+ returned ZERO, and the Get and Set Current occurrences method will have no 
+ particular interest. But they have to be implemented.</p>
+	<p>The convention about the Number Of Occurrences and the index of the 
+	Current Occurrence is :</p>
+	<table border="1" style="border-collapse: collapse" width="100%" id="table1">
+		<tr>
+			<td>&nbsp;</td>
+			<td width="316"> <b>GetNumberOfOccurrences</b> </td>
+			<td width="361"><b>GetCurrentOccurrence</b></td>
+		</tr>
+		<tr>
+			<td><b>Single Occurrence</b></td>
+			<td width="316">0</td>
+			<td width="361">-1</td>
+		</tr>
+		<tr>
+			<td><b>Multi Occurrence</b></td>
+			<td width="316">N (N &gt; 0)</td>
+			<td width="361">[0,n-1]<p>-1 if the Characteristics are not linked 
+			to any particular Occurrences or to all of them.</td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+//=============================================================================
+HRESULT CAAAniADCharacCollector::<b>GetNumberOfOccurrences</b> (int &amp; oNumberOfOccurrences)
+{
+  oNumberOfOccurrences = 0;
+  return S_OK;
+}
+//=============================================================================
+HRESULT CAAAniADCharacCollector::<b>GetCurrentOccurrence</b> (int &amp; oOccurrenceNumber)
+{
+  oOccurrenceNumber = -1;
+  return S_OK;
+}
+//=============================================================================
+HRESULT CAAAniADCharacCollector::<b>SetCurrentOccurrence</b> (const int iOccurrenceNumber)
+{	
+  if (iOccurrenceNumber == -1) 
+    return S_OK;
+  else   
+    return E_FAIL;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="File Access"></a>Accessing the File for Results</h4>
+ <p>The path name of the file is stored on the analysis set in an attribute as 
+ defined in the CATfct file. The attribute is called ExternalFile. To get access 
+ to the file use the standard PPR modeler tools:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+  CATUnicodeString Path;
+
+  CATISpecAttrAccess *piAccess = NULL;
+  QueryInterface(IID_CATISpecAttrAccess,(void **)&amp;piAccess);
+  if (NULL != Access)
+  {
+    CATILinkableObject *piLink = piAccess -&gt;
+    GetExternalObject(&quot;ExternalFile&quot;);
+    if (Link)
+    {
+      CATDocument * pDoc = piLink -&gt; GetDocument ();
+      if (NULL != pDoc) CATSamDocumentTools::GetFileStorage(pDoc,Path);
+      piLink -&gt; Release();
+    }
+    piAccess -&gt; Release(); piAccess = NULL;
+  }<code>
+  ...</pre>
+     </code></td>
+   </tr>
+ </table>
+ <p>Once the Path value is set; you can manipulate the file as usually, for 
+ example Open it:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+  FILE * stream = fopen (Path.ConvertToChar(),&quot;r&quot;);
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="Get CC"></a>GetCharacCollector</h4>
+ <p>This is the most important method. Its goal it to returned the 
+ CATAnalysisCharacCollector Object that will manage the results access. The 
+ first step is to control if this object exists. For this use the 
+ FindCharacCollector method on the Field model context. If the Collector exists, 
+ Increase its Life Counter with an AddRef and return it.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>  ...
+  <b>_Context.FindCharacCollector</b>(iPhysicalType, iVersion, iPosition, _CurrentOccurence, CharacCollector) ;
+ if (CharacCollector)
+ {
+    CharacCollector -&gt; AddRef();
+    oCharacCollector = CharacCollector;
+    return S_OK;
+  }
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>If It does not exists, allocate a new one and fill its data. For this a 
+ sequence of method to call well defined.</p>
+ <ul>
+   <li>Set Context (define the parent of the object inside the field model)</li>
+   <li>Set definition (initialize for the collector a definition based on the 
+   physical type, version, position and occurrence)</li>
+   <li>Set Nb Entities (defined the values that have results, in our case all 
+   nodes of the model)</li>
+   <li>Set Dimension (to define variable length of the data). In our case, all 
+   the data are vector, there is only one dimension object for all the nodes 
+   values.</li>
+   <li>Set Values ( to fill the array of vector).</li>
+ </ul>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>  ...
+  CharacCollector = new CATAnalysisCharacCollector;
+  CharacCollector -&gt; <b>SetContext</b>(_Context,TRUE);
+
+  _Model-&gt;GetPhysicalTypeUnit(iPhysicalType, CharUnit) ;
+  CharacCollector-&gt;<b>SetDefinition</b>(iPhysicalType, CharUnit, iVersion, iPosition, _CurrentOccurence);
+
+  _Model -&gt; GetNbNodes(_Context,NbEntities);
+  CharacCollector-&gt;<b>SetNbEntities</b>(NbEntities) ;
+
+  if (iEntityFlags == NULL)
+  {
+    EntityFlags = new char[NbEntities] ; // array of EntityFlags
+    memset(EntityFlags, 1, NbEntities) ; // set them all == 1
+    CharacCollector-&gt;<b>SetEntities</b>(EntityFlags) ;
+    // A pointer to the table of flag of the entities.
+  }
+  else
+  CharacCollector-&gt;SetEntities(iEntityFlags);
+
+  int nbRepeat[1]={1};
+  Dimensions = new CATSamDimension (1, 1, 1, nbRepeat, CATSamValueReal, CATSamMathTypeVector, 3) ;
+  CharacCollector -&gt; <b>SetDimensions</b>(1, Dimensions, DimensionPointers) ;
+  delete Dimensions ;
+
+  float *Fvalues;
+  Fvalues = new float [3*NbEntities];
+  Values = _Fvalues;
+  for( i=0;i&lt;3*NbEntities;i++)
+  {
+    _Fvalues[i]=(float)(i);
+  }
+
+  CharacCollector -&gt; <b>SetValues</b>(3*NbEntities,3*sizeof(float)*NbEntities,Values, ValuePointers) ;
+  delete [] _Fvalues;
+
+  CharacCollector -&gt; AddRef();
+  oCharacCollector = CharacCollector;
+
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4 align="left"><a name="CATIBuild Implementation"></a>Implementing CATISamExplicitation</h4>
+ <p>This is done in the CAAAniExplicitAeroSet.cpp file. This is the minimum 
+ implementation that is required to manage the Life Cycle of the explicit model 
+ object associated to this set.The intent is to create a new version of the 
+ field model object, and to ask to the system to remove the previous one (and 
+ all associated characCollectors). The system will also manage the undo/redo.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+CATBeginImplementClass(CAAAniExplicitAeroSet,CacheExtension,CATISamExplicitation,STRUCTURAL_AeroDynamicSet);
+CATEndImplementClass(CAAAniExplicitAeroSet);
+
+CATImplementBOA (CATISamExplicitation, CAAAniExplicitAeroSet);
+
+//-----------------------------------------------------------------------------
+// Implements CATISamExplicitation::TranslateToFieldModel
+//-----------------------------------------------------------------------------
+HRESULT CAAAniExplicitAeroSet::TranslateToFieldModel(CATISpecObject* iFeatToTranslate, 
+        CATISamAnalysisModel* iFEMModel, CATAnalysisExplicitListUsr&amp; iOldExplObjects, CATAnalysisExplicitListUsr&amp; oNewExplObjects)
+{
+
+HRESULT HR = S_OK ;
+CATISamExplicit *piExplicit = NULL ;
+CATAnalysisExplicitChild Child;
+CATAnalysisExplicitSet OldSet, NewSet ;
+CATAnalysisExplicitList Children ;
+CATAnalysisExplicitListUsr ContainingData ;
+CATAnalysisExplicitModel *ExplicitModel = NULL ;
+CATSamPhysicalType PhysicalType;
+CATISamAnalysisSet_var spSet(iFeatToTranslate);
+
+if(!iFeatToTranslate) goto error;
+
+// Retrieve CATISamExplicit interface for GetContainingData and UpdateExplicitList methods
+//-----------------------------------------------------------------------------
+iFeatToTranslate -&gt; QueryInterface (IID_CATISamExplicit,(void**)&amp; piExplicit);
+if (piExplicit == NULL) goto error;
+
+// Retrieve physcal type of the previous version 
+OldSet = *(iOldExplObjects.First()) ;
+if (OldSet == NULL_exp) goto error;
+ExplicitModel = OldSet.GetModel();
+if (ExplicitModel == NULL) goto error;
+
+OldSet.GetPhysicalType(PhysicalType);
+
+if (!SUCCEEDED(ContainingData.CreateList(ExplicitModel))) goto error;
+if (!SUCCEEDED(piExplicit -&gt; GetContainingData(iOldExplObjects, ContainingData))) goto error;
+
+if (!SUCCEEDED(NewSet.CreateSet(ExplicitModel,PhysicalType))) goto error;
+
+oNewExplObjects += NewSet;
+
+OldSet.GetChildrenList(Children);
+Child = *(Children.First());
+while ( Child != NULL_exp )
+{
+CATSamDataType DataType = Child.GetType();
+if (DataType == CATSamDataTypeSet || DataType == CATSamDataTypeEntity) NewSet.AddChild(Child);
+Child = *(Children.Next()) ;
+}
+
+if (!SUCCEEDED(piExplicit -&gt; UpdateExplicitList(iOldExplObjects, ContainingData, oNewExplObjects))) goto error;
+
+piExplicit -&gt; Release(); piExplicit = NULL;
+if (ContainingData != NULL_exp) ContainingData.Delete() ;
+
+cout &lt;&lt; &quot;Insert here the applicative software you need for updating the feature &quot;&lt;&lt; endl;
+
+return S_OK;
+
+error:
+if (piExplicit) piExplicit -&gt; Release(); piExplicit = NULL;
+if (ContainingData != NULL_exp) ContainingData.Delete() ;
+return E_FAIL;
+}
+... </pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This tutorial has demonstrated how to integrate the Aero-Dynamic Set 
+ Feature's Set into the feature modeler standards and retrieve some physics' for 
+ visualization.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td valign="top">
+     <a href="../CAAOsmQuickRefs/CAAOsmHome.htm">
+     Feature Modeler documentation</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+     Analysis Modeler Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td valign="top">
+     <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">
+     Integrate new Feature inside Analysis.</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Sep 2005]</td>
+     <td valign="top">Document Reviewed</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,563 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgCombo</title>
+</head>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgCombo</h3>
+      <em>Selects an alphanumerical value in a discrete list</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgCombo</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Combo</caption>
+  <tr>
+    <td><img src="images/CATDlgCombo.jpg" alt="CATDlgCombo.jpg (3268 bytes)" width="96" height="78"></td>
+    <td>The combo allows the end user to choose a value or an option by
+      selecting a character string from a predefined list, or through a keyboard
+      entry.</td>
+  </tr>
+</table>
+<p>Use a combo whenever you propose to the end user to select an alphanumerical
+value from a discrete list, or enter an alphanumerical value to update a
+discrete list.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Display</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td align="center"><img src="images/CATDlgCombo.jpg" alt="CATDlgCombo.jpg (3268 bytes)" width="96" height="78"></td>
+    <td>The standard combo, composed of an entry zone which displays the
+      selected value, and a list permanently displayed.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbDropDown</td>
+    <td align="center"><img src="images/CATDlgComboDropDown1.jpg" alt="CATDlgComboDropDown1.jpg (1432 bytes)" width="111" height="23"></td>
+    <td>The drop down combo, composed of an entry zone which displays the
+      selected value, and the list of values to select in, displayed when the
+      arrow located on the right of the entry zone is selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbOptionStyle</td>
+    <td align="center"></td>
+    <td>The option style combo, which is very near of the drop down combo with a
+      Motif style. This type of combo is replaced by a CATDlgCmbDropDown combo
+      with Windows.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbEntry</td>
+    <td align="center"></td>
+    <td>Allows for keyboard text entry in addition to text selection for drop
+      down and standard combos.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbDouble</td>
+    <td align="center"><img src="images/CATDlgComboDouble.jpg" alt="CATDlgComboDouble.jpg (3630 bytes)" width="94" height="78"></td>
+    <td>The entered number must be a double precision floating number.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbColor</td>
+    <td align="center"><img src="images/CATDlgComboColor1.jpg" alt="CATDlgComboColor1.jpg (1531 bytes)" width="109" height="23"></td>
+    <td>Shows a color palette. Available in conjunction with CATDlgCmbDropDown
+      only</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbLineType</td>
+    <td align="center"><img src="images/CATDlgComboLineType1.jpg" width="111" height="24" alt="CATDlgComboLineType1.jpg (1444 bytes)"></td>
+    <td>Shows a linetype palette. Available in conjunction with
+      CATDlgCmbDropDown only</td>
+  </tr>
+  <tr>
+    <td>CATDlgCmbBitmap</td>
+    <td align="center"></td>
+    <td>Shows an icon palette. Available in conjunction with CATDlgCmbDropDown
+      only</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgComboSelectNotification</td>
+    <td><code>GetComboSelectNotification</code></td>
+    <td>Whenever a value is selected in the list.</td>
+  </tr>
+  <tr>
+    <td>CATDlgComboDropNotification</td>
+    <td><code>GetComboDropNotification</code></td>
+    <td>Whenever the list of values is displayed</td>
+  </tr>
+  <tr>
+    <td colspan="3">Available with CATDlgCmbEntry only:</td>
+  </tr>
+  <tr>
+    <td>CATDlgComboModifyNotification</td>
+    <td><code>GetComboModifyNotification</code></td>
+    <td>Whenever the keyboard entry is modified by selection.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEditModifyNotification</td>
+    <td><code>GetEditModifyNotification</code></td>
+    <td>Whenever the keyboard entry is modified by editing.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The combo is dedicated to executing a command when it is clicked.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing a Combo</h4>
+<p>These kinds of combo can be constructed, according to their different styles.
+Styles can be concatenated using the &quot;|&quot; character.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>Standard combo</em></td>
+    <td class="code">
+      <pre>_pCombo            = new CATDlgCombo (iParent, iName);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>DropDown combo</em></td>
+    <td class="code">
+      <pre>_pDropDownCombo    = new CATDlgCombo (iParent, iName,
+                                 <strong>  CATDlgCmbDropDown</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Option style combo</em></td>
+    <td class="code">
+      <pre>_pOptionStyleCombo = new CATDlgCombo (iParent, iName,
+                                   <strong>CATDlgCmbOptionStyle</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Double number combo</em></td>
+    <td class="code">
+      <pre>_pDoubleCombo      = new CATDlgCombo (iParent, iName,
+                                   <strong>CATDlgCmpDouble</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Color combo</em></td>
+    <td class="code">
+      <pre>_pColorCombo       = new CATDlgCombo (iParent, iName,
+                               <strong>CATDlgCmbColor</strong>|<strong>CATDlgCmbDropDown</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Linetype combo</em></td>
+    <td class="code">
+      <pre>_pLinetypeCombo    = new CATDlgCombo (iParent, iName,
+                               <strong>CATDlgCmbLineType</strong>|<strong>CATDlgCmbDropDown</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Bitmap combo</em></td>
+    <td class="code">
+      <pre>_pBitmapCombo      = new CATDlgCombo (iParent, iName,
+                               <strong>CATDlgCmbBitmap</strong>|<strong>CATDlgCmbDropDown</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Color Combo</h4>
+<table width="100%">
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboColor1.jpg" alt="CATDlgComboColor1.jpg (1531 bytes)" width="109" height="23"></td>
+    <td>A color combo displays a color palette that can contain up to 16 million
+      colors. Colors are assigned for each line using the RGB values ranging
+      each from 0 to 255 passed as parameters of the <code>SetLine</code>
+      method. The selected or current color is displayed in the entry zone.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboColor2.jpg" alt="CATDlgComboColor2.jpg (4181 bytes)" width="111" height="110"></td>
+    <td>When the end user clicks on the arrow, the color palette is displayed
+      and another color can be selected. The number of displayed colors is set
+      using the <code>SetVisibleTextHeight</code> method.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboColor3.jpg" alt="CATDlgComboColor3.jpg (1578 bytes)" width="108" height="23"></td>
+    <td>A name can be assigned to each color. It is displayed beside the color.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboColor4.jpg" alt="CATDlgComboColor4.jpg (4233 bytes)" width="109" height="111"></td>
+    <td>The color names are read from the combo resource file. CATUnicodeString
+      instances must be built from these names, and passed as parameters of the <code>SetLine</code>
+      method.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Linetype Combo</h4>
+<table width="100%">
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboLineType1.jpg" width="111" height="24" alt="CATDlgComboLineType1.jpg (1444 bytes)"></td>
+    <td>A linetype combo displays a linetype palette. Linetypes are assigned for
+      each line using a pixel pattern expressed using two bytes, a repeating
+      factor of this pattern, and a width expressed as a pixel number, passed as
+      parameters of the <code>SetLine</code> method. The selected or current
+      linetype is displayed in the entry zone.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboLineType2.jpg" alt="CATDlgComboLineType2.jpg (5443 bytes)" width="110" height="161"></td>
+    <td>When the end user clicks on the arrow, the linetype palette is displayed
+      and another linetype can be selected. The number of displayed linetypes is
+      set using the <code>SetVisibleTextHeight</code> method.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboLineType3.jpg" alt="CATDlgComboLineType3.jpg (1512 bytes)" width="110" height="24"></td>
+    <td>A name can be assigned to each linetype. It is displayed beside the
+      linetype.</td>
+  </tr>
+  <tr>
+    <td width="20%"><img src="images/CATDlgComboLineType4.jpg" alt="CATDlgComboLineType4.jpg (6599 bytes)" width="110" height="161"></td>
+    <td>The linetype names are read from the combo resource file.
+      CATUnicodeString instances must be built from these names, and passed as
+      parameters of the <code>SetLine</code> method.</td>
+  </tr>
+</table>
+<p>The linetype is built using a bit pattern, or mask, encoded on two bytes.
+This mask is shown below for Dashed, DotDashed, and Solid respectively.</p>
+<p><img src="images/CATDlgComboLinetype.gif" alt="CATDlgComboLinetype.gif (5090 bytes)" width="469" height="240"></p>
+<p>This mask can be used with a mapping of one pixel for one bit. Each bit can
+also be repeated on several pixels. This enlarges the mask. The linetype
+thickness is set as a number of pixels. The code that creates the combo shown
+above without the linetype names is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString * pucsEmpty = new CATUnicodeString();
+unsigned short Mask[8] = {0xffff, 0x3333, 0x7777, 0x0c3f, 0x5757, 0xcccc, 0x7ffb, 0x5bbc};
+unsigned short Repeat[8] = {1, 4, 4, 2, 8, 1, 4, 4};
+
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[0], Repeat[0], 1, 0);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[1], Repeat[1], 1, 1);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[2], Repeat[2], 1, 2);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[3], Repeat[3], 1, 3);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[4], Repeat[4], 1, 4);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[5], Repeat[5], 1, 5);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[6], Repeat[6], 1, 6);
+_pLinetypeCombo-&gt;SetLine(*pucsEmpty, Mask[7], Repeat[7], 3, 7);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The fourth parameter is the thickness expressd in pixels. It is set to 1,
+except for the last linetype for which it is set to 3 pixels. The last parameter
+is the line number.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Line Content</h4>
+<p>Lines in a combo are numbered beginning with 0.
+<ul>
+  <li>You can retrieve the number of lines with <code>GetLineCount</code>:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int LineCount = _pCombo-&gt;GetLineCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>You can get the content of a line with <code>GetLine</code>. For example,
+    retrieve the content of the fourth line.
+    <table width="100%">
+      <tr>
+        <td width="20%"></td>
+        <td class="code">
+          <pre>int iLineNumber = 3;</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Standard, dropdown, or option style combo</em></td>
+        <td class="code">
+          <pre>CATUnicodeString oLineContent;
+_pCombo-&gt;GetLine(oLineContent, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Double combo</em></td>
+        <td class="code">
+          <pre>double oLineValue;
+oLineValue = _pDoubleCombo-&gt;GetLine(iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Color combo</em></td>
+        <td class="code">
+          <pre>unsigned char oRed, oGreen, oBlue;
+_pColorCombo-&gt;GetLine(oLineContent, oRed, oGreen, oBlue, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Linetype combo</em></td>
+        <td class="code">
+          <pre>unsigned short oMask, oRepeat, oWeight;
+_pLinetypeCombo-&gt;GetLine(oLineContent, oMask, oRepeat, oWeight, iLineNumber);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>You can set the content of a line with <code>SetLine</code>. For example,
+    set the content of the third line.
+    <table width="100%">
+      <tr>
+        <td width="20%"></td>
+        <td class="code">
+          <pre>int iLineNumber = 2;</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Standard, dropdown, or option style combo</em></td>
+        <td class="code">
+          <pre>CATUnicodeString iLineContent = ...;
+_pCombo-&gt;SetLine(iLineContent, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Double combo</em></td>
+        <td class="code">
+          <pre>double iLineValue;
+_pDoubleCombo-&gt;SetLine(iLineValue, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Color combo</em></td>
+        <td class="code">
+          <pre>// Set athe red color
+unsigned char iRed=255, iGreen=0, iBlue=0;
+_pColorCombo-&gt;SetLine(iLineContent, iRed, iGreen, iBlue, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>Linetype combo</em></td>
+        <td class="code">
+          <pre>// Set a solid line
+unsigned short iMask=0xffff, iRepeat=1, iWeight=1;
+_pLinetypeCombo-&gt;SetLine(iLineContent, iMask, iRepeat, iWeight, iLineNumber);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>You can delete all lines, a given line, or several lines.
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>delete all lines</em></td>
+        <td class="code">
+          <pre>_pCombo-&gt;ClearLine();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>delete the fourth line</em></td>
+        <td class="code">
+          <pre>int LineToClear = 3;
+_pCombo-&gt;ClearLine(LineToClear);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>delete four lines (2nd, 5th, 9th, and 12th)</em></td>
+        <td class="code">
+          <pre>int LinesToClear[4] = {1, 4, 8, 11};
+int NumberOfLinesToClear = 4;
+_pCombo-&gt;ClearLine(LinesToClear, NumberOfLinesToClear);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Line Display</h4>
+<p>To help manage the line display in the combo, you can use the following
+methods:
+<ul>
+  <li>managing the number of lines displayed with <code>GetVisibleTextHeight</code>
+    and <code>SetVisibleTextHeight</code>:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get number of visible lines</em></td>
+        <td class="code">
+          <pre>int Height;
+Height = _pCombo-&gt;<code>GetVisibleTextHeight</code>();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set number of visible lines</em></td>
+        <td class="code">
+          <pre>int Height = 10;
+_pCombo-&gt;<code>SetVisibleTextHeight</code>(Height);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>managing the number of visible characters in the entry zone with <code>GetVisibleTextWidth</code>
+    and <code>SetVisibleTextWidth</code>:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get number of visible characters</em></td>
+        <td class="code">
+          <pre>int <code>Width</code>;
+<code>Width</code> = _pCombo-&gt;<code>GetVisibleTextWidth</code>();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set number of visible characters</em></td>
+        <td class="code">
+          <pre>int <code>Width</code> = 15;
+_pCombo-&gt;<code>SetVisibleTextWidth</code>(<code>Width</code>);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The visible text width is expressed in number of characters.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Selection</h4>
+<p>You can manage the selection with the methods <code>GetSelect</code>, <code>SetSelect</code>,
+and <code>ClearSelect</code>:</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>get the selected line number</em></td>
+    <td class="code">
+      <pre>int SelectedLineNumber;
+SelectedLineNumber = _pCombo-&gt;GetSelect();</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>set the selected line as the 9th line</em></td>
+    <td class="code">
+      <pre>int SelectedLineNumber = 8;
+_pCombo-&gt;SetSelect(SelectedLineNumber);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>clear the selection</em></td>
+    <td class="code">
+      <pre>_pCombo-&gt;ClearSelect();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog4"></a>Managing the Keyboard Entry</h4>
+<p>You can manage the keyboard entry field with the methods <code>GetField</code>,
+<code>SetField</code>, and <code>ClearField</code>:</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>get the entry field</em></td>
+    <td class="code">
+      <pre>CATUnicodeString FieldText;
+_pCombo-&gt;GetField(FieldText);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>get the entry field for a double combo</em></td>
+    <td class="code">
+      <pre>double FieldValue;
+FieldValue = _pDoubleCombo-&gt;GetField();</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>set the entry field</em></td>
+    <td class="code">
+      <pre>CATUnicodeString FieldText = ...;
+_pCombo-&gt;SetField(FieldText);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>set the entry field for a double combo</em></td>
+    <td class="code">
+      <pre>double FieldValue = 3.14159;
+_pDoubleCombo-&gt;SetField(FieldValue );</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>clear the entry field</em></td>
+    <td class="code">
+      <pre>_pCombo-&gt;ClearField();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Combo</h4>
+<p>Set a callback on a non editable combo to be informed whenever the end user
+selects a value in the combo:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pCombo,                                    // combo 
+  _pCombo-&gt;GetComboSelectNotification(),      // notification
+  (CATCommand)&amp;Combo::MethodToExecute,        // method to execute 
+  CATCommandClientData iUsefulData);          // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Combo</h4>
+<p>The combo title should be set by the resource file using a key built with the
+identifier you declare as the second parameter of the combo constructor. This
+title is never displayed. If you want to comment the choice available from the
+combo in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</html>

@@ -1,0 +1,430 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 5.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Working With Flexible/Rigid Sub-Products</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Working With Rigid/Flexible Sub-Products</H3>
+        <P><EM>Using the CATIBlockMovable interface</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents&nbsp; the CAAPstBlockMovable use case which 
+        illustrates how to work with flexible sub-products. </P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstBlockMovable Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstBlockMovable Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstBlockMovable</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstBlockMovable Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the <i>CATIBlockMovable</i> interface, a sub-product can be made flexible or 
+rigid.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstBlockMovable Use Case</H3>
+<P>CAAPstBlockMovable is a use case of the CAAProductStructure.edu framework 
+that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstBlockMovable Do</H4>
+<P>The goal of CAAPstBlockMovable is to demonstrate the CATIBlockMovable 
+interface. It performs the following steps:</P>
+<UL>
+    <LI>Loads a  Product document</LI>
+    <LI>Finds a part with a given name and its parent product</LI>
+    <LI>Checks whether the parent is flexible or rigid</LI>
+    <LI>Makes the parent soft (only if it is necessary)</LI>
+    <LI>Applies a translation to the part</LI>
+    <LI>Saves the modified document into a new file</LI>
+</UL>
+<P>Below&nbsp; is the  Product document that will be loaded in the use case. 
+It can be found in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstBlockMovable_document.CATProduct</TT></P>
+<P><A name="document">
+<img border="0" src="images/CAAPstBlockMovable01.jpg" width="577" height="464"></A></P>
+<P>If link.1 is moved (by dropping the compass on the part and then 
+dragging it), it is the whole chain.1 that will move and not only
+link.1. This is because chain.1 is rigid.</P>
+<P>
+<img border="0" src="images/CAAPstBlockMovable02.jpg" width="576" height="462"></P>
+<P>The code in the use case will make chain.1 flexible and then move
+link.1. The resulting document will show that only link.1 has moved. 
+Moreover, link.1 and link.2 can now be moved separately using the 
+compass.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstBlockMovable</H4>
+<P>To launch CAAPstBlockMovable:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment and build the 
+    CAAPstBlockMovable.m module (see reference
+    <a href="#[2]">[2]</a>)</LI>
+    <LI>Execute the following command:<BR>
+    <BR>
+    <TT>mkrun -c &quot;CAAPstBlockMovable <B><I>input.CATProduct</I></B> <B><I>
+    output.CATProduct</I></B> link.1 0 50 0&quot;</TT></LI>
+</OL>
+<BLOCKQUOTE>
+    <UL>
+        <LI><TT><B><I>input.CATProduct</I></B></TT> - the path to the supplied 
+        document whose path is <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstBlockMovable_document.CATProduct</TT></LI>
+        <LI><TT><B><I>output.CATProduct: </I></B></TT>the path to the resulting 
+        CATProduct document</LI>
+        <LI><TT>link.1</TT>: instance name of the part to be moved and whose 
+        parent must be made flexible beforehand</LI>
+        <LI><TT>0 50 0</TT>: x,y,z translation vector to be applied to <TT>
+        link.1</TT></LI>
+    </UL>
+</BLOCKQUOTE>
+<P align="left">In the resulting document, only link.1 has moved because chain.1 has been made flexible</P>
+<P align="left">
+<img border="0" src="images/CAAPstBlockMovable03.jpg" width="473" height="361"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstBlockMovable Code</H4>
+<P>CAAPstBlockMovable code is located in the CAAPstBlockMovable.m module of the 
+CAAProductStructure.edu framework. There are two source files:</P>
+<UL>
+    <LI>&nbsp;<B>CAAPstBlockMovable.cpp: </B>all the code </LI>
+    <LI><B>CAAPstBlockMovable_main.cpp:<SPAN style="font-weight: 400"> launcher 
+    code</SPAN></B></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A><B>Step-by-Step</B></H3>
+<P>There are six logical steps in <I>CAAPstBlockMovable</I>:</P>
+<OL>
+    <LI><A href="#NewDoc">Creating a session to load a  Product document</A></LI>
+    <LI><A href="#RetrieveRoot">Retrieving the document's Root Product</A></LI>
+    <LI><A href="#LoadingDoc">Finding a part and its parent</A></LI>
+    <LI><A href="#AddPartToRoot">Checking whether a sub-product is rigid and 
+    making it flexible</A></LI>
+    <LI><A href="#MovingThePart">Moving the part</A></LI>
+    <LI><A href="#SaveDoc">Saving the  Product Document</A></LI>
+</OL>
+<P>We will now detail&nbsp; each of those sections:</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="NewDoc"></A>Loading a Product Document</H4>
+<P>Generally, the first thing that is necessary in a batch program is the 
+creation of a new session. This is done using the <CODE>Create_Session</CODE> 
+global function. It is important not to forget to delete the session when the 
+program exits. Once the session is created, a  Product document can be loaded 
+with <TT>CATDocumentServices::Open</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //
+        // Start session and load a Product
+        //
+        rc = ::Create_Session((char *) _sessionName, _pSession);
+...
+        rc = CATDocumentServices::Open(inputFilename, _pDocument);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="RetrieveRoot"></A>Retrieving the Document's Root Product</H4>
+<P>In order to work with a product structure within the  Product document, it 
+is necessary to access the <B>root product</B>. This is done using the <CODE>
+GiveDocRoots</CODE> method of <I>CATIDocRoots</I> which returns a list of all of 
+the roots within the document, the first one being the root product we are 
+looking for. From this root product, we can get a <I>CATIProduct</I> handle 
+which will be needed later in order to find a part.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //
+        // Get Root Product
+        //
+        CATIDocRoots* piDocRootsOnDoc = NULL;
+        rc = _pDocument-&gt;QueryInterface(IID_CATIDocRoots,
+                                        (void**) &amp;piDocRootsOnDoc);
+...
+        //
+        // The root product is the first element of root elements
+        //
+        CATListValCATBaseUnknown_var* pRootProducts = 
+                piDocRootsOnDoc-&gt;GiveDocRoots();
+        CATIProduct_var spRootProduct = NULL_var;
+
+        if (pRootProducts &amp;&amp; pRootProducts-&gt;Size()) { 
+                spRootProduct = (*pRootProducts)[1];
+...
+
+        //
+        // Get CATIProduct handle on the root product.
+        //
+        CATIProduct *piProductOnRoot = NULL;
+        rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                           (void**) &amp;piProductOnRoot);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="LoadingDoc"></A>Finding a part and its parent</H4>
+<P>Finding a part with a given instance name is implemented by the <tt>FindPart</tt> 
+method: it walks though the children list of the root product until the name 
+matches with an instance's.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>CATIProduct_var CAAPstBlockMovable::FindPart(CATUnicodeString&amp; ipartName,
+                                             CATIProduct *ipiProductOnRoot)
+{
+        CATIProduct_var ospPart = NULL_var;
+
+...
+        CATListValCATBaseUnknown_var* childrenList =
+                ipiProductOnRoot-&gt;GetAllChildren();
+...
+        int childrenCount = childrenList-&gt;Size();
+        CATIProduct_var spChild = NULL_var;
+        CATUnicodeString instanceName;
+        for (int i=1; i &lt;= childrenCount; i++) {
+                spChild = (*childrenList)[i];
+                if (NULL_var == spChild)
+                        break;
+                HRESULT rc = spChild-&gt;GetPrdInstanceName(instanceName);
+                if (FAILED(rc))
+                        break;
+                if (instanceName == ipartName) {
+                        ospPart = spChild;
+                        break;
+                }
+        }
+...
+        return ospPart;
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Once the part is found, getting its parent product is done by 
+calling <TT>GetFatherProduct</TT></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //
+        // Retrieve the part with specified name
+        //
+        CATIProduct_var spPart = FindPart(partName, piProductOnRoot);
+...
+        if ( NULL_var == spPart) {
+                cout &lt;&lt; partName.ConvertToChar() &lt;&lt; &quot; not found&quot; &lt;&lt; endl;
+                ERROR_RETURN(S_PartNotFound);
+        }
+
+        //
+        // Retrieve the parent product of the part
+        //
+        CATIProduct_var spParentProduct = spPart-&gt;GetFatherProduct();
+        if (NULL_var == spParentProduct) {
+                cout &lt;&lt; &quot;Can't find parent product of &quot; &lt;&lt; partName.ConvertToChar() &lt;&lt; endl;
+                ERROR_RETURN(S_ParentNotFound);
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="AddPartToRoot"></A>Checking whether a sub-product is rigid and 
+making it flexible</H4>
+<P>The next thing to do is to get the <i>CATIBlockMovalbe</i> interface of the parent 
+product. Using this interface, the parent product rigidity is tested with <TT>
+IsSoft</TT> and is made flexible only if it is necessary with <TT>
+MakeSoftAssembly</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //
+        // Get the CATIBlockMovable interface on the parent product
+        //
+        CATIBlockMovable *piBlockMovable = NULL;
+        rc = spParentProduct-&gt;QueryInterface(IID_CATIBlockMovable,
+                                             (void **) &amp;piBlockMovable);
+...
+        //
+        // Check whether the rigid/flexible modification needs to be applied to
+        // the parent product
+        //
+        int isFlexibleFlag = piBlockMovable-&gt;<B>IsSoft</B>();
+        CATUnicodeString parentName;
+        spParentProduct-&gt;GetPrdInstanceName(parentName);
+        cout &lt;&lt; parentName.ConvertToChar();
+        if (isFlexibleFlag)
+                cout &lt;&lt; &quot; is already flexible&quot; &lt;&lt; endl;
+        else {
+                cout &lt;&lt; &quot; is rigid, making it flexible&quot; &lt;&lt; endl;
+                piBlockMovable-&gt;<B>MakeSoftAssembly</B>(); 
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="MovingThePart"></A>Moving the part</B></P>
+<P>Now that the parent product is flexible, the part can be moved using the <i>
+CATIMovable</i> interface. (see reference <a href="#[3]">[3]</a>)</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        isFlexibleFlag = piBlockMovable-&gt;<B>IsSoft</B>();
+...
+
+        //
+        // If the parent product is flexible then move the part:
+        // Get the CATIMovable Interface and move the part on the Y axis
+        //
+        if (isFlexibleFlag) {
+                CATIMovable *piMovable = NULL;
+                rc = spPart-&gt;QueryInterface(IID_CATIMovable, 
+                                            (void **) &amp;piMovable);
+...
+                CATMathTransformation position;
+                rc = piMovable-&gt;<B>GetAbsPosition</B>(position);
+...
+                double array[12];
+                position.GetCoef(array, sizeof(array)/sizeof(array[0]));
+                //
+                // move the part 20mm in the Y axis
+                //
+                array[9]  += double(deltaX);
+                array[10] += double(deltaY);
+                array[11] += double(deltaZ);
+                position.SetCoef(array);
+                rc = piMovable-&gt;<B>SetAbsPosition</B>(position);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="SaveDoc"></A>Saving the modified  Product Document</H4>
+<P>The modified document can now be saved. Finally the session is delete and the 
+loaded  Product document is removed.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //
+        // All done. save the modified document into the specified output file
+        //
+        rc = CATDocumentServices::<B>SaveAs</B>(*_pDocument, outputFilename);
+...
+
+        //
+        // Remove the opened document and close the session
+        //
+        CleanUp();</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to make a sub-product flexible so that one 
+of its parts can be moved:</P>
+<UL>
+    <LI>Loading a  Product document with <TT>CATDocumentServices::Open</TT></LI>
+    <LI>Retrieving the root product of the document with <TT>
+    CATIDocRoots::GiveDocRoots</TT> </LI>
+    <LI>Finding a part by traversing the parts returned by <TT>
+    CATIProduct::GetAllChildrenList</TT> on the root product</LI>
+    <LI>Obtaining the part's parent product with <tt>CATIProduct::GetFatherProduct</tt></LI>
+    <LI>Checking whether the parent product is flexible with 
+    <tt>CATIBlockMovable::IsSoft</tt></LI>
+    <LI>Making the parent product flexible with 
+    <tt>CATIBlockMovable::MakeSoftAssembly</tt></LI>
+    <LI>Change the part position with <tt>CATIMovable::GetAbsPosition</tt> and 
+    <tt>SetAbsPosition</tt></LI>
+    <LI>Saving the modified product with <tt>CATDocumentServices::SaveAs</tt></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[3]">[3]</a></TD>
+        <TD><a href="CAAPstMovable.htm">Positioning Products Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1.1</span></STRONG><b><span style="font-weight: 400"> [Aug 2004]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document revised</span></b></TD>
+    </tr>
+    <TR>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1</span></STRONG><b><span style="font-weight: 400"> [Aug 2003]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document created</span></b></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2003, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>
+

@@ -1,0 +1,280 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Drawing Table</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Interactive Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Drawing Table</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This macro shows you how to create a drawing table in Drawing document.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This macro creates a new drawing document. In the active view of the
+      document we create a drawing table and specify merged cells, row sizes
+      then column size.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAADriDrawingTable is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <!----------------------------------comment------------------------------------->
+
+      <p><a href="CAADriDrawingTableSource.htm">CAADriDrawingTable.CATScript</a>
+      is located in the CAADriUseCases module.&nbsp; <a href="macros/CAADriDrawingTable.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAADriDrawingtable includes five steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Creating and Specifying a New Drawing Document</a></li>
+        <li><a href="#Step3">Retrieving and Defining the Sheet</a></li>
+        <li><a href="#Step4">Retrieving and Defining the View</a></li>
+        <li><a href="#Step5">Creating the Drawing Table</a></li>
+        <li><a href="#Step6">Defining the Drawing Table Update</a></li>
+        <li><a href="#Step7">Modifying the Drawing Table</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The CATIA prompts are disabled thanks to the <code>DisplayFileAlerts</code>
+      property of the <i>Application</i> object set to <code>False</code>.</p>
+      <h4><a name="Step2"></a>Creating and Specifying a New Drawing Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Create a new drawing document</font>
+<font color="#0000FF">    Set </font>oDrwDocument = CATIA.Documents.Add(&quot;Drawing&quot;)
+
+    <font color="#008000">' Set the drawing document standard</font>
+    oDrwDocument.Standard = catISO
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A new drawing document is created and its standard is set to ISO.</p>
+      <h4><a name="Step3"></a>Retrieving and Defining the Sheet</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' Retrieve the drawing document's sheets collection</font>
+<font color="#0000FF">    Set </font>oDrwSheets = oDrwDocument.Sheets
+
+    <font color="#008000">' Retrieve the active sheet</font>
+<font color="#0000FF">    Set </font>oDrwSheet = oDrwSheets.ActiveSheet
+
+    <font color="#008000">' Set the sheet properties</font>
+    oDrwSheet.PaperSize = catPaperA4
+    oDrwSheet.Orientation = catPaperLandscape
+    oDrwSheet.Scale2 = 1
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The sheets collection is retrieved from the <code>oDrwDocument</code>
+      object using the <code>Sheets</code> method.<br>
+      The sheet object is retrieved from the <code>oDrwSheets</code> collection
+      using the <code>ActiveSheet</code> method.<br>
+      The <code>oDrwSheet</code> properties set are A4 format, landscape
+      orientation and 1:1 scale.</p>
+      <h4><a name="Step4"></a>Retrieving and Defining the View</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' Retrieve the active view of the sheet</font>
+<font color="#0000FF">    Set </font>oDrwView = oDrwSheet.Views.ActiveView
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The view object is retrieved from the <code>oDrwSheet</code> object
+      using the <code>ActiveView</code> method.</p>
+      <h4><a name="Step5"></a>Creating the Drawing Table</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Retrieve the view's tables collection</font>
+<font color="#0000FF">    Set </font>oDrwTables = oDrwView.Tables
+    
+    <font color="#008000">' Create a new drawing table</font>
+<font color="#0000FF">    Set </font>oDrwTable = oDrwTables.Add(107, 70, 9, 9, 5, 20)</pre>
+            <pre>    <font color="#008000">' Set the drawing table's name</font>
+    oDrwTable.Name = &quot;Title Block&quot;
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The tables collection is retrieved from the <code>oDrwView</code>
+      object using the <code>Tables</code> method.<br>
+      The table object is created from the <code>oDrwTables</code> collection
+      using the <code>Add</code> method:</p>
+      <ul>
+        <li>At 107mm from the sheet origin along x.</li>
+        <li>At 60 mm from the sheet origin along y.</li>
+        <li>With 9 rows and a row size of 5mm.</li>
+        <li>With 9 columns and a column size of 20mm.</li>
+        <li>Named <code>&quot;Title Block&quot;&nbsp;</code></li>
+      </ul>
+      <p><img border="0" src="images/img007.gif" hspace="40" width="420" height="297"></p>
+      <h4><a name="Step6"></a>Defining the Drawing Table Update</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Do not update drawing table modifications</font>
+    oDrwTable.ComputeMode = CatTableComputeOFF
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>CatTableComputeOFF</code> enumerate allows you to modify the
+      drawing table without update visualization.</p>
+      <h4><a name="Step7"></a>Modifying the Drawing Table</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Merge drawing table's cells</font>
+    oDrwTable.MergeCells 1, 1, 2, 2
+    oDrwTable.MergeCells 1, 3, 1, 7
+    oDrwTable.MergeCells 2, 3, 2, 7
+    oDrwTable.MergeCells 4, 3, 1, 7
+    oDrwTable.MergeCells 5, 4, 1, 5
+    oDrwTable.MergeCells 6, 3, 2, 1
+    oDrwTable.MergeCells 6, 4, 2, 5
+    oDrwTable.MergeCells 6, 9, 2, 1
+    oDrwTable.MergeCells 7, 1, 2, 1
+    oDrwTable.MergeCells 7, 2, 2, 1
+    oDrwTable.MergeCells 8, 3, 2, 1
+    oDrwTable.MergeCells 8, 4, 2, 1
+    oDrwTable.MergeCells 8, 5, 2, 1
+    oDrwTable.MergeCells 8, 6, 2, 1
+    oDrwTable.MergeCells 8, 7, 2, 1
+    oDrwTable.MergeCells 8, 8, 2, 1
+    oDrwTable.MergeCells 8, 9, 2, 1
+
+    <font color="#008000">' Set the drawing table's row sizes</font>
+    oDrwTable.SetRowSize 1, 20
+    oDrwTable.SetRowSize 2, 4
+    oDrwTable.SetRowSize 3, 5
+    oDrwTable.SetRowSize 4, 7
+    oDrwTable.SetRowSize 5, 5
+    oDrwTable.SetRowSize 6, 7
+    oDrwTable.SetRowSize 7, 2
+    oDrwTable.SetRowSize 8, 3
+    oDrwTable.SetRowSize 9, 7
+
+    <font color="#008000">' Set the drawing table's column sizes</font>
+    oDrwTable.SetColumnSize 1, 45
+    oDrwTable.SetColumnSize 2, 20
+    oDrwTable.SetColumnSize 3, 15
+    oDrwTable.SetColumnSize 4, 15
+    oDrwTable.SetColumnSize 5, 27
+    oDrwTable.SetColumnSize 6, 18
+    oDrwTable.SetColumnSize 7, 20
+    oDrwTable.SetColumnSize 8, 15
+    oDrwTable.SetColumnSize 9, 15
+    
+    <font color="#008000">' Update drawing table modifications</font>
+    oDrwTable.ComputeMode = CatTableComputeON
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The table's cells are merged using the <code>MergeCells</code> method.<br>
+      Row and column sizes are modified using the <code>SetRowSize</code> and <code>SetColumnSize</code>
+      methods.<br>
+      The <code>CatTableComputeON</code> enumerate allows you to update drawing
+      table visualization.</p>
+      <p><img border="0" src="images/img008.gif" hspace="40" width="420" height="297"></p>
+      <blockquote>
+        <p><code>oDrwTable.MergeCells 1, 1, 2, 2</code> instruction is executed,
+        cells (1,1), (1,2), (2,1), (2,2) are merged.</p>
+      </blockquote>
+      <p><img border="0" src="images/img009.gif" hspace="40" width="420" height="297"></p>
+      <blockquote>
+        <p>At the end of merging operation.</p>
+      </blockquote>
+      <p><img border="0" src="images/img010.gif" hspace="40" width="420" height="297"></p>
+      <blockquote>
+        <p><code>oDrwTable.SetRowSize 1, 20</code> instruction is executed, the
+        first row is resized.</p>
+      </blockquote>
+      <p><img border="0" src="images/img011.gif" hspace="40" width="420" height="297"></p>
+      <blockquote>
+        <p>End of the macro.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a Drawing Table sheets using the <i>Add</i>
+method of the <i>DrawingTables</i> collection.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>,
+      <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a><i>,
+      </i><a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm"><i>DrawingView</i></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

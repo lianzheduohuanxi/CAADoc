@@ -1,0 +1,354 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Computing Bundle Segment Dimensions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Wire Routing</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Computing Bundle Segment Dimensions</h3>
+      <em>How to implement your own algorithm to compute bundle segment
+      dimensions</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create your proper algorithm to compute
+      the dimensions (i.e. diameter and minimum bend radius) of a bundle segment
+      according on the wires its contains
+      <ul>
+        <li><strong><a href="#Learn">Modifying the interface dictionary of the
+          framework CAAElecRoutingItf.edu</a></strong></li>
+        <li><a href="#UseCase"><strong>Building the CAAEwrRoutingImpl component</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>Modifying the interface dictionary of the framework
+CAAElecRoutingItf.edu</h3>
+<p>The dictionary is called CAAElecRoutingItf.edu.dic and is located in the
+following path :
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecRoutingItf.edu\CNEXT\code\dictionary</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecRoutingItf.edu/CNEXT/code/dictionary</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation.&nbsp;
+<p>&nbsp;
+<p>To activate your code, you have to uncomment the following line :
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ElecBundleSegmentE           CATIEwrUipBundleSegment         libCAAEwrRoutingImpl</pre>
+      <pre>#ElecBundleSegmentC           CATIEwrUipBundleSegment         libCAAEwrRoutingImpl</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary declares that the <i>ElecBundleSegment </i>object
+implements the <i>CATIEwrUipBundleSegment </i>interface and that the code to
+load into memory to use this interface is located in the libCAAEwrRoutingImpl
+shared library or DLL. To have more details, you can refer to the referenced
+articles [<a href="#References">1</a>] and [<a href="#References">2</a>]</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>Building the CAAEwrRoutingImpl component</h3>
+<p>&nbsp;</p>
+<p>CAAEwrRoutingImpl is a CATIA component exposing the CATIEwrUipBundleSegment
+interface. For the definition of components and interfaces, you can refer to the
+referenced articles [<a href="#References">1</a>] and [<a href="#References">2</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What does CAAEwrRoutingImpl do ?</h4>
+<p>The goal of CAAEwrRoutingImpl is to calculate the diameter and the minimum
+bend radius of a bundle segment according to the wires contained in it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to build CAAEwrRoutingImpl ?</h4>
+<p>To launch CAAEwrRoutingImpl, you will need to set up the build time
+environment, then compile CAAEwrRoutingImpl along with its prerequisites as
+described in [<a href="#References">3</a>]</p>
+<p>To do that, you must use the mkmk command (refer to [<a href="#References">5</a>]
+for more explanations)</p>
+<i><font face="Courier">$ cd
+ws_root_dir/CAAElecRoutingItf.edu/CAAEwrRoutingImpl.m</font></i><br>
+<i><font face="Courier">$ mkmk</font></i>
+<p>or
+<p><i><font face="Courier">$ cd ws_root_dir/CAAElecRoutingItf.edu</font></i><br>
+<font face="Courier"><i>$ mkmk CAAEwrRoutingImpl.m</i></font>
+<p>&nbsp;</p>
+<p>After, to test your component, you will have to run CATIA typing CNEXT on the
+command line (refer to [<a href="#References">5</a>]) , and to follow the
+scenario given in the referenced chapter [<a href="#References">4</a>]
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to find the <i>CAAEwrRoutingImpl</i> code?</h4>
+<p>CAAEwrRoutingImpl code is located in the CAAEwrRoutingImpl.m module of the
+CAAElecRoutingItf.edu framework:</p>
+<table width="674">
+  <tr>
+    <td width="53">Windows</td>
+    <td width="611"><code>InstallRootDirectory\CAAElecRoutingItf.edu\CAAEwrComputeBundleSegment.m</code></td>
+  </tr>
+  <tr>
+    <td width="53">Unix</td>
+    <td width="611"><code>InstallRootDirectory/CAAElecRoutingItf.edu/CAAEwrComputeBundleSegment.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEwrUipBundleSegmentExt.cpp</b>.
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="How"></a>Description of the extension class</h4>
+<p>The extension class is called CAAEwrUipBundleSegmentExt.h and is located in
+the LocalInterfaces of the CAAEwrRoutingImpl.m module of the
+CAAElecRoutingItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecRoutingItf.edu\CAAEwrComputeBundleSegment.m\LocalInterfaces</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecRoutingItf.edu/CAAEwrComputeBundleSegment.m/LocalInterfaces</code></td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef CAAEwrUipBundleSegmentExt_H
+#define CAAEwrUipBundleSegmentExt_H
+
+// COPYRIGHT DASSAULT SYSTEMES 2002
+
+// inherited from
+#include &quot;CATBaseUnknown.h&quot;
+
+// forward declaration
+#include &quot;CATListOfDouble.h&quot;
+
+
+class CAAEwrUipBundleSegmentExt: public CATBaseUnknown
+{
+  CATDeclareClass;
+  
+public:
+  
+  CAAEwrUipBundleSegmentExt();
+  virtual ~CAAEwrUipBundleSegmentExt();
+  
+  /**
+  * Returns the value of bundle segment diameter (in mm) fonction
+  * of the values of the diameters of the wires contained in it.     
+  *  
+  * iListOfWireDiameters
+  *   The list of the diameters of the wires contained in the bundle segment
+  *   (the diameters must be expressed in mm)
+  * oBundleSegmentDiameter
+  *   The value of the bundle segment diameter 
+  *   (the diameter must be expressed in mm)
+  */
+  HRESULT ComputeDiameter (const CATListOfDouble iListOfWireDiameters , double &amp; oBundleSegmentDiameter); 
+  
+  /**
+  * Returns the value of bundle segment bend radius (in mm) fonction
+  * of the values of the bend radii of the wires contained in it.     
+  *  
+  * iListOfWireBendRadius
+  *   The list of the bend radii of the wires contained in the bundle segment
+  *   (the bend radii must be expressed in mm)
+  * oBundleSegmentBendRadius
+  *   The value of the bundle segment bend radius
+  *   (the value must be expressed in mm)
+  */ 
+  HRESULT ComputeBendRadius (const CATListOfDouble iListOfWireBendRadius, double &amp; oBundleSegmentBendRadius);
+  
+private:
+  
+  CAAEwrUipBundleSegmentExt(const CAAEwrUipBundleSegmentExt &amp;);
+  CAAEwrUipBundleSegmentExt&amp; operator=(const CAAEwrUipBundleSegmentExt &amp;); 
+  
+};
+
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>For more details about what is an extension class, you can refer to the
+referenced article [<a href="#References">1</a>]</p>
+<p>&nbsp;</p>
+<h4><a name="How"></a>Description of the implemented methods</h4>
+<p>The code of the implemented methods is contained in the source file named <b>CAAEwrUipBundleSegmentExt.cpp.</b></p>
+<p>&nbsp;</p>
+<p>Firstly&nbsp; we include the adhesion of our class CAAEwrUipBundleSegmentExt
+with interface CATIEwrUipBundleSegment as like :&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#include &quot;TIE_CATIEwrUipBundleSegment.h&quot;
+TIE_CATIEwrUipBundleSegment(CAAEwrUipBundleSegmentExt);
+
+CATBeginImplementClass(CAAEwrUipBundleSegmentExt, CodeExtension, CATBaseUnknown, ElecBundleSegmentE);
+CATAddClassExtension(ElecBundleSegmentC);
+CATEndImplementClass(CAAEwrUipBundleSegmentExt);
+</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>The first method is called <b>ComputeDiameter</b>. It takes as input the list
+of the diameters of the wires contained in the bundle segment (CATListOfDouble)
+and it returns the value of the bundle segment.</p>
+<p>The calculation is based upon the whole area taken by all the wires.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>
+//==========================================================================
+// ComputeDiameter
+//==========================================================================
+HRESULT CAAEwrUipBundleSegmentExt::ComputeDiameter(const CATListOfDouble iListOfWireDiameters, 
+                                                   double &amp; oBundleSegmentDiameter)
+
+{
+  oBundleSegmentDiameter = 0.;
+  
+  int nbDiam = iListOfWireDiameters.Size();
+  double Area = 0.;
+  
+  for (int ii=1;ii&lt;=nbDiam;ii++)
+    Area += CATPI * iListOfWireDiameters[ii] * iListOfWireDiameters[ii] /4.;
+  
+
+  oBundleSegmentDiameter = sqrt (Area * 4. / CATPI);;
+  
+  return S_OK;
+  
+}</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second method is called <b>ComputeBendRadius</b>. It takes as input the
+list of the bend radii of the wires contained in the bundle segment
+(CATListOfDouble) and it returns the value of the bundle segment bend radius.</p>
+<p>The returned bend radius is equal to the maximum bend radius of the wires.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>
+//==========================================================================
+// ComputeBendRadius
+//==========================================================================
+HRESULT CAAEwrUipBundleSegmentExt::ComputeBendRadius(const CATListOfDouble iListOfWireBendRadius, 
+                                                     double &amp; oBundleSegmentBendRadius)
+{
+  
+  oBundleSegmentBendRadius=0.;
+  
+  int nbRad=iListOfWireBendRadius.Size();
+  
+  for (int ii=1;ii&lt;=nbRad;ii++)
+  {
+    if (iListOfWireBendRadius[ii] &gt; oBundleSegmentBendRadius)
+    {
+      oBundleSegmentBendRadius = iListOfWireBendRadius[ii];
+    }
+  }
+  
+  return S_OK;
+  
+}</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="1143">
+  <tr>
+    <td valign="top" width="1">[1]&nbsp;</td>
+    <td width="1529"><a href="../CAASysUseCases/CAASysSampleOMCreatingCmp.htm">Creating
+      components</a>
+  </tr>
+  <tr>
+    <td valign="top" width="1">[2]</td>
+    <td width="1529"><a href="../CAASysUseCases/CAASysSampleOMCreatingInt.htm">Creating
+      interfaces</a>
+  </tr>
+  <tr>
+    <td valign="top" width="1">[3]</td>
+    <td width="1529"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a>
+  </tr>
+  <tr>
+    <td valign="top" width="1">[4]</td>
+    <td width="1529"><a href="CAAEwrComputeBundleSegment.htm">Testing your own
+      computation algoritm</a>
+  </tr>
+  <tr>
+    <td valign="top" width="1">[5]</td>
+    <td width="1529"><a href="../CAABtlQuickRefs/CAABtlMkHandBook.htm">Using
+      mkmk</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="1135">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,522 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Enabling New Features in a Product Document to be Deleted</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Enabling New Features in a Product Document to be
+      Deleted</h3>
+      <em>Deleting new features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures</a> &gt; <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</a>
+      &gt; <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</a> &gt; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a>
+      &gt; <a href="CAAPstINFVisu.htm">CAAPstINFVisu</a> &gt; <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp;
+      &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</a> &gt; <b>CAAPstINFDelete</b>
+      &gt; <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPstINFDelete use case. This use case
+      explains how to delete features created &quot;from scratch&quot; in an
+      applicative container of a Product document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstINFDelete Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstINFDelete Do</a></li>
+            <li><a href="#Launch">How to Launch CAAPstINFDelete&nbsp;</a></li>
+            <li><a href="#Where">Where to Find the CAAPstINFDelete Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate how to program the delete of features
+created &quot;from scratch&quot; in an applicative container of a Product
+document.&nbsp; Two types of geometrical features are treated in this use case:</p>
+<ol>
+  <li>Referenced features: these are features that are used as input data for
+    the definition of other features. In the case of this use case, the
+    &quot;CAAPstINFPoint&quot; feature is used to define both
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features.&nbsp;</li>
+  <li>Referencing features: these are features that reference other features
+    which define them. In this use case, &quot;CAAPstINFLine&quot; and
+    &quot;CAAPstINFWire&quot; reference &quot;CAAPstINFPoint&quot; features.</li>
+</ol>
+<p>These geometrical features are the only ones that are allowed to be deleted.
+Enabling or disabling the &quot;Delete&quot; operation is filtered through the <i>CATICSOFilter</i>
+interface.&nbsp;</p>
+<p>This use case will show you how to program the <i>CATILifeCycleObject</i>
+interface implementations for the two types of geometrical objects defined in
+this use case, as well as how to program the <i>CATICSOFilter</i> interface
+implementations for all the features created in this use case.&nbsp;</p>
+<p>You should already be familiar with the CAAPstIntegrateNewFeatures use case
+article [<a href="#References">1</a>] in order to more easily understand the
+context of this particular use case. A general pre-requisite knowledge of the
+Feature Modeler may be required to fully understand this sample. You may want to
+review the basics of the Feature Modeler by looking over the &quot;Feature
+Modeler Overview&quot; technical article [<a href="#References">2</a>]. Finally,
+it may be useful for you to look over the &quot;Product Structure Model&quot;
+technical article [<a href="#References">3</a>] as well.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstINFDelete Use Case</h3>
+<p>The CAAPstINFDelete a use case that is part of the CAAPstIntegrateNewFeatures
+use case defined in the CAAProductStructure.edu framework that illustrates the
+integration of ObjectModelerBase and ApplicationFrame framework capabilities in
+the scope of a Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the CAAPstINFDelete Use Case Do</h4>
+<p>This use case shows how to program the <i>CATILifeCycleObject</i> interface
+implementations for the geometrical features defined in this use case. It also
+shows how to enable the delete operation through the contextual menu for these
+geometrical features as well.&nbsp;</p>
+<p>First of all, let's take a look at the contents of the Product document:</p>
+<b>Fig. 1: Contents of the CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDocStructure.jpg" width="428" height="438"></td>
+  </tr>
+</table>
+<p>The&nbsp; &quot;CAAPstINFLine&quot; feature references two
+&quot;CAAPstINFPoint&quot; features. If any one of these two points were to be
+deleted, the &quot;CAAPstINFLine&quot; feature would not longer have a valid
+definition and it should, therefore, be deleted as well. In the case of the
+&quot;CAAPstINFWire&quot; feature, although its definition is composed of any
+number of points (minimum two), we consider, as for the line, that its
+definition is no longer valid if any one of the points it references is deleted.
+Therefore, the tasks defined in the <i>CATILifeCycleObject</i> implementation
+for the &quot;CAAPstINFPoint&quot; object are the same for both of these
+features.</p>
+<p>Notice that the &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;
+features which are simply referencing features can be deleted without impacting
+the existence of other features, since no other feature depends on them for its
+definition. The tasks defined in the <i>CATILifeCycleObject</i> implementation
+are the same for both &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;
+features.</p>
+<p>There are two <i>CATICsoFilter</i> implementations as well. The first filters
+the operations available on the &quot;CAAPstINFRoot&quot; features which are not
+allowed to be deleted. The second filters the operations available on the other
+features which are allowed to be deleted.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="Launch"></a>How to Launch the CAAPstINFDelete Use Case</h4>
+<p>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures
+Use Case&quot; in the &quot;<a href="CAAPstIntegrateNewFeatures.htm">Integrating
+New Features in a Product Structure</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p>Specifically, the code described in this article is executed during the
+following scenario:</p>
+<p>Launch <b>CATIA</b>. When the application is ready, follow the scenario
+described below:
+<ul>
+  <li>
+    <p>Select <b>File</b> + <b>Open</b> and select the <b><code>CAAPstINFDocument.CATProduct
+    </code></b>in the <code>CAAProductStructure.edu/CNext/resources/graphic</code>
+    directory or select the document you created yourself by executing the batch
+    program described in the previous step.&nbsp;</p>
+  <li>
+    <p><b>Collapse</b> the &quot;CAAPstINFRoot1&quot; node by selecting the
+    &quot;+&quot; symbol: notice that this root aggregates seven features of
+    which five are of type &quot;CAAPstINFPoint&quot;, one
+    &quot;CAAPstINFLine&quot; and one &quot;CAAPstINFWire&quot;.</p>
+  <li>
+    <p><b>Display the contextual menu</b> on the &quot;CAAPstINFPoint1&quot;
+    feature.</p>
+  <li>
+    <p><b>Select &quot;Delete&quot;</b>. Notice that the
+    &quot;CAAPstINFPoint1&quot; feature has been deleted and that the
+    &quot;CAAPstINFLine1&quot; feature has also been deleted because it can no
+    longer exist without one of its reference points. The initial copy of
+    &quot;CAAPstINFPoint1&quot;, however, continues to exist.</p>
+</ul>
+<p>The CAAPstINFDocument.CATProduct document that can be found in the
+CNext/resources/graphic directory of the CAAProductStructure.edu
+framework.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPstINFDelete Code</h4>
+<p>This use case describes the implementation class of the <i>CATILifeCycleObject</i>
+interface on the one hand for the &quot;CAAPstINFPoint&quot; feature, called <i>CAAEPstINFLCOPoint</i>,
+which is found in the CAAEPstINFLCOPoint.cpp source file and
+CAAEPstINFLCOPoint.h header file and on the other hand for the
+&quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features, called <i>CAAEPstINFLCO</i>,
+which is found in the CAAEPstINFLCO.cpp source file and CAAEPstINFLCO.h header
+file. Both of these implementations can be found in the CAAPstINFModeler.m
+shared library. It also describes the implementation of the <i>CATICSOFilter</i>
+interface, on the one hand for the &quot;CAAPstINFRoot&quot; feature called <i>CAAEPstINFCSORoot</i>,
+which is found in the CAAEPstINFCSORoot.cpp source file and CAAEPstINFCSORoot.h
+header file and on the other hand for all the other geometrical objects called <i>CAAEPstINFCSOFeature
+</i>which is found in the CAAEPstINFCSOFeature.cpp source file and
+CAAEPstINFCSOFeature.h header file. Both of these implementations can be found
+in the CAAPstINFCommands.m shared library.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstINFModeler.m
+        and CAAPstINFCommands.m</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstINFModeler.m
+        and CAAPstINFCommands.m</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="StepByStep"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAAPstINFDelete:</p>
+<ol>
+  <li><a href="#LCOLineWire">Implementing the <i>CATILifeCycleObject</i>
+    Interface for Line and Wire Features</a></li>
+  <li><a href="#LCOPoint">Implementing the <i>CATILifeCycleObject</i> Interface
+    for Point Features</a></li>
+  <li><a href="#CSORoot">Implementing the <i>CATICSOFilter</i> Interface for
+    Root Features</a></li>
+  <li><a href="#CSOFeature">Implementing the <i>CATICSOFilter</i> Interface for
+    Geometrical Features</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="LCOLineWire"></a>Implementing the <i>CATILifeCycleObject</i>
+Interface for Line and Wire Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>void CAAEPstINFLCO::remove (int forCloseContext )</b>
+{
+    cout &lt;&lt; &quot;******CAAEPstINFLCO::remove&quot; &lt;&lt; endl;
+
+    HRESULT rc;
+
+    if (!forCloseContext)
+    {
+       // Update the navigation tree
+       CATIRedrawEvent *piRedrawEventOnFeature = NULL;
+       rc = this -&gt; <b>QueryInterface</b>(IID_CATIRedrawEvent,
+	                          (void**) &amp;piRedrawEventOnFeature);
+       if (SUCCEEDED(rc))
+       {
+           piRedrawEventOnFeature -&gt; <b>RedrawParent</b>();
+           piRedrawEventOnFeature -&gt; <b>Release</b>();
+           piRedrawEventOnFeature = NULL;
+       }
+
+       // Force an update of the visualization process
+       CATIModelEvents *piModelEventsOnFeature = NULL;
+       rc = this -&gt; <b>QueryInterface</b>(IID_CATIModelEvents,
+	                          (void**) &amp;piModelEventsOnFeature);
+
+       if (SUCCEEDED(rc))
+       {
+           <b>CATDelete delNotif (this);</b>
+           piModelEventsOnFeature -&gt; <b>Dispatch</b>(delNotif);
+           piModelEventsOnFeature -&gt; <b>Release</b>();
+           piModelEventsOnFeature = NULL;
+       }
+    }
+
+    <b>CATSpecLifeCycleObjectExt::remove(forCloseContext);
+</b>
+    <b>return</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">This implementation is called whenever a
+&quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; feature has been
+requested to be deleted. Because these are not referenced features, the only
+tasks necessary are to refresh the navigation and visualization in order to
+account for the deleted feature.</p>
+<p align="left">First of all, to refresh the specs tree, it is necessary to
+retrieve a <i>CATIRedrawEvent</i> pointer on the feature to be deleted. Then we
+can use the <code>RedrawParent</code> method to refresh the specs tree starting
+with the deleted feature's parent.</p>
+<p align="left">To refresh the visualization, we retrieve a pointer to the <i>CATIModelEvents</i>
+interface on the feature to be deleted. Not that this interface has been
+implemented on the &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;
+features. Then, we need to create an instance of <i>CATDelete</i> on the feature
+to be deleted and dispatch this instance using the <code>Dispatch</code> method
+of <i>CATIModelEvents</i> in order to notify the visualization process that a
+feature has been deleted and that a refresh is necessary.</p>
+<p align="left">Finally, using the <i>CATSpecLifeCycleObjectExt</i>::<code>remove</code>
+method, the feature is deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="LCOPoint"></a>Implementing the <i>CATILifeCycleObject</i>
+Interface for Point Features</b></p>
+<p align="left">1. Delete the referencing features.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>void CAAEPstINFLCOPoint::remove (int forCloseContext)</b>
+{
+    cout &lt;&lt; &quot;******CAAEPstINFLCOPoint::remove&quot; &lt;&lt; endl;
+
+    HRESULT rc;
+
+    CATISpecObject *piSpecObjectOnThis = NULL;
+    rc = this -&gt; <b>QueryInterface</b>(IID_CATISpecObject,
+	                       (void**) &amp;piSpecObjectOnThis);
+    if (FAILED(rc)) <b>return</b>;
+
+    // Retrieve a list of the attributes pointing the Point
+    CATListValCATISpecAttribute_var *pList = NULL;
+    pList = piSpecObjectOnThis -&gt; <b>InverseAttrLink</b>();
+    piSpecObjectOnThis -&gt; <b>Release</b>();
+    piSpecObjectOnThis = NULL;
+    if (NULL == pList) <b>return</b>;
+
+    for(int i=1;i&lt;=pList-&gt;<b>Size</b>();i++)
+    {
+	// Retrieve the spec object owner of the pointing attribute
+	CATISpecObject *piPointingObject = (*pList)[i] -&gt; <b>GetOwner</b>();
+         CATUnicodeString specType = piPointingObject -&gt; <b>GetType</b>();
+		
+	// If the spec object owner is a &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot;,
+	// this object must also be deleted.
+	if (specType == &quot;CAAPstINFLine&quot; || specType == &quot;CAAPstINFWire&quot;)
+	{
+	    // Retrieve the father of the Line or Wire because since it is aggregated, it must
+	    // be removed from the father level.
+    	    CATISpecObject *piPointingObjFather = piPointingObject -&gt; <b>GetFather</b>();
+	    if (NULL != piPointingObjFather)
+	    {
+		piPointingObjFather -&gt; <b>Remove</b>(piPointingObject);
+		piPointingObjFather -&gt; <b>Release</b>();
+		piPointingObjFather = NULL;
+	    }
+	}
+         piPointingObject -&gt; <b>Release</b>();
+	piPointingObject = NULL;
+    }
+    <b>delete</b> pList;
+    pList = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Before actually deleting the &quot;CAAPstINFPoint&quot; feature
+itself, it is necessary to scan through the features pointing to it. If we run
+accross a &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; feature, since
+these features are no longer valid when the point is deleted, they must also be
+deleted.</p>
+<p align="left">In order to retrieve a list of the pointing objects, we can use
+the <code>InverseAttrLink</code> method of <i>CATISpecObject</i> which returns a
+list of pointing attributes. Then we can loop through the list returned and
+retrieve the pointing feature themselves using the <code>GetOwner</code> method
+of <i>CATISpecAttribute</i>. Now, we can test the type of the feature returned
+using the <code>GetType</code> method of <i>CATISpecObject</i>. If the type of
+the feature is &quot;CAAPstINFLine&quot; or CAAPstINFWire&quot;, the feature
+must be deleted. Since these features are aggregated at the
+&quot;CAAPstINFRoot&quot; level, they must also be deleted at this level, so it
+is necessary to retrieve the parent feature using the <code>GetFather</code>
+method of <i>CATISpecObject</i>. Finally, we delete the feature using the <code>Remove</code>
+method of <i>CATISpecObject</i> on the parent (&quot;CAAPstINFRoot&quot;
+aggregating feature).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">2. Refresh the navigation and visualization and delete the
+point.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>...</b>
+    if (!forCloseContext)
+    {
+        // Update the navigation tree
+        CATIRedrawEvent *piRedrawEventOnFeature = NULL;
+        rc = this -&gt; <b>QueryInterface</b>(IID_CATIRedrawEvent,
+	                           (void**) &amp;piRedrawEventOnFeature);
+        if (SUCCEEDED(rc))
+        {
+            piRedrawEventOnFeature -&gt; <b>RedrawParent</b>();
+            piRedrawEventOnFeature -&gt; <b>Release</b>();
+            piRedrawEventOnFeature = NULL;
+        }
+
+        // Force an update of the visualization process
+        CATIModelEvents *piModelEventsOnFeature = NULL;
+        rc = this -&gt; <b>QueryInterface</b>(IID_CATIModelEvents,
+	                           (void**) &amp;piModelEventsOnFeature);
+
+        if (SUCCEEDED(rc))
+        {
+            <b>CATDelete delNotif (this);</b>
+            piModelEventsOnFeature -&gt; <b>Dispatch</b>(delNotif);
+            piModelEventsOnFeature -&gt; <b>Release</b>();
+            piModelEventsOnFeature = NULL;
+        }
+    }
+
+    <b>CATSpecLifeCycleObjectExt::remove(forCloseContext);</b>
+
+    <b>return</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">As for the &quot;CAAPstINFLine&quot; and
+&quot;CAAPstINFWire&quot; features in the previous section, we need to refresh
+the navigation and visualization in order to account for the deleted objects.
+So, first of all, we retrieve a CATIRedrawEvent pointer on the feature to be
+deleted. Then we can use the <code>RedrawParent</code> method to refresh the
+specs tree starting with the deleted feature's parent.</p>
+<p align="left">First of all, to refresh the specs tree, it is necessary to
+retrieve a <i>CATIRedrawEvent</i> pointer on the feature to be deleted. Then we
+can use the <code>RedrawParent</code> method to refresh the specs tree starting
+with the deleted feature's parent.</p>
+<p align="left">To refresh the visualization, we retrieve a pointer to the <i>CATIModelEvents</i>
+interface on the feature to be deleted. Note that this interface has been
+implemented on the &quot;CAAPstINFPoint&quot; feature. Then, we need to create
+an instance of <i>CATDelete</i> on the feature to be deleted and dispatch this
+instance using the <code>Dispatch</code> method of <i>CATIModelEvents</i> in
+order to notify the visualization process that a feature has been deleted and
+that a refresh is necessary.</p>
+<p align="left">Finally, using the <i>CATSpecLifeCycleObjectExt</i>::<code>remove</code>
+method, the &quot;CAAPstINFPoint&quot; feature is deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CSORoot"></a>Implementing the <i>CATICSOFilter</i>
+Interface for Root Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>HRESULT CAAEPstINFCSORoot::CommandIsAvailable (const char *pHeaderID, const CATCSO *pCSO)
+{
+    cout &lt;&lt; &quot;******CAAEPstINFCSORoot::CommandIsAvailable&quot; &lt;&lt; endl;
+    HRESULT result;
+    result = E_FAIL;
+  
+    if (!strcmp(pHeaderID, &quot;Paste&quot;)) 
+       result = S_OK;
+
+    <b>return</b> result;	
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The implementation of the <i>CATICSOFilter</i> interface on the
+&quot;CAAPstINFRoot&quot; feature defines which operations of the contextual
+menu are available for this particular feature type. Because this is a root
+feature, the only operation we allow is the &quot;Paste&quot;. You will see this
+operation in further detail in the use case dealing with Cut, Copy and Paste
+operations [<a href="#References">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CSOFeature"></a>Implementing the <i>CATICSOFilter</i>
+Interface for Geometrical Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>HRESULT CAAEPstINFCSO::CommandIsAvailable (const char *pHeaderID, const CATCSO *pCSO)
+{
+    cout &lt;&lt; &quot;******CAAEPstINFCSO::CommandIsAvailable&quot; &lt;&lt; endl;
+    return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">By providing an empty implementations, all of the contextual
+menu operations are made available for the features implementing this interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAPstINFDelete use case has shown you how program the delete operation
+of a &quot;from scratch&quot; feature by implementing the <i>CATILifeCycleObject</i>
+interface. It has also shown how to make the Delete operation available in the
+contextual menu of the feature by implementing the <i>CATICSOFilter</i>
+interface.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td><a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features in a
+        Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td>Feature Modeler Overview</td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td><a href="CAAPstProviders.htm">Using the Provider Mechanism</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td><a href="CAAPstINFCCP.htm">Enabling Cut, Copy and Paste Operations on
+        New Features in a Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [June 2002]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

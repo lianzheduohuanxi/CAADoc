@@ -1,0 +1,439 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Editing a User Feature</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Editing a User Feature</h3>
+      <em>Using CATIUdfFeatureInstance</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to edit a User Feature.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMcaUdfEdition Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMcaUdfEdition Do</a></li>
+            <li><a href="#How">How to Launch CAAMcaUdfEdition</a></li>
+            <li><a href="#Where">Where to Find the CAAMcaUdfEdition code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The goal of this article is to show how to edit a User Feature.</p>
+<p>On a User Feature you can modify:</p>
+<ol>
+  <li>The value on an input, that is set a new input feature in place of an old
+    one</li>
+  <li>The value of a published parameter.</li>
+</ol>
+<p>Before reading this article, see the technical article about Power Copy and
+User Feature [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMcaUdfEdition Use Case</h3>
+<p>CAAMcaUdfEdition is a use case of the CAAMechanicalCommands.edu framework
+that illustrates MechanicalCommands framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMcaUdfEdition Do</h4>
+<p>In the <code>CAAUdfModelWithInstances</code> Part document we have two
+instances of the User Feature reference <code>CAAUserFeatureSample</code>. This
+User Feature reference has been created by the use case &quot;Creating a User
+Feature Reference&quot; [<a href="#References">2</a>], and the two instances
+have been created thanks to the use case &quot;Instantiating a User Feature
+Reference&quot; [<a href="#References">3</a>].</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The CAAUdfModelWithInstances Part
+    Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEdition1.jpg" width="495" height="396"></td>
+  </tr>
+</table>
+<p>On the first instance <code>CAAUserFeatureSample.1</code> we will change the
+inputs. Its inputs are <code>Point.3</code> and <code>Point.1</code> and will
+become <code>Point.1</code> and <code>Point.2 </code>respectively.</p>
+.
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: Image before Modifications</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEdition2a.jpg" width="630" height="541"></td>
+  </tr>
+</table>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: Image after Modifications</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEdition2b.jpg" width="630" height="484"></td>
+  </tr>
+</table>
+<p>On the second instance <code>&quot;The Loft With Point2 and Point3&quot;,</code>
+we will change the value of the first published parameter <code>&quot;Radius of
+the circle placed at the first input&quot;</code>. This value is 10mm and will
+become 50mm.</p>
+<table>
+  <caption><i><a name="Fig.4">Fig.4</a>: Image before Modifications</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEdition3a.jpg" width="630" height="534"></td>
+  </tr>
+</table>
+<p>Image after modifications:</p>
+<table>
+  <caption><i><a name="Fig.5">Fig.5</a>: Image after Modifications</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaUdfEdition3b.jpg" width="630" height="510"></td>
+  </tr>
+</table>
+<p><b>The interactive scenario:</b></p>
+<p>Launch CATIA, When the application is ready :</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li>In the <b>File Selection</b> Dialog box click <b>CAAUdfModelWithInstances.CATPart</b>
+    [<a href="#How">see how to find this part</a> ] and click <b>Open</b></li>
+  <li>Double click on <b>CAAUserFeatureSample.1 </b>in the specifications tree</li>
+  <li>A <b>UserFeature Edition </b>dialog box appears
+    <ul>
+      <li>Click the <b>Inputs</b> tab
+        <ul>
+          <li>Click the first line, and click <b>Point.1</b> in the
+            specification tree</li>
+          <li>You are now on the second line, Click <b>Point.2</b> in the
+            specification tree</li>
+          <li>Click <b>OK</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Double click on <b>The Loft with Point2 and Point3 </b>in the
+    specification tree<b></b></li>
+  <li>A <b>UserFeature Edition </b>dialog box<b> </b>appears
+    <ul>
+      <li>Click the <b>Parameters</b> tab
+        <ul>
+          <li>In the first editor, dedicated to the parameter &quot;<b>Radius of
+            the circle placed at the first input</b>&quot; , enter 50.</li>
+          <li>Click <b>OK</b></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMcaUdfEdition</h4>
+<p>To launch CAAMcaUdfEdition , you will need to set up the build time
+environment, then compile CAAMcaUdfEdition along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">4</a>].
+To launch the use case execute the command:</p>
+<p>mkrun -c CAAMcaUdfEdition InputPath [OutputPath]</p>
+<ul>
+  <li><b>InputPath</b>: The path of the file <code>CAAUdfModelWithInstances.CATPart</code>
+    included in the directory <code>CAAMechanicalCommands.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAMechanicalCommands.edu/InputData</code></li>
+      <li>Windows : <code>InstallRootDirectory\CAAMechanicalCommands.edu\InputData</code></li>
+    </ul>
+  </li>
+  <li><b>OutputPath</b>: The path to write the output file <code>CAAUdfModelWithInstancesModified.CATPart</code>.
+    If this path is empty, the output file is created in the current directory.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMcaUdfEdition Code</h4>
+<p>The CAAMcaUdfEdition use case is made of one main program located in the
+CAAMcaUdfEdition.m module of the CAAMechanicalCommands.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\</code>CAAMechanicalCommands<code>.edu\</code>CAAMcaUdfEdition<code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/</code>CAAMechanicalCommands<code>.edu/</code>CAAMcaUdfEdition<code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In the CAAMcaUtilities.m module of the same framework, there is a global
+function to retrieve data from the input Part, named CAAMcaGetGeometry. It is
+located in <code>CAAMcaGetGeometry.cpp</code>. The header of this function, <code>CAAMcaGetGeometry.h,
+</code>is set in the PrivateInterfaces directory of the framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>This section does not follow exactly the use case code. We have chosen to
+show, from the use case, the main steps of one edition.</p>
+<ol>
+  <li><a href="#Step Prolog">Prolog</a></li>
+  <li><a href="#Step 1">Retrieving the User Feature</a></li>
+  <li><a href="#Step 2">Beginning Modifications</a></li>
+  <li><a href="#Step 3">Modifyingthe Inputs</a></li>
+  <li><a href="#Step 4">Modifying the Published Parameters</a></li>
+  <li><a href="#Step 5">Ending Modifications</a></li>
+  <li><a href="#Step Epilog">Epilog</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a></p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step Prolog"></a>Prolog</h4>
+<p>CAAMcaUdfEdition begins creating a session, and opening the
+CAAUdfModelWithInstances Part document. Next it retrieves the root container of
+this Part<code>.</code> This is the usual sequence for loading a Part document [<a href="#References">5</a>].
+<p>Thanks to the <code>GetPart</code> method on the root container we retrieves
+the Mechanical Part. This part is handled by the smart pointer <code>spSpecObjectCAAUdfModelPart</code>.</p>
+<h4><a name="Step 1"></a>Retrieving the User Feature</h4>
+<p>This piece of code is almost the same for the first and the second User
+Feature to modify. For the first User Feature, the second argument of <code>CAAMcaGetGeometry
+</code>is <code>CAAUserFeatureSample.1</code>, and for the second feature it is <code>The
+Loft With Point2 and Point3</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  CATBaseUnknown * pOnInstance = NULL ;
+  <b>CATIUdfFeatureInstance </b>* pIUdfFeatInstance = NULL ;
+  rc = ::CAAMcaGetGeometry(<b>spSpecObjectCAAUdfModelPart</b>,&quot;CAAUserFeatureSample.1&quot;,&amp;pOnInstance);
+  if ( FAILED(rc) ) return 1 ;
+  rc = pOnInstance-&gt;QueryInterface(IID_CATIUdfFeatureInstance,(void **) &amp;<b>pIUdfFeatInstance</b>);
+  if ( FAILED(rc) )  return 1;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The goal of this section is to find in the <code>CAAUdfModelWithInstances
+Part</code> document the feature <code>CAAUserFeatureSample.1</code> (i.e <code>The
+Loft With Point2 and Point3</code>).</p>
+<p><code>CAAMcaGetGeometry</code>is a function which returns a pointer, <code>pOnInstance</code>,
+on the object whose name is the second argument. This object is a User Feature
+which implements <i>CATIUdfFeatureInstance</i>. <code>pIUdfFeatInstance</code>
+is the pointer to this interface.</p>
+<p align="right">[<a href="#Top">Top</a>]
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 2"></a>Beginning Modifications</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  rc = pIUdfFeatInstance-&gt;<b>Init</b>();
+  if ( FAILED(rc) ) return 1;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step is mandatory for any modification on the instance. Only after
+calling the <code>Init</code> method you can modify the instance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 3"></a>Modifying the Inputs</h4>
+<p>This step is done on the first User Feature instance <code>CAAUserFeatureSample.1</code>.
+This User Feature has two inputs.</p>
+<p>Modification of the first input:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  CATBaseUnknown * pInput = NULL ;
+  rc = ::CAAMcaGetGeometry(spSpecObjectCAAUdfModelPart,&quot;<b>Point.1</b>&quot;,&amp;pInput);
+  if ( FAILED(rc) )  return 1 ;
+
+  CATPathElement * pPathFirstInput = new CATPathElement(pInput);
+  rc = pIUdfFeatInstance-&gt;<b>SetNewInput</b>(1,pPathFirstInput);
+  if ( FAILED(rc) )  return 1 ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The feature associated with the first input is <code>Point.3</code>. (See the
+use case Instantiating a User Feature Reference [<a href="#References">3</a>]).
+We change it to the <code>Point.1 feature.</code></p>
+<p><code>Point.1</code> is found in the <code>CAAUdfModelWithInstances</code>
+Part document thanks to the <code>CAAMcaGetGeometry </code>function. This
+function returns a pointer to this feature, <code>pInput</code> .
+<p>We create a path, <code>pPathFirstInput,</code> with the pointer <code>pInput</code>.
+At last, we use the <code>SetNewInput</code> method on the <code>pIUdfFeatInstance</code>
+to modify the first input of the User Feature. The first argument of this method
+is the number of the input, here it is <b>1</b> and the second argument is the
+complete path of the new input, <code>pPathFirstInput.</code></p>
+<p><b>Note</b>: <code>pIUdfFeatInstance</code> is the <i>CATIUdfFeatureInstance</i>
+interface pointer of the first instance defined in the <a href="#Step 1">Retrieving
+the User Feature</a> step.</p>
+<p>For the second input:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  rc = ::CAAMcaGetGeometry(spSpecObjectCAAUdfModelPart,&quot;<b>Point.2</b>&quot;,&amp;pInput);
+  if ( FAILED(rc) )  return 1 ;
+  
+  CATPathElement * pPathSecondInput = new CATPathElement(pInput);
+  rc = pIUdfFeatInstance-&gt;<b>SetNewInput</b>(<b>2</b>,pPathSecondInput);
+  if ( FAILED(rc) )  return 1 ;
+
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The feature associated with the second input is <code>Point.1</code>. (See
+the use case Instantiating a User Feature Reference [<a href="#References">3</a>]).
+We change it by the <code>Point.2 feature.</code></p>
+<p><code>Point.2</code> is found in the <code>CAAUdfModelWithInstances</code>
+Part document thanks to the <code>CAAMcaGetGeometry </code>function. This
+function returns a pointer on this feature, <code>pInput</code> .
+<p>We create a path, <code>pPathSecondInput ,</code> with the pointer <code>pInput</code>.
+At last, we use the <code>SetNewInput</code> method on the <code>pIUdfFeatInstance</code>
+to modify the second input of the User Feature. The first argument of this
+method is the number of the input, here it is <b>2</b> and the second argument
+is the complete path of the new input, <code>pPathSecondInput .</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step 4"></a>Modifying the Published Parameters</h4>
+<p>This step consists in modifying the value of the published parameters of the
+User Feature instance.</p>
+<p>This step has been done on the second User Feature instance <code>The Loft
+With Point2 and Point3</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  CATListValCATBaseUnknown_var * pListParam = NULL ;
+  rc = pIUdfFeatInstance-&gt;<b><b>GetParameters</b></b>(pListParam) ;
+  if ( FAILED(rc) ) return 1 ;
+     
+  <b>CATICkeParm</b>_var spCkeParm = (*pListParam)[1] ;
+  if ( NULL_var != spCkeParm)
+  {
+         spCkeParm-&gt;Valuate(0.050f);
+  }
+  	 
+   ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pIUdfFeatInstance</code> is the <i>CATIUdfFeatureInstance</i> interface
+pointer of the instance.The <code>GetParameters</code> method retrieves the list
+of all the published parameters.</p>
+<p>In this use case, the value of the first parameter, <code>(*pListParam)[1]</code>
+has been changed by using the valuate method of <i>CATICkeParm</i> interface.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step 5"></a>Ending Modifications</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  rc = pIUdfFeatInstance-&gt;<b>Reset</b>();
+  if ( FAILED(rc) ) return 1;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step is mandatory after any modification on the instance. After the <code>Reset</code>
+call you cannot modify the instance any longer.</p>
+<h4><a name="Step Epilog"></a>Epilog</h4>
+<p>The last actions of the CAAMcaUdfEdition use case are the following: save the
+CAAUdfModelWithInstances.CATPart as CAAUdfModelWithInstancesModified.CATPart,
+close it and delete the session. It is also described in the Loading a Document
+use case [<a href="#References">5</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to edit a User Feature:
+<ul>
+  <li>Retrieves the User Feature to modify thanks to a local global function.
+    This feature implements the <i>CATIUdfFeatureIntance</i> interface</li>
+  <li>Begins the modifications by calling the <code>Init</code> method</li>
+  <li>Modifies the User Feature, either the inputs or the published parameters</li>
+  <li>End the modifications in calling the Reset method</li>
+</ul>
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">Power
+      Copy and User Features Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMcaUdfCreation.htm">Creating a User Feature Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMcaUdfInstantiation.htm">Instantiating a User Feature
+      Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

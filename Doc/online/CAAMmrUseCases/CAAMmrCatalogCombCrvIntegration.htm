@@ -1,0 +1,821 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Integrating a New Type of Component</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Catalog Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Integrating a New Type of Component</h3>
+      <em>Implementing CATICatalogEnable, CATICatalogInstantiation, and
+      CATICatalogSynchronize</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case shows how to integrate a new type of component in a
+      catalog document.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrCatalogCombCrv Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrCatalogCombCrv Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrCatalogCombCrv</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrCatalogCombCrv Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use case</h3>
+<p>The catalog document natively integrates the following components:</p>
+<ul>
+  <li>V5 Documents ( Part [<a href="#References">1</a>] , Product, Drawing,...)</li>
+  <li>Features (User Feature [<a href="#References">2</a>] , Power Copy, ...)</li>
+</ul>
+<p>The aim of this article is to show how to integrate your own type of
+component in implementing three interfaces on it:</p>
+<ul>
+  <li>CATICatalogSynchronize</li>
+  <p>This interface enables to update the contents of the description which has
+  a link towards an instance of the component. A description is one of three
+  elements which a catalog is made of: chapter, description and keyword. The
+  technical article &quot;Catalog overview&quot; [<a href="#References">3</a>]
+  or the use case &quot;Creating a Catalog&quot; [<a href="#References">4</a>]
+  explain in details the catalog structure.&nbsp;</p>
+  <p>It is not mandatory to implement it.&nbsp;</p>
+  <li>CATICatalogEnable</li>
+  <p>This&nbsp;interface authorizes the integration of the component (only for a
+  feature) in a catalog document.&nbsp;</p>
+  <li>CATICatalogInstantiation</li>
+  <p>This interface contains the method&nbsp; which launches an interactive
+  command to create a new instantiation of the component. The use case
+  &quot;Instantiating a Component&quot; [<a href="#References">5</a>] explains
+  how to realize an instantiation and in with which conditions.&nbsp;</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrCatalogCombCrv Use Case</h3>
+<p>CAAMmrCatalogCombCrv is a use case of the CAAMechanicalModeler.edu framework
+that illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right"><b>[<a href="#Top">Top</a>]</b></p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrCatalogCombCrv Do</h4>
+<p>This use case works with the <code>CombinedCurve</code> feature which is
+explained in the use case entitled &quot;Creating a New Geometrical Feature: the
+Combined Curve&quot; [<a href="#References">6</a>]. The next picture shows
+&quot;<code>CombineCrv</code>&quot; an instance of this feature. &quot;<code>CombineCrv&quot;</code>
+is the alias (<i>CATIAlias </i>interface of the ObjectModelerBase framework)
+name of the feature. It means that we have used the Edit Properties command to
+change its display name.&nbsp;&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The CAACombinedCurve.CATPart&nbsp;
+    Document&nbsp;</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrCatalogIntegration-PartCombCrv.jpg" width="296" height="391"></td>
+  </tr>
+</table>
+<p>In implementing&nbsp; <em>CATICatalogEnable, CATICatalogInstantiation </em>and
+<em>CATICatalogSynchronize&nbsp;</em> on the <code>CombinedCurve </code>feature,
+it is possible to integrate instances into a catalog document.</p>
+<p>An example of one catalog which contains a links towards &quot;<code>CombineCrv</code>&quot;
+the <code>CombinedCurve</code> feature. The implementation of the <i>CATICatalogSynchronize</i>
+enables to value the &quot;Name&quot; and the &quot;Inputs number&quot; keywords
+[<a href="#Fig.2">Fig.2</a>] and the name of the description [<a href="#Fig.3">Fig.3</a>].&nbsp;</p>
+<table width="432">
+  <caption><i><a name="Fig.2">Fig.2</a>: The CAACombinedCurve.catalog Document-
+    Keywords Tab Page</i></caption>
+  <tr>
+    <td width="424"><img border="0" src="images/CAAMmrCatalogIntegration-Cat2CombCrv.jpg" width="545" height="176"></td>
+  </tr>
+</table>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: The CAACombinedCurve.catalog Document-
+    RerefenceTab Page</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrCatalogIntegration-Cat1CombCrv.jpg" width="813" height="174"></td>
+  </tr>
+</table>
+<p>The CAACombinedCurve.catalog and the CAACombinedCurve.CATPart files are
+located in the directory <code>CAAMechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrCatalogCombCrv</h4>
+<p>To launch CAAMmrCatalogCombCrv , you will need to set up the build time
+environment, then compile the CAAMmrCatalogCombCrv module along with its
+prerequisites, set up the run time environment, and then launch CATIA [<a href="#References">7</a>].&nbsp;</p>
+<ul>
+  <li>On the <b>File</b> menu click <b>Open</b></li>
+  <li>in the <b>File Selection</b> dialog box retrieve the <b>CAACombinedCurve.CATPart</b>
+    (*) document and click <b>Open</b></li>
+  <li>On the <b>File</b> menu click <b>New</b></li>
+  <li>In the <b>File New&nbsp; </b>Dialog box select <b>CatalogDocument</b>&nbsp;
+    and click <b>OK</b></li>
+  <li>Launch the <b>Add Family <img border="0" src="../CAACciUseCases/images/CAACatalogAddFamily.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the <b>Component Family Definition</b> dialog box, enter <b>Family</b>
+    in the <b>Name </b>field and click <b>OK</b></li>
+  <li>Select <b>Family</b> in the specification tree&nbsp;</li>
+  <li>Launch the <b>Keyword</b> <b><img border="0" src="../CAACciUseCases/images/CAACatalogAddKeyword.jpg" width="22" height="22">
+    </b>command&nbsp;</li>
+  <li>In the <b>Keyword</b> <b>Definition</b> dialog box
+    <ul>
+      <li>Enter <b>Inputs number</b> in the <b>Name</b> field</li>
+      <li>Select <b>Integer</b> as <b>Type</b></li>
+      <li>Click <b>OK</b></li>
+    </ul>
+  </li>
+  <li>Launch the <b>Add Component <img border="0" src="../CAACciUseCases/images/CAACatalogDescription.gif" width="22" height="22">
+    </b>command</li>
+  <li>In the&nbsp; <b>Description&nbsp; Definition</b> dialog box
+    <ul>
+      <li>Push<b> Select external feature&nbsp;</b></li>
+      <li>select the <b>CombineCrv</b> in the <b>Part</b> document</li>
+      <li>Click <b>OK</b>&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p>(*) The file is located in the directory <code>CAAMechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrCatalogCombCrv Code</h4>
+<p>The CAAMmrCatalogCombCrv use case is made of three classes located in the
+CAAMmrCatalogCombCrv .m module of the CAAMechanicalModeler.edu framework:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the classes</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAAEMmrCatalogEnableForCombCrv</td>
+    <td width="67%">Data extension of the <i>CATICatalogEnable</i> interface</td>
+  </tr>
+  <tr>
+    <td width="33%">CAAEMmrCatalogInstantiationForCombCrv</td>
+    <td width="67%">Data extension of the <i>CATICatalogInstantiation</i>
+      interface</td>
+  </tr>
+  <tr>
+    <td width="33%">CAAEMmrCatalogSynchronizeForCombCrv</td>
+    <td width="67%">Data extension of the <i>CATICatalogSynchronize</i>
+      interface</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler</code><code>.edu\CAAMmrCatalogCombCrv.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrCatalogCombCrv.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>In the<i> </i>CAAMmrCatalogCombCrv use case you have four mains steps</p>
+<ol>
+  <li><a href="#Implem CATICatalogEnbale">Implementing CATICatalogEnable</a></li>
+  <li><a href="#impl cataloginsta">Implementing CATICatalogInstantiation</a></li>
+  <li><a href="#Implementing synchro">Implementing CATICatalogSynchronize</a></li>
+  <li><a href="#Dico">Modifying the Interface Dictionary</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Implem CATICatalogEnbale"></a>Implementing CATICatalogEnable</h4>
+<p>The implementation class is <i>CAAEMmrCatalogEnableForCombCrv</i>. This
+section describes:</p>
+<ol>
+  <li><a href="#hdr file pour enable">The header file</a>
+  <li><a href="#src pour enable">The source file</a>
+</ol>
+<ol>
+  <li><a name="hdr file pour enable"></a>The header file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// System Framework
+#include &quot;CATBaseUnknown.h&quot;  // To derive from 
+
+class CAAEMmrCatalogEnableForCombCrv: public CATBaseUnknown
+{
+    CATDeclareClass;
+    
+public:
+    
+    CAAEMmrCatalogEnableForCombCrv ();
+    virtual ~CAAEMmrCatalogEnableForCombCrv ();
+        
+private:
+ 
+    CAAEMmrCatalogEnableForCombCrv (CAAEMmrCatalogEnableForCombCrv &amp; iObjectToCopy);
+    CAAEMmrCatalogEnableForCombCrv&amp; operator=(CAAEMmrCatalogEnableForCombCrv &amp; iObjectToCopy);    
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAEMmrCatalogEnableForCombCrv</i> C++ class derives from <i>CATBaseUnknown</i>.
+  The <code>CATDeclareClass</code> macro declares that the <i>CAAEMmrCatalogEnableForCombCrv</i>
+  <code></code>class belongs to a component. The copy constructor and the
+  &quot;=&quot; operator are set as private to prevent the compiler from
+  automatically creating as public.</p>
+  <li><a name="src pour enable"></a>The source file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CAAEMmrCatalogEnableForCombCrv.h&quot;
+
+CATImplementClass ( CAAEMmrCatalogEnableForCombCrv ,
+                    DataExtension           ,
+                    CATBaseUnknown          ,
+                    <b>CombinedCurve</b>            );
+
+CAAEMmrCatalogEnableForCombCrv::CAAEMmrCatalogEnableForCombCrv()
+{<i>     </i>
+}
+
+CAAEMmrCatalogEnableForCombCrv::~CAAEMmrCatalogEnableForCombCrv()
+{
+}
+
+
+#include &quot;TIE_<b>CATICatalogEnable</b>.h&quot; 
+TIE_CATICatalogEnable( CAAEMmrCatalogEnableForCombCrv);
+</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The main points of this source file are:</p>
+  <ul>
+    <li><i>CAAEMmrCatalogEnableForCombCrv</i> implements the <i>CATICatalogEnable</i>
+      interface: this is expressed thanks to the <code>TIE_CATICatalogEnable</code>
+      macro
+    <li>CAAEMmrCatalogEnableForCombCrv implements the <i>CATICatalogEnable</i>
+      interface for the <code>CombinedCurve</code> component as a data
+      extension. This is expressed using the <code>CATImplementClass</code>
+      macro
+    <li>Since none of the <i>CATICatalogEnable</i> methods needs to be
+      redefined, the default constructor and the destructor are enough.</li>
+  </ul>
+</ol>
+<h4><a name="impl cataloginsta"></a>Implementing CATICatalogInstantiation</h4>
+<p>The implementation class is <i>CAAEMmrCatalogInstantiationForCombCrv</i>.
+This section describes:</p>
+<ol>
+  <li><a href="#hdr pour instantiation">The header file</a>
+  <li><a href="#src pour instantiation">The source file</a>
+</ol>
+<ul>
+  <li><a name="hdr pour instantiation"></a>The Header file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATBaseUnknown.h&quot;  // To derive from 
+class CATICatalogLink;
+class CATICatalogBrowser ;
+
+
+class CAAEMmrCatalogInstantiationForCombCrv: public CATBaseUnknown
+{
+    CATDeclareClass;
+    
+public:
+    
+    CAAEMmrCatalogInstantiationForCombCrv ();
+    virtual ~CAAEMmrCatalogInstantiationForCombCrv ();
+    
+    virtual HRESULT <b>RunInstantiationCmd</b> (const CATICatalogLink    * ipCatalogLink,
+                                       const CATICatalogBrowser * ipBrowser,
+                                       int iInstantiateMode,
+                                       int iRepeatMode,
+                                       int &amp; oNotDone) ;
+private:
+
+    CAAEMmrCatalogInstantiationForCombCrv (CAAEMmrCatalogInstantiationForCombCrv &amp; iObjectToCopy);
+    CAAEMmrCatalogInstantiationForCombCrv&amp; operator=(CAAEMmrCatalogInstantiationForCombCrv &amp; iObjectToCopy);
+    
+};
+    </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAEMmrCatalogInstantiationForCombCrv</i> C++ class derives from <i>CATBaseUnknown</i>.
+  The <code>CATDeclareClass</code> macro declares that the <i>CAAEMmrCatalogInstantiationForCombCrv</i>
+  class belongs to a component. The copy constructor and the &quot;=&quot;
+  operator are set as private to prevent the compiler from automatically
+  creating as public.</p>
+  <li><a name="src pour instantiation"></a>The source file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// Local FrameWork
+#include &quot;CAAEMmrCatalogInstantiationForCombCrv.h&quot;
+
+// MecModInterfaces Framework
+#include &quot;CATIPartRequest.h&quot;
+
+// ComponentsCatalogsInterfaces Framework
+#include &quot;CATICatalogDescription.h&quot;
+#include &quot;CATICatalogLink.h&quot;
+#include &quot;CATICatalogBrowser.h&quot;
+
+// ApplicationFrame Framework
+#include &quot;CATFrmEditor.h&quot;
+
+// Visualization Framework
+#include &quot;CATPathElement.h&quot;
+
+// System Framework
+#include &quot;CATCreateExternalObject.h&quot;
+#include &quot;CATCommand.h&quot;
+#include &quot;CATUnicodeString.h&quot;
+#include &quot;CATString.h&quot;
+
+#include &quot;iostream.h&quot;
+
+CATImplementClass ( CAAEMmrCatalogInstantiationForCombCrv ,
+                    DataExtension           ,
+                    CATBaseUnknown          ,
+                    <b>CombinedCurve</b>         );
+
+
+CAAEMmrCatalogInstantiationForCombCrv::CAAEMmrCatalogInstantiationForCombCrv()
+{
+}
+CAAEMmrCatalogInstantiationForCombCrv::~CAAEMmrCatalogInstantiationForCombCrv()
+{
+}
+
+#include &quot;<b>TIE_CATICatalogInstantiation</b>.h&quot; 
+<b>TIE_CATICatalogInstantiation</b>( CAAEMmrCatalogInstantiationForCombCrv);
+...
+</pre>
+      </td>
+    </tr>
+  </table>
+  <ul>
+    <li><code>CAAEMmrCatalogInstantiationForCombCrv</code> implements the <i>CATICatalogInstantiation</i>
+      interface: this is expressed thanks to the <code>TIE_CATICatalogInstantiation</code>
+      macro</li>
+    <li><code>CAAEMmrCatalogInstantiationForCombCrv </code>implements the <i>CATICatalogInstantiation</i>
+      interface for the <code>CombinedCurve</code> component as a data
+      extension. This is expressed using the <code>CATImplementClass</code>
+      macro</li>
+  </ul>
+  <p>The unique method of this interface is <code>RunInstantiationCmd</code>.
+  Its goal is to launch the interactive command to create a new instance of the
+  component. &nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEMmrCatalogInstantiationForCombCrv::RunInstantiationCmd (
+                                       const CATICatalogLink    * ipCatalogLink,
+                                       const CATICatalogBrowser * ipBrowser,
+                                       int                        iInstantiateMode,
+                                       int                        iRepeatMode,
+                                       int                      &amp; oNotDone)
+{
+   NotDone = 0;
+   HRESULT rc = E_FAIL;
+   if ( NULL == ipCatalogLink ) return rc ; 
+  
+   CATICatalogDescription * pDesc = NULL;
+   rc = ipCatalogLink-&gt;<b>GetPointedDescription</b> (&amp;pDesc) ;
+   if ( SUCCEEDED(rc) &amp;&amp; ( NULL!= pDesc) )
+   {
+       CATFrmEditor * pCurrentEditor = <b>CATFrmEditor::GetCurrentEditor</b>();
+       if ( NULL != pCurrentEditor )
+       {
+         CATPathElement path = pCurrentEditor-&gt;<b>GetUIActiveObject</b>();
+         int nbSizePath = path.<b>GetSize</b>();
+         
+         rc = E_FAIL ;
+         if ( nbSizePath &gt; 0 )
+         {
+             CATBaseUnknown * pLeaf = NULL ;
+             pLeaf = path[nbSizePath-1] ;
+             if ( NULL != pLeaf )
+             {
+                <b>CATIPartRequest</b> * pInt = NULL ;
+                rc = pLeaf-&gt;QueryInterface(IID_CATIPartRequest,(void**)&amp; pInt);
+                if ( SUCCEEDED(rc) )
+                {
+                   pInt-&gt;Release();
+                   pInt = NULL ;
+                }
+             }
+         }
+         
+         if ( SUCCEEDED(rc)  )
+         {
+             <b>CATICatalogDescription::CATCatalogDescriptionType </b>ComponentType ;
+             ComponentType = CATICatalogDescription::<b>CATCatalogUnset</b> ;
+             rc = pDesc-&gt;<b>GetDescriptionType</b>(ComponentType);
+
+	    if (SUCCEEDED (rc) &amp;&amp; (ComponentType == <b>CATICatalogDescription::CATCatalogFeature</b>) )
+             {
+                CATCommand * newCommand = NULL;
+                CATUnicodeString CommandName=&quot;<b>CAAMmrCombCrvPanelStCmd</b>&quot;;
+                CATUnicodeString CommandLib=&quot;<b>CAAMmrCombinedCurveUI</b>&quot;;
+
+                newCommand = (CATCommand *)::<b>CATCreateExternalObject</b>(
+                             CommandName.CastToCharPtr(),
+                             NULL,
+                             CommandLib.CastToCharPtr(),
+                             NULL); 
+                if ( NULL == newCommand )
+                {
+                   rc = E_FAIL ;
+                }
+             } 
+             pDesc-&gt;Release(); 
+             pDesc = NULL;
+         }
+      }
+   }
+
+   return rc;
+}</pre>
+      </td>
+    </tr>
+  </table>
+  <p>Before to launch the interactive command some tests are done:</p>
+  <ul>
+    <li>Input Parameters</li>
+    <p>Thanks to the <i>CATICatalogLink</i> interface, the description which
+    contents the object to instantiate is retrieved with the <code>GetPointedDescription</code>
+    method. It enables to check the type of the component. The <code>GetDescriptionType</code>
+    returns the type of the description.&nbsp;</p>
+    <li>Current UI active object</li>
+    <p>The <code>CombinedCurve</code> feature can only be instantiated in a Part
+    document, so the UI active object [<a href="#References">8</a>] must be a <code>MechanicalPart</code>
+    feature.&nbsp;The UI Active path is returned by the <code>GetUIActiveObject</code>
+    method of the current <i>CATFrmEditor</i> instance. Next, we analyze that
+    the leaf of this path, <code>pLeaf</code>, is a <code>MechanicalPart</code>
+    feature is testing an interface, <i>CATIPartRequest</i>, only implemented on
+    this feature.</p>
+  </ul>
+</ul>
+The last step consists in to launch the command. In this example the <code>CATCreateExternalObject</code>
+global function is used to launch the command by its name. This solution enables
+to execute a command whose the header is not accessible. It is the case for the
+&quot;<code>CAAMmrCombCrvPanelStCmd</code>&quot; command not exported by the
+CAAMmrCombinedCurveUI.m module of the CAAMechanicalModeler.edu framework.
+Otherwise you can always instantiate the command by the <code>new</code> method.
+<p>The deletion of the command, <code>CAAMmrCombCrvPanelStCmd</code>, is done by
+the command itself.
+<p>The output argument, <code>NotDone</code>, is set to <code>1</code> is the
+interactive command is launched otherwise it is set to <code>0</code>.
+<h4><a name="Implementing synchro"></a>Implementing CATICatalogSynchronize</h4>
+<ol>
+  <li><a href="#hdr synchro">The header file</a>
+  <li><a href="#scr synchro">The source file</a>
+</ol>
+<ol>
+  <li><a name="hdr synchro"></a>The header file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// System Framework
+#include &quot;CATBaseUnknown.h&quot;  // To derive from 
+
+class CATPixelImage;
+class CATUnicodeString;
+#include &quot;CATICkeType.h&quot;
+
+class CAAEMmrCatalogSynchronizeForCombCrv: public CATBaseUnknown
+{
+    CATDeclareClass;
+    
+public:
+
+   virtual ~CAAEMmrCatalogSynchronizeForCombCrv ();
+ 
+   virtual HRESULT <b>GetAlias</b>(CATUnicodeString&amp; oAlias) ;
+
+   virtual HRESULT <b>GetEmbeddedPreview</b>(CATPixelImage** oImage) ;
+
+   virtual HRESULT <b>GetKeywordValue</b>(const CATUnicodeString&amp; iKeywordName,
+                                   int&amp; oKeyWordValue) ;
+ 
+   virtual HRESULT <b>GetKeywordValue</b>(const CATUnicodeString&amp; iKeywordName,
+                                   const CATICkeType* iKeywordType,
+                                   double&amp; oKeyWordValue) ;
+
+   virtual HRESULT <b>GetKeywordValue</b>(const CATUnicodeString&amp; iKeywordName,
+                                   CATCke::Boolean &amp; oKeyWordValue) ;
+ 
+
+   virtual HRESULT <b>GetKeywordValue</b>(const CATUnicodeString&amp; iKeywordName,
+                                   CATUnicodeString&amp; oKeyWordValue) ;
+    
+private:
+
+    CAAEMmrCatalogSynchronizeForCombCrv (CAAEMmrCatalogSynchronizeForCombCrv &amp; iObjectToCopy);
+    CAAEMmrCatalogSynchronizeForCombCrv&amp; operator=(CAAEMmrCatalogSynchronizeForCombCrv &amp; iObjectToCopy);
+    
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CAAEMmrCatalogSynchronizeForCombCrv</i> C++ class derives from <i>CATBaseUnknown</i>.
+  The <code>CATDeclareClass</code> macro declares that the <i>CAAEMmrCatalogSynchronizeForCombCrv</i>
+  class belongs to a component. The copy constructor and the &quot;=&quot;
+  operator are set as private to prevent the compiler from automatically
+  creating as public.</p>
+  <li><a name="scr synchro"></a>The source file</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// Local FrameWork
+#include &quot;CAAEMmrCatalogSynchronizeForCombCrv.h&quot;
+
+// ObjectModelerBase Framework
+#include &quot;CATIAlias.h&quot;
+
+// System Framework
+#include &quot;CATUnicodeString.h&quot;
+
+#include &quot;<b>TIE_CATICatalogSynchronize</b>.h&quot; 
+<b>TIE_CATICatalogSynchronize</b>( CAAEMmrCatalogSynchronizeForCombCrv);
+
+CATImplementClass ( CAAEMmrCatalogSynchronizeForCombCrv ,
+                    DataExtension           ,
+                    CATBaseUnknown          ,
+                    <b>CombinedCurve</b>            );
+
+CAAEMmrCatalogSynchronizeForCombCrv::CAAEMmrCatalogSynchronizeForCombCrv()
+{
+}
+
+CAAEMmrCatalogSynchronizeForCombCrv::~CAAEMmrCatalogSynchronizeForCombCrv()
+{
+}
+ ...</pre>
+      </td>
+    </tr>
+  </table>
+  <ul>
+    <li><code>CAAEMmrCatalogSynchronizeForCombCrv</code> implements the <i>CATICatalogSynchronise</i>
+      interface: this is expressed thanks to the <code>TIE_CATICatalogSynchronize</code>
+      macro</li>
+    <li><code>CAAEMmrCatalogSynchronizeForCombCrv</code> implements the <i>CATICatalogSynchronise</i>
+      interface for the <code>CombinedCurve</code> component as a data
+      extension. This is expressed using the <code>CATImplementClass</code>
+      macro</li>
+  </ul>
+  <p><b><a name="GetAlias">GetAlias</a></b></p>
+  <p>This method returns the name of the description. It is the value returned
+  by the <code>GetName</code> method of the <i>CATICatalogDescription</i>
+  interface. In the [<a href="#Fig.3">Fig.3</a>] notices the value and the
+  following code: the string &quot;CAA&quot; is added to the name of the
+  feature. It is an example to see the role of this method, but in most cases
+  the alias of the feature is used.</p>
+  <p>The value returned by this method is also the value of the &quot;<code>Name</code>&quot;
+  keyword. see [<a href="#Fig.2">Fig.2</a>]. In others word, the value returned
+  by the <code>GetValue</code> method of the <i>CATICatalogDescription</i>
+  interface for the &quot;<code>Name</code>&quot; keyword is those of this
+  method.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre> ...
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetAlias(CATUnicodeString&amp; oAlias) 
+{
+  CATIAlias_var alias(this);
+  if (alias!=NULL_var)
+  {
+      oAlias = &quot;CAA&quot; ;
+      oAlias += alias-&gt;GetAlias();
+  }
+  return S_OK;
+}</pre>
+      </td>
+    </tr>
+  </table>
+  <p><b>GetEmbeddedPreview</b></p>
+  <p>This method enables to associate a specific image to the description. This
+  method is called only if the description has an embedded preview. It means
+  that this method is without effect if the description has an image from a
+  file. The use case &quot;Creating a Catalog With Part Document&quot; [<a href="#References">1</a>]
+  explains how to set an preview image by a file.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetEmbeddedPreview(CATPixelImage** oImage) 
+{
+    return E_FAIL ;
+}
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><b>GetKeywordValue</b></p>
+  <p>There are four methods which depends on the type of the keyword : integer,
+  CATUnicodeString, CATICkeType and CATCke::Boolean. For the four, the principle
+  is the same: to value keywords. One of these four methods is called for each
+  keyword of the catalog in taken account of its type.</p>
+  <p>There is a specific keyword: the &quot;<code>Name</code>&quot; keyword. If
+  your <code><a href="#GetAlias">GetAlias</a></code> method doesn't return
+  E_FAIL, the value of this keyword is the value returned by <code>GetAlias</code>
+  method. So in general, It is not necessary to write specific code in the <code>GetKeywordValue</code>
+  method for this CATUnicodeString keyword.</p>
+  <p>For this example, we have chosen to valuate the <code>Inputs number</code>
+  (integer) keywords.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre> ...
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetKeywordValue(const CATUnicodeString&amp; iKeywordName,
+                                   int&amp; oKeyWordValue) 
+{
+    HRESULT rc = S_OK ;
+    CATUnicodeString Key = &quot;<b>Inputs number</b>&quot; ;
+    if ( Key == iKeywordName )
+    {
+        oKeyWordValue = 4 ;
+    }else rc = E_FAIL ;
+
+    return rc ;
+}
+</pre>
+      </td>
+    </tr>
+  </table>
+  <p>Notice on the [<a href="#Fig.2">Fig.2</a>] the value of the keyword <code>Inputs
+  number</code> . To create a Combined Curve, 4 elements are necessary: two
+  curves and two directions, it is the reason of the<code> 4</code> value.</p>
+  <p>For the others methods, each returns E_FAIL.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre> ...
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetKeywordValue(const CATUnicodeString&amp; iKeywordName,
+                                   const CATICkeType* iKeywordType,
+                                   <b>double</b>&amp; oKeyWordValue)
+{
+    return E_FAIL ;
+}
+
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetKeywordValue(const CATUnicodeString&amp; iKeywordName,
+                                   <b>CATCke::Boolean</b> &amp; oKeyWordValue) 
+{
+    return E_FAIL ;
+}
+ ...
+HRESULT CAAEMmrCatalogSynchronizeForCombCrv::GetKeywordValue(const CATUnicodeString&amp; iKeywordName,
+                                   <b>CATUnicodeString</b>&amp; oKeyWordValue)
+{
+    return E_FAIL ;
+}</pre>
+      </td>
+    </tr>
+  </table>
+</ol>
+<h4><a name="Dico"></a>Modifying the Interface Dictionary</h4>
+<p>In the interface dictionary dedicated to the CAAMechanicalModeler.edu
+framework, it is necessary to add the following lines to indicate that the <code>CombinedCurve</code>
+component<code> </code>implements the three interfaces in the
+CAAMmrCatalogCombCrv.m module.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+CombinedCurve               CATICatalogEnable               libCAAMmrCatalogCombCrv
+CombinedCurve               CATICatalogInstantiation        libCAAMmrCatalogCombCrv
+CombinedCurve               CATICatalogSynchronize          libCAAMmrCatalogCombCrv
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case illustrates how to implement the three following interfaces to
+integrate a new type of component in a catalog document:
+<ul>
+  <li>CATICatalogEnable (for features only)</li>
+  <li>CATICatalogInstantiation</li>
+  <li>CATICatalogSynchronize (not mandatory)</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="896">
+  <tr>
+    <td valign="top" width="62">[1]</td>
+    <td width="820"><a href="../CAACciUseCases/CAACciCatalogCreationPart.htm">Creating
+      a Catalog With Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[2]</td>
+    <td width="820">User Feature and Power Copy in Catalog</td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[3]</td>
+    <td width="820"><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[4]</td>
+    <td width="820"><a href="../CAACciUseCases/CAACciCatalogCreationStructure.htm">Creating
+      a Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[5]</td>
+    <td width="820"><a href="CAAMmrCatalogCombCrvInst.htm">Instantiating a
+      Component</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[6]</td>
+    <td width="820"><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating a
+      New Geometrical Feature: the Combined Curve</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[7]</td>
+    <td width="820"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="62">[8]</td>
+    <td width="820"><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="888">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

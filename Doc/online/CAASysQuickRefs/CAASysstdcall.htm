@@ -1,0 +1,85 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>About __stdcall</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>About __stdcall</h3>
+      <em>Making your interface methods comply with Automation</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the <code>__stdcall</code> statement you need to
+      insert in your interface method signatures. It includes the following
+      section:
+      <ul>
+        <li><a href="#100000"><strong>What Is __stdcall?</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Is __stdcall?</h3>
+<p><code>__stdcall</code> is a Microsoft specific extension to the C++ compiler.
+It is set to <code>NULL</code> with UNIX, and is there useless. <code>__stdcall</code>
+is required in the method signature for Automation and invocation from Visual
+Basic.</p>
+<p>A function or method with <code>__stdcall</code> in its signature uses the
+Pascal calling convention, which requests the called function to remove the
+parameters from the stack before returning to the caller. Otherwise, the C/C++
+calling convention is used, which requests the caller to clean up the parameter
+stack instead of the called method.</p>
+<p>Note that <code>__stdcall</code> must be included in the interface (.idl) and
+in the header (.h) files, but can be omitted in the source (.cpp) file. This is
+the convention used in these articles.</p>
+<p>The IUnknown interface gives an example of <code>__stdcall</code> usage in
+the <code>QueryInterface</code> method signature:</p>
+<pre>
+virtual HRESULT <font color="red">__stdcall</font> QueryInterface(const IID &amp; iid, void ** ppv) = 0;
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

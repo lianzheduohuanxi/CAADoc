@@ -1,0 +1,278 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspLogicalLine.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspGroup, CATIAPspGroupable  and CATIAPspLogicalLine</font>
+<font color="#008000">'  </font>
+<font color="#008000">'   Asumption : Looks  for document CAAPsp3DEduIn.CATProduct.              </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    Dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    Dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ----------------------------------------------------------------</font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct" )
+
+    
+    <font color="#008000">'MsgBox strMessage_g</font>
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "----------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspLogicalLine.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+    
+<font color="#0000FF">    Dim </font>objLLogLines     <font color="#0000FF"> As </font>PspListOfObjects  
+    
+<font color="#0000FF">    Dim </font>objPspGroup      <font color="#0000FF"> As </font>PspGroup
+<font color="#0000FF">    Dim </font>objPspID         <font color="#0000FF"> As </font>PspID
+<font color="#0000FF">    Dim </font>objPspLogLine    <font color="#0000FF"> As </font>PspLogicalLine
+    
+    
+<font color="#0000FF">    Dim </font>ePspIDLDomainID  <font color="#0000FF"> As </font>CatPspIDLDomainID    
+<font color="#0000FF">    Dim </font>intIdx         <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intNbLogLines  <font color="#0000FF"> As </font>Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get a list of logical lines instances, then get PspGroup handle</font>
+    <font color="#008000">' to the first logical line instance obtained </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      
+
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">        Set </font>objLLogLines = objPspAppFactory.ListLogicalLines (objPrdRoot)
+<font color="#0000FF">        If </font>( Not ( objLLogLines Is Nothing ) )<font color="#0000FF"> Then</font>
+         <font color="#0000FF"> int</font>NbLogLines = objLLogLines.Count
+
+          strMessage_g = strMessage_g & _
+                    "Number of Logical Lines=" & intNbLogLines & vbCr              
+
+<font color="#0000FF">          If </font>(<font color="#0000FF"> int</font>NbLogLines &gt; 0 )<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Set </font>objPspGroup = objLLogLines.Item(1,"CATIAPspGroup")
+<font color="#0000FF">            Set </font>objPspLogLine = objLLogLines.Item(1,"CATIAPspLogicalLine")
+<font color="#0000FF">            Set </font>objPspID = objLLogLines.Item(1,"CATIAPspID")
+<font color="#0000FF">            If </font>( Not (objPspID Is Nothing) )<font color="#0000FF"> Then</font>
+              strMessage_g = strMessage_g & "Logical line object ID =" &  objPspID.GetID & vbCr               
+<font color="#0000FF">            End If </font>
+
+<font color="#0000FF">          End if</font>
+<font color="#0000FF">        End If       </font>
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">'  List members (CATIAPspGroup)</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objLMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+     
+<font color="#0000FF">    Dim </font>objPspGroupable     <font color="#0000FF"> As </font>PspGroupable
+<font color="#0000FF">    Dim </font>objPspGroupableRem  <font color="#0000FF"> As </font>PspGroupable
+<font color="#0000FF">    Dim </font>objPspIDMember      <font color="#0000FF"> As </font>PspID
+    
+    
+<font color="#0000FF">    If </font>( Not ( objPspGroup Is Nothing ))<font color="#0000FF"> Then      </font>
+<font color="#0000FF">      Dim </font>objLCntrs           <font color="#0000FF"> As </font>PspListOfObjects            
+                     
+<font color="#0000FF">      Set </font>objLMembers = objPspGroup.Members         
+
+<font color="#0000FF">      If </font>( Not ( objLMembers Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g & _
+          "Number of Members= " &  objLMembers.Count & vbCr                      
+    
+<font color="#0000FF">        For </font>intIdx = 1<font color="#0000FF"> To </font>objLMembers.Count      
+<font color="#0000FF">          Set </font>objPspGroupable = objLMembers.Item (intIdx, "CATIAPspGroupable")                            
+<font color="#0000FF">          Set </font>objPspIDMember = objLMembers.Item (intIdx, "CATIAPspID")          
+
+<font color="#0000FF">          If </font>( Not (objPspIDMember Is Nothing) )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g & "Member ID =" &  objPspIDMember.GetID & vbCr               
+<font color="#0000FF">          End If                   </font>
+<font color="#0000FF">        Next </font>
+
+        <font color="#008000">'-----------------------------------------</font>
+        <font color="#008000">' Query PspGroupable methods</font>
+        <font color="#008000">'-----------------------------------------</font>
+
+<font color="#0000FF">        If </font>( Not ( objPspGroupable Is Nothing ) )<font color="#0000FF"> Then                </font>
+          QueryGroupable objPspGroupable
+
+          <font color="#008000">'-------------------------------------</font>
+          <font color="#008000">' Remove member</font>
+          <font color="#008000">'-------------------------------------</font>
+<font color="#0000FF">          If </font>( Not ( objPspGroupable Is Nothing ) )<font color="#0000FF"> Then       </font>
+            strMessage_g = strMessage_g &   "Removing member= " & _
+                objPspIDMember.GetID   & vbCr              
+            objPspGroup.RemoveMember objPspGroupable           
+            
+            <font color="#008000">'-------------------------------------</font>
+            <font color="#008000">' Add member</font>
+            <font color="#008000">'-------------------------------------     </font>
+            
+            strMessage_g = strMessage_g & _
+                "Adding member= " &  objPspIDMember.GetID & vbCr              
+            objPspGroup.AddMember objPspGroupable                   
+<font color="#0000FF">          End If               </font>
+<font color="#0000FF">        End If</font>
+
+<font color="#0000FF">      End If        </font>
+<font color="#0000FF">    End if</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">'  GetFromTo information (CATIAPspLogicalLine)</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objLFromMajorMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLFromMinorMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLToMajorMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    Dim </font>objLToMinorMembers         <font color="#0000FF"> As </font>PspListOfObjects  
+<font color="#0000FF">    If </font>( Not ( objPspLogLine Is Nothing ))<font color="#0000FF"> Then      </font>
+      objPspLogLine.GetFromTo objLFromMajorMembers, objLFromMinorMembers,  _
+                              objLToMajorMembers, objLToMinorMembers
+
+<font color="#0000FF">      If </font>( Not ( objLFromMajorMembers Is Nothing ))<font color="#0000FF"> Then      </font>
+        strMessage_g = strMessage_g & _
+          "Number of From-Major Members is: " & objLFromMajorMembers.Count  & vbCr  
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of From-Major Members is 0"  & vbCr  
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLFromMinorMembers Is Nothing ))<font color="#0000FF"> Then      </font>
+        strMessage_g = strMessage_g & _
+           "Number of From-Minor Members is: " & objLFromMinorMembers.Count & vbCr  
+        
+      Else       
+        strMessage_g = strMessage_g & _
+           "Number of  From-Minor Members is 0"  & vbCr  
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLToMajorMembers Is Nothing ))<font color="#0000FF"> Then      </font>
+        strMessage_g = strMessage_g & _
+          "Number of To-Major Members is: " & objLToMajorMembers.Count  & vbCr  
+        
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of  To-Major Members is 0"  & vbCr   
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLToMinorMembers Is Nothing ))<font color="#0000FF"> Then      </font>
+        strMessage_g = strMessage_g & _
+            "Number of  To-Minor Members is 0"  & objLToMinorMembers.Count & vbCr   
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of  To-Minor Members is 0"  & vbCr   
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If</font>
+
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryGroupable methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspGroupableArg        : PspGroupable object</font>
+<font color="#008000">' |        </font>
+<font color="#008000">' |        </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+Private Sub QueryGroupable (objPspGroupableArg<font color="#0000FF"> As </font>PspGroupable)      
+
+<font color="#0000FF">    Dim </font>objPspGroups      <font color="#0000FF"> As </font>PspGroup    
+
+<font color="#0000FF">    If </font>( Not ( objPspGroupableArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      <font color="#008000">' ---------------------------</font>
+      <font color="#008000">' Get Groups</font>
+      <font color="#008000">' ---------------------------</font>
+
+<font color="#0000FF">      Set </font>objPspGroups = objPspGroupableArg.Groups
+
+<font color="#0000FF">      If </font>( Not ( objPspGroups Is Nothing ) )<font color="#0000FF"> Then         </font>
+        strMessage_g = strMessage_g & _
+          "Number of Groups =" & objPspGroups.Count & vbCr              
+<font color="#0000FF">      End If      </font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

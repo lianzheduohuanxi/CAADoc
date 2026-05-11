@@ -1,0 +1,934 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta version="1">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>What's New in CAA V5 Automation Objects</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <h1 align="right"><a name="Top"></a>What's New in V5R17 in CAA V5 Automation 
+ Objects</h1>
+ <hr>
+ <p>This article presents automation object, methods and properties that have 
+ been added since V5R16 GA to enhance CAA V5 automation capabilities, support 
+ functional evolutions and correct defects. Some of those modification already 
+ exist on V5R16 service packs. A few properties and methods have been modified 
+ or suppressed. VB and VBScripts code using those methods may have to be 
+ modified. VB projects using the corresponding objects must be recompiled.</p>
+<p>Consult <a href="../CAAScdInfTechArticles/CAAInfHints.htm">About VB, VBA, Debug, and Portability</a> for  details on manual adjustments that may be required for existing VB/VBA projects to be usable on a new release.</p>
+ <ul>
+   <li><a href="#NewClass">New Classes</a></li>
+   <li><a href="#NewMethod">New Methods and Properties</a></li>
+   <li><a href="#Modif">Modified Methods and Properties</a></li>
+   <li><a href="#Suppress">Suppressed Classes, Methods and Properties</a></li>
+ </ul>
+ <p>Deprecated APIs can be found in
+ <a href="#" onclick="javascript:CAAlink('IDL', 'Deprecated');return false;">CAA 
+ IDL API Deprecated Index</a>.</p>
+ <p>New articles and Use Cases in V5R17:</p>
+ <ul>
+   <li><a href="CAA2dlScriptHome.htm">2D Layout for 3D Design</a><ul>
+     <li><a href="../CAAScd2dlTechArticles/CAA2dlToc2DLayout.htm">2D Layout for 3D Design Automation Objects</a></li>
+     <li><a href="../CAAScd2dlUseCases/CAA2dlIPrint2DLayout.htm">Printing Part 2D Layouts in an Assembly</a></li>
+     </ul>
+   </li>
+   <li><a href="CAAAniScriptHome.htm">Analysis</a><ul>
+     <li>Mesh Parts<ul>
+     <li><a href="../CAAScdAniUseCases/CAAAniMesh1D.htm">Creating 1D Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshSweep3D.htm">Creating Sweep 3D Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshTetraFiller.htm">Creating Tetrahedron Filler Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshOctTetra.htm">Creating Octree Tetrahedron Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshOctTriangle.htm">Creating Octree Triangle Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshAdvSurf.htm">Creating Advanced Surface Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshBasicSurf.htm">Creating Surface Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshCoating1D.htm">
+       Creating Coating1D Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshCoating2D.htm">Creating Coating2D Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshSpotWelding.htm">Meshing Spot Welding Connections 
+       </a> </li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshSeamWelding.htm">Meshing Seam Welding Connections</a> </li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshSurfaceWelding.htm">Meshing Surface Welding Connections</a></li>
+     <li>
+       <a href="../CAAScdAniUseCases/CAAAniMeshNodesToNodesConnection.htm">Meshing Nodes to Nodes Connections</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshNodesInterface.htm">Creating Nodes Interface Mesh Parts</a></li>
+     </ul>
+     </li>
+     <li>Mesh Transformations<ul>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshTranslation.htm">Creating Translation Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshRotation.htm">Creating Rotation Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshSymmetry.htm">Creating Symmetry Mesh Parts</a></li>
+     </ul>
+     </li>
+     <li>Extrude Trasformations<ul>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshExtrudeTrans.htm">
+       Creating Extrude with Translation Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshExtrudeRot.htm">Creating Extrude with Rotation Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshExtrudeSymm.htm">Creating Extrude with Symmetry Mesh Parts</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniMeshExtrudeSpine.htm">Creating Extrude along a Spine Mesh Parts</a></li>
+     </ul>
+     </li>
+     <li>Post-Processing<ul>
+     <li>
+       <a href="../CAAScdAniUseCases/CAAAniPostProImageCreation.htm">Generating Images</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPostProExportData.htm">Exporting Data on Images</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPostProBasicReport.htm">Creating Basic Report</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPostProAcDesact.htm">Activating-Deactivating Images</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPostProOccurrence.htm">Specifying Occurrences for Images</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPostProSelection.htm">Selecting 
+       Groups for Image Visualization</a></li>
+     </ul>
+     </li>
+     <li>Transfer of Loads / Displacements<ul>
+     <li><a href="../CAAScdAniUseCases/CAAAniPreProAsmbldLoads.htm">Create Assembled Loads</a></li>
+     <li><a href="../CAAScdAniUseCases/CAAAniPreProAsmbldSol.htm">Create Assembled Solutions</a></li>
+     </ul>
+     </li>
+     </ul>
+   </li>
+   </li>
+ </ul>
+ <p>You can also find news from previous CAA releases:</p>
+ <ul>
+   <li><a href="CAAScdScriptNewsR16.htm">V5R16 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR15.htm">V5R15 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR14.htm">V5R14 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR13.htm">V5R13 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR12.htm">V5R12 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR11.htm">V5R11 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR10.htm">V5R10 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR9.htm">V5R9 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR8.htm">V5R8 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR7.htm">V5R7 What's New?</a></li>
+   <li><a href="CAAScdScriptNewsR6.htm">V5R6 What's New?</a></li>
+ </ul>
+<table border="0" width="100%">
+<tr>
+<td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="NewClass"></a><font color="#FFFFFF"><em><strong>New classes</strong></em></font></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>Analysis</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisExport'); return false;">AnalysisExport</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisImport'); return false;">AnalysisImport</a></td>
+<td width="42%"></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>DMU Navigator</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Hyperlink'); return false;">Hyperlink</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Hyperlinks'); return false;">Hyperlinks</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'MarkerSettingAtt'); return false;">MarkerSettingAtt</a></td>
+<td width="42%"></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>Infrastructure</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'DraftingPageSetup'); return false;">DraftingPageSetup</a></td>
+<td width="42%"></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>Misc</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ElecSchematicItf', 'ElecSchematicObject'); return false;">ElecSchematicObject</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ElecSchematicItf', 'ElecSchWire'); return false;">ElecSchWire</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CAT3DXmlInterfaces', 'Export3DXmlSettingAtt'); return false;">Export3DXmlSettingAtt</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DFactory'); return false;">Layout2DFactory</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DRoot'); return false;">Layout2DRoot</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DSheet'); return false;">Layout2DSheet</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DSheets'); return false;">Layout2DSheets</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DView'); return false;">Layout2DView</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DViews'); return false;">Layout2DViews</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PCBoardBase', 'PCBBoard'); return false;">PCBBoard</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PCBoardBase', 'PCBWorkbench'); return false;">PCBWorkbench</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay'); return false;">Replay</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATReporterInterfaces', 'RpmReport'); return false;">RpmReport</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'FittingInterfaces', 'Shuttles'); return false;">Shuttles</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'AIPDPDProperty'); return false;">AIPDPDProperty</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBDeviceInterfaces', 'BasicDevice'); return false;">BasicDevice</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBDeviceInterfaces', 'DeviceJointRelations'); return false;">DeviceJointRelations</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBEHSInterfaces', 'EHSUpdateSmoothnessFactor'); return false;">EHSUpdateSmoothnessFactor</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBDeviceInterfaces', 'HomePosition'); return false;">HomePosition</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'IPDTemplateProperty'); return false;">IPDTemplateProperty</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBRobotInterfaces', 'ParameterProfiles'); return false;">ParameterProfiles</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%"></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBRobotInterfaces', 'ParameterProfilesFactory'); return false;">ParameterProfilesFactory</a></td>
+<td width="42%"></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>Part Design</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'AutoFillet'); return false;">AutoFillet</a></td>
+<td width="42%"></td>
+</tr>
+<tr><td colspan="3"></td></tr>
+<tr>
+<td width="24%"><b><i>Wireframe and Surface</i></b></td>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeTransfer'); return false;">HybridShapeTransfer</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%" valign="top" colspan="3">
+<p align="right">[<a href="#Top">Top</a>]</td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+<tr>
+<td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="NewMethod"></a><font color="#FFFFFF"><em><strong>New methods and Properties</strong></em></font></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisMeshPart', 'SetSpecificationFromPublication'); return false;">AnalysisMeshPart::SetSpecificationFromPublication</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisMeshPart', 'SetSpecificationFromReference'); return false;">AnalysisMeshPart::SetSpecificationFromReference</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'ApplyLabelEffToAltChild'); return false;">MfgHubSettingAtt::ApplyLabelEffToAltChild</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'GetApplyLabelEffToAltChildInfo'); return false;">MfgHubSettingAtt::GetApplyLabelEffToAltChildInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'GetLoadAllChildProcMfgCtxInfo'); return false;">MfgHubSettingAtt::GetLoadAllChildProcMfgCtxInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'GetLoadAssocPrdResChildInfo'); return false;">MfgHubSettingAtt::GetLoadAssocPrdResChildInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'GetLoadResGeoInfo'); return false;">MfgHubSettingAtt::GetLoadResGeoInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'GetMfgCtxPrevProcRelationTypeInfo'); return false;">MfgHubSettingAtt::GetMfgCtxPrevProcRelationTypeInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'LoadAllChildProcMfgCtx'); return false;">MfgHubSettingAtt::LoadAllChildProcMfgCtx</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'LoadAssocPrdResChild'); return false;">MfgHubSettingAtt::LoadAssocPrdResChild</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'LoadResGeo'); return false;">MfgHubSettingAtt::LoadResGeo</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'MfgCtxPrevProcRelationType'); return false;">MfgHubSettingAtt::MfgCtxPrevProcRelationType</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'SetApplyLabelEffToAltChildLock'); return false;">MfgHubSettingAtt::SetApplyLabelEffToAltChildLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'SetLoadAllChildProcMfgCtxLock'); return false;">MfgHubSettingAtt::SetLoadAllChildProcMfgCtxLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'SetLoadAssocPrdResChildLock'); return false;">MfgHubSettingAtt::SetLoadAssocPrdResChildLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'SetLoadResGeoLock'); return false;">MfgHubSettingAtt::SetLoadResGeoLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATIPDAdapterInterfaces', 'MfgHubSettingAtt', 'SetMfgCtxPrevProcRelationTypeLock'); return false;">MfgHubSettingAtt::SetMfgCtxPrevProcRelationTypeLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'AlphabeticOrder'); return false;">FTASettingAtt::AlphabeticOrder</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'DimMoveLeaderCre'); return false;">FTASettingAtt::DimMoveLeaderCre</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'DimMoveLeaderMod'); return false;">FTASettingAtt::DimMoveLeaderMod</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'GetAlphabeticOrderInfo'); return false;">FTASettingAtt::GetAlphabeticOrderInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'GetDimMoveLeaderCreInfo'); return false;">FTASettingAtt::GetDimMoveLeaderCreInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'GetDimMoveLeaderModInfo'); return false;">FTASettingAtt::GetDimMoveLeaderModInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'SetAlphabeticOrderLock'); return false;">FTASettingAtt::SetAlphabeticOrderLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'SetDimMoveLeaderCreLock'); return false;">FTASettingAtt::SetDimMoveLeaderCreLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATTPSInterfaces', 'FTASettingAtt', 'SetDimMoveLeaderModLock'); return false;">FTASettingAtt::SetDimMoveLeaderModLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Activity', 'Outputs'); return false;">Activity::Outputs</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Activity', 'ProcessID'); return false;">Activity::ProcessID</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Activity', 'SetProcessID'); return false;">Activity::SetProcessID</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Items', 'AddByAssignmentType'); return false;">Items::AddByAssignmentType</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Items', 'CountByAssignmentType'); return false;">Items::CountByAssignmentType</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Items', 'ItemByAssignmentType'); return false;">Items::ItemByAssignmentType</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Items', 'RemoveByAssignmentType'); return false;">Items::RemoveByAssignmentType</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'GetIDUniqueSetting'); return false;">LibTabSettingAtt::GetIDUniqueSetting</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'GetIDUniqueSettingInfo'); return false;">LibTabSettingAtt::GetIDUniqueSettingInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'GetProcessIDScript'); return false;">LibTabSettingAtt::GetProcessIDScript</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'GetProcessIDScriptInfo'); return false;">LibTabSettingAtt::GetProcessIDScriptInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'SetIDUniqueSetting'); return false;">LibTabSettingAtt::SetIDUniqueSetting</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'SetIDUniqueSettingLock'); return false;">LibTabSettingAtt::SetIDUniqueSettingLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'SetProcessIDScript'); return false;">LibTabSettingAtt::SetProcessIDScript</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'LibTabSettingAtt', 'SetProcessIDScriptLock'); return false;">LibTabSettingAtt::SetProcessIDScriptLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBIgpOlpUI', 'IgpOlpSettingAtt', 'GetNRLDirInfo'); return false;">IgpOlpSettingAtt::GetNRLDirInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBIgpOlpUI', 'IgpOlpSettingAtt', 'NRLDir'); return false;">IgpOlpSettingAtt::NRLDir</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBIgpOlpUI', 'IgpOlpSettingAtt', 'SetNRLDirLock'); return false;">IgpOlpSettingAtt::SetNRLDirLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlAccelLimit'); return false;">AnalysisSettingAtt::AnlAccelLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlCautionZone'); return false;">AnalysisSettingAtt::AnlCautionZone</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlIntDist'); return false;">AnalysisSettingAtt::AnlIntDist</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlIntf'); return false;">AnalysisSettingAtt::AnlIntf</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlIOAnalysis'); return false;">AnalysisSettingAtt::AnlIOAnalysis</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlLinAccelLimit'); return false;">AnalysisSettingAtt::AnlLinAccelLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlLinSpeedLimit'); return false;">AnalysisSettingAtt::AnlLinSpeedLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlMeasure'); return false;">AnalysisSettingAtt::AnlMeasure</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlRotAccelLimit'); return false;">AnalysisSettingAtt::AnlRotAccelLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlRotSpeedLimit'); return false;">AnalysisSettingAtt::AnlRotSpeedLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlTravelLimit'); return false;">AnalysisSettingAtt::AnlTravelLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'AnlVelocityLimit'); return false;">AnalysisSettingAtt::AnlVelocityLimit</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'DisplayAnlStatus'); return false;">AnalysisSettingAtt::DisplayAnlStatus</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlAccelLimitInfo'); return false;">AnalysisSettingAtt::GetAnlAccelLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlCautionZoneInfo'); return false;">AnalysisSettingAtt::GetAnlCautionZoneInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlIntDistInfo'); return false;">AnalysisSettingAtt::GetAnlIntDistInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlIntfInfo'); return false;">AnalysisSettingAtt::GetAnlIntfInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlIOAnalysisInfo'); return false;">AnalysisSettingAtt::GetAnlIOAnalysisInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlLinAccelLimitInfo'); return false;">AnalysisSettingAtt::GetAnlLinAccelLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlLinSpeedLimitInfo'); return false;">AnalysisSettingAtt::GetAnlLinSpeedLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlMeasureInfo'); return false;">AnalysisSettingAtt::GetAnlMeasureInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlRotAccelLimitInfo'); return false;">AnalysisSettingAtt::GetAnlRotAccelLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlRotSpeedLimitInfo'); return false;">AnalysisSettingAtt::GetAnlRotSpeedLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlTravelLimitInfo'); return false;">AnalysisSettingAtt::GetAnlTravelLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetAnlVelocityLimitInfo'); return false;">AnalysisSettingAtt::GetAnlVelocityLimitInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetDisplayAnlStatusInfo'); return false;">AnalysisSettingAtt::GetDisplayAnlStatusInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'GetSyncAnlSpecsInfo'); return false;">AnalysisSettingAtt::GetSyncAnlSpecsInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlAccelLimitLock'); return false;">AnalysisSettingAtt::SetAnlAccelLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlCautionZoneLock'); return false;">AnalysisSettingAtt::SetAnlCautionZoneLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlIntDistLock'); return false;">AnalysisSettingAtt::SetAnlIntDistLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlIntfLock'); return false;">AnalysisSettingAtt::SetAnlIntfLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlIOAnalysisLock'); return false;">AnalysisSettingAtt::SetAnlIOAnalysisLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlLinAccelLimitLock'); return false;">AnalysisSettingAtt::SetAnlLinAccelLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlLinSpeedLimitLock'); return false;">AnalysisSettingAtt::SetAnlLinSpeedLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlMeasureLock'); return false;">AnalysisSettingAtt::SetAnlMeasureLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlRotAccelLimitLock'); return false;">AnalysisSettingAtt::SetAnlRotAccelLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlRotSpeedLimitLock'); return false;">AnalysisSettingAtt::SetAnlRotSpeedLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlTravelLimitLock'); return false;">AnalysisSettingAtt::SetAnlTravelLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetAnlVelocityLimitLock'); return false;">AnalysisSettingAtt::SetAnlVelocityLimitLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetDisplayAnlStatusLock'); return false;">AnalysisSettingAtt::SetDisplayAnlStatusLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SetSyncAnlSpecsLock'); return false;">AnalysisSettingAtt::SetSyncAnlSpecsLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DNBSimulationInterfaces', 'AnalysisSettingAtt', 'SyncAnlSpecs'); return false;">AnalysisSettingAtt::SyncAnlSpecs</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', '2DLSettingAtt', 'GetPropagateHighlightInfo'); return false;">2DLSettingAtt::GetPropagateHighlightInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', '2DLSettingAtt', 'PropagateHighlight'); return false;">2DLSettingAtt::PropagateHighlight</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', '2DLSettingAtt', 'SetPropagateHighlightLock'); return false;">2DLSettingAtt::SetPropagateHighlightLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DSheet', 'PrintOut'); return false;">Layout2DSheet::PrintOut</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DSheet', 'PrintToFile'); return false;">Layout2DSheet::PrintToFile</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDimension', 'GetClip'); return false;">DrawingDimension::GetClip</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDimension', 'IsClipped'); return false;">DrawingDimension::IsClipped</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDimension', 'SetClip'); return false;">DrawingDimension::SetClip</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDimension', 'Unclip'); return false;">DrawingDimension::Unclip</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingDimValue', 'GetDisplayUnit'); return false;">DrawingDimValue::GetDisplayUnit</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'FittingInterfaces', 'Track', 'GetMatrixAll'); return false;">Track::GetMatrixAll</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'FittingInterfaces', 'Track', 'MoveMode'); return false;">Track::MoveMode</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SetSmoothAngleThreshold'); return false;">HybridShapeBlend::SetSmoothAngleThreshold</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SetSmoothDeviation'); return false;">HybridShapeBlend::SetSmoothDeviation</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SmoothAngleThreshold'); return false;">HybridShapeBlend::SmoothAngleThreshold</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SmoothAngleThresholdActivity'); return false;">HybridShapeBlend::SmoothAngleThresholdActivity</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SmoothDeviation'); return false;">HybridShapeBlend::SmoothDeviation</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBlend', 'SmoothDeviationActivity'); return false;">HybridShapeBlend::SmoothDeviationActivity</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewConicalReflectLineWithType'); return false;">HybridShapeFactory::AddNewConicalReflectLineWithType</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewTransfer'); return false;">HybridShapeFactory::AddNewTransfer</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapePointBetween', 'Support'); return false;">HybridShapePointBetween::Support</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeReflectLine', 'Origin'); return false;">HybridShapeReflectLine::Origin</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeReflectLine', 'SourceType'); return false;">HybridShapeReflectLine::SourceType</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeThickness', 'Thickness1'); return false;">HybridShapeThickness::Thickness1</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeThickness', 'Thickness2'); return false;">HybridShapeThickness::Thickness2</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeUnfold', 'SurfaceType'); return false;">HybridShapeUnfold::SurfaceType</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeUnfold', 'TargetOrientationMode'); return false;">HybridShapeUnfold::TargetOrientationMode</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'FullSceneAntiAliasingMode'); return false;">VisualizationSettingAtt::FullSceneAntiAliasingMode</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'GetFullSceneAntiAliasingModeInfo'); return false;">VisualizationSettingAtt::GetFullSceneAntiAliasingModeInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'GetKeyboardRotationAngleValueInfo'); return false;">VisualizationSettingAtt::GetKeyboardRotationAngleValueInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'KeyboardRotationAngleValue'); return false;">VisualizationSettingAtt::KeyboardRotationAngleValue</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'SetFullSceneAntiAliasingModeLock'); return false;">VisualizationSettingAtt::SetFullSceneAntiAliasingModeLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'VisualizationSettingAtt', 'SetKeyboardRotationAngleValueLock'); return false;">VisualizationSettingAtt::SetKeyboardRotationAngleValueLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingOperation', 'GetFeedSpeedAutoUpdate'); return false;">ManufacturingOperation::GetFeedSpeedAutoUpdate</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingOperation', 'SetFeedSpeedAutoUpdate'); return false;">ManufacturingOperation::SetFeedSpeedAutoUpdate</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingView', 'CreateAllMachinableAreaFeaturesFromTechResultsOfUDF'); return false;">ManufacturingView::CreateAllMachinableAreaFeaturesFromTechResultsOfUDF</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'GetKnowledgeInHybridDesignModeInfo'); return false;">PartInfrastructureSettingAtt::GetKnowledgeInHybridDesignModeInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'GetModelSizeInfo'); return false;">PartInfrastructureSettingAtt::GetModelSizeInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'KnowledgeInHybridDesignMode'); return false;">PartInfrastructureSettingAtt::KnowledgeInHybridDesignMode</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'ModelSize'); return false;">PartInfrastructureSettingAtt::ModelSize</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'SetKnowledgeInHybridDesignModeLock'); return false;">PartInfrastructureSettingAtt::SetKnowledgeInHybridDesignModeLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'MecModInterfaces', 'PartInfrastructureSettingAtt', 'SetModelSizeLock'); return false;">PartInfrastructureSettingAtt::SetModelSizeLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'NavigatorWorkbench', 'Hyperlinks'); return false;">NavigatorWorkbench::Hyperlinks</a> (Property Read)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory', 'AddNewAutoFillet'); return false;">ShapeFactory::AddNewAutoFillet</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Sweep', 'AnchorDirReverse'); return false;">Sweep::AnchorDirReverse</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Sweep', 'MoveProfileToPath'); return false;">Sweep::MoveProfileToPath</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Sweep', 'NormalAxisDirReverse'); return false;">Sweep::NormalAxisDirReverse</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'AddProductMotion'); return false;">Replay::AddProductMotion</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'AddSample'); return false;">Replay::AddSample</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'GetNbProductMotion'); return false;">Replay::GetNbProductMotion</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'GetNbSample'); return false;">Replay::GetNbSample</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'GetProduct'); return false;">Replay::GetProduct</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'GetSamplePosition'); return false;">Replay::GetSamplePosition</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'GetSampleTime'); return false;">Replay::GetSampleTime</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SimulationInterfaces', 'Replay', 'RemoveSample'); return false;">Replay::RemoveSample</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'GetWindowDefaultHeightInfo'); return false;">SectioningSettingAtt::GetWindowDefaultHeightInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'GetWindowDefaultWidthInfo'); return false;">SectioningSettingAtt::GetWindowDefaultWidthInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'GetWindowOpenModeInfo'); return false;">SectioningSettingAtt::GetWindowOpenModeInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'SetWindowDefaultHeightLock'); return false;">SectioningSettingAtt::SetWindowDefaultHeightLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'SetWindowDefaultWidthLock'); return false;">SectioningSettingAtt::SetWindowDefaultWidthLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'SetWindowOpenModeLock'); return false;">SectioningSettingAtt::SetWindowOpenModeLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'WindowDefaultHeight'); return false;">SectioningSettingAtt::WindowDefaultHeight</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'WindowDefaultWidth'); return false;">SectioningSettingAtt::WindowDefaultWidth</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'SectioningSettingAtt', 'WindowOpenMode'); return false;">SectioningSettingAtt::WindowOpenMode</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'System', 'LicenseSettingAtt', 'GetNodelockAlertInfo'); return false;">LicenseSettingAtt::GetNodelockAlertInfo</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'System', 'LicenseSettingAtt', 'NodelockAlert'); return false;">LicenseSettingAtt::NodelockAlert</a> (Property Read/Write)</td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'System', 'LicenseSettingAtt', 'SetNodelockAlertLock'); return false;">LicenseSettingAtt::SetNodelockAlertLock</a></td>
+<td width="42%"></td>
+</tr>
+<tr>
+<td width="24%" valign="top" colspan="3">
+<p align="right">[<a href="#Top">Top</a>]</td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+<tr>
+<td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="Modif"></a><font color="#FFFFFF"><em><strong>Modified methods and properties</strong></em></font></td>
+</tr>
+<tr>
+<td width="24%" valign="top" colspan="3">
+<p align="right">[<a href="#Top">Top</a>]</td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+<tr>
+<td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="Suppress"></a><font color="#FFFFFF"><em><strong>Suppressed methods, classes and properties</strong></em></font></td>
+</tr>
+<tr>
+<td width="34%" valign="top">Sticker<br>StickerSupport<br>DropFeatureEvent</td>
+<td width="42%">
+Those interfaces had never been implemented and were so useless. They have been removed.
+</td>
+<tr>
+<td width="34%" valign="top">
+CATIAKnowledgeSheetSettingAtt::PreviousIncremental (Property Read/Write)<br>
+CATIAKnowledgeSheetSettingAtt::GetPreviousIncrementalInfo<br>
+CATIAKnowledgeSheetSettingAtt::GetPreviousIncrementalLock
+<td width="42%">
+The User Setting to which those methods were giving access does not exist anymore. Those methods are so useless and have been removed.
+</td>
+</tr>
+<td width="24%" valign="top" colspan="3">
+<p align="right">[<a href="#Top">Top</a>]</td>
+</tr>
+</table>
+</body>
+</html>

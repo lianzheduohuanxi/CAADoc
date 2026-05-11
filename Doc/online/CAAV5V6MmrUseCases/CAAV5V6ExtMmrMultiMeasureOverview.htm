@@ -1,0 +1,517 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="CAAMmrUseCase">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Non Geometrical Features</title>
+</head>
+
+<body>
+
+<p><br>
+</p>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler&nbsp;</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Non Geometrical Features</h3>
+      <i>A full example to create and integrate in the V5 your own non 
+		geometrical features</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create and integrate a new analysis 
+		feature which doesn't have any geometry: 
+		the <b>CAAV5V6ExtMmrMultiMeasure</b>. It also shows how to create a Set 
+		dedicated to aggregate it in the MechanicalPart: the <b>
+		CAAV5V6ExtMmrMeasureSet</b>[<a href="#References">5</a>].<br>
+		
+		<p>This use case is a copy of the CAAMmrMultiMeasure use case [<a href="#References">6</a>], 
+		rewritten with V6 backported interfaces.</p> 
+
+		
+		<ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#MmrMultiMeasure"><b>What Is a &quot;CAAV5V6ExtMmrMultiMeasure&quot;, 
+		What Is a &quot;CAAV5V6ExtMmrMeasureSet&quot;</b></a></li>
+        <li><a href="#UseCase"><strong>The&nbsp; V5V6ExtMultiMeasure Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the V5V6ExtMultiMeasure Use Case Do</a></li>
+            <li><a href="#How">How to Launch the V5V6ExtMultiMeasure Use Case</a></li>
+            <li><a href="#Where">Where to Find the V5V6ExtMultiMeasure Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step-by-Step">Step-by-Step</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates the sub-section entitled &quot;<b>The Contents of 
+the Specification Container - Non Geometrical Features Set</b>&quot; and &quot;<b>The 
+Contents of the Specification Container - Non Geometrical Features</b>&quot; you can find in the &quot;Technical Articles&quot;
+section of the Mechanical Modeler home page. <br>
+Its main intent is to show you
+<b>MechanicalElements</b> and <b>MechanicalSets</b> derivates specificities [<a href="#References">1</a>], [<a href="#References">2</a>] and to explain 
+how to use them when you need to design non Geometrical Features [<a href="#References">5</a>].</p>
+<p>In this use case, you will learn to:</p>
+<ul>
+  <li><b>Create </b>features derivated from MechanicalElement and MechanicalSet:</li>
+</ul>
+<blockquote>
+	<p>How to create a new StartUp of MechanicalElement or MechanicalSet, how to store it in a feature's catalog 
+	and how to instantiate it.</p>
+</blockquote>
+<ul>
+  <li><b>Integrate </b>&nbsp;MechanicalSet and MechanicalElement derivates in V5 
+	Mechanisms using their default behaviors.</li>
+</ul>
+<blockquote>
+  <p>Default Behaviors for CATIParmPublisher, CATINavigateObject, ContextualMenu.</p>
+  <p>How to make a Build process with non geometrical features<br>
+	How implement visualization on non Geometrical Feature.</p>
+</blockquote>
+<ul>
+</ul>
+<p>The &quot;<i><b>Creating Non Geometrical Features:</b></i>&quot; use case constitutes a set of articles, each describing the
+creation or the integration in V5. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="MmrMultiMeasure"></a> <b>What Is a &quot;CAAV5V6ExtMmrMultiMeasure&quot;, What Is a &quot;CAAV5V6ExtMmrMeasureSet&quot;</b></h3>
+<p>The <code><b>CAAV5V6ExtMmrMultiMeasure</b></code> is an analysis feature derivated from <b>
+MechanicalElement</b> StartUp which allows users to compute the Length, or the 
+Wet Area and/or the Volume of a Geometrical Feature.<br>
+Consequently, it is designed with one input: the Geometrical Feature to analyze, 
+and three outputs: the three computed parameters.</p>
+<p>It doesn't have any geometry but a visualization: on the 3D View, its result 
+- a physical measure - is displayed in a violet box.</p>
+<p>As it is a specific feature, we decided to design a specific set to aggregate 
+it in the MechanicalPart: the <b>CAAV5V6ExtMmrMeasureSet.</b>.<br>
+This set is derivate from <b>MechanicalSet </b>StartUp and can display the 
+visualization of the feature aggregated in it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The V5V6ExtMultiMeasure Use Case</h3>
+<p>The V5V6ExtMultiMeasure is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the V5V6ExtMultiMeasure Use Case Do</h4>
+<p>The final intent of this use case is to design, create and use an analysis 
+feature which doesn't have any geometry but which has a 3D Representation. It can be divided into several 
+steps:</p>
+<ol>
+  <li>Creating the new Analysis Feature <b>StartUp</b>(<b>CAAV5V6ExtMmrMultiMeasure</b>), 
+	the new Analysis Set <b>StartUp</b> (<b>CAAV5V6ExtMmrMeasureSet</b>) 
+	both stored in the <b>catalog &quot;CAAV5V6ExtMmrMultiMeasureCatalog.CATfct&quot;</b>
+    using &quot;OSM Modelling Language&quot;.<p>The CATfct file has been 
+	generated using CATfctEditorAssistant tool.&nbsp; The client authentication is &quot;CAAMmrUseCaseForMechanicalSetsAndElements&quot; 
+	.<li>Creating an <b>interface to instantiate</b> the new StartUps 
+	&quot;<b>CAAV5V6ExtMmrMultiMeasure</b>&quot; and &quot;<b>CAAV5V6ExtMmrMeasureSet</b>&quot; - the 
+	CAAIV5V6ExtMmrMultiMeasureFactory.<p>To create instances of the <b>CAAV5V6ExtMmrMultiMeasure</b> 
+	and <b>CAAV5V6ExtMmrMeasureSet</b> StartUp, you should create and implement a 
+	factory interface on the specification container [<a href="#References">3</a>]. 
+	This interface creates instances but do not set them in the MechanicalPart.</p>
+	<div align="center">
+		<table border="0" width="468">
+			<caption><a name="Fig.4">Fig.1</a>: The CAAIV5V6ExtMmrMultiMeasureFactory 
+			Interface</caption>
+			<tr>
+				<td>
+				<p align="center">
+				<img alt="" src="images/CAAV5V6ExtMmrMultiMeasureFactoryInterface.jpg" width="484" height="56"></td>
+			</tr>
+		</table></div>
+	<p>CATPrtCont is the container containing all the specifications of the Part 
+	document. This factory interface uses the &quot;<b>CAAV5V6ExtMmrMultiMeasureAndMeasureSetCatalog</b>&quot; 
+	catalog file created in the first step.<li>Creating an interface to <b>modify or retrieve the input specifications</b> of
+    the CAAV5V6ExtMmrMultiMeasure instances.- Creating CAAV5V6ExtMmrMultiMeasure's 
+	Interface of Type</li>
+  <p>In the <i>CATIBuild</i> implementation, or in the edition
+  command, it is mandatory to have an access to the input specifications of the
+  new feature. It is the role of the <i>CAAIMmrMultiMeasure </i>&nbsp;interface.&nbsp;<br>&nbsp;</p>
+	<div align="center">
+		<table border="0" width="447">
+			<caption><a name="Fig.5">Fig.2</a>: The CAAIV5V6ExtMmrMultiMeasure Interface</caption>
+			<tr>
+				<td>
+				<p align="center">
+				<img alt="" src="images/CAAV5V6ExtMmrMultiMeasureInterface.jpg" width="560" height="63"></td>
+			</tr>
+		</table></div>
+	<p>With this interface you can retrieve or modify the value of 
+	CAAV5V6ExtMmrMultiMeasure's Attributes.<br>&nbsp;</p>
+	<li><b>Integrating the CAAV5V6ExtMmrMultiMeasure in V5</b> &nbsp;</li>
+
+  	<p>To integrate a new feature in V5, Interfaces classified in three categories 
+	need to be taken into account:<br>&nbsp;</p>
+	<ul>
+		<li>The mandatory interfaces:<br>&nbsp;<ul>
+			<li><b><i>CATIFmFeatureBehaviorCustomization </i></b>- Building 
+			CAAV5V6extMmrMultiMeasure Result<br><br>To compute something, analysis feature has to integrate update 
+			mechanism&nbsp; [<a href="#References">4</a>], which is done by 
+			implementing <i>CATIFmFeatureBehaviorCustomization </i> interface on CAAV5V6ExtMmrMultiMeasure 
+			(<code>CAAEV5V6ExtMmrMultiMeasureBehavior.cpp</code>).
+			<br>&nbsp;</li>
+			<li><i><b>CATIReplace</b></i> - Modifying CAAV5V6ExtMmrMultiMeasure inputs<br>This interface enables you to define the available elements for a 
+			replacement, and makes the replacement, which is done in 
+			CAAV5V6ExtMmrMultiMeasure's implementation (<code>CAAEV5V6ExtMmrMultiMeasureReplace.cpp</code>).&nbsp;</li>
+		</ul></li>
+		<p></p>
+		<li>The Dassault Systèmes Behavior interfaces:<br>&nbsp;<ul>
+			<li><b><i>CATIEdit</i></b> - Editing CAAV5V6ExtMmrMultiMeasure inputs<br>
+			<br>This interface of the ApplicationFrame framework enables editing 
+			feature.<br>Double clicking on V5V6ExtMmrCAAMultiMeasure, launches&nbsp; the 
+			<code>CAAV5V6ExtMmrMultiMeasureStCmd</code> state command; an interactive command 
+			without panel. This command can be used in the creation mode and in 
+			the edition mode<br><br>&nbsp;</li>
+			<li><b><i>CATIContextualSubMenu </i></b>&nbsp;- Use of Default 
+			MechanicalElement / MechanicalSet behaviors<br><br>As MechanicalElement has a default behavior, CAAV5V6ExtMmrMultiMeasure 
+			inherits from this one. Consequently, CAAV5V6ExtMmrMultiMeasure has a 
+			default contextual sub-menu .<br>&nbsp;</li>
+			<li><i><b>CATINavigateObject, CATIParmPublisher, CATIParmPublisher:</b></i> 
+			- Display Measure's result.<br><br>As CAAV5V6ExtMmrMultiMeasure inherits from MechanicalElement, it has 
+			default behaviors for all of those interfaces: all features 
+			aggregated under MechanicalElement 
+			and more particularly Parameters are shown in SpecTree and in f(x).<br>
+			<br>&nbsp;</li>
+			<li><i><b>CATIMechanicalCCP</b></i><br>Please, don't overload this interface.</li>
+		</ul></li>
+		<li>Specific Case:<br><br>As we want to visualize the measure's result in the 3D view, we decided 
+		to implement Visualization behaviors:<br>&nbsp;<ul>
+			<li><i><b>CATIVisu</b></i> or <i><b>CATI3DGeoVisu</b></i> - building 
+			a 3D Representation for CAAV5V6ExtMmrMultiMeasure and CAAV5V6ExtMeasureSet.<br>
+			<br>This Specialized 3D Visualization interface makes objects have a 3D 
+			representation. In <code>CAAEV5V6ExtMmrMultiMeasureVisu</code>, 
+			CAAV5V6ExtMmrMultiMeasure builds a 3DBagRep in which the representation of 
+			the measure's result is shown.<br>CAAV5V6ExtMmrMeasureSet's implementation (<code>CAAEV5V6ExtMmrMeasureSetVisu</code>) 
+			builds a 3DBagRep which aggregates all the 3DRep of its aggregated 
+			features.<br><br>For more detail on CATI3DGeoVisu, please refer to specified article 
+			[].<br>&nbsp;</li>
+			<li><i><b>CATIVisProperties</b></i> - <br><br>This interface manages the graphic properties associated with the 
+			features representations. <br><br>For more detail on CATIVisProperties, please refer to specified 
+			article [].<br>&nbsp;</li>
+			<li><i><b>CATISelectShow</b></i> - Adding hide/Show command to your 
+			non geometrical features.<br><br>The Hide/Show command enables to hide or show the selected features. 
+			But to benefit of this functionality on your feature, it must 
+			implement the CATISelectShow interface, which is done with <code>CATEV5V6ExtMmrMultiMeasureSelectShow</code> implementation.<br>
+			<br>Please, note Hide/Show command uses the <i>CATIVisProperties</i> to 
+			modify the visibility state of the feature.<br>&nbsp;</li>
+		</ul></li>
+	</ul>
+	<li><b>Creating Interactively
+    Instances</b> </li>
+  	<p>To create interactively new instances of the <b>CAAV5V6ExtMmrMeasureSet </b>or 
+	<b>CAAV5V6ExtMmrMultiMeasure</b>, you will create an add-in of the
+  Shape Design workbench (<code>CAAEV5V6ExtMmrMultiMeasureAndMeasureSetAdn</code>) into which you will add the 
+	MultiMeasure and the MeasureSet Creation Commands (<code>CAAV5V6ExtMmrMultiMeasureStCmd</code> 
+	and <code>CAAV5V6ExtMmrMultiMeasureStCmd</code>).</p>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<h4><a name="How"></a>How to Launch the V5V6ExtMultiMeasure Use Case</h4>
+  <p>To launch this use case, you will need to set up the build time
+environment, then compile the following modules of the <b>CAAV5V6MechanicalModeler.edu</b>
+  framework along with their prerequisites:</p>
+<ul>
+  <li>CAAV5V6ExtMmrMultiMeasureAndMeasureSet.m,&nbsp;&nbsp;</li>
+  <li>CAAV5V6ExtMmrMultiMeasureAndMeasureSetUI.m,</li>
+  <li>CAAV5V6ExtMmrMultiMeasureAndMeasureSetAddIn.m&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
+<p> Next, let's execute interactively the use case. Several steps must be
+followed in order to completely execute the use case:</p>
+<ul>
+  <li><p>Launch CATIA. When the application is ready, follow scenarios described
+    below:</p></li>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Creation</b> scenario:</p>
+</blockquote>
+<ul>
+   <ul>
+   <li>In the <b>Start</b> menu choose <b>Shape Design </b>and click <strong>
+   Generative Shape</strong> <b>Design</b></li>
+   <li>Retrieve the <b>CAAV5V6ExtMmrMultiMeasure</b> Additional toolbar.</li>
+   <li>Open a Part including geometrical instances or Create one &quot;from scratch&quot; [<a href="#References">9</a>].</li>
+   <li>Measure the length or the wet area (and) the volume of a geometrical 
+	feature using the <b>&quot;CAAV5V6ExtMmrMultiMeasure&quot;</b> 
+	command:
+	<img border="1" src="../CAAMmrUseCases/images/CAAMmr_I_MultiMeasure.jpg" width="22" height="22" hspace="11" vspace="11" align="center">.<br>
+	Click on the icon command and select a geometrical feature in 3D View or in 
+	the Specification Tree.</li>
+   <li>Then the Part will become &quot;non updated&quot;</li>
+	<li>Update</li>
+	<li>The computed length, or area or volume, will appear in 3DVisualisation, 
+	And, in the Spec Tree.<div align="center">
+		<table border="1" width="1%" id="table1">
+			<tr>
+				<td>
+				<img border="0" src="../CAAMmrUseCases/images/CAAMmrMultiMeasureScreenShot.jpg" width="640" height="480"></td>
+			</tr>
+			<tr>
+				<td>
+				<p align="center" style="margin-top: 1px">View Of 
+				MmrMultiMeasure instance</td>
+			</tr>
+		</table>
+	</div>
+	</li>
+	<li>&nbsp;Instantiate a V5V6ExtMeasureSet using the dedicated command (<img border="1" src="../CAAMmrUseCases/images/CAAMmr_I_MeasureSet.jpg" width="22" height="22" hspace="11" vspace="11" align="center">). 
+	A new set appears under the Part Node. Then, if you instantiate a new 
+	CAAV5V6ExtMmrMeasure, it will be aggregated under the CAAV5V6ExtMeasureSet.<br>
+&nbsp;</li>
+	<li>Use of Default MechanicalSet and MechanicalElement:<ul>
+   <li>f(x) shows all parameters aggregated under CAAV5V6ExtMmrMeasureSet and its sons. 
+	It shows all parameters aggregated under CAAV5V6ExtMmrMultiMeasure.</li>
+	<li>Sub-Menu allows Reorder/Reorder Children for CAAV5V6ExtMmrMeasureSet and 
+	Reorder for CAAV5V6ExtMmrMultiMeasure.</li>
+	<li>Copy/Paste can be use.</li>
+   </ul></li>
+   </ul>
+	<ul>
+		<li>It is possible to see the computed parameter on f(x) panel and to use 
+	this value into rules. To do this, just click on f(x) icon. You will note 
+	that the computed value is in &quot;read only mode&quot; (The Cell containing the 
+	computed value is gray.).</li>
+	</ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Edition</b> scenario</p>
+</blockquote>
+<ul>
+   <ul>
+   <li><b>Double</b> click the <b>CAAV5V6ExtMmrMultiMeasure</b>  instance</li>
+	<li>Change its input selecting a new geometrical feature</li>
+	<li>Update</li>
+	<li>The Feature result and its 3DRepresentation have changed!</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Open</b> scenario:</p>
+</blockquote>
+<ul>
+   <ul>
+   <li>Open a Part including &quot;<b>CAAV5V6ExtMmrMultiMeasure</b>&quot; instances
+	<a href="#(*)">(*)</a> </li>
+	Check the visualisation in 3D, in SpecTree.<li>Change CAAV5V6ExtMmrMultiMeasure's 
+	input</li>
+	<li>Update.</li>
+	<li>Check Modification in the 3DVisualisation and in SpecTree.</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p><a name="(*)">(*)</a> The file &quot;<b>CAAV5V6ExtMmrMultiMeasure.CATPart</b>&quot; 
+	is located in the directory
+	<code>CAAV5V6MechanicalModeler.edu/InputData</code></p>
+	<ul>
+		<li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code>
+		<li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+	</ul>
+	<p>where <code>InstallRootDirectory</code> is the directory where the CAA
+  CD-ROM is installed.</p>
+</blockquote>
+
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the V5V6ExtMultiMeasure Code</h4>
+<p>The V5V6ExtMultiMeasure use case is made of several modules of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ul>
+  <li><b>CAAV5V6ExtMmrMultiMeasure.m</b> - This module contains the implementations
+    of&nbsp; the <b><i>CATIFmFeatureBehaviorCustomization</i></b> interface (manages the build operation called during the
+    update of CAAV5V6ExtMmrMultiMeasure), the definition and the implementation of the <b>
+	<i>CAAIV5V6ExtMmrMultiMeasureFactory </i></b>&nbsp;interface&nbsp;(manages the 
+	CAAV5V6ExtMmrMultiMeasure And CAAV5V6ExtMmrMeasureSet StartUp instantiation), the <b><i>
+	CAAIV5V6ExtMmrMultiMeasure </i></b>&nbsp;interface
+    (manages the access to the input specifications of the Analysis Feature).<br>Moreover, in this module, you will find the implementations of 
+	<i><b>CATI3DGeoVisu</b></i>, <i><b>CATIVisProperties</b></i>.<br>&nbsp;<ul>
+		<li>CAAIV5V6ExtMmrMultiMeasure.cpp, the header file is in the PublicInterfaces
+        directory of the CAAV5V6MechanicalModeler.edu framework</li>
+		<li>CAAIV5V6ExtMmrMultiMeasureFactory.cpp, the header file is in the PublicInterfaces directory of the CAAV5V6MechanicalModeler.edu framework<br>&nbsp;</li>
+		<li>CAAEV5V6ExtMmrMultiMeasure.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMultiMeasuretFactory.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMultiMeasureBehavior.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMultiMeasureReplace.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMultiMeasureVisu.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMultiMeasureVisProperties.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrMeasureSetVisu.cpp, the header file is in the LocalInterfaces
+        directory</li>
+	</ul></li>
+	<li><b>CAAV5V6ExtMmrMultiMeasureAddIn.m</b> -&nbsp;This module contains the
+    implementation of the <i>CATIShapeDesignWorkshopAddin</i> interface. In
+    other words, it defines an Add-in to the Shape Design workbench.
+    <ul>
+		<li>CAAEV5V6ExtMmrMultiMeasureAdn.cpp, the header file is in the LocalInterfaces
+        directory</li>
+	</ul></li>
+  
+  <li><b>CAAV5V6ExtMmrMultiMeasureUI.m</b> - This module contains the implementation
+    of the <i>CATIEdit</i> for CAAV5V6ExtMmrMultiMeasure and <i>CATISelectShow </i>for 
+	CAAV5V6ExtMmrMultiMeasure and CAAV5V6ExtMmrMeasureSet.<br>
+	It also contains the implementation of StateCommands to create and insert 
+	CAAV5V6ExtMmrMultiMeasures and CAAV5V6ExtMmrMeasureSets.<ul>
+      <li>CATEV5V6ExtMmrMultiMeasureSelectShow.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEV5V6ExtMmrMultiMeasureEdit.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAV5V6ExtMmrMeasureSetStCmd.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAV5V6ExtMmrMultiMeasureStCmd.cpp, the header file is in the LocalInterfaces
+        directory</li>
+    </ul>
+  </li>
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3 align="left"><a name="Step-by-Step"></a>Step-by-Step</h3>
+<p align="left">You can now successively get to:</p>
+<ul>
+  <li>
+    <p align="left">Creating a feature Catalog using OSM Language</li>
+  <li>
+    <p align="left"> Creating&nbsp; the factory interface of CAAV5V6ExtMmrMultiMeasure 
+	And CAAV5V6ExtMmrMeasureSet</li>
+  <li>
+    <p align="left"> Creating 
+	the CAAV5V6ExtMmrMultiMeasure 's Interface of Type</li>
+  <li>
+    <p align="left"> Building 
+		the CAAV5V6ExtMmrMultiMeasure's Result</li>
+  <li>
+    <p align="left"> 
+		Displaying the Computed Result in the 3D View</li>
+  <li>
+    <p align="left">Creating an Add-in in
+    the Shape Design Workbench</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAV5V6ExtMmrMultiMeasure and 
+CAAV5V6ExtMmrMeasureSet sample shows how to create your own
+Non Geometrical Feature, by derivation from respectively MechanicalElement 
+feature and MechanicalSet feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" >[1]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrMechanicalElement.htm">
+	The Contents of the Specification Container - Non Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[2]</td>
+    <td >
+	<a href="../CAAMmrTechArticles/CAAMmrMechanicalSet.htm">The 
+	Contents of the Specification Container - Non Geometrical Features Set</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[3]</td>
+    <td >
+	<a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The 
+	Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[4]</td>
+    <td >
+	<a href="../CAAOsmUseCases/CAAOsmBuildUpdate.htm">
+	The Build/Update Mechanism</a></td>
+  </tr>
+   <tr>
+    <td valign="top" >[5]</td>
+    <td >
+	<a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">
+	Creating a new Startup deriving from a Mechanical Startup </a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[6]</td>
+    <td >
+	<a href="../CAAMmrUseCases/CAAMmrMultiMeasureAndMeasureSetSamplesOverview.htm">
+	Creating Non Geometrical Features </a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2" >[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2013]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+</body>
+
+</html>
+

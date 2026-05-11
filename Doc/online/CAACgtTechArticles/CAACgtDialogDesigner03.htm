@@ -1,0 +1,430 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Interaction Techniques</title>
+</head>
+
+<body onload="createToc();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Interaction Techniques</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The purpose of this article is to explain how to interact with Rich 
+		Application Presentation Designer in your development environment.</p>
+		<div id="toc">
+		</div>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Designing_Widgets"></a>The Design Environment</h2>
+<p>When a Rich Application Presentation Designer file is created or opened, the designer will show its 
+appearance in a design document. Here is the general view of Visual Studio when 
+we are editing this file:</p>
+<p>
+<img alt="Rich Application Presentation Designer Global View" src="images/VSGlobalView.png" width="652" height="536"></p>
+<p>We can find:</p>
+<ul>
+	<li>The design document, where the dialog box is graphically authored. The 
+	document is integrated in the solution explorer like any source file.</li>
+	<li>The Toolbox that contains the widgets that can be placed in the dialog 
+	box</li>
+	<li>The Properties Window that shows the properties and callbacks of the 
+	selected widget</li>
+	<li>The two C++ generated files that can be modified to customize the 
+	generated code</li>
+</ul>
+<h2><a name="Creating_widgets"></a>Creating Widgets</h2>
+<p>The widget creation process depends on the created widget parent container. 
+Basically, once the widget type to create is selected in the toolbox, you can 
+clicks on the container to select the first corner of the component, and drags 
+to select the second corner to define the size of the component. If the 
+container doesn&#8217;t have a grid layout, it can&#8217;t be resized, and it&#8217;s created on 
+the first click. You can abort the widget creation process at any time by a 
+right click or with the escape key. We describe this process for each type of 
+container. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Containers_with_grid_layout"></a>Containers with Layout</h3>
+<p>This behavior is only applied when the parent container is a CATDlgDialog, a 
+CATDlgFrame or a CATDlgTabPage.</p>
+<ol>
+	<li>Select the desired widget in the toolbox.
+	<p>
+	<img alt="Rich Application Presentation Designer Toolbox" src="images/ContainerGridLayout01.png" width="211" height="293"></li>
+	<li>Move the widget to one of its borders.
+	<p>The designer tries to place the created widget in the deepest container 
+	located on the mouse cursor. This container is surrounded with a black frame 
+	to show the user the container that will be used. Then, the row and column 
+	corresponding to the mouse position on the container is computed.</p>
+	<p>
+	<img src="images/ContainerGridLayout02.png" width="612" height="172"></p>
+	<p>If the mouse cursor is located on a row/column border, the designer 
+	automatically creates a new row/column at this position.</p>
+	<p>
+	<img src="images/ContainerGridLayout03.png" width="457" height="177"></p>
+	<p>If a widget is already located on the mouse position, the created widget 
+	is hatch in red to signal the user that the widget creation will be 
+	impossible at this position.</p>
+	<p>
+	<img src="images/ContainerGridLayout04.png" width="338" height="194"></li>
+	<li>Click down to confirm the first border.<br>
+	If the current mouse position is occupied by another widget, the process 
+	goes back to step 2</li>
+	<li>Drag the mouse to the widget second border.
+	<p>The designer calculates the row and column closest to the cursor location 
+	on the container where the first point was placed. The widget occupies the 
+	position between the first selected point and the current calculated point. 
+	If a widget intersects the created widget, this widget is hatch in red to 
+	signal the user that the widget creation will be impossible at this 
+	position.</p>
+	<p>
+	<img src="images/ContainerGridLayout05.png" width="578" height="163"></li>
+	<li>Release the mouse click to confirm the widget size.<br>If the current 
+	mouse position is occupied by another widget, the process goes back to step 
+	4.</li>
+</ol>
+<p>If the process succeeds, the new widget is integrated in the dialog box, and 
+is selected.</p>
+<p>
+<img src="images/ContainerGridLayout06.png" width="341" height="222"></p>
+<h3><a name="Containers_without_grid_layout"></a>Containers without Layout</h3>
+<p>This behavior is only applied when the parent container is either a 
+CATDlgContainer or a CATDlgSplitter.</p>
+<p>There is no size of a widget inserted in a container without layout. The 
+process stops after 3 steps, on the first mouse click.</p>
+<ol>
+	<li>Select the desired widget in the toolbox</li>
+	<li>Move the widget to its location.</li>
+	<li>Click down to confirm the position.</li>
+</ol>
+<h3><a name="Tab_Containers"></a>Tab Containers</h3>
+<p>A tab container is created with one tab page.</p>
+<p>
+<img src="images/TaContainer01.png" width="113" height="81"></p>
+<p>This tab page is a container with a grid layout and can be filled with other 
+widgets. It can be selected and edited by clicking on the inner part of the tab 
+container. This is useful in particular to change the tab page title or to 
+delete it.</p>
+<p>
+<img src="images/TaContainer02.png" width="538" height="106"></p>
+<p>It also shows a grayed page that can be used to generate a new tab page. A 
+simple click on this virtual page indicates the designer that a new page should 
+be created. When a new page is created, it is automatically displayed as the 
+active tab.</p>
+<p>
+<img src="images/TaContainer03.png" width="373" height="76"></p>
+<p>Once several tab pages are created, the user can select the displayed page by 
+simply clicking the corresponding tab item. The page order can be modified 
+simply by clicking the page to be moved, and dragging it to its new location. 
+The command can be cancel with a mouse right click, and the moved tab will be 
+placed to its original location.</p>
+<p>
+<img src="images/TaContainer04.png" width="523" height="81"></p>
+<h2><a name="Dragging_widgets0"></a>Manipulate Existing Widgets</h2>
+<h3><a name="Dragging_widgets"></a>Moving Widgets</h3>
+<p>A widget can be dragged to define a new position, or change its container. 
+When a widget is dragged, its size is preserved unless it&#8217;s dragged to a 
+container without layout. The dragged widget is placed in the deepest container 
+located under the mouse cursor.</p>
+<p>For this operation, no row/column is automatically created, and if the moved 
+widget is covering an existing one, it&#8217;s hatched in red, and the operation is 
+impossible. If the user releases the mouse click when there is a widget 
+intersection, the operation is cancelled, and the moved widget returns to its 
+original location.</p>
+<p>You can abort the widget creation process at any time by a right click.</p>
+<p>CATDlgDialog and CATDlgTabPage cannot be dragged.</p>
+<h3><a name="Resizing_widgets"></a>Resizing Widgets</h3>
+<p>When a widget is selected, a sizing handle appears. You can resize the widget 
+by selecting and then dragging the sizing handle.</p>
+<p>
+<img src="images/PushbuttonDesignerComp07.png" width="77" height="41"></p>
+<p>You can abort the widget creation process at any time by a right click. The 
+widget returns to its original size.</p>
+<p>CATDlgDialog and CATDlgTabPage cannot be resized.</p>
+<h3><a name="Deleting_widgets"></a>Deleting Widgets</h3>
+<p>Any selected widget (except the dialog box) can be deleted either by pressing 
+the &quot;Del&quot; key, or by using the widget contextual menu. Deleting a container also 
+deletes its child widgets.</p>
+<h3><a name="Deleting_widgets1"></a>Copy/Paste</h3>
+<p>Any selected widget can be copied using the Ctrl+C key or the context menu 
+item 'Copy'. The widget is then 
+placed on the clipboard, and can be pasted on any Rich Application Presentation 
+Designer document with 
+the Ctrl+V key or with the context menu item 'Paste'. When a widget is pasted, the widget is not placed right away on 
+the designed dialog box. You must still validate its position using the same 
+interaction techniques that are used to create a new widget from the Visual 
+Studio Toolbox. In particular, the paste command can be cancelled with the Esc 
+key or a mouse right click. If a container is copied, the designer will also 
+copy all its children.</p>
+<p>Some containers can't be copied and placed inside a dialog box as they are 
+(like the CATDlgDialog or CATDlgTabPage widgets). Those widgets are transformed 
+into a CATDlgFrame before being pasted. However, their content is preserved in 
+the operation.</p>
+<h3><a name="Deleting_widgets2"></a>Quick copy</h3>
+<p>You can perform a quick copy of a widget by moving it while maintaining the 
+Ctrl key down. If the Ctrl key is still pressed when the mouse left button is 
+release, the designer will copy the selected widget in the location that you 
+specified.</p>
+<h3><a name="Deleting_widgets0"></a>Multi Selection</h3>
+<p>You can select several widget by keeping the Ctrl key down while clicking on 
+widgets. If a widget is already selected, then a click on it will deselect it.</p>
+<p>Multi-selection can be used to delete several widgets at the same time or to 
+edit properties common to all selected widget. However, the move, resize and 
+copy commands can't be used in a multi-selection context.</p>
+<p>&nbsp;</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Editing_Widget_Properties"></a>Editing Widget Properties</h2>
+<p>Once a widget is selected, its properties can be edited in the VS properties 
+window. Some properties have a direct visual impact on the design view, like the 
+widget title, or its direction if it has one. This visual feedback helps the 
+user to author its dialog box, without using constantly the simulation 
+application.</p>
+<p>The properties window can be opened by using the widget contextual menu.</p>
+<h3><a name="Widgets_anchor0"></a>Icon Properties</h3>
+<p>Icons in the Rich Application Presentation Designer application are handled 
+using the standard process: the icons are searched in the concatenation of the runtime 
+view, in the resources\graphic\icons or in the resources\graphic\icons\normal 
+directories. You can enter directly the name of your icon (without path and 
+extension). The icon will be searched in every icon resource path of the current 
+concatenation path. We also provide a specific tool to be able to find an icon 
+easily, and to force the user to define an icon that exists in its current 
+runtime view concatenation.</p>
+<p>In the properties window, every icon property has a browse 
+button that will launch an icon research dialog:</p>
+<p>
+<img src="images/IconProperties01.png" width="258" height="68"></p>
+<p>This opened the following dialog box:</p>
+<p>
+<img src="images/IconProperties02.png"></p>
+<p>This dialog box lists every available path in the current 
+concatenation, and contains an additional item &#8216;All&#8217; that will list any 
+available icon in the current concatenation.</p>
+<p>The icons can be filtered to look faster for a specific 
+icon. This search feature uses a wildcard-like syntax:</p>
+<table>
+<tr>
+<th>Wildcards</th>
+<th>Meanings</th>
+</tr>
+<tr>
+<td>xxx</td>
+<td>Look for any icon that contains xxx</td>
+</tr>
+<tr>
+<td>xxx*yyy</td>
+<td>Look for any icon that contains xxx, then any character sequence, then yyy</td>
+</tr>
+<tr>
+<td>xxx?yyy</td>
+<td>Look for any icon that contains xxx, 
+	then any character (but exactly one), then yyy</td>
+</tr>
+<tr>
+<td>^xxx</td>
+<td>Look for any icon that begins with xxx</td>
+</tr>
+<tr>
+<td>yyy$</td>
+<td>Look for any icon that ends with yyy</td>
+</tr>
+</table>
+<p>The filter is case insensitive.</p>
+<h3><a name="Widgets_anchor"></a>Anchoring Widgets</h3>
+<p>If a widget is placed in a container with a grid layout, its anchor can be accessed by using the anchor contextual menu:</p>
+<p>
+<img src="images/WidgetAnchor01Ext.png" width="333" height="158"></p>
+<p>The selected widget is then surrounded with an anchor editor:</p>
+<p>
+<img src="images/WidgetAnchor02.png" width="237" height="165"></p>
+<p>Attached sides are marked with a dark line, and the attached aspect can be 
+toggled with a left mouse click on the button right next to the widget border. </p>
+<p>The editor also allows the edition of the constant size aspect of a widget. A 
+green line indicates that the widget size can varies, an orange line that its 
+size is fixed. This aspect can be toggle with a left mouse click on the line.</p>
+<p>When a widget is selected (but not while editing the anchor), there is a 
+direct visual feedback of the anchor state for that widget. Attached sides 
+appear with a blue line on the corresponding borders. If a widget size is fixed 
+on a direction, a red line is drawn on the corresponding direction.</p>
+<p>
+<img src="images/WidgetAnchor03.png" width="179" height="90"></p>
+<p>
+You can also edit the widgets anchor in the properties window. Each anchor 
+parameter is editable as a separate property. In particular, those properties 
+can be edited with multiple widget selected. You can for instance select several 
+widgets that must be attached to their left side, and set this property for all 
+the selected widgets at the same time.</p>
+<p>
+<img src="images/WidgetAnchorProp.png" width="260" height="120"></p>
+<h3><a name="Layout_control"></a>Controlling Layout</h3>
+<p>Although the widget creation process can modify the layout to include the 
+created components on new rows/columns, it might be necessary to redefine the 
+layout aspect. If a column has become useless after some constraint 
+modifications, we must be able to destroy it. Besides, we must be able to define 
+which rows/columns are resizable, and the one whose size is fixed.</p>
+<p>If a container with layout is selected, we draw the layout form in the design 
+window margin, and the user can interact with it using a context menu to define 
+every aspects specified in the previous paragraph.</p>
+<p>Controlling a row:</p>
+<p>
+<img src="images/LayoutControlExt.png" width="360" height="214"></p>
+<p>Controlling a row border:</p>
+<p>
+<img src="images/LayoutControl01Ext.png" width="344" height="213"></p>
+<p>The &quot;Insert row/column&quot; command can be realized anytime.</p>
+<p>The &quot;Split row/column&quot; command automatically resizes the components contained in 
+the row/column so that they occupy both rows/columns after the split.</p>
+<p>If a &#8216;Merge rows/columns&#8217; and &#8216;Delete row/column&#8217; commands result in a widget destruction, 
+they are disabled. A row/column destruction is only possible if the row/column 
+is entirely free. For the merge operation, there can&#8217;t be two different widgets 
+on the same row in both columns to merge, or in the same column in both rows to 
+merge.</p>
+<p>Finally, the resizable rows/columns are highlighted in the margin, so that 
+the user can see them. The resizable aspect can be toggled using the context 
+menu, or directly right clicking on the margin line, that show whether the 
+row/column is resizable. A line next to the dialog border indicates its 
+resizable status: green if it&#8217;s resizable, orange otherwise.</p>
+<h3><a name="Callbacks_edition"></a>Editing Callbacks</h3>
+<p>Widget callbacks are located in a special property tab in the Visual Studio 
+properties window.</p>
+<p>
+<img src="images/CallbackEdition01.png" width="502" height="260"></p>
+<p>This tab displays the list of callbacks defined for the selected widget. The 
+callback name can be specified using the 3 methods here below:</p>
+<ul>
+	<li>Typing the callback name directly.
+	<p>If the callback is not defined, a new function is created in the code 
+	part of the document. The editor automatically switches to the code view of 
+	the dialog box, and points to the editable part of the code of the callback 
+	function.</p>
+	<p>
+	<img src="images/CallbackEdition02.png" width="622" height="215"></li>
+	<li>Asking for a new generated name. 
+	<p>Each callback property has a drop down list that contains the option <kbd>
+	generate new</kbd>. This automatically generates a new unique method name 
+	(two callbacks will never have the same name). However, the class member and 
+	methods specified by the user aren&#8217;t checked, and a name collision is still 
+	possible with those. Once the callback is generated, the code view is 
+	opened, and the cursor is place on the user code of the callback.</p>
+	<p>
+	<img src="images/CallbackEdition03.png" width="711" height="182"></li>
+	<li>Reusing a previously defined callback. 
+	<p>The drop down list also displays the list of all created callbacks. If 
+	one of the existing names is selected, the association between the widget 
+	event and the coded function is made.</p>
+	<p>
+	<img src="images/CallbackEdition04.png" width="216" height="171"></li>
+</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --> 
+<h2><a name="History1"></a>Simulating the Application</h2>
+<p>The designer shows a rendering of the dialog box that is close from its real 
+look. However, some differences are left intentionally to help the designer to 
+create its dialog box faster (some spaces between the widgets for instance). 
+More over, we want to be able to see the behavior when the dialog box is 
+resized. To test the designed application quickly and accurately, we created an 
+application that will create the dialog box on the fly (without compilation), 
+using the real C++ code of the Dialog framework.</p>
+<p>To simulate a dialog box, use the context menu on the design surface:</p>
+<p><img src="images/Simulate1Ext.png" width="243" height="124"></p>
+<p><img src="images/Simulate2.png"></p>
+<p><b>Remark:</b></p>
+<p>Sometimes, the simulator doesn't appear on top of Visual Studio. If the 
+simulator window isn't visible after a few seconds, it means that it is most 
+likely lying under the current Visual Studio window.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --> 
+<h2><a name="History0"></a>Accessing the Generated Code</h2>
+<p>The designer creates two code files that are generated from the designer file 
+(.DSGen):</p>
+<ul>
+	<li>A C++ header file (.h)</li>
+	<li>A C++ implement file (.cpp)</li>
+	</ul>
+	<p>Each file is accessible from context menu on the design surface:</p>
+	<p>
+	<img src="images/GoToCodeViewExt.png" width="236" height="129"></p>
+	<p>Once created, they are added to the C++ project, and can be opened 
+	directly from the Visual Studio solution explorer:</p>
+	<p><img src="images/GoToCodeView2.png" width="212" height="219"></p>
+	<p>Those files show the code that will be generated by mkmk to implement the 
+	dialog box that was graphically designed. This generated code is grayed and 
+	read only. Those view also include some writable parts that have a white 
+	background, where the user can customize the generated code.</p>
+	<p>In the header, the user can specify:</p>
+	<ul>
+		<li>Class dependencies</li>
+		<li>Class members (fields or methods)</li>
+		</ul>
+		<p>And in the implementation file:</p>
+		<ul>
+			<li>Additional includes</li>
+			<li>Code in the constructor</li>
+			<li>Code in the destructor</li>
+			<li>Code that must be executed before, or after the dialog box 
+			construction</li>
+			<li>The implementation of the custom methods declared in the header</li>
+			<li>The code of each callback method</li>
+		</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --> 
+<h2><a name="History2"></a>Compiling the Designed Dialog Box</h2>
+<p>The generation of the final C++ code implementing the dialog box is fully 
+integrated in mkmk. Just launch mkmk on the module containing your dialog file 
+(.DSGen file), the compiler will automatically translate it into C++ code, and 
+then compile and link it to the other files located in this module.</p>
+<p><b>Remark:</b></p>
+<p>The designer will not update the Identity card and the Imakefile that defines 
+the prerequisites of the module containing the dialog box. You have to edit 
+them manually, to add the frameworks (in the Identity card) or modules (in the Imakefile) that contain the implementation of the 
+widgets used in your Dialog box. The required frameworks and modules for each 
+widget are described in the documentation, on top of each widget description.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --> 
+<h2><a name="CATCommand"></a>Using the Dialog Box as a Command</h2>
+<p>It is extremely simple to use your Dialog Box as a simple, dialog-based, interactive command.</p>
+<p>The only thing you have to do is to <strong>set to true the "IsCommand" property</strong> of your Dialog Box, like shown in the following figure.</p>
+<p><img src="images/CAACgtCATCommandProp.png" width="268" height="435"></p>
+<p>This will trigger the generation of 3 overridden methods, inherited from CATCommand (through CATDlgDialog):
+<strong>Activate, Desactivate and Cancel</strong>. The call of <strong>CATCreateClass macro</strong> and <strong>a default constructor</strong> are also generated.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --> 
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>2</b> [Jun 2009]</td>
+		<td valign="top">Document update by OJA</td>
+	</tr>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Jul 2007]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

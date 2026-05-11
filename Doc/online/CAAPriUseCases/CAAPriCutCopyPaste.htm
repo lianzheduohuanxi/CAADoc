@@ -1,0 +1,634 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Implementing the Cut/Copy/Paste Behavior for Mechanical Design Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Part Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing the Cut/Copy/Paste Behavior for
+      Mechanical Design Features</h3>
+      <em>Implementing Mechanical Modeler interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPriCutCopyPaste use case. This use case
+      explains, with the <i>CAAPriUserPad</i> simplified pad as example, how to
+      implement the interfaces <i>CATIMechanicalCCP</i> and <i>CATIShapeFeatureProperties</i>.
+      to enable a mechanical design feature for the cut, copy and paste
+      capabilities.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The CAAPriCutCopyPaste Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAPriCutCopyPaste Do</a></li>
+            <li><a href="#How">How to Launch CAAPriCutCopyPaste</a></li>
+            <li><a href="#Where">Where to Find the CAAPriCutCopyPaste Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#StepA"><strong>CATIMechanicalCCP Implementation
+          Step-by-Step</strong></a></li>
+        <li><a href="#StepB"><strong>CATIShapeFeatureProperties Implementation
+          Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you use the Cut/Copy/Paste and understand
+how to implement it on the simplified pad feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPriCutCopyPaste Use Case</h3>
+<p>The CAAPriCutCopyPaste is a use case of the CAAPartInterfaces.edu framework
+that illustrates PartInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPriCutCopyPaste Do</h4>
+<p>The goal of CAAPriCutCopyPaste is to show how to implement the <i>CATIMechanicalCCP</i>
+and <i>CATIShapeFeatureProperties</i> interfaces onto a given form feature [<a href="#References">1</a>],
+namely the simplified pad. The simplified pad exists as a Start Up in the
+CAAPriFormFeature.CATfct catalog and has the type <i>CAAPriUserPad</i> [<a href="#References">2</a>].
+The two interfaces are implemented in the following classes:</p>
+<ul>
+  <li><i>CAAPriEMechanicalCCP</i> implements the <i>CATIMechanicalCCP</i>
+    interface. It specifies the Cut/Copy/Paste behavior of the simplified pad
+    feature.</li>
+  <li><i>CAAPriECCPProp</i> implements the <i>CATIShapeFeatureProperties</i>
+    interface. It is used to specify the general behavior of solid features. A
+    standard implementation for this interface exists. You need to implement
+    this interface for your features if they rely on a sketch that is not
+    directly aggregated, but is aggregated using a profile. This is the case of
+    the simplified pad.</li>
+</ul>
+<p>The CAAPriCutCopyPasteMain.m module contains a main program that creates a
+Part document, instantiates the <i>CAAPriUserPad</i> StartUp with a first
+sketch, calls its <code>Build</code> method and saves the resulting Part
+Document. In a second step, a second sketch is created, and a Copy/Paste
+operation is performed from the simplified pad onto this sketch. The resulting
+Part is saved in a second Part document. <a href="#Fig1">Fig.1</a> shows the pad
+to copy in the first Part document. <a href="#Fig2">Fig.2</a> shows the pad to
+copy and the copied pad saved in the second Part document.</p>
+<table>
+  <caption><a name="Fig1"></a><i>Fig. 1 The Pad to Copy</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAPriCCP1.jpg" width="631" height="493"></td>
+  </tr>
+</table>
+<table>
+  <caption><a name="Fig2"></a><i>Fig. 2 The Copied Pad</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAPriCCP2.jpg" width="631" height="493"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAPriCutCopyPaste</h4>
+<p>To launch CAAPriCutCopyPaste, you will need to set up the build time
+environment, then compile CAAPriCutCopyPaste along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">3</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAPriCutCopyPasteMain outputDirectory\CAAUserPadCCP1.CATPart outputDirectory\CAAUserPadCCP2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAAPriCutCopyPasteMain outputDirectory/CAAUserPadCCP1.CATPart outputDirectory/CAAUserPadCCP2.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>outputDirectory</code></td>
+    <td>The directory into which <code>CAAUserPadCCP1.CATPart</code> and <code>CAAUserPadCCP2.CATPart</code>
+      will be stored</td>
+  </tr>
+  <tr>
+    <td><code>CAAUserPadCCP1.CATPart</code>
+    <td>The file that contains the pad created</td>
+  </tr>
+  <tr>
+    <td><code>CAAUserPadCCP2.CATPart</code></td>
+    <td>The file that contains the two pads after Copy/paste operation</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPriCutCopyPaste Code</h4>
+<p>The CAAPriCutCopyPaste use case is made of two modules named
+CAAPriCutCopyPast.m and CAAPriCutCopyPasteMain.m module of the
+CAAPartInterfaces.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td>
+        <pre>InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCutCopyPaste.m\
+InstallRootDirectory\CAAPartInterfaces.edu\CAAPriCutCopyPasteMain.m\</pre>
+      </td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td>
+        <pre>InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCutCopyPaste.m/
+InstallRootDirectory/CAAPartInterfaces.edu/CAAPriCutCopyPasteMain.m/</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. These modules contain:</p>
+<table>
+  <tr>
+    <td valign="top">CAAPriCutCopyPaste.m</td>
+    <td>The two classes <i>CAAPriEMechanicalCCP</i> and <i>CAAPriECCPProp</i>
+      that implements the <i>CATIMechanicalCCP</i> and <i>CATIShapeFeatureProperties</i>
+      interfaces respectively as <i>CAAPriUserPad</i> feature extensions</td>
+  </tr>
+  <tr>
+    <td valign="top">CAAPriCutCopyPasteMain.m</td>
+    <td>The main program that performs the copy/paste operation</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="StepA"></a>CATIMechanicalCCP Implementation Step-by-Step</h3>
+<p><i>CATIMechanicalCCP</i> is implemented using a class named <i>CAAPriEMechanicalCPP</i>
+that is a data extension of the late type <i>CAAPriUserPad</i>. There are six
+methods to implement:</p>
+<ol>
+  <li><a href="#StepA1">GiveMeYourFavoriteSpecifications</a></li>
+  <li><a href="#StepA2">IsElementValidForPaste</a></li>
+  <li><a href="#StepA3">GetAnchorPoint</a></li>
+  <li><a href="#StepA4">GetReferenceNormal</a></li>
+  <li><a href="#StepA5">CanBeDeleted</a></li>
+  <li><a href="#StepA6">CanBeCopied</a></li>
+</ol>
+<p>We will now comment each of these methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepA1"></a>GiveMeYourFavoriteSpecifications</h4>
+<p><code>GiveMeYourFavoriteSpecifications</code> is a method that returns the
+list of the features that are required to build the simplified pad. That is the
+sketch the pad is built on.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATLISTV(CATISpecObject_var) CAAPriEMechanicalCCP::GiveMeYourFavoriteSpecifications() const
+{
+  // Retrieves the Profile attribute of the UserPad feature.
+  //
+ 
+  CATLISTV(CATISpecObject_var) listSpec;</pre>
+      <pre>  CATISpecObject *piUserPad = NULL;
+  HRESULT rc = ((CATBaseUnknown*)this)-&gt;QueryInterface( IID_CATISpecObject ,
+                                                        ( void** ) &amp;piUserPad );
+  if( FAILED(rc) )
+    return listSpec;
+
+  CATISpecAttribute *piProfileAtt = piUserPad-&gt;<b>GetAttribute</b>(&quot;Profile&quot;);
+  if(NULL != piProfileAtt)
+  {
+    CATISpecObject_var spProfile = piProfileAtt-&gt;GetSpecObject(1);
+    piProfileAtt-&gt;Release();
+    if(NULL_var != spProfile)
+    {
+      spProfile-&gt;Release();   // To decrement the reference count</pre>
+      <pre>      // Retrieves the sketch associated with the profile
+      // The sketch is added in the returned list
+      //
+      CATIPrtProfile_var spPrtProfileOnProfile(spProfile);
+      if (NULL_var != spPrtProfileOnProfile)
+      {
+        CATISpecObject_var spElt = NULL_var;
+        spPrtProfileOnProfile-&gt;<b>GetElement</b>(1, spElt);
+        if (NULL_var != spElt)
+        {
+          listSpec.Append(spElt);
+        }
+      }
+    }
+  }
+  piUserPad-&gt;Release();
+  return listSpec;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The &quot;Profile&quot; attribute of the simplified pad references the
+profile, which in turns, references the unique sketch. We get the attribute by
+using the <code>GetAttribute</code> method of the <i>CATISpecObject</i>
+interface. We get the sketch from the profile by using the <code>GetElement</code>
+method of the <i>CATIPrtProfile</i> interface. The sketch is inserted into the
+returned list.</p>
+<p>Note that the <code>spProfile</code> smart pointer to <i>CATISpecObject</i>
+is released. This is usually useless with smart pointers that are automatically
+released when going out of scope, but here, this is required, because <code>GetSpecObject</code>
+returns an interface pointer, and as any good method that returns an interface
+pointer, <code>GetSpecObject</code> calls <code>AddRef</code> onto the returned
+pointer. This pointer is then used in the same statement to create the smart
+pointer using the redefined assignment operator of the smart pointer class, that
+also calls <code>AddRef</code> onto the created smart pointer. The reference
+count is incremented twice, and must be decremented. Since the returned pointer
+cannot be handled, the smart pointer is used to call <code>Release</code>. This
+decrements the reference count. Then the smart pointer can be used and is again
+released when going out of scope.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="StepA2"></a>IsElementValidForPaste</h4>
+<p><code>IsElementValidForPaste</code> is a method that returns 1 to let the
+paste occur, 0 to prevent it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPriEMechanicalCCP::IsElementValidForPaste(CATPathElement* ispPath) const 
+{<i>
+  </i>//
+  // return value: the paste is not valid yet.
+  //
+  int valid = 0;
+
+  //
+  // checking if there is a sketch in the path element
+  //
+  CATBaseUnknown *spiSketchOnElt = ispPath-&gt;<b>FindElement</b>(IID_CATISketch);
+  if( NULL != spiSketchOnElt )
+  {
+    spiSketchOnElt-&gt;Release();
+    valid = 1;
+  }
+  return valid;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The input argument is the selected object onto which the user intends to
+paste the cut or copied object: it is a <i>CATPathElement</i> instance that
+holds the whole user selection. For the simplified pad, the intent is to let the
+paste operation occur if the destination object is a sketch that is going to
+replace the current sketch of the pad.</p>
+<p>We look for a sketch in the input path element using the <code>FindElement</code>
+method to which the <i>CATISketch</i> <code>IID</code> is passed. If a sketch is
+found, the paste operation is possible and the method returns 1.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepA3"></a>GetAnchorPoint</h4>
+<p><code>GetAnchorPoint</code> is used to retrieve the absolute positioning of
+the object being copied.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...<i>
+</i>CATMathPoint CAAPriEMechanicalCCP::GetAnchorPoint() const 
+{
+<i>  </i>// Retrieves the Profile attribute of the UserPad feature.
+  //
+ 
+  CATMathPoint anchorPoint;
+  
+  CATISpecObject * piUserPad = NULL;
+  HRESULT rc = ((CATBaseUnknown*)this)-&gt;QueryInterface( IID_CATISpecObject ,
+                                                        ( void** ) &amp;piUserPad );
+  if( FAILED(rc) )
+    return anchorPoint;
+ 
+  CATISpecAttribute *piProfileAtt = piUserPad-&gt;GetAttribute(&quot;Profile&quot;);
+  if(NULL != piProfileAtt)
+  {
+    CATISpecObject_var spProfile = piProfileAtt-&gt;GetSpecObject(1);
+    piProfileAtt-&gt;Release();
+    if(NULL_var != spProfile)
+    {
+      spProfile-&gt;Release();
+   
+      // Retrieves the sketch associated with the profile
+      // The sketch is added in the returned list
+      //
+      CATIPrtProfile_var spPrtProfileOnProfile(spProfile);
+      if (NULL_var != spPrtProfileOnProfile)
+      {
+        int nbElt = spPrtProfileOnProfile-&gt;<b>GetElementCount</b>();
+        if (1 == nbElt)
+        {
+          // Retrieves the sketch associated to the profile
+          //
+          CATISpecObject_var spElt;
+          spPrtProfileOnProfile-&gt;<b>GetElement</b>(1, spElt);
+          CATIMechanicalCCP_var spCCPOnElt(spElt);
+          if (NULL_var != spCCPOnElt)
+          {
+            // Delegates GetAnchorPoint to the sketch
+            //
+            anchorPoint = spCCPOnElt-&gt;GetAnchorPoint();
+          }
+        }
+      }
+    }
+  }
+  piUserPad-&gt;Release();
+  return anchorPoint;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the case of the simplified pad, the anchor point is the one of the sketch.
+The sketch is retrieved in the same way than in the <a href="#StepA1">GiveMeYourFavoriteSpecifications</a>
+method. The algorithm consists in finding the referenced sketch and delegate the
+call to it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepA4"></a>GetReferenceNormal</h4>
+<p><code>GetReferenceNormal</code> is a used to retrieve the absolute normal of
+the result of feature.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATMathDirection CAAPriEMechanicalCCP::GetReferenceNormal() const
+{
+<i>  // Retrieves the Profile attribute of the UserPad feature.
+  //
+ 
+ </i> CATMathDirection normal;
+  
+  CATISpecObject *piUserPad = NULL;
+  HRESULT rc = ((CATBaseUnknown*)this)-&gt;QueryInterface( IID_CATISpecObject , ( void** ) &amp;piUserPad );
+  if( FAILED(rc) )
+    return normal;  
+ 
+  CATISpecAttribute *piProfileAtt = piUserPad-&gt;GetAttribute(&quot;Profile&quot;);
+  if(NULL != piProfileAtt)
+  {
+    CATISpecObject_var spProfile = piProfileAtt-&gt;GetSpecObject(1);
+    piProfileAtt-&gt;Release();
+    if(NULL_var != spProfile)
+    {
+      spProfile-&gt;Release();
+   <i>
+      // Retrieves the sketch associated with the profile
+      // The sketch is added in the returned list
+      //
+ </i>     CATIPrtProfile_var spPrtProfileOnProfile(spProfile);
+      if (NULL_var != spPrtProfileOnProfile)
+      {
+        int nbElt = spPrtProfileOnProfile-&gt;GetElementCount();
+        if (1 == nbElt)
+        {
+          CATISpecObject_var spElt;
+          spPrtProfileOnProfile-&gt;GetElement(1, spElt);
+          CATIMechanicalCCP_var spCCPOnElt(spElt);
+          if (spCCPOnElt != NULL_var)
+          {
+            // Delegates GetReferenceNormal to the sketch
+            //
+            normal = spCCPOnElt-&gt;GetReferenceNormal();
+          }
+        }
+      }
+    }
+  }
+  piUserPad-&gt;Release();
+  return normal;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the case of the simplified pad, the normal is the one of the sketch. The
+sketch is retrieved in the same way than in the <a href="#StepA1">GiveMeYourFavoriteSpecifications</a>
+method. The algorithm consists in finding the referenced sketch and delegate the
+call to it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepA5"></a>CanBeDeleted</h4>
+<p><code>CanBeDeleted</code> is used to know whether the cut feature can be
+actually be cut. It should return 1 if the feature can be cut, and 0 otherwise</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPriEMechanicalCCP::CanBeDeleted(CATListValCATISpecObject_var List) const 
+{<i>
+  </i>return 1;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The simplified pad can always be the cut.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepA6"></a>CanBeCopied</h4>
+<p><code>CanBeCopied</code> is used to know whether the copied feature can be
+actually be copied. It should return 1 if the feature can be copied, and 0
+otherwise.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPriEMechanicalCCP::CanBeCopied() const 
+{
+<i>  </i>return 1;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The simplified pad can always be the copied.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="StepB"></a>CATIShapeFeatureProperties Implementation Step-by-Step</h3>
+<p><i>CATIShapeFeatureProperties</i> is implemented using a class named <i>CAAPriECCPProp</i>
+that is a data extension of the late type <i>CAAPriUserPad</i>. This class
+derives from the <i>CATMmrShapeFeaturePropertiesAdapter</i> adaptor class. There are
+only two methods to implement :</p>
+<ol>
+  <li><a href="#StepB3">GetPolarity</a></li>
+  <li><a href="#StepB4">GiveMeYourFavoriteSketches</a></li>
+</ol>
+<p>The&nbsp; <i>CATIShapeFeatureProperties</i> has also the followings methods:</p>
+<ul>
+  <li><code>IsAContextualFeature</code> : Implemented by the <i>CATMmrShapeFeaturePropertiesAdapter</i>&nbsp;
+    adaptor class</li>
+  <li><code>IsAFreeFormFeature</code> : implemented by the <i>CATMmrShapeFeaturePropertiesAdapter</i>&nbsp;
+    adaptor class.&nbsp;</li>
+</ul>
+<blockquote>
+  <p>These two methods are implemented by the <i>CATMmrShapeFeaturePropertiesAdapter</i>&nbsp;
+  adaptor class, you do not have to overwrite them.</p>
+</blockquote>
+<p>and,</p>
+<ul>
+  <li><code>GiveMeYourBRepSpecifications</code>: the default implementation
+    provides an empty list.</li>
+  <li><code>CanBePatterned</code> :&nbsp; the default implementation sets that
+    the feature can not be patterned.</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The default implementation of
+these two methods are available. So the <i>CAAPriECCPProp</i>
+ class do not overwrite them.</p>
+<p>The <i>CATIShapeFeatureProperties</i>  is an interface which can be
+implemented by the BOA mechanism [<a href="#References">4</a>]. So lets us
+consider the first part of the <i>CAAPriECCPProp</i>
+ code file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAPriECCPProp, 
+                  DataExtension, 
+                  <b>CATIShapeFeatureProperties</b>, 
+                  CAAPriUserPad);
+
+<b>CATImplementBOA</b>(CATIShapeFeatureProperties, CAAPriECCPProp);
+...</pre>
+    </td>
+  </tr>
+</table>
+The <code>CATImplementClass</code> macro is used in conjunction with the <code>CATDeclareClass</code>
+macro in the class header file to express that the class is part of a CAA V5
+Object Modeler component. Its argument read as follows:
+<ol>
+  <li><code>CAAPriECCPProp</code>: the class name
+  <li><code>DataExtension</code>: the CAA V5 Object Modeler class type.&nbsp;
+  <li><code>CATIShapeFeatureProperties</code> <code>: </code>The name of
+    implemented interface
+  <li><code>CAAPriUserPad</code>: the name of the extended component</li>
+</ol>
+The <code>CATImplementBOA</code> macro replaces the <code>TIE_CATIShapeFeatureProperties</code>
+macro. Its arguments are the BOA-implemented interface and the extension class
+name respectively.
+<h4><a name="StepB3"></a>GetPolarity</h4>
+<p><code>GetPolarity</code> returns the polarity of the feature, that is,
+whether the feature adds or removes matter.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString CAAPriECCPProp::GetPolarity ( )
+{
+  CATUnicodeString PrtAdd(&quot;<b>Add</b>&quot;);
+  return PrtAdd;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The simplified pad adds matter.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="StepB4"></a>GiveMeYourFavoriteSketches</h4>
+<p><code>GiveMeYourFavoriteSketches</code> returns the sketches used to build
+the feature. In the case of the simplified pad, there is a single sketch. It is
+retrieved as in <a href="#StepA1">GiveMeYourFavoriteSpecifications</a>.</p>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to implement the Cut/Copy/Paste
+behavior for the simplified pad. This is achieved by making theb CAAPriUserPad
+feature implement the <i>CATIMechanicalCCP</i> and <i>CATIShapeFeatureProperties</i>
+interfaces. Implementing <i>CATIMechanicalCCP</i> is enough for features that
+directly aggregate a sketch. If this is not the case, <i>CATIShapeFeatureProperties</i>
+must also be implemented. Both interfaces are implemented in data extension
+classes of the feature late type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPriTechArticles/CAAPriFormAndShapeFeature.htm">Form
+      Feature and Contextual Feature Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAPriBuildUserPad.htm">Implementing a Mechanical Design
+      Feature Building</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

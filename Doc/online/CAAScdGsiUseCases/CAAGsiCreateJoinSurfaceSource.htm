@@ -1,0 +1,67 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAGsiCreateJoinSurface.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language=&quot;VBScript&quot;
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create a Join surface </font>
+<font color="#008000">'   Assumtions:   .\samples\CAAGsiCreateJoinSurface.CATPart use as input geometry  </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+
+<font color="#008000">' Openning CATIA Part : CAAGsiCreateJoinSurface.CATPart </font>
+<font color="#0000FF">  Dim </font>sDocPath<font color="#0000FF"> As </font>String
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">  Dim </font>oPartDocument<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">  Set </font>oPartDocument = CATIA.Documents.Open(sDocPath &amp; &quot;\online\CAAScdGsiUseCases\samples\CAAGsiCreateJoinSurface.CATPart&quot;)
+ 
+<font color="#008000">' Retrieving Active OpenBody </font>
+<font color="#0000FF">  Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">  Set </font>hybridBodies1 = oPartDocument.Part.HybridBodies
+
+<font color="#0000FF">  Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody1 = hybridBodies1.Item(&quot;Open_body.2&quot;)
+
+<font color="#008000">' Creating a reference for Fill.1 object  </font>
+<font color="#0000FF">  Dim </font>hybridShapeFill1<font color="#0000FF"> As </font>HybridShape
+<font color="#0000FF">  Set </font>hybridShapeFill1 = OpenBody1.HybridShapes.Item(&quot;Fill.1&quot;)
+
+<font color="#0000FF">  Dim </font>reference1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>reference1 = oPartDocument.Part.CreateReferenceFromObject(hybridShapeFill1)
+
+<font color="#008000">' Creating a reference for Extrude.1 object </font>
+<font color="#0000FF">  Dim </font>hybridShapeExtrude1<font color="#0000FF"> As </font>HybridShape
+<font color="#0000FF">  Set </font>hybridShapeExtrude1 = OpenBody1.HybridShapes.Item(&quot;Extrude.1&quot;)
+
+<font color="#0000FF">  Dim </font>reference2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>reference2 = oPartDocument.Part.CreateReferenceFromObject(hybridShapeExtrude1)
+
+<font color="#008000">' Retrieving Wireframe and Shape Design Factory </font>
+<font color="#0000FF">  Dim </font>hybridShapeFactory1<font color="#0000FF"> As </font>Factory
+<font color="#0000FF">  Set </font>hybridShapeFactory1 = oPartDocument.Part.HybridShapeFactory
+
+<font color="#008000">' Creating a Join (also named assemble)   between Fill.1 and Extrude.1 </font>
+<font color="#0000FF">  Dim </font>hybridShapeAssemble1<font color="#0000FF"> As </font>HybridShapeAssemble
+<font color="#0000FF">  Set </font>hybridShapeAssemble1 = hybridShapeFactory1.AddNewJoin(reference1, reference2)
+
+<font color="#008000">' Inserting Join in current OpenBody </font>
+  OpenBody1.AppendHybridShape hybridShapeAssemble1
+
+<font color="#008000">' Making Join as active object in CATIA Part  </font>
+  oPartDocument.Part.InWorkObject = hybridShapeAssemble1
+
+<font color="#008000">' Updating CATPart </font>
+  oPartDocument.Part.Update 
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

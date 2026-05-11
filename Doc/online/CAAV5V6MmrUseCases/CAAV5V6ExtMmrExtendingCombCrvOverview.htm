@@ -1,0 +1,505 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="CAAMmrUseCase">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Extending a Mechanical Feature using Extension Feature and Providers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler&nbsp;</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Extending a Mechanical Feature using Extension 
+		Feature and Providers</h3>
+      <i>A full example to create and integrate in the V5 your own extension
+      features</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create and integrate an <b>Extension 
+		Feature</b>, used to add data and behaviors into CAA V5: the <b>
+		CAAV5V6ExtMmrCCDataExtension</b> feature.<br>
+		It extends the V5V6ExtCombinedCurve feature defined and detailed in the CAA 
+		Use Cases articles &quot;Creating a New Geometrical Feature: the V5V6ExtCombinedCurve&quot; [<a href="#References">1</a>].
+		
+		 <p>This use case is a copy of the extended Combined Curve use case: the CAAMmrCCDataExtension use case
+		 [<a href="#References">5</a>], rewritten with V6 backported interfaces. 
+	
+		<ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#CombinedCurve"><b>What Is a &quot;CAAV5V6ExtMmrCCDataExtension&quot;</b></a></li>
+        <li><a href="#UseCase"><strong>The &quot;Extending V5V6ExtCombinedCurve&quot; Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the &quot;Extending V5V6ExtCombinedCurve&quot; Use Case Do</a></li>
+            <li><a href="#How">How to Launch the &quot;Extending V5V6ExtCombinedCurve&quot; Use Case</a></li>
+            <li><a href="#Where">Where to Find the &quot;CAAV5V6ExtMmrCCDataExtension&quot; Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step-by-Step">Step-by-Step</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates the sub-section entitled &quot;<b>Adding Applicative 
+Data</b>&quot; you can find in the &quot;Technical Articles&quot;
+section of the Mechanical Modeler home page. <br>
+Its main intent is to show you
+<b>Extension Features</b> specifities [<a href="#References">2</a>] and to explain 
+how to use <b>Providers</b>[<a href="#References">3</a>] 
+in order to add data and behaviors to Mechanical Features.&nbsp;&nbsp;</p>
+<p>In this use case, you will learn to:</p>
+<ul>
+  <li><b>Create </b>an Extension Feature :</li>
+</ul>
+<blockquote>
+	<p>How to create a new StartUp of Extension Feature, how to store it in a feature's catalog 
+	and how to instantiate it.</p>
+</blockquote>
+<ul>
+  <li><b>Create </b>Providers:</li>
+</ul>
+<blockquote>
+  <p>How to define and create new Providers to extend CATPrtCont's behaviors to Applicative 
+	Container.</p>
+</blockquote>
+<ul>
+  <li><b>Integrate </b>your Extension and your Providers in the V5.</li>
+</ul>
+<blockquote>
+  <p>As Extension Features are features, they are completely described by a set 
+	of behaviors, in other words interfaces, which have to be implemented in 
+	order to integrate cleanly your new features in the V5.<br>
+&nbsp;</p>
+</blockquote>
+<p>The &quot;<i><b>Extending V5V6ExtCombinedCurve</b></i>&quot; use case constitutes a set of articles, each describing the
+creation or the integration. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CombinedCurve"></a> <b>What Is a &quot;CAAV5V6ExtMmrCCDataExtension&quot;</b></h3>
+<p>The <i><b>CAAV5V6ExtMmrCCDataExtension&nbsp;</b></i> is an extension feature designed to 
+add a computed data to V5V6ExtCombinedCurves instantiated in your MechanicalPart. Its 
+aim is to add a parameter - the computed length - to the instantiated V5V6ExtCombinedCurve.</p>
+<p>Consequently, a <i><b>CAAV5V6ExtMmrCCDataExtension&nbsp;</b></i>&nbsp; has only one 
+Input (the base feature it extends) and an Output (The aggregated Parameter 
+representing the computed length)</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The &quot;Extending V5V6ExtCombinedCurve&quot; Use Case</h3>
+<p>The &quot;Extending V5V6ExtCombinedCurve&quot; is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities in Extension Feature Domain.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the &quot;Extending V5V6ExtCombinedCurve&quot; Use Case Do</h4>
+<p>The final intent of this use case is to add a computed data to instantiated 
+V5V6ExtCombinedCurves and to extend some behaviors (Update, NavigateObject, 
+3DVisualisation...) on this extension feature. It can be divided into several 
+steps:</p>
+<ol>
+  <li>Creating the new Extension Feature <b>StartUp</b>(<b>CAAV5V6ExtMmrCCDataExtension</b>) 
+	and storing it in the <b>catalog &quot;CAAV5V6ExtMmrCCDataExtensionCatalog.CATfct&quot;</b>
+    using &quot;OSM Modelling Language&quot;.<p>The CATfct file has been generated using CATfctEditorAssistant tool.&nbsp; 
+	The client authentication is &quot;CAAMmrUseCase&quot; . </p>
+	<li>Creating a command <b> to instantiate</b> the new Extension StartUp 
+	&quot;CAAV5V6ExtMmrCCDataExtension&quot; into a specific applicative container -
+  
+  <p>This command enables the end user to select a V5V6ExtCombinedCurve, and then uses a global method,<i> CAAV5V6ExtMmrAddCCExtension,</i> 
+	to create its extension. This method creates a new instance of Extension Feature 
+	using the <code>AddExtension</code> API. This Feature&nbsp; Modeler API creates 
+	the extension on the V5V6ExtCombinedCurve, and creates the Extension Container <b>&quot;V5V6ExtMmrDataExtensionCont&quot;</b> 
+	if it doesn't exists. </p>
+	<li>Creating an interface to <b>modify or retrieve the input specifications</b> of
+    the CAAV5V6ExtMmrCCDataExtension instances.- Creating 
+	CAAV5V6ExtMmrCCDataExtension 's 
+	Interface of Type</li>
+  		<p>In the <i>CATIFmFeatureBehaviorCustomization</i> implementation, or in the edition command, it 
+		is mandatory to have an access to the input specifications of the new 
+		feature. It is the role of this <i>CAAIV5V6ExtMmrCCDataExtension</i>
+  interface.&nbsp;<br>&nbsp;</p>
+	<div align="center">
+		<table border="0" width="447">
+			<caption><i><a name="Fig.5">Fig.2</a>: The CAAIV5V6ExtMmrCCDataExtension Interface</i></caption>
+			<tr>
+				<td>
+				<p align="center">
+				<img border="0" src="images/CAAV5V6ExtMmrCCDataExtensionInterface.jpg"></td>
+			</tr>
+		</table></div>
+	<p>With this interface you can retrieve or modify the value of 
+	CAAV5V6ExtMmrCCDataExtension's Attributes.<br>&nbsp;</p>
+	<li><b>Integrating the CAAV5V6ExtMmrCCDataExtension in the V5</b> &nbsp;</li>
+
+  	<p>As an Extension Feature is like a traditional feature, we have to take into 
+	account several interfaces to integrate clearly our 
+	CAAV5V6ExtMmrCCDataExtension in the V5.<br>&nbsp;</p>
+	<ul>
+		<li><b><i>CATIFmFeatureBehaviorCutomization</i></b>- Building 
+		CAAV5V6ExtMmrCCDataExtension's Result<p>As our extension is designed to 
+		compute something, we have to implement <em>CATIFmFeatureBehaviorCutomization</em> Interface. This 
+		interface enables you to build the result of the feature. <br>&nbsp;</p>
+		<li><b><i>CATIParmPublisher </i></b>- 
+		Displaying CAAV5V6ExtMmrCCDataExtension's Result<br><br>As 
+		CAAV5V6ExtMmrCCDataExtension aggregates parameters, it is interesting to 
+		implement this interface to define which parameters would be displayable 
+		and &quot;pickable&quot; into <i>f(x)</i>.<br>&nbsp;<li><b><i>CATI3DGeoVisu 
+		</i></b>- 
+		Displaying CAAV5V6ExtMmrCCDataExtension's Result<p>We decide to implement <b>
+		<i>CATI3DGeoVisu</i></b> in order to display a 
+		3D Representation&nbsp; associated with mathematical result of 
+		CAAV5V6ExtMmrCCDataExtension. This consists in displaying the value computed 
+		sticking it on the Extended Combined Curve 3DRepresentation.<br>&nbsp;<li>
+		<i><b>CATINavigateObject </b></i>- Displaying 
+		CAAV5V6ExtMmrCCDataExtension's 
+		parameter under its node in the Spec Tree<p>We decided to implement <b>
+		<i>CATINavigateObject</i></b> on CAAV5V6ExtMmrCCDataExtension in order to make 
+		visible it's valuated parameter under its node in the SpecTree. 
+		Nevertheless this implementation is not mandatory, since there is a 
+		default implementation of this interface on the feature extension 
+		(implemented on the feature whose derives the feature extension).<br>&nbsp;</li>
+		<li><b>CATINavigateFilter</b> - Allowing CAAV5V6ExtMmrCCDataExtension's node in the 
+		Spec Tree <i>under the V5V6ExtCombinedCurve</i></li>
+		<p>This interface enables an application to display or not a child 
+		beneath its parent.&nbsp; This method contains one method: <code>IsShown</code>. 
+		You must implement this interface, otherwise the behavior is not 
+		guaranteed. This interface is valid for Mechanical Modeler context, for 
+		other context refer to the modeler's documentation.<p>In the use 
+		case we have decided that the extension will be not displayed beneath 
+		the V5V6ExtCombinedCurve. Nevertheless we have implemented <i>
+		<b>CATINavigateFilter</b></i> (<code>IsShown= FALSE)</code>. The 
+		extension will be visible beneath the Part's node thanks the <i>
+		CATINavigateProvider </i>implementation<i>.</i>
+		
+		<p>
+		
+		<img alt="" src="images/CAAV5V6ExtMmrCCDataExtensionSpecTree.jpg"></p>
+		
+		<p>If you only want see the extension beneath the V5V6ExtCombinedCurve, 
+		implement <i>
+		<b>CATINavigateFilter</b></i> with <code>IsShown= TRUE</code>, and do 
+		not implement <b><i>CATINavigateProvider . </i></b>
+	</ul>
+	<p>In Addition, Extension Features are instantiated in a specific 
+	Applicative Container (<b><i>V5V6ExtMmrDataExtensionCont</i></b>) defined in 
+	the CAAV5V6ExtMmrCCDataExtensionCatalog.CATfct file . Consequently, we 
+	have to define Provider Mechanism to extend CATPrtCont's Behavior to 
+	this Applicative Container.<br>This is done by:<ul>
+		<li>Implementing the Providers <b><i>CATIUpdateProvider / 
+	CATINavigateProvider / CATIParmProvider / CATI3DVisuProvider&nbsp; </i></b>- 
+	Implementing 
+		V5V6ExtMmrDataExtensionCont's Providers.<p>In this article we show how to 
+	implement Providers. This implementation is done on components (in Object 
+	Modeler meaning) keeping in mind the specific context of Mechanical Part.</p>
+		<p>&nbsp;</p>
+		<li>Declaring those Providers to V5: <b><i>CATInit</i></b> -
+	Implementing 
+		V5V6ExtMmrDataExtensionCont's Initialization.<br>&nbsp;</ul>
+	<p>&nbsp;<li><b><a name="Creating interactively instances"></a>Creating Interactively
+    Instances</b> </li>
+  <p>To create interactively new instances of the <b>
+	CAAV5V6ExtMmrCCDataExtension </b>, we will use the add-in of the Shape 
+	Design workbench that we had already created for V5V6ExtCombinedCurve 
+	interactive command: the CAAV5V6ExtMmrCombinedCurveAddIn. We will add the 
+	CAAV5V6ExtMmrCCDataExtension Creation
+  command.&nbsp;</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<h4><a name="How"></a>How to Launch the Extending V5V6ExtCombinedCurve Use Case</h4>
+  <p>To launch the Extending V5V6ExtCombinedCurve use case, you will need to set up the build time
+environment, then compile the following modules of the CAAV5V6MechanicalModeler.edu
+  framework along with their prerequisites:</p>
+<ul>
+  <li>CAAV5V6ExtMmrCombinedCurve.m,&nbsp;&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveAddIn.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveReplace.m,</li>
+  <li>CAAV5V6ExtMmrCombinedSample.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCombinedCurveUI.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCCDataExtension.m,&nbsp;</li>
+  <li>CAAV5V6ExtMmrCCDataExtensionUI.m&nbsp;</li>
+</ul>
+<p>&nbsp;</p>
+<p> Next, let's execute interactively the use case. Several steps must be
+followed in order to completely execute the use case:</p>
+<ul>
+  <li><p>Launch CATIA. When the application is ready, follow scenarios described
+    below:</p></li>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Creation</b> scenario:</p>
+</blockquote>
+<ul>
+   <ul>
+   <li>In the <b>Start</b> menu choose <strong>Shape</strong><b> </b>and click <b>
+	Generative Shape Design</b></li>
+   <li>Retrieve the <b>V5V6ExtCombinedCurve</b> Additional toolbar which is invisible 
+	right clicking on tool bar board.</li>
+   <li>Open a Part including &quot;<b>V5V6ExtCombinedCurves</b>&quot; instances
+	<a href="#(*)">(*)</a> or Create one &quot;from scratch&quot; [<a href="#References">9</a>].</li>
+   <li>Extend instantiated V5V6ExtCombinedCurve using the <b>&quot;CAAV5V6ExtMmrCombinedCurveDataExtension&quot;</b> 
+	command:
+	<img border="1" src="../CAAMmrUseCases/images/CAAMmrCCDataExtensionCommandIcon.gif" width="22" height="22" hspace="11" vspace="11" align="center">. </li>
+	<li>The computed length - Extension of V5V6ExtCombinedCurve- will appear in 
+	3DVisualisation, And, in the Spec Tree beneath the MechanicalPart node.<br>
+	<br>
+	<img alt="" src="images/CAAV5V6ExtMmrExtendedCombinedCurve.jpg" width="403" height="470"></li>
+	<p></p>
+	<li>It is possible to see the computed parameter on f(x) panel and to use 
+	this value into rules. To do this, just click on f(x) icon. You will note 
+	that the computed value is in &quot;read only mode&quot; (The Cell containing the 
+	computed value is gray.).</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Edition</b> scenario</p>
+</blockquote>
+<ul>
+   <ul>
+   <li><b>Double</b> click the <b>V5V6ExtCombinedCurve</b>  instance</li>
+	<li>Change V5V6ExtCombinedCurve Specs</li>
+   </ul>
+	<ul>
+		<li>Extension is updated.</li>
+	</ul>
+  
+  </ul>
+
+<blockquote>
+  <p>The <b>Open</b> scenario:</p>
+</blockquote>
+<ul>
+   <ul>
+   <li>Open a Part including &quot;<b>Extended V5V6ExtCombinedCurve</b>&quot; instances
+	<a href="#(*)">(*)</a> </li>
+	Check the visualisation in 3D, in SpecTree and the result of Extension:<br>
+	All extended behaviors are automatically loaded on opening the part without 
+	any user action.<br>
+	(This is due to Extension Container specifity: it is loaded automatically on 
+	opening the part, which is not the case for traditional applicative 
+	container.)<li>Change V5V6ExtCombinedCurve Specs</li>
+	<li>Check Modification in the 3DVisualisation and in SpecTree.</li>
+   </ul>
+  
+  </ul>
+
+<blockquote>
+  <p><a name="(*)">(*)</a> The files &quot;<b>CAAV5V6ExtCombinedCurve.CATPart</b>&quot; 
+	and &quot;<b>CAAV5V6ExtExtendedCombinedCurve.CATPart</b>&quot; are located in the directory
+	<code>CAAV5V6MechanicalModeler.edu/InputData</code></p>
+	<ul>
+		<li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code>
+		<li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+	</ul>
+	<p>where <code>InstallRootDirectory</code> is the directory where the CAA
+  CD-ROM is installed.</p>
+</blockquote>
+
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCCDataExtension Code</h4>
+<p>The &quot;Extending V5V6ExtCombinedCurve&quot; use case is made of a several modules of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ul>
+  <li><b>CAAV5V6ExtMmrCCDataExtension.m</b> - This module contains the implementations 
+	of&nbsp; the <b><i>CATIFmFeatureBehabiorCustomization</i></b> interface (manages the build operation 
+	called during the update of the Extension Feature), the <i><b>
+	CAAV5V6ExtMmrAddCCExtension</b></i> implementation (manages the 
+	CAAV5V6ExtMmrCCDataExtension StartUp instantiation), the <b><i>CAAIV5V6ExtMmrCCDataExtension</i></b>
+    interface
+    (manages the access to the input specifications of the Extension Feature).<br>
+	Moreover, in this module, you will find the implementations of <i><b>
+	CATIParmPublisher</b></i>, <i><b>CATI3DGeoVisu</b></i> on the Extension 
+	Feature.<br>
+	It also contains the implementations of <i><b>CATIUpdateProvider</b></i>, <i>
+	<b>CATINavigateProvider</b></i>, <i><b>CATIParmProvider </b></i>and <i><b>
+	CATI3DVisuProvider</b></i> to extent CATPrtCont Behavior to Applicative 
+	Container and the implementation of <i><b>CATIInit</b></i> on the 
+	ApplicativeContainer.
+	<ul>
+		<li>CAAIV5V6ExtMmrCCDataExtension.cpp, the header file is in the PublicInterfaces
+        directory of the CAAV5V6MechanicalModeler.edu framework</li>
+		<li>CAAV5V6ExtMmrAddCCExtension.cpp, the header file is in the 
+		PublicInterfaces directory of the CAAV5V6MechanicalModeler.edu framework<br>
+&nbsp;</li>
+		<li>CAAEV5V6ExtMmrCCDataExtension.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrCCDataExtensionBehavior.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrCCDataExtensionParmPublisher.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrCCDataExtensionVisu.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrDataExtensionContInit.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAV5V6ExtMmrNavigateProvForExtCont.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAV5V6ExtMmrParmProvForExtCont.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAV5V6ExtMmrUpdateProvForExtCont.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAV5V6ExtMmrVisuProvForExtCont.cpp, the header file is in the LocalInterfaces
+        directory</li>
+		<li>CAAEV5V6ExtMmrCCDataExtensionModelEvent.cpp, the header file is in the LocalInterfaces
+        directory</li>
+	</ul></li>
+  <li><b>CAAV5V6ExtMmrCombinedCurveAddIn.m</b> -&nbsp;This module contains the
+    implementation of the <i>CATIShapeDesignWorkshopAddin</i> interface for 
+	V5V6ExtCombinedCurves and Extension for V5V6ExtCombinedCurve. In
+    other words, it defines an Add-in to the Shape Design workbench.
+    <ul>
+      <li>CAAEV5V6ExtMmrCombinedCurveAdn.cpp, the header file is in the LocalInterfaces
+        directory</li>
+    </ul>
+  </li>
+  
+  <li><b>CAAV5V6ExtMmrCCDataExtensionUI.m</b> - This module contains the implementation
+    of the <i>CATINavigateObject</i>,<i> CATINavigateFilter</i> interfaces and the 
+	implementation of a StateCommand to create and insert and Extension Feature 
+	on an instanciated V5V6ExtCombinedCurve.<ul>
+      <li>CAAV5V6ExtMmrCCDataExtensionStCmd.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEMmrCCDataExtensionNavigateObject.cpp, the header file is in the LocalInterfaces
+        directory</li>
+      <li>CAAEMmrCCDataExtensionNavFilter.cpp, the header file is in the LocalInterfaces
+        directory</li>
+    </ul>
+  </li>
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3 align="left"><a name="Step-by-Step"></a>Step-by-Step</h3>
+<p align="left">You can now successively get to:</p>
+<ul>
+  <li>
+    <p align="left">Creating Extension 
+	Feature 's Catalog</li>
+  <li>
+    <p align="left"> Creating CAAV5V6ExtMmrCCDataExtension's creation method </li>
+  <li>
+    <p align="left"> Creating 
+	CAAV5V6ExtMmrCCDataExtension 's Interface of Type</li>
+  <li>
+    <p align="left"> Building 
+		CAAV5V6ExtMmrCCDataExtension's Result</li>
+  <li>
+    <p align="left"> 
+		Displaying CAAV5V6ExtMmrCCDataExtension's Result</li>
+  <li>
+    <p align="left">Implementing V5V6ExtMmrDataExtensionCont's Providers</li>
+  <li>
+    <p align="left">
+	Implementing V5V6ExtMmrDataExtensionCont's Initialization</li>
+  <li>
+    <p align="left">Creating an Add-in in
+    the Shape Design Workbench</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAV5V6MechanicalModeler.edu &quot;Extending V5V6ExtCombinedCurve&quot; sample shows how to create your own
+Extension Feature to add parameters and behaviors to Mechanical Features.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" >[1]</td>
+    <td ><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating a New 
+	Geometrical Feature: the V5V6ExtCombinedCurve</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[2]</td>
+    <td >
+	<a href="../CAAMmrTechArticles/CAAMmrExtension.htm">Working With Extension Feature in Mechanical Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[3]</td>
+    <td >
+    <a href="../CAAMmrTechArticles/CAAMmrProvidersInMechPart.htm">Working with 
+	Providers in Mechanical Part</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[4]</td>
+    <td >
+	<a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The 
+	Structure of a Part Document</a></td>
+  </tr>
+    <tr>
+    <td valign="top" >[5]</td>
+    <td >
+	<a href="../CAAMmrUseCases/CAAMmrExtendingCombinedCurveSamplesOverview.htm">
+	Extending a Mechanical Feature using Extension Features and Providers</a></td>
+  </tr>
+
+    <td valign="top" align="right" colspan="2" >[<a href="#Top">Top</a>]</td>
+
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2013]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,396 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Feature Modeler API Presentation</title>
+<style type="text/css">
+.style1 {
+	list-style-type: circle;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Feature Modeler Entities and API Presentation</h3>
+      <p><em>Introduction about the main Feature entities and the related APIs Presentation</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Fundamentally, the Feature Modeler is comprised of two main objects, a 
+		Feature which represents the data and a Container which holds the 
+		features and facilitates feature data persistency. The objective of the 
+		current article is to introduce you to these two objects, and other 
+		related entities. We begin with an introduction, following which we will 
+		have sections succinctly describing each object and the way it is handled by various related APIs. </p>
+		<p>In the process this article links to various other articles, for 
+		further reference and study, thus providing end-users a fairly sound 
+		knowledge of the&nbsp; entities which play a key role in the secured 
+		access mechanism defined by the Feature Modeler.</p>
+		<ul>
+			<li><a href="#Introduction" class="style3">Introduction</a></li>
+			<li><a href="#Main feat">Main Feature Entities</a><ul>
+				<li class="style1"><a href="#Credential">Credential</a></li>
+				<li class="style1"><a href="#StartUp">StartUp</a></li>
+				<li class="style1"><a href="#Feature">Feature</a></li>
+				<li class="style1"><a href="#Attribute">Attribute</a></li>
+				<li class="style1"><a href="#Container">Container</a></li>
+			</ul>
+			</li>
+			<li><a href="#The API involved">The APIs Involved</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		&nbsp;</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The <strong>feature</strong> is  a key entity  of the Feature modeler, a fundamental building block of a feature data model. A 
+<strong>feature</strong> represents  data typically characterized by attributes [<a href="#References">1</a>], and behavior. 
+</p>
+<p>An <strong>attribute</strong>  is either a  primitive type ( double, Boolean,..), or a link type.  A primitive type is defined in 
+standard programming languages while a link type, is prevalent only within the Feature Modeler,   since it facilitates linking a feature to another feature or a PLM Object, a need specific to the Feature Modeler domain.  
+</p>
+<p>A feature,  is   created from a <strong>StartUp</strong> [<a href="#References">2</a>], which may be considered as a &#8220;feature template&#8221;, although a feature itself  can serve as a reference, for further feature instantiations. StartUps 
+are defined in feature catalogs found in specific directories, which are runtime 
+accessible.
+
+</p>
+<p>Creating a feature implies instantiating it inside a <strong>Container</strong> [<a href="#References">3</a>]. A 
+<strong>Container</strong> is a feature modeler entity which facilitates feature persistency.
+  
+</p>
+<p>We also introduce the <strong>Credential</strong> object [<a href="#References">4</a>]. 
+In the secured feature access context, it is this object which authorizes access 
+to and working with the features (StartUps).&nbsp; A <strong>Credentials</strong> 
+object infact works in conjunction with another object namely a <strong>Facade</strong>. A
+<strong>Facade</strong> is an enveloping class, bound to an 
+underlying feature and associated with the right Credentials, thus providing a 
+controlled access to the underlying feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Main feat"></a>Main Feature Entities</h2>
+<p>We detail the main feature entities in the sections that follow.</p>
+<h3><a name="Credential"></a>Credential</h3>
+<p>The <strong>Credential</strong> [<a href="#References">4</a>] object is a 
+feature modeler entity which plays a key role in the&nbsp; secured feature 
+access mechanism. It authorizes instantiating a feature (StartUp), scanning a 
+container for its features etc. Infact, a feature is handled by a Facade object, 
+detailed further below, which is bound to an underlying feature and is 
+associated with the appropriate credentials.</p>
+<p>A Credentials object is represented by the <em>CATFmCredentials</em> class. A 
+single credential object could be appended with all credentials, required by the 
+client applications, akin to a key chain which may have several keys in it.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="StartUp"></a>StartUp</h3>
+<p>A <strong>StartUp</strong> [<a href="#References">2</a>] is a &#8220;feature template&#8221;, implying it contains the feature definition in it. It typically occurs in a feature catalog.
+
+</p>
+<p>In the secured feature access environment, a user is forbidden direct access 
+to the Startup. Instead it is handled by an enveloping <em>CATFmStartUpFacade</em> 
+class. As the name itself signifies, the class could be considered as a facade 
+over the underlying feature (in this case, StartUp). </p>
+<p>The authorization to instantiate the underlying StartUp is sought 
+from the Credentials associated with the facade class. As a result, the <em>
+CATFmStartUpFacade</em> class object is created with the StartUp late type and the required 
+Credentials, as key input. This object can then calls the <em>Instantiate()</em> 
+method</p>
+<p>It is significant to note here that the underlying StartUp feature is never 
+directly accessible to the client applications, since a StartUp is accessed 
+solely to instantiate a feature from it, which is accomplished using the 
+services exposed by the StartUp facade class.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Feature"></a>Feature</h3>
+<p>A F<strong>eature</strong> is an entity around which the entire 
+feature Modeler world revolves. It is handled with a class named 
+<em>CATFmFeatureFacade</em> and defined by the Feature Modeler.</p>
+<p>Unlike a StartUp, you can have direct access to the feature bound to a facade, but access is limited, 
+since the feature is retrieved simply as a <em>CATBaseUnknown</em> type, devoid 
+of credentials thus prohibiting an end-user to fully access and work with the 
+underlying feature, except of course if your feature implements an Interface of 
+its own.</p>
+<p>The methods of a feature facade that succeed only if the facade is 
+associated with the required, credentials can broadly be classified into the 
+different orientations&nbsp; listed below:
+</p>
+<ul>
+	<li><strong>Identity</strong>:  to retrieve its type,  its reference, its startup [<a href="#References">2</a>] and to manage the naming [<a href="#References">5</a>]</li>
+	<li><strong>Location</strong>: to retrieve its parent, root parent, 
+	Container, Rep Ref</li>
+	<li><strong>Feature extension</strong>: to add, remove, retrieve feature extension on the current feature, commonly referred to as the base feature [<a href="#References">6</a>]
+	</li>
+	<li><strong>Attribute Management</strong> : to get and set an attribute value (there are specific methods to manage list 
+	attributes) [<a href="#References">1</a>]
+	</li>
+	<li><strong>Lifecycle</strong>: creation ( from a feature), and deletion [<a href="#References">7</a>]
+	</li>
+	<li><strong>Update</strong> [<a href="#References">8</a>]
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+	</li>
+</ul>
+<p>In your applications, you may use the same Feature Facade object repeatedly, 
+thus binding it to a different feature each time. This is typically useful, 
+while you iterate through a feature iterator, thus retrieving a new feature in 
+the same feature facade, each time.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Attribute"></a>Attribute</h3>
+<p>A Feature <strong>Attribute</strong> [<a href="#References">1</a>] value is retrieved as a <em>CATFmAttributeValue</em> 
+type. It is significant to note that the Credentials are relevant only until an 
+attribute value is retrieved from a feature. Analysing this attribute value 
+thereafter, is independent of the credentials held by the client.<p>A single <em>
+CATFmAttributeValue</em> class could be used to store the value across all 
+attribute types. 
+The actual values are then retrieved with calls to the <em>CATFmAttributeValue</em> 
+services, which exist for each attribute type.<p>An attribute is identified by its name, represented by a <em>CATFmAttributeName</em>
+class equivalent for it. From an end-user&#8217;s point of view, an attribute name 
+could simply have been a basic string, while the Feature Modeler, has defined an 
+equivalent class, for it. This is because, compared to a string, a class 
+improves the efficiency in terms of speed and simplicity in the 
+operations involving feature attribute access.</p>  
+<p>The main methods of the <em>CATFmAttributeValue</em> 
+class are :</p>
+<ul>
+	<li>To retrieve the value as a basic (C++) type</li>
+	<li>To retrieve attribute information like attribute type, 
+	valuated/non-valuated, list/non-list, set/unset, valuation mode etc</li>
+	<li>To valuate a feature attribute, irrespective of its type</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Container"></a>Container
+</h3>
+<p>A <strong>Container</strong>[<a href="#References">3</a>] is an object modeler entity for storing 
+data and thus facilitating data persistency. A Container of features is the only 
+CAA exposed one. As a result the Feature Modeler defines the <em>
+CATFmContainerFacade</em> class, to specifically handle a Container object in 
+the CAA environment.</p>
+<p>Usually you work with an existing container, defined by the DS Modelers, but your application can also create its applicative container [<a href="#References">3</a>] for its own usage.
+
+</p>
+<p>An object of a <em>CATFmContainerFacade</em> class, can be bound to different Containers during its lifetime. You can have direct access to the Container bound to a facade, but access is limited, 
+since the Container is retrieved simply as a 
+<em>CATBaseUnknown</em> type, devoid of credentials, thus prohibiting an 
+end-user to fully access and work with the Container, except of course if your 
+Container implements an Interface of its own. The main methods of the <em>CATFmContainerFacade</em>  are primarily those 
+used to scan its contents. 
+
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="The API involved"></a>The APIs Involved</h2>
+<p>The tables below sums up the APIs to work with.</p>
+<h3>Classes to handle Objects</h3>
+	<table >
+		<tr>
+			<th>Class name</th>
+			<th>Object</th>
+		</tr>
+		<tr>
+			<td>CATFmCredentials.h</td>
+			<td>Credential </td>
+		</tr>
+		<tr>
+			<td>CATFmFeatureFacade.h</td>
+			<td>Feature</td>
+		</tr>
+		<tr>
+			<td>CATFmContainerFacade.h</td>
+			<td>Container</td>
+		</tr>
+		<tr>
+			<td>CATFmAttributeValue.h</td>
+			<td>Attribute as Value</td>
+		</tr>
+		<tr>
+			<td>CATFmAttributeName.h</td>
+			<td>Attribute As Name</td>
+		</tr>
+		<tr>
+			<td>CATFmAttributeValuationInfo.h</td>
+			<td>Attribute information</td>
+		</tr>
+		<tr>
+			<td>CATFmStartUpFacade.h</td>
+			<td>StartUp</td>
+		</tr>
+		<tr>
+			<td>CATFmCCPContext.h</td>
+			<td>Context for CCP - used by CATIFmFeatureBehaviorCustomization&nbsp; 
+			</td>
+		</tr>
+</table>
+<h3>Classes of Service</h3>
+ 
+
+
+<table >
+	<tr>
+		<th>Class name</th>
+		<th>Purpose</th>
+	</tr>
+	<tr>
+		<td>CATFmFeatureIterator.h</td>
+		<td>iterator used when scanning a container, retrieving feature 
+		extension</td>
+	</tr>
+	<tr>
+		<td>CATFmPointingFeatureIterator.h</td>
+		<td>specific iterator when retrieving the pointing features</td>
+	</tr>
+	<tr>
+		<td>CATFmContainerServices.h</td>
+		<td>To create applicative container</td>
+	</tr>
+	<tr>
+		<td>CATFmFeatureModelerID.h</td>
+		<td>Used for credentials</td>
+	</tr>
+	<tr>
+		<td>CATFmInfrastructureID.h</td>
+		<td>Used for credentials</td>
+	</tr>
+</table>
+<h3>Enumerate </h3>
+
+
+
+<table >
+	<tr>
+		<th>Class name</th>
+		<th>Purpose</th>
+	</tr>
+	<tr>
+		<td>CATFmAttributeAndValueKind.h</td>
+		<td>Type of Attributes (or value for attribute) </td>
+	</tr>
+	<tr>
+		<td>CATFmAttributeUpdateBehavior.h</td>
+		<td>Type of Update Behavior</td>
+	</tr>
+	<tr>
+		<td>CATFmAttributeValuationMode.h</td>
+		<td>Attribute Valuation Mode</td>
+	</tr>
+</table>
+<h3>Interface</h3>
+ 
+
+
+<table >
+	<tr>
+		<th>Interface Name</th>
+		<th>Purpose</th>
+	</tr>
+	<tr>
+		<td>CATIFmFeatureBehaviorCustomization.h</td>
+		<td>Interface to customize the feature</td>
+	</tr>
+	<tr>
+		<td>CATFmFeatureCustomizationAdaptor</td>
+		<td>Adaptor class for the interface</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article introduces two key entities namely a Feature and a 
+Container. A feature represents the data and behavior while a Container contains 
+the features and facilitates data persistency. </p>
+<p>In addition the article also introduces us to the Credentials object and the 
+Facade entity (Feature Facade and Container Facade) which together play a 
+fundamental role in the secured feature access mechanism defined by the Feature 
+Modeler. </p>
+<p>Finally this article lists the set of APIs that you'll be working with, while you deal with features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td style="width: 8px">[1]</td>
+		<td><a href="CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature 
+		Attribute</a></td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[2]</td>
+		<td>				
+			<a href="../CAAOsmTechArticles/CAAOsmHowToUpdateCatalogs.htm">Understanding Catalogs 
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[3]</td>
+		<td>
+				<a href="../CAAOsmTechArticles/CAAOsmTaApplicativeContainer.htm">Understanding Applicative Container 
+				</a>
+		</td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[4]</td>
+		<td><a href="CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[5]</td>
+		<td ><a href="CAAV5V6FmExtTaNamingFeatures.htm">Understanding 
+		Feature Naming</a></td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[6]</td>
+		<td ><a href="CAAV5V6FmExtTaFeatureExtension.htm">Understanding Feature Extension</a></td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[7]</td>
+		<td><a href="CAAV5V6FmExtTaFeatureLifeCycle.htm">Understanding Feature Lifecycle</a></td>
+	</tr>
+	<tr>
+		<td style="width: 8px">[8]</td>
+		<td><a href="CAAV5V6FmExtTaUpdateOverview.htm">Understanding Feature Update</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Apr 2010]</td>
+		<td>Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

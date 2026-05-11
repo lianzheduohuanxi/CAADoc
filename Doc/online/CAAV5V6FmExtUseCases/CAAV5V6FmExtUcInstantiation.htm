@@ -1,0 +1,461 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating Features</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Instantiating Features</h3>
+      <p><em>How to instantiate features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtInstantiation </code>use case. It illustrates the steps involved to create a feature from a StartUp 
+		[<a href="#References">1</a>] 
+		(defined within a feature Catalog) and from&nbsp;another feature. It 
+		also instantiates a feature as an aggregate (component) under another 
+		feature. The Feature Modeler authentication mechanism [<a href="#References">2</a>] 
+		ensures that the instantiation is realized only if the user owns the 
+		catalog.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtInstantiation&nbsp; Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtInstantiation&nbsp; Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtInstantiation </a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6FmExtInstantiation&nbsp; Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The user learns to instantiate a feature either from a Startup, or from another feature. It is an 
+illustration of the prototype/instance data model as described in the 
+referenced technical article [<a href="#References">1</a>]. </p>
+<p>Besides the reader also learns to create the appropriate accreditations object 
+which authenticates his ownership of the Catalog and authorizes him to 
+instantiate its StartUps and handle its features. In the process the UC 
+introduces the user to the fundamentals of secured feature access mechanism 
+implemented by the Feature Modeler (detailed in the technical article [<a href="#References">2</a>]).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtInstantiation&nbsp; Use Case</h2>
+<p> <code>CAAV5V6FmExtInstantiation </code>&nbsp;is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code> framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtInstantiation&nbsp; Do</h3>
+<p>The Use Case creates a new document and then retrieves it. At the end it saves the 
+document in the 
+database. The StartUps referred to in this UC are defined in the 
+&quot;CAAOsmCatalogSU&quot; catalog, generated with the clientID set to &quot;CAAOsmClientID&quot; 
+using the CATfctEditorAssistant tool</p>
+<p>The steps of the UC scenario are listed below</p>
+<ul>
+	<li>Instantiate the &quot;CAAOsmNovel&quot; StartUp, to create the &quot;Novel&quot; 
+	feature</li>
+	<li>Instantiate the &quot;Novel&quot; feature (the result of the previous 
+	instantiation)</li>
+	<li>Instantiate the &quot;CAAOsmChapter&quot; StartUp as an aggregate under the 
+	&quot;Novel&quot; feature (instance created in step 1)</li>
+	<li>Instantiate the &quot;CAAOsmPublisher&quot; StartUp by changing the StartUp 
+	latetype bind to the current StartUp facade</li>
+</ul>
+<p>The traces of this UC execution is seen below. </p>
+<pre class="code">The Product Representation Reference is created
+Applicative container created OK
+Success in instantiating a Novel <strong>Novel</strong> from its CAAOsmNovel StartUp
+Success in instantiating a Novel feature <strong>Novel</strong> from an existing Novel feature
+Success in instantiating a Chapter <strong>Chapter.1</strong> aggregated under a Novel Novel
+Success in changing the StartUp latetype
+Success in instantiating a Publisher</pre>
+<p>Please take note of the default display names of the three features, instantiated in this UC. 
+The aggregated feature are indexed with a number while the none aggregated are 
+without an index. By default the display name is the NLS name of the StartUp. 
+This feature naming principles are detailed in a referenced article [<a href="#References">3</a>].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtInstantiation </h3>
+<p>To launch <code>CAAV5V6FmExtInstantiation </code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtInstantiation </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<code><em>CAAV5V6FmExtInstantiation DocumentStorageName.CATPart</em></code>&quot;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtInstantiation&nbsp; Code</h3>
+<p><span class="style1">CAAV5V6FmExtInstantiation </span> &nbsp;code is located in the
+<span class="style1"><code>CAAV5V6FmExtInstantiation </code></span><code>.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\</code><span class="style1"><code>CAAV5V6FmExtInstantiation </code></span><code>.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CAAV5V6FmExtInstantiationMain.cpp</code></span>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are nine logical steps in <code>CAAV5V6FmExtInstantiation </code>:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Create credential">Creating A<span class="style3">ccredi</span>tations 
+	Object</a></li>
+	<li><a href="#Create a SU Facade">Creating a StartUp Facade</a></li>
+	<li><a href="#Instantiate a SU">Instantiating the StartUp</a></li>
+	<li><a href="#Instantiate the New Feature">Instantiating the Newly Created Feature</a>
+	</li>
+	<li><a href="#Instantiation and Aggregation">Instantiation and Aggregation</a></li>
+	<li><a href="#Changing the Bound StartUp">Changing the Bound StartUp</a></li>
+	<li><a href="#Instantiate the New Feature">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see 
+CAAObjectSpecsModeler.edu The V5 UseCase documentation. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create credential"></a>Creating Accreditations object</h3>
+<p>It further creates the <strong>Credentials</strong> [<a href="#References">2</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. This subject of 
+secured feature access is further detailed in the technical article [<a href="#References">2</a>]</p>
+<p>An accreditations object is an instance of the <em>CATFmCredentials</em> 
+class, created with a call to its default constructor.</p>
+
+<table class="code">
+	<tr>
+		<td><pre><strong>CATFmCredentials</strong> <strong>MyCredentials;</strong>
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The first step is to update the Accreditations object with the ownership 
+privileges to work with Applicative Container:</p>
+
+<pre class="code">
+CATUnicodeString partnerId("CAAFmExtFeatureModeler");
+rc = MyCredentials.<strong>RegisterAsApplicationBasedOn</strong>(CATFmFeatureModelerID,partnerId)
+</pre>
+	<p>The Accreditations object is then upgraded to add the client identity, as an 
+owner of the &quot;CAAOsmCatalogSU&quot; catalog, which defines the two StartUps 
+(CAAOsmNovel, CAAOsmChapter) instantiated in the steps ahead.</p>
+
+<table class="code">
+	<tr>
+		<td><pre>CATUnicodeString clientId(&quot;CAAOsmClientID&quot;);
+CATUnicodeString iCatalogName(&quot;CAAOsmCatalogSU&quot;);
+<strong>rc = </strong>MyCredentials<strong>.RegisterAsCatalogOwner(iCatalogName,clientId);</strong>
+</pre>
+	</td>
+	</tr>
+</table>
+<p>The <code>RegisterAsCatalogOwner</code>() call of the <em>CATFmCredentials</em> class input arguments include the catalog name 
+(CAAOsmCatalogSU) and the clientID (CAAOsmClientID). Remember the clientID is 
+used initially for catalog generation, and subsequently each time it is upgraded 
+[<a href="#References">4</a>]. So, if client owns a catalog, he'll be aware of 
+its ClientID. The Accreditations object (<code>MyCredentials</code>) can thus be 
+updated with the ownership privileges of the &quot;CAAOsmCatalogSU&quot; catalog.</p>
+<p>We next proceed to explain the usage of this Accreditations object 
+(<code>MyCredentials</code>)</p>
+
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create a SU Facade"></a>Creating a StartUp Facade</h3>
+<p>Our interest is to instantiate a &quot;CAAOsmNovel&quot; StartUp. We create a StartUp 
+facade bound to the StartUp type and the Accreditations object (MyCredentials, 
+created earlier).&nbsp; The feature modeler secured access mechanism 
+authenticates the client identity as an owner of the Catalog stored in the 
+Accreditations object prior to instantiating the StartUp.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>CATUnicodeString MyStartUpType("CAAOsmNovel");
+<strong>CATFmStartUpFacade </strong>MyStartUpNovelFacade<strong>(</strong>MyCredentials<strong>,MyStartUpType);</strong></pre>
+		</td>
+	</tr>
+</table>
+<p><code>MyStartUpNovelFacade</code>, is the facade for the &quot;<code>CAAOsmNovel</code>&quot; 
+StartUp. </p>
+<p>The first argument, <code>MyCredentials</code>, is the client 
+accreditations. We updated it earlier, with the ownership privileges of the 
+&quot;CAAOsmCatalogSU&quot; catalog. This authorizes the facade thus created to access the 
+catalog contents and to instantiate the &quot;CAAOsmNovel&quot; StartUp.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Instantiate a SU"></a>Instantiating the StartUp</h3>
+<p>Here, we can realize the StartUp instantiation.</p>
+<table class="code">
+	<tr>
+		<td><pre>CATFmFeatureFacade oInstanceNovelFromStartUp(MyCredential);
+rc = MyStartUpNovelFacade<strong>.InstantiateIn</strong>(MyContainerFacade,oInstanceNovelFromStartUp);</pre></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>The call to the <code>InstantiateIn </code>method on <code>MyStartUpNovelFacade</code>, a <em>CATFmStartUpFacade</em> 
+class created just earlier,<strong> </strong>instantiates our StartUp 
+inside the Container as a input. The resulting feature is returned as a <i>CATFmFeatureFacade</i> type.</p>
+<p>Please note that <code>
+oInstanceNovelFromStartUp</code> is initially created with only a credential, 
+the <code>InstantiateIn </code>just binds the new feature to the facade. Thanks 
+to the credentials, the application can use <code>
+oInstanceNovelFromStartUp</code> to manage its attribute, or displays its 
+display name:</p>
+<table class="code">
+	<tr>
+		<td><pre>CATUnicodeString NovelInstFromFeatName;
+rc = oInstanceNovelFromFeature.<strong>GetDisplayName</strong>(NovelInstFromFeatName);</pre></td>
+	</tr>
+</table>
+<p>Here <code>GetDisplayName </code>will not fail, since <code>
+oInstanceNovelFromStartUp</code> contains the accreditations to handle 
+CAAOsmNovel feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Instantiate the New Feature"></a>Instantiate the Newly Created Feature</h3>
+<p>The new feature created above, in turn serves as a reference for further 
+instantiation, in accordance with the prototype-instance model [<a href="#References">1</a>]. </p>
+<table class="code">
+	<tr>
+		<td><pre>CATFmFeatureFacade oInstanceNovelFromFeature(MyCredential);
+rc = oInstanceNovelFromStartUp.<strong>InstantiateIn</strong>(MyContainerFacade,oInstanceNovelFromFeature);</pre>
+		</td>
+	</tr>
+</table>
+<p>The call to <code>InstantiateIn </code>method on <code>InstanceNovelFromStartUp</code>, 
+further instantiates it. The return is <code>oInstanceNovelFromFeature</code>, a 
+<em>CATFmFeatureFacade</em> type. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Instantiation and Aggregation"></a>Instantiation and Aggregation</h3>
+<p>Now we illustrate the call which instantiates a StartUp (or a feature) 
+and also realizes the aggregation of the new feature, simultaneously.</p>
+<p>First we create a StartUp facade for the <code>CAAOsmChapter</code> StartUp on 
+similar lines, as we did earlier for the <code>CAAOsm</code>N<span class="style4">ovel.</span></p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>CATFmStartUpFacade<strong> </strong>MyStartUpChapterFacade<strong>(</strong>MyCred<code>entials</code><strong>,&quot;</strong>CAAOsmChapter&quot;<strong>);</strong></pre>
+		</td>
+	</tr>
+</table>
+<p>Next we create an object, which represents the attribute &quot;NovelChapter&quot; ( 
+list of components) associated with the &quot;CAAOsmNovel&quot; StartUp. This attribute is 
+valuated with the Chapter instances, for aggregating under the Novel.</p>
+<table class="code">
+	<tr>
+		<td><pre>CATFmFeatureKey MyKeyNovelChapter(&quot;NovelChapter&quot;);
+</pre></td>
+	</tr>
+</table>
+<p>Then we call instantiation.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+CATFmFeatureFacade oFeatFacadeOnChapter(MyCredential);		
+rc = MyStartUpChapterFacade<strong>.InstantiateUnder</strong>(MyContainerFacade,oInstanceNovelFromStartUp,
+		                           MyKeyNovelChapter,<strong>oFeatFacadeOnChapter</strong>);                                                </pre></td>
+	</tr>
+</table>
+	
+<p>The <span class="style4">InstantiateUnder</span> API of the
+<em>CATFmStartUpFacade</em> class involves</p>
+<ol>
+	<li>Instantiating a StartUp (<code>MyStartUpChapterFacade</code>) within a 
+	container (<code>MyContainerFacade</code>, the first container)</li>
+	<li>Aggregating the instantiated (aggregated) feature under an input 
+	(aggregating) feature. 
+	<ol>
+		<li>The argument, <code>oInstanceNovelFromStartUp</code>, is the 
+		feature facade bound to the aggregating feature (Novel). This facade&nbsp; 
+		must contain the accreditation to handle the feature. You cannot 
+		aggregate a feature (i.e. modify one attribute of the aggregating 
+		feature) without to be authorized.&nbsp; </li>
+		<li>The third argument is an attribute of the third argument. it can be 
+		either a component, or a list of component. In this last case, the new 
+		feature is added at the end of the list</li>
+		<li><code>oFeatFacadeOnChapter</code>, a <em>CATFmFeatureFacade</em> 
+		type, representing the feature facade on the newly created Chapter 
+		feature. Please note that this feature facade was linked to the right 
+		credentials, during its instantiation with a call to its parametrized 
+		constructor, which takes a Credential, as input</li>
+	</ol>
+	</li>
+</ol>
+<p>An important observation is that the display name of the instantiated Chapter 
+feature is suffixed with a number (traces included in the what does the UC do 
+section).&nbsp; This enumerated suffix to a feature name is a characteristic 
+typical to an aggregated features. This makes an aggregated feature distinct from a 
+standalone instantiation. The &quot;Naming Features&quot; article [<a href="#References">3</a>] explains the policy defined for 
+feature naming.</p>
+<p>We finally retrieve the display name of the newly instantiated Chapter, 
+aggregated under the Novel. </p>
+<table class="code">
+	<tr>
+		<td><pre>
+CATUnicodeString ChptInstName;
+rc = <strong>FeatFacadeOnChapter.GetDisplayName</strong>(ChptInstName);
+if (FAILED(rc)) return 1;</pre></td>
+	</tr>
+</table>
+<p>The <code>GetDisplayName</code>(<span class="style4">)</span> method of the
+<em>CATFmFeatureFacade</em> class returns the display name of the associated 
+feature. The call is invoked on <code>FeatFacadeOnChapter</code>, a <em>CATFmFeatureFacade</em> type, on 
+our new Chapter instance.&nbsp; Since this feature facade is associated with the 
+correct credentials, this call is expected to succeed.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Changing the Bound StartUp"></a>Changing the Bound StartUp</h3>
+<p>We finally show how you can use the same StartUp facade to instantiate a 
+feature from another latetype.</p>
+<table class="code">
+	<tr>
+		<td><pre>
+rc = MyStartUpChapterFacade.<strong>BindTo</strong>("CAAOsmPublisher&quot;);
+...
+CATFmFeatureFacade oFeatFacadeOnPublisher(MyCredential);
+rc = MyStartUpChapterFacade.<strong>InstantiateIn</strong>(MyContFacade,oFeatFacadeOnPublisher);
+...</pre></td>
+	</tr>
+</table>
+<p>The <span class="style4">Bindto</span>(<span class="style4">)</span> method of the
+<em>CATFmStartUpFacade</em> class changes the latetype bind to the facade.</p>
+
+
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3>Epilog</h3>
+<p>Lastly the document is saved and the session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The Use Case demonstrates the steps involved to instantiate a StartUp. The 
+feature thus instantiated, is held as a reference, for further instantiation, in 
+accordance with the Prototype-Instance model detailed in the &quot;Feature Modeler 
+Overview&quot; article [<a href="#References">1</a>]. </p>
+<p>The Feature Modeler Secured Access mechanism ensures that the instantiation 
+is possible only if the client owns the catalog and has the Feature 
+infrastructure privileges on 
+the container within which the features exist. An Accreditation object stores 
+these client privileges, and is a bound to a facade objects, which are wrappers 
+around the features (Feature, StartUp, Container), . Any operation on a feature 
+invoked through its facade object succeeds, only if the associated Accreditation 
+object grants the required authorization.</p>
+<p>Finally the UC illustrates a very simple method to both instantiate a feature 
+as well as realize its aggregation, with a single call to the 
+InstantiateUnder method.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+	<td>	
+		<a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview 
+		</a>
+
+     		
+	</td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+	
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaNamingFeatures.htm">Understanding Feature Naming</a></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td>[4]</td>
+		
+		<td>
+			<a href="../CAAOsmTechArticles/CAAOsmTaUnderstandingCatalogs.htm">Understanding StartUp Catalog
+			</a>
+		</td>
+	</tr>
+	
+
+		
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Aug 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

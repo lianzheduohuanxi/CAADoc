@@ -1,0 +1,223 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>An Overview of the Part Design Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Part Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>An Overview of the Part Design Features</h3>
+      <em>Describing the differences between form and contextual features</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the Part Design features. To take full advantage
+      of this article, a pre-requisite knowledge of the Mechanical Modeler [<a href="#References">1</a>]
+      is essential.&nbsp;</p>
+      <ul>
+        <li><b><a href="#Using">Using Solid Procedure for Mechanical Design</a></b></li>
+        <li><b><a href="#Procedural">Integrating the Procedural Model: the Build
+          Method</a></b></li>
+        <li><b><a href="#Creating">Creating a Shape-Based Solid: the BuildShape
+          Method</a></b></li>
+        <li><b><a href="#Combining">Combining Two Solids</a></b></li>
+        <li><b><a href="#Dressing">Dressing Up a Solid</a></b></li>
+        <li><b><a href="#Integrating">Integrating the Generic Naming: the
+          CreateprocReport Method</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Using"></a>Using Solid Procedure for Mechanical Design</h3>
+<p>For mechanical part design, the more productive procedure is the <b> Solid</b>
+procedure, in CAD/CAM system, a solid models a piece of 3D space limited by a
+closed skin which represents the material volume of the real solid, when in the <b>
+Surfacic</b> procedure there is no material notion: a surface have no thickness.</p>
+<p>In the Solid procedure, the designer works with the shapes, dimensions and
+locations of basic components from the mechanical functions. These mechanical
+functions are able to create, to modify, to dress-up and to operate solids.</p>
+<p>There are three mechanical function categories:</p>
+<ol>
+  <li>Creating a solid from components other than solids from the following
+    functions:
+    <blockquote>
+      Pad, Shaft, Rib, Loft, Close Surface and Thick Surface in an empty part
+      body.
+    </blockquote>
+  </li>
+  <li>Combining two solids to generate another one from the following functions:
+    <blockquote>
+      Pad, Shaft, Rib, Loft, Add, Union Trim and Assemble to add material.<br>
+      Pocket, Groove, Slot, Remove Loft, Hole, Remove, Intersect, Remove Lump
+      and Assemble to remove material.
+    </blockquote>
+    <p>These two mechanical function categories create <b> Form</b> features.</p>
+  </li>
+  <li>Operating the solid from the following functions:
+    <blockquote>
+      Fillet, Chamfer, Draft, Thickness, Shell, Sewing and Split.
+    </blockquote>
+    <p>This mechanical function category creates <b> Contextual</b> features.</p>
+  </li>
+</ol>
+    <p>You can retrieve in details these concepts in the article entitled
+    &quot;Contents of the Specification Container - Part 2&quot; [<a href="#References">2</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Procedural"></a>Integrating the Procedural Model: the Build Method</h3>
+<p>The CAA V5 architecture offers a common procedural infrastructure for all
+applications. This infrastructure picks up and manage the input/output
+dependencies between the objects which are evaluated and computed one after the
+others in a compatible order according to their dependencies. The procedural
+infrastructure allows applicative objects to be built from the virtual method: <code>Build</code>.
+All application and particularly the Part Design workbench which wish to have
+the procedural update must implement a <code>Build</code> method for each of its
+classes and responsible for the method contents.</p>
+<p>The technical article entitled &quot;Integrating a New Geometrical Feature in
+the Update Mechanism&quot; [<a href="#References">3</a>] explains the
+implementation of the <code>Build</code> method for a new geometrical feature in
+general an gives some explanations for a shape feature in particular.&nbsp;The
+&quot;Implementing a Mechanical Design Feature Building&quot; [<a href="#References">4</a>]
+use case is an illustration.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Creating"></a>Creating a Shape-Based Solid: the BuildShape Method</h3>
+<p>The usually solid creation is to extrude a planar profile along a direction
+or a revolution axis, a surface or plane may be used to limit the extrusion. To
+integrate the procedural infrastructure the <code>Build</code> method is
+programmed for each solid type, and in creation case this method calls the <code>BuildShape</code>
+method dedicated to create a solid.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Combining"></a>Combining Two Solids</h3>
+<p>By example, a Hole function is seen by user as one operation on the solid.
+Nevertheless there are two steps: the solid form creation to be combined (a
+cylinder for a simple hole) then the Boolean operation between this solid and
+the current solid (cylinder subtraction for the drilling operation).</p>
+<p>The <code>BuildShape</code> method builds the solid form to be combined,
+named tool solid.</p>
+<p>The <code>Build</code> method chained the <code>BuildShape</code> method
+which returns the tool solid then subtracts it from the current solid.</p>
+<p>This architecture reuse the solid creation and the Boolean operation code to
+guarantee a stable behavior of the system.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Dressing"></a>Dressing Up a Solid</h3>
+<p>A dress-up function operates directly a solid and there is no preliminary
+step with a tool solid. The usually dress-up functions are Fillet, Chamfer,
+Draft Angle, Thickness, etc., and consist in operating a solid locally. This
+operation prohibits a Boolean operation structure because it may adds and
+removes material to a solid at the same time: a draft operation on a face with a
+plane as neutral element normal to it, adds/removes material below/ above the
+plane. The know how of these functions is contained in the <code>Build</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Integrating"></a>Integrating the Generic Naming: the
+CreateprocReport Method</h3>
+<p>Mechanical functions create, delete, cut, combine solids which are
+represented with orientated closed skins themselves made of adjacent faces. To
+replay an operation where its input is a BRep element (face, edge, vertex) or to
+define the available mechanical function according to the selected face of the
+solid, we have to give the relation between the mechanical functions and the
+topological faces created or cut from it: this is the Generic Naming objective.
+The solid skin is continually regenerated according to the solid modifications
+and updates, so the relation must be regenerated to.</p>
+<p>A mechanical function must indicates to the Generic Naming the symbolic name
+of the generated faces from it. The symbolic name or label is linked with the
+topological faces and followed by the topological operations, to know which face
+is generated by which mechanical function. The <code>CreateprocReport</code>
+method allows the mechanical functions and the Generic Naming to communicate.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td vAlign="top">[1]</td>
+      <td><a href="../CAAMmrTechArticles/CAAMmrMechModOverview.htm">Mechanical
+        Modeler Overview</a></td>
+    </tr>
+    <tr>
+      <td vAlign="top">[2]</td>
+      <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The
+        Contents of the Specification Container - Part 2</a></td>
+    </tr>
+    <tr>
+      <td vAlign="top">[3]</td>
+      <td><a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">Integrating
+        a New Geometrical Feature in the Update Mechanism</a></td>
+    </tr>
+    <tr>
+      <td vAlign="top">[4]</td>
+      <td><a href="../CAAPriUseCases/CAAPriBuildUserPad.htm">Implementing
+        a Mechanical Design Feature Building</a></td>
+    </tr>
+    <tr>
+      <td vAlign="top" align="right" colSpan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has explained whar are the solid features and how to integrate
+them in the procedural model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jan 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

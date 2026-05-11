@@ -1,0 +1,90 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAADriInstantiateInnerDitto.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro allows you to instantiate a ditto in </font>
+<font color="#008000">'                      a view from a detail view</font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:       English </font>
+<font color="#008000">'   CATIA Level: V5R11</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Open the drawing document</font>
+<font color="#0000FF">    Dim </font>oDrawing<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawing = CATIA.Documents.Open(sDocPath & _
+             "\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing")
+    
+    <font color="#008000">' Retrieve the sheets collection of the drawing document</font>
+<font color="#0000FF">    Dim </font>oSheets<font color="#0000FF"> As </font>DrawingSheets
+<font color="#0000FF">    Set </font>oSheets = oDrawing.Sheets
+    
+    <font color="#008000">' Retrieve the sheet where the detail view will be instantiated</font>
+<font color="#0000FF">    Dim </font>oSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheet = oSheets.Item("Sheet.1")
+    
+    <font color="#008000">' Retrieve the view where the detail view will be instantiated</font>
+<font color="#0000FF">    Dim </font>oView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oView = oSheet.Views.Item("View.3")
+    oView.Activate
+    
+    <font color="#008000">' Retrieve the detail sheet containing the detail view to be instantiated</font>
+<font color="#0000FF">    Dim </font>oDetailSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oDetailSheet = oSheets.Item("Sheet.2 (Detail)")
+    
+    <font color="#008000">' Retrieve the detail view to be instantiated</font>
+<font color="#0000FF">    Dim </font>oDetailView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oDetailView = oDetailSheet.Views.Item("DrwDetail.1")
+    
+    <font color="#008000">' Indicate the ditto location</font>
+<font color="#0000FF">    Dim </font>ReturnStatus<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>iDittoCoordinates(1)
+<font color="#0000FF">    Dim </font>oDraw
+<font color="#0000FF">    Set </font>oDraw = oDrawing
+    ReturnStatus = oDraw.Indicate2D("Indicate the ditto location", iDittoCoordinates)
+       
+    <font color="#008000">' Retrieve the drawing components collection of the target drawing view</font>
+<font color="#0000FF">    Dim </font>o2DComponents<font color="#0000FF"> As </font>DrawingComponents
+<font color="#0000FF">    Set </font>o2DComponents = oView.Components
+    
+    <font color="#008000">' Create the ditto</font>
+<font color="#0000FF">    Dim </font>o2DComponent<font color="#0000FF"> As </font>DrawingComponent
+<font color="#0000FF">    Set </font>o2DComponent = o2DComponents.Add(oDetailView, iDittoCoordinates(0), iDittoCoordinates(1))
+    
+    <font color="#008000">' Retrieve the modifiable text of the ditto</font>
+<font color="#0000FF">    Dim </font>oText<font color="#0000FF"> As </font>DrawingText
+<font color="#0000FF">    Set </font>oText = o2DComponent.GetModifiableObject(1)
+    
+    <font color="#008000">' Modify the modifiable text value</font>
+<font color="#0000FF">    Dim </font>ReturnValue<font color="#0000FF"> As </font>String
+    ReturnValue = InputBox( "Enter a value", "", "New Value For Text" )
+    oText.Text = ReturnValue
+
+    <font color="#008000">' Clear the variables</font>
+<font color="#0000FF">    Set </font>oText = Nothing
+<font color="#0000FF">    Set </font>o2DComponent = Nothing
+<font color="#0000FF">    Set </font>o2DComponents = Nothing
+<font color="#0000FF">    Set </font>oDraw = Nothing
+<font color="#0000FF">    Set </font>oDetailView = Nothing
+<font color="#0000FF">    Set </font>oDetailSheet = Nothing
+<font color="#0000FF">    Set </font>oView = Nothing
+<font color="#0000FF">    Set </font>oSheet = Nothing
+<font color="#0000FF">    Set </font>oSheets = Nothing
+<font color="#0000FF">    Set </font>oDrawing = Nothing
+    
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

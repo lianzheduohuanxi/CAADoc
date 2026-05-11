@@ -1,0 +1,1591 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>VisualizationBase Class CATPixelImage</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../VisualizationBase.htm" href="../VisualizationBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "VisualizationBase";	}
+		function getCurrentObjectName() { 
+ 	return "CATPixelImage"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>VisualizationBase <script type="text/javascript" > writeClassCharacteristic(); </script> CATPixelImage</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATPixelImage_22908','CATPixelImage','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATPixelImage</b>
+</p>
+<p>
+<b><i> Class to represent a pixel image or texture in memory.</i></b><br>
+
+ <b>Role</b>: This object is used to read, visualize, write pixel images.<br>
+ Supported internal formats are <tt>RGBA</tt>, <tt>RGB</tt>, <tt>LA</tt>, <tt>L</tt> (where <tt>L</tt> stands for
+ Luminance, that is a 8-bit Grey Scale value, and <tt>A</tt> for Alpha), <tt>RGB_S3TC_DXT1</tt>, <tt>RGBA_S3TC_DXT1</tt>, <tt>RGBA_S3TC_DXT3</tt>, <tt>RGBA_S3TC_DXT5</tt>.
+ The image can be locked to a <tt>ReadOnly</tt> State. This allows to create only one
+ image, and to reference it many times, with little risks for modification
+ conflicts.<br>
+ <br>
+ You can create a <tt>CATPixelImage</tt> from RGB, TIFF, JPEG, BMP, PNG files.<br>
+ You can visualize a <tt>CATPixelImage</tt> using the <script type="text/javascript"> activateLinkAnchor('CAT2DImagePixelRep','','CAT2DImagePixelRep') </script> class.<br> <br>
+ The pointer to the pixel data points to the first pixel of the bottom line (or row) of the image.
+ Origin is bottom left corner.<br>
+ The data is not stored by colors planes, but pixel by pixel
+ (that is : <tt>RGBRGBRGB</tt>... or <tt>RGBARGBARGBA</tt>...).<br>
+ <br>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPixelImageFormat','','CATPixelImageFormat') </script>, <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>, <script type="text/javascript"> activateLinkAnchor('CATDeallocatePixels','','CATDeallocatePixels') </script>, <script type="text/javascript"> activateLinkAnchor('CATSecondaryPixelImageFormat','','CATSecondaryPixelImageFormat') </script>, <script type="text/javascript"> activateLinkAnchor('CATLineProgression','','CATLineProgression') </script>, <script type="text/javascript"> activateLinkAnchor('CAT2DImagePixelRep','','CAT2DImagePixelRep') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATPixelImage()"><b>CATPixelImage</b></a>()
+<dd>  Default constructor.
+ <dt> o 
+    <a href="#CATPixelImage(CATPixelImage&amp;)"><b>CATPixelImage</b></a>(CATPixelImage&amp;)
+<dd>  Copy constructor.
+ <dt> o 
+    <a href="#CATPixelImage(int,int,CATPixelImageFormat)"><b>CATPixelImage</b></a>(int,int,CATPixelImageFormat)
+<dd>  Constructs a blank image.
+ <dt> o 
+    <a href="#CATPixelImage(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)"><b>CATPixelImage</b></a>(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)
+<dd>  Constructs an image from a pixel array, pixel data is not duplicated.
+ <dt> o 
+    <a href="#~CATPixelImage()"><b>~CATPixelImage</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#ChangeFormat(CATPixelImageFormat)"><b>ChangeFormat</b></a>(CATPixelImageFormat)
+<dd>  Changes the image format.
+ <dt> o 
+    <a href="#ChangeFormatBilevel(DITHER_MODE)"><b>ChangeFormatBilevel</b></a>(DITHER_MODE)
+<dd>  Changes the image format to BILEVEL using DITHER_MODE algorithm.
+ <dt> o 
+    <a href="#ChangeTransparencyToColor(unsigned char,unsigned char,unsigned char)"><b>ChangeTransparencyToColor</b></a>(unsigned char,unsigned char,unsigned char)
+<dd>  Replaces every pixel whose alpha component is smaller than 128 by a new color.
+ <dt> o 
+    <a href="#CreateFromFile(CATString&amp;,CATReadOnlyState,int)"><b>CreateFromFile</b></a>(CATString&amp;,CATReadOnlyState,int)
+<dd>  Creates an image from a file.
+ <dt> o 
+    <a href="#CreateFromFile(CATString&amp;,CATString&amp;,CATReadOnlyState,int)"><b>CreateFromFile</b></a>(CATString&amp;,CATString&amp;,CATReadOnlyState,int)
+<dd>  Creates an image from a file given an explicit file format.
+ <dt> o 
+    <a href="#CreateRotatedImage(int)"><b>CreateRotatedImage</b></a>(int)
+<dd>  Creates a rotated image from an existing image.
+ <dt> o 
+    <a href="#CreateSubImage(int,int,int,int)"><b>CreateSubImage</b></a>(int,int,int,int)
+<dd>  Creates a new <tt>CATPixelImage</tt> from a region of the image.
+ <dt> o 
+    <a href="#CreateZoomedImage(float,int)"><b>CreateZoomedImage</b></a>(float,int)
+<dd>  Creates a zoomed image from an existing image.
+ <dt> o 
+    <a href="#CreateZoomedImage(int,int,int)"><b>CreateZoomedImage</b></a>(int,int,int)
+<dd>  Creates a zoomed image from an existing image.
+ <dt> o 
+    <a href="#Dither()"><b>Dither</b></a>()
+<dd>  Grey levels to Black and White conversion using Floyd-Steinberg algorithm.
+ <dt> o 
+    <a href="#DitherAverageThreshold()"><b>DitherAverageThreshold</b></a>()
+<dd>  Grey levels to Black and White conversion using average threshold algorithm.
+ <dt> o 
+    <a href="#Duplicate()"><b>Duplicate</b></a>()
+<dd>  Duplicates an image.
+ <dt> o 
+    <a href="#Duplicate(CATPixelImageFormat)"><b>Duplicate</b></a>(CATPixelImageFormat)
+<dd>  Duplicates an image and changes the format of the resulting image.
+ <dt> o 
+    <a href="#GetBgColor(unsigned char*,unsigned int)"><b>GetBgColor</b></a>(unsigned char*,unsigned int)
+<dd>  Returns an array of the most frequent colors.
+ <dt> o 
+    <a href="#GetBitsPerPixel()"><b>GetBitsPerPixel</b></a>()
+<dd>  Returns the number of bits per pixel.
+ <dt> o 
+    <a href="#GetColorAtPixel(unsigned int,unsigned int,unsigned int*,unsigned int*,unsigned int*,unsigned int*)"><b>GetColorAtPixel</b></a>(unsigned int,unsigned int,unsigned int*,unsigned int*,unsigned int*,unsigned int*)
+<dd>  Retrieves the color of a pixel.
+ <dt> o 
+    <a href="#GetDXTnLineProgression()"><b>GetDXTnLineProgression</b></a>()
+<dd>  Gets the line progression for DXTn compressed pixel image.
+ <dt> o 
+    <a href="#GetFileCommentList()"><b>GetFileCommentList</b></a>()
+<dd>  Returns a list of the supported file formats comments.
+ <dt> o 
+    <a href="#GetFileExtensionList()"><b>GetFileExtensionList</b></a>()
+<dd>  Returns the list of the supported file formats extensions.
+ <dt> o 
+    <a href="#GetFileFormatList()"><b>GetFileFormatList</b></a>()
+<dd>  Returns the list of the supported file formats.
+ <dt> o 
+    <a href="#GetFileFormatProperties(CATString&amp;,CATString&amp;,CATString**,CATString**,CATString**,CATString**)"><b>GetFileFormatProperties</b></a>(CATString&amp;,CATString&amp;,CATString**,CATString**,CATString**,CATString**)
+<dd>  Retrieves the properties of a given file format.
+ <dt> o 
+    <a href="#GetFileOptionsList()"><b>GetFileOptionsList</b></a>()
+<dd>  Returns a list of the supported file formats options.
+ <dt> o 
+    <a href="#GetFileRWList()"><b>GetFileRWList</b></a>()
+<dd>  Returns a list of the supported file formats Read and Write properties.
+ <dt> o 
+    <a href="#GetFormat()"><b>GetFormat</b></a>()
+<dd>  Returns the image format.
+ <dt> o 
+    <a href="#GetHBITMAP()"><b>GetHBITMAP</b></a>()
+<dd>  Creates a HBITMAP from a <tt>CATPixelImage</tt> (MS-Windows only).
+ <dt> o 
+    <a href="#GetLastError()"><b>GetLastError</b></a>()
+<dd>  Returns the latest error.
+ <dt> o 
+    <a href="#GetNumberOfPages(CATString&amp;)"><b>GetNumberOfPages</b></a>(CATString&amp;)
+<dd>  Returns the number of pages for a multipage file.
+ <dt> o 
+    <a href="#GetPixelsToModify()"><b>GetPixelsToModify</b></a>()
+<dd>  Returns the pixel data for modification.
+ <dt> o 
+    <a href="#GetPixelsToRead()"><b>GetPixelsToRead</b></a>()
+<dd>  Returns the pixel data for consultation.
+ <dt> o 
+    <a href="#GetSecondaryPixelsToRead(CATSecondaryPixelImageFormat,CATLineProgression)"><b>GetSecondaryPixelsToRead</b></a>(CATSecondaryPixelImageFormat,CATLineProgression)
+<dd>  Returns the secondary image pixel data for consultation.
+ <dt> o 
+    <a href="#GetSize(int&amp;,int&amp;)"><b>GetSize</b></a>(int&amp;,int&amp;)
+<dd>  Retrieves the image size in pixels.
+ <dt> o 
+    <a href="#GetXPixelSize()"><b>GetXPixelSize</b></a>()
+<dd>  Returns the size in mm of one pixel in X direction.
+ <dt> o 
+    <a href="#GetYPixelSize()"><b>GetYPixelSize</b></a>()
+<dd>  Returns the size in mm of one pixel in Y direction.
+ <dt> o 
+    <a href="#GetbytesPerPixel()"><b>GetbytesPerPixel</b></a>()
+<dd>  Returns the number of bytes per pixel.
+ <dt> o 
+    <a href="#InsertPixelImage(int,int,CATPixelImage*,int)"><b>InsertPixelImage</b></a>(int,int,CATPixelImage*,int)
+<dd>  Inserts a <tt>CATPixelImage</tt> inside the image.
+ <dt> o 
+    <a href="#InvertLineProgression()"><b>InvertLineProgression</b></a>()
+<dd>  Inverts the line progression (flips the image).
+ <dt> o 
+    <a href="#InvertTransparency()"><b>InvertTransparency</b></a>()
+<dd>  Replaces the <tt>A</tt> (alpha) component by <tt>255-A</tt>.
+ <dt> o 
+    <a href="#IsValidBitmapFile(CATString&amp;)"><b>IsValidBitmapFile</b></a>(CATString&amp;)
+<dd>  Says whether the given file is a valid bitmap file or not.
+ <dt> o 
+    <a href="#LockAsReadOnly()"><b>LockAsReadOnly</b></a>()
+<dd>  Prevents modifications on the image.
+ <dt> o 
+    <a href="#Modify(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)"><b>Modify</b></a>(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)
+<dd>  Redefines an image.
+ <dt> o 
+    <a href="#ModifyBgColor(unsigned int,unsigned char,unsigned char,unsigned char)"><b>ModifyBgColor</b></a>(unsigned int,unsigned char,unsigned char,unsigned char)
+<dd>  Looks for the most frequent colors and replaces them.
+ <dt> o 
+    <a href="#ModifyColor(unsigned char,unsigned char,unsigned char,unsigned char,unsigned char,unsigned char)"><b>ModifyColor</b></a>(unsigned char,unsigned char,unsigned char,unsigned char,unsigned char,unsigned char)
+<dd>  Changes a specific color in the whole image.
+ <dt> o 
+    <a href="#SetDXTnLineProgression(CATLineProgression)"><b>SetDXTnLineProgression</b></a>(CATLineProgression)
+<dd>  Sets the line progression for DXTn compressed pixel image.
+ <dt> o 
+    <a href="#SetImagePixelsModification()"><b>SetImagePixelsModification</b></a>()
+<dd>  Informs of an image modification.
+ <dt> o 
+    <a href="#SetTransparency(unsigned char)"><b>SetTransparency</b></a>(unsigned char)
+<dd>  Modifies a RGBA picture by setting every pixel which has the same color than the upper left one to a new alpha value.
+ <dt> o 
+    <a href="#SetXPixelSize(float)"><b>SetXPixelSize</b></a>(float)
+<dd>  Sets the size in mm of one pixel in X direction.
+ <dt> o 
+    <a href="#SetYPixelSize(float)"><b>SetYPixelSize</b></a>(float)
+<dd>  Sets the size in mm of one pixel in Y direction.
+ <dt> o 
+    <a href="#Sharpen(int)"><b>Sharpen</b></a>(int)
+<dd>  Sharpens the image applying a highpass filter.
+ <dt> o 
+    <a href="#UpdateAllList()"><b>UpdateAllList</b></a>()
+<dd>  Rebuilds the I/O image formats list.
+ <dt> o 
+    <a href="#WriteToFile(CATString&amp;,CATString&amp;)"><b>WriteToFile</b></a>(CATString&amp;,CATString&amp;)
+<dd>  Writes an image to a file.
+ <dt> o 
+    <a href="#operator=(CATPixelImage&amp;)"><b>operator=</b></a>(CATPixelImage&amp;)
+<dd>  Assignment operator.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATPixelImage"></a><a name="CATPixelImage()"></a> <dt> o <b>CATPixelImage</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPixelImage</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Default constructor.
+</dl>
+<a name="CATPixelImage"></a><a name="CATPixelImage(CATPixelImage&amp;)"></a> <dt> o <b>CATPixelImage</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPixelImage</b>(<td> const <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage&amp;')</script> <td><tt>iPixelImage</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Copy constructor.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPixelImage</tt>
+   <dd>   An existing <tt>CATPixelImage</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATPixelImage"></a><a name="CATPixelImage(int,int,CATPixelImageFormat)"></a> <dt> o <b>CATPixelImage</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPixelImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script> <td><tt>iFormat</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a blank image.
+ Use 
+<script type="text/javascript"> activateLinkAnchor('','GetPixelsToModify','GetPixelsToModify') </script> to modify it. <br>The warning indicated on the previous constructor does not apply here.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXSize</tt>
+   <dd>   The width of the image in pixels.
+ </dd>
+    <dt><tt> iYSize</tt>
+   <dd>   The height of the image in pixels.
+ </dd>
+    <dt><tt> iFormat</tt>
+   <dd>   The format of the data.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATPixelImage"></a><a name="CATPixelImage(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)"></a> <dt> o <b>CATPixelImage</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPixelImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script> <td><tt>iFormat</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char*')</script> <td><tt>iPixels</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDeallocatePixels','CATDeallocatePixels')</script> <td><tt>iToDelete</tt><td><tt>= PixDeallocateNO</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an image from a pixel array, pixel data is not duplicated.
+ <br>Be careful with this constructor because you have to make sure
+ to not deallocate pixels memory before any <tt>CATPixelImage</tt> referencing
+ this data has disappeared. This is true for this image, but also any
+ image copied from this image.<br>
+ Use <tt>PixDeallocateYESdelete</tt> if data to delete has been allocated with <tt>new</tt>.
+ Use <tt>PixDeallocateYESfree</tt> if data to delete has been allocated with <tt>malloc</tt>.<br>
+ CAREFULL :
+ Change the iToDelete value to <tt>PixDeallocateYESdelete</tt> or <tt>PixDeallocateYESfree</tt>
+ do delete pixels when you delete the <tt>CATPixelImage</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXSize</tt>
+   <dd>   The width of the image in pixels.
+ </dd>
+    <dt><tt> iYSize</tt>
+   <dd>   The height of the image in pixels.
+ </dd>
+    <dt><tt> iFormat</tt>
+   <dd>   The format of the data stored in the pixel array.
+ </dd>
+    <dt><tt> iPixels</tt>
+   <dd>   The pixel data.
+ </dd>
+    <dt><tt> iToDelete</tt>
+   <dd>   Whether the given pixel array has to be deleted when the <tt>CATPixelImage</tt> is destroyed, and how (<tt>free()</tt> or <tt>delete[]</tt>).
+   The default value for this parameter is <tt>PixelDeallocateNO</tt>, which implies the pixel data is not deleted when the image is destroyed.
+   It is the user to delete the pixel data.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATPixelImage"></a><a name="~CATPixelImage()"></a> <dt> o <b>~CATPixelImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATPixelImage</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="ChangeFormat"></a><a name="ChangeFormat(CATPixelImageFormat)"></a> <dt> o <b>ChangeFormat</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ChangeFormat</b>(<td><script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script> <td><tt>iFormat</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Changes the image format.
+ It is not available for DXTN formats.
+ <br>Valid conversions are: <tt>RGB</tt> to <tt>RGBA</tt> and <tt>RGBA</tt> to <tt>RGB</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFormat</tt>
+   <dd>   The new format.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="ChangeFormatBilevel"></a><a name="ChangeFormatBilevel(DITHER_MODE)"></a> <dt> o <b>ChangeFormatBilevel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ChangeFormatBilevel</b>(<td><script type="text/javascript"> activateLink('DITHER_MODE','DITHER_MODE')</script> <td><tt>iMode</tt><td><tt>= DITHER_FloydSteinberg</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Changes the image format to BILEVEL using DITHER_MODE algorithm.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>   The dither algorithm (FloydSteinberg or AverageTheshold).
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="ChangeTransparencyToColor"></a><a name="ChangeTransparencyToColor(unsigned char,unsigned char,unsigned char)"></a> <dt> o <b>ChangeTransparencyToColor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ChangeTransparencyToColor</b>(<td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iR</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iG</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iB</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Replaces every pixel whose alpha component is smaller than 128 by a new color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iR</tt>
+   <dd>   The new Red component.
+ </dd>
+    <dt><tt> iG</tt>
+   <dd>   The new Green component.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd>   The new Blue component.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Failure.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="CreateFromFile"></a><a name="CreateFromFile(CATString&amp;,CATReadOnlyState,int)"></a> <dt> o <b>CreateFromFile</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateFromFile</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iPathName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATReadOnlyState','CATReadOnlyState')</script> <td><tt>iRState</tt><td><tt>= NotReadOnly</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPageNumber</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an image from a file.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPathName</tt>
+   <dd>   The file to create the image from.
+   <br>Recognized formats are : TIFF, BMP, JPEG, PNG, RGB, PICTURE.
+ </dd>
+    <dt><tt> iRState</tt>
+   <dd>   The <tt>ReadOnly</tt> state of the new image.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="CreateFromFile"></a><a name="CreateFromFile(CATString&amp;,CATString&amp;,CATReadOnlyState,int)"></a> <dt> o <b>CreateFromFile</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateFromFile</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iFileFormat</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iPathName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATReadOnlyState','CATReadOnlyState')</script> <td><tt>iRState</tt><td><tt>= NotReadOnly</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPageNumber</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an image from a file given an explicit file format.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFileFormat</tt>
+   <dd>   The format of the file to create the image from ; valid values are :
+ <br><b>Legal values</b>
+ <dl>
+  <dt>"TIFF"</dt>
+  <dt>"RGB"</dt>
+  <dt>"JPEG"</dt>
+  <dt>"BMP"</dt>
+  <dt>"PNG"</dt>
+  <dt>"PICTURE"</dt>
+ </dl>
+ </dd>
+    <dt><tt> iPathName</tt>
+   <dd>   The file to create the image from.
+ </dd>
+    <dt><tt> iRState</tt>
+   <dd>   The <tt>ReadOnly</tt> state of the new image.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="CreateRotatedImage"></a><a name="CreateRotatedImage(int)"></a> <dt> o <b>CreateRotatedImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateRotatedImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iAngleInDegrees</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a rotated image from an existing image.
+ It is not available for DXTN formats.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAngleInDegrees</tt>
+   <dd>   Legal values are 90, 180, 270.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="CreateSubImage"></a><a name="CreateSubImage(int,int,int,int)"></a> <dt> o <b>CreateSubImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateSubImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXMin</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYMin</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXMax</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYMax</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a new <tt>CATPixelImage</tt> from a region of the image.
+ It is not available for DXTN formats.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXMin</tt>
+   <dd>   The X left coordinate of the region.
+ </dd>
+    <dt><tt> iYMin</tt>
+   <dd>   The Y lower coordinate of the region.
+ </dd>
+    <dt><tt> iXMax</tt>
+   <dd>   The X right coordinate of the region.
+ </dd>
+    <dt><tt> iYMax</tt>
+   <dd>   The Y upper coordinate of the region.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="CreateZoomedImage"></a><a name="CreateZoomedImage(float,int)"></a> <dt> o <b>CreateZoomedImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateZoomedImage</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iZoomFactor</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iZoomQuality</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a zoomed image from an existing image.
+ It is not available for DXTN formats.
+ <br>The size in mm of the image is also zoomed (that is the size in mm of each pixel is not changed).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iZoomFactor</tt>
+   <dd>   The zoom factor.
+ </dd>
+    <dt><tt> iZoomQuality</tt>
+   <dd> <br><b>Legal values</b>
+ <dl>
+  <dt>1</dt>
+  <dd>Pixel replication only (fast, poor quality).</dd>
+  <dt>2</dt>
+  <dd>if <tt>iZoomFactor < 1</tt> : linear interpolation, replication if <tt>> 1</tt>.</dd>
+  <dt>3</dt>
+  <dd>Linear interpolation in all cases (slow, good quality).</dd>
+ </dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="CreateZoomedImage"></a><a name="CreateZoomedImage(int,int,int)"></a> <dt> o <b>CreateZoomedImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>CreateZoomedImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iZoomQuality</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a zoomed image from an existing image.
+ It is not available for DXTN formats.
+ <br>The size in mm of the image is also zoomed (that is the size in mm of each pixel is not changed).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXSize</tt>
+   <dd>   The width of the new image in pixels.
+ </dd>
+    <dt><tt> iYSize</tt>
+   <dd>   The height of the new image in pixels.
+ </dd>
+    <dt><tt> iZoomQuality</tt>
+   <dd> <br><b>Legal values</b>
+ <dl>
+  <dt>1</dt>
+  <dd>Pixel replication only (fast, poor quality).</dd>
+  <dt>2</dt>
+  <dd>if <tt>iZoomFactor < 1</tt> : linear interpolation, replication if <tt>> 1</tt>.</dd>
+  <dt>3</dt>
+  <dd>Linear interpolation in all cases (slow, good quality).</dd>
+ </dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A new <tt>CATPixelImage</tt>.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="Dither"></a><a name="Dither()"></a> <dt> o <b>Dither</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Dither</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Grey levels to Black and White conversion using Floyd-Steinberg algorithm.
+ <br>Pixel format must be <tt>L</tt> and remains <tt>L</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Invalid image.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="DitherAverageThreshold"></a><a name="DitherAverageThreshold()"></a> <dt> o <b>DitherAverageThreshold</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>DitherAverageThreshold</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Grey levels to Black and White conversion using average threshold algorithm.
+ <br>Pixel format must be <tt>L</tt> and remains <tt>L</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Invalid image.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="Duplicate"></a><a name="Duplicate()"></a> <dt> o <b>Duplicate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>Duplicate</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Duplicates an image.
+ <br>This allows to modify a <tt>ReadOnly</tt> image.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A <tt>CATPixelImage</tt> pointer</dt>
+  <dd>The resulting image is not <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="Duplicate"></a><a name="Duplicate(CATPixelImageFormat)"></a> <dt> o <b>Duplicate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script>  <b>Duplicate</b>(<td><script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script> <td><tt>iFormat</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Duplicates an image and changes the format of the resulting image.
+ <br>This allows to modify a <tt>ReadOnly</tt> image.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFormat</tt>
+   <dd>   The new format.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A <tt>CATPixelImage</tt> pointer</dt>
+  <dd>The resulting image is not <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="GetBgColor"></a><a name="GetBgColor(unsigned char*,unsigned int)"></a> <dt> o <b>GetBgColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>GetBgColor</b>(<td><script type="text/javascript"> activateLink('unsigned char','unsigned char*')</script> <td><tt>oColorArray</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int')</script> <td><tt>iNbBgColor</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns an array of the most frequent colors.
+ <br>The image must be in <tt>RGB</tt> format.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oColorArray</tt>
+   <dd>   The array of found colors. The array must be allocated before you call this method : <tt>oColorArray = new unsigned char[iNbBgColor*3]</tt>.
+ </dd>
+    <dt><tt> iNbBgColor</tt>
+   <dd>   The number of colors to look for. Must be <= 4.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>-1</dt>
+  <dd>Invalid format.</dd>
+  <dt>-2</dt>
+  <dd>Invalid image.</dd>
+  <dt>-3</dt>
+  <dd>Invalid <tt>iNbBgColor</tt> parameter.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPixelImageFormat','','CATPixelImageFormat') </script>
+</dl>
+</dl>
+<a name="GetBitsPerPixel"></a><a name="GetBitsPerPixel()"></a> <dt> o <b>GetBitsPerPixel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>GetBitsPerPixel</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of bits per pixel.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>8</dt>
+  <dd>L format.</dd>
+  <dt>16</dt>
+  <dd>LA format.</dd>
+  <dt>24</dt>
+  <dd>RGB format.</dd>
+  <dt>32</dt>
+  <dd>RGBA format.</dd>
+  <dt>0</dt>
+  <dd>RGB_S3TC_DXT1 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT1 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT3 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT5 format.</dd>
+  <dt>0</dt>
+  <dd>Invalid format.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPixelImageFormat','','CATPixelImageFormat') </script>
+</dl>
+</dl>
+<a name="GetColorAtPixel"></a><a name="GetColorAtPixel(unsigned int,unsigned int,unsigned int*,unsigned int*,unsigned int*,unsigned int*)"></a> <dt> o <b>GetColorAtPixel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script>  <b>GetColorAtPixel</b>(<td><script type="text/javascript"> activateLink('unsigned int','unsigned int')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int')</script> <td><tt>iY</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>oRL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>oG</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>oB</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>oA</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the color of a pixel.
+ It is not available for DXTN formats.
+ <br>If format is <tt>L</tt>, only <tt>oRL</tt> is evaluated (<tt>oRL</tt> and <tt>oA</tt> for <tt>LA</tt> format)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The X coordinate of the pixel.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The Y coordinate of the pixel.
+ </dd>
+    <dt><tt> oRL</tt>
+   <dd>   The Red or Luminance value of the pixel.
+ </dd>
+    <dt><tt> oG</tt>
+   <dd>   The Green value of the pixel.
+ </dd>
+    <dt><tt> oB</tt>
+   <dd>   The Blue value of the pixel.
+ </dd>
+    <dt><tt> oA</tt>
+   <dd>   The Alpha value of the pixel.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>The format of the picture.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetDXTnLineProgression"></a><a name="GetDXTnLineProgression()"></a> <dt> o <b>GetDXTnLineProgression</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLineProgression','CATLineProgression')</script>  <b>GetDXTnLineProgression</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Gets the line progression for DXTn compressed pixel image.
+ Be careful, if the line progression is normalised and if the image height is not a multiple of 4,
+ top lines will be removed to get the right image height.
+ Otherwise, the bottom lines will be removed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLineProgression</tt>
+   <dd>   The line progression of pixel image with DXTn CATPixelImageFormat.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFileCommentList"></a><a name="GetFileCommentList()"></a> <dt> o <b>GetFileCommentList</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('list<CATString>','list<CATString>&')</script>  <b>GetFileCommentList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a list of the supported file formats comments.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A list of <tt>CATString</tt>s giving the file formats comments.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetFileExtensionList"></a><a name="GetFileExtensionList()"></a> <dt> o <b>GetFileExtensionList</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('list<CATString>','list<CATString>&')</script>  <b>GetFileExtensionList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the supported file formats extensions.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A list of <tt>CATString</tt>s giving the file formats extensions.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetFileFormatList"></a><a name="GetFileFormatList()"></a> <dt> o <b>GetFileFormatList</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('list<CATString>','list<CATString>&')</script>  <b>GetFileFormatList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the list of the supported file formats.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A list of <tt>CATString</tt>s giving the supported file formats.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetFileFormatProperties"></a><a name="GetFileFormatProperties(CATString&amp;,CATString&amp;,CATString**,CATString**,CATString**,CATString**)"></a> <dt> o <b>GetFileFormatProperties</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetFileFormatProperties</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iFileFormat</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iReadOrWrite</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>oExtension</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>oCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>oOptions</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>oComment</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the properties of a given file format.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFileFormat</tt>
+   <dd>   The requested file format (see </dd>
+<script type="text/javascript"> activateLinkAnchor('','CreateFromFile','CreateFromFile') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','WriteToFile','WriteToFile') </script> ). 
+    <dt><tt> iReadOrWrite</tt>
+   <dd>   The Read or Write properties of the file format.
+ </dd>
+    <dt><tt> oExtension</tt>
+   <dd>   The extension string associated with this file format.
+ </dd>
+    <dt><tt> oCommand</tt>
+   <dd>   The command string associated with this file format.
+ </dd>
+    <dt><tt> oOptions</tt>
+   <dd>   The options string associated with this file format.
+ </dd>
+    <dt><tt> oComment</tt>
+   <dd>   The comment string associated with this file format.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFileOptionsList"></a><a name="GetFileOptionsList()"></a> <dt> o <b>GetFileOptionsList</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('list<CATString>','list<CATString>&')</script>  <b>GetFileOptionsList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a list of the supported file formats options.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A list of <tt>CATString</tt>s giving the file formats options.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetFileRWList"></a><a name="GetFileRWList()"></a> <dt> o <b>GetFileRWList</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('list<CATString>','list<CATString>&')</script>  <b>GetFileRWList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a list of the supported file formats Read and Write properties.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A list of <tt>CATString</tt>s giving the file formats Read and Write properties.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetFormat"></a><a name="GetFormat()"></a> <dt> o <b>GetFormat</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script>  <b>GetFormat</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Returns the image format.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>L</dt>
+  <dd>L format.</dd>
+  <dt>LA</dt>
+  <dd>LA format.</dd>
+  <dt>RGB</dt>
+  <dd>RGB format.</dd>
+  <dt>RGBA</dt>
+  <dd>RGBA format.</dd>
+  <dt>RGB_S3TC_DXT1</dt>
+  <dd>RGB_S3TC_DXT1 format.</dd>
+  <dt>RGBA_S3TC_DXT1</dt>
+  <dd>RGBA_S3TC_DXT1 format.</dd>
+  <dt>RGBA_S3TC_DXT3</dt>
+  <dd>RGBA_S3TC_DXT3 format.</dd>
+  <dt>RGBA_S3TC_DXT5</dt>
+  <dd>RGBA_S3TC_DXT5 format.</dd>
+  <dt>BADFORMAT</dt>
+  <dd>Invalid format.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="GetHBITMAP"></a><a name="GetHBITMAP()"></a> <dt> o <b>GetHBITMAP</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HBITMAP','HBITMAP')</script>  <b>GetHBITMAP</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a HBITMAP from a <tt>CATPixelImage</tt> (MS-Windows only).
+ <br>The image must be in RGB format.
+</dl>
+<a name="GetLastError"></a><a name="GetLastError()"></a> <dt> o <b>GetLastError</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATUnicodeString','const CATUnicodeString*')</script>  <b>GetLastError</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the latest error.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>Returns the last available error message.</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetNumberOfPages"></a><a name="GetNumberOfPages(CATString&amp;)"></a> <dt> o <b>GetNumberOfPages</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('int','int')</script>  <b>GetNumberOfPages</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iPathName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of pages for a multipage file.
+</dl>
+<a name="GetPixelsToModify"></a><a name="GetPixelsToModify()"></a> <dt> o <b>GetPixelsToModify</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('char','unsigned char*')</script>  <b>GetPixelsToModify</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pixel data for modification.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A pointer to the pixel data</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetPixelsToRead"></a><a name="GetPixelsToRead()"></a> <dt> o <b>GetPixelsToRead</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('char','const unsigned char*')</script>  <b>GetPixelsToRead</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Returns the pixel data for consultation.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A <tt>const</tt> pointer to the pixel data</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetSecondaryPixelsToRead"></a><a name="GetSecondaryPixelsToRead(CATSecondaryPixelImageFormat,CATLineProgression)"></a> <dt> o <b>GetSecondaryPixelsToRead</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('char','const unsigned char*')</script>  <b>GetSecondaryPixelsToRead</b>(<td><script type="text/javascript"> activateLink('CATSecondaryPixelImageFormat','CATSecondaryPixelImageFormat')</script> <td><tt>iFormat</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLineProgression','CATLineProgression')</script> <td><tt>iProgression</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the secondary image pixel data for consultation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFormat</tt>
+   <dd>   The secondary image format.
+ </dd>
+    <dt><tt> iProgression</tt>
+   <dd>   The secondary image line progression.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <dl>
+  <dt>A <tt>const</tt> pointer to the secondary image pixel data</dt>
+ </dl>
+</dl>
+</dl>
+<a name="GetSize"></a><a name="GetSize(int&amp;,int&amp;)"></a> <dt> o <b>GetSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetSize</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oXSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oYSize</tt>)</table></dt>
+<dl>
+  <dd>
+ Retrieves the image size in pixels.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oXSize</tt>
+   <dd>   Image width in pixels.
+ </dd>
+    <dt><tt> oYSize</tt>
+   <dd>   Image height in pixels.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetXPixelSize"></a><a name="GetXPixelSize()"></a> <dt> o <b>GetXPixelSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('float','float')</script>  <b>GetXPixelSize</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Returns the size in mm of one pixel in X direction.
+</dl>
+<a name="GetYPixelSize"></a><a name="GetYPixelSize()"></a> <dt> o <b>GetYPixelSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('float','float')</script>  <b>GetYPixelSize</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Returns the size in mm of one pixel in Y direction.
+</dl>
+<a name="GetbytesPerPixel"></a><a name="GetbytesPerPixel()"></a> <dt> o <b>GetbytesPerPixel</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>GetbytesPerPixel</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of bytes per pixel.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>1</dt>
+  <dd>L format.</dd>
+  <dt>2</dt>
+  <dd>LA format.</dd>
+  <dt>3</dt>
+  <dd>RGB format.</dd>
+  <dt>4</dt>
+  <dd>RGBA format.</dd>
+  <dt>0</dt>
+  <dd>RGB_S3TC_DXT1 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT1 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT3 format.</dd>
+  <dt>0</dt>
+  <dd>RGBA_S3TC_DXT5 format.</dd>
+  <dt>0</dt>
+  <dd>Invalid format.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPixelImageFormat','','CATPixelImageFormat') </script>
+</dl>
+</dl>
+<a name="InsertPixelImage"></a><a name="InsertPixelImage(int,int,CATPixelImage*,int)"></a> <dt> o <b>InsertPixelImage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>InsertPixelImage</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iY</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script> <td><tt>iPixelImage</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iTransparency</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Inserts a <tt>CATPixelImage</tt> inside the image.
+ It is not available for DXTN formats.
+ <br>Images must be of same type. The input image is clipped if it is larger than the original image.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The X coordinate of the insertion point.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The Y coordinate of the insertion point.
+ </dd>
+    <dt><tt> iPixelImage</tt>
+   <dd>   The <tt>CATPixelImage</tt> to insert.
+ </dd>
+    <dt><tt> iTransparency</tt>
+   <dd>   If not null, the color of the first pixel of <tt>iPixelImage<tt> is taken as transparent
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd><tt>iPixelImage</tt> is not a valid image.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt> or formats are different.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="InvertLineProgression"></a><a name="InvertLineProgression()"></a> <dt> o <b>InvertLineProgression</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>InvertLineProgression</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Inverts the line progression (flips the image).
+ It is not available for DXTN formats.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="InvertTransparency"></a><a name="InvertTransparency()"></a> <dt> o <b>InvertTransparency</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>InvertTransparency</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Replaces the <tt>A</tt> (alpha) component by <tt>255-A</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Failure.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="IsValidBitmapFile"></a><a name="IsValidBitmapFile(CATString&amp;)"></a> <dt> o <b>IsValidBitmapFile</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('int','int')</script>  <b>IsValidBitmapFile</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iPathName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Says whether the given file is a valid bitmap file or not.
+</dl>
+<a name="LockAsReadOnly"></a><a name="LockAsReadOnly()"></a> <dt> o <b>LockAsReadOnly</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>LockAsReadOnly</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Prevents modifications on the image.
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="Modify"></a><a name="Modify(int,int,CATPixelImageFormat,unsigned char*,CATDeallocatePixels)"></a> <dt> o <b>Modify</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Modify</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iXSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iYSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPixelImageFormat','CATPixelImageFormat')</script> <td><tt>iFormat</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char*')</script> <td><tt>iPixels</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDeallocatePixels','CATDeallocatePixels')</script> <td><tt>iToDelete</tt><td><tt>= PixDeallocateNO</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Redefines an image.
+ <br>In some cases the assignment operator may be used in place of this method.
+ The pixel data is not duplicated ; because of this, pixel data should not be
+ deallocated before any <tt>CATPixelImage</tt> referencing this data has disappeared.
+ This is also true for any image copied from this image.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXSize</tt>
+   <dd>   The width of the image in pixels.
+ </dd>
+    <dt><tt> iYSize</tt>
+   <dd>   The height of the image pixels.
+ </dd>
+    <dt><tt> iFormat</tt>
+   <dd>   The format of the data stored in the pixel array.
+ </dd>
+    <dt><tt> iPixels</tt>
+   <dd>   The pixel data.
+ </dd>
+    <dt><tt> iToDelete</tt>
+   <dd>   Whether the given pixel array has to be deleted when the <tt>CATPixelImage</tt> is destroyed, and how (free() or delete[]).
+   The default value for this parameter is <tt>PixelDeallocateNO</tt>, which implies the pixel data is not deleted when the image is destroyed.
+   It is the user to delete the pixel data.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="ModifyBgColor"></a><a name="ModifyBgColor(unsigned int,unsigned char,unsigned char,unsigned char)"></a> <dt> o <b>ModifyBgColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ModifyBgColor</b>(<td><script type="text/javascript"> activateLink('unsigned int','unsigned int')</script> <td><tt>iNbBgColor</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iR</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iG</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iB</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Looks for the most frequent colors and replaces them.
+ <br>The image must be in <tt>RGB</tt> format.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbBgColor</tt>
+   <dd>   The number of colors to look for. Must be <= 4.
+ </dd>
+    <dt><tt> iR</tt>
+   <dd>   The new Red component.
+ </dd>
+    <dt><tt> iG</tt>
+   <dd>   The new Green component.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd>   The new Blue component.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+  <dt>2</dt>
+  <dd>Invalid format.</dd>
+  <dt>3</dt>
+  <dd>Invalid <tt>iNbBgColor</tt> parameter.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>, <script type="text/javascript"> activateLinkAnchor('CATPixelImageFormat','','CATPixelImageFormat') </script>
+</dl>
+</dl>
+<a name="ModifyColor"></a><a name="ModifyColor(unsigned char,unsigned char,unsigned char,unsigned char,unsigned char,unsigned char)"></a> <dt> o <b>ModifyColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ModifyColor</b>(<td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iR1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iG1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iB1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iR2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iG2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iB2</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Changes a specific color in the whole image.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iR1</tt>
+   <dd>   The old Red value.
+ </dd>
+    <dt><tt> iG1</tt>
+   <dd>   The old Green value.
+ </dd>
+    <dt><tt> iB1</tt>
+   <dd>   The old Blue value.
+ </dd>
+    <dt><tt> iR2</tt>
+   <dd>   The new Red value.
+ </dd>
+    <dt><tt> iG2</tt>
+   <dd>   The new Green value.
+ </dd>
+    <dt><tt> iB2</tt>
+   <dd>   The new Blue value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+  <dt>2</dt>
+  <dd>Bad format.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="SetDXTnLineProgression"></a><a name="SetDXTnLineProgression(CATLineProgression)"></a> <dt> o <b>SetDXTnLineProgression</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDXTnLineProgression</b>(<td><script type="text/javascript"> activateLink('CATLineProgression','CATLineProgression')</script> <td><tt>iLineProgression</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the line progression for DXTn compressed pixel image.
+ Be careful, if the line progression is normalised and if the image height is not a multiple of 4,
+ top lines will be removed to get the right image height.
+ Otherwise, the bottom lines will be removed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineProgression</tt>
+   <dd>   The line progression of pixel image with DXTn CATPixelImageFormat.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetImagePixelsModification"></a><a name="SetImagePixelsModification()"></a> <dt> o <b>SetImagePixelsModification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetImagePixelsModification</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Informs of an image modification.
+ <b>Role</b>: This method is not defined on a <tt>CATPixelImage</tt>.
+ <br>For a 
+<script type="text/javascript"> activateLinkAnchor('CATTexturePixelImage','','CATTexturePixelImage') </script>, a flag is set to indicate that a pixel in the data zone is modified so that the image is regenerated at the next draw.
+ This method is used in all the methods of <tt>CATPixelImage</tt> wich modify
+ the pixel data.
+</dl>
+<a name="SetTransparency"></a><a name="SetTransparency(unsigned char)"></a> <dt> o <b>SetTransparency</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SetTransparency</b>(<td><script type="text/javascript"> activateLink('unsigned char','unsigned char')</script> <td><tt>iAlpha</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies a RGBA picture by setting every pixel which has the same color than the upper left one to a new alpha value.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAlpha</tt>
+   <dd>   The new alpha value. <tt>iAlpha = 0</tt> means transparent, <tt>iAlpha = 255</tt> means opaque.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Failure.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="SetXPixelSize"></a><a name="SetXPixelSize(float)"></a> <dt> o <b>SetXPixelSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetXPixelSize</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iXPixelSize</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the size in mm of one pixel in X direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iXPixelSize</tt>
+   <dd>   The new X pixel size.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetYPixelSize"></a><a name="SetYPixelSize(float)"></a> <dt> o <b>SetYPixelSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetYPixelSize</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iYPixelSize</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the size in mm of one pixel in Y direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iYPixelSize</tt>
+   <dd>   The new Y pixel size.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Sharpen"></a><a name="Sharpen(int)"></a> <dt> o <b>Sharpen</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Sharpen</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iAmount</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sharpens the image applying a highpass filter.
+ It is not available for DXTN formats.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAmount</tt>
+   <dd>   The sharpening amount.<br>
+   <tt>0 < iAmount <= 200</tt> gives good results.
+   <tt>iAmount = 50</tt> is a good value
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+  <dt>1</dt>
+  <dd>Invalid image.</dd>
+  <dt>2</dt>
+  <dd>Image is <tt>ReadOnly</tt>.</dd>
+ </dl>
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATReadOnlyState','','CATReadOnlyState') </script>
+</dl>
+</dl>
+<a name="UpdateAllList"></a><a name="UpdateAllList()"></a> <dt> o <b>UpdateAllList</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>UpdateAllList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Rebuilds the I/O image formats list.
+</dl>
+<a name="WriteToFile"></a><a name="WriteToFile(CATString&amp;,CATString&amp;)"></a> <dt> o <b>WriteToFile</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>WriteToFile</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iFileFormat</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iPathName</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Writes an image to a file.
+ It is not available for DXTN formats on UNIX OS.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFileFormat</tt>
+   <dd>   The output file format.
+ <br><b>Legal values</b>
+ <dl>
+  <dt>"TIFF"</dt>
+  <dd>True color uncompressed TIFF file.</dd>
+  <dt>"TIFFTCPB"</dt>
+  <dd>True color PackBits compressed TIFF file.</dd>
+  <dt>"TIFFINDEX"</dt>
+  <dd>Indexed (256 colors) uncompressed TIFF file.</dd>
+  <dt>"TIFFPB"</dt>
+  <dd>Indexed (256 colors) PackBits compressed TIFF file.</dd>
+  <dt>"TIFFGREY"</dt>
+  <dd>Grey scale PackBits compressed TIFF file.</dd>
+  <dt>"TIFFBWPB"</dt>
+  <dd>Bilevel (black and white) PackBits compressed TIFF file.</dd>
+  <dt>"RGB"</dt>
+  <dd>RGB file.</dd>
+  <dt>"HPRTL"</dt>
+  <dd>HP/RTL - 300 dpi.</dd>
+  <dt>"BMP"</dt>
+  <dd>Windows Bitmap.</dd>
+  <dt>"JPEG_FAIR"</dt>
+  <dd>JPEG, fair quality.</dd>
+  <dt>"JPEG"</dt>
+  <dd>JPEG, medium quality.</dd>
+  <dt>"JPEG_HIGH"</dt>
+  <dd>JPEG, high quality.</dd>
+  <dt>"PNG"</dt>
+  <dd>Portable Network Graphics.</dd>
+ </dl>
+ </dd>
+    <dt><tt> iPathName</tt>
+   <dd>   The file to save the image in.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>
+ <dl>
+  <dt>0</dt>
+  <dd>Success.</dd>
+ </dl>
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(CATPixelImage&amp;)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage&')</script>  <b>operator=</b>(<td> const <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage&amp;')</script> <td><tt>iPixelImage</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Assignment operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPixelImage</tt>
+   <dd>   An existing <tt>CATPixelImage</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPixelImage.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATViz</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

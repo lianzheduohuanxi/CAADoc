@@ -1,0 +1,500 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Enabling New Features in a Product Document to be Updated</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Enabling New Features in a Product Document to be 
+       Updated</h3>
+       <p><em>Updating new features</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">
+       CAAPstIntegrateNewFeatures</a> &gt; <a href="CAAPstINFCreateDocument.htm">
+       CAAPstINFCreateDocument</a> &gt; <a href="CAAPstINFInitCont.htm">
+       CAAPstINFInitCont</a> &gt; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a> 
+       &gt; <a href="CAAPstINFVisu.htm">CAAPstINFVisu</a> &gt;&nbsp;
+       <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp; 
+       &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</a> &gt;
+       <a href="CAAPstINFDelete.htm">CAAPstINFDelete</a> &gt; <b>CAAPstINFUpdate</b></td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>bstract</h3>
+       <p>This article discusses the CAAPstINFUpdate use case. This use case 
+       explains how to impacted features can be updated when one of their 
+       dependent features has been modified.&nbsp; </p>
+       <ul>
+         <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+         <li><a href="#UseCase"><strong>The CAAPstINFUpdate Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAPstINFUpdate Do</a></li>
+           <li><a href="#Launch">How to Launch CAAPstINFUpdate&nbsp;</a></li>
+           <li><a href="#Where">Where to Find the CAAPstINFUpdate Code</a></li>
+         </ul>
+         </li>
+         <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case is intended to illustrate how to program the update of 
+   features whose definition has been modified. This occurs whenever a &quot;CAAPstINFPoint&quot; 
+   feature has been modified and it is referenced by a &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; 
+   feature. The referencing feature must, therefore, be updated as well in order 
+   to reflect the modification of its definition. The update itself normally 
+   consists simply in redrawing the line or wire in order to visually reflect 
+   the change in its geometry.</p>
+   <p>For features created &quot;from scratch&quot;, two different programming tasks are 
+   necessary for a proper update to occur:</p>
+   <ol>
+     <li>Each feature to be updated (i.e., &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;) 
+     must provide a <i>CATIBuild</i> implementation in which a visualization 
+     notification is sent so that the geometry of the feature can be visually 
+     re-defined.</li>
+     <li>An update provider implementation must be created in order for the 
+     &quot;from scratch&quot; features to be taken into account during the update of the 
+     entire Product structure.</li>
+   </ol>
+   <p>The update process works as follows:</p>
+   <ul>
+     <li>The coordinates of a &quot;CAAPstINFPoint&quot; are modified. This potentially 
+     impacts the definition of other features, such as &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot;. 
+     The <code>Update</code> method of <i>CATISpecObject</i> is called on the 
+     Product document's root object in order to update the entire Product 
+     structure. Starting with the root, each object inquires of its children 
+     whether they are updated or not.</li>
+     <li>Because the Product structure has no knowledge of the &quot;from scratch&quot; 
+     features that may have been integrated, at each update inquiry, any Update 
+     provider currently declared to the document is called as well. When the 
+     Update provider is called by the Product document's root, the applicative 
+     container is scanned and whenever a &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; 
+     object is found, the <code>Update</code> method of <i>CATISpecObject</i>&nbsp; 
+     is called in order to update the visualization of this feature.</li>
+     <li>The <code>Update</code> method of <i>CATISpecObject</i>&nbsp; calls the
+     <i>CATIBuild</i> implementation on the respective feature in order to send 
+     a notification to the visualization process in order to visually update the 
+     feature.</li>
+   </ul>
+   <p>You should already be familiar with the CAAPstIntegrateNewFeatures use 
+   case article [<a href="#References">1</a>] in order to more easily understand 
+   the context of this particular use case. A general pre-requisite knowledge of 
+   the Feature Modeler, of Providers and of the Build/Update mechanism may be 
+   required to fully understand this sample. You may want to review the basics 
+   of the Feature Modeler by looking over the &quot;Feature Modeler Overview&quot; 
+   technical article [<a href="#References">2</a>],&nbsp; the &quot;Using the 
+   Provider Mechanism&quot; use case [<a href="#References">3</a>] which describes 
+   the basics of the Provider mechanism and the &quot;Build/Update Mechanism&quot; use 
+   case [<a href="#References">4</a>]. Finally, it may be useful for you to look 
+   over the &quot;Product Structure Model&quot; technical article [<a href="#References">5</a>] 
+   as well.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAPstINFUpdate Use Case</h3>
+   <p>The CAAPstINFUpdate a use case that is part of the 
+   CAAPstIntegrateNewFeatures use case defined in the CAAProductStructure.edu 
+   framework that illustrates the integration of ObjectSpecsModeler and 
+   ProductStructure framework capabilities in the scope of a Product document.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does the CAAPstINFUpdate Use Case Do</h4>
+   <p>This use case shows how to program an Update provider in order for &quot;from 
+   scratch&quot; features to be taken into account during the Update process of a 
+   Product structure.</p>
+   <p>First of all, let's take a look at the contents of the Product document:</p>
+   <p><b>Fig. 1: Contents of the CAAPstINFDocument.CATProduct document.</b> </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <tr>
+       <td width="100%"><img border="0" src="images/CAAPstINFDocStructure.jpg" width="428" height="438"></td>
+     </tr>
+   </table>
+   <p>The&nbsp; &quot;CAAPstINFLine&quot; feature references two &quot;CAAPstINFPoint&quot; 
+   features. If the coordinates of any of these two points were modified, the &quot;CAAPstINFLine&quot; 
+   feature's geometry must be updated. Similarly, the &quot;CAAPstINFWire&quot; feature 
+   references a list of &quot;CAAPstINFPoint&quot; features so its geometry would need to 
+   be updated as well in the case the coordinates of any of the referenced &quot;CAAPstINFPoint&quot; 
+   features were modified.</p>
+   <p>How does this update occur?&nbsp;</p>
+   <p>Whenever a &quot;CAAPstINFPoint&quot; is modified, knowing that it is a &quot;from 
+   scratch&quot; feature potentially referenced by other &quot;from scratch&quot; features, the 
+   Update of the Product document's root is called. From there, the entire 
+   Product structure is updated, the Update providers are called, the CATIBuild 
+   implementations are executed and the impacted &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; 
+   features' visualizations are refreshed.</p>
+   <p>Let's take a look at an example by double-clicking on the 
+   &quot;CAAPstINFPoint1&quot; feature in order to edit it:</p>
+   <p><b>Fig. 2: Editing a &quot;CAAPstINFPoint&quot; feature.</b> </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <tr>
+       <td width="100%"><img border="0" src="images/CAAPstINFEdit1.jpg" width="547" height="449"></td>
+     </tr>
+   </table>
+   <p>The dialog box entitled &quot;Point Definition&quot; contains the values of the 
+   coordinates of the selected point. Initially, these values were all set to 
+   0.0. The Y coordinate value is changed to 100.0 in the dialog box and when 
+   selecting the OK button, the following modification occurs:</p>
+   <p><b>Fig. 3: Result of &quot;CAAPstINFPoint&quot; feature modification.</b> </p>
+   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <tr>
+       <td width="100%"><img border="0" src="images/CAAPstINFEdit2.jpg" width="544" height="446"></td>
+     </tr>
+   </table>
+   <p>As you can see, the position of the point has changed and the impacted 
+   line has been re-drawn to reflect the referenced point's modification. This 
+   use case will show you in detail how the different update tasks must be 
+   programmed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Launch"></a>How to Launch the CAAPstINFUpdate Use Case</h4>
+   <p>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures Use 
+   Case&quot; in the &quot;<a href="CAAPstIntegrateNewFeatures.htm">Integrating New 
+   Features in a Product Structure</a>&quot; use case for a detailed description of 
+   how this use case should be launched.</p>
+   <p>Specifically, the code described in this article is executed during the 
+   following scenario:</p>
+   <p>Launch <b>CATIA</b>. When the application is ready, follow the scenario 
+   described below: </p>
+   <ul>
+     <li>Select <b>File</b> + <b>Open</b> and select the <b><code>
+     CAAPstINFDocument.CATProduct </code></b>in the <code>
+     CAAProductStructure.edu/CNext/resources/graphic</code> directory or select 
+     the document you created yourself by executing the batch program described 
+     in the previous step.&nbsp;</li>
+     <li><b>Collapse</b> the &quot;CAAPstINFRoot1&quot; node by selecting the &quot;+&quot; symbol: 
+     notice that this root aggregates seven features of which five are of type &quot;CAAPstINFPoint&quot;, 
+     one &quot;CAAPstINFLine&quot; and one &quot;CAAPstINFWire&quot;.</li>
+     <li><b>Double-click</b> on the &quot;CAAPstINFPoint1&quot; feature: the &quot;Point 
+     Definition&quot; dialog box appears.</li>
+     <li><b>Modify</b> <b>the values </b>of any of the point coordinates and <b>
+     select</b> <b>OK</b> or <b>press</b> <b>Enter</b>. Notice that the 
+     &quot;CAAPstINFPoint1&quot; feature has changed position and that the 
+     &quot;CAAPstINFLine1&quot; feature has also been updated.</li>
+   </ul>
+   <p>The CAAPstINFDocument.CATProduct document that can be found in the CNext/resources/graphic 
+   directory of the CAAProductStructure.edu framework.&nbsp;</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAPstINFUpdate Code</h4>
+   <p>This use case describes the implementation class of the <i>CATIBuild</i> 
+   interface, called <i>CAAEPstINFBuild</i>, which is found in the 
+   CAAEPstINFBuild.cpp source file and CAAEPstINFBuild.h header file. It also 
+   describes the implementation of the <i>CATIUpdateProvider</i> interface, 
+   called <i>CAAPstINFUpdateProvider</i>, which is found in the 
+   CAAPstINFUpdateProvider.cpp source file and CAAPstINFUpdateProvider.h header 
+   file. Both of these implementations can be found in the CAAPstINFModeler.m 
+   shared library.</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstINFModeler.m</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstINFModeler.m</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h3><a name="StepByStep"></a>Step-by-Step</h3>
+   <p>There are three logical steps in CAAPstINFUpdate:</p>
+   <ol>
+     <li><a href="#Build">Implementing the <i>CATIBuild</i> Interface for Line 
+     and Wire Features</a></li>
+     <li><a href="#UpdateProvider">Implementing the <i>CATIUpdateProvider</i> 
+     Interface</a></li>
+   </ol>
+   <p>We will now comment each of these sections by looking at the code.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <p align="left"><a name="Build"></a><b>Implementing the <i>CATIBuild</i> 
+   Interface for Line and Wire Features</b></p>
+   <p align="left">The <i>CATIBuild</i> implementation of a feature is called 
+   whenever the feature is requested to be updated by the U<code>p</code>date 
+   method of <i>CATISpecObject</i>. This particular implementation applies to 
+   both the &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features. The Update of these 
+   features is called from the <i>CATIUpdateProvider</i> implementation 
+   described in the next section.</p>
+   <table class="code" width="773">
+     <tr>
+       <td width="765">
+       <pre><b>HRESULT CAAEPstINFBuild::Build()</b>
+{
+    cout &lt;&lt; &quot;******* Start of: CAAEPstINFBuild::Build()&quot; &lt;&lt; endl;
+     
+    // Retrieve a CATIModelEvents interface pointer on the current line or wire feature
+    // in order to send a modification notification to force its re-visualization.
+    
+    CATIModelEvents * piModelEvents = NULL;                
+    HRESULT rc = <b>QueryInterface</b>(IID_CATIModelEvents, 
+	                       (void**)&amp;piModelEvents);
+    if (SUCCEEDED(rc))
+    {
+       <b>CATModify Notif (piModelEvents); </b>
+       piModelEvents -&gt; <b>Dispatch</b>(Notif);
+
+       piModelEvents -&gt; <b>Release</b>();
+       piModelEvents = NULL;
+    }
+    else cout &lt;&lt; &quot;CATIModelEvents QI on Line or Wire failed.&quot; &lt;&lt; endl;
+
+    <b>return</b> S_OK;
+}</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left">The <code>Build</code> method for the &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; 
+   features consists in sending a visualization notification in order for the 
+   geometric visualization of the features to be refreshed, taking into account 
+   any possible modifications of the coordinates of the referenced points that 
+   define the line or wire. The <i>CATIModelEvents</i> interface pointer is 
+   first retrieved on the current feature. This means that an implementation of
+   <i>CATIModelEvents</i> must have been provided for both &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;. 
+   Then, a <i>CATModify</i> instance is created as well and the <code>Dispatch</code> 
+   method of <i>CATIModelEvents</i> is executed using the <i>CATModify</i> 
+   instance in order to send the notification for the visualization process to 
+   perform the necessary refresh.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <p><b><a name="UpdateProvider"></a>Implementing the <i>CATIUpdateProvider</i> 
+   Interface&nbsp;</b></p>
+   <p>This section describes the implementation of the <i>CATIUpdateProvider</i> 
+   interface. This code is executed whenever an Update on the Product document's 
+   root has been requested. This occurs each time a &quot;CAAPstINFPoint&quot; feature's 
+   coordinates have been modified (see the &quot;Enabling New Features in a Product 
+   Document to be Edited&quot; use case [<a href="#References">6</a>]) because this 
+   type of feature is used as &quot;input&quot; to other features, &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;. 
+   Since these features are all structured in an applicative container, it is 
+   necessary to update the entire Product structure in order to retrieve, 
+   through an Update provider, the referencing features to be updated.</p>
+   <p>&nbsp;Essentially, only the <code>Update</code> method needs to be 
+   re-implemented. Its function is to scan the applicative container of the 
+   current document and to update every &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; 
+   feature contained in it.</p>
+   <p>1. Retrieve the applicative container.</p>
+   <table class="code" width="773">
+     <tr>
+       <td width="765">
+       <pre><b>int CAAPstINFUpdateProvider::Update(CATBaseUnknown * pObj, CATIDomain_var spDomain) </b>
+{
+    cout &lt;&lt; &quot;***** CAAPstINFUpdateProvider::Update&quot; &lt;&lt; endl &lt;&lt; flush;
+
+    int retnum = 1; 
+
+    // Retrieve a pointer to the applicative container.
+    CATILinkableObject *piLinkableOnObj = NULL;
+    HRESULT rc = pObj -&gt; <b>QueryInterface</b> (IID_CATILinkableObject,
+	                                (void**) &amp;piLinkableOnObj);
+    if (FAILED(rc)) <b>return</b> retnum;
+
+    CATDocument* pDoc = piLinkableOnObj -&gt; <b>GetDocument</b>();
+    piLinkableOnObj -&gt; <b>Release</b>();
+    piLinkableOnObj = NULL;
+		
+    CATUnicodeString appliContIdentifier(&quot;PstINFContainer&quot;);
+    CATBaseUnknown *pApplicativeContainer = NULL;
+    rc = ::<b>CATGetApplicativeContainer</b> (&amp;pApplicativeContainer,   
+                                       pDoc,                     
+	    		           IID_CATIContainer,  
+                                       appliContIdentifier);     
+    if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Applicative container retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+    {
+       cout &lt;&lt; &quot;ERROR in retrieving applicative container&quot; &lt;&lt; endl &lt;&lt; flush;
+       <b>return</b> retnum;
+    }
+...	</pre>
+       </td>
+     </tr>
+   </table>
+   <p>In order to retrieve the applicative container, a <i>CATDocument</i> 
+   pointer to the current document is necessary. This pointer is retrieved 
+   through the <code>GetDocument</code> method of <i>CATILinkableObject</i> on 
+   the calling object. Then, using the <code>CATDocument</code> pointer, the 
+   applicative container called &quot;PstINFContainer&quot; is retrieved using the <code>
+   CATGetApplicativeContainer</code> global function of the ObjectModelerBase 
+   framework.&nbsp;</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <p>2. Retrieve a list of the features contained in the applicative container.</p>
+   <table class="code" width="773">
+     <tr>
+       <td width="765">
+       <pre>...    
+    // Retrieve a pointer to CATIClientContainer in order to list the members
+    // of the applicative container.
+    CATIClientContainer *piClientOnAppliCont = NULL;
+    rc = pApplicativeContainer -&gt; <b>QueryInterface</b>(IID_CATIClientContainer,
+                                                 (void**) &amp;piClientOnAppliCont);
+
+    pApplicativeContainer -&gt; <b>Release</b>();
+    pApplicativeContainer = NULL;
+
+    if (NULL == piClientOnAppliCont)
+    {
+       cout &lt;&lt; &quot;ERROR in retrieving container pointer&quot; &lt;&lt; endl &lt;&lt; flush;
+       <b>return</b> retnum;
+    }
+    else cout &lt;&lt; &quot;CATIClientContainer pointer retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+	
+    // Retrieve the list of features in the applicative container
+    CATUnicodeString clientId(&quot;CAAPstINFClientId&quot;); 
+    CATListPtrCATBaseUnknown *pMemberList = NULL;
+    rc = piClientOnAppliCont -&gt; <b>ListMembers</b>(IID_CATISpecObject,
+                                            clientId,  
+                                            &amp;pMemberList);
+    piClientOnAppliCont -&gt; <b>Release</b>();
+    piClientOnAppliCont = NULL;
+
+    if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Member list retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+    { 
+        cout &lt;&lt; &quot;ERROR in retrieving member list&quot; &lt;&lt; endl &lt;&lt; flush;
+        <b>return</b> retnum;
+    }
+
+    cout &lt;&lt; &quot;Number of members in applicative container: &quot; &lt;&lt; pMemberList-&gt;<b>Size</b>() &lt;&lt; endl &lt;&lt; flush;
+...  </pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left">The list of features contained in an applicative container 
+   can be retrieved through the <code>ListMembers</code> method of <i>
+   CATIClientContainer</i> on the applicative container. This method requires as 
+   input the client id which is defined at the creation of the feature catalog 
+   in which the StartUps of the features contained in the applicative container 
+   have been defined. Be careful also to release each <i>CATISpecObject</i> 
+   feature retrieved in the list.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <p>3. Update the &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features.</p>
+   <table class="code" width="773">
+     <tr>
+       <td width="765">
+       <pre>...    
+    CATUnicodeString type;
+    CATISpecObject *piSpecsMember = NULL;
+    for(int i=1;i&lt;=pMemberList-&gt;<b>Size</b>();i++)
+    {
+	<b>piSpecsMember = (CATISpecObject*) ((*pMemberList)[i]);</b>
+	type = piSpecsMember -&gt; <b>GetType</b>();
+	cout &lt;&lt; &quot;Type of object &quot; &lt;&lt; i &lt;&lt; &quot; = &quot; &lt;&lt; type.ConvertToChar() &lt;&lt; endl;
+	if ((type == &quot;CAAPstINFLine&quot;) || (type == &quot;CAAPstINFWire&quot;))
+	{
+	   cout &lt;&lt; &quot;Call update on line or wire.&quot; &lt;&lt; endl;
+	   piSpecsMember -&gt; <b>Update</b>();
+         }
+	(*pMemberList)[i] -&gt; <b>Release</b>();
+	(*pMemberList)[i] = NULL;
+	piSpecsMember = NULL;
+    }
+    <b>delete</b> pMemberList;
+    pMemberList = NULL;
+
+    return 0;
+}
+...  </pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left">The list retrieved from the <code>ListMembers</code> method 
+   is scanned and for each &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; feature retrieved 
+   (verified by using the <code>GetType</code> method of <i>CATISpecObject</i>), 
+   the <i>CATISpecObject</i>::<code>Update</code> method is executed on it. This 
+   method will call the <i>CATIBuild</i> implementation on the feature in order 
+   to refresh the visualization of the feature.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>The CAAPstINFUpdate use case has shown you how program the update of a 
+   &quot;from scratch&quot; feature by implementing the <i>CATIBuild</i> and <i>
+   CATIUpdateProvider</i> implementations in order for a feature whose 
+   references have been modified to be taken into account in the update process 
+   of the Product structure.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td><a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features in 
+       a Product Document</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td>Feature Modeler Overview</td>
+     </tr>
+     <tr>
+       <td valign="top">[3]</td>
+       <td><a href="CAAPstProviders.htm">Using the Provider Mechanism</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[4]</td>
+       <td>The Build/Update Mechanism</td>
+     </tr>
+     <tr>
+       <td valign="top">[5]</td>
+       <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+       Product Structure Model</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[6]</td>
+       <td>Enabling New Features in a Product Document to be Edited</td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [June 2002]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

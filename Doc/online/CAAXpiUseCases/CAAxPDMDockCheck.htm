@@ -1,0 +1,630 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Retrieving Information on a Document Without Loading it</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Retrieving Information on a Document Without Loading it</h3>
+       <em>How to retrieve its type, its last save path, and its last save 
+       version?</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article shows how to retrieve some information on a file document 
+       without loading it: </p>
+       <ul>
+         <li>Its real type, meaning independently of its file extension, </li>
+         <li>Its last save path, </li>
+         <li>The CATIA version used for the last save,</li>
+         <li>Its preview file.</li>
+       </ul>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+         <li><a href="#UseCase"><strong>The CAAxPDMCheckDocType Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAxPDMCheckDocType Do</a></li>
+           <li><a href="#How">How to Launch CAAxPDMCheckDocType</a></li>
+           <li><a href="#Where">Where to Find the CAAxPDMCheckDocType Code</a></li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a></li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case is intended to show you how to use the <i>CATIxPDMItem</i> 
+   interface to retrieve information on a file document. Mainly through samples, 
+   you will learn the meaning and the limits of three methods of this interface:</p>
+   <ul>
+     <li><b><code>GetItemType</code>, to retrieve 
+     the </b>real <b>type of the document 
+     (CATPart, CATProduct). </b></li>
+     <li><b><code>GetLastSavePath</code>,
+     to retrieve the last file path.</b></li>
+     <li><b><code>GetLastSaveVersion</code>,
+     to retrieve the CATIA version used for the 
+     last save,</b></li>
+     <li>GeneratePreview, to create the preview file.</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAxPDMCheckDocType Use Case</h3>
+   <p>CAAxPDMCheckDocType is a use case of the CAAxPDMInterfaces.edu framework 
+   that illustrates CATxPDMInterfaces framework capabilities. <b>Be careful</b>, 
+   such as all use cases illustrating the CATxPDMInterfaces framework, the 
+   current one requires a PX1 licence. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does CAAxPDMCheckDocType Do</h4>
+   <p>CAAxPDMCheckDocType begins by opening a session, then retrieves and 
+   displays the information about a given file, without loading it, and finally 
+   closes the session. </p>
+   <p>Here are given the outputs of the use case for different files located in 
+   the following directory:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\InputData\DocCheck</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/InputData/DocCheck</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p>Before to detail the different cases, we specify where come from the 
+   outputs.</p>
+   <ul>
+     <li><b>Read all information on file</b> : the input argument, i.e the 
+     complete path of the file to analyze.</li>
+     <p>To reduce the output string, we have cut the middle of the complete file 
+     name (\...\) to keep only the most important string, the filename and its 
+     extension.</li>
+     <li><b>Type</b>:&nbsp; the type returned by <code>GetItemType</code> </li>
+     <li><b>Save Path</b>:&nbsp; the save path returned by <b><code>
+     GetLastSavePath</code></b></li>
+     <li><b>Version</b>: the version returned by <b><code>GetLastSaveVersion</code></b></li>
+     <li><b>Path Preview image (jpg): </b>the filename of the preview file 
+     generated by GeneratePreview</li>
+   </ul>
+   <p><b><a name="Part1.CATPart"></a>Part1.CATPart</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file</b> : E:\...\<code>CAAxPDMInterfaces.edu\InputData\</code>DocCheck\Part1.CATPart
+<b>Type</b>:CATPart
+<b>Save Path</b>:E:\users\bpe\ADELE\CXR7\bpePRJ7Base2\ObjectModelerBase.tst\FunctionTests\InputData\SampleDocEnv\Part1.CATPart
+<b>Version</b>:
+<b>Path Preview image (jpg):</b>E:\...\CAAxPDMInterfaces.edu\InputData\DocCheck\Part1.CATPart.jpg
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Part1 is really a Part document, so the returned type is &quot;CATPart&quot;. You 
+   can see that the file has been moved (or copied) from its last Save 
+   operation, because the Save path is different from the input file path. The 
+   version is not displayed because the document has been created before the 
+   V5R10 level. (The version can be found only for document created after the 
+   V5R10). The last output, is the filename of the preview file.</p>
+   <table border="0" cellpadding="0" cellspacing="0" 
+   style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+     <tr>
+       <td><img border="0" src="images/CAAxPDMDocCheckPart1.CATPart.jpg" width="130" height="110"></td>
+     </tr>
+   </table>
+   <p>If you copy Part1.CATPart into Part1 (without extension), or into 
+   Part1.txt, or into Part1.xxx ( xxx is what you want), the returned type of
+   <code>GetItemType</code> will be ever &quot;CATPart&quot;. </p>
+   <p><b><a name="Part3.CATPart"></a>Part3.CATPart</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file</b> : E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\Part3.CATPart
+<b>Type</b>:CATPart
+<b>Save Path</b>:E:\users\jdp\AdeleIMOR15\omi15jdp1\CAAxPDMInterfaces.tst\FunctionTests\InputData\Part3.CATPart
+<b>Version</b>:&lt;Version&gt;5&lt;/Version&gt;&lt;Release&gt;14&lt;/Release&gt;&lt;ServicePack&gt;2&lt;/ServicePack&gt;&lt;HotFix&gt;0&lt;/HotFix&gt;
+<b>Path Preview image (jpg)</b>:E:\...\CAAxPDMInterfaces.edu\InputData\DocCheck\Part3.CATPart.jpg
+...
+
+</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Part3 is really a Part document, so the returned type is &quot;CATPart&quot;. You 
+   can see that the file has been moved (or copied) from its last Save 
+   operation, because the Save path is different from the input file path. Part3 
+   has been saved for the last time with the V5R14SP2 level. The generated 
+   preview file is the following:</p>
+   <table border="0" cellpadding="0" cellspacing="0" 
+   style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+     <tr>
+       <td><img border="0" src="images/CAAxPDMDocCheckPart3.CATPart.jpg" width="130" height="110"></td>
+     </tr>
+   </table>
+   <p><b><a name="Part1.CATProduct"></a>Part1.CATProduct</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file</b> : E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\Part1.CATProduct
+<b>Type</b>:CATPart
+<b>Save Path</b>:E:\users\bpe\ADELE\CXR7\bpePRJ7Base2\ObjectModelerBase.tst\FunctionTests\InputData\SampleDocEnv\Part1.CATPart
+<b>Version</b>:
+<b>Path Preview image (jpg)</b>:E:\...\CAAxPDMInterfaces.edu\InputData\DocCheck\Part1.CATProduct.jpg
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Despite the file extension of Part1 (.CATProduct), the file is not a 
+   Product document, but a Part document, so the returned type is &quot;CATPart&quot;. The 
+   version is not displayed because the document has been created before the 
+   V5R10 level. The generated preview file is the same image as the
+   <a href="#Part1.CATPart">Part1.CATPart</a>. </p>
+   <p><b><a name="Root.CATProduct"></a>Root.CATProduct</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file </b>: E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\Root.CATProduct
+<b>Type</b>:CATProduct
+<b>Save Path</b>:E:\users\bpe\ADELE\CXR7\bpePRJ7Base2\ObjectModelerBase.tst\FunctionTests\InputData\SampleDocEnv\SP1.CATProduct
+<b>Version</b>:
+<b>Path Preview image (jpg)</b>:E:\...\CAAxPDMInterfaces.edu\InputData\Root.CATProduct.jpg
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Root is really a Product document. You can see on the output path that it 
+   has been renamed (outside CATIA). There is no displayed version because the 
+   document has been created before the V5R10 level. </p>
+   <p>The generated preview file is the following:</p>
+   <table border="0" cellpadding="0" cellspacing="0" 
+   style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+     <tr>
+       <td><img border="0" src="images/CAAxPDMDocCheckRoot.CATProduct.jpg" width="130" height="110"></td>
+     </tr>
+   </table>
+   <p><b><a name="Cube.model"></a>Cube.model</b> </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file</b> : E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\CUBE.model
+<b>Type</b>:model
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>CUBE is a model document. The type returned by <code>GetItemType</code> is 
+   model. The file path and the version are not displayed because it is not a V5 
+   document. There is no previous file.</p>
+   <p><b><a name="MyTextDocCheck.txt"></a>MyTextDocCheck.txt</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file :</b> E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\MyTextDocCheck.txt
+<b>Type</b>:txt
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <b>MyTextDocChec file is
+   </b>a txt file. The type returned by <code>GetItemType</code> is txt.&nbsp; 
+   The file path and the version are not displayed because it is not a V5 
+   document. There is no previous file.</p>
+   <p>Attention, if <b>MyTextDocChec 
+   was not a txt file, but an xls file for example, the </b>returned type 
+   will by <code>nevertheless</code> txt. The <code>GetItemType</code> method 
+   returns the extension without check if the input file is not a V5 file ( 
+   CATPart, CATProduct, ....). </p>
+   <p><b><a name="MyTextDocCheck.CATPart"></a>MyTextDocCheck.CATPart</b> </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file :</b> E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\MyTextDocCheck.CATPart
+<b>Type</b>:NotAV5File
+This file has a V5 extension but is not a V5 file
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <b>MyTextDocCheck file is 
+   actually a txt file with a V5 extension. The </b><code>GetItemType</code> 
+   method returns the &quot;NotAV5File&quot; string. The file path and the version are not 
+   displayed because it is not a V5 document. There is no previous file.</p>
+   <p><b><a name="NoExistingDoc.CATPart"></a>NoExistingDoc.CATPart</b>
+   </p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file :</b> E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\NoExistingDoc.CATPart
+<b>ERROR:</b> Impossible to open file E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\NoExistingDoc.CATPart.
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <b>NoExistingDoc file does not exist. 
+   It is not possible to create an item for it. The <code>GetItemFromFile</code> 
+   method returns an error. </b></p>
+   <p><b><a name="MyFileWithoutExtension"></a>
+   MyFileWithoutExtension</b></p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>Read all information on file :</b> E:\...\<code>CAAxPDMInterfaces.edu\</code>DocCheck\MyFileWithoutExtension
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The MyFileWithoutExtension<b> file is a 
+   file without extension, the <code>GetItemFromFile</code> does not return an 
+   error, because the file exists on disk. But </b><code>GetItemType</code> 
+   , <b><code>GetLastSavePath and 
+   GetLastSaveVersion</code> fail. </b></p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="How"></a>How to Launch CAAxPDMCheckDocType</h4>
+   <p>To launch CAAxPDMCheckDocType, you will need to set up the build time 
+   environment, then compile CAAxPDMCheckDocType along with its prerequisites, 
+   set up the run time environment, and then execute the use case [<a 
+   href="#References">1</a>]. To launch it, execute the following command:</p>
+   <pre>mkrun -c &quot;CAAxPDMCheckDocType FileName&quot;</pre>
+   <p>where <code>Filename</code> is&nbsp;the <b>complete path of a file</b>. You can 
+   use&nbsp;those specified in the <a href="#What">What Does CAAxPDMCheckDocType Do</a> 
+   section. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAxPDMCheckDocType Code</h4>
+   <p>The CAAxPDMCheckDocType use case is made of one single file, the 
+   CAAxPDMCheckDocTypeMain.cpp file, located in the CAAxPDMCheckDocType.m module 
+   of the CAAxPDMInterfaces.edu framework:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAxPDMInterfaces.edu\CAAxPDMCheckDocType.m\</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAxPDMInterfaces.edu/CAAxPDMCheckDocType.m/</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Step"></a>Step-by-Step</h3>
+   <p>There are six logical steps in CAAxPDMCheckDocType:</p>
+   <ol>
+     <li><a href="#Prolog">Prolog</a></li>
+     <li><a href="#Retrieving a CATIxPDMItem Interface Pointer">Retrieving a 
+     CATIxPDMItem Interface Pointer </a></li>
+     <li><a href="#Retrieving the Document Type">Retrieving the Document Type
+     </a></li>
+     <li><a href="#Retrieving the Last Save Path">Retrieving the Last Save Path</a></li>
+     <li><a href="#Retrieving the Version of the Last Save">Retrieving the 
+     Version of the Last Save</a> </li>
+     <li>Generating the Previous File</li>
+     <li><a href="#Epilog">Epilog</a></li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Prolog"></a>Prolog</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+HRESULT rc = S_OK;
+char * pSessionName = &quot;CAA_Sample_Session&quot;;
+CATSession *pSession = NULL;
+rc = ::<b>Create_Session</b>(pSessionName,pSession);
+CATUnicodeString filename  = <b>argv[1]</b> ;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>CAAxPDMCheckDocType begins by creating a session and retrieving from the 
+   command line the file path to analyze. <code>filename</code> must be a 
+   complete path, in other words an absolute path.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Retrieving a CATIxPDMItem Interface Pointer"></a>
+   Retrieving a CATIxPDMItem Interface Pointer</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+<b>CATIxPDMItem_var</b> pIxPDMItem;
+rc = <b>CATxPDMFileServices</b>::<b>GetItemFromFile</b>(filename,pIxPDMItem);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p><code>GetItemFromFile</code> is a static method of the <i>
+   CATxPDMFileServices</i> class. It creates, or retrieves in session, an &quot;item&quot; 
+   from a given file without uselessly loading it. This item is represented by 
+   the <i>CATIxPDMItem</i> interface. </p>
+   <p><code>pIxPDMItem</code> is a smart pointer on the item representing <code>
+   filename</code>, the input file name. </p>
+   <p>Finally, such as all methods of the <i>CATxPDMFileServices</i> class, the
+   <code>GetItemFromFile</code> method returns a <i>CATError</i> class instance 
+   in case of failure. You retrieve this error thanks to <b>
+   <code>CATGetLastError</code>, a </b>
+   global function [<a href="#References">2</a>]. You have an illustration, with 
+   the <b><a href="#MyFileWithoutExtension">
+   NoExistingDoc</a></b> case in the <a href="#What">What Does 
+   CAAxPDMCheckDocType Do</a> section.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+if (FAILED(rc))
+{
+      CATError * pError = CATError::<b>CATGetLastError</b>(rc);
+      if ( NULL != pError )
+      {
+         CATUnicodeString ErrorMessage = pError-&gt;GetNLSMessage() ;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Retrieving the Document Type"></a>Retrieving the 
+   Document Type </h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATUnicodeString LocalDocType;
+if (SUCCEEDED(pIxPDMItem-&gt;<b>GetItemType</b>(LocalDocType)))
+{
+   if (LocalDocType==&quot;<b>NotAV5File</b>&quot;)
+   {
+     ....
+   }
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>Once you have an item of the input file, an item represented by <code>
+   pIxPDMItem</code>, you can retrieve the type of the input file. <code>
+   LocalDocType,</code> the file type, is the output argument of the <b>
+   <code>GetItemType </code>method. </b>
+   Its specifications<b> are the following:</b></p>
+   <ul>
+     <li>The file has a V5 file extension
+     <ul>
+       <li>It is a right V5 file: the real V5 file extension is returned<ul>
+         <li><a href="#Root.CATProduct">Root.CATProduct </a>: <b>
+         (</b><code>LocalDocType=CATProduct)-
+         </code>It is really a Product document</li>
+         <li><a href="#Part1.CATPart">Part1.CATPart</a> : <b>
+         (</b><code>LocalDocType=CATPart)-
+         </code>It is really a Part document</li>
+         <li><a href="#Part1.CATProduct">Part1.CATProduct</a>: <b>
+         (</b><code>LocalDocType=<b>CATPart</b>)-
+         </code>It is actually a Part document.</li>
+       </ul>
+       </li>
+       <li>It is a not a right V5 file: <b><code>
+       the &quot;NotAV5File&quot; string is returned</code></b><ul>
+         <li>For <a href="#MyTextDocCheck.CATPart"><b>
+         MyTextDocCheck.</b>CATPart</a> -
+         <code>LocalDocType=</code><b><code>NotAV5File
+         </code></b></li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+     <li>The file does not have a V5 file extension<ul>
+       <li>It is a right V5 file: the real V5 file extension is returned<ul>
+         <li>For Part1.txt <b>(</b><code>LocalDocType=CATPart)-
+         </code>It is really a Part document</li>
+       </ul>
+       </li>
+       <li>It is not a V5 file: the file extension without check<ul>
+         <li>For <a href="#Cube.model">Cube.model </a>(<code>LocalDocType=model</code>)
+         </li>
+         <li>For <b>
+         <a href="#MyTextDocCheck.txt">MyTextDocCheck.txt</a>&nbsp;
+         (</b><code>LocalDocType=txt)</code></li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+     <li>The file is without an extension<ul>
+       <li>It is a right V5 file: the real V5 file extension is returned<ul>
+         <li>For Part1 : <b>(</b><code>LocalDocType=CATPart)-
+         </code>It is really a Part document</li>
+       </ul>
+       </li>
+       <li>It is not a V5 file: error
+       <ul>
+         <li>For <a href="#MyFileWithoutExtension">MyFileWithoutExtension</a>,
+         <b><code>GetItemType</code> returns 
+         E_FAIL</b></li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Retrieving the Last Save Path"></a>Retrieving the 
+   Last Save Path</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATUnicodeString SavePath;
+if (SUCCEEDED(pIxPDMItem-&gt;<b>GetLastSavePath</b>(SavePath)))
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <b><code>GetLastSavePath</code> method 
+   returns the complete file path used during the last Save operation. This 
+   method is successful only for V5 document. </b></p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Retrieving the Version of the Last Save"></a>
+   Retrieving the Version of the Last Save </h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATUnicodeString SaveVersion;
+if (SUCCEEDED(pIxPDMItem-&gt;<b>GetLastSaveVersion</b>(SaveVersion)))
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The none NLS string returned by the <b>
+   <code>GetLastSaveVersion</code> method of the <i>CATIxPDMItem</i> interface 
+   gives you the CATIA level w</b>hen the document has been saved for the 
+   last time. This string is the concatenation of the following four 
+   sub-strings, and in this order:</p>
+   <table border="1" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber1">
+     <tr>
+       <th>Sub-string Syntax</th>
+       <th>Meaning</th>
+       <th>Comments</th>
+     </tr>
+     <tr>
+       <td><code>&lt;Version&gt;X&lt;/Version&gt; </code></td>
+       <td>The version number</td>
+       <td>&nbsp;</td>
+     </tr>
+     <tr>
+       <td><code>&lt;Release&gt;X&lt;/Release&gt;</code></td>
+       <td>The release number</td>
+       <td>&nbsp;</td>
+     </tr>
+     <tr>
+       <td><code>&lt;ServicePack&gt;X&lt;/ServicePack&gt;</code></td>
+       <td>The service pack number</td>
+       <td>if X is equal to zero it is a GA level</td>
+     </tr>
+     <tr>
+       <td><code>&lt;HotFix&gt;X&lt;/HotFix&gt;</code></td>
+       <td>The hot fix number</td>
+       <td>if X is equal to zero it is not an Hot Fix </td>
+     </tr>
+   </table>
+   <p>These information can be retrieved only for document created from and 
+   after the V5R10, except for the Hot fix number which it is only available for 
+   document created from and after V5R14. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="PreviousFile"></a>Generating the Previous File</h4>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+CATUnicodeString PathPreviewImage;
+CATUnicodeString FormatPreviewImage=&quot;jpg&quot; ;
+if (SUCCEEDED(pIxPDMItem-&gt;<b>GeneratePreview</b>(FormatPreviewImage, PathPreviewImage)))
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The <code>GeneratePreview</code> method generates a file containing the 
+   preview of the V5 document. The first argument is the format of the image ( 
+   jpg for example), and the second one is the file name. The nomenclature is 
+   the following : the name of the file + Its V5 extension. See the different 
+   samples in the <a href="#What">What Does CAAxPDMCheckDocType Do </a>section.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4><a name="Epilog"></a>Epilog</h4>
+   <p>The session is closed using the global function named <code>Delete_Session</code>.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+rc = ::Delete_Session(pSessionName);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p><code>pSessionName</code> is the name of the session declared and used&nbsp; 
+   in the <a href="#Prolog">Prolog</a> section. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>You have learned that without loading a file in session you can check that 
+   it is a real V5 file name, retrieve its last save path, retrieve the CATIA 
+   version when it has been saved last time, and generate its previous file. </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td>
+       <a href="../CAASysTechArticles/CAASysErrors.htm">
+       Managing Errors Using HRESULT</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Jan 2005]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,627 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowledgeInterfaces Relations (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowledgeInterfaces.htm" href="../KnowledgeInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowledgeInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "Relations"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>Relations<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_Relations_25383','Relations','0');</script>
+<b><i> Represents the collection of relations of the part or the product.</i></b><br>
+
+ <p>
+ A relation computes values.
+ A relation can belong to one of the following types:
+ <dl>
+ <dt>Formula
+ <dd>It combines parameters to compute the value of one output parameter
+ only. For example, the mass of a cuboid can be the output parameter
+ of a formula, while the value is computed using the following parameters:
+ <pre> 
+ FormulaBody = (height*width*depth)*density
+ </pre>
+ <dt>Program
+ <dd>It combines conditions and actions on parameters to compute one or
+ several output parameter values. For example, the following is a program:
+ <pre>
+ ProgramBody = if (mass&gt;2kg) { depth=2mm length=10mm } else { depth=1mm length=5mm }  
+ </pre>
+ <dt>Check
+ <dd>It only contains conditions on parameter values.
+ For example, the following is a check:
+ <pre>
+ CheckBody = mass&lt;10kg
+ </pre>
+ </dl>
+ <p>
+ The parameters should be defined previously.
+ <p>
+ The following example shows how to retrieve the collection of relations
+ from a newly created part document: 
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim part As Document
+ Set part  = CATDocs.Add("CATPart")
+ Dim relations As Relations
+ Set relations = part.Relations
+ </pre>
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('Formula','','Formula') </script>, <script type="text/javascript"> activateLinkAnchor('Rule','','Rule') </script>, <script type="text/javascript"> activateLinkAnchor('Check','','Check') </script>, <script type="text/javascript"> activateLinkAnchor('DesignTable','','DesignTable') </script>
+</dl>
+<hr>
+<dl>
+ <h2><a name="PropertyIndex"></a>Property Index</h2>
+ <dt>
+    <a href="#Optimizations"><b>Optimizations</b></a>
+<dd>  Returns the optimization collection.
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#CreateCheck"><b>CreateCheck</b></a>
+<dd>  Creates a check relation and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateDesignTable"><b>CreateDesignTable</b></a>
+<dd>  Creates a design table based on a file organized in an vertical way and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateFormula"><b>CreateFormula</b></a>
+<dd>  Creates a formula relation and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateHorizontalDesignTable"><b>CreateHorizontalDesignTable</b></a>
+<dd>  Creates a design table based on a file organized in an horizontal way and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateLaw"><b>CreateLaw</b></a>
+<dd>  Creates a law relation and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateProgram"><b>CreateProgram</b></a>
+<dd>  Creates a program relation and adds it to the part's
+ collection of relations.
+ <dt>
+    <a href="#CreateRuleBase"><b>CreateRuleBase</b></a>
+<dd>  Creates a rulebase.
+ <dt>
+    <a href="#CreateSetOfEquations"><b>CreateSetOfEquations</b></a>
+<dd>  Creates a set of equations.
+ <dt>
+    <a href="#CreateSetOfRelations"><b>CreateSetOfRelations</b></a>
+<dd>  Creates a set of relations and appends it to a parent object.
+ <dt>
+    <a href="#GenerateXMLReportForChecks"><b>GenerateXMLReportForChecks</b></a>
+<dd>  Generates an XML Report on all checks in the current document.
+ <dt>
+    <a href="#Item"><b>Item</b></a>
+<dd>  Retrieves a relation using its index or its name from the
+ Relations collection.
+ <dt>
+    <a href="#Remove"><b>Remove</b></a>
+<dd>  Removes a relation from the Relations collection.
+ <dt>
+    <a href="#SubList"><b>SubList</b></a>
+<dd>  Returns a sub-collection of relations aggregated to an object.
+</dl>
+ <h2><a name="Properties"></a>Properties</h2> <br>
+<a name="Optimizations"><dt>
+
+<table><tr><td>o Property <b>Optimizations</b>(<td>) As <script type="text/javascript"> activateLink('Optimizations','Optimizations')</script>  (Read Only)</table></dt>
+<dl>
+  <dd>
+ Returns the optimization collection. 
+ <br>It can be empty
+ if no optimization is defined in the document.<br>
+ This property is available only when the Product Engineering Optimizer
+ license is available.
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="CreateCheck"><dt>
+
+<table><tr><td>o Func <b>CreateCheck</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iCheckBody</tt>) As <script type="text/javascript"> activateLink('Check','Check')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a check relation and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The check name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the check
+ </dd>
+    <dt><tt> iCheckBody</tt>
+   <dd>    The check definition
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created check <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the <tt>maximummass</tt> check relation
+ and adds it to the newly created part:
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim partdoc As Document
+ Set partdoc  = CATDocs.Add("CATPart")
+ Dim part As Part
+ Set part    = partdoc.Part 
+ Dim massCheck As Check 
+ Set massCheck    = part.Relations.<font color="red">CreateCheck</font>
+                    ("maximummass",
+                     "Ensures that the mass is less than 10 kg",
+                     "mass&lt;10kg")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="CreateDesignTable"><dt>
+
+<table><tr><td>o Func <b>CreateDesignTable</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iCopyMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iSheetPath</tt>) As <script type="text/javascript"> activateLink('DesignTable','DesignTable')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a design table based on a file organized in an vertical way and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The design table name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the design table
+ </dd>
+    <dt><tt> iCopyMode</tt>
+   <dd>  
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created design table <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the <tt>dt</tt> design table
+ and adds it to the newly created part:
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim partdoc As Document
+ Set partdoc  = CATDocs.Add("CATPart")
+ Dim part As Part
+ Set part    = partdoc.Part 
+ Dim designtable As DesignTable
+ Set designtable    = part.Relations.<font color="red">CreateDesignTable</font>
+                     ("dt",
+                      "Ensures that the mass is less than 10 kg",
+                      TRUE,
+                      "/u/users/client/data/sheet.txt")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="CreateFormula"><dt>
+
+<table><tr><td>o Func <b>CreateFormula</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('Parameter','Parameter')</script> <td><tt>iOutputParameter</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iFormulaBody</tt>) As <script type="text/javascript"> activateLink('Formula','Formula')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a formula relation and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The formula name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the formula
+ </dd>
+    <dt><tt> iOutputParameter</tt>
+   <dd>    The parameter which stores the result of the formula
+ </dd>
+    <dt><tt> iFormulaBody</tt>
+   <dd>    The formula definition
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created formula <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the <tt>computemass</tt> formula relation
+ and adds it to the newly created part:
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim partdoc As Document
+ Set partdoc  = CATDocs.Add("CATPart")
+ Dim part As Part
+ Set part    = partdoc.Part 
+ Dim massFormula As Formula
+ Set massFormula = part.Relations.<font color="red">CreateFormula</font>
+                   ("computemass",
+                   "Computes the cuboid mass",
+                    mass,
+                   "(height*width*depth)*density")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="CreateHorizontalDesignTable"><dt>
+
+<table><tr><td>o Func <b>CreateHorizontalDesignTable</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iCopyMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iSheetPath</tt>) As <script type="text/javascript"> activateLink('DesignTable','DesignTable')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a design table based on a file organized in an horizontal way and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The design table name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the design table
+ </dd>
+    <dt><tt> iCopyMode</tt>
+   <dd>  
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created design table <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the <tt>dt</tt> design table
+ and adds it to the newly created part:
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim partdoc As Document
+ Set partdoc  = CATDocs.Add("CATPart")
+ Dim part As Part
+ Set part    = partdoc.Part 
+ Dim designtable As DesignTable
+ Set designtable    = part.Relations.<font color="red">CreateHorizontalDesignTable</font>
+                    ("dt",
+                     "Ensures that the mass is less than 10 kg",
+                     TRUE,
+                     "/u/users/client/data/horizontalsheet.txt")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="CreateLaw"><dt>
+
+<table><tr><td>o Func <b>CreateLaw</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iLawBody</tt>) As <script type="text/javascript"> activateLink('Law','Law')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a law relation and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The law name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the law
+ </dd>
+    <dt><tt> iLawBody</tt>
+   <dd>    The law definition
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created law
+</dl>
+</dl>
+<a name="CreateProgram"><dt>
+
+<table><tr><td>o Func <b>CreateProgram</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iProgramBody</tt>) As <script type="text/javascript"> activateLink('Rule','Rule')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a program relation and adds it to the part's
+ collection of relations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>    The program name
+ </dd>
+    <dt><tt> iComment</tt>
+   <dd>    A description of the program
+ </dd>
+    <dt><tt> iProgramBody</tt>
+   <dd>    The program definition
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The created program <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the <tt>selectdepth</tt> program relation
+ and adds it to the newly created part:
+ <pre>
+ Dim CATDocs As Documents
+ Set CATDocs = CATIA.Documents
+ Dim partdoc As Document
+ Set partdoc  = CATDocs.Add("CATPart")
+ Dim part As Part
+ Set part    = partdoc.Part 
+ Dim depthProgram As Program
+ Set depthProgram = part.Relations.<font color="red">CreateProgram</font>
+                    ("selectdepth",
+                    "Select depth with respect to mass",
+                    "if (mass&gt;2kg) { depth=2mm } else { depth=1 mm }")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="CreateRuleBase"><dt>
+
+<table><tr><td>o Func <b>CreateRuleBase</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>) As <script type="text/javascript"> activateLink('Relation','Relation')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a rulebase.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>   The name of the rulebase.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The created rulebase.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('ExpertRuleBase','','ExpertRuleBase') </script>
+</dl>
+</dl>
+<a name="CreateSetOfEquations"><dt>
+
+<table><tr><td>o Func <b>CreateSetOfEquations</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iComment</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iFormulaBody</tt>) As <script type="text/javascript"> activateLink('SetOfEquation','SetOfEquation')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a set of equations.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the set of equation. </dd>
+    <dt><tt> iComment</tt>
+   <dd> The comment of the set of equation. </dd>
+    <dt><tt> iFormulaBody</tt>
+   <dd> The body of the set of equation " a==b+4; c &le; 90". </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The created set of equations
+</dl>
+</dl>
+<a name="CreateSetOfRelations"><dt>
+
+<table><tr><td>o Sub <b>CreateSetOfRelations</b>(<td><script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> <td><tt>iParent</tt>)</table></dt>
+<dl>
+  <dd>
+ Creates a set of relations and appends it to a parent object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd> The object to which the set is appended</dd>
+</dl>
+</dl>
+</dl>
+<a name="GenerateXMLReportForChecks"><dt>
+
+<table><tr><td>o Sub <b>GenerateXMLReportForChecks</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>)</table></dt>
+<dl>
+  <dd>
+ Generates an XML Report on all checks in the current document.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the XML file</dd>
+</dl>
+</dl>
+</dl>
+<a name="Item"><dt>
+
+<table><tr><td>o Func <b>Item</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>) As <script type="text/javascript"> activateLink('Relation','Relation')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves a relation using its index or its name from the
+ Relations collection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index or the name of the relation to retrieve from
+   the collection of relations.
+   As a numerics, this index is the rank of the relation
+   in the collection.
+   The index of the first relation in the collection is 1, and
+   the index of the last relation is Count.
+   As a string, it is the name you assigned to the relation using
+   the </dd>
+</dl>
+<script type="text/javascript"> activateLinkAnchor('AnyObject','Name','AnyObject.Name') </script> property or when creating the relation. 
+  <dt> <b>Returns:</b> 
+  <dd>  The retrieved relation <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example retrieves the last relation in the <tt>relations</tt>
+ collection. 
+ <pre>
+ Dim lastRelation As Relation
+ Set lastRelation = relations.<font color="red">Item</font>(relations.Count)
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="Remove"><dt>
+
+<table><tr><td>o Sub <b>Remove</b>(<td><script type="text/javascript"> activateLink('CATVariant','CATVariant')</script> <td><tt>iIndex</tt>)</table></dt>
+<dl>
+  <dd>
+ Removes a relation from the Relations collection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index or the name of the relation to remove from
+   the collection of relations.
+   As a numerics, this index is the rank of the relation
+   in the collection.
+   The index of the first relation in the collection is 1, and
+   the index of the last relation is Count.
+   As a string, it is the name you assigned to the relation using
+   the </dd>
+</dl>
+<script type="text/javascript"> activateLinkAnchor('AnyObject','Name','AnyObject.Name') </script> property or when creating the relation. </dl>
+ <dt><b>Example:</b>
+ <dd>
+ This example removes the relation named <tt>density</tt> from
+ the <tt>relations</tt> collection.
+ <pre>
+ relations.<font color="red">Remove</font>("density")
+ </pre>
+ </dl>
+</dl>
+</dl>
+<a name="SubList"><dt>
+
+<table><tr><td>o Func <b>SubList</b>(<td><script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> <td><tt>iFeature</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>iRecursively</tt>) As <script type="text/javascript"> activateLink('Relations','Relations')</script> </table></dt>
+<dl>
+  <dd>
+ Returns a sub-collection of relations aggregated to an object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeature</tt>
+   <dd> The object used to filter the the whole relation collection 
+ to get the resulting sub-collection.
+ </dd>
+    <dt><tt> iRecursively</tt>
+   <dd> A flag to specify if children parameters are to be searched for in the returned collection
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The resulting sub-collection
+ <! @sample >
+ <dt><b>Example:</b>
+ <dd>
+ This example shows how to get a collection of relations that are under a Pad
+ <pre>
+ Dim Relations1 As Relations
+ Set Relations1 = CATIA.ActiveDocument.Part.Relations' gets the collection of relations in the part
+ Dim Body0 As AnyObject
+ Set Body0 = CATIA.ActiveDocument.Part.Bodies.Item  ( "MechanicalTool.1" ) 
+ Dim Pad1 As AnyObject
+ Set Pad1 = Body0.Shapes.Item  ( "Pad.1" ) ' gets the pad Pad.1
+ Dim Relations2 As Relations
+ Set Relations2 = Relations1.SubList(Pad1, TRUE) ' gets the collection of relations that are under the pad Pad.1
+ </pre>
+ </dl>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

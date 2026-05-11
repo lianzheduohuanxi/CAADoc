@@ -1,0 +1,1444 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <title>
+      Consuming CAA Web Services From Within BizTalk Server 2004 Orchestrations
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <script language="JavaScript" src="../CAADocJavaScript/submit.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <!-- ========================================================================= -->
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming CAA Web Services From Within BizTalk Server 2006 Orchestrations
+            </h3><em>How to consume CAA Web services from a .NET assembly invoked by an orchestration</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article discusses the <strong>CAAENOVIAQueryProcess</strong> use case. It explains how to consume
+              CAA Web services from within a <strong>BizTalk Server 2006</strong> environment. It provides a sample 
+              scenario that demonstrates how to manage a session and perform a query against an ENOVIA LCA V5 system.
+              The sample scenario relies on a .NET assembly that is invoked by an <strong>orchestration</strong>, both 
+              of which are developed using Visual Studio .NET 2005.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>Introducing Microsoft BizTalk Server 2006</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#3"><strong>The CAAENOVIAQueryProcess Use Case</strong></a>
+                <ul>
+                  <li>
+                    <a href="#3.1">What Does CAAENOVIAQueryProcess Do</a>
+                  </li>
+                  <li>
+                    <a href="#3.2">Where To Find the CAAENOVIAQueryProcess Code</a>
+                  </li>
+                  <li>
+                    <a href="#3.3">How to Launch CAAENOVIAQueryProcess</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#4"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>Introducing Microsoft BizTalk Server 2006
+    </h3>
+    <p>
+      Microsoft BizTalk Server 2006 is an integration server that can be used to develop, deploy and manage automated
+      business processes. It ships with a wide range of adapters that allow to connect to heterogenous sources,
+      from legacy systems to the latest popular enterprise applications. Business processes are graphically
+      built from within Visual Studio .NET 2005, then deployed and executed into a BizTalk Server 
+		2006 environment.
+    <p>  
+      One of the native adapters that ship with BizTalk Server 2006 is dedicated to the connectivity through Web 
+      services. It suffers from some limitations, such as the lack of support for array parameter types. The default
+      Web service adapter also doesn't provide a way to maintain the HTTP session state 
+		across requests performed on 
+      the same or distinct Web services, which is one of the main requirements of ENOVIA LCA V5 CAA Web services.
+    </p>
+    <p> 
+      Relying on the default native adapter is not the only way to consume Web services with BizTalk Server 
+		2006,
+      as it also provides support to call external .NET assemblies. A .NET adapter class can therefore easily be 
+      written in order to use the .NET Framework capabilities to interact with CAA Web services from a BizTalk
+      Server 2006 orchestration. This latter approach is the recommended way to consume ENOVIA LCA V5 CAA Web 
+      services and is described in the rest of this use case.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      This use case demonstrates how to develop, deploy and test an orchestration that interacts with an ENOVIA LCA V5
+      system. First, it explains how to develop and build a C# client library that invokes the ENOPosApplicationBinderImpl 
+      and ENOVWSQueryCpp CAA Web services in order to query an ENOVIA LCA V5 
+		system. Then, it demonstrates how to build, deploy and run the 
+		orchestration that stands as a sample ENOVIA query business process.&nbsp; 
+		It just servers as a simple BizTalk orchestration reference example.</p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>The CAAENOVIAQueryProcess Use Case
+    </h3>
+    <p>
+      CAAENOVIAQueryProcess is a use case of the CAAWebServices.edu framework that illustrates how to consume
+      CAA Web services from a BizTalk Server 2006 environment.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>What Does CAAENOVIAQueryProcess Do
+    </h4>
+    <p>
+      The CAAENOVIAQueryProcess use case scenario contains the following steps:
+    </p>
+    <ul>
+      <li>The query business process is triggered by an XML message dropped in a given input folder. This XML message contains a
+      SelectExpression value,</li>
+      <li>The XML message is automatically picked up and processed by the orchestration,</li>
+      <li>During the orchestration workflow, a C# adapter class is instantiated and the SelectExpression value is set on this object,</li>
+      <li>The main C# adapter class business logic is triggered from the orchestration. It creates a session with a target ENOVIA
+      LCA V5 system, queries its content based on the input SelectExpression value, and finally terminates the opened session,</li>
+      <li>The XML message returned by the ENOVWSQueryCpp CAA Web service is forwarded to the calling orchestration,</li>
+      <li>The XML query results message is finally saved in a given output folder using the default native file adapter shipped
+      with BizTalk Server 2006.</li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Where To Find the CAAENOVIAQueryProcess Code
+    </h4>
+    <p>
+      The complete content of the sample reference Visual Studio .NET 2005 solution demonstrated in this use case can be found at 
+      the following location:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\CAAENOVWS.edu\Data.d\CAAENOVIAWSSolution</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The above folder contains the following resources:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>
+              \CAAENOVIAWSSolution\CAAENOVIAWSSolution.sln<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSSolution.snk<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\Properties\AssemblyInfo.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOBizTalkAdapter.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOPosApplicationBinderImplProxy.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOPosApplicationBinderImplWrapper.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOVIAWSLibrary.csproj<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOVWSQueryCppProxy.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOVWSQueryCppWrapper.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAWSLibrary\CAAENOVWSUtils.cs<br>
+              \CAAENOVIAWSSolution\CAAENOVIAProcess\CAAENOVIAQuery.odx<br>
+              \CAAENOVIAWSSolution\CAAENOVIAProcess\CAAENOVIAProcess.btproj<br>
+              \CAAENOVIAWSSolution\CAAENOVIAProcess\ENOVIA.xsd<br>
+              \CAAENOVIAWSSolution\CAAENOVIAProcess\FilterXML.xsd<br>
+              \CAAENOVIAWSSolution\Filedrop\QueryFilter.xml<br>
+              \CAAENOVIAWSSolution\Filedrop\InputXmlFilter<br>
+              \CAAENOVIAWSSolution\Filedrop\OutputQueryResults\QueryResult_{08FC7789-35EB-4446-B913-15B5DCF63A48}.xml</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>How to Launch CAAENOVIAQueryProcess
+    </h4>
+    <p>
+      Before doing this usecase you must have both Visual Studio .NET 2005 and BizTalk Server 2006 
+      products installed, configured and tested. You can easily check your BizTalk Server 2006 environment by testing one of the
+      BizTalk Server 2006 tutorials that can be downloaded from Microsoft official Web site. 
+</p>
+
+<p>
+You can refer to the step-by-step guide below for details on how to build and launch the sample CAAENOVIAQueryProcess 
+      use case. <p>
+This document serves as a guideline for your development only. Your step-by-step screens may not be exactly the same as provided
+depending on your Visual Studio 2005 and BizTalk installation and configuration. If there is some deviation in your environment please consult
+Microsoft Visual Studio developer's guide to fulfill each step's business logical.
+    
+</p>
+    </p>
+    <p>
+      If you do not wish to create the complete Visual Studio .NET 2005 solution from scratch, you can open the one delivered 
+      on the CAA CD-ROM in order to directly build, deploy and test the orchestration in your environment. To do so, you must 
+      copy the <em>CAAENOVIAWSSolution</em> folder contained in the <em>CAAENOVWS.edu\Data.d</em> directory at the root 
+      of your <em>C:</em> drive.
+    </p>
+    <p>
+      Before you try to deploy and test the solution, you must first edit the C# BizTalk adapter class so that it references 
+      your target ENOVIA LCA V5 server. You can refer to the <a href="#4.4">Creating the C# BizTalk Adapter Class</a> section
+      for details on this task. Then, you can simply follow the two last sections of the step-by-step guide below, including
+      <a href="#4.13">Building and Deploying the Solution</a> and <a href="#4.14">Running the Sample Application</a>.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="4"></a>Step-by-step
+    </h3>
+    <p>
+      Before completing this usecase scenario you must have both Visual Studio .NET 2005 and BizTalk Server 2006 
+      products installed and configured. 
+    </p>
+    <ol>
+      <li>
+        <a href="#4.1">Setting Up Your Visual Studio .NET 2005 Solution</a>
+      </li>
+      <li>
+        <a href="#4.2">Creating and Configuring the C# Class Library Project</a>
+      </li>
+      <li>
+        <a href="#4.3">Adding the Required Resources to the C# Class Library Project</a>
+      </li>
+      <li>
+        <a href="#4.4">Creating the C# BizTalk Adapter Class</a>
+      </li>
+      <li>
+        <a href="#4.5">Creating and Configuring the BizTalk Server Project</a>
+      </li>
+      <li>
+        <a href="#4.6">Creating the BizTalk Server Orchestration</a>
+      </li>
+      <li>
+        <a href="#4.7">Designing the ENOVIA Query Process Workflow</a>
+      </li>
+      <li>
+        <a href="#4.8">Creating the Messages Instance Variables</a>
+      </li>
+      <li>
+        <a href="#4.9">Instantiating the C# BizTalk Adapter Class</a>
+      </li>
+      <li>
+        <a href="#4.10">Invoking the CAA Web Services</a>
+      </li>
+      <li>
+        <a href="#4.11">Creating and Configuring the Ports</a>
+      </li>
+      <li>
+        <a href="#4.12">Setting Messages on the Actions Shapes and Connecting the Ports</a>
+      </li>
+      <li>
+        <a href="#4.13">Building and Deploying the Solution</a>
+      </li>
+      <li>
+        <a href="#4.14">Running the Sample Application</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.1"></a>Setting Up Your Visual Studio .NET 2005 Solution
+    </h4>
+    <p>
+      The .NET assembly and the BizTalk Server orchestration demonstrated in this use case are created in the same solution. 
+      To create the solution, please complete the following steps:
+    </p>
+    <ol>
+      <li>On the <strong>Start</strong> menu, point to <strong>Programs</strong> -&gt; <strong>
+		Microsoft Visual Studio .NET 2005</strong>, and click on <strong>
+		Microsoft Visual Studio .NET 2005</strong>,</li>
+      <li>Go to <strong>File</strong> -&gt; <strong>New -&gt; Project</strong> -&gt; <strong>Blank Solution</strong>,</li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOVIAWSSolution</em>, and then <em>C:\</em> in the 
+      <strong>Location</strong> field. The rest of the article will assume that the solution has been created in
+      the <em>C:\CAAENOVIAWSSolution</em> directory. You are free to choose any other location you wish to use,</li>
+      <li>You can then click <strong>OK</strong> to close the <strong>New Project</strong> dialog box and create the solution.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig1" id="Fig1"></a>Fig.1: Setting Up Your Visual Studio .NET 
+		2005 Solution
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig1.png" alt="Setting Up Your Visual Studio .NET 2003 Solution">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      You can then directly create the two following folders. The former is used to listen for input XML filter messages, and the 
+      latter is used to store the output XML query results ones:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>
+              C:\CAAENOVIAWSSolution\Filedrop\InputXmlFilter<br>
+              C:\CAAENOVIAWSSolution\Filedrop\OutputQueryResults
+            </code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.2"></a>Creating and Configuring the C# Class Library Project
+    </h4>
+    <p>
+      First, you need to create a <strong>C# class library</strong>. It holds the C# client application that consumes the CAA 
+      Web services being demonstrated in the use case:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the solution, and go to <strong>Add</strong> 
+      -&gt; <strong>New Project</strong>,</li>
+      <li>In the <strong>Project Types</strong> left pane, select the <strong>Visual C# Projects</strong> folder,</li>
+      <li>From <strong>Templates</strong> right pane, select the <strong>Class Library</strong> template,</li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOVIAWSLibrary</em>,</li>
+      <li>Click <strong>OK</strong> to close the <strong>Add New Project</strong> dialog box,</li>
+      <li>You can  finally delete the default <em>Class1.cs</em> resource created.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig2" id="Fig2"></a>Fig.2: Creating the C# Class Library Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig2.png" alt="Creating the C# Class Library Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <p>
+      Then, you must create a <strong>strong name assembly key file</strong> in order to build your projects in Visual Studio 
+      .NET 2005 and then deploy them into the <strong>Global Assembly Cache</strong> (GAC). Deploying the assembly in the GAC
+      is a requirement for BizTalk Server 2006, therefore signing is mandatory:
+    </p>
+    <ol>
+      <li>On the <strong>Start</strong> menu, point to <strong>Programs</strong> -&gt; <strong>Microsoft 
+		Visual Studio 2005</strong> -&gt; <strong>Visual Studio Tools</strong>, and then click <strong>Visual Studio 
+		2005 Command Prompt</strong>,</li>
+      <li>Change the current directory to <em>C:\CAAENOVIAWSSolution</em>,</li>
+      <li>Issue the following command: <em>sn -k CAAENOVIAWSSolution.snk</em>. You should receive the
+      following message at the command prompt: <em>Key pair written to CAAENOVIAWSSolution.snk</em>.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig3" id="Fig3"></a>Fig.3: Creating a Strong Name Assembly Key File
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig3.png" alt="Creating a Strong Name Assembly Key File">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      You must now edit the <strong>AssemblyInfo.cs</strong> file contained in the project to reference the created strong name
+      assembly key file:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, expand the <em>CAAENOVIAWSLibrary</em> project, and double-click on the
+      <em>AssemblyInfo.cs</em> file under pPoperties directory,</li>
+      <li>In the code editor window, edit or add the following lines:<br><br>
+        <table class="code">
+          <tbody>
+            <tr>
+              <td>
+                <code>
+                  [assembly: AssemblyVersion("1.0.0.0")]<br>
+                  ...<br>
+                  [assembly: AssemblyKeyFileAttribute(@"..\\..\\..\\CAAENOVIAWSSolution.snk")]
+                </code>
+              </td>
+            </tr>
+          </tbody>
+        </table></li>
+    </ol>
+    <p>Finally, you need to configure your project in order to reference two assemblies, including System.Web.Services.dll 
+    (from the .NET Framework) and Microsoft.XLANGs.BaseTypes.dll (from the BizTalk Server 
+	2006 libraries):</p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, expand the <em>CAAENOVIAWSLibrary</em> project. Right click
+      on the <strong>References</strong> folder, and point to <strong>Add Reference</strong>,</li>
+      <li>In the <strong>Add Reference</strong> dialog box, click on the <strong>Browse</strong> button,</li>
+      <li>Browse to the directory where you installed BizTalk Server 2006, and then click on the following assembly: 
+      <em>Microsoft.XLANGs.BaseTypes.dll</em></li>
+      <li>Click on <strong>Open</strong> to close the <strong>Select Component</strong> dialog box. You should now see 
+      the <em>Microsoft.XLANGs.BaseTypes.dll</em> assembly in the <strong>Selected Components</strong> pane,</li>
+      <li>Click on <strong>OK</strong> to close the <strong>Add Reference</strong> dialog box,
+      <li>Right click on the <strong>References</strong> folder again, and point to <strong>Add Reference</strong>,</li>
+      <li>In the <strong>Add Reference</strong> dialog box, select the <em>System.Web.Services.dll</em> assembly from
+      the <strong>.NET</strong> pane, and click on the <strong>Select</strong> button,</li>
+      <li>Click on <strong>OK</strong> to close the <strong>Add Reference</strong> dialog box.</li>
+    </ol>
+    <p>Your solution should now be configured as follows:</p>
+    <table border="0">
+      <caption>
+        <a name="Fig4" id="Fig4"></a>Fig.4: Configuring the C# Class Library Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig4.png" alt="Configuring the C# Class Library Project">
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.3"></a>Adding the Required Resources to the C# Class Library Project
+    </h4>
+    <p>
+      In order to consume the CAA Web services from a C# library, you must first generate the C# client bindings from the
+      WSDL and XSD files describing the services, and then write some client code in order to invoke each target Web service 
+      using the dedicated generated proxy.
+    </p>
+    <p>
+      These steps are already described in the use cases demonstrating how to consume the available CAA Web services with the 
+      .NET Framework. You can refer to [<a href="#References">1</a>] and [<a href="#References">2</a>] for further details on 
+      how to generate and write the required code. The reference articles are 
+		documented in .Net 1.1 with Visual Studio 2003, which is officially 
+		supported version for R17GA. Therefore please just use it as a reference 
+		for your work with Visual Studio 2005 .Net 2.0.&nbsp;
+    </p>
+    <p> 
+      In the current use case, we'll just assume that the required resources have already been created. They will be imported 
+      from the CAA CD-ROM content for convenience, but they could also be written from scratch by following the step-by-step
+      guides available in the articles mentioned above. From Visual Studio .NET 
+		2005, please complete the following steps:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAWSLibrary</em> project and go to
+      <strong>Add</strong> -&gt; <strong>Add Existing Item</strong>,</li>
+      <li>From the <strong>Add Existing Item</strong> dialog box, browse to the location where you installed the CAA CD-ROM 
+      content. Point to <em>CAAPLMSecurity.edu\CAAENOPosAppBinderDotNet1_1ClientBase.m\src</em> and then select the two
+      following resources: <em>CAAENOPosApplicationBinderImplProxy.cs</em> and <em>CAAENOPosApplicationBinderImplWrapper.cs</em>,</li>
+      <li>Click <strong>Open</strong> to close the dialog box and add the resources to the project,</li>
+      <li>Right click on the <em>CAAENOVIAWSLibrary</em> project and go to <strong>Add</strong> -&gt; <strong>Add Existing 
+      Item</strong> again,</li>
+      <li>Browse to the location where you installed the CAA CD-ROM content again. This time, point to 
+      <em>CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</em> and then select the three following resources: 
+      <em>CAAENOVWSQueryCppProxy.cs</em>, <em>CAAENOVWSQueryCppWrapper.cs</em> and <em>CAAENOVWSUtils.cs</em>,</li>
+      <li>Click <strong>Open</strong> to close the dialog box and add the resources to the project.</li>
+    </ol>
+    <p>Your solution should now contain the following resources:</p>
+    <table border="0">
+      <caption>
+        <a name="Fig5" id="Fig5"></a>Fig.5: C# Project Content
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig5.png" alt="C# Project Content">
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>   
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.4"></a>Creating the C# BizTalk Adapter Class
+    </h4>
+    <p>First, you need to create a new C# class within the project:</p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAWSLibrary</em> project and go to
+      <strong>Add</strong> -&gt; <strong>Add New Item</strong>,</li>
+      <li>Select the <strong>Class</strong> template from the right pane, and enter <em>CAAENOBizTalkAdapter.cs</em> in
+      the <strong>Name</strong> field.</li>
+      <li>Click <strong>Open</strong> to close the <strong>Add New Item</strong> dialog box.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig6" id="Fig6"></a>Fig.6: Creating the C# Adapter Class
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig6.png" alt="Creating the C# Adapter Class">
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <p>
+      Once the <strong>CAAENOBizTalkAdapter</strong> class is created, you must add the <code><strong>[Serializable]</strong></code> 
+      attribute to its generated constructor.
+    </p>
+    <p>
+      Then, you can add a method named <code><strong>SetXmlFilter</strong></code>. It is used to read the XML message processed as
+      input of the orchestration. The message consists of an XML query string, as detailed in the related technical article (see 
+      [<a href="#References">3</a>] for details). The <code><strong>SetXmlFilter</strong></code> method simply consists of some code 
+      that reads the input <code><strong>XLANGMessage</strong></code> object and loads up the related XML content into a string. 
+      You can refer to BizTalk Server documentation for further details on the <code>XLANGMessage</code> object type:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">using</font> System;<br>
+            <font color="#0000FF">using</font> System.IO;<br>
+            <font color="#0000FF">using</font> System.Xml;<br>
+            <br>
+            <font color="#0000FF">using</font> Microsoft.XLANGs.BaseTypes;<br>
+            <br>
+            <font color="#0000FF">namespace</font> CAAENOVIAWSLibrary<br>
+            {<br>
+            &nbsp;&nbsp;<font color="#808080">/// &lt;summary&gt;<br>
+            &nbsp;&nbsp;///</font> <font color="#008000">Summary description for CAAENOBizTalkAdapter.</font><br>
+            &nbsp;&nbsp;<font color="#808080">/// &lt;/summary&gt;</font><br>
+            &nbsp;&nbsp;[Serializable]<br>
+            &nbsp;&nbsp;<font color="#0000FF">public class</font> CAAENOBizTalkAdapter<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">private string</font> xmlFilter = <font color="#0000FF">null</font>;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">public</font> CAAENOBizTalkAdapter()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">//<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// TODO: Add constructor logic here<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">public void</font> SetXmlFilter(XLANGMessage inputMessage)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>				
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XLANGPart part = inputMessage.Count == 1 ? inputMessage[0] : <font color="#0000FF">null</font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">if</font> (part != <font color="#0000FF">null</font>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XmlDocument document = (XmlDocument) part.RetrieveAs(<font color="#0000FF">typeof</font>(XmlDocument));<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringWriter sw = <font color="#0000FF">new</font> StringWriter();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XmlTextWriter xw = <font color="#0000FF">new</font> XmlTextWriter(sw);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.WriteContentTo(xw);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter =<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&lt;?xml version=\"1.0\" encoding=\"UTF-8\" ?&gt;\n" + sw.ToString();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      In the next step, you need to add a method named <code><strong>RunQuery</strong></code>. This method contains the core of 
+      the business process logic: it invokes both ENOPosApplicationBinderImpl and ENOVWSQueryCpp CAA Web services. The 
+      first one is used to manage the session with the ENOVIA LCA V5 system, and the second one is used to query objects based on 
+      the XML filter used as input of the orchestration.
+    </p>
+    <p>
+      <img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">
+      &nbsp;You <strong><font color="#FF0000">must</font></strong> edit the value of the <code>uri</code>, <code>credUser</code>, 
+      <code>credPwd</code> and <code>enoviaUser</code> variables to match your environment configuration. For simplicity, these 
+      values are hard-coded in the sample C# adapter class, but they could easily be read from a file, or retrieved during the 
+      orchestration flow.
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#0000FF">using</font> System;<br>
+            <font color="#0000FF">using</font> System.IO;<br>
+            <font color="#0000FF">using</font> System.Net;<br>
+            <font color="#0000FF">using</font> System.Text;<br>
+            <font color="#0000FF">using</font> System.Xml;<br>
+            <font color="#0000FF">using</font> System.Xml.Serialization;<br>
+            <br>
+            <font color="#0000FF">using</font> Microsoft.XLANGs.BaseTypes;<br>
+            <br>
+            <font color="#0000FF">using</font> enoposapplicationbinderimpl = com.dassault_systemes.caaplmsecurity.caaenoposappbinderdotnet1_1clientbase.enoposapplicationbinderimpl;<br>
+            <font color="#0000FF">using</font> enovwsquerycpp = com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase.enovwsquerycpp;<br>
+            <font color="#0000FF">using</font> com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientbase;<br>
+            <br>
+            <font color="#0000FF">namespace</font> CAAENOVIAWSLibrary<br>
+            {<br>
+            &nbsp;&nbsp;<font color="#808080">/// &lt;summary&gt;<br>
+            &nbsp;&nbsp;///</font> <font color="#008000">Summary description for CAAENOBizTalkAdapter.</font><br>
+            &nbsp;&nbsp;<font color="#808080">/// &lt;/summary&gt;</font><br>
+            &nbsp;&nbsp;<font color="#0000FF">public class</font> CAAENOBizTalkAdapter<br>
+            &nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">public</font> XmlDocument RunQuery()<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><strong><font color="#FF0000">// The values highlighted in red below must be updated with your environment.<br>
+            <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code>// The last slash for the URI value is mandatory.</font></strong><br>
+            <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">string</font> uri = "<font color="#FF0000">http://webservicehost:9080/B17/</font>";<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">string</font> credUser = "<font color="#FF0000">wsadmin</font>";<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">string</font> credPwd = "<font color="#FF0000">wsadminpassowrd</font>";<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">string</font> enoviaUser = "<font color="#FF0000">lcauser</font>";<br>
+            <br>
+            <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XmlDocument results = <font color="#0000FF">new</font> XmlDocument();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = <font color="#0000FF">null</font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enoposapplicationbinderimpl.SessionToken sessionToken = <font color="#0000FF">null</font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">try</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 1 - Instantiate and configure the proxies<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// Create a CookieContainer object to maintain the HTTP session<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// state accross proxies</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CookieContainer container = <font color="#0000FF">new</font> CookieContainer();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// Instantiate wrapper client classes</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">int</font> timeOut = 360000;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binderWrapper = <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">new</font> enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container, uri, credUser, credPwd, timeOut);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper =<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">new</font> enovwsquerycpp.CAAENOVWSQueryCppWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container, uri, credUser, credPwd, timeOut);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 2 - Open session with ENOVIA LCA V5<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// Get user contexts</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">string</font>[] userContexts = binderWrapper.GetUserContexts(enoviaUser);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// Log in using the first available context</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">if</font> (userContexts.Length == 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">throw new</font> ApplicationException("No context found for the user specified");<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sessionToken = binderWrapper.Login(userContexts[0]);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 3 - Count objects and display result<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// Create input XML select expression</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuilder xmlFilter = <font color="#0000FF">new</font> StringBuilder();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlFilter.Append(<font color="#0000FF">this</font>.xmlFilter);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 4 - Query objects and display results<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enovwsquerycpp.ENOVIA resultSet = <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queryWrapper.QueryObjects(xmlFilter.ToString());<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XmlSerializer s = <font color="#0000FF">new</font> XmlSerializer(typeof(enovwsquerycpp.ENOVIA));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MemoryStream inputStream = <font color="#0000FF">new</font> MemoryStream();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s.Serialize(inputStream, resultSet);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inputStream.Position = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;results.Load(inputStream);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">catch</font> (Exception e)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">throw</font> e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">finally</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#008000">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 5 - Terminate opened session<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// The session must be closed even if a call to a method<br> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// on the ENOVWSQueryCpp CAA Web service fails</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;binderWrapper.Logout(sessionToken);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">return</font> results;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Finally, you can build the project. In the <strong>Solution Explorer</strong>, right-click on the <em>CAAENOVIAWSLibrary</em> 
+      project, and then click <strong>Build</strong>. The <strong>Output</strong> window at the bottom of the screen should read:  
+      <em>Build: 1 succeeded, 0 failed, 0 skipped</em>.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>   
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.5"></a>Creating and Configuring the BizTalk Server Project
+    </h4>   
+    <p>
+      You can now start to create the <strong>BizTalk Server Project</strong>:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the solution, and go to <strong>Add</strong> 
+      -&gt; <strong>New Project</strong>,</li>
+      <li>In the <strong>Project Types</strong> left pane, select the <strong>BizTalk Projects</strong> folder,</li>
+      <li>From <strong>Templates</strong> right pane, select the <strong>Emtpy BizTalk Server Project</strong> template,</li>
+      <li>In the <strong>Name</strong> field, enter <em>CAAENOVIAProcess</em>,</li>
+		<li>In the <b>Location</b> field, enter or browse to
+		C:\CAAENOVIAWSSolution,</li>
+		<li>In the Solution field, choose <b>Add to Solution</b> from the 
+		drop-down selection</li>
+      <li>Click <strong>OK</strong> to close the <strong>Add New Project</strong> dialog box.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig7" id="Fig7"></a>Fig.7: Creating the BizTalk Server Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig7.png" alt="Creating the BizTalk Server Project">
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <p>
+      Then, you need to configure your project so that it references the strong name assembly key file created above:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAProcess</em> project and go to
+      <strong>Properties</strong>,</li>
+      <li>In the <strong>Property Pages</strong> dialog box, select <strong>Assembly</strong> from the left pane,</li>
+      <li>In the right pane, scroll down, select <strong>Assembly Key File</strong>, and then click the ellipsis 
+      <strong>(...)</strong> button,</li>
+      <li>Browse to <em>C:\CAAENOVIAWSSolution</em>, click <em>CAAENOVIAWSSolution.snk</em>, and then click <strong>Open</strong>,</li>
+      <li>Click <strong>OK</strong> to apply the changes and close the <strong>Property Pages</strong> dialog box.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig8" id="Fig8"></a>Fig.8: Setting the Strong Name Assembly Key File on the Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig8.png" alt="Setting the Strong Name Assembly Key File on the Project">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Finally, you need to configure your project in order to reference the C# library project created above:</p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, expand the <em>CAAENOVIAProcess</em> project. Right click
+      on the <strong>References</strong> folder, and point to <strong>Add Reference</strong>,</li>
+      <li>In the <strong>Add Reference</strong> dialog box, select the <strong>Projects</strong> tab,</li>
+      <li>In the left pane, select the <em>CAAENOVIAWSLibrary</em> project,</li>
+      <li>Click on the <strong>Select</strong> button. You should now see 
+      the <em>CAAENOVIAWSLibrary</em> project in the <strong>Selected Components</strong> pane at the bottom,</li>
+      <li>Click on <strong>OK</strong> to close the <strong>Add Reference</strong> dialog box.</li>
+    </ol>
+    <p>Your solution should now contain the following resources:</p>
+    <table border="0">
+      <caption>
+        <a name="Fig9" id="Fig9"></a>Fig.9: Configuring the BizTalk Server Project
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig9.png" alt="Configuring the BizTalk Server Project">
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.6"></a>Creating the BizTalk Server Orchestration
+    </h4>
+    <p>
+      In this step, you use the <strong>Orchestration Designer</strong> in order to create the orchestration that represents 
+      the flow of the business process. You create create the business process flow by dragging shapes from the 
+      <strong>Toolbox</strong> to the Orchestration Design surface. To create the orchestration, please complete the 
+      following steps:
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAProcess</em> project and go to
+      <strong>Add</strong> -&gt; <strong>Add New Item</strong>,</li>
+      <li>Select the <strong>BizTalk Orchestration</strong> template from the right pane, and enter <em>CAAENOVIAQuery.odx</em> in
+      the <strong>Name</strong> field,</li>
+      <li>Click <strong>Open</strong> to close the <strong>Add New Item</strong> dialog box.</li>
+    </ol>
+    <table border="0">
+      <caption>
+        <a name="Fig10" id="Fig10"></a>Fig.10: Creating the Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig10.png" alt="Creating the Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+    <p>
+      The new orchestration is created and displayed in Orchestration Designer. If the toolbox is not docked on the left side, 
+      on the <strong>View</strong> menu, click <strong>Toolbox</strong>. In the toolbox, click the 
+      <strong>BizTalk Orchestrations</strong> tab to view the BizTalk Orchestration toolbox. Here follows a snapshot of the
+      <strong>Orchestration Designer</strong> environment:
+    </p> 
+    <table border="0">
+      <caption>
+        <a name="Fig11" id="Fig11"></a>Fig.11: Orchestration Designer Snapshot
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig11.png" alt="Orchestration Designer Snapshot">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.7"></a>Designing the ENOVIA Query Process Workflow
+    </h4>
+    <p>You can now start to design the ENOVIA query process workflow:</p>
+    <ol>
+      <li>Drag the <strong>Receive</strong> shape from the toolbox to the Orchestration Design surface, and drop the shape between 
+      the Begin (green circle) and End (red octagon) shapes,</li>
+      <li>Select the <em>Receive_1</em> shape, go to the <strong>Properties</strong> window, and change the <strong>Name</strong> 
+      property to <em>ReceiveXmlFilterMsg</em>. You must also set the <strong>Activate</strong> property to <em>True</em>,</li>
+      <li>Drag the <strong>Expression</strong> shape from the toolbox to the Orchestration Design surface, and drop the shape on 
+      the connecting line directly below the <em>Receive_Request</em> shape,</li>
+      <li>Select the <em>Expression_1</em> shape, go to the <strong>Properties</strong> window, and change the <strong>Name</strong> 
+      property to <em>SetXmlFilter</em>,</li>
+      <li>Drag the <strong>Construct Message</strong> shape from the toolbox to the Orchestration Design surface, and drop the shape on
+      the connecting line directly below the <em>SetXmlFilter</em> shape,</li>
+      <li>Select the <em>ConstructMessage_1</em> shape, go to the <strong>Properties</strong> window, and change the <strong>Name</strong> 
+      property to <em>ConstructQueryResultsMsg</em>,</li>
+      <li>Drag the <strong>Message Assignment</strong> shape from the toolbox to the Orchestration Design surface, and drop the
+      shape inside the <em>ConstructQueryResultsMsg</em> one,</li>
+      <li>Select the <em>MessageAssignment_1</em> shape, go to the <strong>Properties</strong> window, and change the <strong>Name</strong> 
+      property to <em>RunQuery</em>,</li>
+      <li>Drag the <strong>Send</strong> shape from the toolbox to the Orchestration Design surface, and drop the shape on 
+      the connecting line between the <em>ConstructQueryResultsMsg</em> and End (red octagon) shapes,</li>
+      <li>Select the <em>Send_1</em> shape, go to the <strong>Properties</strong> window, and change the <strong>Name</strong> 
+      property to <em>SendQueryResultsMsg</em>,</li>
+      <li>On the <strong>File</strong> menu, click <strong>Save All</strong>.</li>
+    </ol>
+    <p>
+      At this point, there will be several insufficient configuration Smart Tags (red exclamation marks) within your orchestration.
+      You must not try to solve them all yet, they will disappear during the next configurations steps. Your orchestration should 
+      appear similar to the following one:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig12" id="Fig12"></a>Fig.12: Query Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig12.png" alt="Query Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.8"></a>Creating the Messages Instance Variables
+    </h4>
+    <p>
+      You must now add the required XML Schema files describing the input and ouput XML messages processed by the 
+      orchestration, and create variables for the related message instances:  
+    </p>
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAProcess</em> project and go to
+      <strong>Add</strong> -&gt; <strong>Add Existing Item</strong>,</li>
+      <li>Browse to the location where you installed the CAA CD-ROM content, point to 
+      <em>CAAWebServices.edu\Data.d\CAAENOVIAWSSolution\CAAENOVIAProcess</em> and then select the two following resources: 
+      <em>ENOVIA.xsd</em> and <em>FilterXML.xsd</em>. These resources are also available in the code unloaded from the ENOVIA 
+      LCA CD-ROM, in the <em>\intel_a\resources\xsd</em> directory,</li>
+	  <li>Click <strong>OK</strong> to close the <strong>Add Existing Item</strong> dialog box,</li>
+      <li>If not already selected, click the Orchestration View tab that appears next to the Solution Explorer tab,</li>
+      <li>In the Orchestration View window, right-click <strong>Messages</strong> and then click <strong>New Message</strong>. 
+      <em>Message_1</em> is displayed,</li>
+      <li>In the <strong>Properties</strong> window, select the <strong>Identifier</strong> property, type 
+      <em>XmlFilterMsg</em>,</li>
+      <li>Scroll down to the <strong>Type</strong> property. In the drop-down list to the right of the property, expand
+      <strong>Schemas</strong> and select <em>CAAENOVIAProcess.FilterXML.FILTER</em> from the list,</li>
+      <li>In the Orchestration View window, right-click <strong>Messages</strong> and then click <strong>New Message</strong> again. 
+      <em>Message_1</em> is displayed,</li>
+      <li>In the <strong>Properties</strong> window, select the <strong>Identifier</strong> property, type 
+      <em>QueryResultsMsg</em>,</li>
+      <li>Scroll down to the <strong>Type</strong> property. In the drop-down list to the right of the property, expand
+      <strong>Schemas</strong> and select <em>CAAENOVIAProcess.ENOVIA</em> from the list,</li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.9"></a>Instantiating the C# BizTalk Adapter Class
+    </h4>
+    <p>
+      The orchestration can now be configured in order to invoke the code contained in the C# library project. The first
+      code invocation is performed within the Expression shape. It is used to instantiate the BizTalk C# adapter class
+      and then set the input XML filter on the created object:
+    <ol>
+      <li>If not already selected, click the Orchestration View tab that appears next to the Solution Explorer tab,</li>
+      <li>In the Orchestration View window, right-click <strong>Variables</strong> and then click <strong>New Variable</strong>. 
+      <em>Variable_1</em> is displayed,</li>
+      <li>In the <strong>Properties</strong> window, select the <strong>Identifier</strong> property, type 
+      <em>CAAENOBizTalkAdapterInstance</em>,</li>
+      <li>Scroll down to the <strong>Type</strong> property. In the drop-down list to the right of the property, select
+      <strong>&lt;.NET Class...&gt;</strong> to open the <strong>Select Artifact Type</strong> dialog box,</li>
+      <li>In the left pane, select the <em>CAAENOVIAWSLibrary</em> entry. Then, from the right pane, select the 
+      <em>CAAENOBizTalkAdapter</em> type name, and click <strong>OK</strong> to close the dialog box,<br><br>
+        <table border="0">
+          <caption>
+            <a name="Fig13" id="Fig13"></a>Fig.13: Select Artifact Type Dialog Box
+          </caption>
+          <tbody>
+            <tr>
+              <td valign="top">
+                <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig13.png" alt="Select Artifact Type Dialog Box">
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </li>
+      <li>On the Orchestration Design surface, double-click the <em>SetXmlFilter</em> Expression shape to open
+      the <strong>BizTalk Expression Editor</strong> dialog box,</li>
+      <li>Type the following code, using the autocompletion feature to help you along:<br><br>
+        <table class="code">
+          <tbody>
+            <tr>
+              <td>
+                <code>CAAENOBizTalkAdapterInstance = new CAAENOVIAWSLibrary.CAAENOBizTalkAdapter();<br>
+                CAAENOBizTalkAdapterInstance.SetXmlFilter(XmlFilterMsg);</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border="0">
+          <caption>
+            <a name="Fig14" id="Fig14"></a>Fig.14: BizTalk Expression Editor
+          </caption>
+          <tbody>
+            <tr>
+              <td valign="top">
+                <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig14.png" alt="BizTalk Expression Editor">
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </li>
+      <li>Click <strong>OK</strong> to close the <strong>BizTalk Expression Editor</strong> dialog box.</li>  
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.10"></a>Invoking the CAA Web Services
+    </h4>
+    <p>
+      The second code invocation is performed within the Message Assignment shape. It is used to invoke the business logic 
+      contained in the BizTalk adapter class. This adapter class performs the login, query and logout operations against the ENOVIA LCA V5 
+      system, and then sends back the query results to the calling orchestration:
+    </p>
+    <ol>
+      <li>On the Orchestration Design surface, select the <em>ConstructENOVIAResultSetMsg</em> Construct Message shape,</li>
+      <li>In the <strong>Properties</strong> window, select the <strong>Messages Constructed</strong> property,</li>
+      <li>In the drop-down list to the right of the property, check the <em>QueryResultsMsg</em> box,</li>
+      <li>On the Orchestration Design surface, double-click the <em>RunQuery</em> Message Assignment shape to open
+      the <strong>BizTalk Expression Editor</strong> dialog box,</li>
+      <li>Type the following code, using the autocompletion feature to help you along:<br><br>
+        <table class="code">
+          <tbody>
+            <tr>
+              <td>
+                <code>QueryResultsMsg = CAAENOBizTalkAdapterInstance.RunQuery();</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table border="0">
+          <caption>
+            <a name="Fig15" id="Fig15"></a>Fig.15: BizTalk Expression Editor
+          </caption>
+          <tbody>
+            <tr>
+              <td valign="top">
+                <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig15.png" alt="BizTalk Expression Editor">
+              </td>
+            </tr>
+          </tbody>
+        </table><br>
+      </li>
+      <li>Click <strong>OK</strong> to close the <strong>BizTalk Expression Editor</strong> dialog box.</li>  
+    </ol>
+    <p>
+      Your orchestration should now appear similar to the following one:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig16" id="Fig16"></a>Fig.16: Query Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig16.png" alt="Query Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.11"></a>Creating and Configuring the Ports
+    </h4>
+    <p>
+      In the next step, you use the <strong>Port Configuration Wizard</strong> to create and configure send and receive ports 
+      in Orchestration Designer. The first port to create is used to monitor a given folder and wait for incoming XML filter
+      messages. When a message is dropped in the input specified folder, it is picked up and processed automatically by the orchestration:
+    </p>
+    <ol>
+      <li>Drag the <strong>Port</strong> shape from the toolbox to the Port Surface on the left side of the Orchestration Design 
+      surface, and drop the shape parallel to the <em>ReceiveXmlFilterMsg</em> shape,</li>
+      <li>In the <strong>Port Configuration Wizard</strong>, click <strong>Next</strong>,</li>
+      <li>On the Port Properties page, type <em>ReceiveXmlFilterMsgPort</em> in the <strong>Name</strong> field, and then click 
+      <strong>Next</strong>,</li>
+      <li>On the <strong>Select a Port Type</strong> page, select <strong>Create a new Port Type</strong>, type 
+      <em>ReceiveXmlFilterMsgPortType</em> in the <strong>Name</strong> field, and then click <strong>Next</strong>. You can
+      leave the <strong>Communication Pattern</strong> and <strong>Access Restrictions</strong> fields to their default 
+      values (respectively <em>One-Way</em> and <em>Internal - limited to this project</em>),</li>
+      <li>On the <strong>Port Binding</strong> page, under <strong>Port direction of communication</strong>, select 
+      <em>I'll always be receiving messages on this port</em>,</li>
+      <li>Select <em>Specify Now</em> for the <strong>Port Binding</strong>, type 
+      <em>C:\CAAENOVIAWSSolution\Filedrop\InputXmlFilter\*.xml</em> under URI, and then select <em>File</em> for the 
+      <strong>Transport type</strong>,</li>
+      <li>Click <strong>Next</strong>, and then click <strong>Finish</strong>.</li>
+    </ol>
+    <p>
+      The second port to create is used to process the output XML message containing the query results and store it into the
+      specified output folder:
+    </p>
+    <ol>
+      <li>Drag the <strong>Port</strong> shape from the toolbox to the Port Surface on the right side of the Orchestration Design 
+      surface, and drop the shape parallel to the <em>SendQueryResultsMsg</em> shape,</li>
+      <li>In the <strong>Port Configuration Wizard</strong>, click <strong>Next</strong>,</li>
+      <li>On the Port Properties page, type <em>SendQueryResultsMsgPort</em> in the <strong>Name</strong> field, and then click 
+      <strong>Next</strong>,</li>
+      <li>On the <strong>Select a Port Type</strong> page, select <strong>Create a new Port Type</strong>, type 
+      <em>SendQueryResultsMsgPortType</em> in the <strong>Name</strong> field, and then click <strong>Next</strong>. You can
+      leave the <strong>Communication Pattern</strong> and <strong>Access Restrictions</strong> fields to their default 
+      values (respectively <em>One-Way</em> and <em>Internal - limited to this project</em>),</li>
+      <li>On the <strong>Port Binding</strong> page, under <strong>Port direction of communication</strong>, select 
+      <em>I'll always be sending messages on this port</em>,</li>
+      <li>Select <em>Specify Now</em> for the <strong>Port Binding</strong>, type 
+      <em>C:\CAAENOVIAWSSolution\Filedrop\OutputQueryResults\QueryResults_%MessageID%.xml</em> under URI, and then select 
+      <em>File</em> for the <strong>Transport type</strong>,</li>
+      <li>Select <em>Microsoft.BizTalk.DefaultPipelines.PassThruTransmit</em> for the <strong>Send Pipeline</strong></li> 
+      <li>Click <strong>Next</strong>, and then click <strong>Finish</strong>.</li></ol>
+    <p>
+      Your orchestration should now appear similar to the following one:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig17" id="Fig17"></a>Fig.17: Query Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig17.png" alt="Query Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.12"></a>Setting Messages on the Actions Shapes and Connecting the Ports
+    </h4>
+    <p>
+      In the next step, you use the Properties windows for each Send and Receive shape to identify the message types that the 
+      action shapes will send or receive. When done, you can use the drag and drop method to connect each port to its target 
+      action shape:   
+    </p>
+    <ol>
+      <li>In Orchestration Designer, on the Orchestration Design surface, select the <em>ReceiveXmlFilterMsg</em> action shape,</li>
+      <li>In the <strong>Properties</strong> window, select <strong>Message</strong>, and then select <em>XmlFilterMsg</em> in the 
+      drop-down list,</li>
+      <li>Connect the <em>ReceiveXmlMsgPort</em> to the <em>ReceiveXmlFilterMsg</em> action shape by selecting the green arrow 
+      shaped handle in the <em>ReceiveXmlMsgPort</em> and dragging it to the green handle on the <em>ReceiveXmlFilterMsg</em> 
+      action shape,</li>
+      <li>Select the <em>SendQueryResultsMsg</em> action shape,</li>
+      <li>In the <strong>Properties</strong> window, select <strong>Message</strong>, and then select <em>QueryResultsMsg</em> in 
+      the drop-down list,</li>
+      <li>Connect the <em>SendQueryResultsMsg</em> action shape to the <em>SendQueryResultsPort</em> by selecting the green arrow 
+      shaped handle in the <em>SendQueryResultsMsg</em> action shape and dragging it to the green handle on the 
+      <em>SendQueryResultsPort</em>,</li>
+      <li>On the <strong>File</strong> menu, click <strong>Save All</strong>.</li>
+    </ol>
+    <p>
+      The orchestration is now finished and should appear similar to the following one:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig18" id="Fig18"></a>Fig.18: Query Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig18.png" alt="Query Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.13"></a>Building and Deploying the Solution
+    </h4>
+    <p>
+      The first step consists in building the entire solution. In <strong>Solution Explorer</strong>, right-click 
+      <em>CAAENOVIAWSSolution</em>, and then click <strong>Build</strong>. The <strong>Output</strong> window at the 
+      bottom of the screen should read: <em>Build: 2 succeeded, 0 failed, 0 skipped</em>. You can safely ignore the 
+      warning from the build step of the <em>CAAENOVIAProcess</em> project.
+    </p>
+    <p>
+      You are now ready to deploy the orchestration into the BizTalk Server 2006 environment:
+    </p> 
+    <ol>
+      <li>From the <strong>Solution Explorer</strong>, right click on the <em>CAAENOVIAProcess</em> project and click 
+      <strong>Deploy</strong>. The <strong>Output</strong> window at the bottom of the screen should read: 
+      <em>Deploy: 1 succeeded, 0 failed, 0 skipped</em>,</li>
+      <li>Open the <strong>BizTalk Explorer</strong> view. If the toolbox is not already docked on the left side, on the 
+      <strong>View</strong> menu, click <strong>BizTalk Explorer</strong>,</li>
+      <li>Expand <strong>BizTalk Configuration Databases</strong>, right click on the database node and click on 
+      <strong>Refresh</strong>,</li>
+      <li>Expand the database node and then the <strong>Orchestrations</strong> folder icon,</li>
+      <li>You should see the <em>CAAENOVIAProcess.CAAENOVIAQuery</em> orchestration deployed. Right click on it, and click
+      on <strong>Bind</strong>,</li>
+      <li>In the Bind Window, click host, from the drop down to select an 
+		available host to set host and click on <strong>OK</strong>.</li>
+      <li>You should see the <em>CAAENOVIAProcess.CAAENOVIAQuery</em> orchestration deployed. Right click on it, and click
+      on <strong>Enlist</strong>,</li>
+      <li>Right click on the <em>CAAENOVIAProcess.CAAENOVIAQuery</em> orchestration again, and click on <strong>Start</strong>,</li>
+      <li>In the <strong>BizTalk Explorer - Express Start</strong> dialog box, leave all the boxes checked, and click on 
+      <strong>OK</strong>.</li>
+    </ol>
+    <p>
+      The <strong>BizTalk Explorer</strong> view should appear similar to the following one:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig19" id="Fig19"></a>Fig.19: Deploying the Orchestration
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig19.png" alt="Deploying the Orchestration">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      You must then deploy the C# library into the GAC. To do so, you can use the <strong>gacutil.exe</strong> utility 
+      delivered with the .NET Framework SDK. Open a command prompt, and issue the following command:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>"C:\Program Files\Microsoft.NET framework 2.0\SDK\v2\Bin\gacutil.exe" /if "C:\CAAENOVIAWSSolution\CAAENOVIAWSLibrary\bin\Debug\CAAENOVIAWSLibrary.dll"</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>You should receive the following message at the command prompt: <em>Assembly successfully added to the cache</em>, as
+    shown below:</p>
+    <table border="0">
+      <caption>
+        <a name="Fig20" id="Fig20"></a>Fig.20: Deploying the C# Library
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig20.png" alt="Deploying the C# Library">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="4.14"></a>Running the Sample Application
+    </h4>
+    <p>
+      Before trying to run the sample query business process, you need to create the input XML filter message that is processed by 
+      the orchestration. Here follows a sample value, to copy and paste in a file, such as <em>QueryFilter.xml</em> for example.
+      If you wish, you can also directly use the sample file available from the 
+      <em>CAAWebServices.edu\Data.d\CAAENOVIAWSSolution\Filedrop</em> directory.
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">&lt;?</font><font color="#800000">xml</font> <font color="#FF0000">version</font><font color="#0000FF">="1.0"</font> <font color="#FF0000">encoding</font><font color="#0000FF">="UTF-8" ?&gt;</font><br>
+            &nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">FILTER</font> <font color="#FF0000">CASESENSITIVE</font><font color="#0000FF">="TRUE"&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">SELECT</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">OBJECT</font> <font color="#FF0000">DOMAIN</font><font color="#0000FF">="PRODUCT"</font> <font color="#FF0000">NAME</font><font color="#0000FF">="VPMBOPartInstance" /&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">SELECT</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">WHERE</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">FILTER_CONDITION</font> <font color="#FF0000">OPERATOR</font><font color="#0000FF">="AND"&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ATTRIBUTE_FILTER</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">EXPRESSION</font> <font color="#FF0000">OP</font><font color="#0000FF">="LIKE"</font> <font color="#FF0000">VALUE</font><font color="#0000FF">="*"&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ATTRIBUTE</font> <font color="#FF0000">NAME</font><font color="#0000FF">="ENOVIA_VPMPartMaster.V_ID" /&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">EXPRESSION</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">ATTRIBUTE_FILTER</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">FILTER_CONDITION</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">WHERE</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ORDERBY</font><font color="#0000FF">&gt;ENOVIA_VPMPartMaster.V_ID&lt;/ORDERBY&gt;</font><br>
+            <font color="#0000FF">&lt;/</font><font color="#800000">FILTER</font><font color="#0000FF">&gt;</font></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Then, you need to copy the <em>QueryFilter.xml</em> file into the 
+      <em>C:\CAAENOVIAWSSolution\Filedrop\InputXmlFilter</em> folder. It triggers the orchestration, and the file should quickly disappear
+      from the folder after a few seconds. You can then go to the <em>C:\CAAENOVIAWSSolution\Filedrop\QueryResults</em> folder, and
+      wait for the resulting XML query results message to be written. You should see a message named <em>QueryResults_{XXX}.xml</em> where 
+      <em>XXX</em> is a GUID value. Here follows a sample content, upon successful execution of the query process:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">&lt;?</font><font color="#800000">xml</font> <font color="#FF0000">version</font><font color="#0000FF">="1.0"</font> <font color="#0000FF">?&gt;</font><br>
+            <font color="#0000FF">&lt;</font><font color="#800000">ENOVIA xmlns</font><font color="#FF00FF">:</font><font color="#FF0000">xsd</font><font color="#0000FF">=&quot;http://www.w3.org/2001/XMLSchema&quot;</font> <font color="#800000">xmlns</font><font color="#FF00FF">:</font><font color="#FF0000">xsi</font><font color="#0000FF">=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;</font><br>
+            &nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">VPMBOPartInstance</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_instance_ID</font><font color="#0000FF">&gt;</font>Part1.1<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_instance_ID</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_status</font><font color="#0000FF">&gt;</font>In Work<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_status</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.C_modified</font><font color="#0000FF">&gt;</font>2006-03-28T11:52:33.0000000+01:00<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.C_modified</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_user</font><font color="#0000FF">&gt;LCAUser&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_user</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_1</font><font color="#0000FF">&gt;</font>1<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_1</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_2</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_2</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_3</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_3</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_4</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_4</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_5</font><font color="#0000FF">&gt;</font>1<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_5</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_6</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_6</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_7</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_7</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_8</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_8</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_9</font><font color="#0000FF">&gt;</font>1<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_9</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_10</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_10</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_11</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_11</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_12</font><font color="#0000FF">&gt;</font>0<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMItemInstance.V_matrix_12</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartVersion.V_version</font><font color="#0000FF">&gt;</font>---<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartVersion.V_version</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V_ID</font><font color="#0000FF">&gt;</font>Part1<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V_ID</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V_name</font><font color="#0000FF">&gt;</font>Part1Name<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V_name</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V511_PartType</font><font color="#0000FF">&gt;</font>Assembly<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V511_PartType</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V508_isStandardPart</font><font color="#0000FF">&gt;</font>false<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V508_isStandardPart</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V512_IsConfigured</font><font color="#0000FF">&gt;</font>false<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V512_IsConfigured</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V511_AssemblyType</font><font color="#0000FF">&gt;</font>Product<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V511_AssemblyType</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V511_ControlledBy</font><font color="#0000FF">&gt;</font>ENOVIA<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V511_ControlledBy</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">ENOVIA_VPMPartMaster.V_description</font><font color="#0000FF">&gt;</font>Part1Description<font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA_VPMPartMaster.V_description</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">Relation xsi</font><font color="#FF00FF">:</font><font color="#FF0000">nil</font><font color="#0000FF">=&quot;true&quot; /&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">Domain</font><font color="#0000FF">&gt;</font>PRODUCT<font color="#0000FF">&lt;/</font>Domain<font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">CATJsyUUID</font><font color="#0000FF">&gt;</font>10252FE9AF00001814439802610000043B0000000007454E4F564C52345 [...] F44554354202020<font color="#0000FF">&lt;/</font><font color="#800000">CATJsyUUID</font><font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">VPMBOPartInstance</font><font color="#0000FF">&gt;</font><br>
+            <font color="#0000FF">&lt;/</font><font color="#800000">ENOVIA</font><font color="#0000FF">&gt;</font></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <p>
+      <img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">
+      &nbsp;In order to reduce the complexity of the sample orchestration, it does not support exception handling. As a result,
+      it may be difficult to debug the source of a failure when running the sample application. To help you in the process, you 
+      can track down issues using the <strong>Event Viewer</strong>. If an exception occurs in the external C# library invoked 
+      by the orchestration, it will be tracked down as an error in the Event Viewer. To display the Event Viewer, go to 
+      <strong>Administrative Tools</strong>, and then double-click <strong>Computer Management</strong>. Or, open the 
+      <strong>MMC</strong> containing the Event Viewer snap-in. In the console tree, click Event Viewer. You can then look for 
+      an error and display its properties. It gives you access to the exception stack trace, as shown below:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig21" id="Fig21"></a>Fig.21: Using the Event Viewer to Debug Issues
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingBizTalkServer2006_Fig21.png" alt="Using the Event Viewer to Debug Issues">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->                                
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      In this article, we described how to consume CAA Web services from a BizTalk Server 
+		2006 orchestration that stands as a sample
+      query business process. The orchestration relies on an external .NET assembly to invoke the target CAA Web services, which in
+      turn sends back the XML query results message to the calling orchestration. The sample orchestration is triggered whenever an 
+      XML SelectExpression message is dropped in a given input folder of the file system. It saves the query results as another XML 
+      message stored in a distinct output folder.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="#" onclick="javascript:CAAlinkUrl('../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm');return false;">Consuming
+            the ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="#" onclick="javascript:CAAlinkUrl('../CAAENOVWSUseCases/CAAENOVWSQueryCppDotNetClient.htm');return false;">Consuming 
+            the ENOVWSQueryCpp CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td>
+            <a href="#" onclick="javascript:CAAlinkUrl('../CAAENOVWSTechArticles/SelectExpression.htm');return false;">SelectExpression</a>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right" valign="top">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [March 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right" valign="top">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

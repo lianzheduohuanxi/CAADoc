@@ -1,0 +1,511 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Supports on Bundle Segments</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Harness Installation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Supports on Bundle Segments</h3>
+      <em>How to create and manage supports on bundle segments</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEhiCreateAndManageSupport</i> use
+      case. This use case explains how to link a support with a bundle segment.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEhiCreateAndManageSupport Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEhiCreateAndManageSupport Do</a></li>
+            <li><a href="#How">How to Launch </a><a href="#What">CAAEhiCreateAndManageSupport</a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#What">CAAEhiCreateAndManageSupport</a><a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to link a support with a bundle
+segment.
+<p>Following operations are detailed is this use case:
+<ul>
+  <li>How to initialize the electrical environment .</li>
+  <li>How to retrieve the bundle segment to link with the support under the
+    geometrical bundle.</li>
+  <li>How to retrieve the support to link with the previous bundle segment .</li>
+  <li>How to link the bundle segment with the support.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEhiCreateAndManageSupport Use Case</h3>
+<p>CAAEhiCreateAndManageSupport is a use case of the CAAElecHarnessItf.edu
+framework that illustrates the ElecHarnessItf framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEhiCreateAndManageSupport Do</h4>
+<p>The goal of CAAEhiCreateAndManageSupport is to link a support with a bundle
+segment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEhiCreateAndManageSupport?</h4>
+<p>To launch CAAEhiCreateAndManageSupport, you will need to set up the build
+time environment, then compile CAAEhiCreateAndManageSupport.cpp along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">2</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEhiCreateAndManageSupport InPathDir OutPathDir Main&quot;</pre>
+<ul>
+  <li><b>InPathDir</b> - the path where the input documents are read. Under
+    Windows, the path could be: E:\HarnessDesign\</li>
+  <li><b>OutPathDir</b> - the path where to save documents. Under Windows, the
+    path could be: E:\HarnessDesign\</li>
+  <li><b>Main</b> - the name of the main document saved</li>
+</ul>
+<p>The input documents can be found in:</p>
+	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic</pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">2</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEhiCreateAndManageSupport</i>
+Code?</h4>
+<p>CAAEhiCreateAndManageSupport code is located in the
+CAAEhiCreateAndManageSupport.m use case module of the CAAElecHarnessItf.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAElecHarnessItf.edu/</code>CAAEhiCreateAndManageSupport<code>.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAElecHarnessItf.edu\</code>CAAEhiCreateAndManageSupport<code>.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEhiCreateAndManageSupport</b><b>.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven main logical steps in <i>CAAEhiCreateAndManageSupport</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Init_Elec">Initializing Electrical Environment.</a></li>
+  <li><a href="#Create_GBN">Retrieving the geometrical bundle.</a></li>
+  <li><a href="#Create_GBN">Retrieving the bundle segment to link with the
+    support.</a></li>
+  <li><a href="#Create_BNS">Retrieving the support to link with the bundle
+    segment .</a></li>
+  <li><a href="#Connect_BNS">Linking the support with the bundle segment.</a></li>
+  <li><a href="#Close">Epilog.</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Once the current session has been created, the main CATProduct document is
+loaded into the session . pMainDoc is a pointer to this document.</p>
+<p>The root product of the document is retrieved . piRootProduct is a
+CATIProduct handle to the root product .</p>
+<p>Methodology describing how to create a CATProduct document and how to
+retrieve the root product is described in <a href="#References">[1]</a>.</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Init_Elec"></a>Initialize Electrical Environment</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIEleDocServices * piElecDocServices = NULL;
+  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to
+electrical objects or electrical attributes .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Create_GBN"></a>Retrieving the Geometrical Bundle</h4>
+<p>Geometrical Bundle is retrieved using a query interface on CATIEhiGeoBundle
+on all the products. Only one geometrical bundle is retrieved in the document.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATListValCATBaseUnknown_var* pListProduct = NULL;
+   pListProduct = piRootProduct-&gt;GetAllChildren(CATIProduct::ClassName());
+
+   int NumberOfProduct = pListProduct?pListProduct-&gt;Size():0;</pre>
+      <pre>   CATListValCATBaseUnknown_var* pListGeoBundle=new CATLISTV(CATBaseUnknown_var);
+
+
+   CATIEhiGeoBundle* piEhiGbn=NULL;
+
+   for ( i =1; i&lt;=NumberOfProduct; i++ )
+   { 
+     if (NULL_var != (*pListProduct)[i])
+     {
+        (*pListProduct)[i]-&gt;QueryInterface(IID_CATIEhiGeoBundle,(void**) &amp;piEhiGbn);
+        if ( NULL != piEhiGbn) 
+        {
+           CATBaseUnknown_var hUnk=piEhiGbn;
+
+           if (NULL_var != hUnk) pListGeoBundle-&gt;Append(hUnk);
+        }
+
+     }
+
+   }
+
+
+   // we keep the geometrical bundle
+   if (NULL_var != (*pListGeoBundle)[1])
+   {
+       (*pListGeoBundle)[1]-&gt;QueryInterface(IID_CATIEhiGeoBundle,(void**) &amp;piEhiGbn);
+   }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>piEhiGbn is a pointer on the geometrical bundle.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Create_BNS"></a>Retrieving the Bundle Segment to link with the
+support.</h4>
+<p>&nbsp;</p>
+<p><u>First step consists in retrieving all the multi branchable bundle
+segments&nbsp; among all the products.</u></p>
+<p>Seven bundle segments are retrieved under the geometrical bundle.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+   CATListValCATBaseUnknown_var* pListMultiBns = new CATLISTV(CATBaseUnknown_var);
+
+   CATIEhiMultiBranchable* pMultiBns=NULL;
+
+   for ( i =1; i&lt;=NumberOfProduct; i++ )
+   { 
+       if (NULL_var != (*pListProduct)[i])
+       {
+           (*pListProduct)[i]-&gt;QueryInterface(IID_CATIEhiMultiBranchable,(void**) &amp;pMultiBns);
+           if ( NULL != pMultiBns) 
+           {
+              CATBaseUnknown_var hUnk=pMultiBns;
+              pListMultiBns-&gt;Append(hUnk);
+           }
+           if ( NULL != pMultiBns ) pMultiBns-&gt;Release(); 
+           pMultiBns = NULL;
+
+       }
+
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>pListMultiBns is a pointer on the list of multi branchable bundle segments.</p>
+<p>&nbsp;</p>
+<p><u>Second step consists in choosing the multi branchable bundle segment</u></p>
+<p>We choose the fourth multi branchable bundle segment found in the previous
+list.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre> 
+  CATIEhiMultiBranchable * piMultiBranchable4 = NULL; 
+
+
+  if (NULL_var != (*pListMultiBns)[4]) 
+  {
+     (*pListMultiBns)[4]-&gt;QueryInterface(IID_CATIEhiMultiBranchable,(void**) &amp;piMultiBranchable4); 
+  }</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><u>Third step consists in listing the bundle segments of the multi branchable</u></p>
+<p>We choose to protect only the first bundle segment found in the previous
+list.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre> 
+   // --- Retrieving all bns under the multi branchable
+
+   CATListValCATBaseUnknown_var* pListBns= NULL; 
+   rc = piMultiBranchable4-&gt;ListBundleSegments(&amp;pListBns);
+
+   
+   CATIEhiBundleSegment * piEhiBns = NULL; // the bundle segment chosen 
+
+   if (NULL_var != (*pListBns)[1]) 
+   {
+     (*pListBns)[1]-&gt;QueryInterface(IID_CATIEhiBundleSegment,(void**) &amp;piEhiBns); 
+   }</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>piEhiBns is a pointer on the bundle segment to link with the support.</p>
+<p align="center"><img border="0" src="images/CAAEhi11.jpg" width="756" height="685"></p>
+<p align="center">&nbsp;</p>
+<p><span style="font-weight: 400">Above is a CATIA image showing the bundle
+segment to link with the support.</span></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Connect_BNS"></a>Retrieving the support to link with the bundle
+segment</h4>
+<p>The support is the product which instance name is &quot;Support-3&quot;&nbsp;
+:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   CATIProduct* piSupport = NULL;
+
+   for ( i =1; i&lt;=NumberOfProduct; i++ )
+   { 
+      if (NULL_var != (*pListProduct)[i])
+      {
+         (*pListProduct)[i]-&gt;QueryInterface(IID_CATIProduct,(void**) &amp;piInstanceProduct);
+          if ( NULL != piInstanceProduct ) 
+          {
+             piInstanceProduct-&gt;GetPrdInstanceName(InstanceName); 
+
+             if (2 == InstanceName.Compare(&quot;Support-3&quot;))
+             {
+                piSupport = piInstanceProduct; 
+                piSupport-&gt;AddRef();
+             }
+          }
+          if ( NULL != piInstanceProduct ) piInstanceProduct-&gt;Release(); 
+          piInstanceProduct = NULL;
+
+      }
+
+   }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="center">&nbsp;</p>
+<p align="left">piSupport is a pointer on the support to link with the bundle
+segment.</p>
+<p align="left">&nbsp;</p>
+<p align="center"><img border="0" src="images/CAAEhi12.jpg" width="743" height="646"></p>
+<p align="left">&nbsp;</p>
+<p align="left"><span style="font-weight: 400">Above is a CATIA image showing
+the support to link with the bundle segment.</span></p>
+<p align="left">.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Connect_BNS"></a>Linking the support with the bundle segment</h4>
+<p><u>First step consists in linking the support with the bundle segment </u>.</p>
+<p>We use the method AddSupport of CATIEhiBundleSegment interface :</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>   int num=1;
+
+   rc = piEhiBns-&gt;AddSupport(piSupport,catEhiInvertMode,&amp;num,catEhiInsertAfter);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><u>Second step consists in computing the shape of the bundle segment </u>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>    rc = piEhiGbn-&gt;ComputeMultiBranchable(piMultiBranchable4);</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="images/CAAEhi10.jpg" width="703" height="587"></p>
+<p align="center">&nbsp;</p>
+<p align="left"><span style="font-weight: 400">Above is a CATIA image showing
+the support linked to the bundle segment.</span></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Close">Epilog</a></h4>
+<p>The four created documents are saved into directory defined as input. Name of
+file is the part number.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  // first bundle segment</pre>
+      <pre>  CATIProduct_var spMultiBranchableI = piMultiBranchable1;
+
+  CATIProduct_var spMultiBranchableR = spMultiBranchableI-&gt;GetReferenceProduct();
+
+  CATILinkableObject_var spLinkable=spMultiBranchableR;
+
+  CATDocument * pMultiBns1PartDoc = spLinkable-&gt;GetDocument(); </pre>
+      <pre>  rc = CATDocumentServices::SaveAs (*pMultiBns1PartDoc , PathOutput+MultiBns1File );</pre>
+      <pre>&nbsp;</pre>
+      <pre>  // second bundle segment</pre>
+      <pre>  spMultiBranchableI = piMultiBranchable2;
+
+  spMultiBranchableR = spMultiBranchableI-&gt;GetReferenceProduct();
+
+  spLinkable=spMultiBranchableR;
+
+  CATDocument * pMultiBns2PartDoc = spLinkable-&gt;GetDocument(); 
+
+  rc = CATDocumentServices::SaveAs (*pMultiBns2PartDoc , PathOutput+MultiBns2File );</pre>
+      <pre>&nbsp;</pre>
+      <pre>  // third bundle segment</pre>
+      <pre>  spMultiBranchableI = piMultiBranchable3;
+
+  spMultiBranchableR = spMultiBranchableI-&gt;GetReferenceProduct();
+
+  spLinkable=spMultiBranchableR;
+
+  CATDocument * pMultiBns3PartDoc = spLinkable-&gt;GetDocument(); 
+
+  rc = CATDocumentServices::SaveAs (*pMultiBns3PartDoc , PathOutput+MultiBns3File );</pre>
+      <pre>&nbsp;</pre>
+      <pre>  // fourth bundle segment</pre>
+      <pre>  spMultiBranchableI = piMultiBranchable4;
+
+  spMultiBranchableR = spMultiBranchableI-&gt;GetReferenceProduct();
+
+  spLinkable=spMultiBranchableR;
+
+  CATDocument * pMultiBns4PartDoc = spLinkable-&gt;GetDocument(); 
+
+  rc = CATDocumentServices::SaveAs (*pMultiBns4PartDoc , PathOutput+MultiBns4File );</pre>
+      <pre>&nbsp;</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>Geometrical bundle and main document are saved at the end.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre> rc = CATDocumentServices::SaveAs (*pGbnDoc , PathOutput+GbnFile );</pre>
+      <pre> rc = CATDocumentServices::SaveAs (*pMainDoc , PathOutput+MainFile );
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Main document is removed and session is deleted before exit.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>rc = CATDocumentServices::Remove(*pMainDoc);
+...
+rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case is has demonstrated how to add supports on bundle segments.
+<p>Following operations have been detailed is this use case :
+<ul>
+  <li>How to activate electrical environment using <code>Initialize </code>method
+    of <i>CATIEleDocServices</i>.</li>
+  <li>How to retrieve the bundle segment to link with the support under the
+    geometrical bundle.</li>
+  <li>How to retrieve the support to link with the bundle segment under the
+    geometrical bundle.</li>
+  <li>How to link the bundle segment with the support using AddSupport of <i>CATIEhiBundleSegment</i>.</li>
+  <li>How to re-compute the bundle segment after the link with&nbsp; the support
+    using ComputeMultiBranchable of <i>CATIEhiGeoBundle</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstUseCases/CAAPstAddComponent.htm">Adding
+      Components to a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

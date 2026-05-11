@@ -1,0 +1,631 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface IProdStructConfigWS</title>
+ </head>
+ <body>
+ <h2>Interface IProdStructConfigWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSProdStructConfigCpp.html">ENOVWSProdStructConfigCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSProdStructIntf:ENOVWSProdStructIntf_ws:IProdStructConfigWS</p>
+ <p><b>Role:</b> Interface for product structure configuration. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSProdStructIntf\ENOVWSProdStructIntf_ws\IProdStructConfigWS.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#AttachObjToCatSpec"><b>AttachObjToCatSpec()</b></a></dt>
+  <dd>Attaches an existing Category or Specification to list of configured objects.</dd>
+  <dt>o <a href="#CreateCategory"><b>CreateCategory()</b></a></dt>
+  <dd>Creates new Category with input attribute values and returns successfully created Category objects with attributes and values.</dd>
+  <dt>o <a href="#CreateConfigHandler"><b>CreateConfigHandler()</b></a></dt>
+  <dd>Creates a Enovia configuration handler, given a configured object (Product) and configuration expression.</dd>
+  <dt>o <a href="#CreateModification"><b>CreateModification()</b></a></dt>
+  <dd>Creates a Enovia modification, given a configured object (Part Instance) and configuration expression.</dd>
+  <dt>o <a href="#CreateSpec"><b>CreateSpec()</b></a></dt>
+  <dd>Creates new Specifications with its input attribute, values as input,along with the Category identifier.</dd>
+  <dt>o <a href="#GetOperations"><b>GetOperations()</b></a></dt>
+  <dd>Gets pending operations for the input ProductRootClass.</dd>
+  <dt>o <a href="#ModifyObjOnMod"><b>ModifyObjOnMod()</b></a></dt>
+  <dd>Given a modifcation identifier as input, operations likes Add , remove, move can be performed with attached existing part with another configured part.</dd>
+  <dt>o <a href="#ResolveOperations"><b>ResolveOperations()</b></a></dt>
+  <dd>Resolves pending operations can be resolved for a given, existing, modification.</dd>
+  <dt>o <a href="#UpdateModEffectivity"><b>UpdateModEffectivity()</b></a></dt>
+  <dd>Updates the effectivity on a Enovia modification, given a existing modification object identifier and configuration expression.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="AttachObjToCatSpec"><b>AttachObjToCatSpec()</b></a></dt>
+  <dd>Attaches an existing Category or Specification to list of configured objects. The input can be either Category or Spec identifier if any one attach fails, all fail.A fault will be returned, and no objects will be committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iCatOrSpec</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>identifier of either Category or Specification.</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Configured Part or PRC to be attached.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation(success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateCategory"><b>CreateCategory()</b></a></dt>
+  <dd>Creates new Category with input attribute values and returns successfully created Category objects with attributes and values.If any one create fails, all fail. A fault will be returned, and no objects will be committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Categories to be created.</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>all the successfully created Categories are returned.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation(success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateConfigHandler"><b>CreateConfigHandler()</b></a></dt>
+  <dd>Creates a Enovia configuration handler, given a configured object (Product) and configuration expression. The output data structure will contain object attributes, values, and Identifier of the created configuration handler. The configuration handler has name, other simple attributes, and the Identifier. The configuration expression is not returned at this time.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iPRCId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the target PRC.</td>
+     </tr>
+     <tr>
+      <td>iConfigExp</td>
+      <td><a href="ConfigExpression.html">{urn:com:dassault_systemes:ENOVWSProdStructIntf}ConfigExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The configuration expression value which will be used to create the Configuration Handler.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing attributes, values, and Identifier of the configuration handler.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateModification"><b>CreateModification()</b></a></dt>
+  <dd>Creates a Enovia modification, given a configured object (Part Instance) and configuration expression. The output data structure will contain metadata and Identifier of the created Enovia Modification. The configuration expression is not returned at this time. The modification has name, other simple attributes, and the Identifier. The configuration expression is not returned at this time.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iPIObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The parent identifier of the target part instance.</td>
+     </tr>
+     <tr>
+      <td>iConfigExp</td>
+      <td><a href="ConfigExpression.html">{urn:com:dassault_systemes:ENOVWSProdStructIntf}ConfigExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Configuration expression can be used to create Enovia Modification. It will contain the effectivity expression (Domain, Date, Range, milestones, Specifications). Common conditions are not supported.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing metadata and Identifier of the Modification.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateSpec"><b>CreateSpec()</b></a></dt>
+  <dd>Creates new Specifications with its input attribute, values as input,along with the Category identifier.It returns successfully created Specification objects with its attribute and values. if any one create fails, all fail.A fault will be returned, and no objects will be committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iCategory</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>identifier of the Category under which specs will be grouped.</td>
+     </tr>
+     <tr>
+      <td>iSpecToBeCreated</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Attributes and values of Specificaitons to be created.</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>all the successfully created Specifications are returned.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation(success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="GetOperations"><b>GetOperations()</b></a></dt>
+  <dd>Gets pending operations for the input ProductRootClass. Refer to OperationArrayHolder section for output. The complete set of operations under given PRC will be returned (for all users.)  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier array of the Part Instances.</td>
+     </tr>
+     <tr>
+      <td>oOperations</td>
+      <td><a href="OperationStructureArrayType.html">{urn:com:dassault_systemes:ENOVWSProdStructIntf}OperationStructureArrayType</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>An Array of OperationStructure objects containing uuid and operation names for the objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="ModifyObjOnMod"><b>ModifyObjOnMod()</b></a></dt>
+  <dd>Given a modifcation identifier as input, operations likes Add , remove, move can be performed with attached existing part with another configured part.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iOpNamed</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td></td>
+     </tr>
+     <tr>
+      <td>iModID</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Enovia Modification Identifier (UUID).</td>
+     </tr>
+     <tr>
+      <td>iObjToBreplaced</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>identifier of the attached object.</td>
+     </tr>
+     <tr>
+      <td>iObjreplacing</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>identifier of the object to be applied on the modification.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="ResolveOperations"><b>ResolveOperations()</b></a></dt>
+  <dd>Resolves pending operations can be resolved for a given, existing, modification. Limitations: Actions cannot be used to resolve operations, only existing modifications can be used to resolve operations.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iEnovMod</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Enovia Modification identifier used to resolve operations.</td>
+     </tr>
+     <tr>
+      <td>iOperation</td>
+      <td><a href="OperationStructureArrayType.html">{urn:com:dassault_systemes:ENOVWSProdStructIntf}OperationStructureArrayType</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>OperationStructureArrayHolder. All operations will be resolved under iENovMod.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="UpdateModEffectivity"><b>UpdateModEffectivity()</b></a></dt>
+  <dd>Updates the effectivity on a Enovia modification, given a existing modification object identifier and configuration expression. The output data structure will contain attribute values and Identifier of the updated Enovia Modification. The configuration expression is not returned at this time. The modification has name, other simple attributes, and the Identifier.Existing effectivity of a modification can be over written either with updated config expression or by empty config expression.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iPIModId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier of existing Modification.</td>
+     </tr>
+     <tr>
+      <td>iConfigExp</td>
+      <td><a href="ConfigExpression.html">{urn:com:dassault_systemes:ENOVWSProdStructIntf}ConfigExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Configuration expression can be used to update Enovia Modification. It will contain the effectivity expression (Domain, Date, Range, milestones, Specifications). Common conditions are not supported.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing attribute values and Identifier of the Modification.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

@@ -1,0 +1,179 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspLightPart.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspLightPart</font>
+<font color="#008000">'  </font>
+<font color="#008000">'   Assumption:   Looks for document CAAPspEduIn.CATProduct.  </font>
+<font color="#008000">'                 Looks for an object Weld-011 ( PspLightPart)</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct" )
+    
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspLightPart.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+
+    <font color="#008000">' ---------------------------------------------------------</font>
+    <font color="#008000">' Find the top node (PspWorkbench) of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product       
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory    
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+    
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( Not( objPspApplication Is Nothing )  )<font color="#0000FF"> Then        </font>
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...    </font>
+
+    <font color="#008000">'</font>
+    <font color="#008000">' ----------------------------------------------------</font>
+    <font color="#008000">' Get a Product whose instance name is Weld-011</font>
+    <font color="#008000">' and then get handler to PspLightPart</font>
+    <font color="#008000">' ----------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>objWeld          <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspLightPart  <font color="#0000FF"> As </font>PspLightPart
+    
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+    
+<font color="#0000FF">      Set </font>objWeld = objPrdRoot.Products.Item("Weld-011")                    
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspLightPart = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspLightPart", _
+                                                objWeld )                  
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspLightPart object information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objRelAxisPrd <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objLDefPoints <font color="#0000FF"> As </font>PspListOfDoubles
+    
+<font color="#0000FF">    Dim </font>iIdx        <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>iNbPts        <font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">    Dim </font>dbX           <font color="#0000FF"> As </font>Double
+<font color="#0000FF">    Dim </font>dbY           <font color="#0000FF"> As </font>Double
+<font color="#0000FF">    Dim </font>dbZ           <font color="#0000FF"> As </font>Double
+<font color="#0000FF">    Dim </font>db6Array(6)<font color="#0000FF"> As </font>CATSafeArrayVariant
+       
+
+<font color="#0000FF">    Set </font>objRelAxisPrd = Nothing
+<font color="#0000FF">    If </font>( Not ( objPspLightPart Is Nothing ) )<font color="#0000FF"> Then         </font>
+
+      strMessage_g = strMessage_g & "Success in getting PspLightPart Weld-011" & vbCr      
+
+      <font color="#008000">' ----------------------------------------</font>
+      <font color="#008000">' Setting up array of definition of points </font>
+      <font color="#008000">' -----------------------------------------</font>
+        
+      db6Array(0)=0.5
+      db6Array(1)=0.0
+      db6Array(2)=0.0
+      db6Array(3)=4.0
+      db6Array(4)=0.0
+      db6Array(5)=0.0
+
+      objPspLightPart.SetDefinition  objRelAxisPrd, db6Array
+
+      <font color="#008000">' ----------------------------------------</font>
+      <font color="#008000">' Get definition points of the light part</font>
+      <font color="#008000">' ----------------------------------------</font>
+
+<font color="#0000FF">      Set </font>objLDefPoints = objPspLightPart.GetDefinition ( _       
+                            objRelAxisPrd )      
+
+      <font color="#008000">'-----------------------------------------</font>
+      <font color="#008000">' Display information on Definition points</font>
+      <font color="#008000">'-----------------------------------------</font>
+<font color="#0000FF">      If </font>( Not ( objLDefPoints Is Nothing ) )<font color="#0000FF"> Then        </font>
+        
+        iNbPts =  objLDefPoints.Count / 3
+        strMessage_g = strMessage_g & _
+               "Number of definition points =" &  iNbPts & vbCr    
+<font color="#0000FF">        For </font>iIdx = 1<font color="#0000FF"> To </font>objLDefPoints.Count Step 3                   
+          dbX = objLDefPoints.Item( iIdx )
+          dbY = objLDefPoints.Item( iIdx + 1 )
+          dbZ = objLDefPoints.Item( iIdx + 2 )
+  
+          strMessage_g = strMessage_g & "Definition pt " &  vbCr                                 
+          strMessage_g = strMessage_g & "      X= " & dbX & vbCr                                 
+          strMessage_g = strMessage_g & "      Y= " & dbY & vbCr                                 
+          strMessage_g = strMessage_g & "      Z= " & dbZ & vbCr                                 
+          
+<font color="#0000FF">        Next                      </font>
+
+<font color="#0000FF">      End If</font>
+                
+<font color="#0000FF">    End If </font><font color="#008000">' End of  If ( Not ( objPspLightPart is Nothing...</font>
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+
+
+
+</pre></body></html>

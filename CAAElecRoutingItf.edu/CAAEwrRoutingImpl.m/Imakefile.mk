@@ -1,0 +1,19 @@
+#ifdef LOCAL_DEFINITION_FOR_IID
+LINK_WITH_FOR_IID = \
+ElecRoutingItfUUID
+#else
+LINK_WITH_FOR_IID = 
+#endif
+#
+# COPYRIGHT DASSAULT SYSTEMES 2002
+#
+BUILT_OBJECT_TYPE=SHARED LIBRARY
+#
+LINK_WITH=$(LINK_WITH_FOR_IID) \
+           JS0GROUP \
+		   CATObjectModelerBase \
+		   CATMathematics CATMathStream \
+		   CATEwrInterfaces
+#
+OS = COMMON
+

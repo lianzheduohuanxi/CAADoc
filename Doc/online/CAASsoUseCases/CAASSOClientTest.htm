@@ -1,0 +1,325 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Editors in Toolbar</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Single Sign On</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using SSO Client</h3>
+      How to leverage SSO capabilities between VPM Navigator and an external 
+		System</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case explains how to create a command header to leverage 
+		Single Sign On capabilities. This
+      command lets you retrieve credentials for a given custom system while you&nbsp; 
+		are already authenticated within VPM Navigator.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAPLMSSOClientTest Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPLMSSOClientTest Do</a></li>
+            <li><a href="#How">How to Set up your Environment for CAAPLMSSOClientTest</a></li>
+            <li><a href="#Where">Where to Find the CAAPLMSSOClientTest </a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates how to use Single Sign On Client within a command 
+to retrieve credentials for a custom System. You will learn how to:</p>
+<ul>
+  <li>Define credentials for a given System by providing ad-hoc <i>credentialSet</i> 
+	file.</li>
+	<li>Define NLS for this credentialSet file to be displayed in the 
+	administration Tool</li>
+	<li>Create credentials for your custom System for your users.</li>
+	<li>Create a command which is able to retrieve those credentials form VPM 
+	Navigator</li>
+</ul>
+<p>You should also read&nbsp;</p>
+<ul>
+  <li>How to activate Single Sign On in VPM Navigator from the official 
+	documentation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAPLMSSOClientTest Use Case</h3>
+<p><b>CAAPLMSSOClientTest</b> is a use case of the <b>CAASecuritySSOCClient.edu</b> framework that
+illustrates <b>PLMSecuritySSOCClient</b> framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPLMSSOClientTest Do</h4>
+<p>CAAPLMSSOClientTest creates a command header whose the
+graphic representation is a simple Message Box displaying the retrieved 
+credentials. The following picture shows the result of the execution of the 
+command when successful:</p>
+<table border="0">
+<caption>
+<p align="left"><a name="Fig.1">Fig.1</a> The successful command</p>
+</caption>
+  <tr>
+    <td><img src="images/SSOSuccess.jpg" width="231" height="159"></td>
+  </tr>
+</table>
+<p align="left">Here is the sequence diagram of the command. It represents the 
+whole process to access a custom system from CATIA. the last step <i>(accessMySystemWithCredentials 
+method </i>) is not implemented in this use case.</p>
+<p align="left"><a name="Fig.2">Fig.2</a> The Sequence Diagram of the command</p>
+<!--[if gte mso 9]>
+<img border="0" src="images/SequenceDiagram.jpg" width="628" height="400"><![endif]--><p>
+<!--[if gte mso 9]>And here is the Class Diagram&nbsp; of the CAA objects used 
+in this use case:<![endif]--></p>
+<p><!--[if gte mso 9]><![endif]--><a name="Fig.3">Fig.3</a> The Class Diagram of 
+the CAA Objects</p>
+<p><!--[if gte mso 9]>
+<img border="0" src="images/ClassDiagram.jpg" width="591" height="240"><![endif]--></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to set up your environment for CAAPLMSSOClientTest</h4>
+<p>To launch the CAAPLMSSOClientTest use case, you will need to set up the build 
+time environment for two workspaces <b>and</b> activate SSO both in you VPM Navigator 
+and in your Application Server. To activate SSO please refer to the official 
+documentation.</p>
+<ol>
+	<li>Server Workspace</li>
+</ol>
+<p>This workspace will contain all definitions of the credential required to 
+authenticate against your custom system. There will be no code in this workspace 
+only definition files. </p>
+<ul>
+	<li>Create a workspace named MySystemServer</li>
+	<li>within create a framework MySystemServerSSO</li>
+	<li>within this framework create the following directories:</li>
+<table id="table1">
+  <tr>
+    <td>Windows</td>
+    <td>MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\credentials</code><p>
+	MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\msgcatalog</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td>MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\credentials</code><p>
+	MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\msgcatalog</code></td>
+  </tr>
+</table>
+	<li><font face="Times New Roman">copy </font><font face="Times New Roman">
+	the following files in the corresponding directories in your runtime view:</font><table id="table2">
+		<tr>
+			<td>Windows</td>
+			<td>MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\credentials\MySystem.credentialSet</code><p>
+			MySystemServer<code>\</code>MySystemServerSSO<code>\CNext\resources\msgcatalog\MySystem_credentialSet.CATNls</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td>MySystemServer<code>/</code>MySystemServerSSO<code>/CNext/resources/credential/MySystem.credentialSet</code><p>
+			MySystemServer<code>/</code>MySystemServerSSO<code>/CNext/resources/msgcatalog/MySystem_credentialSet.CATNls</code></td>
+		</tr>
+	</table></li>
+	<li>Update your runtime view launching mkrtv tool.</li>
+</ul>
+<p>Now there is two ways for those definitions to be taken into account by your 
+Application server.</p>
+<ul>
+	<li>You may concatenate your workspace with the install directory of your 
+	SSO Server by restarting WASSetupUI tool or</li>
+	<li>You may copy all the content of the runtime view of your workspace in the 
+	runtime view of your installation directory</li>
+</ul>
+<p>Then you will have to restart your Application Server.</p>
+<ol>
+	<li value="2">VPM Navigator workspace:&nbsp;</li>
+</ol>
+<p>This workspace will contain all the client code executed by VPM Navigator. 
+You will need to </p>
+<ul>
+	<li>Copy <b>CAAPLMSSOClientTest.m </b>the module of the <b>CAASecuritySSOCClient.edu</b> 
+	framework</li>
+	<li>Build it.</li>
+	<li>Update your runtime view launching mkrtv tool.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the&nbsp;CAAPLMSSOClientTest&nbsp;Code</h4>
+<p>The CAAAfrEltCountHeader use case is made of several classes mainly located in
+modules of the CAAApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASecuritySSOCCLient.edu\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASecuritySSOCCLient.edu/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<ul>
+  <li>The CAAPLMSSOClientTest.m module contains
+classes to define the the command. <br>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in&nbsp; CAAPLMSSOClientTest :</p>
+<ol>
+  <li>
+	<a href="#Step1">
+	Creating a CredentialSet file and its NLS for your custom System</a></li>
+  <li><a href="#Step2">Creating 
+	Credentials in the SSO Admin Console for your custom system</a></li>
+  <li><a href="#Step3">Creating the
+    Class of the command</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>
+Creating a CredentialSet file and its NLS for your custom System</h4>
+<p class="MsoNormal"><span lang="EN-GB">In this section, we will explain you how 
+you can leverage SSO capability to enable a command from VPM Navigator to 
+retrieve your own credentials, for your own System.</span></p>
+<p class="MsoNormal"><span lang="EN-GB">There are two steps to be achieved :</span></p>
+<ul>
+	<li>
+	<p class="MsoNormal"><span lang="EN-GB">Define Credential Sets by writing an 
+	XML .CredentialSet file</span></li>
+	<li>
+	<p class="MsoNormal"><span lang="en-gb">Create NLS for this credentialSet 
+	file</span></li>
+</ul>
+<ol>
+	<li>
+	<h3><span style="font-weight: 400"><a name="_Toc118859372">
+	<span lang="EN-GB"><font size="3">Defining XML .CredentialSets file for your 
+	own System</font></span></a></span></h3>
+	</li>
+</ol>
+<p class="MsoNormal"><span lang="EN-GB">A .CredentialSets file represents 
+metadata defining which credentials are required to access a system. Once 
+credentialSet file is provided it is automatically recognized and usable from 
+the Single Sign On Administrative console.</span></p>
+<p class="MsoNormal"><span lang="EN-GB">A set of Credentials has to be defined 
+for each system you need to retrieve credentials from the SSO Server. To perform 
+it you have to deliver an XML file in the runtime view, following this path: 
+MyWorkspace/MyFramework/CNext/resources/sso/credentials/.</span></p>
+<p class="MsoNormal"><span lang="EN-GB">This XML file has to be named with the 
+name of the system and with &#8216;credentialSet&#8217; extension. </span></p>
+<p class="MsoNormal"><span lang="EN-GB">Here is an example of a CredentialSet 
+for MySystem : (MySystem.credentialSet)</span></p>
+<table class="code" id="table3" width="961">
+  <tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%">
+    <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><p>
+		&lt;SSOCredentialSet applicationType=&quot; MySystem
+		&quot; &gt;</p>
+	<blockquote>
+		<p>&lt;SSOCredentialDescriptor name=&quot;User&quot; 
+		type=&quot;String&quot; password=&quot;false&quot; hidden=&quot;false&quot; /&gt;</p>
+		<p>&lt;SSOCredentialDescriptor name=&quot;Password&quot; 
+		type=&quot;String&quot; password=&quot;true&quot; hidden=&quot;false&quot; /&gt;</p>
+	</blockquote>
+	<p>
+		&lt;/SSOCredentialSet:SSOCredentialSet&gt;</td>
+		</pre>
+  </tr>
+<tr>
+    <td bgcolor="#FFFFFF">
+    &nbsp;</td>
+		</tr>
+</table>
+	<h3><span lang="EN-GB"><font size="3">Description of the XML format&nbsp;</font></span></h3><p>The root object is <i>SSOCredentialSet. </i>It describes what are the required credentials to let you authenticate against a custom system. it has one required attribute which is <i>applicationType</i>. This attribute must be valuated with the exact name of the file. It is the ID of your system when you want to retrieve credentials.</p><p>the root object can embed any number of <i>SSOCredentialDescriptor</i> element. It represents on credential required to authenticate against your system. It has many attribute :</p><ul><li>name : the name of the credential</li><li>type: the type of the credential (String, int,...)</li><li>password: is the credential is a password and must be displayed with stars from the SSO Administrative Console (can be valuated to true or false)</li><li>hidden: is that credential can be dispalyed within the SSO Administrative Console (can be valuated to true or false)</li></ul><p align="right">[<a href="#Top">Top</a>]</p><ol start="2"><li><h3><span style="font-weight: 400"><a name="_Toc118859373"><span lang="EN-GB"><font size="3">Creating NLS names for 
+credentials of your own System (Optional)</font></span></a></span></h3></li></ol><p class="MsoNormal"><span lang="EN-GB">To display NLS names in the Single Sign 
+On administrative console you may provide an NLS file. The NLS File must be 
+named as follow: <i>SystemName_credentialSet.CATNls</i> where <i>SystemName</i> is the name in the .credentialSet file. It must be delivered in Workspace/$os/resources/msgCatalog/.</span></p><p class="MsoNormal"><span lang="EN-GB">The property applicationType.name must 
+be set to the NLS name of your System</span></p><p class="MsoNormal"><span lang="EN-GB">Then each credential name must follow 
+this pattern:</span></p><p class="MsoNormal"><i><span lang="EN-GB">SSOCredential.MyCredentialName=&#8221;My NLS Message&#8221;;</span></i></p><p class="MsoNormal"><span lang="EN-GB">Where <i>MyCredentialName</i> is the 
+name of the credential given in the .CredentialSet file and <i>My NLS Message</i> is the corresponding NLS message to be displayed.</span></p><p class="MsoNormal"><span lang="EN-GB">Here is an example of NLS file:</span></p><table class="code" id="table4" width="960"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><p class="MsoNormal" style="text-autospace: none; background: silver"><span lang="EN-GB">SSOCredential.Password=&quot;Password&quot;;</span></p><p><span lang="EN-GB">applicationType.name=&quot;My System&quot;;</span></p><p>
+		<span lang="EN-GB">SSOCredential.User=&quot;User Name&quot;;</span></td></pre></tr><tr>
+    <td bgcolor="#FFFFFF">
+    &nbsp;</td>
+		</tr>
+</table>
+	<p>Now there is two ways for those definitions to be taken into account by your 
+Application server.</p><ul><li><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7.0pt; font-family: Times New Roman" lang="EN-GB">&nbsp;</span><span lang="EN-GB">Regenerate the EAR of your WAS concatenating your w orkspace with your installation when specifying sources in WASSetupUI</span></li></ul><p>or</p><ul>
+	<li>You may copy all the content of the runtime view of your workspace in the 
+	runtime view of your installation directory</li></ul><p>Then you will have to restart your Application Server.</p><p align="right">[<a href="#Top">Top</a>]</p><h3><a name="Creating the Data Model Representing the Current Color in the Combo0"><font size="3"></font></a>
+<a name="Step2"></a>
+<font size="3">Creating Credentials in the SSO Admin Console for your custom system</font></h3><h3><span style="font-weight: 400"><font size="3">Once you 
+have created your own .credentialSet file you have to administrate those 
+credentials the same way you did for ENOVIA LCA. It means that you have to 
+access the Single Sign On administrative console and create credentials instance 
+for each SSO User you want him to be allowed to access your own System.</font></span></h3><h3><span style="font-weight: 400"><span lang="EN-GB"><font size="3">Credentials must be created from the SSO Administrative console for a given SSO user and the application MySystem. Go to the URL:</font></span></span></h3><h3><span style="font-weight: 400"><span lang="EN-GB"><font size="3">&nbsp;http<span lang="EN-US">://<i>host:port/RootURI</i>/html/SSOAdminConsole</span></font></span><font size="3">.</font></span></h3><h3><span style="font-weight: 400"><font size="3"><i>host</i>: is the host name of your WAS</font></span></h3><h3><span style="font-weight: 400"><font size="3"><i>port</i>: is the listening port of the WAS</font></span></h3><h3><span style="font-weight: 400"><font size="3"><i>RootURI</i>: is the rootURI used to install the EAR on the WAS on WASSetupUI tool.</font></span></h3><h3><span style="font-weight: 400"><font size="3">the following panel appears:</font></span></h3><p>Fig4 : The Single Sign On Adminstrative Console</p><h3><img border="0" src="images/SSOAdminConsole.jpg" width="372" height="129"></h3><h3><span style="font-weight: 400"><font size="3">and click on create. the following panel appears:</font></span></h3><p>Fig5 : The create Credentials Panel</p><p><img border="0" src="images/CreateInstance.jpg" width="465" height="177"></p><p><span lang="EN-GB">Note: smq is the SSO user, it must exist in you User Repository (LDAP if you are using one to secure your WAS)</span></p><p align="right">[<a href="#Top">Top</a>]</p><!---------------------------------comment-------------------------------------><h4><a name="Step3"></a>Creating the
+    Class of the command</h4><p>Now we will work in the VPM Navigator Workspace.</p><p><b><font size="3">Creating </font>the header of the command</b></p><p>here is the description of the code of the command which retrieves credentials from the server : TestSSOCAACmd.h</p><table class="code" id="table6" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%">
+    <span style="background-color: #C0C0C0"><pre>#ifndef TestSSOCAACmd_H<br>#define TestSSOCAACmd_H<br>#include &quot;CATStateCommand.h&quot;<br><br>#include &quot;CATCommand.h&quot; // for CATStatusChangeRC<br>#include &quot;CATBoolean.h&quot;<br><br>class CATMsgCatalog;<br><br>class TestSSOCAACmd : public CATStateCommand<br>{ <br>public:<br><br>		//constructor of the command<br>								TestSSOCAACmd (); <br>		virtual ~TestSSOCAACmd (); //destructor of the command<br>		<br>		virtual void BuildGraph (); //called when the command is instantiated<br><br><br>private:<br><br>				//used to retrieve errors when one occurs within the CAASSOClient object<br>		CATUnicodeString HandleError(HRESULT iStatus); r><br>				//used to Display Msg in a Display Blocked Box<br>		void DisplayMessage(CATUnicodeString &amp;iMessage,int iIsError);<br>		CATMsgCatalog *m_msgCat; //MsgCatalog Object to retrieve NLS msg from TestSSOCAACmd.CATNls int the RTV<br>};<br><br>#endif</span></pre></td></tr></table><p>As you can see our inherit from a CATStateCommand. We will build our state graph in the <i>BuildGraph()</i> method. This method is called when the command is instantiated. We also define a method to handle Errors from the CAASSOClient Object with the method <i>HandleError. </i>Finally we define a method to display the final message of the command with <i>DisplayMessage() </i>method. We also have one private member with <i>m_msg</i> to handle NLS messages.</p><p><b><font size="3">Creating </font>the implementation of the command</b></p><p>here is the description of the code of the command which retrieves credentials from the server : TestSSOCAACmd.cpp</p><table class="code" id="table5" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>#include &quot;TestSSOCAACmd.h&quot;<br>#include &quot;CATDlgNotify.h&quot;<br>#include &quot;CATCreateExternalObject.h&quot;<br>#include &quot;CATApplicationFrame.h&quot;<br>#include &quot;CATUnicodeString.h&quot;<br>#include &quot;CATMsgCatalog.h&quot;<br><br>#include &quot;PLMSSOClient.h&quot;<br>#include &quot;PLMSSOCredential.h&quot;<br>#include &quot;PLMSSOCredentialSet.h&quot;<br><br>CATCreateClass(TestSSOCAACmd);<br><br>//-------------------------------------------------------------------------<br>TestSSOCAACmd::TestSSOCAACmd ():CATStateCommand (&quot;TestSSOCAACmd&quot;)<br>{<br>	//Loading Msg Catalog for this Command<br>	m_msgCat = new CATMsgCatalog();<br>	if (m_msgCat != NULL)m_msgCat-&gt;LoadMsgCatalog(&quot;TestSSOCAACmd&quot;);<br>}<br><br>//-------------------------------------------------------------------------<br>TestSSOCAACmd::~TestSSOCAACmd()<br>{<br>	if (m_msgCat != NULL)<br>	{<br>		delete m_msgCat;<br>				m_msgCat=NULL;<br>	}br>}<br><br>//-------------------------------------------------------------------------<br>void TestSSOCAACmd::BuildGraph()<br>{<br>								CATUnicodeString texte; //text to be display in the Pop-up<br>	HRESULT hr = E_FAIL;<br><br>	//create the SSO Client Object<br>	PLMSSOClient sso;<br><br>	CATBoolean activated = FALSE;<br><br>	// Test if the SSO Has been activated in the RuntimeView<br>	hr = sso.IsSSOActivated(activated);br><br>	// if it fails display the error message and exits<br>	if (FAILED(hr)) <br>	{<br>		texte = HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//IF SSO is not activated no need to go further<br>	if (!activated) <br>	{<br>		if (m_msgCat)texte=(m_msgCat-&gt;GetCatalogMsg (&quot;NotActivated&quot;)).BuildMessage();<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<pre>	//prepare the display of the SSO Activated message<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;Activated&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>	CATBoolean authenticated=FALSE;<br>	//Test if the End User is Authenticated on the SSO Server<br>	hr = sso.IsAlreadyAuthenticated(authenticated);<br><br>	//if an error occurs display the error Message and exit<br>	if (FAILED(hr))<br>	{<br>		texte = HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//if the user is not authenticated Display the message and exit<pre>	if (!authenticated)<br>	{<br>		if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;NotAuhtenticated&quot;)).BuildMessage()+&quot;\n&quot;;<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br>	//prepare the display of the SSO authenticated message<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;Auhtenticated&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>	//Try to retrieve the Authenticated User<br>	CATUnicodeString user;<br>	hr = sso.GetAuthenticatedUsername(user);<br><br>	//If fails display the error and exit<br>	if (FAILED(hr))<br>	{<br>		CATUnicodeString temp;<br>		if (m_msgCat)temp=(m_msgCat-&gt;GetCatalogMsg (&quot;ErrorSSOUser&quot;)).BuildMessage();<br>		texte =texte + temp+&quot;\n&quot;+HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//prepare the display of the retrieved SSO User<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;SSOUser&quot;)).BuildMessage()+user+&quot;\n&quot;;<br><br><br>	//Retrieving Credentials for the authenticated user<br>	PLMSSOCredentialSet credentialSet;<br>	hr = sso.GetCredentialSetForApplication(&quot;MySystem&quot;,&quot;&quot;,credentialSet);<br><br>	//if an error occurs display the error Message and exit <br>	if (FAILED(hr))<br>	{<br>		CATUnicodeString tmp;<br>		if (m_msgCat)tmp = (m_msgCat-&gt;GetCatalogMsg (&quot;GetCredentialError&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>		texte = tmp+HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//Prepare the display of the credentials well retrieve status<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;CredentialsOK&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>	//Do a loop to retrieve and Display all credentials<br>	int size = credentialSet.Size();<br>	for (int k=1;k&lt;=size;k++)<br>	{<br>		CATUnicodeString credentialValue;<br>		CATUnicodeString credentialName;<br><br>		hr = credentialSet[k].GetCredentialValue(credentialValue);<br><br>		// if fails while retrieving credential value<br>		if (FAILED(hr))<br>		{<br>			texte =texte + HandleError(hr)+&quot;\n&quot;;<br>			DisplayMessage(texte,TRUE);<br>			return;<br>		}<br><br>		//retrieve the name of the credential<br>		hr = credentialSet[k].GetCredentialName(credentialName);<br><br>		//if it fails while retrieving credential value<br>		if (FAILED(hr))<br>		{<br>			texte =texte + HandleError(hr)+&quot;\n&quot;;<br>			DisplayMessage(texte,TRUE);<br>			return;<br>		}<br>		//prepare the Display of the credential name : value<br>		texte = texte +credentialName+&quot; : &quot;+credentialValue + &quot;\n&quot;;<br>	}<br>	//display the info Message<br>	DisplayMessage(texte,FALSE);<br>}<br><br>void TestSSOCAACmd::DisplayMessage(CATUnicodeString&amp; iMsg,int iIsError)<br>{<br>	CATApplicationFrame* applicationFrame=CATApplicationFrame::GetFrame();<br><br>	//exits if no applicationFrame found<br>	if (applicationFrame == NULL) return;<br><br>	CATDlgStyle style =CATDlgNfyOK|CATDlgWndModal; <br>	CATUnicodeString title;<br><br>	if (iIsError)<br>	{<br>		//retrieve the NLS title of the Display Error Box<br>		if (m_msgCat != NULL)title=(m_msgCat-&gt;GetCatalogMsg (&quot;TitleError&quot;)).BuildMessage();<br>				//Set the style of the pop-up to an Error Box<br>		style = style |CATDlgNfyError;<br>	}<br>	else<br>	{<br>		//retrieve the NLS title of the Display Info Box<br>		if (m_msgCat != NULL)title=(m_msgCat-&gt;GetCatalogMsg (&quot;TitleInfo&quot;)).BuildMessage();<br>	}<br>	//create the message Box<br>	CATDlgNotify *notif = new CATDlgNotify(applicationFrame-&gt;GetApplicationDocument(),&quot;Notif&quot;,style );<br>&nbsp;<pre>	//display the Message<br>	notif-&gt;DisplayBlocked(iMsg,title);<pre><br>	//ask for destruction of the box<br>	notif-&gt;RequestDelayedDestruction();<br>}<br><br>//----------------------------------------------------------------------------<br>CATUnicodeString TestSSOCAACmd::HandleError(HRESULT iStatus)<br>{<br><br>	CATUnicodeString message=&quot;&quot;;<br>	//Retrieving the Last Error<br>	CATError * pOccurringError = CATError::CATGetLastError(iStatus);<br>	if (pOccurringError != 0) <br>	{<br>		//retrieve the NLS Message of the CATError<br>		message = pOccurringError-&gt;GetNLSMessage();<br>		//free the memory of the CATError<br>		pOccurringError-&gt;Release();<br>		pOccurringError = NULL;<br>	}<br>	return message;<br>}<br>&nbsp;</td></pre></tr></table>&nbsp;<p>The Constructor and destrutors</p><table class="code" id="table7" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>#include &quot;TestSSOCAACmd.h&quot;<br>#include &quot;CATDlgNotify.h&quot;<br>#include &quot;CATCreateExternalObject.h&quot;<br>#include &quot;CATApplicationFrame.h&quot;<br>#include &quot;CATUnicodeString.h&quot;<br>#include &quot;CATMsgCatalog.h&quot;<br><br>#include &quot;PLMSSOClient.h&quot;<br>#include &quot;PLMSSOCredential.h&quot;<br>#include &quot;PLMSSOCredentialSet.h&quot;<br><br>CATCreateClass(TestSSOCAACmd);<br><br>//-------------------------------------------------------------------------<br>TestSSOCAACmd::TestSSOCAACmd ():CATStateCommand (&quot;TestSSOCAACmd&quot;)<br>{<br>
+	//Loading Msg Catalog for this Command<br>	m_msgCat = new CATMsgCatalog();<br>
+	if (m_msgCat != NULL)m_msgCat-&gt;LoadMsgCatalog(&quot;TestSSOCAACmd&quot;);<br>}<br><br>//-------------------------------------------------------------------------<br>TestSSOCAACmd::~TestSSOCAACmd()<br>{<br>
+	if (m_msgCat != NULL)<br>	{<br>		delete m_msgCat;<br>		m_msgCat=NULL;<br>	}<br>}<pre>...</td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    here we load abd free the MessageCatalog for our command<p>The BuildGraph() Method : getting PLMSSOClient Object and testing environment</p><table class="code" id="table8" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>...<pre>	HRESULT hr = E_FAIL;<br><br>	//create the SSO Client Object<br>	PLMSSOClient sso;<br><br>	CATBoolean activated = FALSE;<br><br>	// Test if the SSO Has been activated in the RuntimeView<br>	hr = sso.IsSSOActivated(activated);br><br>	// if it fails display the error message and exits<br>	if (FAILED(hr)) <br>	{<br>		texte = HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//IF SSO is not activated no need to go further<br>	if (!activated) <br>	{<br>		if (m_msgCat)texte=(m_msgCat-&gt;GetCatalogMsg (&quot;NotActivated&quot;)).BuildMessage();<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<pre>	//prepare the display of the SSO Activated message<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;Activated&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>&nbsp;<pre>...</td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    here we create our <b><i>PLMSSOClient</i></b> Object. It is the object which let us retrieve credentials without having to authenticate once more.<font color="#FF0000"><b> </b></font>Now we have that object we have to check if the SSO has been activated with the method <i>IsSSOActivated() </i>. If not there is no need to go further as the SSO will not be able to retrieve credentials. if there is an error or if it is not activated we display the error and return form the <i>BuildGraph()</i> method<p>The BuildGraph() Method : Testing if the user is already authenticated</p><table class="code" id="table9" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>...<pre>	CATBoolean authenticated=FALSE;<br>	//Test if the End User is Authenticated on the SSO Server<br>	hr = sso.IsAlreadyAuthenticated(authenticated);<br><br>	//if an error occurs display the error Message and exit<br>	if (FAILED(hr))<br>	{<br>		texte = HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//if the user is not authenticated Display the message and exit<pre>	if (!authenticated)<br>	{<br>		if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;NotAuhtenticated&quot;)).BuildMessage()+&quot;\n&quot;;<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br>	//prepare the display of the SSO authenticated message<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;Auhtenticated&quot;)).BuildMessage()+&quot;\n&quot;;<pre>...</td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    <p>&nbsp;<font color="#FF0000"><b>If the end user has not yet identify itself with the logon panel of ENOVIA the whole command will fail. So we have to check it first. </b></font>So we can do it using <i>IsAlreadyAuthenticated() </i>method. Once again if false or if the method fails we display the ad-hoc message and exit</p><p>&nbsp;</td>The BuildGraph() Method : Retrieving authenticated User name<table class="code" id="table10" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>...<p>	//Try to retrieve the Authenticated User<br>	CATUnicodeString user;<br>	hr = sso.GetAuthenticatedUsername(user);<br><br>	//If fails display the error and exit<br>	if (FAILED(hr))<br>	{<br>		CATUnicodeString temp;<br>		if (m_msgCat)temp=(m_msgCat-&gt;GetCatalogMsg (&quot;ErrorSSOUser&quot;)).BuildMessage();<br>		texte =texte + temp+&quot;\n&quot;+HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//prepare the display of the retrieved SSO User<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;SSOUser&quot;)).BuildMessage()+user+&quot;\n&quot;;<br><font face="Courier New">...</font></td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    <p>We can retrieve the Single Sign On username with the method <i>GetAuthenticatedUseranme().</i></p><p>The BuildGraph() Method : retrieving credentials</p><table class="code" id="table11" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>...<pre>	//Retrieving Credentials for the authenticated user<br>	PLMSSOCredentialSet credentialSet;<br>	hr = sso.GetCredentialSetForApplication(&quot;MySystem&quot;,&quot;&quot;,credentialSet);<br><br>	//if an error occurs display the error Message and exit <br>	if (FAILED(hr))<br>	{<br>		CATUnicodeString tmp;<br>		if (m_msgCat)tmp = (m_msgCat-&gt;GetCatalogMsg (&quot;GetCredentialError&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>		texte = tmp+HandleError(hr);<br>		DisplayMessage(texte,TRUE);<br>		return;<br>	}<br><br>	//Prepare the display of the credentials well retrieve status<br>	if (m_msgCat)texte = texte +(m_msgCat-&gt;GetCatalogMsg (&quot;CredentialsOK&quot;)).BuildMessage()+&quot;\n&quot;;<br><br>...</td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    <p>Here is how to retrieve credentials for the authenticated user form the SSO Server. We use the <i>GetCredentialSetForApplication</i> method to do that. There are two inputs arguments. The first one is the name of the system you are interested on (on our case we want to retrieve credentials for MySystem ). The second argument is the name of the instance of the credentials you want to retrieve for that user. Within the SSO Administrative console you have provided a name of instance while creating credentials for that user and that system. As you can create multiples instance of credentials per user, it is that you name you have to give as a second argument. If you give a blank string (as we did in our example) it returns the default instance. This instance is returned within the <i>PLMSSOCredentialSet</i> object.</p><p>The BuildGraph() Method : using the retrieved credentials:</p><table class="code" id="table12" width="961"><tr>
+    <td bgcolor="#C0C0C0" style="text-align: left; line-height: 100%"><pre>...	<pre>	//Do a loop to retrieve and Display all credentials<br>	int size = credentialSet.Size();<br>	for (int k=1;k&lt;=size;k++)<br>	{<br>		CATUnicodeString credentialValue;<br>		CATUnicodeString credentialName;<br><br>		hr = credentialSet[k].GetCredentialValue(credentialValue);<br><br>		// if fails while retrieving credential value<br>		if (FAILED(hr))<br>		{<br>			texte =texte + HandleError(hr)+&quot;\n&quot;;<br>			DisplayMessage(texte,TRUE);<br>			return;<br>		}<br><br>		//retrieve the name of the credential<br>		hr = credentialSet[k].GetCredentialName(credentialName);<br><br>		//if it fails while retrieving credential value<br>		if (FAILED(hr))<br>		{<br>			texte =texte + HandleError(hr)+&quot;\n&quot;;<br>			DisplayMessage(texte,TRUE);<br>			return;<br>		}<br>		//prepare the Display of the credential name : value<br>		texte = texte +credentialName+&quot; : &quot;+credentialValue + &quot;\n&quot;;<br>	}<br>	//display the info Message<br>	DisplayMessage(texte,FALSE);<br>}...</td></pre></tr><tr>
+    <td bgcolor="#FFFFFF"></table>
+    <p>Here is how to retrieve credentials name and value from a <i>PLMSSOCredentialSet</i> object. The <i>PLMSSOCredentialSet</i> can be seen as a container of credentials for a given System and for a given user. So you can get each member as an array item with <i>credentialSet[k]. </i>At that point you have a <i>PLMSSOCredential</i> Object. On that object you can retrieve its name with <i>GetCredentialName() </i>method and its value with <i>GetCredentialValue()</i></p><p align="right">[<a href="#Top">Top</a>]</p><h4><a name="Creating the Component Representing the Command Header&nbsp;0"></a>Testing the Use Case</h4><ul>
+	<li>Restart your Application Server</li><li>Launch VPM Navigator</li><li>Select the SSOCAAToolbar in the menu View-&gt;Toolbars-&gt;SSOCAAToolbar.The following Toolbar should appear :</li> <p><blockquote>Fig6 : The Single Sign On CAA Test Toolbar</p><p><img border="0" src="images/SSOToolbar.jpg" width="494" height="40"></p></blockquote><li>Start the command SSOCAAPanel (You should have the following error, 
+	which is normal as you are not authenticated yet :</li> <blockquote>
+		<p>Fig7 : Error on command</p><p><img border="0" src="images/SSOError.jpg" width="311" height="133"></p></blockquote><li>Start VPM Navigator and authenticate yourself (ENOVIA V5 -&gt; Connect) with the SSOUser used when credentials were created.</li> <blockquote>
+		<p>Fig8 : ENOVIA Logon</p><p><img border="0" src="images/VPMNavLogin.jpg" width="241" height="199"></p></blockquote><li>Click once again on the SSOCAAPanel button and the following panel should appear displaying the content of the credential created earlier with the SSOAdminConsole:</li> <blockquote>
+		<p>Fig9 : Command Successful</p><p><img src="images/SSOSuccess.jpg" width="231" height="159"></p></blockquote></ul><p align="right">[<a href="#Top">Top</a>]</p><p align="right">&nbsp;</p><hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3><p>This use case has explained how to create credentialSet definition for a custom system. how to create credentials for that system and how to retrieve them from VPM Navigator</p><p align="right">[<a href="#Top">Top</a>]</p><hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3><table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>      [Mar 2006]</td><td valign="top">Document created</td></tr><tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td></tr></table><hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p></body></html>

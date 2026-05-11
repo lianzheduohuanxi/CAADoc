@@ -1,0 +1,431 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgSelectorList</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgSelectorList</h3>
+      <em>Selects one or several items in a list</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgSelectorList</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Selector List</caption>
+  <tr>
+    <td><img src="images/ListSelectorlist.jpg" alt="ListSelectorlist.jpg (1496 bytes)" width="60" height="42"></td>
+    <td>The selector list allows the end&nbsp;user to select one or several
+      values among a discrete list of predefined values. The values are
+      generally character strings. Scrollbars are added if the list is longer or
+      wider than the list display area. The selected value (s) is (are)
+      highlighted. The end user cannot enter values and can only select among
+      those proposed.</td>
+  </tr>
+</table>
+<p>Use selector list whenever you propose to the end user to select values from
+a predefined list.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>A single value can be selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgLstMultisel</td>
+    <td>Several values can be selected using the Shift and Ctrl keys.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgListSelectNotification</td>
+    <td><code>GetListSelectNotification</code></td>
+    <td>Whenever a line is selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgListActivateNotification</td>
+    <td><code>GetListActivateNotification</code></td>
+    <td>Whenever a line is double clicked.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The selector list is dedicated to selection.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing a Selector List</h4>
+<p>These following kinds of selector list can be constructed.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>default</em></td>
+    <td class="code">
+      <pre>_pSelectList  = new CATDlgSelectorList (iParent, iName);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Multiselection</em></td>
+    <td class="code">
+      <pre>_pMSelectList = new CATDlgSelectorList (iParent, iName,
+                                    <strong>CATDlgListMultisel</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Line Content</h4>
+<p>You can do the following to manage the content of the lines in a selector
+list:
+<ul>
+  <li>get the number of lines in the list with the GetLineCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfLines;
+NumberOfLines = _pSelectList-&gt;GetLineCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the contents of a given line with the GetLine:method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString oLineContents;
+int iLineNumber;
+_pSelectList-&gt;GetLine(oLineContents, iLineNumber);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set or modify the contents of one or several lines with the SetLine
+    method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString * iLineContents
+iLineContents = &quot;This is my selector list line&quot;;
+int iLineNumber = 3;
+int FirstLine;
+FirstLine = _pSelectList-&gt;SetLine(*iLineContents,
+                                  iLineNumber,CATDlgDataAdd);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Two modes are available: CATDlgDataAdd to add a line, which is the
+    default, and CATDlgDataModify to modify an existing line. If iLineNumber is
+    omitted or set to -1, the line is appended to the list. You can also set or
+    modify a group of contiguous lines:</p>
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>modifies 5 lines starting from line 3</em></td>
+        <td class="code">
+          <pre>CATUnicodeString StringArray[5]
+StringArray[0] = ...
+...
+int iArraySize = 5
+int iLineNumber = 3;
+int FirstLine;
+FirstLine = _pSelectList-&gt;SetLine(StringArray, iArraySize,
+                                  iLineNumber, CATDlgDataModify);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>delete one or several lines with the ClearLine method:
+    <table width="100%">
+      <tr>
+        <td width="20%" valign="bottom"><em>deletes lines 1,3,6<br>
+          delete all lines</em></td>
+        <td class="code">
+          <pre>int iLineNumber = 5;
+_pSelectList-&gt;ClearLine(iLineNumber);
+int iLineNum[3] = { 1,3,6 };
+int iLineNumSize=3;
+_pSelectList-&gt;ClearLine(iLineNum, iLineNumSize);
+_pSelectList-&gt;ClearLine();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Line Display</h4>
+<p>You can manage the line display with the following methods:
+<ul>
+  <li>get or set the visible text width:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>set number of visible char</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleChar = 20;
+_pSelectList-&gt;SetVisibleTextWidth(NumberOfVisibleChar);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>get number of visible char</em></td>
+        <td class="code">
+          <pre>...
+NumberOfVisibleChar = _pSelectList-&gt;GetVisibleTextWidth();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The value returned by the GetVisibleTextWidth method makes sense only if
+    it has been set by the SetVisibleTextWidth method.</p>
+  </li>
+  <li>get or set the visible text height:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get visible height</em></td>
+        <td class="code">
+          <pre>int VisibleTextHeight;
+TextHeight = _pSelectList-&gt;GetVisibleTextHeight();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set visible height</em></td>
+        <td class="code">
+          <pre>...
+TextHeight = 8;
+_pSelectList-&gt;SetVisibleTextHeight(TextHeight);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the position of the first visible character in the line:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st visible char</em></td>
+        <td class="code">
+          <pre>int FirstVisibleChar;
+FirstVisibleChar = _pSelectList-&gt;GetFirstColumn();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set 1st visible char</em></td>
+        <td class="code">
+          <pre>...
+FirstVisibleChar = 5;
+_pSelectList-&gt;SetFirstColumn(FirstVisibleChar);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the position of the first line:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st line position</em></td>
+        <td class="code">
+          <pre>int FirstLine;
+FirstLine = _pSelectList-&gt;GetFirstLine();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set 1st line position</em></td>
+        <td class="code">
+          <pre>...
+FirstLine = 3;
+_pSelectList-&gt;SetFirstLine(FirstLine);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Selection in the List</h4>
+<p>To help manage the selection in the list displayed in the selector, you can
+use the following methods::
+<ul>
+  <li>retrieve the number of lines selected using the GetSelectCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfLinesSelected;
+NumberOfLinesSelected = _pMSelectList-&gt;GetSelectCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>retrieve the lines selected with the GetSelect method:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get selected lines as a table of int</em></td>
+        <td class="code">
+          <pre>int oNumberOfSelectedLine[10];
+int oArraySize;
+_pMSelectList-&gt;GetSelect(oNumberOfSelectedLine,oArraySize);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or as a table of CATUnicodeString</em></td>
+        <td class="code">
+          <pre>CATUnicodeString oSelectedLines[10];
+_pMSelectList-&gt;GetSelect(oSelectedLines,oArraySize);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Pay attention to properly allocate and deallocate the table.</p>
+  </li>
+  <li>set the lines selected with the SetSelect method:
+    <table width="100%">
+      <tr>
+        <td width="20%" valign="middle"><em>set selected lines as a table of int</em></td>
+        <td class="code">
+          <pre>int iNumberOfSelectedLines[10];
+int iArraySize = 10;
+int iNotify = 1;
+_pMSelectList-&gt;SetSelect(iNumberOfSelectedLines,
+                         iArraySize, iNotify);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or as a table of CATUnicodeString</em></td>
+        <td class="code">
+          <pre>CATUnicodeString * iContentsOfSelectedLines[10];
+iContentsOfSelectedLines[0] = ...
+...
+_pMSelectList-&gt;SetSelect(iContentsOfSelectedLines,
+                         iArraySize, iNotify);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The lines with the line numbers contained in iNumberOfSelectedLines or
+    with the contents contained in iContentsOfSelectedLines are selected. Set
+    the parameter <code>Notify</code> to a non null value if you want the
+    corresponding notification to be sent. Otherwise set to 0, no notification
+    is sent.</p>
+  </li>
+  <li>deselect all selected lines with the ClearSelect method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pMSelectList-&gt;ClearSelect();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>query whether a given line is selected:
+    <table width="100%">
+      <tr>
+        <td width="20%" valign="middle"><em>query whether a line is selected
+          given its number</em></td>
+        <td class="code">
+          <pre>CATBool LineIsSelected;
+int LineNumber = 5;
+LineIsSelected = _pSelectList-&gt;IsSelect(LineNumber);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>or its contents</em></td>
+        <td class="code">
+          <pre>CATUnicodeString LineContents;
+LineContents = ...
+LineIsSelected = _pSelectList-&gt;IsSelect(LineContents)</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A CATBool is a short.</p>
+  </li>
+  <li>get the line number of the selected line under the mouse when the end user
+    displays the contextual menu:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int LineNumber;
+LineNumber = _pSelectList-&gt;GetContextualLine();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Selector List</h4>
+<p>Set a callback on a selector list to be informed whenever the end user
+selects a line as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pSelectList,                                   // selector list 
+  _pSelectList-&gt;<code>GetListSelectNotification</code>(),      // notification
+  (CATCommand)&amp;SelectorList::MethodToExecute,     // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Selector List</h4>
+<p>The selector list title should be set by the resource file using a key built
+with the identifier you declare as the second parameter of the selector list
+constructor. This title is never displayed. If you want to comment the choices
+available from the selector list in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

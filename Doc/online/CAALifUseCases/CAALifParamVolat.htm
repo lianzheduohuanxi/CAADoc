@@ -1,0 +1,427 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Using Volatile Parameters</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Using Volatile Parameters</h3>
+     <p><em>How to create and modify volatile parameters</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to create volatile parameters, retrieve and 
+     modify their values. Volatile parameters are literals that are not saved in 
+     any form. Unlike persistent parameters, they cannot be retrieved when a 
+     document is unloaded. Volatile parameters are created, read and modified 
+     like persistent parameters but the way to create them is a bit different.</p>
+     <ul>
+       <li><a href="#Learn"><b>What You Will Laern With This Use Case</b></a></li>
+       <li><a href="#UseCase"><b>The CAALifParametersVolatile Use Case</b></a></li>
+       <ul>
+         <li><a href="#What">What Does CAALifParametersVolatile Do</a></li>
+         <li><a href="#How">How to Launch CAALifParametersVolatile</a></li>
+         <li><a href="#Where">Where to Find the CAALifParametersVolatile Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This article explains how to do most of the usual operations on volatile 
+ parameters.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifParametersVolatile Use Case</h3>
+ <p>CAALifParametersVolatile is a use case of the CAALiteralFeatures.edu 
+ framework that illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifParametersVolatile Do</h4>
+ <p>The CAALifParametersVolatile use case is divided into five parts:</p>
+ <ol type="I">
+   <li>Retrieving the volatile factory</li>
+   <li>Creating and managing simple type parameters
+   <ol>
+     <li>creates two simple type parameters:</li>
+     <ul>
+       <li>intParam - which is an integer with an initial value of 2</li>
+       <li>booleanParam - which is a boolean with an initial value of true (CATCke::True).</li>
+     </ul>
+     </li>
+     <li>displays the name and the value of each simple type parameter.</li>
+     <li>modifies each simple type parameter</li>
+   </ol>
+   </li>
+   <li>Creating and managing length and angle parameters</li>
+   <ol>
+     <li>creates two dimension type parameters:</li>
+     <ul>
+       <li>lengthParam - which is a length with an initial value of 2</li>
+       <li>angleParam - which is an angle with an initial value of 3.1416</li>
+     </ul>
+     </li>
+     <li>displays the name and value of each dimension type parameter.</li>
+   </ol>
+   </li>
+   <li>Creating and managing magnitude type parameters</li>
+   <ol>
+     <li>creates one magnitude type parameter</li>
+     <ul>
+       <li>volumeParam - which is a VOLUME magnitude with an initial value of 
+       20.5</li>
+     </ul>
+     </li>
+     <li>displays the name and the value of volumeParam</li>
+   </ol>
+   </li>
+   <li>Creating and managing literal type parameter</li>
+   <ol>
+     <li>creates a literal of integer type and assigns it a value</li>
+     <li>creates a literal of boolean type and assigns it a value.</li>
+   </ol>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifParametersVolatile</h4>
+ <p>To launch CAALifParametersVolatile, you will need to set up the build time 
+ environment, then compile CAALifParametersVolatile along with its 
+ prerequisites, set up the run time environment, and then execute the use case 
+ which main program is CAALifParametersMain. This program encompasses several 
+ use cases [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifParametersVolatile Code</h4>
+ <p>The CAALifParametersVolatile use case is made of the&nbsp; CAALifParametersVolatile.cpp 
+ file located 
+ in the CAALifParameters.m module of the CAALiteralFeatures.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifParameters.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifParameters.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p>The main program related to this use case is CAALifParametersMain.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>CAALifParametersVolatile is divided into five steps:</p>
+ <ol>
+   <li><a href="#Step1">Retrieving the Volatile Factory</a></li>
+   <li><a href="#Step2">Creating and Managing Simple Type Parameters</a></li>
+   <li><a href="#Step3">Creating and Managing Dimension Type Parameters</a></li>
+   <li><a href="#Step4">Creating and Managing Magnitude Type Parameters</a></li>
+   <li><a href="#Step5">Creating and Managing Literal Type Parameters</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Retrieving the Volatile Factory</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// -----------------------------------
+// 1 - Retrieving the volatile factory
+// -----------------------------------
+CATICkeParmFactory_var spVolFactory = <b>CATCkeGlobalFunctions::GetVolatileFactory</b>();</pre>
+     </td>
+   </tr>
+ </table>
+ <p>You can only create volatile parameters from the volatile factory. The 
+ CATCkeGlobalFunctions::GetVolatileFactory method allows you to create a 
+ volatile factory.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating and Managing Simple Type Parameters</h4>
+ <p>Simple type parameters are integers, reals, strings or booleans.</p>
+ <ol>
+   <li><i>Creating simple type parameters</i>
+   <p>To create a simple type parameter, you should use one of the methods 
+   below:<ol>
+     <li>CATICkeParmFactory::CreateInteger</li>
+     <li>CATICkeParmFactory::CreateReal</li>
+     <li>CATICkeParmFactory::CreateString</li>
+     <li>or CATICkeParmFactory CreateBoolean.</li>
+   </ol>
+   <p>Each method takes the parameter name as its first argument, the parameter 
+   value as its second argument.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// -----------------------------------
+// 2 - Simple type volatile parameters
+// -----------------------------------
+
+   // Create a real
+   // Parameter name is &quot;realParam&quot;, parameter value is 2.3
+   CATICkeParm_var spPp1 = spVolFactory-&gt;CreateInteger (&quot;intParam&quot;,2);
+   ...
+   // Create a boolean
+   // Parameter name is &quot;booleanParam&quot;, parameter value is CATCke::True
+   CATICkeParm_var spPp4 = spVolFactory-&gt;CreateBoolean (&quot;booleanParam&quot;,
+                                                          CATCke::True);</pre>
+       </td>
+     </tr>
+   </table>
+   <p>If the second argument of CATICkeParmFactory::CreateInteger is passed as a 
+   real, its is converted to an integer. Likewise, if the second argument of 
+   CATICkeParmFactory::CreateReal is passed as an integer, the method converts 
+   it to a real.</p>
+   <p>The value of a boolean is either CATCke::True or CATCke::False.</li>
+   <li><i>Modifying a parameter</i></li>
+   <p>The CATICkeParm::Valuate method is used to modify the value of a volatile 
+   parameter.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Modify the intParam value (initial value = 2)
+spPp1-&gt;Valuate (6);</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li><i>Retrieving and displaying parameter values</i></li>
+   <p>Like persistent parameter values, volatile parameter values can be 
+   retrieved and displayed in three ways:
+   <ol>
+     <li>CATICkeInst::Show which displays the end user view of the parameter 
+     value (i.e the parameter value with the units and settings specified in the 
+     Tools-&gt;Options...-&gt;General Units tab).</li>
+     <li>CATICkeInst::As<i><font face="Times New Roman">Type</font></i> which:
+     <ul>
+       <li>either returns the parameter value when the parameter is of the 
+       appropriate type</li>
+       <li>or converts the parameter value to a value with the type expected.
+       <ul>
+         <li>CATICkeInst::AsInteger converts:
+         <ul>
+           <li>a real to an integer </li>
+           <li>a boolean to 0 or 1 </li>
+           <li>an enum to its rank </li>
+         </ul>
+         </li>
+         <li>CATICkeInst::AsReal converts
+         <ul>
+           <li>an integer to a real </li>
+           <li>a boolean to 0 or 1 </li>
+           <li>an enum to its rank </li>
+         </ul>
+         </li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+     <li>CATIParmAsStored::ValueStored which returns the value in model units [<a href="#References">2</a>].</li>
+   </ol>
+   <p>Here is a code extract illustrating how to use these methods.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Display the name and value of booleanParam
+cout &lt;&lt; spPp4-&gt;Name().CastToCharPtr() &lt;&lt; &quot; value is: &quot; &lt;&lt; endl;
+cout &lt;&lt; spPp4-&gt;Show ().CastToCharPtr() &lt;&lt; &quot; (with CATICkeParm::Show)&quot; &lt;&lt; endl ;
+
+cout &lt;&lt; spPp4-&gt;Value()-&gt;AsBoolean () ;
+cout &lt;&lt; &quot; (with CATICkeInst::AsBoolean)&quot; &lt;&lt; endl;
+cout &lt;&lt; spPp4-&gt;Value()-&gt;AsInteger () 
+cout &lt;&lt; &quot; (with CATICkeInst::AsInteger)&quot; &lt;&lt; endl;
+cout &lt;&lt; spPp4-&gt;Value()-&gt;AsString ().CastToCharPtr() ;
+cout &lt;&lt; &quot; (with CATICkeInst::AsString)&quot; &lt;&lt; endl;</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Creating and Managing Dimension Type Parameters</h4>
+ <ol>
+   <li><i>Creating length and angle type parameters</i><p>These parameters are 
+   created by the:<ol>
+     <li>CATICkeParmFactory::CreateLength</li>
+     <li>and CATICkeParmFactory ::CreateAngle methods.</li>
+   </ol>
+   <p>The value passed as the second argument should be specified in MKS units, 
+   i.e, in meters for a length type parameter and in radians for an angle type 
+   parameters.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// ------------------------------------------------
+// 3 - Dimension type parameters (Length and Angle) 
+// ------------------------------------------------
+ 
+  // Create and display a Length type parameter
+  // Parameter name is &quot;lengthParam&quot;, parameter value is 2
+  CATICkeParm_var spPp5 = spVolFactory-&gt;CreateLength (&quot;lengthParam&quot;,2);
+  ...
+  
+  // Create and display an Angle type parameter
+  // Parameter name is &quot;angleParam&quot;, parameter value is 3.1416
+  CATICkeParm_var spPp6 = spVolFactory-&gt;CreateAngle (&quot;angleParam&quot;,3.1416);
+  ...
+</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li><i>Retrieving Parameter Values</i>
+   <p>The portion of code below</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+// Display the name and value of lengthParam
+cout &lt;&lt; spPp5-&gt;Name().CastToCharPtr() &lt;&lt; &quot; value is: &quot; &lt;&lt; endl;
+cout &lt;&lt; spPp5-&gt;Show ().CastToCharPtr() &lt;&lt; &quot; (with CATICkeParm::Show)&quot; &lt;&lt; endl ;</pre>
+       </td>
+     </tr>
+   </table>
+   <p>displays in the standard output:</p>
+   <pre>lengthParam value is:
+2 (with CATICkeParm::Show)</pre>
+   </li>
+ </ol>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Creating and Managing Magnitude Type Parameters</h4>
+ <p>Dimension other than lengths and angles are created by using the 
+ CATICkeParmFactory::CreateDimension method.</p>
+ <p>To create a magnitude type parameter: </p>
+ <ul>
+   <li>you must specify a magnitude as the first argument of the 
+   CATICkeParmFactory::CreateDimension method</li>
+   <li>use the CATParmDictionary-&gt;FindMagnitude method to get this magnitude</li>
+   <li>use the CATCkeGlobalFunctions::GetParmDictionary method to retrieve the 
+   CATParmDictionary.</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// ------------------------------
+// 4 - Magnitude type parameters
+// ------------------------------
+
+CATICkeParm_var
+  spPp7 = spFact-&gt;CreateDimension(
+CATCkeGlobalFunctions::GetParmDictionary()-&gt;FindMagnitude(&quot;VOLUME&quot;),
+                                                 &quot;volumeParam&quot;,20.5);</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Creating and Managing Literal Type Parameters</h4>
+ <p>Parameters of a given type can be created by using the 
+ CATICkeParmFactory::CreateLiteral method and specify the parameter type in the 
+ first argument. To retrieve this parameter type, you must use the 
+ CATIParmDictionary::GetxxxType method. The 
+ CATCkeGlobalFunctions::GetParmDictionary allows to retrieve the 
+ CATIParmDictionary.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+//  6 - Create literals of a given type
+//      Create a literal of integer type
+CATICkeParm_var 
+  spLast = spVolFactory-&gt;CreateLiteral(
+              CATCkeGlobalFunctions::GetParmDictionary()-&gt;GetIntegerType(),&quot;int0&quot;);
+spLast-&gt;Valuate(5);
+...
+//       Create a literal of boolean type
+spLast = spVolFactory-&gt;CreateLiteral(
+             CATCkeGlobalFunctions::GetParmDictionary()-&gt;GetBooleanType(),&quot;bool0&quot;);
+spLast-&gt;Valuate(CATCke::True);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Note that when you create a literal that way, you can't specify a value at 
+ creation. The parameter must be valuated later on. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>A volatile factory allows you to create the same types of parameters as a 
+ persistent factory. To retrieve a volatile factory, you must use the <code>
+ CATCkeGlobalFunctions::GetVolatileFactory</code> method.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="../CAALifTechArticles/CAALifUnits.htm">About Units</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ 
+ </body>
+
+</html>

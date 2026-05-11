@@ -1,0 +1,289 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Implicit Objects</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Implicit Objects</h3>
+      <em>Using the implicit factory</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The use case illustrates how to create implicit objects and how they
+      are managed by the CATIA Geometric Modeler in terms of life cycle..
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#General features on Mathematical Classes"><strong>About
+          Implicit Objects</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAGobLifeCycleImplicit Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAGobLifeCycleImplicit Do</a></li>
+            <li><a href="#How">How to Launch CAAGobLifeCycleImplicit</a></li>
+            <li><a href="#Where">Where to Find the CAAGobLifeCycleImplicit Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step- by- Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The use case explains how to create implicit objects and illustrates how
+their life cycle is managed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="General features on Mathematical Classes"></a>About Implicit
+Objects</h3>
+<p>Implicit objects are created by the implicit factory. They are automatically
+removed when all the objects that point to them are removed with the
+RemoveDependancies option of the CATICGMContainer::Remove method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAGobLifeCycleImplicit Use Case</h3>
+<p>CAAGobLifeCycleImplicit is a use case of the CAAGeometricObjects.edu
+framework that illustrates GeometricObjects framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAGobLifeCycleImplicit Do</h4>
+<p>With this use case, you create an implicit CATPlane on which an implicit
+CATPline is created. Then this CATPLine is cloned. Because the CATCloneManager
+is created with the CatCGMFullDuplicate&nbsp; option, a duplicate plane is
+created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAGobLifeCycleImplicit</h4>
+<p>To launch CAAGobLifeCycleImplicit, you will need to set up the build time
+environment, then compile CAAGobLifeCycleImplicit.m along with its
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>If you simply type CAAGobLifeCycleImplicit with no argument, the use case
+executes, but doesn't save the result in an NCGM file. If you want to save this
+result, provide the full pathname of the NCGM file to create. For example:</p>
+<p>With Windows <code>CAAGobLifeCycleImplicit</code><code> e:\ObjCreation.NCGM</code></p>
+<p>With UNIX <code>CAAGobLifeCycleImplicit</code><code> /u/ObjCreation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAGobLifeCycleImplicit Code</h4>
+<p>The CAAGobLifeCycleImplicit use case is made of a main named
+CAAGobLifeCycleImplicit.cpp located in the CAAGobLifeCycleImplicit.m module of
+the CAAGeometricObjects.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAGeometricObjects.edu\CAAGobLifeCycleImplicit.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAGeometricObjects.edu/CAAGobLifeCycleImplicit.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The main program is divided into the following steps:
+<ol>
+  <li><a href="#Creates the Geometry Factory">Creating the Standard Geometry
+    Factory</a></li>
+  <li><a href="#Creates a Bézier curve">Creating the Implicit Geometry Factory</a></li>
+  <li><a href="#Creating the Implicit Objects">Creating the Implicit Objects:
+    the CATPlane, the Initial CATPline and the Cloned CATPLine</a></li>
+  <li><a href="#Removing">Removing the two Plines with RemoveDependancies and
+    Attempting to create a New CATPline</a></li>
+  <li><a href="#Writes the Model and Closes the Factory">Writing the Model and
+    Closing the Container</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates the Geometry Factory"></a>Creating the Standard Geometry
+Factory</h4>
+<p>The geometry factory (<tt>CATGeoFactory</tt>) creates and manages all the
+CATICGMObject&nbsp; This creation is done by the global function <tt>::CATCreateCGMContainer</tt>.
+Notice that the factory can be defined by reading a NCGM file that was
+previously stored. In that case, the global function <tt>::CATLoadCGMContainer</tt>
+must be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory* piGeomFactory = ::CATCreateCGMContainer() ;
+if (NULL == piGeomFactory) return (1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates a Bézier curve"></a>Creating the Implicit Geometry Factory</h4>
+<p>The implicit factory is retrieved from the standard factory by using the
+CATGeoFactory::GetImplicitGeoFactory( ) method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory * piImplicitFactory =piGeomFactory-&gt;GetImplicitGeoFactory( );
+if (NULL == piImplicitFactory) return (1); </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creating the Implicit Objects">Creating the Implicit Objects: the
+CATPlane, the Initial CATPline and the Cloned CATPLine</a></h4>
+<p>You create implicit objects exactly like you would create standard or
+explicit objects, except that the implicit factory is to be used.</p>
+<p>There are two ways to create a cloned objects:</p>
+<ul>
+  <li>either in full duplication mode, in this case the objects referred to by
+    the object to be cloned are duplicated&nbsp; by the CATCloneManager (the
+    CATPline underlying plane is duplicated).</li>
+  <li>or in single duplication mode, in this case only the object to be cloned
+    is duplicated.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATPlane * piPlane = piImplicitFactory-&gt;CreatePlane(CATMathOIJ);
+...
+CATPLine * pPline =  piImplicitFactory-&gt;CreatePLine   (p1, p2, piPlane );
+<font color="#008000"><b>// ----- Clone pPline - Full duplication mode
+//       A duplicate plane is created because the CatCGMFullDuplicate
+//       is specified - if the default option is used, the duplicated 
+//       PLine points to the already existing plane.</b></font>
+CATCloneManager * pCloneManager= new CATCloneManager(piImplicitFactory, CatCGMFullDuplicate); 
+...
+pCloneManager-&gt;Add(pPline);
+pCloneManager-&gt;Run();
+CATICGMObject* piClonedPLine=NULL;
+piClonedPLine = pCloneManager-&gt;ReadImage(pPline);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Removing">Removing the Two Plines with RemoveDependancies and
+Attempting to Create a New CATPline</a></h4>
+<p>The RemoveDependancies option only applies to implicit objects. By using it,
+you will remove all the implicit objects no longer used by the object which is
+to be removed.</p>
+<p>Case 1</p>
+<p>CATCloneManager in full duplication option<br>
+If you remove pPline with the RemoveDependancies options, piPlane being an
+implicit object, it is removed. Any attempt to re-use&nbsp; it to create another
+Pline will result in a throw. Removing the cloned CATPLine will not change
+anything.</p>
+<p>Case 2</p>
+<p>CATCloneManager is single duplication option<br>
+if you remove pPline with RemoveDependancies but not piClonedPLine, piPlane will
+not be removed because it is still pointed to by piClonedPLine and you will be
+able to re-use it to create a new PLine.<br>
+but, if you remove pPline as well as piClonedPLine with the RemoveDependancies
+option,&nbsp; piPlane will be removed because it is no longer pointed to by
+other objects and you will not be able to re-use piPlane.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>piImplicitFactory-&gt;Remove(pPline,CATICGMContainer::RemoveDependancies);
+piImplicitFactory-&gt;Remove(piClonedPLine,CATICGMContainer::RemoveDependancies);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Writes the Model and Closes the Factory"></a>Writing the Model and
+Closing the Container</h4>
+<p>To save the model in a file, the <tt>::CATSaveCGMContainer</tt> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <tt>::CATCloseCGMContainer</tt>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <em>//
+ // Closes the container
+ //</em>	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case describes how to create implicit objects and illustrates how
+the RemoveDependancies option affects their life cycle.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

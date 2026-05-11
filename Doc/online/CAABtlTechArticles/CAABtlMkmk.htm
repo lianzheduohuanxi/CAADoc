@@ -1,0 +1,446 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Workbench Code Builder mkmk</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>RADE</h1>
+    </td>
+    <td valign="top">
+    <h2><span lang="en-us">Multi-Workspace</span> Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>The Workbench Code Builder mkmk</h3>
+    <p><em>Principles - What does it do for CAA developers?</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>mkmk is a tool that is used to build programs from source files.</p>
+    <p>CAA source files are managed and delivered in components which structure 
+    respects a particular organization (we call it the CAA FileTree).</p>
+    <p>This paper has been written to explain the main features of mkmk (and 
+    related tools) and what files and directories any mkmk user should be aware 
+    of in order to be efficient in the use of this tool.</p>
+    <ul>
+      <li><a href="#What does mkmk for you"><b>What does mkmk for you?</b></a>
+      <ul>
+        <li><a href="#Developing is more interesting than building">Developing 
+        is more interesting than building</a></li>
+        <li><a href="#Hide operating system specificities">Hiding operating 
+        system specifics</a></li>
+        <li><a href="#Support of component-oriented design">Supporting 
+        component-oriented design</a></li>
+        <li><a href="#Support of concurrent engineering">Supporting concurrent 
+        engineering</a></li>
+      </ul>
+      </li>
+      <li><a href="#Principles of use"><strong>Principles of use</strong></a>
+      <ul>
+        <li><a href="#Mkmk and the CAA FileTree">mkmk and the CAA FileTree</a></li>
+        <li><a href="#How to start with mkmk">How to start with mkmk</a></li>
+        <li><a href="#New build step checking interfaces usage">New build step 
+        checking interfaces usage</a> - <font color="#FF0000"><b><i>New !</i></b></font>
+        </li>
+        <li><a href="#Mkmk compilation phases">mkmk compilation phases</a></li>
+        <li><a href="CAABtlMANJava.htm">mkmk and Java</a></li>
+        <li><a href="CAABtlMANtlb.htm">Support of type libraries import in C++ 
+        sources for Windows</a></li>
+        <li><a href="#How to access prerequisite frameworks">How to access 
+        prerequisite frameworks</a></li>
+        <li><a href="#Run a program">Running a program</a></li>
+      </ul>
+      </li>
+      <li><a href="#Tips and hints"><strong>Tips and hints</strong></a></li>
+      <li><a href="#References"><b>References</b></a></li>
+      <li><a href="#InShort"><b>In Short</b></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<h3><a name="What does mkmk for you">What does mkmk for you?</a></h3>
+<h4><a name="Developing is more interesting than building">Developing is more 
+interesting than building</a></h4>
+<p>Before being able to see the result of what he has written, the developer 
+must build his program with the appropriate compiler and linker. This is not a 
+simple task especially when one must take into account various locations of 
+source files, multiple operating systems, several languages, multiple compilers 
+with different and numerous options and so on. Those who have experienced 
+makefiles management know the problem...</p>
+<p>With mkmk, the Workbench proposes a single tool to compile and link 
+applications wherever the user is working and whatever the
+<a href="../CAABtlQuickRefs/CAABtlMANMkmk.htm">programming language(s) 
+used</a>.</p>
+<h4><a name="Hide operating system specificities">Hiding operating system </a>
+specifics</h4>
+<p>mkmk offers the same independence from the development platforms as CNext 
+components: they offer the same interfaces and methods no matter whether you're 
+writing code for NT or Unix platforms.</p>
+<p>It's the same with mkmk:</p>
+<ul>
+  <li>same development data for all platforms</li>
+  <li>same location (workspace) for all operating systems with all platforms
+  <ul>
+    <li>source files stay at the same place</li>
+    <li>generated data is placed in its <em>operating system</em> directory</li>
+  </ul>
+  </li>
+  <li>same way of running
+  <ul>
+    <li>whatever the language(s)</li>
+    <li>whatever the operating system</li>
+  </ul>
+  </li>
+</ul>
+<p>Supported platforms and operating systems are:</p>
+<ul>
+  <li>Windows NT 4.0
+  <ul>
+    <li>Intel architecture</li>
+  </ul>
+  </li>
+  <li>Unix
+  <ul>
+    <li>AIX, HP-UX, SunOS</li>
+  </ul>
+  </li>
+</ul>
+<h4><a name="Support of component-oriented design">Supporting component-oriented 
+design</a></h4>
+<table border="0" cellspacing="6">
+  <tr>
+    <td valign="top" width="40%">mkmk recognizes the CAA organization of 
+    components, the structure of frameworks and modules has no secret for it. 
+    mkmk lets the developer work at the framework/module level, specifies what 
+    are the components he's really working on and what prerequisite frameworks 
+    he needs (prerequisite frameworks which services are used by his own 
+    frameworks).</td>
+    <td valign="top" width="60%">
+    <img border="0" src="images/fw_mod.gif" width="279" height="239"></td>
+  </tr>
+</table>
+<p>One can consider that users think of component organization and dependencies 
+while mkmk translates their meaning into concrete information on files and 
+directories. For example, a user needing services offered by framework X to 
+implement his own framework will just declare that X is a prerequisite framework 
+for him, then mkmk will find the related libraries (regarding the current 
+operating system) and header files which are needed for compilation.</p>
+<p>Two special files are strongly related to frameworks and modules and are 
+analyzed by mkmk:</p>
+<ul>
+  <li><strong>IdentityCard.h</strong> [<a href="#References">1</a>]: associated 
+  with each framework and gives the name of the prerequisite framework(s)</li>
+  <li><strong>Imakefile.mk</strong> [<a href="#References">2</a>]: associated 
+  with each module and explains what must be produced from this module<br>
+  (executable, shared library, archive, etc.)</li>
+</ul>
+<h4><a name="Support of concurrent engineering">Supporting distributed data</a></h4>
+<p>Concurrent engineering is mainly supported by the WSManager that allows 
+people to share and integrate data in workspaces. However, WSManager commands 
+are used to copy files into a workspace and it is not a good idea to have copies 
+of all frameworks in every workspaces. To avoid this situation the user can set 
+up a special path by specifying one or several workspace root directories where 
+mkmk will look in to find prerequisite frameworks.</p>
+<ul>
+  <li>The whole set of frameworks can be dispatched among number of workspaces (this 
+  is done by WSManager commands)</li>
+  <li>Any user, inside his workspace, needing prerequisite frameworks, specifies 
+  the location of workspaces containing the frameworks he needs. This 
+  information is used by mkmk to find out the corresponding libraries and header 
+  files to achieve the local compilation (prerequisite resources stay in their 
+  own workspace, no copy is performed).</li>
+  <li>Any user decides whether the access to prerequisites should be static (isolated 
+  work) or dynamic (impacted by prerequisite changes). This is explained below.</li>
+</ul>
+<h3><a name="Principles of use">Principles of use</a></h3>
+<h4>mkmk<a name="Mkmk and the CAA FileTree"> and the CAA FileTree</a></h4>
+<p>The aim of this section is to explain where to find mkmk special files and 
+what directories and files are managed by the tool.</p>
+<h5 align="center">
+<img border="0" src="images/FileTree13.gif" width="439" height="479"></h5>
+<p align="left">Note that you must have one IdentityCard.h file per framework 
+and one Imakefile.mk file per module.If your framework does not need any 
+external service, its identity card will be empty, otherwise it will contain 
+references to the corresponding frameworks. The minimum required for the 
+Imakefile.mk file is to contain the type of data which must be produced from the 
+container module: consult the <a href="CAABtlMANIdCard.htm">Imakefile.mk</a> 
+article to learn its syntax.</p>
+<p align="left">As said before, mkmk recognizes frameworks and modules inside 
+the CAA FileTree, it means that you can run mkmk in any directory (somewhere 
+under the root directory) and it will build what corresponds to this level.&nbsp;</p>
+<p align="center">&nbsp;</p>
+<h4><a name="How to start with mkmk">How to start with </a>mkmk</h4>
+<p><em>My first program!</em></p>
+<p>Before to compile a program with mkmk, some things must exist. Here is the 
+smallest file tree you can have if you use mkmk, Our example consists in a 
+single source file just to say &quot;<em>Hello World</em>&quot;.</p>
+<p><img border="0" src="images/FileTree15.gif" width="439" height="399"></p>
+<p><a name="My first compilation!"><em>My first compilation!</em></a></p>
+<p>The first thing to know is where is mkmk. Considering that mkmk has been 
+installed under &lt;mkmk&gt; directory, you should execute the following command to 
+set up your path:</p>
+<table border="1" width="100%">
+  <tr>
+    <td valign="top" bgcolor="#00FFFF"><strong>Unix platform</strong></td>
+    <td valign="top" bgcolor="#00FFFF"><strong>NT platform</strong></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50%">Open a shell window</td>
+    <td valign="top" width="50%">Open a DOS window</td>
+  </tr>
+  <tr>
+    <td valign="top" width="50%">Enrich your shell path<br>
+    <code><em>.</em> <em>&lt;mkmk&gt;</em></code>
+    <p>Ask your tools administrator to get the exact installation path.</td>
+    <td valign="top" width="50%">Enrich your DOS environment<br>
+    <code><em>&lt;mkmk&gt;</em></code>
+    <p>On NT, the exact installation path may be given under UNC format (<code>//machine/shared_name/...</code>)</td>
+  </tr>
+</table>
+<p>Once your path has been updated, next commands are the same no matter <u>
+whether you're working on NT or on UNIX</u> (AIX, HP-UX, SunOS operating 
+systems).</p>
+<p>The first compilation should be global to be sure to build all what is needed: 
+in the example below, we go under the framework we want to build and run mkmk 
+with option -a to compile all what can be find under it.</p>
+<blockquote>
+  <p><code><em>$ cd &lt;workspace_root_directory&gt;/Hello<br>
+  $ mkmk -a<br>
+  ...</em></code></p>
+</blockquote>
+<p>If our example had two modules, we could choose to compile just one of them 
+by giving its name to mkmk:</p>
+<blockquote>
+  <p><code><em>$ cd &lt;workspace_root_directory&gt;/Hello<br>
+  $ mkmk hello.m<br>
+  ...</em></code></p>
+</blockquote>
+<p>We propose the reader to consult the mkmk<a href="../CAABtlQuickRefs/CAABtlMANMkmk.htm"> 
+reference page</a> to know all about the mkmk options.</p>
+<p><em>Where is my program?</em></p>
+<table border="0">
+  <tr>
+    <td valign="top">When a compilation is successfully completed, its results (programs 
+    or libraries) can be found under a related OS directory. For our &quot;hello&quot; 
+    example, we should get a &quot;hello&quot; program on Unix platform and a &quot;hello.exe&quot; 
+    program on NT platform.</td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<h4><span lang="en-us"><a name="New build step checking interfaces usage"></a>
+New build step checking interfaces usage</span></h4>
+<font face="Arial">
+<p><span lang="en-us">A new build step has been added to mkmk to check the 
+interfaces architecture. This new step will check two rules:</span></p>
+<h5><span lang="en-us">1 - A Public interface can only use other Public 
+interfaces</span></h5>
+<p><span lang="en-us">The hierarchy of interfaces level from upper to lower is:</span></p>
+<ul>
+  <li><span lang="en-us">Public interfaces </span></li>
+  <li><span lang="en-us">Protected interfaces </span></li>
+  <li><span lang="en-us">Private interfaces </span></li>
+  <li><span lang="en-us">Local (of a module) interfaces </span></li>
+</ul>
+<p><span lang="en-us">If an interface uses a lower level header, an error 
+message is displayed. Example:</span></p>
+<p><font size="2"><span lang="en-us"><i>
+/WS/MyFW/PublicInterfaces/NameOfTheInterface.h file PUBLIC cannot use 
+/WS/MyFW/ProtectedInterfaces/UsedInterface.h as include since it is PROTECTED.<br>
+# make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h</i></span></p>
+</font>
+<h5><span lang="en-us">2 - If an interface uses an header from another 
+framework, it must be a direct prerequisite framework.</span></h5>
+<p><span lang="en-us">If an interface uses interfaces from a non direct 
+prerequisite an error message is displayed. Example:</span></p>
+<p><span lang="en-us"><i>/WS/MyFW/PublicInterfaces/NameOfTheInterface.h cannot 
+use /WS/PrereqFW/PublicInterfaces\UsedInterface.h as include since it is in 
+framework [PrereqFW] which is not a direct prerequisite<br>
+# make-ERROR: MyFW/PublicInterfaces/NameOfTheInterface.h</i></span></p>
+<p><span lang="en-us"><font color="#ff0000"><i><b>Those new messages have no 
+effect on the build time process. There is only new messages in the output of 
+the command.</b></i></font></span></p>
+</font>
+<h4>mkmk<a name="Mkmk compilation phases"> compilation phases</a></h4>
+<p>When you run mkmk (whether to compile a framework or a module), the 
+compilation goes through four main steps. These steps can be controlled using 
+specific mkmk <a href="../CAABtlQuickRefs/CAABtlMANMkmk.htm#Usage">
+options</a>.</p>
+<ol>
+  <li>Identity Card compilation<br>
+  mkmk processes the (container) framework Identity Card</li>
+  <li>Header list generation<br>
+  mkmk computes the list of headers made public by the (container) framework</li>
+  <li>Build Time Data update<br>
+  mkmk (re)generates makefiles used during step 4</li>
+  <li>The build itself<br>
+  two passes for shared libraries, to successfully build a series of them</li>
+</ol>
+<p>Note about step 4:<br>
+two passes are needed when several libraries must be produced from a framework 
+because they may call each others, so they are first built (standalone) and then 
+missing symbols are resolved. If you decide to build shared libraries one by 
+one, you may encounter some &quot;unresolved symbols&quot; problems, in such cases, run 
+mkmk on the whole framework, all modules will be treated in the right order.</p>
+<h4><a name="How to access prerequisite frameworks">How to access prerequisite 
+frameworks</a></h4>
+<p>Prerequisite frameworks are frameworks which services are used by your own 
+frameworks, by the way you need:</p>
+<ul>
+  <li>at build time, to access the corresponding header files (compilation) and 
+  libraries (link),</li>
+  <li>at run time: to access the corresponding (shared) libraries.</li>
+</ul>
+<p>The way you specify where to find prerequisite data is based on workspaces 
+and more precisely on workspace root directories:</p>
+<ul>
+  <li>before to start the first build, use the command
+  <a href="../CAABtlQuickRefs/CAABtlMkOthers.htm#mkGetPreq">mkGetPreq</a> 
+  to specify the root directory (ies)of the workspace(s) managing the framework(s) 
+  you need</li>
+  <li>during the compilation, mkmk goes under the specified directory (ies) to 
+  find the header files and libraries.</li>
+</ul>
+<p>As soon as prerequisite data are stored in a CAA FileTree, the root directory 
+is enough for mkmk, no need to specify the exact location of each files.</p>
+<p>More than one workspace can be referenced to look for prerequisite frameworks, 
+this is done by setting a &quot;prerequisite path&quot; :</p>
+<ul>
+  <li>prerequisite workspaces are specify from the most interesting to the less 
+  interesting, i.e. if a framework exists in several workspaces, take it from 
+  the first specified</li>
+  <li>in a same way, if the first workspace does not contain a prerequisite 
+  framework, mkmk will look for it in the second one, and so on, until to find 
+  it (if no one contains the framework, mkmk will raise an error).</li>
+</ul>
+<p>As anybody is able to choose his own prerequisite workspace(s), we advice the 
+users to decide what are the &quot;reference&quot; workspace(s), otherwise this situation 
+may lead to real problem during integrations of developments. A safety way for a 
+workspace to reference prerequisite frameworks is to used those defined by its 
+father workspace.</p>
+<h4><a name="Run a program">Running a program</a></h4>
+<p>Here are some pointers for those who are developing CNext applications. The 
+purpose of the following commands is to set up the user environment in order to 
+access the right resources and libraries (remember that applications are mainly 
+composed of shared libraries and that a wrong search path could lead to load a 
+wrong library at runtime):</p>
+<ul>
+  <li>
+  <a href="../CAABtlQuickRefs/CAABtlMkOthers.htm#mkCreateRuntimeView">
+  mkCreateRuntimeView</a>: this command is used to install application resources 
+  (icons, message files, ...) from every frameworks to a single place.</li>
+  <li><a href="../CAABtlQuickRefs/CAABtlMkOthers.htm#mkrun">mkrun</a>: 
+  this command runs CNext based applications with parameters, the search path is 
+  set up to access libraries, taking into account the path that was set up 
+  before, for the compilation, to access the prerequisite frameworks. This 
+  ensures that you use the same libraries both at buildtime and at runtime. This 
+  command can be used also to attach a debugger to the program.
+			<!-- IR IR-421828-V5-6R2017 -->
+			Note that with Windows, mkrun requires the folder C:\temp. Make sure this 
+			folder exists on your computer.
+  </li>
+</ul>
+<p>The mkrun command is not the only way to run programs which are developed and 
+built in a CAA FileTree but in any cases, you must take care of your search path 
+to be sure to use the right libraries.</p>
+<h3><a name="Tips and hints">Tips and hints</a></h3>
+<p>This section is intended for people having started with mkmk and who know a 
+little bit more about mkmk capabilities.</p>
+<h4>Skip mkmk compilation steps</h4>
+<p>If you know that neither the IdentityCard.h file, nor the Imakefile.mk file, 
+nor prerequisite frameworks have changed, then try the option -nomk. Derived 
+objects will be produced faster.</p>
+<blockquote>
+  <p><code><em>$ mkmk -nomk</em></code></p>
+</blockquote>
+<h4>Choose between dynamic or static access to prerequisites</h4>
+<p>We told you that
+<a href="../CAABtlQuickRefs/CAABtlMkOthers.htm#mkGetPreq">mkGetPreq</a> 
+is the command to specify the location of prerequisite frameworks, in fact there 
+is another command (named
+<a href="../CAABtlQuickRefs/CAABtlMkOthers.htm#mkCopyPreq">mkCopyPreq</a>) 
+which can be used to copy these frameworks locally. This can be useful if you 
+don't want to be impacted each time your prerequisites changed. However, the 
+choice between static and dynamic access must be decided at team level (and not 
+by each user) in order to have a proper integration.</p>
+<h3><a name="InShort"></a>In short</h3>
+<ul>
+  <li>mkmk is the CAA compiler, it is available with both NT and UNIX platforms, 
+  with same options and behavior, native compilers are hidden to simplify user's 
+  tasks.</li>
+  <li>Two files must be managed by the developer: <em>IdentityCard.h</em> is 
+  defined for each framework and specifies the prerequisite frameworks, <em>
+  Imakefile.mk</em> is a template defined for each module and specifies what 
+  must be produced by it (a shared library, an archive or an executable).</li>
+  <li>mkmk allows the user to reference and dynamically access multiple 
+  workspaces to search for prerequisite frameworks.</li>
+</ul>
+<p>Before to start, we advise the developer to consult the papers describing the 
+mkmk special files where it can find additional information on how he can 
+control the way mkmk works (see below).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAABtlMANIdCard.htm">The Identity Card Special File</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAABtlMANimakefile.htm">The Imakefile.mk Special File</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAABtlMANJava.htm">mkmk and Java</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAABtlMANtlb.htm">Support of type libraries import in C++ 
+    sources for Windows</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAABtlQuickRefs/CAABtlMANMkThemIx.htm">Summary of 
+    Commands Around mkmk</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

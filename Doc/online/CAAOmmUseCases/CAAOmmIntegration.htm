@@ -1,0 +1,899 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+  <head>
+  <meta http-equiv="Content-Language" content="fr">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Integrating a New Mechanical Feature in the CAA Exposed Model</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>Mechanical Modeler</h1>
+       </td>
+       <td valign="top">
+       <h2></h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Integrating a New Mechanical Feature in the CAA 
+       Exposed Model</h3>
+       <p><em>Performing OLE replay on features</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article shows how to integrate a new feature in the CATIA 
+       OLE-exposed model so that Visual Basic or Java Script can create and 
+       manipulate this feature. </p>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+         </li>
+         <li><a href="#UseCase"><strong>The CAAOmm Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAOmm Do</a> </li>
+           <li><a href="#How">How to Launch CAAOmm</a> </li>
+           <li><a href="#Where">Where to Find the CAAOmm Code</a> </li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a> </li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+   <p>This use case explains how to integrate a new feature so that any 
+   OLE-based scripting language can create and use this feature. It shows how to 
+   extend the default CATIA OLE model.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAOmm Use Case</h3>
+   <p>CAAOmm use case implements a basic mechanical feature, <code>
+   CAAOmmVerticalLine</code>, and provides all the 
+   mandatory implementation to be fully OLE integrated. It illustrates IDL 
+   interfaces design and MechanicalModeler OLE resources usage.</p>
+   
+   <p> The <code>CAAOmmVerticalLine</code> startup is defined in <code>CAAOmmCatalog.CATfct</code>
+   file. It is derives from <code>GSMGeom</code> (SuperTypeName) which is declared public 
+   and derivable in the CATHybridShape.CATSpecs file. 
+   Our vertical line feature 
+   has two &quot;in&quot; attributes, which are features (<i>tk_specobject</i>) from the 
+   Vertical Line standpoint. They are actually be point features, hence their 
+   name of &quot;Point 1&quot; and &quot;Point2&quot;.
+</p>   
+ 
+     <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   
+   <h4><a name="What"></a>What Does CAAOmm Do</h4>
+   <p>CAAOmm includes a simple mechanical feature, drawing a vertical line from 
+   a point and limited by the normal projection on another one in the XY plane.</p>
+   <p>This feature is created by a Visual Basic script.</p>
+   <p><b>Snapshot of the result</b></p>
+   <p><img border="0" src="images/CAAOmmUseCaseSnapshot.jpg" width="447" height="320"></p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   
+   <h4><a name="How"></a>How to Launch CAAOmm</h4>
+   <p>The sample contained in CAAOLE4MecMod.edu is intended to be used through a 
+   Visual Basic Macro.</p>
+   <p>First, you have:</p>
+   <ul>
+     <li>To compile the sample with mkmk -aug [<a href="#References">1</a>] </li>
+     <li>To generate the runtime view with mkCreateRuntimeView [<a 
+     href="#References">1</a>]</li>
+   </ul>
+   <p>Once all the modules contained in CAAOLE4MecMod.edu have been compiled, 
+   you have to launch CATIA and properly configure the TypeLib: CATIA has to 
+   know about the new OLE object contained in the sample TypeLib named 
+   OmmTypeLib, this .tlb file is located under your workspace runtime view 
+   (.../code/bin).</p>
+   <p>Thus, you should import this library with the &quot;Option&quot; Menu such as shown 
+   below.</p>
+   <p><img border="0" src="images/CAAOmmSettings.jpg" width="600" height="417"></p>
+   <p>Then you should execute the following macro thru the Tools menu:</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>Language=&quot;VBSCRIPT&quot;
+
+Sub CATMain()
+  Dim doc0 As Document
+  Set doc0 = CATIA.Documents.Add(&quot;Part&quot;)
+
+  Dim body1 As HybridBody
+  Set body1 = doc0.Part.HybridBodies.Add()
+
+  Dim point1 As HybridShapePointCoord
+  Set point1 = doc0.Part.HybridShapeFactory.AddNewPointCoord( 20., 50., 0. )
+  body1.AppendHybridShape point1
+
+  Dim point2 As HybridShapePointCoord
+  Set point2 = doc0.Part.HybridShapeFactory.AddNewPointCoord( -30., 80., 0. )
+  body1.AppendHybridShape point2
+
+  doc0.Part.InWorkObject = point2
+  doc0.Part.Update
+
+  Dim Reference1 As Reference
+  Set Reference1 = doc0.Part.CreateReferenceFromGeometry ( point1 )
+
+  Dim Reference2 As Reference
+  Set Reference2 = doc0.Part.CreateReferenceFromGeometry ( point2)
+
+  Dim CustFact0 As Factory
+  Set CustFact0 = doc0.Part.GetCustomerFactory(&quot;OmmFactory&quot;)
+
+  Dim line1 As OmmVerticalLine
+  Set line1 = CustFact0.AddNewVerticalLine( Reference1, Reference2 )
+  body1.AppendHybridShape line1
+
+  line1.Compute
+
+End Sub</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   
+   <h4><a name="Where"></a>Where to Find the CAAOmm Code</h4>
+   <p>The CAAOmm use case is made of several modules located in the 
+   CAAOLE4MecMod.edu framework:</p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAOLE4MecMod.edu\</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAOLE4MecMod.edu/</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <table width="100%">
+     <tr>
+       <td colspan="2">
+       <p align="center">Modules Repartition</td>
+     </tr>
+     <tr>
+       <td>CAAOmmInterfaces.m</td>
+       <td>Module containing the directives to process the IDL interfaces (TIE 
+       and IID)</td>
+     </tr>
+     <tr>
+       <td>CAAOmmTypeLib.m</td>
+       <td>Module containing the directives to create the TypeLib of this sample 
+       exposed model objects</td>
+     </tr>
+     <tr>
+       <td>CAAOmmImpl.m</td>
+       <td>Module handling all the interface implementations</td>
+     </tr>
+     <tr>
+       <td colspan="2">
+       <p align="center">Source files Repartition</td>
+     </tr>
+     <tr>
+       <td>CAAIAOmmFactory.idl</td>
+       <td>IDL interface defining the sample OLE exposed factory</td>
+     </tr>
+     <tr>
+       <td>CAAIAOmmVerticalLine.idl</td>
+       <td>IDL interface defining the OLE exposed vertical line behavior</td>
+     </tr>
+     <tr>
+       <td>CAAOmmTypeLib.tlb</td>
+       <td>TypeLib definition including OmmFactory and OmmVerticalLine exposed 
+       objects</td>
+     </tr>
+     <tr>
+       <td>CAAEOmmFactory.cpp</td>
+       <td>Extension of the Part document root element implementing 
+       CAAIAOmmFactory interface</td>
+     </tr>
+     <tr>
+       <td>CAAEOmmVerticalLine.cpp</td>
+       <td>Extension of the VerticalLine feature implementing 
+       CAAIAOmmVerticalLine interface</td>
+     </tr>
+     <tr>
+       <td>CAAEOmmBuildVerticalLine.cpp</td>
+       <td>Extension of the VerticalLine feature implementing the CATIBuild 
+       interface (geometrical valuation)</td>
+     </tr>
+     <tr>
+       <td>CAAOLE4MecMod.edu.dico</td>
+       <td>Object Modeler dictionary</td>
+     </tr>
+     <tr>
+       <td>CAAOLE4MecMod.edu.iid</td>
+       <td>Object Modeler dictionary extension (meta objects names, aliases and 
+       IID mapping)</td>
+     </tr>
+     <tr>
+       <td>CAAOmmCatalog.CATfct</td>
+       <td>The feature catalog file describing CAAOmmverticalLine Startup</td>
+     </tr>
+
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   
+   <h3><a name="Step"></a>Step-by-Step</h3>
+   <table width="100%">
+     <tr>
+       <th>#</th>
+       <th>Step</th>
+       <th>Where</th>
+     </tr>
+     <tr>
+       <td valign="top"><a href="#Step1">1</a></td>
+       <td valign="top">Designing the Exposed Model</td>
+       <td valign="top">N/A</td>
+     </tr>
+     <tr>
+       <td valign="top"><a href="#Step2">2</a></td>
+       <td valign="top">Creating IDL Interfaces</td>
+       <td valign="top">PublicInterfaces</td>
+     </tr>
+     <tr>
+       <td valign="top"><a href="#Step3">3</a></td>
+       <td valign="top">Creating a Type Library</td>
+       <td valign="top">CAAOmmTypeLib.m</td>
+     </tr>
+     <tr>
+       <td valign="top"><a href="#Step4">4</a></td>
+       <td valign="top">Implementing IDL Interfaces</td>
+       <td valign="top">CAAEOmmFactory.cpp and CAAEOmmVerticalLine.cpp</td>
+     </tr>
+   </table>
+  
+ 
+  
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   
+   <h4><a name="Step1"></a>Designing the Exposed Model</h4>
+   <p>Now that we have a brand new feature, we need to add some code around it 
+   in order to integrate it within the world of automation objects that Shape 
+   Design exposes. Here is a schematic view, expressed in UML, of the objects 
+   involved in that process. The blue boxes depict the objects that we will add 
+   as part of this use case.</p>
+   <p><img border="0" src="images/CAAOmmUseCaseModel.jpg" width="722" height="632"></p>
+   <p>Let us first isolate the objects in this schema that are directly exposed 
+   to the automation world. Those are the ones whose name begins with &quot;CATIA&quot;.</p>
+   <p>The CATIAPart is the top level automation object here. It aggregates a 
+   collection of CATIAHybridBody, named CATHybridBodies, which in turn 
+   aggregates a collection of CATIAHybridShape, names CATIAHybridShapes. This 
+   implements the hierarchy of containers-and-objects that is classical in 
+   automation:</p>
+   <pre>Part
+  HybridBodies
+    HybridBody
+      HybridShapes
+        HybridShape</pre>
+   <p>Underneath this hierarchy of automation objects, there is a parallel 
+   hierarchy of features, that are not visible from automation, but actually 
+   implement in the Mechanical Modeler what those automation objects can do. 
+   These are:</p>
+   <pre>MechanicalPart (corresponds to HybridBodies)
+  GSMTool (corresponds to HybridBody and HybridShapes)
+    GSMGeom (corresponds to HybridShape: any wireframe/surfacic element)</pre>
+   <p>Last, the CATIAPart object can instantiate a CATIAFactory object (through 
+   GetCustomerFactory()), which in turn can instantiate any automation object 
+   that may be needed, in particular instances of CATIA HybridShape.</p>
+   <p>What about adding our Vertical Line feature to this? What we have done so 
+   far is creating a new feature with GSMGeom as father. This is the blue box in 
+   the lower left corner.</p>
+   <p>The first step is to enrich this feature so that it implements a newly 
+   designed automation interface through which it can be manipulated from the 
+   automation world. This interface is named CAAIAOmmVerticalLine (CAAIA is CAA 
+   counterpart to CATIA as prefix for automation interfaces). This interface has 
+   got four methods for manipulating the Vertical Line by the two points that 
+   constrain it (blue box at bottom right). Since a Vertical Line is a kind of 
+   HybridShape, the CAAIAOmmVerticalLine interface derives from the 
+   CATIAHybridShape interface, so that all methods that apply to HybridShape 
+   also apply to our line. The script sample for example uses 
+   CATIAHybriShape::Compute to update the newly Created CAAOmmVerticalLine.</p>
+   <p>Being a CATIAHybridShape also allows our feature to be put in the 
+   collection of Hybrid Shapes of an Hybrid Body, allowing to retrieve it 
+   through the same container-object access mechanism as the other Hybrid Shape 
+   features. </p>
+   <p>The code that implements this interface on the CAAOmmVerticalLine feature 
+   is beared by an extension to it, named CAAEOmmVerticalLine (bottom center).</p>
+   <p>As our newly created feature inherits from GSMGeom, it inherits mechanical 
+   behaviors including an implementation for CATIAHybridShape.</p>
+   <p>The last step consists in extending our automation model so that instances 
+   of CAAIAOmmVerticalLine can actually be created. This is done by providing 
+   another automation factory, called CAAIAOmmFactory. This factory's single 
+   method, AddNewVerticalLine(), instantiates a CAAIAOmmVerticalLine.</p>
+   <p>The implementation code for CAAIAOmmFactory is beared by the 
+   CAAEOmmFactory class, which is an extension to the MechanicalPart Feature. 
+   This is mandatory in order for your factory to be found at run time.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Step2"></a>Creating IDL Interfaces</h4>
+   <p>We are now going to implement the interfaces we need as designed in the 
+   previous step. Since these interfaces are to be used in a variety of 
+   programming languages, such as Visual Basic or JavaScript, it is not written 
+   in a specific language, but in IDL (Interface Definition Language), a 
+   language which is specific to the definition of interfaces that can be used 
+   in a multi-languages environment. Here is the source file for the factory 
+   interface:</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>interface CAAIAOmmFactory : CATIAFactory
+{
+  HRESULT AddNewVerticalLine(in CATIAReference ipiReferenceOnPoint1,
+                             in CATIAReference ipiReferenceOnPoint2,
+                             out /*IDLRETVAL*/ CAAIAOmmVerticalLine opiVerticalLineOnLine);
+};
+
+// Interface name : CAAIOmmFactory
+#pragma ID CAAIAOmmFactory &quot;DCE:c726e680-1538-11d4-9eea00508b675465&quot;
+#pragma DUAL CAAIAOmmFactory
+
+// VB object name : OmmFactory (Id used in Visual Basic)
+#pragma ID OmmFactory &quot;DCE:c726e681-1538-11d4-9eea00508b675465&quot;
+#pragma ALIAS CAAIAOmmFactory OmmFactory</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The IDL is close to common object programming languages such as Java or 
+   C++. Most noticeable differences are:</p>
+   <ul>
+     <li>Argument direction (in, out) must be declared </li>
+     <li>A special comment, /* IDLRETVAL */, can be inserted before the last out 
+     argument of an interface. It allows this argument to be used as a lvalue in 
+     an expression, like in</li>
+   </ul>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+  dim myLine as OmmVerticalLine;
+  OmmVerticalLine = AddNewVerticalLine(PStart, PEnd);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The last four lines of the file are #pragmas, ie compiler directives. The 
+   first #pragma (ID) is used to associate the interface name as defined for 
+   human usage (&quot;OmmFactory&quot;) with a GUID (Globally Unique Identifier), which is 
+   used by the system to unically indentify your interface. That way, even if 
+   another interface is named OmmFactory elsewhere, no confusion can occur.</p>
+   <p>The DUAL #pragma declares that this interface can be used in late binding 
+   mode allowing access by automation controlers like VBScript.</p>
+   <p>The ALIAS #pragma is a commodity pragma. It actually defines a shorter 
+   name (&quot;OmmFactory&quot;) for the interface complete name (&quot;CAAIAOmmFactory&quot;). That 
+   way, the entity represented by this interface can be handled in Visual Basic 
+   with type &quot;OmmFactory&quot; instead of &quot;CAAIAOmmFactory&quot;), which improves the code 
+   readability.</p>
+   <p>Before being used, this alias should be declared as any other ID with a 
+   GUID.</p>
+   <p>You can find more information on the IDL language and the automation 
+   mechanisms in [<a href="#References">2</a>] and [<a href="#References">4</a>].</p>
+   <p>To complete the mechanism allowing to retrieve your factory, you need to 
+   put the following line in a file suffixed .iid, in the dictionary. Here it's 
+   called CAAOLE4MecMod.edu.iid.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>{c726e680-1538-11d4-9eea-00508b675465} CAAIAOmmFactory OmmFactory</pre>
+       </td>
+     </tr>
+   </table>
+   <p>It contains the GUID of the automation class, its name and the name of the 
+   feature that bears its implementation.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>interface CAAIAOmmVerticalLine : CATIAHybridShape
+{
+  #pragma PROPERTY Point1
+
+  HRESULT get_Point1(out /*IDLRETVAL*/ CATIAReference opiReferenceOnPoint1);
+  HRESULT put_Point1(in CATIAReference ipiReferenceOnPoint1);
+
+  #pragma PROPERTY Point2
+  HRESULT get_Point2(out /*IDLRETVAL*/ CATIAReference opiReferenceOnPoint2);
+  HRESULT put_Point2(in CATIAReference ipiReferenceOnPoint2);
+};
+
+// Interface name : CAAIOmmVerticalLine
+#pragma ID CAAIAOmmVerticalLine &quot;DCE:2ea944f0-1539-11d4-9eea00508b675465&quot;
+#pragma DUAL CAAIAOmmVerticalLine
+
+// VB object name : OmmVerticalLine (Id used in Visual Basic)
+#pragma ID OmmVerticalLine &quot;DCE:2ea944f1-1539-11d4-9eea00508b675465&quot;
+#pragma ALIAS CAAIAOmmVerticalLine OmmVerticalLine</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The IDL code for the second interface follows the same rules, but 
+   introduces one more #pragma, the PROPERTY #pragma. Such a #pragma must 
+   precede two methods definitions whose signature is put_* and get_* 
+   respectively. The two methods must have one argument, in and out 
+   respectively, and the get_* method must qualify its argument with /* 
+   IDLRETVAL */.</p>
+   <p>Given those writing conventions, what you get is something that, despite 
+   the fact that the interface is totally method-based and does not hold any 
+   instance data by itself, appears to the scripting client as an instance data 
+   beared by the interface (hence the name 'property'). As a result, such VBasic 
+   code becomes possible:</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>...
+  dim myLine as OmmVerticalLine;
+  dim PStart as Point;
+  dim rPStart as Reference;
+  rPStart = Pstart;
+  myLine.Point1 = rPStart;
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p>What actually happens is an encapsulation by the interface of all the 
+   calls to get_Point1 and put_Point1 that are necessary to place a reference on 
+   PStart as the starting point for our OmmVerticalLine. The net result is a 
+   much simpler and straightforward client VBasic code.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Step3"></a>Creating a Type Library</h4>
+   <p>IDL source is not used as is by the languages that use it as a medium to 
+   resources programmed in other languages. It must be compiled first, and the 
+   result of this compilation is called a <i>typelib</i>. Creating a typelib is 
+   useful for two reasons:</p>
+   <ol>
+     <li>It allows the correctness of IDL source to be verified, producing 
+     build-time errors, always better than run-time errors </li>
+     <li>the typelib is a much more efficient interface information repository 
+     that the raw IDL source for clients</li>
+   </ol>
+   <p>So, the next step is to compile our two interfaces into a typelib. 
+   Creating a new typelib requires a little directives to be given to our IDL 
+   compiler thanks to a couple of new #pragmas. Here is the source code for the 
+   file containing those directives. This file has a .tlb extension and is to be 
+   put in the src directory of a specific module whose Imakefile.mk type is 
+   TYPELIB. Here it's called CAAIAOmmTypeLib.tlb in the CAAOllTypeLib.m module.</p>
+   <table class="code">
+     <tr>
+       <td>
+       <pre>#pragma REPID CAAOmm &quot;DCE:872b73b0-1538-11d4-9eea00508b675465&quot;
+#pragma REPBEGIN CAAOmm
+
+#pragma REPREQ InfTypeLib
+#pragma REPREQ MecModTypeLib
+
+#include &quot;CAAIAOmmVerticalLine.idl&quot;
+#include &quot;CAAIAOmmFactory.idl&quot;
+
+#pragma REPEND CAAOmm</pre>
+       </td>
+     </tr>
+   </table>
+   <p>The REPID #pragma names our typelib and assign it a GUID, just like we did 
+   previously for interfaces and for the same reasons.</p>
+   <p>The CAAOmm typelib code itself is comprised between the delimiting #pragmas 
+   REPBEGIN and REPEND. It includes two sections:</p>
+   <ol>
+     <li>REPREQ #pragmas indicate that the newly defined typelib uses interfaces 
+     previously defined in other typelibs (&quot;InfTypeLib&quot; and &quot;MecModTypeLib&quot;). 
+     That way, definition of interfaces like CATIAReference can be used within 
+     CAAOmm while being defined elsewhere. </li>
+     <li>#include directives import in that typelib definition file the IDL 
+     definition for the newly defined interfaces.</li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Step4"></a>Implementing IDL Interfaces</h4>
+   <p>At this point, we are done with what is necessary to allow scripting 
+   languages to access our C++ code for the VerticalLine feature, that is, IDL 
+   interface definition and a typelib as their repository.</p>
+   <p>What's next? The actual C++ implementation of the interfaces that we have 
+   'promised' to the external world via the typelib. This is explained in six 
+   steps:</p>
+   <ol type="a">
+     <li>Create a C++ class to implement the CAAIAOmmFactory interface </li>
+     <li>Implement get_Name for this class </li>
+     <li>Implement get_Parent for this class </li>
+     <li>Implement the specific method of this interface: CreateVerticalLine
+     </li>
+     <li>Create a C++ class to implement the CAAIAOmmVerticalLine interface, and 
+     implement get_Name and get_Parent for this class </li>
+     <li>Implement the specific methods of this interface</li>
+   </ol>
+   <p>And this is what we are going to do now:</p>
+   <ol type="a">
+     <li>we start by the Ommfactory interface
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+#include &quot;TIE_CAAIAOmmFactory.h&quot;
+TIE_CAAIAOmmFactory(CAAEOmmFactory);
+
+CATImplementClass( CAAEOmmFactory,
+                   DataExtension,
+                   CATBaseUnknown,
+                   MechanicalPart );
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The IDL compilation of our IDL interfaces has produced a 
+     TIE_CAAIAOmmFactory.h C++ header file that we are going to use here for the 
+     definition of methods that must be provided as implementations for the IDL 
+     interface methods. CAAEOmmFactory is the name of the C++ class that we 
+     provide as the implementation class for the IDL OmmFactory interface.</p>
+     <p>As per our previous design (see <a href="#Step2">Designing The Exposed 
+     Model</a> above), CAAEOmmFactory is an extension (CAA<b>E</b>) of the 
+     MechanicalPart feature. We can now begin to implement its methods, 
+     beginning by get_Name().</li>
+     <li>We can now begin to implement its methods,beginning by get_Name().
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+HRESULT CAAEOmmFactory::get_Name(CATBSTR &amp; oName)
+{
+  // Instance is a singleton : name is the meta-class alias name
+  CATUnicodeString str (&quot;<b>OmmFactory</b>&quot;);
+  str.ConvertToBSTR(&amp;oName);
+  return S_OK;
+}
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>Our factory must provide a get_Name() method because it inherits from 
+     the anyObject interface through its CATIAFactory parent (in other words, 
+     each scripting object must be able to name itself).</p>
+     <p>As an extension of the MechanicalPartFeature feature that is unique 
+     within a Part document, there will be only one CAAIOmmFactory per document. 
+     We so choose to return always the same name: OmmFactory.</li>
+     <li>There is another property that is common to all automation objects, the 
+     Parent property. This is the goal of the next methods, still inherited from 
+     anyObject interface.
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+HRESULT __stdcall CAAEOmmFactory::get_Parent(CATBaseDispatch *&amp;opiBaseOnOLEParent)
+{
+  HRESULT rc=QueryInterface(IID_CATIAPart, (void**) &amp;opiBaseOnOLEParent);
+  return rc;
+}
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The data model exposed through automation is basically an aggregation 
+     model. As a result, every exposed object appears as aggregated within a 
+     higher level entity: a part contains a collection of its bodies, within 
+     which each body contains a collection of its features, and so on. The 
+     exposed data model is therefore organized as a tree. For any node in that 
+     tree, except the top node, the Parent property is expected to return the 
+     aggregating node above its target object. This can sometimes make this 
+     property non trivial to implement, if the actual underlying data model is 
+     not organized as an aggregation model, as an automation client expects.</p>
+     <p>Here the situation is not desperate, though. Since the OmmFactory can be 
+     obtained from the Part through GetCustomerFactory(), and this is the only 
+     path to the factory, the OmmFactory appears to be contained in the Part. 
+     Therefore, when asked for its parent, the OmmFactory should return the Part 
+     object.</p>
+     <p>However, behind the scenes, ie in the C++ world, the OmmFactory and the 
+     Part are actually one single object, or, more precisely, two extensions of 
+     the same Object Modeler component, the Mechanical Part. Consequently, the 
+     OmmFactory, to return its associated Part, returns itself cast to a 
+     CATIAPart interface thanks to an appropriate QueryInterface().</li>
+     <li>After paying this tribute to the Automation world by implementing 
+     Parent and Name properties, we can now skip to the actual job of this 
+     factory: instantiating VerticalLine feature objects. This longer method is 
+     split is severel steps, here is the first one.
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+HRESULT __stdcall CAAEOmmFactory::AddNewVerticalLine(
+               CATIAReference * ipiReferenceOnPoint1,
+               CATIAReference * ipiReferenceOnPoint2,
+               CAAIAOmmVerticalLine *&amp; opiVerticalLineOnLine)
+{
+  HRESULT rc = E_FAIL;
+  opiVerticalLineOnLine=NULL;
+
+  //-------------------------------------------------------------------------------
+  // -1- Getting a pointer on CATIContainer
+  //-------------------------------------------------------------------------------
+  <b>CATIPartRequest</b> *piPartOnThis = NULL;
+  rc = QueryInterface( IID_CATIPartRequest, ( void**) &amp;piPartOnThis );
+  ...
+  CATBaseUnknown_var spBUOnMainTool ;
+  rc = piPartOnThis-&gt;<b>GetMainBody</b>(&quot;&quot;,spBUOnMainTool);
+  ...
+  CATISpecObject_var spSpecOnMainTool = spBUOnMainTool ;
+  CATIContainer_var spiContainer ( spSpecOnMainTool-&gt;<b>GetFeatContainer</b>());
+
+
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+
+ <p> The goal of this first step is to access the container in which we will create 
+     instances of our features. 
+     <ul>
+      <li>We first get a <i>CATIPartRequest</i> interface on ourselves. </li>
+      <li>The <i>CATIPartRequest</i> interface gives access to the part's main 
+       body through <code>GetMainBody</code> </li>
+      <li>From the main body, <code>GetFeatContainer</code> gives access to the 
+       document internal container in which its features are contained. </li>
+     </ul>
+     </p>
+     
+       <table class="code">
+       <tr>
+         <td>
+         <pre>...
+
+  //-------------------------------------------------------------------------------
+  // -2- Creating an instance of the <code>CAAOmmVerticalLine startup</code>
+  //-------------------------------------------------------------------------------
+  
+  CATUnicodeString StartupType = "CAAOmmVerticalLine";
+  CATUnicodeString ClientId = "CAA_OLE4MecMod";
+  CATUnicodeString StorageName = "CAAOmmCatalog.CATfct";
+  CATOsmSUHandler OmmSUHandler(StartupType, ClientId, StorageName);
+  CATISpecObject_var spSpecOnInstance = NULL_var;
+    
+  rc = OmmSUHandler.Instanciate(spSpecOnInstance, piContainerOnThis);
+   
+  if( FAILED(rc) )
+    return E_FAIL;
+
+
+  //-------------------------------------------------------------------------------
+  // -5- Setting default values for the attributes of the instance
+  //-------------------------------------------------------------------------------
+  rc = spSpecOnInstance-&gt;QueryInterface( IID_CAAIAOmmVerticalLine,
+                                         (void**) &amp;opiVerticalLineOnLine );
+ 
+  if( FAILED(rc) )
+   return E_FAIL;
+
+  rc = opiVerticalLineOnLine-&gt;put_Point1( ipiReferenceOnPoint1 );
+  rc = opiVerticalLineOnLine-&gt;put_Point2( ipiReferenceOnPoint2 );
+
+  return rc;
+}
+
+</pre>
+         </td>
+       </tr>
+     </table>
+     
+     <p> The reference to 
+     points received in arguments are set onto the instance thanks to the 
+     put_Point1() and put_Point2() method, for which the next section details 
+     the implementation.</li>
+     <li>Now that the CAAIAOmmFactory is implemented, the next step is to 
+     implement the CAAIAOmmVerticalLine interface itself. The first section of 
+     this implementation consists in providing code for the standard get_Name() 
+     and get_Parent() methods:
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+#include &quot;TIE_CAAIAOmmVerticalLine.h&quot;
+TIE_CAAIAOmmVerticalLine( CAAEOmmVerticalLine);
+
+CATImplementClass( CAAEOmmVerticalLine,
+                   DataExtension,
+                   CATBaseUnknown,
+                   CAAOmmVerticalLine );
+
+HRESULT CAAEOmmVerticalLine::get_Name(CATBSTR &amp; oName)
+{
+  HRESULT rc = E_FAIL;
+  CATIAlias* ipAliasOnThis = NULL;
+
+  rc=QueryInterface(IID_<b>CATIAlias</b>, (void**) &amp;ipAliasOnThis);
+  if (SUCCEEDED(rc)) {
+    CATUnicodeString str = ipAliasOnThis-&gt;<b>GetAlias</b>();
+    ipAliasOnThis-&gt;Release();
+    str.ConvertToBSTR (&amp;oName);
+  }
+  return rc;
+}
+
+HRESULT __stdcall CAAEOmmVerticalLine::get_Parent(CATBaseDispatch *&amp; opiBaseOnOLEParent)
+{
+   HRESULT rc=E_FAIL;
+   opiBaseOnOLEParent=NULL;
+
+   <b>CATISpecObject</b>* ipSpecObjectOnThis = NULL;
+   rc=QueryInterface(IID_CATISpecObject, (void**) &amp;ipSpecObjectOnThis);
+   if (SUCCEEDED(rc)) { 
+      CATISpecObject * pParent = ipSpecObjectOnThis-&gt;<b>GetFather</b>();
+      ipSpecObjectOnThis-&gt;Release();
+      ipSpecObjectOnThis = NULL ;
+
+      while ((NULL != pParent) &amp;&amp; (NULL == opiBaseOnOLEParent)) 
+      {
+         CATISpecObject * pParentCurrent = pParent ;
+         rc =  pParentCurrent-&gt;QueryInterface(IID_<b>CATIAHybridShapes</b>, (void**) &amp;opiBaseOnOLEParent);
+
+         pParent =  pParentCurrent -&gt; GetFather();
+
+         pParentCurrent-&gt;Release();
+         pParentCurrent = NULL ;
+      }
+   }
+   return rc;
+}
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The name of the object is retrieved in a standard way by querying it for 
+     the support of CATIAlias, the standard naming interface, and using its 
+     GetAlias() method for retrieving the actual name.</p>
+     <p>The get_Parent() method is implemented by using the parent-child 
+     relationship contained in the feature modeler. As any feature, our Vertical 
+     Line implements the <i>CATISpecObject</i> interface. This interface 
+     provides the GetFather() method that returns the mechanical feature 
+     aggregating for <i>this.</i></p>
+     <p>However, this direct parent may not be a suitable parent for the 
+     automation world. Remember, the automation world presents a data model that 
+     is often simpler than the actual underlying data modeler. In this case, 
+     what aggregates the Vertical Line in the automation view that we want to 
+     provide is a collection of Hybrid Shapes. In the underlying model, the 
+     object that correspond to this collection may exist not only as a direct 
+     parent to the Vertical Line, but also as its ancestor up the parent-chidren 
+     tree.</p>
+     <p>This is why we iterate from parent to grand parent, etc., in the last 
+     section of this code, until an object implementing CATIAHybridShapes is 
+     finally found, and we return it as the father for our Vertical Line.</li>
+     <li>The next methods to implements are the methods for getting and putting 
+     the points that are the input specs for our line. Here is the code for 
+     put_Point1(), the three others being very similar:
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+HRESULT __stdcall CAAEOmmVerticalLine::put_Point1(CATIAReference * ipiReferenceOnPoint1)
+{
+   HRESULT rc=E_FAIL;
+
+   <b>CATISpecAttrAccess</b> * piSpecAttrAccessOnThis=NULL;
+   rc=QueryInterface(IID_CATISpecAttrAccess, (void**) &amp;piSpecAttrAccessOnThis);
+   ...
+
+   <b>CATISpecAttrKey</b>* piAttrKeyOnSpec = piSpecAttrAccessOnThis-&gt;<b>GetAttrKey</b>(&quot;Point1&quot;);
+   ...
+
+   CATISpecObject_var spSpecOnPoint1;
+   rc = ::<b>GetSpecFromReference</b> (ipiReferenceOnPoint1, spSpecOnPoint1); 
+   ...
+
+   piSpecAttrAccessOnThis-&gt;<b>SetSpecObject</b>(piAttrKeyOnSpec,spSpecOnPoint1);
+   ...
+   return rc;
+}</pre>
+         </td>
+       </tr>
+     </table>
+     <p>We begin by retrieving a pointer of <i>CATISpecAttrAccess</i>, on <i>
+     this, </i>ie the Vertical Line. Then we use it to access the &quot;Point1&quot; 
+     attribute.&nbsp;</p>
+     <p>In this method we get the input point ipiReferenceOnPoint1 not as a 
+     feature, but as a CATIAReference. CATIAReferences are used because they 
+     provide a stable handle onto objects that are manipulated within scripts, 
+     whether those objects represent actual underlying model objects or only 
+     part of them. So we convert the reference into a real Feature through a 
+     call to <code>GetSpecFromReference</code>(), which manages the link from a 
+     reference to its referent.</p>
+     <p>The last step consists in assigning the feature we got from 
+     GetSpecFromReference() as attribute to the vertical line.</li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>This article explains what has to be done in order to integrate a new 
+   feature added to a CATIA application to the automation exposed view for that 
+   application. As a result, the new feature can be manipulated as the native 
+   features from within scripting environments such as Visual Basic.</p>
+   <p>The first step is to 'plug' the new feature and its associated factory as 
+   new automation interfaces in the application automation model. From there, 
+   where those new behaviors should be implemented in the underlying, actual 
+   application model can be deduced.</p>
+   <p>Then, automation interfaces for the new feature and its factory are 
+   written using the IDL language, and appropriate dictionary declaration is 
+   produced. Some more additional IDL code gathers those new IDL objects 
+   definitions within a source code TypeLib, which is compiled into an 
+   executable TypeLib that will be used by scripting languages for knowing about 
+   those new types at run time.</p>
+   <p>The last part consists in implementing the new IDL interfaces in the 
+   underlying model. In addition to the methods defined in the interfaces 
+   themselves, the implementations must provide code for methods get_Name() and 
+   get_Parent(), that all automation objects must implement. Thanks to 
+   get_Parent(), the exposed automation model can appear as having a 
+   parent-child structure which is somehow different (and most often, simpler) 
+   than the one existing in the underlying model.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td>
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td>
+       <a href="../CAASysTechArticles/CAASysAutomationItf.htm">
+       Creating Interfaces for Automation</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[3]</td>
+       <td>
+       <a href="../CAASysTechArticles/CAASysAutomationImpl.htm">
+       Implementing Interfaces for Automation</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[4]</td>
+       <td>
+       <a href="../CAASysTechArticles/CAASysIDLCompiler.htm">
+       The CAA V5 IDL Compiler</a></td>
+     </tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>2</strong> [Dec 2003]</td>
+       <td valign="top">StartUp creation modification</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,373 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Analysis Feature Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Analysis Feature Overview</h3>
+      <em>A full example to add your own analysis features</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAniCatalog, CAAAniWorkbench and
+      CAAAniAeroDtransition use cases.
+      <p>These use cases goal is to show a scenario for integrating a new set of
+      data inside the CATIA Analysis environment. It explains how to create and
+      integrate some <b>New Analysis Features </b>for an import scenario: the <b>AeroDynamic
+      Set</b>.&nbsp;
+      <ul>
+        <li><strong><a href="#What">What You Will Learn With These Use Cases</a></strong></li>
+        <li><a href="#scenario"><b>Scenario</b></a></li>
+        <li><a href="#Use Case"><strong>The Use Cases</strong></a>
+          <ul>
+            <li><a href="#What does this Use Cases do">What Do These Use Cases
+              Do</a></li>
+            <li><a href="#AboutImp">About Import</a></li>
+            <li><a href="#link">Keeping a Link to File from a Feature</a></li>
+            <li><a href="#User">Where Each Object Will Interact With User
+              Interface</a></li>
+            <li><a href="#Where">Where to Find These Use Cases</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#Refs">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="What"></a>What You Will Learn With These Use Cases</h3>
+<p>These use cases are intended to help you make your first steps in creating a
+new <b>Analysis Feature</b> using the Feature Modeler and Analysis
+Infrastructure frameworks.
+<p>The main intent is to explain:</p>
+<ul>
+  <li>How to define a new <b>analysis workbench</b>.</li>
+  <li>How to <b>define features</b> and how to store their definitions as
+    Start-Up's&nbsp; in a <b>startup Catalog file.</b></li>
+  <li>How to <b>reuse these Start-Up's</b> to create feature instance by
+    implementing an Analysis transition. The transition will be introduced in
+    order to customize the document for an analysis kind.</li>
+  <li>How to <b>Implement the import</b> of an external data inside the Analysis
+    document.</li>
+  <li>How to <b>manage the access to the physical data</b> that are associated
+    to this kind of analysis.</li>
+</ul>
+<p>These use cases include some knowledge from various V5 Frameworks, such as
+the Feature Modeler framework, or the Dialog and DialogEngine Frameworks. Their
+intent is to focus on the use of the Analysis Infrastructure frameworks.
+A&nbsp;prerequisite knowledge of other Frameworks may be required to fully
+understand this use case. Some links with other CAA use cases will help you
+navigate among them.
+<p>Before getting to the tutorials, it is important to get an understanding of <b>the
+use case scenario</b>. This is the goal of the next section.&nbsp;</p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="scenario"></a>The Use Case Scenario</h3>
+<p>An external solver computes velocity vectors expressed at the node of a mesh.
+Two scenarios can be taken into account:</p>
+<ul>
+  <li>Use some interactive functionality of CATIA in order to generate a mesh,
+    and define your preprocessing data, then export those data for the external
+    as solver (as explain in<a href="#Ref3"> the export use case</a>) and
+    integrate on the solution set the access to the computed data.</li>
+  <li>Integrate the import of the mesh as defined in the input file of the
+    solver and then give access the result file.</li>
+</ul>
+<p>The use case will explain how to integrate these data inside the CATIA
+application in order to visualize the following picture by focusing on the
+second scenario.</p>
+<p align="center"><img border="2" src="images/NewFeat5.jpg" width="517" height="391"></p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Use Case"></a>The Use Cases</h3>
+<p>This section will describe the different tasks to perform to achieve the
+scenario described before.</p>
+<h4><a name="What does this Use Cases do"></a>What Do These Use Cases Do</h4>
+<p>The final intent of this use cases is to create some analysis features to
+manage Aero Dynamic Data. This is an <b>end-to-end integration</b>. At the end
+of this use case &quot;Tour&quot;, you should hardly notice any difference
+between this Feature and an original V5 Analysis feature as defined for the
+&quot;Structural Analysis&quot; Applications. We will focus on three analysis
+features for this scenario.</p>
+<ol>
+  <li>The &quot;<b>Links manager</b>&quot; feature that is dedicated to keep all
+    the links to imported documents. (Is this scenario, just the mesh). For this
+    we will&nbsp; use the &quot;<b>SAMFeatureLinkFile</b>&quot; or &quot;<b>SAMFeatureLink</b>&quot;
+    basic startup. This link management includes:
+    <ul>
+      <li>The update integration to know if the file is modified since last
+        consultation of the document (just&nbsp; for SAMFeatureLinkFile)</li>
+      <li>The data management of the file if the analysis document is moved
+        (Send-To, Edit-Links and Search-Order capabilities) for both
+        startup's.&nbsp;</li>
+    </ul>
+  <li>The &quot;Aero&quot; <b>MeshPart</b> feature dedicated to integrate the
+    imported mesh inside the analysis document. More generally, the MeshPart is
+    used to keep the meshing specification that will produced as result the mesh
+    (Nodes and Finite Elements).&nbsp;</li>
+  <li>The &quot;AeroDynamic&quot; <b>SolutionSet</b> feature dedicated to keep
+    the link to the result file and the access to its contents for
+    visualisation.</li>
+</ol>
+<p>The first feature will be created &quot;as defined&quot; inside the Analysis
+Infrastructure (by instantiating an existing late type) and the two others will
+be created by derivation of existing startup (respectively MSHPart and
+SolutionSet) in order to assume specific implementations.</p>
+<p>Consequently, this use case includes tree main modules :</p>
+<p>Fisrt, <a href="../CAAAniUseCases/CAAAniSampleAnalysisWorkBench.htm">CAAAniWb.m</a>
+for the user interface required for this scenario. This use case defines a new
+analysis workbench associated to this scenario.</p>
+<p>Then, <a href="../CAAAniUseCases/CAAAniCatalog.htm">CAAAniCatalog.m</a>
+for the feature catalog definition, that&nbsp;create the &quot;Aero&quot;
+MeshPart and &quot;AeroDynamic&quot; SolutionSet feature StartUp.</p>
+<p>Then, CAAAniAeroDTransition.m, that:</p>
+<ul>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDTransition.htm">Instantiates
+    the StartUp by implementing a transition</a></li>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDImport.htm">Imports an
+    external mesh</a> (This step can also be done by creating directly a mesh
+    inside CATIA Applications).</li>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDCharacCollector.htm">Implements
+    the required interfaces</a> to integrate the meshing and the solution
+    feature inside CATIA
+    <ul>
+      <li>The CATISamExplicitation interface for all analysis features.</li>
+      <li>The CATICharacCollector interface that allow the access to physical
+        data that deals with this Solution Set.</li>
+    </ul>
+  </li>
+</ul>
+<p>We will also see that some other interactive behavior, such as Analysis
+Visualization.&nbsp;</p>
+<h4><a name="AboutImp"></a>About Import</h4>
+<p>This chapter will focus on the feature created for managing the import, the
+MSHPart. For our scenario, we just need a to have a mesh, but a mesh is a result
+view of the analysis infrastructure (like all the field model objects). These
+result objects must be created and modified by implementing some specific
+interface on some analysis feature, this will manage the results object life
+cycle (including Undo/Redo) and the way to access them. Working directly on
+result view objects may produce some unpredictable results.</p>
+<ul>
+  <li>To create a mesh, implement the CATIMSHMesher interface on a feature
+    created by derivation of MSHPart.</li>
+  <li>To define physics on a mesh, implement the CATISamExplicitation interface
+    on a feature created by derivation of MSHPart. By default, when creating a
+    meshpart feature, an explicit set (with physical type MESH SET) is created.
+    The implementation of CATISamExplicitation will create under this set two
+    other sets, one with physical type NODES for nodes definition and one with
+    physical type ELEMENTS for finite elements definition. In this last set,
+    elements will be created according to their element type and some physics
+    can be defined at this level.</li>
+</ul>
+In the case of a mesher which creates the elements by using an algorithm, the
+CATISamExplicitation&nbsp; can be dedicated to that algorithm and therefore
+attribute the correct physical types. The MeshPart feature can also contain that
+information in its attributes. In the case of a mesher which imports elements
+from an external file, the CATISamExplicitation must be provided with a precise
+list of physical types per element. In the sample this problem was solved in the
+following way :
+<blockquote>
+  <ol>
+    <li>Create a dedicated interface (CAAIAniAeroImport) which is implemented on
+      the object representing the imported document type.</li>
+    <li>The mesher then calls the first method of the interface to create the
+      mesh. That method stores in the implementation object the list of nodes,
+      elements and physical types.&nbsp;</li>
+    <li>The TranslateToFieldModel() calls the second method to create the
+      explicit nodes and elements using the stored information.</li>
+  </ol>
+</blockquote>
+To define preprocessing, implement the CATISamExplicitation interface on a
+feature created by derivation of AnalysisEntity. If this step may also be
+included inside an import scenario, you can complete the proposed interface and
+implementation of&nbsp; CAAIAniAeroImport according to our need. For analysis
+entities the main issue is to identify the imported mesh inside the analysis
+document and to be able to restart the update at any level of the feature tree.
+<p>All these interfaces, are used by Dassault Systemes implementation of
+CATIBuild (for the Update of any analysis features).</p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="link"></a>Keeping a Link to an External File from a Feature Object.</h4>
+<p>The capability to keep a link to input or output files of external solver can
+be very useful in the analysis domain. To do this, some special feature
+attributes exist. They are called tk_external.</p>
+<p>To use them, you need to simulate that your file is a CATDocument. Your file
+type need only to have a defined suffix. For this, implement the CATIPersistent
+interface on your file type. All the methods have to be implemented with dummy
+software. In order, to get the CATDocument from your file, use
+CATDocumentServices::Open method. From the CATDocument, we have to get the
+CATILinkable Object (implemented by ObjectModelerBase for any kind of
+CATDocument).&nbsp;</p>
+<p>Then you can use the CATILinkableObject interface in order to valuate or read
+the tk_external attribute. All required information for valuating attributes can
+be found at the Reference <a href="#Ref1">[1]</a>.</p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h4 align="left"><a name="User"></a>Where Each Object Will Interact With User
+Interface.</h4>
+<p align="left">All this module have to be compiled in order to be taken into
+account for CATIA Interactive applications. This will customize the user
+interface of Analysis Workbenches by adding an Aero Dynamic line in the
+&quot;New Analysis Case&quot; window. You can also enter an Analysis Workbench
+by creating a new Analysis Document, the same window will appear. This section
+presents each object that correspond to specific interface implementation and
+its interaction with the user interface according to the final scenario.&nbsp;</p>
+<p align="left">Then, an import item will appear under the contextual menu of
+the Links manager object.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="38%"><b>CATISamAnalysisTransition</b>
+      <p>Customizes an new analysis document with an Analysis Case and a
+      specific Solution Set.</p>
+    </td>
+    <td width="62%" align="center"><img border="0" src="images/NewFeat1.jpg" width="229" height="166"><img border="0" src="images/NewFeat2.jpg" width="261" height="196"></td>
+  </tr>
+  <tr>
+    <td width="38%"><b>CATISamImportDefine</b>
+      <ul>
+        <li>Is NOT implemented on the file suffix.</li>
+        <li>Creates the mesh Part for importing data</li>
+        <li>Creates the link to the external file.</li>
+        <li>Customizes the Import command with a dedicated file selection for 
+        the domain.</li>
+        <li>Can customize the import with an user dialog. </li>
+      </ul>
+    <p>This import command is a contextual menu on the Links Manager object.</p>
+      <p>&nbsp;</p>
+    </td>
+    <td width="62%" align="center"><img border="0" src="images/NewFeat3.jpg" width="486" height="310"></td>
+  </tr>
+  <tr>
+    <td width="38%"><b>CATIPersistent</b>
+      <ul>
+        <li>Is Implemented on the file suffix.</li>
+        <li>Allow you to manage the file as a CATDocument in order to keep the
+          link.</li>
+      </ul>
+    </td>
+    <td width="62%" align="center"><img border="0" src="images/NewFeat4.jpg" width="487" height="371"></td>
+  </tr>
+  <tr>
+    <td width="38%"><b>CATIMSHMesher</b>
+      <ul>
+        <li>Is implemented on the meshpart to import the mesh inside the meshing
+          container.</li>
+      </ul>
+      <p><b>CATISamExplicitation</b></p>
+      <ul>
+        <li>Is implemented on the meshpart to link the mesh and its Field model
+          physical definition.</li>
+      </ul>
+      <b>CATICharacCollector</b>
+      <ul>
+        <li>Is implemented on the Solution Set&nbsp; to import the results and
+          keep it up_to_date according to the Update mechanism.</li>
+        <li>Is used by CATIA Analysis Visualization package.</li>
+      </ul>
+    </td>
+    <td width="62%" align="center"><img border="0" src="images/NewFeat5.jpg" width="517" height="391"></td>
+  </tr>
+</table>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find These Use Cases</h4>
+<p>Code for these use case is contained in the <b>CAAAniWB.m</b>, <b>CAAAniCatalog.m</b>
+and <b>CAAAniAeroDtransition.m</b> modules of the <b>CAAAnalysisInterfaces.edu </b>framework.</p>
+<p align="right"><small><a href="#Top">[Top]</a></small></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAAnalysisInterfaces.edu sample shows how to add a new Analysis feature
+inside CATIA Analysis Infrastructure.</p>
+<p>You can now successively go to:</p>
+<ul>
+  <li><a href="../CAAAniUseCases/CAAAniCatalog.htm">Creating Analysis
+    Startup's in a Catalog file.</a></li>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDTransition.htm">Customize
+    an analysis document (<i>CATISamAnalysisTransition</i> implementation).</a></li>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDImport.htm">Implement an
+    Import of external format document</a><a href="../CAAAniUseCases/CAAAniAeroDTransition.htm">
+    (<i>CATI</i><i>Persistent, CATISamImportDefine</i>
+    implementations).</a></li>
+  <li><a href="../CAAAniUseCases/CAAAniAeroDCharacCollector.htm">Implement
+    a physics behavior (<i>CATICharacCollector and CATISamExplicitation</i>
+    implementations).</a></li>
+  <li><a href="../CAAAniUseCases/CAAAniSampleImageCommand.htm">Create
+    an image for the velocity</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Refs"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1">[</a>1]</td>
+    <td valign="top">
+    <a href="../CAAOsmQuickRefs/CAAOsmHome.htm">Feature
+      Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[</a>2]</td>
+    <td valign="top"><a href="CAAAniAnalysisOverview.htm">Analysis Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3"></a>[3]</td>
+    <td valign="top"><a href="../CAAAniUseCases/CAAAniSampleExport.htm">Sample
+      of export</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="858">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

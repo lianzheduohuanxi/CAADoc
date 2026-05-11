@@ -1,0 +1,149 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Composite Law</title>
+<style type="text/css">
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating a Composite Law</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A composite law is made up of a set of C2 continuous laws but the 
+		connection between the pieces of the composite law is not necessarily 
+		continuous. Sub-laws can be of any type, they can be polynomial or user 
+		functions. Composite laws are used in various operations such as sweeps 
+		or variable fillets.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">The API to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">The API to be Used</a></h2>
+<p>Use CATGeoFactory::CreateCompositeLaw in the GeometricObjects framework.<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelMakeLaws.m module in CAAGMModelInterfaces.edu 
+illustrates how to manipulate mathematical functions and polynomials (CATMathFunctionX and CATMathPolynomX) as well as laws.</p>
+
+<p>This use case 
+constructs its input data. If you are not already 
+familiar with geometric modeler use cases, go to <a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: Linear functions</h3>
+<p>To define a composite law from two pieces </p>
+<ul>
+	<li>f1(x) = 1 + 2x applied in the [ 0 , 0.5 ] range
+ </li>
+	<li>and f2(x) = 1.25 + 1.5x applied in the [ 0.5 , 2 ] range</li>
+</ul>
+<p>you must:</p>
+<p>define the two functions f1 and f2</p>
+
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATMathFunctionX *ListOfFunctions1[2] = { NULL, NULL };
+double array1[2] = {1,2};      // first law coefficients 1, 2
+CATMathPolynomX P1(1,array1);
+ListOfFunctions1[0]=&P1;
+double array2[2] = {2,1.5};    // second law coefficients
+CATMathPolynomX P2(1,array2);
+ListOfFunctions1[1]=&P2;
+...
+</TD>
+    </TR>
+</TABLE>
+<p>then create the composite laws</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATCompositeLaw * compLaw1 = piGeomFactory->CreateCompositeLaw (2,LimitParameters1,
+		(const CATMathFunctionX**)ListOfFunctions1);
+	...
+</TD>
+    </TR>
+</TABLE>
+
+<p>The CATCompositeLaw::Eval service computes the result for a given value. </p>
+<h3>Case 2: User Functions</h3>
+<p>You can define a user function as a piece of a composite law. </p>
+<p>To define a user function, you must create an object deriving from 
+CATMathFunctionX, and implement the services below:</p>
+<ul>
+	<li>a constructor</li>
+	<li>a destructor</li>
+	<li>an eval method (here it depends on a trigonometric function but it could 
+	be any mathematical function)</li>
+	<li>the Duplicate and DeepDuplicate methods.</li>
+</ul>
+<p>Using a user function in a composite law does not change the way you create 
+the composite law.</p>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,155 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>About the Model Size and Infinite</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>About the Model Size and Infinite</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Models must conform to validity criteria related to their size. Two parameters 
+		drive the model validity in terms of dimensions: the model size and the 
+		&quot;infinite&quot;. These two parameters are explained below.</p>
+		<ul>
+			<li><a href="#Introduction">The Model Size and Infinite Values</a></li>
+			<li><a href="#The Resolution of the Factory">The Rules</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Introduction"></a>The Model Size and Infinite Values</h2>
+<p>Here are the values of the model size and infinite:</p>
+<table class="fill">
+	<tr>
+		<td>&nbsp;</td>
+		<th>Until V5R13</th>
+		<th>From V5R14</th>
+	</tr>
+	<tr>
+		<td>Model Size</td>
+		<td>[-100 meters, + 100 meters]<br>
+		on each coordinate </td>
+		<td>[-1000 meters, + 1000 meters]<br>
+		on each coordinate</td>
+	</tr>
+	<tr>
+		<td>Model infinite (10 x model size)</td>
+		<td>[-1000 meters, + 1000 meters]<br>
+		on each coordinate</td>
+		<td>[-10000 meters, + 10000 meters]<br>
+		on each coordinate</td>
+	</tr>
+</table>
+<p>The validity of geometric objects depend on their location within the limits 
+defined by the model size and infinite. The validity rules are explained below.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="The Resolution of the Factory"></a>The Rules</h2>
+<h3>Rule 1</h3>
+<p>Except authorized infinite objects (see <a href="#Rule_2">Rule 2</a>), any relimited 
+objects should be included in the model size. Objects that are not included in the 
+model size are called « infinite ».</p>
+<h3><a name="Rule_2"></a>Rule 2</h3>
+<p>The authorized infinite objects the user can create are: the planes, lines, half-lines 
+and points. The visualization of such objects is always reframed at most to the 
+model size. The parts of the infinite object that are not in the model size are 
+not seen by the user.</p>
+<p>
+<img alt="Rule 2" src="images/CAACgmGobinfinite0.gif" width="386" height="293"></p>
+<p><em>Should an infinite object necessarily fit in the &quot;infinite&quot;?</em></p>
+<p>No. An infinite object does not necessarily exactly fit in the model infinite. 
+Usually, its larger coordinates are between half and twice the model infinite.
+</p>
+<p>When a plane is not « parallel » to canonical planes, it is usually not possible 
+to relimit it exactly in the model infinite. When such an infinite plane is created, 
+its half-dimension with the model infinite is determined. Thus a part of it is in 
+the infinite, while a part of it is outside the infinite.</p>
+<p><strong>Note</strong>: at creation, infinite lines fit in the model infinite.</p>
+<p><em>Are transformations of infinite objects valid?<br>
+</em>Transformation of infinite objects are valid provided their origins remain 
+within the model size.</p>
+<p>
+<img alt="Rule 2 Examples" src="images/CAACgmGobinfinite1.gif" width="524" height="262"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Rule 3</h3>
+<p>The mathematical definition of an object should be in the model infinite.</p>
+<p><em>An example: the circle arc</em></p>
+<p>
+<img alt="Rule 3" src="images/CAACgmGobinfinite2.gif" width="299" height="246"></p>
+<p>The mathematical definition of the circle consists of a radius which must be 
+smaller than the infinite and a center which must be in the infinite.</p>
+<p>On the left-hand side figure, the created arc circle (in blue) is in the model 
+size, the mathematical circle (in dashed green) is in the infinite (<a href="#Rule_4">Rule 
+4)</a>. This model is valid.</p>
+<p>The figures below are examples of unauthorized geometries. On the first figure, 
+the model itself (the full circle in blue) sticks out from the model size.</p>
+<p>
+<img alt="Rule 3 Example" src="images/CAACgmGobinfinite2bis.gif" width="236" height="234"></p>
+<p>On the second figure, the model (the circle arc in blue) is in the model size 
+but the mathematical definition does not fit in the infinite.</p>
+<p>
+<img alt="Rule 3 Example" src="images/CAACgmGobinfinite3.gif" width="238" height="242"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Rule_4"></a>Rule 4</h3>
+<p>The origin of planes and lines should be in the model size.</p>
+<p><em>An example: the infinite line</em></p>
+<p>On the figure below, the infinite line and semi infinite line (in green) have 
+their origin (green point) in the model size. The origin (orange point) of infinite 
+plane has its origin in the model size.</p>
+<p>
+<img alt="Rule 4" src="images/CAACgmGobinfinite5.gif" width="311" height="279"></p>
+<p>On the first figure below, the relimited line (in non dashed-green) is in the 
+model size, but its origin (green point on its support in dashed green) is not. 
+The plane origin (orange point) is not in the model size. On the second figure, 
+the origins of the line and the planes are not in the model size. </p>
+<p>
+<img alt="Rule 4 Examples" src="images/CAACgmGobinfinite4.gif" width="516" height="264"></p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Jul 2005]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

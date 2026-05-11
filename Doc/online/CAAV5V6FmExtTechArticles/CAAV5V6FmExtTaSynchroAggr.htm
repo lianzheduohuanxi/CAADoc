@@ -1,0 +1,259 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Component Synchronization</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding Component Synchronization</h3>
+      <p><em>Explaination about the Synchronization concept in Component type of Attribute</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article deals with the concept of synchronization involving the component attribute only. 
+		We recommend you go through the &#8220;Understanding Feature Attribute&#8221; i[<a href="#References">1</a>] 
+		article</p>
+		<ul>
+			<li><a href="#Introduction">Introduction</a></li>
+			<li><a href="#Scenarios">Scenarios</a></li>
+				<ul>
+			<li><a href="#The reference can be a StartUp">The Reference can be a StartUp</a></li>
+			<li><a href="#For a Single Component Attribute">For a Single Component Attribute</a></li>
+			<li><a href="#For a list of Component Attribute">For a List of Component Attribute</a></li>
+			<li><a href="#A none Recursive Process">A None Recursive Process</a></li>
+       </ul>
+       <li><a href="#apis">APIs</a></li>
+
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+	 
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The synchronization enables you to refresh an instance of a reference for its attributes of type 
+&quot;component&quot;.  The synchronization can be useful since the &quot;inherited mode&quot;, 
+does exist on such type of attribute.   The next schema can give you a fair idea of the concept. 
+In this case component value is replaced by a number&#8217;s value. </p>
+<table>
+	<caption>Fig.1 Principle</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig1.png" width="406" height="245"></td>
+	</tr>
+</table>
+<p>Let&#8217;s imagine a StartUp A with at least an attribute X of the 
+component type. (with more imagination, suppose 3 and 4 are features)</p>
+<font SIZE="2">
+<p><strong>Step 1</strong>: The Feature A is instantiated to create the new 
+feature A'.&nbsp; A' contains an attribute X evaluated to 3 .</p>
+<p><strong>Step 2</strong>: The Feature A is modified, its X value becomes 4. 
+But it is without impact on the X value of Feature A' (since X is a component, there is no inheritance between A and A'). So, A'.X value is still equal 
+to 3 </p>
+<p><strong>Step 3</strong>: The X attribute of Feature A' is synchronized. So its 
+value becomes the same as its reference attribute. A'.X value is now 4</p>
+<p>From this basic scenario, now we can go deeper. </p>
+<p>Convention: in this article, B' means an instance of B,&nbsp;&nbsp; B&quot; means 
+an instance of B', and so one. </p>
+</font>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Scenarios"></a>Scenarios</h2>
+<p>This sections presents all aspects of the component 's synchronization 
+through illustrations.</p>
+ 
+
+<h3><a name="The reference can be a StartUp"></a>The Reference can be a StartUp </h3>
+<p>The synchronization can be done between an instance and its StartUp. The scenario is as follows:
+</p>
+<ul>
+	<li>You have a StartUp with a component attribute and without an initial value
+	</li>
+	<li>You create instances from this StartUp , without an explicit valuation&nbsp; the 
+	attribute value for each instance is NULL.
+	</li>
+	<li>Later on you modify the feature Catalog to add a default value to the 
+	component attribute</li>
+	<li>For all instances, synchronized to this attribute, the new value will be the one of the catalog, 
+	whatever the current value of the attribute before its synchronization.
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="For a Single Component Attribute"></a>For a Single Component Attribute </h3>
+<p>This section details the behavior of the synchronization when the attribute is a single value.</p>
+<table>
+	<caption>Fig.2 Instantiation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig2.png"></td>
+	</tr>
+</table>
+
+<p>[Fig.2]: on the left there is reference feature (A), and on the right the instantiated feature 
+(A'). All attributes are component. You have noticed that when a feature is 
+instantiated, its new instance contains an instance of all the reference's 
+component. For example, B' is an instance of B.&nbsp; </p>
+<table>
+	<caption>Fig.3 Reference and Instance Modification</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig3.png"></td>
+	</tr>
+</table>
+<p>[Fig.3] presents the modifications done on the reference (A), and its instance ( A&#8217;). 
+Some features are deleted (B, C') and some are replaced (D and E') to become ( U 
+and V) respectively.</p>
+<table>
+	<caption>Fig.4 After the Synchronization</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig4.png"></td>
+	</tr>
+</table>
+<p>[Fig.4] presents A&#8217; after the synchronization of its component attributes.   </p>
+<ul>
+	<li>attribute 1:&nbsp; B' is deleted, the new value of A' will be NULL as A</li>
+	<li>&nbsp;attribute 2:&nbsp; The new value of A' will be a new instance of 
+	C, called C'' to avoid confusion with the previous C'</li>
+	<li>attribute 3:&nbsp; D' is deleted, the new value of A' will be U', the 
+	instance of U</li>
+	<li>attribute 1:&nbsp; V is deleted, the new value of A' will be E', the 
+	instance of E</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="For a list of Component Attribute"></a>For a List of Component Attribute </h3>
+<p>This section details the behavior of the synchronization when the attribute is a list of components.</p>
+<table>
+	<caption>Fig.5 Instantiation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig5.png"></td>
+	</tr>
+</table>
+
+<p>[Fig.5]: on the left is the reference feature, and on the right the instantiated feature. All attributes are lists of components. </p>
+<table>
+	<caption>Fig.6 Reference and Instance Modifications</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig6.png"></td>
+	</tr>
+</table>
+<p>[Fig.6] presents the modifications done on the reference ( A), and its instance ( A&#8217;).  &nbsp;In 
+yellow are the added features, and the deleted one is symbolized by a red cross.</p>
+<table>
+	<caption>Fig.7 After Synchronization</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig7.png"></td>
+	</tr>
+</table>
+<p>After the synchronization of A' attributes:
+</p>
+<ul>
+	<li>Attribute 1: A new instance, U&#8217;&nbsp; the 
+	instance of U, is added on the A list.
+</li>
+	<li>Attribute 2: W is kept on feature A&#8217;
+</li>
+	<li>Attribute 3: X is kept on Feature A&#8217;, while the feature V of Feature A is created and inserted at the same position as within its reference list.
+	</li>
+	<li>Attribute 4: J&#8217; is deleted, because its &#8220;reference&#8221; J is deleted on the 
+	reference feature</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="A none Recursive Process"></a>A None Recursive Process</h3>
+<table>
+	<caption>Fig.8 Instantiation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig8.png"></td>
+	</tr>
+</table>
+
+<p>[Fig.8]: On the left is the reference feature, and on the right the instantiated feature.  Note that the instantiation is recursive </p>
+
+<table>
+	<caption>Fig.9 Reference</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaSynchroAggr_Fig9.png"></td>
+	</tr>
+</table>
+<p>[Fig.9] One attribute of the feature B aggregated by A is modified; one 
+element of its list is deleted. If you synchronize the attribute 1 of A&#8217;, it 
+will be without effect. D&#8217; will be not deleted. The synchronization of the 
+attribute 2 of B&#8217; will update B&#8217; ( D' will be deleted from attribute 2 of B').</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="apis"></a>APIs</h2>
+<p>The APIs for attribute&#8217;s synchronization are available on the CATFmFeatureFacade class:
+</p>
+<ul>
+	<li>Synchronize(const CATFmAttributeName &amp; iKey); </li>
+	<li>IsSynchronized(const CATFmAttributeName &amp; iKey, CATBoolean &amp; oSynchronized);
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>In replacement of the inherited mode, not available for component attribute, 
+you can update the instance 's attributes to take into account the new 
+reference values. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attribute</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMesh1D.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">'COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+<FONT COLOR="#008000">'  Purpose:  Create a 1D beam mesh part</FONT>
+<FONT COLOR="#008000">'                  assign the support </FONT>
+<FONT COLOR="#008000">'                  specify the global specifications           </FONT>
+<FONT COLOR="#008000">'  Assumptions:  Looks for the published element Line.3 in the analysis doc</FONT>
+<FONT COLOR="#008000">'  Author:       bmw</FONT>
+<FONT COLOR="#008000">'  Languages:    VBScript</FONT>
+<FONT COLOR="#008000">'  Locales:      English </FONT>
+<FONT COLOR="#008000">'  CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">'Optional: allows to find the sample wherever it&#39;s installed</FONT>
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+<FONT COLOR="#0000FF">If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">End If</FONT>
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+
+
+<FONT COLOR="#008000">'Open the CATAnalysis Document</FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Beam.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">&#39;Retrieve the Analysis Managar and Analysis Model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManager = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">&#39;Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+<FONT COLOR="#008000">&#39;Retrieve the analysis model from list of models</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">'Retrieve mesh manager and mesh part </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+<FONT COLOR="#008000">'Retrieve publications from product and retrieve the published face.</FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubLine = publications.Item("Line.3")
+
+<FONT COLOR="#008000">'Add the new beam mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>beamPart = oAnalysisMeshParts.Add("MSHPart1D")
+
+beamPart.AddSupportFromPublication product, pubLine
+beamPart.SetGlobalSpecification "SizeValue", "10.0 mm"
+beamPart.SetGlobalSpecification "AbsoluteSag", 1
+beamPart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
+beamPart.SetGlobalSpecification "MinimumSizeValue", "1.1 mm"
+beamPart.SetGlobalSpecification "ElementOrder", "Parabolic"
+beamPart.SetGlobalSpecification "MeshCapture", 1
+beamPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
+beamPart.SetGlobalSpecification "CurveAngle", "40 deg"
+</PRE>
+<PRE>
+<FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+beamPart.Update 
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+
+</PRE>
+
+</BODY>
+
+</HTML>

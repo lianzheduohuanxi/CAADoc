@@ -1,0 +1,124 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Enumeration CATMovingFrameType</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATMovingFrameType"; } 
+	function getCurrentType() { 
+ 	return "enum"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Enumeration CATMovingFrameType</h1>
+<pre>
+enum <b>CATMovingFrameType</b> {
+  PARALLEL_TO_PLANE_MF,
+  ORTHO_MF,
+  PSEUDO_ORTHO_MF,
+  ORTHO_CRV_CRV_MF,
+  PSEUDO_ORTHO_CRV_CRV_MF,
+  MEAN_TANGENT_MF
+}
+</pre>
+<b><i> The type of definition of the moving frame.</i></b><br>
+
+ <br>The moving frame is an orthonormal axes system (<tt>X, Y, Z</tt>) moving along a curve (the dominant guide
+ or spine): at every point on the curve, the moving frame defines a local coordinate system. The moving frame
+ is defined by a strong condition (one direction is given) and by a weak condition (another direction
+ indicating the preliminary second axis). The third axis is set to be orthonormal to these two axes.
+ Afterwards, the second axis is changed to be orthonormal to the first and third axis.
+ <br>
+ By default for the <tt>PARALLEL_TO_PLANE_MF</tt>, <tt>ORTHO_MF</tt>, <tt>PSEUDO_ORTHO_MF</tt> cases, the
+ moving frame is chosen as follows: the viewing direction is the normal to the best approximating plane 
+ of the spine.
+ <dl>
+  <dt> <b>Values:</b>
+  <dd>
+    <dl>
+    <dt><tt> PARALLEL_TO_PLANE_MF</tt>
+   <dd> Parallel to a plane: the directions of all the three axes are constant.
+ <br>Strong condition: the direction of the <tt>Z</tt> axis is given. 
+ <br>Weak condition: the viewing direction <tt>V</tt>: then, <tt>X=V^Z</tt> and <tt>Y=Z^Y</tt>.
+ </dd>
+    <dt><tt> ORTHO_MF</tt>
+   <dd> Perpendicular to the spine.
+ <br>Strong condition: the direction of the <tt>Z</tt> axis is the current tangent of the spine. 
+ <br>Weak condition: the viewing direction <tt>V</tt>: then, <tt>X=V^Z</tt> and <tt>Y=Z^Y</tt>.
+ </dd>
+    <dt><tt> PSEUDO_ORTHO_MF</tt>
+   <dd> Pseudo-perpendicular to the spine.
+ <br>Strong condition:  <tt>Y</tt> is parallel to the viewing direction. 
+ <br>Weak condition: the tangent <tt>T</tt> to the spine: then, <tt>X=Y^T</tt> and <tt>Z=X^Y</tt>.
+ </dd>
+    <dt><tt> ORTHO_CRV_CRV_MF</tt>
+   <dd> Two guiding curves and perpendicular to the spine.
+ <br>Strong condition:  <tt>X</tt> is parallel to the difference vector of corresponding points of
+ two guiding curves. 
+ <br>Weak condition: the tangent <tt>T</tt> to the spine: then, <tt>Y=T^X</tt> and <tt>Z=X^Y</tt>.
+ </dd>
+    <dt><tt> PSEUDO_ORTHO_CRV_CRV_MF</tt>
+   <dd> Two guiding curves and pseudo-perpendicular to the spine.
+ <br>Strong condition:  <tt>X</tt> is parallel to the difference vector of corresponding points of
+ two guiding curves. 
+ <br>Weak condition: the viewing direction <tt>V</tt>: then, <tt>Y=V^X</tt> and <tt>Z=X^Y</tt>.</dd>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATMovingFrameType.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

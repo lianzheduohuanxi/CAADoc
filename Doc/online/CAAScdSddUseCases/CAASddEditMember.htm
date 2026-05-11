@@ -1,0 +1,311 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Members</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Members</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to modify members.
+		This macro modifies the existing members created using the 
+		<a href="CAASddCreateMember.htm">CAASddCreateMember</a> macro.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddEditMember is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddEditMember.CATPart in the samples directory.</p>
+		<p><a href="CAASddEditMemberSource.htm" target="Source">CAASddEditMember.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddEditMember.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddEditMember includes <span lang="fr">eight</span> steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Members</a></li>
+			<li><a href="#Step5">Modifying an SfmMemberCurve Object</a></li>
+			<li><a href="#Step6">Modifying an SfmMemberPlane2Curves Object</a></li>
+			<li><a href="#Step7">Modifying an SfmMemberSurfSurf Object</a></li>
+			<li><a href="#Step8">Updating the Part Document</a></li>
+		</ol>
+<p><img alt="" src="images/CAASddEditMember.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASddEditMember.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain()
+  <span class="keyword">Dim</span> ObjPart  <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get Structure Functional Modeler factory object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>This step describes how to get the SfmManager object.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj  <span class="keyword">As</span>  SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Members</a></h4>
+		<p>This step describes how to get the collection of members
+		and how to get one specific element in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> SuperMembers <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SuperMembers = ManagerObj.GetSuperMembers
+  <span class="keyword">Dim</span> SuperMember1, SuperMember2, SuperMember3, SuperMember4, SuperMember5 <span class="keyword">As</span> SfmMember
+  <span class="keyword">Set</span> SuperMember1 = SuperMembers.Item (1)
+  <span class="keyword">Set</span> SuperMember2 = SuperMembers.Item (2)
+  <span class="keyword">Set</span> SuperMember3 = SuperMembers.Item (4)
+  <span class="keyword">Set</span> SuperMember4 = SuperMembers.Item (5)
+  <span class="keyword">Set</span> SuperMember5 = SuperMembers.Item (6)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>We have to check the types of the member and then retrieve them <span class="keyword">As</span> objects of their types.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'TO KNOW THE MEMBER TYPE</span>
+  <span class="keyword">Dim</span> MemberTypeName1 <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> MemberTypeName2 <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> MemberTypeName3 <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> MemberTypeName4 <span class="keyword">As</span> String
+  <span class="keyword">Dim</span> MemberTypeName5 <span class="keyword">As</span> String
+  MemberTypeName1 = SuperMember1.GetMemberType
+  MemberTypeName2 = SuperMember2.GetMemberType
+  MemberTypeName3 = SuperMember3.GetMemberType
+  MemberTypeName4 = SuperMember4.GetMemberType
+  MemberTypeName5 = SuperMember5.GetMemberType
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Modifying an SfmMemberCurve Object</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">If</span> (TypeName (SuperMember1) = "SfmMemberCurve") <span class="keyword">Then</span>
+    <span class="comment">'MODIFYING SuperMember1</span>
+    <span class="comment">'Modifying AnchorPoint</span>
+    <span class="keyword">Dim</span> AnchorPoint1 <span class="keyword">As</span> String
+    AnchorPoint1 = SuperMember1.AnchorPoint
+    SuperMember1.AnchorPoint = "catStrTopLeft"
+    <span class="comment">'To Know Category And Curve</span>
+    <span class="keyword">Dim</span> Member1Category <span class="keyword">As</span> String
+    Member1Category = SuperMember1.Category
+    <span class="keyword">Dim</span> Member1CurveRef <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> Member1CurveRef = SuperMember1.Curve
+    <span class="comment">'Setting The Reference Surface</span>
+    <span class="keyword">Dim</span> Member1Surface <span class="keyword">As</span> AnyObject
+    <span class="keyword">Set</span> Member1Surface = ObjPart.FindObjectByName("Shell_058 Molded surface")
+    <span class="keyword">Dim</span> Member1RefSurface <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> Member1RefSurface = ObjPart.CreateReferenceFromObject(Member1Surface)
+    SuperMember1.ReferenceSurface = Member1RefSurface
+    <span class="comment">'Getting The ReferenceSurface Orientation</span>
+    <span class="keyword">Dim</span> ReferenceSurfaceOrient <span class="keyword">As</span> Long
+    ReferenceSurfaceOrient = SuperMember1.ReferenceSurfaceOrientation
+    <span class="comment">'Inverting the reference surface orientation</span>
+    SuperMember1.InvertReferenceSurface
+    <span class="comment">'Getting the FlipStatus and Flipping</span>
+    <span class="keyword">Dim</span> FlipStatus <span class="keyword">As</span> Boolean
+    FlipStatus = SuperMember1.IsFlip
+    SuperMember1.Flip
+    <span class="comment">'Setting Grade,Horizontal and Vertical Offset</span>
+    SuperMember1.Grade = "A45"
+    SuperMember1.HorizontalAnchorPointOff<span class="keyword">Set</span> = "10"
+    SuperMember1.VerticalAnchorPointOff<span class="keyword">Set</span> = "15"
+    <span class="comment">'Checking the Horizontal Offset</span>
+    <span class="keyword">Dim</span> Member1HAPOff<span class="keyword">Set</span> <span class="keyword">As</span> Double
+    Member1HAPOff<span class="keyword">Set</span> = SuperMember1.HorizontalAnchorPointOffset
+    <span class="comment">'Checking and Modifying SectionName Of Member</span>
+    <span class="keyword">Dim</span> Member1SectionName <span class="keyword">As</span> String
+    Member1SectionName = SuperMember1.SectionName
+    SuperMember1.SectionName = "WT15x54"
+  <span class="keyword">End If</span>
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Modifying an SfmMemberPlane2Curves Object</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">If</span> (TypeName(SuperMember3) = "SfmMemberPlane2Curves") <span class="keyword">Then</span>
+    <span class="comment">'MODIFYING SuperMember3</span>
+
+    <span class="comment">'Checking First and Second Member</span>
+    <span class="keyword">Dim</span> InputMemRef1, InputMemRef2 <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> InputMemRef1 = SuperMember3.FirstMember
+    <span class="keyword">Set</span> InputMemRef2 = SuperMember3.SecondMember
+ 
+    <span class="comment">'Modifying FirstMember</span>
+    <span class="keyword">Dim</span> NewInputMemRef <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> NewInputMemRef = ObjPart.CreateReferenceFromObject(SuperMember5)
+    SuperMember3.FirstMember = NewInputMemRef
+
+    <span class="comment">'Getting the Reference Plane</span>
+    <span class="keyword">Dim</span> InputPlaneRef <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> InputPlaneRef = SuperMember3.Plane
+  <span class="keyword">End If</span>
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Modifying an SfmMemberSurfSurf Object</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">If</span> (TypeName(SuperMember5) = "SfmMemberSurfSurf") <span class="keyword">Then</span>
+    <span class="comment">'MODIFYING SuperMember5</span>
+    <span class="comment">'Checking and Modifying FirstSurface</span>
+
+    <span class="keyword">Dim</span> FirstSurfaceRef <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> FirstSurfaceRef = SuperMember5.FirstSurface
+  
+    <span class="keyword">Dim</span> NewFirstSurface <span class="keyword">As</span> AnyObject
+    <span class="keyword">Set</span> NewFirstSurface = ObjPart.FindObjectByName("CROSS.65")
+
+    <span class="keyword">Dim</span> NewFirstSurfaceRef <span class="keyword">As</span> Reference
+    <span class="keyword">Set</span> NewFirstSurfaceRef = ObjPart.CreateReferenceFromObject(NewFirstSurface)
+
+    SuperMember5.FirstSurface = NewFirstSurfaceRef
+
+    <span class="comment">'Checking And Modifying FirstSurfaceOffSet and Orientation</span>
+
+    <span class="keyword">Dim</span> FirstSurfaceOrient <span class="keyword">As</span> Long
+    FirstSurfaceOrient = SuperMember5.FirstSurfaceOrientation
+    SuperMember5.FirstSurfaceOrientation = 2
+  
+    SuperMember5.FirstSurfaceOff<span class="keyword">Set</span> = "20"
+
+    <span class="keyword">Dim</span> Surface1Off<span class="keyword">Set</span> <span class="keyword">As</span> Double
+    Surface1Off<span class="keyword">Set</span> = SuperMember5.FirstSurfaceOffset
+
+  <span class="keyword">End If</span>
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Updating the Part Document</a></h4>
+		<p>Update the Part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'Updating The Part with All Modifications</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit member objects.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,337 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Class DialogEngine.CATDialogTransition</title>
+</head>
+<body bgcolor=white>
+<pre><font color="blue"><u>All Frameworks</u>  <u>Class Hierarchy</u>  <u>This Framework</u> <u>Previous</u> <u>Next</u>  <u>Index</u></font></pre>
+<hr>
+<h1>Class DialogEngine.CATDialogTransition</h1>
+<pre>
+<font color="blue"><u>System.IUnknown</u></font>
+  |
+  +---<font color="blue"><u>System.IDispatch</u></font>
+    |
+    +---<font color="blue"><u>System.CATBaseUnknown</u></font>
+      |
+      +---CATDialogTransition
+ </pre>
+<br>
+<b>Usage: you must use this class as is. You should never derive it.</b>
+<br><hr><br>
+<dl>
+ <dt>public class <b>CATDialogTransition</b></dt>
+</dl>
+<p>
+<b><i> Class to create a command transition.</i></b><br>
+
+ <b>Role</b>: A transition is one of the main elements of a state dialog 
+ command which is a state machine that uses states to let the end user 
+ input the requested parameters, and transitions between states to process 
+ these input parameters and progress in the statechart.
+ <br>Do not use the <tt>CATDialogTransition</tt> constructor to create a 
+ transition but the <font color="blue"><u>CATStateCommand.Addtransition</u></font> method. <br>A transition must have at least one source state, a target state which
+ may be NULL, and may be associated with a condition and an action.
+ <br>
+ Transitions must be created in the 
+<font color="blue"><u>CATStateCommand.BuildGraph</u></font> method. 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <font color="blue"><u>CATDialogState</u></font>, <font color="blue"><u>CATStateCondition</u></font>, <font color="blue"><u>CATDiaAction</u></font>
+</dl>
+<hr>
+<dl>
+</dl>
+<dl>
+ <h2>Method Index</h2> <br>
+ <dt> o 
+    <a href="#SetAction(CATDiaAction*)"><b>SetAction</b></a>
+<dd>  Sets the transition action.
+ <dt> o 
+    <a href="#GetAction()"><b>GetAction</b></a>
+<dd>  Returns the transition action.
+ <dt> o 
+    <a href="#SetCondition(CATStateCondition*)"><b>SetCondition</b></a>
+<dd>  Sets the transition condition.
+ <dt> o 
+    <a href="#GetCondition()"><b>GetCondition</b></a>
+<dd>  Returns the transition condition.
+ <dt> o 
+    <a href="#AddInitialState(CATDialogState*)"><b>AddInitialState</b></a>
+<dd>  Adds a source state to the transition.
+ <dt> o 
+    <a href="#RemoveInitialState(CATDialogState*)"><b>RemoveInitialState</b></a>
+<dd>  Removes a source state from the transition.
+ <dt> o 
+    <a href="#GetInitialStateNumber()"><b>GetInitialStateNumber</b></a>
+<dd>  Returns the count of source states.
+ <dt> o 
+    <a href="#GetInitialState(int)"><b>GetInitialState</b></a>
+<dd>  Returns a source state using the source state index.
+ <dt> o 
+    <a href="#SetFinalState(CATDialogState*)"><b>SetFinalState</b></a>
+<dd>  Sets the target state.
+ <dt> o 
+    <a href="#GetFinalState()"><b>GetFinalState</b></a>
+<dd>  Returns the target state.
+ <dt> o 
+    <a href="#SetResourceID(CATString&)"><b>SetResourceID</b></a>
+<dd>  Sets the resource identifier.
+ <dt> o 
+    <a href="#GetResourceID()"><b>GetResourceID</b></a>
+<dd>  Retrieves the resource identifier.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="SetAction"><a name="SetAction(CATDiaAction*)"> <dt> o <b>SetAction</b>
+
+<dt>  <table><tr><td>  public virtual void  <b>SetAction</b>(<td><font color="blue"><u>CATDiaAction</u></font>* <td><tt>iAction</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the transition action.
+ <br><b>Role</b>: This action is executed when a transition fires.
+ <br>Since a transition has only one action, successive calls to 
+ <tt>SetAction</tt> for the same transition successively overwrite the 
+ action.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAction</tt>
+   <dd>   The action.
+   <br><b>Cyclic reference</b>: A copy of <tt>iAction</tt> is kept and
+   AddRef'ed. It is Released at the end of the command before the command 
+   destructor call.
+   <br><b>Legal values</b>: <tt>iAction</tt> may be set to NULL to cancel 
+   an action inherited from the command base class. 
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetAction"><a name="GetAction()"> <dt> o <b>GetAction</b>
+
+<dt>  <table><tr><td>  public <font color="blue"><u>CATDiaAction</u></font>*  <b>GetAction</b>(<td> <td><tt></tt>) const</table></dt>
+<dl>
+  <dd>
+ Returns the transition action.
+ <br><b>Role</b>: This action is executed when a transition fires.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The action.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned value.
+
+</dl>
+</dl>
+<a name="SetCondition"><a name="SetCondition(CATStateCondition*)"> <dt> o <b>SetCondition</b>
+
+<dt>  <table><tr><td>  public virtual void  <b>SetCondition</b>(<td><font color="blue"><u>CATStateCondition</u></font>* <td><tt>iCond</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the transition condition.
+ <br><b>Role</b>: This condition must evaluate TRUE to make the transition
+ fire. 
+ <br>Since a transition has only one condition, successive calls to 
+ <tt>SetCondition</tt> for the same transition successively overwrite the 
+ condition.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCond</tt>
+   <dd>   The condition.
+   <br><b>Cyclic reference</b>: A copy of <tt>iCond</tt> is kept and 
+   AddRef'ed. It is Released at the end of the command before the command 
+   destructor call.
+   <br><b>Legal values</b>: <tt>iCond</tt> may be set to NULL to cancel 
+   a condition inherited from the command base class. 
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCondition"><a name="GetCondition()"> <dt> o <b>GetCondition</b>
+
+<dt>  <table><tr><td>  public <font color="blue"><u>CATStateCondition</u></font>*  <b>GetCondition</b>(<td> <td><tt></tt>) const</table></dt>
+<dl>
+  <dd>
+ Returns the transition condition.
+ <br><b>Role</b>: This condition must evaluate TRUE to make the transition
+ fire. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The condition.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned value.
+
+</dl>
+</dl>
+<a name="AddInitialState"><a name="AddInitialState(CATDialogState*)"> <dt> o <b>AddInitialState</b>
+
+<dt>  <table><tr><td>  public void  <b>AddInitialState</b>(<td><font color="blue"><u>CATDialogState</u></font>* <td><tt>iState</tt>)</table></dt>
+<dl>
+  <dd>
+ Adds a source state to the transition.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iState</tt>
+   <dd>   The state.
+   <br><b>Cyclic reference</b>: A pointer to the state is kept, and 
+   AddRef'ed. It is Released at the end of the command before the command
+   destructor call or when the state is removed.
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveInitialState"><a name="RemoveInitialState(CATDialogState*)"> <dt> o <b>RemoveInitialState</b>
+
+<dt>  <table><tr><td>  public void  <b>RemoveInitialState</b>(<td><font color="blue"><u>CATDialogState</u></font>* <td><tt>iState</tt>)</table></dt>
+<dl>
+  <dd>
+ Removes a source state from the transition.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iState</tt>
+   <dd>   The state.
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInitialStateNumber"><a name="GetInitialStateNumber()"> <dt> o <b>GetInitialStateNumber</b>
+
+<dt>  <table><tr><td>  public int  <b>GetInitialStateNumber</b>(<td> <td><tt></tt>)</table></dt>
+<dl>
+  <dd>
+ Returns the count of source states.
+ <br><b>Role</b>: The count of source states ranges from 1 to n.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The source state count.
+
+</dl>
+</dl>
+<a name="GetInitialState"><a name="GetInitialState(int)"> <dt> o <b>GetInitialState</b>
+
+<dt>  <table><tr><td>  public <font color="blue"><u>CATDialogState</u></font>*  <b>GetInitialState</b>(<td>int <td><tt>iIndex</tt>)</table></dt>
+<dl>
+  <dd>
+ Returns a source state using the source state index.
+ <br><b>Role</b>: This method returns the <tt>iIndex</tt>th source state.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index.
+   <br><b>Legal values</b>: <tt>iIndex</tt> range starts with 1, which is 
+   the default.
+   Use </dd>
+<a href="#GetInitialStateNumber">GetInitialStateNumber</a> to get the source state count. 
+  <dt> <b>Returns:</b> 
+  <dd>    The state.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the
+    returned value.
+
+</dl>
+</dl>
+</dl>
+<a name="SetFinalState"><a name="SetFinalState(CATDialogState*)"> <dt> o <b>SetFinalState</b>
+
+<dt>  <table><tr><td>  public void  <b>SetFinalState</b>(<td><font color="blue"><u>CATDialogState</u></font>* <td><tt>iState</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the target state.
+ <br><b>Role</b>: Since a transition has only one target state, successive
+ calls to <tt>SetFinalState</tt> for the same transition successively 
+ overwrite the target state.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iState</tt>
+   <dd>   the state.
+   <br><b>Cyclic reference</b>: A copy of <tt>iState</tt> is kept and
+   AddRef'ed. It is Released at the end of the command before the command
+   destructor call or when the state is removed.
+   <br><b>Legal values</b>: <tt>iState</tt> may be set to NULL to cancel 
+   a state inherited from the command base class. 
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFinalState"><a name="GetFinalState()"> <dt> o <b>GetFinalState</b>
+
+<dt>  <table><tr><td>  public <font color="blue"><u>CATDialogState</u></font>*  <b>GetFinalState</b>(<td> <td><tt></tt>) const</table></dt>
+<dl>
+  <dd>
+ Returns the target state.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The state.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned value.
+
+</dl>
+</dl>
+<a name="SetResourceID"><a name="SetResourceID(CATString&)"> <dt> o <b>SetResourceID</b>
+
+<dt>  <table><tr><td>  public void  <b>SetResourceID</b>(<td> const <font color="blue"><u>CATString</u></font>& <td><tt>iId</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the resource identifier.
+ <br><b>Role</b>: This identifier is used to retrieve the Undo/Redo titles 
+ in the command message file.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The resource identifier.
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResourceID"><a name="GetResourceID()"> <dt> o <b>GetResourceID</b>
+
+<dt>  <table><tr><td>  public <font color="blue"><u>CATString</u></font>&  <b>GetResourceID</b>(<td> <td><tt></tt>)</table></dt>
+<dl>
+  <dd>
+ Retrieves the resource identifier.
+ <br><b>Role</b>: This identifier is used to retrieve the Undo/Redo titles
+ in the command message file.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The resource identifier.
+
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATDialogTransition.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>DI0STATE</b>
+
+</body>
+<hr><p><i>
+Copyright © 2000, Dassault Systèmes. All rights reserved.
+</i></p>
+</html>
+

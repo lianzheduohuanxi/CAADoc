@@ -1,0 +1,386 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Browsing a Product Structure</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Browsing a Product Structure</h3>
+      <em>Navigating in an existing product structure</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAPstBrowse</i> use case. This use case
+      explains how to navigate within an existing product structure, in other
+      words, how to find the number and names of the children of a product,
+      beginning with the root product.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstBrowse Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstBrowse Do</a></li>
+            <li><a href="#How">How to Launch CAAPstBrowse</a></li>
+            <li><a href="#Where">Where to Find the CAAPstBrowse Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to browse a product structure.
+Through this use case, you will also learn some important concepts about the
+Product Structure model. Basically, you will see how to:
+<ul>
+  <li>Load an existing CATProduct document</li>
+  <li>Retrieve the root product of the CATProduct document</li>
+  <li>Retrieve each child of the product structure beginning with the root
+    product</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of the Product Structure model by reading the referenced article <a href="#References">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstBrowse Use Case</h3>
+<p>CAAPstBrowse is a use case of the CAAProductStructure.edu framework that
+illustrates the ProductStructure framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPstBrowse Do</h4>
+<p>The goal of CAAPstBrowse is to navigate within an existing product structure
+and to retrieve the number and names of the children of a product. The existing
+product structure is found under the pathname of the document passed as an
+argument to this program.</p>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/CAAPstAddComponent.jpg" width="760" height="591"></td>
+  </tr>
+</table>
+<p>Above is a CATIA image of a product structure we will use as an example to
+navigate through. Under the root product, &quot;Product1&quot;, there are two
+product instances of external CATPart documents, called &quot;ImpSample.1&quot;
+and &quot;CAAPstPart.1&quot; and a product instance of an external CATProduct
+document, called &quot;CAAPstProduct.1&quot;.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPstBrowse?</h4>
+<p>To launch CAAPstBrowse, you will need to set up the build time environment,
+then compile CAABrowse along with its prerequisites, set up the run time
+environment, and then execute the sample. This is fully described in the
+referenced article [<a href="#References">2</a>].&nbsp;</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAPstBrowse input.CATProduct&quot;</pre>
+<ul>
+  <li><b>input.CATPart</b> - the path to the existing external CATProduct that
+    will be browsed. You may reference the supplied CATProduct document called
+    &quot;CAAPstBrowset.CATProduct&quot; found in :<table id="table1">
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CNEXT/resources/graphic</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CNEXT\resources\graphic</code></td>
+  </tr>
+</table>
+	<p>where <code>InstallRootDirectory</code> is the root directory of your CAA 
+	V5 installation.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAPstBrowse</i> Code?</h4>
+<p>CAAPstBrowse code is located in the CAAPstBrowse.m use case module of the
+CAAProductStructure.edu framework:</p>
+<table>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstBrowse.m</code></td>
+  </tr>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstBrowse.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAPstBrowse.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in <i>CAAPstBrowse</i>:</p>
+<ol>
+  <li><a href="#Load_doc">Loading an Existing CATProduct Document</a></li>
+  <li><a href="#Retrieve_root">Retrieving the Root Product of the CATProduct
+    Document</a></li>
+  <li><a href="#Get_direct">Finding the Number of Direct Children of the Root
+    Product</a></li>
+  <li><a href="#Get_all">Getting the Number of All of the Children of the Root
+    Product</a></li>
+  <li><a href="#Get_names">Getting Each Child's Root Product Reference and
+    Instance Names</a></li>
+  <li><a href="#CloseSession">Closing the Session</a>.</li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Load_doc"></a>Loading an Existing CATProduct Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT rc = 0;
+...
+CATSession* pSession = NULL;
+rc = <b>::Create_Session</b>(&quot;CAA2_Sample_Session&quot;,
+		             pSession);</pre>
+    </td>
+  </tr>
+</table>
+<p>The first thing that must be done in a batch environment is to create a new
+session. Use the <code>Create_Session</code> global function. It is important
+not to forget to delete the session at the end of your batch program.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDocument* pDoc = NULL;
+rc = <b>CATDocumentServices::Open</b>(argv[1],
+	                      pDoc);
+if ( FAILED(rc) || (NULL==pDoc)) return 2;</pre>
+    </td>
+  </tr>
+</table>
+<p>Once the current session has been created, the CATProduct document can be
+loaded into the session using the <code>Open</code> method of <i>CATDocumentServices</i>.
+The input parameter representing the pathname of the document to be loaded is
+taken from the first argument passed to this program. As output, we receive a <i>CATDocument</i>
+pointer to the document loaded into the session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve_root"></a>Retrieving the Root Product of the CATProduct
+Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIDocRoots* piDocRootsOnDoc = NULL;
+rc = pDoc-&gt;<b>QueryInterface</b>(IID_CATIDocRoots,
+                          (void**) &amp;<b>piDocRootsOnDoc</b>);
+if ( FAILED(rc) ) <b>return</b> 3;
+	
+// get the root product which is the first element of root elements
+CATListValCATBaseUnknown_var* pRootProducts = 
+   piDocRootsOnDoc-&gt;<b>GiveDocRoots</b>();
+CATIProduct_var spRootProduct = NULL_var;
+	
+if (pRootProducts-&gt;<b>Size</b>())
+{  
+   spRootProduct = <b>(*pRootProducts)[1]</b>;
+   <b>delete</b> pRootProducts;
+   pRootProducts = NULL;
+}
+piDocRootsOnDoc-&gt;<b>Release</b>();
+	
+// Get CATIProduct handle on the root product.
+CATIProduct *piProductOnRoot = NULL;
+rc = spRootProduct-&gt;<b>QueryInterface</b>(IID_CATIProduct,
+                                   (void**) &amp;<b>piProductOnRoot</b>);
+if ( FAILED(rc) ) <b>return</b> 3;</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to begin navigating through the product structure contained in the
+current document, we need to retrieve the <b>root product </b>using the <code>GiveDocRoots</code>
+method found in the <i>CATIDocRoots</i> interface implemented by the CATProduct
+document. This method returns all the roots of the document, the first being the
+root product we are looking for. From this root product, we can get a <i>CATIProduct</i>
+handle which will be needed later in order to browse the product structure.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get_direct"></a>Finding the Number of Direct Children of the Root
+Product</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int nbOfDirectChidren = piProductOnRoot<b> </b>-&gt; <b>GetChildrenCount</b>() ;
+cout &lt;&lt; &quot; Number of direct children under the root = &quot; &lt;&lt; nbOfDirectChidren &lt;&lt; endl &lt;&lt; flush;</pre>
+    </td>
+  </tr>
+</table>
+<p>Now that we have the root product in the form of a <i>CATIProduct</i> handle,
+we use the <code>GetChildrenCount</code> method in order to find the number of
+direct children under the root product. Using the product structure example
+shown previously, the trace should return: <b>3</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get_all"></a>Getting All of the Children of the Root Product</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATListValCATBaseUnknown_var*   ListChildren =
+   piProductOnRoot-&gt;<b>GetAllChildren</b>();
+piProductOnRoot -&gt; <b>Release</b>();
+if(NULL != ListChildren)
+{
+   int numberOfChildren = ListChildren-&gt;<b>Size</b>();
+   cout &lt;&lt; &quot; Number of all children under the root = &quot; &lt;&lt; numberOfChildren &lt;&lt; endl &lt;&lt; flush;</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the <i>CATIProduct</i> handle to the root product, we use the <code>GetAllChildren</code>
+method in order to get a list of all of the children of the root product. Again,
+based on the previous product structure example, the trace should return: <b>3</b>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get_names"></a>Getting Each Child's Root Product Reference and
+Instance Names</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   CATIProduct_var spChild = NULL_var;
+   for (int i=1;i&lt;=numberOfChildren;i++)
+   {
+      spChild = <b>(*ListChildren)[i]</b>;
+      CATUnicodeString partNumber = spChild -&gt; <b>GetPartNumber</b>();
+      CATUnicodeString instanceName (&quot; &quot;);
+      rc = spChild -&gt; <b>GetPrdInstanceName</b> ( instanceName ) ;
+      if  ( FAILED(rc) ) <b>return </b>4;
+
+      cout &lt;&lt; &quot; child number : &quot; &lt;&lt; i &lt;&lt; endl &lt;&lt; flush;
+      cout &lt;&lt; &quot; has as part number : &quot; &lt;&lt; partNumber.CastToCharPtr() &lt;&lt; endl &lt;&lt; flush;
+      cout &lt;&lt; &quot; and as instanceName : &quot; &lt;&lt; instanceName.CastToCharPtr() &lt;&lt; endl &lt;&lt; endl &lt;&lt; flush;
+   }
+   <b>delete</b> ListChildren;
+   ListChildren=NULL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Each product in the structure has two names associated with it: the name of
+the product reference, in other words, the name of the root product of the
+document (CATPart or CATProduct) from which it has been imported, and the name
+of the product instance. For example, two instances of the same product will
+have the same product reference name (or &quot;Part Number&quot;) but particular
+product instance names. Use the <code>GetPartNumber</code> method to get the
+product reference name for a child and <code>GetPrdInstanceName</code> to get
+its particular product instance name. Both are found in the <i>CATIProduct</i>
+interface. Above is the loop we coded to scan through all of the children and
+retrieve their names. Still based on our previous example of a product
+structure, the traces should come out thus:</p>
+<pre>Child number:  1  has as part number:  ImpSample   and as instanceName:  ImpSample.1
+Child number:  2  has as part number:  CAAPstPart  and as instanceName:  CAAPstPart.1
+Child number:  3  has as part number:  CAAPstProduct and as instanceName:  CAAPstProduct.1</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CloseSession"></a>Closing the Session</h4>
+<ol>
+  <li>Remove the CATProduct document from the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// remove opened document
+rc = <b>CATDocumentServices::Remove</b> (*pDoc);
+if (!SUCCEEDED(rc)) <b>return</b> 5;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It is good practice to remove any opened documents before exiting the
+    session.</p>
+  </li>
+  <li>Delete the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre><b>rc = ::Delete_Session</b>(&quot;CAA2_Sample_Session&quot;);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Do not forget to delete the session before exiting using the <code>Delete_Session</code>
+    global function.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to navigate within an existing product
+structure by retrieving the names of each child of the structure beginning with
+the root product. Specifically, it has illustrated:</p>
+<ul>
+  <li>Loading an existing CATProduct document using the <code>Open</code> method
+    of <i>CATDocumentServices</i></li>
+  <li>Retrieving the root product of the document using the <code>GiveDocRoots</code>
+    method of <i>CATIDocRoots</i></li>
+  <li>Finding the number of direct children of a rood product using the <code>GetChildrenCout</code>
+    of <i>CATIProduct</i></li>
+  <li>Getting all the children of a root product using the <code>GetAllChildren</code>
+    method of <i>CATIProduct</i></li>
+  <li>Getting each child's reference name using the <code>GetPartNumber</code>
+    method of <i>CATIProduct</i></li>
+  <li>Getting each child's instance name using the <code>GetPrdInstanceName</code>
+    method of <i>CATIProduct</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The Product
+      Structure Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

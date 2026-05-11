@@ -1,0 +1,453 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Displaying a Distance between Two Points Belonging to the Same Tool Path</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Displaying a Distance between Two Points Belonging
+      to the Same Tool Path</h3>
+      <i>Manipulating a tool path</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAMfgTPEDisplayDistanceCom use case .
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAMfgTPEDisplayDistanceCom Use Case</a></b></li>
+        <ul>
+          <li><b><a href="#What">What Does CAAMfgTPEDisplayDistanceCom Do</a></b></li>
+          <li><b><a href="#How">How to Launch CAAMfgTPEDisplayDistanceCom</a></b></li>
+          <li><b><a href="#Where">Where to Find the CAAMfgTPEDisplayDistanceCom
+            Code</a></b></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you manipulate the tool path structure.
+This involves the following:</p>
+<ul>
+  <li>Creating a command which will select a tool path, two points and display
+    in the viewer the distance between the selected points.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMfgTPEDisplayDistanceCom Use Case</h3>
+<p>CAAMfgTPEDisplayDistanceCom is a use case of the CAAToolPathEditorItf.edu
+framework that illustrates ToolPathEditor framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAMfgTPEDisplayDistanceCom Do</h4>
+<p>CAAMfgTPEDisplayDistanceCom runs with the document CAAMfgToolPath.CATPart
+shown on <a href="#Fig1">Fig.1</a>.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The tool path of a sweeping operation</caption>
+  <tr>
+    <td><img src="images/CAAMfgTPEDisplayDistance00.jpg" nosaveborder= "0"width= "713"height= "727"> </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMfgTPEDisplayDistanceCom</h4>
+<p>To launch CAAMfgTPEDisplayDistanceCom, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile CAAMfgTPEAddToolBar.m
+    module along with its prerequisites [<a href="#References">1</a>]</li>
+</ul>
+<pre># Decomment this line in file ToolPathEditor.edu.dico to run CAAMfgTPEAddToolBar Sample
+# CAAMfgTPEM3xAddin CATISmgProgramAddin libCAAMfgTPEAddToolBar</pre>
+<ul>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMfgToolPath.CATPart file located in:</li>
+  <table width="100%">
+    <tr>
+      <td>Windows</td>
+      <td><tt>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CNext\resources\</tt><code>graphic</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><tt>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CNext/resources/</tt><code>graphic</code></td>
+    </tr>
+  </table>
+  <p><img src="images/CAAMfgTPEDisplayDistance01.jpg" nosavewidth= "482"height= "417"> 
+  <li>Using the Start menu, select the Surfacic Machining workbench in NC
+    Manufacturing</li>
+  <p><img src="images/CAAMfgTPEDisplayDistance02.jpg" nosaveborder= "0"width= "275"height= "417"> 
+  <p>This displays the PPR document:
+  <p><img src="images/CAAMfgTPEDisplayDistance03.jpg" nosaveborder= "0"height= 267width= 327> </p>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a sweeping
+    operation using the Sweeping command in the Insert-&gt;Machining
+    Operations-&gt;sweeping</li>
+  <li>Select a body, then do replay to compute the tool path.</li>
+  <li>In the PPR tree, an icon appears under the activity of sweeping.</li>
+  <p><img src="images/CAAMfgTPEDisplayDistance04.jpg" nosaveborder= "0"width= "402"height= "372"> </p>
+  <li>Then select the tool path and click on the icon representing the command
+    &quot;Display distance&quot;. A tool path is displayed, with points.</li>
+  <p><img src="images/CAAMfgTPEDisplayDistance05.jpg" nosavewidth= "509"height= "524"> 
+  <li>Select two points on the tool path. Then the distance between these two
+    points is displayed in the viewer.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMfgTPEDisplayDistanceCom Code</h4>
+<p>The CAAMfgTPEDisplayDistanceCom use case is made of a class named<i>
+CAAMfgTPEDisplayDistanceCom</i> located in the CAAMfgTPEAddToolBar.m module of
+the CAAToolPathEditorItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CAAMfgTPEAddToolBar.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CAAMfgTPEAddToolBar.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are four logical steps in CAAMfgTPEDisplayDistanceCom:</p>
+<ol>
+  <li><a href="#Step1">Creating a Command for Displaying the Distance between
+    Two Points</a></li>
+  <li><a href="#Step2">Selecting a Tool Path</a></li>
+  <li><a href="#Step3">Selecting Two Points</a></li>
+  <li><a href="#Step4">Displaying the Distance between These Two Points</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a Command for Displaying the Distance between
+Two Points</h4>
+<p>The class that will implement the command is named <i><tt>CAAMfgTPEDisplayDistanceCom.</tt></i><br>
+Create the <i>CAAMfgTPEDisplayDistanceCom</i> class header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class ExportedByCAAMfgTPEAddToolBar CAAMfgTPEDisplayDistanceCom : public CATStateCommand
+{
+  public:
+    DeclareResource (CAAMfgTPEDisplayDistanceCom,CATStateCommand)
+    CAAMfgTPEDisplayDistanceCom (CATString* argument);
+    virtual ~CAAMfgTPEDisplayDistanceCom();
+    void BuildGraph();
+    void Valuate (const CATBaseUnknown_var&amp; iValue);  
+  private:
+    // to Create the rep of the tool path
+    void CreateController();
+    // Delete the rep of the tool path
+    void DeleteController();
+    // To update the rep of the tool path
+    void DispatchInfo();
+    // To get the tool path
+    boolean GetSelection (void* data);
+    // To Terminate the command
+    boolean End (void* data);
+    // To display the distance between two points.
+    void DisplayDistance();
+    // To create the selector of points
+    void SetSelector();
+    // Processing of events.
+    void PreActivate (CATCommand*, CATNotification*, CATCommandClientData);
+    void Move (CATCommand*, CATNotification*, CATCommandClientData);
+    void EndPreActivate (CATCommand*, CATNotification*, CATCommandClientData);
+    // To process the selection of a point.
+    void ActivateSelector (CATCommand*, CATNotification*, CATCommandClientData);
+    // To remove the rep of the distance.
+    void RemoveDistanceRep();
+    //  To remove the rep of the point.
+    void RemovePointRep();
+    // To convert a length in the current unit.
+    void ConvertLengthInUnit(double iLength, CATUnicodeString&amp; ioLengthinUnit);
+    CATIMfgToolPath_var _ToolPath;
+    CAT3DViewer*         _Viewer;
+    CATPathElementAgent* _TPSelectionAgent;
+    CATDialogAgent*      _TPEndAgent ;
+    CAT3DCustomRep*      _DistanceRep;
+    CATMathPoint _FirstPoint, _SecondPoint;
+    CATPathElement* _ToolPahVisu;
+    IID*            _iid;
+    CATVisManager*  _VisuManager;
+    CAT3DPointRep*  _CurrentPointRep;
+    CATSelector*    _Selector;    
+    
+    double _Distance;
+    boolean _hasFirstPoint, _hasSecondPoint;  
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i><tt>CAAMfgTPEDisplayDistanceCom</tt></i> class C++-derives from <i>CATStateCommand</i>.
+The DeclareResource macro declares that the resource file is <i><tt>CAAMfgTPEDisplayDistanceCom</tt>.CATNls</i>.
+The class has a constructor, a destructor, a DisplayDistance method to compute
+the distance, severals methods to manage the user's interaction and the rep of
+the tool path, and a copy constructor.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Selecting a Tool Path</h4>
+<p>First you have to implement the method BuilGraph, which will provide you with
+capturing the user's interactions.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEDisplayDistanceCom::BuildGraph()
+{  
+  // To Select tool path.
+  _TPSelectionAgent = new CATPathElementAgent(&quot;ToolPathSelection&quot;);
+  if (NULL != _TPSelectionAgent) {
+    _TPSelectionAgent-&gt;SetOrderedElementType(CATIMfgCompoundTraject::ClassName());
+    _TPSelectionAgent-&gt;SetBehavior(CATDlgEngWithPrevaluation|CATDlgEngWithCSO|CATDlgEngMultiAcquisition);
+    AddCSOClient(_TPSelectionAgent);
+  }
+  // To terminate the command
+  if ( _TPEndAgent == NULL ) {
+    _TPEndAgent = new CATDialogAgent(&quot;End&quot;);
+    if (NULL != _TPEndAgent)
+      _TPEndAgent-&gt;AcceptOnNotify(NULL, CATEdit::ClassName());
+  }
+  CATDialogState* firstState = GetInitialState(&quot;TPESelectToolPath&quot;);
+  if (NULL != firstState) firstState-&gt;AddDialogAgent(_TPSelectionAgent); 
+  CATDialogState* secondState = AddDialogState(&quot;TPEEndCommand&quot;);
+  if (NULL != secondState)
+    secondState-&gt;AddDialogAgent(_TPEndAgent); 
+  CATDialogTransition * firstTransition = 
+    AddTransition (firstState, secondState,
+                   IsOutputSetCondition(_TPSelectionAgent),
+                   Action((ActionMethod) &amp;CAAMfgTPEDisplayDistanceCom::GetSelection));
+    AddTransition (secondState, NULL,
+                   IsOutputSetCondition(_TPEndAgent),
+                   Action((ActionMethod) &amp;CAAMfgTPEDisplayDistanceCom::End));
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Now the method GetSelection is implemented. It gets the selected tool path.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>boolean CAAMfgTPEDisplayDistanceCom::GetSelection (void* data)
+{ 
+  CATBoolean RESULT = CATFalse;
+  CATSO* selectedObjects = NULL;
+  if (NULL != _TPSelectionAgent)
+    selectedObjects = _TPSelectionAgent-&gt;GetListOfValues();
+  // We display only one tool path in this command
+  if ( selectedObjects ) {
+    if ( selectedObjects-&gt;GetSize() == 1 ) {
+      CATPathElement* pathElement=NULL;
+      CATIMfgCompoundTraject* ptrCTraject=NULL;
+      CATIMfgCompoundTraject_var itfCmpTraject;
+      pathElement = (CATPathElement*) (*selectedObjects)[0];
+      if (NULL != pathElement) {
+        // A CATIMfgCOmpoundTraject must have been seletecd
+        ptrCTraject = (CATIMfgCompoundTraject *) (pathElement-&gt;FindElement(CATIMfgCompoundTraject::ClassId()));
+        itfCmpTraject = ptrCTraject;
+        if (!! itfCmpTraject ) {
+          _ToolPath = itfCmpTraject;
+          ptrCTraject-&gt;Release();
+          ptrCTraject=NULL;
+          RESULT = CATTrue;
+        }
+        
+        pathElement=NULL;
+      }
+      // Display the tool path.
+      CreateController();
+      DispatchInfo();
+      // To Select points.
+      SetSelector();
+    }
+  }
+  return RESULT;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>First, we verify that the selected object is a tool path object, then we
+display it ( call to methods CreateController to create the image then a call to
+method DispatchInfo to display it in the 3d viewer). Then we create a selector
+to select points on a tool path.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEDisplayDistanceCom::SetSelector() 
+{
+  // To get the rep of the points
+  CATRep* pointsRep=NULL;          
+  CATIMfg3DToolPathVisuData_var VisuData (_ToolPath);
+  if (!! VisuData)
+    VisuData-&gt;GetPointsRep(&amp;pointsRep);
+  if ( _Selector == NULL ) {
+    _Selector = new CATSelector (this,&quot;ToolPathSelector&quot;, pointsRep);
+    AddAnalyseNotificationCB ( _Selector,
+                               _Selector-&gt;GetCATPreactivate(),
+                               (CATCommandMethod)&amp;CAAMfgTPEDisplayDistanceCom::PreActivate,NULL);
+    AddAnalyseNotificationCB ( _Selector,
+                               _Selector-&gt;GetCATActivate(),
+                               (CATCommandMethod)&amp;CAAMfgTPEDisplayDistanceCom::ActivateSelector,NULL);
+    AddAnalyseNotificationCB ( _Selector,
+                               _Selector-&gt;GetCATMove(),
+                               (CATCommandMethod)&amp;CAAMfgTPEDisplayDistanceCom::Move,NULL);
+    AddAnalyseNotificationCB ( _Selector,
+                               _Selector-&gt;GetCATEndPreactivate(),
+                               (CATCommandMethod)&amp;CAAMfgTPEDisplayDistanceCom::EndPreActivate,NULL);
+  }
+  else {
+    _Selector-&gt;AssociateToRep(pointsRep);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Selecting Two Points</h4>
+<p>The method Activateselector is called when an end-user click on a point of
+the tool path.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEDisplayDistanceCom::ActivateSelector(CATCommand* c1, CATNotification* c2, CATCommandClientData c3)
+{
+  CATGraphicElementIntersection* Intersection = NULL;
+  if (NULL != _Selector)  {
+    Intersection = (CATGraphicElementIntersection*) 
+            _Selector-&gt;SendCommandSpecificObject (CATGraphicElementIntersection::ClassName(), c2);
+  }
+  if (!Intersection) return;
+  if ( _hasFirstPoint) {
+    _hasSecondPoint = CATTrue;
+    _SecondPoint = Intersection-&gt;point;
+    _Distance = _FirstPoint.DistanceTo(_SecondPoint);
+    DisplayDistance ();
+    _hasFirstPoint = CATFalse;
+  }
+  else {
+    _hasFirstPoint = CATTrue;
+    _FirstPoint = Intersection-&gt;point;
+    _Distance = _FirstPoint.DistanceTo(_SecondPoint);
+    if ( _hasSecondPoint) {
+      DisplayDistance ();
+      _hasSecondPoint = CATFalse;
+    }
+  }
+  Intersection-&gt;Release();
+  if ( _Viewer) _Viewer-&gt;Draw();
+}</pre>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Displaying the Distance between These Two Points</h4>
+<p>The next is to compute distance between two selected points and to display
+this information in the 3d viewer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEDisplayDistanceCom::DisplayDistance()
+{
+  if ( _hasFirstPoint &amp;&amp;  _hasSecondPoint ) {
+    RemoveDistanceRep();
+    CATUnicodeString distanceStr;
+    ConvertLengthInUnit(_Distance, distanceStr);
+    float tab[3] = {(float)_SecondPoint.GetX(),(float)_SecondPoint.GetY(),(float)_SecondPoint.GetZ()};
+    CAT3DMarkerGP* arrowGP = new CAT3DMarkerGP(tab,1,FILLED_ARROW);
+    CATMathPointf anchor=(_FirstPoint+ _SecondPoint)/2.0;
+    CAT3DAnnotationTextGP* textGP  = new CAT3DAnnotationTextGP(anchor,distanceStr,BASE_CENTER);
+    float Points[6] = {  (float)_FirstPoint.GetX(), (float)_FirstPoint.GetY(), (float)_FirstPoint.GetZ(),
+                         (float)_SecondPoint.GetX(), (float)_SecondPoint.GetY(),(float)_SecondPoint.GetZ()};
+    CAT3DLineGP* lineGP = new CAT3DLineGP (Points);
+    CATGraphicAttributeSet AttributsDir;
+    AttributsDir.SetColor(RED);
+    _DistanceRep = new CAT3DCustomRep(lineGP,AttributsDir);
+    if (NULL != _DistanceRep) {
+      _DistanceRep -&gt; AddGP(textGP,AttributsDir);
+      _DistanceRep -&gt; AddGP(arrowGP,AttributsDir);
+    }
+    if (_Viewer) {
+      _Viewer-&gt;AddRep(_DistanceRep);
+      _Viewer-&gt;Draw();
+    }
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the structure of the tool path
+and how to make command in the tool path editor. It shows how to select points a
+on a tool path.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMaiDumpToolPathCommand.htm">Dump of Tool Path Content
+      Command</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+<META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+<TITLE>Creating Preprocessing Data</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD ALIGN="right" VALIGN="top">
+		<H2><A NAME="Top"></A>Creating Preprocessing Data</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This macro shows you how to create preprocessing 
+		commands on an existing Analysis document linked to a Part document and 
+		how to launch the computation. This scenario is related to the Generative 
+		Analysis products.</P>
+		<!---------------------------------comment------------------------------------->
+		<P>It opens an Analysis document, and generates preprocessing data applied 
+		to the part attached to the Analysis document. This scenario retrieves the 
+		Restraint set to define a clamp on one face, retrieves the Load set in order 
+		to define a momentum on another face and compute the case. This last task 
+		launches the meshes, generates the finite element model for preprocessing 
+		and launches the solver in order to generate the finite element results.</P>
+		<P ALIGN="center">
+		<img border="2" src="images/MacroPrepro.jpg" width="635" height="314"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniPrepro is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniPreproSource.htm">CAAAniPrepro.CATScript</A> is located 
+		in the CAAScdAniUseCases module. <a href="macros/CAAAniPrepro.CATScript">
+		Execute macro</A> (Windows only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniPrepro includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting from the Part Document the Reference 
+			Object for Preprocessing</A></LI>
+			<LI><A HREF="#Navigate">Navigating into the Analysis Document in Order 
+			to Retrieve the Preprocessing Sets</A></LI>
+			<LI><A HREF="#bound">Defining the Boundaries</A></LI>
+			<LI><A HREF="#load">Defining the Load</A></LI>
+			<LI><A HREF="#compute">Computing the Case</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>  ...</PRE>
+				<PRE> <FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+    <FONT COLOR="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</FONT>
+<FONT COLOR="#0000FF">    dim </FONT>sDocPath<FONT COLOR="#0000FF"> As </FONT>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+    <FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+    <FONT COLOR="#008000">&#39; Open the Analysis document</FONT> 
+    <FONT COLOR="#0000FF">Dim</FONT> oAnalysisDocument <FONT COLOR="#0000FF">As</FONT> Document
+    <FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open
+        (sDocPath &amp; &quot;\CAAScdAniUseCases\samples\AnalysisCrank.CATAnalysis&quot;)
+   ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is fetched in the documentation 
+		installation path, this path has already been stored in the <CODE>sDocPath</CODE> 
+		variable. In the collection of documents, two documents can be retrieved: 
+		the Analysis document and the Part document.</P>
+		<H4><A NAME="Reference"></A>Extracting from the Part Document the Reference 
+		Object for Preprocessing</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; Retrieve the Part document in order to compute the references for preprocessing</FONT>
+<FONT COLOR="#0000FF">Dim</FONT> PartDocument <FONT COLOR="#0000FF">As</FONT> PartDocument
+<FONT COLOR="#0000FF">Set</FONT> PartDocument = documents1.Item(3)
+
+<FONT COLOR="#008000">&#39; Retreive the Part from this document</FONT>
+<FONT COLOR="#0000FF">Dim</FONT> part1 <FONT COLOR="#0000FF">As</FONT> Part
+<FONT COLOR="#0000FF">Set</FONT> part1 = PartDocument.Part
+
+<FONT COLOR="#008000">&#39; Retrieve the References</FONT>
+<FONT COLOR="#0000FF">Dim</FONT> referenceBound <FONT COLOR="#0000FF">As</FONT> Reference
+<FONT COLOR="#0000FF">Set</FONT> referenceBound = part1.CreateReferenceFromName(&quot;Selection_RSur:(Face:(Brp:(GSRotate.2...));None:());...)&quot;)
+
+<FONT COLOR="#0000FF">Dim</FONT> referenceLoad <FONT COLOR="#0000FF">As</FONT> Reference
+<FONT COLOR="#0000FF">Set</FONT> referenceLoad = part1.CreateReferenceFromName(&quot;Selection_RSur:(Face:(Brp:(GSMRotate.2...));None:());...)&quot;)
+
+<FONT COLOR="#008000">&#39; Extract the product as input of preprocessing feature.</FONT>
+<FONT COLOR="#0000FF">Dim</FONT> product1 <FONT COLOR="#0000FF">As</FONT> Product
+<FONT COLOR="#0000FF">Set</FONT> product1 = PartDocument.Product
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>The extraction of pre-defined geometrical arena is done by using the 
+		Reference interface. This is equivalent as the selection of a B-Rep element 
+		inside the interactive applications.</P>
+		<H4><A NAME="Navigate"></A>Navigating Inside the Analysis Document in Order 
+		to Retrieve the Preprocessing Sets</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+    <FONT COLOR="#008000">&#39;Start to scan the existing structure of the analysis document: Retrieve the Analysis Manager 
+</FONT>    <FONT COLOR="#008000">
+</FONT>    <FONT COLOR="#0000FF">Dim</FONT> AnaManager <FONT COLOR="#0000FF">As</FONT> AnalysisManager
+    <FONT COLOR="#0000FF">Set</FONT> AnaManager = oAnalysisDocument.Analysis
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisModels</FONT>
+    <FONT COLOR="#0000FF">Dim</FONT> AnaModels <FONT COLOR="#0000FF">As</FONT> AnalysisModels
+    <FONT COLOR="#0000FF">Set</FONT> AnaModels = AnaManager.AnalysisModels
+
+    <FONT COLOR="#008000">&#39; To work with the first AnalysisModel of the collection</FONT>
+    <FONT COLOR="#0000FF">Dim</FONT> AnaModel <FONT COLOR="#0000FF">As</FONT> AnalysisModel
+    <FONT COLOR="#0000FF">&gt;Set</FONT> AnaModel = AnaModels.Item(1)
+    
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisCases</FONT>
+    <FONT COLOR="#0000FF">Dim</FONT> Cases <FONT COLOR="#0000FF">As</FONT> AnalysisCases
+     <FONT COLOR="#0000FF">Set</FONT> Cases=AnaModel.AnalysisCases
+    
+    <FONT COLOR="#008000">&#39; To work with the first AnalysisCase of the collection</FONT>
+     <FONT COLOR="#0000FF">Dim</FONT> MyCase  <FONT COLOR="#0000FF">As</FONT> AnalysisCase
+     <FONT COLOR="#0000FF">Set</FONT> MyCase=Cases.Item(1)
+  ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>document</B>, 
+		we find the <B>Analysis manager Object</B>, the <B>Analysis models</B> and 
+		the <B>Analysis cases Objects</B>. From both last object (Analysis Model 
+		and Analysis case), you can get access to <B>Analysis Sets</B> and <B>Analysis 
+		entities</B> that defines the preprocessing actions.</P>
+		<H4><A NAME="bound"></A>Defining the Boundaries</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>  ...
+    <FONT COLOR="#008000">&#39; To work with the AnalysisSet of the collection that is typed for Boundary condition</FONT>
+    <FONT COLOR="#0000FF">Dim</FONT> MySet <FONT COLOR="#0000FF">As</FONT> AnalysisSet
+    <FONT COLOR="#0000FF">Set</FONT> MySet= ListSets.ItemByType(&quot;RestraintSet&quot;)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisEntities collection defined on the set</FONT>.
+    <FONT COLOR="#0000FF">Dim</FONT> anEntities <FONT COLOR="#0000FF">As</FONT> AnalysisEntities
+    <FONT COLOR="#0000FF">Set</FONT> anEntities = MySet.AnalysisEntities
+
+    <FONT COLOR="#008000">&#39; Define an Analysis Entity on the set in order to Fix the referencebound of the part</FONT>.
+    <FONT COLOR="#0000FF">Dim</FONT> analysisEntity <FONT COLOR="#0000FF">As</FONT> AnalysisEntity
+    <FONT COLOR="#0000FF">Set</FONT> analysisEntity = anEntities.Add(&quot;SAMClamp&quot;)
+    analysisEntity.AddSupportFromProduct product1, referenceBound
+  ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>From the collection of analysis sets defined on the analysis case, we 
+		retrieve the preprocessing set that allows you to define boundary conditions. 
+		This set is made of analysis entities. We add to this collection a fix (clamp) 
+		boundary condition and apply it on the reference extracted from the Part 
+		document.</P>
+		<H4><A NAME="load"></A>Defining the Loads</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>  ...
+    <FONT COLOR="#008000">&#39; To work with the AnalysisSet of the collection that is typed for Loading condition</FONT>
+    <FONT COLOR="#0000FF">Set</FONT> MySet= ListSets.ItemByType(&quot;LoadSet&quot;)
+
+    <FONT COLOR="#008000">&#39; Retrieve the AnalysisEntities collection defined on the set</FONT>.
+   <FONT COLOR="#0000FF">Set</FONT> anEntities = MySet.AnalysisEntities
+
+    <FONT COLOR="#008000">&#39; Define an Analysis Entity on the set in order to load the referenceLoad of the part</FONT>.
+   <FONT COLOR="#0000FF">Set</FONT> analysisEntity = anEntities.Add(&quot;SAMMoment&quot;)
+   
+   analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 1, 1, 1, 100000.
+   analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 2, 1, 1, 0.
+   analysisEntity.SetValue &quot;SAMMomentVector&quot;,&quot;&quot;, 3, 1, 1, 0.
+   
+    analysisEntity.AddSupportFromProduct product1, referenceLoad
+  ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>From the collection of analysis sets defined on the analysis case, we 
+		retrieve the preprocessing set that allows you to define loading conditions. 
+		This set is made of analysis entities. We add to this collection a momentum, 
+		valuate the vector that defines this loading condition, and apply it on 
+		the reference extracted from the part document.</P>
+		<P>For more information about the physical types included inside analysis 
+		entities and the way to valuate them, refer to the reference [<A HREF="#References">2</A>]</P>
+		<H4><A NAME="compute"></A>Computing the Case</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>  ...
+    <FONT COLOR="#008000">&#39; Launch the computation of the Case</FONT> 
+    MyCase.Compute
+  ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>This method will launch the mesher, generate the finite element model 
+		for preprocessing and launch the solver to generate the finite element results.</P>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create preprocessing entities and launch a computation 
+inside an Analysis document.</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD VALIGN="top">[1]</TD>
+		<TD><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top">[2]</TD>
+		<TD>
+		<a href="../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm">
+		The Physical Types for Structural Analysis</A></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2" ALIGN="right">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

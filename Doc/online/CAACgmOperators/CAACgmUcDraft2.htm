@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Draft: Untwist</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Draft: Untwist</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>CATICGMDynDraft is the base operator to create a draft. However drafting a set of adjacent faces may not be possible when the 
+		drafting angle is too big or when the face arrangement is such that the 
+		generated drafted faces self-intersect or are twisted. In this case, CATICGMDynAdvancedDraft is the operator to be used.  
+		<p>All the 
+		operation parameters are gathered in a CATDynDraftDomain which is added 
+		to the CATICGMDynAdvancedDraft operator prior to running it. <br>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a draft with &quot;untwist&quot; mode, use the CATICGMDynAdvancedDraft operator in 
+GMOperatorsInterfaces. This operator has to be created using the 
+CATCGMCreateDynAdvancedDraft global function. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsDraftCreation.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how to create drafts. This use case must be executed with 
+two arguments, the input file DraftTest.NCGM which is delivered in the 
+FunctionTests/InputData folder of the CAAGMOperatorsInterfaces.edu framework and 
+the NCGM file to store the result. This use case is divided into three parts:</p>
+<ol>
+				<li>CAATopDraftmain.cpp, the main program which calls the two 
+				other parts</li>
+				<li>CreateDraft.cpp which explains how to create a basic draft</li>
+				<li>CAATopAdvancedDraft.cpp which illustrates how to use the 
+				&quot;untwist mode&quot;.</li>
+</ol>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>
+ <table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Advanced Draft: Input data </caption>
+   <tr>
+    <td>
+	<img alt="Advanced Draft: Input Data" src="images/CGM_advanced_draft_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+	<pre>
+// (a) - Create a draft angle from the specified list of faces and an angle
+CATDynDraftAngle *pDraftAngle = new CATDynDraftAngle(iFaces, iDraftAngle); 
+CATListPtrCATDynDraftAngle listDraftAngles;
+listDraftAngles.Append(pDraftAngle);
+
+// (b) - Create a draft ribbon from the specified list of angles
+CATDynDraftRibbon *pDraftRibbon = new CATDynDraftRibbon(listDraftAngles); 
+
+// (c) - Create a draft domain from the specified list of ribbons, draft direction and neutral face.
+CATListPtrCATDynDraftRibbon listRibbons;
+listRibbons.Append(pDraftRibbon);
+CATDynDraftDomain *pDraftDomain = new CATDynDraftDomain(iDraftDir, CATDynDraftDomainNeutral, iNeutralFace, listRibbons);
+
+// (d) - Create the advanced draft operator, append the draft domain and enable untwisting
+CATICGMDynAdvancedDraft *pDraftOp = CATCGMCreateDynAdvancedDraft(iFactory, iTopData, iBody, CATDynBasic);
+...
+pDraftOp->Add(pDraftDomain);
+pDraftOp->SetAutomaticUntwistMode(TRUE);
+...
+pDraftOp->Run(); 
+CATBody * pDraftBody = NULL;
+pDraftBody = pDraftOp->GetResult();
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Advanced Draft: No Untwist Mode and Untwist Mode </caption>
+   <tr>
+   <td>
+	<img alt=" Advanced Draft: No Untwist" src="images/CGM_advanced_draft_1.png" width="250" height="220"></td>
+       <td>
+	<img alt=" Advanced Draft: Result" src="images/CGM_advanced_draft_2.png" width="250" height="220"></td>
+   </tr>
+   </table>
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

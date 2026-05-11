@@ -1,0 +1,355 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATPEllipse</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATPEllipse"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATPEllipse</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATPEllipse_21857','CATPEllipse','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATPEllipse</b>
+</p>
+<p>
+<b><i> Interface representing an ellipse in the space of a surface.</i></b><br>
+
+<br> The CATPEllipse is created by the <tt>CreatePEllipse</tt>
+ method of the <tt>CATGeoFactory</tt> interface 
+ and deleted with the <tt>Remove</tt> method.
+<br>A CATPEllipse is defined with:
+<table>
+ <tr><td>CATSurface</td><td><tt>Sur </tt></td>
+                 <td> The underlying surface</td></tr>
+ <tr><td>double</td><td><tt>A</tt></td>
+                 <td> The half length of the major axis</td></tr>
+ <tr><td>double</td><td><tt>B</tt></td>
+                 <td> The half length of minor axis </td></tr>
+ <tr><td>CATAngle</td><td><tt> iOffset </tt></td>
+                 <td> The angle between the surface first direction and the
+                       major axis</td></tr>
+ <tr><td>CATAngle</td><td><tt> iStart </tt></td>
+                 <td> The low angle limitation </td></tr>
+ <tr><td>CATAngle</td><td><tt> iEnd </tt></td>
+                 <td> The high angle limitation</td></tr>
+</table>
+ with <tt> 0 <= iStart < CAT2PI</tt>, 
+ <tt>iStart < iEnd <= iStart + CAT2PI</tt>, <tt>B <= A</tt>.
+ The <tt>iStart</tt> and <tt>iEnd</tt> angles are measured
+ from the major axis.<br> 
+ The parametric equation of the ellipse in the surface is:
+ <tt>U=a*cos(theta), V=b*sin(theta)</tt>.
+ Notice that the CATSurParam associated with (U,V) 
+ may not correspond to <tt>theta</tt>. So, do not make any assumption on the
+ internal ellipse parameterization.<br>
+ The ellipse equation
+ in its axis system is <tt>U&sup2;/A&sup2; + V&sup2;/B&sup2; = 1</tt>.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetCenter()"><b>GetCenter</b></a>()
+<dd>  Returns the center of a CATPEllipse.
+ <dt> o 
+    <a href="#GetCenter(CATSurParam&amp;)"><b>GetCenter</b></a>(CATSurParam&amp;)
+<dd>  Returns the center of a CATPEllipse.
+ <dt> o 
+    <a href="#GetEndAngle()"><b>GetEndAngle</b></a>()
+<dd>  Returns the high angle limitation of <tt>this</tt> CATPEllipse.
+ <dt> o 
+    <a href="#GetMajorAxis()"><b>GetMajorAxis</b></a>()
+<dd>  Returns the half length of the major axis.
+ <dt> o 
+    <a href="#GetMinorAxis()"><b>GetMinorAxis</b></a>()
+<dd>  Returns the half length of minor axis.
+ <dt> o 
+    <a href="#GetOffsetAngle()"><b>GetOffsetAngle</b></a>()
+<dd>  Returns the angle between the surface first direction and the major axis
+ of <tt>this</tt> CATPEllipse.
+ <dt> o 
+    <a href="#GetStartAngle()"><b>GetStartAngle</b></a>()
+<dd>  Returns the low angle limitation of <tt>this</tt> CATPEllipse.
+ <dt> o 
+    <a href="#Set(double,double,CATAngle,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"><b>Set</b></a>(double,double,CATAngle,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)
+<dd>  Modifies the characteristics of <tt>this</tt> CAPEllipse.
+ <dt> o 
+    <a href="#SetCenter(CATSurParam&amp;)"><b>SetCenter</b></a>(CATSurParam&amp;)
+<dd>  Modifies the center of a CATPEllipse.
+ <dt> o 
+    <a href="#SetMajorAxis(double)"><b>SetMajorAxis</b></a>(double)
+<dd>   Modifies the half length of the major axis of <tt>this</tt> CATPEllipse.
+ <dt> o 
+    <a href="#SetMinorAxis(double)"><b>SetMinorAxis</b></a>(double)
+<dd>   Modifies the half length of minor axis of <tt>this</tt> CATPEllipse.
+ <dt> o 
+    <a href="#SetOffsetAngle(CATAngle)"><b>SetOffsetAngle</b></a>(CATAngle)
+<dd>  Modifies the angle between the surface first direction and the major axis
+ of <tt>this</tt> CATPEllipse.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetCenter"></a><a name="GetCenter()"></a> <dt> o <b>GetCenter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSurParam','CATSurParam')</script>  <b>GetCenter</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the center of a CATPEllipse.
+ Use preferably the signature which returns the center in output argument.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The center.
+</dl>
+</dl>
+<a name="GetCenter"></a><a name="GetCenter(CATSurParam&amp;)"></a> <dt> o <b>GetCenter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCenter</b>(<td><script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>ioCenter</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the center of a CATPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCenter</tt>
+   <dd> The center.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEndAngle"></a><a name="GetEndAngle()"></a> <dt> o <b>GetEndAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetEndAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high angle limitation of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The end limitation angle.
+</dl>
+</dl>
+<a name="GetMajorAxis"></a><a name="GetMajorAxis()"></a> <dt> o <b>GetMajorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMajorAxis</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the half length of the major axis.
+
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The half length of the major axis.
+</dl>
+</dl>
+<a name="GetMinorAxis"></a><a name="GetMinorAxis()"></a> <dt> o <b>GetMinorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetMinorAxis</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the half length of minor axis.
+
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The half length of the minor axis.
+</dl>
+</dl>
+<a name="GetOffsetAngle"></a><a name="GetOffsetAngle()"></a> <dt> o <b>GetOffsetAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetOffsetAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the angle between the surface first direction and the major axis
+ of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The angle.
+</dl>
+</dl>
+<a name="GetStartAngle"></a><a name="GetStartAngle()"></a> <dt> o <b>GetStartAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetStartAngle</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low angle limitation of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The first limitation angle.
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(double,double,CATAngle,CATSurParam&amp;,CATAngle,CATAngle,CATSurface*)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMajorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iMinorAxis</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iOffsetAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iCenter</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iStart</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iEnd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the characteristics of <tt>this</tt> CAPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMajorAxis</tt>
+   <dd> The new value.
+ </dd>
+    <dt><tt> iMinorAxis</tt>
+   <dd> The new value.
+ </dd>
+    <dt><tt> iOffsetAngle</tt>
+   <dd> The new offset angle value.
+ </dd>
+    <dt><tt> iCenter</tt>
+   <dd> The new center.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> The first limitation angle.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> The end limitation angle.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCenter"></a><a name="SetCenter(CATSurParam&amp;)"></a> <dt> o <b>SetCenter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCenter</b>(<td> const <script type="text/javascript"> activateLink('CATSurParam','CATSurParam&amp;')</script> <td><tt>iNewCenter</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the center of a CATPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewCenter</tt>
+   <dd> The new center.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMajorAxis"></a><a name="SetMajorAxis(double)"></a> <dt> o <b>SetMajorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMajorAxis</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewMajorAxis</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the half length of the major axis of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewMajorAxis</tt>
+   <dd> The new value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMinorAxis"></a><a name="SetMinorAxis(double)"></a> <dt> o <b>SetMinorAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMinorAxis</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewMinorAxis</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the half length of minor axis of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewMinorAxis</tt>
+   <dd> The new value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetAngle"></a><a name="SetOffsetAngle(CATAngle)"></a> <dt> o <b>SetOffsetAngle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOffsetAngle</b>(<td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iNewOffsetAngle</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the angle between the surface first direction and the major axis
+ of <tt>this</tt> CATPEllipse.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewOffsetAngle</tt>
+   <dd> The new angle value.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPEllipse.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

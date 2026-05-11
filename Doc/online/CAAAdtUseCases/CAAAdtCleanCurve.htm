@@ -1,0 +1,363 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>How to Achieve a Given Continuity along a Wire</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Achieve a Given Continuity along a Wire</h3>
+      <em>Getting wires of better quality</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>CATTopCleanCrvOperator enables you to correct or improve the
+      (dis)continuities along a wire. It can be run in two modes: either by
+      giving the priority to continuity or by giving the priority to
+      deformation. In neither mode, the points where the curve segments join are
+      displaced. This is an important feature: the operator only modifies the
+      curve around the vertices. An interesting capability of this operator
+      stands in the cell reduction: the vertices where the curvature continuity
+      is achieved can be removed from your topology that way reducing the number
+      of cells. </p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAdtCleanCrv Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does </a><a href="#UseCase"><strong>CAAAdtCleanCrv</strong></a><a href="#What">
+              Do?</a></li>
+            <li><a href="#How">How to Launch </a><a href="#UseCase"><strong>CAAAdtCleanCrv</strong></a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#UseCase"><strong>CAAAdtCleanCrv</strong></a><a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case, you learn how to use the CATTopCleanCrvOperator operator to
+modify a wire in order to get a better continuity at the points where the curve
+segments are joined. CATTopCleanCrvOperator is to be used according to the
+general scheme of&nbsp; topological operators.&nbsp; If need be, you can take a
+look at &quot;Overview of the Topological Operators&quot; [<a href="#References">1</a>]
+for more information.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAdtCleanCrv Use Case</h3>
+<p>CAAAdtCleanCrv is a use case of the CAAAdvancedTopologicalOperators.edu
+framework that illustrates the&nbsp; CAAAdvancedTopologicalOperators framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAdtCleanCrv Do</h4>
+<p>The use case:
+<ul>
+  <li>creates the curves making up the wire</li>
+  <li>creates a wire by using the CATTopWire operator</li>
+  <li>creates a CATTopCleanCrvOperator operator instance</li>
+  <li>sets the parameters prior to running the operator. Three set of parameters
+    are tested:</li>
+  <ol>
+    <li>No angle specified for the tangency criteria<br>
+      Targeted continuity: curvature continuity</li>
+    <li>Angle specified for the tangency criteria: 32 deg<br>
+      Targeted continuity: curvature continuity<br>
+      Cell reduction requested</li>
+    <li>Angle specified for the tangency criteria: 32 deg<br>
+      Targeted continuity: curvature continuity<br>
+      Cell reduction requested<br>
+      Criteria to be met on priority is deformation<br>
+      Maximum deformation of 0.2 specified</li>
+  </ol>
+  <li>run the CATTopCleanCrvOperator and retrieve the resulting body.</li>
+</ul>
+<p><b>Note</b><br>
+This article only focuses on the operations related to the
+CATTopCleanCrvOperator operator. Refer to &quot;Overview of the Topological
+Operators&quot; [<a href="#References">3</a>] for more information on the
+operations which are not detailed in the article.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAdtCleanCrv</h4>
+<p>To launch CAAAdtCleanCrv, you will need to set up the build time environment,
+then compile CAAAdtCleanCrv .m, set up the run time environment, and then
+execute the use case [<a href="#References">2</a>].</p>
+<font face="Helv" size="2" color="#000000">
+<p>If you simply type CAAAdtCleanCrv with no argument, the use case executes,
+but doesn't save the result in an NCGM file. If you want to save this result,
+provide the full pathname of the NCGM file to create. For example:</p>
+</font><font face="Courier New" size="2" color="#000000">
+<p>With Windows CAAAdtCleanCrv <code>e:\G2Wire.NCGM</code></p>
+<p>With UNIX CAAAdtCleanCrv <code>/u/G2Wire.NCGM</code></p>
+</font><font face="Helv" size="2" color="#000000">
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+</font>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAdtCleanCrv Code</h4>
+<p>The CAAAdtCleanCrv use case is made of a main named CAAAdtCleanCrv .cpp
+located in the CAAAdtCleanCrv .m module of the CAATopologicalOperators.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAdvancedTopologicalOperators.edu\</code>CAAAdtCleanCrv
+      <code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAdvancedTopologicalOperators.edu/</code>CAAAdtCleanCrv
+      <code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The use case is divided into the following main steps:</p>
+<ul>
+  <li><a href="#Creating the curves making up the wire">Creating the curves
+    making up the wire</a></li>
+  <li><a href="#Creating the wire to be corrected">Creating the wire to be
+    corrected</a></li>
+  <li><a href="#Creating a CATTopCleanCrvOperator operator instance">Creating a
+    CATTopCleanCrvOperator operator instance</a></li>
+  <li><a href="#Setting the parameters">Setting the parameters</a></li>
+  <li>Running the operator and retrieving the resulting body (common to all
+    operators - not discussed below).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="Creating the curves making up the wire">Creating the curves making
+up the wire</a></h4>
+<p>The curves to be used in the wire are CATLine that are simply created from
+the geometry factory.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathPoint P0(0,0,0);
+CATMathPoint P1(10,7.5,0);
+CATMathPoint P2(20,15,-2);
+CATMathPoint P3(45,20,-5);
+CATMathPoint P4(77,23,-7);
+    
+CATLine * piLine0 = piGeomFactory-&gt;CreateLine(P0,P1);
+CATLine * piLine1 = piGeomFactory-&gt;CreateLine(P1,P2);
+CATLine * piLine2 = piGeomFactory-&gt;CreateLine(P2,P3);
+CATLine * piLine3 = piGeomFactory-&gt;CreateLine(P3,P4);
+  </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+</ol>
+<h4><a name="Creating the wire to be corrected">Creating the wire to be
+corrected</a></h4>
+<p>You must follow the general scheme of all the topological operators:</p>
+<ul>
+  <li>create an operator instance,</li>
+  <li>run it</li>
+  <li>retrieve the resulting body.&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATTopWire * pWire0 = ::CATCreateTopWire(piGeomFactory, 
+        &amp;topdata,
+        nbcurve0,
+        ListOfCurves0,
+        curLimits0,
+        wireOrientations0);
+...
+pWire0-&gt;Run();
+CATBody * pWireBody0 = pWire0-&gt;GetResult();
+  </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+</ol>
+<h4><a name="Creating a CATTopCleanCrvOperator operator instance">Creating a
+CATTopCleanCrvOperator operator instance</a></h4>
+<p>The CATTopCleanCrvOperator operator is created by the
+CATCreateTopCleanCrvOperator global function. The wire body is passed as the
+third argument of the function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATTopCleanCrvOperator * pCleanCrvOpe0 = NULL;
+CATBody * piCleanBody = NULL;
+    
+// <font color="#008000">4.1 - Create the operator</font>
+//
+pCleanCrvOpe0 =::CATCreateTopCleanCrvOperator(piGeomFactory, 
+        &amp;topdata,
+        pWireBody0);  <font color="#008000">// the wire to be corrected</font>
+  </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+      <!---------------------------------comment------------------------------------->
+</ol>
+<h4><a name="Setting the parameters">Setting the parameters</a></h4>
+<p>Three set of parameters are tested. For each set, the G2 continuity is
+requested.</p>
+<ol>
+  <li><u>Case a</u>: No angle specified for the tangency criteria, by default
+    this angle is set to 0.5 deg. The G2 requirement is not achieved.
+    <table class="code" width="59%">
+      <tr>
+        <td width="626%">
+          <pre>pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; <font color="#008000">// G2 requested</font></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The resulting body and the input body are the same:<br>
+    <img border="0" src="images/cleancrv1.gif" hspace="1" vspace="14" width="528" height="301"><br>
+  </li>
+  <li><u>Case b</u>: The angle specified for the tangency criteria is 32 deg -
+    the cell reduction is requested. In other words, the simplication of the
+    topology is requested whenever a vertex becomes G2 continuous.
+    <table class="code" width="59%">
+      <tr>
+        <td width="626%">
+          <pre>pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; <font color="#008000">/* Target: G2 */</font>
+pCleanCrvOpe0-&gt;SetCellReduction(TRUE) ; <font color="#008000">// Cell reduction requested</font>
+CATAngle tanAngle = 32;
+pCleanCrvOpe0-&gt;SetTangencyAngle(tanAngle); <font color="#008000">// Tangency criteria specified</font></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The resulting body only has two vertices.<br>
+    <img border="0" src="images/cleancrv2.gif" vspace="15" width="537" height="278"></p>
+    <p>The model displayed in the figure above is obtained by applying the
+    &quot;Porcupine&quot; capability of the Generative Shape Design product on
+    the resulting curve. Red lines represent the curvature along the resulting
+    wire while the green curve represents the curvature envelope.<br>
+    The second derivative is always null at the vertex location, in other words
+    there is an inflexion at each vertex.&nbsp; In order to achieve G2
+    continuity at all price, the curve may exhibit an undesirable bulge around a
+    vertex&nbsp; Keep in mind that the resulting curve is not C2 but G2
+    continuous.</li>
+  <li><u>Case c:</u> The angle specified for the tangency criteria is 32 deg -
+    The cell reduction requested - The criteria to be met on priority is
+    deformation. Setting the priority criteria to the deformation does not imply
+    that the maximum has to be specified. By default this deformation is set to
+    0.001 - In this sample, a value of&nbsp; 0.2 is specified:
+    <table class="code" width="59%">
+      <tr>
+        <td width="626%">
+          <pre>pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; <font color="#008000">/* Target: G2 */</font>
+pCleanCrvOpe0-&gt;SetCellReduction(TRUE) ;  <font color="#008000">// Cell reduction requested</font>
+CATAngle tanAngle = 32;
+pCleanCrvOpe0-&gt;SetTangencyAngle(tanAngle);  <font color="#008000">// Tangency criteria specified</font></pre>
+        </td>
+      </tr>
+    </table>
+    <p>The resulting curve is corrected and the cell reduction is also
+    achieved.&nbsp;<br>
+    <img border="0" src="images/cleancrv3.gif" vspace="13" width="533" height="260"><br>
+    But after a &quot;Porcupine&quot; operation, the resulting body exhibits
+    some abrupt changes in the second derivative. The resulting curve exhibits
+    local irregularities.</p>
+    <p>Using the&nbsp; CATTopCleanCrvOperator operator requires a fine tuning of
+    the parameters. Being G2 at all price does not mean that the quality of the
+    resulting curve suits your application needs. The operator is best fit to
+    work with a slight or moderate tangency angle threshold, that way you may
+    reduce not all the vertices but obtain a better quality on the reduced
+    portion.&nbsp;</li>
+</ol>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CATTopCleanCrvOperator operator attempts to achieve a given geometric
+continuity along a wire. The cell reduction is a process whereby the topology is
+simplified whenever the G2 continuity is achieved at a vertex.&nbsp;
+CATTopCleanCrvOperator&nbsp; is not really a smoothing operator, depending on
+the parameters specified, the resulting curve may exhibit bulges at inflexions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAATopUseCases/CAATopOverview.htm">Overview
+      of the Topological Operators</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+   <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

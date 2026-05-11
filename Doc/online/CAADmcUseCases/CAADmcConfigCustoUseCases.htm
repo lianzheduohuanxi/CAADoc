@@ -1,0 +1,325 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customizing an ENOVIA Config</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customizing an ENOVIA Config</h3>
+     </td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>&nbsp;This article aims at presenting a comprehensive customization sample on 
+     ENOVIA Config. </p>
+     <ul>
+       <li><strong><a href="#Principle">Principle</a></strong><font color="#0000FF"><b>
+       </b></font></li>
+       <li><font color="#0000FF"><b>
+       <a href="#Creating a UML Project">Creating a UML Project</a></b></font></li>
+       <li><u><font color="#0000FF"><b>
+       <a href="#Creating_a_new_Config_customization">Creating a Config 
+       Customization</a></b></font></u></li>
+       <li><strong><a href="#Creating a Modeler Object">Creating 
+       a Modeler Object</a></strong></li>
+       <li><a href="#Generate_the Dictionary_file"><strong>Generating the
+       Dictionary</strong><b> File</b></a></li>
+       <li><a href="#Publish_Enovia_data"><strong>Publishing Enovia Data</strong><b><font color="#0000FF">
+       </font></b></a></li>
+       <li><u><font color="#0000FF"><b><a href="#Test_In_Enovia">Testing in ENOVIA</a></b></font></u></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Principle"></a>Principle</h3>
+ <p>The Configuration management enables you to establish and maintain variations and alternative versions of your product structure. Configuration applicability 
+ is carried by each item instance within your product structure. Subsequently, 
+ when you open a product using a particular configuration filter, the 
+ applicability criteria you specified determine whether a given item instance is 
+ included in the view. When a product is associated with a specific 
+ configuration, it is considered to be under configuration control.</p>
+ <p>But, according to their applicative products, customers may 
+     need new fields to take internal processes into account 
+     for example.</p>
+ <p align="left">In the example below, you are going to 
+ customize a Config. This use case shows a customization of the whole 
+ modeler, that is to say, all entities will be customized. You have to remember 
+ that&nbsp; it is not mandatory to customize all classes to customize 
+ the Config 
+ modeler. The following principle graphic explains what to customize relating to what you 
+ want to do:</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigPrinciple.gif"></p>
+ <p align="left">You are going to add an attribute 
+ to each customized class:</p>
+ <ul>
+   <li>
+   <p align="left">a string internal_ref to MyCategory</p></li>
+   <li>
+   <p align="left">a date CustoAttr1 to MyExpressionrule</p></li>
+   <li>
+   <p align="left">a boolean CustoAttr2 to MyInclusionRule</p></li>
+   <li>
+   <p align="left">a boolean CustAttr3 to MySpecification</p></li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3>Creating a UML Project <a name="Creating a UML Project">
+ </a></h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;UML 
+   Project</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>.
+   </li>
+   <li>Enter the name of the UML project. Click <code>
+   <font color="#008040">Next</font></code>&gt; and <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>In the <code><font color="#008040">Navigator</font></code> 
+   view, right-click your project and select <code><font color="#008040">
+   Open as a DMC Project</font></code>. </li>
+   <li>In the <code><font color="#008040">Open a DMC 
+   Project</font></code> window, select the tool level and click
+   <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Initializing tools</font></code> 
+   window.</li>
+   <li>Click <code><font color="#008040">Add</font></code> 
+   and select your prerequisite frameworks. Click <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Installing Prereqs</font></code> 
+   window.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3 align="left"><a name="Creating_a_new_Config_customization"></a>Creating a Config
+ Customization</h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New LCA Customization</font></code>. Click <code>
+   <font color="#008040">Next&gt;</font></code>. </li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigNewApplication.gif"></p>
+ <ol start="2">
+   <li>Enter the name of the application, MyConfig in this 
+   example.</li>
+   <li>Click <code><font color="#008040">...</font></code> 
+   in the <code><font color="#008040">Customize LCA application</font></code> 
+   field. The <code><font color="#008040">Select a framework </font>
+   </code> 
+   dialog box 
+   opens.</li>
+   <li>Select Config and click <code>
+   <font color="#008040">OK</font></code>.</li>
+   <li>Click <code><font color="#008040">Finish</font></code>. The wizard creates 
+   a new workspace.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Creating a Modeler Object"></a>Creating a Modeler 
+ Object </h3>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <code><font color="#008040">Other-&gt;DMC elements-&gt;New
+   Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. The 
+   <code><font color="#008040">New Modeler Object </font></code>window opens.</li>
+   <li>Enter the class name in the <code>
+   <font color="#008040">Class name</font></code> field, 
+   MyCategory  in this example.</li>
+   <li>Select <code><font color="#008040">CATEGORY</font></code> in the list. Click <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Insert</font></code> to add 
+   an attribute to your MyCategory. In this case, add a string called &quot;Internal_ref&quot;.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+       <tr>
+         <td>&nbsp;</td>
+       </tr>
+       <tr>
+         <td>
+         <img border="1" src="images/CAADmcCustoConfigModeler.gif" width="366" height="251"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Finish</font></code>
+   when done.</li>
+   <li>Repeat the above steps for the other 
+   3 customized classes.<div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+       <tr>
+         <td valign="top">
+         <h4>INCLUSIONSPEC</h4>
+         </td>
+         <td valign="top">
+         <h4>EXPRESSIONSPEC</h4>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoConfigUMLSchema1.gif" width="260" height="246"></td>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoConfigUMLSchema2.gif" width="257" height="250"></td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <h4>CATEGORYSPEC</h4>
+         </td>
+         <td valign="top">
+         <h4>SPECIFICATION</h4>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoConfigUMLSchema3.gif" width="281" height="300"></td>
+         <td valign="top">
+         <img border="0" src="images/CAADmcCustoConfigUMLSchema4.gif" width="298" height="321"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p>
+ <!---------------------------------comment------------------------------------->
+ </p>
+ <h3><a name="Generate_the Dictionary_file"></a>Generating the 
+ Dictionary File</h3>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+     <li>Select<code><font color="#008040"> DMC Project-&gt;Generate 
+   VPM Dictionary file</font></code>.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigGenMetadata.gif" width="356" height="479"></p>
+ <p>The wizard creates <i>MyConfig.metadata</i> under the directory MyConfig/CNext/code/dictionary. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Publish_Enovia_data"><span style="background-color: #FFFF00">
+ </span></a>Publishing Enovia Data</h3>
+ <ol>
+   <li>Select<code><font color="#008040"> DMC Project-&gt;Publish 
+   VPM Dictionary file in Database.</font></code><div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+       <tr>
+         <td>
+         <img border="0" src="images/CAADmcCustoConfigGenMetadata1.gif" width="467" height="470"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p>Check if the settings are correctly valuated and click <code>
+ <font color="#008040">OK</font></code> to start the Publish command to finish 
+ the scenario.</p>
+ <h3><a name="Test_In_Enovia"><span style="background-color: #FFFF00"></span></a>
+ Testing in ENOVIA</h3>
+ <p>Now it is time to test your customization. To use this customization, launch ENOVIA with the environment of 
+ the customization. To do so,
+ indicate the location where your customization is built 
+ on the server, as follows:</p>
+ <p>On UNIX:</p>
+   <p align="left">$ENOVIA_INSTALLATION_PATH$/$OS$/code/command/enoviastart<i>
+   </i>-direnv $EnvDir$ -env $EnvName$</p>
+   <p align="left"><i>where:</i> </p>
+   <ul type="circle">
+     <li><kbd>ENOVIA_INSTALLATION_PATH</kbd> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li><kbd>OS</kbd> is the operating system tag (eg. solaris_a, aix_a, 
+     hpux_b).</li>
+     <li><kbd>EnvDir</kbd> is the environment folder containing the EnvName.txt file.</li>
+     <li><kbd>EnvName</kbd> is the name of the ENOVIA environment (Default name is <b>
+     ENOVIA_LCA.V5R17.B17</b>).</li>
+   </ul>
+ <p>&nbsp;</p>
+ <p>On Windows:</p>
+   <p align="center">$ENOVIA_INSTALL_PATH$/$OS$/code/bin/CATSTART -run &quot;ENOVIA.exe<i>&quot;
+   </i>-direnv $EnvDir$ -env $EnvName$ -object &quot;-senv $sEnvName$ -sdirenv $sEnvDir$&quot;
+   </p>
+   <p align="left"><i>where:</i> </p>
+   <ul type="circle">
+     <li><kbd>ENOVIA_INSTALLATION_PATH</kbd> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li><kbd>OS</kbd> is the operating system tag (eg. intel_a).</li>
+     <li><kbd>EnvDir</kbd> is the environment folder containing the EnvName.txt file.</li>
+     <li><kbd>EnvName</kbd> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b>).</li>
+     <li><kbd>sEnvName</kbd> is the name of server environment contained in your new 
+     customization workspace (The 
+     default name is <b>WorkspaceEnv</b>)</li>
+     <li><kbd>sEnvDir</kbd> is the server environment folder containing the 
+     sEnvName.txt file.</li>
+   </ul>
+ <p>Now, the new MyInclusionRule has a new field available: CustoAttr2.</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigResult1.jpg" width="340" height="263"></p>
+ <p>And a search can be performed to find this object in the database.</p>
+ <p>&nbsp;</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigResult2.jpg" width="908" height="643"></p>
+ <p>&nbsp;</p>
+ <p>Here is a sample of a customized category with a customized specification:</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoConfigResult3.jpg" width="539" height="801"></p>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [March 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

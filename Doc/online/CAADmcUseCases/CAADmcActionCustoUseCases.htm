@@ -1,0 +1,324 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customizing the Action Modeler</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customizing the Action Modeler</h3>
+     </td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article provides you with a comprehensive customization example on 
+     Enovia Actions. </p>
+     <ul>
+       <li><a href="#Principle"><b>Principle</b></a></li>
+       <li><b><a href="#Creating a UML Project">Creating a UML 
+       Project</a></b></li>
+       <li><a href="#Creating_a_new_Customization"><b>Creating an 
+       &quot;Actions&quot; Customization</b></a></li>
+       <li><a href="#Details_about_customization"><b>Creating an 
+       Object Modeler</b></a></li>
+       <li><a href="#Generate_the metadata_file"><b>Generating the Metadata File</b></a></li>
+       <li><a href="#Publish_Enovia_data"><b>Publishing Enovia Data</b></a></li>
+       <li><a href="#Test_In_Enovia"><b>Testing in Enovia</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Principle"></a>Principle</h3>
+ <table width="100%" border="0">
+   <tr>
+     <td width="91%">An action is used in Enovia V5 to request, define, and 
+     track a modification performed on a product. It contains the information (methodological 
+     documentation, affected parts, configuration specifications, CAD/CAM 
+     models, and electronic documents) necessary to implement the requested 
+     modification.&nbsp;
+     <p>All major events which the action undergoes (creation, promotion, 
+     transfer, completion, association of documents, etc.) are recorded and can 
+     be used to communicate the progress of a modification throughout its 
+     lifecycle, or for later historical analysis.</p>
+     <p>Depending on your applicative products, 
+     you may need new fields to take
+     internal processes into account for example.</td>
+   </tr>
+ </table>
+ <h4>Customizing a Design Action</h4>
+ <div align="center">
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+     <tr>
+       <td>
+ <img border="0" src="images/CAADmcCustoActionEnoviaIntro.jpg" width="426" height="328"></td>
+     </tr>
+   </table>
+ </div>
+ <p align="left">You are going to add 2 new fields:</p>
+ <ul>
+   <li>
+   <p>A boolean <code><font color="#008040">CanBePostponed</font></code> to specify if this action can be postponed</p></li>
+   <li>
+   <p>The date <code><font color="#008040">Furtherdate</font></code> if this action is postponed</p>
+   </li>
+ </ul>
+ <p align="center">&nbsp;</p>
+ <h3>Creating a UML Project <a name="Creating a UML Project">
+ </a></h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;UML 
+   Project</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>.
+   </li>
+   <li>Enter the name of the UML project. Click <code><font color="#008040">Next</font></code>&gt; and 
+   <code><font color="#008040">Finish</font></code>.</li>
+   <li>In the <code><font color="#008040">Navigator</font></code> 
+   view, right-click your project and select <code><font color="#008040">Open as a DMC Project</font></code>. 
+   </li>
+   <li>In the <code><font color="#008040">Open a DMC 
+   Project</font></code> window, select the tool level and click
+   <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Initializing tools</font></code> 
+   window.</li>
+   <li>Click <code><font color="#008040">Add</font></code> 
+   and select your prerequisite frameworks. Click <code><font color="#008040">Finish</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Installing Prereqs</font></code> 
+   window.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Creating_a_new_Customization"></a>Creating an
+ &quot;Actions&quot; 
+ Customization</h3>
+ <ol>
+   <li>Create a new CAA V5 Workspace.</li>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <code><font color="#008040">Other-&gt;DMC elements-&gt;New LCA 
+   Customization</font></code>. Click <code>
+   <font color="#008040">Next&gt;</font></code>. The <code>
+   <font color="#008040">Create New Enovia PLM Customization</font></code> 
+   window opens.</li>
+   <li>Enter the name of the application in the <code>
+   <font color="#008040">Application Name</font></code> field.</li>
+   <li>Click <code><font color="#008040">...</font></code> in the 
+   <code><font color="#008040">Customize LCA Application </font></code> field. The 
+   <code><font color="#008040">Select a framework</font></code> dialog box opens.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoActionNewApplication.gif"></p>
+ <ol start="5">
+   <li>Select <code><font color="#008040">Actions </font></code>
+   in the list and click <code><font color="#008040">OK</font></code>.</li>
+   <li>Select <code><font color="#008040">Actions</font></code>. The <code>
+   <font color="#008040">Customize LCA application</font></code> 
+   field is automatically updated with the Use Package corresponding to 
+   the application.</li>
+   <li>Click <code><font color="#008040">Finish</font></code>. The wizard 
+   creates a new workspace.<div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+       <tr>
+         <td>
+         <img border="1" src="images/CAADmcCustoActionNewApplication2.gif" width="176" height="161"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Details_about_customization"></a>Creating an 
+ Object Modeler </h3>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+    <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <code><font color="#008040">Other-&gt;DMC elements-&gt;New
+   Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. The 
+   <code><font color="#008040">New Modeler Object </font></code>window opens.</li>
+   <li>Enter the class name in the <code>
+   <font color="#008040">Class name</font></code> field, 
+   CustoDesignAction in this example.</li>
+   <li>Select the <code><font color="#008040">Super
+   Class</font></code> in the list (<code><font color="#008040">Action_Design</font></code> 
+   in this example). Click <code><font color="#008040">Next</font></code><code><font color="#008040">&gt;</font></code>.</li>
+ </ol>
+ <blockquote>
+   <blockquote>
+     <p align="center">
+     <img border="0" src="images/CAADmcCustoActionModeler.gif" width="559" height="486">
+     </p>
+   </blockquote>
+ </blockquote>
+ <ol start="4">
+   <li>Click <code><font color="#008040">Insert</font></code> 
+   in the <code><font color="#008040">Attributes</font></code> 
+   field to add 
+   an attribute to your CustoDesignAction.</li>
+   <li>Enter <code><font color="#008040">CanBePostponed</font></code> 
+   in the <code><font color="#008040">Name</font></code> 
+   field.</li>
+   <li>Select <code><font color="#008040">Boolean</font></code> 
+   in the list.<div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoActionModeler2.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> 
+   in the <code><font color="#008040">Attributes</font></code> 
+   field to add 
+   another attribute to your CustoDesignAction.</li>
+   <li>Enter FurtherDate in the <code>
+   <font color="#008040">Name</font></code> field.</li>
+   <li>Select <code><font color="#008040">Date</font></code> 
+   in the list.</li>
+   <li>Click <code><font color="#008040">OK</font></code> to 
+   close this window. Click <code><font color="#008040">Finish</font></code> 
+   when done. The following graphic is displayed describing&nbsp;your 
+   customization.</li>
+ </ol>
+ <blockquote>
+   <blockquote>
+     <p align="center">
+     <img border="0" src="images/CAADmcCustoActionUMLSchema.gif" width="576" height="526"></p>
+   </blockquote>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p>
+ <!---------------------------------comment------------------------------------->
+ </p>
+ <h3><a name="Generate_the metadata_file"></a>Generating the 
+ Dictionary File</h3>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+     <li>From the <code><font color="#008040">DMC Project</font></code> menu, select Generate<code><font color="#008040"> 
+   VPM Dictionary file</font></code>. The following window is displayed.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoActionGenMetadata.gif"></p>
+ <p>The wizard creates <i>MyAction.metadata</i> under the directory <kbd>MyAction/CNext/code/dictionary</kbd>. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Publish_Enovia_data"><span style="background-color: #FFFF00">
+ </span></a>Publishing Enovia Data</h3>
+ <ol>
+   <li>Select <code><font color="#008040">DMC Project-&gt;Publish 
+   VPM Dictionary file in Database</font></code>. Click 
+   <code><font color="#008040">OK</font></code>. The data are published. Check if the settings are correctly valuated and click <code>
+ <font color="#008040">OK</font></code> to launch the Publish command to finish 
+ the scenario.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Test_In_Enovia"></a>Testing in ENOVIA</h3>
+ <p>Now it is time to test your customization. To use this customization, launch ENOVIA with the environment of 
+ the customization. Indicate the location 
+ of your customization  
+ on the server, as follows:</p>
+ <p>On UNIX:</p>
+   <p align="left">$ENOVIA_INSTALLATION_PATH$/$OS$/code/command/enoviastart<i>
+   </i>-direnv $EnvDir$ -env $EnvName$</p>
+   <p align="left"><i>where:</i> </p>
+   <ul type="circle">
+     <li><b>ENOVIA_INSTALLATION_PATH</b> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li><b>OS</b> is the operating system tag (eg. solaris_a, aix_a, 
+     hpux_b).</li>
+     <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file</li>
+     <li><b>EnvName</b> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b><code> )</code><br>
+&nbsp;</li>
+   </ul>
+ <p>On Windows:</p>
+   <p align="left">$ENOVIA_INSTALL_PATH$/$OS$/code/bin/CATSTART -run 
+   &quot;ENOVIA.exe<i>&quot; </i>-direnv $EnvDir$ -env $EnvName$ -object &quot;-senv $sEnvName$ 
+   -sdirenv $sEnvDir$&quot; </p>
+   <p align="left"><i>where:</i> </p>
+   <ul type="circle">
+     <li><b>ENOVIA_INSTALLATION_PATH</b> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li><b>OS</b> is the operating system tag (eg. intel_a).</li>
+     <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file</li>
+     <li><b>EnvName</b> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b>)</li>
+     <li><b>sEnvName</b> is the name of server environment contained in your new 
+     customization workspace ( Default is :<b>WorkspaceEnv</b></li>
+     <li><b>sEnvDir</b> is the server environment folder containing the 
+     sEnvName.txt file<code>&nbsp;<br>
+     </li>
+   </ul>
+ </code>
+ <p>Now we can use your new &quot;CustoDesignAction&quot; which contains 
+ 2 
+ new fields.</p><code>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoActionEnoviaResult.jpg" width="582" height="422"></p>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top"><font face="Verdana" size="2">Top</font></a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a><span style="font-weight: 400">
+ History</span></h3>
+ <table width="100%">
+   <tr>
+     <td valign="top"><font face="Verdana" size="2">Version: <strong>1</strong> 
+     [Mar 2004]</font></td>
+     <td valign="top"><font face="Verdana" size="2">Document created</font></td>
+   </tr>
+   <tr>
+     <td valign="top"><font face="Verdana" size="2">Version: <strong>
+     2</strong> 
+     [March 2006]</font></td>
+     <td valign="top"><font face="Verdana" size="2">Document 
+     updated</font></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2"><font face="Verdana" size="2">[<a href="#Top">Top</a>]</font></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><font face="Verdana" size="2">Copyright © 2006, Dassault Systèmes. All 
+ rights reserved.</font></p>
+ </code>
+
+ </body>
+
+</html>

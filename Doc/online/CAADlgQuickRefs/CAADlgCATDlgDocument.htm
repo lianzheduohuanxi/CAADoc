@@ -1,0 +1,364 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgDocument</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgDocument</h3>
+      <em>The application main window</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgWindow.htm">CATDlgWindow</a>
+        |
+        +---CATDlgDocument</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table>
+  <caption>The Application Window</caption>
+  <tr>
+    <td><img src="images/CATDlgDocument.jpg" alt="CATDlgDocument.jpg (16087 bytes)" width="266" height="224"></td>
+    <td>The application window is the main frame window to display documents and
+      to present to the end user the tools to edit these documents. It contains
+      one or several windows displaying documents, whether it is set as SDI or
+      MDI.&nbsp; It usually features a menu bar, a status bar, and toolbars that
+      can be docked to its frame sides, or undocked as independent dialog boxes.</td>
+  </tr>
+</table>
+<p>Use the application window as a base class when you want to create the window
+for a new application.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Containment Parent</caption>
+  <tr>
+    <td>The parent of a instance of a class that derives from CATDlgDocument
+      must be an instance of a class that derives from <a href="CAADlgCATInteractiveApplication.htm">CATInteractiveApplication</a>.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The default application window style. The application window accepts
+      only one document opened at a time, and is therefore qualifed as
+      Single-Document Interface</td>
+  </tr>
+  <tr>
+    <td>CATDlgWndFrameMDI</td>
+    <td>The application window is a Multiple-Document Interface (MDI) window,
+      and allows the end user to display multiple documents at the same time.
+      This is available with Windows only</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgDroppedFileNotification</td>
+    <td><code>GetDroppedFileNotification</code></td>
+    <td>Whenever the end user drops an object in a document window</td>
+  </tr>
+  <tr>
+    <td>CATDlgDSLogoNotification</td>
+    <td><code>GetDSLogoNotification</code></td>
+    <td>Whenever the end user clicks on the DS logo</td>
+  </tr>
+  <tr>
+    <td>CATDlgEscapeNotification</td>
+    <td><code>GetEscapeNotification</code></td>
+    <td>Whenever the Escape key is pressed</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>Create the main window for your application by deriving the CATDlgDocument
+class. CATDlgDocument cannot be instantiated and must always be derived. This
+application window will make the link between your application and the different
+objects, that is other windows or containers, menus and controls, and the
+application. Your application window will then aggregate or reference your
+dialog objects, manage their layout, describe their behavior using callbacks to
+react to the end-user interactions and call the appropriate programs to match
+the end-user requests. A main application window includes all window
+capabilities of your operating system, such as move, resize, minimize, and
+maximize.</p>
+<p>The Multiple Document Interface mode is specific to Windows operating
+systems. With MDI, the dialog windows, instances of the CATDlgDialog classes,
+that display documents, are within the application window, instance of the
+derived class of CATDlgDocument. Such an MDI application window doesn't accept
+CATDlgBox instances as children.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing an Application Window</h4>
+<p>Derive CATDlgDocument. A main window father is always a
+CATInteractiveApplication instance. A main window can be used as the parent
+object of the following dialog objects:
+<ul>
+  <li>Any types and numbers of boxes (CATDlgBox instances) except CATDlgTabPage
+    which must have a CATDlgTabContainer instance as parent</li>
+  <li>Any type and numbers of CATDlgBlackBox instances</li>
+  <li>Any type and number of controls (CATDlgControl instances)</li>
+  <li>Any number of CATDlgToolBar instances</li>
+  <li>One instance of CATDlgBarMenu and of CATDlgStatusBar</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pAppWindow = new MainWindow(iApplication, iName)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Retrieving the Contextual Menu, the Menu Bar, and the Status Bar</h4>
+<p>You can retrieve the contextual menu, the menu bar, or the status bar of an
+application window as follows:
+<ul>
+  <li>get the contextual menu with the GetContextualMenu method
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get contextual menu</em></td>
+        <td class="code">
+          <pre>CATDlgContextualMenu * pCtxMenu;
+pCtxMenu = _pAppWindow-&gt;GetContextualMenu();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the menu bar with the GetBarMenu method
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get menu bar</em></td>
+        <td class="code">
+          <pre>CATDlgBarMenu * pBarMenu;
+pBarMenu = _pAppWindow-&gt;GetBarMenu();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the status bar with the GetStatusBar method
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get status bar</em></td>
+        <td class="code">
+          <pre>CATDlgStatusBar * pStatusBar;
+pStatusBar = _pAppWindow-&gt;GetStatusBar();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the MDI Mode</h4>
+<p>You can manage the MDI mode as follows:
+<ul>
+  <li>Retrieve whether the application window is MDI with the IsMDI method
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int MDI;
+MDI = _pAppWindow-&gt;IsMDI();
+if (MDI)
+  ...       // main application window is MDI</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Activate a dialog window with the MDIActivate method
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog * pDialogWindoToActivate = ...;
+_pAppWindow-&gt;MDIActivate(pDialogWindoToActivate);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Retrieve the active dialog window with the MDIGetActive method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog * pActiveDialogWindow;
+pActiveDialogWindow = _pAppWindow-&gt;MDIGetActive();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Arrange the icons of the iconified dialog windows with the MDIIconArrange
+    method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pAppWindow-&gt;MDIIconArrange();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Maximize a dialog window with the MDIMaximize method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog * pDialogWindowToMaximize = ...;
+_pAppWindow-&gt;MDIMaximize(pDialogWindowToMaximize);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Minimize a dialog window with the MDIMinimize method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog * pDialogWindowToMinimize = ...;
+_pAppWindow-&gt;MDIMinimize(pDialogWindowToMinimize);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Activate the next a dialog window with the MDINext method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pAppWindow-&gt;MDINext();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Activate the previous dialog window with the MDIPrevious method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pAppWindow-&gt;MDIPrevious();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Restore a minimized dialog window with the MDIRestore method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog * pDialogWindowToRestore = ...;
+_pAppWindow-&gt;MDIRestore(pDialogWindowToRestore);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Tile the dialog windows with the MDITile method. The tiling can be
+    described using one, or a combination of the different parameters:
+    <table width="100%">
+      <tr>
+        <td>CATDlgTileHorizontal</td>
+        <td>The windows are arranged horizontally, with up to three windows on
+          the same row</td>
+      </tr>
+      <tr>
+        <td>CATDlgTileVertical</td>
+        <td>The windows are arrangedvertically, with up to three windows on the
+          same column</td>
+      </tr>
+      <tr>
+        <td>CATDlgTileSkipHidden</td>
+        <td>Minimized windows are kept minimized</td>
+      </tr>
+    </table>
+    <p>For example, tile the windows horizontally, and leave the minimized
+    windows:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pAppWindow-&gt;MDITile(CATDlgTileHorizontal|CATDlgTileSkipHidden);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Cascade the dialog windows with the MDICascade method. The cascading mode
+    can be described using the following parameters:
+    <table width="100%">
+      <tr>
+        <td>default</td>
+        <td>All the dialog windows are processed, even the minimized ones</td>
+      </tr>
+      <tr>
+        <td>CATDlgTileSkipHidden</td>
+        <td>Minimized windows are kept minimized</td>
+      </tr>
+    </table>
+    <p>For example, cascade the windows, but leave the minimized windows:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pAppWindow-&gt;MDICascade(CATDlgTileSkipHidden);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title to an Application Main Window</h4>
+<p>The application window title should be set by the resource file using a key
+built with the identifier you declare as the second parameter of the application
+window constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

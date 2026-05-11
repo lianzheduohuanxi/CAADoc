@@ -1,0 +1,524 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing network connectivity and connector flow data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Network Connectivity and Connector Flow Data</h3>
+      <em>How to access network connectivity data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspConnectivity use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPspConnectivity Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPspConnectivity Do</a></li>
+            <li><a href="#How">How to Launch CAAPspConnectivity</a></li>
+            <li><a href="#Where">Where to Find the CAAPspConnectivity Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to obtain a part's connectors and get connectivity and connector flow data.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspConnectivity Use Case</h3>
+<p>CAAPspConnectivity&nbsp; is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspConnectivity Do</h4>
+<p>The goal of&nbsp; CAAPspConnectivity&nbsp; is to show you how to use the
+CATPlantShipInterfaces methods to query and obtain part connector and connection
+information.&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspConnectivity</h4>
+<p>To launch CAAPspConnectivity, you will need to set up the build time
+environment, then compile CAAPspConnectivity&nbsp; along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspConnectivity Code</h4>
+<p>CAAPspConnectivity code is located in the CAAPspConnectivity.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspConnectivity.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspConnectivity.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspConnectivityMain.cpp and CAAPspConnectivity.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight logical steps in CAAPspConnectivity:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Get Connectors">Retrieving a List of Connectors</a></li>
+  <li><a href="#Get Connectable Data">Retrieving Connectable Data&nbsp;</a></li>
+  <li><a href="#Get Connector Flow">Retrieving Connector Flow information</a></li>
+  <li><a href="#Get Connector Data">Retrieving Connector Data</a></li>
+  <li><a href="#Get Connections">Retrieving a List of Connections</a></li>
+  <li><a href="#Get Connection Data">Retrieving Connection Data</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspConnectivity code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.&nbsp;&nbsp;
+Initializing the environment involves the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv
+CAAPspBaseEnv::ApplicationInit</pre>
+    </td>
+  </tr>
+</table>
+<p>This method performs the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+  <li>Initializing the application using the <i>CATIPspApplication</i>
+    interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Connectors"></a>Retrieving a List of&nbsp; Connectors</h4>
+<p>The <i>CATIPspConnectable</i><i> </i>interface is used to get the number of&nbsp;connectors belonging to a part and to retrieve a list of
+its connectors.&nbsp;&nbsp; In this sample, the <i>CATIPspConnectable</i><i> </i>interface
+pointer is obtained from a physical part in the document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>if ( SUCCEEDED(piPspConnectable-&gt;ListConnectors (NULL,&amp;piUnkListCtnr ))
+         &amp;&amp; (NULL!= piUnkListCtnr )) 
+{
+   cout &lt;&lt; &quot;Succeeded in  getting a list of connectors&quot; &lt;&lt; endl;
+ </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Connectable Data"></a>Retrieving Connectable Data</h4>
+<p>The&nbsp; <i>CATIPspConnectable</i><i> </i>interface pointer is used to get the following information:</p>
+<ul>
+  <li>List all the valid connector types for the part</li>
+  <li>Find all the objects connected to this object through their connectors</li>
+  <li>Retrieve a part connector interface pointer given a connector name</li>
+</ul>
+<table class="code" width="912">
+  <tr>
+    <td width="904">
+      <pre>    //----------------------------------------------------------------------
+    //  List valid connector types
+    //----------------------------------------------------------------------    
+    if ( SUCCEEDED(piPspConnectable-&gt;ListValidCntrTypes(&amp;pLTypes)) &amp;&amp; pLTypes )
+    {
+      unsigned int LCStrSize = 0;
+      int NumOfCStr = 0;
+      if (pLTypes) 
+      HRESULT rc = pLTypes-&gt;Count (&amp;LCStrSize);
+      NumOfCStr = LCStrSize;
+      if (NumOfCStr)
+      {
+        cout &lt;&lt; &quot;Number of valid connector types = &quot; &lt;&lt; NumOfCStr &lt;&lt;endl;
+        char *piCStrMember = NULL;
+        for (int iCStr=1; iCStr &lt;= NumOfCStr; iCStr++)
+        {
+          if ( SUCCEEDED(pLTypes-&gt;Item(iCStr-1,&amp;piCStrMember)) &amp;&amp;
+               (NULL != piCStrMember) )
+          {
+            cout &lt;&lt;  iCStr &lt;&lt; &quot;) &quot; &lt;&lt; piCStrMember &lt;&lt; endl;
+            delete [] piCStrMember; piCStrMember = NULL;
+          }
+        }
+      }
+      if ( NULL != pLTypes )
+      {
+        pLTypes-&gt;Release();
+        pLTypes = NULL;
+      }
+    }
+    //----------------------------------------------------------------------
+    // Find all the objects connected to this object and the corresponding
+    // connectors involved in the connection.
+    //----------------------------------------------------------------------
+    if ( SUCCEEDED(piPspConnectable-&gt;ListConnectables(NULL,&amp;pIUListOfOtherCtbl,&amp;pIUListOfCtr,&amp;pIUListOfOtherCtr)) &amp;&amp; 
+            pIUListOfOtherCtr &amp;&amp; pIUListOfCtr &amp;&amp; pIUListOfOtherCtbl )
+    {
+      unsigned int uiListSizeOtherCtbl = 0;
+      unsigned int uiListSizeCtr = 0;
+      unsigned int uiListSizeOtherCtr = 0;
+      pIUListOfOtherCtbl -&gt; Count(&amp;uiListSizeOtherCtbl);
+      pIUListOfCtr -&gt; Count(&amp;uiListSizeCtr);
+      pIUListOfOtherCtr -&gt; Count(&amp;uiListSizeOtherCtr);
+      cout &lt;&lt; &quot;Number of connected objects = &quot; &lt;&lt; uiListSizeOtherCtbl &lt;&lt; endl;
+      cout &lt;&lt; &quot;Number of connected connectors on this object = &quot; &lt;&lt; uiListSizeCtr &lt;&lt; endl;
+    }</pre>
+      <pre>    // Get the connector with given name
+    CATIPspConnector *piCntr = NULL;
+    if ( SUCCEEDED(piPspConnectable-&gt;GetConnector(CntrName,&amp;piCntr)) )
+    {
+       cout &lt;&lt; &quot;Succeeded in getting a connector pointer&quot; &lt;&lt; endl;
+       piCntr-&gt;Release();
+       piCntr = NULL;
+    }
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get Connector Flow"></a>Retrieving Connector Flow information</h4>
+<p>In this sample, the <i>CATIPspCntrFlow</i><i> </i>interface
+pointer is obtained from a connector object ( CATIPspConnector pointer) and is
+used to get and set the following flow connector information</p>
+<ul>
+  <li>Flow direction capability at the connector
+  <li>Actual flow direction at the connector</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    // Query the connector flow capability
+    CATPspCntrFlowCapability CntrFlowCapability = CatPspCntrFlowCapability_Undefined;
+    if ( SUCCEEDED(piPspCntrFlow-&gt;GetFlowCapability(CntrFlowCapability)) )
+    {
+      switch( CntrFlowCapability )
+      {
+        case  CatPspCntrFlowCapability_Undefined :
+            cout &lt;&lt; &quot;Flow Capability is undefined&quot; &lt;&lt; endl;
+            break;
+        case  CatPspCntrFlowCapability_InDirection :
+            cout &lt;&lt; &quot;Flow Capability is inward direction&quot; &lt;&lt; endl;
+            break;
+        case  CatPspCntrFlowCapability_OutDirection :
+            cout &lt;&lt; &quot;Flow Capability is Outward Direction&quot; &lt;&lt; endl;
+            break;
+        case  CatPspCntrFlowCapability_InOutDirection :
+            cout &lt;&lt; &quot;Flow Capability is bi-directional&quot; &lt;&lt; endl;
+            break;
+      }
+    }
+
+    // Set the connector flow capability
+    CntrFlowCapability = CatPspCntrFlowCapability_InDirection;
+    if ( SUCCEEDED(piPspCntrFlow-&gt;SetFlowCapability(CntrFlowCapability)) )
+       cout &lt;&lt; &quot;Succeeded in setting the connector flow capability&quot; &lt;&lt; endl;
+
+    // Query the connector flow reality
+    CATPspCntrFlowReality CntrFlowReality = CatPspCntrFlowReality_Undefined;
+    if ( SUCCEEDED(piPspCntrFlow-&gt;GetFlowReality(CntrFlowReality)) )
+    {
+      switch( CntrFlowCapability )
+      {
+        case  CatPspCntrFlowReality_Undefined :
+          cout &lt;&lt; &quot;Flow Reality is undefined&quot; &lt;&lt; endl;
+          break;
+        case  CatPspCntrFlowReality_InDirection :
+          cout &lt;&lt; &quot;Flow is in inward direction&quot; &lt;&lt; endl;
+          break;
+        case  CatPspCntrFlowReality_OutDirection :
+          cout &lt;&lt; &quot;Flow is in Outward Direction&quot; &lt;&lt; endl;
+          break;
+        case  CatPspCntrFlowReality_InOutDirection :
+          cout &lt;&lt; &quot;Flow is bi-directional&quot; &lt;&lt; endl;
+          break;
+      }
+    }
+
+    // Set the connector flow reality
+    CntrFlowReality = CatPspCntrFlowReality_InDirection;
+    if ( SUCCEEDED(piPspCntrFlow-&gt;SetFlowReality(CntrFlowReality)) )
+       cout &lt;&lt; &quot;Succeeded in setting the connector flow reality&quot; &lt;&lt; endl;
+ &nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get Connector Data"></a>Retrieving Connector Data</h4>
+<p>The&nbsp;<i>CATIPspConnector</i> interface pointer is obtained from one of
+the connectors and is used to get the following information:</p>
+<ul>
+  <li>Owner of this connector,&nbsp; i.e associated connectable object</li>
+  <li>Is the connector connected</li>
+  <li>Query and modify connector name</li>
+  <li>Connector number</li>
+  <li>Get a valid connection type between two connectors</li>
+  <li>Disconnect two connectors</li>
+  <li>Connect two connectors<br>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    // Get the owner of this connector i.e Associated Connectable
+    if( SUCCEEDED( piPspConnector-&gt;GetAssociatedConnectable ( &amp;piPspConnectable ))
+      &amp;&amp; ( NULL != piPspConnectable) )
+    {       
+       cout &lt;&lt; &quot;Succeeded in getting associated connectable&quot; &lt;&lt; endl;
+    }
+
+    if ( NULL != piPspConnectable ) { piPspConnectable-&gt;Release(); piPspConnectable = NULL; }
+
+    // Is connector connected
+    CATBoolean oBYes = FALSE;
+    if( SUCCEEDED( piPspConnector-&gt;IsCntrConnected (&amp;oBYes) ) )
+    {
+      if( oBYes)
+      {
+        cout &lt;&lt; &quot;Connector is connected &quot; &lt;&lt; endl;                       
+      }
+      else
+      {
+        cout &lt;&lt; &quot;Connector is not connected &quot; &lt;&lt; endl;                       
+      }
+    }
+
+    // Getting name of the connector 
+    CATUnicodeString uConnectorName;
+    if( SUCCEEDED( piPspConnector-&gt;GetName (uConnectorName) ))
+    {
+      cout &lt;&lt; &quot;Name of the connector is &quot; &lt;&lt; uConnectorName.ConvertToChar() &lt;&lt; endl;            
+    }
+
+    // Setting name of the connector 
+    uConnectorName = &quot;Connector1&quot;;
+    if( SUCCEEDED( piPspConnector-&gt;SetName (uConnectorName) ))
+    {
+      cout &lt;&lt; &quot;Succeeded in modifying the connector's name&quot; &lt;&lt; endl;                       
+    }
+    
+    // Getting connector number 
+    int iCtrNumber;
+    if( SUCCEEDED( piPspConnector-&gt;GetConnectorNumber(iCtrNumber) ))
+    {
+      cout &lt;&lt; &quot;Number of the connector is &quot; &lt;&lt; iCtrNumber &lt;&lt; endl;                         
+    }</pre>
+      <pre>    //-----------------------------------------------------------------------
+    // Disconnect and connect connectors
+    //-----------------------------------------------------------------------
+    if ( SUCCEEDED(piCntr1-&gt;Disconnect(piCntr2)) )
+    {
+       cout &lt;&lt; &quot;Succeeded in disconnecting two connectors&quot; &lt;&lt; endl;
+
+       // Get a valid connection type for 2 connectors
+       if ( SUCCEEDED(piCntr1-&gt;GetValidConnection(piCntr2,ConnectionType)) )
+          cout &lt;&lt; &quot;Succeeded in getting a valid connection type&quot; &lt;&lt; endl;
+              
+       if ( SUCCEEDED(piCntr1-&gt;Connect(ConnectionType,piCntr2,&amp;piConnection)) 
+            &amp;&amp; (NULL != piConnection) )
+       {
+          cout &lt;&lt; &quot;Succeeded in connecting two connectors&quot; &lt;&lt; endl;
+          piConnection-&gt;Release();
+          piConnection = NULL;
+       }
+    }</pre>
+    </td>
+  </tr>
+</table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get Connections"></a>Retrieving a List of&nbsp; Connections</h4>
+<p>The <i>CATIPspConnector</i> interface pointer is also used to get a list of&nbsp;
+connections.&nbsp;&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>      if ( SUCCEEDED( piPspConnector-&gt;ListConnections (NULL, &amp;piUnkListConnections )) &amp;&amp;
+           (NULL != piUnkListConnections) )          
+      {
+        // Get a connection 
+        unsigned int ListSize = 0;
+        if ( SUCCEEDED(piUnkListConnections-&gt;Count(&amp;ListSize)) ) NumOfCntns = ListSize;
+        if ( NumOfCntns &gt; 0 )
+        {
+          for ( int i = 0; i &lt; NumOfCntns; i++ )
+          {
+            if ( SUCCEEDED(piUnkListConnections-&gt;Item(i,&amp;piUnknown)) &amp;&amp; (NULL != piUnknown) )
+            {
+              rc = piUnknown-&gt;QueryInterface(IID_CATIPspConnection,(void**)&amp;piPspConnection);
+              piUnknown-&gt;Release();
+              piUnknown = NULL; 
+              if ( NULL != piPspConnection ) break;
+            }
+          }
+        }
+        piUnkListConnections-&gt;Release();  piUnkListConnections = NULL;
+      }
+	</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get Connection Data"></a>Retrieving Connection Data</h4>
+<p>The <i>CATIPspConnection</i> interface pointer is obtained from one of
+the connections and is used to get the following information:</p>
+<ul>
+  <li>List all the objects included in a connection
+  <li>List all the connectors included in a connection</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    //-------------------------------------------------------------------------
+    // Find all connected objects in this connection
+    //-------------------------------------------------------------------------
+    if ( SUCCEEDED(piPspConnection-&gt;ListConnectables(NULL,&amp;pIUListOfConnectables, &amp;pIUListOfConnectors))
+                &amp;&amp; pIUListOfConnectables  &amp;&amp; pIUListOfConnectors)
+    {
+      unsigned int uiListSizeCtbl = 0;                
+      pIUListOfConnectables -&gt; Count(&amp;uiListSizeCtbl);                
+      cout &lt;&lt; &quot;Number of connected objects in this connection is &quot; &lt;&lt; uiListSizeCtbl &lt;&lt; endl;
+
+      if ( NULL != pIUListOfConnectables )
+      {
+        pIUListOfConnectables-&gt;Release();
+        pIUListOfConnectables = NULL;
+      }
+
+      unsigned int uiListSizeCntr = 0;
+      pIUListOfConnectors -&gt; Count(&amp;uiListSizeCntr);
+      cout &lt;&lt; &quot;Number of connectors included in this connection is &quot; &lt;&lt; uiListSizeCntr &lt;&lt; endl;
+
+      if ( NULL != pIUListOfConnectors )
+      {
+        pIUListOfConnectors-&gt;Release();
+        pIUListOfConnectors = NULL;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+    // Find all the connectors included in this connection
+    //-------------------------------------------------------------------------   
+    if ( SUCCEEDED(piPspConnection-&gt;ListConnectors(NULL,&amp;pIUListOfConnectors))
+         &amp;&amp; pIUListOfConnectors )
+    {
+      cout &lt;&lt; &quot;Succeded in getting a list of connectors in the connection&quot; &lt;&lt; endl;
+
+      unsigned int uiListSizeCntr = 0;                
+      pIUListOfConnectors-&gt;Count(&amp;uiListSizeCntr);
+      if ( uiListSizeCntr == 2 )
+      {
+         if ( SUCCEEDED(pIUListOfConnectors-&gt;Item(0,&amp;piUnknown)) )
+         {
+            piUnknown-&gt;QueryInterface(IID_CATIPspConnector,(void**)&amp;piCntr1);
+            piUnknown-&gt;Release();
+            piUnknown = NULL;
+         }
+         if ( SUCCEEDED(pIUListOfConnectors-&gt;Item(1,&amp;piUnknown)) )
+         {
+            piUnknown-&gt;QueryInterface(IID_CATIPspConnector,(void**)&amp;piCntr2);
+            piUnknown-&gt;Release();
+            piUnknown = NULL;
+         }
+      }
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to obtain
+network connectivity information.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Listing the connectors on a physical part</li>
+  <li>Retrieving Connectable Data&nbsp;</li>
+  <li>Retrieving Connector Flow information</li>
+  <li>Retrieving Connector Data</li>
+  <li>Retrieving a List of Connections</li>
+  <li>Retrieving Connection Data</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [March 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

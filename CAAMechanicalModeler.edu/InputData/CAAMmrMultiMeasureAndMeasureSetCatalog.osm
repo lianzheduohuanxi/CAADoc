@@ -1,0 +1,25 @@
+// COPYRIGHT DASSAULT SYSTEMES 2007
+//
+// This document defines the content of CAAMmrMultiMeasureAndMeasureSetCatalog.CATfct in "OSM Language".
+// With this language quite similar to XML, we are going to define StartUps Inheritance and their attributes.
+// Please refer to CAA Article dedicated to OSM in FeatureModeler Encyclopedia for more information.
+
+//Defines Catalog name
+document `CAAMmrMultiMeasureAndMeasureSetCatalog.CATfct` {
+  //StartUp are aggregated in the Catalog Root Cont
+	container CATFeatCont #root{
+    //Defines the Catalog Manager i.e. the catalog where ascendant StartUp (in inheritance view) are defined
+		catalog_manager `MechMod.feat`
+				
+		//We declare a New StartUp "CAAMmrMultiMeasure" designing a Mechanical Feature
+    //This New StartUp is derivated from MechanicalElement defined in MechMod.feat
+    feature CAAMmrMultiMeasure#2 MechanicalElement#127@`MechMod.feat` #startup #backup_startup(FeatureBackUpMechaElem#128@`MechMod.feat`) {
+		  specobject FeatureToMeasure #in
+			component BRepFeatureToMeasure #in
+		}
+		//We declare a New StartUp "CAAMmrMeasureSet" designing a Mechanical Feature
+    //This New StartUp is derivated from MechanicalSet defined in MechMod.feat
+		feature CAAMmrMeasureSet#12 MechanicalSet#129@`MechMod.feat` #startup #backup_startup(FeatureBackUpMechaSet#130@`MechMod.feat`) {
+		}
+	}
+}

@@ -1,0 +1,379 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Interfaces</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Interfaces</h3>
+      <em>The way to expose your component behavior</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article introduces the interfaces. It describes their role in the
+      Object Modeler, of what they are made, and how to use them.
+      <ul>
+        <li><a href="#50000"><strong>Whar Are CAA V5 Interfaces?</strong></a></li>
+        <li><a href="#60000"><strong>What Is an Interface Made of?</a></strong></li>
+        <li><a href="#100000"><strong>A Sample Interface</strong></a></li>
+        <ul>
+          <li><a href="#110000">The Interface Header File</a></li>
+          <li><a href="#120000">The Interface Source File</a></li>
+          <li><a href="#130000">The Interface TIE</a></li>
+        </ul>
+        <li><a href="#200000"><strong>IUnknown and CATBaseUnknown</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="50000"></a>What Are CAA V5 Interfaces?</h3>
+<p>Object-oriented design and related object-oriented languages such as C++
+allow the application programmer to describe and code real objects as classes
+tha include a structural part, the data members, and a behavioral part, the
+member functions, or methods. With C++, the classes are instantiated using their
+constructors and the application programmer who uses the classes can reference
+the data members and the methods declared as public, and can also use the data
+members and the methods declared as protected when deriving the classes to build
+new ones. This is a very nice object-oriented feature, but when the header file
+of a class changes, even if only the private part changes, all the applications
+that include this file must be rebuilt.</p>
+<p>A more generic way to design objects is to see them through their behavior
+only, and to describe this behavior by means of methods only: this provides
+interfaces to grasp the object. For the application programmer, the interface is
+the only visible part of an object that hides the details of its implementation
+which are totally under the responsibility of the class provider.</p>
+<p>The interface constitutes a contract between the framework class developer
+and the application programmer. This contract includes the object from the real
+world to work on, the methods to use to manipulate these objects and how to call
+these methods. This should not change with the time. Only additions are allowed,
+and the applications developed on top of the framework should never been rebuilt
+due to framework modifications.</p>
+<p>Implementing an interface is the way the framework class developer meets the
+contract. It is his/her own business to choose the most appropriate technology,
+and possibly to switch from one technology to another when necessary without
+impact for the applications.</p>
+<p>A supplied interface should not change with the time. A supplied
+implementation of an interface should also continue to implement the unchanged
+interface without modification for the client application with the time. If
+modifications are required, such as new method signatures, a new interface must
+be supplied. If other interfaces must be implemented, existing implementations
+should not change, and CAA V5 provides means to extend them without impact for
+the client application.</p>
+<p>The needs that suit the interface and implementation separation are the
+following:</p>
+<ul>
+  <li>Encapsulation: an object exposes only handles to manipulate it, not its
+    internal mechanisms that carry out the manipulations.</li>
+  <li>Polymorphism: objects which share the same interface can be treated by an
+    application in the same way, even if these objects implements this interface
+    in different ways.</li>
+  <li>Inheritance: objects that have common interfaces can be said as kind of a
+    base object that expose these common interfaces. These objects derive from
+    the base object and inherit its inter-faces.</li>
+  <li>build independence: the coupling between the applications and the
+    frameworks they use should be as weak as possible. The applications know
+    only the interfaces of the frameworks, and the implementation modifications
+    do not require to rebuild the applications.</li>
+  <li>Framework open architecture: it should be possible for a customer to
+    implement framework interfaces and to add new interfaces to existing
+    implementations.</li>
+  <li>Multiple implementation: a framework with a given interface should be able
+    to associate several implementations with this interface. This multiple
+    implementation can be static (sequential) or dynamic (simultaneous). The
+    static multiple implementation means that the current implementation
+    switches at a given time for another which for example matches a new
+    technology. The dynamic multiple implementation allows for several
+    implementations to coexist simultaneously and allows to switch from one
+    implementation to another at user&#8217;s request.</li>
+  <li>Distributed object architecture: the object instances of a framework
+    should be able of being handled by an object server running in a different
+    process, possibly on another node, than the process which runs the client
+    application, possibly through an object request broker which sends requests
+    for the objects to the remote object server.</li>
+</ul>
+<p align="right"><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="60000"></a>What Is an Interface Made of?</h3>
+<p align="right"><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>A Sample Interface</h3>
+<p>A CATIA interface is created as a C++ abstract class. It thus contains only
+pure virtual methods. It is made of a header file, a source file, and a TIE
+file.
+<p align="right"><a href="#Top">Top</a></p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="110000"></a>The Interface Header File</h4>
+<p>Here is how the <em>CAAIXX</em> CATIA interface header file looks like:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef CAAIXX_h
+#define CAAIXX_h
+
+#include &quot;CATBaseUnknown.h&quot;
+
+extern ExportedByCAADLL IID IID_CAAIXX;
+
+class ExportedByCAADLL CAAIXX : public CATBaseUnknown
+{
+  CATDeclareInterface;
+  public :
+    virtual HRESULT __stdcall MXX1() = 0;
+    virtual HRESULT __stdcall MXX2(CATBaseUnknown * pUnk) = 0;
+};
+
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The role of each statement is depicted below.</p>
+<p><img border="0" src="images/CAASysInterfaceHeader.jpg" width="601" height="297"></p>
+<p>These roles are:
+<ul>
+  <li>The <code>#ifndef</code>, <code>#define</code>, and <code>#endif</code>
+    preprocessor directives protect the header file from multiple inclusion.</li>
+  <li>The <em>CATBaseUnknown</em> header file is included because the <em>CAAIXX</em>
+    interface is an abstract class that C++-derives from <em>CATBaseUnknown</em></li>
+  <li>Any interface can be recognized thanks to an identifier declared as a
+    global extern variable. This identifier must be unique, and will be
+    initialized in the interface source file</li>
+  <li>The interface class must derive from <em>CATBaseUnknown</em>, or from
+    another interface class. Multiple inheritance is not available, according to
+    CATIA rules</li>
+  <li>The macro <code>CATDeclareInterface</code> declares that this class is a
+    CATIA interface</li>
+  <li>The methods features the following:
+    <ul>
+      <li>All methods must be public, since any interface method is intended to
+        be implemented</li>
+      <li>They must be pure virtual, that is, the interface class doesn't
+        provide any implementation of these methods</li>
+      <li>They must return a HRESULT [<a href="#References">1</a>]. This is a
+        standard Microsoft return code used to make interfaces OLE compliant</li>
+      <li>They must use the __stdcall calling convention [<a href="#References">2</a>].
+        This is a Microsoft extension to the C++ compiler also used to make
+        interfaces OLE compliant</li>
+      <li>They can have parameters that are usually pointers to other
+        interfaces.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right"><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="120000"></a>The Interface Source File</h4>
+<p>The <em>CAAIXX</em> interface source file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAIXX.h&#8220;
+
+IID IID_CAAIXX = {
+  0x7c1b4ba8,
+  0x5c25,
+  0x0000,
+&nbsp; {0x02, 0x80, 0x02, 0x0b, 0xcb, 0x00, 0x00, 0x00} };
+
+CATImplementInterface(CAAIXX, CATBaseUnknown);</pre>
+    </td>
+  </tr>
+</table>
+<p>The role of each statement is depicted below.</p>
+<p><img border="0" src="images/CAASysInterfaceSource.jpg" width="441" height="182"></p>
+<p>These roles are:
+<ul>
+  <li>The <em>CAAIXX</em> header file is included to retrieve the IID
+    declaration, and the <em>CATBaseUnknown</em> header file inclusion</li>
+  <li>The interface IID is initialized to a worldwide and lasting unique value.
+    It is also called GUID, for Global Unique IDentifier [<a href="#References">3</a>]</li>
+  <li>The macro <code>CATImplementInterface</code> declares that <em>CAAIXX</em>
+    OM-derives from <em>CATBaseUnknown</em>. Interfaces must always OM-derive
+    from <em>CATBaseUnknown</em>.</li>
+</ul>
+<p>The pure virtual functions are of course not implemented in the classes which
+declare them as pure.</p>
+<p>Among the methods of <code>CATIXX</code>, three methods inherited from the
+interface <code>IUnknown</code>, from which derives the class <code>CATBaseUnknown</code>,
+play a particular role for an interface:
+<ol>
+  <li><code>QueryInterface</code> returns a pointer to an interface from another
+    pointer to another interface implemented by the same object</li>
+  <li><code>AddRef</code> adds a reference to a counter for this interface</li>
+  <li><code>Release</code> removes the reference from the counter.</li>
+</ol>
+<p><code>QueryInterface</code> allows for navigation among the interfaces
+implemented by a component, while <code>AddRef</code> and <code>Release</code>
+allow for component life cycle management [<a href="#References">4</a>].</p>
+<p align="right"><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="130000"></a>The Interface TIE</h4>
+<p>The third file to create requests that the interface TIE be generated by the
+code builder mkmk. This file is the TIE_CAAIXX.tsrc file that simply contains an
+include statement to the CAAIXX.h file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAIXX.h&quot;</pre>
+    </td>
+  </tr>
+</table>
+<p>The TIEs is not part of the object model concepts. It is a necessary
+implementation detail. To separate interfaces from their implementations, a TIE
+object instance is created at run time as an intermediary object that makes the
+link between the component that uses the interface and thus holds a pointer to
+this interface, and the component that implements the interface, that is, that
+contains the code to run the methods declared by the interface. The interface
+pointer is in fact a pointer to a TIE object instance returned by the <code>QueryInterface</code>
+method. The TIE object redirects the interface method calls to the component
+that implements the interface.</p>
+<p>The TIE file is by default created in the ProtectedGenerated folder, whatever 
+the interface header file location. To 
+create it in the PublicGenerated folder, add the //public keyword in the tsrc 
+file, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAIXX.h&quot;
+//public</pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><a href="#Top">Top</a></p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>IUnknown and CATBaseUnknown</h3>
+<p>The base class for all interfaces and for all classes that implement
+interfaces is <em>CATBaseUnknown</em>, a class provided by CATIA. <em>CATBaseUnknown</em>
+derives from the <em>IUnknown</em> interface, supplied by CATIA for UNIX and by
+the Microsoft's Component Object Model (COM) for Windows. The <em>IUnknown</em>
+interface is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>interface IUnknown
+{
+  virtual HRESULT __stdcall QueryInterface(const IID&amp; iid, void** ppv) = 0;
+  virtual ULONG __stdcall AddRef() = 0;
+  virtual ULONG __stdcall Release() = 0;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>Among the methods of <em>CAAIXX</em>, these three methods inherited from the
+interface <em>IUnknown</em> play a particular role:
+<ol>
+  <li><code>QueryInterface</code> returns a pointer to an interface from another
+    pointer to another interface implemented by the same component</li>
+  <li><code>AddRef</code> adds a reference to a counter for this interface</li>
+  <li><code>Release</code> removes the reference from the counter.</li>
+</ol>
+<p><code>QueryInterface</code> allows for navigation among the interfaces
+implemented by a component, while <code>AddRef</code> and <code>Release</code>
+allow for component life cycle management.</p>
+<p>The <em>IUnknown</em> interface supplied by CATIA is exactly the same that
+the one of COM, making interfaces portable from UNIX to Windows and the reverse.</p>
+<p><em>CATBaseUnknown</em> provides an implementation for the methods <code>QueryInterface</code>,
+<code>AddRef</code> and <code>Release</code>, exposed as pure virtual functions
+by <em>IUnknown</em>, avoiding to implement them whenever you implement an
+interface and thus contributing to code factorization.</p>
+<p>All interfaces can be seen as <em>IUnknown</em> interfaces, that is a pointer
+to <em>IUnknown</em> can be used for each of them . This allows the client
+application to request from such an <em>IUnknown</em> pointer if the
+implementing component supports other interfaces and prevents the client
+application to manage pointers to those implementing objects, managing only
+pointers to interfaces.</p>
+<p align="right"><a href="#Top">Top</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>CATIA interfaces as created as C++ absract classes deriving from <em>CATBaseUnknown</em>.
+The interface TIE makes the link at run time between the component that uses the
+interface and the component that implements it.</p>
+<p>The interface is a contract between the interface developer, the provider of
+the component that implements the interface, and the client application
+programmer who uses the component. The interface should not change with the
+time, and the client applications which use these interfaces never need to be
+rebuilt when a new version of the code which contains the interface
+implementations is installed.</p>
+<p align="right"><a href="#Top">Top</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysQuickRefs/CAASysHRESULT.htm">What Is
+      HRESULT?</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysQuickRefs/CAASysstdcall.htm">About
+      __stdcall</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About Globally
+      Unique IDentifiers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAASysUsingComponents.htm">Using Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysQuickRefs/CAASysInterfaceQR.htm">Interface
+      Quick Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,1255 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOVWSQueryCpp CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming the ENOVWSProdStructConfigCpp CAA Web Service
+            </h3><em>Using the </em>ENOVWSProdStructConfigCpp<em>CAA Web Service for 
+			a configured product</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article discusses the <strong>CAAENOVWSDotNet1_1Client</strong> use case. It describes how 
+              to use the Java client binding that can be generated using the Axis WSDL2Java emitter in order to 
+              consume the <strong>ENOVWSProdStructConfigCpp CAA Web service</strong>. It provides a sample usage scenario that 
+              demonstrates configuration capabilities in ENOVIA LCA V5. 
+				CAAENOVWSProdStructConfigCppUseCase choreographs the larger 
+				steps. Details are encapsulated in 
+				CAAENOVWSProdStructConfigCppUseCaseCar. 
+				CAAENOVWSProdStructConfigCppUseCaseCar, in turn, calls methods 
+				exposed in each of the web service wrapper classes. Only 
+				services exposed by <strong>ENOVWSProdStructConfigCppWrapper
+				</strong>are discussed in detail in this document.</p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The </strong></a><strong><a href="#2">
+				CAAENOVWSProdStructConfigCppUseCase Use Case</a></strong>
+                <ul>
+                  <li>
+                    <a href="#2.1">What Does CAAENOVWSProdStructConfigCppUseCase Use Case Do</a>
+                  </li>
+                  <li>
+                    <a href="#2.2">Where To Find the CAAENOVWSProdStructConfigCppUseCase Code</a>
+                  </li>
+                  <li>
+                    <a href="#2.3">How to Launch CAAENOVWSDotNet1_1Client</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>This use case demonstrates how to write a client application that consumes the ENOVWSProdStructConfigCpp CAA Web
+        service. It helps you to:</p>
+    <ul>
+        <li>Generate the C# client binding for the ENOVWSProdStructConfigCpp CAA Web service,</li>
+        <li>Configure and use the generated proxy,</li>
+        <li>Understand a sample usage scenario of the ENOVWSProdStructConfigCpp CAA Web service.</li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>The CAAENOVWSProdStructConfigCppUseCase Use Case
+    </h3>
+    <p>
+      CAAENOVWSProdStructConfigCppUseCase is a use case of the CAAENOVWS.edu framework that illustrates the
+      ENOVWSProdStructConfigCpp CAA Web service capabilities. 
+		CAAENOVWSProdStructConfigCppUseCaseCar is also a member of he 
+		CAAENOVWS.edu framework.</p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.1"></a>What Does CAAENOVWSProdStructConfigUseCase Use Case Do
+    </h4>
+	<p>In this use case we build a concept engineering car as follows:</p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/first_pass.png" width="720" height="125"></p>
+	<p>Basically, the first car(unit 1) is a front-wheel-drive, whose exhaust 
+	has a small-tail. And the last one(unit 100) is a rear-wheel-drive, whose 
+	exhaust has a large-tail. Basic unit 'effectivities' are applied to 
+	determine the configuration of each of the cars in between.</p>
+	<p>Even the best conceived designs are subjected to change, so include two 
+	more configurations (four-wheel-drive, and all-wheel-drive) to this concept 
+	design.</p>
+	<ul>
+		<li>To include the four-wheel-drive for units(80-90), first do a Cut 
+		operation on the front-wheel-drive. Then an Add operation for the 
+		four-wheel-drive. </li>
+		<li>To include the all wheel drive for units(35-50), perform a Replace 
+		operation on the rear wheel drive. </li>
+	</ul>
+	<p>Of course you would want to capture all the changes on an Action in 
+	ENOVIA LCA.</p>
+    <hr>
+    <p>Now let's dissect the <font SIZE="2">
+	CAAENOVWSProdStructConfigCppUseCaseCar use case. </font></p>
+	<p><font size="2">First introduce a configured product in ENOVIA LCA</font></p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/concept_car.png" width="335" height="88">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</p>
+	<p><font SIZE="2">The big picture steps - process steps - are choreographed 
+	in CAAENOVWSProdStructConfigCppUseCase use case. Details are coded in 
+	methods of&nbsp; CAAENOVWSProdStructConfigCppUseCaseCar</font><a href="#References">[7]</a><font SIZE="2">. 
+	CAAENOVWSProdStructConfigCppUseCaseCar in turn calls web services in each 
+	domain's wrapper implementations. For instance 
+	CAAENOVWSProdStructConfigCppWrapper encapsulates web services for 
+	configuration capabilities in ENOVIA LCA. It will be helpful to follow along 
+	by reading the code for this use case. In particular CAAENOVWSProdStructConfigCppUseCaseCar</font><a href="#References">[7]</a><font SIZE="2">.</font></p>
+    <hr>
+    <p><font size="2">Having performed the necessary preliminary steps to 
+	connect to ENOVIA LCA and having queried the PRC 'Concept CAR', this use 
+	case creates parts used to build the 'Concept CAR' in ENOVIA LCA.</font></p>
+	<p><font size="2"><a name="Step 4 back" href="#Step 4">Step 4</a> calls
+	creatPartVersionObjects()</font><a href="#References">[7]</a><font size="2"> 
+	method to create parts in ENOVIA LCA. It also calls creatDocumentObjects()</font><a href="#References">[7]</a><font size="2"> to 
+	create an owner's manual&nbsp; to be added to the action manually. </font>
+	</p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/create_parts_lca.png" width="846" height="243"></p>
+	<p>Please note that only the exhaust is configured by the use case. The 
+	product 'Concept CAR' was configured in LCA.</p>
+	<p><font size="2"><a href="#Step 5" name="Step 5 back">Step 5</a> </font>
+	constructs Effectivity Mods, containing units, belonging to 'Concept CAR' at 
+	the first level.</p>
+	<ul>
+		<li>front-wheel-drive-mod: units(1-50)</li>
+		<li>rear-wheel-drive-mod: units(51-100)</li>
+		<li>four-wheel-drive-mod: units(80-90)</li>
+		<li>all-wheel-drive-mod: units(35-50)</li>
+		<li>exhaust: units(1-100)</li>
+	</ul>
+	<p>This step also constructs Effectivity Mods, containing units, belonging 
+	to 'exhaust'. Since tail-small and tail-large are items under exhaust, we 
+	will say that they are at the second level. Children of product 'Concept 
+	CAR' are at first level. <font SIZE="2">Refer to
+	<a href="#createModifications">createModifications</a> sample code for 
+	consumption details.</font></p>
+	<ul>
+		<li>small-tail-mod: units(1-25, 51-75)</li>
+		<li>large-tail-mod: units(26-50, 76-100)</li>
+	</ul>
+	<p>Resulting Mods in ENOVIA LCA:</p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/mods.png" width="508" height="227"></p>
+	<p><font size="2"><a href="#Step 5">Step 5</a> also </font>created config 
+	handlers for units 1,40,51,80, and 91 by calling <font SIZE="2">
+	creatConfigHandlers()</font><a href="#References">[7]</a><font SIZE="2">
+	method. Refer to <a href="#createConfigHandler">createConfigHandler</a> 
+	sample code for consumption details.</font></p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/cofig_handlers.png" width="246" height="101"></p>
+	<p><font size="2"><a href="#Step 6" name="Step 6 back">Step 6</a> creates an 
+	Action - </font><font SIZE="2" COLOR="#2a00ff">PSCWSAction - </font>
+	<font size="2">in ENOVIA LCA. To capture changes in ENOVIA LCA Change 
+	Management during construction and configuration of 'Concept CAR', two 
+	methods are called. Namely, addAssociatedObjectsToCar()</font><a href="#References">[7]</a><font size="2"> and
+	addAssociatedObjectsToExhaust()</font><a href="#References">[7]</a><font size="2">. The first one adds configured PRC 
+	'Concept CAR' as an Associated Object and attaches the first level Mods to 
+	it. These Mods will be used to configure children of 'Concept CAR'. 
+	Likewise, addAssociatedObjectsToExhaust()</font><a href="#References">[7]</a><font size="2"> ads exhaust as an Associated Object and 
+	attaches the second level Mods to it.</font></p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/add_assoc.png" width="702" height="480"></p>
+	<p><font size="2"><a href="#Step 7" name="Step 7 back">Step 7</a> builds the 
+	first level assembly. As you can see, the use case has constructed the first 
+	level - as was originally intended - by adding only a front-wheel-drive, a 
+	rear-wheel-drive, and an exhaust to the 'Concept CAR'.</font></p>
+	<p><font size="2"><a href="#Step 8" name="Step 8 back">Step 8 </a>Get(s) and 
+	Resolve(s) Operations for the changes in the above steps. Since an Add was 
+	performed on each of the items above, the <a href="#getOperations">
+	getOperations</a> Web service will return three unresolved operations. For 
+	each of the unresolved operation, the use case furnishes a Mod, created 
+	prior, and uses <a href="#resolveOperations">resolveOperatiions</a> to 
+	resolve them. The rear-wheel-drive-mod is sent in during resolve 'Add' 
+	operations for the rear-wheel-drive. And so on. The code matches the names 
+	of the Mods and the Items.</font></p>
+	<p><font size="2"><a href="#Step 9" name="Steps 9  back">Step 9</a> and
+	<a href="#Step 10" name="Step 10 back">Step 10</a> performs add, and then 
+	resolves operations for children of exhaust.</font></p>
+	<p><font size="2"><a href="#Step 11" name="Step 11 back">Step 11</a></font> 
+	demonstrated Replace and Cut functions. First by replacing rear-wheel-drive 
+	with all-wheel-drive. And then by issuing a Cut on front-wheel-drive, and an 
+	Add for a four-wheel-drive in it's place. The resulting operations are 
+	resolved using the Mods created earlier. </p>
+	<p><font size="2"><a href="#Step 13" name="Step 13 back">Step 13</a></font> 
+	gets all the affected objects captured by <font SIZE="2" COLOR="#2a00ff">
+	PSCWSAction :</font></p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/affected_objs.png" width="715" height="388"></p>
+	<p>&nbsp;</p>
+	<p><font size="2">'Concept CAR' looks like so in the LCA Product Editor.</font></p>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/car_full_assy.png" width="446" height="207"></p>
+	<p><font size="2"><a href="#Step 14" name="Step 14 back">Step 14</a></font><font size="2" color="#2A00FF">
+	</font>generates BOM reports by calling an expand on 'Concept CAR' and 
+	passing in Config Handlers as follows:</p>
+	<ul>
+		<li><font size="2" color="#2a00ff">Unit 1</font> is a rear-wheel-drive 
+		with a small exhaust tail. Basically, when the Replace Operation was 
+		resolved, all the rear-wheel-drive cars for units(1-50) were 
+		reconfigured to rear-wheel-drive.</li>
+	</ul>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/report_unit1.png" width="498" height="145"></p>
+	<p>&nbsp;</p>
+	<ul>
+		<li><font size="2" color="#2a00ff">Unit 40</font> is a rear-wheel-drive 
+		with a large exhaust tail. Basically, when the Replace Operation was 
+		resolved, all the rear-wheel-drive cars for units(1-50) were 
+		reconfigured to rear-wheel-drive. The tail effectivities remained.</li>
+	</ul>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/CAAENO1.gif" width="549" height="154"></p>
+	<p>&nbsp;</p>
+	<ul>
+		<li><font size="2" color="#2a00ff">Units 51 &amp; 91</font>: When the 
+		front-wheel-drive was cut, it was cut for unit(51-100). An add of 
+		all-wheel-drive was done for units(86-90) only! This did not account for 
+		the units(51-85), nor did it account for units(91-100).</li>
+	</ul>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/report_unit51.png" width="533" height="115"></p>
+	<p>&nbsp;</p>
+	<ul>
+		<li><font size="2" color="#2a00ff">Unit 80</font> is a four-wheel-drive 
+		car with a large exhaust tail.</li>
+	</ul>
+	<p>&nbsp;&nbsp;&nbsp;
+	<img border="0" src="images/report_unit80.png" width="526" height="139"></p>
+	<p align="right">[<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <h4>
+      <a name="2.2"></a>Where To Find the CAAENOVWSProdStructConfigCppUseCase Code
+    </h4>
+    <p>The CAAENOVWSDotNet1_1Client use case is made of several classes located in both <b>CAAENOVWSDotNet1_1Client.m</b>
+        and <b>CAAENOVWSDotNet1_1ClientBase.m</b> modules of the <b>CAAENOVWS.edu</b> framework:</p>
+    <table class="code" id="table4">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code><br>
+                    <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p>The CAAENOVWSDotNet1_1ClientBase.m module (library) contains the following resources:</p>
+    <table class="code" id="table5">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSProdStructConfigCppProxy.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSProdStructConfigCppWrapper.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSQueryCppProxy.cs</b> file contains the C# client binding generated using the wsdl.exe
+        utility. A C# client binding consists of a proxy and several types definitions. The <b>CAAENOVWSQueryCppWrapper.cs</b>
+        file contains a class that describes how to configure the generated proxy and how to invoke its methods.</p>
+    <p>The CAAENOVWSDotNet1_1Client.m module (executable) contains the following resources:</p>
+    <table class="code" id="table6">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSDotNet1_1Client.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSProdStructConfigCppUseCase.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSProdStructConfigCppUseCaseCar.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSDotNet1_1Client.cs</b> file contains the main program. It parses the command line inputs
+        and starts up the use case. The <b>CAAENOVWSProdStructConfigCppUseCase.cs</b> file contains the sample use case
+        scenario.</p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.3"></a>How to Launch <strong>CAAENOVWSProdStructConfigCppUseCase</strong>
+    </h4>
+    <p>
+      To launch the CAAENOVWSProdStructConfigCppUseCase use case, you will need to set up a 
+		build time environment,
+      build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You
+      can see [<a href="#References">3</a>] for details on how to perform these steps within the IRAD 6 environment.
+    </p>
+    <p>
+      This use case requires a configured product(PRC) to be in the LCA V5 database. 
+		The name of this product is passed in as a parameter described below.</p>
+    <p>
+      The sample usage scenario delivered within this use case is launched from the <code>
+		CAAENOVWSDotNet1_1Client </code>class. It defines
+      a main method that takes several options as parameters, as described below:
+    </p>   
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em> -t </code>
+			CAAENOVWSProdStructConfigCppUseCase -r Concept_CAR</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the ENOPosApplicationBinderImpl
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t 
+			CAAENOVWSProdStructConfigCppUseCase</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step
+    </h3>
+    <p>
+      The following section first explains how to generate the Java client 
+		binding for the ENOVWSProdStructConfigCpp CAA Web service demonstrated. 
+		The remaining sections then describe the code that must be written in 
+		order to consume this Web service. Not all service employed by this use 
+		case are detailed in this section. Only the one's that pertain to 
+		ENOVWSProdStructConfigCpp are detailed here.</p>
+    <ol>
+      <li>
+        <a href="#3.8">Creating the C# Client Binding</a> 
+      </li>
+      <li>
+        <a href="#3.2">Instantiating and Configuring the Generated Proxy</a> 
+      </li>
+      <li>
+        <a href="#3.3">Create Modification</a> 
+      </li>
+      <li>
+        <a href="#3.4">Create Config Handler</a> 
+      </li>
+      <li>
+        <a href="#3.5">Get Operations</a></li>
+		<li>
+        <a href="#resolveOperations">Resolve Operations</a>
+      </li>
+      <li>
+        <a href="#3.6">Sample Usage Scenario</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- SECTION 3.1 ----------------------------------------------------------------------------- SECTION 3.1 -->
+    <h4><a name="3.8"></a>Creating the C# Client Binding</h4>
+    <p>Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using
+        the wsdl.exe utility.</p>
+    <p>Here follows a sample command in order to generate the C# client binding for the ENOVWSProdStructConfigCpp CAA Web
+        service:</p>
+    <table class="code" id="table7">
+        <tbody>
+            <tr>
+                <td><code>wsdl /namespace:com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientgen.enovwsquerycpp /username:wpsadmin
+                    /password:wpsadmin /out:CAAENOVWSProdStructConfigCppProxy.cs http://stophe1dsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSProdStructConfigImpl:ENOVWSQueryImpl:ENOVWSProdStructConfigCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The server name, port, and context root URI information must be updated to match the server where the
+        ENOVWSProdStructConfigCpp CAA Web service has been deployed. The <code>/username</code> and <code>/username</code>
+        options are required to authenticate on the Web server hosting the Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.2 ----------------------------------------------------------------------------- SECTION 3.2 -->
+    <h4><a name="3.2"></a>Instantiating and Configuring the Generated Proxy</h4>
+    <p>In order to consume an implementation of the ENOVWSProdStructConfigCpp CAA Web service deployed on a target Web
+        server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must
+        then be configured in order to manage authentication on the remote Web server, timeout, and session
+        management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.</p>
+    <p>The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and
+        to unmarshall SOAP responses to objects. The following code describes how to instantiate and configure
+        it:</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <pre>		public CAAENOVWSProdStructConfigCppWrapper(
+			CookieContainer container, 
+			string uri, 
+			string credUser, 
+			string credPwd,
+			int timeOut) {
+			proxy = new CAAENOVWSProdStructConfigCppProxy();</pre>
+			<pre>			// Compute the SOAP endpoint URI value that bounds to the deployed implementation of the 
+			// ENOVWSProdStructCpp CAA Web service
+			proxy.Url = uri + &quot;servicerouter?service=&quot; + SERVICE_ID;</pre>
+			<pre>			// Required for HTTP session state management
+			proxy.CookieContainer = container;</pre>
+			<pre>			// Required for the Basic Authentication mechanism
+			ICredentials credentials = new NetworkCredential(credUser, credPwd);
+			proxy.Credentials = credentials; 
+			</pre>
+			<pre>			// Increase the default client time-out
+			proxy.Timeout = timeOut;
+		}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed
+        using either the same or multiple proxy instances, the <code>CookieContainer</code> property must be
+        set on the proxy. This is mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+        <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+        <code>Credentials </code>property on the proxy. The values specified must match a valid set of credentials
+        for the Basic Authentication mechanism,<br>
+        <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues
+        at runtime, such as losing the HTTP connection before receiving the SOAP responses. The value specified
+        in the code is in milliseconds.<br>
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>Create Modification</h4>
+    <p>
+      Create mod can be achieved using the
+      following method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="createModifications" id="queryCount"></a><code><font color="#7F0055"><strong>public</strong></font> Status 
+			createModification(ConfigExpression iConfigExp, ENOVIAHolder 
+			oResult)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iConfigExp</code>
+          </td>
+          <td>
+            &nbsp; The ConfigExpression to create mods. See [<a href="#References">6</a>] for details
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oResult</code>
+          </td>
+          <td>
+            &nbsp; Resulting mods</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of createModifications method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <pre>       public ENOVIA CreateModification(String iPartOrPRCId, String iConfigExpression) {
+		</pre>
+			<pre>		     Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'createModification' on ENOVWSProdStructConfigCpp CAA Web service proxy&quot;);
+			 if (iPartOrPRCId == null) {
+				 throw new ApplicationException(&quot;iPartOrPRCId ID is null&quot;);
+			 } else if (iConfigExpression == null) {
+				 throw new ApplicationException(&quot;configExpression is null&quot;);
+			 } 
+						</pre>
+			<pre>			 Console.Out.WriteLine(&quot;PRCId ID: &quot; + iPartOrPRCId);
+			 Console.Out.WriteLine(&quot;configExpression name: &quot; + iConfigExpression);
+		 </pre>
+			<pre>			 ConfigExpression configExp = new ConfigExpression();
+			 configExp.ConfigExpression1 = iConfigExpression;
+			 			 </pre>
+			<pre>		     Identifier partOrPRCId = ToIdentifier(iPartOrPRCId);
+						 </pre>
+			<pre>			 ENOVIA oResult = null;</pre>
+			<pre>			 // Invoke create document on remote Web service
+			 try {
+				 Status status = proxy.CreateModification(partOrPRCId,configExp, ref oResult);
+				 Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+			 } catch (Exception e) {
+				 throw new Exception(&quot;Failed to create modification&quot;, e);
+			 }</pre>
+			<pre>			 // Process output data
+			 if (oResult == null) {
+				 throw new Exception(&quot;Failed to create modification&quot;);
+			 }
+			 return oResult;
+		 }</pre>
+			<p>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.4"></a>Create Config Handler</h4>
+    <p>
+      Create Config Handler can be achieved using the following
+      method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="createConfigHandler" id="queryObjects"></a><code><font color="#7F0055"><strong>public</strong></font> Status 
+			createConfigHandler(ConfigExpression iConfigExp, ENOVIAHolder oResult)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iConfigExp</code></td>
+          <td>
+            &nbsp; The ConfigExpression for create config handler. See [<a href="#References">6</a>] for details
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oResult</code>
+          </td>
+          <td>
+            &nbsp; Resulting config handlers</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of createConfigHandler method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <pre>	   public ENOVIA CreateConfigHandler(String iPRCId, String iConfigExpression) {
+		</pre>
+			<pre>		   Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'createConfigHandler' on ENOVWSProdStructConfigCpp CAA Web service proxy&quot;);
+ </pre>
+			<pre>		   
+		   if (iPRCId == null) 
+		   {
+			   throw new ApplicationException(&quot;PRC ID is null&quot;);
+		   } 
+		   else if (iConfigExpression == null) 
+		   {
+			   throw new ApplicationException(&quot;configExpression is null&quot;);
+		   } 
+						</pre>
+			<pre>		   Console.Out.WriteLine(&quot;PRCId ID: &quot; + iPRCId);
+		   Console.Out.WriteLine(&quot;configExpression name: &quot; + iConfigExpression);
+		 </pre>
+			<pre>		   ConfigExpression configExp = new ConfigExpression();
+		   configExp.ConfigExpression1 = iConfigExpression;
+			 			 </pre>
+			<pre>		   Identifier prcId = ToIdentifier(iPRCId);
+						 </pre>
+			<pre>		   ENOVIA oResult = null;</pre>
+			<pre>		   // Invoke create document on remote Web service
+		   try {
+			   Status status = proxy.CreateConfigHandler(prcId,configExp,ref oResult);
+			   Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+		   } 
+		   catch (Exception e) {
+			   throw new Exception(&quot;Failed to create ConfigHandler&quot;, e);
+		   }</pre>
+			<pre>		   // Process output data
+		   if (oResult == null ) 
+		   {
+			   throw new Exception(&quot;Failed to create ConfigHandler&quot;);
+		   }
+		   return oResult;
+	   }</pre>
+			<p>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <h4>
+      <a name="3.5"></a>Get Operations</h4>
+    <p>
+      Get Operations can be achieved using the following
+      method, which is available through the generated proxy:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="getOperations" id="getObjects"></a><code><font color="#7F0055"><strong>public</strong></font> Status getOperations(Identifier iObjectId, 
+			OperationStructureArrayHolder oResult)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iObjectId</code></td>
+          <td>
+            &nbsp; The object identifier</td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oResult</code>
+          </td>
+          <td>
+            &nbsp; Operations structure&nbsp;
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of getOperations method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <pre>		public OperationStructure [] GetOpers(String iPRCId) {</pre>
+			<pre>			Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'GetAllOperations' on ENOVWSProdStructConfigCpp CAA Web service proxy&quot;);
+			if (iPRCId == null) 
+			{
+				throw new ApplicationException(&quot;PRC ID is null&quot;);
+			}
+						</pre>
+			<pre>			Console.Out.WriteLine(&quot;PRCId ID: &quot; + iPRCId);
+					</pre>
+			<pre>			Identifier prcId = ToIdentifier(iPRCId);
+			OperationStructure [] oHolderOperations = null;</pre>
+			<pre>			// Invoke create document on remote Web service
+			try 
+			{
+				Status status = proxy.GetOperations(prcId, ref oHolderOperations);
+				Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+			} 
+			catch (Exception e) 
+			{
+				throw new Exception(&quot;Failed to GetOperations&quot;, e);
+			}</pre>
+			<pre>			// Process output data
+			if (oHolderOperations == null) 
+			{
+				throw new Exception(&quot;Failed to GetOperations&quot;);
+			}
+			return oHolderOperations;		   
+		}</pre>
+			</td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.7"></a>Resolve Operations</h4>
+    <p>
+      Resolve Operations can be achieved using the following
+      method, which is available through the generated proxy:
+    </p>
+    <table class="code" id="table1">
+      <tbody>
+        <tr>
+          <td>
+            <a name="resolveOperations" id="getObjects0"></a><code><font color="#7F0055"><strong>public</strong></font> 
+			Status resolveOperations(OperationStructureArrayHolder 
+			iOperationStruct)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table id="table2">
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iOperationStruct</code></td>
+          <td>
+            &nbsp; Operations structure</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of resolveOperations method:
+    </p>
+    <table class="code" id="table3">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <pre>		public void ResolveOpers(String iMod, OperationStructure [] iOperations){
+		</pre>
+			<pre>			Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'ResolveOpers' on ENOVWSProdStructConfigCpp CAA Web service proxy&quot;);
+			if (iMod == null) 
+			{
+				throw new ApplicationException(&quot;iMod ID is null&quot;);
+			} 
+			else if (iOperations == null) 
+			{
+				throw new ApplicationException(&quot;iOperations is null&quot;);
+			} 
+						</pre>
+			<pre>			Console.Out.WriteLine(&quot;iMod ID: &quot; + iMod);			 			 
+			Identifier iEnovMod = ToIdentifier(iMod);
+						 										</pre>
+			<pre>			try {
+				Status status = proxy.ResolveOperations(iEnovMod, ref iOperations);
+				Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+			} catch (Exception e) {
+				throw new Exception(&quot;Failed to resolveOperations&quot;, e);
+			}
+				</pre>
+			<pre>		}   	</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <h4>
+      <a name="3.6"></a>Sample Usage Scenario
+    </h4>
+    <p>
+      The following code depends on:
+    </p>
+    <ul>
+      <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">2</a>] 
+		for details</li>
+      <li>the CAAENOVWSQueryCppWrapper<font SIZE="2"><a href="#References">[10]</a> </font>class for query.</li>
+		<li><font SIZE="2">the CAAENOVWSProdStructCppWrapper<a href="#References">[8]</a> for product 
+		sturucture services</li>
+    	<li>the CAAENOVWSProdStructConfigCppWrapper<a href="#References">[12]</a> for configuration services</li>
+		<li>the CAAENOVWSChgMgmtCppWrapper<a href="#References">[11]</a> for change management services</li>
+		<li>the CAAENOVWSCntMgmtCppWrapper<a href="#References">[9]</a> for document services</li>
+		<li>the all important CAAENOVWSProdStructConfigCppUseCaseCar<a href="#References">[7]</a> is where 
+		the functionality is.</font></li>
+    </ul>
+    <p>
+      It demonstrates a sample usage scenario for an end to end product 
+		configuration, and change management functions.</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code>
+            <br>
+            &nbsp;</code><pre>	public class CAAENOVWSProdStructConfigtCppUseCase {
+		private string uri = null;
+		private string credUser = null;
+		private string credPwd = null;</pre>
+			<pre>		public CAAENOVWSProdStructConfigtCppUseCase(string uri, string credUser, string credPwd) {
+			this.uri = uri;
+			this.credUser = credUser;
+			this.credPwd = credPwd;
+		}</pre>
+			<pre>		public void RunSampleUsageScenario(string enoviaUser, string prcVID) {</pre>
+			<pre>			bool success = false;
+			Exception exception = null;
+			enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = null;
+			enoposapplicationbinderimpl.SessionToken sessionToken = null;
+			try {
+				// ------------------------------------------------------------
+				// Step 1 - Instantiate and configure the proxies
+				// ------------------------------------------------------------</pre>
+			<pre>				Console.Out.WriteLine(&quot;STEP 1: Instantiating and configuring CAA Web services proxies&quot;);
+				</pre>
+			<pre>				// Create a CookieContainer object to maintain the HTTP session state accross proxies
+				CookieContainer container = new CookieContainer();</pre>
+			<pre>				// Instantiate the wrapper client classes
+				int timeOut = 360000;
+				binderWrapper = new enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper(container, uri, credUser, credPwd, timeOut);
+				enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper = new enovwsquerycpp.CAAENOVWSQueryCppWrapper(container, uri, credUser, credPwd, timeOut);
+				enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgMgmtWrapper = new enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper(container, uri, credUser, credPwd, timeOut);
+				enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper = new enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper(container, uri, credUser, credPwd, timeOut);
+				enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper prodStructWrapper = new enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper(container, uri, credUser, credPwd, timeOut);
+				enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper prodStructConfigWrapper = new enovwsprodstructconfigcpp.CAAENOVWSProdStructConfigCppWrapper(container, uri, credUser, credPwd, timeOut);</pre>
+			<pre>				// ------------------------------------------------------------
+				// Step 2 - Open session with ENOVIA LCA V5
+				// ------------------------------------------------------------</pre>
+			<pre>				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 2: Opening session with ENOVIA LCA V5&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>				// Get user contexts
+				string[] userContexts = binderWrapper.GetUserContexts(enoviaUser);
+				Console.Out.WriteLine(&quot;Found {0} context(s) in database&quot;, userContexts.Length);
+				Console.Out.WriteLine(&quot;Displaying list of available contexts:&quot;);
+				for (int i = 0; i &lt; userContexts.Length; i++) {
+					Console.Out.WriteLine(&quot;Context[{0}]: {1}&quot;, i, userContexts[i]);
+				}</pre>
+			<pre>				// Log in using the first available context
+				if (userContexts.Length == 0) {
+					throw new ApplicationException(&quot;No context found for the user specified&quot;);
+				}
+				sessionToken = binderWrapper.Login(userContexts[0]);</pre>
+			<pre>				//create unique string for repeated running of the scenario
+				long t=System.DateTime.Now.Ticks;        
+				String uniqueStr = t.ToString();</pre>
+			<pre>				// ------------------------------------------------------------
+				// Step 3 - query car PRC
+				//       Preq: car PRC with VID of &quot;CAAPSCWS_CAR_PRC&quot; has to be present in the ENOVIA database 
+				// ------------------------------------------------------------</pre>
+			<pre>				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 3: query car PRC&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				</pre>
+			<pre>				//String configPRC = &quot;DotNetCAAPSCWS_CAR_PRC&quot;;  passing PRC from command line
+				Console.Out.WriteLine(&quot;---&gt; Looking for product in LCA --&gt; &quot; + prcVID);
+				String carPRC = null;
+				carPRC=queryWrapper.GetProductRootClassUUID(prcVID); 
+			
+</pre>
+			<pre>				<a name="Step 4"></a>// ------------------------------------------------------------
+				// Step 4 - create objects (part version, document) for car components
+				//
+				// ------------------------------------------------------------
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 4: create PV and Doc objects&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				</pre>
+			<pre>				//instantiate a car 
+				CAAENOVWSProdStructConfigCppUseCaseCar car= new CAAENOVWSProdStructConfigCppUseCaseCar(carPRC, uniqueStr);
+				car.CreatPartVersionObjects(prodStructWrapper);
+				car.CreatDocumentObjects(cntMgmtWrapper);//<a href="#Step 4 back">Step 4 back</a>	
+</pre>
+			<pre>				<a name="Step 5"></a>// ---------------------------------------------------------------
+				// Step 5 - create configuration objects (mods and config handlers)
+				// ---------------------------------------------------------------
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 5: create configuration objects, Mods and Config Handlers&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>				car.CreatModsForCar(prodStructConfigWrapper);
+				car.CreatModsForExhaust(prodStructConfigWrapper);
+				car.CreatConfigHandlers(prodStructConfigWrapper);//<a href="#Step 5 back">Step 5 back</a>
+				</pre>
+			<pre>				<a name="Step 6"></a>// ---------------------------------------------------------------
+				// Step 6 - Change Management
+				// ---------------------------------------------------------------
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 6: change management &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>				car.CreatAction(chgMgmtWrapper);
+				car.AddAssociatedObjectsToCar(chgMgmtWrapper);
+				car.AddAssociatedObjectsToExhaust(chgMgmtWrapper);
+				car.AddAffectedObjects(chgMgmtWrapper);//<a href="#Step 6 back">Step 6 back</a>
+				</pre>
+			<pre>				<a name="Step 7"></a>// ---------------------------------------------------------------
+				// Step 7 - build car (assembly)
+				// ---------------------------------------------------------------
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 7: build prodStruct first level&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.BuildProdStructCAR(prodStructWrapper);//<a href="#Step 7 back">Step 7 back</a></pre>
+			<pre>				<a name="Step 8"></a>// ---------------------------------------------------------------
+				// STEP 8: Get and Resolve Operation for Car 
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 8: Get and Resolve Operation for Car &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				//carPRC
+				car.GetAndResolveOperationsCAR(prodStructConfigWrapper);//<a href="#Step 8 back">Step 8 back</a></pre>
+			<pre>				<a name="Step 9"></a>// ---------------------------------------------------------------
+				// Step 9 - build exhaust (assembly)
+				// ---------------------------------------------------------------
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 9: build prodStruct second level&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.BuildProdStructExhaust(prodStructWrapper);//<a href="#Steps 9  back">Step 9 back</a></pre>
+			<pre>				<a name="Step 10"></a>// ---------------------------------------------------------------
+				// STEP 10: Get and Resolve Operation for Exhaust
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 10: Get and Resolve Operation for Exhaust &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				//Exhaust
+				car.GetAndResolveOperationsExhaust(prodStructConfigWrapper);//<a href="#Step 10 back">Step 10 back</a></pre>
+			<pre>				<a name="Step 11"></a>// ---------------------------------------------------------------
+				// STEP 11: Make some modification on ProdStruct car
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 11: Make some modification on ProdStruct car &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.ModifyCar(prodStructWrapper);//<a href="#Step 11 back">Step 11 back</a></pre>
+			<pre>				<a name="Step 12"></a>// ---------------------------------------------------------------
+				// STEP 12: Get and Resolve Operation caused by step 9
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 12: Get and Resolve Operation caused by step 11 &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.GetAndResolveOperationsCAR(prodStructConfigWrapper);//<a href="#Step 11 back">Step 12 back</a></pre>
+			<pre>				<a name="Step 13"></a>// ---------------------------------------------------------------
+				// STEP 13: Get affected objects on action resulting from steps 10 and 12
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 13: Get affected objects on action resulting from steps 6, 10 and 12&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.GetAffectedObjects(chgMgmtWrapper);//<a href="#Step 13 back">Step 13 back</a>
+				<a name="Step 14"></a>// ---------------------------------------------------------------
+				// STEP 14: Report car BOM by applying config handlers
+				// ---------------------------------------------------------------			
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 14: Report car BOM by applying config handlers &quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				car.ReportBOM(prodStructWrapper,queryWrapper);//<a href="#Step 14 back">Step 14 back</a></pre>
+			<pre>			    success = true;
+			} catch (Exception e) {
+				exception = e;
+			} finally {
+				// ------------------------------------------------------------
+				// Step 15 - Terminate opened session
+				// ------------------------------------------------------------</pre>
+			<pre>				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+				Console.Out.WriteLine(&quot;STEP 15: Terminating opened session with ENOVIA LCA V5&quot;);
+				Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+			<pre>				// The session must be closed even if a call to a method on the ENOVWSQueryCpp 
+				// CAA Web service fails
+				binderWrapper.Logout(sessionToken);
+			}
+			</pre>
+			<pre>			if (success) {
+				Console.Out.WriteLine(&quot;================================================================================&quot;);
+				Console.Out.WriteLine(&quot;Use case execution successful&quot;);
+				Console.Out.Flush();
+				Console.Out.Close();
+				Environment.Exit(0);
+			} else {
+				Console.Out.Flush();
+				Console.Out.Close();
+				Console.Error.WriteLine(&quot;================================================================================&quot;);
+				Console.Error.WriteLine(&quot;Use case execution failed&quot;);
+				Console.Error.WriteLine(exception.Message);
+				Console.Error.WriteLine(&quot;Details:&quot;);
+				if (exception.InnerException != null) {
+					Console.Error.WriteLine(exception.InnerException); // handles ApplicationException launched from the use case
+				} else {
+					Console.Error.WriteLine(exception); // handles unexpected exception
+				}
+				Console.Error.Flush();
+				Console.Error.Close();
+				Environment.Exit(-1);
+			}
+		}
+	}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following methods are implemented in CAAENOVWSProdStructConfigCppUseCaseCar.java 
+		class<a href="#References">[7]</a></p>
+	<ul>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatPartVersionObjects</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatDocumentObjects</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatModsForCar</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatModsForExhaust</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatConfigHandlers</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">creatAction</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">addAssociatedObjectsToCar</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">addAssociatedObjectsToExhaust</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">addAffectedObjects</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">buildProdStructCAR</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">GetAndResolveOperationsCAR</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">buildProdStructExhaust</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">GetAndResolveOperationsExhaust</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">modifyCar</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">getAffectedObjects</a></li>
+		<li><a href="CAAENOVWSProdStructConfigCppCar.htm">reportBOM</a></li>
+	</ul>
+	<p>
+      the source code can be found in:</p>
+    <table class="code" id="table8">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Install&gt;</em>\<em>&lt;Source&gt;</em>\<em>&lt;Package&gt;</em>\</code>CAAENOVWSProdStructConfigCppUseCaseCar
+			<code>.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the root directory where the CAA CD-ROM is installed,
+      </li>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: \CAAENOVWS.edu\<code>CAAENOVWSDotNet1_1Client</code>.mj\src,
+      </li>
+      <li>
+        <code><em>&lt;Package&gt;</em>\com\dassault_systemes\caaenovws\CAAENOVWSDotNet1_1Client.</code></li>
+    </ul>
+	<p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case explains how to use the Java client binding generated using the Axis WSDL2Java emitter in order to
+      consume the ENOVWSProdStructConfigCpp Web service. It also gives an overview of the methods available for that particular
+      CAA Web service:
+    </p>
+    <ul>
+      <li>
+        <code><a href="#createModifications">createModification</a></code>: 
+		Create a Enovia modification, given a configured object (Part Instance) 
+		and configuration expression. 
+      </li>
+      <li>
+        <code><a href="#createConfigHandler">createConfigHandler</a></code>: 
+		Create a Enovia config handler, given a configuration expression. 
+      </li>
+      <li>
+        <code><a href="#getOperations">getOperations</a></code>: Get pending 
+		operations on a product.
+      </li>
+		<li>
+        <code><a href="#resolveOperations">resolveOperations</a>: Resolve 
+		pending operations.</code></li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining the
+            Session State</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td>
+            <a href="../CAAPLMSecUseCases/CAAENOPosAppBinderAxisClient.htm">Consuming the
+            ENOPosApplicationBinderImpl CAA Web Service</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building
+            and Launching a CAA Web Service Use Case</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [4]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating a
+            Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [5]
+          </td>
+          <td>
+            <a href="../CAAENOVWSTechArticles/SelectExpression.htm">Using SelectExpression</a>
+          </td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [6]</td>
+          <td>
+            <a href="../CAAENOVWSTechArticles/ConfigExpression.htm">Using ConfigExpression</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [7]</td>
+          <td>
+            <a href="CAAENOVWSProdStructConfigCppDotNetCar.htm">CAAENOVWSProdStructConfigCppUseCaseCar</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [8]</td>
+          <td>
+            <a href="CAAENOVWSProdStructCppDotNetClient.htm">Consuming ENOVWSProdStructCpp
+			CAA Web Service</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [9]</td>
+          <td>
+            <a href="CAAENOVWSCntMgmtCppDotNetClient.htm">Consuming ENOVWSCntMgmtCpp
+			CAA Web Service</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [10]</td>
+          <td>
+            <a href="CAAENOVWSQueryCppDotNetClient.htm">Consuming ENOVWSQueryCpp
+			CAA Web Service</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [11]</td>
+          <td>
+            <a href="CAAENOVWSChgMgmtCppDotNetClient.htm">Consuming ENOVWSChgMgmtCpp
+			CAA Web Service</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            [12]</td>
+          <td>
+            <a href="CAAENOVWSProdStructConfigCppDotNetClient.htm">Consuming ENOVWSProdStructConfigCpp
+			CAA Web Service</a></td>
+        </tr>
+		<tr>
+          <td valign="top">
+            &nbsp;</td>
+          <td>
+            &nbsp;</td>
+        </tr>
+      </tbody>
+    </table><!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

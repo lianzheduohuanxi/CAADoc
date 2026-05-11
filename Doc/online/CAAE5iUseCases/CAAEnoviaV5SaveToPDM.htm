@@ -1,0 +1,712 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Automatically load, modify and save EV5 VPM data from within CV5</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>ENOVIA V5 VPM</h1>
+    </td>
+    <td valign="TOP">
+      <h2>CATIA V5 ENOVIA V5 VPM Integration</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>API's to automate access to ENOVIA V5 VPM data and
+      Automate Save from CATIA V5</h3>
+      <i>Automatically load, modify and save EV5 VPM data from within CV5</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------ABSTRACT------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><span lang="en-us">Abstract</span></h3>
+      <p><span lang="en-us">This document is related to the use case <code>
+		CAAEnoviaV5SaveToPDMCmd</code>. 
+		It describes how to automatically:
+		<ul type="circle">
+		  <li>load data from ENOVIA V5 VPM,</li>
+		  <li>insert file-based data into loaded data,</li>
+		  <li>save new data with a choosen vault mode in ENOVIA V5 VPM.</li>
+		</ul>
+		<p>Use case <code>CAAEnoviaV5SaveToPDMCmd </code>is basically extension 
+		to already existing use case </span><code>CAAEnoviaV5SaveCmd</code><span lang="en-us">. 
+		New use case is written to explain the user how to use </span><code>SaveToPDM</code><span lang="en-us"> in 
+		conjunction with the already existing APIs used in&nbsp; </span><code>
+		CAAEnoviaV5SaveCmd</code><span lang="en-us">. </p>
+		This, using CAA APIs and triggering the "Save in ENOVIA V5 VPM" from within one CATIA V5 command.</span></p>
+      <ul>
+        <li><span lang="en-us"><b><a href="#Learn">What You Will Learn With This Use Case</a></b></span></li>
+        <li><span lang="en-us"><b><a href="#UseCase">The CAAEnoviaV5SaveToPDMCmd Use Case</a></b></li>
+        </span>
+        <ul>
+          <li><span lang="en-us"><a href="#What">What Does 
+			CAAEnoviaV5SaveToPDMCmd Do</a></span></li>
+          <li><span lang="en-us"><a href="#How">How to Launch 
+			CAAEnoviaV5SaveToPDMCmd</a></span></li>
+          <li><span lang="en-us"><a href="#Where">Where to Find the 
+			CAAEnoviaV5SaveToPDMCmd Code</a></span></li>
+        </ul>
+        <li><span lang="en-us"><b><a href="#Step">Step-by-Step</a></b></span></li>
+        <li><span lang="en-us"><b><a href="#InShort">In Short</a></b></span></li>
+        <li><span lang="en-us"><b><a href="#References">References</a></b></span></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------WHAT_WILL_YOU_LEARN------------------------------------->
+<h3><span lang="en-us"><a name="Learn"></a>What You Will Learn With This Use Case</span></h3>
+
+<p><span lang="en-us">This use case is intended to help you: 
+<ul type="circle">
+  <li>to manipulate the two CAA APIs of <code>CATPDMInteropServices.h</code>: <code>SetEV5PersistencyMode()</code> & 
+  <code>LoadFromPDM()</code>, </li>
+  <li>and to trigger &quot;Save In Enovia&quot; from CAA API <code>SaveToPDM</code></span><span style="font-size:8.0pt;mso-bidi-font-size:
+12.0pt;font-family:Verdana;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-GB;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA" lang="EN-GB"> </span><span lang="en-us">from </span><span lang="en-us"> <code>CATPDMInteropServices.h.</code></span> </li>
+</ul>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p><hr>
+
+<!---------------------------------THE_USE_CASE------------------------------------->
+<h3><span lang="en-us"><a name="UseCase"></a>The "CAAEnoviaV5SaveToPDMCmd" Use Case</span></h3>
+
+<p><span lang="en-us"><code>CAAEnoviaV5SaveToPDMCmd</code> is a use case of the <code>CAAProductStructureE5i.edu</code> 
+framework that illustrates how ENOVIA V5 VPM data can be automatically manipulated from within a CATIA V5
+command and saved back to Enovia based on a starter root Document.
+</span></p>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+
+<!---------------------------------WHAT_DOES_THE_USE_CASE_DO------------------------------------->
+<h4><span lang="en-us"><a name="What"></a>What Does the "CAAEnoviaV5SaveToPDMCmd" Use Case Do</span></h4>
+<p><span lang="en-us">The <code>CAAEnoviaV5SaveToPDMCmd</code> use case aims at a presentation of how, from within in a CATIA V5 command, to automatically perform: 
+<ul type="circle">
+  <li>the load from ENOVIA V5 VPM of three assembly Item-Instances (in context of a PRC),</li>
+  <li>the insertion of 2 file-based CATProduct documents under the two first of the three loaded Item-Instances,</li>
+  <li>the attribution of the "ENOVIA5" PDM destination and the "VolatileExposed"/"PermanentBlackBox" vault modes on the CATProduct documents and their children,</li>
+  <li>and the save in ENOVIA V5 VPM of the previous modifications.</li>
+</ul>
+</span>
+<p><span lang="en-us">From an implementation view, this use case also deals with the following points:</span></p>
+<ol>
+  <li><span lang="en-us">Using the <code><b>RunObjectService()</b></code> API (<code>CATPDMCSServices.h</code>): Retrieve the <code>CATIPLMIdentificator-s</code> of three EV5 VPM (assembly) Item-Instances from their name. [<a href="#References">2</a>]</span></li>
+  <li><span lang="en-us">Using the <code><b>LoadFromPDM()</b></code> API (<code>CATPDMInteropServices.h</code>): Load the three EV5 VPM Item-Instances (in context) given by their CATIPLMIdentificator-s.</span></li>
+  <li><span lang="en-us">Using the <code><b>Open()</b></code> API (<code>CATDocumentServices.h</code>): Open a file-based CATProduct document.</span></li>
+  <li><span lang="en-us">Using the <code><b>GiveDocRoots()</b></code> & <code><b>AddProduct()</b></code> methods (<code>CATIDocRoots.h</code> & <code>CATIProduct.h</code>): Insert the file-based CATProduct under one of the loaded EV5 VPM assembly Item-Instances.</span></li>
+  <li><span lang="en-us">Using the <code><b>SetEV5PersistencyMode()</b></code> API (<code>CATPDMInteropServices.h</code>): Define a vault-mode for the file-based CATProduct document and its children.</span></li>
+  <li><span lang="en-us">Get current CATIA Editor using <code><b>GetEditor()</b>
+    </code>method (<code>CATIEditor.h) </code>and get starter root document
+    using<code> <b>GetDocument()</b></code> <code>(CATFrmEditor.h</code>).</span></li>
+  <li><span lang="en-us">Using the <code><b>SaveToPDM()</b></code> API (<code>CATPDMInteropServices.h</code>): Trigger the "Save in ENOVIA"
+    process with Document from step 6 as input parameter.</span></li>
+</ol>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------HOW_TO_LAUNCH_THE_USE_CASE------------------------------------->
+<h4><span lang="en-us"><a name="How"></a>How to Launch the "CAAEnoviaV5SaveToPDMCmd" Use Case</span></h4>
+<p><span lang="en-us">Before to launch the <code>CAAEnoviaV5SaveToPDMCmd</code> use case, you will need to set up the build-time
+environment, compile <code>CAAEnoviaV5SaveToPDMCmd</code> (client side) and <code>CAAVpmPsEnovGetData</code> (server side) 
+along with their prerequisites, set up the run-time environment (on both client and server sides) and then execute 
+the mandatory prerequisite steps in the following way: </span></p>
+<ol>
+  <li><span lang="en-us">Run ENOVIA V5 VPM</span></li>
+  <li><span lang="en-us">Create and Save a Product Root Class</span></li>
+	<li>Export variable &quot;CAAEnoviaV5SaveToPDMCmd_ODT&quot; on CATIA side to get the 
+	new behavior (Automated Save to Enovia)</li>
+  <li><span lang="en-us">Run CATIA V5 and connect it to ENOVIA V5 VPM</span></li>
+  <li><span lang="en-us">Send the created Product Root Class to CATIA V5</span></li>
+  <li><span lang="en-us">Insert under the loaded PRC the file-based documents "_AutoAccessAPI_BranchOne.CATProduct" & "AutoAccessAPI_BranchTwo.CATProduct" 
+  (data located in: <code>InstallRootDirectory\CAAProductStructureE5i.edu\InputData\StartingPS\</code>)</span></li>
+  <li><span lang="en-us">Set the "Structure Exposed" as Storage Mode and the "ENOVIA5" as PDM destination on each inserted file-based CATDocument</span></li>
+  <li><span lang="en-us">Save the whole assembly in ENOVIA V5 VPM and close the CATIA V5 editor.</span></li>
+</ol>
+<p><span lang="en-us">It is mandatory to have the following assembly saved in ENOVIA V5 VPM before to go through the use case.</span></p>
+<br /><img border="0" src="CAAEnoviaV5Save_01.jpg">
+<p><span lang="en-us">
+The use case is launched by clicking the icon below: (process: View > Toolbars> <code>CAACV5EV5Integration</code>, if the icon is not visible)
+</span></p>
+<br /><img border="0" src="CAAEnoviaV5SaveToPDM_04.jpg">
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<span lang="en-us">
+
+<!---------------------------------WHERE_TO_FIND_THE_USE_CASE------------------------------------->
+</span>
+<h4><span lang="en-us"><a name="Where"></a>Where to Find the "CAAEnoviaV5SaveToPDMCmd" Use Case Code</span></h4>
+<p><span lang="en-us">This use case is made of two classes: </span></p>
+<ul>
+  <li>One "client-side" class named <code>CAAEnoviaV5SaveToPDMCmd</code> located into the module <code>
+	CAAEnoviaV5SaveToPDMCmd.m</code> 
+  of the framework <code>CAAProductStructureE5i.edu</code>,</li>
+  <li>one "server-side" class named <code>CAAVpmPsEnovGetData</code> located into the module <code>CAAVpiServerCode.m</code>
+  of the framework <code>CAAVPMinterfaces.edu</code>.</li>
+</ul>
+<table>
+  <tr>
+    <td><span lang="en-us">Windows</span></td>
+    <td><span lang="en-us"><tt>ClientInstallRootDirectory\CAAProductStructureE5i.edu\CAAEnoviaV5SaveToPDMCmd.m\</tt></span></td>
+  </tr>
+  <tr>
+    <td><span lang="en-us">&nbsp</span></td>
+    <td><span lang="en-us"><tt>ServerInstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiServerCode.m\</tt></span></td>
+  </tr>
+  <tr>
+    <td><span lang="en-us">Unix</span></td>
+    <td><span lang="en-us"><tt>ClientInstallRootDirectory/CAAProductStructureE5i.edu/CAAEnoviaV5SaveToPDMCmd.m/</tt></span></td>
+  </tr>
+  <tr>
+    <td><span lang="en-us">&nbsp</span></td>
+    <td><span lang="en-us"><tt>ServerInstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiServerCode.m/</tt></span></td>
+  </tr>
+</table>
+<p><span lang="en-us">Where <tt>ClientInstallRootDirectory</tt> is the directory of the CAA CD-ROM client side 
+installation and <tt>ServerInstallRootDirectory</tt> the directory of the CAA CD-ROM server side installation.</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p><hr>
+
+<!---------------------------------STEP_BY_STEP------------------------------------->
+<h3><span lang="en-us"><a name="Step"></a>Step-by-Step</span></h3>
+
+<p><span lang="en-us">The explanations of the <code>CAAEnoviaV5SaveToPDMCmd</code> implementation goes through 5 main steps:</span></p>
+<ol>
+  <li><span lang="en-us"><a href="#Step1">Retrieve the CATIPLMIdentificator of an EV5 VPM Item-Instance knowing its "V_instance_ID"</a></span></li>
+  <li><span lang="en-us"><a href="#Step2">Load in context an EV5 VPM Item-Instance from its CATIPLMIdentificator</a></span></li>
+  <li><span lang="en-us"><a href="#Step3">Insert a file-based CATProduct under a loaded EV5 VPM assembly Item-Instance</a></span></li>
+  <li><span lang="en-us"><a href="#Step4">Set a Storage/Vault mode (and the ENOVIA5 PDM destination) on a file-based CATProduct and its (file-based) children</a></span></li>
+  <li><span lang="en-us"><a href="#Step5">Open a loaded assembly in a CV5 editor</a></span></li>
+  <li><span lang="en-us"><a href="#Step6">Trigger the Save in ENOVIA from the
+    starter document of current CV5 editor</a></span></li>
+</ol>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_1------------------------------------->
+<h4><span lang="en-us"><a name="Step1"></a>Retrieve the CATIPLMIdentificator of an EV5 VPM Item-Instance knowing its "V_instance_ID"</span></h4>
+
+<p><span lang="en-us">
+To retrieve a <code>CATIPLMIdentificator</code> of an EV5 VPM Item-Instance from its "V_Instance_Id", 
+the API <code>RunObjectService</code> is used [<a href="#References">2</a>]. Giving proper arguments and a late-type this API triggers on server-side the execution
+of the corresponding <code>RunObjectServiceCode</code> (<code>ENOVIObjectServiceCode</code>) User-Exit implementation. [<a href="#References">3</a>]
+</span></p>
+
+<p><span lang="en-us">
+The code below shows how to retrieve 3 CATIPLMIdentificators corresponding to 3 Item-Instances. 
+</span></p>
+
+<p><span lang="en-us">
+The 3 "V_Instance_Id" are given through the input string argument (<code>ipString</code>) of the RunObjectService API. The type "Instance"
+is also precised through this same input argument: the server User-Exit performs a database query to found 
+an EV5 VPM object from its "V_Id" attribute but also from its type.
+(code can be found at <i>InstallServerDirectory\CAAVPMInterfaces.edu\CAAVpiServerCode.m\src\CAAVpmPsEnovGetData.cpp</i>) 
+</span></p>
+
+<p><span lang="en-us">
+The <code>RunObjectServiceCode</code> user-exit implementation latetype is given through the argument <code>iServName</code>
+</span></p>
+
+<p><span lang="en-us">
+The <code>CATIPLMIdentificator</code>-s are returned trough the output list <code>plmIdentificatorList</code>. The other parameters of the API are not used here.
+</span></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>
+//*Step1: Retrieve the PLM-Identificators of 3 EV5 Assembly Item Instances that belong to the same PRC
+//        using CAA API RunObjectService().
+//        (The whole product structure is supposed to have already been created on EV5 database)
+
+// *** RunObjectService() parameters</b>
+
+<b>//Ouput param: List supposed to be filled with the 3 II CATIPLMIdentificators</b>
+<b>//Input param: Useless in this Use-Case</b>
+CATLISTV(CATIPLMIdentificator_var)  plmIdentificatorList, notUsedInputList; 
+
+<b>//Input param: Late-Type of the RunObjectServiceCode() Implementation</b>                                         
+CATString   iServName     = &quot;ENOVIA5_AccessEV5Data&quot;;      
+
+<b>//Input param: String constitute with the V_ID of the 3 EV5 Item Instances</b>
+const char *ipString      = &quot;Instance;AutoAccessAPI_BranchOneASMII.1;AutoAccessAPI_BranchTwoASMII.1;AutoAccessAPI_BranchThreeASMII.1&quot;;
+
+<b>//Ouput param: Useless in this Use-Case</b>
+char       *notUsedString = NULL;
+
+<b>// *** RunObjectService() executing</b>
+rc = CATPDMCSServices::RunObjectService(iServName, notUsedInputList, ipString, plmIdentificatorList, &amp;notUsedString);
+
+<b>// *** RunObjectService() return test</b>
+int nbID = 0;
+if (SUCCEEDED(rc))
+{
+  <b>// Trace the number of the built PLM-Identificators</b>
+  nbID = plmIdentificatorList.Size();
+  cout &lt;&lt; &quot;OnOKSelected - The list returned by RunObjectService() contains &quot; &lt;&lt; nbID &lt;&lt; &quot; PLMId(s)&quot; &lt;&lt; endl;
+}
+else cout &lt;&lt; &quot;OnOKSelected - **Error: RunObjectService() has failed!&quot; &lt;&lt; endl;  
+...   </span></pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_2------------------------------------->
+<h4><span lang="en-us"><a name="Step2"></a>Load in context an EV5 VPM Item-Instance from its CATIPLMIdentificator</span></h4>
+
+<p><span lang="en-us">
+This step intends to give details about the way the API <code>LoadFromPDM()</code> is used to load the three EV5 VPM 
+assembly Item-Instances whose <code>CATIPLMIdentificator-s</code> have been previously retrieved. [<a href="#Step1">Step 1</a>] 
+</span></p>
+
+<p><span lang="en-us">
+The only thing to managed is to give in input of the API a list <code>CATIPLMIdentificator</code>-s, which is done in the code below through the argument <code>plmIdentificatorList</code> of the previous step. [<a href="#Step1">Step 1</a>]
+The API returns (<code>pOpenedDocList</code>) the list of the CATDocument-s in the CATIA V5 session that have been loaded.
+</span></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>//*Step2: Load in CV5 session the 3 EV5 Item Instances whose PLM-Identificators have just been retrieved
+//        using CAA API LoadFromPDM().</b>
+if (nbID &gt; 0)
+{
+  <b>// *** LoadFromPDM() parameters
+  
+  // Ouput param: List that will be filled with the CATDocuments opened in CV5 session resulting from Load of the 3 EV5 Item Instances</b>
+  CATLISTP(CATDocument)* pOpenedDocsList = NULL;
+  
+  <b>// *** LoadFromPDM() executing</b>
+  rc = LoadFromPDM(plmIdentificatorList, pOpenedDocsList);
+...
+    </span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+The "<code>plmIdentificatorList</code>" list contains three <code>CATIPLMIdentificator</code>-s standing for the three assembly terminal EV5 VPM Item-Instances of the prerequisite assembly previously created and saved into the EV5 VPM database. [<a href="#How">How 
+to Launch CAAEnoviaV5SaveToPDMCmd</a>] 
+The API <code>LoadFromPDM()</code> loads in context these three Item-Instances in CV5; consequently, at this step of the use case, we have got in session the complete prerequisite assembly. (...loaded, but still not open in a CV5 editor!)
+</span></p>
+
+<p><span lang="en-us">
+It is important to notice that for each load performed, the API locks the root document of the loaded data (unless the root is already in session when the API is called); this to hold the data in session. 
+This means, the root document will have to be unlocked before unloading data from session. 
+As seen above, the three loaded Item-Instances belongs to the same assembly; so there will be one document to unlock: the root "CATProduct" document of this assembly. We will see later how this can be managed. [<a href="#Step5">Step5</a>]
+</span></p>
+
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_3------------------------------------->
+<h4><span lang="en-us"><a name="Step3"></a>Insert a file-based CATProduct under a loaded EV5 VPM assembly Item-Instance</span></h4>
+
+<p><span lang="en-us">
+The first thing to do in this step is to catch the two documents concerned by the insert operation. 
+</span></p>
+
+<p><span lang="en-us">
+What we want is to insert the file-based CATProduct document "AutoAccessAPI_fbSubAsm.CATProduct"
+under the CV5 Product corresponding to the first EV5 VPM assembly Item-Instance loaded with the <code>LoadFromPDM()</code> API [<a href="#Step2">Step 2</a>]; i.e. under the node named "AutoAccessAPI_BranchOneASMII" in the prerequisite assembly [<a href="#How">How 
+to Launch CAAEnoviaV5SaveToPDMCmd</a>]
+</span></p>
+
+<p><span lang="en-us">
+The code below calls the API <code>Open()</code> to load the file-based CATProduct document into the CV5 session, whereas the document carrying the CV5 product "AutoAccessAPI_BranchOneASMII" is picked from the list of the loaded document 
+returned by the API <code>LoadFromPDM()</code> [<a href="#Step2">Step 2</a>]
+</span></p> 
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>
+//*Step3: Insert a file based Product under the loaded instance BranchOneASMII.1
+//        Set VolatileExposed Vault Mode on the Product and its children
+//        using CAA API SetEV5PersistencyMode().</b>
+if (SUCCEEDED(rc))
+{
+  <b>// Get (from the loaded document list) the doc hosting the Reference of Instance BranchOneASMII.1</b>
+  CATDocument *pBranchOneLeafDoc = (*pOpenedDocsList)[3];
+  
+  if (SUCCEEDED(rc))
+  {
+    <b>// Open the file based document in session</b>
+    CATUnicodeString docStorageName = &quot;CAAProductStructureE5i.edu\\InputData\\StartingPS\\AutoAccessAPI_fbSubAsm.CATProduct&quot;;
+    CATDocument *pfileBasedDoc = NULL;
+    rc = CATDocumentServices::Open(docStorageName, pfileBasedDoc);
+
+    if (SUCCEEDED(rc) &amp;&amp; pfileBasedDoc)
+    {
+      <b>// Insert file based document under Instance document</b>
+      CATIProduct_var hNewInst;
+      rc = InsertDocument(pBranchOneLeafDoc, pfileBasedDoc, hNewInst);
+      ...</span></pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+Then the insert operation can be proceed; catching the Root CATIA V5 Root Product Reference of each document and aggregating the first one (the file-based document reference) under the second one (the loaded-instance document reference).
+</span> </p>
+
+<p><span lang="en-us">
+To catch the Root Product Reference of a CATDocument, the <code>GiveDocRoots()</code> method is used.
+</span> </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+HRESULT CAAEnoviaV5SaveToPDMCmd::GetDocumentRootProdRef(CATDocument *ipDoc, CATIProduct_var &amp;ohRefProd)
+{
+  cout &lt;&lt; &quot;--&gt;CAAEnoviaV5SaveToPDMCmd::GetDocumentRootProdRef()&quot; &lt;&lt; endl;
+  HRESULT rc = S_OK;
+
+  if (ipDoc)
+  {
+    CATIDocRoots_var hLeafDoc = ipDoc;
+
+    if (!!hLeafDoc)
+    {
+      <b>// Catch the Root Product Reference of the CATDocument</b>
+      CATListValCATBaseUnknown_var * pRootProductsList = hLeafDoc-&gt;GiveDocRoots();
+
+      if (pRootProductsList)
+      {
+        if (pRootProductsList-&gt;Size() &gt; 0)  <b>// The returned list is supposed to contains only one element</b>
+        {
+          ohRefProd = (*pRootProductsList)[1];
+...</span></pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+To instanciate a Root Product Reference under anoher one, the <code>AddProduct()</code> method is used...
+</span> </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>// Get the Root Reference of the father Document</b>
+CATIProduct_var hFatherDocRootProdRef;
+rc = GetDocumentRootProdRef(ipDocFather, hFatherDocRootProdRef);
+
+if (SUCCEEDED(rc) &amp;&amp; !!hFatherDocRootProdRef)
+{
+  <b>// Get the Root Reference of the file son Document</b>
+  CATIProduct_var  hSonDocRootProdRef;
+  rc = GetDocumentRootProdRef(ipDocSon, hSonDocRootProdRef);
+
+  if (SUCCEEDED(rc) &amp;&amp; !!hSonDocRootProdRef)
+  {
+    <b>// Insert son Reference Product under father Reference Product</b>
+    ohInstProd = hFatherDocRootProdRef-&gt;AddProduct(hSonDocRootProdRef);
+...</span></pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+This step is run twice to insert a second file-based document: "AutoAccessAPI_fbSubAsmBB.CATProduct", under the node "AutoAccessAPI_BranchTwoASMII" of the prerequisite assembly. [<a href="#How">How 
+to Launch CAAEnoviaV5SaveToPDMCmd</a>]
+</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_4------------------------------------->
+<h4><span lang="en-us"><a name="Step4"></a>Set a Storage/Vault mode (and the ENOVIA5 PDM destination) on a file-based CATProduct and its (file-based) children</span></h4>
+
+<p><span lang="en-us">
+The API <code>SetEV5PersistencyMode()</code> is used in this use case to set a choosen vault mode and the PDM destination "ENOVIA5" on the two file-based documents inserted [<a href="#Step3">Previous step</a>] into the assembly loaded into the CV5 session. [<a href="#Step2">Step 2</a>]
+</span></p>
+
+<p><span lang="en-us">
+The below code sample set the <code>PermanentBlackBox</code> vault mode (and the PDM destination "ENOVIA5") on a "<code>pfileBasedDoc</code>" document. 
+The "<code>doPropagation</code>" parameter asks for propagation of the vault mode and the PDM destination on the document children of "<code>pfileBasedDoc</code>".
+</span></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>// SetEV5PersistencyMode() parameters</b>
+
+<b>// Input param: The Vault Mode</b>
+CATIPDMPersistency::VaultMode vaultMode = CATIPDMPersistency::PermanentBlackBox;
+
+<b>// Input param: Notification flag used to launch propagation of the Vault Mode on children documents</b>
+CATBoolean doPropagation = TRUE;
+
+<b>// SetEV5PersistencyMode() executing</b>
+rc = SetEV5PersistencyMode(pfileBasedDoc, vaultMode, doPropagation);
+...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+This code sample is run to set (with children propagation) the "VolatileExposed" vault mode and the "PermanentBlackBox" vault mode respectively on "AutoAccessAPI_fbSubAsm.CATProduct" and "AutoAccessAPI_fbSubAsmBB.CATProduct".
+</span></p>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_5------------------------------------->
+<h4><span lang="en-us"><a name="Step5"></a>Open a loaded assembly in a CV5 editor</span></h4>
+<p><span lang="en-us">
+Before triggering the "Save in ENOVIA V5 VPM" interactiv command on an assembly, it has to be open in an editor (mandatory). 
+The first thing to do is to catch the assembly root document.
+</span></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+<b>//*Step5: Edit the whole assembly. (loaded documents + file based inserted documents)
+//        Release the lock put on the root document during the load API execution
+//        Save the whole modified assembly directly calling the EV5Save command.</b>
+if (SUCCEEDED(rc))
+{
+  <b>// Edit the root Document of the whole assembly
+  // (i.e. the first document of the returned load-list in this specific scenario)</b>
+  CATDocument *pDocToBeEdited = (*pOpenedDocsList)[1];
+  if (pDocToBeEdited)
+  {
+    rc = EditDocument(pDocToBeEdited);
+...</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p><span lang="en-us">
+Then, the steps to follow are: 
+<ul type="circle">
+  <li>to create the editor from the root document using the <code>GetEditor()</code> method  of the <code>CATIEditor</code> interface</li>
+  <li>to intialize the editor with the <code>Init()</code> method of the <code>CATFrmEditor</code> interface,</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">HRESULT CAAEnoviaV5SaveToPDMCmd::EditDocument(CATDocument *pToBeEditedDoc)
+{
+  cout &lt;&lt; &quot;--&gt;CAAEnoviaV5SaveToPDMCmd::EditDocument()&quot; &lt;&lt; endl;
+  HRESULT rc = S_OK;
+
+  if (pToBeEditedDoc)
+  {
+    int nbWind = 0;
+
+    if (CATFrmLayout::GetCurrentLayout()) 
+    {
+      <b>// Create Editor</b>
+      CATFrmEditor* pEditor = NULL;
+      CATIEditor_var hPrdEditor(pToBeEditedDoc);
+      if (!!hPrdEditor) pEditor = hPrdEditor-&gt;GetEditor();
+
+      if (pEditor)  <b>// Editor should now exists</b>
+      {
+        <b>// Intialize the editor</b>
+        pEditor-&gt;Init();
+        ...
+      </span></pre>
+    </td>
+  </tr>
+</table>
+
+<ul type="circle">
+  <li>to create the physical window with the <code>CreateDefaultWindow()</code> method of the <code>CATFrmEditor</code> interface,</li>
+  <li>to name the window with the display name of the root document using the <code>SetWindowName()</code> methods of the <code>CATFrmEditor</code> interface.</li>
+</ul>
+
+<table class="code" style=width="734">
+  <tr>
+    <td width="730">
+      <pre><span lang="en-us">        ...
+        <b>// Get the nb of window attached to the editor</b>
+        nbWind = pEditor-&gt;GetWindowCount();
+
+        if(nbWind == 0) <b>// No window</b>
+        {
+          <b>// Create Window</b>
+          CATFrmWindow *pWind = pEditor-&gt;CreateDefaultWindow();
+          nbWind++;
+        }
+
+        <b>// Get Document Display Name</b>
+        CATUnicodeString toBeEditedDocDisplayName;
+        CATIDocEnvironment *pEV5DocEnv = CATDocEnvManager::GetEnvironment(&quot;ENOVIA5&quot;);
+
+        if (pEV5DocEnv)
+        {
+          <b>// Get Document Id</b>
+          CATIDocId *pToBeEditedDocId = NULL;
+          rc = pToBeEditedDoc-&gt;GetDocId(&amp;pToBeEditedDocId);
+
+          if (SUCCEEDED(rc) &amp;&amp; pToBeEditedDocId)
+          {
+            <b>// Get Display Name</b>
+            rc = pEV5DocEnv-&gt;GetDocDisplayName(pToBeEditedDocId, toBeEditedDocDisplayName);
+            pToBeEditedDocId-&gt;Release();
+          }
+          pEV5DocEnv-&gt;Release();
+        }
+
+        <b>// Set the window title</b>
+        pEditor-&gt;SetWindowName(toBeEditedDocDisplayName);
+      }
+      ...
+  cout &lt;&lt; &quot;&lt;--CAAEnoviaV5SaveToPDMCmd::EditDocument(), RC = &quot; &lt;&lt; rc &lt;&lt; endl;
+  return rc;
+}
+      </span></pre>
+    </td>
+  </tr>
+</table>
+</span>
+
+<p><span lang="en-us">
+At this step of the use case, the following editor should appear in CATIA V5:
+<span></span></p>
+<br /><img border="0" src="CAAEnoviaV5Save_03.jpg">
+
+<p><span lang="en-us">
+Now that it is opened, the assembly is hold in session by the editor. This means the lock performed - by the <code>LoadFromPDM()</code> API [<a href="#Step2">Step 2</a>] - on the root document of the assembly can be released.
+This can be done calling the <code>ReleaseForLock()</code> method of the <code>CATDocument</code> interface.
+<span></span></p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...
+rc = EditDocument(pDocToBeEdited);
+
+if (FAILED(rc)) cout &lt;&lt; &quot;OnOKSelected - **Error : Unable to edit the assembly!&quot; &lt;&lt; endl;
+
+</span></pre>
+    </td>
+  </tr>
+</table>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+
+<!---------------------------------STEP_6------------------------------------->
+<h4><span lang="en-us"><a name="Step6"></a>Trigger the Save in ENOVIA from the
+starter document of current CV5 editor</span></h4>
+<p><span lang="en-us">
+
+</span></p>
+<p>Once the assembly is opened in an editor, we can start &quot;Save In
+ENOVIA&quot; process using <code>SaveToPDM()</code> API with starter document as
+input...</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><span lang="en-us">...</span></span></span></pre>
+      <pre style="line-height: 100%"><span lang="en-us"><b>//Get the current Editor</b></span></pre>
+  <pre style="line-height: 100%"><span lang="en-us">CATFrmEditor *pEditor=CATFrmEditor::GetCurrentEditor();
+if(pEditor)
+{
+  <b>//Getting  the  starter  document</b>
+  CATDocument *pRootStarterDoc = pEditor-&gt;GetDocument();
+  if(pRootStarterDoc != NULL)
+  {
+    rc = SaveToPDM(pRootStarterDoc);
+    if (FAILED(rc)) cout &lt;&lt; &quot;SaveToPDM - **Error : Saving back to EV5 has failed!&quot; &lt;&lt; endl;
+    pRootStarterDoc-&gt;ReleaseForLock();
+  }
+}</span></pre>
+  <pre style="line-height: 100%"><span lang="en-us">...   </pre>
+    </td>
+  </tr>
+</table>
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p><hr>
+
+<!---------------------------------IN_SHORT------------------------------------->
+<h3><span lang="en-us"><a name="InShort"></a>In Short</span></h3>
+
+<p><span lang="en-us">
+This use case intend to give an example of how can be used the three new API-s <code>LoadFromPDM()</code> 
+, <code>SetEV5PersistencyMode() </code>and&nbsp; 
+</span></span></span><code>SaveToPDM</code><code>()</code><span lang="en-us">. The first two API-s are respectively alternatives for the interactive 
+"Send To CATIA" command of ENOVIA V5 VPM and the interactive "Set PDM Properties" command of CATIA V5.
+And the third one is to automate the Interactive &quot;Save In ENOVIA&quot;
+process.&nbsp; </p>
+<p><span lang="en-us">
+The above exposed use case, is implemented to load (in context of a PRC) 3 EV5 assembly Item-Instances in CATIA V5, to insert under them two file-based CATDocument-s, and to save the whole
+modified assembly from within a CATIA V5 editor, in the ENOVIA V5 VPM database.
+</span></p>
+
+<p align="right"><span lang="en-us">[<a href="#Top">Top</a>]</span></p>
+<hr>
+<span lang="en-us">
+<!---------------------------------REFERENCES------------------------------------->
+</span>
+<h3><span lang="en-us"><a name="References"></a>References</span></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><span lang="en-us">[1]</span></td>
+    <td><span lang="en-us"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us">[2]</span></td>
+    <td><span lang="en-us"><a href="../CAAImmUseCases/CAAImmEV5CV5BindTestCmd.htm">Manipulating an ENOVIA Item Instance from within the ENOVIA V5 VPM Navigator environment (Client Use case)</a></span></td>
+  </tr>
+  <tr>
+    <td valign="top"><span lang="en-us">[3]</span></td>
+    <td><span lang="en-us">Implementing the ENOVIObjectServiceCode User-Exit (Server Use case)
+    in <i>Server documentation in ServerInstallRootDirectory/CAAVPMInterfacesDoc.edu/CAAVpiUseCases.doc/src/CAAVpmPsEnovGetII.htm</i></span></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2"><span lang="en-us">[<a href="#Top">Top</a>]</span></td>
+  </tr>
+</table>
+<hr>
+<span lang="en-us">
+<!---------------------------------HISTORY------------------------------------->
+</span>
+<h3><span lang="en-us"><a name="History"></a>History</span></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><span lang="en-us">Version: <strong>1</strong> [DEC 2008]</span></td>
+    <td valign="top"><span lang="en-us">Document created</span></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2"><span lang="en-us">[<a href="#Top">Top</a>]</span></td>
+  </tr>
+</table>
+<hr>
+
+<span lang="en-us">
+<!---------------------------------COPYRIGHT------------------------------------->
+</span>
+<p><span lang="en-us"><i>Copyright © 2008, Dassault Systèmes. All rights reserved.</i></span></p>
+
+</body>
+</html>

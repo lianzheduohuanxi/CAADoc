@@ -1,0 +1,336 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Link Attribute -2</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Linking Features: Understanding Link Attribute - 2</h3>
+      <p><em>Understanding Linking Features from API perspective: Evaluating and Retrieving features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The documentation about the attribute of type links has been split in two parts: the first 
+		article is 
+		a presentation of the different kind of links [<a href="#References">1</a>], 
+		while the second one -the current one- is about the APIs.</p>
+		<ul>
+			<li><a href="#CommonBehavior">Getting And Setting Attribute Value</a></li>
+			<li><a href="#ValuatingLinkAttribute">Valuating Link Attribute</a></li>
+			<li><a href="#Retrieving SpecObject-Component Value">Retrieving 
+			SpecObject/Component Value</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="CommonBehavior"></a>Getting And Setting Attribute Value</h2>
+<p>The API to handle a link attribute is mainly the same as 
+the ones to handle the other attribute types. From a feature facade, a <em>CATFmFeatureFacade</em> 
+class, you have the below APIs as usual:</p>
+<ul>
+	<li><strong>Retrieval</strong>: GetValue / GetValueAtIndex</li>
+	<li><strong>Valuation</strong>: SetValue / InsertValue / AppendValue / ReplaceValueAtIndex 
+	/ RemovePosition</li>
+</ul>
+<p>All these methods handle the attribute value as a <em>CATFmAttributeValue</em> 
+class. Here the typical piece of code to retrieve the value of an attribute 
+(link or not) when 
+using the <code>GetValue </code>method of <em>CATFmFeatureFacade</em> 
+</p>
+<pre class="code">...
+CATFmFeatureFacade MyFeaturePointing ... ;
+...
+CATFmAttributeName MyAttName (&quot;MyName&quot;);
+<strong>CATFmAttributeValue</strong> <strong>MyValueToReturn</strong>  ;
+MyFeaturePointing.<strong>GetValue</strong>(MyAttName ,<strong>MyValueToReturn</strong> );
+...</pre>
+<p>and here the code to set a new value to the attribute:</p>
+<pre class="code">...
+CATFmFeatureFacade MyFeaturePointing ...;
+...
+CATFmAttributeName MyAttName (&quot;MyName&quot;);
+<strong>CATFmAttributeValue</strong> <strong>MyValuetoSet</strong> ...  ;
+MyFeaturePointing.<strong>SetValue</strong>(MyAttName,<strong>MyValueToSet</strong>);
+...</pre>
+<p>Then the way to 
+use the <em>CATFmAttributeValue</em> class to set or get the attribute value is 
+different according to the attribute link type. </p>
+<p>For a <strong>specobject</strong> or <strong>component</strong> attribute, the 
+methods on the <em>CATFmAttributeValue</em> class are the same:</p>
+<ul>
+	<li>Retrieval: <code>GetFeature</code></li>
+	<li>Valuation: <code>SetFeature</code></li>
+</ul>
+<p>For an <strong>external</strong> attribute, the methods on the <em>CATFmAttributeValue</em> 
+class are:</p>
+<ul>
+	<li>Retrieval: <code>GetExternalObject</code></li>
+	<li>Valuation: <code>SetExternalObject</code></li>
+</ul>
+<p>These two methods, <code>GetExternalObject</code> and <code>SetExternalObject</code>, 
+handle the attribute value (a complex object) as a <em>CATOmbObjectInContext</em> 
+[<a href="#References">2</a>] class 
+object.</p>
+<p>You can notice that, except for the methods to handle the attribute value, 
+the methodology to handle a link attribute is the same as for 
+the primitive attributes. Nevertheless since attributes are feature or complex objects, the valuation 
+and the retrieval methods require additional information.</p>
+<p><strong>Note:</strong> In this article we are only going to talk about SpecObject and Component attributes.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2>
+<a name="ValuatingLinkAttribute"></a>Valuating Link Attribute</h2>
+<p>
+First, don't forget that as for any type of attributes,&nbsp; modifying the 
+feature data model requires that ALL feature containers of the stream be 
+loaded. In other words, all methods editing a feature fail with E_FMLOADINGMODE 
+as HRESULT. Now lets us present the other aspect of the valuation in the 
+specific case of&nbsp; a link attribute valuation. </p>
+<h4>
+Replacing Existing Value </h4>
+<p>When you valuate a link attribute with a new value, what does the old value become 
+(if exists):</p>
+<ul>
+	<li><strong>specobject</strong> <strong>/ e</strong><strong>xternal</strong>: 
+		the previous value (a feature/complex object) is not deleted. <li><strong>component : </strong>
+	the previous value (a feature) is deleted .</li>
+	</ul>
+	 
+<h4><a name="Removing the attribute value"></a>Removing the attribute value</h4>
+<p>Your objective is to &quot;reset&quot; the value of an attribute. &quot;Reset&quot; meaning 
+removing the old value.</p>
+<p>When the attribute is a single value, (not a list), to remove the existing 
+value, you can use the  <code>SetFeature </code>(component/specobject)<code> </code>method of the <em>CATFmAttributeValue</em> class 
+with NULL as argument. Then you use the <code>SetValue</code> method of the <em>CATFmFeatureFacade</em> 
+class.&nbsp; </p>
+<p>For a list, it is a little bit trickier. Indeed we must take into account 
+another parameter for the lists: their <strong>array facet</strong>, the one defined at the 
+feature StartUp level [<a href="#References">1</a>] - Just a reminder, when a 
+list has the array facet, the list can contain NULL values, otherwise it can 
+never contain NULL values. It implies that some methods are forbidden as 
+presented by the next table: </p>
+<p><strong>For the specobject/component</strong> : </p>
+<table >
+	<tr>
+		<th >Facet</th>
+		<th >RemovePosition</th>
+		<th >SetValue with NULL</th>
+	</tr>
+	<tr>
+		<td >array</td>
+		<td >possible</td>
+		<td >possible</td>
+	</tr>
+	<tr>
+		<td >not array</td>
+		<td >possible</td>
+		<td ><strong>Impossible</strong></td>
+	</tr>
+</table>
+<p><code>RemovePosition</code> of <em>CATFmFeatureFacade</em> 
+shrinks the list, so this method can be used whatever the array facet since a 
+NULL value will be not introduced in the list. But the usage of <code>SetValue</code> 
+(*) of <em>CATFmFeatureFacade </em>
+with a list containing at least one NULL value is impossible when the attribute 
+is defined with no array facet.</p>
+<p>(*) it is also valid for <code> ReplaceValueAtIndex.</code></p>
+<p><code>RemovePosition</code> as<code> SetValue(NULL)</code> deletes the 
+aggregated feature.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop()</script>
+
+<h2><a name="Retrieving SpecObject-Component Value"></a>Retrieving SpecObject/Component Value</h2>
+<p>The retrieval of a link attribute value must be studied in different 
+contexts. To illustrate the possible scenarios we use this data model.</p>
+<p>&nbsp;</p>
+<table>
+	<caption><a name="Fig.1">Fig.1</a> SpecObject/Component Data 
+	Model</caption>
+	<tr>
+		<td>
+		<img alt="" src="images/CAAFmExtLinkAttribute01.png" width="428" height="187">&nbsp;</td>
+	</tr>
+</table>
+ <p>Feature A is a feature having three attributes:</p>
+<ul>
+	<li><code>Attr1</code> is a specobject /component pointing/aggregating a feature 
+	within the same container as Feature A</li>
+	<li><code>Attr2</code> is a specobject /component pointing/ aggregating a feature 
+	outside the container of Feature A</li>
+	<li><code>Attr3</code> is a list of specobject (/component) 
+	pointing/aggregating features inside and outside the container A</li>
+</ul>
+<p>Feature A is the pointing (or aggregating) feature,&nbsp; while the feature 
+of the attribute is the Pointed/Aggregated feature. Let us illustrate 
+what you get according to these scenarios:</p>
+<ul>
+	<li>
+	<a href="#The container of the Pointing / Pointed features are in session">
+	Pointing/Aggregating and Pointed/Aggregated Features both exist in Session</a></li>
+	<li><a href="#The container of the Pointed feature is not in session">
+	Pointed/Aggregated Feature does not exist in session</a></li>
+	<li>
+	
+	<a href="#The pointed feature is deleted when the pointing feature is in session">
+	After a Pointed/Aggregated Feature is deleted</a></li>
+</ul>
+<ol>
+	<li>
+	<a name="The container of the Pointing / Pointed features are in session">
+	</a><strong>Pointing/Aggregating and Pointed/Aggregated Features both exist in Session</strong><p>In session you have all objects shown by [<a href="#Fig.1">Fig.1</a>]. The <code>GetValue</code> of <em>CATFmFeatureFacade </em>
+	is always successful (except of course usual errors as wrong credential, 
+	wrong input,...), and the <code>GetFeature </code> method  of the <em>CATFmAttributeValue </em>
+	is successful also. We can afford to be more accurate, since if the pointed/aggregated 
+	feature exists, the exact HRESULT value 
+	of <code>GetFeature </code> is <code>S_OK</code> (the value is not null).</p>
+	<p style="height: 15px">If the pointed/aggregated feature does not exist, <code>GetValue</code> of <em>CATFmFeatureFacade</em> 
+	is successfull, but<em> </em> <code>GetFeature </code>on the returned value returns <code>S_FALSE </code>(null feature)</p>
+  </li>
+	<li><a name="The container of the Pointed feature is not in session"></a>
+	<strong>The Pointed/Aggregated feature is not in session
+	</strong>
+	<p>In session you only have the container A, the container B is 
+	not loaded.&nbsp; [<a href="#Fig.1">Fig.1</a>] In fact this behavior should 
+	not appear since when the PLM Representation Reference is switched to Edit 
+	mode, all its container are loaded. So if you have container A, you have 
+	container B too.</p>
+	<li>
+	<a name="The pointed feature is deleted when the pointing feature is in session">
+	</a><strong>After a Pointed/ Aggregating feature is deleted </strong><p>In session you have all objects shown by [<a href="#Fig.1">Fig.1</a>]], 
+	then you delete some pointed/aggregated features as 
+	illustrated by 
+	the next picture:</p>
+	<table>
+		<caption>Fig.2 Deletion when Pointing Container is in 
+		Session</caption>
+		<tr>
+			<td>
+			<img alt="" src="images/CAAFmExtLinkAttribute02.png" width="431" height="192">&nbsp;</td>
+		</tr>
+	</table>
+	<p>After the deletion, the data model differs in one aspect, the contents of 
+	its list attribute, <strong>Attr3</strong>. Its contents will be governed by 
+	the array facet of the attribute of type list. To remind you, if the list attribute 
+	does not contain the array facet, the list cannot have NULL values. </p>
+	<p><strong>Not array mode</strong></p>
+	<table>
+		<caption><a name="Fig.3">Fig.3 </a>not array mode</caption>
+		<tr>
+			<td>
+			<img alt="" src="images/CAAFmExtLinkAttribute03.png" width="433" height="186">&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	<ul>
+		<li><code>Attr1</code> / <code>Attr2</code> (unique element) point to a 
+		<strong>NULL</strong> value - Retrieving the value is successful (<code>GetValue</code> of <em>CATFmFeatureFacade</em> 
+		is successful)<em>,</em> but the returned value being 
+		NULL, the HRESULT of the <code>GetFeature </code> 
+		method of <em>CATFmAttributeValue</em> returns <code>S_FALSE</code>.</li>
+		<li><code>Attr3</code>&nbsp; is automatically shrunk by the number of 
+		deleted features</li>
+		 
+	</ul>
+	<p><strong>Array mode </strong></p>
+	<table>
+		<caption>Fig.4 array mode</caption>
+		<tr>
+			<td>
+			<img alt="" src="images/CAAFmExtLinkAttribute06.png" width="435" height="196">&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+	<ul>
+		<li><code>Attr1</code> / <code>Attr2</code>&nbsp; (unique element) point to a 
+		NULL value </li>
+		<li><code>Attr3</code>&nbsp; keeps the same size, but contains NULL values </li>
+		</ul>
+		<p>In both cases above (array mode) , retrieving the value is successful 
+		(<code>GetValue</code> of <em>CATFmFeatureFacade </em>&nbsp;is 
+		successful), but the returned value being 
+		NULL, the HRESULT of the <code>GetFeature </code> 
+		method of <em>CATFmAttributeValue</em> returns <code> S_FALSE</code>.</p>
+		 
+	</ol>
+		<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article has introduced you to dealing with methods to valuate / to 
+retrieve a value for a link attribute. </p>
+<p>We invite the reader to refer to the dedicated use cases about 
+component 
+[<a href="#References">3</a>],&nbsp; specobject&nbsp; [<a href="#References">4</a>] 
+,for a better idea about these APIs.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAAV5V6FmExtTaLinkingFeatures.htm">Understanding Link Attribute -1</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps</a></td>
+	</tr>
+
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcAggregatedAttr.htm">Setting up Aggregating Links</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcReferencedAttr.htm">Making Referencing Links</a></td>
+	</tr>
+
+
+
+</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <b>1</b> [Apr 2010]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

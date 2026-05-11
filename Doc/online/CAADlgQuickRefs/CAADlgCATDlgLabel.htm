@@ -1,0 +1,166 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgLabel</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgLabel</h3>
+      <em>Adds a text or an image</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgLabel</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><em>The Label</em></caption>
+  <tr>
+    <td><img src="images/CATDlgLabel1.gif" alt="CATDlgLabel1.gif (14684 bytes)" width="307" height="250"></td>
+    <td>The label is dedicated to add an information text or an image to
+      controls and to other objects as well. The text can be parameterized with
+      data coming from the application. Some controls, such as a push button, a
+      radio button, or a check button, and frames, have a text companion you can
+      set using its Title resource. On the opposite, a combo or a spinner
+      doesn't display its title. You can then use labels to inform the end user
+      of what the combo or spinner is intended to do, or which variable it can
+      set. The labels in the figure beside are associted with a combo (Form
+      Name), and editors. The other texts are either frame titles, push button
+      titles, or a bitmap combo line mixing a bitmap and the text
+      &quot;User&quot;.</td>
+  </tr>
+</table>
+<p>Use labels whenever you want to qualify a control or add information to
+explain its purpose.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td rowspan="4"><img src="images/CATDlgLabel.jpg" alt="CATDlgLabel.jpg (6154 bytes)" width="200" height="108"></td>
+    <td>CATDlgLabLeft</td>
+    <td>The label text is left justified</td>
+  </tr>
+  <tr>
+    <td>CATDlgLabRight</td>
+    <td>The label text is right justified</td>
+  </tr>
+  <tr>
+    <td>CATDlgLabCenter</td>
+    <td>The label text is centered</td>
+  </tr>
+  <tr>
+    <td>CATDlgLabFramed</td>
+    <td>The label text is framed</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The label doesn't send any notification.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Label</h4>
+<p>You just need to choose the label style. A left, center, or right justified
+label can be framed or not.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pLeftLabel = new CATDlgLabel (iParent, &quot;Left&quot;, <strong>CATDlgLabLeft</strong>);
+_pRightAndFramedLabel = new CATDlgLabel (iParent, &quot;RightAndFramed&quot;,
+                                         <strong>CATDlgLabRight|CATDlgFramed</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title or an Image to a Label</h4>
+<p>The label title should be set by the resource file using a key built with the
+identifier you declare as the second parameter of the label constructor. If the
+label has altogether a title and an icon declared in its resource files, the
+icon is displayed alone. The icon shown in the Label Frame above is
+associated&nbsp; with a label as follows:
+<ul>
+  <li>The label instantiation:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pIconLabel = new CATDlgLabel (iParent, &quot;IconLabelId&quot;, CATDlgLabLeft);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The label title declaration in the CATNls file
+    <table class="code">
+      <tr>
+        <td>
+          <pre>FrameId.IconLabelId.Title = &quot;Icon Label&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The icon declaration in the CATRsc file
+    <table class="code">
+      <tr>
+        <td>
+          <pre>FrameId.IconLabelId.Icon = &quot;PaperPortrait&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <p>The PaperPortrait.bmp file should be available in the
+  CNext\resources\graphic\icons\normal directory. Otherwise, the title is
+  displayed.</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

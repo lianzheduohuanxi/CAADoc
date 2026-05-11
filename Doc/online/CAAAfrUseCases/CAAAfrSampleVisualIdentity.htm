@@ -1,0 +1,449 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Product Line Visual Identity</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Product Line Visual Identity</h3>
+      <em>Differentiating your own product line from others</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>A product line should be easily recognized from others using some
+      visual features discerningly chosen, such as its launching icon or splash
+      screen. This article shows you how to implement the visual identity
+      components for your product line.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrProductLine Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrProductLine Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrProductLine</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrProductLine Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a load module to launch
+the application and how to create the visual identity resources [<a href="#References">1</a>]
+for a fictitious product line named CAAProductLine.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrProductLine Use Case</h3>
+<p>CAAAfrProductLine is a use case of the CAAApplicationFrame.edu framework that
+illustrates the ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrProductLine Do</h4>
+<p>The CAAAfrProductLine use case creates the load module that launches the
+product line application CAAProductLine, and includes all the resources to customize this
+product line visual identity.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrProductLine</h4>
+<p>To launch CAAAfrProductLine, you will need to set up the build time
+environment, then compile CAAAfrProductLine along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Do not type the module name on the command line, but type the <b>product name</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrProductLine Code</h4>
+<p>The CAAAfrProductLine use case is made of a single source file named <i>CAAAfrProductLine.cpp</i>
+located in the CAAAfrProductLine.m module of the CAAApplicationFrame.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrProductLine.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrProductLine.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>With Windows, other files are needed to launch the application from a desktop
+shortcut. These files are also located in CAAAfrProductLine.m.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>Creating the visual identity components is divided into the following steps:
+<ul>
+  <li><a href="#Step1">Creating the main program to launch your application</a></li>
+  <li><a href="#Step2">Providing the graphic resources</a></li>
+  <li><a href="#Step3">Creating the resource file</a></li>
+</ul>
+<p>Assume the product line is named CAAProductLine.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Main Program to Launch Your Application</h4>
+<p>To create this main program, you should first create its module directory,
+such as CAAAfrProductLine.m. This module directory should contain:
+<ul>
+  <li>An Imakefile.mk file like the following:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#
+# LOAD MODULE FOR CAAAfrProductLine
+#
+BUILT_OBJECT_TYPE=LOAD MODULE
+#
+LINK_WITH=CATApplicationFrame JS0FM JS0GROUP </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>In the src directory
+    <ul>
+      <li>A C++ file that only instantiates the CNext class using the product
+        line name as parameter, such as CAAAfrProductLine.cpp</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CNext.h&quot;
+
+CNext Product (&quot;CAAProductLine&quot;);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>An icon file, named icon1.ico, containing the product line icon to display
+    as a shortcut to the application in the Windows NT desktop. This icon is
+    generated using Microsoft Developer Studio, using the Insert Resource dialog
+    box displayed thanks to the Resource item in the Insert menu
+    <p><img border="0" src="images/CAAAfrVIInsert.jpg" width="351" height="254"></p>
+    <p>You can choose to import an existing bit map file. Click Import and
+    select this file.You can also choose to draw the icon. Click New, and the
+    Graphics and Colors toolbars are displayed</p>
+    <p><img border="0" src="images/CAAAfrVIEditIcon.jpg" width="584" height="401"></p>
+    <p>When the icon is created, use Save As to save the icon in the src
+    directory of your module. Microsoft Developer Studio has also created two
+    files:
+    <ol>
+      <li>The Script1.rc file. You just need to add the line shown in bold
+        typeface to by-pass a Windows bug
+        <table class="code">
+          <tr>
+            <td>
+              <pre>//Microsoft Developer Studio generated resource script.
+//
+#include &quot;resource.h&quot;
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include &quot;afxres.h&quot;
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON    DISCARDABLE     &quot;icon1.ico&quot;
+
+<b>// Add this line to have the icon on the desktop and by-pass a Windows bug 
+IDI_ICON2               ICON    DISCARDABLE     &quot;icon1.ico&quot;</b>
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    &quot;resource.h\0&quot;
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    &quot;#include &quot;&quot;afxres.h&quot;&quot;\r\n&quot;
+    &quot;\0&quot;
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    &quot;\r\n&quot;
+    &quot;\0&quot;
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+      <li>The resource.h file
+        <table class="code">
+          <tr>
+            <td>
+              <pre>//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by Script1.rc
+//
+#define IDI_ICON1                       101
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        102
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_SYMED_VALUE           101
+#endif
+#endif
+</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ol>
+  </li>
+</ul>
+<p>Move the resource.h file to the LocalInterfaces directory, and build the
+module file using mkmk -u.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Providing the Graphic Resources</h4>
+<p>The graphic resources to provide should be copied into the
+CNext\resources\graphic directory or in its subdirectories of the framework
+used. They are:
+<ul>
+  <li><strong>The product line icon </strong>for the window title bars:
+    CAAProduct.bmp. Its characteristics are the following for both Window and
+    UNIX:
+    <ul>
+      <li><img border="0" src="images/CAAAfrVIIcon.jpg" width="16" height="17">
+        width: 16 pixels; height: 17 pixels; resolution: 96 pixels per inch; 16
+        indexed color image.</li>
+    </ul>
+  </li>
+  <li><strong>The product line logo</strong>. It should be copied in the
+    CNext\resources\graphic\icons directory. It can be different for P1 and P2
+    looks. Its characteristics are the following:
+    <ul>
+      <li>Window: width: 130 pixels; height: 29 pixels; resolution: 72 pixels
+        per inch; real color 24 bits image
+        <table>
+          <tr>
+            <td>For Windows with P1 look: CAALogoP1NT.bmp</td>
+            <td><img border="0" src="images/CAAAfrVILogoP1NT.jpg" width="130" height="29"></td>
+          </tr>
+          <tr>
+            <td>For Windows with P2 look: CAALogoP2NT.bmp</td>
+            <td><img border="0" src="images/CAAAfrVILogoP2NT.jpg" width="130" height="29"></td>
+          </tr>
+        </table>
+      </li>
+      <li>UNIX: width: 130 pixels; height: 29 pixels; resolution: 72 pixels per
+        inch; 256 indexed color image.
+        <table>
+          <tr>
+            <td>For UNIX with P1 Look: CAALogoP1IX.bmp</td>
+            <td><img border="0" src="images/CAAAfrVILogoP1IX.jpg" width="130" height="29"></td>
+          </tr>
+          <tr>
+            <td>For UNIX with P2 Look: CAALogoP2IX.bmp</td>
+            <td><img border="0" src="images/CAAAfrVILogoP2IX.jpg" width="130" height="29"></td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><strong>The product line splash screen</strong>: a bit map and an
+    animation: CAASplash.bmp and CAASplash.avi. They should be copied in the
+    CNext\resources\graphic\splashscreens directory
+    <p><img border="0" src="images/CAAAfrVISplash.jpg" width="320" height="200"></p>
+  </li>
+  <li><strong>The product line background image</strong>. It should be copied in
+    the CNext\resources\graphic\icons directory. Its characteristics are the
+    following:
+    <ul>
+      <li>Windows (CAABackgroundNT.bmp): width: 640 pixels; height: 512 pixels;
+        resolution: 254 pixels per inch; real color 24 bits image. It is shown
+        as 320x256 pixels<br>
+        <img border="0" src="images/CAAAfrVIBkgNT.jpg" width="320" height="256"></li>
+      <li>UNIX (CAABackgroundIX.bmp): width: 1280 pixels; height: 1024 pixels;
+        resolution: 254 pixels per inch; real color 24 bits image. It is shown
+        below as 320x256 pixels<br>
+        <img border="0" src="images/CAAAfrVIBkgIX.jpg" width="320" height="256"></li>
+    </ul>
+</ul>
+<ul>
+  <li><strong>The product line dialog box background image</strong>, available
+    with Windows NT only. It should be copied in the
+    CNext\resources\graphic\icons directory.&nbsp; Its characteristics are the
+    following:
+    <ul>
+      <li>P1 (CAADecorationP1.bmp): width: 500 pixels; height: 36 pixels;
+        resolution: 72 pixels per inch; 256 indexed color image<br>
+        <img border="0" src="images/CAAAfrVIDecorationP1.jpg" width="500" height="36"></li>
+      <li>P2 (CAADecorationP2.bmp): width: 55 pixels; height: 1000 pixels;
+        resolution: 72 pixels per inch; real color 24 bits image. It is shown
+        cropped to its lower part<br>
+        <img border=" 0" src="images/CAAAfrVIDecorationP2Crop.jpg" width="55" height="68"></li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Resource File</h4>
+<p>The resource file must have the name you choose for the product line, here
+CAAProductLine. This file is:
+<ul>
+  <li>CAAProductLine.CATRsc refers to the graphic resources provided
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// .CATRsc of a product line
+// --------------------------------------
+ApplicationFrame.Icon.Name  = &quot;CAAProduct&quot;;
+SplashScreen.Name           = &quot;CAASplash&quot;;
+
+// P1 Look
+ApplicationLogo.P1.NT       = &quot;CAALogoP1NT&quot;;
+ApplicationLogo.P1.Unix     = &quot;CAALogoP1IX&quot;;
+DialogBoxBottom.P1          = &quot;CAADecorationP1&quot;;  // Available NT Only
+
+// P2 Look 
+ApplicationLogo.P2.NT       = &quot;CAALogoP2NT&quot;;
+ApplicationLogo.P2.Unix     = &quot;CAALogoP2IX&quot;;
+DialogBoxBottom.P2          = &quot;CAADecorationP2&quot;;   // Available NT Only
+BackgroundImage.NT          = &quot;CAABackgroundNT&quot;;
+BackgroundImage.Unix        = &quot;CAABackgroundIX&quot;;
+</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>You can now launch your application using the shortcut in the desktop and see
+its different visual identity components.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>To provide a visual identity to your product line, you can, with Windows
+only, create an EXE to launch your application associated with an icon of your
+own that can also be used as a shortcut in the desktop. You can create with UNIX
+and Windows text and graphic resources to display with your applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrVisualIdentity.htm">What
+      Is the Product Line Visual Identity</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrHelpOnLine.htm">Contextual
+      Help</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

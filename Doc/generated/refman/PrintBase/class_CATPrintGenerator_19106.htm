@@ -1,0 +1,2075 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>PrintBase Class CATPrintGenerator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../PrintBase.htm" href="../PrintBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "PrintBase";	}
+		function getCurrentObjectName() { 
+ 	return "CATPrintGenerator"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>PrintBase <script type="text/javascript" > writeClassCharacteristic(); </script> CATPrintGenerator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATPrintGenerator_19106','CATPrintGenerator','0');</script>
+<p><b>Usage: you can derive this class.</b></p>
+<hr>
+<p>
+ public class <b>CATPrintGenerator</b>
+</p>
+<p>
+<b><i> Base class to write generators and usually printer drivers.</i></b><br>
+
+ <br>
+ <b>Role</b>: Derive from this class and override low-level methods to 
+ generate drawing primitives in the desired language.
+ <br>Printing is done through calls of high-level methods in user coordinates which 
+ are in turn converted in low-level methods calls in device coordinates (note that
+ the unit is always the millimeter). 
+ <br><br>For instance, when plotting at scale 5, a high-level call :
+ <br>      generator->DrawLine(0, 0, 5, 10);    // User coordinates
+ <br>will be converted in the sequence
+ <br>      generator->DrvMoveTo(0, 0);
+ <br>      generator->DrvLineTo(25, 50);        // Device coordinates
+ <br>and so one, even for more complex operations (such as text discretization).
+
+ <br><br>The following low-level methods must be overridden :
+         <script type="text/javascript"> activateLinkAnchor('','DrvBegin','DrvBegin') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvEnd','DrvEnd') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvFormFeed','DrvFormFeed') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvDefineColor','DrvDefineColor') </script>,          
+<script type="text/javascript"> activateLinkAnchor('','DrvSelectDrawColor','DrvSelectDrawColor') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvSetDrawWidth','DrvSetDrawWidth') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvMoveTo','DrvMoveTo') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvLineTo','DrvLineTo') </script>,         
+<script type="text/javascript"> activateLinkAnchor('','DrvSelectFillColor','DrvSelectFillColor') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvFillArea','DrvFillArea') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawBitmap','DrvDrawBitmap') </script>. <br>Whereas the following can be overridden if needed :
+         
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawPolyline','DrvDrawPolyline') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawArcCircle','DrvDrawArcCircle') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawArcEllipse','DrvDrawArcEllipse') </script>, 
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawPolyBezier','DrvDrawPolyBezier') </script>,          
+<script type="text/javascript"> activateLinkAnchor('','DrvSetTextAttribute','DrvSetTextAttribute') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','DrvDrawText','DrvDrawText') </script>.
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPrintDevice','','CATPrintDevice') </script>, <script type="text/javascript"> activateLinkAnchor('CATPrintImage','','CATPrintImage') </script>, <script type="text/javascript"> activateLinkAnchor('CATPrintParameters','','CATPrintParameters') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATPrintGenerator(CATString&amp;)"><b>CATPrintGenerator</b></a>(CATString&amp;)
+<dd>  Constructs a CATPrintGenerator of a given language.
+ <dt> o 
+    <a href="#~CATPrintGenerator()"><b>~CATPrintGenerator</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Begin(CATPrintParameters&amp;)"><b>Begin</b></a>(CATPrintParameters&amp;)
+<dd>  Initializes generation with given parameters.
+ <dt> o 
+    <a href="#Begin(CATPrintParameters&amp;,CATUnicodeString&amp;)"><b>Begin</b></a>(CATPrintParameters&amp;,CATUnicodeString&amp;)
+<dd>  Initializes generation with given parameters.
+ <dt> o 
+    <a href="#BeginClosedFigure(void)"><b>BeginClosedFigure</b></a>(void)
+<dd>  Begins a closed figure.
+ <dt> o 
+    <a href="#BeginDrawScissor(int,float*)"><b>BeginDrawScissor</b></a>(int,float*)
+<dd>  Begins a clipping of the image from the polygon.
+ <dt> o 
+    <a href="#BeginGroup(int)"><b>BeginGroup</b></a>(int)
+<dd>  
+ <dt> o 
+    <a href="#BeginGroup(CATUnicodeString&amp;)"><b>BeginGroup</b></a>(CATUnicodeString&amp;)
+<dd>  Begins a group of primitives.
+ <dt> o 
+    <a href="#DefineColor(int,float,float,float)"><b>DefineColor</b></a>(int,float,float,float)
+<dd>  Defines a color in the palette in rgb coordinates.
+ <dt> o 
+    <a href="#DrawArcCircle(float,float,float,float,float,int)"><b>DrawArcCircle</b></a>(float,float,float,float,float,int)
+<dd>  Draws a circle arc with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrawArcEllipse(float,float,float,float,float,float,float,int)"><b>DrawArcEllipse</b></a>(float,float,float,float,float,float,float,int)
+<dd>  Draws an ellipse arc with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrawBitmap(float,float,int,CATPixelImage*)"><b>DrawBitmap</b></a>(float,float,int,CATPixelImage*)
+<dd>  Draws a bitmap at the given position with the given orientation.
+ <dt> o 
+    <a href="#DrawConnectingEdge(void)"><b>DrawConnectingEdge</b></a>(void)
+<dd>  Draw the edge closing the closed figure.
+ <dt> o 
+    <a href="#DrawDisjointPolyline(int,float*)"><b>DrawDisjointPolyline</b></a>(int,float*)
+<dd>  Draws disjoint a polyline with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrawGeometricText(float,float,CATUnicodeString&amp;)"><b>DrawGeometricText</b></a>(float,float,CATUnicodeString&amp;)
+<dd>  Draws a text at given coordinates.
+ <dt> o 
+    <a href="#DrawLine(float,float,float,float)"><b>DrawLine</b></a>(float,float,float,float)
+<dd>  Draws a line between (iX0, iY0) and (iX1, iY1) with current draw color,
+ line style and line width.
+ <dt> o 
+    <a href="#DrawMarker(float,float,CATPrintMarkerAttribute,float)"><b>DrawMarker</b></a>(float,float,CATPrintMarkerAttribute,float)
+<dd>  Draws a marker at given coordinates.
+ <dt> o 
+    <a href="#DrawPolyBezier(int,float*)"><b>DrawPolyBezier</b></a>(int,float*)
+<dd>  Draws a polybezier curve of order 3 with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrawPolyPolygon(int,int*,float*)"><b>DrawPolyPolygon</b></a>(int,int*,float*)
+<dd>  Draws a polypolygon with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ <dt> o 
+    <a href="#DrawPolyQuadraticBezier(int,float*)"><b>DrawPolyQuadraticBezier</b></a>(int,float*)
+<dd>  Draws a polybezier curve of order 2 with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrawPolygon(int,float*)"><b>DrawPolygon</b></a>(int,float*)
+<dd>  Draws a simple area with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ <dt> o 
+    <a href="#DrawPolyline(int,float*)"><b>DrawPolyline</b></a>(int,float*)
+<dd>  Draws a polyline with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvBegin(CATPrintParameters&amp;)"><b>DrvBegin</b></a>(CATPrintParameters&amp;)
+<dd>  Initializes generator with print parameters.
+ <dt> o 
+    <a href="#DrvBegin(CATPrintParameters&amp;,CATUnicodeString&amp;)"><b>DrvBegin</b></a>(CATPrintParameters&amp;,CATUnicodeString&amp;)
+<dd>  Initializes generator with print parameters.
+ <dt> o 
+    <a href="#DrvBeginClosedFigure(void)"><b>DrvBeginClosedFigure</b></a>(void)
+<dd>  Begins a closed figure.
+ <dt> o 
+    <a href="#DrvBeginGroup(int)"><b>DrvBeginGroup</b></a>(int)
+<dd>  
+ <dt> o 
+    <a href="#DrvBeginGroup(CATUnicodeString&amp;)"><b>DrvBeginGroup</b></a>(CATUnicodeString&amp;)
+<dd>  Begins a group of primitives.
+ <dt> o 
+    <a href="#DrvDefineColor(int,float,float,float)"><b>DrvDefineColor</b></a>(int,float,float,float)
+<dd>  Defines a color in the palette in rgb coordinates.
+ <dt> o 
+    <a href="#DrvDrawArcCircle(float,float,float,float,float,int)"><b>DrvDrawArcCircle</b></a>(float,float,float,float,float,int)
+<dd>  Draws a circle arc in device coordinates  with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvDrawArcEllipse(float,float,float,float,float,float,float,int)"><b>DrvDrawArcEllipse</b></a>(float,float,float,float,float,float,float,int)
+<dd>  Draws an ellipse arc in device coordinates with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvDrawBitmap(float,float,CATPixelImage*)"><b>DrvDrawBitmap</b></a>(float,float,CATPixelImage*)
+<dd>  Draws a bitmap in device coordinates at the given position.
+ <dt> o 
+    <a href="#DrvDrawConnectingEdge(void)"><b>DrvDrawConnectingEdge</b></a>(void)
+<dd>  Draw the edge closing the closed figure.
+ <dt> o 
+    <a href="#DrvDrawPolyBezier(int,float*)"><b>DrvDrawPolyBezier</b></a>(int,float*)
+<dd>  Draws a polybezier curve of order 3 in device coordinates with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvDrawPolyPolygon(int,int*,float*)"><b>DrvDrawPolyPolygon</b></a>(int,int*,float*)
+<dd>  Draws a polypolygon with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ <dt> o 
+    <a href="#DrvDrawPolyQuadraticBezier(int,float*)"><b>DrvDrawPolyQuadraticBezier</b></a>(int,float*)
+<dd>  Draws a polybezier curve of order 2 with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvDrawPolygon(int,float*)"><b>DrvDrawPolygon</b></a>(int,float*)
+<dd>  Draws a simple area with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ <dt> o 
+    <a href="#DrvDrawPolyline(int,float*,int)"><b>DrvDrawPolyline</b></a>(int,float*,int)
+<dd>  Draws a polyline with current draw color, line style and line width.
+ <dt> o 
+    <a href="#DrvDrawText(float,float,CATUnicodeString&amp;)"><b>DrvDrawText</b></a>(float,float,CATUnicodeString&amp;)
+<dd>  Draws text in device coordinates.
+ <dt> o 
+    <a href="#DrvEnd(void)"><b>DrvEnd</b></a>(void)
+<dd>  Terminates generation.
+ <dt> o 
+    <a href="#DrvEndClosedFigure(void)"><b>DrvEndClosedFigure</b></a>(void)
+<dd>  Ends current closed figure.
+ <dt> o 
+    <a href="#DrvEndGroup(void)"><b>DrvEndGroup</b></a>(void)
+<dd>  Ends current group of primitives.
+ <dt> o 
+    <a href="#DrvFillArea(int,int*,float*)"><b>DrvFillArea</b></a>(int,int*,float*)
+<dd>  Fills a polypolygon in device coordinates with current fill color.
+ <dt> o 
+    <a href="#DrvFormFeed(void)"><b>DrvFormFeed</b></a>(void)
+<dd>  Starts a new page.
+ <dt> o 
+    <a href="#DrvFormFeed(CATUnicodeString&amp;)"><b>DrvFormFeed</b></a>(CATUnicodeString&amp;)
+<dd>  Starts a new page.
+ <dt> o 
+    <a href="#DrvLineTo(float,float)"><b>DrvLineTo</b></a>(float,float)
+<dd>  Draws a line from the current pen position to (iX, iY) in device coordinates with current draw color,
+ line type and draw width.
+ <dt> o 
+    <a href="#DrvMoveTo(float,float)"><b>DrvMoveTo</b></a>(float,float)
+<dd>  Moves the pen to (iX, iY) in device coordinates without drawing.
+ <dt> o 
+    <a href="#DrvSelectDrawColor(int)"><b>DrvSelectDrawColor</b></a>(int)
+<dd>  Selects the current drawing color.
+ <dt> o 
+    <a href="#DrvSelectFillColor(int)"><b>DrvSelectFillColor</b></a>(int)
+<dd>  Selects the current filling color.
+ <dt> o 
+    <a href="#DrvSetDrawWidth(float)"><b>DrvSetDrawWidth</b></a>(float)
+<dd>  Selects the current draw width.
+ <dt> o 
+    <a href="#DrvSetEdgeMode(CATPrintEdgeMode)"><b>DrvSetEdgeMode</b></a>(CATPrintEdgeMode)
+<dd>  Selects the current edge mode.
+ <dt> o 
+    <a href="#DrvSetFillMode(CATPrintFillMode)"><b>DrvSetFillMode</b></a>(CATPrintFillMode)
+<dd>  Selects the current fill mode.
+ <dt> o 
+    <a href="#DrvSetLineCap(CATPrintLineAttribute)"><b>DrvSetLineCap</b></a>(CATPrintLineAttribute)
+<dd>  Selects the current line cap style.
+ <dt> o 
+    <a href="#DrvSetLineJoin(CATPrintLineAttribute)"><b>DrvSetLineJoin</b></a>(CATPrintLineAttribute)
+<dd>  Selects the current line join style.
+ <dt> o 
+    <a href="#DrvSetLineStyle(CATPrintLineAttribute,float,float*)"><b>DrvSetLineStyle</b></a>(CATPrintLineAttribute,float,float*)
+<dd>  Selects the current line style.
+ <dt> o 
+    <a href="#DrvSetPolygonFillRule(CATPrintFillRule)"><b>DrvSetPolygonFillRule</b></a>(CATPrintFillRule)
+<dd>  Sets the polygon filling rule.
+ <dt> o 
+    <a href="#DrvSetTextAttribute(CATPrintTextAttribute,float)"><b>DrvSetTextAttribute</b></a>(CATPrintTextAttribute,float)
+<dd>  Defines text attributes.
+ <dt> o 
+    <a href="#DrvSetTextAttribute(CATPrintTextAttribute,CATFont*)"><b>DrvSetTextAttribute</b></a>(CATPrintTextAttribute,CATFont*)
+<dd>  Defines current text font.
+ <dt> o 
+    <a href="#DrvStartNewRegion(void)"><b>DrvStartNewRegion</b></a>(void)
+<dd>  Begins a new region inside the closed figure.
+ <dt> o 
+    <a href="#End(void)"><b>End</b></a>(void)
+<dd>  Terminates generation.
+ <dt> o 
+    <a href="#EndClosedFigure(void)"><b>EndClosedFigure</b></a>(void)
+<dd>  Ends current closed figure.
+ <dt> o 
+    <a href="#EndDrawScissor(void)"><b>EndDrawScissor</b></a>(void)
+<dd>  Ends the clipping the image from the polygon.
+ <dt> o 
+    <a href="#EndGroup(void)"><b>EndGroup</b></a>(void)
+<dd>  Ends current group of primitives.
+ <dt> o 
+    <a href="#FillArea(int,int*,float*)"><b>FillArea</b></a>(int,int*,float*)
+<dd>  Fills a polypolygon with current fill color using the even/odd method.
+ <dt> o 
+    <a href="#FillPolygon(int,float*)"><b>FillPolygon</b></a>(int,float*)
+<dd>  Fills a simple area with current fill color using the even/odd method.
+ <dt> o 
+    <a href="#FillRectangle(float,float,float,float)"><b>FillRectangle</b></a>(float,float,float,float)
+<dd>  Fills a rectangle between (iX0, iY0) to (iX1, iY1) with current fill color.
+ <dt> o 
+    <a href="#GetDeviceCoordinates(float&amp;,float&amp;)"><b>GetDeviceCoordinates</b></a>(float&amp;,float&amp;)
+<dd>  Converts from user coordinates to device coordinates.
+ <dt> o 
+    <a href="#GetLanguage(void)"><b>GetLanguage</b></a>(void)
+<dd>  Returns the name of the generated language.
+ <dt> o 
+    <a href="#GetOrigin(float&amp;,float&amp;)"><b>GetOrigin</b></a>(float&amp;,float&amp;)
+<dd>  Returns current printing offset from the lower left corner of the sheet.
+ <dt> o 
+    <a href="#GetProperties(void)"><b>GetProperties</b></a>(void)
+<dd>  Override this method to provide specific properties which can be stored and
+ read by the printer manager.
+ <dt> o 
+    <a href="#GetPropertiesDialog(CATDialog*)"><b>GetPropertiesDialog</b></a>(CATDialog*)
+<dd>  Returns dialog used to fill specific properties.
+ <dt> o 
+    <a href="#GetScale(void)"><b>GetScale</b></a>(void)
+<dd>   Returns current printing scale.
+ <dt> o 
+    <a href="#LineTo(float,float)"><b>LineTo</b></a>(float,float)
+<dd>  Draws a line from the current pen position to (iY, iY) with current draw color,
+ line style and line width.
+ <dt> o 
+    <a href="#MoveTo(float,float)"><b>MoveTo</b></a>(float,float)
+<dd>  Moves the pen to (iX, iY) coordinates without drawing.
+ <dt> o 
+    <a href="#SelectDrawColor(int)"><b>SelectDrawColor</b></a>(int)
+<dd>  Selects the current drawing color.
+ <dt> o 
+    <a href="#SelectFillColor(int)"><b>SelectFillColor</b></a>(int)
+<dd>  Selects the current filling color.
+ <dt> o 
+    <a href="#SetDrawWidth(float)"><b>SetDrawWidth</b></a>(float)
+<dd>  Selects the current draw width.
+ <dt> o 
+    <a href="#SetDrawingSize(float,float)"><b>SetDrawingSize</b></a>(float,float)
+<dd>  Defines the size of the drawing area.
+ <dt> o 
+    <a href="#SetEdgeMode(CATPrintEdgeMode)"><b>SetEdgeMode</b></a>(CATPrintEdgeMode)
+<dd>  Selects the current edge mode.
+ <dt> o 
+    <a href="#SetFillMode(CATPrintFillMode)"><b>SetFillMode</b></a>(CATPrintFillMode)
+<dd>  Selects the current fill mode.
+ <dt> o 
+    <a href="#SetLineCap(CATPrintLineAttribute)"><b>SetLineCap</b></a>(CATPrintLineAttribute)
+<dd>  Selects the current line cap style.
+ <dt> o 
+    <a href="#SetLineJoin(CATPrintLineAttribute)"><b>SetLineJoin</b></a>(CATPrintLineAttribute)
+<dd>  Selects the current line join style.
+ <dt> o 
+    <a href="#SetLineStyle(CATPrintLineAttribute,float,float*)"><b>SetLineStyle</b></a>(CATPrintLineAttribute,float,float*)
+<dd>  Selects the current line style.
+ <dt> o 
+    <a href="#SetOrigin(float,float)"><b>SetOrigin</b></a>(float,float)
+<dd>  Defines the printing offset from the lower-left corner of the sheet.
+ <dt> o 
+    <a href="#SetPolygonFillRule(CATPrintFillRule)"><b>SetPolygonFillRule</b></a>(CATPrintFillRule)
+<dd>  Sets the polygon filling rule.
+ <dt> o 
+    <a href="#SetScale(float)"><b>SetScale</b></a>(float)
+<dd>  Defines the plotting iScale.
+ <dt> o 
+    <a href="#SetTextAttribute(CATPrintTextAttribute,float)"><b>SetTextAttribute</b></a>(CATPrintTextAttribute,float)
+<dd>  Defines current text attributes.
+ <dt> o 
+    <a href="#SetTextAttribute(CATPrintTextAttribute,CATFont*)"><b>SetTextAttribute</b></a>(CATPrintTextAttribute,CATFont*)
+<dd>  Defines current text font.
+ <dt> o 
+    <a href="#SetViewport(float,float,float,float)"><b>SetViewport</b></a>(float,float,float,float)
+<dd>  Defines the plotting viewport (or clipping area) in user coordinates.
+ <dt> o 
+    <a href="#StartNewPage(CATPrintParameters&amp;)"><b>StartNewPage</b></a>(CATPrintParameters&amp;)
+<dd>  Starts a new page with (eventually) new parameters.
+ <dt> o 
+    <a href="#StartNewPage(CATPrintParameters&amp;,CATUnicodeString&amp;)"><b>StartNewPage</b></a>(CATPrintParameters&amp;,CATUnicodeString&amp;)
+<dd>  Starts a new page with (eventually) new parameters.
+ <dt> o 
+    <a href="#StartNewRegion(void)"><b>StartNewRegion</b></a>(void)
+<dd>  Begins a new region inside the closed figure.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATPrintGenerator"></a><a name="CATPrintGenerator(CATString&amp;)"></a> <dt> o <b>CATPrintGenerator</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPrintGenerator</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iLanguage</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATPrintGenerator of a given language.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLanguage</tt>
+   <dd>   The generator language.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATPrintGenerator"></a><a name="~CATPrintGenerator()"></a> <dt> o <b>~CATPrintGenerator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATPrintGenerator</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Begin"></a><a name="Begin(CATPrintParameters&amp;)"></a> <dt> o <b>Begin</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Begin</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Initializes generation with given parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   The generator parameters.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Begin"></a><a name="Begin(CATPrintParameters&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>Begin</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Begin</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPageTitle</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Initializes generation with given parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   The generator parameters.
+ </dd>
+    <dt><tt> iPageTitle</tt>
+   <dd>   First page title.</dd>
+</dl>
+</dl>
+</dl>
+<a name="BeginClosedFigure"></a><a name="BeginClosedFigure(void)"></a> <dt> o <b>BeginClosedFigure</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>BeginClosedFigure</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a closed figure.
+</dl>
+<a name="BeginDrawScissor"></a><a name="BeginDrawScissor(int,float*)"></a> <dt> o <b>BeginDrawScissor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>BeginDrawScissor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a clipping of the image from the polygon.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points in the polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="BeginGroup"></a><a name="BeginGroup(int)"></a> <dt> o <b>BeginGroup</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>BeginGroup</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iId</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R16
+ Begins a group of primitives.
+ The signature of the method has been changed to manage the id as an unicode string
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The id of the group.</dd>
+</dl>
+</dl>
+</dl>
+<a name="BeginGroup"></a><a name="BeginGroup(CATUnicodeString&amp;)"></a> <dt> o <b>BeginGroup</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>BeginGroup</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iId</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a group of primitives.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The id of the group.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DefineColor"></a><a name="DefineColor(int,float,float,float)"></a> <dt> o <b>DefineColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DefineColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iRed</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iGreen</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iBlue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a color in the palette in rgb coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index in the color table.
+   <br><b>Legal values</b>: Between 0 and 255.
+ </dd>
+    <dt><tt> iRed</tt>
+   <dd>    The red color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.
+ </dd>
+    <dt><tt> iGreen</tt>
+   <dd>   The green color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.
+ </dd>
+    <dt><tt> iBlue</tt>
+   <dd>   The blue color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawArcCircle"></a><a name="DrawArcCircle(float,float,float,float,float,int)"></a> <dt> o <b>DrawArcCircle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawArcCircle</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iRadius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iStartAngle</tt><td><tt>= 0.f</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iEndAngle</tt><td><tt>= CAT2PI</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFill</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a circle arc with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The center x coordinate of the arc.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The center y coordinate of the arc.
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd>   The radius of the arc.
+ </dd>
+    <dt><tt> iStartAngle</tt>
+   <dd>   The start angle of the arc in radians. 
+   <br><b>Legal values</b>: The default is 0.
+ </dd>
+    <dt><tt> iEndAngle</tt>
+   <dd>   The end angle of the arc in radians.
+   <br><b>Legal values</b>: The default is <tt>CAT2PI</tt>
+ </dd>
+    <dt><tt> iFill</tt>
+   <dd>   The filling mode of the arc.
+   <br><b>Legal values</b>: 1 to fill the arc (chord-style), 0 to draw the outline only. 0 is the
+   default.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawArcEllipse"></a><a name="DrawArcEllipse(float,float,float,float,float,float,float,int)"></a> <dt> o <b>DrawArcEllipse</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawArcEllipse</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iHradius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iVradius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iStartAngle</tt><td><tt>= 0.f</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iEndAngle</tt><td><tt>= CAT2PI</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iSlope</tt><td><tt>= 0.f</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFill</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws an ellipse arc with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0,</tt>
+   <dd> iY0   The center coordinates of the arc.
+ </dd>
+    <dt><tt> iHradius</tt>
+   <dd>   The horizontal radius.
+ </dd>
+    <dt><tt> iVradius</tt>
+   <dd>   The vertical radius.
+ </dd>
+    <dt><tt> iStartAngle,</tt>
+   <dd> iEndAngle   The start and end angles of the arc (radians).
+ </dd>
+    <dt><tt> iSlope</tt>
+   <dd>   The angle between the largest axis of the ellipse and the horizontal.
+   <br><b>Legal values</b>:  The default is 0.
+ </dd>
+    <dt><tt> iFill</tt>
+   <dd>   The filling mode of the arc.
+   <br><b>Legal values</b>: 1 to fill the arc (chord-style), 0 to draw the outline only. 0 is the
+   default.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawBitmap"></a><a name="DrawBitmap(float,float,int,CATPixelImage*)"></a> <dt> o <b>DrawBitmap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawBitmap</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script> <td><tt>iPixelImage</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a bitmap at the given position with the given orientation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate of the lower left corner of the bitmap.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate of the lower left corner of the bitmap.
+ </dd>
+    <dt><tt> iOrientation</tt>
+   <dd>   The bitmap rotation.
+   <br><b>Legal values</b>: 0->0 deg, 1->90 deg, 2->180 deg, 3->270 deg.
+ </dd>
+    <dt><tt> iPixelImage</tt>
+   <dd>   The pointer to a CATPixelImage object.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawConnectingEdge"></a><a name="DrawConnectingEdge(void)"></a> <dt> o <b>DrawConnectingEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawConnectingEdge</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draw the edge closing the closed figure.
+</dl>
+<a name="DrawDisjointPolyline"></a><a name="DrawDisjointPolyline(int,float*)"></a> <dt> o <b>DrawDisjointPolyline</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawDisjointPolyline</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws disjoint a polyline with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points in the polyline.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawGeometricText"></a><a name="DrawGeometricText(float,float,CATUnicodeString&amp;)"></a> <dt> o <b>DrawGeometricText</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawGeometricText</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iText</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a text at given coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate of the anchor point.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate of the anchor point.
+ </dd>
+    <dt><tt> iText</tt>
+   <dd>   The text to draw.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawLine"></a><a name="DrawLine(float,float,float,float)"></a> <dt> o <b>DrawLine</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawLine</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a line between (iX0, iY0) and (iX1, iY1) with current draw color,
+ line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The x coordinate of the first point.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The y coordinate of the first point.
+ </dd>
+    <dt><tt> iX1</tt>
+   <dd>   The x coordinate of the second point.
+ </dd>
+    <dt><tt> iY1</tt>
+   <dd>   The y coordinate of the second point.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawMarker"></a><a name="DrawMarker(float,float,CATPrintMarkerAttribute,float)"></a> <dt> o <b>DrawMarker</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawMarker</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPrintMarkerAttribute','CATPrintMarkerAttribute')</script> <td><tt>iMarker</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iSize</tt><td><tt>= 0.0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a marker at given coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate of the anchor point.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate of the anchor point.
+ </dd>
+    <dt><tt> iMarker</tt>
+   <dd>   The type of marker. See <tt>CATPrintMarkerAttribute</tt> for available marker attribute.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>   The size of the marker. 
+   <br><b>Legal values</b>: Defaut is 0, then uses the standard size.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawPolyBezier"></a><a name="DrawPolyBezier(int,float*)"></a> <dt> o <b>DrawPolyBezier</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawPolyBezier</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polybezier curve of order 3 with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points defining the polybezier.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawPolyPolygon"></a><a name="DrawPolyPolygon(int,int*,float*)"></a> <dt> o <b>DrawPolyPolygon</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawPolyPolygon</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNoutlines</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int*')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polypolygon with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNoutlines</tt>
+   <dd>   The number of polygons in the polypolygon.
+ </dd>
+    <dt><tt> iNcorners</tt>
+   <dd>   The array of <tt>iNOutlines</tt> integers giving the number of corners in each polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of floats giving the coordinates of alls corners of each polygon.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawPolyQuadraticBezier"></a><a name="DrawPolyQuadraticBezier(int,float*)"></a> <dt> o <b>DrawPolyQuadraticBezier</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawPolyQuadraticBezier</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polybezier curve of order 2 with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points defining the polybezier.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawPolygon"></a><a name="DrawPolygon(int,float*)"></a> <dt> o <b>DrawPolygon</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawPolygon</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a simple area with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNcorners</tt>
+   <dd>   The number of corners in the polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNcorners</tt> floats giving the coordinates of the corners.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrawPolyline"></a><a name="DrawPolyline(int,float*)"></a> <dt> o <b>DrawPolyline</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrawPolyline</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polyline with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points in the polyline.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvBegin"></a><a name="DrvBegin(CATPrintParameters&amp;)"></a> <dt> o <b>DrvBegin</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvBegin</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Initializes generator with print parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   The generator parameters.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvBegin"></a><a name="DrvBegin(CATPrintParameters&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>DrvBegin</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvBegin</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPageTitle</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Initializes generator with print parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   The generator parameters.
+ </dd>
+    <dt><tt> iPageTitle</tt>
+   <dd>   First page title.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvBeginClosedFigure"></a><a name="DrvBeginClosedFigure(void)"></a> <dt> o <b>DrvBeginClosedFigure</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvBeginClosedFigure</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a closed figure.
+</dl>
+<a name="DrvBeginGroup"></a><a name="DrvBeginGroup(int)"></a> <dt> o <b>DrvBeginGroup</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvBeginGroup</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iId</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R16
+ Begins a group of primitives.
+ The signature of the method has been changed to manage the id as an unicode string
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The id of the group.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvBeginGroup"></a><a name="DrvBeginGroup(CATUnicodeString&amp;)"></a> <dt> o <b>DrvBeginGroup</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvBeginGroup</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iId</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a group of primitives.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The id of the group.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDefineColor"></a><a name="DrvDefineColor(int,float,float,float)"></a> <dt> o <b>DrvDefineColor</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDefineColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iRed</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iGreen</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iBlue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a color in the palette in rgb coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index in the color table.
+   <br><b>Legal values</b>: Between 0 and 255.
+ </dd>
+    <dt><tt> iRed</tt>
+   <dd>   The red color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.
+ </dd>
+    <dt><tt> iGreen</tt>
+   <dd>   The green color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.
+ </dd>
+    <dt><tt> iBlue</tt>
+   <dd>   The blue color in RGB coordinates.
+   <br><b>Legal values</b>: Between 0 and 1.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawArcCircle"></a><a name="DrvDrawArcCircle(float,float,float,float,float,int)"></a> <dt> o <b>DrvDrawArcCircle</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawArcCircle</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iRadius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iStartAngle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iEndAngle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFill</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a circle arc in device coordinates  with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The x center coordinates of the arc.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The y center coordinates of the arc.
+ </dd>
+    <dt><tt> iRadius</tt>
+   <dd>   The radius of the arc.
+ </dd>
+    <dt><tt> iStartAngle</tt>
+   <dd>   The start angle of the arc in radians. 
+ </dd>
+    <dt><tt> iEndAngle</tt>
+   <dd>   The end angle of the arc in radians.
+ </dd>
+    <dt><tt> iFill</tt>
+   <dd>   The filling mode of the arc.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawArcEllipse"></a><a name="DrvDrawArcEllipse(float,float,float,float,float,float,float,int)"></a> <dt> o <b>DrvDrawArcEllipse</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawArcEllipse</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iHradius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iVradius</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iStartAngle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iEndAngle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iSlope</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFill</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws an ellipse arc in device coordinates with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The x center coordinates of the arc.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The y center coordinates of the arc.
+ </dd>
+    <dt><tt> iHradius</tt>
+   <dd>   The horizontal radius.
+ </dd>
+    <dt><tt> iVradius</tt>
+   <dd>   The vertical radius.
+ </dd>
+    <dt><tt> iStartAngle</tt>
+   <dd>   The start angle of the arc in radians.
+ </dd>
+    <dt><tt> iEndAngle</tt>
+   <dd>   The end angle of the arc in radians.
+ </dd>
+    <dt><tt> iSlope</tt>
+   <dd>   The angle between the largest axis of the ellipse and the horizontal.
+ </dd>
+    <dt><tt> iFill</tt>
+   <dd>   The filling mode of the arc.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawBitmap"></a><a name="DrvDrawBitmap(float,float,CATPixelImage*)"></a> <dt> o <b>DrvDrawBitmap</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawBitmap</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPixelImage','CATPixelImage*')</script> <td><tt>iPixelImage</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a bitmap in device coordinates at the given position.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinates of the lower left corner of the bitmap.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinates of the lower left corner of the bitmap.
+ </dd>
+    <dt><tt> iPixelImage</tt>
+   <dd>   The pointer to a CATPixelImage object.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawConnectingEdge"></a><a name="DrvDrawConnectingEdge(void)"></a> <dt> o <b>DrvDrawConnectingEdge</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawConnectingEdge</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draw the edge closing the closed figure.
+</dl>
+<a name="DrvDrawPolyBezier"></a><a name="DrvDrawPolyBezier(int,float*)"></a> <dt> o <b>DrvDrawPolyBezier</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawPolyBezier</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polybezier curve of order 3 in device coordinates with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points defining the polybezier.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawPolyPolygon"></a><a name="DrvDrawPolyPolygon(int,int*,float*)"></a> <dt> o <b>DrvDrawPolyPolygon</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawPolyPolygon</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNoutlines</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int*')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polypolygon with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNoutlines</tt>
+   <dd>   The number of polygons in the polypolygon.
+ </dd>
+    <dt><tt> iNcorners</tt>
+   <dd>   The array of <tt>iNOutlines</tt> integers giving the number of corners in each polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of floats giving the coordinates of alls corners of each polygon.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawPolyQuadraticBezier"></a><a name="DrvDrawPolyQuadraticBezier(int,float*)"></a> <dt> o <b>DrvDrawPolyQuadraticBezier</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawPolyQuadraticBezier</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polybezier curve of order 2 with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points defining the polybezier.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawPolygon"></a><a name="DrvDrawPolygon(int,float*)"></a> <dt> o <b>DrvDrawPolygon</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawPolygon</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a simple area with current fill color and the using the even/odd method,
+ the edge color is the draw color if needed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNcorners</tt>
+   <dd>   The number of corners in the polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNcorners</tt> floats giving the coordinates of the corners.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawPolyline"></a><a name="DrvDrawPolyline(int,float*,int)"></a> <dt> o <b>DrvDrawPolyline</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawPolyline</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNpoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iDisjoint</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a polyline with current draw color, line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNpoints</tt>
+   <dd>   The number of points in the polyline.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNpoints</tt> floats giving the coordinates of the points.
+ </dd>
+    <dt><tt> iDisjoint</tt>
+   <dd>   Tells if the polyline is disjoint or not</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvDrawText"></a><a name="DrvDrawText(float,float,CATUnicodeString&amp;)"></a> <dt> o <b>DrvDrawText</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvDrawText</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iText</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws text in device coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate of the anchor point.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate of the anchor point.
+ </dd>
+    <dt><tt> iText</tt>
+   <dd>   The text to draw.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvEnd"></a><a name="DrvEnd(void)"></a> <dt> o <b>DrvEnd</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvEnd</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Terminates generation.
+</dl>
+<a name="DrvEndClosedFigure"></a><a name="DrvEndClosedFigure(void)"></a> <dt> o <b>DrvEndClosedFigure</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvEndClosedFigure</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends current closed figure.
+</dl>
+<a name="DrvEndGroup"></a><a name="DrvEndGroup(void)"></a> <dt> o <b>DrvEndGroup</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvEndGroup</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends current group of primitives.
+</dl>
+<a name="DrvFillArea"></a><a name="DrvFillArea(int,int*,float*)"></a> <dt> o <b>DrvFillArea</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvFillArea</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNoutlines</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int*')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Fills a polypolygon in device coordinates with current fill color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNoutlines</tt>
+   <dd>   The number of polygons in the polypolygon.
+ </dd>
+    <dt><tt> iNcorners</tt>
+   <dd>   The array of <tt>iNOutlines</tt> integers giving the number of corners in each polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of floats giving the coordinates of alls corners of each polygon.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvFormFeed"></a><a name="DrvFormFeed(void)"></a> <dt> o <b>DrvFormFeed</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvFormFeed</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Starts a new page.
+</dl>
+<a name="DrvFormFeed"></a><a name="DrvFormFeed(CATUnicodeString&amp;)"></a> <dt> o <b>DrvFormFeed</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvFormFeed</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPageTitle</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Starts a new page.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPageTitle</tt>
+   <dd>   First page title.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvLineTo"></a><a name="DrvLineTo(float,float)"></a> <dt> o <b>DrvLineTo</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvLineTo</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a line from the current pen position to (iX, iY) in device coordinates with current draw color,
+ line type and draw width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate to draw to.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate to draw to.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvMoveTo"></a><a name="DrvMoveTo(float,float)"></a> <dt> o <b>DrvMoveTo</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvMoveTo</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Moves the pen to (iX, iY) in device coordinates without drawing.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate to move to.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate to move to.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSelectDrawColor"></a><a name="DrvSelectDrawColor(int)"></a> <dt> o <b>DrvSelectDrawColor</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSelectDrawColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current drawing color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the current drawing color.
+   <br><b>Legal values</b>: Between 0 and 255.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSelectFillColor"></a><a name="DrvSelectFillColor(int)"></a> <dt> o <b>DrvSelectFillColor</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSelectFillColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current filling color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the current filling color.
+   <br><b>Legal values</b>: Between 0 and 255.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetDrawWidth"></a><a name="DrvSetDrawWidth(float)"></a> <dt> o <b>DrvSetDrawWidth</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetDrawWidth</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iWidth</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current draw width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWidth</tt>
+   <dd>   The current draw width.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetEdgeMode"></a><a name="DrvSetEdgeMode(CATPrintEdgeMode)"></a> <dt> o <b>DrvSetEdgeMode</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetEdgeMode</b>(<td><script type="text/javascript"> activateLink('CATPrintEdgeMode','CATPrintEdgeMode')</script> <td><tt>iEdgeMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current edge mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdgeMode</tt>
+   <dd>   The current edge mode.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTEDGE_NONE</tt> for none edge, the closed primitive edges are not drawn,
+   <tt>CATPRINTEDGE_SOLID</tt> for solid edge mode, the closed primitive edges are not drawn with the draw color.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetFillMode"></a><a name="DrvSetFillMode(CATPrintFillMode)"></a> <dt> o <b>DrvSetFillMode</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetFillMode</b>(<td><script type="text/javascript"> activateLink('CATPrintFillMode','CATPrintFillMode')</script> <td><tt>iFillMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current fill mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFillMode</tt>
+   <dd>   The current fill mode.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTFILL_EMPTY</tt> for empty fill mode, the closed primitive will not be filled,
+   <tt>CATPRINTFILL_SOLID</tt> for solid fill mode, the closed primitives will be painted with the current fill color,
+   <tt>CATPRINTFILL_PATTERN</tt> for pattern fill mode, the closed primitives will be painted with the current pattern.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetLineCap"></a><a name="DrvSetLineCap(CATPrintLineAttribute)"></a> <dt> o <b>DrvSetLineCap</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetLineCap</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iLineCap</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line cap style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineCap</tt>
+   <dd>   The current line cap style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_ENCAP_FLAT</tt> for flat cap style,
+   <tt>CATPRINTLINE_ENCAP_SQUARE</tt> for square cap style,
+   <tt>CATPRINTLINE_ENCAP_ROUND</tt> for round cap style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetLineJoin"></a><a name="DrvSetLineJoin(CATPrintLineAttribute)"></a> <dt> o <b>DrvSetLineJoin</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetLineJoin</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iLineJoin</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line join style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineJoin</tt>
+   <dd>   The current line join style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_JOIN_MITER</tt> for miter join style,
+   <tt>CATPRINTLINE_JOIN_ROUND</tt> for round join style,
+   <tt>CATPRINTLINE_JOIN_BEVEL</tt> for bevel join style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetLineStyle"></a><a name="DrvSetLineStyle(CATPrintLineAttribute,float,float*)"></a> <dt> o <b>DrvSetLineStyle</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetLineStyle</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iPatternLength</tt><td><tt>= 0.0</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iDescription</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd>   The current line style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_SOLID</tt> for solid line style,
+   <tt>CATPRINTLINE_DOT</tt> for dot line style, 
+   <tt>CATPRINTLINE_DASH</tt> for dash line style,
+   <tt>CATPRINTLINE_DASHDOT</tt> for dashdot line style,
+   <tt>CATPRINTLINE_PHANTOM</tt> for phantom line style, 
+   <tt>CATPRINTLINE_USER</tt> for user line style.
+ </dd>
+    <dt><tt> iPatternLength</tt>
+   <dd>   The length of the description for user line style. 
+   <br><b>Legal values</b>: The default is 0.
+ </dd>
+    <dt><tt> iDescription</tt>
+   <dd>   The description for user line style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetPolygonFillRule"></a><a name="DrvSetPolygonFillRule(CATPrintFillRule)"></a> <dt> o <b>DrvSetPolygonFillRule</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetPolygonFillRule</b>(<td><script type="text/javascript"> activateLink('CATPrintFillRule','CATPrintFillRule')</script> <td><tt>iFillRule</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the polygon filling rule.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFillRule</tt>
+   <dd>   The current polygon filling rule.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPrintFill_EvenOdd</tt> for filling parts of polygon with odd winding number
+   <tt>CATPrintFill_NonZero</tt> for filling parts of polygon with non-zero winding number</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetTextAttribute"></a><a name="DrvSetTextAttribute(CATPrintTextAttribute,float)"></a> <dt> o <b>DrvSetTextAttribute</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetTextAttribute</b>(<td><script type="text/javascript"> activateLink('CATPrintTextAttribute','CATPrintTextAttribute')</script> <td><tt>iAttribute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines text attributes. Texts are drawn with current draw color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttribute</tt>
+   <dd>   See <tt>CATPrintTextAttribute</tt> for available text attributes.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd>   See <tt>CATPrintTextAttribute</tt> for available text values corresponding to iAttribute.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvSetTextAttribute"></a><a name="DrvSetTextAttribute(CATPrintTextAttribute,CATFont*)"></a> <dt> o <b>DrvSetTextAttribute</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvSetTextAttribute</b>(<td><script type="text/javascript"> activateLink('CATPrintTextAttribute','CATPrintTextAttribute')</script> <td><tt>iAttribute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFont','CATFont*')</script> <td><tt>iFont</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines current text font.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttribute</tt>
+   <dd>   <b>Legal values</b>: It must be CATPRINTTEXT_TYPEFACE.
+ </dd>
+    <dt><tt> iFont</tt>
+   <dd>   See CATFont for more informations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DrvStartNewRegion"></a><a name="DrvStartNewRegion(void)"></a> <dt> o <b>DrvStartNewRegion</b>
+
+<dt>  <table><tr><td>  protected virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DrvStartNewRegion</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a new region inside the closed figure.
+</dl>
+<a name="End"></a><a name="End(void)"></a> <dt> o <b>End</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>End</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Terminates generation.
+</dl>
+<a name="EndClosedFigure"></a><a name="EndClosedFigure(void)"></a> <dt> o <b>EndClosedFigure</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EndClosedFigure</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends current closed figure.
+</dl>
+<a name="EndDrawScissor"></a><a name="EndDrawScissor(void)"></a> <dt> o <b>EndDrawScissor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EndDrawScissor</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends the clipping the image from the polygon.
+</dl>
+<a name="EndGroup"></a><a name="EndGroup(void)"></a> <dt> o <b>EndGroup</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EndGroup</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends current group of primitives.
+</dl>
+<a name="FillArea"></a><a name="FillArea(int,int*,float*)"></a> <dt> o <b>FillArea</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>FillArea</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNoutlines</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int*')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Fills a polypolygon with current fill color using the even/odd method.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNoutlines</tt>
+   <dd>   The number of polygons in the polypolygon.
+ </dd>
+    <dt><tt> iNcorners</tt>
+   <dd>   The array of <tt>iNOutlines</tt> integers giving the number of corners in each polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of floats giving the coordinates of alls corners of each polygon.</dd>
+</dl>
+</dl>
+</dl>
+<a name="FillPolygon"></a><a name="FillPolygon(int,float*)"></a> <dt> o <b>FillPolygon</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>FillPolygon</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNcorners</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iCoord</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Fills a simple area with current fill color using the even/odd method.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNcorners</tt>
+   <dd>   The number of corners in the polygon.
+ </dd>
+    <dt><tt> iCoord</tt>
+   <dd>   The array of 2*<tt>iNcorners</tt> floats giving the coordinates of the corners.</dd>
+</dl>
+</dl>
+</dl>
+<a name="FillRectangle"></a><a name="FillRectangle(float,float,float,float)"></a> <dt> o <b>FillRectangle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>FillRectangle</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Fills a rectangle between (iX0, iY0) to (iX1, iY1) with current fill color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The x coordinate of the first point.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The y coordinate of the first point.
+ </dd>
+    <dt><tt> iX1</tt>
+   <dd>   The x coordinate of the second point.
+ </dd>
+    <dt><tt> iY1</tt>
+   <dd>   The y coordinate of the second point.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDeviceCoordinates"></a><a name="GetDeviceCoordinates(float&amp;,float&amp;)"></a> <dt> o <b>GetDeviceCoordinates</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetDeviceCoordinates</b>(<td><script type="text/javascript"> activateLink('float','float&amp;')</script> <td><tt>ioX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float&amp;')</script> <td><tt>ioY</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts from user coordinates to device coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioX</tt>
+   <dd>   The x device coordinate from the x user coordinate.
+ </dd>
+    <dt><tt> ioY</tt>
+   <dd>   The y device coordinate from the y user coordinate.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetLanguage"></a><a name="GetLanguage(void)"></a> <dt> o <b>GetLanguage</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATString','const CATString&')</script>  <b>GetLanguage</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the name of the generated language.
+</dl>
+<a name="GetOrigin"></a><a name="GetOrigin(float&amp;,float&amp;)"></a> <dt> o <b>GetOrigin</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetOrigin</b>(<td><script type="text/javascript"> activateLink('float','float&amp;')</script> <td><tt>oX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float&amp;')</script> <td><tt>oY0</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns current printing offset from the lower left corner of the sheet.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oX0</tt>
+   <dd>   The x offset of the sheet.
+ </dd>
+    <dt><tt> oY0</tt>
+   <dd>   The y offset of the sheet.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetProperties"></a><a name="GetProperties(void)"></a> <dt> o <b>GetProperties</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script>  <b>GetProperties</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Override this method to provide specific properties which can be stored and
+ read by the printer manager.
+</dl>
+<a name="GetPropertiesDialog"></a><a name="GetPropertiesDialog(CATDialog*)"></a> <dt> o <b>GetPropertiesDialog</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATDlgWindow','CATDlgWindow*')</script>  <b>GetPropertiesDialog</b>(<td><script type="text/javascript"> activateLink('CATDialog','CATDialog*')</script> <td><tt>oParent</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns dialog used to fill specific properties.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oParent</tt>
+   <dd>   The parent dialog.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetScale"></a><a name="GetScale(void)"></a> <dt> o <b>GetScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('float','float')</script>  <b>GetScale</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns current printing scale.
+</dl>
+<a name="LineTo"></a><a name="LineTo(float,float)"></a> <dt> o <b>LineTo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>LineTo</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Draws a line from the current pen position to (iY, iY) with current draw color,
+ line style and line width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate to draw to.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate to draw to.</dd>
+</dl>
+</dl>
+</dl>
+<a name="MoveTo"></a><a name="MoveTo(float,float)"></a> <dt> o <b>MoveTo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>MoveTo</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Moves the pen to (iX, iY) coordinates without drawing.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x coordinate to move to.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y coordinate to move to.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SelectDrawColor"></a><a name="SelectDrawColor(int)"></a> <dt> o <b>SelectDrawColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SelectDrawColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current drawing color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the current drawing color.
+   <br><b>Legal values</b>: Between 0 and 255.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SelectFillColor"></a><a name="SelectFillColor(int)"></a> <dt> o <b>SelectFillColor</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SelectFillColor</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current filling color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the current filling color.
+   <br><b>Legal values</b>: Between 0 and 255.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDrawWidth"></a><a name="SetDrawWidth(float)"></a> <dt> o <b>SetDrawWidth</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDrawWidth</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iWidth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current draw width.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWidth</tt>
+   <dd>   The current draw width.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDrawingSize"></a><a name="SetDrawingSize(float,float)"></a> <dt> o <b>SetDrawingSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDrawingSize</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iWidth</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iHeight</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the size of the drawing area.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWidth</tt>
+   <dd>   The width of the drawing area.
+ </dd>
+    <dt><tt> iHeight</tt>
+   <dd>   The height of the drawing area.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetEdgeMode"></a><a name="SetEdgeMode(CATPrintEdgeMode)"></a> <dt> o <b>SetEdgeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetEdgeMode</b>(<td><script type="text/javascript"> activateLink('CATPrintEdgeMode','CATPrintEdgeMode')</script> <td><tt>iEdgeMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current edge mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdgeMode</tt>
+   <dd>   The current edge mode.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTEDGE_NONE</tt> for none edge, the closed primitive edges are not drawn,
+   <tt>CATPRINTEDGE_SOLID</tt> for solid edge mode, the closed primitive edges are not drawn with the draw color.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFillMode"></a><a name="SetFillMode(CATPrintFillMode)"></a> <dt> o <b>SetFillMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFillMode</b>(<td><script type="text/javascript"> activateLink('CATPrintFillMode','CATPrintFillMode')</script> <td><tt>iFillMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current fill mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFillMode</tt>
+   <dd>   The current fill mode.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTFILL_EMPTY</tt> for empty fill mode, the closed primitive will not be filled,
+   <tt>CATPRINTFILL_SOLID</tt> for solid fill mode, the closed primitives will be painted with the current fill color,
+   <tt>CATPRINTFILL_PATTERN</tt> for pattern fill mode, the closed primitives will be painted with the current pattern.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLineCap"></a><a name="SetLineCap(CATPrintLineAttribute)"></a> <dt> o <b>SetLineCap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLineCap</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iLineCap</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line cap style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineCap</tt>
+   <dd>   The current line cap style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_ENCAP_FLAT</tt> for flat cap style,
+   <tt>CATPRINTLINE_ENCAP_SQUARE</tt> for square cap style,
+   <tt>CATPRINTLINE_ENCAP_ROUND</tt> for round cap style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLineJoin"></a><a name="SetLineJoin(CATPrintLineAttribute)"></a> <dt> o <b>SetLineJoin</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLineJoin</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iLineJoin</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line join style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineJoin</tt>
+   <dd>   The current line join style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_JOIN_MITER</tt> for miter join style,
+   <tt>CATPRINTLINE_JOIN_ROUND</tt> for round join style,
+   <tt>CATPRINTLINE_JOIN_BEVEL</tt> for bevel join style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetLineStyle"></a><a name="SetLineStyle(CATPrintLineAttribute,float,float*)"></a> <dt> o <b>SetLineStyle</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLineStyle</b>(<td><script type="text/javascript"> activateLink('CATPrintLineAttribute','CATPrintLineAttribute')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iPatternLength</tt><td><tt>= 0.0</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iDescription</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Selects the current line style.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd>   The current line style.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPRINTLINE_SOLID</tt> for solid line style,
+   <tt>CATPRINTLINE_DOT</tt> for dot line style, 
+   <tt>CATPRINTLINE_DASH</tt> for dash line style,
+   <tt>CATPRINTLINE_DASHDOT</tt> for dashdot line style,
+   <tt>CATPRINTLINE_PHANTOM</tt> for phantom line style, 
+   <tt>CATPRINTLINE_USER</tt> for user line style.
+ </dd>
+    <dt><tt> iPatternLength</tt>
+   <dd>   The length of the description for user line style. 
+   <br><b>Legal values</b>: The default is 0.
+ </dd>
+    <dt><tt> iDescription</tt>
+   <dd>   The description for user line style.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOrigin"></a><a name="SetOrigin(float,float)"></a> <dt> o <b>SetOrigin</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOrigin</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the printing offset from the lower-left corner of the sheet.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX0</tt>
+   <dd>   The x offset of the sheet.
+ </dd>
+    <dt><tt> iY0</tt>
+   <dd>   The y offset of the sheet.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPolygonFillRule"></a><a name="SetPolygonFillRule(CATPrintFillRule)"></a> <dt> o <b>SetPolygonFillRule</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPolygonFillRule</b>(<td><script type="text/javascript"> activateLink('CATPrintFillRule','CATPrintFillRule')</script> <td><tt>iFillRule</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the polygon filling rule.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFillRule</tt>
+   <dd>   The current polygon filling rule.
+   <br><b>Legal values</b>: It can be set to either 
+   <tt>CATPrintFill_EvenOdd</tt> for filling parts of polygon with odd winding number
+   <tt>CATPrintFill_NonZero</tt> for filling parts of polygon with non-zero winding number</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetScale"></a><a name="SetScale(float)"></a> <dt> o <b>SetScale</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetScale</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iScale</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the plotting iScale.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iScale</tt>
+   <dd>   The plotting scale.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTextAttribute"></a><a name="SetTextAttribute(CATPrintTextAttribute,float)"></a> <dt> o <b>SetTextAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTextAttribute</b>(<td><script type="text/javascript"> activateLink('CATPrintTextAttribute','CATPrintTextAttribute')</script> <td><tt>iAttribute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines current text attributes. Texts are drawn with current draw color.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttribute</tt>
+   <dd>   See <tt>CATPrintTextAttribute</tt> for available text attributes.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd>   See <tt>CATPrintTextAttribute</tt> for available text values corresponding to iAttribute.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTextAttribute"></a><a name="SetTextAttribute(CATPrintTextAttribute,CATFont*)"></a> <dt> o <b>SetTextAttribute</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTextAttribute</b>(<td><script type="text/javascript"> activateLink('CATPrintTextAttribute','CATPrintTextAttribute')</script> <td><tt>iAttribute</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFont','CATFont*')</script> <td><tt>iFont</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines current text font.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttribute</tt>
+   <dd>   <b>Legal values</b>: It must be CATPRINTTEXT_TYPEFACE.
+ </dd>
+    <dt><tt> iFont</tt>
+   <dd>   See CATFont for more informations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetViewport"></a><a name="SetViewport(float,float,float,float)"></a> <dt> o <b>SetViewport</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetViewport</b>(<td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iX</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iY</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iWidth</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float')</script> <td><tt>iHeight</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the plotting viewport (or clipping area) in user coordinates.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iX</tt>
+   <dd>   The x origin of the viewport.
+ </dd>
+    <dt><tt> iY</tt>
+   <dd>   The y origin of the viewport.
+ </dd>
+    <dt><tt> iWidth</tt>
+   <dd>   The width of the viewport.
+ </dd>
+    <dt><tt> iHeight</tt>
+   <dd>   The height of the viewport.</dd>
+</dl>
+</dl>
+</dl>
+<a name="StartNewPage"></a><a name="StartNewPage(CATPrintParameters&amp;)"></a> <dt> o <b>StartNewPage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>StartNewPage</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Starts a new page with (eventually) new parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   Current printing parameters.</dd>
+</dl>
+</dl>
+</dl>
+<a name="StartNewPage"></a><a name="StartNewPage(CATPrintParameters&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>StartNewPage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>StartNewPage</b>(<td> const <script type="text/javascript"> activateLink('CATPrintParameters','CATPrintParameters&amp;')</script> <td><tt>iParameters</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPageTitle</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Starts a new page with (eventually) new parameters.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParameters</tt>
+   <dd>   Current printing parameters.  
+ </dd>
+    <dt><tt> iPageTitle</tt>
+   <dd>   New page title.</dd>
+</dl>
+</dl>
+</dl>
+<a name="StartNewRegion"></a><a name="StartNewRegion(void)"></a> <dt> o <b>StartNewRegion</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>StartNewRegion</b>(<td><script type="text/javascript"> activateLink('void','void')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Begins a new region inside the closed figure.
+</dl>
+<hr>
+ This object is included in the file: <b>CATPrintGenerator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATPrintBase</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

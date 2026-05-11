@@ -1,0 +1,505 @@
+<body bgcolor="#FFCC99">
+
+<p><b><font color="#800080" size="5" face="Comic Sans MS"><i><a name="Top"></a>
+Properties physical types</i></font></b></p><hr>
+<p><font face="Comic Sans MS"><a href="#structural">The Structural Properties</a></font></p>
+<p><font face="Comic Sans MS"><a href="#Kin">The Kinematics Properties</a></font></p>
+<p><font face="Comic Sans MS"><a href="#RTM">The RTM Properties</a></font></p>
+<p><font face="Comic Sans MS"><a href="#others">The Others Properties</a></font></p>
+<hr>
+<p><i><b><font size="5" color="#FF6600" face="Comic Sans MS">
+<a name="structural"></a>The structural properties</font></b></i></p>
+<p><font size="2">Theses properties are applied on structural elements and have 
+the particularity to all have a </font><a href="MATERIAL.htm">MATERIAL</a> 
+characteristic. This characteristic is a pointer which references the explicit 
+material entity which should be under the material explicit set. Indeed, in the 
+update mechanism of the field model, the material set (and therefore its child 
+material) is always updated before the property set (and therefore before the 
+child properties). For all the structural properties listed here after, the
+<a href="MATERIAL.htm">MATERIAL</a> characteristic is present but not in the 
+list of characteristic.</p>
+<ul>
+	<li><font color="#FF6600" face="Comic Sans MS"><b><a name="PROPERTY_BAR_3D">PROPERTY_BAR_3D</a></b></font> 
+	defines a bar element. A bar element is a 1D element that only strain in 
+	traction and compression. This property is axis-symmetric. The X axis is 
+	parallel to the bar axis&nbsp; and the cross-sectional characteristics are 
+	constant in X. Physical characteristics is: 
+	<ul>
+		<li><b>CROSS_SECTIONAL_AREA is the constant area of the section computed 
+		in the orthogonal plane of the X&nbsp; axis. </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_BEAM_3D">PROPERTY_BEAM_3D</a></font></b> 
+	defines the properties of the straight beam element. The X axis is parallel 
+	to the beam axis and the beam cross-sectional characteristics are constant 
+	in X. Transverse shear effects and torsion center are taken into account. 
+	Arbitrary rigid offsets (one vector at each structure node) are also taken 
+	into account. To clarify the axis vocabulary, refer to the following scheme:
+	<p align="center">
+	<img height="50%" src="../images/elfbeama.jpg" width="50%" border="1"></p>
+	<p>Physical characteristics are:
+	<ul>
+		<li><b>CROSS_SECTIONAL_AREA </b>is the constant area of the section 
+		computed in the orthogonal plane of the X&nbsp; axis. 
+		</li>
+		<li><b>AREA_MOMENT_OF_INERTIA</b> is the symmetrical tensor expressed in 
+		the real element axis, usually expressed in its principal axis (i.e. the 
+		tensor is diagonal); if so, Ixx is the torsion stiffness and Iyy an Izz 
+		the bending stiffness. 
+		</li>
+		<li><b>AREA_SHEAR_RATIO_XY</b> is the ratio of the total cross-sectional 
+		area over the effective shear area in the local XLocYLoc plane (should 
+		always be greater than 1). 
+		</li>
+		<li><b>AREA_SHEAR_RATIO_XZ</b> is the ratio of the total cross-sectional 
+		area over the effective shear area in the local XLocZLoc' plane (should 
+		always be greater than 1). 
+		</li>
+		<li><b>OFFSET</b>: 6 components of the 2 rigid offset vectors in m, each 
+		oriented from a structural node to the corresponding end of the physical 
+		beam, with respect to the element reference frame by default. 
+		</li>
+		<li><b>SHEAR-CENTER</b>:&nbsp;2 coordinates of the torsion (shear) center in 
+		m, expressed in the YLocZLoc axis. 
+		</li>
+		<li><b>ORIENTATION_VECTOR </b>same as for the element (Element value is 
+		collected by priority) 
+		</li>
+		<li><b>ORIENTATION_NODE </b>same as for the element (Element value is 
+		collected by priority) 
+		</li>
+		<li><b>ORIENTATION_POINT </b>same as for the element (Element value is 
+		collected by priority). Note: Only one of the three last characteristics 
+		should be defined. 
+		</li>
+		<li><b>TORSIONAL_STIFFNESS_PARAMETER</b> is the torsion stiffness 
+		parameter. 
+		</li>
+		<li><b>DEGREES_OF_FREEDOM </b>two bit arrays (6 bits for each) to 
+		release a combination of the 6 degrees of freedom at each end (Element 
+		value is collected by priority). 
+		</li>
+		<li><b>WARPING_NODE_A </b>Node identifier that define the warping at the 
+		beginning of the beam. 
+		</li>
+		<li><b>WARPING_NODE_B </b>Node identifier that define the warping at the 
+		end of the beam. 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CURVED_BEAM_3D">PROPERTY_CURVED_BEAM_3D</a></font></b>: 
+	Property applied only on ELEMENT_CURVED_BEAM_3D_BAR2. For characteristic 
+	description, refer to the here above <b>PROPERTY_BEAM_3D.&nbsp; </b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_SHELL_3D">PROPERTY_SHELL_3D</a> </font>
+	</b>
+	<ul>
+		<li><b>THICKNESS</b>&nbsp; Note that if no SURFACE_OFFSET characteristic is 
+		defined the thickness is equally distributed above and under the 
+		element. 
+		</li>
+		<li><b>SURFACE_OFFSET</b> same as for the element (Element value is 
+		collected by priority). 
+		</li>
+		<li><b>MATERIAL_ANGLE</b> same as for the element (Element value is 
+		collected by priority). 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_MEMBRANE_3D">PROPERTY_MEMBRANE_3D</a></font></b>
+	<ul>
+		<li><b>THICKNESS:&nbsp; <span style="font-weight: 400">See</span> </b>
+		PROPERTY_SHELL_3D thickness definition. 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_SHEAR_PANEL_3D">PROPERTY_SHEAR_PANEL_3D</a>
+	</font></b>
+	<ul>
+		<li><b>THICKNESS: <span style="font-weight: 400">See</span> </b>
+		PROPERTY_SHELL_3D thickness definition. 
+		</li>
+		<li><b>ROD_AREA_RATIO</b>: Two scalar to simulate virtual stiffening 
+		bars along the quadrangle shear element edges. The scalars is the ratio 
+		of the area of the quadrangle over the cross-sectional area of the 
+		virtual bars. Four virtual bars are simulated with this characteristic 
+		but only two ratios are given as inputs as opposite bars have the same 
+		properties by pairs?? 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_COMPOSITE_SHELL_3D">PROPERTY_COMPOSITE_SHELL_3D</a></font></b>. Used to model a 2D stack-up of 
+	composites.
+	<ul>
+		<li><b>NB_LAMINATES: Integer defining the number of laminate.</b> 
+		</li>
+		<li><b>MATERIAL: Characteristic listed here because unlike other 
+		structural properties, the number of pointers to explicit materials 
+		(repeat on the characteristic) has to be equal to the number of laminate 
+		defined here above.</b> 
+		</li>
+		<li><b>THICKNESS: in m. Thickness of all the layers. The repeat on this 
+		characteristic has to be equal to the number of laminates.</b> 
+		</li>
+		<li><b>ANGLE</b>: in radian. Angle of the fiber with respect to the 
+		reference axis (see here after scheme). Useful, of course, only when 
+		using non-isotropic material 
+		</li>
+		<li><b>MATERIAL_ANGLE</b>: In radian. Angle between the first edge of 
+		one element and the reference axis (see here after scheme). 
+		</li>
+		<li><b>LOCAL_AXIS</b>: Local axis of the element expressed in the 
+		reference axis??. Note: Only one of the two former characteristic should 
+		be defined. 
+		</li>
+		<li><b>PLY_ID</b>: Set of <b>NB_LAMINATES <span style="font-weight: 400">
+		integers that can be optionally stored for post processing purpose only 
+		(e.g. display the stresses of the layer of PLY_ID 2 in the entire 
+		model). </span></b></li>
+	</ul>
+	<p>Here is a scheme showing the computation and meaning of the different 
+	axis:</p>
+	<p align="center">
+	<img height="195" src="../images/Composite_axis.gif" width="240" border="0">
+	</li>
+</ul>
+<blockquote>
+	<p>On this scheme, the reference axis is chosen by the user and not stored 
+	in the field model. In case the X and Y axis of the reference axis is not in 
+	the element plane, they are projected in the plane axis. The element is in 
+	blue on the scheme with the node numbers (local to the element). The first 
+	edge which is used to define the MATERIAL_ANGLE characteristic is the 
+	oriented edge that goes from node 1 to node 2 of the element. Note that in 
+	this particular scheme, the normal to the element would be positively 
+	oriented in the same sense as Z. Note also that the number of ANGLE 
+	characteristics defined has to be equal to the number of laminates, as the 
+	number of MATERIAL_ANGLE defined should be equal to the number of elements 
+	on which the property is applied (if only one is defined, i.e. repeat=1, 
+	then the unique value is taken for all the elements). </p>
+	<p>On the scheme, the red stripes shows the orientation of one laminate.</p>
+	<p>With this model one cannot under the same entity property have a 
+	different stack-up for two elements on which the property is applied. </p>
+</blockquote>
+<p align="right">&nbsp;<a href="#Top">[Top]</a></p>
+<blockquote>
+	<hr>
+</blockquote>
+<p><b><i><font size="5" color="#FF6600" face="Comic Sans MS"><a name="Kin"></a>
+The cinematic properties</font></i></b></p>
+<p><font size="2">Theses properties are applied on cinematic elements. No </font>
+<a href="MATERIAL.htm">MATERIAL</a><font size="2"> characteristic is associated 
+to on any of these properties.</font></p>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_RIGID">PROPERTY_CONSTRAINT_3D_RIGID</a></font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>DEGREES_OF_FREEDOM</b>: Only one bit array to release the DOFs at 
+		the slave node?? 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_AXIAL">PROPERTY_CONSTRAINT_3D_AXIAL</a></font></b>: 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_MEAN">PROPERTY_CONSTRAINT_3D_MEAN</a></font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>DEGREES_OF_FREEDOM</b>: Only one bit array to release the DOFs at 
+		the slave node?? 
+		</li>
+		<li><b>WEIGHTING_FACTOR ?? </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_SPRING_3D">PROPERTY_SPRING_3D</a>:</font></b> 
+	<ul>
+		<li><b>TRANSLATIONAL_STIFFNESS</b>: Translational spring constants with 
+		respect to the local reference frame, expressed as a diagonal tensor. 
+		</li>
+		<li><b>ROTATIONAL_STIFFNESS</b>: Rotational spring constants with 
+		respect to the local reference frame, expressed as a diagonal tensor. 
+		</li>
+		<li><b>LOCAL_AXIS</b>: Same as for the element (Element value is 
+		collected by priority). 
+		</li>
+		<li><b>DEGREES_OF_FREEDOM</b>: Two bit arrays to release the DOF at each 
+		end of the spring element. 
+		</li>
+		<li><b>ROTATIONAL_DAMPING</b>: Three real values to define the damping 
+		in each direction defined by the <b>LOCAL_AXIS definition.?? </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_SPRING_BEAM_3D">PROPERTY_SPRING_BEAM_3D</a></font></b>: 
+	<ul>
+		<li><b>TRANSLATIONAL_STIFFNESS</b>: Translational spring constants with 
+		respect to the local reference frame, expressed as a diagonal tensor. 
+		</li>
+		<li><b>ROTATIONAL_STIFFNESS</b>: Rotational spring constants with 
+		respect to the local reference frame, expressed as a diagonal tensor. 
+		</li>
+		<li><b>LOCAL_AXIS</b>: Same as for the element (Element value is 
+		collected by priority). 
+		</li>
+		<li><b>AREA_MOMENT_OF_INERTIA</b>: See beam property 
+		</li>
+		<li><b>MASS_INERTIA</b>: ?? 
+		</li>
+		<li><b>STRUCTURAL_DAMPING</b>:?? 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_CONTACT">PROPERTY_CONSTRAINT_3D_CONTACT</a> </font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>ORIENTATION_VECTOR See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_POINT See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_NODE See beam properties for more information. </b>
+		</li>
+		<li><b>CLEARANCE</b>: in m. Rigid contact bar element with 2 nodes are 
+		used to impose a minimal clearance between the nodes in the direction of 
+		the segment joining the initial positions of these nodes. The clearance 
+		is&nbsp; maximum distance by which the clearance projected on this segment 
+		can be reduced (this parameter can also be interpreted as an initial 
+		clearance between nodes, supposing that they are allowed to eventually 
+		come in contact). Its use is recommended when some part of a structure 
+		may be brought into contact with some other part of the structure. 
+		Contact elements are then defined for pairs of nodes from the two parts. 
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_CABLE">PROPERTY_CONSTRAINT_3D_CABLE</a></font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>ORIENTATION_VECTOR See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_POINT See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_NODE See beam properties for more information. </b>
+		</li>
+		<li><b>CLEARANCE</b>: in m. See <b>PROPERTY_CONSTRAINT_3D_CONTACT. </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONTACT_3D">PROPERTY_CONTACT_3D</a></font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>ORIENTATION_VECTOR See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_POINT See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_NODE See beam properties for more information. </b>
+		</li>
+		<li><b>CLEARANCE</b>: in m. See <b>PROPERTY_CONSTRAINT_3D_CONTACT. </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_FITTING">PROPERTY_CONSTRAINT_3D_FITTING</a>: </font></b>
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>ORIENTATION_VECTOR See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_POINT See beam properties for more information </b>
+		</li>
+		<li><b>ORIENTATION_NODE See beam properties for more information. </b>
+		</li>
+		<li><b>OVERLAP</b>: in m. Distance of interference at the initial state. 
+		The behavior is comparable to a <b>PROPERTY_CONSTRAINT_3D_CONTACT with a 
+		negative clearance. </b>
+		<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_TIGHTENING">PROPERTY_CONSTRAINT_3D_TIGHTENING</a></font></b>: 
+	<ul>
+		<li><b>LOCAL_AXIS</b>: Local axis definition (Element value is collected 
+		by priority) 
+		</li>
+		<li><b>ORIENTATION_VECTOR</b>
+		See beam properties for more information
+		</li>
+		<li><b>ORIENTATION_POINT </b>
+		See beam properties for more information
+		</li>
+		<li><b>ORIENTATION_NODE </b>
+		See beam properties for more information.
+		</li>
+		<li><b>TIGHTENING_FORCE</b>: in N. Force transmitted by the element.?? 
+		</li>
+	</ul>
+	</li>
+</ul>
+<p align="right">&nbsp;<a href="#Top">[Top]</a></p>
+<hr>
+<p><b><i><font size="5" color="#FF6600" face="Comic Sans MS"><a name="RTM"></a>
+T<span lang="en-us">he <a href="#RTMdef">RTM*</a> properties</span></font></i></b></p>
+<ul>
+	<li><span lang="en-us"><font color="#FF6600" face="Comic Sans MS"><b>
+	<a name="PROPERTY_RTM_RUNNER">PROPERTY_RTM_RUNNER</a></b></font></span><ul>
+		<li><span lang="en-us"><b>ISOTROPIC_PERMEABILITY : </b>The material is 
+		implicit. The principal material characteristic is the the permeability 
+		which is calculated from the geometrical parameters.</span></li>
+		<li><span lang="en-us"><b>THICKNESS</b></span></li>
+		<li><span lang="en-us"><b><a name="Fiber_Content"></a>FIBER_CONTENT : </b>Characteristic which represents the percentage 
+		of volumic space occupied by the fibers. The rest is in most of the case 
+		empty&nbsp; or eventually it can be filled with resin.&nbsp; For a 
+		runner, the percentage is most of the case Null but in some cases the 
+		user may like to precise a non-null value.</span></li>
+	</ul>
+	</li>
+</ul>
+<p align="right"><span lang="en-us">&nbsp;<a href="#Top">[Top]</a></span></p>
+<ul>
+	<li><span lang="en-us"><font color="#FF6600" face="Comic Sans MS"><b>
+	<a name="PROPERTY_RTM_SHELL">PROPERTY_RTM_SHELL</a></b></font></span><ul>
+		<li><span lang="en-us"><b>MATERIAL : </b>Characteristic listed here because unlike other 
+		structural properties, the number of pointers to explicit materials 
+		(repeat on the characteristic) .</span></li>
+		<li><span lang="en-us"><b>THICKNESS</b></span></li>
+		<li><span lang="en-us"><b>&nbsp;<a href="#Fiber_Content">FIBER_CONTENT</a> : </b>See Property_RTM_Runner.</span></li>
+		<li><span lang="en-us"><b>&nbsp;<a name="FIBER_DIR"></a>FIBER_DIR_1 :</b> Allow to store the fiber direction 
+		in the first direction</span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_2 :</b> Allow to store the fiber direction 
+		in the second direction</span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_3 :</b> Allow to store the fiber direction 
+		in the third direction</span><ul>
+		<li><span lang="en-us">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Why do 
+		we need these fiber directions? If we take the example of a fabric that 
+		has been sheared, all the fibers are not necessary orthogonal.</span></li>
+	</ul></li>
+		<li><span lang="en-us"><b>&nbsp;PRINCIPAL_PERMEABILITY : </b>At the 
+		origin this matrix was used to store the full permeability values in the 
+		global axis on each element.</span></li>
+	</ul>
+	<p align="right"><span lang="en-us">&nbsp;<a href="#Top">[Top]</a></span></li>
+	<li><span lang="en-us"><font color="#FF6600" face="Comic Sans MS"><b>
+	<a name="PROPERTY_RTM_SHELL_CPD">PROPERTY_RTM_SHELL_CPD</a></b></font></span><ul>
+		<li><span lang="en-us"><b>&nbsp;THICKNESS</b></span></li>
+		<li><span lang="en-us"><b>&nbsp;<a href="#Fiber_Content">FIBER_CONTENT</a>&nbsp; </b>See Property_RTM_Runner.</span></li>
+		<li><span lang="en-us"><b>&nbsp;<a href="#FIBER_DIR">FIBER_DIR_1 </a>:</b> 
+		Refer to PROPERTY_RTM_SHELL</span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_2</b></span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_3</b></span></li>
+		<li><b>&nbsp;PRINCIPAL_PERMEABILITY</b></li>
+	</ul>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><font color="#FF6600" face="Comic Sans MS"><b>
+	<a name="PROPERTY_RTM_SOLID"></a>PROPERTY_RTM_SOLID</b></font><ul>
+		<li><b>MATERIAL</b></li>
+		<li><b>&nbsp;<a href="#Fiber_Content">FIBER_CONTENT</a>&nbsp; </b>See Property_RTM_Runner.</li>
+		<li><span lang="en-us"><b>&nbsp;<a href="#FIBER_DIR">FIBER_DIR_1 </a>:</b> 
+		Refer to PROPERTY_RTM_SHELL</span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_2</b></span></li>
+		<li><span lang="en-us"><b>&nbsp;FIBER_DIR_3</b></span></li>
+		<li><b>&nbsp;PRINCIPAL_PERMEABILITY</b></li>
+	</ul>
+	</li>
+</ul>
+<p align="right">&nbsp;<a href="#Top">[Top]</a></p>
+<p align="left"><font face="Comic Sans MS" color="#FF6600">*<a name="RTMdef"></a> 
+Resin Transfer Molding </font></p>
+<hr>
+<p><b><i><font size="5" color="#FF6600" face="Comic Sans MS"><a name="others">
+</a>The Other Properties</font></i></b></p>
+<ul>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_FLUID_3D">PR</a></font></b><font color="#FF6600" face="Comic Sans MS"><b><a name="PROPERTY_FLUID_3D">OPERTY_FLUID_3D</a></b></font> 
+	No characteristic associated to this entity. 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_BEAM_3D_CURVED">PROPERTY_BEAM_3D_CURVED</a> </font></b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_SHELL_3D_COMPOSITE">PROPERTY_SHELL_3D_COMPOSITE</a> </font>
+	</b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_DAMPER_3D_THERMAL">PROPERTY_DAMPER_3D_THERMAL</a> </font>
+	</b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="MATERIAL_ISOTROPIC_THERMAL_">MATERIAL_ISOTROPIC_THERMAL</a> </font>
+	</b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_SPRING_DAMPER">PROPERTY_CONSTRAINT_3D_SPRING_DAMPER</a>?? 
+	</font></b>
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_CONSTRAINT_3D_SPRING_DAMPER_FREQUENCY_DEPENDENT">PROPERTY_CONSTRAINT_3D_SPRING_DAMPER_FREQUENCY_DEPENDENT</a></font></b>?? 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_DAMPER_3D">PROPERTY_DAMPER_3D</a></font></b>?? 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_DAMPER_THERMAL">PROPERTY_DAMPER_THERMAL</a></font></b>?? 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_ACOUSTIC_3D">PROPERTY_ACOUSTIC_3D</a> </font></b>?? 
+	<p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><font color="#FF6600" face="Comic Sans MS">
+	<a name="PROPERTY_MASS_3D">PROPERTY_MASS_3D</a></font></b><p align="right">&nbsp;<a href="#Top">[Top]</a></li>
+	<li><b><a href="../Mechanical.htm#234" name="PROPERTY_TFA_SHELL">
+	<font color="#FF6600" face="Comic Sans MS">PROPERTY_TFA_SHELL</font></a></b></li>
+</ul>
+<p align="right">&nbsp;<a href="#Top">[Top]</a></p>
+

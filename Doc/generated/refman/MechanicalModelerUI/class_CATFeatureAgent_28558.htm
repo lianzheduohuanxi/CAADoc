@@ -1,0 +1,474 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MechanicalModelerUI Class CATFeatureAgent</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MechanicalModelerUI.htm" href="../MechanicalModelerUI.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MechanicalModelerUI";	}
+		function getCurrentObjectName() { 
+ 	return "CATFeatureAgent"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MechanicalModelerUI <script type="text/javascript" > writeClassCharacteristic(); </script> CATFeatureAgent</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATFeatureAgent_28558','CATFeatureAgent','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATFeatureAgent</b>
+</p>
+<p>
+<b><i> Class to select in Mechanical context.</i></b><br>
+
+ <b>Role</b>:This agent of selection is dedicated for mechanical features. In addition to the 
+  <script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','','CATPathElementAgent') </script> possibilities, this agent enables you to:  <ul>
+   <li>Featurize the selected object and manage the featurization options</li>
+   <li>Authorize or not, in assembly context, the selection outside the current component. 
+       ( see 
+<script type="text/javascript"> activateLinkAnchor('CATFeatureAgentBehavior','','CATFeatureAgentBehavior') </script> )</li>  </ul>
+  In addition, this agent automatically transforms a document in Visu mode in Design mode, 
+  when the end user selects one element of this document.
+  <p>The featurization of the selected object should be used only if it is necessary. This
+  feature is named a BRep feature. It implements at least the <tt>CATIMfBRep</tt> interface. 
+  The 
+<script type="text/javascript"> activateLinkAnchor('','FeaturizeElement','FeaturizeElement') </script> method enables you to know if the selected object  ( 
+<script type="text/javascript"> activateLinkAnchor('','GetElementValue','GetElementValue') </script> ) has been  featurized. Once the BRep feature has been created you have only two possibilities:
+  <ul>
+  <li>Keep the feature: It must be aggregated, with the <tt>CATIDescendants</tt> interface, 
+   in order to manage its automatic deletion. </li>
+  <li>Delete the feature: The <tt>CATICutAndPastable</tt> interface must be used.</li>
+  </ul>
+  </p>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATFeatureAgent(CATString&amp;,CATClassId,CATDlgEngBehavior,CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)"><b>CATFeatureAgent</b></a>(CATString&amp;,CATClassId,CATDlgEngBehavior,CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)
+<dd>  Constructs a path element agent.
+ <dt> o 
+    <a href="#~CATFeatureAgent()"><b>~CATFeatureAgent</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AgentError()"><b>AgentError</b></a>()
+<dd>  Returns the agent error codes.
+ <dt> o 
+    <a href="#ElementInContext(CATPathElement*)"><b>ElementInContext</b></a>(CATPathElement*)
+<dd>  Returns the selection context.
+ <dt> o 
+    <a href="#FeaturizedElement(CATPathElement*)"><b>FeaturizedElement</b></a>(CATPathElement*)
+<dd>  Returns the featurization status.
+ <dt> o 
+    <a href="#GetAgentBehavior(CATMfFeaturizeMode&amp;,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior&amp;)"><b>GetAgentBehavior</b></a>(CATMfFeaturizeMode&amp;,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior&amp;)
+<dd>  Gets the agent behavior.
+ <dt> o 
+    <a href="#GetElementValue(CATPathElement*)"><b>GetElementValue</b></a>(CATPathElement*)
+<dd>  Returns the selected object.
+ <dt> o 
+    <a href="#SetActiveObjectPath(CATPathElement&amp;)"><b>SetActiveObjectPath</b></a>(CATPathElement&amp;)
+<dd>  Sets the active object path.
+ <dt> o 
+    <a href="#SetAgentBehavior(CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)"><b>SetAgentBehavior</b></a>(CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)
+<dd>  Sets the agent behavior.
+ <dt> o 
+    <a href="#SetListOfValuesToSelect(CATSO*)"><b>SetListOfValuesToSelect</b></a>(CATSO*)
+<dd>  Sets the agent list of values as the selection would do.
+ <dt> o 
+    <a href="#SetValueToSelect(CATPathElement*)"><b>SetValueToSelect</b></a>(CATPathElement*)
+<dd>  Sets the agent value as the selection would do.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATFeatureAgent"></a><a name="CATFeatureAgent(CATString&amp;,CATClassId,CATDlgEngBehavior,CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)"></a> <dt> o <b>CATFeatureAgent</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATFeatureAgent</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATClassId','CATClassId')</script> <td><tt>iType</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgEngBehavior','CATDlgEngBehavior')</script> <td><tt>iBehavior</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt><td><tt>= 0</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt><td><tt>= NULL_var</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFeatureAgentBehavior','CATFeatureAgentBehavior')</script> <td><tt>iAgBehavior</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a path element agent.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The agent identifier. It is used to retrieve the undo/redo titles in 
+   the command resource file.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd>   The type of the expected objects.
+   The type corresponds to an interface implemented by the object. 
+   <br><b><Legal values></b>If it is NULL, all the objects
+   are accepted.
+   <br>You can add interfaces with </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','AddElementType','CATPathElementAgent.AddElementType') </script> or    you can specified later an ordered list thanks to the 
+   
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','SetOrderedTypeType','CATPathElementAgent.SetOrderedTypeType') </script> method. 
+    <dt><tt> iBehavior</tt>
+   <dd>   The agent behavior. The behavior is given in the form of a
+   concatenation of the facet values using the | character. Refer to the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','CATPathElementAgent','CATPathElementAgent.CATPathElementAgent') </script> method    for details about the valid facets. 
+    <br>However, for the two following facets the default value is the opposite 
+    of the <tt>CATPathElementAgent</tt> class.
+   <ul>
+   <li>Tooltip: <tt>CATDlgEngWithTooltip</tt> is the default and not
+   <tt>CATDlgEngWithoutTooltip</tt>.</li>
+   <li>User Selection Filter: <tt>CATDlgEngWithUserSelectionFilter</tt> is the default and not
+   <tt>CATDlgEngWithoutUserSelectionFilter</tt>.</li>
+   </ul>
+   <br>The behavior may be specified later with the 
+<script type="text/javascript"> activateLinkAnchor('CATDialogAgent','SetBehavior','CATDialogAgent.SetBehavior') </script> method. 
+    <dt><tt> iMode</tt>
+   <dd>   The featurization mode to featurized the selected geometry.
+   <br><b>Legal values</b>: The featurization mode is defined with options
+   separeted with the | character.
+   <br>e.g.: <code>MfRelimitedFeaturization|MfPermanentBody</code>
+   <br>The default featurization mode is the <tt>MfNoFeaturization</tt> option (=0).
+   <br>The featurization mode may be specified later with the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetAgentBehavior','SetAgentBehavior') </script> method. 
+    <dt><tt> iSupport</tt>
+   <dd>   The support of the featurized object.
+   <br><b>Legal values</b>: 
+    <ul>
+     <li> NULL_var when <tt>iMode</tt> is <tt>MfNoFeaturization</tt> or
+   <tt>MfFunctionalFeaturization</tt>.</li>
+    <li>Otherwise a feature, if it required by the featurization option.</li>
+    </ul>
+   <br>The support of the featurized object may be specified later with 
+   the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetAgentBehavior','SetAgentBehavior') </script> method. 
+    <dt><tt> iAgBehavior</tt>
+   <dd>   The specific agent behavior. The default behavior (NULL) means:
+    <ul>
+      <li>The optimization mode which keeps the decode result is activated.</li>
+      <li>In assembly context, selection of geometry outside the current component is prohibited. The
+       </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetActiveObjectPath','SetActiveObjectPath') </script> method enables you to change the current component         which is by default the current UI active object.</li>
+    </ul>
+   <br>This behavior may be specified later with the 
+<script type="text/javascript"> activateLinkAnchor('','SetAgentBehavior','SetAgentBehavior') </script> method.
+</dl>
+</dl>
+</dl>
+<a name="~CATFeatureAgent"></a><a name="~CATFeatureAgent()"></a> <dt> o <b>~CATFeatureAgent</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATFeatureAgent</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AgentError"></a><a name="AgentError()"></a> <dt> o <b>AgentError</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>AgentError</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the agent error codes.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The value.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>0</tt>: no error.</li>
+   <li><tt>!=0</tt>: otherwise</li>
+   </ul>
+</dl>
+</dl>
+<a name="ElementInContext"></a><a name="ElementInContext(CATPathElement*)"></a> <dt> o <b>ElementInContext</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ElementInContext</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the selection context.
+ <br><b>Role:</b>This methode enables you to know, in assembly context, if the 
+ the selection has been done in the current Part or outside. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>   The agent value that you retrieve with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetValue','CATPathElementAgent.GetValue') </script> (mono-sel)   and the 
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetListOfValues','CATPathElementAgent.GetListOfValues') </script> (multi-sel)methods. 
+  <dt> <b>Returns:</b> 
+  <dd>    The selection context.
+   <br><b>Legal values</b>: 
+   <ul>
+     <li><tt>0</tt>:the selected element is in the current Part.</li>
+     <li><tt>1</tt>: the selected element is in another Part.</li>
+   </ul>
+</dl>
+</dl>
+</dl>
+<a name="FeaturizedElement"></a><a name="FeaturizedElement(CATPathElement*)"></a> <dt> o <b>FeaturizedElement</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>FeaturizedElement</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the featurization status.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>   The agent value that you retrieve with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetValue','CATPathElementAgent.GetValue') </script> (mono-sel)   and the 
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetListOfValues','CATPathElementAgent.GetListOfValues') </script> (multi-sel) methods. 
+  <dt> <b>Returns:</b> 
+  <dd>    The value.
+   <br><b>Legal values</b>: <ul>
+   <li>TRUE the selected element has been featurized. The value returned by 
+    the 
+<script type="text/javascript"> activateLinkAnchor('','GetElementValue','GetElementValue') </script> method is a BRep feature implementing the     <tt>CATIMfBRep</tt> interface.</li>
+   <li>FALSE the selected element is not featurized.</li></ul>
+</dl>
+</dl>
+</dl>
+<a name="GetAgentBehavior"></a><a name="GetAgentBehavior(CATMfFeaturizeMode&amp;,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior&amp;)"></a> <dt> o <b>GetAgentBehavior</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetAgentBehavior</b>(<td><script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode&amp;')</script> <td><tt>ioMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>ioSupport</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFeatureAgentBehavior','CATFeatureAgentBehavior&amp;')</script> <td><tt>ioAgBehavior</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the agent behavior.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioMode</tt>
+   <dd>   The featurization mode to featurize the selected geometry.
+ </dd>
+    <dt><tt> ioSupport</tt>
+   <dd>   The support of the featurized object.
+ </dd>
+    <dt><tt> ioAgBehavior</tt>
+   <dd>    <ul>
+      <li>The optimization mode which keeps the decode result is activated.</li>
+      <li>In assembly context, selection of geometry outside the current component is prohibited. The
+       </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetActiveObjectPath','SetActiveObjectPath') </script> method enables you to change the current component         which is by default the current UI active object.</li>
+    </ul>
+</dl>
+</dl>
+</dl>
+<a name="GetElementValue"></a><a name="GetElementValue(CATPathElement*)"></a> <dt> o <b>GetElementValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script>  <b>GetElementValue</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the selected object.
+ <br><b>Role</b>: This method returns the leaf of the input path.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>   The agent value that you retrieve with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetValue','CATPathElementAgent.GetValue') </script> (mono-sel)   and the 
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetListOfValues','CATPathElementAgent.GetListOfValues') </script> (multi-sel)methods.   If the value is NULL, the 
+<script type="text/javascript"> activateLinkAnchor('CATPathElementAgent','GetElementValue','CATPathElementAgent.GetElementValue') </script> is used.  
+  <dt> <b>Returns:</b> 
+  <dd>    The selected object.
+</dl>
+</dl>
+</dl>
+<a name="SetActiveObjectPath"></a><a name="SetActiveObjectPath(CATPathElement&amp;)"></a> <dt> o <b>SetActiveObjectPath</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetActiveObjectPath</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement&amp;')</script> <td><tt>iPath</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the active object path.
+ <br><b>Role</b>: In assembly context, i.e. when the current document is a Product document,
+  this method enables you to declare a context (a path) 
+  different from the current User Interface active object one.
+  <br>The role of this method is different from the classes and their behaviors:
+  <ul>
+  <li>For <tt>CATFeatureAgent</tt>:</li>
+   The role of <tt>iPath</tt> depends on the agent behavior:( 
+<script type="text/javascript"> activateLinkAnchor('CATFeatureAgentBehavior','','CATFeatureAgentBehavior') </script> )    <ul>
+    <li><tt>CATFAgAllowSelectionInContext</tt> is not set (default behavior): It is possible to select only 
+    in the document whose the path is specified by <tt>iPath</tt>. 
+    </li>
+    <li><tt>CATFAgAllowSelectionInContext</tt> is set: This method is useless. It is possible
+    to select anywhere. </li>
+    </ul>
+  <li>For 
+<script type="text/javascript"> activateLinkAnchor('CATFeatureImportAgent','','CATFeatureImportAgent') </script> : <tt>iPath</tt> is the path of a Part document where will be imported the selected objects. </li>
+   </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>   The active object path. Its default value is the current UI active object, the value returned 
+  by the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATFrmEditor','GetUIActiveObject','CATFrmEditor.GetUIActiveObject') </script> method.
+</dl>
+</dl>
+</dl>
+<a name="SetAgentBehavior"></a><a name="SetAgentBehavior(CATMfFeaturizeMode,CATBaseUnknown_var&amp;,CATFeatureAgentBehavior)"></a> <dt> o <b>SetAgentBehavior</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAgentBehavior</b>(<td><script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt><td><tt>= NULL_var</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFeatureAgentBehavior','CATFeatureAgentBehavior')</script> <td><tt>iAgBehavior</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the agent behavior.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>   The featurization mode to featurize the selected geometry.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd>   The support of the featurized object.
+   <br><b>Legal values</b>: NULL_var when <tt>iMode</tt> is <tt>MfNoFeaturization</tt> or 
+   <tt>MfFunctionalFeaturization</tt> otherwise the support feature if it is required by 
+  the featurization option.
+ </dd>
+    <dt><tt> iAgBehavior</tt>
+   <dd>    <ul>
+      <li>The optimization mode which keeps the decode result is activated.</li>
+      <li>In assembly context, selection of geometry outside the current component is prohibited. The
+       </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetActiveObjectPath','SetActiveObjectPath') </script> method enables you to change the current component         which is by default the current UI active object.</li>
+    </ul>
+</dl>
+</dl>
+</dl>
+<a name="SetListOfValuesToSelect"></a><a name="SetListOfValuesToSelect(CATSO*)"></a> <dt> o <b>SetListOfValuesToSelect</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SetListOfValuesToSelect</b>(<td><script type="text/javascript"> activateLink('CATSO','CATSO*')</script> <td><tt>iList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the agent list of values as the selection would do.
+ <br><b>Role</b>: This method is usable only on MultiAcquisition objects,
+ otherwise use the 
+<script type="text/javascript"> activateLinkAnchor('','SetValueToSelect','SetValueToSelect') </script> method. <br>This method does not register an undo step.
+ <br><b>Postcondition</b>: Use the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','SetValuation','CATAcquisitionAgent.SetValuation') </script> method to make the agent accept the value list, otherwise this list is not
+ taken into account.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iList</tt>
+   <dd>   The list of values.
+   <br><b>Cyclic reference</b>: A copy of <tt>iList</tt> is kept and 
+   AddRef'ed. It is Released in the agent destructor.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The number of path element was successfully treated.
+</dl>
+</dl>
+<a name="SetValueToSelect"></a><a name="SetValueToSelect(CATPathElement*)"></a> <dt> o <b>SetValueToSelect</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SetValueToSelect</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the agent value as the selection would do.
+ <br><b>Role</b>: The value is a path element to be treated.
+ <br>This method does not register an undo step.
+ <br><b>Postcondition</b>: Use the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','SetValuation','CATAcquisitionAgent.SetValuation') </script> method to make the agent accept the value, otherwise this value is not
+ taken into account.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iValue</tt>
+   <dd>   The value.
+   <br><b>Cyclic reference</b>: A copy of <tt>iValue</tt> is kept and  
+   AddRef'ed. It is Released in the agent destructor.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    1 if the path element was successfully treated, 0 otherwise.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATFeatureAgent.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMechanicalModelerUI</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,230 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To edit connections.
+'
+' Assumptions:   The Part document CAASfdEditConnection.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  'Get the Manager Object
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'Get the Stiffeners,Plates and Members
+  Dim StiffenerReferencesObj As References
+  Set StiffenerReferencesObj = ManagerObj.GetSuperStiffeners
+
+  Dim PlateReferencesObj As References
+  Set PlateReferencesObj = ManagerObj.GetSuperPlates
+  
+  Dim MemberReferencesObj As References
+  Set MemberReferencesObj = ManagerObj.GetSuperMembers
+  
+  Dim Plate1, Plate2 As SfmSuperPlate
+  Set Plate1 = PlateReferencesObj.Item(1)
+  Set Plate2 = PlateReferencesObj.Item(2)
+
+  Dim Stiffener1, Stiffener2, Stiffener3 As SfmStiffener
+  Set Stiffener1 = StiffenerReferencesObj.Item(1)
+  Set Stiffener2 = StiffenerReferencesObj.Item(2)
+  Set Stiffener3 = StiffenerReferencesObj.Item(3)
+  
+  Dim Member1, Member2 As SfmMember
+  Set Member1 = MemberReferencesObj.Item(1)
+  Set Member2 = MemberReferencesObj.Item(2)
+  
+  'Retrieving Existing Endcut on Profile
+  Dim Stiff1StartEndcut, Stiff1EndEndcut, Stiff2StartEndCut, Stiff2EndEndCut As SfmEndcut
+  Set Stiff1StartEndcut = Stiffener1.GetEndcut(1)
+  Set Stiff1EndEndcut = Stiffener1.GetEndcut(2)
+
+  Set Stiff2StartEndCut = Stiffener2.GetEndcut(1)
+  Set Stiff2EndEndCut = Stiffener2.GetEndcut(2)
+  
+  'Get the information of existing Endcuts on Stiffener1
+  Dim Stiff1_StartEndCutName, Stiff1_StartEndCutType, Stiff1_EndEndCutName, Stiff1_EndEndCutType As String
+  Dim Stiff1_Start_ContextList, Stiff1_End_ContextList As SfmReferences
+  Dim Stiff1_Start_ParamList, Stiff1_End_ParamList As SfmConnectionParameters
+  Dim Stiff1_Start_ParamNamesList(), Stiff1_End_ParamNamesList() As Variant
+
+  Stiff1StartEndcut.GetEndcutinfo Stiff1_StartEndCutType, Stiff1_StartEndCutName, Stiff1_Start_ContextList, Stiff1_Start_ParamList, Stiff1_Start_ParamNamesList
+  
+  Stiff1EndEndcut.GetEndcutinfo Stiff1_EndEndCutType, Stiff1_EndEndCutName, Stiff1_End_ContextList, Stiff1_End_ParamList, Stiff1_End_ParamNamesList
+
+  'Reading Parameters
+  Dim SizeOfUDFParams As Long
+  SizeOfUDFParams = Stiff1_Start_ParamList.Count
+  Dim UDFParam As Parameter
+  Dim UDFParamName As String
+  Dim UDFParamValue As String
+  Dim i As Integer
+  For i = 1 To SizeOfUDFParams
+    Set UDFParam = Stiff1_Start_ParamList.Item(i)
+    UDFParamName = Stiff1_Start_ParamNamesList(i - 1)
+    UDFParamValue = UDFParam.ValueAsString
+    If UDFParamName = "Flange length" Then
+    UDFParam.ValuateFromString ("150mm")
+    End If
+  Next
+
+  'Get the information of existing Endcuts on Stiffener2
+  Dim Stiff2_StartEndCutName, Stiff2_StartEndCutType As String
+  Dim Stiff2_EndEndCutName As String
+  Dim Stiff2_EndEndCutType As String
+  Dim Stiff2_Start_ContextList, Stiff2_End_ContextList As SfmReferences
+  Dim Stiff2_Start_ParamList, Stiff2_End_ParamList As SfmConnectionParameters
+  Dim Stiff2_Start_ParamNamesList(), Stiff2_End_ParamNamesList() As Variant
+
+  Stiff2StartEndCut.GetEndcutinfo Stiff2_StartEndCutType, Stiff2_StartEndCutName, Stiff2_Start_ContextList, Stiff2_Start_ParamList, Stiff2_Start_ParamNamesList
+    
+  Stiff2EndEndCut.GetEndcutinfo Stiff2_EndEndCutType, Stiff2_EndEndCutName, Stiff2_End_ContextList, Stiff2_End_ParamList, Stiff2_End_ParamNamesList
+  
+  'Reading Contexts
+  Dim Context As Reference
+  Dim ContextName As String
+  Dim SizeOfContext As Long
+  SizeOfContext = Stiff2_Start_ContextList.Count
+  For i = 1 To SizeOfContext
+   Set Context = Stiff2_Start_ContextList.Item(1)
+   ContextName = Context.DisplayName
+  Next
+  
+  'Get the location of existing endcut
+  Dim Coord As Variant
+  Dim X, Y, Z As Double
+  Coord = Stiff1StartEndcut.GetConnectionCoordinate
+  X = Coord(0)
+  Y = Coord(1)
+  Z = Coord(2)
+  
+  'Getting Endcuts on both the extremities for Member
+  Dim Member1_StartEndCut, Member1_EndEndCut As SfmEndcut
+  Set Member1_StartEndCut = Member1.GetEndcut(1)
+  Set Member1_EndEndCut = Member1.GetEndcut(2)
+  
+  'Get the information of existing Endcuts on Member1
+  Dim Member1_StartEndCutName, Member1_StartEndCutType, Member1_EndEndCutType As String
+  Dim Member1_EndEndCutName As String
+  Dim Member1_Start_ContextList, Member1_End_ContextList As SfmReferences
+  Dim Member1_Start_ParamList, Member1_End_ParamList As SfmConnectionParameters
+  Dim Member1_Start_ParamNamesList(), Member1_End_ParamNamesList() As Variant
+
+  Member1_StartEndCut.GetEndcutinfo Member1_StartEndCutType, Member1_StartEndCutName, Member1_Start_ContextList, Member1_Start_ParamList, Member1_Start_ParamNamesList
+  Member1_EndEndCut.GetEndcutinfo Member1_EndEndCutType, Member1_EndEndCutName, Member1_End_ContextList, Member1_End_ParamList, Member1_End_ParamNamesList
+  
+  'Reading and Modifying UDF Parameter Values
+  Dim Member1_SizeOfUDFParams As Long
+  Dim Member1_UDFParam As Parameter
+  Dim Member1_UDFParamName As String
+  Dim Member1_UDFParamValue As String
+  
+  Member1_SizeOfUDFParams = Member1_End_ParamList.Count
+  
+  For i = 1 To Member1_SizeOfUDFParams
+    Set Member1_UDFParam = Member1_End_ParamList.Item(i)
+    Member1_UDFParamName = Member1_End_ParamNamesList(i - 1)
+    Member1_UDFParamValue = Member1_UDFParam.ValueAsString
+    If Member1_UDFParamName = "radius 1" Then
+    Member1_UDFParam.ValuateFromString ("100mm")
+    End If
+    If Member1_UDFParamName = "Angle 1" Then
+    Member1_UDFParam.ValuateFromString ("20deg")
+    End If
+  Next
+    
+'********SLOTS*********
+    
+  'Get Existing Slots on Plate
+  Dim SlotsOnPlate As SfmSlots
+  Set SlotsOnPlate = Plate2.GetSlotsOnPlate
+  
+  Dim CntSlotsOnPlate As Long
+  CntSlotsOnPlate = SlotsOnPlate.Count
+  
+ 'Take Slots one by one
+  For i = 1 To CntSlotsOnPlate
+    Dim SlotObjOnPlate As SfmSlot
+    Set SlotObjOnPlate = SlotsOnPlate.Item(i)
+    
+    Dim UDFName As String
+    Dim MasterRef, SlaveRef As Reference
+    Dim ListSlotParams As SfmConnectionParameters
+    Dim ListOfParamNames() As Variant
+    'Gets the name of the UDF used for creating the slot
+    UDFName = SlotObjOnPlate.GetCntnDetailName
+    'Gets the Penetrating Element used in the creation of the Slot
+    Set MasterRef = SlotObjOnPlate.GetMasterObject
+    'Gets the Penetrated Element used in the creation of the Slot
+    Set SlaveRef = SlotObjOnPlate.GetSlaveObject
+    'Gets the Information of Existing Slot
+    SlotObjOnPlate.GetCntnDetailParameters ListSlotParams, ListOfParamNames
+    'Reading Parameters and Modifying
+    Dim PlateUDFParam As Parameter
+    Set PlateUDFParam = ListSlotParams.Item(i)
+    Dim PlateUDFParamName  As String
+    PlateUDFParamName = ListOfParamNames(i - 1)
+    If PlateUDFParamName = "Clearance" Then
+      PlateUDFParam.ValuateFromString ("15mm")
+    End If
+  Next
+   
+ 'Get Existing Slots on Stiffener
+  Dim SlotOnStiff As SfmSlots
+  Set SlotOnStiff = Stiffener1.GetSlotsOnProfile
+  
+  Dim CntSlotsOnStiff As Long
+  CntSlotsOnStiff = SlotOnStiff.Count
+
+  For i = 1 To CntSlotsOnStiff
+    Dim SlotObjOnStiff As SfmSlot
+    Dim UDFNameStiff As String
+    Dim MasterRef1, SlaveRef1 As Reference
+    Dim SlotParamsList As SfmConnectionParameters
+    Dim ParamNamesList() As Variant
+    'Taking First Slot
+    Set SlotObjOnStiff = SlotOnStiff.Item(i)
+    'Gets the name of the UDF used for creating the slot
+    UDFNameStiff = SlotObjOnStiff.GetCntnDetailName
+    'Gets the Penetrating Element used in the creation of the Slot
+    Set MasterRef1 = SlotObjOnStiff.GetMasterObject
+    'Gets the Penetrated Element used in the creation of the Slot
+    Set SlaveRef1 = SlotObjOnStiff.GetSlaveObject
+    'Getting the List of Parameters and their Names of Existing Slot
+    SlotObjOnStiff.GetCntnDetailParameters SlotParamsList, ParamNamesList
+    
+    Dim StiffUDFParam As Parameter
+    SizeOfUDFParams = SlotParamsList.Count
+   
+   'Reading Parameters and Modifying
+    Dim j As Integer
+    For j = 1 To SizeOfUDFParams
+     Set StiffUDFParam = SlotParamsList.Item(j)
+     Dim  StiffUDFParamName As String
+     StiffUDFParamName = ParamNamesList(j - 1)
+     If StiffUDFParamName = "Side Clearance" Then
+       StiffUDFParam.ValuateFromString ("10mm")
+     End If
+     If StiffUDFParamName = "Flange Clearance" Then
+       StiffUDFParam.ValuateFromString ("10mm")
+     End If
+     Next
+   Next
+End Sub

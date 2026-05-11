@@ -1,0 +1,2123 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Dump of Tool Path Content Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Dump of Tool Path Content Command</h3>
+      <em>Reading tool path</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" width="100%">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiDumpToolPathCommand use case:</p>
+      <ul>
+        <li><a href="#What"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#The Use Case"><strong>The CAAMaiDumpToolPathCommand Use
+          Case</strong></a>
+          <ul>
+            <li><a href="#What2">What Does CAAMaiDumpToolPathCommand Do</a></li>
+            <li><a href="#Launch">How to Launch CAAMaiDumpToolPathCommand</a></li>
+            <li><a href="#Code">Where to Find the CAAMaiDumpToolPathCommand Code</a></li>
+          </ul>
+        <li><a href="#step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="What"></a>What You Will Learn With This Use Case</h3>
+This use case deals with a command that can dump interactively the content of
+the tool path stored on a manufacturing operation.
+<p>The main role of this use case is to show how to use the CAA2 methods to read
+data in a tool path.
+<!---------------------------------comment------------------------------------->
+<h3><a name="The Use Case"></a>The CAAMaiDumpToolPathCommand Use Case</h3>
+<p>CAAMaiDumpToolPathCommand is a use case of the CAAManufacturingItf.edu
+framework that illustrates ManufacturingInterfaces framework capabilities.</p>
+<h4><a name="What2"></a>What Does CAAMaiDumpToolPathCommand Do</h4>
+<p>CAAMaiToolPathCustomization runs with the Process document shown on figure
+below that contains a &quot;Drilling Dwell Delay&quot; operation and a
+&quot;Pocketing&quot; operation.</p>
+<p><img border="0" src="images/CAAMaiDumpToolPath1.jpg" width="838" height="794"></p>
+<ul>
+  <li>Select either &quot;Drilling Dwell Delay.1&quot; operation, or
+    &quot;Pocketing.1&quot; operation and submit the
+    &quot;CAAMaiDumpToolPathCommand&quot;.</li>
+  <li>A report is generated in temporary directory (by default, C:\Temp for
+    Windows, /tmp for UNIX). The name of the file is <i>DumpToolPath.txt </i>or,
+    if it already exists, <i>DumpToolPath-1.txt, DumpToolPath-2.txt,</i> ....</li>
+</ul>
+<p><a href="#pocket">Generating report on &quot;Pocketing.1&quot; operation</a></p>
+<p><a href="#drill">Generating report on &quot;Drilling Dwell Delay.1&quot;
+operation</a></p>
+<p><a href="#ProfileContouring">Generating report on &quot;Profile
+Contouring.1&quot; operation</a></p>
+<h4><a name="pocket"></a>Generating report on &quot;Pocketing.1&quot; operation</h4>
+<p>The tool path is a <i>CATIMfgCompoundTraject </i>object. It has one child,
+which is a <i>CATIMfgTPMultipleMotion</i> object.</p>
+<p>The<i> CATIMfgTPMultipleMotion</i> object contains several
+&quot;polylines&quot; and circle arcs: all paths are machining paths with
+machining feedrate.</p>
+<pre>============================================================
+=========== Dump of CATIMfgCompoundTraject object ==========
+============================================================
+Value of machining time (in minutes)                        7.6112
+Value of total time (in minutes)                            7.6112
+Number of linear motions                                    118
+Number of circular motions                                  0
+Tool Axis is fixed    
+Coordinates of tool axis in absolute axis system            0 0 1
+Value of MachiningFeedrate                                  1000mm_mn
+Value of ApproachFeedrate                                   300mm_mn
+Value of RetractFeedrate                                    1mm_mn
+Value of FinishingFeedrate                                  0.1mm_mn
+Value of Spindle speed                                      70turn_mn
+Name of tool or tool assembly                               T2 End Mill D 10
+Value of corrector number                                   1
+Start Point coordinates in absolute axis system             97.3438 2.9646 20 
+Start axis coordinates in absolute axis system              0 0 1 
+End Point coordinates in absolute axis system               14.3791 -36.3035 20 
+End axis coordinates in absolute axis system                0 0 1 
+          ------------------------------------------------------------
+          Child index 1 is a CATIMfgTPMultipleMotion object  
+          ------------------------------------------------------------
+          Number of tip points                                        536
+          Number of contact points                                    0
+          Number of contact normals                                   0
+          Number of tool axis                                         536
+          More than 100 tip points
+          Number of sub-motions                                       142
+          +++ Name of tool or tool assembly                           T2 End Mill D 10
+          +++ Sub-motion 1 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    1 2
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 2 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    3 4
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 3 is a circle   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    5 7
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Normal to the plane                                  0 0 1
+          ++++++ Center of the circle arc                             41.8731 -48.3068 20
+          ++++++ Radius of the circle arc                             72.6562 -48.3068 20
+          ++++++ Angle of the circle arc                              -9.76176 -48.3068 20
+          ++++++ Tangent at the start of the circle arc               0.765943 -0.642908 0
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 4 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    8 9
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 5 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    10 11
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 6 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    12 13
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 7 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    14 15
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 8 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    16 17
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 9 is a circle   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    18 22
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Normal to the plane                                  0 0 1
+          ++++++ Center of the circle arc                             41.8731 -48.3068 20
+          ++++++ Radius of the circle arc                             70 -48.3068 20
+          ++++++ Angle of the circle arc                              -22.5416 -48.3068 20
+          ++++++ Tangent at the start of the circle arc               0.832954 -0.553342 0
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 10 is a polyline
+          
+          etc .....
+</pre>
+<h4><a name="drill"></a>Generating report on &quot;Drilling Dwell Delay.1&quot;
+operation</h4>
+<p>In this case, the structure of the tool path is more complex.</p>
+<p>The tool path is a <i>CATIMfgCompoundTraject</i> object which has 4 children:</p>
+<ul>
+  <li>3 <i>CATIMfgTPMultipleMotion</i> objects to describe approach and retract
+    paths</li>
+  <li>1 <i>CATIMfgToolPathCycle</i> object.</li>
+</ul>
+<p>The <i>CATIMfgToolPathCycle</i> object has one child, which is a <i>CATIMfgTPMultipleMotion</i>
+object:</p>
+<ul>
+  <li>The syntax associated to the <i>CATIMfgToolPathCycle</i> object is
+    &quot;CYCLE/DRILL, 0.000000, 1.000000&quot; (evaluation of NC_DRILLING
+    NC_Command or NC_Instruction).</li>
+  <li>The <i>CATIMfgTPMultipleMotion</i> object describes the machining paths ,
+    with &quot;polylines&quot; to describe linear motions and a
+    &quot;DELAY&quot; command (evaluation of NC_DELAY Command).</li>
+</ul>
+<pre>============================================================
+=========== Dump of CATIMfgCompoundTraject object ==========
+============================================================
+Value of machining time (in minutes)                        0.0493333
+Value of total time (in minutes)                            0.0563333
+Number of linear motions                                    12
+Number of circular motions                                  0
+Tool Axis is fixed    
+Coordinates of tool axis in absolute axis system            0 0 1
+Value of MachiningFeedrate                                  1000mm_mn
+Value of ApproachFeedrate                                   300mm_mn
+Value of RetractFeedrate                                    1000mm_mn
+Value of PlungeFeedrate                                     10mm_mn
+Value of Spindle speed                                      70turn_mn
+Name of tool or tool assembly                               T1 Drill D 10
+Value of corrector number                                   1
+Start Point coordinates in absolute axis system             150 60 31 
+Start axis coordinates in absolute axis system              0 0 1 
+End Point coordinates in absolute axis system               -120 -90 31 
+End axis coordinates in absolute axis system                0 0 1 
+          ------------------------------------------------------------
+          Child index 1 is a CATIMfgTPMultipleMotion object  
+          ------------------------------------------------------------
+          Number of tip points                                        3
+          Number of contact points                                    0
+          Number of contact normals                                   0
+          Number of tool axis                                         0
+          Tip point number 1                                          150 60 31
+          Tip point number 2                                          150 60 31
+          Tip point number 3                                          150 60 21
+          Number of sub-motions                                       2
+          +++ Name of tool or tool assembly                           T1 Drill D 10
+          +++ Sub-motion 1 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    1 1
+          ++++++ RAPID feedrate for the motion
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 2 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    2 3
+          ++++++ Feedrate value                                       300mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          ------------------------------------------------------------
+          Child index 2 is a CATIMfgTPMultipleMotion object  
+          ------------------------------------------------------------
+          Number of tip points                                        2
+          Number of contact points                                    0
+          Number of contact normals                                   0
+          Number of tool axis                                         0
+          Tip point number 1                                          150 60 21
+          Tip point number 2                                          150 60 21
+          Number of sub-motions                                       1
+          +++ Name of tool or tool assembly                           T1 Drill D 10
+          +++ Sub-motion 1 is a polyline   
+          ++++++ Type of path                                         ApproachTraject
+          ++++++ Index of Start and End tip points                    1 2
+          ++++++ RAPID feedrate for the motion
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          ------------------------------------------------------------
+          Child index 3 is a CATIMfgToolPathCycle object  
+          ------------------------------------------------------------
+          Location point index 1                                      150 60 20
+          Location point index 2                                      150 -90 20
+          Location point index 3                                      -120 -90 20
+          NC_command evaluation                                       CYCLE/DRILL,    0.000000,    1.000000
+          Value of machining time (in minutes)                        0.006
+          Value of total time (in minutes)                            0.013
+          Number of linear motions                                    8
+          Number of circular motions                                  0
+          Tool Axis is fixed    
+          Coordinates of tool axis in absolute axis system            0 0 1
+          Value of MachiningFeedrate                                  1000mm_mn
+          Value of ApproachFeedrate                                   300mm_mn
+          Value of RetractFeedrate                                    1000mm_mn
+          Value of PlungeFeedrate                                     10mm_mn
+          Value of Spindle speed                                      70turn_mn
+          Name of tool or tool assembly                               T1 Drill D 10
+          Value of corrector number                                   1
+          Start Point coordinates in absolute axis system             150 60 21 
+          Start axis coordinates in absolute axis system              0 0 1 
+          End Point coordinates in absolute axis system               -120 -90 21 
+          End axis coordinates in absolute axis system                0 0 1 
+                    ------------------------------------------------------------
+                    Child index 1 is a CATIMfgTPMultipleMotion object  
+                    ------------------------------------------------------------
+                    Number of tip points                                        16
+                    Number of contact points                                    0
+                    Number of contact normals                                   0
+                    Number of tool axis                                         0
+                    Tip point number 1                                          150 60 21
+                    Tip point number 2                                          150 60 20
+                    Tip point number 3                                          150 60 20
+                    Tip point number 4                                          150 60 21
+                    Tip point number 5                                          150 60 21
+                    Tip point number 6                                          150 -90 21
+                    Tip point number 7                                          150 -90 21
+                    Tip point number 8                                          150 -90 20
+                    Tip point number 9                                          150 -90 20
+                    Tip point number 10                                         150 -90 21
+                    Tip point number 11                                         150 -90 21
+                    Tip point number 12                                         -120 -90 21
+                    Tip point number 13                                         -120 -90 21
+                    Tip point number 14                                         -120 -90 20
+                    Tip point number 15                                         -120 -90 20
+                    Tip point number 16                                         -120 -90 21
+                    Number of sub-motions                                       11
+                    +++ Name of tool or tool assembly                           T1 Drill D 10
+                    +++ Sub-motion 1 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    1 2
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 2 is a PP command   
+                    ++++++ NC_Command value                                     DELAY/    2.000000,REV
+                    +++ Sub-motion 3 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    3 4
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 4 is a polyline   
+                    ++++++ Type of path                                         LinkingTraject
+                    ++++++ Index of Start and End tip points                    5 6
+                    ++++++ RAPID feedrate for the motion
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 5 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    7 8
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 6 is a PP command   
+                    ++++++ NC_Command value                                     DELAY/    2.000000,REV
+                    +++ Sub-motion 7 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    9 10
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 8 is a polyline   
+                    ++++++ Type of path                                         LinkingTraject
+                    ++++++ Index of Start and End tip points                    11 12
+                    ++++++ RAPID feedrate for the motion
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 9 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    13 14
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+                    +++ Sub-motion 10 is a PP command   
+                    ++++++ NC_Command value                                     DELAY/    2.000000,REV
+                    +++ Sub-motion 11 is a polyline   
+                    ++++++ Type of path                                         MachiningTraject
+                    ++++++ Index of Start and End tip points                    15 16
+                    ++++++ Feedrate value                                       1000mm_mn
+                    ++++++ Ratio to apply on feedrate                           1
+                    ++++++ Spindle value                                        70turn_mn
+                    ++++++ Ratio to apply on spindle                            1
+                    ++++++ Normal rotation direction for the spindle
+                    ++++++ Fixed Tool Axis value                                0 0 1
+                    ++++++ Tool corrector number                                1
+          ------------------------------------------------------------
+          Child index 4 is a CATIMfgTPMultipleMotion object  
+          ------------------------------------------------------------
+          Number of tip points                                        2
+          Number of contact points                                    0
+          Number of contact normals                                   0
+          Number of tool axis                                         0
+          Tip point number 1                                          -120 -90 21
+          Tip point number 2                                          -120 -90 31
+          Number of sub-motions                                       1
+          +++ Name of tool or tool assembly                           T1 Drill D 10
+          +++ Sub-motion 1 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    1 2
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+</pre>
+<p><a name="ProfileContouring"></a><b>Generating report on &quot;Profile
+Contouring.1&quot; operation</b></p>
+<p>The tool path is a <i>CATIMfgCompoundTraject </i>object. It has one child,
+which is a <i>CATIMfgTPMultipleMotionWithProfileData</i> object.</p>
+<p>A <i>CATIMfgTPMultipleMotionWithProfileData</i> object is a kind of <i>CATIMfgTPMultipleMotion
+</i>object on which it is possible to store cutter profile datas.</p>
+<p>The<i> CATIMfgTPMultipleMotionWithProfileData</i> object contains several
+&quot;polylines&quot; to describe tip points: cutter profile motions linked to
+these &quot;polylines&quot; are either &quot;polylines&quot;, or &quot;circle
+arcs&quot;.</p>
+<pre>============================================================
+=========== Dump of CATIMfgCompoundTraject object ==========
+============================================================
+Value of machining time (in minutes)                        0.799783
+Value of total time (in minutes)                            0.799783
+Number of linear motions                                    7
+Number of circular motions                                  0
+Tool Axis is fixed    
+Coordinates of tool axis in absolute axis system            0 0 1
+Value of MachiningFeedrate                                  1000mm_mn
+Value of ApproachFeedrate                                   300mm_mn
+Value of RetractFeedrate                                    1mm_mn
+Value of FinishingFeedrate                                  0.1mm_mn
+Value of Spindle speed                                      70turn_mn
+Name of tool or tool assembly                               T2 End Mill D 10
+Value of corrector number                                   1
+Start Point coordinates in absolute axis system             -114.985 -85 20 
+Start axis coordinates in absolute axis system              0 0 1 
+End Point coordinates in absolute axis system               -115 -84.9609 20 
+End axis coordinates in absolute axis system                0 0 1 
+          ------------------------------------------------------------
+          Child index 1 is a CATIMfgTPMultipleMotionWithProfileData object  
+          ------------------------------------------------------------
+          Number of tip points                                        14
+          Number of contact points                                    0
+          Number of contact normals                                   0
+          Number of tool axis                                         14
+          Tip point number 1                                          -114.985 -85 20
+          Tip point number 2                                          144.985 -85 20
+          Tip point number 3                                          144.985 -85 20
+          Tip point number 4                                          144.985 -85 20
+          Tip point number 5                                          145 -84.9609 20
+          Tip point number 6                                          145 54.9609 20
+          Tip point number 7                                          145 54.9609 20
+          Tip point number 8                                          145 54.9609 20
+          Tip point number 9                                          144.985 55 20
+          Tip point number 10                                         -114.985 55 20
+          Tip point number 11                                         -114.985 55 20
+          Tip point number 12                                         -114.985 55 20
+          Tip point number 13                                         -115 54.9609 20
+          Tip point number 14                                         -115 -84.9609 20
+          Number of sub-motions                                       7
+          +++ Name of tool or tool assembly                           T2 End Mill D 10
+          +++ Sub-motion 1 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    1 2
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 2 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    3 4
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 3 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    5 6
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 4 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    7 8
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 5 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    9 10
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 6 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    11 12
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          +++ Sub-motion 7 is a polyline   
+          ++++++ Type of path                                         MachiningTraject
+          ++++++ Index of Start and End tip points                    13 14
+          ++++++ Feedrate value                                       1000mm_mn
+          ++++++ Ratio to apply on feedrate                           1
+          ++++++ Spindle value                                        70turn_mn
+          ++++++ Ratio to apply on spindle                            1
+          ++++++ Normal rotation direction for the spindle
+          ++++++ Fixed Tool Axis value                                0 0 1
+          ++++++ Tool corrector number                                1
+          ============================================================
+          +++ Dump of cutter profile datas   
+          ============================================================
+          +++ Cutter profile datas described by a polyline for sub-motion 1
+          +++ Cutter profile datas located on the right for sub-motion 1
+          Profile point number 1                                      -114.985 -90 20
+          Profile point number 2                                      144.985 -90 20
+          +++ Cutter profile datas described by a circle for sub-motion 2
+          +++ Cutter profile datas located on the right for sub-motion 2
+          Profile point number 1                                      144.985 -90 20
+          Profile point number 2                                      146.908 -89.613 20
+          Profile point number 3                                      148.536 -88.5195 20
+          Profile point number 4                                      149.622 -86.8858 20
+          Profile point number 5                                      150 -84.9609 20
+          +++ Cutter profile datas described by a polyline for sub-motion 3
+          +++ Cutter profile datas located on the right for sub-motion 3
+          Profile point number 1                                      150 -84.9609 20
+          Profile point number 2                                      150 54.9609 20
+          +++ Cutter profile datas described by a circle for sub-motion 4
+          +++ Cutter profile datas located on the right for sub-motion 4
+          Profile point number 1                                      150 54.9609 20
+          Profile point number 2                                      149.611 56.8795 20
+          Profile point number 3                                      148.524 58.5076 20
+          Profile point number 4                                      146.901 59.6023 20
+          Profile point number 5                                      144.985 60 20
+          +++ Cutter profile datas described by a polyline for sub-motion 5
+          +++ Cutter profile datas located on the right for sub-motion 5
+          Profile point number 1                                      144.985 60 20
+          Profile point number 2                                      -114.985 60 20
+          +++ Cutter profile datas described by a circle for sub-motion 6
+          +++ Cutter profile datas located on the right for sub-motion 6
+          Profile point number 1                                      -114.985 60 20
+          Profile point number 2                                      -116.908 59.613 20
+          Profile point number 3                                      -118.536 58.5195 20
+          Profile point number 4                                      -119.622 56.8858 20
+          Profile point number 5                                      -120 54.9609 20
+          +++ Cutter profile datas described by a polyline for sub-motion 7
+          +++ Cutter profile datas located on the right for sub-motion 7
+          Profile point number 1                                      -120 54.9609 20
+          Profile point number 2                                      -120 -84.9609 20
+</pre>
+<h4><a name="Launch"></a>How to Launch CAAMaiDumpToolPathCommand</h4>
+<p>To launch CAAMaiDumpToolPathCommand, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiDumpToolPathCommand.m module along with its prerequisites.</li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Add the &quot;CAAMaiDumpToolPathCommand&quot; command in the environment.</li>
+  <li>Open the CAAMaiDumpToolPathCommand.CATProcess file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<h4><a name="Code"></a>Where to Find the CAAMaiDumpToolPathCommand Code</h4>
+<p>The CAAMaiDumpToolPathCommand use case is a C++ class named <i>CAAMaiDumpToolPathCommand</i>
+located in the CAAMaiDumpToolPathCommand.m module of the CAAManufacturingItf.edu
+framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiDumpToolPathCommand.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiDumpToolPathCommand.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="step"></a>Step-by-Step</h3>
+<p>There are several logical steps in CAAMaiDumpToolPathCommand:</p>
+<ol>
+  <li><a href="#init">Initialization of the command</a></li>
+  <li><a href="#compound">Dump of a <i>CATIMfgCompoundTraject</i> object</a></li>
+  <li><a href="#cycle">Dump of a <i>CATIMfgToolPathCycle</i> object</a></li>
+  <li><a href="#motion">Dump of a <i>CATIMfgTPMultipleMotion</i> object.</a></li>
+  <li><a href="#MultipleMotionWithProfileData">Dump of a
+    CATIMfgTPMultipleMotionWithProfileData object.</a></li>
+</ol>
+<p>We now comment each of these steps by looking at the code.</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="init"></a>Initialization of the command</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//========================================================================
+// Constructor
+//========================================================================
+CAAMaiDumpToolPathCommand::CAAMaiDumpToolPathCommand(CATString* argument)
+:CATStateCommand ()
+{ 
+	_File = NULL;
+
+	//===============================================
+	// Init of selection agent for activity	selection
+	//===============================================
+	<b>_ActAcq = new CATPathElementAgent</b>(&quot;Act&quot;);
+	_ActAcq-&gt;SetElementType(CATIMfgActivity::ClassName());
+	_ActAcq-&gt;SetBehavior(CATDlgEngWithPrevaluation|CATDlgEngWithCSO);
+}
+
+//========================================================================
+// Destructor
+//========================================================================
+CAAMaiDumpToolPathCommand::~CAAMaiDumpToolPathCommand()
+{
+	//======================
+	// Close the report file
+	//======================
+	if (_File) fclose(_File);
+	_File = NULL;
+	
+	if(_ActAcq) _ActAcq-&gt;RequestDelayedDestruction();    
+	_ActAcq = NULL;
+}
+
+//========================================================================
+// Build Graph
+//========================================================================
+void CAAMaiDumpToolPathCommand::BuildGraph()
+{  
+	if (NULL!=_ActAcq)
+	{
+		AddCSOClient(_ActAcq);
+		CATDialogState* InitState = GetInitialState(&quot;InitState&quot;);  
+		if (NULL!=InitState)
+		{
+			InitState-&gt;AddDialogAgent(_ActAcq);
+ 
+			<b>AddTransition</b> (InitState, NULL, IsOutputSetCondition(_ActAcq),
+			  Action((ActionMethod)&amp; <b>CAAMaiDumpToolPathCommand::DumpToolPath</b>));
+		}
+	}
+	return;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This section of the source concerns the definition of the dialog agents, the
+dialog states, and the transitions:</p>
+<ul>
+  <li><i>_ActAcq </i>is the dialog agent for the selection of the operation</li>
+  <li>There is only one transition: once operation is selected, method <code>DumpToolPath
+    </code>is called on the selected operation.</li>
+</ul>
+<p>Refer to &quot;Dialog Engine&quot; documentation for further details.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+//========================================================================
+// DumpToolPath
+//========================================================================
+CATBoolean CAAMaiDumpToolPathCommand::DumpToolPath (void *)
+{
+	//========================================
+	// <b>Creates log file in temporary directory</b>
+	//========================================
+	const char* cTemporaryDirectory = CATGetTempDirectory ();
+        char cNom_complet[CATMaxPathSize];
+	CATUnicodeString sFileName (&quot;<b>DumpToolPath.txt</b>&quot;);
+	CATMakePath (cTemporaryDirectory,sFileName.ConvertToChar(),cNom_complet);
+	CATUnicodeString sNom_complet (cNom_complet);
+	CATLibStatus Status = CATFileAccess (sNom_complet,F_OK);
+	int i=0;
+	while (Status == CATLibSuccess &amp;&amp; i&lt;=100000)
+	{
+		//==========================================================
+		// if file &quot;DumpToolPath.txt&quot; exists in temporary directory,
+		// try to create &quot;DumpToolPath-'i'.txt&quot;
+		//==========================================================
+		i++;
+		CATUnicodeString Suffix;
+		Suffix.BuildFromNum (i);
+		Suffix = &quot;-&quot; + Suffix;
+		<b>CATUnicodeString sFileName = &quot;DumpToolPath&quot; + Suffix + &quot;.txt&quot;</b>;
+
+		CATMakePath (cTemporaryDirectory,sFileName.ConvertToChar(),cNom_complet);
+		sNom_complet = (CATUnicodeString) cNom_complet;
+		Status = CATFileAccess (sNom_complet,F_OK);
+	}
+	if (Status == CATLibSuccess) return FALSE;
+
+	_File = fopen (sNom_complet.ConvertToChar(),&quot;w&quot;);
+
+	//============================
+	// Retrieves selected activity
+	//============================
+	CATBaseUnknown_var SelectedObj = _ActAcq -&gt; GetElementValue();	
+
+	//=========================================
+	// Retrieves tool path on selected activity
+	// --&gt; End if no tool path found
+	//=========================================
+	<b>CATIMfgToolPathManagement_var</b> Manage (SelectedObj);
+	if (NULL_var == Manage) 
+	{
+		CATUnicodeString String (&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; No Tool path on selected object&quot;);
+		WriteString (0,String);
+		return FALSE;
+	}
+
+	<b>CATIMfgToolPath_var</b> ToolPath;
+	Manage-&gt;<b>GetToolPath</b> (ToolPath);
+	if (NULL_var == ToolPath)
+	{
+		CATUnicodeString String (&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; No Tool path on selected object&quot;);
+		WriteString (0,String);
+		return FALSE;
+	}
+
+        //====================================
+	// Loads PP Table for current activity
+	//====================================
+	<b>CATIMfgCompoundTraject_var</b> CompoundTraject (ToolPath);
+	if (NULL_var == CompoundTraject) return FALSE;
+	CompoundTraject-&gt;LoadsPPTable (SelectedObj);
+
+	//==================================================================
+	// Dump of the tool path
+	// Two cases are possible:
+	// The element is a CATIMfgToolPathCycle or a CATIMfgCompoundTraject
+	//==================================================================
+	<b>CATIMfgToolPathCycle_var</b> Cycle (ToolPath);
+	if (<b>NULL_var != Cycle</b>)
+	{
+		//=========================================
+		// The object is a CATIMfgToolPathCycle one
+		//=========================================
+		CATUnicodeString text1;
+		text1.Resize(60,'=');
+		WriteString (0,text1);
+		CATUnicodeString text2 (&quot;=========== Dump of CATIMfgToolPathCycle object ============&quot;);
+		WriteString (0,text2);
+		WriteString (0,text1);
+		<b>DumpCycle</b> (0,Cycle);
+	}
+	else if (<b>NULL_var != CompoundTraject</b>)
+	{
+		//=========================================
+		// The object is a CATIMfgToolPathCycle one
+		//=========================================
+		CATUnicodeString text1;
+		text1.Resize(60,'=');
+		WriteString (0,text1);
+		CATUnicodeString text2 (&quot;=========== Dump of CATIMfgCompoundTraject object ==========&quot;);
+		WriteString (0,text2);
+		WriteString (0,text1);
+		<b>DumpCompoundTraject</b> (0,CompoundTraject);
+	}
+	else return FALSE;
+
+	//===============
+	// End of command
+	//===============
+	RequestDelayedDestruction ();
+
+	return TRUE;
+}
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <code>DumpToolPath </code>is called when an operation is selected.</p>
+<p>The name of the report file is <i>DumpToolPath.txt</i> in the temporary
+directory (by default, C:/Temp on NT, /tmp on UNIX): if the file already exists,
+a suffix is added (<i>DumpToolPath-1.txt, DumpToolPath-2.txt</i>, ....).</p>
+<p>With the interface <i>CATIMfgToolPathManagement</i> and the method <code>GetToolPath</code>,
+the tool path is read on the operation:</p>
+<ul>
+  <li>If the interface <i>CATIMfgToolPathManagement </i>is not found or the tool
+    path is not found, the command is ended and a diagnostic is written in the
+    report file.</li>
+</ul>
+<p>The tool path always implements the interface <i>CATIMfgCompoundTraject </i>(see
+below). The tool path can also implement the interface <i>CATIMfgToolPathCycle </i>(see
+below).</p>
+<p>The method <code>LoadsPPTable </code>from the interface <i>CATIMfgCompoundTraject
+</i>loads the PP table linked to the Part Operation containing the selected
+activity: the call to this method is necessary to have a correct syntax
+evaluation of nc_commands and nc_instructions.</p>
+<p>If the tool path is a <i>CATIMfgToolPathCycle </i>object, the method <code>DumpCycle
+</code>is called ; otherwise, the method <code>DumpCompoundTraject </code>is
+called.</p>
+<p><b><a name="compound"></a>Dump of a <i>CATIMfgCompoundTraject </i>object</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+//====================
+// DumpCompoundTraject
+//====================
+void CAAMaiDumpToolPathCommand::DumpCompoundTraject (int iLevel,
+						     const CATIMfgCompoundTraject_var&amp; iCompound)
+{
+	if (NULL_var == iCompound) return;
+
+        //=========================================================================
+	// Retrieves machining time,total time, number of linear and circular motions
+	//=========================================================================
+	double MachiningTime,TotalTime;
+	long LinearMotions,CircularMotions;
+	if (iCompound-&gt;<b>GetCharacteristics</b> (MachiningTime,
+		                               TotalTime,LinearMotions,CircularMotions))
+	{
+		CATUnicodeString String1;
+		CATUnicodeString String2;
+
+		String2.BuildFromNum (MachiningTime);
+		String1 = &quot;Value of machining time (in minutes)&quot;;
+		String1.Resize(60);
+		String1 = String1 + String2;
+		WriteString (iLevel,String1);
+
+		String2.BuildFromNum (TotalTime);
+		String1 = &quot;Value of total time (in minutes)&quot;;
+		String1.Resize(60);
+		String1 = String1 + String2;
+		WriteString (iLevel,String1);
+		
+		String2.BuildFromNum (LinearMotions);
+		String1 = &quot;Number of linear motions&quot;;
+		String1.Resize(60);
+		String1 = String1 + String2;
+		WriteString (iLevel,String1);
+
+		String2.BuildFromNum (CircularMotions);
+		String1 = &quot;Number of circular motions&quot;;
+		String1.Resize(60);
+		String1 = String1 + String2;
+		WriteString (iLevel,String1);
+	}
+
+        //====================================================================
+	// Retrieves axis guidance mode (Fixed,Variable)
+	//====================================================================
+	CATBoolean HasAToolAxis;
+	CATBoolean HasAFixedToolAxis;
+	CATMathVector Dummy;
+	if (iCompound-&gt;<b>RetrievesFixedToolAxis</b> (HasAToolAxis,HasAFixedToolAxis,Dummy))
+	{
+		CATUnicodeString String;
+		if (HasAToolAxis)
+		{
+			if (HasAFixedToolAxis)
+				String = &quot;Tool Axis is fixed    &quot;;
+			else 
+				String = &quot;Tool Axis is variable &quot;;
+			WriteString (iLevel,String);
+		}
+	}
+
+	//=======================================
+	// Retrieves value of reference tool axis
+	//=======================================
+	CATIMfgToolPathToolAxis_var ToolAxis;
+	if (iCompound-&gt;<b>GetToolAxis</b>(ToolAxis))
+	{
+		CATIMfgToolPathConstantToolAxis_var ConstantToolAxis (ToolAxis);
+		if (NULL_var != ConstantToolAxis)
+		{
+			CATMathVector ToolAxisValue;
+			if (ConstantToolAxis-&gt;<b>GetToolAxis</b> (ToolAxisValue))
+			{
+				CATUnicodeString ValueX,ValueY,ValueZ;
+				ValueX.BuildFromNum (ToolAxisValue.GetX());
+				ValueY.BuildFromNum (ToolAxisValue.GetY());
+				ValueZ.BuildFromNum (ToolAxisValue.GetZ());
+				CATUnicodeString String = &quot;Coordinates of tool axis in absolute axis system&quot;;
+				String.Resize(60);
+				String = String + ValueX+&quot; &quot;+ValueY+&quot; &quot;+ValueZ;
+				WriteString (iLevel,String);
+			}
+		}
+	}
+
+	//==========================
+	// Retrieves feedrate values
+	//==========================
+	CATUnicodeString FeedrateType = TPMachiningFeedrate;
+	<b>DumpFeedrate </b>(iLevel,iCompound,FeedrateType);
+	
+	FeedrateType = TPApproachFeedrate;
+	<b>DumpFeedrate</b> (iLevel,iCompound,FeedrateType);
+
+	FeedrateType = TPRetractFeedrate;
+	<b>DumpFeedrate</b> (iLevel,iCompound,FeedrateType);
+
+        FeedrateType = TPFinishingFeedrate; 
+	<b>DumpFeedrate</b> (iLevel,iCompound,FeedrateType);
+
+	FeedrateType = TPChamferingFeedrate;
+	<b>DumpFeedrate</b> (iLevel,iCompound,FeedrateType);
+
+	FeedrateType = TPPlungeFeedrate;
+	<b>DumpFeedrate</b> (iLevel,iCompound,FeedrateType);
+
+	//==================================
+	// Retrieves the spindle speed value
+	//==================================
+	CATIMfgToolPathSpindle_var Spindle;
+	if (iCompound-&gt;<b>GetSpindle</b> (Spindle))
+	{	
+		CATIMfgToolPathConstantSpindle_var ConstantSpindle (Spindle);
+		if (NULL_var != ConstantSpindle)
+		{
+			CATICkeParm_var SpindleValue;
+			if(ConstantSpindle-&gt;<b>GetSpindle</b> (SpindleValue))
+			{
+				if (NULL_var != SpindleValue)
+				{
+					CATUnicodeString String = &quot;Value of Spindle speed&quot;;
+					String.Resize(60);
+					String = String+SpindleValue-&gt;Show();
+					WriteString (iLevel,String);
+				}
+			}
+		}
+	}
+
+	//====================================
+	// Retrieves the tool or tool assembly
+	//====================================
+	CATIMfgToolPathToolAssembly_var TPTA;
+	if (iCompound-&gt;<b>GetToolAssembly</b> (TPTA))
+	{
+		CATBaseUnknown_var ToolOrToolassembly;
+		if (TPTA-&gt;<b>GetTool</b>(ToolOrToolassembly))
+		{
+			CATIMfgResource_var spResource (ToolOrToolassembly);
+			if (NULL_var != spResource)
+			{
+				CATUnicodeString Name;
+				spResource-&gt;GetName(Name);
+				CATUnicodeString String =  &quot;Name of tool or tool assembly&quot;;
+				String.Resize(60);
+				String=String+Name;
+				WriteString (iLevel,String);
+			}
+		}
+	}
+
+	//====================================
+	// Retrieves the Tool Corrector Number
+	//====================================
+	int CorrectorNumber;
+	if (iCompound-&gt;<b>GetCorrectorNumber</b> (CorrectorNumber))
+	{
+		CATUnicodeString String;
+		String.BuildFromNum (CorrectorNumber);
+		CATUnicodeString String1 = &quot;Value of corrector number&quot;;
+		String1.Resize(60);
+		String1 = String1 + String;
+		WriteString (iLevel,String1);
+	}
+
+	//===========================================
+	// Retrieves the start point of the tool path
+	//===========================================
+	CATMathPoint StartPoint;
+	CATMathVector StartVector;
+	if (iCompound-&gt;<b>GetStartPoint</b> (StartPoint,StartVector))
+	{
+		CATUnicodeString ValueX,ValueY,ValueZ;
+		ValueX.BuildFromNum (StartPoint.GetX());
+		ValueY.BuildFromNum (StartPoint.GetY());
+		ValueZ.BuildFromNum (StartPoint.GetZ());
+		CATUnicodeString String = &quot;Start Point coordinates in absolute axis system&quot;;
+		String.Resize(60);
+		String=String+ValueX+&quot; &quot;+ValueY+&quot; &quot;+ValueZ+&quot; &quot;;
+		WriteString (iLevel,String);
+		ValueX.BuildFromNum (StartVector.GetX());
+		ValueY.BuildFromNum (StartVector.GetY());
+		ValueZ.BuildFromNum (StartVector.GetZ());
+		String = &quot;Start axis coordinates in absolute axis system&quot;;
+		String.Resize(60);
+		String=String+ValueX+&quot; &quot;+ValueY+&quot; &quot;+ValueZ+&quot; &quot;;
+		WriteString (iLevel,String);
+	}
+
+	//=========================================
+	// Retrieves the end point of the tool path
+	//=========================================
+	CATMathPoint EndPoint;
+	CATMathVector EndVector;
+	if (iCompound-&gt;<b>GetEndPoint</b> (EndPoint,EndVector))
+	{
+		CATUnicodeString ValueX,ValueY,ValueZ;
+		ValueX.BuildFromNum (EndPoint.GetX());
+		ValueY.BuildFromNum (EndPoint.GetY());
+		ValueZ.BuildFromNum (EndPoint.GetZ());
+		CATUnicodeString String = &quot;End Point coordinates in absolute axis system&quot;;
+		String.Resize(60);
+		String=String+ValueX+&quot; &quot;+ValueY+&quot; &quot;+ValueZ+&quot; &quot;;
+		WriteString (iLevel,String);
+		ValueX.BuildFromNum (EndVector.GetX());
+		ValueY.BuildFromNum (EndVector.GetY());
+		ValueZ.BuildFromNum (EndVector.GetZ());
+		String = &quot;End axis coordinates in absolute axis system&quot;;
+		String.Resize(60);
+		String=String+ValueX+&quot; &quot;+ValueY+&quot; &quot;+ValueZ+&quot; &quot;;
+		WriteString (iLevel,String);
+	}
+
+	//===================
+	// Retrieves children
+	//===================
+	<b>DumpChildren</b> (iLevel,iCompound);
+}
+  ...
+//=============
+// DumpFeedrate
+//=============
+void CAAMaiDumpToolPathCommand::DumpFeedrate (int iLevel,
+					      const CATIMfgCompoundTraject_var&amp; iCompound,
+					      CATUnicodeString&amp; iFeedrateType)
+{
+	if (NULL_var == iCompound) return;
+
+	CATIMfgToolPathFeedrate_var Feedrate;
+	if (iCompound-&gt;<b>GetFeedrate</b> (iFeedrateType,Feedrate))
+	{	
+		CATIMfgToolPathConstantFeedrate_var ConstantFeedrate (Feedrate);
+		if (NULL_var != ConstantFeedrate)
+		{
+			CATICkeParm_var FeedrateValue;
+			if(ConstantFeedrate-&gt;<b>GetFeedrate</b> (FeedrateValue))
+			{
+				if (NULL_var != FeedrateValue)
+				{
+					CATUnicodeString String = &quot;Value of &quot;+iFeedrateType;
+					String.Resize(60);
+					String = String + FeedrateValue-&gt;Show();
+					WriteString (iLevel,String);
+				}
+			}
+		}
+	}
+}
+
+//=============
+// DumpChildren
+//=============
+void CAAMaiDumpToolPathCommand::DumpChildren (int iLevel,
+					      const CATIMfgCompoundTraject_var&amp; iCompound)
+{
+	if (NULL_var == iCompound) return;
+
+	iLevel++;
+
+	//================================================================
+	// Use of CATIMfgToolPathComponents interface to retrieve children
+	//================================================================
+	<b>CATIMfgToolPathComponents_var</b> Components (iCompound);
+	if (NULL_var == Components) return;
+
+	<b>CATListValCATBaseUnknown_var* ListOfChildren = Components-&gt;GetAllElements</b> ();
+	if (NULL!=ListOfChildren)
+	{
+		CATUnicodeString Index;
+		int size = ListOfChildren-&gt;Size();
+		CATUnicodeString text1;
+		text1.Resize(60,'-');
+		for (int i=1;i&lt;=size;i++)
+		{
+			<b>CATIMfgTPMultipleMotionWithProfileData_var MultipleMotionWithProfileData ((*ListOfChildren)[i]);
+			CATIMfgTPMultipleMotion_var MultipleMotion ((*ListOfChildren)[i]);
+			CATIMfgCompoundTraject_var CompoundTraject((*ListOfChildren)[i]);
+			CATIMfgToolPathCycle_var Cycle((*ListOfChildren)[i]);</b>
+			CATUnicodeString String;
+			//=============================================================
+			// The child is a CATIMfgTPMultipleMotionWithProfileData object
+			//=============================================================
+			if (<b>NULL_var != MultipleMotionWithProfileData</b>)
+			{
+				WriteString (iLevel,text1);
+				Index.BuildFromNum (i);
+				String = &quot;Child index &quot;+Index+ &quot; is a CATIMfgTPMultipleMotionWithProfileData object  &quot;;
+				WriteString (iLevel,String);
+				WriteString (iLevel,text1);
+				<b>DumpMultipleMotionWithProfileData</b> (iLevel,MultipleMotionWithProfileData);
+			}
+			//==============================================
+			// The child is a CATIMfgTPMultipleMotion object
+			//==============================================
+			if (<b>NULL_var != MultipleMotion</b>)
+			{
+				WriteString (iLevel,text1);
+				Index.BuildFromNum (i);
+				String = &quot;Child index &quot;+Index+ &quot; is a CATIMfgTPMultipleMotion object  &quot;;
+				WriteString (iLevel,String);
+				WriteString (iLevel,text1);
+				<b>DumpMultipleMotion</b> (iLevel,MultipleMotion);
+			}
+			//===========================================
+			// The child is a CATIMfgToolPathCycle object
+			//===========================================
+			else if (<b>NULL_var != Cycle</b>)
+			{
+				WriteString (iLevel,text1);
+				Index.BuildFromNum (i);
+				String = &quot;Child index &quot;+Index+ &quot; is a CATIMfgToolPathCycle object  &quot;;
+				WriteString (iLevel,String);
+				WriteString (iLevel,text1);
+				<b>DumpCycle</b> (iLevel,Cycle);
+			}
+			//======================================
+			// The child is a CATIMfgCompoundTraject
+			//======================================
+			else if (<b>NULL_var != CompoundTraject</b>)
+			{
+				WriteString (iLevel,text1);
+				Index.BuildFromNum (i);
+				String = &quot;Child index &quot;+Index+ &quot; is a CATIMfgCompoundTraject object  &quot;;
+				WriteString (iLevel,String);
+				WriteString (iLevel,text1);
+				<b>DumpCompoundTraject</b> (iLevel,CompoundTraject);
+			}
+			//==================
+			// child not treated
+			//==================
+			else
+			{
+				CATISpecObject_var SpecObj ((*ListOfChildren)[i]);
+				if (NULL_var != SpecObj)
+				{
+					WriteString (iLevel,text1);
+					Index.BuildFromNum (i);
+					String = &quot;!!!!!! Child index &quot;+Index+ &quot; which is a &quot; 
+						+SpecObj-&gt;GetName()+ &quot; is not treated !!!!!&quot;;
+					WriteString (iLevel,String);
+					WriteString (iLevel,text1);
+				}
+			}
+		}
+		delete ListOfChildren;
+		ListOfChildren=NULL;
+	}
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMfgCompoundTraject</i> interface identifies the object stored on
+the operation to model the tool path.</p>
+<p>It can own:</p>
+<ul>
+  <li>The value of a reference tool axis (expressed in absolute axis system)</li>
+  <li>The values of reference feedrates (Machining, Approach, ...)</li>
+  <li>The value of reference spindle speed</li>
+  <li>A link on the tool or the tool assembly of the operation</li>
+  <li>The value of tool corrector number.</li>
+</ul>
+<p>It can also have children:</p>
+<ul>
+  <li>that describe tool motions (modelized with one or several <i>CATIMfgTPMultipleMotion
+    </i>or <i>CATIMfgTPMultipleMotionWithProfileData </i>objects)</li>
+  <li>or, that can be <i>CATIMfgCompoundTraject</i> or <i>CATIMfgToolPathCycle</i>
+    objects.</li>
+</ul>
+<p>The source shows the use of the following methods:</p>
+<ul>
+  <li><code>GetCharacteristics: </code>computes or retrieves values of machining
+    time and total time (taking into account tool motions and values of
+    feedrates) . It retrieves also the total number of linear and circular
+    motions</li>
+  <li><code>RetrievesFixedToolAxis: </code>analyzes if the tool axis of the tool
+    path is fixed or not, even if a tool axis is stored on each point of the
+    tool path</li>
+  <li><code>GetToolAxis: </code>retrieves the value of the reference tool axis</li>
+  <li><code>GetSpindle: </code>retrieves the value of the reference spindle
+    speed</li>
+  <li><code>GetFeedrate: </code>retrieves the values of the reference feedrates</li>
+  <li><code>GetToolAssembly: </code>retrieves the tool or the tool assembly of
+    the operation</li>
+  <li><code>GetCorrectorNumber: </code>retrieves the tool corrector number</li>
+  <li><code>GetStartPoint: </code>computes the start tip point (and its tool
+    axis) of the tool path</li>
+  <li><code>GetEndPoint: </code>computes the end tip point (and its tool axis)
+    of the tool path.</li>
+</ul>
+<p>The interface <i>CATIMfgToolPathComponents </i>and the method <code>GetAllElements
+</code>are used to retrieve the children of the <i>CATIMfgCompoundTraject </i>object.
+Three cases are possible for each child:</p>
+<ul>
+  <li>The child is a <i>CATIMfgToolPathCycle</i> object: the method <code>DumpCycle
+    </code>is called to dump its attributes and its children</li>
+  <li>The child is a <i>CATIMfgCompoundTraject</i> object: the method <code>DumpCompoundTraject
+    </code>is called to dump its attributes and its children</li>
+  <li>The child is a <i>CATIMfgTPMultipleMotionWithProfileData</i> object: the
+    method <code>DumpMultipleMotionWithProfileData </code>is called to dump its
+    attributes.</li>
+  <li>The child is a <i>CATIMfgTPMultipleMotion</i> object: the method <code>DumpMultipleMotion
+    </code>is called to dump its attributes.</li>
+</ul>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="cycle"></a>Dump of a <i>CATIMfgToolPathCycle</i> object</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//==========
+// DumpCycle
+//==========
+void CAAMaiDumpToolPathCommand::DumpCycle (int iLevel,
+					   const CATIMfgToolPathCycle_var&amp; iCycle)
+{
+	if (NULL_var == iCycle) return;
+
+	//==========================
+	// Retrieves location points
+	//==========================
+	CATMathSetOfPoints Points;
+	if (iCycle-&gt;<b>GetCycleLocationPoints</b> (Points))
+	{
+		int size=Points.GetNumberOfPoints ();
+		if (size &gt; 100)
+		{
+			CATUnicodeString String (&quot;More than 100 location points    &quot;);
+			WriteString (iLevel,String);
+		}
+		else
+		{
+			CATMathPoint Pt;
+			CATUnicodeString ValueX,ValueY,ValueZ;
+			CATUnicodeString Index;
+			for (int i=1;i&lt;=size;i++)
+			{
+				Pt = Points.GetPoint (i-1);
+				Index.BuildFromNum (i);
+				ValueX.BuildFromNum (Pt.GetX());
+				ValueY.BuildFromNum (Pt.GetY());
+				ValueZ.BuildFromNum (Pt.GetZ());
+				CATUnicodeString String = &quot;Location point index &quot;;
+				String = String + Index;
+				String.Resize(60);
+				String = String + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String);
+			}
+		}
+	}
+
+	//==================================================
+	// Retrieves axis (if they exist) on location points
+	//==================================================
+	CATMathSetOfVectors Vectors;
+	if (iCycle-&gt;<b>GetCycleLocationAxis</b> (Vectors))
+	{
+		int size=Vectors.GetNumberOfVectors ();
+		if (size &gt; 100)
+		{
+			CATUnicodeString String (&quot;More than 100 location axis    &quot;);
+			WriteString (iLevel,String);
+		}
+		else
+		{
+			CATMathVector Vec;
+			CATUnicodeString ValueX,ValueY,ValueZ;
+			CATUnicodeString Index;
+			for (int i=1;i&lt;=size;i++)
+			{
+				Vec = Vectors.GetVector (i-1);
+				Index.BuildFromNum (i);
+				ValueX.BuildFromNum (Vec.GetX());
+				ValueY.BuildFromNum (Vec.GetY());
+				ValueZ.BuildFromNum (Vec.GetZ());
+				CATUnicodeString String = &quot;Location axis index &quot; + Index;
+				String.Resize(60);
+				String=String + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String);
+			}
+		}
+	}
+
+	//=======================================================================
+	// Retrieves syntax of the cycle
+	// --&gt; UserSyntax    OR
+	// --&gt; Syntax evaluated from NC_Command or NC_Instruction of the PP Table
+	//=======================================================================
+	CATListValCATUnicodeString Liste;
+	if (iCycle-&gt;<b>GetUserSyntax</b> (Liste))
+	{
+		int size = Liste.Size();
+		for (int i=1;i&lt;=size;i++)
+		{
+			CATUnicodeString String = &quot;User syntax associated to the cycle&quot;;
+			String.Resize(60);
+			String = String + Liste[i];
+			WriteString (iLevel,String);
+		}
+	}
+	else if (iCycle-&gt;<b>GetCommandEvaluation</b> (Liste))
+	{
+		int size = Liste.Size();
+		for (int i=1;i&lt;=size;i++)
+		{
+			CATUnicodeString String = &quot;NC_command evaluation&quot;;
+			String.Resize(60);
+			String = String + Liste[i];
+			WriteString (iLevel,String);
+		}
+	}
+
+	//==========================================================================
+	// As a CATIMfgToolPathCycle object is also a CATIMfgCompoundTraject object,
+	// dump of its &quot;CATIMfgCompoundTraject&quot; attributes
+	//========================================================================
+	<b>DumpCompoundTraject</b> (iLevel,iCycle);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMfgToolPathCycle</i> interface inherits from the <i>CATIMfgCompoundTraject</i>
+interface.</p>
+<p>The <i>CATIMfgToolPathCycle</i> object is used to modelize machining cycles
+inside tool path:</p>
+<ul>
+  <li>Like a <i>CATIMfgCompoundTraject </i>object, it can own reference values
+    (tool axis, feedrate, ....) and have children to describe tool motions</li>
+  <li>Specifically to the <i>CATIMfgToolPathCycle</i> interface:
+    <ul>
+      <li>It can own a NC_Command or NC_Instruction (described in the PP Table)
+        that is evaluated to be generated in the APT file, or a user syntax that
+        is generated as it is in the APT file</li>
+      <li>It can own location points to describe positions where to apply the
+        machining cycle (that can be associated with axis in multi-axis
+        machining).</li>
+    </ul>
+  </li>
+</ul>
+<p>The <code>DumpCycle </code>method shows the use of the following methods:</p>
+<ul>
+  <li><code>GetCycleLocationPoints: </code>retrieves the points where to apply
+    the machining cycle</li>
+  <li><code>GetCycleLocationAxis: </code>retrieves the tool axis that can be
+    associated to the points where to apply the machining cycle</li>
+  <li><code>GetCommandEvaluation: </code>if the cycle is described by a
+    NC_Command or NC_Instruction, evaluates the syntax of this NC_Command or
+    NC_Instruction</li>
+  <li><code>GetUserSyntax: </code>if the cycle is described by a syntax entered
+    by the user, retrieves this syntax.</li>
+</ul>
+<p>In the sample, the <code>DumpCompoundTraject </code>method is called to dump
+common attributes between <i>CATIMfgToolPathCycle</i> object and <i>CATIMfgCompoundTraject
+</i>object.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="motion"></a>Dump of a <i>CATIMfgTPMultipleMotion</i> object</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//===================
+// DumpMultipleMotion
+//===================
+void CAAMaiDumpToolPathCommand::DumpMultipleMotion (int iLevel,
+						    const CATIMfgTPMultipleMotion_var&amp; iMultipleMotion)
+{
+	if (NULL_var == iMultipleMotion) return;
+
+	CATUnicodeString String1,String2;
+	CATUnicodeString ValueX,ValueY,ValueZ;
+	//===================================
+	// Retrieves the number of tip points
+	//===================================
+	int NumberOfTipPoints = iMultipleMotion-&gt;<b>GetNumberOfTipPoints</b>();
+	String1.BuildFromNum (NumberOfTipPoints);
+	String2=&quot;Number of tip points&quot;;
+	String2.Resize(60);
+	String2 = String2+String1;
+	WriteString (iLevel,String2);
+
+	//=======================================
+	// Retrieves the number of contact points
+	//=======================================
+	int NumberOfContactPoints = iMultipleMotion-&gt;<b>GetNumberOfContactPoints</b>();
+	String1.BuildFromNum (NumberOfContactPoints);
+	String2=&quot;Number of contact points&quot;;
+	String2.Resize(60);
+	String2 = String2+String1;
+	WriteString (iLevel,String2);
+
+	//========================================
+	// Retrieves the number of contact normals
+	//========================================
+	int NumberOfContactNormals = iMultipleMotion-&gt;<b>GetNumberOfContactNormals</b>();
+	String1.BuildFromNum (NumberOfContactNormals);
+	String2=&quot;Number of contact normals&quot;;
+	String2.Resize(60);
+	String2 = String2+String1;
+	WriteString (iLevel,String2);
+
+	//==================================
+	// Retrieves the number of tool axis
+	//==================================
+	int NumberOfToolAxis = iMultipleMotion-&gt;<b>GetNumberOfToolAxisPoints</b>();
+	String1.BuildFromNum (NumberOfToolAxis);
+	String2=&quot;Number of tool axis&quot;;
+	String2.Resize(60);
+	String2 = String2+String1;
+	WriteString (iLevel,String2);
+
+	//====================================
+	// Retrieves coordinates of tip points
+	//====================================
+	if (NumberOfTipPoints &gt; 100)
+	{
+		String1=&quot;More than 100 tip points&quot;;
+		WriteString (iLevel,String1);
+	}
+	else
+	{
+		double x,y,z;
+		CATUnicodeString Index;
+		for (int i=1;i&lt;=NumberOfTipPoints;i++)
+		{
+			if (iMultipleMotion-&gt;<b>GetTipPoint</b> (i,x,y,z))
+			{
+				ValueX.BuildFromNum (x);
+				ValueY.BuildFromNum (y);
+				ValueZ.BuildFromNum (z);
+				Index.BuildFromNum (i);
+				String1 = &quot;Tip point number &quot;+Index;
+				String1.Resize(60);
+				String2 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String2);
+			}
+		}
+	}
+
+	//================================
+	// Retrieves number of sub-motions
+	//================================
+	int NumberOfSubMotions;
+	if (iMultipleMotion-&gt;<b>GetNumberOfSubTrajects</b> (NumberOfSubMotions))
+	{
+		String1 = &quot;Number of sub-motions   &quot;;
+		String1.Resize(60);
+		String2.BuildFromNum (NumberOfSubMotions);
+		String1 = String1 + String2;
+		WriteString (iLevel,String1);
+	}
+
+	//================================
+	// Retrieves Tool or Tool Assembly
+	//================================
+	CATBaseUnknown_var ToolOrToolAssembly;
+	if (iMultipleMotion-&gt;<b>GetToolAssembly </b>(ToolOrToolAssembly))
+	{
+		CATIMfgResource_var Resource (ToolOrToolAssembly);
+		if (NULL_var != Resource)
+		{
+			CATUnicodeString Name;
+			Resource-&gt;GetName(Name);
+			CATUnicodeString String =  &quot;+++ Name of tool or tool assembly&quot;;
+			String.Resize(60);
+			String=String+Name;
+			WriteString (iLevel,String);
+		}
+	}
+
+	//=========================================
+	// Retrieves information on each sub-motion
+	//=========================================
+	for (int i=1;i&lt;=NumberOfSubMotions;i++)
+	{
+		CATUnicodeString Index;
+		
+		//===================
+		// Type of sub-motion
+		//===================
+		CATIMfgTPMultipleMotion::SubTrajectType SubTrajectType;
+		if (iMultipleMotion-&gt;<b>GetSubTrajectType</b> (i,SubTrajectType))
+		{
+			Index.BuildFromNum (i);
+			if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b>)
+			{
+				CATUnicodeString String = &quot;+++ Sub-motion &quot;+Index+&quot; is a polyline   &quot;;
+				WriteString (iLevel,String);
+			}
+			else if (<b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+			{
+				CATUnicodeString String = &quot;+++ Sub-motion &quot;+Index+&quot; is a circle   &quot;;
+				WriteString (iLevel,String);
+			}
+			else if (<b>SubTrajectType == CATIMfgTPMultipleMotion::UserSyntax</b>)
+			{	
+				CATUnicodeString String = &quot;+++ Sub-motion &quot;+Index+&quot; is a user syntax   &quot;;
+				WriteString (iLevel,String);	
+			}
+			else if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PPCommand</b>)
+			{	
+				CATUnicodeString String = &quot;+++ Sub-motion &quot;+Index+&quot; is a PP command   &quot;;
+				WriteString (iLevel,String);	
+			}
+		}
+		
+		//=========================================================
+		// Path type (Machining, Linking, ....)
+		// --&gt; For a polyline or a circle arc
+		// --&gt; See CATMfgToolPathDefs for reference values 
+		//              (TPMachiningTraject, TPLinkingTraject, ...)
+		//=========================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			CATUnicodeString TrajectType;
+			if (iMultipleMotion-&gt;<b>GetTrajectType</b> (TrajectType,i))
+			{
+				String1 = &quot;++++++ Type of path&quot;;
+				String1.Resize(60);
+				String1 = String1 + TrajectType;
+				WriteString (iLevel,String1);
+			}
+		}
+		
+		//============================================================================
+		// Index of start point and end point in the list of tip points
+		//  and, it they exist, in the list of tool path axis, contact points, etc ...
+		// --&gt; For a polyline or a circle arc
+		// --&gt; To get a tip point, use &quot;GetTipPoint (i,x,y,z) with a value of &quot;i&quot;
+		//     between index of start point and index of end point
+		//============================================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			int StartIndex,EndIndex;
+			if (iMultipleMotion-&gt;<b>GetStartAndEndNumber</b> (i,StartIndex,EndIndex))
+			{
+				ValueX.BuildFromNum (StartIndex);
+				ValueY.BuildFromNum (EndIndex);
+				String1 = &quot;++++++ Index of Start and End tip points&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY;
+				WriteString (iLevel,String1);
+			}
+		}
+		
+		//=====================================
+		// Retrieves feedrate of the sub-motion
+		// --&gt; For a polyline or a circle arc
+		//=====================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			CATICkeParm_var FeedrateValue;
+			double Ratio;
+			CATUnicodeString Feedrate;
+			if (iMultipleMotion-&gt;<b>GetFeedrateConstantValue</b> (FeedrateValue,Ratio,i))
+			{
+				if (NULL_var != FeedrateValue)
+				{
+					String1 = &quot;++++++ Feedrate value&quot;;
+					String1.Resize(60);
+					String1 = String1 + FeedrateValue-&gt;Show();
+					WriteString (iLevel,String1);
+					
+					ValueX.BuildFromNum (Ratio);
+					String1 = &quot;++++++ Ratio to apply on feedrate&quot;;
+					String1.Resize(60);
+					String1 = String1 + ValueX;
+					WriteString (iLevel,String1);
+				}
+			}
+			//================================
+			// <b>Special test for RAPID Feedrate</b>
+			//================================
+			else if (iMultipleMotion-&gt;GetFeedrate (Feedrate,Ratio,i) &amp;&amp; 
+				     <b>TPRapidFeedrate == Feedrate</b>)
+			{
+					String1 = &quot;++++++ RAPID feedrate for the motion&quot;;
+					WriteString (iLevel,String1);
+			}
+		}
+		
+		//=================================================
+		// Retrieves spindle speed value for the sub-motion
+		// --&gt; For a polyline or a circle arc
+		//=================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			CATICkeParm_var SpindleValue;
+			double Ratio;
+			if (<b>iMultipleMotion-&gt;GetSpindleConstantValue</b> (SpindleValue,Ratio,i))
+			{
+				if (NULL_var != SpindleValue)
+				{
+					String1 = &quot;++++++ Spindle value&quot;;
+					String1.Resize(60);
+					String1 = String1 + SpindleValue-&gt;Show();
+					WriteString (iLevel,String1);
+					
+					ValueX.BuildFromNum (Ratio);
+					String1 = &quot;++++++ Ratio to apply on spindle&quot;;
+					String1.Resize(60);
+					String1 = String1 + ValueX;
+					WriteString (iLevel,String1);
+				}
+			}
+		}
+		
+		//======================================================
+		// Retrieves spindle rotation direction for a sub-motion
+		// --&gt; For a polyline or a circle arc
+		//======================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			int RotationWay;
+			if (iMultipleMotion-&gt;<b>GetSpindleRotationWay</b> (RotationWay,i))
+			{
+				if (-1 == RotationWay)
+				{
+					String1 = &quot;++++++ Inverse rotation direction for the spindle&quot;;
+					WriteString (iLevel,String1);
+				}
+				else
+				{
+					String1 = &quot;++++++ Normal rotation direction for the spindle&quot;;
+					WriteString (iLevel,String1);
+				}
+			}
+		}
+		
+		//====================================================
+		// Retrieves tool axis for the sub-motion 
+		// --&gt; For a polyline or a circle arc
+		// --&gt; If fixed for the sub-motion
+		//====================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			CATMathVector ToolAxis;
+			if (iMultipleMotion-&gt;<b>GetToolAxisConstantValue</b> (ToolAxis,i))
+			{
+				ValueX.BuildFromNum (ToolAxis.GetX()); 
+				ValueY.BuildFromNum (ToolAxis.GetY()); 
+				ValueZ.BuildFromNum (ToolAxis.GetZ()); 
+				String1 = &quot;++++++ Fixed Tool Axis value&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+			}
+		}
+		
+		//====================================================
+		// Retrieves characteristics if sub-motion is a circle
+		// --&gt; Normal vector to the plane containing the circle
+		// --&gt; Center of the circle arc
+		// --&gt; Radius of the circle arc
+		// --&gt; Angle of the circle arc
+		// --&gt; Tangent vector at the start of the circle
+		//====================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			CATMathVector Normal,StartTangent;
+			CATMathPoint Center;
+			double Radius;
+			CATAngle Angle;
+			if (iMultipleMotion-&gt;<b>GetCircleCharacteristics</b> (i,
+				Normal,Center,Radius,Angle,StartTangent))
+			{	
+				ValueX.BuildFromNum (Normal.GetX()); 
+				ValueY.BuildFromNum (Normal.GetY()); 
+				ValueZ.BuildFromNum (Normal.GetZ()); 
+				String1 = &quot;++++++ Normal to the plane &quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+				
+				ValueX.BuildFromNum (Center.GetX()); 
+				ValueY.BuildFromNum (Center.GetY()); 
+				ValueZ.BuildFromNum (Center.GetZ()); 
+				String1 = &quot;++++++ Center of the circle arc&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+				
+				ValueX.BuildFromNum (Radius);
+				String1 = &quot;++++++ Radius of the circle arc&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+				
+				ValueX.BuildFromNum (Angle);
+				String1 = &quot;++++++ Angle of the circle arc&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+				
+				ValueX.BuildFromNum (StartTangent.GetX()); 
+				ValueY.BuildFromNum (StartTangent.GetY()); 
+				ValueZ.BuildFromNum (StartTangent.GetZ()); 
+				String1 = &quot;++++++ Tangent at the start of the circle arc&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+				WriteString (iLevel,String1);
+			}
+		}
+		
+		//======================================
+		// Retrieves tool corrector number value
+		// --&gt; For a polyline or a circle arc
+		//======================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PolyLine</b> || 
+		    <b>SubTrajectType == CATIMfgTPMultipleMotion::Circle</b>)
+		{
+			int CorrectorNumber;
+			if (iMultipleMotion-&gt;GetCorrectorNumber (CorrectorNumber,i))
+			{
+				ValueX.BuildFromNum (CorrectorNumber);
+				String1 = &quot;++++++ Tool corrector number&quot;;
+				String1.Resize(60);
+				String1 = String1 + ValueX;
+				WriteString (iLevel,String1);
+			}
+		}
+		
+		//=======================================================
+		// Retrieves evaluation of a NC_Command or NC_Instruction
+		//=======================================================
+		if (<b>SubTrajectType == CATIMfgTPMultipleMotion::PPCommand</b>)
+		{
+			CATListValCATUnicodeString CommandValue;
+			if (iMultipleMotion-&gt;GetCommandEvaluation (i,CommandValue))
+			{
+				int NumberOfValue = CommandValue.Size();
+				for (int j=1;j&lt;=NumberOfValue;j++)
+				{
+					String1 = &quot;++++++ NC_Command value&quot;;
+					String1.Resize(60);
+					String1 = String1 + CommandValue[j];
+					WriteString (iLevel,String1);
+				}
+			}
+		}
+	}
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMfgTPMultipleMotion interface </i>is useful to modelize the tool
+motions.</p>
+<p>It can describe several tool motions which can be the following types:</p>
+<ul>
+  <li><i>A set of linear motions (&quot;polyline&quot;)</i> with the following
+    attributes:
+    <ul>
+      <li>Tip points , and possibly, tool axis for multi-axis machining, contact
+        points and contact normals
+        <ul>
+          <li>A feedrate:
+            <ul>
+              <li>Which can be described by a string (to refer to the reference
+                feedrate values, like &quot;Machining Feedrate&quot;,
+                &quot;Approach Feedrate&quot;,.....)</li>
+              <li>Which can be specific to the sub-motion (local feedrate
+                described by a literal feature)</li>
+            </ul>
+          </li>
+          <li>A mode of work of the tool: &quot;MachiningTraject&quot;,
+            &quot;LinkingTraject&quot;, ...</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><i>A circle arc</i> with the following attributes:
+    <ul>
+      <li>Tip points , and possibly, tool axis for multi-axis machining, contact
+        points and contact normals (they represent the discretization of the
+        circle)
+      <li>A feedrate:
+        <ul>
+          <li>Which can be described by a string (to refer to the reference
+            values, like &quot;Machining Feedrate&quot;, &quot;Approach
+            Feedrate&quot;,.....)</li>
+          <li>Which can be specific to the sub-motion (local feedrate described
+            by a literal feature).</li>
+        </ul>
+      <li>A mode of work of the tool: &quot;MachiningTraject&quot;,
+        &quot;LinkingTraject&quot;, ....
+      <li>The normal vector to the plane containing the circle arc</li>
+      <li>The center of the circle arc</li>
+      <li>The radius of the circle arc</li>
+      <li>The angle described by the circle arc</li>
+    </ul>
+  </li>
+  <li><i>A NC_Command </i>or <i>NC_Instruction </i>which is evaluated from the
+    PP Table linked to the Part-Operation</li>
+  <li><i>A User Syntax</i> which is generated as it is in the APT File.</li>
+</ul>
+<p>The sample illustrates the use of the following methods:</p>
+<ul>
+  <li><code>GetNumberOfTipPoints</code>: retrieves the total number of tip
+    points for all &quot;polylines&quot; and circle arcs of the <i>CATIMfgTPMultipleMotion</i>
+    object</li>
+  <li><code>GetNumberOfContactPoints, GetNumberOfContactNormals,
+    GetNumberOfToolAxisPoints: </code>retrieve respectively the number of
+    contact points, the number of contact normals, the number of tool axis<br>
+    This data can be equal to zero. Otherwise, they are equal to the number of
+    tip points.</li>
+  <li><code>GetTipPoint</code>: retrieves coordinates of a tip point (with an
+    index between 1 and the total number of tip points retrieved by <i>GetNumberOfTipPoints</i>)<br>
+    Please note that methods <i>GetContactPoint, GetContactNormal,
+    GetToolAxisPoint </i>are useful to retrieve (if they exist) the coordinates
+    of a contact point, a contact normal or a tool axis.</li>
+  <li><code>GetNumberOfSubTrajects</code>: retrieves the total number of
+    sub-motions (&quot;polyline&quot;, Circle Arc, PPCommand (NC_Command or
+    NC_Instruction), User Syntax)</li>
+  <li><code>GetToolAssembly</code>: retrieves the tool or tool assembly</li>
+  <li><code>GetSubTrajectType</code>: retrieves the type (&quot;polyline&quot;,
+    CircleArc, PPCommand (NC_Command or NC_Instruction), User Syntax) <i>of a
+    given sub-motion</i></li>
+  <li><code>GetTrajectType</code>: retrieves the mode of work of the tool
+    (&quot;MachiningTraject&quot;,&quot;ApproachTraject&quot;, ....) <i>of a
+    given sub-motion</i></li>
+  <li><code>GetStartAndEndNumber</code>: retrieves index of first and last tip
+    point <i>for a given sub-motion</i><br>
+    If you want to retrieve the coordinates of a tip point of a given
+    sub-motion, use <i>GetTipPoint</i> with a value of index between index of
+    first tip point and index of last point retrieved by <code>GetStartAndEndNumber</code></li>
+  <li><code>GetFeedrateConstantValue</code>: retrieves the value of feedrate <i>for
+    a given sub-motion</i><br>
+    Please note that the case of a RAPID path is managed in a specific way (no
+    value of feedrate associated)</li>
+  <li><code>GetSpindleConstantValue</code>: retrieves the value of spindle speed
+    <i>for a given sub-motion</i></li>
+  <li><code>GetSpindleRotationWay</code>: retrieves the way of rotation of the
+    spindle <i>for a given sub-motion</i></li>
+  <li><code>GetToolAxisConstantValue</code>: retrieves the value of tool axis <i>for
+    a given sub-motion</i></li>
+  <li><code>GetCircleCharacteristics</code>: retrieves the specific
+    characteristics <i>if the given sub-motion is a circle arc</i></li>
+  <li><code>GetCorrectorNumber</code>: retrieves the tool corrector number <i>of
+    a given sub-motion</i></li>
+  <li><code>GetCommandEvaluation</code>: retrieves the evaluation of the syntax <i>if
+    the given sub-motion is a PP Command (NC_Command or NC_Instruction)</i>.</li>
+</ul>
+<h4><b><a name="MultipleMotionWithProfileData"></a>Dump of a <i>CATIMfgTPMultipleMotionWithProfileData</i>
+object</b></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//==================================
+// DumpMultipleMotionWithProfileData
+//==================================
+void CAAMaiDumpToolPathCommand::DumpMultipleMotionWithProfileData (int iLevel,
+													const CATIMfgTPMultipleMotionWithProfileData_var&amp; iMultipleMotionWithProfileData)
+{
+	//=============================================================================================
+	// As a CATIMfgTPMultipleMotionWithProfileData object is also a CATIMfgTPMultipleMotion object,
+	// dump of its &quot;CATIMfgTPMultipleMotion&quot; attributes
+	//=============================================================================================
+	<b>DumpMultipleMotion</b> (iLevel,iMultipleMotionWithProfileData);
+
+	//=========================================================================================
+	// Now we dump the specific attributes of the CATIMfgTPMultipleMotionWithProfileData object
+	//=========================================================================================
+	CATUnicodeString text1;
+	text1.Resize(60,'=');
+	WriteString (iLevel,text1);
+	CATUnicodeString String = &quot;+++ Dump of cutter profile datas   &quot;;
+	WriteString (iLevel,String);
+	WriteString (iLevel,text1);
+
+	int number;
+	iMultipleMotionWithProfileData-&gt;GetNumberOfSubTrajects (number);
+
+	for (int i=1;i&lt;=number;i++)
+	{
+		CATUnicodeString Index;
+		Index.BuildFromNum (i);
+
+		CATIMfgTPMultipleMotionWithProfileData::ProfileType ProfileType;
+		if (iMultipleMotionWithProfileData-&gt;<b>GetProfileType</b> (i,ProfileType))
+		{
+			if (ProfileType == CATIMfgTPMultipleMotionWithProfileData::UndefType)
+			{
+				CATUnicodeString String = &quot;+++ No cutter profile datas for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+			else if (ProfileType == CATIMfgTPMultipleMotionWithProfileData::Polyline)
+			{
+				CATUnicodeString String = &quot;+++ Cutter profile datas described by a polyline for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+			else if (ProfileType == CATIMfgTPMultipleMotionWithProfileData::Circle)
+			{
+				CATUnicodeString String = &quot;+++ Cutter profile datas described by a circle for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+		}
+
+		CATIMfgTPMultipleMotionWithProfileData::ProfileSide ProfileSide;
+		if (iMultipleMotionWithProfileData-&gt;<b>GetProfileSide</b> (i,ProfileSide))
+		{
+			if (ProfileSide == CATIMfgTPMultipleMotionWithProfileData::UndefType)
+			{
+				CATUnicodeString String = &quot;+++ No cutter profile datas for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+			else if (ProfileSide == CATIMfgTPMultipleMotionWithProfileData::Left)
+			{
+				CATUnicodeString String = &quot;+++ Cutter profile datas located on the left for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+			else if (ProfileSide == CATIMfgTPMultipleMotionWithProfileData::Right)
+			{
+				CATUnicodeString String = &quot;+++ Cutter profile datas located on the right for sub-motion &quot;+Index;
+				WriteString (iLevel,String);
+			}
+		}
+
+		int NumberOfProfilePoints;
+		if (iMultipleMotionWithProfileData-<b>&gt;GetNumberOfProfilePoints</b> (i,NumberOfProfilePoints))
+		{
+			Index.BuildFromNum (NumberOfProfilePoints);
+			CATUnicodeString String = &quot;+++ Number of cutter profile points &quot;+Index;
+			CATUnicodeString ValueX,ValueY,ValueZ;
+			CATUnicodeString String1,String2;
+			double x,y,z;
+			for (int j=1;j&lt;=NumberOfProfilePoints;j++)
+			{
+				if (iMultipleMotionWithProfileData-&gt;<b>GetProfilePoint</b> (i,j,x,y,z))
+				{
+					ValueX.BuildFromNum (x);
+					ValueY.BuildFromNum (y);
+					ValueZ.BuildFromNum (z);
+					Index.BuildFromNum (j);
+					String1 = &quot;Profile point number &quot;+Index;
+					String1.Resize(60);
+					String2 = String1 + ValueX + &quot; &quot; + ValueY + &quot; &quot; + ValueZ;
+					WriteString (iLevel,String2);
+				}
+			}
+		}
+	}
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMfgTPMultipleMotionWithProfileData</i> interface inherits from the
+<i>CATIMfgTPMultipleMotion</i> interface.</p>
+<p>As the object with implements the <i>CATIMfgTPMultipleMotion</i> interface,
+the object with implements the <i>CATIMfgTPMultipleMotionWithProfileData</i>
+interface allows to model tool motions.</p>
+<p>It can contain several sub-motions of the following type:</p>
+<ul>
+  <li><b><i>Polyline</i></b>: to describe a set of linear motions of the tip
+    point of the tool,</li>
+  <li><b><i>Circle Arc</i> </b>: to describe a circular motion of the tip point
+    of the tool,</li>
+  <li><b><i>NC_Command </i>or </b><i><b>NC_Instruction</b>: </i>which is
+    evaluated from the PP Table linked to the Part-Operation,</li>
+  <li><i><b>User Syntax</b></i>: which is generated as it is in the APT File.</li>
+</ul>
+<p>Specifically to the object which implements the <i>CATIMfgTPMultipleMotionWithProfileData</i>
+interface, it is possible to add cutter profile data on each tip sub-motion.</p>
+<p>To model these cutter profile data, you can use either a
+&quot;polyline&quot;, or a circle arc.</p>
+<p>The sample illustrates the use of the following methods:</p>
+<ul>
+  <li><code>GetProfileType </code>: retrieves the type of cutter profile data
+    associated to a tip sub-motion (none, &quot;polyline&quot;,circle arc)</li>
+  <li><code>GetProfileSide </code>: retrieves the side on which are located
+    cutter profile data (none, right, left).</li>
+  <li><code>GetNumberOfProfilePoints: </code>retrieves the total number of
+    cutter profile points for a tip sub-motion</li>
+  <li><code>GetProfilePoint: </code>retrieves the coordinates of a cutter
+    profile point.</li>
+</ul>
+<p>Methods to retrieve characteristics of cutter profile data described by a
+circle arc exist also.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the ManufacturingInterfaces
+classes to read data of the tool path of an operation , and has illustrated them
+on an interactive command to dump the tool path linked to a manufacturing
+operation.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2"></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="history"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2"></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

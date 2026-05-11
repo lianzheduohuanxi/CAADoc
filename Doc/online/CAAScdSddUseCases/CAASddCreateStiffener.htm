@@ -1,0 +1,261 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Stiffeners</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Stiffeners</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create stiffeners on 
+		different plates.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddCreateStiffener is launched in CATIA [<a href="#References">1</a>]. 
+		First open CAASddCreateStiffener.CATPart in the samples directory.</p>
+		<p><a href="CAASddCreateStiffenerSource.htm" target="Source">CAASddCreateStiffener.CATScript</a> 
+		is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddCreateStiffener.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddCreateStiffener includes eight steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Plates</a></li>
+			<li><a href="#Step5">Creating Shell Stiffeners</a></li>
+			<li><a href="#Step6">Creating Deck Stiffeners</a></li>
+			<li><a href="#Step7">Creating Transverse Bulkhead Stiffeners</a></li>
+			<li><a href="#Step8">Updating the Part Document</a></li>
+		</ol>
+		<p><img alt="Create Stiffeners" src="images/CAASddCreateStiffener.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CreateStiffener.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain ()
+  <span class="keyword">Dim</span> ObjPart <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get the Structure Functional Modeler factory. 
+		The SfmFactory Object will be used for creating Structure Functional Modeler 
+		objects.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory (&quot;SfmFactory&quot;)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>The SfmManager object is obtained by the GetManager method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj <span class="keyword">As</span> SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Plates</a></h4>
+		<p>This step describes how to get the plate collection and how to get one 
+		specific element in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="keyword">Dim</span> SuperPlates <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SuperPlates = ManagerObj.GetSuperPlates
+  <span class="keyword">Dim</span> ShellSuperPlate, DeckSuperPlate, TBHSuperPlate <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSuperPlate = SuperPlates.Item (1)
+  <span class="keyword">Set</span> DeckSuperPlate = SuperPlates.Item (2)
+  <span class="keyword">Set</span> TBHSuperPlate = SuperPlates.Item (3)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Creating Shell Stiffeners</a></h4>
+		<p>This step describes how to create stiffeners of different categories 
+		and sections. First support is defined.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'CREATING SHELL STIFFENER</span>
+ <span class="comment">'Defining Support for Stiffener</span>
+  <span class="keyword">Dim</span> webSupport1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport1 = ObjPart.FindObjectByName (&quot;LONG.8&quot;)
+  <span class="keyword">Dim</span> webSupportRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef1 = ObjPart.CreateReferenceFromObject (webSupport1)
+  <span class="keyword">Dim</span> ShellStiffener1 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> ShellStiffener1 = FactoryObj.AddSuperStiffener (&quot;ShellStiffener&quot;, &quot;WT15x54&quot;, ShellSuperPlate, webSupportRef1)
+  <span class="keyword">Dim</span> webSupport2 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport2 = ObjPart.FindObjectByName (&quot;CROSS.105&quot;)
+  <span class="keyword">Dim</span> webSupportRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef2 = ObjPart.CreateReferenceFromObject (webSupport2)
+  <span class="keyword">Dim</span> ShellStiffener2 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> ShellStiffener2 = FactoryObj.AddSuperStiffener (&quot;ShellStiffener&quot;, &quot;C12x25&quot;, ShellSuperPlate, webSupportRef2)
+
+ <span class="comment">'Limiting Stiffener2 By Stiffener1</span>
+  <span class="keyword">Dim</span> StiffenerLimitRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> StiffenerLimitRef1 = ObjPart.CreateReferenceFromObject (ShellStiffener1)
+  ShellStiffener2.SetProfileLimit 1, StiffenerLimitRef1
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Creating Deck Stiffeners</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'CREATING DECK STIFFENER</span>
+ <span class="comment">'Defining Support for Stiffener on DeckPlate</span>
+  <span class="keyword">Dim</span> webSupport3 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport3 = ObjPart.FindObjectByName (&quot;LONG.0&quot;)
+  <span class="keyword">Dim</span> webSupportRef3 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef3 = ObjPart.CreateReferenceFromObject (webSupport3)
+  <span class="keyword">Dim</span> DeckStiffener1 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> DeckStiffener1 = FactoryObj.AddSuperStiffener (&quot;DeckStiffener&quot;, &quot;HP12x63&quot;, DeckSuperPlate, webSupportRef3)
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Creating Transverse Bulkhead Stiffeners</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'CREATING TRANSVERSE BULKHEAD STIFFENER</span>
+ <span class="comment">'Defining Support</span>
+  <span class="keyword">Dim</span> webSupport4 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport4 = ObjPart.FindObjectByName (&quot;LONG.-5&quot;)
+  <span class="keyword">Dim</span> webSupportRef4 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef4 = ObjPart.CreateReferenceFromObject (webSupport4)
+  <span class="keyword">Dim</span> TBHStiffener1 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> TBHStiffener1 = FactoryObj.AddSuperStiffener (&quot;TransBulkhdStiffener&quot;, &quot;C12x25&quot;, TBHSuperPlate, webSupportRef4)
+  <span class="keyword">Dim</span> webSupport5 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport5 = ObjPart.FindObjectByName (&quot;DECK.2&quot;)
+  <span class="keyword">Dim</span> webSupportRef5 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef5 = ObjPart.CreateReferenceFromObject (webSupport5)
+  <span class="keyword">Dim</span> TBHStiffener2 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> TBHStiffener2 = FactoryObj.AddSuperStiffener (&quot;TransBulkhdHorStiffener&quot;, &quot;HP12x63&quot;, TBHSuperPlate, webSupportRef5)
+
+ <span class="comment">'Limiting Stiffener2 By Stiffener1</span>
+  <span class="keyword">Dim</span> StiffenerLimitRef2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> StiffenerLimitRef2 = ObjPart.CreateReferenceFromObject (TBHStiffener1)
+   TBHStiffener2.SetProfileLimit 1, StiffenerLimitRef2
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Updating the Part Document</a></h4>
+		<p>The Part has to be updated to generate the geometrical representation 
+		of the created objects. Once this done, the updated objects are visible 
+		in the 3D window and in the specification tree.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+ <span class="comment">'To Updating CATIA Part Document</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span>
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create <span lang="fr">stiffener</span> objects.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening 
+		an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

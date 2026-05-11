@@ -1,0 +1,421 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATGSOUseItf Interface CATIGSOUseFactory</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATGSOUseItf.htm" href="../CATGSOUseItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATGSOUseItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIGSOUseFactory"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATGSOUseItf Interface CATIGSOUseFactory</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIGSOUseFactory_23641','CATIGSOUseFactory','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIGSOUseFactory</b>
+</p>
+<p>
+<b><i> Factory of all geometrical elements of Generative Shape Optimizer workshop.</i></b><br>
+
+ <b>Role</b>: Creation of all Generative Shape Optimizer feature.
+ All methods described here work on CATIMmiMechanicalFeature (for geometrical elements)
+ and CATICkeParm (for data such as lengths, angles, ratios...).
+ <p>
+ Note: If the creation fails, the methods return NULL_var.
+ <p>
+ This factory never agregates the created feature.
+ You need to agregate your object in a GSMTool feature to see it in 3D and Graph. 
+ GSMTool feature can be either HybridBody(Body), Geometrical Set (GS) or Ordered Geometrical Set (OGS). 
+ <br>You can use :
+ <ul> 
+ <li> either the interface CATIMechanicalRootFactory to create the GSMTool and 
+ the interface CATIDescendants on GSMTool to agregate the GSM feature.</li>
+ <li>  or in a more straigh forward way the method InsertInProceduralView method 
+ of CATIGSMUseProceduralView Interface. (recommended since V5R12) </li>
+ </ul> 
+ <p>
+ Once aggregated the feature has to be updated. 
+ <p> 
+ If feature is inserted in Body or OGS, you have to call CATMmrLinearBodyServices::Insert() 
+ This method checks the linearity of the Parent/Children relationship and ,if needed,
+ performed re-arrangement(Replace) to makes sure that created feature depends logically of just previouly created feature 
+ <p> 
+ LICENCING INFORMATION    
+ <br>This interface concern GSO/DL1/ABT(partly)  features creation 
+ <br>Use of the creation methods requires to have granted license configuration for feature creation
+ <ul> 
+ <li> - Bump, Develop, WrapCurve, WrapSurface, Surface Simplification require GSO License</li>
+ <li> - Unfold, Develop require DL1 License </li>
+ </ul> 
+ <br> if License are not granted creation fails.
+ <p> 
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSMUseProceduralView','','CATIGSMUseProceduralView') </script>, <script type="text/javascript"> activateLinkAnchor('CATIMechanicalRootFactory','','CATIMechanicalRootFactory') </script>, CATIGSMUseTool, <script type="text/javascript"> activateLinkAnchor('CATIMmiMechanicalFeature','','CATIMmiMechanicalFeature') </script>, <script type="text/javascript"> activateLinkAnchor('CATICkeParm','','CATICkeParm') </script>, <script type="text/javascript"> activateLinkAnchor('CATICkeParmFactory','','CATICkeParmFactory') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateBump(CATIMmiMechanicalFeature_var)"><b>CreateBump</b></a>(CATIMmiMechanicalFeature_var)
+<dd>  Creates a new surface with a bump type deformation.
+ <dt> o 
+    <a href="#CreateBump(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATICkeParm_var,CATICkeParm_var,CATGSMContinuity)"><b>CreateBump</b></a>(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATICkeParm_var,CATICkeParm_var,CATGSMContinuity)
+<dd>  Creates a new surface with a bump type deformation.
+ <dt> o 
+    <a href="#CreateDevelop(CATGSMDevelopMethod,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,boolean)"><b>CreateDevelop</b></a>(CATGSMDevelopMethod,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,boolean)
+<dd>  Creates a developed curve.
+ <dt> o 
+    <a href="#CreateSurfaceSimplification()"><b>CreateSurfaceSimplification</b></a>()
+<dd>  Creates a Surface Simplification feature.
+ <dt> o 
+    <a href="#CreateTransfer(CATIMmiMechanicalFeature_var&amp;,CATGSMTypeOfTransfer)"><b>CreateTransfer</b></a>(CATIMmiMechanicalFeature_var&amp;,CATGSMTypeOfTransfer)
+<dd>  Creates a Transfered result.
+ <dt> o 
+    <a href="#CreateUnfold()"><b>CreateUnfold</b></a>()
+<dd>  Creates a Unfold operation.
+ <dt> o 
+    <a href="#CreateWrapCurve()"><b>CreateWrapCurve</b></a>()
+<dd>  Creates a wrapcurve surface deformation feature.
+ <dt> o 
+    <a href="#CreateWrapCurve(CATListValCATIMmiMechanicalFeature_var&amp;,CATListValCATIMmiMechanicalFeature_var&amp;,CATGSOWrapCurveSurfaceCst,CATGSOWrapCurveSurfaceCst)"><b>CreateWrapCurve</b></a>(CATListValCATIMmiMechanicalFeature_var&amp;,CATListValCATIMmiMechanicalFeature_var&amp;,CATGSOWrapCurveSurfaceCst,CATGSOWrapCurveSurfaceCst)
+<dd>  Creates a wrapcurve surface deformation feature.
+ <dt> o 
+    <a href="#CreateWrapSurface(CATIMmiMechanicalFeature_var)"><b>CreateWrapSurface</b></a>(CATIMmiMechanicalFeature_var)
+<dd>  Creates a wrapsurface deformation feature.
+ <dt> o 
+    <a href="#CreateWrapSurface(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var)"><b>CreateWrapSurface</b></a>(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var)
+<dd>  Creates a wrapsurface deformation feature.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateBump"></a><a name="CreateBump(CATIMmiMechanicalFeature_var)"></a> <dt> o <b>CreateBump</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseBump','CATIGSOUseBump_var')</script>  <b>CreateBump</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iElemToBump</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a new surface with a bump type deformation. 
+ <br> Note: require GSO license.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElemToBump</tt>
+   <dd>      Element to be modified by a bump deformation.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseBump_var        created surface
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSOUseBump','','CATIGSOUseBump') </script>, <script type="text/javascript"> activateLinkAnchor('CATICkeParm','','CATICkeParm') </script>
+</dl>
+</dl>
+<a name="CreateBump"></a><a name="CreateBump(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATICkeParm_var,CATICkeParm_var,CATGSMContinuity)"></a> <dt> o <b>CreateBump</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseBump','CATIGSOUseBump_var')</script>  <b>CreateBump</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iElemToBump</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iLimitCurve</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iDeformationCenter</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iProjectionDir</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iDeformationDir</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATICkeParm','CATICkeParm_var')</script> <td><tt>iDeformationDistance</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATICkeParm','CATICkeParm_var')</script> <td><tt>iDeviationUser</tt><td><tt>=NULL_var </tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGSMContinuity','CATGSMContinuity')</script> <td><tt>iContinuity</tt><td><tt>=CATGSMContinuity_Curvature </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a new surface with a bump type deformation.
+ <br> Note: require GSO license.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElemToBump</tt>
+   <dd>      Element to be modified by a bump deformation.
+   </dd>
+    <dt><tt> iLimitCurve</tt>
+   <dd>      Curve limit of the deformation area.
+   </dd>
+    <dt><tt> iDeformationCenter</tt>
+   <dd>      Center of the bump deformation.
+   </dd>
+    <dt><tt> iProjectionDir</tt>
+   <dd>      Projection Direction.
+   </dd>
+    <dt><tt> iDeformationDir</tt>
+   <dd>      Direction of the bump deformation.
+   </dd>
+    <dt><tt> iDeformationDistance</tt>
+   <dd>      Distance of the bump deformation. 
+   </dd>
+    <dt><tt> iDeviationUser</tt>
+   <dd>      G0 deviation fixed by the user.
+   </dd>
+    <dt><tt> iContinuity</tt>
+   <dd>      Continuity type .
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseBump_var        created surface
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSOUseBump','','CATIGSOUseBump') </script>, <script type="text/javascript"> activateLinkAnchor('CATICkeParm','','CATICkeParm') </script>
+</dl>
+</dl>
+<a name="CreateDevelop"></a><a name="CreateDevelop(CATGSMDevelopMethod,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,boolean)"></a> <dt> o <b>CreateDevelop</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSMUseDevelop','CATIGSMUseDevelop_var')</script>  <b>CreateDevelop</b>(<td><script type="text/javascript"> activateLink('CATGSMDevelopMethod','CATGSMDevelopMethod')</script> <td><tt>Mode</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iToDevelop</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('boolean','boolean')</script> <td><tt>ibInstanciateTransfo</tt><td><tt>= TRUE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a developed curve.
+ <br> Note: require either DL1 or GSO license.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> Mode</tt>
+   <dd>      Develop-Develop or Develop-Project
+   </dd>
+    <dt><tt> iToDevelop</tt>
+   <dd>      iCurve to be developed.
+   </dd>
+    <dt><tt> iSupport</tt>
+   <dd>      Revolution surface for develop.
+   </dd>
+    <dt><tt> ibInstanciateTransfo</tt>
+   <dd>      Flag indicating whether :<br>
+       - the user has not done anything (yet) for wire positioning :
+       ibInstanciateTransfo = TRUE (default ivalue if not specified) <br>
+       - the user has already instanciated a positioning transformation
+       of his own, and then will have to use SetPositionedWire() to
+       store it : ibInstanciateTransfo = FALSE <br>
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSMUseDevelop_var        created develop.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSMUseDevelop','','CATIGSMUseDevelop') </script>, <script type="text/javascript"> activateLinkAnchor('CATGSMDevelopMethod','','CATGSMDevelopMethod') </script>
+</dl>
+</dl>
+<a name="CreateSurfaceSimplification"></a><a name="CreateSurfaceSimplification()"></a> <dt> o <b>CreateSurfaceSimplification</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSMUseSurfaceSimplification','CATIGSMUseSurfaceSimplification_var')</script>  <b>CreateSurfaceSimplification</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a Surface Simplification feature.
+ <br> Note: requires license containing Generative Shape Morphing application.
+   
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSMUseSurfaceSimplification_var        the Surface Simplification feature.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSMUseSurfaceSimplification','','CATIGSMUseSurfaceSimplification') </script>
+</dl>
+</dl>
+<a name="CreateTransfer"></a><a name="CreateTransfer(CATIMmiMechanicalFeature_var&amp;,CATGSMTypeOfTransfer)"></a> <dt> o <b>CreateTransfer</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSMUseTransfer','CATIGSMUseTransfer_var')</script>  <b>CreateTransfer</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature_var','CATIMmiMechanicalFeature_var&amp;')</script> <td><tt>ihSpecObject</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATGSMTypeOfTransfer','CATGSMTypeOfTransfer')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a Transfered result.
+ <br> Note: require either DL1 or GSO license.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ihSpecObject</tt>
+   <dd>      Element to be transfered.
+   </dd>
+    <dt><tt> iType</tt>
+   <dd>      Type of transfer
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSMUseTransfer_var       created feature, @see CATIGSMUseTransfer
+</dl>
+</dl>
+<a name="CreateUnfold"></a><a name="CreateUnfold()"></a> <dt> o <b>CreateUnfold</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSMUseUnfold','CATIGSMUseUnfold_var')</script>  <b>CreateUnfold</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a Unfold operation.
+ <br> Note: require DL1 license.
+   
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSMUseUnfold_var        created feature.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSMUseUnfold','','CATIGSMUseUnfold') </script>
+</dl>
+</dl>
+<a name="CreateWrapCurve"></a><a name="CreateWrapCurve()"></a> <dt> o <b>CreateWrapCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseWrapCurve','CATIGSOUseWrapCurve_var')</script>  <b>CreateWrapCurve</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a wrapcurve surface deformation feature.
+ <br> Note: require GSO license.
+   
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseWrapCurve_var        created WrapCurve, @see CATIGSOUseWrapCurve
+</dl>
+</dl>
+<a name="CreateWrapCurve"></a><a name="CreateWrapCurve(CATListValCATIMmiMechanicalFeature_var&amp;,CATListValCATIMmiMechanicalFeature_var&amp;,CATGSOWrapCurveSurfaceCst,CATGSOWrapCurveSurfaceCst)"></a> <dt> o <b>CreateWrapCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseWrapCurve','CATIGSOUseWrapCurve_var')</script>  <b>CreateWrapCurve</b>(<td> const <script type="text/javascript"> activateLink('CATListValCATIMmiMechanicalFeature_var','CATListValCATIMmiMechanicalFeature_var&amp;')</script> <td><tt>iReferenceCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListValCATIMmiMechanicalFeature_var','CATListValCATIMmiMechanicalFeature_var&amp;')</script> <td><tt>iTargetCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATGSOWrapCurveSurfaceCst','CATGSOWrapCurveSurfaceCst')</script> <td><tt>iFirstCurvesCst</tt><td><tt>= CATGSOWrapCurveSameCurvature </tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATGSOWrapCurveSurfaceCst','CATGSOWrapCurveSurfaceCst')</script> <td><tt>iLastCurvesCst</tt><td><tt>= CATGSOWrapCurveSameCurvature </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a wrapcurve surface deformation feature.
+ <br> Note: require GSO license.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iReferenceCurves</tt>
+   <dd>    The list of reference curves.
+ </dd>
+    <dt><tt> iTargetCurves</tt>
+   <dd>   The list of target curves.
+   The first curve in oTargetCurves is the target curve of the first curve in oReferenceCurves,
+   The second curve in oTargetCurves is the target curve of the second curve in oReferenceCurves...
+ </dd>
+    <dt><tt> iFirstCurvesCst</tt>
+   <dd>    The constraint to first curves 
+      </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATGSOWrapCurveSurfaceCst','','CATGSOWrapCurveSurfaceCst') </script>
+    <dt><tt> iLastCurvesCst</tt>
+   <dd>    The constraint to last curves 
+      </dd>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATGSOWrapCurveSurfaceCst','','CATGSOWrapCurveSurfaceCst') </script>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseWrapCurve_var        created WrapCurve, @see CATIGSOUseWrapCurve
+</dl>
+</dl>
+<a name="CreateWrapSurface"></a><a name="CreateWrapSurface(CATIMmiMechanicalFeature_var)"></a> <dt> o <b>CreateWrapSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseWrapSurface','CATIGSOUseWrapSurface_var')</script>  <b>CreateWrapSurface</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iElemToDeform</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a wrapsurface deformation feature.
+ <br> Note: require GSO license. 
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElemToDeform</tt>
+   <dd>      Element to be modified by a wrap surface deformation.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseWrapSurface_var        created WrapSurface, @see CATIGSOUseWrapSurface
+</dl>
+</dl>
+<a name="CreateWrapSurface"></a><a name="CreateWrapSurface(CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var,CATIMmiMechanicalFeature_var)"></a> <dt> o <b>CreateWrapSurface</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIGSOUseWrapSurface','CATIGSOUseWrapSurface_var')</script>  <b>CreateWrapSurface</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iElemToDeform</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iReferenceSurface</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iTargetSurface</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a wrapsurface deformation feature.
+ <br> Note: require GSO license.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElemToDeform</tt>
+   <dd>      Element to be modified by a wrap surface deformation.
+   </dd>
+    <dt><tt> iReferenceSurface</tt>
+   <dd>      Reference Element to define a wrap surface deformation.
+   </dd>
+    <dt><tt> iTargetSurface</tt>
+   <dd>      Target Element to define a wrap surface deformation.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATIGSOUseWrapSurface_var        created WrapSurface, @see CATIGSOUseWrapSurface
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIGSOUseFactory.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGSOUseItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

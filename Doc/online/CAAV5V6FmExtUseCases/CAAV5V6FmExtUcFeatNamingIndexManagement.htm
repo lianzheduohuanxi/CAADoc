@@ -1,0 +1,429 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Feature Naming - Context Management</title>
+<script type="text/javascript" language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Feature Naming - Context Management</h3>
+      <p><em>How to set and retrieve AutoNumbering provider for features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>
+		CAAV5V6FmExtFeatNamingIndexManagement </code>
+		use case (UC). It illustrates the steps involved to set and retrieve an
+		<strong>AutoNumbering</strong> Provider for a feature. The &quot;<strong>Feature 
+		Naming</strong>&quot; [<a href="#References">1</a>] article dwelves into the 
+		depth of the concept of an AutoNumbering Provider. The impact of setting 
+		this Provider on the display name of a feature, can be best understood, 
+		by studying this UC.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtFeatNamingIndexManagement Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtFeatNamingIndexManagement API Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtFeatNamingIndexManagement API</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtFeatNamingIndexManagement API Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>And end user learns primarily:&nbsp;</p>
+<ul>
+	<li>Steps involved to Set and Retrieve an AutoNumbering Provider for a 
+	feature</li>
+	<li>The impact of setting this Provider on a feature display name</li>
+	<li>A StandAlone feature and an Aggregated feature by default, do not have 
+	an associated AutoNumbering Provider </li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtFeatNamingIndexManagement Use Case</h2>
+<p> The <code>CAAV5V6FmExtFeatNamingIndexManagement
+</code>is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code>&nbsp; framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtFeatNamingIndexManagement Do</h3>
+<p>The UC creates a feature model as the one depicted in [<a href="#Fig.1">Fig.1</a>] 
+below.&nbsp; Please note the model depicts the Feature display names. </p>
+<table>
+	<caption><a name="Fig.1"></a>Fig.1.Feature Model with no explicit Auto 
+	Numbering Provider specified</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUCFeatNamingIndexMgt_Fig1.jpg"></td>
+	</tr>
+	<p>&nbsp;</p>
+</table>
+<p>This model consists of the features listed below. The display names of the 
+features occur in paranthesis alongside.</p>
+<ul>
+	<li><strong>CAAOsmLibrary</strong> feature (Library)</li>
+	<li>Two <strong>CAAOsmPublisher</strong> features (Publisher)</li>
+	<li>Three <strong>CAAOsmBook</strong> features (Book). One of them 
+	references one of the Publisher feature, while the remaining two reference 
+	the other Publisher feature</li>
+	<li>Three <strong>CAAOsmChapter</strong> features (Chapter). One of them is 
+	standalone while the remaining two are aggregated (<strong>Chapter.1</strong> 
+	and <strong>Chapter.2</strong>) under a <strong>CAAOsmNovel</strong> feature 
+	(Novel)</li>
+	<li>Three <strong>CAAOsmBarCode</strong> features (<strong>BarCode.1</strong>) 
+	each aggregated under a Book feature. </li>
+</ul>
+<p>The associated feature StartUps are defined in the <strong>
+CAAOsmCatalogSU.CATfct</strong> file.</p>
+<p>The UC execution primarily illustrates the impact of setting an <strong>Auto 
+Numbering Provider</strong> to a feature, on its display name, particularly the 
+index suffixed to it. We list below the concepts illustrated by this UC, 
+supported by the steps that the UC execution proceeds through.</p>
+<ul>
+	<li><strong>Feature Display Names when an Auto Numbering Provider is not explicitly 
+	set</strong></li>
+	<p>In the model depicted in [<a href="#Fig.1">Fig.1</a>] above, an auto 
+	numbering provider has not been explicitly set. We output the display names 
+	of the features</p>
+	<ul>
+		<li>The display names of the <strong>standalone</strong> 
+		features are exactly the same as specified in the <strong>CATNls</strong> 
+		for their StartUps. Thus you'll find <strong>Library</strong>, <strong>
+		Book</strong>, <strong>Publisher</strong>, <strong>Novel</strong> and
+		<strong>Chapter</strong> as display names for the standalone features</li>
+		<li>On aggregation, the display name of a feature is its
+		<strong>NLS</strong> name suffixed with an <strong>index</strong>. The
+		<strong>index</strong> represents the aggregation count of the feature, 
+		in the context of its parent. As a result:<ul>
+			<li><strong>BarCode.1</strong> is the display name of 
+			a <strong>CAAOsmBarCode</strong> feature aggregated under the
+			<strong>CAAOsmBook</strong> feature</li>
+			<li><strong>Chapter.1</strong> and <strong>Chapter.2</strong> 
+			are the display names of the two <strong>CAAOsmChapter</strong> 
+			features under the <strong>CAAOsmNovel</strong> feature</li>
+		</ul>
+		</li>
+	</ul>
+	<li><strong>AutoNumbering Provider does not exist for a StandAlone and 
+	Aggregated feature, by default</strong>
+	<p>The UC retrieves the AutoNumbering Provider for one of the Book features. 
+	The call returns NULL, since a standalone feature does not have an 
+	AutoNumbering Provider associated with it.</p>
+	<p>Next, we retrieve the AutoNumbering&nbsp;Provider for the aggregated Chapter 
+	feature (<strong>Chapter.1</strong>). This call too returns NULL, implying 
+	that an aggregated feature, by default, has no AutoNumbering Provider set 
+	for it. </p><table class="Remark"> 
+	<tr> 
+		<td class="remark"><strong>Warning</strong>: Typically an aggregated 
+		feature has a display name which has an index associated with it, which 
+		might give an impression that its parent feature, serves as its 
+		AutoNumbering Provider. But that is not the case. Unless explicitly set, 
+		an aggregated feature by default has no AutoNumbering Provider 
+		associated with it. </td></tr></table>
+</li>
+	<li><strong>Feature Display Names on setting explicitly an Auto Numbering 
+	Provider for features</strong><p>The UC now sets &quot;<strong>Library</strong>&quot; 
+	as an Auto Numbering Provider for all features except &quot;<strong>Chapter</strong>&quot;. 
+	This impacts the display names of the features, as depicted by [<a href="#Fig.2">Fig.2</a>] 
+	below. You'll notice the display names have an index suffixed to it now. </p>
+	<table>
+	<caption><a name="Fig.2"></a>Fig. 2 Feature Model with an explicit 
+	AutoNumbering Provider (Library) set</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUCFeatNamingIndexMgt_Fig2.jpg"></td>
+	</tr>
+</table>
+	<p>The details of the impact are listed below:</p>
+	<ul>
+		<li>The two Publisher features display name is modified 
+		to <strong>Publisher.1 </strong>and <strong>Publisher.2</strong></li>
+		<li>The Book features display name is <strong>Book.1</strong>, 
+		<strong>Book.2</strong> and 
+		<strong>Book.3</strong></li>
+		<li>The BarCode features display name is <strong>BarCode.1</strong>,
+		<strong>BarCode.2</strong> and <strong>BarCode.3</strong></li>
+		<li>The Novel feature display name is <strong>Novel.1</strong></li>
+		<li>The Chapter features display name is not impacted. 
+		The standalone Chapter display name remains &quot;<strong>Chapter</strong>&quot; while the aggregated Chapter 
+		features display names are still &quot;<strong>Chapter.1</strong>&quot; and &quot;<strong>Chapter.2</strong>&quot;</li>
+	</ul>
+	</li>
+	<li>
+	<p><strong>Impact of an AutoNumbering Provider on an Aggregated Feature</strong>&nbsp;</p>
+	<p>We discuss two cases here</p>
+	<ul>
+		<li><strong>Impact on Display Name of an Aggregated Feature set with an 
+		AutoNumbering Provider </strong><p>
+		The [<a href="#Fig.3">Fig.3</a>] that follows depicts one such case.</p><table>
+		<caption><a name="Fig.3"></a>Fig.3.Setting Auto Numbering Provider for 
+		an Aggregated Feature</caption>
+		<tr>
+			<td>
+			<img src="images/CAAFmExtUCFeatNamingIndexMgt_Fig3.jpg">&nbsp;</td>
+		</tr>
+	</table><p>A <strong>Book</strong> feature aggregates a <strong>BarCode</strong> 
+		feature aggregated under it. The aggregation computes <strong>BarCode.1</strong>, 
+		as the display name of the aggregated feature, index being one, since we 
+		only have a single BarCode feature under Book.</p>
+	<p>Next, we set <strong>Library </strong>as an AutoNumbering Provider for 
+	the aggregated <strong>BarCode</strong> feature. As a result the display name of the 
+	aggregated feature updates to <strong>BarCode.4</strong>. The index is 
+	<strong>4</strong>, since you'll find in the previous section, we already 
+	have three <strong>BarCode</strong> features in the <strong>Library</strong> 
+	context.</p>
+		</li>
+		<li><strong>Impact of aggregation on the display name of a feature set 
+		with an AutoNumbering Provider</strong><p>The [<a href="#Fig.4">Fig.4</a>] 
+		that follows depicts one such case.</p><table>
+			<caption><a name="Fig.4"></a>Fig. 4 Aggregating a feature set with 
+			an AutoNumbering Provider</caption>
+			<tr>
+				<td>
+				<img src="images/CAAFmExtUCFeatNamingIndexMgt_Fig4.jpg">&nbsp;</td>
+			</tr>
+		</table>
+		</li>
+		<p>A StandAlone BarCode feature is set with &quot;<strong>Library</strong>&quot; 
+		as its AutoNumbering Provider. So far, in the &quot;Library&quot; context, we have 
+		four BarCode features. As a result, the next BarCode feature has a 
+		display name &quot;<strong>BarCode.5</strong>'.</p>
+		<p>Next we aggregate this BarCode under Book. Typically, on this 
+		aggregation, the BarCode display name would have been &quot;<strong>BarCode.1</strong>&quot;, 
+		since this is the only <strong>BarCode</strong> under <strong>Book</strong>.&nbsp; 
+		But, since the aggregated feature was already set with an AutoNumbering 
+		Provider, its display name on aggregation remains &quot;<strong>BarCode.5</strong>&quot;, 
+		thus overriding the effects of an aggregation.</p>
+	</ul>
+	
+	</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtFeatNamingIndexManagement<br>
+</h3>
+<p>To launch <code>CAAV5V6FmExtFeatNamingIndexManagement</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtFeatNamingIndexManagement </code>along with its prerequisites, set up the run time environment, 
+and then execute the sample. This is fully described in the referenced article [<a href="#References">3</a>].
+</p>
+<p>mkrun -c &quot;<i><code>CAAV5V6FmExtFeatNamingIndexMgt DocumentStorageName.CATPart</code> </i>&quot;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtFeatNamingIndexManagement Code</h3>
+<p>
+<code>CAAV5V6FmExtFeatNamingIndexManagement</code> code is located in the
+<code>CAAV5V6FmExtFeatNamingIndexMgt.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CAAV5V6FmExtFeatNamingIndexMgt.m</code></p>
+<p>where <code>InstallRootDirectory</code>  
+is the root directory of your CAA installation. It is made of a unique source 
+file named <code>CAAV5V6FmExtFeatNamingIndexMgt.cpp</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The logical steps of <code>CAAV5V6FmExtFeatNamingIndexManagement</code> are:</p>
+<ol>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Set an auto provider">Set an AutoNumbering Provider to a Feature</a></li>
+	<li><a href="#Get an auto provider">Retrieving an AutoNumbering Provider of a Feature</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description of session creation and document 
+creation you may see CAAObjectSpecsModeler.edu V5 UseCase documentation. It further creates the <strong>Credentials</strong> [<a href="#References">3</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features [<a href="#References">4</a>], retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Set an auto provider"></a>Set an AutoNumbering Provider to a 
+Feature</h3>
+	<p>We set an AutoNumbering Provider for our feature below. An important 
+	point to note is that the Provider is set only if the call below, is 
+	explicitly invoked on our feature. Otherwise, there is no Provider set for 
+	any feature.</p>
+<pre class="code">CATFmAttributeValue FeatureAsValueForIndexRef = <strong>FeatFacadeOnLibrary.GetFeatureAsValue</strong>();
+rc = <strong>FeatFacadeOnNovel.SetAutoNumberingProvider</strong>(FeatureAsValueForIndexRef);</pre>
+	<p>The method <code>SetAutoNumberingProvider()</code> of the <em>CATFmFeatureFacade</em> class, 
+	sets an Auto Numbering Provider to a feature. The Provider is another 
+	feature, input to the API, as its <em>CATFmAttributeValue</em> equivalent. </p>
+<p>In the code extract above, we are setting the &quot;<strong>Library</strong>&quot; as 
+an AutoNumbering Provider for the &quot;<strong>Novel</strong>&quot;.</p>
+<ul>
+	<li><code>FeatFacadeOnNovel</code>, a <em>CATFmFeatureFacade</em> type represents 
+the &quot;<strong>CAAOsmNovel</strong>&quot; Feature Facade</li>
+	<li><code>FeatureAsValueForIndexRef</code>, a <em>CATFmAttributeValue</em> type which has 
+	the Library feature assigned to it. This is realized with the call to 
+	<code>GetFeatureAsValue()</code> of the <em>CATFmFeatureFacade</em> class. The call is 
+	invoked on <code>FeatFacadeOnLibrary</code>, a <em>CATFmFeatureFacade</em> type 
+	representing the Library feature facade.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Get an auto provider"></a>Retrieving an 
+AutoNumbering Provider of a Feature</h3><p>A StandAlone or an Aggregated 
+feature, by default do not have an AutoNumbering Provider associated with it. 
+The Provider is associated only if explicitly set, as in the previous step. The 
+call below to retrieve the Provider is significant particularly considering 
+these various possible cases.</p>
+<pre class="code">CATFmAttributeValue oValueOnRef;
+rc = <strong>FeatFacadeOnBook1.GetAutoNumberingProvider</strong>(oValueOnRef);
+if (FAILED(rc) ) return 1;
+</pre>
+<p>The method <code>GetAutoNumberingProvider()</code> of the <em>CATFmFeatureFacade</em> class, 
+	retrieves the <strong>AutoNumbering</strong> Provider set for a feature. The 
+Provider is a feature, returned as a <em>CATFmAttributeValue</em> type.</p>
+<p>This method returns <strong>FAILURE</strong>, if you are not granted 
+authorization to handle the feature StartUp [<a href="#References">3</a>]. </p>
+<p>Otherwise the method returns <strong>S_OK</strong>, for all cases. It is 
+important to note that the return is <strong>S_OK</strong>, even if an Auto 
+Numbering Provider is not explicitly set for a feature. An example could be a 
+standalone feature or an aggregated feature, which by default, do not have an 
+AutoNumbering Provider set.</p>
+<p>The next step is to retrieve the AutoNumbering Provider feature from the <em>
+CATFmAttributeValue</em> type, returned in the above step.&nbsp;</p>
+<pre class="code">CATFmFeatureFacade TheReference; 
+rc = <strong>oValueOnRef.GetFeature</strong>(TheReference) ;</pre>
+	<p>The <code>GetFeature()</code> call of the <em>CATFmAttributeValue</em> class&nbsp;retrieves 
+	a feature from an Attribute Value. It is invoked on <code>oValueOnRef</code> here, a 
+	<em>CATFmAttributeValue</em> type, representing the Provider retrieved in the earlier 
+	step. It returns <code>TheReference</code>, a <em>CATFmFeatureFacade</em> type, representing the 
+Provider.&nbsp;</p>
+<p>The call returns:</p>
+<ul>
+	<li><strong>S_OK</strong>, if there is a context feature explicitly set by 
+	the <code>SetAutoNumberingProvider</code> call</li>
+	<li><strong>S_FALSE</strong>, if there is no context feature found. This 
+	case is that of a standalone feature or an aggregated feature, which by 
+	default does not have an <strong>AutoNumbering</strong> Provider set&nbsp;</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>The document is then saved and session is closed</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The UC illustrates the steps involved to set and retrieve an <strong>
+AutoNumbering Provider</strong> for a feature. It outputs the display names of 
+features in our model before and after we set an <strong>AutoNumbering Provider</strong>. </p>
+<p>Unless a feature is aggregated, before a Provider is set, its display name is 
+without an index. While on setting the <strong>AutoNumbering Provider</strong>, 
+a feature display name is its <strong>NLS</strong> name with an index appended 
+to it. The index represents the count of this feature type in the context of its 
+parent. </p>
+<p>The &nbsp;<code>SetAutoNumberingProvider</code> and G<code>etAutoNumberingProvider</code>&nbsp; 
+calls of the <em>CATFmFeatureFacade</em> class are primarily responsible for 
+setting and retrieving an <strong>AutoNumbering Provider</strong> for a feature. </p>
+<p>The UC also clarifies that a <strong>StandAlone</strong> feature and an
+<strong>Aggregated</strong> feature, by default do not have an <strong>
+AutoNumbering Provider</strong>. A Provider is 
+associated only if it is explicitly set to a feature. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaNamingFeatures.htm">Feature Naming</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">
+		Modeling StartUps </a>
+</td>
+	</tr>
+
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+	
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating Features</a></td>
+	</tr>
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [July 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,143 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddEditPlate.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create members.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddEditPlate.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+<font color="#008000">'RETRIEVING THE SUPERPLATES</font>
+<font color="#0000FF">  Dim </font>SuperPlates<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>SuperPlates = ManagerObj.GetSuperPlates
+  
+<font color="#0000FF">  Dim </font>ShellSuperPlate1, ShellSuperPlate2, DeckSuperPlate, TBHSuperPlate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSuperPlate1 = SuperPlates.Item(1)
+<font color="#0000FF">  Set </font>ShellSuperPlate2 = SuperPlates.Item(2)
+<font color="#0000FF">  Set </font>DeckSuperPlate = SuperPlates.Item(3)
+<font color="#0000FF">  Set </font>TBHSuperPlate = SuperPlates.Item(4)
+  
+ <font color="#008000">'Retrieving the SplitPlates of ShellSuperPlate</font>
+<font color="#0000FF">  Dim </font>ShellSplitPlateRefs<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>ShellSplitPlateRefs = ShellSuperPlate1.SplitPlates
+  
+<font color="#0000FF">  Dim </font>ShellSplitPlateRef1, ShellSplitPlateRef2<font color="#0000FF"> As </font>Reference
+
+<font color="#0000FF">  Set </font>ShellSplitPlateRef1 = ShellSplitPlateRefs.Item(1)
+<font color="#0000FF">  Set </font>ShellSplitPlateRef2 = ShellSplitPlateRefs.Item(2)
+  
+  <font color="#008000">'Getting Selection Object</font>
+<font color="#0000FF">  Dim </font>SelectionObj<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">  Set </font>SelectionObj = CATIA.ActiveDocument.Selection
+  
+  <font color="#008000">'Adding SplitPlate(as Reference) to Selection Object</font>
+  SelectionObj.Add ShellSplitPlateRef1
+  
+  <font color="#008000">'To get SplitPlate1 as SfmSuperPlate</font>
+<font color="#0000FF">  Dim </font>ShellSplitPlate1<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSplitPlate1 = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  <font color="#008000">'Retrieving and Modifying the Attributes of ChildPlate</font>
+<font color="#0000FF">  Dim </font>Thickness1<font color="#0000FF"> As </font>Double
+<font color="#0000FF">  Dim </font>material1<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>grade1<font color="#0000FF"> As </font>String
+  ShellSplitPlate1.GetSplitPlateAttributes 1, Thickness1, material1, grade1
+  
+  ShellSplitPlate1.SetSplitPlateAttributes 1, 30, "Steel", "A42"
+ 
+ <font color="#008000">'EDITING THE DECK SUPERPLATE</font>
+  
+  SelectionObj.Add DeckSuperPlate
+<font color="#0000FF">  Dim </font>DeckPlate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>DeckPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  <font color="#008000">'Retrieving SuperPlate's Support</font>
+<font color="#0000FF">  Dim </font>DeckSupport<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>DeckSupport = DeckPlate.Support
+  
+  <font color="#008000">'Setting and Retrieving the SuperPlate's support offset</font>
+  
+  DeckPlate.SupportOffset = "30.0"
+<font color="#0000FF">  Dim </font>DeckSupportOffset<font color="#0000FF"> As </font>Double
+  DeckSupportOffset = DeckPlate.SupportOffset
+  
+  <font color="#008000">'Retrieving the SuperPlate's limit mode</font>
+<font color="#0000FF">  Dim </font>LimitMode<font color="#0000FF"> As </font>Long
+  LimitMode = DeckPlate.LimitMode
+  
+  <font color="#008000">'Retrieving the Limits Of SuperPlate</font>
+<font color="#0000FF">  Dim </font>DeckPlateLimits<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>DeckPlateLimits = DeckPlate.Limits
+  
+ <font color="#008000">'EDITING THE TRANSVERSE BULKHEAD SUPERPLATE</font>
+    
+  SelectionObj.Add TBHSuperPlate
+<font color="#0000FF">  Dim </font>TBHPlate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>TBHPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  <font color="#008000">'Getting Limits Of SuperPlate</font>
+<font color="#0000FF">  Dim </font>TBHPlateLimits<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>TBHPlateLimits = TBHPlate.Limits
+  <font color="#008000">'Setting 2nd Limit as Last Limit</font>
+  TBHPlate.SetAsLastLimit (2)
+  <font color="#008000">'Adding One More Limit</font>
+<font color="#0000FF">  Dim </font>TBHPlateNewLimit<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>TBHPlateNewLimit = ObjPart.FindObjectByName("LONG.5")
+<font color="#0000FF">  Dim </font>TBHPlateNewLimitRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TBHPlateNewLimitRef = ObjPart.CreateReferenceFromObject(TBHPlateNewLimit)
+   
+<font color="#0000FF">  Dim </font>TBHPlateNewOrnt<font color="#0000FF"> As </font>Long
+  TBHPlateNewOrnt = 4
+  TBHPlate.AddLimit TBHPlateNewLimitRef, TBHPlateNewOrnt
+  <font color="#008000">'Inverting the limit orientation of 4th Limit</font>
+  TBHPlate.InvertLimit (4)
+  
+  <font color="#008000">'Retrieving and Modifying the Support of SuperPlate</font>
+<font color="#0000FF">  Dim </font>TBHPlateSupport<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TBHPlateSupport = TBHPlate.Support
+  
+<font color="#0000FF">  Dim </font>TBHPlateNewSupport<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>TBHPlateNewSupport = ObjPart.FindObjectByName("CROSS.100")
+<font color="#0000FF">  Dim </font>TBHPlateNewSupportRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>TBHPlateNewSupportRef = ObjPart.CreateReferenceFromObject(TBHPlateNewSupport)
+  
+  TBHPlate.Support = TBHPlateNewSupportRef
+   
+  <font color="#008000">'To get Category</font>
+<font color="#0000FF">  Dim </font>TBHPlateCategory<font color="#0000FF"> As </font>String
+  TBHPlateCategory = TBHPlate.Category
+  <font color="#008000">'Retrieving and Modifying the thickness,material,grade of SuperPlate</font>
+<font color="#0000FF">  Dim </font>TBHPlateThickness<font color="#0000FF"> As </font>Double
+  TBHPlateThickness = TBHPlate.Thickness
+<font color="#0000FF">  Dim </font>TBHPlateMaterial, TBHPlateGrade<font color="#0000FF"> As </font>String
+  TBHPlateMaterial = TBHPlate.Material
+  TBHPlateGrade = TBHPlate.Grade
+  
+  TBHPlate.Material = "Steel"
+  TBHPlate.Grade = "A45"
+  TBHPlate.Thickness = "35.0"
+  
+  <font color="#008000">'Updating The Part with All Modifications</font>
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

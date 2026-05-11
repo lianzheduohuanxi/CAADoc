@@ -1,0 +1,125 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAScdBKTBehaviors.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro:</font>
+<font color="#008000">'                 1 - Opens an extended Part document</font>
+<font color="#008000">'				  2 - Retrieves the BehaviorExtensionsRoot, </font>
+<font color="#008000">'					  which gives access to the behaviors defined in the corresponding CATfct file</font>
+<font color="#008000">'				  3 - Successively retrieves behaviors under the main behavior, and get some of the input </font>
+<font color="#008000">'					  and output attributes defined on those behaviors</font>
+<font color="#008000">'				  4 - created parameters under the Part document</font>
+<font color="#008000">'				  5 - Assigns the value of those parameters to behavior's attribute: "MyExternal" attribute is linked to parameter P2</font>
+<font color="#008000">'					  </font>
+
+   
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">'**********************************************************</font>
+<font color="#0000FF">dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdBKTUseCases\samples\TypedPartforBKTAutomation.CATPart")
+
+<font color="#008000">'**********************************************************</font>
+
+
+<font color="#008000">'Before opening the extended part, don't forget to copy Doc_path\CAAScdBKTUseCases\samples\CAAScdBKTautomation.CATfct into installed_path/intel_a/resources/graphic</font>
+
+<font color="#008000">' Set the CATIA popup file alerts to False</font>
+<font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+CATIA.DisplayFileAlerts = False
+
+sFilePath ="E:\users\auw\ADELE\CAAAUWCXR14\CAAScriptDoc.edu\CAAScdBKTUseCases.doc\src\samples\TypedPartforBKTAutomation.CATPart"
+<font color="#008000">'We open an extended Part</font>
+<font color="#0000FF">Set </font>CurDocument= CATIA.Documents.Open  (sFilePath)
+CurDocument.Activate()
+<font color="#0000FF">Set </font>RootPart = CATIA.ActiveDocument.Part
+
+<font color="#008000">'We get the BehaviorExtension, which will provide access to every behavior instantiated</font>
+<font color="#0000FF">Set </font>BehExtension = RootPart.GetItem("CATGetBehaviorExtensions")
+
+<font color="#008000">'We get the behavior called Test Sequence, which is a main behavior (Sequential Combination)</font>
+<font color="#0000FF">set </font>MainBehavior = BehExtension.SelectBehavior("Test Sequence") 
+
+<font color="#008000">'We retrieve the behavior called "Display Information" under the sequence</font>
+<font color="#008000">'and the behavior called VBScript</font>
+<font color="#008000">'The method GetItem allows to retrieve a behavior of a sequence with its name</font>
+<font color="#0000FF">set </font>Behavior = MainBehavior.Behaviors.GetItem("Display Information")
+<font color="#0000FF">set </font>Behavior2 = MainBehavior.Behaviors.GetItem("VBScript")
+msgbox "Name of the information Behavior : " & Behavior.Name
+
+<font color="#008000">'It is possible to access to any behavior of a sequence</font>
+<font color="#008000">'the "Parent" method retrieves the owner of the behavior its called on</font>
+<font color="#0000FF">set </font>ParentBehavior= Behavior.Parent
+
+<font color="#008000">'It is possible to retrieve the type,and the list of behaviors</font>
+<font color="#0000FF">set </font>ExtensionBehavior= ParentBehavior.Parent
+NameExtension = ExtensionBehavior.Name
+
+<font color="#008000">'From the main behavior, we can get the list of every behaviors defined under it.</font>
+<font color="#0000FF">set </font>listBehavior = MainBehavior.Behaviors
+count = listBehavior.Count
+msgbox "number of behaviors : " & count, 64
+
+<font color="#008000">'ExtensionBehavior Parent is retrieved: it is the name of the extended object : here, Part1</font>
+<font color="#0000FF">set </font>ParentOfExtension = ExtensionBehavior.Parent
+ParentOfExtensionName = ParentOfExtension.Name
+
+type_parent= ExtensionBehavior.ExtensionClass
+msgbox "Type is " & type_parent, 64
+
+
+
+<font color="#008000">'As ParentBehavior is a sequence, we can access to any behavior of it using the "Item" method on "Behaviors"</font>
+<font color="#008000">'This is another way than GetItem to access to a behavior</font>
+<font color="#0000FF">set </font>SecondBehavior=ParentBehavior.Behaviors.Item(1)
+name_second=SecondBehavior.Name
+<font color="#008000">'We display the name of the Information behavior to control it is the same as retrieved before by GetItem method.</font>
+msgbox "Second Behavior of Parent List is " & name_second , 64   
+ 
+<font color="#008000">'The TestInput method ensures that the searched input attribute exists, before effectively retrieving it with GetInput </font>
+MyParameter="MyParameter"
+<font color="#0000FF">Dim </font>Param 
+<font color="#0000FF">if </font>(Behavior.TestInput(MyParameter))<font color="#0000FF"> then </font>
+<font color="#0000FF">	set </font>Param = Behavior.GetInput(MyParameter)
+<font color="#0000FF">end if</font>
+	msgbox "MyParameter value is " & Param.Value , 64
+
+
+<font color="#008000">'We create a parameter P2 of type LENGTH under the Part. Its value is set to 100</font>
+<font color="#0000FF">Dim </font>params<font color="#0000FF"> As </font>Parameters
+<font color="#0000FF">Set </font>params = RootPart.Parameters
+<font color="#0000FF">Set </font>NewParameter = params.CreateDimension("P2", "LENGTH", 100.000000)
+
+
+Behavior2.Start
+<font color="#008000">'Now we retrieve the output attribute called "MyExternal" of the "VBScript" behavior</font>
+<font color="#008000">'We test that this outupt attribute exists with TestOutput method</font>
+MyExternal="MyExternal"
+<font color="#0000FF">Dim </font>ParamExt
+<font color="#0000FF">if </font>(Behavior2.TestOutput(MyExternal))<font color="#0000FF"> then </font>
+<font color="#0000FF">	set </font>ParamExt = Behavior2.GetOutput(MyExternal)
+<font color="#0000FF">end if</font>
+
+
+<font color="#008000">'The PutOutput methods assigns a value to an output attribute of a running Behavior</font>
+<font color="#008000">'The Behavior2 has to be in executing mode, that's why we call the Start method on the VBScript behavior.</font>
+Behavior2.PutOutput "MyExternal", NewParameter 
+msgbox "New parameter MyExternal value  is " & Behavior2.GetOutput(MyExternal).Value, 64
+
+
+
+
+Behavior2.Done
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

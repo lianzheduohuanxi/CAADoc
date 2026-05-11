@@ -1,0 +1,229 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgToolbar</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgToolbar</h3>
+      <em>Arranges commands</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgBar.htm">CATDlgBar</a>
+        |
+        +---CATDlgToolBar</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Toolbar</caption>
+  <tr>
+    <td><img src="images/ListToolbar.jpg" alt="ListToolbar.jpg (2778 bytes)" width="157" height="38"></td>
+    <td>The toolbar gathers related commands, usually displayed using icons.
+      These commands are often also presented in menus. Some commands can be
+      gathered in an icon box, as in a submenu. Each command in a toolbar is
+      either a push item, a check item, or a radio item. They can be separated
+      by separator items.</td>
+  </tr>
+</table>
+<p>Use the toolbar when you want to group commands that relate to each other.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgTlbDockOnTop</td>
+    <td>The toolbar is displayed horizontally and is attached to the top side of
+      the main application window. This is the default</td>
+  </tr>
+  <tr>
+    <td>CATDlgTlbDockOnBottom</td>
+    <td>The toolbar is displayed horizontally and is attached to the botom side
+      of the main application window</td>
+  </tr>
+  <tr>
+    <td>CATDlgTlbDockOnLeft</td>
+    <td>The toolbar is displayed vertically and is attached to the left side of
+      the main application window</td>
+  </tr>
+  <tr>
+    <td>CATDlgTlbDockOnRight</td>
+    <td>The toolbar is displayed vertically and is attached to the right side of
+      the main application window</td>
+  </tr>
+  <tr>
+    <td>CATDlgTlbUnDock</td>
+    <td>The toolbar is displayed as a separate dialog window</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgWindCloseNotification</td>
+    <td><code>GetWindCloseNotification</code></td>
+    <td>Whenever the end user closes the toolbar window when it is undocked</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindDockNotification</td>
+    <td><code>GetWindDockNotification</code></td>
+    <td>Whenever the end user modifies the toolbar attachment</td>
+  </tr>
+  <tr>
+    <td>CATDlgToolBarMButtonNotification</td>
+    <td><code>GetToolBarMButtonNotification</code></td>
+    <td>Whenever the end user presses a toolbar push, check, or radio item</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The message displayed by the message window is set using the SetText method.
+This message can contain parameter you retrieve at run time to give run time
+parameter values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Toolbar</h4>
+<p>For example, the following toolbar is displayed vertically and attached to
+the right side of the main application window:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pToolbar = new CATDlgToolBar(iParent, iName, CATDlgTlbDockOnRight)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the Docking Mode</h4>
+<p>You can set or get the toolbar docking state as follows:
+<ul>
+  <li>set the toolbar docking state with the SetDockState method. It returns the
+    previous docking state:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATULong PreviousState;
+PreviousState = _pToolbar-&gt;SetDockState(CATDlgTlbDockOnBottom);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the toolbar docking state with the GetDockState method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATULong CurrentState;
+CurrentState= _pToolbar-&gt;SetDockState();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the Undocked Floating Position</h4>
+<p>You can set or get the undocked toolbar floating position using the pixel
+coordinates of the toolbar top left corner as follows:
+<ul>
+  <li>set the undocked toolbar floating position with the SetFloatingPosition
+    method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int x = 250;
+int y = 300;
+_pToolbar-&gt;SetFloatingPosition (x, y);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the undocked toolbar floating position with the GetFloatingPosition
+    method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int x, y;
+_pToolbar-&gt;GetFloatingPosition(&amp;x, &amp;y);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Retrieving the Contextual Menu</h4>
+<p>You can retrieve the contextual menu of a toolbar as follows:
+<ul>
+  <li>get the contextual menu with the GetContextualMenu method
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgContextualMenu * pCtxMenu;
+pCtxMenu = _pToolbar-&gt;GetContextualMenu();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title to a Toolbar</h4>
+<p>The toolbar title should be set by the resource file using a key built with
+the identifier you declare as the second parameter of the toolbar constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

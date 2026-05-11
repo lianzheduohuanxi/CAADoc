@@ -1,0 +1,673 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Tessellating and Displaying a Torus</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Tessellating and Displaying a Torus</h3>
+      <em>Creating a 3D face graphic primitive and displaying it using a 3D
+      custom representation</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a <i>CAT3DFaceGP</i> class instance to
+      tessellate a torus and how to display it using a <i>CAT3DCustomRep</i>
+      instance.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVisBasics Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVisBasics Do</a></li>
+            <li><a href="#How">How to Launch CAAVisBasics</a></li>
+            <li><a href="#Where">Where to Find the CAAVisBasics Code</a></li>
+            <li><a href="#Tess">Tessellating a Torus</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains how to create a <i>CAT3DFaceGP</i> class instance to
+tessellate a torus and how to display it using a <i>CAT3DCustomRep</i> instance.
+It show the torus tessellation using a set of triangle strips according to a
+given sag.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVisBasics Use Case</h3>
+<p>CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that
+illustrates Vizualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVisBasics Do</h4>
+<p>CAAVisBasics includes a MDI interactive application that displays viewers in
+its document windows. One of these viewers is displayed when the application is
+launched and contains the representation of a torus. This article focuses on how
+to create this representation as a <i>CAT3DCustomRep</i> instance associated
+with a graphic primitive that is an instance of the <i>CAT3DFaceGP</i> class.</p>
+<p>The torus is displayed in a 3D navigation viewer as soon as the application
+is launched.</p>
+<table>
+  <caption><i><a name="Fig1"></a>Fig 1: The Torus</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleCGRFile1.jpg" width="620" height="625"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVisBasics</h4>
+<p>To launch CAAVisBasics, you will need to set up the build time environment,
+then compile CAAVisBasics along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>The torus is displayed in a 3D navigation viewer as soon as the application
+is launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVisBasics Code</h4>
+<p>The CAAVisBasics use case is made of several classes located in the
+CAAVisBasics.m module of the CAAVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>This use case deals with the following classes:</p>
+<table>
+  <tr>
+    <td><i>CAAVisBaseApplication</i></td>
+    <td>Class for the interactive application that hosts the viewer</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseDocument</i></td>
+    <td>Class for the document base class</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseDefaultDocument</i></td>
+    <td>Class for the document that creates a representation and four level of
+      details for a torus model</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseView</i></td>
+    <td>Class for the document window containing a viewer to display the
+      document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Tess"></a>Tessellating a Torus</h4>
+<p>A torus is a solid of rotation made by rotating a circle about an axis
+located in the plane of the circle.</p>
+<table>
+  <caption><i><a name="Fig2"></a>Fig. 2: The Discretization Parameters</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleTorusWireframe.gif" width="509" height="551"></td>
+    <td>This is a wireframe view of the torus showing eight positions of the
+      rotating circle. The chosen torus has the following characteristics:
+      <ul>
+        <li>The torus center is the absolute 3D axis system origin</li>
+        <li>The torus plane is the zx plane</li>
+        <li>The rotating circle radius is 20mm</li>
+        <li>The rotating circle rotates about the y axis.</li>
+      </ul>
+      <p><i>phi</i> is the angle between two successive circles, measured in the
+      zx plane about the y axis, and <i>theta</i> is the angle between two
+      successive vertices on a circle.</td>
+  </tr>
+</table>
+<p>The torus surface can be described by selecting evenly distributed circles,
+and by drawing a strip of triangles between each couple of consecutive circles.</p>
+<table>
+  <caption><i><a name="Fig3"></a>Fig. 3: The Triangle Strips</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleTorusTessalation.gif" width="374" height="485"></td>
+    <td>Each strip is made of triangles whose vertices are alternatively located
+      on a circle and on the other. The strip winds around the part of torus
+      located between the two circles. The last triangle side closes the strip
+      on the vertex by which the strip begins. Such a strip is built between
+      each couple of circles, until the whole torus surface is covered.</td>
+  </tr>
+</table>
+<p>The two important parameters of the tessellation are the number of circles,
+and the number of vertices per circle. The more they are circles and vertices,
+the more the discretization is precise, but the more the discretization and
+display processes are costly. In addition, depending on the current zoom, the
+number of circles and of vertices per circle can be changed to optimize display
+performance and accuracy. This is possible thanks to levels of details [<a href="#References">2</a>],
+but is not discussed here.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create a 3D navigation viewer instance</td>
+    <td valign="top"><code>CreateViewer</code> method of <i>CATVisBaseView</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create a 3D representation bag</td>
+    <td valign="top"><i>CAAVisBaseDefaultDocument</i> constructor</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create and fill in the arrays for the vertex coordinates
+      and the normal components</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create and fill in the arrays for the strip triangle vertex
+      indices and the number of vertices per strip</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Create the graphic primitive and its associated bounding
+      box</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Set graphic attributes to the graphic primitive</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Create the 3D custom representation</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">8</a></td>
+    <td valign="top">Associate the representation with the graphic primitive</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step9">9</a></td>
+    <td valign="top">Compute the representation bounding box</td>
+    <td valign="top"><code>CreateRep</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step10">10</a></td>
+    <td valign="top">Display the created 3D representation</td>
+    <td valign="top"><code>AddRepToViewer</code> method of <i>CATVisBaseView</i></td>
+  </tr>
+</table>
+<p>The torus is displayed when the CAAVisBasics application is launched. The
+torus creation and display is performed in the <i>CAAVisBaseDefaultDocument</i>
+constructor that calls the <code>CreateRep</code> and <code>AddRepToViewer</code>
+methods respectively. These two methods are described below.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a 3D Navigation Viewer Instance</h4>
+<p>The 3D navigation viewer is an instance of the <i>CATNavigation3DViewer</i>
+class. It is created in the <code>CreateViewer</code> method of the <i>CAAVisBaseView</i>
+class that is called when the application is launched.
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBaseView::CreateViewer()
+{
+  _pViewer = new CATNavigation3DViewer(this, &quot;3DViewer&quot;,
+                                      CATDlgFraNoTitle | CATDlgFraNoFrame,
+                                      500, 500);
+  Attach4Sides(_pViewer);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>_pViewer</code> pointer to the 3D navigation viewer is kept as a
+data member of the <i>CAAVisBaseView</i> class. Its parameter are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>this</code></td>
+    <td valign="top">The viewer parent in the dialog containment tree structure
+      and in the command tree structure [a]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>3DViewer</code></td>
+    <td valign="top">The viewer identifier</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATDlgFraNoTitle</code></td>
+    <td valign="top">The viewer has no title [b]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATDlgFraNoFrame</code></td>
+    <td valign="top">The viewer frame is not displayed [b]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>500, 500</code></td>
+    <td valign="top">The viewer width and height expressed in pixels</td>
+  </tr>
+</table>
+<p>The <code>Attach4Sides</code> method attaches the four sides of the viewer to
+those of the window. This makes the viewer occupy the whole window space.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a 3D Representation Bag</h4>
+<p>The <i>CAAVisBaseDefaultDocument</i> constructor creates the representation
+bag to attach to the viewer, calls <code>CreateRep</code> to create the torus
+representation, adds it to the representation bag, and calls <code>AddRepToViewer</code>
+for display.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAVisBaseDefaultDocument::CAAVisBaseDefaultDocument(CATCommand * iParent,
+                                                     CATDialog  * iDialogParent,
+                                                     CATString  * const iDocumentName)
+                         : CAAVisBaseDocument(iParent, iDialogParent, iDocumentName)
+{
+  _pRootContainer  = new CAT3DBagRep();
+  CreateRep();
+  _pRootContainer-&gt;AddChild(*_pTorus);
+  AddRepToViewer();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's examine what <code>CreateRep</code> does.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating and Filling in the Arrays for the Vertex
+Coordinates and the Normal Components</h4>
+<p>First set the tessellation parameters.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBaseDefaultDocument::CreateRep()
+{
+  int R = TORUS_RADIUS;
+  int r = CIRCLE_RADIUS;
+
+  float teta = sqrt(sag/r);
+  float phi  = sqrt(sag/R);
+
+  int nVertexPerCircle = floor(2*PI/teta)+1;
+  int nCircles         = floor(2*PI/phi)+1;
+
+  teta = 2*PI/nVertexPerCircle;
+  phi  = 2*PI/nCircles;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The tessellation parameters are <code>nVertexPerCircle</code> (number of
+vertices per circle), and <code>nCircles</code> (total number of circles). They
+determine the two angles theta and phi:</p>
+<ul>
+  <li><b>theta</b> is the angle between two successive vertices on a circle (<code>2*Pi/nVertexPerCircle</code>).
+    It determines the sag parameter for the circle discretization, that is the
+    distance between the chord joining two vertices, that is displayed to
+    represent the circle, and the actual circle</li>
+  <li><b>phi</b> determines the number of circles. It also determines sag
+    parameters for the torus discretization.</li>
+</ul>
+<table>
+  <caption><i><a name="Fig4"></a>Fig. 4: The Sag and the Angles</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleTorusSag.gif" width="323" height="262"></td>
+    <td><img border="0" src="images/CAAVisSampleTorusSag1.gif" width="341" height="366"></td>
+  </tr>
+</table>
+<p>And now fill in the arrays.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //array containing the vertices coordinates:
+  int verticesArraySize = 3*nCircles*nVertexPerCircle;
+  float * vertices = new float[verticesArraySize];
+
+  //array containing the normals to each vertex:
+  int normalsArraySize = 3*nCircles*nVertexPerCircle;
+  float * normals = new float[normalsArraySize ];
+  
+  for(int i=0; i&lt;nCircles; i++)
+  {
+    for(int j=0; j&lt;nVertexPerCircle; j++)
+    {
+      //vertex XYZ coordinates
+      vertices[3*(nVertexPerCircle*i+j)]   = (R+r*cos(j*theta))*sin(i*phi);
+      vertices[3*(nVertexPerCircle*i+j)+1] = r*sin(j*theta);
+      vertices[3*(nVertexPerCircle*i+j)+2] = (R+r*cos(j*theta))*cos(i*phi);
+
+      //normal vector XYZ components
+      normals[3*(nVertexPerCircle*i+j)]   = cos(j*theta)*sin(i*phi);
+      normals[3*(nVertexPerCircle*i+j)+1] = sin(j*theta); 
+      normals[3*(nVertexPerCircle*i+j)+2] = cos(j*theta)*cos(i*phi);
+    }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The vertex coordinates are stored in the <code>vertices</code> array. The
+first vertex x, y, and z coordinates are stored in the first three array
+elements, then the second vertex coordinates are stored in the following three
+array elements, and so on. The normal components are stored in the <code>normals</code>
+array in the same way than the vertex coordinates. The coordinates of a given
+vertex occupies the same array elements in the <code>vertices</code> array than
+the components of the normal at this vertex in the <code>normals</code> array.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating and Filling in the Arrays for the Strip
+Triangle Vertex Indices and the Number of Vertices per Strip</h4>
+<p>The vertex indices of the triangle strips are stored in the vertex index
+array. They are used to scan the vertex and normal arrays when the graphic
+primitive is built. Vertices and normals are then used for display in the order
+read from the vertex index array.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Creation of the torus representation thanks to the CAT3DFaceGP.
+  // We can build a CAT3DFaceGP made of nCircles triangles strips, each one
+  // made of 2*nVertexPerCircle vertices. Indeed, by joining, with strips, the torus circles
+  // two by two, we can describe the entire torus.
+
+  // We have to build an array containing the vertices indices, sorted in
+  // order to be parsed as strips vertices.
+
+  //Array containing vertices indices:
+  int * triangleStripIndices = new int[nCircles*2*(nVertexPerCircle+1)];
+  //number of strips used to describe the torus:
+  int nbTriangleStrip = nCircles;
+  //Array containing the number of vertices used for each strip:
+  int * nbVertexPerTriangleStrip = new int[nCircles];
+
+  // the parsing order looks like this:
+  // 
+  //           first strip:
+  //           -----------
+  //   Circle0.Vertex0  -&gt; Circle1.Vertex0
+  //   Circle1.Vertex0  -&gt; Circle0.Vertex1
+  //   Circle0.Vertex2  -&gt; Circle1.Vertex2    Circle0.Vertex1  -&gt; Circle1.Vertex1
+  //               ...                        Circle1.Vertex1  -&gt; Circle0.Vertex2
+  //   Circle1.Vertex11 -&gt; Circle0.Vertex0
+  //   Circle0.Vertex0  -&gt; Circle1.Vertex0
+  //
+  //           second strip:
+  //           ------------
+  //   Circle1.Vertex0  -&gt; Circle2.Vertex0
+  //   Circle2.Vertex0  -&gt; Circle1.Vertex1
+  //               ...
+
+  for(i=0; i&lt;nCircles; i++)
+  {
+    for(int j=0; j&lt;=nVertexPerCircle; j++)
+    {
+      if(j&lt;nVertexPerCircle)
+      {
+        triangleStripIndices[2*(nVertexPerCircle+1)*i+2*j]   = 3*(i*nVertexPerCircle+j);
+        triangleStripIndices[2*(nVertexPerCircle+1)*i+2*j+1] = 3*((((i+1)%nCircles)*nVertexPerCircle)+j);
+      }
+      else
+      {
+        triangleStripIndices[2*(nVertexPerCircle+1)*i+2*j]   = 3*((i)*nVertexPerCircle);
+        triangleStripIndices[2*(nVertexPerCircle+1)*i+2*j+1] = 3*(((i+1)%nCircles)*nVertexPerCircle);
+      }
+    }
+    nbVertexPerTriangleStrip[i] = 2*(nVertexPerCircle+1);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The vertex index array to create the triangle strips is filled in following
+the vertex scanning order shown in <a href="#Fig3">Fig. 3</a>. Each couple of
+adjacent circles is processed until reaching the first circle to close the
+torus. For each couple of circles, the indices successively stored designate a
+vertex on the first circle and its counterpart on the second one until reaching
+the first vertices on each circle. The index of a vertex is the index of its x
+coordinate in the <code>vertices</code> array. This table thus begins by 0, 240,
+3, 243, 6, 246, ... and so on. The <code>(i+1)%nCircles</code> modulo operation
+always returns <code>i+1</code>, except when <code>i</code> is equal to <code>nCircles-1</code>
+where it returns 0 to get the first circle. The array containing the number of
+vertices per strip has <code>nCircles</code> elements that all have the same
+value <code>2*(nVertexPerCircle+1)</code>, that is 162, since the first two
+vertices are counted twice.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating the Graphic Primitive and its Associated
+Bounding Box</h4>
+<p>The graphic primitive is created using the arrays computed in the previous
+steps.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Creation of the CAT3DFaceGP:
+
+  int * triangleIndices = NULL;
+  int nbTriangle = 0;
+  int * triangleFanIndices = NULL;
+  int nbTriangleFan = 0;
+  int * nbVertexPerTriangleFan = NULL;
+  <b>float TextureCoord = NULL;
+  int   TextureFormat = 3;</b>
+  
+  CAT3DFaceGP * pFace = new CAT3DFaceGP(vertices,
+                                        verticesArraySize,
+                                        normals,
+                                        normalsArraySize,
+                                        triangleIndices,
+                                        nbTriangle,
+                                        triangleStripIndices,
+                                        nbTriangleStrip,
+                                        nbVertexPerTriangleStrip,
+                                        triangleFanIndices,
+                                        nbTriangleFan,
+                                        nbVertexPerTriangleFan,
+                                        <b>TextureCoord,</b>
+                                        <b>TextureFormat,
+                                        ALLOCATE_VERTICES | ALLOCATE_NORMALS</b>
+                                        );
+  pFace-&gt;ComputeBox();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The computed arrays are passed as constructor parameters, along with their
+sizes. Since the graphic primitive is not built using isolated triangles or
+triangle fans, the corresponding arrays are passed as <code>NULL</code>
+pointers, and their sizes and the triangle fan number as 0. No texture
+coordinates are passed. The vertex and normal arrays default allocation mode is
+explicitly used to show that the created graphic primitive allocates the arrays.
+In this case, there is no need to allocate them using the new operator. The
+graphic primitive bounding box is computed as soon as graphic primitive is
+created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Setting Graphic Attributes to the Graphic Primitive</h4>
+<p>The graphic attribute set can be customized.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATGraphicAttributeSet pGraphicAttributes;
+  //We specify within the graphic attributs that our surface is a SOLID.
+  pGraphicAttributes.SetType(3);
+
+  //In order to be able to see each LOD, we specify a different color
+  //for each LOD:
+  pGraphicAttributes.SetColor(TRUECOLOR);
+
+  //Red for the most precise model.
+<b>  </b>pGraphicAttributes.SetColorRGBA(255, 0, 0, <b>255</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The value 3 passed as the parameter of <code>SetType</code> indicates that
+the graphic primitive is a volume and participates to the ZBuffer. The graphic
+primitive color scheme is set as true color, and its color is set to red using
+the red color RGB components (255, 0, 0). The last parameter is the default
+value for alpha blending.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Creating the 3D Custom Representation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAT3DCustomRep * _pTorusCustomRep = new CAT3DCustomRep();  // ou CAT3DCustomRep(pFace, pGraphicAttributes); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The custom representation to accommodate the graphic primitive is a 3D custom
+representation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Associating the Representation with the Graphic
+Primitive</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  _pTorusCustomRep-&gt;AddGP(pFace, pGraphicAttributes);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The representation is associated with the graphic primitive and its graphic
+attribute set.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step9"></a>Computing the Representation Bounding Box</h4>
+<p>The representation needs a bounding box to improve the display process.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //We MUST create the associated bounding box:
+  float center[3] = {0.0, 0.0, 0.0};
+  float radius = R+r;
+  CAT3DBoundingSphere bs(center, radius);
+  _pTorusCustomRep-&gt;SetBoundingElement(bs);
+  _pTorusCustomRep-&gt;SetGraphicAttributeSet(pGraphicAttributes);
+ 
+  delete [] vertices;
+  delete [] normals;
+  delete [] triangleStripIndices;
+  delete [] nbVertexPerTriangleStrip;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This bounding box is the sphere whose center is the torus center, and whose
+radius is the external torus radius.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>Displaying the Created 3D Representation</h4>
+<p>The <code>AddRepToViewer</code> method displays the created representation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBaseDocument::AddRepToViewer()
+{
+  _pView-&gt;Add3DRep(_pRootContainer);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_pView</code> is a pointer to the 3D navigation viewer. The
+representation is assigned to this viewer thanks to the <code>Add3DRep</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved when tessellating a torus, and the
+tessellation process, namely a 3D navigation viewer instance, a 3D
+representation bag, how to create vertices, normals, and strip triangles, how to
+create the graphic primitive and its associated bounding box to accommodate the
+torus, how to set its graphic attributes, how to create the 3D custom
+representation from the graphic primitive and its graphic attributes, compute
+the representation bounding box, and display the representation.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAVisSampleLOD.htm">Creating Levels of Details</a></td>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

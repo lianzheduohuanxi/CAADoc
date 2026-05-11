@@ -1,0 +1,159 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Computing the Maximum Separation</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Space Analysis</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Computing the Maximum Separation</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use distances to
+      compute the maximum separation between selected components (i.e. the
+      maximum of all the minimum distances between a couple of components). The
+      macro assumes that a CATProduct has been loaded and that some components
+      are selected.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This image shows the selection state before the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaMaximumSeparation1-sm.gif"></p>
+      <p>&nbsp;</p>
+      <p>This image shows the result of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaMaximumSeparation2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAASpaMaximumSeparation is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAASpaMaximumSeparationSource.htm" target="Source">CAASpaMaximumSeparation.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAASpaMaximumSeparation.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAASpaMaximumSeparation includes seven steps:</p>
+      <ol>
+        <li><a href="#Select">Retrieving the selected components</a></li>
+        <li><a href="#Distances">Retrieving the distances collection</a></li>
+        <li><a href="#Loop">Loop on each couple of components</a></li>
+        <li><a href="#Distance">Creation and computation of the distance</a></li>
+        <li><a href="#Comparison">Comparison with the maximum value</a></li>
+        <li><a href="#Clean">Clean</a></li>
+        <li><a href="#Result">Display the results</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Select"></a>Retrieving the selected components</h4>
+      <p>The <i>cGroups</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups'); return false;">Groups</a></code>
+      ) is the factory to create <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group'); return false;">Group</a></code>
+      object : this collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Groups&quot;</code>, on the root
+      product of the active document.</p>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups', 'AddFromSel'); return false;">AddFromSel</a></code>
+      method is used on the <i>cGroups</i> collection to create the <i>oGroup1</i>
+      object containing all the selected components.</p>
+      <p>The number of selected components, <i>iNumber</i> is retrieved using
+      the <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'CountExtract'); return false;">CountExtract</a></code>
+      method on the <i>oGroup1</i> object.</p>
+      <p>A warning is sent if, at least, two components are not selected.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Distances"></a>Retrieving the distances collection</h4>
+      <p>The <i>cDistances</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distances'); return false;">Distances</a></code>
+      ) is the factory to create <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distance'); return false;">Distance</a></code>
+      object : this collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Distances&quot;</code>, on the root
+      product of the active document.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Loop"></a>Loop on each couple of components</h4>
+      <p>The basic idea of the algorithm is to create a <i>oDistance</i> object
+      for each couple of components.</p>
+      <p>Each couple is build using imbricated loops and one group <i>iGroup2</i>
+      which content is changed using <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'AddExplicit'); return false;">AddExplicit</a></code>
+      and <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'RemoveExplicit'); return false;">RemoveExplicit</a></code>
+      methods to add the selected components retrieved using <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'ItemExtract'); return false;">ItemExtract</a></code>
+      method on <i>oGroup1</i> object.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Distance"></a>Creation and computation of the distance</h4>
+      <p>The <i>oDistance</i> object is created using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distances', 'Add'); return false;">Add</a></code>
+      method on the <i>cDistances</i> collection, modified with the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distance', 'FirstGroup'); return false;">FirstGroup</a></code>
+      method, to take into account the group <i>oGroup2</i>, and then computed
+      with the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distance', 'Compute'); return false;">Compute</a></code>
+      method.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Comparison"></a>Comparison with the maximum value</h4>
+      <p>If the result is consistent ( <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distance', 'IsDefined'); return false;">IsDefined</a></code>
+      method give this information) the value is retrieved using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Distance', 'Value'); return false;">Value</a></code>
+      method and compared to the current maximum value.
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Clean"></a>Clean</h4>
+      <p>The environment is cleaned using <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups', 'Remove'); return false;">Remove</a></code>
+      method group objects.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Result"></a>Display the results</h4>
+      <p>The results are displayed in a Msgbox.</p>
+      <p align="center"><img border="0" src="images/CAASpaMaximumSeparation3-sm.gif"></p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use distance in order to compute the maximum
+separation. Specifically, it has illustrated how to :</p>
+<ul>
+  <li>retrieve selected components</li>
+  <li>use groups</li>
+  <li>create and use distances</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocSPA.htm">Space
+      Analysis automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

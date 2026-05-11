@@ -1,0 +1,384 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>How to Use the Smoothing Options when Creating a Sweep</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Geometric Modeler</h1>
+     </td>
+     <td valign="top">
+     <h2>Topology</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>How to Use the Smoothing Options when Creating a
+     Sweep</h3>
+     <em>Tolerant Modeling Capabilities in the CATFrFSweepOperator</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>The CATFrFTopologicalSweep operator enables you to create sweeps. This 
+     use case explains how to create a circle sweep with two guides and a 
+     tangency surface.</p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAAAdtSweepSmoothing Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAAAdtSweepSmoothing Do?</a></li>
+         <li><a href="#How">How to Launch CAAAdtSweepSmoothing</a></li>
+         <li><a href="#Where">Where to Find the CAAAdtSweepSmoothing Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+       <li><strong><a href="#InShort">In Short</a></strong></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <table border="1" cellpadding="3" cellspacing="3" width="100%" id="AutoNumber2" bordercolor="#F3F3F3">
+   <tr>
+     <td width="50%" valign="top">In this use case, you learn how to use the 
+     &quot;Smooth Sweeping&quot; option of the CATFrFTopologicalSweep operator. You create 
+     a segment sweep with a guide curve and a reference surface, specify the 
+     input data as indicated below and improve the sweep surface quality by 
+     acting on the &quot;Smooth sweeping&quot; parameters. CATFrFTopologicalSweep is to 
+     be used according to the general scheme of topological operators. 
+     If need be, you can take a look at &quot;Overview of the Topological Operators&quot; 
+     [<a href="#References">1</a>] for more information.</td>
+     <td width="50%">
+     <img border="0" src="images/Sweep0.jpg" width="355" height="450"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAAdtSweepSmoothing Use Case</h3>
+ <h4><a name="Rem"></a>Reminder </h4>
+ <p>In a CATIA session, the &quot;Smooth Sweeping&quot; option can be used in two cases:</p>
+ <ol>
+   <li>whenever a sweep cannot be generated because the specified input data are 
+   invalid (guide not continuous in tangency or not planar).</li>
+   <li>whenever the generated sweep does not provide the user with the expected 
+   quality. The user may wish to reduce the number of edges on the created 
+   surface or at least improve the tangency conditions along the edges.</li>
+ </ol>
+ <p>There are two parameters to be adjusted in order to perform a sweep that 
+ does not complete with the standard options or to achieve a sweep of better 
+ quality:</p>
+ <p><i><font color="#008000"><b><u>The &quot;Angular Correction&quot; option</u></b></font></i></p>
+ <p>This parameter is related to the angular tolerance of the moving frame 
+ (plane that moves perpendicularly along the guide curve). When the 
+ &quot;Angular Correction&quot; option is activated, the sweep algorithm tries to modify 
+ the angle between the moving frame and the guide curve to complete the sweep 
+ operation or produce a surface of better quality.</p>
+ <p>Example: to understand well how it works, compare the angle between one edge 
+ of the sweep and the plane normal to the reference surface in 
+ TolerantSweepDev0.CATPart<sup><a href="#References">[*]</a></sup> and 
+ TolerantSweepDev1.CATPart<sup><a href="#References">[*]</a></sup>. </p>
+ <table border="1" cellpadding="3" cellspacing="3" id="AutoNumber1" width="100%" bordercolor="#C0C0C0">
+   <tr>
+     <td width="521" valign="top">The sweep wouldn't complete with the default 
+     options because the guide curve is not planar- but if the &quot;Deviation from 
+     Guide&quot; option is activated, it completes. The angle between the edge and 
+     the plane normal to the reference surface is 45deg, which is exactly the 
+     value specified for the sweep angle (see TolerantSweepDev0.CATPart<sup><a href="#References">[*]</a></sup>).
+     </td>
+     <td width="316">
+     <img border="0" src="images/SweepAng45.jpg" width="314" height="121"></td>
+   </tr>
+   <tr>
+     <td width="521" valign="top">Now, if you specify an angle correction of 
+     2deg, the angle between the edge and the plane normal to the reference 
+     surface is 43.867deg. This value is within the specified range. (See 
+     TolerantSweepDev1.CATPart<sup><a href="#References">[*]</a></sup>).</td>
+     <td width="316">
+     <img border="0" src="images/SweepAng43.jpg" width="316" height="133"></td>
+   </tr>
+ </table>
+ <p><i><u><font color="#008000"><b>The &quot;Deviation From Guide&quot; option</b></font></u></i></p>
+ <p>This parameter defines the gap authorized between the guide curve and the 
+ sweep itself. With the default option, there is no gap. When this option is 
+ activated, the sweep algorithm tries to generate a surface that does not stick 
+ necessarily to the guide curve but is of better quality or enables the 
+ completion of the sweep operation. When the resulting sweep is smooth enough, 
+ some edges can be cleaned.</p>
+ <p><i><u><font color="#008000"><b>The improvements to be expected</b></font></u></i></p>
+ <p>By adjusting the parameters above, you can reduce the tangency constraints 
+ along the edges and reduce the number of patches for the Nurbs surfaces 
+ underlying the sweep faces.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAAdtSweepSmoothing Do ?</h4>
+ <p>The use case: </p>
+ <ul>
+   <li>retrieve the input data (guide curve and reference surface) from the 
+   TolerantSweepInit.ncgm<sup><a href="#References">[*]</a></sup> file.</li>
+   <li>creates a CATFrFTopologicalSweep operator instance.</li>
+   <li>specifies the sweep parameters (angle and length laws, smoothing options)</li>
+   <li>run the CATFrFTopologicalSweep and retrieve the resulting body.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAAdtSweepSmoothing</h4>
+ <p>To launch CAAAdtSweepSmoothing, you will need to set up the build time 
+ environment, then compile CAAAdtSweepSmoothing.m, set up the run time 
+ environment, and then execute the use case [<a href="#References">2</a>].</p>
+ <p>If you simply type CAAAdtSweepSmoothingwith with TolerantSweepInit.ncgm as 
+ input argument, the use case executes, but doesn't save the result in an NCGM 
+ file. If you want to save this result, provide the full pathname of the NCGM 
+ file to create. For example:</p>
+ <p>With Windows <code>CAAAdtSweepSmoothing ...\tolerantSweepInit.ncgm 
+ e:\sweep.NCGM</code></p>
+ <p>With UNIX <code>CAAAdtSweepSmoothing ...\tolerantSweepInit.ncgm 
+ /u/sweep.NCGM</code></p>
+ <p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAAdtSweepSmoothing Code</h4>
+ <p>The CAAAdtSweepSmoothing code use case is made of a main named 
+ CAAAdtSweepSmoothingCode.cpp located in the CAAAdtSweepSmoothing code.m module 
+ of the CAAAdvancedTopologicalOpe.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAdvancedTopologicalOperators.edu\</code>CAAAdtSweepSmoothing
+     <code>.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAdvancedTopologicalOperators.edu/</code>CAAAdtSweepSmoothing
+     <code>.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>The use case is divided into the following main steps:</p>
+ <ul>
+   <li><a href="#Creating the curves making up the wire">Retrieving the input 
+   data</a></li>
+   <li><a href="#Creating a CATFrFTopologicalSweep operator instance">Creating a 
+   CATFrFTopologicalSweep operator instance</a></li>
+   <li><a href="#Setting the parameters">Setting the parameters (Smooth options)</a></li>
+   <li>Running the operator and retrieving the resulting body (common to all 
+   operators - not discussed below).</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating the curves making up the wire">Retrieving the Input Data</a></h4>
+ <p>The guide curva as well as the reference surface are retrieved from the 
+ input file by using the CATICGMObject::GetPersistentTag method.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Creating a CATFrFTopologicalSweep operator instance">Creating a 
+ CATFrFTopologicalSweep operator instance</a></h4>
+ <p>The CATFrFTopologicalSweep operator is created by the 
+ CATCreateFrFTopologicalSegmentSweepglobal function. The guide is passed in the 
+ form of a list as the third argument of the function.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre><b><font color="#008000">// (a) - Define the list of guides (a single guide list in this case)
+//</font></b>
+CATLISTP(CATGeometry) guides= NULL;
+CATGeometry * guideGeom = (CATGeometry*)piInputBody ; 
+guides.Append(guideGeom);
+
+<b><font color="#008000">// (b) - Create the sweep operator
+//</font></b>
+CATFrFTopologicalSweep * sweepOpe =::CATCreateFrFTopologicalSegmentSweep(piGeomFactory, 
+&amp;topdata, &amp;guides);</pre>
+     </td>
+   </tr>
+ </table>
+ <ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+ </ol>
+ <h4><a name="Setting the parameters">Setting the Smooth Options</a></h4>
+ <p>The &quot;smooth sweeping&quot; options are specified by using the combination of 
+ services below:</p>
+ <table border="1" cellpadding="0" cellspacing="0" width="100%" id="AutoNumber3">
+   <tr>
+     <td width="50%" bgcolor="#99CCFF"><i><u><b><font color="#000080">Service(s)</font></b></u></i></td>
+     <td width="50%" bgcolor="#99CCFF"><i><b><font color="#000080">Correspond(s) 
+     to</font></b></i></td>
+   </tr>
+   <tr>
+     <td width="50%" bgcolor="#EAF4FF">SetSmoothOption(1) + 
+     SetSmoothAngleThreshold(<i>RadianAngleTol</i>)</td>
+     <td width="50%" bgcolor="#EAF4FF">&nbsp;&quot;Angular correction&quot; check box 
+     activated.</td>
+   </tr>
+   <tr>
+     <td width="50%" bgcolor="#EAF4FF">SetCleanGuidesOption(1, ..., ..., ...);</td>
+     <td width="50%" bgcolor="#EAF4FF">&nbsp;&quot;Deviation from Guide&quot; check box 
+     activated.</td>
+   </tr>
+   <tr>
+     <td width="50%" bgcolor="#EAF4FF">No SetSmoothOption or SetSmoothOption(0)</td>
+     <td width="50%" bgcolor="#EAF4FF">&nbsp;&quot;Angular correction&quot; check box 
+     deactivated.</td>
+   </tr>
+   <tr>
+     <td width="50%" bgcolor="#EAF4FF">No SetCleanGuidesOption or 
+     SetCleanGuidesOption (0)</td>
+     <td width="50%" bgcolor="#EAF4FF">&nbsp;&quot;Deviation from Guide&quot; check box 
+     deactivated.</td>
+   </tr>
+ </table>
+ <p>Four set of data are specified. The result is analyzed by using the 
+ &quot;Apply Dress-Up&quot; capability of the &quot;Free Style&quot; workbench. &quot;Apply 
+ Dress-Up&quot; allows you to display the number of patches for each face of the 
+ generated sweep as well as the isoparametric curves (dotted lines). The 
+ &quot;Connect Checker&quot; is used to check the tangency condition along edges.</p>
+ <table border="3" cellpadding="4" cellspacing="4" style="border-collapse: collapse" bordercolor="#C0C0C0" width="100%" id="AutoNumber5">
+   <tr>
+     <td width="100%" colspan="2" bordercolor="#DFDFDF" bgcolor="#C0C0C0"><u><i>
+     <b>Specification 1</b></i></u><p>Deviation from Guide: 0.03 mm<br>
+     Angular correction:&nbsp;&nbsp;&nbsp;&nbsp; <b>not activated</b></td>
+   </tr>
+   <tr>
+     <td width="50%"><u><b>Code</b></u><br>
+     <xph>sweepOpe -&gt; SetSmoothOption (<b>0</b>);<br>
+double iCleanMaxDeformation=<b>0.03</b>;<br>
+sweepOpe -&gt; SetCleanGuidesOption(<b>1</b>, &amp;iCleanMaxDeformation,<br>
+NULL, NULL);</xph>
+     <p style="margin-top: 15"><u><b>Comments</b></u><br>
+     The tangency conditions along the two edges are not satisfactory (maximum 
+     angle between edges: 5.921deg)</p>
+     <p style="margin-top: 15">Face 1: 2 knots along U - 2 along 
+     V<br>
+     Face 2: 3 knots along U - 2 along V<br>
+     Face 3: 2 knots along U - 2 along V</td>
+     <td width="50%">
+     <img border="0" src="images/Segmentation0.jpg" width="443" height="261"></td>
+   </tr>
+   <tr>
+     <td width="100%" colspan="2" bgcolor="#C0C0C0"><u><i><b>Specification </b>
+     </i><b><i>2</i></b></u><p>Deviation from Guide: 0.03 mm<br>
+     Angular correction:&nbsp;&nbsp;&nbsp;&nbsp; 0.5deg</td>
+   </tr>
+   <tr>
+     <td width="50%"><u><b>Code</b></u><br>
+     <xph>sweepOpe -&gt; SetSmoothOption (1); <br>
+     double AngleTol = 0.5 ;// in degrees<br>
+     double RadianAngleTol = AngleTol*CATDegreeToRadian; <br>
+     <nobr>sweepOpe -&gt; SetSmoothAngleThreshold(RadianAngleTol);</nobr><br>
+     double iCleanMaxDeformation=0.03;<br>
+     sweepOpe -&gt; SetCleanGuidesOption(1, &amp;iCleanMaxDeformation, NULL, NULL);</xph>
+     <p style="margin-top: 10"><u><b>Comments</b></u><br>
+     The tangency conditions along the two edges are satisfactory (Max is 0deg).</p>
+     <p style="margin-top: 10">Face 1: 3 knots along U - 2 along V<br>
+     Face 2: 4 knots along U - 2 along V<br>
+     Face 3: 3 knots along U - 2 along V</xph></xph></td>
+     <td width="50%">
+     <img border="0" src="images/Segmentation1.jpg" width="437" height="254"></td>
+   </tr>
+   <tr>
+     <td width="100%" colspan="2" bgcolor="#C0C0C0"><u><i><b>Specification </b>
+     </i><b><i>3</i></b></u><p>Deviation from Guide: 1mm<br>
+     Angular correction:&nbsp;&nbsp;&nbsp; 2deg</td>
+   </tr>
+   <tr>
+     <td width="50%"><u><b>Code</b></u><br>
+     <xph>sweepOpe -&gt; SetSmoothOption (1); <br>
+     double AngleTol = 2 ;// in degrees<br>
+     double RadianAngleTol = AngleTol*CATDegreeToRadian; <br>
+     <nobr>sweepOpe -&gt; SetSmoothAngleThreshold(RadianAngleTol);</nobr><br>
+     double iCleanMaxDeformation=1;<br>
+     sweepOpe -&gt; SetCleanGuidesOption(1, <br>
+     &amp;iCleanMaxDeformation, NULL, NULL);<p></p>
+     <p style="margin-top: 10"><u><b>Comments</b></u><br>
+     The tangency conditions along the two edges are satisfactory (Max is 0deg)</p>
+     <p style="margin-top: 10">Face 1: 2 knots along U - 2 along 
+     V<br>
+     Face 2: 3 knots along U - 2 along V<br>
+     Face 3: 2 knots along U - 2 along V</xph></td>
+     <td width="50%">
+     <img border="0" src="images/segmentation2.jpg" width="442" height="223"></td>
+   </tr>
+   <tr>
+     <td width="100%" colspan="2" bgcolor="#C0C0C0"><u><i><b>Specification </b>
+     </i><b><i>4</i></b></u><p>No smooth option specified - a throw is issued - 
+     the sweep cannot be generated.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case is an example of how to the smooth options to achieve a better 
+ quality of the segment sweep. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td>[*]</td>
+     <td>Delivered in CAAAdvancedTopologicalOpe.edu/FunctionTests/InputData</td>
+   </tr>
+   <tr>
+     <td>[1]</td>
+     <td>
+     <a href="../CAATopUseCases/CAATopOverview.htm">
+     Overview of the Topological Operators</a></td>
+   </tr>
+   <tr>
+     <td>[2]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching a CAA V5 Use Case</a></td>
+   </tr>
+   <tr>
+     <td>[3]</td>
+     <td>
+     <a href="../CAATopUseCases/CAATopSpline.htm">
+     Basic Topological Operators</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Aug 2002]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

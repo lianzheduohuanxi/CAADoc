@@ -1,0 +1,298 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Installing Rational Applications with DS Plugins</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>RADE Interactive Products</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Installing Rational Applications with DS Plugins</h3>
+     <p><em>How to install Rational Applications with DS Plugins</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article is intended for people administrating the 
+     Rational Software Architect Designer and RADE interactive 
+     products.</p>
+     <ul>
+		<li><a href="#Setup"><strong>Launching the Setup Tool</strong></a></li>
+			<li><a href="#Using_the_options"><strong>Setting your Options</strong></a>
+			<ul>
+				<li><a href="#Setting_default_variables">Setting Default Variables</a></li>
+				<li><a href="#Modifying_the_tck_file">Changing the tck Server</a></li>
+				<li><a href="#Building_on_UNIX">Building your Software on UNIX</a></li>
+			</ul>
+			</li>
+			<li><strong><a href="#Running_the_Setup">Running the Setup Tool</a></strong></li>
+       <li><a href="#Conf"><strong>Installing DS Plugins for Rational 
+	   Applications</strong></a></li>
+       <li><a href="#Uninstall_DMC_Plugin"><strong>Uninstalling DS Plugins for Rational 
+	   Applications</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <h3><a name="Setup"></a>Launching the Setup Tool</h3>
+<p>After installation of the RADE CD on a workstation, all users are provided with 
+a default working environment enabling them to work with the C++ Interactive Dashboard 
+within <em>Visual Studio, </em>or with the Java Interactive Dashboard or Data 
+Model Customizer within
+Rational Applications.</p>
+<!--
+<p>This default environment however may not be adapted to the user&#39;s individual 
+needs, and many options are open to him. These options are conditioned by the authorizations 
+he/she has on his/her workstation, and an administrator has more possibilities than a simple 
+user.</p>
+-->
+<p>To install the DS plugins for Rational Applications, you must launch the interactive setup tool.</p>
+<p>In order to launch this interactive setup tool, simply, with administrator 
+privileges, start the program called CATVBTSetup located in the RADE installation directory. 
+Right click CATVBTSetup .exe in an explorer, and click Run as administrator, 
+then press Yes in the User Account Control dialog box.</p>
+<p>&quot;c:\Program Files\Dassault Systemes\B28\win_b64\code\bin\CATVBTSetup.exe&quot;</p>
+<p>If no ssh implementation exists on your computer, the following prompt 
+opens:</p>
+<p><img alt="ssh Prompt" height="154" src="images/dbRADE0001.png" width="476"></p>
+<p>Click OK.</p>
+<p>The setup tool looks like this, but appearance may 
+vary from one configuration to the other:</p>
+<p><img alt="CATVBTSetup Dialog Box" height="640" src="images/dbRADE0002.png" width="913"></p>
+<p>Click <strong>IBM Rational applications</strong>.</p>
+<p><img alt="CATVBTSetup Dialog Box" height="638" src="images/dbRADE0003.png" width="910"></p>
+<p>Click the components to install. The installation directory box is normally 
+filled. This refers to the RADE installation directory.</p>
+<p>Note on the left-hand side the various target applications you wish to install 
+the products on. Currently, only <em>IBM Rational applications</em> is available.</p>
+<!--
+<p>The target application conditions the list of components that appears underneath. 
+For example, the <em>ENOVIA Designer Studio</em> and <i>CAA - Web Application 
+Composer </i>do not appear if only <em>Visual Studio</em> is selected. 
+The list of components is also determined by the number of products you have installed 
+from the RADE CD.</p>
+<p>Please note that the Interactive Dialog Designer application should not be installed 
+if the corresponding license (the IDD - CAA - Interactive Dialog Designer product) is not 
+available, otherwise the CAA workspaces will fail to open with a licensing error. This can be 
+checked using the RADE License Manager (<code>CATVBTLicenser</code>) utility. 
+In case the application has been selected by error, open Visual Studio, go to 
+the <code>Tools/Addin Manager ...</code> menu, uncheck the <code>CAA V5 - Interactive Dialog Designer Addin</code> 
+Addin and restart Visual Studio.</p>
+-->
+<p>The list of components to install is displayed in the box named <strong>
+Components to Install</strong>. Check the components to install depending on 
+your RADE products:</p>
+<ul>
+<li>&nbsp;Java Dashboard (JID), check <strong>CAA V5 - MKMK</strong> and <strong>CAA V5 - CodeGenerator</strong>.</li>
+	<li>&nbsp;Data Model Customizer (DMC), check <strong>ENOVIA Designer Studio</strong>.&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Using_the_options"></a>Setting your Options</h3>
+<p>The following options do not require administrative privileges, and can be modified 
+by an individual user.</p>
+<h4><a name="Setting_default_variables"></a>Setting Default Variables</h4>
+<p>The <strong>Settings</strong> tab page enables you to customize variables used by the various interactive 
+tools.</p>
+<table>
+	<tr>
+		<td>
+		<img alt="CATVBTSetup Dialog Box" height="639" src="images/dbRADE0006.png" width="911">&nbsp;</td>
+	</tr>
+</table>
+<p>There are currently two categories of variables:</p>
+<ul>
+	<li><strong>ENOVIA</strong> Publish variables. These variables enable you to pre-valuate the standard 
+	values needed to publish an ENOVIA customization to the database in order to 
+	avoid the individual user to know these values.
+	<ul>
+		<li><code>CATSettingPath</code>: The setting path of the ENOVIA server installation.</li>
+		<li><code>ENOVDataBaseAliasName</code>: ENOVIA database alias name.</li>
+		<li><code>ENOVDataBaseType</code>: the type of the database. Possible values: 
+		db2 or oracle.</li>
+		<li><code>ENOVDB2_HOME</code>: Installation path of DB2 if db2 database 
+		installed</li>
+		<li><code>ENOVDBAID</code>: Id of the ENOVIA database administrator.</li>
+		<li><code>ENOVDBAPSSD</code>: Password of the ENOVIA database administrator 
+		(this value is not kept).</li>
+		<li><code>ENOVORACLE_HOME</code>: Installation path of ORACLE if ORACLE 
+		database installed.</li>
+		<li><code>ENOVOutputDirectory</code>: UNIX directory where generated libraries, 
+		SQL orders and metadata files are copied to facilitate deployment.</li>
+		<li><code>ENOVSimulatePublish</code>: Default value for publish (YES for 
+		simulation, NO for NoSimulation, i.e. database modification).</li>
+		<li><code>ENOVTableSpace</code>: Name of the ENOVIA tablespace.</li>
+		<li><code>TNS_ADMIN</code>: For Oracle only. The default value is the installation 
+		path of oracle with /network/admin suffixed.</li>
+	</ul>
+	</li>
+	<li><strong>CodeGenerator</strong> variables. These variables enable you to customize values 
+	for the Code Generation wizards.
+	<ul>
+		<li><code>CATCompanyName</code>: The generated code has a standard header. 
+		You can modify the name of the company developing the software. Default 
+		value is Dassault Systemes, but you can insert your own company name in 
+		its place when developing your code.</li>
+	</ul>
+	</li>
+</ul>
+<p>To edit a variable, double click it. A dialog box opens:</p>
+<p>
+<img alt="Environment Variable Edition Dialog Box" height="178" src="images/dbRADE0010.png" width="402">&nbsp;</p>
+<p>Type the appropriate value, and click OK.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Modifying_the_tck_file"></a>Changing the tck Server</h4>
+<p>The Tool Access tab page allows you to modify several tool initialization 
+options:</p>
+<ul>
+	<li><b>tck_init Profile Path</b> When installing the RADE CD, a tck initialization 
+	file is provided. This file initializes the tools that let you point to various 
+	software levels (called profiles). Refer to the tck documentation for full explanations. 
+	It is possible to point to tck initialization files installed with other levels 
+	of the RADE CD, but in practice this should not be necessary as an initialization file provided
+	on a given level gives you access to profiles set up on all other levels below.</li>
+</ul>
+<p>
+		<img alt="CATVBTSetup Dialog Box" height="638" src="images/dbRADE0007.png" width="912"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Building_on_UNIX"></a>Building your Software on UNIX</h4>
+<p><strong>Warning</strong>: this section applies to Data Model Customizer only.</p>
+ <p>The <strong>Tool access</strong> tab page also enables you to build your software on a UNIX platform. CAA-RADE V5 Products CD-ROM should have been previously installed on 
+     Unix before running this optional step.</p>
+<p>In addition, to be able to send commands to the UNIX computer, you must have 
+an implementation of either rsh or ssh installed on your Windows computer and 
+available from the PATH environment variable.</p>
+<p>When connecting to a UNIX machine from the Data Model Customizer, the connection is established under a given user only if that 
+     user has authorized the connection by adding a line in the .rhosts file in 
+     the user's home directory specifying the Windows computer name and the Windows 
+     user name.</p>
+		<img alt="CATVBTSetup Dialog Box" height="639" src="images/dbRADE0005.png" width="911"><ul>
+	<li><b>Activate Remote Access</b>: This check-box determines whether the interactive 
+	tools will allow you to build your software on a UNIX platform.</li>
+	<li>Using rsh or <strong>using ssh</strong>: 
+		Check the option you want to use.</li>
+	<li><b>Location of RADE tools on UNIX</b>: In this box, type the UNIX path 
+	of the directory where you have installed the RADE tools. Note that you must 
+	enter the platform in the path. For example, if you installed the tools on AIX 
+	under /usr/DassaultSystemes/RADE, enter /usr/DassaultSystemes/RADE/aix_a64.</li>
+	<li><b>Unix tck_init Profile Path</b>: In this field, enter the location of the UNIX 
+	tck initialization file. In most installation cases, this path should start as the previous one. In our example, this would be: /usr/DassaultSystemes/RADE/aix_a64/code/command/tck_init.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Running_the_Setup"></a>Running the Setup Tool</h3>
+<p>Once you have set all the options you required, click Install to modify the options in your directory.</p>
+<p><img alt="Confirmation Prompt" src="images/dbRADE0008.png"></p>
+<p>Click OK.</p>
+<p>
+		<img alt="CATVBTSetup Dialog Box" height="638" src="images/dbRADE0009.png" width="912"></p>
+<p>In the <strong>Log</strong> tab page, notice that the various steps and warnings are listed to 
+guide you in case a step should fail. If you have not administrator privileges, 
+you are warned first, but setup will continue for those operations not needing it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+ <h3><a name="Conf"></a>Installing DS Plugins for Rational Applications</h3>
+<p><strong>Warning</strong>: Run the steps below without the administrator privileges.</p>
+ <p>To 
+ perform this installation, you need to create an Eclipse extension. To do so, proceed as follows:</p>
+ <ol>
+   <li>Start Rational Software Architect Designer.</li>
+     <li>From the <kbd><em>Help</em></kbd> menu, select<kbd> <em>&quot;Install New Software...&quot;</em></kbd>. The Install 
+	 dialog box is displayed.</li>
+     <li>Click on <em>Add</em> button to declare a new repository for plugins.</li>
+     <li>In the <em>Add Repository</em> dialog box, enter a label for the new repository (ex: DS Plugins for DMC V5).</li>
+     <li>Click on &quot;<em>Local</em>&quot; button.</li>
+     <li>In the file selection box, select the <em>CAAExtensionSite</em> directory from your RADE V5 installation (ex: C:/Program Files/Dassault Systemes/B28/win_b64/resources/CATVBTServer/CAAExtensionSite).
+         <p><img alt="Installing DS Plugins for Rational Applications" src="images/CAAVBTRSAInstall.png"></p>
+     </li>
+     
+     
+     <li>Click OK in the panels.</li>
+     <li>Now a list of plugins is displayed. If no list is displayed, be sure the &quot;<em>Group items by category</em>&quot; option is unchecked.</li>
+     <li>Select one or all features (&quot;<em>Feature JID</em>&quot; or &quot;<em>Feature DMC</em>&quot;).</li>
+     <li>Click <em>Next.</em></li>
+     <li>Validate License agreement.</li>
+     <li>Click <em>Yes</em> when asked to restart Rational Software Architect 
+	 Designer.</li>
+ </ol>
+
+
+
+<h3><a name="Uninstall_DMC_Plugin"></a>Uninstalling DS Plugins for Rational Applications</h3>
+<p><strong>Warning</strong>: Run the steps below without the administrator privileges.</p>
+ <p>To perform uninstallation of Dassault Systemes extensions for Rational Software 
+ Architect Designer, proceed as follows: </p>
+ <ol>
+   <li>Start Rational Software Architect Designer.</li>
+     <li>From the <kbd><em>Help</em></kbd> menu, select<kbd> <em>&quot;Installation 
+	 Details&quot;</em></kbd>. The Installation Details window is displayed.</li>
+     <li>In the <em>Installed Software</em> tabpage, select one or all of the Dassault Systemes Features (ex: DMCFeature) 
+	 (use CTRL to select more than 1)<em>.</em>
+         <p><img alt="Uninstalling DS Plugins for Rational Applications" src="images/CAAVBTRSAUninstall.png"></p>
+     </li>
+     <li>Click <em>Uninstall.</em></li>
+	 <li>Click <em>Yes</em> when asked to restart Rational Software Architect 
+	 Designer.</li>
+ </ol>
+
+
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+    <tr>
+     <td valign="top">Version: <strong>6</strong> [Nov 
+     2017]</td>
+     <td valign="top">Document updated for V5-6R2018</td>
+   </tr>
+  <tr>
+     <td valign="top">Version: <strong>5</strong> [Jul 
+     2014]</td>
+     <td valign="top">Document updated to remove C++ add-ins and for Rational 
+	 Software Architect Designer</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>4</strong> [Jul 
+     2007]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>3</strong> [Dec 
+     2006]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <p><em>Copyright © 1999-2017, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+ </body>
+
+</html>

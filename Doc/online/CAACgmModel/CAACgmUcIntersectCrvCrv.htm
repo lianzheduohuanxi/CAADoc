@@ -1,0 +1,159 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Intersecting Curves</title>
+<style type="text/css">
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Intersecting&nbsp; Curves</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Curves can be intersected by using the CATICGMIntersectionCrvCrv 
+		operator. The result is a set of geometrical objects (points, curves or 
+		a combination of these objects) that you have to scan.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>Use CATICGMIntersectionCrvCrv. This operator is created by using the CATCGMCreateIntersection global function.
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelIntersectionOpe.m module in CAAGMModelInterfaces.edu 
+illustrates how to intersect curves. This use case constructs its input data 
+and requires the CAAGMModelGeometryCreation.m module. You have to specify this module 
+in your Imakefile.mk file.&nbsp; If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Intersection of Curves:&nbsp; Input data </caption>
+  <tr>
+    <td>
+	<img alt="Curve Intersection" src="images/CGM_intersect_crvCrv_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMIntersectionCrvCrv * pPtCrvCrv =:: CATCGMCreateIntersection(
+		piGeomFactory,
+		pConfig,
+		piNurbsCurve, 
+		piNurbsCurve1); 
+...
+
+//       c - Scan the resulting points
+CATLONG32 nbOfPoints1 = pPtCrvCrv->GetNumberOfPoints();
+cout   &lt&lt "NumberOfPoints "   &lt&lt nbOfPoints1   &lt&lt endl;
+CATCartesianPoint * pCartP = NULL;
+if(nbOfPoints1)
+	{
+		while(pPtCrvCrv->NextPoint())
+		{
+			// Retrieves the resulting points 
+			// 3 points are expected
+			pCartP = pPtCrvCrv->GetCartesianPoint();
+			if (pCartP)
+			{
+				cout   &lt&lt "X="   &lt&lt pCartP->GetX()   &lt&lt endl;
+				cout   &lt&lt "Y="   &lt&lt pCartP->GetY()   &lt&lt endl;
+				cout   &lt&lt "Z="   &lt&lt pCartP->GetZ()   &lt&lt endl;
+			}
+		}
+	} 				</TD>
+    </TR>
+</TABLE>
+<p>returns 
+<pre>NumberOfPoints 3
+X=34.9987
+Y=9.86305
+Z=0
+X=26.2534
+Y=12.9795
+Z=0
+X=100
+Y=20
+Z=0</pre>
+
+on the standard output. 
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.2</a> Curve Intersection:&nbsp; Output data are three points</caption>
+  <tr>
+    <td>
+	<img alt="Intersecting Curves" src="images/CGM_intersect_crvCrv_1.png" width="250" height="220"></td>
+   </tr>
+</table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

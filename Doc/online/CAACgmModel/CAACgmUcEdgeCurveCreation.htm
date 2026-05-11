@@ -1,0 +1,167 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating or Computing an Edge Curve</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating or Computing an Edge Curve</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>The edge curve (CATEdgeCurve) is the object which aggregates the curves 
+		or sub-curves making up 
+		the geometry of an edge. It is intended to define the limits of the edge 
+		though the POECs (PointsOnEdgeCurve) as well as the curve which supports 
+		the topology. </p>
+		<p>It is highly recommended to create an edge curve by using the CATICGMEdgeCurveComputation 
+		operator because this operator computes a mapping between the parameters 
+		on either curve. If the sub-curves making up an edge curve are identical 
+		(same parameterization, same limits and confusion), you can use the 
+		CATGeoFactory::CreateSimCurve method, but only in this case.</p>
+		<p>Not using CATICGMEdgeCurveComputation may lead to unpredictable 
+		results when the sub-curves are not identical.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used to Compute an 
+			Edge Curve</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#ECMaxGap">About the Edge Curve Maximum Gap</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used to Create an Edge Curve</a> </h2>
+<p>The CATICGMComputeEdgeCurve is to be used and should be preferred to any 
+other API.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelEdgeCurveComputation.m module in CAAGMModelInterfaces.edu illustrates 
+how to compute an edge curve. This use case 
+creates its own input data. You can refer to <a href="CAACgmUcTobTetra.htm">
+Using Topological Objects</a> for more information on how to 
+create geometry and topological objects without using operators. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>The code which is used in the 
+CAAGMModelEdgeCurveComputation.m use case is basically the same as CAAGMModelTetra.m 
+except that only a shell is created. It is intended to focus on the edge curve 
+computation. The shell is made up of two triangular faces. There are five edges. Only the edge curves under the shell bounding edges 
+are CATSimCurve. The edge curve under the edge which is shared between the two 
+faces must not be created as a CATSimCurve, it has to be created with the CATICGMEdgeCurveComputation operator.
+In the code below, piPLinexy20 and piPLineyz01 do not have the same limits and there is a small gap between the two sub-curves.
+Any gap is allowed between sub-curves but it is recommended to have a gap between sub-curves smaller than 0.1mm.
+The MPG_1 rule of the data checker is infringed if the gap is greater than 0.1mm.
+The code below:
+<pre class="code">
+...
+piPlanexy->GetParam(CATMathPoint(0.0,     0,     0.05),Pxy0); 
+piPlanexy->GetParam(CATMathPoint(10.01,   0.03,  0.0) ,Pxy1);
+piPlanexy->GetParam(CATMathPoint(0,       10.04, 0.05) ,Pxy2);
+...
+// Edge curve 5 (shared by two faces: two sub-curves)-> Compute the edge curve 
+CATICGMEdgeCurveComputation * pEdgeComputationOpe20=::CATCGMCreateEdgeCurveComputation(piGeomFactory,pConfig,
+piPLinexy20,piPLineyz01);
+pEdgeComputationOpe20->SetMaxGap(0.11);
+pEdgeComputationOpe20->Run();
+CATEdgeCurve * piSimCurve20= pEdgeComputationOpe20->GetEdgeCurve();
+</pre>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+generates this result if the Data Checker is not activated. The max gap is around 0.101mm:<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Edge Curve Computation</caption>
+  <tr>
+    <td>
+	<img alt="ddd" src="images/CGM_computeEdgeCurve_0.png"></td>
+   </tr>
+</table>
+
+<p>If you run the use case with the Data Checker activated, you get something 
+like this on the standard output and no shell is created: </p>
+<pre>
+CGM_CHECK_RULE:MPG_1:KO
+MPG_1: MacroPoint: CATMacroPoint_26
+MPG_1:   RefPoint: CATPointOnEdgeCurve_17
+MPG_1:     [0, 10.04, 0]
+MPG_1:   CurrPoint: CATPointOnEdgeCurve_20
+MPG_1:     [0, 10.02, 0.0990000000000002]
+MPG_1: GeometricalTol(0.1) : Gap3D = 0.101
+** CATCGMCheckRule::Check Object( MPG_1 ; CATMacroPoint_26  )
+********************************************************************************
+CGMCleaner on Body Completion CHECK #14
+
+CGM Rule : MPG_1
+On CGM Objects : (factory : 1) :
+CATMacroPoint 26
+From Feature : Unknown Feature
+Short msg : Macro Point has a too big gap between its internal points.
+Extended msg : none.
+********************************************************************************
+</pre>
+<h2><a name="ECMaxGap">About the Edge Curve Maximum Gap</a></h2>
+<ul>
+				<li>The CATGeoFactory::CreateSimCurve method does not prevent 
+				you from creating an edge curve with unsuitable sub-curves (non 
+				identical sub-curves). It is up to the application to make sure 
+				that the input parameters are correct: parameterization, limits, 
+				confusion. </li>
+				<li>The CATICGMEdgeCurveComputation generates an ABEND if the 
+				maximum gap between sub-curves is greater than the one specified 
+				in SetMaxGap. If SetMaxGap is not used, the authorized max gap 
+				is around 1 mm. However, the CATICGMObject::Completed method 
+				generates an Abend, when the Data Checker is run (the MPG_1 rule 
+				must be activated) and when the max gap is greater than 0.1mm.</li>
+</ul>
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="CAACgmUcTobEdgeCurve.htm">Scanning an Edge Curve</a></td>
+	</tr>
+	
+
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History">History</a></h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

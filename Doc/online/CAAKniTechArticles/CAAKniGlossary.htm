@@ -1,0 +1,232 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>KnowledgeInterfaces Glossary</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Knowledge Advisor Glossary</h3>
+     <p><em>To understand what we are talking about</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>The purpose of this article is to give you the right definition for each 
+     term of the Knowledge vocabulary used in the context of&nbsp; the 
+     KnowledgeInterfaces framework.</p>
+     <ul>
+       <li><b><a href="#General">General - Product Definition</a></b></li>
+       <li><b><a href="#Application Definition">Concepts Relying on Application 
+       Definition</a></b></li>
+       <li><b><a href="#Core V5 Objects">Knowledge Core V5 Objects</a></b></li>
+       <li><b><a href="#Additional Concepts">Knowledge Core Additional Concepts</a></b></li>
+       <li><b><a href="#Where In The Code">Where To Find Each Concept In The 
+       Code</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="General"></a>General - Product Definiton</h3>
+ <p><b>Knowledge Advisor<i> </i>:</b> Build time product for creating rules, set 
+ of equations, reactions, loops, lists, etc.</p>
+ <p><b>KWA :</b> Acronym for Knowledge Advisor P2 product. Used for explaining 
+ that this license if required for certain APIs.</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Application Definition"></a>Concepts Relying on Application 
+ Definition</h3>
+ <p><b>Knowledge Type :</b><i> </i>Class of V5 objects that can be used by 
+ Knowledgeware products.</p>
+ <blockquote>
+   <p>Example: Hole, Length, Point</p>
+   <p>This types are created by the applications based on an implementation 
+   defined in KnowledgeInterfaces [<a href="#References">1</a>].</p>
+ </blockquote>
+ <p><b>Attribute :</b><i> </i>Property of a type<i>.</i> A type can hold some 
+ attributes. An attribute is defined by a name and a type.</p>
+ <blockquote>
+   <p>Example: a Hole has an attribute named Diameter of type Length.</p>
+   <p>Example: a Pad has an attribute named Sketch of type Sketch.</p>
+   <p>This is also created by the applications based on an implementation 
+   defined in KnowledgeInterfaces [<a href="#References">1</a>].</p>
+ </blockquote>
+ <p><b>Object:</b> An object in V5 that can be used by Knowledgeware products</p>
+ <blockquote>
+   <p>Example: Hole.1, Pad.1, etc…</p>
+   <p>These are applicative implementations that are seen through a protocol 
+   defined in KnowledgeInterfaces [<a href="#References">1</a>].</p>
+ </blockquote>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Core V5 Objects"></a>Knowledge Core V5 Objects</h3>
+ <p><b>Knowledge dictionary :</b> A singleton that provides access to all the V5 
+ types, and functions, classified in packages.</p>
+ <p><b>Knowledge function :</b> A function that can be used in the Knowledge 
+ language. It describes its arguments and it knows how to be evaluated.</p>
+ <blockquote>
+   <p>Example: sin (x)</p>
+   <p>Example: Message (String, String, …)</p>
+ </blockquote>
+ <p><b>Magnitude :</b> A particular type of values for dimensions.</p>
+ <blockquote>
+   <p>Example: Length, Viscosity, etc…</p>
+   <p>&nbsp;</p>
+ </blockquote>
+ <p><b>Unit:</b>Associated to a magnitude.</p>
+ <blockquote>
+   <p>Example: mm, m, km, etc…</p>
+ </blockquote>
+ <p><b>Enumerated Type:</b> A particular type of values for values that take a 
+ limited list of possible values.</p>
+ <blockquote>
+   <p>Example: Boolean, Severity</p>
+ </blockquote>
+ <p><b>Literal:</b> A persistent value, owned by a feature. It can be of type 
+ Boolean, Integer, Real, String, or of any subtype of dimensions and enumerated 
+ types that exist in the dictionary.</p>
+ <p><b>Volatile value:</b> A non persistent value. It can be of the same type as 
+ persistent values.</p>
+ <p><b>List feature:</b>A feature that allows to reference a set of persistent 
+ objects or literals.</p>
+ <p><b>Volatile list :</b> A non persistent object that allows to reference a 
+ set of objects or values.</p>
+ <p><b>Knowledge expression : </b>An object (persistent or not) that is used to 
+ describe with a text an evaluation method and that can be used to perform the 
+ evaluation on <a href="#Parameter">parameters</a>.</p>
+ <blockquote>
+   <p>Example: expression named exp1 that computes a distance between two points 
+   ( P1: #In Point, P2:#In Point, L :#Out Length)</p>
+   <p>body = “let x1=0mm let x2=0mm let y1=0mm let y2=0mm let z1=0mm let z2=0mm
+   </p>
+   <blockquote>
+     <blockquote>
+       <p>P1.coord (x1,y1,z1)&nbsp; P2.coord 
+       (x2,y2,z2)&nbsp;L=sqrt((x1-x2)2+(y1-y2)2+(z1-z2)2)»</p>
+     </blockquote>
+   </blockquote>
+ </blockquote>
+ <p><b>Knowledge relation :</b> A persistent feature that describes a valuation 
+ relationship between persistent <a href="#Parameter">parameters</a>. Any 
+ literal can be used as output of a relation. Some objects can be used as output 
+ of relation like a list feature or a geometric datum.</p>
+ <blockquote>
+   <p>Example: a formula between two literals: y=2*x</p>
+   <p>Example: a formula between two objects: Pt=centerofgravity(Body)</p>
+ </blockquote>
+ <p><b>Design Table:</b> A kind of relation that valuates N literals from a 
+ literal called configuration that belongs to the design table. The evaluation 
+ method is based on a table (excel or .txt file).</p>
+ <p><b>Equivalent Dimension:</b> A kind of relation that valuates N literals 
+ from a literal called driving that belongs to the equivalent dimension. Each 
+ literal in output is affected with the value of the driving literal.</p>
+ <p><i>&nbsp;</i><b>Formula:</b> A kind of relation that valuates one persistent 
+ parameter from a set of parameters used as input, based on the Knowledge 
+ language.</p>
+ <p><b>Rule:</b> A kind of relation that valuates several persistent parameters 
+ from a set of parameters used as input, based on the Knowledge language.</p>
+ <p><b>Check:</b> A kind of relation that produces a Boolean diagnosis from 
+ several persistent parameters used as input, based on the Knowledge language.</p>
+ <p><b>Set of Equations:</b> A kind of relation that valuates several persistent 
+ parameters from a set of parameters used as input, based on the Knowledge 
+ language, with an evaluation performed by a mathematical solver.</p>
+ <p><b>Optimization constraints:</b> A kind of relation that expresses a 
+ constraint between several persistent parameters used as input, based on the 
+ Knowledge language, to be integrated in the definition of optimization.</p>
+ <p><b>Knowledge law:</b> A mathematical relationship between formal values that 
+ can be used by V5 features.</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Additional Concepts"></a>Knowledge Core Additional Concepts</h3>
+ <p><b><a name="Parameter"></a>Parameter:</b> A parameter is a variable with a 
+ name that can be passed as an argument of an expression for its evaluation. It 
+ can be read or written inside an expression (let’s talk of its <i>content</i>). 
+ Several Knowledge objects are parameters (Literal, Volatile value, List 
+ feature, Volatile List, Geometric datum, Reference to V5 objects).</p>
+ <p><b>Persistent parameter:</b> Only some parameters are persistent in the data 
+ model (Literal, List feature, Geometric datum, Reference to V5 persistent 
+ objects). Only those parameters can be used as input or output of a relation 
+ because a relation creates a link to the objects that it manipulates. Note that 
+ only the first 3 ones (Literal, List feature and Geometric datum) can be used 
+ as outputs.</p>
+ <p><b>Reference to V5 object:</b> It is possible to create a parameter from an 
+ object to be able to use it in an expression evaluation or in a relation if it 
+ is persistent. It is used only as an input in the expression or in the 
+ relation.</p>
+ <p><b>Geometric datum:</b> This object does not belong to the Knowledge 
+ Interface framework. It is provided by GSMModel. But it is a persistent 
+ parameter.</p>
+ <p><b>Knowledge library:</b> It is a place where V5 applications can declare 
+ their own Knowledge types and Knowledge functions. It is a C++ code that we 
+ know how to trigger.</p>
+ <p><b>Knowledge Package:</b>It is a classification for Knowledge types and 
+ functions. They are created by applications.</p>
+ <p><b>Parameter valuator:</b> An object that is responsible for valuating a 
+ parameter. For example a Knowledge relations. But there may exist other 
+ applicative objects that know how to valuate parameters. They are called 
+ parameter valuator</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Where In The Code"></a>Where To Find Each Concept In The Code</h3>
+ <p>
+ <img border="0" src="images/CAAKniGlossaryArray.jpg" width="627" height="769"></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAALifTechArticles/CAALifObjectUserViewArticle.htm">
+     Knowledge Language Integration</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="../CAAOptTechArticles/CAAOptGlossary.htm">
+     KnowledgeOptimizer Glossary</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Nov 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+ <p></p>
+
+ </body>
+
+</html>

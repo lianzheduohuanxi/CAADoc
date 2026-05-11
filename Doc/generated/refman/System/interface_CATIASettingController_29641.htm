@@ -1,0 +1,242 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Interface CATIASettingController</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATIASettingController"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System Interface CATIASettingController</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIASettingController_29641','CATIASettingController','0');</script>
+<p><b>Usage: you cannot implement this base interface directly. You must first derive it and then implement the derived interface. </b></p>
+<hr>
+<p>
+ interface <b>CATIASettingController</b>
+</p>
+<p>
+<b><i> Base interface to handle a setting controller for Automation.</i></b><br>
+
+ <b>Role</b>: A setting controller manages the values of all or
+ only a part of the attributes available in a property page of the dialog
+ displayed using the Options command of the Tools menu.
+ <p>CATIASettingController supplies the methods common to all setting controllers
+ for the setting controller Automation implementation:</p>
+ <ul>
+  <li><code>Commit</code> to make a memory copy of the setting attribute values</li>
+  <li><code>Rollback</code> to restore the last memory copy of the setting attribute values</li>
+  <li><code>ResetToAdminValues</code> to restore the administrated values of all the attributes</li>
+  <li><code>ResetToAdminValuesByName</code> to restore the administrated values of a subset of the attributes</li>
+  <li><code>SaveRepository</code> to make a persistent copy of the setting attribute values on file</li>
+ </ul>
+ <p>CATIASettingController must be implemented, through a derived interface that stands for
+ the setting controller for Automation, by a V5 component, as follows:
+ <ul>
+  <li>Create an interface that derives from CATIASettingController with the
+      methods appropriate to manage the attributes handled by the setting controller</li>
+  <li>Create a class, data extension of your setting controller V5 component,
+      that derives from <script type="text/javascript"> activateLinkAnchor('CATSysAutoSettingController','','CATSysAutoSettingController') </script> class      to implement this interface. Usually the methods that manage the attributes should simply
+      call their counterpart in your implementation of the interface derived from 
+      the C++ 
+<script type="text/javascript"> activateLinkAnchor('CATISysSettingController','','CATISysSettingController') </script> interface.      In addition, 
+<script type="text/javascript"> activateLinkAnchor('CATSysAutoSettingController','','CATSysAutoSettingController') </script> supplies the implementation      of the five methods of CATIASettingController.
+      In most cases, you should not re-implement these methods, except if you create
+      a bufferized setting controller. Refer to the CAA Encyclopedia to know
+      about such controllers.</li>
+ </ul>
+ <p>Your setting controller V5 component should in addition implement the C++ interface
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATSysAutoSettingController','','CATSysAutoSettingController') </script>, <script type="text/javascript"> activateLinkAnchor('CATISysSettingController','','CATISysSettingController') </script>, <script type="text/javascript"> activateLinkAnchor('CATSysSettingController','','CATSysSettingController') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Commit()"><b>Commit</b></a>()
+<dd>  Makes a memory copy of the setting attribute values.
+ <dt> o 
+    <a href="#ResetToAdminValues()"><b>ResetToAdminValues</b></a>()
+<dd>  Restores the administrated values of all the attributes.
+ <dt> o 
+    <a href="#ResetToAdminValuesByName(CATSafeArrayVariant&amp;)"><b>ResetToAdminValuesByName</b></a>(CATSafeArrayVariant&amp;)
+<dd>  Restores the administrated values of a subset of the attributes.
+ <dt> o 
+    <a href="#Rollback()"><b>Rollback</b></a>()
+<dd>  Restores the last memory copy of the setting attribute values.
+ <dt> o 
+    <a href="#SaveRepository()"><b>SaveRepository</b></a>()
+<dd>  Makes a persistent copy of the setting attribute values on file.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Commit"></a><a name="Commit()"></a> <dt> o <b>Commit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','HRESULT __stdcall')</script>  <b>Commit</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Makes a memory copy of the setting attribute values.
+ <br><b>Role</b>: <code>Commit</code> saves the current values of the setting attributes
+ managed by the setting controller in a specific memory area.
+ Successive calls to <code>Commit</code> overwrite the memory area.
+ The values saved by the last call to <code>Commit</code> can be restored from that memory area
+ using the 
+<script type="text/javascript"> activateLinkAnchor('','Rollback','Rollback') </script> method. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b>: S_OK on success, and E_FAIL otherwise
+</dl>
+</dl>
+<a name="ResetToAdminValues"></a><a name="ResetToAdminValues()"></a> <dt> o <b>ResetToAdminValues</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','HRESULT __stdcall')</script>  <b>ResetToAdminValues</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores the administrated values of all the attributes.
+ <br><b>Role</b>: <code>ResetToAdminValues</code> restores all
+ the values of the setting attributes managed by the setting controller
+ to either the values set by the setting administrator, or to their default values
+ if the setting administrator did not change them. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b>: S_OK on success, and E_FAIL otherwise
+</dl>
+</dl>
+<a name="ResetToAdminValuesByName"></a><a name="ResetToAdminValuesByName(CATSafeArrayVariant&amp;)"></a> <dt> o <b>ResetToAdminValuesByName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','HRESULT __stdcall')</script>  <b>ResetToAdminValuesByName</b>(<td> const <script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant&amp;')</script> <td><tt>iAttList</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores the administrated values of a subset of the attributes.
+ <br><b>Role</b>: <code>ResetToAdminValuesByName</code> restores
+ the values of a subset of the setting attributes managed by the setting controller
+ to either the values set by the setting administrator, or to their default values
+ if the setting administrator did not change them. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> [in]</tt>
+   <dd> iAttList  The attribute subset to which the administrated values are to be restored
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b>: S_OK on success, and E_FAIL otherwise
+</dl>
+</dl>
+<a name="Rollback"></a><a name="Rollback()"></a> <dt> o <b>Rollback</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','HRESULT __stdcall')</script>  <b>Rollback</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores the last memory copy of the setting attribute values.
+ <br><b>Role</b>: <code>Rollback</code> restores the values of the 
+ setting attributes managed by the setting controller from the
+ memory area.
+ All values of the setting attributes managed by the setting controller modified since the last call
+ to 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> are restored to the values they had when this last 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> was called. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b>: S_OK on success, and E_FAIL otherwise
+</dl>
+</dl>
+<a name="SaveRepository"></a><a name="SaveRepository()"></a> <dt> o <b>SaveRepository</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','HRESULT __stdcall')</script>  <b>SaveRepository</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Makes a persistent copy of the setting attribute values on file.
+ <br><b>Role</b>: <code>SaveRepository</code> saves the current values of the
+ setting attributes managed by the setting controller in a setting repository file.
+ To avoid inconsistencies, <code>SaveRepository</code> first saves the values in the memory area
+ used by the 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> method by calling 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> before writing the values in the setting repository file.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b>: S_OK on success, and E_FAIL otherwise
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIASettingController.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>JS0GROUP</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

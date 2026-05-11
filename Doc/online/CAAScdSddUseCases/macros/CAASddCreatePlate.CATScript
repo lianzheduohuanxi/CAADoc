@@ -1,0 +1,188 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create members.
+'
+' Assumptions:   The Part document CAASddCreatePlate.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+  
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  'Get the Manager Object
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'Adding Hull
+  ManagerObj.AddHull
+  
+  Dim Hull As AnyObject
+  Set Hull = ManagerObj.GetHull
+  
+  'CREATING SHELL PLATES
+  'Defining Shell Plate Support
+  Dim ShellSupport As AnyObject
+  Set ShellSupport = ObjPart.FindObjectByName("Hull1234")
+  Dim ShellSupportRef As Reference
+  Set ShellSupportRef = ObjPart.CreateReferenceFromObject(ShellSupport)
+  
+  Dim ShellSuperplate1 As SfmSuperPlate
+  Set ShellSuperplate1 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing)
+  'Applying Limits
+  'Defining First Limit
+  Dim ShellPlateLimit1 As AnyObject
+  Set ShellPlateLimit1 = ObjPart.FindObjectByName("CROSS.40")
+  Dim ShellPlateLimitRef1 As Reference
+  Set ShellPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlateLimit1)
+  'Defining Orientation of First Limit
+  Dim ShellPlateOrnt1 As Long
+  ShellPlateOrnt1 = 8
+  ShellSuperplate1.AddLimit ShellPlateLimitRef1, ShellPlateOrnt1
+  'Defining Second Limit
+  Dim ShellPlateLimit2 As AnyObject
+  Set ShellPlateLimit2 = ObjPart.FindObjectByName("CROSS.140")
+  Dim ShellPlateLimitRef2 As Reference
+  Set ShellPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlateLimit2)
+  'Defining Orientation of Second Limit
+  Dim ShellPlateOrnt2 As Long
+  ShellPlateOrnt2 = 9
+  ShellSuperplate1.AddLimit ShellPlateLimitRef2, ShellPlateOrnt2
+  'Defining Third Limit
+  Dim ShellPlateLimit3 As AnyObject
+  Set ShellPlateLimit3 = ObjPart.FindObjectByName("LONG.0")
+  Dim ShellPlateLimitRef3 As Reference
+  Set ShellPlateLimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlateLimit3)
+  'Defining Orientation of Third Limit
+  Dim ShellPlateOrnt3 As Long
+  ShellPlateOrnt3 = 5
+  ShellSuperplate1.AddLimit ShellPlateLimitRef3, ShellPlateOrnt3
+  
+  'To Create the SuperPlate,RUN is used
+  ShellSuperplate1.Run
+  
+  'Creating Second ShellPlate
+  Dim ShellSuperplate2 As SfmSuperPlate
+  Set ShellSuperplate2 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing)
+  
+  Dim ShellPlate2Limit1 As AnyObject
+  Set ShellPlate2Limit1 = ObjPart.FindObjectByName("CROSS.40")
+  Dim ShellPlate2LimitRef1 As Reference
+  Set ShellPlate2LimitRef1 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit1)
+   
+  Dim ShellPlate2Ornt1 As Long
+  ShellPlate2Ornt1 = 8
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef1, ShellPlate2Ornt1
+  
+  Dim ShellPlate2Limit2 As AnyObject
+  Set ShellPlate2Limit2 = ObjPart.FindObjectByName("CROSS.140")
+  Dim ShellPlate2LimitRef2 As Reference
+  Set ShellPlate2LimitRef2 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit2)
+   
+  Dim ShellPlate2Ornt2 As Long
+  ShellPlate2Ornt2 = 9
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef2, ShellPlate2Ornt2
+  
+  Dim ShellPlate2Limit3 As AnyObject
+  Set ShellPlate2Limit3 = ObjPart.FindObjectByName("LONG.0")
+  Dim ShellPlate2LimitRef3 As Reference
+  Set ShellPlate2LimitRef3 = ObjPart.CreateReferenceFromObject(ShellPlate2Limit3)
+  
+  Dim ShellPlate2Ornt3 As Long
+  ShellPlate2Ornt3 = 4
+  ShellSuperplate2.AddLimit ShellPlate2LimitRef3, ShellPlate2Ornt3
+  
+  'To Create the SuperPlate,Run is used
+  ShellSuperplate2.Run
+  
+  'CREATING DECK PLATE
+  'Defining Support
+  Dim DeckSupport As AnyObject
+  Set DeckSupport = ObjPart.FindObjectByName("DECK.3")
+  Dim DeckSupportRef As Reference
+  Set DeckSupportRef = ObjPart.CreateReferenceFromObject(DeckSupport)
+  
+  Dim DeckSuperplate As SfmSuperPlate
+  Set DeckSuperplate = FactoryObj.AddSuperPlate("DeckPanel", DeckSupportRef, Nothing)
+  'Applying Limits
+  Dim DeckPlateLimit1 As AnyObject
+  Set DeckPlateLimit1 = ObjPart.FindObjectByName("CROSS.40")
+  Dim DeckPlateLimitRef1 As Reference
+  Set DeckPlateLimitRef1 = ObjPart.CreateReferenceFromObject(DeckPlateLimit1)
+   
+  Dim DeckPlateOrnt1 As Long
+  DeckPlateOrnt1 = 2
+  DeckSuperplate.AddLimit DeckPlateLimitRef1, DeckPlateOrnt1
+  
+  Dim DeckPlateLimit2 As AnyObject
+  Set DeckPlateLimit2 = ObjPart.FindObjectByName("CROSS.140")
+  Dim DeckPlateLimitRef2 As Reference
+  Set DeckPlateLimitRef2 = ObjPart.CreateReferenceFromObject(DeckPlateLimit2)
+   
+  Dim DeckPlateOrnt2 As Long
+  DeckPlateOrnt2 = 3
+  DeckSuperplate.AddLimit DeckPlateLimitRef2, DeckPlateOrnt2
+  
+  'Limiting DeckPlate by ShellPlate
+  Dim DeckPlateOrnt3 As Long
+  DeckPlateOrnt3 = 8
+  DeckSuperplate.AddLimit ShellSupportRef, DeckPlateOrnt3
+  
+  'SETTING MATERIAL,GRADE AND THICKNESS OF DECKPLATE
+  
+  Dim DeckPlateObj As SfmObject
+  Set DeckPlateObj = DeckSuperplate
+  DeckPlateObj.Material = "Steel"
+  DeckPlateObj.Grade = "A45"
+  DeckSuperplate.Thickness = "25.0"
+  
+  DeckSuperplate.Run
+  
+  'CREATING ADVANCED TRANSVERSE PLATE AND LIMITED BY SHELLPLATE AND DECKPLATE
+  'Defining Support for Transverse Bulkhead Plate
+  Dim TrnsPlateSupport As AnyObject
+  Set TrnsPlateSupport = ObjPart.FindObjectByName("CROSS.90")
+  Dim TrnsPlateSupportRef As Reference
+  Set TrnsPlateSupportRef = ObjPart.CreateReferenceFromObject(TrnsPlateSupport)
+  'Creating SuperPlate
+  Dim TrnsSuperplate As SfmSuperPlate
+  Set TrnsSuperplate = FactoryObj.AddAdvSuperPlate("TransversePanel", TrnsPlateSupportRef, Nothing)
+  'Applying Limits
+  'First Limiting by ShellPlates
+  Dim TrnsPlateLimitRef1 As Reference
+  Set TrnsPlateLimitRef1 = ObjPart.CreateReferenceFromObject(ShellSuperplate1)
+  Dim TrnsPlateOrnt1 As Long
+  TrnsPlateOrnt1 = 4
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef1, TrnsPlateOrnt1
+  
+  Dim TrnsPlateLimitRef2 As Reference
+  Set TrnsPlateLimitRef2 = ObjPart.CreateReferenceFromObject(ShellSuperplate2)
+  Dim TrnsPlateOrnt2 As Long
+  TrnsPlateOrnt2 = 5
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef2, TrnsPlateOrnt2
+  'Second Limiting by DeckPlate
+  Dim TrnsPlateLimitRef3 As Reference
+  Set TrnsPlateLimitRef3 = ObjPart.CreateReferenceFromObject(DeckSuperplate)
+  Dim TrnsPlateOrnt3 As Long
+  TrnsPlateOrnt3 = 7
+  TrnsSuperplate.AddLimit TrnsPlateLimitRef3, TrnsPlateOrnt3
+  
+  TrnsSuperplate.Run
+
+  'To Update the Part
+  ObjPart.Update
+End Sub

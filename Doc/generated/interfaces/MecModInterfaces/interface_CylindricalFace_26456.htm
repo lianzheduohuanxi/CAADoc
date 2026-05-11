@@ -1,0 +1,174 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces CylindricalFace (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CylindricalFace"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CylindricalFace<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CylindricalFace_26456','CylindricalFace','0');</script>
+<b><i> 2-D boundary with a cylindrical geometry.</i></b><br>
+
+ <b>Role</b>: 
+ This <script type="text/javascript"> activateLinkAnchor('Boundary','','Boundary') </script> object may be, for example, the lateral face of a cylinder.</br> You will create a CylindricalFace object using the 
+<script type="text/javascript"> activateLinkAnchor('Shapes','GetBoundary','Shapes.GetBoundary') </script> , 
+<script type="text/javascript"> activateLinkAnchor('HybridShapes','GetBoundary','HybridShapes.GetBoundary') </script> ,  
+<script type="text/javascript"> activateLinkAnchor('Sketches','GetBoundary','Sketches.GetBoundary') </script> or 
+<script type="text/javascript"> activateLinkAnchor('Selection','SelectElement2','Selection.SelectElement2') </script> method. Then, you pass it to the operator (such as 
+<script type="text/javascript"> activateLinkAnchor('ShapeFactory','AddNewCircPattern','ShapeFactory.AddNewCircPattern') </script> ).</br>  The lifetime of a CylindricalFace object is limited, see 
+<script type="text/javascript"> activateLinkAnchor('Boundary','','Boundary') </script>.</br>  <! @sample>
+ <dl>
+ <dt><b>Example:</b>
+ <dd>
+ This example asks the end user to select a shape to pattern and a cylindrical face, and creates a circular
+ pattern of the shape. The cylindrical face specifies the rotation axis.
+ <pre>
+ Dim InputObjectType(0)
+ Set Document = CATIA.ActiveDocument
+ Set Selection = Document.Selection
+ 'We propose to the user that he select the shape to pattern
+ InputObjectType(0)="SketchBasedShape"
+ Status=Selection.SelectElement2(InputObjectType,"Select the shape to pattern",true)
+ if (Status = "cancel") then Exit Sub
+ Set Shape = Selection.Item(1).Value
+ Selection.Clear
+ 'We propose to the user that he select the cylindrical face
+ InputObjectType(0)="CylindricalFace"
+ Status=Selection.SelectElement2(InputObjectType,"Select the cylindrical face",true)
+ if (Status = "cancel") then Exit Sub
+ Set CylindricalFace = Selection.Item(1).Value
+ Set RotationCenter = Document.Part.CreateReferenceFromName("")
+ Set CircPattern = ShapeFactory.AddNewCircPattern(Shape,1,4,20.0,45.0,1,4,RotationCenter,CylindricalFace,True,0.0,True)
+ Document.Part.Update  
+ </pre>
+ </dl>
+<hr>
+<dl>
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#GetDirection"><b>GetDirection</b></a>
+<dd>   Returns the direction of the cylindrical face axis
+   
+ <dt>
+    <a href="#GetOrigin"><b>GetOrigin</b></a>
+<dd>  Returns the origin of the cylindrical face axis.
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="GetDirection"><dt>
+
+<table><tr><td>o Sub <b>GetDirection</b>(<td><script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <td><tt>oDirection</tt>)</table></dt>
+<dl>
+  <dd>
+  Returns the direction of the cylindrical face axis
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDirection[0]</tt>
+   <dd>   The X Coordinate of the axis direction 
+   </dd>
+    <dt><tt> oDirection[1]</tt>
+   <dd>   The Y Coordinate of the axis direction
+   </dd>
+    <dt><tt> oDirection[2]</tt>
+   <dd>   The Z Coordinate of the axis direction</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetOrigin"><dt>
+
+<table><tr><td>o Sub <b>GetOrigin</b>(<td><script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <td><tt>oOrigin</tt>)</table></dt>
+<dl>
+  <dd>
+ Returns the origin of the cylindrical face axis. 	
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOrigin[0]</tt>
+   <dd>   The X Coordinate of the axis origin
+   </dd>
+    <dt><tt> oOrigin[1]</tt>
+   <dd>   The Y Coordinate of the axis origin
+   </dd>
+    <dt><tt> oOrigin[2]</tt>
+   <dd>   The Z Coordinate of the axis origin</dd>
+</dl>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

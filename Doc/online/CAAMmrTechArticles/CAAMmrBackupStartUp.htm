@@ -1,0 +1,663 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="fr">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+  </script>
+  <title>Backup StartUp Principles</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>Mechanical Modeler</h1>
+       </td>
+       <td valign="top">
+       <h2></h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Backup StartUp Principles</h3>
+       <p><em>Principles &amp; how to update existing StartUps and features</em></td>
+     </tr>
+     <tr>
+       <td class="tech" colspan="2">Technical Article</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article first explains what is a Mechanical backup StartUp and 
+       what is its utility. The second part details the behaviors and the 
+       specificity of the GeometricalElement3D backup StartUp. The last part is devoted to 
+       describe the usage of tools which enable you to update existing StartUp's 
+       catalogs and Part documents when a backup StartUp is newly added to a DS 
+       mechanical feature.</p>
+       <p>To take full advantage of this article, a pre-requisite knowledge of 
+       Mechanical StartUp principles [<a href="#References">1</a>] is 
+       essential.&nbsp;</p>
+       <ul>
+         <li><strong><a href="#Principles">Principles</a></strong>
+         <ul>
+           <li>
+           <a href="#Exchange of V5 Part with CAA Geometrical Features&nbsp;">
+           Exchange of V5 Part with CAA Mechanical Features</a></li>
+           <li><a href="#What is a Backup StartUp?">What is a Mechanical Backup 
+           StartUp?</a></li>
+           <li><a href="#How is the Geometrical Backup StartUp Managed?">How is 
+           the Mechanical Backup StartUp Managed?</a></li>
+           <li><a href="#What are the Mechanical Features with BackUp StartUp">
+           What are the Mechanical Features with BackUp StartUp?</a></li>
+         </ul>
+         </li>
+         <li><b><a href="#Geometrical Backup StartUp Behaviors&nbsp;">GeometricalElement3D 
+           Backup StartUp </a></b>
+       <ul>
+         <li><a href="#Behaviors">Behaviors</a></li>
+         <li><a href="#Instantiation">Instantiation</a></li>
+       </ul></li>
+         <li><strong><a href="#What to do when a new Backup StartUp is Created">What to do when a Backup StartUp is newly Created</a></strong><ul>
+           <li><strong style="font-weight: 400">
+           <a href="#Updating Existing CAA Geometrical StartUp">Updating Existing CAA 
+         Mechanical StartUp</a></strong></li>
+           <li><strong style="font-weight: 400">
+           <a href="#Updating Existing CAA Geometrical Features">Updating Existing CAA 
+         Mechanical Features</a></strong></li>
+         </ul></li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Principles"></a>Principles</h3>
+   <h4><a name="Exchange of V5 Part with CAA Geometrical Features&nbsp;"></a>
+   Exchange of V5 Part with CAA Mechanical Features&nbsp;</h4>
+   <p>Suppose you have a Part document with instances of CAA Mechanical StartUp, 
+   and you send this Part to a supplier. In most cases, your suppliers do not 
+   have the code (dll) and StartUp's catalog which would enable them to find the 
+   behaviors that you defined on your CAA features. Your Part documents are 
+   quiet useless in this context.</p>
+   <p>This matter is illustrated with a Part document containing a CombinedCurve 
+   instance [<a href="#References">2</a>]. The two following pictures are screen 
+   shot of the CAACombinedCurve.CATPart file located in the InputData directory 
+   of the CAAMechanicalModeler.edu framework.</p>
+   <table border="0">
+     <caption><a name="Fig.1">Fig.1</a> CAA Feature with CATfct</caption>
+     <tr>
+       <td><img border="0" src="images/CAAMmrBackupStartUpImageWithCATFct.jpg" width="310" height="339"></td>
+       <td valign="middle">This picture shows the CombinedCurve (yellow and bold 
+       curve) in an environment with dll and the catalog (a CATfct file) which 
+       defines the CombinedCurve StartUp ( a CAA feature deriving from the 
+       GeometricalElement3D StartUp)<ul>
+         <li>The feature is 3D visualized,</li>
+         <li>Its icon is displayed in the specification tree,</li>
+         <li>It has all the specific behaviors which were allowed to him by the 
+         implementation of some interfaces, and the default behaviors of 
+         geometrical features.&nbsp;</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <table border="0">
+     <caption><a name="Fig.2">Fig.2</a> CAA Feature without CATfct</caption>
+     <tr>
+       <td><img border="0" src="images/CAAMmrBackupStartUpImageWithoutCATFct.jpg" width="429" height="289"></td>
+       <td valign="middle">On this picture you have the same Part but in an 
+       environment without dll and CATfct file. You can see that the 
+       CombinedCurve is not visualized, its specific icon is replaced by the &quot;broken&quot; 
+       icon. Moreover, the picture does not show it, but you cannot:
+       <ul>
+         <li>edit the feature,</li>
+         <li>update it,</li>
+         <li>execute Copy, Cut and Paste operations</li>
+         <li>used it as input for other features,</li>
+         <li>....</li>
+       </ul>
+       <p>The feature is such as &quot;dead&quot;.&nbsp;</td>
+     </tr>
+   </table>
+   <p>One thus set up a system which aims at:</p>
+   <ol>
+     <li>Having a minimum of behaviors when the CAA feature is used without its 
+     CATfct file. </li>
+     <p>That the dll are there or not, that does not change anything. On the 
+     other hand if the catalog file is there but not the code, it is considering 
+     as a wrong installation.</li>
+     <li>Re-reading modified documents in complete environment&nbsp;</li>
+   </ol>
+   <p>This system is possible thanks to a <b>backup</b> StartUp, and since its 
+   concerns the Mechanical features, it is 
+   precisely named the Mechanical backup StartUp.&nbsp;&nbsp;</p>
+   <h4><a name="What is a Backup StartUp?"></a>What is a Mechanical Backup StartUp?</h4>
+   <p>All instances of a CAA Mechanical StartUp know the name of a specific 
+   Dassault Systèmes StartUp playing the role of backup StartUp. When the CATfct file defining the CAA Mechanical StartUp is present, the StartUp's 
+   instances will have the complete behaviors, otherwise, they will have the 
+   behaviors of the backup StartUp.</p>
+   <table border="0">
+     <caption><a name="Fig.3">Fig.3</a> Instance Used With CATfct</caption>
+     <tr>
+       <td><img border="0" src="images/CAAMmrBackupStartUpSchemaWithCATFct.jpg" width="488" height="296"></td>
+     </tr>
+   </table>
+   <p>This picture shows:</p>
+   <ul>
+     <li>A Part containing an instance of the StartUp named CAAStartUp deriving 
+     from the GeometricalElement3D StartUp&nbsp;</li>
+     <li>The CAA instance knows the name of its backup StartUp.</li>
+   </ul>
+   <table border="0">
+     <caption><a name="Fig.4">Fig.4</a> Instance Used Without CATfct</caption>
+     <tr>
+       <td><img border="0" src="images/CAAMmrBackupStartUpSchemaWithoutCATFct.jpg" width="524" height="395"></td>
+     </tr>
+   </table>
+   <p>This picture shows:</p>
+   <ul>
+     <li>When the CATfct file defining the CAAStartUp's StartUp is missing, the 
+     backup StartUp associated with the instance is retrieval in the catalog 
+     defining the Dassault Systemes mechanical StartUps (MechMod).&nbsp;</li>
+     <li>This backup StartUp is also a mechanical feature. This StartUp has specific behaviors 
+     that we describe further.</li>
+   </ul>
+   <p>When the end user retrieves the modified Part in the complete 
+   context, it can work again with it.</p>
+   <h4><a name="How is the Geometrical Backup StartUp Managed?"></a>How is the 
+   Mechanical Backup StartUp Managed?</h4>
+   <p>Each CAA geometrical StartUp should know its backup StartUp. The 
+   association between StartUp and backup StartUp is automatically set in the 
+   global function which creates CAA StartUp, it means in the <i>CATOmsSUFactory</i><i>
+   </i>global function. The CAA StartUp having a backup StartUp, all its 
+   instances will have it too.&nbsp;</p>
+   <h4><a name="What are the Mechanical Features with BackUp StartUp"></a>What 
+   are the Mechanical Features with BackUp StartUp?</h4>
+   <p>Among the Mechanical features that you can derive [<a href="#References">1</a>] to create your own CAA 
+   feature, those having a specific backup StartUp are:</p>
+   <ul>
+     <li>GeometricalElement3D</li>
+     <li>MechanicalSet&nbsp; [<a href="#References">6</a>]</li>
+     <li>MechanicalElement [<a href="#References">7</a>]</li>
+   </ul>
+   <p>About MechanicalFormFeature, MechanicalContextualFeature or GSMGeom, there 
+   is no specific backup StartUp associated with those mechanical features, but 
+   since they derived from GeometricalElement3D, the backup StartUp of the GeometricalElement3D 
+   will be associated with your new CAA feature. </p>
+   <p>In brakets you have access to the articles describing the features, and the 
+   behaviors of their backup StartUp. For the GeometricalElement3D, the 
+   explanations are just below.</p>
+   <h4><a name="Geometrical Backup StartUp Behaviors&nbsp;"></a>GeometricalElement3D 
+   Backup StartUp </h4>
+   <h4><a name="Behaviors"></a>Behaviors&nbsp;</h4>
+   <p>The backup StartUp of the GeometricalElement3D feature has behaviors that are illustrated with 
+   the CombinedCurve [<a href="#References">2</a>]. The following pictures are 
+   screen shots of the CAACombinedCurveWithBackup.CATPart file located in the 
+   InputData directory of the CAAMechanicalModeler.edu framework.</p>
+   <ul>
+     <li>3D Visualization</li>
+     <table border="0" height="222">
+       <tr>
+         <td height="218"><img border="0" src="images/CAAMmrBackupStartUpOKVisu.jpg" width="349" height="216"></td>
+       </tr>
+     </table>
+     </li>
+     <li>A specific icon</li>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKIcon.jpg" width="186" height="70"></td>
+       </tr>
+     </table>
+     </li>
+     <li>No update</li>
+   </ul>
+   <blockquote>
+     <p>The CombinedCurve.1 has for inputs Line.1. This line is defined by 
+     Point.1 and Point.2. Try to change Point.2 by Point.11.&nbsp;If you try to 
+     update the CombinedCurve, you have the following message:</p>
+   </blockquote>
+   <ul>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKUpdate1.jpg" width="531" height="391"></td>
+       </tr>
+     </table>
+     <li>No edition</li>
+     <p>If you double click the Combined curve, the following dialog box informs 
+     the end user that the feature edition is impossible.</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKEdit.jpg" width="317" height="117"></td>
+       </tr>
+     </table>
+     </li>
+     <li>Only Paste As Result</li>
+     <p>If the end user first copies the Combined curve, then for the Paste 
+     operation, only the Paste with Result is possible.&nbsp;</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKPaste1.jpg" width="438" height="232"></td>
+         <td valign="top"><img border="0" src="images/CAAMmrBackupStartUpOKPaste2.jpg" width="178" height="93">
+         </td>
+       </tr>
+     </table>
+     <p>Curve.1&nbsp;(right picture) has been created with the Paste as Result 
+     operation on CombinedCurve.1 Note the &quot;flash&quot; sign to indicate an isolated 
+     feature (a&nbsp; datum) [<a href="#References">3</a>]. </li>
+   </ul>
+   <p>The end user can work with instances of the CAA features. He/she can:</p>
+   <ul>
+     <li>Used them as input for another features</li>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKSpec.jpg" width="638" height="376"></td>
+       </tr>
+     </table>
+     <p>A point (Point.10) is created along the Combined Curve.&nbsp;</li>
+     <li>Know theirs parents and children</li>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKParentChild.jpg" width="325" height="277"></td>
+       </tr>
+     </table>
+     <p>Here is a picture of the the dialog box displayed by the Parent/Children 
+     command when the Combined Curve is selected.</li>
+     <li>Modify theirs graphical attributes ( color, thickness ...)</li>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpOKPropGrap.jpg" width="353" height="310"></td>
+       </tr>
+     </table>
+     <p>With the Edit/Properties command, the thickness and the color of the 
+     combined curve have been changed.</li>
+   </ul>
+   <p>In this incomplete context, applications such as Measure, Drafting, 
+   Manufacturing will always works.&nbsp;</p>
+   <p align="left">When the end user retrieves the modified Part in the complete 
+   context, it can work again with it. The picture below shows the 
+   CAACombinedCurveWithtBackup2 Part document, a saving of the 
+   CAACombinedCurveWithBackup file. This file is also located in the InputData 
+   directory of the CAAMechanicalModeler.edu framework.</p>
+   <table border="0">
+     <tr>
+       <td valign="top" width="320"><img border="0" src="images/CAAMmrBackupStartUpAfter1.jpg" width="320" height="301"></td>
+       <td><img border="0" src="images/CAAMmrBackupStartUpAfter2.jpg" width="359" height="302"></td>
+     </tr>
+   </table>
+   <p align="left">On left, you can see that the Combined Curve is not visible 
+   due to the replace operation. Once the update is done, the feature is yet 
+   visible.&nbsp;</p>
+   <h4 align="left"><a name="Instantiation"></a>Instantiation</h4>
+   <p>If your CAA feature derives from a &quot;geometrical startup&quot; ( <b>
+   GeometricalElement3D or GSMGeom </b>) ,&nbsp; you need to define and store its 
+   type according to <i><b>CATIInputDescription</b></i> implementation. This 
+   information, stored on the instance, will be useful in <b>BackUpStartUp</b> 
+   Mode to determine which behaviours are authorized. </p>
+   <p>This operation is done <b>just after</b> instantiation, calling <b>
+   CATMmrFeatureAttributes::SetFeatureType</b>&nbsp; </p>
+   <table class="code" id="table1" width="739">
+     <tr>
+       <td width="731">
+       <pre>...
+<b>CATIInputDescription</b>* pInputDescriptionOnInstance = NULL;
+rc = (*pISpecObjectOnInstance)-&gt;QueryInterface( IID_CATIInputDescription, (void**) &amp;pInputDescriptionOnInstance);
+
+...
+
+CATIInputDescription::FeatureType Feature_type = CATIInputDescription::FeatureType_Unset;
+rc = pInputDescriptionOnInstance -&gt; <b>GetFeatureType</b>(Feature_type);
+
+...
+
+rc = <b>CATMmrFeatureAttributes::SetFeatureType</b>(*pISpecObjectOnInstance, Feature_type);
+...</pre>
+       </td>
+     </tr>
+   </table>
+   <p align="left">where <code>pISpecObjectOnInstance</code> is the newly 
+   created feature.</p>
+   <p align="left">This step is not to do if your CAA feature is not geometrical 
+   or if it is a &quot;Solid feature&quot; i.e. derivate from <b>MechanicalFormFeature, 
+   MechanicalContextualFeature.</b></p>
+   <p></p>
+   <p align="right"></p>
+   <p align="right"></p>
+   <blockquote>
+   </blockquote>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="What to do when a new Backup StartUp is Created"></a>What to do 
+   when a new Backup StartUp is Created</h3>
+   <p>The &quot;<a href="#Updating Existing CAA Geometrical StartUp">Updating 
+   Existing CAA Mechanical StartUps</a>&quot;&nbsp; section explains how to update 
+   your old CATfct files (those defined before R13), and the &quot;<a 
+   href="#Updating Existing CAA Geometrical Features">Updating Existing CAA 
+   MechanicalFeatures</a>&quot; concerns the Part documents containing instances 
+   created with these old catalogs.</p>
+   <p>As of today, it only involves CAA StartUps and their instances deriving 
+   from GeometricalElement3D (MechanicalSet and MechanicalElement StartUps were introduced after R13).</p>
+   <h4><a name="Updating Existing CAA Geometrical StartUp"></a>Updating Existing 
+   CAA Mechanical StartUps</h4>
+	
+	<p> The following schema is a reminder of the Mechanical Modeler's tree 
+	structure for&nbsp; the GeometricalElement3D feature: </p>
+
+
+   <table> 
+  <tbody>
+    <tr>
+      <td>
+       <td><img border="0" src="images/CAAMmrGElt3DDiagram.jpg" width="482" height="430"></td>
+
+	
+    </tr>
+  </tbody>
+</table>
+
+   <p></p>
+   <p> If your Startup derives from <code>GeometricalElement3D</code> or any derivable feature below in the tree structure (<code>GSMGeom</code>, <code>MechanicalFormFeature</code>, <code>MechanicalContextualFeature)</code>, you can update your 
+   old CATfct file to integrate Backup Startup.
+   </p>
+  
+
+ <br>
+
+   
+   
+   The upgrade of&nbsp; your old CATfct file is done by using the
+   <code>CATFctEditorAssistant</code> command. You can refer directly to the 
+Feature Modeler documentation "Managing StartUp Catalogs" [<a href="#References">8</a>] and &quot;How to update 
+Catalogs&quot; [<a href="#References">9</a>] for all the details on how to use
+this tool. 
+<br> <br>
+In this article we will just list the different steps:
+<ol>
+<li>Generate an "osm" file from your CATfct file by using the
+				<code>-describe-as-osm</code> option of 
+the <code>CATfctEditorAssistant</code> tool.</li>
+	<p></p>			
+<li>Edit your "osm" file and insert just after the keyword <code>#Startup</code> of your Startup's description:
+<br>
+ <code>#backup_startup(`FeatureBackUpGeoElem3D`@`MechMod.feat`)</code>
+ 
+ <p> For example, here's the description of the Combined Curve 's Startup:
+ <table class="code">
+  <tr>
+    <td>
+      <pre>...
+feature CombinedCurve GeometricalElement3D@`MechMod.feat` #startup #backup_startup(`FeatureBackUpGeoElem3D`@`MechMod.feat`)
+{
+	specobject Curve1 #in
+	specobject Direction1 #in
+	specobject Curve2 #in
+	specobject Direction2 #in
+}
+
+...</pre>
+    </td>
+  </tr>
+</table>
+
+</p> </li>
+
+<li> Generate a new "CATfct" file from the modified "osm" file by using the <code>-upgrade-catalog</code> option of 
+the <code>CATfctEditorAssistant</code> tool.
+</li>
+
+   
+   <p></p>
+   <li>
+<p>Once the tool has been executed, the updated catalog should be located in 
+   the framework which defines the StartUp [<a href="#References">1</a>].</p>
+  </li> 
+ 
+</ol>
+  
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <h4 align="left"><a name="Updating Existing CAA Geometrical Features"></a>
+   Updating Existing CAA Mechanical Features</h4>
+   <p align="left">The goal of this section is to give you the step to be 
+   followed if you have or you think of having Part documents containing CAA 
+   instances without geometrical backup StartUp.</p>
+   <p align="left">To check or update a document, the <b>CATDUAV5 </b>tool will 
+   be used. For more details about this tool, refer to the following interactive 
+   documentation: CATIA Infrastructure &gt; CATIA Infrastructure User Guide &gt; 
+   Advanced Tasks &gt; Using the Data Upward Assistant.</p>
+   <p align="left"><b>When updating a Part document</b>:</p>
+   <ul>
+     <li>When you have already updated your StartUp catalog<p>You can update 
+     instances even though you do not have yet modified the StartUp. But if you 
+     create new instances, and if the Startup is still without backup StartUp, 
+     you should again update the Part document. So the best methodology is first 
+     to update the StartUp, and then to migrate the existing Part documents.</li>
+     <li>When the CATfct file is in the runtimeview<p>You cannot update 
+     instances if the Startup catalog (a CATfct file) is not present in the 
+     runtimeview. It means that you cannot update instances while they are &quot;broken&quot;.
+     </li>
+   </ul>
+   <p align="left">You can use the <b><span style="font-weight: 400">CATDUAV5</span>
+   </b>tool<b>, </b>in two modes:</p>
+   <ul>
+     <li>
+     <p align="left">Using<a href="#Interactive Mode"> <b>Interactive </b>Mode</a><b> 
+     - </b>CATIA Infrastructure &gt; CATIA Infrastructure User Guide &gt; Advanced 
+     Tasks &gt; Using the Data Upward Assistant &gt; Using CATDUA V5 in Interactive 
+     Mode&nbsp;</li>
+     <li>
+     <p align="left">Using<b> <a href="#Batch Mode">Batch </a></b>
+     <a href="#Batch Mode">Mode</a><b> - </b>CATIA Infrastructure &gt; CATIA 
+     Infrastructure User Guide &gt; Advanced Tasks &gt; Using the Data Upward 
+     Assistant &gt; Using CATDUA V5 Batch&nbsp;</li>
+   </ul>
+   <p align="left">The <b>BST_1</b> rule has been added to this tool. It 
+   specifies that all CAA geometrical features should have a backup StartUp. 
+   This rule being not mandatory, neither a risk of data corruption, it has the 
+   lowest priority (<b>3</b>).</p>
+   <p align="left">These articles explain how to launch the tool according to 
+   the mode. The current article does not explain again the way to launch it.
+   </p>
+   <p align="left"><b><a name="Interactive Mode"></a>Interactive Mode</b></p>
+   <ol>
+     <li>Launch CNEXT</li>
+     <li>Open a <b>Part</b> Document&nbsp;</li>
+     <li>On the <b>File </b>menu, select <b>Desk...</b></li>
+     <li>Right click on the <b>Part</b> Document, and select <b>CATDUAV5</b>&nbsp;</li>
+     <p>The following dialog box appears:</p>
+     <table border="0">
+       <caption><a name="Fig.5">Fig.5</a> Interactive Mode -CATDUAV5&nbsp;</caption>
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUAInter1.jpg" width="532" height="280"></td>
+       </tr>
+     </table>
+     </li>
+   </ol>
+   <p><a name="Batch Mode"><b>Batch Mode</b></a></p>
+   <ol>
+     <li>mkrun -c &quot;CATUTIL -Name CATDUAV5&quot;&nbsp;&nbsp;</li>
+     <p>The following dialog box appears:</p>
+     <table border="0">
+       <caption><a name="Fig.6">Fig.6</a> Batch Mode - CATDUAV5</caption>
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUABatch1.jpg" width="450" height="207"></td>
+       </tr>
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUABatch2.jpg" width="449" height="173"></td>
+       </tr>
+     </table>
+     </li>
+   </ol>
+   <p>In the two cases you have always two options: <b>Check</b> or <b>Clean</b>. 
+   Once one option is chosen, you can push Run to execute the action.&nbsp;Reports 
+   sum up the operations. There are detailed just below.</p>
+   <ol>
+     <li><b>Check</b></li>
+     <p>In interactive mode, once the check operation is done, in the left 
+     editor of the dialog box, <a href="#Fig.5">Fig.5</a> , a message specifies 
+     the report location. In Batch mode, the location report is entered by the 
+     Output Directory editor <a href="#Fig.6">Fig.6</a>.</p>
+     <p>Here is an example with a Part document containing a CombinedCurve
+     <a href="#Fig.1">Fig.1</a> without backup StartUp.&nbsp;</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUAInter2.jpg" width="403" height="105"></td>
+         <td valign="bottom">It is an extract of the report, the 
+         OutputCATDUA.htm file.
+         <p>There is only one error, with the priority 3</td>
+       </tr>
+     </table>
+     <p>If you click on the Part document you have more details:</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUAInter4.jpg" width="596" height="264"></td>
+       </tr>
+     </table>
+     <p>You retrieve the name of the document, and for each not respected rule, 
+     a long or short message, depending on the chosen option <a href="#Fig.5">
+     Fig. 5</a>,&nbsp; is written.&nbsp;</li>
+     <li><b>Clean</b></li>
+     <p>In interactive mode, once the clean operation is done, in the left 
+     editor of the dialog box, <a href="#Fig.5">Fig. 5</a>,&nbsp; a message is 
+     displayed. If there is at least one correction, the location of the report 
+     is specified otherwise the message specifies that there is zero 
+     modification. In Batch mode, the location report is always entered with the 
+     Output Directory editor. <a href="#Fig.6">Fig.6</a></p>
+     <p>Here is an example with a Part document containing a CombinedCurve
+     <a href="#Fig.1">Fig.1</a> without backup StartUp..&nbsp;</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUAInter3.jpg" width="434" height="107"></td>
+         <td valign="bottom">It is an extract of the report, the 
+         OutputCATDUA.htm file.
+         <p>There is only one correction of an error of priority 3</td>
+       </tr>
+     </table>
+     <p>If you click on the Part document you have more details:</p>
+     <table border="0">
+       <tr>
+         <td>,<img border="0" src="images/CAAMmrBackupStartUpCATDUAInter5.jpg" width="605" height="321"></td>
+       </tr>
+     </table>
+     <p>The first part of the file contains the check pass report, and the 
+     second part concerns the clean operation.&nbsp;</p>
+     <p>If you re-clean the same Part document, you have no the following 
+     report:</p>
+     <table border="0">
+       <tr>
+         <td><img border="0" src="images/CAAMmrBackupStartUpCATDUAInter6.jpg" width="546" height="237"></td>
+       </tr>
+     </table>
+     </li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>This article explains that it is possible to have a minimum of behaviors 
+   for CAA mechanical features when they are used without their StartUp's 
+   catalog. It is enough that each instance knows the name of the mechanical 
+   backup StartUp. Thanks to this specific StartUp, you can:</p>
+   <ul>
+     <li>Visualize the feature,</li>
+     <li>Use it as Input for other features,</li>
+     <li>Modify its graphic properties,</li>
+     <li>...</li>
+   </ul>
+   <p>Two tools are important:</p>
+   <ul>
+     <li>CATMmrBackupStartUpTool: to update existing catalog of geometrical CAA 
+     StartUps without backup StartUp.</li>
+     <li>CATDUAV5 : to update existing Part documents containing instances 
+     without backup StartUp.</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%" height="89">
+     <tr>
+       <td valign="top" height="16">[1]</td>
+       <td height="16"><a href="CAAMmrCreatingNewFeat.htm">Creating a New 
+       StartUp Deriving from a Mechanical StartUp</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="16">[2]</td>
+       <td height="16">
+       <a href="../CAAMmrUseCases/CAAMmrCombinedCurveSamplesOverview.htm">
+       Creating a New Geometrical Feature: the Combined Curve</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="16">[3]</td>
+       <td height="16"><a href="CAAMmrContentsSpecCont2.htm">The Contents of the 
+       Specification Container - Geometrical Features</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="15">[4]</td>
+       <td height="15">
+       <a href="../CAADocUseCases/CAADocRunSample.htm">
+       Building and Launching a CAA V5 Use Case</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="15">[5]</td>
+       <td height="15"><a href="CAAMmrOrderLinearBody.htm">Order and Absorption 
+       Concepts</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="15">[6]</td>
+       <td height="15"><a href="CAAMmrMechanicalSet.htm">The Contents of the Specification Container - Non Geometrical Features Set</a></td>
+     </tr>
+     <tr>
+       <td valign="top" height="15">[7]</td>
+       <td height="15"><a href="CAAMmrMechanicalElement.htm">The Contents of the Specification Container - Non Geometrical Features</a></td>
+     </tr>
+      <tr>
+       <td valign="top" height="16">[8]</td>
+       <td height="16"><a href="../CAAOsmTechArticles/CAAOsmTaMaintainingCatalogs.htm">
+       Managing Startup Catalogs</a></td>
+     </tr>
+      <tr>
+       <td valign="top" height="16">[9]</td>
+       <td height="16"><a href="../CAAOsmTechArticles/CAAOsmHowToUpdateCatalogs.htm">
+       How to Update Catalogs</a></td>
+     </tr>
+
+     <tr>
+       <td valign="top" align="right" colspan="2" height="16">[<a href="#Top">Top</a>]</td>
+     </tr>
+     
+
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [oct 2003]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>2</strong> [Dec 2008]</td>
+       <td valign="top">Generalize the principle, not only Geometrical feature 
+       can have Backup StartUp</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+   </font></font></font></font></font></font></font></font></font></font></font>
+   </font></font>
+
+  </body>
+
+</html>
+

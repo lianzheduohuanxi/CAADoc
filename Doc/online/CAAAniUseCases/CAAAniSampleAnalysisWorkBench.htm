@@ -1,0 +1,562 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name=" generator" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating an Analysis Application</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating an Analysis Application</h3>
+      <em>How to create a new Analysis workbench</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAniWorkBench use case. This use case
+      explains how to create a new analysis workbench and all the interfaces
+      that can be used in order to customize it.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAniWorkBench Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAniWorkBench Do</a></li>
+            <li><a href="#How">How to Launch CAAAni</a><a href="#What">WorkBench</a></li>
+            <li><a href="#Where">Where to Find the CAAAniWorkbench Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a>
+          <ul>
+            <li><a href="#Define">Define the new workbench</a></li>
+            <li><a href="#Init">The workbench initialization</a></li>
+            <li><a href="#Transition">Customize the document: Analysis
+              Transition</a></li>
+            <li><a href="#CtxMenu">Customize the workbench with contextual menu.</a></li>
+          </ul>
+        </li>
+        <li><a href="#Short"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you design a new workbench dedicated to the
+analysis domain.</p>
+<p>Before getting to the use case itself, it is important to have an
+understanding of some concepts that are the heart of the 3D PLM PPR Hub
+Enterprise Infrastructure, since the use case basically navigates among objects
+that represent those concepts. Refer to the appropriate articles and
+use cases in reference <a href="#Ref1">[1]</a>. If you are already familiar with
+all these frameworks, let's start with analysis and simulation concepts:</p>
+<p>Before starting, you have to think about the kind of application you need to
+integrate inside the analysis domain.</p>
+<ul>
+  <li>If your application is dealing with a new analysis domain, prefer to
+    design a new workbench that derives of the analysis workshop. For this,
+    implement <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISAMWorkshopConfiguration');return false;">CATISAMWorkshopConfiguration</a></b>.</li>
+  <li>If your application provides some general tools that are not dependent of
+    a specific domain, prefer to design a new &quot;ADDIN&quot; of the analysis
+    workshop. For this, implement <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATICATSAMWorkshopAddin');return false;">CATICATSAMWorkshopAddin</a></b>.</li>
+  <li>If your application is an extension of the existing structural analysis
+    application, prefer to design a new &quot;ADDIN&quot; of the Structural
+    Analysis Workbench. For this, implement <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisGPSInterfaces', 'interface', 'CATIGPSCfgAddin');return false;">CATIGPSCfgAddin</a></b>.</li>
+  <li>If your application is dealing with some new meshing technology, prefer to
+    design a new &quot;ADDIN&quot; of the Advanced Meshing Tools Workbench. For
+    this, implement <b><a href="#" onclick="javascript:CAAlink('CPP', 'AnalysisMeshingModel', 'interface', 'CATIMSHAdvWorkbenchAddin');return false;">CATIMSHAdvWorkbenchAddin</a></b>.
+    In this case, you will need the appropriate license.</li>
+</ul>
+<p align="left">In this use case we will focus on the first scenario. The access
+to your application will look like the following picture:</p>
+<p align="center"><img border="0" src="images/WBInAnalysisDomain.jpg" width="523" height="277"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAniWorkBench Use Case</h3>
+<p>CAAAniWorkBench is a use case of the CAAAnalysisInterfaces.edu framework that
+illustrates the way to define a new application inside the Analysis domain.</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAniWorkBench Do.</h4>
+<p>This use case will explain how to design a new workbench inside the Analysis
+&amp; Simulation product line and define some commands.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAniWorkBench</h4>
+<p>To launch CAAAniWorkBench, you will need to set up the build time
+environment, then compile CAAAniWorkBench along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#Ref2">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAniWorkBench Code</h4>
+<p>The CAAAniWorkBench use case is made of interfaces, implementations and
+commands located in the CAAAniWb.m module of the CAAAnalysisInterfaces.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\</code>CAAAniWb<code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/</code>CAAAniWb<code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The following table shows which code resources are used in this Use Case.
+These resources are physically located within the appropriate directories (with
+same names) of your CAA installation.</p>
+<table width="100%">
+  <tr>
+    <th width="22%">Framework
+    <th width="17%">Module/Interface
+    <th width="24%">Source
+    <th width="37%">Content
+  </tr>
+  <tr>
+    <td width="22%" valign="top">
+      <p>CAAAnalysisInterfaces.edu</td>
+    <td width="17%" valign="top">
+      <p>CAAAniWb.m</td>
+    <td width="24%" valign="top">
+      <p>CAAIAniConfigurationFactory.cpp</td>
+    <td width="37%" valign="top">
+      <p>Create a new factory.</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top"></td>
+    <td width="17%" valign="top">CAAAniWb.m</td>
+    <td width="24%" valign="top">CAAAniConfigurationFactory.cpp</td>
+    <td width="37%" valign="top">Implements CAAIAniConfigurationFactory</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top">
+      <p></td>
+    <td width="17%" valign="top">
+      <p>CAAAniWb.m</td>
+    <td width="24%" valign="top">
+      <p>CAAAniCfg.cpp</td>
+    <td width="37%" valign="top">
+      <p>Implements CATISAMWorkshopConfiguration</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top"></td>
+    <td width="17%" valign="top">CAAAniWb.m</td>
+    <td width="24%" valign="top">CAAAniCfgTemplate.cpp</td>
+    <td width="37%" valign="top">Implements CATISamWorkbenchTemplate</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top"></td>
+    <td width="17%" valign="top">CAAAniWb.m</td>
+    <td width="24%" valign="top">CAAEAniCfgInit.cpp</td>
+    <td width="37%" valign="top">Implements CATIWorkbenchInitialization</td>
+  </tr>
+  <tr>
+    <td width="22%" valign="top"></td>
+    <td width="17%" valign="top">CAAAniWb.m</td>
+    <td width="24%" valign="top">CAAAniCtxMenu.cpp</td>
+    <td width="37%" valign="top">Implement CATISamCtxMenuProvider.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now comment each of those files by looking at the code. This use case
+is made of the following steps:</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Define"></a>Define the new workbench.</h4>
+<p>This step is assumed by the files:</p>
+<ul>
+  <li>CAAIAniConfigurationFactory.cpp</li>
+  <li>CAAAniConfigurationFactory.cpp</li>
+  <li>CAAAniCfg.cpp</li>
+</ul>
+<p>It defines the ANICfg workbench configuration and the capability to make this
+workbench extendable with an ADDIN interface. Some important associated files
+with the ANICfg prefix are located in the resources/msgcatalog directory in
+order to configure this new workbench. For more information, have a look at the
+reference[<a href="#Ref1">1</a>]. Note that to define a workbench inside the Analysis &amp;
+Simulation product line, the CATRsc file may include the line:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font size="2">CAAAniCfg.Category = &quot;AnalysisSimulation&quot;;</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Before testing you may remove the comments in the beginning of
+this line.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Init"></a>The workbench initialization.</h4>
+<p>The CAAEAniCfgInit implements the CATIWorkbenchInitialization interface to do
+some initializations before starting a workbench. For example, in the
+implementation made in this sample, the following tasks are performed:</p>
+<ul>
+  <li>Open the associated feature catalog: &quot;CAAAniCatalog.CATCfg&quot; and
+    log it on the analysis container.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATFrmEditor * pEditor = CATFrmEditor::GetCurrentEditor();
+  if (NULL == pEditor) return;
+
+//=====================================
+// Retrieves the Analysis document from the Editor.
+  CATDocument * pDoc = pEditor -&gt; GetDocument();
+  CATISamAccess * piDocAccess =  NULL;
+  CATIContainer * piSpecContainer = NULL;
+  CATISamImageDisplayManager_var spSpmDisplay ;
+
+  if (pDoc) pDoc -&gt; QueryInterface(IID_CATISamAccess, (void**) &amp;piDocAccess);
+
+if ( piDocAccess)
+{
+   piDocAccess -&gt; GetSpecContainer(piSpecContainer); // Container for feature
+   piDocAccess -&gt; Release(); piDocAccess = NULL;
+}
+
+//=====================================
+// Open CAAAniCatalog.CATfct  catalog
+if ( piSpecContainer )
+{
+  CATICatalogManager * piCatalogManager = NULL;
+  piSpecContainer -&gt; QueryInterface(IID_CATICatalogManager,(void**) &amp;piCatalogManager);
+  if (piCatalogManager)
+  {
+    CATBaseUnknown * pCatalog = piCatalogManager -&gt; OpenCatalog(&quot;CAAAniCatalog.CATfct&quot;,CATIContainer::ClassName());
+    if (pCatalog) pCatalog -&gt; Release(); pCatalog = NULL;
+    piCatalogManager -&gt; Release(); piCatalogManager = NULL;
+  }
+  piSpecContainer -&gt; Release(); piSpecContainer = NULL;
+}
+... </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>Customize the visualization framework. This is managed by the CATISamImageDisplayManager interface you can access 
+  to the post processing
+    container returned by the CATISamAccess interface as follow:</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISamImageDisplayManager_var spSpmDisplay ;
+
+CATIContainer * piContainer = NULL;
+piDocAccess -&gt; GetPostproContainer(piContainer); // Container for postprocessing
+if (piContainer)
+{
+  spSpmDisplay = piContainer;
+  piContainer -&gt; Release(); piContainer = NULL;
+}
+... </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>Load a new image definition file. For all allowed capabilities that you
+    can customize with this file, refer to the reference [<a href="#Ref3">3</a>]. This is managed by
+    the CATISamImageFactoryInterface that is also implemented on the
+    PostProcessing container.</li>
+</ul>
+<table class="code" width="684">
+  <tr>
+    <td width="678">
+      <pre>...
+//                                - Define the XML file definition.
+CATISamImageFactory * piImageFactory = NULL;
+spSpmDisplay -&gt; QueryInterface(IID_CATISamImageFactory,(void **)&amp; piImageFactory);
+if (piImageFactory)
+{
+  piImageFactory -&gt; AddImageFile (&quot;CAAAniImages.xml&quot;);
+  piImageFactory -&gt; Release();
+}
+... </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>
+  <p style="margin-bottom: 0">Define the visualization behavior by setting the default and the global 
+  visualization modes. Five visualization modes exist :</li>
+</ul>
+<table width="76%" height="162">
+  <tr>
+    <th width="53%" height="19">With the following visualization mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <th width="34%" height="19">
+    &nbsp;You can 
+    see<tr>
+    <td width="53%" valign="top" height="19">
+      <p><b><font face="Courier New" size="2">CATSamVisuModeMeshing</font></b></td>
+    <td width="34%" valign="top" height="19">
+      <p><font face="Times New Roman">Mesh.</font></td>
+  </tr>
+  <tr>
+    <td width="53%" valign="top" height="19">
+      <p><b><font face="Courier New" size="2">CATSamVisuModeGeometry</font></b></td>
+    <td width="34%" valign="top" height="19">
+      <p><font face="Times New Roman">Geometry.</font></td>
+  </tr>
+  <tr>
+    <td width="53%" valign="top" height="19"><b>
+    <font face="Courier New" size="2">
+    CATSamVisuModePreProcessing </font></b></td>
+    <td width="34%" valign="top" height="19"><font face="Times New Roman">
+    Symbols from the preprocessing. </font></td>
+  </tr>
+  <tr>
+    <td width="53%" valign="top" height="19"><b>
+    <font face="Courier New" size="2">
+    CATSamVisuModePostProcessing&nbsp;&nbsp;&nbsp; </font></b></td>
+    <td width="34%" valign="top" height="19"><font face="Times New Roman">Images 
+    from the post processing.&nbsp;&nbsp;&nbsp; </font></td>
+  </tr>
+  <tr>
+    <td width="53%" valign="top" height="19"><b>
+    <font face="Courier New" size="2">
+    CATSamVisuModeRealDeformation</font></b></td>
+    <td width="34%" valign="top" height="19">
+    <p style="margin-top: 0; margin-bottom: 0">Real deformation images.</td>
+  </tr>
+</table>
+<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="60%">Global and default visualization mode have been defined to 
+    manager the visualization in assembly context.<p>The <b>
+    <font color="#0000FF">global mode</font></b> corresponds to the mode in 
+    which you want to visualize the activated analysis (Analysis 2) and all its 
+    analysis leaves (Analysis 3 and Analysis 4).</p>
+    <p>The <b><font color="#FF0000">default mode</font></b> is applied to each 
+    analysis document out of the scope of the activated Analysis document. So by 
+    activating Analysis 2, you will only see the mesh of Analysis 1 and Analysis 
+    5.&nbsp;&nbsp; </p>
+      <p>&nbsp;</td>
+    <td width="40%">
+      <p align="center">
+      <img border="0" src="images/VisuMode.jpg"></td>
+  </tr>
+</table>
+<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<p style="margin-top: 0; margin-bottom: 0">&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISamAnalysisContext * piContextEditor = NULL;
+pEditor -&gt; QueryInterface (IID_CATISamAnalysisContext, (void**) &amp; piContextEditor);
+if (piContextEditor)
+{
+  piContextEditor -&gt; SetVisuModes(CATSamVisuModeMeshing,CATSamVisuModeMeshing|CATSamVisuModePostProcessing);
+  piContextEditor -&gt; Release(); piContextEditor = NULL;
+}
+... </pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>Declare to the analysis document a contextual menu provider.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Declare a contextual menu provider
+CATISamProviders* piProvider = NULL;
+if (pDoc)
+pDoc -&gt; QueryInterface(IID_CATISamProviders, (void **) &amp;piProvider);
+
+if (piProvider)
+{
+   CAAAniCtxMenu * _piCtxMenu = new CAAAniCtxMenu ();
+   if (_piCtxMenu) piProvider -&gt; AddProvider(IID_CATISamCtxMenuProvider,_piCtxMenu);
+   piProvider -&gt; Release(); piProvider = NULL;
+}
+... </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Transition"></a>Customize the document.</h4>
+<p>This step allows for a workbench to define the list of allowed &quot;transitions&quot;. 
+The main transition goal is to create an analysis case and all the
+required&nbsp; sets  for a kind of analysis. This is implemented in the CAAAniCfgTemplate.cpp file on the CAAAniCfg_TempList late type. In this sample,
+only one transition is allowed, the transition is automatically launched without
+any user interaction.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="60%">If you add new transition types or removes the comments in
+      the sample file, the user interface will looks like:
+      <p>&nbsp;</td>
+    <td width="40%">
+      <p align="center"><img border="0" src="images/Transition.jpg" width="227" height="164"></td>
+  </tr>
+</table>
+<p>The AeroDynamic transition is implemented in the Reference <a href="#Ref4">[4]</a>.
+To allow this new analysis case and have a workbench initialization as defined
+in the previous image:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAAniCfgTemplate::GetTemplates(CATListOfCATString&amp; oList)
+{
+  oList.Append(&quot;AeroDynamic&quot;);
+  oList.Append(&quot;CATGPSStressAnalysis_template&quot;);
+  oList.Append(&quot;CATGPSModalAnalysis_template&quot;);	
+
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CtxMenu"></a>Customize the workbench with contextual menu.</h4>
+<p>This step allows you to add some contextual menus to an analysis feature. This
+is based on the provider technology. More information about providers are in
+Reference <a href="#Ref5">[5]</a>.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="60%">As example, in the CAAAniCtxMenu.cpp file, we will associate
+      a command that creates an image on the solution. This command will be
+      defined twice in the workbench, one in a toolbar and once as a contextual
+      menu to a specific feature.</td>
+    <td width="40%">
+      <p align="center"><img border="0" src="images/Ctxmenu.jpg" width="422" height="173"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAAniCtxMenu::GetContextualMenu(CATBaseUnknown * iObj, CATCmdContainer* &amp;ioCtxMenu)
+{
+  CATISpecObject_var spSpecObj (iObj);
+  if (NULL_var == spSpecObj) return S_OK;
+
+  CATString FeatureType = ((spSpecObj -&gt; GetType()).ConvertToChar());
+
+  if (FeatureType == &quot;AeroDynamicSet&quot;)              
+  {
+    CATString HeaderId = &quot;CreateOneImage&quot; ;    // header defined in the CAAAniCfg.cpp
+    NewAccess (CATCmdStarter ,CmdStarterCreateOneImage ,CAAAniCreateOneImage);
+    SetAccessCommand	(CmdStarterCreateOneImage,HeaderId);
+    if (ioCtxMenu) ioCtxMenu -&gt; AddChild (CmdStarterCreateOneImage);
+
+    CATCommandHeader* pHeader = NULL;
+    CATAfrGetCommandHeader(HeaderId,pHeader);  // provided by #include &quot;<b>CATAfrCommandHeaderServices.h</b>&quot;
+    if (pHeader)
+    {
+      pHeader -&gt; BecomeUnavailable();
+      if (spSpecObj -&gt; IsUpToDate()) pHeader -&gt; BecomeAvailable();
+    }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Short"></a>In Short</h3>
+<p>This use case can be used as an example to define a new workbench dedicated
+to the analysis domain. We will now see how to create some new commands:</p>
+<ul>
+  <li><a href="../CAAAniTechArticles/CAAAniPreproOverview.htm">Define
+    a preprocessing command.</a></li>
+  <li><a href="CAAAniSampleImageCommand.htm">Create an image command for post
+    processing.</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1">[1]</a></td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">3D
+      PLM Enterprise Architecture</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[2]</a></td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3">[3]</a></td>
+    <td><a href="../CAAAniTechArticles/CAAAniImagesOverview.htm">Analysis
+      Images Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref4">[4]</a></td>
+    <td><a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">Define
+      new Analysis feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref5">[5]</a></td>
+    <td><a href="../CAAAniQuickRefs/CAAAniProviders.htm">About
+      Analysis Providers</a>.</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jun 2004]</td>
+    <td valign="top">Document modified</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+
+

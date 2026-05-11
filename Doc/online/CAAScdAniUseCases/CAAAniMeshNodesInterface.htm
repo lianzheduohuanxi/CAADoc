@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Creating Nodes Interface Mesh Parts</TITLE>
+<meta http-equiv="Content-Language" content="en-us">
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="Microsoft FrontPage 6.0" name=GENERATOR>
+<META content=FrontPage.Editor.Document name=ProgId>
+	<link href="../CAAScrBase/caav5.css" type=text/css rel=stylesheet>
+<script language=JavaScript src="../CAAScrJavaScript/submit.js"></script>
+</HEAD>
+<BODY>
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H2>Analysis Modeler</H2></TD>
+    <TD vAlign=top align=right>
+      <H2><A name="Top"></A>Creating Nodes Interface Mesh Parts</H2></TD></TR></TBODY></TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="7%">
+	<img height=32 src="../CAAScrBase/images/atarget.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Learn></A>This use case shows how to create nodes interface 
+		mesh parts. This scenario requires &quot;FEM Surface (FMS)&quot;.</P>
+		<p>This macro opens an Analysis document. Mesh part nodes interface mesh&nbsp; 
+		is created. This mesh part requires a point analysis interface connection 
+		as support. The support already exist in the document and is assigned to 
+		the mesh part. The mesh part is updated to generate mesh.</p>
+		<P>&nbsp;</P>
+      <P align=center>
+		<img height=220 src="images/NodesInterfaceMesh.gif" width=485 border=2></P>
+      <P>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%">
+	<img height=32 src="../CAAScrBase/images/ainfo.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=How></A>CAAAniMeshNodesInterface is launched in CATIA [<A 
+      href="#References">1</A>]. 
+      No open document is needed.</P>
+      <P>
+		<a href="CAAAniMeshNodesInterfaceSource.htm">
+		CAAAniMeshNodesInterface.catvbs</A> 
+      is located in the CAAScdAniUseCases module. <a href="macros/CAAAniMeshNodesInterface.catvbs">Execute 
+      macro</A> (Windows only).</P>
+      <P align=center>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%">
+	<img height=32 src="../CAAScrBase/images/ascenari.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Step></A>CAAAniMeshNodesInterface includes the following steps:</P>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Reference">Extracting the List of Mesh Parts and 
+		Publications</a></li>
+		<li><a href="#Navigate">Creating Mesh part and Assigning Values to its Attributes</a></li>
+		<li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <H4><A name=prolog></A>Prolog</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE><font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">' Open the Analysis document</font> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)</PRE>
+			<PRE>...</PRE></TD></TR></TBODY></TABLE>
+      <p>Open the Analysis document. The Analysis document is retrieved in the documentation 
+		installation path, this path has already been stored in the <code>sDocPath</code> 
+		variable. In the collection of documents, two documents can be retrieved; 
+		the Analysis document and the Part document. </p>
+		<H4><A name=Reference></A>Extracting the List of Mesh Parts and 
+		Publications</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE>
+<font color="#008000">' Retrieve the analysis Manager </font>
+<font color="#0000FF">Set </font>oAnalysisManagar = oAnalysisDocument.Analysis
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+<font color="#008000">' Retrieve the part document and product</font>
+<font color="#0000FF">Set </font>oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+<font color="#0000FF">Set </font>partDocument = oAnalysisLinkedDocuments.Item(1)
+<font color="#0000FF">Set </font>product = partDocument.Product
+
+<font color="#008000">' Retreive the analysis model</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+
+<font color="#008000">'Retrieve the mesh manager and list of mesh parts</font>
+<font color="#0000FF">Set </font>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<font color="#0000FF">Set </font>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+<font color="#008000">'Retrieve the connection design manager and connection</font>
+<font color="#0000FF">Set </font>connection = oAnalysisSet.ItemByType("ConnectionDesignManager")
+<font color="#0000FF">Set </font>connSet = connection.AnalysisSets
+<font color="#0000FF">Set </font>conn = connSet.ItemByType("ConnectionDesignSet")
+<font color="#0000FF">Set </font>entity = conn.AnalysisEntities
+<font color="#0000FF">Set </font>surfConn  = entity.Item(1)
+
+<font color="#008000">'Create reference from the surface analysis connection</font>
+<font color="#0000FF">Set </font>reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)</PRE>
+			<pre>
+...</pre></TD></TR></TBODY></TABLE><p>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</a> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <b>Document</b>, 
+		we find the <b>Analysis Manager Object</b>, the <b>Analysis Models</b> and 
+		the <b>Mesh Manager Objects</b>. The extraction of pre-defined geometric 
+		elements is done by using the Reference interface. This is equivalent to the 
+		selection of a B-Rep element inside the interactive application. In this 
+		macro reference is created from the analysis connection.</p><H4><A name=Navigate></A>Creating the Mesh Part and 
+		Assigning Values to its Attributes.</H4><TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...
+
+<font color="#008000">'Add nodes interface mesh part to the list of mesh  parts</font>
+<font color="#0000FF">Set </font>nodeMesh = oAnalysisMeshParts.Add ("MSHPartConnHalfPoint") 
+
+<font color="#008000">'Assign previously create reference as support</font>
+nodeMesh.AddSupportFromReference NOTHING, reference1
+
+<font color="#008000">'Assign values to its global specifications</font>
+nodeMesh.SetGlobalSpecification "Tolerance", "6 mm"
+nodeMesh.SetGlobalSpecification "StopUpdateOnError", 2
+nodeMesh.SetGlobalSpecification &quot;MiddleCombination&quot;, 1
+
+nodeMesh.Update
+
+...</PRE></TD></TR></TBODY></TABLE>
+		<H4><A name=Epilog></A>Epilog</H4><TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...
+ End Sub
+...</PRE></TD></TR></TBODY></TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variable must be defined.</TD></TR></TBODY></TABLE><!---------------------------------comment-------------------------------------><P align=center>
+&nbsp;</P>
+<P align=center>
+<img height=32 src="../CAAScrBase/images/aendtask.gif" width=64 border=0></P><P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=InShort></A>In Short</H4><p>This use case has shown how to create nodes interface mesh parts and how to 
+assign values to its global specifications.</p><P>&nbsp;</P>
+<P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=References></A>References</H4><TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="7%">[1]</TD><TD width="93%"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+      a Macro</A></TD></TR><TR>
+    <TD align=right colSpan=2>[<A 
+      href="#Top">Top</A>]</TD></TR></TBODY></TABLE><HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights 
+reserved.</I></P></BODY></HTML>

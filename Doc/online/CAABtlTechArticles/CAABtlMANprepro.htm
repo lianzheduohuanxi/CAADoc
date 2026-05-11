@@ -1,0 +1,228 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Declarative File Preprocessor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Declarative File Preprocessor</h3>
+      <em>How to distinguish specific operating system sections</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Some declarative files are `preprocessed' (i.e. Imakefile.mk,
+      IdentityCard.h) in order to distinguish specific sections (such as
+      operating systems under which the workspace is being built).</p>
+      <ul>
+        <li><a href="#Syntax"><strong>Syntax</strong></a></li>
+        <li><a href="#Sample"><strong>Sample</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<h3><a name="Syntax"></a>Syntax</h3>
+<p>The preprocessor is an internal step which parse any lines that begin with a
+`<b>#</b>' character in first column and is followed by an interpreted keyword,
+any others are translated to declarative file parser.<br>
+Such lines cannot be continued on next line with the `<b>\</b>' continuing
+character.</p>
+<p>The comments are encapsulated with `<b>/*</b>' and `<b>*/</b>' sequence
+characters.</p>
+<p>The following keywords are available:
+<table border="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#define</strong><em> FlagName</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#undef</strong><em> FlagName</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>are used for special purpose and may not be used outside Dassault
+      Systèmes</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#if</strong><em> Expression</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#elif</strong><em> Expression</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#else</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>#endif</strong></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>are used to check flag(s) by analysing <em><b>Expression</b></em>.</td>
+</table>
+<p>Expression consist of test flag clauses that can be mixed with booleans
+operators and grouped with parenthesis `<b>(</b>...<b>)</b>'.<br>
+Only following operators are supported (comparison's are not) :
+<table border="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>&amp;&amp;</b></td>
+    <td>(AND)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>||</b></td>
+    <td>(OR)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>!</b></td>
+    <td>(NOT)</td>
+  </tr>
+</table>
+<br>
+<p>A clause consist of a flag existence test (not a value test), by using the
+following keywords :<br>
+<table border="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>defined</strong><em> FlagName</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>used for special purpose and may not be used outside Dassault Systèmes</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><strong>os</strong><em> OSName</em></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>test predefined flags set by <a href="CAABtlMkmk.htm">mkmk</a>,
+      depending on the operating system it is executed. Such flags names
+      correspond to value of environment variables <i>MkmkOS_NAME</i> (platform
+      notion) and <i>MkmkOS_Buildtime</i> (targeted operating system notion, the
+      one for which the code is being built)</td>
+  </tr>
+</table>
+<br>
+<p>List of actually supported OS names is described in the following table:
+<table border="1" width="100%">
+  <tr>
+    <th align="left" valign="top" bgcolor="#66FFFF">Operating system</th>
+    <th align="left" valign="top" bgcolor="#66FFFF">Value of OSName flag</th>
+  </tr>
+  <tr>
+    <td>AIX (IBM)</td>
+    <td><em><b>AIX</b></em><br>
+      <em><b>aix_a</b></em></td>
+  </tr>
+  <tr>
+    <td>HP-UX (Hewlett Packard)</td>
+    <td><em><b>HP-UX</b></em><br>
+      <em><b>hpux_a</b></em></td>
+  </tr>
+  <tr>
+    <td>SunOS (Sun MicroSystems)</td>
+    <td><em><b>SunOS</b></em><br>
+      <em><b>solaris_a</b></em></td>
+  </tr>
+  <tr>
+    <td>Windows (Microsoft)</td>
+    <td><em><b>Windows_NT</b></em><br>
+      <em><b>intel_a</b></em> (Windows 2000)<br>
+      <em><b>win_a</b></em> (Windows 98)</td>
+  </tr>
+</table>
+<h3><a name="Sample"></a>Sample</h3>
+<p>This example is not optimized in term of logic but it just shows the syntax
+that can be used to distinguish operating systems specifics in a declarative
+file:</p>
+<pre>
+  ... common section (available for all operating systems) ...
+ 
+  <em>#if os <b>AIX</b></em>
+  ... section available for IBM platform ...
+
+  <em>#elif os <b>SunOS</b></em>
+  ... section available for SUN platform ...
+
+  <em>#elif os <b>HP-UX</b></em>
+  ... section available for HP platform ...
+
+  <em>#elif os <b>Windows_NT</b></em>
+  ... section available for Windows platform (intel_a, win_a ) ...
+
+  </pre>
+<pre><em>#if os <b>intel_a</b></em>
+  ... section available for Windows NT operating systems ...
+<em>#elif os <b>win_a</b></em>
+  ... section available for Windows 98 operating system ...
+<em>#endif </em><font color="red">/* &quot;<b>#if os intel_a</b>&quot; block closing instruction */
+</font><em>#else</em> <font color="red">/*&quot;<b>#if os AIX</b>&quot; else instruction */
+ </font> ... section available all other operating system ...
+<em>#endif </em><font color="red">/* &quot;<b>#if os AIX</b>&quot; block closing instruction */</font>
+... common section (available for all operating systems) ...</pre>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>Preprocessor is invoked for framework and module declarative files</li>
+  <li>It can be used to express specific sections for all (supported) operating
+    systems.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

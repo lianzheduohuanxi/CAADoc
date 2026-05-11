@@ -1,0 +1,102 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>IClassFactory</title>
+</head>
+
+<body>
+
+<pre>
+#ifndef INCL_IClassFactory_h
+#define INCL_IClassFactory_h
+
+// COPYRIGHT DASSAULT SYSTEMES  1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U5
+ */
+
+
+#ifdef _WINDOWS_SOURCE
+#include <unknwn.h>
+#else
+#include &quot;IUnknown.h&quot;
+#include &quot;CATBooleanDef.h&quot;
+
+/**
+ * Boolean flag for @href IClassFactory#LockServer.
+ */
+typedef unsigned char BOOL;
+
+/**
+ * Interface to component factories.
+ * &lt;b&gt;Role&lt;/b&gt;:
+ * Objects that implement IClassFactory instantiate components using their CLSIDs as input,
+ * and retrieve a pointer to the requested interface passed as an output argument to the client.
+ */
+class IClassFactory : public IUnknown {
+
+public:
+
+  /**
+   * Creates an uninitialized component of a given CLSID.
+   * @param iUnkOuter
+   *    A pointer to the aggregating component IUnknown interface.
+   *    &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: NULL if the client is not an aggregating component,
+   *    and a pointer to its IUnknwon interface otherwise.
+   * @param iIid
+   *    A reference to the identifier to an interface that the component implmeents
+   *    and for which the client request a pointer to be retrieved.
+   *    &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: Should be expressed as IID_CATIXX,
+   *    where CATIXX is the interface to which a pointer is requested
+   * @param oObject
+   *    The address of the pointer to the requested interface
+   * @return
+   *   An HRESULT.
+   *    &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:
+   *    &lt;dl&gt;
+   *      &lt;dt&gt;S_OK
+   *      &lt;dd&gt;The component is successfully created
+   *          and the interface pointer is successfully returned
+   *      &lt;dt&gt;E_FAIL
+   *      &lt;dd&gt;The component was successfully created, * but the interface query failed
+   *      &lt;/dt&gt;E_NOINTERFACE
+   *      &lt;dd&gt;The component was successfully created,
+   *          but the it doesn't implement the requested interface
+   *      &lt;dt&gt;E_OUTOFMEMORY
+   *      &lt;dd&gt;The component allocation failed
+   *    &lt;/dl&gt;
+   */
+  virtual HRESULT __stdcall CreateInstance( IUnknown* iUnkOuter, REFIID iIid, void ** oObject ) = 0;
+
+  /**
+   * Keeps an out-process server in memory.
+   * @param iLock
+   *   Locking flag.
+   *    &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: TRUE to keep the server in memory,
+   *    and FALSE otherwise
+   * @return
+   *   An HRESULT.
+   *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:
+   *   &lt;dl&gt;
+   *     &lt;dt&gt;S_OK
+   *     &lt;dd&gt;The server is successfully locked or unlocked
+   *     &lt;dt&gt;E_FAIL
+   *     &lt;dd&gt;The server cannot be accessed
+   *   &lt;/dl&gt;
+   */
+  virtual HRESULT __stdcall LockServer( BOOL iLock ) = 0; };
+</pre>
+<pre> /* 00000001-0000-0000-C000-000000000046 */
+ extern &quot;C&quot; const IID IID_IClassFactory;
+ #endif
+ #endif</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,737 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Integrating New Features in a Product Structure</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Integrating New Features in a Product Structure</h3>
+      <em>Implementing basic V5 behaviors for new applicative features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><b>CAAPstIntegrateNewFeatures</b>
+      &gt; <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</a>
+      &gt; <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</a> &gt; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a>
+      &gt; <a href="CAAPstINFVisu.htm">CAAPstINFVisu</a> &gt; <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp;
+      &gt; CAAPstINFEdit &gt; <a href="CAAPstINFCCP.htm">CAAPstINFCCP</a> &gt; <a href="CAAPstINFDelete.htm">CAAPstINFDelete</a>
+      &gt; <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPstIntegrateNewFeatures use case. This
+      use case explains how to create new features in an applicative container
+      of a Product document and how to enable these features to be integrated in
+      basic V5 mechanisms such as navigation, visualization, editing, update or
+      CCP/Delete operations.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstIntegrateNewFeatures Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstIntegrateNewFeatures Do</a></li>
+            <li><a href="#Doc">Overview of the CAAPstIntegrateNewFeatures Use
+              Case Articles</a>
+            <li><a href="#How">How to Launch CAAPstIntegrateNewFeatures</a></li>
+            <li><a href="#Where">Where to Find the CAAPstIntegrateNewFeatures
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate how to create new features in an
+applicative container of a Product document and how to integrate these features
+in the following basic V5 mechanisms:
+<ul>
+  <li><b>Navigation</b>: this mechanism allows a feature to be visualized in the
+    specs tree of the Product document and to list its children through a
+    collapsable node.</li>
+  <li><b>Visualization</b>: this mechanism allows the feature to be included in
+    the visualization process in order for its geometry to be visible.</li>
+  <li><b>Editing</b>: this mechanism allows the feature's data values to be
+    modified.</li>
+  <li><b>Update</b>: this mechanism allows a feature's data and visualization to
+    be updated whenever any of the features it depends on have been modified.</li>
+  <li><b>Cut, Copy, Paste</b>: this mechanism allows features to be cut or
+    copied and pasted to and from the same or different containers.</li>
+  <li><b>Delete</b>: this mechanism allows a feature to be deleted from the
+    applicative container, specs tree and viewer while at the same time deleting
+    any other features whose definition may be dependent on it.</li>
+</ul>
+<p>This list is still incomplete and is planned to be enriched with
+illustrations of other mechanisms.&nbsp;</p>
+<p>A new applicative feature can be created in a Product document without any
+behaviors at all. Basic behaviors can then be added little by little, one by
+one, without any interference of one with the other. The outline of this article
+follows this principle, as it is based on independent articles, each describing
+a basic mechanism, which, when put together, illustrate the coherent integration
+of new features in V5.</p>
+<p>Some of the behaviors illustrated here are defined in various V5 Frameworks:</p>
+<table border="1" cellpadding="0" cellspacing="0" width="70%">
+  <tr>
+    <td width="50%" align="center">
+      <p align="center"><b>Framework</b></td>
+    <td width="50%" align="center">
+      <p align="center"><b>Behavior</b></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <p align="center">ObjectModelerBase</td>
+    <td width="50%" align="center">
+      <p align="center">Cut, copy, paste, delete and specs tree navigation</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">ObjectSpecsModeler</td>
+    <td width="50%" align="center">Update</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">Visualization</td>
+    <td width="50%" align="center">Geometrical visualization</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">ApplicationFrame</td>
+    <td width="50%" align="center">Edit</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">Dialog</td>
+    <td width="50%" align="center">Edit dialog box</td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">ProductStructure</td>
+    <td width="50%" align="center">Providers</td>
+  </tr>
+</table>
+<p>A quick note about Providers: The Provider mechanism, used to integrate
+&quot;from scratch&quot; features in a product structure, is implemented in the
+ObjectSpecsModeler framework. However, it is essentially used by
+ProductStructure implementations on Product features which is why this use case
+is based on a Product document example and delivered with ProductStructure
+framework CAA documentation.</p>
+<p>A general pre-requisite knowledge of the frameworks described above may be
+required to fully understand this sample, but some links with other CAA V5 use
+cases will be indicated to help you navigate among them. To begin with, you may
+want to review the basics of the Feature Modeler that you can find in the
+&quot;Feature Modeler Overview&quot; technical article [<a href="#References">1</a>].
+You may also find it useful to look over the &quot;Product Structure Model&quot;
+technical article [<a href="#References">2</a>] as well.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstIntegrateNewFeatures Use Case</h3>
+<p>The CAAPstIntegrateNewFeatures is a use case of the CAAProductStructure.edu
+framework that illustrates the integration of ObjectSpecsModeler,
+ObjectModelerBase, Visualization, ApplicationFrame, Dialog and
+ProductStructure&nbsp; framework capabilities in the scope of a Product
+document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the CAAPstIntegrateNewFeatures Use Case Do</h4>
+<p>This use case illustrates creating new applicative features &quot;from
+scratch&quot;, instantiating them in an applicative container of a Product
+document and attributing different behaviors to them in order to be able to
+perform basic operations.</p>
+<p>Here is an image of the feature catalog containing the &quot;StartUps&quot;
+which define the basic data structure of each of the features that will be
+created in this use case:</p>
+<b>Fig 1: Contents of the CAAPstINFCatalog.CATfct file</b>
+<table border="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFCatalog.jpg" width="336" height="296"></td>
+  </tr>
+</table>
+<ul>
+  <li>&quot;CAAPstINFRoot&quot; represents the parent node that will aggregate
+    all the other features. Its unique attribute contains a list of components,
+    in other words, a list of the features that it aggregates.</li>
+  <li>&quot;CAAPstINFPoint&quot; is a feature representing a 3D geometrical
+    point. Its attributes contain the values of the x, y and z coordinates of
+    the point.</li>
+  <li>&quot;CAAPstINFLine&quot; is a feature representing a 3D geometrical line.
+    Its attributes contain references to the two points of type
+    &quot;CAAPstINFPoint&quot; that define the line.</li>
+  <li>&quot;CAAPstINFWire&quot; is a feature representing a 3D geometrical line
+    as well. Its attribute contains a list of at least two
+    &quot;CAAPstINFPoint&quot; features that define the wire.</li>
+</ul>
+<p>As you remember, the difference between an aggregated object and a referenced
+object in the context of the feature modeler is that:</p>
+<ul>
+  <li>an object is <b>aggregated</b> by only one &quot;parent&quot;; its
+    existence is dependent on this parent, i.e., if the parent is deleted, it
+    must also be deleted.&nbsp;This is sometimes called a &quot;Component&quot;
+    link because the attribute containing an aggregated link is defined as a
+    &quot;tk_component&quot; attribute.</li>
+  <li>an object can be <b>referenced</b> by any number of other objects and its
+    existence is independent of the objects that reference it. This is sometimes
+    called a &quot;SpecObject&quot; link because the attribute containing the
+    referenced link is defined as a &quot;tk_specobject&quot; attribute.</li>
+</ul>
+<p>Now that we understand what data objects we are working with and how they
+interact with each other, let's take a look at the Product document that we want
+to create. Initially, the Product document will be created in batch mode. A new
+applicative container of type &quot;CAAPstINFCont&quot; is created in which two
+&quot;CAAPstINFRoot&quot; features are instantiated, the first that will
+aggregate the other features and the second that will be used during the
+interactive scenario to demonstrate CCP capabilities. Next, five
+&quot;CAAPstINFPoint&quot; features are instantiated, each having different
+coordinate values. Then, a &quot;CAAPstINFLine&quot; feature is instantiated,
+whose attribute values reference the first two &quot;CAAPstINFPoint&quot;
+features. Finally, a &quot;CAAPstINFWire&quot; feature is instantiated and its
+attribute points to a list containing references to the last three
+&quot;CAAPstINFPoint&quot; features.&nbsp; The &quot;CAAPstINFPoint&quot;,
+&quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features are then
+aggregated by the first &quot;CAAPstINFRoot&quot; feature. Here are the contents
+of the new Product document:</p>
+<b>Fig. 2: Contents of the CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDocStructure.jpg" width="428" height="438"></td>
+  </tr>
+</table>
+<p>As you can see, the five &quot;CAAPstINFPoint&quot; features, the
+&quot;CAAPstINFLine&quot; feature and &quot;CAAPstINFWire&quot; feature are the
+elements in the list of components of the &quot;CAAPstINFRoot1&quot; feature.
+Also, notice that the &quot;CAAPstINFLine1&quot; feature points to
+&quot;CAAPstINFPoint1&quot; and &quot;CAAPstINFPoint2&quot; through a
+&quot;SpecObject&quot; link and that the &quot;CAAPstINFWire1&quot; feature
+points to &quot;CAAPstINFPoint3&quot;, &quot;CAAPstINFPoint4&quot;, and
+&quot;CAAPstINFPoint5&quot; through a &quot;SpecObject&quot; link as well.</p>
+<p>You can see, in this case, that &quot;CAAPstINFRoot1&quot; aggregates the
+other features, meaning that if &quot;CAAPstINFRoot1&quot; were to be deleted,
+all of the aggregated features would be deleted as well. The
+&quot;CAAPstINFLine&quot; and the &quot;CAAPstINFWire&quot; objects, on the
+other hand, only reference the points that make up their definitions, meaning
+that if they were to be deleted, the points would continue to exist
+independently. Inversely, however, in the case of the line, for example, if ever
+one of the points were to be deleted, it would be necessary to delete the line
+as well, since its definition would no longer be valid. Here is a UML diagram
+describing the links between these features:</p>
+<b>Fig. 3: UML diagram of the three new features.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFFeatureLinks.jpg" width="596" height="173"></td>
+  </tr>
+</table>
+<p>Note that nowhere in this document have we specified where the
+&quot;CAAPstINFRoot&quot; nodes themselves are to be structured. This operation
+will take place during the initialization of the applicative container, at
+runtime. When the Product document is opened in the V5 interactive session, the
+implementation of the <i>CATInit</i>::<code>Init</code> method for the
+&quot;CAAPstINFCont&quot; applicative container is executed. This method
+declares the provider implementations that will need to be executed during the
+navigation and visualization processes in order to structure the
+&quot;CAAPstINFRoot&quot; features under the Product root in the specs tree and
+to be able to visualize the geometry of the point, line and wire features. So,
+when the document is finally visualized, it looks like this:</p>
+<b>Fig. 4: Initial loading of CAAPstINFDocument.CATProduct document.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDocument.jpg" width="545" height="447"></td>
+  </tr>
+</table>
+<p>As you can see, the &quot;CAAPstINFRoot1&quot; and &quot;CAAPstINFRoot2&quot;
+features are structured directly under the Product root. This is defined in the
+navigation provider implementation. Remember that the navigation provider
+mechanism has been implemented for all products in a Product document. This
+means that during the navigation process, for each product node, any navigation
+provider that is currently declared to the document will be executed. So, in
+order to structure the &quot;CAAPstINFRoot&quot; features under the product
+root, the navigation provider code retrieves the &quot;CAAPstINFRoot&quot; types
+of features from the &quot;CAAPstINFCont&quot; applicative container and returns
+them as children nodes whenever the provider is called by the Product root
+object during the navigation process.</p>
+<p>Note also that the geometry of the points and line is also visualized,
+whereas these are applicative features stored in an aplicative container and are
+not automatically taken into account during the visualization process. In order
+these objects to be treated, a visualization provider must also have been
+declared, which, when called, returns the list of the aggregating feature root
+nodes. Then, the <i>CATI3DGeoVisu</i> implementation for each feature root as
+well as for each aggreagted object in order to define the visualization.</p>
+<p>See the technical article entitled &quot;Using the Provider Mechanism&quot; [<a href="#References">3</a>]
+for another example of how providers work.</p>
+<p>Now, once the features are correctly represented in the navigation and
+visualization processes of the Product document, we would like to enable the
+features to be edited: a double-click on the feature node or geometrical
+representation causes the display of a dialog box, as seen in the following
+screen image:</p>
+<b>Fig. 5: Editing a &quot;CAAPstINFPoint&quot; feature.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFEdit1.jpg" width="547" height="449"></td>
+  </tr>
+</table>
+<p>The dialog box entitled &quot;Point Definition&quot; contains the values of
+the coordinates of the selected point. Initially, these values were all set to
+0.0. The Y coordinate value is changed to 100.0 in the dialog box and when
+selecting the OK button, the following modification occurs:</p>
+<b>Fig. 6: Result of &quot;CAAPstINFPoint&quot; feature modification.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFEdit2.jpg" width="544" height="446"></td>
+  </tr>
+</table>
+<p>As you can see, the position of the point has changed and the impacted line
+has been re-drawn to reflect the referenced point's modification. This use case
+will show you in detail how this modification must be programmed.</p>
+<p>Next, we want to illustrate copying a feature from one node to another or
+within the same node. This is done using the CCP mechanism. Here is a screen
+image showing this behavior:</p>
+<b>Fig. 7: Copying a feature.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFCCP1.jpg" width="544" height="447"></td>
+  </tr>
+</table>
+<p>The contextual menu on the feature has been enabled to offer the Cut, Copy,
+Paste and Delete options. Here, the Copy operation has been selected. Next, a
+Paste operation will be selected on the second &quot;CAAPstINFRoot&quot; node,
+as seen below:</p>
+<b>Fig. 8: Pasting a feature.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFCCP2.jpg" width="545" height="536"></td>
+  </tr>
+</table>
+<p>The &quot;CAAPstINFPoint1&quot; feature has been copied to create a new
+instance called &quot; CAAPstINFPoint1.1&quot; that is aggregated under
+&quot;CAAPstINFRoot2&quot;. Here is the result of the CCP operation:</p>
+<b>Fig. 9: Result of Copy/Paste operation.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFCCP3.jpg" width="546" height="446"></td>
+  </tr>
+</table>
+<p>Lastly, we want to illustrate deleting a feature. To do this, we select the
+Delete option of the contextual menu on the &quot;CAAPstINFPoint1&quot; feature:</p>
+<b>Fig. 10: Deleting a feature.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDel1.jpg" width="545" height="447"></td>
+  </tr>
+</table>
+<p>When the feature is deleted, any object pointing to it that is dependent on
+it for its definition, such as the &quot;CAAPstINFLine1&quot; feature, must be
+deleted as well. The result of the Delete operation on the point can be seen in
+the following screen image:</p>
+<b>Fig. 11: Result of deleting a feature.</b>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFDel2.jpg" width="545" height="445"></td>
+  </tr>
+</table>
+<p>Note that two points are left: &quot;CAAPstINFPoint2&quot; which existed
+originally and &quot;CAAPstINFPoint1.1&quot; which is a copy of the
+&quot;CAAPstINFPoint1&quot; feature that was just deleted.</p>
+<p>Below is a figure showing the interface implementations necessary for each
+new feature type created in order to enable the operations described above:</p>
+<p><b>Fig. 12: Basic interface implementations necessary to integrate new
+features in a Product document.</b></p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%"><img border="0" src="images/CAAPstINFInterfaceImpl.jpg" width="372" height="479"></td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p align="left"><i>CATICutAndPastable</i> - this interface is implemented by
+    all four features: &quot;CAAPstINFRoot&quot;, &quot;CAAPstINFPoint&quot;,
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;. It manages the cut
+    and copy operations for the point, line and wire features and paste
+    operation for the root feature.</li>
+  <li>
+    <p align="left"><i>CATINavigateObject</i> - this interface is implemented
+    only by the &quot;CAAPstINFRoot&quot; feature. It returns the list of its
+    children, i.e., the features aggregated to it, so that they can be included
+    in the specs tree.</li>
+  <li>
+    <p align="left"><i>CATICSOFilter</i> - this interface is implemented by all
+    four features, &quot;CAAPstINFRoot&quot;, &quot;CAAPstINFPoint&quot;,
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;. It filters the
+    CCP/Delete options of the contextual menu that are allowed on each
+    particular feature. For example, for the &quot;CAAPstINFRoot&quot;, we do
+    not want to allow cut, copy or delete, but only paste. On the contrary, for
+    the &quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; and
+    &quot;CAAPstINFWire&quot; features, we want to allow cut, copy and delete,
+    but not paste. Depending on this implementation, the contextual menu options
+    will be enabled or disabled.</li>
+  <li>
+    <p align="left"><i>CATI3DGeoVisu</i> - this interface is implemented by all
+    four features: &quot;CAAPstINFRoot&quot;, &quot;CAAPstINFPoint&quot;,
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;. This interface
+    defines the root features and creates the visualization of the geometric
+    elements.</li>
+  <li>
+    <p align="left"><i>LifeCycleObject</i> - this interface is implemented by
+    the &quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; and
+    &quot;CAAPstINFWire&quot; features in order to handle the delete operation
+    for these features.</li>
+  <li>
+    <p align="left"><i>CATIEdit</i> - this interface is implemented only by the
+    &quot;CAAPstINFPoint&quot;. It allows the edition of the point feature by
+    displaying a dialog box in which the point's coordinate values can be
+    modified. (The edition of the line or wire features is not demonstrated here
+    in order to keep this use case manageable in size.)</li>
+  <li>
+    <p align="left"><i>CATIModelEvents</i> - this interface is implemented by
+    all four features: &quot;CAAPstINFRoot&quot;, &quot;CAAPstINFPoint&quot;,
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot;.It allows each of
+    these features to be connected to its root as well as enabling the refresh
+    of their visualization in case they have been modified or deleted.&nbsp;</li>
+  <li>
+    <p align="left"><i>CATIBuild</i> - this interface is implemented only by the
+    &quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features. It allows
+    the refresh of their visualization taking into account the changes that may
+    have been made to any one of the referenced points that define them. This
+    implementation is called automatically during the update process.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Doc"></a>Overview of the CAAPstIntegratingNewFeatures Use Case
+Articles</h4>
+<p>The documentation of the CAAPstINFIntegrateNewFeatures use case contains the
+following articles:</p>
+<ul>
+  <li><a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures:
+    Integrating New Features in a Product Structure.</a> This is the current
+    article.</li>
+  <li><a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument: Creating
+    New Features &quot;From Scratch&quot; in a Product Document. </a>This
+    articles describes the creation of a new Product document, the creation of
+    the applicative container and the instantiation of the new features within
+    it.&nbsp;</li>
+	<li><a href="CAAPstINFInitCont.htm">CAAPstINFInitCont: Initializing the
+    Applicative Container at Runtime.</a> This article describes the
+    implementation of the <i>CATInit</i> interface on the new applicative
+    container. It declares all the necessary providers that allow the
+    integration of the new features within the product structure. It also
+    performs the necessary connections of&nbsp; features to their roots in order
+    for the visualization process to function correctly.</li>
+	<li><a href="CAAPstINFNavigate.htm">CAAPstINFNavigate: Enabling the Navigation
+    of New Features in a Product Document. </a>This article describes the
+    necessary steps that must be gone through in order for a new feature to be
+    integrated in the product structure specs tree.</li>
+	<li>CAAPstINFVisu: Enabling the Visualization of New Features in a Product
+    Document. This article describes the necessary steps that must be gone
+    through in order for a new feature's geometric visualization to be taken
+    into account.&nbsp;</li>
+	<li><a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties:
+    Setting Graphical Properties. </a>This article describes the implementation
+    of the CATIVisProperties interface allowing graphical properties to be set
+    on a feature.</li>
+	<li>CAAPstINFEdit: Enabling New Features in a Product Document to be Edited.
+    This article describes the necessary steps that must be followed in order to
+    create and manage a dialog box allowing the edition of a
+    &quot;CAAPstINFPoint&quot; feature. This implies updating the visualization
+    of the point.</li>
+	<li><a href="CAAPstINFCCP.htm">CAAPstINFCCP: Enabling Cut, Copy and Paste
+    Operations on New Features in a Product Document.</a> This article describes
+    enabling cut, copy and paste operations through the <i>CATICSOFilter</i>
+    interface implementation as well as the actual cut, copy and paste
+    operations themselves through the <i>CATICutAndPastable</i> interface
+    implementation.</li>
+	<li><a href="CAAPstINFDelete.htm">CAAPstINFDelete: Enabling New Features in a
+    Product Document to be Deleted.</a> This article describes deleting a new
+    feature object. This takes into account the case where the deletion of a
+    point must require the deletion of the line or wire referencing it as well.</li>
+	<li><a href="CAAPstINFUpdate.htm">CAAPstINFUpdate: Enabling New Features in a
+    Product Document to be Updated.</a> This article describes how a feature can
+    be updated after a deletion or a modification has occurred on other features
+    it references. This is the case when one of the &quot;CAAPstINFPoint&quot;
+    coordinate values has been modified: it is then necessary to update the
+    &quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; feature that may be
+    referencing it.&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch the CAAPstIntegrateNewFeatures Use Case</h4>
+<p>To launch the CAAPstIntegrateNewFeatures use case, you will need to set up
+the build time environment, then compile the following modules:</p>
+<ul>
+  <li>CAAPstINFCreateDocument.m</li>
+  <li>CAAPstINFInterfaces.m</li>
+  <li>CAAPstINFCommands.m</li>
+  <li>CAAPstINFModeler.m&nbsp;</li>
+</ul>
+<p>&nbsp;along with their prerequisites [<a href="#References">4</a>]. Several
+steps must be followed in order to completely execute the use case:</p>
+<ul>
+  <li>By batch, launch the following command:</li>
+  <pre>    mkrun -c &quot;CAAPstINFCreateDocument CatalogName DocumentStorageName&quot;</pre>
+  where <code>CatalogName</code> is the name and .<code>CATfct</code> suffix of
+  the catalog containing the StartUps to be retrieved in the document and <code>DocumentStorageName</code>
+  is the entire pathname, name and .<code>CATProduct</code> suffix of the
+  document to be created. This batch program will create the Product document
+  containing an applicative container in which the new features will be
+  instantiated. Like the catalog, a document called
+  &quot;CAAPstINFDocument.CATProduct&quot; has already been supplied with this
+  use case, so this step can be skipped as well.
+  <p>&nbsp;
+  <li>
+    <p>Launch <b>CATIA</b>. When the application is ready, follow the scenario
+    described below:
+    <p>&nbsp;
+    <ul>
+      <li>
+        <p>Select <b>File</b> + <b>Open</b> and select the <b><code>CAAPstINFDocument.CATProduct
+        </code></b>in the <code>CAAProductStructure.edu/CNext/resources/graphic</code>
+        directory or select the document you created yourself by executing the
+        batch program described in the previous step.&nbsp;</p>
+      <li>
+        <p><b>Collapse</b> the &quot;CAAPstINFRoot1&quot; node by selecting the
+        &quot;+&quot; symbol: notice that this root aggregates seven features of
+        which five are of type &quot;CAAPstINFPoint&quot;, one
+        &quot;CAAPstINFLine&quot; and one &quot;CAAPstINFWire&quot;.</p>
+      <li>
+        <p><b>Double-click</b> on the &quot;CAAPstINFPoint1&quot; feature: the
+        &quot;Point Definition&quot; dialog box appears.</p>
+      <li>
+        <p><b>Modify</b> <b>the values </b>of any of the point coordinates and <b>select</b>
+        <b>OK</b> or <b>press</b> <b>Enter</b>. Notice that the
+        &quot;CAAPstINFPoint1&quot; feature has changed position and that the
+        &quot;CAAPstINFLine1&quot; feature has also been updated.</p>
+      <li>
+        <p><b>Double-click</b> on the &quot;CAAPstINFPoint3&quot; feature: the
+        &quot;Point Definition&quot; dialog box appears.</p>
+      <li>
+        <p><b>Modify</b> <b>the values </b>of any of the point coordinates and <b>select</b>
+        <b>OK</b> or <b>press</b> <b>Enter</b>. Notice that the
+        &quot;CAAPstINFPoint3&quot; feature has changed position and that the
+        &quot;CAAPstINFWire1&quot; feature has also been updated.</p>
+      <li>
+        <p><b>Display the contextual menu</b> on the &quot;CAAPstINFPoint1&quot;
+        feature.&nbsp;</p>
+      <li>
+        <p><b>Select &quot;Copy&quot;</b>.</p>
+      <li>
+        <p><b>Display the contextual menu </b>on the &quot;CAAPstINFRoot2&quot;
+        feature.</p>
+      <li>
+        <p><b>Select &quot;Paste&quot;</b>. Notice that a new feature,
+        &quot;CAAPstINFPoint1.1&quot; has been aggregated to the
+        &quot;CAAPstINFRoot2&quot; feature by copy/paste. The new point has the
+        same coordinate values as the point it is copied from, so its geometry
+        cannot be visualized.&nbsp;</p>
+      <li>
+        <p><b>Double-click</b> on the &quot;CAAPstINFPoint1.1&quot; feature: the
+        &quot;Point Definition&quot; dialog box appears.</p>
+      <li>
+        <p><b>Modify the values</b> of any of the point coordinates and <b>select
+        OK</b> or <b>press Enter</b>. Now you can visualize the
+        &quot;CAAPstINFPoint1.1&quot; since its coordinates are no longer the
+        same as those of &quot;CAAPstINFPoint1&quot;. The
+        &quot;CAAPstINFLine1&quot; feature has not changed at all because it is
+        not dependent on the copy of &quot;CAAPstINFPoint1&quot; but on
+        &quot;CAAPstINFPoint1&quot; itself.</p>
+      <li>
+        <p><b>Display the contextual menu</b> on the &quot;CAAPstINFPoint1&quot;
+        feature again.</p>
+      <li>
+        <p><b>Select &quot;Delete&quot;</b>. Notice that the
+        &quot;CAAPstINFPoint1&quot; feature has been deleted and that the
+        &quot;CAAPstINFLine1&quot; feature has also been deleted because it can
+        no longer exist without one of its reference points. The initial copy of
+        &quot;CAAPstINFPoint1&quot;, however, continues to exist.</p>
+    </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPstIntegrateNewFeatures Code</h4>
+<p>The CAAPstIntegrateNewFeatures use case is made of several modules of the
+CAAProductStructure.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstINFCreateDocument.m and CAAPstINFInterfaces.m and
+        CAAPstINFCommands.m and CAAPstINFModeler.m&nbsp;</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstINFCreateDocument.m and CAAPstINFInterfaces.m and
+        CAAPstINFCommands.m and CAAPstINFModeler.m&nbsp;</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ul>
+  <li><b>CAAPstINFCreateDocument.m</b> - This module contains one main program,
+    CAAPstINFMainCreateDocument.cpp. It is an executable batch program that was
+    used to create the CAAPstINFDocument.CATProduct document. This document can
+    also be found in the CNext/resources/graphic directory of the
+    CAAProductStructure.edu framework.
+  <li><b>CAAPstINFInterfaces.m</b> - This module contains the interface IID's
+    and TIE's necessary for the three new interfaces created to manage the new
+    feature's data access: <i>CAAIPstINFPoint</i>, <i>CAAIPstINFLine,
+    CAAIPstINFWire</i> and <i>CAAIPstINFRoot</i>. The interface header files can
+    be found in the ProtectedInterfaces file of the CAAProductStructure.edu
+    framework.
+  <li><b>CAAPstINFCommands.m</b> - This module contains the necessary
+    implementations of the <i>CATICSOFilter </i>(manages the options available
+    in the contextual menu), <i>CATIEdit </i>(manages the editing capabilities
+    of a feature) and <i>CATIModelEvents </i>(manages sending notifications in
+    order to refresh visualization)<i> </i>interfaces and manages the edit
+    dialog box in the following source files:
+    <ul>
+      <li>CAAEPstINFCSOLine.cpp</li>
+      <li>CAAEPstINFCSOPoint.cpp</li>
+      <li>CAAEPstINFCSORoot.cpp</li>
+      <li>CAAEPstINFEditPoint.cpp</li>
+      <li>CAAEPstINFModelEvents.cpp</li>
+      <li>CAAPstINFEditCmdPoint.cpp</li>
+      <li>CAAPstINFEditDlgPoint.cpp</li>
+    </ul>
+  <li><b>CAAPstINFModeler.m </b>- This module contains the necessary
+    implementations of the <i>CATIBuild </i>(manages the build operation called
+    during the update of the line), <i>CATICutAndPastable</i> (manages CCP
+    operations on the new features), <i>CATInit</i> (initialization procedure of
+    the new applicative container), <i>LifeCycleObject</i> (manages the delete
+    of new features), <i>CAAIPstINFLine</i> (manages the data access of new line
+    features), <i>CAAIPstINFPoint</i> (manages the data access of new point
+    features), <i>CAAIPstINFWire</i> (manages the data access of new wire
+    features), <i>CAAIPstINFRoot</i> (manages the data access of new root
+    features), <i>CATINavigateObject</i> (manages the navigation of the root
+    node), <i>CATI3DGeoVisu</i> (manages the visualization of the new features),
+    <i>CATINavigProvider</i> (manages the integration of the feature root node
+    under the product root), <i>CATI3DVisuProvider</i> (manages the integration
+    of the new features in the visualization process), <i>CATIUpdateProvider</i>
+    (integrates the new features in the update process) in the following source
+    files:
+    <ul>
+      <li>CAAEPstINFBuild.cpp</li>
+      <li>CAAEPstINFCCPFeature.cpp</li>
+      <li>CAAEPstINFCCPRoot.cpp</li>
+      <li>CAAEPstINFInitCont.cpp</li>
+      <li>CAAEPstINFLCO.cpp</li>
+      <li>CAAEPstINFLine.cpp</li>
+      <li>CAAEPstINFPoint.cpp</li>
+      <li>CAAEPstINFRoot.cpp</li>
+      <li>CAAEPstINFNavigateObjectRoot.cpp</li>
+      <li>CAAEPstINFVisuLine.cpp</li>
+      <li>CAAEPstINFVisuPoint.cpp</li>
+      <li>CAAEPstINFVisuRoot.cpp</li>
+      <li>CAAEPstINFVisuWire.cpp</li>
+      <li>CAAEPstINFWire.cpp</li>
+      <li>CAAPstINFNavigProviderRoot.cpp</li>
+      <li>CAAPstINFUpdateProviderLine.cpp</li>
+      <li>CAAPstINFVisuProviderRoot.cpp</li>
+    </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="StepByStep"></a>Step-by-Step</h3>
+<p>You can now successively get to:</p>
+<ul>
+  <li><a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features in a
+    Product Structure</a></li>
+  <li><a href="CAAPstINFCreateDocument.htm">Creating New Features &quot;From
+    Scratch&quot; in a Product Document</a></li>
+	<li><a href="CAAPstINFInitCont.htm">Initializing the Applicative Container at
+    Runtime</a></li>
+	<li><a href="CAAPstINFNavigate.htm">Enabling the Navigation of New Features in
+    a Product Document</a></li>
+	<li>Enabling the Visualization of New Features in a Product Document</li>
+	<li><a href="CAAPstINFGraphicalProperties.htm">Setting Graphical Properties</a></li>
+	<li>Enabling New Features in a Product Document to be Edited</li>
+	<li><a href="CAAPstINFCCP.htm">Enabling Cut, Copy and Paste Operations on New
+    Features in a Product Document</a></li>
+	<li><a href="CAAPstINFDelete.htm">Enabling New Features in a Product Document
+    to be Deleted</a></li>
+	<li><a href="CAAPstINFUpdate.htm">Enabling New Features in a Product Document
+    to be Updated</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAPstIntegratingNewFeatures use case has shown you how to create new
+features &quot;from scratch&quot; and how to integrate them in a product
+structure and enable them to have certain basic V5 behavioral capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td>
+      <a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td><a href="../CAAPstTechArticles/CAAPstModel.htm">The Product
+        Structure Model</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td><a href="CAAPstProviders.htm">Using the Provider Mechanism</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+        and Launching a CAA V5 Use Case</a></td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [May 2002]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

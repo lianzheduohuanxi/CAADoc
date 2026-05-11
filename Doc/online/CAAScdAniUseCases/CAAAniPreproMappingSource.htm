@@ -1,0 +1,155 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniPreproMapping.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE STYLE="margin-top: 0; margin-bottom: 0">Language=&quot;VBSCRIPT&quot;
+<FONT COLOR="#008000">&#39; COPYRIGTH DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">&#39; ***********************************************************************</FONT>
+<FONT COLOR="#008000">&#39;   Purpose:      Create a New Analysis document.</FONT>
+<FONT COLOR="#008000">&#39;                 Import on a CATPart document with some publication defined </FONT>
+<FONT COLOR="#008000">&#39;                 Define all preprocessing data based on publications</FONT>
+<FONT COLOR="#008000">&#39;                 Define a surfacique force with variable data (use mapping capability)</FONT>
+<FONT COLOR="#008000">&#39;                 Launch the Computation.</FONT>
+<FONT COLOR="#008000">&#39;                 Create a AnalysisSensor and display its values</FONT>
+<FONT COLOR="#008000">&#39;   Assumtions:   Looks for SimpleChrank.CATPart stored in the DocView   </FONT>
+<FONT COLOR="#008000">&#39;   Author: </FONT>
+<FONT COLOR="#008000">&#39;   Languages:    VBScript</FONT>
+<FONT COLOR="#008000">&#39;   Locales:      English </FONT>
+<FONT COLOR="#008000">&#39;   CATIA Level:  V5R13</FONT>
+<FONT COLOR="#008000">&#39; ***********************************************************************</FONT>
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+<FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</FONT>
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Get the collection of documents in session</FONT>
+<FONT COLOR="#0000FF">    Set </FONT>documents1 = CATIA.Documents
+
+<FONT COLOR="#008000">&#39; Only one Analysis Document is required</FONT>
+<FONT COLOR="#008000">&#39; Create the CATAnalysis Document </FONT>
+<FONT COLOR="#0000FF">    Set </FONT>TheAnalysisDocument = documents1.Add(&quot;Analysis&quot;)
+
+<FONT COLOR="#008000">&#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench</FONT>
+    WBName = CATIA.GetWorkbenchId
+<FONT COLOR="#0000FF">    if </FONT>(WBName &lt;&gt; &quot;GPSCfg&quot;) Then
+	CATIA.StartWorkbench(&quot;GPSCfg&quot;)
+<FONT COLOR="#0000FF">    End If</FONT>
+ 
+<FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager</FONT>
+<FONT COLOR="#008000">&#39; and link the analysis to a Part Document</FONT></PRE>
+<PRE STYLE="margin-top: 0; margin-bottom: 0"><FONT COLOR="#008000">&#39; We call the Import on CATAnalysisImport which implements CATISamImportDefine</FONT>
+    
+<FONT COLOR="#0000FF">    Set </FONT>analysisManager1 = TheAnalysisDocument.Analysis</PRE>
+<PRE STYLE="margin-top: 0; margin-bottom: 0">    Dim arrayOfVariantOfShort1(0)
+    analysisManager1.ImportDefineFile (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep  &amp; &quot;SimpleChrank.CATPart&quot;),</PRE>
+<PRE STYLE="margin-top: 0; margin-bottom: 0">				       &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Reframe All.</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>specsAndGeomWindow1 = CATIA.ActiveWindow
+<FONT COLOR="#0000FF">  Set </FONT>viewer3D1 = specsAndGeomWindow1.ActiveViewer
+  viewer3D1.Reframe 
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing</FONT>
+<FONT COLOR="#0000FF">    Set </FONT>analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+    CATIA.SystemService.Print analysisLinkedDocuments1.Name
+
+<FONT COLOR="#0000FF">   If </FONT>(analysisLinkedDocuments1.Count &lt;&gt; 1 )<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;NbDoc Lié NE 1&quot;
+<FONT COLOR="#0000FF">   End If</FONT>
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Retrieve the CATPart Document and associated publications for preprocessing.</FONT>
+<FONT COLOR="#0000FF">   Set </FONT>TheDoc = analysisLinkedDocuments1.Item(1)
+   CATIA.SystemService.Print TheDoc.FullName
+
+<FONT COLOR="#0000FF">   Set </FONT>product1 = TheDoc.Product
+<FONT COLOR="#0000FF">   Set </FONT>publications1 = product1.Publications
+<FONT COLOR="#0000FF">   Set </FONT>publication1 = publications1.Item(&quot;ClampFace&quot;)
+<FONT COLOR="#0000FF">   Set </FONT>publication2 = publications1.Item(&quot;MappingFace&quot;)
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create a Static Case in the current analysis model.</FONT>
+<FONT COLOR="#0000FF">   Set </FONT>analysisModels1 = analysisManager1.AnalysisModels
+<FONT COLOR="#0000FF">   Set </FONT>analysisModel1 = analysisModels1.Item(1)
+
+<FONT COLOR="#0000FF">   Set </FONT>analysisCases1 = analysisModel1.AnalysisCases
+<FONT COLOR="#0000FF">   Set </FONT>analysisCase1 = analysisCases1.Add()
+<FONT COLOR="#0000FF">   Set </FONT>analysisSets1 = analysisCase1.AnalysisSets
+
+<FONT COLOR="#0000FF">   Set </FONT>analysisSet1 = analysisSets1.Add(&quot;RestraintSet&quot;, catAnalysisSetIn)
+<FONT COLOR="#0000FF">   Set </FONT>analysisSet2 = analysisSets1.Add(&quot;LoadSet&quot;, catAnalysisSetIn)
+<FONT COLOR="#0000FF">   Set </FONT>analysisSet3 = analysisCase1.AddSolution(&quot;StaticSet&quot;)
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create clamp boundary and apply to the publication called ClampFace</FONT>
+
+<FONT COLOR="#0000FF">   Set </FONT>analysisEntities1 = analysisSet1.AnalysisEntities
+<FONT COLOR="#0000FF">   Set </FONT>analysisEntity1 = analysisEntities1.Add(&quot;SAMClamp&quot;)
+   analysisEntity1.AddSupportFromPublication product1, publication1
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create Surfacic Force and apply to the publication called MappingFace</FONT>
+
+<FONT COLOR="#0000FF">   Set </FONT>analysisEntities2 = analysisSet2.AnalysisEntities
+<FONT COLOR="#0000FF">   Set </FONT>analysisEntity3 = analysisEntities2.Add(&quot;SAMSurfacicForce&quot;)
+
+   analysisEntity3.AddSupportFromPublication product1, publication2
+
+<FONT COLOR="#0000FF">   Set </FONT>basicComponents1 = analysisEntity3.BasicComponents
+
+<FONT COLOR="#008000">&#39; No Local Axis is defined</FONT>
+<FONT COLOR="#0000FF">   Set </FONT>basicComponent1 = basicComponents1.GetItem(&quot;SAMSurfacicForceAxis.1&quot;)
+   basicComponent1.SetValue &quot;&quot;, 0, 0, 0, 1
+
+<FONT COLOR="#008000">&#39; Valuate the vector.</FONT>
+<FONT COLOR="#0000FF">   Set </FONT>basicComponent2 = basicComponents1.GetItem(&quot;SAMSurfacicForceVector.1&quot;)
+   basicComponent2.SetValue &quot;Values&quot;, 1, 1, 1, 0.000000
+   basicComponent2.SetValue &quot;Values&quot;, 2, 1, 1, -1000000.000000
+   basicComponent2.SetValue &quot;Values&quot;, 3, 1, 1, 0.000000
+
+<FONT COLOR="#008000">&#39; Create a Design Table for the mapping file and valuate the basic component</FONT>
+<FONT COLOR="#0000FF">   Set </FONT>basicComponent3 = basicComponents1.GetItem(&quot;SAMDTPtrSurfForce&quot;)
+<FONT COLOR="#0000FF">   Set </FONT>designTable1 = analysisManager1.Relations.CreateDesignTable(&quot;&quot;, &quot;&quot;, False, sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot; &amp; sSep &amp; &quot;samples&quot; &amp; sSep  &amp; &quot;MappingForCrank.txt&quot;)
+   basicComponent3.SetValue &quot;&quot;, 0, 0, 0, designTable1
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Launch Computation.</FONT>
+  analysisCase1.Compute
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Define a global sensor measuring the maximum value of VonMises criterion.</FONT>
+
+<FONT COLOR="#0000FF">  Set </FONT>dimension1 = analysisManager1.Parameters.CreateDimension(&quot;Maximum value of VonMises criterion&quot;, &quot;PRESSURE&quot;, 0.000000)
+<FONT COLOR="#0000FF">  Set </FONT>formula1 = analysisManager1.Relations.CreateFormula(&quot;Maximum value of VonMises criterion&quot;,&quot;&quot;,dimension1,&quot;misesmax(`Finite Element Model.1\Static Case Solution.1` ) &quot;)
+  CATIA.SystemService.Print &quot; Mises Max Computed &quot; &amp; dimension1.ValueAsString
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+  viewer3D1.Reframe 
+
+<FONT COLOR="#008000">&#39;------------------------------- END   END   END   ----------------------------</FONT>
+  CATIA.DisplayFileAlerts = False
+<FONT COLOR="#008000">&#39;  TheAnalysisDocument.Close</FONT>
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

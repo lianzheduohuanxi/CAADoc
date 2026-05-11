@@ -1,0 +1,247 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving the Part Version to which Input Document Revision Is Linked</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Light Navigation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving the Part Version to which Input Document Revision Is Linked</h3>
+      <p><em>Navigating on Representation/Documentation links</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case:CAALightWhereUsedPartsLight</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAALightWhereUsedPartsLight use case. This
+      use case explains how to use CATIVpmLightNavigationServices::whereUsedParts_Light
+	  API to retrieve the Part Version to which input Document Revision is attached.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAALightWhereUsedPartsLight Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAALightWhereUsedPartsLight Do</a></li>
+            <li><a href="#How">How to Launch CAALightWhereUsedPartsLight</a></li>
+            <li><a href="#Where">Where to Find the CAALightWhereUsedPartsLight Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to use the service "whereUsedParts_Light" exposed in CATIVpmLightNavigationServices Public Interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALightWhereUsedPartsLight Use Case</h3>
+<p>CAALightWhereUsedPartsLight is a use case of the CAAVPMPersistency.edu
+framework that illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALightWhereUsedPartsLight Do</h4>
+<p>The goal of CAALightWhereUsedPartsLight case is to show how to use CATIVpmLightNavigationServices::whereUsedParts_Light Service
+to retrieve the Part Version to which Input Document Revision is linked. This is to inverse navigation on representation and documentation link, to retrieve a list of Part Version from a list of Document revision. The navigation will be done on Representation AND Documentation links only.:</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALightWhereUsedPartsLight</h4>
+<p>To launch CAALightWhereUsedPartsLight, you will need to set up the build time
+environment, then compile CAALightWhereUsedPartsLight along with its
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<p> CAALightWhereUsedPartsLight utility requires following argument in same order:</p>
+<ul>
+  <li>&lt;user&gt;                 : The user ID of a Admin user to run the utility.</li>
+  <li>&lt;Password&gt;             : Password for the Admin User.</li>
+  <li>&lt;Role&gt;	              : This must be a ADMIN Role. i.e. VPMADMIN.ADMIN.DEFAULT</li>
+  <li>&lt;V_ID OF Document &gt;	  : V_ID Of Document Revision to know where this DR is attached.</li>
+  <li>&lt;Revision String &gt;	  : Revision string of the document.</li>
+  <li>&lt;Document Criteria &gt;	  : Document Criteria from [Documentation/Representation]. Documentation to traverse on documentation links and Representation to 
+  traverse on Representation links.</li>
+</ul>
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAALightWhereUsedPartsLight &lt;user&gt; &lt;Password&gt; &lt;Role&gt; &lt;V_ID of Doc&gt; &lt;Revision String&gt; &lt;Document Criteria [Documentation/Representation]&gt;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAALightWhereUsedPartsLight &lt;user&gt; &lt;Password&gt; &lt;Role&gt; &lt;V_ID of Doc&gt; &lt;Revision String&gt; &lt;Document Criteria [Documentation/Representation}&gt;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALightWhereUsedPartsLight Code</h4>
+<p>The CAALightWhereUsedPartsLight use case is made of a single class named
+CAALightWhereUsedPartsLight located in the CAALightWhereUsedPartsLight.m module of
+the CAAVPMPersistency.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMPersistency.edu\CAALightWhereUsedPartsLight.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMPersistency.edu/CAALightWhereUsedPartsLight.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>Following are the main steps in CAALightWhereUsedPartsLight Code:</p>
+<ol>
+  <li><a href="#Prerequisite">Prerequisite</a></li>
+  <li><a href="#Step2">Open Enovia session</a></li>
+  <li><a href="#Step3">Get the UUID of Input Document Revision</a></li>
+  <li><a href="#Step4">Call the CATIVpmLightNavigationServices::whereUsedParts_Light to get the Parts from Documents)</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prerequisite"></a>Prerequisite</h4>
+<p>To run and test this utility we must have created one Part Version and a document revision attached to it on representation link.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Open Enovia session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//--Get Session
+  VPMSession* session = VPMSession::<b>OpenSession</b>();
+	 
+//--Get FactoryManager
+  CATIVpmFactoryManager_var FactoManager = NULL_var;
+  session-&gt;<b>GetVPMObjectFactory</b>(FactoManager);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Factory manager is retrieved from the session to further get the pointer of CATIVpmLightQueryManager interface to run the light query to get the UUID 
+of input document revision and also to get the pointer of CATIVpmLightNavigationServices interface to call whereUsedParts_Light service.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Get the UUID of Input Document Revision</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+
+//- Get CATIVpmLightQueryManager pointer.
+	CATIVpmLightQueryManager_var LightQueryManager( spTheFactory );
+
+//- Execute query and get the Light Query result.
+	LightQueryManager-&gt;RunLightQuery( Query, SelectClause, SortAttr, TypeOfQuery, oQueryResult );
+
+//- Query the CATIVPMLightNavigation Interface from pointer.
+	spTheFactory-&gt;QueryInterface(IID_CATIVpmLightNavigationServices, (void**)&amp; navPTR)) &amp;&amp; navPTR);
+
+//- Get the UUID of in Put Document Revision
+	navPTR-&gt;GetUUIDFromObjectIdentity( 
+
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>For more information on how to use light query please refer the documentation on CATIVpmLightQueryManager and ENOVLightQueryResult. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Call the CATIVpmLightNavigationServices::whereUsedParts_Light to get the Parts from Documents</h4>
+<p>The input and output parameters for whereUsedParts_Light are as below:</p>
+<ul>
+  <li>iListofDRUUID        : Input list of DR UUIDs in _SEQUENCE_octet.</li>
+  <li>iSelectClause        : Select clause to get the attributes of Part Version.</li>
+  <li>iDocCriteria         : Input document criteria in DocumentCriteria enum.[LEX_Documentation/LEX_Representation]</li>
+  <li>oLightObjects        : Output in format of light expand Objects.</li>
+ </ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	
+	navPTR-&gt;whereUsedParts_Light(iListOFDRUUIDs,iSelectClause,iDocCriteria,oLightObjects);
+
+...	</pre>
+    </td>
+  </tr>
+</table>
+<p> For more information on Select Clause Please refer the Documentation Light query.</p>
+<p> For more information on LightExpandObject Please refer documentation on CATIVpmLightExpandObject interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated How to navigate on documentation/Representation link in inverse direction to get the PV where document is attached.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2013]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+
+

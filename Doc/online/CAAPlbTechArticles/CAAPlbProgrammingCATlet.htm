@@ -1,0 +1,334 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATlets in the Portal</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATlets in the Portal</h3>
+      <em>The CATlet MVC paradigm and its development</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <p>This article presents the CATlet architecture and development.
+      <ul>
+        <li><a href="#What"><strong>What Is a CATlet</strong></a></li>
+        <li><a href="#Concept"><strong>CATlet Concepts and Basic Processes</strong></a>
+          <ul>
+            <li><a href="#Reusable">Making Components Reusable: the Java-Beans
+              Component Model</a></li>
+            <li><a href="#Inside">Inside a CATlet: The Beanified
+              Model-View-Controller</a></li>
+          </ul>
+        </li>
+        <li><a href="#ComCATlets"><strong>Communication between CATlets: the
+          Hookup Mechanisms</strong></a></li>
+        <li><a href="#ComDesktop"><strong>Communication with the Portal Desktop</strong></a></li>
+        <li><a href="#LifeCycle"><strong>CATlet Life Cycle</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="What"></a>What Is a CATlet</h3>
+<p>Basically a CATlet can be assimilated to a Java Bean but it is a more than a
+Java Bean in the way it is designed to fit inside the Portal and as such has
+built-in functionalities to enhance this integration. But don't mess with this:
+we didn't say a CATlet can only exist inside the Portal. As a standard Java Bean
+a CATlet can be instantiated anywhere outside the Portal and any Java Bean can
+be instantiated inside the Portal (but with a degraded integration).
+<p>A CATlet is a graphical container and is built around the
+model-view-controller paradigm (named MVC afterward). The CATlet is itself the
+controller of the whole component and aggregates its views and models. A CATlet
+can have many views and models but most of the time it has only one for each. Be
+careful that we use the term CATlet to represent two things: the whole component
+(Model View and Controller) as well as the controller itself. This may be
+confusing but in fact they represent quite the same thing: The CATlet is the
+graphical controller component added inside the Portal and it is the only part
+of the MVC, visible from outside.<br>
+All the intelligence of the MVC component is located in the CATlet (the
+Controller). The model is meant to store the data of this component and the view
+to display whole or part of these data. Model and view are instantiated by the
+CATlet. They should not know (i.e. no reference) each other or the CATlet that
+created them. This way you strongly reduce the tight between components and
+views or models can be reused in other contexts.<br>
+Now, these three components (model, view and controller) have to communicate
+which each others. As the CATlet knows (i.e. has a reference) the model and the
+view, the CATlet communicates with the model and the view via method calls. As
+the model knows neither the view nor the CATlet it can only communicate with
+them by sending events, subscription being through the CATlet. For the view it
+is the same kind of communication as for the model with the difference that
+usually the view doesn't have to directly communicate with the model.<br>
+The communication flow between these components is as follow:
+<ul>
+  <li>a user interaction occurs in the view, it is analyzed by the view and and
+    the view warns the CATlet with an event that something happened
+  <li>the CATlet analyzes the view's event and edits the model with direct
+    function calls.</li>
+  <li>as the model is edited, it fires events to warn that its data have changed</li>
+  <li>these event are received by the view that update its representation
+    accordingly</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Concept"></a>CATlet Concepts and Basic Processes</h3>
+<p align="center"><img border="1" src="images/CATletsCom.gif" nosavewidth= "689"height= "368"> </p>
+<p>Main statements from this schema are that</p>
+<ul>
+  <li>CATlets are independant component based on the model of java-beans and the
+    model-view-controller structure</li>
+  <li>As independant java-beans, CATlet can communicate with each other and with
+    their container through different services like the CommonSupport or the
+    Hookup for events publication.</li>
+</ul>
+<p>To program a CATlet, a programmer needs to write the client
+model-view-controller of its CATlet (using base classes delivered by the
+infrastructure), write the communication classes (event listener and publisher).
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Reusable"></a>Making Components Reusable: the Java-Beans Component
+Model</h4>
+<p>A java-bean is a elementary Java component allowing to users to build other
+components. Each CATlet is also a java-bean and is itself made of other
+java-beans.</p>
+<p>To be considered as a java-bean, a component must follow the Java Bean design
+patterns. These design patterns describe mainly how to define your object
+methods, its events and properties. Following this design pattern make a lot
+easier communication and connection between beans as well a configuration of
+your object at runtime. Please refer to the JavaBean specification document for
+more detail about this design pattern.
+<p>An important property of the java-beans event model is that to communicate,
+beans don't have to know each other at build time. This way, beans can be
+completely independent, providing the following benefits :
+<ul>
+  <li>communication between beans is standardized and easy to do : it helps
+    understand existing code, as well as designing and implementing new code</li>
+  <li>as beans contain no reference to other beans, they are independent and
+    reusable in any environment welcoming beans</li>
+  <li>thanks to the java-beans introspection mechanism, a bean can easily
+    describes its interface at runtime, allowing it to be used in visual
+    builders.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Inside"></a>Inside a CATlet: The beanified Model-View-Controller</h4>
+<h5>Description and benefits</h5>
+<p>A CATlet is basically made of three kind of elements:</p>
+<ul>
+  <li>the model, which basically contains data, editors on these data.</li>
+  <li>the view which basically displays the data contained inside the model and
+    processes user interactions.</li>
+  <li>the controller which basically interprets the user interaction processed
+    by the view and edits the model.</li>
+</ul>
+<p>The beanified MVC protocol describes precisely the events and properties
+flows between the model, view and controller. The benefits of this protocol are:</p>
+<ul>
+  <li>this protocol can be repeated over and over in a CATlet design : this help
+    for the design.</li>
+  <li>the infrastructure provides base classes to implement this protocol : this
+    help for the implementation</li>
+  <li>this protocol allows to attach more than one view to the same model</li>
+  <li>this protocol allows to attach more than one model to the same view</li>
+  <li>this protocol allows to create new views and attach them to an already</li>
+  existing model without modifying it (if the model can provide its data in the
+  right flavor)
+</ul>
+<b>So you need to design and implement CATlet as beanified MVC components.</b>
+<h5>Basic process</h5>
+This describes how to program a beanified MVC to make a CATlet.
+<p>The controller must extend one of these classes CATlet or JCATlet (AWT or
+Swing implentation of the ICAtlet interface) from the package
+com.dassault_systemes.catweb.base.catlet. Within it you need to:</p>
+<ul>
+  <li>manage the communication with other CATlets (see Communicating with other
+    CATlets)</li>
+  <li>implement the CATlet abstract methods to allow the Portal to communicate
+    with your CATlet and manage its life cycle (see Communicating with the
+    Portal and the CATlet life Cycle)</li>
+  <li>create the views and models components. The controller is the only entity
+    to have and keep a reference on its models and views</li>
+  <li>as the CATlet is also a graphical container, handle the layout of its
+    views (which have been previously added inside the CATlet)</li>
+  <li>make the views subscribe to events fired by the models, at least
+    PropertyChangeEvent but also ItemEvent or other model custom events</li>
+  <li>subscribe the controller to events fired by the views</li>
+  <li>edit and query the models</li>
+</ul>
+<p>The model must extend the class Model (from package
+com.dassault_systemes.catweb.base.catlet.model). Within it you need to:</p>
+<ul>
+  <li>store and retrieve data and warn by firing a PropertyChangeEvent each time
+    the data have been changed</li>
+  <li>provide edit and query methods on these data</li>
+  <li>handle the selection of these data and warn by firing an ItemEvent each
+    time the selection content has changed</li>
+</ul>
+<p>The view must implement the interface ViewInterface (from package
+com.dassault_systemes.catweb.base.catlet.view). Within it you need to</p>
+<ul>
+  <li>create the user interface objects</li>
+  <li>upon reception of a PropertyChangeEvent which source is a model, retrieve
+    data from this model and display them</li>
+  <li>subscribe to low level interaction events from the user interface objects</li>
+  <li>transform this low level events in high level events to re-dispatch them
+    to the controller.</li>
+</ul>
+<h5>Communication flow at runtime</h5>
+<p>The following diagram shows the different kind of communication that exist
+between the models, views and controller :</p>
+<p align="center"><img border="1" src="images/CATletCom.gif" nosavewidth= "390"height= "305"> </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="ComCATlets"></a>Communication between CATlets: the Hookup Mechanism</h3>
+<h5>Description and benefits</h5>
+<p>The Hookup is a component delivered in the CATlet infrastructure that allows
+you to make your CATlet communicating with each other without knowing
+themselves.</p>
+<p>The Hookup uses a publish-subscribe mechanism based on the java-beans events
+model. When a CATlet is interested in listening some events, it must get a
+reference on an object which fires these events to subscribe on it. When you
+don't have a reference on such object, just tell the Hookup that you are
+interesting in listening some particular events (this is called subscribing). On
+the other side, when you may fire events, tell the Hookup that you can fire
+these king of events (this is called publishing). This way, when the Hookup has
+a subscriber interested in listening events that one of its publishers fire, it
+will act as a third party and make this subscriber subscribes to this publisher
+(as defined in the java-beans event model). Up to this point, both beans are
+connected and when the publisher fires an event, the subscriber is notified on
+the corresponding listener interface (as defined in the java-beans event model).</p>
+<p>At no moment the publisher had a reference on the subscriber nor the
+subscriber had a reference on the publisher. The drawback of this mechanism is
+that you can't control to which CATlet you fire your events, except if the
+events you fire contains additional information that will let the subscriber
+filter the received events.</p>
+<p>An other mechanism provided by the Hookup is the notion of persistent events.
+If a publisher has fired an event and decided that this event will be
+persistent, each time a new subscriber declares itself as being interested in
+this kind of events, it will automatically receive this event.</p>
+<h5>Basic process</h5>
+<p>This describes briefly how to publish and subscribe</p>
+<ul>
+  <li>a publishing CATlet must have a BeanInfo class describing all the events
+    it may fire</li>
+  <li>for each XXX event the CATlet may fire, it must implement a addXXXListener
+    and removeXXXListener methods for the matching XXXListener interface</li>
+  <li>the subscribing CATlet must implement the XXXListener interface that
+    contains the methods on which this listener will be called back when the
+    event is fired.</li>
+  <li>when needed, the publishing CATlet must inform the Hookup that it may fire
+    the events described in its BeanInfo class. At any time this publisher may
+    also inform the Hookup that it no more wants to publish its events.</li>
+  <li>when needed, the subscribing CATlet must inform the Hookup that it is
+    interested in some kind of event. At any time this subscriber may also
+    inform the Hookup that it is no more interested in receiving this event.
+  <li>when needed, a publisher may inform the Hookup that it wants to made this
+    event persistent.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="ComDesktop"></a>Communication with the Portal Desktop</h3>
+<p>In order to benefit from services of the environment it lives in, the CATlet
+may communicate with it. Even if the CATlet's main and dedicated environment is
+the Portal desktop, it may have others environment it doesn't know.&nbsp; This
+is why all the requests are processed to the CommonSupport which redirects them
+to interfaces which implementation differ from the environment. The requests
+this CommonSupport object support are:</p>
+<ul>
+  <li>send various messages to display (errors, warnings, infos)</li>
+  <li>show and hide waiting cursors for all CATlets</li>
+  <li>query if the current mode is application or applet</li>
+  <li>make the environment create and start a CATlet by its name</li>
+  <li>display the properties of a CATlet</li>
+  <li>display an URL</li>
+</ul>
+<p>As the environment in which the CATlets live may change, some of these
+requests may be processed or not depending on the capabilities of the
+environment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="LifeCycle"></a>The CATlet Life Cycle</h3>
+<p>The CATlet life cycle is the following one:</p>
+<img border="1" src="images/CATletLifeCycle.gif" nosavewidth= "631"height= "142"> 
+<p>At each state of this life cycle, the CATlet may take special action:
+<ul>
+  <li>creation : the CATlet initialize itself. At this time, the CATlet is not
+    already added in its environment (the Portal desktop for example)</li>
+  <li>start : the CATlet is now added in its environment. This is in this state
+    that the models and views are usually created. Events subscription and
+    publishing may also take place here.</li>
+  <li>activation : the CATlet has been activated by the end user and is now
+    ready to receive user interaction.</li>
+  <li>deactivation : the CATlet has been deactivated by the end user and does
+    not receive user interaction any more.</li>
+  <li>stop : the CATlet is about to removed from its environment. Events
+    un-subscription and un-publishing usually take place here. Persistent data
+    may also be saved here.</li>
+  <li>cleanup : the CATlet is about to be destroyed. The CATlet must clean up
+    itself to ease the task of the garbage collector.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPlbDeclareCATletInPortal.htm">Declare a CATlet in the Portal</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAPlbProgrammingCommand.htm">Programming Command</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

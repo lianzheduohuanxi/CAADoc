@@ -1,0 +1,395 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Workshop for a CATlet</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Workshop for a CATlet</h3>
+      <em>The declaration of commands of a CATlet in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article presents the Workshop structure and how to associate
+      Commands to a CATlet in the Portal.
+      <ul>
+        <li><a href="#Overview"><strong>The Workshop Overview</strong></a>
+        <li><a href="#Content"><strong>The Information Content in a Workshop</strong></a>
+        <li><a href="#WorkshopFile"><strong>The Workshop File Structure</strong></a>
+        <li><a href="#CATletWorkshop"><strong>Associating a Workshop file with a
+          CATlet</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Overview"></a>The Workshop Overview</h3>
+<p>The Workshop is a command organizer associated to a CATlet. Commands of a
+CATlet can appear in many places like in a toolbar, a contextual menu or a menu
+bar. They can also be grouped in different categories. All this is described in
+a Workshop description file which will be represented at runtime by a Workshop
+object. The Workshop object is a sort of hierarchical representation of the way
+the Commands are placed inside the CATlet.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Content"></a>The Information Content in a Workshop</h3>
+<p>The Workshop describes all the commands of a CATlet, their graphical
+representations, and their location (menu bar, toolbar or contextual menu) in
+the CATlet.</p>
+<p>Each command is described by its class name, its associated Command Header,
+its icon representation (for toolbar) and its container location (See how to
+program command and headers in the Portal [<a href="#References">1</a>]). A
+command can be added in 6 different containers which are the Menu bar, the
+(right, left, top and bottom) toolbar, and the contextual menu. Each container
+of command is described as a list of command and sub command container.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="WorkshopFile"></a>The Workshop File Structure</h3>
+<p>The Workshop description file is a java properties file structured by
+predefined keywords and made of three master parts. The first part is a short
+description of the Workshop which contains the identity name , the title, the
+internationalization file, the pointers to each containers and the default
+command of the Workshop. The second part is a description of each command with
+their associated header, icons, and their representation class. The third part
+is the chained description of each command container.
+<p><b>The header Description of the Workshop:</b></p>
+<table width="100%">
+  <tr>
+    <td valign="top"><b>CATWorkshop</b></td>
+    <td valign="top">The id of the Workshop which will be used in the file
+      (mandatory)</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Title</b></td>
+    <td valign="top">The NLS name of the Workshop (mandatory)</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>ResourceFile</b></td>
+    <td valign="top">The internationalization file which will be used by the
+      Workshop</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>TopToolbar</b></td>
+    <td valign="top">The top toolbar container displayed at the north of the
+      CATlet.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>BottomToolbar</b></td>
+    <td valign="top">The bottom toolbar container displayed at the south of the
+      CATlet.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>LeftToolbar</b></td>
+    <td valign="top">The left toolbar container displayed at the west of the
+      CATlet</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>RightToolbar</b></td>
+    <td valign="top">The right toolbar container displayed at the east of the
+      CATlet</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Menubar</b></td>
+    <td valign="top">The menu bar container displayed at the north of the CATlet</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>ContextualMenu</b></td>
+    <td valign="top">The contextual menu container</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>DefaultHeader</b></td>
+    <td valign="top">The default command to start.</td>
+  </tr>
+</table>
+<p>A sample of header workshop:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CATWorkshop</b>=CAAWorkshop
+CAAWorkshop.<b>Title</b>=MyCAACATlet
+CAAWorkshop.<b>ResourceFile</b>=basewidgets
+CAAWorkshop.<b>BottomToolbar</b>=BottomBar
+CAAWorkshop.<b>RightToolbar</b>=RightBar
+CAAWorkshop.<b>ContextualMenu</b>=CtxMenu
+CAAWorkshop.<b>DefaultHeader</b>=HeaderSelect</pre>
+    </td>
+  </tr>
+</table>
+<p><b>The Command Header Description for a Command</b></p>
+<table width="100%">
+  <tr>
+    <td valign="top"><b>CommandClass</b></td>
+    <td valign="top">The class name of the command (mandatory)</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Classname</b></td>
+    <td valign="top">The class name of the specific header associated to this
+      command</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>UserArgument</b></td>
+    <td valign="top">A string argument set to the header which can be called by
+      the command class</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Icon</b></td>
+    <td valign="top">The file name of the icon associated to the command (which
+      overrides the icon returned by the Command BeanInfo)</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>IconFocus</b></td>
+    <td valign="top">The file name of the icon associated to the command when
+      its representation has the focus</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>IsVisible</b></td>
+    <td valign="top">The state visibility of the command. If not specified, the
+      command is visible.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>ToolbarRepClass</b></td>
+    <td valign="top">The class name of the specific representation in a toolbar
+      (the default is a round image button)</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>MenuRepClass</b></td>
+    <td valign="top">The class name of the specific representation in a menu bar</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>CtxMenuRepClass</b></td>
+    <td valign="top">The class name of the specific representation in a
+      contextual menu</td>
+  </tr>
+</table>
+<p>A sample of command description in a Workshop file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Headerxx.<b>CommandClass</b>=com.dassault_systemes.catweb.base.catlet.command.PropertiesCommand
+Headerxx.<b>Icon</b>=Resources/I_OptionsCATlet.gif
+Headerxx.<b>IconFocus</b>=Resources/IF_OptionsCATlet.gif</pre>
+    </td>
+  </tr>
+</table>
+<p><b>The Description of the Chained Command Representation Container</b></p>
+<p>A container of command is made of sub containers and commands.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><b>Type</b></td>
+      <td valign="top">The type of the object : container, separator or command.
+        Possible values are <i>CmdContainer</i>, <i>CmdStarter</i> and <i>CmdSeparator</i>
+        (mandatory)</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Title</b></td>
+      <td valign="top">The NLS name of the container (mandatory)</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Child</b></td>
+      <td valign="top">The pointer to the first sub container. Used for
+        container type only</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Next</b></td>
+      <td valign="top">The pointer to the next container</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Header</b></td>
+      <td valign="top">The pointer to the command header description (described
+        in part 2). Used for command type only</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>Accelerator</b></td>
+      <td valign="top">The accelerator keys for invoking the command. Used for
+        command type only.<br>
+        The accelerator key is described by the modifier name (control, shift,
+        ..) followed by the name of the key in KeyEvent without &quot;VK_&quot;
+        ( X, DELETE, ...)</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>ToolbarRepClass</b></td>
+      <td valign="top">The class name of the specific representation of the
+        toolbar. Used for container and separator type</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>MenuRepClass</b></td>
+      <td valign="top">The class name of the specific representation of the a
+        menu bar. Used for container and separator type</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>CtxMenuRepClass</b></td>
+      <td valign="top">The class name of the specific representation of the
+        contextual menu. Used for container and separator type</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>PlaceBeforeMenu</b></td>
+      <td valign="top">The name of the menu that will be displayed after the
+        current one. Used for container type only</td>
+    </tr>
+    <tr>
+      <td valign="top"><b>PlaceBeforeItem</b></td>
+      <td valign="top">The name of the menu item that will be displayed after
+        the current one.</td>
+    </tr>
+  </tbody>
+</table>
+<p>A sample of chained command declaration:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+# --- Right toolbar container declaration ---
+RightBar.<b>Type </b>= <b>CmdContainer</b>
+RightBar.<b>Title </b>= Viewpoint Commands
+RightBar.<b>Child </b>= StarterZoomIn
+
+StarterZoomIn.<b>Type </b>= <b>CmdStarter</b>
+StarterZoomIn.<b>Header </b>= HeaderZoomIn
+StarterZoomIn.<b>Accelerator </b>= control PAGE_UP
+StarterZoomIn.<b>Next </b>= StarterZoomOut
+
+StarterZoomOut.<b>Type </b>= <b>CmdStarter</b>
+StarterZoomOut.<b>Header </b>= HeaderZoomOut
+StarterZoomOut.<b>Accelerator </b>= control PAGE_DOWN
+StarterZoomOut.<b>Next </b>= StarterReframe</pre>
+      <pre>StarterReframe.<b>Type </b>= <b>CmdStarter</b>
+StarterReframe.<b>Header </b>= HeaderReframe
+
+# --- Contextual menu container declaration ---
+CtxMenu.<b>Type </b>= <b>CmdContainer</b>
+CtxMenu.<b>Title </b>= Manipulator
+CtxMenu.<b>Child </b>= StarterRotate
+
+StarterRotate.<b>Type</b>  = <b>CmdStarter</b>
+StarterRotate.<b>Title</b> = Rotate
+StarterRotate.<b>Header</b>= HeaderRotate
+StarterRotate.<b>Next</b>  = StarterTranslate
+
+StarterTranslate.<b>Type</b>  = <b>CmdStarter</b>
+StarterTranslate.<b>Title</b> = Translate
+StarterTranslate.<b>Header</b>= HeaderTranslate
+StarterTranslate.<b>Next</b>  = StarterReframeCtx
+
+StarterReframeCtx.<b>Type</b>  = <b>CmdStarter</b>
+StarterReframeCtx.<b>Title</b> = Reframe
+StarterReframeCtx.<b>Header</b>= HeaderReframe
+StarterReframeCtx.<b>Next</b>  = ViewpointContainer
+
+ViewpointContainer.<b>Type</b>  = <b>CmdContainer</b>
+ViewpointContainer.<b>Title</b> = Viewpoints
+ViewpointContainer.<b>Child</b>  = StarterPrevious
+
+StarterPrevious.<b>Type</b>  = <b>CmdStarter</b>
+StarterPrevious.<b>Title</b> = Previous
+StarterPrevious.<b>Header</b>= HeaderPrevious
+StarterPrevious.<b>Accelerator </b>= alt LEFT
+StarterPrevious.<b>Next</b> = StarterNext
+
+StarterNext.<b>Type</b>  = <b>CmdStarter</b>
+StarterNext.<b>Title</b> = Next
+StarterNext.<b>Header </b>= HeaderNext
+StarterNext.<b>Accelerator </b>= alt RIGHT
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CATletWorkshop"></a>Associating a Workshop File with a CATlet</h3>
+<p>The association of a Workshop with a CATlet is made in the file
+CATletList.xml , which contains the declaration of all the CATlet recognized by
+the Portal (See How to declare a CATlet in the Portal [<a href="#References">2</a>]).
+The Workshop file is associated to the CATlet with the tag <b>workshop</b> in
+the CATlet tag.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;CATletList&gt;
+  &lt;BrowserCATlets&gt;
+  ...
+  &lt;/BrowserCATlets&gt;
+
+  &lt;ViewerCATlets&gt;
+
+    &lt;CATlet icon=&quot;Resources/I_Wk13.gif&quot;
+            label=&quot;Food_store&quot;
+            <b>workshop</b>=&quot;FoodStoreCATlet.workshop&quot;
+            url=&quot;bean://com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet&quot;&gt;
+    &lt;/CATlet&gt;
+    ...
+        
+  &lt;/ViewerCATlets&gt;
+
+&lt;/CATletList&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPlbProgrammingCommand.htm">How to Program Commands and
+      Headers in the Portal</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAPlbDeclareCATletInPortal.htm">How to Declare a CATlet in the
+      Portal</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

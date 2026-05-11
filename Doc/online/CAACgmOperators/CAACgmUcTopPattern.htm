@@ -1,0 +1,226 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Pattern</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+.style3 {
+				font-family: "Courier New";
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating a Pattern</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A pattern is a set of operations repeated by applying a 
+		transformation in the same body. </p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a pattern, use the CATICGMTopPattern operator in GMOperatorsInterfaces. 
+This operator has to 
+be created by the CATCGMCreateTopPattern global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsPattern.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to create a pattern. This use case is to be run with 
+the PatternTest.NCGM input file which is delivered in 
+CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: Pattern Creation from a List of Faces</h3>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Pattern Operation: Input Data</caption>
+  <tr>
+    <td><img alt="Pattern Support" src="images/CGM_pattern_0.png"></td>
+    <td><img alt="Faces to be patterned" src="images/CGM_pattern_1.png"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATLISTP(CATMathTransformation) translationList;
+int nbOccurrences = 9;
+// Translation distance
+double distToNext = 40.0;
+ 
+for (int i = 1; i <=nbOccurrences; i++)
+	{			
+		CATMathTransformation *pTrans =
+			new CATMathTransformation(CATMathVector(i * distToNext, 0, 0));
+		translationList.Append(pTrans);
+	}
+// 
+// Create a plane representing the pattern plane (performance)
+// 
+CATMathPlane patternMathPlane(CATMathPoint(0, 0, 10), CATMathVector(0, 0, 1));
+CATPlane* pPatternPlane =iFactory->CreatePlane(patternMathPlane);
+// 
+// Create the pattern operator
+// 
+CATICGMTopPattern *pPatternOp =
+		CATCGMCreateTopPattern(iFactory, iTopData, iBody, pPatternPlane, iFaces, &translationList);
+// 
+// Identify the pattern type (performance)
+//
+pPatternOp->SetRectPattern(nbOccurrences , translationList[1], 1, NULL);
+
+// 
+// Run the pattern operator and get the result
+// 
+pPatternOp->Run();
+oResultBody = pPatternOp->GetResult();
+...
+	</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Result of Pattern Operation from a Set of 
+	Faces </caption>
+  <tr>
+    <td><img alt="Pattern Result - Set of faces" src="images/CGM_pattern_2.png"></td>
+    <td><img alt="Pattern Result - Set of faces - Global View " src="images/CGM_pattern_3.png"></td>
+    </tr>
+ </table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Case 2: Pattern Creation from a Body to be Replicated </h3>
+<p>The body to be patterned is a solid cylinder. With the same input body as 
+above and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+// Create the body to be patterned
+CATICGMSolidCylinder* pCylinderOp =
+		CATCGMCreateSolidCylinder(iFactory, iTopData, firstPointOnAxis, secondPointOnAxis, cylRadius);
+...
+pCylinderOp->Run();
+CATBody *piCylindricalTool = pCylinderOp->GetResult();
+...
+// Create a list of transformations for a 2D pattern
+CATLISTP(CATMathTransformation) translationList;
+int nbOccurrencesX = 10;
+int nbOccurrencesY = 3;
+double distToNextX = 40.0;
+double distToNextY = 30.0;
+ 
+for (int i = 1; i &lt;<span class="style3">=</span> nbOccurrencesX; i++)
+ {			
+ 	for (int j = 1; j <=nbOccurrencesY; j++)
+		{
+			CATMathTransformation * pTrans =
+				new CATMathTransformation(CATMathVector(i * distToNextX, -j * distToNextY, 0));
+			translationList.Append( pTrans );
+		}
+ }
+ 
+// Create a plane representing the pattern plane (performance)
+CATMathPlane patternMathPlane(CATMathPoint(0, 0, 10), CATMathVector(0, 0, 1));
+CATPlane* pPatternPlane =iFactory->CreatePlane(patternMathPlane);
+ 
+// Create the pattern operator
+CATICGMTopPattern *pPatternOp =
+		CATCGMCreateTopPattern(iFactory, iTopData, CATBoolRemoval, iBody, pPatternPlane, 
+		    piCylindricalTool, &translationList);
+
+// Identify the pattern type (performance)
+CATMathTransformation translation1X(CATMathVector(distToNextX, 0, 0));
+CATMathTransformation translation1Y(CATMathVector(0, -distToNextY, 0));
+pPatternOp->SetRectPattern(nbOccurrencesX, &translation1X, nbOccurrencesY, &translation1Y);
+pPatternOp->Run();
+pPatternOp->GetResult();
+	</pre>
+        </TD>
+    </TR>
+</TABLE>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.3">Fig.3</a> Result of Pattern Operation from a Body to 
+	be Replicated</caption>
+  <tr>
+    <td><img alt="Pattern Result - Tool" src="images/CGM_pattern_4.png"></td>
+    <td><img alt="Pattern Result - Tool - Global View " src="images/CGM_pattern_5.png"></td>
+    </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

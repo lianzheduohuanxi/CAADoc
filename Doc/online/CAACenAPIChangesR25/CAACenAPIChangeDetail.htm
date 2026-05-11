@@ -1,0 +1,997 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Detail Of C++ API Changes</title>
+</head>
+ 
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1></h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top">Detail Of V5-6R2015 C++ API Changes</h3>
+      <em>What changes in the API compared with CAA V5-6R2014</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><a name="Abstract">Abstract</h3>
+      <p>This article presents by frameworks the detail of CAA C++ resources
+      modified in V5-6R2015 and how to modify your code accordingly.
+      <p>Each modification is listed for a resource (file, class, method) with a
+      classification. They will generally be detected by a recompilation of the
+      code. Most of the time, signature modifications are obvious. Check in the
+      framework detail how to replace deleted entities. Possibly impacting
+      modifications are highlighted in red.<br>
+      <div align="center">
+        <center>
+        <table border="0" width="80%">
+          <tr>
+            <td width="15%" align="center"><font size="2" color="#000000">Classification</font></td>
+            <td width="51%" align="center">Meaning</td>
+          </tr>
+          <tr>
+            <td width="15%">LHC</td>
+            <td width="51%"><font size="2" color="#000000">@CAA2Level Has
+              Changed: a L1 file is no more L1.</font></td>
+          </tr>
+          <tr>
+            <td width="15%">UHC</td>
+            <td width="51%"><font size="2" color="#000000">@CAA2Usage Has
+              Changed: usage has changed for a more restricted usage. For
+              example a class tagged as derivable is not derivable anymore.</font></td>
+          </tr>
+          <tr>
+            <td width="15%">CHBD</td>
+            <td width="51%"><font size="2" color="#000000">Class Has Been
+              Deleted</font></td>
+          </tr>
+          <tr>
+            <td width="15%">FHBD</td>
+            <td width="51%"><font size="2" color="#000000">File Has Been Deleted</font></td>
+          </tr>
+          <tr>
+            <td width="15%">ADVHC</td>
+            <td width="51%"><font size="2" color="#000000">Argument Default
+              Value Has Changed</font></td>
+          </tr>
+          <tr>
+            <td width="15%">MHBDM</td>
+            <td width="51%"><font size="2" color="#000000">Method Has Been
+              Deleted or Modified</font></td>
+          </tr>
+          <tr>
+            <td width="15%">MRTHC</td>
+            <td width="51%"><font size="2" color="#000000">Method Returned Type
+              Has Changed</font></td>
+          </tr>
+          <tr>
+            <td width="15%">NPVM</td>
+            <td width="51%"><font size="2" color="#000000">New Pure Virtual
+              Method. A new pure virtual method has been added on a derivable
+              class or on an interface to be implemented without an
+              adapter.&nbsp;</font></td>
+          </tr>
+          <tr>
+            <td width="15%">INDM</td>
+            <td width="51%"><font size="2" color="#000000">Method is no more
+              documented. It does not break your code in any way but means that
+              you are not supposed to use it anymore. Check that you don't use
+              it or look for replacement informations. &nbsp;</font></td>
+          </tr>
+          <tr>
+            <td width="15%">MINMV</td>
+            <td width="51%"><font size="2" color="#000000">Method is no more
+              virtual. If occurs on a U1 class, may require modifications in 
+              Imakefile.mk  of client code. If occurs on a U2 class, see
+              details on the documentation of the concerned resource 
+              modification.</font></td>
+          </tr>
+        </table>
+        </center>
+      </div>
+      <p>&nbsp;</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table border="1" width="100%">
+<tr>
+	<th width="45%"><center>File</center></th>
+	<th width="45%"><center>Class</center></th>
+	<th width="45%"><center>Method</center></th>
+	<td width="10%"><center>Modification</center></th>
+	<th><center>To Do</center></th>
+</tr>
+	<tr>
+		<td>ObjectModelerSystem/PublicInterfaces/sequence_CORBAAny.h</td>
+		<td rowspan="3"></td>
+		<td rowspan="3"></td>
+		<td rowspan="3">FHBD</td>
+		<td rowspan="3">File has been moved into the ObjectModelerCollection framework. Update you application IdentityCard.h and Imakefile.mk files accordingly.</td>
+	</tr>
+	<tr>
+		<td>ObjectModelerSystem/PublicInterfaces/sequence.h</td>
+	</tr>
+	<tr>
+		<td>ObjectModelerSystem/PublicInterfaces/sequence_octet.h</td>
+	</tr>
+	<tr>
+		<td>Mathematics/PublicInterfaces/CATTolerance.h</td>
+		<td>CATTolerance</td>
+		<td>~CATTolerance</td>
+		<td>INDM</td>
+		<td>CATTolerance objects are not meant to not de bestroyed by applications. Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		CATPDMReconcile/PublicInterfaces/CATScmPDMObject.h</td>
+		<td>CATScmPDMObject</td>
+		<td>CATScmPDMObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		CATPDMReconcile/PublicInterfaces/CATScmPDMObject.h</td>
+		<td>CATScmPDMObject</td>
+		<td>GetDescriptor</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		CATPDMReconcile/PublicInterfaces/CATScmPDMObject.h</td>
+		<td>CATScmPDMObject</td>
+		<td>SetDescriptor</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/CATIEnovCMManager.h</td>
+		<td>CATIEnovCMManager</td>
+		<td>GetCOPSpecRelationships</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/ENOVICfgUESolver.h</td>
+		<td>ENOVICfgUESolver</td>
+		<td>Solve</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/ENOVIInitSpecsUE.h</td>
+		<td>ENOVIInitSpecsUE</td>
+		<td>getListOfSpecs</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/ENOVIOrderCategoriesUE.h</td>
+		<td>ENOVIOrderCategoriesUE</td>
+		<td>OrderCategories</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/VPMIWflParticipant.h</td>
+		<td>VPMIWflParticipant</td>
+		<td>Resolve</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/VPMIWflProcess.h</td>
+		<td>VPMIWflProcess</td>
+		<td>GetRealResponsible</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/VPMIWflQuery.h</td>
+		<td>VPMIWflQuery</td>
+		<td>GetWflDefaultCalendar</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		ENOVInterfaces/PublicInterfaces/VPMIWflRegularActivity.h</td>
+		<td>VPMIWflRegularActivity</td>
+		<td>GetRealPerformer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		SDMRuntime/PublicInterfaces/SdaiEntity.h</td>
+		<td>SdaiEntity</td>
+		<td>SDAIAGGRH</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		SDMRuntime/PublicInterfaces/SdaiModel.h</td>
+		<td>SdaiModel</td>
+		<td>SDAIAGGRH</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		SDMRuntime/PublicInterfaces/SdaiSchema.h</td>
+		<td>SdaiSchema</td>
+		<td>SDAIAGGRH</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMDesktopObjects/PublicInterfaces/ENOVCustoCommandUtils.h</td>
+		<td>ENOVCustoCommandUtils</td>
+		<td>ENOVCustoCommandUtils</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgAttachable.h</td>
+		<td>CATICfgAttachable</td>
+		<td>QueryAttachedObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		<td>CATICfgFilter</td>
+		<td>Filter</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgInterval.h</td>
+		<td>CATICfgInterval</td>
+		<td>GetValues</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>CreateBasicEffectivity</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>CreateInterval</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>CreateModContainer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>GetContributingObjectList</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>QueryEffValByObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>QueryModContainerByDescription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>QueryProductType</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgManager.h</td>
+		<td>CATICfgManager</td>
+		<td>QuerySpecCategories</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr height="34" >
+		<td height="34" >
+		VPMInterfaces/PublicInterfaces/CATICfgSimpleSpecification.h</td>
+		<td>CATICfgSimpleSpecification</td>
+		<td>Attach</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgSimpleSpecification.h</td>
+		<td>CATICfgSimpleSpecification</td>
+		<td>GetLinkForUID</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATICfgUEValidateEff.h</td>
+		<td>CATICfgUEValidateEff</td>
+		<td>ValidateEffectivity</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>GetListOfMileStoneValue</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>GetSpecification</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>GetSpecLnkType</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>GetTypeDefiningCategories</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>QueryMileStoneValueByMileStone</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIConfigurable.h</td>
+		<td>CATIConfigurable</td>
+		<td>SetSpecLnkType</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAFLManager.h</td>
+		<td>CATIVpmAFLManager</td>
+		<td>CreateAflBinPredicate</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAFLManager.h</td>
+		<td>CATIVpmAFLManager</td>
+		<td>CreateAflPredicate</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAFLManager.h</td>
+		<td>CATIVpmAFLManager</td>
+		<td>GetVpmObjectAttributeNames</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h</td>
+		<td>CATIVpmAttribute</td>
+		<td>CheckAttribute</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h</td>
+		<td>CATIVpmAttribute</td>
+		<td>CloneMe</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h</td>
+		<td>CATIVpmAttribute</td>
+		<td>CloneMe</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h</td>
+		<td>CATIVpmAttribute</td>
+		<td>GetAttributeName</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmAttribute.h</td>
+		<td>CATIVpmAttribute</td>
+		<td>GetAttributeNames</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmFactoryObject.h</td>
+		<td>CATIVpmFactoryObject</td>
+		<td>GetFactoryObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmFactoryObject.h</td>
+		<td>CATIVpmFactoryObject</td>
+		<td>GetRealObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmFactoryObject.h</td>
+		<td>CATIVpmFactoryObject</td>
+		<td>SetFactoryObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/CATIVpmFactoryObject.h</td>
+		<td>CATIVpmFactoryObject</td>
+		<td>SetRealObject</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddBusinessDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddDataDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddExternSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddHost</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddReplPackageDefinition</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddReplSubscribingTarget</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddReplSubscription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>AddServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateBusinessDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateDataRDB</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateDataServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateExternSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateExternSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateHost</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateLocalSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplApplyStatus</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplCaptureStatus</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplMedia</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplPackageDefinition</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplPackageDefinition</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplSubscribingTarget</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplSubscribingTarget</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplSubscription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateReplSubscription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>CreateServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GenerateSubscription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetAppServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetBusinessDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetBusinessDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDataDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDataDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDataDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDataServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDataServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetExternSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetExternSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetHost</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetHost</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetLocalSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetMasterBusinessDomain</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplApplyStatus</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplCaptureStatus</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplMedia</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplPackageDefinition</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplSubscribingTarget</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplSubscribingTarget</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetReplSubscription</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>GetVaultServer</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>SetLocalSite</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMIAdmin.h</td>
+		<td>VPMIAdmin</td>
+		<td>Subscribe</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMInterfaces/PublicInterfaces/VPMSession.h</td>
+		<td>VPMSession</td>
+		<td>GetPubSubManager</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+	<tr>
+		<td>
+		VPMXBom/PublicInterfaces/ENOVIAttributeDefinitions.h</td>
+		<td>ENOVIAttributeDefinitions</td>
+		<td>get_Enum</td>
+		<td>INDM</td>
+		<td>Check that you don't use it</td>
+	</tr>
+
+</table>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References">References</h3>
+<table width="100%">
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History">History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2015]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+	  <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2014, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+</html>

@@ -1,0 +1,526 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Publishing Literals</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Publishing Literals</h3>
+     <p><em>Displaying knowledgeware objects in f(x)</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAALifPublish use case.<br>
+     This use case explains how to display parameters and relations in the <i>
+     f(x)</i> dialog box and benefit from the capabilities provided by the <i>
+     f(x)</i> dialog. </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAALifPublish Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAALifPublish Do</a></li>
+         <li><a href="#How">How to Launch CAALifPublish</a></li>
+         <li><a href="#Where">Where to Find the CAALifPublish Code</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#Step">Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to create a length and an angle 
+ type parameters as the children of a given feature and make them display in <i>
+ f(x)</i> when the parent feature is selected either in the specification tree 
+ or in the geometry area.</p>
+ <p>Throughout this article, the word 'published' qualifies a feature whose 
+ parameters and relations are designed to be displayed in <i>f(x)</i> as well as 
+ the displayed parameters and relations.</p>
+ <p>The example which is developed in this use case can be extended to other 
+ types of parameters and to relations as the principles illustrated in the use 
+ case are quite general.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAALifPublish Use Case</h3>
+ <p>CAALifPublish is a use case of the CAALiteralFeatures.edu framework that 
+ illustrates KnowledgeInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAALifPublish Do</h4>
+ <p>CAALifPublish explains how to proceed to publish knowledgeware objects, that 
+ is display them in<i> f(x)</i>. It illustrates the different coding steps 
+ required to display parameters in the &quot;Formulas&quot; dialog box:</p>
+ <ul>
+   <li>it illustrates how to provide an implementation of CATIParmPublisher</li>
+   <li>and, through a basic example, it shows how to manage the published 
+   parameters by using the methods provided by the CATIParmPublisher 
+   implementation.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAALifPublish</h4>
+ <p>To launch CAALifPublish, you will need to set up the build time environment, 
+ then compile CAALifPublishMain along with its prerequisites, set up the run time 
+ environment, and then execute the use case which main program is 
+ CAALifPublishMain [<a href="#References">1</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAALifPublish Code</h4>
+ <p>The CAALifPublish use case is made up of:</p>
+ <ul>
+   <li>The CAALifMyPublisher.cpp source file located in the CAALifBasis module which defines an implementation of CATIParmPublisher.</li>
+   <li>A main source file named CAALifPublishMain.cpp located in the 
+   CAALifPublish module which initializes the 
+   environment and creates features intended to publish parameters and 
+   relations.</li>
+ </ul>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifPublish.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifPublish.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>Here are the main steps followed in this use case to create parameters to be 
+ displayed in the f(x) dialog box:</p>
+ <ol>
+   <li><a href="#Step1">Prolog</a><br>
+   This step creates a session, a Part document, and retrieves from the 
+   document's root container a pointer to the factory to be used to create the 
+   parameters as well as the formula. </li>
+   <li><a href="#Step2">Creating the Feature to be Published</a><br>
+   The &quot;CAAMyPublisher1&quot; feature is created. It is the initial feature intended 
+   to be published. </li>
+   <li><a href="#Step3">Implementing CATIParmPublisher</a><br>
+   The CATIParmPublisher interface is implemented on &quot;CAAMyPublisher1&quot;. </li>
+   <li><a href="#Step4">Adding a new Parameter of Angle Type to the Feature to 
+   be Published</a><br>
+   The Append method redefined in the CATIParmPublisher implementation is used 
+   to add a parameter to the feature. The number of items in the list of 
+   children is checked. </li>
+   <li><a href="#Step5">Adding a Relation of Formula Type to the Feature to be 
+   Published</a><br>
+   A formula is appended to the feature. The number of relations in the list of 
+   children is checked. </li>
+   <li><a href="#Step6">Removing Children</a><br>
+   The RemoveChild method redefined in the CATIParmPublisher implementation is 
+   used. The number of items in the new list of children is checked. </li>
+   <li><a href="#Step7">Epilog</a><br>
+   This step closes the document and the session.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Prolog</h4>
+ <p>Before going any further in literal programming, you must initialize your 
+ environment. This is done in the main source file.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main (int argc, char** argv)
+{
+ CAALifServices services;
+  // Initialize the session
+  int rc = 0;
+  rc = services.<b>CAALifInitSession</b> ();
+  if( rc != CAALifOk )
+    return rc;
+
+  // Retrieve the parameter factory 
+  CATIContainer* container = NULL;		
+  rc = services.<b>CAALifCreateInstanceContainer</b>( &amp;container );
+  if( rc != CAALifOk )
+    return rc;
+
+  CATICkeParmFactory_var spFact = container;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This task consists in:</p>
+ <ol>
+   <li>Creating a session<br>
+   This is done by the <code>CAALifInitSession</code> method of the <i>
+   CAALifServices</i> class defined in the CAALifBasis.m module. </li>
+   <li>Creating a document and retrieving its root container through a literal 
+   factory interface.<br>
+   This is done by the <code>CAALifCreateInstanceContainer</code> method of the
+   <i>CAALifServices</i> class that is also defined in the CAALifBasis.m module 
+   and that returns a <i>CATIContainer</i> interface smart pointer, cast into a
+   <i>CATICkeParmFactory</i> smart pointer. There are two important points about 
+   this interface:
+   <ol type="a">
+     <li>It is implemented by any root container </li>
+     <li>It provides you with all the literal and relation creation methods.</li>
+   </ol>
+   </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating the Feature to be Published</h4>
+ <p>For the purpose of this example, a StartUp with the &quot;CAAMyPublish&quot; type and 
+ the &quot;CAAMyPublisher1&quot; name is created. It is added a component named &quot;myparam&quot;. 
+ The value of &quot;myparam&quot; is set by the &quot;Height&quot; parameter. Here is an excerpt of 
+ the CAALifPublish0.cpp file:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> ...
+ CATISpecObject_var spSu = CreateStartUp(&quot;CAAMyPublisher1&quot;,
+                                         &quot;CAAMyPublisher&quot;,
+                                         CATISpecObject::ClassName(),
+                                         spFact);  
+ ...
+ CATISpecAttribute_var
+     spMyParam = spSu-&gt;AddAttribute(&quot;myparam&quot;,tk_component);
+ ...
+ CATICkeParm_var spLength = spFact-&gt;CreateLength (&quot;Height&quot;,2.3);
+ spMyParam-&gt;SetSpecObject(spLength);
+ ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>From now on, the feature we have on hand will be added two new objects (one 
+ parameter of angle type and one formula type relation).</p>
+ <p>To be able to publish these objects in <i>f(x)</i>, the &quot;CAAMyPublisher1&quot; 
+ feature must implement the CATIParmPublisher interface. In your implementation, 
+ you must redefine the GetDirectChildren, GetAllChildren, Append and RemoveChild 
+ methods by deriving this CATCkeDescendants adapter.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Implementing CATIParmPublisher</h4>
+ <p>Implementing CATIParmPublisher consists in defining how a feature recognizes 
+ its children, how a parameter is added to or remove from the list of children.</p>
+ <p>To display the parameters and relations belonging to a document, you must at 
+ least implement CATIParmPublisher on the document root feature. Implementing 
+ CATIParmPublisher on other features below the root feature depends on whether 
+ your application needs to filter the parameters of objects below the root.</p>
+ <p>The KnowledgeInterfaces framework provides you with the CATCkeDescendants 
+ adapter. You redefine the GetDirectChildren, GetAllChildren, Append and 
+ RemoveChild methods by deriving this adapter.</p>
+ <p>You can implement the CATIParmPublisher methods in several ways. 
+ Nevertheless, it is is recommended to gather all the objects (parameters and 
+ relations) to be published in a tk_list(tk_component) attribute added to the 
+ parent feature. Implementing the GetDirectChildren and Append methods will be 
+ made easy thanks to the use of the services provided by the ObjectSpecsModeler 
+ framework to manipulate tl_list(tk_component) attributes.</p>
+ <p><i>Adding a tk_list(tk_component) attribute to the parent feature</i></p>
+ <p>This is done in the CAAMyPublish0.cpp source file.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATISpecAttribute_var
+  spAttcomp = spSu-&gt;AddAttribute(&quot;components&quot;,tk_list(tk_component));
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p><i>Writing the CATIParmPublisher Implementation</i></p>
+ <p>In the example below, CAALifMyPublisher is the type of the feature to be 
+ published. This type is extended in the CAALifMyPublisher.cpp file. The 
+ extension redefines the GetDirectChildren, GetAllChildren, Append and 
+ RemoveChild methods of the CATCkeDescendants adapter.</p>
+ <p>In short</p>
+ <ul>
+   <li>The GetDirectChildren is redefined so that:<ul>
+     <li>The &quot;myparam&quot; attribute is retrieved and added to the list of children 
+     if it supports the interface specified as the first argument</li>
+     <li>The &quot;components&quot; attributes is retrieved. All its components are 
+     accessed by using the ListSpecObjects method of the CATISpecAttrAccess 
+     interface. The retrieved components are then appended one-by-one to the 
+     list to be populated by using the Append method.</li>
+   </ul>
+   </li>
+   <li>The Append method uses the SetSpecObject method of the CATISpecAttrAccess 
+   interface which allows you to add one-by-one objects to a 
+   tk_list(tk_component) attribute.</li>
+ </ul>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+#include &quot;TIE_CATIParmPublisher.h&quot;
+TIE_CATIParmPublisher(CAALifMyPublisher);
+
+CATImplementClass(CAALifMyPublisher,DataExtension,
+                                    CATBaseUnknown,CAAMyPublisher);
+void CAALifMyPublisher::GetDirectChildren (CATClassId iIntfName,
+				CATListValCATISpecObject_var &amp;oLst)  
+{
+  ...
+  CATISpecAttrKey_var spSpecKey = spSpecAccess-&gt;GetAttrKey(&quot;myparam&quot;);
+  ...
+  CATISpecObject_var spMySpecParam = spSpecAccess-&gt;GetSpecObject(spSpecKey);
+  ...
+  oLst.Append(spMySpecParam);
+  ...
+  
+  spSpecKey =  spSpecAccess-&gt;GetAttrKey(&quot;components&quot;);
+  ...
+  {
+    ... 
+    {
+      CATListValCATInterfaceObject_var* 
+      plis = spSpecAccess-&gt;ListSpecObjects(spSpecKey,iIntfName);
+      ...
+      CATISpecObject_var spec = (*plis)[i];
+      if (spec != NULL_var) oLst.Append (spec);
+	...
+    }
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p><i>Retrieving the Initial List of Children</i></p>
+ <p>Prior to manipulating the published feature, the &quot;myspec0&quot; instance is 
+ created. This feature has exactly the same data structure as its StartUp. </p>
+ <p>The list of CATICkeParm which is retrieved from the created instance 
+ contains only one item, the &quot;Height&quot; parameter. </p>
+ <p>The list of CATICkeRelation which is retrieved from the created instance is 
+ empty. </p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATISpecObject_var spSpec0 = spSu-&gt;Instanciate (&quot;myspec0&quot;);
+...
+CATListValCATISpecObject_var spLst;
+spPub-&gt;GetDirectChildren (CATICkeParm::ClassName(),spLst);
+cout&lt;&lt;&quot;The number of parameters is (1 expected): &quot;&lt;&lt; spLst.Size()&lt;&lt; endl;
+...
+spPub-&gt;GetDirectChildren (CATICkeRelation::ClassName(),spLst);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Adding a New Parameter of Angle Type to the Feature to 
+ be Published</h4>
+ <p>The angle type parameter is created thanks to the <code>CreateAngle</code> 
+ method of the <i>CATICkeParmFactory</i> interface, that takes the angle name as 
+ a parameter in addition to the initial angle value.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATICkeParm_var spPp2 = spFact-&gt;CreateAngle (&quot;a&quot;,0);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The angle type parameter is added to &quot;myspec0&quot; by using the Append method of 
+ the CATIParmPublisher interface which is implemented in the CAALifMyPublisher 
+ class.</p>
+ <p>Back to the Append method implementation. Let's take a look at the 
+ implementation code. To append a new parameter to a feature, we use the 
+ SetSpecObject method of the CATISpecAttrKey interface which allows to populate 
+ a tk_list(tk_component) attribute by adding a new object to the attribute each 
+ time you do a SetSpectObject. Appending a new parameter to CAAMyFeature1 is the 
+ same as adding a new component to the &quot;components&quot; attribute.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+void CAALifMyPublisher::Append(const CATISpecObject_var &amp; iKBwareObject) 
+{
+  CATISpecAttrAccess_var spSak (this);
+  CATISpecAttrKey_var spKey = spSak-&gt;GetAttrKey(&quot;components&quot;);
+  if (NULL_var != spKey) 
+  { 
+    spSak-&gt;SetSpecObject(spKey,iKBwareObject);
+    spKey-&gt;Release();
+  }
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p><i>Retrieving the New List of Children</i></p>
+ <p>The list of children whether it is retrieved by GetDirectChildren or 
+ GetAllChildren returns two objects(&quot;myparam&quot; and &quot;a&quot;).</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Adding a Relation of Formula Type to the Feature to be 
+ Published</h4>
+ <p>The formula is created thanks to the <code>CreateFormula</code> method of 
+ the <i>CATICkeParmFactory</i> interface.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+CATCkeListOf(Parm) spLi;
+CATICkeRelation_var
+    spRel = spFact-&gt;CreateFormula(&quot;&quot;,&quot;&quot;,&quot;&quot;,spPp2,&amp;spLi,
+	                                        &quot;3deg&quot;,
+					      NULL_var,
+					CATCke::False);
+spPub-&gt;Append(spRel);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The formula created is: a = 3deg. For more information on how to create 
+ formulas, see [<a href="#References">2</a>] and [<a href="#References">3</a>].</p>
+ <p>The relation is then appended to its parent feature by using the redefined 
+ Append method of CATIParmPublisher.</p>
+ <p><i>Retrieving the list of children of relation type</i></p>
+ <p>The list of relation to be published under the CAAMyPublisher1 feature. i.e. 
+ the list of objects supporting the CATICkeRelation interface is retrieved by 
+ using the redefined GetDirectChildren method as below:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+spPub-&gt;GetDirectChildren (CATICkeRelation::ClassName(),spLst);
+cout &lt;&lt; &quot; The number of direct children supporting&quot; ;
+cout &lt;&lt; &quot; CATICkeRelation is (1 expected) &quot; ;
+cout &lt;&lt;  spLst.Size() &lt;&lt; endl;</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The returned list is made up of one item.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Removing Children</h4>
+ <p>The angle type parameter and the formula are removed by using the redefined 
+ RemoveChild method of the CATIParmPublisher interface which is implemented in 
+ the CAALifMyPublisher class.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+spPub-&gt;RemoveChild(spPp2);
+spPub-&gt;RemoveChild(spRel);</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Now let's take a look at the RemoveChild implementation. To remove a 
+ parameter from the list of published objects, we simply use the 
+ RemoveSpecObject method of the CATISpecAttrAccess interface.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+void
+  CAALifMyPublisher::RemoveChild(const CATISpecObject_var &amp; iKBwareObject) 
+{
+CATISpecAttrAccess_var spSak (this); 
+CATISpecAttrKey_var spKey = spSak-&gt;GetAttrKey(&quot;components&quot;);
+if (NULL_var != spKey) 
+  { 
+   spSak-&gt;RemoveSpecObject(spKey,iKBwareObject);
+   spKey-&gt;Release();
+  }
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The list of direct children now contains one item (&quot;myparam&quot;) and the list 
+ of children supporting CATICkeRelation, that is the list of published relations 
+ is now empty as the formula has been removed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Epilog</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main (int argc, char** argv)
+{
+  ...
+  rc = services.<b>CAALifCloseSession</b>();
+  return rc;
+};</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>CAALifCloseSession</code> method of the <i>CAALifServices</i> 
+ class defined in the CAALifBasis.m module removes the Part document and deletes 
+ the session.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows how to publish the attributes of a feature and 
+ illustrates how to implement the <i>CATIParmPublisher </i>on any feature to be 
+ published.</p>
+ <p>The recommended implementation requires a tk_list(tk_component) added to the 
+ feature to be published.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Launching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAALifFirstApplication.htm">Getting Started with Literal 
+     Programming</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td><a href="CAALifFormulas.htm">Creating and Manipulating Formulas</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jun 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

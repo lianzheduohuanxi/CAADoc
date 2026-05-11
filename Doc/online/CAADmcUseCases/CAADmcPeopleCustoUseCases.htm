@@ -1,0 +1,1024 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customizing the People Modeler</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customizing the People Modeler</h3>
+     <p><i>Customizing ENOVIA People with DMC (publishing on UNIX)</i></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article aims at presenting a comprehensive customization sample on 
+     ENOVIA People.</p>
+     <ul>
+       <li><a href="#Principle"><b>Principle</b></a></li>
+       <li><a href="#Rules to follow while customizing people"><b>Rules to follow while 
+       Customizing People</b></a></li>
+       <li><a href="#Let s try with an example"><b>Example</b></a></li>
+       <li><a href="#Design Process"><b>Design Process</b></a>
+       <ul>
+       <li><a href="#Creating a UML Project">Creating a UML Project</a></li>
+       <li><a href="#Creating a new People Customization">Creating 
+       a new People Customization</a></li>
+       <li><a href="#Creating a Modeler Object">Creating 
+       a Modeler Object</a></li>
+       <li><a href="#Generate the metadata file">Generate the metadata file</a></li>
+       </ul>
+       </li>
+       <li><a href="#Publishing Process"><b>Publishing Process</b></a>
+       <ul>
+       <li><a href="#Publish the customization">Publish the customization</a></li>
+       <li><a href="#Finalizing the Customization">Finalizing the Customization</a></li>
+       <li><a href="#First preview of the database using VPMpeopleEdit">First 
+       preview of the database using VPMPeopleEdit</a></li>
+       <li><a href="#Modifying customer preferences and naming conventions">
+       Modifying customer preferences</a></li>
+       </ul>
+       </li>
+       <li><a href="#Result"><b>Results</b></a></li>
+		<li><a href="#Deploying a People Customization"><b>Deploying a People Customization</b></a></li>
+		<li><a href="#Migrating a People Customization"><b>Migrating a People Customization</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Principle"></a>Principle</h3>
+ <table width="100%" border="0">
+   <tr>
+     <td width="91%">People, Organization and Security is a set of tools and 
+     methods designed to help the ENOVIA database administrator determine 
+     which end users of ENOVIA Lifecycle Applications can work on which 
+     project, and specify which functions users will be able to use, and under 
+     which conditions. Furthermore, the tools allow the user to define security 
+     mechanisms for controlling access to ENOVIA objects manipulated using 
+     ENOVIA Lifecycle Applications.<p>The need of P&amp;O customization can be met 
+     in several cases:</p>
+     <ol>
+       <li>Need to define new attributes on existing P&amp;O objects</li>
+       <li>Need to define new objects inside the P&amp;O schema</li>
+       <li>Need to define new security attributes on specific object classes 
+       pertaining to other schemas</li>
+       <li>Need to define security rules/conditions as native Data Group objects 
+       on Privileges, that determine the access rights to instances of 
+       customized/secured object classes according to the current security 
+       context</li>
+     </ol>
+     <p>By customizing P&amp;O objects, you can add security concepts, 
+     or modify those already put in place. Such a modification is really 
+     sensitive, consequently, the full customization is divided into 2 
+     processes. The first part will deal with the design of the future 
+     application. The second part will be executed only by an ENOVIA 
+     administrator, to prevent you from losing any information. Indeed, the 
+     administrator must verify whether the customization agrees with his 
+     recommendations before deploying it. If the model turns out to be valid 
+     with the contents of the database, the administrator will update the 
+     database. As this task is critical, before updating tables, a backup of the 
+     database is performed. Therefore, if an error occurs, the design is still safe, and 
+     it is just necessary to execute the second process.</p>
+     <p align="center"><img border="0" src="images/CAADmcCustoPeoplePrinciple.gif"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><b><a name="Rules to follow while customizing people"></a>Rules to Follow 
+ While Customizing People</b></h3>
+
+ <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+   <tr>
+     <td width="13%">
+     <img border="0" src="images/Be_carefull.jpg"></td>
+     <td width="87%">
+     <p>You can extend the P&amp;O data model:</p>
+     <ul>
+       <li>By extending some native P&amp;O classes
+       <ul>
+         <li>The P&amp;O classes that can be derived are:
+         <code><font color="#008040">RscPerson</font></code>,
+         <code><font color="#008040">RscOrg</font></code>,
+         <code><font color="#008040">RscRole</font></code>,
+         <code><font color="#008040">RscProject</font></code></li>
+         <li>These native classes can be derived at most once</li>
+         <li>The resulting classes cannot be derived</li>
+         <li>The resulting classes are referred to as &#8220;derived P&amp;O classes&#8221; 
+         below</li>
+       </ul>
+       </li>
+       <li><a name="by creating new P&amp;O classes"></a>By creating new P&amp;O classes
+       <ul>
+         <li>The new classes must derive from the P&amp;O common resource base 
+         class: <code><font color="#008040">RscObject</font></code></li>
+         <li>The new classes cannot be derived</li>
+         <li>The resulting classes are referred to as &#8220;new P&amp;O classes&#8221; below</li>
+       </ul>
+       </li>
+     </ul>
+     <p>No other P&amp;O and Security classes can be customized. 
+     You cannot extend the 
+     behavioral model of the P&amp;O objects. In particular:</p>
+     <ul>
+     <li>No new CAA-exposed API for P&amp;O is provided</li>
+     <li>The lifecycle of the P&amp;O objects cannot be customized</li>
+     <li>New events related to the P&amp;O domain cannot be defined 
+     or fired</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <blockquote>
+   <p>For example, a class called MyPerson deriving from the 
+   RscPerson class will represent the business concept of a &#8220;person&#8221; in the 
+   usual P&amp;O sense in place of the RscPerson class. Hence, at runtime, every 
+   &#8220;person&#8221; will be an instance of MyPerson instead of RscPerson. Meanwhile the 
+   behavioral model of this &#8220;person&#8221; will not be changed. In particular, the 
+   inherited relationships of the RscPerson with the other native classes will 
+   not 
+   change and cannot be overridden. It is also true for <code>
+   <font color="#008040">RscOrg</font></code>, <code><font color="#008040">RscRole</font></code> 
+   and <code><font color="#008040">RscProject</font></code> classes.</p>
+   <p>The role of the new classes deriving from <code><font color="#008040">RscObject</font></code> is 
+   to represent business concepts that are not currently accounted for by the 
+   P&amp;O data model. The administration management of instances of those classes 
+   will be done through the usual P&amp;O tools i.e. <code>
+   <font color="#008040">VPMPeopleEdit</font></code> and 
+   <code><font color="#008040">VPMPeopleImport</font></code> by the P&amp;O administrator. These P&amp;O tools provide the ability 
+   of creating, modifying and deleting instances of new classes. During ENOVIA 
+   LCA runtime, the only possible entry point to account for those instances is 
+   through the Data Group conditions linked to the Privileges of the logged 
+   user. These conditions may contain reference to the new classes via the 
+   provided context variables </p>
+   <p>Security attributes on classes outside the P&amp;O data 
+   domain can be added by derivation as proposed by the current RADE tools. 
+   Hence, only those classes that are currently CAA derivable can 
+   support some extra security attributes. The role of these security attributes 
+   is to be used in the evaluation of the Data Group conditions linked to the 
+   Privileges of the logged user to manage the access rights to the instances of 
+   the customized class.</p>
+ </blockquote>
+ <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+   <tr>
+     <td width="14%">
+     <img border="0" src="images/Be_carefull.jpg"></td>
+     <td width="86%">
+     <p>Usually, class relationships in 
+     metadata files can be managed in many different manners. As far as P&amp;O 
+     customization is concerned, NOT ALL types of links are allowed:</p>
+     <ul>
+       <li>
+       <p>Only direct relationships are allowed.</p>
+       </li>
+       <li>
+       <p>Only shared aggregations are allowed (of 
+     type Set exclusively).</p></li>
+       <li>
+       <p>Classes outside the P&amp;O schema cannot directly reference P&amp;O 
+     classes and vice versa.</p></li>
+       <li>
+       <p>New P&amp;O classes (coming from 
+       <code><font color="#008040">RscObject</font></code>) 
+     can reference any native class (unless it has been derived) or any derived 
+     P&amp;O class (coming from <code><font color="#008040">RscPerson</font></code>, 
+       <code><font color="#008040">RscOrg</font></code>, 
+       <code><font color="#008040">RscRole</font></code> or 
+       <code><font color="#008040">RscProject</font></code>) through 
+     direct relationships or shared aggregations (of type Set exclusively).</p>
+       </li>
+       <li>
+       <p>New P&amp;O classes can also reference each 
+     other by the same means.</p></li>
+       <li>
+       <p>Derived P&amp;O classes can reference any new 
+     P&amp;O class BUT NOT<b> </b>other native or derived P&amp;O class.</p>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+
+ <p><b>Another consequence of the P&amp;O customization</b></p>
+ <ul>
+   <li>P&amp;O objects created during installation must be migrated according to the 
+   customized schema. For example, in case of a <code><font color="#008040">RscPerson</font></code> customization, the 
+   admin user has to be migrated.</li>
+   <li>P&amp;O objects created in a production database must be exported before the 
+   customization process and re-imported after the end of the customization 
+   process.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top]</a></p>
+ <h3><a name="Let s try with an example"></a>Example</h3>
+ <blockquote>
+   <p>If you have never tried to customize a People modeler, create a 
+   database structured like the one shown in the graphic below. </p>
+   <p align="center">
+   <img border="0" src="images/CAADmcCustoPeopleUseCases1.gif"></p>
+   <p>Now, you want to associate to each project a list of implied 
+   technologies, and a list of contracts. The context will now establish relations 
+   with customized projects, original roles, and customized persons. Each person 
+   contains a list of authorized technologies.</p>
+   <p align="center">
+   <img border="0" src="images/CAADmcCustoPeopleUseCases2.gif"></p>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><b><a name="Design Process"></a>Design Process</b></h3>
+ <blockquote>
+   <p>This step aims at designing the customization and 
+   generating the associated metadata file. Everybody can take part to 
+   this step. There is no risk for the database. The associated UML schema lists the different relations 
+   between objects, and their attributes. In fact, these UML representations 
+   will appear in several windows. They are gathered below to provide you with a 
+   global 
+   model.</p>
+
+ </blockquote>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoPeopleUseCasesUML.gif"></p>
+ <p align="right">[<a href="#Top">Top]</a></p>
+ <h3>Creating a UML Project <a name="Creating a UML Project">
+ </a></h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;UML 
+   Project</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>.
+   </li>
+   <li>Enter the name of the UML project. Click <code>
+   <font color="#008040">Next</font></code>&gt; and <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>In the <code><font color="#008040">Navigator</font></code> 
+   view, right-click your project and select <code><font color="#008040">
+   Open as a DMC Project</font></code>. </li>
+   <li>In the <code><font color="#008040">Open a DMC 
+   Project</font></code> window, select the tool level and click
+   <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Initializing tools</font></code> 
+   window.</li>
+   <li>Click <code><font color="#008040">Add</font></code> 
+   and select your prerequisite frameworks. Click <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Installing Prereqs</font></code> 
+   window.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top]</a></p>
+ <h3><a name="Creating a new People Customization"></a>Creating a People 
+ Customization</h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New LCA Customization</font></code>. Click <code>
+   <font color="#008040">Next&gt;</font></code>. </li>
+   <li>Enter the application name in the <code>
+   <font color="#008040">Application Name</font></code> field, 
+   MyPeople  in this example.</li>
+   <li>Click ...<code><font color="#008040"> </font></code>in the Customize LCA 
+   application field and select <code><font color="#008040">People</font></code>. The list of the Use 
+   Package is automatically updated with the Use Package corresponding to the 
+   application. </li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoPeopleNewApplication.gif"></p>
+ <ol start="4">
+   <li>Click <code><font color="#008040">Finish</font></code>. The wizard 
+   creates a new workspace.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3>Creating a Modeler Object <a name="Creating a Modeler Object"></a></h3>
+ <blockquote>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+   <li>
+   From the <code><font color="#008040">File</font></code> menu, select 
+   <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. </li>
+   <li>
+   Enter the name of the new Modeler Object, 
+   Contract in this example.<div>
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table6">
+       <tr>
+         <td valign="top">
+         <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+         <td valign="top">Unlike other modelers, you can create new objects. So, we will present the 
+   2 cases allowed by RADE tools. Keep in mind that RADE tools are 
+   generic tools, and you must always check that the change you are performing is 
+   granted by <a href="#Rules to follow while customizing people">People 
+   customization rules</a>.<h4><b>Build a new class 
+         </b>(ex Contract): <font color="#000000">To build a new class, you must 
+         proceed as if you were customizing the class </font>
+         <font color="#000000">
+       <code>RscObject</code>. At the opposite of basic customizable classes, 
+          
+       <code>RscObject</code> can 
+       be derived several times, and is not replaced by the new class created. 
+       Thus,  <code>RscObject</code></font><font color="#000000"> provides only the structure and a behavior for new 
+       classes, in order that they can be interpreted correctly by ENOVIA.</font>
+         </h4></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+   
+     
+       <ol start="4">
+         <li>Select the RscObject in the <code><font color="#008040">Super Class</font></code> 
+         list. 
+                    <table border="0" cellpadding="0" style="border-collapse: collapse" id="table7">
+             <tr>
+               <td>
+       <img border="1" src="images/CAADmcCustoPeopleModelerContrat.gif" width="363" height="161"></td>
+             </tr>
+           </table>
+         </li>
+         <li>Click <code><font color="#008040">
+         Insert</font></code> to add any 
+         attribute to your Contract.</li>
+         <li>Optional: Add a new index by using the second 
+         <code><font color="#008040">Insert</font></code> button.</li>
+         <li>In this sample, we create a list of STRING as reference to 
+         partners.</li>
+         <li>Click <code><font color="#008040">
+         OK</font></code> to finish the 
+         command.</li>
+       </ol>
+     </blockquote>
+   </blockquote>
+   <ul>
+     <li>
+     <h4><b>Customizing an existing class </b>(ex CustoProject)</h4>
+     </li>
+   </ul>
+   <p align="center">
+   <img border="0" src="images/CAADmcCustoPeopleModelerProject.jpg" width="787" height="688"></p>
+   <blockquote>
+     <blockquote>
+       <ol>
+         <li>Enter the name of the new Modeler Object : CustoProject.</li>
+         <li>Select the RscProject in the Combo Box.</li>
+         <li>Click <code><font color="#008040">
+         Insert</font></code> to add any 
+         attribute to your CustoProject.</li>
+         <li>You can also add a new index by using the second 
+         <code>
+         <font color="#008040">Insert</font></code> button.</li>
+         <li>Click <code><font color="#008040">
+         OK</font></code> to finish the 
+         command.</li>
+       </ol>
+     </blockquote>
+   </blockquote>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Generate the metadata file"></a>Generating the Dictionary File</h3>
+   <ol>
+     <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+    <li>Select <code><font color="#008040">DMC Project-&gt;Generate VPM Dictionary 
+     file</font></code>.</li>
+   </ol>
+   <p align="center">
+   <img border="0" src="images/CAADmcCustoPeopleMetadataGeneration.jpg" width="353" height="476"></p>
+   <p>The wizard creates <i>MyPeople.metadata</i> under the directory MyPeople/CNext/code/dictionary.</p>
+   <h3>Generating the SQL Script Files</h3>
+   <ul>
+     <li>Select<code><font color="#008040"> DMC Project-&gt;Publish 
+     VPM Dictionary file in database</font></code>.
+     <div align="center">
+       <table>
+         <tr>
+           <td>
+           <img border="0" src="images/CAADmcCustoPeopleMetadataGeneration.gif" width="467" height="470"></td>
+         </tr>
+       </table>
+     </div>
+     </li>
+     <li>This will launch the first part of the publishing process during which 
+     *.sql or *.clp files will be created under the directory <code>MyPeople/CNext/reffiles/DBMS/ddl</code>.</li>
+     <li>This publish step is run as if you did a simulation with any other 
+     domain than PEOPLE. In fact SQL orders are not propagated to the database 
+     at this step.</li>
+     <li>At the end of this process, you should be warned that you cannot 
+     disable simulation when customizing People with RADE tools. To go on with 
+     the Publishing process, you have to be ENOVIA admin and go to the server.</li>
+   </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Publishing Process"></a>Publishing Process</h3>
+ <blockquote>
+   <p>Bear in mind that this step is really sensitive. And a bad 
+   customization could have your ENOVIA server crashed. So at this step, only an 
+   ENOVIA database administrators are allowed to publish modifications to 
+   the database, after checking the customization.</p>
+   <table>
+     <tr>
+       <td width="32" valign="top">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td valign="top">
+   <p>
+   To prevent you from losing any information, a backup of 
+   your database is REQUIRED before publishing the 
+   customization to the database. If any of the 
+   following steps failed then return to this backup step and restore your 
+   database.</p></td>
+     </tr>
+   </table>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Publish the customization"></a>Publishing the Customization</h3>
+ <p>Now it is time to modify the ENOVIA database. To do so:
+ </p>
+ <ol>
+   <li>Launch catstart.</li>
+   <li>Set 2 extra environment variables. In some cases, one more environment 
+	variable is required.</li>
+   <li>Launch the dedicated script.</li>
+ </ol>
+ <p>Steps to follow:</p>
+ <ol>
+   <li>
+   <p>Set-up the ENOVIA runtime environment with the catstart 
+   command</p>
+   <p>on Unix:</p>
+   <p><code>$ENOVIA_INSTALL_PATH/$OSDS/code/command/catstart -run ksh -env $EnvName 
+   -direnv $EnvDir</code></p>
+   <p>on Windows:</p>
+   <p><code>%ENOVIA_INSTALL_PATH%\win_b64\code\bin\catstart -run cmd -env %EnvName% 
+   -direnv %EnvDir%</code></p>
+   <p>Where<i>:</i></p>
+   <p><b><i>ENOVIA_INSTALL_PATH</i></b> is the location where you 
+   installed the ENOVIA CD. </p>
+   <p><b><i>OSDS</i></b> is the Unix operating system tag (eg. aix_a).
+   </p>
+   <p><b><i>EnvName</i></b> is the name of the ENOVIA environment 
+   (Default is: ENOVIA_LCA.V5Rxx.Bxx) </p>
+   <p><b><i>EnvDir</i></b> is the environment folder containing the 
+   EnvName.txt file.</p></li>
+   <li>
+   <p>Export the following variables:<div>
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table4">
+       <tr>
+         <td><b><i>ENOVApplicationPath</i></b></td>
+         <td>The location where your customization is stored</td>
+       </tr>
+       <tr>
+         <td><i><b>ENOVDBAPSSD</b></i></td>
+         <td>The password of the ENOVIA DBA administrator</td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p>For example:</p>
+ <p>on Unix:<br>
+ export ENOVApplicationPath=/u/users/fya/MSDEV/E__TMP_WSCUSTOPEOPLE<br>
+ export ENOVDBAPSSD=fya</p>
+ <p>on Windows:<br>
+ set ENOVApplicationPath=C:\users\fya\MSDEV\E__TMP_WSCUSTOPEOPLE<br>
+ set ENOVDBAPSSD=fya</p>
+ <div>
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table5">
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+       <td valign="top">All other needed parameters are stored in a file CAAPeopleVariables 
+ located in ENOVApplicationPath. You cannot go on if this file has not been 
+       generated using RADE tools during the first part of the publish operation (simulation 
+ mode). You may change the backup/deployment directory referred to by 
+       the variable ENOVSavePath 
+ to the location of your choice (the default being /tmp on Unix and C:\tmp on 
+ Windows) by editing this file.</td>
+     </tr>
+   </table>
+ </div>
+ <p><u><b>WARNING: Particular cases</b></u></p>
+	<p>This is happening whenever the workspace containing the P&amp;O customization 
+	(i.e. ENOVApplicationPath) requires a workspace containing any other modeler 
+	customizations (Product, Conf, etc.) that itself requires the ENOVIA 
+	installation path. In these cases, the CATInstallPath contains a 
+	concatenation of all the required workspaces that prevents the P&amp;O 
+	publication script from working properly. To avoid this useless 
+	concatenation, one supplementary environment variable is required, named 
+	ENOVInstallPath. This environment variable needs to be set equal to the 
+	ENOVIA installation path only.</p>
+ <p>For example:</p>
+ <p>on Unix:<br>
+ export ENOVInstallPath=<code>$ENOVIA_INSTALL_PATH/$OSDS</code></p>
+ <p>on Windows:<br>
+ set ENOVInstallPath=<code>%ENOVIA_INSTALL_PATH%\win_b64</code></p>
+   <p>Where<i>:</i> </p>
+   <p><b><i>ENOVIA_INSTALL_PATH</i></b> is the location where you 
+   installed the ENOVIA CD.</p>
+   <p><b><i>OSDS</i></b> is the Unix operating system tag (eg. aix_a).
+   </p>
+   <p>3. Launch the script:</p>
+ <p>on Unix:</p>
+ <p><b>$ENOVIA_INSTALL_PATH/$OSDS/code/command/CAAPublishPnOModel.sh</b></p>
+ <p>on Windows:</p>
+ <p><b>%</b><b>ENOVIA_INSTALL_PATH%\win_b64\code\command\CAAPublishPnOModel.bat</b></p>
+ <p>You have to know that 4 sub-steps are performed while the script is 
+ processed:</p>
+ <ol>
+   <li>First, while publishing, old records located in original 
+	People tables 
+   are erased. That is why a file containing all data about these records are 
+   exported to a file called <font face="Courier New" color="#008000">AllPnOObjectsBeforeCusto</font> in /tmp directory (or C:\tmp 
+   directory on Windows), just before performing the database update. At the end 
+   of the current publishing process all those records have to be re-imported into 
+   the 
+   database. This import step is not part of the publishing script: Use the
+   <font face="Courier New" color="#008000">VPMPeopleImport</font> tool to re-import your P&amp;O data after the 
+   publishing process. Therefore, the file 
+   <font face="Courier New" color="#008000">AllPnOObjectsBeforeCusto</font> must not be 
+   destroyed, and must be securely stored at the temporary location (referred to 
+   by <font face="Courier New" color="#008000">ENOVSavePath</font> in the file
+   <font face="Courier New" color="#008000">CAAPeopleVariables</font> that 
+   points by default to /tmp or C:\tmp).</li>
+   <li>Then, the SQL orders (contained in the script files generated by RADE 
+   tools) are processed in order to update the database structure. And changes 
+   occur in the database to use your customization. This is the more critical 
+   sub-step.</li>
+   <li>Although your customization is now published in the database, you still cannot use it. The only way to edit customized P&amp;O data is to use the
+   <font face="Courier New" color="#008000">VPMPeopleEdit</font> tool. But to identify and modify each new object or 
+   customized object, 2 more files need to be generated using the command<b><font color="#000080">
+   </font></b> <font face="Courier New" color="#008000">VPMPeopleCusto</font> (automatically called at this step), which are:<p>
+   on Unix:<ul>
+     <li>$ENOVApplicationPath/$OSDS/code/dictionary/<font face="Courier New" color="#008000">VPMPeopleCusto</font><b>.</b><font face="Courier New" color="#008000">xml</font></li>
+     <li>$ENOVApplicationPath/$OSDS/resources/msgcatalog/<font face="Courier New" color="#008000">VPMPeopleCusto.CATNls</font></li>
+   </ul>
+   <p>on Windows:<ul>
+     <li>%ENOVApplicationPath%\win_b64\code\dictionary\<font face="Courier New" color="#008000">VPMPeopleCusto.xml</font></li>
+     <li>%ENOVApplicationPath%\win_b64\resources\msgcatalog\<font face="Courier New" color="#008000">VPMPeopleCusto.CATNls</font></li>
+   </ul>
+   </li>
+   <li>Finally <font face="Courier New" color="#008000">VPMPeopleUpdate</font>
+   <font face="Courier New" color="#008000">-p -m</font> is launched. This should recreate 
+   installation objects and their relations in the new customized tables 
+   (DEFAULT project, ADMIN org, VPMADMIN role, admin person, admin context, 
+   login privileges).</li>
+ </ol>
+ <p><b>Special Note about the Windows .bat file:</b></p>
+ <p>It is possible that some steps will not be performed on Windows 
+	XP because some 
+ subroutine labels declared in the .bat file are not recognized. In this case 
+ the whole publication process has to be done again until all steps are 
+ correctly performed. Examples of such labels are :<font face="Courier New" color="#008000">DoVPMPeopleImport</font>, :<font face="Courier New" color="#008000">DoLoadAdmin</font>, 
+ etc.</p>
+ <h3><a name="Finalizing the Customization"></a>Finalizing the Customization</h3>
+ <p>Remember that at the end of the publishing 
+ process all old records have to be re-imported into the database. This import 
+ step is not included in the publishing script: Use the 
+ <font face="Courier New" color="#008000">VPMPeopleImport</font> tool to re-import your P&amp;O data after the publishing process. 
+ Therefore, you have to retrieve the file 
+ <font face="Courier New" color="#008000">AllPnOObjectsBeforeCusto</font> stored at the 
+ temporary location (/tmp or ENOVSavePath if you modified the default location) 
+ and run:</p>
+ <p> on Unix:</p>
+ <p align="center">$ENOVIA_INSTALL_PATH/$OSDS/code/command/catstart -run<i> &quot;</i>VPMPeopleImport<i>
+ </i>/tmp/AllPnOObjectsBeforeCusto<i>&quot; </i>
+ <code>-direnv $EnvDir -env $EnvName</code></p>
+ <p> on Windows:</p>
+ <p align="center">%ENOVIA_INSTALL_PATH%\win_b64\code\bin\catstart -run<i> &quot;</i>VPMPeopleImport<i>
+ </i>C:\tmp\AllPnOObjectsBeforeCusto<i>&quot;
+ </i><code>-direnv %EnvDir% -env %EnvName%</code></p>
+ <p><i>where: </i></p>
+ <ul>
+   <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the ENOVIA 
+   CD. </li>
+   <li><b>OSDS</b> is the Unix operating system tag (eg. solaris_a, 
+   aix_a, hpux_b). </li>
+   <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file.</li>
+   <li><b>EnvName</b> is the name of the customization environment (Default is: <b>WorkspaceEnv</b><code>)</code> </li>
+ </ul>
+ <p>Note that during the publishing process, 
+ <font face="Courier New" color="#008000">VPMPeopleCusto</font> has generated a file 
+ called <font face="Courier New" color="#008000">VPMPeopleCusto</font>.<font face="Courier New" color="#008000">import</font> in 
+ the directory called <font face="Courier New" color="#008000">ENOVSavePath</font> 
+ which can be used to check that the import functionality is correct in the new customized database and environment. 
+ This import file contains dummy entities and attributes of each customized type 
+ that can be imported with VPMPeopleImport as described above. If this import 
+ process is OK then you can safely import 
+ AllPnOObjectsBeforeCusto.</p>
+ <h3><a name="First preview of the database using VPMpeopleEdit"></a>First 
+ Preview of the Database Using VPMPeopleEdit</h3>
+ <p>Now, let's take a look at the People customization by launching 
+ <font face="Courier New" color="#008000">VPMPeopleEdit</font>, within the customization environment :</p>
+ <div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+   <p>On Unix:</p>
+   <p>$ENOVIA_INSTALL_PATH/$OSDS/code/command/catstart -run<i> &quot;VPMPeopleEdit&quot;
+   </i><code>-direnv $EnvDir -env $EnvName</code></p>
+   <p><code>On Windows</code></p>
+   <p>%ENOVIA_INSTALL_PATH%\win_b64\code\bin\catstart -run<i> &quot;VPMPeopleEdit&quot;
+   </i><code>-direnv %EnvDir% -env %EnvName%</code></p>
+   <p><i>where : </i></p>
+   <ul>
+     <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the 
+     ENOVIA CD. </li>
+     <li><b>OSDS</b> is the Unix operating system tag (eg. solaris_a, 
+     aix_a, hpux_b). </li>
+     <li><b>EnvDir</b> is the environment folder containing the EnvName.txt 
+     file.</li>
+     <li><b>EnvName</b> is the name of the customization environment (Default 
+     is <b>WorkspaceEnv</b><code>)</code> </li>
+   </ul>
+</div>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoPeopleResult1.jpg"></p>
+
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Modifying customer preferences and naming conventions"></a>
+ Modifying Customer Preferences</h3>
+ <p>In <font face="Courier New" color="#008000">VPMPeopleEdit</font>, by default, customized entities and 
+ attributes will appear as defined in the generated file
+ <font face="Courier New" color="#008000">VPMPeopleCus</font><font face="Courier New" color="#008000">to.CATNls</font>.<b>
+ </b>The names of the entities and attributes 
+ will correspond to the names given while customizing People.</p>
+ <p>So, to modify these names, edit 
+ <font face="Courier New" color="#008000">VPMPeopleCusto</font>.<font face="Courier New" color="#008000">CATNls</font> (located in the customization folder under 
+       CNext/resources/msgcatalog):</p><ul>
+         <li>All lines follow the pattern: entityName.attributeName=&quot;attributeName&quot;;</li>
+         <li>Example for entity CustoProject: 
+         CustoProject.IsSensitive=&quot;IsSensitive&quot;;</li>
+         <li>To change attribute names according to your preferences just edit 
+         the quoted string</li>
+         <li>Example for entity CustoProject this 
+         could be : CustoProject.IsSensitive=&quot;IsClassified&quot;;</li>
+       </ul>
+       <p>Old names will be replaced by preferred names.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Result"></a>Results</h3>
+ <blockquote>
+   <p>Now it is time to test your customization with ENOVIA client.</p>
+   <p>To use this customization, you must launch ENOVIA server within the 
+   environment of the customization. So refer the location where your 
+   customization is built on the server, as followed :</p>
+   <div style="border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+     <p>On Unix</p>
+     <p>$ENOVIA_INSTALL_PATH/$OSDS/code/command/enoviastart<i>
+     </i><code>-direnv $EnvDir -env $EnvName</code><font FACE="Arial"> -object 
+     &quot;-sdirenv $SrvEnvDir -senv $SrvEnvName&quot; </font></p>
+     <p>On Windows</p>
+     <p>%ENOVIA_INSTALL_PATH%\win_b64\code\bin\enovia<i> </i>
+     <code>-direnv %EnvDir% -env %EnvName%</code></p>
+     <p><i>where : </i></p>
+     <ul>
+       <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the 
+       ENOVIA client.</li>
+       <li><b>OSDS</b> is the client operating system tag (eg. solaris_a, 
+       aix_a, hpux_b). </li>
+       <li><b>EnvDir</b> is the client environment folder containing the 
+       EnvName.txt file</li>
+       <li><b>EnvName</b> is the name of the ENOVIA client environment ( Default 
+       is : <b>ENOVIA_LCA.V5Rxx.Bxx</b><code> )</code> </li>
+       <li><b>SrvEnvDir</b> is the server environment folder containing the 
+       EnvName.txt file.</li>
+       <li><b>SrvEnvName</b> is the name of the customization environment ( 
+       Default is : <b>WorkspaceEnv</b><code> )</code> </li>
+     </ul>
+   </div>
+ </blockquote>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Deploying a People Customization"></a>Deploying a People Customization</h3>
+<p>Once your People Customization has been published and 
+tested in your development environment, it is time to deploy it on 
+the production environment.</p>
+<p>As for publishing, there is a special process to follow to successfully 
+deploy your People Customization:</p>
+ <ol>
+   <li>Make a database backup</li>
+   <li>Export People data</li>
+   <li>Launch the deployment shell</li>
+	<li>Re-import People data</li>
+ </ol>
+ <p>Let's detail these steps.</p>
+<p>1. Make a database backup</p>
+ <div>
+   <table>
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td valign="top">To prevent you from losing any information, a backup of 
+your database is REQUIRED before deploying the customization to the 
+database. <br>
+If any of the following steps fail, then return to this backup step and 
+restore your database.</td>
+     </tr>
+   </table>
+ </div>
+<p>2. Export People data</p>
+ <div>
+   <table>
+     <tr>
+       <td valign="top">
+       &nbsp;</td>
+       <td valign="top">This step is REQUIRED.</td>
+     </tr>
+   </table>
+ </div>
+<p>A DROP of the old tables is necessary and the People data are entirely 
+deleted. So to restore the People data, an export is required to 
+prepare the last step, which consists in importing these saved data back to the 
+new tables.</p>
+<p>On your ENOVIA server installation, run</p>
+ <p align="center">$ENOVIA_INSTALL_PATH/$OSDS/code/command/catstart -run<i> &quot;</i>VPMPeopleImport<i>
+ -export
+ </i>/tmp/AllPnOObjectsBeforeCusto<i>&quot; </i>
+ <code>-direnv $EnvDir -env $EnvName</code></p>
+ <p><i>where : </i></p>
+ <ul>
+   <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the ENOVIA 
+   CD. </li>
+   <li><b>OSDS</b> is the Unix operating system tag (eg. solaris_a, 
+   aix_a, hpux_b). </li>
+   <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file.</li>
+   <li><b>EnvName</b> is the name of the production environment.</li>
+ </ul>
+ <p>This will save the People data in a file named 
+	AllPnOObjectsBeforeCusto (you may set the file name and directory at any 
+	suitable locations; temporary directories shown above are for illustration 
+	purpose only).</p>
+<p>3. Launch the deployment shell: CAADeployPnOCusto.sh</p>
+ <div>
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table11">
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td valign="top">The shell CAADeployPnOCusto works nearly like DeployRadeCusto 
+		except that the People data will be entirely deleted.<p>Be sure you have 
+		done step 2 before running the deployment shell.</p></td>
+     </tr>
+   </table>
+ </div>
+<p>The deployment shell will:</p>
+<ul>
+	<li>Create a new RADE directory to store customized files.</li>
+	<li>Create a new environment file.</li>
+	<li>Generate SQL orders.</li>
+	<li>Update the database accordingly.</li>
+	<li>Add the customized People modeler to the ADMIN database.</li>
+	<li>Import Default Mask generated by RADE.</li>
+</ul>
+<p>First, check the prerequisites for the deployment:</p>
+<ul>
+	<li>The Development Server and the Production Server 
+	should be installed on the same operating system. 
+	</li>
+	<li>In the ENOVSavePath directory ( generated during publishing process ), 
+	you should have 
+	<ul>
+		<li>*.custo file, *.metadata file, *.dico file, 
+		SearchEntitiesDefinition.xml, VPMPeopleCusto.xml under 
+		$OSDS/code/dictionary 
+		</li>
+		<li>*.param file under $OSDS/reffiles/DBMS/Generator</li>
+		<li>VPMPeopleCusto.CATNls under $OSDS/resources/msgcatalog</li>
+		<li>*.CustomEnv.sh under $ENOVSavePath</li>
+	</ul>
+	</li>
+</ul>
+ <div>
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table12">
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+       <td valign="top">
+<ul>
+	<li>You can make your customization on DB2 and deploy it on ORACLE ( or the 
+	other way around ).  
+	</li>
+	<li>You can deploy your customization on a customized database.</li>
+</ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+<p>Then:</p>
+<p>3.1 - From the UNIX command line, type: cd 
+$ENOVIA_INSTALL_PATH/$OSDS/code/command</p>
+ <p><i>where: </i></p>
+ <ul>
+   <li><b>ENOVIA_INSTALL_PATH</b> is the location where your Production server 
+	is installed </li>
+   <li><b>OSDS</b> is the Unix operating system tag (eg. solaris_a, 
+	aix_a, hpux_b)</li>
+ </ul>
+ <p>3.2 - Create a command file containing all the parameters you will need to 
+	run the deployment script. The parameters should all wrap continuously as 
+	one line. </p>
+ <div>
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table13">
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td valign="top">Because the command line contains the user/password of 
+       the LCA admin, maintain the confidentiality of this command file.</td>
+     </tr>
+   </table>
+ </div>
+<p>3.3 - The command line is as follows:</p>
+<p><i> ./CAADeployPnOCusto.sh ...</i></p>
+<table border="0" id="table1">
+	<tr>
+		<td width="40%"><i>-DBVendor</i></td>
+		<td width="60%">ORACLE or DB2</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-DBName</i></td>
+		<td width="60%">The name of your database</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-DBAdmHome</i></td>
+		<td width="60%">The home directory of Oracle Id or the DB2 instance ID</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-TbsName</i></td>
+		<td width="60%">The tablespace name used by ENOVIA LCA for its database 
+		tables</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-IdxTbsName</i></td>
+		<td width="60%">The tablespace name used by ENOVIA LCA for its indexes</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-TableOwner</i></td>
+		<td width="60%">The ID that is creator/owner of database tables</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-AdmUsr</i></td>
+		<td width="60%">The ENOVIA LCA administrative user ID ( often the same 
+		as TableOwner )</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-AdmPwd</i></td>
+		<td width="60%">The AdmUser password</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-DBAID</i></td>
+		<td width="60%">The database administrator ID</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-DBAPwd</i></td>
+		<td width="60%">The database administrator password</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-EnvDir</i></td>
+		<td width="60%">The full directory path to the CATEnv directory</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-EnvName</i></td>
+		<td width="60%">The name of the &quot;ENOVIA_LCA~&quot; file in CATEnv directory 
+		without the &quot;.sh&quot;</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-InitRADECustoDir</i></td>
+		<td width="60%">The ENOVSavePath directory of the publish</td>
+	</tr>
+	<tr>
+		<td width="40%"><i>-RADECustoDir</i></td>
+		<td width="60%">The directory where you want to deploy the 
+		customization</td>
+	</tr>
+	</table>
+<p>For command line help with this script, simply type: <i>CAADeployPnOCusto.sh &lt;return&gt;</i></p>
+<p>from the UNIX command line and it will return some help text.</p>
+<p><br>
+Here are two sample executable files, one for Oracle and one for DB2</p>
+<p><b>DB2 :</b><br>
+<i>./CAADeployPnOCusto.sh -DBVendor DB2 -DBName ENOVRADE -DBAID db2adm7 -DBAPwd 
+db2adm7 -DBAdmHome /home/data/db2adm7 -TbsName TBS1_8K -IdxTbsName TBS1_8K 
+-TableOwner EV5ADM -AdmUsr ev5adm -AdmPwd EV5ADM -EnvDir /CATEnv -EnvName 
+ENOVIA_LCA.V5R11.B11 -InitRADECustoDir /home/data/ev5adm/MSDEV/CustoOutput 
+-RADECustoDir /home/data/vpm5adm/RADECusto</i></p>
+<p><b>ORACLE:<br>
+</b><i>./CAADeployPnOCusto.sh -DBVendor ORACLE -DBName ORARADE -DBAID ora7 
+-DBAPwd ora7 -DBAdmHome /home/oracle/8.1.7 -TbsName TBS1_8K -IdxTbsName TBS1_8K 
+-TableOwner EV5ADM -AdmUsr ev5adm -AdmPwd EV5ADM -EnvDir /CATEnv -EnvName 
+ENOVIA_LCA.V5R11.B11 -InitRADECustoDir /home/data/ev5adm/MSDEV/CustoOutput 
+-RADECustoDir /home/data/vpm5adm/RADECusto</i></p>
+<p>3.4 - Run the file script from the UNIX command line. Information status 
+messages appears. Some steps will take several minutes, during which no 
+additional messages will appear.</p>
+<p>3.5 - Run ./catstart -run &quot;VPMPeopleEdit&quot; -env
+ <code>$EnvName</code> -direnv
+ <code>$EnvDir</code> to test your deployment</p>
+ <p><i>where : </i></p>
+ <ul>
+   <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file.</li>
+   <li><b>EnvName</b> is the name of the new production environment.</li>
+ </ul>
+ <p>4. Re-import People data</p>
+ <div>
+   <table border="0" cellpadding="0" style="border-collapse: collapse" id="table14">
+     <tr>
+       <td valign="top">
+       <img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+       <td valign="top">This step is REQUIRED.</td>
+     </tr>
+   </table>
+ </div>
+<p>To restore the People data that have been saved at step 2, import 
+them back to the database using the backup file AllPnOObjectsBeforeCusto.</p>
+<p>On your ENOVIA server installation, run</p>
+ <p align="center">$ENOVIA_INSTALL_PATH/$OSDS/code/command/catstart -run<i> &quot;</i>VPMPeopleImport<i>
+ </i>/tmp/AllPnOObjectsBeforeCusto<i>&quot; </i>
+ <code>-direnv $EnvDir -env $EnvName</code></p>
+ <p><i>where : </i></p>
+ <ul>
+   <li><b>ENOVIA_INSTALL_PATH</b> is the location where you installed the ENOVIA 
+   CD. </li>
+   <li><b>OSDS</b> is the Unix operating system tag (eg. solaris_a, 
+   aix_a, hpux_b). </li>
+   <li><b>EnvDir</b> is the environment folder containing the EnvName.txt file.</li>
+   <li><b>EnvName</b> is the name of the new production environment.</li>
+ </ul>
+ <p>Be sure to re-import the right file generated at step 2 (in particular check 
+	its name and directory if you did not follow the examples).</p>
+<p>This step ends the deployment of a People customization.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Migrating a People Customization"></a>Migrating a People Customization</h3>
+	<p>Migrating a People customization from release N to release N+1 is just 
+	like any other customization migrations plus the peculiarities of the People 
+	customization publication. Refer to the use case &quot;<a href="CAADmcMigratingCusto.htm">Migrating 
+	an Existing Customization</a>&quot; and strictly follow the provided 
+	instructions.</p>
+	<p>Then, you will have to perform a specific People publication of your migrated 
+	workspace, just as it is exposed in the present documentation. To know more, 
+    see <a href="#Publishing Process">Publishing 
+	Process</a>. This completes the migration of your People customization.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [Dec 2004]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>3</strong> [Apr 2005]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>4</strong> [Oct 2005]</td>
+     <td valign="top">Document updated for Migration and 
+		Deployment</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>5</strong> [March 2006]</td>
+     <td valign="top">Document updated </td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>6</strong> [Sept 2007]</td>
+     <td valign="top">Document updated for Deployment</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

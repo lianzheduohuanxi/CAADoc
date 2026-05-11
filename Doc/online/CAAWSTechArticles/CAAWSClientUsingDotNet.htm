@@ -1,0 +1,533 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>
+      Generating a C# Client Binding
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Generating a C# Client Binding
+            </h3><em>How to use WSDL and XSD definitions to generate C# client bindings for CAA Web services</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="tech" colspan="2">
+            Technical Article
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article introduces the <strong>.NET Framework</strong> Web Services support and explains how to use
+              the <strong>Web Services Description Language Tool (wsdl.exe)</strong> in order to generate C# client
+              bindings for <strong>CAA Web services</strong>. These bindings can be used to create client applications
+              that interact with CAA Web services.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>.NET Framework Web Services Overview</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>Officially Certified Release</strong></a>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>.NET Framework Web Services Overview
+    </h3>
+    <p>
+      The .NET Framework natively provides support to build Web services, as well as to consume them. In the context of
+      CAA Web services, only the client side feature of the .NET Framework is required:
+    </p>
+    <ul>
+      <li>
+        <strong>Buildtime</strong>: the .NET Framework SDK ships with a tool named <strong>Web Services Description
+        Language Tool (wsdl.exe)</strong>. It can be used to generate a C# client binding (or proxy class) based on the
+        WSDL and XSD definitions of a CAA Web service,
+      </li>
+      <li>
+        <strong>Runtime</strong>: using the .NET Framework runtime, the generated C# client binding handles the work of
+        sending and receiving SOAP messages to the target CAA Web service implementation. The SOAP network endpoint URI
+        describing a deployed implementation of the CAA Web service is set on the generated C# proxy class.
+      </li>
+    </ul>
+    <p>
+      <strong>Note</strong>: If you have already installed Microsoft Visual Studio .NET 2003, you do not need to
+      install the .NET Framework SDK separately. Visual Studio .NET 2003 includes the SDK.
+    </p>
+    <p>
+      <img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">
+      &nbsp;The wsdl.exe tool shipped with the .NET Framework 1.1 suffers from a limitation. It does not support WSDL
+      documents containing <strong>WS-I conformance claims</strong>, even though the use of the related XML elements
+      are officially documented in the <strong>WS-I Basic Profile</strong> [<a href="#References">1</a>]. As a
+      consequence, if you try to generate a C# proxy using the wsdl.exe tool using one of the CAA Web services WSDL
+      documents, it will issue an error. Fortunately, this particular wsdl.exe issue has been fixed with <strong>.NET
+      Framework 1.1 Service Pack 1</strong>. As a consequence, this level is the offical minimal prerequisite when
+      trying to generate a C# proxy for CAA Web services.
+    </p>
+    <p>
+      Without Service Pack 1, the workaround would consist in the following steps:
+    </p>
+    <ol>
+      <li>Retrieve the WSDL interface document describing the CAA Web service you wish to consume and save it to your
+      local file system,
+      </li>
+      <li>Retrieve all of the XSD referenced by the WSDL interface document and save them at the same location,
+      </li>
+      <li>Update the relative paths contained in the <strong>wsdl:types</strong> section of the WSDL interface document
+      so that it directly references the locally available XSD files,
+      </li>
+      <li>Remove the <strong>wsdl:documentation</strong> element contained in the WSDL interface document. It can be
+      done manually or using a tool. For example, you can download the <strong>DeDoc</strong> tool available on the
+      GotDotNet Web site [<a href="#References">2</a>]. It automatically removes WSDL elements that contain children
+      (e.g. WS-I conformance claims) allowing wsdl.exe to consume these WSDL documents.
+      </li>
+    </ol>
+    <p>
+      The sample WSDL document below highlights the WS-I conformance claims which is contained in the
+      <em>wsdl:documentation</em> element and that must be removed:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">&lt;?</font><font color="#800000">xml</font> <font color="#FF0000">version</font><font color="#0000FF">="1.0"</font> <font color="#FF0000">encoding</font><font color="#0000FF">="UTF-8" ?&gt;</font><br>
+            <font color="#0000FF">&lt;</font><font color="#800000">definitions</font> [...]<font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;[...]<br>
+            &nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">binding</font> [...]<font color="#0000FF">&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<strong><font color="#0000FF">&lt;</font><font color="#800000">documentation</font>&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;</font><font color="#800000">wsi:Claim</font> <font color="#FF0000">conformsTo</font><font color="#0000FF">="http://ws-i.org/profiles/basic/1.0"&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">documentation</font><font color="#0000FF">&gt;</font></strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;[...]<br>
+            &nbsp;&nbsp;<font color="#0000FF">&lt;/</font><font color="#800000">binding</font><font color="#0000FF">&gt;</font><br>
+            <font color="#0000FF">&lt;/</font><font color="#800000">definitions</font><font color="#0000FF">&gt;</font></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      You can refer to the .NET Framework documentation for further details on Web services related topics. See
+      [<a href="#References">3</a>] for access to some accurate links on the MSDN Web site.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>Officially Certified Release
+    </h3>
+    <p>
+      The term "certified" is intended to describe the fact that a given .NET Framework release has been successfully
+      tested and validated in order to consume CAA Web services. As of now, the certified release requires:
+    </p>
+    <ul>
+      <li>
+        <strong>Microsoft .NET Framework 1.1 + Software Development Kit + Service Pack 1</strong>.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step
+    </h3>
+    <p>
+      Before using wsdl.exe to create the C# proxy, it is important to get an understanding of some of the concepts
+      that are related to the WSDL documents describing the available CAA Web services. See [<a href="#References">4</a>] 
+      for an overview of these concepts.
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Generating the C# Client Binding</a>
+      </li>
+      <li>
+        <a href="#3.2">Overview of the Generated Code</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>Generating the C# Client Binding
+    </h4>
+    <p>
+      As detailed in the following section, there is not much difference between using either the WSDL interface
+      document or the WSDL implementation document as input of the wsdl.exe tool (unlike what can be observed with the
+      Axis WSDL2Java compiler for example). There are several ways available to access these WSDL documents:
+    </p>
+    <ul>
+      <li>
+        <strong>Retrieving WSDL interface documents from the file system</strong>: all of the WSDL interface documents
+        are available from the runtime view of every product that provides CAA Web services. You can refer to 
+        [<a href="#References">5</a>] in order to determine the exact location of the WSDL interface document describing the CAA
+        Web services you wish to consume,
+      </li>
+      <li>
+        <strong>Retrieveing WSDL interface documents from a remote location</strong>: once a product has been deployed
+        as a web application on a target application server, you can use the <code>file</code> servlet to access all of
+        the files delivered in the runtime view. You can refer to [<a href="#References">5</a>] for the description of
+        the URI scheme providing access to each available WSDL interface document,
+      </li>
+      <li>
+        <strong>Retrieveing WSDL implementation documents from a remote location</strong>: once a product has been
+        deployed as a web application on a target application server, you can use the <code>wsdl</code> servlet to
+        dynamically generate the content of the WSDL implementation documents. These files are not physically delivered
+        in the file system, because they contain deployment specific information. You can refer to [<a href="#References">6</a>] 
+        for the description of the URI scheme providing access to each available WSDL
+        implementation document.
+      </li>
+    </ul>
+    <p>
+      The remote location approaches are typically useful if you do not have access to the file system of the product
+      installation (for example, it may be the case for security considerations).
+    </p>
+    <p>
+      In order to use the wsdl.exe tool, you need to open up a command prompt. Click on <strong>Start</strong> -&gt;
+      <strong>Run</strong> and then type <strong>cmd</strong>. From the prompt, browse to the \Bin directory of your
+      .NET Framework 1.1 SDK installation. By default, it is located in the <strong>C:\Program
+      Files\Microsoft.NET\SDK\v1.1\Bin</strong> directory. For details on the wsdl.exe tool options, you can issue the
+      following command: <strong>wsdl /?</strong>.
+    </p>
+    <p>
+      You are now ready to invoke the wsdl.exe tool, providing as input the WSDL document describing the CAA Web
+      service you wish to consume:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>wsdl /namespace:<em>&lt;Namespace&gt;</em> /out:<em>&lt;Filename&gt;</em>
+            <em>&lt;WSDL-document&gt;</em></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Namespace&gt;</em></code>: the namespace for the generated C# proxy class,
+      </li>
+      <li>
+        <code><em>&lt;Filename&gt;</em></code>: the filename of the generated C# proxy class,
+      </li>
+      <li>
+        <code><em>&lt;WSDL-document&gt;</em></code>: the path or URI of the input WSDL document (as explained above).
+      </li>
+    </ul>
+    <p>
+      <img src="../CAAIcons/images/solution.gif" alt="Solution" width="28" height="30">
+      &nbsp;When the WSDL document is accessed from a remote location using the HTTP protocol, it may be required
+      to set security settings for the wsdl.exe tool. This is typically the case when the remote server is secured
+      using Basic Authentication. In such case, you need to provide two extra parameters:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>wsdl /namespace:<em>&lt;Namespace&gt;</em> /out:<em>&lt;Filename&gt;</em>
+            /username:<em>&lt;Username&gt;</em> /password:<em>&lt;Password&gt;</em>
+            <em>&lt;WSDL-document&gt;</em></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Username&gt;</em>, <em>&lt;Password&gt;</em></code>: valid set of credentials for Basic
+        Authentication.
+      </li>
+    </ul>
+    <p>
+      Upon successful invocation, you should receive the following message at the command prompt: <em>Writing file
+      'XXX.cs'</em>, where <em>XXX</em> is the name of the file provided as input of the wsdl.exe tool:
+    </p>
+    <table border="0">
+      <caption>
+        <a name="Fig1" id="Fig1"></a>Fig.1: Generating the C# Client Binding
+      </caption>
+      <tbody>
+        <tr>
+          <td valign="top">
+            <img border="0" src="images/CAAWSClientUsingDotNet_Fig1.png" alt="Generating the C# Client Binding">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Overview of the Generated Code
+    </h4>
+    <p>
+      The wsdl.exe tool always generates a single source file for each WSDL document used as input, no matter its type
+      (WSDL interface document versus WSDL implementation document). The generated file contains a proxy class that
+      defines both synchronous and asynchronous methods for each operation defined in the WSDL document. For example,
+      when the <em>IApplicationBinder.wsdl</em> WSDL interface document defines the <code>getUserContexts</code>
+      operation, wsdl.exe generates the following methods: <code>bindToApplication</code>,
+      <code>BeginbindToApplication</code> and <code>EndbindToApplication</code>. The first method can be used to
+      interact with the target CAA Web service synchronously, and the other ones can be used to interact with it
+      asynchronously.
+    </p>
+    <p>
+      The wsdl.exe tool generates almost the exact source code when using the WSDL interface document as input than
+      when using the WSDL implementation document. The only differences are:
+    </p>
+    <ul>
+      <li>
+        <strong>WSDL implementation document</strong>: the name of the C# proxy class constructor is computed from the
+        value of the <em>name</em> attribute of the <em>wsdl:service</em> element. In the constructor body, the
+        <em>Url</em> property is set and is computed from the value of the <em>location</em> attribute of the
+        <em>soap:address</em> element.<br>
+        <br>
+        The code below provides a sample of the generated code when using as input the WSDL implementation document
+        describing the ENOPosApplicationBinderImpl CAA Web service implementation:
+      </li>
+    </ul>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">namespace</font> com.dassault_systemes.caaplmsecurity.caaenoposappbinderdotnet1_1clientbase.enoposapplicationbinderimpl {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;[System.Diagnostics.DebuggerStepThroughAttribute()]<br>
+            &nbsp;&nbsp;[System.ComponentModel.DesignerCategoryAttribute("code")]<br>
+            &nbsp;&nbsp;[System.Web.Services.WebServiceBindingAttribute(
+            &nbsp;&nbsp;&nbsp;&nbsp;Name="IApplicationBinderBinding", 
+            &nbsp;&nbsp;&nbsp;&nbsp;Namespace="urn:com:dassault_systemes:ENOPosWS:ENOPos_ws:IApplicationBinder")]<br>
+            &nbsp;&nbsp;<font color="#0000FF">public class</font> <strong>ENOPosApplicationBinderImpl</strong> : System.Web.Services.Protocols.SoapHttpClientProtocol {<br>
+            &nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">public</font> <strong>ENOPosApplicationBinderImpl</strong>() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color="#0000FF">this</font>.Url = "http://karindsy.dsy.ds:9081/LCAB17D49/servicerouter?service=urn!com!dassault_syst" +<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"emes!ENOPosWS!ENOPosAppliBinder!ENOPosApplicationBinderImpl";</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <strong>WSDL interface document</strong>: the name of the constructor is computed from the value of the
+        <em>wsdl:portType</em> element. The <em>Url</em> property is not set inside the constructor.<br>
+        <br>
+        The code below provides a sample of the generated code when using as input the WSDL interface document
+        describing the IApplicationBinder CAA Web service interface:
+      </li>
+    </ul>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">namespace</font> com.dassault_systemes.caaplmsecurity.caaenoposappbinderdotnet1_1clientbase.enoposapplicationbinderimpl {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;[System.Diagnostics.DebuggerStepThroughAttribute()]<br>
+            &nbsp;&nbsp;[System.ComponentModel.DesignerCategoryAttribute("code")]<br>
+            &nbsp;&nbsp;[System.Web.Services.WebServiceBindingAttribute(
+            &nbsp;&nbsp;&nbsp;&nbsp;Name="IApplicationBinderBinding", 
+            &nbsp;&nbsp;&nbsp;&nbsp;Namespace="urn:com:dassault_systemes:ENOPosWS:ENOPos_ws:IApplicationBinder")]<br>
+            &nbsp;&nbsp;<font color="#0000FF">public class</font> <strong>IApplicationBinderBinding</strong> : System.Web.Services.Protocols.SoapHttpClientProtocol {<br>
+            &nbsp;&nbsp;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000FF">public</font> <strong>IApplicationBinderBinding()</strong> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Aside from the proxy class itself, wsdl.exe also generates the type mapping between XML structures and C#
+      objects. For every <strong>complexType</strong> element defined in the XSD referenced by a given WSDL interface
+      document, wsdl.exe generates the corresponding C# class in the same namespace than the C# proxy one. The XSD
+      types are directly mapped to .NET types when available. The example below describes how a given
+      <em>complexType</em> referenced in the <em>IApplicationBinder.wsdl</em> file is mapped to its corresponding C#
+      equivalent:
+    </p>
+    <p>
+      Complex type definition defined in <em>PPRGenericWS.xsd</em>:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><font color="#0000FF">&lt;<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">complexType name</font>="Identifier"&gt;<br>
+            &nbsp;&nbsp;&lt;<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">sequence</font>&gt;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">element minOccurs</font><font color="#0000FF">="1"</font> <font color="#800000">maxOccurs</font><font color="#0000FF">="1"</font> <font color="#800000">form</font><font color="#0000FF">="qualified"</font> <font color="#800000">name</font><font color="#0000FF">="Identifier"</font> <font color="#800000">nillable</font><font color="#0000FF">="true"</font> <font color="#800000">type</font><font color="#0000FF">="xsd:base64Binary" /&gt;</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">element minOccurs</font><font color="#0000FF">="1"</font> <font color="#800000">maxOccurs</font><font color="#0000FF">="1"</font> <font color="#800000">form</font><font color="#0000FF">="qualified"</font> <font color="#800000">name</font><font color="#0000FF">="Location"</font> <font color="#800000">nillable</font><font color="#0000FF">="true"</font> <font color="#800000">type</font><font color="#0000FF">="xsd:string" /&gt;</font><br>
+            &nbsp;&nbsp;&lt;/<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">sequence</font>&gt;<br>
+            &lt;/<font color="#FF0000">xsd</font><font color="#FF00FF">:</font><font color="#800000">complexType</font>&gt;</font></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Corresponding C# class generated by wsdl.exe:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>[System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:com:dassault_systemes:PPRGenericWS")]<br>
+            <font color="#0000FF">public class</font> Identifier {<br>
+            &nbsp;&nbsp;[System.Xml.Serialization.XmlElementAttribute("Identifier", DataType="base64Binary", IsNullable=true)]<br>
+            &nbsp;&nbsp;<font color="#0000FF">public</font> System.Byte[] Identifier1;<br>
+            <br>
+            &nbsp;&nbsp;[System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]<br>
+            &nbsp;&nbsp;<font color="#0000FF">public string</font> Location;<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      A C# client binding (or proxy class) can be generated for CAA Web services using the Web Services Description
+      Language Tool (wsdl.exe). You must use apply the Service Pack 1 to your Microsoft .NET Framework 1.1 + SDK
+      installation in order to avoid the issue of the wsdl.exe tool that fails to understand WS-I conformance claims
+      contained in the WSDL interface documents describing the available CAA Web services.
+    </p>
+    <p>
+      The generated C# client binding can be used to consume the related CAA Web service implementations that have
+      been deployed on a target application server. For more details, please refer to the use cases describing how to
+      consume the CAA Web services you wish to use.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSQuickRefs/CAAWSLinks.htm#1.4">WS-I Basic Profile 1.0</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSQuickRefs/CAAWSLinks.htm#3.5">DeDoc Tool</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSQuickRefs/CAAWSLinks.htm#2.2">.NET Framework Developer's Guide</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [4]
+          </td>
+          <td valign="top" align="left">
+            <a href="CAAWSWSDLDefinitions.htm">CAA Web Services and WSDL Definitions</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [5]
+          </td>
+          <td valign="top" align="left">
+            <a href="CAAWSWSDLDefinitions.htm#2">WSDL Interface Documents</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [6]
+          </td>
+          <td valign="top" align="left">
+            <a href="CAAWSWSDLDefinitions.htm#3">WSDL Implementation Documents</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p>
+      <em>Copyright © 1994-2006, Dassault Systèmes. All rights reserved.</em>
+    </p>
+  </body>
+</html>

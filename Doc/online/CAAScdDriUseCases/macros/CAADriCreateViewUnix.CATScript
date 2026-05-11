@@ -1,0 +1,61 @@
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Create A Drawing document with a front view and a projection view
+'   Assumtions:   Looks for MyPart.CATPart in the DocView   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+
+Sub CATMain()
+
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim oPartToDraw As PartDocument
+    Set oPartToDraw = CATIA.Documents.Open(sDocPath & _
+             "/online/CAAScdDriUseCases/samples/Cube.CATPart")
+
+    ' Create a drawing document: it becomes the active document.
+    Dim oDrawing As DrawingDocument
+    Set oDrawing = CATIA.Documents.Add("Drawing")
+
+    ' Retrieve the active sheet
+    Dim oSheet As DrawingSheet
+    Set oSheet = oDrawing.Sheets.ActiveSheet
+
+    ' Create a view called "Front View" in this sheet
+    Dim oFrontView As DrawingView
+    Set oFrontView = oSheet.Views.Add("Front View")
+
+    ' Retrieve it generative behavior
+    Dim oFrontViewGB As DrawingViewGenerativeBehavior
+    Set oFrontViewGB = oFrontView.GenerativeBehavior
+
+    ' Declare the part to draw in this front view
+    oFrontViewGB.Document = oPartToDraw
+
+    ' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane 
+    oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
+
+    ' Position the View in the Sheet
+    oFrontView.x = 300
+    oFrontView.y = 150
+
+    ' Update the view
+    oFrontViewGB.Update 
+
+End Sub
+

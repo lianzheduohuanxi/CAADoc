@@ -1,0 +1,234 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Dress Up Automatically</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+    <h2>DMU Kinematics Simulator</h2>
+    </td>
+    <td align="right" valign="top">
+    <h2><a name="Top"></a>Creating a Dress Up Automatically</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="7%">
+    <img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td width="93%"><a name="Learn"></a>This macro shows you how to create a dressup 
+    object associated to a mechanism defined on a sub-product.
+    <p>The product on which this macro is used has the following structure:</p>
+    <p>
+    <img border="0" src="images/CAAKiiDressupIntegratorProduct.jpg" width="689" height="536"></p>
+    <p>The integrator_level product contains an architect_level product on which 
+    a mechanism is defined based on wireframe elements such as points, lines and 
+    planes:</p>
+    <p>
+    <img border="0" src="images/CAAKiiDressupArchitectProduct.jpg" width="673" height="430"></p>
+    <!----------------------------------comment------------------------------------->
+    <ul>
+      <li>The parts of the mechanim are:</li>
+    </ul>
+    <blockquote>
+      <p><b>fix_wireframe1</b></p>
+      <p><b>driver_wireframe1</b></p>
+      <p><b>rod _wireframe1</b></p>
+      <p><b>piston _wireframe1</b>.</p>
+    </blockquote>
+    <ul>
+      <li>The integrator_level product has the following 3D part: </li>
+    </ul>
+    <blockquote>
+      <p><b>designer_level_fix.1</b></p>
+      <p><b>designer_level_driver.1</b></p>
+      <p><b>designer_level_rod.1</b></p>
+      <p><b>designer_level_piston1.</b></p>
+    </blockquote>
+    <p>The purpose of this macro is to create a Dressup under the integrator_level 
+    on Mechanism.1.<br>
+    This dressup will associate all the parts of the mechanism with the 3D parts 
+    directly under the root product. This dressup attachement is based on the name 
+    of the parts: For instance <b><font color="#0000FF">fix</font>_wireframe.1</b> 
+    will be attached to the 3D part <b>designer_level_<font color="#0000FF">fix</font>.1.<br>
+    </b><br>
+    After running the macro a dressup is created.</p>
+    <p>
+    <img border="0" src="images/CAAKiiDressupProduct.jpg" width="689" height="536"></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="7%">
+    <img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td width="93%">
+    <p><a name="How"></a>CAAKiiDressupCreation is launched in CATIA [<a href="#References">1</a>]. 
+    You need to previously open the provided document.</p>
+    <p><a target="Source" href="CAAKiiDressupCreationSource.htm">CAAKiiDressupCreation.CATScript</a> 
+    is located in the CAAScdDmuUseCases module.
+    <a href="macros/CAAKiiDressupCreation.CATScript">Execute macro</a> (Windows 
+    only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="7%">
+    <img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td width="93%">
+    <p><a name="Step"></a>CAAKiiDressupCreation </p>
+    <p>has a main subroutine with the following steps:</p>
+    <blockquote>
+      <p><a href="#RootProd">Retrieve the root product </a><br>
+      <a href="#Dressups">Retrieve Dressups collection from the root product</a><br>
+      <a href="#PossibleMecList">Retrieve all the mechanisms including the sub-mechanisms
+      </a><br>
+      <a href="#ContextList">Retrieve all the corresponding context for each mechanism
+      </a><br>
+      <a href="#PossibleMecList Rank">Compute the maximum rank of PossibleMecList</a><br>
+      <a href="#Dressup Loop">Loop for automatic dressup creation only for sub-mechanisms
+      </a><br>
+      </p>
+    </blockquote>
+    <p>CAAKiiDressupCreation includes also the AutomaticDressup subroutine:</p>
+    <blockquote>
+      <p>
+      <a href="#Retrieve_all_the_first_level_products_under_the_Root_Product_">Retrieve 
+      all the first level products under the root product</a><br>
+      <a href="#Create_a_new_dressup_object_associate_to_iMechanism">Create a new 
+      dressup object associated to iMechanism</a><br>
+      <a href="#Loop_on_all_the_Products_of_the_mechanism">Loop on all the products 
+      of the mechanism</a><br>
+      <a href="#Loop_on_all_first_level_Product">Loop on all first level Product</a><br>
+      <a href="#Name_comparison_between_link_and_Product_j">Compare the name between 
+      link and Product_j</a><br>
+      <a href="#Dressup_attachement">Perform Dressup attachement</a></p>
+    </blockquote>
+    <p>CAAKiiDressupCreation includes also the ComparProductName function.<br>
+    </p>
+    <h4>Main subroutine</h4>
+    <h4><a name="RootProd"></a>Retrieve the root product</h4>
+    <p><i></p>
+    <p>RootProduct</i></p>
+    <p>: it represents the root of the product graph.</p>
+    <h4><a name="Dressups"></a>Retrieve Dressups collection from the root product</h4>
+    <p><i>MyDressups</i>: it represents the dressup collection for this product. 
+    This collection is retrieved using the <code>
+    <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">
+    GetTechnologicalObject</a> </code>method, with the string &quot;Dressups&quot;.</p>
+    <h4><a name="PossibleMecList"></a>Retrieve all the mechanisms including the 
+    sub-mechanisms </h4>
+    <p><i>PossibleMecList</i>: It represents the list of possible mechanism on which 
+    a dressup can be created. This list contains all the mechanisms under the root 
+    product and also all the mechanisms defined in the sub-products.</p>
+    <p>This list is given by the <code>
+    <a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Dressups', 'ListPossibleMechanisms'); return false;">
+    ListPossibleMechanisms </a></code>method on the <i>MyDressups </i>object.</p>
+    <h4><a name="ContextList"></a>Retrieve all corresponding context for each mechanism
+    </h4>
+    <p><i>MecContextList: </i>Each mechanism from the previous <i>PossibleMecList
+    </i>is defined under a specific product, called context and it appears in this 
+    list.<br>
+    This list is given by the <code>
+    <a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Dressups', 'ListMechanismsContext'); return false;">
+    ListMechanismsContext</a></code> method on the <i>MyDressups </i>object<code>.The 
+    context of </code><i>PossibleMecList(i) </i>mecanism is <i>MecContextList(i)
+    </i>product.</p>
+    <h4><a name="PossibleMecList Rank"></a>Compute the maximum rank of PossibleMecList</h4>
+    <p><i>PossibleMecList(i):</i>The rank of this list varies between 0 to <i>ubound(PossibleMecList</i><i>)</i>. 
+    If the list is empty the <i>ubound</i> function will return -1.<br>
+    <i>ubound(PossibleMecList)+1</i> can be also seen as the size of this list.</p>
+    <h4><br>
+    <a name="Dressup Loop"></a>Loop for automatic dressup creation only for sub-mechanisms
+    </h4>
+    <p>For each couple (Mechanism,Context) the subroutine <i>AutomaticDressup</i>
+    is called in order to create a dressup object.</p>
+    <!----------------------------------comment------------------------------------->
+    <h4>Automatic Dressup subroutine</h4>
+    <h4><a name="Retrieve_all_the_first_level_products_under_the_Root_Product_">
+    Retrieve all the first level products under the Root Product</a></h4>
+    <p><i>FirsLevelProducts</i>: It represents the collection of product under the 
+    root product.</p>
+    <h4><a name="Create_a_new_dressup_object_associate_to_iMechanism">Create a new 
+    dressup object associated to iMechanism</a></h4>
+    <p>The <code>
+    <a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Dressups', 'Add'); return false;">
+    Add</a></code> method is used on the <i>iDressups</i> collection to create the
+    <i>NewDressupobject.</i></p>
+    <h4><a name="Loop_on_all_the_Products_of_the_mechanism">Loop on all the products 
+    of the mechanism</a></h4>
+    <p>This first loop concerns all the parts of the mechanism, they can be potentially 
+    attached.</p>
+    <p><b><a name="Loop_on_all_first_level_Product">Loop on all first level Product</a></b></p>
+    <p>This second loop is embedded in the previous one.</p>
+    <h4><a name="Name_comparison_between_link_and_Product_j">Compare the name between 
+    link and Product_j</a></h4>
+    <p>The macro compares names of a given part of the mechanism with a product 
+    through the <i>ComparProductName</i> function. If the comparison is OK an attachement 
+    between <i>Link</i> and <i>Product_j</i> is done.</p>
+    <p><b><a name="Dressup_attachement">Perform Dressup attachement</a></b></p>
+    <p>The <code>
+    <a href="#" onclick="javascript:CAAlink('IDL', 'KinematicsInterfaces', 'Dressup', 'Attach'); return false;">
+    Attach</a></code> method is used on the <i>NewDressup </i>object in order to 
+    attach <i>Link</i> to <i>product_j</i></p>
+    <h4>ComparProductName function</h4>
+    <p>This function compares the name between two products: <i>iLink</i> as a given 
+    part of a mechanism and <i>iProduct</i>. All the parts of the mechanism are 
+    suffixed by &quot;_wireframe.1&quot;. &#39; <i>iProduct</i> is OK for comparison if it contains 
+    the previous name without its suffix.</p>
+    For instance, the comparison is OK for: <b><font color="#0000FF">fix</font>_wireframe.1</b> 
+    and <b>designer_level_<font color="#0000FF">fix</font>.1.</b></td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center">
+<img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p></p>
+<p>This use case has shown how to create a simple dressup, so that it can be simulated. 
+Specifically, it has illustrated how to:</p>
+<ul>
+  <li>Retrieve the dressups&#39; collection</li>
+  <li>Retrieve all the couples (mechanism,context) on which a dressup can be created</li>
+  <li>Create a dressup</li>
+  <li>Create a dressup attachement between two products</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+    a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocKin.htm">DMU Kinematics 
+    Automation Objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU Navigator 
+Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU Space Analysis 
+Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU Kinematics 
+Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

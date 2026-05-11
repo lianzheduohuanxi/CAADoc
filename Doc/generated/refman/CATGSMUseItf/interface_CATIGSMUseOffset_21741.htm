@@ -1,0 +1,609 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATGSMUseItf Interface CATIGSMUseOffset</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATGSMUseItf.htm" href="../CATGSMUseItf.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATGSMUseItf";	}
+		function getCurrentObjectName() { 
+ 	return "CATIGSMUseOffset"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATGSMUseItf Interface CATIGSMUseOffset</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIGSMUseOffset_21741','CATIGSMUseOffset','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIGSMUseOffset</b>
+</p>
+<p>
+<b><i> Interface to offset surface feature.</i></b><br>
+
+ <b>Role</b>: Allows you to gets or/and sets the definition elements of a surface offset:
+ a surface, an orientation and an offset value.
+ <br> Note: Methodolpgy of remove of "tricky" face at offset update : 
+ Use of the suppress mode has to be handle carefully in Offset 
+ 
+ <br>- If Supppress mode is active:
+    Each time the offset is updated, the operator will identify automatically the "tricky" faces and removes them  
+    Example: This mode is the standard behaviour in Part Design (Offset is used in "Thick" operator)  
+               
+ <br>- If Supppress mode is in-active:
+    Each time the offset is update, if a face has to be removed and this face is not declared in the "tricky" faces 
+    the update failed 
+    Example: This mode is the standard behaviour in Gsd in Offset : 
+      Each time some face has to be removed,  the offset failed if it is not declared as tricky face 
+      In the Gsd interactive offset command, a pop-up window is proposed in order to validate the insertion of "tricky" identified faces in the list 
+      The list of all tricky face are then kept in the offset data , and are reused at update
+  
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIGSMUseFactory','CreateOffset','CATIGSMUseFactory.CreateOffset') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddTrickyFace(CATIMmiMechanicalFeature_var)"><b>AddTrickyFace</b></a>(CATIMmiMechanicalFeature_var)
+<dd>  Adds a tricky face object on the object.
+ <dt> o 
+    <a href="#GetCkeOffsetDeviation(CATICkeParm_var&amp;)"><b>GetCkeOffsetDeviation</b></a>(CATICkeParm_var&amp;)
+<dd>  Gets the offset deviation value.
+ <dt> o 
+    <a href="#GetCkeOffsetValue(CATICkeParm_var&amp;)"><b>GetCkeOffsetValue</b></a>(CATICkeParm_var&amp;)
+<dd>  Gets the offset value.
+ <dt> o 
+    <a href="#GetInvertDirection(CATBoolean&amp;)"><b>GetInvertDirection</b></a>(CATBoolean&amp;)
+<dd>  Gets the orientation.
+ <dt> o 
+    <a href="#GetOffsetDeviation(double&amp;)"><b>GetOffsetDeviation</b></a>(double&amp;)
+<dd>  Gets the offset deviation value.
+ <dt> o 
+    <a href="#GetOffsetType(CATGSMOffsetType&amp;)"><b>GetOffsetType</b></a>(CATGSMOffsetType&amp;)
+<dd>  Gets Offset type.
+ <dt> o 
+    <a href="#GetOffsetValue(double&amp;)"><b>GetOffsetValue</b></a>(double&amp;)
+<dd>  Gets the offset value.
+ <dt> o 
+    <a href="#GetProfil(CATIMmiMechanicalFeature_var&amp;)"><b>GetProfil</b></a>(CATIMmiMechanicalFeature_var&amp;)
+<dd>  Gets the reference surface.
+ <dt> o 
+    <a href="#GetRegularizationType(CATGSMOffsetRegularisationType&amp;)"><b>GetRegularizationType</b></a>(CATGSMOffsetRegularisationType&amp;)
+<dd>   Gets the regularization type
+   
+ <dt> o 
+    <a href="#GetSuppressMode(CATBoolean&amp;)"><b>GetSuppressMode</b></a>(CATBoolean&amp;)
+<dd>  Gets 'suppress mode'.
+ <dt> o 
+    <a href="#GetSuppressModeValue(int&amp;)"><b>GetSuppressModeValue</b></a>(int&amp;)
+<dd>  Gets the suppress mode.
+ <dt> o 
+    <a href="#GetTrickyFaces(CATLISTV(CATIMmiMechanicalFeature_var)&amp;)"><b>GetTrickyFaces</b></a>(CATLISTV(CATIMmiMechanicalFeature_var)&amp;)
+<dd>  Returns the tricky faces object on the object.
+ <dt> o 
+    <a href="#RemoveTrickyFaces(int)"><b>RemoveTrickyFaces</b></a>(int)
+<dd>  Remove the tricky face object on the object.
+ <dt> o 
+    <a href="#SetInvertDirection(CATBoolean)"><b>SetInvertDirection</b></a>(CATBoolean)
+<dd>  Sets the orientation.
+ <dt> o 
+    <a href="#SetOffsetDeviation(double)"><b>SetOffsetDeviation</b></a>(double)
+<dd>  Sets the offset deviation  value.
+ <dt> o 
+    <a href="#SetOffsetDeviation(CATICkeParm_var)"><b>SetOffsetDeviation</b></a>(CATICkeParm_var)
+<dd>  Sets the offset deviation  value.
+ <dt> o 
+    <a href="#SetOffsetType(CATGSMOffsetType)"><b>SetOffsetType</b></a>(CATGSMOffsetType)
+<dd>  Sets the type of Offset.
+ <dt> o 
+    <a href="#SetOffsetValue(double)"><b>SetOffsetValue</b></a>(double)
+<dd>  Sets the offset value.
+ <dt> o 
+    <a href="#SetOffsetValue(CATICkeParm_var)"><b>SetOffsetValue</b></a>(CATICkeParm_var)
+<dd>  Sets the offset value.
+ <dt> o 
+    <a href="#SetProfil(CATIMmiMechanicalFeature_var)"><b>SetProfil</b></a>(CATIMmiMechanicalFeature_var)
+<dd>  Sets the reference surface.
+ <dt> o 
+    <a href="#SetRegularizationType(CATGSMOffsetRegularisationType&amp;)"><b>SetRegularizationType</b></a>(CATGSMOffsetRegularisationType&amp;)
+<dd>   Sets the regularization type
+   
+ <dt> o 
+    <a href="#SetSuppressMode(CATBoolean)"><b>SetSuppressMode</b></a>(CATBoolean)
+<dd>  Sets the suppress mode.
+ <dt> o 
+    <a href="#SetSuppressModeValue(int&amp;)"><b>SetSuppressModeValue</b></a>(int&amp;)
+<dd>  Sets the suppress mode.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddTrickyFace"></a><a name="AddTrickyFace(CATIMmiMechanicalFeature_var)"></a> <dt> o <b>AddTrickyFace</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AddTrickyFace</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iTrickyFace</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a tricky face object on the object. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTrickyFace</tt>
+   <dd>    Offset invalid face</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCkeOffsetDeviation"></a><a name="GetCkeOffsetDeviation(CATICkeParm_var&amp;)"></a> <dt> o <b>GetCkeOffsetDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCkeOffsetDeviation</b>(<td><script type="text/javascript"> activateLink('CATICkeParm_var','CATICkeParm_var&amp;')</script> <td><tt>oOffDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the offset deviation value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOffDeviation</tt>
+   <dd>      Offset deviation value (Cke Parameter)</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCkeOffsetValue"></a><a name="GetCkeOffsetValue(CATICkeParm_var&amp;)"></a> <dt> o <b>GetCkeOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetCkeOffsetValue</b>(<td><script type="text/javascript"> activateLink('CATICkeParm_var','CATICkeParm_var&amp;')</script> <td><tt>oOffValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the offset value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOffValue</tt>
+   <dd>      Offset value</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInvertDirection"></a><a name="GetInvertDirection(CATBoolean&amp;)"></a> <dt> o <b>GetInvertDirection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetInvertDirection</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oInvert</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the orientation.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oInvert</tt>
+   <dd>      : False   means that there is no invertion of the surface orientation 
+       (orientation is the normal on the surface)
+      : True    to invert this orientation</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetOffsetDeviation"></a><a name="GetOffsetDeviation(double&amp;)"></a> <dt> o <b>GetOffsetDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetOffsetDeviation</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>oOffDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the offset deviation value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOffDeviation</tt>
+   <dd>      Offset deviation value</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetOffsetType"></a><a name="GetOffsetType(CATGSMOffsetType&amp;)"></a> <dt> o <b>GetOffsetType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetOffsetType</b>(<td><script type="text/javascript"> activateLink('CATGSMOffsetType','CATGSMOffsetType&amp;')</script> <td><tt>oType</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets Offset type.
+ <br>
+ Normal or smooth tyoe.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oType</tt>
+   <dd>      Offset type
+       : CATGSMOffset_Constant (=0) -> Normal
+       : CATGSMOffset_Rough (=1) -> Rough
+       : CATGSMOffset_Smooth  (=2) -> Smooth
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATGSMOffsetType','','CATGSMOffsetType') </script>
+</dl>
+</dl>
+<a name="GetOffsetValue"></a><a name="GetOffsetValue(double&amp;)"></a> <dt> o <b>GetOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetOffsetValue</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>oOffValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the offset value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOffValue</tt>
+   <dd>      Offset value</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetProfil"></a><a name="GetProfil(CATIMmiMechanicalFeature_var&amp;)"></a> <dt> o <b>GetProfil</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetProfil</b>(<td><script type="text/javascript"> activateLink('CATIMmiMechanicalFeature_var','CATIMmiMechanicalFeature_var&amp;')</script> <td><tt>oElem</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the reference surface.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oElem</tt>
+   <dd>      Offset Surface</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetRegularizationType"></a><a name="GetRegularizationType(CATGSMOffsetRegularisationType&amp;)"></a> <dt> o <b>GetRegularizationType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetRegularizationType</b>(<td><script type="text/javascript"> activateLink('CATGSMOffsetRegularisationType','CATGSMOffsetRegularisationType&amp;')</script> <td><tt>oRegul</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets the regularization type
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oRegul</tt>
+   <dd>      CATGSMRegularization_Undefined if the regularization is not defined
+	   CATGSMRegularization_Local if the regularization is local
+	   CATGSMRegularization_Global if the regularization is global</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetSuppressMode"></a><a name="GetSuppressMode(CATBoolean&amp;)"></a> <dt> o <b>GetSuppressMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetSuppressMode</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oSuppressMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets 'suppress mode'.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSuppressMode</tt>
+   <dd>      CATTrue  = erroneous elements are removed from the result autonmatically at update 
+      CATFalse = error if erroneous elements, (not declared tricky faces) 
+   </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATBoolean','','CATBoolean') </script>
+</dl>
+</dl>
+<a name="GetSuppressModeValue"></a><a name="GetSuppressModeValue(int&amp;)"></a> <dt> o <b>GetSuppressModeValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetSuppressModeValue</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oSuppressMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the suppress mode.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSuppressMode</tt>
+   <dd>      0 = error if erroneous elements, (not declared tricky faces)
+      1 = erroneous elements are removed from the result automatically at update (For Part Design)
+	   2 = erroneous elements are removed from the result automatically at update (For GSD)</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetTrickyFaces"></a><a name="GetTrickyFaces(CATLISTV(CATIMmiMechanicalFeature_var)&amp;)"></a> <dt> o <b>GetTrickyFaces</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetTrickyFaces</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIMmiMechanicalFeature_var)','CATLISTV(CATIMmiMechanicalFeature_var)&amp;')</script> <td><tt>oTrickyFaces</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the tricky faces object on the object. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTrickyFaces</tt>
+   <dd>    Offset invalid faces</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveTrickyFaces"></a><a name="RemoveTrickyFaces(int)"></a> <dt> o <b>RemoveTrickyFaces</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveTrickyFaces</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iRank</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Remove the tricky face object on the object. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRank</tt>
+   <dd>   position of the face in the list of TrickyFaces</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetInvertDirection"></a><a name="SetInvertDirection(CATBoolean)"></a> <dt> o <b>SetInvertDirection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetInvertDirection</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iInvert</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the orientation.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInvert</tt>
+   <dd>     :  False means that there is no invertion of the curve orientation 
+         (orientation is the product of the tangent of the curve by the normal on the support)
+     :  True  to invert this orientation</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetDeviation"></a><a name="SetOffsetDeviation(double)"></a> <dt> o <b>SetOffsetDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetOffsetDeviation</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iOffDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the offset deviation  value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffDeviation</tt>
+   <dd>      Offset deviation value</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetDeviation"></a><a name="SetOffsetDeviation(CATICkeParm_var)"></a> <dt> o <b>SetOffsetDeviation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetOffsetDeviation</b>(<td> const <script type="text/javascript"> activateLink('CATICkeParm','CATICkeParm_var')</script> <td><tt>iOffDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the offset deviation  value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffDeviation</tt>
+   <dd>      Offset deviation value (Cke Parameter)</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetType"></a><a name="SetOffsetType(CATGSMOffsetType)"></a> <dt> o <b>SetOffsetType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetOffsetType</b>(<td><script type="text/javascript"> activateLink('CATGSMOffsetType','CATGSMOffsetType')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the type of Offset. 
+ <br> It modifies the Offset type either "Normal" or "Rough" or "Smooth"
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iType</tt>
+   <dd>      Offset type
+       : CATGSMOffset_Constant (=0) -> Normal
+       : CATGSMOffset_Rough (=1) -> Rough
+       : CATGSMOffset_Smooth  (=2) -> Smooth
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATGSMOffsetType','','CATGSMOffsetType') </script>
+</dl>
+</dl>
+<a name="SetOffsetValue"></a><a name="SetOffsetValue(double)"></a> <dt> o <b>SetOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetOffsetValue</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iOffValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the offset value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffValue</tt>
+   <dd>      Offset value</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetValue"></a><a name="SetOffsetValue(CATICkeParm_var)"></a> <dt> o <b>SetOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetOffsetValue</b>(<td> const <script type="text/javascript"> activateLink('CATICkeParm','CATICkeParm_var')</script> <td><tt>iOffValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the offset value.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffValue</tt>
+   <dd>      Offset value</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetProfil"></a><a name="SetProfil(CATIMmiMechanicalFeature_var)"></a> <dt> o <b>SetProfil</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetProfil</b>(<td> const <script type="text/javascript"> activateLink('CATIMmiMechanicalFeature','CATIMmiMechanicalFeature_var')</script> <td><tt>iElem</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the reference surface.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElem</tt>
+   <dd>      new reference surface</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetRegularizationType"></a><a name="SetRegularizationType(CATGSMOffsetRegularisationType&amp;)"></a> <dt> o <b>SetRegularizationType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetRegularizationType</b>(<td> const <script type="text/javascript"> activateLink('CATGSMOffsetRegularisationType','CATGSMOffsetRegularisationType&amp;')</script> <td><tt>iRegul</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets the regularization type
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oRegul</tt>
+   <dd>      CATGSMRegularization_Undefined if the regularization is not defined
+	   CATGSMRegularization_Local if the regularization is local
+	   CATGSMRegularization_Global if the regularization is global</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSuppressMode"></a><a name="SetSuppressMode(CATBoolean)"></a> <dt> o <b>SetSuppressMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetSuppressMode</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iSuppressMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the suppress mode.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSuppressMode</tt>
+   <dd>      CATTrue  = erroneous elements are removed from the result autonmatically at update 
+      CATFalse = error if erroneous elements, (not declared tricky faces) 
+ <br> Note: 
+ <br>- If Supppress mode is active:
+    Each time the offset is updated, the operator will identify automatically the "tricky" faces and removes them  
+    Example: This mode is the standard behaviour in Part Design (Offset is used in "Thick" operator)  
+               
+ <br>- If Supppress mode is in-active:
+    Each time the offset is update, if a face has to be removed and this face is not declared in the "tricky" faces 
+    the update failed 
+    Example: This mode is the standard behaviour in Gsd in Offset : 
+      Each time some face has to be removed,  the offset failed if it is not declared as tricky face 
+      In the Gsd interactive offset command, a pop-up window is proposed in order to validate the insertion of "tricky" identified faces in the list 
+      The list of all tricky face are then kept in the offset data , and are reused at update
+   </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATBoolean','','CATBoolean') </script>
+</dl>
+</dl>
+<a name="SetSuppressModeValue"></a><a name="SetSuppressModeValue(int&amp;)"></a> <dt> o <b>SetSuppressModeValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetSuppressModeValue</b>(<td> const <script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>iSuppressMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the suppress mode.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSuppressMode</tt>
+   <dd>      0 = error if erroneous elements, (not declared tricky faces)
+      1 = erroneous elements are removed from the result automatically at update (For Part Design)
+	   2 = erroneous elements are removed from the result automatically at update (For GSD)</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIGSMUseOffset.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGSMUseItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

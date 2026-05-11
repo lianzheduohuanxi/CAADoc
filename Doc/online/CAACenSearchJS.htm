@@ -1,0 +1,421 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Full-Text Search</title>
+<link rel="stylesheet" type="text/css" href="CAADocStyleSheets/search.css">
+<script src="CAADocJavaScript/long.js"></script>
+<script src="CAADocJavaScript/jquery-3.1.0.min.js"></script>
+<script src="CAADocJavaScript/DSDocCommon.js"></script>
+<script src="CAADocJavaScript/status.js"></script>
+<script src="CAADocJavaScript/search.js"></script>
+<script language="Javascript" src="CAACenSearchJS.js">
+</script>
+<script language="Javascript">
+	var enter_key_pressed = 0;
+	var third_row, fourth_row;
+
+	function change_color(elem){
+		if($(elem).hasClass("anchor_class1"))
+			$(elem).removeClass("anchor_class1").addClass("anchor_class2");
+		else {
+			$(elem).removeClass("anchor_class2").addClass("anchor_class1");
+		}
+	}
+
+	function ShowPagelocal(url,view,word) {
+		var word_to_serach = [];
+		if(filter != "Exact Phrase"){
+			word_to_serach = word.split(" ");
+		 }
+		else
+			word_to_serach[0] = word.replace(",", " ");
+		document.getElementById('ResultClass').disabled = false;
+		document.getElementById('ResultClass').setAttribute('style', 'color:rgb(28,21,87)');
+		var navigate_tab = document.getElementById('navigate_option');
+		if(navigate_tab != null || navigate_tab != undefined)
+			navigate_tab.disabled = false;
+		ShowPage(url,view,word_to_serach);
+		var word = $('#navigate_option').find(":selected").text();
+		if(word == "")
+			temporisation(word_to_serach[0],view);
+		else
+			temporisation(word,view);
+	}
+
+	function change_background(elem)
+	{
+		var elements = document.getElementsByClassName('result_anchor_class2');
+		for(var i = elements.length - 1; i >= 0; --i)
+			{
+				elements[i].className = "result_anchor_class1";
+			}
+		if($(elem).hasClass("result_anchor_class1"))
+			$(elem).removeClass("result_anchor_class1").addClass("result_anchor_class2");
+	}
+
+	function view_result_list() {
+	  var result_div = document.getElementById(bookchoice_container);
+		$("#bookchoice_container").empty();
+		var word = ($('#usersearch').val());
+		if(ResultSet.length != 0) {
+				jQuery.each(ResultSet, function(index, value) {
+					var _a = document.createElement('a');
+					_a.href = "#";
+					_a.innerHTML = value;
+					_a.ondblclick = function(){ ShowPagelocal(ResultSet_URL[index],"DS_SEARCH",word); }
+					_a.onclick = function() { change_background(this); }
+					_a.className = "result_anchor_class1";
+
+					$("#bookchoice_container").append(_a);
+					$("#bookchoice_container").append("<br/>");
+				});
+
+				$("#bookchoice_container a").css('color', '#000000');
+				$("#bookchoice_container a").css('pointer-events',' auto');
+				$("#bookchoice_container a").css('cursor','default');
+		}
+	}
+
+	function view_solution_list() {
+	  NoDoc = false;
+		$("#bookchoice_container").empty();
+		if(bookchoicesol.length != 0) {
+				jQuery.each(bookchoicesol, function(index, value) {
+					$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1' style='pointer-events: none;'>" + value + '</a>' + '<br/>');
+					$("#all_sols").next('label').css('color', '#1c1557');
+					$("#bookchoice_container a").css('color', '#000000');
+					$("#bookchoice_container a").css('pointer-events',' auto');
+					$("#bookchoice_container a").css('cursor','default');
+				});
+		}
+	}
+
+	function view_products_list() {
+		$("#bookchoice_container").empty();
+	  if(bookchoice.length != 0) {
+		 		jQuery.each(bookchoice, function(index, value) {
+				 	$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1' style='pointer-events: auto;'>" + value + '</a>' + '<br/>');
+				 	$("#bookchoice_container a").css('color', '#000000');
+		 	   });
+	 	}
+	}
+
+
+	function option_check(elem) {
+			switch(($(elem).attr('id')))
+			{
+				case "all_doc":
+												if((!$(elem).is(":checked"))) {
+													$("#all_sols").prop("disabled", false);
+													$("#all_prod").prop("disabled", false);
+													if($("#all_sols").is(":checked")) {
+														$("#all_sols").next('label').css('color', '#1c1557');
+														$("#all_prod").next('label').css('color', '#1c1557');
+														$("#bookchoice_container a").css('color', '#000000');
+														$("#bookchoice_container a").css('pointer-events',' auto');
+														$("#bookchoice_container a").css('cursor','default');
+													}
+													else if($("#all_prod").is(":checked")) {
+														$("#all_sols").prop("disabled", false);
+														$("#all_prod").prop("checked", true);
+														view_products_list();
+														$("#all_prod").next('label').css('color', '#1c1557');
+														$("#all_sols").next('label').css('color', '#1c1557');
+													}
+												}
+												else if(($(elem).is(":checked"))) {
+													$("#all_sols").prop("disabled", true);
+													$("#all_prod").prop("disabled", true);
+													if($("#all_sols").is(":checked")) {
+														$("#all_sols").next('label').css('color', '#7a7a7a');
+														$("#bookchoice_container a").css('color', '#7a7a7a');
+														$("#bookchoice_container a").css('pointer-events','none');
+														$("#bookchoice_container a").css('cursor','default');
+													}
+													else if($("#all_prod").is(":checked")) {
+														$("#all_sols").prop("disabled", true);
+														$("#all_prod").prop("disabled", true)
+														view_solution_list();
+														$("#all_sols").next('label').css('color', '#7a7a7a');
+														$("#bookchoice_container a").css('color', '#7a7a7a');
+														$("#bookchoice_container a").css('pointer-events','none');
+														$("#bookchoice_container a").css('cursor','default');
+													}
+												}
+												break;
+				case "all_sols":
+												if((!$(elem).is(":checked"))){
+														$("#all_prod").prop("checked", true);
+														view_products_list();
+												}
+												else if(($(elem).is(":checked"))){
+														$("#all_prod").prop("checked", false);
+														view_solution_list();
+												}
+												break;
+				case "all_prod":
+												if((!$(elem).is(":checked"))){
+														$("#all_sols").prop("checked", true);
+														view_solution_list();
+												}
+												else if(($(elem).is(":checked"))){
+														$("#all_sols").prop("checked", false);
+														view_products_list();
+												}
+												break;
+			}
+	}
+
+	window.onload = function () {
+				charge_index_status("CAA");
+				if(bookchoicesol.length != 0) {
+					jQuery.each(bookchoicesol, function(index, value) {
+    					$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1' style='pointer-events: none;'>" + value + '</a>' + '<br/>');
+ 					});
+
+						$("#bookchoice_container a").css('color', '#7a7a7a');
+				}
+	}
+	function find() {
+		var word = $('#navigate_option').find(":selected").text();
+		if(word == "")
+			word = ($('#usersearch').val());
+		chercheSurPage(word,'DS_SEARCH');
+	}
+
+	function createReplacement() {
+		third_row = document.getElementById('third_row');
+		if(third_row != null || third_row != undefined) {
+      third_row.style.visibility = "hidden";
+
+      var td = document.getElementById("dynamic_td");
+
+		  var word_to_serach = ($('#usersearch').val());
+		  if(word_to_serach != "" && ($("#select_class :selected").text() != "Exact Phrase")) {
+					word_to_serach = word_to_serach.split(" ");
+					var select = document.createElement("select");
+					select.setAttribute('style','width:25%;');
+					select.id = "navigate_option";
+					for (var i = 0; i < word_to_serach.length; i++){
+							var opt = document.createElement('option');
+							opt.value = word_to_serach[i];
+							opt.innerHTML = word_to_serach[i];
+							select.appendChild(opt);
+						}
+					 select.disabled = true;
+			   }
+
+	      var element2 = document.createElement("input");
+			  element2.type = "button";
+	      element2.value = "Find Next";
+			  element2.onclick = function() { find(); }
+	      element2.setAttribute('style', 'background-color: white;color:rgb(122,122,122);box-shadow: #888888;width:25%');
+			  element2.id = "ResultClass";
+			  element2.disabled = true;
+	      td.removeChild(third_row);
+
+			  if(select != null || select != undefined)
+					td.appendChild(select);
+	      td.appendChild(element2);
+
+	          //extend div
+        fourth_row = document.getElementById('fourth-row');
+        var head = document.getElementById('head');
+	  		var index = fourth_row.rowIndex;
+        head.deleteRow(index);
+
+        var newRow = head.insertRow(index);
+        var newtd = newRow.insertCell(0);
+        newtd.colSpan = "2";
+        var div = document.createElement("div");
+        div.setAttribute('style', 'background-color: white;height:146px;border:1px solid black;width:610px');
+	  	  div.id = "bookchoice_container";
+        newtd.appendChild(div);
+	  		newRow.id = "replace_fourth_row";
+
+        var res_button = document.getElementById('result_button');
+        res_button.value = "Scope";
+
+			  if($('#usersearch').val() == "")
+				div.innerHTML = "String not found in selected Documentations..";
+			  else {
+					if(NoDoc == true)
+						div.innerHTML = "No Documentation Selected";
+					else {
+							if(ResultSet.length == 0)
+								div.innerHTML = "String not found in selected Documentations..";
+							else
+								view_result_list();
+						}
+				}
+			}
+	}
+
+	function toggle_result_button(elem) {
+		if(elem.value == "Scope") {
+			if(document.getElementById("ResultClass") != 'undefined' && document.getElementById("ResultClass") != null) {
+				var td = document.getElementById("dynamic_td");
+				var result = document.getElementById("ResultClass");
+				var navigate_tab = document.getElementById("navigate_option");
+				if(result != null) {
+					td.removeChild(result);
+					if(td.contains(navigate_tab))
+						td.removeChild(navigate_tab);
+					if(third_row != null || third_row != undefined) {
+						td.appendChild(third_row);
+						third_row.style.visibility = "visible";
+				  }
+					var fourth = document.getElementById("replace_fourth_row");
+					var head = document.getElementById('head');
+					var index = replace_fourth_row.rowIndex;
+					head.deleteRow(index);
+					$('#head > tbody > tr').eq(index-1).after(fourth_row);
+					var res_button = document.getElementById('result_button');
+					res_button.value = "Results";
+				}
+		  }
+		}
+		else if(elem.value == "Results") {
+			createReplacement();
+		}
+	}
+
+	$(document).ready(function () {
+		$('#usersearch').on("keypress", function(e) {
+				if (e.keyCode == 13) {
+					enter_key_pressed = 1;
+					Searchlocal();
+					document.activeElement.blur();
+					e.preventDefault();
+				}
+			});
+		});
+
+	function handle_input_focus(textbox) {
+			if(document.getElementById("ResultClass") != 'undefined' && document.getElementById("ResultClass") != null) {
+				var td = document.getElementById("dynamic_td");
+				var result = document.getElementById("ResultClass");
+				var navigate_tab = document.getElementById("navigate_option");
+				if(result != null) {
+					td.removeChild(result);
+					if(td.contains(navigate_tab))
+						td.removeChild(navigate_tab);
+					if(third_row != null || third_row != undefined) {
+						td.appendChild(third_row);
+						third_row.style.visibility = "visible";
+					}
+
+					var fourth = document.getElementById("replace_fourth_row");
+					var head = document.getElementById('head');
+					var index = replace_fourth_row.rowIndex;
+					head.deleteRow(index);
+					$('#head > tbody > tr').eq(index-1).after(fourth_row);
+					var aa = 10;
+
+				}
+		 }
+	}
+
+	function Searchlocal()
+	{
+		if(!($('#all_doc').is(":checked")))
+			{
+				if(($('#all_prod').is(":checked")))
+				{
+					var product_search_list = document.getElementsByClassName('anchor_class2');
+					if(product_search_list.length !=0 ) {
+						Search("CAA",ModToCheck,product_search_list);
+						NoDoc = false;
+						createReplacement();
+					}
+					else {
+						NoDoc = true;
+						createReplacement();
+					}
+				}
+				else{
+					NoDoc = true;
+					createReplacement();
+				}
+			}
+		else {
+				var iString = $('#usersearch').val();
+				if(iString != "")
+					Search("CAA",ModToCheck);
+				NoDoc = false;
+				createReplacement();
+			}
+	}
+</script>
+
+</head>
+
+<body bgcolor="#FFFFFF" background="CAADocJavaScript/common/tocbg.jpg" style="background-repeat: repeat-y">
+
+<!-- Applet -->
+<p class ="ex" align="left">
+
+  <table id="head">
+      <tr>
+          <td><label class="label_class" style="background-color:transparent !important;">Search for</label></td>
+      </tr>
+
+      <tr>
+          <td><input type="text" class="text_class" id="usersearch"  onfocus="handle_input_focus(this)"></td>
+          <td><input type="button" class="button_class" value="Go" onclick="Searchlocal()"></td>
+      </tr>
+
+      <tr>
+          <td id="dynamic_td">
+              <table id="third_row" style="width:100%">
+                <tr>
+                  <td style="width:45%;padding-right: 0px;border-collapse:collapse;">
+                    <label class="label_class"><input type="checkbox" id="match" class="checkbox_class"/>   Match whole word</label>
+                  </td>
+                  <td style="width:25%;">
+                      <label class="label_class" style="display: block;">Search mode</label>
+                  </td>
+                  <td  style="width:20%;">
+                      <select id="select_class">
+                          <option value="and">AND</option>
+                            <option value="or">OR</option>
+                              <option value="exact">Exact Phrase</option>
+                      </select>
+                  </td>
+                  <td style="width:15%;">
+                  </td>
+                </tr>
+              </table>
+          </td>
+
+          <td><input style="background-color:rgb(255,223,165)" type="button" class="button_class" id="result_button" value="Results" onclick="toggle_result_button(this)"></td>
+      </tr>
+      <tr><td style="width:50%;background-color:white;"><label class="label_class">Search in</label></td></tr>
+      <tr id ="fourth-row">
+          <td>
+              <div id="bookchoice_container">
+              </div>
+          </td>
+
+          <td>
+                <table id="options-1">
+                    <tr><td><label class="label_class" style="color:rgb(28,21,87); !important;">Search scope</label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_doc" onclick ="option_check(this)" checked><label class="label_class">    All documents</label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_sols" onclick ="option_check(this)" disabled="disabled" checked><label class="label_class" style="color:#7a7a7a; !important">    Solutions</label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_prod" onclick ="option_check(this)" disabled="disabled"><label class="label_class" style="color:#7a7a7a; !important">    Products</label></td></tr>
+                </table>
+                <table id="options-2">
+                    <tr><td><input type="button" class="button_class" value="Reset"></td></tr>
+                    <tr><td><input type="button" class="button_class" value="Help"></td></tr>
+                </table>
+
+          </td>
+      </tr>
+  </table>
+
+</p>
+
+</body>
+</html>

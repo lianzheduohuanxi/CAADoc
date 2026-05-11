@@ -1,0 +1,165 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>An Overview of the Aerospace Sheet Metal Design Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Aerospace Sheet Metal Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>An Overview of the Aerospace Sheet Metal Design Features</h3>
+      <em>Describing the specific characteristics of the Aerospace Sheet Metal 
+      Design Features</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the Part Design features. To take full advantage
+      of this article, a pre-requisite knowledge of the Mechanical Modeler [<a href="#References">1</a>]
+      is essential.&nbsp;</p>
+      <ul>
+        <li><b><a href="#Generalities">What is an Aerospace Sheet Metal Feature</a></b></li>
+        <li><b><a href="#Web">The Web Feature</a></b></li>
+        <li><b><a href="#SurfacicFlange">The Surfacic Flange Feature</a></b></li>
+        <li><b><a href="#Joggle">The Joggle Feature</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Generalities"></a>What is an Aerospace Sheet Metal Feature</h3>
+<p>It is a <b>Mechanical Feature</b> designed to create surfacic sheet metal parts.
+The specificity of these type of parts is that they consist of a complex surface 
+with a small thick.</p>
+<p>Sheet Metal Features have two associated views : a <b>Folded</b> view and an <b>UnFolded</b> view :</p>
+
+<p><img border="0" src="images/FoldedView.jpg" width="800" height="438"></p>
+
+<p> </p>
+
+<p><img border="0" src="images/UnFoldedView.jpg" width="834" height="453"></p>
+
+<p>Each Sheet Metal Feature may be considered as a set of 2 Mechanical
+Features ( 1 per view ). An Aerospace Sheet Metal Feature is a set of Sheet Metal Features.
+This internal model complexity explains that it is possible that you need to call specific
+method to update internal Features links (i.e. : Joggle : ManageOnSupport method) and that
+we suggest to update the Part instead of the Aerospace Sheet Metal Feature.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Web"></a>The Web Feature</h3>
+<p>A <b>Web</b> Feature is the base feature for all Aerospace Sheet Metal Feature. 
+Only one Web can exist in a Part.</p>
+<p>A <b>Web</b> Feature is a bounded planar surface. Next developpments should enable a non-planar surface.</p>
+<p><img border="0" src="images/Web.jpg" width="626" height="389"></p>
+<p>The Web internal Model consists of : </p>
+<p>a <b>SUPPORT</b>  : the Surface on which the Web will be created.</p>
+<p>a <b>BOUNDARY</b> : a set of Limits : Curves , Surfaces or a closed Sketch.</p>
+<p>If a Limit is a Curve it will be projected on the Support Surface.</p>
+<p>If a Limit is a Surface it will be intersected with the Support Surface.</p>
+<p>The set of resulting Curves on the Support must represent a closed Wire ( the BOUNDARY ).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="SurfacicFlange"></a>The Surfacic Flange Feature</h3>
+<p>A Surfacic Flange Feature is a Feature that stiffen the Part.</p>
+<p>This Feature consists of a bounded Surface intersecting the Web or another Surfacic Flange.</p>
+<p>The intersection between the Surfacic Flange and its Base Feature (IWBF) is filleted.</p>
+<p><img border="0" src="images/SurfacicFlange.jpg" width="929" height="383"></p>
+<p>The sample above shows a Web bounded by five Surfacic Flanges.</p>
+<p>The Surfacic Flange internal Model consists of :</p>
+<p>a <b>BASE FEATURE</b>        : the Web or another Surfacic Flange.</p>
+<p>a <b>SUPPORT</b>             : a Surface or a Curve which will be bounded by :</p>
+<p>an <b>EDGE OF PART</b> (EOP) : a Curve or a Length limiting the opposit side to IWBF.</p>
+<p>two <b>SIDES</b>             : a Surface or a Curve defining left and right sides.</p>
+<p>Some technological attributes : Bend Radius, Manufacturing Process, Compensation ...</p>
+<p>The set of resulting Curves (IWBF, SIDE 1, EOP, SIDE 2) must represent a closed Wire
+(the Support boundary).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Joggle"></a>The Joggle Feature</h3>
+<p>A Joggle Feature is a local deformation ( twist ) of a Surfacic Flange or a Web.</p>
+<p>This Feature consists of an offset (Depth) of its Support Surface (Surfacic Flange or Web)
+The Support Surface and the Offset Surface are joined by a ruled Surface (Runout).</p>
+
+<p><img border="0" src="images/Joggle.jpg" width="759" height="410"></p>
+
+<p>The sample above shows a Joggle on Web and a Joggle on a Surfacic Flange.</p>
+<p>The Joggle internal Model consists of :</p>
+<p>a <b>SUPPORT</b>        : the Web or a Surfacic Flange.</p>
+<p>a <b>PLANE</b>          : a CATPlane or a Planar Face defining the start of the Joggle.</p>
+<p>the <b>DEPTH</b>        : distance between the Support Surface and its offset Surface.</p>
+<p>the <b>RUNOUT</b>       : the Joggle Length.</p>
+<p>the <b>START RADIUS</b> : Radius of the Fillet between between the Support Surface and the Runout.</p>
+<p>the <b>END RADIUS</b>   : Radius of the Fillet between between the offset Surface and the Runout.</p>
+<p>The specificity of the Joggle is that it can not be isolated : a Joggle is always immerged in
+its Support Model ( like a contextual Feature ).
+A Joggle will thus be automatically deleted (desactivated) if its Support is deleted (desactivated).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td vAlign="top">[1]</td>
+      <td><a href="../CAAMmrTechArticles/CAAMmrMechModOverview.htm">Mechanical
+        Modeler Overview</a></td>
+    </tr>
+    <tr>
+      <td vAlign="top" align="right" colSpan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article has explained what is an Aerospace Sheet Metal Feature and has given a description
+of them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

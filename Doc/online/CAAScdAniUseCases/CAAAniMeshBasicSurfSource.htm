@@ -1,0 +1,110 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshBasicSurf.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">&#39;COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">&#39;***********************************************************************</FONT>
+<FONT COLOR="#008000">&#39;  Purpose:      Open an analysis document</FONT>
+<FONT COLOR="#008000">&#39;                Create a basic surface mesh  </FONT>
+<FONT COLOR="#008000">&#39;                assign the surface as support</FONT>
+<FONT COLOR="#008000">&#39;                specify the global specifications and assign values</FONT>
+<FONT COLOR="#008000">&#39;  Assumptions:   Looks for Surface.CATAnalysis in the directory</FONT>
+<FONT COLOR="#008000">&#39;  Author:       bmw</FONT>
+<FONT COLOR="#008000">&#39;  Languages:    VBScript</FONT>
+<FONT COLOR="#008000">&#39;  Locales:      English </FONT>
+<FONT COLOR="#008000">&#39;  CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">&#39;***********************************************************************</FONT>
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39;Optional: allows to find the sample wherever it&#39;s installed</FONT>
+
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+
+<FONT COLOR="#008000">&#39;Open the Analysis document </FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">&#39;Retrieve the Analysis Manager and Analysis Model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManagar = oAnalysisDocument.Analysis
+
+<FONT COLOR="#008000">&#39;Retrieve the product from Analysis manager</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocument = oAnalysisManagar.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocument.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+<FONT COLOR="#008000">&#39;Retrieve the analysis model from the list of models</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">&#39;Retrieve mesh manager and mesh part </FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshManagar = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>meshPart = meshManagar.AnalysisMeshParts
+
+<FONT COLOR="#008000">&#39;Retrieve publications from product and retrieve the published face.</FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubSurf = publications.Item("Round Hole.1")
+
+<FONT COLOR="#008000">&#39;Add the new basic surface mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>surfPart = meshPart.Add ("MSHPartBasicSurf") 
+
+<FONT COLOR="#008000">&#39;Add the support from the published surface</FONT>
+surfPart.AddSupportFromPublication product, pubSurf
+
+
+<FONT COLOR="#008000">&#39;Set the global Specifications</FONT>
+surfPart.SetGlobalSpecification "GlobalMethod", 1
+surfPart.SetGlobalSpecification &quot;QuadsOnly&quot;, 2
+surfPart.SetGlobalSpecification "ElementOrder", "Parabolic"
+surfPart.SetGlobalSpecification "DedicatedMesh", 1
+surfPart.SetGlobalSpecification "GlobalSize", "10.0 mm"
+surfPart.SetGlobalSpecification "Offset", "15.0 mm"
+surfPart.SetGlobalSpecification "TopologySize", "20.0 mm"
+surfPart.SetGlobalSpecification "TopologySag", 2
+surfPart.SetGlobalSpecification "SharpEdges", 1
+surfPart.SetGlobalSpecification "FaceAngle", "0 deg"
+surfPart.SetGlobalSpecification "OffsetFromThickness", 1
+surfPart.SetGlobalSpecification "MeshRelSag", 1
+surfPart.SetGlobalSpecification "MeshRelSagValue", "0.1 mm"
+surfPart.SetGlobalSpecification "CurveCapture", 1
+surfPart.SetGlobalSpecification "CurveCaptureTol", "1.1 mm"
+surfPart.SetGlobalSpecification "MeshCapture", 1
+surfPart.SetGlobalSpecification "MeshCaptureTol", "1.1 mm"
+surfPart.SetGlobalSpecification "MeshAbsSag", 1
+surfPart.SetGlobalSpecification "MeshAbsSaglValue", "1.1 mm"</PRE>
+<PRE>
+<FONT COLOR="#008000">&#39;Create local specification</FONT>
+Set meshSpecs = surfPart.AnalysisMeshLocalSpecifications 
+Set spec = meshSpecs.Add("MSHTopProjectCurve") 
+spec.AddSupportFromPublication "ConnectorList", product1, pubCurve
+spec.SetAttribute "Tolerance", "500 mm" 
+</PRE>
+<PRE>
+<FONT COLOR="#0000FF">Set </FONT>spec = meshSpecs.Add("MSHTopProjectPoint")
+spec.AddSupportFromPublication "ConnectorList", product1, pubPoint
+spec.SetAttribute "Tolerance", "500 mm"
+
+
+<FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+surfPart.Update
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,177 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Modifying Structure Objects</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Structure Design</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Modifying Structure Objects</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to modify structure
+      objects.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>This macro modifies some member and plate properties in the document
+      created using the CAAStrCreateOfStructureObject&nbsp; macro.</p>
+      <p><img border="0" src="images/CAAScdStrImg2.jpg" width="554" height="384"></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAStrModificationOfStructureObjects is launched in
+      CATIA [<a href="#References">1</a>]. One document is needed.</p>
+      <p>You have to run the <a href="CAAStrCreationOfStructureObjectsSource.htm" target="Source">CAAStrCreationOfStructureObjects</a>
+      macro before running this macro.</p>
+      <p><a href="CAAStrModificationOfStructureObjectsSource.htm" target="Source">CAAStrModificationOfStructureObjects.CATScript</a>
+      is located in the CAAScdStrUseCases module. <a href="macros/CAAStrModificationOfStructureObjects.CATScript">Execute
+      macro</a> (windows only).
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAStrModificationOfStructureObjects includes four
+      steps:</p>
+      <ol>
+        <li><a href="#step1">Prolog</a></li>
+        <li><a href="#step2">Retrieving&nbsp; members</a></li>
+        <li><a href="#step3">Modifying members&nbsp;</a></li>
+        <li><a href="#step4">Retrieving plates</a>&nbsp;</li>
+        <li><a href="#step5">Modifying plates</a></li>
+      </ol>
+      <h4>&nbsp;</h4>
+      <h4><a name="step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#0000FF">Dim</font> doc <font color="#0000FF">As</font> Document
+
+    <font color="#0000FF">Dim</font> StrWorkbench <font color="#0000FF">As</font> StrWorkbench
+    <font color="#0000FF">Dim</font> strFactory <font color="#0000FF">As</font> StrObjectFactory
+
+    <font color="#0000FF">Set</font> doc = CATIA.ActiveDocument
+    <font color="#0000FF">Dim</font> rootProduct <font color="#0000FF">As</font> Product
+    <font color="#0000FF">Set</font> rootProduct = doc.Product
+   
+    <font color="#0000FF">Set</font> strWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This step describes how to get the structure workbench.</p>
+      <h4><a name="step2"></a>Retrieving members</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   <font color="#0000FF">Dim</font> strMembers <font color="#0000FF">as</font> StrMembers
+   <font color="#0000FF">Set</font> strMembers = rootProduct.GetTechnologicalObject(&quot;StructureMembers&quot;)</pre>
+            <pre>   <font color="#0000FF">Dim</font> member <font color="#0000FF">as</font> StrMember
+   <font color="#0000FF">Set</font> member = strMembers.Item(&quot;Column_3&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This step describes how to get the collection of members and how to get
+      one specific element in it.</p>
+      <h4><a name="step3"></a>Modifying members</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   member.Rotate(45.0)
+   member.CurrentAnchorPointName = &quot;catStrTopCenter&quot;
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>We rotate the member and we change its current anchor point.</p>
+      <h4><a name="step4"></a>Retrieving&nbsp; plates</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#0000FF">dim</font> strPlates <font color="#0000FF">as</font> StrPlates
+    <font color="#0000FF">Set</font> strPlates = rootProduct.GetTechnologicalObject(&quot;StructurePlates&quot;)
+
+    <font color="#0000FF">dim</font> plate <font color="#0000FF">as</font> StrPlates
+    <font color="#0000FF">set</font> plate = strPlates.Item(&quot;PlateType_11&quot;)</pre>
+            <pre>...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This step describes how to get the plate collection and how to get one
+      specific element in it.</p>
+      <h4><a name="step5"></a>Modifying plates</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+  plate.ReverseDirection
+	
+  plate.StandardThickness = 0.020<font color="#008000">
+</font>
+  rootProduct.Update</pre>
+            <pre>...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>We reverse the material orientation of the plate and we change its
+      thickness.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to modify structure objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><a href="CAAStrCreationOfStructureObjects.htm">Creation of a
+      structure object</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

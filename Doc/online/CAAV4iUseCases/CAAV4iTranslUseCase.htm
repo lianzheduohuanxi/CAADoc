@@ -1,0 +1,188 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a V5 Geometrical Element from V4 Data</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>V4 Access</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Creating a V5 Geometrical Element from V4 Data</h3>
+      Adapt the behavior of V4 data migration</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article shows how to migrate V5 geometrical element from a V4 data
+      .&nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAV4iEduTranslV4ToV5 Use Case</a></b>&nbsp;</li>
+        <ul>
+          <li><a href="#What">What Does CAAV4iEduTranslV4ToV5</a></li>
+          <li><a href="#How">How to Launch CAAV4iEduTranslV4ToV5</a></li>
+          <li><a href="#Where">Where to Find the CAAV4iEduTranslV4ToV5 Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to show you how to migrate V5 geometrical element from
+a V4 data.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV4iEduTranslV4ToV5 Use Case</h3>
+CAAV4iEduTranslV4ToV5 is a use case of the CAACATIAV4Interfaces.edu framework
+that illustrates CATIAV4Interfaces framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV4iEduTranslV4ToV5 Do</h4>
+CAAV4iEduTranslV4ToV5 is a frame, which implements the CATIV4DataTranslator
+interface. This interface is used by CATIA V5, when elements from a V4 model are
+pasted into a CATPart. Currently the implementation is restricted to spline
+curves and nets.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV4iEduTranslV4ToV5</h4>
+<i></i>&nbsp; First of all, complete the object methods in order to migrate V5
+geometrical element from a V4 data. Read your V4 data and set the matching V5
+data in accordance with the V4 CATGEO type as SPLINE or NET. Tell the process
+that you want to compute yourself the V5 data. If you want to let the system do,
+the generic process will be applied and curve or a surface will be computed. If
+you wish no computation, the V4 element will not be migrated.<br>
+<i></i>&nbsp; Then set up the build time environment, compile
+CAAV4iEduTranslV4ToV5 with its prerequisites, set up the run time environment to
+take into account the use case dictionary, and execute the use case [<a href="#References">1</a>].<br>
+<i></i>&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAV4iEduTranslV4ToV5 Code</h4>
+The CAAV4iEduTranslV4ToV5 use case is made of one file located in the
+CAAV4iEduTranslV4ToV5.m module of the CAACATIAV4Interfaces.edu framework:<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\</tt>CAACATIAV4Interfaces<tt>.edu\</tt>CAAV4iEduTranslV4ToV5<tt>.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/</tt>CAACATIAV4Interfaces<tt>.edu/</tt>CAAV4iEduTranslV4ToV5<tt>.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.<br>
+&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There is possible to manage your intent in CAAV4iEduTranslV4ToV5 :
+<ol>
+  <li><a href="#Step1">Change the V4 to V5 Paste behaviour</a></li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1">Change the V4 to V5 Paste behaviour</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+&nbsp; HRESULT CAADataTranslator::GetUserIntent(CATV4iV4Element * V4Elem, int &amp; oIntent)
+&nbsp; {
+&nbsp;   HRESULT rc = S_OK;
+&nbsp;   ...
+&nbsp;   oIntent = ...;
+&nbsp;   return rc;
+&nbsp; }
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>oIntent is set to
+<ul>
+  <li>0 : do the generic process, do not use the customer method.
+  <li>1 : let the customer do as here before.
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This use case provides a way to decide if an element will be pasted or not.
+<div align="right">
+  <i>[</i><a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Dec 2003]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

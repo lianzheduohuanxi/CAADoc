@@ -1,0 +1,419 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATEdgeCurve</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATEdgeCurve"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATEdgeCurve</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATEdgeCurve_22927','CATEdgeCurve','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATEdgeCurve</b>
+</p>
+<p>
+<b><i> Interface defining a curve representing several other curves.</i></b><br>
+
+ <b>Role</b>: A CATEdgeCurve is the geometry of a topological edge. As an edge can
+ bound several faces (with different geometry), 
+ a CATEdgeCurve is a curve that presents a common behavior for
+ several curves. 
+ <br>The aggregation of the CATPCurves resulting of an intersection 
+ leads to a CATIntCurve, the aggregation of identical CATCurves 
+ leads to a CATSimCurve and the aggregation of CATCurves with different limits 
+ or parameterizations leads to a 
+ CATMergedCurve. To create a CATMergedCurve, use the <script type="text/javascript"> activateLinkAnchor('CATEdgeCurveComputation','','CATEdgeCurveComputation') </script> operator.<br>The aggregation is a recursive notion, and you can aggregate
+ CATEdgeCurves.
+<br>One aggregated curve plays a special role: its manages the evaluations and is called the reference curve.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Compare(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;,CATPositiveLength*)"><b>Compare</b></a>(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;,CATPositiveLength*)
+<dd>  Checks whether points can be merged within the same CATPointOnEdgeCurve.
+ <dt> o 
+    <a href="#GetEquivalentParam(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;)"><b>GetEquivalentParam</b></a>(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;)
+<dd>  Returns the parameter on <tt>this</tt> EdgeCurve corresponding to the point defined by
+ parameters on its components.
+ <dt> o 
+    <a href="#GetEquivalentPoint(CATCrvParam&amp;,CATCurve*,CATCurve*,CATCrvParam&amp;,short)"><b>GetEquivalentPoint</b></a>(CATCrvParam&amp;,CATCurve*,CATCurve*,CATCrvParam&amp;,short)
+<dd>   Reports a point from a curve to another one.
+ <dt> o 
+    <a href="#GetMaxGap()"><b>GetMaxGap</b></a>()
+<dd>  Returns a length larger than the distance between any couple of corresponding evaluated 
+ points on all subcurves.
+ <dt> o 
+    <a href="#GetRefCurve()"><b>GetRefCurve</b></a>()
+<dd>  Returns the reference curve of <tt>this</tt> CATEdgeCurve.
+ <dt> o 
+    <a href="#GetRelativeOrientation(CATCurve*)"><b>GetRelativeOrientation</b></a>(CATCurve*)
+<dd>  Retrieves the parametric orientation of a CATCurve with regards to the 
+ orientation of <tt>this</tt> CATEdgeCurve.
+ <dt> o 
+    <a href="#GetSharpness(CATPCurve*,CATPCurve*,CATGeoContinuity*,CATGeoConvexity*)"><b>GetSharpness</b></a>(CATPCurve*,CATPCurve*,CATGeoContinuity*,CATGeoConvexity*)
+<dd>  Retrieves the sharpness between the underlying surfaces of two CATPCurves.
+ <dt> o 
+    <a href="#Next(CATCurve*)"><b>Next</b></a>(CATCurve*)
+<dd>  Scans the CATCurves represented by <tt>this</tt> CATEdgeCurve.
+ <dt> o 
+    <a href="#NextThru(CATCurve*)"><b>NextThru</b></a>(CATCurve*)
+<dd>  
+ <dt> o 
+    <a href="#SetSharpness(CATPCurve*,CATPCurve*,CATGeoContinuity,CATGeoConvexity)"><b>SetSharpness</b></a>(CATPCurve*,CATPCurve*,CATGeoContinuity,CATGeoConvexity)
+<dd>  Imposes the sharpness between the underlying surfaces of two CATPCurves.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATCompareDiagnostic"><b>CATCompareDiagnostic</b></a>
+<dd>  The confusion diagnosis of a point on an CATEdgeCurve.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Compare"></a><a name="Compare(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;,CATPositiveLength*)"></a> <dt> o <b>Compare</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATEdgeCurve::CATCompareDiagnostic','CATEdgeCurve::CATCompareDiagnostic')</script>  <b>Compare</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbOfCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*[]')</script> <td><tt>iCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam[]')</script> <td><tt>iParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioSuggestedParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPositiveLength','CATPositiveLength*')</script> <td><tt>ioGap</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks whether points can be merged within the same CATPointOnEdgeCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbOfCurves</tt>
+   <dd> The number of CATCurves.
+ </dd>
+    <dt><tt> iCurves[]</tt>
+   <dd> The array of <tt>iNbOfCurves</tt> CATCurve pointers.
+ </dd>
+    <dt><tt> iParams[]</tt>
+   <dd> The corresponding parameters of the points to merge.
+ </dd>
+    <dt><tt> ioSuggestedParam</tt>
+   <dd> The parameter of the corresponding point on <tt>this</tt> CATEdgeCurve.
+ </dd>
+    <dt><tt> ioGap</tt>
+   <dd> The maximum distance between the points. If <tt>NULL</tt>, this distance is not output.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of confusion.
+</dl>
+</dl>
+<a name="GetEquivalentParam"></a><a name="GetEquivalentParam(CATLONG32,CATCurve*[],CATCrvParam[],CATCrvParam&amp;)"></a> <dt> o <b>GetEquivalentParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetEquivalentParam</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbOfCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*[]')</script> <td><tt>iCurves</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam[]')</script> <td><tt>iParams</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioCalcParam</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the parameter on <tt>this</tt> EdgeCurve corresponding to the point defined by
+ parameters on its components.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNbOfCurves</tt>
+   <dd> The number of CATCurves.
+ </dd>
+    <dt><tt> iCurves[]</tt>
+   <dd> The array of <tt>iNbOfCurves</tt> CATCurve pointers.
+ </dd>
+    <dt><tt> iParams[]</tt>
+   <dd> The corresponding parameters on the CATCurves.
+ </dd>
+    <dt><tt> ioCalcParam</tt>
+   <dd> The parameter of the point on <tt>this</tt> CATEdgeCurve.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEquivalentPoint"></a><a name="GetEquivalentPoint(CATCrvParam&amp;,CATCurve*,CATCurve*,CATCrvParam&amp;,short)"></a> <dt> o <b>GetEquivalentPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetEquivalentPoint</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParamOnCurrentCurve</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iCurrentCurveOrEdgeCurve</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iEquivalentCurve</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioParamOnEquivalentCurve</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iConverge</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Reports a point from a curve to another one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParamOnCurrentCurve</tt>
+   <dd> The parameter on <tt>iCurrentCurveOrEdgeCurve</tt>.
+ </dd>
+    <dt><tt> iCurrentCurveOrEdgeCurve</tt>
+   <dd> The initial CATCurve.
+ </dd>
+    <dt><tt> iEquivalentCurve</tt>
+   <dd> The CATCurve on which the point is to be expressed.
+ </dd>
+    <dt><tt> ioParamOnEquivalentCurve</tt>
+   <dd> The equivalent parameter on <tt>iEquivalentCurve</tt>.
+ </dd>
+    <dt><tt> iConverge</tt>
+   <dd> The type of computation.
+ <br><b>Legal values</b>:
+ <dl><dt>1</dt><dd>An exact computation.
+ <dt>0</dt><dd>An approximated (and faster) computation.</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetMaxGap"></a><a name="GetMaxGap()"></a> <dt> o <b>GetMaxGap</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPositiveLength','CATPositiveLength')</script>  <b>GetMaxGap</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a length larger than the distance between any couple of corresponding evaluated 
+ points on all subcurves.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The gap between the curves.
+ If the gap is 0., 
+<script type="text/javascript"> activateLinkAnchor('CATCurve','EvalPoint','CATCurve.EvalPoint') </script> returns the same value whatever the subcurve  it applies to.
+ The gap of an CATIntCurve is always 0., because the evaluators always return an exact value in this case.
+ However, the equation of a CATIntCurve may not return an exact solution.
+</dl>
+</dl>
+<a name="GetRefCurve"></a><a name="GetRefCurve()"></a> <dt> o <b>GetRefCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script>  <b>GetRefCurve</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the reference curve of <tt>this</tt> CATEdgeCurve.
+ <br> The reference curve manages the evaluations.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A pointer to the curve of <tt>this</tt> CATEdgeCurve.
+</dl>
+</dl>
+<a name="GetRelativeOrientation"></a><a name="GetRelativeOrientation(CATCurve*)"></a> <dt> o <b>GetRelativeOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('short','short')</script>  <b>GetRelativeOrientation</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iCurrentCurve</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the parametric orientation of a CATCurve with regards to the 
+ orientation of <tt>this</tt> CATEdgeCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentCurve</tt>
+   <dd> A pointer to a curve of <tt>this</tt> CATEdgeCurve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The relative orientation
+<dl> <dt> 1 <dd> <tt>this</tt> and <tt>iCurrentCurve</tt> have the same orientation.
+     <dt> -1 <dd> <tt>this</tt> and <tt>iCurrentCurve</tt> have an opposite orientation.</dl>
+</dl>
+</dl>
+<a name="GetSharpness"></a><a name="GetSharpness(CATPCurve*,CATPCurve*,CATGeoContinuity*,CATGeoConvexity*)"></a> <dt> o <b>GetSharpness</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('short','short')</script>  <b>GetSharpness</b>(<td> const <script type="text/javascript"> activateLink('CATPCurve','CATPCurve*')</script> <td><tt>iC1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPCurve','CATPCurve*')</script> <td><tt>iC2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeoContinuity','CATGeoContinuity*')</script> <td><tt>ioContinuity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeoConvexity','CATGeoConvexity*')</script> <td><tt>ioConvexity</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the sharpness between the underlying surfaces of two CATPCurves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iC1</tt>
+   <dd> A pointer to the first CATPCurve.
+ </dd>
+    <dt><tt> iC2</tt>
+   <dd> A pointer to the second CATPCurve. 
+ </dd>
+    <dt><tt> ioContinuity</tt>
+   <dd> The tangential continuity.
+ </dd>
+    <dt><tt> ioConvexity</tt>
+   <dd> The tangential convexity. If <tt>NULL</tt>, this argument is not written.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Next"></a><a name="Next(CATCurve*)"></a> <dt> o <b>Next</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve','const CATCurve*')</script>  <b>Next</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iCurrentSubElement</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Scans the CATCurves represented by <tt>this</tt> CATEdgeCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentSubElement</tt>
+   <dd> The pointer to the CATCurve from which the search is initialized, may
+ be <tt>NULL</tt> for retrieving the first CATCurve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the next CATCurve of the aggregation. Remember that a 
+ CATEdgeCurve is also a CATCurve.
+<br><b>Sample</b>: Search of all CATCurves of a CATEdgeCurve.
+<pre> 
+ const CATCurve * Current=NULL
+ while (Current = MyEdgeCurve->Next(Current) ) 
+  { ... process Current ... }
+</pre>
+</dl>
+</dl>
+<a name="NextThru"></a><a name="NextThru(CATCurve*)"></a> <dt> o <b>NextThru</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve','const CATCurve*')</script>  <b>NextThru</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iCurrentSubElement</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R12 CATEdgeCurveIterator
+ Recursively scans the CATCurves of <tt>this</tt> CATEdgeCurve, without returning
+ the imbedded CATEdgeCurves.
+ 
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentSubElement</tt>
+   <dd> The pointer to the CATCurve from which the search is initialized, may
+ be <tt>NULL</tt> for retrieving the first CATCurve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the next CATCurve (not being a CATEdgeCurve) of the aggregation.
+</dl>
+</dl>
+<a name="SetSharpness"></a><a name="SetSharpness(CATPCurve*,CATPCurve*,CATGeoContinuity,CATGeoConvexity)"></a> <dt> o <b>SetSharpness</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSharpness</b>(<td> const <script type="text/javascript"> activateLink('CATPCurve','CATPCurve*')</script> <td><tt>iC1</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPCurve','CATPCurve*')</script> <td><tt>iC2</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATGeoContinuity','CATGeoContinuity')</script> <td><tt>iContinuity</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATGeoConvexity','CATGeoConvexity')</script> <td><tt>iConvexity</tt><td><tt>= CATUnknownConvexity</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Imposes the sharpness between the underlying surfaces of two CATPCurves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iC1</tt>
+   <dd> A pointer to the first CATPCurve.
+ </dd>
+    <dt><tt> iC2</tt>
+   <dd> A pointer to the second CATPCurve. 
+ </dd>
+    <dt><tt> iContinuity</tt>
+   <dd> The tangential continuity to impose.
+ </dd>
+    <dt><tt> iConvexity</tt>
+   <dd> The tangential convexity to impose.</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATCompareDiagnostic"> <dt> o <b>CATCompareDiagnostic</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATCompareDiagnostic</b> {
+  Equal,
+  Similar,
+  Distinct
+}
+</pre>
+ The confusion diagnosis of a point on an CATEdgeCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> Equal</tt>
+   <dd> Same geometrical points with same parameter.
+ </dd>
+    <dt><tt> Similar</tt>
+   <dd>  Same geometrical points with different parameters.
+ </dd>
+    <dt><tt> Distinct</tt>
+   <dd> Distinct geometrical points.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATEdgeCurve.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,150 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperatorsLight Global Function CATCreateTopNewSplitShell</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperatorsLight.htm" href="../TopologicalOperatorsLight.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperatorsLight";	}
+		function getCurrentObjectName() { 
+ 	return "CATCreateTopNewSplitShell"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperatorsLight Global Function CATCreateTopNewSplitShell</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('CATHybSplit',' CATHybSplit *')</script>  <b>CATCreateTopNewSplitShell</b>(<td><script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script> <td><tt>iFactory</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopData','CATTopData*')</script> <td><tt>iData</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iBodyToCut</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iCuttingBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATHybSelectionMode','CATHybSelectionMode')</script> <td><tt>iSelectMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATHybExtrapolationMode','CATHybExtrapolationMode')</script> <td><tt>iExtrapolMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iTol</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an operator that splits a CATShell domain by a CATShell or a CATWire domain.
+ <br>The body to split and the cutting body must only contain 
+ one shell domain and one (shell or wire) domain respectively.
+ <br><b>Orientation</b>: The orientation of the resulting body is the orientation
+ of the body to cut.
+ <br><b>Journal</b>:
+ <ul>
+ <li>The faces that are kept and not cut are written as <tt>CATCGMJournal::Keep</tt>
+ <li>The faces that are cut are written as <tt>CATCGMJournal::Subdivision</tt> 
+ <li>The new edges are written as <tt>CATCGMJournal::Creation</tt>
+ <li>The faces that are neither cut, nor kept, are written as <tt>CATCGMJournal::Deletion</tt>
+ </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFactory</tt>
+   <dd> A pointer to the factory of the resulting body.
+ </dd>
+    <dt><tt> iData</tt>
+   <dd> A pointer to the topological data.
+ </dd>
+    <dt><tt> iBodyToCut</tt>
+   <dd> A pointer to the body to cut. It must only contain one shell
+ domain.
+ </dd>
+    <dt><tt> iCuttingBody</tt>
+   <dd> A pointer to the cutting body. It must only contain one (wire or shell)
+ domain
+ </dd>
+    <dt><tt> iSelectMode</tt>
+   <dd> The selection of the resulting parts. Here are the legal values:
+ <ul>
+ <li><tt>BOTH_SIDES</tt>: Keeps all the domains
+ <li><tt>POSITIVE_POSITIVE_SIDE</tt>: Keeps the domains that are to the right of the cut body and the cutting body. 
+ <li><tt>NEGATIVE_POSITIVE_SIDE</tt>: Keeps the domains that are to the left of the cut body and to the right 
+ of the cutting body. 
+ <li><tt>POSITIVE_NEGATIVE_SIDE</tt>: Keeps the domains that are to the right of the cut body and to the left 
+ of the cutting body. 
+ <li><tt>NEGATIVE_NEGATIVE_SIDE</tt>: Keeps the domains that are to the left of the cut body and to the left 
+ of the cutting body.
+ </ul>
+ <ul>
+ <li>The right of a shell cut by another shell is the part of the cut shell that is
+ pointed out by the orientation of the cutting shell.
+ The left side is the other one.
+ <li>The right of a shell cut by a wire is the part of the cut shell such that the 
+ orientation of the shell, the orientation of the wire and the direction on the selected
+ part is direct. 
+ <li>The right of a wire cut by a shell, a wire or a vertex is the part of the wire 
+ that is pointed out by the
+ orientation of the wire.
+ </ul>
+ </dd>
+    <dt><tt> iExtrapolMode</tt>
+   <dd> The extrapolation mode during a cutting operation.
+ This is useful when the cutting body does not cut right along the body to cut, or
+ vice versa in case of a trim operation. Here are the legal values:
+ <ul>
+ <li><tt>NO_EXTRAPOLATION</tt>: No extrapolation is performed. The operator cannot find a solution
+ if the cutting body does not cut right along the body to cut.
+ <li><tt>TANGENT_DIRECTION</tt>: If the cutting body does not cut right along the body to cut, the extrapolation is
+ made tangentially to the scar at the last computed point.
+ </ul>
+ </dd>
+    <dt><tt> iTol</tt>
+   <dd> Defines the tolerance of the geometrically coincident elements to be taken 
+ into acccount by <tt>this</tt> operator during the LayDown process.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  [out, delete] The pointer to the created operator.  To be deleted after use.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCreateTopBoolean.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

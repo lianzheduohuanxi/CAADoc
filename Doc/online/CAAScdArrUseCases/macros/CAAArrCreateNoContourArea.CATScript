@@ -1,0 +1,49 @@
+Option Explicit
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an Area without
+'                a contour.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :                               
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
+'******************************************************************************
+
+
+Sub CATMain()
+   
+   ' On Error Resume Next
+
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
+
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Dim objPosition       As Position
+   Set objMove      = objRootProd.Move
+   Set objPosition  = objRootProd.Position
+
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+
+   '----------------------------------------------
+   ' Create Area without a contour under the Root Product
+   Dim objArea              As ArrangementArea
+   Dim dblAreaPosition(11)  As Double
+
+   objPosition.GetComponents dblAreaPosition
+   dblAreaPosition(9)    = 300.0
+   dblAreaPosition(10)   = 400.0
+   dblAreaPosition(11)   = 300.0
+   Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
+
+End Sub 
+

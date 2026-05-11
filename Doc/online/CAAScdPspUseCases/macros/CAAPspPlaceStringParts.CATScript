@@ -1,0 +1,724 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2007
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interface
+'                 CATIAPspPlacePart to place string parts.
+'  
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R17 
+' *****************************************************************************
+
+' *****************************************************************************
+'--- Global variables
+' *****************************************************************************
+Dim gTraceOutput As String
+Set gTraceOutput = ""
+Dim gListFactory As PspTempListFactory
+Set gListFactory = Nothing
+Dim gPspDoc As Document
+Set gPspDoc = Nothing
+Dim gRootProduct    As Product
+Set gRootProduct = Nothing
+Dim gPspWorkbench   As PspWorkbench
+Set gPspWorkbench = Nothing
+
+' *****************************************************************************
+'--- Support routines
+' *****************************************************************************
+' Show a trace output line.
+Sub ShowTraceOutputLine(iTraceOutput As String)
+  'Add message to output string for sending to message box at end of run.
+  gTraceOutput = gTraceOutput & iTraceOutput & vbCr               
+  'Show message right away. May cause a lot of message boxes if used interactively.
+  'CATIA header and lots of stuff is added to every MsgBox.
+  'MsgBox iTraceOutput
+  ' Print doesn't work in CATIA VB
+  'Print iTraceOutput & vbCr   
+End Sub
+
+' Dump all traces.
+Sub DumpTraces()
+  MsgBox gTraceOutput
+End Sub
+
+' Get the ID of an object.
+Function GetObjectID(iObject As CATIABase) As String
+  Dim objPspPhyID       As PspID
+  GetObjectID = ""
+  If ( Not ( gPspWorkbench Is Nothing ) And _
+        Not ( iObject Is Nothing ) ) Then  
+  
+    Set objPspPhyID = gPspWorkbench.GetInterface("CATIAPspID", iObject )      
+
+    If ( Not (objPspPhyID Is Nothing) ) Then
+      GetObjectID = objPspPhyID.GetID
+    End If 
+
+  End If
+End Function
+
+' Show the ID of an object.
+Sub ShowObjectID(iObjectComment As String, iObject As CATIABase)
+  ShowTraceOutputLine iObjectComment &  " ID = " & GetObjectID(iObject)
+End Sub
+
+
+' Empty list of doubles.
+Sub ClearDoubles(iListDoubles As PspListOfDoubles)
+  If ( Not iListDoubles Is Nothing ) Then
+    Dim ii As Integer
+    For ii = iListDoubles.Count To 1 Step -1
+      iListDoubles.RemoveByIndex ii
+    Next
+  End If
+End Sub
+
+' Empty list of objects.
+Sub ClearObjects(iListObjects As PspListOfObjects)
+  If ( Not iListObjects Is Nothing ) Then
+    Dim ii As Integer
+    For ii = iListObjects.Count To 1 Step -1
+      iListObjects.RemoveByIndex ii
+    Next
+  End If
+End Sub
+
+' Convert list of three doubles to string.
+Function DumpVector(iVector As PspListOfDoubles) As String
+  DumpVector = ""
+  
+  If ( Not iVector Is Nothing ) Then
+    If (iVector.Count = 3) Then
+      DumpVector = "("
+      Dim iiCoord As Integer
+      For iiCoord = 1 To 3
+        Dim coord As Double
+        coord = iVector.Item(iiCoord)
+        DumpVector = DumpVector & coord
+        if (iiCoord < 3) Then DumpVector = DumpVector & ","
+      Next
+      DumpVector = DumpVector & ")"
+    End If
+
+  End If
+End Function
+
+' Convert a four vector transform matrix to a string
+Function DumpTransform(iTransform As CATSafeArray) As String
+  DumpTransform = ""
+  
+  Dim vector As PspListOfDoubles
+  Set vector = gListFactory.CreateListOfDoubles()
+  Dim iiVector As Integer
+  For iiVector = 1 To 4
+    Dim ii1 As Integer
+    ii1 = 3 * iiVector
+    vector.Append iTransform(ii1 - 3)
+    vector.Append iTransform(ii1 - 2)
+    vector.Append iTransform(ii1 - 1)
+    DumpTransform = DumpTransform & DumpVector(vector)
+    if (iiVector < 4) Then DumpTransform = DumpTransform & " "
+    ClearDoubles vector
+  Next
+End Function
+
+' Get application 
+Function GetApplication(iApplicationID As CatPspIDLApplicationID) As PspApplication
+  Set GetApplication = gPspWorkbench.GetApplication(iApplicationID)
+  If (GetApplication Is Nothing) Then
+    Err.Raise 9999,sDocPath,"Unable to get PspApplication"
+  End If
+  ShowTraceOutputLine "Success in getting PspApplication"
+  GetApplication.Initialization()             
+End Function
+
+' Get PspPhysicalProduct object
+Function GetPspPhysicalProduct(iApplicationObject As PspApplication, iDomainID As CatPspIDLDomainID, iName As String) As Product
+  Set GetPspPhysicalProduct = Nothing
+  Dim objLPhysicals     As PspListOfObjects                  
+  Dim objPspAppFactory  As PspAppFactory
+  Dim pspPhysical As PspPhysicalProduct
+  Dim pspPhysicalProd As Product
+  Set objPspAppFactory = gPspWorkbench.GetInterface("CATIAPspAppFactory", iApplicationObject)      
+
+  Set objLPhysicals = objPspAppFactory.ListPhysicals ( gRootProduct , iDomainID)
+  If ( Not ( objLPhysicals Is Nothing ) ) Then
+    Dim iiPhysical As Integer
+    For iiPhysical = 1 to objLPhysicals.Count
+      Set pspPhysical =  objLPhysicals.Item( iiPhysical, "CATIAPspPhysicalProduct" )
+      Set pspPhysicalProd = gPspWorkbench.GetInterface("CATIAProduct", pspPhysical)      
+      ShowTraceOutputLine "Physical product name = " & pspPhysicalProd.Name
+      If (pspPhysicalProd.Name = iName) Then 
+        Set GetPspPhysicalProduct = gPspWorkbench.GetInterface("CATIAProduct", pspPhysicalProd )
+        Exit For
+      End If
+    Next
+  End If
+  If (GetPspPhysicalProduct Is Nothing) Then
+    Err.Raise 9999,sDocPath,"Unable to get physcial part for reference product input"
+  End If
+  ShowObjectID "Physical Product object", GetPspPhysicalProduct
+End Function
+
+' Get the logical line that is a child of the input product
+Function GetLogicalLine(iLineMember As Product) As PspLogicalLine
+  Set GetLogicalLine = Nothing
+  Dim PhysicalProductGroupable As PspGroupable
+  Set PhysicalProductGroupable = Nothing
+  Set PhysicalProductGroupable = gPspWorkbench.GetInterface("CATIAPspGroupable", iLineMember )      
+  If ( Not ( PhysicalProductGroupable Is Nothing ) ) Then
+    ShowTraceOutputLine "Number of groups = " & PhysicalProductGroupable.Groups.Count
+    Dim iiGroup As Integer
+    For iiGroup = 1 to PhysicalProductGroupable.Groups.Count
+      Dim Group As CATIABase
+      Set Group = PhysicalProductGroupable.Groups.Item(iiGroup, "CATIABase")
+      ShowTraceOutputLine "Group name = " & Group.Name
+      Set GetLogicalLine = gPspWorkbench.GetInterface("CATIAPspLogicalLine", Group ) 
+      If ( Not ( GetLogicalLine Is Nothing ) ) Then
+        ShowTraceOutputLine "Logical line name = " & GetLogicalLine.Name
+        Exit For
+      End If
+    Next
+  End If
+End Function
+
+' Get reference part given instance.
+Function GetReferencePart(iInstancePart As Product) As Product
+  Set GetReferencePart = Nothing
+  
+  If ( Not (iInstancePart Is Nothing) ) Then
+    Set GetReferencePart = iInstancePart.ReferenceProduct
+  End If 
+  If (GetReferencePart Is Nothing) Then
+    Err.Raise 9999,sDocPath,"Unable to get reference product input"
+  End If
+  ShowTraceOutputLine "Reference part number = " & GetReferencePart.PartNumber
+  ShowObjectID "Reference Part object", GetReferencePart
+End Function
+ 
+' Find a product.
+Function FindProduct(iParentProduct As Product, iProductName As String) As Product
+  Set FindProduct = Nothing
+  Dim ParentProducts As Products
+  If ( Not ( iParentProduct Is Nothing ) ) Then  
+    Set ParentProducts = iParentProduct.Products
+    If ( Not (ParentProducts Is Nothing) ) Then
+      ShowTraceOutputLine "Number of children = " & ParentProducts.Count
+      Dim Prod As CATIABase
+      For Each Prod in ParentProducts
+        'ShowTraceOutputLine "Child product name = " & Prod.Name
+        If (Prod.Name = iProductName) Then 
+          Set FindProduct = gPspWorkbench.GetInterface("CATIAProduct", Prod )      
+          Exit For
+        End If
+      Next
+      ShowTraceOutputLine "Found product name = " & FindProduct.Name
+    End If 
+  End If
+End Function
+
+' Show point position
+Sub ShowPointPosition(iPoint As HybridShapePointCoord)
+  If ( Not ( iPoint Is Nothing ) ) Then  
+    Dim OutString As String
+    OutString = "Point posit = ("
+    OutString = OutString & iPoint.X.ValueAsString2(0, FALSE)
+    OutString = OutString & ","
+    OutString = OutString & iPoint.Y.ValueAsString2(0, FALSE)
+    OutString = OutString & ","
+    OutString = OutString & iPoint.Z.ValueAsString2(0, FALSE)
+    OutString = OutString & ")"
+    ShowTraceOutputLine OutString
+  End If
+End Sub
+
+Sub ShowProductPosition(iProduct As Product, iName As String)
+  If ( Not ( iProduct Is Nothing ) ) Then  
+    Dim positArray(11) As CATSafeArray
+    iProduct.Position.GetComponents(positArray)
+    ShowTraceOutputLine iName & " posit = " & DumpTransform(positArray)
+  End If
+End Sub
+
+' Show product info
+Sub ShowProductInfo(iProduct As Product, iName As String, iRelativeAxis As Product)
+    
+    ShowProductPosition iProduct, iName
+    
+    ' Placed part connectors
+    Dim objPlacePartPhysical As CATIAPspPhysicalProduct                  
+    Set objPlacePartPhysical = Nothing
+    Set objPlacePartPhysical = gPspWorkbench.GetInterface("CATIAPspPhysicalProduct", iProduct )      
+    If ( Not ( objPlacePartPhysical Is Nothing ) ) Then
+      ShowTraceOutputLine "Number of connectors = " & objPlacePartPhysical.Connectors.Count
+      If ( objPlacePartPhysical.Connectors.Count <> 2 ) Then      
+        Err.Raise 9999,sDocPath,"Wrong number of connectors"
+      End If
+      Dim iiCtr As Integer
+      For iiCtr = 1 to objPlacePartPhysical.Connectors.Count
+        ShowTraceOutputLine "iiCtr = " & iiCtr
+        Dim Ctr As PspPartConnector
+        Set Ctr = objPlacePartPhysical.Connectors.Item(iiCtr, "CATIAPspPartConnector")
+        If ( Ctr Is Nothing ) Then      
+          Err.Raise 9999,sDocPath,"Bad connector"
+        End If
+        ShowTraceOutputLine "Ctr name = " & Ctr.Name
+        Dim CtrPosit As PspListOfDoubles
+        Set CtrPosit = Nothing
+        Set CtrPosit = Ctr.GetPosition(iRelativeAxis)
+        ShowTraceOutputLine "Ctr posit = " & DumpVector(CtrPosit)
+        Dim CtrAlign As PspListOfDoubles
+        Set CtrAlign = Nothing
+        Set CtrAlign = Ctr.GetAlignmentDirection(iRelativeAxis)
+        ShowTraceOutputLine "Ctr align = " & DumpVector(CtrAlign)
+        Dim CtrUp As PspListOfDoubles
+        Set CtrUp = Nothing
+        Set CtrUp = Ctr.GetUpDirection(iRelativeAxis)
+        ShowTraceOutputLine "Ctr up = " & DumpVector(CtrUp)
+      Next
+    End If
+    
+End Sub
+
+' *****************************************************************************
+'--- Main routine
+' *****************************************************************************
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Setup the Environment
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+    End If
+
+    ShowTraceOutputLine "Doc path = " & sDocPath
+    
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\StringParts\CAAPspEduStringParts.CATProduct" )
+
+    ShowTraceOutputLine "Doc full path = " & sDocFullPath
+    
+    Set gPspDoc = CATIA.Documents.Open(sDocFullPath)
+    If (gPspDoc Is Nothing) Then
+      Err.Raise 9999,sDocPath,"No Document Open"
+    End If
+
+    ShowTraceOutputLine "Output traces from CAAPspPlacePart.CATScript"
+
+    ' Find the top node of the Distributive System object tree - .  
+    Set gRootProduct = gPspDoc.Product 
+    If (gRootProduct Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get root product"
+    End If
+    
+    ' Get Plant-ship modeler workbench
+    Set gPspWorkbench = gRootProduct.GetTechnologicalObject ("PspWorkbench")
+    If (gPspWorkbench Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get PspWorkbench"
+    End If
+    ShowTraceOutputLine "Success in getting PspWorkbench"
+
+    ' ------------------------------------------------------------------------- 
+    ' Setup application data 
+    ' ------------------------------------------------------------------------- 
+    ' Get tubing application
+    Dim objPspApplicationTub As PspApplication
+    Set objPspApplicationTub = GetApplication(catPspIDLCATTubing)
+    
+    ' Get gListFactory
+    Set gListFactory = gPspWorkbench.GetInterface("CATIAPspTempListFactory", objPspApplicationTub )      
+    If (gListFactory Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get list factory"
+    End If
+    
+    '-----------------------------------------------------------------------
+    ' Get part parent products.
+    '-----------------------------------------------------------------------
+    ' Get root product children and parent products for placed part
+    Dim ParentProductTub As Product
+    Set ParentProductTub = FindProduct(gRootProduct, "CAAPspEduTubes.1")
+    If (ParentProductTub Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get tubing parent product"
+    End If
+    ShowTraceOutputLine "Tubing part place parent product name = " & ParentProductTub.Name   
+ 
+    ' ------------------------------------------------------------------------- 
+    ' Add parts to hold points
+    ' Parts created under placement part parent because points are interpretted as relative to that parent.
+    ' ------------------------------------------------------------------------- 
+    Dim PartForPointsProductTub As Product
+    Set PartForPointsProductTub = Nothing
+    Dim PartForPointsTub As Part
+    Set PartForPointsTub = Nothing
+    Dim PartForPointsGeoSetTub As OrderedGeometricalSet
+    Set PartForPointsGeoSetTub = Nothing 
+    
+    Dim PartForPointsDoc As Document
+    
+    Set PartForPointsProductTub = ParentProductTub.Products.AddNewComponent("Part", "PartForPointsTubing")
+    ShowTraceOutputLine "Part for tubing points product name = " & PartForPointsProductTub.Name
+    If (Not (PartForPointsProductTub is Nothing) ) Then
+      Set PartForPointsDoc = PartForPointsProductTub.GetMasterShapeRepresentation(TRUE)
+      Set PartForPointsTub = PartForPointsDoc.Part
+    End If 
+    ShowTraceOutputLine "Part for tubing points name = " & PartForPointsTub.Name
+    Set PartForPointsGeoSetTub = PartForPointsTub.OrderedGeometricalSets.Add
+    If (PartForPointsTub Is Nothing Or PartForPointsGeoSetTub Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to add part to hold tubing points"
+    End If
+
+    '-----------------------------------------------------------------------
+    ' Define some part placement variables
+    '-----------------------------------------------------------------------
+    Dim objInstancePartOfReference As Product
+    Dim objReferencePart As Product
+    Dim LogicalLine As PspLogicalLine
+    Dim Standard As String
+    Dim FunctionType As String
+    Dim PlacedPartID As String
+    Dim UpDirectionFirstPoint As PspListOfDoubles
+    Set UpDirectionFirstPoint = gListFactory.CreateListOfDoubles()
+    Dim Point As HybridShapePointCoord
+    Dim ListPlacementPoints As PspListOfObjects                  
+    Set ListPlacementPoints = gListFactory.CreateListOfObjects()
+    Dim Location(2)
+    Dim ListBendRadii As PspListOfDoubles
+    Set ListBendRadii = gListFactory.CreateListOfDoubles()
+    Dim PlacePartRef As CATIABase
+    Dim objPlacePart As PspPlacePart                  
+    Dim objPlacePartProduct As Product
+
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    ' Place Tube
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    Set objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationTub, catPspIDLCATTUB, "T-003")
+    Set objReferencePart = GetReferencePart(objInstancePartOfReference)
+    Set LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "SSTL"
+    FunctionType = "CATTubTubeFunction"
+    PlacedPartID = "TestTube" 'Null string uses name generated by PP engine
+    ' Up direction for part = (0,0,1)
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 'Align vertical parallel to z-axis.
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+
+    ' Create points
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(0.0, -1000.0, 0.0) 
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-1000.0, -1000.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 25.4 'Bend radius in mm (1in).
+    ListBendRadii.Append 25.4
+    Set PlacePartRef = Nothing
+    Set objPlacePart = Nothing
+    Set objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationTub )
+    If ( Not ( objPlacePart Is Nothing ) ) Then      
+      Set PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductTub, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    End If
+    If ( PlacePartRef Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+    End If
+	
+    '-----------------------------------------------------------------------
+    ' View and Test Part Data
+    '-----------------------------------------------------------------------
+    ' Placed part position
+    Set objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    If ( objPlacePartProduct Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    End If
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductTub
+    
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    ' Place Tube with bends
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    Set objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationTub, catPspIDLCATTUB, "T-004")
+    Set objReferencePart = GetReferencePart(objInstancePartOfReference)
+    Set LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "SSTL"
+    FunctionType = "CATTubTubeFunction"
+    PlacedPartID = "TestTubeWithBends" 'Null string uses name generated by PP engine
+    ' Up direction for part = (0,0,1)
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 'Align vertical parallel to z-axis.
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+
+    ' Create points
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-1500.0, -1000.0, 0.0) 
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-2500.0, -1000.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-2500.0, 500.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsTub.HybridShapeFactory.AddNewPointCoord(-3500.0, 500.0, 0.0)
+    PartForPointsGeoSetTub.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 25.4 'Bend radius in mm (1in).
+    ListBendRadii.Append 25.4
+    ListBendRadii.Append 25.4
+    ListBendRadii.Append 25.4
+    Set PlacePartRef = Nothing
+    Set objPlacePart = Nothing
+    Set objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationTub )      
+    If ( Not ( objPlacePart Is Nothing ) ) Then      
+      Set PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductTub, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    End If
+    If ( PlacePartRef Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+    End If
+ 
+    '-----------------------------------------------------------------------
+    ' View and Test Part Data
+    '-----------------------------------------------------------------------
+    ' Placed part position
+    'Set objPlacePartProduct = PlacePartRef
+    Set objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    If ( objPlacePartProduct Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    End If
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductTub
+    
+    ' ------------------------------------------------------------------------- 
+    ' Setup Piping application data 
+    ' ------------------------------------------------------------------------- 
+     ' Get piping application
+    Dim objPspApplicationPip As PspApplication
+    Set objPspApplicationPip = GetApplication(catPspIDLCATPiping)
+    
+    '-----------------------------------------------------------------------
+    ' Get part parent products.
+    '-----------------------------------------------------------------------
+    
+    Dim ParentProductPip As Product
+    Set ParentProductPip = FindProduct(gRootProduct, "CAAPspEduPipes.1")
+    If (ParentProductPip Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to get parent product"
+    End If
+    ShowTraceOutputLine "Piping part place parent product name = " & ParentProductPip.Name
+    
+    ' ------------------------------------------------------------------------- 
+    ' Add parts to hold points
+    ' Parts created under placement part parent because points are interpretted as relative to that parent.
+    ' ------------------------------------------------------------------------- 
+    Dim PartForPointsProductPip As Product
+    Set PartForPointsProductPip = Nothing
+    Dim PartForPointsPip As Part
+    Set PartForPointsPip = Nothing
+    Dim PartForPointsGeoSetPip As OrderedGeometricalSet
+    Set PartForPointsGeoSetPip = Nothing
+    
+    Set PartForPointsProductPip = ParentProductPip.Products.AddNewComponent("Part", "PartForPointsPiping")
+    ShowTraceOutputLine "Part for tubing points product name = " & PartForPointsProductPip.Name
+    If (Not (PartForPointsProductPip is Nothing) ) Then
+      Set PartForPointsDoc = PartForPointsProductPip.GetMasterShapeRepresentation(TRUE)
+      Set PartForPointsPip = PartForPointsDoc.Part
+    End If 
+    ShowTraceOutputLine "Part for piping points name = " & PartForPointsPip.Name
+    Set PartForPointsGeoSetPip = PartForPointsPip.OrderedGeometricalSets.Add
+    If (PartForPointsPip Is Nothing Or PartForPointsGeoSetPip Is Nothing) Then
+      Err.Raise 9999,sDocPath,"Unable to add part to hold piping points"
+    End If
+    
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    ' Place Pipe
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    Set objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATPIP, "P-052")
+    Set objReferencePart = GetReferencePart(objInstancePartOfReference)
+    Set LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "ASTL"
+    FunctionType = "CATPspPipeFunction"
+    PlacedPartID = "TestPipe" 'Null string uses name generated by PP engine
+    ' Up direction for part = (0,0,1)
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 'Align vertical parallel to z-axis.
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+
+    ' Create points
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(0.0, 1000.0, 0.0) 
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(0.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 50.8 'Bend radius in mm (2in).
+    ListBendRadii.Append 50.8
+    Set PlacePartRef = Nothing
+    Set objPlacePart = Nothing
+    Set objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationPip )      
+    If ( Not ( objPlacePart Is Nothing ) ) Then      
+      Set PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductPip, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    End If
+    If ( PlacePartRef Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+    End If
+ 
+    '-----------------------------------------------------------------------
+    ' View and Test Part Data
+    '-----------------------------------------------------------------------
+    ' Placed part position
+    'Set objPlacePartProduct = PlacePartRef
+    Set objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    If ( objPlacePartProduct Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    End If
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductPip
+    
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    ' Place Pipe with bends
+    '-----------------------------------------------------------------------
+    '-----------------------------------------------------------------------
+    Set objInstancePartOfReference = GetPspPhysicalProduct(objPspApplicationPip, catPspIDLCATPIP, "P-053")
+    Set objReferencePart = GetReferencePart(objInstancePartOfReference)
+    Set LogicalLine = GetLogicalLine(objInstancePartOfReference) 
+    Standard = "ASTL"
+    FunctionType = "CATPspPipeFunction"
+    PlacedPartID = "TestPipeWithBends" 'Null string uses name generated by PP engine
+    ' Up direction for part = (0,0,1)
+    ClearDoubles UpDirectionFirstPoint
+    UpDirectionFirstPoint.Append 0.0 'Align vertical parallel to z-axis.
+    UpDirectionFirstPoint.Append 0.0
+    UpDirectionFirstPoint.Append 1.0
+    ClearObjects ListPlacementPoints
+
+    ' Create points
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(1000.0, 1000.0, 0.0) 
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(1000.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(2500.0, 2000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+    Set Point = PartForPointsPip.HybridShapeFactory.AddNewPointCoord(2500.0, 1000.0, 0.0)
+    PartForPointsGeoSetPip.InsertHybridShape Point
+    ShowPointPosition Point
+    ListPlacementPoints.Append Point
+
+    ClearDoubles ListBendRadii
+    ListBendRadii.Append 50.8 'Bend radius in mm (2in).
+    ListBendRadii.Append 50.8
+    ListBendRadii.Append 50.8
+    ListBendRadii.Append 50.8
+    Set PlacePartRef = Nothing
+    Set objPlacePart = Nothing
+    Set objPlacePart = gPspWorkbench.GetInterface("CATIAPspPlacePart", objPspApplicationPip )      
+    If ( Not ( objPlacePart Is Nothing ) ) Then      
+      Set PlacePartRef = objPlacePart.RouteStringPartInSpace(Standard, _
+                                                             FunctionType, _
+                                                             objReferencePart, _
+                                                             ParentProductPip, _
+                                                             LogicalLine, _
+                                                             PlacedPartID, _
+                                                             UpDirectionFirstPoint, _
+                                                             ListPlacementPoints, _
+                                                             ListBendRadii)
+    End If
+    If ( PlacePartRef Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Place part error = " & objPlacePart.ErrorMessage
+    Else
+      ShowObjectID "Placed part", PlacePartRef
+    End If
+ 
+    '-----------------------------------------------------------------------
+    ' View and Test Part Data
+    '-----------------------------------------------------------------------
+    ' Placed part position
+    'Set objPlacePartProduct = PlacePartRef
+    Set objPlacePartProduct = gPspWorkbench.GetInterface("CATIAProduct", PlacePartRef )      
+    If ( objPlacePartProduct Is Nothing ) Then      
+      Err.Raise 9999,sDocPath,"Bad placed product"
+    End If
+    ShowProductInfo objPlacePartProduct, "Placed part", ParentProductPip
+        
+    '-----------------------------------------------------------------------
+    ' Clean up model
+    '-----------------------------------------------------------------------
+    ' Remove part that holds points
+    If (Not (PartForPointsProductTub is Nothing) ) Then
+      ParentProductTub.Products.Remove(PartForPointsProductTub.Name)
+    End If 
+    If (Not (PartForPointsProductPip is Nothing) ) Then
+      ParentProductPip.Products.Remove(PartForPointsProductPip.Name)
+    End If 
+    
+    ' Dump messages.
+    DumpTraces
+
+End Sub
+
+
+

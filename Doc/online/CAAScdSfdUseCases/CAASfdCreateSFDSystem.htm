@@ -1,0 +1,270 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating an SFD System</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating an SFD System</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create an SFD System from scratch.
+		This system then can be then used to design SFD features.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASfdCreateSFDSystem is launched in CATIA [<a href="#References">1</a>].
+		There is no need to open any Part or Product documents to run this 
+		macro.</p>
+		<p><a href="CAASfdCreateSFDSystemSource.htm" target="Source">CAASfdCreateSFDSystem.CATScript</a>
+		 is located in the CAAScdSfdUseCases.
+		<a href="macros/CAASfdCreateSFDSystem.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASfdCreateSFDSystem includes eleven steps:</p>
+		<ol>
+			<li><a href="#Step1">Creating a Product Document</a></li>
+			<li><a href="#Step2">Retrieving the Product Root Object from the Product Document</a></li>
+			<li><a href="#Step3">Selecting the Product Document</a></li>
+			<li><a href="#Step4">Adding the Product to the Selection</a></li>
+			<li><a href="#Step5">Getting the SFD Product from the Created Product</a></li>
+			<li><a href="#Step6">Creating the SFD System Part</a></li>
+			<li><a href="#Step7">Retrieving the Factory from the SFD System</a></li>
+			<li><a href="#Step8">Retrieving the Manager from the Factory</a></li>
+			<li><a href="#Step9">Adding the Hull Surface</a></li>
+			<li><a href="#Step10">Creating a Shell Plate using the Hull Surface</a></li>
+			<li><a href="#Step11">Updating the Part Document</a></li>
+		</ol>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Creating a Product Document</a></h4>
+		<p>Opens the CAASfdCreateSFDSystem.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain()
+  <span class="comment">'Create a Product Document</span>
+  <span class="keyword">Dim</span> NewProdDoc <span class="keyword">As</span> ProductDocument
+  <span class="keyword">Set</span> NewProdDoc = CATIA.Documents.Add("Product")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Product Root Object from the Product Document</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Product from Product Document</span>
+  <span class="keyword">Dim</span> RootPrd <span class="keyword">As</span> Product
+  <span class="keyword">Set</span> RootPrd = NewProdDoc.Product
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Selecting the Product Document</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Select the Product Document</span>
+  <span class="keyword">Dim</span> SelectionObj <span class="keyword">As</span> Selection
+  <span class="keyword">Set</span> SelectionObj = NewProdDoc.Selection
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Adding the Product to the Selection</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  SelectionObj.Add RootPrd
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Getting the SFD Product from the Created Product</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Create a SFD product by finding it in selection</span>
+  <span class="keyword">Dim</span> SfdProductObj <span class="keyword">As</span> SfdProduct
+  <span class="keyword">Set</span> SfdProductObj = SelectionObj.FindObject("CATIASfdProduct")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Creating the SFD System Part</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Create a SFD System</span>
+  <span class="keyword">Dim</span> sfdpart <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> sfdpart = SfdProductObj.CreateFunctionalSystem
+  ...
+</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Retrieving the Factory from the SFD System</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieve the Factory from the SFD System part</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = sfdpart.GetCustomerFactory("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step8">Retrieving the Manager from the Factory</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieve the Manager from the Factory</span>
+  <span class="keyword">Dim</span> ManagerObj <span class="keyword">As</span> SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step9">Adding the Hull Surface</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Add Hull Using Manager</span>
+  ManagerObj.AddHull
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step10">Creating a Shell Plate using the Hull Surface</a></h4>
+<p>The following script is common to Structure Functional Design and Structure Detail Design.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Define Shell Plate Support</span>
+  <span class="keyword">Dim</span> ShellSupport <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellSupport = sfdpart.FindObjectByName("Hull1234")
+  <span class="keyword">Dim</span> ShellSupportRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellSupportRef = sfdpart.CreateReferenceFromObject(ShellSupport)
+  
+  <span class="keyword">Dim</span> ShellSuperplate1 <span class="keyword">As</span> SfmSuperPlate
+  <span class="keyword">Set</span> ShellSuperplate1 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing) 
+
+  <span class="comment">'Define Limit</span>
+  <span class="keyword">Dim</span> ShellPlateLimit <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> ShellPlateLimit = sfdpart.FindObjectByName("LONG.0")
+  <span class="keyword">Dim</span> ShellPlateLimitRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellPlateLimitRef = sfdpart.CreateReferenceFromObject(ShellPlateLimit)
+  
+  <span class="comment">'Define Orientation of Third Limit</span>
+  <span class="keyword">Dim</span> ShellPlateOrnt <span class="keyword">As</span> Long
+  ShellPlateOrnt = 5
+  ShellSuperplate1.AddLimit ShellPlateLimitRef, ShellPlateOrnt
+  ShellSuperplate1.Thickness = "1.0"
+  ShellSuperplate1.Run
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step11">Updating the Part Document</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'To Updating CATIA Part Document</span>
+  sfdpart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a SFD System and features inside it.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

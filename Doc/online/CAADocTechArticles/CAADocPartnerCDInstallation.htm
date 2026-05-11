@@ -1,0 +1,155 @@
+<html>
+
+<head>
+<title>CAA Partner Product Installation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>3D PLM Entreprise Architecture</h1>
+    </td>
+    <td>
+      <h1>Data Administration</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA Partner Product Installation</h3>
+      <em>How to install and set up environments for partner products</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tbody>
+    <tr>
+      <td>
+        <h3>Abstract</h3>
+        <p>CAA applications developed by CAA partners can be installed as
+        products by customers to be used with V5 products. This article
+        describes the basics of their installation and environment setup.</p>
+        <ul>
+          <li><strong><a href="#Installation">How to Define a Partner Product
+            Installation Procedure</a></strong>
+          <li><strong><a href="#Environment">How to Set up Environments</a></strong>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Installation"></a>How to Define a Partner Product Installation
+Procedure</h3>
+<p>The installation procedure 
+<ul>
+  <li>The CD-ROM must contain at least the file tree created using
+    <pre>mkCreateRuntimeView -s -t DestDir -d</pre>
+  </li>
+  <li>The installation procedure must retrieve the V5 installation directory
+    using either a dialog with UNIX, or by reading the value data assigned to 
+	the value <code>DESTFOLDER</code> in the registry key <nobr><code>HKLM\SOFTWARE\Dassault Systemes\Bxx\yy</code></nobr>
+    with Windows,	where:
+  <ul>
+  <li><code>HKLM</code> stands for <code>HKEY_LOCAL_MACHINE</code></li>
+	<li><code>Bxx</code> is the V5 installed release level, such as B18 for 
+	V5R18</li>
+	<li><code>yy</code> is an integer, starting from 0, that increments with the 
+	count of GA installations of the same build level, and that is limited to 
+	19.</li>
+</ul>
+	<p>If a 32-bit installation and a 64-bit installation coexist on a Windows 
+	machine, to determine to which 
+	installation this directory applies, use the value <code>OSNAME</code> of the same registry key, 
+	whose value data is <code>INTEL</code> 
+	with 32-bit Windows and <code>WIN64</code> 
+	with 64-bit Windows. </li>
+	<li>The installation procedure must check that the installed V5 release level
+    matches its own prerequisites by using the CAA global functions <code>CATGetGALevel</code>
+    and <code>CATGetSPKLevel</code></li>
+	<li>The installation directory to be proposed by default should be similar to:<br>
+	<code>/usr/partner/B18</code> or <code>C:\ProgramFiles\partner\B18</code><br>where 
+	<code>partner</code> is the partner name</li>
+	<li>The installation procedure must check that the installation directory
+    chosen by the customer is empty and is not the V5 installation directory.
+    This will avoid future naming space and uninstallation problems</li>
+	<li>At the end of the installation, the installation procedure must create an
+    environment that concatenates the V5 and the partner installed products. Use
+    the <code>setcatenv</code> command to do this:
+    <pre>setcatenv -e PartnerProduct -p V5_InstallPath:Partner_InstallPath</pre>
+	</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Environment"></a>How to Set up Environments</h3>
+<p>Sample scenario: Two partner add-ons are installed, Prod1 and Prod2. The
+customer may want to use CATIA alone, CATIA with Prod1, CATIA with Prod2, and
+CATIA with both products. An environment dedicated to each of these cases must
+be defined.
+<ul>
+  <li>Using CATIA alone:
+    <pre>setcatenv -e CATIA_Alone</pre>
+  </li>
+  <li>Using CATIA and Prod1:
+    <pre>setcatenv -e CATIA_And_Prod1 -p CATIA_InstallPath;Prod1_InstallPath</pre>
+  </li>
+  <li>Using CATIA and Prod2:
+    <pre>setcatenv -e CATIA_And_Prod2 -p CATIA_InstallPath;Prod2_InstallPath</pre>
+  </li>
+  <li>Using CATIA, Prod1 and Prod2:
+    <pre>setcatenv -e CATIA_And_Prods -p CATIA_InstallPath;Prod1_InstallPath;Prod2_InstallPath</pre>
+  </li>
+</ul>
+<p><b>Notes</b>:
+<ul>
+  <li>With UNIX, replace ; with :</li>
+  <li>Using <code>setcatenv</code>/<code>catiaenv</code>
+    <ul>
+      <li>UNIX: <code>catstart_fullpath -run &quot;setcatenv
+        catenv_options&quot;</code>
+      <li>Windows: <code>setcatenv_fullpath catenv_options</code>
+    </ul>
+</ul>
+<p>Desktop access: Double clicking the CATIA icon starts CATIA and gives access
+to the resources defined by the concatenation referred to.
+<p>Access from the command line (either located in the appropriate directory or
+by typing the full path name):
+<ul>
+  <li>UNIX:
+    <pre>catstart -env used_product_env -d env_path -run my_appli</pre>
+  </li>
+  <li>Windows:
+    <pre>my_appli -env used_product-env [-dir env_path]</pre>
+  </li>
+</ul>
+<p>This works with Windows and UNIX, with CATIA or any application. With
+Windows, using an application other than CATIA requires to set the <code>Path</code>
+environment variable using the file tree/code/bin directory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Aug 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

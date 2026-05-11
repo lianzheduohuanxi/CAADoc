@@ -1,0 +1,294 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+<title>Generating the Field Model</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<p></p>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right">
+      <h3><a name="Top"></a>Customization of the highlight of node and element</h3>
+      <em>Customize the highlight of node in your command</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract&nbsp; <font color="#800080"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		NEW R18</b></font></h3>
+      <p>This use case explains how to customize the high light of node and 
+		element. This&nbsp; step includes the creation of 
+      a command of Node Selection and the definition of the
+      <b>Highlight method</b>.&nbsp;
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAAniSelectNodeCmd Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAniSelectNodeCmd Do</a></li>
+            <li><a href="#Where">Where to Find the CAAAniSelectNodeCmd Code</a></li>
+			<li><a href="#Howto">How to Launch the use case</a> </li>
+            <li><a href="#illustration">Illustration of the result</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+		<li><strong><a href="#in short">In Short</a></strong></li>
+		<li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to generate the field model of an 
+analysis entity associated to a support. This use case will also include the 
+definition of the authorized support.&nbsp;
+<p>More specifically, the CAAAniSelectNodeCmd use case shows how to :
+<ul>
+  <li>Create a new Highlight Method </li>
+  <li>Associate this method to the filter of selection</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="UseCase"></a>The CAAAniSelectNodeCmd Use Case</h3>
+<p>CAAAniSelectNodeCmd is an use case of the CAAAnalysisInterfaces.edu framework that 
+illustrates the CATIA Analysis modeler frameworks capabilities.</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAAniSelectNodeCmd Do</h4>
+<p>The goal of this use case is to illustrate the way of how defining your 
+customized highlight for a node or element selection. </p>
+<p>The main methods to use are:</p>
+<ul>
+  <li>CATMSHCustomHighlight to create a customized highlight.</li>
+	<li>HighlightCustoNode (CAT3DCustomRep * iRep, CATBaseUnknown * iEntity, 
+	void * iHData) to define in order to have your own highlight.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAniSelectNodeCmd Code</h4>
+<p>CAAAniSelectNodeCmd code is located in the CAAAniWB.m use case module of the 
+CAAAnalysisInterfaces.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniWB.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniWB.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed. It is made of a source file named </p>
+<p>The following table shows which code resources are used in this Use Case. 
+These resources are physically located within the appropriate directories (with 
+same names) of your CAA installation.</p>
+<table width="100%" id="table1">
+	<tr>
+		<th width="22%">Framework 
+		</th>
+		<th width="17%">Module/Interface 
+		</th>
+		<th width="24%">Source 
+		</th>
+		<th width="37%">Content </th>
+	</tr>
+	<tr>
+		<td vAlign="top" width="22%">CAAAnalysisInterfaces.edu</td>
+		<td vAlign="top" width="17%">CAAAniWB.m</td>
+		<td vAlign="top" width="24%">CAAAniSelectNodeCmd.cpp</td>
+		<td vAlign="top" width="37%">Node Selection command</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Howto"></a>How to Launch CAAAniSelectNodeCmd </h4>
+<p>To launch this use case, you will need to set up the build time environment, 
+then compile CAAAniWB and CAAAniAeroDTransition along with its prerequisites, 
+set up the run time environment, and then execute the use case <a href="#Ref3">
+[2]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 style="margin-bottom: 10"><a name="illustration"></a>Illustration of the 
+result</h4>
+<p align="center">
+<img border="0" src="images/HighLight.jpg" width="726" height="731"></p>
+<p>The default highlight is a circle. We have customized our highlight in order 
+to have a cross for node selection. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical sections in CAAAniExplicit.m. We will now comment 
+each of those sections by looking at the code.</p>
+<ul>
+  <li>Create your CATMSHCustomHighlight </li>
+  <li>Define your own HighlightCustoNode method</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="dico"></a>Create your CATMSHCustomHighlight </h4>
+<p>Define your path element selection agent with specifying the type of object 
+you want the user to be allowed to select. In order case we only allow the 
+objects adherent to CATIMSHSelectedNode.</p>
+<table class="code" id="table2">
+  <tr>
+    <td>
+      <pre>...
+ _FeatSelectionAgent = new CATPathElementAgent (&quot;FeatSelectionAgent&quot;);
+ if ( _FeatSelectionAgent) {
+   _FeatSelectionAgent-&gt;AddElementType(IID_CATIMSHSelectedNode);
+   _FeatSelectionAgent -&gt; SetBehavior ( CATDlgEngWithPSOHSO | CATDlgEngWithPrevaluation );
+   AddCSOClient(_FeatSelectionAgent);
+ }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">Define your customized highlight by creating a 
+CATMSHCustomHighlight or its derivated. Note that HighlightCustoNode is your own 
+method that you have to define according to some nomenclatures. Refer to next 
+step.</p>
+<table class="code" id="table3">
+  <tr>
+    <td>
+      <pre>...
+ CATMSHCustomHighlight* pFilter = new CATMSHCustomHighlight((CATMSHMethodHilight) &amp;HighlightCustoNode,(void*)this);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">Set this object CATMSHCustomHighlight as filter of your 
+selection agent.</p>
+<table class="code" id="table4">
+  <tr>
+    <td>
+      <pre>...
+ _FeatSelectionAgent-&gt;SetFilter(pFilter);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="implement"></a>Define your own HighlightCustoNode method</h4>
+<p>This method must have the following arguments : (CAT3DCustomRep * iRep, 
+CATBaseUnknown * iEntity, void * iHData) with&nbsp; :</p>
+<ul>
+	<li>The iRep parameter to allow the partner to add its<b> own graphic 
+	primitives</b> with the AddGP services.</li>
+	<li>The iEntity parameter is a <b>filter associate to the dialog agent.</b></li>
+	<li>The option parameter iHData to allow the<b> partner to give its own 
+	information</b>.</li>
+</ul>
+<p><i>Warning</i> : Note that this method is a<font color="#FF0000"> <b>static 
+method</b></font>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAAniSelectNodeCmd::HighlightCustoNode (CAT3DCustomRep * iRep, CATBaseUnknown * iEntity, void * iHData) 
+{ 
+CATAssert ( iEntity );
+CATAssert ( iRep );
+
+CATIMSHSelectedNode * Node = NULL;
+iEntity -&gt; QueryInterface ( IID_CATIMSHSelectedNode , (void **) &amp;Node );
+if ( !Node ) return E_FAIL;
+
+CATMSHNode * node = Node -&gt; GetNode ();
+CATAssert ( node );
+Node -&gt; Release ();
+Node = NULL;
+
+float xyz[3];
+const double * coor = node -&gt; GetCoordinates ();
+xyz[0] = (float) coor[0];
+xyz[1] = (float) coor[1];
+xyz[2] = (float) coor[2];
+
+CATGraphicAttributeSet attribute;
+attribute.SetColor ( GREEN );
+
+CAT3DMarkerGP * marker = new CAT3DMarkerGP ( xyz, 1 , CROSS );
+iRep -&gt; AddGP ( marker , attribute );
+
+return S_OK; 
+} 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="in short"></a>In Short</h3>
+<p>his use case explains how to customize the high light of node and element. This&nbsp; step includes the creation of 
+      a command of Node Selection and the definition of the
+      <b>Highlight method</b>.&nbsp; </p>
+<p align="right"><a href="#Top">[Top]</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" align="right">
+	<table width="100%" id="table5">
+		<tr>
+    <td valign="top">[1]</td>
+    <td valign="top"><a href="../CAAAniTechArticles/CAAAniAnalysisOverview.htm">
+    Analysis Modeler Overview</a></td>
+  		</tr>
+	</table>
+	<table width="100%" id="table6">
+		<tr>
+			<td vAlign="top"><a name="Ref3">[2]</a></td>
+			<td width="872">
+			<a href="../CAADocUseCases/CAADocRunSample.htm">Building and Launching a CAA V5 Use Case</a></td>
+		</tr>
+	</table>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

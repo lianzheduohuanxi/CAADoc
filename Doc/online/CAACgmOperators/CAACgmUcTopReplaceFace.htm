@@ -1,0 +1,144 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Modifying the Geometry of a Face</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Modifying the Geometry of a Face</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The geometry of a face, that is the surface underlying a CATFace can 
+		be replaced. The operator manages to extrapolate the adjacent faces up 
+		to the replacing surface in order to build a new solid.
+		</font>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		&nbsp;</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>The CATICGMTopFaceReplaceSurface operator is to be used.<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsFaceReplaceSurface.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to replace the geometry of a face by a new surface. This use case 
+requires the ReplaceFace.NCGM file as input data. This file is delivered in the FunctionTests/InputData 
+folder of CAAGMOperatorsInterfaces.edu framework.
+</font>
+If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Modify the Geometry of a Face : Input Data</caption>
+  <tr>
+    <td>
+	<img alt="Modify the Geometry of a Face: Input Data" src="images/CGM_replace_face_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopFaceReplaceSurface * pOp = ::CATCGMCreateFaceReplaceSurfaceOperator(piGeomFactory, &topdata, piInputBody);
+...
+CATSurLimits limits;
+piNewSurf->GetLimits(limits);
+pOp->ReplaceWith(piOldFace, piNewSurf, limits, CATOrientationNegative);
+
+pOp->Run();
+
+CATBody * piResultBody = pOp->GetResult();
+pOp->Release();
+pOp = NULL;
+</TD>
+    </TR>
+</TABLE>
+<p>you get this result :</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Modify the Geometry of a Face :&nbsp; Result</caption>
+  <tr>
+    <td>
+	<img alt="Modify the Geometry of a Face: Result 1" src="images/CGM_replace_face_1.png" width="250" height="220"></td>
+	 <td>
+	<img alt="Modify the Geometry of a Face: Result 2" src="images/CGM_replace_face_2.png" width="250" height="220"></td>
+     </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

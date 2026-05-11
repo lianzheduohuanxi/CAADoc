@@ -1,0 +1,469 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Geometric Modeler Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Geometric Modeler Overview</h3>
+      <em>An introduction to the geometric modeler</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article presents the main features of the CGM modeler, in term of
+      objectives, architecture, functionality and openness.
+      <ul>
+        <li><a href="#CGM Objectives"><strong>CGM Objectives</strong></a></li>
+        <li><a href="#Architecture"><strong>CGM Architecture</strong></a>
+          <ul>
+            <li><a href="#Components">CGM Frameworks</a></li>
+            <li><a href="#Scalability">Scalability</a></li>
+            <li><a href="#Opening">Openness</a></li>
+            <li><a href="#Integration">Integration in the General V5 Offering</a></li>
+          </ul>
+        </li>
+        <li><a href="#Functionalities"><strong>CGM Functionality</strong></a>
+          <ul>
+            <li><a href="#Modeler">The Geometric and Topological Modeler</a></li>
+            <li><a href="#Application">Building an Application</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="CGM Objectives"></a>CGM Objectives</h3>
+<p>CATIA Geometric Modeler (CGM) is a complete software package for the
+development of applications with a need for 3D geometric modeling capabilities,
+and which want to take advantage of the power of the CATIA modeler and its
+solid, surfacing and wireframe capabilities.</p>
+<p>Provided as a set of object oriented programming ressources, it is composed
+of a full set of high level geometric primitives, operations and queries, as
+well as interfaces dedicated to the integration with other parts of an
+application such as viewers, dialog monitors and data managers.</p>
+<p>Designed in accordance to the major standards and the most recent design
+patterns, it allows the best interoperability with other software components, a
+great potential of growth and a possible customization.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Architecture"></a>CGM Architecture</h3>
+<p>The CGM modeler is delivered as a set of specialized components, called
+frameworks, that are built on top of each other. They can be used stand-alone or
+integrated with other CAA V5 applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Components"></a>CGM Frameworks</h4>
+<p>Each framework provides either the application, or other frameworks with a
+set of consistent services. The different frameworks cooperate to provide the
+application with high level services. The hierarchy between the frameworks
+allows an application which would like to only use a subset of CGM to minimize
+the size of its prerequisites.</p>
+<table>
+  <tr>
+    <td><img src="images/Overview.gif" width="479" height="359"></td>
+    <td>This figure represents the tree of prerequisites and exposed services of
+      the frameworks. For example, GeometricObjects uses as prerequisites some
+      AdvancedMathematics exposed services.<br>
+      Only direct arrows are drawn to simplify the figure. Hence,
+      GeometricObjects also uses Mathematics exposed services.
+      <p>Presented as a complete geometric and topological package, the CGM
+      modeler can be used to develop powerful applications for building and
+      operating complex geometry.</td>
+  </tr>
+  <tr>
+    <td>
+      <p align="center"><em>Fig. 1: CGM architecture</em></td>
+  </tr>
+</table>
+<dl>
+  <dt><em>Mathematics</em></dt>
+  <dd>defines <strong>basic mathematical objects</strong>: points, vectors,
+    lines, planes, axis, matrices and transformations. It is used by the
+    frameworks of the CGM offering, and provide basic mathematical services to
+    many other applications.</dd>
+  <dt>&nbsp;</dt>
+  <dt><em>AdvancedMathematics</em></dt>
+  <dd>offers a set of specific mathematical objects, such as N-dimensional
+    intervals, NxM matrices, mathematical functions and systems of 1 or 2
+    variables, implicit systems, and associated operations, dedicated to
+    applications which need to perform<strong> intensive mathematical
+    computations</strong>. The Mathematics and AdvancedMathematics objects are
+    not persistent; they are used as intermediates by the other CGM frameworks.</dd>
+  <dt>&nbsp;</dt>
+  <dt><em>GeometricObjects</em></dt>
+  <dd>provides the application with
+    <ul>
+      <li>an extensive set of <strong>basic geometric primitives</strong>, such
+        as lines, conics, NURBS curves and surfaces, fillet surfaces.</li>
+      <li>general mechanisms of <strong>the object management</strong>: creation
+        and delete of a set containing the CGM objects, object creation and
+        removal, object checking, stream (conversion of the objects in memory
+        into a sequence of bytes to be later stored on a given media) and
+        unstream, read and write on disk, persistent references.</li>
+    </ul>
+    <p>The geometric objects are used to define the supporting geometry for
+    higher level objects, such as topological objects for instance. The C2
+    continuity is assumed for all geometric object.</p>
+  </dd>
+  <dt><em>GeometricOperators</em></dt>
+  <dd>provides the <strong>operators</strong> on GeometricObjects such as
+    intersection, projection, reflect lines, mathematical analysis. It uses the
+    AdvancedMathematics ressources and is used by TopologicalOperators.</dd>
+  <dt>&nbsp;</dt>
+  <dt><em>TopologicalObjects</em></dt>
+  <dd>
+    <ul>
+      <li>defines all manifold and non-manifold <strong>topological objects</strong>.
+        A topological object provides a full boundary representation by explicit
+        definition of its boundaries.</li>
+      <li>provides<strong> tools for the navigation</strong> through the
+        topological graph and for <strong>the check</strong> of its logical
+        consistency.</li>
+    </ul>
+    <p>This framework uses GeometricObjects for the supporting geometry
+    definition and can be used by applications in need for B-Rep topology
+    representations.</p>
+  </dd>
+  <dt><em>TopologicalOperators</em></dt>
+  <dd>provides the <strong>operators acting on topological objects</strong>:
+    boolean, sweep, fillet, draft, thickness operations.</dd>
+  <dt>&nbsp;</dt>
+  <dt><em>Tessellation</em></dt>
+  <dd>provides tools to extract representations of the geometry and topology
+    modeled with the CGM frameworks:
+    <ul>
+      <li>polylines,</li>
+      <li>triangular mesh,</li>
+      <li>outlines.</li>
+    </ul>
+    <p>These tools are dedicated to display applications (such as wireframe,
+    shaded or hidden line removal visualizations), SLA (stereolithography)
+    machines and quick interference analysis.</p>
+  </dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Scalability"></a>Scalability</h4>
+<p>CGM offers a large scale of use:
+<ul>
+  <li>The first level allows<strong> </strong>you<strong> to consult the
+    geometric and topological objects</strong> that are already built. This
+    level corresponds to the need of applications such as numerical control,
+    finite element analysis, or data transfer to STEP or IGES format.</li>
+  <li>At a second level, CGM provides resources <strong>to create geometric and
+    topological objects</strong> for applications such as mechanical part
+    design.</li>
+  <li>At the most specialized level, the CGM core is enhanced by <strong>applications</strong>
+    (such as free form or geodesic applications) <strong>providing powerful
+    tools for building and operating complex surfaces</strong>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Opening"></a>Openness</h4>
+<p>The architecture of the CGM modeler is designed to be open. Hence, if an
+application programmer wants to put additional information on existing objects,
+attributes are provided. Moreover, a mechanism is provided to define foreign
+surfaces or curves and use them as any CGM surface or curve.
+<dl>
+  <dt><em>Attributes</em></dt>
+  <dd>CGM allows an application developer to associate typed data with geometric
+    or topological objects, without creating a new class. This additional data
+    is called a CGM attribute. The attributes can be streamed. They are very
+    useful to store temporary data produced by an algorithm, such as, for
+    example:
+    <ul>
+      <li>stamps on objects during model scans.</li>
+      <li>processed data relative to an object: extraction of the meshing.</li>
+    </ul>
+  </dd>
+</dl>
+<dl>
+  <dt><em>Defining a foreign geometry</em></dt>
+  <dd>CGM allows an application programmer to introduce his own class of curve
+    or surface A generic development frame is provided, to fully integrate the
+    foreign class in the general CGM architecture, and uses the foreign class
+    instances as any CGM curve or surface instances.</dd>
+  <dt>&nbsp;</dt>
+  <dt><em>Defining a new operator</em></dt>
+  <dd>In matter of operators, the application programmer can define a new
+    operator by creating a new class.</dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Integration"></a>Integration in the General V5 Offering</h4>
+<p>The CGM modeler can be used stand-alone or as a component of the general V5
+offering.</p>
+<p>The CGM objects are created inside a CGM container, which is a set of CGM
+objects. This container must be complete: when a CGM object is inside the
+container, all the CGM objects that are referred by it must also be inside the
+same container.</p>
+<p>In particular, topological and geometric operators work on objects of a same
+container: the input and output objects must belong to the same container.</p>
+<p>To store the CGM container, the application puts it in its own document.</p>
+<p>Applications which are not owner of any document, but want to store their
+data, can use a .NCGM document, delivered by the CGM offering.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Functionalities"></a>CGM Functionality</h3>
+<p>CGM provides a geometric and topological modeler and general mechanisms to
+interact with this modeler.</p>
+<h4><a name="Modeler"></a>A Geometric and Topological Modeler</h4>
+<p>The <strong>geometric part of the modeler</strong> allows the user to create
+and use <strong>an extensive set of geometric primitives</strong>:
+<ul>
+  <li>point, point on curve, point on surface</li>
+  <li>curves: line, circle, conic, spline curve, NURBS curve</li>
+  <li>curves on surface: line, circle, conic, spline curve, NURBS curve lying on
+    a surface.</li>
+  <li>surfaces: plane, cone, sphere, torus, cylinder, NURBS surface, revolution
+    surface, ruled surface, offset surface, fillet surface, draft surface,
+    chamfer surface</li>
+</ul>
+<p>These geometric objects must be C2 continuous.</p>
+<p>The provided <strong>geometric operations</strong> are:
+<ul>
+  <li>Intersection of two curves, a curve and a surface, two surfaces</li>
+  <li>Projection of a point on a curve or a surface, of a curve on a surface</li>
+  <li>Reflect lines</li>
+  <li>Connection between two surfaces</li>
+  <li>Determination of the minimum distance between two curves, a curve and a
+    surface, a point and a curve, a point and a surface, two surfaces</li>
+  <li>Search of the confusion between 2 curves, two points on curve, two points
+    on surface</li>
+  <li>Search of the inclusion of a point in a curve or a surface, a curve in
+    another curve or a surface</li>
+  <li>Local analysis at a point of a curve or a surface</li>
+</ul>
+<p>The <strong>topological part of the modeler</strong> defines an object from
+its <strong>boundary representation</strong>: <em>vertice</em>s bound <em>edges</em>,
+that bound <em>faces</em>, that bound <em>volumes</em>. The highest level of
+topological objects is called a<em> body</em>.
+<ul>
+  <li>1D-bodies represent wire objects.</li>
+  <li>2D-bodies represent shell objects.</li>
+  <li>3D-bodies represent solid objects.</li>
+  <li>Bodies of mixed dimensions, leading to a case of <em>non-manifold</em>
+    bodies, can also be represented, as well as any kind of manifold and
+    non-manifold configurations.</li>
+</ul>
+<p>The topological modeler is based on the <strong>cell complexes theory</strong>
+(see Rossignac and O'Connor [<a href="#References">1</a>]). This approach
+presents a lot of advantages such as:
+<ul>
+  <li>To manage all the dimensions in a unified way</li>
+  <li>To handle all cases of manifold and non-manifold bodies.</li>
+</ul>
+<p>The topological operations build new bodies. The following operators are
+provided:
+<ul>
+  <li>Boolean operations: union, intersection, subtract</li>
+  <li>Transformation</li>
+  <li>Draft operation</li>
+  <li>Fillet operation</li>
+  <li>Chamfer operation</li>
+  <li>Shell operation</li>
+  <li>Sweep operation</li>
+  <li>Thickness operation</li>
+  <li>Split operation</li>
+  <li>Reflect operation</li>
+  <li>Creation of prism</li>
+  <li>Creation of revolute</li>
+  <li>Intersection with a curve or a surface</li>
+</ul>
+<p>Moreover, CGM contains advanced topological operators for surface modeling,
+especially powerful for body in white or surface styling applications:
+<ul>
+  <li>Sweep with one or more profiles, along a spine or between two rails, with
+    various laws of angle or radius definition</li>
+  <li>Blend with a G1 or G2 joining, fillet blend</li>
+  <li>Topological extrapolation</li>
+  <li>Loft with various mixing laws</li>
+  <li>Match of a face to be in G0, G1 or G2 continuity with another one</li>
+  <li>Fitting of a face on a set of geometries.</li>
+</ul>
+<p>The topological modeler implements the <strong>smart concept</strong>:
+<ul>
+  <li>Once accepted, a body is never modified: the body is called <em>frozen</em>.</li>
+  <li>Bodies are allowed to share geometry and topology.<br>
+    Hence, a topological operation does not modify a body; it creates a new
+    resulting body, that potentially shares geometry or topology with the
+    initial one.</li>
+</ul>
+<p>The steps leading to a new topological body can be written in a <strong>topological
+journal</strong>.This information, depending on each operator, is temporary and
+helps the CGM programmer to follow the objects modifications. This capability
+provides the key mechanisms that are used by applications (such as the
+mechanical modeler) to implement a full feature modeling approach</p>
+<p><strong>What About Units?</strong><br>
+The unit of the container is the millimeter. Moreover, the maximum size of an
+object, called <em>model size</em>, is given by the container. Its value is
+fixed to 1km (10^5mm=100m before R14). This determines the <em>resolution</em> of the model or
+minimum size of valid objects. This size is 10^-3mm. The angle unit is the
+radian.</p>
+<p><strong>...and Tolerant Modeling?:</strong><br>
+</p>
+<p>The objects are built as hermetic as possible, that is to say, with the as 
+small as possible gap.<br>
+The resolution (0.001mm) defines the minimum size of the valid objects. In 
+particular, this defines the criterion of geometric coincidence. But the 
+mathematical computations (such as intersection, projection) work at a numerical 
+tolerance, which is much more precise.</p>
+<p>Gaps in imported data can affect the behavior of operators:</p>
+<ol>
+				<li>Operators should mandatorily complete on models with gaps &lt; 
+				0.001mm. Incidents, if any, should be reported. This gap value 
+				must be considered as a validity criterion. </li>
+				<li>Beyond this <em>valid gap</em> and up to 0.1 mm, the 
+				robustness and performance of operators can be impeded. However, 
+				developments can possibly be carried out in order to suit the 
+				requirements of a tolerant modeler and widen the scope of data 
+				the geometric modeler can import. </li>
+				<li>The successful completion of operators is not mandatory for 
+				gaps &gt; 0.1 mm, but some operators handle properly models with 
+				such gaps. </li>
+</ol>
+<SCRIPT type=text/javascript>insertLinkToTop();</SCRIPT>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Application"></a>Building an Application</h4>
+<p>CGM provides as a separate software component a set of classes and methods
+for the creation and use of geometric and topological objects such as to operate
+them, analyze their geometric properties, modify their definition or update
+them.</p>
+<p>All the CGM objects can be used by viewers or dialog monitors, defining a
+wide range of applications. We describe now some general mechanisms for
+interacting with the CGM modeler.
+<dl>
+  <dt><em>Subscript/Subscribe</em></dt>
+  <dd>This mechanism allows an application to subscribe to a modification of the
+    CGM objects. The application is then informed as soon as a modification
+    occurs, and can launch specific treatments. The refresh of the visualization
+    after the modification of an object is an example of use of such
+    functionality.</dd>
+  <dt><em>Undo/Redo</em></dt>
+  <dd>Using the smart mechanism, <em>undo</em> actions can be put in place on
+    the topological objects. An <em>undo</em> action restore the model in the
+    state it was at the last stamp. A <em>redo</em> action cancel the previous <em>undo</em>
+    action.</dd>
+  <dt><em>Streaming and unstreaming</em></dt>
+  <dd>In order to be saved on disk or to be included inside another file, the
+    CGM objects are able to be converted in a sequence of bytes (this operation
+    is called <em>streaming</em>); conversely, such sequence of bytes can be
+    transformed into a CGM model (<em>unstreaming</em>).</dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>CGM addresses the geometric and topological modeling with a large scale of
+    use.</li>
+  <li>CGM provides a set of unified interfaces for the use of geometric and
+    topological objects and operations.</li>
+  <li>CGM offers the capability to define own object and operator classes.</li>
+  <li>CGM is designed in accordance to the major standards and is available on
+    the main UNIX and NT platforms.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Rossignac J. , O'Connor M.:<br>
+      SGC: A dimension independant model for point sets with internal structures
+      and incomplete boundaries.<br>
+      Geometric modeling for product engineering. Eds M. Wosny, J. Turner, K.
+      Preiss,<br>
+      North Holland pp. 145--180 (1989).</td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="../CAAGobTechArticles/GeoObjects.htm">The
+      CGM Objects</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="../CAAGobTechArticles/Curves.htm">The
+      CGM Curves</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="../CAAGobTechArticles/Surfaces.htm">The
+      CGM Surfaces</a></td>
+  </tr>
+  <tr>
+    <td>[5]</td>
+    <td><a href="../CAAGobTechArticles/Attribute.htm">The
+      Management of Foreign Data</a></td>
+  </tr>
+  <tr>
+    <td>[6]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concepts</a></td>
+  </tr>
+  <tr>
+    <td>[7]</td>
+    <td><a href="../CAATobTechArticles/TopoModel.htm">The
+      CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

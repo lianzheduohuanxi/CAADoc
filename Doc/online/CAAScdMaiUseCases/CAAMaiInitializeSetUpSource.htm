@@ -1,0 +1,95 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAMaiInitializeSetUp.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+Language="VBSCRIPT"
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*		Open an existing CATPart Document and then execute the Macro:</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*		- Creates a new Process Document</font>
+<font color="#008000">'*		- Starts Prismatic Machining Workbench</font>
+<font color="#008000">'*		- Associates the Design Part will to the existing Set Up</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Get current Part Document</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim thePartDoc<font color="#0000FF"> As </font>Document
+	Set thePartDoc = CATIA.ActiveDocument
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'Get the Product to be associated to the Set Up</font>
+	<font color="#008000">'*******************************************************************************************</font>
+	Dim theProduct<font color="#0000FF"> As </font>Product
+	Set theProduct = thePartDoc.Product
+	
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'Create Process Document</font>
+	<font color="#008000">'*******************************************************************************************</font>
+	CATIA.Documents.Add "Process"
+	Dim thePPRDoc<font color="#0000FF"> As </font>Document
+	Set thePPRDoc = CATIA.ActiveDocument
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Load Prismatic Machining Workbench</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim theApplication<font color="#0000FF"> As </font>Application
+	Set theApplication = thePPRDoc.Application
+	theApplication.StartWorkbench ("ManufacturingProgramWorkbench")
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Root Process </font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim theProcess<font color="#0000FF"> As </font>AnyObject
+	set theProcess = thePPRDoc.GetItem("Process")
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current SetUp</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim theSetup<font color="#0000FF"> As </font>ManufacturingSetup
+
+	If (theProcess.IsSubTypeOf("PhysicalActivity")) Then
+
+		Set childs = theProcess.ChildrenActivities
+		quantity = childs.Count
+
+		if quantity &lt;= 0<font color="#0000FF"> then</font>
+			Exit Sub
+		End if
+
+		NumberOfPO = 0
+
+		For I=1<font color="#0000FF"> To </font>quantity
+			Set child = childs.Item(I)
+			If (child.IsSubTypeOf("ManufacturingSetup")) Then
+				Set theSetup = child
+				NumberOfPO = NumberOfPO +1
+				Exit For
+			End If
+		Next   
+	End If
+
+	if NumberOfPO &lt;= 0<font color="#0000FF"> then</font>
+	  Exit Sub
+	End if
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Associate the Part to the Setup</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	theSetup.Product = theProduct
+
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

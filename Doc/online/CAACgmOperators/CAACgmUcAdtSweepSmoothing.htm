@@ -1,0 +1,330 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using the Smoothing Options when Creating a Sweep</title>
+<style type="text/css">
+.style1 {
+				font-family: "Courier New", Courier;
+				font-size: 9pt;
+				color: #976970;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using the Smoothing Options when Creating a Sweep</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CATICGMFrFTopologicalSweep operator enables you to create sweeps. 
+		This use case explains how to create a circle sweep with two guides and 
+		a tangency surface.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsSweepSmoothing Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsSweepSmoothing Do?</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsSweepSmoothing</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsSweepSmoothing 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<table>
+	<tr>
+		<td>In this use case, you learn how to use the &quot;Smooth Sweeping&quot; option 
+		of the CATICGMFrFTopologicalSweep operator. You create a segment sweep with 
+		a guide curve and a reference surface, specify the input data as indicated 
+		below and improve the sweep surface quality by acting on the &quot;Smooth sweeping&quot; 
+		parameters. CATICGMFrFTopologicalSweep is to be used according to the general 
+		scheme of topological operators. If need be, you can take a look at &quot;Overview 
+		of the Topological Operators&quot; [<a href="#References">1</a>] for more information.</td>
+		<td>
+		<img alt="Swept Surface Definition Dialog Box" src="images/CAACgmAdtSweep0.jpg" width="355" height="450"></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsSweepSmoothing Use Case</h2>
+<h3><a name="Rem"></a>Reminder</h3>
+<p>In a CATIA session, the &quot;Smooth Sweeping&quot; option can be used in two cases:</p>
+<ol>
+	<li>Whenever a sweep cannot be generated because the specified input data are 
+	invalid (guide not continuous in tangency or not planar).</li>
+	<li>Whenever the generated sweep does not provide the user with the expected 
+	quality. The user may wish to reduce the number of edges on the created surface 
+	or at least improve the tangency conditions along the edges.</li>
+</ol>
+<p>There are two parameters to be adjusted in order to perform a sweep that does 
+not complete with the standard options or to achieve a sweep of better quality:</p>
+<h4>The &quot;Angular Correction&quot; Option</h4>
+<p>This parameter is related to the angular tolerance of the moving frame (plane 
+that moves perpendicularly along the guide curve). When the &quot;Angular Correction&quot; 
+option is activated, the sweep algorithm tries to modify the angle between the moving 
+frame and the guide curve to complete the sweep operation or produce a surface of 
+better quality.</p>
+<h4>The &quot;Deviation From Guide&quot; Option</h4>
+<p>This parameter defines the gap authorized between the guide curve and the sweep 
+itself. With the default option, there is no gap. When this option is activated, 
+the sweep algorithm tries to generate a surface that does not stick necessarily 
+to the guide curve but is of better quality or enables the completion of the sweep 
+operation. When the resulting sweep is smooth enough, some edges can be cleaned.</p>
+<p>For more information, see the CATIA/Shape/Generative Shape Design/User Tasks/Creating 
+Surfaces/Creating Swept Surfaces interactive documentation.</p>
+<h4>The Improvements to Be Expected</h4>
+<p>By adjusting the parameters above, you can reduce the tangency constraints along 
+the edges and reduce the number of patches for the Nurbs surfaces underlying the 
+sweep faces.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsSweepSmoothing Do?</h3>
+<p>The use case:</p>
+<ul>
+	<li>Retrieves the input data (guide curve and reference surface) from the TolerantSweepInit.ncgm<a href="#References">[*]</a> 
+	file.</li>
+	<li>Creates a CATICGMFrFTopologicalSweep&nbsp; operator instance.</li>
+	<li>Specifies the sweep parameters (angle and length laws, smoothing options).</li>
+	<li>Runs the CATICGMFrFTopologicalSweep&nbsp; and retrieve the resulting body.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsSweepSmoothing</h3>
+<p>To launch CAAGMOperatorsSweepSmoothing, you will need to set up the build time 
+environment, then compile CAAGMOperatorsSweepSmoothing.m, set up the run time environment, 
+and then execute the use case [<a href="#References">2</a>].</p>
+<p>&nbsp;To launch this use case you must type the command below, this commands 
+saves the result in the outfile.NCGM file:</p>
+<p><code>CAAGMOperatorsSweepSmoothing ...\tolerantSweepInit.ncgm </code>o<span class="style1">utfile.NCGM</span></p>
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsSweepSmoothing Code</h3>
+<p>The CAAGMOperatorsSweepSmoothing code use case is made of a main named CAAAdtSweepSmoothingCode.cpp 
+located in the CAAGMOperatorsSweepSmoothing.m code module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsSweepSmoothing.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">2</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The use case is divided into the following main steps:</p>
+<ul>
+	<li><a href="#Creating the curves making up the wire">Retrieving the Input Data</a></li>
+	<li><a href="#Creating a CATFrFTopologicalSweep operator instance">Creating 
+	a CATICGMFrFTopologicalSweep Operator Instance</a></li>
+	<li><a href="#Setting the parameters">Setting the Smooth Options</a></li>
+	<li>Running the operator and retrieving the resulting body (common to all operators 
+	- not discussed below).</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating the curves making up the wire"></a>Retrieving the Input Data</h3>
+<p>The guide curve as well as the reference surface are retrieved from the input 
+file by using the CATICGMObject::GetPersistentTag method.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating a CATFrFTopologicalSweep operator instance"></a>Creating a 
+CATICGMFrFTopologicalSweep Operator Instance</h3>
+<p>The CATICGMFrFTopologicalSweep operator is created by the CATCGMCreateFrFTopologicalSegmentSweep 
+global function. The guide is passed in the form of a list as the third argument 
+of the function.</p>
+<pre class="code">// (a) - Define the list of guides (a single guide list in this case)
+//
+
+CATLISTP(CATGeometry) guides= NULL;
+CATGeometry * guideGeom = (CATGeometry*)piInputBody ; 
+guides.Append(guideGeom);
+
+// (b) - Create the sweep operator
+//
+
+CATICGMFrFTopologicalSweep  * sweepOpe =::CATCGMCreateFrFTopologicalSegmentSweep(piGeomFactory, 
+&amp;topdata, &amp;guides);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Setting the parameters"></a>Setting the Smooth Options</h3>
+<p>The &quot;smooth sweeping&quot; options are specified by using the combination of services 
+below:</p>
+<table class="fill">
+	<tr>
+		<th>Service(s)</th>
+		<th>Correspond(s) to</th>
+	</tr>
+	<tr>
+		<td>SetSmoothOption(1) + SetSmoothAngleThreshold(<i>RadianAngleTol</i>)</td>
+		<td>&quot;Angular correction&quot; check box activated.</td>
+	</tr>
+	<tr>
+		<td>SetCleanGuidesOption(1, ..., ..., ...);</td>
+		<td>&quot;Deviation from Guide&quot; check box activated.</td>
+	</tr>
+	<tr>
+		<td>No SetSmoothOption or SetSmoothOption(0)</td>
+		<td>&quot;Angular correction&quot; check box deactivated.</td>
+	</tr>
+	<tr>
+		<td>No SetCleanGuidesOption or SetCleanGuidesOption (0)</td>
+		<td>&quot;Deviation from Guide&quot; check box deactivated.</td>
+	</tr>
+</table>
+<p>Four set of data are specified. The result is analyzed by using the &quot;Apply Dress-Up&quot; 
+capability of the &quot;Free Style&quot; workbench. &quot;Apply Dress-Up&quot; allows you to display 
+the number of patches for each face of the generated sweep as well as the isoparametric 
+curves (dotted lines). The &quot;Connect Checker&quot; is used to check the tangency condition 
+along edges.</p>
+<table class="fill">
+	<tr>
+		<th colspan="2">Specification 1
+		<p>Deviation from Guide: 0.03 mm<br>
+		Angular correction: not activated</p>
+		</th>
+	</tr>
+	<tr>
+		<td><strong>Code</strong>
+		<pre>sweepOpe -&gt; SetSmoothOption (<strong>0</strong>);
+double iCleanMaxDeformation=<strong>0.03</strong>;
+sweepOpe -&gt; SetCleanGuidesOption(<strong>1</strong>,
+             &amp;iCleanMaxDeformation,NULL, NULL);</pre>
+		<p><strong>Comments</strong></p>
+		<p>The tangency conditions along the two edges are not satisfactory (maximum 
+		angle between edges: 5.921deg)</p>
+		<p>Face 1: 2 knots along U - 2 along V<br>
+		Face 2: 3 knots along U - 2 along V<br>
+		Face 3: 2 knots along U - 2 along V</p>
+		</td>
+		<td>
+		<img alt="Specification 1" src="images/CAACgmAdtSegmentation0.jpg" width="443" height="261"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Specification 2
+		<p>Deviation from Guide: 0.03 mm<br>
+		Angular correction: 0.5deg</p>
+		</th>
+	</tr>
+	<tr>
+		<td><strong>Code</strong>
+		<pre>sweepOpe -&gt; SetSmoothOption (1);
+double AngleTol = 0.5 ;// in degrees
+double RadianAngleTol = AngleTol*CATDegreeToRadian;
+sweepOpe -&gt; SetSmoothAngleThreshold(RadianAngleTol);
+double iCleanMaxDeformation=0.03;
+sweepOpe -&gt; SetCleanGuidesOption(1,
+             &amp;iCleanMaxDeformation, NULL, NULL);</pre>
+		<p><strong>Comments</strong></p>
+		<p>The tangency conditions along the two edges are satisfactory (Max is 
+		0deg).</p>
+		<p>Face 1: 3 knots along U - 2 along V<br>
+		Face 2: 4 knots along U - 2 along V<br>
+		Face 3: 3 knots along U - 2 along V</p>
+		</td>
+		<td>
+		<img alt="Specification 2" src="images/CAACgmAdtSegmentation1.jpg" width="437" height="254"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Specification 3
+		<p>Deviation from Guide: 1mm<br>
+		Angular correction: 2deg</p>
+		</th>
+	</tr>
+	<tr>
+		<td><strong>Code</strong>
+		<pre>sweepOpe -&gt; SetSmoothOption (1);
+double AngleTol = 2 ;// in degrees
+double RadianAngleTol = AngleTol*CATDegreeToRadian;
+sweepOpe -&gt; SetSmoothAngleThreshold(RadianAngleTol);
+double iCleanMaxDeformation=1;
+sweepOpe -&gt; SetCleanGuidesOption(1,
+             &amp;iCleanMaxDeformation, NULL, NULL);</pre>
+		<p><strong>Comments</strong></p>
+		<p>The tangency conditions along the two edges are satisfactory (Max is 
+		0deg)</p>
+		<p>Face 1: 2 knots along U - 2 along V<br>
+		Face 2: 3 knots along U - 2 along V<br>
+		Face 3: 2 knots along U - 2 along V</p>
+		</td>
+		<td>
+		<img alt="Specification 3" src="images/CAACgmAdtsegmentation2.jpg" width="442" height="223"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Specification 4
+		<p>No smooth option specified - a throw is issued - the sweep cannot be 
+		generated.</p>
+		</th>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This use case is an example of how to the smooth options to achieve a better 
+quality of the segment sweep. </p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[*]</td>
+		<td>Delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData</td>
+	</tr>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmUcTopSpline.htm">Using the Basic Topological Operators</a></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2002]</td>
+		<td>Document created</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>2</strong> [Jan 2008]</td>
+		<td>Document Modified</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

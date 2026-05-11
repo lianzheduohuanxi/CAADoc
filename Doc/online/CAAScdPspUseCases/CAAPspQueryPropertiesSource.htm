@@ -1,0 +1,390 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspQueryProperties.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrates the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspAttribute and CATIAPspID </font>
+<font color="#008000">'  </font>
+<font color="#008000">'   Assumption:   Looks for document CAAPspEduIn.CATProduct.  </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    Dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    Dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspQueryProperties.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+       
+    <font color="#008000">' Find the top node of the Distribute System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+<font color="#0000FF">    Dim </font>objPspID        <font color="#0000FF"> As </font>PspID
+
+<font color="#0000FF">    Dim </font>objPspAttribute  <font color="#0000FF"> As </font>PspAttribute
+<font color="#0000FF">    Dim </font>objPspPhysical   <font color="#0000FF"> As </font>PspPhysical
+<font color="#0000FF">    Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">    Dim </font>intNbPhysical    <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>ePspIDLDomainID  <font color="#0000FF"> As </font>CatPspIDLDomainID
+<font color="#0000FF">    Dim </font>objLStrAttrNames <font color="#0000FF"> As </font>PspListOfBSTRs
+
+<font color="#0000FF">    Dim </font>intIndex         <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intNbAttr        <font color="#0000FF"> As </font>Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( Not(objPspApplication Is Nothing ) )<font color="#0000FF"> Then        </font>
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspPhysical object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory",objPspApplication )      
+
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">        Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">        If </font>( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">          Set </font>objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspID object and query ID information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+<font color="#0000FF">      Set </font>objPspID = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspID",objPspPhysical )      
+
+      If( Not ( objPspID Is Nothing ))<font color="#0000FF"> Then</font>
+        QueryPspID objPspID
+<font color="#0000FF">      End if</font>
+
+<font color="#0000FF">    End If</font>
+    
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspAttribute object and query Attribute information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+        
+<font color="#0000FF">      Set </font>objPspAttribute = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAttribute",objPspPhysical )      
+      
+<font color="#0000FF">      If </font>( Not ( objPspAttribute Is Nothing ) )<font color="#0000FF"> Then        </font>
+     
+        <font color="#008000">'----------------------------------------------------------------------</font>
+        <font color="#008000">' List Attributes for CATPIP domain</font>
+        <font color="#008000">'----------------------------------------------------------------------</font>
+        
+<font color="#0000FF">        Set </font>objLStrAttrNames= objPspAttribute.ListAttributes (ePspIDLDomainID )
+       
+<font color="#0000FF">        If </font>( Not ( objLStrAttrNames Is Nothing ) )<font color="#0000FF"> Then   </font>
+         <font color="#0000FF"> int</font>NbAttr = objLStrAttrNames.Count
+<font color="#0000FF">          If </font>(<font color="#0000FF"> int</font>NbAttr &gt; 0 )<font color="#0000FF"> Then            </font>
+            QueryPspAttribute objPspWorkbench, objPspAttribute, objLStrAttrNames              
+<font color="#0000FF">          End If </font>
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">      End If              </font>
+      
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objLPhysicals</font>
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryPspID methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspIDArg        : PspID object</font>
+<font color="#008000">' |        </font>
+<font color="#008000">' |        </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+Private Sub QueryPspID (objPspIDArg<font color="#0000FF"> As </font>PspID)  
+<font color="#0000FF">    Dim </font>strID           <font color="#0000FF"> As </font>String 
+<font color="#0000FF">    Dim </font>str2ID          <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strGenIDNoSeq   <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strGenAndPutID  <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strNewID        <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>bIsIDGenerated  <font color="#0000FF"> As </font>Boolean
+
+    strMessage_g =  strMessage_g & _
+      "     --------Display ID information -----    " & vbCrLf
+    
+<font color="#0000FF">    If </font>( Not ( objPspIDArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      strID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &  "Object ID =" & strID & vbCr                       
+      
+      strNewID = strID & "NewID"
+
+      objPspIDArg.SetID strNewID
+
+      str2ID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &  "New ID set =" & str2ID & vbCr                       
+
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Generate ID without regenerating sequence num</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+
+      strGenIDNoSeq = objPspIDArg.GenIDNoGenSeqNum
+
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Generate and Put ID on the object</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+
+      strGenAndPutID = objPspIDArg.GenAndPutID
+
+      strMessage_g = strMessage_g &  "Generated ID =" & strGenAndPutID & vbCr                       
+     
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Is ID generated</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+  
+  
+      bIsIDGenerated = objPspIDArg.IsIDGenerated
+<font color="#0000FF">      If </font>( bIsIDGenerated   )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g &  "ID is generated " & vbCr         
+      Else
+        strMessage_g = strMessage_g &  "ID is not generated " & vbCr         
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font>
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | QueryPspAttribute methods </font>
+<font color="#008000">' | </font>
+<font color="#008000">' | Input: objPspWorkbenchArg : PspWorkbench object</font>
+<font color="#008000">' |        objPspIDArg        : PspID object</font>
+<font color="#008000">' |        objLStrAttrNamesArg: PspListOfBSTRs object  </font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+
+
+Private Sub QueryPspAttribute (objPspWorkbenchArg<font color="#0000FF"> As </font>PspWorkbench, _
+                               objPspAttributeArg<font color="#0000FF"> As </font>PspAttribute, _
+                               objLStrAttrNamesArg<font color="#0000FF"> As </font>PspListOfBSTRs )  
+
+<font color="#0000FF">    Dim </font>intNbAttr      <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>intIdx         <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>strAttrName    <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strAttrValue   <font color="#0000FF"> As </font>String     
+
+<font color="#0000FF">    Dim </font>eAttrDataType          <font color="#0000FF"> As </font> CatPspIDLAttrDataType
+<font color="#0000FF">    Dim </font>objAttrParam           <font color="#0000FF"> As </font> Parameter
+<font color="#0000FF">    Dim </font>objAttrRealParam       <font color="#0000FF"> As </font> RealParam
+<font color="#0000FF">    Dim </font>objAttrDimensionParam  <font color="#0000FF"> As </font> Dimension
+<font color="#0000FF">    Dim </font>objAttrUnit            <font color="#0000FF"> As </font> Unit
+<font color="#0000FF">    Dim </font>bIsDiscrete            <font color="#0000FF"> As </font> Boolean
+<font color="#0000FF">    Dim </font>bIsDerived             <font color="#0000FF"> As </font> Boolean
+<font color="#0000FF">    Dim </font>iDiscreteType          <font color="#0000FF"> As </font> Short
+<font color="#0000FF">    Dim </font>objLIntDiscreteVals    <font color="#0000FF"> As </font> PspListOfLongs
+<font color="#0000FF">    Dim </font>objLStrDiscreteVals    <font color="#0000FF"> As </font> PspListOfBSTRs
+<font color="#0000FF">    Dim </font>objLStrEncDiscreteVals <font color="#0000FF"> As </font> PspListOfBSTRs
+<font color="#0000FF">    Dim </font>objLStrDecDiscreteVals <font color="#0000FF"> As </font> PspListOfBSTRs
+
+    strMessage_g =  strMessage_g & _
+      "     --------Display Attribute information -----    " & vbCrLf
+
+   <font color="#0000FF"> int</font>NbAttr = objLStrAttrNamesArg.Count
+
+    strMessage_g = strMessage_g &  "Number of Attributes = " & intNbAttr & vbCrLf
+    
+<font color="#0000FF">    If </font>( Not ( objPspAttributeArg Is Nothing ) And _
+         Not ( objPspWorkbenchArg Is Nothing ))<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">      If </font>(<font color="#0000FF"> int</font>NbAttr &gt; 12 )<font color="#0000FF"> Then</font>
+       <font color="#0000FF"> int</font>NbAttr = 12
+        strMessage_g = strMessage_g &  "Displaying first 12 attributes" & vbCr
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">      For </font>intIdx = 1 To<font color="#0000FF"> int</font>NbAttr      
+        strAttrName = objLStrAttrNamesArg.Item (intIdx)
+
+        <font color="#008000">'-----------------------------------------------------</font>
+        <font color="#008000">' Getting type, Discrete, Derived status of the attribute</font>
+        <font color="#008000">'-------------------------------------------------------</font>
+
+        eAttrDataType = objPspAttributeArg.GetType (strAttrName)
+
+        iDiscreteType = objPspAttributeArg.IsDiscrete ( strAttrName, bIsDiscrete)
+
+        bIsDerived =  objPspAttributeArg.IsDerived (strAttrName)
+        
+<font color="#0000FF">        If </font>( bIsDerived )<font color="#0000FF"> Then</font>
+          strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+          strMessage_g = strMessage_g &  "  is Derived" & vbCr        
+        
+<font color="#0000FF">        End If </font><font color="#008000">'------ bIsDerived</font>
+      
+        <font color="#008000">'-------------------------------------------------</font>
+        <font color="#008000">' Handling Integer, String and boolean attributes</font>
+        <font color="#008000">'-------------------------------------------------</font>
+
+<font color="#0000FF">        If </font>( (eAttrDataType = catPspIDLInteger ) Or _            
+            (eAttrDataType = catPspIDLString ) Or _ 
+            (eAttrDataType = catPspIDLBoolean ) )<font color="#0000FF"> Then                      </font>
+
+<font color="#0000FF">          Set </font>objAttrParam = objPspAttributeArg.GetParameter (strAttrName)          
+   
+<font color="#0000FF">          If </font>( Not( objAttrParam Is Nothing) )<font color="#0000FF"> Then</font>
+            strAttrValue = objAttrParam.ValueAsString                        
+            strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+            strMessage_g = strMessage_g &  " = " & strAttrValue 
+<font color="#0000FF">          End If </font>
+
+<font color="#0000FF">          If </font>( bIsDiscrete )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g &  "  is Discrete" 
+            
+            <font color="#008000">'--------------------------------------------</font>
+            <font color="#008000">' Get discrete values for String attribute</font>
+            <font color="#008000">'--------------------------------------------</font>
+<font color="#0000FF">            If </font>(eAttrDataType = catPspIDLString  )Then
+<font color="#0000FF">              If </font>( iDiscreteType = 1)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                Set </font>objLStrDiscreteVals = _
+                  objPspAttributeArg.ListStringDiscreteValues  (strAttrName )                                                                                            
+<font color="#0000FF">              End If</font>
+
+<font color="#0000FF">              If </font>( iDiscreteType = 2)<font color="#0000FF"> Then</font>
+                          
+                objPspAttributeArg.ListEncodedDecodedDiscreteValues strAttrName, _
+                                 ObjLStrEncDiscreteVals, ObjLStrDecDiscreteVals            
+                                                            
+<font color="#0000FF">              End If</font>
+<font color="#0000FF">            End If    </font>
+
+            <font color="#008000">'--------------------------------------------</font>
+            <font color="#008000">' Get discrete values for Integer attribute</font>
+            <font color="#008000">'--------------------------------------------</font>
+            
+<font color="#0000FF">            If </font>(eAttrDataType = catPspIDLInteger  )Then
+<font color="#0000FF">              If </font>( iDiscreteType = 1)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                Set </font>objLIntDiscreteVals = _
+                  objPspAttributeArg.Lis<font color="#0000FF">tInt</font>egerDiscreteValues (strAttrName )                                                                                            
+<font color="#0000FF">              End If</font>
+
+<font color="#0000FF">              If </font>( iDiscreteType = 2)<font color="#0000FF"> Then</font>
+                          
+                objPspAttributeArg.ListEncodedDecodedDiscreteValues strAttrName, _
+                                 ObjLStrEncDiscreteVals, ObjLStrDecDiscreteVals            
+                                                            
+<font color="#0000FF">              End If</font>
+<font color="#0000FF">            End If           </font>
+                   
+<font color="#0000FF">          End If</font>
+          strMessage_g = strMessage_g & vbCr
+<font color="#0000FF">        End If         </font>
+
+        <font color="#008000">'-------------------------------------------------</font>
+        <font color="#008000">' Handling Real (Double) attribute</font>
+        <font color="#008000">' Some attribute could be with magnitude</font>
+
+        If( (eAttrDataType = catPspIDLDouble ) )<font color="#0000FF"> Then                                          </font>
+<font color="#0000FF">          Set </font>objAttrRealParam = objPspAttributeArg.GetParameter (strAttrName)
+
+<font color="#0000FF">          If </font>( Not( objAttrRealParam Is Nothing) )<font color="#0000FF"> Then          </font>
+            <font color="#008000">' -------------------------------------</font>
+            <font color="#008000">' Checking if CATIADimension handle</font>
+            <font color="#008000">' can be obtained from Real parameter</font>
+<font color="#0000FF">            Set </font>objAttrDimensionParam = objPspWorkbenchArg.Ge<font color="#0000FF">tInt</font>erface( _
+                                    "CATIADimension",objAttrRealParam )   
+                                       
+            strAttrValue = objAttrRealParam.ValueAsString
+            strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+            strMessage_g = strMessage_g &  " = " & strAttrValue
+              
+<font color="#0000FF">          End If </font>
+
+          <font color="#008000">' ---------------------------------------------</font>
+          <font color="#008000">' Getting Unit handler from the Dimension object</font>
+          <font color="#008000">' ----------------------------------------------</font>
+
+<font color="#0000FF">          If </font>( Not( objAttrDimensionParam Is Nothing) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Set </font>objAttrUnit = objAttrDimensionParam.Unit                                      
+<font color="#0000FF">          End If </font>
+
+<font color="#0000FF">          If </font>( Not( objAttrUnit Is Nothing) )<font color="#0000FF"> Then            </font>
+            strMessage_g = strMessage_g &  " , unit = " & objAttrUnit.Symbol           
+<font color="#0000FF">          End If </font>
+
+<font color="#0000FF">          If </font>( bIsDiscrete )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g &  "  is Discrete"             
+<font color="#0000FF">          End If</font>
+          strMessage_g = strMessage_g & vbCr
+<font color="#0000FF">        End If  </font><font color="#008000">' Real attribute</font>
+
+<font color="#0000FF">      Next </font><font color="#008000">' End for loop index = intIdx</font>
+<font color="#0000FF">    End If  </font><font color="#008000">' Not ( objPspAttributeArg Is Nothing )</font>
+<font color="#0000FF">End Sub</font>
+
+
+
+</pre></body></html>

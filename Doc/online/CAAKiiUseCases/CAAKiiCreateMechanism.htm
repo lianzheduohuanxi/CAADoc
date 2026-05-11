@@ -1,0 +1,509 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Mechanism in a Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Product Synthesis &amp; Knowledgeware</h1>
+    </td>
+    <td valign="top">
+      <h2>DMU Kinematics Simulator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Mechanism in a Document</h3>
+      <em>From geometrical lines to mechanism</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAKiiCreateMechanism use case. This use
+      case explains how to open a CATProduct document and explore its contents
+      from a Kinematics perspective, down to the basic entities that capture the
+      technology of a mechanism contained in the document.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will You Learn With This Use Case</a></b></li>
+        <li><b><a href="#Concepts">Kinematics Concepts</a></b></li>
+        <li><b><a href="#UseCase">The CAAKiiCreateMechanism Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAKiiCreateMechanism Do</a></li>
+          <li><a href="#How">How to Launch CAAKiiCreateMechanism</a></li>
+          <li><a href="#Where">Where to Find the CAAKiiCreateMechanism Code</a></li>
+          <li><a href="#Sample">Where to Find the CATProduct sample document for
+            CAAKiiCreateMechanism</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will You Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the CATIA Kinematics modeler. Its main intent is to introduce the API of the
+Kinematics modeler, and ways to use it.</p>
+<p>The scenario is based on the creation of a simple mechanism starting from an
+assembly of two products which each contains a line. One will create the
+mechanism in the document, then create a joint on the two lines and create a
+command to control the mechanism. This mechanism will be movable interactively
+in the Kinematics workbench.</p>
+<p><img src="images/CAAKiiCreateMechanismIn.jpg" width="654" height="512"></p>
+<p>This picture represents a CATProduct document containing lines to create a
+mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Concepts"></a>Kinematics Concepts</h3>
+<p>Before getting to the use case itself, it is important to get an
+understanding of some of the concepts that are at the heart of the Kinematics,
+since the use case basically navigates among objects that represent those
+concepts. They are presented in Kinematics Overview [<a href="#References">1</a>].</p>
+<p>These concepts are:</p>
+<ul>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#mechanismconcept">Mechanism</a></li>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#jointconcept">Joint</a></li>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#commandconcept">Command</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAKiiCreateMechanism Use Case</h3>
+<p>CAAKiiCreateMechanism is a use case of the CAAKinematicsInterfaces.edu
+framework that illustrates KinematicsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAKiiCreateMechanism Do</h4>
+<p>The goal of CAAKiiCreateMechanism is to create a mechanism in an assembly
+using two products as links, and a cylindrical joint that enables a product to
+translate along a line with respect to the other product that remains fixed in
+the assembly, thanks to a translation command associated with the mechanism. To
+do this, CAAKiiCreateMechanism:</p>
+<ul>
+  <li>Opens a CATProduct document, whose pathname is passed as an argument</li>
+  <li>Searches for geometries within the product from the assembly</li>
+  <li>Creates a mechanism</li>
+  <li>Creates a joint, based on geometries, and a command in the mechanism.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAKiiCreateMechanism</h4>
+<p>To launch CAAKiiCreateMechanism, you will need to set up the build time
+environment, then compile CAAKiiCreateMechanism along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt; CAAKiiCreateMechanism inputDirectory inputFile.CATProduct outputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAKiiCreateMechanism inputDirectory inputFile.CATProduct outputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>inputDirectory</code></td>
+    <td>The directory in which <code>inputFile.CATProduct</code> is located</td>
+  </tr>
+  <tr>
+    <td><code>inputFile.CATProduct</code>
+    <td>The file that contains the use case CATProduct document</td>
+  </tr>
+  <tr>
+    <td><code>outputDirectory</code></td>
+    <td>The directory into which <code>inputFile.CATProduct</code> is stored
+      after the mechanism is created</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAKiiCreateMechanism Code</h4>
+<p>The CAAKiiCreateMechanism use case is made of a C++ main named <i>CAAKiiCreateMechanism</i>
+whose source file is located in the CAAKiiCreateMechanism.m module
+of the CAAKinematicsInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAKinematicsInterfaces.edu\CAAKiiCreateMechanism.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAKinematicsInterfaces.edu/CAAKiiCreateMechanism.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The <i>CAAKiiCreateMechanism</i> class derives from <i>CATInteractiveApplication</i>.
+The described code is located in the <code>BeginApplication</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Sample"></a>Where to Find the CATProduct sample document for
+CAAKiiCreateMechanism</h4>
+<p>You will find a CATProduct sample document in the following directory:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAKinematicsInterfaces.edu\CNext\resources\graphic\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAKinematicsInterfaces.edu/CNext/resources/graphic/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The sample is called <code>CAAKiiCreateMechanism.CATProduct</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are seven steps in CAAKiiCreateMechanism:
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Geometry">Searching Geometries</a></li>
+  <li><a href="#Mechanism">Creating the Mechanism</a></li>
+  <li><a href="#Joint">Creating the Joint</a></li>
+  <li><a href="#Command">Creating the Command</a></li>
+  <li><a href="#Fix">Setting the Fixed Product</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is the <i>CAAKiiCreateMechanism</i> batch which runs in one shot. The described code is
+located in the <code>C++ main</code> method. It begins by creating a
+session, and by opening the use case CATProduct document passed as an argument: <code>pDocument</code>
+refers to it. This is the usual sequence for creating a document [<a href="#References">3</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Geometry"></a>Searching Geometries</h4>
+<p>The objective of this step is to retrieve the connector associated with the
+line in each of the two products:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Search all the roots of the document
+  CATIDocRoots* piDocRootsOnDocument = NULL;
+  HR = pDocument-&gt;QueryInterface(IID_CATIDocRoots, (void**)&amp;piDocRootsOnDocument);
+  if (SUCCEEDED(HR))
+  {
+    CATListValCATBaseUnknown_var* pRootList = piDocRootsOnDocument-&gt;GiveDocRoots();
+    piDocRootsOnDocument-&gt;Release();
+    piDocRootsOnDocument = NULL;
+    if (NULL != pRootList)
+    {
+      // Search the root product
+      CATIProduct* piProductOnRootProduct = NULL;
+      CATIProduct_var spRootProduct = NULL_var;
+      for (int j = 1; j &lt;= pRootList-&gt;Size() &amp;&amp; NULL == piProductOnRootProduct; j++)
+      {
+        HR = (*pRootList)[j]-&gt;QueryInterface(IID_CATIProduct,(void**)&amp;piProductOnRootProduct);
+        if (SUCCEEDED(HR)) {spRootProduct = (*pRootList)[j];}
+      }
+      delete pRootList;
+      pRootList = NULL;
+
+      // Get all the products of the root product
+      CATListValCATBaseUnknown_var* pProductList = piProductOnRootProduct-&gt;GetAllChildren();
+      int numberOfProducts = pProductList-&gt;Size();
+    
+      // Search two valid lines in the products
+      const int maximumNumberOfConnector = 2;
+      CATLISTP(CATBaseUnknown) iConnectorList;
+      CATIProduct* piFixedProduct = NULL;
+      int numberOfConnector = 0;
+      for (int i = 1; numberOfConnector &lt; maximumNumberOfConnector &amp;&amp; i &lt;= numberOfProducts; i++)
+      {    
+        // Search the product
+        CATIProduct* piProductOnProduct = NULL;
+        if (SUCCEEDED((*pProductList)[i]-&gt;QueryInterface(IID_CATIProduct,(void**)&amp;piProductOnProduct)))
+        {    
+          // retain first product to be set as fixed at the end
+          if (i==1) {
+            piFixedProduct = piProductOnProduct;
+            piFixedProduct-&gt;AddRef();
+          }
+          // Search the link to the shape representation associated with the product
+          CATILinkableObject_var spLinkableOnShapeRep = NULL_var;
+          if (SUCCEEDED(piProductOnProduct-&gt;GetShapeRep(spLinkableOnShapeRep)))  {        
+            // Use the link the find the document containing the shape representation
+            CATDocument* pShapeDocument = spLinkableOnShapeRep-&gt;GetDocument();
+            if (NULL != pShapeDocument)
+            {   
+              // Find the container of the document
+              CATIContainerOfDocument* piContainerOfDocumentOnShapeDocument = NULL;
+              if (SUCCEEDED(pShapeDocument-&gt;QueryInterface(IID_CATIContainerOfDocument,
+                                                           (void**)&amp;piContainerOfDocumentOnShapeDocument)))
+              {
+                // Find the container of the geometry
+                CATIContainer* piContainer = NULL;
+                piContainerOfDocumentOnShapeDocument-&gt;GetSpecContainer(piContainer);
+                piContainerOfDocumentOnShapeDocument-&gt;Release();
+                piContainerOfDocumentOnShapeDocument = NULL;
+                if (NULL != piContainer)
+                {
+                  // List all geometrical entities and search the first line in the document
+                  SEQUENCE(CATBaseUnknown_ptr) memberList = piContainer-&gt;ListMembers(CATLine::ClassName());
+                  CATBaseUnknown* papiUnknownOnLineConnector = NULL;
+                  for (int k = 0; NULL == papiUnknownOnLineConnector &amp;&amp; k &lt; memberList.length(); k++)
+                  {
+                    // Filter the line
+                    CATLine* piLine = NULL;
+                    if (SUCCEEDED(memberList[k]-&gt;QueryInterface(IID_CATLine,(void**)&amp;piLine)))
+                    {
+                      CATILinkableObject_var spLinkableOnLine (memberList[k]);
+                      if (NULL_var != spLinkableOnLine)
+                      {
+                        // Get the connector associated to the line
+                        int xCreation = 0;
+			
+			HR = GetProductConnector(spLinkableOnLine, piProductOnProduct, piProductOnRootProduct, 0, spConnectorOnLine, xCreation);
+                        if (NULL_var != spConnectorOnLine)  {
+                          // Store the connector as a CATBaseUnknown
+                          HR = spConnectorOnLine-&gt;QueryInterface(IID_CATBaseUnknown, (void**)&amp;papiUnknownOnLineConnector);
+                        }
+                      }
+                      piLine-&gt;Release();
+                      piLine = NULL;
+                    }
+                  }
+                  // Store the connector and the product corresponding to the line
+                  if (NULL != papiUnknownOnLineConnector)  {
+                    iConnectorList.Append(papiUnknownOnLineConnector);
+                    numberOfConnector++;
+                    papiUnknownOnLineConnector-&gt;Release();
+                    papiUnknownOnLineConnector = NULL;
+                  }
+                  piContainer-&gt;Release();
+                  piContainer = NULL;
+               }
+	          }
+	        }
+            piProductOnProduct-&gt;Release();
+            piProductOnProduct = NULL;
+          }
+        }
+      }
+      delete pProductList;
+      pProductList = NULL;
+      piProductOnRootProduct-&gt;Release();
+      piProductOnRootProduct = NULL;       
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A CATProduct document contains many roots accessible thru <code>GiveDocRoots</code>
+method available on the <i>CATIDocRoots</i> interface of the document. The first
+root which answer to the interface <i>CATIProduct</i>, is the root of all the
+products in the document. To get all the products, the sample gets the children
+of the root product. Then the sample search two lines which belong to the
+products. It queries the document associated to each product as a shape
+representation. Having the list of all geometries in this document, it filters
+the lines and retrieves their connector. This connector and the corresponding
+product are stored in <code>papiUnknownOnConnector</code> and <code>papiProduct</code>.
+The sample has to clean the environment and release all resources. The technique
+is fairly simple: all references to interfaces have to be released using <code>CATBaseUnknown::Release()</code>
+and nullified.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Mechanism"></a>Creating the Mechanism</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATIKinMechanism* piMechanism = NULL;
+      CATIKinMechanismFactory* piDocumentAsMechanismFactory = NULL;
+      if (SUCCEEDED(pDocument-&gt;QueryInterface(IID_CATIKinMechanismFactory, (void**)&amp;piDocumentAsMechanismFactory)))  {
+        if (SUCCEEDED(piDocumentAsMechanismFactory-&gt;CreateInstance(&amp;piMechanism)))  {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The creation of a mechanism in the document is made through the factory
+method <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanismFactory', 'CreateInstance');return false;">CreateInstance</a></code>.
+The factory is obtained thru a QueryInterface on <code>pDocument</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Joint"></a>Creating the Joint</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        if (numberOfConnector == maximumNumberOfConnector)
+        {
+          // Cylindrical joint from connectors
+          CATIKinJoint* piJoint = NULL;
+          const char* jointType = CATKinCylindricalJoint;
+          boolean iCreateConstraintsForJoint = 1;
+          if (SUCCEEDED(piMechanism-&gt;AddJoint(jointType,&amp;iConnectorList, iCreateConstraintsForJoint, &amp;piJoint)))  {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A cylindrical joint is created in the mechanism from the two retrieved
+connectors using the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'AddJoint');return false;">AddJoint</a>
+</code>method of the <i>CATIKinMechanism</i> interface, with the connectors
+stored in <code>iConnectorList</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Command"></a>Creating the Command</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+              CATIKinCmd* piCmd = NULL;
+              const char* cmdType = CATKinLengthCmd;
+              if (SUCCEEDED(piMechanism-&gt;AddCommand(piJoint, cmdType, &amp;piCmd)))  {
+                piCmd-&gt;Release();
+                piCmd = NULL;
+              }
+              piJoint-&gt;Release();
+              piJoint = NULL;
+            }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A translation command is associated with the mechanism to apply to the joint
+using <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'AddCommand');return false;">AddCommand</a></code>
+method of the <i>CATIKinMechanism</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Fix"></a>Setting the Fixed Product</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+          boolean iCreateConstraintsForFixed = 1;
+          HR = piMechanism-&gt;SetFixedProduct(piFixedProduct,iCreateConstraintsForFixed);
+          piFixedProduct-&gt;Release();
+          piFixedProduct = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To complete the mechanism, the fixed product is defined using <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'SetFixedProduct');return false;">SetFixedProduct</a></code>
+method of the <i>CATIKinMechanism</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Epilog"></a>Epilog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...  
+         piMechanism-&gt;Release();
+          piMechanism = NULL;   </pre>
+      <pre>         }
+      piDocumentAsMechanismFactory-&gt;Release();
+      }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The pointers to the mechanism and factory are released.
+<p>Then, the document is saving using <code>CATDocumentServices::SaveAs</code>
+static method in the directory passed as the third argument when launching the
+use case, and with the same name as the input document. After being saved, it is
+is closed using the <code>remove</code> method of its <code>LifeCycleObject</code>
+interface. The environment is cleaned, and the session is deleted by the <code>Delete_Session</code>
+global function, which is passed the same identifier that was used to open it.
+This is the usual sequence for saving and closing a CATIA document, and for
+deleting the session [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This use case has demonstrated the way to programmatically navigate a CATProduct
+document, from the document itself down to the entities that hold the mechanism
+definition.
+<p>More specifically, you have learn how to create:
+<ul>
+  <li><i>mechanisms</i> in a CATProduct document</li>
+  <li><i>joints</i> within a mechanism</li>
+  <li><i>commands</i> within a mechanism</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAKiiTechArticles/CAAKiiOverview.htm">Kinematics
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2 </strong>[Jan 2001]</td>
+    <td valign="top">Interface reviewed; exposing only KinematicsInterfaces</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3 </strong>[Aug 2002]</td>
+    <td valign="top">CATProduct sample document added</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000-2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

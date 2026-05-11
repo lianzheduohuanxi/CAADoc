@@ -1,0 +1,86 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAAniPostProExportData.catvbs</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre>
+<font color="#008000">&#39; COPYRIGHT DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">&#39; ***********************************************************************</font>
+<font color="#008000">&#39;   Purpose:      Export data on image</font>
+<font color="#008000">&#39;   Assumptions:  </font>
+<font color="#008000">&#39;   Author:       bmw</font>
+<font color="#008000">&#39;   Languages:    VBScript</font>
+<font color="#008000">&#39;   Locales:      English </font>
+<font color="#008000">&#39;   CATIA Level:  V5R16</font>
+<font color="#008000">&#39; ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+
+
+<font color="#008000">&#39; Open the CATAnalysis Document</font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+<font color="#008000">&#39; Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set </font>oAnalysisManager = oAnalysisDocument.Analysis
+
+<font color="#008000">&#39; Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+
+<font color="#008000">&#39; Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisModel.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisSets.ItemByType(&quot;PropertySet&quot;)
+
+<font color="#0000FF">Set </font>oAnalysisImages = oAnalysisSet.AnalysisImages
+<font color="#0000FF">Set </font>oAnalysisImage = oAnalysisImages.Add(&quot;Material_Fringe&quot;, False, False, True)
+
+<font color="#008000">&#39; Retrieve the folder stored in sOut</font>
+<font color="#0000FF">Set </font>fileSystem1 = CATIA.FileSystem
+<font color="#0000FF">Set </font>folder1 = fileSystem1.GetFolder(sout)
+</pre>
+<pre>
+<font color="#008000">&#39;export data in exportfile1.txt (format txt)</font>
+<font color="#008000">&#39;==============================</font>
+oAnalysisImage.ExportData folder1, &quot;exportfile1&quot;, &quot;txt&quot;
+</pre>
+<pre>
+<font color="#008000">&#39;export data in exportfile2.xls (format xls)</font>
+<font color="#008000">&#39;==============================</font>
+oAnalysisImage.ExportData folder1, &quot;exportfile2&quot;, &quot;xls&quot;
+
+</pre>
+<pre>
+<font color="#008000">&#39;export data (with mesh part id) in exportfile3.txt (format txt) </font>
+<font color="#008000">&#39;==================================================</font>
+oAnalysisImage.ExportDataWithMeshPartId folder1, &quot;exportfile3&quot;, &quot;txt&quot;
+
+</pre>
+<pre>
+<font color="#008000">&#39;export data (with mesh part id) in exportfile4.xls (format xls) </font>
+<font color="#008000">&#39;==================================================</font>
+oAnalysisImage.ExportDataWithMeshPartId folder1, &quot;exportfile4&quot;, &quot;xls&quot;
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

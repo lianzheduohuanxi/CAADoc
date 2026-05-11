@@ -1,0 +1,1071 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Building Combined Curves</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Building Combined Curves</h3>
+      <em>Implementing <i>CATI<span lang="fr">FmFeatureBehaviorCustomization</span></i></em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+      a New Geometrical Feature : The V5V6ExtCombinedCurve</a>  <b>&gt; Building Combined Curves</b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the implementation of the <i>CATI<span lang="fr">FmFeatureBehaviorCustomization</span></i> 
+		interface that enables to build the result of the V5V6ExtCombinedCurve 
+		feature. It 
+		is a copy of the implementation of <em>CATIBuild</em> interface for&nbsp; 
+		the CombinedCurve feature, described in the article 
+		&quot;Building Combined Curves&quot;[<a href="#References">10</a>], rewritten with V6 
+		backported interfaces.&nbsp; In order to be V5/V6 compatible, some 
+		specific parts are coded inside #ifdef/#endif macros. We won't detail in this article 
+		any of the V6 specific code.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAV5V6ExtMmrCombinedCurve Use Case</a> </strong>
+          <ul>
+            <li><a href="#What">What Does the CAAV5V6ExtMmrCombinedCurve Use Case Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurve Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case demonstrates how to <b>build</b>  the result of a geometrical
+feature which is a wireframe feature. The build is done by the update mechanism through the <code>Build</code> method of the
+ <i>CATIFmFeatureBehaviorCustomization</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the CAAV5V6MmrCombinedCurve Use Case Do</h4>
+<p>This article explains how the V5V6ExtCombinedCurve implements the <i>CATI<span lang="fr">FmFeatureBehaviorCustomization</span></i>
+interface. This interface is called whenever someone wants to <b>update</b> an
+object. The <code>Build</code> method, the only method of the interface for 
+which the implementation is mandatory, produces:</p>
+<ul>
+  <li>An <b>associative geometric
+result</b> computed by objects coming from the Geometric Modeler's Frameworks.
+    This result is a <i> CATBody, </i>a topological object,<i> </i>called &quot;Topo&quot; on the picture below
+    [<a href="#Fig.1">Fig.1</a>]</li>
+  <li><b>A scope</b> [<a href="#References">2</a>] : To ensure the V5V6ExtCombinedCurve's life cycle and make it reusable by other
+    mechanical features, the <code>Build</code>  method constructs an object which manages the access
+    stability of the <i>CATCell</i> of the <i>CATBody</i>.&nbsp; This object is
+    a scope created by the <b>procedural report</b> 
+    of the V5V6ExtCombinedCurve.&nbsp;</li>
+	<li><b>A Configuration </b>[<a href="#References">9</a>]: To ensure the 
+	versioning of the V5V6ExtCombinedCurve features, the <code>Build</code>  method 
+	retrieves the software level (SoftwareConfiguration) which will be used to 
+	compute Built result. On the first <code>Build</code>  call, the 
+	AlgorithmConfiguration is set on the feature instance to keep this 
+	information.</li>
+</ul>
+<p>The following picture explains the process of the <code>Build</code> method in the case of
+a surfacic (wireframe) feature:</p>
+  <table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Surfacic Feature Build</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="../CAAMmrTechArticles/images/CAAMmrBuildSurfacic.jpg" width="680" height="206"></td>
+    </tr>
+  </tbody>
+</table>
+&nbsp;
+<p>All the inputs specifications of the feature will be followed by the
+procedural report.&nbsp;The <i>CATIMechanical<span lang="fr">Properties</span></i> interface will be used 
+to check if the result must be built of not. </p>
+<p> The final part of the Use Case describes how to <b>manage
+any potential error</b> that may occur during the V5V6ExtCombinedCurve build .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the V5V6ExtCombinedCurve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.&nbsp; </p>
+<p>Launch CATIA, when the application is ready, follow the scenario described 
+below:</p>
+<ul>
+  <li>On the <b>File</b> menu click <b>Open</b> </li>
+  <li>in the <b>File Selection</b> dialog box retrieve the <b>
+  CAAV5V6ExtCombinedCurve.CATPart</b> <a href="#(*)">(*)</a> document and click <b>Open</b>
+  </li>
+  <li>In the <b>Start</b> menu choose <b>Generative Shape Design</b></li>
+  <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Deactivate&nbsp;
+  </b></li>
+  <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Activate&nbsp;
+  </b></li>
+</ul>
+<p>The following picture shows the<b><span style="font-weight: 400"> 
+CAAV5V6EXtCombinedCurve.CATPart, on left when the result of the combined curve is 
+computed, and on right otherwise.</span></b></p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td valign="top">
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCatalogIntegration-PartCombCrv.jpg" width="296" height="391">
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvDeactivated.jpg" width="331" height="467"></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>On right note that the icon of the combined curve shows that the geometrical 
+feature is deactivated:<img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvDeactivatedIcon.jpg" width="231" height="47"></p>
+<p><a name="(*)">(*)</a> The file is located in the directory <code>
+CAAV5V6ExtMechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAV5V6ExtMechanicalModeler.edu/InputData</code>
+  </li>
+  <li>Windows : <code>InstallRootDirectory\CAAV5V6ExtMechanicalModeler.edu\InputData</code>
+  </li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6ExtMmrCombinedCurve Code</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve use case is made one class,<i> CAAEV5V6ExtMmrCombinedCurveBehavior</i>,
+located in the
+CAAV5V6ExtMmrCombinedCurve.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurve.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurve.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>By implementing the <code>Build</code> method of <i>CATIFmFeatureBehaviorCustomization</i> 
+interface, you will define how the V5V6ExtCombinedCurve is build, i.e. how to 
+compute the two extruded surfaces and their intersection, and how to integrate 
+these operations in the procedural journal.&nbsp; </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAEV5V6ExtMmrCombinedCurveBehavior::Build ()
+{
+   HRESULT rc = E_FAIL ;
+   
+   <a href="#Declaring the Usefull pointer">Declaring the Useful Pointers</a>
+   
+   CATTry
+   {
+      <font face="Arial"><a href="#Checking the Build Activation">Checking the build activation</a></font>
+      if ( DeactivateState == 0 )
+      {
+         <a href="#Removing all Possible Update Errors Associated with the Combined Curve">Removing all Possible Update Errors Associated with the Combined Curve</a>
+         <a href="#Retrieving the Data for the PR">Retrieving Data for the Procedural Report</a>
+         <a href="#Creating the Procedural Report">Creating the Procedural Report</a>
+         <a href="#Running the Topological Operators">Running the Topological Operators</a> 
+         <a href="#Storing the Procedural Report">Storing the Procedural Report and the Algorithm Configuration</a>
+         <a href="#Cleaning the Useless Data">Cleaning the Useless Data</a>
+      }
+   }
+   
+  
+   CATCatch(CATError , pError)
+   {
+      <a href="#Managing the CATError Error">Managing the <i>CATError </i>Error</a>
+   }
+   
+   CATEndTry
+   
+   return rc ;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This method contains a <code>CATTry</code> and <code>CATCatch</code> sections
+because some methods can throw an error. [<a href="#References">3</a>]</p>
+<p>At last, the <a href="#Step1">Implementing the <i>CATIFmFeatureBehaviorCustomization</i> Interface</a>
+section describes how to create the new data extension for the V5V6ExtCombinedCurve
+feature.</p>
+<h4 align="right">[<a href="#Top">Top</a>]</h4>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Declaring the Usefull pointer"></a>Declaring the Useful Pointers</h4>
+
+<p>Before the <code>CATTry</code> section you declare all the pointers:</p>
+
+<ul>
+  <li>Used in the <code>CATTry</code> and <code>CATCatch</code> sections: such
+    as <code>piUpdateErrorOnThis</code> the <i>CATIUpdateError</i> interface
+    pointer on the combined curve.</li>
+  <li>Initialized in the <code>CATTry</code> section and not released before the
+    call of a method which can throw an error&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   CATICGMTopPrism *piCurve1Extrude = NULL;
+   CATICGMTopPrism *piCurve2Extrude = NULL;
+   CATICGMHybOperator *piIntersect = NULL;
+   CATBody * pCurve1ExtrudeBody = NULL;
+   CATBody * pCurve2ExtrudeBody = NULL;
+   CATIMmiProcReport_var spProcReport = NULL_var;
+   CATGeoFactory *pGeomFactory = NULL;
+   CATSoftwareConfiguration *pSoftConfig = NULL;
+   int IsConfigToStore = NULL;
+   CATIMmiMechanicalFeature *piCombinedCurveFeat = NULL;
+   CATIMmiAlgoConfigServices *piAlgoConfigServices = NULL;  
+   CATIUpdateError_var spUpdateErrorOnThis = NULL_var;    
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>All these pointers will be explained in the next sections.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4 align="left"><a name="Checking the Build Activation"></a>Checking the Build 
+Activation</h4>
+
+<p align="left">This part consists in to check the status of the combined curve 
+in term of build's activation. This information is managed by the <i>
+CATIMechanicalProperties</i> interface [<a href="#References">8</a>]. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#ifdef CATIAV5R23
+/======================================================
+// specific for V5
+// New V6 api CATIMmiProcReport has not been backported 
+//=====================================================
+ CATIMfProcReport_var  spProcReport = NULL_var;
+#endif
+
+...
+int DeactivateState = 0;
+<strong>CATIMechanicalProperties_var</strong> spMechProp = this;
+if (spMechProp != NULL_var)
+{
+  DeactivateState = spMechProp<strong><span lang="fr">-&gt;</span>IsInactive</strong>();     
+     
+  if (1 == DeactivateState)
+  {
+    <strong>spProcReport</strong> = this; 
+<span lang="fr">    </span>if (spProcReport != NULL_var)
+      rc = spProcReport<span lang="fr">-&gt;</span><strong>InactivateResult</strong>();
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="left">If the geometrical feature is deactivated, the <code>InactivateResult</code> 
+method of the <em>CATI<span lang="fr">Mf</span>ProcReport</em> interface must be used. This interface, 
+<em>CATIMfProcReport</em>, 
+is natively implemented by a geometrical feature.&nbsp; </p>
+
+
+<p align="left">This check 
+about the deactivation must be done in the <code>CATTry</code> section because the <code>
+InactivateResult</code> method of the <i>CATIMfProcReport</i> can throw an 
+error. In this case, <code>piProcReport </code>will be released in the CATCatch 
+section. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Removing all Possible Update Errors Associated with the Combined Curve"></a>Removing all Possible Update Errors Associated with the
+Combined Curve</h4>
+
+<p>It is safer to remove all possible
+update error that may be associated with the current Combined Curve feature. To do
+so, use the <code> UnsetUpdateError<span lang="fr"> method</span></code> of the <i>
+CATIMmiUpdateError</i> interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>CATIMmiUpdateError_var</strong> spUpdateErrorOnThis = NULL_var;
+...
+spUpdateErrorOnThis = this; 
+if (spUpdateErrorOnThis != NULL_var)
+  spUpdateErrorOnThis<span lang="fr">-&gt;</span><strong>UnsetMmiUpdateError</strong>();
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The implementation of <i> CATIMmiUpdateError</i> interface for Combined Curve is
+provided by an extension of late type MechanicalFeature. Since CombinedCurve
+late type derives from MechanicalFeature late type [<a href="#References">4</a>], you automatically benefit
+from this implementation.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieving the Data for the PR"></a>Retrieving the Data for the
+Procedural Report</h4>
+
+<p>This step consists in three sub-steps which are :</p>
+
+<ul>
+  <li><a href="#Retrieving the two Input Curves and the two Input Directions">Retrieving the two Input Curves and the two Input
+Directions</a></li>
+  <li><a href="#Retrieving the two CATMathDirections Corresponding to the two Input Directions">Retrieving the two CATMathDirections Corresponding to
+the two Input Directions</a></li>
+  <li><a href="#Retrieving the two Bodies Corresponding to the two Input Curves">Retrieving the two
+    CATBody Corresponding to the two Input
+Curves</a></li>
+</ul>
+
+<h5><a name="Retrieving the two Input Curves and the two Input Directions"></a>Retrieving the two Input Curves and the two Input
+Directions</h5>
+<p>With the <i>CAAIV5V6ExtMmrCombinedCurve</i> interface [<a href="#References">5</a>] it
+is easy to retrieve the
+V5V6ExtCombinedCurve input curves and directions.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      
+CATBaseUnknown  *pCurve1 = NULL;
+CATBaseUnknown  *pCurve2 = NULL;
+CATBaseUnknown  *pDirection1 = NULL; 
+CATBaseUnknown  *pDirection2 = NULL; 
+
+<strong>CAAIV5V6ExtMmrCombinedCurve_var</strong> spCombinedCurve = this;
+if (spCombinedCurve != NULL_var)
+{
+  // Retrieves curves and directions
+  rc = spCombinedCurve<span lang="fr">-&gt;</span><strong>GetCurve</strong>(1, pCurve1);
+  if (SUCCEEDED(rc))
+  {
+    rc = spCombinedCurve<span lang="fr">-&gt;</span><strong>GetDirection</strong>(1, pDirection1);
+    if (SUCCEEDED(rc))
+    {
+      rc = spCombinedCurve<span lang="fr">-&gt;</span><strong>GetCurve</strong>(2, pCurve2);
+      if (SUCCEEDED(rc))
+      <span lang="fr">  </span>rc = spCombinedCurve<span lang="fr">-&gt;</span><strong>GetDirection</strong>(2, pDirection2);
+    }
+  }<span lang="fr">
+}</span>
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>Once the inputs are retrieved, you can generate an error if one of them are
+not valid.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+        if (FAILED(rc))
+{
+  // Clean up 
+  if (NULL != pCurve1)
+  {
+    pCurve1<span lang="fr">-&gt;</span>Release();
+    pCurve1 = NULL;
+  }
+  if (NULL != pCurve2)
+  {
+    pCurve2<span lang="fr">-&gt;</span>Release();
+    pCurve2 = NULL;
+  }
+  if (NULL != pDirection1)
+  {
+    pDirection1<span lang="fr">-&gt;</span>Release();
+    pDirection1 = NULL; 
+  }
+  if (NULL != pDirection2)
+  {
+    pDirection2<span lang="fr">-&gt;</span>Release();
+    pDirection2 = NULL; 
+  }
+
+  // An error is created 
+  CATIMmiErrUpdate *piErrorAccess = NULL;
+  rc = CATMmiExtendServicesFactory::CreateUpdateErrorAccess(piErrorAccess);
+
+  CATError * pErrorNoValidInput = NULL;
+  if (NULL != piErrorAccess)
+  {
+     // Builds a new update error.
+     piErrorAccess-&gt;<strong>CreateNewError</strong>(pErrorNoValidInput);
+     CATUnicodeString Diagnostic("One of the inputs is wrong.");
+     piErrorAccess-&gt;<strong>SetMmiDiagnostic</strong>(pErrorNoValidInput,Diagnostic);
+     <strong>CATThrow</strong>(pErrorNoValidInput);
+						
+}      
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pErrorNoValidInput</code> is an update error. Before throw<span lang="fr">ing</span> the error, all the none-null pointers declared in the <code>CATTry</code>
+section, in other words the inputs of the Combined Curve, are released.&nbsp;</p>
+<p><b>Note</b>: In the use case we have chosen to generate an update error if
+the inputs of the combined curve are wrong. You can also consider that it is
+an internal error, so do not generate an error but only use the HRESULT
+mechanism. In this last case, the &quot;Update Diagnosis&quot; dialog box will
+not appear in case of error. Refer to the &quot;A Description of Update
+Errors&quot; article [<a href="#References">6</a>] for details about the update
+errors.</p>
+
+<h5><a name="Retrieving the two CATMathDirections Corresponding to the two Input Directions"></a>Retrieving the two CATMathDirections Corresponding to
+the two Input Directions</h5>
+<p>Retrieving the geometrical directions of the two input directions is even
+easier. You just have to get a pointer on <i> CATLine</i> from the input direction, and
+then ask this <i> CATLine</i> for its mathematical direction.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ <strong>CATMathDirection</strong> MathDirection1,MathDirection2;
+ 
+ <strong>CATLine</strong> *pLine1 = NULL;    
+ rc = pDirection1<span lang="fr">-&gt;</span>QueryInterface(IID_CATLine, (void**) <span lang="fr">&amp;</span>pLine1);
+    
+ if (SUCCEEDED(rc))
+ {
+   // Get first mathematical direction
+   pLine1<span lang="fr">-&gt;</span><strong>GetDirection</strong>(MathDirection1);
+    
+   // Release pointer
+   pLine1<span lang="fr">-&gt;</span>Release();
+   pLine1 = NULL;
+ }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>These input curves and directions will be now asked to give their geometry so
+that you can compute the two extruded surfaces.</p>
+
+<h5><a name="Retrieving the two Bodies Corresponding to the two Input Curves"></a>Retrieving the two
+CATBody Corresponding to the two Input
+Curves</h5>
+<p>A
+method of <i>CATI<span lang="fr">MmiUse</span>GeometricalElement</i> retrieves the <i>CATBody</i>
+corresponding to a feature.</p>
+      <pre>...
+<strong>CATBody_var</strong> spBodyOfCurve1, spBodyOfCurve2;
+
+if (SUCCEEDED(rc) <span lang="fr">&amp;&amp;</span> pCurve1)
+{
+  <strong>CATIMmiUseGeometricalElement_var</strong> spGeometricalElementOnCurve1 = pCurve1;
+      
+  if (spGeometricalElementOnCurve1 != NULL_var)
+     rc = spGeometricalElementOnCurve1<span lang="fr">-&gt;</span><strong>GetBodyResult</strong>(spBodyOfCurve1);
+}
+...</pre>
+<p>Once again, you do not have to worry about the implementation of <i>
+CATI<span lang="fr">MmiUse</span>GeometricalElement</i> for your V5V6ExtCombinedCurve or input curves. 
+<span lang="fr">T</span>he
+parent late type GeometricalElement3D [<a href="#References">4</a>] of V5V6ExtCombinedCurve has an extension that
+provides the implementation for <i>CATIMmiUseGeometricalElement</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Procedural Report"></a>Creating the Procedural Report</h4>
+<p>The procedural report is the means to generate the scope of the feature by
+using the topological report to generate the name of the following cells. The
+procedural report is managed by the <i>CATIMfProcReport</i> interface.&nbsp;</p>
+<p>The first thing is to declare the following cells by the procedural journal
+during the Build operation. In general, in the case of a surfacic feature, all
+the input specifications are followed:</p>
+      <pre>...
+ CATLISTV(CATBaseUnknown_var) ListFeat;
+ CATListOfCATUnicodeString ListKeys;
+
+ if (SUCCEEDED(rc))
+ {
+    ListFeat.Append(pCurve1); 
+    ListKeys.Append(MfKeyNone);    
+    ListFeat.Append(pDirection1); 
+    ListKeys.Append(MfKeyNone);
+    ListFeat.Append(pCurve2); 
+    ListKeys.Append(MfKeyNone);
+    ListFeat.Append(pDirection2); 
+    ListKeys.Append(MfKeyNone);
+ }
+...</pre>
+<p><code>List<span lang="fr">feat</span></code> is the list of <span lang="fr">features</span> to follow<span lang="fr">-up</span>, and <code>ListKeys</code>
+is the list of associated keys. These two lists have the same size. The default
+value of a key is <code>MfKeyNone</code>. A different key value will indicate
+that the historical relationship of a node should be replaced with a user
+information.&nbsp;The value of the key must be in relationship with the
+information given by the topological report.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>CATIMfProcReport_var</strong> spProcReport = NULL_var;
+...
+spProcReport = this;
+if (spProcReport != NULL_var)
+{
+  int BoolOper = 0;
+  rc = spProcReport<span lang="fr">-&gt;</span><strong>CreateProcReport</strong>(ListFeat,ListKeys,BoolOper); 
+}   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Once the <i>CATI<span lang="fr">Mf</span>ProcReport</i> interface 
+<span lang="fr">smart </span>pointer on the combined curve is
+retrieved, <span lang="fr">sp</span><code>ProcReport</code>, you can create the procedural report
+thanks to the <code>CreateProcReport</code> method. The last argument of this
+method is <code>0</code>, the default value, because the result ( the scope )
+will be affected to the feature itself [<a href="#Fig.1">Fig.1</a>]. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Running the Topological Operators"></a>Running the Topological
+Operators</h4>
+<p>This step consists in three sub-steps which are always:</p>
+<ul>
+  <li> <a href="#Retrieving the Geometrical Factory">Retrieve a pointer on the geometrical
+    factory</a> to create the topological operators and the topology,</li>
+  <li><a href="#Retrieving the Topological Journal">Retrieve the Topological
+    Journal </a>used by the procedural report,</li>
+	<li><a href="#Retrieving the Algorithm Configuration">Retrieving the 
+	Algorithm Configuration</a> which is used to take the right level of 
+	algorithms in MechanicalModeler, CGM etc..</li>
+  <li><a href="#Creating the Resulting Geometry">Create the geometry</a> to
+    associate with the feature.&nbsp;</li>
+</ul>
+<h5><a name="Retrieving the Geometrical Factory"></a>Retrieving the Geometrical
+Factory</h5>
+<p>The geometrical factory is handled by the <i>CATGeoFactory</i> interface. 
+This interface is implemented by the Procedural Report manager. You retrieve
+<span lang="fr">it</span> thanks to the <i>CATI<span lang="fr">Mf</span>ProcReport</i>&nbsp; interface implemented
+for <strong>V5V6ExtCombinedCurve</strong> feature.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <strong>CATGeoFactory_var</strong> LocalFactory;
+  rc = spProcReport<span lang="fr">-&gt;</span><strong>GetGeoFactoryFromFeature</strong>(LocalFactory);
+  if (SUCCEEDED(rc) <span lang="fr">&amp;&amp;</span> NULL_var != LocalFactory)
+  rc  = LocalFactory<span lang="fr">-&gt;</span>QueryInterface(IID_CATGeoFactory, (void**) <span lang="fr">&amp;</span>pGeomFactory);		 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The GetGeoFactoryFromFeature is the method of the <i>CATIMfProcReport</i> 
+to retrieve the geometrical <span lang="fr">factory</span>.<code><span lang="fr">
+</span>pGeomFactory</code>
+is the pointer on the geometrical factory interface.</p>
+<h5><a name="Retrieving the Topological Journal"></a>Retrieving the Topological
+Journal</h5>
+<p>The procedural report then provides a pointer on a new topological journal
+that will log all topological operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATTopData TopData;
+<strong>CATCGMJournalList</strong> *pCGMJournalList = NULL;
+rc = spProcReport<span lang="fr">-&gt;</span><strong>GetCGMJournalList</strong>(pCGMJournalList);  
+TopData.SetJournal(pCGMJournalList) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pCGMJournalList</code> is the pointer on the topological journal. This
+pointer must not be released.&nbsp;</p>
+<h5><a name="Retrieving the Algorithm Configuration"></a>Retrieving the 
+Algorithm Configuration</h5>
+<pre><span id="M25"><span class="comment">The &quot;<b>CATSoftwareConfiguration</b>&quot; pointer (pSoftConfig) is needed to get the version of the V5V6ExtCombinedCurve feature </span></span>[<a href="#References">9</a>]<span id="M25"><span class="comment">.
+This information is used to determine which type of algorithm will be used to compute the result.</span></span></pre>
+<p class="style1">This Software Configuration is stored on the feature instance 
+and has to be retrieved using the <code>GetConfiguration</code> method of <em>CATIMmiAlgoConfigServices</em> interface.<span lang="fr">
+</span></p>
+<p class="style1">If your feature has not been built yet, &quot;<span class="style2">IsConfigToStore</span> 
+= <span class="style2">1</span>&quot;.<br>
+Then, at the end of build process of the feature<span lang="fr">, </span>the value set by &quot;<strong>TopData.SetSoftwareConfiguration</strong>&quot; has 
+to be stored using <code>StoreConfiguration</code> method of <em>CATIMmiAlgoConfigServices</em> interface<span lang="fr">.
+</span></p>
+<pre>&nbsp;</pre>
+<table class="code" id="table2">
+  <tr>
+    <td>
+		<pre>
+<strong>CATSoftwareConfiguration</strong> *pSoftConfig = NULL;
+<strong>CATIMmiMechanicalFeature</strong> *piCombinedCurveFeat = NULL;
+<strong>CATIMmiAlgoConfigServices</strong> *piAlgoConfigServices = NULL;
+int IsConfigToStore = NULL; 
+...
+rc = QueryInterface(IID_CATIMmiMechanicalFeature,(void **) <span lang="fr">&amp;</span>piCombinedCurveFeat);
+...
+rc = <strong>CATMmiExtendServicesFactory::CreateAlgoConfigServicesAccess</strong>(piAlgoConfigServices);
+
+if (piCombinedCurveFeat <span lang="fr">&amp;&amp;</span> piAlgoConfigServices)
+{
+  rc = piAlgoConfigServices<span lang="fr">-&gt;</span><strong>GetConfiguration</strong>(piCombinedCurveFeat ,pSoftConfig ,IsConfigToStore);
+               
+  if (SUCCEEDED(rc))
+    TopData.<strong>SetSoftwareConfiguration</strong>(pSoftConfig);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that <code>&quot;pSoftConfig&quot;</code> and <code>&quot;IsConfigToStore&quot; </code>are declared
+<a href="#Declaring the Usefull pointer"> at the beginning</a> of the <code>Build</code>
+method because they will be useful at its end and because <code>pSoftConfig</code> can be released in a <code>CATCatch </code>section.<br>
+&nbsp;</p>
+<h5><a name="Creating the Resulting Geometry"></a>Creating the Resulting
+Geometry</h5>
+<p>The combined curve geometry is computed thanks three operations:</p>
+<ul>
+  <li><a href="#The first surface">Extruding the first curve along the first
+    direction</a>, to create a first
+    surface&nbsp;</li>
+  <li><a href="#The second surface">Extruding the second curve along the second
+    direction</a>, to create a second
+    surface&nbsp;</li>
+  <li><a href="#At last, the final result">Intersecting the two surfaces to create a curve</a></li>
+</ul>
+
+<p><a name="The first surface">The first surface</a> is created by a <i>CATTopPrism</i>
+operator. <code>pCurve1Extrude</code> is a <i>CATICGMTopPrism</i> interface pointer
+declared <a href="#Declaring the Usefull pointer"> at the top</a> of the <code>Build</code> method.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if (SUCCEEDED(rc))
+{
+  <b>CATLength</b> StartOffset = 1000;
+  <b>CATLength</b> EndOffset   = -StartOffset;
+
+  pCurve1Extrude = ::<b>CATCGMCreateTopPrism</b> ( piGeomFactory   ,
+					    &amp;TopData ,
+					    <b>spiBodyOfCurve1</b>  ,
+					    &amp;<b>MathDirection1</b> ,
+					    StartOffset     ,
+					    EndOffset);
+ 
+  if (NULL != pCurve1Extrude)
+  {
+    pCurve1Extrude-&gt;<b>Run</b>();
+    pCurve1ExtrudeBody = pCurve1Extrude-&gt;<b>GetResult</b>();
+  }        
+  ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pCurve1ExtrudeBody</code> is an intermediary <i> CATBody</i> corresponding to
+the first surface. It is also declared <a href="#Declaring the Usefull pointer"> at the top</a> of the <code>Build</code>
+method. Once the combined curve body will be computed, <code>pCurve1ExtrudeBody</code>
+should be removed from the geometric container.</p>
+<table class="code">
+  <tr>
+    <td>
+<p><a name="The second surface">The second surface</a> is also created by a <i>CATTopPrism</i>
+operator. <code>pCurve2Extrude</code> is a <i>CATICGMTopPrism</i> interface pointer
+declared <a href="#Declaring the Usefull pointer"> at the top</a> of the <code>Build</code> method.&nbsp;</p>
+      <pre>...</pre>
+      <pre>...
+pCurve2Extrude = ::<b>CATCGMCreateTopPrism</b> ( piGeomFactory   ,
+                                          &amp;TopData,
+			    <b><span lang="fr">              </span>spiBodyOfCurve2</b>  ,
+					  &amp;<b>MathDirection2</b> ,
+					  StartOffset     ,
+					  EndOffset);
+	
+if (NULL != pCurve2Extrude)
+{
+  pCurve2Extrude-&gt;<b>Run</b>();       
+  pCurve2ExtrudeBody = pCurve2Extrude-&gt;<b>GetResult</b> ();
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pCurve2ExtrudeBody</code> is an intermediary <i>CATBody</i> corresponding to
+the first surface. It is also declared <a href="#Declaring the Usefull pointer"> at the top</a>
+of the <code>Build</code>
+method. Once the combined curve body will be computed, <code>pCurve2ExtrudeBody</code>
+should be removed from the geometric container.</p>
+<p><a name="At last, the final result">At last, the final result</a> is created
+by a <i>CATHybOperator</i> operator. <code>pIntersect</code> is a <i>CATICGMHybOperator</i>
+interface pointer declared <a href="#Declaring the Usefull pointer"> at the top</a>
+of the <code>Build</code> method.&nbsp;<code>pResultBody</code>
+is the resulting topology.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBody<span lang="fr"> </span>*<b>pResultBody</b> = NULL;
+
+if (SUCCEEDED(rc) &amp;&amp;  (NULL!=pCurve2ExtrudeBody) &amp;&amp; (NULL!=pCurve1ExtrudeBody) )
+{
+  pIntersect = ::<b>CATCGMCreateTopIntersect</b> ( piGeomFactory      ,
+				      <span lang="fr">      </span>&amp;TopData ,
+					    <b>pCurve1ExtrudeBody</b> ,
+					    <b>pCurve2ExtrudeBody</b> );
+   
+  if (NULL != pIntersect)
+  {
+    pIntersect-&gt;<b>Run</b>();
+    <b>pResultBody</b>= pIntersect-&gt;<b>GetResult</b> ();
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<table class="code">
+  <tr>
+    <td>
+<p>Note that <code> pResultBody</code>&nbsp; is not declared at the top of the
+method. It is not necessary once its lifecycle is managed by the <code>DeletedProcReport</code>
+method in the <a name="CATCatch0"><code>CATCatch</code></a> sections.</p>
+
+    </td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Storing the Procedural Report"></a>Storing the Procedural Report 
+and the Algorithm Configuration</h4>
+<p>It is now high time to store (fill) the procedural report corresponding to 
+the creation of the geometric result of the Combined Curve<span lang="fr">.
+</span>That's the job of the <code>CATI<span lang="fr">Mf</span>ProcReport::StoreProcReport</code> 
+method.</p>
+<p>In addition, it is also time to store the Algorithm Configuration, if it is 
+needed...<br>
+Indeed, when the software configuration is retrieved, an integer (<code>IsConfigToStore</code>) 
+determines if it is needed to store this data on the feature 
+instance. <br>
+This configuration, used to version the feature, has to be stored, at least, on 
+the first Build Time.[<a href="#References">8</a>]&nbsp;</p>
+<p>The storage of this data on the feature instance is done thanks to <code>
+CATMmrAlgoConfigServices::StoreConfiguration </code>method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+if (SUCCEEDED(rc) && spProcReport != NULL_var)
+{
+  if (pResultBody)
+  {
+    int BoolOper = 0; 
+    rc = spProcReport<span lang="fr">-&gt;</span><strong>StoreProcReport</strong>(pResultBody, NoCopy, BoolOper); 
+
+<span lang="fr">    </span>if (IsConfigToStore == 1)
+<span lang="fr">    {</span>
+<span lang="fr">     </span> if (piCombinedCurveFeat <span lang="fr">&amp;&amp;</span> piAlgoConfigServices)
+    <span lang="fr">  </span>rc = piAlgoConfigServices<span lang="fr">-&gt;</span><strong>StoreConfiguration</strong>(piCombinedCurveFeat ,pSoftConfig);
+<span lang="fr">    </span>}
+  }
+  else
+  {
+    // creates an error if the intersection failed
+    CATIMmiErrUpdate *piErrorAccess = NULL;
+    rc = CATMmiExtendServicesFactory::CreateUpdateErrorAccess(piErrorAccess);
+
+    CATError * pErrorNoIntersection = NULL;
+    if (NULL != piErrorAccess)
+    {
+       // Builds a new update error.
+       piErrorAccess->CreateNewError(pErrorNoIntersection);
+       CATUnicodeString Diagnostic("The two extruded curves do not intersect.");
+       piErrorAccess->SetMmiDiagnostic(pErrorNoIntersection,Diagnostic);
+       CATThrow(pErrorNoIntersection);
+     }
+   
+   }
+}      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The last argument of the <code>StoreProcReport</code>  method, <code>BoolOper,</code>
+is the same as the value in the <code>CreateProcReport</code> method.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Cleaning the Useless Data"></a>Cleaning the Useless Data</h4>
+
+<p>In this last part&nbsp;of the <code>CATTry</code> section, you clean the data
+declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer">Declaring
+the Useful Pointers</a>&quot; and not released/deleted during the <code>CATTry</code> 
+section.</p>
+
+<ul>
+  <li>All the objects to <b> remove</b> from the topological container thanks to
+    the Remove method of the <i>CATGeoFactory</i> interface. it is the intermediary <i>CATBody: </i><code>pCurve1ExtrudeBody</code> and <code>pCurve2ExtrudeBody</code>&nbsp;</li>
+  <li>
+    <p>All the objects not yet <b>deleted</b>, it means the topological operators: <code>pCurve1Extrude</code>, <code>pCurve2Extrude</code>
+  and <code>pIntersect</code></li>
+  <li>All the pointers not yet <b> released</b>&nbsp;: ( You should always have these
+    four pointers)</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li><code>piUpdateErrorOnThis</code></li>
+    <li><code>piProcReport</code></li>
+    <li><code>pSoftConfig</code></li>
+    <li><code>piGeomFactory</code></li>
+  </ul>
+</blockquote>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Managing the CATError Error"></a>Managing the Error</h4>
+<p>Some errors may be thrown during these previous operations, the <code>CATTry</code>
+bloc catches them and the <code>CATCatch</code> block treats the error. 
+<p>Each <code>CATCatch</code> section processes the error and <a href="#Cleaning the Pointers">cleans
+the pointers</a> declared <a href="#Declaring the Usefull pointer"> at the top</a> of the <code>Build</code> method.</p>
+
+<p> The error to process can be an update error or not. Therefore we first need to check 
+the type of the CATError, using the 
+<code>IsAnUpdateError</code> method of <em>CATIMmiErrUpdate</em> interface. 
+If the error is already an update error, it is re-thrown without modification, if not an update error is created.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATCatch (CATError , pError)
+  {
+    CATError * pErrorToThrow = NULL;
+
+    // Create access to Update Error
+    CATIMmiErrUpdate *piErrorAccess = NULL;
+    rc = CATMmiExtendServicesFactory::CreateUpdateErrorAccess(piErrorAccess);
+
+    if (NULL != piErrorAccess)
+    {
+      // Check if the error is already an update error or not
+      if (S_OK == piErrorAccess-><strong>IsAnUpdateError</strong>(pError))
+      {
+	// Associate the error with the Combined Curve
+        if(NULL_var != spUpdateErrorOnThis)
+	  spUpdateErrorOnThis->SetMmiUpdateError(pError);
+      }
+      else
+      {
+        // Build a new update error
+        piErrorAccess->CreateNewError(pErrorToThrow);
+	piErrorAccess->SetMmiDiagnostic(pErrorToThrow,pError->GetNLSMessage());
+
+	 // Clean-up
+	 ::Flush(pError);
+
+         // Associates the error with the Combined Curve
+         if (spUpdateErrorOnThis != NULL_var) 
+           spUpdateErrorOnThis->SetMmiUpdateError(pErrorToThrow);
+       }
+    }
+      
+    // <a href="#Cleaning the Pointers">Here the pointers declared at the top of the <code>Build</code> method are cleaned</a>
+     	
+    if (pErrorToThrow)
+      CATThrow(pErrorToThrow);
+    else
+      CATRethrow;   
+   
+  } 
+      
+   
+...</pre>
+    </td>
+  </tr>
+</table>
+
+
+<h5><a name="Cleaning the Pointers">Cleaning the Pointers</a></h5>
+<p>In the two <code>CATCatch</code> sections it is important to :</p>
+
+<ul>
+  <li><b>Remove</b> the result: the newly <i>CATBody</i> associated with the feature
+    and its scope. It is done thanks to the <code>DeleteProcReport</code>
+    method.</li>
+</ul>
+
+<p>and for the data declared in the first section entitled &quot;<a href="#Declaring the Usefull pointer">Declaring
+the Useful Pointers</a>&quot;:</p>
+
+<ul>
+  <li><b>Remove</b>, from the topological container thanks to the Remove method
+    of the <i>CATGeoFactory</i> interface. it is
+    the intermediary <i>CATBody: </i><code>pCurve1ExtrudeBody</code> and <code>pCurve2ExtrudeBody</code>&nbsp;</li>
+  <li>
+    <p><b>Delete</b> the topological operators: <code>pCurve1Extrude</code>, <code>pCurve2Extrude</code>
+  and <code>pIntersect</code>
+  </li>
+  <li><b>Release</b> all the pointers not released in the <code>CATTry</code> section: ( You should always have,
+    at least, these
+    four pointers)</li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li><code>piUpdateErrorOnThis&nbsp; </code></li>
+    <li><code>piProcReport</code></li>
+    <li><code>pSoftConfig</code></li>
+    <li><code>piGeomFactory</code></li>
+  </ul>
+</blockquote>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Step1"></a>Implementing the <i> CATIFmFeatureBehaviorCustomization</i> Interface</h4>
+
+<p>To implement the <i> CATIFmFeatureBehaviorCustomization</i> interface, you just have to create a new extension
+of V5V6ExtCombinedCurve. Its class name is CAAEV5V6ExtMmrCombinedCurveB<span lang="fr">ehavior</span>.</p>
+<p>This part of <i>CAAEV5V6ExtMmrCombinedCurveBehavior.cpp</i> aims at declaring this new
+extension.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAEV5V6ExtMmrCombinedCurveBehavior, 
+                  DataExtension, 
+                  CATIFmFeatureBehaviorCustomization, 
+                  V5V6ExtCombinedCurve);</pre>
+		<pre>
+CATImplementBOA(CATIFmFeatureBehaviorCustomization,CAAEV5V6ExtMmrCombinedCurveBehavior);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Do not forget to update your dictionary to declare that V5V6ExtCombinedCurve has been
+extended to implement <i>CATIFmFeatureBehaviorCustomization</i>.</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This paper demonstrates a complete implementation of the&nbsp; interface&nbsp; <i> CATIFmFeatureBehaviorCustomization </i> for the 
+V5V6ExtCombinedCurve mechanical feature, that can now take part in the update
+of a Part document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">Integrating a New Geometrical Feature in
+the Update Mechanism</a></td>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrGenericNaming.htm">Generic
+      Naming Overview</a></td>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysExceptions.htm">Managing
+      Errors Using Exceptions</a></td>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating V5V6ExtCombinedCurve's Catalog</a></td>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAV5V6ExtMmrCombinedCurveInterface.htm">Creating V5V6ExtCombinedCurve's
+      Interface of Type</a></td>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrErreurUpdateDescription.htm">A Description of Update
+Errors</a></td>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      S</a><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">tructure
+      of a Part Document</a></td>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvMechProp.htm">Enabling V5V6ExtCombinedCurve's 
+    Result Deactivation</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrVersioningMechFeat.htm">Configuration and Versioning in Mechanical Modeler</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveBuild.htm">
+    Building CombinedCurves</a></td>
+  </tr>
+
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+ 
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>
+
+</html>
+

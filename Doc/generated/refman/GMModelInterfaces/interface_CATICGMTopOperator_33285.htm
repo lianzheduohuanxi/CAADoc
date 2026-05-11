@@ -1,0 +1,306 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMModelInterfaces Interface CATICGMTopOperator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMModelInterfaces.htm" href="../GMModelInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMModelInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMTopOperator"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMModelInterfaces Interface CATICGMTopOperator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMTopOperator_33285','CATICGMTopOperator','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMTopOperator</b>
+</p>
+<p>
+<b><i> Abstract class for the topological operators.</i></b><br>
+
+ <br>
+ The topological operators follow the use frame of all operator and satisfy to the smart mechanism: the
+ input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input ones. They are not streamable.
+ To use a topological operator:
+ <ul>
+ <li>Create it with the <tt>CATCGMCreateTopXxx</tt> global methods
+ <li>Tune it with appropriate options, using the <tt>SetXxx</tt> methods.
+ <li>Run it
+ <li>Get the result with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+ <li>Release the operator with the <tt>Release</tt> method after use.
+ </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetFailsafeDiagnosis(CATLISTP(CATCGMDiagnosis)&amp;)"><b>GetFailsafeDiagnosis</b></a>(CATLISTP(CATCGMDiagnosis)&amp;)
+<dd>  If Failsafe mode is active, this method allows to retrieve all failure diagnosis after <tt>Run</tt>.
+ <dt> o 
+    <a href="#GetFailsafeMode()"><b>GetFailsafeMode</b></a>()
+<dd>  To be used to know if Failsafe mode is active.
+ <dt> o 
+    <a href="#GetFreezeMode()"><b>GetFreezeMode</b></a>()
+<dd>  Returns the mode in which the resulting body is created.
+ <dt> o 
+    <a href="#GetInputObjectsForJournal(CATBoolean&amp;,CATLISTP(CATICGMObject)&amp;,CATTopCheckJournalType,CATGeometricType)"><b>GetInputObjectsForJournal</b></a>(CATBoolean&amp;,CATLISTP(CATICGMObject)&amp;,CATTopCheckJournalType,CATGeometricType)
+<dd>  Returns the input objects used by <tt>this</tt> CATICGMTopOperator to create its journal.
+ <dt> o 
+    <a href="#GetJournal()"><b>GetJournal</b></a>()
+<dd>  Returns a pointer to the topological journal associated with <tt>this</tt> CATICGMTopOperator.
+ <dt> o 
+    <a href="#GetResult()"><b>GetResult</b></a>()
+<dd>  Returns a pointer to the resulting body.
+ <dt> o 
+    <a href="#GetResult(CATCGMJournalList*)"><b>GetResult</b></a>(CATCGMJournalList*)
+<dd>  Returns the pointer to the resulting body.
+ <dt> o 
+    <a href="#SetFailsafeMode(CATBoolean)"><b>SetFailsafeMode</b></a>(CATBoolean)
+<dd>  Activates Failsafe mode : in the case of failure, instead of throwing an error,
+ a partial or non-optimal result is returned.
+ <dt> o 
+    <a href="#SetFreezeMode(CATBodyFreezeMode)"><b>SetFreezeMode</b></a>(CATBodyFreezeMode)
+<dd>  Defines the state of the resulting body.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetFailsafeDiagnosis"></a><a name="GetFailsafeDiagnosis(CATLISTP(CATCGMDiagnosis)&amp;)"></a> <dt> o <b>GetFailsafeDiagnosis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetFailsafeDiagnosis</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATCGMDiagnosis)','CATLISTP(CATCGMDiagnosis)&amp;')</script> <td><tt>oFailsafeDiagnosis</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ If Failsafe mode is active, this method allows to retrieve all failure diagnosis after <tt>Run</tt>.
+ Failsafe mode should be activated using <tt>SetFailsafeMode</tt> method before <tt>Run</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oFailsafeDiagnosis</tt>
+   <dd> The list of failure diagnosis stored during the operation.
+ <br> All diagnosis should be destroyed by the caller using <tt>Release</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFailsafeMode"></a><a name="GetFailsafeMode()"></a> <dt> o <b>GetFailsafeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>GetFailsafeMode</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ To be used to know if Failsafe mode is active.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:
+ <dl><dt><tt>FALSE</tt><dd> Failsafe mode is not active.
+     <dt><tt>TRUE</tt><dd> Failsafe mode is active.</dl>
+</dl>
+</dl>
+<a name="GetFreezeMode"></a><a name="GetFreezeMode()"></a> <dt> o <b>GetFreezeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBodyFreezeMode','CATBodyFreezeMode')</script>  <b>GetFreezeMode</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the mode in which the resulting body is created.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The smart mode.
+</dl>
+</dl>
+<a name="GetInputObjectsForJournal"></a><a name="GetInputObjectsForJournal(CATBoolean&amp;,CATLISTP(CATICGMObject)&amp;,CATTopCheckJournalType,CATGeometricType)"></a> <dt> o <b>GetInputObjectsForJournal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInputObjectsForJournal</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oSucceeded</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATICGMObject)','CATLISTP(CATICGMObject)&amp;')</script> <td><tt>oObjects</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopCheckJournalType','CATTopCheckJournalType')</script> <td><tt>iCopy_Or_Not</tt><td><tt>= CATTopCheckCopy</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeometricType','CATGeometricType')</script> <td><tt>iTypeOfObjects</tt><td><tt>= CATBodyType</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the input objects used by <tt>this</tt> CATICGMTopOperator to create its journal.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSucceeded</tt>
+   <dd> This returned value tells whether <tt>this</tt> CATICGMTopOperator
+ actually defined its journal inputs or not. If <tt>FALSE</tt>,
+ the content of <tt>oObjects</tt> should not be relied on.
+ </dd>
+    <dt><tt> oObjects</tt>
+   <dd> The list of requested inputs.
+ </dd>
+    <dt><tt> iCopy_Or_Not</tt>
+   <dd> The copy status of requested input objects.
+ <br><b>Legal values</b>:
+ <dl><dt><tt> CATTopCheckCopy </tt></dt><dd>
+     <dt><tt> CATTopCheckNoCopy </tt></dt><dd>
+     <dt><tt> CATTopCheckNeutral </tt></dt><dd></dl>   
+ </dd>
+    <dt><tt> iTypeOfObjects</tt>
+   <dd> The geometric type of the requested input objects.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetJournal"></a><a name="GetJournal()"></a> <dt> o <b>GetJournal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList *')</script>  <b>GetJournal</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the topological journal associated with <tt>this</tt> CATICGMTopOperator.
+ <br>Only available if a journal was given at the operator creation.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the journal of the operation.
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult()"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetResult</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the resulting body.
+ The body is frozen and completed if <tt>CATBodyFreezeOn</tt> is active (default mode).
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the resulting body. Use 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> if you do not want to keep it.
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult(CATCGMJournalList*)"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetResult</b>(<td><script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script> <td><tt>iJournal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer to the resulting body.
+ The pointer to the journal of the operation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iJournal</tt>
+   <dd> The pointer to the journal to fill.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the resulting body. If you do not want to keep it, 
+ use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+</dl>
+</dl>
+<a name="SetFailsafeMode"></a><a name="SetFailsafeMode(CATBoolean)"></a> <dt> o <b>SetFailsafeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFailsafeMode</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iFailsafeMode</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Activates Failsafe mode : in the case of failure, instead of throwing an error,
+ a partial or non-optimal result is returned.
+ <br> Please notice that not all operators support this mode. By default an operator doesn't support Failsafe,
+ except where it is explicitly declared.
+ <br> This option is not activated by default.
+ <br> The error diagnosis are stored by the operator, and can be retrieved via <tt>GetFailsafeDiagnosis</tt> method.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFailsafeMode</tt>
+   <dd> <br><b>Legal values</b>:
+ <dl><dt><tt>FALSE</tt><dd> Failsafe mode not active: if a failure occurs, an error is thrown.
+     <dt><tt>TRUE</tt><dd> Failsafe mode active: if a failure occurs, a partial result is returned.</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFreezeMode"></a><a name="SetFreezeMode(CATBodyFreezeMode)"></a> <dt> o <b>SetFreezeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFreezeMode</b>(<td><script type="text/javascript"> activateLink('CATBodyFreezeMode','CATBodyFreezeMode')</script> <td><tt>iOnOrOff</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the state of the resulting body.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOnOrOff</tt>
+   <dd> The state of the resulting body.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMTopOperator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMModelInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

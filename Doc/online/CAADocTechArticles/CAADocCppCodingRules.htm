@@ -1,0 +1,1646 @@
+<html>
+
+<head>
+<title>CAA V5 C++ Coding Rules</title>
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta content="Microsoft FrontPage 6.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 C++ Coding Rules</h3>
+      <em>Rules, hints and tips to write C++ code</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you a set of rules and advice to better write your
+      C++ code, to correctly deal with object lifecycle, and to appropriately
+      use the CAA V5 Object Modeler.
+      <ul>
+        <li><a href="#CplusplusRules"><b>C++ Rules</b></a>
+        <li><a href="#LifecycleRules"><b>Lifecycle Rules</b></a>
+        <li><a href="#ObjectModelerRules"><b>Object Modeler Rules</b></li>
+        </ul>
+      </a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="CplusplusRules"></a>C++ Rules</h3>
+<p>This set of rules deal with the C++ entities you will use.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C1"></a>Create a Header File for each C++ or C Entity</h4>
+<p>Create a separate header file for each class, interface, structure, global
+enumumeration, global function, and macro, and put in this file only the
+declaration of this entity. This file must have the same name than the entity.
+For example, the CATBaseUnknown class header file is CATBaseUnknown.h.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C1">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C2"></a>Use Preprocessor Directives to Enclose Your Header File
+Contents</h4>
+<p>This is the appropriate means to protect code from a multiple inclusion of
+your header file. Do this as follows, for example for the CATBaseUnknown class:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><strong>#ifndef CATBaseUnknown_h
+#define CATBaseUnknown_h</strong>
+
+... // Put here the #include statements,
+... // forward class declarations, and the class stuff
+
+<strong>#endif</strong></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C2">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C3"></a>Use <code>#include</code> Judiciously</h4>
+<p>When you create a header file, always ask you the following question for each
+file you include: &quot;Do I really need to include this file, or is a forward
+declaration enough?&quot; Here is the answer to this question:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img border="0" src="images/Include1.jpg" width="351" height="109"></td>
+      <td>Use <code>#include</code> to include the header file of the base class</td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/Include2.jpg" width="217" height="160"></td>
+      <td>Use <code>#include</code> to include the header file of a class when
+        an instance of this class is used as a data member</td>
+    </tr>
+    <tr>
+      <td><img border="0" src="images/Include3.jpg" width="405" height="255"></td>
+      <td>Use the class forward declaration when a reference of, a value, or a
+        pointer to a class is used as a method returned value or parameter, or
+        if a pointer to a class is used as a data member</td>
+    </tr>
+  </tbody>
+</table>
+<p>For any included file, check that you actually use the class, the enum, the
+macro, the type defined by a <code>typedef</code>, or a parameter among the set
+defined by <code>#define</code> contained in the file, or otherwise remove it.</p>
+<p>Do not include C++ header files, such as stream.h or iostream.h, if they are
+useless, since they can include static data that is in any case allocated
+whatever the way you use these files.</p>
+<p>Never copy and paste sets of <code>#include</code> statements from another
+file. This is the worst you can do, since it's then more difficult to sort
+useful and useless files. If you include useless header files, your code grows
+and the time required to manage the module dependency impacts and to build it
+increases.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C3">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C4"></a>Do Not Use <code>namespace</code> Statements</h4>
+<p>Comply to the naming rules [<a href="#Ref1">1</a>] instead.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C4">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C5"></a>Do Not Use Threads</h4>
+<p>Do not use threads.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C5">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C24"></a>Do Not Use Templates</h4>
+<p>Do not use Templates.</p>
+<p>They are not portable to different operating systems, especially in the way
+they are supported by compilers and link-editors.
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C24">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C6"></a>Do Not Use Multiple Inheritance</h4>
+<p>The main problem raised by multiple inheritance is the ambiguity on the
+multiple inherited members, whether they come from two different base classes
+that feature members with the same name, or from the same base class that is
+multi-inherited. Use instead the CAA V5 Object Modeler that offers other means,
+such as interfaces and components, to deal with inheritance while keeping C++
+single inheritance.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C6">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C7"></a>Do Not Use Virtual Inheritance</h4>
+<table>
+  <tbody>
+    <tr>
+      <td><img border="0" src="images/Diamond.jpg" width="175" height="171"></td>
+      <td>Virtual inheritance is used in conjunction with multiple inheritance
+        to solve the diamond ambiguity. This happens when a class inherits from
+        two classes that themselves inherit from the same class. Since multiple
+        inheritance shouldn't be used, virtual inheritance shouldn't be used
+        too.</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C7">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C8"></a>Use Only Public Inheritance</h4>
+<p>Inheritance can be set to public, protected, or private. The following table
+summarizes the status of the members of the base class in the derived class,
+with respect to the inheritance mode.</p>
+<table cellpadding="1" cellspacing="5">
+  <tbody>
+    <tr>
+      <th></th>
+      <th colspan="3">Inheritance mode</th>
+    </tr>
+    <tr>
+      <th>Base class<br>
+        member status</th>
+      <th>public</th>
+      <th>protected</th>
+      <th>private</th>
+    </tr>
+    <tr>
+      <td>public</td>
+      <td>public</td>
+      <td>protected</td>
+      <td>private</td>
+    </tr>
+    <tr>
+      <td>protected</td>
+      <td>protected</td>
+      <td>protected</td>
+      <td>private</td>
+    </tr>
+    <tr>
+      <td>private</td>
+      <td>private</td>
+      <td>private</td>
+      <td>private</td>
+    </tr>
+  </tbody>
+</table>
+<p>To make sure that base class public members remain public, and that the
+protected ones remain protected in the derived class, always use public
+inheritance.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C8">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C9"></a>Do Not Implement <code>friend</code> Classes</h4>
+<p>You may do so if the two friend classes are conceptually one object, that is
+share the same life cycle. This occurs when a 'big' object has to be split in
+two parts. Facing this situation, consider using aggregation as an alternative
+technique.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C9">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C10"></a>Do not Expose Data Members as Public</h4>
+<p>If you do so, you give a direct access to your data members to any user of
+your class instances. This breaks encapsulation. Set your data members as
+private and expose methods to access them.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C10">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C11"></a>Avoid Defining Static Data Members</h4>
+<p>Static is synonymous of memory fragmentation and pagination. In addition, a
+static member function is required to handle a static data member. Before
+defining a static data member, make sure this data is really common to all
+instances of your class, such as an instance counter, and not only to some of
+them.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C11">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C12"></a>For each Class, Provide by Default a Copy Constructor, a
+Default Constructor, a Destructor, and an Assignment Operator</h4>
+<p>This will help your clients assume that these &quot;basic&quot; constructors
+always exist.</p>
+<p><strong>Warning</strong>: Don't do so, however, if this breaks the logic of
+your objects (e.g. some object absolutely requires some other object referenced
+in its constructor: don't provide a default constructor for them, or better
+provide a default constructor and an Init method to pass the initialization
+parameters).</p>
+<p><strong>For extensions</strong>: This rule is especially true for <strong>extension
+classes</strong>: remember, those classes are not autonomous, since they are
+extensions of some other classes. As a consequence, their creation is not left
+to their clients, because these clients never manipulate them directly.
+Therefore, providing a copy constructor and an assignment operator for these
+classes is useless and increases code size. But if you don't provide them, the
+C++ compiler will do it for you. To prevent this, simply declare the default
+constructor and the assignment operator as non virtual in the extension class
+private part, and do not provide their implementation. Thus, the C++ compiler
+will not attempt to provide their default implementation and will not attempt to
+allocate room for them in the virtual function table. The only thing to remember
+is to never call them in the extension class code.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C12">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C13"></a>Always Declare the Destructor as Virtual for Classes to
+Derive</h4>
+<p>This is important when an instance of a derived class is identified using a
+pointer to its base class. Assume the following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class A
+{
+  public :
+    A();
+    ~A();
+    ...
+};
+class B : public A
+{
+  public :
+    B();
+    ~B();
+    ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Suppose that the client handles a pointer to a B instance using the A type:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+B * pB = new B(); // Calls A(), and then calls B()
+A * pA = pB;
+...
+delete pA;        // Calls ~A() only
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When this occurs, the destructor of A is called, since pA is a pointer to A,
+but the destructor of B is not called, and since pA is a B object, only its A
+part is deleted, thus causing memory leaks. This is because the destructor of A
+is not virtual. If this destructor were virtual, the destructor of B would be
+called first, and then the destructor of A as shown below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+B * pB = new B(); // Calls A(), and then calls B()
+A * pA = pB;
+...
+delete pA;        // Calls ~B(), and then calls ~A()
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>And there is no memory leak!</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C13">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C14"></a>Do Not Declare Virtual Methods within Class Private Parts</h4>
+<p>Since a virtual method is intended to be overridden in a derived class, it
+must be accessible from this derived class. Inserting a virtual method in the
+private part of a class hides it from its derived classes, and from the client
+applications that use the class as well, and thus prevents from overriding it.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C14">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C15"></a>Declare the Methods Intended to Be Redefined as Virtual</h4>
+<p>These methods are of course public or protected members of your class. For
+example,</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CATClass
+{
+  public
+  ...
+  <strong>virtual</strong> HRESULT ComputeUsingAGoodAlgorithm();  // Can be redefined in derived classes
+  HRESULT ComputeUsingMyAlgorithm();  // Cannot be redefined in derived classes
+  ...
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The methods declared as virtual can be redefined when a client application
+derives the class. This enables objects to be polymorphically processed and
+methods to be adapted to specialized objects. Because you may not, in the
+general case, predict who will ever derive your classes, and why, carefully set
+as virtual all the methods that make your class a base class and that must be
+redefine in the derived class. By doing so, you respect the future, by
+preserving the ability of possible future derivations to adapt your methods to
+the new objects.</p>
+<p><b>Advice</b>: Apply this rule unless you design a class not intended for
+derivation, because it would make your class bigger in prevision of an event
+that will never occur.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C15">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C16"></a>Avoid Implementing <code>inline</code> Methods</h4>
+<p><code>inline</code> methods are faster than classical methods because they do
+not branch to another part of the code, and consequently do not deal with all
+the current data saving and restoring operations. The <code>inline</code> method
+executable code is added at each call location by the compiler. (With a macro,
+the preprocessor adds source code.) Even if it is faster, the general rule is to
+avoid <code>inline</code> methods, because any modification to such a method
+forces the client application to rebuild.</p>
+<p><b>Advice</b>: You can use <code>inline</code> methods only if you need
+performance with a very small method. If you code large <code>inline</code>
+methods, the <code>inline</code> advantage disappears. Performance analysis
+should be made prior to deciding which method should be <code>inline</code>, and
+which should not.</p>
+<p><strong>You must never</strong>:
+<ul>
+  <li>Create virtual <code>inline</code> methods
+    <p>The compilers have usually trouble to implement such methods They often
+    add an implementation of these methods in all the executable code files
+    whose source files have included their header files, even if the class or
+    the method is not used. This increases the size of all the modules that are
+    client of this class.</p>
+  <li>Create <code>inline</code> default constructors
+    <p>So never do this:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>class MyClass : public MyParentClass
+{
+  inline MyClass(int i) : MyParentClass(i,&quot;WhyNot&quot;),_MyPointer(NULL) {}
+  ...
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Constructor implementations must be put in the class source (.cpp) file.</p>
+  <li>Call other methods in <code>inline</code> methods
+    <p>First, the <code>inline</code> advantage disappears, since calling a
+    method branches to another location in the executable code. Moreover, some
+    compilers implement such method as a static one in all executable code files
+    whose source files include the header file containing the <code>inline</code>
+    method. So never do this:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>class MyClass
+{
+  public :
+    inline int foo(int i) { return i*GetValue(); }
+    ...
+}; </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C16">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C17"></a>Do not Redefine Basic Operators</h4>
+<p>Except if it is OBVIOUS for everybody (complexes, points) .</p>
+<p><b>Advice</b>: before providing one, verify that your implementation respects
+their &quot;natural&quot; properties. For example, one would expect the addition
+&quot;+&quot; operator to be commutative. Don't provide one which is not, such
+as for character strings.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C17">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C18"></a>Do not Include non Declarative Code in Header Files</h4>
+<p>It is disastrous from a size perspective, and couples your code with your
+clients' code. They'll have to rebuild when you modify this code.</p>
+<p><b>Caution</b>: Be aware that:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class C c;</pre>
+    </td>
+  </tr>
+</table>
+<p>in a header file outside a class definition IS NON declarative code, but
+executable code. It calls the class constructor and actually creates an instance
+in all the classes that include this file.</p>
+<p>For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef MyClass_h
+#define MyClass_h
+
+class MyClass
+{
+   ...
+};
+MyClass AnInstance;
+
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>This code creates an instance of MyClass for each source that includes this
+header file, along with an initialization function called when the shared
+library or DLL is loaded into memory, and a destruction function called when
+exiting, and that often core dumps. Prefer the following declaration:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>extern ExportedByCATModuleName const MyClass AnInstance;</pre>
+    </td>
+  </tr>
+</table>
+<p>and insert in MyClass.cpp:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>const MyClass AnInstance;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C18">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C19"></a>Do Not Use Implicit Casts</h4>
+<p>When you pass a class instance as a method parameter or in an expression,
+check that its type matches the expected one, or use an explicit cast to get
+this type. Otherwise, the compiler attempts to implicitly cast the actual type
+into the required one. Some compilers issue errors when two different ways of
+casting exist, thus leading to an ambiguity. Some others take the casting
+decision for you, and don't issue an error. This is worse, since the wrong
+result could be detected at run time only. By explicitly casting your instance
+into the appropriate type, you keep control on what happens and you have
+knowledge of the actual conversion performed, without surprise.</p>
+<p>For example, assume that the following class encapsulates the integer scalar
+type:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class MyInt
+{
+  public :
+    MyInt(int iInt);              // constructor
+    MyInt operator + (MyInt);     // addition operator
+    operator int();               // conversion function to int
+  private :
+    int a;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The expression <code>(x+1)</code> is ambiguous since it can be interpreted as
+either</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>(x.operator int() + 1)</pre>
+    </td>
+  </tr>
+</table>
+<p>or</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>(x.operator + (MyInt(1)))</pre>
+    </td>
+  </tr>
+</table>
+<p>The first way of interpretation casts x into an int before using the int
+addition operator to add 1, and supply the result as an int. The second way
+constructs a MyInt instance from the value 1, uses the MyInt addition operator
+to add the two MyInt instances, and&nbsp; leads to a MyInt instance. The same
+ambiguity could happen if a constructor and a conversion function could both be
+used to cast an object into another.</p>
+<p>Here is the result of the compilation of such expressions:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyInt y1 = x + 1;          // error AIX, HP-UX, Windows / OK Solaris
+int   y2 = x + 1;          // error AIX, HP-UX, Windows / OK Solaris
+int   y3 = int(x) + 1;     // OK
+MyInt y4 = x + (MyInt(1)); // OK</pre>
+    </td>
+  </tr>
+</table>
+<p>A way to make the compiler issue an error when such situations occur is to
+use the <code>explicit</code> prefix (unknown with AIX and Solaris) for the
+constructor:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class MyInt
+{
+  public :
+    <strong>explicit</strong> MyInt(int iInt);     // constructor
+    MyInt operator + (MyInt);     // addition operator
+    operator int();               // conversion function to int
+  private :
+    int a;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The expression <code>(x+1)</code>may issue a compiler error.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyInt y1 = x + 1;          // error HP-UX, Windows
+int   y2 = x + 1;          // OK HP-UX, Windows 
+int   y3 = int(x) + 1;     // OK
+MyInt y4 = x + (MyInt(1)); // error HP_UX / OK Windows</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C19">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C20"></a>Use Legal Types Only</h4>
+<p>Legal types are types you can assign to your variables. They are classified
+in <a href="#Table1">scalar types</a> and <a href="#Table2">non-scalar types</a>.</p>
+<table width="100%">
+  <caption><a name="Table1"></a><em>Table 1: Scalar Types</em></caption>
+  <tbody>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid" valign="top">CATBoolean</td>
+      <td style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid" valign="top">Integer
+        which can take the value TRUE (1) or FALSE (0). Since this type is not a
+        native C++ type, its definition must be included using the CATBoolean.h
+        header of the System framework.</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">char</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Signed integer in the
+        -2<sup>7</sup>&#8230; 2<sup>7</sup>-1 range</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">wchar_t</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">UNICODE character</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">short</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Signed integer in the
+        -2<sup>15</sup> &#8230; 2<sup>15</sup>-1 range</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">int</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Signed integer in the
+        -2<sup>31</sup> &#8230; 2<sup>31</sup>-1 range. (Note: 64 bit, LLP64
+        (Windows) and LP64 (Solaris, AIX, HP-UX) platforms agree on the
+        following definition for int: &quot;Signed integer in the -2<sup>31</sup>
+        &#8230; 2<sup>31</sup> -1 range&quot;. However, 64 bits ILP64 platforms
+        define this type as &quot;Signed integer in the -2<sup>63</sup> &#8230; 2<sup>63</sup>
+        -1 range&quot;. Since no ILP64 platform exists yet, we will ignore the
+        compatibility issue between ILP64 and other 64 bit platforms and
+        recommend the use of int.)</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">float</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Floating point 32 bit
+        ANSI/IEEE 754-1985 number</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">double</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Floating point 64 bit
+        ANSI/IEEE 754-1985 number</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">unsigned char</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Unsigned integer in the
+        0&#8230;2<sup>8</sup> -1 range</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">unsigned short</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Unsigned integer in the
+        0&#8230;2<sup>16</sup> -1 range</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">unsigned int</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Unsigned integer in the
+        0&#8230;2<sup>32</sup> -1 range</td>
+    </tr>
+  </tbody>
+</table>
+<p>See also <a href="#Table3">Table 3</a> that summarizes how to use the
+available types when they are used as parameters.</p>
+<table width="100%">
+  <caption><a name="Table2"></a><em>Table 2: Non-scalar Types</em></caption>
+  <tbody>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid" valign="top">char*</td>
+      <td style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid" valign="top">non-NLS
+        character strings are defined using this header.</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">wchar_t*</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Unicode character
+        string</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">CATString</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Character string
+        encoded using the ISO 10646 code page, also known as the 7-bit ASCII</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">CATUnicodeString</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Unicode character
+        strings. CATUnicodeString must be used whenever the character string is
+        shown to the end user as part of the user interface, and thus must be
+        translated in the end user language. It must also be used for character
+        strings that are not intended to be translated, but that are directly
+        expressed in the end user language, such as file names. Use CATString or
+        char for any other case.</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">enum <NAME>{<VALUE1>}</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Enumerated integer
+        value.</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">&lt;scalar
+        type&gt;[size]</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Array of scalar
+        elements. Can be of fixed or variable size. Fixed size arrays are
+        defined using the * notation and not the [] notation when they are used
+        as out parameters (<code>float array[]*</code> would not be correct,
+        whereas <code>float array**</code> is).
+        <p>An array of three floats will be defined as:<br>
+        <code>float myFixedArray[3]</code></p>
+        <p>A variable size array of floats will be defined as:<br>
+        <code>float* myVariableArray</code></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">struct</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Structure made of one
+        or more typed fields. The type of each field is restricted to the list
+        of authorized types defined in <a href="#Table1">Table 1</a>.</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">interface</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Object Modeler
+        interface. When the exact type of an interface is not known, the type
+        CATBaseUnknown should be used (instead of void*).</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">CATListOf &lt;X&gt;</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Collection class to
+        manage different kinds of lists</td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">&lt;interface&gt;_var</td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top">Smart pointers,&nbsp;
+        also known as handlers, can be used only when a CATIA-supplied method
+        requests one as a parameter, or returns one. Do not create new ones.</td>
+    </tr>
+  </tbody>
+</table>
+<p>See also <a href="#Table3">Table 3</a> that summarizes how to use the
+available types when they are used as parameters.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C20">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C21"></a>Constrain Variables, Arguments and Methods by Using const</h4>
+<p>CAA methods must use the <code>const</code> C++ modifier to indicate the
+parameters which are not modifiable.</p>
+<p>const can be used as follows for scalar types:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>const int i;              // error. i must be initialized
+const int j = 5;          // ok
+const int * k;            // int value can't be changed
+int l = 5;
+int * const m = &amp;l;       // m is a constant pointer, but pointed value can change
+const int * const n = &amp;l; // n is a constant pointer pointed to a constant value</pre>
+    </td>
+  </tr>
+</table>
+<p>This can be used with method parameters, especially for input parameters, or
+with returned values, and for data members that must be initialized in the
+constructors. Member functions can be declared as const to operate on constant
+objects.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C21">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C22"></a>Appropriately Use the Scope Resolution Operator (<code>::</code>)</h4>
+<p>Assume the following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class A
+{
+  ...
+  virtual void m();
+};
+class B : public A
+{
+  ...
+  void m();
+};
+class C : public B
+{
+  ...
+  void f();
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>Do not call <code>A::m()</code> from <code>C::f()</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void C::f()
+{
+  ...
+  A::m();     // Forbidden
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The version of the m method you execute might not fit your needs, since,
+being a C instance, your class instance is also a B instance. You can either use
+<code>B::m();</code> or <code>m();</code>.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C22">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="C23"></a>Do not Create Exceptions</h4>
+<p>Exceptions may seem an easy and powerful way of handling exceptional
+situations in a given method, and possibly to deal with classical errors, by
+transferring the control to another part of the application that is designed to
+do this. It is usually the worst thing to do in large applications, since if any
+method can throw exceptions, any method need them to catch them. The difficulty
+is what to do with exceptions the method I'm currently writing is not aware of,
+and what could the methods that are calling it can do with the exceptions it
+throws. Usually, the answer is nothing, and the exception goes up in the calling
+stack, up to the upper level that simply aborts. Use CAA V5 errors instead.</p>
+<p>Nevertheless, some CATIA frameworks throws exceptions, as you should use the <code>CATTry</code>,
+<code>CATCatch</code>, and <code>CATCatchOthers</code> macros to enclose your
+code that calls methods from these frameworks, and take appropriate actions when
+such an exception occurs.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#C23">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="LifecycleRules"></a>Lifecycle Rules</h3>
+<p>This set of rules deal with the lifecycle of the entities you will use.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC1"></a>Manage the Lifecycle of Interface Pointers</h4>
+<p>As a general rule, any interface pointer must be:
+<ul>
+  <li><code>AddRef</code>'d as soon as it is copied
+  <li><code>Release</code>d as soon as it is not needed any longer.</li>
+</ul>
+<p>A call to <code>Release</code> must be associated with each call to <code>AddRef</code>.</p>
+<p>This rule applies as follows for method parameters:</p>
+<ol>
+  <li>For <b>in</b> parameters: the caller must have <code>AddRef</code>'d an
+    interface pointer passed as a method in parameter. As for any in parameter,
+    the callee can only use the pointer, but cannot modify it, and must call
+    neither <code>AddRef</code> nor <code>Release</code> on this interface
+    pointer. The caller calls <code>Release</code> when the method have returned
+    and as soon as the interface pointer is not used any longer.<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATDocument * pDoc = NULL;
+HRESULT rc = CATDocumentServices::New(&quot;Part&quot;, pDoc);
+...
+CATInit * piInitOnDoc = NULL;
+rc = pDoc-&gt;QueryInterface(IID_CATInit,
+                          (void**) &amp;piInitOnDoc); // AddRef called by QueryInterface
+...
+CATInit * <b>pInitOnDoc2</b> = piInitOnDoc;    <b>// pInitOnDoc</b> is copied into <b>pInitOnDoc</b>2
+<b>pInitOnDoc2-&gt;AddRef();                  </b>// and immediately AddRef'd
+
+HRESULT = pDoc-&gt;CalledMethod(<b>pInitOnDoc2</b>); // <b>Use pInitOnDoc2, but don't modify it</b>
+                                           // No call to AddRef/Release
+
+...                            // Use <b>pInitOnDoc2</b>
+<b>pInitOnDoc2-&gt;Release();</b>        // <b>pInitOnDoc2</b> is not needed any longer
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The caller passes a valued and <code>AddRef</code>'d <i>CATInit</i>
+    pointer to the callee that can only use the pointer, that is call <i>CATInit</i>
+    methods. The called method returns, the caller can go on using the pointer,
+    and <code>Release</code>s it as soon as it is not needed any longer.</p>
+  <li>For <b>out</b> parameters: the caller must <b>not</b> <code>AddRef</code>
+    an interface pointer passed as a method out parameter. This interface
+    pointer must be passed as <code>NULL</code>. The possible value of the&nbsp;
+    interface pointer is of no use to the callee. The callee must call <code>AddRef</code>
+    as soon as the interface pointer is valued, and the caller must call <code>Release</code>.
+    The caller uses the interface pointer when the method has returned and calls
+    <code>Release</code> and as soon as the interface pointer is not used any
+    longer. This is the case, for example, when calling <code>QueryInterface</code>:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATDocument * pDoc = NULL;
+HRESULT rc = CATDocumentServices::New(&quot;Part&quot;, pDoc);
+...
+CATInit * <b>pInitOnDoc</b> = NULL;
+HRESULT rc = pDoc-&gt;QueryInterface(IID_CATInit, (void**)&amp;<b>pInitOnDoc</b>)
+       // Expanded QueryInterface
+       HRESULT QueryInterface(const IID&amp; iid, void** <b>ppv</b>)
+       {
+         ...
+         *<b>ppv</b> = ...;     // <b>pInitOnDoc</b> is copied
+         *<b>ppv-&gt;AddRef(); </b>// and immediately AddRef'd<b>
+</b>         ...
+       }
+...                    // Use <b>pInitOnDoc</b>
+<b>pInitOnDoc-&gt;Release();</b> // <b>pInitOnDoc</b> is not needed any longer
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The caller passes a <code>NULL</code> <i>CATInit</i> pointer to <code>QueryInterface</code>,
+    that values and <code>AddRef</code>s this pointer. The caller uses it and <code>Release</code>s
+    it as soon as it is not needed any longer.</p>
+  <li>For <b>inout</b> parameters: the caller must call <code>AddRef</code>
+    before passing the interface pointer. The callee can modify the interface
+    pointer after having calling <code>Release</code>, and must <code>AddRef</code>
+    the new interface pointer value. Finally, the caller must call <code>Release</code>
+    after the method returned when the interface pointer is not needed any
+    longer.<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATDocument * pDoc = NULL;
+HRESULT rc = CATDocumentServices::New(&quot;Part&quot;, pDoc);
+...
+CATInit * piInitOnDoc = NULL;
+rc = pDoc-&gt;QueryInterface(IID_CATInit,
+                          (void**) &amp;piInitOnDoc); // AddRef called by QueryInterface
+...
+CATInit * <b>pInitOnDoc2</b> = piInitOnDoc;    <b>// pInitOnDoc</b> is copied into <b>pInitOnDoc</b>2
+<b>pInitOnDoc2-&gt;AddRef();                  </b>// and immediately AddRef'd
+
+HRESULT rc = pDoc-&gt;CalledMethod(&amp;<b>pInitOnDoc2</b>)
+       // Expanded CalledMethod
+       HRESULT CalledMethod(CATInit ** <b>ppv</b>)
+       {
+         ...
+         *ppv-&gt;Init()     // Use <b>pInitOnDoc2</b>
+         ...
+         *ppv-&gt;<b>Release()</b>; // Release <b>pInitOnDoc2</b>
+         *ppv = ...;      // <b>pInitOnDoc2</b> is revalued
+         *ppv-&gt;<b>AddRef()</b>;  // and immediately AddRef'd
+         ...
+         *ppv-&gt;Init()     // Use again <b>pInitOnDoc2</b>
+         ...
+       }
+...                     // Use <b>pInitOnDoc2</b>
+<b>pInitOnDoc2-&gt;Release();</b> // <b>pInitOnDoc2</b> is not needed any longer
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The caller passes a copied and <code>AddRef</code>'d <i>CATInit</i>
+    pointer to the callee, that can use it as is before modifying its value. To
+    modify the interface pointer, the callee first calls <code>Release</code>,
+    copies another value in the pointer, and calls <code>AddRef</code>. The
+    interface pointer can then be used by the callee, and by the caller when the
+    method has returned. The caller <code>Release</code>s it as soon as it is
+    not needed any longer.</p>
+  </li>
+</ol>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC1">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC2"></a>Manage the Lifecycle of Objects That Are not Interface
+Pointers</h4>
+<p>As a general rule, associate a <code>delete</code> with each <code>new</code>,
+or a <code>free</code> with each <code>malloc</code>.
+<ul>
+  <li>in parameters: the parameter must be allocated and freed by the caller
+  <li>out parameters: the parameter must be allocated by the callee, and freed
+    by the caller
+  <li>inout parameters: the parameter must be allocated by the caller. The
+    callee may use the parameter before modifying it. If the parameter is a
+    pointer, the callee can free and reallocate it before returning. The
+    parameter is finally deallocated by the caller.</li>
+</ul>
+<p>For out parameters:</p>
+<ul>
+  <li>It is the responsibility of the caller to set the pointer to NULL before
+    passing it to the callee
+  <li>It is the responsibility of the callee, if it fails, to cleanup memory and
+    reset the pointer to NULL before passing it back to the caller</li>
+</ul>
+<p>For inout parameters, if the callee fails:</p>
+<ul>
+  <li>It is the responsibility of the callee to either restore the pointer
+    initial value or cleanup memory and reset the pointer to NULL before passing
+    it back to the caller
+  <li>It is the responsibility of the caller to check that the pointer passed
+    back can be used.</li>
+</ul>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC2">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC3"></a>Always Pass Parameters to Methods Using the Following
+Table</h4>
+<table width="100%">
+  <caption><a name="Table3"></a><em>Table 3: Available Types for Function
+    Parameters</em></caption>
+  <tbody>
+    <tr>
+      <th style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid">Type</th>
+      <th style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid">in</th>
+      <th style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid">out</th>
+      <th style="BORDER-BOTTOM: thin solid; BORDER-TOP: thin solid">inout</th>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATBoolean</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATBoolean
+        iMyBoolean</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATBoolean *
+        oMyBoolean</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATBoolean *
+        ioMyBoolean</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const char
+        iMyChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char * oMyChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char * ioMyChar</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATString
+        iMyString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString *
+        oMyString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString *
+        ioMyString</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const wchar_t
+        iMyWChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t *
+        oMyWChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t *
+        ioMyWChar</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const
+        CATUnicodeString &amp; iMyUString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString
+        &amp; oMyUString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString
+        &amp; ioMyUString</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>short</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const short
+        iMyShort</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>short * oMyShort</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>short * ioMyShort</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>int</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const int iMyInt</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>int * oMyInt</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>int * ioMyInt</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATLong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATLong32
+        iMyLong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATLong32 *
+        oMyLong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATLong32 *
+        ioMyLong32</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>float</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const float
+        iMyFloat</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>float * oMyFloat</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>float * ioMyFloat</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>double</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const double
+        iMyDouble</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>double *
+        oMyDouble</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>double *
+        ioMyDouble</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned char</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const unsigned
+        char iMyUChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned char *
+        oMyUChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned char *
+        ioMyUChar</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned short</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const unsigned
+        short iMyUShort</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned short *
+        oMyUShort</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned short *
+        ioMyUShort</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned int</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const unsigned
+        int iMyUInt</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned int *
+        oMyUInt</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>unsigned int *
+        ioMyUInt</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATULong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATULong32
+        iMyULong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATULong32 *
+        oMyULong32</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATULong32 *
+        ioMyULong32</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char *</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const char *
+        iMyChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char ** oMyChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>char ** ioMyChar</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString *</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATString *
+        iMyString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString **
+        oMyString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATString **
+        ioMyString</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t *</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const wchar_t *
+        iMyWChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t **
+        oMyWChar</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>wchar_t **
+        ioMyWChar</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString
+        *<br>
+      (array of CATUnicodeString's)</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const
+        CATUnicodeString * iMyUString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString
+        *&amp; oMyUString</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATUnicodeString
+        *&amp; ioMyUString</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>enum &lt;name&gt;
+        {&lt;value&gt;}</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const
+        &lt;name&gt; iMyEnum</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>&lt;name&gt; *
+        oMyEnum</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>&lt;name&gt; *
+        ioMyEnum</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>&lt;scalar
+        type&gt; [size]</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const &lt;scalar
+        type&gt; * iMyArray<br>
+        const &lt;scalar type&gt; iMyArray[3]</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>&lt;scalar
+        type&gt; ** oMyArray</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>&lt;scalar
+        type&gt; ** ioMyArray</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>struct</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATStruct *
+        iMyStruct</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATStruct **
+        oMyStruct</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATStruct **
+        ioMyStruct</code></td>
+    </tr>
+    <tr>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>interface</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>const CATIXX *
+        iCmpAsXX</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATIXX **
+        oCmpAsXX</code></td>
+      <td style="BORDER-BOTTOM: thin solid" valign="top"><code>CATIXX **
+        ioCmpAsXX</code></td>
+    </tr>
+  </tbody>
+</table>
+<p><b>Note about CATUnicodeString</b>: Never pass a single CATUnicodeString 
+instance as a pointer, always use references. Also do not use pass-by-value, as this may perform string data duplication. Ideally CATUnicodeString should never be allocated on the heap (except for arrays of CATUnicodeString whose size is unknown at compile time): this class is a value type meant to be used like a native type (it performs the correct copy-on-write semantics to optimize string data sharing yet preserve the correct semantics, unlike the native char*/wchar_t* types).</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC3">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC4"></a>Always Initialize Your Pointers to <code>NULL</code></h4>
+<p>Whenever you create a pointer to a class instance or to an interface, always
+intialize it to <code>NULL</code>. This ensures that the pointer doesn't take a
+non-null value without you knowing, and that any part of the program uses the
+pointer as if it were correctly set.</p>
+<pre>...
+CATBaseUnknown * piBaseUnk = <b>NULL</b>;
+...  // assign a valid value</pre>
+<p>Pointers incorrectly valued is the main memory leak source.
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC4">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC5"></a>Always Test Pointer Values Before Using Them</h4>
+<p>Whenever you use a pointer, first test its value against <code>NULL</code>
+before using it. This ensures that the pointer has a valid value and that you
+can use it safely. Otherwise, if the pointer is NULL, the pogram crashes.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( <b>NULL != piBaseUnk</b> )
+{
+  ... // you can use the pointer safely
+}
+else if ( <b>NULL == piBaseUnk</b> )
+{
+  ... // you cannot use the pointer
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Put <code>NULL</code> first preferably.
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC5">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC6"></a>Always Set Pointers to Deleted Objects to NULL</h4>
+<p>Whenever you delete an object allocated using the new operator, or whenever
+you free a memory block allocated using either the malloc, calloc, or realloc
+functions, immediately set the pointer to NULL. This ensures that this pointer
+cannot be used any longer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( NULL != pObject )
+{
+  delete pObject;
+  <b>pObject = NULL</b>;
+}
+...
+if ( NULL != pMemBlock )
+{
+  free (pMemBlock) ;
+  <b>pMemBlock = NULL</b>;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC6">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LC7"></a>Always Set Released Interface Pointers to NULL</h4>
+<p>Releasing an interface pointer means that you don't need it any longer, and
+thus that you don't intend to use it again. To ensure that this pointer will
+never be used afterwards, set it to NULL as soon as you release it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+piBaseUnk-&gt;Release();
+<b>piBaseUnk = NULL</b>;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#LC7">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="ObjectModelerRules"></a>Object Modeler Rules</h3>
+<p>This set of rules deal with the CAA V5 Object Modeler.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM1"></a>Never Implement the Same Interface Twice in the Same
+Component</h4>
+<p><strong>Why?</strong> To satisfy the <strong>Determinism</strong> principle.
+Otherwise, a call to QueryInterface for this interface is undetermined.</p>
+<table>
+  <tbody>
+    <tr>
+      <td><strong>A call to QueryInterface must always be determinist</strong>.
+        Here, querying an IB pointer is undetermined. <code>QueryInterface</code>
+        returns a pointer to a TIE to IB implemented by either Ext1 or Ext2,
+        depending on the run time context (dictionary declaration order or
+        shared library or DLL loading order). There is no means for the caller
+        of <code>QueryInterface</code> to know which pointer is returned, and no
+        means for <code>QueryInterface</code> to indicate which one is returned.</td>
+      <td><img border="0" src="images/DupInt.jpg" width="229" height="89"></td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM1">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM2"></a>Never Implement in a Component an Interface that
+OM-derives from Another Interface Already Implemented in the Component</h4>
+<p>Why? To satisfy the Determinism Principle. Otherwise, a component could
+implement two interfaces that OM-derive from the same interface using two
+different extensions. A call to <code>QueryInterface</code> to get the base
+interface would then be undetermined.</p>
+<table>
+  <tr>
+    <td><strong>Don't</strong> OM-derive IB and IC from IA. If Comp implements
+      IB using Ext1, and IC using Ext2, this can occur:
+      <p><img border="0" src="images/IntDeriv1.jpg" width="372" height="82"></p>
+      <p><strong>Why?</strong> To satisfy the <strong>Determinism Principle</strong>.
+      This call is undetermined. <code>QueryInterface</code> returns a pointer
+      to a TIE to the IA interface implemented by either Ext1 or Ext2, depending
+      on the run time context.</p>
+    </td>
+    <td><img border="0" src="images/IntDeriv2.jpg" width="268" height="124"></td>
+  </tr>
+  <tr>
+    <td><strong>Do</strong>: Only C++-derive IB and IC from IA. Thus Comp
+      doesn't implement IA. A call to <code>QueryInterface</code> for IA will
+      return <code>E_NOINTERFACE</code>. How? In the cpp file of the IB and IC
+      interfaces, do not write:
+      <pre>CATImplementInterface(IB, IA);</pre>
+      <p>but write this instead:</p>
+      <pre>CATImplementInterface(IB, CATBaseUnknown);</pre>
+    </td>
+    <td><img border="0" src="images/IntDeriv3.jpg" width="255" height="114"></td>
+  </tr>
+</table>
+<p><strong>Do Better</strong>: Let only IA be a C++ abstract class to share
+method signatures, but don't make it an interface.</p>
+<p><strong>How?</strong> Do not include the <code>CATDeclareInterface</code>
+macro and an IID in IA's header file, and do not provide any cpp file for IA.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM2">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM3"></a>Appropriately Use Data and Code Extensions</h4>
+<p>Use data extensions if the extension class has data members. Otherwise, use
+code extensions.</p>
+<p><strong>Why? To save memory</strong>. The code extension is dedicated to
+extension without data members. A code extension class is instantiated once for
+all the instances of the component it belongs to, while a data extension is
+instantiated for each component's instance. This can save a lot of memory.</p>
+<p><strong>How?</strong> Declare a code extension using the <code>CATImplementClass</code>
+macro. Like any extension class, it should always OM-derive from CATBaseUnknown.
+As a code extension class, it should never C++-derive from a data extension
+class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATImplementClass(MyExtension, <strong>CodeExtension</strong>, CATBaseUnknown, MyImplementation);</pre>
+    </td>
+  </tr>
+</table>
+<p><strong>Warning</strong>: Among other restrictions, chained TIEs can't be
+used with code extensions.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM3">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM4"></a>Always OM-Derive Your Extensions from CATBaseUnknown</h4>
+<p><strong>Why?</strong> If you set another class instead of CATBaseUnknown,
+such as the class from which the extension class C++-derives, you introduce an
+unnecessary additional node in the metaobject chain that can only decrease
+performance.</p>
+<p><strong>How?</strong> This is done using the <code>CATImplementClass</code>
+macro with <strong>CATBaseUnknown</strong> or <strong>CATNull</strong> always
+set as the third argument.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATImplementClass(MyExtension, DataExtension, <strong>CATBaseUnknown</strong>, MyImplementation);</pre>
+    </td>
+  </tr>
+</table>
+<p>or</p>
+<p><code>CATImplementClass(MyExtension, DataExtension, <strong>CATNull</strong>,
+MyImplementation);</code></p>
+<p align="right"><code>[</code><a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM4">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM5"></a>Never C++-derive Extensions that Implement Several
+Interfaces</h4>
+<p><strong>Why?</strong> If you create an extension that C++-derives from
+another extension that itself implements several interfaces, you may instantiate
+useless objects. You or your component's clients might use methods of an
+inherited interface not explicitly implemented by your component, but whose
+bodies come from the inherited extension. As a result, your extension may have
+undesirable companion objects, and any client can get a pointer to an interface
+implemented by these companion objects.</p>
+<p>For example, suppose that you create Ext2 that implements IB for component
+Comp2. Ext2 derives from Ext1 that implements IA and IB, but IA is of no use to
+you. Object Modeler inheritance makes Comp2 implement also IA, but you have not
+included a TIE macro for IA. Everything is OK with IB, but assume that a client
+already has a pointer to IC, and queries a pointer to IA.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/ExtDeriv0.jpg" width="226" height="148"></td>
+    <td><img border="0" src="images/ExtDeriv4.jpg" width="355" height="83"></td>
+  </tr>
+</table>
+<p>Instead of getting a pointer to a TIE_IA on Ext2, as expected, the client
+gets it on a new instance of Ext1, even if the dictionary is correctly filled
+in, that is, even if Impl2 declares that it implements IA. This means that in
+addition to Ext1 instantiated as the base object for Ext2, that is (Ext1 *)
+Ext2, another instance of Ext1 is created by QueryInterface, and is pointed to
+by the returned TIE_IA. The major problems are:
+<ul>
+  <li>Ext1 is duplicated and successive QueryInterface calls to the same
+    component to get an IA pointer will create as many Ext1 duplicates
+  <li>If you have overridden some methods of IA in Ext2, they will not be
+    executed. Those of Ext1 will be executed instead.</li>
+</ul>
+<p>There are three solutions.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/ExtDeriv1.jpg" width="209" height="146"></td>
+    <td><strong>1. The recommended solution</strong>: Define and use only unit
+      interfaces, that is, interfaces that expose methods that must ALL be
+      implemented. In this case, there is no need to C++-derive Ext2 from Ext1.</td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/ExtDeriv2.jpg" width="212" height="143"></td>
+    <td><strong>2.</strong> Otherwise, if you need to derive from an extension
+      that implements IB, choose one that implements ONLY IB. Ext2a C++-derives
+      from Ext1a, includes a TIE_IB macro, and the interface dictionary contains
+      the IB declaration for Impl2.</td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/ExtDeriv3.jpg" width="214" height="146"></td>
+    <td><strong>3.</strong> If you really can't do anything else, declare all
+      the interfaces whose implementations are inherited by Ext2 from Ext1. To
+      do this, include a TIE macro for IA and IB to Ext2, and correctly fill in
+      the interface dictionary.</td>
+  </tr>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM5">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM6"></a>Correctly Use <code>QueryInterface</code></h4>
+<p>To correctly use <code>QueryInterface</code>:
+<ol>
+  <li>Initialize the pointer to the requested interface to <code>NULL</code>
+  <li>Use the same type, that is the same interface to initialize the pointer
+    and to retrieve it from <code>QueryInterface</code>
+  <li>Never use a smart pointer in place of the interface pointer
+  <li>Test the returned code using the macros <code>SUCCEEDED</code> and <code>FAILED</code>.
+    The output parameters of functions such as <code>QueryInterface</code> are
+    valid and usable if and only if <code>SUCCEEDED</code> returns <code>TRUE</code>.
+    Never test the output pointers. Always test the HRESULT value using <code>SUCCEEDED</code>
+    before using the output pointers.</li>
+</ol>
+<p><img border="0" src="images/QueryInterface.jpg" width="400" height="193"></p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM6">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM7"></a>Do not Use Smart Interface Pointers</h4>
+<p>Smart interface pointers raise more problems than they solve.</p>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM7">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM8"></a>Enable Interface Pointers and Smart Interface Pointers to
+Coexist</h4>
+<p>You will need sometimes to make interface pointers and smart pointers
+coexist, because, for example, you call a function that returns an interface
+pointer you need to cast into a smart pointer to call another function. Here are
+the rules to smooth over this coexistence.</p>
+<ul>
+  <li>Avoid retrieving an interface pointer while casting it as a smart
+    interface pointer to the same interface
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+{
+  CATIXX_var spCATIXX = ::ReturnAPointerToCATIXX();
+  if (NULL_var != spCATIXX)
+  {
+     spCATIXX-&gt;Release(); // Release the returned interface
+                          // pointer using spCATIXX
+     ...   // Use spCATIXX
+  }
+  ...
+}     // spCATIXX is released</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The reference count is incremented by the global function, and
+    incremented again by the assignment operator redefined by the smart pointer
+    class. That is once too often. To decrement the reference count, you can't
+    use the returned interface pointer since you have no variable to handle it.
+    You must then use the smart pointer spCATIXX. The count decrements. When
+    going out of scope, the smart interface pointer is deleted and the count
+    decrements again. <b>Avoid doing that</b>. Even if this is correct, you can
+    easily skip from this case to the next one. <b>Do this instead</b>.<br>
+    </p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+{
+  CATIXX * pCATIXX = ::ReturnAPointerToCATIXX();
+  if (NULL != pCATIXX)
+  {
+    CATIXX_var spCATIXX = pCATIXX;
+    pCATIXX-&gt;Release();            // Release the returned interface pointer 
+    if (NULL_var != spCATIXX)
+    {
+      ...   // Use spCATIXX
+    }
+  }    // spCATIXX is released
+...
+}     </pre>
+        </td>
+      </tr>
+    </table>
+  <li>Never retrieve an interface pointer while casting it as a smart interface
+    pointer to another interface
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIYY_var spCATIYY = ::ReturnAPointerToCATIXX();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You have cast the returned CATIXX pointer to a smart pointer to CATIYY.
+    This returned pointer to CATIXX couldn't be released, since you have no
+    variable to handle it. The reference count will never reach 0, and the
+    component will never be deleted. <strong>Never do that. Do this instead</strong>.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIXX * pCATIXX = ::ReturnAPointerToCATIXX();
+CATIYY_var spCATIYY = pCATIXX;
+pCATIXX-&gt;Release();</pre>
+        </td>
+      </tr>
+    </table>
+  <li>Never cast a smart pointer to an interface pointer
+    <pre>CATIXX * pCATIXX = SmartPtrToCATIXX;</pre>
+    <p>This is not smart, and you must call AddRef and Release on the interface
+    pointer.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIXX * pCATIXX = ::ReturnASmartPtrToCATIXX();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The returned smart pointer is a volatile variable. This makes a core dump
+    with unchained TIEs, or with any TIE if the returned smart pointer is the
+    only handle on to the component.</p>
+  </li>
+</ul>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM8">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="OM9"></a>Correctly Fill in the Interface Dictionary</h4>
+<p>To correctly fill in the interface dictionary, follow the two rules below:
+<ul>
+  <li><b>Rule 1</b>: A component must declare:
+    <ul>
+      <li>The interfaces it implements, that is, the interfaces for which it
+        declares a TIE in its implementation class or extension classes (see <a href="#Fig1">Figure
+        1</a>)
+      <li>The interfaces ObjectModeler-inherited by these interfaces (see <a href="#Fig2">Figure
+        2</a>).</li>
+    </ul>
+    <p>A component must not declare the interfaces whose implementations are
+    OM-inherited through OM component inheritance.</p>
+  <li><b>Rule 2</b>: If the code generated by the TIE macro and the code that
+    implements the corresponding interface are located in two different shared
+    libraries or DLLs, you must declare, in the dictionary, the shared library
+    or DLL that contains the TIE code instead of the one that contains the
+    interface implementation code.</li>
+</ul>
+<p><b>Why? </b>To satisfy the <b>Determinism</b> Principle. Depending on the run
+time context, that is, which shared libraries or DLLs are loaded in memory, and
+on other interface dictionary declarations, <code>QueryInterface</code> may find
+a pointer to the requested interface on an inherited implementation or
+extension, and not on the current one.</p>
+<table width="100%">
+  <caption><a name="Fig1"><em>Figure 1</em></a></caption>
+  <tr>
+    <td><img border="0" src="images/Dic1.jpg" width="119" height="96"></td>
+    <td>No need to declare IA for Cmp2. The dictionary must only include
+      <pre>Cmp1   IA    LibCmp1
+Cmp2   IB    LibCmp2
+Cmp2   IC    LibCmp2</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%">
+  <caption><a name="Fig2"><em>Figure 2</em></a></caption>
+  <tbody>
+    <tr>
+      <td><img border="0" src="images/Dic2.jpg" width="166" height="95"></td>
+      <td>For example, when IB C++- and OM-derives from IA:
+        <ol>
+          <li>if Cmp2 doesn't declare that it implements IA in the interface
+            dictionary
+          <li>and if the TIE_IB macro code is located in a shared library or DLL
+            that is different from the one containing the IB implementation and
+            that is not loaded at the moment <code>QueryInterface</code> is
+            called to get a pointer to IA from a pointer to IC</li>
+        </ol>
+        <p><code>QueryInterface</code> will return a pointer to a TIE to Cmp1
+        instead of a pointer to a TIE to Cmp2. To avoid this, the dictionary
+        must include:</p>
+        <pre>Cmp1  IA  LibCmp1
+<b>Cmp2  IA  LibTIE_IBCmp2</b>
+Cmp2  IB  LibCmp2
+Cmp2  IC  LibCmp2</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="../CAADocQuickRefs/CAADocCppCodingRulesChecklist.htm#OM9">Checklist</a>
+| <a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[<a name="Ref1"></a>1]</td>
+    <td><a href="CAADocCppNamingRules.htm">CAA V5 C++ Naming Rules</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

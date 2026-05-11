@@ -1,0 +1,922 @@
+<html>
+	<head>
+		<title>mkmk Commands</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<h1>RADE</h1>
+				</td>
+				<td valign="top">
+					<h2>Multi-Workspace Application Builder</h2>
+				</td>
+				<td rowspan="2" align="right" valign="top">
+					<h3><a name="Top"></a>mkmk Commands</h3>
+					<em>Quick Reference to mkmk commands</em></td>
+			</tr>
+			<tr>
+				<td class="quick" colspan="2">Quick Reference</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkCopyPreq"></a><font color="#ffffff"><b>mkCopyPreq</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p><b>mkCopyPreq</b> copies the prerequisite frameworks into a workspace. Contrary 
+			to <a href="#mkGetPreq">mkGetPreq</a> physical copies are made. The user thus 
+			isolates his work space from the changes in his prerequisites, which stabilizes 
+			his environment.</p>
+		<P><FONT color="red">Please note that mkCopyPreq replaces the existing frameworks only 
+				for a case where these frameworks were previously created by 
+				the&nbsp;mkCopyPreq command.</FONT></P>
+		<P>For disk space economy reasons and performances, mkCopyPreq does not copy the 
+			entire data of a prerequisite framework. For instance, the source code is not 
+			copied locally, which won't allow a local work on these frameworks.</P>
+		<p>mkCopyPreq reprocesses the identity card of the local framework.</p>
+		<p>If one of the frameworks is already existing in the target workspace, it is not 
+			copied, an error message is displayed but the copy continues.</p>
+		<p>When the -remove option is set, mkCopyPreq deletes data had been eventually 
+			copied locally by a previous mkCopyPreq.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkCopyPreq -h</code></p>
+		<ul>
+			<li>
+				to consult the usage of the command</li>
+		</ul>
+		<p><code>mkCopyPreq [-v] [-p &lt;LPath&gt;] [-o &lt;OS1&gt; [-o &lt;OS2&gt;]...] [-W 
+				&lt;OriginDir&gt;] [-t &lt;TargetDir&gt;] [-f] [-d] [-j &lt;nbproc&gt;] 
+				[-copysrc | -copyall] [-simu]</code> &nbsp;</p>
+		<p><code>-v</code></p>
+		<blockquote>
+			<p>To activate the verbose mode.</p>
+		</blockquote>
+		<p><code>-p &lt;LPath&gt;</code></p>
+		<blockquote>
+			<p>LPath is a list of workspaces where frameworks are searched for.</p>
+		</blockquote>
+		<h5>Warning</h5>
+		<ul>
+			<li>
+				The syntax is different between Unix and Windows:</li>
+		</ul>
+		<blockquote>
+			<p>Path1:Path2:Path3 is the AIX syntax</p>
+			<p>Path1;Path2;Path3 is the Windows syntax</p>
+		</blockquote>
+		<p><code>[-o &lt;OS1&gt; [-o &lt;OS2&gt;] ...]</code></p>
+		<blockquote>
+			<p>the effect of this option is to limit the getting data related to any operating 
+				systems (OS1 and OS2 for example) from the prerequesite frameworks. By default 
+				mkCopyPreq grabs data for all the known operating systems.</p>
+		</blockquote>
+		<p><code>[-W &lt;OriginDir&gt;]</code></p>
+		<blockquote>
+			<p>OriginDir is the full path name of the workspace in which the framework to be 
+				processed is. The default is current workspace root directory. For instance if 
+				the command is run in /u/users/gus/ws/MyFramework/MyModule.m, /u/users/gus/ws 
+				is considered as the current workspace directory.</p>
+		</blockquote>
+		<p><code>[-t &lt;TargetDir&gt;]</code></p>
+		<blockquote>
+			<p>directory into data will be copied.</p>
+			<p>Default is the OriginDir if the -W option is set; or current workspace root 
+				directory if it is not set.</p>
+		</blockquote>
+		<p><code>[-f]</code></p>
+		<blockquote>
+			<p>to copy the FunctionTests directories of the prerequesite frameworks.</p>
+		</blockquote>
+		<p><code>[-d]</code></p>
+		<blockquote>
+			<p>to copy the CNext data directories of the prerequesite frameworks.</p>
+		</blockquote>
+		<p><code>[-j &lt;nbproc&gt;]</code></p>
+		<blockquote>
+			<p>Limits the number of copy scripts triggered by the command to the value. The 
+				default is 5. This is useful when the local machine CPU is already heavily 
+				used.</p>
+		</blockquote>
+		<p><code>[-copysrc | -copyall]</code></p>
+		<blockquote>
+			<p>-copysrc copy source code of the modules</p>
+			<p>-copyall copy every files</p>
+		</blockquote>
+		<p><code>[-simu]</code></p>
+		<blockquote>
+			<p>Simulation mode : turn out the list of frameworks that would be removed.</p>
+		</blockquote>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkCopyPreq -p /cnext/419 -t /s/users/dave/Preq&nbsp;</code></p>
+		<p>This command line prompts mkCopyPreq to process the prerequisites of current 
+			workspace. It will get these prerequisites from /cnext/419, and copy what's 
+			necessary into /s/users/dave/Preq.</p>
+		<p>&nbsp;</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkGetPreq"></a><font color="#ffffff"><b>mkGetPreq</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p><b>mkGetPreq</b> is, like <a href="#mkCopyPreq">mkCopyPreq</a>, a command 
+			designed to make available to a [local] workspace the prerequisite frameworks 
+			of frameworks present in the [local] workspace.</p>
+		<p>Whereas mkCopyPreq performs a physical copy of the data useful for build-time 
+			and run-time in the identified prerequisites, mkGetPreq defines a dynamic 
+			search path, which later on is detected and interpreted by mkmk; mkmk then 
+			dynamically uses this concatenation of directories.</p>
+		<p>You may want to run the command in simulation mode (-simu option) to know from 
+			what directory in the dynamic search path all the prerequisite frameworks are 
+			taken from. Note that if you want to focus on the prerequisites of a given 
+			[local] framework, use command <a href="#mkPrintPreq">mkPrintPreq</a>.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><b>Note</b>: Contrary to mkmk and other commands, mkGetPreq ignores any possible 
+			target. As its goal is to define a dynamic search path for every framework in a 
+			workspace, it never focuses on a given target framework.</p>
+		<p><code>mkGetPreq -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkGetPreq [-W &lt;WSroot&gt;] -p &lt;LWSpath&gt; [-a] [-fwout file] [-mkinfo] [-noci] [-noq] [-pfile file] [-pfrom path] [-simul]</code></p>
+		<p><code>[-W &lt;WSroot&gt;]</code></p>
+		<blockquote>
+			<p>To indicate the root directory of the workspace to process. Default is current 
+				workspace directory.</p>
+		</blockquote>
+		<p><code>-p &lt;LWSpath&gt;</code></p>
+		<blockquote>
+			<p>list/path of directories in which the prerequesites frameworks are looked for. 
+				mkGetPreq fails if one or several of the prerequisite frameworks cannot be 
+				found in the option -p path.</p>
+		</blockquote>
+		<h5>Warnings</h5>
+		<ul>
+			<li>On Unix the directories names are separated by a ':'; and on Windows by and ';'.</li>
+			<li>After the dynamic search path is modified, command mkmk should be run with 
+				option -u.</li>
+		</ul>
+		<p><code>-a </code></p>
+		<blockquote>
+			Consider all the frameworks of the workspace.</blockquote>
+		<p><code>-fwout file </code></p>
+		<blockquote>
+			Print the command output in a file. <code>file</code> is the full 
+		pathname of this file.</blockquote>
+		<p><code>-mkinfo </code></p>
+		<blockquote>
+			Print additional information when some errors are raised, such as a 
+		prerequisite framework not built.</blockquote>
+		<p><code>-noci </code></p>
+		<blockquote>
+			Avoid framework identity card compilation.</blockquote>
+		<p><code>-noq </code></p>
+		<blockquote>
+			Verbose mode.</blockquote>
+		<p><code>-pfile file </code></p>
+		<blockquote>
+			Concatenate workspaces where to search for the prerequisite frameworks.
+		The workspace full pathnames are stored in a file, with a workspace 
+		pathname per line. <code>file</code> is the full pathname of this file. 
+		Ignored if -p is used.</blockquote>
+		<p><code>-pfrom path </code></p>
+		<blockquote>
+			Concatenate workspaces where to search for the prerequisite frameworks, 
+		starting from a single workspace pathname, and using the prerequisites 
+		of this workspace, if any. <code>path</code> is the full pathname of 
+		this workspace. Ignored if -p or -pfile is used.</blockquote>
+
+
+
+
+
+		<p><code>[-simul]</code></p>
+		<blockquote>
+			<p>Simulate the result of the command. You see the prerequisites of all 
+				frameworks in the workspace.</p>
+		</blockquote>
+		<hr>
+		<h3>Limitations</h3>
+		<p>The concatenation concept is very powerful because it avoids the developer to 
+			attach all the components that application needs to run. However there are some 
+			limitations to this feature that you should be aware of:</p>
+		<ol>
+			<li>
+			Prerequisite modules must be specified explicitly using the LINK_WITH clause if 
+			Imakefile.mk files.
+			<li>
+			If a NONE module has to be modified, the module which embeds this NONE module 
+			must be present in the workspace and not just visible throughout the 
+			concatenation.
+			<li>
+				For the time being, all modules generating interfaces (<em>PrivateGenerated</em>,
+				<em>ProtectedGenerated</em> and <em>PublicGenerated</em>) must be attached 
+			locally. This is a current limitation and it should disappear in a further 
+			version.
+			<li>
+				If a module, which is referenced in a LINK_WITH directive, is destroyed in a 
+				local framework, it can be still visible because existing somewhere in the 
+				concatenation.</li>
+		</ol>
+		<p>Only modules which are found at the first level of the concatenation (thus the 
+			workspace itself) can be modified.</p>
+		<p>We consider that a framework is "local", and thus that its modules can be 
+			modified, if it contains the source of its Identity Card. As a consequence, it 
+			is possible to copy some frameworks locally and to prevent that they could be 
+			modified by deleting the local copy of their Identity Card source file.</p>
+		<hr>
+		<h3>Examples</h3>
+		<p>To define in workspace /u/users/me/myws_dir a dynamic prerequisit search path 
+			for mkmk</p>
+		<pre>$ cd /u/users/me/myws_dir
+$ ls
+SampleFramework aix_a
+$ mkGetPreq -p /u/lego/CXR1/BSF:/u/lego/CXR1rel/BSF
+$ ls
+Install_config SampleFramework aix_a</pre>
+		<p>Other examples:</p>
+		<p>In the following example, framework Fw1 is made of modules Titi1 and Toto1. 
+			Module Titi1 needs services implemented by modules Toto1, Toto2 and Toto3. 
+			Given the content of the all workspaces in presence, mkGetPreq should be run in 
+			Ws_mine the following way: "<code>mkGetPreq -p Ws_b:Ws_c</code>". A further 
+			mkmk picks up in path Ws_b:Ws_c the prerequisites it needs.</p>
+		<p><img border="0" src="images/linkwith.gif" width="479" height="399"></p>
+		<h3>Advanced Scenarios</h3>
+		<p>This paragraph sets out some scenarios `not that intuitive'. Read it to make 
+			sure you understand the combined effect of mkGetPreq and mkmk.</p>
+		<h4>Scenario 1: concatenation of modules</h4>
+		<p>In the following example, Ws_mine does not contain the entire framework Fw1(made 
+			of modules Titi1 and Toto1): only the module under work Titi1. Nevertheless, 
+			module Toto1 is present in Ws_Teamster. To build Titi1 in Ws_mine, work spaces 
+			WS_mine, WS_b ,WS_c and Ws_Teamster need to be concatenated. mkGetPreq makes it 
+			possible.</p>
+		<p><img border="0" src="images/linkwith2.gif" width="479" height="399"></p>
+		<p>Even if command mkGetPreq seems simple, it may lead to sharp situations.</p>
+		<h4>Scenario 2: prerequisite framework not complete</h4>
+		<p>In the following situation, the prerequisite framework is not complete in the 
+			first work space given in the -p option:</p>
+		<p><img border="0" src="images/linkwith3.gif" width="479" height="399"></p>
+		<p>The chosen behaviour of mkGetPreq in such a case is to only consider the modules 
+			of Fw2 presents in the first work space Fw2 was found. In the example, Toto2 
+			only will be referred to at link-time.</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkPrintPreq"></a><font color="#ffffff"><b>mkPrintPreq</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p>Prints out the list of the [direct and indirect] prerequesite frameworks of a 
+			given framework.</p>
+		<p>The <b>mkPrintPreq</b> command may be compared with "<a href="#mkGetPreq">mkGetPreq</a>
+			-simul", which also outputs a list of prerequisite frameworks. mkPrintPreq can 
+			be run on a given [local] framework, whereas mkGetPreq works on all the [local] 
+			frameworks.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkPrintPreq -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkPrintPreq [-W &lt;WSroot&gt;] [-l | -f | -d] [-a | -lFW /path/FWList | 
+				[&lt;FW1&gt; [&lt;FW2&gt;...]]] [-p Path1[:Path2]] [-e] [-fwout file]  [-mkinfo] [-nort] [-pfile file] [-pfrom path] [-q] [-v]</code></p>
+		<blockquote>
+			<p>By default the command uses the dynamic search path (file <em>Install_config</em>) 
+				possibly previously set with command mkGetPreq. If this file does not exist in 
+				the workspace, use mkGetPreq command first.</p>
+		</blockquote>
+		<h5>Warning</h5>
+		<blockquote>
+			<p>On Unix the directories names are separated by a ':'; and on Windows by a ';'.</p>
+		</blockquote>
+		<p><code>[-W &lt;WSroot&gt;]</code></p>
+		<blockquote>
+			<p>To indicate the root directory of the workspace to process, in which is the 
+				target framework. Default is current workspace directory.</p>
+		</blockquote>
+		<p><code>[-f]</code></p>
+		<blockquote>
+			<p>By default, mkPrintPreq outputs the list of prerequisite(s) of the target 
+				framework(s) without indicating in which directory the prerequisite(s) was/were 
+				found (either in the search path previously defined my mkGetPreq ).</p>
+			<p>Option -f prompts the command to explicit in which directory the prerequisite(s) 
+				must be taken from. Refer to the example in next paragraph.</p>
+		</blockquote>
+		<p><code>[-l]</code></p>
+		<blockquote>
+			<p>By default, mkPrintPreq outputs the list of prerequisite(s) of the target 
+				framework(s) like a simple list. This option prompts the command to details 
+				prerequisite(s) for each framework.</p>
+		</blockquote>
+		<p><code>[-d]</code></p>
+		<blockquote>
+			<p>By default, mkPrintPreq outputs the direct and indirect prerequisite(s) of the 
+				target framework(s). This option prompts the command to output only direct 
+				prerequisite(s).</p>
+		</blockquote>
+		<p><code>[-a | -lFW /path/FWLst] | &lt;FW1&gt; [&lt;FW2&gt;...]</code></p>
+		<blockquote>
+			<p>Focuses the command on a (list of) framework(s). By default, the command 
+				processes at once all the frameworks in the workspace. Note that in this latter 
+				case, the output list is duplicated.</p>
+			<p>Option -a can be set to apply the command on all frameworks belonging to the 
+				current workspace.</p>
+		</blockquote>
+		<p><code>[-p Path1[:Path2]]</code></p>
+		<blockquote>
+			Concatenate workspaces where to search for the prerequisite frameworks.
+		<code>Path1</code> and <code>Path2</code> represent workspace root folder 
+		paths, and must be separated using a &quot;:&quot; (colon) with Unix and a &quot;;&quot; (semi-colon) 
+		with Windows. Windows workspace paths can be mapped drive paths, such a 
+		e:\WorkspaceToAdd, or UNC paths, such as \\mycomputer\home\WorkspaceToAdd.</blockquote>
+		<p><code>[-e]</code></p>
+		<blockquote>
+			Add extended information to the detailed view of the prerequisites, framework per framework, with 
+		prerequisite modes (direct, indirect, etc.), and full pathnames.</blockquote>
+		<p><code>[-fwout file]</code></p>
+		<blockquote>
+			Print the command output in a file. <code>file</code> is the full 
+		pathname of this file.</blockquote>
+		<p><code>[-mkinfo]</code></p>
+		<blockquote>
+			Print additional information when some errors are raised, such as a 
+		prerequisite framework not built.</blockquote>
+		<p><code>[-nort]</code></p>
+		<blockquote>
+			Do not consider runtime prerequisite frameworks.</blockquote>
+		<p><code>[-pfile file]</code></p>
+		<blockquote>
+			Concatenate workspaces where to search for the prerequisite frameworks.
+		The workspace full pathnames are stored in a file, with a workspace 
+		pathname per line. <code>file</code> is the full pathname of this file. 
+		Ignored if -p is used.</blockquote>
+		<p><code>[-pfrom path]</code></p>
+		<blockquote>
+			Concatenate workspaces where to search for the prerequisite frameworks, 
+		starting from a single workspace pathname, and using the prerequisites 
+		of this workspace, if any. <code>path</code> is the full pathname of 
+		this workspace. Ignored if -p or -pfile is used.</blockquote>
+		<p><code>[-q]</code></p>
+		<blockquote>
+			Quiet mode. Display only errors.</blockquote>
+		<p><code>[-v]</code></p>
+		<blockquote>
+			Verbose mode.</blockquote>
+
+
+
+		<hr>
+		<h3>Examples</h3>
+		<p>In the current workspace, mkGetPreq was previously run to define a dynamic 
+			search path to access the prerequisites. To basically obtain the list of 
+			prerequisites of framework SampleFramework1:</p>
+		<pre>E:\MyWorkspace&lt;mkPrintPreq Framework1
+# Populating 2 workspace(s) with frameworks and modules ...
+# 2 workspace(s) populated with 301 frameworks and 1688 modules.
+BSFBuildtimeData
+LCCommon
+SpecialAPI
+System</pre>
+		<p>To get more information:</p>
+		<pre>E:\MyWorkspace&lt;>mkprintpreq -l Framework1
+# Populating 2 workspace(s) with frameworks and modules ...
+# 2 workspace(s) populated with 301 frameworks and 1688 modules.
+
+Required frameworks for: Framework1
+------------------------------------
+Direct   : BSFBuildtimeData in C:\Program Files\Dassault Systemes\B24\.\BSFBuildtimeData
+Direct   : System           in C:\Program Files\Dassault Systemes\B24\.\System
+Indirect : LCCommon         in C:\Program Files\Dassault Systemes\B24\.\LCCommon
+Indirect : SpecialAPI       in C:\Program Files\Dassault Systemes\B24\.\SpecialAPI</pre>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkCopyFW"></a><font color="#ffffff"><b>mkCopyFW</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p><b>mkCopyFw</b> copies the build-time and run-time files of a framework from a 
+			workspace into another workspace.</p>
+		<P><FONT color="red">Please note that mkCopyFw replaces the existing frameworks only 
+				for a case where these frameworks were previously created by the&nbsp;mkCopyFw 
+				command.</FONT></P>
+		<P>mkCopyFw can be used to copy frameworks from an Unix system into Windows system 
+			and vice versa. But this functionality can be involved only from a Windows 
+			platform.</P>
+		<p>If one of the frameworks is already existing in the target workspace, an error 
+			message is displaying and the copy stops.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkCopyFw -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkCopyFw [-W &lt;workspace path&gt;] -p &lt;LPath&gt; [ [-no] | [-o 
+				&lt;OS1&gt; [-o &lt;OS2&gt;] ... ] ] [-d] [-f] [-remove] [-update] [-sniff] 
+				[-nm]&nbsp; [-j&lt;nbproc&gt;] [-lFW /path/FWList | &lt;FW1&gt; [&lt;FW2&gt;..] 
+				]</code></p>
+		<p><code>[-W &lt;workspace path&gt;]a</code></p>
+		<blockquote>
+			<p>target workspace directory path name. If not specified, mkCopyFw uses the 
+				current directory path name.</p>
+		</blockquote>
+		<p><code>-p &lt;LPath1&gt;</code></p>
+		<blockquote>
+			<p>LPath is a list of workspaces where frameworks are searched for. Be carreful the 
+				syntax is different between Unix system and Windows system.</p>
+			<p>Path1:Path2:Path3 is the AIX syntax</p>
+			<p>Path1;Path2;Path3 is the Windows syntax</p>
+		</blockquote>
+		<p><code>[-no]</code></p>
+		<blockquote>
+			<p>Derived objects are not copied.</p>
+		</blockquote>
+		<p><code>[-o OS1 [-o OS2] ...]</code></p>
+		<blockquote>
+			<p>the effect of this option is to limit the getting derived data related to any 
+				operating systems (OS1 and OS2 for example) from the prerequesite frameworks. 
+				By default mkCopyFw grabs derived data for all the known operating systems.</p>
+		</blockquote>
+		<p><code>[-d]</code></p>
+		<blockquote>
+			<p>copy the CNext-type data directories of the frameworks.</p>
+		</blockquote>
+		<p><code>[-f]</code></p>
+		<blockquote>
+			<p>copy the FunctionTests directories of the prerequesite frameworks.</p>
+		</blockquote>
+		<p><code>[-remove]</code></p>
+		<blockquote>
+			<p>cleans up in the target workspace the frameworks to be copied, if they already 
+				exist in there.</p>
+		</blockquote>
+		<p><code>[-update]</code></p>
+		<blockquote>
+			<p>forces the copy even if the frameworks already exists in the target workspace. 
+				Note that mkCopyFw does not take care of deleted objects.</p>
+		</blockquote>
+		<p><code>[-sniff]</code></p>
+		<blockquote>
+			<p>to copy the Sniff+ related directories of the prerequesite frameworks.</p>
+		</blockquote>
+		<p><code>[-nm]</code></p>
+		<blockquote>
+			<p>the modules will be not copied (src and Objects directories).</p>
+		</blockquote>
+		<h5><b>Internal usage</b></h5>
+		<p><code>[-j &lt;nbproc&gt;]</code></p>
+		<blockquote>
+			<p>max number of parallel copy processes (default is 5).</p>
+		</blockquote>
+		<p><code>[-lFW /path/FWList | [&lt;FW1&gt; | [&lt;FW2 &gt;...] ]]</code></p>
+		<blockquote>
+			<p>When a framework is already present in the target workspace, mkCopyFw emits an 
+				error message and stops. If the copy is nevertheless necessary, use the -remove 
+				option.</p>
+		</blockquote>
+		<ul>
+		</ul>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkCopyFw -p /cnext/419 FW1</code></p>
+		<p>If run from directory /u/users/gus/MyWS, this command copies data from 
+			/cnext/419 into /u/users/gus/MyWS/FW1. Are copied the data related to every 
+			o.s. present in /cnext for FW1.</p>
+		<p><code>mkCopyFw -W /u/users/gus/MyWS -p /u/lego/CXR1/BSF -o aix_a -remove FW1 FW2</code></p>
+		<p>Run from directory /u/users/gus, this command copies data from /cnext/419 into 
+			/u/users/gus/MyWS/FW1 and /u/users/gus/MyWS/FW2. Only data related to aix_a are 
+			taken into account. In case these two directories would already exist, their 
+			aix_a-related data are first removed.</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkRmFw"></a><font color="#ffffff"><b>mkRmFw</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p><b>mkRmFw</b> deletes frameworks into a workspace.</p>
+		<p>Note that this command addresses frameworks which have been installed by command <a href="#mkCopyPreq">
+				mkCopyPreq</a> or command <a href="#mkCopyFW">mkCopyFw</a>.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkRmFw -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkRmFw [-W &lt;workspace&gt;] [-simu] [-preq] [-fw] [&lt;FW1&gt; 
+				[&lt;FW2&gt;..]</code></p>
+		<p><code>-W &lt;workspace&gt;</code></p>
+		<blockquote>
+			<p>to indicate the path of the workspace where the framework to delete is.</p>
+		</blockquote>
+		<p><code>[-simu]</code></p>
+		<blockquote>
+			<p>to simulate the command and see the result</p>
+		</blockquote>
+		<p><code>[-preq]</code></p>
+		<blockquote>
+			<p>to delete only the frameworks which are coming from the mkCopyPreq command</p>
+		</blockquote>
+		<p><code>[-fw]</code></p>
+		<blockquote>
+			<p>to delete only the frameworks which are coming from the mkCopyFw</p>
+		</blockquote>
+		<p><code>[&lt;FW1&gt; [&lt;FW2&gt; ...]]</code></p>
+		<blockquote>
+			<p>&lt;FW1&gt; [&lt;FW2&gt;... ] to indicate a list of frameworks to delete.</p>
+		</blockquote>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkRmFw -preq</code></p>
+		<p>deletes any frameworks in the current workspace which are coming from mkCopyPreq 
+			commands</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkRemoveDo"></a><font color="#ffffff"><b>mkRemoveDo</b></font></td>
+			</tr>
+		</table>
+		<h3>Purpose</h3>
+		<p>This command is used to discard all derived objects into read-write frameworks 
+			of a development workspace.</p>
+		<P>A framework is read-write only if a file named IdentityCard.h exists into the 
+			IdentityCard sub-directory. Note that&nbsp;mkCopyPreq command will 
+			create&nbsp;read-only versions for all prerequisites frameworks, then 
+			mkRemoveDo will not remove any files into frameworks created by the mkCopyPreq 
+			command.</P>
+		<P>An operating system can be indicated to limit the scope of the deletion.</P>
+		<p><b>mkRemoveDo</b> deletes the derived objects which are coming from</p>
+		<ul>
+			<li>
+				the <a href="#mkCopyPreq">mkCopyPreq</a>
+			command
+			<li>
+				or from any framework whatever.</li>
+		</ul>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkRemoveDo -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkRemoveDo [-W &lt;Workspace&gt;] [-o &lt;OS1&gt; [-o &lt;OS2&gt;] ...] 
+				[-simul] [-a | -lFW /path/FWList | &lt;FW1&gt; [&lt;FW2&gt;...]] [-preq | 
+				-nopreq]</code></p>
+		<p><code>[-W &lt;Workspace&gt;]</code></p>
+		<blockquote>
+			<p>rootdir of the workspace. If not specified, use the current one.</p>
+		</blockquote>
+		<p><code>[-o &lt;OS1&gt; [-o &lt;OS2&gt;]...]</code></p>
+		<blockquote>
+			<p>the effect of this option is to limit the deletion to any derived objects 
+				related to any operating systems (OS1 and OS2 for example). By default 
+				mkRemoveDo delete derived objects for all known operating systems.</p>
+		</blockquote>
+		<p><code>[-simul]</code></p>
+		<blockquote>
+			<p>to simulate the execution of the command.</p>
+		</blockquote>
+		<p><code>[-a | -lFW /path/FWList | &lt;FW1&gt; [&lt;FW2&gt;...]]&nbsp;</code></p>
+		<blockquote>
+			<p>List of frameworks separated with a blank character. Framework names can also be 
+				specified in a text file (-lFW text_file) containing one framework name per 
+				line.</p>
+			<p>The framework names must be specified to delete derived objects FW1, FW2 ...:<br>
+				to delete FW1, FW2, ... framework's derived objects.</p>
+		</blockquote>
+		<p><code>[ -preq | -nopreq]</code></p>
+		<blockquote>
+			<p>-preq is used to delete ONLY derived objects of frameworks which have been 
+				installed with mkCopyPreq.</p>
+			<p>-nopreq is used to delete ALL frameworks except frameworks which have been 
+				installed with mkCopyPreq.</p>
+		</blockquote>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkRemoveDo -W /u/users/gus/MyWS -preq -o aix_a</code></p>
+		<p>This command deletes all <em>aix_a</em> derived objects in the frameworks which 
+			have been copied by mkCopyPreq</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkCreateRuntimeView"></a><font color="#ffffff"><b>mkCreateRuntimeView</b></font></td>
+			</tr>
+		</table>
+		<hr>
+		<h3 align="left">Purpose</h3>
+		<p align="left">They are two kinds of file trees: one for the build time and one 
+			for the run time. Some objects are used during the run time like icons, 
+			resources files and are stored in the frameworks architecture ($$CAA2 
+			$$FileTree). In order to be used during the run time they must be copied in a 
+			run time file tree named RunTimeView.</p>
+		<p align="left">CATIA software knows only the RunTimeView.</p>
+		<p align="left">The&nbsp;<b>mkCreateRuntimeView</b> is a command to copy (copy or 
+			symbolic link) automatically files from the build time file tree into the run 
+			time file tree.</p>
+		<p align="left"><img border="0" src="images/rtview.gif" width="439" height="319"></p>
+		<p align="left">CNext.xxx means specific operating systems.</p>
+		<p align="left">In this kind of directories are resources which are available only 
+			on some operating systems. These directories are named CNext.specifics_$OS. The 
+			following table shows the different values of $OS</p>
+		<div align="center">
+			<center>
+				<table border="1" width="100%">
+					<tr>
+						<th align="left" bgcolor="#00ffff">
+							<font color="#000000">$OS</font></th>
+						<th align="left" colspan="2" bgcolor="#00ffff">
+							<font color="#000000">Operating System</font></th>
+					</tr>
+					<tr>
+						<td>aix_a</td>
+						<td>AIX</td>
+						<td rowspan="4">UNIX</td>
+					</tr>
+					<tr>
+						<td>hpux_a</td>
+						<td>HP-UX 10</td>
+					</tr>
+					<tr>
+						<td>hpux_b</td>
+						<td>HP-UX 11</td>
+					</tr>
+					<tr>
+						<td>solaris_a</td>
+						<td>SunOS</td>
+					</tr>
+					<tr>
+						<td>intel_a</td>
+						<td>Windows</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
+			</center>
+		</div>
+		<p>The values are hierarchical. It means if a file is both in CNext, 
+			CNext.specifics_AIX and CNext_specifics_UNIX, the run time view will contain 
+			the file coming from:</p>
+		<blockquote>
+			<p>- CNext.specifics_AIX on aix_a</p>
+			<p>- CNext_specifics_UNIX on the other UNIX platforms</p>
+			<p>- CNext on Windows.</p>
+		</blockquote>
+		<p>Here is an example (for AIX operating system) where the same file appears in 
+			different CNext directories, the arrrows show what is taken into account.</p>
+		<p><img border="0" src="images/rtview2.gif" width="439" height="319"></p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkCreateRuntimeView -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkCreateRuntimeView [-c|-f|-l] [-d] [-W &lt;WSroot&gt;] [-t 
+				&lt;Targetroot&gt;] [-s] [-v] [-k &lt;FwType&gt;]</code></p>
+		<p><code>[-c|-f|-l]</code></p>
+		<blockquote>
+			<p>to specify which files must be copied.</p>
+		</blockquote><blockquote>
+			<ul>
+				<li>
+				-c: if the source is newer than the destination the file is copied
+				<li>
+					-f: every files is copied into target file tree (default on Windows)</li>
+			</ul>
+		</blockquote>
+		<h5><code>Unix only</code></h5>
+		<blockquote>
+			<p>-l: symbolic links are defined and no file is copied (default on Unix)</p>
+		</blockquote>
+		<p><code>[-d]</code></p>
+		<blockquote>
+			<p>to delete unknown files in the runtime view. It means if you put personal files 
+				in the runtimeview, they will be discard.</p>
+		</blockquote>
+		<p><code>[-W &lt;WSroot&gt;]</code></p>
+		<blockquote>
+			<p>workspace directory name. Default is the current workspace.</p>
+		</blockquote>
+		<p><code>[-t &lt;Targetroot&gt;]</code></p>
+		<blockquote>
+			<p>to indicate the root directory where the copy must be done.</p>
+			<p>Default is $MkmkOS_VAR. If you used another value as the default value, modules 
+				are processing. It means that the modules in $MkmkOS_VAR/code/bin will be 
+				copied into the run time view.</p>
+		</blockquote>
+		<h5>Unix only</h5>
+		<p><code>[-s]</code></p>
+		<blockquote>
+			<p>It make sense with the -t option with other value as the default value.The 
+				modules will be stripped after the copy.</p>
+		</blockquote>
+		<p><b>Internal usage</b></p>
+		<p><code>[-o]</code></p>
+		<blockquote>
+			<p>In the $OS/Control directory files named as the framework names are created. 
+				They contain the list of the object which are coming from these frameworks.</p>
+		</blockquote>
+		<p><code>[-v]</code></p>
+		<blockquote>
+			<p>to activate the debug mode</p>
+		</blockquote>
+		<p><code>[-k &lt;FwType&gt;]</code></p>
+		<blockquote>
+			<p>to filter the type of framework to browse, &lt;FwType&gt; can be either <em>code</em>,
+				<em>edu</em> or <em>tst</em> (default is all).</p>
+		</blockquote>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkCreateRuntimeView</code></p>
+		<p>creates symbolic links from the CNext directory in the current workspace into 
+			the <em>$Mkms_OS_VAR </em>of the current workspace.</p>
+		<p><code>mkCreateRuntimeView -t /tmp/myCNext -c</code></p>
+		<p>creates the run time view of the current workspace into the /tmp/myCNext 
+			directory.</p>
+		<p><code>mkCreateRuntimeView -W /u/users/gus/ADELE/MYWS</code></p>
+		<p>creates the run time view of the /u/users/gus/ADELE/MYWS</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="mkrun"></a><font color="#ffffff"><b>mkrun</b></font></td>
+			</tr>
+		</table>
+		<hr>
+		<h3>Purpose</h3>
+		<p>This command is used to execute a $$CNext program. It initializes the 
+			environment: PATH on Unix, LIBPATH on AIX, SHLIB_PATH on HP, LD_LIBRARY_PATH 
+			for Sun, path on Windows.</p>
+		<hr>
+		<h3>Usage</h3>
+		<p><code>mkrun -h</code></p>
+		<blockquote>
+			<p>to consult the usage of the command</p>
+		</blockquote>
+		<p><code>mkrun [-v] [-a] [-W &lt;WSroot&gt;] [-p &lt;LPath&gt;] [-type &lt;LLevel&gt;] 
+				[-r &lt;Lconcatpath&gt;] [-e &lt;envir&gt;] [-keep] [-c command ...] [-mkmk] 
+				[-x] [-s &lt;LPath&gt;]</code></p>
+		<p><code>[-W &lt;WSroot&gt;]</code></p>
+		<blockquote>
+			<p>path to find the program to execute</p>
+		</blockquote>
+		<p><code>[-p &lt;LPath&gt;]</code></p>
+		<blockquote>
+			<p>to indicate a concatenation of paths . This concatenation replaced those defined 
+				with the <a href="#mkGetPreq">mkGetPreq</a> command and registered in the 
+				Install_config file.</p>
+		</blockquote>
+		<h5>Warning</h5>
+		<ul>
+			<li>
+				The syntax is different between Unix and Windows:
+				<ul>
+					<li>
+					Path1:Path2:Path3 is the Unix syntax
+					<li>
+						Path1;Path2;Path3 is the Windows syntax</li>
+				</ul>
+			</li>
+			<!-- IR IR-421828-V5-6R2017 -->
+			<li>With Windows, mkrun requires the folder C:\temp. Make sure this 
+			folder exists on your computer.</li>
+		</ul>
+		<p><code>[-type &lt;LLevel&gt;]</code></p>
+		<blockquote>
+			<p>to indicate a list of levels of concatenation:</p>
+		</blockquote><blockquote>
+			<ul>
+				<li>
+				off for CNext
+				<li>
+				dev for
+				<li>
+				inst for CNext.inst
+				<li>
+					debug for CNext.debug</li>
+			</ul>
+		</blockquote><blockquote>
+			<p>This option must be used with the -p option or if the mkGetPreq command has been 
+				executed (<em>Install_config</em> file existing).</p>
+		</blockquote>
+		<p><code>[-r &lt;Lconcatpath&gt;]</code></p>
+		<blockquote>
+			<p>to indicate a deeper concatenation of paths (until CNext.xxx directory). It can 
+				be used to point under debug levels.</p>
+		</blockquote>
+		<h5>Warning</h5>
+		<ul>
+			<li>
+				The syntax is different between Unix and Windows:
+				<ul>
+					<li>
+					Path1:Path2:Path3 is the Unix syntax
+					<li>
+						Path1;Path2;Path3 is the Windows syntax</li>
+				</ul>
+			</li>
+		</ul>
+		<p><code>[-e &lt;envir&gt;]</code></p>
+		<blockquote>
+			<p>to specify the environment name.</p>
+		</blockquote>
+		<p><code>[-keep]</code></p>
+		<blockquote>
+			<p>to keep the shell which starts the command. Default the shell is removed after 
+				the run. The shell name is deduced from the environment name (-e option). Its 
+				name is $HOME/mkrun_envir.sh on Unix and C:\temp\mkrun_envir.bat on Windows</p>
+			<p>This shell will use the concatenation as defined by the mkGetPreq command 
+				(Install_config file).</p>
+		</blockquote>
+		<p><code>[-c command ...]</code></p>
+		<blockquote>
+			<p>to indicate the command to run after the setting of the environment variables. 
+				This option must be the last one on the command line. The parameters after the 
+				-c option won't be interpreted by mkrun but automatically sent to <em>command</em>.
+				<strong>For legibility reason it is advised to set the command between double quote 
+					characters</strong> (").</p>
+		</blockquote>
+		<h5><b>Internal usage</b></h5>
+		<p><code>[-mkmk]</code></p>
+		<p><code>[-x]</code></p>
+		<p><code>[-s LPath]</code></p>
+		<p><code>[-v]</code></p>
+		<hr>
+		<h3>Examples</h3>
+		<p><code>mkrun -p /u/lego/CXR1rel/BSF:/u/lego/CSSTOOLSCXR1rel/BSF -t off:dev:inst ...</code></p>
+		<p>The PATH variable will be:</p>
+		<pre>/u/lego/CXR1rel/BSF/aix_a/<b>CNext</b>/code/bin:/u/lego/CXR1rel/BSF/aix_a/code/bin:
+/u/lego/CXR1rel/BSF/aix_a/<b>CNext.inst</b>/code/bin:/u/lego/CSSTOOLSCXR1/BSF/aix_a/<b>CNext</b>/code/bin:
+/u/lego/CSSTOOLSCXR1/BSF/aix_a/code/bin:/u/lego/CSSTOOLSCXR1/BSF/aix_a/<b>CNext.inst</b>/code/bin:</pre>
+		<p><code>mkrun -c "CATRTV -check /u/users/gus/ws1:fw1:CNext"</code></p>
+		<p>will set the environment and execute the <em>CATRTV -check 
+				/u/users/gus/ws1:fw1:CNext</em> command</p>
+		<table border="0" width="100%" bgcolor="#008000">
+			<tr>
+				<td>&nbsp;<a name="AnnexeA"></a><font color="#ffffff"><b>List of generated 
+							directories/files by CAA2 Workbench Code Builder</b></font></td>
+			</tr>
+		</table>
+		<p>This list is communicated for information. These directories are under the 
+			workspace root directory.</p>
+		<p>Do not remove these files and directories.</p>
+		<table border="1" width="100%">
+			<tr>
+				<th bgcolor="#66ffff">
+					<font color="#000000"><b>Files or Directories</b></font></th>
+				<th bgcolor="#66ffff">
+					<font color="#000000"><b>Purpose</b></font></th>
+			</tr>
+			<tr>
+				<td>FW/various/MkmkOS_VAR/HList/*.lh</td>
+				<td>Headers which are contained in the *Interfaces and *Generated directories of 
+					the framework</td>
+			</tr>
+			<tr>
+				<td>FW/*Generated/MkmkOS_VAR/*</td>
+				<td>Headers generated by mkmk</td>
+			</tr>
+			<tr>
+				<td>FW/IdentityCard/Objects/MkmkOS_VAR/*</td>
+				<td>Files used to generate the identity card of the framework</td>
+			</tr>
+			<tr>
+				<td>FW/ImportedInterfaces/MkmkOS_VAR/.HeaderTable.map</td>
+				<td>Authorized headers for the framework</td>
+			</tr>
+			<tr>
+				<td>FW/ImportedInterfaces/MkmkOS_VAR/*.h</td>
+				<td>Headers which are indirection into the external headers</td>
+			</tr>
+			<tr>
+				<td>FW/MOD/Objects/MkmkOS_VAR/*.o</td>
+				<td>Compilation results</td>
+			</tr>
+			<tr>
+				<td>FW/MOD/LocalGenerated/MkmkOS_VAR/.f .cpp.c ...</td>
+				<td>Grammar apply results</td>
+			</tr>
+			<tr>
+				<td height="1">OS/code/bin/*</td>
+				<td height="1">Librairies and load generated by mkmk</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+				<td valign="top">Document created</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

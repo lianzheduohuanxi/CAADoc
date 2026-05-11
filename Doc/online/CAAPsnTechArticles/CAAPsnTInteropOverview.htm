@@ -1,0 +1,740 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+
+
+  <head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+
+  </script>
+
+  <title>CATIA V5 and ENOVIA VPM V4 Interoperability Principles</title>
+
+  </head>
+
+
+
+  <body>
+
+
+
+   <table width="100%">
+
+     <tr>
+
+       <td valign="top">
+
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+
+       </td>
+
+       <td valign="top">
+
+       <h2>ENOVIA VPM V4<br>
+
+       </h2>
+
+       </td>
+
+       <td rowspan="2" align="right" valign="top">
+
+       <h3><a name="Top"></a>CATIA V5 and ENOVIA VPM V4 Interoperability<br>
+
+       </h3>
+
+       <p><em>Interoperability Architecture</em></td>
+
+     </tr>
+
+     <tr>
+
+       <td class="tech" colspan="2">Technical Article</td>
+
+     </tr>
+
+   </table>
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <table class="abstract">
+
+     <tr>
+
+       <td>
+
+       <h3>Abstract</h3>
+
+       <p>This article describes the architecture for interoperability between 
+
+		CATIA V5 and ENOVIA VPM V4. It first briefly presents the main concepts 
+
+		of VPM V4.Then it explains how the communication channel between CATIA 
+
+		V5 and VPM V4 works. Finally it explains how the Unix Long Field 
+
+		repository can be accessed through the interoperability.<br>
+
+       </p>
+
+       <ul>
+
+         <li><b><a href="#ENOVIA_VPM_V4">ENOVIA VPM V4</a></b>&nbsp;<ul>
+
+           <li><b><a href="#Introducing_ENOVIA_VPM_V4">Introducing ENOVIA VPM V4</a> </b>
+
+           </li>
+
+           <li><b><a href="#Long_Field_Storage">Long Field Storage</a></b></li>
+
+           <li><b><a href="#CATIA_data_Storage_modes">CATIA data Storage modes</a></b></li>
+
+         </ul>
+
+         </li>
+
+			<li><b><a href="#Interoperability_with_ENOVIA_VPM_V4">
+
+			Interoperability with ENOVIA VPM V4</a></b>&nbsp;<ul>
+
+           <li><b><a href="#Principles_of_the_Interoperability">Principles of 
+
+			the Interoperability</a> </b>
+
+           </li>
+
+         </ul>
+
+         </li>
+
+			<li><b>
+
+			<a href="#Establishing_the_communication_channel_with_VX0SERV">
+
+			Establishing the communication channel with VX0SERV</a></b>&nbsp;<ul>
+
+           <li><b><a href="#Principles_of_the_Interoperability">Principles of the communication channel</a> </b>
+
+           </li>
+
+           <li><b><a href="#Environment_Setup_on_Unix_remote_server">Environment 
+
+			Setup on the remote Unix server</a></b></li>
+
+			<li><b><a href="#Environment_Setup_on_Windows_client">Environment 
+
+			Setup for Windows client</a></b></li>
+
+			<li><b><a href="#Environment_Setup_on_Unix_client">Environment Setup 
+
+			for Unix client</a></b></li>
+
+         </ul>
+
+         </li>
+
+			<li><b>
+
+			<a name="Communication_channel_between_CATIA_V5_and_VX0SERV_application1" href="#How_CATIA_V5_accessed_the_VPM_V4_Long_Field_repository">
+
+			How CATIA V5 accesses the VPM V4 Long Field repository</a></b>&nbsp;&nbsp;<ul>
+
+           <li><b><a href="#HTTP_access">HTTP server for Read Only access</a></b></li>
+
+           <li><b><a href="#NFS_access_for_Windows_client">NFS access for 
+
+			Windows client</a></b><ul>
+
+           <li><b><a href="#CATIPDMUnixNTMapping_User_Exit">CATIPDMUnixNTMapping 
+
+			User Exit</a></b></li>
+
+         </ul>
+
+         	<p>&nbsp;</li>
+
+         </ul>
+
+         </li>
+
+			<li><b><a href="#InShort">In Short</a></b></li>
+
+			<li><b><a href="#References">References</a></b></li>
+
+       </ul>
+
+       </td>
+
+     </tr>
+
+   </table>
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <h3><strong><a name="ENOVIA_VPM_V4">ENOVIA VPM V4</a></strong></h3>
+
+   <h4><a name="Introducing_ENOVIA_VPM_V4">Introducing ENOVIA VPM V4</a></h4>
+
+   <p>ENOVIA VPM V4 is a product of the ENOVIA Solutions product line whose 
+
+	objective is to enable companies to achieve quality, time and cost benefits 
+
+	by addressing the requirements for the management of product information 
+
+	throughout the entire product life cycle and across the extended enterprise. </p>
+
+	<p>ENOVIA VPM V4 product delivers a <b>Unix client application</b> directly 
+
+	connected to the Database Manager (DB2 or Oracle).</p>
+
+	<p>The main modules of ENOVIA VPM V4 are:</p>
+
+	<ul>
+
+		<li>Bill of Material (BOM)</li>
+
+		<li>Configuration (CFG)</li>
+
+		<li>Action Flow. </li>
+
+		<li>People &amp; Organisation (PO)</li>
+
+	</ul>
+
+	<p>The functional highlights of ENOVIA VPM V4 are:</p>
+
+	<ul>
+
+		<li>CATIA V4 and CATIA V5 documents support</li>
+
+		<li>MultiCAD/CAM/CAE support </li>
+
+		<li>multimodel link dependency analysis  
+
+		</li>
+
+		<li>maturity management  
+
+		</li>
+
+		<li>Part versioning and model revisioning  
+
+		</li>
+
+		<li>Publish/Subscribe mechanism  
+
+		</li>
+
+		<li>support for change propagation  
+
+		</li>
+
+		<li>support for work-in-configuration  
+
+		</li>
+
+		<li>support for the export and import of STEP data  
+
+		</li>
+
+		<li>support for organization, roles and security definitions. </li>
+
+	</ul>
+
+	<p>The VPM V4 Unix client proposes a direct connection with CATIA V4 and 
+
+	CATIA V5 enabling create and save new CATIA V4 and CATIA V5 documents in the 
+
+	VPM V4 vault. On Windows, the ENOVIA 3Dcom client coupled with its VPM V4 
+
+	plugin enables interoperate with CATIA V5</p>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h4><a name="Long_Field_Storage">Long Field Storage</a></h4>
+
+   <p>CATIA documents are stored in the VPM V4 vault by means of <b>Long Fields</b> 
+
+	accessed by different available methods called <b>Access Methods</b>. The 
+
+	standard access methods are:</p>
+
+	<ul>
+
+		<li>DBLFAIX: mainly used to store CATIA V5 documents</li>
+
+		<li>DBLFCAT: used to store CATIA V4 models</li>
+
+		<li>DBLFCDM: used to store CATIA V4 models</li>
+
+	</ul>
+
+	<p>Customers can also implement their own access method to store their V4 
+
+	models and V5 documents in the VPM V4 vault.</p>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h4><a name="CATIA_data_Storage_modes">CATIA data Storage modes</a></h4>
+
+   <p>Any CATIA V5 file type can be stored in the VPM V4 vault. The most usual 
+
+	types are CATProduct, CATPart and CATDrawing. All the CATIA V5 documents are 
+
+	stored in Publication Exposed mode, except the CATProduct that can be stored 
+
+	either in Publication Exposed mode, either in Structure Exploded mode:</p>
+
+	<ul>
+
+		<li><b>Structure Exploded</b>: the CATProduct is not kept in the 
+
+		database. The assembly structure relationships are published in the 
+
+		database.</li>
+
+		<li><b>Publication Exposed</b>: the CATProduct is kept in the database. 
+
+		Its external link information is published in the database.</li>
+
+	</ul>
+
+	<p>The CATIA V4 models are stored in Publication Exposed mode too, except 
+
+	the CATProduct that can be stored either in Publication Exposed mode</p>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h3><strong><a name="Interoperability_with_ENOVIA_VPM_V4">Interoperability 
+
+	with ENOVIA VPM V4</a></strong></h3>
+
+   <p>The purpose of the CATIA V5 interoperability with VPM V4 is to establish a 
+
+	connection between the CATIA V5 application and the VPM V4 application in 
+
+	order to <b>
+
+	load</b> into the CATIA session existing assemblies and documents that are <b>
+
+	stored</b> in the ENOVIA VPM V4 vault. Then, the documents that might have 
+
+	been modified by the application can be <b>saved</b> back to the ENOVIA VPM 
+
+	V4 vault. This interoperability capability consists in setting up a <b>
+
+	communication channel</b> between the CATIA V5 application (batch or 
+
+	interactive) and the ENOVIA VPM V4 application. On Unix, the CATIA 
+
+	application is able to connect to a running VPM V4 client. On Windows, the 
+
+	connection to an existing VPM V4 client on Unix is not possible. In this 
+
+	case, the connection must be established with a specific application running 
+
+	on a remote Unix server called <b>VX0SERV</b>. The VX0SERV application can 
+
+	be launched by the client application itself or can be run as a deamon.</p>
+
+	<p>In the next section, we detail the required environment setting to 
+
+	communicate with the VX0SERV application.</p>
+
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+
+   id="table1">
+
+     <caption>Fig.1 Interoperability functional view</caption>
+
+     <tr>
+
+       <td>
+
+		<img border="0" src="./images/CAAPsnTInteropArchitecture.jpg" width="506" height="389" align="left"></td>
+
+     </tr>
+
+   </table>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h3><strong>
+
+	<a name="Establishing_the_communication_channel_with_VX0SERV">Establishing 
+
+	the communication channel with VX0SERV</a></strong></h3>
+
+   <p>This section first explains the principles of the communication channel 
+
+	between CATIA V5 and the VX0SERV server application. Then it describes the 
+
+	required environment set up on the Unix remote server and on the Windows or 
+
+	Unix client.</p>
+
+   <h4><a name="Principles_of_the_Interoperability">Principles of the 
+
+	Interoperability</a></h4>
+
+   <ol>
+
+	<li>The CATIA V5 client application starts </li>
+
+	<li>The application launches the StartVPMBatchFromV5Batch.sh shell script on 
+
+	the unix server</li>
+
+	<li>The application waits until the VX0SERV server application starts and 
+
+	replies</li>
+
+	<li>The application connects to the VPM server for user/password and Role 
+
+	authentication</li>
+
+	<li>The application performs the required tasks </li>
+
+	<li>The application disconnects from the VPM server</li>
+
+	<li>The application stops the VX0SERV server application</li>
+
+	</ol>
+
+   <h4><a name="Environment_Setup_on_Unix_remote_server">Environment Setup on 
+
+	Unix remote server</a></h4>
+
+	<ul type="square">
+
+		<li>Declare the <b>catcom</b> service in /etc/services file:<table class="code" id="table5">
+
+			<tr>
+
+				<td>
+
+				<pre>...
+
+catcom 7201/tcp </pre>
+
+				</td>
+
+			</tr>
+
+		</table>
+
+		</li>
+
+		<li>Configure the <b>catcom</b> service in /etc/inetd.conf file:<table class="code" id="table4">
+
+			<tr>
+
+				<td>
+
+				<pre>...
+
+catcom stream tcp nowait nobody /EnoviaVPMPathInstallation/JS0TLN JS0TLN -secured /home/data/vpmadm/MySec.txt</pre>
+
+				</td>
+
+			</tr>
+
+		</table>
+
+		<p>Where &#8220;/EnoviaVPMPathInstallation/&#8221; is the absolute path of JS0TLN 
+
+		for ENOVIA VPM V4 installation. Besides JS0TLN&nbsp; must have only root 
+
+		read/write access mode. It must have the right to change access right 
+
+		for user and group (setgid bit).</p>
+
+		<p>Where MySec.txt file contains the security parameters identifying 
+
+		which userids&nbsp; can submit the process and from which client (IP 
+
+		address). It enables declare under which userid the process is run. For 
+
+		instance, in the next example, the user <b>user27</b> running on host ip 
+
+		address <b>
+
+		128.40.125.149</b> is authorized to run the process. The process will be 
+
+		run under <b>vpmadm</b> userid.</p>
+
+		<table class="code" id="table6">
+
+			<tr>
+
+				<td>
+
+				<pre>...
+
+HostAddr='128.40.125.149' RemoteUser='user27' LocalUser='vpmadm' </pre>
+
+				</td>
+
+			</tr>
+
+		</table>
+
+		</li>
+
+		<li>Customize the <b>StartVPMBatchFromV5Batch.sh</b> shell script on the 
+
+		Unix remote server:<table class="code" id="table3">
+
+			<tr>
+
+				<td>
+
+				<pre>#!/bin/ksh
+
+
+
+. /home/data/vpmadm/.profile
+
+. /home/data/vpmadm/env/YOUR.env
+
+. /home/data/vpmadm/env/VPMWsUser.sh
+
+</pre>
+
+				<pre>export <b>GlobalVPMServer</b>=1
+
+export <b>VPMServerTimeOut</b>=6000
+
+
+
+VX0SERV &gt;&gt;/tmp/VX0SERV.log 2&gt;&amp;1 </pre>
+
+				</td>
+
+			</tr>
+
+		</table>
+
+		<p>Where <b>GlobalVPMServer</b> variable enables xco connection with a 
+
+		VX0SERV server on a different machine for UNIX/UNIX communication.</p>
+
+		<p>Where <b>VPMServerTimeOut</b> variable defines the timeout of the 
+
+		server.</p>
+
+		</li>
+
+	</ul>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h4><a name="Environment_Setup_on_Windows_client">Environment Setup for 
+
+	Windows client</a></h4>
+
+	<ul type="square">
+
+		<li>Define the path of the directory containing the <b>
+
+		StartVPMBatchFromV5Batch.sh</b> shell script on the Unix remote server 
+
+		by the <b>CV5VpmStart</b> environment variable. For instance: </li>
+
+		<p>set CV5VpmStart=/home/data/vpmadm/code/bin</p>
+
+		<li>&nbsp;</li>
+
+		<li>Active the specific Windows communication mode by setting the <b>
+
+		CV5_VPM_XCONT</b> environment variable:</li>
+
+		<p>&nbsp;set CV5_VPM_XCONT=1</p>
+
+	</ul>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h4><a name="Environment_Setup_on_Unix_client">Environment Setup for Unix 
+
+	client</a></h4>
+
+	<ul type="square">
+
+		<li>Define the path of the directory containing the <b>
+
+		StartVPMBatchFromV5Batch.sh</b> shell script on the Unix remote server 
+
+		by the <b>CV5VpmStart</b> environment variable.<p>export 
+
+		CV5VpmStart=/home/data/vpmadm/code/bin</li>
+
+	</ul>
+
+   <h3><strong><a name="How_CATIA_V5_accessed_the_VPM_V4_Long_Field_repository">
+
+	How CATIA V5 accessed the VPM V4 Long Field repository</a></strong></h3>
+
+   <p>The interoperability between CATIA V5 en ENOVIA VPM V4 enables read the 
+
+	Long Fields stored on the Unix server and load the associated CATIA 
+
+	documents in the CATIA session. For Windows application, the Long Fields can 
+
+	be read either via a HTTP server access, either through a NFS access. Only 
+
+	the NFS access allows write access.</p>
+
+   <h4><a name="HTTP_access">HTTP server for Read Only access</a></h4>
+
+   <p>The HTTP server running on a Unix remote server can be used to access the 
+
+	Long Field directory. The HTTP access is activated by setting the 
+
+	HTTP_SERVER environment variable. For instance: </p>
+
+	<p>set HTTP_SERVER=arbi2dsy:80</p>
+
+	<p>&nbsp;</p>
+
+   <h4><a name="NFS_access_for_Windows_client">NFS mount&nbsp; for Read/Write 
+
+	access</a></h4>
+
+	<p>For Unix client, the NFS access consists in mounting the NFS server 
+
+	directory on the client machine.</p>
+
+	<p>For Windows client, the NFS access requires the following setup:</p>
+
+	<ul>
+
+		<li>the NFS mapping of the Unix Long Field directory to a Windows drive. 
+
+		For instance, mapping the directory /home/data/VPMData/LF to the W: 
+
+		drive</li>
+
+		<li>the implementation of the <b>CATIPDMUnixNTMapping</b> interface.</li>
+
+	</ul>
+
+	<p align="right">[<a href="#Top">Top</a>]</p>
+
+   <h5><a name="CATIPDMUnixNTMapping_User_Exit">CATIPDMUnixNTMapping interface</a></h5>
+
+   <p>For Windows client, the <b>CATIPDMUnixNTMapping</b> interface enables 
+
+	convert the syntax of the Long Field path from Unix to Windows.</p>
+
+	<p>This User Exit has two methods to implement:</p>
+
+	<ul>
+
+		<li><b>&nbsp;UnixPathToNTPath()</b> to read Long Fields<p>The interface 
+
+		implementation has to retrieve the name of the chosen drive and convert 
+
+		the syntax of the Long Field path.</p>
+
+		</li>
+
+		<li><b>&nbsp;NtPathToUnix() </b>to write Long Fields<p>The interface 
+
+		implementation has to set the full path of a file in a Unix directory in 
+
+		which the new Long Field will be written before ENOVIA vpm application 
+
+		finaly saves it in the ENOVIA vpm vault with the chosen access method. </p>
+
+		</li>
+
+	</ul>
+
+   <p align="right">[<a href="#Top">Top</a>]</p>
+
+   <!---------------------------------comment------------------------------------->
+
+   <!---------------------------------comment------------------------------------->
+
+   <!---------------------------------comment------------------------------------->
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <h3><a name="InShort"></a>In Short</h3>
+
+   <p align="right">[<a href="#Top">Top</a>]</p>
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <h3><a name="References"></a>References</h3>
+
+   <table width="100%">
+
+     <tr>
+
+       <td valign="top">[1]</td>
+
+       <td><a></a></td>
+
+     </tr>
+
+     </table>
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <h3><a name="History"></a>History</h3>
+
+   <table width="100%">
+
+     <tr>
+
+       <td valign="top">Version: <strong>1</strong> [Sep 2005]</td>
+
+       <td valign="top">Document created</td>
+
+     </tr>
+
+     <tr>
+
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+
+     </tr>
+
+   </table>
+
+   <hr>
+
+   <!---------------------------------comment------------------------------------->
+
+   <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+
+
+  </body>
+
+
+
+</html>
+
+
+

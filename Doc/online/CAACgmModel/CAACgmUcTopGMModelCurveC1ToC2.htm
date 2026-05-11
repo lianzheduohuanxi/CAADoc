@@ -1,0 +1,156 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Breaking a C1 Curve into C2 Pieces</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Breaking a C1 Curve into C2 Pieces</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The geometric modeler is designed to operate on C2 curves and surfaces.
+		Non-C2 curves and surfaces are to be broken into C2 pieces.	Any curve which is suspected of being non-C2
+		can be analyzed by using the CATICGMNurbsCurveTools::Check method. If a curve is detected as being non-C2, 
+		it has to be split into C2 pieces by using the CATICGMMathNurbsCurveTools operator. 
+        From the C2 pieces, you can compute the parameters of a single Nurbs. 
+        These parameters can be used to create a single Nurbs (non-C2) in an other modeler.  
+</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To check whether a curve is C2, use the <tt>Check</tt> method of CATICGMNurbsCurveTools operator. 
+This operator is created by the CATCGMCreateNurbsCurveTools global function.
+To break a non-C2 curve into C2 pieces, use the <tt>ConvertToC2NurbsCurves</tt> method of the CATICGMMathNurbsCurveTools operator.
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelConvertCurveToC2.m module in CAAGMModelInterfaces.edu 
+illustrates how to break a non-C2 curve into C2 pieces. This use case 
+is to be run with the 
+RationalNurbsCurveC1.ncgm file which is delivered in the FunctionTests/InputData 
+folder. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Break a C1 Curve into C2 Pieces: Input 
+	Curve </caption>
+  <tr>
+    <td>
+	<img alt="Break a C1 Curve into C2" src="images/CGM_curve_C1toC2_1.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+// Checks the input curve continuity
+CATICGMNurbsCurveTools  * pNurbsTool3D  =::CATCGMCreateNurbsCurveTools(piGeomFactory, pConfig, pC1Nurbs);
+...
+CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+if (infoContinuity != Info_InternalContinuity) 
+    {
+		cout &lt;&lt; "The curve is C2 discontinuous" &lt;&lt; endl; 
+     // Retrieves the parameters to be passed to the 
+     const CATKnotVector * inputKV = pC1Nurbs->GetKnotVector();  // the knot vector
+     CATLONG32  NbCp  =  inputKV->GetNumberOfControlPoints();  	
+     ...
+     CATICGMMathNurbsCurveTools  * pMathNurbsTool3D  =::CATCGMCreateMathNurbsCurveTools( *inputKV,
+            pNurbs->IsRational(),
+			ctlPts,
+			CATMathNurbsFull3D,
+			aWeights);
+     ...
+     // Creates the C2 curves pieces
+     CATLISTP(CATCurve) listOfC2Curves;
+     pMathNurbsTool3D->ConvertToC2NurbsCurves(piGeomFactory,listOfC2Curves);
+     ...
+     }
+</TD>
+    </TR>
+</TABLE>
+<p>three pieces are created. Assembling these three pieces and analyzing the 
+wire with the CATIA GSD &quot;Curve Smooth&quot; capability&nbsp; gives this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Point on a Wire: Result</caption>
+  <tr>
+    <td>
+	<img alt="Break a C1 Curve into C2: Result" src="images/CGM_curve_C1toC2_0.png"></td>
+       </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Dec 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

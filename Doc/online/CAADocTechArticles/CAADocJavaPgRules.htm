@@ -1,0 +1,646 @@
+<html>
+
+<head>
+<title>CAA V5 Java Programming Rules and Tips</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>CAA V5 Java Coding Rules</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 Java Coding Rules</h3>
+      <em>Rules, hints and tips to write Java code</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you several mandatory rules to program with Java in
+      order to improve the readability of your code and moreover to enable
+      Dassault Systèmes tools to process your code. Besides, this article
+      provides some tips to make your code profit from the advantages of Java
+      and avoid its drawbacks. These tips are often sum ups of world-wide-web
+      items to which they point by hyperlinks.</p>
+      <ul>
+        <li><a href="#Mandatory Rules">Internal Mandatory Rules</a>
+        <li><a href="#Advised Tips">Advised Tips</a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Mandatory Rules"></a>Internal Mandatory Rules</h3>
+<p>These rules are:
+<ul>
+  <li><a href="#R1">Create a file for each Java top level class or interface</a></li>
+  <li><a href="#R2">Use the single-type-import import declaration systematically</a></li>
+  <li><a href="#R3">Do not expose data members as public</a></li>
+  <li><a href="#R4">Release your objects when you no longer use them</a></li>
+  <li><a href="#R5">Often use the class modifier final</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="R1"></a>Create a File for each Java Top Level Class or Interface</h4>
+<p>Create a separate .java file for each top level class and interface, and put
+in this file only the declaration of this entity. This file must have the same
+name than the entity. For example, the BitmapPanel class is written in the
+BitmapPanel.java file.</p>
+<p>However, you can define nested classes, that is to say classes whose
+declaration occurs within the body of another class or interface if the nested
+class completely depends on the top level class and is meaningless without it.
+It avoids namespace pollution by using the enclosing type as namespace.</p>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="R2"></a>Use the Single-Type-Import Import Declaration
+Systematically</h4>
+<ul>
+  <li>Always import the classes and interfaces you use in a file. It enables you
+    to refer to a type declared in another package by its simple name instead of
+    its fully qualified name. Fo example:
+    <pre>import com.dassault_systemes.CATVisu.CATVisEvent.CreationEvent;</pre>
+    <p>In the files where you insert this declaration, the simple name
+    CreationEvent refers to the type CreationEvent in the package
+    com.dassault_systemes.CATVisu.CATVisEvent.CreationEvent.<br>
+    Otherwise, you would have to use the fully qualified name
+    com.dassault_systemes.CATVisu.CATVisEvent.CreationEvent to refer to the type
+    CreationEvent in your code.</p>
+    <p>Even if the class you need belongs to the current package, insert an
+    import declaration to use it. It is not demanded by Java, but it improves
+    the readability of your code and it is requested by Dassault Systemes tools
+    which use import declarations to detect dependencies.</p>
+  </li>
+  <li>Always use the Single-Type-Import declaration. A Single-Type-Import
+    declaration imports a single type by giving its full name. For example:
+    <pre>import com.dassault_systemes.CATVisu.CATVisEvent.CreationEvent;</pre>
+    <p>Don't use the Type-Import-on-Demand declaration: &quot;import
+    com.dassault_systemes.CATVisu.CATVisEvent.* ;&quot; which imports all the
+    types of the com.dassault_systemes.CATVisu.CATVisEvent package. It reduces
+    the readability of the code because when a type is referred by its simple
+    name, one cannot know to which package the type belongs. Whereas, if you
+    always use Single-Type-Import declarations, the type is listed in the the
+    import declarations. Moreover, Dassault Systemes tools demand
+    Single-Type-Import declaration to manage dependencies.</p>
+    <p>However, you may be compelled to use such a declaration if you need two
+    types with the same simple name but belonging to different packages.</p>
+    <p>For example:</p>
+    <pre>import com.dassault_systemes.CATDialog.CATDlgWindow.awt.RadioButon;
+import com.dassault_systemes.CATDialog.CATDlgWindow.swing.RadioButon;</pre>
+    <p>causes a compile-time error. It must be replaced by:</p>
+    <pre>import com.dassault_systemes.CATDialog.CATDlgWindow.awt.RadioButon;
+import com.dassault_systemes.CATDialog.CATDlgWindow.*</pre>
+    <p>and you have to refer to the
+    com.dassault_systemes.CATDialog.CATDlgWindow.swing.RadioButon type by its
+    fully qualified name in the class body.<br>
+    However, such pieces of code must remain exceptions.</p>
+  </li>
+  <li>Always use simple names in the class body (except when a name conflict
+    prevents it). That obliges to add the import declaration corresponding to
+    the type if it belongs to another package.</li>
+  <li>Avoid including useless import statement. Never copy and paste sets of
+    import declarations from another file. This is the worst you can do, since
+    it's then more difficult to sort useful and useless files.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="R3"></a>Do Not Expose Data Members as Public</h4>
+<p>If you do so, you give a direct access to your data members to any users of
+your class instances. This breaks encapsulation. Even if using methods to access
+private data members doesn't avoid the client application to be rebuilt if you
+change this data, you keep a control on your data if you enable the client
+application to access them using these methods.</p>
+<p>You can nevertheless do that if performance is an issue, and if there is no
+added value to add a pair of methods to access your data.</p>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="R4"></a>Release Your Objects When You no Longer Use Them</h4>
+<p>An object is eligible for garbage collection when there are no more
+references to that object. References that are held in a variable are naturally
+dropped when the variable goes out of scope. Two cases can be distinguished:</p>
+<ul>
+  <li>A reference held in a local variable is released at the end of the block
+    or the method it belongs to. So you needn't manage this case.
+  <li>As regard a reference held by an instance variable, you must set this
+    variable to null as soon as you are done with it. Otherwise, it will be
+    released when the instance is collected by the garbage collector, so in an
+    indeterminate time depending on the the use of the instance and on the
+    garbage collector too.</li>
+</ul>
+<table width="100%">
+  <tr>
+    <td width="50%">For instance, assume that you have a graph of 4 instances
+      i0, i1, i2, i3. i0. Each instance has one or several instance variables
+      that hold a reference to another instance like in the diagram near by.
+      <p>Refij is a variable of instance i which references instance j.</p>
+      <p>In order for i1, i2, i3 to be eligible for garbage collection, i0 must
+      set ref01 to null as soon as i0 is useless.</p>
+    </td>
+    <td width="50%"><img border="0" src="images/CAADocJavaReleaseRule.jpg" width="360" height="270"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="R5"></a>Often Use the Class Modifier Final</h4>
+<p>As soon as you don't want a class to be derived, declare it Final. It is the
+only way to prevent CAA clients from deriving an exposed class.</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Advised Tips"></a>Advised Tips</h3>
+<p>The tips are:
+<ul>
+  <li><a href="#T1">Avoid using an object to refer to class (static) variables
+    and methods</a></li>
+  <li><a href="#T2">Avoid using finalizers</a></li>
+  <li><a href="#T3">Avoid calling non-private methods from initializers and
+    constructors</a></li>
+  <li><a href="#T4">Avoid calling methods from an initializer</a></li>
+  <li><a href="#T5">Use constants whenever possible</a></li>
+  <li><a href="#T6">Clone objects before returning them to prevent a client from
+    modifying them</a></li>
+  <li><a href="#T7">Take advantage of immutable objects</a></li>
+  <li><a href="#T8">Choose the right exception type to throw</a></li>
+  <li><a href="#T9">Use threads cautiously</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T1"></a>Avoid Using an Object to Refer to Class (static) Variables
+and Methods</h4>
+<p>Avoid using an object to access a class (static) variable or method. Use a
+class name instead. For example:</p>
+<pre>classMethod();             //OK
+AClass.classMethod();      //OK
+anObject.classMethod();    //AVOID!
+</pre>
+<p>Class methods are statically bound, so they don't enjoy the flexibility of
+polymorphism: if you derive a class and create a static method with the same
+name and arguments as a static method of the superclass, you don't override the
+superclass's method, you only hide it. When this redefined method is invoked,
+the JVM will select the method implementation to execute not by the class of the
+object at runtime, but by the type of the variable at compile-time.</p>
+<p>(Source: Designing with Static Members, <a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/static.html');return false;">http://www.artima.com/designtechniques/static.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T2"></a>Avoid Using Finalizers</h4>
+<p>They are only useful for non-memory resources such as file handles and
+sockets. However:</p>
+<ul>
+  <li>
+    <p><b>Do not rely on finalizers to release non-memory resources<br>
+    </b>You don't know when objects will be finalized. You only know that
+    finalizable objects will be finalized before being garbage collected. But
+    you don't know when and even whether your objects will be garbage collected.<br>
+    Moreover, finalizers may be run in any order, sequentially by a single
+    thread or concurrently by multiple threads.<br>
+    So you cannot rely on the finalizer to release resources. For example, when
+    an object opens a file in its constructor, it cannot only close it in its
+    finalize method. A Java program generally will have only a finite number of
+    file handles at its disposal. When all those handles are in use, the program
+    won't be able to open any more files. Instead, the object should provide a
+    method that will close the file. However, the finalizer can close the file
+    in case of problem or if the closing method has not been called.<br>
+    So, you can use finalizers to provide a fallback mechanism for releasing non
+    memory finite resources such as file handles or sockets.</p>
+  <li><b>Do not resurrect objects in Finalizers<br>
+    </b>It is possible to resurrect objects in finalizers by making them
+    referenced again but don't do it! First, it makes the code difficult to
+    understand and maintain. Moreover, the garbage collectors in the JVM invoke
+    the finalize method of an object only once. If that object is resurrected
+    and becomes available for garbage collection a second time, the object's
+    finalize method will not be invoked again.</li>
+  <li>
+    <p><b>End your finalizers with:</b></p>
+    <pre>super.finalize();</pre>
+    <p>The JVM does not automatically invoke superclass finalizers, so you must
+    do so explicitly. Making super.finalize() the last action of a finalizer
+    ensures that subclasses will be finalized before superclasses.</p>
+  <li>
+    <p><b>Do not call finalize<br>
+    </b>Finalize is designed to be called by the garbarge collector. Do not call
+    it yourself. Define CleanUp methods if you need to deallocate object at
+    specific moments.</p>
+  </li>
+</ul>
+<p>(Source: Object Finalization and Cleanup<font color="#000066" face="arial, helvetica">,</font>
+<a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/cleanup.html');return false;">http://www.artima.com/designtechniques/cleanup.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T3"></a>Avoid calling non-private methods from initializers and
+constructors</h4>
+<p>If an initializer or a constructor of a superclass invokes a non-private
+method which has been overridden in a subclass, the subclass's implementation of
+that method will run. If the subclass's method implementation uses instances
+variables explicitly declared in the subclass, those variables will still have
+their default initial values (their initializers and the subclass's constructor
+will not have been called yet).<br>
+If you invoke non-private methods from initializers and constructors, remember
+that later some other programmer could extend your class and override those
+methods.</p>
+<p>Eg: Here is a Building class which has 5 floors of 3 flats and a BigBuilding
+class with 10 floors of 4 flats.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td width="50%">
+        <pre>class Building
+{
+  protected int flatCount;
+  private int floorCount = 5;
+  Building()
+  {
+    flatCount = initFlatCount();
+  }
+  int initFlatCount()
+  {
+    return floorCount * 3;
+  }
+  // ...
+}</pre>
+      </td>
+      <td width="50%">
+        <pre>class BigBuilding extends Building
+{
+  private int flatByFloorCount = 4;
+  int initFlatCount()
+  {
+    return 10 * flatByFloorCount ;
+  }
+  // ...
+}</pre>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%">After the constructor, flatCount = 15</td>
+      <td width="50%">After the constructor, flatCount = 0 !<br>
+        because flatByFloorCount has not been initialized before the call to
+        BigBuilding::initFlatCount by Building's constructor.</td>
+    </tr>
+  </tbody>
+</table>
+<p>(Source: Object Initialization in Java, <a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/initialization.html');return false;">http://www.artima.com/designtechniques/initialization.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T4"></a>Avoid Calling Methods from an Initializer</h4>
+<p>The compiler generates an error if an initializer refers to an instance
+variable declared textually after the variable being initialized. So you cannot
+make a direct forward reference from an initializer.</p>
+<p>You'll never be allowed to write:</p>
+<pre>class Building
+{
+    private int flatCount = 3 * floorCount;
+    private int floorCount = 5;
+    // ...
+}</pre>
+<p>But you may inadvertently circumvent the compiler's preventive restriction:</p>
+<pre>class Building
+{
+    private int flatCount = initFlatCount();
+    private int floorCount = 5;
+    private int initFlatCount()
+    {
+         return floorCount * 3;
+    }
+    // ...
+}</pre>
+<p>This code compiles without an error but the Runtime result is not the
+expected one: flatCount equals 0.<br>
+Indeed, when initFlatCount is called, floorCount is not initialized yet, so it
+has its default value:0.</p>
+<p>(Source: Object Initialization in Java<font color="#000066" face="arial, helvetica">,</font>
+<a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/initialization.html');return false;">http://www.artima.com/designtechniques/initialization.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h4><a name="T5"></a>Use Constants Whenever Possible</h4>
+<p>In Java, the constants must be coded as static final variables. Numerical
+constants (literals) should not be coded directly, except for -1, 0, and 1,
+which can appear in a <code>for</code> loop as counter values.</p>
+<p>A static final variable:</p>
+<ul>
+  <li>makes your code more readable: MAX_LENGTH is more meaningful than 10.
+  <li>makes your code more flexible: if an evolution of your program requires to
+    change the value, you'll only have to change the initialization of the
+    constant rather than change every occurrence of the hard coded value.
+  <li>is not more costly than a literal: references to static final variables
+    initialized to a compile-time constant are resolved at compile-time to a
+    local copy of the constant value, so the class of the constant doesn't need
+    to be loaded when the constant is used. This is true for constants of all
+    the primitive types and of type java.lang.String.</li>
+</ul>
+<p>(Source: Designing Fields and Methods, <a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/coupling.html');return false;">http://www.artima.com/designtechniques/coupling.html</a>)</p>
+<p>Moreover, static final variables enable you to define &quot;enum&quot; in
+Java.<br>
+For example the C++ statement::</p>
+<pre>enum Color {RED, GREEN, BLUE, WHITE} </pre>
+<p>may be replaced in Java by:</p>
+<pre>public final class Color
+{
+    private Color() {}
+    public static final Color RED = new Color();
+    public static final Color GREEN = new Color();
+    public static final Color BLUE = new Color();
+    public static final Color WHITE = new Color();
+}</pre>
+<p>(Source: Type safe constants in C++ and Java, <a href="#" onclick="javascript:CAAlinkUrl('http://www.javaworld.com/javaworld/javatips/jw-javatip27.html');return false;">http://www.javaworld.com/javaworld/javatips/jw-javatip27.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T6"></a>Clone Objects before Returning Them to Prevent a Client
+from Modifying Them</h4>
+<p>If a method returns a reference to a private data member, the client can
+modify it and corrupt it.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td width="50%">Avoid</td>
+      <td width="50%">Prefer</td>
+    </tr>
+    <tr>
+      <td width="50%">
+        <pre>import java.awt.Dimension;
+
+  public class Ground
+  {
+    private Dimension d = new Dimension (0, 0);
+
+    public Dimension getDimension()
+    {
+      return d;
+    }
+  }</pre>
+      </td>
+      <td width="50%">
+        <pre>import java.awt.Dimension;
+
+  public class Ground
+  {
+    private Dimension d = new Dimension (0, 0);
+
+     public Dimension getDimension()
+    {
+        return new Dimension (d.x, d.y);
+    }
+ }</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The following code affects only the first implementation</p>
+<pre>    Ground gr = new Ground();
+
+    Dimension d = gr.getDimension();
+    d.height = -5;
+    d.width = -10;
+</pre>
+<p>So, if you don't want the caller method to be able to modify the original
+object, clone it before returning it. However, cloning may take a certain time.
+So you can disobey this rule if time is a critical point and if you know the
+possible callers (e.g., if the class is not public, the callers only belong to
+the same package).</p>
+<p>In the same way, when you return an array, not only clone the array but also
+each object belonging to the array unless you intentionally give the client the
+access to the original objects.</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td width="38%">Avoid</td>
+      <td width="62%">Prefer</td>
+    </tr>
+    <tr>
+      <td width="38%">
+        <pre>import java.awt.Dimension;
+
+public class Grounds
+{
+  static final public int TOTAL_VALUES = 10;
+  private Dimension[] d = new Dimension[TOTAL_VALUES];
+
+  public Dimension[] getDimensions() 
+      throws CloneNotSupportedException
+  {
+    return (Dimension[])d.clone();
+  }
+}</pre>
+      </td>
+      <td width="62%">
+        <pre>public Dimension[] getValues()
+           throws CloneNotSupportedException
+{
+  Dimension[] copy = (Dimension[])d.clone();
+  for (int i = 0; i &lt; copy.length; ++i)
+  {
+    if (d[i] != null)
+    {
+      copy[i] = new Dimension (d[i].height, d[i].width);
+    }
+  }
+  return copy;
+}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The same problem occurs with multidimensional arrays of atomic types.</p>
+<p>(Source: Complement testing with code inspections, <a href="#" onclick="javascript:CAAlinkUrl('http://www.javaworld.com/javaworld/javatips/jw-javatip88.html');return false;">http://www.javaworld.com/javaworld/javatips/jw-javatip88.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h4><a name="T7"></a>Take Advantage of Immutable Objects</h4>
+<p>Java provides immutable classes, for example:</p>
+<ul>
+  <li>Boolean
+  <li>Byte
+  <li>Character
+  <li>Class
+  <li>Double
+  <li>Float
+  <li>Integer
+  <li>Long
+  <li>Short
+  <li>String
+  <li>Most Exception subclasses</li>
+</ul>
+<p>Immutable objects cannot change, so there is no need to clone them before
+returning them.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td width="50%">Avoid</td>
+      <td width="50%">Prefer</td>
+    </tr>
+    <tr>
+      <td width="50%">
+        <pre>public class Rope
+{
+  private Integer lg = new Integer(0);
+
+  public Integer getLength()
+  {
+    return new Integer(lg.intValue());
+  }
+}</pre>
+      </td>
+      <td width="50%">
+        <pre>public class Rope
+{
+  private Integer lg = new Integer(0);
+
+  public Integer getLength()
+  {
+    return lg;
+  }
+}</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>A particular type of immutable class is String which represents character
+strings. All string literals in Java programs, such as &quot;abc&quot; are
+implemented as instances of this class. Since String objects are immutable, they
+can be shared. So:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td width="50%">Avoid</td>
+      <td width="50%">Prefer</td>
+    </tr>
+    <tr>
+      <td width="50%">
+        <pre>    String str = new String(&quot;abc&quot;); </pre>
+      </td>
+      <td width="50%">
+        <pre>    String str = &quot;abc&quot;; </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>(Source: Complement testing with code inspections, <a href="#" onclick="javascript:CAAlinkUrl('http://www.javaworld.com/javaworld/javatips/jw-javatip88.html');return false;">http://www.javaworld.com/javaworld/javatips/jw-javatip88.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T8"></a>Choose the Right Exception Type to Throw</h4>
+<ul>
+  <li>Don't throw Exceptions systematically.<br>
+    A method should throw an exception only when it encounters an abnormal
+    condition that it can't handle. For example, reaching the end of a file when
+    reading a file is not considered as an abnormal condition but as a condition
+    which occurs normally for each file and should be treated by returning a
+    special value. Inversely, if a precondition of the method is not fulfilled
+    (an argument has not a legal value or a prerequisite method has not been
+    executed), an exception can be thrown.
+  <li>Don't throw Errors<br>
+    Error is intended for drastic problems such as OutOfMemoryError which would
+    be reported by the JVM itself.
+  <li>Choose between Checked and Unchecked Exceptions<br>
+    A checked exception is some subclass of <code>Exception</code> (or <code>Exception</code>
+    itself), excluding class <code>RuntimeException</code> and its subclasses.
+    Unchecked exceptions are <code>RuntimeException</code> and any of its
+    subclasses. If you throw a checked exception (and don't catch it), you will
+    need to declare the exception in your method's <code>throws</code> clause.
+    Client programmers who wish to call your method will then need to either
+    catch and handle the exception within the body of their methods, or declare
+    the exception in the throws clause of their methods. Making an exception
+    checked forces client programmers to deal with the possibility that the
+    exception will be thrown.<br>
+    The simple guideline is: if you are throwing an exception for an abnormal
+    condition that you feel client programmers should consciously decide how to
+    handle, throw a checked exception. In general, exceptions that indicate an
+    improper use of a class (e.g., an illegal value for a parameter) should be
+    unchecked because they signal a software bug that will have to be fixed.
+  <li>Use specific exception classes<br>
+    Don't just throw <code>Exception</code>, for example, with a string message
+    indicating the kind of abnormal condition that caused the exception. Define
+    or choose an already existing exception class for each kind of abnormal
+    condition that may cause your method to throw an exception. This way, client
+    programmers can define a separate catch clause for each kind of exception,
+    or can catch some but not others, without having to query the object to
+    determine the kind of abnormal condition that caused the exception.</li>
+</ul>
+<p>(Source: Designing with Exceptions, <a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/desexcept.html');return false;">http://www.artima.com/designtechniques/desexcept.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="T9"></a>Use Threads Cautiously</h4>
+<ul>
+  <li>Use threads only when necessary.<br>
+    Multithreading is not easy to control, debug and maintain. It obliges you to
+    make objects thread-safe which may involve a performance penalty.</li>
+  <li>Make class and instance variables thread-safe<br>
+    If you use threads, class and instance variables are shared by the threads,
+    so you have to make them thread-safe. Inversely; you needn't worry about
+    method parameters and returned values which inherently are thread-safe.</li>
+  <li>Make long and double thread-safe<br>
+    Reads and writes of primitive types and object references are atomic by
+    definition, except for <code>long</code>s and <code>double</code>s. This
+    means that if you have an <code>int</code>, for example, that is independent
+    of any other fields in an object, you needn't synchronize code that accesses
+    that field. Inversely, if two different threads were to attempt to write two
+    different values to a <code>long</code> concurrently, you might just end up
+    with a corrupted value consisting of some bits written by one thread and
+    other bits written by the other thread. Multithreaded access to <code>long</code>s
+    and <code>double</code>s, therefore, should always be synchronized.</li>
+  <li>Three ways to make an object thread-safe
+    <ul>
+      <li>Synchronizing critical sections: it is the normal approach. If you
+        synchronize a piece of code which treats some specific data, you must
+        synchronize every other piece of code which modifies or reads these same
+        data.
+      <li>Using immutable objects, that is to say objects whose variable values
+        cannot be changed like the String or Integer classes. Each time a new
+        value is needed, another object is created. This approach works well
+        when objects are small and represent values of a simple abstract data
+        type.
+      <li>Using wrapper objects: When you cannot modify the code of the an
+        object you need, you can create a thread-safe object (with synchronized
+        critical sections) to wrap it.</li>
+    </ul>
+  </li>
+</ul>
+<p>(Source: Designing for Thread Safety, <a href="#" onclick="javascript:CAAlinkUrl('http://www.artima.com/designtechniques/threadsafety.html');return false;">http://www.artima.com/designtechniques/threadsafety.html</a>)</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

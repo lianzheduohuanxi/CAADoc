@@ -1,0 +1,254 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Splitting a Wire</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Splitting a Wire </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A wire can be split by another wire, a shell or a vertex.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a><ul>
+							<li><a href="#WireByShell">Case 1: Split a Wire by a Shell when the Shell does not cut the 
+			Wire</a></li>
+							<li><a href="#WireByWire">Case 2: Split a Wire by a Wire</a></li>
+							<li><a href="#WireByVertex">Case 3: Split a Wire by a Vertex</a></li>
+			</ul>
+			</li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To split a wire, use the CATICGMHybSplit operator in GMOperatorsInterfaces.
+This operator is created by the CATCGMCreateTopSplitWire global function in 
+which the last argument (CATHybSelectionMode) defines the partitions to be kept. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsSplitWire.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how split a wire. This use case is to be run with the 
+splitWireInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. 
+</p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3><a name="WireByShell">Case 1: Split a Wire by a Shell when the Shell does not Cut the Wire</a></h3>
+The CATHybSelectionMode identifies which partitions of the split body are kept. 
+For a wire cut by a shell:
+<dl>
+<dt>POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE</dt>
+<dd>The partitions to keep are pointed to by the shell orientation.</dd>
+<dt>NEGATIVE_POSITIVE_SIDE or NEGATIVE_NEGATIVE_SIDE</dt>
+<dd>The partitions to remove are pointed to by the shell orientation.</dd>
+<dt>BOTH_SIDES</dt>
+<dd>Should not be used.</dd>
+</dl>
+<p>When the wire to be split and the shell do not intersect, the CATICGMHybSplit 
+throws an exception with a message indicating that the input bodies do not 
+intersect. You can use the CATICGMHybSplit::SetKeepHalfSpaceMode method to 
+indicate which partition of the space is to be kept (TRUE must be specified).<p>With the input data below<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Split a wire by a plane (shell orientation 
+	in blue)</caption>
+   <tr>
+    <td>
+	<img alt="SplitWireByShell Input Data" src="images/CGM_splitWireByShell_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMHybSplit * pSplitWireByShellOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata, 
+  pWire1, pShellBody, POSITIVE_NEGATIVE_SIDE);
+...
+pSplitWireByShellOpe->SetKeepHalfSpaceMode(TRUE);
+pSplitWireByShellOpe->Run();
+CATBody * pSplitWireByShellResult = pSplitWireByShellOpe->GetResult();
+...
+pSplitWireByShellOpe->Release(); pSplitWireByShellOpe=NULL;</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Split a wire by a plane: result </caption>
+   <tr>
+    <td>
+	<img alt="Split a wire by a plane: Result" src="images/CGM_splitWireByShell_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+<p>The same result is obtained if you specify POSITIVE_POSITIVE_SIDE for the 
+CATHybSelectionMode. But, if you specify NEGATIVE_NEGATIVE_SIDE or 
+NEGATIVE_POSITIVE_SIDE, the result is NULL.</p>
+<h3><a name="WireByWire">Case 2: Split a Wire by a Wire</a></h3>
+<p>The CATHybSelectionMode identifies which partitions of the split wire are 
+kept. When splitting a wire by a wire, the split partitions are alternately 
+assigned NEGATIVE and POSITIVE values, the first partition being NEGATIVE when 
+moving along the direction of the wire to be cut (going from the start vertex to 
+the end vertex). The result is independent on the cutting wire orientation.<dl>
+<dt>POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE</dt>
+<dd>The POSITIVE partitions are kept.</dd>
+<dt>NEGATIVE_POSITIVE_SIDE or NEGATIVE_NEGATIVE_SIDE</dt>
+<dd>The POSITIVE partitions are removed.</dd>
+<dt>BOTH_SIDES</dt>
+<dd>Should not be used.</dd>
+</dl>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3</a> Split a wire by a wire: partitioning&nbsp; </caption>
+   <tr>
+    <td>
+	<img alt="Split a wire by a wire" src="images/CGM_splitWireByWire_0.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+and the code below:
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMHybSplit * pSplitWireByWireOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata, pWire1, pWire2,
+		POSITIVE_NEGATIVE_SIDE);
+...
+pSplitWireByWireOpe->Run();
+CATBody * pSplitWireByWireResult = pSplitWireByWireOpe->GetResult();
+pSplitWireByWireOpe->Release(); pSplitWireByWireOpe=NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.4">Fig.4</a> Split a wire by a wire: result </caption>
+   <tr>
+    <td>
+	<img alt="Split a wire by a wire: Result" src="images/CGM_splitWireByWire_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+
+
+
+<h2><a name="WireByVertex">Case 3: Split a Wire by a Vertex</a></h2>
+<p>The wire is split into two partitions.
+The CATHybSelectionMode identifies which partition of the split wire is kept.&nbsp; The NEGATIVE part is the first one in the wire 
+when moving along the wire direction (going from the start vertex to the end vertex).</p>
+<dl>
+<dt>POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE</dt>
+<dd>The POSITIVE partitions are kept.</dd>
+<dt>NEGATIVE_POSITIVE_SIDE or NEGATIVE_NEGATIVE_SIDE</dt>
+<dd>The POSITIVE partitions are removed.</dd>
+<dt>BOTH_SIDES</dt>
+<dd>Should not be used. </dd>
+</dl>
+<p> 
+With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.4">Fig.5 </a>Split a wire by a vertex: input data 
+	(splitting vertex in green)</caption>
+   <tr>
+    <td>
+	<img alt="Split a wire by a vertex: Result" src="images/CGM_splitWireByVertex_0.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+and the code below:
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATBody * pVertexInVolumeBody  =  piGeomFactory->CreateBody();  
+CATVertexInVolume *  pVertexInVolume = NULL;
+if  (!!pVertexInVolumeBody)  
+{  
+		pVertexInVolume =  pVertexInVolumeBody->CreateVertexInVolume();  
+		if  (!!pVertexInVolume)  
+		{  
+			pVertexInVolume->AddCell(pVertex);  
+			pVertexInVolumeBody->AddDomain(pVertexInVolume);  
+		}
+}
+CATICGMHybSplit * pSplitWireByVertexOpe = CATCGMCreateTopSplitWire (piGeomFactory, &topdata, pWire1,
+		pVertexInVolumeBody, POSITIVE_NEGATIVE_SIDE);
+...  
+pSplitWireByVertexOpe->Run();
+CATBody * pSplitWireByVertex = pSplitWireByVertexOpe->GetResult();</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.6">Fig.6</a> Split a wire by a vertex: result </caption>
+   <tr>
+    <td>
+	<img alt="Split a wire by a vertex: Result" src="images/CGM_splitWireByVertex_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

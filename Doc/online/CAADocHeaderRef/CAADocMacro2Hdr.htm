@@ -1,0 +1,117 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgEngUtility</title>
+</head>
+
+<body>
+
+<pre>
+#ifndef CATDlgEngUtility_H
+#define CATDlgEngUtility_H
+
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U1
+ */
+
+#include "CATString.h"
+#include "CATUnicodeString.h"
+
+/**
+ * Dialog agent behavior.
+ * &lt;b&gt;Role&lt;/b&gt;: Defines the dialog agent behavior as a field of bits.
+ * The behavior is a concatenation of behavioral facets
+ * set thanks to the @href CATDialogAgent#SetBehavior method.
+ * @param CATDlgEngActive
+ *   The dialog agent is notified by any user interaction.
+ *  This is the default
+ * @param CATDlgEngInactive
+ *   The dialog agent is never notified by a user interaction
+ * @param CATDlgEngWithUndoStep
+ *   The dialog agent's valuation can be undone, and the
+ *   dialog agent registers an undo step.
+ *   This is the default
+ * @param CATDlgEngWithUndo
+ *   The dialog agent's valuation can be undone, but the
+ *   dialog agent doesn't register an undo step
+ * @param CATDlgEngOneShot
+ *   The dialog agent doesn't remain active after it is valued.
+ *   This is the default
+ * @param CATDlgEngRepeat
+ *   The dialog agent remains active after it is valued and can be reused
+ * @param CATDlgEngWithoutSO
+ *   The dialog agent doesn't highlight neither the object under the mouse
+ *   nor the selected object.
+ *   Applies to @href CATPathElementAgent agents only.
+ *   This is the default
+ * @param CATDlgEngWithPSOHSO
+ *   The dialog agent highlights both the object under the mouse and the selected object.
+ *   Implies that <tt>CATDlgEngWithPrevaluation</tt> is also used.
+ *   Applies to @href CATPathElementAgent agents only.
+ * @param CATDlgEngWithPSO
+ *   The dialog agent highlights the object under the mouse.
+ *   Implies that <tt>CATDlgEngWithPrevaluation</tt> is also used.
+ *   Applies to @href CATPathElement agents only.
+ * @param  CATDlgEngWithHSO
+ *   The dialog agent highlights the selected object
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngIgnoreOnPrevaluate
+ *   The dialog agent requests that the transition triggers when an object is selected only. 
+ *   Applies to @href CATPathElement agents only.
+ *   This is the default
+ * @param CATDlgEngAcceptOnPrevaluate
+ *   The dialog agent requests that the transition triggers as soon as an object
+ *   is located under the mouse without being selected.
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngMonoAcquisition
+ *   The dialog agent accepts one object indication or selection only.
+ *   Applies to acquisition dialog agents only.
+ *   This is the default
+ * @param CATDlgEngMultiAcquisition
+ *   The dialog agent accepts multi-indication or multiselection. 
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngSimpleValuation
+ *   The dialog agent is valued with object selection, that is,
+ *   with a mouse left button simple click on an object.
+ *   Applies to acquisition dialog agents only.
+ *   This is the default
+ * @param CATDlgEngWithPrevaluation
+ *   The dialog agent is valued with object preselection, that is, with an 
+ *   object under the mouse without being selected, in addition to object 
+ *   selection.
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngWithManipulation
+ *   The dialog agent is valued with object manipulation, that is,
+ *   with an object selected and dragged.
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngWithEdit
+ *   The dialog agent is valued with object edition, that is,
+ *   with a mouse left button double click on an object.
+ *   Applies to acquisition dialog agents only.
+ * @param CATDlgEngWithContext
+ *   The dialog agent is valued with a mouse right click, on an object.
+ *   Applies to acquisition dialog agents only.
+ * @param  CATDlgEngOldHSOManager   
+ *   when the CATPathElementAgent puts an element in the HSO, it 
+ *   remains in the HSO until the end of the command. 
+ * @param  CATDlgEngNewHSOManager   
+ *   The element is removed from the HSO when the
+ *   agent is reinitialized.
+ */
+#ifdef _WINDOWS_SOURCE
+typedef unsigned __int64 CATDlgEngBehavior;
+#else
+typedef unsigned long long CATDlgEngBehavior;
+#endif
+</pre>
+
+</body>
+
+</html>

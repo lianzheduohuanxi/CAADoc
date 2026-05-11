@@ -1,0 +1,239 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASchNetworkTransf.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      Scale and move component instances in a network.</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'------------------------------------------------------------------------------</font>
+<font color="#008000">' These variables are visible to private Sub and CATMain</font>
+<font color="#008000">'------------------------------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>objLGRR_g<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">Dim </font>objLCntbl_g<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">Dim </font>objLSelected_g<font color="#0000FF"> As </font>SchListOfObjects
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    strMessage = strMessage &  "sDocPath = " & sDocPath
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the schematic document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Network01.CATProduct")
+
+<font color="#0000FF">    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF">    Dim </font>strMessage<font color="#0000FF"> As </font>String
+
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASchNetworkTransf.CATScript" & vbCrLf
+
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font>
+<font color="#0000FF">    Dim </font>objPrdRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objSchRoot<font color="#0000FF"> As </font>SchematicRoot
+<font color="#0000FF">    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objSchDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>objSchBaseFact<font color="#0000FF"> As </font>SchBaseFactory
+<font color="#0000FF">    Dim </font>objSchTempListFact<font color="#0000FF"> As </font>SchTempListFactory
+<font color="#0000FF">    Dim </font>objLNetWork<font color="#0000FF"> As </font>SchListOfObjects
+
+<font color="#0000FF">    If </font>( Not ( objSchRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+       <font color="#008000">' Get all the necessary factories.</font>
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+<font color="#0000FF">       Set </font>objSchBaseFact = objSchRoot.GetSchBaseFactory 
+<font color="#0000FF">       Set </font>objSchTempListFact = objSchRoot.GetTemporaryListFactory
+
+<font color="#0000FF">       If </font>( Not ( objSchBaseFact Is Nothing )  And _
+            Not ( objSchTempListFact Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">          Set </font>objLCntbl_g = objSchTempListFact.CreateListOfObjects
+<font color="#0000FF">          Set </font>objLGRR_g = objSchTempListFact.CreateListOfObjects
+<font color="#0000FF">          Set </font>objLSelected_g = objSchTempListFact.CreateListOfObjects
+
+<font color="#0000FF">          If </font>( Not ( objLCntbl_g Is Nothing )  And _
+               Not ( objLGRR_g Is Nothing ) And _
+               Not ( objLSelected_g Is Nothing ) )<font color="#0000FF"> Then</font>
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">' The following "Sub" will populate objLCntbl_g and objLGRR_g and</font>
+             <font color="#008000">' objLSelected_g</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             FindNetworkComponentInst objSchRoot
+
+<font color="#0000FF">             Set </font>objLNetWork = objSchBaseFact.CreateNetwork (objLCntbl_g, _
+               objLGRR_g) 
+
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">       End If </font><font color="#008000">'--- If ( Not ( objSchBaseFact Is Nothing )...</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objSchRoot Is Nothing )...</font>
+
+<font color="#0000FF">    If </font>(  Not ( objLNetWork Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">       Dim </font>objSchNet<font color="#0000FF"> As </font>SchMovable
+<font color="#0000FF">       Dim </font>Db2Vector (2)<font color="#0000FF"> As </font>CATSafeArrayVariant
+<font color="#0000FF">       Dim </font>DbScaleFactor<font color="#0000FF"> As </font>Double
+<font color="#0000FF">       Dim </font>intNbNet<font color="#0000FF"> As </font>Integer
+
+       Db2Vector(0) = 50.0
+       Db2Vector(1) = 0.0
+       DbScaleFactor = 1.5
+
+       intNbNet = objLNetWork.Count
+       strMessage = strMessage & "number of network found = " & intNbNet & vbCr
+
+<font color="#0000FF">       If </font>( intNbNet &gt; 0 )<font color="#0000FF"> Then </font>
+<font color="#0000FF">          Set </font>objSchNet = objLNetWork.Item (1,"CATIASchMovable")
+
+<font color="#0000FF">          If </font>( Not ( objSchNet Is Nothing ) )<font color="#0000FF"> Then</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">'  Translate the first network by (50.0, 0.0)</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             objSchNet.Translate Db2Vector
+             strMessage = strMessage & "Successfully translate network by " _
+               & Db2Vector(0) & "," & Db2Vector(1) & vbCr
+
+             <font color="#008000">'-----------------------------------------------------------------</font>
+             <font color="#008000">'  Scale a component (the one with "_Scale" in its name) that is in</font>
+             <font color="#008000">'  the network. Objects directly connected to this component will</font>
+             <font color="#008000">'  be adjusted according until a route is reached. The latter will</font>
+             <font color="#008000">'  be "reshaped".</font>
+             <font color="#008000">'  objLSelected_g is set in FindNetworkComponentInst</font>
+             <font color="#008000">'-----------------------------------------------------------------</font>
+<font color="#0000FF">             Dim </font>intSelected<font color="#0000FF"> As </font>Integer
+             intSelected = objLSelected_g.Count
+<font color="#0000FF">             If </font>( intSelected &gt; 0 )<font color="#0000FF"> Then </font>
+                objSchNet.ScaleSelectedObjects objLSelected_g, DbScaleFactor
+                strMessage = strMessage & "Successfully scale a connectable in the network by " _
+                  & DbScaleFactor & vbCr
+<font color="#0000FF">             End If</font>
+
+<font color="#0000FF">          End If </font>
+<font color="#0000FF">       End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objLNetWork Is Nothing ) ...</font>
+
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find components and their images to be used to compute a network.</font>
+<font color="#008000">' | Input: objSchRootArg:  the root of the document.</font>
+<font color="#008000">' | Returns: objLCntbl_g: a list of component instance objects</font>
+<font color="#008000">' |          objLGRR_g: a list of component instance image objects</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Sub FindNetworkComponentInst (objSchRootArg<font color="#0000FF"> As </font>SchematicRoot)
+
+<font color="#0000FF">   If </font>( objLCntbl_g Is Nothing ) Then Exit Sub
+<font color="#0000FF">   If </font>( objLGRR_g Is Nothing ) Then Exit Sub
+
+<font color="#0000FF">   Dim </font>objLCompInst<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   Dim </font>intNbComp<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">   If </font>( Not ( objSchRootArg Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objLCompInst = objSchRootArg.GetComponents
+<font color="#0000FF">      If </font>( Not ( objLCompInst Is Nothing ) )<font color="#0000FF"> Then</font>
+         intNbComp = objLCompInst.Count
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">   End If</font>
+
+<font color="#0000FF">   Dim </font>intIndex<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>intNbFlow<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>objCntbl<font color="#0000FF"> As </font>SchConnectable
+<font color="#0000FF">   Dim </font>objGRR<font color="#0000FF"> As </font>SchGRR
+<font color="#0000FF">   Dim </font>objPrd<font color="#0000FF"> As </font>Product
+<font color="#0000FF">   Dim </font>strInstName<font color="#0000FF"> As </font>String
+<font color="#0000FF">   Dim </font>intFound<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>intNbFound<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>intSelected<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">   If </font>(Not ( objLCompInst Is Nothing ) )<font color="#0000FF"> Then</font>
+
+      <font color="#008000">'------------------------------------------------------------------------</font>
+      <font color="#008000">'  Loop through the members in the list and find components that</font>
+      <font color="#008000">'  have "network" as part of the product instance names</font>
+      <font color="#008000">'------------------------------------------------------------------------</font>
+      intNbFound = 0
+
+<font color="#0000FF">      For </font>intIndex = 1<font color="#0000FF"> To </font>intNbComp
+
+        strInstName = ""
+        intFound = 0
+
+<font color="#0000FF">        Set </font>objCntbl = objLCompInst.Item (intIndex,"CATIASchAppConnectable")
+
+<font color="#0000FF">        If </font>( Not ( objCntbl Is Nothing ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">           Set </font>objPrd = objSchRootArg.GetInterface ( _
+             "CATIAProduct", objCntbl)
+
+<font color="#0000FF">           If </font>( Not ( objPrd Is Nothing ) )<font color="#0000FF"> Then</font>
+              strInstName = objPrd.Name
+              intFound  = Instr (1, strInstName, "_network_scale", 1) 
+<font color="#0000FF">           End If </font>
+
+<font color="#0000FF">           If </font>( intFound &gt; 0 )<font color="#0000FF"> Then</font>
+<font color="#0000FF">             Dim </font>ObjSchCompGraph<font color="#0000FF"> As </font>SchCompGraphic
+<font color="#0000FF">             Set </font>objSchCompGraph = objSchRootArg.GetInterface ( _
+               "CATIASchCompGraphic",objCntbl)
+<font color="#0000FF">             Set </font>objGRR = GetComponentImage (objSchCompGraph)
+
+<font color="#0000FF">             If </font>( ( Not ObjGRR Is Nothing ) )<font color="#0000FF"> Then</font>
+                objLCntbl_g.Append objCntbl
+                objLGRR_g.Append objGRR
+                intSelected = objLSelected_g.Count
+<font color="#0000FF">                If </font>(intSelected = 0) Then objLSelected_g.Append objCntbl
+                intNbFound = intNbFound + 1
+<font color="#0000FF">             End If </font>
+
+<font color="#0000FF">           End If       </font>
+
+<font color="#0000FF">        End If </font><font color="#008000">'--- If ( Not ( objCntbl Is Nothing ) ...</font>
+
+<font color="#0000FF">      Next</font>
+
+<font color="#0000FF">   End If </font><font color="#008000">'--- If (Not ( objLCompInst Is Nothing ) ...</font>
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find the first symbol used for the input schematic component.</font>
+<font color="#008000">' | Input: objSchCompGraph:  the schematic component </font>
+<font color="#008000">' |        (a CATIASchCompGraphic interface handle).</font>
+<font color="#008000">' | Returns: the component image (the symbol instance)</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Function GetComponentImage (objSchCompGraphArg<font color="#0000FF"> As </font>SchCompGraphic)<font color="#0000FF"> As </font>SchGRR
+<font color="#0000FF">   Dim </font>objSchLSymbols<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   If </font>( Not ( objSchCompGraphArg Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objSchLSymbols = objSchCompGraphArg.ListGraphicalImages
+<font color="#0000FF">      If </font>( Not ( objSchLSymbols Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">         Set </font>GetComponentImage = objSchLSymbols.Item (1,"CATIASchGRR")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">   End If</font>
+<font color="#0000FF">End Function</font>
+
+
+</pre></body></html>

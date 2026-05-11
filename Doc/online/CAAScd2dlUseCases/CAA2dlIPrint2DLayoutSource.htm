@@ -1,0 +1,104 @@
+<html>
+
+ <head>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>CAA2dlIPrint2DLayout.CATScript</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ </head>
+
+ <body>
+
+ <pre><font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2006</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : This macro allows you to print the part 2D layout         </font>
+<font color="#008000">'   Author      : TBU</font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R17</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+  <font color="#008000">' Define the application default printer</font>
+  CATIA.ActivePrinter = CATIA.Printers.Item(&quot;Printer TIF&quot;)
+<font color="#0000FF">  Dim </font>oDocument<font color="#0000FF"> As </font>Document
+  <font color="#008000">' Retrieve the active document</font>
+<font color="#0000FF">  Set </font>oDocument = CATIA.ActiveDocument
+  <font color="#008000">' Look for the document type, if it is not a product document the macro stops</font>
+<font color="#0000FF">  If </font>TypeName(oDocument) = &quot;ProductDocument&quot; <font color="#0000FF">Then</font>
+<font color="#0000FF">    Dim </font>oProductDocument<font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">    Set </font>oProductDocument = oDocument
+  <font color="#0000FF">Else</font>
+    MsgBox &quot;This macro can be run with a product document only.&quot;
+<font color="#0000FF">    Exit Sub</font>
+<font color="#0000FF">  End If</font>
+  <font color="#008000">' Call the procedure to search the parts in document</font>
+<font color="#0000FF">  Call </font>SearchPartsInProduct(oProductDocument.Product)
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#0000FF">Sub </font>SearchPartsInProduct(ProductParent<font color="#0000FF"> As </font>Object)
+
+<font color="#0000FF">  Dim </font>oProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">  Dim </font>oProductReference<font color="#0000FF"> As </font>Product
+<font color="#0000FF">  Dim </font>oShapeRepresentation<font color="#0000FF"> As </font>CATBaseDispatch
+<font color="#0000FF">  Dim </font>oPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Dim </font>oLayout2DRoot<font color="#0000FF"> As </font>Layout2DRoot
+<font color="#0000FF">  Dim </font>oLayout2DSheets<font color="#0000FF"> As </font>Layout2DSheets
+<font color="#0000FF">  Dim </font>oLayout2DSheet<font color="#0000FF"> As </font>Layout2DSheet
+        
+  <font color="#008000">' Search for the parts in the product structure</font>
+<font color="#0000FF">  For Each</font> oProduct<font color="#0000FF"> In </font>ProductParent.Products
+    <font color="#008000">' Look for product children</font>
+<font color="#0000FF">    If </font>oProduct.Products.Count &lt;&gt; 0<font color="#0000FF"> Then</font>
+      <font color="#008000">' Call the procedure to search the parts in document</font>
+<font color="#0000FF">      Call </font>SearchPartsInProduct(oProduct)
+    <font color="#0000FF">Else</font>
+      <font color="#008000">' Retrieve the reference product</font>
+<font color="#0000FF">      Set </font>oProductReference = oProduct.ReferenceProduct
+      <font color="#008000">' Look for the product existence</font>
+<font color="#0000FF">      If Not</font> oProductReference <font color="#0000FF">Is</font> <font color="#0000FF">Nothing Then</font>
+          <font color="#008000">' Look for the product shape representation</font>
+<font color="#0000FF">          If </font>oProduct.HasAMasterShapeRepresentation<font color="#0000FF"> Then</font>
+            <font color="#008000">' Retrieve the shape representation</font>
+<font color="#0000FF">            Set </font>oShapeRepresentation = oProduct.GetMasterShapeRepresentation(False)
+            <font color="#008000">' Look for the shape representation document type</font>
+<font color="#0000FF">            If </font>Right(oShapeRepresentation.Name, 7) = &quot;CATPart&quot; <font color="#0000FF">Then</font>
+              <font color="#008000">' Retrieve the part</font>
+<font color="#0000FF">              Set </font>oPart = oShapeRepresentation.Part
+              <font color="#008000">' Retrieve the 2D Layout</font>
+<font color="#0000FF">              Set </font>oLayout2DRoot = oPart.GetItem(&quot;CATLayoutRoot&quot;)
+              <font color="#008000">' Look for the 2D Layout existence</font>
+<font color="#0000FF">              If Not</font> oLayout2DRoot <font color="#0000FF">Is</font> <font color="#0000FF">Nothing Then</font>
+                <font color="#008000">' Retrieve the sheet collection</font>
+<font color="#0000FF">                Set </font>oLayout2DSheets = oLayout2DRoot.Sheets
+                <font color="#008000">' Retrieve the sheets contained in the collection</font>
+<font color="#0000FF">                For </font>iSheet = 1<font color="#0000FF"> To </font>oLayout2DSheets.Count
+                  <font color="#008000">' Retrieve the sheet</font>
+<font color="#0000FF">                  Set </font>oLayout2DSheet = oLayout2DSheets.Item(iSheet)
+                  <font color="#008000">' Print the sheet in a TIFF file</font>
+                  oLayout2DSheet.PrintToFile &quot;F:\tmp\2D3DDesign\print\&quot; + oLayout2DSheet.Name + &quot;.tif&quot;, _
+                    catRenderQuickHiddenLinesRemovalWithHiddenEdgesWithOutlinesWithoutVertices
+<font color="#0000FF">                  Set </font>oLayout2DSheet = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">                  Set </font>oLayout2DSheets = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">                Next</font>
+<font color="#0000FF">                Set </font>oLayout2DRoot = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">                Set </font>oShapeRepresentation = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">            End If</font>
+<font color="#0000FF">            Set </font>oPart = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">      Set </font>oProductReference = <font color="#0000FF">Nothing</font>
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+  
+<font color="#0000FF">End Sub</font>
+</pre>
+
+ </body>
+
+</html>

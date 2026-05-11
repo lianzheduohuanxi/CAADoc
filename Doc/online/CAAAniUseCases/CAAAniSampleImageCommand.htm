@@ -1,0 +1,280 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name=" generator" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Analysis Features - Part 4</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Analysis Features - Part 4</h3>
+      <em>How to create some specific images for a physical type</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the <a href="../CAAAniTechArticles/CAAAniNewfeatureOverview.htm">Analysis
+      New Feature Overview</a> technical article. It explains how to create an
+      image based on the physical types that are provided by the
+      CATICharacCollector implementation of the Aerodynamic solution Set.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does this </a><a href="#How">use case</a><a href="#What">
+              Do</a></li>
+            <li><a href="#How">How to Launch the use case</a></li>
+            <li><a href="#Where">Where to Find the </a><a href="#How">use case</a><a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#Short"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you program a command that display specific
+analysis results. Refer to the Reference <a href="#Ref1">[1]</a> and <a href="#Ref3">[3]</a>
+to be familiar to the prerequisite.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The Use Case</h3>
+<h4><a name="What"></a>What Does the use case Do</h4>
+<p>The goal of this Use Case is to create a command that will produce the
+following image.</p>
+<p align="center"><img border="0" src="images/ImageCommand.jpg" width="510" height="480"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch the use case.</h4>
+<p>To launch this use case, you will need to set up the build time environment,
+then compile CAAAniWB and CAAAniAeroDTransition along with its prerequisites,
+set up the run time environment, and then execute the use case <a href="#Ref3">[2]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the use case Code</h4>
+<p>The use case is made of classes located in the CAAAniWB.m and
+CAAAniAeroDTransition.m modules of the CAAAnalysisInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\CAAAniWB.m\</code></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><code>InstallRootDirectory\CAAAnalysisInterfaces.edu\</code>CAAAniAeroDTransition<code>.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/CAAAniWB.m/</code></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><code>InstallRootDirectory/CAAAnalysisInterfaces.edu/</code>CAAAniAeroDTransition<code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The following table shows which code resources are used in this Use Case.
+These resources are physically located within the appropriate directories (with
+same names) of your CAA installation.</p>
+<table width="100%">
+  <tr>
+    <th width="22%">Framework
+    <th width="17%">Module/Interface
+    <th width="24%">Source
+    <th width="37%">Content
+  </tr>
+  <tr>
+    <td width="22%" valign="top">
+      <p>CAAAnalysisInterfaces.edu</td>
+    <td width="17%" valign="top">
+      <p>CAAAniWB.m</td>
+    <td width="24%" valign="top">
+      <p>CAAAniCreateOneImageCmd.cpp</td>
+    <td width="37%" valign="top">
+      <p>Image creation command</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now comment each of those steps by looking at the code. The objective
+is to define a command. Note the associated resources: the icon is defined as
+I_VelocitySmooth.bmp and the NLS message file is CAAAniCreateOneImageCmd.CATNls.
+This command is included in the headers definition of the ANICgf workbench.</p>
+<h4><a name="Checking"></a>Define the command</h4>
+<p>Two data members are defined:</p>
+<ul>
+  <li>_SolutionFound is the CATPathElementAgent that control the selected
+    object.</li>
+  <li>_Solution is the selected object.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...#include &quot;CATCreateExternalObject.h&quot;
+CATCreateClass(CAAAniCreateOneImageCmd);
+
+//=============================================================================
+// Implementation
+//=============================================================================
+CATImplementClass( CAAAniCreateOneImageCmd ,
+                   Implementation , 
+                   CATStateCommand ,
+                   CATNull );
+
+//=============================================================================
+// constructor
+//=============================================================================
+CAAAniCreateOneImageCmd::CAAAniCreateOneImageCmd ():
+  CATStateCommand(CATString(&quot;CAAAniCreateOneImageCmd&quot;)),
+  _SolutionFound (NULL),
+  _Solution (NULL)
+{}
+... </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The &quot;BuildGraph&quot; method defines a single state
+command. As soon the appropriate feature is selected, the image creation is
+called:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+AddTransition (selState,NULL,IsOutputSetCondition(_SolutionFound) ,
+         Action ((ActionMethod) &amp;CAAAniCreateOneImageCmd::CreateImage,NULL));
+... </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Checking"></a>Create the image.</h4>
+<p>The post-processing container implements CATISamImageFactory interface for
+image creation. The image is associated to it's name, here
+&quot;CAA_Translational_velocity_Iso&quot;&nbsp; that is customized in the
+CAAAniImage.xml file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATISamImageFactory * piFactory = NULL;
+  hr = piContainer -&gt; QueryInterface (IID_CATISamImageFactory,(void **) &amp;piFactory);
+  piContainer -&gt; Release(); piContainer = NULL;
+
+  if (NULL == piFactory) return TRUE; /* quit the command in case of error */
+
+  // image creation
+  CATString imageName (&quot;CAA_Translational_velocity_Iso&quot;);
+  CATISamImage * piNewImage = NULL;
+  hr = piFactory -&gt; CreateImage (imageName,_Solution,piNewImage);
+  piFactory -&gt; Release(); piFactory = NULL;
+  if (NULL == piNewImage) return TRUE; /* quit the command in case of error */
+  piNewImage -&gt; Release ();  piNewImage = NULL;  
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;Now, we will customize the associated color map. The value for the
+minimum and maximum display are fixed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <div align="left">
+        <pre>...
+  // we retrieve the color map
+  CATISamImageColorMap * piColorMap = NULL;
+  hr = piNewImage -&gt; GetColorMap(piColorMap);
+  if (NULL != piColorMap)
+  {
+    // we impose the bounds
+    piColorMap -&gt; ImposeMinValue(1.f);
+    piColorMap -&gt; ImposeMaxValue(6.f);
+
+    // and we update the color map...
+    piColorMap -&gt; UpdateDisplay();
+
+    piColorMap -&gt; Release (); piColorMap = NULL;  
+  }
+... </pre>
+      </div>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Short"></a>In Short</h3>
+<p>This use case can be used as an example create images based on the physical
+types that are computed by your feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1">[1]</a></td>
+    <td><a href="../CAAAniTechArticles/CAAAniImagesOverview.htm">Analysis
+      Images Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[2]</a></td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3">[3]</a></td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">3D
+      PLM Enterprise Architecture</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

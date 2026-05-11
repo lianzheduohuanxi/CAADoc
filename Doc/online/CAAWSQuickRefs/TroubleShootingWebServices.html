@@ -1,0 +1,130 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Consuming the ENOVWSCntMgmtCpp CAA Web Service</title>
+</head>
+<body>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>CAA Web Services References</h1>
+			</td>
+			<td valign="top">
+			<h2>&nbsp;</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Troubleshoot<em> </em>the ENOVWSCntMgmtCpp CAA Web Service</h3>
+			<em>Trouble shooting ENOVWSCntMgmtCpp CAA Web Service for document management</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!----------------------------------------------------------------------------->
+<p><b><font color="#FB7203" size="3">Abstract</font></b><br>
+This article discusses trouble shooting process while consuming the 
+ENOVWSCntMgmtCpp CAA Web service. More specifically crash occurred while running 
+the ExtractDocument Web Service.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p><font size="3" color="#FB7203"><b>Problem Description</b></font><br>
+Large file size in a document extraction causes crash while running the 
+ExtractDocument Web Service. Crash might occur on V5 server side as well as 
+inside JAVA client application which user has created (Similar to provided CAA 
+use cases).</p>
+<p align="right">[<a href="#Top">Top</a>]</p><hr>
+<i><b><font size="3">In case of crash occurring on V5 
+		server side</font></b></i><p><b>Solution</b><br>
+		Define a runtime variable restricting size of document which will be 
+		extracted:<br>
+		<code>export WSDOC_EXT=1 </code>( Example - 1 mb) </p>
+		<p><b>Usage<br>
+		</b>The number assigned to this variable limits the size of the file in 
+		megabytes that can be extracted using web services. For example, if it 
+		is set to 50 then files greater than 50 MB will not be returned as 
+		binary, and instead of a crash, a warning is returned. </p>
+		<p>In its absence or if nothing is assigned to this variable, the web 
+		services code will attempt to extract the file irrespective of the size 
+		of the file. Please avoid using decimal numbers.<br>
+&nbsp;</p>
+		<p><b>General suggestion for Extract Document</b><br>
+		If the introspection is turned ON while extracting a document, the 
+		ENOVIA V5 VPM server converts CATPart into different formats which may 
+		be installation dependent. <br>
+		It is advised to turn OFF the introspection process by defining the 
+		runtime variables:</p>
+		<p><code>export ENOVIA_WO_INTROSPECTION=1<br>
+		export CATJWS_JAVA_OPTION=&quot;-Xmx512m&quot;</code><p align="right">[<a href="#Top">Top</a>]</p><hr>
+	<p class="MsoNoSpacing"><b><i><font size="3">In case of crash with JAVA 
+	client application</font></i> </b></p>
+	<p class="MsoNormal">With a large size document, the memory requirement 
+	needed to consume the ExtractDocument method is significantly larger than 
+	the default memory limit on Java Virtual Machine. This might lead JVM to 
+	crash (stack falling on : java.lang.OutOfMemoryError: Java heap space).</p>
+	<p class="MsoNormal"><b>Solution<br>
+		</b>To consume this web method using a Java SOAP client, 
+	you should define the JVM&#8217;s maximum heap size using these recommendation : 
+	&#8220;-Xms128m &#8211;Xmx512m&#8221;. (where lower JVM heap size limit value will be of 
+	128mb, and upper value of 512mb). In case crash still happens, user remains 
+	free to increase those values to find appropriate JVM size limits. </p>
+<p class="MsoNormal">&nbsp;</p>
+	<p class="MsoNormal"><b>Usage Example<br>
+		</b>Here is an example for the 
+	same using IRADE7 for running our JAVA application. Once you are ready with 
+	your JAVA application, click on Run:</p>
+	<p class="MsoNormal" style="text-indent:.5in"><span style="color:#C00000">
+	<img border="0" src="images/TroubleShootWS_IRADE7_1.png" width="444" height="233">&nbsp;</span></p>
+	<p class="MsoNormal">You will be shown following 
+	panel:</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_2.png" width="654" height="435"></span></p>
+	<p class="MsoNormal">Click on Arguments tab:</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_3.png" width="661" height="541"></span></p>
+	<p class="MsoNormal">Click on variable for &#8220;VM 
+	arguments&#8221;, following panel will be shown:</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_4.png" width="326" height="397"></span></p>
+	<p class="MsoNormal">Click on &#8220;Edit Variables&#8221;. 
+	Again following panel will be displayed:</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_5.png" width="634" height="280"></span></p>
+	<p class="MsoNormal">Click on New button and 
+	fill details as below (You can name the variable as you want):</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_6.png" width="381" height="170"></span></p>
+	<p class="MsoNormal">Click on OK for all panel 
+	displayed and you will find results as below in &#8220;Run&#8221; panel:</p>
+	<p class="MsoNormal"><span style="color:#C00000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<img border="0" src="images/TroubleShootWS_IRADE7_7.png" width="665" height="546"></span></p>
+	<p class="MsoNormal">&nbsp;After 
+	above all modifications you are ready to Run your JAVA application using ExtractDocument 
+	Web Service.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [Feb 2010]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!----------------------------------------------------------------------------->
+<hr>
+<p><i>Copyright &#169; 1995-2010,&nbsp; Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+
+
+
+

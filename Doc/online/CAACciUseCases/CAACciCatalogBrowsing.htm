@@ -1,0 +1,896 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Browsing a Catalog</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Browsing a Catalog</h3>
+      <em>Understanding the internal catalog structure</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This use case enables to understand the catalog document structure in displaying its
+      contents.&nbsp;</p>     
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACciCatalogVisualize Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACciCatalogVisualize Do</a></li>
+            <li><a href="#How">How to Launch CAACciCatalogVisualize</a></li>
+            <li><a href="#Where">Where to Find the CAACciCatalogVisualize Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In reading the &quot;What You Will learn With this Use case&quot; section of
+the use case &quot;Creating a Catalog&quot; [<a href="#References">1</a>], you
+learn that a catalog is in the form of a tree structure made up of chapters,
+families (end chapters), components, descriptions and keywords. This use case is browsing a
+catalog to retrieve and display all the catalog is made off.&nbsp;</p>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of Catalog. See the referenced article [<a href="#References">2</a>]
+for a detailed overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACciCatalogVisualize Use Case</h3>
+<p>CAACciCatalogVisualize is a use case of the CAAComponentsCatalogs.edu framework that
+illustrates ComponentsCatalogsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACciCatalogVisualize Do</h4>
+<p>The CAACciCatalogVisualize use case dumps a catalog. It means that it
+displays:</p>
+<ul>
+  <li>On each chapter
+    <ul>
+      <li>Its name</li>
+      <li>Its type ( chapter or family, external or not )</li>
+      <li>Its keywords list and theirs default value</li>
+      <li>The number of its persistent queries</li>
+    </ul>
+  </li>
+  <li>On each description
+    <ul>
+      <li>its name</li>
+      <li>the value of each keyword associated with its chapter</li>
+      <li>if the referenced object is not a chapter&nbsp;
+        <ul>
+          <li>The type of the referenced object</li>
+          <li>The name of the referenced object</li>
+          <li>Some tests depending on referenced object's type</li>
+        </ul>
+      </li>
+      <li>otherwise browsing on the chapter with a right shift</li>
+    </ul>
+  </li>
+</ul>
+<p>The output format (right shift at each sub-chapter) enables to understand
+the tree structure of the chapters.&nbsp;</p>
+<p>Here an illustration with the <code>CAATool.catalog</code> created in the use
+case <i>CAACciCatalogToolCreation</i> [<a href="#References">1</a>].&nbsp;</p>
+  
+<table class="code">
+<caption><i><a name="Fig.1">Fig.1</a>: The Chapters list&nbsp;</i></caption>
+  <tr>
+    <td>
+      <pre>The CAACciCatalogVisualize main program begins ....
+
+   The E:\users\egd\adele\egdmm10\CAAComponentsCatalogs.edu\InputData\CAATool.catalog is opened
+
+   The catalog contains <b>5</b> chapter(s)
+      Tools
+      Nuts
+      Nuts4SidesFamily
+      NutsWithFixedSizeHole
+      Nuts6SidesHole10Family
+...</pre>
+    </td>
+  </tr>
+</table>
+<table class="code">
+<caption><i><a name="Fig.2">Fig.2</a>: The Catalog Dump&nbsp;</i></caption>
+  <tr>
+    <td>
+      <pre>...
+<b>---Tools (Chapter)</b>
+      Keyword(s): 2
+         ToolType; Default value= Unset
+         Suppliers(*); Default value= Unset
+      Description's name= Tools.2
+         Chapter's keyword value 
+            ToolType= Screws
+            Suppliers= MySupplierA
+<b>---------Screws (External Chapter)</b>
+            Keyword(s): 1
+               ToolType; Default value= Screw
+            Description's name= Screws.2
+               Chapter's keyword value 
+                  ToolType= Screw
+<b>---------------ScrewsFamily (Family)</b>
+                  Keyword(s): 1
+                     Material; Default value= Iron
+                  Description's name= ScrewsFamily.2
+                     Chapter's keyword value 
+                        Material= Iron
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= CAAScrew.CATPart
+                     Part configuration
+                  Description's name= ScrewsFamily.3
+                     Chapter's keyword value 
+                        Material= Iron
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= CAAGroovedScrew.CATPart
+                     Part configuration
+      Description's name= Tools.3
+         Chapter's keyword value 
+            ToolType= Nuts
+            Suppliers= MySupplierA
+<b>---------Nuts (Chapter)</b>
+            Keyword(s): 1
+               SideNumber; Default value= Unset
+            Description's name= Nuts.2
+               Chapter's keyword value 
+                  SideNumber= 6
+<b>---------------Nuts6SidesFamily (External Family)</b>
+                  Keyword(s): 3
+                     PartNumber; Default value= Unset
+                     PartBody\Pad.1\FirstLimit\Length; Default value= Unset
+                     PartBody\Hole.1\Diameter; Default value= Unset
+                  Description's name= Nut20x20
+                     Chapter's keyword value 
+                        PartNumber= Nut20x20
+                        PartBody\Pad.1\FirstLimit\Length= 0.02 Meter
+                        PartBody\Hole.1\Diameter= 0.02 Meter
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= Nut20x20.CATPart
+                     <b><font color="#FF0000">Resolved Part configuration</font></b>
+                  Description's name= Nut30x10
+                     Chapter's keyword value 
+                        PartNumber= Nut30x10
+                        PartBody\Pad.1\FirstLimit\Length= 0.03 Meter
+                        PartBody\Hole.1\Diameter= 0.01 Meter
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= Nut30x10.CATPart
+                     Resolved Part configuration
+                  Description's name= Nut40x10
+                     Chapter's keyword value 
+                        PartNumber= Nut40x10
+                        PartBody\Pad.1\FirstLimit\Length= 0.04 Meter
+                        PartBody\Hole.1\Diameter= 0.01 Meter
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= Nut40x10.CATPart
+                     Resolved Part configuration
+            Description's name= Nuts.3
+               Chapter's keyword value 
+                  SideNumber= 4
+<b>---------------Nuts4SidesFamily (Family)</b>
+                  Keyword(s): 3
+                     PartNumber; Default value= Unset
+                     PartBody\Pad.1\FirstLimit\Length; Default value= Unset
+                     PartBody\Hole.1\Diameter; Default value= Unset
+                  Description's name= Nut20x20
+                     Chapter's keyword value 
+                        PartNumber= Nut20x20
+                        PartBody\Pad.1\FirstLimit\Length= 0.02 Meter
+                        PartBody\Hole.1\Diameter= 0.02 Meter
+                     Referenced Object's Type= <b><font color="#FF0000">Document</font></b>
+                     Referenced Object's Name= CAANuts4Sides.CATPart
+                     <b><font color="#FF0000">Part configuration</font></b>
+                  Description's name= Nut20x10
+                     Chapter's keyword value 
+                        PartNumber= Nut20x10
+                        PartBody\Pad.1\FirstLimit\Length= 0.02 Meter
+                        PartBody\Hole.1\Diameter= 0.01 Meter
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= CAANuts4Sides.CATPart
+                     Part configuration
+                  Description's name= Nut20x5
+                     Chapter's keyword value 
+                        PartNumber= Nut20x5
+                        PartBody\Pad.1\FirstLimit\Length= 0.02 Meter
+                        PartBody\Hole.1\Diameter= 0.005 Meter
+                     Referenced Object's Type= Document
+                     Referenced Object's Name= CAANuts4Sides.CATPart
+                     Part configuration
+      Description's name= Tools.4
+         Chapter's keyword value 
+            ToolType= Nuts
+            Suppliers= MySupplierA
+<b>---------NutsWithFixedSizeHole (Chapter)</b>
+
+            Description's name= NutsWithFixedSizeHole.2
+               Chapter's keyword value 
+<b>---------------Nuts6SidesHole10Family (Family)</b>
+                  Keyword(s): 1
+                     Name; Default value= Unset
+                  <font color="#FF0000"><b>Nb Pesistent Query</b></font>=1
+                  Description's name= Nut30x10
+                     Chapter's keyword value 
+                        Name= Nut30x10
+                     Referenced Object's Type= <font color="#FF0000"><b>Description</b></font>
+                     Referenced Object's Name= Nut30x10
+                     <b><font color="#FF0000">Name of its external chapter</font></b>:Nuts6SidesFamily
+                  Description's name= Nut40x10
+                     Chapter's keyword value 
+                        Name= Nut40x10
+                     Referenced Object's Type= Description
+                     Referenced Object's Name= Nut40x10
+                     Name of its external chapter:Nuts6SidesFamily
+
+
+The CAACciCatalogVisualize main program is ended.</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACciCatalogVisualize</h4>
+<p>To launch CAACciCatalogVisualize , you will need to set up the build time environment,
+then compile the CAACciCatalogVisualize module along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">3</a>].&nbsp;</p>
+<p>mkrun -c <b>CAACciCatalogVisualize</b> InputPath&nbsp;</p>
+<p>Where:</p>
+<b>InputPath</b> : The path of the catalog to visualize.&nbsp;
+<p>You can use catalogs located in <code>CAA</code><code>ComponentsCatalogs</code><code>.edu/InputData</code>
+</p>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\InputData</code></li>
+    </ul>
+    <p> where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACciCatalogVisualize Code</h4>
+<p>The CAACciCatalogVisualize use case is made of two source files located in the
+CAACciCatalogVisualize.m module of the CAAComponentsCatalogs.edu framework:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%"><b>Name of the source file</b></td>
+    <td width="67%"><b>Function</b></td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciCatalogVisualizeMain</td>
+    <td width="67%">Main source file&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%">CAACciChapterBrowser</td>
+    <td width="67%">Global function to browse a chapter</td>
+  </tr>
+</table>
+<p>depending on operating system you find them :</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAA</code><code>ComponentsCatalogs</code><code>.edu\CAACciCatalogVisualize.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAA</code><code>ComponentsCatalogs</code><code>.edu/CAACciCatalogVisualize.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>In the<i> CAACciCatalogVisualizeMain.cpp</i> file you have four mains steps</p>
+<ol>
+  <li><a href="#Retrieving the factory">Retrieving the CATICatalogChapterFactory
+Interface Pointer</a></li>
+  <li><a href="#Retrieving chapters">Retrieving the Catalog's Chapters</a></li>
+  <li><a href="#Retrieving the RC">Retrieving the Root Chapter</a></li>
+  <li><a href="#Browsing the Catalog">Browsing the Catalog</a></li>
+</ol>
+<p>In the <i>CAACciCatalogChapterBrowser.cpp</i> file,&nbsp; which contains the <code>CAABrowsingChapter</code>
+recursive global function to browse a chapter , there is two main steps:</p>
+<ol>
+  <li><a name="Displaying Chapter's Data" href="#Chapter datas">Displaying
+    Chapter's Data</a></li>
+  <li><a href="#Browsing descriptions">Browsing the Chapter's Descriptions</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieving the factory"></a>Retrieving the CATICatalogChapterFactory
+Interface Pointer</h4>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+  CATDocument * pDocument = NULL ;
+  rc = <b>CATDocumentServices::Open</b>(CatalogPath.CastToCharPtr(), pDocument);
+  ...
+  CATInit *pInitOnDoc = NULL ;
+  rc = <b>pDocument-&gt;QueryInterface(IID_CATInit</b>,(void **) &amp;pInitOnDoc);
+  ...
+  CATIContainer *pIRootCont = NULL ;
+  pIRootCont = (CATIContainer*)<b>pInitOnDoc-&gt;GetRootContainer</b>(&quot;CATIContainer&quot;);
+  ...
+  CATICatalogChapterFactory * pICatalogChapterFactory = NULL ;        
+  rc = <b>pIRootCont-&gt;QueryInterface(IID_CATICatalogChapterFactory</b>,
+                                              (void **) &amp;pICatalogChapterFactory);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>CatalogPath</code> is a <i>CATUnicodeString</i> initialized with the
+first argument of the CAACciCatalogVisualize main, so the complete name of the
+catalog to dump.</p>
+  
+<p>The root container of a catalog document implements the <i> CATICatalogChapterFactory</i>
+interface. As usual you retrieve the root container of a document thanks to the <i>CATInit</i>
+interface.</p>
+  
+<h4><a name="Retrieving chapters"></a>Retrieving Catalog's Chapters&nbsp;</h4>
+  
+<p>Before to dump the catalog, it is interesting to list the chapters of the
+catalog.&nbsp;</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+  CATListValCATICatalogChapter_var * ListOfChapter = NULL ;
+  rc = <b>pICatalogChapterFactory</b>-&gt;<b>ListChapters</b>(ListOfChapter);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>pICatalogChapterFactory</code> is the <i> CATICatalogChapterFactory</i>
+interface pointer previously retrieved. The <code>ListChapters</code> method
+retrieves the list of the chapters of the CURRENT catalog. It means that this
+method doesn't retrieve the eventually external chapters pointed by a
+description [<a href="#Fig.1">Fig.1</a>].</p>
+
+<h4><a name="Retrieving the RC"></a>Retrieving the Root Chapter</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+  CATICatalogChapter * pICatalogChapter = NULL ;
+  rc = <b>pICatalogChapterFactory-&gt;GetRootChapter</b>(pICatalogChapter) ;
+  ...
+  CATUnicodeString TypeChapter = &quot;Chapter&quot; ;
+  if ( TRUE == <b>pICatalogChapter-&gt;KindIsEndChapter</b>() )
+  {
+      TypeChapter = &quot;Family&quot; ;
+  }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The root chapter is the first chapter created in the catalog. This chapter,
+retrieved by the <code>GetRootChapter</code>, can be a end chapter, but it is
+not recommended.&nbsp;</p>
+  
+<h4><a name="Browsing the Catalog"></a>Browsing the Catalog</h4>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+  rc = ::<b>CAABrowsingChapter</b>(pICatalogChapter,TypeChapter, 3); 
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The catalog will be recursively browsed from the root chapter. <code>
+pICatalogChapter</code> is the <i>CATICatalogChapter</i> interface pointer on the root
+chapter. The last argument indicates the space's number to display the chapters
+tree. [<a href="#Fig.2">Fig. 2</a>]</p>
+  
+<h4><a name="Chapter datas"></a>Displaying Chapter's Data</h4>
+  
+<p>We are inside the <code>CAABrowsingChapter</code>
+ global function. <code>pICatalogChapter</code> is the <i> CATICatalogChapter</i>
+interface pointer on the chapter to dump, the first argument of this function.</p>
+  
+<ol>
+  <li>The Name of the Chapter</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+ CATUnicodeString ChapterName ;
+ ChapterName = <b>pICatalogChapter-&gt;GetChapterName</b>();
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  <li><a name="its keywords"></a>The keywords of the Chapter</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATListValCATICatalogKeyword_var * pListKeyword = NULL ;
+    rc = <b>pICatalogChapter</b>-&gt;<b>ListKeywords</b>(pListKeyword);
+    int SizeKWList = 0 ;
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL != pListKeyword) )
+    {
+        SizeKWList = pListKeyword-&gt;Size();
+        ...
+        for ( int i=1 ; i&lt;= SizeKWList; i++)
+        {
+            CATICatalogKeyword_var CurrentKeyword ((*pListKeyword)[i]);
+            if ( NULL_var != CurrentKeyword )
+            {
+               CATUnicodeString KWName = CurrentKeyword-&gt;<b>GetKeywordName</b>();
+        
+               if  ( TRUE == CurrentKeyword-&gt;<b>GetHidden</b>() )
+               {
+                   KWName += &quot;(*)&quot;;
+               }
+               CATUnicodeString DefaultValue ;
+               CATBoolean IsDefaultValue = pICatalogChapter-&gt;<b>GetDefaultValue</b>(KWName,DefaultValue);
+ 
+               if ( FALSE == IsDefaultValue  ) DefaultValue = &quot;Unset&quot; ;
+
+               ...
+            }
+        }
+    }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The list of keyword of the chapter is retrieved thanks to the <code>ListKeywords</code>
+  method applied to <code>pICatalogChapter</code>  the <i> CATICatalogChapter</i>
+interface pointer on the chapter.&nbsp;</p>
+  <p>The name of the keyword is given by the <code>GetKeywordName</code> method
+  applied to the <i>CATICatalogKeyword</i>
+interface pointer on the keyword.</p>
+  <p>The default value of a keyword is given by the chapter thanks to the <code>GetDefaultValue</code>
+  method applied to <code>pICatalogChapter</code> the <i> CATICatalogChapter</i>
+interface pointer on the chapter. If this method returns false, there is no
+  default value, otherwise the value is returned by the second argument&nbsp; of
+  the method.&nbsp;</p>
+  <li>The Persistent Queries of the Chapter</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATListValCATICatalogPersistentQuery_var * pListPersistentQuery = NULL ;
+    rc =<b> pICatalogChapter-&gt;ListPersistentQuery</b>(pListPersistentQuery);
+
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL !=pListPersistentQuery) )
+    {
+       int NbPQ = <b>pListPersistentQuery-&gt;Size</b>();
+    }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Each chapter can contain persistent queries even if it is strongly
+  recommended to set a persistent query to a end chapter and only one for each
+  end chapter. Refer to the &quot;Creating a Persistent Query&quot; article [<a href="#References">4</a>]
+  for more details about persistent queries.</p>
+</ol>
+
+<h4><a name="Browsing descriptions"></a>Browsing Chapter's Descriptions</h4>
+<ol>
+  <li>
+<h5>Retrieving Descriptions</h5>
+  </li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATListValCATICatalogDescription_var * pListDescription = NULL ;
+    rc = <b>pICatalogChapter-&gt;ListDescriptions</b>(pListDescription);
+    if ( SUCCEEDED(rc) &amp;&amp; (NULL != pListDescription) )
+    {
+        int SizeDescList = pListDescription-&gt;Size();
+        ...
+        CATICatalogDescription_var CurrentDescription ((*pListDescription)[i]);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Each chapter contains a list of descriptions. For each element of the list,
+  <code>pListDescription</code>, an analyze of its contents is done in the
+  following sections. <code>&nbsp;</code></p>
+  <li>
+<h5>Displaying Description Name</h5>
+  </li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    rc = CurrentDescription-&gt;GetName(DescriptionName) ;
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  <li>
+<h5>Displaying Keywords Value</h5>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                for ( int j= 1 ; j &lt;= <b>SizeKWList</b> ; j++ )
+                {
+                  CATICatalogKeyword_var <b>CurrentKeyword </b>((*<b>pListKeyword</b>)[j]);
+                  CATUnicodeString value ;
+                   
+                  CATUnicodeString KWName = <b>CurrentKeyword-&gt;GetKeywordName();</b>
+ 
+                  rc = CurrentDescription<b>-&gt;GetValue(</b>KWName,value<b>);</b> 
+                  ...
+                  if ( SUCCEEDED(rc) )
+                  {
+                     cout &lt;&lt; &quot;= &quot; &lt;&lt; value.CastToCharPtr() &lt;&lt; endl;
+                  }else cout &lt;&lt; &quot;= Unset&quot; &lt;&lt; endl;
+                }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+  </li>
+  <p>The keywords of a description are the keywords defined on its chapter. <code>
+  pListKeyword</code>&nbsp; is the list of keywords of the current chapter retrieving
+  at the &quot;<a href="#its keywords">The Keywords of the Chapters</a>&quot;
+  step.&nbsp;</p>
+  <p>On each description you retrieve the value of a keyword thanks to the <code>GetValue</code>
+  method. The first argument of the method, <code>KWName</code>, is the name of
+  the keyword. Notice that when there is no value on the keyword (Unset), the <code>GetValue</code>
+  method returns E_FAIL.</p>
+  <li>
+<h5>Analysing the Referenced object&nbsp;</h5>
+  </li>
+  
+  <ul>
+        <li>Retrieving the Referenced Object</li>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATBaseUnknown * pReferencedObject = NULL ;
+    rc = CurrentDescription-&gt;<b>GetObject</b>(pReferencedObject);
+    
+ ...</pre>
+    </td>
+  </tr>
+</table>
+
+    <li>Sub-chapter or a component</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+ if ( CurrentDescription-&gt;<b>IsObjectASubchapter</b>() )
+ {
+ ...</pre>
+    </td>
+  </tr>
+</table>
+    <p>The <code>IsObjectASubchapter</code><b> </b>method is the easiest way to
+    determine is the referenced object is a chapter or not.</p>
+    <li>Case of Chapter</li>
+    <p>We are in case where the <code>IsObjectASubchapter</code> method returns <code>TRUE</code>.&nbsp;</p>
+    <p>To retrieve the pointed chapter the easiest way is to use the <code>GetSubChapter</code>
+    method on the description.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+ CATICatalogChapter * pChapter = NULL ;
+ pChapter = CurrentDescription-&gt;<b>GetSubChapter</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+    <p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">The
+    <code>GetObject</code> method doesn't retrieve the pointed chapter but a
+    temporary object, a QueryResult object. See the technical article
+    &quot;Catalog Overview&quot; [<a href="../CAACciTechArticles/CAACciCatalogOverview.htm">2</a>]
+    for details about this object.</p>
+    <p>Before to call a recursive method on the new chapter, <code>pChapter</code>,
+    we make some verifications.</p>
+    <p>The first verification consists in to define if it is a end chapter or not.
+    The&nbsp;<code>KindIsEndChapter</code> method retrieves this information.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+           CATUnicodeString sTypeOfChapter ;
+           sTypeOfChapter = &quot;Chapter&quot; ;
+
+           CATBoolean EndChapter ;
+           EndChapter = pChapter -&gt;<b>KindIsEndChapter</b>() ;
+           if ( TRUE == EndChapter )
+           {
+              sTypeOfChapter = &quot;Family&quot; ; 
+           }
+...</pre>
+    </td>
+  </tr>
+</table>
+        <p>The second verification consists in to define if it is an
+        external chapter for its parent chapter. To resolve this question, you
+        must retrieve the <i>CATILinkableObject</i> interface pointer on the
+        current description and itself. Thanks to this interface
+        and its method <code>GetDocument</code> you can compare the associated
+        document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATILinkableObject * pLinkObjectOnChapter = NULL ;
+    rc = <b>pChapter-</b>&gt;QueryInterface(IID_<b>CATILinkableObject</b>,
+                                               (void **) &amp; pLinkObjectOnChapter);
+
+    if ( SUCCEEDED(rc) )
+    {  
+       CATILinkableObject * pLinkObjectOnDescription = NULL ;
+       rc = <b>CurrentDescription-</b>&gt;QueryInterface(IID_<b>CATILinkableObject</b>,
+                                                    (void **) &amp; pLinkObjectOnDescription);
+       if ( SUCCEEDED(rc) )
+       {
+          CATDocument *pDocOnDescription    = pLinkObjectOnDescription-&gt;<b>GetDocument</b>();
+          CATDocument *pDocOnPointedChapter = pLinkObjectOnChapter-&gt;<b>GetDocument</b>();
+          if ( pDocOnDescription != pDocOnPointedChapter )
+          {
+             sTypeOfChapter = &quot;External &quot; + sTypeOfChapter ;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+    <p><code>pLinkObjectOnDescription</code> is the <i>CATILinkableObject</i>
+    interface pointer on the current description and <code>pLinkObjectOnChapter</code>
+    is the same interface pointer on the pointed chapter. The <code>GetDocument</code>
+    method returns the document (a <i>CATDocument</i> pointer) which contains
+    the object which implements the <i>CATILinkableObject</i> interface. It is
+    possible to test the <i>CATDocument</i> pointer because during a session
+    this pointer is always the same.</p>
+        <p>At last we can browse the pointed chapter. The global function <code>CAABrowsingChapter</code> browses the <code>pChapter</code>
+        whose the type is <code>sTypeOfChapter</code> and with a shift for the <code>cout</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+        ::<b>CAABrowsingChapter</b>(pChapter,sTypeOfChapter,MoveTxt+6) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+    <li>Case of simple description</li>
+        <p>We are in case where the <code>IsObjectASubchapter</code> method
+        returns <code>FALSE</code>.&nbsp;</p>
+  
+        <p>The type of the description is retrieved thanks the <code>GetDescriptionType</code>
+        method on the <i>CATICatalogDescription</i> interface pointer.&nbsp;</p>
+  
+    <p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30"><code>GetDescriptionType</code>
+ is valid only for descriptions with reference a component and not a chapter.&nbsp;</p>
+  
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                      CATUnicodeString sTypeOfTheDescription ;
+                      <b>CATICatalogDescription::CATCatalogDescriptionType</b> TypeOfTheDescription ;
+                      CurrentDescription-&gt;<b>GetDescriptionType</b>(TypeOfTheDescription);
+                  
+                      if      (TypeOfTheDescription == CATICatalogDescription::CATCatalogFeature)
+                         sTypeOfTheDescription = &quot;Feature&quot;;
+                      else if (TypeOfTheDescription == CATICatalogDescription::CATCatalogDescription)
+                         sTypeOfTheDescription = &quot;Description&quot;;
+                      else if (TypeOfTheDescription == CATICatalogDescription::CATCatalogDocument)
+                         sTypeOfTheDescription = &quot;Document&quot;;
+                      ...
+ ...</pre>
+    </td>
+  </tr>
+</table>
+        <p>The name of the referenced object can be obtained with the <i>CATIAlias</i>
+        interface.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+    CATIAlias * pIAlias = NULL ;
+    rc = pReferencedObject-&gt;QueryInterface(IID_CATIAlias,(void **) &amp; pIAlias);
+                                               
+    if ( SUCCEEDED(rc) )
+    {
+       CATUnicodeString Identifier;
+       Identifier = pIAlias-&gt;<b>GetAlias</b>() ;
+       ...
+    }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+        <p>In case of a description containing a link towards a description, the
+        referenced object implements the <i>CATICatalogDescription</i>
+        interface. Such descriptions are obtained when a persistent query is
+        associated (and resolved) with a chapter. The referenced object is the
+        description from an another catalog.&nbsp; Refer to the &quot;Creating a Persistent Query&quot; article [<a href="#References">4</a>]
+  for more details about persistent query.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                      if ( <b>TypeOfTheDescription == CATICatalogDescription::CATCatalogDescription</b> )
+                      {
+                         CATICatalogDescription * pIPointedDesc = NULL ;
+                         rc = pReferencedObject-&gt;QueryInterface(IID_CATICatalogDescription,
+                                                  (void**) &amp;pIPointedDesc);
+                         if ( SUCCEEDED(rc) )
+                         {
+ 
+                             CATICatalogChapter * pExternalChapter = NULL ;
+                             rc = pIPointedDesc-&gt;<b>GetChapter</b>(pExternalChapter);
+                             if ( SUCCEEDED(rc) )
+                             {
+                                ...
+                                pExternalChapter-&gt;Release();
+                                pExternalChapter = NULL ;
+                             }
+                             pIPointedDesc-&gt;Release();
+                             pIPointedDesc = NULL ;
+                         }
+                      }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+        <p>In case of a description containing a link towards a document, the
+        referenced object implements at least the <i>CATInit</i> interface
+        because it is a document.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+                      if (<b>TypeOfTheDescription == </b><b>CATICatalogDescription::CATCatalogDocument</b>) 
+                      {
+                         <b>CATInit</b> * pIInitOnPointedDesc = NULL ;
+                         rc = pReferencedObject-&gt;QueryInterface(IID_CATInit,
+                                                  (void**) &amp;pIInitOnPointedDesc);
+                         if ( SUCCEEDED(rc) )
+                         {
+                            pIInitOnPointedDesc-&gt;Release();
+                            pIInitOnPointedDesc = NULL ;
+
+                            int value ; 
+                            CurrentDescription-&gt;<b>IsResolvedObjectComputed</b>(value) ;
+                            ...
+                            if ( value == 1 )
+                            {
+                               cout &lt;&lt;&quot;Resolved Part configuration&quot; &lt;&lt; endl;
+                            }else
+                            {
+                               cout &lt;&lt;&quot;Part configuration&quot; &lt;&lt; endl;
+                            }
+                         }
+
+                      }
+ ...</pre>
+    </td>
+  </tr>
+</table>
+    <p>The <b><code>IsResolvedObjectComputed</code></b> enables to know if the description
+    references a resolved document or not. To be resolved two cases:</p>
+    <ul>
+    <li>If you insert a document as a component of a catalog&nbsp; [<a href="#References">5</a>]&nbsp;</li>
+    <li>If you associate a Part document with a design table, and the
+      description is resolved (in using the <code>ResolvedDocumentFromDesignTable
+      </code>method) [<a href="#References">6</a>]</li>
+    </ul>
+  </ul>
+</ol>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case enables to understand the catalog structure in analyzing the
+description's content and in detailing the data (keyword) linked to the chapter.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="896">
+  <tr>
+    <td valign="top" width="63">[1]</td>
+    <td width="819"><a href="CAACciCatalogCreationStructure.htm">Creating a
+      Catalog</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[2]</td>
+    <td width="819"><a href="../CAACciTechArticles/CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[3]</td>
+    <td width="819"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[4]</td>
+    <td width="819"><a href="CAACciCatalogCreationStructure.htm">Creating a Persistent
+      Query</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[5]</td>
+    <td width="819"><a href="CAACciCatalogCreationPart.htm">Creating a Catalog
+      with Part Documents</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="63">[6]</td>
+    <td width="819"><a href="CAACciCatalogCreationPartFamily.htm">Creating a Catalog
+      with Part Family</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="888">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

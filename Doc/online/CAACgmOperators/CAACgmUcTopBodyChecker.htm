@@ -1,0 +1,189 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using the Body Checker</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using the Body Checker</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A CGM surface which exhibits curvature radii less than the resolution 
+		is not valid. The &quot;Body Checker&quot; can be used to determine whether a surface 
+		is valid with respect to this criteria.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsBodyChecker Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsBodyChecker Do?</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsBodyChecker</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsBodyChecker 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you determine whether a surface is valid in 
+terms of curvature radius. This is done by using the CATICGMBodyChecker.h interface. 
+Today, the rule to check whether a shell self-intersects is not implemented yet 
+(see the interface documentation in the encyclopedia).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsBodyChecker Use Case</h2>
+<p>CAAGMOperatorsBodyChecker is a use case of the CAAGMOperatorsInterfaces.edu framework 
+that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsBodyChecker Do?</h3>
+<p>The CAAGMOperatorsBodyChecker use case:</p>
+<ul>
+	<li>Loads the container and retrieves the body to be checked.</li>
+	<li>Creates and uses the body checker.</li>
+	<li>Displays the diagnosis.</li>
+	<li>Closes the container.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsBodyChecker</h3>
+<p>To launch CAAGMOperatorsBodyChecker , you will need to set up the build time 
+environment, then compile CAAGMOperatorsBodyChecker.m along with its prerequisites, 
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p><code>CAAGMOperatorsBodyChecker e:\bodyChecker1.NCGM</code></p>
+<p>where <code>bodyChecker1.NCGM</code> is the input file delivered in the CAAGMOperatorsInterfaces.edu\FunctionTests\InputData 
+file [<a href="#References">1</a>]. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsBodyChecker Code</h3>
+<p>The CAAGMOperatorsBodyChecker use case is made of a main named CAATopBodyChecker.cpp 
+located in the CAAGMOperatorsBodyChecker.m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsBodyChecker.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are thee main steps in CAATopBodyChecker.cpp: </p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Loading the Container and Retrieving 
+	the Body to Be Checked</a></li>
+	<li><a href="#KV">Creating and Running the CATICGMBodyChecker Object</a></li>
+	<li><a href="#Displaying the Diagnosis">Displaying the Diagnosis</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Loading the Container and Retrieving 
+the Body to Be Checked</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject 
+(and the curves and surfaces in particular). In this use case, the factory is defined 
+by reading a NCGM file that was previously stored,&nbsp; the global function
+<code>::CATLoadCGMContainer</code> must be used to retrieve the factory. The body 
+is retrieved by using the CATICGMContainer::FindObjectFromTag method. There is only 
+one body in the container which is loaded. 2353356 is the body tag.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = CATLoadCGMContainer(filetoread);
+...
+CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag(2353356); </pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="KV"></a>Creating and Running the CATICGMBodyChecker Object</h3>
+<p>The CATICGMBodyChecker object is created by using the <code>CATICGMBodyChecker::Create</code> 
+static function. To activate all the checker rules, you must specify the <code>BodyChkModeFull</code> 
+mode. So far, only the check of the curvature radius is implemented for curves and 
+surfaces.</p>
+<pre class="code">CATICGMBodyChecker * pBodyChecker = CATICGMBodyChecker::Create(piGeomFactory, &amp;topdata, piBodyToBeChecked);
+//
+// b - Specify the Full Mode
+if (NULL != pBodyChecker)
+{
+CATCGMBodyCheckMode eChkMode = CATCGMBodyChkModeFull;
+pBodyChecker-&gt;SetCheckMode(eChkMode);
+//
+// c - Run the operator
+CATBoolean bRet = FALSE;
+bRet = pBodyChecker-&gt;Run();
+....</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Displaying the Diagnosis"></a>Displaying the Diagnosis</h3>
+<p>All the errors found in the body to be checked are displayed if you have specified 
+the Full Mode. If the light mode is specified, several errors of the same type can 
+be diagnosed.</p>
+<pre class="code">pBodyChecker-&gt;BeginningDiagnosis();
+while( pBodyChecker-&gt;NextDiagnosis() )
+{
+CATUnicodeString strDiagnosis;
+pBodyChecker-&gt;GetDiagnosis(strDiagnosis);
+
+cout &lt;&lt; strDiagnosis.ConvertToChar() &lt;&lt; endl;
+}</pre>
+<p>This is the message which is displayed on the standard output at execution:</p>
+<pre>CATTabulatedCylinder[2353360] : Surface has invalid curvature
+Invalid curvature radius found = 0.000403962 &lt;= Allowed [0.001]
+At surface parameter = (PatchU=48, ParamU=373.951; PatchV=1, ParamV=0)</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Closing the Container</h3>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code">//
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2004]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

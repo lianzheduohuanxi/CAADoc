@@ -1,0 +1,345 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Inserting a Shape Design Feature in the Procedural View</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Shape Design &amp; Styling</h1>
+    </td>
+    <td valign="top">
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Inserting a Shape Design Feature in the Procedural
+      View</h3>
+      <em>Insert GSD feature in the procedural view: attach it to an Open Body
+      in the graph</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAGsiUserTools Object. This use case explains
+      how to insert a feature in an open body.
+      <ul>
+        <li><b><a href="#Learn">What means inserting in the procedural view</a></b></li>
+        <li><b><a href="#UseCase">The CAAGsiUserTools Object - Inserting
+          Wireframe and ShapeDesign Feature in procedural view</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAGsiUserTools Do</a></li>
+          </ul>
+          <ul>
+            <li><a href="#Where">Where to Find the CAAGsiUserTools Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What means inserting in the procedural view</h3>
+<p>The procedural view is the representation of the associative feature creation
+in the CATIA V5 frame.</p>
+<p>Once the feature is created , its representation is generated (build, update)
+and it is visualized in CATIA in the 3D window and in graph</p>
+<p>This article is intended to help you make your first steps in programming
+with CATIA Shape Design [<a href="#References">1</a>]. Its main intent is to
+show you how to insert a feature in procedural view.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAGsiUserTools Object - Inserting Wireframe and
+Shape Design Feature in the procedural view</h3>
+<p>CAAGsiUserTools is a usefull class in CAAGsiToolkit.m module of the
+CAAGSMInterfaces.edu framework that illustrates GSMInterfaces framework object
+standard use.</p>
+<p>CAAGsiUserTools is a toolkit object that encapsulate three aspects of CAA
+development in Wireframe and Shape Design</p>
+<ul>
+  <li>Creating an OpenBody
+  <li>Inserting a Wireframe and Shape Design feature in an OpenBody
+  <li>Creating Wireframe and shape Design feature using GSMInterface framework
+    Interfaces
+</ul>
+<p>Two first aspects are general behaviors to re-use to instanciate any GSD
+features of GSMInterfaces in CATIA V5 frame.</p>
+<p>The second aspect is presented in this article</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAGsiUserTools Do</h4>
+The goal of CAAGsiUserTools Object is to show how to insert a feature in an open
+body feature, which is a basic task when you create shape design features in a
+part document. CAAGsiUserTools illustrates some backbone concepts that are
+shared by all mechanical applications.
+<p align="right">[<a href="#Top">Top</a>][<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGsiUserTools Code</h4>
+<p>The CAAGsiUserTools Object is made of a single class named CAAGsiUserTools
+located in the CAAGsiToolkit.m module of the CAAGSMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiToolkit.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiToolkit.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are two logical steps in CAAGsiUserTools:
+<p>Since release V5R12
+<ol>
+  <li><a href="#InsertInProceduralView">Use of CATIGSMInsertInProceduralView
+    interface</a></li>
+</ol>
+<p>Before release CATIA V5R12</p>
+<ol>
+  <li><a href="#OpenBody">Retrieving the Open Body from the Part Feature</a></li>
+  <li><a href="#CurrentTool">Aggregating the Feature to This Open Body</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="InsertInProceduralView"></a>Use of CATIGSMInsertInProceduralView
+interface</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>HRESULT 
+CAAGsiUserTools::InsertInProceduralView</b>(const CATISpecObject_var&amp; ispObjectToAppend,
+                                        const CATISpecObject_var&amp; ispInputParent)
+{
+   
+    <span style="background-color: #FFFFFF">
+    // V5R12 AND FOLLOWING VERSIONS: Tool to Insert into the procedural view 
+    //   ----------------------------------------------------------------------------
+    </span>
+    HRESULT rc = E_FAIL; 
+    CATIGSMProceduralView_var curobj = ispObjectToAppend;
+    if (NULL_var != curobj ) {
+        rc = curobj-&gt;InsertInProceduralView(ispInputParent);
+    }
+    return rc ;
+    
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface is implemented for all GSD feature and it allows to directly
+insert the current feature in the procedural view<br>
+It encapsulates the previous proposed methodology to insert a feature in an Open
+Body<br>
+If the input father feature is not set (NULL_var) then the current feature is
+used as reference for inserting.<br>
+Note: If object is already inserted, nothing is done.</p>
+<p>Some additionnal arguments can be setted (which values are default defined)
+<ul>
+  <li>bSetAsCurrent (TRUE by default) TRUE means that the object after insert
+    becomes current</li>
+  <li>BeforeFeature (NULL_var by default), only to be used for inserting in a
+    partbody, allow to specify where insert the feature in a PartBody</li>
+</ul>
+<p><img src="../CAAIcons/images/warning.gif" border="0" width="30" height="30">The
+interface is much more straight forward for inserting GSD feature and it is
+recommended to use it since V5R12.</p>
+<h4><a name="OpenBody"></a>Retrieving the Open Body from the Part Feature</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>HRESULT
+ CAAGsiUserTools::InsertInProceduralView</b>(const CATISpecObject_var &amp;ispObjectToAppend,
+                                         const CATISpecObject_var &amp;ispInputParent)
+{
+  CATIGSMTool_var spTool = ispInputParent;
+
+  if (NULL_var == spTool)
+    spTool = <b><a href="#GetCurrentGSMTool">GetCurrentGSMTool</a></b>(&quot;&quot;,1);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We first get a <i>CATIGSMTool</i> smart pointer from the <code>ispInputParent</code>
+smart pointer. If the given <i>CATISpecObject</i> Smart Pointer <code>ispInputParent</code>
+equals NULL_var then we call the <code>GetCurrentGSMTool</code> method to
+retrieve a GMTool. If we call <code>InsertInProceduralView</code> with a null <code>ispInputParent</code>
+then we will retrieve the GSMTool automatically.</p>
+<p>We have stored the _pFact pointer in the CAAGsiUserTools class in the method <code>Init</code>
+that has to be called before doing anything, we call the <code>GetCurrentGSMTool()</code>
+method to retrieve a Current GSMTool or create one and set it current. This
+enable the user to directly call <code>InsertInProceduralView()</code> without
+calling <code>CreateGSMTool()</code> before.</p>
+<p><img src="../CAAIcons/images/warning.gif" border="0" width="30" height="30">The
+main drawback of this, is that we will make a lot of unuseful calls to retrieve
+the Part, the current Tool and finally insert a feature in the GSMTool.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><a name="GetCurrentGSMTool"></a><b>CATIGSMTool_var
+  CAAGsiUserTools::GetCurrentGSMTool</b>(const CATUnicodeString &amp;iName,
+                                     int iSetAsCurrent)
+{
+  CATIContainer_var    spCont      = _pFact;
+  CATIPrtContainer_var spPartCont  = spCont;
+  CATIPrtPart_var      spPart      = spPartCont -&gt; GetPart();
+
+  CATIGSMTool_var spTool = NULL_var;
+  if (NULL_var != spPart)
+  { 
+    CATIBasicTool_var spCurrentTool = spPart-&gt;<b>GetCurrentTool</b>();
+    spTool = spCurrentTool;
+    if (NULL_var != spTool)
+    {
+      CATISpecObject_var spExternalRef = spPart-&gt;<b>GetBodyForExternalReferences</b>();
+      if (NULL_var != spExternalRef &amp;&amp; spTool == spExternalRef)
+             spTool = NULL_var;
+    }
+    if (<b>NULL_var == spTool</b>)
+    {
+      spTool = <b>CreateGSMTool</b>(iName);
+    }
+  }
+  return spTool;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The smart pointer <code>spPart</code> to the <i>CATIPrtPart</i> interface
+enables us to retrieve the active Tool (One always one.) Then, we try to get a <i>CATIGSMTool</i>
+smart pointer on the <code>spCurrentTool</code> <i>CATIBasicTool</i> smart
+pointer, if <code>spCurrentTool</code> is a GSMTool then <code>spTool</code> is
+not null.</p>
+<p>At this stage, we have to check that the tool retrieved is not the open body
+dedicated to store external references (Multi-model links). If it is the case,
+we set <code>spTool</code> to NULL_var which means that we need to create
+another GSMTool feature for our need. We finally call the <code>CreateGSMTool</code>
+method [<a href="#References">3</a>]. We will create this open body with the
+default argument (iSetAsCurrent = 1 and iTopLevel = 0). This open body will
+appear after the current open body in procedural view.</p>
+<p><img src="../CAAIcons/images/information.gif" border="0" width="31" height="30">In
+some case, we will insert two features at a time in the procedural view: a
+feature and an open body.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h4><a name="CurrentTool"></a>Aggregating the Feature to This Open Body</h4>
+<p>Now that we have retrieved (or created) an open body, we can aggregate the
+shape design feature inside it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>HRESULT CAAGsiUserTools::InsertInProceduralView()</b>
+  {
+  ...
+  if ( NULL_var != ispObjectToAppend &amp;&amp; NULL_var != spTool)
+  {
+    <b>CATIDescendants</b>_var spParent = spTool;
+    if ( NULL_var != spParent)
+      spParent-&gt;<b>Append ( ispObjectToAppend )</b>;
+    else
+      return E_FAIL;
+  }
+  else
+    return E_FAIL;
+  return S_OK;</pre>
+    </td>
+  </tr>
+</table>
+<p>We get a <i>CATIDescendants</i> interface smart pointer from the <code>spTool</code>
+smart pointer, in order to aggregate the <i>ispObjectToAppend</i> in the
+GSMTool.</p>
+<p><img src="../CAAIcons/images/information.gif" border="0" width="31" height="30">A
+shape design feature is created without any parent, but in order to see them in
+3D and to manipulate them in the CATIA V5 applications, we have to aggregate
+them in open bodies.</p>
+<p>We call the <code>Append</code> method of spParent in order to add to its
+descendant the <code>ispObjectToAppend</code> feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+This use case has demonstrated the way to insert a shape design feature in
+procedural view. We illustrate the way we can automatically insert an open body
+in the procedural view if no active open body exists. We also show how to
+aggregate a feature in an open body using <i>CATIDescendants</i> interface.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAGsiShapeDesignFeature.htm">About Generative Shape Design
+      Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAGsiCreateGSMTool.htm">Creating an Open Body</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAGsiUseCases/CAAGsiNozzleSample.htm">CAAGsiNozzle
+      Use case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Apr 2003]</td>
+    <td valign="top">Documentset as Technical Article</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

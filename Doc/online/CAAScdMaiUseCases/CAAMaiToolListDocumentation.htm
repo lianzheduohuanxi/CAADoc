@@ -1,0 +1,219 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Generating an HTML Documentation from a Tool List</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Machining</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Generating an HTML Documentation from a Tool List</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro CAAMaiToolListDocumentation shows you
+      how to generate an HTML document from a list of Tools used in one or more
+      Manufacturing Programs.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>It creates an HTML document by retrieving the process document,
+      scanning the list of Manufacturing Activities, and reading Tools and Tool
+      Assemblies used in the Program.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAMaiToolListDocumentation is launched in CATIA. A
+      Process document with a completed Manufacturing Program is needed.</p>
+      <p><a href="CAAMaiToolListSource.htm" target="Source">CAAMaiToolListDocumentation.CATScript</a>
+      is located in the CAAScdMaiUseCases module.&nbsp;</p>
+      <p>You can also use the VB Macro ToolList.CATScript located in
+      startup\Manufacturing\Documentation.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAMaiToolListDocumentation includes five&nbsp;
+      steps:</p>
+      <ol>
+        <li><a href="#Step1">Create the HTML file for the documentation</a></li>
+        <li><a href="#Step2">Retrieve the active document</a></li>
+        <li><a href="#Step3">Retrieve the current Process of the active document</a></li>
+        <li><a href="#Step4">Retrieve the list of activities of the current
+          Process</a></li>
+        <li><a href="#Step5">Have a look at the generated documentation</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Create the HTML file for the documentation</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Create the HTML file </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font></font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>aFileSyst<font color="#0000ff"> As </font>FileSystem </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>aFileSyst = CATIA.FileSystem </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>theHTMLFile<font color="#0000ff"> As </font>File </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>aTextStream<font color="#0000ff"> As </font>TextStream </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>theHTMLFile = aFileSyst.CreateFile(HtmlFilesPath &amp; OutIndex, True) </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>aTextStream = theHTMLFile.OpenAsTextStream(&quot;ForWriting&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Create the HTML file and open it as a Text Stream in order to set data
+      for documentation.</p>
+      <h4><a name="Step2"></a>Retrieve the active CATProcess document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Retrieve the active document</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF"> Dim </font>MfgDoc1<font color="#0000FF"> As </font>Document
+<font color="#0000FF"> set </font>MfgDoc1 = CATIA.ActiveDocument</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"> ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves the active document and set it in the variable MfgDoc1.</p>
+      <h4><a name="Step3"></a>Retrieve the current Process of the active
+      document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...
+<font color="#008000">'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">' Retrieve the current Process</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">Set </font>aProcess = MfgDoc1.GetItem(&quot;Process&quot;)</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The current Process is retrieved as an Item of the active
+      document.&nbsp;</p>
+      <h4><a name="Step4"></a>Retrieve the list of activities and read Tool
+      Assemblies and Tools</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...
+<font color="#0000ff">For </font>i = 1<font color="#0000ff"> To </font>quantity </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	<font color="#0000ff">Set </font>CurrentSetup = childs.Item(i) </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	<font color="#0000ff">If </font>(CurrentSetup.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">	</font><font color="#008000">'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">	' Read the Programs of the current Setup</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">	'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	Set </font>ProgramList = CurrentSetup.Programs </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	NumberOfProgram = ProgramList.Count </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	For </font>J = 1<font color="#0000ff"> To </font>NumberOfProgram </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">		Set </font>CurrentProgram = ProgramList.GetElement(J) </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">		</font><font color="#008000">'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">		' Read the Activities of the current Program</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">		'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">		Set </font>ActivityList = CurrentProgram.Activities </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">		NumberOfActivity = ActivityList.Count </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">		For </font>K = 1<font color="#0000ff"> To </font>NumberOfActivity </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">	</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">			Set </font>CurrentActivity = ActivityList.GetElement(K) </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">			ActivityName = CurrentActivity.Name </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">			ActivityType = CurrentActivity.Type </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			' Read the Activity Type</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			' If the Activity is a tool Change -&gt; Add to the document</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			'---------------------------------------------------------------</font> </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">			If </font>(ActivityType = &quot;ToolChange&quot; Or ActivityType = &quot;ToolChangeLathe&quot;) Then </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">			</font></pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				... </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">				Set </font>CurrentAssembly = CurrentActivity.ToolAssembly </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				AssemblyNumber = CurrentAssembly.Number </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				Dim Attribut<font color="#0000ff"> As </font>Parameter </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				Set Attribut = CurrentAssembly.getAttribute(&quot;MFG_NAME&quot;) </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				AssemblyName = Attribut.Value </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000ff">				Set </font>CurrentTool = CurrentActivity.Tool </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				ToolNumber = CurrentTool.Number </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				ToolName = CurrentTool.Name</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">				 ...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">			End If</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">			...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">		Next</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">		...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	Next</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">	...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">Next</pre>
+          </td>
+        </tr>
+      </table>
+      <p style="word-spacing: 0; margin-top: 0; margin-bottom: 0">Retrieve the
+      list of activities to scan in the current Process. Then scan the setup and
+      Program list to retrieve Manufacturing Activities such as Tool Changes.</p>
+      <p style="word-spacing: 0; margin-top: 0; margin-bottom: 0">Finally read
+      the Tool Assemblies and Tools information to be written in the HTML output
+      file.</p>
+      <h4><a name="Step5"></a>Have a look at the generated documentation&nbsp;</h4>
+      <p><a href="ToolList.html">Sample of the generated documentation for the
+      Tool List</a></p>
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to generate an HTML documentation from a Tool
+List</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><i><a href="../CAAScdMaiTechArticles/CAAMaiTocManufacturingActivity.htm">Machining
+      automation objects</a></i>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

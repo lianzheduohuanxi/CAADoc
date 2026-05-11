@@ -1,0 +1,130 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniParameters.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro:</font>
+<font color="#008000">'                 1 - scans the list of parameters of a CATPart document</font>
+<font color="#008000">'                 2 - for each parameter, determines whether a parameter is hidden,</font>
+<font color="#008000">'                     whether it is a boolean type parameter</font>
+<font color="#008000">'                     and sets its value to true</font>
+<font color="#008000">'                 3 - displays the list of hidden parameters</font>
+<font color="#008000">'                     along with their values and comments</font>
+<font color="#008000">'                 4 - asks you to modify the status (Hidden-&gt;Show) of the parameters</font>
+<font color="#008000">'                     and to re-run to macro.</font>
+<font color="#008000">'                 The parameter comments are those you specify by using the Edit comments...</font>
+<font color="#008000">'                 command from the contextual menu. After the list of hidden parameters</font>
+<font color="#008000">'                 is displayed you can turn the status of each parameters to Show </font>
+<font color="#008000">'                 and run again the macro.</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumptions:  This macro is intended to be run on the </font>
+<font color="#008000">'                 KwrMacroHiddenParameters.CATPart document.</font>
+<font color="#008000">'                 However, you can run this macro on any CATPart document       </font>
+<font color="#008000">'                 The KwrMacroHiddenParameters.CATPart sample has three </font>
+<font color="#008000">'                 hidden parameters: "Task1" , "Task2" and "Task3", all of them </font>
+<font color="#008000">'                 are booleans with their initial values set to false. </font>
+<font color="#008000">'                 As these parameters are in a hidden status, they are not displayed </font>
+<font color="#008000">'                 in the specification tree but they are visible in the f(x) dialog box.</font>
+<font color="#008000">'</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Author:       Carole ROULLE, Pierre Grignon</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6  </font>
+<font color="#008000">'   revision V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\KwrMacroHiddenParam.CATPart")
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sFilePath)
+
+ <font color="#008000">' Set the CATIA popup file alerts to False</font>
+ <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+ CATIA.DisplayFileAlerts = False
+
+ <font color="#008000">' Retrieve your active document - CATIA is your application </font>
+ <font color="#008000">' You get the active document by using the ActiveDocument property</font>
+ <font color="#008000">' on your application object</font>
+<font color="#0000FF"> Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF"> Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+ <font color="#008000">' Check whether the document is a CATPart</font>
+ <font color="#008000">' InStr is a standard VB function</font>
+<font color="#0000FF"> If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+    <font color="#008000">' Retrieve the collection object which contains</font>
+    <font color="#008000">' all the document parameters</font>
+<font color="#0000FF">    Dim </font>oParams<font color="#0000FF"> As </font>Parameters 
+<font color="#0000FF">    Set </font>oParams = oActiveDoc.Part.Parameters 
+
+    <font color="#008000">' Declare the variables to be used in the message box</font>
+    <font color="#008000">' which displays the hidden parameters</font>
+<font color="#0000FF">    Dim </font>strRel0<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>strRel1<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>strRel2<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>HiddenNumber<font color="#0000FF"> As </font>Integer
+    strRel0 = "Name   Value   Comments"
+    strRel1 = "Here is the list of hidden parameters" & vbCrLf & strRel0
+ 
+    <font color="#008000">' Scan the parameter list,</font>
+    <font color="#008000">' test whether the value returned by the Hidden property is "True",</font>
+    <font color="#008000">' test whether the type of the parameter is BoolParam,</font>
+    <font color="#008000">' increment the HiddenNumber variable</font>
+    <font color="#008000">' set to true the boolean value of the hidden parameters (if any) </font>
+    <font color="#008000">' Note about the BoolParam type test:</font>
+    <font color="#008000">' The statement oParams.Item(i).Value = "true" raises an error</font>
+    <font color="#008000">' whenever the parameter is not a boolean</font>
+<font color="#0000FF">    Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    For </font>i = 1<font color="#0000FF"> To </font>oParams.Count
+<font color="#0000FF">       if </font>(oParams.Item(i).Hidden = "True") Then
+<font color="#0000FF">         if </font>TypeName(oParams.Item(i)) = "BoolParam" Then
+         strRel1 = strRel1 & vbCrLf & oParams.Item(i).Name &_
+             "   " & oParams.Item(i).Value &_
+             "   " & "'" & oParams.Item(i).Comment &_
+             "'" : HiddenNumber = HiddenNumber + 1 : oParams.Item(i).Value = "true"
+<font color="#0000FF">         end if</font>
+<font color="#0000FF">       end if </font>
+
+<font color="#0000FF">    Next</font>
+
+    <font color="#008000">' Display the list of hidden parameters.</font>
+    <font color="#008000">' The parameter names, values and comments</font>
+    <font color="#008000">' are displayed in a message box.</font>
+    <font color="#008000">' Ask you to modify interactively the status of the</font>
+    <font color="#008000">' parameters and to re-run the macro.</font>
+
+    strRel2 = "NOW, SHOW THE HIDDEN PARAMETERS" &_ 
+    vbCrLf & vbCrLf & "IN THE f(x) DIALOG BOX," &_
+    vbCrLf & "  1 ) RIGHT-CLICK THE PARAMETER VALUE FIELD " &_
+    vbCrLf & "  2 ) SELECT THE SHOW COMMAND FROM THE CONTEXTUAL MENU" &_
+    vbCrLf & vbCrLf & "THEN RE-RUN THE MACRO "
+<font color="#0000FF">    If </font>(HiddenNumber &gt; 0)<font color="#0000FF"> Then</font>
+       MsgBox strRel1  
+       MsgBox strRel2 
+    Else 
+       MsgBox "There are no hidden parameters in this document"
+<font color="#0000FF">    End If</font>
+
+Else 
+   MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

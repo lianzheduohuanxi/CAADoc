@@ -1,0 +1,238 @@
+<html>
+
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Language</title>
+</head>
+
+<body>
+
+<pre>
+Language=&quot;VBSCRIPT&quot;
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'*</font>
+<font color="#008000">'* Procedure that allow the user to create a lathe sequential operation and tool motions</font>
+<font color="#008000">'* </font>
+<font color="#008000">'*    Open CATProcess and load Lathe workbench</font>
+<font color="#008000">'*    Execute the VB Script Macro</font>
+<font color="#008000">'*</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#008000">'********************************* </font>
+<font color="#008000">'Global variables</font>
+<font color="#008000">'********************************</font>
+
+<font color="#0000FF">Dim </font>MfgDoc1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Dim </font>ActivityRef<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">Dim </font>Setup1<font color="#0000FF"> As </font>ManufacturingSetup
+<font color="#0000FF">Dim </font>Program1<font color="#0000FF"> As </font>ManufacturingProgram
+<font color="#0000FF">Dim </font>PartMachined<font color="#0000FF"> As </font>Product     	         	    <font color="#008000">' Product including the Design Part</font>
+<font color="#0000FF">Dim </font>documents1<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">Dim </font>partDocument1<font color="#0000FF"> As </font>Document
+
+<font color="#008000">'*******************************************************************************************</font>
+<font color="#008000">'* 				Main Entry  Point</font>
+<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+	
+	Dim ProgramList<font color="#0000FF"> As </font>MfgActivities
+	Dim NumberOfPO<font color="#0000FF"> As </font>Integer
+	Dim childs<font color="#0000FF"> As </font>Activities
+	Dim child<font color="#0000FF"> As </font>Activity
+	Dim quantity<font color="#0000FF"> As </font>Integer
+	Dim Line1<font color="#0000FF"> As </font>CATIABase
+	Dim Point1<font color="#0000FF"> As </font>CATIABase
+	Dim Point2<font color="#0000FF"> As </font>CATIABase
+	Dim Point3<font color="#0000FF"> As </font>CATIABase
+	Dim Plane2<font color="#0000FF"> As </font>CATIABase	
+	Dim Line2<font color="#0000FF"> As </font>CATIABase
+	Dim Line3<font color="#0000FF"> As </font>CATIABase
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the Open body of the part</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set documents1 = CATIA.Documents
+	Set partDocument1 = documents1.Item(&quot;PartLathe_ToolMotion.CATPart&quot;)
+	Set part1 = partDocument1.Part
+	Set hybridBodies1 = part1.HybridBodies
+	Set hybridBody1 = hybridBodies1.Item(&quot;Open_body.1&quot;)
+	Set hybridShapes1 = hybridBody1.HybridShapes
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the tool motion's geometry</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set PT1 = hybridShapes1.Item(&quot;PT1&quot;)
+	Set PT2 = hybridShapes1.Item(&quot;PT2&quot;)
+	Set PT3 = hybridShapes1.Item(&quot;PT3&quot;)
+
+	Set D1 = hybridShapes1.Item(&quot;D1&quot;)
+	Set D2 = hybridShapes1.Item(&quot;D2&quot;)
+	Set D3 = hybridShapes1.Item(&quot;D3&quot;)
+	Set D3 = hybridShapes1.Item(&quot;D3&quot;)
+	Set D4 = hybridShapes1.Item(&quot;D4&quot;)
+	Set D5 = hybridShapes1.Item(&quot;D5&quot;)
+	Set D6 = hybridShapes1.Item(&quot;D6&quot;)
+	Set D7 = hybridShapes1.Item(&quot;D7&quot;)
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Process Root</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set MfgDoc1 = CATIA.ActiveDocument
+	Set ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+
+	<font color="#008000">'*** Retrieve current SetUp</font>
+	<font color="#008000">'***</font>
+	If (ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+	Set childs = ActivityRef.ChildrenActivities
+	quantity = childs.Count
+
+	if quantity &lt;= 0<font color="#0000FF"> then</font>
+	  Exit Sub
+	End if
+	NumberOfPO = 0
+	For I=1<font color="#0000FF"> To </font>quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+			Set Setup1 = child
+			NumberOfPO = NumberOfPO +1
+			Exit For
+		End If
+	Next
+     
+	End If
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Program</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	set ProgramList = Setup1.Programs
+	Set PartMachined = SetUp1.Product
+	Set Program1 = ProgramList.GetElement(1)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Create lathe horizontal machine</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim Machine1<font color="#0000FF"> As </font>ManufacturingMachine
+ 	Set Machine1 = SetUp1.CreateMachine(&quot;MfgHorizontalLatheMachine&quot;)
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation lathe sequential operation</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	dim Mo1<font color="#0000FF"> As </font>ManufacturingOperation
+	Set Mo1 = Program1.AppendOperation(&quot;MfgLatheSequentialOperation&quot;,1)
+	MO1.SetTool(&quot;T1 External Tool&quot;)
+	Dim Tm1<font color="#0000FF"> as </font>ToolMotion
+	Dim Tm2<font color="#0000FF"> as </font>ToolMotion
+	Dim Tm3<font color="#0000FF"> as </font>ToolMotion
+	Dim Tm4<font color="#0000FF"> as </font>ToolMotion
+	Dim Tm5<font color="#0000FF"> as </font>ToolMotion
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of gostd tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm1 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;, 1)
+<font color="#0000FF">    	Call </font>Tm1.SetGeometry(&quot;Parts&quot;, PT1, PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Go GO tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm2 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;,2)
+<font color="#0000FF">    	Call </font>Tm2.SetGeometry(&quot;Parts&quot;, D2, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm2.SetGeometry(&quot;SecondRelimitingElement&quot;, D1, PartMachined, 0)
+
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Indirv tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm3 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheIndirv&quot;,3)
+<font color="#0000FF">    	Call </font>Tm3.SetGeometry(&quot;Parts&quot;, D4, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm3.SetGeometry(&quot;FirstRelimitingElement&quot;, D3, PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Delta tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+ 
+<font color="#0000FF">    	Set </font>Tm4 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheDelta&quot;, 4)
+<font color="#0000FF">    	Dim </font>DeltaMode<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">    	Set </font>DeltaMode = Tm4.GetAttribute(&quot;MfgLatheEODeltaCheckMode&quot;)
+    	DeltaMode.ValuateFromString (&quot;MfgLatheDeltaPtPt&quot;)
+<font color="#0000FF">    	Call </font>Tm4.SetGeometry(&quot;FirstRelimitingElement&quot;, PT2, PartMachined,1)
+<font color="#0000FF">    	Call </font>Tm4.SetGeometry(&quot;FirstRelimitingElement&quot;, PT3,PartMachined, 2)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Go GO tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm5 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;,5)
+<font color="#0000FF">    	Call </font>Tm5.SetGeometry(&quot;Parts&quot;, D6, PartMachined, 0)
+<font color="#0000FF">    	Call </font>Tm5.SetGeometry(&quot;SecondRelimitingElement&quot;, D5, PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Delta tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+<font color="#0000FF">    	Set </font>Tm6 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheDelta&quot;, 6)
+<font color="#0000FF">    	Set </font>DeltaMode = Tm6.GetAttribute(&quot;MfgLatheEODeltaCheckMode&quot;)
+    	DeltaMode.ValuateFromString (&quot;MfgLatheDeltaLineDist&quot;)
+<font color="#0000FF">    	Call </font>Tm6.SetGeometry(&quot;FirstRelimitingElement&quot;, D5, PartMachined, 0)
+	Dim DeltaValue<font color="#0000FF"> as </font>Variant
+	Set DeltaValue = Tm6.GetAttribute(&quot;MfgLatheEOValueDistance&quot;)
+	DeltaValue.Value = 10
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of gostd tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm7 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheGoStd&quot;, 7)
+<font color="#0000FF">    	Call </font>Tm7.SetGeometry(&quot;Parts&quot;, D6, PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of Follow tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+<font color="#0000FF">    	Set </font>Tm8 = Mo1.InsertToolMotion(&quot;MfgSeqMotionLatheFollow&quot;, 8)
+<font color="#0000FF">    	Call </font>Tm8.SetGeometry(&quot;Parts&quot;, D7, PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of PP Word tool motion and geometry assignment</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Tm5 = Mo1.InsertToolMotion(&quot;MfgSeqMotionPPWord&quot;,9)
+	
+
+	Dim TMList<font color="#0000FF"> As </font>MfgToolMotions
+	Set TMList = MO1.GetListOfToolMotions
+
+	NbMo = TMList.Count
+	<font color="#008000">'msgbox NbMo</font>
+
+	Dim Test<font color="#0000FF"> As </font>ManufacturingToolMotion
+	Set Test = TMList.GetElement(1)
+	<font color="#008000">'msgbox(Test.Name)</font>
+  
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre>
+
+</body>
+
+</html>

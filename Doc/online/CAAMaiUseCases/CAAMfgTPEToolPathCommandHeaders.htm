@@ -1,0 +1,298 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Changing Command Headers in the Tool Path Editor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Changing Command Headers in the Tool Path Editor</h3>
+      <i>Create your own menu of tool path in the tool path editor</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMfgTPEUserCommandHeaders use case.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAMfgTPEUserCommandHeaders Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAMfgTPEUserCommandHeaders Do</a></li>
+          <li><a href="#How">How to Launch CAAMfgTPEUserCommandHeaders</a></li>
+          <li><a href="#Where">Where to Find the CAAMfgTPEUserCommandHeaders
+            Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you create your own contextual menu for
+tool path.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UseCase"></a>The CAAMfgTPEUserCommandHeaders Use Case</h4>
+<p>CAAMfgTPEUserCommandHeaders is a use case of the CAAToolPathEditorItf.edu
+framework that illustrates ToolPathEditorInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAMfgTPEUserCommandHeaders Do</h4>
+<p>CAAMfgTPEUserCommandHeaders builds and customize the contextual menu of tool
+path as shown on <a href="#Fig1">Fig.1</a>.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The tool path contextual menu</caption>
+  <tr>
+    <td><img src="images/CAAMfgTPEUserCommandHeaders00.jpg" width="579" height="742"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMfgTPEUserCommandHeaders</h4>
+<p>To launch CAAMfgTPEUserCommandHeaders, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile CAAMfgTPEAddToolBar.m and
+    CAAMfgTPEUserCommandHeaders.m modules along with its prerequisites [<a href="#References">1</a>]</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre># Decomment this line into file ToolPathEditor.edu.dico to run CAAMfgTPEAddToolBar Sample
+# CAAMfgTPEM3xAddin CATISmgProgramAddin libCAAMfgTPEAddToolBar
+# Decomment these lines into file ToolPathEditor.edu.dico to run CAAMfgTPEUserCommandHeaders Sample
+# MfgCompoundTraject CATIMfgToolPathEditorUserHeader libCAAMfgTPEUserCommandHeaders
+# MfgTPMultipleMotion CATIMfgToolPathEditorUserHeader libCAAMfgTPEUserCommandHeaders</pre>
+    </td>
+  </tr>
+</table>
+<p>Set up the run time environment:</p>
+<ul>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMfgToolPath.CATPart file located in:</li>
+  <table width="100%">
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CNext\resources\graphic</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CNext/resources/graphic</code></td>
+    </tr>
+  </table>
+  <p><img src="images/CAAMfgTPEDisplayDistance01.jpg" width="482" height="417">
+  <li>Using the Start menu, select the Surfacic Machining workbench in NC
+    Manufacturing</li>
+  <p><img src="images/CAAMfgTPEDisplayDistance02.jpg" border="0" width="275" height="417">
+  <p>This displays the PPR document:
+  <p><img src="images/CAAMfgTPEDisplayDistance03.jpg" border="0" height=267 width=327></p>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a sweeping
+    operation using the Sweeping command in the Insert-&gt;Machining
+    Operations-&gt;sweeping</li>
+  <li>Select a body, then do replay to compute the tool path.</li>
+  <li>Lock the Sweeping operation : The contextual menu of the tool path is enabled only
+    if the Sweeping operation is locked in the PPR tree.</li>
+  <li>In the PPR tree, an icon appears under the activity of sweeping.</li>
+  <li>Then display the contextual menu of the tool path as shown in fig.1.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMfgTPEUserCommandHeaders Code</h4>
+<p>The CAAMfgTPEUserCommandHeaders use case is made of a class named <i>CAAMfgTPEUserCommandHeaders</i>
+located in the CAAMfgTPEUserCommandHeaders.m module of the
+CAAToolPathEditorItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CAAMfgTPEUserCommandHeaders.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CAAMfgTPEUserCommandHeaders.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There is one logical steps in CAAMfgTPEDisplayToolPathCommand:</p>
+<ul>
+  <li><a href="#Step1">Creating the Implementation of the
+    CATIMfgToolPathUserHeader</a></li>
+</ul>
+<p>We now comment these section by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the Implementation of the
+CATIMfgToolPathUserHeader</h4>
+<p>The class that will implement the command is named <i>CAAMfgTPEUserCommandHeaders.</i>
+Create the <i>CAAMfgTPEUserCommandHeaders</i> class header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class ExportedByCAAMfgTPEUserCommandHeadersEnv CAAMfgTPEUserCommandHeaders : public CATBaseUnknown
+{
+  CATDeclareClass;
+public:
+ 
+  CAAMfgTPEUserCommandHeaders();
+  virtual ~CAAMfgTPEUserCommandHeaders();
+   //Give the list of headers of command in the tool path editor.
+	virtual HRESULT GetHeaders( CATListValCATString &amp;ioHeadersList );
+   //Say if the header of command is available for a given set of object
+	virtual HRESULT IsHeadersAvailable( CATListValCATString&amp; ioHeadersList , CATCSO* iCSO );
+private :
+	// The copy constructor and the equal operator must not be implemented
+	// -------------------------------------------------------------------
+	CAAMfgTPEUserCommandHeaders (CAAMfgTPEUserCommandHeaders &amp;);
+	CAAMfgTPEUserCommandHeaders&amp; operator=(CAAMfgTPEUserCommandHeaders&amp;);
+	// ------------------
+	// HeaderAvailability
+	// ------------------
+	void HeaderAvailability(const CATString&amp; HeaderName, CATBoolean isON);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAMfgTPEUserCommandHeaders</i> class C++-derives from CATBaseUnknown.
+The class has a constructor, a destructor, and the two methods of the interface
+CATIMfgToolPathUserHeaders.</p>
+<p>First you have to implement the method GetHeaders, which will provide you
+with getting the standard headers and to give the application yours own headers
+of command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgTPEUserCommandHeaders::GetHeaders( CATListValCATString &amp;ioHeadersList)
+{
+	HRESULT hRes= S_OK;
+	// Default list of Headers of command in the Tool path Editor.
+	// Each empty string is displayed as a separator in the menu.
+	// TPEPointModification
+	// TPEAreaModification 
+	// &quot;&quot; 
+	// TPETranslate
+	// TPERotate
+	// TPEMirror
+	// &quot;&quot;
+	// TPEReverse
+	// TPEConnect
+	// TPEApproachRetract
+	// &quot;&quot;
+	// TPEToolLength
+	CATIMfgToolPathEditorHeader_var spTPEHeaders = GetImpl();
+	if (!!spTPEHeaders)
+		spTPEHeaders-&gt;GetHeaders(ioHeadersList);
+	int index=8;
+	ioHeadersList.InsertBefore(index,CATString(&quot;TPESplitToolPath&quot;));
+	index=1;
+	ioHeadersList.Replace ( index, CATString(&quot;TPEDisplayToolPath&quot;));
+	// User's list of Headers of command.
+	ioHeadersList.Append(CATString(&quot;TPEDisplayDistance&quot;));
+	return hRes;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>First, we get the standard headers of the tool path editor ( if there are
+used ) by a call to the method GetHeaders of interface
+CATIMfgToolPathEditorHeader. (Note that an empty string in the list is
+equivalent to a separator.) Then we customize this list replacing, suppressing
+or adding command headers.</p>
+<p>Now we implement the method IsHeadersAvailable.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgTPEUserCommandHeaders::IsHeadersAvailable( CATListValCATString&amp; ioHeadersList , CATCSO* iCSO )
+{
+	HRESULT hRes= S_OK;
+	if (NULL == iCSO) return E_FAIL;
+	int nbSelectedItems = iCSO-&gt;GetSize();
+	// if several objects are selected, the contextual menu isn't the same.
+	// Two items are disabled
+	if ( nbSelectedItems &gt; 1 ) {
+		// Get the CATIMfgToolPathEditorHeader interface
+		CATIMfgToolPathEditorHeader_var spTPEHeaders = GetImpl();
+		if (!!spTPEHeaders)
+			spTPEHeaders-&gt;IsHeadersAvailable(ioHeadersList,iCSO);
+		HeaderAvailability(CATString(&quot;TPESplitToolPath&quot;), CATFalse);
+	}
+	return hRes;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>First, we call the method <code>IsHeadersAvailable</code> of interface
+CATIMfgToolPathEditorHeader, if we have any standard command header of the tool
+path editor.</p>
+<p>Then we can activate or deactivate our own headers. For example, if a command
+doesn't work for a multiple selection of tool path, it should be deactivated</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This article provides an example on how to customize the contextual menu of an
+object of type tool path.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMaiDumpToolPathCommand.htm">Dump of Tool Path Content
+      Command</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [March 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

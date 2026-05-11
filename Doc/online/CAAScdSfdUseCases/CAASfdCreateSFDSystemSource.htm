@@ -1,0 +1,75 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASfdCreateSFDSystem.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create an SFD system and features in it.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   No document need to be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+  <font color="#008000">'Create a Product Document</font>
+<font color="#0000FF">  Dim </font>NewProdDoc<font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">  Set </font>NewProdDoc = CATIA.Documents.Add("Product")
+
+  <font color="#008000">'Get the Product from Product Document</font>
+<font color="#0000FF">  Dim </font>RootPrd<font color="#0000FF"> As </font>Product
+<font color="#0000FF">  Set </font>RootPrd = NewProdDoc.Product
+
+  <font color="#008000">'Select the Product Document and Add Product to this selection</font>
+<font color="#0000FF">  Dim </font>SelectionObj<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">  Set </font>SelectionObj = NewProdDoc.Selection
+  SelectionObj.Add RootPrd
+
+  <font color="#008000">'Create a SFD product by Finding it it selection</font>
+<font color="#0000FF">  Dim </font>SfdProductObj<font color="#0000FF"> As </font>SfdProduct
+<font color="#0000FF">  Set </font>SfdProductObj = SelectionObj.FindObject("CATIASfdProduct")
+
+  <font color="#008000">'Create a SFD System</font>
+<font color="#0000FF">  Dim </font>sfdpart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>sfdpart = SfdProductObj.CreateFunctionalSystem
+
+  <font color="#008000">'Retrieve the Factory from the SFD System part</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = sfdpart.GetCustomerFactory("SfmFactory")
+
+  <font color="#008000">'Retrieve the Manager from the Factory</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+  <font color="#008000">'Add Hull Using Manager</font>
+  ManagerObj.AddHull
+
+  <font color="#008000">'Define Shell Plate Support</font>
+<font color="#0000FF">  Dim </font>ShellSupport<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellSupport = sfdpart.FindObjectByName("Hull1234")
+<font color="#0000FF">  Dim </font>ShellSupportRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellSupportRef = sfdpart.CreateReferenceFromObject(ShellSupport)
+  
+<font color="#0000FF">  Dim </font>ShellSuperplate1<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSuperplate1 = FactoryObj.AddSuperPlate("ShellPanel", ShellSupportRef, Nothing)
+  <font color="#008000">'Define Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateLimit<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>ShellPlateLimit = sfdpart.FindObjectByName("LONG.0")
+<font color="#0000FF">  Dim </font>ShellPlateLimitRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>ShellPlateLimitRef = sfdpart.CreateReferenceFromObject(ShellPlateLimit)
+  
+  <font color="#008000">'Define Orientation of Third Limit</font>
+<font color="#0000FF">  Dim </font>ShellPlateOrnt<font color="#0000FF"> As </font>Long
+  ShellPlateOrnt = 5
+  ShellSuperplate1.AddLimit ShellPlateLimitRef, ShellPlateOrnt
+  
+  ShellSuperplate1.Run
+  sfdpart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

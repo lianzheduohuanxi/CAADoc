@@ -1,0 +1,129 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Remove Faces from a Body</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Removing Faces from a Body</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>You can remove a set of faces from a volume or a skin, this does not 
+		change the dimension of the body. The provided set of faces must 
+		be consistent as the operator does not propagate the faces to be removed. The operation completes when the body can be closed by extrapolation 
+		of the faces which are adjacent to the ones removed.</p>
+		</font>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To remove a set of faces from a body, you can use the CATICGMAdvancedRemoveFaceOpe operator.</p>
+<h2><a name="UseCaseDescription">Use Case Description<a></h2>
+<p>The CAAGMOperatorsAdvancedRemoveFace.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to remove a set of faces from a body. This use case must be run with the CAAAdvRemoveFace.NCGM file which is delivered in the
+FunctionTests/InputData folder of the CAAGMOperatorsDoc.edu framework. If you are not already 
+familiar with geometric modeler use cases, go to <a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Remove Face Input data </caption>
+  <tr>
+    <td>
+	<img alt="Remove Face Input data" src="images/CGM_advRemoveFace_0.png" width="250" height="220">&nbsp; </td>
+  </tr>
+</table>
+
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>
+CATLISTP(CATFace) iFacesToRemove;
+...
+CATICGMAdvancedRemoveFaceOpe * pOp = ::CATCGMCreateAdvancedRemoveFaceOpe(piGeomFactory, &topdata, piInputBody);
+...
+pOp->Append(iFacesToRemove);
+pOp->Run();
+CATBody * piResultBody = pOp->GetResult();</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Remove Face Output Body </caption>
+  <tr>
+    <td>
+	<img alt="Remove Face Input data" src="images/CGM_advRemoveFace_1.png" width="250" height="220">&nbsp; </td>
+  </tr>
+</table>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

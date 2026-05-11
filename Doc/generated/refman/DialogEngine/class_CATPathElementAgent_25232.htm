@@ -1,0 +1,642 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>DialogEngine Class CATPathElementAgent</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../DialogEngine.htm" href="../DialogEngine.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "DialogEngine";	}
+		function getCurrentObjectName() { 
+ 	return "CATPathElementAgent"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>DialogEngine <script type="text/javascript" > writeClassCharacteristic(); </script> CATPathElementAgent</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATPathElementAgent_25232','CATPathElementAgent','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATPathElementAgent</b>
+</p>
+<p>
+<b><i> Class representing an agent dedicated to selection.</i></b><br>
+
+ <b>Role</b>: <p>A Path element agent is a specific acquisition agent which
+ retrieves the path of the object under the mouse and stores it
+ as its value. The selection can be done in 3D/2D viewers or in  
+ specification trees.</p>
+ <p>The required object can be directly under the mouse or can be in the path of the
+ object under the mouse. Here is an example to understand the path truncation:
+  <pre>
+   Suppose a Point aggregated by an Open_Body inside a Part document included in a
+   Product document. The path of the Point is as follows:
+
+   Product.1/Part.1/Open_body.2/Point.3
+   
+   In the specification tree or in 3D you select Point.3; the object under the mouse
+   is Point.3 but you can require an object of its path: Open_body.2 for example. 
+   Point.3 is the selected object whenever Open_body.2 is the required object.
+  </pre>
+ </p>
+ <p>The object filtering is based on interface implementation. There are two kinds of filtering:
+  <ol>
+   <li>With an ordered list, thanks to the <script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script> method </li>    <br>The interface's order is more important than the object's position in the selected path.
+     For each interface of the list, a <tt>QI</tt> is done for all objects of the selected path 
+     (from the leaf to the root), if one object implements the current interface, the process is 
+     ended. The required path is from the root to this object.
+   <li>With a non ordered list, thanks to the 
+<script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script> method</li>    <br>The object's position in the selected path is more important than the interface's 
+    order. 
+    For each object of the selected path (from leaf to root), a <tt>QI</tt> of all 
+    interfaces is done, if the current object implements one of them, the process is ended.
+    The required path is from the root to this current object.
+ </ol>
+  <pre>
+   In the previous sample, suppose that Point implements the Itf1 interface and Open_body
+   implements the itf2 interface.
+   case 1: An ordered list with itf2 then itf1.
+           The path of the agent is = Product.1/Part.1/Open_body.2/
+
+   case 2: A non ordered list with itf2 and itf1.
+           The path of the agent is = Product.1/Part.1/Open_body.2/Point.3
+  </pre>
+ </p>
+ <p>The 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> method returns the path of the required object, in case of mono-selection, whenever the 
+<script type="text/javascript"> activateLinkAnchor('','GetListOfValues','GetListOfValues') </script> method returns the list of required objects in case of multi-selection. 
+ </p>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATPathElement','','CATPathElement') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATPathElementAgent(CATString&amp;,CATClassId,CATDlgEngBehavior)"><b>CATPathElementAgent</b></a>(CATString&amp;,CATClassId,CATDlgEngBehavior)
+<dd>  Constructs a path element agent.
+ <dt> o 
+    <a href="#~CATPathElementAgent()"><b>~CATPathElementAgent</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddElementType(IID&amp;)"><b>AddElementType</b></a>(IID&amp;)
+<dd>  Sets an object type expected by the agent.
+ <dt> o 
+    <a href="#GetElementType(int)"><b>GetElementType</b></a>(int)
+<dd>  Returns an object type from those expected by the agent
+ by using the object type index.
+ <dt> o 
+    <a href="#GetElementTypeSize()"><b>GetElementTypeSize</b></a>()
+<dd>  Returns the count of object types expected by the agent.
+ <dt> o 
+    <a href="#GetElementValue()"><b>GetElementValue</b></a>()
+<dd>  Returns the selected object.
+ <dt> o 
+    <a href="#GetListOfValues()"><b>GetListOfValues</b></a>()
+<dd>  Returns the agent list of values.
+ <dt> o 
+    <a href="#GetModifier()"><b>GetModifier</b></a>()
+<dd>  Returns whether the shift and control keys have been pushed during 
+ the selection.
+ <dt> o 
+    <a href="#GetOrderedTypeList()"><b>GetOrderedTypeList</b></a>()
+<dd>  Returns the ordered list of object types expected by the agent.
+ <dt> o 
+    <a href="#GetValue()"><b>GetValue</b></a>()
+<dd>  Returns the agent value.
+ <dt> o 
+    <a href="#RequestDelayedDestruction()"><b>RequestDelayedDestruction</b></a>()
+<dd>  Requests the CATPathElementAgent delayed destruction.
+ <dt> o 
+    <a href="#ResetNoSelectionCursor()"><b>ResetNoSelectionCursor</b></a>()
+<dd>  Resets the customized "No Selection" cursor.
+ <dt> o 
+    <a href="#ResetPreselectionCursor()"><b>ResetPreselectionCursor</b></a>()
+<dd>  Resets the customized "Preselection" cursor.
+ <dt> o 
+    <a href="#SetListOfValues(CATSO*)"><b>SetListOfValues</b></a>(CATSO*)
+<dd>  Sets the agent list of values.
+ <dt> o 
+    <a href="#SetMessage(CATUnicodeString,CATPathElement*)"><b>SetMessage</b></a>(CATUnicodeString,CATPathElement*)
+<dd>  Adds a message to the tooltip displayed over the selected object.
+ <dt> o 
+    <a href="#SetNoSelectionCursor(CATDialog::CATDlgHCursor)"><b>SetNoSelectionCursor</b></a>(CATDialog::CATDlgHCursor)
+<dd>  Sets a customized "No Selection" cursor.
+ <dt> o 
+    <a href="#SetOrderedTypeList(CATListOfCATString&amp;)"><b>SetOrderedTypeList</b></a>(CATListOfCATString&amp;)
+<dd>  Sets an ordered list of object types expected by the agent.
+ <dt> o 
+    <a href="#SetPreselectionCursor(CATDialog::CATDlgHCursor)"><b>SetPreselectionCursor</b></a>(CATDialog::CATDlgHCursor)
+<dd>  Sets a customized "Preselection" cursor.
+ <dt> o 
+    <a href="#SetValue(CATPathElement*)"><b>SetValue</b></a>(CATPathElement*)
+<dd>  Sets the agent value.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATPathElementAgent"></a><a name="CATPathElementAgent(CATString&amp;,CATClassId,CATDlgEngBehavior)"></a> <dt> o <b>CATPathElementAgent</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATPathElementAgent</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATClassId','CATClassId')</script> <td><tt>iType</tt><td><tt>=NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgEngBehavior','CATDlgEngBehavior')</script> <td><tt>iBehavior</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a path element agent.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iId</tt>
+   <dd>   The agent identifier. It is used to retrieve the undo/redo titles in 
+   the command resource file.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd>   The type of the expected objects.
+   The type corresponds to an interface implemented by the object. 
+   <br><b><Legal values></b>If it is NULL, all the objects
+   are accepted.
+   <br>You can add interfaces with </dd>
+<script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script> or you can specified later   an ordered list thanks to the 
+<script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeType','SetOrderedTypeType') </script> method. 
+    <dt><tt> iBehavior</tt>
+   <dd>   The behavior of the agent.
+   <br><b>Legal values</b>: The behavior is given in the form of a
+   concatenation of the facet values using the | character.
+   <br>e.g.: <code>CATDlgEngRepeat|CATDlgEngActive</code>
+   <br>If it is NULL, the agent has the default behavior value for each
+   facet.
+   <br>The facets specific to this agent are :
+   <ul>
+   <li><b>Highlight</b>: <tt>CATDlgEngWithoutSO (default)</tt>,
+   <tt>CATDlgEngWithPSO</tt>,
+   <tt>CATDlgEngWithHSO</tt>,
+   or <tt>CATDlgEngWithPSOHSO</tt>.</li>
+   <li><b>HSO manager</b>: <tt>CATDlgEngOldHSOManager (default)</tt>,
+   or <tt>CATDlgEngNewHSOManager</tt>.</li>
+   <li><b>Multi acquisition</b>: <tt>CATDlgEngMonoAcquisition (default)</tt>,
+   <tt>CATDlgEngMultiAcquisition</tt>,
+   <tt>CATDlgEngMultiAcquisitionCtrl</tt>,
+   <tt>CATDlgEngMultiAcquisitionUserCtrl</tt>,
+   <tt>CATDlgEngMultiAcquisitionSelModes</tt> or
+   <tt>CATDlgEngMultiAcquisitionCtrlNoFeedback</tt>. </li>
+   <li><b>Deep acquisition</b>: <tt>CATDlgEngWithoutDeepSel (default)</tt>,
+   <tt>CATDlgEngWithDeepSel</tt>,
+   or <tt>CATDlgEngWithDeepFirstSel</tt>.</li>
+   <li><b>Truncation</b>: <tt>NULL (default)</tt>,
+   or <tt>CATDlgEngNoSubPath</tt>.</li>
+   <li><b>Valuation from CSO</b>: <tt>CATDlgEngNotValuedFromCSO (default)</tt>,
+   or <tt>CATDlgEngValuedFromCSO</tt>.</li>
+   <li>Valuation mode</b>: <tt>CATDlgEngSimpleValuation (default)</tt>,
+   <tt>CATDlgEngWithPrevaluation</tt>,
+   <tt>CATDlgEngWithManipulation</tt>,
+   <tt>CATDlgEngWithEdit</tt>,
+   <tt>CATDlgEngWithContext</tt>,
+   or <tt>CATDlgEngWithDrag</tt>.</li>
+   <li><b>Tooltip</b>: <tt>CATDlgEngWithoutTooltip (default)</tt>,
+   or <tt>CATDlgEngWithTooltip</tt>.</li>
+   <li><b>User Selection Filter</b>: <tt>CATDlgEngWithoutUserSelectionFilter (default)</tt>,
+   or <tt>CATDlgEngWithUserSelectionFilter</tt>.</li>
+   </ul>
+   The behavior may be specified later with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDialogAgent','SetBehavior','CATDialogAgent.SetBehavior') </script>    method.
+</dl>
+</dl>
+</dl>
+<a name="~CATPathElementAgent"></a><a name="~CATPathElementAgent()"></a> <dt> o <b>~CATPathElementAgent</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATPathElementAgent</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddElementType"></a><a name="AddElementType(IID&amp;)"></a> <dt> o <b>AddElementType</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>AddElementType</b>(<td> const <script type="text/javascript"> activateLink('IID','IID&amp;')</script> <td><tt>iTypeIID</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets an object type expected by the agent.
+ <br><b>Role</b>: The type corresponds to an interface implemented by the 
+ object. 
+ <br>This method may be used several times: then the expected objects must
+ implement one of the given interfaces.
+ <br>However this method cancels any previous use of 
+<script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script> which is an incompatible method.
+ <br>By using a non-ordered type list, for each object in the selection path
+ the agent checks whether it adheres to one of the types until it founds one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeIID</tt>
+   <dd>   It is the identifier of an interface that the expected objects
+   must implement.
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script>
+</dl>
+</dl>
+<a name="GetElementType"></a><a name="GetElementType(int)"></a> <dt> o <b>GetElementType</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATClassId','CATClassId')</script>  <b>GetElementType</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns an object type from those expected by the agent
+ by using the object type index.
+ <br><b>Role</b>: This method returns the <tt>iIndex</tt>th object type
+ from those (ordered or not) expected by the dialog agent,
+ that is set using the 
+<script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script> methods. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the object type .
+   <br><b>Legal values</b>: <tt>iIndex</tt> range starts with 1, which 
+   is the default.
+   Use </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetElementTypeSize','GetElementTypeSize') </script> to get the object type count.
+</dl>
+</dl>
+</dl>
+<a name="GetElementTypeSize"></a><a name="GetElementTypeSize()"></a> <dt> o <b>GetElementTypeSize</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetElementTypeSize</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the count of object types expected by the agent.
+ <br><b>Role</b>: The count of element types ranges from 1 to n
+ if one or more (ordered or not) types are expected, 0 otherwise.
+</dl>
+<a name="GetElementValue"></a><a name="GetElementValue()"></a> <dt> o <b>GetElementValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown *')</script>  <b>GetElementValue</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the selected object.
+ <br><b>Role</b>: The returned value is the required object that is the first  
+ matching the requested type. In otherwords, it is the leaf of the path 
+ returned by the 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> method.  <br>Moreover, the returned value depends on the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','ValuationState','CATAcquisitionAgent.ValuationState') </script>.
+ Indeed, if the agent valuation state is <tt>Valuated</tt>, the 
+ <tt>GetElementValue</tt> method returns the real value; but if the agent 
+ valuation state is <tt>PreValuated</tt>, the <tt>GetElementValue</tt> method 
+ returns the prevalue even if the agent has got a value.  
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The selected object.
+   <br>If the behavior of the agent 
+ ( 
+<script type="text/javascript"> activateLinkAnchor('CATDlgEngBehavior','','CATDlgEngBehavior') </script> ) is not <tt>CATDlgEngMonoAcquisition</tt>, in  other words in case of multi-selection, the 
+   returned value is NULL.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned value.
+</dl>
+</dl>
+<a name="GetListOfValues"></a><a name="GetListOfValues()"></a> <dt> o <b>GetListOfValues</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSO','CATSO *')</script>  <b>GetListOfValues</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the agent list of values.
+ <br><b>Role</b>: This method is usable only on MultiAcquisition objects, 
+ otherwise use the 
+<script type="text/javascript"> activateLinkAnchor('','GetValue','GetValue') </script> method. <br>Moreover, the returned list depends on the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','ValuationState','CATAcquisitionAgent.ValuationState') </script>.
+ Indeed, if the agent valuation state is <tt>Valuated</tt>, the 
+ <tt>GetListofValues</tt> method returns the real list of values; but if
+ the agent valuation state is <tt>PreValuated</tt>, the 
+ <tt>GetListOfValues</tt> method returns the list of prevalues even if
+ the agent has got values. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The list of values.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned list.
+</dl>
+</dl>
+<a name="GetModifier"></a><a name="GetModifier()"></a> <dt> o <b>GetModifier</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>GetModifier</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns whether the shift and control keys have been pushed during 
+ the selection.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The key use.
+   <br><b>Legal values</b>: Use the defined values to decode the returned
+   integer:
+   <ul>
+   <li><tt>ShiftModifierOn</tt></li>
+   <li><tt>ControlModifierOn</tt></li>
+   </ul>
+   <pre>
+   e.g.
+   #include "CATDeviceEvent.h"
+   ...
+   if (Agent->GetModifier() & ControlModifierOn)
+   ...
+   </pre>
+</dl>
+</dl>
+<a name="GetOrderedTypeList"></a><a name="GetOrderedTypeList()"></a> <dt> o <b>GetOrderedTypeList</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATListOfCATString','CATListOfCATString &')</script>  <b>GetOrderedTypeList</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the ordered list of object types expected by the agent.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The ordered type list.
+ 
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script>
+</dl>
+</dl>
+<a name="GetValue"></a><a name="GetValue()"></a> <dt> o <b>GetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATPathElement','CATPathElement *')</script>  <b>GetValue</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the agent value.
+ <br><b>Role</b>: The value is the path of the selected object. 
+ <br>If no type has been specified, the returned path contains all the 
+ objects from the the root object to the selected object. Otherwise, with 
+ a type query, if the selected object is a child of the required object, 
+ the returned path is a subpath, that is a path that begins with the root
+ object and truncated with the first object matching the requested type.
+ <br>Moreover, the returned value depends on the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','ValuationState','CATAcquisitionAgent.ValuationState') </script>.
+ Indeed, if the agent valuation state is <tt>Valuated</tt>, the 
+ <tt>GetValue</tt> method returns the real value; but if the agent 
+ valuation state is <tt>PreValuated</tt>, the <tt>GetValue</tt> method 
+ returns the prevalue even if the agent has got a value. 
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script>, <script type="text/javascript"> activateLinkAnchor('','SetOrderedTypeList','SetOrderedTypeList') </script>
+  <dt> <b>Returns:</b> 
+  <dd>    The value.
+   <br><b>Lifecycle rules deviation</b>: This method doesn't AddRef the 
+   returned value.
+</dl>
+</dl>
+<a name="RequestDelayedDestruction"></a><a name="RequestDelayedDestruction()"></a> <dt> o <b>RequestDelayedDestruction</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>RequestDelayedDestruction</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Requests the CATPathElementAgent delayed destruction.
+ <br><b>Role</b>: The CATPathElementAgent will be destroyed as soon as this will be possible
+</dl>
+<a name="ResetNoSelectionCursor"></a><a name="ResetNoSelectionCursor()"></a> <dt> o <b>ResetNoSelectionCursor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ResetNoSelectionCursor</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Resets the customized "No Selection" cursor.
+ <br><b>Role</b>: This method cancels previous uses of 
+<script type="text/javascript"> activateLinkAnchor('','SetNoSelectionCursor','SetNoSelectionCursor') </script>.
+</dl>
+<a name="ResetPreselectionCursor"></a><a name="ResetPreselectionCursor()"></a> <dt> o <b>ResetPreselectionCursor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ResetPreselectionCursor</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Resets the customized "Preselection" cursor.
+ <br><b>Role</b>: This method cancels previous uses of 
+<script type="text/javascript"> activateLinkAnchor('','SetPreselectionCursor','SetPreselectionCursor') </script>.
+</dl>
+<a name="SetListOfValues"></a><a name="SetListOfValues(CATSO*)"></a> <dt> o <b>SetListOfValues</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetListOfValues</b>(<td><script type="text/javascript"> activateLink('CATSO','CATSO*')</script> <td><tt>iList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the agent list of values.
+ <br><b>Role</b>: This method is usable only on MultiAcquisition objects,
+ otherwise use the 
+<script type="text/javascript"> activateLinkAnchor('','SetValue','SetValue') </script> method. <br>This method does not register an undo step.
+ <br><b>Postcondition</b>: Use the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','SetValuation','CATAcquisitionAgent.SetValuation') </script> method to make the agent accept the value list, otherwise this list is not
+ taken into account.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iList</tt>
+   <dd>   The list of values.
+   <br><b>Cyclic reference</b>: A copy of <tt>iList</tt> is kept and 
+   AddRef'ed. It is Released in the agent destructor.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMessage"></a><a name="SetMessage(CATUnicodeString,CATPathElement*)"></a> <dt> o <b>SetMessage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMessage</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script> <td><tt>iMsg</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPath</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a message to the tooltip displayed over the selected object.
+ <br><b>Role</b>: This method enables to add a specific message
+ to the tooltip in addition to the path of the selected object. However, this
+ method is useless if the behavior of the agent ( 
+<script type="text/javascript"> activateLinkAnchor('CATDlgEngBehavior','','CATDlgEngBehavior') </script> )  is <tt>CATDlgEngWithoutTooltip</tt>. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMsg</tt>
+   <dd>   The message to display
+ </dd>
+    <dt><tt> iPath</tt>
+   <dd>   The path object to display.
+   This is to be used only if the preselection contains several objects.
+   <br>If it is NULL, the current path under the mouse is displayed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetNoSelectionCursor"></a><a name="SetNoSelectionCursor(CATDialog::CATDlgHCursor)"></a> <dt> o <b>SetNoSelectionCursor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetNoSelectionCursor</b>(<td><script type="text/javascript"> activateLink('CATDialog::CATDlgHCursor','CATDialog::CATDlgHCursor')</script> <td><tt>iCursor</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a customized "No Selection" cursor.
+ <br><b>Role</b>: This method enables to display a cursor different
+ from the standard "No Selection" one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCursor</tt>
+   <dd>   The cursor.
+   Use </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDialog','DefineCursor','CATDialog.DefineCursor') </script> to define the new cursor.
+</dl>
+</dl>
+</dl>
+<a name="SetOrderedTypeList"></a><a name="SetOrderedTypeList(CATListOfCATString&amp;)"></a> <dt> o <b>SetOrderedTypeList</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOrderedTypeList</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATString','CATListOfCATString&amp;')</script> <td><tt>iOrderedTypeList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets an ordered list of object types expected by the agent.
+ <br><b>Role</b>: A type corresponds to an interface implemented by the 
+ object. 
+ <br>This method may give several types: then the expected objects must implement
+ one of the given interfaces.
+ <br>Since an agent has only one ordered type list,
+ successive calls to <tt>SetOrderedTypeList</tt> for the same agent
+ successively overwrite the list.
+ Moreover this method cancels any previous use of 
+<script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script>  which is an incompatible method.
+ <br>By using an ordered type list, for each type in the list
+ the agent checks whether an object in the selection path adheres to it
+ until it founds one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrderedTypeList</tt>
+   <dd>   The ordered type list.
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('','AddElementType','AddElementType') </script>
+</dl>
+</dl>
+<a name="SetPreselectionCursor"></a><a name="SetPreselectionCursor(CATDialog::CATDlgHCursor)"></a> <dt> o <b>SetPreselectionCursor</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPreselectionCursor</b>(<td><script type="text/javascript"> activateLink('CATDialog::CATDlgHCursor','CATDialog::CATDlgHCursor')</script> <td><tt>iCursor</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a customized "Preselection" cursor.
+ <br><b>Role</b>: This method enables to display a cursor different
+ from the standard "Preselection" one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCursor</tt>
+   <dd>   The cursor.
+   Use </dd>
+<script type="text/javascript"> activateLinkAnchor('CATDialog','DefineCursor','CATDialog.DefineCursor') </script> to define the new cursor.
+</dl>
+</dl>
+</dl>
+<a name="SetValue"></a><a name="SetValue(CATPathElement*)"></a> <dt> o <b>SetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetValue</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the agent value.
+ <br><b>Role</b>: The value is a path object.
+ <br>This method does not register an undo step.
+ <br><b>Postcondition</b>: Use the 
+<script type="text/javascript"> activateLinkAnchor('CATAcquisitionAgent','SetValuation','CATAcquisitionAgent.SetValuation') </script> method to make the agent accept the value, otherwise this value is not
+ taken into account.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iValue</tt>
+   <dd>   The value.
+   <br><b>Cyclic reference</b>: A copy of <tt>iValue</tt> is kept and  
+   AddRef'ed. It is Released in the agent destructor.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPathElementAgent.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATDialogEngine</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

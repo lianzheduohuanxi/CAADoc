@@ -1,0 +1,668 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>SelectExpression</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>CAA Web Services Home</h1>
+     </td>
+     <td valign="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>SelectExpression</h3>
+     <p><em>Overview of SelectExpression used in ENOVIA LCA V5 CAA Web services</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article introduces the SelectExpression and its usage in ENOVIA LCA V5 CAA Web service.</p>
+     <ul>
+       <li><a href="#1"><strong>Filter</strong></a>
+       <ul>
+         <li><a href="#1.1">SELECT Clause</a></li>
+         <li><a href="#1.2">WHERE Clause</a></li>
+			<li><a href="#orderby">ORDERBY Clause</a></li>
+       </ul>
+       </li>
+       <li><strong><a href="#2">ATTRIBUTE Filter</a></strong></li>
+       <li><strong><a href="#3">CONFIGURATION Filter</a></strong></li>
+       <li><strong><a href="#4">Examples</a></strong>
+       <ul>
+         <li><a href="#4.1">getObject</a></li>
+         <li><a href="#4.2">queryObject</a></li>
+         <li><a href="#4.3">expandProductStructure</a></li>
+         <li><a href="#4.4">getAffectedObject</a></li>
+       </ul>
+       </li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+	   <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <p>SelectExpression allows you to construct an expression in XML format to be 
+	used for filtering ENOVIA Object and its composition in result set. SelectExpression 
+	is used in ENOVIA web services, such as query and 
+	expand. </p>
+	<p>A typical SelectExpression is made up of a FILTER 
+ element which contains the SELECT, WHERE and ORDERBY clauses. SELECT clause identifies the Object requested. The object names and 
+ attribute names used to specify a criteria should exist in the ENOVIA.xsd [<a href="#References">1</a>]. In ENOVIA LCA, objects belong to specific 
+ domains. The domain information is communicated via the 'Domain' attribute on 
+ each of the entities.</p>
+ <p>WHERE clause is the fetch criterion to be used by Web services in order to 
+ constrain the results of a Query or Expand service. ORDERBY clause orders the 
+ result set. The results can be ordered only by one attribute.</p>
+ <p>Overall Structure of SelectExpression</p>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><code><strong>&lt;FILTER</strong></code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See <a href="#1"><strong>Filter</strong></a></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;SELECT&gt;</strong></code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;See <a href="#1.1"><strong>SELECT Clause</strong></a></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;/SELECT&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;WHERE&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </strong></code>See <a href="#1.2"><strong>WHERE Clause</strong></a><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;
+     </strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;/WHERE&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;ORDERBY/&gt;&nbsp;&nbsp;&nbsp;
+     </strong></code>The <b><a href="#orderby">ORDERBY</a></b> clause is mandatory for&nbsp; 
+     'QueryObject'.<code><strong>&nbsp;&nbsp; </strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&lt;/FILTER&gt;</strong></code></td>
+   </tr>
+ </table>
+ <p>The ENOVIA.xsd identifies the ENOVIA entities and attributes that can be 
+ used as inputs into SelectExpression and the outputs that can be expected from 
+ the ENOVIA LCA V5 CAA Web services. This file can be found in your <code><strong>&lt;install 
+ path&gt;/resources/xsd</strong></code> directory.</p>
+ <p>The FilterXML.xsd identifies the grammar for the SelectExpression. Any input 
+ into ENOVIA LCA V5 CAA Web services for SelectExpression should be valid with reference to 
+ this XSD. This file can be found in your <code><strong>&lt;install 
+ path&gt;/resources/xsd</strong></code> directory.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="1"></a>Filter</h3>
+ <p>The root element FILTER has the following attributes:</p>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><code><strong>COMMAND</strong></code></td>
+     <td valign="top" align="left">Default is QUERY. Specify EXPAND for Web 
+     Services that pertain to product structure.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>CASESENSITIVE</strong></code></td>
+     <td valign="top" align="left">Used for 'FILTER COMMAND of QUERY' only. TRUE 
+     or FALSE. Specify TRUE for default.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>ENDRANGEVALUE</strong></code></td>
+     <td valign="top" align="left">Value is not used.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>LASTVERSION</strong></code></td>
+     <td valign="top" align="left">Value is not used.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>MINORMAX</strong></code></td>
+     <td valign="top" align="left">Value is not used.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>RESULTPAGE</strong></code></td>
+     <td valign="top" align="left">Value is not used.</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>STARTRANGEVALUE</strong></code></td>
+     <td valign="top" align="left">Value is not used.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="1.1"></a>SELECT Clause</h4>
+ <p>The SELECT clause identifies an ENOVIA entity against which the Web service 
+ is performed. ENOVIA entities are uniquely identified by a DOMAIN and a NAME. 
+ Only the entities identified in the ENOVIA.xsd are valid for use. The SELECT 
+ clause can also constrain the results to specific attribute of the entity in 
+ question.</p>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><code><strong>&lt;SELECT&gt;</strong></code></td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;OBJECT</strong></code></td>
+     <td valign="top" align="left"><code><strong>&nbsp;&nbsp; DOMAIN=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     NAME=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Default domains are specified in ENOVIA.xsd 
+     for the objects specified in the NAME field.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Element name for the complex type defined in 
+     ENOVIA.xsd: format, object_name.attribute_name.<br>
+     This allows one to specify attributes to be returned that belong to 
+     different objects for 'FILTER COMMAND of EXPAND'.<br>
+     The result set, therefore, can contain a heterogeneous set of objects for 
+     'FILTER COMMAND of EXPAND'.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;ATTRIBUTE</strong></code></td>
+     <td valign="top" align="left"><code><strong>&nbsp;&nbsp; NAME=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     /&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Specify the object attribute name.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;/OBJECT&gt;</strong></code></td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&lt;/SELECT&gt;</strong></code></td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+ </table>
+ <p>Following is an example of a SELECT clause that asks for 3 attributes of the 
+ VPMBOPartInstance entity from the ENOVIA server.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;SELECT&gt;<br>
+&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;PRODUCT&quot; NAME=&quot;VPMBOPartInstance&quot; &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMItemInstance.V_instance_ID&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartVersion.V_version&quot; 
+     /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot; /&gt;<br>
+&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+     &lt;/SELECT&gt;</code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="1.2"></a>WHERE Clause</h4>
+ <p>The WHERE clause contains filter condition used to constrain the results to 
+ be returned from ENOVIA LCA V5 CAA Web service. The following elements are defined in 
+ the WHERE clause:</p>
+ <table border="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="top" width="205"><code><strong>&lt;WHERE&gt;</strong></code></td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp; &lt;FILTER_CONDITION</strong></code></td>
+     <td valign="top" align="left" width="543"><code><strong>&nbsp;&nbsp;&nbsp;OPERATOR=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">FILTER_CONDITION contains the 
+     specific criteria for ATTRIBUTE_FILTER, and CONFIGURATION.<br>
+     An implicit 'AND' condition is applied to multiple criterion.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">Only 'AND' is supported</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &lt;ATTRIBUTE_FILTER/&gt;</strong></code></td>
+     <td valign="top" align="left" width="543"><a href="#2">See Attribute Filter</a></td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp; &lt;/FILTER_CONDITION&gt;</strong></code></td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp; &lt;CONFIGURATION&gt;</strong></code></td>
+     <td valign="top" align="left" width="543"><a href="#3">See Configuration 
+     Filter</a></td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;PRC</strong></code></td>
+     <td valign="top" align="left" width="543"><code><strong>&nbsp;&nbsp; UUID=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     /&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">The Product Root Class identifier 
+     is required for EXPAND where the starting (parent) object is not a PRC and 
+     you specify FILTER_CONDITION with CONDIFUGRATION or ATTRIBUTE_FILTER.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTACHMENT_TYPE/&gt;</strong></code></td>
+     <td valign="top" align="left" width="543">Used only for 
+     expandProductStructure Web service.<br>
+     ATTACHMENT_TYPE is designed to controls the type of documents to be 
+     returned for FILTER COMMAND of 'EXPAND'.
+     <p>These documents are attached to either Parts or Products. FilterXML.xsd 
+     lists the different attachment types which are detailed below:</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205">&nbsp;</td>
+     <td valign="top" align="left" width="543">
+     <ul>
+       <li>NoDocuments: Do not send any attached documents in the result set.</li>
+       <li>OnInst_Documentations: Send only Documentation attachments attached to</li>
+       <li>VPMBOPartInstances </li>
+       <li>OnInst_Documents: Send both Documentation and Representation attached to</li>
+       <li>VPMBOPartInstances.</li>
+       <li>OnRef_Documentations: Send Documentation attached to ENOVIA_VPMPartVersion 
+       and ProductRootClass.</li>
+       <li>OnRef_Representations: Send Representations attached to 
+     ENOVIA_VPMPartVersion and ProductRootClass.</li>
+       <li>OnInstAndRef_Documentations: Send Documentation attached to all entities in 
+     the result set.</li>
+       <li>OnInstAndRef_Representations. Send Representation attached to all entities 
+     in the result set.</li>
+       <li>OnInstAndRef_Documents. Send all attachments on all entities</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></code></td>
+     <td valign="top" align="left" width="543">ATTACHMENT_TYPE is also used to 
+		do a zero level(depth 0) expand to retrieve ENOVIA Mods on configured 
+		products and item instances. Syntax :<ul>
+		<li>&lt;ATTACHMENT_TYPE VALUE=&quot;ENOVIA_EFF_MOD&quot; 
+		/&gt;</li>
+		</ul>
+		<p>ATTACHMENT_TYPE is also used to do a zero level(depth 0) expand to retrieve Config Handlers attached to 
+		products in ENOVIA. Syntax:</p>
+		<ul>
+			<li>&lt;ATTACHMENT_TYPE VALUE=&quot;ENOVIA_CFHANDLER&quot; /&gt; 
+			</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&nbsp;&nbsp; &lt;CONFIGURATION/&gt;</strong></code></td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="205"><code><strong>&lt;/WHERE&gt;</strong></code></td>
+     <td valign="top" align="left" width="543">&nbsp;</td>
+   </tr>
+ </table>
+ <p>The following where clause constrains the result set to all Parts where the 
+ version and ID attributes satisfy the specified criteria.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;WHERE&gt;<br>
+&nbsp;&nbsp; &lt;FILTER_CONDITION OPERATOR=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE_FILTER OPERATOR=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXPRESSION OP=&quot;LIKE&quot; 
+     VALUE=&quot;*B&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMPartVersion.V_version&quot;/&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXPRESSION OP=&quot;LIKE&quot; VALUE=&quot;A* 
+     &quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot;/&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/ATTRIBUTE_FILTER&gt;<br>
+&nbsp;&nbsp; &lt;/FILTER_CONDITION&gt;<br>
+     &lt;/WHERE&gt;</code></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="2"></a>ATTRIBUTE Filter</h3>
+ <p>ATTRIBUTE_FILTER specifies the constraints on values of attributes of 
+ entities in question.</p>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top"><code><strong>&lt;ATTRIBUTE_FILTER</strong></code></td>
+     <td valign="top" align="left">&nbsp;&nbsp; <code><strong>OPERATOR=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Supports 'AND', 'OR', and 'NOT'. Used when 
+     there is more than one EXPRESSION</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;EXPRESSION</strong></code></td>
+     <td valign="top" align="left"><code><strong>&nbsp;&nbsp; OP=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     VALUE=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Supports 'LT', 'GT', 'EQ', 'LIKE', and 
+     'BETWEEN'</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">String to search on. Required for 'LT', 'GT', 
+     'EQ', 'LIKE', and 'BETWEEN'</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">String to search on. Required for 'BETWEEN'</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE</strong></code></td>
+     <td valign="top" align="left">&nbsp;&nbsp; <code><strong>NAME=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     /&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">Attribute name defined in ENOVIA.xsd. Only 
+     one attribute name per EXPRESSION is supported.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&nbsp;&nbsp; &lt;/EXPRESSION&gt;</strong></code></td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><code><strong>&lt;/ATTRIBUTE_FILTER&gt;</strong></code></td>
+     <td valign="top" align="left">&nbsp;</td>
+   </tr>
+ </table>
+ <p>The following ATTRIBUTE_FILTER constrains the result set only to versions 
+ 'B' whose ID starts with 'A'.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;ATTRIBUTE_FILTER OPERATOR=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp; &lt;EXPRESSION OP=&quot;EQ&quot; VALUE=&quot;B&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartVersion.V_version&quot; 
+     /&gt; <br>
+&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+&nbsp;&nbsp; &lt;EXPRESSION OP=&quot;LIKE&quot; VALUE=&quot;A*&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot; /&gt;
+     <br>
+&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+     &lt;/ATTRIBUTE_FILTER&gt;</code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="3"></a>CONFIGURATION Filter</h3>
+ <p>CONFIGURATION filters are used to constrain the results of a query or an 
+ expand by a configuration. The format and contents of configuration criteria 
+ are explained below:</p>
+ <table border="0" width="958">
+   <tr>
+     <td valign="top" width="188"><code><strong>&lt;CONFIGURATION&gt;</strong></code></td>
+     <td valign="top" align="left" width="766">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="188"><code><strong>&nbsp;&nbsp; &lt;CONFIG_HANDLER</strong></code></td>
+     <td valign="top" align="left" width="766"><code><strong>&nbsp;&nbsp; UUID=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     /&gt;</strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top" width="188">&nbsp;</td>
+     <td valign="top" align="left" width="766">
+     Universally Unique 
+     Identifier of the config handler in which are stored the filters to apply 
+		when expanding a configured product with effectivities.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="188"><code><strong>&lt;/CONFIGURATION&gt;</strong></code></td>
+     <td valign="top" align="left" width="766">&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <h3><a name="orderby"></a>ORDERBY</h3>
+ <p>The format and contents of ORDERBY 
+ are explained below:</p>
+ <table border="0" width="958" id="table1">
+   <tr>
+     <td valign="top" width="188"><code><strong>&lt;ORDERBY&gt;</strong></code></td>
+     <td valign="top" align="left" width="766">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="188">&nbsp;</td>
+     <td valign="top" align="left" width="766">
+     Attribute name must exist on Object defined in ENOVIA.xsd and must be a 
+		STRING type.&nbsp; </td>
+   </tr>
+   <tr>
+     <td valign="top" width="188"><code><strong>&lt;/ORDERBY&gt;</strong></code></td>
+     <td valign="top" align="left" width="766">&nbsp;</td>
+   </tr>
+ </table>
+ <p align="left">&nbsp;</p>
+ <h3><a name="4"></a>Examples</h3>
+ <h4><a name="4.1"></a>getObject</h4>
+ <p>The following SelectExpression will deliver the attributes listed in the 
+ SELECT clause for the ENOVIA_ECO object specified in the Identifier:</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+     &lt;FILTER CASESENSITIVE=&quot;FALSE&quot; &gt;<br>
+&nbsp;&nbsp; &lt;SELECT&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;APLECO&quot; NAME=&quot;ENOVIA_ECO&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_ID&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_name&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_version&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_creator&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_priority&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+&nbsp;&nbsp; &lt;/SELECT&gt;<br>
+     &lt;/FILTER&gt;</code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="4.2"></a>queryObjects</h4>
+ <p>The following SelectExpression will deliver ENOVIA_ECO objects with the 
+ attributes listed in the SELECT clause for ENOVIA_ECO objects in Approved 
+ status and whose priority is 1.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+     &lt;FILTER CASESENSITIVE=&quot;FALSE&quot; &gt;<br>
+     &nbsp;&nbsp;
+     &lt;SELECT&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;APLECO&quot; NAME=&quot;ENOVIA_ECO&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_ID&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_name&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_version&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_creator&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_priority&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_start_date&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_ECO.V_duration&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+     &nbsp;&nbsp;
+     &lt;/SELECT&gt;<br>
+     &nbsp;&nbsp;
+     &lt;WHERE&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;CONDITION TYPE=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXPRESSION VALUE=&quot;1&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_priority&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXPRESSION VALUE=&quot;Approved&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_ECO.V_status&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/CONDITION&gt;<br>
+     &nbsp;&nbsp;
+     &lt;/WHERE&gt;<br>
+     &nbsp;&nbsp;
+     &lt;ORDERBY&gt;ENOVIA_ECO.V_ID&lt;/ORDERBY&gt;<br>
+     &lt;/FILTER&gt;</code></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="4.3"></a>expandProductStructure</h4>
+ <p>The following SelectExpression will return part instances with only one 
+ attribute specified in the SELECT clause. The Parent in this case is another 
+ Part Instance, so the PRC CATJsyUUID value is passed in the &lt;PRC UUID=&quot;&quot; /&gt;. 
+ Also, we want to apply the CONFIG_HANDLER, so it's CATJsyUUID value is passed 
+	in.</p>
+ <table class="code">
+   <tr>
+     <td><font face="Courier New" style="font-size: 9pt">&lt;?xml version=&quot;1.0&quot; 
+     encoding=&quot;UTF-8&quot; ?&gt; <br>
+     &lt;FILTER CASESENSITIVE=&quot;FALSE&quot; COMMAND=&quot;EXPAND&quot;&gt;<br>
+&nbsp;&nbsp; &lt;SELECT&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;PRODUCT&quot; NAME=&quot;VPMBOPartInstance&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMItemInstance.V_instance_ID&quot; 
+     /&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot; 
+     /&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+&nbsp;&nbsp; &lt;/SELECT&gt;<br>
+&nbsp;&nbsp; &lt;WHERE&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;PRC&nbsp;&nbsp; UUID=&quot;108333B469000021D840FBEDB00005AE1F0000000007454E4F564C52345C00000005446F63496430000104454E4F56085644656661756C741F003C44424D533E3C7264623E3C454E4F434F4D4D4F4E3E454E4F434F4D4D4F4E2000000080A2B3BD0000520C383BE4980006C143454E4F44525F50524F44554354202020&quot; 
+     /&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;FILTER_CONDITION OPERATOR=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;CONFIGURATION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;CONFIG_HANDLER 
+     UUID=&quot;108333B469000021D840FBEDB00005AE1F0000000007454E4F564C52345C00000005446F63496430000104454E4F56085644656661756C741F003C44424D533E3C7264623E3C454E4F434F4D4D4F4E3E454E4F434F4D4D4F4E2000000080A2B3BD0000520C383BE4980006C143454E4F44525F50524F44554354202020&quot; /&gt; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/CONFIGURATION&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/FILTER_CONDITION&gt;<br>
+&nbsp;&nbsp;&nbsp; &lt;/WHERE&gt;</font><p>
+		<font face="Courier New" style="font-size: 9pt">&lt;/FILTER&gt;</font></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="4.4"></a>getAffectedObjects</h4>
+ <p>The following SelectExpression returns ENOVIA_CMAFFECTED_OBJECT with 
+ attributes specified in the SELECT clause for an ECO specified by the 
+ Identifier.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+     &lt;FILTER CASESENSITIVE=&quot;FALSE&quot; COMMAND=&quot;EXPAND&quot;&gt;<br>
+&nbsp;&nbsp; &lt;SELECT&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;PRODUCT&quot; NAME=&quot;ENOVIA_ECO&quot; &gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_CMAFFECTED_OBJECT.V_name&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_CMAFFECTED_OBJECT.V_type&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+&nbsp;&nbsp; &lt;/SELECT&gt;<br>
+     &lt;/FILTER&gt;</code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>SelectExpression is used as a filter for ENOVIA LCA V5 CAA Web services to return 
+ selected ENOVIA objects and attributes. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td valign="top" align="left"><a href="Customization.htm">Customization</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [May 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [Feb 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <p><i>Copyright &copy; 2006, Dassault Systèmes. All rights reserved.</i></p>
+ 
+  </body>
+</html>
+
+
+
+

@@ -1,0 +1,2250 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Analysis Visualization Overview</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td>
+      <h2 align="center">Analysis Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Analysis Visualization Overview</h3>
+      <em>Some general concepts about Images definition</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The aim of this document is to explain the principles of analysis
+      visualization. It is based on the &quot;images definition files&quot; that
+      configure the images managing the display.</p>
+      <p>This article is intended to help you make your first steps in creating
+      a new &quot;<b>Images definition file</b>&quot; using the Analysis
+      visualization framework.</p>
+      <ul>
+        <li><a href="#ImageDefinition"><b>The analysis images concept</b></a></li>
+        <li><a href="#imagesdefinitionfile"><b>Images definition files</b></a></li>
+        <ul>
+          <li><a href="#Principles"><b>Principles</b></a></li>
+          <li><a href="#Structure"><b>Images definition file structure</b></a></li>
+          <li><a href="#Attributes"><b>Attributes</b></a></li>
+          <li><a href="#Examples"><b>Examples</b></a></li>
+          <li><a href="#ImageDefinitionDTD"><b><u>ImageDefinition dtd</u></b></a></li>
+          <li><b><u><a href="#Images names">Image names</a></u></b></li>
+          <li><a href="#ImageProvided interfaces"><b><u>Provided interfaces</u></b></a></li>
+        </ul>
+        <li><a href="#ProcessDefinition"><b><u>The analysis process concept</u></b></a></li>
+        <li><a href="#StandardProcesses"><b><u>Standard processes</u></b></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="ImageDefinition"></a><a name="ImageDefinition"><b>An Image : What
+is it ?</b></a></h3>
+<p>An <b>Image </b>is a 3D visualization of analysis data. It defines how the
+physical characteristic values are displayed on their finite element support. It
+contains all the information needed to display these values. It is a dress-up
+mode. This data may be pre-processing or post-processing results.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="ImageDefinition"></a><a name="imagesdefinitionfile"><b>Images
+definition files</b></a></h3>
+<p>The <b>Images definition file </b>defines all available images. It also
+defines how data (characteristics values) must be displayed. For each image, it
+contains all the information needed to display these values :</p>
+<ul>
+  <li>visualization type (HOW) : defines the type of display (symbol, text,
+    contours, ...)</li>
+  <li>criterion (WHAT) : defines the values to be displayed (vector component,
+    Von Mises criterion,...)</li>
+  <li>information to select the right characteristic. (value control :
+    positions, mathematical type, ...)</li>
+  <li>process (elementary calculation allowing new data to be generated for
+    display (example: normalize) )</li>
+  <li>filters (on components, layers, lamina, ...)</li>
+  <li>dress-up mode (color fixed or variable, arrow size, ...)</li>
+</ul>
+<p>When you create a new image with the &quot;Generate Image&quot; command, the
+displayed image list is a sub list of all defined images. This subset list
+depends on the physical types the selected set or entity are able to produce.</p>
+<p>When you choose an image the program searches for the best characteristic to
+be acquired according to the definition that was given for (Physical type,
+Visualization type, Criterion, Filters, ...) in the ImagesDefinition files.</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center">Input&nbsp;&nbsp;&nbsp; characteristic</td>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center">&nbsp;(Processes)</td>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center">Intermediate characteristic</td>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center">(Processes)</td>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center">Output characteristic</td>
+  </tr>
+  <tr>
+    <td width="20%" align="left" bgcolor="#FFCCFF">&lt;--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      code&nbsp;</td>
+    <td width="20%" align="left" bgcolor="#FFCCFF">
+      <p align="right">&nbsp;
+      search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      --&gt;</td>
+    <td width="20%" align="left" bgcolor="#CCCCFF">&lt;--&nbsp; depending on</td>
+    <td width="20%" align="left" bgcolor="#CCCCFF">
+      <p align="center">&nbsp;&nbsp; images definition</td>
+    <td width="20%" align="left" bgcolor="#CCCCFF">
+      <p align="right">&nbsp;&nbsp;
+      files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      --&gt;</td>
+  </tr>
+  <tr>
+    <td width="20%" align="left">It may be every characteristic having the
+      physical type defined in the current image.</td>
+    <td width="20%" align="left">The previous list of characteristics is
+      filtered to take into account the &quot;position&quot; and the
+      &quot;version&quot; of the intermediate characteristic asked in the image
+      definition. Processes may be added in order to change position, filters
+      (on layer, lamina, ...)&nbsp; or <a href="#Availablemathematicaltypechange">mathematical
+      types</a>.</td>
+    <td width="20%" align="left">This characteristic is defined in the image
+      description in terms of position, and version (value type, mathematical
+      type, dimension, reference frame, category, combined or not combined
+      characteristic)&nbsp;</td>
+    <td width="20%" align="left">All processes defined in the image description
+      are added.</td>
+    <td width="20%" align="left">The output characteristic is created and
+      computed according to the input one and to the image definition.</td>
+  </tr>
+</table>
+<p>In fact, all images belonging to the same physical type are grouped so that
+the edition of an existing image enables you to pass from one to another. By
+edition you can choose an other visualization type, or criterion in the &quot;<i>Visu
+tab page</i>&quot;, or change the dress-up (<i>Options button</i>), or finally
+control values or filters in the &quot;<i>Filter tab page</i>&quot;.</p>
+<p><b><a name="Availablemathematicaltypechange">Available and automatic
+mathematical type changes are</a> :</b></p>
+<ul>
+  <li>from VECTOR, SYMMETRICAL-TENSOR, TENSOR or EIGEN_VALUES to SCALAR</li>
+  <li>from SYMMETRICAL-TENSOR or TENSOR to EIGEN_VALUES</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><a name="Principles"><b>Principles</b></a></h4>
+<p>The images definition files defining all available images must be written in
+XML language (extensible markup language). For general rules and recommandation
+about XML consideration inside CAAV5, refer to <a name="Ref2" href="#[2]">[2]</a>.</p>
+<ul>
+  <li>An xml file named for example <i>MyXMLfile</i> is created in a directory :
+    <b>/.../CNext/reffiles/FEM/</b><i><b>MyXMLfile</b></i> <b>.xml</b></li>
+  <li>After the Runtime View generation (mkrtv); this file is written in
+    (depending on system) : <b>/.../intel_a/reffiles/FEM/</b><i><b>MyXMLfile</b></i>
+    <b>.xml</b></li>
+  <li>When Interactive application is launched, the program searches first in
+    the current directory (or in the <b>/.../intel_a/reffiles/FEM/</b>
+    directory) the requested xml files.</li>
+  <li>These files are interpreted the first time you need them.</li>
+  <li>The dtd file name is : <b>\...\CNext\reffiles\FEM\ImageDefinition.dtd</b></li>
+  <li>A xsl (extensible stylesheet language) file is supplied by DS. It is
+    useful to format the images definition files and to browse them in a pretty
+    way.</li>
+  <li>The xsl file name is : <b>\...\CNext\reffiles\FEM\ImageDefinition.xsl</b></li>
+  <li>A special header must introduced the xml file: It describes the xml
+    version, the style sheet and the document type definition :</li>
+</ul>
+<table class="code">
+  <tr>
+    <td width>
+      <blockquote>
+        <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- COPYRIGHT DASSAULT SYSTEMES 2002 --&gt;
+&lt;!DOCTYPE ImagesList SYSTEM &quot;ImageDefinition.dtd&quot;&gt;
+&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;ImageDefinition.xsl&quot;?&gt;
+...</pre>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The ImagesDefinition files are loaded in the following order :</li>
+  <ol>
+    <li>Standard ImagesDefinition files are delivered (depending on the
+      installed product).</li>
+    <li>A special interface, named <b><a name="CATISamImageFactory">CATISamImageFactory</a></b>,
+      is provided in order to add and remove your own
+      &quot;ImagesDefinition&quot; files and to retrieve the list of all
+      loaded&nbsp; &quot;ImagesDefinition&quot; files.</li>
+    <li>The <b>SPMAdminImagesDefinition</b> file may be created or modified by
+      the administrator.&nbsp;The path of this file is defined through an
+      environment variable called <b>SPMAdminXmlDir</b></li>
+    <li>The <b>SPMUserTemplateImagesDefinition</b> file may be created using the
+      &quot;SaveAsNewTemplate&quot; command.&nbsp;(depending on the installed
+      product). The Tools + Options + Analysis&amp;Simulation + Post Processing
+      menu enables the user to manage this file ( to define the path, to rename
+      or delete image definitions). The behaviour of this file is a little bit
+      different from the others : On the first hand, by edition, you can't
+      switch from one image to another; on the other hand, you may add
+      ImageExtension, but only on images belonging to the same file.</li>
+    <li>The <b>SPMUserImagesDefinition</b> file may be created or modified by
+      user (depending on the installed product), it is recommended not to
+      deliver applications with such a file name, because if multiple
+      installations occur there will be some conflicts.&nbsp;</li>
+    <ol>
+    </ol>
+  </ol>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><b><a name="Structure">Images definition file
+structure</a></b></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>ImagesList</b> <font color="#FF0000">[ ] </font>(<i>Name</i>)
+|__<b>Image</b> <font color="#FF0000">[*]</font> (<i>Name, Physical, SubType, Visu, Hidden</i>)
+|     |__<b>Criterion</b> <font color="#FF0000">[ ] </font>(<i>Name</i>)
+|     |    |__<b>Values</b> <font color="#FF0000">[ ] </font>(<i>RefType, Combined</i>)
+|     |    |     |__ <b>DefaultPosition</b> <font color="#FF0000">[?]</font> (<i>Name</i>)
+|     |    |     |__ <b>Position</b> <font color="#FF0000">[+]</font> (<i>Name</i>)
+|     |    |     |__ <b>MathType</b> <font color="#FF0000">[+]</font> (<i>Name</i>)
+|     |    |     |__ <b>MathDim</b> <font color="#FF0000">[*]</font> (<i>Name</i>)
+|     |    |     |__ <b>ValueType</b> <font color="#FF0000">[*]</font> (<i>Name</i>)
+|     |    |     |__ <b>Filters</b> <font color="#FF0000">[?]</font> 
+|     |    |           |__ <b>Smi</b> <font color="#FF0000">[?]</font> (<i>Name</i>)
+|     |    |           |__ <b>Lamina</b> <font color="#FF0000">[?]</font> (<i>Name</i>)
+|     |    |           |__ <b>Component</b> <font color="#FF0000">[*]</font> (<i>Name, ApplyOn</i>)
+|     |    |           |__ <b>ComplexPart</b> <font color="#FF0000">[?]</font> (<i>Name</i>)
+|     |    |           |__ <b>AxisSystem</b> <font color="#FF0000">[*]</font> (<i>CoordinateSystem, ApplyOn</i>)
+|     |    |                 |__ <b>Origin</b> <font color="#FF0000">[?]</font> (<i>X, Y, Z</i>)
+|     |    |                 |__ <b>X-Axis</b> <font color="#FF0000">[ ]</font> (<i>X, Y, Z</i>)
+|     |    |                 |__ <b>Y-Axis</b> <font color="#FF0000">[ ]</font> (<i>X, Y, Z</i>)
+|     |    |                 |__ <b>Z-Axis</b> <font color="#FF0000">[ ]</font> (<i>X, Y, Z</i>)
+|     |    |__ <b>ProcessList</b> <font color="#FF0000">[?]</font>
+|     |          |__ <b>Process</b> <font color="#FF0000">[+]</font> (<i>Name</i>)
+|     |                |__ <b>IParam</b> <font color="#FF0000">[*]</font>
+|     |                |__ <b>Fparam</b> <font color="#FF0000">[*]</font>
+|     |                |__ <b>CParam</b> <font color="#FF0000">[*]</font>
+|     |__ <b>Attributes</b> <font color="#FF0000">[?]</font>
+|           |__ <b>Text</b> <font color="#FF0000">[?]</font>
+|           |      |__ <b>FixedColor</b> <font color="#FF0000">[?]</font> (<i>Red, Green, Blue, Alpha</i>)
+|           |__ <b>Symbol</b> <font color="#FF0000">[?]</font> (<i>Type, ZoomSensitive, Fixed</i>)
+|           |      |__ <b>FixedColor</b> <font color="#FF0000">[?]</font> (<i>Red, Green, Blue, Alpha</i>)
+|           |__<b>Display</b> <font color="#FF0000">[?]</font> (<i>Deformed, WithoutValues, Mode, Shrink</i>)
+|           |__<b>ColorMap</b> <font color="#FF0000">[?]</font> (<i>MinMaxMode, ComputeMode, Smooth</i>)
+|__<b>ImageExtension</b> <font color="#FF0000">[*]</font> (<i>Name</i>)
+|     |__<b>AddValues</b> <font color="#FF0000">[?]</font>
+|     |     |__<b>DefaultPosition</b> <font color="#FF0000">[?]</font> (<i>Name</i>)
+|     |     |__<b>AddPosition</b> <font color="#FF0000">[*]</font> (<i>Name</i>)
+|     |__<b>RemoveValues</b> <font color="#FF0000">[?]</font>
+|           |__<b>RemovePosition</b> <font color="#FF0000">[*]</font> (<i>Name</i>)
+|__<b>ImageByReference</b> <font color="#FF0000">[*]</font> (<i>Reference, Name, SubType, Hidden</i>)
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><b><u>Conventions:</u></b></p>
+<blockquote>
+  <p>Words in <b>bold characters</b> are defined in the dtd (document type
+  definition) as <b>ELEMENT</b> Words in (<i>italic and parenthesis</i>) are
+  defined in the dtd as <b>ATTLIST</b> (Explanations on these attributes will be
+  given in the next paragraph) The sign defined in red color between two
+  brackets gives the number of expected fields:</p>
+  <ul>
+    <li><font color="#FF0000">[?]</font> means (0 or 1 time)</li>
+    <li><font color="#FF0000">[+]</font> means (1 or several times)</li>
+    <li><font color="#FF0000">[*]</font> means (0 or several times)</li>
+    <li><font color="#FF0000">[ ]</font> sign means (1 time)</li>
+  </ul>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><b><a name="Attributes">Attributes</a></b></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1">
+  <tr>
+    <td width="10%" bordercolor="#0000FF" bgcolor="#3399FF" bordercolorlight="#00FFFF" bordercolordark="#0000FF">
+      <p align="center"><b>ELEMENT</b></td>
+    <td width="10%" bordercolor="#0000FF" bgcolor="#3399FF" bordercolorlight="#00FFFF" bordercolordark="#0000FF">
+      <p align="center"><b>ATTRIBUTE</b></td>
+    <td width="80%" bordercolor="#0000FF" bgcolor="#3399FF" bordercolorlight="#00FFFF" bordercolordark="#0000FF">
+      <p align="center"><b>EXPLANATION</b></td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImagesList</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The name of the images list.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Image</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The image name. It must be unique. Associated NLS names may
+      be provided (see <a href="#CATISamImageFactory">CATISamImageFactory
+      interface</a>)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Image</td>
+    <td width="10%" align="center">Physical</td>
+    <td width="80%">The physical type of the characteristic to be visualized.
+      Images with the same physical type and subtype are pooled.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Image</td>
+    <td width="10%" align="center">SubType</td>
+    <td width="80%">The subtype of the characteristic to be visualized. Images
+      with the same physical type and subtype are pooled. For physical types
+      like Stress, Strain or Energy, this parameter is optional. If you choose
+      to define it , available values are : NOMINAL , LOGARITHMIC , ELASTIC ,
+      INELASTIC , THERMAL , PLASTIC. If the physical type is
+      GENERIC_CHARACTERISTIQUE this parameter is requested, in this case any
+      string is available. Default: no subtype is defined</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Image</td>
+    <td width="10%" align="center">Visu</td>
+    <td width="80%">The visualization type. It may be AVERAGE-ISO,
+      DISCONTINUOUS-ISO, SYMBOL, FRINGE, MESH or TEXT</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Image</td>
+    <td width="10%" align="center">Hidden</td>
+    <td width="80%">An hidden image is not in the proposed list of images given
+      by the generic command and can't be created directly. But, editing an
+      existing image with the same physical type enables to create it .The value
+      of hidden parameter may be YES or NO (default is NO)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Criterion</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The criterion name. It's used to choose between several
+      images with the same visualization type. By edition, the change of the
+      visualization type may induce the change of criterion. By default, if
+      exists, the last criterion will be taken.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Values</td>
+    <td width="10%" align="center">RefType</td>
+    <td width="80%">To impose input-characteristic in a specific axis system. It
+      may be GLOBAL, LOCAL or NONE. By default, no axis system type is imposed.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Values</td>
+    <td width="10%" align="center">Combined</td>
+    <td width="80%">To impose the input-characteristic to be combined or
+      uncombined. By default, no choice is made .So, this attribute must not be
+      given when no choice has to be done .The parameter value is either YES or
+      NO.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">DefaultPosition</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The default position name of the ouput-characteristic to be
+      visualized. It may be NODE, EDGE, FACE, ELEMENT, GAUSS, CENTER, or
+      NODE_OF_ELEMENT or a &quot;user position&quot;.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Position</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The position name of the ouput-characteristic to be
+      visualized. It may be NODE, EDGE, FACE, ELEMENT, GAUSS, CENTER, or
+      NODE_OF_ELEMENT or a &quot;user position&quot;. This position may be
+      imposed by the visualization type : AVERAGE-ISO needs NODE position,
+      DISCONTINUOUS-ISO needs NODE_OF_ELEMENT position and FRINGE needs ELEMENT,
+      CENTER or FACE position.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">MathType</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The mathematical type of the intermediate-characteristic
+      before processes defined in the image were applied. It may be SCALAR,
+      VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR or BIT_ARRAY.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">MathDim</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">If this parameter is given, the input-characteristic must
+      have the specified dimension. It may be 1D, 2D or 3D. By default, no
+      specific dimension is imposed.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ValueType</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">If this parameter is given, the input-characteristic must
+      have the specified type. It may be CHARACTER, SHORT, INTEGER, REAL,
+      DOUBLE, COMPLEX or COMPLEX_DOUBLE. By default, no specific type is
+      imposed.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Filters</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element starts the filters definition. Filters may be
+      on layer (Smi), on lamina (Lamina), on component (Component) or on complex
+      part (ComplexPart). Filters on component may be elements dependent. If
+      it's the case, the attribute ValueOn is used.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Smi</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">During computation we will had a filter on layers for
+      surfacic elements, if this attribute is specified . Parameter value may be
+      UPPER, MID, LOWER or UPPER_LOWER (default is UPPER).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Lamina</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">During computation we will had a filter on lamina, if this
+      attribute is specified . Parameter value is an integer. It's the number of
+      the chosen lamina.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Component</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">During computation we will filter components of
+      output-characteristic if this attribute is specified. The parameter value
+      may be C1, C2, C3, C12, C13, C21, C23, C31, C32 (default is C1). It
+      depends on the mathematical type of the output-characteristic. Filter for
+      a vector may be C1, C2, C3. Filter for a tensor 2D may be C1, C2, (C12 if
+      tensor is symmetrical), (C21 for full tensor).Filter for a tensor 3D may
+      be C1, C2,C3, (C12, C13, C23 if tensor is symmetrical), (C21,C31,C32 for
+      full tensor) .The output-characteristic may be different on 1D, 2D or 3D
+      elements. (See attribute ApplyOn)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Component</td>
+    <td width="10%" align="center">ApplyOn</td>
+    <td width="80%">The filter component may be element dependent. This
+      attribute, if defined specifies where it has to be applied. Authorized
+      values are: ALL, 1D, 2D, 3D (default is ALL).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ComplexPart</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">If output-characteristic is complex, during computation we
+      will filter a part of this complex, if this attribute is specified. The
+      parameter value may be REAL, IMAGINARY, MODULUS or PHASE (default is
+      REAL).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">AxisSystem</td>
+    <td width="10%" align="center">CoordinateSystem</td>
+    <td width="80%">The axis coordinate system to apply may be CARTESIAN,
+      CYLINDRICAL or SPHERICAL (default is CARTESIAN)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">AxisSystem</td>
+    <td width="10%" align="center">ApplyOn</td>
+    <td width="80%">The filter axis system may be element dependent. This
+      attribute, if defined specifies where it has to be applied. Authorized
+      values are: ALL, 1D, 2D, 3D (default is ALL).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Origin</td>
+    <td width="10%" align="center">X Y or Z</td>
+    <td width="80%">These attributes if defined specify the axis origin (default
+      values are: (x=0.)(y=0.)(z= 0.))</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">X-Axis</td>
+    <td width="10%" align="center">X Y or Z</td>
+    <td width="80%">These attributes if defined specify the X-axis (default
+      values are: (x=1.)(y=0.)(z= 0.))</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Y-Axis</td>
+    <td width="10%" align="center">X Y or Z</td>
+    <td width="80%">These attributes if defined specify the Y-axis (default
+      values are: (x=0.)(y=1.)(z= 0.))</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Z-Axis</td>
+    <td width="10%" align="center">X Y or Z</td>
+    <td width="80%">These attributes if defined specify the Z-axis (default
+      values are: (x=0.)(y=0.)(z= 1.))</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ProcessList</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element starts the processes definition.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Process</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;; 
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;; 
+color:black;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language: 
+AR-SA">A process is an elementary calculation permitting new data to be
+      generated for display from the intermediate-characteristics. (vector
+      normalization, tensor eigen-values values,...). </span>This attribute
+      defines the name of the process to add. The input parameters of the
+      process are specified with the Iparam, Fparam and Cparam values.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">IParam</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element is used to give each integer parameter of the
+      previous defined process</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FParam</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element is used to give each float parameter of the
+      previous defined process</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">CParam</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element is used to give each character parameter of the
+      previous defined process</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Attributes</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element starts the dress-up definition.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Text</td>
+    <td width="10%" align="center">&nbsp;</td>
+    <td width="80%">This element starts the text dress-up.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Red</td>
+    <td width="80%">By default color is variable. You may imposed a fixed color
+      for TEXT visualization , using the fixedColor element. The color is
+      defined by this four integers lying between 0 and 255. (default color is
+      BLUE : Red=Green=0 Blue=213 Alpha=255). This four arguments are the red,
+      green blue and alpha attributes. Here is the definition of the Red
+      attribute.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Green</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Green parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Blue</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Blue parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Alpha</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Alpha parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Symbol</td>
+    <td width="10%" align="center">Type</td>
+    <td width="80%">If the image visualization type is SYMBOL, you may choose
+      the symbol type. Authorized values are CUBE, TETRA, ARROW, DOUBLE-ARROW,
+      TENSOR, PRESSURE, RESTRAINT, AXIS, POINT or BALL . Authorized values are
+      mathematical type dependent : BIT_ARRAY needs RESTRAINT type. SCALAR needs
+      CUBE, TETRA, BALL or PRESSURE type (default is CUBE). VECTOR needs ARROW or
+      DOUBLE-ARROW type (default is ARROW), and EIGEN_VALUES needs AXIS or
+      TENSOR type (default is TENSOR ). The POINT type may always be used.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Symbol</td>
+    <td width="10%" align="center">ZoomSensitive</td>
+    <td width="80%">This attribute enables to define if symbol is sensitive with
+      zoom. It may be YES or NO (default is YES).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Symbol</td>
+    <td width="10%" align="center">Fixed</td>
+    <td width="80%">This attribute enables to define if the length of symbol is
+      fixed or variable. It may be YES or NO (default is NO). (this option is
+      ignored if POINT type)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Red</td>
+    <td width="80%">By default color is variable. You may imposed a fixed color
+      for SYMBOL visualization, using the fixedColor element. Here is the
+      definition of the Red attribute. (See definition of Red attribute for TEXT
+      visualization)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Green</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Green parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Blue</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Blue parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">FixedColor</td>
+    <td width="10%" align="center">Alpha</td>
+    <td width="80%">(See definition of Red attribute). Here is the definition of
+      the Alpha parameter.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Display</td>
+    <td width="10%" align="center">Deformed</td>
+    <td width="80%">To define if the deformation is on or off. It may be YES or
+      NO (default is NO).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Display</td>
+    <td width="10%" align="center">WithoutValues</td>
+    <td width="80%">This parameter is available for AVERAGE-ISO,
+      DISCONTINUOUS-ISO or FRINGE visualization. If the value is YES, elements
+      without values are drawn in white color. The value of the attribute may be
+      YES or NO (default is NO).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Display</td>
+    <td width="10%" align="center">Mode</td>
+    <td width="80%">This parameter defines where the display has to be done. It
+      may be FREE-FACES or ALL (default is FREE-FACES)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">Display</td>
+    <td width="10%" align="center">Shrink</td>
+    <td width="80%">This parameter defines the value of shrink coefficient for
+      elements. (default is 1.0 : there is no shrink). The correct values are
+      between 0.5 and 1.0.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ColorMap</td>
+    <td width="10%" align="center">MinMaxMode</td>
+    <td width="80%">This parameter defines the way of computation for the color
+      map. It may be FREE-FACES or ALL (default is FREE-FACES).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ColorMap</td>
+    <td width="10%" align="center">ComputeMode</td>
+    <td width="80%">This parameter defines the type of color map. It may be
+      LINEAR, HISTOGRAM or LOG (default is LINEAR). In a LINEAR color map values
+      are linearly distributed. In an HISTOGRAM color map there is an
+      iso-distribution of values by colors (in this case, you cannot imposed a
+      minimum or a maximum value by color map edition). In an LOG color map
+      there is a logarithmic distribution of values by colors (in this case,
+      values must be strictly positive).</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ColorMap</td>
+    <td width="10%" align="center">Smooth</td>
+    <td width="80%">This parameter is used for AVERAGE-ISO, DISCONTINUOUS-ISO
+      visualization, to define if the patterns are smoothed or not. It may be
+      YES or NO (default is NO)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImageExtension</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The name of the image to extend. An image with the same name
+      must have been defined previously in a xml file. (Be careful with the
+      loading order of the files !)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">DefaultPosition</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The default position name of the ouput-characteristic to be
+      visualized. It may be NODE, EDGE, FACE, ELEMENT, GAUSS, CENTER, or
+      NODE_OF_ELEMENT or a &quot;user position&quot;. To reset a default
+      position set this parameter to &quot;&quot;.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">AddPosition</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The position name of the ouput-characteristic to be
+      visualized. It may be NODE, EDGE, FACE, ELEMENT, GAUSS, CENTER, or
+      NODE_OF_ELEMENT or a &quot;user position&quot;. (See &quot;position&quot;
+      to have more information ). This attribute is used to add a new Position
+      to an image previously defined.</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">RemovePosition</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The position name of the ouput-characteristic to be
+      visualized. It may be NODE, EDGE, FACE, ELEMENT, GAUSS, CENTER, or
+      NODE_OF_ELEMENT or a &quot;user position&quot;. (See &quot;position&quot;
+      to have more information). This attribute is used to remove a Position to
+      an image previously defined. After the remove, it must remain at least one
+      position in the image</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImageByReference</td>
+    <td width="10%" align="center">Reference</td>
+    <td width="80%">The name of the referenced image. The referenced image must
+      have been defined previously in a xml file. (Be careful with the loading
+      order of the files !)</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImageByReference</td>
+    <td width="10%" align="center">Name</td>
+    <td width="80%">The name of the image to define by reference</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImageByReference</td>
+    <td width="10%" align="center">SubType</td>
+    <td width="80%">The subtype of the characteristic to be visualized. Images
+      with the same physical type and subtype are pooled. For physical types
+      like Stress, Strain or Energy, this parameter is optional. If you choose
+      to define it , available values are : NOMINAL , LOGARITHMIC , ELASTIC ,
+      INELASTIC , THERMAL , PLASTIC. If the physical type is
+      GENERIC_CHARACTERISTIQUE this parameter is requested, in this case any
+      string is available. Default: no subtype is defined</td>
+  </tr>
+  <tr>
+    <td width="10%" align="center">ImageByReference</td>
+    <td width="10%" align="center">Hidden</td>
+    <td width="80%">An hidden image is not in the proposed list of images given
+      by the generic command and can't be created directly. But, editing an
+      existing image with the same physical type enables to create it .The value
+      of hidden parameter may be YES or NO (default is NO)</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="ImageDefinition"></a><b><a name="Examples">Examples</a></b></p>
+<ul>
+  <li>The aim of this image named &quot;Disp_Iso&quot; is to normalize the
+    displacement vector (physical name : TRANSLATION) and to display the result
+    as contours. Deformation as to be taken into account.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;Image Name=&quot;Disp_Iso&quot; Physical=&quot;TRANSLATION&quot; Visu=&quot;AVERAGE-ISO&quot; &gt;
+  &lt;Criterion Name=&quot;NORMALIZE&quot; &gt;
+     &lt;Values&gt;
+        &lt;Position    Name=&quot;NODE&quot;/&gt;
+        &lt;MathType Name=&quot;VECTOR&quot;/&gt;
+     &lt;/Values&gt;
+     &lt;ProcessList&gt;
+        &lt;Process Name=&quot;SPMProcessNormalize&quot;/&gt;
+     &lt;/ProcessList&gt;
+  &lt;/Criterion&gt;
+  &lt;Attributes&gt;
+     &lt;Display Deformed=&quot;YES&quot;/&gt;
+  &lt;/Attributes&gt;
+&lt;/Image&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this image named &quot;Stress_Iso_PpalValue_Disc&quot; is to
+    search the eigen values of the stress tensor (physical name : STRESS) and to
+    display the first component as discontinuous iso. Upper layer must be chosen
+    for 2D elements. Deformation as to be taken into account. This image does
+    not appear in the generic command. It will be accessed by edition only.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;Image Name=&quot;Stress_Iso_PpalValue_Disc&quot; Physical=&quot;STRESS&quot; Visu=&quot;DISCONTINUOUS-ISO&quot; Hidden=&quot;Yes&quot;&gt;
+  &lt;Criterion Name=&quot;PRINCIPAL-VALUE&quot; &gt;
+     &lt;Values&gt;
+        &lt;Position Name=&quot;NODE_OF_ELEMENT&quot;/&gt;
+         &lt;MathType Name=&quot;EIGEN_VALUES&quot;/&gt;
+         &lt;Filters&gt;
+           &lt;Smi Name=&quot;UPPER&quot;/&gt;
+           &lt;Component Name=&quot;C1&quot;/&gt;
+         &lt;/Filters&gt;
+     &lt;/Values&gt;
+  &lt;/Criterion&gt;
+  &lt;Attributes&gt;
+      &lt;Display Deformed=&quot;YES&quot;/&gt;
+  &lt;/Attributes&gt;
+&lt;/Image&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this image named &quot;Stress_Symbol_PpalTensor&quot; is to
+    search the eigen values of the stress tensor (physical name : STRESS) and to
+    display the eigen tensor as symbol. Upper layer must be chosen for 2D
+    elements. Deformation as to be taken into account. The results symbols may
+    be displayed at nodes , at centers of elements , at gauss points of elements
+    or at nodes of elements.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;Image Name=&quot;Stress_Symbol_PpalTensor&quot; Physical=&quot;STRESS&quot; Visu=&quot;SYMBOL&quot; &gt;
+   &lt;Criterion Name=&quot;PRINCIPAL-VALUE&quot; &gt;
+     &lt;Values&gt;
+        &lt;DefaultPosition Name=&quot;NODE&quot;/&gt;
+        &lt;Position Name=&quot;CENTER&quot;/&gt;
+        &lt;Position Name=&quot;NODE_OF_ELEMENT&quot;/&gt;
+        &lt;Position Name=&quot;GAUSS&quot;/&gt;
+        &lt;MathType Name=&quot;EIGEN_VALUES&quot;/&gt;
+         &lt;Filters&gt;
+           &lt;Smi Name=&quot;UPPER&quot;/&gt;
+         &lt;/Filters&gt;
+     &lt;/Values&gt;
+  &lt;/Criterion&gt;
+  &lt;Attributes&gt;
+     &lt;Display Deformed=&quot;YES&quot;/&gt;
+  &lt;/Attributes&gt;
+&lt;/Image&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this image named &quot;EstimatedError_Symbol&quot; is to
+    display symbols of the estimated error (physical name : ESTIMATED_ERROR) .
+    The symbols will be displayed at the centers of the elements, as blue cubes.
+    The color map as to be computed on all model. This image does not appear in
+    the generic command. It will be accessed by edition only.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;Image Name=&quot;EstimatedError_Symbol&quot; Physical=&quot;ESTIMATED_ERROR&quot; Visu=&quot;SYMBOL&quot; Hidden=&quot;YES&quot; &gt;
+  &lt;Criterion Name=&quot;SCALAR&quot; &gt;
+    &lt;Values&gt;
+      &lt;Position Name=&quot;CENTER&quot;/&gt;
+      &lt;MathType Name=&quot;SCALAR&quot;/&gt;
+    &lt;/Values&gt;
+  &lt;/Criterion&gt;
+  &lt;Attributes&gt;
+    &lt;Symbol Type=&quot;CUBE&quot;&gt;
+      &lt;FixedColor Red=&quot;0&quot; Green=&quot;0&quot; Blue=&quot;213&quot; Alpha=&quot;255&quot;/&gt;
+    &lt;/Symbol&gt;
+    &lt;ColorMap MinMaxMode=&quot;ALL&quot;/&gt;
+  &lt;/Attributes&gt;
+&lt;/Image&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this extension is to add a new position
+    &quot;NODE_OF_ELEMENT&quot; to the image named &quot;Elements_Text&quot;.
+    The image named &quot;Elements_Text&quot; is supposed to be already defined
+    in the same or in another xml file.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;ImageExtension Name=&quot;Elements_Text&quot;  &gt;
+    &lt;AddValues&gt;
+      &lt;AddPosition Name=&quot;NODE_OF_ELEMENT&quot;/&gt;
+    &lt;/AddValues&gt;
+&lt;/ImageExtension&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this extension is to set the position
+    &quot;NODE_OF_ELEMENT&quot; as default position in the image named
+    &quot;Elements_Text&quot;. The image named &quot;Elements_Text&quot; is
+    supposed to be already defined in the same or in another xml file.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;ImageExtension Name=&quot;Elements_Text&quot;  &gt;
+    &lt;AddValues&gt;
+      &lt;DefaultPosition Name=&quot;NODE_OF_ELEMENT&quot;/&gt;
+    &lt;/AddValues&gt;
+&lt;/ImageExtension&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this extension is to reset the default position
+    &quot;NODE_OF_ELEMENT&quot; in the image named &quot;Elements_Text&quot;.
+    The image named &quot;Elements_Text&quot; is supposed to be already defined
+    in the same or in another xml file.
+    <p>&nbsp;</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;ImageExtension Name=&quot;Elements_Text&quot;  &gt;
+    &lt;AddValues&gt;
+      &lt;DefaultPosition Name=&quot;&quot;/&gt;
+    &lt;/AddValues&gt;
+&lt;/ImageExtension&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this extension is to remove a position
+    &quot;NODE_OF_ELEMENT&quot; to the image named &quot;Elements_Text&quot;.
+    The image named &quot;Elements_Text&quot; is supposed to be already defined
+    in the same or in another xml file.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;ImageExtension Name=&quot;Elements_Text&quot;  &gt;
+    &lt;RemoveValues&gt;
+      &lt;RemovePosition Name=&quot;NODE_OF_ELEMENT&quot;/&gt;
+    &lt;/RemoveValues&gt;
+&lt;/ImageExtension&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>The aim of this example is to add a new image named
+    &quot;Relative_Disp_Symbol&quot; using by reference the image named
+    &quot;Disp_Symbol&quot;. The image named &quot;Disp_Symbol&quot; is supposed
+    to be already defined in the same or in another xml file. The new image will
+    be the same as the reference. Only the subtype will be changed.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;ImageByReference Name=&quot;Relative_Disp_Symbol&quot; Reference=&quot;Disp_Symbol&quot; SubType=&quot;RELATIVE&quot; /&gt;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><b><a name="ImageDefinitionDTD">
+ImageDefinition.dtd</a></b></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;!ELEMENT ImagesList ( (Image) | (ImageExtension)  | (ImageByReference) )* &gt;
+&lt;!ATTLIST ImagesList Name CDATA #REQUIRED &gt;
+
+&lt;!-- START Image creation --&gt;
+
+&lt;!ELEMENT Image ( Criterion , Attributes? ) &gt;
+&lt;!ATTLIST Image Name  CDATA #REQUIRED
+          Physical    CDATA #REQUIRED
+          SubType     CDATA #IMPLIED
+          Visu        ( AVERAGE-ISO | DISCONTINUOUS-ISO | SYMBOL | FRINGE | MESH | TEXT ) #REQUIRED
+          Hidden      ( YES | NO ) &quot;NO&quot; &gt;
+    	  GroupID     CDATA #IMPLIED &gt;	
+
+&lt;!ELEMENT Criterion ( Values , ProcessList? )&gt;
+&lt;!ATTLIST Criterion Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT Values ( DefaultPosition? , Position+ , MathType+ , MathDim* , ValueType* , Filters? ) &gt;
+&lt;!ATTLIST Values RefType    ( GLOBAL | LOCAL | NONE  ) #IMPLIED
+                 Combined   ( YES | NO ) #IMPLIED &gt;
+
+&lt;!ELEMENT DefaultPosition EMPTY &gt;
+&lt;!-- predefined positions are ( NODE | EDGE | FACE | ELEMENT | GAUSS | CENTER | NODE_OF_ELEMENT  ) --&gt;
+&lt;!ATTLIST DefaultPosition Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT Position EMPTY &gt;
+&lt;!-- predefined positions are ( NODE | EDGE | FACE | ELEMENT | GAUSS | CENTER | NODE_OF_ELEMENT  ) --&gt;
+&lt;!ATTLIST Position Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT MathType EMPTY &gt;
+&lt;!ATTLIST MathType Name ( SCALAR | VECTOR | TENSOR | EIGEN_VALUES | SYMMETRICAL_TENSOR | BIT_ARRAY) #REQUIRED &gt;
+
+&lt;!ELEMENT MathDim EMPTY &gt;
+&lt;!ATTLIST MathDim Name ( 1D | 2D | 3D ) #REQUIRED &gt;
+
+&lt;!ELEMENT ValueType EMPTY &gt;
+&lt;!ATTLIST ValueType Name ( CHARACTER | SHORT | INTEGER | REAL | DOUBLE | COMPLEX | COMPLEX_DOUBLE ) #REQUIRED &gt;
+
+&lt;!ELEMENT Filters   (Smi ?, Lamina ?, Component *, ComplexPart ?, AxisSystem * ) &gt;
+
+&lt;!ELEMENT Smi EMPTY &gt;
+&lt;!ATTLIST Smi Name ( UPPER | MID | LOWER | UPPER_LOWER ) &#8220;UPPER&#8221; &gt;
+
+&lt;!ELEMENT Lamina EMPTY &gt;
+&lt;!ATTLIST Lamina Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT Component EMPTY &gt;
+&lt;!ATTLIST Component Name ( C1 | C2 | C3 | C12 | C13 | C21 | C23 | C31 | C32) &#8220;C1&#8221; &gt;
+&lt;!ATTLIST Component ApplyOn (ALL | 1D | 2D | 3D ) &#8220;ALL&#8221; &gt;
+
+&lt;!ELEMENT ComplexPart EMPTY &gt;
+&lt;!ATTLIST ComplexPart Name ( REAL | IMAGINARY | MODULUS | PHASE) &#8220;REAL&#8221; &gt;
+
+&lt;!ELEMENT AxisSystem ( Origin ?, X-Axis , Y-Axis , Z-Axis ) &gt;
+&lt;!ATTLIST AxisSystem CoordinateSystem ( CARTESIAN | CYLINDRICAL | SPHERICAL) &#8220;CARTESIAN &#8221; &gt;
+&lt;!ATTLIST AxisSystem ApplyOn (ALL | 1D | 2D | 3D ) &#8220;ALL&#8221; &gt;
+
+&lt;!ELEMENT Origin EMPTY &gt;
+&lt;!ATTLIST Origin X CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST Origin Y CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST Origin Z CDATA &#8220;0.&#8221; &gt;
+
+&lt;!ELEMENT X-Axis EMPTY &gt;
+&lt;!ATTLIST X-Axis X CDATA &#8220;1.&#8221; &gt;
+&lt;!ATTLIST X-Axis Y CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST X-Axis Z CDATA &#8220;0.&#8221; &gt;
+
+&lt;!ELEMENT Y-Axis EMPTY &gt;
+&lt;!ATTLIST Y-Axis X CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST Y-Axis Y CDATA &#8220;1.&#8221; &gt;
+&lt;!ATTLIST Y-Axis Z CDATA &#8220;0.&#8221; &gt;
+
+&lt;!ELEMENT Z-Axis EMPTY &gt;
+&lt;!ATTLIST Z-Axis X CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST Z-Axis Y CDATA &#8220;0.&#8221; &gt;
+&lt;!ATTLIST Z-Axis Z CDATA &#8220;1.&#8221; &gt;
+
+&lt;!ELEMENT ProcessList ( Process+ ) &gt;
+
+&lt;!ELEMENT Process ( IParam* , FParam* , CParam* ) &gt;
+&lt;!ATTLIST Process Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT IParam (#PCDATA) &gt;
+&lt;!ELEMENT FParam (#PCDATA) &gt;
+&lt;!ELEMENT CParam (#PCDATA) &gt;
+
+&lt;!ELEMENT Attributes ( Text? , Symbol? , Display? , ColorMap? ) &gt;
+
+&lt;!ELEMENT Text ( FixedColor? ) &gt;
+
+&lt;!ELEMENT Symbol ( FixedColor? ) &gt;
+&lt;!ATTLIST Symbol Type          ( CUBE | TETRA | ARROW | DOUBLE-ARROW | TENSOR | PRESSURE | RESTRAINT | AXIS | POINT | BALL ) &quot;ARROW&quot; &gt;
+&lt;!ATTLIST Symbol ZoomSensitive ( YES | NO ) &quot;YES&quot; &gt;
+&lt;!ATTLIST Symbol Fixed         ( YES | NO ) &quot;NO&quot; &gt;
+
+&lt;!ELEMENT FixedColor EMPTY &gt;
+&lt;!ATTLIST FixedColor Red   CDATA #REQUIRED &gt;
+&lt;!ATTLIST FixedColor Green CDATA #REQUIRED &gt;
+&lt;!ATTLIST FixedColor Blue  CDATA #REQUIRED &gt;
+&lt;!ATTLIST FixedColor Alpha CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT Display EMPTY &gt;
+&lt;!ATTLIST Display Deformed      ( YES | NO )         &quot;NO&quot; &gt;
+&lt;!ATTLIST Display WithoutValues ( YES | NO )         &quot;NO&quot; &gt;
+&lt;!ATTLIST Display Mode   ( FREE-FACES | ALL ) &quot;FREE-FACES&quot; &gt;
+&lt;!ATTLIST Display Shrink   CDATA  #IMPLIED &gt;
+
+&lt;!ELEMENT ColorMap EMPTY &gt;
+&lt;!ATTLIST ColorMap MinMaxMode  ( FREE-FACES | ALL )   &quot;FREE-FACES&quot; &gt;
+&lt;!ATTLIST ColorMap ComputeMode ( LINEAR | HISTOGRAM | LOG ) &quot;LINEAR&quot; &gt;
+&lt;!ATTLIST ColorMap Smooth      ( YES | NO )         &quot;NO&quot; &gt;
+&lt;!-- END Image creation --&gt;
+
+&lt;!-- START Image extension --&gt;
+
+&lt;!ELEMENT ImageExtension ( AddValues?, RemoveValues? ) &gt;
+&lt;!ATTLIST ImageExtension Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT AddValues  ( DefaultPosition? , AddPosition* ) &gt;
+
+&lt;!ELEMENT AddPosition EMPTY &gt;
+&lt;!ATTLIST AddPosition Name CDATA #REQUIRED &gt;
+
+&lt;!ELEMENT RemoveValues  ( RemovePosition* ) &gt;
+
+&lt;!ELEMENT RemovePosition EMPTY &gt;
+&lt;!ATTLIST RemovePosition Name CDATA #REQUIRED &gt;
+
+&lt;!-- END Image extension --&gt;
+
+&lt;!-- START Image by reference --&gt;
+
+&lt;!ELEMENT ImageByReference EMPTY &gt;
+&lt;!ATTLIST ImageByReference Reference CDATA #REQUIRED 
+			   Name      CDATA #REQUIRED
+                           SubType   CDATA #IMPLIED
+                           Hidden    ( YES | NO ) &quot;NO&quot; &gt;
+			   GroupID   CDATA #IMPLIED &gt;	
+&lt;!-- END Image by reference --&gt;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><a name="Images names">Image names</a></h4>
+<p>The available products may be :</p>
+<ul>
+  <li>Generative Part Structural Analysis : GPS (G in this table)</li>
+  <li>ELFINI Structural Analysis : EST (E in this table)</li>
+</ul>
+<p>The images spotted with an asterisk may be generated with the <i>Generate
+image</i> command or by selecting an icon</p>
+<table border="2" width="100%" id="AutoNumber1" cellspacing="1">
+  <tr>
+    <td width="15%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Physical type</b></td>
+    <td width="40%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Internal name (name in xml file)</b></td>
+    <td width="40%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>English NLS name</b></td>
+    <td width="5%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Product</b></td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">3D_COORDINATES</td>
+    <td width="40%">Coordinates_Symbol</td>
+    <td width="40%">Nodal coordinates symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Coordinates_Text</td>
+    <td width="40%">Nodal coordinates text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">ANGLE</td>
+    <td width="40%">Composite_Angle</td>
+    <td width="40%">Composite angle symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ANGULAR_ACCELERATION</td>
+    <td width="40%">AngularAcc_Symbol</td>
+    <td width="40%">Angular acceleration vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">AngularAcc_Text</td>
+    <td width="40%">Angular acceleration text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">AngularAcc_Fringe</td>
+    <td width="40%">Angular acceleration fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ANGULAR_VELOCITY</td>
+    <td width="40%">AngularVelocity_Symbol</td>
+    <td width="40%">Angular velocity vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">AngularVelocity_Text</td>
+    <td width="40%">Angular velocity text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">AngularVelocity_Fringe</td>
+    <td width="40%">Angular velocity fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">AREA_MOMENT_OF_INERTIA</td>
+    <td width="40%">AreaMomentOfInertia_Text</td>
+    <td width="40%">Area moment of inertia (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">AREA_SHEAR_RATIO_XY</td>
+    <td width="40%">AreaShearRatioInXYPlane_Text</td>
+    <td width="40%">Area shear ratio in XY plane (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">AREA_SHEAR_RATIO_XZ</td>
+    <td width="40%">AreaShearRatioInXZPlane_Text</td>
+    <td width="40%">Area shear ratio in XZ plane (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">CLEARANCE</td>
+    <td width="40%">Display_clearance_symbol</td>
+    <td width="40%">Clearance symbol</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Display_clearance_text</td>
+    <td width="40%">Clearance text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Display_clearance_iso</td>
+    <td width="40%">Clearance iso</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">CROSS_SECTIONAL_AREA</td>
+    <td width="40%">CrossSectionalArea_Text</td>
+    <td width="40%">Cross sectional area text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">CrossSectionalArea_Fringe</td>
+    <td width="40%">Cross sectional area fringe</td>
+    <td width="5%">E</td>
+  </tr>
+    <tr>
+    <td width="40%">CrossSectionalArea_Symbol</td>
+    <td width="40%">Cross sectional area symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">CURVATURE</td>
+    <td width="40%">Curvature_Text</td>
+    <td width="40%">Curvature text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">DEGREES_OF_FREEDOM</td>
+    <td width="40%">Restraint</td>
+    <td width="40%">Degrees of freedom symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ELASTIC_ENERGY</td>
+    <td width="40%">ElasticEnergy_Text</td>
+    <td width="40%">Local strain energy text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">ElasticEnergy_Fringe</td>
+    <td width="40%">Local strain energy</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">ElasticEnergy_Symbol</td>
+    <td width="40%">Local strain energy symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ELASTIC_ENERGY_DENSITY</td>
+    <td width="40%">ElasticEnergyDensity_Text</td>
+    <td width="40%">Local strain energy density text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">ElasticEnergyDensity_Fringe</td>
+    <td width="40%">Local strain energy density</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">ElasticEnergyDensity_Symbol</td>
+    <td width="40%">Local strain energy density symbol</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ELEMENTS</td>
+    <td width="40%">Mesh</td>
+    <td width="40%">Mesh</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Mesh_Deformed</td>
+    <td width="40%">Deformed Mesh</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Elements_Text</td>
+    <td width="40%">Elements text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ESTIMATED_ERROR</td>
+    <td width="40%">EstimatedError_Fringe</td>
+    <td width="40%">Estimated local error</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">EstimatedError_Text</td>
+    <td width="40%">Estimated local error text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">EstimatedError_Symbol</td>
+    <td width="40%">Estimated local error symbol</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">FORCE_FLOW</td>
+    <td width="40%">Force_Flow_Text</td>
+    <td width="40%">Force flow text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">FRICTION_RATIO</td>
+    <td width="40%">Display_FrictionRatio_Symbol</td>
+    <td width="40%">Friction force ratio symbol</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Display_FrictionRatio_Text</td>
+    <td width="40%">Friction force ratio text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Display_FrictionRatio_Iso</td>
+    <td width="40%">Friction force ratio iso</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">LINEIC_FORCE</td>
+    <td width="40%">Lineic_Force_Symbol</td>
+    <td width="40%">Line force vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Lineic_Force_Text</td>
+    <td width="40%">Line force text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">LINEIC_MASS</td>
+    <td width="40%">Lineic_Mass_Symbol</td>
+    <td width="40%">Line mass symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Lineic_Mass_Text</td>
+    <td width="40%">Line mass text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">LOCAL_AXIS</td>
+    <td width="40%">LocalAxis</td>
+    <td width="40%">Local axis symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">MASS_INERTIA</td>
+    <td width="40%">MassInertia_Text</td>
+    <td width="40%">Mass inertia (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">MASS_MOMENT_OF_INERTIA</td>
+    <td width="40%">MassMomentOfInertia_Text</td>
+    <td width="40%">Mass moment of inertia (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">MATERIAL</td>
+    <td width="40%">Material_Text</td>
+    <td width="40%">Material text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Material_Fringe</td>
+    <td width="40%">Material fringe</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%">MOMENT_FLOW</td>
+    <td width="40%">Moment_Flow_Text</td>
+    <td width="40%">Moment flow text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">NB_LAMINATES</td>
+    <td width="40%">Nb_laminates</td>
+    <td width="40%">Laminate number text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Nb_laminates_Fringe</td>
+    <td width="40%">Laminate number fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">NODES</td>
+    <td width="40%">Nodes_Text</td>
+    <td width="40%">Nodes text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">OFFSET</td>
+    <td width="40%">Offset_Symbol</td>
+    <td width="40%">offset (symbol)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Offset_Text</td>
+    <td width="40%">offset (text)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">ORIENTATION_VECTOR</td>
+    <td width="40%">Orientation_Vector_Symbol</td>
+    <td width="40%">Orientation vector (symbol)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Orientation_Vector_Text</td>
+    <td width="40%">Orientation vector (text)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">PHYSICAL_TYPE</td>
+    <td width="40%">PhysicalType_Text</td>
+    <td width="40%">Physical type text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">PhysicalType_Fringe</td>
+    <td width="40%">Physical type fringe</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">PLY_ID</td>
+    <td width="40%">Ply_id</td>
+    <td width="40%">Ply id text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Ply_id_Fringe</td>
+    <td width="40%">Ply id fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="8">POINT_FORCE</td>
+    <td width="40%">Force_Iso</td>
+    <td width="40%">Point force magnitude</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Force_Iso_Component</td>
+    <td width="40%">Point force component</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Force_Symbol</td>
+    <td width="40%">Point force vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Force_Text</td>
+    <td width="40%">Point force text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Force_Iso</td>
+    <td width="40%">Free body force magnitude</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Force_Iso_Component</td>
+    <td width="40%">Free body force component</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Force_Symbo</td>
+    <td width="40%">Free body force vector</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Force_Text</td>
+    <td width="40%">Free body force text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">POINT_MASS</td>
+    <td width="40%">Point_Mass_Symbol</td>
+    <td width="40%">Point mass symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Point_Mass_Text</td>
+    <td width="40%">Point mass text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Point_Mass_Iso</td>
+    <td width="40%">Point mass</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="8">POINT_MOMENT</td>
+    <td width="40%">Moment_Symbol</td>
+    <td width="40%">Point moment vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Moment_Text</td>
+    <td width="40%">Point moment text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Moment_Iso</td>
+    <td width="40%">Point moment magnitude</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Moment_Iso_Component</td>
+    <td width="40%">Point moment component</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Moment_Symbol </td>
+    <td width="40%">Free body moment vector</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Moment_Text</td>
+    <td width="40%">Free body moment text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Moment_Iso</td>
+    <td width="40%">Free body moment magnitude</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Freebody_Moment_Iso_Component</td>
+    <td width="40%">Free body moment component</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="5">POST PROCESSING CHARAC (ENVELOP_VALUES)</td>
+    <td width="40%">Values_Symbol</td>
+    <td width="40%">Values symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Values_Text</td>
+    <td width="40%">Values text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Values_Average_Iso</td>
+    <td width="40%">Values average iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Values_Discontinuous_Iso</td>
+    <td width="40%">Values discontinuous iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Values_Fringe</td>
+    <td width="40%">Values fringe</td>
+    <td width="5%">E</td>
+  </tr>
+    <tr>
+    <td width="15%" rowspan="5">POST PROCESSING CHARAC (ENVELOP_CRITICALS)</td>
+    <td width="40%">Criticals_Symbol</td>
+    <td width="40%">Critical sets symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Criticals_Text</td>
+    <td width="40%">Critical sets text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Criticals_Average_Iso</td>
+    <td width="40%">Critical sets average iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Criticals_Discontinuous_Iso</td>
+    <td width="40%">Critical sets discontinuous iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Criticals_Fringe</td>
+    <td width="40%">Critical sets fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">PRESSURE</td>
+    <td width="40%">Pressure_Symbol</td>
+    <td width="40%">Pressure vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Pressure_Text</td>
+    <td width="40%">Pressure text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Pressure_Fringe</td>
+    <td width="40%">Pressure fringe</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Pressure_Iso</td>
+    <td width="40%">Pressure (nodal values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">ROTATION</td>
+    <td width="40%">Rotation_Iso</td>
+    <td width="40%">Rotational displacement magnitude</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotation_Iso_Component</td>
+    <td width="40%">Rotational displacement component</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotation_Symbol</td>
+    <td width="40%">Rotational displacement vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotation_text</td>
+    <td width="40%">Rotational displacement text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ROTATIONAL_ACCELERATION</td>
+    <td width="40%">Rotational_Acceleration_Symbol</td>
+    <td width="40%">Rotational acceleration vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotational_Acceleration_Text</td>
+    <td width="40%">Rotational acceleration text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotational_Acceleration_Iso</td>
+    <td width="40%">Rotational acceleration iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">ROTATIONAL_STIFFNESS</td>
+    <td width="40%">Rotational_Stiffness_Symbol</td>
+    <td width="40%">Rotational stiffness (symbol)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotational_Stiffness_Text</td>
+    <td width="40%">Rotational stiffness (text)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">ROTATIONAL_VELOCITY</td>
+    <td width="40%">Rotational_Velocity_Symbol</td>
+    <td width="40%">Rotational velocity vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotational_Velocity_Text</td>
+    <td width="40%">Rotational velocity text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Rotational_Velocity_Iso</td>
+    <td width="40%">Rotational velocity iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">SHEAR_CENTER</td>
+    <td width="40%">ShearCenter_Text</td>
+    <td width="40%">Shear center (text)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="5">STRAIN</td>
+    <td width="40%">Strain_Iso_PpalValue</td>
+    <td width="40%">Strain principal tensor component (nodal values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Strain_Symbol_PpalTensor</td>
+    <td width="40%">Strain principal tensor symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Strain_Text_PpalTensor</td>
+    <td width="40%">Strain principal tensor text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Strain_Iso_Tensor_Component</td>
+    <td width="40%">Strain full tensor component (nodal values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Strain_Text_SymTensor</td>
+    <td width="40%">Strain full tensor text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="17">STRESS</td>
+    <td width="40%">Stress_Iso_PpalShearing_Disc</td>
+    <td width="40%">Stress principal shearing (element's nodes values)</td>
+    <td width="5%">G / E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_PpalValue_Disc</td>
+    <td width="40%">Stress principal tensor component (element's nodes values)</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Symbol_PpalTensor</td>
+    <td width="40%">Stress principal tensor symbol</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_VonMises</td>
+    <td width="40%">Stress Von Mises criterion (nodal values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_VonMises_Disc</td>
+    <td width="40%">Stress Von Mises criterion (element's nodes values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Text_VonMises</td>
+    <td width="40%">Stress Von Mises criterion text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_PpalValue</td>
+    <td width="40%">Stress principal tensor component (nodal values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_PpalValue_Abs</td>
+    <td width="40%">Stress principal tensor component (nodal absolute values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_PpalValue_Disc_Abs</td>
+    <td width="40%">Stress principal tensor component (element's nodes absolute
+      values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Text_PpalTensor</td>
+    <td width="40%">Stress principal tensor text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Text_PpalTensor_Abs</td>
+    <td width="40%">Stress principal tensor text (absolute)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_Tensor_Component</td>
+    <td width="40%">Stress full tensor component (nodal values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_Tensor_Component_Disc</td>
+    <td width="40%">Stress full tensor component (element's nodes values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Text_SymTensor</td>
+    <td width="40%">Stress full tensor text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Iso_PpalShearing</td>
+    <td width="40%">Tensor for maximum shearing (nodal values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Stress_Text_PpalShearing</td>
+    <td width="40%">Tensor for maximum shearing text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">StressVonMises_Fringe</td>
+    <td width="40%">Stress Von Mises criterion (center of element's values)</td>
+    <td width="5%">E</td>
+  </tr>
+   <tr>
+    <td width="15%" rowspan="2">STRESS (SHEAR)</td>
+    <td width="40%">ShearStress_Disc</td>
+    <td width="40%">Shear panel stress (element's nodes values)</td>
+    <td width="5%">E *</td>
+  </tr>
+    <tr>
+    <td width="40%">ShearStress_Text</td>
+    <td width="40%">Shear panel stress text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="7">STRESS (SURFACE)</td>
+    <td width="40%">Surface_Stress_Symbol_PpalTensor</td>
+    <td width="40%">Surface stress principal tensor symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+    <tr>
+    <td width="40%">Surface_Stress_Iso_PpalValue_Disc</td>
+    <td width="40%">Surface stress principal tensor component (element's nodes 
+	values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surface_Stress_Iso_PpalValue</td>
+    <td width="40%">Surface stress principal tensor component (nodal values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surface_Stress_Text_PpalTensor</td>
+    <td width="40%">Surface stress principal tensor text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surface_Stress_Iso_Tensor_Component</td>
+    <td width="40%">Surface stress full tensor component (nodal values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surface_Stress_Iso_Tensor_Component_Disc</td>
+    <td width="40%">Surface stress full tensor component (element's nodes 
+	values)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surface_Stress_Text_SymTensor</td>
+    <td width="40%">Surface stress full tensor text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">STRESS_VON_MISES</td>
+    <td width="40%">StressVonMises_Iso_Smooth</td>
+    <td width="40%">Von Mises Stress (nodal values)</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">StressVonMises_Iso_Disc</td>
+    <td width="40%">Von Mises Stress (element's nodes values)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">StressVonMises_Text</td>
+    <td width="40%">Von Mises Stress text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">StressVonMises_Symbol</td>
+    <td width="40%">Von Mises stress (symbol)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">SURFACIC_FORCE</td>
+    <td width="40%">Surfacic_Force_Symbol</td>
+    <td width="40%">Surface force vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Surfacic_Force_Text</td>
+    <td width="40%">Surface force text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Surfacic_Force_Fringe</td>
+    <td width="40%">Surface force fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">SURFACIC_MASS</td>
+    <td width="40%">Surfacic_Mass_Symbol</td>
+    <td width="40%">Surface mass symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Surfacic_Mass_Text</td>
+    <td width="40%">Surface mass text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Surfacic_Mass_Fringe</td>
+    <td width="40%">Surface mass fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">TEMPERATURE</td>
+    <td width="40%">Temperature_Field_Fringe</td>
+    <td width="40%">Temperature field fringe</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Temperature_Field_Text</td>
+    <td width="40%">Temperature field text</td>
+    <td width="5%">G / E</td>
+  </tr>
+  <tr>
+    <td width="40%">Temperature_Field_Iso</td>
+    <td width="40%">Temperature field iso</td>
+    <td width="5%">G / E</td>
+  </tr>
+  <tr>
+    <td width="40%">Temperature_Field_Symbol</td>
+    <td width="40%">Temperature field symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">THICKNESS</td>
+    <td width="40%">Lamina_Thickness_Text</td>
+    <td width="40%">Thickness text (Lamina)</td>
+    <td width="5%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="40%">Lamina_Thickness_Fringe</td>
+    <td width="40%">Thickness fringe (Lamina)</td>
+    <td width="5%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="40%">Thickness_Text</td>
+    <td width="40%">Thickness text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Thickness_Fringe</td>
+    <td width="40%">Thickness fringe</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">TRANSLATION</td>
+    <td width="40%">Disp_Iso</td>
+    <td width="40%">Translational displacement magnitude</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Disp_Iso_Component</td>
+    <td width="40%">Translational displacement component</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Disp_Symbol</td>
+    <td width="40%">Translational displacement vector</td>
+    <td width="5%">G / E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Disp_Text</td>
+    <td width="40%">Translational displacement text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">TRANSLATION (RELATIVE)</td>
+    <td width="40%">Relative_Disp_Symbol</td>
+    <td width="40%">Relative translational displacement vector</td>
+    <td width="5%">G / E *</td>
+  </tr>
+    <tr>
+    <td width="15%">TRANSLATION (SNG)</td>
+    <td width="40%">Local_Singularity_In_Rotation</td>
+    <td width="40%">Local singularity in rotation</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">TRANSLATIONAL_ACCELERATION</td>
+    <td width="40%">Acceleration_Symbol</td>
+    <td width="40%">Acceleration vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Acceleration_Text</td>
+    <td width="40%">Acceleration text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Acceleration_Iso</td>
+    <td width="40%">Acceleration</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Acceleration_Fringe</td>
+    <td width="40%">Acceleration fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">TRANSLATIONAL_ACCELERATION (RELATIVE)</td>
+    <td width="40%">Relative_Acceleration_Symbol</td>
+    <td width="40%">Relative acceleration vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">TRANSLATIONAL_STIFFNESS</td>
+    <td width="40%">Translational_Stiffness_Symbol</td>
+    <td width="40%">Translational stiffness (symbol)</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Translational_Stiffness_Text</td>
+    <td width="40%">Translational stiffness (text)</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="3">TRANSLATIONAL_VELOCITY</td>
+    <td width="40%">Velocity_Symbol</td>
+    <td width="40%">Velocity vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Velocity_Text</td>
+    <td width="40%">Velocity text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Velocity_Iso</td>
+    <td width="40%">Velocity</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%">TRANSLATIONAL_VELOCITY (RELATIVE)</td>
+    <td width="40%">Relative_Velocity_Symbol</td>
+    <td width="40%">Relative velocity vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">TRANSVERSE_SHEAR_STRAIN</td>
+    <td width="40%">Transverse_Shear_Strain_Text</td>
+    <td width="40%">Transverse shear strain text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Transverse_Shear_Strain_Iso</td>
+    <td width="40%">Transverse shear strain iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">TRANSVERSE_SHEAR_STRESS</td>
+    <td width="40%">Transverse_Shear_Stress_Text</td>
+    <td width="40%">Transverse shear stress text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Transverse_Shear_Stress_Iso</td>
+    <td width="40%">Transverse shear stress iso</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="2">USER_NUMBER</td>
+    <td width="40%">UserNodesNumber_Text</td>
+    <td width="40%">User nodes text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">UserElementsNumber_Text</td>
+    <td width="40%">User elements text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">VOLUMIC_FORCE</td>
+    <td width="40%">Volumic_Force_Symbol</td>
+    <td width="40%">Volume force vector</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Force_Text</td>
+    <td width="40%">Volume force text</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Force_Iso</td>
+    <td width="40%">Volume force</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Force_Fringe</td>
+    <td width="40%">Volume force fringe</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="15%" rowspan="4">VOLUMIC_MASS</td>
+    <td width="40%">Volumic_Mass_Symbol</td>
+    <td width="40%">Volume mass symbol</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Mass_Text</td>
+    <td width="40%">Volume mass text</td>
+    <td width="5%">E *</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Mass_Iso</td>
+    <td width="40%">Volume mass</td>
+    <td width="5%">E</td>
+  </tr>
+  <tr>
+    <td width="40%">Volumic_Mass_Fringe</td>
+    <td width="40%">Volume mass fringe</td>
+    <td width="5%">E</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a><b><a name="ImageProvided interfaces">
+Provided interfaces</a></b></h4>
+<p>&nbsp;</p>
+<p>The provided interfaces are to be used according to following schema:</p>
+<p align="center"><img border="0" src="images/PostPro.jpg" width="567" height="422"></p>
+<p>The <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisVisuInterfaces', 'interface', 'CATISamImageFactory');return false;">CATISamImageFactory</a></b>
+interface provides the methods to manage the &quot;ImageDefinition&quot; files
+and to create images. Query this interface on the post-processor container.</p>
+<ul>
+  <li><b>AddImageFile</b> method : is used to add an image description file. The
+    file path as to be specified. If the file path specified is MyFile, the NLS
+    names of images will be searched in the file MyFile.CATNls.</li>
+  <p>&nbsp;
+  <li><b>RemoveImageFile </b>method : is used to remove an image description
+    file. The file path as to be specified.</li>
+  <li><b>GetImageFiles </b>method : is used to retrieve the list of loaded image
+    files and their paths.</li>
+  <li><b>CreateImage </b>method : is used to create a new image, giving its
+    name. The name parameter has to be found in one of the loaded image
+    description files . You have to specify under which object (the owner) this
+    new image has to be plugged (AnalysisSet or AnalysisEntity). You may specify
+    the list of objects from which the values will be retrieved with the
+    CATICharacCollector interface. If not specified (default), values will be
+    retrieved from the owner parameter.<br>
+    You may also specify the list of objects from which the displacements will
+    be retrieved with the CATICharacCollector interface.<br>
+    If not specified (default), displacements will be retrieved from the owner
+    parameter.</li>
+</ul>
+<p>The <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisVisuInterfaces', 'interface', 'CATISamImage');return false;">CATISamImage</a></b>
+interface provides the methods :</p>
+<ul>
+  <li>to retrieve information (current parameters) on an existing image (for
+    example : the ActivationStatus, the DeformMode, the DeformCoefficient, the
+    SelectionGroup associated, the VisuTypeName, the CriteriaName, the
+    CurrentOccurrence, the ColorMap).</li>
+  <p>&nbsp;
+  <li>to modify current parameters of an existing image.</li>
+  <li>to update the display of an existing image.</li>
+</ul>
+<p>The <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisVisuInterfaces', 'interface', 'CATISamImageColorMap');return false;">CATISamImageColorMap</a></b>
+interface provides the methods :</p>
+<ul>
+  <li>to retrieve information (current parameters) on an existing color map (for
+    example : the number of colors, the minimum and maximum values of the color
+    map, to know if the min (max) Value is imposed).</li>
+  <li>to modify current parameters of an existing color map.</li>
+  <li>to update the display of an existing color map.</li>
+</ul>
+<p>The <b><a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisVisuInterfaces', 'interface', 'CATISamImageDisplayManager');return false;">CATISamImageDisplayManager</a></b>
+interface provides the methods to manage display of images. Query this interface
+on the post-processor container. This interface is used:</p>
+<ul>
+  <li>to retrieve information (current parameters) on the post-processor
+    container (for example : the current display mode, the current deformation
+    mode, the current pre-highlight mode ).</li>
+  <li>to modify these parameters.</li>
+  <li>to restore the previous modes for both pre-highlight and deformation
+    modes.</li>
+  <li>to activate/deactivate all deactivated/activated images, starting from a
+    root object.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="ImageDefinition"></a><b><a name="ProcessDefinition">A Process :
+What is this ?</a></b></h3>
+<p>A process can be defined by:</p>
+<ul>
+  <li>A mathematical operation applied on the values stored in a
+    CATAnalysisCharacCollector (or several) in order to create a new one (or
+    several).</li>
+  <li>An elementary calculation enabling new data to be generated from the
+    characteristics initially chosen (vector normalization, tensor Eigen values,
+    ...).</li>
+  <li>A unique name.</li>
+  <li>A computation method that produces the Output characteristic(s).</li>
+</ul>
+<p>A process may have input parameters. These parameters can be of types :
+INTEGER , FLOAT or CHAR parameters.</p>
+<p>The process availability is defined through it's input characteristic(s). it
+will accept as <i>version </i>and <i>position</i> types:</p>
+<ul>
+  <ul>
+    <li><b>Value Type</b> (CHARACTER, SHORT, INTEGER, REAL, DOUBLE, COMPLEX or
+      COMPLEX_DOUBLE ).</li>
+    <li><b>Mathematical Type</b> (SCALAR, VECTOR, TENSOR, EIGEN_VALUES,
+      SYMMETRICAL_TENSOR or BIT_ARRAY).</li>
+    <li><b>Mathematical Dimension</b> (1D, 2D or 3D).</li>
+    <li><b>RefFrame</b> (GLOBAL, LOCAL or NONE).</li>
+    <li><b>Category</b> (NODE or ELEMENT).</li>
+    <li><b>ValuesAreCombined </b>(TRUE or FALSE).</li>
+    <li><b>Position </b>( NODE | EDGE | FACE | ELEMENT | GAUSS | CENTER |
+      NODE_OF_ELEMENT ).</li>
+  </ul>
+  <li>The process gives the change it will operate on these <i>version</i> and <i>position</i>.</li>
+</ul>
+<p align="center"><img border="0" src="images/ProcessGraph.gif" width="565" height="121"></p>
+<p>The appropriate interfaces to run a process is <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'interface', 'CATISPMProcess');return false;"><b>CATISPMProcess</b></a>.
+For Process argument management, use <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisBase', 'interface', 'CATISPMProcessAccess');return false;"><b>CATISPMProcessAccess</b></a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="ImageDefinition"></a><b><a name="StandardProcesses">Standard
+Processes</a></b></h3>
+<p>The analysis modeler provides some standard processes. They are described in
+the <a href="#Ref3">quick reference article</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This document presented some principles of analysis visualization.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="References">References</a></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="1">[1]</a></td>
+    <td valign="top"><a href="CAAAniAnalysisOverview.htm">Analysis Modeler
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[2]">[2]</a></td>
+    <td valign="top"><a href="../CAADocTechArticles/CAADocXMLPgRules.htm">CAA
+      V5 XMLProgramming Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3">[3]</a></td>
+    <td valign="top"><a href="../CAAAniQuickRefs/CAAAniStdProcess.htm">Analysis
+      process reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>1</strong> [Jun 2002]</font></td>
+    <td valign="top"><font size="2">Document created</font></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+<ol>
+</ol>
+<ol>
+</ol>
+
+</body>
+
+</html>

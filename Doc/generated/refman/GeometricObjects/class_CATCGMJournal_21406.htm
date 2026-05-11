@@ -1,0 +1,390 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Class CATCGMJournal</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATCGMJournal"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects <script type="text/javascript" > writeClassCharacteristic(); </script> CATCGMJournal</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATCGMJournal_21406','CATCGMJournal','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATCGMJournal</b>
+</p>
+<p>
+<b><i> Class defining the journal of the topological operations.</i></b><br>
+
+ <br> The journal logs the modifications of the faces, free edges and free vertices
+ of topological objects. The journal is designed as a composite pattern: it represents a journal item 
+ ( <script type="text/javascript"> activateLinkAnchor('CATCGMJournalItem','','CATCGMJournalItem') </script> ) and a list of items ( 
+<script type="text/javascript"> activateLinkAnchor('CATCGMJournalList','','CATCGMJournalList') </script> ). <br>You have to manage the creation and deletion of a journal. 
+ The journal items are created when you report new events inside the
+ journal list (
+<script type="text/javascript"> activateLinkAnchor('CATCGMJournalList','Report','CATCGMJournalList.Report') </script>, 
+<script type="text/javascript"> activateLinkAnchor('CATCGMJournalList','ReportUnspecModify','CATCGMJournalList.ReportUnspecModify') </script> ). The journal items are deleted with the journal list in which they are imbedded, except if you have directly
+ created an item, without inserting it inside a journal list.
+ The journal information is also deleted with the journal it informs.
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATCGMJournal(CATCGMJournalList*)"><b>CATCGMJournal</b></a>(CATCGMJournalList*)
+<dd>  Constructs a CGM journal.
+ <dt> o 
+    <a href="#~CATCGMJournal()"><b>~CATCGMJournal</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddRef()"><b>AddRef</b></a>()
+<dd>  Use AddRef when a new handler of the journal references it
+
+ 
+ <dt> o 
+    <a href="#CastToReportItem()"><b>CastToReportItem</b></a>()
+<dd>    Casts <tt>this</tt> into a journal item if possible.
+ <dt> o 
+    <a href="#CastToReportList()"><b>CastToReportList</b></a>()
+<dd>    Casts <tt>this</tt> into a journal list if possible.
+ <dt> o 
+    <a href="#ForgetObjects(CATLISTP(CATGeometry)&amp;)"><b>ForgetObjects</b></a>(CATLISTP(CATGeometry)&amp;)
+<dd>   Discards a list of objects from the topological journal.
+ <dt> o 
+    <a href="#GetActiveMode()"><b>GetActiveMode</b></a>()
+<dd>  <dt> o 
+    <a href="#GetActiveMode()"><b>GetActiveMode</b></a>()
+<dd>    Returns the activation mode.
+ <dt> o 
+    <a href="#GetType()"><b>GetType</b></a>()
+<dd>  Returns the type of <tt>this</tt> journal.
+ <dt> o 
+    <a href="#MakeAttributesFollow(CATCGMAttrId*)"><b>MakeAttributesFollow</b></a>(CATCGMAttrId*)
+<dd>   DO NOT USE
+ <br>Automatically reports the attributes pointed by the objects before the operation, on the 
+ objects after the operation.
+ <dt> o 
+    <a href="#Release()"><b>Release</b></a>()
+<dd>  Use Release when a handler want to unreference a journal that it handles.
+ <dt> o 
+    <a href="#SetActiveMode(short)"><b>SetActiveMode</b></a>(short)
+<dd>    Activates or deactivates <tt>this</tt> journal.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#Type"><b>Type</b></a>
+<dd>   The types of report.
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATCGMJournal"></a><a name="CATCGMJournal(CATCGMJournalList*)"></a> <dt> o <b>CATCGMJournal</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATCGMJournal</b>(<td><script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script> <td><tt>iList</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CGM journal.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iList</tt>
+   <dd> If not <tt>NULL</tt>, a pointer to a journal list, inside which <tt>this</tt> will be inserted after its creation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATCGMJournal"></a><a name="~CATCGMJournal()"></a> <dt> o <b>~CATCGMJournal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATCGMJournal</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddRef"></a><a name="AddRef()"></a> <dt> o <b>AddRef</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('short','INLINE unsigned short')</script>  <b>AddRef</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Use AddRef when a new handler of the journal references it
+
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Number of objects that still reference the journal
+</dl>
+</dl>
+<a name="CastToReportItem"></a><a name="CastToReportItem()"></a> <dt> o <b>CastToReportItem</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCGMJournalItem','CATCGMJournalItem *')</script>  <b>CastToReportItem</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+   Casts <tt>this</tt> into a journal item if possible.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The casted pointer if <tt>this</tt> is a CATCGMJournalItem, <tt>NULL</tt> otherwise.
+</dl>
+</dl>
+<a name="CastToReportList"></a><a name="CastToReportList()"></a> <dt> o <b>CastToReportList</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList *')</script>  <b>CastToReportList</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+   Casts <tt>this</tt> into a journal list if possible.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The casted pointer if <tt>this</tt> is a CATCGMJournalList, <tt>NULL</tt> otherwise.
+</dl>
+</dl>
+<a name="ForgetObjects"></a><a name="ForgetObjects(CATLISTP(CATGeometry)&amp;)"></a> <dt> o <b>ForgetObjects</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>ForgetObjects</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATGeometry)','CATLISTP(CATGeometry)&amp;')</script> <td><tt>iToSimplify</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Discards a list of objects from the topological journal. 
+ This method is to be used with caution. Only objects 
+ which are not required by the backtracking mechanism can be discarded.
+ If not used properly, this method can lead to an invalid journal.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToSimplify</tt>
+   <dd> The list of objects to be discarded from the journal.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  0 if the objects can be removed - otherwise 1
+</dl>
+</dl>
+<a name="GetActiveMode"></a><a name="GetActiveMode()"></a> <dt> o <b>GetActiveMode</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('short','short')</script>  <b>GetActiveMode</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetActiveMode"></a><a name="GetActiveMode()"></a> <dt> o <b>GetActiveMode</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('short','INLINE short')</script>  <b>GetActiveMode</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+   Returns the activation mode.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The activation mode.
+ <br><b>Legal values</b>:
+  0 inactive, 1 active
+</dl>
+</dl>
+<a name="GetType"></a><a name="GetType()"></a> <dt> o <b>GetType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCGMJournal::Type','CATCGMJournal::Type')</script>  <b>GetType</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the type of <tt>this</tt> journal.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The type of the journal.
+</dl>
+</dl>
+<a name="MakeAttributesFollow"></a><a name="MakeAttributesFollow(CATCGMAttrId*)"></a> <dt> o <b>MakeAttributesFollow</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>MakeAttributesFollow</b>(<td> const <script type="text/javascript"> activateLink('CATCGMAttrId','CATCGMAttrId*')</script> <td><tt>iAttr</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  DO NOT USE
+ <br>Automatically reports the attributes pointed by the objects before the operation, on the 
+ objects after the operation.
+ <br>Not available for a creation item.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttr</tt>
+   <dd> The type of attribute to report. If the objects before the operation point an attribute of this
+ type, the attribute will also be shared by the objects after modification.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Release"></a><a name="Release()"></a> <dt> o <b>Release</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('short','INLINE unsigned short')</script>  <b>Release</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Use Release when a handler want to unreference a journal that it handles.
+ 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Number of objects that still reference the journal. When this number reach 0 
+   the journal is deleted
+
+</dl>
+</dl>
+<a name="SetActiveMode"></a><a name="SetActiveMode(short)"></a> <dt> o <b>SetActiveMode</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetActiveMode</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+   Activates or deactivates <tt>this</tt> journal.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The activation mode.
+ <br><b>Legal values</b>:
+  0 inactive, 1 active</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="Type"> <dt> o <b>Type</b>
+<dl>
+  <dd>
+<pre>
+enum <b>Type</b> {
+  None,
+  List,
+  Creation,
+  Modification,
+  Subdivision,
+  Absorption,
+  Deletion,
+  Keep,
+  UnspecModif,
+  Copy,
+  NoCopy
+}
+</pre>
+  The types of report.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> None</tt>
+   <dd> The report is inactivated.
+ </dd>
+    <dt><tt> List</tt>
+   <dd> The report is a CATCGMJournalList
+ </dd>
+    <dt><tt> Creation</tt>
+   <dd> The report is a CATCGMJournalItem describing the creation of an object.
+ </dd>
+    <dt><tt> Modification</tt>
+   <dd> The report is a CATCGMJournalItem describing the modification of an object in another one.
+ </dd>
+    <dt><tt> Subdivision</tt>
+   <dd> The report is a CATCGMJournalItem describing the subdivision of an object in P other objects.
+ </dd>
+    <dt><tt> Absorption</tt>
+   <dd> The report is a CATCGMJournalItem describing the absorption of N objects inside P>1 other objects.
+ </dd>
+    <dt><tt> Deletion</tt>
+   <dd> The report is a CATCGMJournalItem describing the deletion of an object.
+ </dd>
+    <dt><tt> Keep</tt>
+   <dd> The report is a CATCGMJournalItem describing that the object is not modified.
+ </dd>
+    <dt><tt> UnspecModif</tt>
+   <dd> One of the preceeding operations. 
+ </dd>
+    <dt><tt> Copy</tt>
+   <dd> By default, the input objects are considered to be kept.
+ </dd>
+    <dt><tt> NoCopy</tt>
+   <dd> By default, none input object is considered to be kept.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCGMJournal.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGeometricObjects</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,390 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Function/Physical/Spatial Integration Data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Function/Physical/Spatial Integration Data</h3>
+      <em>How to access integration data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspFunctionPhysical use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPspFunctionPhysical Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPspFunctionPhysical Do</a></li>
+            <li><a href="#How">How to Launch </a><a href="#What">CAAPspFunctionPhysica</a>l</li>
+            <li><a href="#Where">Where to Find the </a><a href="#What">CAAPspFunctionPhysica</a>l<a href="#Where">
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to obtain integration data from
+function, physical and spatial objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspFunctionPhysical Use Case</h3>
+<p>CAAPspFunctionPhysical is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspFunctionPhysical Do</h4>
+<p>The goal of&nbsp; CAAPspFunctionPhysical is to show you how to use the
+CATPlantShipInterfaces methods to query and obtain part integration data from
+function, physical, and spatial objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspFunctionPhysical</h4>
+<p>To launch CAAPspFunctionPhysical, you will need to set up the build time
+environment, then compile CAAPspFunctionPhysical along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspFunctionPhysical Code</h4>
+<p>CAAPspFunctionPhysical code is located in the CAAPspFunctionPhysical.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspFunctionPhysical.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspFunctionPhysical.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspFuncPhysMain.cpp and CAAPspFunctionPhysical.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAAPspFunctionPhysical:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Retrieve Function">Retrieving Objects Associated to a Physical
+    Part</a></li>
+  <li><a href="#Retrieve Physicals">Retrieving Physical Objects Associated to a
+    Spatial Object</a></li>
+  <li><a href="#Retrieve Physical">Retrieving a Physical Object Associated to a
+    Function Object</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspFunctionPhysical code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.&nbsp;&nbsp;
+Initializing the environment involves the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv
+CAAPspBaseEnv::ApplicationInit</pre>
+    </td>
+  </tr>
+</table>
+<p>This method performs the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+  <li>Initializing the application using the <i>CATIPspApplication</i>
+    interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve Function"></a>Retrieving Objects Associated to the
+Physical Part</h4>
+<p>The <i>CATIPspPhysical </i>interface is used to check if this physical part
+has an associated function and to retrieve pointers to this function and
+associated spatial object.&nbsp;&nbsp; In this sample, the <i>CATIPspPhysical </i>interface
+pointer is obtained from a physical part in the document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>       //----------------------------------------------------------------------
+       //  Query if physical object has a function associated with it
+       //----------------------------------------------------------------------    
+       rc = piPhysical-&gt;HasFunction(Found);
+       if ( Found )
+          cout &lt;&lt; &quot;CAAPspFunctionPhysical: &quot;
+               &lt;&lt; &quot;Physical object was created with a function&quot; &lt;&lt; endl;
+ 
+       //----------------------------------------------------------------------
+       //  Get the function associated to the physical object
+       //----------------------------------------------------------------------    
+       if ( SUCCEEDED(piPhysical-&gt;GetFunctional(piUnknown)) &amp;&amp; NULL != piUnknown )
+       {
+          //  Find CATIPspFunctional interface
+          rc = piUnknown-&gt;QueryInterface(IID_CATIPspFunctional,(void**)&amp;piFunction);
+          piUnknown-&gt;Release();
+          piUnknown = NULL;
+       }
+ 
+       //----------------------------------------------------------------------
+       //  Get the spatial object associated to the physical object
+       //----------------------------------------------------------------------    
+       if ( SUCCEEDED(piPhysical-&gt;GetSpatial(piUnknown)) &amp;&amp; NULL != piUnknown )
+       {
+          //  Find CATIPspSpatial interface
+          rc = piUnknown-&gt;QueryInterface(IID_CATIPspSpatial,(void**)&amp;piSpatial);
+          piUnknown-&gt;Release();
+          piUnknown = NULL;
+       }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve Physicals"></a>Retrieving Physical Objects Associated to a
+Spatial Object</h4>
+<p>Using the spatial object associated to the previous physical object, we find
+its <i>CATIPspSpatial </i>interface.&nbsp;&nbsp; A spatial object can be
+associated to multiple physical objects and the <i>CATIPspSpatial</i> interface
+is used to retrieve the list of associated physicals.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   //----------------------------------------------------------------------
+   //  Get a list of physical objects 
+   //---------------------------------------------------------------------- 
+   if ( SUCCEEDED(piSpatial-&gt;ListPhysicals(piUnkList))
+            &amp;&amp; NULL != piUnkList )
+   {
+       unsigned int ListSize = 0;
+       piUnkList-&gt;Count(&amp;ListSize);
+       piUnkList-&gt;Release();  piUnkList = NULL;
+       cout &lt;&lt; &quot;Number of physical objects associated to the spatial object: &quot;
+            &lt;&lt; (int)ListSize &lt;&lt; endl;
+   }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieve Physical"></a>Retrieving a Physical Object Associated to a
+Function Object</h4>
+<p>The <i>CATIPspFunctional </i>interface is used to retrieve the following
+information from a function object:</p>
+<ul>
+  <li>Is function specification driven</li>
+  <li>List of physical part types that are compatible with function</li>
+  <li>List of physical part numbers that are compatible with function</li>
+  <li>Is function realized by a physical object, i.e. the function is associated
+    to a placed physical part (with 3D representation and position information)</li>
+  <li>List physical objects associated to function</li>
+  <li>Can the function be realized by a given list of physical objects</li>
+  <li>Information about the physical object (part type, name and number) that
+    realizes the function</li>
+  <li>Is it OK to associate the function with a physical object</li>
+  <li>The part catalog resource name of the physical object associated to the
+    function</li>
+  <li>Function status</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>       //-------------------------------------------------------------------
+       //  Is function specification driven?
+       //-------------------------------------------------------------------
+       rc = piFunction-&gt;IsSpecDriven(Found);
+       ....
+       ....
+
+       //-------------------------------------------------------------------
+       //  List compatible part types
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piFunction-&gt;ListCompatiblePartTypes(Standard,pPartTypeList))
+            &amp;&amp; NULL != pPartTypeList )
+       ....
+       ....</pre>
+      <pre>       //-------------------------------------------------------------------
+       //  List compatible part numbers
+       //-------------------------------------------------------------------
+       if ( NULL != piResource )
+       {
+	  CATUnicodeString Path;
+	  rc = piResource-&gt;GetPartCatalogPath(Path,CatalogName);
+          piResource-&gt;Release();
+	  piResource = NULL;
+       }
+       if ( SUCCEEDED(piFunction-&gt;ListCompatiblePartNumbers(PartType,Standard,
+	          CatalogName,pCatPartNameList,pPartNumberList)) )
+       ....
+       ....
+ 
+       //-------------------------------------------------------------------
+       //  Is function realized by a placed part?
+       //-------------------------------------------------------------------
+       rc = piFunction-&gt;IsRealized(Found);
+       ....
+       ....
+
+       //----------------------------------------------------------------------
+       //  Get a list of physical objects associated to this function
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;ListPhysicals(piUnkList))
+            &amp;&amp;  NULL != piUnkList )
+       ....
+       ....</pre>
+      <pre>       //----------------------------------------------------------------------
+       //  Check if this function can be realized by the input list of 
+       //  physical objects
+       //----------------------------------------------------------------------
+       CATPspListServices::CreateCATIUnknownList(&amp;piUnkList); // Create a list of unknowns
+       if ( NULL != piPhysical )
+          rc = piPhysical-&gt;QueryInterface (IID_IUnknown, (void **)&amp;piUnknown);
+
+       if (SUCCEEDED(rc) &amp;&amp; (NULL != piUnknown) &amp;&amp; (NULL != piUnkList))
+       {
+          rc = piUnkList-&gt;Add(0,piUnknown);
+          piUnknown-&gt;Release(); piUnknown = NULL;
+       }
+
+       if ( SUCCEEDED(piFunction-&gt;CanBeRealizedBy(piUnkList,pStatusList)) )
+       .... 
+       ....  </pre>
+      <pre>       //----------------------------------------------------------------------
+       //  Get the part type of physical object that realizes this function
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;GetPartType(PartType)) )
+          cout &lt;&lt; &quot;Part type of physical object that realizes the function: &quot;
+               &lt;&lt; PartType.ConvertToChar() &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get the part number of physical object that realizes this function
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;GetPartNumber(PartNumber)) )
+          cout &lt;&lt; &quot;Part number of physical object that realizes the function: &quot;
+               &lt;&lt; PartNumber.ConvertToChar() &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get the part name of physical object that realizes this function
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;GetCatalogPartName(CatPartName)) )
+          cout &lt;&lt; &quot;Part name of physical object that realizes the function: &quot;
+               &lt;&lt; CatPartName.ConvertToChar() &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get the standard name
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;GetStandard(Standard)) )
+          cout &lt;&lt; &quot;Standard name: &quot; &lt;&lt; Standard.ConvertToChar() &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Is it OK to integrate (realize) this function with a physical part?
+       //----------------------------------------------------------------------
+       CATBoolean IsOK;
+       rc = piFunction-&gt;IsOKToIntegrate(IsOK);
+       ....
+       ....
+
+       //----------------------------------------------------------------------
+       //  Get the part catalog name
+       //---------------------------------------------------------------------- 
+       if ( SUCCEEDED(piFunction-&gt;GetPartCatalogName(CatalogName)) )
+          cout &lt;&lt; &quot;Catalog name: &quot; &lt;&lt; CatalogName.ConvertToChar() &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get the function status
+       //---------------------------------------------------------------------- 
+       CATPspFunctionStatus Status;
+       if ( SUCCEEDED(piFunction-&gt;GetFunctionStatus(Status)) )
+          cout &lt;&lt; &quot;Get function status succeeded&quot; &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to obtain object
+integration data.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Retrieving the objects associated to a&nbsp; physical part</li>
+  <li>Listing the physical parts associated to a spatial object</li>
+  <li>Querying the function object to retrieve its associated physical part and
+    physical part data&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [March 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

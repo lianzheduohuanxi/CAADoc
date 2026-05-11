@@ -1,0 +1,399 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-gb">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+<META NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+<TITLE>Creating Connection Properties on a Product</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+
+ </SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD ALIGN="right" VALIGN="top">
+		<H2><A NAME="Top"></A>Creating Connection Properties on a Product</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!--------------------------------------comment------->
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%"><A NAME="Learn"></A>This macro shows you how to create an 
+		Analysis document for a generative structural analysis. With this scenario, 
+		you will cover all the steps of a generative analysis application. This 
+		scenario will require a &quot;CATIA - GENERATIVE ASSEMBLY STRUCTURAL ANALYSIS 
+		2 Product&quot; license.
+		<P>It creates an Analysis document, imports a Product document provided 
+		with the sample. An Analysis Case is created as for static linear analysis. 
+		Some preprocessing data are defined by using the publication defined on 
+		the product. We will focus on the creation of connection properties based 
+		on assembly constraints and creation of loading conditions based on rigid 
+		virtual part.</P>
+		<P ALIGN="center">
+		<img border="1" src="images/PreproWithCts.jpg" width="648" height="504"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%"><A NAME="How"></A>CAAAniPreproOnProduct is launched in CATIA 
+		[<A HREF="#References">1</A>]. No open document is needed.
+		<P>&nbsp;<a href="CAAAniPreproOnProductSource.htm">CAAAniPreproOnProduct.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniPreproOnProduct.catvbs">Execute macro</A> (Windows 
+		only).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH="7%" VALIGN="top">
+		<img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></TD>
+		<TD WIDTH="93%"><A NAME="Step"></A>CAAAniPreproOnProduct includes the following 
+		steps:
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Importing the Product Document and Extract 
+			the Publications and Constraints</A></LI>
+			<LI><A HREF="#Virtual">Creating a Virtual Part and a Property Connection</A></LI>
+			<LI><A HREF="#Navigate">Creating an Analysis Case for Static Analysis</A></LI>
+			<LI><A HREF="#bound">Defining the Boundaries</A></LI>
+			<LI><A HREF="#load">Defining the Load</A></LI>
+			<LI><A HREF="#Sensor">Extracting Data from a Basic Component</A></LI>
+			<LI><A HREF="#compute">Computing the Case</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</FONT>
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sSep=CATIA.SystemService.Environ(&quot;ADL_ODT_SLASH&quot;)
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39;_____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Get the collection of documents in session</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>documents1 = CATIA.Documents
+<FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Get the collection of documents in session</FONT> 
+<FONT COLOR="#008000">&#39; Create the CATAnalysis Document </FONT>
+   <FONT COLOR="#0000ff">Set </FONT>TheAnalysisDocument = documents1.<FONT COLOR="#FF0000">Add</FONT>(&quot;Analysis&quot;) 
+   
+<FONT COLOR="#008000">&#39; if WB name already is &quot;GPSCfg&quot;, not to use StartWorkbench</FONT> 
+   WBName = CATIA.GetWorkbenchId <FONT COLOR="#0000ff">if </FONT>(WBName &lt;&gt; &quot;GPSCfg&quot;) <FONT COLOR="#0000ff">Then</FONT> 
+      CATIA.<FONT COLOR="#FF0000">StartWorkbench</FONT>(&quot;GPSCfg&quot;)
+  <FONT COLOR="#008000"></FONT> <FONT COLOR="#0000ff">End If</FONT>
+ ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Create the Analysis document. The use of StartWorkbench will customize 
+		the analysis document as a generative one. This means that meshparts and 
+		properties will be automatically created as in the Generative workbench.</P>
+		<H4><A NAME="Reference"></A>Importing the Product Document and Extracting 
+		the Publications</H4>
+		<P>In order to import the document you have to give the path of this document, 
+		the late type which implements CATISamImportDefine and an array of CATVariant 
+		if you want to customize the import.<BR>
+&nbsp;</P>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE STYLE="margin-top: 0; margin-bottom: 0">...
+<FONT COLOR="#008000">&#39; Start to scan the existing structure of analysis document:  Retrieve the AnalysisManager</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>analysisManager1 = TheAnalysisDoc.Analysis</PRE>
+				<PRE STYLE="margin-top: 0; margin-bottom: 0">  Dim arrayOfVariantOfShort1(0)
+  analysisManager1.<FONT COLOR="#FF0000">ImportDefineFile</FONT> (sDocPath &amp; sSep  &amp; &quot;online&quot; &amp; sSep &amp; &quot;CAAScdAniUseCases&quot;
+                                     &amp; sSep &amp; &quot;samples&quot; &amp; sSep &amp; &quot;basic_assembly.CATProduct&quot;),</PRE>
+				<PRE STYLE="margin-top: 0; margin-bottom: 0"> 				     &quot;CATAnalysisImport&quot;, arrayOfVariantOfShort1
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Reframe All.</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>specsAndGeomWindow2 = CATIA.ActiveWindow
+<FONT COLOR="#0000FF">  Set </FONT>viewer3D1 = specsAndGeomWindow2.ActiveViewer
+  viewer3D1.Reframe 
+
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Scan the analysis document:  Retrieve the Pointed documents to extract the reference for preprocessing</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+  CATIA.SystemService.Print analysisLinkedDocuments1.Name
+<FONT COLOR="#0000FF">  If </FONT>(analysisLinkedDocuments1.Count &lt;&gt; 1 )<FONT COLOR="#0000FF"> Then</FONT>
+    Err.Raise 9999,,&quot;NbDoc Lié NE 1&quot;
+<FONT COLOR="#0000FF">  End If</FONT>
+
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Retrieve the CATProduct Document and associated publications and constraints collection.</FONT>
+
+<FONT COLOR="#0000FF">  Set </FONT>productDocument1 = analysisLinkedDocuments1.Item(1)
+
+<FONT COLOR="#0000FF">  Set </FONT>product1 = productDocument1.Product
+<FONT COLOR="#0000FF">  Set </FONT>products1 = product1.<FONT COLOR="#FF0000">Products</FONT>
+
+<FONT COLOR="#0000FF">  Set </FONT>publications1 = product1.<FONT COLOR="#FF0000">Publications</FONT>
+<FONT COLOR="#0000FF">  Set </FONT>constraints1 = product1.<FONT COLOR="#FF0000">Connections</FONT>(&quot;<FONT COLOR="#008000">CATIAConstraints</FONT>&quot;)
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>The product document is fetched in the documentation installation path, 
+		this path has already been stored in the <CODE>sDocPath</CODE> variable. 
+		In the collection of documents analysisLinkedDocuments1, two documents can 
+		be retrieved: the Analysis document and the Product document. The extraction 
+		of pre-defined geometrical arena is done by using the Publication interface. 
+		Each publication is identified by a logical name. This is equivalent as 
+		the selection of a Publication element inside the interactive applications. 
+		Other used support is the assembly constraints. For this we also extract 
+		from the product the constraints collection.</P>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="Virtual"></A>Creating a Virtual Part and a Property Connection</H4>
+		<P><B>Virtual Parts</B> are structures created without a geometric support. 
+		They represent bodies for which no geometry model is available, but which 
+		play a role in the structural analysis of single part or assembly systems. 
+		Virtual Parts are used to transmit actions at a distance. Therefore they 
+		can be thought of as rigid bodies, except for the case where a lumped flexibility 
+		is explicitly introduced by the means of a spring element. For each hole 
+		we will create a Rigid virtual part in order to distribute a global force 
+		to a linked face.</P>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create a Virtual Part in the analysis model to transmit the load.</FONT>
+<FONT COLOR="#0000FF">Set </FONT>analysisSets1 = analysisModel1.AnalysisSets
+<FONT COLOR="#0000FF">Set </FONT>analysisSet1 = analysisSets1.<FONT COLOR="#FF0000">ItemByType</FONT>(&quot;PropertySet&quot;)
+
+<FONT COLOR="#0000FF">Set </FONT>analysisEntities1 = analysisSet1.AnalysisEntities
+<FONT COLOR="#0000FF">Set </FONT>analysisEntity1 = analysisEntities1.<FONT COLOR="#FF0000">Add</FONT>(&quot;SAMVirPartRigid&quot;)
+<FONT COLOR="#0000FF">Set </FONT>publication1 = publications1.<FONT COLOR="#FF0000">Item</FONT>(&quot;FaceCylinderTop&quot;)
+analysisEntity1.<FONT COLOR="#FF0000">AddSupportFromPublication</FONT> product1, publication1
+<FONT COLOR="#0000FF">Set </FONT>basicComponents1 = analysisEntity1.BasicComponents
+<FONT COLOR="#0000FF">Set </FONT>basicComponent1 = basicComponents1.<FONT COLOR="#FF0000">GetItem</FONT>(&quot;SAMRigSlavePoint.1&quot;)
+<FONT COLOR="#0000FF">Set </FONT>publication4 = publications1.<FONT COLOR="#FF0000">Item</FONT>(&quot;ForceHandler&quot;)
+basicComponent1.<FONT COLOR="#FF0000">AddSupportFromPublication</FONT> product1, publication4
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P><B>Connections properties</B> are assembly connections used to specify 
+		the boundary interactions between bodies in an assembled system. Once the 
+		geometric assembly positioning constraints are defined at the Product level, 
+		the user can specify the physical nature of the constraints. We will use 
+		in this scenario a <B>Fastened Connection</B> that represents the link between 
+		two bodies which are fastened together at their common boundary, and will 
+		behave as if they were a single body. From a finite element model viewpoint, 
+		this is equivalent to the situation where the corresponding nodes of two 
+		compatible meshes are merged together. However, since bodies can be meshed 
+		independently, the Fastened Connection is designed to handle incompatible 
+		meshes.</P>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create a Fastened connection in the analysis model to complete the constraints </FONT>
+<FONT COLOR="#008000">&#39; definition</FONT>
+<FONT COLOR="#0000FF">Set </FONT>analysisEntity2 = analysisEntities1.<FONT COLOR="#FF0000">Add</FONT>(&quot;SAMFaceFaceFastened&quot;)
+<FONT COLOR="#0000FF">Set </FONT>constraint1 = constraints1.<FONT COLOR="#FF0000">Item</FONT>(&quot;Surface contact.2&quot;)
+analysisEntity2.<FONT COLOR="#FF0000">AddSupportFromConstraint</FONT> product1, constraint1
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="Navigate"></A>Creating an Analysis Case for Static Analysis</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT> 
+<FONT COLOR="#008000">&#39; Create a Static Case in the current analysis model.</FONT> 
+   <FONT COLOR="#0000ff">Set </FONT>analysisModels1 = analysisManager1.AnalysisModels 
+   <FONT COLOR="#0000ff">Set </FONT>analysisModel1 = analysisModels1.Item(1) 
+   <FONT COLOR="#0000ff">Set </FONT>analysisCases1 = analysisModel1.AnalysisCases
+   
+   <FONT COLOR="#0000ff">Set </FONT>analysisCase1 = analysisCases1.<FONT COLOR="#FF0000">Add</FONT>()
+   <FONT COLOR="#0000ff">Set </FONT>analysisSets1 = analysisCase1.AnalysisSets
+   <FONT COLOR="#0000ff">Set </FONT>analysisSet1 = analysisSets1.<FONT COLOR="#FF0000">Add</FONT>(&quot;RestraintSet&quot;, catAnalysisSetIn)
+   <FONT COLOR="#0000ff">Set </FONT>analysisSet2 = analysisSets1.<FONT COLOR="#FF0000">Add</FONT>(&quot;LoadSet&quot;, catAnalysisSetIn)
+   <FONT COLOR="#0000ff">Set </FONT>analysisSet3 = analysisCase1.<FONT COLOR="#FF0000">AddSolution</FONT>(&quot;StaticSet&quot;)
+  ...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>document</B>, 
+		we find the <B>Analysis manager Object</B>, the <B>Analysis models</B> and 
+		the <B>Analysis cases Objects</B>. From both last object (Analysis Model 
+		and Analysis case), you can get access to <B>Analysis Sets</B> and <B>Analysis 
+		entities</B> that defines the preprocessing actions. This step create a 
+		new case and create two input sets (Restraint Set and Load Set) and a solution 
+		set (StaticSet).</P>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="bound"></A>Defining the Boundaries</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>  ...
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create clamp boundary. Associated to a publication</FONT>
+<FONT COLOR="#0000FF">Set </FONT>analysisEntities2 = analysisSet2.AnalysisEntities
+<FONT COLOR="#0000FF">Set </FONT>analysisEntity3 = analysisEntities2.<FONT COLOR="#FF0000">Add(&quot;</FONT>SAMClamp&quot;)
+<FONT COLOR="#0000FF">Set </FONT>publication2 = publications1.<FONT COLOR="#FF0000">Item</FONT>(&quot;FaceToClamp&quot;)
+analysisEntity3.<FONT COLOR="#FF0000">AddSupportFromPublication</FONT> product1, publication2
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>From the restraint set defined on the analysis case, we retrieve the 
+		collection of&nbsp; analysis entities. We add to this collection a fix (clamp) 
+		boundary condition and apply it on the geometry extracted from the Product 
+		document.</P>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="load"></A>Defining the Loads</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; _____________________________________________________________________________________</FONT>
+<FONT COLOR="#008000">&#39; Create load boundary. Associated to the virtual part</FONT>
+<FONT COLOR="#0000FF">Set </FONT>analysisEntities3 = analysisSet3.AnalysisEntities
+
+<FONT COLOR="#0000FF">Set </FONT>analysisEntity4 = analysisEntities3.<FONT COLOR="#FF0000">Add</FONT>(&quot;SAMDistributedForce&quot;)
+<FONT COLOR="#0000FF">Set </FONT>reference2 = analysisManager1.<FONT COLOR="#FF0000">CreateReferenceFromObject</FONT>(analysisEntity1)
+analysisEntity4.<FONT COLOR="#FF0000">AddSupportFromReference</FONT> reference2, reference2
+
+<FONT COLOR="#0000FF">Set </FONT>basicComponents2 = analysisEntity4.BasicComponents
+<FONT COLOR="#0000FF">Set </FONT>basicComponent2 = basicComponents2.<FONT COLOR="#FF0000">GetItem</FONT>(&quot;SAMForceAxis.1&quot;)
+basicComponent2.<FONT COLOR="#FF0000">SetValue</FONT> &quot;Values&quot;, 0, 0, 0, 1
+<FONT COLOR="#0000FF">Set </FONT>basicComponent3 = basicComponents2.<FONT COLOR="#FF0000">GetItem</FONT>(&quot;SAMForceVector.1&quot;)
+basicComponent3.SetDimensions 3, 1, 1
+basicComponent3.SetValue &quot;&quot;, 1, 1, 1, 100.000000
+basicComponent3.SetValue &quot;&quot;, 2, 1, 1, 0.000000
+basicComponent3.SetValue &quot;&quot;, 3, 1, 1, 0.000000
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>The load is defined as the boundaries. In this case the support is the 
+		virtual part created before. To use the method with a Reference use AnalysisManager.<FONT COLOR="#FF0000">CreateReferenceFromObject</FONT> 
+		that will transform the analysis entity into a reference.</P>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="Sensor"></A>Extracting Data from a Basic Component</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; Some examples to read the data on the basic component</FONT>
+<FONT COLOR="#008000">&#39;In this case, direct read </FONT>
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetValue</FONT>(&quot;&quot;, 1, 1, 1) 
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetValue</FONT>(&quot;&quot;, 2, 1, 1)
+CATIA.SystemService.Print &quot; ForceVector &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetValue</FONT>(&quot;&quot;, 3, 1, 1)
+
+CATIA.SystemService.Print &quot; ForceVector Type &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">Type</FONT>  
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetLinesNumber</FONT>  (&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetColumnsNumber</FONT>(&quot;&quot;)
+CATIA.SystemService.Print &quot; ForceVector Dimension &quot; &amp; basicComponent3.<FONT COLOR="#FF0000">GetLayersNumber</FONT> (&quot;&quot;)
+
+<FONT COLOR="#008000">&#39;In this case, use the Kwe CATIAParameter interface.</FONT>
+<FONT COLOR="#0000FF">Set </FONT>ParametersList = analysisManager1.<FONT COLOR="#FF0000">Parameters</FONT>
+<FONT COLOR="#0000FF">Set </FONT>SubList = ParametersList.<FONT COLOR="#FF0000">SubList</FONT>(basicComponent3,FALSE)
+
+<FONT COLOR="#0000FF">For </FONT>i = 1<FONT COLOR="#0000FF"> to </FONT>SubList.Count
+	Set Parameter = SubList.<FONT COLOR="#FF0000">Item</FONT>(i)
+	CATIA.SystemService.Print Parameter.Name  
+	CATIA.SystemService.Print Parameter.<FONT COLOR="#FF0000">ValueAsString</FONT>
+<FONT COLOR="#0000FF">Next</FONT>
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="compute"></A>Computing the Case</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39; Launch the computation of the Case</FONT> 
+   MyCase.ComputeMeshOnly ...
+  
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>This method will launch the mesher, generate the finite element model 
+		for preprocessing.</P>
+		<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView and ADL_ODT_SLASH 
+		environment variables must be defined.</TD>
+	</TR>
+</TABLE>
+<!--------------------------------------comment------->
+<P ALIGN="center">
+<img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!--------------------------------------comment------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to produce in VB a complete analysis document with 
+a generative way.</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!--------------------------------------comment------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE BORDER="0" WIDTH="100%">
+	<TR>
+		<TD VALIGN="top">[1]</TD>
+		<TD><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a macro</A></TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top">[2]</TD>
+		<TD>
+		<a href="../CAAScdAniTechArticles/CAAAniPreprocessingFeatures.htm">
+		The Physical Types for Structural Analysis</A></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2" ALIGN="right">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!--------------------------------------comment------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

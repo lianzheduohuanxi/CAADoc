@@ -1,0 +1,374 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Standard Command Headers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Standard Command Headers</h3>
+      <em>Exposing your commands</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a standard command header class, and
+      how to use it to expose several commands.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrGeometryWshop Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrGeometryWshop Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrGeometryWshop</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrGeometryWshop Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a standard command header
+class, and how to use it to expose several commands.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrGeometryWshop Use Case</h3>
+<p>CAAAfrGeometryWshop is a use case of the CAAApplicationFrame.edu framework
+that illustrates the ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrGeometryWshop Do</h4>
+<p>The CAAAfrGeometryWshop use case creates a workshop named <strong>CAA V5:
+Geometry Creation</strong> for the CAAGeometry document [<a href="#References">1</a>].
+It is used here only to show and detail how to expose the workshop commands
+thanks to command headers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrGeometryWshop</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>Select File-&gt;New</li>
+  <li>In the New box, select CAAGeometry and click OK</li>
+</ul>
+<p>The CAAAfrGeometryWshop is loaded with the CAAGeometry document.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAfrGeometryWshop Code</h4>
+<p>The CAAAfrGeometryWshop use case is made of classes and interfaces located in
+the CAAAfrGeometryWshop.m module and in the ProtectedInterfaces directory of the
+CAAApplicationFrame.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The only class referred to in this article is the workshop description class
+named <i>CAAAfrGeometryWks</i></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the command headers for the command of the Geometry workshop, there
+are three steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the command header class</td>
+    <td valign="top">Workshop class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Instantiate the command header class</td>
+    <td valign="top"><code>CreateCommands</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Assign Resources to the command header instance</td>
+    <td valign="top">Resource files</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Command Header Class</h4>
+<p>To create a command header class, you should use the <code>MacDeclareHeader</code>
+macro. It creates for you a class that derives from <em>CATCommandHeader</em>,
+that is the base class for command headers and that should never be directly
+instantiated.</p>
+<p>The command header class for the CAAAfrGeometryWks workshop is named <em>CAAAfrGeometryWksHeader</em>.
+The two lines of code below create this class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCommandHeader.h&quot;
+<strong>MacDeclareHeader</strong>(CAAAfrGeometryWksHeader);</pre>
+    </td>
+  </tr>
+</table>
+<p>This macro creates a class that is ready to use.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Instantiating the Command Header Class</h4>
+<p>To instantiate this command header for the Point command, for example, the
+following constructor created by the macro should be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>new CAAAfrGeometryWksHeader(&quot;Point&quot;,
+                            &quot;CAADegGeoCommands&quot;,
+                            &quot;CAADegCreatePointCmd&quot;,
+                            (void *) NULL);</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>Point</code> is the identifier assigned to the command header. It
+    will be used afterwards to associate the command starters defined to put the
+    command in a menu and in toolbars with the command header. This is described
+    in Exposing Your Commands in Menus and Toolbars. This identifier is also
+    used to build the variables that define the command header resources, such
+    as the name seen by the end user in his/her own language in the menu, or the
+    icon to display in a toolbar. This is explained in Creating Resources for
+    Command Headers</li>
+  <li><code>CAADegGeoCommands</code> is the name of the shared library or DLL
+    containing the command's code, without the prefix lib, and without the
+    suffix depending on the operating system</li>
+  <li><code>CAADegCreatePointCmd</code> is the name of the command class</li>
+  <li>the last argument is the possible pointer to the object to pass to the
+    command constructor when starting the command. It is often a character
+    string that indicates the action to carry out when the same command can
+    perform several actions depending on the active document and data, such as
+    &quot;update&quot; or &quot;update all&quot;, or &quot;cut&quot; or
+    &quot;copy&quot;.</li>
+</ul>
+<p>Different commands can share the same command header class to create their
+command headers. For example, to creating a workshop [<a href="#References">1</a>],
+we have created the following instances of the <em>CAAAfrGeometryWksHeader</em>
+class in the <code>CreateCommands</code> method of the CAAAfrGeometryWshop
+workshop description class:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAAfrGeometryWks::CreateCommands()
+{
+  ...
+  //     1-a Cases without argument 
+  new CAAAfrGeometryWksHeader(&quot;Point&quot;,  &quot;CAADegGeoCommands&quot;,
+                              &quot;CAADegCreatePointCmd&quot;,    (void *) NULL);
+  new CAAAfrGeometryWksHeader(&quot;Line&quot;,   &quot;CAADegGeoCommands&quot;,
+                              &quot;CAADegCreateLineCmd&quot;,     (void *) NULL);
+  new CAAAfrGeometryWksHeader(&quot;Circle&quot;, &quot;CAADegGeoCommands&quot;,
+                              &quot;CAADegCreateCircleCmd&quot;,   (void *) NULL);
+  ...
+  //     1-b Cases with argument 
+  new CAAAfrGeometryWksHeader(&quot;xNormal&quot;, &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,(void *)<b>CATINT32ToPtr</b>(1));
+  new CAAAfrGeometryWksHeader(&quot;yNormal&quot;, &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,(void *)CATINT32ToPtr(2));
+  new CAAAfrGeometryWksHeader(&quot;zNormal&quot;, &quot;CAAAfrGeoCommands&quot;,
+                              &quot;CAAAfrChangeViewNormalCmd&quot;,(void *)CATINT32ToPtr(3));
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p> See the referenced article [<a href="#References">2</a>]
+to see the definition of the <i>CAAAfrChangeViewNormalCmd</i> class. The <code>CATINT32ToPtr</code>
+macro enables you to be 64 bits compliant.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Assigning Resources to the Command Header Instance</h4>
+<p>The <em>CAAAfrGeometryWksHeader</em> class is automatically associated with
+two resources files whose names are built using the class name:
+<ul>
+  <li>CAAAfrGeometryWksHeader.CATNls for titles and help message that can be
+    translated</li>
+  <li>CAAAfrGeometryWksHeader.CATRsc for other resources, such as the icons to
+    display in the toolbars</li>
+</ul>
+<p>The resources are designated using a key built as a concatenation of the
+command header class name, the command header instance identifier, and the
+resource keyword, separated by dots. The CAAAfrGeometryWksHeader.CATNls file
+includes the following for the Point command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrGeometryWksHeader.Point.<strong>Title</strong>     = &quot;Point&quot;;
+CAAAfrGeometryWksHeader.Point.<strong>ShortHelp</strong> = &quot;Point&quot;;
+CAAAfrGeometryWksHeader.Point.<strong>Help</strong>      = &quot;Creates points: indicate a point or enter coordinates&quot;;
+CAAAfrGeometryWksHeader.Point.<strong>LongHelp</strong>  = &quot;Point (Insert menu)
+Create points in two ways:
+ 1- Indicate a point with the mouse left button 
+ 2- Enter the point coordinates in the dialog box
+This Command is in repeat mode, so you can create
+several points along the command life.
+To leave the command, select another command.&quot;;
+CAAAfrGeometryWksHeader.Point.<strong>Category</strong>  = &quot;Element&quot;;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>These resources are:</p>
+<table>
+  <tr>
+    <td valign="top">Title</td>
+    <td><img src="images/CAAAfrPointTitle.jpg" alt="CAAAfrPointTitle.jpg (965 bytes)" width="59" height="23"></td>
+    <td valign="top">Text displayed in the menu bar for the command</td>
+  </tr>
+  <tr>
+    <td valign="top">ShortHelp</td>
+    <td><img src="images/CAAAfrPointShortHelp.jpg" alt="CAAAfrPointShortHelp.jpg (1222 bytes)" width="35" height="54"></td>
+    <td valign="top">Text displayed in a balloon as the command short help
+      message when the mouse moves over the command. This is not applicable to
+      commands located in the menu bar</td>
+  </tr>
+  <tr>
+    <td valign="top">Help</td>
+    <td><img src="images/CAAAfrPointHelp.jpg" alt="CAAAfrPointHelp.jpg (2161 bytes)" width="249" height="23"></td>
+    <td valign="top">Text displayed in the status bar as the command help
+      message when the mouse moves over the command. This is not applicable to
+      commands located only in the menu bar, but is applicable for commands
+      located in both the menu bar and a toolbar</td>
+  </tr>
+  <tr>
+    <td valign="top">LongHelp</td>
+    <td><img src="images/CAAAfrPointLongHelp.jpg" alt="CAAAfrPointLongHelp.jpg (12312 bytes)" width="268" height="101"></td>
+    <td valign="top">Text displayed in a balloon when the end user clicks <img src="images/I_WhatsThisP2.gif" alt="I_WhatsThisP2.gif (235 bytes)" width="24" height="24">,
+      which turns the mouse cursor as a question mark, and then clicks on the
+      icon representing the command. This is not applicable to commands located
+      in the menu bar</td>
+  </tr>
+  <tr>
+    <td valign="top">Category</td>
+    <td><img src="images/CAAAfrPointCategory.jpg" alt="CAAAfrPointCategory.jpg (36402 bytes)" width="431" height="327"></td>
+    <td valign="middle">An attribute associated with the command and used to
+      sort the commands in the Command tab page of the Customize window</td>
+  </tr>
+</table>
+<p>The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point
+command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrGeometryWksHeader.Point.<strong>Icon.Normal</strong>  = &quot;I_EduPoint&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This is the file name of the icon used to show the Point command in the
+toolbar:</p>
+<table>
+  <tr>
+    <td valign="top">Icon.Normal</td>
+    <td><img src="images/CAAAfrPointIconNormal.jpg" alt="CAAAfrPointIconNormal.jpg (750 bytes)" width="32" height="32"></td>
+    <td valign="top">Icon associated with the command and used in toolbars when
+      the command is available. The greyed icon associated with the command when
+      it is unavailable is computed from this one. In a P2 session, the shadowed
+      icon displayed for default state and the Pressed and Focused icons are
+      computed from the Normal one too.</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A command header is a light object that stands for a command and avoids to
+load the command as long as the end user does not require it. A command header
+is an instance of a command header class. A standard command header class is
+created using the <code>MacDeclareHeader</code> macro, and can be used for
+several commands. Resources that help to expose and access the command are
+assigned to the command header in order to be available even if the command is
+not loaded.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrSampleWorkbench.htm">Creating a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAAfrSampleCamera.htm">Using Cameras</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Mar 2004]</td>
+    <td valign="top">64 bits</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

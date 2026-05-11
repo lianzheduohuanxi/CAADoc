@@ -1,0 +1,300 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Computing a Tool Path with Machining Areas</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>3 Axis Surface Machining</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Computing a Tool Path with Machining Areas</h3>
+      <i>Implement CATIMfgComputeToolPathCustom on a surface machining operation
+      using machining areas</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAASmiUserOperationWithMAToolPath use case.
+      It explains how to customize tool path computation of a surface machining
+      operation with machining areas.</p>
+      <p>This paper accompanies the second scenario of <i>Surface Machining
+      Operation Sample</i> [<a href="#References">1</a>] and follows the <a href="CAASmiUserOperationWithMA.htm">CAASmiUserOperationWithMA</a>
+      use case.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASmiUserOperationWithMAToolPath Use
+          Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASmiUserOperationWithMAToolPath Do</a></li>
+            <li><a href="#How">How to Launch CAASmiUserOperationWithMAToolPath</a></li>
+            <li><a href="#Where">Where to Find the
+              CAASmiUserOperationWithMAToolPath Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to implement tool path computation of a
+surface machining operation.</p>
+<p>More specifically, the CAASmiUserOperationWithMAToolPath Use Case shows how
+to:</p>
+<ul>
+  <li>Implement the <i>CATIMfgComputeToolPathCustom</i> interface.</li>
+  <li>Retrieve geometry of a machining area.</li>
+  <li>Create a tool path.</li>
+</ul>
+<p>Another use case describes in detail how to customize tool path computation [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASmiUserOperationWithMAToolPath Use Case</h3>
+<p>CAASmiUserOperationWithMAToolPath is a use case of the
+CAASurfaceMachiningItf.edu framework that illustrates Surface Machining
+capabilities. It is a part of the sample described in the technical article [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASmiUserOperationWithMAToolPath Do</h4>
+<p>This use case computes the tool path of <b>CAASmgOperationWithMA</b>, connected
+with a <b>machining area</b>.</p>
+<p>The tool path is created from the boundaries of geometrical elements of the
+connected machining area. The CAAOffset parameter can be used to inflate the boundaries on each direction.</p>
+<p><img border="0" src="images/CAASmiOperationWithMATP1.jpg" width="584" height="297"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASmiUserOperationWithMAToolPath</h4>
+<p>This use case is a part of <i>Surface Machining Operation Sample</i> [<a href="#References">1</a>].
+You should build all the modules of this sample at a time to be able to launch
+it [<a href="#References">2</a>].</p>
+<p>Don't forget to edit the interface dictionary located in:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed, and uncomment the appropriate lines by removing the '#' character.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASmiUserOperationWithMAToolPath Code</h4>
+<p>This use case is made of source files located in the
+CAASmiConnectUserOperationWithMA.m module of the CAASurfaceMachiningItf.edu
+framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiConnectUserOperationWithMA.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiConnectUserOperationWithMA.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAASmiUserOperationWithMAToolPath is divided into the following steps:</p>
+<ol>
+  <li><a href="#Step1">Declaring CATIMfgComputeToolPathCustom Implementation</a></li>
+  <li><a href="#Step2">Reading Machining Area Geometry</a></li>
+  <li><a href="#Step3">Creating a Tool Path</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring CATIMfgComputeToolPathCustom Implementation</h4>
+<p>To customize the ComputeToolPath <b></b>method<b>, </b>we should create an
+extension class that will implement <i>CATIMfgComputeToolPathCustom</i>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Tie the implementation to its interface
+#include &quot;TIE_CATIMfgComputeToolPathCustom.h&quot;
+TIE_CATIMfgComputeToolPathCustom( CAAESmiUserOperationWithMATPComputation);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Reading Machining Area Geometry</h4>
+<p>To retrieve geometry of a machining area, we use the <i>CATISmgMachiningAreaxxx</i>
+interfaces:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  // Gets Machining Area
+  CATBaseUnknown_var spBaseFeature = pActivity-&gt;GetFeature();	
+  if (!!spBaseFeature)
+  {
+    // Gets geometry from PART of the machining area
+    <b>CATISmgMachiningAreaParts</b> * pParts = NULL;
+    RC = spBaseFeature-&gt;QueryInterface(IID_CATISmgMachiningAreaParts, (void**) &amp;pParts);
+    if (SUCCEEDED(RC))
+    {
+      // Gets geometry of parts
+      CATLISTP(CATGeometry) ListOfGeometries;
+      RC = pParts-&gt;<b>GetGeometricElements</b>(ListOfGeometries);
+
+      // Gets the bounding box of the geometry of the part body
+      GetBoundingBox(ListOfGeometries,PartsBBox);
+
+      pParts-&gt;Release();
+      pParts = NULL;
+    }
+
+    // Gets geometry from CHECK of the machining area
+    <b>CATISmgMachiningAreaChecks</b> * pChecks = NULL;
+    RC = spBaseFeature-&gt;QueryInterface(IID_CATISmgMachiningAreaChecks, (void**) &amp;pChecks);
+    if (SUCCEEDED(RC))
+    {
+      // Gets geometry of checks
+      CATLISTP(CATGeometry) ListOfGeometries;
+      RC = pChecks-&gt;<b>GetGeometricElements</b>(ListOfGeometries);
+
+      // Gets the bounding box of the geometry of the checks
+      GetBoundingBox(ListOfGeometries,ChecksBBox);
+
+      pChecks-&gt;Release();
+      pChecks = NULL;
+    }
+
+    // Gets geometry from LIMITING CURVE of the machining area
+    <b>CATISmgMachiningAreaGuidingCurves</b> * pGuidingCurves = NULL;
+    RC = spBaseFeature-&gt;QueryInterface(IID_CATISmgMachiningAreaGuidingCurves, (void**) &amp;pGuidingCurves);
+    if (SUCCEEDED(RC))
+    {
+      // Gets geometry of Limiting Curves
+      CATLISTP(CATCurve) ListOfCurves;
+      RC = pGuidingCurves-&gt;<b>GetResultingCATCurves</b>(ListOfCurves);
+
+      // Fill a list of CATGeometry from CATCurve
+      CATLISTP(CATGeometry) ListOfGeometries;
+      int NbCurves = ListOfCurves.Size();
+      for (int ic=1;ic&lt;=NbCurves;ic++)
+      {
+        ListOfGeometries.Append(ListOfCurves[ic]);
+      }
+
+      // Gets the bounding box of the geometry of the Limiting Curve 
+      GetBoundingBox(ListOfGeometries,GuidingCurvesBBox);
+
+      pGuidingCurves-&gt;Release();
+      pGuidingCurves = NULL;
+    }
+  }	
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating a Tool Path</h4>
+<p>The tool path is created and returned as a <i>CATIMfgCompoundTraject</i>
+smart pointer using the CreateMfgCompoundTraject of the <i>CATIMfgToolPathFactory</i>
+interface implemented by the Process document manufacturing container passed as
+input parameter. Then, a pointer to <i>CATIMfgToolPathComponents</i> is
+retrieved from the tool path and the tool path is initialized from the activity
+using the Init method of <i>CATIMfgCompoundTraject</i>.</p>
+<p>The tool path data is created from the boundaries of the machining area
+(computed with GetBoundingBox).</p>
+<p>The CreateMfgTPMultipleMotion method of <i>CATIMfgToolPathFactory</i> creates
+the object which contains the motions. This object is added to the tool path
+thanks to the AddElement method of <i>CATIMfgToolPathComponents</i>.</p>
+<p>With the interface <i>CATIMfgTPSaveData</i> on tool path, the tool path is
+saved in the model with the method SaveData.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to implement tool path computation of
+a new surface machining operation with machining areas.</p>
+<p>It shows also how to get geometry from a machining area, illustrating <i>CATISmgMachiningAreaxxx</i>
+interfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASmiTechArticles/CAASmiOperationSampleOverview.htm">Surface
+      Machining Operation Sample Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMaiUseCases/CAAMaiToolPathWithCycleCustomization.htm">Customizing
+      Tool Path Computation on Axial Operation</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" width="881">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top" width="118">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

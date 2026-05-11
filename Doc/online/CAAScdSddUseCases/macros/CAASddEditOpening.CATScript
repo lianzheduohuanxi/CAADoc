@@ -1,0 +1,101 @@
+Option Explicit
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create members.
+'
+' Assumptions:   The Product document Product1.CATProduct located in
+'                CAASddUseCases/samples/OpeningEditionData should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R20
+' Locales:       English
+' CATIA Level:   V5R20
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim documents1 As Documents
+  Set documents1 = CATIA.Documents
+  Dim partDocument1 As PartDocument
+  Set partDocument1 = documents1.Item("Design_Unit_004.CATPart")
+  Dim part1 As Part
+  Set part1 = partDocument1.Part
+
+  'Get the OpeningObject for Opening_038
+  Dim Opening1 As SfmOpening
+  Set Opening1 = part1.FindObjectByName("Opening_038")
+
+  Dim Sel1 As Selection
+  Set Sel1 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening1
+
+  Dim OpeningObject1 As SfmOpening
+  Set OpeningObject1= Sel1.FindObject("CATIASfmOpening")
+
+  'Get the OpeningObject for Opening_040
+  Dim Opening2 As SfmOpening
+  Set Opening2 = part1.FindObjectByName("Opening_040")
+
+  Dim Sel2 As Selection
+  Set Sel2 = CATIA.ActiveDocument.Selection
+  Sel2.Add Opening2
+
+  Dim OpeningObject2 As SfmOpening
+  Set OpeningObject2= Sel2.FindObject("CATIASfmOpening")
+
+  'Get the OpeningObject for Opening_043
+  Dim Opening3 As SfmOpening
+  Set Opening3 = part1.FindObjectByName("Opening_043")
+
+  Dim Sel3 As Selection
+  Set Sel3 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening3
+
+  Dim OpeningObject3 As SfmOpening
+  Set OpeningObject3= Sel3.FindObject("CATIASfmOpening")
+
+  'Get the mode in which Opening_038 and Opening_040 is created
+  Dim CreationMode1 As Long
+  CreationMode1 = OpeningObject1.CreationMode
+  MsgBox CreationMode1
+
+  Dim CreationMode2 As Long
+  CreationMode2 = OpeningObject2.CreationMode
+  MsgBox CreationMode2
+
+  'Get the Intersecting Element for Opening_038
+  Dim IntersectingElem1 As Reference
+  Set IntersectingElem1 = OpeningObject1.IntersectingElement
+
+  'Modify the creation mode to Sketch Mode for Opening_040. then assign a sketch as intersecting element to this opening
+  OpeningObject2.CreationMode = 1
+
+  Dim Sketch As Sketch
+  Set Sketch = part1.FindObjectByName("Sketch.11")
+  Dim sketchref As Reference
+  Set sketchref = part1.CreateReferenceFromObject(Sketch)
+  OpeningObject2.IntersectingElement = sketchref
+
+  'Get the current Direction of Opening_043 and then set a new direction
+  Dim GetDir As Reference
+  Set GetDir = OpeningObject3.Direction
+
+  Dim SketchAsDir As Sketch
+  Set SketchAsDir = part1.FindObjectByName("Sketch.14")
+  Dim PutDir As Reference
+  Set PutDir = part1.CreateReferenceFromObject(SketchAsDir)
+  OpeningObject3.Direction  = PutDir
+
+  'GetMathDirection for Opening_043. This will return the direction in Vector Form.
+  Dim GetMathDir(3)
+  GetMathDir(3) = OpeningObject3.GetDirection
+  Dim x1, y1, z1 As Double
+  x1 = GetMathDir(0)
+  y1 = GetMathDir(1)
+  z1 = GetMathDir(2)
+
+  part1.Update
+End Sub

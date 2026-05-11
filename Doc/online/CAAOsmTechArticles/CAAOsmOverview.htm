@@ -1,0 +1,1093 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Feature Modeler Overview</title>
+	<style type="text/css">
+.style1 {
+	font-family: "Courier New", Courier;
+	font-size: 9pt;
+	color: #976970;
+}
+.style2 {
+	color: #FF7900;
+	text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Feature Modeler Overview</h3>
+      <p><em>Essential characteristics, tasks and mechanisms of the
+feature modeler</em></p>
+      </td>
+    </tr>
+    <tr>
+      <td class="tech" colspan="2">Technical Article</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tbody>
+    <tr>
+      <td>
+      <h3><a name="Abstract"></a>Abstract</h3>
+      <p>This article deals with the basic conceptual issues of the
+feature modeler. </p>
+      <ul>
+        <li><a href="#Introduction"><b>The Characteristics of the
+Feature Modeler</b></a>
+          <ul>
+            <li><a href="#HighLevelOO">A High-Level Object-Oriented
+Data Modeler</a></li>
+            <li><a href="#PrototypeInstance">A Prototype/Instance
+Object Model</a>
+              <ul>
+                <li><a href="#Prototypes">About Prototypes</a> </li>
+                <li><a href="#Instances">About Instances</a> </li>
+              </ul>
+            </li>
+            <li><a href="#SpecResult">A Spec/Result Modeler</a></li>
+            <li><a href="#Names_of_Features">Names of Features</a></li>
+          </ul>
+        </li>
+        <li><a href="#BasicTasks"><b>The Basic Tasks Involved in
+Working with Features</b></a>
+          <ul>
+            <li><a href="#ModelingStartUps">Modeling StartUps</a>
+              <ul>
+                <li><a href="#Accessing_StartUps">Accessing Startups from Catalogs
+				</a> </li>
+                <li><a href="#CreatingStartUps">Creating a StartUp</a> </li>
+                <li><a href="#AddingAttributes">Adding Attributes to StartUps</a></li>
+                <li><a href="#Naming_a_StartUp">Naming a Startup</a> </li>
+              </ul>
+            </li>
+            <li><a href="#ModelingFeatures">Modeling Features</a>
+              <ul>
+                <li><a href="#Instantiating">Instantiating StartUps and
+Features</a> </li>
+                <li><a href="#Valuating">Valuating Attributes</a> </li>
+                <li><a href="#Retrieving">Retrieving Attributes</a> </li>
+                <li><a href="#Extensions">Extending a Feature</a> </li>
+                <li><a href="#DeletingFeatures">Deleting a Feature</a> </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#BuildUpdate"><b>The Build/Update Mechanism of the
+Specs/Result Modeler</b></a>
+          <ul>
+            <li><a href="#BuildingFeatures">Building a Feature</a> </li>
+            <li><a href="#UpdatingFeatures">Updating a System of
+Features</a> </li>
+          </ul>
+        </li>
+        <li><a href="#SummaryTasks"><b>Summary of Tasks</b></a></li>
+        <li><a href="#InShort"><b>In Short</b></a> </li>
+        <li><a href="#References"><b>References</b></a> </li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>The Characteristics of the Feature
+Modeler</h3>
+<p>The feature modeler has three main characteristics:</p>
+<ol>
+  <li>It is a <b>high-level object-oriented modeler</b> in the sense
+that it allows the creation and management of simple or complex data
+objects</li>
+  <li>It is a <b>prototype/instance modeler</b> because an instance
+can be modified so that it itself serves as a prototype for the
+creation of yet other instances.</li>
+  <li>It is a <b>spec/result modeler</b> in that it allows the
+creation of a network of inter-related data objects in order to be able
+to automatically update the "result" of an object whose "spec" has been
+modified</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="HighLevelOO"></a>A High-Level Object-Oriented Data Modeler</h4>
+<p>Types of attributes.</p>
+<p>A feature object can be partially described by its attributes.
+Attributes are like "slots" attached to feature objects in which data
+is stored. Attributes contain two main types of data:</p>
+<ol>
+  <li>Simple data which is composed of single values of C++ types such
+as integer, double, string, etc.</li>
+  <li>Feature data which is composed of a feature object which in turn
+has attributes that can be simple or feature types of data.</li>
+</ol>
+<p>An attribute is essentially defined by its:</p>
+<ul>
+  <li>Name: this name must be unique to the feature object to which the
+attribute is attached. In other words, the same name cannot be given to
+another attribute of the same feature object.</li>
+  <li>Type: this is the kind of data the attribute can contain (i.e.,
+simple data of type integer, double, etc., or feature data).</li>
+  <li>Quality: this is a keyword (sp_IN, sp_OUT or sp_NEUTRAL) used in
+the generation of consistent data values during an update operation.</li>
+</ul>
+<p>Let's look at a simple example. Say that we want to define a feature
+called "Point2D" which would represent a 2-D Point. This feature would
+have to reference at least the attributes containing the coordinates of
+a point. The feature object "Point2D.1" could look like this:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmAttrPoint1.gif" border="0" height="142" width="165"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Note that the attributes "H" and "V" contain simple double-type
+values.</p>
+<p>Let's define a second feature object, "Point2D.2":</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmAttrPoint2.gif" border="0" height="135" width="156"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Note that "Point2D.1" and "Point2D.2" have the same data structure:
+they are instances of the same feature type, "Point2D".</p>
+<p>Now, we can define another feature object representing a line
+segment based on the two points defined above. "Line2D.1" would look
+like this:</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td width="100%"><img src="images/CAAOsmAttrLine.gif" border="0" height="189" width="155"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Note that the "StartPoint" amd "EndPoint" attributes are
+feature-type attributes referencing "Point2D.1" and "Point2D.2".</p>
+<p>Feature attributes are of two types:</p>
+<ol>
+  <li><b>SpecObject</b> or <b>Referenced</b>. The feature can be
+referenced as an attribute by any number of other feature objects. It
+exists independently of the feature object to which it is attached.</li>
+  <li><b>Component</b> or <b>Aggregated</b>. The feature can be
+aggregated by only one feature object to which it <b>belongs</b>
+henceforward. The aggregating feature object is said to be the <b>parent</b>
+of the aggregated feature object, called the <b>child</b>. If ever the
+parent is deleted, the child is also deleted. Once it has been
+aggregated, the existence of a child feature object is directly related
+to the existence of its parent.</li>
+</ol>
+<p>Here is a complete schematic view of the different types of
+attributes:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmAttrType.gif" border="0" height="201" width="396"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Note that new attributes can be added to an existing feature object
+and that existing attribute values can be modified, thus allowing a
+feature object to be enriched dynamically at run-time.</p>
+<p>An integrated modeler.</p>
+<p>One major benefit of the data modeler aspect of the feature modeler
+is that it provides a set of generic mechanisms that are natively
+integrated to the V5 environment. In other words, each feature object
+created is treated as a native V5 object, thus benefiting from
+elaborate services existing automatically, which provide for the
+following tasks:</p>
+<ul>
+  <li>Transactions: allowing the "Undo" of modifications applied to a
+feature object</li>
+  <li>Cut, copy and paste feature objects</li>
+  <li>Persistency: save and retrieve (stream/unstream) a feature object
+within the container of the document in which it exists</li>
+  <li>Link Management: referencing any feature object a stable way</li>
+  <li>Introspection: list the attributes of a feature object</li>
+  <li>Navigation: position a feature object in a feature inheritance
+tree.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="PrototypeInstance"></a>A Prototype/Instance Object Model</h4>
+<h5><a name="Prototypes"></a>About Prototypes</h5>
+<p>A feature prototype is a feature object. Any feature object is a
+potential prototype since it can be instantiated in order to create a
+new feature object. The initial feature prototype is called a <b>StartUp</b>
+and it is stored in a catalog to be accessed and re-used by any number
+of applications. It describes:</p>
+<ul>
+  <li>A data structure through its <b>attributes</b></li>
+  <li>The <b>behavior</b> that can be performed on its data through
+its <b> type</b>.</li>
+</ul>
+<p>A StartUp may also have a <b>supertype. </b>In this case, it is
+said to "derive" from the StartUp having the supertype as its type.
+This means that it inherits not only the data structure of the deriving
+StartUp, i.e., its attributes, but any specific behavior it may have
+been given as well. Feature behavior is the set of operations that can
+be applied to a feature. These operations are, for example, the methods
+by which you can calculate values assigned to attributes.</p>
+<p>Behind a feature late type, there are certain interface
+implementations specific to a given feature. In the previous example of
+the "Line2D" feature type, we saw that one of the operations needed to
+be applied to a line is to draw it: We would logically, therefore, have
+to define an interface containing a method by which the line can be
+drawn. Let's see what a complete prototype of the "Line2D" feature
+could look like:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmLineProto.gif" border="0" height="225" width="345"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Every feature of type "Line2D" instantiated from this prototype
+would inherit these same attributes and behaviors.</p>
+<p>When a feature has been assigned a supertype, it can be manipulated
+by using the interfaces implemented both by its type <b>and</b> by its
+supertype. Here is another example of the "Pad" feature:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmSuperType.gif" border="0" height="134" width="153"></td>
+    </tr>
+  </tbody>
+</table>
+<p>The "Pad" feature prototype has "Pad" as its type and "Prism" as its
+supertype. The "Prism" feature prototype has "Prism" as its type and
+"MechanicalFormFeature" as its supertype. You can manipulate a "Prism"-
+type feature with the interfaces implemented by both the types "Prism"
+and "MechanicalFormFeature". When you create a feature and specify a
+supertype for it, you are in effect extending both its behavior and its
+data. You extend the feature behavior as the feature receives an
+additional set of operations from the feature with the supertype as its
+type. You extend the data as the feature receives the attributes from
+the feature with the supertype as its type. In other words, you are <b>deriving</b>
+a new type of feature from an existing one.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmSuperType2.gif" border="0" height="260" width="193"></td>
+    </tr>
+  </tbody>
+</table>
+<p>In the above example, the feature "Prism" is defined by:</p>
+<ul>
+  <li>its type: "Prism"</li>
+  <li>its supertype: "MechanicalFormFeature"</li>
+  <li>its attributes: "Sketch", "Direction", "EndLimit", "StartLimit".</li>
+</ul>
+<p>Having "Prism" as its supertype, "Pad", therefore, inherits the
+behaviors and attributes defined for the "MechanicalFormFeature" as
+well as the behavior and attributes defined for the "Prism".</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Instances"></a>About Instances</h5>
+<p>A StartUp is retrieved from the catalog at run-time and it is
+instantiated in order to create a new feature object. When this
+happens, the StartUp is called the "reference" and the new feature
+object created is called the "instance". This new object inherits both
+the data structure, i.e., the attributes assigned to the StartUp, as
+well as the behavior attributed to it, i.e., the interfaces implemented
+for this feature type. You can see, then, how useful prototypes can be
+because they can be re-used, i.e., retrieved any number of times in
+order to create new feature objects from them.</p>
+<p>An "instance", however, can also become a "reference" when it itself
+is instantiated to create another new feature object. In this case, the
+new "instance" created also inherits the actual values stored in the
+attribute "slots". The instance itself can be a reference. Actually,
+all feature objects are instances originally since all features are
+created by instantiation.</p>
+<p>An instance is said to be strongly tied to its reference if few
+attributes of the reference have been overridden. It is said to be
+lightly tied to its reference if many attributes of the reference have
+been overridden.</p>
+<p>When an instance is created from its reference, by default, the
+reference attributes are repeated in the instance. You can add new
+attributes to an instance and you can modify the value of an inherited
+attribute as well. When an attribute value is modified somewhere in the
+chain of the features depending on it, the modification is propagated
+to the objects downstream from the modified feature. However, at the
+same time, the modified feature has become distinct from its references
+upstream.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmPointInstRef.gif" border="0" height="305" width="520"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Above is an example of instantiation: Two new Point2D features,
+Point2D.1 and Point2D.2 are created. The first, Point2D.1, by
+instantiating the StartUp Point2D, the second by instantiating
+Point2D.1. Point2D.1 thus is both the instance of the Point2D reference
+and the reference of the Point2D.2 instance. If the attribute "H" were
+modified in Point2D.1, the change would be propagated to Point2D.2:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmPointInstRef_1.gif" border="0" height="306" width="523"></td>
+    </tr>
+  </tbody>
+</table>
+<p>At the same time, Point2D.1 would become separate from its
+reference, Point2D, and any changes in the "H" attribute of Point2D
+would not be propagated to Point2D.1. However, if the initial value of
+V in Point2D were modified, this change would be propagated to
+Point2D.1 and Point2D.2.</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmPointInstRef_2.gif" border="0" height="294" width="523"></td>
+    </tr>
+  </tbody>
+</table>
+<p>As you can see, the Prototype/Instance Model allows for data
+extension through the instantiation mechanism (reference -&gt;
+instance) and for behavior extension through the derivation of
+StartUps. In summary, it has the following characteristics:</p>
+<ul>
+  <li>The Prototype/Instance Model is based on the ability to find good
+enough instances (prototypes) and to make variations from them.</li>
+  <li>Instances are created by cloning a prototype. A modified instance
+can be a prototype in turn leading to generations of instances.</li>
+  <li>The Prototype/Instance Model is very good for making incremental
+design variations starting from a validated instance. It allows for
+automatic change propagation across generations of instances.</li>
+</ul>
+<p>Here is a schematic view of the prototype/instance mechanism:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmGeneralInstRef.gif" border="0" height="413" width="578"></td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SpecResult"></a>A Spec/Result Modeler</h4>
+<p>"Specs" are what make up an object, its definition. What happens
+after the "specs" have been processed is called the "Result". For
+example, in the case of a line segment:</p>
+<ul>
+  <li>Two points are the "specs" of the segment.</li>
+  <li>The line segment is the "result" of its "specs".</li>
+</ul>
+<p>Moreover, each point is specified by a set of coordinates:</p>
+<ul>
+  <li>The set of coordinates are the "specs" of the point.</li>
+  <li>The point is the "result" of its "specs".</li>
+</ul>
+<p>The Spec/Result Modeler provides an infrastructure for spec/result
+management, also called the Build/Update mechanism.</p>
+<p>Now, if ever any one of the coordinates of any one of the points
+were modified, the line segment would have to be redrawn as well. In
+other words, whenever the "specs" change, the "result" must be updated.
+As you can see, all of the results must be updated in order for the
+model to remain coherent. The Build/Update mechanism allows precisely
+for this to happen: Because of the inter-relations defined between
+specs, when one spec is modified, it automatically triggers the update
+of all of the specs dependent on it.</p>
+<p>The Build/Update mechanism has two basic activities:</p>
+<ol>
+  <li>Calculating each spec in order to update results. Whenever a spec
+input is no longer valid, a network of inter-related specs undertakes
+to re-calculate every dependent spec in turn in order to obtain an
+updated result.</li>
+  <li>Defining the relationships between specs. The features defining
+these specs have a formal definition of their input/output attributes.
+They cooperate by forming a network in which the feature specs must
+produce a result given the valuated input values of the attributes.</li>
+</ol>
+<p>Here is a general view of the update function of the Build/Update
+mechanism:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmGeneralBU.gif" border="0" height="415" width="777"></td>
+    </tr>
+  </tbody>
+</table>
+<p>The main benefits of the Spec/Result Modeler are:</p>
+<ul>
+  <li>Homogeneity of data between applications as the update of data is
+propagated throughout a system</li>
+  <li>Company rules and know-how are captured more effectively. For
+example, two pieces of information such as the weight and the thickness
+of a given object can be considered as two inter-related specs. When
+one is modified, it triggers the other to be re-calculated, thus always
+maintaining a coherent result.</li>
+  <li>A result is explainable given the specs</li>
+  <li>Designers do design, not clerical tasks.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Names_of_Features"></a>Names of Features</h4>
+<p align="left">For any StartUp or feature there are two kinds of names
+to consider, the <a href="#Internal_Name">internal name</a> and the <a
+ href="#External_Name">external name</a>. The first is named
+"internal" because it is hidden for the end user. The "external" name
+is, on the other hand, seen through user interfaces, like the
+specification tree, and it is used for some user mechanisms such as the
+Search.&nbsp;</p>
+<p align="left"><b><a name="Internal_Name"></a>Internal Name</b></p>
+<p align="left">For a StartUp, the internal name is its late type. When
+creating a StartUp, it is declared using the CATfctEditorAssistant tool. Refer to the Other Entities section of the "CAA V5 C++ Naming
+Rules" article [<a href="#References">6</a>] for the StartUp (late
+type) naming rule.&nbsp;</p>
+<p align="left">It is not possible to change afterwards the
+internal name of a feature which is returned by the <code>GetName</code>
+of <i>CATISpecObject.</i>&nbsp;</p>
+<p align="left"><b><a name="External_Name"></a>External Name</b></p>
+<p align="left">It is the name seen by the end user and which can be
+translated (NLS). With the difference of the internal name, it can be
+modified. The <i>CATIAlias</i> interface manages this name whith two
+methods whose specifications are the following:</p>
+<ul>
+  <li>
+    <p align="left"><code>SetAlias: </code>Change the external name
+using the name entered by the end user, and ensure its
+persistency.&nbsp;&nbsp; </p>
+  </li>
+  <li>
+    <p align="left"><code>GetAlias:</code> Return the name set by <code>
+SetAlias</code> or, if the name is empty, return a default name.
+According to the <i>CATIAlias</i> implementation, the default name
+computing can vary. It is detailed&nbsp; just below, in the <a
+ href="#CATIAlias_Implementation">CATIAlias Implementation</a>
+section. </p>
+  </li>
+</ul>
+<p align="left"><b><a name="CATIAlias_Implementation"></a>CATIAlias
+Implementation</b></p>
+<p align="left">This interface manages the external name of a feature.
+This section explains the different Dassault Systemes (DS)
+implementations, and what do you need to do when you create your own
+feature.</p>
+<ul>
+  <li>
+    <p align="left">The default implementation </p>
+    <p><i>CATIAlias</i> interface is implemented on any feature as
+follows:</p>
+    <ul>
+      <li>
+        <p align="left"><code>SetAlias </code>modifies the external
+name from the end user input, BUT does not ensure the
+persistency.&nbsp; </p>
+      </li>
+      <li> <align ="left"><code>GetAlias</code> returns the name set
+by <code> SetAlias</code> or if any, the <a
+ href="#Default_External_Name">default external name</a>.&nbsp;</align></li>
+    </ul>
+  </li>
+  <li>
+    <p align="left">The implementation on Dassault Systemes
+features&nbsp; </p>
+    <p>The <i>CATIAlias</i> interface is re-implemented on the
+Dassault Systemes features to ensure the name persistency, otherwise
+the <align ="left"><code>GetAlias</code> method is such as the default
+implementation described just above.</align> </p>
+  </li>
+</ul>
+<p>Consequently, if your feature has no <i>CATIAlias</i>
+re-implementation in its inheritance to ensure the name persistency,
+the <i>CATIAlias</i> re-implementation is mandatory. On the other
+hand, if your feature derives from a DS feature, the re-implementation
+is not necessary, except for specific cases. The article entitled
+"Integrating New Features in CATIA" [<a href="#References">7</a>]
+explains how to re-implement <i>CATIAlias</i> and gives some
+recommendations.</p>
+<p align="left"><b><a name="Default_External_Name"></a>Default External
+Name</b></p>
+<p align="left">For a StartUp, the default name is a name set in the
+CATNls file associated with the StartUp catalog - See the <a
+ href="#Naming_a_StartUp">Naming StartUp</a> section for
+implementation details. It is the recommended methodology. But if this
+Nls file is not provided, the internal name of
+the StartUp is used as default.</p>
+<p align="left">For a feature, its default name is the default name of
+its StartUp to which an index value can be appended, like for its <a
+ href="#Internal_Name">internal name</a>. See the <a
+ href="#Feature_Indexation">Feature Indexation</a><b> </b>section
+for details.&nbsp;</p>
+<p align="left">For both, the <code>GetDisplayName</code> method
+of&nbsp; <i> CATISpecObject</i> interface returns the "default"
+external name of the feature. </p>
+<p align="left"><b><a name="Feature_Indexation"></a>Feature Indexation</b></p>
+<p align="left">As explained here-above, all instances of the same StartUp will have the same name (the <a href="#Default_External_Name">default external name</a>). 
+It is often desirable to identify each instance with a unique name. 
+This is achieved thanks to a mechanism known as <a href="#Feature_Indexation"> Feature indexation</a>, 
+that adds an unique numerical suffix to the usual name: 
+in a CATPart document, instances of the <tt>"Sketch"</tt> StartUp will be labeled <tt>"Sketch<b>.1</b>"</tt>, <tt>"Sketch<b>.2</b>"</tt> and so on.</p> 
+ 
+<p align="left">Names unicity directly depends on the suffix unicity. The numbers used as suffixes are granted by different 
+sources that maintain a counter for each type of object requesting an index: the first <tt>"Line"</tt> will be <tt>"Line<b>.1</b>"</tt> 
+and the first <tt>"Point"</tt> will be <tt>"Point<b>.1</b>"</tt>. For each request the counter related to the requesting object type will be 
+incremented and the new value will be attributed. Unicity only exist with respect to a source (also refered to 
+as context).</p> 
+ 
+<ol><li><a name="Default_Behavior"></a><p align="left">Default behavior.<br/> 
+<a href="#Feature_Indexation"> Feature indexation</a> gets activated by default on a feature instance when this feature gets aggregated. 
+In such a case the aggregating object (or "owner", or "father") will issue the new number to its component, 
+making it's name unique among all the aggregating object components. This leads to a relative unicity: you 
+cannot have two <tt>"Line<b>.1</b>"</tt> objects in the same Sketch object but a <tt>"Part/Sketch<b>.1</b>/Line<b>.1</b>"</tt> and a <tt>"Part/Sketch<b>.2</b>/Line<b>.1</b>"</tt> 
+could exist in the same document. If this is not desirable see <a href="#Customization">Customization</a> section here-under. 
+If the aggregation relation is suppressed (thanks to a call like <code>CATISpecObject::RemoveComponent</code>), the (ex)component 
+will lose its suffix and its name will revert to the <a href="#Default_External_Name">default external name</a>. If aggregated again, the instance 
+will get a new index from its new owner as if it had never been aggregated.</p>
+	</li> 
+<li><a name="Customization"></a><p align="left">Customized behavior.<br /> 
+Indexation can also be used on root instances (i.e. instances that are not intended to be aggregated) via the 
+<code>CATISpecObject::SetAutoNameFather</code> method. This will associate the instance and a numbering source as if the 
+instance had been aggregated (hence the <code>SetAutoNameFather method</code> name). This operation is not reversible, 
+and the index will not be changed if the instance gets aggregated. Only another call to <code>SetAutoNameFather</code> 
+will alter the name if the index source is changed. The name will never revert to the <a href="#Default_External_Name">default external name</a>. 
+This can be used to get a document wide name unicity by using the same context for all instances.</p>
+<p align="left">If you plan to agregate features but still use a document-wide numbering, it is recommended to call 
+the <code>SetAutoName</code> method before calling the <code>CATISpecObject::SetSpecObject</code> method or <code>CATIDescendant</code> interface 
+to avoid wasting numbers and CPU cycles.</p></li></ol>
+ 
+<p align="left"><u>Limitations.</u> 
+<ul><li>This mechanism was designed as a default, lightweight solution and implemented in order to add as little 
+overhead (CPU time, data size) as possible. Consequently a new number is issued every time, no matter whether 
+a lower number issued previously could be reused or not (indexes are not "recycled"). 
+Even if you create and immediatly delete <tt>"Point<b>.1</b>"</tt>, the next point will be labeled <tt>"Point<b>.2</b>"</tt>.<br/> 
+Note: undoing the creation of <tt>"Point<b>.1</b>"</tt> is not equivalent to deleting it, indexes granted during an 
+undone transaction are considered as if they had never been issued.</li> 
+<li>Mixing the <a href="#Default_Behavior">Default</a> and <a href="#Customization">Customized</a> behaviors can lead to an inconsistent numbering scheme with duplicate names.</li> 
+<li>It is not recommended to use the <code>CATISpecObject::SetAutoNameFather</code> call cross container boundaries as it 
+can lead to the same issues.</li> 
+<li><code>CATISpecObject::SetAutoNameFather</code> MUST NOT be used to set a naming context that is not in the same document as the feature instance.</li></ul></p> 
+
+<!---------------------------------comment------------------------------------->
+<h3 align="right">[<a href="#Top">Top</a>]</h3>
+<h3><a name="BasicTasks"></a>The Basic Tasks Involved in Working with
+Features</h3>
+<h4><a name="ModelingStartUps"></a>Modeling StartUps</h4>
+<p>Read the OSM language article instead [<a href="#References">8</a>] . </p>
+<p>A StartUp is a feature prototype. It describes the preliminary data
+structure of a feature. To be meaningful, a StartUp definition should
+possess attributes. Attributes are the actual "slots" where feature
+data will be stored.</p>
+<p>StartUps must be created in catalogs. A StartUp catalog is a special
+type of document which must be loaded into a session before any StartUp
+can be created or accessed. Creating StartUps in catalogs assures their
+persistency. It also allows existing StartUps to be shared by other
+applications.</p>
+<p>The StartUp catalog file is a .<b>CATfct</b> file located in the
+CNext\resources\graphic directory of your framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Accessing_StartUps">Accessing StartUps from Catalogs</a></h5>
+<p>To create a new catalog, use the CATfctEditorAssistant tool/ OSM language [<a href="#References">9</a>].</p>
+<p>Once features have been instantiated in a document, the catalog
+defining their StartUps cannot be re-created. You should only use the CATfctEditorAssistant tool/ OSM language to modify the StartUp catalog. With this 
+the Startups are
+in ReadWrite access mode in the catalog.<br>
+Once your catalog is ready for production usage you should distribute
+it in ReadOnly mode (i.e. conversion of .osm file to .CATfct file using 
+CATfctEditor Assistant tool) to avoid unwanted changes and its presence in the
+CATIA
+V5 "Save Management" command. </p>
+<p>The <span class="style1">CATOsmSUHandler</span> is a class which gives you 
+handle on the StartUps and enables you to retrieve the StartUp, it is sufficient to carry out
+instantiations, for example.&nbsp;</p>
+<p>The class to manage a StartUp in catalog is
+(CATOsmSUHandler). This class enables you:</p>
+<ul>
+  <li>To retrieve a StartUp with the <code>RetrieveSU</code> method.</li>
+  <li>To Instanciate a StartUp with the <span class="style1">Instanciate()</span>
+method.</li>
+</ul>
+<p>Refer to the following article [<a href="#References">9</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="CreatingStartUps"></a>Creating a StartUp</h5>
+<p>Before studying in details the methods to create a StartUp, consider
+the various cases which can arise at you. For each case, there is an
+appropriate method:</p>
+<ul>
+  <li>You create a StartUp from "scratch" ( no super type)&nbsp;</li>
+  <p>You have no dependency with another StartUp and consequently you
+have no need to load before an StartUp catalog.</p>
+  <li>You create a StartUp deriving from an another one&nbsp;</li>
+</ul>
+<p>For the above cases you will have to use the CATfctEditorAssistant tool which will allow you to declare startUps in the .osm files and then instanciate them in some applicative container</p>
+<p>Refer to the following article [<a href="#References">9</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="AddingAttributes"></a>Adding Attributes to StartUps</h5>
+<p>In order to define the data structure of a new StartUp, it is
+necessary to describe its attributes. These attributes can be added to a 
+StartUps using the OSM language. First we have to convert the .CATfct file to a 
+ReadWrite mode which is .osm file. In this osm file you can directly add your 
+attributes to desired StartUp. Here you can also initialize the attributes.<br>
+Refer to the following article [<a href="#References">8</a>]</p>
+<p>&nbsp;</p>
+<p>The attribute type describes the type of value the attribute can
+contain. Here is a complete list of the <b>types of attributes</b>
+that can be defined:</p>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="50%"><b>Type</b>:</td>
+      <td width="50%"><b>Specifies</b>:</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_string</code></td>
+      <td width="50%">C++ char * type</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_double</code></td>
+      <td width="50%">C++ double type</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_boolean</code></td>
+      <td width="50%">CATBoolean type</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_octet</code></td>
+      <td width="50%">C++ unsigned char type</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_integer</code></td>
+      <td width="50%">C++ integer type</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_specobject</code></td>
+      <td width="50%">"referenced" feature attribute</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_component</code></td>
+      <td width="50%">"aggregated" feature attribute</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_external</code></td>
+      <td width="50%">symbolic link to another feature object</td>
+    </tr>
+    <tr>
+      <td width="50%"><code>tk_list</code></td>
+      <td width="50%">list of any other type</td>
+    </tr>
+  </tbody>
+</table>
+<p>An attribute can have a given type and <code>tk_list</code> at the
+same time. For example, it can be a <code>tk_string</code> and a <code>tk_list</code>,
+meaning that it contains a list of string-type data.</p>
+<p>The <code>tk_specobject</code> and <code>tk_component</code>
+attribute types define particular feature attributes. In other words,
+the attribute data will contain a pointer to another existing feature.
+The difference between attributes of type <code>tk_specobject</code>
+and those of type <code> tk_component</code> is that in the former
+case, the feature data structure pointed to by the attribute is said to
+be "referenced" by it and in the latter case, it is said to be
+"aggregated" to it. A "referenced feature" can be referenced by any
+number of other features. It exists independently of any of them. On
+the contrary, an "aggregated feature" belongs to the feature that
+aggregates it. It cannot belong to any other feature and its existence
+is tied to this "parent" feature.</p>
+<p>Here is a schematic view of attribute types and their possible
+type-definitions:</p>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody>
+    <tr>
+      <td width="100%"><img src="images/CAAOsmAttrContentType.gif" border="0" height="287" width="315"></td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5 align="left"><a name="Naming_a_StartUp"></a>Naming a StartUp</h5>
+<p align="left">The <a href="#Names_of_Features">Names of Features</a>
+section of this article explains the difference between the internal
+name of a StartUp ( its late type) and the <a href="#External_Name">external
+name</a>. It is strongly recommended to provide the default external
+name (if no end user name) by a NLS file. If you provide this file, the
+name returned by the <code>GetDisplayName</code> method will be the
+value set in this file. It can be also returned by the <i><a
+ href="#CATIAlias_Implementation">CATIAlias</a></i> interface, but it
+depends on its implementation on the StartUp.&nbsp;</p>
+<p align="left">There is a .<code>CATNls</code> file corresponding to
+each .<code>CATfct</code> catalog.&nbsp; The .<code>CATNls</code> file
+is a normal text file. Its name must be the same as the catalog name +
+"NLS" and the .<code>CATNls</code> suffix.&nbsp;The file is delivered
+in the CNext + resources + msgcatalog directory of your framework. The
+contents of the file must follow a precise format: for each feature
+name that is displayed to the user, a text line must be created
+containing the correspondence FeatureInternalName = "NLS Name" .</p>
+<p align="left">Here is an extract of the English CAAOsmCatalogSU<b>NLS.CATNls</b> 
+file:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td><font face="Courier New" size="2"><code>CAAOsmPublisher="Publisher";</code></font></td>
+    </tr>
+  </tbody>
+</table>
+<p align="left">where <code><font face="Courier New" size="2">CAAOsmPublisher</font></code>
+is the <a href="#Internal_Name">internal name</a> of a StartUp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ModelingFeatures"></a>Modeling Features</h4>
+<h5><a name="Instantiating"></a>Instantiating StartUps and Features</h5>
+<p>Once a StartUp exists in a catalog, it can be retrieved in order to
+create a new feature. This is done using the <code>RetrieveSU</code>
+method of <i> CATOsmSUHandler</i>. This method takes the following
+arguments:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+      <pre>HRESULT <b>RetrieveSU (</b>CATISpecObject_var &amp;oStartup)       <br>		          		     		          		     		          		     		          		     		          		     		          		     		          		     		          		     </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li><code>oStartUp</code> is the <b>retrieved</b> StartUp</li>
+</ul>
+<p>The resulting <i>CATISpecObject_var </i> pointer, <code>oStartUp</code>, can 
+be directly used.</p>
+<p>Now that the StartUp has been retrieved, it can be <b>instantiated</b>
+in order to create a new feature object. This is done using the <code>
+Instanciate</code> method on the <i>CATISpecObject </i>pointer to the
+StartUp. This method takes the following arguments:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+      <pre>virtual <b>Instanciate</b>(CATISpecObject_var &amp;oObject, CATIContainer *iContainer ,const CATUnicodeString &amp;iName = CATUnicodeString());<br></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>&nbsp;</p>
+<ul>
+  <li><code>oObject</code> The returned instance</li>
+  <li><code>iContainer</code> is <b>root container</b> in which the
+new feature will be instantiated.</li>
+  <li><code>iName</code> Name to be given to instance</li>
+</ul>
+<p>Note: The new feature itself, once created, can be instantiated in order to 
+create yet another new feature using the <code>Instanciate</code>
+method on the <i>CATISpecObject</i> pointer to the feature object
+itself.</p>
+<p>The data of any new feature object created can be extended as
+compared to the initial StartUp data structure by simply adding new
+attributes to it.</p>
+<p>See the CAAOsmSimpleAttr use case [<a href="#References">1</a>] for
+an example showing how new features are created through instantiation.</p>
+<p>Also refer to the following article to know more about osm [<a href="#References">9</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Valuating"></a>Valuating Attributes</h5>
+<p>A feature definition becomes meaningful only when its attributes are
+actually valuated. In order to do this, it is necessary to access the
+attribute key for each attribute to be valuated using the <code>GetAttrKey</code>
+method of <i>CATISpecAttrKey</i> on the name of the attribute. Then,
+use any of the <code>Set</code>... methods of <i>CATISpecAttrKey</i>
+passing the key itself as an argument in order to valuate an attribute.</p>
+<p>See the CAAOsmSimpleAttr use case [<a href="#References">1</a>] for
+an example showing how simple attributes are valuated.</p>
+<p>See the CAAOsmReferencedAttr use case [<a href="#References">2</a>]
+for an example showing how referenced attributes are valuated.</p>
+<p>See the CAAOsmAggregatedAttr use case [<a href="#References">3</a>]
+for an example showing how aggregated attributes are valuated.</p>
+<p align="right"><u>[<a href="#Top">Top</a>]</u></p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Retrieving"></a>Retrieving Attributes</h5>
+<p>In order to retrieve the attribute values of a feature object, it is
+necessary to access the attribute key for each attribute to be
+retrieved using the <code>GetAttrKey</code> method of <i>CATISpecAttrKey</i>
+on the name of the attribute. Then, use any of the <code>Get</code>...
+methods of <i> CATISpecAttrKey</i> passing the key itself as an
+argument in order to retrieve the value of the an attribute.</p>
+<p>See the CAAOsmSimpleAttr use case [<a href="#References">1]</a> for
+an example showing how simple attributes are retrieved.</p>
+<p>See the CAAOsmReferencedAttr use case [<a href="#References">2</a>]
+for an example showing how referenced attributes are retrieved.</p>
+<p>See the CAAOsmAggregatedAttr use case [<a href="#References">3</a>]
+for an example showing how aggregated attributes are retrieved.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h5><a name="Extensions"></a>Extending a Feature</h5>
+<p>A feature object can be enriched by adding one or several extensions
+on it. <br>
+</p>
+<p>See the referenced article CAAOsmHowToAddDataToAFeature [<a
+ href="#References">4</a>] showing how feature objects can be extended.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="DeletingFeatures"></a>Deleting a Feature</h5>
+<p>In order to delete a feature, simply get a <i>LifeCycleObject</i>
+handle on it and to use the <code>remove</code> method.</p>
+<p>See the CAAOsmReferencedAttr use case [<a href="#References">2</a>]
+for an example showing how feature objects can be deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="BuildUpdate"></a>The Build/Update Mechanism of the
+Specs/Result Modeler</h3>
+<p>The objective of the Specs/Result Modeler is to offer a general
+model for the definition and management of specs and results, to be
+able to particularize this model, and to manage common mechanisms
+automatically. The Build/Update Mechanism is the means of reaching this
+objective. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="BuildingFeatures"></a>Building a Feature</h4>
+<p>As you have seen in the previous sections, a feature is an object to
+which attributes are assigned. These attributes are usually related to
+each other. The values of certain attributes result from an operation
+taking as its input parameters the values of other attributes.</p>
+<p>For a given feature, the Build operation consists in defining how
+certain attributes depend on others and how to recalculate the value of
+attributes so that all the attributes of a feature have consistent
+values.</p>
+<p>A Build operation may use as its parameters values originating from
+other features. Suppose you have just performed a Build operation on a
+feature and somewhere among all the features and feature attributes
+upstream, something is modified. This may have an impact on your
+feature. Your feature may require a parameter which is a value
+resulting from another feature which itself uses as a parameter an
+attribute just modified. In such a case, your first feature is in an
+inconsistent state. To make your feature consistent, you should
+normally detect what has been modified upstream from your feature, then
+rebuild one by one all the features that need to be rebuilt upstream up
+to your first feature, i.e., the one you want to make consistent. This
+would be quite a chore and a risky one as you will never be able to
+guarantee that you have not missed something. To avoid this problem,
+the feature platform provides you with an algorithm which, when applied
+to a given feature, detects and rebuilds what is necessary to make the
+feature consistent.</p>
+<p>Every time this mechanism is applied to a feature, all the features
+upstream from the updated feature are rebuilt if needed, i.e., if they
+are found to be out of date by the mechanism.</p>
+<p>This default algorithm is based on the <code>sp_IN</code> and <code>sp_OUT</code>
+qualities of the attributes which are analyzed by the Update operation.
+The attribute quality is passed as the last argument of the <i>CATISpecObject</i><code>::AddAttribute</code>
+method when the attribute is initially defined. The possible values are:</p>
+<ul>
+  <li><code>sp_IN</code></li>
+  <li><code>sp_OUT</code></li>
+  <li><code>sp_NEUTRAL</code></li>
+</ul>
+<p>How you choose the quality of an attribute depends on how you want
+each attribute and feature of your application to be updated when one
+of the objects potentially impacting other objects of your feature
+network is modified. The default Update algorithm operates according to
+the attribute qualities. If you use this default Update mechanism, the
+trick is then to specify the appropriate qualities for attributes.</p>
+<p>Attributes defined with <code>sp_IN</code> are those which are
+usually required to define or specify a feature. If one of these values
+is modified, you wish to rebuild your feature when it is applied the
+Update command. These attributes are all recognized by the default
+Update operation. When the default Update operation is applied to a
+feature, the Build/Update mechanism automatically scans all the <code>sp_IN</code>
+attributes of all the features potentially impacting the feature to be
+updated to detect whether any of these attributes has been modified.</p>
+<p>Attributes defined with <code>sp_OUT</code> are those whose values
+result from a Build operation and may be used as input parameters for
+other features. The Update algorithm needs to determine whether these
+attributes are up-to-date and if they are not, how they can be updated.
+Specifying an attribute as <code>sp_OUT</code> means that the
+attribute is not up-to-date if its owner feature is not up-to-date. In
+order to update the <code>sp_OUT</code> attribute, you must first
+update its owning feature.</p>
+<p>Attributes defined with <code>sp_NEUTRAL</code> are ignored by the
+default Update operation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UpdatingFeatures"></a>Updating a System of Features</h4>
+<p>Let's again take the example of the line segment defined by two
+points. For each point, a <code>Build</code> operation is defined in
+order to re-draw the point using the modified value of one or more of
+its coordinates. Whenever a modification occurs, an <code>Update</code>
+operation on the Line is performed, triggering the <code>Build</code>
+operation to be executed on the Point whose value has changed. A Line
+will also have a Build operation associated with it so that it can be
+re-drawn whenever one of its values has changed. Here is the order in
+which the Update of the line will occur:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td><img src="images/CAAOsmLineBU.gif" border="0" height="227" width="393"></td>
+    </tr>
+  </tbody>
+</table>
+<p>Now, in order for the "Build Point2D.1" operation to occur, the
+keyword sp_IN must have been added to the attribute "StartPoint" of the
+"Line2D" feature. This means that this value must be valid before the
+building of the line can occur. So, the building of "Point2D.1" is
+performed, unless it is known to be valid already. The same goes for
+the attribute "EndPoint" and for "Point2D.2". The "H" and "V"
+attributes of the "Point2D" feature, however, must be declared as sp_IN.</p>
+<p>The specific Build operation is defined by implementing the <i>CATIBuild</i>
+interface. The default Build operation is empty. There is, however, a
+default Update operation, triggered by the execution of the <code>Update</code>
+method of <i>CATISpecObject</i>.</p>
+<p>See the CAAOsmBuildUpdate use case [<a href="#References">9</a>] for
+a complete programming example of the Build/Update Mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="SummaryTasks"></a>Summary of Essential Tasks</h3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="33%"><b>Method Name</b>:</td>
+      <td width="33%"><b>Interface Name</b>:</td>
+      <td width="34%"><b>Function</b>:</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>GetAttrKey</code></td>
+      <td width="33%"><i>CATISpecAttrKey</i></td>
+      <td width="34%">Retrieves the attribute key of a given attribute
+for a feature object.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>GetInteger, GetString, Get...</code></td>
+      <td width="33%"><i>CATISpecAttrKey</i></td>
+      <td width="34%">Retrieves the value of an attribute.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>Instanciate</code></td>
+      <td width="33%"><i>CATOsmSUHandler</i></td>
+      <td width="34%">Instantiates a StartUp (or feature object) in order to 
+		create a new feature object.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>remove</code></td>
+      <td width="33%"><i>LifeCycleObject</i></td>
+      <td width="34%">Deletes a feature object.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>RetrieveSU</code></td>
+      <td width="33%"><i>CATOsmSUHandler</i></td>
+      <td width="34%">Retrieves an existing StartUp from a catalog.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>SetInteger, SetString, Set...</code></td>
+      <td width="33%"><i>CATISpecAttrKey</i></td>
+      <td width="34%">Valuates an attribute.</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The Feature Modeler is a high-level object-oriented data modeler, a
+prototype/instance object modeler and a spec/result modeler.</p>
+<p>The basic tasks required when working with features deal with
+creating StartUps in catalogs and with modeling actual feature objects.
+New catalogs can be created or existing catalogs can be loaded into the
+current session. Once a catalog exists in the session, working with
+StartUps consists in creating them, accessing them, or adding new
+attributes to them. New feature objects are created in a document by
+the instantiation of an existing StartUp or of another feature object.
+Working with a feature object consists in valuating its attributes,
+retrieving its attributes and deleting the feature object itself.</p>
+<p>The Build/Update Mechanism consists in defining <code>Build</code>
+operations for specific features that are implicated in an
+inter-related system of specs and results. The execution of an <code>Update</code>
+operation triggers the different <code>Build</code> operations to be
+performed in order for the system to yield coherent results.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmSimpleAttr.htm">Working
+with Features</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmReferencedAttr.htm">Referencing
+Features by Features</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmAggregatedAttr.htm">Aggregating
+Features to Features</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td><a href="CAAOsmHowToAddDataToAFeature.htm">How to add data to
+a feature</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[5]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmBuildUpdate.htm">The
+Build/Update Mechanism</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[6]</td>
+      <td> <a href="../CAADocTechArticles/CAADocCppNamingRules.htm">CAA
+V5 C++ Naming Rules</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[7]</td>
+      <td><a href="CAAOsmFeatureIntegration.htm">Integrating New
+Features in CATIA&nbsp;</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[8]&nbsp;</td>
+      <td><a href="CAAOsmTaModelingStartUps.htm">Modeling StartUp</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[9]&nbsp;</td>
+      <td><a href="CAAOsmTaOsmMigration.htm">H<span class="style2">ow to Move 
+		from C++ to OSM</span></a></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [Aug 2000]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top">Version: <strong>2</strong> [Jun 2003]</td>
+      <td valign="top">StartUp and Feature names</td>
+    </tr>
+    <tr>
+      <td valign="top">Version: <strong>3</strong> [Jul 2004]</td>
+      <td valign="top">Clean up</td>
+    </tr>
+    <tr>
+      <td>Version: <strong>4</strong> [Nov 2004]</td>
+      <td>Extensions<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<p><i>Copyright &copy; 2000, Dassault Syst&egrave;mes. All rights
+reserved.</i></p>
+<!-- Mirrored from dsweb2e/caaV5/V5R14/online/CAAOsmTechArticles/CAAOsmOverview.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 15 Oct 2004 13:02:53 GMT -->
+</body>
+</html>

@@ -1,0 +1,844 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Mechanical Modeler Novelties - Presentation</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Mechanical Modeler</h1>
+		</td>
+		<td valign="top">
+		<h2></h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Mechanical Modeler Novelties - Presentation</h3>
+		<i><em>V5R13 &amp; V5R14 novelties</em></i></td>
+	</tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>Since V5R13, Mechanical Modeler has introduced novelties which can 
+        imply modifications in your existing code, or can have consequences on 
+        the way to lead up your new developments.</p>
+		<p>The article has been cut in two parts, the current one presents the 
+        novelties, and the second one exposes the consequences in term of code&nbsp;[<a href="#References">1</a>].</p>
+		<p>This article requires Mechanical Modeler knowledge. However to help 
+        the reader, along the paragraphs, technical articles explaining 
+        Mechanical Modeler concepts or vocabulary are referenced.</p>
+		<ul>
+			<li><a href="#Introduction"><b>Introduction</b></a> </li>
+			<li><b><a href="#Geometrical Features Set">Geometrical Features Set</a></b>
+              <ul>
+				<li><b><a href="#Interfaces">Interfaces and StartUps</a></b></li>
+				<li><a href="#Geometrical Set et Ordered Geometrical Set"><b>
+				Geometrical Set &amp; Ordered Geometrical Set</b> </a></li>
+				<li><b><a href="#The Solid and Surfacic Features Set">Body</a></b></li>
+				<li><b><a href="#Ordered Sets">Ordered Set</a></b></li>
+				<li><b>
+				<a href="#Mechanical Features Integration into Geometrical Features Sets">
+				Mechanical Feature Insertion</a></b></li>
+				<li><b><a href="#CCP and CATIBodyRequest Behavior">Copy and 
+                Result Behavior</a></b></li>
+			</ul>
+			</li>
+			<li><b><a href="#The Volume, a New Surfacic Feature">The Volume, a 
+            New Surfacic Feature</a></b></li>
+			<li><b>
+			<a href="#The Specification Tree Represents the Internal Modelization">
+			The Specification Tree Represents the Internal Modelization</a></b></li>
+			<li><strong><a href="#InShort">In Short</a></strong></li>
+			<li><strong><a href="#References">References</a></strong></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>The first novelty concerns the <b>geometrical features sets </b>[<a href="#References">2</a>], 
+that is, the features which structure the Part document. </p>
+<ul>
+	<li>In V5R13, it is about the surfacic features set: the former Open_Body 
+    was renamed Geometrical Set, and a new type of surfacic set was introduced, 
+    the Ordered Geometrical Set. Both of them are surfacic features sets, since 
+    they can only aggregate surfacic features [<a href="#References">3</a>].  
+	</li>
+	<li>Starting from V5R14, the Body feature, which previously could only 
+    contain solid features, can now also contain surfacic features. </li>
+</ul>
+<p>All these novelties are presented in the <a href="#Geometrical Features Set">
+Geometrical Features Set </a>section.&nbsp;</p>
+<p>The second novelty concerns the <b>volumes</b>. From V5R14, you can create 
+volumes with CAA. They behave like the surfacic features although you can 
+associate a weight, a density with a volume. They can be inserted into a 
+surfacic features set, but not into a Body feature. You can refer to the
+<a href="#The Volume, a New Surfacic Feature">The Volume, a New Surfacic Feature</a> 
+section for more details.</p>
+<p>The last novelty concerns the <b>specification tree</b>. From V5R14, it 
+reflects the internal modelization.
+<a href="#The Specification Tree Represents the Internal Modelization">The 
+Specification Tree Represents the Internal Modelization</a> section gives you 
+samples.&nbsp;</p>
+<h3><a name="Geometrical Features Set"></a>Geometrical Features Set</h3>
+<p>Before the V5R13 there are two kinds of geometrical features sets:</p>
+<ul>
+	<li><b>Open_Body</b>: It is a surfacic features set which is mathematically 
+    speaking a bag of features: the order of the features contained in the bag 
+    does not matter. This set can only contain surfacic features (point, 
+    wire,surface).&nbsp;</li>
+	<li><b>Body</b>: It is a solid features set which are ordered and can only 
+    contain solid features (Pad, Hole,...)</li>
+</ul>
+From V5R13 onwards, there are two kinds of surfacic features set:
+<ol>
+	<li><b>Geometrical Set&nbsp;</b></li>
+	<li><b>Ordered Geometrical Set</b></li>
+</ol>
+Starting from V5R14, the <b>Body</b> feature can also contain surfacic features. 
+It is a solid and surfacic features set.&nbsp;
+<p>These three kinds of sets are presented in term of StartUp and interfaces in 
+the <a href="#Interfaces">Interfaces and StartUps</a> section. This first 
+overview is prolonged by two sections,&nbsp; Geometrical Set &amp; Ordered 
+Geometrical Set&nbsp;and <a href="#The Solid and Surfacic Features Set">Body</a>, to 
+complete your information about these mechanical features. </p>
+<h4><a name="Interfaces"></a>Interfaces and StartUps</h4>
+<p>The following diagram, <a href="#Fig.1">Fig.1</a>, shows the geometrical 
+features sets in term of StartUp, and interfaces&nbsp;they implement.</p>
+<table border="0">
+	<caption><a name="Fig.1">Fig.1</a> Geometrical Features Sets and their 
+    Interfaces</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrDiagramMechRoot.gif" width="602" height="334"></td>
+	</tr>
+</table>
+<p align="left">About the StartUp:</p>
+<ul>
+	<li>
+	<p align="left">The diagram does not show it, but the <b>MechanicalRoot</b> 
+	StartUp derives from the MechanicalFeature StartUp, the &quot;root&quot; StartUp of 
+    any mechanical feature.&nbsp;</li>
+	<li>
+	<p align="left"><b>MechanicalTool</b> is the StartUp of the solid features 
+    set. The Body created before V5R14 is a feature instantiated from the 
+    MechanicalTool StartUp.&nbsp;</li>
+	<li>
+	<p align="left"><b>GSMTool</b> is the StartUp of the surfacic features sets. 
+    Ordered Geometrical Set and Geometrical Set are GSMTool features.</li>
+	<li>
+	<p align="left"><b>HybridBody</b> is the StartUp of the solid and surfacic 
+    features sets. A Body created from V5R14 is a feature instantiated from the 
+    HybridBody StartUp.&nbsp;</li>
+</ul>
+<p align="left">About the interfaces:</p>
+<ul>
+	<li>
+	<p align="left">The <i><b>CATIMmiGeometricalSet</b></i> has been created to 
+    distinguish a surfacic set from an surfacic and solid set; because the <i>
+	CATIGSMTool</i> is implemented both by the HybridBody StartUp and the 
+    GSMTool StartUp.&nbsp;</li>
+</ul>
+<blockquote>
+	<p align="left">From V5R14: Do not use the <i>CATIGSMTool</i> as 
+    discriminant of surfacic set.</p>
+</blockquote>
+<ul>
+	<li>
+	<p align="left">The <i><b>CATIMmiOrderedGeometricalSet</b></i> is 
+    implemented by the GSMTool StartUp, and discrimines the Ordered Geometrical 
+    Set</li>
+	<li>
+	<p align="left">The <i><b>CATIMmiNonOrderedGeometricalSet</b></i> is 
+    implemented by the GSMTool StartUp, and discrimines the Geometrical Set</li>
+</ul>
+<h4><a name="Geometrical Set et Ordered Geometrical Set"></a>Geometrical Set &amp; 
+Ordered Geometrical Set&nbsp;</h4>
+<p>The Geometrical Set (GS) and the Ordered Geometrical Set (OGS) are both 
+GSMTool features [<a href="#Fig.1">Fig.1</a>]. This means that both of them are 
+surfacic features sets, and can contain surfacic features [<a href="#References">3</a>]. 
+Until R14, the highest dimension of these surfacic features was 2D: point, wire 
+and surface. From R14, a surfacic features set can also contain <b>
+<a href="#The Volume, a New Surfacic Feature"><span style="font-weight: 400">
+volumes</span></a></b>. &nbsp;</p>
+<p>The GSMTool feature has been &quot;typed&quot; to be either a Geometrical Set or an 
+Ordered Geometrical Set. This type is materialized by the downwards arrow on the 
+icon representing the Ordered Geometrical Set in the specification tree.</p>
+<table border="0">
+	<caption><a name="Fig.2">Fig.2 </a>Comparison of Icons Between Geometrical 
+    Set and Ordered Geometrical Set</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrOGSIcon1.jpg" width="225" height="34"></td>
+		<td valign="top">
+		<img border="0" src="images/CAAMmrOGSIcon2.jpg" width="171" height="34"></td>
+	</tr>
+</table>
+<p>In an interactive session, you can create either a Geometrical Set or an 
+Ordered Geometrical Set using the Insert menu</p>
+<p>The Ordered Geometrical Set is ordered, like its name pre-supposes it. This 
+concept of order is presented in the <a href="#Ordered Sets">Ordered Set</a> 
+section, further below.&nbsp;</p>
+<p>The Ordered Geometrical Set has been introduced to simplify the management of 
+the links between features when the Part has a huge historical graph. The 
+Geometrical Set staying always adapted for features with few history or without 
+input specification (datum [<a href="#References">3</a>]).&nbsp;</p>
+<h4><a name="The Solid and Surfacic Features Set"></a>Body</h4>
+<p>Up to the V5R14, the Body feature is created from the MechanicalTool StartUp 
+[<a href="#Fig.1">Fig.1</a>]. It is only a solid features set because it can 
+only contain solid features [<a href="#References">3</a>].&nbsp;</p>
+<p>In V5R14, the Body feature is created from the HybridBody StartUp [<a href="#Fig.1">Fig.1</a>]. 
+This name comes from the fact that this StartUp is able to contain surfacic 
+features in addition of solid features. The picture [<a href="#Fig.3">Fig.3</a>] 
+shows it.&nbsp;</p>
+<table border="0">
+	<caption><a name="Fig.3">Fig.3</a> HybridBody Instances</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrHybridBodyInstances.jpg" width="342" height="306"></td>
+	</tr>
+</table>
+<p>On the above picture, you can see that surfacic features (<code>Surface.1, 
+Split.1 </code>and<code> Offset.1</code>) are integrated into Body features (<code>PartBody</code> 
+and <code>Body.2</code>), and modify the solid features.&nbsp;</p>
+<p>In CAA documentation, solid and surfacic features set, and solid features set 
+is the wording used to designate a Body feature created after and before R14 
+respectively.</p>
+<p>When opening a Part document containing features created from the 
+MechanicalTool StartUp, no conversion will be done. It means that the former 
+Body features remain solid features sets (their StartUp are always 
+MechanicalTool), and you cannot insert surfacic features inside them. But in a 
+former Part document, the new created Body features are instantiated from the 
+HybridBody StartUp. So in the same Part document can coexist solid features 
+sets, and solid and surfacic features sets [<a href="#Fig.4">Fig.4</a>]. </p>
+<table border="0">
+	<caption><a name="Fig.4">Fig.4 </a>Old and New Body features</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrOldPartBodyBody.jpg" width="171" height="235"></td>
+	</tr>
+</table>
+<p>Just above, the picture is a screen shot of a Part document created before 
+the R14. <code>PartBody</code> and <code>Body.2</code> are features instantiated 
+from the MechanicalTool StartUp, whereas <code>Body.1</code> is a feature 
+instantiated from the HybridBody StartUp. The icons enables the end user to 
+differentiate them: the icon for the former body is gray, and for the new one it 
+is green:</p>
+<table border="0">
+	<caption><a name="Fig.5">Fig.5</a> Comparison of Icons Between Old and New 
+    Body features</caption>
+	<tr>
+		<td width="121">
+		<img border="0" src="images/CAAMmrOldPartBodyIcon.jpg" width="121" height="42"></td>
+		<td width="5">
+		<img border="0" src="images/CAAMmrNewPartBodyIcon.jpg" width="143" height="45"></td>
+	</tr>
+</table>
+<p>But excepted the icon color, what is the difference between the former body 
+(a MechanicalTool) and the new one (an HybridBody) ? Let's us consider two parts 
+with the same visual effect [<a href="#Fig.6">Fig.6</a>]. On left, <code>
+PartBody</code> (the main body) is a former body (the icon is gray), and on 
+right it is a new body, its icon is green.</p>
+<table border="0" width="630">
+	<caption><a name="Fig.6">Fig.6</a> Comparison Between MechanicalTool and 
+    HybridBody</caption>
+	<tr>
+		<td valign="top">
+		<img border="0" src="images/CAAMmrMechToolAsHybridBody.jpg" width="353" height="242"></td>
+		<td>
+		<img border="0" src="images/CAAMmrNewSolidBody.jpg" width="320" height="232"></td>
+	</tr>
+</table>
+<p><code>Offset.1</code> is holed in the two cases: the surface is based on the 
+top face of<code> Pad.1</code>. </p>
+<p>Now let us consider the following scenario: reorder <code>Hole.1 </code>to 
+locate it after <code>Pad.2</code>, and compare the result on [<a href="#Fig.7">Fig.7</a>]. 
+On left it is the result with the MechanicalTool, and on right the result with 
+the HybridBody.&nbsp;</p>
+<table border="0" width="630">
+	<caption><a name="Fig.7">Fig.7</a> Reorder Operation</caption>
+	<tr>
+		<td width="393" valign="top">
+		<img border="0" src="images/CAAMmrMechToolAsHybridBody2.jpg" width="351" height="240"></td>
+		<td width="292" valign="top" align="left">
+		<img border="0" src="images/CAAMmrNewSolidBody2.jpg" width="320" height="232"></td>
+	</tr>
+</table>
+<table border="0" width="630">
+</table>
+<p>On left, you can see that <code>Offset.1</code>&nbsp;is always holed.&nbsp;The reason 
+is that <code>Offset.1</code> is always based on <code>Hole.1.</code> On right, 
+you can see that <code>Offset.1</code> is no more holed. The reason is that now,
+<code>Offset.1</code> is based on the top face of<code> Pad.1</code> which is 
+not holed.</p>
+<p>This modification of behavior, is due to the fact that the surfacic and solid 
+features set is an ordered set. </p>
+<h4><a name="Ordered Sets"></a>Ordered Set</h4>
+<p>The Ordered Geometrical Set, and Body are geometrical features sets 
+introducing two concepts:</p>
+<ul>
+	<li><a href="#Ordered Set">Ordered Concept</a></li>
+	<li><a href="#Absorbent Set">Absorption Concept</a></li>
+</ul>
+<p>This section is an overview on these two concepts, you are encouraged to read 
+the referenced article [<a href="#References">4</a>] to find out more technical 
+information.</p>
+<ol>
+	<li><a name="Ordered Set"></a>Ordered Concept
+    <p>The goal is having a set inside which features are ordered from the basic 
+    features (top) to features with huge historical graph (bottom). To reach it, 
+    a rule has been defined: &quot;Each feature inside an ordered set can only have 
+    as input specifications features which are above it&quot;.&nbsp; It has been 
+    interactively implemented by following these behaviors:<ol>
+		<li>When editing a feature, it becomes the current feature, 
+      	</li>
+		<li>A new feature is inserted just below the current feature, 
+      	</li>
+		<li>The input specifications of a feature can only be features above it 
+        in the specification tree using the <i>CATFeatureImportAgent </i>class, 
+      	</li>
+		<li>Only features above the current feature are visualized in the 3D 
+        viewer.<p></li>
+	</ol>
+	</li>
+	<li><a name="Absorbent Set"></a>Absorption Concept
+    <p>The goal is having a set inside which only the relevant features are 
+    taken into account. Let us consider the following sample:</p>
+	<table border="0">
+		<caption><a name="Fig.8">Fig.8 </a>Split Operation</caption>
+		<tr>
+			<td>
+			<img border="0" src="images/CAAMmrLinearBodyWithHybridBody.jpg" width="349" height="213"></td>
+		</tr>
+	</table>
+	<p>On the [<a href="#Fig.8">Fig.8</a>], just above, you can see in the 3D 
+    viewer, even if <code>Extrude.1</code> is not hidden (its icon is not 
+    grayed), that only one surface is drawn. it is <code>Split.1, </code>the 
+    surface coming from the split operation. <code>Extrude.1</code> has been 
+    like visually &quot;absorbed&quot; by <code>Split.1</code>. So feature such as <code>
+	Extrude.1</code> are named <b>absorbed</b> features, and those as <code>
+	Split.1</code> are named <b>absorbent</b> features.&nbsp;</p>
+	<p>So the main particularities of an absorbed feature are:<ul>
+		<li>Absorbed features are not visualization as long as the absorbent 
+        feature is visualized. Consequently there is no superimposition.</li>
+		<li>Absorbed features are not selectable as long as the absorbent 
+        feature is visualized. The <i>CATFeatureImportAgent </i>class has been 
+        also modified to&nbsp;obtain this behavior.</li>
+		<li>The main absorbed feature (an absorbent feature can have several 
+        inputs) gives its graphic properties to the absorbent feature.</li>
+		<li>Absorbed features are excluded of the result of the set. For this 
+        behavior, refer to the <a href="#CCP and CATIBodyRequest Behavior">
+		Geometrical Features Set Behaviors</a>&nbsp; section.&nbsp;</li>
+	</ul>
+	<p>The interface which defines the type of a feature, is <i>
+	CATIInputDescription</i>. </li>
+</ol>
+<p>In all Mechanical Modeler articles, the wording to designate both the OGS and 
+the Body feature, is &quot;<b>ordered set</b>&quot; in reference to these two concepts.&nbsp;</p>
+<h4><a name="Mechanical Features Integration into Geometrical Features Sets">
+</a>Mechanical Feature Insertion</h4>
+<p>This section answers to three questions:</p>
+<ul>
+	<li>
+	<a href="#What type of mechanical features you can integrate into a geometrical features set ?">
+	What Type of Mechanical Features can you Integrate into Geometrical Features 
+    Sets?</a></li>
+	<li><a href="#How Insert a Geometrical Features Set into Another One?">How 
+    Insert a Geometrical Features Set into Another One?</a></li>
+	<li>
+	<a href="#How Insert a Surfacic Features into a Geometrical Features Set?">
+	How Insert a Geometrical Feature into a Geometrical Features Set?</a></li>
+</ul>
+<h4><b>
+<a name="What type of mechanical features you can integrate into a geometrical features set ?">
+</a>What Type of Mechanical Features can you Integrate into Geometrical Features 
+Sets?</b></h4>
+<p>The following table [<a href="#Tab.1">Tab.1</a>] summarizes the 
+possibilities, depending on the type of the geometrical features set (first 
+row), and the type of the mechanical feature (the first column).</p>
+<table border="2" height="188">
+	<caption><a name="Tab.1">Tab.1</a> What is it Possible to Insert into Sets&nbsp; 
+	</caption>
+	<tr>
+		<td height="16">&nbsp;</td>
+		<td height="16"><b>Part&nbsp;</b></td>
+		<td height="16"><b>GS</b></td>
+		<td height="16"><b>OGS</b></td>
+		<td height="16"><b>Body</b></td>
+		<td height="16"><b>Solid Body </b>(obsolete)</td>
+	</tr>
+	<tr>
+		<td height="16">GS</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">&nbsp;X</td>
+		<td align="center" height="16">&nbsp;</td>
+		<td align="center" height="16">&nbsp;</td>
+		<td align="center" height="16">
+		<p align="center">&nbsp;X</td>
+	</tr>
+	<tr>
+		<td height="16">OGS</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">&nbsp;</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="16">Body</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">&nbsp;</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="6">Solid Body (obsolete)&nbsp;</td>
+		<td align="center" height="6">X</td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+	</tr>
+	<tr>
+		<td height="6">Sketch</td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6">X</td>
+		<td align="center" height="6">X</td>
+		<td align="center" height="6">X</td>
+		<td align="center" height="6">X</td>
+	</tr>
+	<tr>
+		<td height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+		<td align="center" height="6"></td>
+	</tr>
+	<tr>
+		<td height="16">Solid features</td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">X</td>
+	</tr>
+	<tr>
+		<td height="16">Point, Wire, Surface</td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16"></td>
+	</tr>
+	<tr>
+		<td height="16">Volume</td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16">X</td>
+		<td align="center" height="16"></td>
+		<td align="center" height="16"></td>
+	</tr>
+</table>
+<p>This above table essentially shows: </p>
+<ol>
+	<li>The Part feature [<a href="#References">5</a>] can contain any kind of 
+    geometrical feature sets.</li>
+	<li>A Geometrical Set (GS) can only be included into a non ordered set.</li>
+	<li>An ordered set (OGS/Body) can only be included into an ordered set.</li>
+	<li>A <a href="#The Volume, a New Surfacic Feature">volume</a>, although a 
+    surfacic feature, cannot be included into a Body feature.</li>
+</ol>
+<h5><a name="How Insert a Geometrical Features Set into Another One?"></a><b>How 
+Insert a Geometrical Features Set into Another One?</b></h5>
+<p>The <i>CATIMechanicalTool</i> interface creates the set and inserts it 
+depending on the arguments of the methods. The usage of this interface is 
+detailed in the referenced article [<a href="#References">2</a>].&nbsp;</p>
+<h5><a name="How Insert a Surfacic Features into a Geometrical Features Set?">
+</a><b>How Insert a Geometrical Feature into a Geometrical Features Set?</b></h5>
+<p>For DS solid feature, the <i>CATIPrtFactory</i> interface manages the 
+insertion, otherwise for DS surfacic features, or for your CAA features, the 
+insertion into a geometrical features set is of yours responsibility. Here it is 
+the methodology to follow depending on the type of the geometrical features set:</p>
+<ul>
+	<li>Insertion into a solid features set (solid Body)
+  	<p>How to recognize this case: the former solid Body implements <i>
+	CATIMechanicalTool</i> , but does not implement <i>CATIGSMTool</i>&nbsp; [<a href="#Fig.1">Fig.1</a>].</p>
+	<p>You aggregate the new solid feature with the <code>InsertInProceduralView</code> 
+	method of the <i>CATIPrtProceduralView </i>interface<i>. </i>Then you update 
+    the feature.</li>
+	<li>Insertion into a non ordered surfacic features set&nbsp;(GS)</li>
+</ul>
+<blockquote>
+	<p>How to recognize this case: the GS implements <i>CATIGSMTool</i> and the
+	<code>GetType</code> method of this interface returns <code>0</code>, or you 
+    can check that the set implements <i>CATIMmiNonOrderedGeometricalSet</i> [<a href="#Fig.1">Fig.1</a>].</p>
+	<p>You aggregate the new geometrical feature (only a surfacic feature) with
+	<i>CATIDescendants, </i>or you can also use the <code>InsertInProceduralView</code> 
+	method of the <i>CATIGSMProceduralView </i>interface<i>. </i>Then you update 
+    the feature.</p>
+</blockquote>
+<ul>
+	<li>Insertion into an ordered set (OGS/Body)</li>
+</ul>
+<blockquote>
+	<p>How to recognize this case: all the ordered sets implement <i>CATIGSMTool</i> 
+	and the <code>GetType</code> method of this interface returns <code>1</code>. 
+    [<a href="#Fig.1">Fig.1</a>]</p>
+	<p>You must respect the following steps:</p>
+	<ol>
+		<li>Aggregate the feature in the set&nbsp;<p>You have three possibilities 
+        depending on the type of the geometrical feature<ul>
+			<li>With the <i>CATIDescendants</i> interface for a surfacic feature<ul>
+				<li>At the end of the set, if the current feature is not inside 
+                this set</li>
+				<li>After the current feature otherwise&nbsp;&nbsp;&nbsp;</li>
+			</ul>
+			</li>
+			<li>With the <code>InsertInProceduralView</code> method of the <i>
+			CATIGSMProceduralView </i>for a surfacic feature<i>. </i>This method 
+            manages the position of the feature.</li>
+			<li>With I<code>nsertInProceduralView</code> method of the <i>
+			CATIPrtProceduralView </i>for a solid feature. This method manages 
+            the position of the feature.</li>
+		</ul>
+		</li>
+		<li>Update the new instance</li>
+		<li>Call <code>Insert</code>, the static method of the <i>
+		CATMmrLinearBodyServices</i> class</li>
+	</ol>
+	<blockquote>
+		<p>This last method enables us to ensure the concept of
+		<a href="#Absorbent Set">absorption</a> into the ordered set.</p>
+	</blockquote>
+</blockquote>
+<h4><a name="CCP and CATIBodyRequest Behavior"></a>Copy and Result Behavior</h4>
+<p>The aim of this section is to present the behaviors of the geometrical 
+features sets in term of result and copy. The following table [<a href="#Tab.2">Tab.2</a>] 
+summarizes the result of a copy as result (with or without link), and the 
+contents of the list returned by the <code>GetResults</code> method of the <i>
+CATIBodyRequest </i>interface.</p>
+<table border="2" width="705">
+	<caption><a name="Tab.2">Tab.2</a> Copy/Result Behaviors depending on the 
+    Set's Configuration&nbsp;</caption>
+	<tr>
+		<td width="104"><b>Set Configuration (1)</b></td>
+		<td width="180"><b>Copy As Result without Link&nbsp;</b></td>
+		<td width="70"><b>Copy As Result with Link&nbsp;</b></td>
+		<td width="324">
+		<p align="center"><b>CATIBodyRequest&nbsp;</b></td>
+	</tr>
+	<tr>
+		<td width="104"><b>Solid Body</b></td>
+		<td width="180">Solid feature</td>
+		<td width="70">
+		<p align="left">Solid feature</td>
+		<td width="324">Solid feature + sketches</td>
+	</tr>
+	<tr>
+		<td width="104"><b>Solid Body1</b><p style="margin-top: 0; margin-bottom: 0">
+		<b>&nbsp;&nbsp; BoolOp</b></p>
+		<p style="margin-top: 0; margin-bottom: 0"><b>&nbsp;&nbsp;&nbsp;&nbsp; 
+        Solid Body2</b></td>
+		<td width="180">Solid feature</td>
+		<td width="70">Solid feature</td>
+		<td width="324">
+		<p style="margin-top: 0; margin-bottom: 0">Solid feature </p>
+		<p style="margin-top: 0; margin-bottom: 0">+ sketches of Solid Body1</p>
+		<p style="margin-top: 0; margin-bottom: 0">+ sketches of Solid Body2</td>
+	</tr>
+	<tr>
+		<td width="104"><b>Body</b></td>
+		<td width="180">Solid feature + surfacic feat. (- abs)&nbsp;</td>
+		<td width="70">Solid feature</td>
+		<td width="324">Such as Copy without link</td>
+	</tr>
+	<tr>
+		<td width="104"><b>OGS</b></td>
+		<td width="180">Surfacic features (- absorbed)&nbsp;</td>
+		<td width="70">
+		<p align="center">NA</td>
+		<td width="324">Such as Copy without link</td>
+	</tr>
+	<tr>
+		<td width="104"><b>GS</b></td>
+		<td width="180">All surfacic features&nbsp;</td>
+		<td width="70">
+		<p align="center">NA</td>
+		<td width="324">Such as Copy without link</td>
+	</tr>
+	<tr>
+		<td width="104"><b>OGS1</b><br>
+		&nbsp;&nbsp;&nbsp;OGS2</td>
+		<td width="180">surfacic feat.(-abs.) of OGS1&nbsp;&amp; OGS2&nbsp;
+    	</td>
+		<td width="70">
+		<p align="center">NA</td>
+		<td width="324">for OGS1: Such as Copy without link<br>
+		for OGS2 : E_FAIL
+    	</td>
+	</tr>
+	<tr>
+		<td width="104"><b>GS1</b><br>
+		&nbsp;&nbsp;&nbsp;GS2</td>
+		<td>All surfacic elements of GS1&nbsp;&amp; GS2&nbsp;</td>
+		<td width="70">
+		<p align="center">NA</td>
+		<td width="324">for GS1: All surfacic elements of GS1&nbsp;<br>
+		for GS2: All surfacic elements of GS2&nbsp;</td>
+	</tr>
+	<tr>
+		<td width="104"><b>Body</b> <br>
+&nbsp;&nbsp; OGS</td>
+		<td width="180">Solid feature of Body +<br>
+		surfacic features (- abs.) of Body +<br>
+		surfacic features (- abs.) of OGS</td>
+		<td width="70">Solid feature</td>
+		<td width="324">for Body: Such as Copy without link<br>
+		for OGS : E_FAIL</td>
+	</tr>
+	<tr>
+		<td width="104"><b>OGS</b> <br>
+		&nbsp;&nbsp;&nbsp;Body</td>
+		<td width="180">surfacic features (- abs.) of OGS +&nbsp; <br>
+		Surfacic features (- abs.) of Body&nbsp;</td>
+		<td width="70">
+		<p align="center">NA</td>
+		<td width="324">for OGS: Such as Copy without link + solid feature&nbsp;<br>
+		for Body : E_FAIL</td>
+	</tr>
+	<tr>
+		<td width="104"><b>Body1</b> <br>
+		&nbsp;&nbsp;&nbsp;OGS <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Body2</td>
+		<td width="180">Solid feature of Body1&nbsp;+ <br>
+		surfacic features (- abs.) of Body1 +&nbsp; <br>
+		surfacic features (- abs.) of Body2 + <br>
+		surfacic features (- abs.) of OGS</td>
+		<td width="70">Solid feature</td>
+		<td width="324">for Body1 : Such as Copy without link + solid feature of 
+        Body2<br>
+		for OGS and Body2 : E_FAIL</td>
+	</tr>
+</table>
+<p>Abbreviations or annotations:</p>
+<ul>
+	<li>(1) The first column gives the possible configurations of sets. The next 
+    columns are the result applied to the highest feature of the first column. 
+    Let us considerer the fifth row (OGS2 included into OGS1). The next three 
+    columns give the result of the operation applied to OGS1.</li>
+	<li>abs. means absorbed</li>
+	<li>a Sketch is a surfacic feature. (It can be absorbed too)</li>
+	<li>Solid feature is the feature holding the result of a solid and surfacic 
+    set [<a href="#References">6</a>]</li>
+	<li>BoolOp is a boolean operation</li>
+</ul>
+<p>This above table shows: </p>
+<ol>
+	<li>The absorbed feature are always excluded of the copy and of the result 
+    of an ordered set</li>
+	<li>For the copy without link, the operation is recursive&nbsp;</li>
+	<li><i>CATIBodyRequest</i> is recursive (excepted for the GS)&nbsp;</li>
+</ol>
+<p>You can read the &quot;Specification/Result Mechanism Applied to Mechanical 
+Features&quot; to have a complete view of the result of a set [<a href="#References">6</a>].</p>
+<h3 align="left"><a name="The Volume, a New Surfacic Feature"></a>The Volume, a 
+New Surfacic Feature</h3>
+<p align="left">Since R13, with a Gso license, you can interactively create 
+volumes. The following picture [<a href="#Fig.9">Fig.9</a>] is an illustration.</p>
+<table border="0">
+	<caption><a name="Fig.9">Fig.9</a> Volumes</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrVolume.jpg" width="511" height="376"></td>
+	</tr>
+</table>
+<p align="left">These features can only be inserted into a surfacic features 
+set: On [<a href="#Fig.9">Fig.9</a>] you can see that <code>Volume Extrude.1</code>, 
+defined from the blue sketch, is inside an Ordered Geometrical Set, and <code>
+Volume Sweep.1</code>, defined from the yellow features, is inside a Geometrical 
+Set. It is not possible to create one in a Body.&nbsp;</p>
+<p align="left">Since R14, you can create them with CAA API.&nbsp;</p>
+<ul>
+	<li>
+	<p align="left">With the <i>CATIPrtFactory</i> interface&nbsp; </p>
+	<p>To create a sweep, a revolve,... such as <code>Volume Sweep.1,Volume 
+    Revolve.1</code> on [<a href="#Fig.9">Fig.9</a>].</li>
+	<li>
+	<p align="left">With&nbsp;the <i>CATIGSMFactory</i> interface </p>
+	<p>To create an Extrude such as <code>Volume Extrude.1</code> on [[<a href="#Fig.9">Fig.9</a>]</li>
+	<li>With the <i>CATIPrtBooleanOperation</i> interface</li>
+</ul>
+<blockquote>
+	<p>To create Add, Remove, Intersect, Union Trim operations. The result of 
+    this operation is itself a volume. <code>Remove.1</code> [[<a href="#Fig.9">Fig.9</a>] 
+    is a volume.&nbsp;</p>
+</blockquote>
+<p align="left">Volumes are surfacic features. The implementation of the <code>
+IsAShape</code> method of <i>CATIMf3DBehavior</i> interface, answers <code>S_OK</code>. 
+To distinguish them from the other surfacic features (point, wire and surface), 
+there is the <i>CATIMf3DBehavior2</i> interface and its <code>IsAVolume</code> 
+method, which answers <code>S_OK</code> for them.</p>
+<p align="left">Refer to the &quot;Creating volume form features&quot; and &quot;Inserting 
+boolean operation on volume features&quot; use cases of the Generative Shape Design 
+for more details about the volumes, their creation, and their usage.&nbsp;</p>
+<h3 align="left"><b>
+<a name="The Specification Tree Represents the Internal Modelization"></a></b>
+The Specification Tree Represents the Internal Modelization</h3>
+<p align="left">Since R14, the specification tree reflects the internal 
+modelization. It means that if a feature A is represented below a feature B, the 
+feature A is aggregated by B. Have a look to the following picture [<a href="#Fig.10">Fig.10</a>] 
+for an illustration of this new principle. &nbsp;</p>
+<table border="0">
+	<caption><a name="Fig.10">Fig.10</a> Specification Tree Novelties </caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrSpecTree.jpg" width="197" height="339"></td>
+		<td>About the Sketches:<ul>
+			<li><code>Sketch.2</code> is below <code>Pad.1</code>, it means that
+			<code>Sketch.2</code> is aggregated by <code>Pad.1. </code>Before 
+            R14, a Pad referenced its Sketch but did not aggregate it.&nbsp;</li>
+			<li>Below <code>Pad.2</code> no sketch although <code>Pad.2</code> 
+			is based on <code>Sketch.1</code> such as shown by the 
+            Parent/Children command see [<a href="#Fig.11">Fig.11</a>,left].
+			<code>Sketch.1</code> is only referenced by <code>Pad.2.</code> 
+			</li>
+		</ul>
+		<p>About the boolean operations:</p>
+		<ul>
+			<li><code>Add.3</code> is the result of a boolean operation between
+			<code>Body.4</code> and <code>PartBody</code>. Before R14, the 
+            operated Body feature was located under the feature representing the 
+            boolean operation, but it was not aggregated by it. The Body feature 
+            was always aggregated by the Part feature.&nbsp; Now, in R14, the 
+            operated feature is aggregated by the feature representing the 
+            boolean operation.&nbsp; </li>
+			<li><code>Add.2</code> is the result of a boolean operation between
+			<code>Body.3</code> and <code>Add.1</code>. <code>Body.3</code> is 
+            aggregated by <code>Add.2</code> too. see&nbsp;[<a href="#Fig.11">Fig.11</a>, 
+            right]</li>
+			<li><code>Add.1</code> is the result of a boolean operation between
+			<code>EdgeFillet.1</code> and <code>Body.2</code>. <code>Add.1</code> 
+			pointes (references) <code>EdgeFillet.1</code> and <code>Body.2</code>, 
+            both of them are not below <code>Add.1. </code>see&nbsp;[<a href="#Fig.11">Fig.11</a>, 
+            middle]</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p>Here are the screen shots of the Parent/Children command applied on <code>
+Pad.2</code> (left)<code>,</code> <code>Add.1</code> (middle), and <code>Add.2
+</code>(right).</p>
+<table border="0">
+	<caption><a name="Fig.11">Fig.11</a> Parent/Children</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAMmrSpecTree2.jpg" width="135" height="56"></td>
+		<td valign="top">
+		<img border="0" src="images/CAAMmrSpecTree3.jpg" width="209" height="56"></td>
+		<td valign="top">
+		<img border="0" src="images/CAAMmrSpecTree4.jpg" width="125" height="56"></td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Since the R13, the main novelties in the Mechanical Modeler are:&nbsp;</p>
+<ul>
+	<li>The <b>surfacic</b> features set are divided in two types: <b>
+	Geometrical Set&nbsp;</b> (former Open_Body) or <b>Ordered Geometrical Set</b>. 
+    Both of them can contain surfacic features (from 0 to 3D).&nbsp;</li>
+	<li>The <b>Body</b> feature is a solid and surfacic features set, and no 
+    more only a solid features set. It can contain solid, and surfacic features 
+    (from 0D to 2D).</li>
+	<li>The <b>Ordered Geometrical Set</b> feature and the <b>Body</b> features 
+    are <b>ordered</b> set.</li>
+	<li>The specification tree&nbsp;reflects the internal modelization.
+    <ul>
+		<li>A none aggregated sketch is not represented under the feature which 
+        references it.</li>
+		<li>An operated set which is referenced by a boolean operation is not 
+        represented under the operation.</li>
+	</ul>
+	</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="CAAMmrOGSAndHybridBodyImpact2.htm">Mechanical Modeler 
+        Novelties - Impact</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the 
+        Specification Container- Geometrical Features Sets</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[3]</td>
+		<td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the 
+        Specification Container- Geometrical Features</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[4]</td>
+		<td><a href="CAAMmrOrderLinearBody.htm">Order and Absorption Concepts</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[5]</td>
+		<td><a href="CAAMmrContentsSpecCont0.htm">The Contents of the 
+        Specification Container- The Part Feature</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[6]</td>
+		<td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result 
+        Mechanism Applied to Mechanical Features</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

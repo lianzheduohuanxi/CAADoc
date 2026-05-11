@@ -1,0 +1,417 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Making Your Components Printable</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization - Print</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Making Your Components Printable</h3>
+      <em>Enabling your components for print</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to make your objects printable.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAPrtPrintableObjects Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPrtPrintableObjects Do</a></li>
+            <li><a href="#How">How to Launch CAAPrtPrintableObjects</a></li>
+            <li><a href="#Where">Where to Find the CAAPrtPrintableObjects Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to make a component printable by making
+the component implement the <i>CATIPrintable</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAPrtPrintableObjects Use Case</h3>
+<p>CAAPrtPrintableObjects is a use case of the CAAPrint.edu framework that
+illustrates the Print framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPrtPrintableObjects Do</h4>
+<p>CAAPrtPrintableObjects is a program that creates a simple component using a
+single class named <i>CAAPrtPrintableString</i> that holds a character string.
+This component implements the <i>CATIPrintable</i> interface [<a href="#References">1</a>]
+and its single method <code>CreatePrintableImage</code> that creates and returns
+the component printable image. This is an instance of the <i>CAAPrtStringImage</i>
+class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPrtPrintableObjects</h4>
+<p>To launch CAAPrtPrintableObjects, you will need to set up the build time
+environment, then compile CAAPrtPrintableObjects along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPrtPrintableObjects Code</h4>
+<p>The CAAPrtPrintableObjects use case is made of a several classes located in
+the CAAPrtPrintableObjects.m module of the CAAPrint.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAPrint.edu\CAAPrtPrintableObjects.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAPrint.edu/CAAPrtPrintableObjects.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To make a component printable, there are four main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Makes the component implement <i>CATIPrintable</i></td>
+    <td valign="top">CAAPrtPrintableString class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Creates the printable image class</td>
+    <td valign="top">CAAPrtStringImage class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Writes the <code>GetSize</code> method</td>
+    <td valign="top">CAAPrtStringImage class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Writes the <code>Decode</code> method</td>
+    <td valign="top">CAAPrtStringImage class</td>
+  </tr>
+</table>
+<p>The CAAPrtPrintableString component is created using a single class whose
+name is the component name.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Makes the Component Implement CATIPrintable</h4>
+<p>The <i>CAAPrtPrintableString</i> class header file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;     <em>// To derive from CATBaseUnknown</em>
+#include &quot;CATUnicodeString.h&quot;   <em>// The string to represent</em>
+
+class CATPrintImage;  <em>// To return the image</em>
+
+class  CAAPrtPrintableString : public CATBaseUnknown
+{
+ public:
+  <strong>CATDeclareClass</strong>;   <em>// Declares that this class belongs to a component</em>
+
+  CAAPrtPrintableString (const CATUnicodeString &amp; iString);
+  virtual ~CAAPrtPrintableString ();
+
+  <em>// CATIPrintable interface method </em>
+  CATPrintImage * <strong>CreatePrintableImage</strong>(void); <em>// Returns the image representing the strin</em>g
+ 
+ private:
+  CATUnicodeString _string;  <em>// The string to print held by the component </em>
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATDeclareClass</code> macro declares that this class is part of a
+component. The class has a constructor that takes the character string as input
+parameter, a destructor, the <code>CreatePrintableImage</code> method of the <i>CATIPrintable</i>
+interface, and the character string.</p>
+<p>Its source file is a follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAPrtPrintableString.h&quot;   <em>// Header of the current class</em>
+#include &quot;CAAPrtStringImage.h&quot;       <em>// The class of the image to print</em>
+
+<em>// Print framework</em>
+#include &quot;TIE_CATIPrintable.h&quot;
+  
+<em>// Declares that this class implements the CATIPrintable interface</em>
+<strong>TIE_CATIPrintable(CAAPrtPrintableString); </strong>
+
+<em>// Declares that this class is an implementation</em>
+<strong>CATImplementClass</strong>(<strong>CAAPrtPrintableString</strong>,<strong> Implementation</strong>, CATBaseUnknown, CATnull);
+
+CAAPrtPrintableString::CAAPrtPrintableString(const CATUnicodeString &amp; iString)
+                     : _string(iString)
+{}
+
+CAAPrtPrintableString::~CAAPrtPrintableString()
+{}
+
+<em>// CATIPrintable implementation
+// Returns the image representing the printable object</em>
+CATPrintImage * CAAPrtPrintableString::CreatePrintableImage(void)
+{
+  return new CAAPrtStringImage(_string);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>TIE_CATIPrintable</code> macro creates a TIE object that decouples
+the interface and its implementation. Clients that hold a pointer to the <i>CATIPrintable</i>
+interface have in fact a pointer to the TIE object, and not to the <i>CAAPrtPrintableString</i>
+instance.</p>
+<p>The <code>CATImplementClass</code> macro declares that the <i>CAAPrtPrintableString</i>
+class is an implementation, that is, the component main class, other possible
+classes making up the component being extensions, and that the component
+OM-derives from <i>CATBaseUnknown</i>.</p>
+<p>The implementation of the <code>CreatePrintableImage</code> method of <i>CATIPrintable</i>
+simply returns an instance of the <i>CAAPrtStringImage</i> class.</p>
+<p>The framework's interface dictionary should include the following line.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATPrtPrintableString   CATIPrintable  libCAAPrtPrintableObjects</pre>
+    </td>
+  </tr>
+</table>
+<p>This declares that the <i>CATPrtPrintable</i> component implements the <i>CATIPrintable</i>
+interface, and that the implementation code is located in the shared library or
+DLL named libCAAPrtPrintableObjects. If the TIE and the method code are located
+in two different shared libraries or DLL, the one that must be inserted in the
+interface dictionary is the one that contains the TIE code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Printable Image Class</h4>
+<p>The printable image class header file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class CATPrintGenerator;  <em>// To use a generator to draw the image</em>
+class CATPrintParameters; <em>// To use print parameters</em>
+
+class CAAPrtStringImage : public CATPrintImage
+{
+  public:
+    CAAPrtStringImage(const CATUnicodeString &amp;iString);
+    virtual ~CAAPrtStringImage();
+    
+    <em>// Retrieves the image size</em>
+    int GetSize(float&amp; iWidth, float&amp; iHeight);
+    // <em>Draws the image using a given generator and specified print parameters</em>
+    int Decode(CATPrintGenerator* iGenerator, const CATPrintParameters&amp; iParameters);
+
+  private:
+    CATUnicodeString _string;   <em>// The string to draw</em>  
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>This class holds the character string, and has two methods
+<ol>
+  <li><code>GetSize</code> to determine and return the printed component size</li>
+  <li><code>Decode</code> that draws the component image to print using a set of
+    print parameters.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Writing the GetSize Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPrtStringImage::<strong>GetSize</strong>(float&amp; oWidth, float&amp; oHeight)
+{
+  <em>// The size depends on the string length</em>
+  int lg = _string.GetLengthInChar();
+  oHeight = 50.f;
+  oWidth  = (lg+4)*10.;
+  return 1;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>GetSize</code> determines the character string length expressed in
+number of characters, and computes from this length a height and a width of the
+character string to print.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Writing the Decode Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAPrtStringImage::<strong>Decode</strong>(CATPrintGenerator* iGenerator, const CATPrintParameters&amp; iParameters)
+{
+  iGenerator-&gt;<strong>Begin</strong>(iParameters);    <em>// Initializes generation</em>
+  ...
+  iGenerator-&gt;<strong>End</strong>();                 <em>// Ends generation</em>
+  return 1;        <em>// Returns 1 to indicate successful execution</em>
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Decode</code> method encloses its code between the call to the
+generator <code>Begin</code> method with the print parameters, and the call to
+the generator <code>End</code> method, just before returning. Now have a look at
+what can be put between these two method calls.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  iGenerator-&gt;<strong>SetDrawWidth</strong>(0.0f);    <em>// Sets line width</em>
+ 
+  int Black=0;                        <em>// Defines the black color</em>
+  iGenerator-&gt;<strong>DefineColor</strong>(Black, 0.0f, 0.0f, 0.0f);
+  int Red =1;                         <em>// Defines the red color</em>
+  iGenerator-&gt;<strong>DefineColor</strong>(Red, 1.f, 0.f, 0.f); 
+  iGenerator-&gt;<strong>SelectDrawColor</strong>(Black); <em>// Sets the black color as the drawing color</em>
+
+  <em>// Defines the text direction: horizontal, from left to right</em>
+  iGenerator -&gt;<strong>SetTextAttribute</strong>(CATPRINTTEXT_DIRECTION, 0.0);
+  <em>// Sets the Courier font</em>
+  iGenerator -&gt;<strong>SetTextAttribute</strong>(CATPRINTTEXT_TYPEFACE, CATPRINTTEXT_COURIER);
+  <em>// Requests bold caracters</em>
+  iGenerator -&gt;<strong>SetTextAttribute</strong>(CATPRINTTEXT_WEIGHT,   CATPRINTTEXT_BOLD);
+  <em>// Defines the character height</em>
+  iGenerator -&gt;<strong>SetTextAttribute</strong>(CATPRINTTEXT_HEIGHT, 16.72);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Some initializations are first performed, such as the drawing line width, the
+black and red colors, the black color being set as the color to use, and some
+attributes of the text to print.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  int lg = _string.GetLengthInChar();
+  
+  float y = 10.;
+  float x = 10.;
+  float x0 = x;
+  float y1 = 4*y;
+  float y0 = y;
+  float x1 = (lg+3)*x;
+
+  <em>// Draws the string</em>
+  iGenerator -&gt;<strong>DrawGeometricText</strong>(x0+x, y0+y, _string);
+
+  iGenerator-&gt;<strong>SelectDrawColor</strong>(Red); <em>// Sets the red color as the drawing color</em>
+  iGenerator-&gt;<strong>MoveTo</strong>(x0, y0); <em>      // Moves to the bottom left corner of the frame</em>
+  
+  for (int i=1; i&lt;=lg+2; i++)       <em>// Draws a bottom zigzag line</em>
+  {
+    iGenerator-&gt;<strong>LineTo</strong>(x0+i*x-x/2, y0-y/2);
+    iGenerator-&gt;<strong>LineTo</strong>(x0+i*x, y0);
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The text is drawn first in black using the <code>DrawGeometricText</code>&nbsp;
+method, and it is then surrounded by zigzag lines drawn in red. The red color is
+selected using the <code>DrawGeometricText</code> method.The pen moves to the
+(x0,y0) point, and then the bottom zigzag line drawing begins. The three others
+zigzag line drawing are not shown.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved and what to do to make a component
+printable. The component must implement the <i>CATIPrintable</i> interface whose
+single method <code>CreatePrintableImage</code> returns an object that bears two
+methods: <code>GetSize</code> that defines the print size from the component
+contents, and <code>Decode</code> that decodes this component contents and that
+actually prints it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPrtTechArticles/CAAPrtPrintableObjects.htm">Making
+      Your Components Printable</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

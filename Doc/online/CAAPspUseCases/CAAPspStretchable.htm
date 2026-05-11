@@ -1,0 +1,217 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Stretchable Part Data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Stretchable Part Data</h3>
+      <em>How to access stretchable part data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspStretchable use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAPspStretchable Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAPspStretchable Do</a></li>
+            <li><a href="#How">How to Launch CAAPspStretchable</a></li>
+            <li><a href="#Where">Where to Find the CAAPspStretchable Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to obtain data defining a
+stretchable object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspStretchable Use Case</h3>
+<p>CAAPspStretchable is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspStretchable Do</h4>
+<p>The goal of&nbsp; CAAPspStretchable is to show you how to use the
+CATPlantShipInterfaces methods to query and obtain data defining stretchable
+objects.&nbsp;</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspStretchable</h4>
+<p>To launch CAAPspStretchable, you will need to set up the build time
+environment, then compile CAAPspStretchable along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspStretchable Code</h4>
+<p>CAAPspStretchable code is located in the CAAPspStretchable.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\</code>CAAPspStretchable<code>.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/</code>CAAPspStretchable<code>.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspStretchableMain.cpp and CAAPspStretchable.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAAPspStretchable:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Retrieve Data">Retrieving Stretchable Part Data</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspStretchable code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.&nbsp;&nbsp;
+Initializing the environment involves the following methods:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv
+CAAPspBaseEnv::ApplicationInit</pre>
+    </td>
+  </tr>
+</table>
+<p>This method performs the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+  <li>Initializing the application using the <i>CATIPspApplication</i>
+    interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieve Data"></a>Retrieving Stretchable Part Data</h4>
+<p>The <i>CATIPspStretchableData </i>interface is used to retrieve a list of
+points defining a stretchable part and a list of bend radius for each definition
+point.&nbsp;&nbsp; In this sample, the <i>CATIPspStretchableData </i>interface
+pointer is obtained from a bendable pipe in the document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATListValCATMathPoint ListOfPoints;
+CATListOfDouble ListOfRadii;</pre>
+      <pre>if ( SUCCEEDED(piStretchable-&gt;ListDefinitionPoints(NULL,ListOfPoints)) )
+{
+   NumOfPts = ListOfPoints.Size();
+   cout &lt;&lt; &quot;Number of pipe definition points: &quot; &lt;&lt; NumOfPts &lt;&lt; endl;
+   for ( int i = 1; i &lt;= NumOfPts; i++ )
+   {
+      mPt = ListOfPoints[i];
+      mPt.GetCoord(PtCoord);
+      X = PtCoord[0]; 
+      Y = PtCoord[1];
+      Z = PtCoord[2];
+   }
+}</pre>
+      <pre>if ( SUCCEEDED(piStretchable-&gt;ListBendData(ListOfRadii)) )
+{
+   NumOfPts = ListOfRadii.Size();
+   for ( int i = 1; i &lt;= NumOfPts; i++ )
+   {
+      Radius = ListOfRadii[i];
+   }
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to obtain
+stretchable part data.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Listing the definition points of a stretchable part</li>
+  <li>Listing the bend radius for each defintion point of a stretchable part</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [April 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

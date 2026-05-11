@@ -1,0 +1,247 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Contents of the Specification Container - The Part Feature</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Contents of the Specification Container - The
+      Part Feature</h3>
+      <em>What is the Part feature?</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The article entitled &quot;The Structure of a Part Document&quot; [<a href="#References">1</a>]
+      shows that the Part document contains four main containers, one of which
+      is the specification container. This container contains the mechanical
+      features. The mechanical features can be divided in three categories:</p>
+      <ul>
+        <li>The <b>Part</b> feature: the main feature containing the design of
+          the object to be built.
+        <li>The <b>geometrical</b> <b>features sets</b>: the features containing
+          either other geometrical features sets, or geometrical features.
+        <li>The <b>geometrical</b> <b>features</b>: those which hold a
+          topological result.
+      </ul>
+      <p>This article is the first of a trilogy. The aim of this one is to detail the first category: what is the
+      Part feature, how is it created, how is it retrieved in a Part
+      document?. The second article [<a href="#References">2</a>] details the
+      geometrical features sets: their type, how are they created, how are they retrieved in a Part
+      document. At last, the third article [<a href="#References">3</a>] details the
+      geometrical features: their type, the existing features and how they are
+      aggregated by the
+      geometrical features set.&nbsp;&nbsp;</p>
+      <p>All of these articles are included in a set of documents presented in
+      the &quot;Mechanical Modeler Overview&quot; article. [<a href="#References">4</a>].&nbsp;</p>
+      <ul>
+        <li><b><a href="#What is the Part Feature?">What is the Part Feature?</a></b></li>
+        <li><strong><a href="#Part Feature Contents">Part Feature Contents</a></strong></li>
+        <li><a href="#Retrieving the Part Feature"><b>Retrieving the Part
+              Feature</b></a></li>
+        <li><a href="#Retrieving the reference planes"><b>Retrieving the
+              Reference Planes</b></a></li>
+        <li><b><a href="#The current feature">The Current Feature</a></b></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="What is the Part Feature?"></a>What is the Part Feature?</h3>
+<p>The Part feature is the highest feature in a Part document [<a href="#Fig.1">Fig.1</a>].</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The Part Feature&nbsp;</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrPartFeature.jpg"></td>
+  </tr>
+</table>
+<p>The Part feature is an instance of the <b>MechanicalPart</b> StartUp. The
+following diagram [<a href="#Fig.1">Fig.2</a>] shows this StartUp in the partial
+view of the mechanical StartUps [<a href="#References">5</a>] tree.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: The MechanicalRoot Architecture</i></caption>
+  <tr>
+    <td>
+	<img border="0" src="images/CAAMmrMechanicalRootDiagram.jpg" width="500" height="254"></td>
+  </tr>
+</table>
+<p>At the top there is the MechanicalFeature StartUp. All the mechanical
+features derive from this StartUp. The MechanicalPart StartUp derives from the
+MechanicalRoot StartUp such as the HybridBody, the GSMTool, and the Sketch StartUps. The first
+two StartUps define the geometrical features sets
+described in the referenced article [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Part Feature Contents"></a>Part Feature Contents</h3>
+<p>The Part feature contains the design of the object to be built. It
+aggregates (directly or indirectly) all the mechanical features of the Part
+document (except itself). The following UML schema [<a href="#Fig.3">Fig.3</a>]
+describes its contents.</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: The Part Feature Contents</i></caption>
+  <tr>
+    <td width="321">
+	<img border="0" src="images/CAAMmrMechanicalPartOMT.jpg" width="287" height="597"></td>
+  </tr>
+</table>
+<p>The Part feature aggregates:</p>
+<ul>
+  <li>Three reference planes:</li>
+  <p>The XY, YZ, YZ planes that together define an origin for the 3D space in
+  which the Part is defined.&nbsp;</p>
+  <li>PartBody, Body, Geometrical Set and Ordered Geometrical Set&nbsp;</li>
+  <p>These are called the geometrical features sets. The PartBody (HybridBody) represents the main
+  set. It is automatically created at the Part document
+  creation and cannot be deleted. To enhance the clarity of the design or to
+  facilitate its creation one can offset in other set sub-parts of the
+  design. These other sets are Body features (HybridBody), Geometrical Set (GSMTool), and Ordered Geometrical Set (GSMTool) [<a href="#References">2</a>].</p>
+	<li>The MechanicalSet: this set is dedicated to aggregate non geometrical 
+	features (i.e. MechanicalElement and MechanicalSet) [<a href="#References">6</a>].</li>
+</ul>
+<h3><a name="Retrieving the Part Feature"></a>Retrieving the Part Feature</h3>
+<p>The Part feature is retrievable thanks to the <i>CATIPrtContainer</i>
+(MecModInterfaces) interface implemented on the specification container.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATISpecObject_var spSpecObjectOnPart = pIPrtCont-&gt;<b>GetPart</b>();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>pIPrtCont</code> is the <i>CATIPrtContainer</i> interface pointer
+on the specification container. Refer to the &quot;Specification Container&quot;
+section in the &quot;Structure of the Part Document&quot; article [<a href="#References">1</a>]
+to see how to retrieve this pointer.</p>
+<h3><a name="Retrieving the reference planes"></a>Retrieving the Reference
+Planes</h3>
+<p>Once you have a pointer on the Part, you can retrieve its reference
+planes using the <i>CATIPrtPart</i>&nbsp; interface (MecModInterfaces).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATIPrtPart</b> * pIPrtPart = NULL ;
+  spSpecObjectOnPart-&gt;QueryInterface(IID_CATIPrtPart,(void**) &amp; pIPrtPart ) ;
+  CATListValCATISpecObject_var ListRefPlanes = pIPrtPart -&gt;<b>GetReferencePlane</b>();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>ListRefPlanes</code> contains three features which implement the <i>CATIGSMPlane</i>
+ (GSMInterfaces) interface.</p>
+<h3><a name="The current feature"></a>The Current Feature</h3>
+<p>The current feature is the current mechanical feature that you can
+interactively change with the &quot;Define Object in Work&quot; command. The
+available interface to retrieve or set the current feature is the <i>CATIPrtPart</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The specification container is one of the containers of the Part document. It
+groups together the mechanical features. One of these is the Part feature. It represents the end user design. It aggregates
+  all the other mechanical features of the Part document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification
+      Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the Specification
+      Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrMechModOverview.htm">Mechanical Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrMechanicalSet.htm">MechanicalSet StartUp and Non 
+	Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2003]</td>
+    <td valign="top">Ordered Geometrical Set Introduction + Open_Body renamed in
+      Geometrical Set&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [May 2004]</td>
+    <td valign="top">Document updated for R14 novelties</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>4</strong> [Mar 2007]</td>
+    <td valign="top">Document updated for R18 novelties - MechanicalSet and 
+	MechanicalElements</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

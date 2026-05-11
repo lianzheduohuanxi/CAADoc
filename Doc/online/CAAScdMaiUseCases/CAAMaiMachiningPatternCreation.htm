@@ -1,0 +1,445 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Machining Pattern</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Machining</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Machining Pattern</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro CAAMaiMachiningPatternCreation shows you
+      how to create a Machining Pattern containing a Design Pattern and Design
+      Holes.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAMaiMachiningPatternCreation is launched in CATIA.
+      Open the file 'Plate-VBSample01.CATPart', go to the Prismatic
+      Manufacturing Programmer workbench and run the macro.</p>
+      <p>CAAMaiMachiningPatternCreation.<a href="CAAMaiMachiningPatternCreationSource.htm" target="Source">CATScript</a>
+      is located in the CAAScdMaiUseCases module.&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAMaiMachiningPatternCreation includes 15 steps:</p>
+      <ol>
+        <li><a href="#Step1">Retrieve the active CATProcess document</a></li>
+        <li><a href="#Step2">Retrieve the&nbsp; current setup</a></li>
+        <li><a href="#Step3">Retrieve the Manufacturing View</a></li>
+        <li><a href="#Step4">Create a Machining Pattern</a></li>
+        <li><a href="#Step5">Retrieve the Design Pattern and the Design Holes</a></li>
+        <li><a href="#Step6">Assign these Design Features to the Machining
+          Pattern</a></li>
+        <li><a href="#Step7">Modify the Jump Distance of the Machining Pattern</a></li>
+        <li><a href="#Step8">Deactivate point number3 of the Machining Pattern</a></li>
+        <li><a href="#Step9">Activate point number 4 of the Machining Pattern</a></li>
+        <li><a href="#Step10">Get the point numbers of the Machining Pattern</a></li>
+        <li><a href="#Step11">Set point number 2 as start point</a></li>
+        <li><a href="#Step12">Reverse the numbering of the Machining Pattern</a></li>
+        <li><a href="#Step13">Add a Part Surface to the Machining Pattern</a></li>
+        <li><a href="#Step14">Remove the Part Surface of the Machining Pattern</a></li>
+        <li><a href="#Step15">Modify the Top Mode of the Machining Pattern</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Retrieve the active CATProcess document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Retrieve the active CATProcess document  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>MfgDoc1<font color="#0000ff"> As </font>Document </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>MfgDoc1 = CATIA.ActiveDocument </pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves the active document and sets it in the variable MfgDoc1.</p>
+      <h4><a name="Step2"></a><a name="Step2">Retrieve the current setup</a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Retrieve the current setup  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'*** Retrieve current Process Root</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim </font><font color="#000000">ActivityRef</font><font color="#0000FF"> As </font><font color="#000000">AnyObject</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Set </font><font color="#000000">ActivityRef</font><font color="#0000FF"> </font><font color="#000000">= MfgDoc1.GetItem(&quot;Process&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim </font><font color="#000000">Setup1</font><font color="#0000FF"> As </font><font color="#000000">ManufacturingSetup</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim </font><font color="#000000">childs</font><font color="#0000FF"> As </font><font color="#000000">Activities</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim </font><font color="#000000">child</font><font color="#0000FF"> As </font><font color="#000000">Activity</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">If </font><font color="#000000">(ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;))</font><font color="#0000FF"> Then</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  Set </font><font color="#000000">childs = ActivityRef.ChildrenActivities</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  </font><font color="#000000">quantity = childs.Count</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  If </font><font color="#000000">quantity &lt;= 0 </font><font color="#0000FF">Then</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">    Exit Sub</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  End If</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF"> </font><font color="#000000"> NumberOfSetup = 0</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  For </font><font color="#000000">I=1</font><font color="#0000FF"> To </font><font color="#000000">quantity</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">          Set </font><font color="#000000">child = childs.Item(I)</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">          If </font><font color="#000000">(child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) </font><font color="#0000FF">Then</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">                Set </font><font color="#000000">Setup1 = child</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">                </font><font color="#000000">NumberOfSetup = NumberOfSetup +1</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">                Exit For</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">          End If </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">  Next</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">End If</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">If </font><font color="#000000">NumberOfSetup &lt;= 0</font><font color="#0000FF"> Then</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">     Exit Sub</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">End If</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'*** Retrieve current Product linked to the current setup</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim </font><font color="#000000">Prod</font><font color="#0000FF"> As </font><font color="#000000">Product</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Set </font><font color="#000000">Prod = SetUp1.Product</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">...</font></pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Retrieves the current process and, from this process, the current
+      setup. Retrieves also the product linked to the setup .</p>
+      <p><a name="Step3"></a><b>Retrieve the Manufacturing View</b></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Retrieve the Manufacturing View  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>MfgView<font color="#0000ff"> As </font>ManufacturingView </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>MfgView = Setup1.GetManufacturingView </pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>&nbsp;Retrieves the Manufacturing View and sets it in the variable
+      MfgView</p>
+      <h4><a name="Step4"></a>Create a Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Create a Machining Pattern  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font><font color="#000000">Features</font><font color="#0000ff"> As </font>ManufacturingFeatures </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>Features = MfgView.ManufacturingFeatures </pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000FF">Dim</font> ManPattern <font color="#0000FF">As</font> ManufacturingPattern</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#0000FF">Set</font> ManPattern = Features.Add (&quot;MfgPatternUsage&quot;)</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"> ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Creates a Machining Pattern and sets it in the variable ManPattern</p>
+      <p><a name="Step5"></a><b>Retrieve the Design Pattern and the Design Holes</b></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font>Retrieve the Design Pattern and the Design Holes  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'*** Retrieve design pattern</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font><font color="#000000">documents1 </font><font color="#0000FF">As</font><font color="#000000"> Documents</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">documents1 = CATIA.documents</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>partDocument1 <font color="#0000ff"> As </font>Document </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font>partDocument1 <font color="#0000ff"> </font>= documents1.Item(&quot;Plate-VBSample01.CATPart&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>part1 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Part</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">part1 = partDocument1.Part</font></pre>
+            <pre style="word-spacing: 0; margin: 0"> </pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>bodies1 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Bodies</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">bodies1 = part1.Bodies</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>body1 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Body</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">body1 = bodies1.Item(&quot;MechanicalTool.1&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>shapes1 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">shapes1 = body1.Shapes</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>designpattern <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">designpattern = shapes1.Item(&quot;RectPattern.1&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'*** Retrieve design holes</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>designhole1 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>designhole2 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>designhole3 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Dim </font>designhole4 <font color="#0000ff"> </font><font color="#0000FF">As</font><font color="#000000"> Shape</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">designhole1 = shapes1.Item(&quot;Hole.1&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">designhole2 = shapes1.Item(&quot;Hole.2&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">designhole3 = shapes1.Item(&quot;Hole.3&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">Set </font><font color="#000000">designhole4 = shapes1.Item(&quot;Hole.4&quot;)</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves, from the CATPart document, the design pattern, the design
+      holes and sets them in the variables designpattern and designhole1,2,3,4</p>
+      <h4><a name="Step6"></a>Assign these Design Features to the Machining
+      Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000"><font color="#0000ff">' </font></font><a name="Step1"></a><font color="#008000">Assign these Design Features to the Machining Pattern  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">ManPattern.AddPosition designpattern,Prod,0</pre>
+            <pre style="word-spacing: 0; margin: 0">ManPattern.AddPosition designhole1,Prod,0 </pre>
+            <pre style="word-spacing: 0; margin: 0">ManPattern.AddPosition designhole2,Prod,0 </pre>
+            <pre style="word-spacing: 0; margin: 0">ManPattern.AddPosition designhole3,Prod,0 </pre>
+            <pre style="word-spacing: 0; margin: 0">ManPattern.AddPosition designhole4,Prod,1</pre>
+            <pre style="word-spacing: 0; margin: 0"> </pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Assigns the couple 'design feature - product'&nbsp; to the machining
+      pattern. For performances reasons, the last parameter is set to 1 only in
+      the last assignment.</p>
+      <h4><a name="Step7"></a>Modify the Jump Distance of the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000">Modify the Jump Distance of the Machining Pattern  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim</font> Jump <font color="#0000FF">As</font> Parameter</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Set</font> Jump = ManPattern.GetAnAttribute(&quot;JumpDistance&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">Jump.ValuateFromString(&quot;50mm&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves&nbsp; the Jump Distance of the machining pattern and sets it
+      to 50 mm.</p>
+      <h4><a name="Step8"></a>Deactivate the point number 3 the Machining
+      Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Deactivate the point number 3 of the Machining Pattern</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.DeactivatePoint 3</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Deactivates&nbsp; the point number 3</p>
+      <h4><a name="Step9"></a>Activate the point number 4 the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Activate the point number 4 of the Machining Pattern</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.ActivatePoint 4</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Activates&nbsp; the point number 4</p>
+      <p>&nbsp;</p>
+      <h4><a name="Step10"></a>Get the point numbers of the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Read numbers</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">Dim Numbers() As Variant</font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.GetNumbers Numbers</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Gets the point numbers of the pattern and put it in the Numbers array</p>
+      <h4><a name="Step11"></a>Set the point number 2 as Start Point of the
+      Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Set the point number 2 as Start Point</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.StartPoint 2</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Sets the point number 2 as the start point of the machining pattern</p>
+      <h4><a name="Step12"></a>Reverse the numbering&nbsp; of the Machining
+      Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Reverse the numbering</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.Reverse</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Reverses the numbering of the machining pattern</p>
+      <h4><a name="Step13"></a>Add a Part Surface to the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Add a Part Surface to the Machining Pattern</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.AddPartSurface PartSurface,Prod,1</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Adds a part surface to the pattern</p>
+      <h4><a name="Step14"></a>Remove the Part Surface of the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000"><font face="Courier New" size="2">Remove the Part Surface of the Machining Pattern</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font face="Courier New" size="2">ManPattern.</font><font face="Courier New" size="2">RemovePartSurfaces</font></pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Removes all part surface defined on the pattern</p>
+      <h4><a name="Step15"></a>Modify the Top Mode of the Machining Pattern</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff"><font color="#008000">'---------------------------------------------------------------</font> </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000ff">' </font><a name="Step1"></a><font color="#008000">Modify the Top Mode of the Machining Pattern  </font></pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'---------------------------------------------------------------</font></pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Dim</font> TopMode <font color="#0000FF">As</font> Parameter</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">Set</font> TopMode = ManPattern.GetAnAttribute(&quot;TopMode &quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">TopMode .ValuateFromString(&quot;MfgProjectPattern&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a Machining Pattern and to assign
+design features to it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><i><a href="../CAAScdMaiTechArticles/CAAMaiTocManufacturingActivity.htm">Machining
+      automation objects</a></i>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

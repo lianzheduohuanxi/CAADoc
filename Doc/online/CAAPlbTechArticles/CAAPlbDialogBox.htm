@@ -1,0 +1,362 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Portal DialogBox</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Portal DialogBox</h3>
+      <em>The use of the Portal DialogBox component</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to add a property page to a property sheet for a
+      given workshop or workbench displayed in the Tools-&gt;Options dialog box.</p>
+      <ul>
+        <li><a href="#What"><b>What Is the DialogBox</b></a></li>
+        <li><a href="#ClassDefinition"><b>DialogBox Class Definition</b></a></li>
+        <li><a href="#Use"><b>How to Use the DialogBox</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="What"></a>What Is the DialogBox</h3>
+<p>The DialogBox component is a dialog which implements the default combinations
+of buttons and the layout described by the ergonomics rules. The buttons of the
+DialogBox are arranged in a left-to-right flow on the bottom of the dialog, and
+are right-justified. The DialogBox listens to default buttons and close the
+dialog when the Ok, Cancel, or Close button is pressed (This default
+implementation is disconnectable.)</p>
+<p>The default buttons combinations are:</p>
+<dl>
+  <dt><b>OK_CANCEL</b></dt>
+  <dd>Must be used:
+    <ul>
+      <li>When the user can see directly the result of his interactions into the
+        dialog box</li>
+      <li>When the task is so simple that the user does not need to do several
+        attempts.
+    </ul>
+  </dd>
+  <dt><b>OK_CANCEL_PREVIEW</b></dt>
+  <dd>Must be used when the user cannot see directly the result after modifying
+    a parameter of the dialog box</dd>
+  <dt><b>OK_APPLY_CLOSE</b></dt>
+  <dd>Must be used when interactions inside the command are not
+    &quot;undo-able&quot;</dd>
+  <dt><b>CLOSE</b></dt>
+  <dd>Must be used:
+    <ul>
+      <li>When interactions do not modify the document</li>
+      <li>When the behavior of the dialog box is like a toolbar palette made up
+        of several commands.</li>
+    </ul>
+  </dd>
+</dl>
+<p>The DialogBox has the same functionalities than the <i>CATDialog</i> class,
+so you can use it as a simple Dialog (you can create components and add them),
+the DialogBox will furtermore create the buttons.</p>
+<p>The CommandDialog and the CATletDialog extend this DialogBox, so all the
+following methods are also available for these classes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="ClassDefinition"></a>DialogBox Class Definition</h3>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.catweb.base.awt;
+
+/**
+ * Properties describing the type of buttons combination
+ */
+ public static final int OK_CANCEL = 0;
+ public static final int OK_CANCEL_PREVIEW = 1;
+ public static final int OK_APPLY_CLOSE = 2;
+ public static final int CLOSE = 3;
+/**
+ * The actions command associated to default buttons
+ */
+ public static final String OK_CMD = &quot;OK&quot;;
+ public static final String CANCEL_CMD = &quot;CANCEL&quot;;
+ public static final String APPLY_CMD = &quot;APPLY&quot;;
+ public static final String PREVIEW_CMD = &quot;PREVIEW&quot;;
+ public static final String CLOSE_CMD = &quot;CLOSE&quot;;
+
+/**
+ * Constructors
+ */
+ public DialogBox(Frame parent)
+ public DialogBox(Frame parent,boolean modal)
+ public DialogBox(Frame parent,String title)
+ public DialogBox(Frame parent,String title, boolean modal)
+ public DialogBox(Frame parent,String title, boolean modal, boolean useSettings)
+
+/**
+ * Sets the type of buttons combination display in the dialog
+ * The possible combinations are OK_CANCEL, OK_CANCEL_PREVIEW, OK_APPLY_CLOSE and CLOSE
+ */
+ public void setButtonsCombination(int buttonsType)
+
+/**
+ * Creates a DialogButton with the label and the action command actionCmd,
+ * and add it to the dialog at South-East
+ */
+ public Button addButton(String label, String actionCmd)
+
+/**
+ * Creates a DialogButton with the label and the action command actionCmd,
+ * and add it to the dialog at South-East
+ */
+ public Button addRightButton(String label, String actionCmd)
+
+/**
+ * Creates a DialogButton with the label and the action command actionCmd,
+ * and add it to the dialog at South-West
+ */
+ public Button addLeftButton(String label, String actionCmd)
+
+/**
+ * Returns the list of buttons of the DialogBox
+ */
+ public Button[] getButtons()
+
+/**
+ * Returns the button specified by its action command
+ */
+ public Button getButton(String actionCmd)
+
+/**
+ * Returns true if the Dialog Box listen to default commands in order to close dialog for action
+ * OK, CANCEL or CLOSE.
+ */
+public boolean isListenDefaultCommands()
+
+public void setListenDefaultCommand(boolean flag)
+
+/**
+ *Adds an ActionListener for buttons ActionEvent
+ */
+public void addButtonActionListener(ActionListener listener)
+
+public void removeButtonActionListener(ActionListener listener)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Use"></a>How to Use the DialogBox</h3>
+<p>This section explains:</p>
+<ul>
+  <li><a href="#CLOSE">How to Create a CLOSE Dialog</a></li>
+  <li><a href="#OKCANCEL1">How to Create an OK_CANCEL Dialog and Listen to the
+    OK Button's ActionEvent</a></li>
+  <li><a href="#OKCANCEL2">How to Create an OK_CANCEL Dialog That Doesn't Listen
+    to Button's ActionEvent</a></li>
+  <li><a href="#OKCANCEL3">How to Create an OK_CANCEL Dialog with a
+    &quot;default&quot; Button on the Left</a></li>
+  <li><a href="#Enable">How to Enable/Disable the Buttons of the DialogBox</a></li>
+  <li><a href="#NODEFAULT">How to Create a Dialog with No Default Button but
+    with Two Specific Buttons on the South-East</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CLOSE"></a>How to Create a CLOSE Dialog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog Close&quot;);
+dialog.setName(&quot;MyCloseDialog&quot;);
+
+// --- specifies the buttons combination
+dialog.setButtonsCombination(DialogBox.CLOSE);
+
+// --- add component to the dialog
+dialog.add(new Label(&quot;My Label&quot;));</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="OKCANCEL1"></a>How to Create an OK_CANCEL Dialog and Listen to the
+OK Button's ActionEvent</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog Ok-Cancel&quot;);
+
+// --- specifies the OK_CANCEL button combination
+dialog.setButtonsCombination(DialogBox.OK_CANCEL);
+
+// --- subscribes to buttons ActionEvent
+dialog.addButtonActionListener(this);
+...
+// ------------------------------------------------
+// --- implementation of the actionPerformed method
+public void actionPerformed(ActionEvent evt)
+{
+  if (DialogBox.OK_CMD.equals(evt.getActionCommand()))
+  {
+    // --- do your specific action
+    System.out.println(&quot;Ok Button click&quot;);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="OKCANCEL2"></a>How to Create an OK_CANCEL Dialog That Doesn't
+Listen to Button's ActionEvent</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog Ok-Cancel&quot;);
+
+// --- specifies the OK_CANCEL button combination
+dialog.setButtonsCombination(DialogBox.OK_CANCEL);
+
+// --- subscribes to buttons ActionEvent
+dialog.addButtonActionListener(this);
+
+// --- DialogBox doesn't listen to default buttons and thus doesn't close alone the dialog
+dialog.setListenDefaultCommand(false);
+...
+// ------------------------------------------------
+// --- implementation of the actionPerformed method
+public void actionPerformed(ActionEvent evt)
+{
+  if(DialogBox.OK_CMD.equals(evt.getActionCommand()))
+  {
+    // --- do your specific action
+    System.out.println(&quot;Ok Button click&quot;);
+
+    // --- close the dialog, because default implementation is disconnected
+    dialog.dispose();
+  }
+  else if (DialogBox.CANCEL_CMD.equals(evt.getActionCommand()))
+  {
+    // --- cancel modification and close the dialog
+    dialog.dispose();
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="OKCANCEL3"></a>How to Create an OK_CANCEL Dialog with a
+&quot;default&quot; Button on the Left</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog Ok-Cancel&quot;);
+
+// --- specifies the OK_CANCEL button combination
+dialog.setButtonsCombination(DialogBox.OK_CANCEL);
+      </pre>
+      <p>// --- add a button &quot;Default&quot; at left
+      dialog.addLeftButton(&quot;Default&quot;, &quot;DefaultAction&quot;);
+      <p>// --- subscribe to buttons ActionEvent
+      dialog.addButtonActionListener(this); ... //
+      ------------------------------------------------ // --- implementation of
+      the actionPerformed method public void actionPerformed(ActionEvent evt) {
+      if (DialogBox.OK_CMD.equals(evt.getActionCommand())) { // --- do your
+      specific OK action System.out.println(&quot;Ok Button click&quot;); } else
+      if (evt.getActionCommand().equals(DefaultAction&quot;)) { // --- do your
+      your default action System.out.println(&quot;Default Action&quot;); } }</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Enable"></a>How to Enable/Disable the Buttons of the DialogBox</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog Ok-Cancel-Preview&quot;);
+
+// --- specify the OK_CANCEL_PREVIEW button combination
+dialog.setButtonsCombination(DialogBox.OK_CANCEL_PREVIEW);
+
+// --- subscribe to buttons ActionEvent
+dialog.addButtonActionListener(this);
+
+// --- disabled preview button while nothing to preview
+dialog.getButton(DialogBox.PREVIEW_CMD).setEnabled(false);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="NODEFAULT"></a>How to Create a Dialog with No Default Button but
+with Two Specific Buttons on the South-East</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>DialogBox dialog = new DialogBox(CommonSupport.getMainFrame(), &quot;My Dialog One-Two&quot;);
+
+// --- don't specify buttons combination
+// --- create first button &quot;one&quot;
+dialog.addRightButton(&quot;One&quot;, &quot;ActionOne&quot;);
+
+// --- create second button &quot;two&quot;
+dialog.addRightButton(&quot;Two&quot;, &quot;ActionTwo&quot;);
+
+// --- subscribe to buttons ActionEvent
+dialog.addButtonActionListener(this);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

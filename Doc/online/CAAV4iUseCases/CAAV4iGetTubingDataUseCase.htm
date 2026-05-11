@@ -1,0 +1,293 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Retrieving Data of an Element of a V4 Document</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>V4 Access</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Retrieving Tubing Data From a V4 Document</h3>
+      <i>Get the information contained in a model</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article shows how to retrieve tubing data from a V4 document.&nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAV4iEduV4GetTubingData Use Case</a></b>&nbsp;</li>
+        <ul>
+          <li><a href="#What">What Does CAAV4iGetTubingData Do</a></li>
+          <li><a href="#How">How to Launch CAAV4iEduGetTubingData</a></li>
+          <li><a href="#Where">Where to Find the CAAV4iEduGetTubingData Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to show you how to retrieve tubing data from a V4 
+model.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV4iEduGetTubingData Use Case</h3>
+CAAV4iEduGetTubingData is a use case of the CAACATIAV4Interfaces.edu framework
+that illustrates CATIAV4Interfaces framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV4iEduGetTubingData Do</h4>
+CAAV4iEduGetTubingData begins by opening the <i>.model</i> document.<br>
+Then, it scans the model using functions of CATIAV4Interfaces to get the element
+to be analyzed [<a href="#References">1</a>]. These elements are objects of the
+class CATV4iV4Element.<br>
+In this particular case, it retrieves the first element of the first set of the
+workspace MASTER.<br>
+Finally, tubing data of the element are retrieved : the tubing line name, the 
+diameter, the bend radius, and the extremity coordinates.<br>
+The elements are removed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV4iEduGetTubingData</h4>
+To launch CAAV4iEduGetTubingData , you will need to set up the build time 
+environment, then compile CAAV4iEduGetTubingData along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].<br>
+CAAV4iEduGetTubingData takes two parameters.
+<p>mkrun -c <b>CAAV4iEduGetTubingData</b> InputModel&nbsp; OutputFile&nbsp;</p>
+<p>Where:</p>
+&nbsp;&nbsp;InputModel : the full path of the model<br>
+&nbsp;&nbsp;OutputFile : the full path of the output text file.
+<p>You can use the model TUBING<code>.model</code> and TUBING2.model located in <code>CAADoc/</code><code>CAA</code><code>CATIAV4Interfaces</code><code>.edu/CNext/resources/graphic</code></p>
+<ul>
+  <li>Windows : <code>InstallRootDirectory\CAADoc\CAA</code><code>CATIAV4Interfaces</code><code>.edu\CNext\resources\graphic</code>
+  <li>Unix : <code>InstallRootDirectory/CAADoc/CAA</code><code>CATIAV4Interfaces</code><code>.edu/CNext/resources/graphic</code></li>
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAV4iEduGetTubingData Code</h4>
+The CAAV4iEduGetTubingData use case is made of a single file located in the
+CAAV4iEduGetTubingData.m module of the CAACATIAV4Interfaces.edu framework:<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\</tt>CAACATIAV4Interfaces<tt>.edu\</tt>CAAV4iEduGetTubingData<tt>.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/</tt>CAACATIAV4Interfaces<tt>.edu/</tt>CAAV4iEduGetTubingData<tt>.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.<br>
+&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are 3 logical steps in CAAV4iEduV4DataAccess :
+<ol>
+  <li><a href="#Step1">Opening the model</a></li>
+  <li><a href="#Step1">Scanning the model</a></li>
+  <li><a href="#Step2">Retrieving the data</a></li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Opening the model</h4>
+<table width="52%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp; char* pathname = argv[1];
+&nbsp; CATDocument * doc=NULL;
+&nbsp; CATUnicodeString filename( pathname );
+&nbsp; CATDocumentServices::OpenDocument( filename, doc, readOnlyFlag );
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>To access to the data of the model, a CATDocument is needed.<br>
+The path of the model passed in argument is converted to a CATString and is used
+to open the model in &quot;read only&quot; mode.<br>
+<i></i>&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Scaning the model</h4>
+<table width="47%" class="code">
+  <tr>
+    <td>
+      <pre>...
+&nbsp; CATV4iV4Element* masterElem=NULL;
+&nbsp; CATV4iV4Element* setElem=NULL;
+&nbsp; CATV4iV4Element* element=NULL;
+&nbsp; int end =0;
+&nbsp; if (! CATV4iGetMaster(doc, masterElem, ier) )
+&nbsp; {
+&nbsp;&nbsp;&nbsp; if (! CATV4iGisset(masterElem, setElem, end, ier) )
+&nbsp;&nbsp;&nbsp; {&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (! CATV4iGisels(setElem, NULL, element, end, ier) )
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>CATV4iGetMaster is a functions that retrieves the first workspace of the
+model : the MASTER. If <i>doc</i> is not a V4 document, the function fails.<br>
+CATV4iGisset retrieves the first set of the workspace <i>masterElem</i>.<br>
+CATV4iGisels retrieves the first element of the set <i>setElem</i>.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Retrieving the data</h4>
+<table class="code">
+  <tr>
+    <td>
+      <font SIZE="2">
+		<p></font><font SIZE="2" COLOR="#008000">// Get the tubing line Outside 
+		Diameter</p>
+		</font><font SIZE="2">
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Diameter = 0.0;</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		BendRadius = 0.0;</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Angle = 0.0;</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Extremity1[3];</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Extremity2[3];</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Center[3];</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Udir[3];</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">double</font><font SIZE="2"> 
+		Vdir[3];</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">int</font><font SIZE="2"> 
+		iReturnElbowTubeData = CATV4iGetElbowTubeData (element, Diameter, 
+		BendRadius, Angle, Extremity1, </p>
+		<p>Extremity2, Center, Udir, Vdir);</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">if</font><font SIZE="2"> (iReturnElbowTubeData 
+		== -1) </p>
+		<p>outputFile &lt;&lt; </font><font SIZE="2" COLOR="#a31515">
+		&quot;CATV4iGetElbowTubeData failed&quot;</font><font SIZE="2"> &lt;&lt; endl;</p>
+		<p></font><font SIZE="2" COLOR="#0000ff">else</font><font SIZE="2">
+		</font><font SIZE="2" COLOR="#0000ff">if</font><font SIZE="2"> (iReturnElbowTubeData 
+		== 0)</p>
+		<p>{</p>
+		<p>outputFile &lt;&lt; </font><font SIZE="2" COLOR="#a31515">
+		&quot;CATV4iGetElbowTubeData succeeded&quot;</font><font SIZE="2"> &lt;&lt; endl;</p>
+		<p>outputFile &lt;&lt; </font><font SIZE="2" COLOR="#a31515">&quot;Elbow tube 
+		Diameter = &quot;</font><font SIZE="2"> &lt;&lt; Diameter &lt;&lt; endl;</p>
+		<p>outputFile &lt;&lt; </font><font SIZE="2" COLOR="#a31515">&quot;Elbow tube 
+		BendRadius = &quot;</font><font SIZE="2"> &lt;&lt; BendRadius &lt;&lt; endl;</p>
+		<p>outputFile &lt;&lt; </font><font SIZE="2" COLOR="#a31515">&quot;Elbow tube Angle 
+		= &quot;</font><font SIZE="2"> &lt;&lt; Angle &lt;&lt; endl;</p>
+		</font>
+      <pre>&nbsp;</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>If <i>element</i> has been correctly created by CATV4iGisels, the data can be
+retrieved.<br>
+<i>element-&gt;Id()</i> retrieves the identificator of the <i>element</i>,<br>
+<i>element-&gt;GetType(...)</i> retrieves the primary and the secondary types of
+<i>element</i><br>
+<i>...CATV4iGirlay(... </i>retrieves the number of the layer<br>
+<i>...CATV4iGirvis(... </i>retrieves graphical data about the element : show,
+pickable, color, blink, steady, thickness, line type.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This use case provides a way to retrieve tubing information from elements in a 
+V4
+model.
+<div align="right">
+  <i>[</i><a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="CAAV4iScanUseCase.htm">Scanning the model</a></td>
+  </tr>
+  <tr>
+    <td valign="TOP">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jul 2003]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

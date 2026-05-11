@@ -1,0 +1,139 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddEditMember.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create members.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddEditMember.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+  <font color="#008000">'RETRIEVING THE SUPERMembers</font>
+<font color="#0000FF">  Dim </font>SuperMembers<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>SuperMembers = ManagerObj.GetSuperMembers
+    
+<font color="#0000FF">  Dim </font>SuperMember1, SuperMember2, SuperMember3, SuperMember4, SuperMember5<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>SuperMember1 = SuperMembers.Item(1)
+  MsgBox TypeName(SuperMember1)
+<font color="#0000FF">  Set </font>SuperMember2 = SuperMembers.Item(2)
+  MsgBox TypeName(SuperMember2)
+<font color="#0000FF">  Set </font>SuperMember3 = SuperMembers.Item(4)
+  MsgBox TypeName(SuperMember3)
+<font color="#0000FF">  Set </font>SuperMember4 = SuperMembers.Item(5)
+  MsgBox TypeName(SuperMember4)
+<font color="#0000FF">  Set </font>SuperMember5 = SuperMembers.Item(6)
+  MsgBox TypeName(SuperMember5)
+  
+  <font color="#008000">'TO KNOW THE MEMBER TYPE</font>
+<font color="#0000FF">  Dim </font>MemberTypeName1<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>MemberTypeName2<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>MemberTypeName3<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>MemberTypeName4<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>MemberTypeName5<font color="#0000FF"> As </font>String
+  
+  MemberTypeName1 = SuperMember1.GetMemberType
+  MemberTypeName2 = SuperMember2.GetMemberType
+  MemberTypeName3 = SuperMember3.GetMemberType
+  MemberTypeName4 = SuperMember4.GetMemberType
+  MemberTypeName5 = SuperMember5.GetMemberType
+  
+  <font color="#008000">'RETRIEVING Members as Their Type</font>
+<font color="#0000FF">  If </font>(TypeName(SuperMember1) = "SfmMemberCurve") Then
+    <font color="#008000">'MODIFYING SuperMember1</font>
+    <font color="#008000">'Modifying AnchorPoint</font>
+<font color="#0000FF">    Dim </font>AnchorPoint1<font color="#0000FF"> As </font>String
+    AnchorPoint1 = SuperMember1.AnchorPoint
+    SuperMember1.AnchorPoint = "catStrTopLeft"
+    <font color="#008000">'To Know Category And Curve</font>
+<font color="#0000FF">    Dim </font>Member1Category<font color="#0000FF"> As </font>String
+    Member1Category = SuperMember1.Category
+  
+<font color="#0000FF">    Dim </font>Member1CurveRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>Member1CurveRef = SuperMember1.Curve
+    <font color="#008000">'Setting The Reference Surface</font>
+<font color="#0000FF">    Dim </font>Member1Surface<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>Member1Surface = ObjPart.FindObjectByName("Shell_058 Molded surface")
+<font color="#0000FF">    Dim </font>Member1RefSurface<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>Member1RefSurface = ObjPart.CreateReferenceFromObject(Member1Surface)
+    SuperMember1.ReferenceSurface = Member1RefSurface
+    <font color="#008000">'Getting The ReferenceSurface Orientation</font>
+<font color="#0000FF">    Dim </font>ReferenceSurfaceOrient<font color="#0000FF"> As </font>Long
+    ReferenceSurfaceOrient = SuperMember1.ReferenceSurfaceOrientation
+    <font color="#008000">'Inverting the reference surface orientation</font>
+    SuperMember1.InvertReferenceSurface
+    <font color="#008000">'Getting the FlipStatus and Flipping</font>
+<font color="#0000FF">    Dim </font>FlipStatus<font color="#0000FF"> As </font>Boolean
+    FlipStatus = SuperMember1.IsFlip
+    SuperMember1.Flip
+    <font color="#008000">'Setting Grade,Horizontal and Vertical Offset</font>
+    SuperMember1.Grade = "A45"
+    SuperMember1.HorizontalAnchorPointOffset = "10"
+    SuperMember1.VerticalAnchorPointOffset = "15"
+    <font color="#008000">'Checking the Horizontal Offset</font>
+<font color="#0000FF">    Dim </font>Member1HAPOffset<font color="#0000FF"> As </font>Double
+    Member1HAPOffset = SuperMember1.HorizontalAnchorPointOffset
+
+    <font color="#008000">'Checking and Modifying SectionName Of Member</font>
+<font color="#0000FF">    Dim </font>Member1SectionName<font color="#0000FF"> As </font>String
+    Member1SectionName = SuperMember1.SectionName
+    SuperMember1.SectionName = "WT15x54"
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">  If </font>(TypeName(SuperMember3) = "SfmMemberPlane2Curves") Then
+    <font color="#008000">'MODIFYING SuperMember3</font>
+    <font color="#008000">'Checking First and Second Member</font>
+<font color="#0000FF">    Dim </font>InputMemRef1, InputMemRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>InputMemRef1 = SuperMember3.FirstMember
+<font color="#0000FF">    Set </font>InputMemRef2 = SuperMember3.SecondMember
+    <font color="#008000">'Modifying FirstMember</font>
+<font color="#0000FF">    Dim </font>NewInputMemRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>NewInputMemRef = ObjPart.CreateReferenceFromObject(SuperMember5)
+    SuperMember3.FirstMember = NewInputMemRef
+    <font color="#008000">'Getting the Reference Plane</font>
+<font color="#0000FF">    Dim </font>InputPlaneRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>InputPlaneRef = SuperMember3.Plane
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">  If </font>(TypeName(SuperMember5) = "SfmMemberSurfSurf") Then
+   <font color="#008000">'MODIFYING SuperMember5</font>
+    <font color="#008000">'Checking and Modifying FirstSurface</font>
+<font color="#0000FF">    Dim </font>FirstSurfaceRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>FirstSurfaceRef = SuperMember5.FirstSurface
+  
+<font color="#0000FF">    Dim </font>NewFirstSurface<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>NewFirstSurface = ObjPart.FindObjectByName("CROSS.65")
+<font color="#0000FF">    Dim </font>NewFirstSurfaceRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>NewFirstSurfaceRef = ObjPart.CreateReferenceFromObject(NewFirstSurface)
+    SuperMember5.FirstSurface = NewFirstSurfaceRef
+    <font color="#008000">'Checking And Modifying FirstSurfaceOffset and Orientation</font>
+<font color="#0000FF">    Dim </font>FirstSurfaceOrient<font color="#0000FF"> As </font>Long
+    FirstSurfaceOrient = SuperMember5.FirstSurfaceOrientation
+    SuperMember5.FirstSurfaceOrientation = 2
+  
+    SuperMember5.FirstSurfaceOffset = "20"
+<font color="#0000FF">    Dim </font>Surface1Offset<font color="#0000FF"> As </font>Double
+    Surface1Offset = SuperMember5.FirstSurfaceOffset
+<font color="#0000FF">  End If</font>
+  
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

@@ -1,0 +1,608 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Working with VPM Graphs</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Database</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with VPM Graphs</h3>
+      <em>Performing basic VPM Graph operations.</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use interfaces in the VPMInterfaces framework
+      to perform certain graph operations using the Graph Manager and Graph
+      Administrator.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVpiGraph Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVpiGraph Do</a></li>
+            <li><a href="#How">How to Launch CAAVpiGraph</a></li>
+            <li><a href="#Where">Where to Find the CAAVpiGraph Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use basic graph functionalities
+available in the VPMInterfaces framework. First of all, you will see how to
+retrieve a Graph manager and a Graph administrator. Using the Graph
+administrator, you will be able to retrieve a list of Graph predicates. Using
+the Graph manager, you will be able to retrieve a list of Graph names, add a new
+Graph type, list statuses and terminals and step forward in the Graph.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVpiGraph Use Case</h3>
+<p>CAAVpiGraph is a use case of the CAAVPMInterfaces.edu framework that
+illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVpiGraph Do?</h4>
+<p>CAAVpiGraph begins by opening a VPM session and creating a login session.
+Then, the Graph manager and Graph administrator are retrieved. Using the Graph
+administrator, a list of Graph predicates is retrieved. Using the Graph manager,
+a list of Graph names is retrieved, a new Graph type is added and lists of
+statuses and terminals are also retrieved. Finally, still using the Graph
+manager, we can make a step forward in the Graph from the initial transition
+status to a new transition status.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiGraph</h4>
+<p>To launch CAAVpiGraph, you will need to set up the build time environment,
+then compile CAAVpiGraph along with its prerequisites, set up the run time
+environment, and then execute the use case. [<a href="#References">1</a>]. The
+required interfaces can be found in the VPM Persistency and VPMInterfaces
+frameworks. Launch the use case by executing the following command:</p>
+<p><code>mkrun -c &quot;CAAVpiGraph&quot;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVpiGraph Code</h4>
+<p>The CAAVpiGraph use case is made of a single file located in the
+CAAVpiGraph.m module of the CAAVPMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAA</code><code>VpiGraph.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/CAA</code><code>VpiGraph.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAVpiGraph use case is shown
+here. There are ten logical steps in the CAAVpiGraph use case:</p>
+<ol>
+  <li><a href="#InitSession">Initializing the VPM Session</a></li>
+  <li><a href="#GraphAdminMgr">Retrieving the Graph and Administration Managers</a></li>
+  <li><a href="#Predicates">Retrieving a List of Predicates</a></li>
+  <li><a href="#GraphNames">Retrieving a List of Graph Names</a></li>
+  <li><a href="#GraphType">Adding a New Graph Type</a></li>
+  <li><a href="#Statuses">Retrieving a List of Statuses</a></li>
+  <li><a href="#InitStatus">Initializing a Status</a></li>
+  <li><a href="#Terminals">Retrieving a List of Terminals</a></li>
+  <li><a href="#StepFwd">Stepping Forward in the Graph</a></li>
+  <li><a href="#CloseSession">Closing the VPM Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="InitSession"></a>Initializing the VPM Session</h4>
+<p>1. Open a new VPM session.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    VPMSession *pSession = <b>VPMSession::OpenSession</b>();
+    if (NULL == pSession)
+    {
+        cout &lt;&lt; &quot;Failed to Open Session.&quot; &lt;&lt; endl;
+	<b>return</b> 1;
+    }
+    cout &lt;&lt; &quot;Open Session successful.&quot; &lt;&lt; endl;  
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>OpenSession</code> static method of <i>VPMSession</i> in order
+to open a new VPM session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Create a new login session.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    const int netWorkCommunication = 1;
+    CATIVpmLoginSession_var spLogSession = NULL_var;
+    HRESULT rc = pSession -&gt; <b>CreateLoginSession</b>(&quot;MySelf&quot;,
+	                                        &quot;MyEncodedPsswd&quot;, 
+	   				        &quot;MyRole&quot;,
+	   	                                netWorkCommunication, 
+						spLogSession);
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to get Login.&quot; &lt;&lt; endl;
+        <b>VPMSession::CloseSession</b>();
+        <b>return</b> 2;
+    }
+    cout &lt;&lt; &quot;Login successful.&quot; &lt;&lt; endl;  	
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to create a new login session, use the <code>CreateLoginSession</code>
+method of <i>VPMSession</i>. This method is used to get the login session
+corresponding to a specific user or to create one if none exists. The input
+arguments are:</p>
+<ul>
+  <li>&quot;<code>MySelf</code>&quot; - User Id</li>
+  <li>&quot;<code>MyEncodedPsswd</code>&quot; - User Password</li>
+  <li>&quot;<code>MyRole</code>&quot; - User Role</li>
+  <li><code>netWorkCommunication</code> -Type of network communication. 0: a
+    local session; no communication bus will be created. 1: a distributed
+    session a communication bus will be created.</li>
+</ul>
+<p>The method returns a <i>CATIVpmLoginSession</i> smart pointer to the login
+session. This is the entry point for all user dependant actions: once a pointer
+to this interface has been obtained, it is assumed that the user has been
+authenticated and that the implementation of the interface keeps track of the
+user's permissions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="GraphAdminMgr"></a><b>Retrieving the Graph and Administration
+Managers</b></p>
+<p>1. Retrieve the Graph Manager.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    cout &lt;&lt; &quot;Retrieve the factory manager.&quot; &lt;&lt; endl;
+    CATIVpmFactoryManager_var spFactoManager = NULL_var;
+    rc = pSession -&gt; <b>GetVPMObjectFactory</b>(spFactoManager);
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to get Factory Manager.&quot;&lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 3; 
+    }
+    cout &lt;&lt; &quot;Factory manager retrieved: OK&quot; &lt;&lt; endl;
+
+    CATUnicodeString domain (&quot;APLECO&quot;);
+    CATIContainer_var spC1;
+    rc = pSession -&gt; <b>SeekContainer</b>(domain,
+	                           spC1); 
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to retrieve domain container.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 4;
+    }
+    cout &lt;&lt; &quot;Domain container retrieved: OK&quot; &lt;&lt; endl;
+		 
+    //  Construct rules from domain container
+    <b>CATIVpmObjectRules_var spRules(spC1);</b>
+
+    //  Retrieve the factory manager
+    CATIVpmGraphMng_var spGraphMng = spFactoManager -&gt; <b>GetGraphManager</b>(&quot;ENOVIA_ECO_Release_Routine&quot;,
+	                                                               spRules);
+    if (spGraphMng == NULL_var)
+    {
+	cout &lt;&lt; &quot;Failed to retrieve graph manager.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 5;
+    }	
+    cout &lt;&lt; &quot;Graph manager retrieved: OK &quot; &lt;&lt; endl;
+...    </pre>
+    </td>
+  </tr>
+</table>
+<p>In order to retrieve the Graph manager, it is first of all necessary to
+retrieve a Factory manager. This is done using the <code>GetVPMObjectFactory</code>
+method of <i>VPMSession</i>. This method returns a <i>CATIVpmFactoryManager</i>
+smart pointer. Then, it is also necessary to retrieve a domain container. In
+this case, the domain used is &quot;APLECO&quot;. Retrieve the domain container
+using the <code>SeekContainer</code> method of <i>VPMSession</i>. This method
+returns a <i>CATIContainer</i> smart pointer from which we can retrieve a <i>CATIVpmObjectRules</i>
+smart pointer which is a necessary input argument to the <code>GetGraphManager</code>
+method of <i>CATIVpmFactoryManager</i>. This method returns a <i>CATIVpmGraphMng</i>
+smart pointer to the Graph named &quot;ENOVIA_ECO_Release_Routine&quot;.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>2. Retrieve the Graph Administrator.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //  Construct the graph administrator from the graph manager
+    <b>CATIVpmGraphAdministrator_var spGraphAdmin(spGraphMng);</b>
+	
+    if (spGraphAdmin == NULL_var)
+    {
+	cout &lt;&lt; &quot;Failed to create graph administrator.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 6;
+    }	
+    cout &lt;&lt; &quot;Graph administrator created: OK &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A <i>CATIVpmGraphAdministrator</i> smart pointer is constructed from the <i>CATIVpmGraphMng</i>
+smart pointer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="Predicates"></a><b>Retrieving a List of Predicates</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATLISTV(CATBaseUnknown_var) listOfPredicates;
+	
+    rc = spGraphAdmin -&gt; <b>GetListOfPredicats</b>(listOfPredicates);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to retrieve list of predicates. &quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 7;
+    }
+    cout &lt;&lt; &quot;Retrieved list of predicates: OK &quot; &lt;&lt; endl;
+
+    int nbPred = listOfPredicates.<b>Size</b>();
+    cout &lt;&lt; &quot;Number of predicates found = &quot; &lt;&lt; nbPred &lt;&lt; endl;
+
+    for (int p =1; p &lt;= nbPred; p++)
+    {
+	CATIVpmGraphPredicat_var spPred = listOfPredicates[p];
+	CATUnicodeString predName;
+	rc = spPred -&gt; <b>GetName</b>(predName);	
+	if(FAILED(rc))
+        {
+	    cout &lt;&lt; &quot;Failed to retrieve predicate name. &quot; &lt;&lt; endl;
+	    <b>VPMSession::CloseSession</b>();
+	    <b>return</b> 8;
+	}
+	char *pPredName = (char*) predName.<b>ConvertToChar</b>();
+	cout &lt;&lt; &quot;Predicate Name &quot; &lt;&lt; p &lt;&lt; &quot;: &quot; &lt;&lt; pPredName &lt;&lt; endl;
+    }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to retrieve a list of Graph predicates, use the <code>GetListOfPredicats</code>
+method of <i>CATIVpmGraphAdministrator</i>. This method returns a list of <i>CATBaseUnknown</i>
+pointers. For each of these pointers, a <i>CATIVpmGraphPredicat</i> smart
+pointer is retrieved. Then, using the <code>GetName</code> method of <i>CATIVpmGraphPredicat</i>,
+each predicate's name can be retrieved and printed out. Here is a partial trace
+resulting from the above code:</p>
+<pre>Number of predicates found = 93
+Predicate Name 1: Affected_Object
+Predicate Name 2: Action&gt;AFLParent
+Predicate Name 3: Action&gt;AFLParent|Action_Design
+Predicate Name 4:
+Predicate Name 5: FOUND_OBJECTS
+...
+Predicate Name 91: MIMEtype
+Predicate Name 92: AddSheet
+Predicate Name 93: MIMEtype
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="GraphNames"></a><b>Retrieving a List of Graph Names</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATLISTV(CATUnicodeString) listOfGraph;
+    rc = spGraphMng -&gt; <b>GetListOfGraphName</b>(listOfGraph);
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to retrieve a list of graph names.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	return 9;
+    }
+    cout &lt;&lt; &quot;Retrieved list of graph names: OK &quot; &lt;&lt; endl;
+	
+    for(int loop=1; loop&lt;=listOfGraph.<b>Size</b>(); loop++)
+    {
+	CATUnicodeString curGraph = listOfGraph[loop];
+	char *pCurGraph = (char*) curGraph.<b>ConvertToChar</b>();
+	cout &lt;&lt; &quot;Graph Name: &quot; &lt;&lt; loop &lt;&lt; &quot; &quot; &lt;&lt; pCurGraph &lt;&lt; endl;
+    }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>GetListOfGraphName</code> method of <i>CATIVpmGraphMng</i> in
+order to retrieve a list of Graph names. Then, print out each name retrieved.
+Here is a partial example of the trace produced by the above code:</p>
+<pre>Graph Name: 1 ACTIONCONDFAIL
+Graph Name: 2 AFLTESTCOMMAND
+Graph Name: 3 AFLTESTCONDFILTER
+Graph Name: 4 AFLTESTFILTER
+Graph Name: 5 AFLTESTFIND
+...
+Graph Name: 59 ODTGraph1
+Graph Name: 60 ODTGraph2
+Graph Name: 61 VPMDocumentRevisionECO_V_status
+Graph Name: 62 VPMDocumentRevision_V_status
+Graph Name: 63 VPMDocumentRevision_V_status1
+Graph Name: 64 VPMObject_V_status
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="GraphType"></a>Adding a New Graph Type</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    rc = spGraphMng -&gt; <b>PutGraphType</b>(&quot;ENOVIA_ECO_status&quot;);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to add a new graph type.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	return 10;
+    }
+    cout &lt;&lt; &quot;New graph type added: OK &quot; &lt;&lt; endl;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>PutGraphType</code> method of <i>CATIVpmGraphMng</i> in order
+to add a new Graph type called &quot;ENOVIA_ECO_status&quot;.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="Statuses"></a>Retrieving a List of Statuses</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATLISTV(CATUnicodeString) listOfStatus;
+	
+    rc = spGraphMng -&gt; <b>GetListOfStatus</b>(listOfStatus);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to retrieve the list of statuses.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 11;
+    }
+    cout &lt;&lt; &quot;List of statuses retrieved: OK &quot; &lt;&lt; endl;
+	
+    for(int s=1; s&lt;=listOfStatus.<b>Size</b>(); s++)
+    {
+	CATUnicodeString curStat = listOfStatus[s];
+	char *pCurStat = (char*)curStat.<b>ConvertToChar</b>();	
+	cout &lt;&lt; &quot;Status &quot; &lt;&lt; s &lt;&lt; &quot;: &quot; &lt;&lt; pCurStat &lt;&lt; endl;
+    } 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>GetListOfStatus</code> method of <i>CATIVpmGraphMng</i> in
+order to retrieve a list of Graph transition statuses. Then, print out each
+status retrieved. Here is a partial example of the trace produced by the above
+code:</p>
+<pre>Status 1: Proposed
+Status 2: Prerelease
+Status 3: Release
+Status 4: Rejected
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="InitStatus"></a>Initializing a Status</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATUnicodeString initStatus, newStatus, curStatus;
+
+    rc = spGraphMng -&gt; <b>Init</b>(initStatus);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to initialize status.  &quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	<b>return</b> 12;
+    }
+    cout &lt;&lt; &quot;Initialize Status: OK &quot; &lt;&lt; endl;
+	
+    char *pInitStatus = (char *) initStatus.<b>ConvertToChar</b>();
+    cout &lt;&lt; &quot;Init Status: &quot; &lt;&lt; pInitStatus &lt;&lt; endl;
+
+...        </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Init</code> method of <i>CATIVpmGraphMng</i> returns a <i>CATUnicodeString</i>
+containing the first status of the transition. Here is the trace of the
+retrieved status that is printed out:</p>
+<p><code>Init Status: Proposed</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="Terminals"></a>Retrieving a List of Terminals</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATLISTV(CATUnicodeString) listOfTerm;
+	
+    rc = spGraphMng -&gt; <b>GetListOfTerminals</b>(initStatus, listOfTerm);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to retrieve a list of terminals.&quot; &lt;&lt; endl;
+	<b>VPMSession::CloseSession</b>();
+	return 13;
+    }
+    cout &lt;&lt; &quot;List of terminals retrieved: OK &quot; &lt;&lt; endl;
+	
+    for(int x=1; x&lt;=listOfTerm.Size(); x++)
+    {
+	CATUnicodeString curTerm = listOfTerm[x];
+	char *pCurTerm = (char*) curTerm.<b>ConvertToChar</b>(); 
+	cout &lt;&lt; &quot;Terminal &quot; &lt;&lt; x &lt;&lt; &quot;: &quot; &lt;&lt; pCurTerm &lt;&lt; endl;
+    
+    }
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetListOfTerminals</code> method of <i>CATIVpmGraphMng</i> is used
+to retrieve a <i>CATUnicodeString</i> list of terminals corresponding to the
+initial status that was retrieved in the previous section. Then, each terminal
+in the list is printed out. Here is a trace produced by the code above:</p>
+<pre>Terminal 1: nls_promote
+Terminal 2: nls_reject</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="StepFwd"></a>Stepping Forward in a Graph</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    rc = spGraphMng -&gt; <b>StepForward</b>(initStatus, 
+	                           &quot;nls_promote&quot;,
+				   newStatus);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to step forward, nls_promote not found.&quot; &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;Step Forward (nls_promote): OK &quot; &lt;&lt; endl;
+	
+    char *pNewStatus = (char*) newStatus.<b>ConvertToChar</b>();
+    cout &lt;&lt; &quot;New Status: &quot; &lt;&lt; pNewStatus &lt;&lt; endl;
+	
+    curStatus = newStatus;
+	
+    rc = spGraphMng -&gt; <b>StepForward</b>(curStatus, 
+	                           &quot;nls_promote&quot;,
+				   newStatus);
+	
+    if(FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Failed to step forward, nls_promote not found.&quot; &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;Next Step Forward (nls_promote): OK &quot; &lt;&lt; endl;
+	
+    pNewStatus =  (char*) newStatus.<b>ConvertToChar</b>();
+    cout &lt;&lt; &quot;New Status: &quot; &lt;&lt; pNewStatus &lt;&lt; endl;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Use the <code>StepForward</code> method of <i>CATIVpmGraphMng</i> in order to
+step forward in the Graph. This method takes the following arguments:</p>
+<ul>
+  <li><code>initStatus</code> - This is the initial status of the transition.</li>
+  <li>&quot;<code>nls_promote</code>&quot; - This is the terminal status of the
+    transition.</li>
+  <li><code>newStatus</code> - This is the new status returned by stepping
+    forward in the Graph.</li>
+</ul>
+<p>We step forward twice in the Graph, the second time using the transition
+status retrieved from the first. Here is the trace produced by the above code:</p>
+<pre>Step Forward (nls_promote): OK
+New Status: Prerelease
+Next Step Forward (nls_promote): OK
+New Status: Release</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="CloseSession"></a>Closing the VPM Session</b></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    rc = pSession -&gt; <b>CloseSession</b>();
+    if (FAILED(rc))
+    {
+	cout &lt;&lt; &quot;Close Session failed.  &quot; &lt;&lt; endl;
+	<b>return</b> 14;
+    }
+    cout &lt;&lt; &quot;Close Session successful. &quot; &lt;&lt; endl;
+ 	
+    <b>return</b> 0;</pre>
+    </td>
+  </tr>
+</table>
+<p>Close the session using the <code>CloseSession</code> method of <i>VPMSession</i>.
+Then return a 0 value for a successful completion.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has illustrated how to use VPM Graph functionalities through
+the <i>CATIVpmGraphMng</i> and <i>CATIVpmGraphAdministrator</i> interfaces of
+the VPMInterfaces framework. It shows how to retrieve a Graph manager and a
+Graph administrator and how to retrieve Graph predicates, names, lists of
+statuses and terminals. It also shows how to add a new Graph type and how to
+initialize a transition status and use it to step forward in a Graph.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [December 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

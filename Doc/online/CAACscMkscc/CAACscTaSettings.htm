@@ -1,0 +1,215 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>Setting Files</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Setting Files</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>The setting files are the way external settings (like lists of methods,
+      etc.) are given to the tool.</p>
+				  <ul>
+					  <li><a href="#What">What Is a Setting File?</a>
+						  <ul>
+							  <li><a href="#Presentation">Presentation of Setting Files</a></li>
+							  <li><a href="#Provided">Provided Setting File</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#Creating">Creating or Modifying a Setting File</a></li>
+					  <li><a href="#Using">Using Your Own Setting File</a></li>
+					  <li><a href="#Structure">Structure of a Setting File</a>
+						  <ul>
+							  <li><a href="#RunType">RunType</a></li>
+							  <li><a href="#ReportSet">ReportSet</a></li>
+							  <li><a href="#OptionLists"> OptionLists</a></li>
+							  <li><a href="#Global_OptionLists"> Global_OptionLists</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#InShort">In Short</a></li>
+					  <li><a href="#References">References</a></li>
+					  <li><a href="#History">History</a></li>
+				  </ul>
+      </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="What"></a>What Is a Setting File?</h2>
+<h3><a name="Presentation"></a>Presentation of Setting Files</h3>
+<p>Setting files are used to give CSC external information about the source code
+(which methods return an AddRef'ed pointer, which classes are
+&quot;non-deletable&quot;, etc.) and to configure the run (which type of run to
+do, which errors to check, which frameworks to ignore, etc.).</p>
+<p>Default setting files are delivered, and used by default by the tool.</p>
+<p>Setting Files are written in XML. The default setting file is provided, plus 
+its DTD (Document Type Definition) (Settings_Check.xml and CheckSourceSettings.dtd files, in Runtime View /
+resources / MkSourceCodeChecker / Settings). This file can be created or modified by any XML
+editor (Microsoft XML Notepad, for example).</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Provided"></a>Provided Setting File</h3>
+<p>One default setting files is provided, Settings_Check.xml, defining a run to detect coding errors, for both code and test
+    frameworks. Detection is made against the most important rules.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating"></a>Creating or Modifying a Setting File</h2>
+<p>If you want to add new user inputs to the tool, you can either modify a
+delivered setting file, or write your own setting file from scratch. Copying a
+delivered setting file to modify it is faster and easier than writing a setting
+file from scratch. An XML file can be modified either in a text editor or in an
+XML editor. If you don't have any notion of XML, please refer to a specific
+documentation.</p>
+<p>As soon as you get your new setting file, use the DTD to check if your
+modifications are valid. You can, for example, open the new setting file with an
+XML editor checking the DTD (like XML notepad, or most of the existing XML
+editors...). If your file is not valid according to the DTD, an error will be
+reported by the editor. If it is valid, you can use it to run CSC.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Using"></a>Using Your Own Setting File</h2>
+<p>When you have written a setting file, you can use only your setting file. The different
+command lines are described in <code>[<a href="#References">1</a>] </code>(Using
+your own Setting File).</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Structure"></a>Structure of a Setting File</h2>
+<p>To get the exact and exhaustive structure of setting files, see the provided
+DTD.</p>
+<p>Every setting file has a root node named SettingsSet. This root node contains
+a the most three sections (three child nodes): RunType, ReportSet and OptionLists.</p>
+<p><img alt="Setting File Structure" src="images/CAACscTaSettingFilesSettingsSet.gif" width="515" height="220"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="RunType"></a>RunType</h3>
+<p>This section consists in three blocks:</p>
+<ul>
+  <li>TypeOfRun indicates the type of run expected. For detecting coding errors,
+    its value must be Check.</li>
+  <li>ReportTestFw indicates if the run includes code and test frameworks
+    (ReportTestFw = true) or only code frameworks (ReportTestFw = false).</li>
+  <li>ExcludeFrameworks lists the name of the frameworks you want to exclude
+    from reporting.</li>
+</ul>
+<p><img alt="Setting File RunType Section" src="images/CAACscTaSettingFilesRunType.gif" width="567" height="311"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ReportSet"></a>ReportSet</h3>
+<p>This section defines the list of activated errors. It contains a list of
+Report, each Report containing the name of an error and the state of this error:
+Activate = true means that this error will be reported, Activate = false means
+that this error will not be reported.</p>
+<p><img alt="Setting File ReportSet Section" src="images/CAACscTaSettingFilesReportSet.gif" width="566" height="372"/></p>
+<p>If you want to ignore some errors, you can write your own setting file to
+de-activate these errors (Activate= false) and overload the default setting file
+with your own setting file: the errors de-activated in your setting file will
+not be checked.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="OptionLists"></a>OptionLists</h3>
+<p>This section defines, for every category of checks, the user inputs. For more
+information, refer to the article describing the check:</p>
+<ul>
+  <li>LifeCycle_OptionLists <code>[<a href="#References">2</a>] [<a href="#References">3</a>]</code>:
+	  LCDMNI, LCLVNI, LCDMMN, LCLVMN*, LCVMNA*, LC*MCBU, LC*MCBU2.</li>
+  <li>MemoryManagement_OptionLists <code>[<a href="#References">4</a>] [<a href="#References">7</a>]</code>:
+    AWRS, AWR2, PNSS, NWD2.</li>
+  <li>ExceptionManagement_OptionLists <code>[<a href="#References">5</a>]</code>:
+    EXCP.</li>
+  <li>EntityDetection_OptionLists <code>[<a href="#References">6</a>]</code>:
+    PUCE.</li>
+  <li>Various_OptionLists <code>[<a href="#References">6</a>]</code>: UADC,
+    UACS, PCOM.</li>
+  <li>Global_OptionLists: see below.</li>
+</ul>
+<p><img alt="Setting File OptionLists Section" src="images/CAACscTaSettingFilesOptionLists.gif" width="600" height="629"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Global_OptionLists"></a>Global_OptionLists</h3>
+<p>This section defines options common to all the checks.</p>
+<p>For the moment, the only section is Macro2Expand, which contains all the
+macros to be expanded by CSC. Macro expansion is described in [<a href="#References">8</a>].</p>
+<p>
+<img alt="Setting File Global_OptionLists Section" src="images/CAACscTaSettingFilesGlobalOptionLists.gif" width="618" height="356"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The mkscc setting files are XML files and store mkscc external data about the 
+source code to check.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAACscQrMkscc.htm">mkscc Quick Reference</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="CAACscTaNP1.htm">Null Pointers Part 1 Checks</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="CAACscTaNP2.htm">Null Pointers Part 2 Checks</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="CAACscTaAddRefRel.htm">AddRef Release Checks</a></td>
+  </tr>
+  <tr>
+    <td>[5]</td>
+    <td><a href="CAACscTaExceptions.htm">Exception Checks</a></td>
+  </tr>
+  <tr>
+    <td>[6]</td>
+    <td><a href="CAACscTaFC.htm">Forbidden Construction
+      Checks</a></td>
+  </tr>
+  <tr>
+    <td>[7]</td>
+    <td><a href="CAACscTaCppChecks.htm">C++ Checks</a></td>
+  </tr>
+  <tr>
+    <td>[8]</td>
+    <td><a href="CAACscTaCppParser.htm">Inside the mkscc Parser</a></td>
+  </tr> 
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

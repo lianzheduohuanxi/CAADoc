@@ -1,0 +1,465 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Arranging Dialog Objects Using a Grid</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Arranging Dialog Objects Using a Grid</h3>
+      <em>How to manage the dialog object with the grid layout</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Arranging dialog objects in a dialog window, a dialog box, a frame or a
+      tab page, that is a container, consists in positionning each object at a
+      given place with respect to the others [<a href="#References">1</a>]. The
+      container layout will then not changed when the dialog window is resized.
+      The dialog objects can be precisely arranged in their respective
+      containers using a grid attached to the container.
+      <ul>
+        <li><a href="#400000"><strong>What Is Dialog Object Grid Layout?</strong></a></li>
+        <li><a href="#500000"><strong>A Grid Layout Example</strong></a></li>
+        <li><a href="#600000"><strong>The Grid Layout Toolbox</strong></a></li>
+        <li><a href="#700000"><strong>The Object Container Grid Layout Specific
+          Programming Tasks</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>What Is Dialog Object Grid Layout?</h3>
+<p>The grid layout consists in designing a grid made of cells located at the
+intersection of rows and columns. A cell is defined using the intersecting row
+and column numbers. Each dialog object occupies a rectangular space spread in
+one or several cells. It's location is defined using the cell at its top left
+corner, and using the number of cells in which it horizontally and vertically
+spreads.</p>
+<p>This enables the container sizes to be defined by their contents. A given row
+has the width of the wider object it contains, and a column has the height of
+its higher object. A given object that spreads in several cells can have more
+room that it really needs. To overcome this, the object can define the way it is
+attached to the cell sides.</p>
+<p>The grid layout applies to CATDlgDocument, CATDlgDialog, CATDlgFrame, and
+CATDlgTabPage objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>A Grid Layout Example</h3>
+<p>Assume you need to create the following window, as a class that derives from
+CATDlgDialog.</p>
+<p><img src="images/CATDlgGridLayoutWindow.jpg" alt="CATDlgGridLayoutWindow.jpg (13714 bytes)" width="286" height="199"></p>
+<p>It contains a spinner and two check buttons aligned on the first row, then a
+combo alone on the second row, and three push buttons aligned on the third row.
+The OK, Cancel, and Help push buttons are supplied with the CATDlgDialog derived
+class and are not to be arranged in the window. The window constructor must be
+as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>GridLayoutWindow ::GridLayoutWindow (CATDialog * Parent,
+                                     const CATString&amp; Name,
+		           	     CATDlgStyle Style)
+                 : CATDlgDialog(Parent, Name, Style)
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p>And the object that instantiate it must use the CATDlgGridLayout style as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>GridLayoutWindow * pWindow = new GridLayoutWindow (this,
+                                                   &quot;GridWind&quot;,
+                                                   <strong>CATDlgGridLayout</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p>The grid to build is as follows:</p>
+<p><img src="images/CATDlgGridLayout.gif" alt="CATDlgGridLayout.gif (25066 bytes)" width="494" height="510"></p>
+<p>The grid could be built using the SetGridConstraints method. It is used on
+each control to associate with it the positioning parameters, as the five
+arguments of SetGridConstraints:
+<ol>
+  <li>The row number where the control top left corner is located in</li>
+  <li>The column number where the control top left corner is located in</li>
+  <li>The number of rows on which the control is spread</li>
+  <li>The number of columns on which the control is spread</li>
+  <li>The attachment mode. It can be set to <code>CATGRID_LEFT</code>, <code>CATGRID_RIGHT</code>,
+    <code>CATGRID_TOP</code>, <code>CATGRID_BOTTOM</code>, and <code>CATGRID_4SIDES</code></li>
+</ol>
+<p>Rows and column numbers begin with 0. You can see that the combo top left
+corner is located in the cell at the intersection of the row 1 and column 0, and
+spreads on three rows and one column. Since it is attached by the four sides, it
+occupies the full space, even if the size is increased. The set of calls to
+SetGridConstraints that build the first window displayed is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Spinner-&gt;SetGridConstraints(0,0,1,1,CATGRID_LEFT);
+CB1    -&gt;SetGridConstraints(0,1,1,1,CATGRID_LEFT);
+CB2    -&gt;SetGridConstraints(0,2,1,1,CATGRID_LEFT);
+Combo  -&gt;SetGridConstraints(1,0,3,1,CATGRID_4SIDES);
+PB1    -&gt;SetGridConstraints(2,0,1,1,CATGRID_LEFT);
+PB2    -&gt;SetGridConstraints(2,1,1,1,CATGRID_LEFT);
+PB3    -&gt;SetGridConstraints(2,3,1,1,CATGRID_RIGHT);</pre>
+    </td>
+  </tr>
+</table>
+<p>The same window is shown with three other attachment modes applied to the
+combo:</p>
+<table>
+  <tr>
+    <td><img src="images/CATDlgGridLayoutWindowLeft.jpg" alt="CATDlgGridLayoutWindowLeft.jpg (12827 bytes)" width="286" height="199"></td>
+    <td><code>CATGRID_LEFT</code>: The combo is attached by its left side. Even
+      if it doesn't seem to be spread on three cells, no other control can
+      occupy this area.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CATDlgGridLayoutWindowCenter.jpg" alt="CATDlgGridLayoutWindowCenter.jpg (12959 bytes)" width="286" height="199"></td>
+    <td><code>CATGRID_CENTER</code>: The combo is attached at the center of its
+      area.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CATDlgGridLayoutWindowRight.jpg" alt="CATDlgGridLayoutWindowRight.jpg (13015 bytes)" width="286" height="199"></td>
+    <td><code>CATGRID_RIGHT</code>: The combo is attached by its right side. The
+      space in front of it is empty, but if longer character strings were used
+      for its lines, its size could grow to the left.</td>
+  </tr>
+</table>
+<p>Since the combo is allone on its row, its size determines the row height, and
+the two other attachment modes, that is&nbsp; <code>CATGRID_TOP</code> and <code>CATGRID_BOTTOM</code>,
+would have the same effect than <code>CATGRID_LEFT</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>The Grid Layout Toolbox</h3>
+<p>To use the grid layout, you need to do the following:
+<ul>
+  <li>Creating a CATDlgGridConstraints instance and assigning it to a dialog
+    object</li>
+  <li>Understanding how to attach a dialog object with respect to the cell sides</li>
+  <li>Enabling rows and colums for resize.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Creating a CATDlgGridConstraints Instance and Assigning it to Dialog Objects</h4>
+<p>The grid is not an object itself. You only need to define how each object is
+located in the grid using one or several CATDlgGridConstraints instances, and
+the grid is interpreted from these instances. As we see in the example, you can
+use the SetGridConstraints method on each object you want to arrange, either
+when this object is a control, or when it is a container contained in another
+container, such as a frame contained in another frame. The grid you refer to is
+set to the containment parent [<a href="#References">2</a>] of the dialog
+object, and must be consistently reffered to for any object having this
+containment parent. SetGridConstraints assigns to the object it applies an
+instance of the CATDlgGridConstraints class that holds the positionning
+parameters. You could do this in two ways:
+<ol>
+  <li>Use the SetGridConstraints methods with five arguments as shown in the
+    example. This method creates the CATDlgGridConstraints class instance and
+    assigns it to the container or control</li>
+  <li>Create a CATDlgGridConstraints class instance, set and modify its
+    parameters before assigning it using SetGridConstraints to each
+    control,&nbsp; as follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgGridConstraints GridCst(0,0,1,1,CATGRID_LEFT);
+Spinner-&gt;SetGridConstraints(GridCst);
+GridCst.Column=1;
+CB1    -&gt;SetGridConstraints(GridCst);
+GridCst.Column=2;
+CB2    -&gt;SetGridConstraints(GridCst);
+GridCst.Row=1;
+GridCst.Column=0;
+GridCst.H_SPAN=3;
+GridCst.V_SPAN=1;
+GridCst.Justification=CATGRID_4SIDES;
+Combo  -&gt;SetGridConstraints(GridCst);
+GridCst.Row=2;
+GridCst.Column=0;
+GridCst.H_SPAN=1;
+GridCst.V_SPAN=1;
+GridCst.Justification=CATGRID_LEFT;
+PB1    -&gt;SetGridConstraints(GridCst);
+GridCst.Column=1;
+GridCst.Justification=CATGRID_BOTTOM;
+PB2    -&gt;SetGridConstraints(GridCst);
+GridCst.Column=3;
+GridCst.Justification=CATGRID_LEFT;
+PB3    -&gt;SetGridConstraints(GridCst);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4>Understanding How to Attach a Dialog Object with Respect to the Cell Sides</h4>
+<p>Attaching a dialog object to its cell(s) sides determines the dialog window
+or container layout when the dialog winodw is first displayed with its original
+size, and has also an effect when the end user resizes it. The following
+attachment modes are available:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Attachment Mode</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td valign="top"><code>CATGRID_LEFT</code></td>
+    <td valign="top">Attaches the object to the left side of the cell, or if the
+      object spreads on several cells, to the left side of the left cell</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_RIGHT</code></td>
+    <td valign="top">Attaches the object to the right side of the cell, or if
+      the object spreads on several cells, to the right side of the right cell</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_TOP</code></td>
+    <td valign="top">Attaches the object to the top side of the cell, or if the
+      object spreads on several cells, to the top side of the top cell</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_BOTTOM</code></td>
+    <td valign="top">Attaches the object to the bottom side of the cell, or if
+      the object spreads on several cells, to the bottom side of the bottom cell</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_4SIDES</code></td>
+    <td valign="top">Attaches the object to each of the four sides of the cell,
+      or if the object spreads on several cells, to the left side of the left
+      cell, to the right side of the right cell, to the top side of the top
+      cell, and to the bottom side of the bottom cell. It is the concatenation
+      of <code>CATGRID_LEFT</code>, <code>CATGRID_RIGHT</code>, <code>CATGRID_TOP</code>,
+      and <code>CATGRID_BOTTOM</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_CST_WIDTH</code></td>
+    <td valign="top">Keeps the object initial width when resizing</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_CST_HEIGHT</code></td>
+    <td valign="top">Keeps the object initial height when resizing</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_CST_SIZE</code></td>
+    <td valign="top">Keeps the object initial size, that is initial width and
+      initial height, when resizing. It is the concatenation of <code>CATGRID_CST_WIDTH</code>
+      and <code>CATGRID_CST_HEIGHT</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATGRID_CST_CENTER</code></td>
+    <td valign="top">Attaches the object to each of the four sides of the cell,
+      and keeps the object initial size, that is initial width and initial
+      height, when resizing. It is the concatenation of <code>CATGRID_4SIDES</code>
+      and <code>CATGRID_CST_SIZE</code></td>
+  </tr>
+</table>
+<p>They can be concatenated using the &quot;|&quot; character, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Combo-&gt;SetGridConstraints(1,0,3,1,CATGRID_LEFT<strong>|</strong>CATGRID_RIGHT);</pre>
+    </td>
+  </tr>
+</table>
+<p>The default value is <code>CATGRID_LEFT</code>|<code>CATGRID_TOP</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4>Enabling Rows and Columns for Resize</h4>
+<p>You can also manage the ability of a given row or column to be resized when
+its container is itself resized. The grid rows and columns are by default non
+sensitive to resizing. Resizing occurs in two cases:
+<ol>
+  <li>The end user resizes the whole dialog box or window. This is possible if
+    the dialog box or window isn't set to CATDlgWndNoResize</li>
+  <li>The dialog box or window is being constructed, and the different
+    containers and controls must match their container size according to their
+    attachment mode.</li>
+</ol>
+<p>The height of a resizable row is increased or decreased when its container is
+resized, while it is the width of a resizable column that changes. To set a row
+or a column resizable, use the methods SetGridRowResizable and
+SetGridColumnResizable.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SetGridRowResizable(2,1);
+SetGridColumnResizable(0,1);</pre>
+    </td>
+  </tr>
+</table>
+<p>The first argument is the row or column number in the grid. The second can be
+set to 0 for a non resizable row or column, and to 1 for a resizable one. In the
+example above, the third row and the first column are set as resizable.</p>
+<p>When the containing window is resized, the controls or containers that are
+spread in cells belonging to resizable rows or columns are moved or resized
+according to their attachment mode. For example, the window of the example used
+in this article is streched as follows:</p>
+<p><img src="images/CATDlgGridLayoutWindowResize.jpg" alt="CATDlgGridLayoutWindowResize.jpg (15412 bytes)" width="365" height="231"></p>
+<p>The third row is resizable, as well as the first three columns. This is coded
+as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SetGridRowResizable(2,1);
+SetGridColumnResizable(0,1);
+SetGridColumnResizable(1,1);
+SetGridColumnResizable(2,1);</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that the spinners and the check buttons were explicitly attached to
+their cell left side. Their cells are stretched, and empty space appears to
+their rights. The combo were attached to the four sides of the cells, and is
+stretched to occupy the full width of the three cells. These first two lines
+have kept their initial height, since they are not resizable. The third row is
+stretched. Its height increases. Apply and Restore have not moved vertically,
+because they are attached to their cell top side, but Undo, which is attached to
+its cell bottom side, has moved vertically. This shows the new row height. As
+for the first row, the first three columns are stretched, but the fourth, which
+contains Restore, is not resizable and its width&nbsp; has not changed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>The Object Container Grid Layout Specific
+ProgrammingTasks</h3>
+<p>To manage the layout of a container using a grid, you can use the following
+methods. They apply to:
+<ul>
+  <li><a href="../CAADlgQuickRefs/CAADlgCATDlgFrame.htm">Frames</a>,
+    instances of the CATDlgFrame instances</li>
+  <li><a href="../CAADlgQuickRefs/CAADlgCATDlgTabPage.htm">Tab pages</a>
+    or property pages, instances of the CATDlgTabPage instances</li>
+  <li>Your classes that derive from <a href="../CAADlgQuickRefs/CAADlgCATDlgDocument.htm">CATDlgDocument</a>
+    or <a href="../CAADlgQuickRefs/CAADlgCATDlgDialog.htm">CATDlgDialog</a></li>
+</ul>
+<p>Layout using a grid is available only if the CATDlgGridLayout style is used
+in the object constructor. The available methods enable to set a row or a column
+of the grid as resizable, and to ask if a row or a column is resizable. The
+examples use a CATDlgFrame instance:</p>
+<table>
+  <tr>
+    <td>Set 1st row as resizable</td>
+    <td class="code">
+      <pre>int RowIndex = 0;        // First row
+int Resizability = 1;    // 0 means non resizable
+pFrame-&gt;<strong>SetGridRowResizable</strong>(RowIndex, Resizability);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Set 3rd column as resizable</td>
+    <td class="code">
+      <pre>int ColumnIndex = 2;     // Third column
+Resizability = 1;        // 0 means non resizable
+pFrame-&gt;<strong>SetGridColumnResizable</strong>(ColumnIndex, Resizability);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Ask if 4th row is resizable</td>
+    <td class="code">
+      <pre>RowIndex = 3;            // Fourth row
+Resizability = pFrame-&gt;<strong>IsGridRowResizable</strong>(RowIndex);
+if (Resizability == 1)
+  ... // Row is resizable
+else  // Resizability == 0
+  ... // Row is NOT resizable</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Ask if 6th column is resizable</td>
+    <td class="code">
+      <pre>ColumnIndex = 5;         // Sixth column
+Resizability = pFrame-&gt;<strong>IsGridColumnResizable</strong>(ColumnIndex);
+if (Resizability == 1)
+  ... // Column is resizable
+else  // Resizability == 0
+  ... // Column is NOT resizable</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Dialog object container sizes are determined using their contents. Containers
+can be resized without modifying their contents, that can be partially hidden if
+necessary. They are arranged according to a grid made of cells that are
+determined by the intersection of rows and columns. Containers and controls can
+occupy one cell, or can be spread in several ones. They can be attached to some
+or all of their cell sides, and can be requested to keep the same width or
+height when the dialog window is resized. Rows and columns are by default
+non-resizable, but can be explicitly set as resizable. Container and control
+location and size after resizing depend on their attachment mode.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADlgObjectLayout.htm">Arranging Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADlgCreatingDialogs.htm">Creating Dialog Objects</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

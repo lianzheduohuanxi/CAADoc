@@ -1,0 +1,5 @@
+#include "CAAISmiUserMachFeature.h"
+
+IID IID_CAAISmiUserMachFeature = { 0xde0467b2, 0x0aa2, 0x11d6, { 0x9f, 0x25, 0x00, 0x02, 0xb3, 0x1e, 0x9e, 0xfb} };
+
+CATImplementInterface(CAAISmiUserMachFeature, CATBaseUnknown);

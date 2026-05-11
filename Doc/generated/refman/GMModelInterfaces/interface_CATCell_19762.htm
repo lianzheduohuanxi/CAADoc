@@ -1,0 +1,806 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMModelInterfaces Interface CATCell</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMModelInterfaces.htm" href="../GMModelInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMModelInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATCell"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMModelInterfaces Interface CATCell</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATCell_19762','CATCell','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATCell</b>
+</p>
+<p>
+<b><i> Interface representing a topological cell.</i></b><br>
+
+ <br>A cell represents a geometry of a given dimension
+ bounded by cells of lower dimension. A cell is oriented with regards to an
+ underlying geometry:
+ <dl><dt><tt>CATOrientationNegative</tt><dd> the cell orientation is reversed
+ with regards to the standard orientation.
+     <dt><tt>CATOrientationPositive</tt><dd> the cell orientation is the 
+ standard orientation.
+     <dt><tt>CATOrientationUnknown</tt><dd> the cell orientation is not
+ defined.</dl>
+ The cell CATSide defines the matter side on a bounding cell of a cell:
+ <table border=1>
+ <tr><td></td><th>CATFace</th><th>CATEdge</th><th>CATVertex</th></tr>
+ <tr><th>CATVolume</th>
+     <td><tt>CATSideLeft</tt>: the face normal points inside the volume<br>
+         <tt>CATSideRight</tt>: the face normal points outside the volume<br>
+         <tt>CATSideFull</tt>: the face is immersed into the volume</td>
+     <td><tt>CATSideFull</tt>: the edge is immersed into the volume</td>
+     <td><tt>CATSideFull</tt>: the vertex is immersed into the volume</td>
+</tr>
+ <tr><th>CATFace</th>
+     <td>  </td>
+     <td><tt>CATSideleft</tt>: when the observation direction is opposite 
+ to the face normal and the edge is run with its own orientation, the matter
+ is on the edge left<br>
+         <tt>CATSideRight</tt>: when the observation direction is opposite 
+ to the face normal and the edge is run with its own orientation, the matter
+ is on the edge right<br>
+         <tt>CATSideFull</tt>: the edge is immersed into the face</td>
+     <td><tt>CATSideFull</tt>: the vertex is immersed into the face</td>
+</tr>
+ <tr><th>CATEdge</th>
+     <td>  </td>  <td></td>
+     <td><tt>CATSideLeft</tt>: the vertex is at the edge beginning <br>
+         <tt>CATSideRight</tt>: the vertex is at the edge end<br>
+         <tt>CATSideFull</tt>: impossible</td>
+</tr>
+</table>
+ If the cell bounds the domain twice, it is set to <tt>CATSideUnknown</tt>.
+ <br> A CATCell is created with the <script type="text/javascript"> activateLinkAnchor('CATBody','CreateCell','CATBody.CreateCell') </script> method, and deleted with the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method. By default, this deletion is not recursive at the topological level: the domains of the cells are
+ not deleted. However, the geometry of the cell, if not used by another object, is also deleted.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddBoundingCell(CATCell*,CATSide,CATDomain*,CATGeometry*)"><b>AddBoundingCell</b></a>(CATCell*,CATSide,CATDomain*,CATGeometry*)
+<dd>  Adds a CATCell to the boundary of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#AddDomain(CATDomain*,CATLocation)"><b>AddDomain</b></a>(CATDomain*,CATLocation)
+<dd>  Adds a CATDomain to <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#CreateBoundaryIterator()"><b>CreateBoundaryIterator</b></a>()
+<dd>  Creates an iterator on the boundary of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#CreateBoundedCellsIterator(CATBody*)"><b>CreateBoundedCellsIterator</b></a>(CATBody*)
+<dd>  Creates an iterator on the  CATCells bounded by <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#EstimateCenter(CATMathPoint&amp;)"><b>EstimateCenter</b></a>(CATMathPoint&amp;)
+<dd>  Retrieves a point belonging to <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#GetCommonBorderCells(CATCell*,short,CATLISTP(CATCell)&amp;,short)"><b>GetCommonBorderCells</b></a>(CATCell*,short,CATLISTP(CATCell)&amp;,short)
+<dd>  Retrieves the cells of a given dimension  bounding <tt>this</tt> and an another cell.
+ <dt> o 
+    <a href="#GetDimension()"><b>GetDimension</b></a>()
+<dd>  Returns the dimension of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#GetGeometry(CATOrientation*)"><b>GetGeometry</b></a>(CATOrientation*)
+<dd>  Returns the geometry of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#GetGeometryOnCell(CATCell*,CATSide,CATOrientation*)"><b>GetGeometryOnCell</b></a>(CATCell*,CATSide,CATOrientation*)
+<dd>  Returns the geometry of <tt>this</tt> CATCell with respect to a bounded cell.
+ <dt> o 
+    <a href="#GetGeometryOrientation()"><b>GetGeometryOrientation</b></a>()
+<dd>  Returns the orientation of <tt>this</tt> CATCell with regards to its geometry.
+ <dt> o 
+    <a href="#GetInfinite()"><b>GetInfinite</b></a>()
+<dd>  Returns the infinite property of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#GetLyingGeometryOn(CATCell*)"><b>GetLyingGeometryOn</b></a>(CATCell*)
+<dd>  Returns the geometry of <tt>this</tt> as a geometry lying on the geometry of another cell.
+ <dt> o 
+    <a href="#GetLyingOn(CATLISTP(CATCell)&amp;,CATBody*)"><b>GetLyingOn</b></a>(CATLISTP(CATCell)&amp;,CATBody*)
+<dd>  Retrieves the CATCells on which <tt>this</tt> is directly lying on.
+ <dt> o 
+    <a href="#GetMatterSide(CATCell*)"><b>GetMatterSide</b></a>(CATCell*)
+<dd>  Returns the matter side of <tt>this</tt> CATCell with regards to a bounding cell of 
+ upper dimension.
+ <dt> o 
+    <a href="#GetNbBoundedCells(CATBody*,CATBoolean)"><b>GetNbBoundedCells</b></a>(CATBody*,CATBoolean)
+<dd>  Returns the number of cells bounded by <tt>this</tt> cell.
+ <dt> o 
+    <a href="#GetNbInternalDomains()"><b>GetNbInternalDomains</b></a>()
+<dd>  Returns the number of internal CATDomains of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#GetNeighborCell(CATCell*,CATBody*,short*)"><b>GetNeighborCell</b></a>(CATCell*,CATBody*,short*)
+<dd>  Retrieves the adjacent cell of <tt>this</tt> on the other side of a border cell.
+ <dt> o 
+    <a href="#GetNeighborCells(CATCell*,CATBody*,CATLISTP(CATCell)&amp;,CATListOfLong*)"><b>GetNeighborCells</b></a>(CATCell*,CATBody*,CATLISTP(CATCell)&amp;,CATListOfLong*)
+<dd>  Retrieves the adjacent cells of <tt>this</tt> on the other side of a border cell.
+ <dt> o 
+    <a href="#IsLyingOn(CATTopology*,CATLISTP(CATCell)*,CATLISTP(CATGeometry)*)"><b>IsLyingOn</b></a>(CATTopology*,CATLISTP(CATCell)*,CATLISTP(CATGeometry)*)
+<dd>  Tests whether <tt>this</tt> CATCell is lying (directly or indirectly) on another topological object.
+ <dt> o 
+    <a href="#IsOnBorder(CATCell*,CATSide*)"><b>IsOnBorder</b></a>(CATCell*,CATSide*)
+<dd>  Tests whether <tt>this</tt> CATCell bounds a given cell of upper dimension.
+ <dt> o 
+    <a href="#RemoveBoundingCell(CATCell*)"><b>RemoveBoundingCell</b></a>(CATCell*)
+<dd>  Removes a CATCell from the boundary of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#RemoveBoundingCell(CATCell*,CATBoolean)"><b>RemoveBoundingCell</b></a>(CATCell*,CATBoolean)
+<dd>  Removes a CATCell from the boundary of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#SetGeometry(CATGeometry*,CATOrientation)"><b>SetGeometry</b></a>(CATGeometry*,CATOrientation)
+<dd>  Defines the geometry of <tt>this</tt> CATCell.
+ <dt> o 
+    <a href="#SetGeometryOnCell(CATCell*,CATSide,CATGeometry*)"><b>SetGeometryOnCell</b></a>(CATCell*,CATSide,CATGeometry*)
+<dd>  Sets the geometry of <tt>this</tt> CATCell with respect to a bounded cell.
+ <dt> o 
+    <a href="#SetGeometryOrientation(CATOrientation)"><b>SetGeometryOrientation</b></a>(CATOrientation)
+<dd>  Modifies the orientation of <tt>this</tt> CATCell with regards to its geometry.
+ <dt> o 
+    <a href="#SetInfinite(CATBoolean)"><b>SetInfinite</b></a>(CATBoolean)
+<dd>  Defines <tt>this</tt> CATCell as infinite.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddBoundingCell"></a><a name="AddBoundingCell(CATCell*,CATSide,CATDomain*,CATGeometry*)"></a> <dt> o <b>AddBoundingCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddBoundingCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBoundingCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSide','CATSide')</script> <td><tt>iSideOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script> <td><tt>iDomain</tt><td><tt>=NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script> <td><tt>iWithGeometry</tt><td><tt>=NULL </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a CATCell to the boundary of <tt>this</tt> CATCell.
+ <br> The cells dimensions must match the domain low and high dimensions.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBoundingCell</tt>
+   <dd> The pointer to the cell to add to the boundary of <tt>this</tt>.
+ </dd>
+    <dt><tt> iSideOrientation</tt>
+   <dd> The side of the matter when walking along the natural orientation of <tt>iBoundingCell</tt>.
+ </dd>
+    <dt><tt> iDomain</tt>
+   <dd> The pointer to the domain that will contain the added cell.
+ <br>If not <tt>NULL</tt>, the bounding cell is also added to the domain.
+ </dd>
+    <dt><tt> iWithGeometry</tt>
+   <dd> The pointer to the underlying geometry ( a CATPCurve for an
+  Edge-Bounding-Face, a CATPointOnEdgeCurve for a Vertex-Bounding-Edge, ..)
+<br>If not <tt>NULL</tt> at the method call, the geometry is associated with
+ <tt>iBoundingCell</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddDomain"></a><a name="AddDomain(CATDomain*,CATLocation)"></a> <dt> o <b>AddDomain</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddDomain</b>(<td><script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script> <td><tt>iDomain</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLocation','CATLocation')</script> <td><tt>iLocation</tt><td><tt>= CATLocationUnknown </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a CATDomain to <tt>this</tt> CATCell.
+ <br>For volumes and faces only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDomain</tt>
+   <dd> The pointer to the domain to add.
+ </dd>
+    <dt><tt> iLocation</tt>
+   <dd> The location of the domain to bound <tt>this</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateBoundaryIterator"></a><a name="CreateBoundaryIterator()"></a> <dt> o <b>CreateBoundaryIterator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoundaryIterator','CATBoundaryIterator *')</script>  <b>CreateBoundaryIterator</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an iterator on the boundary of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created iterator. You must <tt>delete</tt> this operator after use.
+</dl>
+</dl>
+<a name="CreateBoundedCellsIterator"></a><a name="CreateBoundedCellsIterator(CATBody*)"></a> <dt> o <b>CreateBoundedCellsIterator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoundedCellsIterator','CATBoundedCellsIterator *')</script>  <b>CreateBoundedCellsIterator</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iInBody</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an iterator on the  CATCells bounded by <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInBody</tt>
+   <dd> The pointer to the body in which the bounded cells are searched. Recall
+ that a same CATCell can be used by several bodies.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created iterator. If not <tt>NULL</tt>, you must <tt>delete</tt> this operator after use.
+  <ul><li>If <tt>this</tt> CATCell is inside <tt>iInBody</tt>, iterator is created.
+ <li>If <tt>this</tt> CATCell does not belongs to <tt>iInBody</tt>, <tt>NULL</tt> is output.
+ </ul>
+</dl>
+</dl>
+<a name="EstimateCenter"></a><a name="EstimateCenter(CATMathPoint&amp;)"></a> <dt> o <b>EstimateCenter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>EstimateCenter</b>(<td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>ioResult</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves a point belonging to <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioResult</tt>
+   <dd> The estimated center of <tt>this</tt> CATCell.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCommonBorderCells"></a><a name="GetCommonBorderCells(CATCell*,short,CATLISTP(CATCell)&amp;,short)"></a> <dt> o <b>GetCommonBorderCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCommonBorderCells</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iMaxDepthSearch</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)&amp;')</script> <td><tt>ioResultCells</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iResultCellsDimension</tt><td><tt>= -1</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the cells of a given dimension  bounding <tt>this</tt> and an another cell. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCell</tt>
+   <dd> The pointer to the other cell, of same dimension as <tt>this</tt>.
+ </dd>
+    <dt><tt> iMaxDepthSearch</tt>
+   <dd> The range of dimensions between the  </tt>this</tt> and <tt>iCell</tt>. For example, 
+ if </tt>this</tt> and <tt>iCell</tt> are faces, specifying 1 returns the common edges, specifying 2
+ returns the common edges plus the common vertices.
+ Current limitation: <tt>this</tt> and <tt>iCell</tt> must have the same dimension.
+ </dd>
+    <dt><tt> ioResultCells</tt>
+   <dd> The list of pointers to the found cells.
+ </dd>
+    <dt><tt> iResultCellsDimension</tt>
+   <dd> The dimension <tt>(0,1,2,3)</tt> of the searched cells, <tt>-1</tt> for all the dimensions.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDimension"></a><a name="GetDimension()"></a> <dt> o <b>GetDimension</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('short','short')</script>  <b>GetDimension</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the dimension of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The dimension.
+ <br><b>Legal values</b>:
+ <dl><dt>0</dt><dd> for a vertex.
+ <dt>1</dt><dd> for an edge.
+ <dt>2</dt><dd> for a face.
+ <dt>3</dt><dd> for a volume.
+ </dl>
+</dl>
+</dl>
+<a name="GetGeometry"></a><a name="GetGeometry(CATOrientation*)"></a> <dt> o <b>GetGeometry</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATGeometry','CATGeometry *')</script>  <b>GetGeometry</b>(<td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation*')</script> <td><tt>ioOrientation</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the geometry of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt>  ioOrientation</tt>
+   <dd> The relative orientation between <tt>this</tt> and its geometry.
+ If <tt>NULL</tt>, the orientation is not filled out.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the geometry of <tt>this</tt>.
+</dl>
+</dl>
+<a name="GetGeometryOnCell"></a><a name="GetGeometryOnCell(CATCell*,CATSide,CATOrientation*)"></a> <dt> o <b>GetGeometryOnCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATGeometry','CATGeometry *')</script>  <b>GetGeometryOnCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBoundedCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSide','CATSide')</script> <td><tt>iSide</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation*')</script> <td><tt>ioOrientation</tt><td><tt>=NULL </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the geometry of <tt>this</tt> CATCell with respect to a bounded cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBoundedCell</tt>
+   <dd> The pointer to the cell bounded by <tt>this</tt>.
+ </dd>
+    <dt><tt> iSide</tt>
+   <dd> The matter side attribute of <tt>this</tt>, as bounding <tt>iBoundedCell</tt>.
+ </dd>
+    <dt><tt> ioOrientation</tt>
+   <dd> A pointer to the cell orientation with regards to the geometry.
+ If <tt>NULL</tt>, the orientation is not filled out.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the geometry of <tt>this</tt>.
+ <ul><li> If <tt>this</tt> is a CATEdge, <tt>iBoundedCell</tt> is a CATFace, 
+ and <tt>iGeomOnSupport</tt> is a CATPCurve.
+ <li> If <tt>this</tt> is a CATVertex, <tt>iBoundedCell</tt> is a CATEdge, 
+ and <tt>iGeomOnSupport</tt> is a CATPointOnEdgeCurve.
+ </ul>
+</dl>
+</dl>
+<a name="GetGeometryOrientation"></a><a name="GetGeometryOrientation()"></a> <dt> o <b>GetGeometryOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script>  <b>GetGeometryOrientation</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the orientation of <tt>this</tt> CATCell with regards to its geometry.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The relative orientation between <tt>this</tt> and its geometry.
+</dl>
+</dl>
+<a name="GetInfinite"></a><a name="GetInfinite()"></a> <dt> o <b>GetInfinite</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>GetInfinite</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the infinite property of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The infinity mode of <tt>this</tt>.
+ <br><b>Legal values</b>:
+ <tt>TRUE</tt>, if <tt>this</tt> must be considered as infinite, 
+ <tt>FALSE</tt> if it is finite (default mode).
+</dl>
+</dl>
+<a name="GetLyingGeometryOn"></a><a name="GetLyingGeometryOn(CATCell*)"></a> <dt> o <b>GetLyingGeometryOn</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script>  <b>GetLyingGeometryOn</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the geometry of <tt>this</tt> as a geometry lying on the geometry of another cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The pointer to the supporting cell.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the geometry of <tt>this</tt> lying on <tt>iSupport</tt>.
+</dl>
+</dl>
+<a name="GetLyingOn"></a><a name="GetLyingOn(CATLISTP(CATCell)&amp;,CATBody*)"></a> <dt> o <b>GetLyingOn</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetLyingOn</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)&amp;')</script> <td><tt>ioSupports</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iInBody</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the CATCells on which <tt>this</tt> is directly lying on.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioSupports</tt>
+   <dd> The list of the pointers to the supporting cells.
+ </dd>
+    <dt><tt> iInBody</tt>
+   <dd> The pointer to the body in which the cells are searched. Recall
+ that a same CATCell can be used by several bodies. 
+ If <tt>NULL</tt>, the search is done among all the bodies.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetMatterSide"></a><a name="GetMatterSide(CATCell*)"></a> <dt> o <b>GetMatterSide</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSide','CATSide')</script>  <b>GetMatterSide</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iUpperDimCell</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the matter side of <tt>this</tt> CATCell with regards to a bounding cell of 
+ upper dimension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUpperDimCell</tt>
+   <dd> The pointer to the cell of higher dimension.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The side attribute.
+ 
+  <dt> <b>Throws:</b> 
+  <dd>  If the difference of dimensions is greater than 1, 
+ or if <tt>this</tt> does not bound <tt>iUpperDimCell</tt>.
+</dl>
+</dl>
+<a name="GetNbBoundedCells"></a><a name="GetNbBoundedCells(CATBody*,CATBoolean)"></a> <dt> o <b>GetNbBoundedCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATULONG32','CATULONG32')</script>  <b>GetNbBoundedCells</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>inBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iDifferentiateMatterSide</tt><td><tt>= FALSE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of cells bounded by <tt>this</tt> cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInBody</tt>
+   <dd> The pointer to the body in which the bounded cells are searched. Recall
+ that a same CATCell can be used by several bodies.
+ </dd>
+    <dt><tt> iDifferentiateMatterSide</tt>
+   <dd> Defines whether a cell that is many times bounded by the same cell with different matter sides
+ must be counted once or twice. Notice that this configuration remains unsual.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>FALSE</tt></dt><dd> if each cell only occurs once in the result (default mode)
+     <dt><tt>TRUE</tt></dt><dd> each distinct matter side for the same bounding cell occurs in the result </dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The number of bounded cells.
+</dl>
+</dl>
+<a name="GetNbInternalDomains"></a><a name="GetNbInternalDomains()"></a> <dt> o <b>GetNbInternalDomains</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetNbInternalDomains</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of internal CATDomains of <tt>this</tt> CATCell.
+<br>This method performs a recursive scan.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The number of internal domains.
+</dl>
+</dl>
+<a name="GetNeighborCell"></a><a name="GetNeighborCell(CATCell*,CATBody*,short*)"></a> <dt> o <b>GetNeighborCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCell','CATCell*')</script>  <b>GetNeighborCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBorderCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iInBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short*')</script> <td><tt>ioRelativeOrientation</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the adjacent cell of <tt>this</tt> on the other side of a border cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBorderCell</tt>
+   <dd> The pointer to the bounding cell.
+ </dd>
+    <dt><tt> iInBody</tt>
+   <dd> The pointer to the body in which the bounded cells are searched. Recall
+ that a same CATCell can be used by several bodies.
+ </dd>
+    <dt><tt> ioRelativeOrientation</tt>
+   <dd> The relative orientation of the found cell with regards to <tt>this</tt>. If <tt>NULL</tt>, this argument
+ is not output.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the other bounded cell, <tt>NULL</tt> if <tt>iBorderCell</tt> only bounds <tt>this</tt>.
+ 
+  <dt> <b>Throws:</b> 
+  <dd>   If the result is not unique.
+</dl>
+</dl>
+<a name="GetNeighborCells"></a><a name="GetNeighborCells(CATCell*,CATBody*,CATLISTP(CATCell)&amp;,CATListOfLong*)"></a> <dt> o <b>GetNeighborCells</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetNeighborCells</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBorderCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iInBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)&amp;')</script> <td><tt>ioNeighborCells</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfLong','CATListOfLong*')</script> <td><tt>ioRelativeOrientations</tt><td><tt>=NULL </tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the adjacent cells of <tt>this</tt> on the other side of a border cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBorderCell</tt>
+   <dd> The pointer to the bounding cell.
+ </dd>
+    <dt><tt> iInBody</tt>
+   <dd> The pointer to the body in which the bounded cells are searched. Recall
+ that a same CATCell can be used by several bodies.
+ </dd>
+    <dt><tt> ioNeighborCells</tt>
+   <dd>  The pointer to the other bounded cell, Empty if <tt>iBorderCell</tt> only bounds <tt>this</tt>.
+ </dd>
+    <dt><tt> ioRelativeOrientations</tt>
+   <dd> The relative orientation of the found cells with regards to <tt>this</tt>. If <tt>NULL</tt>, this argument
+ is not output.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    An HRESULT value. 
+   <br><b>Legal values</b>:
+   <dl>
+     <dt>S_OK</dt>
+     <dd>The query succeeds.</dd>
+     <dt>E_FAIL </dt>
+     <dd>The <tt>inBody</tt> is not valid, or <tt>this</tt> CATCell does not belongs to <tt>iInBody</tt></dd>
+   </dl>
+</dl>
+</dl>
+<a name="IsLyingOn"></a><a name="IsLyingOn(CATTopology*,CATLISTP(CATCell)*,CATLISTP(CATGeometry)*)"></a> <dt> o <b>IsLyingOn</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsLyingOn</b>(<td><script type="text/javascript"> activateLink('CATTopology','CATTopology*')</script> <td><tt>iContainerOfSupportingCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)*')</script> <td><tt>ioSupports</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATGeometry)','CATLISTP(CATGeometry)*')</script> <td><tt>ioGeomSupports</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCell is lying (directly or indirectly) on another topological object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainerOfSupportingCell</tt>
+   <dd> The pointer to another topological object.
+ </dd>
+    <dt><tt> ioSupports</tt>
+   <dd> The pointer to the list of supporting cells.
+ </dd>
+    <dt><tt> ioGeomSupports</tt>
+   <dd> The pointer to the list of the geometry of supporting cells.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+</dl>
+</dl>
+<a name="IsOnBorder"></a><a name="IsOnBorder(CATCell*,CATSide*)"></a> <dt> o <b>IsOnBorder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsOnBorder</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iUpperDimCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSide','CATSide*')</script> <td><tt>ioSide</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCell bounds a given cell of upper dimension.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUpperDimCell</tt>
+   <dd> The pointer to the cell of upper dimension.
+ </dd>
+    <dt><tt> ioSide</tt>
+   <dd> A pointer to the matter side of the bouding cell.
+ If <tt>NULL</tt>, the side is not filled out.
+ <br>Warning: <tt>ioSide=CATSideUnknown</tt>: 
+ <ul>
+ <li>either if the difference of dimensions is greater than 1
+ <li>or if <tt>this</tt> bounds UpperDimCell twice (Left and Right)
+ </ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>0</tt></dt><dd> if <tt>this</tt> does not bound 
+ <tt>iUpperDimCell</tt>
+     <dt><tt>1</tt></dt><dd> if <tt>this</tt> bounds <tt>iUpperDimCell</tt></dl>
+</dl>
+</dl>
+<a name="RemoveBoundingCell"></a><a name="RemoveBoundingCell(CATCell*)"></a> <dt> o <b>RemoveBoundingCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveBoundingCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iCellToRemove</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a CATCell from the boundary of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCellToRemove</tt>
+   <dd> The pointer to the cell to remove. 
+ The cell is detached from the boundary, but still exists in the CATGeoFactory.</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveBoundingCell"></a><a name="RemoveBoundingCell(CATCell*,CATBoolean)"></a> <dt> o <b>RemoveBoundingCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>RemoveBoundingCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iCellToRemove</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iRemoveFromFactory</tt><td><tt>= FALSE </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Removes a CATCell from the boundary of <tt>this</tt> CATCell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCellToRemove</tt>
+   <dd> The pointer to the cell to remove. 
+ The cell is detached from the boundary, but still exists in the CATGeoFactory.
+ </dd>
+    <dt><tt> iRemoveFromFactory</tt>
+   <dd> The action on the detached cell <tt>iDomainToDetach</tt>.
+ Dedicated to the case where no more CATDomain refers to <tt>iCellToDetach</tt>.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>FALSE</tt></dt><dd> the <tt>iCellToDetach</tt> remains in the factory
+     <dt><tt>TRUE</tt></dt><dd> the <tt>iCellToDetach</tt> is removed from the factory with RemoveDependancies management</dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetGeometry"></a><a name="SetGeometry(CATGeometry*,CATOrientation)"></a> <dt> o <b>SetGeometry</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetGeometry</b>(<td><script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script> <td><tt>iGeometry</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script> <td><tt>iOrientation</tt><td><tt>=CATOrientationPositive </tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the geometry of <tt>this</tt> CATCell. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iGeometry</tt>
+   <dd> The pointer to the geometry to associate with <tt>this</tt>.
+ <ul><li>The geometry of a CATFace is a CATSurface.
+ <li>The geometry of a CATEdge is a CATEdgeCurve.
+ <li>The geometry of a CATVertex is a CATMacroPoint.
+ <li><tt>SetGeometry</tt> is not used in case of a CATVolume,
+ as the geometry of a CATVolume always is the 3D space. 
+</ul>
+ </dd>
+    <dt><tt> iOrientation</tt>
+   <dd> The relative orientation of the cell with regards to the geometry.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetGeometryOnCell"></a><a name="SetGeometryOnCell(CATCell*,CATSide,CATGeometry*)"></a> <dt> o <b>SetGeometryOnCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetGeometryOnCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBoundedCell</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSide','CATSide')</script> <td><tt>iSide</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATGeometry','CATGeometry*')</script> <td><tt>iGeomOnSupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the geometry of <tt>this</tt> CATCell with respect to a bounded cell.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBoundedCell</tt>
+   <dd> The pointer to the cell bounded by <tt>this</tt>.
+ </dd>
+    <dt><tt> iSide</tt>
+   <dd> The matter side attribute of <tt>this</tt>, as bounding <tt>iBoundedCell</tt>.
+ </dd>
+    <dt><tt> iGeomOnSupport</tt>
+   <dd> The pointer to the geometry of <tt>this</tt>.
+ <ul><li> If <tt>this</tt> is a CATEdge, <tt>iBoundedCell</tt> is a CATFace, 
+ and <tt>iGeomOnSupport</tt> is a CATPCurve.
+ <li> If <tt>this</tt> is a CATVertex, <tt>iBoundedCell</tt> is a CATEdge, 
+ and <tt>iGeomOnSupport</tt> is a CATPointOnEdgeCurve.
+ </ul></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetGeometryOrientation"></a><a name="SetGeometryOrientation(CATOrientation)"></a> <dt> o <b>SetGeometryOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetGeometryOrientation</b>(<td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script> <td><tt>iNewOrientation</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the orientation of <tt>this</tt> CATCell with regards to its geometry.
+ <br>For faces and edges.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewOrientation</tt>
+   <dd> The new relative orientation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetInfinite"></a><a name="SetInfinite(CATBoolean)"></a> <dt> o <b>SetInfinite</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetInfinite</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iYesOrNo</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATCell as infinite.
+<br> All the cells are bordered, 
+           but one can consider a cell as infinite by applying this method.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iYesOrNo</tt>
+   <dd> The infinity mode of <tt>this</tt>.
+ <br><b>Legal values</b>:
+ <tt>TRUE</tt>, if <tt>this</tt> must be considered as infinite, 
+ <tt>FALSE</tt> if it is finite (default mode).</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCell.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMModelInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

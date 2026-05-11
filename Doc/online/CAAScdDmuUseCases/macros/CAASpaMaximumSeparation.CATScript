@@ -1,0 +1,76 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Compute the maximum separation.
+'   Assumptions : A CATProduct document should be active and some components selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' Retrieve the group of all components
+    Dim cGroups As AnyObject
+    Set cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+    Dim oGroup1 As Group
+    Set oGroup1 = cGroups.AddFromSel
+    Dim iNumber As Integer
+    iNumber = oGroup1.CountExtract
+    If (iNumber <= 1) Then
+       ' Display the warning
+       MsgBox "At least two products must be selected"
+    Else
+
+
+       ' Retrieve the Distances collection
+       Dim cDistances As Distances
+       Set cDistances = CATIA.ActiveDocument.Product.GetTechnologicalObject("Distances")
+
+       'Loop on each couple of components
+       Dim dMaximum As Double
+       dMaximum = 0.
+       Dim oDistance As Distance
+       Dim I As Integer
+       Dim J As Integer
+
+       Dim oGroup2 As Group
+       Set oGroup2 = cGroups.Add
+       Dim oProduct1 As Product
+       Dim oProduct2 As Product
+       For I = 1 To iNumber-1
+           Set oProduct1 = oGroup1.ItemExtract(I)
+           oGroup2.AddExplicit oProduct1
+           For J = I+1 To iNumber
+               Set oProduct2 = oGroup1.ItemExtract(J)
+               oGroup2.AddExplicit oProduct2
+
+               ' Create the distance and compute it
+               Set oDistance = cDistances.Add
+               oDistance.FirstGroup = oGroup2
+               oDistance.Compute
+
+               ' Compare the distance with the maximum value
+               If (oDistance.IsDefined = 1) Then
+                   If (oDistance.Value > dMaximum) Then
+                       dMaximum = oDistance.Value
+                   End If
+               End If
+               cDistances.remove oDistance
+               oGroup2.RemoveExplicit 2
+           Next
+           oGroup2.RemoveExplicit 1
+       Next
+
+       ' Clean
+       cGroups.Remove oGroup2
+       cGroups.Remove oGroup1
+
+       ' Display the results
+       MsgBox "Maximum separation is :" & Cstr(dMaximum)
+
+    End If
+
+End Sub

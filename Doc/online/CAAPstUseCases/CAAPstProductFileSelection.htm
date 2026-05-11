@@ -1,0 +1,451 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 6.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Inserting Components Stored in Foreign Files</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Inserting Components Stored in Foreign Files</H3>
+        <P><EM>Implementing the CATIProductFileSelection Interface</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents&nbsp; the CAAPstProductFileSelection use case 
+        which illustrates how to add products contained in a foreign file 
+        format.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstProductFileSelection Use 
+            Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstProductFileSelection Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstProductFileSelection</A></LI>
+                <LI><A href="#Where">Where to Find the 
+                CAAPstProductFileSelection Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the <i>CATIProductFileSelection</i> interface, a component stored in a foreign 
+file format can be loaded and inserted into an existing product.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstProductFileSelection Use Case</H3>
+<P>CAAPstProductFileSelection is a use case of the CAAProductStructure.edu 
+framework that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstProductFileSelection Do</H4>
+<P>Components are inserted into a product by activating the <B>Components -&gt; 
+Existing Component...</B> contextual menu and selecting one or more files. By 
+implementing the <i>CATIProductFileSelection</i> interface, we will show how 
+to make that menu recognize new file types and how those files can be processed 
+for insertion.</P>
+<P><img border="0" src="images/CAAPstPrdSel01.jpg" width="686" height="596"></P>
+<P>This implementation is designed specifically to</P>
+<UL>
+    <LI>recognize the <TT>CAAProduct</TT> file extension</LI>
+    <LI>extract only the second child product from the <TT>CAAProduct</TT> file 
+    (provided of course that there are more than two.)</LI>
+</UL>
+<P>The sample <TT>CAAProduct</TT> file is in fact a <TT>CATProduct</TT> file 
+that has been renamed. It has five child products and can be found at</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstProductFileSelection_MainPrd.CAAProduct</TT></P>
+<P><img border="0" src="images/CAAPstPrdSel00.jpg" width="687" height="616"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstProductFileSelection</H4>
+<P>To launch CAAPstProductFileSelection:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment and build the <TT>
+    CAAPstProductFileSelection.m</TT> module (see reference <a href="#[2]">[2]</a>)</LI>
+    <LI>Edit the&nbsp; <TT>CNext/code/dictionary/CAAProductStructure.edu.dico
+    </TT>dictionary by uncommenting the line beginning with <TT>CAAPstPrdFileSel</TT><TABLE class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+        <TR>
+            <TD>
+            <PRE># CAAPstProductFileSelection use case
+CAAPstPrdFileSel CATIProductFileSelection libCAAPstProductFileSelection</PRE>
+            </TD>
+        </TR>
+    </TABLE>
+    </LI>
+    <LI>Install the dictionary and other resource files by executing <TT>
+    mkCreateRuntimeView</TT></LI>
+    <LI>Start CATIA by executing <TT>mkrun</TT></LI>
+    <LI>Create a new product and select <B>Components -&gt; Existing Component...</B> 
+    on the product contextual menu</LI>
+    <LI>Select <TT>CAAProduct</TT> as file type and browse to <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resource/graphic</TT> 
+    to pick the only eligible file <TT>CAAPstPrdFileSel_MainPrd.CAAProduct</TT><BR>
+    <img border="0" src="images/CAAPstPrdSel02.jpg" width="686" height="596">
+    </LI>
+    <LI>This is the result once the <TT>CAAPstPrdFileSel_MainPrd.CAAProduct</TT> 
+    file has been selected<BR>
+    <img border="0" src="images/CAAPstPrdSel03.jpg" width="687" height="597"><BR>
+    As you can see, it is the second child product (<TT>CAAPstPrdFileSel_Prd2</TT>) 
+    that has been inserted (instead of <TT>CAAPstPrdFileSel_MainPrd</TT> if it 
+    is a <TT>CATProduct</TT>.)</LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstProductFileSelection Code</H4>
+<P>CAAPstProductFileSelection code is located in the 
+CAAPstProductFileSelection.m module of the CAAProductStructure.edu framework.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A><B>Step-by-Step</B></H3>
+<P>There are two parts in <I>CAAPstProductFileSelection</I>:</P>
+<OL>
+    <LI><A href="#The User Interface">User Interface</A></LI>
+    <LI><A href="#Actual Implementation Code">Actual Implementation Code</A></LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><B><A name="The User Interface">User Interface</A></B></H4>
+<P>The impact on the user interface is the appearance of the new <TT>CAAProduct</TT> 
+file type with a corresponding label in the file selection dialog. This is done 
+with the help of the dictionary and two resource files.</P>
+<P>In the dictionary we indicate that our implementation <TT>CAAPstPrdFileSel</TT>, 
+implements the <i>CATIProductFileSelection</i> interface with code residing in 
+the <TT>libCAAPstProductFileSelection</TT> library:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE># CAAPstProductFileSelection use case
+CAAPstPrdFileSel CATIProductFileSelection libCAAPstProductFileSelection</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>As a consequence, there must be a <TT>CAAPstPrdFileSel.CATRsc</TT> file 
+describing the file type that <TT>CAAPstPrdFileSel</TT> will handle. This file 
+can found at</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/msgcatalog/CAAPstPrdFileSel.CATRsc</TT></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>ExtensionCount=&quot;1&quot;;
+1.Method=&quot;CAA Product File&quot;;
+1.Extension=&quot;CAAProduct&quot;;</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The <TT>CAAPstPrdFileSel.CATRsc file</TT> indicates that one type is handled 
+(<TT>ExtensionCount=&quot;1&quot;</TT>) and that the extension is &quot;C<TT>AAProduct</TT>&quot;. 
+The <TT>Method</TT> line serves as a unique identification in case there are 
+more than one implementation handling the <TT>CAAProduct</TT> file type.</P>
+<P>Finally we need a localized label for the <TT>CAAProduct</TT> file type. It 
+is defined by the <TT>CAAPstPrdFileSel.CATNls</TT> file that is located at</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/msgcatalog/CAAPstPrdFileSel.CATNls</TT></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>1=&quot;CAA Product Files &quot;;</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The contents of this file can be translated for other locales if needed. In 
+that case, they should be located in the corresponding locale directory. For 
+example, you can find the French version in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/msgcatalog/French/CAAPstPrdFileSel.CATNls</TT></P>
+<P>Now that the user interface recognizes the new file type, the logic that 
+processes the files must also be provided.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><B><A name="Actual Implementation Code">Actual Implementation Code</A></B></H4>
+<P>The <TT>CATIProductFileSelection</TT> interface implementation has to be 
+derived from the <TT>CATPrdCommonFileSelection</TT> class. It has two methods 
+that can be redefined:</P>
+<UL>
+    <LI><TT>HRESULT GetSelectionCount(long&amp; oCount)</TT>: <BR>
+    returns the number of components that will be extracted from the selected 
+    files. The default is one for each file.</LI>
+    <LI><TT>HRESULT ExtractProducts()</TT><BR>
+    returns the list of components for insertion from the selected files.</LI>
+</UL>
+<P>In our <TT>CAAPstProductFileSelection</TT> class, we need to redefine only
+<TT>ExtractProducts</TT> for the specific behavior (of extracting only the 
+second child product) and the constructor/destructor to add the <TT>CAAProduct</TT> 
+file type.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>class CAAPstProductFileSelection: public CATPrdCommonFileSelection
+{
+CATDeclareClass;
+
+public:
+
+        // Standard constructor and destructor for an implementation class
+        // -----------------------------------------------------------------
+        CAAPstProductFileSelection ();
+        virtual ~CAAPstProductFileSelection ();
+
+        /**
+         * @see ProductStructure.CATIProductFileSelection#ExtractProducts()
+         */
+        HRESULT ExtractProducts (CATIContainer*, CATIProduct*,
+                                 CATListValCATBaseUnknown_var*&amp;);
+
+
+private:
+        // The copy constructor and the = operator must not be implemented
+        // -------------------------------------------------------------------
+        CAAPstProductFileSelection (CAAPstProductFileSelection &amp;);
+        CAAPstProductFileSelection&amp; operator=(CAAPstProductFileSelection&amp;);
+
+};</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>There are roughly three parts in the <TT>CAAPstProductFileSelection.cpp</TT> 
+source file:</P>
+<OL>
+    <LI><A href="#Interface binding">Interface binding</A></LI>
+    <LI><A href="#Constructor and destructor">Constructor and Destructor</A></LI>
+    <LI><A href="#ExtractProducts Method">ExtractProducts Method</A></LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H5><I><A name="Interface binding">Interface binding</A></I></H5>
+<P>The C++ class is linked to <TT>the interface with the TIEchain</TT> macro.The
+<TT>ClassImplementClass</TT> macro indicates that the C++ class is a data 
+extension and that it is extending <TT>CAAPstPrdFileSel</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>TIEchain_CATIProductFileSelection(CAAPstProductFileSelection);
+
+CATImplementClass(CAAPstProductFileSelection,
+                  DataExtension,
+                  CATBaseUnknown,
+                  CAAPstPrdFileSel);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P><I><A name="Constructor and destructor">Constructor and destructor</A></I></P>
+<P>In the constructor, the <TT>_typesList</TT> data member is allocated and 
+initialized with a list consisting of <TT>&quot;CAAProduct&quot;</TT>. This is how CATIA 
+determines which implementation to invoke for a given file type. This data 
+member is freed in the destructor if necessary.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>//-----------------------------------------------------------------------------
+// Constructor
+//-----------------------------------------------------------------------------
+CAAPstProductFileSelection::CAAPstProductFileSelection():
+CATPrdCommonFileSelection()
+{
+        CAAPstPFSTRACE(&quot;CAAPstProductFileSelection - Constructor&quot;);
+
+        _typesList = new CATListOfCATUnicodeString(1);
+        if (NULL != _typesList) {
+                // must be identical to the one in CAApstPrdFileSel.CATRsc
+                _typesList-&gt;Append(&quot;CAAProduct&quot;);
+        }
+}
+
+//-----------------------------------------------------------------------------
+// Destructor
+//-----------------------------------------------------------------------------
+CAAPstProductFileSelection::~CAAPstProductFileSelection()
+{
+        CAAPstPFSTRACE(&quot;CAAPstProductFileSelection - Destructor&quot;);
+
+        if (NULL != _typesList) {
+                delete _typesList;
+        _typesList = NULL;
+        }
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P><I><A name="ExtractProducts Method"><TT>ExtractProducts</TT> Method</A></I></P>
+<P>Once the user has selected one or more files, this method is invoked. The 
+purpose of this method is to process the selected files and return a list of 
+components from it.</P>
+<P><TT>ExtractProducts</TT> is called with three input parameters (one data 
+member and two arguments) and one output parameter:</P>
+<OL>
+    <LI><TT>_pathsList</TT>: the data member contains the list of files that 
+    have been selected</LI>
+    <LI><TT>iContainer</TT>: the container of the parent product</LI>
+    <LI><TT>iParentProduct</TT>: the product into which the insertion(s) will be 
+    made</LI>
+    <LI><TT>oList</TT>: the list of products to be inserted</LI>
+</OL>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>//-----------------------------------------------------------------------------
+// ExtractProducts
+//-----------------------------------------------------------------------------
+HRESULT CAAPstProductFileSelection::ExtractProducts
+        (CATIContainer* iContainer,            // container of parent product
+         CATIProduct* iParentProduct,          // parent product to insert to
+         CATListValCATBaseUnknown_var*&amp; oList) // products to be inserted
+{
+        HRESULT rc;
+        CAAPstPFSTRACE(&quot;Entering CAAPstProductFileSelection::ExtractProducts&quot;);
+</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The inputs are verified and the output list is allocated.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+        if (NULL == _pathsList || NULL == iContainer || NULL == iParentProduct)
+                return E_FAIL;
+        int pathCount = _pathsList-&gt;Size();
+        if (NULL == oList) {
+                // allocate product list
+                oList = new CATLISTV(CATBaseUnknown_var) (pathCount);
+                if (NULL == oList) {
+                        CAAPstPFSTRACE(&quot;Failed to allocate output list&quot;);
+                return E_FAIL;
+                }
+        }
+...
+</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Then for each file, we extract the second child product and add it to the 
+output list.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+        for (int pathNum = 1; pathNum &lt;= pathCount; pathNum++) {
+
+                //
+                // For each file selected,
+                // retrieve the 2nd child product for insertion
+                //
+                CATUnicodeString&amp; curPath = (*_pathsList)[pathNum];
+                CATDocument* pSelectedDoc = NULL;
+                rc = CATDocumentServices::Open(curPath, pSelectedDoc);
+...
+                CATIDocRoots* pDocRoots = NULL;
+                rc = pSelectedDoc-&gt;QueryInterface(IID_CATIDocRoots,
+                                                  (void **) &amp;pDocRoots);
+...
+                CATListValCATBaseUnknown_var* pRootProducts = 
+                        pDocRoots-&gt;GiveDocRoots();
+...
+                CATIProduct_var spRootProduct = (*pRootProducts)[1];
+                delete pRootProducts;
+                pRootProducts = NULL;
+...
+                CATIProduct *pProductOnRoot = NULL;
+                rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                                   (void **) &amp;pProductOnRoot);
+...
+                CATListValCATBaseUnknown_var* childrenList =
+                        pProductOnRoot-&gt;GetAllChildren();
+                if (NULL == childrenList || childrenList-&gt;Size() &lt; 2) {
+                        CAAPstPFSTRACE(&quot;Failed to get 2nd children of root product&quot;);
+                        return E_FAIL;
+                }
+
+                CATIProduct_var spProductToAdd = (*childrenList)[selectedChild];
+                oList-&gt;Append(spProductToAdd);
+
+...
+        }
+
+        CAAPstPFSTRACE(&quot;Exiting CAAPstProductFileSelection::ExtractProducts&quot;);
+        return S_OK;
+}
+</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to handle a new file type:</P>
+<UL>
+    <LI>Adding a new file type to the File Selection Dialog with a dictionary 
+    and two resource files</LI>
+    <LI>Implementing the CATIProductFileSelection to handle the new file type</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1</span></STRONG><b><span style="font-weight: 400"> [Aug 2004]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document revised</span></b></TD>
+    </tr>
+    <TR>
+        <TD valign="top"><b><span style="font-weight: 400">Version: </span></b> <STRONG>
+        <span style="font-weight: 400">1</span></STRONG><b><span style="font-weight: 400"> [Sep 2003]</span></b></TD>
+        <TD valign="top"><b><span style="font-weight: 400">Document created</span></b></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2003, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>
+

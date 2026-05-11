@@ -1,0 +1,338 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Administration Commands</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - CATJDialog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Administration Commands</h3>
+      <em>How to create centralized administration commands</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to create centralized administration commands
+      in JDialog.
+      <ul>
+        <li><strong><a href="#scalability">What is the Administration Tool?</a></strong></li>
+        <li><strong><a href="#createadmincommand">How to create an
+          administration command?</a></strong></li>
+        <li><strong><a href="#declare">How to add an administration command to
+          the Administration Tool?</a></strong></li>
+        <li><font color="#0000FF"><b><a href="#shortguide">Short guide to create
+          a new Administration Tool</a></b></font><a href="#shortguide"></a></li>
+        <li><b><font color="#FF0000"><u><a href="#associate">How to associate an
+          administration command to a JDialog command?</a></u></font></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="scalability"></a>What is the Administration Tool</h3>
+<p>The Administration Tool is a common command that centralizes all
+administration commands (i.e. commands that configure the application settings).
+<p align="center"><img border="0" src="images/CATOptionPanel.gif" width="800" height="404">
+<p>As you can see, the Administration Tool, is displayed in two parts:
+<ul>
+  <li>The <b>Category tree</b>: organizes and classifies administration commands
+    in a logical way.</li>
+  <li>The <b>Option Area</b>: a zone that displays the administration command
+    related to the selected node in the category tree.</li>
+</ul>
+<p>From a development point of view, the Administration Tool takes charge of the
+OK/Cancel lifecycle, and the administration commands code should never worry
+about this.</p>
+<p>For any application, it is possible to create one or more administration
+commands, and define the <b>category path</b> where it will be accessed. This
+articles explains how.</p>
+<p>It is also possible to associate an administration command to a JDialog
+command (ex: &quot;People &amp; Organization administration&quot; may be
+associated to a &quot;Project Management&quot; command). This is explained at
+the end of this article.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3 style="margin-top: 0; margin-bottom: 0"><a name="createadmincommand"></a>How
+to create an administration command?</h3>
+<p>An administration command is a standard JDialog command, except that it's
+root component has to be an <b>Option Panel</b> (CATOptionPanel).</p>
+<p>Assuming all administration datas are stored in the settings (CATSetting),
+the administration tool manages a centralized setting repository object that is
+accessible through the option panel object. The command controller can retrieve
+it with <b>CATOptionPanel.getSetting( );</b></p>
+<p>This setting repository object is initialized and available for the
+application <b>right after</b> the option panel fires an <b>Initialize</b>
+notification (<b>onInitialize</b>).</p>
+<p>Here are main methods of CATOptionPanel class:</p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre>public class CATOptionPanel extends CATDialog
+{
+<font color="#0000FF">	/**
+	 * Returns the 'Initialize' notification (fired after the OptionPanel has been initialized with the setting object)
+	 */</font>
+	public CATNotification getInitializeNotification();</pre>
+      <pre>	<font color="#0000FF">/**
+	 * Returns the setting object (managed by Administration Tool)
+	 */</font>
+	public CATSetting getSetting()</pre>
+      <pre>}</pre>
+    </td>
+  </tr>
+</table>
+<p>Basic rules for programming an administration command:</p>
+<ul>
+  <li>You don't need to manage the setting creation and flush lifecycle: just
+    use the one provided by the CATOptionPanel widget</li>
+  <li>You don't have to instantiate and take car of OK and Cancel buttons (they
+    are handled by the Administration Tool).</li>
+  <li>The OK button is enabled as soon as you modify a setting and the flush is
+    automatic when the user clicks the OK button.</li>
+</ul>
+<p><b>Sample:</b> MyAdminCommand.XMLDlg file:</p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;<b>OptionPanel</b> Name=&quot;option&quot; <b>Attribute</b>=&quot;<b><font color="#0000FF">_Option</font></b>&quot; <b>onInitialize</b>=&quot;<b><font color="#FF0000">onInitialize</font></b>&quot; Controller=&quot;com.dassault_systemes.myadmin.MyAdminCommand&quot;&gt;
+  &lt;Frame Name=&quot;f&quot; DefaultButton=&quot;Change&quot;&gt;
+    &lt;TextField Name=&quot;Field&quot; Attribute=&quot;<font color="#0000FF"><b>_TextField</b></font>&quot;/&gt;
+    &lt;Button Name=&quot;Change&quot; onButtonActivated=&quot;<font color="#FF0000"><b>onUserChangedValue</b></font>&quot;/&gt;
+    [...]
+  &lt;/Frame&gt;
+&lt;/OptionPanel&gt;&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p>As you can see:</p>
+<ul>
+  <li>The root widget is an <b>OptionPanel</b></li>
+  <li>The controller holds a reference to the option panel widget (_Option)</li>
+  <li>The controller registers to the <b>onInitialize</b> notification (instead
+    of onCreate)</li>
+</ul>
+<p>Here is a controller sample: MyAdminCommand.java</p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre>package com.dassault_systemes.myadmin;</pre>
+      <pre>import com.dassault_systemes.catjdialog.CATOptionPanel;
+import com.dassault_systemes.catjsystem.CATSetting;</pre>
+      <pre>public class MyAdminCommand
+{
+	public CATOptionPanel<b> <font color="#0000FF">_Option</font></b>;
+	public CATTextField <b><font color="#0000FF">_Textfield</font></b>;<b>
+</b>	[...]</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#0000ff">	/**
+	 * onInitialize callback: initialize the user interface from the settings
+	 */</font>
+	public void <b><font color="#FF0000">onIntialize</font></b>(CATDialog iDialog, CATNotification iNotification, Object iData)
+	{</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000">	    </font><font size="2" color="#7f0055">try</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font size="2" color="#7f0055">	  </font><font size="2"><font color="#7f0055">  </font>{</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000">	        // --- retrieve settings</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	        CATSetting setting = <b><font color="#0000FF">_Option</font></b>.<b>getSetting()</b>;</pre>
+      </font>
+      <pre style="margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000" size="2">	        </font><font color="#008000">// --- initialize the User Interface from the settings</font><font size="2"></pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	        <b><font color="#0000FF">_Textfield</font></b>.setText(setting.getString(</font>&quot;MyAdmin&quot;, &quot;MyStringValue&quot;, &quot;&quot;<font size="2"> ) );</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	        [...]</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	    }</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	    </font><font color="#7f0055">catch</font>( Exception e )</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	    <font size="2">{</font></pre>
+      <font size="2">
+      <pre style="margin-top: 0; margin-bottom: 0">	        [...]</pre>
+      </font>
+      <pre style="margin-top: 0; margin-bottom: 0"><font size="2">	    }</font>
+	}
+<font color="#0000ff">	/**</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#0000ff">	 * When the user modifies a value, store it in the settings.</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#0000ff">	 * Note: right after the first stored value, the OK button is enabled, and when the user presses it, </font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#0000ff">	 * all modified values are flushed into to database.
+	 */</font>
+	public void <font color="#FF0000"><b>onUserChangedValue</b></font>(CATDialog iDialog, CATNotification iNotification, Object iData)
+	{</pre>
+      <font size="2">
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000">	    // --- retrieve settings</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	    CATSetting setting = <b><font color="#0000FF">_Option</font></b>.<b>getSetting()</b>;</pre>
+      </font>
+      <pre style="margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000">	    // --- store the new value in the settings</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><b>	    </b>setting.setString(&quot;MyAdmin&quot;, &quot;MyStringValue&quot;<font size="2">,</font> <font color="#0000FF"><b>_Textfield</b></font><font size="2">.</font>getText());</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">	}<font color="#008000">
+</font>}&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note</b>: the setting object is always retrieved with
+_Option.getSetting(). This way, the controller is fully stateless.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="declare"></a>How to add an administration command to the
+Administration Tool?</h3>
+<p>Once the administration command is written, you still have to register it to
+the Administration Tool (and declare it's <b>category path</b>). This is done
+through 'XMLCmdIndex' files, that must be created in <i><tt>[myFrameWork]/CNext/resources/command/[index
+file name].XMLCmdIndex</tt></i></p>
+<p><b>Sample:</b> MyAppCmdIndex.XMLCmdIndex file:</p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;CmdIndex&gt;
+<font color="#008000">  &lt;!-- declaration of the administration command for administrator --&gt;</font>
+  &lt;<font color="#0000FF"><b>Option</b></font> Name=&quot;MyAppAdminCommand&quot; CategoryPath=&quot;/Admin/MyAppAdmin&quot;/&gt; Authorized=&quot;Admin&quot; Icon=&quot;MyAppAdmin.gif&quot; HelpURI=&quot;/online/ptlad_O2/myadmin.htm&quot;
+<font color="#008000">  &lt;!-- declaration of an option panel that can be customized by every user --&gt;</font>
+  &lt;<font color="#0000FF"><b>Option</b></font> Name=&quot;MyAppPreferences&quot; CategoryPath=&quot;/MyApplicationRoot/MyPrefs&quot;/&gt; Icon=&quot;MyAppPrefs.gif&quot; HelpURI=&quot;/online/ptlad_O2/myprefs.htm&quot;
+  [...]
+&lt;/CmdIndex&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>Attributes of <b>Option</b> tag are:</p>
+<ul>
+  <li>
+    <p style="margin-top: 0; margin-bottom: 0"><b>Name</b> (mandatory): the Name
+    of the XMLDlg defining the administration command (root widget is expected
+    to be an OptionPanel).</li>
+  <li>
+    <p style="margin-top: 0; margin-bottom: 0"><b>CategoryPath</b> (mandatory):
+    gives the category path where the administration command is accessible inn
+    the Administration Tool.</li>
+  <li>
+    <p style="margin-top: 0; margin-bottom: 0"><b>Authorized </b>(optional):
+    defines whether the administration command is reserved for administrators or
+    for all users. Supported values are 'Admin' or 'All'. Default value is
+    'All'.</li>
+  <li>
+    <p style="margin-top: 0; margin-bottom: 0"><b>Icon </b>(optional): the icon
+    filename that will be used in the category path for representing the
+    administration command (icons are found in the <i>resources/graphic</i>
+    directory in the runtime view).</li>
+  <li>
+    <p style="margin-top: 0; margin-bottom: 0"><b>HelpURI </b>(optional): the
+    relative path to the help for the administration command (a link appears
+    when it is set).</li>
+</ul>
+<p>Localized values of the category path are stored in a CATNls file associated
+to the XMLCmdIndex file.</p>
+<p><b>Sample:</b> MyAppCmdIndex.CATNls file:</p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre><font color="#008000">// --- Catalog file for MyAppCmdIndex.XMLCmdIndex
+// --- contains NLS names for Category tree</font>
+
+Category.Admin= &quot;Administration&quot;;
+Category.MyAppAdmin= &quot;Buzz 2000 Administration&quot;;
+Category.MyApplicationRoot= &quot;Buzz 2000&quot;;
+Category.MyPrefs= &quot;User Preferences&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="shortguide"></a>Short guide to create&nbsp; administration
+commands:</h3>
+<ol>
+  <li>The XMLDlg file:</li>
+</ol>
+<blockquote>
+  <ul>
+    <li>The root element is an <b>OptionPanel</b><font size="2"></font></li>
+    <li>In order to initialize the user interface from settings, you need to
+      register to <b>onInitialize</b> notification (instead of onCreate)</li>
+  </ul>
+</blockquote>
+<ol start="2">
+  <li>In your controller:</li>
+</ol>
+<blockquote>
+  <ul>
+    <li>Access the setting object from the CATOptionPanel</li>
+    <li>Don't try to enable the OK button by yourself: this is done
+      automatically as soon as you store a new value in the settings</li>
+    <li>Don't try to flush the setting values by yourself: this is handled by
+      the Administration Tool infrastructure, based on the OK/Cancel buttons</li>
+  </ul>
+</blockquote>
+<ol start="3">
+  <li>The XMLCmdIndex:</li>
+</ol>
+<blockquote>
+  <ul>
+    <li>Declare your administration command and it's related category path</li>
+    <li>Don't forget to create associated CATNls files containing localized
+      category path node names</li>
+  </ul>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="associate"></a>How to associate an administration command to a
+JDialog command?</h3>
+<p>Associating an administration command to a JDialog command adds an icon to
+the portlet titlebar that allows direct access to the administration tool on the
+right administration command.</p>
+<p align="center"><img border="0" src="images/CATJdgAdmin.gif" width="766" height="542"></p>
+<p>This association is done in 'XMLCmdIndex' files.</p>
+<p><b>Sample:</b></p>
+<table class="code" width="1144" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="1136">
+      <pre style="margin-top: 0; margin-bottom: 0">&lt;?xml version=&quot;1.0&quot;?&gt;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">&lt;CmdIndex&gt;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#008000">  &lt;!-- declares the administration command &quot;MyAdmin&quot; --&gt;</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0">  &lt;<b>Option</b> Name=&quot;<font color="#0000FF">MyAdmin</font>&quot; [...]/&gt;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">  [...]</pre>
+      <font size="2">
+      <pre style="margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+      </font>
+      <pre style="margin-top: 0; margin-bottom: 0"><font color="#0000FF"> </font><font color="#008000"> &lt;!-- declares the JDialog command &quot;MyCommand&quot; and associates it with the administration command &quot;MyAdmin&quot; --&gt;</font></pre>
+      <pre style="margin-top: 0; margin-bottom: 0">  &lt;<b>Command</b> Name=&quot;<font color="#FF0000">MyCommand</font>&quot; ... Option=&quot;<font color="#0000FF">MyAdmin</font>&quot;/&gt;</pre>
+      <pre style="margin-top: 0; margin-bottom: 0">  [...]</pre>
+      <font size="2">
+      <pre style="margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+      </font>
+      <pre style="margin-top: 0; margin-bottom: 0">&lt;/CmdIndex&gt;&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

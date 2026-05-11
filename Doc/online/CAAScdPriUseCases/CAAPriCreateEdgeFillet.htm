@@ -1,0 +1,228 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating EdgeFillets on a Rectangular Pad</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Part Interfaces</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating EdgeFillets on a Rectangular Pad</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td>
+<p>This macro shows you how to create fillets on a rectangular Pad.</p>
+<! ---------------------------------comment------------------------------------->
+<p>This macro retrieves a rectangular pad from a Part document and creates
+fillets from the selection of all vertical edges and top and bottom faces.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAAPriCreateEdgeFillet is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p align="left"><img border="0" src="images/PartWithFillet.jpg" width="615" height="500"><br>
+      Figure 1: The final result.</p>
+<! ---------------------------------comment------------------------------------->
+
+<p><a href="CAAPriCreateEdgeFilletSource.htm" target="_blank">CAAPriCreateEdgeFillet.CATScript</a> is located
+in the CAAPriUseCases module.&nbsp; <a href="macros/CAAPriCreateEdgeFillet.CATScript">Execute
+      macro</a>.</p>
+
+<p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAAPriCreateEdgeFillet includes five steps:</p>
+<ol>
+  <li><a href="#Step1">Retrieving the Pad Contained in the Associated
+    Pad.CATPart file</a></li>
+  <li><a href="#Step2">Retrieving All the Vertical Edges from the Rectangular
+    Pad</a></li>
+    <li><a href="#Step3">Creating a First EdgeFillet with the Selected Edges</a></li>
+    <li><a href="#Step4">Retrieving the Top and Bottom Faces of the Pad</a></li>
+  <li><a href="#Step5">Creating a Second EdgeFillet with the Selected Faces</a></li>
+</ol>
+      <h4><a name="Step1"></a>Retrieving the Pad Contained in the Associated
+      Pad.CATPart file</h4>
+      <table border="0" width="100%" bgcolor="#E0E0E0">
+        <tr>
+          <td width="100%">
+      <pre>...<font FACE="Courier New" SIZE="2"></pre>
+      <p>Dim oPartDocument As PartDocument<br>
+      Set oPartDocument =
+      CATIA.Documents.Open(&quot;E:\tmp\CAAScdPriUseCases.doc\src\samples\Pad.CATPart</p>
+      <p>Dim oPart As Part<br>
+      Set oPart = CATIA.ActiveDocument.Part</p>
+      <p>' Retrieve the part body of the document containing the pad to be used<br>
+      Dim oBody As Body<br>
+      Set oBody = oPart.Bodies.Item ( &quot;MechanicalTool.1&quot; )</p>
+      <p>' Retrieve the pad of the body<br>
+      Dim oPad As Pad<br>
+      Set oPad = oBody.Shapes.Item ( &quot;Pad.1&quot; )</p>
+      </font>
+      <pre>...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>oPad is retrieved by its name &quot;Pad.1&quot; in the PartBody tree.</p>
+<h4><a name="Step2"></a>Retrieving All the Vertical Edges of the Rectangular Pad</h4>
+      <table border="0" width="100%" bgcolor="#E0E0E0">
+        <tr>
+          <td width="100%">
+<pre>  ...
+</pre>
+      <font FACE="Courier New" SIZE="2">
+      <p>' Retrieve the vertical edges of the pad to be filleted<br>
+      Dim oEdge1 As Reference<br>
+      Set oEdge1 = oPart.CreateReferenceFromBRepName (
+      &quot;REdge:(Edge:(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;1)));
+      None:());Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;2)));None:());None:(Limits1:();Limits2:()));
+      WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)&quot;,
+      oPad )</p>
+      <pre></font>  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <font FACE="Courier New" SIZE="2">
+      </font><p>The elements to be filleted are edges. Here these
+      elements are REdge features<br>
+      defined by their symbolic addresses.</p>
+<h4><a name="Step3"></a>Creating a first EdgeFillet with the selected edges</h4>
+<table width="100%" bgcolor="#E0E0E0">
+  <tr>
+    <td>
+      <pre>...
+</pre>
+      <font FACE="Courier New" SIZE="2">
+      <p>' Define the fillet to be created with the first edge<br>
+      Dim oEdgeFillet1 As ConstRadEdgeFillet<br>
+      Set oEdgeFillet1 =
+      oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oEdge1, 1,
+      5.000000 )</p>
+      <p>' Add the others edges to be filleted<br>
+      oEdgeFillet1.AddObjectToFillet oEdge2<br>
+      oEdgeFillet1.AddObjectToFillet oEdge3<br>
+      oEdgeFillet1.AddObjectToFillet oEdge4</p>
+      <p>' Enable the fillet to be propagated to all the tangent contiguous
+      edges<br>
+      oEdgeFillet1.EdgePropagation = 1</p>
+      <p>' Define the fillet radius to 5 mm<br>
+      oEdgeFillet1.Radius.Value = 5.000000</p>
+      <p>' Update the document<br>
+      oPart.Update</p>
+      </font>
+      <pre>  ...</pre>
+    </td>
+  </tr>
+</table>
+      <p>The AddNewEdgeFilletWithConstantRadius method from the ShapeFactory
+      allows you to create a constant<br>
+      EdgeFillet with the propagation mode (1 for second argument) and a 5 mm
+      radius.<br>
+      Update the part to compute the result of the EdgeFillet.</p>
+      <p><img border="0" src="images/PartWithVerticalFillets.jpg" width="615" height="500"><br>
+      Figure 2: Rectangular pad with its vertical filleted edges.</p>
+<h4><a name="Step4"></a>Retrieving the Top and Bottom Faces of the Rectangular
+Pad</h4>
+      <table border="0" width="100%" bgcolor="#E0E0E0">
+        <tr>
+          <td width="100%">
+<pre>...  </pre>
+      <font FACE="Courier New" SIZE="2">
+      <p>' Retrieve the top face of the pad to be filleted<br>
+      Dim oTopFace As Reference<br>
+      Set oTopFace = oPart.CreateReferenceFromBRepName ( &quot;RSur:(Face:(Brp:(Pad.1;2);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)&quot;,
+      oEdgeFillet1 )</p>
+      <p>' Retrieve the bottom face of the pad to be filleted<br>
+      Dim oBottomFace As Reference<br>
+      Set oBottomFace = oPart.CreateReferenceFromBRepName ( &quot;RSur:(Face:(Brp:(Pad.1;1);None:());WithTemporaryBody;WithoutBuildError;WithSelectingFeatureSupport)&quot;,
+      oEdgeFillet1 )</p>
+      </font>
+<pre>
+...</pre>
+          </td>
+        </tr>
+      </table>
+<p>Retrieve the Rsur features representing the top and bottom faces of the pad
+to use
+them to create another EdgeFillet.</p>
+<h4><a name="Step5"></a>Creating a Second EdgeFillet with the Selected Faces</h4>
+      <table border="0" width="100%" bgcolor="#E0E0E0">
+        <tr>
+          <td width="100%">
+      <font FACE="Courier New" SIZE="2">
+      <p>...</p>
+      <p>' Define the fillet to be created with the first face<br>
+      Dim oEdgeFillet2 As ConstRadEdgeFillet<br>
+      Set oEdgeFillet2 =
+      oPart.ShapeFactory.AddNewEdgeFilletWithConstantRadius ( oTopFace, 1,
+      15.000000 )</p>
+      <p>' Define the fillet radius to 5 mm<br>
+      oEdgeFillet2.Radius.Value = 5.000000</p>
+      <p>' Add the other face<br>
+      oEdgeFillet2.AddObjectToFillet oBottomFace</p>
+      <p>' Update the document<br>
+      oPart.Update</p>
+      <p>...</p>
+      </font>
+          </td>
+        </tr>
+      </table>
+      <font FACE="Courier New" SIZE="2">
+      </font>
+<p> All the limiting edges of  the selected faces will be used to create the second EdgeFillet.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td>
+      <p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create EdgeFillets retrieving REdge or RSur
+features from a pad.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 2001, Dassault Syst&#232;mes. All rights reserved.</i></p>
+
+</body>
+
+

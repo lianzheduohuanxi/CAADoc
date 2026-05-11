@@ -1,0 +1,307 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Command Header</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Command Header</h3>
+      <em>Creating a new command header and associating it with a command</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a CommandHeader in the Portal
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The FoodStoreSelectionCommandCmdHeader
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does FoodStoreSelectionCmdHeader Do</a></li>
+            <li><a href="#How">How to Launch FoodStoreSelectionCmdHeader</a></li>
+            <li><a href="#Where">Where to Find the FoodStoreSelectionCmdHeader
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a new Command Header and how
+to associate it to a Command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The FoodStoreSelectionCmdHeader Use Case</h3>
+<p>The FoodStoreSelectionCmdHeader is a use case of the CAAJApplicationFrame.edu
+framework that illustrates the creation of a new Command Header and its
+association with commands in the Portal application. This use case use the
+Command and CommandHeader classes from the PortalBase framework.</p>
+<p>The Command Header of a Command manages the graphical representation of the
+command (For example, by default, it creates a button if the command is added to
+a toolbar), it manages the command validity, and the life cycle of the Command
+(See how to create a Command [<a href="#References">2</a>]). A specific header
+can be created for a command, if the validity of this one depends of the CATlet
+context (In this use case, the context is the selection state).<br>
+During the construction of a CATlet, its workshop is created, and so a Command
+Header is created for each command (the one specified in the workshop file,
+otherwise the default one). The Command Header creates the view of the command
+(for example a button), and sets its validity depending on the CATlet context.
+When the end user selects the command view, the command header creates the
+command, initializes it, and starts it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does FoodStoreSelectionCmdHeader Do</h4>
+<p>The FoodStoreSelectionCmdHeader use case creates a new command header which
+listens to the modification of the selection content (the content of the CSO
+[2]). This command header disables its associated commands when the selection is
+empty, and enables them when the selection contains items.</p>
+<p>The FoodStoreSelectionCmdHeader is associated with the PublishBill command in
+the Food Store use case. When the selection is empty the bill creation is
+useless, so the PublishBill command is disabled. When the selection contains
+some items, this command is enabled and allows you to ask for the bill for your
+food items selection.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch FoodStoreSelectionCmdHeader</h4>
+<p>To launch the FoodStoreSelectionCmdHeader, you will need to set up the build
+time environment, then compile FoodStoreSelectionCmdHeader and FoodStoreCATlet
+along with their prerequisites, set up the run time environment, and then
+execute the use case [<a href="#References">1</a>].</p>
+<p>Specify the FilePrefix CAAGw0 in the Portal launching command, logon to the
+Portal and do the following steps:
+<ul>
+  <li>Select the CATlet list Workbook. (If you already have a personal Workbook
+    list customization and the CATlet list Workbook does not appear, then
+    customize your personal Workbook list and add the CATlet list Workbook)</li>
+  <li>In the WebInfo part, double click on the FoodStore CATlet item which will
+    add the CATlet to the WebSpace part.</li>
+  <li>The FoodStoreSelectionCommand is selected, and the PublishBill command is
+    disabled.</li>
+  <li>Select a food item. Then the PublishBill command is switched to enable.</li>
+</ul>
+<table>
+  <tr>
+    <th>Publish Bill Command Disabled</th>
+    <th>Publish Bill Command Enabled</th>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/FoodStorePublishBillDisabled.jpg" alt="FoodStorePublishBillDisabled.jpg" width="412" height="386"></td>
+    <td><img border="0" src="images/FoodStorePublishBillEnabled.jpg" alt="FoodStorePublishBillEnabled.jpg" width="408" height="383"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the FoodStoreSelectionCmdHeader Code</h4>
+<p>The FoodStoreSelectionCmdHeader use case is one part of a Food Store use
+case. The FoodStoreSelectionCmdHeader class is located in the CAAGw0FoodStore.mj
+module of the CAAJApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAJApplicationFrame.edu\CAAGw0FoodStore.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAJApplicationFrame.edu/CAAGw0FoodStore.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the FoodStoreSelectionCmdHeader and to associate it with an
+existing command declared in the workshop file of the CATlet, there are 2 steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td><a href="#Step1">1</a></td>
+    <td>Create the selection command header class file</td>
+    <td>FoodStoreSelectionCmdHeader.java</td>
+  </tr>
+  <tr>
+    <td><a href="#Step2">2</a></td>
+    <td>Associate the CommandHeader with the Command</td>
+    <td>FoodStoreCATlet.workshop</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Selection Command Header Class</h4>
+<p>The FoodStoreSelectionCmdHeader file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class FoodStoreSelectionCmdHeader extends <b>CmdHeader</b>
+                                         implements CSOListener
+{
+
+ public void setMasterCATlet(ICATlet catlet)
+  {
+    // --- must call father implementation in order that all father default treatments be done.
+    <b>super.setMasterCATlet(catlet);</b>
+
+    // --- subscribes to CSO event
+    catlet.getCSO().addCSOListener(this);
+
+    // --- updates the header validity
+    setValid(isValid());    
+  }
+
+ public void cleanup()
+  {
+    // --- must call father implementation in order that father cleanup be done.
+    <b>super.cleanup();</b>
+
+    // --- unsubscribes to CSO event
+    if(getMasterCATlet() != null)
+	getMasterCATlet().getCSO().removeCSOListener(this);     
+   }
+
+ <b>public boolean isValid()</b>
+  {
+   // --- gets and tests the CSO of the CATlet.
+   if (getMasterCATlet().getCSO().getSize() &gt; 0)
+	return true;
+    else return false;
+  }
+
+ public void csoChanged(CSOEvent evt)
+  {
+    // --- updates the CmdHeader validity
+    <b>setValid(isValid())</b>;
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreSelectionCmdHeader</em> derives from <i>CmdHeader</i><em> </em>class
+(the default Command Header used by Command when no header is specified in the
+Workshop file). This Command Header overrides the <i>setMasterCATlet</i> method
+in order to subsribe to the <i>CSOEvent</i>. It unsuscribes itself to the <i>CSOEvent</i>
+in the <i>cleanup</i> method for the Garbage Collector. When the Command Header
+receives a <i>CSOEvent</i>, it updates its validity state. If the CSO is empty,
+the header invalidates the command representation (for example the button
+becomes unselectable). If the CSO contains elements, the header validates the
+command representation (for example the button becomes selectable).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Associating a Command Header to a Command</h4>
+<p>The association <i>CmdHeader</i>, <i>Command</i> is made in the workshop
+file. The FoodStore commands declarations are made in the
+FoodStoreCATlet.workshop, and the Command Header declaration is made as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre># --- FoodStoreCATlet workshop description ---
+...
+# --- Header description ---
+...
+
+Header3.<b>CommandClass</b>=<b>com.dassault_systemes.japplicationframe.caa.catlet.command.PublishBillCommand</b>
+Header3.<b>Classname</b>=<b>com.dassault_systemes.japplicationframe.caa.catlet.command.FoodStoreSelectionCmdHeader</b>
+Header3.Icon=Resources/I_Reporter2.gif
+Header3.IconFocus=Resources/IF_Reporter2.gif
+
+# --- Right toolbar description ---
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The command <i>PublishBillCommand</i> is declared in the Food Store Workshop
+file (See how to create and declare a Command [<a href="#References">2</a>] ),
+and is associated to the specific Command Header <i>FoodStoreSelectionCmdHeader</i></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The Command Header of a Command manages the graphical representation of the
+command (For example, by default, it creates a button if the command is added to
+a toolbar), it manages the command validity, and the life cycle of the Command
+(See how to create a Command [<a href="#References">2</a>]). A specific header
+can be created for a command, if the validity of this one depends of the CATlet
+context (In this use case, the context is the selection state).<br>
+During the construction of a CATlet, its workshop is created, and so a Command
+Header is created for each command (the one specified in the workshop file,
+otherwise the default one). The Command Header creates the view of the command
+(for example a button), and sets its validity depending on the CATlet context.
+When the end user selects the command view, the command header creates the
+command, initializes it, and starts it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Building and Launching a CAA Enovia V5 Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAJafFoodStoreSelectionCommand.htm">Creating a Command</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

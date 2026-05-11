@@ -1,0 +1,122 @@
+Option Explicit
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create members.
+'
+' Assumptions:   The Product document Product1.CATProduct located in
+'                CAASddUseCases/samples/StandardOpening should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R20
+' Locales:       English
+' CATIA Level:   V5R20
+'
+' ****************************************************************************
+Sub CATMain()
+  Dim documents1 As Documents
+  Set documents1 = CATIA.Documents
+  Dim PartDocument1 As PartDocument
+  Set PartDocument1 = documents1.Item("Design_Unit_002.CATPart")
+  dim Part1 As Part
+  Set Part1 = PartDocument1.Part
+  Dim plate As SuperPlate
+  Set plate = Part1.FindObjectByName("Deck_002")
+  Dim plateref As Reference
+  Set plateref = Part1.CreateReferenceFromObject(plate)
+  Dim Factory As SfmFunctionFactory
+  Set Factory = Part1.GetCustomerFactory("SfmFunctionFactory")
+
+  Dim ObjSfmContourMgr As SfmOpeningContoursMgr
+  Set ObjSfmContourMgr = Factory.GetOpeningMgr(Part1, "SfmOpeningContoursMgr")
+ 
+  Dim ObjSfmPosStrategyMgr As SfmPositioningStrategyManager
+  Set ObjSfmPosStrategyMgr = Factory.GetOpeningMgr(Part1, "SfmPositioningStrategyManager")
+
+  'Prepare a List of U & V Reference
+  Dim UrefList As SfmReferences
+  Dim Uref1, Uref2, Uref3, Uref4 As Reference
+  Set Uref1 = Part1.FindObjectByName("CROSS.95")
+  Set Uref2 = Part1.FindObjectByName("CROSS.50")
+  Set Uref3 = Part1.FindObjectByName("CROSS.25")
+  Set Uref4 = Part1.FindObjectByName("CROSS.40")
+  Set UrefList = Factory.SfmReferences
+  UrefList.Add Uref1
+  UrefList.Add Uref2
+  UrefList.Add Uref3
+  UrefList.Add Uref4
+ 
+  Dim VrefList As SfmReferences
+  Dim Vref1, Vref2 As Reference
+  Set Vref1 = Part1.FindObjectByName("LONG.0")
+  Set Vref2 = Part1.FindObjectByName("LONG.10")
+  Set VrefList = Factory.SfmReferences
+  'VrefList.Add Vref1
+  VrefList.Add Vref2
+ 
+  Dim NbofURef As Long
+  NbofURef = UrefList.Count
+ 
+  Dim NbofVRef As Long
+  NbofVRef = VrefList.Count
+
+  'Define The Contour
+
+  Dim oListContourNames() As Variant
+  ObjSfmContourMgr.GetAvailableStdOpeningContours oListContourNames
+  Dim NbOfContour As Long
+  NbOfContour = UBound(oListContourNames)
+  'Display List of contours
+  Dim i As Integer
+  'For i = 0 To NbOfContour
+    'MsgBox oListContourNames(i)
+  'Next
+  'Select Contour from List
+  Dim oListCkeParms As SfmStandardContourParameters
+  Set oListCkeParms = ObjSfmContourMgr.GetStdOpeningContourParams("Sfm_Rect")
+  'Display List of Parameters for Selected Contour
+  Dim NbOfParam As Long
+  NbOfParam = oListCkeParms.Count
+  Dim ContourParam As Parameter
+  Dim ContourParamName As String
+  For i = 1 To NbOfParam
+    Set ContourParam = oListCkeParms.Item(i)
+    ContourParamName = oListCkeParms.Item(i).Name
+    'MsgBox ContourParamName
+    'Set Contour Parameter Values
+    If ContourParamName = "Sfm_Width" Then
+      ContourParam.ValuateFromString ("1000mm")
+    End If
+    If ContourParamName = "Sfm_Height" Then
+      ContourParam.ValuateFromString ("2000mm")
+    End If
+    If ContourParamName = "Sfm_CornerRadius" Then
+      ContourParam.ValuateFromString ("10mm")
+    End If
+  Next
+ 
+ 'Define The Postition Strategy
+
+  Dim PositionStrategyParms As SfmStandardPosStrategyParameters
+  Set PositionStrategyParms = ObjSfmPosStrategyMgr.GetPositioningStrategyParams("CATSfmPosMidDistOffset")
+
+  Dim StdOpening As SfmStandardOpening
+
+  Dim URefListint As SfmReferences
+  Set URefListint = Factory.SfmReferences
+
+  Dim nUrefCnt As Integer
+  For nUrefCnt = 1 To NbofURef Step 2
+    If (nUrefCnt + 1) <= NbofURef Then
+      URefListint.Add UrefList.Item(nUrefCnt)
+      URefListint.Add UrefList.Item(nUrefCnt + 1)
+      PositionStrategyParms.SetPosParamData "CATSfmPosMidDistOffset", 20, URefListint, 0, VrefList, 22
+      Set StdOpening = Factory.CreateStandardOpening("FunctionalOpening", "Sfm_Rect", oListCkeParms, "CATSfmPosMidDistOffset", PositionStrategyParms, plateref)
+      URefListint.ClearList
+    End If
+  Next
+
+  Part1.Update
+End Sub

@@ -1,0 +1,387 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Freezing Internal Copy With Link</title>
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body>
+<p>&nbsp;</p>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Freezing Internal Copy With Link</h3><p><em>Using CATIMmiResultFreeze</em></p>
+      &nbsp;</td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+
+<!-- -------------------------------comment---------------------------------- -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to freeze internal copies with link</p>
+      <ul>
+        <li><u><b><a href="#Part1">What&nbsp; is freezing</a> </b></u></li>
+		<li><u><b><a href="#Part2">How to freeze and unfreeze</a></b></u></li>
+        <li><b><a href="#Changing Reference">Changing Reference</a></b><ul>
+        <li><a href="#Using the Replace Viewer">Using the Replace Viewer</a></li>
+        <li><a href="#without Using the Replace Viewer0">without Using the 
+        Replace Viewer0</a></li>
+        <li><a href="#Howc does it work">How Does it Work</a></li>
+      </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="Part1"></a>What is freezing</h3>
+<p>An internal copy with link is obtained by copying and pasting a mechanical feature (as result with link) inside the same 
+CATPart. It may also be obtained from <i>CATMmrInterPartCopy</i> [<a href="#References">1</a>] 
+(inside a CATPart, option with link). 
+The internal copy is a feature which has a geometrical result copied from the 
+original feature.</p>
+   <table border="0" >
+     <caption>Fig.1: Point.2 is a copy of Point.1</caption>
+<tr>
+       <td valign="top">&nbsp;
+		<img src="images/CAAMmrFreezeCopy.jpg"></td>
+</tr></table><p>
+When the original feature is modified, the update mechanism [<a href="#References">2</a>] will copy 
+the geometry of the copied feature to the internal copy.</p>
+<p>In some cases the user may want to update the part while keeping the geometry 
+of some internal copies : this is called freezing the internal copy. </p>
+<p>When an internal copy is frozen, the original feature may be modified without 
+impacting the geometry of the internal copy.</p>
+<p>The concept of freezing is different from the concept of deactivating (described in [<a href="#References">3</a>] : 
+deactivating is equivalent 
+to a temporary deletion). <i>If an internal copy is freezed its geometry still 
+exists, and is always displayed in 3D viewer.</i></p>
+<p>However the &quot;deactivate command&quot; (from the contextual submenu) which normally 
+performs a deactivation for all features, has a different behavior for internal 
+copies : it performs freezing. The mask of frozen internal 
+copies is the same mask as a deactivated feature : an opening and a closing bracket 
+[<a href="#Fig.2">Fig.&nbsp;2</a>]. </p>
+ <table border="0">
+     <caption><a name="Fig.2">Fig.2</a>: A Point and its copy after freezing</caption>
+<tr>
+       <td valign="top"><img border=0 src="images/CAAMmrFreezeInactive.jpg"></td></tr></table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Part2"></a>How to freeze and unfreeze</h3>
+<p>The interface <i>CATIMmiResultFreeze</i> must be called on the internal copy : its 
+type may 
+be a point, a line, a surface, a plane, volume or a solid.</p>
+<p>Here is the way to freeze the internal copy feature:</p>
+<table class="code">
+  <tr>
+    <td>
+ <pre>...
+<b>CATIMmiResultFreeze</b> * pIFreezeOnInternalFeature = ... ;
+
+pIFreezeOnInternalFeature-&gt;<b>Freeze</b>();
+CATBoolean  status = pIFreezeOnInternalFeature -&gt;<b>IsFrozen</b>(); // status is TRUE
+}
+...
+    </td></tr></table>
+
+<p>Here is the way to unfreeze the internal copy feature: Note that after unfreezing, the geometry does not change : an update of the copy must 
+be called to synchronize the geometry.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>CATIMmiResultFreeze </b>* pIFreezeOnInternalFeature = ...
+<b>CATISpecUpdate</b>      * pISpecUpdateOnInternalFeature = ..... ;
+
+pISpecUpdateOnUnFeature-&gt;<b>Unfreeze</b>();
+CATBoolean  status = pIFreezeOnInternalFeature -&gt;<b>IsFrozen</b>(); // status is FALSE
+pISpecUpdateOnUnFeature -&gt;<b>Update</b>();
+...
+</pre></td></tr></table><p align="right">[<a href="#Top">Top</a>]</p><hr>
+<h3 align="left"><a name="Changing Reference"></a>Changing Reference</h3>
+
+<p>Changing the reference of an internal copy with link can be done using the
+<i>CATIMmiInternalCopyWithLinkEdition</i> interface. Any object that implements to
+<i>CATIMmiInternalCopyWithLink</i> implements to the 
+<i>CATIMmiInternalCopyWithLinkEdition </i>interafce too. However, changing the reference of an 
+internal import is only available for <b>solid</b> internal copies 
+for now.</p> 
+<p><b>CASE1:</b> The most simple example explained visually</p>
+<table border="0" id="table1" width="576">
+  <caption><a name="Fig.3">Fig.3</a> Before the Change</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE1_1_Data.jpg" width="572" height="440"></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p align="left">On the pictutre just above you can see <code>Solid.1</code> 
+(highlighted feature) an (internal) copy of <code>PartBody</code>. The <code>Solid.1</code> 
+geometry is a copy of the <code>PartBody </code>geometry. (it is not visible on 
+the picture, but there are two pad (<code>Pad.1</code> and <code>Solid.1</code>, 
+this last is highlighted) at the same place)</p>
+<table border="0" id="table2">
+  <caption><a name="Fig.4">Fig.4</a> After the Change</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE1_2_DataAfterEdit.jpg" width="573" height="440"></td>
+  </tr>
+</table>
+<p align="left">On the picture just above, you can see the result of the change 
+of reference for <code>Solid.1. Body.2</code> (containing triangle pad) is the 
+new reference for <code>Solid.1.</code> Now the <code>Solid.1</code> geometry is 
+a copy of the <code>Body.2</code> geometry. (it is not visible on the picture, 
+but there are two pad (<code>Pad.2</code> and <code>Solid.1</code>, this last is 
+highlighted) at the same place)</p>
+<h4 align="left"><a name="Using the Replace Viewer"></a>Using the Replace Viewer</h4>
+<p align="left">Client scenarios are rarely so simple.
+As stated earlier, when an internal copy is created, its geometry is a copy of the geometry of its reference. 
+
+</p>
+<p align="left">Sub elements of the geometry of the internal copy can be used to build other features. These features are therefore children of the internal copy. 
+
+When the reference of an internal copy is changed, its geometry changes too. The old copied geometry is replaced with a copy of the geometry of its new reference. 
+Children features that were based on sub elements of the old copied geometry cannot automatically be replugged on sub elements of the new copied geometry. 
+
+In order to do so, user intervention is needed.  
+
+</p>
+<p align="left">The user will have to specify, via the 
+<b>Replace Viewer</b>, on which sub elements of the new geometry these children have to be rerouted. 
+If this is not done, the features that referenced sub elements of the internal copy will not be able to update themselves correctly. 
+
+</p>
+<p align="left"><b>CASE2</b>: Changing the reference in a interactive context with the help of the Replace Viewer</p>
+<table border="0" id="table5" width="576">
+  <caption><a name="Fig.5">Fig.5</a> Before the Change</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE2_1_Data.jpg" width="570" height="441"></td>
+  </tr>
+</table>
+<p align="left">Just above you can see <code>Solid.1</code> an internal copy of <code>PartBody</code> (containing 
+<code>Pad.1</code>). Based on <code>Solid.1</code> a fillet (<code>EdgeFillet.1</code>) 
+has been created. </p>
+<p align="left">Now you replace the initiale reference of <code>Solid.1(PartBody</code>) 
+by <code>Body.2.</code> Changing its reference to Body.2 would mean that <code>Solid.1 </code>will then be based on the geometry contained in Body.2<code>.</code> The EdgeFillet cannot automatically replug itself on any Edge of the new geometry. Therefore user intervention is 
+required. </p>
+<table border="0" id="table6">
+  <caption><a name="Fig.6">Fig.6</a> The Replace viewer</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE2_2_ReplaceViewer.jpg" width="636" height="307"></td>
+  </tr>
+</table>
+<p>Thanks the Replace viewer the end user can choose an edge on the new 
+geometrie of <code>Solid.1</code> 
+to be the input of the EdgeFillet.</p>
+<table border="0" id="table7">
+  <caption>Fig.7 New Edge Selection</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE2_3_ReplaceViewer2.jpg" width="634" height="306"></td>
+  </tr>
+</table>
+<p>The edge was defined by 2 faces on the old geometry (left-hand side). The user now has to select the 2 faces that define the edge on the new geometry (right-hand side).
+</p>
+<table border="0" id="table7">
+  <caption>Fig.8 Re-root is done</caption>
+  <tr>
+    <td>
+     <img border="0" src="images/CAAMmrCASE2_4_DataAfterEdit.jpg" width="571" height="441"></tr>
+</table>
+<p>When the end user closes the dialog box, <code>EdgeFillet.1</code> is 
+correctly defined. There is no update error. </p>
+<h4><a name="without Using the Replace Viewer0"></a>Without Using the Replace Viewer</h4>
+<p>For an interactive command you have the choice to use or not the Replace 
+viewer for manual re-rooting. In batch mode, the Replace viewer has no sense, it 
+will be never launched.&nbsp;So, if after the replace a manual re-root is necessary, 
+and that it cannot be done, it could imply update 
+error for some internal copy children.</p>
+<table border="0" id="table8">
+  <caption>Fig.9 Change without a re-root</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCASE3_1_DataAfterEdit.jpg"></td>
+  </tr>
+</table>
+<p>On the picture just above, you can see the result of the change of reference 
+of <code>Solid.1</code> from <code>PartBody</code> (box) to <code>Body.2 </code> 
+(triangle)<code>.</code> The 
+replace has been successful<code>,</code> but an input of <code>EdgeFillet.1</code>, 
+based on <code>Solid.1 </code>whose the geometry has changed,<code> is </code>a none-existant edge. 
+So it implies an update error for the <code>EdgeFillet.1</code> feature (see 
+update error icon). The edgefillet is not geometrically represented.</p>
+<p>The user will then have to solve these errors manually through the update error 
+panel. </p>
+<h4><a name="Howc does it work"></a>How Does it Work?</h4>
+<p>The 
+<i>CATIMmiInternalCopyWithLinkEdition </i>interface contains one method, <code>
+SetSelected</code>, whose the arguments are:</p>
+<ul>
+  <li>The new reference</li>
+</ul>
+<blockquote>
+  <p>As of today, the <code>SetSelected</code> method only works on Solid 
+  feature [<a href="#References">5</a>]. By consequence the new reference 
+  feature can only be an hybrid body [<a href="#References">6</a>], a feature 
+  implementing the <i>CATIMechanicalTool</i> interface.</p>
+</blockquote>
+<ul>
+  <li>A boolean specifying if the viewer must be launched to solve manual re-root.</li>
+</ul>
+<blockquote>
+  <p>This boolean has no sense in a batch, in this case the value will be not 
+  taken into account. But inside an interactive command, if the value is true, 
+  and if a manual re-root is required, the Replace viewer will be launched. This 
+  viewer is a shared state command. It de-activates your command, and 
+  when the end use closes the dialog box, your command is re-activated.</p>
+</blockquote>
+<p>The <code>SetSelected</code> returns E_FAIL and a <i>CATError </i>(that you retrieve using 
+CATGetLastError ) when the method fails. The kind of error can be :</p>
+<table border="1" id="table9">
+  <tr>
+    <td><b>Error Id</b></td>
+    <td><b>Meaning</b></td>
+  </tr>
+  <tr>
+    <td>101</td>
+    <td>Cannot change the reference of an internal copy to a NULL object.</td>
+  </tr>
+  <tr>
+    <td>102</td>
+    <td>The reference of the given internal copy cannot be changed. Only solid internal imports can be changed.</td>
+  </tr>
+  <tr>
+    <td>103</td>
+    <td>The internal copy is frozen. Its reference cannot be changed as longs it 
+    is frozen.</td>
+  </tr>
+  <tr>
+    <td>201</td>
+    <td>Cannot create a Specification with a NULL object.</td>
+  </tr>
+  <tr>
+    <td>202</td>
+    <td>Failed to retrieve keys and accesses of given object.</td>
+  </tr>
+  <tr>
+    <td>203</td>
+    <td>Failed to create Specification.</td>
+  </tr>
+  <tr>
+    <td>204</td>
+    <td>Failed to generate the list of Inputs for the given Specification.</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>Cannot create a Link with a NULL object.</td>
+  </tr>
+  <tr>
+    <td>206</td>
+    <td>Link creation failed.</td>
+  </tr>
+   <tr>
+    <td>301</td>
+    <td>No matching Input found on given Specification </td>
+  </tr>
+
+   <tr>
+    <td>405</td>
+    <td>Failed to set Link on given Input.</td>
+  </tr>
+
+</table>
+<p>and returns</p>
+<ul>
+  <li><code>S_OK</code> when the replace has been successfully done. But it does 
+  mean that update operation will be a success. </li>
+  <li><code>E_NOTIMPL</code> when the import feature is not a valid one (not a 
+  solid).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p><hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="InShort"></a>In Short</h3><p>While an internal copy feature is 
+unfreezed (default behavior), if the geometry of the original feature is 
+modified, the geometry of the copied feature is automatically modified too. Freezing an internal copy allows 
+you to temporarily disable this update.</p>
+<p>Just after the internal copy feature unfreezing, do not forget to update the 
+internal feature: unfreeze api does not launch the update mechanism. Then, the 
+next modifications on the original feature will be automatically take into 
+account in the copied feature.</p>
+<p>You can check&nbsp;the <i>CATIMmiResultFreeze</i> usage in the dedicated 
+interactive use case [<a href="#References">4</a>].</p>
+<p>The 
+<i>CATIMmiInternalCopyWithLinkEdition</i> interface enables you to change the 
+reference feature.</p><p align="right">[<a href="#Top">Top</a>]</p><hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h3><a name="References"></a>References</h3><table width="100%">
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrInterPartCopy.htm">Copying Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism 
+	Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIMechPop.htm">Enabling the Build Deactivation </a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrFreezeInternalCopy.htm">
+	Freezing or Unfreezing Internal Copy</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the Specification Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+ <!-- -------------------------------comment---------------------------------- -->
+<h3><a name="History"></a>History</h3><table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2007]</td><td valign="top">Document created</td></tr><tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td></tr></table><hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright &#169; 1999-2006, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="#">CAA V5 CATIA</a> | 
+<a href="#">CAA V5 DELMIA</a> | 
+<a href="#">CAA V5 ENOVIA</a></p></body></html>

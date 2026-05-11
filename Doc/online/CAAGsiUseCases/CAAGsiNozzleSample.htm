@@ -1,0 +1,496 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Nozzle Shape Thanks to Shape Design Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Shape Design &amp; Styling</h1>
+    </td>
+    <td valign="top">
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Nozzle Shape Thanks to Shape Design
+      Features</h3>
+      <em>Using the Shape Design factory to create point, line, plane, circle,
+      split, sweep, and loft features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAGsiNozzle use case. This use case explains
+      how to create a nozzle shape thanks to shape design features.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#Concepts">Some Important Concepts Relevant to
+          CATGsiToolkit</a></b></li>
+        <li><b><a href="#UseCase">The CAAGsiNozzle Use Case</b>
+          <ul>
+            <li></a><a href="#What">What Does CAAGsiNozzle Do</a></li>
+          <li><a href="#How">How to Launch CAAGsiNozzle</a></li>
+          <li><a href="#Where">Where to Find the CAAGsiNozzle Code</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will You Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with Shape Design. Its main intent is to allow you to create a nozzle shape
+using shape design features[<a href="#References">2</a>].
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Concepts"></a>Some Important Concepts Relevant to CATGsiUserTools</h3>
+<p>The CAAGsiNozzle use case uses many services of the CAAGsiUserTools class.
+This class embeds several calls to the <i>CATIGSMFactory</i> interface. This
+decreases the number of lines to write. We use a list that contains the input
+for the specification (feature) we want to instantiate. The way it is coded,
+enables the user to call many times the same method by changing a few parameters
+in the input list.</p>
+<p>This class <i>CAAGsiUserTools</i> separates the sample CAAGsiNozzle from the
+interfaces used from GSMInterfaces framework. This could be a good solution to
+limit the impact of a change in these interfaces for your in-house code.</p>
+<p>Moreover, if a common task has to be done for every feature created by the
+user, this can be done in the <code>CreateXXX</code> method instead of doing it
+in every file that creates that feature. (As an example, change the name or put
+it into NoShow.)</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAGsiNozzle Use Case</h3>
+<p>CAAGsiNozzle is a use case of the CAAGSMInterfaces.edu framework that
+illustrates GSMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAGsiNozzle Do</h4>
+<p>The goal of CAAGsiUserTools use case is to show how to create a nozzle shape
+using shape design features. We enrich the sample code CAAGsiNozzle.cpp and
+explains in more detail the way shape design features are created.</p>
+<p>We have decided to split the creation of the Nozzle Shape in different steps:
+first the Wireframe (Point, Plane, Circle), then the Shape (Sweep, Loft). The
+result is shown below.</p>
+<p><img src="images/CAAGsiNozzle.jpg" width="1024" height="768"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAGsiNozzle</h4>
+<p>To launch CAAGsiNozzle, you will need to set up the build time environment,
+then compile CAAGsiNozzle along with its prerequisites, and set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>CAAGsiUserTools API is used in CAAGsiNozzle use Case
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAGsiNozzle outputDirectory\CAAGsiNozzle.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAGsiNozzle outputDirectory/CAAGsiNozzle.CATPart</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><code>outputDirectory</code></td>
+      <td>The directory into which <code>CAAGsiNozzle.CATPart is saved</code></td>
+    </tr>
+    <tr>
+      <td><code>CAAGsiNozzle.CATPart</code>
+      <td>The file that contains the part created to contain the nozzle shape
+        result</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGsiNozzle Code</h4>
+<p>The CAAGsiNozzle use case is made of main program located in the
+CAAGsiNozzle.m module of the CAAGSMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGSMInterfaces.edu\CAAGsiNozzle.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGSMInterfaces.edu/CAAGsiNozzle.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are six logical step in CAAGsiNozzle:
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Point">Create Point Features</a></li>
+  <li><a href="#Plane">Create Plane and Line Features</a></li>
+  <li><a href="#Circle">Create Circle Features</a></li>
+  <li><a href="#Split">Create Split and Spline Features</a></li>
+  <li><a href="#Sweep">Create Sweep and Loft Features</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code of the main
+method of file CAAGsiNozzle.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In CAAGsiNozzle, we use an instance (named CAAGsiObjTool) of the class <i>CAAGsiUserTools</i>
+to create shape design features. We call the <code>Init</code> method to create
+a session and a Part document.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int <b>main</b>(int argc, char **argv, char **envp)
+{
+  HRESULT rc = S_OK;
+
+  char* pSessionName = &quot;CAA2SampleSession&quot;;
+  rc = CAAGsiObjTool.<b>Init</b>( pSessionName);
+  if (FAILED(rc)) return 1;
+
+  int setAsCurrent = 1;
+  CATIGSMTool_var spTool = CAAGsiObjTool.<a href="../CAAGsiTechArticles/CAAGsiCreateGSMTool.htm">CreateGSMTool</a>(&quot;Nozzle&quot;,setAsCurrent);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, we create an open body to insert generative shape design features
+inside it. We call the <code>CreateGSMTool</code> method that returns the
+GSMTool that has been created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="Point"></a>Create Point Features</h4>
+<p>How to create a point coordinate feature:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATLISTV(CATISpecObject_var) aObjectParameters;
+  ...
+  CATISpecObject_var spCurrent = NULL_var;
+
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;X&quot;, 17.0, <b>spCurrent</b>)
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;Y&quot;, 0.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;Z&quot;, 0.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+
+  CATISpecObject_var spPoint1 = CAAGsiObjTool.<b>CreatePointCoord</b>(aObjectParameters);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Here we create a point coordinate at location (17,0,0). For this purpose, we
+first create three length parameters with values 17, 0, and 0 millimeters
+respectively, and put each into <code>spCurrent</code>, and then append <code>spCurrent</code>
+in the input list <code>aObjectParameters</code> that is bound to store the
+ordered parameters needed to create a feature. Finally, we create a point
+coordinate using <code>aObjectParameters</code> as input by calling the <code>CreatePointCoord</code><b>
+</b>method.</p>
+<p>How to create a point on curve feature:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  spCurrent = NULL_var;
+  aObjectParameters.Append(spSplit2);
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateReal</b>(&quot;Parm&quot;, 0.0, spCurrent);
+  aObjectParameters.Append(spCurrent);  
+  CATISpecObject_var spPoint14 = CAAGsiObjTool.<b>CreatePointOnCurve</b>(aObjectParameters,TRUE);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create a point on curve feature using Split.12 feature at curvilinear
+length 0 First, we get the spSplit12 CATISpecObject smart pointer and add it in <code>aObjectParameters</code><b>.</b>
+Second, we set <code>spCurrent</code> to null and store it in the input list,
+that means that the reference for the curvilinear length will be computed taking
+into account the start extremity of Split.12 feature. We create a real parameter
+that represents the caviling length on the curve by calling <code>CreateReal</code>
+method. Finally we create a point on curve feature using <code>CreatePlaneEquation</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Plane"></a>Create Plane and Line Features</h4>
+<p>Now that we have created points, we can use them to create planes and lines.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;A&quot;, 0.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;B&quot;, 1.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;C&quot;, 0.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;D&quot;,10.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+        
+  CATISpecObject_var spPlaneY10 = CAAGsiObjTool.<b>CreatePlaneEquation</b>(aObjectParameters);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Here we create the plane Y = 10. To do this, we create a plane equation with
+the <code>aObjectParameters</code> input list Here the parameters created are
+length for the plane coefficients, and after having created the four length
+parameters, we call the <code>CreatePlaneEquation</code><b> </b>method.</p>
+<p>We can also create lines like this:
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  aObjectParameters.Append(spPoint3);
+  aObjectParameters.Append(spPoint5);
+  CATISpecObject_var spLine3 = CAAGsiObjTool.<b>CreateLinePtPt</b>(aObjectParameters);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create a simple line defined by two points. We get <code>spPoint3</code>
+(respectively <code>spPoint5</code>), a <i>CATISpecObject</i> smart pointer on
+Point.3 (respectively Point.5) feature and store it in the <code>aObjectParameters</code>
+input list used by <code>CreateLinePtPt</code><b> </b>method to create the line
+point-point feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Circle"></a>Create Circle Features</h4>
+<p>How to create circles:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  aObjectParameters.Append(spPoint5);
+  aObjectParameters.Append(spPoint6);
+  aObjectParameters.Append(spPlaneY15);
+  CAAGsiObjTool.<b>CreateLength</b>(&quot;Radius&quot;, 15.0, spCurrent);
+  aObjectParameters.Append(spCurrent);
+  CATISpecObject_var spCircle3 = CAAGsiObjTool.<b>CreateCircle2PointsRad</b>(aObjectParameters,FALSE,TRUE);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We want to create a circle profile in plane Y=15. On this purpose, we first
+retrieve the <code>spPoint5</code>, <code>spPoint6</code> and <code>spPlaneY15</code>
+<i>CATISpecObject</i> smart pointers and append them into the <code>aObjectParameters</code>
+input list used by the <code>CreateCircle2PointsRad</code><b> </b>method to
+create a circle defined by two points and a radius.</p>
+<p>The circle will pass through Point.5 and Point.6 and will have for reference
+plane the plane Y=15. The circle Circle.3 will not be a geodesic circle and will
+keep the same orientation defined by the input. The part of the circle arc will
+depend on the orientation given to the method <code>CreateCircle2PointsRad</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Split"></a>Create Split and Spline Features</h4>
+<p>We can now create split features that will relimit a feature by intersection
+with another one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  aObjectParameters.Append(spCircle6);
+  aObjectParameters.Append(spPlaneAngle35);
+  CATISpecObject_var spSplit1 = CAAGsiObjTool.<b>CreateSplit</b>(aObjectParameters,TRUE);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create a split feature that will be the relimitation of Circle.6 by
+Plane.6. To do this, we set <code>spCircle6</code> and <code>spPlaneAngle35</code>
+in the <code>aObjectParameters</code> input list and call <code>CreateSplit</code><b>
+</b>to create Split.1 feature. The orientation (<code>TRUE</code> argument)
+enable us to choose between the two parts of the circle that is splitted.</p>
+<p>How to create a spline feature:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  aObjectParameters.Append(spPoint15);
+  aObjectParameters.Append(spPoint16);
+  CATISpecObject_var spDir1 = CAAGsiObjTool.<b>CreateDirection</b>(spLine7);
+  CATISpecObject_var spDir2 = CAAGsiObjTool.<b>CreateDirection</b>(spLine8);
+  CATISpecObject_var spSpline = CAAGsiObjTool.<b>CreateSpline</b>(aObjectParameters,spDir1,FALSE,spDir2,TRUE);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The spline will go through Point.15 and Point.16. Then we create two
+directions that are defined relatively to a line feature. We create a spline
+feature that goes through Point.15 and Point.16, and that have two tangents
+defined at the extremity.We will take the inverse direction for <code>spDir1</code>
+and the same direction for <code>spDir2</code>.</p>
+<p>We have created two directions above that will not be seen in the Procedural
+View [<a href="#References">3</a>]. Indeed, direction features are internal
+features for shape design features.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Sweep"></a>Create Sweep and Loft Features</h4>
+<p>Now that we have created the wireframe we need, we can create skins, let see
+how to create sweep and loft.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  aObjectParameters.Append(spLine2);
+  aObjectParameters.Append(spCircle1);
+  CATISpecObject_var spSweep1 = CAAGsiObjTool.<b>CreateSweepOneGuide</b>(aObjectParameters);
+  aObjectParameters.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create a sweep unspec feature with a guide Line.2 and a profile Circle.1.
+Line.2 will be used also as the spine of the explicit sweep.</p>
+<p>The same for the loft feature:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATLISTV(CATISpecObject_var) aObjectParametersSections;
+  aObjectParametersSections.Append(spCircle2);
+  aObjectParametersSections.Append(spCircle3);
+  aObjectParameters.Append(spLine3);
+  CATISpecObject_var spUnused = NULL_var;
+
+  CATISpecObject_var spLoft1 = CAAGsiObjTool.<b>CreateLoft</b>(aObjectParametersSections,
+                                                        aObjectParameters,
+                                                        spUnused);
+
+  aObjectParameters.RemoveAll();
+  aObjectParametersSections.RemoveAll();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create a loft feature with sections Circle.2, Circle.3 and with guide
+Line.3. The input list <code>aObjectParameters</code> contains the guide curve
+and the sections are stored in the <code>aObjectParametersSections</code>
+dedicated list. We call the <code>CreateLoft</code><b> </b>method with <code>spUnused</code>
+set to <code>NULL_var</code> which represents the spine of the loft. Here we use
+the automatic spine capability of the loft feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create a nozzle shape thanks to
+shape design primitives. We illustrates the use of the <i>CAAGsiUserTools</i>
+class that encapsulates the <i>CATIGSMFactory</i> method for a set of
+capabilities. We illustrates also the creation of wireframe and almost simple
+skin features. We also show that there is different ways to design points,
+lines, planes, circles depending on what are the driving parameters the user
+want to manipulate and also the way he wants the shape to behave in a
+modification scenario.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAGsiTechArticles/CAAGsiShapeDesignFeature.htm">About
+      Generative Shape Design Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAGsiTechArticles/CAAGsiInsertInProceduralView.htm">Inserting a Shape Design
+      Feature in the procedural view&nbsp;</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td>
+    <a href="../CAAGsiTechArticles/CAAGsiUpdateShapeDesign.htm">Updating a shape Design feature </a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Apr 2003]</td>
+    <td valign="top">Update</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+</html>

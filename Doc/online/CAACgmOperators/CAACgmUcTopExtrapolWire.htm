@@ -1,0 +1,162 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extrapolating a Wire</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Extrapolating a Wire</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>CATICGMExtrapolateBody can be used to extrapolate a wire in tangency 
+		and CATICGMWireExtrapolationOp to extrapolate a wire in curvature.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To extrapolate a wire in tangency, use the CATICGMExtrapolateBody operator in GMOperatorsInterfaces. This operator has to be created by the CATCGMCreateExtrapolateBody global function. 
+To extrapolate a wire in curvature, use CATICGMWireExtrapolationOp. This 
+operator has to be created by the CATCGMCreateWireExtrapolationOp global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsTangExtrapol.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to extrapolate a wire. The wire to be extrapolated is a spline 
+which is created in CAATopTangExtrapol.cpp by using the CATCGMCreateTopSpline function.
+<p>If you are not already 
+familiar with geometric modeler use cases, go to <a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> The spline to be extrapolated</caption>
+  <tr>
+    <td>
+	<img alt="Extrapol Wire" src="images/CGM_extrapolWire_0.png" width="250" height="220"></td>
+  </tr>
+</table>
+<h3>Tangency Extrapolation</h3>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+ CATICGMExtrapolateBody * extrapolOpe0 =::CATCGMCreateExtrapolateBody(piGeomFactory,
+        &amptopdata,
+        piSplineBody,NULL,0);
+     if (NULL==extrapolOpe0)
+    {
+        ::CATCloseCGMContainer(piGeomFactory);
+        return (1);
+    }
+    extrapolOpe0->SetLimitToExtrapolate(cellToExtrapolate, 20.0);
+    extrapolOpe0->Run();
+    CATBody * pBody0 = extrapolOpe0->GetResult();</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> The extrapolated spline (tangency 
+	extrapolation)</caption>
+  <tr>
+    <td>
+	<img alt="tangency extrapolation" src="images/CGM_extrapolWire_1.png" width="270" height="220"></td>
+  </tr>
+</table>
+<h3>Curvature Extrapolation</h3>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+ CATICGMWireExtrapolationOp * extrapolOpe1 =::CATCGMCreateWireExtrapolationOp(piGeomFactory,
+        &amptopdata,piSplineBody);
+    if (NULL==extrapolOpe1)
+    {
+        ::CATCloseCGMContainer(piGeomFactory);
+        return (1);
+    }
+    extrapolOpe1->SetExtrapolation(V2, 20.0);
+    extrapolOpe1->Run();
+    CATBody * pBody1 = extrapolOpe1->GetResult();
+    </pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.2</a> The extrapolated spline (curvature 
+	extrapolation)</caption>
+  <tr>
+    <td>
+	<img alt="curvature extrapolation" src="images/CGM_extrapolWire_2.png" width="270" height="220"></td>
+  </tr>
+</table>
+
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

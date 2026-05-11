@@ -1,0 +1,164 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Breaking a C1 Surface into C2 Pieces</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+.style3 {
+				color: #FB7203;
+}
+.style4 {
+				font-family: "Courier New";
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Breaking a C1 Surface into C2 Pieces</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The geometric modeler is designed to operate on C2 curves and surfaces.
+		Non-C2 curves and surfaces are to be broken into C2 pieces.	Any surface which is suspected of being non-C2
+		can be analyzed by using the CATICGMNurbsSurfaceTools::Check method. If 
+		a 
+		surface is detected as being non-C2, 
+		it has to be split into C2 pieces by using the CATICGMMathNurbsSurfaceTools operator. 
+        From the C2 pieces, you can compute the parameters of a single Nurbs. 
+        These parameters can be used to create a single Nurbs (non-C2) in an other modeler.  
+</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To check whether a surface is C2, use the <tt>Check</tt> method of CATICGMNurbsSurfaceTools operator. 
+This operator is created by the CATCGMCreateNurbsSurfaceTools global function.
+To break a non-C2 surface into C2 pieces, use the <tt>ConvertToC2NurbsSurfaces</tt> method of the CATICGMMathNurbsSurfaceTools operator.
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelConvertSurfaceToC2.m module in CAAGMModelInterfaces.edu 
+illustrates how to break a non-C2 surface into C2 pieces. This use case 
+is to be run with the 
+C1NurbsSurface.ncgm file which is delivered in the FunctionTests/InputData 
+folder. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Break a C1 Surface into C2 Pieces: Input 
+	Surface </caption>
+  <tr>
+    <td>
+	<img alt="Break a C1 Surface into C2 Pieces: Input" src="images/CGM_surface_C1toC2_0.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMNurbsSurfaceTools  * pNurbsTool3D  =::CATCGMCreateNurbsSurfaceTools(piGeomFactory, pConfig, pC1Nurbs);
+...
+// Retrieve the surface degree
+int degU = 0;
+int degV = 0;
+pNurbsTool3D->GetDegrees (degU,degV);
+cout &lt;&lt; "surface degree along U (3 expected) " &lt;&lt; degU &lt;&lt; endl;
+cout &lt;&lt; "surface degree along V (3 expected) "&lt;&lt; degV &lt;&lt; endl;
+...
+// Retrieve the knot number
+...
+// Checks the input curve continuity
+CATNurbsToolsInfo infoContinuity = pNurbsTool3D->Check();
+cout &lt;&lt; "Check the surface continuity " &lt;&lt; endl;
+if (infoContinuity == Info_InternalContinuity) 
+	{
+	 ...
+// Create the CATICGMMathNurbsSurfaceTools operator
+CATICGMMathNurbsSurfaceTools  * pMathNurbsTool3D  =::CATCGMCreateMathNurbsSurfaceTools( *inputKVU, *inputKVV,
+			pC1Nurbs->IsRational(), Vertices, aWeights);
+...
+int NbRefU, NbRefV=0;
+CATLISTP(CATSurface) listOfC2Surfaces;
+// Create the C2 surfaces
+cout &lt;&lt; listOfC2Surfaces.Size() &lt;&lt; " C2 surfaces are generated" &lt;&lt; endl;
+...
+	</TD>
+    </TR>
+</TABLE>
+<p>nine pieces are created. </p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Break a C1 Surface into C2 Pieces: Result</caption>
+  <tr>
+    <td>
+	<img alt="Break a C1 Surface into C2 Pieces: Result" src="images/CGM_surface_C1toC2_1.png"></td>
+       </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Dec 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

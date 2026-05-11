@@ -1,0 +1,423 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>Environment Variables</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>mkodt</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Environment Variables</h3>
+      <em>The environment variables you can use in your test objects</em></td>
+  </tr>
+  <tr>
+    <td class="quick">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p class="header">This article lists the environment variables that you 
+		can use when creating and running a test object.</p>
+		<ul>
+			<li><a href="#EVmkodt">Environment Variables Evaluated by mkodt</a></li>
+			<li><a href="#EVUser">Environment Variables You Can Set</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="EVmkodt"></a>Environment Variables Evaluated by mkodt</h2>
+<p>These environment variables are set by mkodt at the beginning of its run. Some 
+are read only and cannot be modified. Others are read/write. You can modify them 
+to match you needs.</p>
+<table class="fill">
+	<tr>
+		<th>Variable</th>
+		<th>Usage</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>WSROOT</code></td>
+		<td>R/O</td>
+		<td>References the workspace root folder containing the test frameworks 
+		where the test objects to be run are located.</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_TMP</code></td>
+		<td>R/O</td>
+		<td>References the temporary folder created during the mkodt run in either 
+		%SystemDrive%:\temp, that is usually C:\temp, with Windows, or /tmp with 
+		UNIX. If this folder C:\temp or /temp does not exist, mkodt creates it.
+		<p><strong>Examples</strong>:</p>
+		<table class="fill">
+			<tr>
+				<th>Windows</th>
+				<td>C:\temp\ADL_ODT_10144</td>
+			</tr>
+			<tr>
+				<th>Unix</th>
+				<td>/tmp/ADL_ODT_10144</td>
+			</tr>
+		</table>
+		<p>This folder is deleted at the end of the mkodt run, unless you use the
+		<code>-k</code> option [<a href="#References">1</a>].</p>
+		<p>You can reset the root temporary folder C:\temp with Windows or /tmp 
+		with Unix to another folder thanks to the <code>MKODT_TMP</code> environment 
+		variable. For example, you can set this temporary root folder to E:\tmp 
+		with Windows:</p>
+		<pre class="code">set MKODT_TMP=E:\tmp</pre>
+		<p>The temporary folders for mkodt will then be created below this temporary 
+		folder root, such as E:\tmp\ADL_ODT_10736.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_IN</code></td>
+		<td>R/O</td>
+		<td>References the folder where data needed as input for a test program 
+		of a given framework (Framework.tst) run by mkodt is stored.
+		<p>This folder is:</p>
+		<table class="fill">
+			<tr>
+				<th>Windows</th>
+				<td>%WSROOT%\Framework.tst\FunctionTests\InputData</td>
+			</tr>
+			<tr>
+				<th>Unix</th>
+				<td>$WSROOT/Framework.tst/FunctionTests/InputData</td>
+			</tr>
+		</table>
+		<p>When mkodt successively replays test objects belonging to several frameworks, 
+		the value of this variable changes to match the test framework from which 
+		the current test object is replayed.</p>
+		<p>If two or more of your test frameworks need to share the same input data, 
+		put this data in the run time view, and use the sample procedure to retrieve 
+		it rather than the <code>ADL_ODT_IN</code> environment variable [<a href="#References">2</a>].</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_OUT</code></td>
+		<td>R/W</td>
+		<td>References the folder where mkodt output data is stored. This output 
+		data comprises:
+		<ul>
+			<li>Two files systematically created by mkodt (assuming the test object 
+				name is ODTName):
+				<ol>
+					<li>ODTName.traces which contains the traces created by either 
+						the echo command in bat or shell files, and/or the traces 
+						created by the cout command in C++ programs.</li>
+					<li>ODTName.mkodt_result which contains data about the test 
+						object replay.</li>
+				</ol>
+			</li>
+			<li>The output file(s) created by your test object, if any.
+				<table class="Remark">
+					<tr>
+						<td class="Remark"><span class="run-in">Important</span>: 
+						If your test object creates output data you need to save 
+						for a later process, you are strongly advised to save it 
+						in the folder referenced by <code>ADL_ODT_OUT</code>.
+						</td>
+					</tr>
+				</table>
+			</li>
+		</ul>
+		<p>The default values are:</p>
+		<table class="fill">
+			<tr>
+				<th>Windows</th>
+				<td>%WSROOT%\&lt;Framework.tst&gt;\FunctionTests\Output\&lt;os&gt;</td>
+			</tr>
+			<tr>
+				<th>Unix</th>
+				<td>$WSROOT/&lt;Framework.tst&gt;/FunctionTests/Output/&lt;os&gt;</td>
+			</tr>
+		</table>
+		<p>Where os is the operating system running mkodt [<a href="#References">3</a>].</p>
+		<p>When mkodt successively replays test objects belonging to several frameworks, 
+		the value of this variable changes to match the test framework from which 
+		the current test object is replayed, unless you have set it to a different 
+		value prior to launching mkodt. In this case, it keeps this set value during 
+		the whole mkodt run. See <a href="#EVUser">Environment Variables You Can 
+		Set</a>.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_REF</code></td>
+		<td>R/O</td>
+		<td>References a folder where reference data is stored. Reference data is 
+		used to compare the data a test program produces with what should be produced. 
+		This reference data is created once by running the test program, checked 
+		to make sure this data can be used as a reference, and stored in the folder 
+		referenced by <code>ADL_ODT_REF</code>.
+		<p>The default values are:</p>
+		<table class="fill">
+			<tr>
+				<th>Windows</th>
+				<td>%WSROOT%\Framework.tst\FunctionTests\OutputRef</td>
+			</tr>
+			<tr>
+				<th>Unix</th>
+				<td>$WSROOT/Framework.tst/FunctionTests/OutputRef</td>
+			</tr>
+		</table>
+		<p>When mkodt successively replays test objects belonging to several frameworks, 
+		the value of this variable changes to match the test framework from which 
+		the current test object is replayed.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_NULL</code></td>
+		<td>R/O</td>
+		<td>References a special file which can be used to redirect output from 
+		a program (<em>/dev/null</em> with Unix or <em>NUL</em> with Windows.)</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_CONCATENATION</code></td>
+		<td>R/W</td>
+		<td>References the workspace framework path concatenation. By default, or 
+		if the mkodt -d option [<a href="#References">1</a>] is used, the first 
+		one is the workspace root folder, and the others are those of the prerequisite 
+		workspaces declared using the mkGetPreq command. Refer to the example below.
+		<code>ADL_ODT_CONCATENATION</code> is used by the procedure given as example 
+		to locate folders or files [<a href="#References">2</a>].</td>
+	</tr>
+</table>
+<p><strong>Example</strong>:</p>
+<p>Assume that the Windows workspace root folder is E:\MyWorkspace, and that the 
+test framework is CAASystem.tst. mkodt is run with Windows 7 with V6R2014x installed 
+in the default location C:\Program Files\Dassault Systemes\B216.</p>
+<p>In the FunctionTests\TestCases folder of CAASystem.tst, create an xml file named 
+CAASysEnvVar.xml with the following contents:</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- COPYRIGHT Dassault Systemes 2013/07/30 --&gt;
+
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Target desc=&quot;This test object displays the environment variables set by mkodt&quot;/&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CMD /C %ADL_ODT_IN%\CAASysEnvVar.bat&quot; osConstraint=&quot;win_b64&quot;/&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>This XML file defines a test object made up of a bat file named CAASysEnvVar.bat, 
+located in the FunctionTests\InputData of CAASystem.tst:</p>
+<pre class="code">@echo off
+
+echo WSROOT                = %WSROOT%
+echo ADL_ODT_TMP           = %ADL_ODT_TMP%
+echo ADL_ODT_IN            = %ADL_ODT_IN%
+echo ADL_ODT_OUT           = %ADL_ODT_OUT%
+echo ADL_ODT_REF           = %ADL_ODT_REF%
+echo ADL_ODT_NULL          = %ADL_ODT_NULL%
+echo ADL_ODT_CONCATENATION = %ADL_ODT_CONCATENATION%
+echo MKMK_LST_RTV          = %MKMK_LST_RTV%</pre>
+<p>To run this test object, in a prompt located at the root folder of the workspace, 
+and initialized with the appropriate TCK, type:</p>
+<pre class="code">E:\MyWorkspace&gt;<strong>mkodt -s CAASysEnvVa</strong></pre>
+<p>This command displays the following traces:</p>
+<pre class="code">E:\MyWorkspace&gt;<strong>mkodt -s CAASysEnvVa</strong>r
+## ------------------------------------------------------------
+## Workspace Directory : E:\MyWorkspace
+<strong>## Concatenation : E:\MyWorkspace
+## Concatenation : C:\Program Files\Dassault Systemes\B216</strong>
+## OS : win_b64
+## Machine : LW5PSRDSY
+## Display :
+## 1 ODT to replay
+## ------------------------------------------------------------
+## RUNNING ODT [CAASystem.tst CAASysEnvVar] (1 / 1)
+elapsed_time: 00 min 01 sec
+## ++ CAASysEnvVar : Test execution successful code 0
+## ------------------------------------------------------------
+##
+## 1 ODT replayed, 0 KO.</pre>
+<p>This test object outputs the following in the trace file CAASysEnvVar.traces 
+located in CAASystem.tst\FunctionTests\Output\win_b64, if run with Windows 64 bit:</p>
+<pre class="code">WSROOT                = E:\MyWorkspace
+ADL_ODT_TMP           = C:\temp\ADL_ODT_8612
+ADL_ODT_IN            = E:\MyWorkspace\CAASystem.tst\FunctionTests\InputData
+ADL_ODT_OUT           = E:\MyWorkspace\CAASystem.tst\FunctionTests\Output\win_b64
+ADL_ODT_REF           = E:\MyWorkspace\CAASystem.tst\FunctionTests\OutputRef
+ADL_ODT_NULL          = NUL
+ADL_ODT_CONCATENATION = E:\MyWorkspace C:\Program Files\Dassault Systemes\B216
+MKMK_LST_RTV          = E:\MyWorkspace;C:\Program Files\Dassault Systemes\B216</pre>
+<p>Note that <code>ADL_ODT_CONCATENATION</code> does not use separators when displaying 
+the run time view concatenated paths, which are displayed highlighted in the command 
+trace.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="EVUser"></a>Environment Variables You Can Set</h2>
+<table class="fill">
+	<tr>
+		<th>Variable</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_OUT</code></td>
+		<td>References the folder where any output data can be stored. This variable 
+		is set by default by mkodt, as shown above. You can set it to another value 
+		if needed, thanks to the <code>-o</code> option [<a href="#References">1</a>]. 
+		If the folder set by <code>-o</code> does not exist, mkodt creates it.
+		<p><strong>Example</strong>:</p>
+		<pre class="code">mkodt -s ODTName -o E:\MyWorkspace\Output</pre>
+		<p>mkodt creates in E:\MyWorkspace\Output the folders Framework.tst\FunctionTests\Output\os 
+		to store the two files ODTName.traces and ODTName.mkodt_result, where os 
+		depends on the operating system used [<a href="#References">3</a>], and 
+		assuming the test object ODTName is located in the framework Framework.tst. 
+		The actual output folder is thus E:\MyWorkspace\Output\Framework.tst\FunctionTests\Output\os, 
+		such as E:\MyWorkspace\Output\Framework.tst\FunctionTests\Output\win_b64 
+		with Windows 64 bit.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ADL_ODT_CONCATENATION</code></td>
+		<td>References the workspace framework path concatenation. This variable 
+		is set by default by mkodt, as shown above. You can set it to another value 
+		if needed, thanks to the <code>-p</code> option.
+		<p><strong>Example</strong>:</p>
+		<pre class="code">mkodt ... -p D:\MyIntegrationWorkspace</pre>
+		<p>mkodt sets the value of <code>ADL_ODT_CONCATENATION</code> to D:\MyIntegrationWorkspace, 
+		whatever the workspace root, its prerequisites, and the possible run time 
+		pathname concatenation stored in the <code>MKMK_LST_RTV</code> environment 
+		variable and declared thanks to the <code>-r</code> option [<a href="#References">1</a>] 
+		[<a href="#References">4</a>].</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ODT_PERTINENCE</code></td>
+		<td>Define the pertinence measure ability [<a href="#References">5</a>]. Valid values are:
+		<table>
+			<tr>
+				<td><code>Yes</code></td>
+				<td>Enable the pertinence measure.</td>
+			</tr>
+			<tr>
+				<td><code>No</code></td>
+				<td>Disable the pertinence measure.</td>
+			</tr>
+		</table>
+		<p>By default, the pertinence measure is not set. To enable it,
+		set <code>ODT_PERTINENCE=Yes</code>
+		before running mkodt.</p>
+		<p>When it is enabled, to disable it, either set <code>ODT_PERTINENCE=No</code>
+		before running mkodt, or use the <code>-NoPert</code> option [<a href="#References">1</a>].</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>MKMK_LST_RTV</code></td>
+		<td>References the workspace run time path concatenation. It is set by the 
+		mkodt <code>-d</code>, <code>-p</code>, and <code>-r</code> options [<a href="#References">1</a>].
+		<code>MKMK_LST_RTV</code> is used by the procedure given as example to locate 
+		folders or files [<a href="#References">2</a>].</td>
+	</tr>
+	<tr>
+		<td><code>PATH_TEST</code></td>
+		<td>Adds a concatenation to the <code>PATH</code> (and <code>LIBPATH</code> 
+		or <code>LD_LIBRARY_PATH</code> or <code>SHLIB_PATH</code>) before running 
+		the test object.</td>
+	</tr>
+	<tr>
+		<td><code>ODT_MAX_TIME</code></td>
+		<td>Defines the maximum replay elapsed time allowed for a test object. When 
+		this variable is not set, the default maximum replay elapsed time is five 
+		minutes.
+		<pre class="code">set ODT_MAX_TIME=20</pre>
+		<p>This sets the maximum elapsed time allowed for any ODT running to 20 
+		minutes.</p>
+		<p>You can also use the <code>-NOMaxTime</code> option to disable the maximum 
+		replay elapsed time control, but not set its value [<a href="#References">1</a>] 
+		[<a href="#References">6</a>].</p>
+		<table class="Remark">
+			<tr>
+				<td class="Remark"><span class="run-in">Important</span>: The maximum 
+				elapsed time you can set using this environment variable is not 
+				limited. </td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><code>ODT_MAX_TIME_COEF</code></td>
+		<td>Defines a percentage to apply to the maximum replay elapsed time:<br />
+		<code>ODT_MAX_TIME=ODT_MAX_TIME*ODT_MAX_TIME_COEFF/100</code></td>
+	</tr>
+	<!-- Not supported any longer
+	<tr>
+		<td><code>MKODT_SUPENV (VPM)</code></td>
+		<td>Set this variable to use environment extension; This variable must contain 
+		a shell-script path that will be run before the ODT shell-script. If this 
+		variable is not set, mkodt looks for <code>mkodt_supenv_($ADL_FR_CATIA)</code> 
+		file in the PATH.</td>
+	</tr>
+-->
+	<tr>
+		<td><code>OPTION_FOR_SETCATENV</code></td>
+		<td>Adds options to setcatenv (set the CATIA environment).</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0001.htm">mkodt</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAARqcQr0004.htm">Finding a File or a Folder</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAARqcTa0003.htm">How to Concatenate Run Time Environments</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAARqcQr0001.htm">How to Replay Test Objects</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td><a href="CAARqcTa0010.htm">How to Modify the Replay Maximum Elapsed 
+		Time</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

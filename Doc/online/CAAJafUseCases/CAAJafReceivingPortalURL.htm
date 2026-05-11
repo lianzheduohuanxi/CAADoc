@@ -1,0 +1,314 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Receiving a PortalURL</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Receiving a PortalURL</h3>
+      <em>Receiving a PortalURL from the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how receive a PortalURL.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The FoodStoreCATlet Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does FoodStoreCATlet Do</a></li>
+            <li><a href="#How">How to Launch FoodStoreCATlet</a></li>
+            <li><a href="#Where">Where to Find the FoodStoreCATlet Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to receive a PortalURL from the Portal.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The FoodSToreCATlet Use Case</h3>
+<p>The FoodStoreCATlet is a use case of the CAAJApplicationFrame.edu framework
+that illustrates how an application of the Portal can receive PortalURLs. This
+use case uses the PortalURL and PortalURLHandler classes from the PortalBase
+framework and the JCAtlet class of the JApplicationFrame framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does FoodStoreCATlet Do</h4>
+<p>For this use case, the FoodStoreCATlet implements a specific interface which
+allows it to receive PortalURL. The FoodStoreCATlet is defined in the
+PortalRegistry as a receiver of stock document. The stock document is a new type
+of document defined for this use case, and which contains a food store stock
+description. When the Portal receives a PortalURL on a stock document, it
+searches for the receivers of such documents in the PortalRegistry, finds the
+FoodStoreCATlet, launches the CATlet and sends it the PortalURL. The
+FoodStoreCATlet receives a PortalURL on a food stock file, opens it, and
+modifies its stock</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch FoodStoreCATlet</h4>
+<p>To launch the FoodStoreCATlet, you will need to set up the build time
+environment, then compile FoodStoreCATlet along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Specify the FilePrefix CAAGw0 in the Portal launching command, logon to the
+Portal and do the following steps:
+<ul>
+  <li>Select the file tree Workbook.
+  <li>In the file tree, select the file &quot;FoodStore.stock&quot; which is
+    delivered in the CAA runtime view.</li>
+  <li>Select the Food Store item in the contextual menu &quot;Open in&quot;. The
+    PortalURL on this file is created and sent to the Portal desktop and so to
+    the right application. (See how to send a PortalURL [<a href="#References">2</a>])</li>
+</ul>
+<table>
+  <tr>
+    <td><b>Select the FoodStore Stock File</b></td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/CAASendingPortalURL.jpg" alt="CAASendingPortalURL.jpg" width="921" height="595"></td>
+  </tr>
+  <tr>
+    <td><b>FoodStore Stock File Opened</b></td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/CAAPortalURLReceiving.jpg" alt="CAAPortalURLReceiving.jpg" width="925" height="598"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the FoodStoreCATlet Code</h4>
+<p>The FoodStoreCATlet use case is one part of the Food Store use case. The
+FoodStoreCATlet class is located in the CAAGw0FoodStore.mj module of the
+CAAJApplicationFrame.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAJApplicationFrame.edu\CAAGw0FoodStore.mj\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAJApplicationFrame.edu/CAAGw0FoodStore.mj/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To be able to receive PortalURLs from the Portal, there are two steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td><a href="#Step1">1</a></td>
+    <td>Implement the PortalURLHandler interface</td>
+    <td>FoodStoreCATlet .java</td>
+  </tr>
+  <tr>
+    <td><a href="#Step2">2</a></td>
+    <td>Associate the bean to MIME Types it recognizes</td>
+    <td>CAAGw0MIMEtypes.xml</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing the PortalURLHandler interface</h4>
+<p>The PortalURLHandler interface allows to programming the CATlet treatment
+when it receives PortalURLs. A CATlet can receive several PortalURLs in one
+call. For example, when a end user selects several model files and sends all of
+them to one viewer. In this use case, the FoodStoreCATlet reads only stock
+document, and only one at a time, because a stock file defines entirely the
+stock of the food store. If the CATlet receives several PortalURL in a call, we
+choice to read the last one. The FoodStoreCATlet class implements the
+PortalURLHandler interface, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet;
+...
+public class FoodStoreCATlet extends JCATlet
+                             implements FoodListener
+				       ,<b>PortalURLHandler</b>
+{
+  ...
+<b>  public void handlePortalURL(PortalURL[] urls)
+</b>  {
+    // --- read urls in order to extract the Food Store stock (read the last one)
+    if ((urls != null) &amp;&amp; (urls.length &gt;0 ))
+    {
+      try
+      {
+        // --- read input stream of the PortalURL
+        InputStream input = urls[urls.length - 1].<b>openStream</b>();
+
+        // --- create a properties object with the input stream for the model init
+        Properties properties = new Properties();
+        properties.load(input);
+
+        // --- cleanup CSO (because it is a new stock)
+        getCSO().empty();
+
+        // --- initialize the model with the stock file porperties
+        ((FoodStoreModel)models[0]).initializeModel(properties);	  
+      }
+      catch(IOException ex)
+      {
+        System.out.println(&quot; Can not read url &quot;+urls[urls.length - 1]);
+        ex.printStackTrace();
+      }
+    }
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>FoodStoreCATlet</i> class implements the <i>PortalURLHandler</i>
+interface, which is composed of only one method <i>handlePortalURL. </i>In this
+method, the CATlet reads the file represented by the <i>PortalURL</i> in order
+to customize its stock food items. The CATlet does not need to know the location
+of the file. It just extracts the file content, by calling the <i>openStream</i>
+method on the <i>PortalURL</i>, and uses the InputStream. This treatment of the
+PortalURL is only for stock document, because the FoodStoreCATlet is declared as
+a receiver only for stock file in the PortalRegistry (see the PortalRegistry use
+[<a href="#References">3</a>]).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step2"></a>Declaring a MIME Type and Associating It with a Bean</h5>
+<p>This step allows to declare new file types and their associated viewers in
+the Portal. The xxxMIMEtypes.xml files define the MIME Types recognized by the
+Portal, and the applications that can handle these types.<br>
+The MIME Type application/stock is defined in the CAAGw0MIMEtypes.xml as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>&lt;MIME-Types&gt;</b>
+...
+<b>&lt;MIME&gt;</b>
+   <b>&lt;Type&gt; </b>
+       application/stock
+       &lt;<b>Command value=</b>&quot;default&quot;&gt; com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet <b>&lt;/Command&gt;</b>
+       <b>&lt;Command value=</b>&quot;FoodStore&quot;<b>&gt;</b> com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet <b>&lt;/Command&gt;</b>
+   <b>&lt;/Type&gt;</b>
+   <b>&lt;Desc&gt;</b> Store stock <b>&lt;/Desc&gt;</b>
+   <b>&lt;Extension&gt;</b> stock <i>&lt;/Extension&gt;</i>
+<b>&lt;/MIME&gt;</b>
+...
+<b>&lt;/MIME-Types&gt;</b></pre>
+    </td>
+  </tr>
+</table>
+<p>This file is the MIMEtypes file taken into account when the Portal is
+launched with the file prefix &quot;CAAGw0&quot; .</p>
+<p>In this declaration the <i>FoodStoreCATlet</i> is defined :</p>
+<ul>
+  <li>as the default command for this type of file: This command is used when
+    end user double click on a file for the activation.</li>
+  <li>as the <i>FoodStore</i> command: This command is proposed when an end user
+    selects a file and asks for applications which can open it.</li>
+</ul>
+<p>The MIME declaration contains the following information:</p>
+<ul>
+  <li>the Type: <i>application/stock</i></li>
+  <li>the Commands able to open the file of this type : <i>com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet.</i>
+    Many commands can open the same type of file, and one of them can be chosen
+    as the default one (used as soon as no application is specified in the query
+    of the PortalURL)</li>
+  <li>the text Description:<i> Store stock</i></li>
+  <li>the Extensions of the files of this Type: <i>stock</i></li>
+</ul>
+<p>See [<a href="#References">3</a>] for further information about MIME types.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>In this use case are presented the two steps that a bean needs to do for
+receiving PortalURLs from applications of the Portal. The bean must implement
+the PortalURLHandler interface, because the Portal desktop calls it on the
+method defined in this interface. If the bean wants to receive PortalURL on a
+specific file type from the others Portal applications, it need to be defined as
+a command of the specific MIME Type in the file MIMEtypes.xml used by the
+PortalRegistry.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Building and Launching a CAA Enovia V5 Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAJafSendingPortalURL.htm">Sending PortalURL</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAPlbUseCases/CAAPlbPortalRegistryUse.htm">The
+      Portal Registry</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

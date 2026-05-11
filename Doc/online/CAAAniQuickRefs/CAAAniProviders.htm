@@ -1,0 +1,212 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Analysis Providers</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Analysis Solution</h1>
+     </td>
+     <td valign="top">
+     <h2>Analysis Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Analysis Providers</h3>
+     <p><em>Definition of providers on Analysis Features&nbsp;</em></td>
+   </tr>
+   <tr>
+     <td class="quick" colspan="2">Quick Reference</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to customize some interactive behavior of 
+     analysis feature. This is done by using provider capabilities.&nbsp; </p>
+     <ul>
+       <li><a href="#Providers"><b>CATISamProviders</b></a></li>
+       <li><a href="#CtxMenu"><b>CATISamCtxMenuProvider</b></a></li>
+       <li><a href="#Catalog"><b>CATISamCatalogProvider</b></a></li>
+       <li><a href="#CCP"><b>CATISamCCPFilter &amp; CATISamCCPFilterProvider</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p>As of today, the providers allow to:</p>
+ <ul>
+   <li>customize contextual menus of an Analysis Feature</li>
+   <li>Load an analysis feature catalog.</li>
+   <li>Customize the Cut Copy Paste aviability.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Providers"></a>CATISamProviders</h4>
+ <p>This interface may be used to manage a provider declaration to an analysis 
+ document. This is implemented on the analysis document by the <i>Dassault 
+ Systèmes </i>frameworks.&nbsp;If you do not manage by yourself the life cycle of 
+ your providers they will be automatically released with the analysis document 
+ life cycle.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="CtxMenu"></a>CATISamCtxMenuProvider</h4>
+ <p>Because an interface can be implemented once only on a late type, analysis 
+ workbench needs to find a way of having differents providers of contextual 
+ menus on the same feature. The CATIContextualMenu interface is implemented by 
+ default on Analysis Features inside the Analysis Frameworks.&nbsp;</p>
+ <p>This implementation search all the objects that implement the analysis 
+ interface &quot;CATISamCtxMenuProvider&quot; to complete contextual menus and appends all 
+ those menus in the user interface. You should not reset the CATCmdContainer by 
+ only complete it. Note that it is always possible for your menu to decide to be 
+ selectable or not. For this, use <b>
+ <a href="#" onclick="javascript:CAAlink('CPP', 'ApplicationFrame', 'class', 'CATCommandHeader');return false;">
+ CATCommandHeader</a></b> interface and BecomeAvailable or BecomeUnavailable 
+ methods in your implementation</p>
+ <p>Two kinds of providers can be defined. To configure your provider use the <b>
+ IsPermanent</b> methods.</p>
+ <ol>
+   <li>If you returns TRUE, your providers is automatically created and plugged 
+   at the level of the analysis workshop. In this case it is available for all 
+   the workbenches.</li>
+   <li>If you returns FALSE, you have to manage by yourself the life cycle of 
+   your provider. For example, if you want to have a specific provider to a 
+   specific workbench, you have to implement the <b>
+   <a href="#" onclick="javascript:CAAlink('CPP', 'ApplicationFrame', 'interface', 'CATIWorkbenchInitialization');return false;">
+   CATIWorkbenchInitialization</a></b> interface. In the <b>Init</b> Method 
+   declare your provider and in the <b>Dispose</b> method removes it. See the 
+   following examples:</li>
+ </ol>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>... In your <b>Init</b> Implementation 
+// Declare a contextual menu provider
+  CATISamProviders* piProvider = NULL;
+  if (pDoc) pDoc -&gt; QueryInterface(IID_CATISamProviders, (void **) &amp;piProvider);
+
+  if (piProvider)
+  {
+    CAAAniCtxMenu * _piCtxMenu = new CAAAniCtxMenu ();
+    if (_piCtxMenu)piProvider -&gt; AddProvider(IID_CATISamCtxMenuProvider,_piCtxMenu);
+    piProvider -&gt; Release(); piProvider = NULL;
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Note that to make your implementation easy to manage, you can keep your 
+ provider implementation as data member. In this example the instruction new 
+ CAAAniCtxMenu will create and &quot;AddRef&quot; the provider. It will be &quot;Released&quot; in 
+ the Dispose implementation.</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>... In your <b>Dispose</b> Implementation
+// Declare a contextual menu provider
+  CATISamProviders* piProvider = NULL;
+  if (pDoc) pDoc -&gt; QueryInterface(IID_CATISamProviders, (void **) &amp;piProvider);
+
+  if (piProvider)
+  {
+    piProvider -&gt; RemoveProvider(IID_CATISamCtxMenuProvider,_piCtxMenu);
+    _piCtxMenu -&gt; Release(); _piCtxMenu = NULL;
+    piProvider -&gt; Release(); piProvider = NULL;
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>To create your menus use the <b>GetContextualMenu</b> methods. You will 
+ receive as input the analysis feature and the CATCmdContainer that contains the 
+ menus definition. <b>Never delete or release</b> the commands container.</p>
+ <p>As example, to assign the visualization command to the solution set of the 
+ sample, the <b>GetContextualMenu</b> implementation may looks to:</p>
+ <table class="code" width="100%">
+   <tr>
+     <td>
+     <pre>...
+// Declare a contextual menu provider
+  CATISpecObject_var spSpecObj (iObj);
+  if (NULL_var == spSpecObj) return S_OK;
+  CATString FeatureType = ((spSpecObj -&gt; GetType()).ConvertToChar());
+
+  if (FeatureType == &quot;AeroDynamicSet&quot;)              
+  {
+    CATString HeaderId = &quot;CreateOneImage&quot; ;    // header defined in the CAAAniCfg.cpp
+    NewAccess (CATCmdStarter ,CmdStarterCreateOneImage ,CAAAniCreateOneImage);
+    SetAccessCommand	(CmdStarterCreateOneImage,HeaderId);
+    if (ioCtxMenu) ioCtxMenu -&gt; AddChild (CmdStarterCreateOneImage);
+
+    CATCommandHeader* pHeader = NULL;
+    CATAfrGetCommandHeader(HeaderId,pHeader);  // provided by #include &quot;<b>CATAfrCommandHeaderServices.h</b>&quot;</pre>
+     <pre>    if (pHeader)
+    {
+      pHeader -&gt; BecomeUnavailable();
+      if (spSpecObj -&gt; IsUpToDate()) pHeader -&gt; BecomeAvailable();
+    }
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <h4><a name="Catalog"></a>CATISamCatalogProvider</h4>
+ <p>If you want to add some commands in a existing workbench, you will need to 
+ declare a feature catalog associated to your new features. For this, implement 
+ the CATISamCatalogProvider interface.</p>
+ <p>In
+ <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamAnalysisModelFactory');return false;">
+ CATISamAnalysisModelFactory</a> implementation, if the creation of an analysis 
+ set or an entity doesn't find the required&nbsp;startup, all the providers that 
+ implement CATISamCatalogProvider interface will be called. It is preferable to 
+ have an implementation with good performance (for example based of the prefix 
+ of the startup). If the name of the startup is ok for your implementation, load 
+ the catalog on the container given as input argument by using the <b>
+ AccessCatalog</b> method. </p>
+ <h4><a name="CCP"></a>CATISamCCPFilter &amp; CATISamCCPFilterProvider</h4>
+ <p>Cut/Copy/Paste is based of three levels: </p>
+ <ol>
+   <li>Some rules of the analysis frameworks that do not allow the commands. For 
+   example Analysis manager can not be copied, or deleted.</li>
+   <li>If the command is allowed, the
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamCATISamCCPFilter');return false;">
+   CATISamCCPFilter</a> interface can be implemented of the late type of the 
+   feature to disable the command.</li>
+   <li>If the command is allowed,
+   <a href="#" onclick="javascript:CAAlink('CPP', 'CATAnalysisInterfaces', 'interface', 'CATISamCCPFilterProvider');return false;">
+   CATISamCCPFilterProvider</a> interface can be implemented as a provider (for 
+   example dedicated to a workbench, or addin workshop) in order&nbsp; to 
+   disable the command.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jul 2003]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

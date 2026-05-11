@@ -1,0 +1,1117 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATSmarTeamIntegInterfaces StiEngine (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATSmarTeamIntegInterfaces.htm" href="../CATSmarTeamIntegInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATSmarTeamIntegInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "StiEngine"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>StiEngine<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_StiEngine_40603','StiEngine','0');</script>
+<b><i> Represents the SmarTeam Integration Engine, that is to say the entry point to the CATIA/SmarTeam Integration.</i></b><br>
+
+ <br>It allows end user to realize the following operations (also called StiEngine methods): connection and disconnection
+ to SmarTeam Integration, creation of SmarTeam Integration Objects (StiDBItem) and management of their lifecycle
+ (Save, Check In, Check Out, Release, New Release, ...).
+ <br>Note that all operations performed from this interface are the same as operations available and launched from the  
+ SmarTeam menu in CATIA.
+ <br><font color="red">Warning: By Default</font>, these operations launched from this interface are executed <font color="red">Without Panel</font>.
+
+ <dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example indicates how to retrieve the SmarTeam Integration Engine.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem(<font color="red">"CAIEngine"</font>)
+ </pre>
+ </pre></dd>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('StiDBItem','','StiDBItem') </script>
+</dl>
+<hr>
+<dl>
+ <h2><a name="PropertyIndex"></a>Property Index</h2>
+ <dt>
+    <a href="#IntegrationType"><b>IntegrationType</b></a>
+<dd>  Returns the Engine Integration Type.
+ <dt>
+    <a href="#UseGraphicalUI"><b>UseGraphicalUI</b></a>
+<dd>  Returns (gets) or sets the use of <font color="green">Graphical User Interface (GUI)</font> in order to display or not panels.
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#BuildDocDBItemFromSmarTeamID"><b>BuildDocDBItemFromSmarTeamID</b></a>
+<dd>  <font color="green">Copys the SmarTeam object -and its children- to default Work directory</font>, opens it into CATIA session and returns the corresponding CATIAStiDBItem.
+ <dt>
+    <a href="#BuildFileDBItemFromSmarTeamID"><b>BuildFileDBItemFromSmarTeamID</b></a>
+<dd>  <font color="green">Copys the SmarTeam object -and its children- to default Work directory</font> and returns the corresponding CATIAStiDBItem, Without opening the file into CATIA session.
+ <dt>
+    <a href="#Connect"><b>Connect</b></a>
+<dd>  <font color="green">Connects to SmarTeam Integration</font>.
+ <dt>
+    <a href="#Disconnect"><b>Disconnect</b></a>
+<dd>  <font color="green">Disconnects to SmarTeam Integration</font>.
+ <dt>
+    <a href="#GetSMARTEAMClassID"><b>GetSMARTEAMClassID</b></a>
+<dd>  Returns the <font color="green">Class Identifier</font> of a SmarTeam Integration Object <font color="green">CATIAStiDBItem</font>
+ -at least saved in SmarTeam.
+ <dt>
+    <a href="#GetSMARTEAMObjectID"><b>GetSMARTEAMObjectID</b></a>
+<dd>  Returns the <font color="green">Object Identifier</font> of a SmarTeam Integration Object <font color="green">CATIAStiDBItem</font>
+ -at least saved in SmarTeam.
+ <dt>
+    <a href="#GetStiDBItemFromAnyObject"><b>GetStiDBItemFromAnyObject</b></a>
+<dd>  Returns the SmarTeam Integration Object <font color="green">CATIAStiDBItem</font> from an <font color="green">AnyObject</font> object.
+ <dt>
+    <a href="#GetStiDBItemFromCATBSTR"><b>GetStiDBItemFromCATBSTR</b></a>
+<dd>  Returns the SmarTeam Integration Object <font color="green">CATIAStiDBItem</font> from a <font color="green">Full Path</font>.
+ <dt>
+    <a href="#GetTeamPDMURL"><b>GetTeamPDMURL</b></a>
+<dd>  Returns the <font color="green">Team PDM URL</font> of a CATIAStiDBItem.
+ <dt>
+    <a href="#IsConnected"><b>IsConnected</b></a>
+<dd>  Returns if end user <font color="green">Is Connected to SmarTeam Integration</font> (True) or not (False).
+ <dt>
+    <a href="#LifeCycleCheckIn"><b>LifeCycleCheckIn</b></a>
+<dd>  <font color="green">Checks the CATIAStiDBItem Into SmarTeam Check-In Vault</font>.
+ <dt>
+    <a href="#LifeCycleCheckOut"><b>LifeCycleCheckOut</b></a>
+<dd>  <font color="green">Checks Out Without Propagation</font> the CATIAStiDBItem in SmarTeam.
+ <dt>
+    <a href="#LifeCycleCheckOutPropagated"><b>LifeCycleCheckOutPropagated</b></a>
+<dd>  <font color="green">Checks Out With Propagation</font> the CATIAStiDBItem in SMARTEAM.
+ <dt>
+    <a href="#LifeCycleNewRelease"><b>LifeCycleNewRelease</b></a>
+<dd>  <font color="green">Enables a New Release Without Propagation</font> for the CATIAStiDBItem in SmarTeam.
+ <dt>
+    <a href="#LifeCycleNewReleasePropagated"><b>LifeCycleNewReleasePropagated</b></a>
+<dd>  <font color="green">Enables a NewRelease action With Propagation</font> for the CATIAStiDBItem in SmarTeam.
+ <dt>
+    <a href="#LifeCycleRelease"><b>LifeCycleRelease</b></a>
+<dd>  <font color="green">Releases the CATIAStiDBItem in SmarTeam Release Vault</font>.
+ <dt>
+    <a href="#LifeCycleUndoCheckOut"><b>LifeCycleUndoCheckOut</b></a>
+<dd>  <font color="green">Cancels Check-Out operation on the CATIAStiDBItem in SmarTeam</font>.
+ <dt>
+    <a href="#RefreshInfo"><b>RefreshInfo</b></a>
+<dd>  <font color="green">Refreshes Information concerning all CATIA Documents in session</font>.
+ <dt>
+    <a href="#Save"><b>Save</b></a>
+<dd>  <font color="green">Saves the CATIAStiDBItem in SmarTeam</font>.
+</dl>
+ <h2><a name="Properties"></a>Properties</h2> <br>
+<a name="IntegrationType"><dt>
+
+<table><tr><td>o Property <b>IntegrationType</b>(<td>) As <script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script>  (Read Only)</table></dt>
+<dl>
+  <dd>
+ Returns the Engine Integration Type.
+ <br><font color="red">Warning: Do Not use this method</font>. It is Not implemented.
+</dl>
+<a name="UseGraphicalUI"><dt>
+
+<table><tr><td>o Property <b>UseGraphicalUI</b>(<td>) As <script type="text/javascript"> activateLink('boolean','boolean')</script> </table></dt>
+<dl>
+  <dd>
+ Returns (gets) or sets the use of <font color="green">Graphical User Interface (GUI)</font> in order to display or not panels.
+ This method allows programmer to define if methods of this Interface Definition Language (IDL) will be executed With or Without user interactions.
+ <br><font color="red">Warning: By Default</font>, operations launched from this interface are executed <font color="red">Without GUI</font>,
+ that is to say 'UseGraphicalUI' is set to 'False'. In practice, <font color="red">No GUI</font> means that treatments are executed 
+ With <font color="red">Default Values</font> because additional parameters or options can not be set, as there is no user interaction.
+ If GUI are allowed, panels will be displayed. These panels correspond to the usual ones displayed when the corresponding
+ functionnalities are launched from the SmarTeam Intagration menu. The behaviour is so the same as in Interactive Mode.
+ <br>Note that the Connection to SmarTeam Integration is totally Independent of the Value of UseGraphicalUI.
+
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns in the boolean <tt>bIsActive</tt> the current value of this option -that is to say 
+ if we use or not GUI for StiEngine methods- and then sets it -if needed- to 'True' -that corresponds to GUI operating mode.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.<font color="red">UseGraphicalUI</font>
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+	oStiEngine.<font color="red">UseGraphicalUI</font> = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ </pre></pre></dd>
+</dl>
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="BuildDocDBItemFromSmarTeamID"><dt>
+
+<table><tr><td>o Func <b>BuildDocDBItemFromSmarTeamID</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iobjectId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iclassId</tt>) As <script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> </table></dt>
+<dl>
+  <dd>
+ <font color="green">Copys the SmarTeam object -and its children- to default Work directory</font>, opens it into CATIA session and returns the corresponding CATIAStiDBItem.
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iobjectId</tt>
+   <dd> This input corresponds to the Object ID of the required SmarTeam object.
+ </dd>
+    <dt><tt> iclassId</tt>
+   <dd> This input corresponds to the Class ID of the required SmarTeam object.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example retrieves a loaded document corresponding to a SmarTeam ID {Object ID, Class ID}.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> iobjectId <font color="blue">As</font> long
+ iobjectId = 963
+ <font color="blue">Dim</font> iclassId <font color="blue">As</font> short
+ iclassId = 57
+ <font color="blue">Dim</font> oStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> oStiDBItem = oStiEngine.<font color="red">BuildDocDBItemFromSmarTeamID</font> iobjectId, iclassId
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="BuildFileDBItemFromSmarTeamID"><dt>
+
+<table><tr><td>o Func <b>BuildFileDBItemFromSmarTeamID</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iobjectId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iclassId</tt>) As <script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> </table></dt>
+<dl>
+  <dd>
+ <font color="green">Copys the SmarTeam object -and its children- to default Work directory</font> and returns the corresponding CATIAStiDBItem, Without opening the file into CATIA session.
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iobjectId</tt>
+   <dd> This input corresponds to the Object ID of the required SmarTeam object.
+ </dd>
+    <dt><tt> iclassId</tt>
+   <dd> This input corresponds to the Class ID of the required SmarTeam object.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example retrieves a loaded document corresponding to a SmarTeam ID {Object ID, Class ID}.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> iobjectId <font color="blue">As</font> long
+ iobjectId = 963
+ <font color="blue">Dim</font> iclassId <font color="blue">As</font> short
+ iclassId = 57
+ <font color="blue">Dim</font> oStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> oStiDBItem = oStiEngine.<font color="red">BuildFileDBItemFromSmarTeamID</font> iobjectId, iclassId
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="Connect"><dt>
+
+<table><tr><td>o Sub <b>Connect</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iUserLogin</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iUserPassword</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Connects to SmarTeam Integration</font>.
+ <br>This connection to SmarTeam Integration is equivalent to launch in CATIA the command <font color="green">SmarTeam/Connect</font>.
+ <br>Note that this method is totally independent of the value returned by 'UseGraphicalUI' and that the 'SmarTeam User Login'
+ panel (dedicated connection panel) may be displayed.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUserLogin</tt>
+   <dd> This input corresponds to the Login name of the end user, who wants to connect to SmarTeam Integration.
+ </dd>
+    <dt><tt> iUserPassword</tt>
+   <dd> This input corresponds to the associated Password of this end user.
+ <br>
+ <br>Note that when 'iUserLogin' is EMPTY, the 'SmarTeam User Login' panel is displayed and the end user has to login himself.
+ Note that 'iUserPassword' is taken into account if and only if 'iUserLogin' is NOT empty.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>********** Connection With 'iUserLogin' & 'iUserPassword' **********</b>
+ <br>The following example connects end user to SmarTeam database on StiEngine <tt>oStiEngine</tt> Without displaying
+ 'SmarTeam User Login' panel. The User Login is "xxx" and his associated Password "yyy".
+ Note that User Login and Password should NOT be EMPTY. Otherwise the 'SmarTeam User Login' panel will be displayed.
+ If User Login or Password are NOT correct, the connection failed.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> iUserLogin <font color="blue">As</font> CATBSTR
+ iUserLogin = "xxx"
+ <font color="blue">Dim</font> iUserPassword <font color="blue">As</font> CATBSTR
+ iUserPassword = "yyy"
+ oStiEngine.<font color="red">Connect</font> iUserLogin,iUserPassword
+ </pre>
+
+ <b>********** Connection Without 'iUserLogin' & 'iUserPassword' **********</b>
+ <br>The following example connects end user to SmarTeam database on stiEngine <tt>oStiEngine</tt> With 'SmarTeam User Login' panel.
+ The end user will have to type his Login and his Password in the dedicated panel.
+ Note that if the User Login and his Password are specified, the 'SmarTeam User Login' panel will NOT be displayed.
+ If the end user only specifies his Login or if User Login and/or Password are NOT correct, the connection failed. 
+ In these cases, the 'SmarTeam User Login' panel will NOT be displayed.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ oStiEngine.<font color="red">Connect</font> "",""
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="Disconnect"><dt>
+
+<table><tr><td>o Sub <b>Disconnect</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Disconnects to SmarTeam Integration</font>.
+ <br>This disconnection to SmarTeam Integration is equivalent to launch in CATIA the command <font color="green">SmarTeam/Disconnect</font>.
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example disconnects end user to SmarTeam database on StiEngine <tt>oStiEngine</tt>.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ oStiEngine.Connect "",""
+ (...)
+ oStiEngine.<font color="red">Disconnect</font>
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetSMARTEAMClassID"><dt>
+
+<table><tr><td>o Func <b>GetSMARTEAMClassID</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>) As <script type="text/javascript"> activateLink('short','short')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the <font color="green">Class Identifier</font> of a SmarTeam Integration Object <font color="green">CATIAStiDBItem</font>
+ -at least saved in SmarTeam. 
+ <br>Note that the Class Identifier is unique for each Class defined in SmarTeam Data Model. This data is so
+ linked to the current DataBase, that is to say With the SmarTeam Release (RXX).
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem.    
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved Class Identifier of the CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns in <tt>oClassId</tt> the Class Identifier of the CATIAStiDBItem <tt>oStiDBItem</tt>.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="green">' Retrieve the Current Activated Product Document</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject(productDocument01)
+ <font color="blue">Dim</font> oClassId <font color="blue">As</font> short
+ oClassId = oStiEngine.<font color="red">GetSMARTEAMClassID</font>(iStiDBItem)
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetSMARTEAMObjectID"><dt>
+
+<table><tr><td>o Func <b>GetSMARTEAMObjectID</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>) As <script type="text/javascript"> activateLink('long','long')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the <font color="green">Object Identifier</font> of a SmarTeam Integration Object <font color="green">CATIAStiDBItem</font>
+ -at least saved in SmarTeam.
+ <br>This data is linked to the current DataBase, that is to say to the SmarTeam Release (RXX).
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved Object Identifier of the CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns in <tt>oObjectId</tt> the Object Identifier of the CATIAStiDBItem <tt>oStiDBItem</tt>.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="green">' Retrieve the Current Activated Product Document</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject(productDocument01)
+ <font color="blue">Dim</font> oObjectId <font color="blue">As</font> long
+ oObjectId = oStiEngine.<font color="red">GetSMARTEAMObjectID</font>(iStiDBItem)
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetStiDBItemFromAnyObject"><dt>
+
+<table><tr><td>o Func <b>GetStiDBItemFromAnyObject</b>(<td><script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> <td><tt>iAnyObject</tt>) As <script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the SmarTeam Integration Object <font color="green">CATIAStiDBItem</font> from an <font color="green">AnyObject</font> object.
+ <br>This method is useful to convert whatever CATIA V5 Object to a CATIAStiDBItem.
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAnyObject</tt>
+   <dd> This input corresponds to a CATIA V5 Object. It must be a Document, a Product, a Part or a DrawingSheet.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns in <tt>oStiDBItem</tt> the CATIAStiDBItem corresponding to the Document <tt>iDocument</tt>.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="green">' Retrieve the Current Activated Product Document</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> oStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> oStiDBItem = oStiEngine.<font color="red">GetStiDBItemFromAnyObject</font>(productDocument01)
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetStiDBItemFromCATBSTR"><dt>
+
+<table><tr><td>o Func <b>GetStiDBItemFromCATBSTR</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iFullPath</tt>) As <script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the SmarTeam Integration Object <font color="green">CATIAStiDBItem</font> from a <font color="green">Full Path</font>.
+ <br>This method is useful to convert a path to a CATIAStiDBItem, that is to say to create a SmarTeam Integration object.
+ The programmer is then able to manage its lifecycle (that is to say to Save, Check In, Check Out, Release, New Release, ... it).
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> CATIAStiDBItem
+
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFullPath</tt>
+   <dd> This input corresponds to the Full Path of the object to retrieve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved CATIAStiDBItem.
+
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns in <tt>oStiDBItem</tt> the CATIAStiDBItem corresponding to the full path.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> iFullPath <font color="blue">As</font> CATBSTR
+ iFullPath = "E:\CATIAFiles\Engine.CATProduct"
+ <font color="blue">Dim</font> oStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> oStiDBItem = oStiEngine.<font color="red">GetStiDBItemFromCATBSTR</font>(iFullPath)
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetTeamPDMURL"><dt>
+
+<table><tr><td>o Func <b>GetTeamPDMURL</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>) As <script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the <font color="green">Team PDM URL</font> of a CATIAStiDBItem.
+ <br>Note that the Team PDM URL has the following syntax: <font color="green">“TeamPDM://DBExtractor?CLASSID.EQ.www.
+ AND.OBJECTID.EQ.zzz.AND.Vers.EQ.1”</font>
+ <br>The only values which are modified from a SmarTeam object to an other are the numbers corresponding to the document
+ “Class ID” (www) and “Object ID” (zzz). 
+ <br>Note that this method is always executed With GUI. Indeed it returns a SmarTeam panel displaying the TEAM PDM URL.
+ It is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  This output corresponds to the retrieved Team PDM URL of the CATIAStiDBItem.
+ 
+ 
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example returns the Team PDM URL from a CATIAStiDBItem.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> iobjectId <font color="blue">As</font> long
+ iobjectId = 963
+ <font color="blue">Dim</font> iclassId <font color="blue">As</font> short
+ iclassId = 57
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.BuildFileDBItemFromSmarTeamID iobjectId, iclassId
+ <font color="blue">Dim</font> oTeamPDMURL <font color="blue">As</font> CATBSTR
+ oTeamPDMURL = oStiEngine.<font color="red">GetTeamPDMURL</font> iStiDBItem 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="IsConnected"><dt>
+
+<table><tr><td>o Func <b>IsConnected</b>(<td>) As <script type="text/javascript"> activateLink('boolean','boolean')</script> </table></dt>
+<dl>
+  <dd>
+ Returns if end user <font color="green">Is Connected to SmarTeam Integration</font> (True) or not (False).
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example tests if end user is connected to SmarTeam Integration on StiEngine <tt>oStiEngine</tt>.
+ If end user is not connected, this code sample allows her/him to connect to SmarTeam Integration by displaying the 'SmarTeam User Login' panel.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> oIsConnected <font color="blue">As</font> boolean
+ oIsConnected = oStiEngine.<font color="red">IsConnected</font>
+ <font color="blue">If Not</font> oStiEngine.<font color="red">IsConnected</font>() <font color="blue">Then</font>
+   oStiEngine.Connect
+ <font color="blue">End If</font>
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleCheckIn"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleCheckIn</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Checks the CATIAStiDBItem Into SmarTeam Check-In Vault</font>.
+ <br>This LifeCycleCheckIn operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/CheckIn</font>.
+ <br>2 cases: either the document is NEW (that is to say already saved in SmarTeam) or the document is being Modified
+ (Checked-Out) and is removed back into the vault.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to Check-In.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>********** LifeCycleCheckIn With GUI **********</b>
+ <br>The following example checks the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and
+ already saved in SmarTeam -into the vault.
+ <br>Note that in the dedicated panel, the end user should choose to activate the following options 'Keep Local File' or 'Keep Checked-Out'.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckIn</font> iStiDBItem
+ </pre>
+
+ <b>********** LifeCycleCheckIn Without GUI **********</b>
+ <br>The following example checks the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and
+ already saved in SmarTeam- into the vault.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckIn</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleCheckOut"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleCheckOut</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Checks Out Without Propagation</font> the CATIAStiDBItem in SmarTeam.
+ <br>This LifeCycleCheckOut operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/CheckOut</font>.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to Check-Out.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>********** LifeCycleCheckOut With GUI **********</b>
+ <br>The following example checks out from the vault the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt>.
+ Note that in the dedicated panel, the end user is able to realize the following action 'Propagate Operation' to select which children she/he also wants to Check-Out.
+ She/he has also access to the SmarTeam panel option 'Do not get the file from vault'.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckOut</font> iStiDBItem
+ </pre>
+
+ <b>**********  LifeCycleCheckOut Without GUI **********</b>
+ <br>The following example Checks Out from the vault the current activated document -associated to the StiDBItem <tt>oStiDBItem</tt>.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckOut</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleCheckOutPropagated"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleCheckOutPropagated</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Checks Out With Propagation</font> the CATIAStiDBItem in SMARTEAM.
+ <br>This LifeCycleCheckOutPropagated operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/CheckOut</font> 
+ and then to specify in the associated SmarTeam panel 'Actions/Propagate Operation'.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to be Checked-Out.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>**********  LifeCycleCheckOutPropagated With GUI **********</b>
+ <br>The following example Checks Out from the vault the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt>
+ AND its children.
+ She/he has also access to the SmarTeam panel option 'Do not get the file from vault'.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckOutPropagated</font> iStiDBItem
+ </pre>
+
+ <b>**********  LifeCycleCheckOutPropagated Without GUI **********</b>
+ <br>The following example Checks Out from the vault the current activated document -associated to the StiDBItem <tt>oStiDBItem</tt>
+ AND its children.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleCheckOutPropagated</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleNewRelease"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleNewRelease</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Enables a New Release Without Propagation</font> for the CATIAStiDBItem in SmarTeam.
+ <br>This LifeCycleNewRelease operation to SmarTeam Integration is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/NewRelease</font>.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to New Release.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>**********  LifeCycleNewRelease With GUI **********</b>
+ <br>The following example makes a new copy of a Released document associated to the CATIAStiDBItem <tt>oStiDBItem</tt>
+ that was moved into the Released vault. The resulting document is a new revision of the source document. 
+ Note that in the dedicated panel,the end user is also able to realize the following action 'Propagate Operation' to select which children
+ she/he also wants to Check-Out. She/he has also access to the SmarTeam panel option 'Do not get the file from vault'.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleNewRelease</font> iStiDBItem
+ </pre>
+ 
+ <b>**********  LifeCycleNewRelease Without GUI **********</b>
+ <br>The following example makes a new copy of a Released document associated to the CATIAStiDBItem <tt>oStiDBItem</tt>
+ that was moved into the Released vault. The resulting document is a new revision of the source document. 
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleNewRelease</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleNewReleasePropagated"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleNewReleasePropagated</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Enables a NewRelease action With Propagation</font> for the CATIAStiDBItem in SmarTeam.
+ <br>This LifeCycleNewReleasePropagated operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/NewRelease</font>
+ and then to specify in the associated SmarTeam panel 'Propagate Operation'.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to be New Released.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b> ********** LifeCycleNewReleasePropagated With GUI **********</b>
+ <br>The following example makes a new copy of the Released document associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and of its children.
+ This document was previously saved into the Released vault. The resulting document is a new revision of the source document. 
+ She/he has also access to the SmarTeam panel option 'Do not get the file from vault'.
+ <pre>
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleNewReleasePropagated</font> iStiDBItem
+ </pre>
+
+ <b>********** LifeCycleNewReleasePropagated Without GUI **********</b>
+ <br>The following example makes a new copy of a Released document associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and of its children.
+ This document was previously saved into the Released vault. The resulting document is a new revision of the source document. 
+ <pre>
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleNewReleasePropagated</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleRelease"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleRelease</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Releases the CATIAStiDBItem in SmarTeam Release Vault</font>.
+ <br>This LifeCycleRelease operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/Release</font>.
+ <br>3 cases: either the document is New (that is to say already saved in SmarTeam) or it is being Modified (Checked-Out or New Released)
+ and is removed back into the vault or it is Checked-In and is moved from the Check-In vault to the Release one.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to Released.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>********** LifeCycleRelease With GUI ********** </b>
+ <br>The following example releases the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and
+ already saved in SmarTeam- into the vault.
+ <br>Note that in the dedicated panel, the end user should choose to activate the following options 'Keep Local File' or 'Keep Checked-Out'.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current activated document</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleRelease</font> iStiDBItem
+ </pre>
+
+ <b>********** LifeCycleRelease Without GUI **********</b>
+ <br>The following example moves the current activated document -associated to the CATIAStiDBItem <tt>oStiDBItem</tt> and
+ already saved in SmarTeam -into the Released vault.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current activated document</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleRelease</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="LifeCycleUndoCheckOut"><dt>
+
+<table><tr><td>o Sub <b>LifeCycleUndoCheckOut</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Cancels Check-Out operation on the CATIAStiDBItem in SmarTeam</font>.
+ So the programmer is able to retrieve the previous latest state (Checked-In or Released) of the CATIAStiDBItem.
+ <br>This LifeCycleUndoCheckOut operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/LifeCycle/UndoCheckOut</font>.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to be Undo Checked-Out.
+
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>**********  LifeCycleUndoCheckOut With GUI **********</b>
+ <br>The following example retrieves a copy of a document associated to the CATIAStiDBItem <tt>oStiDBItem</tt>
+ in the previous latest state (Checked-In or Released).
+ <br>A CATIA panel is firstly displayed to warn the end user that it is strongly recommanded to confirm the file deletion when asked.
+ If, the end user clicks "OK", a SmarTeam panel is then displayed "File '(...)\Work\CATPRD-XXXX.CATProduct' is referenced only by 
+ Object 'CATPRD-XXXX RevX.X', and will be deleted. Do you want to delete this file?" The end user had better accept.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleUndoCheckOut</font> iStiDBItem
+ </pre>
+
+ <b>**********  LifeCycleUndoCheckOut Without GUI **********</b>
+ <br>The following example cancels the Check-Out of the document associated to the CATIAStiDBItem <tt>oStiDBItem</tt> 
+ in the previous latest state (Checked-In or Released).
+ <br>By default, the Undo Check-Out operation is not propagated, i.e. available only for the current CATIAStiDBItem.
+ <pre>
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ oStiEngine.<font color="red">LifeCycleUndoCheckOut</font> iStiDBItem
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="RefreshInfo"><dt>
+
+<table><tr><td>o Sub <b>RefreshInfo</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Refreshes Information concerning all CATIA Documents in session</font>.
+ <br>This RefreshInfo operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/Tools/Refresh</font>.
+ <br>Note that this method is always executed Without any GUI and is so totally independent of the value returned by 'UseGraphicalUI'.
+
+ <dl>
+ <dt> During this RefreshInfo operation, the following steps are executed:
+ <dd> - Checking the document synchronization on disk, 
+ <dd> - Updating internal info, 
+ <dd> - Updating Read/Write status for valid documents, 
+ <dd> - Updating icons, 
+ <dd> - Sending error or warning message for not synchronized or removed documents if GUIs are activated.
+ </dl>
+
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following example refreshs the CATIA session:
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ oStiEngine.<font color="red">RefreshInfo</font> 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="Save"><dt>
+
+<table><tr><td>o Sub <b>Save</b>(<td><script type="text/javascript"> activateLink('StiDBItem','StiDBItem')</script> <td><tt>iStiDBItem</tt>)</table></dt>
+<dl>
+  <dd>
+ <font color="green">Saves the CATIAStiDBItem in SmarTeam</font>.
+ <br>This Save operation is equivalent to launch in CATIA the command <font color="green">SmarTeam/Save</font>.
+ <br>Note that this method should be executed With GUI and is so totally dependent of the value returned by 'UseGraphicalUI'.
+ The SmarTeam Integration Object (and its children) is(are) saved in the current Work -if NOT already saved on disc.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStiDBItem</tt>
+   <dd> This input corresponds to the CATIAStiDBItem to save.
+ 
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  <b>********** Save With GUI **********</b>
+ <br>Note that in the 'Projects Manager' panel, the end user should select the 'Project' in which she/he wants to save the corresponding file.
+ If she/he selects one, then she/he can activate the option 'Link To Projects' and then 'Secured By' and to finish 'Propagate security'.
+ She/he is also able to choose to activate the following option 'Add To Desktop'. 
+ <br>The following example saves in SmarTeam the CATIAStiDBItem <tt>oStiDBItem</tt> With GUI.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If Not</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">True</font>
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject(productDocument01)
+ oStiEngine.<font color="red">Save</font> iStiDBItem 
+ </pre>
+
+ <b>********** Save Without GUI **********</b>
+ <br>By Default, the SmarTeam Integration Object (and its children) is(are) saved in the current Work -if NOT already saved on disc, 
+ NOT linked With any Project and NOT Added to Desktop.
+ <br>The following example saves in SmarTeam the CATIAStiDBItem <tt>oStiDBItem</tt> Without GUI.
+ <pre>
+ <font color="blue">Dim</font> oStiEngine <font color="blue">As</font> StiEngine
+ <font color="blue">Set</font> oStiEngine = CATIA.GetItem("CAIEngine")
+ <font color="blue">Dim</font> bIsActive <font color="blue">As</font> boolean
+ bIsActive = oStiEngine.UseGraphicalUI
+ <font color="blue">If</font> bIsActive <font color="blue">Then</font>
+   oStiEngine.UseGraphicalUI = <font color="blue">False</font> 
+ <font color="blue">End If</font>
+ <font color="green">' Retrieve the Current Activated Product</font>
+ <font color="blue">Dim</font> productDocument01 <font color="blue">As</font> Document
+ <font color="blue">Set</font> productDocument01 = CATIA.ActiveDocument
+ <font color="green">' Retrieve the StiDBItem from the Document</font>
+ <font color="blue">Dim</font> iStiDBItem <font color="blue">As</font> StiDBItem
+ <font color="blue">Set</font> iStiDBItem = oStiEngine.GetStiDBItemFromAnyObject( productDocument01 )
+ <font color="green">' Save the Product</font>
+ oStiEngine.<font color="red">Save</font> iStiDBItem 
+ </pre></pre></dd>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

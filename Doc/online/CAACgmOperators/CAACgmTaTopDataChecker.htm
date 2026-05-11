@@ -1,0 +1,513 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>How to Use the CGM Data Checker</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Use the CGM Data Checker</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>CGM objects are valid if they fulfill a certain number of rules. When 
+		a given object is created, it can be checked for a given rule. If any problem 
+		is found, a core dump is issued and the developer has to take a look at 
+		the core dump traces to get some clue about why the object is invalid. The 
+		rule checker itself is a detection tool which does not repair any object. 
+		If no core dump has been issued, this only means that the CGM object to 
+		be validated complies with a specified rule. Other rules may not be fulfilled 
+		making the object invalid.</p>
+		<ul>
+			<li><a href="#_The_Rules_to">The Rules to be Satisfied</a></li>
+			<li><a href="#_How_to_Activate">How to Activate the Rules</a></li>
+			<li><a href="#_The_Topological_Checks">The Topological Checks</a></li>
+			<li><a href="#_The_Geometrical_Checks">The Geometrical Checks</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="_The_Rules_to"></a>The Rules to be Satisfied</h2>
+<p>Each rule is defined by an identifier. This identifier is used to activate the 
+data checker as described in <a href="#_How_to_Activate">How to Activate the Rules</a>.</p>
+<table class="fill">
+	<tr>
+		<th>Rules to be checked</th>
+		<th>Identifiers</th>
+	</tr>
+	<tr>
+		<td><a href="#_Body_should_not">A body should not contain any touched topology</a></td>
+		<td valign="top"><code>TRE_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#Closed_wire">A closed wire should be made up of at least two 
+		edges</a></td>
+		<td><code>CWE_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#Edge_sharpness">A topologically smooth edge should be geometrically 
+		smooth </a></td>
+		<td><code>ESH_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#Loop_closed">A loop should not be closed in 3D and open in 
+		2D</a></td>
+		<td><code>SCE_0</code></td>
+	</tr>
+	<tr>
+		<td><a href="#CATPointOnEdgeCurve">A CATPointOnEdgeCurve should be on its 
+		EdgeCurve</a></td>
+		<td><code>PCE_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#POECCATCrvParam">Any CATCrvParam of a POEC should be in the 
+		maximum limits of its spec curve.</a></td>
+		<td><code>PPO_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#CATINTCurve">The gap between the curves making up a CATINTCurve 
+		should be less than the resolution</a></td>
+		<td><code>ICG_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Limit_Box_of">Limit Box of a PCurve curve should be inside 
+		the Support&#39;s limits box. (Check for PCurve::CloneAndMove service)</a></td>
+		<td><code>PSS_0</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Check_that_PCurve">Limit Box of a PCurve curve should be 
+		inside the Support&#39;s limits box. (Check for PCurve::SetSurface service)</a></td>
+		<td><code>PSS_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Curve_continuity_should">Curve continuity should be at least 
+		C1</a></td>
+		<td><code>CCC_0</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Surface_continuity_should">Surface continuity should be at 
+		least C1</a></td>
+		<td><code>CCC_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_SetOfPointsMapping_for_curve">SetOfPointsMapping for curve 
+		limits inclusion for CATSetOfPointsMapX for ref/co curves of an edge curve 
+		should be within the resolution</a></td>
+		<td><code>SPM_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_The_internal_gap">The internal gap in a macro point should 
+		be less than the resolution.</a></td>
+		<td><code>MPG_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Check_for_ref">Check for ref curve and curve from MapX for 
+		an edge curve, that curve useful limits are included in it&#39;s max limits.</a></td>
+		<td><code>ULO_0</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Curve_continuity_OK">Curve continuity OK in V6 (at least 
+		C2)</a></td>
+		<td><code>CGC_0</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_Surface_continuity_OK">Surface continuity OK in V6 (at least 
+		C2)</a></td>
+		<td><code>CGC_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_The_EdgeCurve_Should">The EdgeCurve should not have identical 
+		PCurves in the same tree</a></td>
+		<td><code>EIP_1</code></td>
+	</tr>
+	<tr>
+		<td><a href="#_The_MathRep_of">The MathRep of canonical curves (Circle &amp; 
+		Ellipse) should be in the model infinite</a></td>
+		<td><code>INF_2</code></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="_How_to_Activate"></a>How to Activate the Rules</h2>
+<p>Here are the preliminary steps to follow prior to activating the data checker:</p>
+<p><strong>Step 1</strong></p>
+<ul>
+	<li>Either create a CATIA environment, edit it and modify the value of the CATICPath 
+	variable.
+	<pre>&lt;install_CATIA&gt;\intel_a\code\productIC</pre>
+	<p>should be modified in:</p>
+	<pre>&lt;install_CATIA&gt;\intel_a\code\productIC;&lt;install ENOVIA Studio&gt;\intel_a\code\productIC</pre>
+	<p>You can install ENOVIA Studio and CATIA at the same place.</p>
+	</li>
+	<li>Or copy the contents of:
+	<pre>&lt;install ENOVIA Studio&gt;\intel_a\code\productIC</pre>
+	<p>Into:</p>
+	<pre>&lt;install_CATIA&gt;\intel_a\code\productIC</pre>
+	</li>
+</ul>
+<p><strong>Step 2</strong></p>
+<ul>
+	<li>Activate the CDC license in the Tools/Option Licensing Menu.</li>
+</ul>
+<p><strong>Step 3</strong></p>
+<ol>
+	<li>Exit CATIA, activate the CATCAADataCheck variable plus the appropriate 
+	rule variables as described below:
+	<pre>set CATCAADataCheck=1</pre>
+	<p>to activate all the rules.</p>
+	<pre>set CATCAADataCheck=1
+set CATCGMCleanerRules=<i>XXX_1;YYY_1</i> ;...</pre>
+	<p>to activate only a set of rules. XXX_1, YYYY_1 are the rule identifiers.</p>
+	</li>
+	<li>Restart CATIA.</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="_The_Topological_Checks"></a>The Topological Checks</h2>
+<h3><a name="_Body_should_not"></a>Body should not contain any touched topology</h3>
+<p>A cell is touched when it is intended to be used in some specific operations 
+like the &quot;smart duplication&quot; (see the CATSmartBodyDuplicator in the Encyclopedia). 
+Note there is other operators that require touched objects as their input data. 
+After the operation has completed the touched cells should return to an untouched 
+status. If they remain touched, further operations on the initial body may lead 
+to unexpected results. A valid topology should not contain any touched cells.</p>
+<p>The CD traces are similar to the ones below:</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: TRE_1</strong><br>
+		Short msg: &quot;Residual touched cells checking failed.&quot;;<br>
+		Extended msg: &quot;Residual touched cells on ... checking failed.&quot;;</td>
+	</tr>
+</table>
+<h3><a name="Closed_wire"></a>A closed wire should be made up of at least two edges</h3>
+<p>An edge cannot be closed on itself, in other words any closed wire should be 
+made up of at least two edges. </p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: CWE_1</strong><br>
+		Short msg: &quot;Closed wire with edgecount &gt; 1 checking failed.&quot;;<br>
+		Extended msg: &quot;Closed wire with edgecount &gt; 1 on ... checking failed.&quot;;</td>
+	</tr>
+</table>
+<h3><a name="Edge_sharpness"></a>A topologically smooth edge should be geometrically 
+smooth</h3>
+<p>The edges that are considered as smooth should not have a geometrical sharpness 
+greater than 2.3 deg. If there is no consistency between topological and geometrical 
+sharpness, operations such as fillets and offset cannot succeed. </p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: ESH_1</strong><br>
+		Short msg: = &quot;Edge sharpness checking failed.&quot;;<br>
+		Extended msg: &quot;Edge sharpness on /p1 checking failed.&quot;;</td>
+	</tr>
+</table>
+<h3><a name="Loop_closed"></a>A loop should not be closed in 3D and open in 2D</h3>
+<table>
+	<tr>
+		<td>A loop relying on a surface should not be closed on itself. For example, 
+		a cylinder should not be made up of one single loop. In the right-hand side 
+		figures, the first one exhibits an invalid loop.</td>
+		<td>
+		<img alt="Invalid Loop" width="230" height="208" src="images/CAACgmTopcyl0.jpg"></td>
+		<td>
+		<img alt="Valid Loop" width="226" height="206" src="images/CAACgmTopcyl2.jpg"></td>
+	</tr>
+</table>
+<p>The CD traces are similar to the ones below:</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: SCE_0</strong><br>
+		On CGM Object: ...<br>
+		From Feature: ...<br>
+		Short msg: &quot;Surface closure for Loop checking failed.&quot;;<br>
+		Extended msg: &quot;Surface closure for Loop ... checking failed.&quot;;</td>
+	</tr>
+</table>
+<h3><a name="CATPointOnEdgeCurve"></a>A CATPointOnEdgeCurve should be on its EdgeCurve</h3>
+<p>Reminder: An CATPointOnEdgeCurve is specified by couples of data including a 
+CATCrvParam and the CATCurve associated with this CATCrvParam. The list of data 
+couples is referred to as a &quot;spec&quot;. The &quot;spec&quot; defines a CATPointOnEdgeCurve. The 
+EdgeCurve itself is made up of several curves. When scanning and analyzing each 
+spec curve of a CATPointOnEdgeCurve by using CATPointOnEdgeCurve::GetSpec for example, 
+one should find that each retrieved CATCurve is contained into the CATEdgeCurve.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: PCE_1</strong><br>
+		On CGM Object: ...<br>
+		From Feature: ...<br>
+		Short msg: &quot;POEC curve in edge curve checking failed.&quot;;<br>
+		Extended msg: &quot;POEC curve in edge curve on ... checking failed.&quot;;</td>
+	</tr>
+</table>
+<h3><a name="POECCATCrvParam"></a>Any CATCrvParam of a POEC should be in the maximum 
+limits of its spec curves</h3>
+<p>When scanning and analyzing each spec curve of a CATPointOnEdgeCurve, one should 
+find that each retrieved CATCrvParam is within the limits of the reference curve.
+</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: PP0_1</strong><br>
+		On CGM Object: ...<br>
+		From Feature: ...<br>
+		Short msg: &quot;POEC spec param inside spec curve limits checking failed.&quot;;<br>
+		Extended msg: &quot;POEC spec param inside spec curve limits on /p1 checking 
+		failed.&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h2><a name="_The_Geometrical_Checks"></a>The Geometrical Checks</h2>
+<h3>The gap between the curves making up a CATINTCurve should be less than the resolution</h3>
+<p>Checks the Gap between the corresponding points of component curves of a CATIntCurve.
+</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: ICG_1</strong><br>
+		On CGM Object: CATIntCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot;IntCurve gap less than resolution checking failed.&quot;;<br>
+		Extended msg: &quot;IntCurve gap less than resolution on /p1 checking failed.&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Limit_Box_of"></a>Limit Box of a PCurve curve should be inside the 
+Support&#39;s limits box. (Check for PCurve::CloneAndMove service)</h3>
+<p>Checks whether the limits of PCurve are included in the limits of its support. 
+The check is called from <strong>PCurve::CloneAndMove</strong> method</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: PSS_0</strong><br>
+		On CGM Object: CATPCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot;PCurve outside its support.&quot;;<br>
+		Extended msg: &quot;PCurve outside its ... support..&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="CATINTCurve"></a><a name="_Check_that_PCurve"></a>Limit Box of a PCurve 
+curve should be inside the Support&#39;s limits box. (Check for PCurve::SetSurface service)</h3>
+<p>Checks whether the limits of PCurve are included in the limits of its support. 
+The check is called from <strong>PCurve::SetSurface</strong> method</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: PSS_1</strong><br>
+		On CGM Object: CATPCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot;PCurve outside its support.&quot;;<br>
+		Extended msg: &quot;PCurve outside its ... support..&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Curve_continuity_should"></a>Curve continuity should be at least C1</h3>
+<p>Checks whether the Curve is C1 continuous </p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: CCC_0</strong><br>
+		On CGM Object: CATCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Curve continuity is at least C1 checking failed.&quot;;<br>
+		Extended msg: &quot; Curve continuity is at least C1 on /p1 checking failed.&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Surface_continuity_should"></a>Surface continuity should be at least 
+C1</h3>
+<p>Checks whether the Surface is C1 continuous</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: CCC_1</strong><br>
+		On CGM Object: CATSurfaceType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Surface continuity is at least C1 checking failed.&quot;;<br>
+		Extended msg: &quot; Surface continuity is at least C1 on /p1 checking failed.&quot;;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_SetOfPointsMapping_for_curve"></a>SetOfPointsMapping for curve limits 
+inclusion for CATSetOfPointsMapX for ref/co curves of an edge curve should be within 
+the resolution</h3>
+<p>For every point in SetOfPointsMapping, the geometrical distance between the reference 
+curve and the other curves of the map should be less than the factory resolution.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: SPM_1</strong><p></p>
+		<p>On CGM Object: CATEdgeCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot; EdgeCurve SetOfPointsMappingLimits checking failed.&quot;;<br>
+		Extended msg: &quot; EdgeCurve SetOfPointsMappingLimits on /p1 checking failed.&quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_The_internal_gap"></a>The internal gap in a macro point should be 
+less than the resolution.</h3>
+<p>Checks the Gap between the component POECs of the MacroPoint. The distance is 
+measured between one reference point and other points.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: MPG_1</strong><p></p>
+		<p>On CGM Object: CATMacroPointType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Macro Point has a too big gap between its internal points.&quot;;<br>
+		Extended msg: &quot; Gap inside Macro Point on /p1 checking failed.&quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Check_for_ref"></a>Check for ref curve and curve from MapX for an 
+edge curve, that curve useful limits are included in its max limits.</h3>
+<p>The useful limits of the RefCurve and curves of an EdgeCurve should be included 
+in the maxlimit of edge curve.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: ULO_1</strong><p></p>
+		<p>On CGM Object: CATEdgeCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Curve Limits - Useful Outside Max checking failed.&quot;;<br>
+		Extended msg: &quot; Curve Limits - Useful Outside Max on /p1 checking failed.&quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Curve_continuity_OK"></a>Curve continuity should be at least C2 in 
+V6</h3>
+<p>The curve should be at least C2 continuous in V6.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: CGC_0</strong><p></p>
+		<p>On CGM Object: CATCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Curve continuity checking failed.&quot;;<br>
+		Extended msg: &quot; Curve continuity on /p1 checking failed.&quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_Surface_continuity_OK"></a>Surface continuity should be at least C2 
+in V6 </h3>
+<p>The surface should be at least C2 continuous: in V6.</p>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: CGC_1</strong><p></p>
+		<p>On CGM Object: CATSurfaceType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Surface continuity checking failed.&quot;;<br>
+		Extended msg: &quot; Surface continuity on /p1 checking failed.&quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_The_EdgeCurve_Should"></a>The edge curve should not have identical 
+PCurves in the same tree</h3>
+<p>The edge curve should not contain identical PCurves in the same tree. But they 
+can exist in different trees. </p>
+<table>
+	<tr>
+		<td><img alt="Edge Curves" src="images/CAACgmTopEIP_1.jpg"></td>
+		<td>The EdgeCurve-EC has one PCurve (PC) and one Merged Curve (MC) which 
+		again has two component PCurves.<p></p>
+		<p>The First case is OK because PC1 is in different trees.</p>
+		<p>The second case is KO because both PC2 s are in the same tree.</p>
+		</td>
+	</tr>
+</table>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: EIP_1</strong>
+		<p>On CGM Object: CATEdgeCurveType<br>
+		From Feature: ...<br>
+		Short msg: &quot; The EdgeCurve Should Not Have Identical PCurves In The Same 
+		Tree checking failed.&quot;;<br>
+		Extended msg: &quot; The EdgeCurve Should Not Have Identical PCurves In The Same 
+		Tree on /p1 checking failed. &quot;;</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="_The_MathRep_of"></a>The MathRep of the canonical curves (Circle &amp; 
+Ellipse) should be in the model infinite</h3>
+<table>
+	<tr>
+		<th><strong>Authorized</strong>: the mathematical circle<br>
+		(in dashed green) is in the infinite.</th>
+		<th><strong>Not authorized</strong>: the complete mathematical circle<br>
+		(in dashed green) is not in the infinite.</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Mathematical Circle" src="images/CAACgmTopINF_2_OK.jpg" width="214" height="205"></td>
+		<td>
+		<img alt="Complete Mathematical Circle" src="images/CAACgmTopINF_2_KO2.jpg" width="214" height="205"></td>
+	</tr>
+</table>
+<p>Definition of Model Infinite &amp; Model space</p>
+<table class="fill">
+	<tr>
+		<td>&nbsp;</td>
+		<th>Until CATIA V5R13</th>
+		<th>From CATIA V5R14</th>
+	</tr>
+	<tr>
+		<td>Model Size</td>
+		<td>[-100 meters, + 100 meters]<br>
+		on each coordinate</td>
+		<td>[-1 000 meters, + 1 000 meters]<br>
+		on each coordinate</td>
+	</tr>
+	<tr>
+		<td>Model infinite</td>
+		<td>[-1 000 meters, + 1 000 meters]<br>
+		on each coordinate</td>
+		<td>[-10 000 meters, + 10 000 meters]<br>
+		on each coordinate</td>
+	</tr>
+</table>
+<table class="fill">
+	<tr>
+		<td><strong>CGM Rule: INF_2</strong><br>
+		On CGM Object: CATCircleType, CATEllipseType<br>
+		From Feature: ...<br>
+		Short msg: &quot; Circle/Ellipse - MathRep Inside Model Infinite checking failed. 
+		&quot;;<br>
+		Extended msg: &quot; Circle/Ellipse - MathRep Inside Model Infinite on /p1 checking 
+		failed. &quot;;</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2004]</td>
+		<td>Document created</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2005]</td>
+		<td>Document modified</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/DSDoc.css" rel="stylesheet" type="text/css"/>
+<script src="../CAADocJavaScript/DSDocTocToc.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/DSDocHighlight.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/submit.js" type="text/javascript">/* */</script>
+<title>Generating an ENOVIA Event Listener</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Generating an ENOVIA Plugin&nbsp; Module</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This task shows you how to generate an ENOVIA plugin 
+		module. Such a module is required to afterwards generate either an 
+		ENOVIA event listener or an ENVIA user exit.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span>
+		<ul>
+			<li>Open a workspace.</li>
+			<li>This workspace must contain a framework with the following frameworks 
+			as prerequisites with Public access: System. 
+			See <a href="wxpug0202.htm">Creating a Framework</a>, and
+			<a name="Top0"></a><a href="wxpug0206.htm">Editing Framework Identity 
+			Card</a>.</li>
+			<li>Display the <kbd>Solution Explorer</kbd>.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<ol class="task">
+	<li>
+	<p>In the <kbd>Solution Explorer</kbd>, right click the project named with 
+	the framework name, that is, NOT the node prefixed with FW_, and containing 
+	the framework to which you 
+	want to add a plugin module.</p>
+	</li>
+	<li>
+	<p>In the contextual menu, point to <kbd>Add</kbd>, and click
+	<img alt="New Item Icon" height="16" src="images/iconNewItem.png" width="16"/>
+	<kbd>New Item</kbd>.</p>
+	<p>The <kbd>Add New Item</kbd> dialog box opens.</p>
+	</li>
+	<li>
+	<p>In <kbd>Installed</kbd>, click the
+	<img alt="Arrow Icon" height="8" src="images/iconArrow2.png" width="5"/> arrow 
+	in front of <kbd>3DS Templates</kbd> to expand its contents, if not yet expanded.</p>
+	</li>
+	<li>
+	<p>Click <kbd>ENOVIAV5</kbd>.</p>
+	<p>The ENOVIAV5 installed templates are displayed in the central pane.</p>
+	</li>
+	<li>
+	<p>In the central pane, click
+	<img alt="CATIAV5 C++ Icon" height="16" src="images/iconCATIAV5CPP.png" width="16"/>
+	<kbd>CATPlugIn</kbd>.</p>
+	</li>
+	<li>
+	<p>In the <kbd>Name</kbd> box, type the name you want to assign to the 
+	plugin module.</p>
+	<table class="Remark">
+		<tr>
+			<td class="Remark"><span class="run-in">Warning</span>: This name is 
+			used to create the test file name. Bear in mind that:
+			<ul>
+				<li>
+				<p>All the characters are allowed except those listed below:</p>
+				<pre>* ? \ / &lt; &gt; &quot; &#39; | :</pre>
+				</li>
+				<li>
+				<p>With Windows, full path names must not exceed 260 characters.</p>
+				</li>
+			</ul>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>
+	<p>Click <kbd>Add</kbd>.</p>
+	<p>The plugin is created.</p>
+		<table class="Remark">
+	<tr>
+	<td class="Remark">
+	<span class="run-in">Warning</span>:
+	If you do not see all the created folders and files, in the <kbd>3DS Workspace Explorer</kbd>,
+	right click the framework name, and click 
+	<img alt="Refresh Solution Icon" height="16" src="images/iconWSRefresh.png" width="16"/> <kbd>Refresh Solution</kbd>.
+	</td>
+	</tr>
+	</table>
+
+	<p>Assume that the plugin name is NewPlugin. 
+	The framework includes now the following:</p>
+	<table class="fill">
+		<tr>
+			<th>Folders and Files in the Solution Explorer</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>
+			<img alt="Solution Explorer" height="488" src="images/dbPlugIn.png" width="294"/></td>
+			<td>
+			<table class="fill" style="width: 98%">
+				<colgroup align="left" span="2">
+				</colgroup>
+				<colgroup align="center" span="1">
+				</colgroup>
+				<tr>
+					<td class="heading1" colspan="3">In CNext/code/dictionary</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>CAAPlugInFW.dico</td>
+					<td>The framework dictionary file.</td>
+					<td>No</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In CNext/resources/msgcatalog</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>PlugInList.CATRsc</td>
+					<td>The plugin resource file.</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In IdentityCard</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>IdentityCard.xml</td>
+					<td>The framework's identity card file is not updated. You 
+					will update it below. You will need to update also it when 
+					creating an ENOVIA event listener or a user exit.</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In ProtectedIInterfaces</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>NewPlugin.h</td>
+					<td>The module header file.</td>
+					<td>No</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In NewPlugin.m/LocalInterfaces</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To&nbsp;Customize</th>
+				</tr>
+				<tr>
+					<td>ENOVPluginNewPlugin.h</td>
+					<td>The plugin class header file.</td>
+					<td>No</td>
+				</tr>
+				<tr>
+					<td>ENOVPluginNewPluginListener.h</td>
+					<td>The event listener class header file.</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In CAAAfrGeoCreationWkbMod.m/src</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>ENOVPluginNewPlugin.cpp</td>
+					<td>The plugin class file.</td>
+					<td>No</td>
+				</tr>
+				<tr>
+					<td>ENOVPluginNewPluginListener.cpp</td>
+					<td>The event listener class file.</td>
+					<td>Yes</td>
+				</tr>
+				<tr>
+					<td class="heading1" colspan="3">In NewPlugin.m</td>
+				</tr>
+				<tr>
+					<th>File</th>
+					<th>Description</th>
+					<th>To Customize</th>
+				</tr>
+				<tr>
+					<td>Imakefile.mk</td>
+					<td>The plugin module Imakefile.</td>
+					<td>No</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>
+		<p>Open the IdentityCard.xml file and add the VPMInterfaces framework as a public prerequisite.</p>
+	</li>
+	<li>
+		<p>You can now generate in this plugin module:</p>
+		<ul>
+			<li>An ENOVIA event listener: see <a href="wxpug0312.htm">Generating an ENOVIA Event Listener</a>.</li>
+			<li>An ENOVIA user exit: see <a href="wxpug0313.htm">Generating an ENOVIA User Exit</a>.</li>
+		</ul>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Oct 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [May 2001]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

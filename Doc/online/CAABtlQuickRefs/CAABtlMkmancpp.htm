@@ -1,0 +1,289 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>mkmancpp</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ API Documentation Generator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>mkmancpp</h3>
+      <p><em>Generating documentation for C++ header files</em></p></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p><b>mkmancpp</b> is a tool that parses the declarations and
+      documentation comments in a set of C++ header files and produces a set of HTML
+      pages describing the C++ entities (class, interface, constructor, method, 
+	  data member, global
+      function, macro, collection class, enumeration, operator, structure, and typedef).</p>
+      <ul>
+        <li><b><a href="#Synopsis">Synopsis</a></b></li>
+        <li><b><a href="#Usage">Usage</a></b></li>
+        <li><b><a href="#Examples">Examples</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p><strong>Warning</strong>: The files must be located in 
+frameworks with names without extensions (education and test frameworks are not processed.) in the following directories:</p>
+<ul>
+	<li>PublicInterfaces: these headers must be tagged according to the 
+		documentation rules [<a href="#References">1</a>]. You can also replace 
+		L1 with L0 in the @CAA2Level tag [<a href="#References">2</a>].&nbsp;
+		<table>
+		<tr>
+		<th>L1 Tagged Headers</th>
+		<th>L0 Tagged Headers</th>
+		<tr>
+		<td><pre class="code">/**
+ *<strong> @CAA2Level L1</strong>
+ * @CAA2Usage U1
+ */</pre></td>
+		<td><pre class="code">/**
+ * <strong>@CAA2Level L0</strong>
+ * @CAA2Usage U1
+ */</pre></td>
+		</tr>
+		</table>
+</li>
+	<li>ProtectedInterfaces: these headers must be tagged according to the 
+		documentation rules [<a href="#References">1</a>]. You must replace L1 
+		with Protected in the @CAA2Level tag.<pre class="code">/**
+ * <strong>@CAA2Level Protected</strong>
+ * @CAA2Usage U1
+ */</pre></li>
+
+	<li>PrivateInterfaces: these headers must be tagged according to the 
+		documentation rules [<a href="#References">1</a>]. You must replace L1 
+		with Private in the @CAA2Level tag.
+		<pre class="code">/**
+ * <strong>@CAA2Level Private</strong>
+ * @CAA2Usage U1
+ */</pre></li>
+
+</ul>
+<p>All non tagged or wrongly tagged headers are not processed.</p>
+<h3><a name="Synopsis"></a>Synopsis</h3>
+<pre>mkmancppM [-h] [-W &lt;path&gt;] [-o &lt;path&gt;] [-private] [-level &lt;level&gt;] [-docPrivateMember] [-productID &lt;name&gt;] [-htmlfooter &lt;path&gt;] [-stylesheet &lt;path&gt;]</pre>
+<table>
+		<tr>
+		<th>Option</th>
+		<th>Description</th>
+		<tr>
+    <td><code>-h</code></td>
+    <td>Command help.</td>
+  </tr>
+  <tr>
+    <td><code>-W &lt;path&gt;</code></td>
+    <td>Define the full path of the workspace to document.</td>
+  </tr>
+  <tr>
+    <td><code>-o &lt;path&gt;</code></td>
+    <td>Define the full path of the HTML output directory. If this option is not used, then the default output path is '&lt;ws path&gt;/Doc/generated/refman'.
+      Note that the command fails if this output directory already exists.</td>
+  </tr>
+  <tr>
+    <td><code>-private</code></td>
+    <td>Scan PrivateInterfaces directories. To be used with <code>-level Private</code>.</td>
+  </tr>
+    <tr>
+    <td><code>-level &lt;level&gt;</code></td>
+    <td>Define the processed header level. By default, only the headers in the PublicInterfaces directory are processed. 
+	For interfaces and classes, only the public methods and data members are 
+	processed.
+	<p>Valid values are:</p>
+	<table>
+	<tr>
+	<td><code>Protected</code></td>
+	<td>Process the headers in the 
+	PublicInterfaces and ProtectedInterfaces directories.</td>
+	</tr>
+	<tr>
+	<td><code>Private</code></td>
+	<td>Process the headers in the 
+	PublicInterfaces, ProtectedInterfaces, and PrivateInterfaces directories.
+	To be used with <code>-private</code></td>
+	</tr>
+	</table>
+	</td>
+    </tr>
+  <tr>
+    <td><code>-docPrivateMember</code></td>
+    <td>Generate documentation for both protected and private data members.</td>
+  </tr>
+  <tr>
+    <td><code>-productID &lt;name&gt;</code></td>
+    <td>Define the product name used in all page titles.</td>
+  </tr>
+  <tr>
+    <td><code>-htmlfooter &lt;path&gt;</code></td>
+    <td>Define the full path name of the HTML footer for all pages.</td>
+  </tr>
+  <tr>
+    <td><nobr><code>-stylesheet &lt;path&gt;</code></nobr></td>
+    <td>Define the full path name of the HTML style sheet.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Usage"></a>Usage</h3>
+<p>Run mkmancpp for the C++ classes and interfaces of your framework.</p>
+<p>If the option -w is not edited to define the path of the workspace to
+document, mkmancpp will use the path of the current workspace. When mkmancpp
+runs, errors are issued as lines beginning with <code># mkmdocman-ERROR</code>
+and a short explanation of the error found.</p>
+<p>html files are generated in the Doc\generated\refman directory located in
+your workspace root directory. Doc is at the same level than your framework
+directories.</p>
+<table>
+  <tr>
+    <td><img alt="mkmancpp Generated File Tree" src="images/CppGenFiles.png" width="142" height="217"></td>
+    <td><strong>refman</strong> contains:
+      <ul>
+        <li>An <strong>_index</strong> directory with the home page main.htm</li>
+		  <li>A directory and a file per framework, such as Dialog and 
+			  Dialog.htm:
+          <ul>
+            <li>The directory contains an HTML file for each existing header
+              file. This file contains the documentation extracted from the header
+              file. It has the same name than the class or interface, but
+              is suffixed with htm.</li>
+            <li>The file contains the framework object list.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>You can ignore the other directories and files. Most of these files are 
+	  pointed to in the generated pages.</p>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Examples"></a>Examples</h3>
+<ul>
+<li>Run without options at the workspace root:
+<pre class="code">mkmancpp</pre>
+<p>This command parses the current workspace and generates the HTML documentation of 
+the public members of the L1 tagged C++ header files located in the PublicInterfaces directories 
+of all the frameworks in the workspace.</p>
+</li>
+<li>Set the workspace to parse and the documentation output directory
+<table>
+<tr>
+<th>UNIX</th>
+<td style="background-color:#E0E0E0">
+<code>mkmancpp -W /u/users/UserName/myWs -o /u/users/UserName/myWs/htmlDoc </code></td>
+</tr>
+<tr>
+<td><strong>Windows</strong></td>
+<td style="background-color:#E0E0E0">
+<code>mkmancpp -W E:\myWs -o E:\myWs\htmlDoc</code></td>
+</tr>
+</table>
+<p>This command parses the workspace myWs and generates the HTML documentation in the
+directory htmlDoc of this workspace. Again the public members of the L1 tagged 
+C++ header files located in the PublicInterfaces directories of all the 
+frameworks in the workspace are processed.</p>
+</li>
+<li>Run at the workspace root to generate PublicInterfaces and ProtectedInterfaces 
+	headers documentation:
+<pre class="code">mkmancpp -level Protected</pre>
+<p>This command parses the current workspace and generates the HTML documentation of 
+the public members of the L1 and L0 tagged C++ header files located in the PublicInterfaces directories,
+and the Protected tagged C++ header files located in the ProtectedInterfaces directories 
+of all the frameworks in the workspace.</p>
+</li>
+<li>Run at the workspace root to generate PublicInterfaces, ProtectedInterfaces, and PrivateInterfaces 
+	headers documentation:
+<pre class="code">mkmancpp -level Private -private</pre>
+<p>This command parses the current workspace and generates the HTML documentation of 
+the public members of the L1 and L0 tagged C++ header files located in the PublicInterfaces directories, the Protected tagged C++ header files located in the ProtectedInterfaces directories, 
+and the Private tagged C++ header files located in the PrivateInterfaces directories of all the frameworks in the workspace.</p>
+</li>
+<li>Run at the workspace root to generate PublicInterfaces, ProtectedInterfaces, and PrivateInterfaces 
+	headers documentation:
+<pre class="code">mkmancpp -level Private -private -docPrivateMember</pre>
+<p>This command parses the current workspace and generates the HTML documentation of 
+the public members and of the protected and private data members of the L1 and L0 tagged C++ header files located in the PublicInterfaces directories, the Protected tagged C++ header files located in the ProtectedInterfaces directories, 
+and the Private tagged C++ header files located in the ProtectedInterfaces directories of all the frameworks in the workspace.</p>
+</li>
+<li>Run at the workspace root to generate PublicInterfaces 
+	headers documentation with a footer and a style sheet included in all pages:
+<table>
+<tr>
+<th>UNIX</th>
+<td style="background-color:#E0E0E0">
+<code>mkmancpp -htmlfooter /u/users/UserName/Footer.txt -stylesheet /u/users/UserName/Stylesheet.css</code></td>
+</tr>
+<tr>
+<td><strong>Windows</strong></td>
+<td style="background-color:#E0E0E0">
+<code>mkmancpp -htmlfooter E:\myWS\Footer.txt -stylesheet E:\myWS\Stylesheet.css</code></td>
+</tr>
+</table>
+<p>This command parses the current workspace and generates the HTML documentation of 
+the public members of the L1 tagged C++ header files located in the PublicInterfaces 
+directories of all the frameworks in the workspace. 
+The footer must contain an HTML section which is included at the bottom of each 
+generated file. The style sheet is referenced by each generated file.</p>
+</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocTechArticles/CAADocCppHeaderDoc.htm">CAA
+      V5 C++ Interface and Class Documentation Rules</a></td>
+  </tr>
+  <tr>
+  	<td>[2]</td>
+  	<td><a href="../CAADocTechArticles/CAADocLxUsageRules.htm">CAA V5 Authorized API Identification, Usage, Deprecation, and Stability</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sept 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Switching on and off All the Lights' Shadows of a Product</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Real Time Rendering</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Switching on and off All the Lights' Shadows of a
+      Product</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to switch off the shadows
+      of a the current document, and how to switch them on again.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>switch_LightsShadows is launched in CATIA. An
+      existing document called &quot;TestLight.CATProduct&quot; must be found in
+      the CATDocView. It needs &quot;Back.CATPart&quot; and
+      &quot;Hole.CATPart&quot;.</p>
+      <p><a href="switch_LightsShadowsSource.htm" target="Source">switch_LightsShadows.CATScript
+      </a>is located in the CAAScdRscUseCases module. <a href="macros/switch_LightsShadows.CATScript">Execute
+      macro </a>(windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>switch_LightsShadows includes three steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#SwitchOFF">Switching off Shadows</a></li>
+        <li><a href="#SwitchON">Switching on Shadows</a></li>
+      </ol>
+      <p><a name="Prolog"></a><b>Prolog</b></p>
+      <table class="code">
+        <tr>
+          <td width="100%">
+            <pre>
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch On Lights&quot;
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oProductDocument<font color="#0000FF"> As </font>Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oProductDocument.Name, &quot;.CATProduct&quot;) Then
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch Off Shadows&quot;
+		Exit Sub
+	End If
+
+	<font color="#008000">' Accessing the Root Product</font>
+	Dim oRootProduct<font color="#0000FF"> As </font>Document
+	Set oRootProduct = oProductDocument.Product
+
+	<font color="#008000">' Accessing the collection of rendering lights</font>
+	Dim oLights<font color="#0000FF"> As </font>RenderingLights
+	Set oLights = oRootProduct.GetItem(&quot;CATRscRenderingLightVBExt&quot;)
+
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int
+	Dim oLight<font color="#0000FF"> As </font>RenderingLight
+	Dim oTab(3)<font color="#0000FF"> As </font>CATSafeArrayVariant
+
+	<font color="#008000">' Create the parameter</font>
+	Dim oParams<font color="#0000FF"> As </font>Parameters
+	Dim oReadParam<font color="#0000FF"> As </font>Parameter
+	Dim oParam<font color="#0000FF"> As </font>Parameter
+	Dim sParamValue<font color="#0000FF"> As </font>String
+	Set oParams = oProductDocument.Product.Parameters
+
+	On Error Resume Next
+	Set oParam = oParams.Item(&quot;LightsShadowsStatus&quot;)
+	...</pre>
+          </td>
+      </table>
+      <p align="left">At first, this macro test if a document is active in CATIA
+      and if this document is a CATProduct. Then it access to the valid root
+      document and to the collection of rendering lights. After that the macro
+      tests if the knowledge parameter exists. This parameter is used in order
+      to remember which shadow was active.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="SwitchOFF"></a>Switching off Shadows</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">''''''''' switch OFF '''''''''</font>
+
+		<font color="#008000">' Lights loop</font>
+		For I=1<font color="#0000FF"> To </font>oLights.Count
+			Set oLight = oLights.Item(I)
+
+			<font color="#008000">' Create sParamValue</font>
+			If I&gt;1<font color="#0000FF"> Then</font>
+				sParamValue = sParamValue &amp; &quot;&amp;&quot;
+			End If
+			sParamValue = sParamValue &amp; oLight.Name &amp; &quot;=&quot;
+			
+			If oLight.HardwareShadowStatus = 1<font color="#0000FF"> Then</font>
+				oLight.HardwareShadowStatus = 0
+				sParamValue = sParamValue &amp; &quot;1&quot;
+			Else
+				sParamValue = sParamValue &amp; &quot;0&quot;
+			End If
+
+			sParamValue = sParamValue &amp; &quot;/&quot;
+
+			If oLight.ShadowObjectStatus = 1<font color="#0000FF"> Then</font>
+				oLight.ShadowObjectStatus = 0
+				sParamValue = sParamValue &amp; &quot;1&quot;
+			Else
+				sParamValue = sParamValue &amp; &quot;0&quot;
+			End If
+		Next
+
+		<font color="#008000">' Create the parameter</font>
+		oParams.CreateString &quot;LightsShadowsStatus&quot;, sParamValue
+		oParams.Item(&quot;LightsShadowsStatus&quot;).Hidden = True
+		...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The macro deactivates lights' shadows on environments and on objects.
+      And it creates the string to be saved by the parameter.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="SwitchON"></a>Switching on Shadows</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	Else <font color="#008000">''''''''' switch ON '''''''''</font>
+
+		<font color="#008000">' Parse the parameter value</font>
+		Dim aLights<font color="#0000FF"> As </font>Array
+		Dim aLight<font color="#0000FF"> As </font>Array
+		sParamValue = oParam.ValueAsString <font color="#008000">' read the parameter value</font>
+		aLights = Split(sParamValue, &quot;&amp;&quot;)
+
+		<font color="#008000">' Lights loop</font>
+		For I=0<font color="#0000FF"> To </font>UBound(aLights)
+
+			aLight = Split(aLights(I), &quot;=&quot;)
+			Err.Clear
+			Set oLight = oLights.Item(aLight(0))
+			If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">' light not exist</font>
+				msgbox &quot;Impossible to find the light '&quot; &amp; aLight(0) &amp; &quot;'&quot;, vbOKOnly, &quot;Switch On Lights' Shadows&quot;
+			Else
+				If oLight.Type = 3<font color="#0000FF"> Then </font><font color="#008000">' 1=directional light</font>
+					oLight.HardwareShadowStatus = Mid(aLight(1), 1, 1)
+				End If
+				If oLight.Type = 1<font color="#0000FF"> Then </font><font color="#008000">' 1=spot light</font>
+					oLight.ShadowObjectStatus = Mid(aLight(1), 3, 1)
+				End If
+			End If
+		Next
+
+		<font color="#008000">' Remove parameter</font>
+		oParams.Remove &quot;LightsShadowsStatus&quot;
+
+	End If
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The macro reactivates lights' shadows on environments and on objects.
+      And it destroys the parameter.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case presents a macro which can be usefull for the demos with CATIA.
+It gives the possibility to deactivate the lights' shadows on environments and
+on objects, and the ability to reactivate only thoses which where ON.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

@@ -1,0 +1,522 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Class CATICGMTopCorner</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMTopCorner"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces <script type="text/javascript" > writeClassCharacteristic(); </script> CATICGMTopCorner</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATICGMTopCorner_34981','CATICGMTopCorner','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATICGMTopCorner</b>
+</p>
+<p>
+<b><i> Class representing the operator that computes a round corner between two wire bodies.</i></b><br>
+
+ <br>There is no unique solution to the corner computation: the input wires
+ cut the corner in two portions. These two portions can be retrieved together, or one can choose
+ the portion to keep (<tt>CATCircleMode</tt>).
+ Moreover, when choosing  the <tt>Direct</tt> or <tt>Complementary</tt> modes, the operator
+ can assemble the computed corner
+ on the input wires on demand (<tt>SetSupportTrimmingMode</tt>).
+ <br>The center of the corner is defined at the intersection of the parallels
+ to the input wires. Once given a wire on a shell, there are two parallel
+ to a wire: one on each side. The side defines the orientation of the
+ parallel:
+ <ul>
+ <li>The cross product of the normal to the shell and the tangent to the wire is positive
+ side (+1)
+ <li>The opposite of the cross product of the normal to the shell and the tangent 
+ to the wire is the negative side (-1).
+ </ul> 
+ <br>The CATICGMTopCorner operator satisfies the smart mechanism: the
+ input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input bodies.
+ It follows the global frame of the topological operators, except that it can return several 
+ bodies, corresponding to the multiple solution it found.
+<ul>
+ <li>A CATICGMTopCorner operator is created with the <tt>CATCGMCreateTopCorner</tt> global method.
+ It must be directly released with the <tt>Release</tt> method after use. It is not streamable. 
+<li>Options can be precised with the <tt>SetXxx</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method. 
+<li>The result is accessed with 
+ <ul><li>the <tt>GetResult</tt> method: all the computed corners are put in the same resulting body.
+     <li>the iterator on the solutions (<tt>BeginningCorner</tt>, <tt>NextCorner</tt>, <tt>GetCorner</tt>):
+ each solution corner is put in a different body.
+ </ul> 
+ If you do not want 
+ to keep the resulting bodies, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove them from the  geometric factory, after the operator deletion.
+</ul>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATICGMTopCorner()"><b>CATICGMTopCorner</b></a>()
+<dd>  Constructor
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#BeginningCorner()"><b>BeginningCorner</b></a>()
+<dd>  Initializes the iterator of the resulting corners.
+ <dt> o 
+    <a href="#GetCenterRadius(CATMathPoint&amp;,double&amp;)"><b>GetCenterRadius</b></a>(CATMathPoint&amp;,double&amp;)
+<dd>  Returns the definition of the current corner.
+ <dt> o 
+    <a href="#GetCircleMode(CATCircleMode&amp;,double&amp;,double&amp;)"><b>GetCircleMode</b></a>(CATCircleMode&amp;,double&amp;,double&amp;)
+<dd>  Retrieves the relimitation mode of <tt>this</tt> corner operator.
+ <dt> o 
+    <a href="#GetCorner(CATCGMJournalList*)"><b>GetCorner</b></a>(CATCGMJournalList*)
+<dd>  Creates the current corner.
+ <dt> o 
+    <a href="#GetCurOrients(CATOrientation&amp;,CATOrientation&amp;,CATOrientation&amp;)"><b>GetCurOrients</b></a>(CATOrientation&amp;,CATOrientation&amp;,CATOrientation&amp;)
+<dd>  Retrieves the orientation of the parallels used to compute the center
+ of the corner.
+ <dt> o 
+    <a href="#GetDirection(CATMathDirection&amp;,CATBoolean&amp;)"><b>GetDirection</b></a>(CATMathDirection&amp;,CATBoolean&amp;)
+<dd>  Get the direction.
+ <dt> o 
+    <a href="#GetNumberOfCorners()"><b>GetNumberOfCorners</b></a>()
+<dd>  Returns the number of computed corners.
+ <dt> o 
+    <a href="#GetOffsetOrientation(int&amp;,int&amp;,int&amp;)"><b>GetOffsetOrientation</b></a>(int&amp;,int&amp;,int&amp;)
+<dd>  Retrieves the defined orientations to take for the parallels to the input wires.
+ <dt> o 
+    <a href="#GetResult()"><b>GetResult</b></a>()
+<dd>  Returns all the computed corners in a single body.
+ <dt> o 
+    <a href="#GetSupportTrimmingSideAndMode(CATLONG32&amp;,CATLONG32&amp;)"><b>GetSupportTrimmingSideAndMode</b></a>(CATLONG32&amp;,CATLONG32&amp;)
+<dd>  Returns whether the input wires can be assembled in the resulting body, and how they can be assembled.
+ <dt> o 
+    <a href="#NextCorner()"><b>NextCorner</b></a>()
+<dd>  Skips to the next solution corner of <tt>this</tt> CATICGMTopCorner operator.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetCircleMode(CATCircleMode,double,double)"><b>SetCircleMode</b></a>(CATCircleMode,double,double)
+<dd>  Defines the relimition mode of <tt>this</tt> corner operator.
+ <dt> o 
+    <a href="#SetDirection(CATMathDirection&amp;)"><b>SetDirection</b></a>(CATMathDirection&amp;)
+<dd>  Set the direction .
+ <dt> o 
+    <a href="#SetOffsetOrientation(int,int,int)"><b>SetOffsetOrientation</b></a>(int,int,int)
+<dd>  Defines the orientations to take for the parallels to the input wires.
+ <dt> o 
+    <a href="#SetSupportTrimmingSideAndMode(CATLONG32,CATLONG32)"><b>SetSupportTrimmingSideAndMode</b></a>(CATLONG32,CATLONG32)
+<dd>  Defines whether the input wires can be assembled in the resulting body, and how they can be assembled.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATICGMTopCorner"></a><a name="CATICGMTopCorner()"></a> <dt> o <b>CATICGMTopCorner</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATICGMTopCorner</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructor
+</dl>
+ <h2>Methods</h2> <br>
+<a name="BeginningCorner"></a><a name="BeginningCorner()"></a> <dt> o <b>BeginningCorner</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>BeginningCorner</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Initializes the iterator of the resulting corners.
+</dl>
+<a name="GetCenterRadius"></a><a name="GetCenterRadius(CATMathPoint&amp;,double&amp;)"></a> <dt> o <b>GetCenterRadius</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCenterRadius</b>(<td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>ioCenter</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioRadius</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the definition of the current corner.
+ <br>To be called after the <tt>GetCorner</tt> method.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCenter</tt>
+   <dd> The center of the current corner.
+ </dd>
+    <dt><tt> ioRadius</tt>
+   <dd> The radius value of the current corner.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCircleMode"></a><a name="GetCircleMode(CATCircleMode&amp;,double&amp;,double&amp;)"></a> <dt> o <b>GetCircleMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCircleMode</b>(<td><script type="text/javascript"> activateLink('CATCircleMode','CATCircleMode&amp;')</script> <td><tt>ioCircleMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioStart</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioEnd</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the relimitation mode of <tt>this</tt> corner operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCircleMode</tt>
+   <dd> The relimitation mode.
+ </dd>
+    <dt><tt> ioStart</tt>
+   <dd> The value is not touched.
+ </dd>
+    <dt><tt> ioEnd</tt>
+   <dd> The value is not touched.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetCorner"></a><a name="GetCorner(CATCGMJournalList*)"></a> <dt> o <b>GetCorner</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetCorner</b>(<td><script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script> <td><tt>iCurrentJournal</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates the current corner.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentJournal</tt>
+   <dd> The pointer to the journal corresponding to the creation of the current corner.
+ If <tt>NULL</tt>, the journal is not written.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created body. If you do not want to keep it,
+ use the @CATICGMContainer#Remove method to remove it from the geometric factory, after the deletion
+ of <tt>this</tt> operator.
+</dl>
+</dl>
+<a name="GetCurOrients"></a><a name="GetCurOrients(CATOrientation&amp;,CATOrientation&amp;,CATOrientation&amp;)"></a> <dt> o <b>GetCurOrients</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCurOrients</b>(<td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation&amp;')</script> <td><tt>ioOr1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation&amp;')</script> <td><tt>ioOr2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation&amp;')</script> <td><tt>ioOr3</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the orientation of the parallels used to compute the center
+ of the corner.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioOr1</tt>
+   <dd> The orientation of the parallel to the first wire.
+ </dd>
+    <dt><tt> ioOr2</tt>
+   <dd> The orientation of the parallel to the second wire.
+ </dd>
+    <dt><tt> ioOr3</tt>
+   <dd> The orientation of the parallel to the third wire, only in case of
+ tritangent corner.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDirection"></a><a name="GetDirection(CATMathDirection&amp;,CATBoolean&amp;)"></a> <dt> o <b>GetDirection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetDirection</b>(<td><script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>oDirectionFor3DCorner</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oAutomaticModeForDirection</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get the direction.
+ To be used only in case of 3D corner definition (by default a direction will be automatically calculated)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDirectionFor3DCorner</tt>
+   <dd> The computed direction.
+ </dd>
+    <dt><tt> oAutomaticModeForDirection</tt>
+   <dd> Returns whether the direction has been computed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetNumberOfCorners"></a><a name="GetNumberOfCorners()"></a> <dt> o <b>GetNumberOfCorners</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetNumberOfCorners</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the number of computed corners.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The number of corners.
+</dl>
+</dl>
+<a name="GetOffsetOrientation"></a><a name="GetOffsetOrientation(int&amp;,int&amp;,int&amp;)"></a> <dt> o <b>GetOffsetOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetOffsetOrientation</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioOrientCrv1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioOrientCrv2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioOrientCrv3</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the defined orientations to take for the parallels to the input wires.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioOrientCrv1</tt>
+   <dd> The orientation of the parallel to the first wire. If <tt>0</tt>, 
+ the two sides parallels are computed.
+ </dd>
+    <dt><tt> ioOrientCrv2</tt>
+   <dd> The orientation of the parallel to the second wire. If <tt>0</tt>, 
+ the two sides parallels are computed.
+ </dd>
+    <dt><tt> ioOrientCrv3</tt>
+   <dd> The orientation of the parallel to the third wire. If <tt>0</tt>, 
+ the two sides parallels are computed. In case of tritangent corner only.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult()"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetResult</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns all the computed corners in a single body.
+ <br>In this case, <tt>GetNumberOfCorners</tt> and <tt>GetResult()->GetNumberOfDomain()</tt> can be different.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the resulting body. If you do not want to keep it, use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the geometric factory after the <tt>delet</tt>ion</tt> of <tt>this</tt> operator.
+</dl>
+</dl>
+<a name="GetSupportTrimmingSideAndMode"></a><a name="GetSupportTrimmingSideAndMode(CATLONG32&amp;,CATLONG32&amp;)"></a> <dt> o <b>GetSupportTrimmingSideAndMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetSupportTrimmingSideAndMode</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oTrimmingSide</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oTrimmingMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns whether the input wires can be assembled in the resulting body, and how they can be assembled.
+ In this case, the iterator cannot be used.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTrimmingSide</tt>
+   <dd> The assembly side.
+ <br><b>Legal values</b>:
+ <tt>0</tt> if the assembly can be done for all input wires,
+ <tt>1</tt> if the assembly can be done just for the first input wire,
+ <tt>2</tt> if the assembly can be done just for the last input wire.
+ </dd>
+    <dt><tt> oTrimmingMode</tt>
+   <dd> The assembly mode.
+ <br><b>Legal values</b>:
+ <tt>1</tt> if the assembly must be done, <tt>0</tt> otherwise.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <tt>0</tt> if the assembly is compatible with the relimitation mode, <tt>1</tt> otherwise.
+</dl>
+</dl>
+<a name="NextCorner"></a><a name="NextCorner()"></a> <dt> o <b>NextCorner</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>NextCorner</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Skips to the next solution corner of <tt>this</tt> CATICGMTopCorner operator.
+<br>After <tt>BeginningCorner</tt>, it skips to the first solution. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The existence of the next solution.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>TRUE</tt> <dd>if there is a solution
+    <dt><tt>FALSE</tt> <dd>no more solution.</dl>
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs <tt>this</tt> operator.
+</dl>
+<a name="SetCircleMode"></a><a name="SetCircleMode(CATCircleMode,double,double)"></a> <dt> o <b>SetCircleMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>SetCircleMode</b>(<td><script type="text/javascript"> activateLink('CATCircleMode','CATCircleMode')</script> <td><tt>iCircleMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iStart</tt><td><tt>= 0.0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iEnd</tt><td><tt>= 0.0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the relimition mode of <tt>this</tt> corner operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCircleMode</tt>
+   <dd> The relimitation mode of the corner. Do not use the <tt>Angular</tt>
+ value.
+ </dd>
+    <dt><tt> iStart</tt>
+   <dd> Not to be used.
+ </dd>
+    <dt><tt> iEnd</tt>
+   <dd> Not to be used.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <tt>0</tt> if the relimitation mode is compatible with the assembly mode, <tt>1</tt> otherwise.
+ In this last case, the <tt>Direct</tt> mode must be set.
+</dl>
+</dl>
+<a name="SetDirection"></a><a name="SetDirection(CATMathDirection&amp;)"></a> <dt> o <b>SetDirection</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDirection</b>(<td> const <script type="text/javascript"> activateLink('CATMathDirection','CATMathDirection&amp;')</script> <td><tt>iDirectionFor3DCorner</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Set the direction .
+ To be used only in case of 3D corner definition (by default a direction will be automatically calculated)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDirectionFor3DCorner</tt>
+   <dd> This is the direction of the cylinder which will be the support of the 3D corner.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOffsetOrientation"></a><a name="SetOffsetOrientation(int,int,int)"></a> <dt> o <b>SetOffsetOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOffsetOrientation</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientCrv1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientCrv2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientCrv3</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the orientations to take for the parallels to the input wires.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrientCrv1</tt>
+   <dd> The orientation of the parallel to the first wire. If <tt>0</tt>, 
+ the two sides parallels are computed.
+ </dd>
+    <dt><tt> iOrientCrv2</tt>
+   <dd> The orientation of the parallel to the second wire. If <tt>0</tt>, 
+ the two sides parallels are computed.
+ </dd>
+    <dt><tt> iOrientCrv3</tt>
+   <dd> The orientation of the parallel to the third wire. If <tt>0</tt>, 
+ the two sides parallels are computed. In case of tritangent corner only.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSupportTrimmingSideAndMode"></a><a name="SetSupportTrimmingSideAndMode(CATLONG32,CATLONG32)"></a> <dt> o <b>SetSupportTrimmingSideAndMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>SetSupportTrimmingSideAndMode</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTrimmingSide</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTrimmingMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines whether the input wires can be assembled in the resulting body, and how they can be assembled.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTrimmingSide</tt>
+   <dd> The assembly side
+ <br><b>Legal values</b>: 
+ <tt>0</tt> if the assembly can be done for all input wires,
+ <tt>1</tt> if the assembly can be done just for the first input wire,
+ <tt>2</tt> if the assembly can be done just for the last input wire.
+ </dd>
+    <dt><tt> iTrimmingMode</tt>
+   <dd> The assembly mode.
+ <br><b>Legal values</b>:
+ <tt>1</tt> if the assembly must be done, <tt>0</tt> otherwise.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>:
+ <tt>1</tt> if the assembly must be done, <tt>0</tt> otherwise.
+ In this last case, <tt>CATCircleMode</tt> must changed to <tt>Direct</tt>.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMTopCorner.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

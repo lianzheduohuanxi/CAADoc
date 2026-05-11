@@ -1,0 +1,1205 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Integrating a New Geometrical Feature in the Update Mechanism</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Integrating a New Geometrical Feature in the Update
+      Mechanism</h3>
+      <em>Implementing the CATIBuild and CATIBuildShape interfaces on
+      geometrical features</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The aim of this article is to explain the implementation of the <i>CATIBuild</i>
+      interface on the geometrical feature [<a href="#References">1</a>]. This
+      interface is used in the Update mechanism to build the result of the
+      features. The article is divided in three parts:&nbsp;</p>
+      <ol>
+        <li>An overview of the <i>CATIBuild</i> interface to explain its role
+          and the contents of its implementation,</li>
+        <li>An explanation about the main purpose of this interface, in other
+          words, how to create the result of the feature,</li>
+        <li>At last, a presentation of the architecture of the <code>Build</code>
+          method, the understanding of which is useful when taking into account
+          update error management and feature de-activation.</li>
+      </ol>
+      <p>To take full advantage of this advanced article, a pre-requisite
+      knowledge of the Feature Modeler [<a href="#References">2</a>] and the
+      Mechanical Modeler [<a href="#References">3</a>] is essential.&nbsp;</p>
+      <ul>
+        <li><b><a href="#principes">Principles of the <i>CATIBuild</i> Interface</a></b></li>
+        <li><b><a href="#Creating the Result Without Procedural Report">Creating
+          the Result without Using a Procedural Report</a></b></li>
+        <li><b><a href="#Creating the Result with the Procedural report">Creating
+          the Result Using a Procedural Report</a></b></li>
+        <li><strong><a href="#Feature Specificite">Geometrical Feature
+          Specificity</a></strong>
+          <ul>
+            <li><strong><a href="#Surfacic case">Surfacic Features</a></strong></li>
+            <li><strong><a href="#contextual case">Contextual Features</a></strong></li>
+            <li><strong><a href="#form case">Form Features</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Architecture of the Build and BuildShape methods">Architecture
+          of the Build and BuildShape Methods</a></strong>
+          <ul>
+            <li><strong><a href="#Update Error Management">Update Error
+              Management</a></strong></li>
+            <li><strong><a href="#Build Desactivate">Taking into account of
+              Feature De-activation</a></strong></li>
+            <li><strong><a href="#Contents of the build (except form feature)">Structure
+              of the Methods</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="principes"></a>Principles of the <i>CATIBuild</i> Interface</h3>
+<p>This interface is called whenever an object need to be updated. Consequently,
+the feature will get an associative geometric result computed by objects coming
+from the Geometric Modeler's frameworks.&nbsp;</p>
+<p>This interface has only one method, the <i>Build</i> method, whose the
+contents depends on the geometrical feature, but whose the main purpose is
+always the same:</p>
+<ul>
+  <li>To create the <i><b>CATBody</b></i> : the topological result&nbsp;</li>
+  <li>To create the <b>scope</b> <b>and nodes</b> [<a href="#References">4</a>]
+    : the object stabilizing the <i>CATCell</i> access&nbsp;</li>
+</ul>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Build Actions&nbsp;</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrSchemaGeneralGN.jpg" width="523" height="279"></td>
+    </tr>
+  </tbody>
+</table>
+<p>In this above figure [<a href="#Fig.1">Fig.1</a>] you should notice two
+things:</p>
+<ul>
+  <li>The <code>Build</code> method generates a <i>CATBody</i> and a scope with
+    nodes,</li>
+  <li>The mechanical features concerned are the geometrical features [<a href="#References">1</a>]</li>
+</ul>
+<p>While the <i>CATBody</i> is created by topological operators, the scope
+creation is dependant on the geometrical feature type:</p>
+<ul>
+  <li>A feature without geometrical specification - in other words a datum [<a href="#References">1</a>]:</li>
+  <p>The feature has no history, so its scope will also be without history. This
+  means that the nodes of such scopes are not linked to nodes of other scopes.
+  The &quot;<a href="#Creating the Result Without Procedural Report">Creating
+  the Result without Using a Procedural Report</a>&quot; section details this
+  case.</p>
+  <li>A feature with geometrical specifications:</li>
+  <p>To build the geometry of such feature, the geometry of its geometrical
+  input specifications is necessary. However, in the same way that the geometry
+  is based on the re-use of the cells, the scope creation will re-use the nodes
+  of the scopes of the input specifications.&nbsp;</p>
+  <p>This operation, creating the scope, falls within the competence of the <b>Procedural
+  Report </b>that need to be created at the beginning of the <code>Build</code>
+  method and saved at the end. The &quot;<a href="#Creating the Result with the Procedural report">Creating
+  the Result Using a Procedural Report</a>&quot; section presents the generic
+  code. The &quot;<a href="#Feature Specificite">Geometrical Feature Specificity</a>&quot;
+  section details the implementation for the three possible geometrical
+  features: a surfacic feature, a contextual feature and a form feature. The
+  last two being solid features. See the article entitled &quot;The Contents of
+  the Specification Container - Geometrical Features&quot; [<a href="#References">1</a>] which
+  explains these three types of geometrical features.</p>
+  <p>A knowledge of the topology in general [<a href="#References">5</a>] [<a href="#References">6</a>],
+  and the topological report [<a href="#References">7</a>] in particular is
+  strongly recommended.</p>
+</ul>
+<p>Once the implementation of the <i>CATIBuild</i> interface has been
+accomplished, a verification of the result is necessary. The <i>CATMmrVerifyUpdate</i>
+application enables you to check the validity of the new feature. The article
+entitled &quot;Verifying the Validity of a Geometrical Feature&quot; [<a href="#References">8</a>]
+explains how to use this application.</p>
+<p><b><i>Note :</i> </b>All algorithms used to generate geometries are <b>
+versioned</b>. Indeed, several internal algorithms exist to compute topological 
+results.<br>
+Consequently, in the two cases (Creating a Datum or using a Feature with 
+geometrical specifications) a <b>Software Configuration</b> has to be retrieved 
+on the feature to choose the right algorithm before generating results. This 
+configuration has to be stored on the instance at the end of the build method to 
+keep this information. [<a href="#References">14</a>]</p>
+<ul>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+</ul>
+<h3><a name="Creating the Result Without Procedural Report"></a>Creating the
+Result without Using a Procedural Report</h3>
+<p>We are in the case of a datum, a feature without any geometrical
+specification. The &quot;Datum versus Specification&quot; section of the article
+entitled &quot;The Contents of the Specification Container - Geometrical
+Features&quot; [<a href="#References">1</a>]
+gives more details about this kind of geometrical feature.</p>
+<p>In this case, you have to compute a Geometrical result (a <i>CATBody</i>). 
+And, after this computing,&nbsp; the scope will be generated &quot;from scratch&quot; using 
+good API.<br>
+However, as CGM algorithms are versioned, you have to retrieve the Algorithm 
+Configuration associated to your feature before computing its geometrical 
+result. This is done thanks to <font face="Courier New" size="2">
+<b>CATMmrAlgoConfigServices</b></font>&nbsp;services. [<a href="#References">14</a>]</p>
+<table class="code" id="table2">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATSoftwareConfiguration</b> * pSoftConfig = NULL;
+  rc = <b>CATMmrAlgoConfigServices::GetConfiguration</b>(pSOCombinedCurve ,pSoftConfig ,IsConfigToStore);
+  if(SUCCEEDED(rc))
+  {
+    CATTopData TopData ;
+    TopData.SetSoftwareConfiguration(pSoftConfig);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, with this <font face="Courier New" size="2">TopData</font>, you can 
+generate the geometry associated to your feature, using the good algorithm 
+level...</p>
+<table class="code" id="table4">
+  <tr>
+    <td>
+      <pre>  ...
+  CATTheTopoOperator * pTopoOperator = NULL ;
+  pTopoOperator = ::TopologicalGlobalFunction(pIGeomFactory,pTopData,...);
+  <b>CATBody</b> * pBody&nbsp; = pTopoOperator -&gt; GetBodyResult();
+  ...  </pre>
+    </td>
+  </tr>
+</table>
+<p>At the end of the build method, the Software configuration, mandatory to 
+generate geometrical result, would be stored if it is needed. This is done with 
+<b>CATMmrAlgoConfigServices::StoreConfiguration</b> method.</p>
+<table class="code" id="table3">
+  <tr>
+    <td>
+      <pre>  ...
+  if(IsConfigToStore == 1)
+  {
+    <b>CATMmrAlgoConfigServices::StoreConfiguration</b>(pSOFeature, pSoftConfig);
+  }
+  ...  </pre>
+    </td>
+  </tr>
+</table>
+<p>where</p>
+<ul>
+  <li><code>IsConfigToStore </code>is the value retrieved by<b> </b>
+	CATMmrAlgoConfigServices::GetConfiguration<code> </code></li>
+	<li><code>pSOFeature </code>is a CATISpecObject's pointer on the current 
+	feature</li>
+  <li><code>pSoftConfig </code>is the Algorithm Configuration to store.</ul>
+<p>Now, as the geometry is created, you just have to create the scope 
+associated.</p>
+<p>To create this scope, you must use the <code>CreateScopeResult</code>
+method of the <i>CATIMfResultManagement</i> interface. This method allows you to
+generate a scope that does not contain a history. This means that the nodes of
+such scopes are not linked to nodes of other scopes.&nbsp;</p>
+<p>As we have seen in the &quot;Generic Naming&quot; [<a href="#References">4</a>]
+document, the name of a cell is computed using the historical relationship that
+exists between the nodes and using the specific information added to the node.
+For a node generated with <code>CreateScopeResult</code> only the added
+information is available. As a matter of fact, a generic name cell will always
+looks like:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Cell of dimension X    generated by feature Y  with info Z</pre>
+    </td>
+  </tr>
+</table>
+<p>This means that for a given feature, the cells with the same information will
+have exactly the same generic name. The end user will not be able to select them
+individually.</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: Meaning of the Added </i>information&nbsp;</caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrCreateScope1.jpg" width="237" height="111"></td>
+    </tr>
+  </tbody>
+</table>
+<p><i>In this example, the end user will be able to select either the edge with
+information 0 or the two edges with information 1 together. He will not be able
+to select one of the two edges with information 1 individually.</i></p>
+<p>The <code>CreateScopeResult</code> method has two signatures. The <b>simple</b>
+signature takes only the <i>CATBody</i> as input parameter. It will generate a
+scope that contains one node for each cell that must be followed. Each node will
+have a different info. Therefore each cell will be selectable.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: A Different Information for Each Node</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrCreateScope2.jpg" width="467" height="134"></td>
+    </tr>
+  </tbody>
+</table>
+<p><i>In this example the <code>CreateScopeResult</code> method has generated
+the nodes and has associated to each node a different information value. Each
+cell will be selectable individually, and can be used as a specification by
+another mechanical feature.</i></p>
+<table class="code" height="101">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATBody</b> * pBody = operator-&gt;GetBodyResult() ;    
+  <b>CATIMfResultManagement</b>* pIMfResultManagement =NULL ;
+  HRESULT rc = QueryInterface(IID_CATIMfResultManagement,
+                                        (void**)&amp;pIMfResultManagement  );
+  if ( SUCCEEDED(rc) )
+  {
+     rc = pIMfResultManagement-&gt;<code><b>CreateScopeResult</b></code>(pBody);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">where <code>pBody</code> is a <i>CATBody</i> created previously
+by using the appropriate topological operators.</p>
+<p align="left">However if the feature is updatable, then there is no guarantee
+that the information that must be associated with each cell will be the same
+after the update. In other words, this feature is not associative, since the way
+its cells are named is not stable. To overcome this problem, it is possible to
+use a more <b>complex signature</b> that allows an application to specify the
+information that must be associated with each of the following cells of the <i>CATBody</i>.
+These following cells are:</p>
+<ul>
+  <li>The faces of a solid,</li>
+  <li>The boundary edges and the faces of a shell,</li>
+  <li>The extremity vertices and the edges of a wire.</li>
+</ul>
+<p align="left">If this signature is used, then it is the responsibility of the
+application to ensure that the naming will be consistent. Being consistent
+implies that:</p>
+<ul>
+  <li>
+    <p align="left">The same information will not used to name cells of
+    different dimension - [<a href="#Fig.4">Fig.4</a>]</li>
+  <li>
+    <p align="left">After an update, an information will not switch to a cell of
+    a different dimension - [<a href="#Fig.5">Fig.5</a>]</li>
+</ul>
+<table border="0" width="506">
+  <caption><i><a name="Fig.4">Fig.4</a>: Same info for cell of different
+    dimension:</i></caption>
+  <tr>
+    <td width="168"><img border="0" src="images/CAAMmrCreateScope3.jpg" width="168" height="104"></td>
+    <td width="324">This naming is not consistent because two cells of different
+      dimension have the same info 0.</td>
+  </tr>
+</table>
+<table border="0" width="550">
+  <caption><i><a name="Fig.5">Fig.5</a>: Update not consistent:</i></caption>
+  <tr>
+    <td width="262"><img border="0" src="images/CAAMmrCreateScope4.jpg" width="262" height="91"></td>
+    <td width="274">This naming is not consistent after the update because:
+      <ul>
+        <li>The information 0 which was associated with the face is now
+          associated with an edge. Same for information 4.</li>
+        <li>No cell has kept the same name !</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p>This complex signature can be used to limit the user's possibility in terms
+of selectable cells. For example, a feature might generate a complex geometry
+made of multiple faces. By using the same information for every face, it is
+possible to prohibit the selection of the individual faces. This may be
+necessary if the application cannot guarantee the number of faces or if it is
+meaningless to use only one face to build the next geometry.</p>
+<p>Example:</p>
+<table border="0">
+  <caption><i><a name="Fig.6">Fig.6</a>:</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrCreateScope5.jpg" width="212" height="145"></td>
+    <td>In this example, the user will be able to select:
+      <ul>
+        <li>A group of 6 faces</li>
+        <li>One of the 4 boundary</li>
+      </ul>
+      <p>He will not be able to select each face individually or the internal
+      edges of the shell.</p>
+      <p>The application can safely change the number of faces in the result.</td>
+  </tr>
+</table>
+<p>The code is the following:</p>
+<table class="code" height="101">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATBody</b> * pBody = operator-&gt;GetBodyResult() ;&nbsp;&nbsp;
+  CATLISTP(CATCell)ListOfFollowedCells = ... ;
+  CATListOfCATUnicodeString ListOfUserKey = ... ;
+  
+  <b>CATIMfResultManagement</b>* pIMfResultManagement =NULL ;
+  HRESULT rc = QueryInterface(IID_CATIMfResultManagement,
+                                        (void**)&amp;pIMfResultManagement );
+  if ( SUCCEEDED(rc) )
+  {
+     rc = pIMfResultManagement -&gt;<code><b>CreateScopeResult</b></code>(pBody, 
+                                                   ListOfFollowedCells,
+                                                   ListOfUserKey);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where:&nbsp;</p>
+<ul>
+  <li><code>pBody</code> is a <i>CATBody</i> created previously by using the
+    appropriate topological operators.</li>
+  <li><code>ListOfFollowedCells</code> is the list of the selected following
+    cells.&nbsp;</li>
+  <li><code>ListOfUserKey</code> is the list of keys. Each key must be a
+    number.&nbsp;&nbsp;</li>
+</ul>
+<p>Note: <code>ListOfFollowedCells</code> and <code>ListOfUserKey</code> are two
+lists with the same size.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Creating the Result with the Procedural report"></a>Creating The
+Result&nbsp;With Procedural Report</h3>
+<p>We are in the case of a feature having geometrical specifications. The
+procedural report allows the application to benefit from a more complex
+algorithm for node creation. It also allows the creation of nodes that are
+linked to other nodes through historical relationships. The following schema
+explains&nbsp;the creation of the scope by using a Procedural report.</p>
+<table>
+  <caption><i><a name="Fig.7">Fig.7</a>: Procedural Report</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrProceduralReport.jpg" width="487" height="291"></td>
+    </tr>
+  </tbody>
+</table>
+<p>There are three main steps to create the result:</p>
+<ol>
+  <li><a href="#Creating the Procedural Report">Creating the Procedural Report</a></li>
+  <li><a href="#Runing the topological Operator">Running the Topological
+    Operator( s ) - Get the Algorithm Configuration</a></li>
+  <li><a href="#Storing the Procedural Report">Storing the Procedural Report and 
+	The Algorithm Configuration</a></li>
+</ol>
+<p class="MsoNormal"><span lang="EN-GB" style="mso-ansi-language:EN-GB">It is in
+the third step that the Mechanical Modeler will create the scopes and the nodes
+of the feature according to its topological result. It will also establish
+relations between new nodes and nodes of the input scopes according to the
+topological journal.<o:p>
+</o:p>
+</span></p>
+<p class="MsoNormal"><span lang="EN-GB" style="mso-ansi-language:EN-GB">Usually,
+the topological journal is generated by the topological operator during the
+calculating of the result. CAA based operators may have to manage their own
+journal.<o:p>
+</o:p>
+</span></p>
+<h4><a name="Creating the Procedural Report"></a>Creating the Procedural Report</h4>
+<p>You should use the <code>CreateProcReport</code> method of the <i>CATIMfProcReport</i>
+interface (MechanicalModeler) implemented on the geometrical feature.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATLISTV(CATBaseUnknown_var) ListSpec ;
+  CATListofCATUnicodeString ListKey ;
+  int BoolOper = 0 ; // or 1 
+  ...      
+  <b>CATIMfProcReport</b> *pIMfProcReportOnThis =NULL ;
+  HRESULT rc = QueryInterface(IID_CATIMfProcReport,
+                                                 (void**)&amp;pIMfProcReportOnThis );
+  if ( SUCCEEDED(rc) )
+  {
+     rc = pIMfProcReportOnThis-&gt;<b>CreateProcReport</b>(ListSpec,ListKey,BoolOper);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<ul>
+  <li><code>ListSpec</code> is the list of specifications</li>
+</ul>
+<blockquote>
+  <p>The list of specifications must contain the mechanical features whose
+  scopes are needed to build the new scope.</p>
+</blockquote>
+<ul>
+  <li><code>ListKey</code> is a list of keys</li>
+</ul>
+<blockquote>
+  <p>The list of keys must have the same number of elements than the list of
+  specifications. The default&nbsp; value is <code>MfKeyNone</code>. A different
+  key value will indicate that the historical relationship of a node should be
+  replaced with a user information.&nbsp;The value of the key must be in
+  relationship with the information given by the topological report.</p>
+  <p>Example:</p>
+  <p><i>Consider the case of a pad. The top face of a pad can be computed by
+  extruding the sketch to a numerical length [<a href="#Fig.8">Fig. 8</a>] or it
+  can be calculated up to a given surface [<a href="#Fig.9">Fig. 9</a>]. In the
+  first case, the top face will have the Top information. In the second case,
+  the top face will have a historical relationship with the limiting face. As a
+  matter of fact the naming will be different and switching between the two
+  options will break any other feature which is using the top face as an input
+  specification.</i></p>
+  <table border="0">
+    <caption><i><a name="Fig.8">Fig.8</a>:</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrCreateScope7.jpg" width="449" height="185"></td>
+    </tr>
+  </table>
+  <table border="0">
+    <caption><i><a name="Fig.9">Fig.9</a>:</i></caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrCreateScope8.jpg" width="422" height="233"></td>
+    </tr>
+  </table>
+  <p><i>The solution to this problem is to use a keyword <code>MfKeyTop</code>
+  for the limiting surface to tell V5 that the historical relationship between
+  the top face and the limiting surface must be replaced by a Top information.
+  Then the name of the top face will be the same as for a pad with a given
+  length</i></p>
+</blockquote>
+<ul>
+  <li><code>BoolOper</code> is an integer value
+    <p>The integer value indicates which feature will own the generated scope:
+    <ul>
+      <li>use<b> 0</b>, if the scope should be associated with the feature
+        itself ( <a href="#Surfacic case">Surfacic feature</a> in <code>Build</code>
+        method or <a href="#form case">Form feature</a> in <code>BuildShape</code>
+        method )</li>
+      <li>use <b>1</b>, if the scope should be associated with the Solid feature
+        of the solid feature - ( <a href="#contextual case">Contextual feature</a>
+        and <a href="#form case">Form feature</a> in <code>Build</code> method )</li>
+    </ul>
+  </li>
+  <li>For the last argument of the <code>CreateProcReport</code> method use the
+    default value, NULL_var</li>
+</ul>
+<h4><a name="Runing the topological Operator"></a>Running the Topological
+Operator(s) - Get the Algorithm Configuration</h4>
+<p>The topological operators need an object which contains:</p>
+<ul>
+  <li>The topological journal, those returned by the <code>GetCGMJournalList</code>
+    method,</li>
+  <li>An object to manage the software configuration, an instance of the <i>CATSoftwareConfiguration</i>
+    class.<br>
+	This Software Configuration determines which type of internal Algorithm will 
+	be used to valuate and compute the results. It is associated to the feature 
+	instance and has to be retrieved using specified API (&quot;CATMmrAlgoConfigServices.h&quot;).[<a href="#References">14</a>]</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATCGMJournalList</b> *pCGMJournalList = NULL ;
+  pCGMJournalList = pIMfProcReportOnThis-&gt;<b>GetCGMJournalList</b>() ;  
+  ...
+  <b>CATSoftwareConfiguration</b> * pSoftConfig = NULL;
+  rc = <b>CATMmrAlgoConfigServices::GetConfiguration</b>(pSOCombinedCurve ,pSoftConfig ,IsConfigToStore);
+  if(SUCCEEDED(rc))
+  {
+    pTopData = new <b>CATTopData</b>(pSoftConfig,pCGMJournalList );
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>One or several topological operators can be used to create the final result.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATTheTopoOperator * pTopoOperator1 = NULL ;
+  pTopoOperator1 = ::TopologicalGlobalFunction(pIGeomFactory,pTopData,...);
+  pTopoOperator1 -&gt;<b>Run</b>();
+  CATBody * <b>pBody1</b>&nbsp; = pIMfProcReportOnThis-&gt;<b>GetResult</b>();
+  ...
+  CATTheTopoOperator * pTopoOperator2 = NULL ;
+  pTopoOperator2 = ::TopologicalGlobalFunction(pIGeomFactory,pTopData,...);
+  pTopoOperator2 -&gt;<b>Run</b>();
+  ...
+  CATBody * pResultBody  = pIMfProcReportOnThis-&gt;<b>GetResult</b>();
+  ...
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>Where <code>TopologicalGlobalFunction</code> is a simulated topological
+operator. The first argument of an operator is always the geometrical factory
+interface. This interface is implemented on <code>CGMGeom</code>, the
+geometrical container of the Part document. Refer to the article entitled
+&quot;The Structure of the Part Document&quot; [<a href="#References">9</a>]&nbsp;to
+retrieve it.</p>
+<p>The geometrical result&nbsp; is returned by the method <code>GetResult</code>
+of the <i>CATIMfProcReport</i> interface pointer on the current feature. The
+result of the <code>Build</code> method is the result computed after the last
+operator. The intermediate results must be deleted from the geometrical
+factory:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  pIGeomFactory-&gt;<b>Remove</b>(pBody1);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="Storing the Procedural Report"></a>Storing the Procedural Report 
+and The Algorithm Configuration</h4>
+<p>To close the procedural report, use the <code>StoreProcReport</code> method
+on the <i>CATIMfProcReport</i> interface pointer on the current feature.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  pIMfProcReportOnThis-&gt;<b>StoreProcReport</b>(pResultBody, TypeProcReport, BoolOper)
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where</p>
+<ul>
+  <li><code>pResultBody</code> is the <i>CATBody </i>computed by the topological
+    operator - See the <a href="#Runing the topological Operator">Running the
+    Topological Operator(s)</a> section</li>
+  <li><code>TypeProcReport, </code>has two possible values:</li>
+  <ul>
+    <li><b>Copy&nbsp;&nbsp;&nbsp;&nbsp;</b> <b>:</b> the nodes of the previous
+      scope which are not modified are copied in the current scope</li>
+    <li><b>NoCopy : </b>the nodes of the previous scope which are not modified
+      by the operation are not copied in the current scope.</li>
+  </ul>
+  <p>The copy/no copy convention used by the procedural report for an input
+  should be the same as the one used internally by the topological operator for
+  this input.</p>
+</ul>
+<ul>
+  <li><code>BoolOper</code>: should have the same value as the one specified in
+    the <code>CreateProcReport</code> method - see <a href="#Creating the Procedural Report">Creating
+    the Procedural Report</a></li>
+</ul>
+<p>&nbsp;</p>
+<p>On the First Build call, the feature determines its AlgorithmConfiguration. 
+This data has to be stored to insure versionning of this feature [<a href="#References">14</a>]<br>
+To store it, use the <font face="Courier New" size="2">StoreConfiguration</font> method 
+of the <font face="Courier New" size="2">CATMmrAlgoConfigServices</font>.&nbsp;</p>
+<table class="code" id="table1">
+  <tr>
+    <td>
+      <pre>  ...
+  if(IsConfigToStore == 1)
+  {
+    CATMmrAlgoConfigServices::StoreConfiguration(pSOFeature, pSoftConfig);
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where</p>
+<ul>
+  <li><code>IsConfigToStore </code>is the value retrieved by<b> 
+	CATMmrAlgoConfigServices::GetConfiguration</b><code> </code></li>
+	<li><code>pSOFeature </code>is a CATISpecObject's pointer on the current 
+	feature</li>
+  <li><code>pSoftConfig </code>is the Algorithm Configuration to store.</ul>
+<p>&nbsp;</p>
+<h3><a name="Feature Specificite"></a>Geometrical Feature Specificity&nbsp;</h3>
+<p>In the previous section, the generic contents of the <code>Build</code>
+method for a feature with geometrical specifications has been explained. The aim
+of the current one is to detail the only three possible cases: the surfacic
+feature, the contextual feature and the form feature. For each one, the
+parameters for the procedural report and the possible operators are
+presented.&nbsp;</p>
+<p>Reading the &quot;Specification/Result Mechanism Applied to Mechanical
+Features&quot; [<a href="#References">10</a>] is recommended to take full
+advantage of this chapter.</p>
+<h4><a name="Surfacic case"></a>Surfacic Features</h4>
+<p>We are in the case where the feature derives either from the GSMGeom or from
+the GeometricalElement3D StartUp.</p>
+<table>
+  <caption><i><a name="Fig.10">Fig.10</a>: Surfacic Feature Build</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrBuildSurfacic.jpg" width="680" height="206"></td>
+    </tr>
+  </tbody>
+</table>
+<p>In most cases, the features to follow by the procedural report are all the
+sp_in features. See the Combined Curve use case for a complete example. [<a href="#References">11</a>]</p>
+<h4><a name="contextual case"></a>Contextual Features</h4>
+<p>This is the case where the feature derives from the
+MechanicalContextualFeature StartUp.</p>
+<table>
+  <caption><i><a name="Fig.11">Fig.11</a>: Contextual Feature Build</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrBuildContextual.jpg" width="480" height="352"></td>
+    </tr>
+  </tbody>
+</table>
+<p>To create the geometry, <code>Topo B,</code> associated with the feature
+result, <code>Solid B</code>, of the Contextual feature, a topological operation
+will be executed on the geometry (<code>Topo A</code>) pointed by&nbsp; the <code>Solid
+A</code> feature&nbsp;<code></code></p>
+<p>The list of features to insert in the procedural report are:&nbsp;</p>
+<ul>
+  <li>This (contextual feature)</li>
+  <li>The feature pointed by the ResultIN attribute (<code>Solid A</code>) - Use
+    the <code>GetBodyINAttributes</code> method of the <i>CATIShapeFeatureBody</i>
+    (MechanicalModeler) interface to retrieve the ResultIN attribute. (The
+    ResultIN feature must exist otherwise it is an error)</li>
+</ul>
+<p>For the topological operator, you can for example use the <i>CATDynFillet</i>
+operator created by the <i>CATCreateDynFillet</i> global function.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDynFillet * pDynFillet = NULL ; 
+  pDynFillet = ::CATCreateDynFillet(pIGeomFactory,iTopData,<b>spResultInBody</b>);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>spResultInBody</code><b> </b>is the <i>CATBody</i> (<code>Topo A)</code>
+associated with<code> </code>the ResultIN feature . Use the <code>GetBodyIN</code>
+method of the <i>CATIShapeFeatureBody</i> (MechanicalModeler) interface to
+retrieve it. The other parameters of the topological operator are explained in
+the &quot;<a href="#Runing the topological Operator">Running the Topological
+Operator(s)</a>&quot; section.&nbsp;</p>
+<p><code>Topo B</code> will be the resulting geometry retrieved by the <code>GetResult</code>
+method of the <i>CATIMfProcReport. </i>See the &quot;<a href="#Runing the topological Operator">Running
+the Topological Operator(s)</a>&quot; section.</p>
+<h4><a name="form case"></a>Form Features</h4>
+<p>This is the case where the feature derives from the MechanicalFormFeature
+StartUp.</p>
+<table>
+  <caption><i><a name="Fig.12">Fig.12</a>: Form Feature Build</i></caption>
+  <tbody>
+    <tr>
+      <td><img src="images/CAAMmrBuildSolid.jpg" width="484" height="345"></td>
+    </tr>
+  </tbody>
+</table>
+<p>To create the geometry, <code>Topo B</code>, associated to the result
+feature, <code>Solid B</code>, of the form feature, there are two steps</p>
+<ul>
+  <li>Creating the geometrical result for the form: <code>Topo C</code>. This is
+    done by the <i><b>CATIBuildShape</b></i> interface implemented by the Form
+    feature.</li>
+  <li>Performing a logical operation between <code>Topo C</code> and the
+    geometry associated to the feature Solid A (<code>Topo A)</code></li>
+</ul>
+<p>The topological body (<code>Topo C)</code> and the scope associated with the
+form feature are created by the <code>BuildShape</code> method of the <i>CATIBuildShape</i>
+(MecModInterfaces) interface. This method has the same architecture as the <code>Build</code>
+method.&nbsp; See the next chapter entitled &quot;<a href="#Architecture of the Build and BuildShape methods">Architecture
+of the Build and BuildShape Methods</a>&quot;.&nbsp;</p>
+<h5>List of Features to follow by the Procedural Report:</h5>
+<ul>
+  <li>This&nbsp;</li>
+  <li>The feature pointed by the ResultIN attribute Solid A.&nbsp;(The ResultIN
+    feature can be NULL for the first feature of the procedural view)</li>
+</ul>
+<p>You can use a topological operator such as <i>CATDynBoolean</i><b> </b>created
+by the <i>CATCreateDynBoolean </i>global function.&nbsp;</p>
+<table class="code" height="101">
+  <tr>
+    <td height="97">
+      <pre>...
+  <b>CATDynBoolean</b> * pDynBoolean = NULL ; 
+  CATDynBooleanType = CATBoolUnion ; // or CATBoolIntersection or CATBoolRemoval 
+  pDynBoolean = ::<b>CATCreateDynBoolean</b>(pIGeomFactory,iTopData,CATDynBooleanType,
+                                               <b>spResultInBody</b><b>,</b><b>spFormBody</b>);
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<ul>
+  <li><code>spResultInBody</code><b> </b>is the <i>CATBody</i> (<code>Topo A</code>)
+    associed to the ResultIN feature. Use the <code>GetBodyIN</code> method of
+    the <i>CATIShapeFeatureBody</i> (MechanicalModeler) interface to retrieve
+    it.</li>
+  <li><code>spFormBody</code> is the <i>CATBody</i> associated to the form
+    feature (<code>Topo C)</code>. Use the GetShape method of the <i>CATIShapeFeatureBody</i>
+    (MechanicalModeler) interface to retrieve it.</li>
+  <li>The first two parameters are explained in the &quot;<a href="#Runing the topological Operator">Running
+    the Topological Operator(s)</a>&quot; section.&nbsp;</li>
+</ul>
+<p><code>Topo B</code> is the resulting geometry returned by the <code>GetResult</code>
+method of the <i>CATIMfProcReport. </i>See &quot;<a href="#Runing the topological Operator">Running
+the Topological Operator(s)</a>&quot;</p>
+<p>The Part Design use case &quot;Implementing a Mechanical Design Feature
+Building&quot; presents an example for a form feature.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Architecture of the Build and BuildShape methods"></a>Architecture
+of the Build and BuildShape Methods&nbsp;</h3>
+<p>The purpose of these two methods is always the same:</p>
+<ul>
+  <li><a href="#Update Error Management">Managing the update error</a>,</li>
+  <li><a href="#Build Desactivate">Taking into account feature de-activation</a>,</li>
+  <li>Building the result, (See the &quot;<a href="#Creating the Result Without Procedural Report">Creating
+    the Result without Using a Procedural Report</a>&quot; or the &quot;<a href="#Creating the Result with the Procedural report">Creating
+    the Result Using a Procedural Report</a>&quot;&nbsp; sections)</li>
+</ul>
+<h4><a name="Update Error Management"></a>Update Error Management</h4>
+<ul>
+  <li>If an error which blocks the result construction is detected:
+    <p>A <i>CATMfErrUpdate</i> instance class will be created. It will be
+    associated with the feature thanks to the <i>CATIUpdateError</i> interface.
+    The <code>Build</code> or the <code>BuildShape</code> methods return the
+    error by a <code>CATThrow</code> .&nbsp;[<a href="#References">12</a>]&nbsp;</p>
+    <p>For more information about the <code>CATTry/CATCatch/CATThrow </code>mechanism,
+    refer to the &quot;Managing Errors Using Exceptions&quot; article [<a href="#References">13</a>]</p>
+  <li>0therwise:&nbsp;
+    <p>The&nbsp;<code>Build</code> method returns S_OK and the BuildShape method
+    returns 0&nbsp; .</p>
+  </li>
+</ul>
+<h4><a name="Build Desactivate"></a>Taking into account Feature De-activation</h4>
+<p>The <i>CATIMechanicalProperties</i>&nbsp;interface enables you to
+de-activate/re-activate a feature from the update mechanism. In the solid features case (MechanicalFormFeature and MechanicalContextualFeature) this flag
+is automatically taken into account, meaning that the <i>CATIBuild</i> interface
+is not called in the feature update.<i> </i>But for a surfacic feature (GSMGeom
+and GeometricalElement3D) the <i>CATIBuild</i> interface is always called. So,
+you have to manage the activation flag inside the <code>Build</code> method
+except for features deriving from GeometricalElement3D: the <i>CATIMechanicalProperties</i>&nbsp;interface
+is not available for this feature.&nbsp;</p>
+<h4><a name="Contents of the build (except form feature)"></a>Structure of the
+Methods</h4>
+<p>The structure of the <code>Build</code> and the <code>BuildShape</code>
+methods are the following:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>HRESULT MyClass::Build()
+{
+   HRESULT rc = S_OK ;
+       
+   <a href="#Declaring Useful Pointers">Declaring Useful Pointers </a>
+   
+   <b>CATTry</b>
+   {      
+      <a href="#Testing the feature de-activation">Testing the feature de-activation</a>
+      ...
+      if ( feature active )
+      {
+         if ( feature is a form feature )
+         { 
+            int value = <b>BuildShape</b>(); 
+            if ( 0 != value )
+               rc = E_FAIL;
+         }
+         if ( SUCCEEDED(rc) )
+         {
+            <a href="#Cleaing last error">Cleaning Last Error</a>
+
+            <a href="#Creating the Feature result">Creating the Feature Result (scope and topology) </a>
+      
+            <a href="#Cleaning Useless Data">Cleaning Useless Data </a>
+         }
+      }
+   }
+
+   <b>CATCatch</b>(CATMfErrUpdate,pMfErrUpdate)
+   {
+      <a href="#Processing a CATMfErrUpdate Error">Processing a <i>CATMfErrUpdate</i> Error</a>
+   }
+   <b>CATCatch</b>(CATError,pError)
+   {
+      <a href="#Processing a CATError error">Processing a <i>CATError</i> Error</a>
+   }
+        
+   <b>CATEndTry</b>   
+   
+   return rc ;     
+}
+        </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h5><a name="Declaring Useful Pointers"></a>Declaring Useful Pointers&nbsp;</h5>
+<p>Before the <code>CATTry</code> section you declare all the pointers:</p>
+<ul>
+  <li>Used in the <code>CATTry</code> and <code>CATCatch</code> sections: such
+    as <code>piUpdateErrorOnThis</code> the <i>CATIUpdateError</i> interface
+    pointer on the feature.
+  <li>Initialized in the <code>CATTry</code> section and not released before the
+    call of a method which can throw an error&nbsp;</li>
+</ul>
+<p>All these pointers will be deleted/removed/released in the <code>CATCatch</code>
+sections if an error occurs, see the &quot;<a href="#Deleting the Useless pointers">Deleting
+the Useless Pointers</a>&quot; section. Otherwise, the same pointers will be
+cleaned during the <code>CATTry</code> section and at the last of this section,
+see the &quot;<a href="#Cleaning Useless Data">Cleaning Useless Data</a>&quot;
+section.</p>
+<h5><a name="Testing the feature de-activation"></a>Testing the feature
+de-activation</h5>
+<p>The first thing to do in the <code>Build</code> method is to check whether
+the feature is active or not. Note that in the <code>BuildShape</code> method
+this is not necessary because for a form feature, the <code>Build</code> and the
+<code>BuildShape</code> methods are not called.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      <b>CATIMechanicalProperties</b> * pIMechanicalProperties = NULL;
+      rc = QueryInterface(IID_CATIMechanicalProperties,pIMechanicalProperties );
+      
+      if ( SUCCEEDED(rc) &amp;&amp; ( 1 == pIMechanicalProperties-&gt;<b>IsInactivate</b>())
+      {
+         QueryInterface(IID_CATIMfProcReport,(void **)&amp; _pIMfProcReport);
+         rc = pIMfProcReport-&gt;<b>InactivateResult</b>();
+      }  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIMechanicalProperties</i> interface enables you to know the status
+of the feature. The <code>InactivateResult</code><b> </b>method of the <i>CATIMfProcReport
+</i>processes the result de-activation.&nbsp;<code>_pIMfProcReport</code> is a
+<i>CATIMfProcReport</i> interface pointer declared before the CATTry section, 
+because the <b><code>I</code><span style="font-weight: 400"><code>nactivateResult</code> 
+method can throw an error.</span></b></p>
+<p>If you have used the <i>CATIMfResultManagement</i> to create a result without 
+a procedural report, you should not have to test the feature de-activation, 
+because your feature being a datum must not implement the <i>CATIMechanicalProperties</i> 
+interface.</p>
+<h5><a name="Cleaing last error"></a>Cleaning Up Last Error</h5>
+<p>This first step consists in invalidating the error which has perhaps been
+associated with the feature at the previous update.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIUpdateError</b> *pIUpdateErrorOnThis =NULL ;
+  HRESULT rc = QueryInterface(IID_CATIUpdateError ,
+                                        (void**)&amp;pIUpdateErrorOnThis );
+  if ( SUCCEEDED(rc) )
+  {
+     rc = pIUpdateErrorOnThis -&gt;<b>UnsetUpdateError</b>();
+  ...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h5><a name="Creating the Feature result"></a>Creating the Feature Result (scope
+and topology)</h5>
+<p>This part is explained in the &quot;<a href="#Creating the Result Without Procedural Report">Creating
+the Result without Using a Procedural Report</a>&quot; and &quot;<a href="#Creating the Result with the Procedural report">Creating
+the Result Using a Procedural Report</a>&quot; sections.</p>
+<h5><a name="Cleaning Useless Data"></a>Cleaning Useless Data&nbsp;</h5>
+<p>Releasing or deleting the useless objects created for the result.</p>
+<h5><a name="Processing a CATMfErrUpdate Error"></a>Processing a CATMfErrUpdate
+Error</h5>
+<p>In most cases, the current error is sufficient and it can be associated with
+the feature without modification.&nbsp;</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>  ...
+  CATCatch(<b>CATMfErrUpdate</b>,pMfErrUpdate)
+  {   
+     pIUpdateErrorOnThis -&gt;<b>SetUpdateError</b>(pMfErrUpdate);
+ 
+     <a href="#Scope Deletion">Deleting the Result</a>
+     
+     <a href="#Deleting the Useless pointers">Deleting the Useless Pointers</a>
+     
+     <b>CATRethrow</b>;
+  }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+Where:
+<ul>
+  <li>
+    <p><code>pIUpdateErrorOnThis</code> is a <i>CATIUpdateError</i> interface
+    pointer on <code>this</code></p>
+  </li>
+  <li>
+    <p>The <code>SetUpdateError</code> method does several things:</p>
+  </li>
+  <ul>
+    <li>Associates the error with the feature&nbsp;
+    <li>If the feature already has an error:
+      <ul>
+        <li>The sick features are copied in the new instance error.</li>
+        <li>The error messages are also copied in the new instance error.</li>
+      </ul>
+  </ul>
+</ul>
+<ul>
+  <li><code><a name="Scope Deletion"></a></code>
+    <p><b>Deleting the Result</b>: You have only to delete the scope, you should
+    never remove, from the geometrical container, the result <i>CATBody</i>.
+    This object is managed by the scope.</p>
+  </li>
+  <ul>
+    <li>if the scope has been created without the procedural report:</li>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>...
+  p<code>IMfResultManagement-&gt;DeleteScopeResult();</code>
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Where p<code>IMfResultManagement </code>is a <i>CATIMfResultManagement</i>
+    interface pointer on <code>this.</code></p>
+    <li>if the scope has been created with the procedural report:</li>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <pre>...
+  p<code>IMfProcReportOnThis-&gt;DeleteProcReport();</code>
+...</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Where <code>pIMfProcReportOnThis </code>is a <i>CATIMfProcReport</i>
+    interface pointer on <code>this</code>.</p>
+  </ul>
+  <li>
+    <p><b><a name="Deleting the Useless pointers">Deleting the Useless Pointers</a></b>:
+    Deleting/Removing/Releasing the pointers declared before the <code>CATTry</code>
+    sections- see the<a href="#Declaring Useful Pointers"> Declaring Useful
+    Pointers</a> section- used in the <code>CATTry </code>sections and not
+    released before a method which can throw an error.&nbsp;</p>
+  </li>
+</ul>
+<p>In certain cases, you have to create a new <i>CATMfErrUpdate</i> class
+instance.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>  ...
+  CATCatch(<b>CATMfErrUpdate</b>,pMfErrUpdate)
+  {   
+       CATMfErrUpdate *pNewMfErrUpdate = new <b>CATMfErrUpdate</b>();
+     
+       ::<b>Flush</b>(pMfErrUpdate);
+     
+       pIUpdateErrorOnThis -&gt;<b>SetUpdateError</b>(pNewMfErrUpdate);
+       
+       pNewMfErrUpdate-&gt;<b>SetDiagnostic</b>(&quot;MyOwnMessage&quot;);
+ 
+       <a href="#Scope Deletion">Deleting the Result</a>
+          
+       <a href="#Deleting the Useless pointers">Deleting the Useless Pointers</a>
+     
+       <b>CATThrow(</b>pNewMfErrUpdate<b>)</b>;
+       
+  }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+where:
+<ul>
+  <li><code>pIUpdateErrorOnThis</code> is a <i>CATIUpdateError</i> interface
+    pointer on this
+  <li>The <code>Flush</code> global function enables you to properly clean the
+    error
+</ul>
+<h5><a name="Processing a CATError error"></a>Processing a CATError Error</h5>
+<p>Some is the <i>CATError</i> class, you should return a <i>CATMfErrUpdate</i>
+class instance to prevent the update mechanism from displaying the &quot;Update
+Diagnosis&quot; dialog box.</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>  ...
+  CATCatch(<b>CATError</b>,pError)
+  {   
+     ::<b>Flush</b>(pError);
+     
+     CATMfErrUpdate *pNewMfErrUpdate = new <b>CATMfErrUpdate</b>(); 
+     
+     pIUpdateErrorOnThis -&gt;<b>SetUpdateError</b>(pNewMfErrUpdate);
+       
+     pNewMfErrUpdate-&gt;<b>SetDiagnostic</b>(&quot;MyOwnMessage&quot;);
+     
+     <a href="#Scope Deletion">Deleting the Result</a>
+           
+     <a href="#Deleting the Useless pointers">Deleting the Useless Pointers</a>
+     
+     rc = E_FAIL ;
+  }
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short&nbsp;</h3>
+<p>The <i>CATIBuild</i> interface enables you to generate the result of the
+feature. In the case of a geometrical feature, this result consists in:</p>
+<ul>
+  <li>A topological result, in other words a <i>CATBody,</i> created by one or
+    several topological operator (s).</li>
+  <li>A scope, i.e. an object which manages the stability of the cell access.
+    This scope can be created by two interfaces:
+    <ul>
+      <li><i>CATIMfResultManagement</i>
+        <p>The new feature is without geometrical input specifications. It is a
+        datum.</li>
+      <li><i>CATIMfProcReport</i>
+        <p>The new feature has geometrical input specifications. The scope will
+        be created thanks to a procedural report.</li>
+    </ul>
+  </li>
+</ul>
+<p>Please, note that topological result and scope are linked to a defined 
+Algorithm Configuration which determine versioning of feature.[<a href="#References">14</a>]</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="859">
+  <tr>
+    <td valign="top" width="72">[1]</td>
+    <td width="773"><a href="CAAMmrContentsSpecCont2.htm">The Contents of the
+      Specification Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[2]</td>
+    <td width="773"><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[3]</td>
+    <td width="773"><a href="CAAMmrMechModOverview.htm">Mechanical Modeler
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[4]</td>
+    <td width="773"><a href="CAAMmrGenericNaming.htm">Generic Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[5]</td>
+    <td width="773"><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[6]</td>
+    <td width="773"><a href="../CAATobTechArticles/TopoModel.htm">The
+      CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[7]</td>
+    <td width="773"><a href="../CAATopTechArticles/TopoJournal.htm">The
+      CGM Journal</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[8]</td>
+    <td width="773"><a href="CAAMmrVerifyUpdate.htm">Verifying the Validity of a
+      Geometrical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[9]</td>
+    <td width="773"><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part
+      Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[10]</td>
+    <td width="773"><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[11]</td>
+    <td width="773"><a href="../CAAMmrUseCases/CAAMmrCombinedCurveBuild.htm">Building
+      Combined Curve's Result</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[12]</td>
+    <td width="773"><a href="CAAMmrErreurUpdateDescription.htm">A Description of
+      Update errors</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[13]</td>
+    <td width="773"><a href="../CAASysTechArticles/CAASysExceptions.htm">Managing
+      Errors Using Exceptions</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="72">[14]</td>
+    <td width="773"><a href="CAAMmrVersioningMechFeat.htm">Configuration and Versioning in Mechanical Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="851">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jan 2007]</td>
+    <td valign="top">Document updated with Algorithm Configuration</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

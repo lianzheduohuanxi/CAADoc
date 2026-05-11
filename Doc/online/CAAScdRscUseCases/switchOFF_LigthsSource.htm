@@ -1,0 +1,62 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>switchOFF_Ligths.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+Language="VBSCRIPT"
+
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:		Switch off all the ligths of a product</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Version:		1.0</font>
+<font color="#008000">'   Author:			bmb</font>
+<font color="#008000">'   Languages:		VBScript </font>
+<font color="#008000">'   Locales:		English </font>
+<font color="#008000">'   CATIA Level:	V5R11 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#008000">' Main </font>
+<font color="#0000FF">Sub </font>CATMain()
+
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch Off Lights"
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oProductDocument<font color="#0000FF"> As </font>Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a product</font>
+	If 0=InStr(oProductDocument.Name, ".CATProduct") Then
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch Off Lights"
+		Exit Sub
+	End If
+
+	<font color="#008000">' Accessing the Root Product</font>
+	Dim oRootProduct<font color="#0000FF"> As </font>Document
+	Set oRootProduct = oProductDocument.Product
+
+	<font color="#008000">' Accessing the collection of rendering lights</font>
+	Dim oLights<font color="#0000FF"> As </font>RenderingLights
+	Set oLights = oRootProduct.GetItem("CATRscRenderingLightVBExt")
+
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int
+	Dim oLight<font color="#0000FF"> As </font>RenderingLight
+
+	<font color="#008000">' Ligths loop</font>
+	For I=1<font color="#0000FF"> To </font>oLights.Count
+		Set oLight = oLights.Item(I)
+		oLight.ActiveStatus = 0
+	Next
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

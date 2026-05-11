@@ -1,0 +1,529 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Navigating through a Part Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Navigating through a Part Document</h3>
+      <em>Exploring mechanical entities down to topological entities</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>
+      This article discusses the<strong> CAAV5V6MmrPartBodyRequest</strong> use case. 
+      It is a copy of the CAAMmrPartBodyRequest use case  [<a href="#References">7</a>], rewritten with V6 backported interfaces. 
+      In order to be V5/V6 compatible, some specific parts are coded inside #ifdef macros. 
+      We won't detail in this article any of the V6 specific code. </p>
+      <p> The CAAV5V6MmrPartBodyRequest use case explains how to open a Part document and explore its content from a
+      mechanical modeler perspective, down to the topological entities that
+      capture the shape of the mechanical entities contained in the document.    </p>   
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAV5V6MmrPartBodyRequest Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6MmrPartBodyRequest Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6MmrPartBodyRequest</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6MmrPartBodyRequest Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming 
+with Mechanical Modeler. Its main intent is to introduce important concepts about
+the underlying data structure of the mechanical modeler [<a href="#References">1</a>], and ways to navigate
+through it. More specifically, you will learn how to:
+<ul>
+  <li>Open a Part document&nbsp;</li>
+  <li>Access the Part feature in the document[<a href="#References">2</a>] </li>
+  <li>Access its geometrical features sets [<a href="#References">3</a>] :
+    <ul>
+      <li>Solid and surfacic features sets (Body features)</li>
+      <li>Surfacic sets ( Ordered Geometrical Set and Geometrical Set)</li>
+    </ul>
+  </li>
+  <li>Retrieve set result [<a href="#References">4</a>]</li>
+  <li>Access topological bodies associated with features representing the result
+    of the sets.</li>
+</ul>
+<p>In bracket, we have referenced technical articles which describe in details
+the concepts in relationship with this use case.&nbsp;&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="UseCase"></a>The CAAV5V6MmrPartBodyRequest Use Case</h3>
+<p>CAAV5V6MmrPartBodyRequest is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6MmrPartBodyRequest Do</h4>
+<p>The goal of CAAV5V6MmrPartBodyRequest is to open a Part document and navigate 
+through its data structure. Namely, it:</p>
+<ul>
+  <li><b>Opens</b> a <b> Part</b> document, whose pathname is passed in argument</li>
+  <li>Accesses the <b>Part</b> feature within it</li>
+  <li>Using the <i><b>CATIPartRequest</b>&nbsp;</i> interface
+    :<ul>
+      <li>Retrieves the <b>Body</b> features.</li>
+      <li>Retrieves the <b>surfacic</b> sets.</li>
+    </ul>
+  </li>
+  <li>Using <i><b>CATIBodyRequest</b></i> and <i><b>CATIMmiUseGeometricalElement</b></i> interfaces,
+  displays the Topological results for each one the Feature Sets returned by the <i>CATIPartRequest</i> interface.</li>
+</ul>
+<p>Here is a sample, with the <code>CAAMmrPartBodyRequest</code> Part document
+(see the <a href="#How">How to Launch CAAV5V6MmrPartBodyRequest</a> section for its
+location).&nbsp;</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrPartBodyRequest.jpg" width="201" height="426"></td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAV5V6MmrPartBodyRequest</h4>
+<p>To launch CAAV5V6MmrPartBodyRequest, you will need to set up the build time
+environment, then compile CAAV5V6MmrPartBodyRequest along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">5</a>].
+To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAV5V6MmrPartBodyRequest Filename &quot;</pre>
+<p>where Filename is&nbsp; the complete path of a Part document. You can use the
+<code>CAAV5V6MmrPartBodyRequest</code><code>.CATPart </code>located:</p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\InputData</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAV5V6MmrPartBodyRequest Code</h4>
+<p>The CAAV5V6MmrPartBodyRequest use case is made of one source program, 
+<strong>CAAV5V6MmrPartBodyRequest.cpp</strong>, located in the CAAV5V6MmrPartBodyRequest.m module of the
+CAAV5V6MechanicalModeler.edu framework</p>
+
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6MmrPartBodyRequest.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6MmrPartBodyRequest.m/</code></td>
+  </tr>
+</table>
+
+
+<p>It also uses a global initialization function, CAAV5V6MmrInitSession.cpp, located  in 
+the CAAV5V6MmrUtilities.m module 
+of the CAAV5V6MechanicalModeler.edu framework. Its header file, CAAV5V6MmrInitSession.h, is located in the PublicInterfaces directory of the framework.
+</p>
+
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6MmrInitSession.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6MmrInitSession.m/</code></td>
+  </tr>
+</table>
+
+<p> <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAAV5V6MmrPartBodyRequest:</p>
+<ol>
+  <li><a href="#Checking"> Checking Arguments, Initializing the Session and Loading the Document</a></li>
+  <li><a href="#part">Accessing the Part Feature</a></li>
+  <li><a href="#Getting Geometrical Features Sets">Getting
+    Geometrical Features Sets</a></li>
+  <li><a href="#Getting the Geometrical Features Set Result">Getting the
+    Geometrical Feature Set Result</a></li>
+  <li><a href="#Closing">Closing the Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Checking"></a> Checking Arguments, Initializing the Session and Loading the Document</h4>
+
+<p>This section represents the sequence for initializing a session, opening a document, and reaching the Specification Container . 
+It is specific code for V5 or V6, therefore the code is inside #ifdef macros and uses a generic method CAAV5V6MmrInitSession 
+that does the job.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+
+#ifdef CATIAV5R23
+//============================================== 
+// V5 only
+//============================================== 
+    //
+    // Checks number of arguments
+    if (2!=iArgc)
+      return 1;
+
+
+    char *pSessionName = "SampleSession";
+    CATIMmiPrtContainer * piPartContainer = NULL;
+    CATUnicodeString FileName =  iArgv[1];
+    CATDocument *pDoc = NULL;
+    HRESULT rc =  <strong>CAAV5V6MmrInitSession</strong>(pSessionName, FileName, pDoc, piPartContainer) ;
+       
+   
+#endif	
+...</pre>
+    </td>
+  </tr>
+
+</table>
+<p> As seen in the <a href="#How">How to launch</a> section, there is only one input argument for this program, the 
+name of the file 
+to open.  </p>
+
+<p>Lets detail the content of CAAV5V6InitSession global function: 
+<br> The objective is to open a Part and retrieve the necessary objects to be able to do what ever we want to do in our Mechanical 
+Modeler context. The sequence to do this and the necessary input information are 
+very different in V5 or V6 due to the 
+different data models. For this reason, the <code>CAAV5V6MmrInitSession</code> method is completely written in between #ifdef 
+macros. The V5 or V6 methods don't have the same input arguments, they do have 
+the same output.<br>  
+</p>
+
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#ifdef CATIAV5R23
+//============================================== 
+// V5 only
+//============================================== 
+HRESULT CAAV5V6MmrInitSession(char * iSessionName, 
+	                      const CATUnicodeString&amp; iStorageName,
+			      CATDocument *&amp; oNewDoc,
+    			      CATIMmiPrtContainer *&amp;opApplicativeContainer)
+{
+...
+      // Create a session
+      CATSession *pSession = NULL;
+      rc = <strong>Create_Session</strong>(iSessionName, pSession) ;
+      
+...
+      // Load the input Document
+      rc= <strong>CATDocumentServices::OpenDocument</strong>(iStorageName, oNewDoc) ;
+
+...
+
+      // Get Root container of the Document
+      <strong>CATInit</strong> *pDocAsInit = NULL;
+      rc= oNewDoc-&gt;QueryInterface(IID_CATInit, (void**)&amp;pDocAsInit) ;
+      if (SUCCEEDED(rc) &amp;&amp; pDocAsInit)
+        opApplicativeContainer = (CATIMmiPrtContainer*)pDocAsInit-&gt;<strong>GetRootContainer</strong>("CATIPrtContainer");
+        
+...
+</pre>
+    </td>
+  </tr>
+
+</table>
+
+
+
+<p>The <code>CATDocumentServices::OpenDocument</code> static method opens the document
+from its disk location and returns it as a <i>CATDocument</i> [<a href="#References">6</a>]. </p>
+
+<p>Then we use the <i>CATInit</i> interface on the document to access the 
+document's root container through the <code>GetRootContainer</code> method. In a Part document, the root container is the specification container,
+<code>CATPrtCont</code>, that contains the
+feature-based definition of the part being modeled. Such structure can be
+explored through a dedicated interface, <i>CATIMmiPrtContainer</i>, that is of
+course implemented by the root container. By giving this interface name as
+argument to <code>GetRootContainer</code>, the root container is returned cast 
+to this interface type</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]<br>
+</p>
+
+<h4><a name="part"></a>Accessing the Part Feature using <em>CATIMmiPrtContainer</em> interface</h4>
+
+<p> The Part feature is the highest feature in a Part Document, it federates all the other Mechanical Features and is
+the entry point to the design of the Mechanical Part. </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIMmiMechanicalFeature_var spMechFeatOnPart;  
+  rc = piPartContainer-&gt;<strong>GetMechanicalPart</strong>(spMechFeatOnPart);
+         
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>
+The <em>CATIMmiPrtContainer</em> interface enables to access the Part feature 
+thanks to its <code>GetMechanicalPart</code> method. A <em>CATIMmiMechanicalFeature</em> 
+interface smart pointer on the Part feature
+is returned. 
+</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Getting Geometrical Features Sets"></a>Getting
+Geometrical Feature Sets using <em>CATIPartRequest</em> interface</h4>
+
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+ 
+  <strong>CATIPartRequest</strong>_var spPartRequest = spMechFeatOnPart; 
+  ...
+   
+  const CATUnicodeString <b>stdContext</b>(&quot; &quot;);  
+  	  
+  // Extracts the list of Body features
+  CATLISTV(CATBaseUnknown_var) BodyList;  
+  pPartAsRequest-&gt;<b>GetSolidBodies</b>(stdContext, BodyList);
+ 
+  <b>PrintGeometricalFeaturesSetsResult</b>(BodyList);
+
+  // Extracts the list of Surfacic Feature Sets 
+  CATLISTV(CATBaseUnknown_var) SurfacicSetList;  
+  pPartAsRequest-&gt;<b>GetSurfBodies</b>(stdContext, SurfacicSetList);
+  
+  <b>PrintGeometricalFeaturesSetsResult</b>(SurfacicSetList);
+
+</pre>
+    </td>
+  </tr>
+</table>
+ 
+<p>The <i><strong>CATIPartRequest</strong></i> interface enables to retrieve the 
+Geometrical Feature Sets aggregated by the Part, thanks to two dedicated methods: <code> 
+<strong>GetSolidBodies</strong></code>, <code><strong>GetSurfBodies</strong></code>. 
+
+What is returned are:<ul>
+  <li>All the Geometrical Set of the Part document (the non ordered sets)</li>
+  <li>The Body features and the Ordered Geometrical Sets (the ordered sets) 
+	which are directly aggregated by the Part feature.</li>
+</ul>
+
+<p>The context parameter enables to filter the result in the case of Sheet Metal 
+applications,&nbsp; for which Mechanical Modeler maintains additional 
+topological bodies that represent the parts in their unfolded configuration. 
+Those topological bodies can be accessed through the string &quot;Unfolded&quot;. A blank value 
+is the same as <span id="M94"><span class="comment">&quot;MfDefault3DView&quot; value, it 
+enables to retrieve the result containing</span></span> standard topological 
+bodies. </p>
+<p>The result of the <i>CATIBodyRequest</i> interface and the final extraction of the topological bodies from the set is
+delegated to a dedicated function: <code><a href="#Getting the Geometrical Features Set Result">PrintGeometricalFeaturesSetsResult</a></code>.<code>&nbsp;</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Getting the Geometrical Features Set Result"></a>Getting the
+Geometrical Features Set Results using <em>CATIBodyRequest</em> interface</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>void PrintGeometricalFeaturesSetsResult(const CATLISTV(CATBaseUnknown_var) &amp;iSet) 
+{
+  const CATUnicodeString stdContext(&quot;&quot;); 
+
+  cout &lt;&lt;&quot; , has &quot; &lt;&lt; iSet.Size() &lt;&lt; &quot; element(s)&quot; &lt;&lt; endl;
+
+  for(int curSetIdx=1; curSetIdx&lt;=iSet.Size(); curSetIdx++)
+  {
+      CATBaseUnknown_var CurrentSet = iSet[curSetIdx] ;
+      if ( NULL_var == CurrentSet ) break ;
+
+      CATIAlias_var aliasOnCurrentSet = CurrentSet ;
+      
+      cout &lt;&lt; &quot;      &quot; &lt;&lt; aliasOnCurrentSet-&gt;<b>GetAlias</b>().ConvertToChar() ;
+      
+      CATLISTV(CATBaseUnknown_var) pListResult;
+
+      <b>CATIBodyRequest</b> *pBodyRequestOnCurrentSet = NULL;
+      HRESULT rc = CurrentSet-&gt;QueryInterface(IID_CATIBodyRequest, (void**)&amp;pBodyRequestOnCurrentSet);
+      if ( SUCCEEDED(rc) )
+      {  
+         rc = pBodyRequestOnCurrentSet-&gt;<b>GetResults</b>(stdContext, pListResult);</pre>
+    </td>
+  </tr>
+</table>
+
+<p>The input of this function is a list of Geometrical Feature Sets. For each Set, the GetResults method 
+of the <em>CATIBodyRequest </em>interface is called. The output is a list of features holding a topological result. 
+<br>The context parameter is the same as for <em>CATIPartRequest</em> interface: for the standard context you can use an empty string 
+or "MfDefault3DView". </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+         for(int curFeatIdx=1; curFeatIdx&lt;=SizeList; curFeatIdx++)
+         { 
+            CATBaseUnknown_var CurrentFeat = pListResult[curFeatIdx] ;
+            ...
+            CATIAlias_var aliasOnCurElt = CurrentFeat ;
+            
+            cout &lt;&lt; &quot;            &quot; &lt;&lt; aliasOnCurElt-&gt;GetAlias().ConvertToChar() ;
+            
+            <b>CATIMmiUseGeometricalElement</b> *pCurFeatOnGeomElt = NULL ;
+            rc = CurrentFeat-&gt;QueryInterface(IID_CATIGeometricalElement, 
+                                                                 (void**)&amp;pCurFeatOnGeomElt);
+            if( SUCCEEDED(rc) )
+            {       
+                  CATBody_var ResultBody = pCurFeatOnGeomElt-&gt;<b>GetBodyResult</b>();
+                  
+                  if ( NULL_var != ResultBody )
+                  {
+                     <b>CATICGMObject</b> *pCurTopo = 0;
+                     rc=ResultBody-&gt;QueryInterface(IID_CATICGMObject,(void**)&amp;pCurTopo);
+                               
+                         unsigned long curResultTag = pCurTopo-&gt;<b>GetPersistentTag</b>();
+                         cout &lt;&lt;&quot;  ,Its contains a topological result with the following tag : &quot; ;
+                         cout &lt;&lt; curResultTag &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p>For each element of the list returned by the GetResults method, the associated CATBody  is retrieved using
+ the GetBodyResult method  of  the CATIMmiUseGeometricalElement interface. </p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Closing"></a>Closing the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+  ::<b>Delete_Session</b>(&quot;SampleSession&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>After the job is finished, there is nothing to save, we just need to clean-up 
+by closing the session thanks to the global function Delete_Session, counterpart 
+of the Create_Session used at the begining of the use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown you how to navigate through a Part Document, 
+from the Part Feature down to the topological results.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont0.htm">The
+      Contents of the Specification Container- The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrStructuralBrowsing.htm">
+    V5 reference Use Case : Navigating through a Part Document </a></td>
+  </tr>
+ 
+
+
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2012, Dassault Systemes. All rights reserved.</i></p>
+
+</body>
+
+</html>

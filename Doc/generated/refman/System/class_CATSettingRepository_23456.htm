@@ -1,0 +1,1432 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Class CATSettingRepository</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATSettingRepository"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System <script type="text/javascript" > writeClassCharacteristic(); </script> CATSettingRepository</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATSettingRepository_23456','CATSettingRepository','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATSettingRepository</b>
+</p>
+<p>
+<b><i> Class for managing the user's customization.</i></b><br>
+
+ <br><b>Role</b>: CATSettingRepositories manage aggregates of setting attributes
+ that are used to store and retrieve values and parameters set by the user. 
+ They are stored between working sessions in one setting file. 
+ <p>
+ Each CATSettingRepository has a unique name used by the application to access
+ it. Each attribute within one CATSettingRepository is identified by its name 
+ and type. 
+ <p>
+ Setting attributes can store the values of simple types such as integers or
+ floats. In addition, a marshallable object should be saved as a setting 
+ attribute with less or no impact on the application. 
+ <p>
+ A CATSettingRepository instance can be saved in memory for temporary storage
+ using a commit/rollback mechanism, and in a file for persistent storage.</p>
+<hr>
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Commit(int)"><b>Commit</b></a>(int)
+<dd>  Makes a persistent copy of the CATsettingRepository in Memory.
+ <dt> o 
+    <a href="#GetInfo(char*,CATSettingInfo*,int)"><b>GetInfo</b></a>(char*,CATSettingInfo*,int)
+<dd>  Retrieves the infos for a given attribute within the 
+ CATSettingRepository.
+ <dt> o 
+    <a href="#GetLock(char*,char&amp;)"><b>GetLock</b></a>(char*,char&amp;)
+<dd>  Retrieves the lock's state of a given attribute within the 
+ CATSettingRepository.
+ <dt> o 
+    <a href="#GetRepository(char*,int,AccessType,CATISysSettingController*)"><b>GetRepository</b></a>(char*,int,AccessType,CATISysSettingController*)
+<dd>  Creates a CATSettingRepository.
+ <dt> o 
+    <a href="#IsPresent(char*,char*)"><b>IsPresent</b></a>(char*,char*)
+<dd>  Indicates the existence of a given attribute.
+ <dt> o 
+    <a href="#IsProtected()"><b>IsProtected</b></a>()
+<dd>  Gives the state of a CATSettingRepository.
+ <dt> o 
+    <a href="#Lock(char*)"><b>Lock</b></a>(char*)
+<dd>  Locks a given attribute within the CATSettingRepository.
+ <dt> o 
+    <a href="#NextAttribute(char*,char*,long*,short)"><b>NextAttribute</b></a>(char*,char*,long*,short)
+<dd>  Browses the CATSettingRepository.
+ <dt> o 
+    <a href="#OrigineValue(char*,CATString**)"><b>OrigineValue</b></a>(char*,CATString**)
+<dd>  Retrieves the origine of an attribute's value.
+ <dt> o 
+    <a href="#ReadSetting(char*,int*,long)"><b>ReadSetting</b></a>(char*,int*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of ints.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATString*)"><b>ReadSetting</b></a>(char*,CATString*)
+<dd>  Retrieves the value of a setting attribute.
+ <dt> o 
+    <a href="#ReadSetting(char*,char*,long)"><b>ReadSetting</b></a>(char*,char*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of char.
+ <dt> o 
+    <a href="#ReadSetting(char*,float*,long)"><b>ReadSetting</b></a>(char*,float*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of floats.
+ <dt> o 
+    <a href="#ReadSetting(char*,short*,long)"><b>ReadSetting</b></a>(char*,short*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of shorts.
+ <dt> o 
+    <a href="#ReadSetting(char*,double*,long)"><b>ReadSetting</b></a>(char*,double*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of doubles.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATBaseUnknown*)"><b>ReadSetting</b></a>(char*,CATBaseUnknown*)
+<dd>  Retrieves the value of a setting attribute.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATString**,long)"><b>ReadSetting</b></a>(char*,CATString**,long)
+<dd>  Retrieves the value of a setting attribute which is an array of CATString.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATUnicodeString*)"><b>ReadSetting</b></a>(char*,CATUnicodeString*)
+<dd>  Retrieves the value of a setting attribute.
+ <dt> o 
+    <a href="#ReadSetting(char*,unsigned int*,long)"><b>ReadSetting</b></a>(char*,unsigned int*,long)
+<dd>  Retrieves the value of a setting attribute which is an array of unsigned ints.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATBaseUnknown**,long)"><b>ReadSetting</b></a>(char*,CATBaseUnknown**,long)
+<dd>  Retrieves the value of a setting attribute which is an array of CATBaseUnknown.
+ <dt> o 
+    <a href="#ReadSetting(char*,CATUnicodeString**,long)"><b>ReadSetting</b></a>(char*,CATUnicodeString**,long)
+<dd>  Retrieves the value of a setting attribute which is an array of 
+ CATUnicodeString.
+ <dt> o 
+    <a href="#ResetToAdminValues()"><b>ResetToAdminValues</b></a>()
+<dd>  Restores the administrated values of the attributes.
+ <dt> o 
+    <a href="#Rollback()"><b>Rollback</b></a>()
+<dd>  Restores a previous persistent copy of the CATsettingRepository in Memory.
+ <dt> o 
+    <a href="#SaveRepository(char*)"><b>SaveRepository</b></a>(char*)
+<dd>  Makes a persistent copy of the CATsettingRepository on file.
+ <dt> o 
+    <a href="#Unlock(char*)"><b>Unlock</b></a>(char*)
+<dd>  Unlocks a given attribute within the CATSettingRepository.
+ <dt> o 
+    <a href="#WriteSetting(char*,int*,long,int)"><b>WriteSetting</b></a>(char*,int*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of ints.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATString*,int)"><b>WriteSetting</b></a>(char*,CATString*,int)
+<dd>  Sets the value of a setting attribute.
+ <dt> o 
+    <a href="#WriteSetting(char*,char*,long,int)"><b>WriteSetting</b></a>(char*,char*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of chars.
+ <dt> o 
+    <a href="#WriteSetting(char*,float*,long,int)"><b>WriteSetting</b></a>(char*,float*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of floats.
+ <dt> o 
+    <a href="#WriteSetting(char*,short*,long,int)"><b>WriteSetting</b></a>(char*,short*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of shorts.
+ <dt> o 
+    <a href="#WriteSetting(char*,double*,long,int)"><b>WriteSetting</b></a>(char*,double*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of doubles.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATBaseUnknown*,int)"><b>WriteSetting</b></a>(char*,CATBaseUnknown*,int)
+<dd>  Sets the value of a setting attribute.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATString**,long,int)"><b>WriteSetting</b></a>(char*,CATString**,long,int)
+<dd>  Sets the value of a setting attribute which is an array of CATString.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATUnicodeString*,int)"><b>WriteSetting</b></a>(char*,CATUnicodeString*,int)
+<dd>  Sets the value of a setting attribute.
+ <dt> o 
+    <a href="#WriteSetting(char*,unsigned int*,long,int)"><b>WriteSetting</b></a>(char*,unsigned int*,long,int)
+<dd>  Sets the value of a setting attribute which is an array of unsigned ints.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATBaseUnknown**,long,int)"><b>WriteSetting</b></a>(char*,CATBaseUnknown**,long,int)
+<dd>  Sets the value of a setting attribute which is an array of CATBaseUnknown.
+ <dt> o 
+    <a href="#WriteSetting(char*,CATUnicodeString**,long,int)"><b>WriteSetting</b></a>(char*,CATUnicodeString**,long,int)
+<dd>  Sets the value of a setting attribute which is an array of CATUnicodeString.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#AccessType"><b>AccessType</b></a>
+<dd> </dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Commit"></a><a name="Commit(int)"></a> <dt> o <b>Commit</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>Commit</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNoEvent</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Makes a persistent copy of the CATsettingRepository in Memory.
+ <br><b>Role</b>: Makes a persistent copy of the CATsettingRepository in Memory
+ The values of the attributes could be restore after that by doing a call to
+ 
+<script type="text/javascript"> activateLinkAnchor('','Rollback','Rollback') </script>.  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNoEvent</tt>
+   <dd>	In order to emit the commit event
+	<br><b>Legal values</b>: 0 to emit the event (the default) and 1 for no emission
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 1 on Success, otherwise -1.
+</dl>
+</dl>
+<a name="GetInfo"></a><a name="GetInfo(char*,CATSettingInfo*,int)"></a> <dt> o <b>GetInfo</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>GetInfo</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSettingInfo','CATSettingInfo*')</script> <td><tt>oInfo</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the infos for a given attribute within the 
+ CATSettingRepository.
+ <br><b>Role</b>:Retrieves the infos for a given attribute within 
+ the CATSettingRepository.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute.
+	<br><b>Legal values</b>: The length of the string must be less than 
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> oInfo</tt>
+   <dd>	the info Structure.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 OK or -1 no <tt>iAttributeName</tt> was found.
+</dl>
+</dl>
+<a name="GetLock"></a><a name="GetLock(char*,char&amp;)"></a> <dt> o <b>GetLock</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>GetLock</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char&amp;')</script> <td><tt>oLock</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the lock's state of a given attribute within the 
+ CATSettingRepository.
+ <br><b>Role</b>:Retrieves the state of the lock of a given attribute, in order
+ to give it to the 
+<script type="text/javascript"> activateLinkAnchor('CATDlgLock','ViewLock','CATDlgLock.ViewLock') </script> method.  An attribute can have been  lock by an CATIA administrator, using the Tools 
+ Options UI. This methods and 
+<script type="text/javascript"> activateLinkAnchor('','Lock','Lock') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','Unlock','Unlock') </script> should be  used when coding a Tools Option Dialog.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than 
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> oLock</tt>
+   <dd>	the state of the lock.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 OK or -1 no <tt>iAttributeName</tt> was found.
+</dl>
+</dl>
+<a name="GetRepository"></a><a name="GetRepository(char*,int,AccessType,CATISysSettingController*)"></a> <dt> o <b>GetRepository</b>
+
+<dt>  <table><tr><td>  public static <script type="text/javascript"> activateLink('CATSettingRepository','CATSettingRepository*')</script>  <b>GetRepository</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iRepositoryName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iMode</tt><td><tt>=0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('AccessType','AccessType')</script> <td><tt>iType</tt><td><tt>=Prj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATISysSettingController','CATISysSettingController*')</script> <td><tt>iCtrl</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a CATSettingRepository.
+ <br><b>Role</b>: Creates the unique instance of the class 
+ CATSettingRepository named with the given argument. If a setting file 
+ exists, it is read.
+ <br><b>Lifecycle rules deviation</b>: The Applications must not call release
+ on the returned pointer.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRepositoryName</tt>
+   <dd>	The name of the CATSettingRepository used by the applications 
+	to retrieve it.
+ </dd>
+    <dt><tt> iMode</tt>
+   <dd> 	Reserved for internal use. Must always be set to 0.
+	<b>Legal values</b>: The length of the string must be less than or 
+	equal to </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> iType</tt>
+   <dd> 	Defines the type of the setting.
+ </dd>
+    <dt><tt> iCtrl</tt>
+   <dd> 	pointer to the controler Interfaces.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsPresent"></a><a name="IsPresent(char*,char*)"></a> <dt> o <b>IsPresent</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>IsPresent</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeClass</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Indicates the existence of a given attribute.
+ <br><b>Role</b>: Searches within the CATSettingRepository for an attribute
+ named <tt>iAttributeName</tt> and of type <tt>iAttributeClass</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute to be set.
+	<b>Legal values</b>: The length of the string must be less than or equal 
+	to </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> iAttributeClass</tt>
+   <dd>	The type of the requested attribute, that could be "int", "float",...
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	 <b>Legal values</b> the number of elements constituting the attribute, or 0 if not found,
+       -1 if the attribute has is default value, -2 found with another type.
+       If the attribute has its default value only a ReadSetting can determine the real number
+       of elements constituting the attribute.
+
+</dl>
+</dl>
+<a name="IsProtected"></a><a name="IsProtected()"></a> <dt> o <b>IsProtected</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>IsProtected</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gives the state of a CATSettingRepository.
+ <br><b>Role</b>: Returns the global state of the CATSettingRepository, which
+ is said protected if all its attributes are locked and thus could not be 
+ modified.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 1 if all attributes are currently locked, otherwise 0.
+</dl>
+</dl>
+<a name="Lock"></a><a name="Lock(char*)"></a> <dt> o <b>Lock</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>Lock</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Locks a given attribute within the CATSettingRepository.
+ <br><b>Role</b>: Locks a given attribute, in order to prevent any further
+ modifications of its value. This methods is only applicable in Administrator's
+ mode, otherwise it does nothing.
+ This methods and 
+<script type="text/javascript"> activateLinkAnchor('','UnLock','UnLock') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','GetLock','GetLock') </script> should be used when coding a Tools Option Dialog.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute to be locked.
+	<br><b>Legal values</b>: The length of the string must be less than
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 if the attribute was successfully locked, otherwise -1.
+</dl>
+</dl>
+</dl>
+<a name="NextAttribute"></a><a name="NextAttribute(char*,char*,long*,short)"></a> <dt> o <b>NextAttribute</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>NextAttribute</b>(<td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>oAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>oAttributeClass</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long*')</script> <td><tt>oAttributeSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iReset</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Browses the CATSettingRepository.
+ <br><b>Role</b>: Returns the Name, the type and the number of constituting 
+ elements of an attribute. The strings are copied but their allocation
+ must be done by the caller. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oAttributeName</tt>
+   <dd>	a pointer to an allocated buffer where the attribute's name will be copied
+ </dd>
+    <dt><tt> oAttributeClass</tt>
+   <dd>	a pointer to an allocated buffer where the attribute's type will be copied
+ </dd>
+    <dt><tt> oAttributeSize</tt>
+   <dd>	a pointer to a long int to put the number of constituting elements
+ </dd>
+    <dt><tt> iReset</tt>
+   <dd>	iReset = 1 forces to begin with the first Attribute,reseting the state
+	reached with the last call to this method, otherwise 0
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b> 0 until reaching the last Attribute and returning -1 
+	when the last attribute is reached
+</dl>
+</dl>
+<a name="OrigineValue"></a><a name="OrigineValue(char*,CATString**)"></a> <dt> o <b>OrigineValue</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>OrigineValue</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>oOrigineLevel</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the origine of an attribute's value.
+ <br><b>Role</b>: Retrieves the level of administration where the given 
+ attribute has been locked or if the attribute is not locked the level that 
+ will give its value to the attribute during the reset process.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute.
+ </dd>
+    <dt><tt> oOrigineLevel</tt>
+   <dd>       the Path of the level of administration
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b> 0 on success -1 in cas of failure.
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,int*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of ints.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of initialized 
+ ints because it is used to set the default value of the attribute, if it 
+ does not yet exist. In this last case the method calls WriteSetting () to 
+ initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized ints.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATString*)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString*')</script> <td><tt>ioSetting</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute.
+ <br><b>Role</b>: Retrieves using its name, the value of an attribute 
+ constituted by one CATString. A pointer on a intialized and constructed 
+ object of type CATString must be given as argument, because this object is 
+ used to set the default value of the attribute, if it does not yet exist. 
+ In this last case the method calls WriteSetting () to initialize the settings 
+ attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	A pointer on a construted CATString. If the attribute has not
+	been yet created, then <tt>ioSetting</tt> is used as default values,
+	otherwise <tt>ioSetting</tt> is overwritten by the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,char*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of char.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the
+ array constituting an attribute. The array is defined as an array of initialized
+ char because it is used to set the default value of the attribute, if it does
+ not yet exist. In this last case the method calls WriteSetting () to initialize 
+ the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized char.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,float*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of floats.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of initialized 
+ floats because it is used to set the default value of the attribute, if it 
+ does not yet exist. In this last case the method calls WriteSetting () to 
+ initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized floats.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,short*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of shorts.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of initialized 
+ shorts because it is used to set the default value of the attribute, if it 
+ does not yet exist. In this last case the method calls WriteSetting () to 
+ initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized shorts.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,double*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of doubles.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of 
+ initialized doubles because it is used to set the default value of the 
+ attribute, if it does not yet exist. In this last case the method calls
+ WriteSetting () to initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized doubles.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATBaseUnknown*)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>ioSetting</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute.
+ <br><b>Role</b>: Retrieves using its name, the value of an attribute 
+ constituted by one CATBaseUnknown. A pointer on a intialized and constructed
+ object of type CATBaseUnknown must be given as argument, because this object 
+ is used to set the default value of the attribute, if it does not yet exist. 
+ In this last case the method calls WriteSetting () to initialize the setting
+ attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be retrieved or created.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	A pointer on an initialized CATBaseUnknow. If the attribute has not
+	been yet created, then <tt>ioSetting</tt> is used as default, otherwise
+	<tt>ioSetting</tt> is overwritten by the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success 
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATString**,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of CATString.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of pointers 
+ on constructed CATString, because it is used to set the default value of 
+ the attribute, if it does not yet exist. In this last case the method calls
+ WriteSetting () to initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointeur on constructed CATString.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The number of elements to read
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATUnicodeString*)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>ioSetting</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute.
+ <br><b>Role</b>: Retrieves using its name, the value of an attribute 
+ constituted by one CATUnicodeString. A pointer on a intialized and constructed
+ object of type CATUnicodeString must be given as argument, because this object
+ is used to set the default value of the attribute, if it does not yet exist.
+ In this last case the method calls WriteSetting () to initialize the setting 
+ attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	A pointer on a construted CATString. 
+	If the attribute has not been yet created, then <tt>ioSetting</tt>
+	is used as default value, otherwise <tt>ioSetting</tt> is overwritten 
+	by the retrieved value.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Succes
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,unsigned int*,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of unsigned ints.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the 
+ array constituting an attribute. The array is defined as an array of initialized 
+ unsigned ints because it is used to set the default value of the attribute, 
+ if it does not yet exist. In this last case the method calls WriteSetting () to 
+ initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized unsigned ints.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATBaseUnknown**,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown**')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of CATBaseUnknown.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the
+ array constituting an attribute. The array is defined as an array of pointers on 
+ constructed CATBaseUnknown, because it is used to set the default value of 
+ the attribute, if it does not yet exist. In this last case the method calls
+ WriteSetting () to initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointers on initialized CATBaseUnknow.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ReadSetting"></a><a name="ReadSetting(char*,CATUnicodeString**,long)"></a> <dt> o <b>ReadSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ReadSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString**')</script> <td><tt>ioSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the value of a setting attribute which is an array of 
+ CATUnicodeString.
+ <br><b>Role</b>: Retrieves using its name, the values of each element of the
+ array constituting an attribute. The array is defined as an array of pointers on 
+ constructed CATUnicodeString, because it is used to set the default value of 
+ the attribute, if it does not yet exist. In this last case the method calls
+ WriteSetting () to initialize the setting attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than 
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointeur on constructed CATUnicodeString.
+	If the attribute has not been yet created, then the elements of
+	<tt>ioSetting</tt> are used as default values, otherwise the elements of 
+	<tt>ioSetting</tt> are overwritten by the retrieved values.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The number of elements to read.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>>0:</tt>  on Success returns the number of elements really read
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="ResetToAdminValues"></a><a name="ResetToAdminValues()"></a> <dt> o <b>ResetToAdminValues</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>ResetToAdminValues</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores the administrated values of the attributes.
+ <br><b>Role</b>: Restores the administrated values of all the attributes of 
+ the CATSettingRepository. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 1 on Success, otherwise negative.
+</dl>
+</dl>
+<a name="Rollback"></a><a name="Rollback()"></a> <dt> o <b>Rollback</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>Rollback</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Restores a previous persistent copy of the CATsettingRepository in Memory.
+ <br><b>Role</b>: Restores the persistent memory copy of the 
+ CATsettingRepository, done by the lastest call to 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> . All modifications that have occured on any attributes of the 
+ CATSettingRepository, since the lastest call to Commit,  are discarded.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 on Success, otherwise -1.
+</dl>
+</dl>
+<a name="SaveRepository"></a><a name="SaveRepository(char*)"></a> <dt> o <b>SaveRepository</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>SaveRepository</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iReseved</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Makes a persistent copy of the CATsettingRepository on file.
+ <br><b>Role</b>: Makes first a persistent copy of the CATsettingRepository 
+ in Memory by calling 
+<script type="text/javascript"> activateLinkAnchor('','Commit','Commit') </script> , then writes on file the persistent  representation
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iReserved</tt>
+   <dd>	reserved for internal use. Not to be used.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 on Success, otherwise negative.
+</dl>
+</dl>
+<a name="Unlock"></a><a name="Unlock(char*)"></a> <dt> o <b>Unlock</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>Unlock</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iAttributeName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Unlocks a given attribute within the CATSettingRepository.
+ <br><b>Role</b>: Unlocks a given attribute, in order to authorize  further
+ modifications of its value. This methods is only applicable in Administrator's
+ mode, otherwise it does nothing, especially if the attribute is locked.
+ This methods and <tt>Lock()</tt> and <tt>GetLock</tt> should be used when coding a Tools
+ Option Dialog
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAttributeName</tt>
+   <dd>	The name of the attribute to unlocked.
+	<br><b>Legal values</b>: The length of the string must be less than 
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+  <dt> <b>Returns:</b> 
+  <dd>  <b>Legal values</b> 0 if the attribute was successfully unlocked, otherwise -1.
+</dl>
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,int*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of ints.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized ints.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized ints.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATString*,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute.
+ <br><b>Role</b>: Sets the value of an attribute of type CATString
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	pointer on a constructed CATString. 
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,char*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of chars.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized char.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized chars.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,float*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('float','float*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of floats.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized floats.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized floats.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,short*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of shorts.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized shorts.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized shorts.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,double*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of doubles.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized doubles.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized doubles.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATBaseUnknown*,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute.
+ <br><b>Role</b>: Sets the value of an attribute of type CATBaseUnknown
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than
+	or equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	An initialized CATBaseUnknow. 
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATString**,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString**')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of CATString.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of pointers on constructed 
+ CATString.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointeur on initialized CATString.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATUnicodeString*,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute.
+ <br><b>Role</b>: Sets the value of an attribute of type CATUnicodeString
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or 
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	pointer on a constructed CATUnicodeString. 
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,unsigned int*,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLength</tt><td><tt>=1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of unsigned ints.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of initialized unsigned ints.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of initialized unsigned ints.
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATBaseUnknown**,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown**')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of CATBaseUnknown.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of pointers on constructed 
+ CATBaseUnknown.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointeur on initialized CATBaseUnknow.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd> 	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+<a name="WriteSetting"></a><a name="WriteSetting(char*,CATUnicodeString**,long,int)"></a> <dt> o <b>WriteSetting</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('long','long')</script>  <b>WriteSetting</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iSettingName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString**')</script> <td><tt>iSetting</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSize</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the value of a setting attribute which is an array of CATUnicodeString.
+ <br><b>Role</b>: Sets the values of each element of the array constituting the
+ attribute. The array is defined as an array of pointers on constructed 
+ CATUnicodeString.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSettingName</tt>
+   <dd>	The name of the attribute to be set.
+	<br><b>Legal values</b>: The length of the string must be less than or
+	equal to  </dd>
+<script type="text/javascript"> activateLinkAnchor('MAXSETTINGNAME','','MAXSETTINGNAME') </script>. 
+    <dt><tt> ioSetting</tt>
+   <dd>	an array of pointeur on initialized CATUnicodeString.
+ </dd>
+    <dt><tt> iSize</tt>
+   <dd>	The size of the array.
+ </dd>
+    <dt><tt> iFlag</tt>
+   <dd>	reserved for internal use. do not use other values than the default one.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  	<b>Legal values</b>:
+	<br><tt>1 :</tt>  on Success
+	<br><tt>0  :</tt>  if a class conflict on the attribute has occured.
+ 	<br><tt>-1:</tt>  on failure
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="AccessType"> <dt> o <b>AccessType</b>
+<dl>
+  <dd>
+<pre>
+enum <b>AccessType</b> {
+  Usr,
+  Prj
+}
+</pre>
+</dl>
+<hr>
+ This object is included in the file: <b>CATSettingRepository.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>JS0GROUP</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

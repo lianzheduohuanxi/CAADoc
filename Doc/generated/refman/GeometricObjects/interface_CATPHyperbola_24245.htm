@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATPHyperbola</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATPHyperbola"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATPHyperbola</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATPHyperbola_24245','CATPHyperbola','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATPHyperbola</b>
+</p>
+<p>
+<b><i> Interface representing an hyperbola in the space of a surface.</i></b><br>
+
+<br> The CATPHyperbola is created by the <tt>CreatePHyperbola</tt>
+ method of the <tt>CATGeoFactory</tt> interface  and deleted with the <tt>Remove</tt> method. 
+ It is defined with:
+<table>
+ <tr><td>CATMathAxis2D</td><td><tt> iAxis </tt></td>
+                <td> The axis of the hyperbola in the space of the surface </td></tr>
+ <tr><td>CATSurface</td><td><tt> iSupport </tt></td>
+                <td> The surface on which the hyperbola is defined </td></tr>
+ <tr><td>double</td><td><tt> iA</tt></td>
+                <td> The length between the center and the vertex.</td></tr>
+ <tr><td>double</td><td><tt> iB</tt></td>
+                <td> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt></td></tr>
+</table>
+ The eccentricity is defined by <tt>e = c/iA > 1</tt>.
+ With this definition, the hyperbola is the branch
+ along the positive X corresponding to the implicit equation
+       <tt>X^2/(iA^2) - Y^2/(iB^2) = 1</tt>
+ To define the limits of the hyperbola, consider the parameter <tt>t</tt> such that:
+   <tt>X(t) = a*cosh(t), Y(t) = b*sinh(t)</tt>  , where  X and Y are relative to <tt>iAxis</tt>.
+  <br>Notice that this parameterization is not the internal parameterization.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetCanonicalParams(double&amp;,double&amp;)"><b>GetCanonicalParams</b></a>(double&amp;,double&amp;)
+<dd>  Returns the canonical lengths of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#GetExtremities(double&amp;,double&amp;)"><b>GetExtremities</b></a>(double&amp;,double&amp;)
+<dd>  Returns the low and high limitations of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#GetReferenceAxis(CATMathAxis2D&amp;)"><b>GetReferenceAxis</b></a>(CATMathAxis2D&amp;)
+<dd>  Returns the reference axis of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#Set(CATMathAxis2D&amp;,double&amp;,double&amp;,double*,CATSurface*)"><b>Set</b></a>(CATMathAxis2D&amp;,double&amp;,double&amp;,double*,CATSurface*)
+<dd>  Modifies the characteristics of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#SetCanonicalParams(double&amp;,double&amp;)"><b>SetCanonicalParams</b></a>(double&amp;,double&amp;)
+<dd>   Modifies the canonical lengths of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#SetExtremities(double&amp;,double&amp;)"><b>SetExtremities</b></a>(double&amp;,double&amp;)
+<dd>  Modifies the low and high Limimitations of <tt>this</tt> CATPHyperbola.
+ <dt> o 
+    <a href="#SetReferenceAxis(CATMathAxis2D&amp;)"><b>SetReferenceAxis</b></a>(CATMathAxis2D&amp;)
+<dd>   Modifies the reference axis of <tt>this</tt> CATPHyperbola.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetCanonicalParams"></a><a name="GetCanonicalParams(double&amp;,double&amp;)"></a> <dt> o <b>GetCanonicalParams</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetCanonicalParams</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioA</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioB</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the canonical lengths of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioA</tt>
+   <dd>  The length between the center and the vertex.
+ </dd>
+    <dt><tt> ioB</tt>
+   <dd> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt>.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetExtremities"></a><a name="GetExtremities(double&amp;,double&amp;)"></a> <dt> o <b>GetExtremities</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetExtremities</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioLowLimitation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioHighLimitation</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low and high limitations of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioLowLimitation</tt>
+   <dd> The parameter value of the first limitation of <tt>this</tt> CATPHyperbola.
+ </dd>
+    <dt><tt> ioHighLimitation</tt>
+   <dd> The parameter value of the second limitation of <tt>this</tt> CATPHyperbola.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetReferenceAxis"></a><a name="GetReferenceAxis(CATMathAxis2D&amp;)"></a> <dt> o <b>GetReferenceAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetReferenceAxis</b>(<td><script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>ioAxis2D</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the reference axis of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioAxis</tt>
+   <dd> The axis of the hyperbola in the surface space.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(CATMathAxis2D&amp;,double&amp;,double&amp;,double*,CATSurface*)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis2D</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iA</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iB</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATSurface','CATSurface*')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the characteristics of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The axis of the hyperbola in the surface space.
+ </dd>
+    <dt><tt> iA</tt>
+   <dd>  The length between the center and the vertex.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt>.
+ </dd>
+    <dt><tt> iLimits</tt>
+   <dd> An array [2] of the parameter values definining the limitations. If <tt>NULL</tt>, the hyperbola is unlimited.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> A pointer to the surface on which the hyperbola is defined.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetCanonicalParams"></a><a name="SetCanonicalParams(double&amp;,double&amp;)"></a> <dt> o <b>SetCanonicalParams</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetCanonicalParams</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iA</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iB</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the canonical lengths of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iA</tt>
+   <dd>  The length between the center and the vertex.
+ </dd>
+    <dt><tt> iB</tt>
+   <dd> The distance between focus and center <tt>c = sqrt(iA^2+iB^2)</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetExtremities"></a><a name="SetExtremities(double&amp;,double&amp;)"></a> <dt> o <b>SetExtremities</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetExtremities</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iLowParam</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iHighParam</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the low and high Limimitations of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLowParam</tt>
+   <dd> The parameter value of the first limitation of <tt>this</tt> CATPHyperbola.
+ </dd>
+    <dt><tt> iHighParam</tt>
+   <dd> The parameter value of the second limitation of <tt>this</tt> CATPHyperbola.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetReferenceAxis"></a><a name="SetReferenceAxis(CATMathAxis2D&amp;)"></a> <dt> o <b>SetReferenceAxis</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetReferenceAxis</b>(<td> const <script type="text/javascript"> activateLink('CATMathAxis2D','CATMathAxis2D&amp;')</script> <td><tt>iAxis2D</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Modifies the reference axis of <tt>this</tt> CATPHyperbola.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAxis</tt>
+   <dd> The axis of the hyperbola in the surface space.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPHyperbola.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,429 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Clone and Transformation Managers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Clone and Transformation Managers</h3>
+      <em>How to duplicate and/or move CGM Objects</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The copy and paste of geometric objects that takes into account their
+      forward linked objects, is called <strong>cloning</strong>. This process
+      is supported by the <strong>CATCloneManager</strong> class. Moreover, the
+      geometric objects can also be <b>moved</b>, with or without copy, through
+      a specific process handled by the <strong>CATTransfoManager</strong>
+      class. Why these classes are needed, how they are used and how a geometric
+      object and a manager cooperate are the main topics of this paper.
+      <ul>
+        <li><a href="#An operator to copy an object"><strong><font color="#0000ff"><u>Operators
+          to Copy or Move Objects</u></font></strong></a></li>
+        <li><a href="#The CATCloneManager"><strong><font color="#0000ff"><u>The
+          CATCloneManager</u></font></strong></a>
+          <ul>
+            <li><a href="#Properties"><font color="#0000ff"><u>Two Modes of
+              Cloning</u></font></a></li>
+            <li><a href="#A code sample"><font color="#0000ff"><u>A Code Sample</u></font></a></li>
+            <li><a href="#How a CATICGMObject and a CATCloneManager cooperate"><font color="#0000ff"><u>How
+              a CATICGMObject and a CATCloneManager Cooperate</u></font></a></li>
+          </ul>
+        </li>
+        <li><a href="#The CATTransfoManager"><strong><font color="#0000ff"><u>The
+          CATTransfoManager</u></font></strong></a>
+          <ul>
+            <li><a href="#Inherited properties"><font color="#0000ff"><u>Inherited
+              Properties</u></font></a></li>
+            <li><a href="#New properties"><font color="#0000ff"><u>New
+              Properties</u></font></a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong><font color="#0000ff"><u>In Short</u></font></strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="An operator to copy an object"></a>Operators to Copy or Move
+Objects</h3>
+<p>CATCloneManager is a class representing an operator that manages the copy and
+paste of a set of objects implementing the CATICGMObject interface, that is to
+say the persistent objects provided by the CGM offering. This operation, that
+also takes into account the forward linked object, is called a <strong>cloning</strong>,
+and is especially useful to design your own cut, copy, paste applications.</p>
+<p>Why is there a specific class for this process, instead of a method in each
+class of each geometric object? This could be the easiest way to do when the
+objects to clone are isolated, that is, have no links with other objects. But
+take now two curves C1 and C2 laying on the same surface. You want to globally
+copy the set of the three objects C1, C2 and the underlying surface. If the copy
+process was at the geometric object level, the surface would be twice copied,
+and the resulting objects would not represent an exact image of the global
+initial set.</p>
+<p>To prevent from this kind of configuration, the cloning process has a global
+knowledge of the objects to clone. Therefore, the role of the <strong>CATCloneManager</strong>
+is to federate the way to copy and paste objects and their forward linked
+objects. In particular, the manager clones a list of selected objects, without
+unnecessarily duplicating the forward common linked objects.</p>
+<p>The same frame occurs for the transformation of geometric objects
+implementing the CATGeometry interface. For these objects that have a geometric
+meaning, the geometric transformation process follows the same way than the
+clone process. Hence, an object implementing the CATGeometry interface, which is
+a kind of CATICGMObject interface, will be geometrically transformed, with or
+without duplication, by the mean of a <strong>CATTransfoManager</strong>
+instance, which is a kind of CATCloneManager instance.</p>
+<table>
+  <caption>Fig1: Inheritance between CATCloneManager and CATTransfoManager</caption>
+  <tr>
+    <td><img src="images/Clone1.gif" alt="Clone1.gif (4209 bytes)" width="479" height="359"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="The CATCloneManager"></a>The CATCloneManager</h3>
+<p>The programmer gives to the CATCloneManager the objects to be cloned
+together, by calling the <tt>CATCloneManager::Add</tt> method. All the objects
+must belong to the same container (a container is an object containing other
+objects) to be processed in a single operation.</p>
+<p>The copy and paste is not made at the creation of the clone process, or when
+objects are added to the list to copy, but triggered by the <tt>CATCloneManager:Run</tt>
+method.</p>
+<p>After the run, you can retrieve the cloned object corresponding to each
+object of the input list.</p>
+<p>If there are topological objects to clone (topological objects are kind of
+geometric objects), the CATCloneManager creates, under request, the topological
+journal associated with the cloning operation.</p>
+<p>The CATCloneManager instances are transient, and therefore cannot be
+streamed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Properties"></a>Two Modes of Cloning</h4>
+<p>The cloning process can be done as a single copy or a full copy. This mode is
+ruled by the <strong>CATCloneManagerType:</strong>
+<ol>
+  <dl>
+    <dt><tt>CatCGMSingleDuplicate</tt></dt>
+    <dd>Only copies and pastes the objects that are <tt>Add</tt>ed to the
+      CATCloneManager. This is only available if the objects are copied from and
+      pasted in the same container</dd>
+    <dt><tt>CatCGMFullDuplicate</tt></dt>
+    <dd>Copies and pastes the objects that are <tt>Add</tt>ed to the
+      CATCloneManager and their forward linked objects.</dd>
+  </dl>
+  <table>
+    <caption>Fig2: Behavior of the duplication according to the
+      CATCloneManagerType</caption>
+    <tr>
+      <td valign="middle">
+        <p align="center"><img src="images/Clone2.gif" alt="Clone2.gif (7989 bytes)" width="479" height="359"></td>
+      <td valign="middle">These diagrams show the behavior of the
+        CATCloneManager for each mode:
+        <p>C1 and C2 are two curves laying on the same Surface. Then, C1 and C2
+        have Surface as forward linked object.</p>
+        <p>When C2 is selected in SingleDuplicate, its copy C2_c lays on
+        Surface. In FullDuplicate, Surface is also duplicated in Surface_c</p>
+        <p>When C1 and C2 are selected in SingleDuplicate, their copies C1_c and
+        C2_c respectively lay on Surface. In FullDuplicate, their copies lay on
+        Surface_c, the copy of Surface, that has been duplicated <em>only once</em>.</td>
+    </tr>
+  </table>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="A code sample"></a>A Code Sample</h4>
+<p>The following example illustrates how to copy the two curves C1 and C1 of the
+previous section and paste them into an other container. The result will be two
+new curves laying on the same new surface, with the same characteristics as the
+initial one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATCloneManager MyManager(GeoFactoryForPasting); // the CATGeoFactory is also a container
+MyManager.Add(C1);   
+MyManager.Add(C2);
+// Copies C1 and C2 and paste them in GeoFactoryForPasting
+MyManager.Run();  
+// Retrieves the copy of C1  
+CATICGMObject* ClonedObject=MyManager.ReadImage(C1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How a CATICGMObject and a CATCloneManager cooperate"></a>How a
+CATICGMObject and a CATCloneManager Cooperate</h4>
+<p>The CATCloneManager globally manages the cloning, but delegates the copy of a
+single object to each object.
+<ol>
+  <li>The CATCloneManager asks the object to clone itself through the <tt>CATICGMObject::Clone</tt>
+    method.</li>
+  <li>The object to clone asks back the CATCloneManager for the copy of its
+    forward linked objects through the <tt>CATCloneManager::ComputeImage</tt>
+    method.
+    <ul>
+      <li>If the copy of the forward linked object has already been created
+        during the cloning process, it is directly returned</li>
+      <li>Otherwise, the process re-runs at the step 1 for the linked object.</li>
+    </ul>
+  </li>
+</ol>
+<p>Hence, there are two types of methods of a CATCloneManager
+<ul>
+  <li>&quot;user methods&quot;, that you call to clone CATICGMObjects, as in the
+    <a href="#A code sample">code sample</a> :
+    <dl>
+      <dt><tt>Add</tt></dt>
+      <dd>Adds objects of the same container to the set of objects to clone</dd>
+      <dt><tt>Run</tt></dt>
+      <dd>Triggers the cloning process</dd>
+      <dt><tt>ReadImage</tt></dt>
+      <dd>Retrieves a pasted object</dd>
+      <dt><tt>WriteReport</tt></dt>
+      <dd>Writes topological items in the journal</dd>
+      <dt><tt>GetFactory</tt></dt>
+      <dd>Retrieves the factory of the pasted objects</dd>
+    </dl>
+  </li>
+  <li>&quot;object methods&quot;, to use for writing the <tt>Clone</tt> method
+    of a new class of CATICGMObject . These methods are not seen by the CAA
+    programmer.
+    <dl>
+      <dt><tt>ComputeImage</tt></dt>
+      <dd>Called inside the code of a CATICGMObject.</dd>
+    </dl>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The CATTransfoManager"></a>The CATTransfoManager</h3>
+<p>This operator is a kind of CATCloneManager, that moves CATGeometry objects,
+with or without copying them. This part highlights the new properties and
+behaviors with respect to those inherited from CATCloneManager.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Inherited properties"></a>Inherited Properties</h4>
+<p>The global architecture is of course inherited. It includes:
+<ul>
+  <li>The cooperation between the manager ant the objects it manages</li>
+  <li>The behavior of &quot;users&quot; and &quot;objects&quot; methods that
+    have already been described</li>
+  <li>The fact that it cannot be streamed.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="New properties"></a>New Properties</h4>
+<ul>
+  <li>The first new property is obviously the transformation. The
+    CATTransfoManager takes two types of transformations:
+    <ul>
+      <li>Linear transformations, instances of CATMathTransformation,
+        representing a simple displacement of the object. These linear
+        transformations must be invertible.</li>
+      <li>Non linear transformations, instances of
+        CATMathNonLinearTransformation, which definition depends on the point
+        where the transformation is done. This is useful for describing
+        deformations such as sheet metal folding and unfolding.</li>
+    </ul>
+  </li>
+  <li>Now, the CatCGMSingleDuplicate/FullDuplicate mode has no more meaning for
+    transformations. It is replaced by the <strong>CATTransfoManagerType</strong>,
+    defined as follows:</li>
+  <dl>
+    <dt><tt>CATTransfoManager::Replace</tt></dt>
+    <dd><tt>T</tt>ransforms the objects that are <tt>Add</tt>ed to the
+      CATransfoManager and their forward linked objects that are not
+      geometrically invariant. In some cases, a copy occurs, when a pointing
+      object is not in the selection. Do not use this mode for the
+      transformation of topological objects, because of the smart mechanism. For
+      your reminder, a topological object is a kind of geometric object with
+      logical boundaries and the smart mechanism is the fact that topological
+      objects to modify have first to be duplicated.</dd>
+    <dt><tt>CATTransfoManager::Duplicate</tt></dt>
+    <dd>Copies, transforms and pastes objects that are <tt>Add</tt>ed to the
+      CATransfoManager and their forward linked objects that are not
+      geometrically invariant, without unnecessarily duplicating common forward
+      linked objects. In particular, a CATTransfoManager with this option and
+      the identity transformation gives the same result as a CATCloneManager
+      with <tt>CatCGMSingleDuplicate</tt> mode.</dd>
+    <dt><tt>CATTransfoManager::FullDuplicate</tt></dt>
+    <dd>Duplicates and transforms the objects that are <tt>Add</tt>ed to the
+      CATTransfoManager. Duplicates a forward linked object even if it is
+      geometrically invariant by the transformation,</dd>
+  </dl>
+</ul>
+<p>The rules for the duplication of the forward linked objects in the same
+container are as follows:
+<ul>
+  <li>If a forward linked object is geometrically <strong>invariant</strong> by
+    the transformation, this object is not duplicated, except if this forward
+    linked object is specifically <tt>Add</tt>ed to the CATTransfoManager.
+    Invariant means that the transformation does not change the object with
+    regards to its maximum limits: for example, a line is invariant by a
+    transformation along its direction, a circle is invariant by a rotation
+    around an axis perpendicular to its plane and passing by its center.</li>
+  <li>Any forward linked object that is not geometrically invariant is copied or
+    replaced</li>
+</ul>
+<p>The following figures illustrate the behavior of the CATTransfoManager in
+different cases:</p>
+<table>
+  <caption>Fig3: Behavior of the CATTransfoManager when a forward linked object
+    belongs to the selection, according to the CATTransfoManagerType</caption>
+  <tr>
+    <td valign="middle">
+      <p align="center"><img src="images/Clone3.gif" alt="Clone3.gif (9258 bytes)" width="479" height="359"></td>
+    <td valign="middle">In these diagrams, a forward linked object (Surface)
+      belongs to the selection.
+      <p>If an object that points to Surface is not in the selection (as C1),
+      Surface is duplicated and moved in Surface_d. In replace mode, the other
+      selected objects C2 and C3 point now to this new surface Surface_d.</p>
+      <p>If all the objects pointing to Surface are selected :</p>
+      <p>* In replace mode, Surface is moved: the relative position between the
+      curves and Surface remains the same, and C1, C2, C3 are not touched. Note
+      that in some rare cases, the curves will also be moved, because the
+      parameterization of the transformed surface can change from the initial
+      one. This is the case when the surface is defined from a curve or another
+      surface, themselves invariant by the transformation.</p>
+      <p>* In duplicate mode, all is duplicated. Notice that the duplicated
+      surface only needs to be moved.</td>
+  </tr>
+</table>
+<p>Note</p>
+<table>
+  <caption>Fig4: Behavior of the CATTransfoManager when a forward linked object
+    does not belong to the selection, nor a pointing object</caption>
+  <tr>
+    <td>
+      <p align="center"><img src="images/Clone4.gif" alt="Clone4.gif (9549 bytes)" width="479" height="359"></td>
+    <td valign="middle">In these diagrams, a forward linked object Surface does
+      not belong to the selection, nor the pointing curve C1.
+      <p>In replace mode, if Surface is invariant, there is no need to duplicate
+      it. C2 and C3 are only moved. If Surface is not invariant, it must be
+      duplicated before the transformation</p>
+      <p>In duplicate mode, if Surface is invariant, there is no need to
+      duplicate it. C1 and C2 are duplicated and moved, pointing to the same
+      Surface. If Surface is not invariant, all is duplicated.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table>
+  <caption>Fig5: Behavior of the CATTransfoManager when all the pointing objects
+    are in the selection, but not the forward linked object</caption>
+  <tr>
+    <td>
+      <p align="center"><img src="images/Clone5.gif" alt="Clone5.gif (7357 bytes)" width="479" height="359"></td>
+    <td valign="middle">In these diagrams, the forward linked object Surface
+      does not belong to the selection, but all the pointing curves C1 and C2
+      are selected.
+      <p>In replace mode, if Surface is invariant, there is no need to duplicate
+      it. C1 and C2 are only moved. If Surface is not invariant, it is moved,
+      and the C1 and C2 are not touched.</p>
+      <p>In duplicate mode, if Surface is invariant, there is no need to
+      duplicate it. C1 and C2 are duplicated and moved, pointing to the same
+      Surface. If Surface is not invariant, all is duplicated.</td>
+  </tr>
+</table>
+<p>The specific methods of a CATTransfoManager are
+<ul>
+  <li>&quot;user methods&quot;, that you call to transform CATGeometry objects:
+    <dl>
+      <dt><tt>GetMathTransformation</tt></dt>
+      <dd>Retrieves the transformation</dd>
+      <dt><tt>GetMathNonLinearTransformation</tt></dt>
+      <dd>Retrieves the non linear transformation</dd>
+      <dt><tt>RetrieveTransfoW</tt></dt>
+      <dd>Retrieves the 1D transformation to apply to an object that lays to
+        another object that is geometrically invariant along one direction.</dd>
+    </dl>
+  </li>
+  <li>&quot;object methods&quot;, to use for writing the <tt>Move3D</tt> and <tt>CloneAndMove3D</tt>
+    methods of a new class of CATGeometry you want to create: <tt>Compute,
+    ComputeW, ComputeUV, SetTransfoW, SetTransfoUV, IsIdentity</tt>, <tt>IsSimilitide,
+    GetOrientationChange</tt>, <tt>IsInvariant</tt> that are called inside the
+    code of a CATGeometry. These methods are not seen by the CAA programmer.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>The CATCloneManager is an operator that copies and pastes a set of
+    CATICGMObject, and their forward linked objects if needed.</li>
+  <li>The CATTransfoManager is a kind of CATCloneManager that also moves set of
+    CATGeometry objects.</li>
+  <li>These operators cooperate with the objects for more efficiency.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="GeoObjects.htm">The CGM Objects</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="Attribute.htm">The Management of Foreign Data</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="Curves.htm">The Curves of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[4]</td>
+    <td><a href="Surfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,295 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Importing a Material Library to a Text File</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+    <style type="text/css">
+        .auto-style1
+        {
+            width: 1055px;
+        }
+    </style>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Materials</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Importing a Material Library to a Text File</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create or complete a material library from a text format.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a><a name="How">importMaterialLibrary</a> is launched
+      in CATIA. An existing material library document (with &quot;.CATMaterial&quot; extension) must be found in the CATDocView.</p>
+      <p>A text file containing all informations for materials should exist on disk. Its extension should be &quot;.matlib&quot;.</p>
+
+      <p><a href="importMaterialLibrarySource2.htm" target="Source">importMaterialLibrary.CATScript
+      </a>is located in the CAAScdMatUseCases module. <a href="macros/importMaterialLibrary.CATScript">Execute
+      macro</a> (Windows only).</p>
+        <p>After the import, the filled material library will be displayed in CATIA, with all families and materials. Note that material thumbnails are default thumbnails (a mat grey sphere) and do not reflect the material's parameters values. To update its thumbnail, a material should be edited in CATIA. </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>importMaterialLibrary includes four steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#RetrieveTextFile">Retrieve the text file and open it</a></li>
+        <li><a href="#CreateEntities">Create and set all entities (families, materials, properties) in current .CATMaterial file</a></li>
+        <li><a href="#WriteLibrary">Save the modified material library file</a></li>
+      </ol>
+      <p><a name="Prolog"></a><b>Prolog</b></p>
+      <table class="code" width="1150">
+        <tr>
+          <td width="1062">
+            <pre>
+
+            <font color="#008000">' Get the file system object</font>
+	        Dim oFileSys<font color="#0000FF"> as </font>FileSystem
+	        Set oFileSys = CATIA.FileSystem
+
+	     <font color="#008000">' Get the documents collection</font>
+	        Dim oCollection<font color="#0000FF"> As </font>Documents
+	        Set oCollection = CATIA.Documents
+
+	     <font color="#008000">' test if no document is open</font>
+	        If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		        msgbox "A new material library document must be active to execute this macro.", vbOKOnly, "Import Material Library"
+		        Exit Sub
+	        End If
+
+	     <font color="#008000">' Get material library</font>
+	        Dim oCat<font color="#0000FF"> As </font>Document
+	        Set oCat = CATIA.ActiveDocument
+
+	     <font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	        If 0=InStr(oCat.Name, ".CATMaterial") Then
+		        msgbox "A new material library document must be active to execute this macro.", vbOKOnly, "Import Material Library"
+		        Exit Sub
+	        End If
+    	       ...
+            </pre>
+          </td>
+      </table>
+      <p align="left">At first, this macro tests if a document is active in CATIA and if this document is a CATMaterial one.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="RetrieveTextFile"></a>Retrieve the text file and open it</h4>
+      <table class="code" width="1050" height="132">
+        <tr>
+          <td class="auto-style1">
+            <pre>	       ...</pre>
+            <pre>
+            <font color="#008000"> ' Get name of the material library text file</font>
+	        Dim sAnswer<font color="#0000FF"> As </font>String
+	        sAnswer = CATIA.FileSelectionBox("Select a material library text file", "*.matlib", CatFileSelectionModeOpen)
+
+	        If ""&lt;&gt;sAnswer Then ' CANCEL
+		
+        <font color="#008000">    ' Determine the file separator</font>
+	        Dim sSep<font color="#0000FF"> As </font>String
+	        sSep = oFileSys.FileSeparator
+
+	    <font color="#008000">' Create the material library text file</font>
+	        Dim oFileIn<font color="#0000FF"> As </font>File    
+	        Set oFileIn = oFileSys.GetFile(sAnswer)
+	        Dim oStream<font color="#0000FF"> As </font>TextStream
+	        Set oStream = oFileIn.OpenAsTextStream("ForReading")
+         
+                ... 
+            </pre>
+          </td>
+        </tr>
+      </table>
+      <p align="left">
+          The macro file opens a file selector to be able to load the material library text file.</p>
+      <p>This text file should be formated like this:</p>
+        ##############################################################################<br>
+        #                            #<br>
+        # MATERIAL LIBRARY TEXT FILE #<br>
+        #                            #<br>
+        ##############################################################################<br>
+        <br>
+        <br>
+        LIBRARY=MyCatalog<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        FAMILY=Construction<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        MATERIAL=Concrete<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        PROPERTY=Rendering<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        MappingType=3<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        AdaptiveCoeff=0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        PreviewSize=50<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AmbientCoefficient=0.80<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        DiffuseCoefficient=1<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        SpecularCoefficient=0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        SpecularExponent=0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TransparencyCoefficient=0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>.....</b><br>
+      <p align="right">&nbsp;</p>
+
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="CreateEntities"></a>Create and set all entities (families, materials, properties) in current .CATMaterial file</h4>
+      <table class="code" width="1150" height="132">
+        <tr>
+          <td class="auto-style1">
+            <pre>	...</pre>
+            <pre>
+              <font color="#008000">' Read the input file line by line</font>
+		Do Until oStream.AtEndOfStream
+
+	<font color="#008000">     ' Read the current line</font>
+		sLine = oStream.ReadLine
+		sBuffer = Left(sLine, 1)
+
+	<font color="#008000">     ' Test if the line is empty or a comment</font>
+		If 0&lt;&gt;StrComp(sBuffer, "#") And 0&lt;Len(sBuffer) And 0&lt;&gt;FindChar(sLine) Then
+				
+	<font color="#008000">     ' Parse the line, determine param and value</font>
+		If 0=ParseLine(sLine, sParam, sValue)<font color="#0000FF"> Then </font><font color="#008000">' test for syntax error</font>
+		  SYNTAX_ERROR iInc
+		  Exit Sub
+		Else
+        <font color="#008000">     ' Special case for the first param (LIBRARY)</font>
+		  If iCurLevel=0 And 0&lt;&gt;StrComp(sParam, "LIBRARY") Then
+		    SEMANTIC_ERROR iCurLevel
+		    Exit Sub
+		  Else
+		    If 0&lt;&gt;iCurLevel<font color="#0000FF"> Then</font>
+		      If LevelParam(sParam) &gt; iCurLevel<font color="#0000FF"> Then </font><font color="#008000">' test for semantic error</font>
+		  	SEMANTIC_ERROR iCurLevel
+			Exit Sub
+		      Else
+			If 0&lt;&gt;StrComp(sParam, "FAMILY") Then
+			  bMinimumDone = True
+			End If
+    	<font color="#008000">	' Case with no error</font>
+			If 0=StrComp(sParam, "FAMILY") Then ' FAMILY treatment
+		<font color="#008000">' Init families</font>
+			  Set oFamilies = oCat.Families
+		<font color="#008000">' Init the new family</font>
+			  Set oFamily = oFamilies.Add
+		<font color="#008000">' Affect name</font>
+			  oFamily.Name = sValue
+			Else
+			  If 0=StrComp(sParam, "MATERIAL") Then ' MATERIAL treatment
+		<font color="#008000">' Init materials</font>
+			    Set oMaterials = oFamily.Materials
+		<font color="#008000">' Init the new material</font>
+			    Set oMaterial = oMaterials.Add
+		<font color="#008000">' Affect name</font>
+			    oMaterial.Name = sValue
+		<font color="#008000">' Affect icon</font>
+			    If oFileSys.FileExists(sFolderIcon & sSep & oFamily.Name & sSep & oMaterial.Name & ".jpg") Then
+					oMaterial.PutIcon(sFolderIcon & sSep & oFamily.Name & sSep) <font color="#008000">' & oMaterial.Name & ".jpg")</font>
+		            End If
+			  Else
+			    If 0=StrComp(sParam, "PROPERTY") Then ' PROPERTY treatment
+
+    			      If 0=StrComp(sValue, "Rendering") Then ' rendering case
+		<font color="#008000">' Add rendering data on the new material</font>
+				Set oRenderingMaterial = oMaterial.CreateRenderingData
+			      End If
+			      If 0=StrComp(sValue, "AnalysisIsotropic") Then ' AnalysisIsotropic case
+		<font color="#008000">' Add Analysis data on the new material</font>
+				Set oAnalysisMaterial = oMaterial.CreateAnalysisData("SAMIsotropicMaterial")
+			      End If
+			      If 0=StrComp(sValue, "AnalysisOrthotropic") Then ' AnalysisOrthotropic case
+		<font color="#008000">' Add Analysis data on the new material</font>
+				Set oAnalysisMaterial = oMaterial.CreateAnalysisData("SAMOrthotropicMaterial")
+			      End If
+			  Else <font color="#008000">' AmbientCoefficient, DiffuseCoefficient, ... treatment</font>
+
+		<font color="#008000">' One variable mode (format: var)</font>
+			      If 0=StrComp(sParam, "MAPPINGTYPE") Then
+				oRenderingMaterial.MappingType = sValue
+			      End If
+			      If oRenderingMaterial.MappingType = 5<font color="#0000FF"> Then </font><font color="#008000">' Manual mapping</font>
+				If 0=StrComp(sParam, "ADAPTIVECOEFF") Then
+				  oRenderingMaterial.AdaptiveCoeff = sValue
+				End If
+			      End If
+			      If 0=StrComp(sParam, "PREVIEWSIZE") Then
+				oRenderingMaterial.PreviewSize = sValue
+			      End If
+			      If 0=StrComp(sParam, "AMBIENTCOEFFICIENT") Then
+				oRenderingMaterial.AmbientCoefficient = sValue
+			      End If
+			...</pre>
+          </td>
+        </tr>
+      </table>
+      <p align="left">
+          The macro loops on each line of the text file :
+        <ul>
+        <li>if &quot;FAMILY&quot; keyword is found, it creates a new family in material library</li>
+        <li>if &quot;MATERIAL&quot; keyword is found, it creates a new material in last created family, with the provided name</li>
+        <li>if &quot;PROPERTY&quot; keyword is found, it adds new applicative data to tha last created material</li>
+        <li>if a parameter name keyword is found (like &quot;MAPPINGTYPE&quot; or &quot;AMBIENTCOEFFICIENT&quot;), parameter of last created material is modified</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+    <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="WriteLibrary"></a>Save the modified material library file</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>	...</pre>
+              <pre>
+         	<font color="#008000">' Save the new CATMaterial</font>
+		    oCat.SaveAs(Left(sAnswer, InStr(sAnswer, ".matlib")-1) & ".CATMaterial")
+	        <font color="#008000">' End message</font>
+	            msgbox "Operation succeed." & Chr(10) & "The material library has been saved at this location :" & Chr(10) & Chr(10) & Left(sAnswer, InStr(sAnswer, ".matlib")-1) & ".CATMaterial", vbOKOnly, "Import Material Library"
+	            msgbox "Operation succeed." & Chr(10) & "The material library has been imported.", vbOKOnly, "Import Material Library"
+            </pre>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+  <hr>
+  <! ---------------------------------comment------------------------------------->
+  <h4><a name="InShort"></a>In Short</h4>
+  <p>This use case presents a macro which can be useful to create a material library
+        from an external text file.</p>
+  <p>The text format file to use is very simple and allows therefore the material library to be easily customized.</p>
+  <p align="right">[<a href="#Top">Top</a>]</p>
+  <hr>
+  <! ---------------------------------comment------------------------------------->
+  <p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

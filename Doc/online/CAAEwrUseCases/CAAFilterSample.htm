@@ -1,0 +1,251 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Abstract This article discusses</title>
+</head>
+
+<body>
+
+<table border="0" width="100%" cellpadding="0" style="border-collapse: collapse" id="table1">
+	<tr>
+		<td>
+
+<table class="abstract" id="table2">
+  <tr>
+    <td>
+      <b><font size="4" color="#FF9900" face="Verdana">Equipment &amp; Systems Engineering</font></b></td>
+    <td valign="top">
+      <b><font face="Verdana" color="#FF9900">Electrical Wire Routing</font></b></td>
+    <td valign="top">
+      <b><font face="Verdana" size="2" color="#FF9900">Usage of the Filtering 
+		Management in Electrical Wire Routing<br>
+		</font></b><font face="Verdana" size="2">
+      <em>How to filter out Devices/BNSs/Supports based on Wires passing through 
+		them.</em></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#CC0000">
+      <i><b><font face="Verdana" size="2" color="#FFFFFF">Use Case</font></b></i></td>
+    <td valign="top" bgcolor="#CC0000">
+      &nbsp;</td>
+    <td valign="top">
+      &nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#CCCCFF" colspan="3">
+      <h3><font color="#FF9900"><a name="Top"></a>Abstract</font></h3>
+      <p>This article discusses the <i>CAAFilterSample</i> use case.&nbsp; This 
+		use case explains how to filter out devices/supports/BNSs in a given 
+		Harness Network through which Wires/WireGroups are routed.
+      <ul>
+        <li><strong><a href="#WhatYouWillLearn"><font color="#FF9900">What You Will Learn With This Use Case</font></a></strong></li>
+        <li><strong><a href="#CAAFilterSample"><font color="#FF9900">The 
+		CAAFilterSample Use Case</font></a></strong><font color="#FF9900">
+		</font>
+          <ul>
+            <li><a href="#WhatDoesCAAFilterSampleDo"><font color="#FF9900">What Does <strong>
+			CAAFilterSample</strong> Do</font></a></li>
+            <li><a href="#HowtoLaunchCAAFilterSample"><font color="#FF9900">How to Launch 
+			</font><strong><font color="#FF9900">CAAFilterSample</font></strong></a></li>
+            <li><a href="#WheretoFind"><font color="#FF9900">Where to Find the 
+            <strong>CAAFilterSample</strong> Code</font></a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step-by-Step"><font color="#FF9900">Step-by-Step</font></a></strong></li>
+		<li><strong><font color="#FF9900"><a href="#References">
+		<font color="#FF9900">References</font></a></font></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<h3> <br>
+		<a name="WhatYouWillLearn"></a><b><font color="#FF9900">What You Will Learn With This Use Case</font></b></h3>
+		<p>The following operations are detailed is this use case: <br>
+		<br>
+		How to create a CATIA V5 session <br>
+		How to open a CATIA V5 document <br>
+		How to Initialize the Electrical Environment <br>
+		How to Filter the current session with a criteria (say CRIT1)<br>
+		How to close the Document and the session</p>
+		<table border="0" width="100%" cellspacing="0" cellpadding="0" id="table8">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		<h3><a name="CAAFilterSample"></a><b><font color="#FF9900">The CAAFilterSample Use Case</font></b></h3>
+		<p><br>
+		CAAFilterSample is a use case of the CAAElecRoutingItf.edu framework 
+		that illustrates the use of the CATIEleUipFilteringCriteria interface 
+		capabilities.</p>
+		<table border="0" width="100%" cellspacing="0" cellpadding="0" id="table6">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		<h3><a name="WhatDoesCAAFilterSampleDo"></a><font color="#FF9900">What Does CAAFilterSample Do</font></h3>
+		<p>The goal of CAAFilterSample is to filter out devices/supports/BNSs in a 
+		given Harness Network through which no wires are routed.</p>
+		<table border="0" width="100%" cellspacing="0" cellpadding="0" id="table7">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		<h3><a name="HowtoLaunchCAAFilterSample"></a><font color="#FF9900">How to Launch CAAFilterSample
+		</font></h3>
+		<p>
+		<br>
+		To launch CAAFilterSample you will need to set up the build time 
+		environment, then compile CAAUipFilteringCriteriaExt.cpp ( which 
+		implements CATIEleUipFilteringCriteria interface) and CAAEwrFilter.cpp ( 
+		which calls the APIs of CATIEleUipFilteringCriteria for Filtering Mgmt) 
+		along with its prerequisites, set up the run time environment, and then 
+		execute the sample. <br>
+		<br>
+		To launch the use case, execute the following command:<br>
+		<br>
+		mkrun -c "CAAEwrFilter &lt;FullPathofCATProduct&gt; &lt;OutputDirectoryPath&gt;"<br>
+		&lt;FullPathofCATProduct&gt; - the path where the file is stored and the name 
+		of the CATProduct document to be opened.<br>
+        Unix InstallRootDirectory/CAAElecRoutingItf.edu/CNext/resources/graphic/CAAEwrFilter/CAA_EwrFilterSample.CATProduct
+		<br>
+		Windows InstallRootDirectory\CAAElecRoutingItf.edu\CNext\resources\graphic\CAAEwrFilter\CAA_EwrFilterSample.CATProduct
+		<br>
+		&lt;OutputDirectoryPath&gt; - the path where the file(s) will be stored after 
+		applying the Filter Criterion.<br>
+        <br>
+        For Example:<br>
+            mkrun -c "InstallRootDirectory\CAAElecRoutingItf.edu\CNext\resources\graphic\CAAEwrFilter\CAA_EwrFilterSample.CATProduct E:\Temp"</p>
+		<table border="0" width="100%" cellspacing="0" cellpadding="0" id="table3">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		<h3>
+		<br>
+		<a name="WheretoFind"></a><font color="#FF9900">Where to Find the CAAFilterSample related Code</font></h3>
+		<p>The code needed for CAAFilterSample is located in the CAAEwrCriteria.m use 
+		case module and CAAEwrFilter.m use case module of the 
+		CAAElecRoutingItf.edu framework:<br>
+		<br>
+		Unix InstallRootDirectory/CAAElecRoutingItf.edu/CAAEwrCriteria.m /src/CAAUipFilteringCriteriaExt.cpp<br>
+		Windows InstallRootDirectory\CAAElecRoutingItf.edu\CAAEwrCriteria.m\src\CAAUipFilteringCriteriaExt.cpp<br>
+		<br>
+		Unix InstallRootDirectory/CAAElecRoutingItf.edu/CAAEwrFilter.m/src/CAAEwrFilter.cpp<br>
+		Windows InstallRootDirectory\CAAElecRoutingItf.edu\CAAEwrFilter.m\src\CAAEwrFilter.cpp
+		<br>
+		<br>
+		where InstallRootDirectory is the root directory of your CAA V5 
+		installation.</p>
+		<table border="0" width="100%" cellpadding="0" style="border-collapse: collapse" id="table4">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		<h3><a name="Step-by-Step"></a><font color="#FF9900">Step-by-Step</font></h3>
+		<p>There are 5 steps in CAAEwrListWiresInBundleSegment:</p>
+		<ol>
+			<li><font color="#FF9900" face="Verdana" size="2"><a href="#Prolog">
+			<font color="#FF9900"><span style="text-decoration: none">Prolog</span></font></a></font></li>
+			<li><font color="#FF9900" face="Verdana" size="2">
+			<a href="#Initialise"><font color="#FF9900">
+			<span style="text-decoration: none">Initializing Electrical Environment 
+			</span></font></a></font></li>
+			<li><font color="#FF9900" face="Verdana" size="2"><a href="#Filter">
+			<font color="#FF9900"><span style="text-decoration: none">Filtering Session with Criteria</span></font></a></font></li>
+			<li><font color="#FF9900" face="Verdana" size="2"><a href="#Save">
+			<font color="#FF9900"><span style="text-decoration: none">Saving Session</span></font></a></font></li>
+			<li><font color="#FF9900" face="Verdana" size="2"><a href="#epilog">
+			<font color="#FF9900"><span style="text-decoration: none">Epilog</span></font></a>. 
+			</font></li>
+		</ol>
+		<p><br>We will now comment each of those sections by looking at the code.<br>
+		<br>Following is a SNAPSHOT OF THE HARNESS PRODUCT being treated for 
+		Filtering Criteria.<br>It is desired to Hide Devices and Bundle Segments not connected and or routed 
+		through by Wires which affiliate to the criteria( say CRIT1)<br><br>
+		<img border="0" src="images/CAAEwr13.gif" width="777" height="541"><br>
+		<br>1. <b><font color="#FF9900" face="Verdana" size="2">
+		<a name="Prolog"></a>Prolog: </font></b><br>Creating the Session and Opening an Existing CATProduct Document.<br>Retrieving the Root Product of the CATProduct Document.<br>
+		<br>&nbsp;<img border="0" src="images/CAAEwr15.gif" width="817" height="351"><br>
+		<br>2.<b><font size="2" face="Verdana" color="#FF9900"><a name="Initialise"></a>Initializing Electrical Environment</font></b><br>To initialize the electrical environment, use the CATIElecDocServices 
+		interface:<br><br>
+		<img border="0" src="images/CAAEwr16.gif" width="637" height="132"><br>
+		<br>3. <b><font size="2" face="Verdana" color="#FF9900">
+		<a name="Filter"></a>Filtering Session with Criteria CRIT1</font></b><br>Lets say Wire.1, Wire.3 and Wire.5 are deactivated from the Session. 
+		This state corresponds to the CRIT1 Criteria to be <br>applied for filtering the Document opened in Session.<br>
+		<br><br>
+		<img border="0" src="images/CAAEwr19.gif" width="891" height="443"><br>&nbsp;</p>
+		<p>Applying the Criteria CRIT1 causes the following changes in the 
+		Product opened in the session. <font size="2">( Wire2, Wire4, Wire6, 
+		Wire7 are deactivated from the session)</font><br>
+		<img border="0" src="images/CAAEwr14.gif" width="867" height="507">
+		<br><br>4. <b><font size="2" face="Verdana" color="#FF9900">
+		<a name="Save"></a>Saving Session</font></b><br>After applying the Filter Criteria, save the session with the filtered 
+		Products in an output folder which was provided as a third argument to 
+		the &quot;mkrun -c CAAEwrFilter..&quot; launch.<br><br>
+		<img border="0" src="images/CAAEwr18.gif" width="840" height="454"><br>
+		<br>5. <b><font size="2" face="Verdana" color="#FF9900">
+		<a name="epilog"></a>Epilog</font></b><br>Remove The Document From Session.<br>To remove the document, use the CATDocumentServices::Remove method.<br>
+		<br>
+		<img border="0" src="images/CAAEwr17.gif" width="561" height="198"><br>
+		<br><br>When the Filtered Product is opened in CATIA, due to the application 
+		of Criteria CRIT1, it is now seen as follows<br>
+		<img border="0" src="images/CAAEwr12.gif" width="626" height="534"></td>
+	</tr>
+	<tr>
+		<td>
+		<table border="0" width="100%" cellpadding="0" style="border-collapse: collapse" id="table5">
+			<tr>
+				<td>
+				<p align="right"><a href="#Top">[Top]</a></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+</table>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

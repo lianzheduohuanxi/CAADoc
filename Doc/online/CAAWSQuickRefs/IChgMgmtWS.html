@@ -1,0 +1,721 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface IChgMgmtWS</title>
+ </head>
+ <body>
+ <h2>Interface IChgMgmtWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSChgMgmtCpp.html">ENOVWSChgMgmtCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSChgMgmtIntf:ENOVWSChgMgmtIntf_ws:IChgMgmtWS</p>
+ <p><b>Role:</b> Interface for change management. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSChgMgmtIntf\ENOVWSChgMgmtIntf_ws\IChgMgmtWS.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#AddActionLink"><b>AddActionLink()</b></a></dt>
+  <dd>Adds objects as links to the given action.</dd>
+  <dt>o <a href="#AddAffectedObject"><b>AddAffectedObject()</b></a></dt>
+  <dd>Adds objects manually under a given action.</dd>
+  <dt>o <a href="#AddAssociatedObject"><b>AddAssociatedObject()</b></a></dt>
+  <dd>Associates an Enovia object like Documents, Part version, etc to a given action object and existing Enovia Modification.</dd>
+  <dt>o <a href="#CreateAction"><b>CreateAction()</b></a></dt>
+  <dd>Creates the specified action(s) and returns the created action(s) Attributes-Values.</dd>
+  <dt>o <a href="#DeleteAction"><b>DeleteAction()</b></a></dt>
+  <dd>Allows deletion of an Action that is in a deleteable state.</dd>
+  <dt>o <a href="#GetActionLinks"><b>GetActionLinks()</b></a></dt>
+  <dd>Get Objects linked to the Action by specified link type.</dd>
+  <dt>o <a href="#GetAffectedObjects"><b>GetAffectedObjects()</b></a></dt>
+  <dd>Returns a list of objects that are affected by an Engineering Change/Action.</dd>
+  <dt>o <a href="#GetAssociatedObjects"><b>GetAssociatedObjects()</b></a></dt>
+  <dd>Returns a list of configured objects with their attributes-values and uuid of the Enovia object like Documents, Part version etc, that are associated to an Action.</dd>
+  <dt>o <a href="#RemoveAffectedObject"><b>RemoveAffectedObject()</b></a></dt>
+  <dd>Removes the links to the objects that are controlled by Action as affected objects.</dd>
+  <dt>o <a href="#RemoveAssociatedObject"><b>RemoveAssociatedObject()</b></a></dt>
+  <dd>Removes the association of configured objects or Enovia Parts , Documents etc , from a given input action.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="AddActionLink"><b>AddActionLink()</b></a></dt>
+  <dd>Adds objects as links to the given action. Link types are as defined in Change Management, such as Parent Link, Peer Link, etc.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The Session Token used to re-establish a server (stateless) session.</td>
+     </tr>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier of an existing Action</td>
+     </tr>
+     <tr>
+      <td>iLinkType</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The type of link, such as Parent Link or Peer Link.</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers of objects to be linked, by a link of the given type, to the Action.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td></td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="AddAffectedObject"><b>AddAffectedObject()</b></a></dt>
+  <dd>Adds objects manually under a given action. The objects can be attached either as input or as output objects. ECOs are not supported.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the target action object.</td>
+     </tr>
+     <tr>
+      <td>iInputObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of object identifiers of object types ( Documents, Part Version) to be attached as Input Objects.</td>
+     </tr>
+     <tr>
+      <td>iOutputObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of object identifiers of object types ( Documents, Part Version) to be attached as Output Objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="AddAssociatedObject"><b>AddAssociatedObject()</b></a></dt>
+  <dd>Associates an Enovia object like Documents, Part version, etc to a given action object and existing Enovia Modification. The input object should be configured. This object can be associated with an existing action and modification(s) whose configurable view(s) is/are attached to the input object. Common conditions not supported.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier of an existing Action</td>
+     </tr>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier of the object to associate</td>
+     </tr>
+     <tr>
+      <td>iModIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifiers of the modification with which to associated the object.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateAction"><b>CreateAction()</b></a></dt>
+  <dd>Creates the specified action(s) and returns the created action(s) Attributes-Values. The action creation in web services will have similar behaviour as native LCA for e.g.: - An Action ID would be automatically generated.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionToBeCreated</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The action(s) with attributes and values.</td>
+     </tr>
+     <tr>
+      <td>oCreatedAction</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>The created action(s).</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="DeleteAction"><b>DeleteAction()</b></a></dt>
+  <dd>Allows deletion of an Action that is in a deleteable state. Multiple Actions can be deleted in one call.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The Session Token used to re-establish a server</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers for Actions to be deleted.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="GetActionLinks"><b>GetActionLinks()</b></a></dt>
+  <dd>Get Objects linked to the Action by specified link type.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iSessionToken</td>
+      <td><a href="SessionToken.html">{urn:com:dassault_systemes:CATJWSInfra}SessionToken</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The Session Token used to re-establish a server</td>
+     </tr>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the existing Action object.</td>
+     </tr>
+     <tr>
+      <td>iSelect</td>
+      <td><a href="SelectExpression.html">{urn:com:dassault_systemes:PPRGenericWS}SelectExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The select expression can be used to restrict attributes and output objects.</td>
+     </tr>
+     <tr>
+      <td>iLinkType</td>
+      <td><a href="stringArrayType.html">{urn:com:dassault_systemes:CATJWSInfra}stringArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The type of link, such as Parent Link or Peer Link.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>The list of linked objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="GetAffectedObjects"><b>GetAffectedObjects()</b></a></dt>
+  <dd>Returns a list of objects that are affected by an Engineering Change/Action. Manually added objects to an Engineering Change using Enovia or any other external system are also returned. The returned objects are Affected Objects and not the Enovia objects like Parts or Documents. The returned objects will have Attributes-Values of affected objects and the uuid of the Enovia objects like Parts and Documents. The output objects on an Action will be identifiable as Input or Output affected objects.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the target EC/Action object.</td>
+     </tr>
+     <tr>
+      <td>iSelect</td>
+      <td><a href="SelectExpression.html">{urn:com:dassault_systemes:PPRGenericWS}SelectExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The select expression can be used to restrict attributes and output objects.</td>
+     </tr>
+     <tr>
+      <td>iObjTypes</td>
+      <td><a href="stringArrayType.html">{urn:com:dassault_systemes:CATJWSInfra}stringArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Not used -- all affected objects will be returned.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>The list of affected objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="GetAssociatedObjects"><b>GetAssociatedObjects()</b></a></dt>
+  <dd>Returns a list of configured objects with their attributes-values and uuid of the Enovia object like Documents, Part version etc, that are associated to an Action.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Action from which we are to retrieve associated Objects.</td>
+     </tr>
+     <tr>
+      <td>iSelect</td>
+      <td><a href="SelectExpression.html">{urn:com:dassault_systemes:PPRGenericWS}SelectExpression</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Select Expression can restrict object attributes on result.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>The associated objects.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="RemoveAffectedObject"><b>RemoveAffectedObject()</b></a></dt>
+  <dd>Removes the links to the objects that are controlled by Action as affected objects. ECOs are not supported.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the target Action object.</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers of object types (eg., Documents, Part Instance, Part Version, Product) to be removed.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="RemoveAssociatedObject"><b>RemoveAssociatedObject()</b></a></dt>
+  <dd>Removes the association of configured objects or Enovia Parts , Documents etc , from a given input action. The actual object is not deleted but the links between the associated object and Action is removed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iActionId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the Action from which we are to remove associated Objects.</td>
+     </tr>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of identifiers of objects such as Enovia Document Revision, Enovia Part Version etc, to be disassociated.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation (success or failure).</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

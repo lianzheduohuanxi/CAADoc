@@ -1,0 +1,275 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Configuration and Versionning in Mechanical Modeler</title>
+</head>
+
+<body>
+
+<table width="100%" id="table19">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Configuration and Versioning</h3>
+      <em>Ascendant Stability in Build Process and Mechanical Behaviours</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract" id="table20">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Mechanical Modeler and Geometrical Modeler have several internal 
+		algorithms to manage generic naming,topological operator etc...<br>
+		<br>
+		For many reasons (enhancements etc...), those algorithms may change. As 
+		side effects, some behaviours could not be exactly the same after the 
+		code modification. <br>
+		A solution to keep stable and defined behaviours on your feature is to 
+		version them.</p>
+		<p>The aim of this article is to make an overview of versioning in 
+		Mechanical Modeler and to describe the steps needed to version correctly 
+		a Mechanical Feature.<br>
+		<br>
+		To take full advantage of this article, it may be interesting to have a 
+		look at the &quot;The Versioning of the Topological Operators&quot; article [<a href="#References">1</a>]</p>
+		<ul>
+        <li><b><a href="#Why versioning">Why versioning? - Software 
+		Configuration</a></b></li>
+        <li><b><a href="#What kind of Algorithms are versionned">What kind of 
+		algorithms are versioned?</a></b></li>
+        <li><strong><a href="#How to version">How to version a Mechanical 
+		Feature?</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Why versioning"></a>Why versioning? - Software Configuration</h3>
+<p>Mechanical Modeler and Geometrical Modeler have different internal 
+algorithms, which differ from software releases.<br>
+Consequently, Mechanical Feature instantiated, inserted in MechanicalPart, and built on a specific 
+date, should -potentially- have different behaviours when it is used on new 
+software level.</p>
+<p>For instance, between &quot;CATIA Rxx&quot; and &quot;CATIA Ryy&quot;, BRep behaviors could have 
+changed, which could impact visualization or Colorization. </p>
+<div align="center">
+	<table border="1" width="44%" id="table26">
+		<tr>
+			<td colspan="2" align="center" height="21">Example of Colour 
+			Behaviors between &quot;CATIA Rxx&quot; &amp; &quot;CATIA Ryy&quot;</td>
+		</tr>
+		<tr>
+			<td width="50%" align="center" height="185">
+			<img border="0" src="images/CAAMmrVersioningMechFeat1.gif" width="195" height="147"></td>
+			<td align="center" width="48%" height="185">
+			<img border="0" src="images/CAAMmrVersioningMechFeat2.gif" width="194" height="147"></td>
+		</tr>
+		<tr>
+			<td width="50%">
+			<p align="center">&quot;In CATIA Rxx&quot;</td>
+			<td width="48%">
+			<p align="center">&quot;In CATIA Ryy&quot;</td>
+		</tr>
+	</table>
+</div>
+<p>To keep the same behaviours on your mechanical features, release after 
+release and build after build, it is necessary to version them when they are 
+instantiated and built.</p>
+<p>This is done setting and storing the <b>CATSoftwareConfiguration </b>on 
+the feature. <br>
+This Class defines the software (Algorithm) configuration which is a set of code 
+modifications and a level on which the code must be run.</p>
+<p>With this data stored on the instance, feature's update and mechanical 
+behaviours will be the same as at the first time it was instantiated and built !<br>
+<br>
+In deed, for example during the build step, retrieving the <b>CATSoftwareConfiguration</b> stored 
+on the feature, you will determine the <b>CATTopData </b>to use on <b>TopologicalOperator
+</b>and the level of Mechanical Modeler 
+(and CGM ) algorithms to execute in order to retrieve the same behaviours as the 
+first time you build the feature.</p>
+<p><i><b><font face="Symbol">Þ&nbsp; </font></b><font face="Verdana">In 
+Consequence,<b> </b></font>versioning your Mechanical Feature guarantees 
+ascendant stability and continuity in your parts: there will always be the same 
+build for your feature as at the first time whenever you call it!</i> </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="What kind of Algorithms are versionned"></a>What kind of algorithms 
+are versioned ?</h3>
+<p>With provided services &quot;<b>CATMmrAlgoConfigServices</b>&quot;, you just take care 
+about <b>internal </b>algorithms.</p>
+<p>This means that those services are <b>just</b> used to keep the level of <b>
+internal</b> Algorithms (in Mechanical and Geometric Modelers) </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="How to version"></a>How to version a Mechanical Feature?</h3>
+<p>Versioning a Mechanical feature is done in two steps.</p>
+<ol>
+	<li><i><b>First, prepare the instance to be versioned:<br></b></i><br>At the instantiation time, the Feature instance has to be prepared to store 
+	the Algorithm Configuration i.e. the <b>CATSoftwareConfiguration</b>.<br>To prepare it and so, to initialize the versioning of your instance, you 
+	just need to call to <b>CATMmrAlgoConfigServices::CreateConfigurationData
+	</b>method during the factory implementation. [<a href="#References">2</a>]<br>
+&nbsp;<table class="code" width="739" id="table23">
+		<tr>
+			<td width="731">
+			<pre>...
+   rc = <b>CATMmrAlgoConfigServices::CreateConfigurationData</b>(*pISpecObjectOnInstance);
+   if( FAILED(rc) )
+     return rc;
+...</pre></td>
+		</tr>
+	</table>
+	<p><br>
+	This step prepare instance to store the CATSoftwareConfiguration. It is a 
+	primordial step in Versioning MechanicalFeature process.<br>&nbsp;</li>
+	<li><b><i>Second, version the instance of the feature:<br></i></b><br>At the first build time, the current Algorithm Configuration need to be 
+	retrieved in order to know the current Algorithm level of current software 
+	code.<br>This is done thanks to the call of <b>CATMmrAlgoConfigServices::GetConfiguration. 
+	<br>
+&nbsp;</b><table class="code" id="table24">
+		<tr>
+			<td>
+			<pre>...</pre>
+			<pre>       rc = QueryInterface(IID_CATISpecObject,(void **) &amp; pSOCombinedCurve);
+       if(SUCCEEDED(rc)&amp;&amp;pSOCombinedCurve != NULL)
+       {
+           rc = <b>CATMmrAlgoConfigServices::GetConfiguration</b>(pSOCombinedCurve ,pSoftConfig ,IsConfigToStore);
+           if(SUCCEEDED(rc))
+           {
+               // SetSoftwareConfig 
+               TopData.<b>SetSoftwareConfiguration</b>(pSoftConfig) ;
+               // release pSoftConfig after the procedural report ending
+           }
+       }
+
+...</pre></td>
+		</tr>
+	</table>
+	<p><b><br></b>With this <b>CATSoftwareConfiguration</b>, you could define the good 
+	<b>CATTopData</b> 
+	to use to build feature's result.<br>&nbsp;</p>
+	<p>Then, at the end of the first build time, this Algorithm Configuration need 
+	to be stored on the instance, to keep it for following builds. <br>This is done calling 
+	<b>CATMmrAlgoConfigServices::StoreConfiguration</b> 
+	method.[<a href="#References">3</a>]</p>
+	<p>&nbsp;</p>
+	<table class="code" id="table25">
+		<tr>
+			<td>
+			<pre>  ...
+       if ( SUCCEEDED(rc) )
+       {
+          if ( NULL != pResultBody )
+          {
+             int BoolOper = 0 ; 
+             piProcReport-&gt;<b>StoreProcReport</b>(pResultBody,NoCopy,BoolOper); 
+              
+             if(IsConfigToStore == 1) 
+             { 
+                 <b>CATMmrAlgoConfigServices::StoreConfiguration</b>(pSOCombinedCurve ,pSoftConfig); 
+             } 
+          }
+          else
+          {
+             <b>CATMfErrUpdate</b> *pErrorNoIntersection = new CATMfErrUpdate();
+             CATUnicodeString Diagnostic(&quot;The two extruded curves do not intersect.&quot;);
+             pErrorNoIntersection-&gt;<b>SetDiagnostic</b>(1,Diagnostic);
+
+             <b>CATThrow</b>(pErrorNoIntersection);
+          }
+       }
+  ...</pre></td>
+		</tr>
+	</table>
+	<p><i>Please, note that after this storage, the configuration can not be 
+	modified anymore. It is impossible to by-pass this restriction. It's the 
+	only way to assure that the configuration used during the following builds 
+	will be the same that during the first one.<br><br></i><b><i>Other build times:</i></b><br>
+	<br>On following build times, the stored Algorithm Configuration is retrieved 
+	using <b>CATMmrAlgoConfigServices::GetConfiguration </b>method and this data 
+	is used to define the only corresponding <b>CATTopData </b>used in 
+	Topological et geometrical operator.</p>
+	<p>With this unique <b>CATTopData</b>, Build result is guaranteed equal to the first 
+built result. And your feature will not be impacted by enhancement or 
+maintenance side effect.</p>
+	<p>&nbsp;</li>
+</ol>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>In order to protect your feature from Algorithm changes in <b>MechanicalModeler</b> 
+or in <b>GeometricalModeler</b> code, it is necessary to version your mechanical 
+feature. <br>
+&nbsp;</p>
+<p>The way to do this is to use <b>CATMmrAlgoConfigServices </b>services on 
+instantiate and build steps.<br>
+&nbsp;</p>
+<p>Using correctly those services, your feature will not be &quot;release dependant 
+on <b>internal</b> algorithms&quot;. 
+This means that its behaviours (in particular for Build and update operation) 
+will not depend on Mechanical or Geometrical Modeler <b>internal</b> algorithm changes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="1241" id="table21">
+  <tr>
+    <td valign="top" width="50">[1]</td>
+    <td width="1186">
+	<a href="../CAATopTechArticles/TopoVersioning.htm">
+	The Versioning of the Topological Operators</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[2]</td>
+    <td width="1186"><a href="CAAMmrCreatingNewFeat.htm">Creating a New StartUp 
+	Deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="50">[3]</td>
+    <td width="1186"><a href="CAAMmrBuildIntegrating.htm">Integrating a New 
+	Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="1239">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%" id="table22">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Jan 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2007, Dassault Syst&#232;mes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,906 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating an Interruptible Task</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating an Interruptible Task</h3>
+      <em>Using CATIProgressTask, CATIProgressTaskUI,and CATTaskController</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create an interruptible task with an
+      indicator of progression.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrProgressTask Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrProgressTask Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrProgressTask</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrProgressTask Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>Some processes can take so long that a user interface indicating the
+progression can be very useful. It can be also interesting to give the end user
+the ability to stop the task. This article shows how this information and
+control can be implemented by a DS component. You will need to:</p>
+<ul>
+  <li>Implement the <i>CATIProgressTask</i> interface to perform the task and
+    control the end user interface through the <i>CATIProgressTaskUI</i>&nbsp;interface,</li>
+  <li>Use the <i>CATTaskController</i> class to launch the task.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrProgressTask Use Case</h3>
+<p>CAAAfrProgressTask is a use case of the CAAApplicationFrame.edu framework
+that illustrates ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAfrProgressTask Do</h4>
+<p>This use case simulates a long process . The task is composed of fifty steps,
+each step consisting in to execution of the following code:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>for ( int j= 0 ; j&lt;= 5000000 ; j++)
+{
+   double k = 24.25 * (double) j ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The progression of the process is indicated by using a DS component which
+displays the following dialog box:</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Interface User</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrProgressTaskDlgWithCancel.jpg" width="606" height="309"></td>
+  </tr>
+</table>
+<p>In this dialog box there are four parts (surrounded in red) that the
+programmer can customize:</p>
+<ul>
+  <li>The title of the dialog box</li>
+  <li>The icon,&nbsp; located at top left, symbolizing the task</li>
+  <li>The name&nbsp; of the object concerned by the task</li>
+  <li>A comment just above the progress bar</li>
+</ul>
+<p>The others parts are:</p>
+<ul>
+  <li>Three ways of estimating the progress of the process
+    <ul>
+      <li>A progress bar</li>
+      <li>The percentage of the task already executed</li>
+      <li>An estimation of the remaining time&nbsp;</li>
+    </ul>
+  </li>
+  <li>A Cancel button used to stop the process ( this button is optional)</li>
+</ul>
+<p>This task is launched from an interactive command, that has been added to
+the&nbsp; &quot; CAA V5 Geometrical Analysis&quot; workbench of the CAAGeometry
+document. This command, &quot;Progress Task&quot;, has been defined in the
+&quot;Analysis&quot; menu and in the&nbsp; &quot;Mathematical
+Analysis&quot;&nbsp; toolbar:</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: The &quot;</i>Mathematical
+    Analysis&quot; Toolbar</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrProgressTaskCommandHdr1.jpg" width="236" height="97"></td>
+  </tr>
+</table>
+<p>This command is a <i>CATDlgDialog</i> having the following user interface:</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: The &quot;</i>Progress Task&quot;
+    Command</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrProgressTaskCommandDlg.jpg" width="128" height="114"></td>
+  </tr>
+</table>
+<ul>
+  <li>The &quot;Interruptible Task&quot; check button enables the display of
+    the&nbsp; &quot;Cancel&quot; button in the dialog box containing the
+    progress bar [<a href="#Fig.1">Fig.1</a>].</li>
+  <li>If the end use clicks on the &quot;Compute&quot; button, the task is
+    launched.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrProgressTask</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Launch CATIA. When the application is ready:</p>
+<ul>
+  <li>On the <b>Start</b> menu, point to <b>Infrastructure</b>, and then click <b>CAA
+    V5: Geometrical Analysis</b>
+  <li>Launch the <b>Progress Task</b> command to see the <b>Interruptible Task</b>
+    dialog box:
+    <ul>
+      <li>In the <b>Mathematical Analysis</b> toolbar or</li>
+      <li>In the<b> Analyse</b> menu, click <b>Progress Task</b>&nbsp;</li>
+    </ul>
+  <li>Click <b>Compute</b>&nbsp;
+    <ul>
+      <li>The <b>Computing</b> Dialog box appears without the <b>Cancel</b>
+        button. Wait until the end of the process</li>
+    </ul>
+  <li>Check&nbsp; <b>Interruptible Task</b>&nbsp;in the&nbsp; <b>Interruptible
+    Task </b>dialog box</li>
+  <li>Click <b>Compute</b>&nbsp;
+    <ul>
+      <li>The <b>Computing</b> Dialog box appears with the <b>Cancel</b>
+        button.&nbsp;</li>
+      <li>Click <b>Cancel </b>before the end of the process.</li>
+    </ul>
+  <li>Click <b>Compute</b>&nbsp;
+    <ul>
+      <li>The <b>Computing</b> Dialog box appears with the <b>Cancel</b> button.
+        Wait until the end of the process</li>
+    </ul>
+  </li>
+  <li>Click <b>Close </b>in the <b>Interruptible Task</b> dialog box.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrProgressTask Code</h4>
+<p>The CAAAfrProgressTask use case is made of a single file located in the
+CAAAfrProgressTask.m module of the CAAApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\</code><code>CAAApplicationFrame.edu\CAAAfrProgressTask.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/</code><code>CAAApplicationFrame.edu/CAAAfrProgressTask.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are two logical steps in CAAAfrProgressTask:</p>
+<ol>
+  <li><a href="#Step1">Creating the Interactive Command</a></li>
+  <li><a href="#Step2">Implementing the CATIProgressTask Interface</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Interactive Command</h4>
+<p>This command is called <i>CAAAfrProgressTaskSampleCmd</i>. This section
+describes:</p>
+<ol>
+  <li><a href="#The header file or inter comm">The header file</a>
+  <li><a href="#The source file for inter comm">The source file</a></li>
+  <li><a href="#The NLS resource file for inter comm">The NLS resource file</a></li>
+</ol>
+<ol>
+  <li><a name="The header file or inter comm">The header file</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>// Dialog Framework
+#include &quot;CATDlgDialog.h&quot;     // Needed to derive from CATDlgDialog
+
+// Dialog Framework
+class CATDlgCheckButton;
+// ApplicationFrame Framework
+class CATFrmEditor;
+
+class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
+{
+  ...
+  <b>DeclareResource</b>(CAAAfrProgressTaskSampleCmd, CATDlgDialog);
+  
+  public :
+    
+    CAAAfrProgressTaskSampleCmd();
+
+    virtual ~CAAAfrProgressTaskSampleCmd();  
+
+    ...
+
+  private : 
+
+    void <b>ClickCompute</b>(CATCommand            *iPublishingCommand, 
+                    CATNotification         *iNotification, 
+                    CATCommandClientData     iUsefulData);
+ 
+    void <b>ClickClose</b>(CATCommand              *iPublishingCommand, 
+                    CATNotification         *iNotification, 
+                    CATCommandClientData     iUsefulData);
+                    
+    void <b>EditorClose</b>  (CATCallbackEvent  iEvent,
+                           void             *iFrom,
+                           CATNotification  *iNotification,
+                           CATSubscriberData iData,
+                           CATCallback       iCallBack );
+                           
+    CAAAfrProgressTaskSampleCmd(const CAAAfrProgressTaskSampleCmd &amp;iObjectToCopy);
+
+    CAAAfrProgressTaskSampleCmd &amp; operator = (const CAAAfrProgressTaskSampleCmd &amp;iObjectToCopy);
+
+  private : 
+
+    <b>CATDlgCheckButton</b> * _pInterruptTask  ;
+    <b>CATFrmEditor</b>      * _pEditor ;
+
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>This header file contains the following declaration:
+  <ul>
+    <li>The class derives from <i>CATDlgDialog</i>
+    <li>The <code>DeclareResource</code> macro states that the resources of the <i>CAAAfrProgressTaskSampleCmd</i>
+      command class are located in the CAAAfrProgressTaskSampleCmd.CATNls file.
+      If&nbsp; resources were assigned to the <i>CATDlgDialog</i> class, they
+      would be concatenated with those of <i>CAAAfrProgressTaskSampleCmd</i>
+    <li>As usual, the class has a constructor and a destructor
+    <li>The copy constructor and the &quot;=&quot; operator are set as private
+      to prevent the compiler from automatically creating them as public.
+    <li>Two callback methods contain the code to be executed when the end user
+      presses either Compute or Close
+    <li>A callback method, <code>EditorClose</code> , to be prevent when an
+      editor is closed. If this editor, referenced by <code>_pEditor</code>, is
+      those which has launched the command,&nbsp; the command kills it.
+    <li>A&nbsp; check button&nbsp;
+  </ul>
+  <p>&nbsp;</p>
+  <li><a name="The source file for inter comm">The source file</a></li>
+  <ul>
+    <li>The necessary&nbsp; header files:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// COPYRIGHT DASSAULT SYSTEMES 2002
+
+//Local Framework
+#include &quot;CAAAfrProgressTaskSampleCmd.h&quot;
+
+// Dialog Framework
+#include &quot;CATDlgCheckButton.h&quot;
+#include &quot;CATDlgPushButton.h&quot;
+#include &quot;CATDlgGridConstraints.h&quot;
+...
+
+//Application Frame Framework
+#include &quot;CATApplicationFrame.h&quot;
+#include &quot;CATFrmEditor.h&quot;
+#include &quot;CATTaskController.h&quot;
+...
+
+// C++ standard library
+#include &quot;iostream.h&quot;
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <li>This command is launched from a header command:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;<b>CATCreateExternalObject</b>.h&quot;
+<b>CATCreateClass</b>(CAAAfrProgressTaskSampleCmd);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CATCreateClass</code> macro enables the instantiation of the
+    command by its class name.&nbsp;</p>
+    <li>The constructor:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAAfrProgressTaskSampleCmd::CAAAfrProgressTaskSampleCmd()
+          :<b>CATDlgDialog</b> ((CATApplicationFrame::GetFrame())-&gt;GetMainWindow(), 
+                          &quot;CAAAfrProgressTaskSampleId&quot;,
+                          CATDlgGridLayout | CATDlgWndBtnClose )
+{
+  _pInterruptTask = new <b>CATDlgCheckButton</b>(this, &quot;InterruptId&quot; );
+  _pInterruptTask-&gt;SetGridConstraints(0,0,1,1,CATGRID_CENTER);      
+  
+  CATDlgPushButton * pComputeButton   = NULL ;
+  pComputeButton = new <b>CATDlgPushButton</b>(this, &quot;ComputeButtonId&quot; );
+  pComputeButton-&gt;SetGridConstraints(1,0,1,1,CATGRID_CENTER);      
+  
+
+  AddAnalyseNotificationCB(pComputeButton, pComputeButton-&gt;GetPushBActivateNotification(),
+                (CATCommandMethod)&amp;CAAAfrProgressTaskSampleCmd::<b>ClickCompute</b>,
+                            NULL);
+  
+  AddAnalyseNotificationCB(this, this-&gt;GetWindCloseNotification(),
+                (CATCommandMethod)&amp;CAAAfrProgressTaskSampleCmd::<b>ClickClose</b>,
+                            NULL);
+  AddAnalyseNotificationCB(this, this-&gt;GetDiaCLOSENotification(),
+                (CATCommandMethod)&amp;CAAAfrProgressTaskSampleCmd::<b>ClickClose</b>,
+                            NULL);
+
+  <b>_pEditor</b> = CATFrmEditor::GetCurrentEditor();
+  if ( (NULL != _pEditor) &amp;&amp; (NULL != CATFrmLayout::GetCurrentLayout()) )
+  {
+     ::<b>AddCallback</b>(this,
+                CATFrmLayout::GetCurrentLayout(),
+		  CATFrmEditor::EDITOR_CLOSE_ENDED(),
+		  (CATSubscriberMethod)&amp;CAAAfrProgressTaskSampleCmd::EditorClose,
+		  NULL);
+  }
+  
+  <b>SetVisibility</b>(CATDlgShow);
+}
+...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The application main window is the parent of the dialog box. The style of
+    this dialog box is <code>CATDlgGridLayout</code> to enhance the positioning
+    of each included dialog object and&nbsp; <code>CATDlgWndBtnClose</code> to
+    display only one button, the <code>Close</code> button, at the bottom of the
+    box.&nbsp;</p>
+    <p>This dialog box has two included dialog objects:</p>
+    <ul>
+      <li>a check button, referenced by the <code>_pInterruptTask</code>
+        pointer, to enable the end user&nbsp;to request the task to be
+        interruptible or not.</li>
+      <li>a push button, referenced by the <code>pComputeButton</code>&nbsp;
+        pointer, to launch the task</li>
+    </ul>
+    <p>The <code>ClickClose</code> callback method is called when the end user
+    clicks:</p>
+    <ul>
+      <li>on the Close Button: the <code>GetDiaCLOSENotification</code>
+        notification is used</li>
+      <li>on the Close window (NT: the cross at upper right corner and UNIX the
+        right mouse button on the banner): the <code>GetWindCloseNotification</code>
+        notification is used</li>
+    </ul>
+    <p>Finally, we set a callback to be prevent when an editor is closed. This
+    notification is sent by the current layout (a singleton during the
+    session).&nbsp;</p>
+    <li>The destructor:</li>
+    <p>In the destructor code, it is not necessary to delete the dialog object
+    created in this command, as it will be automatically deleted by the Dialog
+    process, but it is strongly recommended to reset the data member to
+    NULL.&nbsp;</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAAfrProgressTaskSampleCmd::~CAAAfrProgressTaskSampleCmd() 
+{
+   _pInterruptTask   = NULL ;
+   
+   if ( (NULL != _pEditor) &amp;&amp; ( NULL != CATFrmLayout::GetCurrentLayout()) )
+   {
+      ::<b>RemoveSubscriberCallbacks</b>(this,CATFrmLayout::GetCurrentLayout());
+   }
+
+   _pEditor = NULL ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The callback set in the constructor must be removed, unless if the
+    destruction has been requested&nbsp; from the <code>EditorClose</code>
+    method where the remove has already be done.&nbsp;</p>
+    <li>The ClickCompute method:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+void CAAAfrProgressTaskSampleCmd::ClickCompute (   CATCommand          * iPublishingCommand,
+                                              CATNotification     * iNotification,
+                                              CATCommandClientData  iUsefulData)
+{
+  <b>CATTaskController  Task </b>;
+
+  <b>CATIProgressTask</b> * pIProgressTask = NULL ;
+  HRESULT rc = QueryInterface(IID_CATIProgressTask,(void**)&amp; pIProgressTask);
+
+  if ( SUCCEEDED(rc) &amp;&amp; (NULL != _pInterruptTask ) )
+  {
+      if ( CATDlgCheck == _pInterruptTask-&gt;GetState() )
+      {
+         Task.<b>Schedule</b>(pIProgressTask,<b>TRUE</b>,NULL);
+      }else
+      {
+         Task.<b>Schedule</b>(pIProgressTask,<b>FALSE</b>,NULL);
+      }
+
+      pIProgressTask-&gt;Release();
+      pIProgressTask = NULL ;
+  }
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The end user has clicked on the &quot;Compute&quot; button and the task
+    must be launched. This is possible by using the <i>CATTaskControler</i>
+    (ApplicationFrame framework). The <code>Schedule</code> method will launch a
+    command which contains the dialog box with the progress bar [<a href="#Fig.1">Fig.1</a>].
+    The arguments of this method are respectively :</p>
+    <ul>
+      <li>The <i>CATIProgressTask</i> interface pointer, referenced by <code>pIProgressTask</code>.
+        In this case the command itself implements this interface, so it
+        performs a <code>QueryInterface</code> on itself</li>
+      <li>A boolean to indicate if the Cancel button must be displayed. In this
+        case, the <code>_pInterruptTask</code> check button contains the end
+        user choice.</li>
+      <li>A value (here NULL) used as input data of the <code>PerformTask</code>
+        method.&nbsp;</li>
+    </ul>
+    <p>&nbsp;</p>
+    <li>The ClickClose method:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+void CAAAfrProgressTaskSampleCmd::ClickClose(CATCommand           * iPublishingCommand,
+                                          CATNotification      * iNotification,
+                                          CATCommandClientData   iUsefulData)
+{
+  SetVisibility(CATDlgHide);
+                         
+  <b>RequestDelayedDestruction</b>();
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>RequestDelayedDestruction</code> enables to delete the
+    command.&nbsp;</p>
+    <li>The EditorClose method:</li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+void CAAAfrProgressTaskSampleCmd::EditorClose(CATCallbackEvent  iEvent, 
+                                              void            * iFrom,
+                                              CATNotification * iNotification,
+                                              CATSubscriberData iClientData,
+                                              CATCallback       iCallBack ) 
+{
+  if ( <b>_pEditor == iFrom</b> )
+   {
+   
+      // Now this extension will receive any message.
+      //
+      ::<b>RemoveSubscriberCallbacks</b>(this,CATFrmLayout::GetCurrentLayout());
+
+      // Suicide
+      <b>RequestDelayedDestruction</b>();
+
+      _pEditor = NULL ; 
+   }
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>An editor is closed, i.e a document is closed. The layout sends a
+    notification indicating that the publisher is the editor; The variable iFrom
+    is the editor to be closed. If this editor is the same as the one that has
+    launched the current command, it must be deleted.&nbsp;</p>
+  </ul>
+  <li><a name="The NLS resource file for inter comm">The NLS resource file</a>:</li>
+  <p>The <code>CAAAfrProgressTaskSampleCmd</code><code>.CATNls </code>file is<code>
+  </code>located in the <code>CAAApplicationFrame.edu/Cnext/resources/msgcatalog
+  </code>directory. It contains:</p>
+  <ul>
+    <li>The title of the dialog box and titles of the included dialog objects:
+      <table class="code" height="51">
+        <tbody>
+          <tr>
+            <td height="47">
+              <pre><b>Title</b>                =&quot;Interruptible Task&quot; 
+ComputeButtonId.Title=&quot;Compute&quot; ;
+InterruptId.Title    =&quot;Interruptible Task&quot; ;
+...</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <li>The help message displayed in the status bar when you pass over the
+      dialog box:
+      <table class="code" height="51">
+        <tbody>
+          <tr>
+            <td height="47">
+              <pre>...
+<b>Help</b> = &quot;Dialog box which creates an interruptible task &quot;;
+...</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <li>The long help message displayed in a balloon when you select a dialog
+      object with the question mark:
+      <table class="code" height="51">
+        <tbody>
+          <tr>
+            <td height="47">
+              <pre>...
+InterruptId.<b>LongHelp</b>     =&quot;Check if the task is interruptible or not&quot; ;
+ComputeButtonId.LongHelp =&quot;Launch the task. It is interruptible if the previous
+button is checked&quot; ;
+...</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <li>The short help message displayed in a balloon when you pass over a
+      dialog object:
+      <table class="code" height="51">
+        <tbody>
+          <tr>
+            <td height="47">
+              <pre>...
+InterruptId.<b>ShortHelp</b>     =&quot;Check if the task is interruptible or not&quot; ;
+ComputeButtonId.ShortHelp =&quot;Launch the task&quot; ;
+...</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <li>The help message displayed in the status bar when you pass over a dialog
+      object:
+      <table class="code" height="51">
+        <tbody>
+          <tr>
+            <td height="47">
+              <pre>...
+InterruptId.<b>Help</b>     =&quot;Check if the task is interruptible or not&quot; ;
+ComputeButtonId.Help =&quot;Launch the task&quot; ;
+...</pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </li>
+  </ul>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the CATIProgressTask&nbsp; Interface</h4>
+<p>The <i>CAAAfrProgressTaskSampleCmd</i> class implements the <i>CATIProgressTask</i>
+interface. This section describes how this is done:</p>
+<ol>
+  <li><a href="#Declare the methods of the CATIProgressTask interface in the header file">Declaring
+    the methods of the <i>CATIProgressTask</i> interface in the header file</a></li>
+  <li><a href="#The needed includes">Adding t</a><a href="#The needed includes">he
+    necessary included files in the source file</a></li>
+  <li><a href="#The PerformTask method">Coding t</a><a href="#The PerformTask method">he
+    PerformTask method</a></li>
+  <li><a href="#The GetCatalogName method">Coding the GetCatalogName method</a></li>
+  <li><a href="#The GetIcon method">Coding the GetIcon method</a></li>
+  <li><a href="#Modify the NLS file">Modifying the
+    CAAAfrProgressTaskSampleCmd.CATNls file</a></li>
+  <li><a href="#Declare the command as a componen">Declaring the command as a
+    component&nbsp;</a></li>
+</ol>
+<ol>
+  <li><a name="Declare the methods of the CATIProgressTask interface in the header file">Declaring
+    the methods of the <i>CATIProgressTask</i> interface in the header file</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+<b>class CATIProgressTaskUI</b> ;
+
+class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
+{
+    ...      
+ public :
+ 
+    ...
+    virtual HRESULT <b>PerformTask</b>    (CATIProgressTaskUI  * iUI, void * iUserData);
+    
+    virtual HRESULT <b>GetCatalogName</b> (CATString           * oCatalogName);
+
+    virtual HRESULT <b>GetIcon</b>        (CATString           * oIcon) ;
+    ...
+}
+      </pre>
+      </td>
+    </tr>
+  </table>
+  <p>These are the three methods of the <i>CATIProgressTask</i> interface.</p>
+  <li>Adding <a name="The needed includes">t</a><a name="The needed includes">he
+    necessary&nbsp; include</a> files:</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+// Dialog Framework
+...
+#include &quot;CATMsgCatalog.h&quot;
+...
+
+//Application Frame Framework
+...
+#include &quot;CATIProgressTaskUI.h&quot;
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <li>Coding <a name="The PerformTask method">t</a><a name="The PerformTask method">he
+    PerformTask method</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAAfrProgressTaskSampleCmd::PerformTask (CATIProgressTaskUI  * iUI, void * iUserData)
+{
+    if ( NULL == iUI ) return E_FAIL ;
+
+    int min = 1 ;
+    int max = 50 ;
+    iUI-&gt;<b>SetRange</b>(min,max);
+    
+    for ( int i= min ; i &lt;= max ; i++)
+    {
+        iUI-&gt;<b>SetProgress</b>(i);
+
+        CATUnicodeString usMessage ;
+        CATUnicodeString usParam[1] ;
+        
+        <b>usParam[0].BuildFromNum(i);</b>
+
+        usMessage = CATMsgCatalog::<b>BuildMessage</b>(&quot;CAAAfrProgressTaskSampleCmd&quot;,
+                                        &quot;ProgressTaskUI.<b>CommentRuntime</b>&quot;,usParam,1,
+                                        &quot;Step ...&quot;);
+
+        iUI-&gt;<b>SetComment</b>(usMessage);
+
+        // begin of the step'simulation 
+        for ( int j= 0 ; j&lt;= 5000000 ; j++)
+        {
+            double k = 24.25 * (double) j ;
+        }
+        // end of the step'simulation 
+
+        CATBoolean interrupt ;
+        if ( S_OK != iUI-&gt;<b>IsInterrupted</b>(&amp;interrupt) || (TRUE == interrupt) )
+        {
+            return E_FAIL ;
+        }
+    }
+
+    return S_OK ;
+}
+...     </pre>
+      </td>
+    </tr>
+  </table>
+  <p>This method consists in executing the task and giving information to the
+  dialog box managed by the <i>CATIProgressTaskUI</i>&nbsp; interface [<a href="#Fig.1">Fig
+  1</a>].&nbsp;</p>
+  <p>At first, before beginning the task, it is necessary to define the range of
+  the process by using the <code>SetRange </code>method.</p>
+  <p>At each step, the dialog box is modified:</p>
+  <ul>
+    <li>The progress bar, the estimated time remaining and the percentage of the
+      progression:&nbsp; using the <code>SetProgress </code>method.&nbsp;</li>
+  </ul>
+  <ul>
+    <li>The comment above the progress bar: using the <code>BuildMessage</code>
+      to construct the NLS message and <code>SetComment</code> to modify the
+      text</li>
+    <p>In this use case, the message is &quot;Step i ...&quot; where i is the
+    number of the step.</p>
+  </ul>
+  <p>The task is stopped if the end user clicks on the Cancel button. The <code>IsInterrupted
+  </code>method returns <code>FALSE</code> if the end user has clicked on the
+  button or if the Cancel button does not exist. If the command has been
+  interrupted, the method returns<code> E_FAIL</code>, and the dialog box will
+  be closed.&nbsp;</p>
+  <li>Coding <a name="The GetCatalogName method">t</a><a name="The GetCatalogName method">he
+    GetCatalogName method</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAAfrProgressTaskSampleCmd::GetCatalogName (CATString * oCatalogName)
+{
+    if ( NULL == oCatalogName ) return E_FAIL ;
+
+    *oCatalogName = CATString(&quot;CAAAfrProgressTaskSampleCmd&quot;);
+    return S_OK ;
+}
+...     </pre>
+      </td>
+    </tr>
+  </table>
+  <p>This method returns the name of the NLS file which contains the title, the
+  default name of the object concerned and the default comment. See the next
+  section &quot;<a href="#Modify the NLS file">Modifying the Nls file</a>&quot;</p>
+  <li>Coding <a name="The GetCatalogName method">t</a><a name="The GetIcon method">he
+    GetIcon method</a></li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAAAfrProgressTaskSampleCmd::GetIcon(CATString  * oIcon) 
+{
+    if ( NULL == oIcon ) return E_FAIL ;
+
+    *oIcon = CATString(&quot;I_CAAProgressClock&quot;);
+    return S_OK ;
+}
+...     </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The&nbsp; I_CAAProgressClock.bmp icon can be found in the
+  CNext/resources/graphic/icons/normal of the CAAApplicationFrame.edu.</p>
+  <li><a name="Modify the NLS file">Modifying the </a>CAAAfrProgressTaskSampleCmd.CAT<a name="Modify the NLS file">Nls
+    file</a></li>
+  <p>Each label of the dialog box is prefixed by the keyword <code>ProgressTaskUI:</code></p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+ProgressTaskUI.<b>Title</b> = &quot;Computing...&quot;;
+ProgressTaskUI.<b>ObjectName</b> = &quot;Model&quot;;
+ProgressTaskUI.<b>Comment</b> = &quot;Step ...&quot;; // Not used in the use case
+... </pre>
+      </td>
+    </tr>
+  </table>
+  <p>In this use case, only the <code>Title</code> and the <code>ObjectName</code>
+  are useful. For the comment, the message is changed at each step, so the
+  default text &quot;Step ...&quot; is not used. At each step the message is
+  constructed thanks to the <code>CommentRuntime</code> keyword. The parameter
+  is the number of the step.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+ProgressTaskUI.CommentRuntime = &quot;Step /p1 ...&quot;; </pre>
+      </td>
+    </tr>
+  </table>
+  <li><a name="Declare the command as a componen">Declaring the command as a
+    componen</a>t</li>
+  <p>An object which implements an interface must be a component.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+class CAAAfrProgressTaskSampleCmd : public CATDlgDialog
+{
+    <b>CATDeclareClass</b>;
+    ...      
+ public :      
+
+...</pre>
+      </td>
+    </tr>
+  </table>
+  The <code>CATDeclareClass</code> macro declares that the class <i>CAAAfrProgressTaskSampleCmd
+  </i>belongs to a component.
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+<b>CATImplementClass</b>(CAAAfrProgressTaskSampleCmd, Implementation, <b>CATCommand</b>, CATNull);
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CATImplementClass</code> macro declares that the <i>CAAAfrProgressTaskSampleCmd</i>
+  class is a component main class thanks the <code>Implementation</code>
+  keyword, and OM-derives [<a href="#References">1</a>] from <i>CATCommand</i>.&nbsp;</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+#include &lt;TIE_CATIProgressTask.h&gt; 
+TIE_CATIProgressTask(CAAAfrProgressTaskSampleCmd);
+...</pre>
+      </td>
+    </tr>
+  </table>
+  The <i>CAAAfrProgressTaskSampleCmd</i> class states that it implements the <i>CATIProgressTask</i>
+  interface thanks to the <code>TIE_CATIProgressTask</code> macro.&nbsp;
+  <p>The interface dictionary, the CAAApplicationFrame.edu.dico file, located in
+  the CNext/code/dictionary of the CAAApplicationFrame.edu framework contains
+  the following line:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+CAAAfrProgressTaskSampleCmd CATIProgressTask  libCAAAfrProgressTask
+...</pre>
+      </td>
+    </tr>
+  </table>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article shows how to create an interruptible task with an indicator of
+progression. The object which contains the task implements the <i>CATIProgressTask</i>
+interface and the task is itself launched by an <i>CATTaskControler</i> class
+instance.</p>
+<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritance</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

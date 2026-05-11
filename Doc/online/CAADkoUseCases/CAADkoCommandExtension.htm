@@ -1,0 +1,490 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding Business Rules to a Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>EBOM Part & Assembly Detailing</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding Business Rules to a Command</h3>
+      <em>Customizing a command with a pre- and post-process</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to extend a server command to perform some checks before executing this
+         command and to perform some works after executing this same command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADkoCommandExtension Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADkoCommandExtension Do</a></li>
+            <li><a href="#How">How to Launch CAADkoCommandExtension</a></li>
+            <li><a href="#Where">Where to Find the CAADkoCommandExtension Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to implement a single interface to plug in rules before executing
+a command and after its execution.</p>
+
+<p>A command has input parameters, is executed, and can have output parameters. A command is also designed
+to call some additional code to check specific rules or execute specific actions depending on each customer.<br>
+This additional code is made available to the command by implementing the Prepare and Cleanup methods of
+the CATIAVPMVDACommandExtension interface in an extension class of the command.<br>
+Before executing, the command will call the Prepare method. At this point, Prepare can have access to all
+the input parameters of the command. If those parameters, or if other conditions are not satisfactory, Prepare
+can return an error code to prevent the command from beeing executed.<br>
+If Prepare returns successfully, and the command is executed, it then calls the Cleanup method. At this point,
+Cleanup can have access to all input and output parameters. But returning an error code here will have no effect
+on the command execution, since this execution is completed.<p><p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADkoCommandExtenstion Use Case</h3>
+<p>CAADkoCommandExtenstion is a use case of the CAAVPMDesktopObjects.edu framework that
+illustrates VPMDesktopObjects framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADkoCommandExtension Do</h4>
+
+<p>CAADkoCommandExtension is a data extension of the CATIAVPMAddChild command. The way to extend other server
+commands is exactly the same, so we just extend one of them.<p>
+
+CATIAVPMAddChild is used to create a business object and attach it to a parent business object, for example
+when creating a Part Instance and attaching it to a Product Root Class.<p><p>
+
+<ol>
+<li>
+In this use case, we implement two simple rules before and after executing the command:<p>
+Before the execution, we check that a Context object (of type ENOVIA_VPMContext) already exists, and that its
+identifier is composed of the name of the object to create to which the string " for context" is appended. If this
+context object does not exist, we send back an error code to prevent the command from creating the object.
+</li>
+<li>
+After the execution, the business object is created, we retrieve it and copy it in the clipboard.
+</li>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADkoCommandExtension</h4>
+<p>To launch CAADkoCommandExtension , you will need to set up the build time environment,
+then compile CAADkoCommandExtension along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADkoCommandExtension Code</h4>
+<p>The CAADkoCommandExtension use case is made of a single file located in
+the CAADkoCommandExtension.m module of the CAAVPMDesktopObjects.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoCommandExtension.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoCommandExtension.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAADkoCommandExtension:</p>
+<ol>
+  <li><a href="#Step1">Creating the CAADkoCommandExtension class</a></li>
+  <li><a href="#Step2">Implementing the Prepare method</a></li>
+  <li><a href="#Step3">Implementing the Cleanup method</a></li>
+  <li><a href="#Step4">Updating the dictionary</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step1"></a>Creating the CAADkoCommandExtension</h5>
+We first create two files, one for the definition of the extension class, the header file, and one
+for the implementation of the class.<br>
+The header file is the following :
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+class ExportedByCAADkoCommandExtension CAADkoCommandExtension : public CATBaseUnknown
+{
+    CATDeclareClass;
+
+    public :
+
+        /** Default Constructor.
+         */
+
+        CAADkoCommandExtension();
+
+
+        /** Destructor.
+         */
+
+        virtual ~CAADkoCommandExtension();
+
+
+        /** Called just before the execution of the command.
+          * The execution of a command is made of three steps : preparation with parameters,
+          * execution, cleanup and retrieval of the results. This method is called just before
+          * the execution, so that every parameter is accessible and the execution of the command
+          * can be cancelled if this method returns an error code.
+         */
+
+        HRESULT Prepare();
+
+
+        /** Called just after the execution of the command.
+          * This method is called just after the execution, so that further work can be done
+          * on the results of the command.
+         */
+
+        HRESULT Cleanup();
+
+
+    private :
+
+        /** Copy constructor.
+         */
+
+        CAADkoCommandExtension( const CAADkoCommandExtension & Extension );
+};
+      </pre>
+    </td>
+  </tr>
+</table>
+In the header file of the class, make it derive from CATBaseUnknown, and use the CATDeclareClass macro to 
+define some methods used by QueryInterface.<p>
+The implementation file is the following (empty so far) :
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+/** Class to implement custom rules when using the AddChild command (example).
+  * The purpose of this implementation is to code custom rules before and after executing a
+  * server command.<br>
+  * The name of the object to extend is defined by the name of the command to extend. In this
+  * case it is CATVpmVDAAddChild.
+ */
+
+CATImplementClass( CAADkoCommandExtension, DataExtension, CATBaseUnknown, CATVpmVDAAddChild );
+
+
+#include "TIE_CATIAVPMVDACommandExtension.h"
+TIE_CATIAVPMVDACommandExtension( CAADkoCommandExtension );
+
+
+/** Constructor.
+ */
+
+CAADkoCommandExtension::CAADkoCommandExtension()
+{}
+
+
+/** Destructor.
+ */
+
+CAADkoCommandExtension::~CAADkoCommandExtension()
+{}
+
+
+/** Called just before the execution of the command.
+  * The execution of a command is made of three steps : preparation with parameters,
+  * execution, cleanup and retrieval of the results. This method is called just before
+  * the execution, so that every parameter is accessible and the execution of the command
+  * can be cancelled if this method returns an error code.
+ */
+
+HRESULT CAADkoCommandExtension::Prepare()
+{
+    HRESULT RC = S_OK;
+    return RC;
+}
+
+
+/** Called just after the execution of the command.
+  * This method is called just after the execution, so that further work can be done
+  * on the results of the command.
+ */
+
+HRESULT CAADkoCommandExtension::Cleanup()
+{
+    HRESULT RC = S_OK;
+    return RC;
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+In the implementation file, we have to put some code to help the QueryInterface giving the correct interfaces
+and implementations. This file is an implementation of CATIAVPMVDACommandExtension, and is an extension of
+the AddChild command. To specify this :<br>
+Use the CATImplementClass macro.<br>
+CAADkoCommandExtension is the name of the class implementing the interface CATIAVPMVDACommandExtension.<br>
+DataExtension is the keyword to tell that this class is an extension.<br>
+CATBaseUnknown is the class from which this class derives.<br>
+CATVpmVDAAddChild is the name of the extended class (CATVpmVDA followed by the name of the command).<br>
+Include the TIE header file for the definition of methods, the macro TIE_CATIAVPMVDACommandExtension will
+implement them.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step2"></a>Implementing the Prepare method</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    CATIAVPMVDAAddChild_var spAddChild( this );
+      </pre>
+    </td>
+  </tr>
+</table>
+We first get the CATIAVPMVDAAddChild interface in order to retrieve the input parameters of the command.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    spAddChild->get_ChildData( pChildtype, pIdentifier, pName, pDescription, piChildReference );
+      </pre>
+    </td>
+  </tr>
+</table>
+Those parameters are the type of the business object to create, its identifier, its name, its description, and
+the reference of the object if needed (when creating a Part Instance, the command needs the Part Reference to
+instanciate).<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	// Construct and get an Exists Command, to search for objects.
+	CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
+	CATIAVPMVDACommand * piCommand = NULL;
+
+	CATUnicodeString ExistsString( "Exists" );
+
+	// Create the Exists command.
+	RC = spCommandFactory->Create( ExistsString, piCommand );
+      </pre>
+    </td>
+  </tr>
+</table>
+We get the factory of command by calling the global function GetCommandFactory() located in VPMCommandServices. We can
+then create a command dedicated for searching objects, called Exists command. We have a generic pointer on this
+command, a CATIAVPMVDACommand pointer. To use it properly, we must get the CATIAVPMVDAExists interface.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	// Retrieve the interface of this Exists command.
+	CATIAVPMVDAExists * piExistsCommand = NULL;
+	RC = piCommand->QueryInterface( IID_CATIAVPMVDAExists, (void **) & piExistsCommand );
+      </pre>
+    </td>
+  </tr>
+</table>
+This is achieved by doing a QueryInterface. We have now the proper interface to search for objects.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	// Constructs parameters for the command.
+	CATUnicodeString ObjectType( "ENOVIA_VPMContext" );
+
+	// Execute the Exists Command.
+	piExistsCommand->put_Type( ObjectType );
+	piExistsCommand->put_ID( ContextName );
+	piExistsCommand->Exec();
+      </pre>
+    </td>
+  </tr>
+</table>
+We prepare the parameters for the search, the type of objects to search for, ENOVIA_VPMContext, and the identifier
+of the object. We pass those parameters to the Exists command and execute it.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	// Get the result object, if any.
+	ENOVIABusinessObject * piObjectResult = NULL;
+	piExistsCommand->get_BObject( piObjectResult );
+	
+	if ( piObjectResult != NULL )
+	{
+	    // The Context object exists, the check is good.
+	    piObjectResult->Release();
+	    piObjectResult = NULL;
+	}
+	else
+	{
+	    // The Context object does not exists, we suppose then that it is
+	    // an error, send an error code to bypass the execution.
+	    RC = E_FAIL;
+    	}
+      </pre>
+    </td>
+  </tr>
+</table>
+Once the Exists command has been executed, we get the result of the query, if there is one. If so, the pointer is
+not null and the check is OK, corresponding to the rule we chose at the beginning. If not, the object does not
+exist and we send back an error code to prevent the AddChild command from being executed.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step3"></a>Implementing the Cleanup method</h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    CATIAVPMVDAAddChild_var spAddChild( this );
+      </pre>
+    </td>
+  </tr>
+</table>
+We first get the CATIAVPMVDAAddChild interface in order to retrieve the output parameters of the command.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	// Retrieves the created object.
+	ENOVIABusinessObject * piCreatedObject = NULL;
+	RC = spAddChild->get_ChildBObject( piCreatedObject );
+      </pre>
+    </td>
+  </tr>
+</table>
+The AddChild command has been executed, so we can retrieve the created object which is an output parameter of
+this command.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	    // Construct and get a Copy Command.
+	    CATIAVPMVDACommandFactory_var spCommandFactory = GetCommandFactory();
+	    CATIAVPMVDACommand * piCommand = NULL;
+
+	    CATUnicodeString CopyString( "Copy" );
+
+	    // Create a Copy Command.
+	    RC = spCommandFactory->Create( CopyString, piCommand );
+
+	    // Retrieves the interface of the Copy Command.
+	    CATIAVPMVDACopy * piCopyCommand = NULL;
+	    RC = piCommand->QueryInterface( IID_CATIAVPMVDACopy, (void **) & piCopyCommand );
+      </pre>
+    </td>
+  </tr>
+</table>
+We want to copy the new created object, so we have to create a CATIAVPMVDACopy command. For this, we get the
+command factory by calling the global function, we ask for the creation of a Copy command and we perform a
+QueryInterface to get the CATIAVPMVDACopy interface to use it properly.<p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+	    // Execute the Copy Command.
+	    piCopyCommand->put_BObject( piCreatedObject );
+	    piCopyCommand->Exec();
+      </pre>
+    </td>
+  </tr>
+</table>
+The only task remaining there is to put the new created object as the input parameter of the Copy command, and
+execute it. This object is now in the clipboard for a later use.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step4">Updating the dictionary</a></h5>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+CATVpmVDAAddChild   CATIAVPMVDACommandExtension   libCAADkoCommandExtension
+      </pre>
+    </td>
+  </tr>
+</table>
+Update the dictionary giving QueryInterface the information needed (which type implements which interface in which
+library). In this case :
+CATVpmVDAAddChild is the type (the fourth parameter of the CATImplementClass macro).<br>
+CATIAVPMVDACommandExtension is the interface implemented by the extension class.<br>
+libCAADkoCommandExtension is the name of the library where the code is (lib followed by the name of the module).<br>
+The dictionary is located in the directory CNext/code/dictionary of the local framework.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+Extending a server command consists in implementing an interface, CATIAVPMVDACommandExtension, implementing two
+methods, Prepare which is called before the execution of the command, and Cleanup which is called after.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2001]</td>
+    <td valign="top">Version: <strong>2</strong> [October 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

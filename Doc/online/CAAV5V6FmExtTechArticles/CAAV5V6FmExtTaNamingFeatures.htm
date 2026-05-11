@@ -1,0 +1,571 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Feature Naming</title>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding Feature Naming</h3>
+      <p><em>Explains the types of names a feature may have</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>In this article, we will explain the different names a StartUp 
+		or a feature 
+		can have. The available method/interface to retrieve and change these names 
+		is also 
+		described.</p>
+		<ul>
+			<li><a href="#Internal Name">Internal Name</a><ul>
+			<li><a href="#StartUp">StartUp's Internal Name</a></li>
+			<li><a href="#Feature">Feature's Internal Name</a></li>
+		</ul>
+			</li>
+			<li><a href="#External Name">External Name</a><ul>
+			<li><a href="#StartUp2">StartUp's External Name</a></li>
+			<li><a href="#Feature2">Feature's External Name</a></li>
+			<li><a href="#CATIAlias">CATIAlias</a></li>
+		</ul>
+			</li>
+			<li><a href="#Feat Name Numbering">Feature Name Numbering</a><ul>
+				<li><a href="#Concept Presentation">Concept Presentation</a></li>
+				<li><a href="#Number Computation rule">Number Computation Rules</a></li>
+				<li><a href="#Feat Auto Number Provider">Feature Auto Number Provider</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Internal Name"></a>Internal Name</h2>
+<p>An internal name is a name without NLS Customization.</p>
+
+<h3><a name="StartUp"></a>StartUp's Internal Name</h3>
+<p>For a <strong>StartUp</strong> we have to distinguish two names (both internal):</p>
+<ul>
+	<li>The <strong>StartUp Identifier</strong></li>
+	<li>The <strong>StartUp Late Type </strong> </li>
+</ul>
+<p>Have a look at the StartUp definition in the OSM file [<a href="#References">1</a>] which depicts these 
+two names:</p>
+<pre class="code">document `MyCatalog.CATfct` {
+...
+  feature <strong>identifier</strong> #startup [<strong>#isa</strong>(<strong>latetype</strong>)] {
+...</pre>
+
+<p>without the <strong>#isa</strong> facet the StartUp&#8217;s identifier is also its late type.</p>
+<p><strong>Examples</strong>:</p>
+<pre class="code">feature <strong>CAAPoint</strong> #startup <strong>#isa</strong>(<strong>CAAFmExtPoint</strong>) {</pre>
+<p>Here:</p>
+<ul>
+	<li>&nbsp;<strong>CAAPoint</strong> is the <strong>StartUp Identifier</strong>
+	</li>
+	<li>&nbsp;<strong>CAAFmExtPoint</strong> is the <strong>StartUp Late Type</strong></li>
+</ul>
+<pre class="code">feature <strong>CAAPoint2</strong> #startup {</pre>
+<p>Here:</p>
+<ul>
+	<li>&nbsp;<strong>CAAPoint2</strong> is both the <strong>StartUp Identifier</strong> and its 
+	<strong>Late Type</strong></li>
+</ul>
+<table class="Remark"> 
+	<tr> 
+		<td class="remark"><span class="run-in">Note</span>: The use of the #isa facet is not really recommended because it can 
+introduce naming confusing.</td></tr></table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="StartUp Late Type"></a>StartUp Late Type</h4>
+<p>The StartUp late type is used for two reasons:</p>
+<ul>
+	<li>To define behaviors to the StartUp</li>
+	<li>To create a StartUp facade instance </li>
+</ul>
+<p>Only the second case is detailed in this section, since the Object Modeler 
+articles [<a href="#References">2</a>] have been dedicated to the first case.</p>
+<p>The class to handle a StartUp in session is <em>CATFmStartUpFacade.</em></p>
+<ul>
+	<li>&nbsp;<code>CATFmStartUPFacade (const 
+	CATFmCredentials &amp; iAccreditations, const CATUnicodeString &amp; 
+	identifier)</code>, a parametrized constructor</li>
+	<li><code>&nbsp;HRESULT BindTo(const <em>CATUnicodeString</em> &amp; identifier)</code>, a 
+	method to change the StartUp's identifier during the lifetime of the <em>
+	CATFmStartUpFacade</em> class instance</li>
+</ul>
+<p> <code>identifier</code> can&nbsp; be the latetype of the StartUp. </p>
+<pre class="code">
+...
+CATFmStartUpFacade MyStartUp(MyCredentials, "<strong>CAAFmExtPoint</strong>");
+...</pre>
+<p> You can see that for the startup of which the identifier is <strong>CAAPoint,</strong>
+<a href="#StartUp Identifier">see below</a> , the input string is the latetype, <strong>CAAFmExtPoint, </strong>
+the string of the #isa facet.</p>
+<p> <strong>Warning</strong>, the input&nbsp;of these two methods may or 
+may not be a late type. </p>
+<p> If it is a late type, being unique, there is no ambiguity. Whereas if 
+two or more StartUps have the same identifier, the ambiguity needs to be 
+resolved by specifying the StartUp in the context of the catalog which defines 
+it, using the syntax that follows:</p>
+<pre class="code">
+<code>identifier</code> = &quot;StartupIdentifier@`CatalogName.CATfct`&quot;;
+</pre>
+<p><strong>Example</strong>:</p>
+<pre class="code">...
+CATFmStartUpFacade MyStartUp(MyCredentials,<strong> &quot;CAAPoint@'MyCatalog.CATfct'&quot;)</strong>;
+...</pre>
+<p>To specify the same StartUp, <strong>CAAPoint,</strong>
+<a href="#StartUp Identifier">see below</a> , here we have used this syntax: &quot;StartUpIdentifier@'MyCatalog.CATfct'&quot;; </p>
+<p>This second metodology is recommended to bind a StartUp to a facade.</p>
+<p>
+<strong>About the API</strong> : Once a <em>CATFmStartUpFacade</em> class instance is created, or retrieved 
+from a feature (<code>GetStartUpFacade</code> of the <em>CATFmFeatureFacade</em> 
+class), you can use the 
+<code>GetTypeName</code> method to get the&nbsp; late type of its bound StartUp.&nbsp;Whatever the methodology 
+used to bind the StartUp to the facade, this method 
+returns its late type. In other words, irrespective of the way you bind 
+the StartUp <strong>CAAPoint</strong> to its facade, in other words using 
+the late type (&quot;<strong>CAAFmExtPoint</strong>&quot;) as input or (&quot;<strong>CAAPoint@'MyCatalog.CATfct</strong>&quot;) 
+as input, <code>GetTypeName</code> will always 
+return <strong>CAAFmExtPoint</strong>.</p>
+<p>
+From a feature you can 
+retrieve its late type (i.e. the late type of its StartUp) by using the 
+<code>GetTypeName</code> method of the <em>CATFmFeatureFacade</em> class.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="StartUp Identifier"></a>StartUp Identifier</h4>
+<p>The StartUp identifier is also used for two reasons: </p>
+<ul>
+	<li>To define the StartUp to derive from, if any</li>
+	<li>For NLS purpose as described in a next section <a href="#StartUp2">Startup External Name</a></li>
+</ul>
+<pre class="code">feature <strong>identifier_A</strong> <strong>super_identifier_B</strong> #startup {</pre>
+<p>In this example, the StartUp of which the identifier is <code>identifier_A</code> is derived 
+from another StartUp whose identifier is <code>super_identifier_B</code>.</p>
+<p><strong>About the API</strong>: there is no API to retrieve the StartUp&#8216;s 
+identifier.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Feature"></a>Feature's Internal Name</h3>
+<p>The internal name of a feature is the identifier of its StartUp. This 
+internal name can be suffixed with <strong>.number</strong>, as explained in the
+<strong>Feature Name Numbering</strong> section.</p>
+<p><strong>About the API</strong>: there is no API to retrieve the internal name of 
+a feature. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h2><a name="External Name"></a>External Name</h2>
+<p>An external name is a name that takes into account a possible NLS 
+customization.</p><h3><a name="StartUp2">
+<script type="text/javascript">insertLinkToTop();</script>
+</a>StartUp's External Name</h3><p>
+StartUps can be given external names simply by creating a <strong>CATNls</strong> file. This 
+<strong>CATNls</strong> file must have the same name as the catalog's but suffixed with 
+<strong>NLS</strong>. For 
+example the <strong>CATNls</strong> file of <strong>MyCatalog.CATfct</strong> would be 
+<strong>MyCatalogNLS.CATNls</strong>. This 
+<strong>CATNls</strong> file resides in the <strong>resources/msgcatalog</strong> directory of your framework.</p>
+<p>
+In this <strong>CATNls</strong> file, StartUps are assigned external names by using their 
+identifier as the key. For example, this is how the <strong>CAAPoint</strong> StartUp is 
+given the external name &quot;<strong>Point</strong>&quot;:</p>
+<pre class="code">...
+<strong>CAAPoint = &quot;Point&quot;</strong>
+...</pre>
+<p><code>CAAPoint </code>is the StartUp defined earlier in this article.</p>
+<p><strong>About the API</strong>: there is no API to retrieve the external name of 
+a StartUp. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Feature2"></a>Feature's External Name</h3>
+<p>The external name of a feature is the external name of its StartUp (see
+<strong>StartUp's External Name</strong> section) and 
+possibly with a<strong> .number</strong> suffix, as explained in the 
+<a href="#Feat Name Numbering">Feature Name Numbering </a>section. </p>
+<p>There is no difference between computing the 
+external name of a feature created from a StartUp, or of one created from another feature, 
+since the instantiating feature comes from the same StartUp. So, the external name 
+of a feature is always the external name of its StartUp (direct or not), and 
+possibly with a <strong>.number </strong>suffix. </p>
+<p><strong>About the API</strong>: This name is returned by the <code>GetDisplayName </code>
+method of the <em>CATFmFeatureFacade</em> class. There is no method in the <em>
+CATFmFeatureFacade</em> class to change this name. Nevertheless let us present 
+another way to handle the external name, the <em>CATIAlias</em> interface.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="CATIAlias"></a>CATIAlias</h3>
+<p>This interface contains two methods:</p>
+<ul>
+	<li><code>GetAlias</code>: to retrieve an external name</li>
+	<li><code>SetAlias</code>: to change the external name</li>
+</ul>
+<p>How to know if your feature take benefit of a default implementation ? </p>
+<ul>
+	<li>Your feature derives from scratch: There is no default implementation. You have to implement the interface. We recommend the study of the 
+	provided documentation to observe <em>CATIAlias</em> implementation's recommendations 
+	from the ObjectSpecsModeler Overview article on Feature homepage.<br>
+	</li>
+	<li>Your feature derives from a Mechanical feature: Your feature takes 
+	benefit of the Mechanical modeler implementation. Don't re-implement it</li>
+	<li>Your feature derives from another DS feature : Have a look at the 
+	modeler documentation in the CAA Encyclopedia</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop()</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Feat Name Numbering"></a>Feature Name Numbering</h2>
+<p>The goal of the name numbering scheme is to add a <strong>.number</strong> 
+suffix to the name of the features, thereby making them unique. This is 
+necessary in order to differentiate features that are instantiated from the same 
+StartUp and aggregated together, or in general referred to, in the same context.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Concept Presentation"></a>Concept Presentation</h3>
+<p>Let us choose a basic scenario with two StartUp: <strong>CAALine</strong> &amp; <strong>
+CAAPoint</strong> for which the respective NLS string is Line and Point. The
+<strong>CAALine</strong> is made up of a component attributes to aggregate
+<strong>CAAPoint</strong> instances. </p>
+<p>In the following data model, <strong>CAALine</strong> is instantiated once, 
+and <strong>CAAPoint</strong> is instantiated twice, each point being aggregated under the 
+line. The next picture shows the external name of each feature:</p>
+<table>
+	<caption >Fig.1 Basic Scenario</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig1.gif" width="101" height="100"></td>
+	</tr>
+</table>
+<ul>
+	<li>&nbsp;For the <strong>CAALine</strong> feature the external name is
+	<strong>Line</strong>. This external name only contains the NLS name of the
+	<strong>CAALine</strong> StartUp because, here , the line is not aggregated</li>
+	<li>&nbsp;For the <strong>CAAPoint</strong> features the external name is
+	<strong>Point.1</strong> and <strong>Point.2</strong>. The external name has 
+	two parts, the first part of the NLS name is the external name of the
+	<strong>CAAPoint</strong> StartUp and the second part is a number to 
+	distinguish, the first point instance from the second one, in the context of 
+	the aggregating Line</li></ul>
+	<p>The line being an aggregating feature is used to define a 
+	unique name for its aggregated features. The unicity is accomplished by 
+	generating a new number each time and appending it to the StartUp 
+	internal/external name, thus resulting in the feature internal/external 
+	name. Hence, the aggregating feature, or in general, any feature that is 
+	responsible for generating such a number for features in its context, is 
+	also referred to as an &quot;<strong>Auto Number Provider</strong>&quot; or simply as a &quot;<strong>context</strong>&quot; feature, 
+	hereafter in this document.</p>
+<p>In the next section, you will learn that the Feature modeler gives you the 
+capability to define any feature as context for any other instances. But let us start to define how 
+its number is computed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Number Computation rule"></a>Number Computation Rules</h3>
+<p>This section explains the basic rules used to compute a number for each 
+feature having a context feature. </p>
+<ul>
+	<li>&nbsp;The number is defined once the feature is associated with a 
+	context feature, and it stays stable while the feature is still linked to 
+	this context feature</li>
+	<li><strong>The number is computed for each StartUp identifier</strong>.
+	<p>Imagine three 
+	features having the same "context" feature, and whose internal name (based 
+	on Startup Identifier, seen above) is respectively { <strong>CAAPoint.1</strong>,
+	<strong>CAAPoint.2</strong>, <strong>CAALine.1</strong>} </p>
+	<ul>
+	<li >for the next <strong>CAAPoint</strong> Startup&#8217;s instance associated with 
+	the same "context" feature , its index will be 3 </li>
+	<li >for the next <strong>CAALine</strong> Startup&#8217;s instance associated with 
+	the same "context" feature, its index will be 2</li>	
+	</ul>	
+	
+	
+	<p>The external names of these features are respectively {<strong>Point.1, Point.2, 
+	Line.1</strong>} according to the external name definition of a feature. </p></li>
+	<li><strong>The numbers of removed features are not re-used during a session</strong>.<br>
+	<p>Imagine the same context having {<strong>CAAPoint.1</strong>, <strong>CAAPoint.2</strong>, 
+	<strong>CAALine.1</strong>} </p>
+	<ul>
+		<li ><strong>CAAPoint.2</strong> is deleted</li>
+		<li >The context has now {<strong>CAAPoint.1</strong>, 
+		<strong>CAALine.1</strong>}
+		</li>
+		<li >For the next Point, its index will be 3, and not 2. The "context" of 
+		the feature has kept the last generated number in session for each StartUp&#8217;s identifier.</li>
+		</ul>		
+		<p>But it does not persist. Imagine the context having {<strong>CAAPoint.1, CAAPoint.2, CAALine.1</strong>}</p>
+		
+    <ul>
+		<li ><strong>CAAPoint.2</strong> is deleted </li>
+		<li >The context has now {<strong>CAAPoint.1, CAALine.1</strong>} </li>
+		<li >The container is saved, unloaded and reloaded </li>
+		<li >For the next Point, its 
+		index will be 2. The context feature unloaded from the session has lost 
+		the last number it generated for each StartUp identifier </li>
+		</ul>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Feat Auto Number Provider"></a>Feature Auto Number Provider (Context)</h3>
+<p>Let us now study the impact of a feature AutoNumber Provider on the feature 
+it is associated with. </p>
+<ul>
+	<li><a href="#Impact on setting a context">Impact on setting a Context on a 
+	Feature</a></li>
+	<li><a href="#Changing the context">Changing the Context</a></li>
+	<li><a href="#Removing the context">Removing the Context</a></li>
+	<li><a href="#Aggregated feat case">Aggregated Feature Case</a></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Impact on setting a context"></a>Impact on setting a Context on a 
+Feature</h4>
+<p>All the features sharing the same context feature have a unique name made up 
+by a string (StartUp's NLS) and a suffix number as defined in the 
+previous section. By default, except the aggregated features, no feature has a 
+context feature. As a result their name remains without number. For the 
+aggregated features they have a default context feature, it is their aggregating 
+feature. </p>
+<p>But a pointed feature or a stand-alone feature can also have a context feature, 
+like you can change the default context feature of an aggregated feature. </p>
+<p><strong>Illustration</strong>: We use the same StartUp, <strong>CAAPoint</strong> 
+and <strong>CAALine</strong>, and two more: <strong>CAACurve</strong> and
+<strong>CAARoot</strong>. </p>
+<p>The <strong>CAACurve</strong> (<strong>Curve</strong> as NLS name) is 
+designed to point to <strong>CAAPoint</strong> instances. </p>
+<p>The <strong>CAARoot</strong> (<strong>Root</strong> as NLS name) can point to 
+any kind features: <strong>Line</strong>, <strong>Point</strong> and <strong>
+Curve</strong>. </p>
+<p>[<a href="#Fig.2">Fig.2</a>] just below shows the external name of each 
+feature by default (left picture), and when each feature has defined its context 
+feature, as the unique Root feature (right picture)</p>
+&nbsp;<table>
+	<caption><a name="Fig.2"></a>Fig.2 Feature Auto Number Provider</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig2.gif" width="372" height="386"></td>
+	</tr>
+</table>
+<p>On the right, you can observe that &#8220;below&#8221; the root all the features have a 
+different name, even if root does not aggregate any feature.</p>
+<p>Now, you can see the advantages of this numbering:</p>
+<ul>
+	<li>&nbsp;Names are unique in the scope of a context. So if you choose a 
+	unique object of the model as a context, you have unique names all along 
+	model </li>
+	<li>&nbsp;You can move a feature and it will have still the same number</li>
+</ul>
+<p><strong>About the API</strong>: The API to associate a context feature with a 
+feature is the <code>SetAutoNumberProvider</code> of the <em>CATFmFeatureFacade</em> class. This API 
+takes an input a feature expressed as a value (<em>CATFmAttributeValue</em>).</p>
+<p>The API to retrieve the possible context feature of a feature is the <code>GetAutoNumberProvider</code> of the <em>CATFmFeatureFacade</em> class.</p>
+<ul>
+	<li>&nbsp;This method fails if you are not granted the rights to handle the StartUp of the 
+	feature 
+[<a href="#References">3</a>]</li>
+	<li>&nbsp;Otherwise, this method is successful, and the <code>GetFeature</code> 
+	method of the <em>CATFmAttributeValue </em>class, returns:<ul>
+		<li >&nbsp;S_FALSE : No context feature found . The case for an 
+		aggregated feature for which <code>SetAutoNumberProvider</code> has not 
+		been called. </li>
+		<li >&nbsp;S_OK: there is a context feature set by the 
+<code>SetAutoNumberProvider</code> method<br>
+</li>
+	</ul>
+	</li>
+</ul>
+<table class="Remark"> 
+	<tr> 
+		<td class="remark"> <strong>Note</strong>: It is strongly recommended that a feature 
+		and its context are both located in the same container. Otherwise in case of 
+partial loading, you may come across issues with the numbering.<br></td></tr></table>
+		 
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Changing the context"></a>Changing the Context (Auto Number Provider for a Feature)</h4>
+<p>During the life of a feature its context feature can be changed. It only 
+affects its number, other features sharing the context feature are not impacted. </p>
+<p><strong>Illustration</strong>: Have a look at the [<a href="#Fig.3">Fig.3</a>] that follows:</p>
+<table>
+	<caption><a name="Fig.3"></a>Fig.3 Changing Context Impact</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig3.jpg" width="361" height="393"></td>
+	</tr>
+</table>
+<p><br>
+</p>
+<p>(Left picture), For each point below <code>Line.1</code> and <code>Line.2</code>, the context feature is the aggregating line, and for points 
+beneath <code>Line.3</code>, the context is the root. </p>
+<p>(Right picture), For the grayed point we have changed its context. Its new 
+context is now Root instead of <code>Line.1</code></p>
+<p>You can observe two things:</p>
+<ul>
+	<li>&nbsp;The number of this point is now <code>Point.3</code> instead 
+	of <code>Point.1</code> , because it is the third point &#8220;below&#8221; the Root
+	(the two others are those beneath <code>Line.3)</code></li>
+	<li>&nbsp;The number of the second point beneath <code>Line.1</code> has 
+	not changed: a number changed for a feature does not affect other features, 
+	irrespective of their StartUp&#8217;s identifiers</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Removing the context"></a>Removing the Context (Auto Number Provider for a Feature)</h4>
+<p>It is possible to remove the context of a feature. You have to 
+call the <code>SetAutoNumberProvider</code> method with an empty value as input. 
+In this case the feature comes back to its default behavior</p>
+<ul>
+	<li>If it is an aggregated feature, its new context feature is 
+its aggregating feature ( its index can change )</li>
+	<li>If it is a pointed / stand alone feature, its displayed name does not 
+	contain an index anymore</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Aggregated feat case"></a>Aggregated Feature Case</h4>
+<p>This section presents some specificities of the aggregated features due to 
+the fact that by default they have a context feature. 
+Let us present three scenarios</p>
+<ul>
+	<li><a href="#Comp Aggregation"><strong>Component Aggregation</strong> </a> </li>
+	<li><strong><a href="#Comp detachment">Component Detachment</a></strong></li>
+	<li><strong><a href="#context feat is the aggregating feat">Context feature is the aggregating feature</a></strong></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong><a name="Comp Aggregation"></a>Component Aggregation</strong></p>
+<p>When a feature is aggregated, its index is computed from its context as for 
+any feature.</p>
+
+<p><strong><a name="Comp detachment"></a>Component Detachment</strong></p>
+<p>When a feature is detached (<code>DetachComponent</code> method of the <code>CATFmFeatureFacade</code>) 
+the aggregated feature is removed from its aggregating feature but not deleted. 
+What is its new number ?</p>
+<p>&nbsp;If the aggregated feature does not have an explicit context feature, in 
+that case, once detached, it will not have a number as depicted in [<a href="#Fig.4">Fig.4</a>] 
+below.</p>
+<table>
+	<caption><a name="Fig.4"></a>Fig.4 Detach Without Context</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig4.gif" width="368" height="135"></td>
+	</tr>
+</table>
+<p>If the aggregated feature has an explicit context feature, the 
+<code>DetachComponent</code> call will not affect its number. The feature keeps its 
+context 
+feature, as depicted in [<a href="#Fig.5">Fig.5</a>] below.</p>
+<table>
+	<caption><a name="Fig.5"></a>Fig.5 Detach With Context</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig5.gif" width="385" height="179"></td>
+	</tr>
+</table>
+<p><code>Point.x</code> remains <code>Point.x</code> even after the 
+detachment.<br>
+</p>
+
+<p><strong><a name="context feat is the aggregating feat"></a>Context Feature is the Aggregating Feature</strong></p>
+<p>As any feature, the aggregated feature can have its context feature, 
+explicitly set. The latter one can of course be its aggregating feature itself. 
+We have added this case to show the specific number management in this 
+situation. We explain this with a scenario depicted in the following picture.</p>
+<table>
+	<caption><a name="Fig.6"></a>Fig.6 Aggregating Feature and Context</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaNamingFeatures_Fig6.gif" width="442" height="183"></td>
+	</tr>
+</table>
+<p>&nbsp;</p>
+<ul>
+	<li><strong>Step 1</strong>: A Curve aggregates Points for which the context feature is 
+	implicitly the Curve</li>
+	<li><strong>Step 2</strong>: A point aggregated by the Curve is deleted &#8211; <code>Point.3</code></li>
+	<li><strong>Step 3</strong>: A new point is aggregated to the Curve. Have a look at its 
+	number : it is 4 because , as explained above, the context retains the 
+	last generated number for a StartUp</li>
+	<li><strong>Step 4</strong>: <code>Point.2</code>, aggregated by the Curve, sets 
+	the Curve explicitly as its context. In a normal case, its new index is 
+	computed from its new context: it should be 5, but Feature modeler 
+	recognizes the case, and lets its current index remain 2</li>
+</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>You have learnt that a <strong>StartUp</strong> has an internal name (its identifier), 
+that 
+can be distinct from its late type, the latter being used to implement the behavior of 
+the StartUp and to instantiate the feature in session. The StartUp&#8217;s NLS (external name) is defined inside a CATNls file 
+associated with the feature catalog. Except the late type, the internal and 
+external names cannot be retrieved by an API.</p>
+<p>For a <strong>feature</strong>, the external name is a string (the NLS value 
+of its StartUp) that can 
+be indexed to have a unique name for all features sharing the same context 
+feature. By default, the aggregating features play this role for its aggregated 
+features, but it is customizable. </p>
+<p>The external name of a feature can also be managed by the <em>
+CATIAlias</em> interface. But in this case, the external name&#8217;s management is 
+dependent on the StartUp implementation.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<tr>
+		<td >[1]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps</a></td>
+	</tr>
+	<tr>
+		<td >[2]</td>
+		<td >
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcWorkingWithCredentials.htm">Working with Credentials</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Aug 2012]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,331 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>XMLParser Interface CATISAXDeclHandler</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../XMLParser.htm" href="../XMLParser.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "XMLParser";	}
+		function getCurrentObjectName() { 
+ 	return "CATISAXDeclHandler"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>XMLParser Interface CATISAXDeclHandler</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATISAXDeclHandler_22282','CATISAXDeclHandler','0');</script>
+<p><b>Usage: you can freely reimplement this interface.</b></p>
+<hr>
+<p>
+ interface <b>CATISAXDeclHandler</b>
+</p>
+<p>
+<b><i> Interface to receive notification of DTD declaration events.</i></b><br>
+
+
+ <p>This is an optional extension handler for SAX2 to provide
+ information about DTD declarations in an XML document.  XML
+ readers are not required to support this handler, and this
+ handler is not included in the core SAX2 distribution.</p>
+ 
+ <p>Note that data-related DTD declarations (unparsed entities and
+ notations) are already reported through the <script type="text/javascript"> activateLinkAnchor('CATISAXDTDHandler','','CATISAXDTDHandler') </script> interface.</p> 
+ <p>If you are using the declaration handler together with a lexical
+ handler, all of the events will occur between the
+ 
+<script type="text/javascript"> activateLinkAnchor('CATISAXLexicalHandler','StartDTD','CATISAXLexicalHandler.StartDTD') </script> and the 
+<script type="text/javascript"> activateLinkAnchor('CATISAXLexicalHandler','EndDTD','CATISAXLexicalHandler.EndDTD') </script> events.</p> 
+ <p>To set the CATISAXDeclHandler for an CATISAXXMLReader, use the
+ 
+<script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','SetProperty','CATISAXXMLReader.SetProperty') </script> method with the propertyId <tt>"http://xml.org/sax/properties/declaration-handler"</tt>.
+ If the reader does not support declaration events, it will return a
+ 
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotRecognizedException','','CATSAXNotRecognizedException') </script> error or a 
+<script type="text/javascript"> activateLinkAnchor('CATSAXNotSupportedException','','CATSAXNotSupportedException') </script> error when you attempt to register the handler.</p>
+ 
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATISAXXMLReader','','CATISAXXMLReader') </script>, <script type="text/javascript"> activateLinkAnchor('CATISAXLexicalHandler','','CATISAXLexicalHandler') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AttributeDecl(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>AttributeDecl</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Receives notification of an attribute type declaration.
+ <dt> o 
+    <a href="#ElementDecl(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>ElementDecl</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Receives notification of an element type declaration.
+ <dt> o 
+    <a href="#ExternalEntityDecl(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>ExternalEntityDecl</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Receives notification of an external entity declaration.
+ <dt> o 
+    <a href="#InternalEntityDecl(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>InternalEntityDecl</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Receives notification of an internal entity declaration.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AttributeDecl"></a><a name="AttributeDecl(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>AttributeDecl</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AttributeDecl</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iElementName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iAttributeName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iValueDefault</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Receives notification of an attribute type declaration.
+
+ <p>Only the effective (first) declaration for an attribute will
+ be reported.  The type will be one of the strings <tt>"CDATA"</tt>,
+ <tt>"ID"</tt>, "<tt>IDREF"</tt>, <tt>"IDREFS"</tt>, <tt>"NMTOKEN"</tt>, <tt>"NMTOKENS"</tt>, <tt>"ENTITY"</tt>,
+ <tt>"ENTITIES"</tt>, a parenthesized token group with 
+ the separator "|" and all whitespace removed, or the word
+ <tt>"NOTATION"</tt> followed by a space followed by a parenthesized
+ token group with all whitespace removed.</p>
+ 
+ <p>Any parameter entities in the attribute value will be
+ expanded, but general entities will not.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iElementName</tt>
+   <dd> The name of the associated element.
+ </dd>
+    <dt><tt> iAttributeName</tt>
+   <dd> The name of the attribute.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd> A string representing the attribute type.
+ </dd>
+    <dt><tt> iValueDefault</tt>
+   <dd> A string representing the attribute default (<tt>"#IMPLIED"</tt>, <tt>"#REQUIRED"</tt>, or <tt>"#FIXED"</tt>) or an empty string if none of these applies.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd> A string representing the attribute's default value, or an empty string if there is none.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">The method can raise a CATSAXException</td>
+     </tr>
+   </table>
+ </dd>
+
+</dl>
+</dl>
+</dl>
+<a name="ElementDecl"></a><a name="ElementDecl(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>ElementDecl</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ElementDecl</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iModel</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Receives notification of an element type declaration.
+
+ <p>The content model will consist of the string <tt>"EMPTY"</tt>, the
+ string <tt>"ANY"</tt>, or a parenthesised group, optionally followed
+ by an occurrence indicator.  The model will be normalized so
+ that all parameter entities are fully resolved and all whitespace 
+ is removed, and will include the enclosing parentheses.  Other
+ normalization (such as removing redundant parentheses or 
+ simplifying occurrence indicators) is at the discretion of the
+ parser.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The element type name.
+ </dd>
+    <dt><tt> iModel</tt>
+   <dd> The content model as a normalized string.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">The method can raise a CATSAXException</td>
+     </tr>
+   </table>
+ </dd>
+
+</dl>
+</dl>
+</dl>
+<a name="ExternalEntityDecl"></a><a name="ExternalEntityDecl(CATUnicodeString&amp;,CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>ExternalEntityDecl</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ExternalEntityDecl</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iPublicId</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iSystemId</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Receives notification of an external entity declaration.
+
+ <p>Only the effective (first) declaration for each entity
+  will be reported.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the entity. If it is a parameter entity, the name will begin with <tt>'%'</tt>.
+ </dd>
+    <dt><tt> iPublicId</tt>
+   <dd> The declared public identifier of the entity, or an empty string if none was declared.
+ </dd>
+    <dt><tt> iSystemId</tt>
+   <dd> The declared system identifier of the entity.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">The method can raise a CATSAXException</td>
+     </tr>
+   </table>
+ </dd>
+
+</dl>
+</dl>
+</dl>
+<a name="InternalEntityDecl"></a><a name="InternalEntityDecl(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>InternalEntityDecl</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InternalEntityDecl</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Receives notification of an internal entity declaration.
+
+ <p>Only the effective (first) declaration for each entity
+ will be reported.  All parameter entities in the value
+ will be expanded, but general entities will not.</p>
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd> The name of the entity. If it is a parameter entity, the name will begin with <tt>'%'</tt>.
+ </dd>
+    <dt><tt> iValue</tt>
+   <dd> The replacement text of the entity.
+
+ </dl>
+ <dt><b>Errors Returned</b>:</dt>
+ <dd>
+   <table class="errtab">
+     <tr>
+       <th class="errth">Error Class</th>
+       <th class="errth">Error Id</th>
+       <th class="errth">Description</th>
+     </tr>
+     <tr>
+        <td class="errtd"></dd>
+<script type="text/javascript"> activateLinkAnchor('CATSAXException','','CATSAXException') </script> </td>        <td class="errtd">XMLParserERR_2000</td>
+        <td class="errtd">The method can raise a CATSAXException</td>
+     </tr>
+   </table>
+ </dd>
+
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATISAXDeclHandler.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATXMLParserItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

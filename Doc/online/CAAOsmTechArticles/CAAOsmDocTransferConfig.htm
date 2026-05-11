@@ -1,0 +1,405 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Transferring Documents Containing Client-Defined Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Feature Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Transferring Documents Containing Client-Defined Features</h3>
+      <em>Working with a client document</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><a name="Abstract"></a>Abstract</h3>
+      <p>This article explains the effects on feature behavior of sending a document without the
+      accompanying application code and catalog.&nbsp;
+      <ul>
+        <li><a href="#Introduction"><b>Introduction</b></a>
+        </li>
+        <li><b><a href="#Overview">Overview of Basic CATIA Behaviors</a></b>
+        </li>
+        <li><b><a href="#FromScratch">Working with Features Defined &quot;From
+          Scratch&quot;</a></b>
+        <li><b><a href="#DerivedFeatures">Working with Derived Features</a></b>
+        <li><b><a href="#Summary">Summary&nbsp;</a></b>
+        <li><a href="#References"><b>References</b></a>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Introduction"></a>Introduction</h3>
+
+<p>Documents are often transferred between clients and sub-contractors. But how
+are the features managed in the retrieved document when the application code and feature catalog do not accompany this transfer? This article intends to
+answer this question by analyzing a number of common basic behaviors on features
+created &quot;from scratch&quot; as well as on features derived from other
+existing features when the application code and catalog are available as
+compared to when they are not available.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Overview"></a>Overview of Basic CATIA Behaviors&nbsp;</h3>
+
+<p>The basic CATIA behaviors analyzed in this article are:</p>
+
+<ul>
+  <li><b>The display of the feature in the specification tree</b>: This behavior
+    is managed by the <i>CATINavigateObject</i> interface. This interface is
+    implemented on all natively-defined CATIA features, i.e., features defined in
+    applications provided by Dassault Systemes. Its methods return the name of the
+    feature and a list of its children. If a new client-defined feature is created in
+    the document, it must implement the <i>CATINavigateObject</i> interface
+    in order to correctly appear in the specification tree. When a feature is
+    added to the specification tree under an existing node, that parent node
+    must be capable of listing it as its child. The feature itself
+    must be capable of listing any of the features it may eventually be pointing
+    to.</li>
+  <li><b>The visualization of the feature's geometry: </b>This behavior is
+    managed by any C++ interface deriving from <i>CATIVisu</i>: <i>CATI3DGeoVisu</i>,
+    <i>CATI2DGeoVisu</i>, etc. One of these interfaces is implemented on all
+    natively-defined CATIA features, i.e., features defined in applications
+    provided by Dassault Systemes. It must be implemented on any feature having
+    a geometry that can be visualized in order to be taken into account during
+    the visualization process.&nbsp;</li>
+  <li><b>The edition of the feature: </b>This behavior is managed by the <i>CATIEdit</i>
+    interface. This interface must be implemented on any feature for which one wants to
+    display a specific panel allowing the edition of the feature's attribute
+    values.</li>
+  <li><b>The update of the feature: </b>This behavior is managed by the <i>CATIBuild</i>
+    interface. This interface must be implemented on any feature that is meant to be
+    integrated in the update process. This interface allows the re-calculation
+    of a feature's result based on the results of other features.&nbsp;</li>
+  <li><b>The Cut/Copy/Paste and Delete operations enabled on the feature: </b>This behavior
+    is managed by the <i>CATICutAndPastable</i>  and <i>LifeCycleObject</i>
+    interfaces. These interfaces are
+    implemented on all selectable CATIA features and their re-implementation is dependent on
+    any specific actions that must be performed during a CCP operation on the
+    client-defined feature. They, therefore, do not need to be systematically
+    re-implemented. However, in order to enable CCP operations, the <i>CATICSOFilter</i>
+    interface (or its equivalent, depending on the application) must be implemented on the
+    client-defined feature. This
+    implementation is only possible if the application's <code>UIActive</code> object has delegated
+    the authorization to the document's features.&nbsp;</li>
+</ul>
+<p>See also the technical article entitled &quot;Integrating New Features in CATIA&quot; [<a href="#References">1</a>] for a view of the
+different interfaces needed to be implemented in order for new client-defined features to be correctly integrated in CATIA.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><font size="4"><a name="FromScratch"></a>Working with Features Defined
+&quot;From Scratch&quot;</font></b>
+</p>
+<p><font size="3">A feature that is created &quot;from scratch&quot; is
+completely client-defined: it does not inherit any behaviors or attributes from
+any other existing feature.&nbsp;</font></p>
+<p><font size="3">Here is an explanation of what enables each behavior described
+in the previous section to be taken into account for a feature created &quot;from
+scratch&quot;:</font></p>
+<p><b>The display of the feature in the specification tree</b>: The application
+code managing the feature must have implemented the <i>CATINavigateObject </i>interface
+on the feature in order to display the feature's name and its children in the
+navigation tree. If the application code is present, the feature will appear in
+the navigation tree; if not, the feature will not be seen at all. The catalog containing the feature's StartUp
+may also be necessary for this behavior to be correctly implemented because the
+feature's StartUp may point to other features that would be part of the
+navigation process, whereas this information may not be present on the feature
+instance itself.</p>
+<p><b>The visualization of the feature's geometry. </b>The application code
+managing the feature must have implemented the <i>CATI3DGeoVisu</i> (or
+equivalent) interface on the feature in order to take the feature into account
+during the visualization process. If the application code is present, the
+feature will, therefore, be correctly visualized; otherwise, it will not be
+visualized at all. The catalog containing the
+feature's StartUp may also be necessary for this behavior to be correctly
+implemented because the feature's StartUp may contain attribute values that are
+not necessarily present on the feature instance itself.</p>
+<p><b>The edition of the feature. </b>The application code managing the feature
+must have implemented the <i>CATIEdit</i> interface on the feature in order to
+display a specific panel allowing the feature's attribute values to be
+modified. If the application code is present, the feature is selectable and this panel will be
+displayed; otherwise, the feature will not even be selectable and no panel will
+be displayed. If the catalog containing the feature's StartUp is not available, the
+panel may be incomplete: indeed, some of the feature's attributes can only be
+found on the StartUp.</p>
+<p><b>The update of the feature. </b>The application code managing the feature
+must have implemented the <i>CATIBuild</i> interface on the feature in order to
+allow its re-calculation in the event any dependent results have been modified.
+If the application code is present, the feature will be correctly re-built,
+otherwise, it will not be taken into consideration during the update process. The catalog containing the
+feature's StartUp may also be necessary for this behavior to be correctly
+implemented because the feature's StartUp may contain attribute values that are
+necessary to the build process but that are
+not necessarily present on the feature instance itself.</p>
+<p><b>The Cut/Copy/Paste and Delete operations enabled on the feature. </b>If the
+application code managing the feature is present, then the feature is already
+selectable both by its geometry and its entry in the specification tree. If the <i>CATICSOFilter</i>
+interface has been implemented on the feature, then it can be included in CCP
+and Delete operations. The catalog containing the feature's StartUp is not necessary for
+this behavior to be correctly implemented.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><font size="4"><a name="DerivedFeatures"></a>Working with Derived Features</font></b></p>
+<p><font size="3">A &quot;derived feature&quot; has been created by the derivation
+of another existing feature. It has inherited the behaviors and attributes of
+the deriving feature. In this article, the &quot;deriving feature&quot; is
+considered to be a feature provided by one of the native CATIA applications. The
+receiving client or sub-contractor installation is assumed to contain the
+deriving feature's native CATIA application and catalog.&nbsp;</font></p>
+<p><font size="3">&nbsp;Here is an explanation of what enables each behavior
+considered in this document to be taken into account for a &quot;derived
+feature&quot;.</font></p>
+<p><b>The display of the feature in the specification tree</b>: The application
+code managing the feature may have implemented the <i>CATINavigateObject </i>interface
+on the feature in order to display the feature's name and its children in the
+navigation tree. If it did not or if the application code is not present, the
+feature may still appear in the navigation tree, but its particular name may not
+be correct and its list of children may not be complete. The catalog containing the feature's StartUp
+may also be
+necessary for this behavior to be correctly implemented because the feature's
+StartUp may point to other features that would be part of the navigation
+procedure, whereas this information may not be present on the feature instance
+itself.</p>
+<p><b>The visualization of the feature's geometry. </b>The application code
+managing the feature may have implemented the <i>CATI3DGeoVisu</i> (or
+equivalent) interface on the feature in order to take the feature into account
+during the visualization process. If it did not or if the application code is
+not present, the feature may still be visualized, but the visualization may not
+be complete. The catalog containing the
+feature's StartUp may also be necessary for this behavior to be correctly
+implemented because the feature StartUp may contain attribute values that are
+not necessarily present on the feature instance itself.</p>
+<p><b>The edition of the feature. </b>The application code managing the feature
+may have implemented the <i>CATIEdit</i> interface on the feature in order to
+display a specific panel allowing the feature's attribute values can be
+modified. If it did not or if the application code is not present, this panel
+will not be displayed. If the application code is present but the catalog
+containing the feature's StartUp is not available, the panel may still not be
+displayed.</p>
+<p><b>The update of the feature. </b>The application code managing the feature
+may have implemented the <i>CATIBuild</i> interface on the feature in order to
+allow its re-calculation in the event any dependent results have been modified.
+If it did not or if the application code is not present, the feature will not re-built. The catalog containing the
+feature's StartUp may also be necessary for this behavior to be correctly
+implemented because the feature's StartUp may contain attribute values that are
+necessary to the build process but that are
+not necessarily present on the feature instance itself.</p>
+<p><b>The Cut/Copy/Paste and Delete operations enabled on the feature. </b>Even
+if the
+application code managing the feature is not present, it is possible that the
+feature can still be selectable. However, it is necessary for the <i>CATICSOFilter</i>
+and <i>CATICcpAble</i> interfaces to have been implemented on the feature itself
+in order to allow CCP and Delete operations. The application must, therefore, be
+present in order for this behavior to be enabled.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<p><font size="4"><b><a name="Summary"></a>Summary</b></font></p>
+
+<p><font size="3">The tables below summarize the different behaviors available
+for features created &quot;from scratch&quot; and for those that have been
+&quot;derived&quot; as accessed by the receiver of the document. Only the two
+following possibilities are taken into account in the receiver's configuration:</font></p>
+
+<ol>
+  <li><font size="3">Both application and catalog are available&nbsp;</font></li>
+  <li><font size="3">Neither application nor catalog are available</font></li>
+</ol>
+<p><font size="3">The two other possibilities,&nbsp;</font></p>
+<ol>
+  <li><font size="3">Only the application is available, the catalog is not</font></li>
+  <li><font size="3">Only the catalog is available, the application is not</font></li>
+</ol>
+<p><font size="3">are not considered because, in the first case,&nbsp; the
+result of this configuration is too dependent on the specific application
+itself, and in the second case, the existence of a catalog without the
+application does not contribute to any different result as compared to the case
+where there is neither application nor catalog.&nbsp;</font></p>
+
+<b><font size="3">Table 1: Summary of CATIA behaviors on features created
+&quot;from scratch&quot;</font></b>
+
+<table border="1" cellpadding="0" cellspacing="0" width="100%" height="162">
+  <tr>
+    <td width="18%" valign="middle" height="38">
+      <p align="center"><b>Feature Behaviors</b></td>
+    <td width="30%" valign="middle" height="38">
+      <p align="center">
+<b>
+Feature &quot;From Scratch&quot;</b><br>
+      <b>Application and Catalog</b></td>
+    <td width="34%" valign="middle" height="38">
+      <p align="center">
+      <b>Feature &quot;From Scratch&quot;<br>No Application, No Catalog</b>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="38">
+      Display in specification tree</td>
+    <td width="30%" valign="middle" height="38">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="38">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Visualization of geometry</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="17">
+      Feature edition</td>
+    <td width="30%" valign="middle" height="17">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="17">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Feature update</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Cut/Copy/Paste Delete</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes, if enabled</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">No
+    </td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]
+
+<p align="left"><b><font size="3">Table 2: Summary of CATIA behaviors on derived
+features</font></b>
+
+<table border="1" cellpadding="0" cellspacing="0" width="100%" height="162">
+  <tr>
+    <td width="18%" valign="middle" height="38">
+      <p align="center"><b>Feature Behaviors</b></td>
+    <td width="30%" valign="middle" height="38">
+      <p align="center">
+<b>Derived Feature</b>
+<br>
+      <b>Application and Catalog</b></td>
+    <td width="34%" valign="middle" height="38">
+      <p align="center">
+      <b>Derived Feature<br>No Application, No Catalog</b>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="38">
+      Display in specification tree</td>
+    <td width="30%" valign="middle" height="38">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="38">
+    <p align="center">Partial
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Visualization of geometry</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">Partial
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="17">
+      Feature edition</td>
+    <td width="30%" valign="middle" height="17">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="17">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Feature update</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">No
+    </td>
+  </tr>
+  <tr>
+    <td width="18%" valign="middle" height="19">
+      Cut/Copy/Paste and Delete</td>
+    <td width="30%" valign="middle" height="19">
+      <p align="center">Yes, if enabled</td>
+    <td width="34%" valign="middle" height="19">
+    <p align="center">No
+    </td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAOsmFeatureIntegration.htm">Integrating New Features in CATIA</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [January 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

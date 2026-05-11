@@ -1,0 +1,63 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2000
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      Create a Join surface 
+'   Assumtions:   .\samples\CAAGsiCreateJoinSurface.CATPart use as input geometry  
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+
+' Ouverture CATIA Part : CAAGsiCreateJoinSurface.CATPart 
+  Dim sDocPath As String
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+  Dim oPartDocument As PartDocument
+  Set oPartDocument = CATIA.Documents.Open(sDocPath & "\online\CAAScdGsiUseCases\samples\CAAGsiCreateJoinSurface.CATPart")
+ 
+' Retrieving Active OpenBody 
+  Dim hybridBodies1 As HybridBodies
+  Set hybridBodies1 = oPartDocument.Part.HybridBodies
+
+  Dim OpenBody1 As HybridBody
+  Set OpenBody1 = hybridBodies1.Item("Open_body.2")
+
+' Creating a reference for Fill.1 object  
+  Dim hybridShapeFill1 As HybridShape
+  Set hybridShapeFill1 = OpenBody1.HybridShapes.Item("Fill.1")
+
+  Dim reference1 As Reference
+  Set reference1 = oPartDocument.Part.CreateReferenceFromObject(hybridShapeFill1)
+
+' Creating a reference for Extrude.1 object 
+  Dim hybridShapeExtrude1 As HybridShape
+  Set hybridShapeExtrude1 = OpenBody1.HybridShapes.Item("Extrude.1")
+
+  Dim reference2 As Reference
+  Set reference2 = oPartDocument.Part.CreateReferenceFromObject(hybridShapeExtrude1)
+
+' Retrieving Wireframe and Shape Design Factory 
+  Dim hybridShapeFactory1 As Factory
+  Set hybridShapeFactory1 = oPartDocument.Part.HybridShapeFactory
+
+' Creating a Join (also named assemble)   between Fill.1 and Extrude.1 
+  Dim hybridShapeAssemble1 As HybridShapeAssemble
+  Set hybridShapeAssemble1 = hybridShapeFactory1.AddNewJoin(reference1, reference2)
+
+' Inserting Join in current OpenBody 
+  OpenBody1.AppendHybridShape hybridShapeAssemble1
+
+' Making Join as active object in CATIA Part  
+  oPartDocument.Part.InWorkObject = hybridShapeAssemble1
+
+' Updating CATPart 
+  oPartDocument.Part.Update 
+
+End Sub

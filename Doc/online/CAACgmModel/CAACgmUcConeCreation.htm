@@ -1,0 +1,134 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Cone</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating a Frustum of a Right Circular Cone</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A right circular cone geometry can be created directly from the 
+		geometry factory. The created cone cannot be a cylinder. When the value 
+		of the cone angle gets close to 90 deg, the apex may exit the model 
+		size. The surface can however be generated but a &quot;Data Checker&quot; message 
+		can be issued. Oblique cones are not supported. </p>
+		<ul>
+			<li><a href="#OpeToBeUsed">API to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">API to be Used</a></h2>
+<p style="height: 10px">To create a cone or a frustum of a circular cone, use the CATGeoFactory::CreateCone 
+method in the GeometricObjects framework. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelConeCreation.m module in CAAGMModelInterfaces.edu 
+illustrates how to create a cone. This use case creates the input data required 
+for the cone creation. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>. </p>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATMathAxis  axis;
+CATMathDirection D1(1.,0.,0.);
+CATMathDirection D2(0.,1.,0.);
+CATMathDirection D3(0.,0.,1.);
+CATMathPoint  mathpoint(5.,15.,50.);
+axis.Set(mathpoint,D1,D2,D3); 
+double slantLengthEnd(80);
+double slantLengthStart(18);
+double coneAngle = 0.25*CATPI; 
+double startAngle = -0.2*CAT2PI;
+double endAngle = +0.1*CAT2PI;
+double radius(25.);
+//
+cout &lt;&lt; "Cone creation" &lt;&lt; endl;
+CATCone * pCone =  piGeomFactory-&gt;CreateCone(axis,radius,ConeAngle,StartAngle, EndAngle, slantLengthStart,slantLengthEnd);
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.1">Fig.1</a> Frustum of a right circular cone </caption>
+  <tr>
+    <td>
+	<img alt="Frustrum of a circular cone" src="images/CGM_cone_0.png" width="250" height="220">&nbsp;
+	</td>
+	<td>
+	Base radius: 25mm <br>
+	The base radius relies on the plane defined by the first and second 
+	direction of the cone axis. This plane passes through the axis origin.<br>
+	Slant height: 62mm = slant length end (80mm) - slant length start (18mm)<br>
+	Cone angle = 45 deg (0.25*CATPI) = angle between the cone and the base 
+	plane.&nbsp;
+	</td>
+
+     </tr>
+   </table>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

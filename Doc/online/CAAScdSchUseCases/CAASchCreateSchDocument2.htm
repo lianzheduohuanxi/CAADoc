@@ -1,0 +1,177 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Creating a Schematic Document</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Creating a Schematic Document</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to create a 
+     new schematic document.
+     <p>Schematic documents for DS provided Schematic applications are all of 
+     the same kind. They are all special CATProduct document. Instead of having 
+     typical 3D viewers, these Schematic documents have 2D viewers embedded in 
+     them. Therefore, when using the standard way of creating a new document, an 
+     additional step is required to initialize this new document the &quot;Schematic 
+     way&quot;. This macro illustrates this important step.</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchCreateSchDocument2 is launched in 
+     CATIA [<a href="#References">1</a>]. No open document is needed.<p>
+     <a href="CAASchCreateSchDocument2Source.htm">
+     CAASchCreateSchDocument2.CATScript </a>is located in the CAAScdSchUseCases 
+     module. <a href="macros/CAASchCreateSchDocument2.CATScript">Execute macro</a> 
+     (Windows only).</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchCreateSchDocument2 includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Initialize Schematic document">Initialize the new Schematic 
+       document the &quot;schematic way&quot;</a></li>
+       <li>Get the current CNEXT session</li>
+       <li>Create a new schematic document</li>
+       <li>Set the drawing standard</li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first creates a new document..</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">'--------------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Create a CATProduct document</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">'--------------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchDoc = CATIA.Documents.Add (&quot;CATProduct&quot;)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Initialize Schematic document"></a>Initialize the new 
+     Schematic document the &quot;schematic way&quot;</h4>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' Regular CATProduct is a 3D document and is associated with a 3D</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' editor and a 3D viewer. On the other hand a schematic document</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' is a special CATProduct document that is associated with a special</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' 2D viewer and 2D editor. Therefore, we need to trigger the</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' documentation initialization (which has already been done in </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' CATDocuments.Add) again after associating schematic </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' behavior to the document, </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' by saving the document and re-opening it again.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchDoc.SaveAs strDocName<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchDoc.Close<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         Set </font>objSchDoc = CATIA.Documents.Open (strDocName)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Set the drawing standard"></a>Set the drawing standard of the 
+     drafting viewer in the schematic document</h4>
+     <p>A schematic document has a drafting viewer embedded in it. The drawing 
+     standard of that drafting viewer can be set by calling the 
+     SetDrawingStandard method. This macro also illustrates how to use the 
+     GetDrawingStandard method to retrieve the drawing standard of a schematic 
+     document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' Set the drawing standard if needed </font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         If </font>( Not ( objSchRoot Is Nothing ) )<font color="#0000FF"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchRoot.SetDrawingStandard catISO<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strMessage = strMessage &amp; &quot;drawing standard set to catISO&quot; &amp; vbCr<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            Dim </font>std<font color="#0000FF"> As </font>CatDrawingStandard<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std = objSchRoot.GetDrawingStandard<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strMessage = strMessage &amp; &quot;drawing standard = &quot; &amp; std &amp; vbCr<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to create a schematic document. A message logging 
+ the status of the critical steps is displayed at the end of the use case. </p>
+ <p>
+ <img border="0" src="images/CAASchCreateSchDocument2.jpg" width="313" height="151"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

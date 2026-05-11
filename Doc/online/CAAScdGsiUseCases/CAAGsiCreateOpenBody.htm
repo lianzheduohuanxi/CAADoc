@@ -1,0 +1,147 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Open Bodies in a Part Document</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Generative Shape Design&nbsp;</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating Open Bodies in a Part Document</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create Open Bodies in a
+      Part Document :&nbsp;</p>
+      <p><img border="0" src="images/GsiOpenBody.jpg" width="166" height="98">
+      &nbsp;</p>
+      <p>The macro creates a Part Document and creates Open Bodies.</p>
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAGsiCreateOpenBody is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAGsiCreateOpenBodySource.htm" target="Source">CAAGsiCreateOpenBody.CATScript</a>
+      is located in the CAAScdGsiUseCases module. <a href="macros/CAAGsiCreateOpenBody.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAGsiCreateOpenBody includes four steps:</p>
+      <ol>
+        <li><a href="#Step1">Creating the Part Document</a></li>
+        <li><a href="#Step2">Retrieving the Part HybridBodies Collection Object
+          to Attach 0pen Bodies</a></li>
+        <li><a href="#Step3">Creating two Open Bodies in the Part Document</a></li>
+        <li><a href="#Step4">Updating the Part Document</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Creating the Part Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre><font color="#008000">' Creating  a Part Document </font>
+<font color="#0000FF">  Dim </font>PartDocument1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">  Set </font>PartDocument1 = CATIA.Documents.Add  ( &quot;Part&quot; ) </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Opens the Part Document.&nbsp;</p>
+      <h4><a name="Step2"></a>Retrieving the Part HybridBodies Collection Object
+      to Attach Open Bodies</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre><font color="#008000">' Retrieving a Part HybridBodies collection to attaching OpenBodies     </font>
+<font color="#0000FF">  Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">  Set </font>hybridBodies1 = PartDocument1.Part.HybridBodies</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Part HybridBodies collection Object is a pre-existing Object in the
+      Part Document.<br>
+      It is used to attachall OpenBodies to&nbsp; a Part Document.<br>
+      The wireframe and surface Objects can then be created and are
+      automatically attached&nbsp; to the active OpenBody.
+      <p>The OpenBodies are used to structure wireframe and surface objects
+      created in a CATPart Document in consistent set of features .</p>
+      <h4><a name="Step3"></a>Create two Open Bodies in the Part Document&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Add a first OpenBody  </font>
+<font color="#0000FF">  Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody1 = hybridBodies1.Add()
+
+<font color="#008000">' Add a second OpenBody  </font>
+<font color="#0000FF">  Dim </font>OpenBody2<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody2 = hybridBodies1.Add()</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The OpenBodies are created and attached to the Part Document</p>
+      <p>Note : An OpenBody cannot be attached to an other OpenBody , it should
+      be associated with the HybridBodies collection Object&nbsp;</p>
+      <h4><a name="Step4"></a>Updating&nbsp; the Part Document &nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre><font color="#008000">' Updating CATIA PArt </font>
+  PartDocument1.Part.Update </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Updates the CATPart Document in order to visualize the Open Bodies
+      created in the specification tree .</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create Open Bodies in a Part Document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm">Hybrid
+      Shapes Automation Objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

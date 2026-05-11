@@ -1,0 +1,102 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>Differences between mkCheckSource and mkscc</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Differences between mkCheckSource and mkscc</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article describes the differences between the old source checker mkCheckSource and the new one mkscc.</p>
+				  <ul>
+					  <li><a href="#About">Why Changing?</a></li>
+					  <li><a href="#Developper">From Developer Perspective</a></li>
+					  <li><a href="#Resume">To Summarize</a></li>
+					  <li><a href="#History">History</a></li>
+					</ul>
+      </td>
+  </tr>
+</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="About"></a>Why Changing?</h2>
+<p>mkCheckSource was becoming very slow due to the constantly increasing size of the source code in the BSF.
+We started to have trouble with the amount of memory used to load the entire 
+syntax tree. A new architecture was needed.</p>
+<p><img alt="Memory increasing" src="images/memory.png" width="922" height="359"/></p>
+<p>mkCheckSource was split in four pieces:</p>
+<ul>
+	<li>Parsing</li>
+	<li>Checking</li>
+	<li>Filtering</li>
+	<li>Reporting.</li>
+</ul>
+<p>mkCheckSource was doing the filtering and the reporting inside the code of the checking. This was one of the reasons
+of the large amount of memory needed, since we needed to keep until the end information in order to finish the reporting.
+To avoid this we are now using database to store information required for the reporting.
+To resolve the problem of time, mkscc can work by multijobs and work by delta.
+Doing a full check on a BSF was taking 13 hours with mkCheckSource, now it only require three hours.</p>
+<p><img alt="Global Time" src="images/Time.png" width="808" height="502"/></p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Developper"></a>From Developer Perspective</h2>
+<p>Ok the new command give a huge improvement of performance in the BSF and for Release manager, but what is the gain for a 
+developer?
+If you want to have the same results as Decision Support you need to use this tool. mkCheckSource is no 
+longer updated.
+The fact it works by delta, make this new tool easy to use, you just have to check your WS and only what change will be checked.
+The new command don't check only C++, it check also JAVA with the <a href="http://pmd.sourceforge.net/">PMD</a> Parser.
+</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<h2><a name="Resume"></a>To Summarize</h2>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>mkscc:</p>
+<ul>
+	<li>Is faster.</li>
+	<li>Is less memory consuming.</li>
+	<li>Does not check only C++ but also JAVA.</li>
+	<li>Is already used for Promote Check and at BSF level.</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+
+</body>
+</html>

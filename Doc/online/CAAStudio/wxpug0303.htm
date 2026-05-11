@@ -1,0 +1,175 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/DSDoc.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Generating Interfaces</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Generating Interfaces</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This task shows you how to generate the source files of 
+		a C++ or IDL interface.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span><ul>
+			<li>Open a workspace with at least a framework and a module for a C++ 
+			interface, or an Automation framework for an IDL interface. See
+			<a href="wxpug0202.htm">Creating a Framework</a>.</li>
+			<li>Display the <kbd>Solution Explorer</kbd>.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<ol class="task">
+	<li>
+	<p>In the <kbd>Solution Explorer</kbd>, right click a module.</p>
+	</li>
+	<li>
+	<p>In the contextual menu, point to <kbd>Add</kbd>, and click
+	<img alt="New Item Icon" src="images/iconNewItem.png" width="16" height="16"/>
+	<kbd>New Item</kbd>.</p>
+	<p>The <kbd>Add New Item</kbd> dialog box opens.</p>
+	</li>
+	<li>
+		<p>In <kbd>Installed</kbd>, click the 
+		<img alt="Arrow Icon" height="8" src="images/iconArrow2.png" width="5"/> 
+		arrow in front of <kbd>3DS Templates</kbd> 
+		to expand its contents, if not yet expanded.</p>
+	</li>
+	<li>
+	<p>Click <kbd>C++</kbd>.</p>
+	<p>The C++ installed templates are displayed in the central pane.</p>
+	</li>
+	<li>
+	<p>In the central pane, click
+	<img alt="Interface Icon" src="images/iconInterface.png" width="16" height="16"/>
+	<kbd>Interface</kbd>.</p>
+	</li>
+	<li>
+	<p>In the <kbd>Name</kbd> box, type the name you want to assign to the interface. 
+	Refer to
+	<a href="#" onclick="CAAlinkOutOfPreqs('CAADocTechArticles/CAADocCppNamingRules.htm');">
+	CAA V5 C++ Naming Rules</a>.</p>
+	<table class="Remark">
+		<tr>
+			<td class="Remark"><span class="run-in">Warning</span>: This name is 
+			also used to create the header and source files. Bear in mind that:
+			<ul>
+				<li>All the characters are allowed except those listed below:
+				<pre>* ? \ / &lt; &gt; &quot; &#39; | :</pre>
+				</li>
+				<li>With Windows, full path names must not exceed 260 characters.</li>
+			</ul>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>
+	<p>Click <kbd>Add</kbd>.</p>
+	<p>The <kbd>3DS - New Interface</kbd> dialog box opens.</p>
+	</li>
+	<li>
+	<p>In <kbd>Parent class</kbd>, type the parent interface name, usually <em>CATBaseUnknown</em>.</p>
+	</li>
+	<li>
+	<p>In <kbd>Header exposition</kbd>, select how you want the interface header 
+	to be seen from.</p>
+	<table class="fill">
+		<tr>
+			<th>Exposition</th>
+			<th>Description</th>
+			<th>Folder</th>
+		</tr>
+		<tr>
+			<td><kbd>Local</kbd></td>
+			<td>Visibility from this module only.</td>
+			<td>LocalInterfaces</td>
+		</tr>
+		<tr>
+			<td><kbd>Private</kbd></td>
+			<td>Visibility from this framework only.</td>
+			<td>PrivateInterfaces</td>
+		</tr>
+		<tr>
+			<td><kbd>Protected</kbd></td>
+			<td>Visibility from the modeler only</td>
+			<td>ProtectedInterfaces</td>
+		</tr>
+		<tr>
+			<td><kbd>Public</kbd></td>
+			<td>External visibility.</td>
+			<td>PublicInterfaces</td>
+		</tr>
+	</table>
+	</li>
+	<li>
+	<p>If you want to create an Automation interface, check <kbd>IDL interface</kbd>.</p>
+	</li>
+	<li>
+	<p>If you want to create an C++ interface accessible using a smart pointer, 
+	check <kbd>Create interface handler</kbd>.</p>
+	</li>
+	<li>
+	<p>Click <kbd>Finish</kbd>.</p>
+	<p>The following is created or updated:</p>
+	<ul>
+		<li>For a C++ interface:
+		<ul>
+			<li>The header file is created where you have requested it to be, the cpp and tsrc 
+			files are created in the module src folder. These files are opened 
+				in the Code Editor window.</li>
+			<li>The dico and the iid files, if they did not exist in the framework, 
+				in the CNext\code\dictionary 
+			folder. The iid file is updated with the interface IID.</li>
+		</ul>
+		</li>
+		<li>For an Automation interface:
+		<ul>
+			<li>The IDL header file is created where you have requested it to be, 
+				and is opened in the Code Editor window.</li>
+		</ul>
+		</li>
+	</ul>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

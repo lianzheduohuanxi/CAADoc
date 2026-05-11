@@ -1,0 +1,136 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>DMUinfwriteselproductsname.CATscript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Write the name of selected products in a text file.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English</font>
+<font color="#008000">'   CATIA Level : V5R7SP3</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Build the complete name of a product.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  ioProduct Product     the product</font>
+<font color="#008000">'</font>
+<font color="#008000">' Outputs:  osName    String      the complete name</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>BuildName ( ByRef ioProduct, ByRef osName )
+
+  osName = ioProduct.Name
+<font color="#0000FF">  Dim </font>oRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">  Set </font>oRoot = CATIA.ActiveDocument.Product
+<font color="#0000FF">  Dim </font>oCurrent<font color="#0000FF"> As </font>Product
+<font color="#0000FF">  Set </font>oCurrent = ioProduct
+<font color="#0000FF">  While </font>(oCurrent.Name &lt;&gt; oRoot.Name)
+<font color="#0000FF">      Set </font>oCurrent = oCurrent.Parent.Parent
+      osName = oCurrent.Name+"\"+osName
+  Wend
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Main.</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+
+    <font color="#008000">' Initialize</font>
+<font color="#0000FF">    Dim </font>sTitle<font color="#0000FF"> As </font>String
+    sTitle = "Write name of selected products"
+<font color="#0000FF">    Dim </font>sExtension<font color="#0000FF"> As </font>String
+    sExtension = "txt"
+
+    <font color="#008000">' Create the file environment</font>
+<font color="#0000FF">    Dim </font>oFso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>oFso = CATIA.FileSystem
+<font color="#0000FF">    Dim </font>oFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">    Dim </font>oTextStream<font color="#0000FF"> As </font>CATIATextStream
+
+    <font color="#008000">' Open the output file</font>
+<font color="#0000FF">    Dim </font>iReturnCode<font color="#0000FF"> As </font>Integer
+    iReturnCode = vbRetry
+<font color="#0000FF">    While </font>(iReturnCode = vbRetry)
+
+        <font color="#008000">' Retrieve the path from the user</font>
+<font color="#0000FF">        Dim </font>sFilePath<font color="#0000FF"> As </font>String
+        sFilePath = CATIA.FileSelectionBox(sTitle, sExtension, CatFileSelectionModeSave)
+<font color="#0000FF">        If </font>(sFilePath = "") Then
+            iReturnCode = vbCancel
+        Else
+           <font color="#008000">' Verify the existence of the output file</font>
+            sFilePath = sFilePath+"."+sExtension
+<font color="#0000FF">            Dim </font>iOverwrite<font color="#0000FF"> As </font>Boolean
+            iOverwrite = False
+<font color="#0000FF">            If </font>(oFso.FileExists(sFilePath))<font color="#0000FF"> Then</font>
+                <font color="#008000">' Ask user if output file exists</font>
+                iReturnCode = Msgbox("The file "+sFilePath+" already exists ! Do you want to overwrite it ?", vbQuestion+vbAbortRetryIgnore, sTitle)
+<font color="#0000FF">                If </font>(iReturnCode = vbAbort)<font color="#0000FF"> Then</font>
+                    iReturnCode = vbCancel
+                ElseIf (iReturnCode = vbIgnore)<font color="#0000FF"> Then</font>
+                    iReturnCode = vbOK
+                    iOverwrite  = True
+<font color="#0000FF">                End If</font>
+            else 
+                iReturnCode = vbOK
+<font color="#0000FF">            End If</font>
+
+            <font color="#008000">' Create the output file</font>
+<font color="#0000FF">            If </font>(iReturnCode = vbOK)<font color="#0000FF"> Then</font>
+                On Error Resume Next
+<font color="#0000FF">                Set </font>oFile = oFso.CreateFile(sFilePath, iOverwrite)
+<font color="#0000FF">                If </font>(Err.Number &lt;&gt; 0)<font color="#0000FF"> Then</font>
+                    Err.Clear
+                    iReturnCode = Msgbox("Cannot Create "+sFilePath+" !", vbExclamation+vbRetryCancel, sTitle)
+                Else
+
+                    <font color="#008000">' Open the output file</font>
+<font color="#0000FF">                    Set </font>oTextStream = oFile.OpenAsTextStream("ForWriting")
+<font color="#0000FF">                    If </font>(Err.Number &lt;&gt; 0)<font color="#0000FF"> Then</font>
+                        iReturnCode = Msgbox("Cannot open "+sFilePath+" as a text file for writting !", vbExclamation+vbRetryCancel, sTitle)
+<font color="#0000FF">                    End If</font>
+<font color="#0000FF">                End If</font>
+                On Error goto 0
+<font color="#0000FF">            End If</font>
+<font color="#0000FF">        End If</font>
+    Wend
+
+    <font color="#008000">' Write the name of selected products</font>
+<font color="#0000FF">    If </font>(iReturnCode = vbOK)<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">        Set </font>oSelection = CATIA.ActiveDocument.Selection
+
+        <font color="#008000">' Retrieve the selected products</font>
+<font color="#0000FF">        Dim </font>oProduct<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">        Dim </font>sCompleteName<font color="#0000FF"> As </font>String
+        On Error Resume Next
+<font color="#0000FF">        While </font>(Err.Number = 0)
+<font color="#0000FF">           Set </font>oProduct = oSelection.FindObject("CATIAProduct")
+<font color="#0000FF">           If </font>(Err.Number = 0)<font color="#0000FF"> Then</font>
+
+                <font color="#008000">' Write the name</font>
+                BuildName oProduct, sCompleteName
+                oTextStream.Write sCompleteName+vbCrLf
+<font color="#0000FF">            End If</font>
+        Wend
+        On Error Goto 0
+
+       <font color="#008000">' Clean</font>
+<font color="#0000FF">        Set </font>oFile = Nothing
+<font color="#0000FF">        Set </font>oFso  = Nothing
+
+        <font color="#008000">' Report</font>
+        Msgbox sTitle+" completed !"
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

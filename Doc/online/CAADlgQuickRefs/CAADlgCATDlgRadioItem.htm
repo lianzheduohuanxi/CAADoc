@@ -1,0 +1,197 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgRadioItem</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgRadioItem</h3>
+      <em>Sets an option among several mutually exclusive ones</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgMenuItem.htm">CATDlgMenuItem</a>
+        |
+        +---CATDlgRadioItem</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Radio Item</caption>
+  <tr>
+    <td><img src="images/CATDlgRadioItem.jpg" alt="CATDlgRadioItem.jpg (9356 bytes)" width="180" height="149"></td>
+    <td>Each item beside is a radio item instance. The radio items allow for
+      selecting mutually exclusive options, that is one radio item is checked
+      and all the others are unchecked. For example, the figure beside is a part
+      of the View-&gt;Render Style submenu where you must choose the render
+      style among six existing possibilities. In this example, Apply Customized
+      view is selected, and the corresponding item is checked. The five other
+      radio items are consequently unchecked. The checked radio item is depicted
+      by the check sign. This is the default and can vary depending on the
+      platform and on the CATIA User Interface Style used. Note that if another
+      radio item were checked, such as <img src="images/ListRadioItem.jpg" alt="ListRadioItem.jpg (2002 bytes)" width="128" height="25">,
+      the associated icon would appear as pressed, providing the appropriate
+      icons for both check and uncheck states were supplied.</td>
+  </tr>
+</table>
+<p>Use radio items whenever you propose to the end user a choice among several
+mutually exclusive options, that is when one option only can be selected among
+all the options proposed.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The default radio item style</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgRadIModifyNotification</td>
+    <td><code>GetRadIModifyNotification</code></td>
+    <td>Whenever the radio item is checked or unchecked</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>A radio item never exists alone, but always belongs to a set of radio items
+grouped in the same container, such as a frame or a tabpage. All the radio items
+of the same container are automatically bound together in such a way that only
+one among all can be checked while the others are unchecked. Checking a given
+radio item unchecks the one that was checked before.</p>
+<p>A notification is sent whenever the user presses a radio item. This
+notification can be retrieved using the&nbsp; <code>GetRadBModifyNotification</code>
+method. The radio item state can be <code>CATDlgCheck</code> when it is checked,
+and <code>CATDlgUncheck</code> when it is not. You can have to test this state
+using the method <code>GetState</code>, or to set it using the method <code>SetState</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Radio Item</h4>
+<p>The radio item should have for parent either the menu, submenu, toolbar, or
+icon box in which it appears:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pRadioItem = new CATDlgRadioItem(iParent, iName);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Callback on a Radio Item</h4>
+<p>Set a callback on a radio item as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+   _pRadioItem,                                  // radio item 
+   _pRadioItem-&gt;GetRadIModifyNotification(),     // notification
+   (CATCommand)&amp;Container::MethodToExecute,      // method to execute 
+   CATCommandClientData iUsefulData);            // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Retrieving or Setting the State of a Radio Item</h4>
+<p>When the end user checks a radio item,&nbsp; this radio item sends a
+notification, instance of the CATDlgRadIModifyNotification class. This
+notification can be retrieved using the <code>GetRadIModifyNotification</code>
+method. If, in the same container, another radio item was checked, it is
+unchecked. and it also sends a CATDlgRadIModifyNotification notification. Since
+each radio item has usually its own callback method, each of them is executed.
+To help distinguish in such a callback method whether the radio item is checked
+or unchecked, use the GetState method that retrieves the state. The following
+example shows how to do this.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void Container::MethodToExecute(CATCommand           * iRadioItem,
+                                CATNotification      * iNotification,
+                                CATCommandClientData   iUsefulData)
+{
+  if (iRadioItem-&gt;GetState() == CATDlgCheck) // radio item is checked
+  { // Do what's required when the radio item is checked }
+  else                                          // radio item is unchecked
+  { // Do what's required when the radio item is unchecked }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>You can set the state of a radio item using the <code>SetState</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int iNotify = 1;
+_pRadioItem-&gt;SetState(CATDlgUncheck, iNotify);</pre>
+    </td>
+  </tr>
+</table>
+<p>Set the first parameter to the state you require, and the parameter <code>iNotify</code>
+to a non null value if you want that the corresponding notification is sent.
+Otherwise set to 0, no notification is sent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Title to a Radio Item</h4>
+<p>The radio item should be set by the resource file using a key built with the
+identifier you declare as the second parameter of the radio item constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

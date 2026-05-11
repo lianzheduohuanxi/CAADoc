@@ -1,0 +1,165 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>An Introduction to Geometric Modeler Use Cases</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>An Introduction to Geometric Modeler Use Cases</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article describe the code portions which are common to most geometric 
+		modeler use cases. The purpose of use cases is to illustrate the use of 
+		CGM APIs and focus on the way to use these APIs in a geometric modeler environment. 
+		Use cases require input data which is:</p>
+		<ul>
+			<li>Either created directly in the use case.</li>
+			<li>Or retrieved from an NCGM file.</li>
+		</ul>
+		<p>This article explains how to create data from the geometry factory or 
+		retrieve special data from an NCGM container. Both operations are widely 
+		used in geometric modeler use cases.</p>
+		<p>Results produced by use cases can be stored in an NCGM container which 
+		is displayable by using the CAAGMModelGemBrowser use case.</p>
+		<ul>
+			<li><a href="#Create">Creating Data Directly from the Geometry Factory</a></li>
+			<li><a href="#Retrieve">Retrieving Data from a Loaded NCGM Container
+			</a></li>
+			<li><a href="#Writes the Model and Closes the Factory">Writing the Model 
+			and Closing the Factory</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Create"></a>Creating Data Directly from the Geometry Factory</h2>
+<p>To create data directly, you must:</p>
+<ol>
+	<li>Create the CATGeoFactory. The geometry factory (CATGeoFactory) creates and 
+	manages all the CATICGMObject (and the curves and surfaces in particular). This 
+	creation is done by using the global function <code>::CATCreateCGMContainer</code>.
+	<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>()</pre>
+	</li>
+	<li>Create the geometric objects by using the geometry factory, for example:
+	<pre class="code">CATLine * piLine = piGeomFactory-&gt;<strong>CreateLine</strong>(CATMathO,     // (0,0,0) math point
+                                             CATMathVector(1.,1.,0.) );
+...
+CATCylinder* piCylinder = piGeomFactory-&gt;<strong>CreateCylinder</strong>(CATMathOIJK, // canonical axis system
+                                                        radius,
+                                                        axisStart,
+                                                        axisEnd,
+                                                        angleStart,
+                                                        angleEnd);</pre>
+	</li>
+</ol>
+<p><strong>Note</strong>: Although geometric objects are handled by the mean of 
+interfaces, such as <code>CATCartesianPoint</code>, <code>CATLine</code>, or
+<code>CATBody</code>, the pointers on these objects must not be released. In fact, 
+they are released at the closure of the factory (the <code>CATCloseCGMContainer</code> 
+global function).</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Retrieve"></a>Retrieving Data from a Loaded NCGM Container</h2>
+<p>To retrieve input data from an already existing container, you must:</p>
+<ol>
+	<li>Retrieve the CATGeoFactory from the input file by using the global function
+	<code>::CATLoadCGMContainer</code>. In most use cases the input file is specified 
+	as an argument of the main program, so that the code to load it looks something 
+	like this:
+	<pre class="code">char *pFileName = NULL;
+pFileName = iArgv[1];
+
+ifstream filetoread(pFileName, ios::binary ) ;
+
+CATGeoFactory* piGeomFactory = <strong>::CATLoadCGMContainer</strong>(filetoread) </pre>
+	</li>
+	<li>Retrieve specific objects by using the CATICGMContainer::FindObjectFromTag 
+	method. This method requires a prerequisite knowledge of the persistent tag 
+	born by the object to be retrieved.
+	<pre class="code">CATICGMObject * piCGMObj1 = piGeomFactory-&gt;FindObjectFromTag(667827);</pre>
+	</li>
+	<li>You can also retrieve objects with a given type by scanning the container.<pre class="code">cout &lt;&lt; &quot;Scanning the geometry... &quot; &lt;&lt; endl; 
+CATGeometry * piCurG = NULL;
+CATULONG32 curtag;
+for (piCurG = piGeomFactory-&gt;Next(NULL,CATPLineType);
+     piCurG != NULL;
+     piCurG = piGeomFactory-&gt;Next(piCurG)) 
+{
+<strong>// Find the PLine from its persistent tag
+//</strong>
+curtag = piCurG-&gt;GetPersistentTag();
+CATICGMObject * piCGMObj = piGeomFactory-&gt;FindObjectFromTag(curtag);
+...
+}</pre>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h2>
+<p>To save the use case result in a file, the <code>::CATSaveCGMContainer</code> 
+global function is used. Notice that in most use cases, the save is conditioned 
+by an input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>In GM use cases, input data can be created by using the geometry factory 
+	APIs or by loading an NCGM container. </li>
+	<li>GM use cases end by saving the result into an NCGM container and by closing 
+	the factory.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jan 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,385 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Fix Constraint in Part Design</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Assembly Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Fix Constraint in Part Design</h3>
+      <em>Set a fix constraint to the Part</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAuiCreateFixConstraintInPart use case. This use
+      case explains how to create, list and remove a fix constraint in a Part document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAAuiCreateFixConstraintInPart Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAAuiCreateFixConstraintInPart Do</a></li>
+            <li><a href="#How">How to Launch CAAAuiCreateFixConstraintInPart</a></li>
+            <li><a href="#Where">Where to Find the CAAAuiCreateFixConstraintInPart
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA Part Design. Its main intent is to fix an element in Part design
+document. More specifically, you will learn how to:</p>
+<ul>
+  <li>Open a part document.</li>
+  <li>Access the part feature in the document.</li>
+  <li>Access its geometrical features sets, thanks to the <i>CATIDescendants.</i></li>
+  <li>Create Constraint on the one of the children of geometrical features sets.</li>
+  <li>List the created constraint.</li>
+  <li>Remove the constraint.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAuiCreateFixConstraintInPart Use Case</h3>
+<p>CAAAuiCreateFixConstraintInPart is a use case of the CAAAssemblyUI.edu framework that
+illustrates the ConstraintModeler framework capabilities.</p>
+<p>Before discussing the use case, some main concepts, about the fix constraint,
+have to be introduced:</p>
+<ul>
+  <li>
+    <p>A fix constraint is a geometrical relation created on a feature or a
+    body, with respect to the 3D space</li>
+  <li>
+    <p>The object then cannot be moved in 3D space, though its defining
+    parameters can be modified</li>
+  <li>
+    <p>The fix constraint appears in the specification tree at the same
+level as the element to be constrained and they are displayed under PartBody or
+    GeometricalSet, which owns the element.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAuiCreateFixConstraintInPart Do</h4>
+<p><img border="0" src="images/CAAAuiCreateFixConstraintInPart.jpg" width="662" height="482"></p>
+<p>CAAAuiCreateFixConstraintInPart:</p>
+<ul>
+  <li>Opens a session.</li>
+  <li>Opens a document.</li>
+  <li>Gets the root (spec) container of given CATPart.</li>
+  <li>Gets the mechanicalPart feature which is contained in the specification container of a Part document.</li>
+  <li>Retrieves all (non order) GeometricalSet type children of a Part.</li>
+  <li>Get the (line) child by its (3rd) position of GeometricalSet.</li>
+  <li>Create a constraint : Type - Fix constraint, Element to be constrained - Line.</li>
+  <li>Get the list of constraints under a given Part.</li>
+  <li>Remove constraint.</li>
+  <li>Closes document.</li>
+  <li>Closes session.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAuiCreateFixConstraintInPart</h4>
+<p>To launch CAAAuiCreateFixConstraintInPart, you will need to set up the build time
+environment, then compile CAAAuiCreateFixConstraintInPart along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAAuiCreateFixConstraintInPart InputDirectory OutputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAAuiCreateFixConstraintInPart InputDirectory OutputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><code>InputDirectory</code></td>
+      <td>The directory into which Line_FixCst.CATPart is stored, usually in the
+        resources directory of your RuntimeView</td>
+    </tr>
+    <tr>
+      <td>OutputDirectory</td>
+      <td>The directory into which output part &quot;Line_FixCst_output.CATPart&quot; is
+        stored&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAuiCreateFixConstraintInPart Code</h4>
+<p>The CAAAuiCreateFixConstraintInPart use case is located in the CAAAuiCreateFixConstraintInPart.m module of the CAAAssemblyUI.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAssemblyUI.edu\CAAAuiCreateFixConstraintInPart.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAssemblyUI.edu/CAAAuiCreateFixConstraintInPart.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Where"></a>Replaying CAAAuiCreateFixConstraintInPart ODT</h4>
+<p>The required data for CAAAuiCreateFixConstraintInPart ODT is located in the CAAAssemblyUI.tst
+framework:</p>
+<table>
+  <tr>
+    <td>Shell script</td>
+    <td><code>InstallRootDirectory/</code>CAAAssemblyUI.tst/FunctionTests/TestCases/CAAAuiCreateFixConstraintInPart.sh</td>
+  </tr>
+  <tr>
+    <td>InputData</td>
+    <td><code>InstallRootDirectory/</code>CAAAssemblyUI.tst/FunctionTests/TestCases/InputData/Line_FixCst.CATPart</td>
+  </tr>
+  <tr>
+    <td>Output</td>
+    <td><code>InstallRootDirectory/</code>CAAAssemblyUI.tst/FunctionTests/TestCases/Output/intel_a/Line_FixCst_output.CATPart</td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five main steps in CAAAuiCreateFixConstraintInPart:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Creating a fix constraint in part document</a></li>
+  <li><a href="#Step3">Listing the constraint</a></li>
+  <li><a href="#Step4">Removing the Constraint</a></li>
+  <li><a href="#Step5">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAAuiCreateFixConstraintInPart begins by checking that the command lines contains
+one argument (file path of CATPart document). It then creates a session, and
+opens a CATPart document with the help static method <i>OpenDocument</i> of
+class <i>CATProductDocument</i>. It then retrieves the document's root(specification)
+container handle of type <i>CATIPrtContainer</i>, and then retrieves mechanical
+part feature handle (of type <i>CATIPrtPart</i>). It searches part's descendants
+(<i>CATIDescendants</i>) of type &quot;non-ordered geometrical set&quot;. Under
+geometrical set, it searches for the 3rd child that is line and retrieves line's
+handle ( of type <i>CATISpecObject</i>) as</p>
+<table width="100%">
+  <tr>
+    <td><code>spSpecLine</code></td>
+    <td>A pointer to <i>CATISpecObject </i>onto the line.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2">Creating a fix constraint in part document.</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+CATICst_var spCst = NULL_var;
+CATLISTV(CATBaseUnknown_var) ElemList; 
+ElemList.Append(spSpecLine);</pre>
+      <pre>
+// Create a constraint : Type - Fix constraint, Element to be constrained - Line,  
+rc = CATConstraintServices::CreateConstraintIn(	spPart, 
+						CstType_Reference,
+						ElemList,
+						0.0,
+						CATCstVal_Mode_Constrained,
+						spCst);</pre>
+      <pre>// Process errors
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constraint is created using the static method <i>CreateConstraintIn </i>of
+the class <i>CATConstraintServices</i>. The only out argument to this method is
+the handle of the created constraint. <i>CreateConstraintIn </i> has the following arguments...</p>
+<table width="100%">
+  <tr>
+    <td valign="top">spPart</td>
+    <td valign="top">The owner of the created constraint, can be a Part or a
+      Sketch.</td>
+  </tr>
+  <tr>
+    <td valign="top">CstType_Reference</td>
+    <td valign="top">The constraint's type: a fix constraint.</td>
+  </tr>
+  <tr>
+    <td valign="top">ElemList</td>
+    <td valign="top">The list of geometry involved in the constraint, can
+      contain from 1 to 3 elements.</td>
+  </tr>
+  <tr>
+    <td valign="top">0.0</td>
+    <td valign="top">The constraint's value. For angle or offset constraints
+      only.</td>
+  </tr>
+  <tr>
+    <td valign="top">CATCstVal_Mode_Constrained</td>
+    <td valign="top">The creation mode.</td>
+  </tr>
+  <tr>
+    <td valign="top">spCst</td>
+    <td valign="top">The created constraint.</td>
+  </tr>
+</table>
+
+<h4>&nbsp;</h4>
+
+<h4><a name="Step3">Listing the constraint.</a></h4>
+<table class="code" width="596">
+  <tr>
+    <td width="592">
+      <pre>  ...
+// Get the list of constraints under a given Part 
+CATLISTV(CATICst_var) CstList;
+rc=CATConstraintServices::ListConstraints(spPart, CstList);
+if(SUCCEEDED(rc))
+{
+	cout &lt;&lt; &quot;***** Listing constraints *****&quot; &lt;&lt; endl;
+	cout &lt;&lt; &quot;*** Total constraints = &quot; &lt;&lt; CstList.Size() &lt;&lt; endl;
+}
+else
+{
+	// Process errors
+}
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constraints are listed using the static method <i>ListConstraints </i>of
+the class <i>CATConstraintServices</i>. If no constraints are found, the call to
+method will fail. <i>ListConstraints </i> has the following arguments...</p>
+<table width="100%">
+  <tr>
+    <td valign="top">spPart</td>
+    <td valign="top">The Part or Sketch where the constraints are created.</td>
+  </tr>
+  <tr>
+    <td valign="top">CstList</td>
+    <td valign="top">The resulting constraints list.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4">Removing the Constraint.</a></h4>
+<table class="code" width="619">
+  <tr>
+    <td width="611">
+      <pre>  ...
+// Remove constraints
+rc = CATConstraintServices::RemoveConstraint(spCst);
+if ( SUCCEEDED(rc) )
+	cout &lt;&lt; &quot;***** Removing constraint ***** &quot; &lt;&lt; endl;
+else
+{
+	// Process errors
+}
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constraint is removed using the static method <i>RemoveConstraint </i>of
+the class <i>CATConstraintServices</i>. <i>RemoveConstraint </i> has the following arguments...</p>
+<table width="100%">
+  <tr>
+    <td valign="top">spCst</td>
+    <td valign="top">The constraint to remove. The constraint has to be defined
+      in a Part or a Sketch.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Epilog</h4>
+<p>Close the document an then session is closed, as usual.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create, list and remove the fix constraint
+on the (non-order geometrical set) element of a part design document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Mar 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

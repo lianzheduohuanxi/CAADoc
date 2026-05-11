@@ -1,0 +1,712 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Developing a Browsing Driver</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Portal Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>3d com Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Developing a Browsing Driver</h3>
+      <em>How to develop a driver to browse a document in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPLBADriverWithVisu use case. This use
+      case explains how to implement the interfaces in order to create a new
+      driver and send documents in the viewer.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAPLBADriverWithVisu Implementation Use
+          Case</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAPLBADriverWithVisu Do</a></li>
+            <li><a href="#How">How to Launch CAAPLBADriverWithVisu</a></li>
+            <li><a href="#Where">Where to find the CAAPLBADriverWithVisu Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you develop a Driver in ENOVIA Portal.<br>
+Its main intent is to allow you to view documents, text, html, Office document,
+2D or 3D format.<br>
+We will define three types of data: the part type, the catia model type and the
+document type.</p>
+<p>This use case looks like the Pst Driver use case. The three main differences
+are:</p>
+<ul>
+  <li>The structure data for this use case are hard coded. The structure is not
+    read from a Pst file since datatype PST_FILE doesn't exist here,</li>
+  <li>A new datatype DOCUMENT enables the association of files which can be
+    browsed or edited</li>
+  <li>The datatype are not bookmarkable here.</li>
+</ul>
+<p>Since the use cases Pst Driver and Driver with Visu share common code, all
+the explanations are not repeated here. Several references are made to the Pst
+Driver use case which is considered as e prerequisite to read this document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Driver Implementation Use Case</h3>
+<p>CAAPLBADriverWithVisu is a use case of the CAAPortalBaseApplications.edu
+framework that illustrates the ENOVIA PortalBaseApplications framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPLBADriverWithVisu Do</h4>
+<p>This driver allows you to visualize: hierarchical data in the Portal WebTree
+and document in the WebSpace.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAPLBADriverWithVisu</h4>
+<p>Before launching ENOVIA Portal and using the new driver, you have to compile
+it and declare it in some environment files.</p>
+<ol>
+  <li><a href="#Compil">Compilation</a></li>
+  <li><a href="#Config">Environment files for the driver</a></li>
+  <li><a href="#DriverUse">Driver Use</a></li>
+</ol>
+<h5><a name="Compil"></a>Compilation</h5>
+<p>You have to compile the java files and make a jar file thanks to the <i>mkmk</i>
+command.</p>
+<p>This sample is using different document file samples (text, html and cgm).
+You will probably have to change pathes to access these files in the
+WithVisuDriverImpl.java source file:
+<table>
+  <tr>
+    <td><code>_path_toCAARTV = &quot;E:/B13/intel_a&quot;;</code></td>
+    <td>is the path to your CAA installation runtime view<br>
+    </td>
+  </tr>
+  <tr>
+    <td><code>_path_toDocOnline = &quot;E:/B13/Doc/online&quot;;</code></td>
+    <td>is the path to your doc online installation<br>
+    </td>
+  </tr>
+  <tr>
+    <td><code>URLDocument doc =<br>
+      new URLDocument(&quot;http://localhost/sample/cgmFiles/nasa.cgm&quot;);</code></td>
+    <td>http://localhost/sample/cgmFiles/nasa.cgm is the url to access the local
+      file InstallRootDirectory/$OS/docs/sample/cgmFiles/nasa.cgm on your
+      machine if an http server is running.<br>
+    </td>
+  </tr>
+  <tr>
+    <td><code>FileDocumentV4 doc0 =<br>
+      new FileDocumentV4(&quot;/u/users/userid/foo.txt&quot;);</code></td>
+    <td>/u/users/userid/foo.txt is the remote file path to access a file foo.txt
+      on your server.<br>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+
+<h5><a name="Config"></a>Environment Files for the Driver</h5>
+<p>In order to add this new driver, you have to modify:</p>
+<ul>
+  <li>the property files dsar.properties,</li>
+  <li>Driver.properties</li>
+  <li>and the xml file SearchProject.xml .</li>
+</ul>
+<p>These modified files are in:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPortalBaseApps.edu\Data.d\DriverWithVisu</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPortalBaseApps.edu/Data.d/DriverWithVisu</code></td>
+  </tr>
+</table>
+<p>and must be put in</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\intel_a\docs\java</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/$OS/docs/java</code></td>
+  </tr>
+</table>
+<h6>dsar.properties</h6>
+<p>Modification of the file dsar.properties to register the new jar file in the
+CATlet where this jar will be used:<br>
+in BookmarkTreeCATlet (you have to increment the number of dsar):</p>
+<!-- <table class="code">
+  <tr>
+    <td>
+      <pre>...
+catlet.11=com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet
+<strong>catlet.11.nbdsar=30</strong>
+catlet.11.dsar.0=PortalBookmarkTree.dsar
+...
+<strong>catlet.11.dsar.29=CAAPLBADriverWithVisu.jar</strong>
+...</pre>
+    </td>
+  </tr>
+</table> -->
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CLASS: com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet
+PortalBookmarkTree.dsar
+...
+<strong>CAAPLBADriverWithVisu.jar</strong>
+...</pre>
+    </td>
+  </tr>
+</table>
+<h6>Driver.properties</h6>
+<p>Modification of the file Driver.properties to add the new driver:<br>
+This file contains the list of all the drivers and the information to use it.<br>
+Increment the number of drivers.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>group=13
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Specify the path of the class that implements the Driver2 interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+group.12.element=1
+group.12.name=WithVisu Driver
+group.12.element.0.classname=com.dassault_systemes.CAAPortalBaseApps.CAAPLBADriverWithVisu.WithVisuDriverImpl
+group.12.element.0.label=WithVisu Driver</pre>
+    </td>
+  </tr>
+</table>
+<h6>SearchProject.xml</h6>
+<p>To add the bookmark &quot;DriverWithVisu queries&quot; and the sub-bookmark
+&quot;Query all&quot; in the Search Tree (to access the driver query window),
+you have to add this lines in SearchProject.xml.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>&lt;folder NAME=&quot;DriverWithVisu queries&quot;&gt;
+&lt;BOOKMARK NAME=&quot;Query All&quot; 
+url=&quot;http://localhost/casta/type.com.casta.generic.Query/?CATLET_TYPE=JAVAQUERYTOOL&amp;amp;Specification=Query_WithVisuDriver&quot;&gt;
+&lt;/BOOKMARK&gt;&lt;/folder&gt;</b>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="DriverUse"></a><b>Driver Use</b></h5>
+<p>Step 1 - Launch ENOVIA Portal and select the Search Tree workbook</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse1.jpg" width="806" height="562"></p>
+<p>Note the new &quot;DriverWithVisu queries&quot; bookmark that has appeared in
+the Search Tree workbook. If you cannot see it, the reason may be that you see a
+previous version of the Search Tree workbook. To update the Search Tree
+workbook: delete it and add it again.</p>
+<p>Step 2 - Open the &quot;DriverWithVisu queries&quot; bookmark, right click on
+the &quot;Query All&quot; sub-bookmark and select &quot;Activate&quot;.</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse2.jpg" width="839" height="566"></p>
+<p>Note that as a result the &quot;DriverWithVisu Query&quot; CATlet has been
+instantiated in the webspace.</p>
+<p>Step 3 - Enter the % query string in the DriverWithVisu Driver CATlet and
+press the submit button.</p>
+<p>As a result, the list of all the parts available with the WithVisu Driver are
+displayed (this is a hard coded data model).</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse3.jpg" width="839" height="566"></p>
+<p>Step 4 - Double-click on the &quot;Part1&quot; result and select the Search
+Tree workbook as target workbook</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse4.jpg" width="199" height="243"></p>
+<p>Note that as a result a bookmark to the selected result is created in the
+Search Tree workbook.</p>
+<p>Step 5 - Open the &quot;shortcut of Part1 Rev1 A349&quot; bookmark and
+navigate in the product structure by opening the different nodes.</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse5.jpg" width="839" height="566"></p>
+<p>Note that you can display the properties of each leaf or node of the
+hierarchical tree by clicking on the Properties tab of the webtree.</p>
+<p>Step 5 - Right click on &quot;Document20&quot; under &quot;Part3 Rev3
+A437&quot; and select Open in new &quot;2D Local Viewer&quot;.</p>
+<p align="center"><img border="0" src="images/WithVisuDriverUse6.jpg" width="819" height="614"></p>
+<p>The last &quot;Open in new&quot; action shows the possibility of visualizing
+documents from a PDM in ENOVIA Portal.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPLBADriverWithVisu Code</h4>
+<p>The CAAPLBADriverWithVisu use case is made of three class named:
+WithVisuDriverImpl, WithVisuMetdataImpl, and WithVisuDataImpl located in the
+CAAPLBADriverWithVisu.mj module of the CAAPortalBaseApplication.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPortalBaseApps.edu\CAAPLBADriverWithVisu.mj\src\com\dassault_systemes\CAAPortalBaseApps\CAAPLBADriverWithVisu</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPortalBaseApps.edu\CAAPLBADriverWithVisu.mj/src/com/dassault_systemes/CAAPortalBaseApps/CAAPLBADriverWithVisu</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a driver for data access, there are six main steps.</p>
+<ol>
+  <li><a href="#DriverIF">Implementing the Interface Driver2</a></li>
+  <li><a href="#SecurityIF">Implementing the Mandatory Interface SecurityIF</a></li>
+  <li><a href="#EnvIF">Implementing the Mandatory Interface EnvironmentIF</a></li>
+  <li><a href="#MetaIF">Implementing the Mandatory Interface MetadataIF</a></li>
+  <li><a href="#DataIF">Implementing the Mandatory Interface DataIF</a></li>
+  <li><a href="#Query">Creating the File Query_DriverWithVisu.properties</a></li>
+</ol>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="DriverIF"></a>Implementing the Interface Driver2</h4>
+<p>Creation of a new class WithVisuDriverImpl which implements the interface
+com.dassault_systemes.catweb.databackend.dataType.Driver2.</p>
+<p>Please refer to the documentation of the Pst Driver sample for the
+presentation of this interface. The only differences between the two
+implementations are the implementations classes for the MetadataIF and DataIF
+interfaces.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class WithVisuDriverImpl implements Driver2
+{
+  ...
+  private WithVisuMetadataImpl     _metadata    = null ;  
+  private WithVisuDataImpl         _data        = null ;
+...
+public void start(InformationObject iInformation)
+{
+  ...
+  _metadata    = new WithVisuMetadataImpl();
+  _data        = new WithVisuDataImpl(_metadata);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The name of the driver:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public String getName()
+  {
+    return &quot;WithVisu Driver&quot;; 
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method setParameter doesn't need to be implemented in this use case. It
+deals with parameters that could be set in a properties file. There is no such
+parameter here so the method is empty.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="SecurityIF"></a>Implementing the Mandatory Interface SecurityIF</h4>
+<p>As in the Pst Driver use case, the default implementation of
+defaultSecurityIFImpl is used here. See [<a href="#References">1</a>] for more
+explanations.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="EnvIF"></a>Implementing the Mandatory Interface EnvironmentIF</h4>
+<p>As in the Pst Driver use case, the default implementation of
+defaultEnvironmentIFImpl is used here. See [<a href="#References">1</a>] for
+more explanations.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="MetaIF"></a>Implementing the Mandatory Interface MetaDataIF</h4>
+<p>The purpose of this interface is to describe the types of data managed by the
+driver. The data could have different types. For example this system will
+provide 3 types of objects: part, model and document.<br>
+A new class: WithVisuMetadataImpl is created to implement the interface
+MetadataIF. This interface contains one method: getTypes, which returns an array
+of PEType Objects.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class WithVisuMetadataImpl implements MetadataIF
+{ 
+  private PEType[] _aType = null ;
+
+  public PEType[] getTypes()
+  {     
+    if( _aType == null)
+    {
+      _aType = new PEType[3];
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>There are three parameters to construct the different PETypes of this system.
+<ul>
+  <li>A name: here &quot;PART_LIST&quot;, &quot;CATIA_MODEL&quot; and
+    &quot;DOCUMENT&quot;. This name is the unique identifier of the PEType.</li>
+  <li>A Boolean indicating whether the type is query able. In this use case,
+    only the type &quot;PART_LIST&quot; is query able.<br>
+    Moreover the query is only allowed with a search string (value 0) as shown
+    by the one-dimension array of the parameter of the setSupportedQueries
+    method.</li>
+  <li>The icon representing every PENode or PELeaf of this type.<br>
+    The icons: I_Body, iDBmodel01 and iDBdocument01 are .gif files with the
+    format 16x16 and are already registered in the jar of the WebTree.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      _aType[0] = new PEType(&quot;PART_LIST&quot;, true, &quot;Resources/I_Body.gif&quot;);
+      _aType[1] = new PEType(&quot;CATIA_MODEL&quot;, false, &quot;Resources/iDBmodel01.gif&quot;);
+      _aType[2] = new PEType(&quot;DOCUMENT&quot;, false, &quot;Resources/iDBdocument01.gif&quot;);
+
+      int[] aFileQuery = new int[1] ;
+      fileQuery[0]=0;
+      types[0].setSupportedQueries(aFileQuery);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then the attributes describing each type are given. For example PART_LIST
+type has 4 attributes: NAME, REV, ID and MATURITY.<br>
+The visible name of a PART_LIST node is composed of the value of the
+&quot;NAME&quot; attribute, the value of the &quot;REV&quot; attribute and the
+value of the &quot;MATURITY&quot; attribute. That's why ID is declared not
+visible by the setTreeVisibility method and all other PEAttribute have a
+treeVisibility equal to their position in the concatenation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      PEAttribute[] aPartAtt = new PEAttribute[4];
+
+      aPartAtt[0] = new PEAttribute(&quot;NAME&quot;,&quot;Name&quot;,_aType[0],0);
+      aPartAtt[0].setTreeVisibility(1);
+
+      aPartAtt[1] = new PEAttribute(&quot;REV&quot;,&quot;Revision&quot;,_aType[0],0);
+      aPartAtt[1].setTreeVisibility(2);
+
+      aPartAtt[2] = new PEAttribute(&quot;ID&quot;,&quot;id&quot;,_aType[0],0);
+      aPartAtt[2].setTreeVisibility(0);
+
+      aPartAtt[3] = new PEAttribute(&quot;MATURITY&quot;,&quot;maturity&quot;,_aType[0],0);
+      aPartAtt[3].setTreeVisibility(3);
+	 
+      _aType[0].setAttributes(aPartAtt);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="DataIF"></a>Implementing the Mandatory Interface DataIF</h4>
+<p>The DataIF interface enables the display and the query of data. It is
+implemented in a new WithVisuDataImpl instantiated by the driver. Two methods
+have to be implemented:
+<ul>
+  <li>QueryRoot to find data from a query</li>
+  <li>openNode to expand a node.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class WithVisuDataImpl implements DataIF
+{ 
+ <em> // The types defined in MetadataIF</em>
+  private PEType[] _types = null;
+
+  <em>// The pathes to CAA workspace rutimeview and to doc online</em>
+  private String _path_toCAARTV = null ;
+  private String _path_toDocOnline = null ;
+      
+  public WithVisuDataImpl( MetadataIF iMDimpl )
+  {
+    _types = iMDimpl.getTypes();
+    ...
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The QueryRoot method searches the objects which meet the conditions expressed
+by a query and which belongs to a specified environment. For this use case only
+the simple query (Search String) is supported for the PEType
+&quot;PART_LIST&quot;. The returned data are hard coded: whatever the search
+string is, the method returns three nodes: Part1, Part2 and Part3.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public PELeaf[] QueryRoot(java.lang.Object iSearch, PEType iTypeOfObject, String iEnvironment)
+  {
+    PENode[] aNodesToBack = new PENode[3] ;
+
+<em>    // Creates the attribute list corresponding to the array of the PEAttribute
+    // of the PEtype of the Object</em>
+    String[] aPartAtt = new String[4];
+
+    aPartAtt[0] = &quot;Part1&quot;;
+    aPartAtt[1] = &quot;Rev 1&quot;;
+    aPartAtt[2] = &quot;A349&quot;;
+    aPartAtt[3] = &quot;Niv 1&quot;;
+ 
+ <em>   // &quot;Nodes1&quot; is the unique identifier of the Node
+    // _types[0] corresponds to the Type of the Node
+    // the last null corresponds to the array of children</em>
+    aNodesToBack[0] = new PENode(new defaultUuidImpl(&quot;Node1&quot;), _types[0], null);
+
+ <em>   // Adds the attributes of the PENode</em>
+    NodesToBack[0].setAttributeValues(aPartAtt);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The openNode method returns the children of a Node.<br>
+In this use case, the returned children of a node are hard coded.<br>
+Part1 has 3 children: Part2, Part3 and a document Document10 to which a
+LocalFileDocument is attached. The LocalFileDocument is used to set files that
+are on the client file system so it is identified by its path.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public PELeaf[] openNode(PENode iNode)   
+  {
+    PELeaf[] aNodesToBack = null;</pre>
+      <pre>    if (((node.getAttributeValues())[0]).equals(&quot;Part1&quot;))
+    {
+    aNodesToBack = new PELeaf[3];</pre>
+      <pre>    String[] aDocAtt = new String[2];
+    aDocAtt[0] = &quot;Document 10&quot;;
+    aDocAtt[1] = &quot;user2&quot;;
+
+    aNodesToBack[0] = new PELeaf(new defaultUuidImpl(&quot;Document10&quot;),_types[2]);
+    aNodesToBack[0].setAttributeValues(aDocAtt);
+
+    //---------------------------------------------
+    // Constructs a LocalFileDocument
+    //---------------------------------------------
+    String docPath = _path_toDocOnline+&quot;/CAAPbaUseCases/CAAPbaUDriverWithVisu.htm&quot;;
+    LocalFileDocument doc = new LocalFileDocument(docPath);
+
+    //---------------------------------------------
+    // Attaches the document to the PELeaf
+    //---------------------------------------------
+    aNodesToBack[0].setDocument(doc);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then Part2 has only one child: Document20 to which a URLDocument is attached.
+The URLDocument is used to set files that are on a http server.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    else if (((node.getAttributeValues())[0]).equals(&quot;Part2&quot;))
+    {
+      aNodesToBack=new PELeaf[1];
+
+      String[] aDocAtt = new String[2];
+      aDocAtt[0] = &quot;Document 20&quot;;
+      aDocAtt[1] = &quot;user1&quot;;
+      aNodesToBack[0] = new PELeaf(new defaultUuidImpl(&quot;Document20&quot;),_types[2]);
+      aNodesToBack[0].setAttributeValues(aDocAtt);
+
+      <em>// Constructs a URLDocument</em>
+      // provided that for instance a web server is running on localhost and /sample/cgmFiles/nasa.cgm
+      // is available from the rootdirectory of the server
+      URLDocument doc = new URLDocument(&quot;http://localhost/sample/cgmFiles/nasa.cgm&quot;);
+      aNodesToBack[0].setDocument(doc);  
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>At last, Part3 has 2 children: a model Model20 and a document Document20.<br>
+The document attached to Model20 is a FileDocumentV4. The FileDocumentV4 is used
+to set files that are on the Portal server.<br>
+The document attached to Document20 is a URLDocument. So URLDocument are not
+only used to set files located on a http server, but also to the URLDocument can
+also be used to set files located on the client file system.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    else if (((node.getAttributeValues())[0]).equals(&quot;Part3&quot;))
+    {
+      aNodesToBack=new PELeaf[2];
+
+      String[] aModelAtt = new String[3];
+      aModelAtt[0] = &quot;Model 20&quot;;
+      aModelAtt[1] = &quot;Rev 003&quot;;
+      aModelAtt[2] = &quot;user1&quot;;
+      aNodesToBack[0] = new PELeaf(new defaultUuidImpl(&quot;Model20&quot;),_types[1]);
+      aNodesToBack[0].setAttributeValues(aModelAtt);
+
+      <em>// Constructs a FileDocumentV4</em>
+      // provided that for instance the /u/users/userid/foo.txt file exists on the portal server
+      FileDocumentV4 doc0 = new FileDocumentV4(&quot;/u/users/userid/foo.txt&quot;);
+      aNodesToBack[0].setDocument(doc0);
+
+      String[] aDocAtt = new String[2];
+      aDocAtt[0] = &quot;Document 20&quot;;
+      aDocAtt[1] = &quot;user2&quot;;
+      aNodesToBack[1]=new PELeaf(new defaultUuidImpl(&quot;Document20&quot;),_types[2]);      
+      aNodesToBack[1].setAttributeValues(aDocAtt);
+
+     <em> // Constructs a URLDocument</em>
+      String doc1Path = &quot;file:/&quot;+_path_toCAARTV+&quot;/docs/sample/cgmFiles/nasa.cgm&quot;;
+      URLDocument doc1 = new URLDocument(doc1Path);
+      aNodesToBack[1].setDocument(doc1);  
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Query"></a>Creating the File Query_DriverWithVisu.properties</h4>
+<p>The Query_DriverWithVisu.properties file is referenced in the &quot;Query
+All&quot; sub-bookmark that has been defined in SearchProject.xml file. The
+inner mechanism is that when the &quot;Query All&quot; sub-bookmark is activated
+the Query CATlet is instantiated giving the Query_DriverWithVisu.properties file
+as a parameter.</p>
+<p>The file Query_DriverWithVisu.properties specifies different properties of
+the query window:</p>
+<ul>
+  <li>The name of the query window
+    <table class="code">
+      <tr>
+        <td>
+          <pre>nameofQuery=DriverWithVisu Query
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The kind of query that will be proposed (if this query is supported by the
+    queried PEType)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+typeOfQuery=Casta.StringSearch
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>All the queriable PEType (if this PEType is queriable), specifing the name
+    of the PEType (&quot;Casta.All&quot; is the wild card for all the PEType)
+    and the name of the Driver to access this PEType.<br>
+    Though all the PEType of WithVisu Driver should be queriable, but the
+    &quot;PART_LIST&quot; type is constructed as queriable, then only the
+    &quot;PART_LIST&quot; type is proposed in the query window.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+nbTypes=1
+Types.0.id=Casta.All
+Types.0.driver_id=WithVisu Driver</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates the way to create a driver in ENOVIA Portal by
+using some interfaces of databackend.dataType.<br>
+First the <i>Driver2</i> interface has to be implemented by a new class which
+must also provide the implementation of mandatory interfaces: <i>MetadatIF,
+DataIF</i><em>, SecurityIF, EnvironmentIF</em>. Some default implementations are
+supplied by Dassault Systèmes.<br>
+This use case also illustrates how some interfaces of databackend.dataType can
+be used to send documents in the WebSpace: <em>LocalFileDocument, FileDocumentV4
+</em>and<em> URLDocument.</em><br>
+At last, a new property file must describe this driver.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPbaUDriverPst.htm">Pst Driver Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

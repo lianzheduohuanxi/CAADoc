@@ -1,0 +1,375 @@
+<html>
+	<head>
+		<title>Creating an Helicoidal Stair</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<meta content="Microsoft FrontPage 4.0" name="GENERATOR">
+		<meta content="FrontPage.Editor.Document" name="ProgId">
+		<link href="../CAAScrBase/caav5.css" type="text/css" rel="stylesheet">
+			<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+	</head>
+	<body>
+		<table width="100%" border="0">
+			<tr>
+				<td>
+					<h2>Generative Shape Design</h2>
+				</td>
+				<td vAlign="top" align="right">
+					<h2><a name="Top"></a>Creating an Helicoidal Stair</h2>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!----------------------------------comment------------------------------------->
+		<table width="100%" border="0">
+			<tr>
+				<td vAlign="top" width="7%"><img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></td>
+				<td width="93%">
+					<p>This macro shows how to use Knowledge parameters and Generative Shape Design to 
+						create repetitive geometry in a CATIA Macro:</p>
+					<p><img height="367" src="images/GsiStair.jpg" width="240" border="0"></p>
+					<p>The macro illustrates the following topics:
+						<ul>
+							<li>
+							Creating a CATIA Part document.
+							<li>
+							Show/Noshow of wireframe and surfacic objects.
+							<li>
+							Adding a new OpenBody.
+							<li>
+							Creating parameters and formulas / Using them in wireframe and surface object 
+							definitions.
+							<li>
+							Generating reference for each input object / CATIA methods require references 
+							as input for object creations.
+							<li>
+							Creating wireframe and shape design objects.
+							<li>
+							Updating CATIA Part/ Note: it has to be done at the end for better performances 
+							when replaying macro.
+							<li>
+								Reframing the 3D window.
+							</li>
+						</ul>
+					<!----------------------------------comment-------------------------------------></td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="7%"><img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></td>
+				<td width="93%">
+					<p><a name="How"></a>CAAGsiCreateStair is launched in CATIA [<A href="#References">1</A>]. 
+						Open a CATIA Part Document.</p>
+					<!----------------------------------comment------------------------------------->
+					<p><a href="CAAGsiCreateStairSource.htm">CAAGsiCreateStair.CATScript</A> is located 
+						in the CAAScdGsiUseCases module. <a href="macros/CAAGsiCreateStair.CATScript">Execute 
+							macro</A> (Windows only).</p>
+					<p></p>
+				</td>
+			</tr>
+			<tr>
+				<td vAlign="top" width="7%"><img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></td>
+				<td width="93%">
+					<p><a name="Step"></a>CAAGsiCreateStair includes four steps</p>
+					<ol>
+						<li>
+							<A href="#Step1">Creating a Part Document</A>
+						<li>
+							<A href="#Step2">Settting Variables and Knowledge Parameters</A>
+						<li>
+							<A href="#Step3">Computing the Number of Steps for the Stair</A>
+						<li>
+							<A href="#Step4">Generating the Steps</A>
+						<li>
+							<A href="#Step5">Updating the Part Document and Reframing</A>
+						</li>
+					</ol>
+					<h4><a name="Step1"></a>Creating a Part Document</h4>
+					<table class="code">
+						<tr>
+							<td><pre>  <font color=#008000>' Creating  a Part Document</FONT> 
+    <font color=#0000ff>Dim</FONT> PartDoc <font color=#0000ff>As</FONT> Document
+    <font color=#0000ff>Set</FONT> PartDoc = CATIA.Documents.Add  ( "Part" )</pre>
+							</td>
+						</tr>
+					</table>
+					<h4><a name="Step2"></a>Setting Variables and Knowledge Parameters</h4>
+					<table class="code">
+						<tr>
+							<td><pre>  <font color=#008000>' Setting knowledge parameters</FONT>
+    <font color=#0000ff>Dim</FONT> parameters <font color=#0000ff>As</FONT> Object
+    <font color=#0000ff>Set</FONT> parameters = PartDoc.Part.parameters
+  <font color=#008000>' declare of a working Parm object</FONT>
+    <font color=#0000ff>Dim</FONT> Parm <font color=#0000ff>As</FONT> Object
+
+  <font color=#008000>' Setting knowledge relations</FONT>
+    <font color=#0000ff>Dim</FONT> relations<font color=#0000ff> As</FONT> Object
+    <font color=#0000ff>Set</FONT> relations = PartDoc.Part.relations
+  <font color=#008000>' declare a working Formula object</FONT>
+    <font color=#0000ff>Dim</FONT> Formula <font color=#0000ff>As</FONT> Object</pre>
+							</td>
+						</tr>
+					</table>
+					<p>The "Parm" and "Formula" objects are collections of knowledge parameters and 
+						Formula.</p>
+					<table class="code">
+						<tr>
+							<td><pre> <font color=#008000>' Creating Parameters for stair generation</FONT>
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("HelixPitch", "LENGTH", Pitch)
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("HelixHeight", "LENGTH", Height)
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("StepHeight", "LENGTH", StepValue)</pre>
+							</td>
+						</tr>
+					</table>
+					<p>The definition of knowledge parameters and their use in creating objects allows 
+						to parameterize object creation.<br>
+						That is a key point in using CATIA V5 objects.<br>
+						For example, if the "StepHeight" is not correct in the resulting CATIA Part , 
+						it can be interactively modified<br>
+						and all the objects using "StepHeight" value are automatically updated.</p>
+					<table class="code">
+						<tr>
+							<td><pre><font color=#008000>   ' Creating a line for helix definition</FONT>
+    <font color=#0000ff>Dim</FONT> Line <font color=#0000ff>As</FONT> Object
+    <font color=#0000ff>Set</FONT> Line = PartDoc.Part.HybridShapeFactory.AddNewLinePtDir(Point1, Dir, 0, HelixHeight, False)
+    myHBody.AppendHybridShape Line
+
+  <font color=#008000>' Create a formula defining the line offset value as equal to the helix height parameter</FONT>
+    <font color=#0000ff>Set</FONT> Formula = relations.CreateFormula("Formula.0", "", Line.EndOffset, "HelixHeight")
+  <font color=#008000>' Set Parameters for stair generation</FONT>
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("HelixPitch", "LENGTH", Pitch)
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("HelixHeight", "LENGTH", Height)
+    <font color=#0000ff>Set</FONT> Parm = parameters.CreateDimension("StepHeight", "LENGTH", StepValue)</pre>
+							</td>
+						</tr>
+					</table>
+					<p>The defined parameters can be used to create a formula.</p>
+					<p>For example, a formula can be associated with the Line object parameter in order 
+						to be updated if the "HelixHeight" paramater is modified</p>
+					<h4><a name="Step3"></a>Computing the Number of Steps for the Stair</h4>
+					<table class="code">
+						<tr>
+							<td><pre>  <font color=#008000>' Computing the number of steps to be generated</FONT>
+    <font color=#0000ff>Dim</FONT> index<font color=#0000ff> As</FONT> Integer
+    index  = HelixHeight / StepHeight
+    ...
+  <font color=#008000>' --------------------------------------------------------------</FONT>
+  <font color=#008000>' Loop on steps</FONT>
+  <font color=#008000>' --------------------------------------------------------------</FONT>
+  <font color=#008000>'</FONT>
+    <font color=#0000ff>Dim</FONT> CounterStep <font color=#0000ff>As</FONT> Integer
+    <font color=#0000ff>For</FONT> CounterStep = 1 <font color=#0000ff>To</FONT> index  Step 1
+      ...
+    <font color=#0000ff>Next</FONT></pre>
+							</td>
+						</tr>
+					</table>
+					<p>The number of steps is directly related to the helix height and the step height. 
+						The number of step and then of the objects created in the CATIA Part Document 
+						depend on these two parameters</p>
+					<h4><a name="Step4"></a>Generating the Steps</h4>
+					<h4><img height="337" src="images/GsiOneStep.jpg" width="666" border="0"></h4>
+					<p></p>
+					<table class="code">
+						<tr>
+							<td><pre>      <font color=#008000>' Create a new openbody for each step</FONT>
+        <font color=#0000ff>Set</FONT> myHBody = PartDoc.Part.HybridBodies.Add()
+
+        <font color=#0000ff>Dim</FONT> stepbody As Object 
+     	<font color=#0000ff>Set</FONT> stepbody = PartDoc.Part.CreateReferenceFromObject(myHBody)
+	PartDoc.Part.HybridShapeFactory.ChangeFeatureName stepbody, "Step." &amp; CounterStep</pre>
+							</td>
+						</tr>
+					</table>
+					<p>Each geometry related to one step is inserted in a specific OpenBody</p>
+					<table class="code">
+						<tr>
+							<td><pre>        <font color=#008000>'Point0 = Point reference for the step on the axis</FONT>
+               <font color=#0000ff>Dim</FONT> Intersection1 <font color=#0000ff>As</FONT> Object
+               <font color=#0000ff>Set</FONT> Intersection1 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefLine, RefPlane)
+        myHBody.AppendHybridShape Intersection1
+               <font color=#0000ff>Set</FONT> Pt0 = PartDoc.Part.CreateReferenceFromObject(Intersection1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt0, 0
+
+        <font color=#008000>'Point1 = Point reference for the step on the helix</FONT>
+               <font color=#0000ff>Dim</FONT> Intersection2 <font color=#0000ff>As</FONT> Object
+               <font color=#0000ff>Set</FONT> Intersection2 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlane, RefHelix)
+        myHBody.AppendHybridShape Intersection2
+               <font color=#0000ff>Set</FONT> Pt1 = PartDoc.Part.CreateReferenceFromObject(Intersection2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt1, 0
+
+        <font color=#008000>'PlanOffset= Step height reference plane</FONT>
+               <font color=#0000ff>Dim</FONT> PlaneOffset2 <font color=#0000ff>As</FONT> Object
+               <font color=#0000ff>Set</FONT> PlaneOffset2 = PartDoc.Part.HybridShapeFactory.AddNewPlaneOffset(RefPlane, StepHeight, False)
+        myHBody.AppendHybridShape PlaneOffset2
+               <font color=#0000ff>Set</FONT> Formula = relations.CreateFormula("Formula.Step.1", "", PlaneOffset2.Offset, "StepHeight")
+               <font color=#0000ff>Set</FONT> RefPlaneOffset = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefPlaneOffset, 0</pre>
+							</td>
+						</tr>
+					</table>
+					<p>The "RefPlane" is the reference plane for each step.</p>
+					<p>A formula is associated with the offset value of the "PlaneOffset" from the 
+						"RefPlane". Then, the "StepHeight" parameter pilots<br>
+						the object creation and will update the offsetted plane position if its value 
+						is modified afterwards.</p>
+					<table class="code">
+						<tr>
+							<td><pre>        <FONT color=#008000>'Point3 = Point reference on helix</FONT>
+<FONT color=#0000ff>        Dim </FONT>Intersection3<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Intersection3 = PartDoc.Part.HybridShapeFactory.AddNewIntersection(RefPlaneOffset, RefHelix)
+        myHBody.AppendHybridShape<FONT color=#0000ff> Int</FONT>ersection3
+<FONT color=#0000ff>        Set </FONT>Pt3 = PartDoc.Part.CreateReferenceFromObject(Intersection3)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt3, 0
+    
+        <FONT color=#008000>'Point2 = Point Projected from helix on step ground plane</FONT>
+<FONT color=#0000ff>        Dim </FONT>Project1 <FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Project1 = PartDoc.Part.HybridShapeFactory.AddNewProject(Pt3, RefPlane)
+        Project1.SolutionType = 0
+        Project1.Normal = True
+        myHBody.AppendHybridShape Project1
+<FONT color=#0000ff>        Set </FONT>Pt2 = PartDoc.Part.CreateReferenceFromObject(Project1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility Pt2, 0
+    
+        <FONT color=#008000>' Step definition contours : 2 lines and a circle arc</FONT>
+        <FONT color=#008000>' Line1</FONT>
+<FONT color=#0000ff>        Set </FONT>LinePt0Pt1 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt1)
+        myHBody.AppendHybridShape LinePt0Pt1
+<FONT color=#0000ff>        Dim </FONT>RefLinePt0Pt1<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>RefLinePt0Pt1 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        
+        <FONT color=#008000>' Line2</FONT>
+<FONT color=#0000ff>        Set </FONT>LinePt0Pt2 = PartDoc.Part.HybridShapeFactory.AddNewLinePtPt(Pt0, Pt2)
+        myHBody.AppendHybridShape LinePt0Pt2
+<FONT color=#0000ff>        Dim </FONT>RefLinePt0Pt2<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>RefLinePt0Pt2 = PartDoc.Part.CreateReferenceFromObject(LinePt0Pt2)
+        
+        <FONT color=#008000>' Circle arc</FONT>
+<FONT color=#0000ff>        Dim </FONT>Circle3Points<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Circle3Points = PartDoc.Part.HybridShapeFactory.AddNewCircle3Points(Pt0, Pt1, Pt2)
+        Circle3Points.SetLimitation 2
+        myHBody.AppendHybridShape Circle3Points
+<FONT color=#0000ff>        Dim </FONT>RefCircle<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>RefCircle = PartDoc.Part.CreateReferenceFromObject(Circle3Points)
+        
+<FONT color=#0000ff>        Dim </FONT>Split<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Split = PartDoc.Part.HybridShapeFactory.AddNewHybridSplit(RefCircle, RefLinePt0Pt1, 1)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt1, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefLinePt0Pt2, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefCircle, 0
+        myHBody.AppendHybridShape Split
+<FONT color=#0000ff>        Dim </FONT>RefSplit<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>RefSplit = PartDoc.Part.CreateReferenceFromObject(Split)
+        
+        <FONT color=#008000>' Step surface</FONT>
+<FONT color=#0000ff>        Dim </FONT>Fill<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Fill = PartDoc.Part.HybridShapeFactory.AddNewFill()
+        Fill.AddBound(RefLinePt0Pt1)
+        Fill.AddBound(RefSplit)
+        Fill.AddBound(RefLinePt0Pt2)
+        myHBody.AppendHybridShape Fill
+        
+        <FONT color=#008000>'Riser (Opposite-step) surface</FONT>
+<FONT color=#0000ff>        Dim </FONT>Extrude<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Extrude = PartDoc.Part.HybridShapeFactory.AddNewExtrude(RefLinePt0Pt2, HauteurMarche, 0, Dir)
+        myHBody.AppendHybridShape Extrude
+<FONT color=#0000ff>        Set </FONT>Formula = relations.CreateFormula("Formula.Step.2", "", Extrude.BeginOffset, "StepHeight")
+        
+        <FONT color=#008000>' Join of two surfaces</FONT>
+<FONT color=#0000ff>        Set </FONT>RefFill = PartDoc.Part.CreateReferenceFromObject(Fill)
+<FONT color=#0000ff>        Set </FONT>RefExtrude = PartDoc.Part.CreateReferenceFromObject(Extrude)
+        
+<FONT color=#0000ff>        Dim </FONT>Join<FONT color=#0000ff> As </FONT>Object
+<FONT color=#0000ff>        Set </FONT>Join = PartDoc.Part.HybridShapeFactory.AddNewJoin(RefFill, RefExtrude)
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefFill, 0
+        PartDoc.Part.HybridShapeFactory.GSMVisibility RefExtrude, 0
+        myHBody.AppendHybridShape Join
+        </pre>
+							</td>
+						</tr>
+					</table>
+					<p>All the objects necessary to create one step are generated</p>
+					<p>Note :The wireframe and shape design objects can be put in no-show using the 
+						specific method of HybridShapeFactory: GSMVisibility</p>
+					<table class="code">
+						<tr>
+							<td><pre>        '<font color=#008000> End of loop - re-initializing the reference plane for the next step</FONT>
+        <font color=#008000>' RefPlane = RefPlaneOffset</FONT>
+               <font color=#0000ff>Set</FONT> RefPlane = PartDoc.Part.CreateReferenceFromObject(PlaneOffset2)</pre>
+							</td>
+						</tr>
+					</table>
+					<p>For the next loop, the "RefPlane" is updated.<br>
+						The new "RefPlane" for the next step is the OffsetPane used in current step</p>
+					<h4><a name="Step5"></a>Updating the Part Document and Reframing</h4>
+					<table class="code">
+						<tr>
+							<td><pre>     <font color=#008000>'Updating CATIA Part Document</FONT>
+    <font color=#008000>' Note : Performed only at the end of geometry generation</FONT>
+
+    PtDoc.Part.Update</pre>
+							</td>
+						</tr>
+					</table>
+					<p><b>Note</b>: The update of the CATIA Part Document is done at the end for 
+						performances reason:<br>
+						The generation of the geometry representation of the objects and their 
+						visualization is done in one step</p>
+					<table class="code">
+						<tr>
+							<td><pre>         <font color=#008000>' Reframing CATIA Part Window</FONT>
+       <font color=#0000ff>Dim</FONT> specsAndGeomWindow1<font color=#0000ff> As</FONT> Window
+       <font color=#0000ff>Set</FONT> specsAndGeomWindow1 = CATIA.ActiveWindow
+
+       <font color=#0000ff>Dim</FONT> viewer3D1<font color=#0000ff> As</FONT> Viewer
+       <font color=#0000ff>Set</FONT> viewer3D1 = specsAndGeomWindow1.ActiveViewer
+    viewer3D1.Reframe
+
+       <font color=#0000ff>Dim</FONT> viewpoint3D1<font color=#0000ff> As</FONT> Viewpoint3D</pre>
+							</td>
+						</tr>
+					</table>
+					<p>The reframing is done to view in the 3D window all objects created and updated 
+						once the macro has been replayed</p>
+				</td>
+			</tr>
+		</table>
+		<!----------------------------------comment------------------------------------->
+		<p align="center"><img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></p>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="InShort"></a>In Short</h4>
+		<p>This use case has shown how to use a CATIA Macro to parameterize the generation 
+			of geometry.</p>
+		<ul>
+			<li>
+			The number of steps generated depends on the initial values given at the 
+			beginning of the macro.
+			<li>
+			The object definitions are done using knowledge parameters and relations that 
+			can be modified afterwards in a CATIA Interactive session
+			<li>
+				The CATIA Macro can be adapted in an Excel VBA Macro: the input parameters can 
+				be set in an Excel sheet (See <a href="samples/CAAGsiCreateStair.xls">CAAGsiCreateStair.xls</A>)
+			</li>
+		</ul>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!----------------------------------comment------------------------------------->
+		<h4><a name="References"></a>References</h4>
+		<table width="100%" border="0">
+			<tr>
+				<td vAlign="top">[1]</td>
+				<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</A></td>
+			</tr>
+			<tr>
+				<td vAlign="top">[2]</td>
+				<td><a href="../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm">Hybrid 
+						Shapes Automation Objects</A></td>
+			</tr>
+		</table>
+		<p align="right">[<A href="#Top">Top</A>]</p>
+		<hr>
+		<!----------------------------------comment------------------------------------->
+		<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

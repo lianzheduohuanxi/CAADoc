@@ -1,0 +1,803 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Implementing Interfaces for Automation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Implementing Interfaces for Automation</h3>
+      <em>Making your components available from scripting languages</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to make your interfaces available from
+      scripting languages, such as Visual Basic or JScript. It is a programmer's
+      guide (how to) to show which statements to include for Automation, and
+      which gives you a check-list of the rules to observe.
+      <ul>
+        <li><a href="#600000"><strong>Implementing Your Interfaces for
+          Automation</strong></a></li>
+        <ul>
+          <li><a href="#610000">Method Returned Value</a></li>
+          <li><a href="#620000">Method Parameters</a></li>
+          <li><a href="#630000">Properties</a></li>
+          <li><a href="#640000">Using Character Strings</a></li>
+          <li><a href="#650000">Using CATVariants</a></li>
+          <li><a href="#660000">Using Arrays</a></li>
+        </ul>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>Implementing Your Interfaces for Automation</h3>
+<p>We define how to code operations to implement interfaces [<a href="#References">1</a>].
+IDL operations are turned into methods (C++ purists name them functions.)
+Nevertheless, we do deal neither with parameters nor with data members. Some
+additional information is given here to make good dispatch interfaces and how
+the IDL language is related with the C++ abstract classes generated.</p>
+<p>The implementation classes you'll create should derive from CATBaseObject,
+except collections which should derive from CATBaseCollection.</p>
+<p><img border="0" src="images/CAASysAutomation2.gif" width="508" height="311"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="610000"></a>Method Returned Value</h4>
+<p>All methods must return an <code>HRESULT</code> value [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="620000"></a>Method Parameters</h4>
+<p>Method parameter types must be coded with IDL in the method signature with a
+directional attribute. An input parameter is declared with the <code>in</code>
+directional attribute, while an output parameter is declared with the <code>out</code>
+directional attribute. A parameter passed in both directions is declared with <code>inout</code>.
+For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT MyExposedMethod(in                  &lt;type&gt; iparameter,
+                        out                 &lt;type&gt; oparameter,
+                        inout /*IDLRETVAL*/ &lt;type&gt; ioparameter);</pre>
+    </td>
+  </tr>
+</table>
+<p>The supported types and their C++ and VBScript correspondences are shown in
+the following tables:</p>
+<ul>
+  <li><a href="#Table1">Table 1</a> for in parameters</li>
+  <li><a href="#Table2">Table 2</a> for out parameters</li>
+  <li><a href="#Table3">Table 3</a> for inout parameters</li>
+</ul>
+<table width="100%">
+  <caption><a name="Table1"></a>Table 1: Supported Types for in Parameters of
+    Non-Property Methods</caption>
+  <tr>
+    <td><b>CAA V5 IDL</b></td>
+    <td><b>C++</b></td>
+    <td><b>VBScript</b></td>
+  </tr>
+  <tr>
+    <td>in float</td>
+    <td>const float</td>
+    <td>Single</td>
+  </tr>
+  <tr>
+    <td>in double</td>
+    <td>const double</td>
+    <td>Double</td>
+  </tr>
+  <tr>
+    <td>in short</td>
+    <td>const short</td>
+    <td>Integer</td>
+  </tr>
+  <tr>
+    <td>in long</td>
+    <td>const long</td>
+    <td>Long</td>
+  </tr>
+  <tr>
+    <td>in char</td>
+    <td>const char</td>
+    <td>Byte</td>
+  </tr>
+  <tr>
+    <td>in boolean</td>
+    <td>const boolean</td>
+    <td>Boolean</td>
+  </tr>
+  <tr>
+    <td>in CatYYY</td>
+    <td>CATYYY</td>
+    <td>Long (enumerated value)</td>
+  </tr>
+  <tr>
+    <td>in CATBSTR</td>
+    <td>const CATBSTR&amp;</td>
+    <td>String</td>
+  </tr>
+  <tr>
+    <td>in CATIAXXX</td>
+    <td>CATIAXXX*</td>
+    <td>VB object</td>
+  </tr>
+  <tr>
+    <td>in CATVariant</td>
+    <td>const CATVariant&amp;</td>
+    <td>any of the above types</td>
+  </tr>
+  <tr>
+    <td>in CATSafeArrayVariant</td>
+    <td>const CATSafeArrayVariant&amp;</td>
+    <td>VB unidimensional array</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%">
+  <caption><a name="Table2"></a>Table 2: Supported Types for out Parameters of
+    Non-Property Methods (Note the lack of CATSafeArrayVariant support)</caption>
+  <tr>
+    <td><b>CAA V5 IDL</b></td>
+    <td><b>C++</b></td>
+    <td><b>VBScript</b></td>
+  </tr>
+  <tr>
+    <td>out float</td>
+    <td>float&amp;</td>
+    <td>Single</td>
+  </tr>
+  <tr>
+    <td>out double</td>
+    <td>double&amp;</td>
+    <td>Double</td>
+  </tr>
+  <tr>
+    <td>out short</td>
+    <td>short&amp;</td>
+    <td>Integer</td>
+  </tr>
+  <tr>
+    <td>out long</td>
+    <td>long&amp;</td>
+    <td>Long</td>
+  </tr>
+  <tr>
+    <td>out char</td>
+    <td>char&amp;</td>
+    <td>Byte</td>
+  </tr>
+  <tr>
+    <td>out boolean</td>
+    <td>boolean&amp;</td>
+    <td>Boolean</td>
+  </tr>
+  <tr>
+    <td>out CatYYY</td>
+    <td>CatYYY&amp;</td>
+    <td>Long (enumerated value)</td>
+  </tr>
+  <tr>
+    <td>out CATIAXXX</td>
+    <td>CATIAXXX*&amp;</td>
+    <td>VB object</td>
+  </tr>
+  <tr>
+    <td>out CATSafeArrayVariant</td>
+    <td>CATSafeArrayVariant*&amp;</td>
+    <td>VB unidimensional array</td>
+  </tr>
+</table>
+<p>Note:  </p>
+<ul>
+  <li>the lack of CATBSTR and CATVariant support for out parameters,</li>
+  <li>it is recommended to use out /*IDLRETVAL*/ instead of inout for 
+CATSafeArrayVariant when possible because it avoids to have to provide a method 
+returning the size of the array.</li>
+</ul>
+<table width="100%">
+  <caption><a name="Table3"></a>Table 3: Supported Types for inout Parameters of
+    Non-Property Methods</caption>
+  <tr>
+    <td><b>CAA V5 IDL</b></td>
+    <td><b>C++</b></td>
+    <td><b>VBScript</b></td>
+  </tr>
+  <tr>
+    <td>inout float</td>
+    <td>float&amp;</td>
+    <td>Single</td>
+  </tr>
+  <tr>
+    <td>inout double</td>
+    <td>double&amp;</td>
+    <td>Double</td>
+  </tr>
+  <tr>
+    <td>inout short</td>
+    <td>short&amp;</td>
+    <td>Integer</td>
+  </tr>
+  <tr>
+    <td>inout long</td>
+    <td>long&amp;</td>
+    <td>Long</td>
+  </tr>
+  <tr>
+    <td>inout char</td>
+    <td>char&amp;</td>
+    <td>Byte</td>
+  </tr>
+  <tr>
+    <td>inout boolean</td>
+    <td>boolean&amp;</td>
+    <td>Boolean</td>
+  </tr>
+  <tr>
+    <td>inout CatYYY</td>
+    <td>CatYYY&amp;</td>
+    <td>Long (enumerated value)</td>
+  </tr>
+  <tr>
+    <td>inout CATBSTR</td>
+    <td>CATBSTR&amp;</td>
+    <td>String</td>
+  </tr>
+  <tr>
+    <td>inout CATVariant</td>
+    <td>CATIAXXX*</td>
+    <td>VB object</td>
+  </tr>
+  <tr>
+    <td>inout CATIAXXX</td>
+    <td>CATVariant&amp;</td>
+    <td>any of the above types</td>
+  </tr>
+  <tr>
+    <td>inout CATSafeArrayVariant</td>
+    <td>CATSafeArrayVariant&amp;</td>
+    <td>VB unidimensional array</td>
+  </tr>
+</table>
+<p>The IDL file doesn't include the <code>*</code> pointer declarator or the <code>&amp;</code>
+reference declarator.</p>
+<p>Optional parameters cannot be used.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+Several output parameters can be used, but only one output parameter can be used
+with <code>/*IDLRETVAL*/ </code>with Visual Basic. It must be the last parameter
+in the signature. A method declared like this, with <code>oArg4</code> declared
+using <code>/*IDLRETVAL*/</code> in the IDL file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT DoThis(in short iArg1,
+               in short iArg2,
+               in short iArg3,
+               out /*IDLRETVAL*/ short oArg4);</pre>
+    </td>
+  </tr>
+</table>
+<p>has the following signature in C++:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT DoThis(short iArg1, short iArg2, short iArg3, short &amp; oArg4);</pre>
+    </td>
+  </tr>
+</table>
+<p>It is called like this in C++</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT rc = Obj-&gt;DoThis(iArg1, iArg2, iArg3, &amp; oArg4);</pre>
+    </td>
+  </tr>
+</table>
+<p>but like this in Visual Basic or Basic Script:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>oArg4 = Obj.DoThis(iArg1, iArg2, iArg3)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="630000"></a>Properties</h4>
+<p>Some methods are often used as accessors (also named setter/getter) to set
+and get the value of a data. For example, the <code>SetName</code> method of the
+CATCommand class sets the name of the MyCommand instance, while the <code>GetName</code>
+method retrieves this name from the MyCommand instance data members. This can be
+used as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// C++
+if (MyCommand-&gt;GetName() == &quot;&quot;)
+{
+   MyCommand-&gt;SetName(CATString(&quot;Nice Command Name&quot;));
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This makes it possible to encapsulate data members and protects client
+applications from implementation changes. With Visual Basic, the goal is quite
+different. Everything must be as easy as possible for the client application
+programmer, and data is manipulated through properties, equivalent to the
+Set/Get methods, that Visual Basic handles as variables.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// VBScript
+If MyCommand.Name = &quot;&quot; Then
+   MyCommand.Name = &quot;Nice Command Name&quot;
+End If</pre>
+    </td>
+  </tr>
+</table>
+<p>Such a property is declared using the <code>#pragma PROPERTY</code> statement
+in the IDL file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// IDL
+#pragma PROPERTY PropertyName
+  HRESULT get_PropertyName (out /*IDLRETVAL*/ &lt;type&gt; oPropertyValue);
+  HRESULT put_PropertyName (in  &lt;type&gt; iPropertyValue);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>#pragma PROPERTY</code> statement declares the property name, that
+is the name dedicated to Visual Basic to handle this property, and the two
+following statements declare the methods to retrieve this property value (<code>get_PropertyName</code>)
+and to set it (<code>put_PropertyName</code>). If the property type is CATBSTR,
+the parameter of the <code>get_PropertyName</code> method must be set as inout.
+To declare a read/only property, simply remove the <code>put_PropertyName</code>
+method. The example of the CATCommand class for its Name property becomes:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// IDL
+#pragma PROPERTY Name
+  HRESULT get_Name (inout /*IDLRETVAL*/ CATBSTR oName);
+  HRESULT put_Name (in  CATBSTR iName);</pre>
+    </td>
+  </tr>
+</table>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+This implies that no identifier must begin with <code>get_</code> or with <code>put_</code>.</p>
+<p>With C++, such methods become:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT get_Name (CATBSTR &amp; oName);
+HRESULT put_Name (CATBSTR   iName);</pre>
+    </td>
+  </tr>
+</table>
+<p>The supported types and their C++ and VBScript correspondences are shown in
+the following tables:</p>
+<ul>
+  <li><a href="#Table1">Table 4</a> for get_ functions</li>
+  <li><a href="#Table2">Table 5</a> for put_ functions</li>
+</ul>
+<p>&nbsp;</p>
+<table width="100%">
+  <caption><a name="Table4"></a>Table 4: Supported Types for Property get_
+    functions</caption>
+  <tr>
+    <td><b>CAA V5 IDL</b></td>
+    <td>C++</td>
+    <td>VBScript</td>
+  </tr>
+  <tr>
+    <td>out float</td>
+    <td>float&amp;</td>
+    <td>Single</td>
+  </tr>
+  <tr>
+    <td>out double</td>
+    <td>double&amp;</td>
+    <td>Double</td>
+  </tr>
+  <tr>
+    <td>out short</td>
+    <td>short&amp;</td>
+    <td>Integer</td>
+  </tr>
+  <tr>
+    <td>out long</td>
+    <td>long&amp;</td>
+    <td>Long</td>
+  </tr>
+  <tr>
+    <td>out char</td>
+    <td>char&amp;</td>
+    <td>Byte</td>
+  </tr>
+  <tr>
+    <td>out boolean</td>
+    <td>boolean&amp;</td>
+    <td>Boolean</td>
+  </tr>
+  <tr>
+    <td>out CatYYY</td>
+    <td>CatYYY&amp;</td>
+    <td>Long (enumerated value)</td>
+  </tr>
+  <tr>
+    <td>inout CATBSTR</td>
+    <td>CATBSTR&amp;</td>
+    <td>String</td>
+  </tr>
+  <tr>
+    <td>out CATIAXXX</td>
+    <td>CATIAXXX*&amp;</td>
+    <td>VB object</td>
+  </tr>
+  <tr>
+    <td>inout CATVariant</td>
+    <td>CATVariant&amp;</td>
+    <td>any of the above types</td>
+  </tr>
+  </table>
+<p>Note:</p>
+<ul>
+  <li>the irregularity with CATBSTR and CATVariant,</li>
+  <li>for get_functions parameters, /*IDLRETVAL*/ is mandatory,</li>
+  <li>the lack of CATSafeArrayVariant support.</li>
+</ul>
+<table width="100%">
+  <caption><a name="Table5"></a>Table 5: Supported types for property put_
+    functions</caption>
+  <tr>
+    <td><b>CAA V5 IDL</b></td>
+    <td><b>C++</b></td>
+    <td><b>VBScript</b></td>
+  </tr>
+  <tr>
+    <td>in float</td>
+    <td>float</td>
+    <td>Single</td>
+  </tr>
+  <tr>
+    <td>in double</td>
+    <td>double</td>
+    <td>Double</td>
+  </tr>
+  <tr>
+    <td>in short</td>
+    <td>short</td>
+    <td>Integer</td>
+  </tr>
+  <tr>
+    <td>in long</td>
+    <td>long</td>
+    <td>Long</td>
+  </tr>
+  <tr>
+    <td>in char</td>
+    <td>char</td>
+    <td>Byte</td>
+  </tr>
+  <tr>
+    <td>in boolean</td>
+    <td>boolean</td>
+    <td>Boolean</td>
+  </tr>
+  <tr>
+    <td>in CatYYY</td>
+    <td>CATYYY</td>
+    <td>Long (enumerated value)</td>
+  </tr>
+  <tr>
+    <td>in CATBSTR</td>
+    <td>const CATBSTR&amp;</td>
+    <td>String</td>
+  </tr>
+  <tr>
+    <td>in CATIAXXX</td>
+    <td>CATIAXXX*</td>
+    <td>VB object</td>
+  </tr>
+  <tr>
+    <td>in CATVariant</td>
+    <td>const CATVariant&amp;</td>
+    <td>any of the above types</td>
+  </tr>
+</table>
+<p>Note the lack of CATSafeArrayVariant support.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="640000"></a>Using Character Strings</h4>
+<p>Visual Basic uses <code>BSTR</code> character strings, which stand for basic
+string, or binary string. CAA V5 uses the CATUnicodeString class to handle
+character strings without language dependency, and the CATString class for non
+translatable character strings. The use of char * is prohibited, but you can
+nevertheless find some char * as method return values. To enable the use of <code>BSTR</code>
+with CATUnicodeString instances, CAA V5 supplies also the CATBSTR class, and the
+CATUnicodeString class offers the <code>BuildFromBSTR</code> and <code>ConvertToBSTR</code>
+methods.</p>
+<p>Declare character string types as CATBSTR in the IDL files, and use these
+methods as follows in your C++ source files:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBSTR StringForVisualBasic = ...;
+CATUnicodeString * StringForCAAV5;
+int rc = StringForCAAV5-&gt;BuildFromBSTR(StringForVisualBasic);
+...
+StringForCAAV5-&gt;ConvertToBSTR(&amp;StringForVisualBasic);</pre>
+    </td>
+  </tr>
+</table>
+<p>In addition, the <code>CATFreeString</code> function deallocates a CATBSTR
+instance:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATFreeString(StringForVisualBasic);</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's take the example of the command name we saw above in <a href="#630000">Properties</a>.
+We assume here that the command methods GetName and PutName manage the access to
+the command name data member, this name being a CATUnicodeString class instance.
+The accessor methods could be coded in C++ as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CATCommand::get_Name(CATBSTR &amp; oName)
+{
+  CATUnicodeString name = this-&gt;GetName();
+  name.ConvertToBSTR(&amp; oName);
+  return S_OK;
+}
+
+HRESULT CATCommand::put_Name(CATBSTR iName)
+{
+  CATUnicodeString name;
+  name.BuildFromBSTR(iName);
+  this-&gt;PutName(name);
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The name could be stored as a char *. Even if you know this never should
+happen, the methods become in this case:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CATCommand::get_Name(CATBSTR &amp; oName)
+{
+  CATUnicodeString name = (const char *) this-&gt;GetName();
+  name.ConvertToBSTR(&amp; oName);
+  return S_OK;
+}
+
+HRESULT CATCommand::put_Name(CATBSTR iName)
+{
+  CATUnicodeString name;
+  name.BuildFromBSTR(iName);
+  this-&gt;PutName(name.ConvertToChar());
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>If the name is stored as a CATString class instance, which is more common,
+the methods become:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CATCommand::get_Name(CATBSTR &amp; oName)
+{
+  const CATString * string = (const CATString) this-&gt;GetName();
+  CATUnicodeString name = (const char *) string.CastToCharPtr();
+  name.ConvertToBSTR(&amp; oName);
+  return S_OK;
+}
+
+HRESULT CATCommand::put_Name(CATBSTR iName)
+{
+  CATUnicodeString name;
+  name.BuildFromBSTR(iName);
+  CATString * string = (CATString *) name.ConvertToChar());
+  this-&gt;PutName(string);
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This is a bit more difficult, since there is no direct conversion between
+CATString and CATUnicodeString, and we need to use char * between them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="650000"></a>Using CATVariants</h4>
+<p>A CATVariant parameter should be used whenever you don't know the type of the
+parameter that Visual Basic will use, or if this type may vary. For example, the
+Item method of most collection objects takes a CATVariant as input parameter to
+locate and retrieve a given object in the collection item. This parameter may be
+either the rank of the object in the collection passed as an integer, or the
+name of this object, and then passed as a CATBSTR. The same type CATVariant
+accommodates these two types.</p>
+<p>A CATVariant parameter is a VARIANT parameter for Visual Basic, and
+corresponds to the any type of the OMG IDL, but must be created as CATVariant in
+your IDL file.</p>
+<p>With C++, you must use a CATVariant variable for method parameters in order
+to be compliant with the C++ abstract classes generated by the IDL compiler, but
+you need to convert them to and from the any type to process them in your code.
+Two global functions are dedicated to convert an any variable to a CATVariant
+and the reverse.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT ConvertAnyToVariant(const any  &amp; iAnyToConvert,
+                            CATVariant * oVariantToCreateFromAny);
+any * BuildAnyFromVariant(const CATVariant &amp; iVariantToConvert);</pre>
+    </td>
+  </tr>
+</table>
+<p>Use these functions as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc;
+CATVariant * oVariantToCreateFromAny;
+
+rc = ::ConvertAnyToVariant(const any  &amp; iAnyToConvert,
+                           CATVariant * oVariantToCreateFromAny);
+if (SUCCEEDED(rc))
+{
+   ...
+}
+...
+any * anyToCreateFromVariant;
+anyToCreateFromVariant = ::BuildAnyFromVariant(iVariantToConvert);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Assume the following scenario. The CATVariant is an input parameter of your
+IDL method, and thus an input parameter of the corresponding C++ method. You
+expect that this CATVariant holds either an integer or a character string. You
+can use the <code>ConvertVariant</code> global functions</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT MyClass:MyMethod(CATVariant iValueWithUnknownType)
+{
+  HRESULT rc = E_FAIL;
+  // try to convert the input CATVariant into a short
+  short IntValue;
+  rc = ::<b>ConvertVariant</b>(iValueWithUnknownType, IntValue);
+  if SUCCEEDED(rc)
+  {
+    // go on, conversion succeeds
+  }
+  else
+  {
+    // try to convert the input CATVariant into a CATUnicodeString
+    CATUnicodeString StringValue;
+    rc = ::ConvertVariant(iValueWithUnknownType, StringValue);
+    if SUCCEEDED(rc)
+    {
+      // go on, conversion succeeds
+    }
+    else
+    {
+      // process the error
+    }
+  }
+  ...
+  return rc;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="660000"></a>Using Arrays</h4>
+<p>If you use a table as a parameter of an interface method, you must use the
+CATSafeArray class. There is one CATSafeArray set of Build, Convert and Free
+methods per type. For example, the following methods exist for long integers:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT FreeVariantSafeArray(CATSafeArrayVariant * iArray);
+CATSafeArray * BuildSafeArrayVariant(const long *iLongArray,
+                                     long iSize);
+HRESULT ConvertSafeArrayVariant(CATSafeArrayVariant * iSafeArray,
+                                long * oongArray,
+                                short iSize);</pre>
+    </td>
+  </tr>
+</table>
+<p>Such methods exist for <code>long</code>, <code>float</code>, <code>short</code>,
+<code>double</code>, CATBSTR, CATBaseDispatch, <code>char</code>, <code>octet</code>
+and <code>boolean</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Implementing your interfaces for Automation implies that your methods return
+a HRESULT, that your method parameters are qualified as in, out, or inout in the
+IDL file, that properties are declared using a #pragma, and that you correctly
+declare and use the character strings, the tables, and the CATVariants.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAASysAutomationItf.htm">Creating Interfaces for Automation</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysQuickRefs/CAASysHRESULT.htm">What Is
+      HRESULT?</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysIDLCompiler.htm">The CAA V5 IDL Compiler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

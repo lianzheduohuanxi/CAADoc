@@ -1,0 +1,402 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Combined Curve's Interface of Type</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Combined Curve's Interface of Type</h3>
+      <i>Defining and implementing the interface to retrieve and modify the
+      Combined Curve's specifications.</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+      a New Geometrical Feature: the V5V6ExtCombined Curve</a> &gt; <b>Creating Combined Curve's Interface of Type</b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+        <p>This article discusses the implementation of <i>
+		CAAIV5V6ExtMmrCombinedCurve 
+		</i> interface that manages the V5V6ExtCombiendCurve attributes. 
+		<br>It is a copy of the implementation of<em> CAAIMmrCombinedCurve</em> 
+		interface described in the article 
+		&quot;Creating Combined Curve's Interface of Type&quot;[<a href="#References">3</a>], 
+		rewritten with V6 backported interfaces. </p>
+
+
+      <p>This article explains how to create and implement an interface to
+      retrieve and modify the attribute values of the V5V6ExtCombinedCurve.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAV5V6ExtMmrCombinedCurve Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve Do <a href="#UseCase"></a>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve<a href="#UseCase"></a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurve Code<a href="#UseCase"></a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to <b>define and implement an interface on the Combined Curves</b>. This interface summarizes what is specific to this new
+feature. Refer to the article entitled &quot;Creating a New StartUp from a
+Mechanical StartUp&quot; for details [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the CAAV5V6ExtMmrCombinedCurve Do</h4>
+<p>This use case defines and implements a new interface modeling V5V6ExtCombinedCurve's
+specific attributes. As a matter of fact,
+you only have to add methods to get and set the input Curves and Directions of Combined Curves. This interface is called <i>CAAIV5V6ExtMmrCombinedCurve</i>.</p>
+<p>Consequently, <b>CAAIV5V6ExtMmrCombinedCurve has four methods</b>:</p>
+<ol>
+  <li><code>GetCurve</code></li>
+  <li><code>SetCurve</code></li>
+  <li><code>GetDirection</code></li>
+  <li><code>SetDirection</code></li>
+</ol>
+<p>To implement this new interface, you must define a new extension of the
+V5V6ExtCombinedCurve late type. Logically, its class name is <i>CAAEV5V6ExtMmrCombinedCurve</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAV5V6ExtMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the V5V6ExtCombinedCurve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrCombinedCurve Code</h4>
+<p>The CAAV5V6ExtMmrCombinedCurve use case is made of a several classes located in the
+CAAV5V6ExtMmrCombinedCurve.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\CAAV5V6ExtMmrCombinedCurve.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/CAAV5V6ExtMmrCombinedCurve.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<ul>
+  <li>in the src directory
+    <ul>
+      <li>CAAIV5V6ExtMmrCombinedCurve.cpp
+      <li>TIE_CAAIV5V6ExtMmrCombinedCurve.cpp
+      <li>CAAEV5V6ExtMmrCombinedCurve.cpp, the implementation of the <i>CAAIV5V6ExtMmrCombinedCurve</i>
+        interface</li>
+    </ul>
+  <li>in the LocalInterfaces directory
+    <ul>
+      <li>CAAEV5V6ExtMmrCombinedCurve.h</li>
+    </ul>
+  </li>
+</ul>
+<p>In the PublicInterfaces of the <code>CAAV5V6MechanicalModeler.edu</code>
+framework there is the CAAIV5V6ExtMmrCombinedCurve.h file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>V5V6ExtCombinedCurves have their interface of type called <i>CAAIV5V6ExtMmrCombinedCurve</i>.
+This interface deals with specific properties of V5V6ExtCombinedCurve, that is to get
+and set its two input curves and its two input directions. This interface is
+implemented according to the following steps:</p>
+<ul>
+  <li><a href="#Step1">Defining the V5V6ExtCombinedCurve Interface</a></li>
+  <li><a href="#Step2">Implementing the <a href="#Step1">V5V6ExtCombinedCurve</a> Interface</a>
+    <ul>
+      <li><a href="#Step3">Setting a <a href="#Step1">V5V6ExtCombinedCurve</a> Attribute Value</a></li>
+      <li><a href="#Step4">Getting a <a href="#Step1">V5V6ExtCombinedCurve</a> Attribute Value</a></li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Defining the V5V6ExtCombinedCurve behavior Interface</h4>
+<p><i>CAAIV5V6ExtMmrCombinedCurve</i>.h declares this new interface (associated with <i>CAAIV5V6ExtMmrCombinedCurve</i>.cpp and TIE_CAAIV5V6ExtMmrCombinedCurve.tsrc).</p>
+<p>Four methods are declared to get/set input curves and to get/set input
+directions. This is a good compromise between the interface's completeness and
+shortness.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>class ExportedByCAAV5V6ExtMmrCombinedCurve CAAIV5V6ExtMmrCombinedCurve : public CATBaseUnknown
+{
+  CATDeclareInterface;
+  public:
+
+   virtual HRESULT SetCurve     ( int iNum ,
+                                  CATBaseUnknown *ipCurve )      = 0 ;
+   virtual HRESULT GetCurve     ( int iNum ,
+                                  CATBaseUnknown *&amp;opCurve )     = 0 ;
+   virtual HRESULT SetDirection ( int iNum , 
+                                  CATBaseUnknown *ipDirection )  = 0 ;
+   virtual HRESULT GetDirection ( int iNum ,
+                                  CATBaseUnknown *&amp;opDirection ) = 0 ;
+}</pre>
+    </td>
+  </tr>
+</table>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Implementing the V5V6ExtCombinedCurve behavior Interface</h4>
+<p>The object chosen to implement V5V6ExtCombinedCurve Interface extends the
+&quot;V5V6ExtCombinedCurve&quot; late type. The following code extracted from
+CAAEV5V6ExtMmrCombinedCurve.cpp declares that V5V6ExtCombinedCurve is extended to implement
+the Interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass ( CAAEV5V6ExtMmrCombinedCurve,
+                    DataExtension,    
+                    CATBaseUnknown,
+                    <b>V5V6ExtCombinedCurve</b> );
+
+// Tie the implementation to its interface
+// ---------------------------------------
+
+#include &quot;TIE_CAAIV5V6ExtMmrCombinedCurve.h&quot; // needed to tie the implementation to its interface
+TIE_CAAIV5V6ExtMmrCombinedCurve(CAAEV5V6ExtMmrCombinedCurve);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Add to your dictionary the line declaring that V5V6ExtCombinedCurve implements
+CAAIV5V6ExtMmrCombinedCurve interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Setting a V5V6ExtCombinedCurve Attribute Value</h4>
+
+<p>&nbsp;As for the 
+implementation of&nbsp; factory interface, it is necessary to start by declaring 
+the credentials needed for the V5V6ExtCombinedCurve application.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString ClientId("SAMPLES");
+  CATUnicodeString PartnerId = "CAAMmrExtMechanicalModeler";
+  CATUnicodeString CatalogName("CAAV5V6ExtMmrCombinedCurveCatalog");
+  CATFmCredentials CredentialForCC;
+  rc = CredentialForCC.RegisterAsApplicationBasedOn(CATFmFeatureModelerID, PartnerId); 
+  if (SUCCEEDED(rc))
+    rc = CredentialForCC.RegisterAsCatalogOwner(CatalogName,ClientId);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p> You also need to declare the feature facades for the V5V6ExtCombinedCurve&nbsp; 
+using the declared credentials and for the geometrical element to set, for which 
+credentials are not necessary (this element will not be modified during the 
+process).
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFmFeatureFacade FeatFacadeOnCombinedCurve(CredentialForCC, this);
+...
+CATFmFeatureFacade FeatFacadeOnCurve;
+FeatFacadeOnCurve = ipCurve;
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<p>You then have to get the key of the attribute associated with the asked 
+curve. You also need to create an attribute value for the curve to set.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Valuate attribute key
+CATFmAttributeName AttrKey;
+if (1 == iNum)
+  AttrKey = CATFmAttributeName("V5V6Curve1");
+else
+  AttrKey = CATFmAttributeName("V5V6Curve2");
+
+// Create an attribute value for the Curve
+CATFmAttributeValue FmAttrValue;
+FmAttrValue.SetFeature(FeatFacadeOnCurve); 
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p>If the input feature is a BRep feature it must be aggregated by the combined
+curve. A BRep feature must always be aggregated by someone, to be deleted.&nbsp;
+If it is already aggregated, it is an error.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIMmiUseMfBRep_var spMfBRep = ipCurve; 
+if (NULL_var != spMfBRep)
+{
+  CATFmAttributeValue Father;
+  rc = FeatFacadeOnCurve.GetParentFeature(Father);
+
+  if (FAILED(rc)) // No parent
+  {
+    CATIMmiUseBasicInsertion_var spBasicInsertion = ipCurve; 
+    CATIMmiMechanicalFeature_var spTarget = this;
+	     
+    if (spBasicInsertion != NULL_var &amp;&amp; spTarget != NULL_var)
+      rc = spBasicInsertion-&gt;InsertInside(spTarget);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, the <code>you can set the attribute value on the V5V6ExtCombinedCurve object.</code></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if (SUCCEEDED(rc))
+  rc = FeatFacadeOnCombinedCurve.SetValue(AttrKey, FmAttrValue);
+...    </pre>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Getting a V5V6ExtCombinedCurve Attribute Value</h4>
+
+<p>The <code>GetCurve</code> method works just like the implementation of <code>CAAIV5V6ExtMmrCombinedCurve::SetCurve</code>
+method. It uses the <code>CATFmAttributeFacade::GetValue</code>
+method instead of <code>CATFmAttributeFacade::SetValue</code>. </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATFmFeatureFacade FeatFacadeOnCombinedCurve(_CredentialForCC, this);
+
+// Valuate attribute key
+CATFmAttributeName AttrKey;
+if ( 1 == iNum )
+  AttrKey = CATFmAttributeName("V5V6Curve1");
+else
+  AttrKey = CATFmAttributeName("V5V6Curve2");
+
+// Get the feature attribute
+CATFmAttributeValue FmAttrValue;
+rc = FeatFacadeOnCombinedCurve.GetValue(AttrKey, FmAttrValue);
+
+if (SUCCEEDED(rc))
+{
+  // Get the Curve feature facade
+  CATFmFeatureFacade FeatFacadeOnCurve; 
+  rc = FmAttrValue.GetFeature(FeatFacadeOnCurve);
+
+  // Get the Curve object
+  if (SUCCEEDED(rc))
+    rc = FeatFacadeOnCurve.QueryInterfaceOnFeature(IID_CATBaseUnknown,(void**)& opCurve);	         
+       </pre>
+    </td>
+  </tr>
+</table>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to define and implement a new interface enabling
+to get and retrieve the V5V6ExtCombinedCurve's attributes.&nbsp; As a matter of fact, this interface makes it
+possible to easily query and modify the input curves and directions of a
+V5V6ExtCombinedCurve.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating a New StartUp from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvCatalog.htm">Creating V5V6ExtCombinedCurve's Catalog</a></td>
+  </tr>
+   <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInterface.htm">Creating CombinedCurve's Interface
+    of Type</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>

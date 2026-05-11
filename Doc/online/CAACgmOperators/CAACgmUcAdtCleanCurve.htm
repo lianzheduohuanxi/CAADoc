@@ -1,0 +1,272 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Achieving a Given Continuity along a Wire</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Achieving a Given Continuity along a Wire</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>CATICGMTopCleanCrvOperator enables you to correct or improve the (dis)continuities 
+		along a wire. It can be run in two modes: either by giving the priority 
+		to continuity or by giving the priority to deformation. In neither mode, 
+		the points where the curve segments join are displaced. This is an important 
+		feature: the operator only modifies the curve around the vertices. An interesting 
+		capability of this operator stands in the cell reduction: the vertices where 
+		the curvature continuity is achieved can be removed from your topology that 
+		way reducing the number of cells.
+		</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsCleanCrv Use Case</a>
+			<ul>
+				<li><a href="#What">What Does </a><a href="#UseCase">CAAGMOperatorsCleanCrv</a><a href="#What"> 
+				Do?</a></li>
+				<li><a href="#How">How to Launch </a><a href="#UseCase">CAAGMOperatorsCleanCrv</a></li>
+				<li><a href="#Where">Where to Find the </a><a href="#UseCase">CAAGMOperatorsCleanCrv</a><a href="#Where"> 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>In this use case, you learn how to use the CATICGMTopCleanCrvOperator operator 
+to modify a wire in order to get a better continuity at the points where the curve 
+segments are joined. CATICGMTopCleanCrvOperator is to be used according to the general 
+scheme of topological operators. If need be, you can take a look at &quot;Overview of 
+the Topological Operators&quot; [<a href="#References">1</a>] for more information.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsCleanCrv Use Case</h2>
+<p>CAAGMOperatorsCleanCrv is a use case of the CAAGMOperatorsInterfaces.edu framework 
+that illustrates the GMOperatorsInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsCleanCrv Do</h3>
+<p>The use case:</p>
+<ul>
+	<li>Creates the curves making up the wire.</li>
+	<li>Creates a wire by using the CATICGMTopWire operator.</li>
+	<li>Creates a CATICGMTopCleanCrvOperator operator instance.</li>
+	<li>Sets the parameters prior to running the operator. Three set of parameters 
+	are tested:
+	<ol>
+		<li>No angle specified for the tangency criteria<br>
+		Targeted continuity: curvature continuity.</li>
+		<li>Angle specified for the tangency criteria: 32 deg<br>
+		Targeted continuity: curvature continuity<br>
+		Cell reduction requested.</li>
+		<li>Angle specified for the tangency criteria: 32 deg<br>
+		Targeted continuity: curvature continuity<br>
+		Cell reduction requested<br>
+		Criteria to be met on priority is deformation<br>
+		Maximum deformation of 0.2 specified.</li>
+	</ol>
+	</li>
+	<li>Runs the CATICGMTopCleanCrvOperator and retrieve the resulting body.</li>
+</ul>
+<p><strong>Note</strong>: This article only focuses on the operations related to 
+the CATICGMTopCleanCrvOperator operator. Refer to &quot;Overview of the Topological Operators&quot; 
+[<a href="#References">3</a>] for more information on the operations which are 
+not detailed in the article.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsCleanCrv</h3>
+<p>To launch CAAGMOperatorsCleanCrv, you will need to set up the build time environment, 
+then compile CAAGMOperatorsCleanCrv .m, set up the run time environment, and then 
+execute the use case [<a href="#References">2</a>].</p>
+<p>If you simply type CAAGMOperatorsCleanCrv with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example: </p>
+<p>CAAGMOperatorsCleanCrv <code>e:\G2Wire.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsCleanCrv Code</h3>
+<p>The CAAGMOperatorsCleanCrv use case is made of a main named CAAAdtCleanCrv.cpp 
+located in the CAAGMOperatorsCleanCrv .m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCleanCrv.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">2</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The use case is divided into the following main steps:</p>
+<ul>
+	<li><a href="#Creating the curves making up the wire">Creating the Curves Making 
+	up the Wire</a></li>
+	<li><a href="#Creating the wire to be corrected">Creating the Wire to Be Corrected</a></li>
+	<li><a href="#Creating a CATTopCleanCrvOperator operator instance">Creating 
+	a CATICGMTopCleanCrvOperator Operator Instance</a></li>
+	<li><a href="#Setting the parameters">Setting the parameters</a></li>
+	<li>Running the operator and retrieving the resulting body (common to all operators 
+	- not discussed below).</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating the curves making up the wire"></a>Creating the Curves Making 
+up the Wire</h3>
+<p>The curves to be used in the wire are CATLine that are simply created from the 
+geometry factory.</p>
+<pre class="code">
+CATMathPoint P0(0,0,0);
+CATMathPoint P1(10,7.5,0);
+CATMathPoint P2(20,15,-2);
+CATMathPoint P3(45,20,-5);
+CATMathPoint P4(77,23,-7);
+    
+CATLine * piLine0 = piGeomFactory-&gt;CreateLine(P0,P1);
+CATLine * piLine1 = piGeomFactory-&gt;CreateLine(P1,P2);
+CATLine * piLine2 = piGeomFactory-&gt;CreateLine(P2,P3);
+CATLine * piLine3 = piGeomFactory-&gt;CreateLine(P3,P4);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating the wire to be corrected"></a>Creating the Wire to Be Corrected</h3>
+<p>You must follow the general scheme of all the topological operators:</p>
+<ul>
+	<li>Create an operator instance.</li>
+	<li>Run it.</li>
+	<li>Retrieve the resulting body.</li>
+</ul>
+<pre class="code">
+CATICGMTopWire * pWire0 = ::CATCGMCreateTopWire(piGeomFactory, 
+        &amp;topdata,
+        nbcurve0,
+        ListOfCurves0,
+        curLimits0,
+        wireOrientations0);
+...
+pWire0-&gt;Run();
+CATBody * pWireBody0 = pWire0-&gt;GetResult();</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating a CATTopCleanCrvOperator operator instance"></a>Creating a 
+CATICGMTopCleanCrvOperator Operator Instance</h3>
+<p>The CATICGMTopCleanCrvOperator operator is created by the CATCGMCreateTopCleanCrvOperator 
+global function. The wire body is passed as the third argument of the function.</p>
+<pre class="code">
+CATICGMTopCleanCrvOperator * pCleanCrvOpe0 = NULL;
+CATBody * piCleanBody = NULL;
+    
+// 4.1 - Create the operator
+//
+pCleanCrvOpe0 =::CATCGMCreateTopCleanCrvOperator(piGeomFactory, 
+        &amp;topdata,
+        pWireBody0);  // the wire to be corrected
+  </pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Setting the parameters"></a>Setting the parameters</h3>
+<p>Three set of parameters are tested. For each set, the G2 continuity is requested.</p>
+<ol>
+	<li><strong>Case a</strong>: No angle specified for the tangency criteria, by 
+	default this angle is set to 0.5 deg. The G2 requirement is not achieved.
+	<pre class="code">pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; // G2 requested</pre>
+	<p>The resulting body and the input body are the same:</p>
+	<p>
+	<img alt="Input and Resulting Bodies" src="images/CAACgmAdtcleancrv1.gif" width="528" height="301"></p>
+	</li>
+	<li><strong>Case b</strong>: The angle specified for the tangency criteria 
+	is 32 deg - the cell reduction is requested. In other words, the simplification 
+	of the topology is requested whenever a vertex becomes G2 continuous.
+	<pre class="code">pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; /* Target: G2 */
+pCleanCrvOpe0-&gt;SetCellReduction(TRUE) ; // Cell reduction requested
+CATAngle tanAngle = 32;
+pCleanCrvOpe0-&gt;SetTangencyAngle(tanAngle); // Tangency criteria specified</pre>
+	<p>The resulting body only has two vertices.<br>
+	<img alt="Resulting Body" src="images/CAACgmAdtcleancrv2.gif" width="537" height="278"></p>
+	<p>The model displayed in the figure above is obtained by applying the &quot;Porcupine&quot; 
+	capability of the Generative Shape Design product on the resulting curve. Red 
+	lines represent the curvature along the resulting wire while the green curve 
+	represents the curvature envelope.<br>
+	The second derivative is always null at the vertex location, in other words 
+	there is an inflexion at each vertex. In order to achieve G2 continuity at all 
+	price, the curve may exhibit an undesirable bulge around a vertex Keep in mind 
+	that the resulting curve is not C2 but G2 continuous.</p>
+	</li>
+	<li><strong>Case c</strong>: The angle specified for the tangency criteria is 
+	32 deg - The cell reduction requested - The criteria to be met on priority is 
+	deformation. Setting the priority criteria to the deformation does not imply 
+	that the maximum has to be specified. By default this deformation is set to 
+	0.001 - In this sample, a value of 0.2 is specified:
+	<pre class="code">pCleanCrvOpe0-&gt;SetContinuityLevel(CATFrFCurvatureCont) ; /* Target: G2 */
+pCleanCrvOpe0-&gt;SetCellReduction(TRUE) ;  // Cell reduction requested
+CATAngle tanAngle = 32;
+pCleanCrvOpe0-&gt;SetTangencyAngle(tanAngle);  // Tangency criteria specified</pre>
+	<p>The resulting curve is corrected and the cell reduction is also achieved.<br>
+	<img alt="Resulting Curve" src="images/CAACgmAdtcleancrv3.gif" width="533" height="260"><br>
+	But after a &quot;Porcupine&quot; operation, the resulting body exhibits some abrupt changes 
+	in the second derivative. The resulting curve exhibits local irregularities.</p>
+	<p>Using the CATICGMTopCleanCrvOperator operator requires a fine tuning of the 
+	parameters. Being G2 at all price does not mean that the quality of the resulting 
+	curve suits your application needs. The operator is best fit to work with a 
+	slight or moderate tangency angle threshold, that way you may reduce not all 
+	the vertices but obtain a better quality on the reduced portion.</p>
+	</li>
+</ol>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The CATICGMTopCleanCrvOperator operator attempts to achieve a given geometric 
+continuity along a wire. The cell reduction is a process whereby the topology is 
+simplified whenever the G2 continuity is achieved at a vertex. CATICGMTopCleanCrvOperator 
+is not really a smoothing operator, depending on the parameters specified, the resulting 
+curve may exhibit bulges at inflexions.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2002]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

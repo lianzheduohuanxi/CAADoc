@@ -1,0 +1,982 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Magnitude and Unit Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Magnitude and Unit Reference</h3>
+      <em>Magnitudes and associated units available for numerical fields in
+      combos, editors, and spinners</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The figures that are displayed and entered in combos [<a href="#References">1</a>],
+      editors [<a href="#References">2</a>], and spinners [<a href="#References">3</a>]
+      of your application, are usually values that represent magnitudes. This
+      article lists these magnitudes and associated units. ese magnitudes are
+      expressed according to a unit system that must match the country, the
+      business, or the customer habits or rules.</p>
+      <ul>
+        <li><a href="#100000"><strong>Magnitudes and Associated Units Managed by
+          CATIA</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Magnitudes and Associated Units Managed by CATIA</h3>
+<p>The Magnitude and Associated Units table below lists the parameter to use for
+each magnitude that CATIA supports, and the parameters of its associated units.
+These magnitudes and units are stored as two enums in the CATDlgControl class
+and are given in the Magnitude Parameter and Unit Parameter columns
+respectively. They should be reffered to, for example, as <code>CATDlgControl::Acceleration</code>
+for the acceleration magnitude in the <code>SetMagnitude</code> method [<a href="#References">4</a>],
+and <code>CATDlgControl::MeterPerSquareSecond</code> for the acceleration SI
+unit in the <code>SetUnit</code> method [<a href="#References">4</a>]. Units in
+bolds are SI units used by default. The CATIA Symbol column shows the symbol
+displayed in the controls. It can slightly differ from the actual symbol.</p>
+<table>
+  <caption>Magnitude and Associated Units</caption>
+  <tr>
+    <th>Magnitude</th>
+    <th>Magnitude Parameter</th>
+    <th>Unit</th>
+    <th>Symbol</th>
+    <th>CATIA Symbol</th>
+    <th>Unit Parameter</th>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Acceleration</td>
+    <td rowspan="3" valign="top">Acceleration</td>
+    <td valign="top"><strong>meter per second squared</strong></td>
+    <td valign="top"><strong>m/s<sup>2</sup></strong></td>
+    <td valign="top"><strong>m/s2</strong></td>
+    <td valign="top">MeterPerSquareSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">foot per second squared</td>
+    <td valign="top">ft/s<sup>2</sup></td>
+    <td valign="top">ft/s2</td>
+    <td valign="top">FootPerSquareSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">inch per second squared</td>
+    <td valign="top">in/s<sup>2</sup></td>
+    <td valign="top">in/s2</td>
+    <td valign="top">InchPerSquareSecond</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Angle</td>
+    <td rowspan="3" valign="top">Angle</td>
+    <td valign="top"><strong>radian</strong></td>
+    <td valign="top"><strong>rad</strong></td>
+    <td valign="top"><strong>rad</strong></td>
+    <td valign="top">Radian</td>
+  </tr>
+  <tr>
+    <td valign="top">degree</td>
+    <td valign="top">º</td>
+    <td valign="top">deg</td>
+    <td valign="top">Degree</td>
+  </tr>
+  <tr>
+    <td valign="top">grade</td>
+    <td valign="top"><sup>g</sup> or gr</td>
+    <td valign="top">grad</td>
+    <td valign="top">Grade</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Angular stiffness</td>
+    <td rowspan="3" valign="top">AngularStiffness</td>
+    <td valign="top"><strong>newton meter per radian</strong></td>
+    <td valign="top"><strong>N·m/rad</strong></td>
+    <td valign="top"><strong>Nxm/rad</strong></td>
+    <td valign="top">NewtonMeterPerRadian</td>
+  </tr>
+  <tr>
+    <td valign="top">newton millimeter per radian</td>
+    <td valign="top">N·mm/rad</td>
+    <td valign="top">Nxmm/rad</td>
+    <td valign="top">NewtonMMPerMradian</td>
+  </tr>
+  <tr>
+    <td valign="top">pound inch per radian</td>
+    <td valign="top">lbf·in/rad</td>
+    <td valign="top">lbfxin/r</td>
+    <td valign="top">PoundforceInchPerRad</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Angular velocity</td>
+    <td rowspan="3" valign="top">AngularVelocity</td>
+    <td valign="top"><strong>radian per second</strong></td>
+    <td valign="top"><strong>rad/s</strong></td>
+    <td valign="top"><strong>rad/s</strong></td>
+    <td valign="top">RadianPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">degree per second</td>
+    <td valign="top">º/s</td>
+    <td valign="top">deg/s</td>
+    <td valign="top">DegreePerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">grade per second</td>
+    <td valign="top"><sup>g</sup>/s or gr/s</td>
+    <td valign="top">grad/s</td>
+    <td valign="top">GradePerSecond</td>
+  </tr>
+  <tr>
+    <td rowspan="5" valign="top">Area</td>
+    <td rowspan="5" valign="top">Area</td>
+    <td valign="top"><strong>square meter</strong></td>
+    <td valign="top"><strong>m<sup>2</sup></strong></td>
+    <td valign="top"><strong>m2</strong></td>
+    <td valign="top">SquareMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">square millimeter</td>
+    <td valign="top">mm<sup>2</sup></td>
+    <td valign="top">mm2</td>
+    <td valign="top">SquareMillimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">square centimeter</td>
+    <td valign="top">cm<sup>2</sup></td>
+    <td valign="top">cm2</td>
+    <td valign="top">SquareCentimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">square inch</td>
+    <td valign="top">in<sup>2</sup></td>
+    <td valign="top">in2</td>
+    <td valign="top">SquareInch</td>
+  </tr>
+  <tr>
+    <td valign="top">square foot</td>
+    <td valign="top">ft<sup>2</sup></td>
+    <td valign="top">ft2</td>
+    <td valign="top">SquareFoot</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Dilatation</td>
+    <td rowspan="2" valign="top">Dilatation</td>
+    <td valign="top">reciprocal degree Fahrenheit</td>
+    <td valign="top">ºF<sup>-1</sup></td>
+    <td valign="top">PerFDeg</td>
+    <td valign="top">PerFahrenheit</td>
+  </tr>
+  <tr>
+    <td valign="top">reciprocal degree Celsius</td>
+    <td valign="top">ºC<sup>-1</sup></td>
+    <td valign="top">PerCDeg</td>
+    <td valign="top">PerCelsius</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Dissolved solid fraction</td>
+    <td rowspan="3" valign="top">DissolvedSolidFraction</td>
+    <td valign="top">fraction</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top">Fraction</td>
+  </tr>
+  <tr>
+    <td valign="top">percentage</td>
+    <td valign="top">%</td>
+    <td valign="top">%</td>
+    <td valign="top">Percentage</td>
+  </tr>
+  <tr>
+    <td valign="top">part per million</td>
+    <td valign="top">ppm</td>
+    <td valign="top">ppm</td>
+    <td valign="top">PartPerMillion</td>
+  </tr>
+  <tr>
+    <td rowspan="4" valign="top">Energy, work, quantity of heat</td>
+    <td rowspan="4" valign="top">Energy</td>
+    <td valign="top"><strong>Joule</strong></td>
+    <td valign="top"><strong>J</strong></td>
+    <td valign="top"><strong>J</strong></td>
+    <td valign="top">Joule</td>
+  </tr>
+  <tr>
+    <td valign="top">watt hour</td>
+    <td valign="top">W·h</td>
+    <td valign="top">Wxh</td>
+    <td valign="top">WattXHour</td>
+  </tr>
+  <tr>
+    <td valign="top">British Thermal Unit</td>
+    <td valign="top">BTU or Btu</td>
+    <td valign="top">Btu</td>
+    <td valign="top">BritishThermalUnit</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force foot</td>
+    <td valign="top">lbf·ft</td>
+    <td valign="top">lbf.ft</td>
+    <td>PoundforceXFoot</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Force</td>
+    <td rowspan="2" valign="top">Force</td>
+    <td valign="top"><strong>newton</strong></td>
+    <td valign="top"><strong>N</strong></td>
+    <td valign="top"><strong>N</strong></td>
+    <td valign="top">Newton</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force</td>
+    <td valign="top">lbf</td>
+    <td valign="top">lbf</td>
+    <td valign="top">Poundforce</td>
+  </tr>
+  <tr>
+    <td valign="top">Frequency</td>
+    <td valign="top">Frequency</td>
+    <td valign="top"><strong>herz</strong></td>
+    <td valign="top"><strong>Hz</strong></td>
+    <td valign="top"><strong>Hz</strong></td>
+    <td valign="top">Herz</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Heat capacity</td>
+    <td rowspan="2" valign="top">HeatCapacity</td>
+    <td valign="top"><strong>joule per kelvin</strong></td>
+    <td valign="top"><strong>J/K</strong></td>
+    <td valign="top"><strong>J/Kdeg</strong></td>
+    <td valign="top">JoulePerKelvin</td>
+  </tr>
+  <tr>
+    <td valign="top">British Thermal Unit per degree Fahrenheit</td>
+    <td valign="top">BTU/ºF or Btu/ºF</td>
+    <td valign="top">Btu/Fdeg</td>
+    <td valign="top">BtuPerFahrenheit</td>
+  </tr>
+  <tr>
+    <td rowspan="5" valign="top">Inertia</td>
+    <td rowspan="5" valign="top">Inertia</td>
+    <td valign="top"><strong>meter power 4</strong></td>
+    <td valign="top"><strong>m<sup>4</sup></strong></td>
+    <td valign="top"><strong>m4</strong></td>
+    <td valign="top">Meter4</td>
+  </tr>
+  <tr>
+    <td valign="top">millimeter power 4</td>
+    <td valign="top">mm<sup>4</sup></td>
+    <td valign="top">mm4</td>
+    <td valign="top">Millimeter4</td>
+  </tr>
+  <tr>
+    <td valign="top">centimeter power 4</td>
+    <td valign="top">cm<sup>4</sup></td>
+    <td valign="top">cm4</td>
+    <td valign="top">Centimeter4</td>
+  </tr>
+  <tr>
+    <td valign="top">inch power 4</td>
+    <td valign="top">in<sup>4</sup></td>
+    <td valign="top">in4</td>
+    <td valign="top">Inch4</td>
+  </tr>
+  <tr>
+    <td valign="top">foot power 4</td>
+    <td valign="top">ft<sup>4</sup></td>
+    <td valign="top">ft4</td>
+    <td valign="top">Foot4</td>
+  </tr>
+  <tr>
+    <td rowspan="9" valign="top"><strong>Length</strong></td>
+    <td rowspan="9" valign="top">Length</td>
+    <td valign="top"><strong>meter</strong></td>
+    <td valign="top"><strong>m</strong></td>
+    <td valign="top"><strong>m</strong></td>
+    <td valign="top">Meter</td>
+  </tr>
+  <tr>
+    <td valign="top">centimeter</td>
+    <td valign="top">cm</td>
+    <td valign="top">cm</td>
+    <td valign="top">Centimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">millimeter</td>
+    <td valign="top">mm</td>
+    <td valign="top">mm</td>
+    <td valign="top">Millimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">kilometer</td>
+    <td valign="top">km</td>
+    <td valign="top">km</td>
+    <td valign="top">Kilometer</td>
+  </tr>
+  <tr>
+    <td valign="top">foot</td>
+    <td valign="top">ft or '</td>
+    <td valign="top">ft</td>
+    <td valign="top">Foot</td>
+  </tr>
+  <tr>
+    <td valign="top">inch</td>
+    <td valign="top">in or &quot;</td>
+    <td valign="top">in</td>
+    <td valign="top">Inch</td>
+  </tr>
+  <tr>
+    <td valign="top">1/64 foot or inch</td>
+    <td valign="top">1/64' or 1/64</td>
+    <td valign="top"></td>
+    <td valign="top">FeetInchFraction64</td>
+  </tr>
+  <tr>
+    <td valign="top">1/16 foot or inch</td>
+    <td valign="top">1/16' or 1/16&quot;</td>
+    <td valign="top"></td>
+    <td valign="top">FeetInchFraction16</td>
+  </tr>
+  <tr>
+    <td valign="top">decimal foot or inch</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top">FeetInchDecimal</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Linear mass</td>
+    <td rowspan="3" valign="top">LinearMass</td>
+    <td valign="top"><strong>kilogram per meter</strong></td>
+    <td valign="top"><strong>kg/m</strong></td>
+    <td valign="top"><strong>kg/m</strong></td>
+    <td valign="top">KilogramPerMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per foot</td>
+    <td valign="top">lb/ft</td>
+    <td valign="top">lb/ft</td>
+    <td valign="top">PoundPerFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per inch</td>
+    <td valign="top">lb/in</td>
+    <td valign="top">lb/in</td>
+    <td valign="top">PoundPerInch</td>
+  </tr>
+  <tr>
+    <td rowspan="4" valign="top">Linear stiffness</td>
+    <td rowspan="4" valign="top">LinearStiffness</td>
+    <td valign="top"><strong>newton per meter</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top">NewtonperMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">newton per millimeter</td>
+    <td valign="top">N/mm</td>
+    <td valign="top">N/mm</td>
+    <td valign="top">NewtonperMillimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force per foot</td>
+    <td valign="top">lbf/ft</td>
+    <td valign="top">lbf/ft</td>
+    <td valign="top">PoundforceperFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force per inch</td>
+    <td valign="top">lbf/in</td>
+    <td valign="top">lbf/in</td>
+    <td valign="top">PoundforceperInch</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Lineic force</td>
+    <td rowspan="3" valign="top">LineicForce</td>
+    <td valign="top"><strong>Newton per meter</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top">NewtonPerMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force per foot</td>
+    <td valign="top">lbf/ft</td>
+    <td valign="top">lbf/ft</td>
+    <td valign="top">PoundforcePerFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force per inch</td>
+    <td valign="top">lbf/in</td>
+    <td valign="top">lbf/in</td>
+    <td valign="top">PoundforcePerInch</td>
+  </tr>
+  <tr>
+    <td rowspan="4" valign="top">Mass</td>
+    <td rowspan="4" valign="top">Mass</td>
+    <td valign="top"><strong>kilogram</strong></td>
+    <td valign="top"><strong>kg</strong></td>
+    <td valign="top"><strong>kg</strong></td>
+    <td valign="top">Kilogram</td>
+  </tr>
+  <tr>
+    <td valign="top">gram</td>
+    <td valign="top">g</td>
+    <td valign="top">g</td>
+    <td valign="top">Gram</td>
+  </tr>
+  <tr>
+    <td valign="top">metric ton or tonne</td>
+    <td valign="top">t</td>
+    <td valign="top">T</td>
+    <td valign="top">Ton</td>
+  </tr>
+  <tr>
+    <td valign="top">pound</td>
+    <td valign="top">lb</td>
+    <td valign="top">lb</td>
+    <td valign="top">Pound</td>
+  </tr>
+  <tr>
+    <td rowspan="4" valign="top">Massic flow</td>
+    <td rowspan="4" valign="top">MassicFlow</td>
+    <td valign="top"><strong>kilogram per second</strong></td>
+    <td valign="top"><strong>kg/s</strong></td>
+    <td valign="top"><strong>kg/s</strong></td>
+    <td valign="top">KilogramPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per hour</td>
+    <td valign="top">lb/h</td>
+    <td valign="top">lb/h</td>
+    <td valign="top">PoundPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">kilogram per hour</td>
+    <td valign="top">kg/h</td>
+    <td valign="top">kg/h</td>
+    <td valign="top">KilogramPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per minute</td>
+    <td valign="top">lb/min</td>
+    <td valign="top">lb/min</td>
+    <td valign="top">PoundPerMinute</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Molecular weight</td>
+    <td rowspan="2" valign="top">MolecularWeight</td>
+    <td valign="top"><strong>kilogram per mole</strong></td>
+    <td valign="top"><strong>kg/mol</strong></td>
+    <td valign="top"><strong>kg/mol</strong></td>
+    <td valign="top">KilogramPerMole</td>
+  </tr>
+  <tr>
+    <td valign="top">gram per mole</td>
+    <td valign="top">g/mol</td>
+    <td valign="top">g/mol</td>
+    <td valign="top">GramPerMole</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Moment or torque</td>
+    <td rowspan="3" valign="top">Moment</td>
+    <td valign="top"><strong>newton meter</strong></td>
+    <td valign="top"><strong>N·m</strong></td>
+    <td valign="top"><strong>Nxm</strong></td>
+    <td valign="top">NewtonXMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound inch</td>
+    <td valign="top">lbf·in</td>
+    <td valign="top">lbfxin</td>
+    <td valign="top">PoundforceXInch</td>
+  </tr>
+  <tr>
+    <td valign="top">newton millimiter</td>
+    <td valign="top">N·mm</td>
+    <td valign="top">Nxmm</td>
+    <td valign="top">NewtonXMillimeter</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Pressure</td>
+    <td rowspan="3" valign="top">Pressure</td>
+    <td valign="top"><strong>newton per square meter</strong></td>
+    <td valign="top"><strong>N/m<sup>2</sup></strong></td>
+    <td valign="top"><strong>N/m2</strong></td>
+    <td valign="top">NewtonPerSquareMeter</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>pascal</strong></td>
+    <td valign="top"><strong>Pa</strong></td>
+    <td valign="top"><strong>Pa</strong></td>
+    <td valign="top">Pascal</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force per square inch</td>
+    <td valign="top">psi or lbf/in<sup>2</sup></td>
+    <td valign="top">psi</td>
+    <td valign="top">LbforcePerSquareInch</td>
+  </tr>
+  <tr>
+    <td valign="top">Scalar</td>
+    <td valign="top">Scalar</td>
+    <td valign="top">NA</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top">Number</td>
+  </tr>
+  <tr>
+    <td rowspan="5" valign="top">Slope</td>
+    <td rowspan="5" valign="top">Slope</td>
+    <td valign="top">ratio</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top">SlopeRatio</td>
+  </tr>
+  <tr>
+    <td valign="top">percentage</td>
+    <td valign="top">%</td>
+    <td valign="top">%</td>
+    <td valign="top">SlopePercentage</td>
+  </tr>
+  <tr>
+    <td valign="top">centimer per meter</td>
+    <td valign="top">cm/m</td>
+    <td valign="top">cm/m</td>
+    <td valign="top">SlopeInCmPerM</td>
+  </tr>
+  <tr>
+    <td valign="top">millimiter per meter</td>
+    <td valign="top">mm/m</td>
+    <td valign="top">mm/m</td>
+    <td valign="top">SlopeInMMPerM</td>
+  </tr>
+  <tr>
+    <td valign="top">inch per foot</td>
+    <td valign="top">in/ft</td>
+    <td valign="top">in/ft</td>
+    <td valign="top">SlopeInInchPerFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">Solid angle</td>
+    <td valign="top">SolidAngle</td>
+    <td valign="top"><strong>steradian</strong></td>
+    <td valign="top"><strong>sr</strong></td>
+    <td valign="top"><strong>sr</strong></td>
+    <td valign="top">Steradian</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Specific heat capacity</td>
+    <td rowspan="2" valign="top">SpecificHeatCapacity</td>
+    <td valign="top"><strong>joule per kilogram kelvin</strong></td>
+    <td valign="top"><strong>J/kg·K</strong></td>
+    <td valign="top"><strong>J/kgKdeg</strong></td>
+    <td valign="top">JoulePerKgKelvin</td>
+  </tr>
+  <tr>
+    <td valign="top">British Thermal Unit per pound and per degree Fahrenheit</td>
+    <td valign="top">BTU/lb·ºF or Btu/lb·ºF</td>
+    <td valign="top">BTU/lb.F</td>
+    <td valign="top">BtuPerLbFahren</td>
+  </tr>
+  <tr>
+    <td rowspan="6" valign="top">Speed or velocity</td>
+    <td rowspan="6" valign="top">Speed</td>
+    <td valign="top"><strong>meter per second</strong></td>
+    <td valign="top"><strong>m/s</strong></td>
+    <td valign="top"><strong>m/s</strong></td>
+    <td valign="top">MeterPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">foot per second</td>
+    <td valign="top">ft/s</td>
+    <td valign="top">ft/s</td>
+    <td valign="top">FootPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">mile per hour</td>
+    <td valign="top">mi/h</td>
+    <td valign="top">mph</td>
+    <td valign="top">MilePerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">kilometer per hour</td>
+    <td valign="top">km/h</td>
+    <td valign="top">km/h</td>
+    <td valign="top">KilometerPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">foot per minute (ft/min)</td>
+    <td valign="top">ft/min</td>
+    <td valign="top">fpm</td>
+    <td valign="top">FootPerMinute</td>
+  </tr>
+  <tr>
+    <td valign="top">foot per hour</td>
+    <td valign="top">ft/h</td>
+    <td valign="top">ft/h</td>
+    <td valign="top">FootPerHour</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Stress</td>
+    <td rowspan="2" valign="top">Stress</td>
+    <td valign="top"><strong>newton per square meter</strong></td>
+    <td valign="top"><strong>N/m<sup>2</sup></strong></td>
+    <td valign="top"><strong>N/m2</strong></td>
+    <td valign="top">NewtonPerSqMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per square inch</td>
+    <td valign="top">psi</td>
+    <td valign="top">psi</td>
+    <td valign="top">LbforcePerSqInch</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top"><strong>Surface tension</strong></td>
+    <td rowspan="3" valign="top">SurfacicTension</td>
+    <td valign="top"><strong>newton per meter</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top"><strong>N/m</strong></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top">kilogram per square second</td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+    <td valign="top">KilogramPerSqSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">dyne per centimeter</td>
+    <td valign="top">dyne/cm</td>
+    <td valign="top">dyne/cm</td>
+    <td valign="top">DynePerCentimeter</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Surfacic mass</td>
+    <td rowspan="2" valign="top">SurfacicMass</td>
+    <td valign="top"><strong>kilogram per square meter</strong></td>
+    <td valign="top"><strong>kg/m<sup>2</sup></strong></td>
+    <td valign="top"><strong>kg/m2</strong></td>
+    <td valign="top">KilogramPerSquareMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per square inch</td>
+    <td valign="top">lb/in<sup>2</sup></td>
+    <td valign="top">lb/in2</td>
+    <td valign="top">PoundPerSquareInch</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Temperature</td>
+    <td rowspan="3" valign="top">Temperature</td>
+    <td valign="top"><strong>Kelvin</strong></td>
+    <td valign="top"><strong>K</strong></td>
+    <td valign="top"><strong>Kdeg</strong></td>
+    <td valign="top">Kelvindegree</td>
+  </tr>
+  <tr>
+    <td valign="top">degree Celsius</td>
+    <td valign="top">ºC</td>
+    <td valign="top">Cdeg</td>
+    <td valign="top">Celsius</td>
+  </tr>
+  <tr>
+    <td valign="top">degree Fahrenheit</td>
+    <td valign="top">ºF</td>
+    <td valign="top">Fdeg</td>
+    <td valign="top">Fahrenheit</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Thermal conductivity</td>
+    <td rowspan="2" valign="top">ThermalConductivity</td>
+    <td valign="top"><strong>watt per meter kelvin</strong></td>
+    <td valign="top"><strong>W/m·K</strong></td>
+    <td valign="top"><strong>J/msKdeg</strong></td>
+    <td valign="top">JoulePerMSecKelvin</td>
+  </tr>
+  <tr>
+    <td valign="top">British Thermal Unit foot per hour square foot degree
+      Fahrenheit</td>
+    <td valign="top">BTU·ft/h·ft<sup>2</sup>·ºF</td>
+    <td valign="top">Bft/hf2F</td>
+    <td valign="top">BtuFtPerHrFt2Fahren</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Time</td>
+    <td rowspan="2" valign="top">TimeMagnitude</td>
+    <td valign="top"><strong>second</strong></td>
+    <td valign="top"><strong>s</strong></td>
+    <td valign="top"><strong>s</strong></td>
+    <td valign="top">Second</td>
+  </tr>
+  <tr>
+    <td valign="top">hour</td>
+    <td valign="top">h</td>
+    <td valign="top">h</td>
+    <td valign="top">Hour</td>
+  </tr>
+  <tr>
+    <td rowspan="9" valign="top">Viscosity, dynamic</td>
+    <td rowspan="9" valign="top">AbsoluteViscosity</td>
+    <td valign="top"><strong>newton second per square meter</strong></td>
+    <td valign="top"><strong>N·s/m<sup>2</sup></strong></td>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top">decapoise</td>
+    <td valign="top">daP</td>
+    <td valign="top">dapoise</td>
+    <td valign="top">Decapoise</td>
+  </tr>
+  <tr>
+    <td valign="top">poise</td>
+    <td valign="top">Poise</td>
+    <td valign="top">poise</td>
+    <td valign="top">Poise</td>
+  </tr>
+  <tr>
+    <td valign="top">centipoise</td>
+    <td valign="top">cP</td>
+    <td valign="top">cpoise</td>
+    <td valign="top">Centipoise</td>
+  </tr>
+  <tr>
+    <td valign="top">millipoise</td>
+    <td valign="top">mP</td>
+    <td valign="top">mpoise</td>
+    <td valign="top">Millipoise</td>
+  </tr>
+  <tr>
+    <td valign="top">micropoise</td>
+    <td valign="top">µP</td>
+    <td valign="top">micpoise</td>
+    <td valign="top">Micropoise</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force by second per square foot</td>
+    <td valign="top">lbf·s/ft<sup>2</sup></td>
+    <td valign="top">lbfs/ft2</td>
+    <td valign="top">LbfSecondPerSqFt</td>
+  </tr>
+  <tr>
+    <td valign="top">pound force by second per square inch</td>
+    <td valign="top">lbf·s/in<sup>2</sup></td>
+    <td valign="top">lbfs/in2</td>
+    <td valign="top">LbfSecondPerSqIn</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per foot and per second</td>
+    <td valign="top">lb/ft·s</td>
+    <td valign="top">lb/ft.s)</td>
+    <td valign="top">PoundPerSecondFoot</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Viscosity, kinematic</td>
+    <td rowspan="3" valign="top">KinematicViscosity</td>
+    <td valign="top"><strong>square meter per second</strong>)</td>
+    <td valign="top"><strong>m<sup>2</sup>/s</strong></td>
+    <td valign="top"><strong>m2/s</strong></td>
+    <td valign="top">SquareMeterPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">stoke</td>
+    <td valign="top">stoke</td>
+    <td valign="top">stoke</td>
+    <td valign="top">Stoke</td>
+  </tr>
+  <tr>
+    <td valign="top">square foot per second</td>
+    <td valign="top">ft<sup>2</sup>/s</td>
+    <td valign="top">ft2/s</td>
+    <td valign="top">SquareFootPerSecond</td>
+  </tr>
+  <tr>
+    <td rowspan="6" valign="top">Volume</td>
+    <td rowspan="6" valign="top">Volume</td>
+    <td valign="top"><strong>cubic meter</strong></td>
+    <td valign="top"><strong>m<sup>3</sup></strong></td>
+    <td valign="top"><strong>m3</strong></td>
+    <td valign="top">CubicMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic millimeter</td>
+    <td valign="top">mm<sup>3</sup></td>
+    <td valign="top">mm<sup>3</sup></td>
+    <td valign="top">CubicMillimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic centimeter</td>
+    <td valign="top">cm<sup>3</sup></td>
+    <td valign="top">cm3</td>
+    <td valign="top">CubicCentimeter</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic inch</td>
+    <td valign="top">in<sup>3</sup></td>
+    <td valign="top">in<sup>3</sup></td>
+    <td valign="top">CubicInch</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic foot</td>
+    <td valign="top">ft<sup>3</sup></td>
+    <td valign="top">ft<sup>3</sup></td>
+    <td valign="top">CubicFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">liter</td>
+    <td valign="top">L</td>
+    <td valign="top">L</td>
+    <td valign="top">Liter</td>
+  </tr>
+  <tr>
+    <td rowspan="8" valign="top">Volumetric flow</td>
+    <td rowspan="8" valign="top">VolumetricFlow</td>
+    <td valign="top"><strong>cubic meter per second</strong></td>
+    <td valign="top"><strong>m<sup>3</sup>/s</strong></td>
+    <td valign="top"><strong>m3/s</strong></td>
+    <td valign="top">CubicMeterPerSecond</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic meter per hour</td>
+    <td valign="top">m<sup>3</sup>/h</td>
+    <td valign="top">m3/h)</td>
+    <td valign="top">CubicMeterPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic foot per hour</td>
+    <td valign="top">ft<sup>3</sup>/h</td>
+    <td valign="top">ft3/h</td>
+    <td valign="top">CubicFootPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">U.S. gallon per minute</td>
+    <td valign="top">gal/min</td>
+    <td valign="top">gal/min</td>
+    <td valign="top">USGallonPerMinute</td>
+  </tr>
+  <tr>
+    <td valign="top">barrel per hour</td>
+    <td valign="top">bbl/h</td>
+    <td valign="top">brl/h</td>
+    <td valign="top">BarrelPerHour</td>
+  </tr>
+  <tr>
+    <td valign="top">barrel per day</td>
+    <td valign="top">bbl/day</td>
+    <td valign="top">brl/day</td>
+    <td valign="top">BarrelPerDay</td>
+  </tr>
+  <tr>
+    <td valign="top">cubic foot per minute</td>
+    <td valign="top">ft<sup>3</sup>/min</td>
+    <td valign="top">ft3/min</td>
+    <td valign="top">CubicFootPerMinute</td>
+  </tr>
+  <tr>
+    <td valign="top">liter/second</td>
+    <td valign="top">L/s</td>
+    <td valign="top">L/s</td>
+    <td valign="top">LiterPerSecond</td>
+  </tr>
+  <tr>
+    <td rowspan="2" valign="top">Volumic force</td>
+    <td rowspan="2" valign="top">VolumicForce</td>
+    <td valign="top"><strong>newton per cubic meter</strong></td>
+    <td valign="top"><strong>n/m<sup>3</sup></strong></td>
+    <td valign="top"><strong>n/m3</strong></td>
+    <td valign="top">NewtonPerCubicMeter</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per cubic inch</td>
+    <td valign="top">lbf/in<sup>3</sup></td>
+    <td valign="top">lbf/in<sup>3</sup></td>
+    <td valign="top">LbforcePerCubicInch</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Volumic mass</td>
+    <td rowspan="3" valign="top">VolumicMass</td>
+    <td valign="top"><strong>kilogram per cubic meter</strong></td>
+    <td valign="top"><strong>kg/m<sup>3</sup></strong></td>
+    <td valign="top"><strong>kg/m3</strong></td>
+    <td valign="top">KilogramPerM3</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per cubic foot</td>
+    <td valign="top">lbm/ft<sup>3</sup></td>
+    <td valign="top">lbm/ft3</td>
+    <td valign="top">PoundPerCubicFoot</td>
+  </tr>
+  <tr>
+    <td valign="top">pound per cubic inch</td>
+    <td valign="top">lb/in<sup>3</sup></td>
+    <td valign="top">lb/in3</td>
+    <td valign="top">PoundPerCubicInch</td>
+  </tr>
+</table>
+<p>NA: Not Applicable</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADlgCATDlgCombo.htm">Combo</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADlgCATDlgEditor.htm">Editor</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAADlgCATDlgSpinner.htm">Spinner</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADlgTechArticles/CAADlgManagingUnits.htm">Managing
+      Magnitudes and Units</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

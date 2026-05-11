@@ -1,0 +1,147 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATIAV5ArrWorkbench, CATIAArrBOMReport Interfaces Use Case</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%" border="0">
+   <tr>
+     <td>
+     <h2>Arrangement</h2>
+     </td>
+     <td valign="top" align="right">
+     <h2><a name="Top"></a>CATIAV5ArrWorkbench, CATIAArrBOMReport Interfaces Use 
+     Case</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <table width="100%" border="0">
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/atarget.gif" border="0" width="32" height="32"></td>
+     <td width="93%">This example shows how to extract a report of Arrangement 
+     objects within a document. Help is taken of a macro. This macro has a 
+     reference to CATIAArrBOMReport, CATIAV5ArrWorkbench Interfaces (referred to 
+     as ArrBOMReport, Workbench in the reference Visual Basic document).<p>This 
+     macro opens an existing Product document and retrieves the 
+     CATIAArrWorkbench selection. Then it finds the interface CATIAArrBOMReport. 
+     It then generates the BOM report and saves the report.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ainfo.gif" border="0" width="32" height="32"></td>
+     <td width="93%">CATArrPipingBOMReport is launched after CATIA is up and the 
+     reference document is opened.<p>CATArrPipingBOMReport.CATScript is located 
+     in the runtime directory Operating System (say intel_a)\code\command</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ascenari.gif" border="0" width="32" height="32"></td>
+     <td width="93%">CAAArrPipingBOMReport includes the following steps:<ol>
+       <li><a href="#BOM_prolog">Prolog</a> </li>
+       <li><a href="#Declare">Declare the macro variables</a></li>
+       <li><a href="#Obtain">Obtain the CATIAArrBOMReport Interface</a></li>
+       <li><a href="#Epilog">Epilog</a> </li>
+     </ol>
+     <h4><a name="BOM_prolog"></a>Prolog</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>  ...
+  a) Open the Input Document with Arrangement objects.
+  b) Run the macro.
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>Once the Product has been loaded, the macro is designed to read the 
+     relevant objects from the model.</p>
+     <p></p>
+     <h4><a name="Declare"></a>Declare the Macro Variables</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   Dim objCATIAV5Document As Document
+   Dim objCATIAV5ArrWorkbench As Workbench
+   Dim objCATIAV5ArrBOMReport As ArrBOMReport
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Obtain"></a>Obtain the CATIAArrBOMReport Interface</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+   Set objCATIAV5Document = CATIA.ActiveDocument
+
+   <font color="#008000">'//---------- Get ArrWorkbench from current document</font>
+   Set objCATIAV5ArrWorkbench = objCATIAV5Document.GetWorkbench(&quot;ArrWorkbench&quot;)
+<font color="#008000">   '//---------- Get CATIAArrBOMReport from ArrWorkbench</font>
+   Set objCATIAV5ArrBOMReport = objCATIAV5ArrWorkbench.FindInterface (&quot;CATIAArrBOMReport&quot;,objCATIAV5Document)
+  <font color="#008000"> '//---------- Generate the report</font>
+   objCATIAV5ArrBOMReport.GenerateBOMReport objCATIAV5Document, strGReportOutputPath
+<font color="#008000">   ' Store this reported data.</font>
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Epilog"></a>Epilog</h4>
+     <p>Thus we saw how to read a CATProduct document, retrieve the interface&nbsp; 
+     we are interested in and generate a report on these objects</p>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+ End Sub</pre>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <!---------------------------------comment--------------------------------->
+ <p align="center">
+ <img src="../CAAScrBase/images/aendtask.gif" border="0" width="64" height="32"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment--------------------------------->
+ <h4>In Short</h4>
+ <p>Thus we saw how to read a Product document, retrieve the interface we are 
+ interested in and generate a report on these objects.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment--------------------------------->
+ <h4>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>Replaying a macro</td>
+   </tr>
+   <tr>
+     <td align="right" width="100%" colSpan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!null ---------------------------------comment----------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></td>
+ </tr>
+ </table>
+ </p>
+
+ </body>
+
+</html>

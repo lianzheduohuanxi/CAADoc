@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>About CATSafeArrayVariant</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>About CATSafeArrayVariant</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>Many methods which return a value do not return a single value, but an array
+of values. For example, the <b>GetOrigin</b> property of the <b>Viewpoint3D</b> object
+returns a 3D point as an array of three coordinates. This array is returned as
+an output argument.</p>
+<p>Such arguments are visible in the VB/VBA object browser as a <b>variant</b> 
+but the reference documentation lists them as <b>CATSafeArrayVariant</b>.</p>
+<p>You can retrieve in the <b>MyVPOrigin</b> variable the
+origin of the 3D viewpoint of the active viewer in the active window as follows:</p>
+<pre>ReDim MyVPOrigin(2)
+CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.GetOrigin MyVPOrigin</pre>
+<p>You should directly use the ReDim statement to assign a size to the array 
+while declaring it as a variable size array, and then call the GetOrigin method.
+Assigning a size of 2 allocates an array containing three values.</p>
+<p>To access each coordinate, you need to go deeper:</p>
+<ul>
+  <li>The x coordinate is in <b>MyVPOrigin(0)</b></li>
+  <li>The y coordinate is in <b>MyVPOrigin(1)</b></li>
+  <li>The z coordinate is in <b>MyVPOrigin(2)</b></li>
+</ul>
+<p>Contrary to collections, a CATSafeArrayVariant's index begins at 0. To set a new
+triplet of values, you can write:</p>
+<pre>MyVPOrigin = Array(150, 200, 50)
+CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin</pre>
+<p>or</p>
+<pre>CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin Array(150, 200, 50)</pre>
+<p>But to modify the y coordinate only, write:</p>
+<pre>MyVPOrigin(1) = 200</pre>
+CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.PutOrigin MyVPOrigin
+<p>When you don't know the size of an array, use the UBound function. It returns
+the rank of the highest element in the array. For example the following example
+returns 2 in Highestrank:</p>
+<pre>Highestrank = Ubound(MyVPOrigin)</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

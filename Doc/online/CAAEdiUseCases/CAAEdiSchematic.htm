@@ -1,0 +1,801 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Electrical Objects in a Schematics Environment</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Systems Diagrams</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Electrical Objects in a Schematics
+      Environment</h3>
+      <em>How to use schematics with electrical objects</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <tr>
+    <td bgcolor="#F0F0FF">
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAEDIInterfaces use case. This use case
+      explains how to manage electrical objects in a Schematic environment.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAEFDInterfacesSample Use Case</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAEdiSchematic Do</a></li>
+            <li><a href="#How">How to Launch CAAEdiSchematic</a></li>
+            <li><a href="#Where">Where to Find the CAAEdiSchematic Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA EDI Interfaces. Its main intent is to allow you to manage electrical
+objects in a document. Before creating the electrical objects, you will have to
+navigate through the feature model of CATIA V5 to find the objects that will
+enable you to do this under the document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEDIInterfaces Use Case</h3>
+<p>CAAEDIInterfaces is a use case of the CAAElecSchematicItf.edu framework that
+illustrates the CATIA EDI Interfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAEdiSchematic Do?</h4>
+<p>The goal of CAAEdiSchematic use case is to show how to manage Electrical
+objects, which is the first common step before creating the entire electrical
+system. We enrich the sample code CAAEDIInterfacesSample.cpp(.h) and illustrates
+some backbone concepts that are shared by an Electrical Application.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEdiSchematic?</h4>
+<p>To launch CAAEdiSchematic, you will need to set up the build time
+environment, then compile CAAEDIInterfacesSample.cpp along with its
+prerequisites, set up the run time environment, and then execute the sample.
+This is fully described in the referenced article [<a href="#References">1</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEdiSchematic CAAEdiSchematic_InstIn.CATProduct output_Inst.CATProduct output_CompRef.CATProduct output_CableRef.CATProduct&quot;</pre>
+<ul>
+  <li><b>CAAEdiSchematic_InstIn.CATProduct</b> - the entire pathname, name and
+    extension (.CATProduct) of the input document. Normally, it should be stored
+    in the CNext/resources/graphic file directory.</li>
+  <li><b>output_Inst.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) under which the new document containing created instances is
+    to be stored.</li>
+  <li><b>output_CompRef.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) under which the new document containing created component
+    references is to be stored.</li>
+  <li><b>output_CableRef.CATProduct</b> - the entire pathname, name and
+    extension (.CATProduct) under which the new document containing created
+    cable references is to be stored.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where">Where to Find the CAAEdiSchematic Code</a></h4>
+<p>The CAAEdiSchematic sample is made of a single class named
+CAAEDIInterfacesSample.cpp located in the CAAEDISchematic.m module of the
+CAAElecSchematicItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecSchematicItf.edu\CAAEDISchematic.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecSchematicItf.edu/CAAEDISchematic.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>This sample deals with the following classes:</p>
+<table>
+  <tr>
+    <td><i>CATSession</i></td>
+    <td>Class for the session</td>
+  </tr>
+  <tr>
+    <td><i>CATDocument</i></td>
+    <td>Class for the document base class</td>
+  </tr>
+  <tr>
+    <td><i>CATObject</i></td>
+    <td>Class for the schematic</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiApplicatin</i></td>
+    <td>Class for the schematic environment</td>
+  </tr>
+  <tr>
+    <td><i>CATEdiInstanceFactory</i></td>
+    <td>Class for the Instance Factory</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiReference Factory</i></td>
+    <td>Class for the Reference factory</td>
+  </tr>
+  <tr>
+    <td><i>IUnknown</i></td>
+    <td>Base Class for the References and Instances</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiCable</i></td>
+    <td>Class for the electrical Cable</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiCableExtremity</i></td>
+    <td>Class for the electrical extremity</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiConnector</i></td>
+    <td>Class for the electrical Connector</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiEquipment</i></td>
+    <td>Class for the electrical Equipment</td>
+  </tr>
+  <tr>
+    <td><i>CATIEdiWidePin</i></td>
+    <td>Class for the electrical WidePin</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now first comment the Electrical environment and it’s components
+creation by looking at the code of the CAAEDIInterfacesSample.cpp. There are 31
+logical steps in CAAEDIInterfacesSample:</p>
+<table width="100%">
+  <tr>
+    <td><b>#</b></td>
+    <td><b>Step</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Creating an Object Modeler Session</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Opening an Existing Document and Creating a New Document</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Creating the Electrical Schematic Object</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Creating the Electrical Schematic Environment</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Creating the Reference Factory</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Creating the Reference Equipment</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Creating the Reference Cables</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">8</a></td>
+    <td valign="top">Retrieving the Instance Factory</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">9</a></td>
+    <td valign="top">Instantiating the Equipments</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">10</a></td>
+    <td valign="top">Retrieving the Equipment Instance Factory</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">11</a></td>
+    <td valign="top">Instantiating the Cable</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">12</a></td>
+    <td valign="top">Retrieving the Cable Extremities</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">13</a></td>
+    <td valign="top">Retrieving the Attribute Name on the Cable</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">14</a></td>
+    <td valign="top">Retrieving the Cable from the Extremity</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">15</a></td>
+    <td valign="top">Adding WidePins on the Equipment</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">16</a></td>
+    <td valign="top">Listing the WidePins on Equipment 1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">17</a></td>
+    <td valign="top">Retrieving the Equipment from the WidePin</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">18</a></td>
+    <td valign="top">Connecting CABLE/Ext1 on EQT1/Pin1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">19</a></td>
+    <td valign="top">Retrieving the WidePin from the Connection CABLE/Ext1 to
+      EQT1/Pin1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">20</a></td>
+    <td valign="top">Retrieving the Extremity from the Connection EQT1/Pin1 to
+      CABLE/Ext1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step21">21</a></td>
+    <td valign="top">Removing EQT1/Pin1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step23">22</a></td>
+    <td valign="top">Retrieving the WidePin from the Connection CABLE/Ext1 to
+      EQT1/Pin1 after Remove</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step23">23</a></td>
+    <td valign="top">Connecting CABLE/Ext1 on EQT1/Pin2</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">24</a></td>
+    <td valign="top">Disconnecting CABLE/Ext1 on EQT1/Pin2</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step29">25</a></td>
+    <td valign="top">Connecting CABLE/Ext1 on EQT1/Pin2 after Disconnection</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step29">26</a></td>
+    <td valign="top">Connecting CABLE/Ext2 on EQT2/Pin1</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step29">27</a></td>
+    <td valign="top">Listing Associated Equipments of the Cable</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step29">28</a></td>
+    <td valign="top">Listing Associated Cables of the Equipments</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step29">29</a></td>
+    <td valign="top">Saving the Document</td>
+  </tr>
+</table>
+<p>The electrical system is displayed when the CAAEDIInterfacesSample
+application is launched. The system creation and display is performed in the <i>Electrical
+Factory</i> constructor that calls the <code>CreateEfdSystem</code> method. This
+is described below.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating an Object Modeler Session</h4>
+<p>We need a <i>CATSession</i> pointer to create the Session.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+char* psessionIdent = &quot;Working Session&quot;;
+CATSession* psession = NULL;
+::Create_Session(psessionIdent, psession);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Opening an Existing Document and Creating a New Document</h4>
+<p>We need a <i>CATDocument</i> pointers to open the existing and create the new
+Document.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDocument *pCATDocument1 = NULL;
+CATDocumentServices::OpenDocument (PATHInstIN, pCATDocument1);
+CATDocument *pCATDocumentEqt = NULL;
+CATDocumentServices::New (ELECTYPE, pCATDocumentEqt);
+CATDocument *pCATDocumentCable = NULL;
+CATDocumentServices::New (ELECTYPE, pCATDocumentCable);</pre>
+    </td>
+  </tr>
+</table>
+<p>We open the existing Document with two arguments: input PATH (path of the
+document) and output POINTER to the opened Document.</p>
+<p>We create the new Document with two arguments: input TYPE (type of the
+Document) and output POINTER to the new Document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the Electrical Schematic Object</h4>
+<p>We need a <i>CATObject</i> pointer to be able to create the Electrical
+Schematic Object.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATObject * pSchematicApplication = new CATObject (SCHELEName_Application); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the Electrical Schematic Environment</h4>
+<p>We need a <i>CATIEdiApplication</i> interface pointer to be able to create
+the Electrical Schematic Environment.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIEdiApplication * piApplication = NULL;
+RC = pSchematicApplication-&gt;QueryInterface(IID_CATIEdiApplication, 
+                                           (void**)&amp; piApplication);
+RC = piApplication-&gt;Init();
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>We create the Electrical Schematic Environment and initialize it by using the
+method Init.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Creating the Reference Factory</h4>
+<p>We need a <i>CATIEdiReferenceFactory</i> interface pointer to be able to
+create the Reference Factory..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIEdiReferenceFactory * piReferenceFactory = NULL;
+RC = pSchematicApplication-&gt;QueryInterface(IID_CATIEdiReferenceFactory, 
+                                           (void**)&amp; piReferenceFactory);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We create the Reference Factory by using the QueryInterface method on the
+Electrical Schematic Object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Creating the Reference Equipment</h4>
+<p>We need a IUnknown pointer to be able to create the Reference Equipment..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IUnknown* pEdiEquipmentReference = NULL;
+const wchar_t* wchar_EquipmentPartNumber = L&quot;EQT_PartNumber&quot;;
+RC = piReferenceFactory-&gt;CreateEdiComponentReference (SCHELEClass_Eqt, 
+                                                      wchar_EquipmentPartNumber,
+                                                      &amp;pEdiEquipmentReference);</pre>
+    </td>
+  </tr>
+</table>
+<p>By using the method CreateEdiComponentReference on the Reference Factory
+pointer we create the Equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Creating the Reference Cables</h4>
+<p>We need a <i>IUnknown</i> pointer to be able to create the Reference Cable.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IUnknown* pEdiBidon = NULL;
+const wchar_t* wchar_CablePartNumber = L&quot;CABLE_PartNumber&quot;;
+RC = piReferenceFactory-&gt;CreateEdiComponentReference (SCHELEClass_Cable, 
+                                                      wchar_CablePartNumber,
+                                                      &amp;pEdiBidon); </pre>
+    </td>
+  </tr>
+</table>
+<p>We create the Reference Cable by using the method CreateEdiComponentReference
+on the Reference Factory.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step8"></a>Retrieving the Instance Factory</h4>
+<p>We need a <i>CATIEdiInstanceFactory</i> interface pointer to be able to
+create (later) the electrical Equipments.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiInstanceFactory * piEquipmentInstanceFactory = NULL;
+RC = pEdiEquipmentReference-&gt;QueryInterface(IID_CATIEdiInstanceFactory, 
+                                            (void**)&amp; piEquipmentInstanceFactory); </pre>
+    </td>
+  </tr>
+</table>
+<p>We use QueryInterface method on the Reference Equipment to obtain an Instance
+Factory pointer .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Instantiating the Equipments</h4>
+<p>We need a <i>IUnknown</i> pointer to be able to create the electrical
+Equipments.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>const wchar_t* wchar_EquipmentInstanceName1 = L&quot;EQT_InstanceName_1&quot;;
+IUnknown * pEdiEquipmentInstance1 = NULL;
+RC = piEquipmentInstanceFactory-&gt;Instanciate(wchar_EquipmentInstanceName1, 
+                                             &amp;pEdiEquipmentInstance1); </pre>
+    </td>
+  </tr>
+</table>
+<p>We use Instanciate method on the Instance Factory pointer to obtain the
+Equipment .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step10"></a>Retrieving the Equipment Instance Factory</h4>
+<p>We need a <i>CATIEdiInstanceFactory</i> interface pointer to be able to
+create (later) the electrical Cable..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiInstanceFactory * piCableInstanceFactory = NULL;
+RC = pEdiCableReference-&gt;QueryInterface(IID_CATIEdiInstanceFactory, 
+                                        (void**)&amp; piCableInstanceFactory); </pre>
+    </td>
+  </tr>
+</table>
+<p>We use QueryInterface method on the Reference Cable to obtain an Instance
+Factory pointer .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step11"></a>Instantiating the Cable</h4>
+<p>We need a IUnknown pointer to create the electrical Cable..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>const wchar_t* wchar_CableInstanceName = L&quot;CABLE_InstanceName&quot;;
+IUnknown * pEdiCableInstance = NULL;
+RC = piCableInstanceFactory-&gt;Instanciate(wchar_CableInstanceName, 
+                                         &amp;pEdiCableInstance);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the <code>Instanciate</code> method on the Instance Factory pointer to
+obtain a Cable. .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step12"></a>Retrieving the Cable Extremities</h4>
+<p>We need a <i>CATIEdiCable</i> interface pointer and two <i>CATIEdiCableExtremity</i>
+interface pointers to retrieves Cable extremities.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiCable * piEdiCable = NULL;
+RC = pEdiCableInstance-&gt;QueryInterface(IID_CATIEdiCable, (void**)&amp; piEdiCable);
+
+  if( FAILED(RC) || NULL == piEdiCable   ) return 14;
+  
+CATIEdiCableExtremity * piEdiCableExt1 = NULL;
+CATIEdiCableExtremity * piEdiCableExt2 = NULL;
+RC = piEdiCable-&gt;GetCableExtremities(&amp;piEdiCableExt1, &amp;piEdiCableExt2); </pre>
+    </td>
+  </tr>
+</table>
+<p>We use GetCableExtremities method on the interface pointer <i>CATIEdiCable </i>with
+the two <i>CATIEdiCableExtremity</i> interface pointers as arguments.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step13"></a>Retrieving the Attribute Name on the Cable</h4>
+<p>We need a <i>CATIEdiConnector</i> interface pointer to retrieves the
+Attribute Name.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiConnector * piCableConnector1 = NULL;
+RC = piEdiCableExt1-&gt;QueryInterface(IID_CATIEdiConnector, 
+                                    (void**)&amp; piCableConnector1);
+...
+
+CATUnicodeString UStgNameExt1;
+RC = piCableConnector1-&gt;GetName(&amp;UStgNameExt1);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use GetName method on the interface pointer <i>CATIEdiConnector </i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step14"></a>Retrieving the Cable from the Extremity</h4>
+<p>We need a <i>CATIEdiCable</i> interface pointer to retrieves the Cable from
+the extremity..</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiCable * piEdiRetCable = NULL;
+RC = piEdiCableExt1-&gt;GetCable(&amp;piEdiRetCable);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use GetCable method on the interface pointer <i>CATIEdiCable </i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step15"></a>Adds WidePin on the Equipment</h4>
+<p>We need a <i>CATIEdiEquipment</i> interface pointer to add a WidePin on it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiEquipment * piEdiEquipment1 = NULL;
+RC = pEdiEquipmentInstance1-&gt;QueryInterface(IID_CATIEdiEquipment, 
+                                            (void**)&amp; piEdiEquipment1);
+...
+const wchar_t* wchar_NUM1 = L&quot;NUM-1&quot;; 
+const wchar_t* wcharId_WidePin1 = L&quot;Wide Pin 1&quot;;
+  
+CATIEdiWidePin *piWidePinCntr1Eqt1 = NULL;
+RC = piEdiEquipment1-&gt;AddWidePin (wcharId_WidePin1, 
+                                  wchar_NUM1,
+                                  &amp;piWidePinCntr1Eqt1);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use AddWidePin method to add a WidePin (CATIEdiWidePin interface pointer)
+on the Equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step16"></a>Listing the WidePins on Equipment 1</h4>
+<p>We need a <i>CATIUnknownList</i> interface pointer to list the WidePins.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIUnknownList* pLUKWidePins = NULL;
+RC = piEdiEquipment1-&gt;ListWidePins (&amp;pLUKWidePins);
+...
+unsigned uSizeCntrs = 0;
+pLUKWidePins-&gt;Count(&amp;uSizeCntrs); </pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method ListWidePins on the Equipment and we can also see the
+number of elements by using Count method on the list created.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step17"></a>Retrieving the Equipment from the WidePin</h4>
+<p>We need a <i>CATIEdiEquipment</i> interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiEquipment *piEdiRetEquipment = NULL;
+RC = piWidePinCntr2Eqt1-&gt;GetEquipment(&amp;piEdiRetEquipment);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method GetEquipment on the WidePin to retrieve the Equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step18"></a>Connecting CABLE/Ext1 on EQT1/Pin1</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piEdiCableExt1-&gt;Connect (piWidePinCntr1Eqt1);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Connect on the Cable to connect Cable extremity to an
+Equipment's pin .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step19"></a>Retrieving the WidePin from the Connection CABLE/Ext1
+to EQT1/Pin1</h4>
+<p>We need a <i>CATIEdiWidePin</i> interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiWidePin *piFromToWidePin = NULL;
+RC = piEdiCableExt1-&gt;GetConnectedWidePin (&amp;piFromToWidePin);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method GetConnectedWidePin on the Cable to retrieve the WidePin .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step20"></a>Retrieving the Extremity from the Connection EQT1/Pin1
+to CABLE/Ext1</h4>
+<p>We need a <i>CATIEdiCableExtremity</i> interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiCableExtremity *piFromToCableExtremity = NULL;
+RC = piWidePinCntr1Eqt1-&gt;GetConnectedCableExtremity (&amp;piFromToCableExtremity);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method GetConnectedCableExtremity on the WidePin to retrieve the
+extremity .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step21"></a>Removing EQT1/Pin1</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piFromToWidePin-&gt;Remove();</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Remove on the WidePin to remove it .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step22"></a>Retrieving the WidePin from the Connection CABLE/Ext1
+to EQT1/Pin1 after Remove</h4>
+<p>We need a <i>CATIEdiWidePin</i> interface pointer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIEdiWidePin *piWidePinBid = NULL;
+RC = piEdiCableExt1-&gt;GetConnectedWidePin (&amp;piWidePinBid);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method GetConnectedWidePin on the Cable to retrieve the WidePin,
+the method returns a null pointer beacause the WidePin has been removed before .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step23"></a>Connecting CABLE/Ext1 on EQT1/Pin2</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piEdiCableExt1-&gt;Connect (piWidePinCntr2Eqt1);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Connect on the Cable to connect the Cable extremity to the
+WidePin(2) of the Equipment 1.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step24"></a>Disconnecting CABLE/Ext1 on EQT1/Pin2</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piEdiCableExt1-&gt;Disconnect ();</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Disconnect on the Cable to disconnect the extremity of the
+Cable from the WidePin of the Equipment .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step25"></a> Connecting CABLE/Ext1 on EQT1/Pin2 after Disconnection</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piEdiCableExt1-&gt;Connect (piWidePinCntr2Eqt1);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Connect on the Cable to connect the WidePin with the
+Cable's extremity after disconnection .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step26"></a> Connecting CABLE/Ext2 on EQT2/Pin1</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>RC = piEdiCableExt2-&gt;Connect (piWidePinCntr1Eqt2);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method Connect on the Cable to connect the WidePin with the
+Cable's extremity.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step27"></a> Listing the Associated Equipments of the Cable</h4>
+<p>We need a <i>CATIUnknownList</i> pointer to build the list</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIUnknownList* pLUKEquipments = NULL;
+RC = piEdiCable-&gt;ListAssociatedEquipments (&amp;pLUKEquipments);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method ListAssociatedEquipments on the Cable to get the list of
+the associated Equipments.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step28"></a> Listing the Associated Cables of the Equipments</h4>
+<p>We need a <i>CATIUnknownList</i> pointer to build the list</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIUnknownList* pLUKCables = NULL;
+RC = piEdiEquipment1-&gt;ListAssociatedCables (&amp;pLUKCables);</pre>
+    </td>
+  </tr>
+</table>
+<p>We use the method ListAssociatedEquipments on the Equipment to get the list
+of the associated Cables.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step29"></a>Saving the Document</h4>
+<p>We need a <i>CATIPersistent</i> interface pointer builded from the Document</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATIPersistent_var hPers (pCATDocument);
+...
+hPers-&gt;Save(); </pre>
+    </td>
+  </tr>
+</table>
+<p>Then we use the method Save .</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to manage electrical entities in a
+document. We illustrate how some management interfaces on the system feature can
+be used like <i>CATIEdiEquipment</i>, <i>CATIEdiConnector</i>, <i>CATIEdiCable</i>.
+We also illustrate the way to connect or disconnect electrical objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

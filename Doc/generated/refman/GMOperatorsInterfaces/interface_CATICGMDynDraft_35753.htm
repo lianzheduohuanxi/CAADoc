@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMDynDraft</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMDynDraft"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMDynDraft</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMDynDraft_35753','CATICGMDynDraft','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMDynDraft</b>
+</p>
+<p>
+<b><i> Class defining the operator to draft faces of a 3D body.</i></b><br>
+
+ <br>When working with castings and forgings, draft operations are needed to allow a part 
+ to be extracted from its mold. The parameters defining a drafting operation are:
+ <dl><dt>Pulling direction</dt><dd>The direction in which the mold of the part is extracted
+ <dt>Neutral element</dt><dd>The intersection between the neutral element and the faces to draft 
+ defines the neutral curve, where the body remains the same. 
+ On both sides of the neutral curve, matter is either added or subtracted, or both in some cases,
+ according to the pulling 
+ direction and the value of the angle. The neutral element does not need to split any of the selected faces.
+ However, the underlying surfaces have to intersect.
+ The neutral curve can also be directly defined by a reflect line computation, see <script type="text/javascript"> activateLinkAnchor('CATDynDraftDomain','','CATDynDraftDomain') </script>. <dt>Parting element</dt><dd>This optional element splits the faces in two sets. One must choose which
+ set of faces to draft
+ <ul><li> either  by defining an orientation value with respect to the parting element (called parting orientation)
+ <li> or, otherwise, by using the pulling direction.
+ </ul>
+ The parting element can be the same as the neutral element. 
+ There is at most one parting element associated with a CATICGMDynDraft operator.
+ <dt>Angle</dt><dd> The draft angle.
+ </dl> 
+<br>A CATICGMDynDraft operator groups in a same operator several draft operations:
+ <ul><li>The CATDynDraftDomain groups all the faces to draft with regards to the same pulling direction,
+ <li>The CATDynDraftRibbon groups all the connected faces to draft with regards to the same pulling direction.
+ <li>The CATDynDraftAngle groups all the faces to draft with the same angle, 
+ defined with regards to the same pulling direction. At present, the operator does not support different
+ angle values.
+ </ul>
+ <br>By default, a ribbon is automatically propagated by following the tangential
+ continuity of its support.
+<br>
+ The CATICGMDynDraft operator follows the global frame of the topological operators and satisfies the smart mechanism: 
+ the input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input bodies.
+<ul>
+ <li>A CATICGMDynDraft operator is created with the <tt>CATCreateDynDraft</tt> global function:
+ It must be directly released with the <tt>Release</tt> method after use. It is not streamable. 
+<li>Options can be precised (such as the domain to draft) with the <tt>SetXxx</tt> and <tt>Add</tt> 
+ methods, before
+ asking for the computation with the <tt>Run</tt> method. The <tt>Add</tt> method can only be called once
+ for a draft operation.
+<li>In both cases, the result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+</ul>
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATDynDraftDomain','','CATDynDraftDomain') </script>, <script type="text/javascript"> activateLinkAnchor('CATDynDraftRibbon','','CATDynDraftRibbon') </script>, <script type="text/javascript"> activateLinkAnchor('CATDynDraftAngle','','CATDynDraftAngle') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Add(CATDynDraftDomain*)"><b>Add</b></a>(CATDynDraftDomain*)
+<dd>  Adds a domain to draft.
+ <dt> o 
+    <a href="#Add(CATBody*,CATOrientation,CATBoolean)"><b>Add</b></a>(CATBody*,CATOrientation,CATBoolean)
+<dd>  Defines the parting element associated with <tt>this</tt> drafting operator.
+ <dt> o 
+    <a href="#AddLimiting(CATBody*,CATOrientation,CATBoolean)"><b>AddLimiting</b></a>(CATBody*,CATOrientation,CATBoolean)
+<dd>  Specifies a body that defines the boundary for a draft operation.
+ <dt> o 
+    <a href="#SetJunctionMode(CATBoolean)"><b>SetJunctionMode</b></a>(CATBoolean)
+<dd>  Defines whether a draft ribbon can be branched into two ribbons.
+ <dt> o 
+    <a href="#SetPrevisualizationMode(CATDynDraftPrevisualization)"><b>SetPrevisualizationMode</b></a>(CATDynDraftPrevisualization)
+<dd>  Asks for the computation of the construction paths of the draft.
+ <dt> o 
+    <a href="#SetPrevisualizationOnly()"><b>SetPrevisualizationOnly</b></a>()
+<dd>  Asks for the computation of the construction paths of the draft.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Add"></a><a name="Add(CATDynDraftDomain*)"></a> <dt> o <b>Add</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Add</b>(<td><script type="text/javascript"> activateLink('CATDynDraftDomain','CATDynDraftDomain*')</script> <td><tt>iDraftDomain</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a domain to draft.
+ <br> The <tt>Add</tt> method can only be called once
+ for a draft operation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDraftDomain</tt>
+   <dd> The pointer to the domain to add to the drafting operation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Add"></a><a name="Add(CATBody*,CATOrientation,CATBoolean)"></a> <dt> o <b>Add</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Add</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iPartingElement</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script> <td><tt>iPartingOrientation</tt><td><tt>= CATOrientationUnknown</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iIsPartingUntil</tt><td><tt>= FALSE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the parting element associated with <tt>this</tt> drafting operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPartingElement</tt>
+   <dd> The pointer to the parting body. 
+ </dd>
+    <dt><tt> iPartingOrientation</tt>
+   <dd> The side of the parting element where the faces are drafted.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>CATOrientationUnknown</tt></dt><dd>The pulling direction defines the side.
+ <dt><tt>CATOrientationNegative</tt></dt>
+ <dd>The opposite of the natural orientation of the parting element.
+ <dt><tt>CATOrientationPositive</tt></dt>
+ <dd>The natural orientation of the parting element.
+ </dl>
+ </dd>
+    <dt><tt> iIsPartingUntil</tt>
+   <dd> In case of a parting element that does not intersect the faces to draft, <tt>iIsPartingUntil</tt> defines 
+ whether the parting element is used or not. By default, it is not. To be used in case of reflect line draft only.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddLimiting"></a><a name="AddLimiting(CATBody*,CATOrientation,CATBoolean)"></a> <dt> o <b>AddLimiting</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddLimiting</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iLimitingElement</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script> <td><tt>iLimitingOrientation</tt><td><tt>= CATOrientationUnknown</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iIsLimitingUntil</tt><td><tt>= FALSE</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Specifies a body that defines the boundary for a draft operation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLimitingElement</tt>
+   <dd> The body to use as the limiting element.
+ </dd>
+    <dt><tt> iLimitingOrientation</tt>
+   <dd> The side of the limiting element on which the faces are drafted.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>CATOrientationUnknown</tt></dt><dd>The pulling direction defines the side.
+ <dt><tt>CATOrientationNegative</tt></dt>
+ <dd>The opposite of the natural orientation of the limiting element.
+ <dt><tt>CATOrientationPositive</tt></dt>
+ <dd>The natural orientation of the limiting element.
+ </dl>
+ </dd>
+    <dt><tt> iIsLimitingUntil</tt>
+   <dd> In case of a limiting element that does not intersect the faces to draft, <tt>iIsLimitingUntil</tt> defines 
+ whether the limiting element is used or not. By default, it is not.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetJunctionMode"></a><a name="SetJunctionMode(CATBoolean)"></a> <dt> o <b>SetJunctionMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetJunctionMode</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iJunctionMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines whether a draft ribbon can be branched into two ribbons.
+ <br>This may happen when the set of faces to draft is itself bifurcating.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iJunctionMode</tt>
+   <dd> The branch mode.
+ <br><b>Legal values</b>: <tt>TRUE</tt> if it can, <tt>FALSE</tt> otherwise.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPrevisualizationMode"></a><a name="SetPrevisualizationMode(CATDynDraftPrevisualization)"></a> <dt> o <b>SetPrevisualizationMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPrevisualizationMode</b>(<td><script type="text/javascript"> activateLink('CATDynDraftPrevisualization','CATDynDraftPrevisualization')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for the computation of the construction paths of the draft.
+ <br>Can be use in debug purpose, in order to understand the configuration.
+</dl>
+<a name="SetPrevisualizationOnly"></a><a name="SetPrevisualizationOnly()"></a> <dt> o <b>SetPrevisualizationOnly</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPrevisualizationOnly</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for the computation of the construction paths of the draft.
+ <br>To obtain the initial wire representing 
+ either the intersection of the neutral element with the initial body or the reflect lines. 
+ <br>Can be use in debug purpose, in order to understand the configuration.
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMDynDraft.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

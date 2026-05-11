@@ -1,0 +1,629 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIFeaturize</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIFeaturize"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIFeaturize</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIFeaturize_24262','CATIFeaturize','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIFeaturize</b>
+</p>
+<p>
+<b><i> Interface to create a BRep feature from a selecting object or to duplicate a BRep feature.</i></b><br>
+
+ <b>Role</b>: All methods of this interface work with the following set of attribute:
+ <ul><li>If a method is called on a selecting object, it creates a BRep feature.
+ <li>If a method is called on a BRep feature, it returns the BRep feature itself or
+ a copy of this BRep feature, depending on the <tt>iMode</tt> parameter.</ul>
+
+ Duplication of the BRep feature is controlled by the following values:
+ <ul><li><tt>MfNoDuplicateFeature</tt>, which is the default value, and 
+ <li><tt>MfDuplicateFeature</tt>.</ul>
+
+ There are 2 ways to define the support, either through a mode, or a support:
+ <ul><li>Support definition of the BRep feature is also controlled by the following <tt>iMode</tt> values:
+ <ul><li><tt>MfInitialFeatureSupport</tt>, which is the default value for functional BRep features, 
+ <li><tt>MfSelectingFeatureSupport</tt>, which is the default value for relimited BRep features, and 
+ <li><tt>MfLastFeatureSupport</tt>.</ul>
+
+ <li>On the other hand, a <tt>CATISpecObject</tt> can be specified as the support of the BRep feature.
+ <ul><li>The functional BRep feature points to this specified object. <li>The relimited BRep feature points to 
+ the <tt>ResultOUT</tt> of this specified object.</ul>
+
+ <br>When the specified support is a <tt>ResultOUT</tt>, 
+ the BRep feature points to the attribute that contains this <tt>ResultOUT</tt>.
+ 
+ <br>Some Part Design features such as fillet or draft angle have a special behavior. 
+ The support becomes the <tt>ResultIN</tt> of the design feature in order to manage 
+ delete, deactive, reorder, cut and paste.
+
+ The specified support also can be a <tt>CATISpecAttribute</tt> that holds a <tt>CATISpecObject</tt>.</ul>
+
+ <br>The <tt>iMode</tt> value <ul><li><tt>MfTemporaryBody</tt>, which is the default value,
+ creates a BRep feature 
+ that is a handle on a shape feature. Such a BRep feature requires the shape feature to provide 
+ its own geometrical description.
+ <li><tt>MfPermanentBody</tt> creates an independant BRep feature that behaves like a
+ curve or surface feature. Such a feature can be used as an input to other operators.</ul>
+
+ <br>These values can be combined together according to the following syntax:
+ <tt>CATMfFeaturizeMode iMode = MfNoDuplicateFeature | MfPermanentBody | MfLastFeatureSupport;</tt>.
+
+ <br>Anyway, the application has to aggregate the BRep feature in the structure so that 
+ it is involved in data management processes: delete, cut, copy, paste, update.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#FeaturizeBorder()"><b>FeaturizeBorder</b></a>()
+<dd>  Creates a BRep feature of type border edge or border vertex.
+ <dt> o 
+    <a href="#FeaturizeBorder(CATMfFeaturizeMode)"><b>FeaturizeBorder</b></a>(CATMfFeaturizeMode)
+<dd>  Creates a BRep feature of type border edge or border vertex.
+ <dt> o 
+    <a href="#FeaturizeBorder(CATBaseUnknown_var&amp;)"><b>FeaturizeBorder</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Creates a BRep feature of type border edge only.
+ <dt> o 
+    <a href="#FeaturizeBorder(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"><b>FeaturizeBorder</b></a>(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)
+<dd>  Creates a BRep feature of type border edge only.
+ <dt> o 
+    <a href="#FeaturizeF()"><b>FeaturizeF</b></a>()
+<dd>  Creates a BRep feature as a functional element.
+ <dt> o 
+    <a href="#FeaturizeF(CATMfFeaturizeMode)"><b>FeaturizeF</b></a>(CATMfFeaturizeMode)
+<dd>  Creates a BRep feature as a functional element.
+ <dt> o 
+    <a href="#FeaturizeR()"><b>FeaturizeR</b></a>()
+<dd>  Creates a BRep feature as a relimited element.
+ <dt> o 
+    <a href="#FeaturizeR(CATMfFeaturizeMode)"><b>FeaturizeR</b></a>(CATMfFeaturizeMode)
+<dd>  Creates a BRep feature as a relimited element.
+ <dt> o 
+    <a href="#FeaturizeR(CATBaseUnknown_var&amp;)"><b>FeaturizeR</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Creates a BRep feature as a relimited element.
+ <dt> o 
+    <a href="#FeaturizeR(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"><b>FeaturizeR</b></a>(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)
+<dd>  Creates a BRep feature as a relimited element.
+ <dt> o 
+    <a href="#FeaturizeWire()"><b>FeaturizeWire</b></a>()
+<dd>  Creates a BRep feature of type wire edge or wire vertex.
+ <dt> o 
+    <a href="#FeaturizeWire(CATMfFeaturizeMode)"><b>FeaturizeWire</b></a>(CATMfFeaturizeMode)
+<dd>  Creates a BRep feature of type wire edge.
+ <dt> o 
+    <a href="#FeaturizeWire(CATBaseUnknown_var&amp;)"><b>FeaturizeWire</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Creates a BRep feature of type wire edge only.
+ <dt> o 
+    <a href="#FeaturizeWire(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"><b>FeaturizeWire</b></a>(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)
+<dd>  Creates a BRep feature of type wire edge only.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="FeaturizeBorder"></a><a name="FeaturizeBorder()"></a> <dt> o <b>FeaturizeBorder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeBorder</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type border edge or border vertex.
+ Implicit support of a border edge is computed with the <tt>MfSelectingFeatureSupport</tt> convention.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object.
+ <li>Creates a <tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a 
+ <li><tt>CATIREdge</tt>, a 
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIWireREdge</tt>, a 
+ <li><tt>CATIWireFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a 
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeBorder"></a><a name="FeaturizeBorder(CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeBorder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeBorder</b>(<td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type border edge or border vertex.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object.
+ <li>Creates a <tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a 
+ <li><tt>CATIREdge</tt>, a 
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIWireREdge</tt>, a 
+ <li><tt>CATIWireFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a 
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeBorder"></a><a name="FeaturizeBorder(CATBaseUnknown_var&amp;)"></a> <dt> o <b>FeaturizeBorder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeBorder</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type border edge only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object.
+ <li>Creates a <tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a 
+ <li><tt>CATIREdge</tt>, a 
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIWireREdge</tt>, a 
+ <li><tt>CATIWireFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a 
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeBorder"></a><a name="FeaturizeBorder(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeBorder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeBorder</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type border edge only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object.
+ <li>Creates a <tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a 
+ <li><tt>CATIREdge</tt>, a 
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIWireREdge</tt>, a 
+ <li><tt>CATIWireFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a 
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeF"></a><a name="FeaturizeF()"></a> <dt> o <b>FeaturizeF</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeF</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a functional element. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfFsur</tt> feature when called on a <tt>CATIRSur</tt> object.
+ <li>Creates a <tt>CATIMfFedge</tt> feature when called on a <tt>CATIREdge</tt> object.
+ <li>Creates a <tt>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object.
+ <li>Creates a <tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object.
+ <li>Creates a <tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object.
+ <li>Creates a <tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object.
+ <li>Creates a <tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object.
+ <li>Creates a <tt>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object.
+ <li>Creates a <tt>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.
+ </ul>
+</dl>
+</dl>
+<a name="FeaturizeF"></a><a name="FeaturizeF(CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeF</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeF</b>(<td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a functional element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>,
+ <li><tt>MfFeaturizeIntersection</tt>,
+ <li><tt>MfFeaturizeC1Intersection</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li><tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object,
+ <li><tt>CATIMfFsur</tt> feature when called on a <tt>CATIRSur</tt> object,
+ <li><tt>CATIMfFedge</tt> feature when called on a <tt>CATIREdge</tt> object,
+ <li><tt>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object,
+ <li><tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object,
+ <li><tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object,
+ <li><tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object,
+ <li><tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object,
+ <li><tt>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object,
+ <li><tt>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.</ul>
+</dl>
+</dl>
+<a name="FeaturizeR"></a><a name="FeaturizeR()"></a> <dt> o <b>FeaturizeR</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeR</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a relimited element.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li><tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object,
+ <li><tt>CATIMfRsur</tt> feature when called on a <tt>CATIRSur</tt> object,
+ <li><tt>CATIMfRedge</tt> feature when called on a <tt>CATIREdge</tt> object,
+ <li><tt>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object,
+ <li><tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object,
+ <li><tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object,
+ <li><tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object,
+ <li><tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object,
+ <li><tt>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object,
+ <li><tt>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.</ul>
+</dl>
+</dl>
+<a name="FeaturizeR"></a><a name="FeaturizeR(CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeR</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeR</b>(<td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a relimited element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>,
+ <li><tt>MfFeaturizeIntersection</tt>,
+ <li><tt>MfFeaturizeC1Intersection</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li><tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object,
+ <li>CATIMfRsur</tt> feature when called on a <tt>CATIRSur</tt> object,
+ <li>CATIMfRedge</tt> feature when called on a <tt>CATIREdge</tt> object,
+ <li>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object,
+ <li>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object,
+ <li>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object,
+ <li>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object,
+ <li>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object,
+ <li>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object,
+ <li>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.</ul>
+</dl>
+</dl>
+<a name="FeaturizeR"></a><a name="FeaturizeR(CATBaseUnknown_var&amp;)"></a> <dt> o <b>FeaturizeR</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeR</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a relimited element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li><tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object,
+ <li><tt>CATIMfRsur</tt> feature when called on a <tt>CATIRSur</tt> object,
+ <li><tt>CATIMfRedge</tt> feature when called on a <tt>CATIREdge</tt> object,
+ <li><tt>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object,
+ <li><tt>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object,
+ <li><tt>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object,
+ <li><tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object,
+ <li><tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object,
+ <li><tt>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object,
+ <li><tt>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.</ul>
+</dl>
+</dl>
+<a name="FeaturizeR"></a><a name="FeaturizeR(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeR</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeR</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature as a relimited element.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <br><b>Legal values</b>:
+ <ul><li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>,
+ <li><tt>MfFeaturizeIntersection</tt>,
+ <li><tt>MfFeaturizeC1Intersection</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object,
+ <li>CATIMfRsur</tt> feature when called on a <tt>CATIRSur</tt> object,
+ <li>CATIMfRedge</tt> feature when called on a <tt>CATIREdge</tt> object,
+ <li>CATIMfFvertex</tt> feature when called on a <tt>CATIFvertex</tt> object,
+ <li>CATIMfBorderRedge</tt> feature when called on a <tt>CATIBorderREdge</tt> object,
+ <li>CATIMfBorderFvertex</tt> feature when called on a <tt>CATIBorderFvertex</tt> object,
+ <li>CATIMfWireRedge</tt> feature when called on a <tt>CATIWireREdge</tt> object,
+ <li>CATIMfWireFvertex</tt> feature when called on a <tt>CATIWireFvertex</tt> object,
+ <li>CATIMfAxis</tt> feature when called on a <tt>CATICharacteristicAxis</tt> object,
+ <li>CATIMfExtremity</tt> feature when called on a <tt>CATICharacteristicExtremity</tt> object.</ul>
+</dl>
+</dl>
+<a name="FeaturizeWire"></a><a name="FeaturizeWire()"></a> <dt> o <b>FeaturizeWire</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeWire</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type wire edge or wire vertex.
+ Implicit support of a wire edge is computed with the <tt>MfSelectingFeatureSupport</tt> convention.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIMfWireRedge</tt> object.
+ <li>Creates a <tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIMfWireFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a
+ <li><tt>CATIREdge</tt>, a
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIBorderREdge</tt>, a
+ <li><tt>CATIBorderFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeWire"></a><a name="FeaturizeWire(CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeWire</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeWire</b>(<td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type wire edge.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <ul><li><b>Legal values</b>:
+ <li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIMfWireRedge</tt> object.
+ <li>Creates a <tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIMfWireFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a
+ <li><tt>CATIREdge</tt>, a
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIBorderREdge</tt>, a
+ <li><tt>CATIBorderFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeWire"></a><a name="FeaturizeWire(CATBaseUnknown_var&amp;)"></a> <dt> o <b>FeaturizeWire</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeWire</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type wire edge only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIMfWireRedge</tt> object.
+ <li>Creates a <tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIMfWireFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a
+ <li><tt>CATIREdge</tt>, a
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIBorderREdge</tt>, a
+ <li><tt>CATIBorderFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<a name="FeaturizeWire"></a><a name="FeaturizeWire(CATBaseUnknown_var&amp;,CATMfFeaturizeMode)"></a> <dt> o <b>FeaturizeWire</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATISpecObject','CATISpecObject_var')</script>  <b>FeaturizeWire</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a BRep feature of type wire edge only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSupport</tt>
+   <dd> The explicit support.
+ </dd>
+    <dt><tt> iMode</tt>
+   <dd> The creation mode.
+ <ul><li><b>Legal values</b>:
+ <li><tt>MfNoDuplicateFeature</tt>,
+ <li><tt>MfDuplicateFeature</tt>,
+ <li><tt>MfInitialFeatureSupport</tt>,
+ <li><tt>MfSelectingFeatureSupport</tt>,
+ <li><tt>MfLastFeatureSupport</tt>,
+ <li><tt>MfTemporaryBody</tt>,
+ <li><tt>MfPermanentBody</tt>.</ul>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <ul><li>Creates a <tt>CATIMfBRep</tt> feature when called on a <tt>CATIBRepAccess</tt> object.
+ <li>Creates a <tt>CATIMfWireRedge</tt> feature when called on a <tt>CATIMfWireRedge</tt> object.
+ <li>Creates a <tt>CATIMfWireFvertex</tt> feature when called on a <tt>CATIMfWireFvertex</tt> object.
+ <li>Returns NULL when called on a 
+ <ul><li><tt>CATIRSur</tt>, a
+ <li><tt>CATIREdge</tt>, a
+ <li><tt>CATIFvertex</tt>, a
+ <li><tt>CATIBorderREdge</tt>, a
+ <li><tt>CATIBorderFvertex</tt>, a
+ <li><tt>CATICharacteristicAxis</tt> or a
+ <li><tt>CATICharacteristicExtremity</tt> object.</ul></ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIFeaturize.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

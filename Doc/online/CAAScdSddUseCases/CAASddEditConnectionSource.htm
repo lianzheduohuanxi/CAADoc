@@ -1,0 +1,240 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddEditConnection.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create a member.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddEditConnection.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+  <font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  <font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+  
+  <font color="#008000">'Get the Stiffeners,Plates and Members</font>
+<font color="#0000FF">  Dim </font>StiffenerReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>StiffenerReferencesObj = ManagerObj.GetSuperStiffeners
+
+<font color="#0000FF">  Dim </font>PlateReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>PlateReferencesObj = ManagerObj.GetSuperPlates
+  
+<font color="#0000FF">  Dim </font>MemberReferencesObj<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>MemberReferencesObj = ManagerObj.GetSuperMembers
+  
+<font color="#0000FF">  Dim </font>Plate1, Plate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>Plate1 = PlateReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>Plate2 = PlateReferencesObj.Item(2)
+
+<font color="#0000FF">  Dim </font>Stiffener1, Stiffener2, Stiffener3<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>Stiffener1 = StiffenerReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>Stiffener2 = StiffenerReferencesObj.Item(2)
+<font color="#0000FF">  Set </font>Stiffener3 = StiffenerReferencesObj.Item(3)
+  
+<font color="#0000FF">  Dim </font>Member1, Member2<font color="#0000FF"> As </font>SfmMember
+<font color="#0000FF">  Set </font>Member1 = MemberReferencesObj.Item(1)
+<font color="#0000FF">  Set </font>Member2 = MemberReferencesObj.Item(2)
+  
+  <font color="#008000">'Retrieving Existing Endcut on Profile</font>
+<font color="#0000FF">  Dim </font>Stiff1StartEndcut, Stiff1EndEndcut, Stiff2StartEndCut, Stiff2EndEndCut<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>Stiff1StartEndcut = Stiffener1.GetEndcut(1)
+<font color="#0000FF">  Set </font>Stiff1EndEndcut = Stiffener1.GetEndcut(2)
+
+<font color="#0000FF">  Set </font>Stiff2StartEndCut = Stiffener2.GetEndcut(1)
+<font color="#0000FF">  Set </font>Stiff2EndEndCut = Stiffener2.GetEndcut(2)
+  
+  <font color="#008000">'Get the information of existing Endcuts on Stiffener1</font>
+<font color="#0000FF">  Dim </font>Stiff1_StartEndCutName, Stiff1_StartEndCutType, Stiff1_EndEndCutName, Stiff1_EndEndCutType<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Stiff1_Start_ContextList, Stiff1_End_ContextList<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Dim </font>Stiff1_Start_ParamList, Stiff1_End_ParamList<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">  Dim </font>Stiff1_Start_ParamNamesList(), Stiff1_End_ParamNamesList()<font color="#0000FF"> As </font>Variant
+
+  Stiff1StartEndcut.GetEndcutinfo Stiff1_StartEndCutType, Stiff1_StartEndCutName, Stiff1_Start_ContextList, Stiff1_Start_ParamList, Stiff1_Start_ParamNamesList
+  
+  Stiff1EndEndcut.GetEndcutinfo Stiff1_EndEndCutType, Stiff1_EndEndCutName, Stiff1_End_ContextList, Stiff1_End_ParamList, Stiff1_End_ParamNamesList
+
+  <font color="#008000">'Reading Parameters</font>
+<font color="#0000FF">  Dim </font>SizeOfUDFParams<font color="#0000FF"> As </font>Long
+  SizeOfUDFParams = Stiff1_Start_ParamList.Count
+<font color="#0000FF">  Dim </font>UDFParam<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">  Dim </font>UDFParamName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>UDFParamValue<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>SizeOfUDFParams
+<font color="#0000FF">    Set </font>UDFParam = Stiff1_Start_ParamList.Item(i)
+    UDFParamName = Stiff1_Start_ParamNamesList(i - 1)
+    UDFParamValue = UDFParam.ValueAsString
+<font color="#0000FF">    If </font>UDFParamName = "Flange length" Then
+      UDFParam.ValuateFromString ("150mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+  
+  Stiffener1.Run
+
+  <font color="#008000">'Get the information of existing Endcuts on Stiffener2</font>
+<font color="#0000FF">  Dim </font>Stiff2_StartEndCutName, Stiff2_StartEndCutType<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Stiff2_EndEndCutName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Stiff2_EndEndCutType<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Stiff2_Start_ContextList, Stiff2_End_ContextList<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Dim </font>Stiff2_Start_ParamList, Stiff2_End_ParamList<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">  Dim </font>Stiff2_Start_ParamNamesList(), Stiff2_End_ParamNamesList()<font color="#0000FF"> As </font>Variant
+
+  Stiff2StartEndCut.GetEndcutinfo Stiff2_StartEndCutType, Stiff2_StartEndCutName, Stiff2_Start_ContextList, Stiff2_Start_ParamList, Stiff2_Start_ParamNamesList
+    
+  Stiff2EndEndCut.GetEndcutinfo Stiff2_EndEndCutType, Stiff2_EndEndCutName, Stiff2_End_ContextList, Stiff2_End_ParamList, Stiff2_End_ParamNamesList
+  
+  <font color="#008000">'Reading Contexts</font>
+<font color="#0000FF">  Dim </font>Context<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Dim </font>ContextName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>SizeOfContext<font color="#0000FF"> As </font>Long
+  SizeOfContext = Stiff2_Start_ContextList.Count
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>SizeOfContext
+<font color="#0000FF">   Set </font>Context = Stiff2_Start_ContextList.Item(1)
+   ContextName = Context.DisplayName
+<font color="#0000FF">  Next</font>
+  
+  <font color="#008000">'Get the location of existing endcut</font>
+<font color="#0000FF">  Dim </font>Coord(2)<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>X, Y, Z<font color="#0000FF"> As </font>Double
+  Coord(2) = Stiff1StartEndcut.GetConnectionCoordinate
+  X = Coord(0)
+  Y = Coord(1)
+  Z = Coord(2)
+  
+  <font color="#008000">'Getting Endcuts on both the extremities for Member</font>
+<font color="#0000FF">  Dim </font>Member1_StartEndCut, Member1_EndEndCut<font color="#0000FF"> As </font>SfmEndcut
+<font color="#0000FF">  Set </font>Member1_StartEndCut = Member1.GetEndcut(1)
+<font color="#0000FF">  Set </font>Member1_EndEndCut = Member1.GetEndcut(2)
+  
+  <font color="#008000">'Get the information of existing Endcuts on Member1</font>
+<font color="#0000FF">  Dim </font>Member1_StartEndCutName, Member1_StartEndCutType, Member1_EndEndCutType<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Member1_EndEndCutName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Member1_Start_ContextList, Member1_End_ContextList<font color="#0000FF"> As </font>SfmReferences
+<font color="#0000FF">  Dim </font>Member1_Start_ParamList, Member1_End_ParamList<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">  Dim </font>Member1_Start_ParamNamesList(), Member1_End_ParamNamesList()<font color="#0000FF"> As </font>Variant
+
+  Member1_StartEndCut.GetEndcutinfo Member1_StartEndCutType, Member1_StartEndCutName, Member1_Start_ContextList, Member1_Start_ParamList, Member1_Start_ParamNamesList
+  Member1_EndEndCut.GetEndcutinfo Member1_EndEndCutType, Member1_EndEndCutName, Member1_End_ContextList, Member1_End_ParamList, Member1_End_ParamNamesList
+  
+  <font color="#008000">'Reading and Modifying UDF Parameter Values</font>
+<font color="#0000FF">  Dim </font>Member1_SizeOfUDFParams<font color="#0000FF"> As </font>Long
+<font color="#0000FF">  Dim </font>Member1_UDFParam<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">  Dim </font>Member1_UDFParamName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>Member1_UDFParamValue<font color="#0000FF"> As </font>String
+  
+  Member1_SizeOfUDFParams = Member1_End_ParamList.Count
+  
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>Member1_SizeOfUDFParams
+<font color="#0000FF">    Set </font>Member1_UDFParam = Member1_End_ParamList.Item(i)
+    Member1_UDFParamName = Member1_End_ParamNamesList(i - 1)
+    Member1_UDFParamValue = Member1_UDFParam.ValueAsString
+<font color="#0000FF">    If </font>Member1_UDFParamName = "radius 1" Then
+      Member1_UDFParam.ValuateFromString ("100mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    If </font>Member1_UDFParamName = "Angle 1" Then
+      Member1_UDFParam.ValuateFromString ("20deg")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+    
+<font color="#008000">'********SLOTS*********</font>
+    
+  <font color="#008000">'Get Existing Slots on Plate</font>
+<font color="#0000FF">  Dim </font>SlotsOnPlate<font color="#0000FF"> As </font>SfmSlots
+<font color="#0000FF">  Set </font>SlotsOnPlate = Plate2.GetSlotsOnPlate
+  
+<font color="#0000FF">  Dim </font>CntSlotsOnPlate<font color="#0000FF"> As </font>Long
+  CntSlotsOnPlate = SlotsOnPlate.Count
+  
+ <font color="#008000">'Take Slots one by one</font>
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>CntSlotsOnPlate
+<font color="#0000FF">    Dim </font>SlotObjOnPlate<font color="#0000FF"> As </font>SfmSlot
+<font color="#0000FF">    Set </font>SlotObjOnPlate = SlotsOnPlate.Item(i)
+    
+<font color="#0000FF">    Dim </font>UDFName<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>MasterRef, SlaveRef<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Dim </font>ListSlotParams<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">    Dim </font>ListOfParamNames()<font color="#0000FF"> As </font>Variant
+    <font color="#008000">'Gets the name of the UDF used for creating the slot</font>
+    UDFName = SlotObjOnPlate.GetCntnDetailName
+    <font color="#008000">'Gets the Penetrating Element used in the creation of the Slot</font>
+<font color="#0000FF">    Set </font>MasterRef = SlotObjOnPlate.GetMasterObject
+    <font color="#008000">'Gets the Penetrated Element used in the creation of the Slot</font>
+<font color="#0000FF">    Set </font>SlaveRef = SlotObjOnPlate.GetSlaveObject
+    <font color="#008000">'Gets the Information of Existing Slot</font>
+    SlotObjOnPlate.GetCntnDetailParameters ListSlotParams, ListOfParamNames
+    <font color="#008000">'Reading Parameters and Modifying</font>
+<font color="#0000FF">    Dim </font>PlateUDFParam<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">    Set </font>PlateUDFParam = ListSlotParams.Item(i)
+    PlateUDFParamName = ListOfParamNames(i - 1)
+<font color="#0000FF">    If </font>PlateUDFParamName = "Clearance" Then
+      PlateUDFParam.ValuateFromString ("15mm")
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    Next</font>
+   
+ <font color="#008000">'Get Existing Slots on Stiffener</font>
+<font color="#0000FF">  Dim </font>SlotOnStiff<font color="#0000FF"> As </font>SfmSlots
+<font color="#0000FF">  Set </font>SlotOnStiff = Stiffener1.GetSlotsOnProfile
+  
+<font color="#0000FF">  Dim </font>CntSlotsOnStiff<font color="#0000FF"> As </font>Long
+  CntSlotsOnStiff = SlotOnStiff.Count
+
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>CntSlotsOnStiff
+<font color="#0000FF">    Dim </font>SlotObjOnStiff<font color="#0000FF"> As </font>SfmSlot
+<font color="#0000FF">    Dim </font>UDFNameStiff<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>MasterRef1, SlaveRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Dim </font>SlotParamsList<font color="#0000FF"> As </font>SfmConnectionParameters
+<font color="#0000FF">    Dim </font>ParamNamesList()<font color="#0000FF"> As </font>Variant
+    <font color="#008000">'Taking First Slot</font>
+<font color="#0000FF">    Set </font>SlotObjOnStiff = SlotOnStiff.Item(i)
+    <font color="#008000">'Gets the name of the UDF used for creating the slot</font>
+    UDFNameStiff = SlotObjOnStiff.GetCntnDetailName
+    <font color="#008000">'Gets the Penetrating Element used in the creation of the Slot</font>
+<font color="#0000FF">    Set </font>MasterRef1 = SlotObjOnStiff.GetMasterObject
+    <font color="#008000">'Gets the Penetrated Element used in the creation of the Slot</font>
+<font color="#0000FF">    Set </font>SlaveRef1 = SlotObjOnStiff.GetSlaveObject
+    <font color="#008000">'Getting the List of Parameters and their Names of Existing Slot</font>
+    SlotObjOnStiff.GetCntnDetailParameters SlotParamsList, ParamNamesList
+    
+<font color="#0000FF">    Dim </font>StiffUDFParam<font color="#0000FF"> As </font>Parameter
+    SizeOfUDFParams = SlotParamsList.Count
+   
+   <font color="#008000">'Reading Parameters and Modifying</font>
+<font color="#0000FF">    For </font>j = 1<font color="#0000FF"> To </font>SizeOfUDFParams
+<font color="#0000FF">      Set </font>StiffUDFParam = SlotParamsList.Item(j)
+      StiffUDFParamName = ParamNamesList(j - 1)
+<font color="#0000FF">      If </font>StiffUDFParamName = "Side Clearance" Then
+        StiffUDFParam.ValuateFromString ("10mm")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">      If </font>StiffUDFParamName = "Flange Clearance" Then
+        StiffUDFParam.ValuateFromString ("10mm")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    Next</font>
+<font color="#0000FF">  Next</font>
+
+  Stiffener1.Run
+  Stiffener1.Run
+  Member1.Run
+  Member2.Run
+  Plate2.Run
+
+  ObjPart.Update
+    
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

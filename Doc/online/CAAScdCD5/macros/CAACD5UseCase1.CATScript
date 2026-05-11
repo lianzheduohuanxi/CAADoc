@@ -1,0 +1,47 @@
+' Customization: change connection data here
+Const CD5Login = "Test Everything"
+Const CD5Password = ""
+Const CD5SecurityContext = ""
+
+Sub CATMain()
+    On Error Resume Next
+
+    ' Get CD5Engine
+    Dim CD5Engine As CD5Engine
+    Set CD5Engine = CATIA.GetItem("CD5Engine")
+	
+    ' Connect to ENOVIA V6 (if not already connected)
+    IsAlreadyConnected = CD5Engine.IsConnected
+    If (Not IsAlreadyConnected) Then
+        CATIA.SystemService.Print "Calling: CD5Engine.Connect"
+        CD5Engine.Connect CD5Login,CD5Password,CD5SecurityContext
+    End If
+
+    ' Set Expand Mode of Partial Open to Latest Version
+    CD5Engine.ExpandMode = "LatestVersion"
+
+    ' Create IDs of Root Product, Sub Product and one Part
+    Dim RootID, SubID, Part2ID As CD5ID
+    Set RootID = CD5Engine.GetIDFromTNRV("CATProduct", "CD5MyUseCaseRoot", "A", "0")
+    Set SubID = CD5Engine.GetIDFromTNR("CATProduct", "CD5MyUseCaseSub", "B")
+    Set Part2ID = CD5Engine.GetIDFromTNRV("CATPart", "CD5MyUseCasePart2", "B", "0")
+	
+    ' Get Structure of Root Product thanks to the ID
+    Dim myStructure As CD5Structure
+    Set myStructure = CD5Engine.GetStructure(RootID)
+
+    ' Include the Sub Product and the Part for Partial Open
+    myStructure.Include(SubID)
+    myStructure.Include(Part2ID)
+	
+    ' Call the Partial Open on the Structure and display the name of the obtained root document
+    Dim MyDoc As Document
+    Set MyDoc = CD5Engine.PartialOpen(myStructure)
+    MsgBox MyDoc.Name
+
+    ' Disconnect from ENOVIA V6 in case we had to connect at the beginning of the script
+    If (Not IsAlreadyConnected) Then
+        CD5Engine.Disconnect
+    End If
+
+End Sub

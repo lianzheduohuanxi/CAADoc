@@ -1,0 +1,87 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAInfFileAccess.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2001</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create a text file, duplicate it and read the result.</font>
+<font color="#008000">'   Assumtions:      </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript BasicScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">    Dim </font>sLF<font color="#0000FF"> As </font>String
+    sLF = Chr(10) 
+
+<font color="#0000FF">    Dim </font>sMessage<font color="#0000FF"> As </font>String
+    sMessage = InputBox ("Enter a message", "Message", "Hello World")
+
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Get the file system object</font>
+<font color="#0000FF">    Dim </font>oFileSys<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>oFileSys = CATIA.FileSystem
+
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Retrieve a folder for temporary files</font>
+<font color="#0000FF">    Dim </font>sTmpPath<font color="#0000FF"> As </font>String 
+    sTmpPath=CATIA.SystemService.Environ("CATTemp")
+<font color="#0000FF">    If </font>(Not oFileSys.FolderExists(sTmpPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Tmp Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Delete possibly existing input and output files</font>
+<font color="#0000FF">    Dim </font>sFilOu<font color="#0000FF"> As </font>String <font color="#008000">' Output file full path</font>
+    sFilOu = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilou.txt")
+<font color="#0000FF">    If </font>(oFileSys.FileExists(sFilou))<font color="#0000FF"> Then </font>
+        oFileSys.DeleteFile sFilOu
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>sFilIn<font color="#0000FF"> As </font>String <font color="#008000">' Intput file full path</font>
+    sFilIn = CATIA.FileSystem.ConcatenatePaths(sTmpPath, "caatmpfilin.txt")
+<font color="#0000FF">    If </font>(oFileSys.FileExists(sFilIn))<font color="#0000FF"> Then </font>
+        oFileSys.DeleteFile sFilIn
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Create file FilIn  </font>
+<font color="#0000FF">    Dim </font>oFilIn<font color="#0000FF"> As </font>File    
+<font color="#0000FF">    Set </font>oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+<font color="#0000FF">    Dim </font>oStream<font color="#0000FF"> As </font>TextStream
+<font color="#0000FF">    Set </font>oStream = oFilIn.OpenAsTextStream("ForWriting")
+    oStream.Write "&lt;MESSAGE&gt;"  & sLF
+    oStream.Write "&lt;VALUE&gt;"
+    oStream.Write sMessage 
+    oStream.Write "&lt;/VALUE&gt;"   & sLF
+    oStream.Write "&lt;/MESSAGE&gt;" & sLF
+    oStream.Close
+
+    <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Duplicate FilIn in FilOu </font>
+    oFileSys.CopyFile sFilIn, sFilOu, FALSE
+
+    <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Get the result from the output file  </font>
+<font color="#0000FF">    Dim </font>oFilOu<font color="#0000FF"> As </font>File
+<font color="#0000FF">    Set </font>oFilOu = oFileSys.GetFile(sFilOu)
+<font color="#0000FF">    Set </font>oStream = oFilOu.OpenAsTextStream("ForReading")
+
+<font color="#0000FF">    Dim </font>sBuffer<font color="#0000FF"> As </font>String
+    sMessage = ""
+    sBuffer = oStream.ReadLine
+    Do  Until oStream.AtEndOfStream
+        sMessage = sMessage & sBuffer 
+        sBuffer = oStream.ReadLine
+    Loop
+
+    oStream.Close
+
+    msgbox sMessage
+
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

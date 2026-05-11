@@ -1,0 +1,436 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Send/Receive Mechanism</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Send/Receive Mechanism</h3>
+      <em>Making commands collaborate</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and instantiate commands, and how
+      notifications can be sent and received by commands.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADlgSendReceive Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADlgSendReceive Do</a></li>
+            <li><a href="#How">How to Launch CAADlgSendReceive</a></li>
+            <li><a href="#Where">Where to Find the CAADlgSendReceive Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how the Send/Receive mechanism [<a href="#References">1</a>]
+works and how to use it in your own applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADlgSendReceive Case</h3>
+<p>CAADlgSendReceive is a use case of the CAADialog.edu framework that
+illustrates CATIA System and Dialog frameworks capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADlgSendReceive Do</h4>
+<p>This use case creates commands that build a command tree structure, create
+and send notifications, analyze them, and process them or ask the sending
+command to resend the notification above in the tree, possibly up to the command
+selector that resends the notification to the active command. The commands that
+send notifications are made of a model that has elements, such as points, lines,
+and so on. This model has a container as parent, and the container has the
+command selector as parent. The possibly active commands are a screen view and a
+plot view of the model and of its elements.</p>
+<table>
+  <caption>Fig. 1: Command Diagram</caption>
+  <tr>
+    <td><img border="0" src="images/CAADlgSendReceive.gif" width="528" height="224"></td>
+  </tr>
+</table>
+<p>The screen and plot views are instantiated without parent. Their default
+parent is then the command selector. The container is also instantiated with the
+command selector as parent. The model is instantiated with the container as
+parent.</p>
+<p>When an element is added to the model, the model notifies this event to its
+parent by sending a <i>CAADlgNotifAdd</i> notification instance. When an element
+is removed from the model, it sends a <i>CAADlgNotifRemove</i> notification
+instance. These two notifications are unknown by the container which is
+transparent for them. The container reacts only if the model sends a <i>CAADlgNotifError</i>
+notification instance.</p>
+<p>The notifications for which the container is transparent are resent by the
+model to the container's parent, that is the command selector. It is the higher
+object in the command tree structure and it receives all the unprocessed
+notifications. The command selector has no ability to process notifications, and
+it only resend the notification to the active command, that is, the command that
+has requested the focus, and that is the last chance for the notification to be
+processed. The screen view and the plot view are the two commands that may have
+the focus and that request it in turn.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADlgSendReceive</h4>
+<p>To launch CAADlgSendReceive, you will need to set up the build time
+environment, then compile CAADlgSendReceive along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADlgSendReceive Code</h4>
+<p>The CAADlgSendReceive use case is made of a several classes located in the
+CAADlgSendReceive.m module of the CAADialog.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADialog.edu\CAADlgSendReceive.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADialog.edu/CAADlgSendReceive.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create an event publisher, an event subscriber or listener, and a scenario
+to make them play together, there are four steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Creating a Notification Class</td>
+    <td valign="top"><i>CAADlgNotifAdd</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Sending a Notification</td>
+    <td valign="top"><i>CAADlgModel</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Filtering Notifications</td>
+    <td valign="top"><i>CAADlgContainer</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Taking the Focus</td>
+    <td valign="top"><i>CAADlgViewScreen</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Making the Active Command React to Notifications</td>
+    <td valign="top"><i>CAADlgViewScreen</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Returning the Added or Removed Object</td>
+    <td valign="top"><i>CAADlgModel</i> class</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a Notification Class</h4>
+<p>The <i>CAADlgAddNotification</i> class is taken as example.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATNotification.h&quot;
+class CAADlgAddNotification: public <b>CATNotification</b>
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAADlgAddNotification();
+    virtual CAADlgAddNotification();
+  private:
+    CAADlgAddNotification(const CAADlgAddNotification&amp;iObjectToCopy);
+    CAADlgAddNotification &amp; operator = (const CAADlgAddNotification &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>A notification is a CAA V5 component. Its class C++-derives from the
+notification base class <i>CATNotification</i>. The <code>CATDeclareClass</code>
+macro makes <i>CAADlgAddNotification</i><i> </i>part of a component. The copy constructor
+and the assignment operator are set as private and are not implemented to prevent the compiler to create one as
+public, and thus prevent from illegal copies of the notification instances.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAADlgAddNotification.h&quot;
+
+CATImplementClass(CAADlgAddNotification, <b>Implementation</b>, CATBaseUnknown,CATNull);
+
+CAADlgAddNotification::CAADlgAddNotification(): CATNotification(<b>CATNotificationDeleteOn</b>)
+{}
+CAADlgAddNotification::CAADlgAddNotification()
+{}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that <i>CAADlgAddNotification</i><i>
+</i>
+is an <code>Implementation</code>, that is, a component main class, that
+OM-derives from <i>CATBaseUnknown</i>. The last argument must always be set to <code>CATNull</code>
+if the second one is set to <code>Implementation</code>.</p>
+<p>The <i>CAADlgAddNotification</i><i> </i>class constructor use <code>CATNotificationDeleteOn
+</code>as argument for the <i>CATNotification</i> class constructor.<code> </code>It
+means that the notification will be automatically deleted by the system.&nbsp;[<a href="#References">3</a>]&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Sending a Notification</h4>
+<p>The model sends notifications whenever an element is added to it, or removed
+from it. Let's take the adding example.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgModel::Add(CAADlgElement * iNewElement) 
+{
+  if ( NULL != iNewElement )
+  {
+    ... // The element is successfully added
+
+     CAADlgAddNotification * pAddNotification = new CAADlgAddNotification();
+     <b>SendNotification</b>(GetFather(), pAddNotification);
+     pAddNotification = NULL;
+  }
+  else
+  {
+     CAADlgErrorNotification * pErrorNotification = new CAADlgErrorNotification();     
+     <b>SendNotification</b>(GetFather(), pErrorNotification);
+     pErrorNotification = NULL;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>When an element is successfully added, a <i>CAADlgAddNotification</i> class
+instance is sent
+to the command parent thanks to the <code>SendNotification</code> method. The
+command parent is retrieved using the <code>GetFather</code> method of <i>CATCommand</i>.
+Otherwise, an error notification is sent. This is an instance of the <i>CAADlgErrorNotification</i>
+class. Each instance is deleted as soon as it is sent, and its pointer is set to
+<code>NULL</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Filtering Notifications</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATNotifPropagationMode CAADlgContainer::<b>AnalyseNotification</b>(CATCommand      *iSending, 
+                                                             CATNotification *iReceive) 
+{
+  if (iReceive-&gt;IsAKindOf(&quot;CAADlgNotifError&quot;))
+  {
+      printf(&quot;The Command Container catches an error \n&quot;);
+      return(<b>CATNotifDontTransmitToFather</b>);
+  }
+  else
+  {
+    return(<b>CATNotifTransmitToFather</b>);
+  };
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The container traps only the notifications that are instances of <i>CAADlgNotifError</i>
+thanks to redefining the <code>AnalyseNotification</code> method of <i>CATCommand</i>.
+To do this, it simply returns <code>CATNotifDontTransmitToFather</code>, that
+stops the notification propagation above in the command tree structure. It
+processes the notification by simply printing out an error message. All other
+notifications are of no interest for the container, and returning <code>CATNotifTransmitToFather</code>
+requests the sending command to resend the notification to the container parent,
+namely the command selector.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Taking the Focus</h4>
+<p>The screen view command is taken as an example.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgViewScreen::WantedFocus() 
+{
+  RequestStatusChange(CATCommandMsgRequestSharedMode);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>WantedFocus</code> method requests that the <i>CAADlgViewScreen</i>
+instance be set as the active command using the <code>RequestStatusChange</code>
+method. <code>CATCommandMsgRequestSharedMode</code> means that the command runs
+in shared mode, that is it pushes on the command stack the previous active
+command without deleting it. This previous command will then take the focus
+again when the <i>CAADlgViewScreen</i> instance will be deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Making the Active Command React to Notifications</h4>
+<p>The active command also redefines the <code>AnalyseNotification</code>
+method. Here is the one of the screen view class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATNotifPropagationMode CAADlgViewScreen::<b>AnalyseNotification</b>(CATCommand      *iSending, 
+                                                              CATNotification *iReceive) 
+{
+  if ( iReceive-&gt;IsAKindOf(&quot;CAADlgAddNotification&quot;) ||
+       iReceive-&gt;IsAKindOf(&quot;CAADlgRemoveNotification&quot;) )
+  {
+    CAADlgElement *pElement= NULL;
+    pElement = (CAADlgElement *)iSending-&gt;<b>SendObject</b>(CAADlgElement::ClassName(), iReceive);
+
+    if ( NULL != pElement) 
+    {
+      pElement-&gt;Release(); 
+      pElement = NULL ;
+      return(CATNotifDontTransmitToFather);
+      }
+    else 
+      return(CATNotifTransmitToFather);
+  }
+  else 
+    return(CATNotifTransmitToFather);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>If the notification is of one of the expected types, the <code>SendObject</code>
+method is called to request the object that sends the notification to provide a
+pointer to the object that was either added or removed. <code>SendObject</code>
+calls the <code>SendCommandSpecificObject</code> that must be redefined by the
+sending command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Returning the Added or Removed Object</h4>
+<p>Any command that sends notifications to state a model change can be asked to
+send a pointer to the object that changes the model. This is the role of <code>SendCommandSpecificObject</code>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void *CAADlgModel::<b>SendCommandSpecificObject</b>(const char      *iObjectClassNeeded, 
+                                             CATNotification *iReceived) 
+{
+  void * pObjectToReturn = NULL;
+
+  if ( iReceived-&gt;IsAKindOf(&quot;CAADlgAddNotification&quot;) || 
+       iReceived-&gt;IsAKindOf(&quot;CAADlgRemoveNotification&quot;) ) 
+  {
+    if ( _pTheLastElementManipulated-&gt;IsAKindOf(iObjectClassNeeded) )
+    {
+      pObjectToReturn = _pTheLastElementManipulated;
+      pObjectToReturn-&gt;AddRef();
+    }
+  } 
+  return pObjectToReturn ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><code>SendCommandSpecificObject</code> is called using a class name and the
+pointer to the notification received. After testing if the notification is one
+of those that are sent by the model, a pointer to the last object manipulated,
+that is the last added or removed object, is returned. Otherwise <code>NULL</code>
+is returned.</p>
+<p><code>SendCommandSpecificObject</code>  addrefs the sent object, and after a <code>SendObject</code>
+ call the method releases the pointer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The Send/Receive communication protocol enables commands to communicate using
+notifications that progress from one command to its parent in the command tree
+structure. A command can send notifications, and can analyze notifications to
+decide whether to be transparent for, or to receive them, depending on their
+types. If a notification reaches the command selector at the top of the command
+tree structure, it is sent to the active command, that is, the one that has the
+focus. This command in turn analyzes the notification, and can ask the sending
+command to send the model object for which the notification was sent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysSendReceive.htm">The
+      Send/Receive Communication Protocol</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbackversusSendReceive.htm">Callback
+      versus Send/Receive Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Feb 2004]</td>
+    <td valign="top">Document updated&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

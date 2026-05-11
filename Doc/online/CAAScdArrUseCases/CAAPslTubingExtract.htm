@@ -1,0 +1,185 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case
+ </title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table width="100%" border="0">
+   <tr>
+     <td>
+     <h2>Arrangement</h2>
+     </td>
+     <td valign="top" align="right">
+     <h2><a name="Top"></a>CATIArrBendableString, CATIAArrSystemLineProduct Interfaces Use Case</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!null ---------------------------------comment------------------------------->
+ <table width="100%" border="0">
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/atarget.gif" border="0" width="32" height="32"></td>
+     <td width="93%">This example shows how to extract 
+     Bendable Data from BendableString objects (Pipe with bends, Tube with 
+     bends). Help is taken of a macro. This macro has a reference to 
+     CATIArrBendableString, CATIAArrSystemLineProduct&nbsp; Interfaces (referred 
+     to as ArrBendableString and as ArrSystemLineProduct in reference Visual 
+     Basic document).<p>This macro opens an existing Product document and 
+     retrieves the CATIAArrSystemLineProduct selection. Then it obtains the 
+     subproducts of this selection, which adhere to CATIAArrBendableString. It 
+     then gets the bending details of the ArrBendableString object.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ainfo.gif" border="0" width="32" height="32"></td>
+     <td width="93%">PslTubingExtract is launched after CATIA is up and the 
+     reference document is opened.<p>PslTubingExtract.CATScript is located in 
+     the runtime directory Operating System (say intel_a)\code\command</td>
+   </tr>
+   <tr>
+     <td valign="top" width="7%">
+     <img src="../CAAScrBase/images/ascenari.gif" border="0" width="32" height="32"></td>
+     <td width="93%">CAAPslTubingExtract includes the following steps:<ol>
+       <li><a href="#Prolog">Prolog</a> </li>
+       <li><a href="#Obtain">Obtain the ArrBendableString Object</a></li>
+       <li><a href="#Start">Start to get the bending data information from 
+       ArrBendableString object</a></li>
+       <li><a href="#Epilog">Epilog</a> </li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>  ...
+  a) Open the Input Document with Tubing or Piping runs and bendables
+  b) Highlight the LineID (Place the line id in CSO)
+  c) Run the macro.	
+  ...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>Once the Product has been loaded, the macro is designed to read the 
+     relevant objects from the model.</p>
+     <h4><a name="Obtain"></a>Obtain the ArrBendableString Object</h4>
+     <p>The ArrSystemLineProduct object is a collection object that manages 
+     ArrBendableString object's.</p>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>... 
+   Set objCATIAV5Document0 = CATIA.ActiveDocument
+
+   '//---------- Get Arrworkbench from current document
+   Set objCATIAV5ArrWorkbench0 = objCATIAV5Document0.GetWorkbench(&quot;ArrWorkbench&quot;) 
+
+   '//---------- Get current selection
+   Set objCATIAV5Selection = objCATIAV5Document0.Selection
+   Dim objSysLineProduct As ArrSystemLineProduct
+   Dim objBendableString As ArrBendableString
+
+   <font color="#008000">' Find from the selection list, objects that conform to the CATIAArrSystemLineProduct interface.
+</font>   Set objSysLineProduct = objCATIAV5Selection.FindObject(&quot;CATIAArrSystemLineProduct&quot;)
+
+   <font color="#008000">' Get the count of subproducts, actual subproduct (methods of CATIArrSystemLineProduct interface)</font>
+   Dim intNumOfSubProducts As integer
+   intNumOfSubProducts = objSysLineProduct.GetSubProductsCount(&quot;CATIAArrBendableString&quot;) 
+   For intSubProdIndex =1 to intNumOfSubProducts
+     Set objBendableString = objSysLineProduct.GetSubItem(intSubProdIndex)
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Start"></a>Start to get the bending data information form 
+     ArrBendableString object</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>... 
+  <font color="#008000">' Get Instance Name of the ArrBendableString object</font> 
+  objBendableString.InstanceName 
+  <font color="#008000">' Get number of Segments</font> 
+  <font color="#0000FF">int</font> NumOfSegments = objBendableString.GetNumOfSegments 
+  <font color="#008000">' Loop through the segments and get bending data of each segment</font> 
+  <font color="#0000ff">Dim </font>dblSegmentData(14)<font color="#0000ff"> As </font>Double 
+  <font color="#000000">o</font><font color="#000000">bjBendableString.GetSegmentData intForLooping, dblSegmentData</font> 
+  <font color="#008000">' The data can be interpreted as follows </font> 
+  <font color="#000000">dblStrXCoord        = dblSegmentData(0)
+  dblStrYCoord        = dblSegmentData(1)
+  dblStrZCoord        = dblSegmentData(2)
+
+  dblEndXCoord        = dblSegmentData(3)
+  dblEndYCoord        = dblSegmentData(4)
+  dblEndZCoord        = dblSegmentData(5)
+
+  </font><font color="#008000">'//Valid only if Radius &gt; 0</font><font color="#000000">
+  dblBendNodeXCoord   = dblSegmentData(6)
+  dblBendNodeYCoord   = dblSegmentData(7)
+  dblBendNodeZCoord   = dblSegmentData(8)
+
+  </font><font color="#008000">'//Valid only if Radius &gt; 0</font><font color="#000000">
+  dblBendRadius       = dblSegmentData(9)
+  dblBendAngle        = dblSegmentData(10)
+
+  dblRotationAngle    = dblSegmentData(11)
+  dblSlopeAngle       = dblSegmentData(12)
+
+  dblLinearSegLen     = dblSegmentData(13)
+  </font><font color="#008000">'//Arc Len valid only if Radius &gt; 0</font><font color="#000000">
+  dblArcLen           = dblSegmentData(14)</font> 
+<font color="#008000">  ' Store this data for every segment, update the corresponding template and save the data as an excel document</font> 
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <h4><a name="Epilog"></a>Epilog</h4>
+     <p>Thus we saw how to read a CATProduct document, retrieve the objects we 
+     are interested in and get more information about the objects</p>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+End Sub</pre>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <!---------------------------------comment--------------------------------->
+ <p align="center">
+ <img src="../CAAScrBase/images/aendtask.gif" border="0" width="64" height="32"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment--------------------------------->
+ <h4>In Short</h4>
+ <p>Thus we saw how to read a CATProduct document, retrieve the objects we are 
+ interested in and get more information about the objects</p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment--------------------------------->
+ <h4>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>Replaying a macro</td>
+   </tr>
+   <tr>
+     <td align="right" colSpan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment--------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

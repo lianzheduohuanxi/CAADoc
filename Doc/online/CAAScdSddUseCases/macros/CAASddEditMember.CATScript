@@ -1,0 +1,137 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create members.
+'
+' Assumptions:   The Part document CAASddEditMember.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'RETRIEVING THE SUPERMembers
+  Dim SuperMembers As References
+  Set SuperMembers = ManagerObj.GetSuperMembers
+    
+  Dim SuperMember1, SuperMember2, SuperMember3, SuperMember4, SuperMember5 As Reference
+  Set SuperMember1 = SuperMembers.Item(1)
+  MsgBox TypeName(SuperMember1)
+  Set SuperMember2 = SuperMembers.Item(2)
+  MsgBox TypeName(SuperMember2)
+  Set SuperMember3 = SuperMembers.Item(4)
+  MsgBox TypeName(SuperMember3)
+  Set SuperMember4 = SuperMembers.Item(5)
+  MsgBox TypeName(SuperMember4)
+  Set SuperMember5 = SuperMembers.Item(6)
+  MsgBox TypeName(SuperMember5)
+  
+  'TO KNOW THE MEMBER TYPE
+  Dim MemberTypeName1 As String
+  Dim MemberTypeName2 As String
+  Dim MemberTypeName3 As String
+  Dim MemberTypeName4 As String
+  Dim MemberTypeName5 As String
+  
+  MemberTypeName1 = SuperMember1.GetMemberType
+  MemberTypeName2 = SuperMember2.GetMemberType
+  MemberTypeName3 = SuperMember3.GetMemberType
+  MemberTypeName4 = SuperMember4.GetMemberType
+  MemberTypeName5 = SuperMember5.GetMemberType
+  
+  'RETRIEVING Members as Their Type
+  If (TypeName(SuperMember1) = "SfmMemberCurve") Then
+    'MODIFYING SuperMember1
+    'Modifying AnchorPoint
+    Dim AnchorPoint1 As String
+    AnchorPoint1 = SuperMember1.AnchorPoint
+    SuperMember1.AnchorPoint = "catStrTopLeft"
+    'To Know Category And Curve
+    Dim Member1Category As String
+    Member1Category = SuperMember1.Category
+  
+    Dim Member1CurveRef As Reference
+    Set Member1CurveRef = SuperMember1.Curve
+    'Setting The Reference Surface
+    Dim Member1Surface As AnyObject
+    Set Member1Surface = ObjPart.FindObjectByName("Shell_058 Molded surface")
+    Dim Member1RefSurface As Reference
+    Set Member1RefSurface = ObjPart.CreateReferenceFromObject(Member1Surface)
+    SuperMember1.ReferenceSurface = Member1RefSurface
+    'Getting The ReferenceSurface Orientation
+    Dim ReferenceSurfaceOrient As Long
+    ReferenceSurfaceOrient = SuperMember1.ReferenceSurfaceOrientation
+    'Inverting the reference surface orientation
+    SuperMember1.InvertReferenceSurface
+    'Getting the FlipStatus and Flipping
+    Dim FlipStatus As Boolean
+    FlipStatus = SuperMember1.IsFlip
+    SuperMember1.Flip
+    'Setting Grade,Horizontal and Vertical Offset
+    SuperMember1.Grade = "A45"
+    SuperMember1.HorizontalAnchorPointOffset = "10"
+    SuperMember1.VerticalAnchorPointOffset = "15"
+    'Checking the Horizontal Offset
+    Dim Member1HAPOffset As Double
+    Member1HAPOffset = SuperMember1.HorizontalAnchorPointOffset
+
+    'Checking and Modifying SectionName Of Member
+    Dim Member1SectionName As String
+    Member1SectionName = SuperMember1.SectionName
+    SuperMember1.SectionName = "WT15x54"
+  End If
+  
+  If (TypeName(SuperMember3) = "SfmMemberPlane2Curves") Then
+    'MODIFYING SuperMember3
+    'Checking First and Second Member
+    Dim InputMemRef1, InputMemRef2 As Reference
+    Set InputMemRef1 = SuperMember3.FirstMember
+    Set InputMemRef2 = SuperMember3.SecondMember
+    'Modifying FirstMember
+    Dim NewInputMemRef As Reference
+    Set NewInputMemRef = ObjPart.CreateReferenceFromObject(SuperMember5)
+    SuperMember3.FirstMember = NewInputMemRef
+    'Getting the Reference Plane
+    Dim InputPlaneRef As Reference
+    Set InputPlaneRef = SuperMember3.Plane
+  End If
+  
+  If (TypeName(SuperMember5) = "SfmMemberSurfSurf") Then
+   'MODIFYING SuperMember5
+    'Checking and Modifying FirstSurface
+    Dim FirstSurfaceRef As Reference
+    Set FirstSurfaceRef = SuperMember5.FirstSurface
+  
+    Dim NewFirstSurface As AnyObject
+    Set NewFirstSurface = ObjPart.FindObjectByName("CROSS.65")
+    Dim NewFirstSurfaceRef As Reference
+    Set NewFirstSurfaceRef = ObjPart.CreateReferenceFromObject(NewFirstSurface)
+    SuperMember5.FirstSurface = NewFirstSurfaceRef
+    'Checking And Modifying FirstSurfaceOffset and Orientation
+    Dim FirstSurfaceOrient As Long
+    FirstSurfaceOrient = SuperMember5.FirstSurfaceOrientation
+    SuperMember5.FirstSurfaceOrientation = 2
+  
+    SuperMember5.FirstSurfaceOffset = "20"
+    Dim Surface1Offset As Double
+    Surface1Offset = SuperMember5.FirstSurfaceOffset
+  End If
+  
+  ObjPart.Update
+End Sub

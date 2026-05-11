@@ -1,0 +1,372 @@
+<html>
+
+<head>
+<title>CAA V5 Java Code Presentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 Java Code Presentation</h3>
+      <em>Presentation conventions to improve the readability of Java code</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives you information on how to program Java classes and
+      interfaces as regards code layout. CAA Use Cases are expected to respect
+      these conventions.
+      <ul>
+        <li><a href="#Global layout"><strong>Global layout</strong></a>
+        <li><a href="#Method layout"><strong>Method layout</strong></a>
+        <li><strong><a href="#Naming Conventions">Naming Conventions</a></strong>
+        <li><a href="#Comments"><strong>Comments</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Global layout"></a>Global layout</h3>
+<p>Each Java source contains a single class or interface.</p>
+<p>The code presentation must obey the following order:</p>
+<ul>
+  <li>Copyright
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// COPYRIGHT DASSAULT SYSTEMES 2000</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Not mandatory, for development sources only, an historical account of the
+    modifications and their authors
+    <table class="code">
+      <tr>
+        <td>
+          <pre>/* -----------------------------------------
+ * creation: 04/01/2000 by egr
+ * modification: 13/02/2000 by egr
+                         to add the dump method
+ * modification: 23/05/2000 by egr. IR A234789.
+                        to treat the case when the file does not exist. 
+ ---------------------------------------------*/</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Package Statement
+    <table class="code">
+      <tr>
+        <td>
+          <pre>package com.dassault_systemes.ENOVDesktop.ENOVDtpCommand;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Import Statements
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// PortalBase Framework
+import com.dassault_systemes.catweb.base.catlet.CSO  // to manage current selection
+import com.dassault_systemes.catweb.base.catlet.CATlet  // to retrieve the CSO
+import com.dassault_systemes.catweb.base.event.CSOListener  // to subscribe to CSO
+// PortalApplications Framework
+import com.dassault_systemes.catweb.databackend.dataType/Driver2  // to implement the interface
+</pre>
+        </td>
+      </tr>
+    </table>
+    <ul>
+      <li>Always import each used class and interface even if it belongs to the
+        current package
+      <li>Never use the * character to import a whole package.
+      <li>Group them by framework and package
+      <li>Explain for what each one is used<br>
+      </li>
+    </ul>
+  </li>
+  <li>Class/Interface documentation comment in javadoc style
+    <table class="code">
+      <tr>
+        <td>
+          <pre>/**
+ * Class which manages the current selection.
+ * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This class stores a list of the currently selected elements.
+ * Each CATlet has one and only one instance of a CSO object.
+ * To get this instance, call the {@link ICATlet#getCSO()} method.
+ * Use this class to add or remove elements from the selection.
+ * This class dispatches {@link CSOEvent} when the selection is modified.
+ * Implement the {@link CSOEventListener} interface to subscribe to this events.
+ */</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Class or interface statement
+    <table class="code">
+      <tr>
+        <td>
+          <pre>public class CSO</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Optionally, a class/interface comment in C++ style with implementation
+    information (which cannot be written in an API documentation).</li>
+  <li>Class (static) variables sorted by modifiers (public, protected, no
+    modifier, private). Every variable must be preceded by a javadoc comment.</li>
+  <li>Instance variables sorted by modifiers (public, protected, no modifier,
+    private). Every variable must be commented in javadoc style.</li>
+  <li>Constructors. Each one is preceded by a javadoc comment.</li>
+  <li>Methods grouped by functionalities rather than by accessibility. Each one
+    is preceded by a javadoc comment.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Method layout"></a>Method layout</h3>
+<ul>
+  <li>
+    <p align="left">Indentation
+    <ul>
+      <li>Always use the same type of indentation (2 or 4 spaces)
+      <li>Use spaces, not tabs.<br>
+      </li>
+    </ul>
+  <li>Line Length &lt; 80 characters
+    <p>When an expression will not fit on a single line, break it after a comma
+    or before an operator.<br>
+    Align the new line with the beginning of the expression at the same level on
+    the previous line, or if it is too far on the right, use an indentation
+    twice as big as usual.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>MyMethod(longArg1, longArg2, longArg3, 
+         longArg4, longArg5);
+
+longName1 = longName2 * (longName3 + longName4 - longName5)
+            + 4 * longname6; 
+</pre>
+        </td>
+      </tr>
+    </table>
+  <li>One Statement per Line
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int level; // indentation level
+int size;  // size of table</pre>
+        </td>
+      </tr>
+    </table>
+    <p>however, the following declarations are acceptable:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int x, y, z;   // point coordinates </pre>
+        </td>
+      </tr>
+    </table>
+    <p>In the same way, do not use embedded assignments (ex: a=b=c).</p>
+  <li>Blank Spaces
+    <p>Air out, use spaces:</p>
+    <ul>
+      <li>after commas in argument lists
+      <li>around binary operators (except .)
+      <li>between the expressions of a for statement
+      <li>after a keyword (while, for, ... but not after a method)
+      <li>after a cast.</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>for (expr1; expr2; expr3)
+{
+  a = b / (c + d) * e++ + (int) l;
+  myVar.myMethod(a, b, c);
+}</pre>
+        </td>
+      </tr>
+    </table>
+  <li>Braces
+    <ul>
+      <li>Be constant in your way of using braces around statements.
+      <li>Always use braces with <code>if-else</code> or <code>for</code>
+        statements even if there is only one line.</li>
+    </ul>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>class Sample extends Object 
+{
+  int var;
+
+  void Print(int i, int j)
+  {
+    if (condition)
+    { 
+<i>      statement1;
+</i>    } 
+    else
+    { 
+     <i> statement1;
+      statement2;</i>
+    }
+  }
+    ...
+}</pre>
+        </td>
+      </tr>
+    </table>
+  <li>Parentheses
+    <p>Use parentheses liberally in expressions involving mixed operators to
+    avoid operator precedence problems.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>if (a == b) &amp;&amp; (c == d) </pre>
+        </td>
+      </tr>
+    </table>
+    <p>But avoid them in a <code>return</code> statement unless they make the
+    return value more obvious in some way.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>return;
+
+return myDisk.size();
+
+return (size ? size : defaultSize);</pre>
+        </td>
+      </tr>
+    </table>
+  <li>Constants<br>
+    Numerical constants (literals) should not be coded directly, except for -1,
+    0, and 1, which can appear in a <code>for</code> loop as counter values. Use
+    static final variables instead.<br>
+  <li>Type names<br>
+    Always use simple type names in the class body (except when a name conflict
+    prevents it). That obliges to add the import declaration corresponding to
+    the type if it belongs to another package.<br>
+  <li>Local variables
+    <ul>
+      <li>Declare local variables at the beginning of the block where they are
+        used
+      <li>Initialize local variables where they're declared
+      <li>Do not hide higher level declarations by giving names which already
+        exist.<br>
+      </li>
+    </ul>
+  <li>Conditions<br>
+    Put constants first:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>if (MAX_LENGTH == lg)</pre>
+        </td>
+      </tr>
+    </table>
+  <li>Naming<br>
+    As regards naming, see CAA2 Naming Conventions.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Naming Conventions"></a>Naming Conventions</h3>
+<ul>
+  <li>method names are to be verbs or verb phrases, in mixed case with the first
+    letter lowercase and the first letter of any subsequent words capitalized.
+    e.g., <code>run(), runFast()</code>.<br>
+    Specific methods:
+    <ul>
+      <li>The getter and setter of a <code>V</code> property should be <code>getV
+        </code>and <code>setV</code>. e.g., <code>setPriority</code>
+      <li>A method that tests a boolean condition <code>V</code> should be named
+        <code>isV</code>, e.g., <code>isInterrupted</code>
+      <li>A method that converts its object to a particular format <code>F</code>
+        should be named <code>toF</code>, e.g., <code>toString</code>.</li>
+    </ul>
+  <li>variable names are to begin with a lowercase letter
+  <li>a constant (public final variable) name should be a sequence of one or
+    more words, acronyms, or abbreviations, in uppercase letters, with
+    components separated by underscore &quot;_&quot; characters. eg: MAX_VALUE.
+  <li>Hungarian notation is useful to recognize data members, parameters and
+    local variables and also to know the type of the variables. Therefore we
+    recommend the usage of the following prefixes:
+    <ul>
+      <li>_ for data member
+      <li>i for input variables (method arguments)
+      <li>a for array</li>
+    </ul>
+  </li>
+</ul>
+<p>As regards the other variables, using a prefix is optional.<br>
+The usually used prefixes are:</p>
+<ul>
+  <li>b for boolean
+  <li>c for char
+  <li>n for number
+  <li>o for object
+  <li>s for string</li>
+</ul>
+<p>and, as for classes, an abbreviation of three or four characters is often
+used as a prefix:</p>
+<ul>
+  <li>btn for Button
+  <li>dlg for Dialog
+  <li>lbl for Label
+  <li>rec for Record
+  <li>rect for Rectangle</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3 align="left"><a name="Comments"></a>Comments</h3>
+<p>All the exposed entities (class, interface, public and protected methods and
+fields) must be preceded by a comment in the javadoc style. See Documenting Your
+Interfaces and Classes. But even the not exposed entities should be commented in
+the same way, particularly in the CAA use cases.<br>
+Moreover, C++ style comments should be used to give overviews of code and
+provide additional information to make the code easier to understand. However,
+redundant information must be avoided.<br>
+Comments are written at the third singular person (e.g., creates).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Front View in a new Drawing Document</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Generative Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Front View in a new Drawing Document</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create views in Drawing
+      documents.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>It retrieves a part document, creates a <i>DrawingDocument</i> and a
+      front view of the part document.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAADriCreateView is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAADriCreateViewSource.htm" target="Source">CAADriCreateView.CATScript</a>
+      is located in the CAAScdDriUseCases module. <a href="macros/CAADriCreateView.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAADriCreateView includes four steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Creating a New View in the Active Sheet</a></li>
+        <li><a href="#Step3">Set its Parameters to Make it a Generative Front
+          View</a></li>
+        <li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Open the Part document</font> 
+    <font color="#0000FF">Dim</font> oPartToDraw <font color="#0000FF">As</font> PartDocument
+    <font color="#0000FF">Set</font> oPartToDraw = CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\Cube.CATPart&quot;)
+
+    <font color="#008000">' Create a drawing document: it becomes the active document.</font>
+    <font color="#0000FF">Dim</font> oDrawing <font color="#0000FF">As</font> DrawingDocument
+    <font color="#0000FF">Set</font> oDrawing = CATIA.Documents.Add(&quot;Drawing&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Open the part document to draw and create a new <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>.
+      The part document is fetched in the documentation installation path, this
+      path has already been stored in the <code>sDocPath</code> variable.</p>
+      <h4><a name="Step2"></a>Creating a New View in the Active Sheet</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+  <font color="#008000">' Retrieve the active sheet</font>
+    <font color="#0000FF">Dim</font> oSheet <font color="#0000FF">As</font> DrawingSheet
+    <font color="#0000FF">Set</font> oSheet = oDrawing.Sheets.ActiveSheet
+
+    <font color="#008000">' Create a view called &quot;Front View&quot; in this sheet</font>
+    <font color="#0000FF">Dim</font> oFrontView <font color="#0000FF">As</font> DrawingView
+    <font color="#0000FF">Set</font> oFrontView = oSheet.Views.Add(&quot;Front View&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The new <a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm"><i>DrawingView</i></a>
+      is created in the active <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a></i>
+      that is found on the <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a>
+      collection aggregated by the <i>DrawingDocument</i> object.</p>
+      <h4><a name="Step3"></a>Set its Parameters to Make it a Generative Front
+      View</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' Retrieve it generative behavior
+</font>    <font color="#0000FF">Dim</font> oFrontViewGB <font color="#0000FF">As</font> DrawingViewGenerativeBehavior
+    <font color="#0000FF">Set</font> oFrontViewGB = oFrontView.GenerativeBehavior
+
+    <font color="#008000">' Declare the part to draw in this front view</font>
+    oFrontViewGB.Document = oPartToDraw
+
+    <font color="#008000">' Define this view as a front view, with the XY plane (in oPartToDraw) as projection plane </font>
+    oFrontViewGB.DefineFrontView 1, 0, 0, 0, 1, 0
+
+    <font color="#008000">' Position the View in the Sheet</font>
+    oFrontView.x = 300
+    oFrontView.y = 150
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The generative behavior is provided by the <a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingViewGenerativeBehavior');return false;"><i>DrawingViewGenerativeBehavior</i></a>
+      object aggregated by the <i>DrawingView</i>. We need to define the
+      document to draw by valuating the <code>Document</code> attribute of the
+      generative behavior. We then define which projection plane in this
+      document will be used to draw the front view (here XY) and then the
+      position of this view in its parent <i>Sheet</i>.</p>
+      <h4><a name="Epilog"></a>Epilog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   <font color="#008000">' Update the view</font>
+    oFrontViewGB.Update </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Update the now completely defined generative behavior.</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create generative views in a drawing document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>,
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm"><i>DrawingView</i></a>,
+      <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingViewGenerativeBehavior');return false;"><i>DrawingViewGenerativeBehavior</i></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

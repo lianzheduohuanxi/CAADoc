@@ -1,0 +1,2020 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>toollist.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">'********************************************************************</font>
+<font color="#008000">'********************************************************************</font>
+<font color="#008000">'****         VBSCRIPT MACRO FOR THE GENERATION OF A             ****</font>
+<font color="#008000">'****              HTML TOOL LIST DOCUMENTATION                  ****</font>
+<font color="#008000">'********************************************************************</font>
+<font color="#008000">'********************************************************************</font>
+
+<font color="#008000">'********************************************************************</font>
+<font color="#008000">'****                         Notes                              ****</font>
+<font color="#008000">'****                                                            ****</font>
+<font color="#008000">'****  La fonction CreateHtmlFilesRoot est dependante du systeme ****</font>
+<font color="#008000">'********************************************************************</font>
+
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> As </font>String
+Language = "VBSCRIPT"
+
+
+<font color="#008000">'=============== USER DEFINED VARIABLES ==================</font>
+
+<font color="#008000">'=========================================================</font>
+<font color="#008000">'        Put here the path to your HTML editor</font>
+<font color="#008000">'=========================================================</font>
+<font color="#0000FF">Dim </font>DefaultHTMLEditor<font color="#0000FF"> As </font>String
+
+<font color="#008000">'=========================================================</font>
+<font color="#008000">'       Default tool list documentation directory</font>
+<font color="#008000">'=========================================================</font>
+<font color="#0000FF">Dim </font>DefaultHtmlAppliName<font color="#0000FF"> As </font>String
+
+
+<font color="#008000">'============ END OF USER DEFINED VARIABLES ==============</font>
+
+
+<font color="#008000">'============ SYSTEM DEPENDANT VARIABLES =================</font>
+<font color="#0000FF">Dim </font>EOL<font color="#0000FF"> As </font>String  <font color="#008000">' Fin de ligne pour les fichiers textes</font>
+<font color="#0000FF">Dim </font>CRLF<font color="#0000FF"> As </font>String
+<font color="#008000">'=========================================================</font>
+
+<font color="#008000">'======================</font>
+<font color="#008000">'  Test cession flag</font>
+<font color="#008000">'======================</font>
+<font color="#0000FF">Dim </font>IsaTest<font color="#0000FF"> As </font>Boolean
+
+
+<font color="#0000FF">Dim </font>StdComponentsDir<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>DefaultDocTarget, HtmlDefaultDocDir, HtmlFilesPath, CATIAComponentPath, HtmlFilesRoot<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">Dim </font>ExistLogoDS<font color="#0000FF"> As </font>Boolean
+
+<font color="#0000FF">Dim </font>IgnoredParameters()
+<font color="#0000FF">Dim </font>NbIgnoredParameters<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">Dim </font>theLogMode<font color="#0000FF"> as </font>Boolean
+<font color="#0000FF">Dim </font>theLogFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">Dim </font>theLogStream<font color="#0000FF"> As </font>TextStream
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+
+<font color="#008000">'------------------------------------------------------------------</font>
+<font color="#008000">' test Macro Atelier</font>
+<font color="#008000">' creation Juillet2000 :    (kbb)</font>
+<font color="#008000">' lecture d'un modele</font>
+<font color="#008000">'------------------------------------------------------------------</font>
+
+<font color="#0000FF">dim </font>EnvVar,BidVar<font color="#0000FF"> as </font>String
+<font color="#0000FF">Dim </font>AdlOdtTmp, AdlOdtTmpPath, AdlOdtOut, AdlOdtOutPath, Slash<font color="#0000FF"> As </font>String
+
+
+EnvVar = CATIA.SystemService.Environ("ADL_ODT_IN")
+CATIA.SystemService.Print "ADL_ODT_IN =" & EnvVar
+
+<font color="#0000FF">if </font>(len(EnvVar)&lt;10)<font color="#0000FF"> then</font>
+  BidVar = EnvVar
+else
+  BidVar = Mid(EnvVar,1,10)
+<font color="#0000FF">end if</font>
+
+<font color="#0000FF">If </font>(BidVar &lt;&gt; "ADL_ODT_IN") Then
+  CATIA.SystemService.Print "IN MKODT"
+  IsaTest = True
+
+  <font color="#008000">'------------------------------------------------------------------</font>
+  CATIA.SystemService.Print "Lire le modele"
+  AdlOdtTmp = CATIA.SystemService.Environ("ADL_ODT_TMP")
+  CATIA.SystemService.Print "AdlOdtTmp=" & AdlOdtTmp
+
+  CATIA.SystemService.Print "Repertoire cible"
+  AdlOdtOut = CATIA.SystemService.Environ("ADL_ODT_OUT")
+  CATIA.SystemService.Print "AdlOdtOut=" & AdlOdtOut
+
+  Slash = CATIA.SystemService.Environ("ADL_ODT_SLASH")
+  CATIA.SystemService.Print "Slash=" & Slash
+
+  AdlOdtTmpPath = AdlOdtTmp & Slash
+  CATIA.SystemService.Print "Path=" & AdlOdtTmpPath
+
+  AdlOdtOutPath = AdlOdtOut & Slash
+  CATIA.SystemService.Print "Generation Path=" & AdlOdtOutPath
+
+  <font color="#008000">'------------------------------------------------------------------</font>
+  CATIA.SystemService.Print "Lire le modele"
+<font color="#0000FF">  Dim </font>Document1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>Document1 = CATIA.Documents.Open(AdlOdtTmpPath & "ToolList.CATProcess")
+  <font color="#008000">'------------------------------------------------------------------</font>
+Else
+  IsaTest = False
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">  Dim </font>aPath<font color="#0000FF"> As </font>String
+
+  HtmlFilesRoot = CreateHtmlFilesRoot
+
+<font color="#0000FF">  If </font>(Not IsaTest)<font color="#0000FF"> Then</font>
+    DefaultDocTarget = HtmlFilesRoot <font color="#008000">'Pourrait etre initialise autrement</font>
+
+        DefaultHtmlAppliName = "ToolList"
+
+    HtmlDefaultDocDir = DefaultDocTarget & DefaultHtmlAppliName
+    aPath = InputBox("Tool List directory", "Define Directory", HtmlDefaultDocDir)
+  Else
+    aPath = AdlOdtOutPath
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">  If </font>(aPath = "") Then
+<font color="#0000FF">    If </font>(Not IsaTest)<font color="#0000FF"> Then</font>
+      MsgBox "Document creation canceled", 4096
+    Else
+      CATIA.SystemService.Print "Document creation canceled"
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    Exit Sub</font>
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">  Dim </font>RootActivityName<font color="#0000FF"> As </font>String
+  RootActivityName = "Process"
+
+  <font color="#008000">'=========================================================</font>
+  <font color="#008000">'        Default tool list documentation name</font>
+  <font color="#008000">'=========================================================</font>
+<font color="#0000FF">  Dim </font>DefaultHTMLFileName<font color="#0000FF"> As </font>String
+  DefaultHTMLFileName = "MfgTool-List"
+
+  <font color="#008000">'pdu***</font>
+  <font color="#008000">'on error resume next</font>
+  CATDocument RootActivityName, DefaultHTMLFileName, aPath
+
+<font color="#0000FF">  If </font>(IsaTest)<font color="#0000FF"> Then</font>
+    Document1.Close
+    CATIA.Quit
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">'     Initialisation des variables dependantes du systeme</font>
+<font color="#008000">'     ---------------------------------------------------</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>CreateSystemVariables()
+
+  theLogMode = False
+
+  <font color="#008000">'Definition des parametres qui seront ignores lors de</font>
+  <font color="#008000">'l'affichage du tableau d'une resource</font>
+  NbIgnoredParameters = 3
+  ReDim IgnoredParameters(NbIgnoredParameters)
+  IgnoredParameters(1) = "MFG_CONE_DIAMETER_2"
+  IgnoredParameters(2) = "MFG_CONE_DIAMETER_1"
+  IgnoredParameters(3) = "MFG_CONE_LENGTH"
+    
+  On Error Resume Next
+
+  EOL = Chr(10)
+  CRLF = Chr(13) & Chr(10)
+
+  StdComponentsDir = "Images"
+
+  ExistLogoDS = False
+
+  DefaultHTMLEditor = "IEXPLORE.EXE"
+
+  On Error GoTo 0  <font color="#008000">'pdu***</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">'     Initialisation de la variable HtmlFilesRoot</font>
+<font color="#008000">'     -------------------------------------------</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Function </font>CreateHtmlFilesRoot()
+
+<font color="#0000FF">  Dim </font>result<font color="#0000FF"> As </font>String
+
+  result = GetPath("CATStartupPath", "Manufacturing")
+<font color="#0000FF">  If </font>(result = "") Then result = GetPath("TEMP", "")
+
+<font color="#0000FF">  If </font>(result &lt;&gt; "") Then
+<font color="#0000FF">    If </font>(Mid(result, Len(result), 1) &lt;&gt; "\" And Mid(result, Len(result), 1) &lt;&gt; "/") Then result = result & "/"
+<font color="#0000FF">  End If</font>
+
+  CreateHtmlFilesRoot = result
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'-------------------------------------------------------</font>
+<font color="#008000">'     Ecriture d'une dans un CATIATextStrean</font>
+<font color="#008000">'-------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>WriteLine(aTextStream, aLine)
+  aTextStream.Write aLine & EOL
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">'     Correspondance Parameter -&gt; valeur NLS</font>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#0000FF">Function </font>ToNLS(anObj, aParameterName)
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> as </font>Integer
+<font color="#0000FF">  Dim </font>NLSresult<font color="#0000FF"> As </font>String
+  On Error Resume Next
+  NLSresult = anObj.GetAttributeNLSName(aParameterName)
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur &lt;&gt; 0 Or NLSresult = "") Then NLSresult = aParameterName
+  On Error GoTo 0
+  ToNLS = NLSresult
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Copie d'un fichier</font>
+<font color="#008000">' Retourne : 0 -&gt; pas d'erreur</font>
+<font color="#008000">'            1 -&gt; source absent</font>
+<font color="#008000">'            2 -&gt; destination existe et overwrite=False</font>
+<font color="#008000">'            3 -&gt; autre erreur</font>
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#0000FF">Function </font>FileCopy(source, destination, overwrite)
+
+<font color="#0000FF">  Dim </font>ReturnedVal<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>fso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>fso = CATIA.FileSystem
+
+<font color="#0000FF">  If </font>(Not (fso.FileExists(source)))<font color="#0000FF"> Then</font>
+    ReturnedVal = 1
+  Else
+<font color="#0000FF">    If </font>(fso.FileExists(destination) And (Not overwrite))<font color="#0000FF"> Then</font>
+      ReturnedVal = 2
+    Else
+      On Error Resume Next
+      fso.CopyFile source, destination, overwrite
+<font color="#0000FF">      Dim </font>erreur<font color="#0000FF"> As </font>Integer
+      erreur = Err.Number
+	  Err.Clear
+<font color="#0000FF">      If </font>(erreur &lt;&gt; 0) Then ReturnedVal = 3
+	  On Error GoTo 0
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  FileCopy = ReturnedVal
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'--------------------------------------------------------------------</font>
+<font color="#008000">' Main Procedure</font>
+<font color="#008000">'--------------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>CATDocument(RootActivityName, HtmlFilesName, FilesPath)
+
+<font color="#0000FF">  dim </font>EnvVar,BidVar<font color="#0000FF"> as </font>String
+
+  EnvVar = CATIA.SystemService.Environ("ADL_ODT_IN")
+  CATIA.SystemService.Print "ADL_ODT_IN =" & EnvVar
+
+<font color="#0000FF">  if </font>(len(EnvVar)&lt;10)<font color="#0000FF"> then</font>
+    BidVar = EnvVar
+  else
+    BidVar = Mid(EnvVar,1,10)
+<font color="#0000FF">  end if</font>
+
+  IsaTest = (BidVar &lt;&gt; "ADL_ODT_IN")
+
+  CreateSystemVariables
+
+  HtmlFilesPath = FilesPath
+
+<font color="#0000FF">  Dim </font>L<font color="#0000FF"> As </font>Integer
+  L = Len(HtmlFilesPath)
+
+<font color="#0000FF">  If </font>(Mid(HtmlFilesPath, L, 1) &lt;&gt; "\" And Mid(HtmlFilesPath, L, 1) &lt;&gt; "/") Then HtmlFilesPath = HtmlFilesPath & "/"
+
+  HtmlFilesPath = HtmlFilesPath & HtmlFilesName
+
+  L = Len(HtmlFilesPath)
+<font color="#0000FF">  If </font>(Mid(HtmlFilesPath, L, 1) = "\" Or Mid(HtmlFilesPath, L, 1) = "/") Then HtmlFilesPath = Mid(HtmlFilesPath, 1, L - 1)
+
+<font color="#0000FF">  Dim </font>fso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>fso = CATIA.FileSystem
+
+<font color="#0000FF">  If </font>(fso.FolderExists(HtmlFilesPath))<font color="#0000FF"> Then</font>
+<font color="#0000FF">    If </font>(Not IsaTest)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>repcont<font color="#0000FF"> As </font>Boolean
+      repcont = ContinueIfExistingFolder(HtmlFilesPath)
+<font color="#0000FF">      If </font>(Not repcont)<font color="#0000FF"> Then</font>
+         MsgBox "Document creation canceled", 4096  '(vbSystemModal)
+         On Error GoTo 0
+         Err.Raise 1
+<font color="#0000FF">      End If</font>
+    Else
+<font color="#0000FF">      Dim </font>deldir<font color="#0000FF"> As </font>Integer
+      deldir = RemoveDirectory(HtmlFilesPath)
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  On Error Resume Next
+<font color="#0000FF">  If </font>(Not fso.FolderExists(HtmlFilesPath))<font color="#0000FF"> Then</font>
+<font color="#0000FF">    Dim </font>CreatedFolder<font color="#0000FF"> As </font>Folder
+<font color="#0000FF">    Set </font>CreatedFolder = fso.CreateFolder(HtmlFilesPath)
+<font color="#0000FF">    Dim </font>erreur<font color="#0000FF"> As </font>Integer
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      If </font>(Not IsaTest)<font color="#0000FF"> Then</font>
+        MsgBox HtmlFilesPath & CRLF & CRLF & "Error creating folder", 4144
+      Else
+        CATIA.SystemService.Print HtmlFilesPath & " : Error creating folder"
+<font color="#0000FF">      End If</font>
+      Err.Raise erreur
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+  On Error GoTo 0
+
+  HtmlFilesPath = HtmlFilesPath & "/"
+
+  OpenLogFile
+
+<font color="#0000FF">  Dim </font>OutIndex<font color="#0000FF"> As </font>String
+  OutIndex = HtmlFilesName & ".html"
+
+  CATIAComponentPath = CreateHtmlFilesRoot & StdComponentsDir & "/"
+
+  CreateHtmlFile OutIndex
+
+<font color="#0000FF">  Dim </font>OpenDocNow<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>EndOfGenerationTxt<font color="#0000FF"> As </font>String
+
+  CloseLogFile
+
+<font color="#0000FF">  If </font>(Not IsaTest)<font color="#0000FF"> Then</font>
+    EndOfGenerationTxt = "Tool List : " & OutIndex & CRLF & "Created In " & HtmlFilesPath & CRLF & "Open the document now?"
+
+    OpenDocNow = MsgBox(EndOfGenerationTxt, 4100)
+
+<font color="#0000FF">    If </font>(OpenDocNow = 6)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>CmdLine<font color="#0000FF"> As </font>String
+      CmdLine = DefaultHTMLEditor & " " & HtmlFilesPath & OutIndex
+
+<font color="#0000FF">      Dim </font>aCmdResult<font color="#0000FF"> As </font>Long
+      On Error Resume Next
+      aCmdResult = CATIA.SystemService.ExecuteBackgroundProcessus(CmdLine)
+<font color="#0000FF">      Dim </font>cmderreur<font color="#0000FF"> As </font>Integer
+      cmderreur = Err.Number
+	  Err.Clear
+<font color="#0000FF">      If </font>(cmderreur &lt;&gt; 0) Then MsgBox "Error while opening HTML editor", 4096
+	  On Error GoTo 0
+<font color="#0000FF">    End If</font>
+  Else
+    CATIA.SystemService.Print "Tool List : " & OutIndex & " " & "Created In " & HtmlFilesPath
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Creation de la liste de tous les outils</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+
+<font color="#0000FF">Sub </font>CreateHtmlFile(OutIndex)
+
+<font color="#0000FF">  Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>aFileSyst = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>theHTMLFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">  Dim </font>aTextStream<font color="#0000FF"> As </font>TextStream
+
+  UpdateLogFile "Tool list documentation file : " & HtmlFilesPath & OutIndex
+
+<font color="#0000FF">  Set </font>theHTMLFile = aFileSyst.CreateFile(HtmlFilesPath & OutIndex, True)
+<font color="#0000FF">  Set </font>aTextStream = theHTMLFile.OpenAsTextStream("ForWriting")
+  
+  <font color="#008000">'---------------------------------------------------------------</font>
+  <font color="#008000">' Retrieve the active document</font>
+  <font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">  Dim </font>MfgDoc1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">  Set </font>MfgDoc1 = CATIA.ActiveDocument
+
+  WriteLine aTextStream, "&lt;html&gt;"
+  WriteLine aTextStream, "&lt;head&gt;"
+  WriteLine aTextStream, "   &lt;title&gt;Tools List Documentation&lt;/title&gt;"
+  WriteLine aTextStream, "&lt;/head&gt;"
+
+  WriteLine aTextStream, "&lt;body&gt;"
+
+  WriteLine aTextStream, "&lt;table CELLSPACING=0 CELLPADDING=5&gt;"
+  WriteLine aTextStream, "&lt;tr&gt;"
+
+  rep = FileCopy(CATIAComponentPath & "navlogocat.gif", HtmlFilesPath & "navlogocat.gif", True)
+<font color="#0000FF">  If </font>(rep = 0)<font color="#0000FF"> Then</font>
+    WriteLine aTextStream, "&lt;td&gt;&lt;img SRC=""navlogocat.gif"" BORDER=0&gt;&lt;/td&gt;"
+    ExistLogoDS = True
+<font color="#0000FF">  End If</font>
+
+  WriteLine aTextStream, "&lt;td BGCOLOR=""#000099""&gt;&lt;b&gt;&lt;font color=""#FFFFFF"" size=+2&gt;"
+  WriteLine aTextStream, "TOOL LIST"
+  WriteLine aTextStream, "&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+  WriteLine aTextStream, "&lt;/tr&gt;"
+  WriteLine aTextStream, "&lt;tr&gt;"
+<font color="#0000FF">  If </font>(rep = 0) Then WriteLine aTextStream, "&lt;td&gt;&lt;/td&gt;"
+  WriteLine aTextStream, "&lt;td&gt;&lt;b&gt;&lt;font color=""#000099"" size=+3&gt;" & MfgDoc1.Name & "&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+  WriteLine aTextStream, "&lt;/tr&gt;"
+  WriteLine aTextStream, "&lt;/table&gt;"
+
+  WriteLine aTextStream, "&lt;br&gt;"
+  WriteLine aTextStream, "&lt;i&gt;&lt;p&gt;Generation : " & Date & " at " & Time & "&lt;/i&gt;&lt;/p&gt;"
+
+<font color="#0000FF">  Dim </font>ProgramList<font color="#0000FF"> As </font>MfgActivities
+<font color="#0000FF">  Dim </font>ActivityList<font color="#0000FF"> As </font>MfgActivities
+<font color="#0000FF">  Dim </font>NumberOfProgram<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>NumberOfActivity<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>i<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>J<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>K<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>ActivityName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>CurrentSetup<font color="#0000FF"> As </font>Activity
+<font color="#0000FF">  Dim </font>CurrentProgram<font color="#0000FF"> As </font>ManufacturingActivity
+<font color="#0000FF">  Dim </font>CurrentActivity<font color="#0000FF"> As </font>ManufacturingActivity
+<font color="#0000FF">  Dim </font>CurrentTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">  Dim </font>CurrentAssembly<font color="#0000FF"> As </font>ManufacturingToolAssembly
+<font color="#0000FF">  Dim </font>AssemblyNumber<font color="#0000FF"> as </font>Integer
+<font color="#0000FF">  Dim </font>ActivityType<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  Dim </font>childs<font color="#0000FF"> As </font>Activities
+<font color="#0000FF">  Dim </font>quantity<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>aProcess<font color="#0000FF"> As </font>AnyObject
+
+<font color="#0000FF">  Dim </font>ToolNumber<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>ToolName<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+    
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Retrieve the current Process</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+
+<font color="#0000FF">  Set </font>aProcess = MfgDoc1.GetItem("Process")
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Scan the Process and print tools</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+  quantity = 0
+  
+<font color="#0000FF">  If </font>(aProcess.IsSubTypeOf("PhysicalActivity")) Then
+
+<font color="#0000FF">    Set </font>childs = aProcess.ChildrenActivities
+    quantity = childs.Count
+
+<font color="#0000FF">    If </font>quantity &lt;= 0<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Exit Sub</font>
+<font color="#0000FF">    End If</font>
+    
+    
+<font color="#0000FF">    Dim </font>TabTool()
+<font color="#0000FF">    Dim </font>TabToolName()
+<font color="#0000FF">    Dim </font>TabToolStatus() <font color="#008000">'outil utilise ou non dans un assembly</font>
+<font color="#0000FF">    Dim </font>MaxToolNb<font color="#0000FF"> As </font>Integer
+    MaxToolNb = 32
+    ReDim TabTool(MaxToolNb)
+    ReDim TabToolName(MaxToolNb)
+
+<font color="#0000FF">    Dim </font>TabAssembly()
+<font color="#0000FF">    Dim </font>TabAssemblyName()
+<font color="#0000FF">    Dim </font>MaxAssemblyNb<font color="#0000FF"> As </font>Integer
+    MaxAssemblyNb = 32
+    ReDim TabAssembly(MaxToolNb)
+    ReDim TabAssemblyName(MaxToolNb)
+
+    WriteLine aTextStream, "&lt;font size=+1&gt;&lt;a href=""#ProcessList""&gt;Process List...&lt;/a&gt;&lt;/font&gt;&lt;/p&gt;"
+
+    WriteLine aTextStream, "&lt;a href=""#ToolList""&gt;"
+
+<font color="#0000FF">    For </font>i = 1<font color="#0000FF"> To </font>quantity
+
+<font color="#0000FF">      Set </font>CurrentSetup = childs.Item(i)
+      
+<font color="#0000FF">      If </font>(CurrentSetup.IsSubTypeOf("ManufacturingSetup")) Then
+
+          <font color="#008000">'---------------------------------------------------------------</font>
+          <font color="#008000">'       Read the Programs  of the current Setup</font>
+          <font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">          Set </font>ProgramList = CurrentSetup.Programs
+          NumberOfProgram = ProgramList.Count
+          
+<font color="#0000FF">          For </font>J = 1<font color="#0000FF"> To </font>NumberOfProgram
+          
+<font color="#0000FF">            Set </font>CurrentProgram = ProgramList.GetElement(J)
+            
+            <font color="#008000">'---------------------------------------------------------------</font>
+            <font color="#008000">'               Read the Activities of the current Program</font>
+            <font color="#008000">'---------------------------------------------------------------</font>
+            
+<font color="#0000FF">            Set </font>ActivityList = CurrentProgram.Activities
+            NumberOfActivity = ActivityList.Count
+            
+<font color="#0000FF">            For </font>K = 1<font color="#0000FF"> To </font>NumberOfActivity
+
+<font color="#0000FF">              Set </font>CurrentActivity = ActivityList.GetElement(K)
+              ActivityName = CurrentActivity.Name
+              ActivityType = CurrentActivity.Type
+              
+              <font color="#008000">'---------------------------------------------------------------</font>
+              <font color="#008000">'      Read the Activity Type</font>
+              <font color="#008000">'      If the Activity is a tool Change -&gt; Add to the document</font>
+              <font color="#008000">'---------------------------------------------------------------</font>
+
+			  UpdateLogFile "Activity : " & ActivityName & EOL & "Type : " & ActivityType
+
+<font color="#0000FF">              If </font>(ActivityType = "ToolChange" Or ActivityType = "ToolChangeLathe") Then
+
+                <font color="#008000">'Traitement si presence d'un tool assembly</font>
+                <font color="#008000">'On procede comme pour l'outil</font>
+
+                On Error Resume Next
+
+				set CurrentAssembly = NOTHING
+				AssemblyNumber = -1
+				Err.Clear
+
+<font color="#0000FF">                Set </font>CurrentAssembly = CurrentActivity.ToolAssembly
+
+                AssemblyNumber = CurrentAssembly.Number
+
+				erreur = Err.Number
+				Err.Clear
+
+				If (erreur = 0)<font color="#0000FF"> Then</font>
+
+				  Dim Attribut<font color="#0000FF"> As </font>Parameter
+				  Set Attribut = CurrentAssembly.getAttribute("MFG_NAME")
+				  erreur = Err.Number
+				  Err.Clear
+				  If (erreur = 0) Then AssemblyName = Attribut.Value
+<font color="#0000FF">                  If </font>(AssemblyNumber &gt; MaxAssemblyNb)<font color="#0000FF"> Then</font>
+                    MaxAssemblyNb = AssemblyNumber
+                    ReDim Preserve TabAssembly(MaxAssemblyNb)
+                    ReDim Preserve TabAssemblyName(MaxAssemblyNb)
+<font color="#0000FF">                    Set </font>TabAssembly(AssemblyNumber) = CurrentAssembly
+                    TabAssemblyName(AssemblyNumber) = AssemblyName
+                  Else
+<font color="#0000FF">                    If </font>(TabAssemblyName(AssemblyNumber) &lt;&gt; AssemblyName)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                      Set </font>TabAssembly(AssemblyNumber) = CurrentAssembly
+                      TabAssemblyName(AssemblyNumber) = AssemblyName
+<font color="#0000FF">                    End If</font>
+<font color="#0000FF">                  End If</font>
+                Else
+				  UpdateLogFile "No assembly (erreur=" & erreur & ")"
+<font color="#0000FF">                End If</font>
+              
+<font color="#0000FF">                Set </font>CurrentTool = CurrentActivity.Tool
+                ToolNumber = CurrentTool.Number
+                ToolName = CurrentTool.Name
+<font color="#0000FF">                If </font>(ToolNumber &gt; MaxToolNb)<font color="#0000FF"> Then</font>
+                  MaxToolNb = ToolNumber
+                  ReDim Preserve TabTool(MaxToolNb)
+                  ReDim Preserve TabToolName(MaxToolNb)
+<font color="#0000FF">                  Set </font>TabTool(ToolNumber) = CurrentTool
+                  TabToolName(ToolNumber) = ToolName
+                Else
+<font color="#0000FF">                  If </font>(TabToolName(ToolNumber) &lt;&gt; ToolName)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                    Set </font>TabTool(ToolNumber) = CurrentTool
+                    TabToolName(ToolNumber) = ToolName
+<font color="#0000FF">                  End If</font>
+<font color="#0000FF">                End If</font>
+<font color="#0000FF">              End If</font>
+
+<font color="#0000FF">            Next</font>
+<font color="#0000FF">          Next</font>
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    Next</font>
+
+	UpdateLogFile "Nombre d'assemblies : " & MaxAssemblyNb
+	UpdateLogFile "Nombre d'outils : " & MaxToolNb
+
+        ReDim TabToolStatus(MaxToolNb)
+<font color="#0000FF">        For </font>i = 0<font color="#0000FF"> To </font>MaxToolNb
+          TabToolStatus(i) = 0
+<font color="#0000FF">        Next</font>
+
+    <font color="#008000">'Ajout des tool-assembly dans le document</font>
+<font color="#0000FF">    For </font>i = 0<font color="#0000FF"> To </font>MaxAssemblyNb
+<font color="#0000FF">     If </font>(TabAssemblyName(i) &lt;&gt; "") Then
+<font color="#0000FF">        Dim </font>anAssembly<font color="#0000FF"> As </font>ManufacturingToolAssembly
+<font color="#0000FF">        Set </font>anAssembly = TabAssembly(i)
+        WriteAssembly anAssembly, aTextStream
+        CreateOneAssemblySheet anAssembly, MfgDoc1.Name
+<font color="#0000FF">                Dim </font>UsedTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">                Set </font>UsedTool = anAssembly.Tool
+                UsedToolNb = UsedTool.Number
+                TabToolStatus(UsedToolNb) = 1
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    Next</font>
+
+    <font color="#008000">'Ajout des outils dans le document</font>
+<font color="#0000FF">    For </font>i = 0<font color="#0000FF"> To </font>MaxToolNb
+<font color="#0000FF">      If </font>(TabToolName(i) &lt;&gt; "") Then
+<font color="#0000FF">        Dim </font>aTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">        Set </font>aTool = TabTool(i)
+<font color="#0000FF">                Dim </font>aToolNb<font color="#0000FF"> As </font>Integer
+                aToolNb = aTool.Number
+<font color="#0000FF">                If </font>(TabToolStatus(aToolNb) = 0)<font color="#0000FF"> Then</font>
+          WriteTool aTool, aTextStream
+          CreateOneToolSheet aTool, MfgDoc1.Name
+<font color="#0000FF">                End If</font>
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    Next</font>
+    
+    WriteLine aTextStream, "&lt;p&gt;&lt;hr&gt;&lt;/p&gt;"
+
+    <font color="#008000">'---------------------------------------------------------------</font>
+    <font color="#008000">' List of involved part operations, programs and  cycles</font>
+    <font color="#008000">'---------------------------------------------------------------</font>
+    WriteLine aTextStream, "&lt;p&gt;&lt;a NAME=""ProcessList""&gt;&lt;/a&gt;"
+    WriteProcessStructure aProcess, aTextStream
+
+<font color="#0000FF">  End If</font>
+
+  WriteLine aTextStream, "&lt;/body&gt;"
+  WriteLine aTextStream, "&lt;/html&gt;"
+
+  aTextStream.Close
+
+<font color="#0000FF">  Set </font>theHTMLFile = Nothing
+<font color="#0000FF">  Set </font>aTextStream = Nothing
+
+  UpdateLogFile "End of creation."
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Ajout d'un outil dans la liste</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>WriteTool(aTool, aStream)
+
+<font color="#0000FF">  Dim </font>ToolNumber<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ToolName, ToolType<font color="#0000FF"> As </font>String
+
+  ToolNumber = aTool.Number
+  ToolName = aTool.Name
+  ToolType = aTool.ToolType
+
+  WriteLine aStream, "&lt;a NAME=""T" & ToolNumber & """&gt;&lt;/a&gt;"
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=1 CELLSPACING=2 CELLPADDING=5 WIDTH=""80%""&gt;"
+  WriteLine aStream, "&lt;tr VALIGN=""MIDDLE""&gt;"
+  WriteLine aStream, "&lt;td WIDTH=""50%"" BGCOLOR=""#C6C6FF""&gt;&lt;b&gt;&lt;font size=+1&gt;&lt;a href=""Tool" & ToolNumber & ".html""&gt;Tool " & ToolNumber & " : " & ToolName & "&lt;/a&gt;&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+
+
+<font color="#0000FF">  Dim </font>ImgName<font color="#0000FF"> As </font>String
+  ImgName = GetToolImage(aTool, True)
+
+<font color="#0000FF">  If </font>(ImgName &lt;&gt; "") Then
+    WriteLine aStream, "&lt;td ALIGN=""CENTER"" WIDTH=""100""&gt;"
+    WriteLine aStream, "&lt;img SRC=""" & ImgName & """&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+<font color="#0000FF">  End If</font>
+
+
+  WriteLine aStream, "&lt;td&gt;"
+  WriteLine aStream, "Type : " & ToNLS(aTool, ToolType) & "&lt;br&gt;"
+
+<font color="#0000FF">  Dim </font>DiameterId<font color="#0000FF"> As </font>String
+<font color="#0000FF">  If </font>(ToolType = "MfgAPTTool") Then
+    DiameterId = "MFG_APT_DIAMETER"
+  Else
+    DiameterId = "MFG_NOMINAL_DIAM"
+<font color="#0000FF">  End If</font>
+  On Error Resume Next
+<font color="#0000FF">  Set </font>DiameterAttribut = aTool.getAttribute(DiameterId)
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+    ToolDiameter = DiameterAttribut.Value
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+      WriteLine aStream, "Diameter : " & ToolDiameter
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  On Error GoTo 0
+
+  WriteLine aStream, "&lt;/td&gt;"
+  WriteLine aStream, "&lt;/tr&gt;"
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+  WriteLine aStream, "&lt;br&gt;"
+
+<font color="#0000FF">End Sub</font>
+
+
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Liste des activites utilisant les outils (scan du process)</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>WriteProcessStructure(aProcess, aStream)
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> as </font>Integer
+<font color="#0000FF">  Dim </font>ProcessActivities<font color="#0000FF"> As </font>Activities
+<font color="#0000FF">  Dim </font>anActivity<font color="#0000FF"> As </font>Activity
+
+<font color="#0000FF">  Dim </font>CurrentSetup<font color="#0000FF"> As </font>ManufacturingActivity
+<font color="#0000FF">  Dim </font>SetupName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>ProgramList<font color="#0000FF"> As </font>MfgActivities
+<font color="#0000FF">  Dim </font>CurrentProgram<font color="#0000FF"> As </font>ManufacturingActivity
+<font color="#0000FF">  Dim </font>ProgramName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>ActivityType<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>anInsert<font color="#0000FF"> As </font>ManufacturingInsert
+<font color="#0000FF">  Dim </font>InsertName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>AssemblyName<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  If </font>(aProcess.IsSubTypeOf("PhysicalActivity")) Then
+<font color="#0000FF">    Set </font>ProcessActivities = aProcess.ChildrenActivities
+    quantity = ProcessActivities.Count
+
+<font color="#0000FF">    If </font>(quantity &lt;= 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Exit Sub</font>
+<font color="#0000FF">    End If</font>
+
+    WriteLine aStream, "&lt;p&gt;&lt;b&gt;&lt;font size=+1&gt;Process List :&lt;/font&gt;&lt;/b&gt;"
+
+    WriteLine aStream, "&lt;ul&gt;"  'liste des P.O.
+<font color="#0000FF">    For </font>i = 1<font color="#0000FF"> To </font>quantity
+<font color="#0000FF">      Set </font>anActivity = ProcessActivities.Item(i)
+      
+<font color="#0000FF">        If </font>(anActivity.IsSubTypeOf("ManufacturingSetup")) Then
+        
+          SetupName = anActivity.Name
+
+<font color="#0000FF">          Set </font>ProgramList = anActivity.Programs
+          NumberOfProgram = ProgramList.Count
+          
+<font color="#0000FF">          If </font>(NumberOfProgram &lt;= 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Exit Sub</font>
+<font color="#0000FF">          End If</font>
+
+          WriteLine aStream, "&lt;p&gt;&lt;li&gt;Part Operation : &lt;b&gt;" & SetupName & "&lt;/b&gt;&lt;/li&gt;&lt;/p&gt;"
+
+          WriteLine aStream, "&lt;ul&gt;"  'liste des programmes
+<font color="#0000FF">          For </font>J = 1<font color="#0000FF"> To </font>NumberOfProgram
+<font color="#0000FF">            Set </font>CurrentProgram = ProgramList.GetElement(J)
+            ProgramName = CurrentProgram.Name
+
+            WriteLine aStream, "&lt;p&gt;&lt;li&gt;Program : &lt;b&gt;" & ProgramName & "&lt;/b&gt;&lt;/li&gt;&lt;/p&gt;"
+
+<font color="#0000FF">            Set </font>ProgActivityList = CurrentProgram.Activities
+            NumberOfActivity = ProgActivityList.Count
+            
+            WriteLine aStream, "&lt;ul&gt;"  'liste des cycles
+<font color="#0000FF">            For </font>K = 1<font color="#0000FF"> To </font>NumberOfActivity
+<font color="#0000FF">              Set </font>CurrentActivity = ProgActivityList.GetElement(K)
+              ActivityName = CurrentActivity.Name
+              ActivityType = CurrentActivity.Type
+
+<font color="#0000FF">              If </font>(ActivityType = "ToolChange" Or ActivityType = "ToolChangeLathe") Then
+
+<font color="#0000FF">                Dim </font>Attribut<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">                Dim </font>CurrentTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">                Dim </font>ToolName<font color="#0000FF"> As </font>String
+<font color="#0000FF">                Dim </font>ToolNumber<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">                Dim </font>CurrentAssembly<font color="#0000FF"> As </font>ManufacturingToolAssembly
+<font color="#0000FF">                Dim </font>AssemblyNumber<font color="#0000FF"> As </font>Integer
+
+<font color="#0000FF">                Set </font>CurrentTool = CurrentActivity.Tool
+                ToolNumber = CurrentTool.Number
+                ToolName = CurrentTool.Name
+  
+				InsertName = ""
+				AssemblyName = ""
+
+                On Error Resume Next
+
+				set CurrentAssembly = NOTHING
+				AssemblyNumber = 0
+
+<font color="#0000FF">                Set </font>CurrentAssembly = CurrentActivity.ToolAssembly
+
+                AssemblyNumber = CurrentAssembly.Number
+
+				erreur = Err.Number
+				Err.Clear
+
+<font color="#0000FF">                If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">                  Dim </font>AssemblyType<font color="#0000FF"> As </font>String
+                  AssemblyNumber = CurrentAssembly.Number
+				  Set Attribut = CurrentAssembly.getAttribute("MFG_NAME")
+				  erreur = Err.Number
+				  Err.Clear
+				  If (erreur = 0) Then AssemblyName = Attribut.Value
+                  AssemblyType = CurrentAssembly.AssemblyType
+
+<font color="#0000FF">                  If </font>(AssemblyType = "MfgLatheToolAssembly") Then
+<font color="#0000FF">                    Set </font>anInsert = CurrentAssembly.Insert
+<font color="#0000FF">                    Set </font>Attribut = anInsert.getAttribute("MFG_NAME")
+                    erreur = Err.Number
+					Err.Clear
+<font color="#0000FF">                    If </font>(erreur = 0) Then InsertName = Attribut.Value
+<font color="#0000FF">                  End If</font>
+<font color="#0000FF">                End If</font>
+                
+<font color="#0000FF">                Dim </font>ActivityLine<font color="#0000FF"> As </font>String
+                
+                ActivityLine = "&lt;li&gt;" & ActivityName & " (" & ToNLS(CurrentActivity, ActivityType) & " : "
+                
+<font color="#0000FF">                If </font>(AssemblyName &lt;&gt; "") Then
+                  ActivityLine = ActivityLine & "&lt;a href=""Assembly" & AssemblyNumber & ".html""&gt;" & AssemblyName & "&lt;/a&gt; , "
+                  ActivityLine = ActivityLine & "&lt;a href=""Assembly" & AssemblyNumber & ".html#Tool""&gt;" & ToolName & "&lt;/a&gt;"
+<font color="#0000FF">                  If </font>(InsertName &lt;&gt; "") Then ActivityLine = ActivityLine & " , &lt;a href=""Assembly" & AssemblyNumber & ".html#Insert""&gt;" & InsertName & "&lt;/a&gt;"
+                Else
+                  ActivityLine = ActivityLine & "&lt;a href=""Tool" & ToolNumber & ".html""&gt;" & ToolName & "&lt;/a&gt;"
+<font color="#0000FF">                End If</font>
+                
+                ActivityLine = ActivityLine & ")&lt;/li&gt;"
+                
+                WriteLine aStream, ActivityLine
+                
+              
+              Else
+                WriteLine aStream, "&lt;li&gt;" & ActivityName & " (" & ToNLS(CurrentActivity, ActivityType) & ")&lt;/li&gt;"
+<font color="#0000FF">              End If</font>
+
+<font color="#0000FF">            Next</font>
+            WriteLine aStream, "&lt;/ul&gt;"  'liste des cycles
+
+<font color="#0000FF">          Next</font>
+          WriteLine aStream, "&lt;/ul&gt;"  'liste des programmes
+          WriteLine aStream, "&lt;br&gt;"
+
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">    Next</font>
+    WriteLine aStream, "&lt;/ul&gt;"  'liste des P.O.
+
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">End Sub</font>
+
+
+
+
+<font color="#008000">' --------------------------</font>
+<font color="#008000">' Creation d'une fiche outil</font>
+<font color="#008000">' --------------------------</font>
+
+<font color="#0000FF">Sub </font>CreateOneToolSheet(aTool, aProcessName)
+
+<font color="#0000FF">  Dim </font>Attribut<font color="#0000FF"> as </font>Parameter
+<font color="#0000FF">  Dim </font>ToolNumber<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>ToolName, ToolType, ToolComment<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>ToolDiameter, ToolCornerRadius, ToolTotalLength, ToolCuttingLength, ToolLength, ToolBodyDiameter<font color="#0000FF"> As </font>Variant
+
+  ToolType = aTool.ToolType
+  ToolNumber = aTool.Number
+
+  On Error Resume Next
+<font color="#0000FF">  Set </font>Attribut = aTool.getAttribute("MFG_NAME")
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0) Then ToolName = Attribut.Value
+
+<font color="#0000FF">  Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>aFileSyst = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>theToolFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">  Dim </font>aStream<font color="#0000FF"> As </font>TextStream
+
+<font color="#0000FF">  Dim </font>FileName<font color="#0000FF"> As </font>String
+  FileName = "Tool" & ToolNumber & ".html"
+
+<font color="#0000FF">  Set </font>theHTMLFile = aFileSyst.CreateFile(HtmlFilesPath & FileName, True)
+<font color="#0000FF">  Set </font>aStream = theHTMLFile.OpenAsTextStream("ForWriting")
+
+
+  <font color="#008000">'Debut de la page</font>
+  WriteLine aStream, "&lt;html&gt;"
+  WriteLine aStream, "&lt;head&gt;"
+  WriteLine aStream, "&lt;title&gt;Tool " & ToolNumber & " : " & ToolName & "&lt;/title&gt;"
+  WriteLine aStream, "&lt;/head&gt;"
+
+  <font color="#008000">'Ecriture de l'entete</font>
+  WriteLine aStream, "&lt;table CELLSPACING=0 CELLPADDING=5&gt;&lt;tr&gt;"
+<font color="#0000FF">  If </font>(ExistLogoDS)<font color="#0000FF"> Then</font>
+    WriteLine aStream, "&lt;td ALIGN=CENTER&gt;&lt;img SRC=""navlogocat.gif"" BORDER=0&gt;&lt;/td&gt;"
+<font color="#0000FF">  End If</font>
+  WriteLine aStream, "&lt;td BGCOLOR=""#000099""&gt;"
+  WriteLine aStream, "&lt;b&gt;&lt;font color=""#FFFFFF"" size=+2&gt;"
+  WriteLine aStream, "TOOL LIST&lt;br&gt;"
+  WriteLine aStream, aProcessName
+  WriteLine aStream, "&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+  WriteLine aStream, "&lt;/tr&gt;&lt;/table&gt;"
+  WriteLine aStream, "&lt;br&gt;&lt;br&gt;"
+  WriteLine aStream, "&lt;table BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=""100%"" BGCOLOR=""#3366FF""&gt;"
+  WriteLine aStream, "&lt;tr&gt;"
+  WriteLine aStream, "&lt;td&gt;&lt;b&gt;&lt;font color=""#FFFFFF"" size=+3&gt;Tool " & ToolNumber & " : " & ToolName & "&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+  WriteLine aStream, "&lt;/tr&gt;"
+  WriteLine aStream, "&lt;/table&gt;"
+  <font color="#008000">'Fin de l'ecriture de l'entete</font>
+
+  WriteLine aStream, "&lt;br&gt;&lt;br&gt;"
+  
+  WriteToolTable aTool, aStream, False
+
+  WriteLine aStream, "&lt;/body&gt;"
+  WriteLine aStream, "&lt;/html&gt;"
+
+  aStream.Close
+
+<font color="#0000FF">  Set </font>theHTMLFile = Nothing
+<font color="#0000FF">  Set </font>aStream = Nothing
+  
+  On Error GoTo 0 <font color="#008000">'pdu***</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'-----------------------------------------------</font>
+<font color="#008000">' Ecriture du tableau de description d'un outil</font>
+<font color="#008000">' Parametres + Image + commentaire + correcteurs</font>
+<font color="#008000">'-----------------------------------------------</font>
+<font color="#0000FF">Sub </font>WriteToolTable(aTool, aStream, writecaption)
+
+<font color="#0000FF">  Dim </font>ToolName, ToolType<font color="#0000FF"> As </font>String
+
+  ToolName = aTool.Name
+  ToolType = aTool.ToolType
+
+<font color="#0000FF">  If </font>(writecaption) Then WriteLine aStream, "&lt;p&gt;&lt;center&gt;&lt;b&gt;&lt;font color=""#3333FF"" size=+2&gt;" & ToolName & "&lt;/font&gt;&lt;/b&gt;&lt;/center&gt;&lt;/p&gt;"
+
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=0 CELLSPACING=5&gt;"
+
+  WriteLine aStream, "&lt;tr&gt;"
+
+  WriteLine aStream, "&lt;td ALIGN=LEFT&gt;"
+  AddResourceParameters aTool, aStream
+  WriteLine aStream, "&lt;/td&gt;"
+
+<font color="#0000FF">  Dim </font>ImgName<font color="#0000FF"> As </font>String
+  ImgName = GetToolImage(aTool, False)
+
+<font color="#0000FF">  If </font>(ImgName &lt;&gt; "") Then
+    WriteLine aStream, "&lt;td ALIGN=RIGHT&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;img BORDER=0 SRC=""" & ImgName & """&gt;"
+    WriteLine aStream, "&lt;br&gt;Type : " & ToNLS(aTool, ToolType) & "&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+  Else
+    WriteLine aStream, "&lt;br&gt;"
+    WriteLine aStream, "&lt;center&gt;Type : &lt;b&gt;" & ToNLS(aTool, ToolType) & "&lt;/b&gt;&lt;/center&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/tr&gt;"
+
+  <font color="#008000">' Commentaire</font>
+  <font color="#008000">'------------</font>
+  ToolComment = aTool.Comment
+
+<font color="#0000FF">  If </font>(ToolComment &lt;&gt; "") Then
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td COLSPAN=""2""&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;table BORDER CELLSPACING=0 CELLPADDING=5 WIDTH=""75%"" BGCOLOR=""#FFFFFF""&gt;"
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td&gt;" & ToolComment & "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+    WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+
+<font color="#0000FF">  If </font>(ToolType &lt;&gt; "MfgAPTTool") Then
+
+    WriteLine aStream, "&lt;center&gt;&lt;hr WIDTH=""60%""&gt;&lt;/center&gt;"
+
+    <font color="#008000">' Correcteurs</font>
+    <font color="#008000">'------------</font>
+    WriteLine aStream, "&lt;center&gt;&lt;table CELLSPACING=10 CELLPADDING=5 WIDTH=""75%""&gt;"
+    WriteLine aStream, "&lt;tr VALIGN=""TOP""&gt;"
+    WriteLine aStream, "&lt;td&gt;"
+    WriteLine aStream, "&lt;p&gt;&lt;center&gt;&lt;b&gt;&lt;font color=""#3333FF"" size=+1&gt;Tool Compensation&lt;/font&gt;&lt;/b&gt;&lt;/center&gt;&lt;/p&gt;"
+
+    WriteLine aStream, "&lt;table CELLSPACING=3 CELLPADDING=3 BGCOLOR=""#C5C5E2"" WIDTH=""100%""&gt;"
+
+    WriteLine aStream, "&lt;tr&gt;&lt;font size=-1&gt;"
+    WriteLine aStream, "&lt;td&gt;&lt;center&gt;&lt;b&gt;Compensation Type&lt;/b&gt;&lt;/center&gt;&lt;/td&gt;"
+    WriteLine aStream, "&lt;td&gt;&lt;center&gt;&lt;b&gt;Corrector Number&lt;/b&gt;&lt;/center&gt;&lt;/td&gt;"
+    WriteLine aStream, "&lt;td&gt;&lt;center&gt;&lt;b&gt;Length Number&lt;/b&gt;&lt;/center&gt;&lt;/td&gt;"
+    WriteLine aStream, "&lt;td&gt;&lt;center&gt;&lt;b&gt;Tool Diameter&lt;/b&gt;&lt;/center&gt;&lt;/td&gt;"
+    WriteLine aStream, "&lt;/font&gt;&lt;/tr&gt;"
+
+<font color="#0000FF">    Dim </font>NbCorr, corr<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>aCorr<font color="#0000FF"> As </font>ManufacturingToolCorrector
+
+    NbCorr = aTool.CorrectorCount
+
+<font color="#0000FF">    Dim </font>CorrPoint<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>CorrNumber, CorrLengthNumber<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>CorrDiameter<font color="#0000FF"> As </font>Variant
+
+<font color="#0000FF">    For </font>corr = 1<font color="#0000FF"> To </font>NbCorr
+
+      CorrPoint = ""
+      CorrNumber = 0
+      CorrLengthNumber = 0
+      CorrDiameter = 0
+
+<font color="#0000FF">      Set </font>aCorr = aTool.GetCorrector(corr)
+
+      CorrPoint = aCorr.Point
+      CorrNumber = aCorr.Number
+      CorrLengthNumber = aCorr.LengthNumber
+      CorrDiameter = aCorr.Diameter
+
+<font color="#0000FF">      If </font>(CorrPoint &lt;&gt; "") Then
+        WriteLine aStream, "&lt;tr&gt;"
+        WriteLine aStream, "&lt;td&gt;&lt;center&gt;" & aCorr.Point & "&lt;/center&gt;&lt;/td&gt;"
+        WriteLine aStream, "&lt;td&gt;&lt;center&gt;" & aCorr.Number & "&lt;/center&gt;&lt;/td&gt;"
+        WriteLine aStream, "&lt;td&gt;&lt;center&gt;" & aCorr.LengthNumber & "&lt;/center&gt;&lt;/td&gt;"
+        WriteLine aStream, "&lt;td&gt;&lt;center&gt;" & aCorr.Diameter & "&lt;/center&gt;&lt;/td&gt;"
+        WriteLine aStream, "&lt;/tr&gt;"
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    Next</font>
+
+    WriteLine aStream, "&lt;/table&gt;"
+
+    WriteLine aStream, "&lt;/td&gt;"
+
+<font color="#0000FF">    Dim </font>ImageCorr<font color="#0000FF"> As </font>String
+    ImageCorr = CompensationImageFromTool(aTool)
+
+<font color="#0000FF">    If </font>(ImageCorr &lt;&gt; "") Then
+      WriteLine aStream, "&lt;td&gt;&lt;img BORDER=0 SRC=""" & ImageCorr & """&gt;&lt;/td&gt;"
+<font color="#0000FF">    End If</font>
+
+    WriteLine aStream, "&lt;/tr&gt;"
+    WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'----------------------------------------------</font>
+<font color="#008000">' Recherche du fichier image associe a un outil</font>
+<font color="#008000">'----------------------------------------------</font>
+
+<font color="#0000FF">Function </font>GetToolImage(aTool, IsSmall)
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> as </font>Integer
+<font color="#0000FF">  Dim </font>ToolPictureName, foldername, FileName<font color="#0000FF"> As </font>String
+  FileName = ""
+  foldername = ""
+
+  On Error Resume Next
+
+<font color="#0000FF">  If </font>(Not IsSmall)<font color="#0000FF"> Then</font>
+    ToolPictureName = aTool.Picture
+
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur &lt;&gt; 0)<font color="#0000FF"> Then</font>
+      ToolPictureName = ""
+    Else
+      ToolPictureName = Trim(ToolPictureName)
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(ToolPictureName &lt;&gt; "") Then
+
+<font color="#0000FF">    If </font>(fso.FileExists(ToolPictureName))<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">      Dim </font>namelength, posdernierslash, i<font color="#0000FF"> As </font>Integer
+      posdernierslash = 0
+      namelength = Len(ToolPictureName)
+
+<font color="#0000FF">      For </font>i = 1<font color="#0000FF"> To </font>namelength
+<font color="#0000FF">        If </font>(Mid(ToolPictureName, i, 1) = "\" Or Mid(ToolPictureName, i, 1) = "/") Then posdernierslash = i
+<font color="#0000FF">      Next</font>
+
+<font color="#0000FF">      If </font>(posdernierslash = 0)<font color="#0000FF"> Then</font>
+        FileName = ToolPictureName
+      Else
+        foldername = Mid(ToolPictureName, 1, posdernierslash)
+        FileName = Mid(ToolPictureName, posdernierslash + 1, namelength - posdernierslash)
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(FileName = "") Then
+    FileName = GetToolStdImage(aTool, IsSmall)
+    foldername = CATIAComponentPath
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(FileName &lt;&gt; "") Then
+<font color="#0000FF">    Dim </font>target<font color="#0000FF"> As </font>String
+    target = HtmlFilesPath & FileName
+<font color="#0000FF">    If </font>(Not (fso.FileExists(target)))<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>rep<font color="#0000FF"> As </font>Integer
+      rep = FileCopy(foldername & FileName, target, True)
+<font color="#0000FF">      If </font>(rep &lt;&gt; 0) Then FileName = ""
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  On Error GoTo 0 <font color="#008000">'pdu***</font>
+
+  GetToolImage = FileName
+
+<font color="#0000FF">End Function</font>
+
+<font color="#0000FF">Function </font>GetToolStdImage(aTool, IsSmall)
+
+<font color="#0000FF">  Dim </font>ToolType, FileName<font color="#0000FF"> As </font>String
+  ToolType = aTool.ToolType
+
+  Select Case ToolType
+
+  <font color="#008000">'Milling tools</font>
+  Case "MfgDrillTool"
+  FileName = "ncdrills"
+  Case "MfgTapTool"
+  FileName = "nctaps"
+  Case "MfgCountersinkTool"
+  FileName = "nccounte"
+  Case "MfgReamerTool"
+  FileName = "ncreamer"
+  Case "MfgSpotDrillTool"
+  FileName = "ncspodri"
+  Case "MfgCenterDrillTool"
+  FileName = "nccenter"
+  Case "MfgMultiDiamDrillTool"
+  FileName = "ncmddrls"
+  Case "MfgBoringAndChamferingTool"
+  FileName = "ncbochmf"
+  Case "MfgTwoSidesChamferingTool"
+  FileName = "nctschmf"
+  Case "MfgBoringBarTool"
+  FileName = "ncborbar"
+  Case "MfgEndMillTool"
+  FileName = "ncendmil"
+  Case "MfgFaceMillTool"
+  FileName = "ncfacmil"
+  Case "MfgConicalMillTool"
+  FileName = "ncconmil"
+  Case "MfgTSlotterTool"
+  FileName = "nctslott"
+  Case "MfgAPTTool"
+  FileName = "ncapt"
+  Case "MfgThreadMillTool"
+  FileName = "ncthrmil"
+
+  <font color="#008000">'Lathe Tools</font>
+  Case "MfgExternalTool"
+  FileName = "nlexttl"
+  Case "MfgInternalTool"
+  FileName = "nlinttl"
+  Case "MfgGrooveExternalTool"
+  FileName = "nlextgrv"
+  Case "MfgGrooveInternalTool"
+  FileName = "nlintgrv"
+  Case "MfgGrooveFrontalTool"
+  FileName = "nlgrvfrl"
+  Case "MfgThreadExternalTool"
+  FileName = "nlextthd"
+  Case "MfgThreadInternalTool"
+  FileName = "nlintthd"
+
+  Case Else
+  FileName = ""
+<font color="#0000FF">  End Select</font>
+
+<font color="#0000FF">  If </font>(FileName &lt;&gt; "") Then
+<font color="#0000FF">    If </font>(IsSmall) Then FileName = FileName & "-small"
+    FileName = FileName & ".gif"
+<font color="#0000FF">  End If</font>
+
+  GetToolStdImage = FileName
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'----------------------------------------------</font>
+<font color="#008000">' Recherche du fichier image associe aux</font>
+<font color="#008000">' correcteurs d'un outil</font>
+<font color="#008000">'----------------------------------------------</font>
+<font color="#0000FF">Function </font>CompensationImageFromTool(aTool)
+
+<font color="#0000FF">  Dim </font>ToolType, FileName<font color="#0000FF"> As </font>String
+  ToolType = aTool.ToolType
+
+  Select Case ToolType
+  Case "MfgDrillTool"
+  FileName = "ncdrillscomp.gif"
+  Case "MfgTapTool"
+  FileName = "nctapscomp.gif"
+  Case "MfgCountersinkTool"
+  FileName = "nccountecomp.gif"
+  Case "MfgReamerTool"
+  FileName = "ncreamercomp.gif"
+  Case "MfgSpotDrillTool"
+  FileName = "ncspodricomp.gif"
+  Case "MfgCenterDrillTool"
+  FileName = "nccentercomp.gif"
+  Case "MfgMultiDiamDrillTool"
+  FileName = "ncmddrlscomp.gif"
+  Case "MfgBoringAndChamferingTool"
+  FileName = "ncbochmfcomp.gif"
+  Case "MfgTwoSidesChamferingTool"
+  FileName = "nctschmfcomp.gif"
+  Case "MfgBoringBarTool"
+  FileName = "ncborbarcomp.gif"
+  Case "MfgEndMillTool"
+  FileName = "ncendmilcomp.gif"
+  Case "MfgFaceMillTool"
+  FileName = "ncfacmilcomp.gif"
+  Case "MfgConicalMillTool"
+  FileName = "ncconmilcomp.gif"
+  Case "MfgTSlotterTool"
+  FileName = "nctslottcomp.gif"
+  Case "MfgThreadMillTool"
+  FileName = "ncthrmilcomp"
+  Case Else
+  FileName = ""
+<font color="#0000FF">  End Select</font>
+
+<font color="#0000FF">  If </font>(FileName &lt;&gt; "") Then
+<font color="#0000FF">    Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>aFileSyst = CATIA.FileSystem
+
+<font color="#0000FF">    If </font>(Not (aFileSyst.FileExists(HtmlFilesPath & FileName)))<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>rep<font color="#0000FF"> As </font>Integer
+      rep = FileCopy(CATIAComponentPath & FileName, HtmlFilesPath & FileName, True)
+<font color="#0000FF">      If </font>(rep &lt;&gt; 0) Then FileName = ""
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  CompensationImageFromTool = FileName
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#0000FF">Function </font>GetToolAssemblyImage(anAssembly, IsSmall)
+
+<font color="#0000FF">  Dim </font>FileName<font color="#0000FF"> As </font>String
+
+  AssemblyType = anAssembly.AssemblyType
+<font color="#0000FF">  If </font>(AssemblyType = "MfgLatheToolAssembly") Then
+    FileName = "nclathetoolassembly"
+  Else
+    FileName = "ncmillingtoolassembly"
+<font color="#0000FF">  End If</font>
+  
+<font color="#0000FF">  If </font>(IsSmall) Then FileName = FileName & "-small"
+  FileName = FileName & ".gif"
+
+<font color="#0000FF">  Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>aFileSyst = CATIA.FileSystem
+
+<font color="#0000FF">  If </font>(Not (aFileSyst.FileExists(HtmlFilesPath & FileName)))<font color="#0000FF"> Then</font>
+<font color="#0000FF">    Dim </font>rep<font color="#0000FF"> As </font>Integer
+    rep = FileCopy(CATIAComponentPath & FileName, HtmlFilesPath & FileName, True)
+<font color="#0000FF">    If </font>(rep &lt;&gt; 0) Then FileName = ""
+<font color="#0000FF">  End If</font>
+
+  GetToolAssemblyImage = FileName
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'----------------------------------------------</font>
+<font color="#008000">' Ajout d'une ligne dans un tableau 2 colonnes</font>
+<font color="#008000">' NOM_DU_PARAMETRE - VALEUR_DU_PARAMETRE</font>
+<font color="#008000">'----------------------------------------------</font>
+<font color="#0000FF">Sub </font>AddParameterToArray(anObj, aParam, aStream, AcceptComment)
+
+<font color="#0000FF">  If </font>(Not AcceptComment And aParam = "MFG_COMMENT") Then Exit Sub
+
+<font color="#0000FF">  Dim </font>anAttribut<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Dim </font>AttrVal<font color="#0000FF"> As </font>String
+
+  On Error Resume Next
+  
+<font color="#0000FF">  Set </font>anAttribut = anObj.getAttribute(aParam)
+  
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+    AttrVal = anAttribut.ValueAsString
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur = 0 And AttrVal &lt;&gt; "") Then
+      WriteLine aStream, "&lt;tr&gt;&lt;td&gt;&lt;font size=-1&gt;&lt;b&gt;" & ToNLS(anObj, aParam) & "&lt;/b&gt;&lt;/font&gt;&lt;/td&gt;&lt;td&gt;&lt;font size=-1&gt;" & ToNLS(anObj,AttrVal) & "&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;"
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  On Error GoTo 0
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'----------------------------------------------------------------------</font>
+<font color="#008000">' Destruction d'un repertoire</font>
+<font color="#008000">' RemoveDirectory = 0 : Ok</font>
+<font color="#008000">'                   1 : erreur de lecture du repertoire foldername</font>
+<font color="#008000">'                   2 : erreur suppression de fichier ou de repertoire</font>
+<font color="#008000">'----------------------------------------------------------------------</font>
+
+<font color="#0000FF">Function </font>RemoveDirectory(foldername)
+
+<font color="#0000FF">  Dim </font>fso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>fso = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>result<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>aFolder<font color="#0000FF"> As </font>Folder
+
+  result = 0
+
+  On Error Resume Next
+
+<font color="#0000FF">  Set </font>aFolder = fso.GetFolder(foldername)
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">    Set </font>aFolder = Nothing
+    RemoveDirectory = 1
+<font color="#0000FF">    Exit Function</font>
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  Dim </font>thefiles<font color="#0000FF"> As </font>Files
+<font color="#0000FF">  Dim </font>nbfiles<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>FilePath<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  Set </font>thefiles = aFolder.Files
+  nbfiles = thefiles.Count
+
+<font color="#0000FF">  For </font>index = nbfiles<font color="#0000FF"> To </font>1 Step -1
+    FilePath = thefiles.Item(index).Path
+    fso.DeleteFile FilePath
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>thefiles = Nothing
+<font color="#0000FF">      Set </font>aFolder = Nothing
+      RemoveDirectory = 2
+<font color="#0000FF">      Exit Function</font>
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+<font color="#0000FF">  Set </font>thefiles = Nothing
+
+<font color="#0000FF">  Dim </font>theFolders<font color="#0000FF"> As </font>Folders
+<font color="#0000FF">  Dim </font>nbfolders<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>FolderPath<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  Set </font>theFolders = aFolder.SubFolders
+  nbfolders = theFolders.Count
+<font color="#0000FF">  For </font>index = nbfolders<font color="#0000FF"> To </font>1 Step -1
+<font color="#0000FF">    Dim </font>delfolder<font color="#0000FF"> As </font>Integer
+    FolderPath = theFolders.Item(index).Path
+    delfolder = RemoveDirectory(FolderPath)
+<font color="#0000FF">    If </font>(delfolder &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>theFolders = Nothing
+<font color="#0000FF">      Set </font>aFolder = Nothing
+      RemoveDirectory = delfolder
+<font color="#0000FF">      Exit Function</font>
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+<font color="#0000FF">  Set </font>theFolders = Nothing
+<font color="#0000FF">  Set </font>aFolder = Nothing
+
+  fso.DeleteFolder foldername
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur &lt;&gt; 0) Then result = 2
+
+  On Error GoTo 0
+
+  RemoveDirectory = result
+
+<font color="#0000FF">End Function</font>
+
+
+
+<font color="#0000FF">Function </font>ContinueIfExistingFolder(aPath)
+
+<font color="#0000FF">  Dim </font>fso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>fso = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>reponse<font color="#0000FF"> As </font>Boolean
+  reponse = False
+  EmptyFolder = False
+
+  On Error Resume Next
+
+<font color="#0000FF">  Dim </font>aFolder<font color="#0000FF"> As </font>Folder
+<font color="#0000FF">  Dim </font>subdir<font color="#0000FF"> As </font>Folders
+<font color="#0000FF">  Dim </font>thefiles<font color="#0000FF"> As </font>Files
+
+<font color="#0000FF">  If </font>(fso.FolderExists(aPath))<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">    Set </font>aFolder = fso.GetFolder(aPath)
+
+<font color="#0000FF">    Dim </font>erreur<font color="#0000FF"> As </font>Integer
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>subdir = aFolder.SubFolders
+<font color="#0000FF">      Dim </font>subdircount<font color="#0000FF"> As </font>Integer
+      subdircount = subdir.Count
+<font color="#0000FF">      If </font>(subdircount = 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>thefiles = aFolder.Files
+<font color="#0000FF">        Dim </font>filecount<font color="#0000FF"> As </font>Integer
+        filecount = thefiles.Count
+<font color="#0000FF">        If </font>(filecount = 0) Then reponse = True <font color="#008000">'Ok si repertoire vide</font>
+<font color="#0000FF">        Set </font>thefiles = Nothing
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">      Set </font>subdir = Nothing
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">    Set </font>aFolder = Nothing
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(reponse)<font color="#0000FF"> Then</font>
+    ContinueIfExistingFolder = True
+<font color="#0000FF">    Exit Function</font>
+<font color="#0000FF">  End If</font>
+
+  DeleteDirPrompt = "Existing directory : " & aPath & Chr(13) & "Delete it?"
+
+<font color="#0000FF">  Dim </font>deldir<font color="#0000FF"> As </font>Integer
+  deldir = MsgBox(DeleteDirPrompt, 4385, "Delete directory?")   'boite modale
+
+<font color="#0000FF">  If </font>(deldir = 1)<font color="#0000FF"> Then</font>
+    deldir = RemoveDirectory(aPath)
+<font color="#0000FF">    If </font>(reponse &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>fso = CATIA.FileSystem
+<font color="#0000FF">      If </font>(fso.FolderExists(aPath))<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>aFolder = fso.GetFolder(aPath)
+        erreur = Err.Number
+		Err.Clear
+<font color="#0000FF">        If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">          Set </font>subdir = aFolder.SubFolders
+          subdircount = subdir.Count
+<font color="#0000FF">          If </font>(subdircount = 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Set </font>thefiles = aFolder.Files
+            filecount = thefiles.Count
+<font color="#0000FF">            If </font>(filecount = 0) Then reponse = True
+<font color="#0000FF">            Set </font>thefiles = Nothing
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">          Set </font>subdir = Nothing
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">        Set </font>aFolder = Nothing
+<font color="#0000FF">      End If</font>
+    Else
+      reponse = True
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  On Error GoTo 0 <font color="#008000">'pdu***</font>
+
+  ContinueIfExistingFolder = reponse
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'----------------------------------------------------------------------</font>
+<font color="#008000">' Lecture d'un chemin defini par une variable d'environnement.</font>
+<font color="#008000">' Possibilite d'ajouter un sous repertoire de ce chemin.</font>
+<font color="#008000">'----------------------------------------------------------------------</font>
+<font color="#0000FF">Function </font>GetPath(anEnvVar, aSubDir)
+
+<font color="#0000FF">  If </font>(anEnvVar = "") Then
+    GetPath = ""
+<font color="#0000FF">    Exit Function</font>
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  Dim </font>EnvValue<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>ErrVal<font color="#0000FF"> As </font>Integer
+
+  On Error Resume Next
+  EnvValue = CATIA.SystemService.Environ(anEnvVar)
+
+  ErrVal = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(ErrVal &lt;&gt; 0)<font color="#0000FF"> Then</font>
+    GetPath = ""
+<font color="#0000FF">    Exit Function</font>
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  Dim </font>strlength<font color="#0000FF"> As </font>Integer
+  strlength = Len(EnvValue)
+<font color="#0000FF">  If </font>(strlength &lt; 1)<font color="#0000FF"> Then</font>
+    GetPath = ""
+<font color="#0000FF">    Exit Function</font>
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  Dim </font>bidstr<font color="#0000FF"> as </font>String
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>strlength
+    if(Mid(EnvValue, i, 1) = ":") then
+      bidstr = bidstr & ";"
+    else
+      bidstr = bidstr & Mid(EnvValue, i, 1)
+<font color="#0000FF">    end if</font>
+<font color="#0000FF">  Next</font>
+  EnvValue = bidstr
+
+<font color="#0000FF">  Dim </font>aFileSystem<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Dim </font>issemicolon<font color="#0000FF"> As </font>Boolean
+<font color="#0000FF">  Dim </font>i, prevpos<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>aPath<font color="#0000FF"> As </font>String
+
+<font color="#0000FF">  Set </font>aFileSystem = CATIA.FileSystem
+
+<font color="#0000FF">  If </font>(Mid(EnvValue, strlength, 1) &lt;&gt; ";") Then
+    EnvValue = EnvValue & ";"
+    strlength = strlength + 1
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(aSubDir &lt;&gt; "") Then
+<font color="#0000FF">    If </font>(Mid(aSubDir, Len(aSubDir), 1) &lt;&gt; "/" And Mid(aSubDir, Len(aSubDir), 1) &lt;&gt; "\") Then aSubDir = aSubDir & "/"
+<font color="#0000FF">  End If</font>
+
+  prevpos = 0
+
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>strlength
+    issemicolon = (Mid(EnvValue, i, 1) = ";")
+<font color="#0000FF">    If </font>(prevpos &lt;&gt; 0)<font color="#0000FF"> Then</font>
+<font color="#0000FF">      If </font>(issemicolon)<font color="#0000FF"> Then</font>
+        aPath = Mid(EnvValue, prevpos, i - prevpos)
+<font color="#0000FF">        If </font>(Mid(aPath, Len(aPath), 1) &lt;&gt; "/" And Mid(aPath, Len(aPath), 1) &lt;&gt; "\") Then aPath = aPath & "/"
+        aPath = aPath & aSubDir
+<font color="#0000FF">        If </font>(aFileSystem.FolderExists(aPath))<font color="#0000FF"> Then</font>
+          GetPath = aPath
+<font color="#0000FF">          Exit Function</font>
+<font color="#0000FF">        End If</font>
+        prevpos = 0
+<font color="#0000FF">      End If</font>
+    Else
+<font color="#0000FF">      If </font>(Not issemicolon) Then prevpos = i
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+  aFileSystem = Nothing
+
+  On Error GoTo 0 <font color="#008000">'pdu***</font>
+
+  GetPath = "" 'Pas trouve de chemin
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------</font>
+<font color="#008000">' Teste si un parametre est dans la liste de ceux</font>
+<font color="#008000">' qui ne doivent pas etre traites</font>
+<font color="#008000">'------------------------------------------------</font>
+<font color="#0000FF">Function </font>ParameterIsIgnored(aParam)
+<font color="#0000FF">  For </font>i = 1<font color="#0000FF"> To </font>NbIgnoredParameters
+<font color="#0000FF">    If </font>(aParam = IgnoredParameters(i))<font color="#0000FF"> Then</font>
+      ParameterIsIgnored = True
+<font color="#0000FF">      Exit Function</font>
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+  ParameterIsIgnored = False
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'------------------------------------------------</font>
+<font color="#008000">' Ajout du tableau des parametres d'une resource</font>
+<font color="#008000">'------------------------------------------------</font>
+<font color="#0000FF">Sub </font>AddResourceParameters(aResource, aStream)
+
+<font color="#0000FF">  Dim </font>TabAtt()
+<font color="#0000FF">  Dim </font>att<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>nbatt<font color="#0000FF"> As </font>Integer
+  nbatt = aResource.NumberOfAttributes
+
+<font color="#0000FF">  If </font>(nbatt = 0) Then Exit Sub
+
+  ReDim TabAtt(nbatt)
+
+  aResource.GetListOfAttributes TabAtt
+  
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=0 CELLSPACING=3 CELLPADDING=3 BGCOLOR=""#C5C5E2""&gt;"
+
+<font color="#0000FF">  For </font>att = 0<font color="#0000FF"> To </font>nbatt - 1
+<font color="#0000FF">    If </font>(Not ParameterIsIgnored(TabAtt(att)))<font color="#0000FF"> Then</font>
+      AddParameterToArray aResource, TabAtt(att), aStream, False
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  Next</font>
+
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Tool assembly</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Ajout d'un assembly dans la liste</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>WriteAssembly(anAssembly, aStream)
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>AssemblyNumber<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>aName, AssemblyType<font color="#0000FF"> As </font>String
+
+  AssemblyNumber = anAssembly.Number
+  AssemblyType = anAssembly.AssemblyType
+
+  On Error Resume Next
+<font color="#0000FF">  Set </font>Attribut = anAssembly.getAttribute("MFG_NAME")
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0) Then aName = Attribut.Value
+  On Error GoTo 0
+
+  WriteLine aStream, "&lt;a NAME=""A" & AssemblyNumber & """&gt;&lt;/a&gt;"
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=1 CELLSPACING=2 CELLPADDING=5 WIDTH=""80%""&gt;"
+  WriteLine aStream, "&lt;tr VALIGN=""MIDDLE""&gt;"
+  WriteLine aStream, "&lt;td WIDTH=""50%"" BGCOLOR=""#C6C6FF""&gt;&lt;b&gt;&lt;font size=+1&gt;&lt;a href=""Assembly" & AssemblyNumber & ".html""&gt;Assembly " & AssemblyNumber & " : " & aName & "&lt;/a&gt;&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+
+  aName = GetToolAssemblyImage(anAssembly, True)
+
+<font color="#0000FF">  If </font>(aName &lt;&gt; "") Then
+    WriteLine aStream, "&lt;td ALIGN=""CENTER"" WIDTH=""100""&gt;"
+    WriteLine aStream, "&lt;img SRC=""" & aName & """&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;td&gt;"
+  WriteLine aStream, "Type : " & ToNLS(anAssembly,AssemblyType) & "&lt;br&gt;"
+
+<font color="#0000FF">  Dim </font>AssTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">  Set </font>AssTool = anAssembly.Tool
+  On Error Resume Next
+<font color="#0000FF">  Set </font>Attribut = AssTool.getAttribute("MFG_NAME")
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0) Then aName = Attribut.Value
+
+<font color="#0000FF">  If </font>(aName &lt;&gt; "") Then WriteLine aStream, "Tool : &lt;a href=""Assembly" & AssemblyNumber & ".html#Tool""&gt;" & aName & "&lt;/a&gt;&lt;br&gt;"
+
+<font color="#0000FF">  If </font>(AssemblyType = "MfgLatheToolAssembly") Then
+<font color="#0000FF">    Dim </font>anInsert<font color="#0000FF"> As </font>ManufacturingInsert
+<font color="#0000FF">    Set </font>anInsert = anAssembly.Insert
+<font color="#0000FF">    Set </font>Attribut = anInsert.getAttribute("MFG_NAME")
+    erreur = Err.Number
+	Err.Clear
+<font color="#0000FF">    If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+      aName = Attribut.Value
+<font color="#0000FF">          If </font>(aName &lt;&gt; "") Then WriteLine aStream, "Insert : &lt;a href=""Assembly" & AssemblyNumber & ".html#Insert""&gt;" & aName & "&lt;/a&gt;&lt;br&gt;"
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/td&gt;"
+  WriteLine aStream, "&lt;/tr&gt;"
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+  WriteLine aStream, "&lt;br&gt;"
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#008000">' Page relative a un tool assembly</font>
+<font color="#008000">'---------------------------------------------------------------</font>
+<font color="#0000FF">Sub </font>CreateOneAssemblySheet(anAssembly, aProcessName)
+
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">  Dim </font>AssemblyNumber<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">  Dim </font>AssemblyName, AssemblyType<font color="#0000FF"> As </font>String
+
+  AssemblyType = anAssembly.AssemblyType
+  AssemblyNumber = anAssembly.Number
+
+  On Error Resume Next
+<font color="#0000FF">  Set </font>Attribut = anAssembly.getAttribute("MFG_NAME")
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0) Then AssemblyName = Attribut.Value
+
+<font color="#0000FF">  Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>aFileSyst = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>theAssemblyFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">  Dim </font>aStream<font color="#0000FF"> As </font>TextStream
+
+<font color="#0000FF">  Dim </font>FileName<font color="#0000FF"> As </font>String
+  FileName = "Assembly" & AssemblyNumber & ".html"
+
+<font color="#0000FF">  Set </font>theHTMLFile = aFileSyst.CreateFile(HtmlFilesPath & FileName, True)
+<font color="#0000FF">  Set </font>aStream = theHTMLFile.OpenAsTextStream("ForWriting")
+
+  <font color="#008000">'Debut de la page</font>
+  WriteLine aStream, "&lt;html&gt;"
+  WriteLine aStream, "&lt;head&gt;"
+  WriteLine aStream, "&lt;title&gt;Assembly " & AssemblyNumber & " : " & AssemblyName & "&lt;/title&gt;"
+  WriteLine aStream, "&lt;/head&gt;"
+
+  <font color="#008000">'Ecriture de l'entete</font>
+  WriteLine aStream, "&lt;table CELLSPACING=0 CELLPADDING=5&gt;&lt;tr&gt;"
+<font color="#0000FF">  If </font>(ExistLogoDS)<font color="#0000FF"> Then</font>
+    WriteLine aStream, "&lt;td ALIGN=CENTER&gt;&lt;img SRC=""navlogocat.gif"" BORDER=0&gt;&lt;/td&gt;"
+<font color="#0000FF">  End If</font>
+  WriteLine aStream, "&lt;td BGCOLOR=""#000099""&gt;"
+  WriteLine aStream, "&lt;b&gt;&lt;font color=""#FFFFFF"" size=+2&gt;"
+  WriteLine aStream, "TOOL LIST&lt;br&gt;"
+  WriteLine aStream, aProcessName
+  WriteLine aStream, "&lt;/font&gt;&lt;/b&gt;&lt;/td&gt;"
+  WriteLine aStream, "&lt;/tr&gt;&lt;/table&gt;"
+  WriteLine aStream, "&lt;br&gt;&lt;br&gt;"
+  WriteLine aStream, "&lt;table BORDER=0 CELLSPACING=0 CELLPADDING=5 WIDTH=""100%"" BGCOLOR=""#3366FF""&gt;"
+  WriteLine aStream, "&lt;tr VALIGN=""TOP"" ALIGN=""LEFT""&gt;"
+  WriteLine aStream, "&lt;td&gt;&lt;b&gt;&lt;font color=""#FFFFFF"" size=+3&gt;Assembly " & AssemblyNumber & " : &lt;/td&gt;&lt;/font&gt;&lt;/b&gt;"
+  WriteLine aStream, "&lt;td&gt;&lt;b&gt;&lt;font color=""#FFFFFF"" size=+3&gt;" & AssemblyName & "&lt;/font&gt;"
+
+<font color="#0000FF">  Dim </font>AssToolName<font color="#0000FF"> As </font>String
+<font color="#0000FF">  Dim </font>AssTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">  Set </font>AssTool = anAssembly.Tool
+<font color="#0000FF">  Set </font>Attribut = AssTool.getAttribute("MFG_NAME")
+  erreur = Err.Number
+  Err.Clear
+
+<font color="#0000FF">  If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+
+    AssToolName = Attribut.Value
+        WriteLine aStream, "&lt;br&gt;"
+        WriteLine aStream, "&lt;font color=""#FFFFFF"" size=+2&gt;Tool : " & AssToolName
+
+<font color="#0000FF">        If </font>(AssemblyType = "MfgLatheToolAssembly") Then
+<font color="#0000FF">          Dim </font>anInsert<font color="#0000FF"> As </font>ManufacturingInsert
+<font color="#0000FF">          Dim </font>InsertName<font color="#0000FF"> As </font>String
+<font color="#0000FF">          Set </font>anInsert = anAssembly.Insert
+<font color="#0000FF">          Set </font>Attribut = anInsert.getAttribute("MFG_NAME")
+          erreur = Err.Number
+		  Err.Clear
+<font color="#0000FF">          If </font>(erreur = 0)<font color="#0000FF"> Then</font>
+            InsertName = Attribut.Value
+                WriteLine aStream, "&lt;br&gt;"
+                WriteLine aStream, "Insert : " & InsertName
+<font color="#0000FF">          End If</font>
+<font color="#0000FF">        End If</font>
+
+        WriteLine aStream, "&lt;/font&gt;"
+
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/b&gt;&lt;/td&gt;"
+
+  WriteLine aStream, "&lt;/tr&gt;"
+  WriteLine aStream, "&lt;/table&gt;"
+  <font color="#008000">'Fin de l'ecriture de l'entete</font>
+
+  WriteLine aStream, "&lt;br&gt;&lt;br&gt;"
+  
+  WriteAssemblyTable anAssembly, aStream, False
+  
+  WriteLine aStream, "&lt;p&gt;&lt;hr WIDTH=""60%""&gt;&lt;/p&gt;"
+
+<font color="#0000FF">  Dim </font>UsedTool<font color="#0000FF"> As </font>ManufacturingTool
+<font color="#0000FF">  Set </font>UsedTool = anAssembly.Tool
+
+  WriteLine aStream, "&lt;p&gt;&lt;a NAME=""Tool""&gt;&lt;/a&gt;&lt;/p&gt;"
+
+  WriteToolTable UsedTool, aStream, True
+  
+<font color="#0000FF">  If </font>(AssemblyType = "MfgLatheToolAssembly") Then
+<font color="#0000FF">    Dim </font>UsedInsert<font color="#0000FF"> As </font>ManufacturingInsert
+	Dim theType<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Set </font>UsedInsert = anAssembly.Insert
+	theType = UsedInsert.InsertType
+    erreur = Err.Number
+	Err.Clear
+	If (erreur = 0)<font color="#0000FF"> Then</font>
+      WriteLine aStream, "&lt;p&gt;&lt;a NAME=""Insert""&gt;&lt;/a&gt;&lt;/p&gt;"
+      WriteLine aStream, "&lt;p&gt;&lt;hr WIDTH=""60%""&gt;&lt;/p&gt;"
+      WriteInsertTable UsedInsert, aStream, True
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/body&gt;"
+  WriteLine aStream, "&lt;/html&gt;"
+
+  aStream.Close
+
+<font color="#0000FF">  Set </font>theHTMLFile = Nothing
+<font color="#0000FF">  Set </font>aStream = Nothing
+  
+  On Error GoTo 0 <font color="#008000">'pdu***</font>
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#0000FF">Sub </font>WriteAssemblyTable(anAssembly, aStream, writecaption)
+
+<font color="#0000FF">  Dim </font>AssemblyName, AssemblyType, AssemblyComment<font color="#0000FF"> As </font>String
+
+  AssemblyName = anAssembly.Name
+  AssemblyType = anAssembly.AssemblyType
+
+<font color="#0000FF">  If </font>(writecaption) Then WriteLine aStream, "&lt;p&gt;&lt;center&gt;&lt;b&gt;&lt;font color=""#3333FF"" size=+2&gt;" & AssemblyName & "&lt;/font&gt;&lt;/b&gt;&lt;/center&gt;&lt;/p&gt;"
+
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=0 CELLSPACING=5&gt;"
+
+  WriteLine aStream, "&lt;tr&gt;"
+
+  WriteLine aStream, "&lt;td ALIGN=LEFT&gt;"
+  AddResourceParameters anAssembly, aStream
+  WriteLine aStream, "&lt;/td&gt;"
+
+<font color="#0000FF">  Dim </font>ImgName<font color="#0000FF"> As </font>String
+  ImgName = GetToolAssemblyImage(anAssembly, False)
+
+<font color="#0000FF">  If </font>(ImgName &lt;&gt; "") Then
+    WriteLine aStream, "&lt;td ALIGN=RIGHT&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;img BORDER=0 SRC=""" & ImgName & """&gt;"
+    WriteLine aStream, "&lt;br&gt;Type : " & ToNLS(anAssembly,AssemblyType) & "&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+  Else
+    WriteLine aStream, "&lt;br&gt;"
+    WriteLine aStream, "&lt;center&gt;Type : &lt;b&gt;" & ToNLS(anAssembly,AssemblyType) & "&lt;/b&gt;&lt;/center&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/tr&gt;"
+
+  <font color="#008000">' Commentaire</font>
+  <font color="#008000">'------------</font>
+  AssemblyComment = anAssembly.Comment
+
+<font color="#0000FF">  If </font>(AssemblyComment &lt;&gt; "") Then
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td COLSPAN=""2""&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;table BORDER=1 CELLSPACING=0 CELLPADDING=5 WIDTH=""75%"" BGCOLOR=""#FFFFFF""&gt;"
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td&gt;" & AssemblyComment & "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+    WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#0000FF">Sub </font>WriteInsertTable(anInsert, aStream, writecaption)
+
+<font color="#0000FF">  Dim </font>InsertName, aType<font color="#0000FF"> As </font>String
+
+  On Error Resume Next
+<font color="#0000FF">  Set </font>Attribut = anInsert.getAttribute("MFG_NAME")
+<font color="#0000FF">  Dim </font>erreur<font color="#0000FF"> As </font>Integer
+  erreur = Err.Number
+  Err.Clear
+<font color="#0000FF">  If </font>(erreur = 0) Then InsertName = Attribut.Value
+
+  aType = anInsert.InsertType
+
+<font color="#0000FF">  If </font>(writecaption) Then WriteLine aStream, "&lt;p&gt;&lt;center&gt;&lt;b&gt;&lt;font color=""#3333FF"" size=+2&gt;" & InsertName & "&lt;/font&gt;&lt;/b&gt;&lt;/center&gt;&lt;/p&gt;"
+
+  WriteLine aStream, "&lt;center&gt;&lt;table BORDER=0 CELLSPACING=5&gt;"
+
+  WriteLine aStream, "&lt;tr&gt;"
+
+  WriteLine aStream, "&lt;td ALIGN=LEFT&gt;"
+  AddResourceParameters anInsert, aStream
+  WriteLine aStream, "&lt;/td&gt;"
+
+<font color="#0000FF">  Dim </font>ImgName<font color="#0000FF"> As </font>String
+  ImgName = GetInsertImage(anInsert, False)
+
+<font color="#0000FF">  If </font>(ImgName &lt;&gt; "") Then
+    WriteLine aStream, "&lt;td ALIGN=RIGHT&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;img BORDER=0 SRC=""" & ImgName & """&gt;"
+    WriteLine aStream, "&lt;br&gt;Type : " & ToNLS(anInsert,aType) & "&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+  Else
+    WriteLine aStream, "&lt;br&gt;"
+    WriteLine aStream, "&lt;center&gt;Type : &lt;b&gt;" & ToNLS(anInsert,aType) & "&lt;/b&gt;&lt;/center&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/tr&gt;"
+
+  <font color="#008000">' Commentaire</font>
+  <font color="#008000">'------------</font>
+<font color="#0000FF">  Dim </font>InsertComment<font color="#0000FF"> As </font>String
+  InsertComment = anInsert.Comment
+
+<font color="#0000FF">  If </font>(InsertComment &lt;&gt; "") Then
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td COLSPAN=""2""&gt;"
+    WriteLine aStream, "&lt;center&gt;&lt;table BORDER CELLSPACING=0 CELLPADDING=5 WIDTH=""75%"" BGCOLOR=""#FFFFFF""&gt;"
+    WriteLine aStream, "&lt;tr&gt;"
+    WriteLine aStream, "&lt;td&gt;" & InsertComment & "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+    WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+    WriteLine aStream, "&lt;/td&gt;"
+    WriteLine aStream, "&lt;/tr&gt;"
+<font color="#0000FF">  End If</font>
+
+  WriteLine aStream, "&lt;/table&gt;&lt;/center&gt;"
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#0000FF">Function </font>GetInsertImage(anInsert, IsSmall)
+
+<font color="#0000FF">  Dim </font>fso<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">  Set </font>fso = CATIA.FileSystem
+
+<font color="#0000FF">  Dim </font>aType, FileName<font color="#0000FF"> As </font>String
+
+  aType = anInsert.InsertType
+
+  Select Case aType
+  Case "MfgDiamondInsert"
+  FileName = "nldiamnd"
+  Case "MfgSquareInsert"
+  FileName = "nlsquare"
+  Case "MfgTriangularInsert"
+  FileName = "nltriang"
+  Case "MfgRoundInsert"
+  FileName = "nlround"
+  Case "MfgTrigonInsert"
+  FileName = "nltrigon"
+  Case "MfgGrooveInsert"
+  FileName = "nlgroove"
+  Case "MfgThreadInsert"
+  FileName = "nlthread"
+  Case Else
+  FileName = ""
+<font color="#0000FF">  End Select</font>
+
+<font color="#0000FF">  If </font>(FileName &lt;&gt; "") Then
+<font color="#0000FF">    If </font>(IsSmall) Then FileName = FileName & "-small"
+    FileName = FileName & ".gif"
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">  If </font>(FileName &lt;&gt; "") Then
+<font color="#0000FF">    Dim </font>target<font color="#0000FF"> As </font>String
+    target = HtmlFilesPath & FileName
+<font color="#0000FF">    If </font>(Not (fso.FileExists(target)))<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>rep<font color="#0000FF"> As </font>Integer
+      rep = FileCopy(CATIAComponentPath & FileName, target, True)
+<font color="#0000FF">      If </font>(rep &lt;&gt; 0) Then FileName = ""
+<font color="#0000FF">    End If</font>
+<font color="#0000FF">  End If</font>
+
+  GetInsertImage = FileName
+
+<font color="#0000FF">End Function</font>
+
+
+<font color="#008000">'-------------------------------------------------------------</font>
+<font color="#008000">'                 Gestion du fichier log</font>
+<font color="#008000">'-------------------------------------------------------------</font>
+
+<font color="#0000FF">Sub </font>OpenLogFile
+
+  if(theLogMode)<font color="#0000FF"> then</font>
+
+<font color="#0000FF">    dim </font>theLogName<font color="#0000FF"> as </font>String
+<font color="#0000FF">    Dim </font>aFileSyst<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>aFileSyst = CATIA.FileSystem
+
+    theLogName = HtmlFilesPath & "ToolList.log"
+<font color="#0000FF">    Set </font>theLogFile = aFileSyst.CreateFile(theLogName,True)
+<font color="#0000FF">    Set </font>theLogStream = theLogFile.OpenAsTextStream("ForWriting")
+
+<font color="#0000FF">  End If</font>
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#0000FF">Sub </font>CloseLogFile
+  if(theLogMode)<font color="#0000FF"> then</font>
+    theLogStream.Close
+<font color="#0000FF">    Set </font>theLogFile = Nothing
+<font color="#0000FF">    Set </font>theLogStream = Nothing
+<font color="#0000FF">  End If</font>
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#0000FF">Sub </font>UpdateLogFile (aString)
+  if(theLogMode)<font color="#0000FF"> then</font>
+    WriteLine theLogStream, aString
+    WriteLine theLogStream, "--------------------------------------------------------------------------------"
+<font color="#0000FF">  End If</font>
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>
+
+

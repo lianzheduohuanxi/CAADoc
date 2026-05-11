@@ -1,0 +1,256 @@
+<HTML>
+
+<HEAD>
+<TITLE>Creating Assembled Loads</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Creating Assembled Loads</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to create an 
+		assembled load. Here use of Edit/Search... capability through VB is also 
+		demonstrated.</P>
+		<P>This macro opens an analysis assembly document and creates an 
+		assembled load. With the use of edit search all the objects with name 
+		&quot;load&quot; are selected and they are applied to the load set. An 
+		assembled load is an entity defined in an assembled analysis and 
+		therefore applied on the assembled mesh. This load is the concatenation 
+		of several loads defined in the sub analyses. This scenario is available 
+		only with the Generative Assembly Structural Analysis (GAS) product.</P>
+		<P>&nbsp;</P>
+		<P ALIGN="center"><img src="images/AsmbldLoads.jpg" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniPreProAsmbldLoads is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><FONT COLOR="#FB7203"><a href="CAAAniPreProAsmbldLoadsSource.htm">CAAAniPreProAsmbldLoads.catvbs</A></FONT>
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniPreProAsmbldLoads.catvbs">Execute macro</A> (Windows 
+		only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniPreProAsmbldLoads includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting the analysis documents and analysis models</A></LI>
+			<LI><A HREF="#Navigate">Adding the assembled load set</A></LI>
+			<LI><A HREF="#Search">Searching through the selection and applying the selected objects</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><font color="#008000">' ----------------------------------------------------------- </font>
+<font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">End If</font>
+<font color="#008000">' ----------------------------------------------------------- </font>
+<FONT COLOR="#008000">' Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Assembled_Loads_Solutions.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> analysisDocument1 = CATIA.Documents.Open(sFilePath)</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path has already been stored in the
+		<CODE>sDocPath</CODE> variable. In the collection of documents, two documents 
+		can be retrieved; the Analysis document and the Part document.</P>
+		<H4><A NAME="Reference"></A><B>Extracting the analysis documents and 
+		analysis models</B></H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<font color="#008000">'Retrieve the Analysis Manager from the analysis document</font>
+<font color="#0000FF">Set </font>analysisManager1 = analysisDocument1.Analysis
+
+<font color="#008000">'Retrieve the product document from the linked document</font>
+<font color="#0000FF">Set </font>analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+<font color="#0000FF">Set </font>productDocument1 = analysisLinkedDocuments1.Item(1)
+
+<font color="#008000">'From product document retrieve products</font>
+<font color="#0000FF">Set </font>product1 = productDocument1.Product
+<font color="#0000FF">Set </font>products1 = product1.Products
+<font color="#0000FF">Set </font>product2 = products1.Item("Analysis1.1")
+
+<font color="#008000">'Retrieve the analysis models and the first model</font>
+<font color="#0000FF">Set </font>analysisModels1 = analysisManager1.AnalysisModels
+<font color="#0000FF">Set </font>analysisModel1 = analysisModels1.Item(1)
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, and&nbsp; <B>Analysis Models</B>. 
+		From analysis models we retrieve the <B>Analysis Cases.</B></P>
+		<H4><A NAME="Navigate"></A>Adding the assembled load set</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...  </PRE>
+				<PRE><font color="#008000">'Retrieve the analysis cases from analysis model</font>
+<font color="#0000FF">Set </font>analysisCases1 = analysisModel1.AnalysisCases</PRE>
+				<PRE><font color="#008000">'Retrieve the first object that is Static Case.1</font>
+<font color="#008000">'from the list of analysis cases</font>
+<font color="#0000FF">Set </font>analysisCase1 = analysisCases1.Item(1)</PRE>
+				<PRE><font color="#008000">'Retrieve the analysis sets and load set</font>
+<font color="#0000FF">Set </font>analysisSets1 = analysisCase1.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet1 = analysisSets1.Item("Loads.1", catAnalysisSetSearchAll)
+
+<font color="#008000">'Retrieve the analysis entities from the load set</font>
+<font color="#0000FF">Set </font>analysisEntities1 = analysisSet1.AnalysisEntities
+
+<font color="#008000">'Add assembled loads to the list</font>
+<font color="#0000FF">Set </font>analysisEntity1 = analysisEntities1.Add("SAMLoadAssembly")
+
+<font color="#008000">'Retrieve the basic component from analysis entity</font>
+<font color="#0000FF">Set </font>basicComponents1 = analysisEntity1.BasicComponents
+<font color="#0000FF">Set </font>basicComponent1 = basicComponents1.GetItem("SAMLoadP.1")
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><SPAN STYLE="font-weight: 400"><FONT COLOR="#000000">Here we 
+		retrieve the static case, in which we want to add the assembled load. 
+		First the list of cases is retrieved from analysis model. From the first 
+		object of the list we obtain the analysis case by its index. The index 
+		of the analysis case is same as that of the position in which it appears 
+		in specification tree. Once we get the desired static case we retrieve 
+		the load set and analysis entities. To this list of analysis entities we 
+		add the assembled load.</FONT></SPAN></H4>
+		<H4><A NAME="Search"></A>Searching through the selection and applying the selected objects</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...  </PRE>
+				<PRE><font color="#008000">'Search and select</font>
+<font color="#0000FF">Set </font>selection1 = analysisDocument1.Selection
+selection1.Search "Name=*Load*,all"
+
+<font color="#008000">'Retrieve the analysis manager object from the analysis document</font>
+<font color="#0000FF">Set </font>documents1 = CATIA.Documents
+<font color="#0000FF">Set </font>analysisDocument2 = documents1.Item("Analysis1.CATAnalysis")
+<font color="#0000FF">Set </font>analysisManager2 = analysisDocument2.Analysis
+
+<font color="#008000">'Go through the selections and find out the the analysis set</font>
+<font color="#008000">'create a reference from the analysis set and add it to the basic component</font>
+<font color="#0000FF">For </font>i =1<font color="#0000FF"> To </font>selection1.Count
+<font color="#0000FF">Set </font>analysisSet = selection1.FindObject("CATIAAnalysisSet")
+<font color="#0000FF">Set </font>entity =   analysisSet.AnalysisEntities.Item(1)
+          IF ( entity.Type = "SAMLoadAssembly") Then 'DO NOTHING
+          ELSE 
+<font color="#0000FF">              Set </font>Reference =analysisManager2.CreateReferenceFromObject(analysisSet)
+              basicComponent1.AddSupportFromProduct product2, Reference
+          END IF       
+<font color="#0000FF">Next</font>
+
+<font color="#008000">'Update the analysis set</font>
+analysisSet1.Update
+</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><SPAN STYLE="font-weight: 400"><FONT COLOR="#000000">The selection 
+		interface allows the user to search objects by providing a search 
+		string.  
+		This is equivalent of selecting objects interactively through edit 
+		search. Here it is important to understand that all the objects which match the search 
+		criterion will be selected, this may include objects which do not 
+		qualify to be set as reference to assembled loads. These objects should 
+		be removed from the selection. Also since the search string is &quot;load&quot; 
+		the assembled load will also be selected but it should be added to 
+		itself hence this is prevented by explicit comparison with the name of 
+		set.</FONT></SPAN></H4>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				 End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variable must be defined.</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create assembled loads and how to select 
+object using the selection interface.</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="74">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+
+</BODY>
+
+</HTML>

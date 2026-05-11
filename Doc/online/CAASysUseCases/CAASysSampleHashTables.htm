@@ -1,0 +1,382 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Hash Tables</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Hash Tables</h3>
+      <em>Creating and managing hash tables</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and manage a hash table, illustrated
+      by a hash table of pointers to the <i>CAASysPoint</i> class.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysCollections Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysCollections Do</a></li>
+            <li><a href="#How">How to Launch CAASysCollections</a></li>
+            <li><a href="#Where">Where to Find the CAASysCollections Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and manage a hash table.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysCollections Case</h3>
+<p>CAASysCollections is a set of use cases of the CAASystem.edu framework that
+illustrates the collection management capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysCollections Do</h4>
+<p>This use case shows summarizes the collection management capabilities:</p>
+<ul>
+  <li>Lists of simple types</li>
+  <li>Lists of pointers</li>
+  <li>Lists of values</li>
+  <li>Sets of <i>CATString</i> class instances</li>
+  <li>Hash tables</li>
+</ul>
+<p>This article describes the hash table capabilities, taking a hash table of
+pointers to instances of the <i>CAASysPoint</i> class as example.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysCollections</h4>
+<p>To launch CAASysCollections, you will need to set up the build time
+environment, then compile CAASysCollections along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysCollections Code</h4>
+<p>The CAASysCollections use case is made of a several classes located in the
+CAASysCollections.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysCollections.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysCollections.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The following capabilities offered by lists of integers are described in the
+following steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>
+      <p align="left">Step</p>
+    </th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create a hash table</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Fill in a hash table</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Count the items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Insert items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Remove items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Retrieve the bucket and position of an item</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Access an item using its bucket and location</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">8</a></td>
+    <td valign="top">Retrieve the first item with a given hash value</td>
+  </tr>
+</table>
+<p>The <i>CATSysPoint</i> class used represents 2D points. To enable its
+pointers to be used by a hash table, the <i>CATSysPoint</i> class must feature a
+hash method and a comparison method. These methods are named <code>Hash</code>
+and <code>Compare</code> respectively in <i>CATSysPoint</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a Hash Table</h4>
+<p>A hash table of pointers to instances of the <i>CATSysPoint</i> class is
+created as a class using macros. The class header file named
+CAASysHashTableToSysPointPtr.h is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef CAASysHashTableToSysPointPtr_h
+#define CAASysHashTableToSysPointPtr_h
+
+#include &quot;CAASysPoint.h&quot;
+
+#include &quot;CATHTAB_Clean.h&quot;
+#include &quot;CATHTAB_AllFunct.h&quot;
+
+#include &quot;CATHTAB_Declare.h&quot;
+<b>CATHTAB_DECLARE</b>(<b>CAASysPoint</b>)
+
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The CATHTAB_Clean.h file undefines all possible previously defined methods,
+while the CATHTAB_AllFunct.h defines for the hash table class to create all the
+available methods for hash table classes. The <code>CATHTAB_DECLARE</code> macro
+creates the class header file.
+<p>The source file named CAASysHashTableToSysPointPtr.cpp is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysHashTableToSysPointPtr.h&quot;
+
+#include  &quot;CATHTAB_Define.h&quot;
+<b>CATHTAB_DEFINE</b>(<b>CAASysPoint</b>)</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATHTAB_DEFINE</code> macro creates the class source file. The
+class for a hash table of pointers to the <i>CAASysPoint</i> class is now
+created. Its name is <i>CATHTAB(CAASysPoint)</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Filling in a Hash Table</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAHashtablesSample()
+{
+  ...
+  <b>CATHTAB(CAASysPoint)</b> hashtable(&amp;CAASysPoint::Hash, &amp;CAASysPoint::Compare);
+
+  CAASysPoint pt1(1.0f, 2.0f);
+  CAASysPoint pt2(-4.0f, 3.0f);
+  CAASysPoint pt3(6.0, 7.0f);
+
+  hashtable.<b>Insert</b>( &amp;pt1 );
+  hashtable.Insert( &amp;pt2 );
+  hashtable.Insert( &amp;pt3 );
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATHTAB(CAASysPoint) </i>class is first instantiated, and its
+constructor takes the pointers to the hash and comparison methods of the class
+whose instance pointers are to be used. Since no size is passed as the third
+parameter, the table can accommodate ten items by default. Then, some <i>CAASysPoint</i>
+class instances are created. The <code>Insert</code> method inserts these
+instances in the hash table.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Counting the Items</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  cout &lt;&lt; &quot;hashtable.Size() = &quot; &lt;&lt; hashtable.<b>Size</b>() &lt;&lt; endl;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Size</code> method returns the number of items in the hash table.
+Note that this size represents the actual number of items in the hash table, and
+not the possible number the hash table can accommodate. This code provides the
+following output:
+<table class="code">
+  <tr>
+    <td>
+      <pre>hashtable.Size() = 3</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Inserting Items</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  hashtable.<b>Insert</b>( &amp;pt1 );
+
+  CAASysPoint pt4(7.0, 8.0f);
+  hashtable.Insert( &amp;pt4 );
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Insert</code> method inserts items into the hash table. Note that
+no duplicate items can exist in a hash table. As a consequence, the first call
+to <code>Insert</code> has no effect, since an item containing <code>&amp;pt1</code>
+already exists in the set. The second call to <code>Insert</code> appends <code>&amp;pt4</code>
+to the hash table. The items are not ordered.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Removing Items</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  hashtable.Remove( &amp;pt1 );
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Remove</code> method removes the pointer passed as parameter from
+the hash table. The hash table now includes three pointers to points p1, p3, and
+p4.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Retrieving the Bucket and Position of an Item</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  int	oBucket = 0;
+  int	oPosition = 0;
+  hashtable.<b>LocatePosition</b>( &amp;pt3, oBucket, oPosition );
+  cout &lt;&lt; &quot;Bucket:&quot;   &lt;&lt; oBucket   &lt;&lt; endl;
+  cout &lt;&lt; &quot;Position:&quot; &lt;&lt; oPosition &lt;&lt; endl;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>LocatePosition</code> method retrieves the bucket and the position
+of a given pointer in the hash table. This code provides the following output:
+<table class="code">
+  <tr>
+    <td>
+      <pre>Bucket:2
+Position:1</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Accessing an Item Using its Bucket and Location</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CAASysPoint *pt5 = NULL;
+  pt5 = hashtable.<b>Retrieve</b>(oBucket, oPosition);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Retrieve</code> method retrieves the item that has <code>oBucket</code>
+as bucket and <code>oPosition</code> as position. Since these parameters are
+initialized to the bucket and position of <code>&amp;pt3</code>, this pointer is
+copied in <code>pt5</code>. If <code>Retrieve</code> fails, a <code>NULL</code>
+pointer is returned .
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Retrieving the First Item with a Given Hash Value</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CAASysPoint *pt6 = NULL;
+  pt6 = hashtable.<b>KeyLocate</b>(CAASysPoint::Hash(&amp;pt3));
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>KeyLocate</code> retrieves the first item that has the same hash
+value than <code>&amp;pt3</code>. Of course, in this simple example, <code>&amp;pt3</code>
+is returned.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a class for a hash table to pointers to a
+given class, and how to use it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

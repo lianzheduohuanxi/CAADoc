@@ -1,0 +1,580 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Components</h3>
+      <em>Enabling your clients to instantiate your usable and scalable objects</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to provide client applications with tools to
+      create your implementation objects. It is a programmer's guide (how to) to
+      show on simple examples the way an the code to write to create a global
+      creation function, implement the CATICreateInstance interface, or a
+      factory.
+      <ul>
+        <li><a href="#000000"><b>What Is a Component?</b></a></li>
+        <li><a href="#010000"><b>What Is a CAA V5 Component?</b></a></li>
+        <ul>
+          <li><a href="#LogicalView">The Client Application Programmer Logical
+            View</a></li>
+          <li><a href="#PhysicalView">The Component Supplier Physical View</a></li>
+        </ul>
+        <li><a href="#100000"><b>What Is an Extension?</b></a></li>
+        <ul>
+          <li><a href="#200000">Data Extensions</a></li>
+          <li><a href="#300000">Code Extensions</a></li>
+        </ul>
+        <li><a href="#500000"><b>Sharing Extensions</b></a></li>
+        <li><a href="#600000"><b>What Are the TIE and the BOA?</b></a></li>
+        <li><a href="#InShort"><b>In Short</b></a></li>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="000000"></a>What Is a Component?</h3>
+<p>Components are the atoms that build an application. A component is a piece of
+executable code that you can't modify, but that you can use by means of the
+interfaces it exposes, that hides its implementation details, that can be
+replaced, even at run time, by another component exposing the same interfaces
+and performing the same job, and that ensures upward compatibility to client
+applications using it.</p>
+<p>Compared to many past and often present monolithic applications, CATIA
+offers, since 1988 and its Version 3, an application programming interface that
+enables you to create applications, such as IUA commands, GII interactive
+functions, and batch applications. Since 1992 and CATIA Version 4, the same
+openness happens with data, and you can add your own application data to the
+CATIA data. Even if CATIA itself was a monolithic application, the applications
+and the data you added match partially the component definition, since you can
+reuse your applications on newer CATIA releases without the need of rebuilding
+them, and your application data without migrating it.</p>
+<p>With the help of the object-oriented technology, data and software make a
+whole named object, and components are now made of objects. Objects provide the
+features required by components:
+<ul>
+  <li>Objects can expose their interfaces and hide their implementations</li>
+  <li>Objects can be exchanged at run time with other objects that match the
+    same interface, even if they are provided by object servers located
+    elsewhere on the network, providing component modularity</li>
+  <li>New versions of objects with new capabilities can be provided while
+    keeping client applications running without the need of rebuilding them,
+    providing component scalability.</li>
+</ul>
+<p>We'll see in this article what is a CAA V5 component made up of, how you can
+create them as CAA V5 component providers, and how you can use and extend them
+as client application programmers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="010000"></a>What Is a CAA V5 Component?</h3>
+<p>Client application programmers have usually a logical view of CAA V5
+components and see a CAA V5 component as an object exposing interfaces. On the
+opposite, the component supplier has a detailed physical view of the CAA V5
+component, that is, he/she knows which C++ classes make up the component, how
+these C++ classes are assembled to build the component, and which interface is
+implemented by which class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LogicalView"></a>The Client Application Programmer Logical View</h4>
+<p>As a client application programmer, you often need to create components and
+manipulate them using the interfaces they expose, whatever the way and the
+complexity of their internal structure. For example, when you need to create a
+circle, you call the circle component factory which creates a circle instance
+and returns a pointer to the CATICircle interface. Then you need to move the
+circle, and you call QueryInterface to get a pointer to the CATIMove interface
+for this circle component instance. Then you may need to draw it, or modify its
+display attributes. Whenever you need to do something to this circle, you ask
+for a pointer to the appropriate interface if you haven't one already, and you
+use this pointer to call the methods exposed by this interface for this
+component.</p>
+<table width="100%">
+  <caption><a name="Fig1"></a>Fig 1: The Client Application Programmer Sees a
+    Simple and Single Component</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAASysComponent1.gif" width="401" height="308"></td>
+  </tr>
+</table>
+<p>Your view of the component you manipulate is a logical view that makes you
+see the component as if it were simple and self-contained.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="PhysicalView"></a>The Component Supplier Physical View</h4>
+<p>As a component supplier, your view of the component may be quite different.
+You may want to take advantage of the code factorization capabilities offered by
+CAA V5, and make full use of extensions. This makes it possible for you to
+design and code a single application component like a circle as several C++
+classes, one being the circle main implementation class, and the others
+extension classes of this main implementation class, each of these classes
+implementing one or several interfaces through which the client application
+programmer will manipulate the circle, seeing it as a simple and single
+component.</p>
+<p>For example, the classes making up the circle could be designed as shown on <a href="#Fig2">Fig
+2</a>.</p>
+<table width="100%">
+  <caption><a name="Fig2"></a>Fig 2: The Component Supplier Sees several Linked
+    Classes</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAASysComponent2.gif" width="582" height="499"></td>
+  </tr>
+</table>
+<p>According to this design, up to four classes can be instantiated when the
+client application programmer manipulates a circle, but everything happens as if
+only one component were manipulated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>What Is an Extension</h3>
+<p>The CAA V5 object model modularity and scalability is offered through
+extensions. This is a very powerful means to build CAA V5 components from C++
+objects and to supply software updates without implying to rebuild the client
+applications.</p>
+<p>An extension to a main implementation class is a separate class that is
+attached to the main implementation class and which extends it to implement
+additional interfaces that this main implementation class does not implement
+itself. Extension common usage is to share the implementation of interfaces
+between several components, or to implement a new interface which did not exist
+at the time the framework was released and which was added after. This helps a
+lot for modularity and scalability.</p>
+<p>Extensions are C++ classes which must have the <code>CATBaseUnknown</code>
+class among its base class, and that must directly OM-derive from <code>CATBaseUnknown</code>.
+They can be of the following types:
+<ul>
+  <li>Data extensions, if they contain data members and methods</li>
+  <li>Code extensions, if they contain only methods and no data member.</li>
+</ul>
+<p>The extension class and the class it is an extension of are declared in the
+extension source file using the macro <code>CATImplementClass</code>. The link
+between the extension and the interface it implements is managed through the
+dictionary. The shared library which contains the code for the extension is also
+included.</p>
+<p>The class that implement interfaces as an extension of a component is created
+automatically when a pointer to an interface the extension implements is
+requested by <code>QueryInterface</code>. So you don't need to worry about a
+factory of global function to create extensions.</p>
+<p>Note that the extension is not a recursive concept. There are no extensions
+of extensions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="200000"></a>Data Extensions</h4>
+<p>A data extension is a C++ class that contains data members and methods.
+Suppose that our object MyObject is already used by numerous clients and that we
+want to add data that it doesn't hold already. If we supply a new version of our
+object which implements an additional interface for this data, the clients will
+be very happy to get a new functionality, but may become unhappy when we'll tell
+them to rebuild their applications, even if they don't use this interface. To
+overcome this problem, we can use a data extension as follows:</p>
+<table width="100%">
+  <caption><a name="Fig3"></a>Fig 3: A Component Made up of an Implentation and
+    a Data Extension Classes</caption>
+  <tr>
+    <td align="center"><img border="0" src="images/CAASysDataExtension.gif" width="497" height="333"></td>
+</table>
+<p>The new interface CATIData is implemented by the separate C++ class
+MyDataExtension with methods to access the data and data members to store it.
+There is no need to rebuild the client applications when you deliver the data
+extension, since the MyObject class has not changed from these applications
+standpoint. Only client applications that want to take advantage of the update
+need of course to be modified and rebuilt.</p>
+<p><b>Lifecycle</b>: A call to <code>QueryInterface</code> against the object
+for an interface implemented by a data extension of this object creates the data
+extension instance, or uses the existing one. The data extension is deleted only
+when the object of which it is an extension is also deleted, that is when all
+the reference counts of the object and of all its extensions reach 0.</p>
+<p>The idl file for CATIData is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// IDL encoded interface
+
+#pragma ID CATIData &quot;DEC:7db286f1-218d-0000-0280020a86000000&quot;
+interface CATIData : CATBaseUnknown {
+#pragma PROPERTY Length
+  HRESULT get_Length(out int oLength);
+  HRESULT put_Length(in int iLength);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The resulting header file <code>CATIData.h</code> is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// C++ generated interface class header file
+#include &quot;CATBaseUnknown.h&quot;
+extern IID IID_CATIData;
+class CATIData : CATBaseUnknown {
+  CATDeclareInterface;
+  public :
+    virtual HRESULT __stdcall get_Length(int * oLength) = 0;
+    virtual HRESULT __stdcall set_Length(int iLength) = 0;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The resulting source file <code>CATIData.cpp</code> is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// C++ generated interface class source file
+#include &quot;CATIData.h&quot;
+IID IID_CATIData = { 0x7db286f1, 0x218d, 0x0000,
+    {0x02, 0x80, 0x02, 0x0a, 0x86, 0x00, 0x00, 0x00} };
+CATImplementInterface(CATIData, CATBaseUnknown);</pre>
+    </td>
+  </tr>
+</table>
+<p>The MyDataExtension class implements this interface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;
+
+class MyDataExtension : public CATBaseUnknown {
+  CATDeclareClass;
+  public :
+    MyDataExtension();
+    virtual ~MyDataExtension();
+    virtual HRESULT __stdcall get_Length(int * oLength);
+    virtual HRESULT __stdcall set_Length(int iLength);
+  private :
+    int _Length;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAEDataExtension class source file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAEDataExtension.h&quot;
+
+CATImplementClass(CAAEDataExtension, // Extension class name
+                  DataExtension,     // Data extension
+                  CATBaseUnknown,    // Always OM-derive extensions from CATBaseUnknown
+                  MyObject);         // Main class of the extended component
+
+#include &quot;TIE_CATIData.h&quot;
+TIE_CATIData(CAAEDataExtension);
+
+CAAEDataExtension::CAAEDataExtension() {}
+CAAEDataExtension::~CAAEDataExtension() {} 
+
+HRESULT CAAEDataExtension::get_Length(int * oLength)
+{ oLength = _Length; return S_OK; }
+
+HRESULT CAAEDataExtension::set_Length(int iLength)
+{ _Length = iLength; return S_OK; }</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro states that the class
+CAAEDataExtensionis a data extension and that extends the MyObject class. The
+third argument that declares the component from which the current one OM-derives
+makes sense only for component main classes and must always be set to <i>CATBaseUnknown</i>
+with an extension.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="300000"></a>Code Extensions</h4>
+<p>A code extension is an extension that contains only methods, and no data. At
+run-time, for a given code extension, only one instance of this code extension
+exists, whatever the number of existing objects this code extension extends.</p>
+<p><img border="0" src="images/CAASysCodeExtension.gif" width="449" height="315"></p>
+<p>As for data extensions, there is no need to rebuild client applications when
+the code extension is supplied.</p>
+<p>You code a code extension as a data extension, and just use <code>CodeExtension</code>
+instead of <code>DataExtension</code> as the second parameter of the <code>CATImplementClass</code>
+macro in the code extension class source file, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAECodeExtension,
+                  CodeExtension,
+                  CATBaseUnknown,
+                  MyObject);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Lifecycle</b>: Once created for a given object instance, the code
+extension is never deleted and is used for all the instances of the same object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h3><a name="500000"></a>Sharing Extensions</h3>
+<p>Sharing an extension makes several classes implement the interfaces the
+extension itself implements, and not only one class as shown in the above
+sections about extensions. This is another step in code factorization and
+reusability, and in code scalability.</p>
+<p>There are two ways for sharing extensions. The first way is to let the
+extension itself declare of which classes it is an extension. This is very handy
+if you have existing classes for which you want to add an additional behavior by
+means of the interfaces implemented in the extension. You don't need to rebuild
+the existing classes, just supply the extension. The second way is to declare
+the extension support in the classes that are extended by the extension. This is
+very handy if you have an existing extension and if you want to declare it as an
+extension of new classes. You don't need to rebuild the extension, just supply
+the new classes.</p>
+<p>Declare that an extension class is an extension for several classes in the
+extension class source file (.cpp) as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBeginImplementClass(MyExtensionClassName,    // Begin declaration
+                       DataExtension,
+                       CATBaseUnknown,
+                       TheFirstClassIExtend);
+CATAddClassExtension(TheSecondClassIExtend);
+CATAddClassExtension(TheThirdClassIExtend);
+...
+CATAddClassExtension(TheLastClassIExtend);
+CATEndImplementClass(MyExtensionClassName);     // End declaration</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATBeginImplementClass</code> macro replaces the <code>CATImplementClass</code>
+macro. The <code>CATAddClassExtension</code> macro is used to add a class to the
+extended classes, and the <code>CATEndImplementClass</code> macro ends the
+declaration sequence for the concerned extension.</p>
+<p>You declare an existing extension in a new class in this class source file
+(.cpp) as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATSupportImplementation(ExtensionClassName,
+                         MyClassName,
+                         ImplementedInterface);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATSupportImplementation</code> macro allows addition of existing
+extensions incrementally to new classes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------------------------------------------------->
+<h3><a name="600000"></a>What Are the TIE and the BOA?</h3>
+<p>In the code example above, when implementing <i>CATIData</i>, the following
+lines were used:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAEDataExtension, // Extension class name
+                  DataExtension,     // Data extension
+                  CATBaseUnknown,    // Base component - Always OM-derive TIE extensions from CATBaseUnknown
+                  MyObject);         // Implementation class of the extended component
+
+#include &quot;TIE_CATIData.h&quot;
+TIE_CATIData(CAAEDataExtension);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Let's detail them:</p>
+<ul>
+  <li>The <code>CATImplementClass</code> macro is used in conjunction with the <code>CATDeclareClass</code>
+    macro in the class header file to express that the class is part of a CAA V5
+    Object Modeler component. Its arguments read as follows:
+    <ol>
+      <li>The class name</li>
+      <li>The CAA V5 Object Modeler class type. Valid values are <code>Implementation</code>,
+        <code>DataExtension</code>, and <code>CodeExtension</code></li>
+      <li>The name of the main class from which the component OM-derives. This
+        is valid for:
+        <ul>
+          <li><code>Implementation</code> type classes</li>
+          <li><code>DataExtension</code> type classes that implement one
+            interface using the BOA</li>
+        </ul>
+        This is NOT valid for:
+        <ul>
+          <li><code>DataExtension</code> type classes that implement all their
+            interfaces using TIEs</li>
+          <li><code>CodeExtension</code> type classes</li>
+        </ul>
+        In these two last cases, this argument should be set to either
+        CATBaseUnknown or CATNull.
+      <li>The name of the extended component if the class is an extension, or
+        CATNull if the class is an implementation</li>
+    </ol>
+  </li>
+  <li>The include of the TIE_CATIData.h header file generated from the
+    TIE_CATIData.tsrc file created when the <i>CATIData</i> interface was
+    created. This file contains the <code>TIE_CATIData</code> macro code</li>
+  <li>The call to this <code>TIE_CATIData</code> macro that actually creates the
+    code for the TIE class. The macro parameter is the name of the class that
+    implements the interface. The TIE class is instantiated and a pointer to it
+    is returned by <code>QueryInterface</code> when the component is asked for <i>CATIData</i>.
+    The TIE is an intermediate class that ties the client application and the
+    component at run time without any link at build time.</li>
+</ul>
+<p>The TIE is the technology promoted by CAA V5 to handle interfaces at run
+time. Nevertheless, in some scenarios where performance is critical,
+instantiating an intermediate object may be costly. For example, if a component
+is instantiated thousands of times and if a pointer to a given interface is
+requested against each component instance, thousands of TIE objects are created
+and may lead to memory allocation problems. To avoid this, CAA V5 proposes an
+alternate solution: the BOA.</p>
+<p>BOA stands for Basic Object Adapter. The BOA technology makes <code>QueryInterface</code>
+return a pointer to the class that implements the interface rather than a
+pointer to an intermediate class. The BOA saves a class instance per component
+in scenarios such as the one described above. Even if a pointer to the
+implementing class is returned, it is returned as an interface pointer, and
+there is not more coupling between interface and implementation than with the
+TIE. The client application does not know which class implements the interface,
+has no build time link with its header file or module, and can thus only call
+the methods exposed by this interface.</p>
+<p>To implement <i>CATIData</i> using the BOA instead of the TIE:</p>
+<ul>
+  <li>Derive the extension class from the interface. The header file is thus
+    changed:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;<b>CATIData.h</b>&quot;
+
+class MyDataExtension : public <b>CATIData</b> {
+  CATDeclareClass;
+  public :
+    MyDataExtension();
+    virtual ~MyDataExtension();
+    virtual HRESULT __stdcall get_Length(int * oLength);
+    virtual HRESULT __stdcall set_Length(int iLength);
+  private :
+    int _Length;
+};</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Use the <code>CATImplementClass</code> and the <code>CATImplementBOA</code>
+    macros.<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATImplementClass(CAAEDataExtension, // Extension class name
+                  DataExtension,     // Data extension
+                  <b>CATIData</b>,          // Always OM-derive BOA extensions from the BOA implemented interface
+                  MyObject);         // Implementation class of the extended component
+
+<b>CATImplementBOA(CATIData, CAAEDataExtension);</b>
+...</pre>
+        </td>
+      </tr>
+    </table>
+    With respect to a TIE implementation, the following is changed:
+    <ul>
+      <li>The third argument of <code>CATImplementClass</code> must be set to
+        the implemented interface from which the extension class derives</li>
+      <li>The <code>CATImplementBOA</code> macro replaces the <code>TIE_CATIData</code>
+        macro. Its arguments are the BOA-implemented interface and the extension
+        class name respectively.</li>
+    </ul>
+  </li>
+</ul>
+<p>Note that since the class implementing the interface using the BOA must
+derive from the interface, and that CAA V5 does not support multi-inheritance, a
+given class can BOA-implement only one interface, the others being
+TIE-implemented. So carefully choose the appropriate interface to BOA-implement
+if your class implements several interfaces. In addition, BOA is not available
+with <code>CodeExtension</code> type classes.</p>
+<p>CAA V5 BOA candidate interfaces are the <b>U4</b> and <b>U5</b> labelled
+interfaces [<a href="#References">3</a>], that is, the interfaces you implement
+and that V5 calls onto your components. U4 means that you implement the
+interface by deriving a V5 supplied adapter class and override a part of the
+methods. U5 means that you write the code for all the methods of the interface.
+While there is no BOA restriction with U5 interfaces, pay attention with U4
+interfaces. A U4 interface must be BOA-enabled, that is, its adapter must derive
+from it, otherwise BOA cannot be used for that interface. Among the U4
+interfaces, some are BOA-enabled, and some are not. To know whether a U4
+interface is BOA-enabled, check <b>BOA information</b> section in the interface
+documentation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A component is an object that implements interfaces. It is seen as a single
+object from the component user standpoint, but can be implemented as several C++
+objects.</p>
+<p>An extension is an object that is part of a component to provide it a given
+behavior by implementing one or several interfaces. The extension is not seen
+from the client application, but is handled using a pointer to an interface it
+implements. An extension is also the means to add behavior to a component
+without modifying already existing client applications.</p>
+<p>The TIE and the BOA are the CAA V5 technologies to implement interfaces. A
+class can implement many interfaces using the TIE, but only one of them can be
+implemented using the BOA.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1">[1]</a></td>
+    <td><a href="CAASysCreatingInterfaces.htm">Creating Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref1">[2]</a></td>
+    <td><a href="CAASysUsingComponents.htm">Using Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref1">[3]</a></td>
+    <td><a href="../CAADocTechArticles/CAADocLxUsageRules.htm">CAA
+      V5 Resource Exposition, Usage, Deprecation, and Stability</a></td>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>2</b> [Oct 2003]</td>
+    <td valign="top">BOA added</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1</b> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

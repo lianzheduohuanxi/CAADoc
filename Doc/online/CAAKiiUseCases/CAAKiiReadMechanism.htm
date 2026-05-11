@@ -1,0 +1,547 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Reading a Mechanism in a Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Product Synthesis &amp; Knowledgeware</h1>
+    </td>
+    <td valign="top">
+      <h2>DMU Kinematics Simulator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Reading a Mechanism in a Document</h3>
+      <em>From a mechanism to its description written in a file</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAKiiReadMechanism use case. This use case
+      explains how to open a CATProduct document and explore its content from a
+      Kinematics perspective, down to the basic entities that capture technology
+      of a mechanism contained in the document.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#Concepts">Kinematics Concepts</a></b></li>
+        <li><b><a href="#UseCase">The CAAKiiReadMechanism Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAKiiReadMechanism Do</a></li>
+          <li><a href="#How">How to Launch CAAKiiReadMechanism</a></li>
+          <li><a href="#Where">Where to Find the CAAKiiReadMechanism Code</a></li>
+          <li><a href="#Sample">Where to Find the CATProduct sample document for
+            CAAKiiReadMechanism</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the CATIA kinematics modeler. Its main intent is to introduce the API of the
+kinematics modeler, and ways to use it.</p>
+<p>The scenario is based on an industrial process:</p>
+<ol>
+  <li>The end-user defines and validates interactively a mechanism within CATIA</li>
+  <li>When mechanism is validated, a batch utility translate them in another
+    system</li>
+  <li>Translated data are used to perform a task.</li>
+</ol>
+<p>To perform the first and last operations, the user works with on-the-shelf
+softwares. But a utility to translate mechanism structure from any system to
+another does not exist on the shelf.</p>
+<p>The target of this use case is to learn how to build such utility. To
+simplify explanations, we suppose the other system read a text file with a
+dedicated format.</p>
+<p><img src="images/CAAKiiReadMechanismIn.jpg" height="500" width="630"></p>
+<p>This picture represents a CATProduct document containing a mechanism.</p>
+<p><img src="images/CAAKiiReadMechanismOut.jpg" width="714" height="304"></p>
+<p>This picture represents a text file which results from the use of the sample
+on the CATProduct document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Concepts"></a>Kinematics Concepts</h3>
+<p>Before getting to the use case itself, it is important to get an
+understanding of some of the concepts that are at the heart of the Kinematics,
+since the use case basically navigates among objects that represent those
+concepts. They are presented in Kinematics Overview [<a href="#References">1</a>].</p>
+<p>These concepts are:
+<ul>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#mechanismconcept">Mechanism</a></li>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#jointconcept">Joint</a></li>
+  <li><a href="../CAAKiiTechArticles/CAAKiiOverview.htm#commandconcept">Command</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAKiiReadMechanism Use Case</h3>
+<p>CAAKiiReadMechanism is a use case of the CAAKinematicsInterfaces.edu
+framework that illustrates KinematicsInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAKiiReadMechanism Do</h4>
+<p>The goal of CAAKiiReadMechanism is to:</p>
+<ul>
+  <li>Open a CATProduct document whose pathname is passed as an argument</li>
+  <li>Obtain the list of mechanisms from the document</li>
+  <li>Request the joints from a mechanism replay</li>
+  <li>Print information from the joint</li>
+  <li>Request the commands from a mechanism replay</li>
+  <li>Print information from the command</li>
+  <li>Get the general information from the mechanism</li>
+  <li>Print this information.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAKiiReadMechanism</h4>
+<p>To launch CAAKiiReadMechanism, you will need to set up the build time
+environment, then compile CAAKiiReadMechanism along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt; CAAKiiReadMechanism inputDirectory inputFile.CATProduct outputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAKiiReadMechanism inputDirectory inputFile.CATProduct outputDirectory</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>inputDirectory</code></td>
+    <td>The directory in which <code>inputFile.CATProduct</code> is located</td>
+  </tr>
+  <tr>
+    <td><code>inputFile.CATProduct</code>
+    <td>The file that contains the use case CATProduct document</td>
+  </tr>
+  <tr>
+    <td><code>outputFile</code>
+    <td>The file that will contain the resulting file</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAKiiReadMechanism Code</h4>
+<p>The CAAKiiReadMechanism use case is made of a C++ main named <i>CAAKiiReadMechanism</i>
+whose source file is located in the CAAKiiReadMechanism.m module of
+the CAAKinematicsInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAKinematicsInterfaces.edu\CAAKiiReadMechanism.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAKinematicsInterfaces.edu/CAAKiiReadMechanism.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The <i>CAAKiiReadMechanism</i> class derives from <i>CATInteractiveApplication</i>.
+The described code is located in the <code>BeginApplication</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Sample"></a>Where to Find the CATProduct sample document for
+CAAKiiReadMechanism</h4>
+<p>You will find a CATProduct sample document in the following directory:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAKinematicsInterfaces.edu\CNext\resources\graphic\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAKinematicsInterfaces.edu/CNext/resources/graphic/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The sample is called <code>CAAKiiReadMechanism.CATProduct</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six steps in CAAKiiReadMechanism:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Mechanism">Getting Access to the Mechanisms of the Document</a></li>
+  <li><a href="#Joint">Getting Access to All the Joints</a></li>
+  <li><a href="#Command">Getting Access to All the Commands</a></li>
+  <li><a href="#Information">Reading the General Information</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+We will now comment each of those sections by looking at the code.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is the <i>CAAKiiReadMechanism</i> batch which runs in one shot. The described code is
+located in the <code>C++ main</code> method. It begins by creating a
+session, and by opening the use case CATProduct document passed as an argument: <code>pDocument</code>
+refers to it. This is the usual sequence for creating a document [<a href="#References">3</a>].
+It also opens the output file: <code>outputFile</code> refers to it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Mechanism"></a>Getting Access to the Mechanisms of the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIKinMechanismFactory* piMechanismFactoryOnDocument = NULL;
+  HR = pDocument-&gt;QueryInterface(IID_CATIKinMechanismFactory,(void**)&amp;piMechanismFactoryOnDocument);
+  if (SUCCEEDED(HR))
+  {
+    CATLISTP(CATBaseUnknown)* ListOfMechanisms = NULL;
+    HR = piMechanismFactoryOnDocument-&gt;ListInstances (&amp;ListOfMechanisms);
+    if (SUCCEEDED(HR))
+      {
+	// Read all the mechanisms of the document
+	int nbMechanisms = ListOfMechanisms-&gt;Size();
+	for (int i = 1;i&lt;=nbMechanisms;i++)
+	 {
+	  CATIKinMechanism* piMechanism = NULL;
+	  (*ListOfMechanisms)[i]-&gt;QueryInterface(IID_CATIKinMechanism,(void**)&amp;piMechanism);
+	    
+	  // Print the name of the mechanism
+	  CATIAlias* piAliasOnMechanism = NULL;
+
+          if (SUCCEEDED(piMechanism-&gt;QueryInterface(IID_CATIAlias,(void**)&amp;piAliasOnMechanism)))
+           {
+             outputFile &lt;&lt; &quot;Mechanism &quot; &lt;&lt; piAliasOnMechanism-&gt;GetAlias().ConvertToChar() &lt;&lt;endl &lt;&lt; flush;
+             piAliasOnMechanism-&gt;Release();
+             piAliasOnMechanism = NULL;
+           }  
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A CATProduct document contains from zero to many mechanisms. Access to the
+list of all the mechanisms included in the document is made through the factory
+method <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanismFactory', 'ListInstances');return false;">CATIKinMechanismFactory::ListInstances</a>,
+using QueryInterface on</code> <code>pDocument</code> to retrieve the factory.
+As a result, it provides a list of CATBaseUnknown objects representing the
+existing mechanisms. The number of mechanisms in the list is given by the <code>CATLISTP(CATBaseUnknown)::Size</code>
+method. The <code>CATIAlias</code> interface is used to retrieve the name of the
+mechanism to be output on the file.
+<p>This produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Mechanism Mechanism.1</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Joint"></a>Getting Access to All the Joints</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	    CATLISTP(CATBaseUnknown)* jointList=NULL;
+	    HR = piMechanism-&gt;GetJointList(&amp;jointList);
+	    if (SUCCEEDED(HR))
+	      {
+		outputFile &lt;&lt; &quot;   Joint&quot; &lt;&lt;endl &lt;&lt; flush;
+		
+		int nbJoints = jointList-&gt;Size();
+		for (int j = 1;j&lt;=nbJoints; j++)
+		  {
+		    outputFile &lt;&lt; &quot;      &quot; &lt;&lt; j &lt;&lt; &quot; : &quot;;
+		    
+		    // Get the type of joint
+		    CATIKinJoint* piJoint = NULL;
+		    (*jointList)[i]-&gt;QueryInterface(IID_CATIKinJoint,(void**)&amp;piJoint);
+		    const char* JointType = NULL;
+		    HR = piJoint-&gt;GetType(&amp;JointType);
+		    if (SUCCEEDED(HR)) {outputFile &lt;&lt; JointType &lt;&lt; &quot;; &quot;;}
+        
+                    // Get the parts involved in the joint
+                    int nbPartInJoint = 0;
+		    CATLISTP(CATBaseUnknown)* productList=NULL;
+		    HR = piJoint-&gt;GetProductList(&amp;productList);
+		    if (SUCCEEDED(HR))
+		      { 
+			nbPartInJoint = productList-&gt;Size();
+			
+			outputFile &lt;&lt; nbPartInJoint &lt;&lt; &quot; products; &quot;;
+		      }
+		    // Get the first frame from the joint definition
+		    double** axis1 = NULL;
+		    HR = piJoint-&gt;GetFrame(1,axis1);
+		    
+		    // Get the second frame from the joint definition
+		    double** axis2 = NULL;
+		    HR = piJoint-&gt;GetFrame(2,axis2);
+		    
+		    // Get the ratio of the joint
+		    
+		    double ratio;
+		    HR = piJoint-&gt;GetRatio(&amp;ratio);
+		    
+		    // Get the parameters of the joint
+		    double* parm = NULL;
+		    int oSize = 0;
+		    
+		    HR = piJoint-&gt;GetJointValues(&amp;parm,&amp;oSize);
+       
+                    //  Get the constraints of the joint
+                    int nbConstraints = 0;
+		    CATLISTP(CATBaseUnknown)* paConstraints = NULL;
+		    HR = piJoint-&gt;GetConstraints(&amp;paConstraints);
+		    if (SUCCEEDED(HR))
+		      {
+			nbConstraints = paConstraints-&gt;Size();
+			outputFile &lt;&lt; nbConstraints &lt;&lt; &quot; constraints; &quot;; 
+		      }
+		    
+		    //  Get the connectors of the joint
+		    int nbConnectors = 0;
+		    CATLISTP(CATBaseUnknown)* paConnectors = NULL;
+		    HR = piJoint-&gt;GetConnectors(&amp;paConnectors);
+		    if (SUCCEEDED(HR)) 
+		      {
+			nbConnectors = paConnectors-&gt;Size();
+			outputFile &lt;&lt; nbConnectors &lt;&lt; &quot; connectors; &quot;; 
+		      }
+		    
+		    outputFile &lt;&lt; endl &lt;&lt; flush;
+		  }
+		outputFile &lt;&lt; &quot;   EndJoint&quot; &lt;&lt;endl &lt;&lt; flush;
+	      }
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A mechanism contains from zero to many joints. Access to the list of all the
+joints included in the mechanism is made through the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'GetJointList');return false;">GetJointList</a></code>
+method of the <i>CATIKinMechanism</i> interface. As a result, it provides a <code>CATLISTP(CATBaseUnknown)</code>
+collection. The type of the joint is given by the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinJoint', 'GetType');return false;">GetType</a></code>
+method of the <i>CATIKinJoint</i> interface. All other methods from the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinJoint');return false;">CATIKinJoint</a></code>
+interface are exercised to learn about them.
+<p>This produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   Joint
+      1 : Revolute; 2 products; 2 constraints; 4 connectors;
+      2 : Revolute; 2 products; 2 constraints; 4 connectors;
+      3 : Revolute; 2 products; 2 constraints; 4 connectors;
+      4 : Revolute; 2 products; 2 constraints; 4 connectors;
+   EndJoint</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Command"></a>Getting Access to All the Commands</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+     CATLISTP(CATBaseUnknown)* cmdList = NULL;
+     HR = piMechanism-&gt;GetCmdList(&amp;cmdList);</pre>
+      if (SUCCEEDED(HR)) { outputFile &lt;&lt; &quot; Command&quot; &lt;&lt;endl
+      &lt;&lt; flush; int nbCmds = cmdList-&gt;Size(); for (int l =
+      1;l&lt;=nbCmds;l++) { outputFile &lt;&lt; &quot; &quot; &lt;&lt; l
+      &lt;&lt; &quot; : &quot;; CATIKinCmd* piCmd = NULL;
+      (*cmdList)[l]-&gt;QueryInterface(IID_CATIKinCmd,(void**)&amp;piCmd);; //
+      Get the command type const char* cmdType = NULL; HR
+      =piCmd-&gt;GetType(&amp;cmdType); if (SUCCEEDED(HR)) {outputFile &lt;&lt;
+      cmdType &lt;&lt; &quot;; &quot;;} // Get the joint associated to the
+      command CATIKinJoint* papiAssociatedJoint = NULL; HR
+      =piCmd-&gt;GetJoint(&amp;papiAssociatedJoint); if (SUCCEEDED(HR)) {
+      outputFile &lt;&lt; &quot;joint X;&quot;; } outputFile &lt;&lt; endl
+      &lt;&lt; flush; } outputFile &lt;&lt; &quot; EndCommand&quot; &lt;&lt;
+      endl &lt;&lt; flush; ...</td>
+  </tr>
+</table>
+<p>A mechanism contains from zero to many commands. Access to the list of all
+the commands included in the mechanism is made through the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'GetCmdList');return false;">GetCmdList</a></code>
+method of the <i>CATIKinMechanism</i> interface. As a result, it provides a <code>CATLISTP(CATBaseUnknown)</code>
+collection. The type of the joint is given by the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinCmd', 'GetType');return false;">GetType</a></code>
+method of the <i>CATIKinCmd</i> interface. All other methods from the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinCmd');return false;">CATIKinCmd</a></code>
+interface are exercised to learn about them.
+<p>This produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   Command
+      1 : Angle; joint 1;
+   EndCommand
+   Command values :</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Information"></a> Reading the General Information</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // Get the fixed product of the mechanism
+    CATIProduct* piProductOnFixedProduct = NULL;
+    if (SUCCEEDED(piMechanism-&gt;GetFixedProduct(&amp;piProductOnFixedProduct)))
+    {
+      CATIAlias* piAliasOnFixedProduct = NULL;
+      if (SUCCEEDED(piProductOnFixedProduct-&gt;QueryInterface(IID_CATIAlias,(void**)&amp;piAliasOnFixedProduct)))
+      {
+        outputFile &lt;&lt; &quot;   Fixed part : &quot; &lt;&lt; piAliasOnFixedProduct-&gt;GetAlias().ConvertToChar() &lt;&lt; endl &lt;&lt; flush;
+        piAliasOnFixedProduct-&gt;Release();
+        piAliasOnFixedProduct = NULL;
+      }
+      piProductOnFixedProduct-&gt;Release();
+      piProductOnFixedProduct = NULL;
+    }
+
+    // Get the list of the products involved in the mechanism
+    int nbInvolvedProducts = 0;
+    CATLISTP(CATBaseUnknown)* papiProductOfMechanism = NULL;
+    HR = piMechanism-&gt;GetProductList (&amp;papiProductOfMechanism);
+    if (SUCCEEDED(HR))
+    {
+      nbInvolvedProducts = papiProductOfMechanism-&gt;Size();
+
+      outputFile &lt;&lt; &quot;   Products involved : &quot; &lt;&lt; nbInvolvedProducts &lt;&lt; &quot;; &quot; &lt;&lt; endl &lt;&lt; flush;
+    }
+    
+    // Clean the environment
+    piMechanism-&gt;Release();
+    piMechanism = NULL;
+    
+    outputFile &lt;&lt; &quot;EndMechanism&quot; &lt;&lt;endl &lt;&lt; flush;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A mechanism has one fixed product. Access to it is made thru the <a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'GetFixedProduct');return false;">GetFixedProduct</a>
+method of the <i>CATIKinMechanism</i> interface. The list of products involved
+in the mechanism is build using the <code><a href="#" onclick="javascript:CAAlink('CPP', 'KinematicsInterfaces', 'interface', 'CATIKinMechanism', 'GetProductList');return false;">GetProductList</a></code>
+method of&nbsp; <i>CATIKinMechanism</i>. At each step the sample cleans the
+environment and releases all resources. The technique is fairly simple : all
+references to interfaces have to be released using <code>CATBaseUnknown::Release()</code>
+and then the list is deleted. All pointer are nullified.</p>
+<p>This produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   Fixed part : rod2.3
+   Products involved : 4;
+EndMechanism</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The document is closed using its <code>LifeCycleObject</code> interface and
+more specifically the <code>remove </code>method. The environment is cleaned,
+and the session is deleted by the <code>Delete_Session</code> global function,
+which is passed the same identifier that was used to open it. This is the usual
+sequence for closing a CATIA document, and for deleting the session [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to programmatically navigate a
+CATProduct document, from the document itself down to the entities that hold the
+mechanism definition.</p>
+<p>More specifically, you have learn how to access:</p>
+<ul>
+  <li><i>mechanisms</i> in a CATProduct document and related data</li>
+  <li><i>joints</i> within a mechanism and related data</li>
+  <li><i>commands</i> within a mechanism and related data</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAKiiTechArticles/CAAKiiOverview.htm">Kinematics
+      Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jan 2001]</td>
+    <td valign="top">Interface reviewed; exposing only KinematicsInterfaces</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Aug 2002]</td>
+    <td valign="top">Added CATProduct sample document</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000-2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

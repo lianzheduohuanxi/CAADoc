@@ -1,0 +1,222 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Saving an Existing CATIA Document</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Saving an Existing CATIA Document</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to save an existing CATIA
+      document that is currently in the session. In order to save a new CATIA
+      document, see the CAAInfSaveAsDocument [<a href="#References">1</a>]
+      sample for a detailed description. This sample details the programming
+      equivalent of the <code>File -&gt; Save</code> command.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAInfSaveDocument is launched in CATIA [<a href="#References">2</a>].
+      An existing document called &quot;CAAInfReadDocument.CATPart&quot; must be
+      found in the CATDocView.</p>
+      <p><a href="CAAInfSaveDocumentSource.htm" target="Source">CAAInfSaveDocument.CATScript
+      </a>is located in the CAAScdInfUseCases module. <a href="macros/CAAInfSaveDocument.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAInfSaveDocument includes four steps:</p>
+      <ol>
+        <li><a href="#CATDocView">Retrieving the CATDocView Environment Variable
+          and Checking its Valuation</a></li>
+        <li><a href="#SaveActive">Saving the Active CATIA Document</a></li>
+        <li><a href="#SaveVar">Saving the CATIA Document Specified by an Object
+          Variable</a></li>
+        <li><a href="#SaveName">Saving the CATIA Document Specified by its Name</a></li>
+      </ol>
+      <h4><a name="CATDocView"></a>Retrieving the CATDocView Environment
+      Variable and Checking its Valuation</h4>
+      <table class="code">
+        <tr>
+          <td width="100%">
+            <pre><font color="#008000">'Optional: allows to find the sample wherever it's installed</font>
+
+      <font color="#0000FF">Dim</font> sDocPath <font color="#0000FF"> As</font> String
+      sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+      <font color="#0000FF">If</font> (<font color="#0000FF">Not</font> CATIA.FileSystem.FolderExists(sDocPath)) <font color="#0000FF"> Then</font>
+         Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+      <font color="#0000FF">End If</font></pre>
+          </td>
+      </table>
+      <p align="left">Define the <code>sDocPath</code> variable to retrieve the
+      CATDocView environment variable value which holds the documentation path
+      where the Part document used below is stored. Also, check that this
+      variable is valuated.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="SaveActive"></a>Saving the Active CATIA Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">'Open the document and add it as the last item of the collection of documents.
+    'Create and display a new window for the document.
+    'Activate the document and its window.</font>
+     <font color="#0000FF">Dim</font> iPartDoc <font color="#0000FF">As</font> Document
+     Set iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+    <font color="#008000">'The document just opened is the active document.
+    'Save the active document and then close it.</font>
+     <b>CATIA.ActiveDocument.Save()</b>
+     <b>CATIA.ActiveDocument.Close()</b></pre>
+            <pre>  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>An existing CATIA document is opened using the <code>Open</code> method
+      of the <i>Documents</i> collection (<i>Documents</i> object). See the
+      CAAInfOpenDocument [<a href="#References">3</a>] sample for a description
+      of how to open a CATIA document. Because the <code>Open</code> method also
+      activates the opened document, you can use the <code>Save</code> method of
+      the <code>ActiveDocument</code> property of the CATIA application in order
+      to save it: the document is saved in the same storage location and under
+      the same name. Note that before exiting the session, the document should
+      also be closed. See the CAAInfCloseDocument [<a href="#References">4</a>]
+      sample for a description of how to close a document.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="SaveVar"></a>Save the CATIA Document Specified by an Object
+      Variable</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...</pre>
+            <pre>    <font color="#008000">'Open the same document again.</font>
+     <font color="#0000FF">Set</font> iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+    <font color="#008000">'Save the document just opened using the variable name defined for it. 
+    'Then, close the document in the same way.</font>
+     <b>iPartDoc.Save()
+     iPartDoc.Close()</b>
+
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The same document is opened a second time. Another way of saving an
+      existing CATIA document is to execute the <code>Save</code> method
+      directly on the variable already assigned to handle the document: the
+      document is saved in the same storage location and under the same name.
+      Note that before exiting the session, the document should also be
+      closed.&nbsp;</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="SaveName"></a>Save the CATIA Document Specified by its Name</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...</pre>
+            <pre>     <font color="#008000">'Open the same document a third time.</font>
+     <font color="#0000FF">Set</font> iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+    <font color="#008000">'Save the document by specifying its name and then close it in the same way.</font>
+     <b>CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Save()
+     CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close()</b>
+
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The same document is opened one last time. The third way of saving a
+      CATIA document is by executing the <code>Save</code> method on the
+      document that has been retrieved from the <i>Documents</i> collection by
+      specifying its name to the argument of the <code>Item</code> method: the
+      document is saved in the same storage location and under the same name.
+      Note that before exiting the session, the document should also be
+      closed.&nbsp;</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown the three ways of saving an existing CATIA document
+during an interactive session:</p>
+<ul>
+  <li>Using the <code>ActiveDocument</code> property of the CATIA application</li>
+  <li>Using the variable assigned to handle the document&nbsp;</li>
+  <li>Using the name of the document retrieved from the <i>Documents</i>
+    collection by the <code>Item</code> method</li>
+</ul>
+<p>In all three cases, the document is saved under the same storage path and
+name.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td><a href="CAAInfSaveAsDocument.htm">Saving a New CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><a href="CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[3]</td>
+    <td><a href="CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[4]</td>
+    <td><a href="CAAInfCloseDocument.htm">Closing a CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

@@ -1,0 +1,792 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Contents of the Specification Container - Geometrical Features Sets</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Contents of the Specification Container -
+      Geometrical Features Sets</h3>
+      <em>What is an Ordered Geometrical Set, a Geometrical Set, a Body?</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The article entitled &quot;The Structure of a Part Document&quot; [<a href="#References">1</a>]
+      shows that the Part document contains four main containers, one of which
+      is the specification container. This container contains the mechanical
+      features. The mechanical features can be divided in three categories:</p>
+      <ul>
+        <li>The <b>Part</b> feature: the main feature containing the design of
+          the object to be built, and in particular geometrical features sets.
+        <li>The <b>geometrical</b> <b>features sets</b>: the features containing
+          either other geometrical features sets, or geometrical features.
+        <li>The <b>geometrical</b> <b>features</b>: those which hold a
+          topological result.
+      </ul>
+      <p>This article is the second one of a trilogy. Its aim is to detail the second category:&nbsp;
+      what are the geometrical features sets, how are they created, how are they retrieved in a Part
+      document. The
+      first article [<a href="#References">2</a>] details the Part feature: what
+      is the Part feature, how is it created, how is it retrieved in a Part
+      document ?.&nbsp; Finally, the last article [<a href="#References">3</a>] details the
+      geometrical features: what are they, their type, the existing geometrical features
+      ,and how they are
+      aggregated by the geometrical features sets.&nbsp;&nbsp;</p>
+      <p>All of these articles are included in a set of documents presented in
+      the &quot;Mechanical Modeler Overview&quot; article. [<a href="#References">4</a>].&nbsp;</p>
+      <ul>
+        <li><b><a href="#What are the Geometrical Features Sets?">What are the Geometrical Features Sets?</a></b>
+          <ul>
+            <li><b><a href="#Two Kinds of Geometrical Features Sets">Two Kinds
+              of
+Geometrical Features Sets</a></b></li>
+            <li><b><a href="#StartUps and Interfaces">StartUps and Interfaces</a></b></li>
+            <li><b><a href="#Ordered Sets">Ordered Sets</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#The Solid and Surfacic Features Set (Body)">The Solid and Surfacic
+          Features Set (Body)</a></strong>
+          <ul>
+            <li><strong><a href="#Creating a Body Feature">Creating Body Features</a></strong></li>
+            <li><b><a href="#Retrieving the PartBody">Retrieving the Main Body Feature</a></b></li>
+            <li><b><a href="#Retrieving Mtool">Retrieving Body Features</a></b></li>
+            <li><b><a href="#How to Operate a Body Feature?">How to Operate a
+              Body Feature?</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#The Surfacic Features Set (OGS/GS)">The Surfacic Features Set
+          (Ordered Geometrical Set &amp; Geometrical Set)</a></strong>
+          <ul>
+                       <li><b><a href="#Creating a Surfacic Features Set">Creating Surfacic Feature Sets</a></b></li>
+                       <li><b><a href="#Retrieving Surfacic Features Set">Retrieving Surfacic Features
+                        Sets</a></b></li>
+                       <li><b><a href="#The Private Surfacic Body">Private </a> </b><a href="#The Private Surfacic Body"><b> Surfacic Features Set</b></a></li>
+          </ul>
+        </li>
+                <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="What are the Geometrical Features Sets?"></a>What are the
+Geometrical Features Sets?</h3>
+<h4><a name="Two Kinds of Geometrical Features Sets"></a>Two Kinds of
+Geometrical Features Sets</h4>
+<p>The geometrical features set are mechanical features including geometrical features [<a href="#References">3</a>],
+and which can include another
+geometrical features sets. There are two kinds of geometrical features sets:</p>
+<ul>
+  <li>The solid and surfacic features set,</li>
+  <li>The surfacic features set.</li>
+</ul>
+<p>&nbsp;The following picture [<a href="#Fig.2">Fig.1</a>] shows them in the
+specification tree with their external name (English name) .</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The </i>Geometrical Features Set&nbsp;</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrPartBody-Body-OpenBody.jpg" width="404" height="273"></td>
+  </tr>
+</table>
+<ul>
+  <li><code><b>PartBody</b></code> and <code><b>Body</b>.2</code><b> </b>are <b>solid
+    and surfacic </b>features sets. They can contain both solid and surfacic
+    features.</li>
+  <li><code><b>Geometrical Set</b>.1</code>  (GS) and <code><b>Ordered Geometrical Set</b>.2</code>
+    (OGS) are <b>surfacic </b>
+    features sets.&nbsp;They can only contain surfacic features.</li>
+</ul>
+<h4><a name="StartUps and Interfaces"></a>StartUps and Interfaces</h4>
+<p>The geometrical features sets are features created from StartUps [<a href="#References">5</a>]
+deriving from the MechanicalRoot StartUp.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: The MechanicalRoot Architecture</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrMechanicalRootDiagram2.jpg" width="398" height="278"> </td>
+  </tr>
+</table>
+<ul>
+  <li>A <a href="#The Solid and Surfacic Features Set (Body)"> solid and surfacic
+    features set </a> is a feature instantiated from the <b> HybridBody</b> StartUp</li>
+  <li>A <a href="#The Surfacic Features Set (OGS/GS)"> surfacic
+    features set</a> is a feature instantiated from the <b> GSMTool</b> StartUp</li>
+</ul>
+<p>The next diagram, <a href="#Fig.3">Fig.3</a>, shows the interfaces which can help you
+to differentiate them.&nbsp;</p>
+
+<table border="0">
+<caption><a name="Fig.3">Fig.3</a> Geometrical Features Sets and their Interfaces</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrDiagramMechRoot2.gif" width="513" height="380"></td>
+  </tr>
+</table>
+
+<ul>
+  <li>
+    <p align="left">The <i><b>CATIMmiGeometricalSet</b></i> has been created to
+    distinguish a surfacic features set from an surfacic and solid features set;&nbsp;</li>
+  <li>
+    <p align="left">The <i><b>CATIMmiOrderedGeometricalSet</b></i> is
+    implemented by the GSMTool StartUp, and characterizes the Ordered Geometrical
+    Set features.</li>
+  <li>
+    <p align="left">The <i><b>CATIMmiNonOrderedGeometricalSet</b></i> is
+    implemented by the GSMTool StartUp, and characterizes the Geometrical Set
+    features.</li>
+</ul>
+
+<h4><a name="Ordered Sets"></a>Ordered Sets</h4>
+<p>The Ordered Geometrical Set, and Body are geometrical features sets
+introducing two concepts:</p>
+<ul>
+  <li><a href="#Ordered Set">Ordered Concept</a>
+  <li><a href="#Absorbent Set">Absorption Concept</a></li>
+</ul>
+<p>This section is an overview on these two concepts, you are encouraged to read
+the referenced article [<a href="#References">6</a>] to find out more
+technical information.</p>
+<ol>
+  <li><a name="Ordered Set"></a>Ordered Concept
+    <p>The goal is having a set inside which features are ordered from the basic
+    features (top) to features with huge historical graph (bottom). To reach it,
+    a rule has been defined: &quot;Each feature inside an ordered set can only
+    have as input specifications features which are above it&quot;.&nbsp; It has
+    been interactively implemented by following these behaviors:</p>
+    <ol>
+      <li>When editing a feature, it becomes the current feature,
+      <li>A new feature is inserted just below the current feature,
+      <li>The input specifications of a feature can only be features above it in
+        the specification tree using the <i>CATFeatureImportAgent </i>class,
+      <li>
+        <p>Only features above the current feature are visualized in the 3D
+        viewer.</p>
+             </li>
+    </ol>
+    <li><a name="Absorbent Set"></a>Absorption Concept
+    <p>The goal is having a set inside which only the relevant features are
+    taken into account. Let us consider the following sample:</p>
+    <table border="0">
+      <caption><a name="Fig.4">Fig.4</a> Split Operation</caption>
+      <tbody>
+        <tr>
+          <td><img src="images/CAAMmrLinearBodyWithHybridBody.jpg" border="0" width="349" height="213"></td>
+        </tr>
+      </tbody>
+    </table>
+      <p>On the [<a href="#Fig.4">Fig.4</a>], just above, you can see in the 3D
+    viewer, even if <code>Extrude.1</code> is not hidden (its icon is not
+    grayed), that only one surface is drawn. It is <code>Split.1, </code>the
+    surface coming from the split operation. <code>Extrude.1</code> has been
+    like &quot;absorbed&quot; by <code>Split.1</code>. So feature such as <code>Extrude.1</code>
+    are named <b>absorbed</b> features, and those as <code>Split.1</code> are
+    named <b>absorbent</b> features.&nbsp;</p>
+    <p>So the main particularities of an absorbed feature are:</p>
+    <ul>
+      <li>Absorbed features are not visualization as long as the absorbent
+        feature is visualized. Consequently there is no superimposition.
+      <li>Absorbed features are not selectable as long as the absorbent feature
+        is visualized. The <i>CATFeatureImportAgent </i>class has been also
+        modified to&nbsp;obtain this behavior.
+      <li>The main absorbed feature (an absorbent feature can have several
+        inputs) gives its graphic properties to the absorbent feature.
+      <li>Absorbed features are excluded of the result of the set [<a href="#References">7</a>]</li>
+    </ul>
+    <p>The interface which defines the type of a feature, is <i>CATIInputDescription</i>.</p>
+  </li>
+</ol>
+<p>In all Mechanical Modeler articles, the wording to designate both the Ordered
+Geometrical Set and
+the Body features, is &quot;<b>ordered set</b>&quot; .</p>
+<p>The <i>CATIGSMTool</i>
+ interface, implemented both by the OGS and the Body feature [<a href="#Fig.3">Fig.3</a>], enables
+you to know the status of a geometrical features set. The <code>GetType</code> method of
+this interface answers <code>1</code> for an ordered set,
+otherwise <code>0</code>.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="The Solid and Surfacic Features Set (Body)"></a>The Solid and Surfacic
+Features Set (Body)</h3>
+<p>The Body features occupy some volume in space, they can model
+objects of the real world and display attributes such as weight or center of
+gravity, once assigned a material specification.&nbsp;</p>
+<table>
+  <caption><i><a name="Fig.5">Fig.</a>5 Body Feature</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrMechanicalTool.jpg" width="427" height="319"></td>
+  </tr>
+</table>
+<p>The term &quot;solid and surfacic features set&quot; is also used because a
+Body feature can contain surfaces features in addition to solid features. These
+surfacic features can be: points, wires, and surfaces but not volumes.</p>
+<table border="0">
+<caption><i><a name="Fig.6">Fig.</a></i>6<i>: A Solid and Surfacic Features Set</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrHybridBody.jpg" width="347" height="307"></td>
+  </tr>
+</table>
+<h4><a name="Creating a Body Feature"></a>Creating Body Feature</h4>
+
+<p>The following table [<a href="#Tab.1">Tab.1</a>] shows that a Body
+feature can be only aggregated within a Part Feature [<a href="#References">2</a>],
+or an Ordered Geometrical Set.</p>
+
+<table border="2">
+<caption><a name="Tab.1">Tab.1</a> Where can be aggregated a Body Feature?</caption>
+  <tr>
+    <td></td>
+    <td><b>Part&nbsp;</b></td>
+    <td><b>GS</b></td>
+    <td><b>OGS</b></td>
+    <td><b>Body</b></td>
+  </tr>
+  <tr>
+    <td>Body</td>
+    <td>
+      <p align="center">X</td>
+    <td></td>
+    <td>
+      <p align="center">X</td>
+    <td></td>
+  </tr>
+</table>
+
+<p>The method to create a Body feature is the <code>CreatePRTTool</code>  
+ method of the <i>CATIMechanicalRootFactoty</i> interface. There are two signatures for this method.</p>
+<ul>
+  <li>The first <code>CreatePRTTool</code>  method is the following:&nbsp;</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  virtual CATISpecObject_var CreatePRTTool(const CATUnicodeString&amp; iUserName, 
+                                           const CATISpecObject_var&amp; iDestination) = 0 ;
+...</pre>
+    </td>
+  </tr>
+</table>
+  <table border="2" width="558">
+    <tr>
+      <td width="250"><code>iDestination </code>= Part</td>
+      <td width="294"><code>iDestination</code>  = OGS</td>
+    </tr>
+    <tr>
+      <td width="250">The new set is located at the end of the Part</td>
+      <td width="294"><code>iDestination</code> and the new Body have the same father. The new set is
+        located just after <code>iDestination</code></td>
+    </tr>
+  </table>
+  <li>The second <code>CreatePRTTool</code>  method is the following:</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  virtual CATISpecObject_var CreatePRTTool(const CATUnicodeString&amp; iUserName, 
+                                            const CATISpecObject_var&amp; iDestination, 
+                                            int iPosition ) = 0 ;
+...</pre>
+    </td>
+  </tr>
+</table>
+  <table border="2" width="619">
+    <tr>
+      <td width="236"></td>
+      <td width="179"><code>iDestination </code>= Part</td>
+      <td width="180"><code>iDestination</code>  = OGS</td>
+    </tr>
+    <tr>
+      <td width="236"><code>iPosition</code> = 0</td>
+    <td width="179">The new Body is located at the end of the Part</td>
+    <td width="180">The new Body is located at the end of <code>iDestination</code> &nbsp;</td>
+    </tr>
+    <tr>
+      <td width="236">0 &lt; <code>iPosition</code> &lt;= size of <code>iDestination</code></td>
+    <td width="179">The new Body is located at <code>iPosition</code> +1 within
+      Part</td>
+    <td width="180">The new set is located at <code>iPosition</code> +1 within <code>iDestination</code> </td>
+    </tr>
+  </table>
+
+</ul>
+<p>The <code>CreatePRTTool</code>  
+ methods check the validity of <code>iDestination</code>. If it is not the Part
+feature, or an Ordered Geometrical Set, the returned value is NULL_var.&nbsp;</p>
+<h4><a name="Retrieving the PartBody"></a>Retrieving the Main Body Feature</h4>
+<p>The main Body feature is the PartBody. It is automatically created at the
+Part document creation and cannot be deleted. The interface to retrieve it is <i>CATIPartRequest</i>
+(MecModInterfaces):
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  <b>CATIPartRequest</b> *pICATIPartRequestOnPart =NULL ;
+  HRESULT rc = spSpecObjectOnPart-&gt;QueryInterface(IID_CATIPartRequest,
+                              (void**)&amp;pICATIPartRequestOnPart );
+  if ( SUCCEEDED(rc) )
+  {
+     CATBaseUnknown_var ThePartBody ;
+     CATUnicodeString ViewContext=&quot;<b>MfDefault3DView</b>&quot;;
+     rc = pICATIPartRequestOnPart-&gt;<b>GetMainBody</b>(ViewContext,ThePartBody);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Where <code>spSpecObjectOnPart</code> is a smart pointer on the Part. Refer to the &quot;Retrieving
+the Part feature&quot;&nbsp; section of the referenced article [<a href="#References">2</a>]
+to see the way to retrieve this smart
+pointer.&nbsp;&nbsp;</p>
+<p><a name="About the context"></a><b>About the view context</b>: There is a
+default view context which is represented by the <b>MfDefault3DView</b> string.
+For some applications, such as Sheet Metal, another view context can be used to
+represent the same object in a different way. (<b>MfUnfoldedView</b> for an
+unfolded view). Except these two values, you can set anything, it will be the
+default 3D view, but it is not guarantee for future versions.</p>
+<h4><a name="Retrieving Mtool"></a>Retrieving Body Features</h4>
+<ul>
+  <li>To retrieve all the Body features inside the Part docuument, you can use the <i>CATIDescendants</i> (ObjectSpecsModeler)
+    interface</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIDescendants</b> *pIDescendantsOnPart =NULL ;
+  HRESULT rc = spSpecObjectOnPart-&gt;QueryInterface(IID_CATIDescendants,
+                                           (void**)&amp;pIDescendantsOnPart);
+  if ( SUCCEEDED(rc) )
+  {
+     CATLISTV(CATISpecObject_var) ListResult ;
+     rc = pIDescendantsOnPart -&gt;<b>GetAllChildren</b>(&quot;<b>CATIMechanicalTool</b>&quot;,
+                                                   ListResult);
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>GetAllChildren </code>method enables you to retrieve all the Body
+  features within the Part document. <i>CATIMechanicalTool</i> is a discriminant
+  interface for Body features see [<a href="#References">Fig.3</a>].</p>
+  <li>To retrieve only the Body features having a result [<a href="#References">7</a>], you can use the <i>CATIPartRequest</i> (MecModInterfaces)
+    interface:</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIPartRequest</b> *pIPartRequest =NULL ;
+  HRESULT rc = spSpecObjectOnPart-&gt;QueryInterface(IID_CATIPartRequest,
+                                                 (void**)&amp;pIPartRequest );
+  if ( SUCCEEDED(rc) )
+  {
+     CATLISTV(CATBaseUnknow_var) ListBodies;
+     CATUnicodeString ViewContext =&quot;<b>MfDefault3DView</b>&quot; ;
+     rc = pIPartRequest-&gt;<b>GetSolidBodies</b>(ViewContext,ListBodies);
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>ListBodies</code> contains the list of all Body features for which
+  the <i>CATIBodyRequest</i> interface does not return <code>E_FAIL</code>. All
+  these Body features are aggregated by the Part feature. Notice that with <i>CATIPartRequest</i>,
+  you should specify the <a href="#About the context">context</a>.&nbsp;&nbsp;</p>
+</ul>
+<p>Where <code>spSpecObjectOnPart</code> is a smart pointer on the Part. Refer to the &quot;Retrieving
+the Part feature&quot;&nbsp; section of the referenced article [<a href="#References">2</a>]
+to see the way to retrieve this smart
+pointer.&nbsp;&nbsp;</p>
+<h4><a name="How to Operate a Body Feature?"></a>How to Operate a Body Feature?</h4>
+<p>The PartBody is the main body, those which holds the design of the part to
+create. In the case of a complex piece, it can be easier to decompose the
+design. So, a part of the design can be created in sub-bodies, in Body features, and next the final design will be realized in making operations
+between the Body features. These operations are boolean operations.</p>
+<p>The boolean operations are: Assemble, Add, Remove, Intersect. Here is an
+example explaining the modifications which occur in a model due to a boolean
+operation.</p>
+<table>
+  <caption><i><a name="Fig.7">Fig.7</a>: Operation Between </i>Body <i>
+    Features</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrBodyOpere.jpg" width="424" height="213"></td>
+  </tr>
+</table>
+<p>In the above picture, you can see that <code>Body.2,</code> previously
+aggregated by Part1, has been operated
+with the PartBody. In the PartBody feature, a new feature, <code>Remove.1</code>
+has been created. <code>Body.2</code> is now aggregated by <code>Remove.1.</code></p>
+<p><i>CATIPrtBooleanFactory</i> (PartInterfaces) is the interface used to create
+boolean operations. The <i>CATIMechanicalTool</i>  (MecModInterfaces) and its <code>GetBooleanOperation</code>()
+method enables knowing if the Body feature is a body used by a boolean
+operation.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="The Surfacic Features Set (OGS/GS)"></a>The Surfacic Features Set (OGS/GS)</h3>
+<p>The surfacic features set is mainly made of 0 thickness elements, such as planes,
+surfaces, wireframe geometry. But it can also contain volumes.</p>
+<table>
+  <caption><i><a name="Fig.10">Fig.8</a>: Surfacic Features Sets</i></caption>
+  <tr>
+    <td><img src="images/CAAMmrResultSurfacicBody.jpg" width="438" height="335"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h4><a name="Creating a Surfacic Features Set"></a>Creating a Surfacic Features
+Set</h4>
+
+<p>The following table [<a href="#Tab.2">Tab.2</a>] summarizes where a surfacic features set can be aggregated. The first
+column is the feature to
+aggregate, and the first row specifies the aggregating feature.</p>
+
+<table border="2">
+<caption><a name="Tab.2">Tab.2</a> Where to aggregate an OGS or a GS?</caption>
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>Part&nbsp;</b></td>
+    <td><b>GS</b></td>
+    <td><b>OGS</b></td>
+    <td><b>Body</b></td>
+  </tr>
+  <tr>
+    <td><b>GS</b></td>
+    <td>
+      <p align="center">X</td>
+    <td>
+      <p align="center">X</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><b>OGS</b></td>
+    <td>
+      <p align="center">X</td>
+    <td>&nbsp;</td>
+    <td>
+      <p align="center">X</td>
+    <td>
+      <p align="center">X</td>
+  </tr>
+</table>
+
+<p>Such as the Body feature, the methods to create an Ordered Geometrical Set,
+or a Geometrical Set are methods of the <i>CATIMechanicalRootFactory</i>
+interface. The <code>CreateGeometricalSet</code>  method enables you to create a
+Geometrical Set, and the <code>CreateOrderedGeometricalSet</code>  enables you
+to create an Ordered Geomerical Set. Both having the same behaviors, only the
+first one has been used to explain their usage.&nbsp;</p>
+<p>The signature of&nbsp; the <code>CreateGeometricalSet</code> method is the
+following:&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ virtual HRESULT CreateGeometricalSet(const CATUnicodeString&amp; iUserName, 
+                                            const CATISpecObject_var&amp; iDestination,
+                                            CATISpecObject_var  &amp; oGeomSet,
+                                            int iPosition=-1 ) = 0 ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The following array summarizes where is located the newly created set by
+taken the different parameters of the method into account.</p>
+<table border="2" width="643">
+  <tr>
+    <td width="206">&nbsp;</td>
+    <td width="179"><code>iDestination = </code>Part</td>
+    <td width="234"><code>iDestination </code><font face="Math B">g</font> Part</td>
+  </tr>
+  <tr>
+    <td width="206"><code>iPosition</code> = -1</td>
+    <td width="179">The new set is located at the end of the Part</td>
+    <td width="234"><code>iDestination </code> and the new set have the same father. The new set is
+      just after <code>iDestination</code></td>
+  </tr>
+  <tr>
+    <td width="206"><code>iPosition</code> = 0</td>
+    <td width="179">The new set is located at the end of the Part</td>
+    <td width="234">The new set is located at the end of <code>iDestination</code></td>
+  </tr>
+  <tr>
+    <td width="206">&nbsp;0 &lt; <code>iPosition</code> &lt;= size of <code>iDestination</code></td>
+    <td width="179">The new set is located at <code>iPosition</code> +1 within
+      Part</td>
+    <td width="234">The new set is located at <code>iPosition</code> +1 within <code>iDestination</code></td>
+  </tr>
+  <tr>
+    <td width="206">Otherwise&nbsp;</td>
+    <td width="179">E_FAIL</td>
+    <td width="234">E_FAIL</td>
+  </tr>
+</table>
+<p>The <code>CreateGeometricalSet</code>   and <code>CreateOrderedGeometricalSet</code>  
+methods check the validity of <code>iDestination</code> based on the previous
+table [<a href="#Tab.2">Tab.2</a>]</p>
+<h4><a name="Retrieving Surfacic Features Set"></a>Retrieving Surfacic Features
+Set</h4>
+<p>There are two ways to retrieve a surfacic features set:</p>
+<ul>
+  <li><i>CATIDescendants</i>, without context:</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIDescendants</b> *pIDescendantsOnPart =NULL ;
+  HRESULT rc = spSpecObjectOnPart-&gt;QueryInterface(IID_CATIDescendants,
+                                           (void**)&amp;pIDescendantsOnPart);
+  if ( SUCCEEDED(rc) )
+  {
+     CATLISTV(CATISpecObject_var) ListResult ;
+     rc = pIDescendantsOnPart -&gt;<b>GetDirectChildren</b>(&quot;<b>CATIMmiOrderedGeometricalSet</b>&quot;,
+                                                   ListResult);
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>In this example, you retrieve all the OGS directly under the Part feature, because the <code>GetDirectChildren</code> method is applied
+  on the MechanicalPart feature and <i>CATIMmiOrderedGeometricalSet</i> is
+  specific to the OGS [<a href="#References">Fig.3</a>]. With <code>GetAllChildren </code>on the same
+  feature, you retrieve all the OGS contained in the specification
+  container. To retrieve the OGS contained in another set, execute the <code>GetDirectChildren</code> method on
+  this set.&nbsp;</p>
+  <p>Using <i>CATIMmiOrderedGeometricalSet</i>  you retrieve the OGS, using <i>CATIMmiNonOrderedGeometricalSet</i> 
+  you retrieve the GS, and with <i>CATIMmiGeometricalSet</i>  you retrieve the
+  surfacic features sets (OGS+GS).</p>
+  <li><i>CATIPartRequest</i>, with context:</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIPartRequest</b> *pICATIPartRequestOnPart = NLLL ;
+  HRESULT rc = spSpecObjectOnPart-&gt;QueryInterface(IID_CATIPartRequest,
+                                       (void**)&amp;pICATIPartRequestOnPart );
+  if ( SUCCEEDED(rc) )
+  {
+     CATListValCATBaseUnknown_var ListSurfBodies ;
+     CATUnicodeString ViewContext =&quot;<b>MfDefault3DView</b>&quot;;
+     rc = pICATIPartRequestOnPart-&gt;<b>GetSurfBodies</b>(ViewContext,ListSurfBodies);
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>ListBodies</code> contains the list of all surfacic features sets for which
+  the <i>CATIBodyRequest</i> interface does not return <code>E_FAIL</code>: all
+  the Geometrical Set of the Part document, but only the Ordered Geometrical Set
+  features aggregated by the Part Feature [<a href="#References">7</a>].</p>
+  <p>Notice that with <i>CATIPartRequest</i>,
+  you should specify the <a href="#About the context">context</a>.&nbsp;&nbsp;</p>
+</ul>
+<p>Where <code>spSpecObjectOnPart</code> is a smart pointer on the Part. Refer to the &quot;Retrieving
+the Part feature&quot;&nbsp; section of the referenced article [<a href="#References">2</a>]
+to see the way to retrieve this smart
+pointer.&nbsp;&nbsp;</p>
+<h4><a name="The Private Surfacic Body"></a>Private Surfacic Features Set&nbsp;</h4>
+<p>A private surfacic features set is protected from interactive
+modifications. It means that end users cannot modify the structure of  such a 
+set:</p>
+<ul>
+    <li>No deletion of its features</li>
+    <li>No insertion of features</li>
+</ul>
+<p>Note, that however the private surfacic set is not protected from all CAA 
+code modifications. <i>CATIMechanicalRootFactory</i> will not allow to define a 
+private set as destination to aggregate a set. On the other hand, <i>CATIDescendants</i> 
+interface will allow to append a set in a private set. So to aggregate a set 
+in a  set, to benefit from all necessary controls in terms of 
+aggregation and privacy, the use of&nbsp; <i>CATIMechanicalRootFactory </i>is 
+advised against <i>CATIDescendants</i>.</p>
+<p>So generally speaking, if the end user wants to aggregate a feature, not 
+necessarily a set, in a set, if he wants to use <i>CATIDescendants</i> he should 
+first test if the set is private thanks to <i>CATIGSMTool </i>interface and<b>
+</b>&nbsp;its IsPrivate method. Note that a Body feature, implementing <i>CATIGSMTool too</i>, 
+can be private.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The specification container is one of the containers of the Part document. It
+groups together the mechanical features. Part of these are the geometrical
+features set. There are two types of geometrical
+features set:</p>
+<ul>
+  <li>The solid and surfacic features set, the Body feature</li>
+  <li>The surfacic features set, the Ordered Geometrical Set and the Geometrical
+    Set</li>
+</ul>
+<p>The following table summarizes what they can contain (the first row is the
+aggregating feature):</p>
+
+<table border="2" height="188">
+  <tr>
+    <td height="16">&nbsp;</td>
+    <td height="16"><b>Part&nbsp;</b></td>
+    <td height="16"><b>GS</b></td>
+    <td height="16"><b>OGS</b></td>
+    <td height="16"><b>Body</b></td>
+  </tr>
+  <tr>
+    <td height="16">GS</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">&nbsp;X</td>
+    <td align="center" height="16">&nbsp;</td>
+    <td align="center" height="16">&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td height="16">OGS</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">&nbsp;</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">X</td>
+  </tr>
+  <tr>
+    <td height="16">Body</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">&nbsp;</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16"></td>
+  </tr>
+  <tr>
+    <td height="6"></td>
+    <td align="center" height="6"></td>
+    <td align="center" height="6"></td>
+    <td align="center" height="6"></td>
+    <td align="center" height="6"></td>
+  </tr>
+  <tr>
+    <td height="16">Solid features</td>
+    <td align="center" height="16"></td>
+    <td align="center" height="16"></td>
+    <td align="center" height="16"></td>
+    <td align="center" height="16">X</td>
+  </tr>
+  <tr>
+    <td height="16">Point, Wire (including Sketch), Surface</td>
+    <td align="center" height="16"></td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">X</td>
+  </tr>
+  <tr>
+    <td height="16">Volume</td>
+    <td align="center" height="16"></td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16">X</td>
+    <td align="center" height="16"></td>
+  </tr>
+</table>
+<p>This above table essentially shows: </p>
+<ol>
+  <li>A Geometrical Set (GS) can only be included into a non ordered set.</li>
+  <li>An ordered set (OGS/Body) can only be included into an ordered set.</li>
+  <li>A volume, although a surfacic feature, cannot be included into a Body feature, such
+    as the other surfacic features: point, wire, and surface.</li>
+</ol>
+<p>The main interfaces are:</p>
+<ul>
+  <li><i>CATIMechanicalRootFactory</i> : to create a geometrical features set</li>
+  <li><i>CATIPartRequest:</i> to retrieve the geometrical features sets</li>
+  <li><i>CATIGSMTool</i>: to know if a geometrical features set is ordered or
+    not.</li>
+  <li><i>CATIMmiOrderedGeometricalSet</i>, <i>CATIMmiNonOrderedGeometricalSet</i>,
+    <i>CATIMmiGeometricalSet</i> to determine the nature of the set.&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrContentsSpecCont0.htm">The Contents of the Specification
+      Container - The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the Specification
+      Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrMechModOverview.htm">Mechanical Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrOrderLinearBody.htm">Order and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism
+      Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2003]</td>
+    <td valign="top">Ordered Geometrical Set Introduction + Open_Body renamed in
+      Geometrical Set&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [May 2004]</td>
+    <td valign="top">Document updated for R14 novelties</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

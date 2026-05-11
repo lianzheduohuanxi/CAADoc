@@ -1,0 +1,462 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperators Class CATTopSweepSkinSkinSegment</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperators.htm" href="../TopologicalOperators.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperators";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopSweepSkinSkinSegment"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperators <script type="text/javascript" > writeClassCharacteristic(); </script> CATTopSweepSkinSkinSegment</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTopSweepSkinSkinSegment_54919','CATTopSweepSkinSkinSegment','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTopSweepSkinSkinSegment</b>
+</p>
+<p>
+<b><i> Class defining the topological operator that creates a sweep between a two skin bodies.</i></b><br>
+
+<br>The sweep is defined by
+ <ul>
+ <li>a skin body, to which the generated sweep is tangent and defining the first extremity of the sweep.
+ <li>a skin body, to which the generated sweep is tangent and defining the second extremity of the sweep..
+ <li>a spine wire body:  defines the moving plane (orthogonal to the spine) that is
+ swept along the spine. 
+ </ul>
+ As several solutions can be found, signatures are defined to distinguish them
+ <ul>
+ <li>signature with regards to the skin orientation: the solution is on the semi-space defined by the
+ normal to the skin, or in the opposite semi-space, or in both.
+ <li>for a same skin1 and skin2 signatures, the rank of the solution.
+ </ul>
+ This operator follows the general scheme of the topological operators producing several resulting bodies:
+ <ul>
+<li> Create the operator with the global function <script type="text/javascript"> activateLinkAnchor('CATCreateTopSweepSkinSkinSegment','','CATCreateTopSweepSkinSkinSegment') </script> <li> Set the parameters,
+<li> Run,
+<li> Get the resulting bodies (in this case, use the iterator on the resulting bodies, because
+ several bodies can be solution of the computation).
+<li> Delete the operator with the usual C++ <tt>delete</tt> operator.
+</ul>
+ Sample:
+ <pre> 
+ CATTopSweepSkinSkinSegment * pOp =  CATCreateTopSweepSkinSkinSegment(factory,Skin1,Skin2,Spine);
+ pOp->Run();
+ pOp->BeginningResult();
+ int nbBodies = pOp->GetNumberOfResults();
+ for (int iBody = 1 ; iBody <= nbBodies ; iBody ++)
+ {
+   pOp->NextResult();
+   CATBody * pCurBody = pOp->GetResult(pReport);
+ }  
+ delete pOp;
+</pre>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATTopSweepSkinSkinSegment()"><b>~CATTopSweepSkinSkinSegment</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetFilletReconfigFillFunction()"><b>GetFilletReconfigFillFunction</b></a>()
+<dd>  <dt> o 
+    <a href="#GetProfileInfo()"><b>GetProfileInfo</b></a>()
+<dd>  <dt> o 
+    <a href="#GetResultInformation(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)"><b>GetResultInformation</b></a>(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)
+<dd>  Retrieves the signature relative to the current resulting body.
+ <dt> o 
+    <a href="#GetResultInformation(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)"><b>GetResultInformation</b></a>(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)
+<dd>  <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetFirstCoupledOrientation(int)"><b>SetFirstCoupledOrientation</b></a>(int)
+<dd>  Defines the signature of the desired results with regards to the first coulped orientation.
+ <dt> o 
+    <a href="#SetFirstCoupledOrientation(int)"><b>SetFirstCoupledOrientation</b></a>(int)
+<dd>  <dt> o 
+    <a href="#SetFirstShellModeTrim(CATDynSegmentationMode)"><b>SetFirstShellModeTrim</b></a>(CATDynSegmentationMode)
+<dd>  <dt> o 
+    <a href="#SetFirstShellModeTrim(CATDynSegmentationMode)"><b>SetFirstShellModeTrim</b></a>(CATDynSegmentationMode)
+<dd>   Defines the mode chosen for first skin
+ 
+ <dt> o 
+    <a href="#SetFirstShellOrientation(int)"><b>SetFirstShellOrientation</b></a>(int)
+<dd>  <dt> o 
+    <a href="#SetFirstShellOrientation(int)"><b>SetFirstShellOrientation</b></a>(int)
+<dd>  Defines the signature of the desired results with regards to the first skin orientation.
+ <dt> o 
+    <a href="#SetReconfigFillFunction(CATFilletReconfigFillFunction)"><b>SetReconfigFillFunction</b></a>(CATFilletReconfigFillFunction)
+<dd>  <dt> o 
+    <a href="#SetSecondCoupledOrientation(int)"><b>SetSecondCoupledOrientation</b></a>(int)
+<dd>  <dt> o 
+    <a href="#SetSecondCoupledOrientation(int)"><b>SetSecondCoupledOrientation</b></a>(int)
+<dd>  Defines the signature of the desired results with regards to the second coulped orientation.
+ <dt> o 
+    <a href="#SetSecondShellModeTrim(CATDynSegmentationMode)"><b>SetSecondShellModeTrim</b></a>(CATDynSegmentationMode)
+<dd>   Defines the mode chosen for second skin
+ 
+ <dt> o 
+    <a href="#SetSecondShellModeTrim(CATDynSegmentationMode)"><b>SetSecondShellModeTrim</b></a>(CATDynSegmentationMode)
+<dd>  <dt> o 
+    <a href="#SetSecondShellOrientation(int)"><b>SetSecondShellOrientation</b></a>(int)
+<dd>  Defines the signature of the desired results with regards to the second skin orientation.
+ <dt> o 
+    <a href="#SetSecondShellOrientation(int)"><b>SetSecondShellOrientation</b></a>(int)
+<dd> </dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATTopSweepSkinSkinSegment"></a><a name="~CATTopSweepSkinSkinSegment()"></a> <dt> o <b>~CATTopSweepSkinSkinSegment</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATTopSweepSkinSkinSegment</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetFilletReconfigFillFunction"></a><a name="GetFilletReconfigFillFunction()"></a> <dt> o <b>GetFilletReconfigFillFunction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATFilletReconfigFillFunction','CATFilletReconfigFillFunction')</script>  <b>GetFilletReconfigFillFunction</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetProfileInfo"></a><a name="GetProfileInfo()"></a> <dt> o <b>GetProfileInfo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATSweepProfileInfo','CATSweepProfileInfo *')</script>  <b>GetProfileInfo</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetResultInformation"></a><a name="GetResultInformation(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)"></a> <dt> o <b>GetResultInformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetResultInformation</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioFirstShellOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioSecondShellOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oCoupledFirstOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oCoupledSecondOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioIndex</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the signature relative to the current resulting body.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioFirstShellOrientation</tt>
+   <dd> The signature with regards to the first skin orientation.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The results are in the semi-space defined by the normal to the skin.
+ <dt><tt>-1</tt></dt><dd> The results are in the semi-space defined by the opposite to the normal to the skin.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The results change of semi-space along the spine. 
+ </dl>
+ </dd>
+    <dt><tt> ioSecondShellOrientation</tt>
+   <dd> The signature with regards to the second skin orientation.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The results are in the semi-space defined by the normal to the skin.
+ <dt><tt>-1</tt></dt><dd> The results are in the semi-space defined by the opposite to the normal to the skin.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The results change of semi-space along the spine. 
+ </dl>
+ </dd>
+    <dt><tt> oCoupledFirstOrientation</tt>
+   <dd> The orientation of the trihedron defined by the the spine, the normal to the first skin and
+ the tangent to the profile.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The output results are such that the triedron is counter clockwise.
+ <dt><tt>-1</tt></dt><dd> The output results are such that the triedron is clockwise.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The orientation of the trihedron changes along the spine. 
+ </dl>
+ </dd>
+    <dt><tt> oCoupledSecondOrientation</tt>
+   <dd> The orientation of the trihedron defined by the the spine, the normal to the second skin and
+ the tangent to the profile.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The output results are such that the triedron is counter clockwise.
+ <dt><tt>-1</tt></dt><dd> The output results are such that the triedron is clockwise.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The orientation of the trihedron changes along the spine. 
+ </dl>
+ </dd>
+    <dt><tt> ioIndex</tt>
+   <dd> The rank (beginning at <tt>1</tt>) of the current body inside a given quadruple 
+ (<tt>ioFirstShellOrientation, ioSecondShellOrientation, oCoupledFirstOrientation, oCoupledSecondOrientation</tt>)</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResultInformation"></a><a name="GetResultInformation(int&amp;,int&amp;,int&amp;,int&amp;,int&amp;)"></a> <dt> o <b>GetResultInformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetResultInformation</b>(<td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioFirstShellOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioSecondShellOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oCoupledFirstOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oCoupledSecondOrientation</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>ioIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs <tt>this</tt> operator.
+ <br>To retrieve the resulting bodies, use the iterator on the bodies provided by 
+<script type="text/javascript"> activateLinkAnchor('CATTopMultiResult','','CATTopMultiResult') </script>.
+</dl>
+<a name="SetFirstCoupledOrientation"></a><a name="SetFirstCoupledOrientation(int)"></a> <dt> o <b>SetFirstCoupledOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstCoupledOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the signature of the desired results with regards to the first coulped orientation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrientation</tt>
+   <dd> The orientation of the trihedron defined by the the spine, the normal to the first skin and
+ the tangent to the profile.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The output results are such that the triedron is counter clockwise.
+ <dt><tt>-1</tt></dt><dd> The output results are such that the triedron is clockwise.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The orientation of the trihedron changes along the spine. 
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFirstCoupledOrientation"></a><a name="SetFirstCoupledOrientation(int)"></a> <dt> o <b>SetFirstCoupledOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstCoupledOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetFirstShellModeTrim"></a><a name="SetFirstShellModeTrim(CATDynSegmentationMode)"></a> <dt> o <b>SetFirstShellModeTrim</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstShellModeTrim</b>(<td><script type="text/javascript"> activateLink('CATDynSegmentationMode','CATDynSegmentationMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetFirstShellModeTrim"></a><a name="SetFirstShellModeTrim(CATDynSegmentationMode)"></a> <dt> o <b>SetFirstShellModeTrim</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstShellModeTrim</b>(<td><script type="text/javascript"> activateLink('CATDynSegmentationMode','CATDynSegmentationMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Defines the mode chosen for first skin
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The segmentation mode (trim - no trim - trim on support)</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFirstShellOrientation"></a><a name="SetFirstShellOrientation(int)"></a> <dt> o <b>SetFirstShellOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstShellOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetFirstShellOrientation"></a><a name="SetFirstShellOrientation(int)"></a> <dt> o <b>SetFirstShellOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFirstShellOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the signature of the desired results with regards to the first skin orientation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrientation</tt>
+   <dd> The semi-space to which the solution belongs.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The results are in the semi-space defined by the normal to the skin.
+ <dt><tt>-1</tt></dt><dd> The results are in the semi-space defined by the opposite to the normal to the skin.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The results change of semi-space along the spine. 
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetReconfigFillFunction"></a><a name="SetReconfigFillFunction(CATFilletReconfigFillFunction)"></a> <dt> o <b>SetReconfigFillFunction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetReconfigFillFunction</b>(<td><script type="text/javascript"> activateLink('CATFilletReconfigFillFunction','CATFilletReconfigFillFunction')</script> <td><tt>iFillFct</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetSecondCoupledOrientation"></a><a name="SetSecondCoupledOrientation(int)"></a> <dt> o <b>SetSecondCoupledOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondCoupledOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetSecondCoupledOrientation"></a><a name="SetSecondCoupledOrientation(int)"></a> <dt> o <b>SetSecondCoupledOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondCoupledOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the signature of the desired results with regards to the second coulped orientation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrientation</tt>
+   <dd> The orientation of the trihedron defined by the the spine, the normal to the second skin and
+ the tangent to the profile.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The output results are such that the triedron is counter clockwise.
+ <dt><tt>-1</tt></dt><dd> The output results are such that the triedron is clockwise.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The orientation of the trihedron changes along the spine. 
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSecondShellModeTrim"></a><a name="SetSecondShellModeTrim(CATDynSegmentationMode)"></a> <dt> o <b>SetSecondShellModeTrim</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondShellModeTrim</b>(<td><script type="text/javascript"> activateLink('CATDynSegmentationMode','CATDynSegmentationMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Defines the mode chosen for second skin
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The segmentation mode (trim - no trim - trim on support)</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSecondShellModeTrim"></a><a name="SetSecondShellModeTrim(CATDynSegmentationMode)"></a> <dt> o <b>SetSecondShellModeTrim</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondShellModeTrim</b>(<td><script type="text/javascript"> activateLink('CATDynSegmentationMode','CATDynSegmentationMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="SetSecondShellOrientation"></a><a name="SetSecondShellOrientation(int)"></a> <dt> o <b>SetSecondShellOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondShellOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the signature of the desired results with regards to the second skin orientation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrientation</tt>
+   <dd> The semi-space to which the solution belongs.
+<br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>1</tt></dt><dd> The results are in the semi-space defined by the normal to the skin.
+ <dt><tt>-1</tt></dt><dd> The results are in the semi-space defined by the opposite to the normal to the skin.
+ <dt> <tt>0</tt></dt><dd> All the results must be output (<tt>1</tt>, <tt>-1</tt>, <tt>2</tt> cases all together).
+ <dt> <tt>2</tt></dt><dd> The results change of semi-space along the spine. 
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSecondShellOrientation"></a><a name="SetSecondShellOrientation(int)"></a> <dt> o <b>SetSecondShellOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSecondShellOrientation</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iOrientation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopSweepSkinSkinSegment.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalOperators</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

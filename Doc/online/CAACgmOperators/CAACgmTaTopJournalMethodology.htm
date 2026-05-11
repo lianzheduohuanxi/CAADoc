@@ -1,0 +1,917 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="topictype" content="Ta" />
+<meta name="devlang" content="cpp" />
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding the Topological Journal</title>
+<style type="text/css">
+.style1 {
+	font-family: Courier;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Topological Journal: Methodology</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article is intended for those of you who have to create a topological 
+		journal. A journal must comply with a set of rules otherwise it is invalid. 
+		The usual symptom revealing an invalid journal is a non appropriate selectability 
+		of cells. This problem is related to the naming mechanism of BRep features 
+		which relies on the topological journal. This article explains why in some 
+		cases a journal can be invalid and what you have to do to fix it.</p>
+		<ul>
+			<li><a href="#Definition">Topology and Generic Naming</a></li>
+			<li><a href="#The CGM Journal Description">The Topological Journal Description</a>
+			<ul>
+				<li><a href="#The types of events">The Type of Events</a>
+				<ul>
+					<li><a href="#The Creation">Creation</a></li>
+					<li><a href="#The Modification">Modification</a></li>
+					<li><a href="#The Deletion">Deletion</a></li>
+					<li><a href="#The Subdivision">Subdivision</a></li>
+					<li><a href="#The Absorption">Absorption</a></li>
+					<li><a href="#The Keep">Keep</a></li>
+				</ul>
+				</li>
+				<li><a href="#The Cells Referred to in the Report">The Cells Referred 
+				to in the Report</a>
+				<ul>
+					<li><a href="#The Type of Cells">The Types of Cells</a></li>
+					<li><a href="#Backtrackedcells">The Backtracked Cells</a></li>
+				</ul>
+				</li>
+				<li><a href="#The Additional Information">The Additional Information</a></li>
+				<li><a href="#The Journal Operands">The Journal Operands</a>
+				<ul>
+					<li><a href="#The Copy/ No Copy Mode">The Copy/No Copy Mode</a></li>
+				</ul>
+				</li>
+			</ul>
+			</li>
+			<li><a href="#Creating a Journal">An Example from the CAA Forum</a>
+			<ul>
+				<li><a href="#The Code Steps">The Code Steps</a></li>
+				<li><a href="#The Default Journal">The Default Journal for the Topological 
+				Operations after the Tass Call</a></li>
+				<li><a href="#The Selectability Problems">The Selectability Problems</a></li>
+				<li><a href="#Preliminary diagnosis">The Preliminary Diagnosis</a></li>
+				<li><a href="#The Solution">The Solution</a></li>
+				<li><a href="#Tips to Create a New Journal">Tips to Create a New 
+				Journal</a></li>
+			</ul>
+			</li>
+			<li><a href="#Checking your Journal">Checking Your Journal</a>
+			<ul>
+				<li><a href="#Preliminary Operations">Preliminary Operations</a>
+				<ul>
+					<li><a href="#Tass">The Tass Operation</a></li>
+					<li><a href="#JournalDumping">Dumping the Journal</a></li>
+				</ul>
+				</li>
+				<li><a href="#JournalChecking">The CAACheck Operation</a>
+				<ul>
+					<li><a href="#RulesTochecked">The Rules to Be Checked</a></li>
+					<li><a href="#The ERRORS and WARNINGS">The ERRORS and WARNINGS</a></li>
+					<li><a href="#The generated files">The Generated Files</a></li>
+				</ul>
+				</li>
+			</ul>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Definition"></a>Topology and Generic Naming</h2>
+<p>A feature cannot refer directly to the topology that is used 
+to specify it. The reason for this, is that the topology as well as the geometry 
+can be deleted and rebuilt during the Update operation. Suppose you create a prism 
+by extruding a simple spline. The spline is assigned a tag as well as the resulting 
+cells of the prism. Modify the spline and update the prism, the tags will all be 
+modified. To sort out this problem, a stable way to refer to parent objects was 
+to be found. The generic naming is a description of the history of a cell that gets 
+rid of tags and is stable when a feature is updated.</p>
+<p>When you move the mouse cursor over a geometric object or select it interactively, 
+CATIA creates a selection object (CATIBRepAccess). These CATIBRepAccess objects 
+are not persistent, they are deleted whenever the document is updated. To keep trace 
+of these objects, CATIA uses specific features called BRep features that store stable 
+labels describing the topology. The generic name of a cell is constructed by reading 
+the a &quot;graph&quot; that describes the Parent-Children links between the cells of different 
+bodies. Building this graph requires information which is provided in the topological 
+journal and is under the responsibility of CGM operators. For more information, 
+take a look at the &quot;Generic Naming Overview&quot; article (Mechanical Modeler).</p>
+<p>In brief, a cell name looks something like this:</p>
+<pre>&quot;Cell dimension + Parent feature + Additional information&quot;</pre>
+<p>Keeping this in mind will help you understand the journal naming rules.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="The CGM Journal Description"></a>The CGM Journal Description</h2>
+<p>A topological journal is made up of a list of entries. Each entry is an order 
+which describes how resulting cells are created or modified through events.</p>
+<p>The syntax of an 
+entry or order is:</p>
+<p>[<em>parent cells</em>] -&gt; <em>Event</em> - [<em>children cells</em>]&nbsp; - info</span></p>
+There can be no parent cells and the <tt>info</tt> data is optional.
+<br>
+<h3><a name="The types of events"></a>The Types of Events</h3>
+<p>The types of events that can appear in a journal are the</p>
+<ul>
+	<li>Creation</li>
+	<li>Modification</li>
+	<li>Deletion</li>
+	<li>Subdivision</li>
+	<li>Absorption</li>
+	<li>and Keep events.</li>
+</ul>
+<h4><a name="The Creation"></a>The Creation Order (CATCGMEvent::Creation)</h4>
+<p>This order notifies that a new cell has been created by a
+<span class="style1">Creation</span> event. A new cell can be created 
+from scratch or from one or several cells. An additional information intended to 
+differentiate the cells can be added to a Creation order. In the example below, 
+&quot;info 0&quot; is used to differentiate the side faces, &quot;info 1&quot; is used to specify a 
+bottom face and &quot;info 2&quot; characterizes a top face.</p>
+<table>
+	<tr>
+		<th>Input Body</th>
+		<th>Resulting Body (After CATTopPrism)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Body" src="images/CAACgmTopInitialFace.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopPadResult.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2"><strong>Report</strong></th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Edge_1]-&gt;Creation[Face_C] info = 0
+[Edge_2]-&gt;Creation[Face_D] info = 0
+[Edge_3]-&gt;Creation[Face_E] info = 0
+[Edge_4]-&gt;Creation[Face_F] info = 0
+[Face_1]-&gt;Creation[Face_A] info = 1
+[Face_1]-&gt;Creation[Face_B] info = 2</pre>
+		</td>
+	</tr>
+</table>
+<h4><a name="The Modification"></a>The Modification Order (CATCGMJournal::Modification)</h4>
+<p>This order notifies that a given cell is the result of a modification of an input 
+cell. The Modification order is to be used whenever the geometry is re-used with 
+different limitations. Except in very few cases, a Modification order should have 
+no additional information.</p>
+<table>
+	<tr>
+		<th>Input Body</th>
+		<th>Resulting Body (After CATDynFillet)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Body" src="images/CAACgmTopInitialPadForFillet.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopFilletPad.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Face_1]-&gt;Modification[Face_A]
+[Face_1],[Face_2]-&gt;Creation[Face_C]
+[Face_2]-&gt;Modification[Face_B]
+[Face_3]-&gt;Modification[Face_D]
+[Face_4]-&gt;Modification[Face_E]</pre>
+		</td>
+	</tr>
+</table>
+<h4><a name="The Deletion"></a>The Deletion Order (CATCGMJournal::Deletion)</h4>
+<p>This order notifies that a given cell belonging to an input body in
+<a href="#The Copy/ No Copy Mode">Copy Mode</a> is to be deleted in the result body.</p>
+<table>
+	<tr>
+		<th>Input bodies</th>
+		<th>Resulting body (After CATHybSplit)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Bodies" src="images/CAACgmTopBeforeSplit.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopAfterSplit.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Face_1, Edge_1] -Creation -&gt; [Vertex_A]
+[Vertex_1] -Deletion
+[Edge_1] -Modification -&gt; [Edge_A]</pre>
+		</td>
+	</tr>
+</table>
+<h4><a name="The Subdivision"></a>The Subdivision Order (CATCGMJournal::Subdivision)</h4>
+<p>This order is a particular type of Modification that notifies that one cell of 
+an input body in <a href="#The Copy/ No Copy Mode">Copy Mode</a> is modified into 
+two or more cells into the resulting body.</p>
+<table>
+	<tr>
+		<th>Input bodies</th>
+		<th>Resulting body (After CATHybSplit)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Bodies" src="images/CAACgmTopSplitSubdivideBef.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopSplitSubdivideAft.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Edge_1, Edge_2] -Creation -&gt; [Vertex_B]
+[Edge_1, Edge_3] -Creation -&gt; [Vertex_A]
+[Edge_1] -Subdivision -&gt; [Edge_A, Edge_B]</pre>
+		</td>
+	</tr>
+</table>
+<h4>
+</h4>
+<h4><a name="The Absorption"></a>The Absorption Order (CATCGMJournal::Absorption)</h4>
+<p>This order is a particular type of Modification that notifies that two or more 
+cells of an input body in <a href="#The Copy/ No Copy Mode">Copy Mode</a> are merged 
+into one cell into the resulting body.</p>
+<table>
+	<tr>
+		<th>Input bodies</th>
+		<th>Resulting body (After CATDynBoolean Add)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Bodies" src="images/CAACgmTopAbsorbBefore.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopAbsorbAfter.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Face_5] -Modification -&gt; [Face_B]
+[Face_6] -Deletion
+[Face_8] -Modification -&gt; [Face_F]
+[Face_2] -Modification -&gt; [Face_E]
+[Face_3] -Modification -&gt; [Face_D]
+[Face_4] -Modification -&gt; [Face_C]
+[Face_1, Face_7] -Absorption -&gt; [Face_A]</pre>
+		</td>
+	</tr>
+</table>
+<p><strong>Note</strong>: In the figure above, Face_6 relies on Face_8. Face_8 is 
+modified and becomes Face_F after the split operation while Face_6 is deleted.</p>
+<h4><a name="The Keep"></a>The Keep Order (CATCGMJournal::Keep)</h4>
+<p>This order specifies that a cell belonging to an input body in
+<a href="#The Copy/ No Copy Mode">No Copy</a> mode is reused in the resulting body. 
+The CAACheck operation issues a warning whenever a cell belonging to an input body 
+in Copy mode is declared as kept in the journal.</p>
+<p>In the example below, the CATHybBoundary operator generates a body that shares 
+the bording edges with the input body which is in
+<a href="#The Copy/ No Copy Mode">No Copy</a> mode.</p>
+<table>
+	<tr>
+		<th>Input Body</th>
+		<th>Resulting Body (After CATHybBoundary)</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Input Body" src="images/CAACgmTopBoundaryAfter.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopBoundaryBefore.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Edge_1]-&gt;Keep
+[Edge_2]-&gt;Keep
+[Edge_3]-&gt;Keep
+[Edge_4]-&gt;Keep</pre>
+		</td>
+	</tr>
+</table>
+<h3><a name="The Cells Referred to in the Report"></a>The Cells Referred to in the 
+Report</h3>
+<h4><a name="The Type of Cells"></a>The Types of Cells</h4>
+<p>Only CATFace, CATEdge and CATVertex objects should be referred to in the journal. 
+It is recommended that CAA developers do not build journals reporting geometry.</p>
+<h4><a name="Backtrackedcells"></a>The Backtracked Cells</h4>
+<p>Only bording cells are backtracked in a journal. In summary:</p>
+<ul>
+	<li>If the result is a solid, the journal should report only events that affect 
+	the faces of the result.</li>
+	<li>If the result is a shell, the journal should report only events that affect 
+	the faces of the result as well as the bording edges of the shell.</li>
+	<li>If the result is a wire, the journal should report only events that affect 
+	the edges and the end vertices.</li>
+	<li>If the result is a vertex, the journal should report only events affecting 
+	the vertex.</li>
+</ul>
+<h3><a name="The Additional Information"></a>The Information</h3>
+<h4>The Purpose of an Information</h4>
+<p>An information is a means to differentiate cells that have different dimensions 
+and same parent features. A simple example is the circular cylinder. You cannot 
+select the semi-cylindrical faces one-by-one because they carry the same name.</p>
+<table>
+<tr>
+<th>Input body: two edges</th>
+<th>Resulting Body</th>
+</tr>
+	<tr>
+		<td rowspan="2">
+		<img alt="Input Body" src="images/CAACgmTopsketchinit.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopcylinderFace0.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopcylinderFace1.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Sketch Report (closed conic): Both edges carry the same 
+		name</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[] -Creation -&gt; [Edge_1]
+[] -Creation -&gt; [Edge_2]</pre>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="2">Prism report - Face_C and Face_D cannot be differentiated</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[] -Creation -&gt; [Face_B] Info=2
+[] -Creation -&gt; [Face_A] Info=1
+[Edge_1] -Creation -&gt; [Face_D] Info=0
+[Edge_2] -Creation -&gt; [Face_C] Info=0</pre>
+		</td>
+	</tr>
+</table>
+<h4>Information in Standard Operators</h4>
+<p>In standard operators, the value assigned to an &quot;information&quot; generally complies 
+with the rule below:</p>
+<ul>
+	<li><strong>Info = 1</strong><br>
+	Denotes a starting cell.<br>
+	Examples:<br>
+	<blockquote>
+		Starting/initial vertex of the helix created by CATCreateTopHelix.<br>
+		Starting edge of an extruded surface (CATTopExtrude).<br>
+		Starting/Bottom face of a pad.
+	</blockquote>
+	</li>
+	<li><strong>Info = 2</strong><br>
+	Denotes an ending cell.<br>
+	Examples:<br>
+	<blockquote>
+		Ending vertex of the helix created by CATCreateTopHelix.<br>
+		Ending edge of an extruded surface (CATTopExtrude).<br>
+		Top face of a pad.
+	</blockquote>
+	</li>
+	<li><strong>Info = 0</strong><br>
+	Denotes a lateral cell.<br>
+	<blockquote>
+		Examples:<br>
+		Lateral edges for a sweep.<br>
+		Lateral faces for a pad.
+	</blockquote>
+	</li>
+</ul>
+<p>Rules related to additional information:</p>
+<ul>
+	<li>The same info should not be used to name cells of different dimensions.</li>
+	<li>After an update, an info will not switch to a cell of different dimensions.</li>
+	<li>Stick as long as it is possible to the info values already used for standard 
+	operators.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="The Journal Operands"></a>The Journal Operands</h3>
+<p>The journal operands are the bodies that are used as input data in your operator. 
+You have to declare these operands whenever you carry out a check operation as well 
+as in CATIMfProcReport::StoreProcReport method.</p>
+<h4><a name="The Copy/ No Copy Mode"></a>The Copy/ No Copy Mode</h4>
+<p>Stating that an input body is in a Copy/No Copy mode is a strategy to reduce 
+the number of entries in a journal. For a given operator, an input body (the operand 
+of the operator) must be either in Copy or in No Copy Mode.</p>
+<p>When an input body is declared as in Copy mode, it is assumed that all its cells 
+are in the resulting body after the operation except those reported as deleted by 
+a Deletion order and those modified. Each unmodified cell is included in the resulting 
+body.</p>
+<p>When an input body is declared as in No Copy mode, it is assumed that none of 
+its cells is in the resulting body except those specified as kept by a Keep order. 
+Stating that an operand is in Copy or No Copy mode has an impact on the topological 
+journal and its validity.</p>
+<p>When do you have to specify the Copy/No Copy Mode of an Operand ?</p>
+<ol>
+	<li>When you check your journal, this is done by using the CAACheckForPart::AddInputBody 
+	method.</li>
+	<li>When you store the report (CATIMfProcReport::StoreProcReport).</li>
+</ol>
+<p>What are the specification criteria for the Copy/No Copy Mode?</p>
+<p><code>No Copy</code> is to be used whenever there are no cell or few cells of 
+the operand in the resulting body. <code>Copy</code> is to be used when a large 
+number of cells providing from the operand exist in the resulting body. For example: 
+if you split a shell by a another shell, the cutting shell is in No Copy mode while 
+the split shell is in Copy mode. Note that you may be induced to create operators 
+with operands having a different Copy/No Copy mode depending on the options of the 
+operator. This is the case for the CATTopCorner standard operator.</p>
+<table>
+<caption>The CATTopCorner Example</caption>
+	<tr>
+		<th>Input bodies: two wires and a support</th>
+		<th>Resulting Body</th>
+	</tr>
+	<tr>
+		<td rowspan="2">
+		<img alt="Input Body" src="images/CAACgmTopCornerInitial.jpg" width="300" height="220"></td>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopCornerCopy.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Resulting Body" src="images/CAACgmTopCornerTrimming.jpg" width="300" height="220"></td>
+	</tr>
+	<tr>
+		<th colspan="2">Report without trimming<br>
+		Support: No Copy - Wires: No Copy</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Edge_1, Edge_2, Face_1] -Creation -&gt; [Edge_A]
+[] -Creation -&gt; [Vertex_A] Info=1
+[] -Creation -&gt; [Vertex_B] Info=2</pre>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="2">Report with trimming<br>
+		Support: No Copy - Wires: Copy</th>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<pre class="code">[Vertex_2] -Deletion
+[Vertex_3] -Deletion
+[Edge_1, Edge_2, Face_1] -Creation -&gt; [Edge_A]
+[Edge_1] -Modification -&gt; [Edge_B]
+[Edge_2] -Modification -&gt; [Edge_C]
+[Vertex_1] -Modification -&gt; [Vertex_D]
+[Vertex_4] -Modification -&gt; [Vertex_E]</pre>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Creating a Journal"></a>An Example from the CAA Forum</h2>
+<p>Here above is a case that has been submitted through the CAA Forum by a developer 
+creating a prism from an extruded skin.</p>
+<h3><a name="The Code Steps"></a>The Code Steps</h3>
+<ul>
+	<li>Input specification (sp_IN) attribute: the initial sketch.</li>
+	<li>Topological operations carried out in the feature build: CATTopSkin to create 
+	the skin to be extruded, CATTopPrism to extrude the skin.</li>
+</ul>
+<h3><a name="The Default Journal"></a>The Default Journal for the Topological Operations 
+after the Tass Call</h3>
+<p>If you <a href="#JournalDumping">dump</a> the journal on the standard output, 
+you obtain something like this:</p>
+<pre class="code">[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -&gt; [Face_bottom] Info=1
+[PLine_a, PLine_b, PLine_c, PLine_d] -Creation -&gt; [Face_skin]
+[PLine_d, PLine_c, PLine_b, PLine_a] -Creation -&gt; [Face_top] Info=2
+[PLine_a] -Creation -&gt; [Edge1_skin]
+[PLine_a] -Creation -&gt; [Face1_lateral] Info=0
+[PLine_b] -Creation -&gt; [Edge2_skin]
+[PLine_b] -Creation -&gt; [Face2_lateral] Info=0
+[PLine_c] -Creation -&gt; [Edge3_skin]
+[PLine_c] -Creation -&gt; [Face3_lateral] Info=0
+[PLine_d] -Creation -&gt; [Edge4_skin]
+[PLine_d] -Creation -&gt; [Face4_lateral] Info=0</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="The Selectability Problems"></a>The Selectability Problems</h3>
+<p>The customer complains because the faces of a prism generated from a sketch are 
+not selectable one-by-one. Actually, the top and the bottom faces are selectable 
+but not the lateral faces. Selecting one of the lateral faces highlights all the 
+lateral faces.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Preliminary diagnosis"></a>The Preliminary Diagnosis</h3>
+<p>All the report events are ignored by the naming mechanism because there are geometric 
+elements (PLines) in the report. You cannot help this when using the CATICGMTopSkin 
+and CATICGMTopPrism operators as both operators take geometry as their input arguments. 
+The initial geometry re-appears in the report. If you pass this default journal 
+to the CATIMfProcReport, you won&#39;t be able to differentiate any face at selection. 
+It is like having an empty journal.</p>
+<p>The <a href="#JournalChecking">journal checking</a> results in a invalid verdict. 
+The warning file tells you there are cells of the resulting body that cannot be 
+traced back.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="The Solution"></a>The Solution</h3>
+<p>The remedy to this invalid default journal consists in creating a valid journal 
+to be passed to CATIMfProcReport. In the journal below, you specify that the lateral 
+faces of the prism are created from the sketch edges (the input specification). 
+It is not mandatory to specify info=0 for the lateral faces but it is recommended 
+as, further on in your application, you may need a key to distinguish the faces 
+in the extrusion direction from the top/bottom ones. This journal is valid because 
+all the cells of the resulting body can be traced back and they all have a different 
+name.</p>
+<pre class="code">[Edge1_sketch] -Creation -&gt; [Face1_lateral] Info=0
+[Edge2_sketch] -Creation -&gt; [Face2_lateral] Info=0
+[Edge3_sketch] -Creation -&gt; [Face3_lateral] Info=0
+[Edge4_sketch] -Creation -&gt; [Face4_lateral] Info=0
+[] -Creation -&gt; [Face_top] Info=2
+[] -Creation -&gt; [Face_bottom] Info=1</pre>
+<h3><a name="Tips to Create a New Journal"></a>Tips to Create a New Journal</h3>
+<p>Dump the default one (CAATopDumpJournal if you want to dump the journal on the 
+standard output). Dumping the journal allows you retrieve all pieces of information 
+to be re-injected in the journal to be created. Taking a look at the
+<a href="#The Default Journal">default journal</a> above (the one invalid), the 
+lateral faces appear in the journal and can be retrieved by scanning all the constructed 
+objects with info=0.</p>
+<p>Check the default journal - the verdict and warning file give clues about why 
+your journal is invalid. In the example above, the default journal is obviously 
+invalid for all events. In most cases you have to look for the non-backtracked cells 
+as well as the cells that are not properly named. The data files resulting from 
+the check help you find out the disorders in the journal and fix them if need be.</p>
+<p>Suppose you are mistaken and create a new journal with the skin edges as parents 
+of the lateral faces instead of the sketch edges, the created journal will be invalid 
+and the lateral faces will be non backtracked (the operand is the sketch and not 
+the skin). In this case, you won&#39;t be able to differentiate the lateral faces at 
+selection.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Checking your Journal"></a>Checking Your Journal</h2>
+<h3><a name="Preliminary Operations"></a>Preliminary Operations</h3>
+<p>Prior to checking a journal, you must tass it. This operation is explained below.</p>
+<h4><a name="Tass"></a>The Tass Operation</h4>
+<p>When you chain operators within the same CATTopData, the resulting journal is 
+made up of several CATCGMJournalList which are nested into each other. In this case, 
+the journal items are arranged according to a hierarchy in which the first journal 
+generated in the application is the one which is at the top of the hierarchy and 
+includes all the others. The journal which is in the heart of the structure contains 
+the events that defines how the cells of the resulting body are constructed.</p>
+<p>The Tass operation allows you to concatenate under a single level all the journal 
+items and simplify the journal by removing intermediate cells. This operation is 
+required when you have to check your journal. If things work properly in term of 
+selectability and update, it is not required to tass the journal prior to passing 
+it to the CATIMfProcReport - it is automatically tassed by the naming mechanism. 
+The Tass operation performs a certain number of operations. Some of them are given 
+below to help you understand how things work. Beware that it is not a comprehensive 
+list.</p>
+<p>Suppose you are chaining two operators, the first operator produces a journal 
+with the <code>A-Creation-&gt;B </code>entry, while the second operator yields a journal 
+with the <code>B-Creation</code> <code>-&gt;</code>C entry. After the Tass operation 
+you will only have A-&gt;Creation C in the journal. C must belong to the body resulting 
+from the chaining of operations 1 and 2 and A belongs to one of the input bodies.</p>
+<table class="fill">
+	<caption>Examples of rules (to name but a few)</caption>
+	<tr>
+		<th>The initial set of events</th>
+		<th>Is replaced with</th>
+	</tr>
+	<tr>
+		<td><code>A-Modification-&gt;B<br>
+		C-Creation-&gt;B</code></td>
+		<td><code>C-Creation-&gt;B</code> (the creation order prevails)</td>
+	</tr>
+	<tr>
+		<td><code>A-Modification-&gt;B info 1<br>
+		B-Modification-&gt;C info 2</code></td>
+		<td><code>A-Modification-&gt;C info 2</code></td>
+	</tr>
+	<tr>
+		<td><code>A-Modification-&gt;B<br>
+		B-&gt;Deletion</code></td>
+		<td><code>A-&gt;Deletion</code></td>
+	</tr>
+	<tr>
+		<td><code>A-Modification-&gt;B info1<br>
+		C-Creation-&gt;D info2<br>
+		B, D-Creation-&gt;E info3</code></td>
+		<td><code>A-Modification-&gt;B info1<br>
+		C-Creation-&gt;D info2<br>
+		A, C-Creation-&gt;E info1</code></td>
+	</tr>
+	<tr>
+		<td style="height: 36px"><code>A-Creation-&gt;A<br>
+		A-Modification-&gt;B</code></td>
+		<td style="height: 36px"><code>[A]-Modification-&gt;B</code></td>
+	</tr>
+	<tr>
+		<td><code>A-Creation-&gt;B info 1<br>
+		B-Modification-&gt;C info 2</code></td>
+		<td><code>A-&gt;Creation-&gt;C info 1 if info 1 not NULL<br>
+		A-&gt;Creation-&gt;C info 2 if info 1 == NULL</code><br>
+		The info on the creation order prevails as long as it is not NULL.</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<h4><a name="JournalDumping"></a>Dumping the Journal</h4>
+<p>To display a journal on the standard output, you can use the CAATopDumpJournal 
+use case (CAATopologicalOperators.edu). This use case can be customized by those 
+of you who want to modify or re-arrange the format of the entries.</p>
+<h3><a name="JournalChecking"></a>The CAACheck Operation</h3>
+<p>To check the journal, you must use the CAATopCheckForPart use case (CAATopologicalOperators.edu).</p>
+<h4><a name="The generated files"></a>The Generated Files</h4>
+<p>The CAATopCheckForPart use case generates two files:</p>
+<ol>
+	<li>The <strong>verdict</strong> file (argument four of the CAATopCheckForPart 
+	constructor).
+	<p>This verdict file informs you about whether the journal to be checked is 
+	valid or invalid.</p>
+	<ol>
+		<li>If you ask for a detailed verdict file (argument six set to TRUE), the 
+		verdict is given for each category of <a href="#RulesTochecked">rules to 
+		be checked</a>. The verdict file looks something like this
+		<pre class="code">Checking MyFeature
+(1) - Mandatory
+Checking that all cells in result body can be traced back
+KO
+(2)
+Checking that all reported cells are of CATFace/CATEdge/CATVertex type
+OK
+(3)
+Checking that all reported cells are bording cells
+OK
+(4)
+Checking that cells with same parents &amp; infos are not of different type
+KO
+TOPOLOGICAL JOURNAL
+[Edge_27]-&gt;Creation[Face_44] Info=1
+[Edge_27]-&gt;Creation[Edge_53] Info=1
+[Edge_27]-&gt;Creation[Edge_52] Info=2
+[Vertex_25]-&gt;Creation[Edge_46] Info=4
+[Vertex_26]-&gt;Creation[Edge_49] Info=3
+<strong>TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO</strong></pre>
+		<p>The journal is displayed at the end of the verdict file only when the 
+		verdict is INVALID.</p>
+		</li>
+		<li>If the argument six is set to FALSE, you will only get a restricted 
+		verdict file:
+		<pre class="code">Checking MyFeature
+<strong>TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO</strong></pre>
+		</li>
+	</ol>
+	</li>
+	<li>The detail file provides you with:
+	<ul>
+		<li>More information on the ERRORS and possible WARNINGS.</li>
+		<li>The list of cells in the resulting body as well as in the operands.</li>
+	</ul>
+	<p>You get something like this:</p>
+	<pre class="code">Checking MyFeature
+
+DETAILED LIST OF ERRORS AND WARNINGS
+
+*
+ERROR
+In
+[Edge_27]-&gt;Creation[Face_44] Info=1
+and
+[Edge_27]-&gt;Creation[Edge_53] Info=1
+Cells with same parents and infos must not be of different type
+*
+ERROR
+Cells in Copy mode not in the result body and not deleted
+27 25 26
+List of Bodies in Copy Mode
+Body 28 - List of cells: 27 25 26
+List of Bodies in No Copy Mode
+Body Result
+Body 29 - List of cells: 44 46 52 49 53
+<strong>TOPOLOGICAL JOURNAL FOR FEATURE MyFeature KO</strong></pre>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<h4><a name="The ERRORS and WARNINGS"></a>The ERRORS and WARNINGS</h4>
+<pre class="code">WARNING
+Cell_x is not a bording cell - The order is ignored</pre>
+<p>This message is displayed along with the entry which refers to the non bording 
+cell and is issued whenever a reported cell is not a bording cell, no matter it 
+is a parent cell or a created/modified cell. The entry containing such a cell is 
+simply ignored. Such a warning may or may not impede the journal validity. If there 
+are other entries that allow a resulting cell to be backtracked, the journal can 
+be valid. This warning is always associated with a &quot;KO&quot; (invalid) result in the Step 3 (&quot;<code>Checking 
+that all reported cells are bording cells&quot;)</code>of the Verdict file.</p>
+<pre class="code">WARNING
+Cell_x is not a CATFace, a CATEdge or a CATVertex - The order is ignored</pre>
+<p>This message is displayed along with the entry which refers to the invalid object 
+and issued whenever a reported cell is not a CATFace, a CATEdge or a CATVertex, 
+no matter it is a parent cell or a created/modified cell. The entry containing such 
+a cell is simply ignored. Such a warning may or may not impede the journal validity. 
+If there are other entries that allow a resulting cell to be backtracked, the journal 
+can be valid. This warning is always associated with a &quot;KO&quot; (invalid) result in the Step 2 (&quot;<code>Checking 
+that all reported cells are of CATFace/CATEdge/CATVertex type&quot;)</code>of the Verdict 
+file.</p>
+<pre class="code">WARNING
+The following cells are not bording cells</pre>
+<p>Provides you with the <strong>list</strong> of cells that are not bording cells. 
+Entries referring to such objects can potentially be the cause of an invalid journal. 
+Either the entry is useless and it is better to remove it from the journal, or it 
+impedes the backtracking of a cell belonging to the resulting body.</p>
+<pre class="code">WARNING
+The following objects are not of CATFace/CATEdge/CATVertex type.</pre>
+<p>Provides you with a <strong>list</strong> of objects that are geometry or not 
+appropriate topological objects. Entries referring to such objects can potentially 
+be the cause of an invalid journal. Either the entry is useless and it is better 
+to remove it from the journal, or it impedes the backtracking of a cell belonging 
+to the resulting body.</p>
+<pre class="code">WARNING
+Cell_x does not belong to any input body in No Copy mode</pre>
+<p>This warning applies to Keep orders. This message is displayed along with the 
+entry which refers to the kept cell. A cell is to be specified as kept when it is 
+intended to be found in the resulting body while it belongs originally to a body 
+in No Copy mode. If a cell is stated as kept while it does not belong to a body 
+in No Copy mode, the entry is meaningless and it is ignored.</p>
+<pre class="code">ERROR
+In
+[Edge_27]-&gt;Creation[Face_44] Info=1
+and
+[Edge_27]-&gt;Creation[Edge_53] Info=1
+Cells with same parents and infos must not be of different type</pre>
+<p>The error above will not result in an invalid journal (in other words, if there 
+are no other errors, the return value of the CAACheck method will be 0). Nevertheless, 
+you must do your best to avoid such a message. This message is only displayed when 
+related entries are not ignored . For more information, see the CAATopCheckGnKO.m 
+and CAATopCheckGnOK.m use cases (CAATopologicalOperators.edu). They both illustrate 
+how to create a journal in which naming rules are or are not satisfied.</p>
+<pre class="code">ERROR
+Cells of the result body that cannot be traced back
+48
+52</pre>
+<p>Provides you with the list of all the cells that cannot be traced back. This 
+message is associated with &quot;KO&quot; in Step1 of the verdict file.</p>
+<pre class="code">ERROR
+Cells in Copy mode not in the result body and not deleted.</pre>
+<p>Provides you with the list of all the cells that are in Copy mode but not in 
+the resulting body and not deleted OR not modified. Is associated with &quot;KO&quot; in Step1 
+of the verdict file.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h4><a name="RulesTochecked"></a>The Rules to Be Checked</h4>
+<p>The rules to be checked are divided into four categories which are summarized 
+below:</p>
+<ol>
+	<li>
+	<p>
+		All cells in the resulting body should be backtrack-able using the 
+		information in the journal (mandatory).<p>A cell is backtracked if its parents belong to the input bodies specified 
+	as the operator inputs. The check result depends on the Copy/NoCopy mode of 
+	the operands. This Copy/NoCopy mode must be specified prior to running the Check 
+	operation. For example: if a cell belonging to the resulting body does not appear 
+	as created/modified in the journal, it is expected to belong to an input body 
+	in Copy mode, otherwise, it is not backtracked and the resulting journal is 
+	invalid. If a cell belonging to an input body in Copy mode is not in the result 
+	it must be explicitly deleted in the journal.</p>
+	<p>If this criteria is not fulfilled, the journal is invalid.</p>
+	</li>
+	<li>All cells should be of CATFace/CATEdge/CATVertex type.<p>Normally, all the cells reported in the journal should be topological cells 
+	of CATFace/CATEdge/CATVertex type. If the Check operation detects an invalid 
+	cell, the entry is ignored. This may or may not result in an invalid journal. 
+	If there are other entries in the journal that make possible the backtracking 
+	of the resulting cell, the journal will not be invalid.</p>
+	<p>Whatever the check result, the Check operation warns you about wrong-type 
+	objects (unauthorized type).</p>
+	<p><strong>Note</strong>: Standard operators that take geometry as input data 
+	(CATICGMTopwire for example) yield journals that exhibit geometry. This is an exception.</p>
+	</li>
+	<li>Only bording cells should be reported. 
+	<p>Journal entries that have internal/non-bording cells are ignored when the 
+	journal is checked. The naming mechanism does not need any information related to the 
+	internal/non-bording cell (the name of internal cells can 
+	be reconstructed from the names of the adjacent cells). Consequently, the 
+	strategy that has been decided for reducing the size of the journal is to <b>
+	<i>IGNORE</i></b> the journal entries where internal/non-bording cells are 
+	reported, when checking the journal.
+	If you happen to have such entries in your journal, you may not 
+	be in trouble. It depends on the other entries. If there are other entries 
+	in the journal that make possible the backtracking of all the resulting 
+	cells, then the journal is considered to be valid.</p>
+	<p>An example of a journal (sweep operation)</p>
+	<p style="width: 728px">
+	<img alt="Sweep journal" longdesc="Sweep journal - Bording cells" src="images/CAACgmJournalSweep0.jpg" width="576" height="288"></p>
+	<p>The resulting cells to be backtracked in the generated shell are 
+	the four faces <tt>fA</tt>, <tt>fB</tt>, <tt>fC</tt>, <tt>fD</tt> as well as the eight bording edges <tt>eA</tt>, <tt>eB</tt>, <tt>eC</tt>, &#8230;, <tt>eH</tt>. 
+	The journal does not have to report the internal edges. Likewise, the 
+	journal does not require any information related to the internal vertices 
+	of the input wires. </p>
+	<p>The correct journal for this operation is:</p>
+	<pre class="code">
+    [Edge e1, Edge e3] -Creation-&gt; [Face fA]
+    [Edge e2, Edge e3] -Creation-&gt; [Face fC]
+    [Edge e1, Edge e4] -Creation-&gt; [Face fB]
+    [Edge e2, Edge e4] -Creation-&gt; [Face fD]
+    [Vertex v3, Edge e1] -Creation-&gt; [Edge eA]
+    [Vertex v1, Edge e3] -Creation-&gt; [Edge eB]
+    [Vertex v3, Edge e2] -Creation-&gt; [Edge eH]
+    [Vertex v2, Edge e3] -Creation-&gt; [Edge eG]
+    [Vertex v1, Edge e4] -Creation-&gt; [Edge eC]
+    [Vertex v4, Edge e1] -Creation-&gt; [Edge eD]
+    [Vertex v4, Edge e2] -Creation-&gt; [Edge eE]
+    [Vertex v2, Edge e4] -Creation-&gt; [Edge eF]
+	</pre>
+	<p>Suppose that you replace the first entry <br>
+	<tt>[Edge e1, Edge e3] -Creation-&gt; [Face fA]</tt> <br>
+	with<br>
+	<tt>[Edge e1, vertex 12] -Creation-&gt; [Face fA]</tt>, <br>
+	<tt>vertex12</tt> being the vertex between <tt>e1</tt> and <tt>e2</tt> (not named in the picture),
+ this journal entry is ignored because <tt>vertex12</tt> is non-bording.
+Consequently <tt>Face fA</tt> is not backtracked and the journal is invalid.</p>
+<p>Now, suppose that you add the entry below:<br>
+<tt>[Edge e2] -Creation-&gt; [Edge AC]</tt>, <br>
+<tt>Edge AC</tt> being the edge between <tt>fA</tt> and <tt>fC</tt> , the journal entry is ignored but it is not 
+a problem because you are not required to backtrack the internal edge. The journal is valid in spite of this &#8220;unclean&#8221; entry.</p>
+	</li>
+	<li>Cells with same parents and &quot;infos&quot; should not be of different type<p>The couple of 
+	entries below (not ignored):</p>
+	<pre class="code">[]-&gt;Creation [Edge_1] info=1
+[]-&gt;Creation [Face_1] info=1</pre>
+	<p>will result into an error because the naming mechanism will not be able to 
+	differentiate <code>[Edge_1]</code>and <code>[Face_1].</code></p>
+	<p>The couple of entries below is fine with respect to the Check operation because 
+	the naming mechanism manages to detect adjacent faces and makes possible the 
+	differentiation of the adjacent cells at selection.</p>
+	<pre class="code">[]-&gt;Creation [Face_1] info=1
+[]-&gt;Creation [Face_2] info=1</pre>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The topological journal is used by the generic naming mechanism. Whenever you 
+create your own operator, you must check your journal. Potential errors left in 
+a journal may result in selectability problem.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaTobTopoConcepts.htm">
+		Topology Concepts</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaTobTopoModel.htm">
+		The CGM Topological Model</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmTaTopJournal.htm">Understanding the CGM Journal</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAACgmUcTopJournal.htm">Using the Topological Journal</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Mar 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

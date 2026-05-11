@@ -1,0 +1,317 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPspPart.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2005</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      This sample illustrats the use of IDL interfaces</font>
+<font color="#008000">'                 CATIAPspPartConnector, CATIAPspPhysicalProduct</font>
+<font color="#008000">'  </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'                 </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#008000">'--- strMessage_g is a global variable visible to all private Sub/Function</font>
+
+<font color="#0000FF">Dim </font>strMessage_g<font color="#0000FF"> As </font>String
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+<font color="#0000FF">    dim </font>sDocFullPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+
+    
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspPart.CATScript" & vbCrLf
+
+
+<font color="#0000FF">    Dim </font>objPrdRoot       <font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objPspWorkbench  <font color="#0000FF"> As </font>PspWorkbench
+    
+
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+
+<font color="#0000FF">    Dim </font>objPspApplication<font color="#0000FF"> As </font>PspApplication
+<font color="#0000FF">    Dim </font>objPspAppFactory <font color="#0000FF"> As </font>PspAppFactory
+    
+<font color="#0000FF">    Dim </font>objPspPhysicalPrd<font color="#0000FF"> As </font>PspPhysicalProduct
+    
+    
+<font color="#0000FF">    Dim </font>ePspIDLDomainID  <font color="#0000FF"> As </font>CatPspIDLDomainID    
+<font color="#0000FF">    Dim </font>iIdx           <font color="#0000FF"> As </font>Integer
+
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspWorkBench, PspApplication </font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( objPspWorkbench Is Nothing  )<font color="#0000FF"> Then</font>
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( objPspApplication Is Nothing  )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspPhysicalProduct object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects                  
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+    
+<font color="#0000FF">      Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">      If </font>( Not ( objLPhysicals Is Nothing ) And _
+         ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">        Set </font>objPspPhysicalPrd =  objLPhysicals.Item( 1, "CATIAPspPhysicalProduct" )
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+ 
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get ID of the object</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+    
+<font color="#0000FF">    Dim </font>objPspPhyID      <font color="#0000FF"> As </font>PspID
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysicalPrd Is Nothing ) )<font color="#0000FF"> Then  </font>
+    
+<font color="#0000FF">      Set </font>objPspPhyID = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface("CATIAPspID", _
+                                                    objPspPhysicalPrd )      
+
+<font color="#0000FF">      If </font>( Not (objPspPhyID Is Nothing) )<font color="#0000FF"> Then</font>
+        strMessage_g = strMessage_g & "Physical Product object ID =" &  objPspPhyID.GetID & vbCr               
+<font color="#0000FF">      End If </font>
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>objPspPartCntr       <font color="#0000FF"> As </font>PspPartConnector
+<font color="#0000FF">    Dim </font>objLCntrs            <font color="#0000FF"> As </font>PspListOfObjects
+    
+    If( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+
+                  
+                     
+<font color="#0000FF">      Set </font>objLCntrs = objPspPhysicalPrd.Connectors 
+        
+
+<font color="#0000FF">      If </font>( Not ( objLCntrs Is Nothing ) )<font color="#0000FF"> Then       </font>
+        strMessage_g = strMessage_g & _
+          "Number of Part Connectors= " &  objLCntrs.Count & vbCr          
+        
+        <font color="#008000">'----------------------------------------</font>
+        <font color="#008000">' Getting the first PspPartConnector</font>
+<font color="#0000FF">        Set </font>objPspPartCntr = objLCntrs.Item (1, "CATIAPspPartConnector")          
+        
+<font color="#0000FF">      End If        </font>
+<font color="#0000FF">    End if</font>
+
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspPartConnector Information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+ 
+<font color="#0000FF">    Dim </font>objFaceCntr     <font color="#0000FF"> As </font> Reference  
+<font color="#0000FF">    Dim </font>objAlignCntr    <font color="#0000FF"> As </font> Reference  
+<font color="#0000FF">    Dim </font>objOrientnCntr  <font color="#0000FF"> As </font> Reference  
+<font color="#0000FF">    Dim </font>eFaceType       <font color="#0000FF"> As </font> CatPspIDLPartConnectorType 
+<font color="#0000FF">    Dim </font>eAlignType      <font color="#0000FF"> As </font> CatPspIDLPartConnectorType 
+<font color="#0000FF">    Dim </font>eClockType      <font color="#0000FF"> As </font> CatPspIDLPartConnectorType 
+
+
+<font color="#0000FF">    If </font>( Not ( objPspPartCntr Is Nothing ) )<font color="#0000FF"> Then       </font>
+<font color="#0000FF">      Dim </font>objRelAxisPrd <font color="#0000FF"> As </font>Product
+    
+<font color="#0000FF">      Dim </font>dbX           <font color="#0000FF"> As </font>Double
+<font color="#0000FF">      Dim </font>dbY           <font color="#0000FF"> As </font>Double
+<font color="#0000FF">      Dim </font>dbZ           <font color="#0000FF"> As </font>Double
+
+<font color="#0000FF">      Dim </font>objLDbPosition  <font color="#0000FF"> As </font>PspListOfDoubles
+<font color="#0000FF">      Dim </font>objLDbMathPlane <font color="#0000FF"> As </font>PspListOfDoubles
+<font color="#0000FF">      Dim </font>objLDbAlignDir  <font color="#0000FF"> As </font>PspListOfDoubles
+<font color="#0000FF">      Dim </font>objLDbUpDir     <font color="#0000FF"> As </font>PspListOfDoubles
+      
+
+<font color="#0000FF">      Set </font>objFaceCntr = objPspPartCntr.GetFaceConnector        
+<font color="#0000FF">      Set </font>objAlignCntr = objPspPartCntr.GetAlignmentConnector          
+<font color="#0000FF">      Set </font>objOrientnCntr = objPspPartCntr.GetOrientationConnector
+
+      eFaceType  = objPspPartCntr.FaceType
+      eAlignType = objPspPartCntr.AlignType
+      eClockType = objPspPartCntr.ClockType
+
+<font color="#0000FF">      Set </font>objRelAxisPrd = Nothing
+      
+<font color="#0000FF">      Set </font>objLDbPosition = objPspPartCntr.GetPosition (objRelAxisPrd)
+<font color="#0000FF">      Set </font>objLDbAlignDir = objPspPartCntr.GetAlignmentDirection( _
+                                                    objRelAxisPrd)
+<font color="#0000FF">      Set </font>objLDbUpDir = objPspPartCntr.GetUpDirection (objRelAxisPrd)    
+          
+<font color="#0000FF">      Set </font>objLDbMathPlane = objPspPartCntr.GetConnectorMathPlane( _
+                                                     objRelAxisPrd )
+<font color="#0000FF">      If </font>( Not ( objLDbPosition Is Nothing ) )<font color="#0000FF"> Then        </font>
+            
+        strMessage_g = strMessage_g & _
+             "Position of the connector:"  & vbCr    
+    
+        dbX = objLDbPosition.Item( 1 )
+        dbY = objLDbPosition.Item( 2 )
+        dbZ = objLDbPosition.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X= " & dbX 
+        strMessage_g = strMessage_g & " ,Y= " & dbY 
+        strMessage_g = strMessage_g & " ,Z= " & dbZ & vbCr                                                   
+
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLDbAlignDir Is Nothing ) )<font color="#0000FF"> Then        </font>
+            
+        strMessage_g = strMessage_g & _
+             "Alignment vector:"  & vbCr    
+    
+        dbX = objLDbAlignDir.Item( 1 )
+        dbY = objLDbAlignDir.Item( 2 )
+        dbZ = objLDbAlignDir.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                   
+
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLDbUpDir Is Nothing ) )<font color="#0000FF"> Then        </font>
+            
+        strMessage_g = strMessage_g & _
+             "Up direction vector:"  & vbCr    
+    
+        dbX = objLDbUpDir.Item( 1 )
+        dbY = objLDbUpDir.Item( 2 )
+        dbZ = objLDbUpDir.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">      If </font>( Not ( objLDbMathPlane Is Nothing ) )<font color="#0000FF"> Then        </font>
+            
+        strMessage_g = strMessage_g & _
+             "Connector math plane:"  & vbCr    
+    
+        dbX = objLDbMathPlane.Item( 1 )
+        dbY = objLDbMathPlane.Item( 2 )
+        dbZ = objLDbMathPlane.Item( 3 )
+        
+        strMessage_g = strMessage_g & _
+             "     Plane origin:"  & vbCr    
+        strMessage_g = strMessage_g & "      X= " & dbX 
+        strMessage_g = strMessage_g & " ,Y= " & dbY 
+        strMessage_g = strMessage_g & " ,Z= " & dbZ & vbCr                                                                     
+
+        dbX = objLDbMathPlane.Item( 4 )
+        dbY = objLDbMathPlane.Item( 5 )
+        dbZ = objLDbMathPlane.Item( 6 )
+
+        strMessage_g = strMessage_g & _
+             "     Plane Z-direction vector:"  & vbCr    
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+        
+        dbX = objLDbMathPlane.Item( 7 )
+        dbY = objLDbMathPlane.Item( 8 )
+        dbZ = objLDbMathPlane.Item( 9 )
+
+        strMessage_g = strMessage_g & _
+             "     Plane Y-direction vector:"  & vbCr    
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+<font color="#0000FF">      End If            </font>
+<font color="#0000FF">    End If          </font>
+
+    <font color="#008000">' -----------------------------------</font>
+    <font color="#008000">' Add a new connector</font>
+    <font color="#008000">' -----------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objNewPspPartCntr       <font color="#0000FF"> As </font>PspPartConnector
+
+    If( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">      Dim </font>strCtrType<font color="#0000FF"> As </font>String
+      strCtrType   =  "CATPspMechPartConnector"
+      
+<font color="#0000FF">      Set </font>objNewPspPartCntr = objPspPhysicalPrd.AddConnector( _
+                       strCtrType, objFaceCntr,eFaceType, _                            
+                       objAlignCntr, eAlignType, _
+                       objOrientnCntr, eClockType )
+
+      If( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+         strMessage_g = strMessage_g & _
+           "Add a new Part connector "  & vbCr          
+
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' -----------------------------------</font>
+    <font color="#008000">' Remove connector</font>
+    <font color="#008000">' -----------------------------------</font>
+
+    If( Not ( objPspPhysicalPrd Is Nothing ))<font color="#0000FF"> Then</font>
+      objPspPhysicalPrd.RemoveConnector objPspPartCntr
+<font color="#0000FF">    End if</font>
+
+   
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+<font color="#0000FF">End Sub</font>
+
+
+
+</pre></body></html>

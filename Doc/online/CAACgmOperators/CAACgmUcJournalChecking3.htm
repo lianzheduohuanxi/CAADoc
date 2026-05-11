@@ -1,0 +1,157 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Topological Journal: Writing a Validation Tool </title>
+<style type="text/css">
+.style1 {
+				color: #FF7900;
+				text-decoration: underline;
+}
+.style2 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Topological Journal: Writing a Validation Tool </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A valid journal should at least follow one rule: <em>&quot;all the cells 
+		belonging to the resulting body must be backtracked&quot;</em>. In other 
+		words, 
+		the history of each cell in the resulting body must be traceable. There are other rules 
+		but they are not mandatory. </p>
+		<p>As a reminder, here are the rules to be fulfilled when you create a 
+		journal: 
+		<ol>
+			<li>all the cells belonging to the resulting body must be backtracked </li>
+			<li>all reported cells must be of CATFace/CATEdge/CATVertex type</li>
+			<li>all reported cells must bording cells</li>
+			<li>cells with same parents &amp; infos must not be of different type.</li>
+		</ol></p>
+		<p>The CAAGMOperatorsCheckForPart.m use case provides you with a way to 
+		write your own tool to validate a journal. It is a fully open tool which 
+		can be adjusted, modified or enhanced according to your need. </p>
+		<ul>
+						<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+						<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>The CAAGMCheckForPart operator is created in CAAGMOperatorsInterfaces.edu/PublicInterfaces. 
+It is being used in the some use cases such as CAAGMOperatorsCheckGnKO.m, 
+CAAGMOperatorsCheckGnOK.m or CAAGMOperatorsJournalThreadOpMain.m. Its 
+implementation is delivered in the CAAGMTopCheckForPart.cpp file of the CAAGMOperatorsCheckForPart.m module. </p>
+<p>Refer to: <a href="CAACgmUcJournalChecking1.htm">
+Topological Journal: Creation and Validation (1) </a>, 
+<a href="CAACgmUcJournalChecking2.htm"><span class="style2">Topological Journal: 
+Creation and Validation (2)</span></a>,
+<a href="CAACgmUcAdtThreadOperator.htm"><span class="style2">Threading a Rod</span></a> for 
+examples.</p>
+<p>The CAAGMCheckForPart operator is to be used like this:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+// Creates the operator
+CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(JournalToBeChecked,  // The journal to be checked
+        pResultBody,
+        &FeatureName,        // mainly dedicated to Part Design applications
+        &VerdictFile,        // summary of checking operations                    
+        &WarningFile,        // detailed list of errors and warnings
+        TRUE);               // activates a verbose mode
+        
+// Adds the input body(ies) and specifies the Copy/NoCopy mode        
+reportCheck->CAAAddInputBody(pInputBody1, CAATopCheckNoCopy);
+reportCheck->CAAAddInputBody(pInputBody2, CAATopCheckNoCopy);
+...
+// Checks the journal - 0 is returned if valid    
+int checkReturn = reportCheck->CAACheck();
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+					<tr>
+		<td>[6]</td>
+		<td>
+		<a href="CAACgmTaTopJournal.htm">Topological Journal: Principles</a></td>
+	</tr>
+	<tr>
+		<td>[7]</td>
+		<td class="style1">
+		<a href="CAACgmTaTopJournalMethodology.htm">Topological Journal: Methodology</a></td>
+	</tr>
+	<tr>
+		<td>[8]</td>
+		<td class="style1">
+		<a href="CAACgmUcTopJournal.htm">Using the Topological Journal</a></td>
+					</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

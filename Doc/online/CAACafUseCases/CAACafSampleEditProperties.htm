@@ -1,0 +1,910 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Property Page for Object Properties</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Property Page for Object Properties</h3>
+      <em>Customizing Edit-&gt;Properties</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to add a property page to the property sheet for
+      one or several property interfaces that objects implement.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACafEditTextureProp Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACafEditTextureProp Do</a></li>
+            <li><a href="#How">How to Launch CAACafEditTextureProp</a></li>
+            <li><a href="#Where">Where to Find the CAACafEditTextureProp Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a property page for a given
+property of objects in your document [<a href="#Ref1">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACafEditTextureProp Command Use Case</h3>
+<p>CAACafEditTextureProp is a use case of the CAACATIAApplicationFrm.edu
+framework that illustrates the CATIAApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAACafEditTextureProp Command Do</h4>
+<p>CAACafEditTextureProp creates the Texture Properties property page with the
+two check buttons that set or unset the Metal Aspect and Rough properties to
+objects. The values of these properties are read from the object when the
+property page is built. The dialog box is as follows:</p>
+<p><img border="0" src="images/CAACafSampleEditProperties.jpg" width="577" height="388"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACafEditTextureProp</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.&nbsp;</p>
+<p>But just before launching the execution, edit the CAACATIApplicationFrm.edu.dico
+interface dictionary file located in the dictionary directory of the CAACATIApplicationFrm.edu
+framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>In this file, remove the &quot;#&quot; character before the two following
+lines, and then run mkCreateRuntimeView.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre># 2 lines to decomment to see pages in the Property Dialog Box
+<b># CAACafTexturePropertyPageEdt CATIEditProperties  libCAACafEditTextureProp
+# CAACafColorPropertyPageEdt   CATIEditProperties  libCAACafEditColorProp</b></pre>
+    </td>
+  </tr>
+</table>
+<p>The second line deals with the Color tab page created by the non-described
+CAACafEditColorProp use case located in the CAACafEditColorProp.m module. Then,
+in the window where you run the mkrun command, do not type the module name on
+the command line, but type CNEXT instead. When the application is ready, do the
+following:
+<ul>
+  <li>Select File-&gt;New</li>
+  <li>In the New box, select CAAGeometry and click OK</li>
+  <li>Create at least three points, a plane using these three points, and a
+    circle in the plane using the Basic Elements toolbar commands</li>
+  <li>Right click the circle, and select Properties in the contextual menu.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACafEditTextureProp Code</h4>
+<p>The CAACafEditTextureProp use case is made of classes and interfaces located
+in the CAACafEditTextureProp.m module and in the ProtectedInterfaces directory
+of the CAACATIAApplicationFrm.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafEditTextureProp.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafEditTextureProp.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These classes and interfaces are:</p>
+<table width="100%">
+  <tr>
+    <td><i>CAACafTexturePropertyPageEdt</i></td>
+    <td>Property page editor class</td>
+  </tr>
+  <tr>
+    <td><i>CAACafTexturePropertyPageEdtFactory</i></td>
+    <td>Factory class for the property page editor class</td>
+  </tr>
+  <tr>
+    <td><i>CAAICafTexturePropertyPageEdtFactory</i></td>
+    <td>Factory interface implemented by <i>CAACafElementPropertyPageEdtFactory</i></td>
+  </tr>
+  <tr>
+    <td><i>TIE_CAAICafTexturePropertyPageEdtFactory</i></td>
+    <td>TIE class for the factory interface</td>
+  </tr>
+  <tr>
+    <td><i>CAACafTexturePropertyPageDlg</i></td>
+    <td>Dialog box class associated with the property page editor</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a property page, there are four main steps:</p>
+<ol>
+  <li><a href="#Step1">Create the property page editor factory interface</a></li>
+  <li><a href="#Step2">Create the property page editor factory</a></li>
+  <li><a href="#Step3">Create the property page editor</a></li>
+  <li><a href="#Step4">Create the property page dialog</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Property Page Editor Factory Interface</h4>
+<p>This factory interface is named CAAICafTexturePropertyPageEdtFactory. To
+create this interface, create:</p>
+<ol>
+  <li>The header file</li>
+  <li>The source file</li>
+  <li>The TIE tsrc file.</li>
+</ol>
+<p>This is shown below.
+<ol>
+  <li><b>Header file</b>: CAAICafTexturePropertyPageEdtFactory.h is as follows.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &lt;CATIGenericFactory.h&gt;.
+
+extern IID <strong>IID_CAAICafTexturePropertyPageEdtFactory</strong>;
+
+class CAAICafTexturePropertyPageEdtFactory : public <strong>CATIGenericFactory</strong>
+{
+  <strong>CATDeclareInterface</strong>;
+  public :
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>A factory interface is an interface, that is, an abstract class that
+    derives from <i>CATIGenericFactory</i>. As any interface, it has an IID
+    declared as IID_ followed by the interface name, and includes the <code>CATDeclareInterface</code>
+    macro that declares that this abstract class is an interface. No additional
+    method than those inherited from <i>CATIGenericFactory</i> is necessary.
+    Don&quot; t forget the public keyword required by the tie compiler.</p>
+  </li>
+  <li><b>Source file</b>: CAAICafTexturePropertyPageEdtFactory.cpp is as
+    follows.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAICafTexturePropertyPageEdtFactory.h&quot;
+
+IID IID_CAAICafTexturePropertyPageEdtFactory = <strong>{ 
+    0x0cf4c1bc,
+    0xd409,
+    0x11d3,
+    {0xb7, 0xf5, 0x00, 0x08, 0xc7, 0x4f, 0xe8, 0xdd}
+    };</strong>
+
+<strong>CATImplementInterface</strong>(CAAICafTexturePropertyPageEdtFactory, CATIGenericFactory);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This file includes a GUID [<a href="#Ref3">2</a>] as follows. The GUID is
+    shown in bold typeface. The <code>CATDeclareInterface</code> in the header
+    file and the <code>CATImplementInterface</code> macros make an interface
+    from this C++ class. The second parameter of <code>CATImplementInterface</code>
+    declares that <i>CAAICafTexturePropertyPageEdtFactory</i> OM-derives from <i>CATIGenericFactory</i>.</p>
+  </li>
+  <li><b>TIE file</b>: to enable components to implement this interface, create
+    a file named TIE_CAAICafTexturePropertyPageEdtFactory.tsrc in the src
+    directory, and containing:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAICafTexturePropertyPageEdtFactory.h&quot;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The building tool mkmk will generate the TIE for this interface, that is
+    the TIE_CAAICafTexturePropertyPageEdtFactory.h file for you in the
+    ProtectedGenerated directory.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Property Page Editor Factory</h4>
+<p>Macros help to create the class. These macros create a class whose name is
+made of the property page editor class name to which the string Factory is
+appended. This is the reason why the header file is named
+CAACafTexturePropertyPageEdtFactory.h and the source file is named
+CAACafTexturePropertyPageEdtFactory.cpp.</p>
+<p>To create this class, create:
+<ol>
+  <li>The header file, using the <code>CAT_EDITOR_DECLARE_FACTORY</code> macro</li>
+  <li>The source file, using the <code>CAT_EDITOR_DEFINE_FACTORY</code> macro</li>
+  <li>Update the interface dictionary and the factory dictionary.</li>
+</ol>
+<ol>
+  <li><b>Header file</b>: CAACafTexturePropertyPageEdtFactory.h is as follows.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &lt;CATEditorFactory.h&gt;
+#include &lt;CAACafTexturePropertyPageEdt.h&gt;
+
+#define ExportedBy<strong>NOTHING</strong>
+
+<strong>CAT_EDITOR_DECLARE_FACTORY</strong>(<strong>NOTHING</strong>, CAACafTexturePropertyPageEdt, CAACafTexturePropertyPageEdt);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It is important to set the same string where <code><b>NOTHING</b></code>
+    is used in this example. <code>ExportedByNOTHING</code> sets a non existing
+    shared library or DLL to the class. Setting a valid one is useless, since
+    the created class in an extension of <i>CATEditorManager</i>, and its
+    instantiation is made when <i>CATEditorManager</i> is asked for <em>CAAICafTexturePropertyPageEdtFactory</em>.
+    In this case, the appropriate shared library or DLL is retrieved using the
+    interface dictionary. The second parameter is the name of the property page
+    editor class. This name is used to create the factory class name by
+    appending Factory. The third parameter is a type assigned to the class to
+    instantiate that could be retrieved using the <code>CATIGenericFactory::Support</code>
+    method. It is unused here, but must be set, and is thus also set to the name
+    of the class to instantiate.</p>
+  </li>
+  <li><b>Source file</b>: CAACafTexturePropertyPageEdtFactory.cpp is as follows.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &lt;CAACafTexturePropertyPageEdtFactory.h&gt;
+
+<strong>CAT_EDITOR_DEFINE_FACTORY</strong>(CAACafTexturePropertyPageEdt, CAACafTexturePropertyPageEdt);
+ 
+#include &lt;TIE_CAAICafTexturePropertyPageEdtFactory.h&gt;
+<strong>TIE_CAAICafTexturePropertyPageEdtFactory</strong>(CAACafTexturePropertyPageEdtFactory);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CAT_EDITOR_DECLARE_FACTORY</code> and <code>CAT_EDITOR_DEFINE_FACTORY</code>
+    macros create the property page editor factory implementation class as a
+    data extension of the <i>CATEditorManager</i> class. Then the TIE macro
+    declares that this extension class implements the <i>CAAICafTexturePropertyPageEdtFactory</i>
+    interface.</p>
+  </li>
+  <li><b>Dictionary files</b>: you should now update
+    <ul>
+      <li>The <em>interface dictionary</em>, that is a file whose name is the
+        framework name suffixed by dico, such as
+        CAACATIAApplicationFrm.edu.dico, and that you should create or update in
+        the framework CNext/code/dictionary directory. The interface dictionary
+        contains the following declaration to state that the CATEditorManager
+        component implements the <em>CAAICafTexturePropertyPageEdtFactory</em>
+        interface, by means of the extension class created by the macros, whose
+        code is located in the libCAACafEditTextureProp shared library or DLL:
+        <table class="code">
+          <tr>
+            <td>
+              <pre>CATEditorManager CAAICafTexturePropertyPageEdtFactory libCAACafEditTextureProp</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+      <li>The <em>factory dictionary</em>, that is a file whose name is the
+        framework name suffixed by fact, such as CAACATIAApplicationFrm.fact,
+        and that that you should create or update in the framework
+        CNext/code/dictionary directory. The factory dictionary contains the
+        following declaration to state that the <em>CAAICafTexturePropertyPageEdtFactory</em>
+        interface is an interface to a factory whose implementation creates an
+        CAACafTexturePropertyPageEdt class instance:
+        <table class="code">
+          <tr>
+            <td>
+              <pre>CAACafTexturePropertyPageEdt   CAAICafTexturePropertyPageEdtFactory</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+    <p>At run time, the pathname of the directory that contains these files is
+    concatenated at run time in the CATDictionaryPath environment variable.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Property Page Editor</h4>
+<p>You'll now create the class for the property page. This class derives from
+the <i>CATEditor</i> class, implements the <em>CATIEditProperties</em> interface
+and overrides methods that are either pure virtual or empty in their <i>CATEditor</i>
+implementation. You should provide their body to make them play the following
+role:
+<ul>
+  <li><code>ExtractFromSelection</code> returns the list of objects found in the
+    Current Set of Objects (CSO) that implement the <em>CAAISysTextureProperties</em>
+    interface</li>
+  <li><code>GetEditorTitle</code> returns the property page title</li>
+  <li><code>SetEditorSize</code> lets you request which size you need to
+    accommodate your property page, among the possible values: small, medium, or
+    large</li>
+  <li><code>BuildEditor</code> instantiates the associated dialog class</li>
+  <li><code>SetPropertyValue</code> sets the values and options in the property
+    page dialog from the element</li>
+  <li><code>CommitModification</code> applies to the selected elements the
+    modifications made to values and options in the property page dialog</li>
+  <li><code>CancelModification</code> is empty, but exists and could be used to
+    delete temporary objects that could possibly be allocated in previous
+    methods</li>
+  <li><code>CloseWindowFromEditor</code> is called whenever the end user selects
+    another property page.</li>
+</ul>
+<p>The methods <code>ExtractFromSelection</code>, <code>GetEditorTitle</code>, <code>SetEditorSize</code>,
+<code>BuildEditor</code>, and <code>SetPropertyValue</code> are executed in this
+order when instantiating the property page.</p>
+<p>When the end user clicks:
+<ul>
+  <li>OK, the <code>CommitModification</code> method is executed and the window
+    is closed</li>
+  <li>Apply the <code>CommitModification</code> method is executed, but the
+    window is not closed</li>
+  <li>Cancel, the <code>CancelModification</code> method is executed and the
+    window is closed</li>
+  <li>Close, the window is closed.</li>
+</ul>
+<p><code>SetPropertyValue</code>, <code>CommitModification</code>, and <code>CancelModification</code>
+call in turn the methods with the same name of the associated dialog class.</p>
+<p>The property page editor class header file is shown below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATEditor.h&quot;                 // Needed to derive from CATEditor
+#include &quot;CATLISTV_CATBaseUnknown.h&quot;   // Needed by ExtractFromSelection,...
+
+class CAACafTexturePropertyPageDlg;    // Dialog Page
+class CATEditorPage;                   // Tabpage frame parent
+
+class CAACafTexturePropertyPageEdt : public CATEditor
+{
+  CATDeclareClass;
+  public:
+    CAACafTexturePropertyPageEdt();
+    virtual ~CAACafTexturePropertyPageEdt(); 
+    virtual void ExtractFromSelection(CATLISTV(CATBaseUnknown_var) &amp; oExtract, 
+                               const  CATLISTV(CATBaseUnknown_var) * iSelection=NULL);
+    virtual CATUnicodeString  GetEditorTitle();
+    virtual void SetEditorSize(int &amp; oSize);
+    virtual void BuildEditor(CATEditorPage *); 
+    virtual void SetPropertyValue(CATLISTV(CATBaseUnknown_var)&amp; iExtract, 
+                                  ModeReadWrite iMode);
+    virtual void CommitModification(CATLISTV(CATBaseUnknown_var)&amp; iExtract);
+    virtual void CancelModification(CATLISTV(CATBaseUnknown_var)&amp; iExtract);
+    virtual void CloseWindowFromEditor();
+  
+ private:
+    CAACafTexturePropertyPageDlg * _pTextureFrame ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>We'll examine each method individually.
+<ul>
+  <li>The <b>constructor</b> initializes the <code>_pT</code><code>extureFrame</code>
+    dialog frame to include in the property page to <code>NULL</code>.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// Local Framework
+#include &quot;CAACafTexturePropertyPageEdt.h&quot;
+#include &quot;CAACafTexturePropertyPageDlg.h&quot;
+
+// CAASystem.edu Framework
+#include &quot;CAAISysTextureProperties.h&quot;
+
+// Visualization Framework
+#include &quot;CATPathElement.h&quot;
+
+// System Framework
+#include &quot;CATLISTV_CATBaseUnknown.h&quot;
+#include &quot;CATMsgCatalog.h&quot;
+#include &quot;CATUnicodeString.h&quot;
+
+// CATIAApplicationFrame Framework 
+#include &quot;CATEditorPage.h&quot;
+
+#include &quot;TIE_CATIEditProperties.h&quot;
+TIE_CATIEditProperties(CAACafTexturePropertyPageEdt);
+
+CATImplementClass(CAACafTexturePropertyPageEdt, Implementation, CATBaseUnknown , CATNull);
+CAACafTexturePropertyPageEdt::CAACafTexturePropertyPageEdt()
+                            :CATEditor(),<strong>_pTextureFrame(NULL)</strong>
+{}
+
+CAACafTexturePropertyPageEdt::~CAACafTexturePropertyPageEdt()
+{
+  _pTextureFrame = NULL;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>ExtractFromSelection</b></code> is called with the list of
+    objects in the CSO as second argument. This should be a list of <i>CATPathElement</i>
+    instances.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::ExtractFromSelection(CATLISTV(CATBaseUnknown_var)&amp; oExtract,
+                                                        const CATLISTV(CATBaseUnknown_var) * iSelection)
+{
+  oExtract.RemoveAll();
+  if (iSelection &amp;&amp; iSelection-&gt;Size())
+  {
+    CAAISysTextureProperties * pISysTexProperties = NULL;
+    HRESULT resu;
+    for (int i=1 ; i&lt;= iSelection-&gt;Size(); i++ )
+    {
+      if ( (*iSelection)[i] != NULL_var )
+      {
+        CATBaseUnknown_var ukn  = (*iSelection)[i];
+	CATBaseUnknown * pukn = ukn;
+        if ( pukn )
+        {
+          CATPathElement path = (CATPathElement &amp;) *pukn;
+          if ( path.GetSize() )
+          {
+            CATBaseUnknown * leaf = path[path.GetSize()-1];
+            resu =  leaf-&gt;QueryInterface(IID_CAAISysTextureProperties,
+                                         (void**)&amp;pISysTexProperties);
+
+            <em>// object extracted implements CAAISysTextureProperties</em>
+            if ( SUCCEEDED(resu) )
+            {
+              oExtract.Append((*iSelection)[i]);
+              pISysTexProperties-&gt;Release();
+              pISysTexProperties = NULL;
+            }
+          }
+        }
+      }
+    }
+  }
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The list is scanned, and any object that implements the <em>CAAISysTextureProperties</em>
+    interface is added to the <code>oExtract</code> list returned as the first
+    argument.</p>
+  </li>
+  <li><code><b>GetEditorTitle</b></code> assigns the property page title.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString CAACafTexturePropertyPageEdt::GetEditorTitle()
+{
+  CATUnicodeString Title;
+  Title = CATMsgCatalog::BuildMessage(&quot;CAACafTexturePropertyPageDlg&quot;,
+                                      &quot;TexturePageTitle&quot;,
+                                       NULL, 0, &quot;Texture&quot;);
+  return Title;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It creates a thet title as a <i>CATUnicodeString</i> instance using the
+    static <code>BuildMessage</code> of <i>CATMsgCatalog</i>. This method takes
+    the following arguments:
+    <ul>
+      <li><code>CAACafTexturePropertyPageDlg</code> is the message catalog name
+        found in the CAACafTexturePropertyPageDlg.CATNls message file</li>
+      <li><code>TexturePageTitle</code> is the message key using which the
+        property page editor title should be retrieved</li>
+      <li>The third argument is set to <code>NULL</code> because there is no
+        parameters customizing the message</li>
+      <li>The fourth argument is the number of parameters, here 0</li>
+      <li><code>Texture</code> is the default title to be used if the message
+        catalog is not found.</li>
+    </ul>
+  </li>
+  <li><code><b>SetEditorSize</b></code> sets the property page size.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::SetEditorSize(int &amp; oSize )
+{
+  oSize = 1;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This size can be set to small (1), medium (2), or large (3) for this
+    property page. The dialog window is displayed using the largest value found
+    among the property pages to be displayed.</p>
+  </li>
+  <li><code><b>BuildEditor</b></code> instantiates and builds the dialog object
+    for the property page.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::BuildEditor(CATEditorPage * iEditor)
+{
+  _pTextureFrame = new CAACafTexturePropertyPageDlg(iEditor);
+  _pTextureFrame-&gt;Build();
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This dialog object is described in <a href="#Step4">Creating the Property
+    Page Dialog</a>. &nbsp;</p>
+  </li>
+  <li><code><b>SetPropertyValue</b></code> requests from the dialog object to
+    set the values and options of its controls from the properties of the
+    extracted objects.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::SetPropertyValue(CATLISTV(CATBaseUnknown_var)&amp; iExtract,
+                                                    ModeReadWrite iMode)
+{
+  _pTextureFrame-&gt;SetPropertyValue(iExtract, iMode);
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>iMode</code> is always set to <code>Write</code></p>
+  </li>
+  <li><code><b>CommitModification</b></code> saves the modified values in each
+    extracted object.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::CommitModification(CATLISTV(CATBaseUnknown_var)&amp; iExtract)
+{
+  _pTextureFrame-&gt;CommitModification(iExtract);
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It is called whenever the end user clicks OK or Apply.</p>
+  </li>
+  <li><code><b>CancelModification</b></code> cancels the modifications brought
+    to the parameter values in the property page.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::CancelModification(CATLISTV(CATBaseUnknown_var)&amp; extract)
+{
+  _pTextureFrame-&gt;CancelModification(extract);
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It is called whenever the end user clicks Cancel. When the end user
+    clicks Cancel, the objects are not yet modified.</p>
+  </li>
+  <li><code><b>CloseWindowFromEditor</b></code> is called whenever the end user
+    selects a new property page, but not when the dialog box is closed.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageEdt::CloseWindowFromEditor()
+{}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>Update the interface dictionary, that is a file named, for example,
+CAACATIAApplicationFrm.edu.dico, whose directory's pathname is concatenated at
+run time in the CATDictionaryPath environment variable, and containing the
+following declaration to state that the <i>CAACafTexturePropertyPageEdt</i>
+class implements the <em>CATIEditProperties</em> interface, and whose code is
+located in the libCATAfrEduEditProp shared library or DLL. The update is in bold
+typeface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATEditorManager CAAICafTexturePropertyPageEdtFactory libCATAfrEduEditProp
+<strong>CAACafTexturePropertyPageEdt CATIEditProperties       libCATAfrEduEditProp</strong></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the Property Page Dialog</h4>
+<p>This dialog class represents the contents of the tab page. Its header file is
+as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATDlgFrame.h&quot;  // Needed to derive from  CATDlgFrame  
+#include &lt;CATEditor.h&gt;
+
+class CATDlgCheckButton;
+
+class CAACafTexturePropertyPageDlg : public CATDlgFrame
+{
+  public :
+    DeclareResource(CAACafTexturePropertyPageDlg, CATDlgFrame);
+
+    CAACafTexturePropertyPageDlg (CATDialog * ipParent);
+    virtual ~CAACafTexturePropertyPageDlg ();
+
+    void Build();
+    void SetPropertyValue(CATLISTV(CATBaseUnknown_var) &amp; iExtract,ModeReadWrite iMode);
+    void CommitModification(CATLISTV(CATBaseUnknown_var) &amp; iExtract);
+    void CancelModification(CATLISTV(CATBaseUnknown_var) &amp; iExtract);
+    void CloseWindowFromEditor();
+
+  private :
+    CAACafTexturePropertyPageDlg ();
+    CAACafTexturePropertyPageDlg(const CAACafTexturePropertyPageDlg &amp;iObjectToCopy);
+
+  private :
+    CATDlgCheckButton * _pMetal;
+    CATDlgCheckButton * _pRough;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>A property page dialog must derive from <i>CATDlgFrame</i>. The <code>DeclareResource</code>
+macro declares that the messages and resources are to be searched for in the
+CAACafTexturePropertyPageDlg.CATNls and CAACafTexturePropertyPageDlg.CATRsc
+files respectively. These files are delivered in the CNext\resources\msgcatalog
+directory of CAACATIAApplicationFrame.edu framework. The class has a constructor
+with a single argument to get its parent, and a destructor. The constructor only
+initializes the data members, while the <code>Build</code> method creates and
+arranges the controls, and sets the callbacks onto these controls. The other
+methods are the companion methods of those of <i>CATEditor</i> overriden in <i>CAACafTexturePropertyPageEdt</i>.
+A default constructor and a copy constructor are set as private, and are not
+implemented in the source file. This prevents the compiler from creating them as
+public without you know.
+<p>We'll examine each method individually.</p>
+<ul>
+  <li>The <b>constructor</b> only allocates storage for the controls. The
+    destructor is empty since any dialog object automatically deletes its dialog
+    object data members.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// Local Framework
+#include &quot;CAACafTexturePropertyPageDlg.h&quot;
+#include &quot;CAAISysTextureProperties.h&quot;
+
+// Dialog Framework
+#include &quot;CATDlgCheckButton.h&quot;
+
+// Visualization Framework
+#include &quot;CATPathElement.h&quot;
+
+CAACafTexturePropertyPageDlg::CAACafTexturePropertyPageDlg (CATDialog * parent)
+                            : CATDlgFrame(parent, &quot;TexturePageFrame&quot;, CATDlgFraNoFrame|CATDlgFraNoTitle),
+                              _pMetal(NULL), _pRough(NULL)
+{}
+
+CAACafTexturePropertyPageDlg ::~CAACafTexturePropertyPageDlg ()
+{
+  _pMetal = NULL;
+  _pRough = NULL;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>Build</b></code> creates the controls.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageDlg ::Build()
+{
+  _pMetal  = new CATDlgCheckButton(this,&quot;Metal&quot;);
+  _pRough  = new CATDlgCheckButton(this,&quot;Rough&quot;);
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>SetPropertyValue</b></code> sets the values and options of its
+    controls, and saves these values, from the properties of the first extracted
+    object. Here it checks or unchecks the appropriate check buttons
+    accordingly.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageDlg::SetPropertyValue(CATLISTV(CATBaseUnknown_var) &amp; iExtract,ModeReadWrite mode)
+{
+  _pMetal-&gt;SetState(CATDlgCheck);
+  _pRough-&gt;SetState(CATDlgCheck);
+   
+  int IsMetalic = 1 ;
+  int IsRough   = 1 ;
+
+  if ( iExtract.Size() &gt; 0 )
+  {
+      // the first element selected
+    CATBaseUnknown_var elt = (iExtract)[1];
+    CATBaseUnknown *pPath = elt;
+    if ( pPath )
+    {
+      CATPathElement &amp;path = (CATPathElement &amp;)*pPath;
+      if (path.GetSize())
+      {
+            // the leaf of the first element
+        CATBaseUnknown * currentp = path[path.GetSize()-1];
+
+            // Information are on the CAAISysTextureProperties interface
+            // of the first object 
+        CAAISysTextureProperties * pISysTexProperties = NULL ;
+        HRESULT resu =  currentp-&gt;QueryInterface(IID_CAAISysTextureProperties,
+                                              (void**)&amp;pISysTexProperties) ;
+
+	        // Get values of this first element to initialize the Dialog's object
+        if ( SUCCEEDED(resu) ) 
+        {
+          pISysTexProperties-&gt;GetMetal(IsMetalic);
+          if ( !IsMetalic ) _pMetal-&gt;SetState(CATDlgUncheck);
+            pISysTexProperties-&gt;GetRough(IsRough);
+          if ( !IsRough   ) _pRough-&gt;SetState(CATDlgUncheck);
+            pISysTexProperties-&gt;Release();
+        }
+      }
+    }
+  }
+  SetSensitivity(CATDlgEnable);
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>CommitModification</b></code> applies the modified property
+    values to the extracted objects.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageDlg::CommitModification(CATLISTV(CATBaseUnknown_var) &amp; iExtract)
+{
+  HRESULT resu ;
+  CAAISysTextureProperties * pISysTexProperties = NULL ;
+
+  for ( int i=1 ; i &lt;= iExtract.Size() ; i++ )
+  {
+      // current element to modify 
+    CATBaseUnknown_var elt = (iExtract)[i];
+    CATBaseUnknown *pPath = elt;
+    CATPathElement &amp;path = (CATPathElement &amp;)*pPath;
+
+    if (path.GetSize() )
+    {
+      CATBaseUnknown * currentp = path[path.GetSize()-1];
+      resu =  currentp-&gt;QueryInterface(IID_CAAISysTextureProperties,
+                                       (void**)&amp;pISysTexProperties) ;
+
+          // Modification of the model with the current values
+      if ( SUCCEEDED(resu) ) 
+      {
+        if ( _pMetal-&gt;GetState() == CATDlgCheck )
+          pISysTexProperties-&gt;SetMetal(1);
+        else
+          pISysTexProperties-&gt;SetMetal(0);
+
+        if ( _pRough-&gt;GetState() == CATDlgCheck )
+          pISysTexProperties-&gt;SetRough(1);
+        else
+          pISysTexProperties-&gt;SetRough(0);
+
+        pISysTexProperties-&gt;Release();
+        pISysTexProperties = NULL ;
+      }
+    }
+  }
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>CancelModification</b></code> closes the dialog window without
+    applying the modified values.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageDlg::CancelModification(CATLISTV(CATBaseUnknown_var) &amp; iExtract)
+{}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code><b>CloseWindowFromEditor</b></code> is called whenever the end user
+    selects another property page when this is the current one.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAACafTexturePropertyPageDlg::CloseWindowFromEditor()
+{}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>Creating a property page for the Edit-&gt;Properties menu implies to create
+an property page editor factory interface that derives from <i>CATIGenericFactory</i>,
+the property page editor factory that instantiates the property page editor, and
+to supply the associated property page dialog class gathering the controls to
+access the parameters and values of the object's properties you let the end user
+access and modify.</p>
+<p>To be extracted from the Current Set of Objects (CSO), the objects should
+implement the property interface(s) to which this property page is dedicated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><a name="Ref1">[1]</a></td>
+    <td><a href="../CAACafTechArticles/CAACafEditProperties.htm">Edit
+      Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref3">[2]</a></td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About
+      Globally Unique IDentifiers</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

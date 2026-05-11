@@ -1,0 +1,196 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Degrees of Freedom</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td valign="top">
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Degrees of Freedom</h3>
+      <em>How degrees of freedom are managed by analysis Modeler</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the list of degrees of freedom allowed inside the
+      analysis modeler and the way they are manage. It includes the following
+      section:
+      <ul>
+        <li><a href="#dof"><strong>Degrees of Freedom</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="dof"></a>Degrees of Freedom</h3>
+<p>The flags representing the <a name="DOF">degrees of freedom</a> definition
+are defined in the <b>CATSamDof</b> enumerate included in the
+CATAnalysisExplicitTypes.h include file. This enumerate allow to use the
+following list of basic D.O.F</p>
+<table border="1" width="100%" height="283">
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofTranslationX</b> &nbsp;</td>
+    <td width="75%" height="16">Translation in the X direction</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofTranslationY</b> &nbsp;</td>
+    <td width="75%" height="16">Translation in the Y direction</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofTranslationZ</b> &nbsp;</td>
+    <td width="75%" height="16">Translation in the Z direction</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofRotationX</b> &nbsp;</td>
+    <td width="75%" height="16">Rotation about the X axis</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofRotationY</b> &nbsp;</td>
+    <td width="75%" height="16">Rotation about the Y axis</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofRotationZ</b> &nbsp;</td>
+    <td width="75%" height="16">Rotation about the Z axis</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofTranslationR</b> &nbsp;</td>
+    <td width="75%" height="16">Translation in the R direction (for axisymmetric problems)</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofRotationRZ</b> &nbsp;</td>
+    <td width="75%" height="16">Rotation in the RZ plane (for axisymmetric problems)</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofTemperature</b> &nbsp;</td>
+    <td width="75%" height="16">Temperature</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofPressure</b> &nbsp;</td>
+    <td width="75%" height="16">Pressure</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofElectricPotential</b> &nbsp;</td>
+    <td width="75%" height="16">Electric potential</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofDensity </b></td>
+    <td width="75%" height="16">Fluid Density</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofVelocityX </b></td>
+    <td width="75%" height="16">Velocity in the X direction</td>
+  </tr>
+  <tr>
+    <td width="25%" height="16"><b>CATSamDofVelocityY </b></td>
+    <td width="75%" height="16">Velocity in the X direction</td>
+  </tr>
+  <tr>
+    <td width="25%" height="15"><b>CATSamDofVelocityZ</b></td>
+    <td width="75%" height="15">Velocity in the X direction</td>
+  </tr>
+</table>
+<p>It also includes some combined definition:</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="25%"><b>CATSamDofBallJoin</b> &nbsp;</td>
+    <td width="75%">A ball join (= CATSamDofTranslationX | CATSamDofTranslationY
+      | CATSamDofTranslationZ)Translation in the X direction</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofPinned</b> &nbsp;</td>
+    <td width="75%">A pinned join (=CATSamDofRotationX | CATSamDofRotationY |
+      CATSamDofRotationZ)</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofClamp</b> &nbsp;</td>
+    <td width="75%">A clamp (= CATSamDofBallJoin | CATSamDofPinned)</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofPivot</b> &nbsp;</td>
+    <td width="75%">A pivot around the Z axis (= CATSamDofBallJoin |
+      CATSamDofRotationX | CATSamDofRotationY)</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofSlidingPivot</b> &nbsp;</td>
+    <td width="75%">A sliding pivot about the Z direction (=
+      CATSamDofTranslationX | CATSamDofTranslationY | CATSamDofRotationX |
+      CATSamDofRotationY)</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofSurfaceSlider</b> &nbsp;</td>
+    <td width="75%">A surface slider in the XY plane (= CATSamDofTranslationZ |
+      CATSamDofPinned)</td>
+  </tr>
+  <tr>
+    <td width="25%"><b>CATSamDofSlider</b> &nbsp;</td>
+    <td width="75%">A slider in the Z direction (= CATSamDofTranslationX |
+      CATSamDofTranslationY | CATSamDofPinned)</td>
+  </tr>
+  <tr>
+    <td width="25%" height="15"><b>CATSamDofFluid</b> </td>
+    <td width="75%" height="15">CDF problem (=CATSamDofTemperature | 
+    CATSamDofPressure |CATSamDofDensity | CATSamDofVelocityX | 
+    CATSamDofVelocityY | CATSamDofVelocityZ). </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>This definition can be used for defining:</p>
+<ul>
+  <li>The degrees of freedom of the finite element (according to their physical
+    type). In this case, the D.O.F. are defined in the element local
+    frame.&nbsp;</li>
+  <li>Data on the model that are valuated at the D.O.F of the model. In this
+    case, they are defined in the absolute reference frame of the analysis
+    model.</li>
+</ul>
+<p>As of today, only the mechanical degrees of freedom are used for the
+definition of the physics.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Fev 2005]</td>
+    <td valign="top">CDF Extension</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+
+

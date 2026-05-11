@@ -1,0 +1,213 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>mkIc2Xml</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>mkIc2Xml</h3>
+      Migrate .h ID cards to XML</td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+
+!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article explains how to use the mkIc2Xml command to migrate your 
+		framework Identity Cards from .h to XML files.</p>
+		<ul>
+			<li><a href="#Synopsis">Synopsis</a></li>
+			<li><a href="#Usage">Usage</a></li>
+			<li><a href="#Options">Options</a></li>
+			<li><a href="#Examples">Example</a></li>
+			<li><a href="#Limitations">Limitations</a>
+			<ul>
+				<li><a href="#Comments">Comments in Parameters not Supported</a></li>
+				<li><a href="#elsif">#elsif not Supported</a></li>
+				<li><a href="#ifdef">#ifdef in #ifdef not Supported</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Synopsis"></a>Synopsis</h2>
+<p><strong>mkIc2Xml</strong> [<strong>-W</strong> WSPath] [<strong>-a</strong> |
+<strong>-L</strong> FWlist | FW1 [FW2 ...]] [<strong>-f</strong> file] [<strong>-o</strong> 
+oFile] [<strong>-type</strong> fwType ] [<strong>-doInclude</strong>] [<strong>-h</strong> 
+| <strong>-help</strong> | <strong>-?</strong>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Usage"></a>Usage</h2>
+<p>This command is used to transform a .h (IdentityCard or included file, components) 
+to .xml.</p>
+<p>It is dedicated to be used one shot (migration) or for a process in migration</p>
+<p>Most of the type, mkIc2Xml fw1 fw2 is enough, possibly with -doInclude to also 
+recursively migrate included .h.</p>
+<p>mkIc2Xml ComponentsDefinition.cmp will convert all components</p>
+<p>The -f, -type, and -o options are used for three reasons:</p>
+<p>Transformation when you cannot write in the file tree of the .h and need the 
+.xml for another process or transformation of .h which are not IdentityCard. In 
+that case, the -type is not mandatory, mkIc2Xml will rely on the extension of the 
+directory to decide the type. If the .h is not in a V6 file tree, you will need 
+to use the -type.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Options"></a>Options</h2>
+<p>mkIc2Xml accepts the following options:</p>
+<table class="fill">
+	<tr>
+		<th>Option</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>-a</code></td>
+		<td>Process all the frameworks of the workspace.</td>
+	</tr>
+	<tr>
+		<td><code>-doInclude</code></td>
+		<td>Process included files recutsively.</td>
+	</tr>
+	<tr>
+		<td><code>-f file</code></td>
+		<td>Process a file the name of which is not IdentityCard.h. Use with
+		<code>-o</code> and possibly <code>-type</code> options.</td>
+	</tr>
+	<tr>
+		<td><code>-h|-help|-?</code></td>
+		<td>Display the command help.</td>
+	</tr>
+	<tr>
+		<td><code>-L FWlist</code></td>
+		<td>Process the frameworks the names of which are listed in the file located 
+		at the path FWlist.</td>
+	</tr>
+	<tr>
+		<td><code>-o oFile</code></td>
+		<td>Output file name if the file to process is not named IdentityCard.h. 
+		Use with <code>-f</code> and possibly <code>-type</code> options.</td>
+	</tr>
+	<tr>
+		<td><code>-type fwType</code></td>
+		<td>Framework type, to use if the command is not run in a V6 workspace file 
+		tree. Use with <code>-f</code> and <code>-o</code> options. Valid values 
+		are:<ul>
+			<li><code>codeFramework</code>: a framework used to create applications.</li>
+			<li><code>testFramework</code>: a framework used to store test objects.</li>
+			<li><code>eduFramework</code>: a framework used for education purposes.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-W WSPath</code></td>
+		<td>Path of the workspace to process. Default is the current folder.</td>
+	</tr>
+	<tr>
+		<td><code>FW1 [FW2 ...]</code></td>
+		<td>Process frameworks FW1, FW2? etc.</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Examples"></a>Example</h2>
+<p>Conversion of frameworks A, A.tst, A.edu Identity Cards from .h to XML.</p>
+<pre class="code">
+&gt;ls *\IdentityCard\*.h
+A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/IdentityCard/IdentityCard.h
+&gt;mkIc2Xml A A.edu A.tst
+== Starting generation: 3 framework(s) to do
+A Done [1/3]
+A.edu Done [2/3]
+A.tst Done [3/3]
+== Generation done
+&gt;ls *\IdentityCard\*.xml
+A.edu/IdentityCard/IdentityCard.xml  A.tst/IdentityCard/IdentityCard.xml  A/IdentityCard/IdentityCard.xml
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Limitations"></a>Limitations</h2>
+<p>This part list limitation and unsupported cases.</p>
+<h3><a name="Comments"></a>Comments in Parameters not Supported</h3>
+<p>This case:</p>
+<pre class="code">
+AddPrereqComponent(&quot;A&quot;, Private /*Protected*/);  
+</pre>
+<p>Is not supported and will make mkIc2Xml fail. Remove such comments before using 
+mkIc2Xml.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="elsif"></a>#elsif not Supported</h3>
+<p>The #elsif preprocessor directive has no match in IdentityCard.xml. The condition 
+need to be rewritten before using mkIc2Xml.</p>
+<p>For instance</p>
+<pre class="code">
+#ifdef CATIAR211
+XXX
+#elsif CATIAR209
+YYY
+#else 
+ZZZ
+#endif
+</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ifdef"></a>#ifdef in #ifdef not Supported</h3>
+<p>#ifdef in #ifdef is not supported if both are used for a level monocoding or 
+for an operating system monocoding.</p>
+<p>For example, this is supported:</p>
+<pre class="code">
+#ifdef CATIAR211
+#if os intel_a
+xxx
+#endif
+#else
+...
+</pre>
+<p>This is not supported:</p>
+<pre class="code">
+#ifdef CATIAR209
+#ifdef CATIAR211
+xxx
+#endif
+#else
+...
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>In this article you have learnt how to migrate your framework Identity Cards 
+from .h to XML.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

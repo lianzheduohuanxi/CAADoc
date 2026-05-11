@@ -1,0 +1,314 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Building Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>PDM Object Hub</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Building Components</h3>
+      <br>
+      <em>How to build an Express schema, user functions for Express-X mapping, and an Express-X mapping schema</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>This task will introduce the various building components and you will learn
+how to build:</p>
+<ul>
+  <li>an express schema</li>
+  <li>user functions for Express-X mapping</li>
+  <li>an Express-X mapping schema</li>
+</ul>
+<p>First of all, you have to create your file tree. A file Tree has several
+fixed levels of directories.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/CAAVseWorkspace1.gif" width="179" height="97"></td>
+    <td>At the first level of your workspace (MyWorkspace in our example) we
+      find directories corresponding to components. These components are called
+      frameworks. The example below shows a framework (MyFramework) containing
+      the basic V5 architecture, i.e. the IdentityCard and ProtectedInterfaces
+      directories.</td>
+</table>
+<p>Even if the file tree shows a flat view of the frameworks, there are
+relationships between them. Different relationships exist but they have quite
+the same meaning, that is to say that a given framework uses the resources
+exported by one or more other frameworks. Those frameworks are called
+prerequisites.</p>
+<p>Such relationships are expressed in a special file called the <b>IdentityCard.h</b>
+file. Any framework - whatever its type is (code, education, test) - must
+provide an IdentityCard file in which it defines its prerequisite frameworks.
+The IdentityCard file is the privileged (and unique) place where the
+relationships between a framework and its prerequisites are expressed: this is a
+convenient way for users and tools to have a knowledge of an application
+architecture.</p>
+<p>A framework being a component, it is not supposed to expose all of its
+resources to its clients, but only the minimum. This contributes to maintain the
+system modular and understandable.</p>
+<p>By the way, the file tree defines several directories whose purpose is to
+gather the public part of any component, resources are made public through an
+&quot;interface&quot;. Several interfaces can be exposed by one framework.</p>
+<p>The different directories we can found under a framework correspond to
+different scopes of resources:</p>
+<ul>
+  <li><em>PublicInterfaces:</em> contains the interfaces that are
+    available for frameworks of other modelers</li>
+  <li><em>ProtectedInterfaces</em>: contains the interfaces that are available 
+    for the frameworks of the modeler to which this framework belongs</li>
+  <li><em>PrivateInterfaces</em>: contains interfaces that the
+    framework wants to provide but for its own needs. These interfaces are not
+    visible outside the framework scope (see also next section)</li>
+</ul>
+<p>Framework interfaces can be implemented in several types of files/languages:</p>
+<ul>
+  <li>C++: the file suffix is .h
+  <li>IDL: the file suffix is .idl</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="ExpressSchema"></a>Building an Express Schema</h3>
+<p>In our example, this schema will be called MySchema.</p>
+<ol>
+  <li>Enter the following prerequisites in the IdentityCard.h file:
+    <pre>AddPrereqComponent(&quot;SDMRuntime&quot;,  Protected);
+AddPrereqComponent(&quot;VPMServices&quot;, Protected);</pre>
+  </li>
+  <li>Initialize the build environment by launching the command:
+    <pre>mkInit</pre>
+  </li>
+  <li>Launch the following command to call the prerequisites:
+    <pre>mkGetPreq</pre>
+  </li>
+  <li>Under your framework, create a module named MySchema.m. In this module,
+    create a Imakefile.mk file as follows:
+    <pre>BUILT_OBJECT_TYPE=SHARED LIBRARY
+###############
+OS = COMMON
+###############
+PROGRAM_NAME =
+LOCAL_CKMFLAGS= -gLate</pre>
+  </li>
+  <li>In this module, create a src directory containing:
+    <ol>
+      <li>a MySchema.cpp file to launch dynamically the schema library in
+        Runtime defined as follows:
+        <pre>#include &quot;CATSchemaMacro.h&quot;
+LoadSchemaDico (MySchema);</pre>
+      </li>
+      <li>a MySchema.exsrc file, where the .cpp file will be generated,
+        containing:
+        <pre>Private</pre>
+      </li>
+    </ol>
+  <li>In the ProtectedInterfaces directory, insert the MySchema.express schema
+    to be built. The file tree now looks like this:<br>
+    <img border="0" src="images/CAAVseWorkspace2.gif" width="198" height="198"></li>
+  <li>At the framework level, launch the build command:
+    <pre>mkmk -au</pre>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="UserFunction"></a>Building a User Function for Express-X Mapping</h3>
+<p>Mapping may use user functions. These functions must be defined as follows:</p>
+<ol>
+  <li>Create a module called My_UserFcts.m in the framework where the user
+    functions will be defined.</li>
+  <li>In this module, create a Imakefile.mk file containing at least:
+    <pre>BUILT_OBJECT_TYPE = SHARED LIBRARY
+#############
+OS = COMMON
+#############
+LINK_WITH= KS0LATE KS0SMPL
+LOCAL_CKMFLAGS= -gLate</pre>
+  </li>
+  <li>In this module, create then a directory containing the .cpp files (i.e.
+    user functions): Fct_1.cpp, Fct_2.cpp, etc.</li>
+  <li>In the ProtectedInterfaces directory, create a header called My_UserFcts.h
+    where the user functions will be declared:
+    <pre>#ifndef My_UserFcts_H
+#define My_UserFcts_H
+
+#ifdef _WINDOWS_SOURCE
+#ifdef __My_UserFcts
+#define ExportedByMy_UserFcts __declspec(dllexport)
+#else
+#define ExportedByMy_UserFcts __declspec(dllimport)
+#endif
+#else
+#define ExportedByMy_UserFcts
+#endif
+
+ExportedByMy_UserFcts SdaiPrimitiveH Fct_1.cpp(const SdaiPrimitiveH&amp; Param1,
+                                               const SdaiPrimitiveH&amp; Param2);
+
+ExportedByMy_UserFcts SdaiPrimitiveH Fct_2.cpp(const SdaiPrimitiveH&amp; Param1);
+#endif</pre>
+  </li>
+  <li>At the framework level, launch the following build command:
+    <pre>mkmk -au</pre>
+  </li>
+  <li>The file tree now looks like this:<br>
+    <img border="0" src="images/CAAVseWorkspace3.gif" width="198" height="198"></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="ExpressXSchema"></a>Building an Express-X Mapping Schema</h3>
+<p>In our example, this schema will be called My_MAPPING.</p>
+<ol>
+  <li>Initialize the build environment.</li>
+  <li>Add the prerequisites in the IdentityCard.h file as follows:
+    <pre>AddPrereqComponent(&quot;SDMExpressX&quot;, Protected);</pre>
+  </li>
+  <li>Launch the following command to call the prerequisites:
+    <pre>mkGetPreq -p path_directory where frameworks are stored</pre>
+  </li>
+  <li>Build the schemas to be mapped by using the command:
+    <pre>mkmk -au</pre>
+    <p>The Express schemas that will be mapped using Express-X mapping must have
+    been previously built&nbsp; (see above paragraph).</p>
+    <p>If you want to build a mapping schema called My_MAPPING that maps the
+    My_SCHEMA_1 and My_SCHEMA_2 schemas, the architecture will be the following
+    one:</p>
+    <p><img border="0" src="images/CAAVseWorkspace4.gif" width="300" height="300"></p>
+  </li>
+  <li>Create a module with the same name as the mapping schema in the framework.<br>
+  </li>
+  <li>In this module, create a Imakefile.mk file as follows:
+    <pre>BUILT_OBJECT_TYPE = SHARED LIBRARY
+#############
+OS = COMMON
+LINK_WITH = KS0LATE KS0SIMPL KS0EXXMAP My_UserFcts
+LOCAL_CKMFLAGS= -gLate</pre>
+  </li>
+  <li>In this module, create a directory called src containing the mapping file
+    called My_MAPPING.exx.<br>
+    <img border="0" src="images/CAAVseWorkspace5.gif" width="181" height="144"></li>
+  <li>At the framework level, launch the build command:
+    <pre>mkmk -au</pre>
+    <p>At this step, the mapping can be compiled but it will not be usable with
+    the Import / Export / Migration platform. Because the tool calls the mapping
+    dynamically, this mapping has to be seen as a Mapper. In other terms, it
+    must adhere to the &#8220;VPMIExMapper&#8221; interface. Therefore an implementation
+    of the interface has to be written to be able to use the mapping.</p>
+  </li>
+  <li>In MyMapping.m, create a new directory called LocalInterfaces.
+    <p>In this directory create a new file called ds_MyMapping.h and write the
+    following lines inside (do not forget to change MyMapping with your real
+    name):</p>
+    <pre>#ifndef ds_MyMapping_H
+#define ds_MyMapping_H
+#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATIContainer.h&quot;
+#include &quot;StdMapper.h&quot;
+
+class ds_MyMapping : public StdMapper
+{
+  CATDeclareClass;
+
+  public:
+
+   ds_MyMapping();
+   ~ds_MyMapping();
+        
+        //--------------------------------
+        // Implementation for VPMIExMapper
+        //--------------------------------
+  HRESULT Convert(const CATIContainer_var&amp; fromContner,
+                  const CATIContainer_var&amp; toContner);
+};
+#endif</pre>
+  </li>
+  <li>In MyMapping.m/src, create a new file ds_MyMapping.cpp and write the
+    following lines inside:
+    <pre>
+#include &lt;iostream.h&gt;
+#include &quot;ds_MyMapping.h&quot;
+CATImplementClass(ds_MyMapping, DataExtension, StdMapper, MyMapping);
+ds_MyMapping::ds_MyMapping()
+{
+}
+ds_MyMapping::ds_MyMapping()
+{
+}
+#include &quot;TIE_VPMIExMapper.h&quot;
+TIE_VPMIExMapper(ds_MyMapping);
+//==============================================================
+//
+        Data Mapping
+//==============================================================
+HRESULT ds_MyMapping::Convert(const CATIContainer_var&amp; fromContner, const
+                              CATIContainer_var&amp; toContner)
+{
+  HRESULT Stone = S_OK;
+  CATUnicodeString TheMappingName((this-&gt;GetImpl())-&gt;IsA());
+  //-------------
+  // Data mapping
+  //-------------
+  Stone = ((StdMapper*)this)-&gt;Convert(fromContner, toContner, TheMappingName);
+  return Stone;
+}</pre>
+    <p>To build this code, you need to add the following prerequisites:</p>
+    <ul>
+      <li>In the Imakefile.mk
+        <pre>LINK_WITH = GUIDVPMSTEPExchanges \
+            JS0GROUP \
+            ENOVSTEPTools</pre>
+      </li>
+      <li>In the IdentityCard.h of MyFramework
+        <pre>AddPrereqComponent(&quot;VPMDataMigration&quot;,  Protected);
+AddPrereqComponent(&quot;VPMSTEPExchanges&quot;, Protected);</pre>
+        <p>Now the module MyMapping.m can be built: mkmk &#8211;u under the module.</p>
+        <p>MyMapping is the late type given for this implementation. It will
+        enable a dynamic loading of the mapping for the run-time.</p>
+      </li>
+    </ul>
+  <li>Launch the command under the workspace:
+    <pre>MkGetPreq &#8211;p /thePath_where_the_frame_wokrs_are_stored</pre>
+    <p>It has to be previously declared in the Dictionary:</p>
+    <ul>
+      <li>If the &#8220;CNext&#8221; directory does not exist, create the directory
+        CNext in the Frame Work MyFramework.</li>
+      <li>In CNext, create the directory code. In this code, create a directory
+        called dictionary and edit MyFramework.dico.</li>
+      <li>Add the following line:
+        <pre>MyMapping  VPMIExMapper  libMyMapping</pre>
+      </li>
+    </ul>
+    <p>In order to take MyFramework.dico into account, do not forget to export
+    the variable in the runtime environment:
+    <pre>Export CATDictionaryPath=/&#8230;/MyWorkspace/MyFramework/CNext/code/dictionary:$CATDictionaryPath</pre>
+    <p><img border="0" src="images/CAAVseWorkspace6.gif" width="227" height="553"></li>
+  <li>These ds_MyMapping files can be stored in a new module.
+    <p>A Unix shell is provided to generate the ds_MyMapping files: <code>EV5_EXGener.sh</code>
+    (<code>&#8211;h</code> to display the parameters).</p>
+  </li>
+</ol>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

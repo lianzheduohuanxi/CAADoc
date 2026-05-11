@@ -1,0 +1,141 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Code Generation Basic Concepts</title>
+</head>
+
+<body onload="createToc();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Code Generation Basic Concepts</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article presents the basic concepts of the code generation infrastructure. 
+		It explains the goal of the product, its global architecture, and its integration 
+		into Visual Studio.</p>
+		<div id="toc">
+		</div>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Overview"></a>Overview</h2>
+<p>In order to increase the productivity of developers, it's possible to 
+automate the development of some portions applications. Native C++ code is not always 
+the more natural way to represent or develop some application parts. The goal is 
+to provide graphical tools or high level languages to accelerate the creation process 
+and to improve the code reliability. The final native code is then automatically 
+generated after this process.</p>
+<p>The automation of code production represents a major development speedup in the 
+complete project lifecycle. In the specification phase, an application prototype 
+can be quickly designed, and then tested in a simulation process, to check that 
+is has the desired behavior. Once the design validated, it&#39;s automatically transformed 
+into native source code. Finally, since this code is generated, it&#39;s reliable, and 
+doesn&#39;t require maintenance.</p>
+<p>CAA programming is based on C++ programming, and contains some parts that 
+can&#39;t be automated, like data models and algorithms. This infrastructure must support 
+both graphical and native code edition. More over those two representations are 
+highly linked, and must be authored in a tool that will integrate this process properly. 
+For this reason, we integrated our application in Visual Studio, to control what 
+we can automate, and to let VS handle the native code edition.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="CodeGenArch"></a>Code Generation Architecture</h2>
+<p>The whole development process is integrated in an IDE (Visual Studio). The design 
+editor of the IDE is the core of the code generation infrastructure. This editor 
+is used to design the application domains handle by the code generation infrastructure. 
+The code editor supports native language code authoring, required to complement 
+the graphical design of the developed component.</p>
+<p>Both views are a partial representation of the same model. This model contains 
+the full representation of the designed application, and the editors are always 
+synchronized with it. This model is directly saved on the disk, and this file represents 
+the only persistent data of the application being developed with the infrastructure.</p>
+<p><img src="images/CodeGenArchi.png" width="556" height="442"></p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="ApplSim"></a>Application Simulation</h3>
+<p>Although the design editor uses a representation of the model close to the real 
+look of the application, some differences can exist with the program that will be 
+generated. In particular, this difference might be useful to design the application 
+easier. Moreover, the view in the design editor can&#39;t always reflect the dynamic 
+behavior of the produced application.</p>
+<p>The code generation file can be simulated to allow the developer to quickly check 
+the real application appearance, and its dynamic behavior. This process avoids long 
+compile/run sequences to check that the application is behaving properly.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="CodeGen"></a>Code Generation</h3>
+<p>The code generation process is not inserted in Visual Studio, but directly in 
+mkmk. Before compiling C++ code, mkmk has a grammar step. In this step, if mkmk 
+encounters a code generation file (with extension .DSGen), it calls our specific 
+compiler that will create the final native code. Those files are then compiled and 
+linked with the application. </p>
+<p>The created header(s) and implement(s) files are generated in the LocalGenerated 
+directory. Thus, they are not meant to be used or edited directly. </p>
+<p>&nbsp;</p>
+<p><img src="images/Compilation.png" width="540" height="309"></p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="VSIntegration"></a>Integration to Visual Studio</h2>
+<p>The code generation infrastructure is inserted in a VS Package. This type of 
+VS extension offers the best integration in Visual Studio, with more functionalities 
+and flexibility than an Add-in. This package provides specialized interfaces to 
+control Visual Studio and controls every code automation domains like dialog, dialog 
+engine, etc.</p>
+<p>This diagram illustrates the integration of the code generation package in Visual 
+Studio:</p>
+<p><img src="images/Package.png" width="522" height="373"></p>
+<p>More precisely, the package consists in:</p>
+<ul>
+	<li>A code editor</li>
+	<li>A design editor</li>
+	<li>The standard Visual Studio toolbox, filled with custom items, related to 
+	the designed application</li>
+	<li>The standard Visual Studio properties window, to edit the properties of 
+	the created components</li>
+	<li>A simulation command that automatically calls the simulation application 
+	that can handle the designed document</li>
+	<li>The integration to VS projects, with the usual creation/loading/saving process.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="VSGenView"></a>General View in Visual Studio</h2>
+<p>Here is a global view of the package elements in a development context in Visual 
+Studio:</p>
+<p>
+<img alt="Rich Application Presentation Designer Global View" src="images/VSGlobalView.png" width="652" height="536">&nbsp;</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [July 2007]</td>
+		<td valign="top">Document creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

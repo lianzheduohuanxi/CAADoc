@@ -1,0 +1,252 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Making Your Commands Available</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Making Your Commands Available</h3>
+      <em>How to integrate your commands into the application frame</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Once you have completed your command development, or even during its
+      development stage, your may want to test them in the application frame,
+      and then make them available to your customers. To do this, you need to
+      decide where to integrate them, and then proceed to the integration. This
+      article gives you tips and explains how to carry out the integration
+      depending on your location decision. Integrating a script as a command is
+      also described.
+      <ul>
+        <li><a href="#200000"><strong>Integrating Your Commands</strong></a>
+          <ul>
+            <li><a href="#220000">Into a Workbench</a></li>
+            <li><a href="#230000">Into an Add-in</a></li>
+            <li><a href="#Into the Warm Start Mechanism">Into the Warm Start
+              Mechanism</a></li>
+          </ul>
+        </li>
+        <li><a href="#120000"><b>Integrating a Script as a Command</b></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Integrating Your Commands</h3>
+<p>To make your brand new commands available to your customers, you need to
+integrate them into one of the following objects:
+<ul>
+  <li>A workbench: your commands will be available as long as this workbench is
+    the active one. You can either create a new workbench, or modify an existing
+    one. In this case, you should be able to modify the workbench source files</li>
+  <li>An add-in to either a workshop or a workbench, allowing you to add your
+    commands without modifying the workshop or the workbench. Creating an add-in
+    makes you fully independent from the workshop or the workbench provider, and
+    protects your commands from future workshop or workbench evolutions. You can
+    also modify an existing add-in, providing you can modify its source files.
+    The add-in and the commands it contains are available with the workshop or
+    the workbench.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Into a Workbench</h4>
+<p>You can either create a new workbench or modify a existing one.
+<ul>
+  <li>To create a new workbench for you&nbsp; commands, refer to the example [<a href="#References">2</a>]</li>
+  <li>To integrate your commands into an existing workbench, you need to do the
+    following:
+    <ol>
+      <li>Decide where you want to integrate your commands: in which menus and
+        possibly which submenus, in which toolbars and possibly in which icon
+        boxes, and at which locations with respect to the other existing&nbsp;
+        commands</li>
+      <li>Create one or several command header classes, or reuse existing ones
+        you have already created for your workbench</li>
+      <li>Modify the <code>CreateCommands</code> method of the workbench class
+        to add your command header instantiations</li>
+      <li>Modify the <code>CreateWorkbench</code> method to create the command
+        starters and put them in the menus, submenus, toolbars, and icon boxes
+        you choose</li>
+      <li>Rebuild the workbench shared libraries and DLLs using mkmk</li>
+      <li>Modify the command header resource files to add the resources you
+        commands will use to display and provide help, such as the menu item
+        titles, the icons for the toolbars, the various help messages, the
+        accelerators and mnemonics, and so forth.</li>
+    </ol>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>Into an Add-in</h4>
+<p>Because you are not their provider, or because you don't want to modify them,
+you may prefer to remain independent from the workshop or from the workbench
+into which you intend to integrate your&nbsp; commands. In this case, the add-in
+is the solution. You can either create a new add-in, or modify a existing one.
+<ul>
+  <li>To create an add-in for your&nbsp; commands, refer to the example [<a href="#References">3</a>]</li>
+  <li>To integrate your&nbsp; commands into an existing add-in, you need to do
+    the following:
+    <ol>
+      <li>Decide in which toolbars of the add-in you want to integrate
+        your&nbsp; commands. Remember that you can neither create nor modify a
+        menu or a submenu in an add-in</li>
+      <li>Create one or several command header classes, or reuse existing ones</li>
+      <li>Modify the <code>CreateCommands</code> method of the add-in class to
+        add your command header instantiations</li>
+      <li>Modify the <code>CreateToolbars</code> method to create the command
+        starters and put them in the toolbars you choose</li>
+      <li>Rebuild the add-in shared libraries and DLLs</li>
+      <li>Modify the command header resource files to add the resources your
+        commands will use to display and provide help, such as the icons for the
+        toolbars, the various help messages, the accelerators and mnemonics, and
+        so forth.</li>
+    </ol>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Into the Warm Start Mechanism"></a>Into the Warm Start Mechanism</h4>
+<p>If your command modifies the contents of a V5 document, you should ensure its
+warm start integration. Refer to the technical article entitled &quot;Warm Start
+Incremental Backup&quot; [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="120000"></a>Integrating a Script as a&nbsp; Command</h4>
+<p>You can easily customize your toolbars by adding icons to trigger your
+favorite macros. This reduces the macro access time for the macros you often
+run.</p>
+<table border="0" cellspacing="0" valign="top" width="100%">
+  <tbody>
+    <tr valign="top" border="0">
+      <td valign="top"><img src="images/atarget.gif" width="30" height="30" alt="atarget.gif (2821 bytes)"></td>
+      <td valign="top" colspan="3">This task explains how to add a macro as a
+        command in a toolbar.</td>
+    </tr>
+    <tr valign="top" border="0">
+      <td valign="top"><img src="images/ascenari.gif" width="30" height="30" alt="ascenari.gif (2737 bytes)"></td>
+      <td valign="top" colspan="2">1. On the <b>Tools</b> menu, point to <b>Macro</b>,
+        and then click <b>Macros</b>. Click <b>Select</b> to select the macro
+        you want to add to make sure that the directory path of the file
+        containing the requested macro is concatenated with those recognized by
+        the application. Then click <b>Cancel</b>.</td>
+      <td valign="top"><img border="0" src="images/CAAAfrCmdInt20.jpg" width="360" height="220"></td>
+    </tr>
+    <tr valign="top" border="0">
+      <td>&nbsp;</td>
+    </tr>
+    <tr valign="top" border="0">
+      <td valign="top"></td>
+      <td valign="top">2. On the <b>Tools</b> menu, click <b>Customize</b>, and
+        then click the <b>Commands</b> tab. In the <b>Categories</b> list, click
+        <b>Macros.</b> Drag the macro name and drop it onto the toolbar you
+        wish. The default icon <img border="0" src="images/CAAAfrCmdInt22.jpg" width="13" height="15">
+        is used</td>
+      <td valign="top" colspan="2"><img border="0" src="images/CAAAfrCmdInt21.jpg" width="508" height="353"><br>
+      </td>
+    </tr>
+    <tr valign="top" border="0">
+      <td valign="top"></td>
+      <td valign="top">3. To select another icon than the default one, click <b>Show
+        Properties</b>, and click <img border="0" src="images/CAAAfrCmdInt25.jpg" align="bottom" width="27" height="27">
+        to display the Icons Browser&nbsp; box.</td>
+      <td valign="top" colspan="2"><img border="0" src="images/CAAAfrCmdInt23.jpg" width="509" height="446"><br>
+      </td>
+    </tr>
+    <tr valign="top" border="0">
+      <td valign="top"></td>
+      <td valign="top" colspan="2">4. Click the appropriate icon. The default
+        icon changes to the one clicked.</td>
+      <td valign="top"><img border="0" src="images/CAAAfrCmdInt24.jpg" width="234" height="308"><br>
+      </td>
+    </tr>
+    <tr valign="top" border="0">
+      <td valign="top" colspan="4">
+        <p align="center"><img src="images/aendtask.gif" width="45" height="25" alt="aendtask.gif (2990 bytes)"></td>
+    </tr>
+  </tbody>
+</table>
+<p>The macro is now ready to use from the toolbar.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>To make your command available to your customers, you need to integrate it
+into a workbench, or an add-in. You can also add scripts as commands in
+toolbars.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleWorkbench.htm">Creating
+      a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">Creating an
+      Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAAfrWarmstart.htm">Warm Start Incremental Backup</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Sep 2003]</td>
+    <td valign="top">Warm Start Integration</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

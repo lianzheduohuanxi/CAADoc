@@ -1,0 +1,652 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Setting applicative attributes and colors on Part sub-elements</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Setting applicative attributes and colors on Part sub-elements</h3>
+		<p>Using CATMmrApplicativeAttributes<em></em></td>
+  </tr>
+  <tr>
+    <td class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMmrApplicativeAttributes use case. This use case explains how to open a Part document, find its sub-elements(faces), set color and applicative attributes on these sub-elements, and retrienve these colors and applicative attributes using dedicated CAA service class.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrApplicativeAttributes Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrApplicativeAttributes Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrApplicativeAttributes</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrApplicativeAttributes Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to set colors and applicative attributes on a list of faces.</p>
+<table width="100%">
+  <tr>
+    <td><img src="images/CAAMmrApplicativeAttributes.jpg" width="417" height="324"></td>
+    <td>This picture represents a Part document before (left) and after (right)
+      its processing by the use case. The program has looked for all faces in the model and set applicative attributes and colors on its faces.
+      </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrApplicativeAttributes Use Case</h3>
+<p>CAAMmrApplicativeAttributes is a use case of the CAAMechanicalModeler.edu framework that
+illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrApplicativeAttributes Do</h4>
+<p>The job of CAAMmrApplicativeAttributes is divided into several steps:
+<ul>
+  <li>Opening and loading a Part document whose pathname is passed as argument</li>
+  <li>Getting access to the Part feature [<a href="#References">1</a>] that the document contains</li>
+  <li>Getting Main Body output geometry
+    <ul>
+      <li>Accessing the main body</li>
+      <li>Getting its associated Result Out feature</li>
+      <li>Retrieving the corresponding geometry</li>
+    </ul>
+  </li>
+	<li>Getting BRepAccess from geometry to access its faces</li>
+	<li>Retrieving each face current colors </li>
+	<li>Setting new colors 
+    <ul>
+      <li>Creating new colors lists</li>
+      <li>Setting these new colors</li>
+    </ul>	
+	</li>
+	<li>Retrieving each face colors </li>
+	<li>Setting applicative attributes
+    <ul>
+      <li>Creating applicative attributes lists</li>
+      <li>Setting these applicative attributes</li>
+    </ul>	
+	</li>
+  <li>retrieving each face applicative attributes lists</li>
+	<li>Saving the document and exiting.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrApplicativeAttributes</h4>
+<p>To launch CAAMmrApplicativeAttributes, you will need to set up the build time
+environment, then compile CAAMmrApplicativeAttributes along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].
+To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAMmrApplicativeAttributes FilenameIn  FilenameOut&quot;</pre>
+<pre>where</pre>
+
+<ul>
+  <li>FilenameIn&nbsp; is&nbsp; the complete path of a Part document. You can
+    use the <code>CAAMmrApplicativeAttributesPart.CATPart </code>located:
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code></li>
+      <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+
+    </ul>
+  </li>
+  <li><code>FilenameOut is the </code>complete path of a Part document which
+    will contain the FilenameIn document modified</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrApplicativeAttributes Code</h4>
+<p>The CAAMmrApplicativeAttributes use case is made of a single source file named
+CAAMmrApplicativeAttributes.cpp located in the CAAMmrApplicativeAttributes.m module of the
+CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrApplicativeAttributes.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrApplicativeAttributes.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are ten logical steps in CAAMmrFeatureTopoBRep:
+<ol>
+  <li><a href="#Checking">Checking Arguments, Loading and Initializing the
+    Document</a></li>
+  <li><a href="#Part">Accessing the Part Feature in the Document</a></li>
+  <li><a href="#GettingMainBody">Getting Main Body output geometry</a></li>
+  <li><a href="#GettingBRepAccess">Getting BRepAccess from geometry to access its faces</a></li>
+  <li><a href="#GettingCurrentColors">Retrieving each face current colors</a></li>
+  <li><a href="#SettingNewColors">Creating and Setting new colors list</a></li>
+  <li><a href="#GettingNewColors">Retrieving each face color</a></li>
+	<li><a href="#SettingAttributes">Creating and Setting applicative attributes list</a></li>
+  <li><a href="#GettingAttributes">Retrieving each face applicative attributes list</a></li>
+  <li><a href="#ClosingSession">Closing and Exiting the Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Checking"></a>Checking Arguments, Loading and Initializing the
+Document</h4>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int iArgc,
+     char **iArgv) // iArgv[1]: path to an existing Part document
+                   // iArgv[2]: path to a  new, modified Part document 
+    {
+      // return code
+      int rc = 0;
+    
+      // Checks number of arguments
+      if( 3!=iArgc )
+        return 1;
+    
+      // Loads input Part and make it ready
+      char *pSessionName = &quot;Sample session&quot;;
+      CATSession *pSession = 0;
+      HRESULT rc = ::<b>Create_Session</b>(pSessionName, pSession) ;
+      if( SUCCEEDED(rc) )
+      {
+        CATDocument *pDoc = 0;
+        rc= <b>CATDocumentServices::Open</b>(iArgv[1], pDoc) ;
+    
+...</pre>
+    </td>
+  </tr>
+
+</table>
+<p>This section represents the classical sequence for opening a document [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Part"></a>Accessing the Part Feature in the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+
+      <pre>...
+    if( SUCCEEDED(rc) )
+    {
+        CATInit *pDocAsInit = 0;
+        rc= pDoc-&gt;QueryInterface(IID_<b>CATInit</b>, (void**)&amp;pDocAsInit) ;
+                 
+        CATIPrtContainer *pSpecContainer = 
+              (CATIPrtContainer*)pDocAsInit-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+        ...
+        CATIPrtPart_var spPart ( pSpecContainer-&gt;<b>GetPart</b>() );
+        ...
+...</pre>
+    </td>
+  </tr>
+
+</table>
+<p>We readily use the <i>CATIPrtContainer</i> to access the object representing
+the part through the Part parsing interface, <i>CATIPrtPart</i>.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GettingMainBody"></a>Getting Main Body output geometry</h4>
+<p>Now we have the part, we want to find the main body out put geometry.</p>
+<ol>
+  <li><a href="#Retrieving the main Part body">Retrieving the main Body feature</a></li>
+  <li><a href="#Retrieving the feature which holds its result (named result feature)">Retrieving
+    the feature which holds its result (named result feature)</a></li>
+  <li><a href="#Retrieving the Shape of the output Body">Retrieving the Shape of the output Body(the body we visualize)</a></li>
+  <li><a href="#Accessing the geometry">Accessing the geometry</a></li>
+</ol>
+<p>You can refer to the technical article entitled &quot;Specification/Result
+Mechanism Applied to Mechanical features&quot; for more details about the <i>result
+feature</i> [<a href="#References">5</a>].&nbsp;This article explains that the
+association of the topological body to a geometrical features set is actually managed by
+a specialized feature, sometimes called the <i>result feature.</i></p>
+<ol>
+
+  <li><a name="Retrieving the main Part body"></a>Retrieving the main Body
+    feature</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIPartRequest</b>_var spPartRequest = spPart ;
+   ...
+   CATBaseUnknown_var spMainPartBody ;
+   rc = spPartRequest-&gt;<b>GetMainBody</b>(&quot;&quot;,spMainPartBody);
+   
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p><code>GetMainBody</code> of the <i>CATIPartRequest</i> interface retrieves
+  the main Body feature of a Part document. It is a feature instantiated from
+  the HybridBody StartUp [<a href="#References">4</a>].</p>
+  <li><a name="Retrieving the feature which holds its result (named result feature)"></a>Retrieving
+    the feature which holds its result (named result feature)</li>
+
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIBodyRequest</b>_var spMainPartBodyBodyRequest = spMainPartBody ;
+   ...
+   CATLISTV(CATBaseUnknown_var) ListResult ;
+   rc = spMainPartBodyBodyRequest-&gt;<b>GetResults</b>(&quot;&quot;,ListResult);
+   ...
+   <b>CATIGeometricalElement</b>_var spFeatureResultGeomElem = ListResult[<b>1</b>] ;
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CATIBodyRequest</i> interface, implemented on HybridBody StartUp, enables you to retrieve the result feature. This feature is a Solid
+  feature which bears the topological result [<a href="#References">5</a>]. The
+  first element of <code>ListResult, </code>is the feature result itself.&nbsp;</p>
+  
+  <li><a name="Retrieving the Shape of the output Body"></a>Retrieving the Shape of the output Body(the body we visualize)</li>
+
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+   <b>CATIShapeFeatureBody</b>_var shapefeat = spFeatureResultGeomElem;
+   ...
+   <b>CATISpecObject</b>_var FeatureSolid = shapefeat->GetResultOUT();
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CATIShapeFeatureBody</i> interface, implemented on Geometrical Element, enables you to retrieve the drawn geometry. Uisng <code>GetResultOUT</code> 
+  on the shape gives you the associated Body out feature.</p>
+  
+  <li><a name="Accessing the geometry"></a>Accessing the geometry</li>
+
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+    <b>CATIMfGeometryAccess</b>_var geoAccess = FeatureSolid;
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p>The <i>CATIMfGeometryAccess</i> enables you to access selecting objects of geometry.</p>
+  
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GettingBRepAccess"></a>Getting BRepAccess from geometry to access its faces</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATLISTV(CATBaseUnknown_var) breps;
+    int nbfaces = geoAccess -> GetBReps(breps);
+    ...        
+    CATLISTP(CATIBRepAccess) ListBreps;
+    CATIBRepAccess * Brep = NULL;
+    CATBaseUnknown * Unk = NULL;
+      
+    for(int compt = 1; compt &lt;= nbfaces; compt++)
+    {
+      Unk = breps[compt];
+      Brep = (CATIBRepAccess * )Unk;
+      ListBreps.Append(Brep);
+    }
+                
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We can get access to each selecting object of the geometry using <code>CATIMfGeometryAccess::GetBReps</code>. 
+Selecting object in this case are faces. We then add each face in a list we will use later.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GettingCurrentColors"></a>Retrieving each face current colors</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    CATListOfInt retrieveRed,retrieveGreen,retrieveBlue;
+
+    rc = CATMmrApplicativeAttributes::GetColorsOnFaces( ListBreps, retrieveRed,retrieveGreen,retrieveBlue);
+    
+            
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We then call <code>CATMmrApplicativeAttributes::GetColorsOnFaces</code> to retrieve each face color. It will return three lists of int that will have 
+the same size that ListBreps. A color is made of three component : Red, Green, Blue. These lists are these components.
+For the first face, the components will be Red = retrieveRed[1], Green = retrieveGreen[1], Blue = retrieveBlue[1].</p>
+<p>If a color couldn't be retrieved on a face, all its component will be valued with -1.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SettingNewColors"></a>Creating and Setting new colors list</h4>
+<p>You now want to overload current colors on every faces. You first have to create new color component 
+lists, one Red/Green/Blue compenent for each face you want to overload, and once this step is done,
+you can set these new colours to the faces. </p>
+<ol>
+  <li><a href="#Creating new colors">Creating new colors component</a></li>
+  <li><a href="#Setting new colors">Setting new colors to each face</a></li>
+</ol>
+<p>In this example, You will create different colour component in order to show you you can color each face
+with a different color. This enables you to color many faces with different color at the same time</p>
+<ol>
+  <li><a name="Creating new colors"></a>Creating new colors component</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+    CATListOfInt newRed,newGreen,newBlue,FailedIndex;
+    int x=0;
+    for (compt = 1;compt &lt;= nbfaces;compt++)
+    {
+      x = compt%3;
+      int red(0),green(0),blue(0);
+      if (1 == x)
+        red = 255;
+      if (2 == x)
+        green = 255;
+      if (0 == x)
+        blue = 255;
+      newRed.Append(red);
+      newGreen.Append(green);
+      newBlue.Append (blue);
+    }   
+   
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p>The first and fourth faces will be red colored, the second and fifth will be green colored, the third and sixth will be blue colored.</p>
+  
+  <li><a name="Setting new colors"></a>Setting new colors to each face</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+    rc = CATMmrApplicativeAttributes::SetColorsOnFaces(ListBreps,newRed,newGreen,newBlue,FailedIndex);        
+   
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p></p>
+  
+</ol>
+<p>If a color couldn't be set on a face, the face index will be added int the <code>FailedIndex</code> in order user to find it easily.</p>
+<p> In this example, I set different colors to show
+you can set different values to each face: you can set more than a color at once. 
+This point is very important as it is faster to color three different faces in a pass than to color three different faces in three passes.</p> 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GettingNewColors"></a>Retrieving each face new colors</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    rc = CATMmrApplicativeAttributes::GetColorsOnFaces( ListBreps, retrieveRed,retrieveGreen,retrieveBlue);
+        
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Same method you saw previously.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SettingAttributes"></a>Creating and Setting applicative attributes list</h4>
+<p>You now want to create applicative attributes on every faces. You first have to create a list of applicative attributes for each face, and 
+then, you have to set them.</p>
+<ol>
+  <li><a href="#Creating applicative attributes">Creating applicative attributes</a></li>
+  <li><a href="#Setting  applicative attributes">Setting applicative attributes to each face</a></li>
+</ol>
+<p>In this example, You will create different sized list of different applicative attributes in order to show you you can annotate each face
+with a different list of applicative attributes. This enables you to set different sized list of attributes on many faces at the same time</p>
+<ol>
+  <li><a name="Creating applicative attributes"></a>Creating new colors component</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+  CATListOfCATUnicodeString **AttrNameListToSet = new CATListOfCATUnicodeString*[nbfaces];
+	CATCkeListOfParm *AttrValueListToSet = new CATCkeListOfParm[nbfaces];
+  CATICkeParmFactory_var factory = CATCkeGlobalFunctions::GetVolatileFactory();
+  for (compt = 1;compt<=nbfaces;compt++)
+  { 
+    x =compt%3;
+    if (1 ==x)
+    {
+      AttrNameListToSet [compt-1] =new CATListOfCATUnicodeString (3);
+      AttrValueListToSet[compt-1]   =new CATLISTV(CATBaseUnknown_var)(3);
+      
+      AttrNameListToSet [compt-1]->Append("FACE_NUMBER");
+      CATICkeParm_var tempcke1 = factory -> CreateInteger ("FACE_NUMBER",compt);
+      AttrValueListToSet[compt-1]->Append(tempcke1);
+      
+      AttrNameListToSet [compt-1]->Append("COLOR");
+      CATICkeParm_var tempcke2 = factory -> CreateString ("COLOR","Red");
+      AttrValueListToSet[compt-1]->Append(tempcke2);
+      
+      AttrNameListToSet [compt-1]->Append("X");
+      CATICkeParm_var tempcke3 = factory -> CreateReal ("X",x);
+      AttrValueListToSet[compt-1]->Append(tempcke3);
+      
+    }
+    else 
+    {
+      AttrNameListToSet [compt-1] = new CATListOfCATUnicodeString (2);
+      AttrValueListToSet[compt-1]   = new CATLISTV(CATBaseUnknown_var)(2);
+
+      AttrNameListToSet [compt-1]->Append("FACE_NUMBER");
+      CATICkeParm_var tempcke1 = factory -> CreateInteger ("FACE_NUMBER",compt);
+      AttrValueListToSet[compt-1]->Append(tempcke1);
+
+      
+      AttrNameListToSet [compt-1]->Append("COLOR");
+      if (2 == x)
+      {
+        CATICkeParm_var tempcke2 = factory -> CreateString ("COLOR","Green");
+        AttrValueListToSet[compt-1]->Append(tempcke2);        
+      }
+      if (0 == x)
+      {
+        CATICkeParm_var tempcke2 = factory -> CreateString ("COLOR","Blue");
+        AttrValueListToSet[compt-1]->Append(tempcke2);
+      }
+    }
+  } 
+   
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p>You can see you set list of applicative attributes of different size. Moreover, these lists have not the same applicative attributes. The lists of names and values
+  are contained in two arrays.</p>
+  
+  <li><a name="Setting  applicative attributes"></a>Setting  applicative attributes to each face</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+    rc=CATMmrApplicativeAttributes::SetAttributesOnFaces(ListBreps, AttrNameListToSet,AttrValueListToSet,FailedIndex);        
+   
+...</pre>
+
+      </td>
+    </tr>
+  </table>
+  <p></p>
+  
+</ol>
+<p>If a list of applicative attributes couldn't be set on a face, the face index will be added int the <code>FailedIndex</code> in order user to find it easily.</p>
+<p> In this example, You set different sized list of different applicative attributes to show
+you can set different values to each face: you can set more than a list of applicative attributes at once. 
+This point is very important as it is faster to set applicative attributes on three different faces in a pass than to 
+set applicative attributes on three different faces in three passes.</p> 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="GettingAttributes"></a>Retrieving each face applicative attributes list</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      
+    CATListOfCATUnicodeString * AttributNameList = new CATListOfCATUnicodeString[nbfaces];
+    CATCkeListOfParm  AttrValList = new CATListValCATBaseUnknown_var[nbfaces];
+    rc = CATMmrApplicativeAttributes::GetAttributesOnFaces(ListBreps, AttributNameList, AttrValList );
+        
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We first create the two arrays of lists that will contains the list of attributes names and the list of attributes values. These two arrays must be same sized as
+the number of faces, as we will retrieve sub-lists for each face.</p>
+<p> We then call <code>CATMmrApplicativeAttributes::GetAttributesOnFaces</code> to retrieve the
+applicative attributes.</p>
+<p> The <code>AttributNameList[i]</code> list and the <code>AttrValList[i]</code> list will be associated to the <code>ListBreps[i+1]</code> face as 
+array starts at position zero. The <code>AttributNameList[i][j]</code> attributes name will correspond to the <code>AttrValList[i][j]</code> attributes value.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ClosingSession"></a>Closing and Exiting the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   // Saves the part document
+   CATDocumentServices::<b>SaveAs</b>(*pDoc, iArgv[2]);
+
+   // Closes the document
+   CATDocumentServices::<b>Remove</b>(*pDoc);
+  }
+  else
+  {
+    cerr &lt;&lt; &quot;doc not opened&quot; &lt;&lt; endl;
+    rc = 1;
+  }
+
+  // Deletes all documents in session 
+  ::<b>Delete_Session</b>(pSessionName);
+}
+...</pre>
+
+    </td>
+  </tr>
+</table>
+<p>In the epilog of the use case, you save the modified Part as a new document
+under the file path entered on the command line, close the document from session
+and delete the session, in a way symmetrical to what you did in the prolog. Refer
+to [<a href="#References">3</a>] for details.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>You saw through this use case how to set colors and applicative attributes on sub-elements using CAA services class CATMmrApplicativeAttributes.</p>
+<p> The most important thing you have to remember is you'd rather set colors and applicative attributes on many faces in a pass than doing many passes.
+ Performances improvement have been done to enable user to set and get many colors and applicative attributes on huge amount of faces with few time costs.
+ Do not forget to clean the arrays of attribute names and values as described in the use case, as memory leak can fast become huge with sizeable parts.
+ For more information on CATMmrAppliativeAttributes methods return values, I suggest you have a look at CATMmrApplicativeAttributes header</p>
+ <p>You also can refer the use case <a href="CAAMmrTopologyMarkup.htm">Marking Up Topology in a Part Document - Mechanical Modeler</a>
+ to see another way to color faces. However, the one described here is the fastest
+ way to do it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont0.htm">The
+      Contents of the Specification Container- Part Feature</a></td>
+  </tr>
+  <tr>
+
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrSpecResultForMechFeat.htm">Specification/Result
+      Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2006]</td>
+    <td valign="top">Document created</td>
+
+  </tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

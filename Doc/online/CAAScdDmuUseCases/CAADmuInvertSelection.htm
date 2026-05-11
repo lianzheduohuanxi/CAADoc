@@ -1,0 +1,136 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Inverting the Selection</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Navigator</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Inverting the Selection</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use groups to invert
+      the selection (i.e. all components that were not selected become selected
+      and vice-versa). The macro assumes that a CATProduct has been loaded and
+      that some components are selected.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This image shows the selection state before the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAADmuInvertSelection1-sm.gif"></p>
+      <p>&nbsp;</p>
+      <p>This image shows the selection state after the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAADmuInvertSelection2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAADmuInvertSelection is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAADmuInvertSelectionSource.htm" target="Source">CAADmuInvertSelection.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAADmuInvertSelection.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAADmuInvertSelection includes four steps:</p>
+      <ol>
+        <li><a href="#Groups">Retrieving the groups collection</a></li>
+        <li><a href="#Group">Creation the group</a></li>
+        <li><a href="#Invert">Inversion of the selection</a></li>
+        <li><a href="#Delete">Deletion of the group</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Groups"></a>Retrieving the groups collection</h4>
+      <p>The <i>cGroups</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups'); return false;">Groups</a></code>
+      ) is the factory to create <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group'); return false;">Group</a></code>
+      object : this collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Groups&quot;</code>, on the root
+      product of the active document.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Group"></a>Creation of the group</h4>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups', 'AddFromSel'); return false;">AddFromSel</a></code>
+      method is used on the <i>cGroups</i> collection to create the <i>oGroup</i>
+      object containing all the selected components.</p>
+      <p>Another way to perform the operation can be to create an empty group
+      using <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups', 'Add'); return false;">Add</a></code>
+      method, to retrieve the selected components using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Selection'); return false;">Selection</a></code>
+      object and the add each of them in the <i>oGroup</i> object using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'AddExplicit'); return false;">AddExplicit</a></code>
+      method.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Invert"></a>Inversion of the selection</h4>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'FillSelWithInvert'); return false;">FillSelWithInvert</a></code>
+      method is used on the <i>oGroup</i> object to fill the selection with all
+      components that are not belonging to the group.</p>
+      <p>Another way to perform the operation can be to extract all the
+      components that are not belonging to the group, using <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'CountInvert'); return false;">CountInvert</a></code>
+      and <code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Group', 'ItemInvert'); return false;">ItemInvert</a></code>
+      methods, and to fill the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Selection'); return false;">Selection</a></code>
+      object with them.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Delete"></a>Deletion of the group</h4>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'NavigatorInterfaces', 'Groups', 'Remove'); return false;">Remove</a></code>
+      method is used on the <i>cGroups</i> collection with the <i>oGroup</i>
+      object to clean the session.</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use groups in order to ease the selection.
+Specifically, it has illustrated how to :</p>
+<ul>
+  <li>create a group</li>
+  <li>use the group in conjunction with the selection</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocDMU.htm">DMU
+      Navigator automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

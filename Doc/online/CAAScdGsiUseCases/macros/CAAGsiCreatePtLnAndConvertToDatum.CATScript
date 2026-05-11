@@ -1,0 +1,285 @@
+Language="VBSCRIPT"
+
+Sub CATMain()
+
+Dim documents1 As Documents
+Set documents1 = CATIA.Documents
+
+' Open CATPart 
+' ----------------------------------------------------------
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Open CAAGsiStart.CATPart  "
+
+' Open CATIA Part : CAAGsiCreateJoinSurface.CATPart 
+Dim sDocPath As String
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  DocPath = "&sDocPath 
+
+Dim partDocument1 As Document
+Set partDocument1 = documents1.Open(sDocPath & "\online\CAAScdGsiUseCases\samples\CAAGsiStart.CATPart")
+' Set partDocument1 = documents1.Open("CAAGsiStart.CATPart")
+
+Dim part1 As Part
+Set part1 = partDocument1.Part
+
+Dim hybridShapeFactory1 As Factory
+Set hybridShapeFactory1 = part1.HybridShapeFactory
+
+Dim hybridBodies1 As HybridBodies
+Set hybridBodies1 = part1.HybridBodies
+
+Dim hybridBody1 As HybridBody
+Set hybridBody1 = hybridBodies1.Item("Open_body.1")
+
+' Declarations 
+' ----------------------------------------------------------
+Dim max as integer
+max=20
+
+
+Dim hybridShapePointCoord1 As HybridShapePointCoord
+Dim hybridShapePointCoord2 As HybridShapePointCoord
+
+Dim reference1 As Reference
+Dim reference2 As Reference
+Dim hybridShapeLinePtPt1 As HybridShapeLinePtPt
+
+Dim reference3 As Reference
+Dim originElements1 As OriginElements
+Dim hybridShapePlaneExplicit1 As AnyObject
+Dim reference4 As Reference
+Dim hybridShapeIntersection1 As HybridShapeIntersection
+
+Dim reference5 As Reference
+Dim hybridShapePointExplicit1 As HybridShapePointExplicit
+Dim VisPropSet1 As VisPropertySet
+
+Dim hybridShapeLineExplicit1 As HybridShapeLineExplicit
+
+
+Dim selection1
+Dim parameters1 As Parameters
+Dim intParam1 As Parameter
+Dim parameters2 As Parameters
+Dim realParam1 As Parameter
+
+
+Set selection1 = CATIA.ActiveDocument.Selection
+
+Set parameters1 = part1.Parameters
+Set intParam1 = parameters1.Item("Num_Of_Points_Created")
+intParam1.Value = 0
+
+Set parameters2 = part1.Parameters
+Set realParam1 = parameters2.Item("Percentage_Completed")
+realParam1.Value = 0.00
+
+
+' Array 
+' ----------------------------------------------------------
+Dim TabExt ()
+Dim TabMil ()
+Dim TabLine()
+Dim TabLineExpl()
+Dim TabPtExpl()
+
+
+ReDim TabExt(2*max)
+ReDim TabMil(max)
+ReDim TabLine(max)
+ReDim TabLineExpl(max)
+ReDim TabPtExpl(max)
+
+
+
+Dim Pi As double
+Dim R As double  
+Dim Omega As double
+
+R    = 50.0000
+Pi   = 3.14116  
+Omega= 2*Pi/max  
+
+Dim i as integer
+Dim angle As double  
+
+' ------------------------------------------------------
+' GSD Geometrie Creation 	
+' ------------------------------------------------------
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Create Points and Lines "
+
+for i=1 to max
+
+  
+   'Create two points
+    Angle = Omega * (i-1)
+ 	
+    Set TabExt(2*i-1)   = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle), R*sin(Angle), 100.000000)  
+    hybridBody1.AppendHybridShape  TabExt(2*i-1) 
+    part1.InWorkObject =  TabExt(2*i-1) 
+    Set TabExt(2*i)  = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle+2*Pi/3), R*sin(Angle+2*Pi/3), -100.000000)
+    hybridBody1.AppendHybridShape  TabExt(2*i)
+    part1.InWorkObject = TabExt(2*i)
+
+   'Draw line
+    Set reference1 = part1.CreateReferenceFromObject(TabExt(2*i-1))
+    Set reference2 = part1.CreateReferenceFromObject(TabExt(2*i))
+    Set TabLine(i)  = hybridShapeFactory1.AddNewLinePtPt(reference1, reference2)
+    hybridBody1.AppendHybridShape TabLine(i)
+    part1.InWorkObject = TabLine(i)
+
+    
+   'Generate Intersection Point
+    Set reference3 = part1.CreateReferenceFromObject(TabLine(i))
+    Set originElements1 = part1.OriginElements
+    Set hybridShapePlaneExplicit1 = originElements1.PlaneXY
+    Set reference4 = part1.CreateReferenceFromObject(hybridShapePlaneExplicit1)
+    Set TabMil(i) = hybridShapeFactory1.AddNewIntersection(reference3, reference4)
+    hybridBody1.AppendHybridShape TabMil(i) 
+    part1.InWorkObject = TabMil(i)
+
+    
+    'update Num_Of_Points_Created parameter
+    intParam1.Value = i
+
+    
+    'update Percentage_Completed parameter
+    realParam1.Value = i/max *100
+
+next
+part1.Update
+
+
+' ------------------------------------------------------
+' Convert to Datum 
+' ------------------------------------------------------
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Convert to Datum "
+
+
+' Add OpenBodys   for datum point and for datum line
+Dim OpenBody1 As HybridBody
+Dim OpenBody2 As HybridBody
+Dim referencebody As Reference
+
+Set OpenBody1 = hybridBodies1.Add()
+Set referencebody = part1.CreateReferenceFromObject(OpenBody1)	
+hybridShapeFactory1.ChangeFeatureName referencebody  , "DatumPointBody" 
+
+Set OpenBody2 = hybridBodies1.Add()
+Set referencebody = part1.CreateReferenceFromObject(OpenBody2)	
+hybridShapeFactory1.ChangeFeatureName referencebody ,  "DatumLineBody" 
+
+' Loop on element to convert 
+for i=1 to max
+
+   'Isolate Intersection point
+    Set reference5 = part1.CreateReferenceFromObject(TabMil(i))
+    Set TabPtExpl(i) = hybridShapeFactory1.AddNewPointDatum(reference5)
+    OpenBody1.AppendHybridShape TabPtExpl(i)
+    part1.InWorkObject = TabPtExpl(i)
+
+    
+   hybridShapeFactory1.DeleteObjectForDatum reference5
+
+   'Isolate the line
+    Set reference5 = part1.CreateReferenceFromObject(TabLine(i))
+    Set TabLineExpl(i) = hybridShapeFactory1.AddNewLineDatum(reference5)
+    OpenBody2.AppendHybridShape TabLineExpl(i)
+    part1.InWorkObject = TabLineExpl(i)
+     
+    hybridShapeFactory1.DeleteObjectForDatum reference5
+
+next 
+part1.Update 
+
+' ------------------------------------------------------
+' Delete Useless points 
+' ------------------------------------------------------
+for i=1 to max
+    selection1.Clear()
+    selection1.Add(TabExt(2*i-1))
+    selection1.Add(TabExt(2*i))
+    selection1.Delete
+next 
+part1.Update
+
+' ------------------------------------------------------
+' Change graphic properties(color)  and datum names  
+' ------------------------------------------------------
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Update graphic properties and names "
+Dim referencedat1 As Reference
+Dim referencedat2 As Reference
+
+' Loop on element to modify 
+for i=1 to max
+    ' -- Points 
+    ' Change Color of Middle Point  
+    selection1.Clear()
+    selection1.Add(TabPtExpl(i))
+    Set VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor 255, int(255*(i-1)/max), int(255*(1-((i-1)/max)) ), 1
+ 
+    ' Rename  
+    NewName ="PointDatum" & "." & i	
+    Set referencedat1 = part1.CreateReferenceFromObject(TabPtExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat1 ,NewName 	
+
+    ' -- Lines 
+    ' Change Color of Line  	
+    selection1.Clear()
+    selection1.Add(TabLineExpl(i))
+    Set VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor int(255*(i-1)/max), 255, int(255*(1-((i-1)/max)) ), 1 
+    
+    ' Rename 
+    NewName = "LineDatum" & "." & i
+    Set referencedat2  = part1.CreateReferenceFromObject(TabLineExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat2 ,NewName 	
+next 
+
+
+EnvSave = Catia.SystemService.Environ("CAA_GSD_SAVE")
+Catia.SystemService.Print "EnvSave=" & EnvSave
+If ( EnvSave <> "" ) Then
+  ' ---------------------------------------------------------------------------
+  ' Save As 
+  ' ---------------------------------------------------------------------------
+
+  ' Note : Optional -  allows to specify where document should be saved
+   sTmpPath = Catia.SystemService.Environ("CATTemp")
+   If (Not Catia.FileSystem.FolderExists(sTmpPath)) Then
+      Err.Raise 9999,,"No Tmp Path Defined"
+   End If
+
+   ' Save 
+   Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  SaveAs in :" & sTmpPath & "\CAAGsiCreatePtLnAndConvertToDatum.CATPart"
+   partDocument1.SaveAs sTmpPath & "\CAAGsiCreatePtLnAndConvertToDatum.CATPart"
+End If
+
+
+EnvVar = Catia.SystemService.Environ("CAA_GSD_EXIT")
+Catia.SystemService.Print "EnvVar=" & EnvVar
+If ( EnvVar <> "" ) Then
+ 
+   On Error Resume Next 
+   CATIA.DisplayFileAlerts = False	 
+  ' ---------------------------------------------------------------------------
+  ' Close 
+  ' ---------------------------------------------------------------------------
+   Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Close and Quit "
+   partDocument1.Close 
+ 
+
+  ' -------------------------------------------------------------
+  ' Exit Catia 
+  ' -------------------------------------------------------------
+    Catia.SystemService.Print "Catia.Quit"
+    Catia.Quit
+End If
+
+End Sub 
+
+
+
+
+
+

@@ -1,0 +1,185 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Link Attribute -1</title>
+
+<style type="text/css">
+.style1 {
+	color: #FB7203;
+}
+</style>
+
+</head>
+
+<body  onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Linking Features: Understanding Link Attribute - 1</h3>
+      <p><em>Explains the types of Links between the Attributes</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Understanding Feature Links has been split in two parts: the first is 
+		a presentation of the different kind of links for a feature attribute, while 
+		the second one [<a href="#References">1</a>] discusses API aspects.</p>
+		<p>It is assumed that the reader is already familiar with the fundamentals 
+		of the Feature Modeler [<a href="#References">2</a>] and the PLM components. 
+		Features are instantiated in containers which are in turn created inside 
+		PLM Representation References [<a href="#References">3</a>]. </p>
+		<ul>
+			<li><a href="#Part1">The Specobject Link</a><ul>
+				<li><a href="#Concept1">Concept</a></li>
+				<li><a href="#OSM1">OSM Declaration</a></li>
+			</ul>
+			</li>
+			<li><a href="#Part2">The Component Link</a></li>
+			<ul>
+				<li><a href="#Concept2">Concept</a></li>
+				<li><a href="#OSM2">OSM Declaration</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part1"></a>The Specobject Link</h2>
+<h3><a name="Concept1"></a>Concept</h3>
+<p>This is the most general type of link. It defines a link between a feature (source) 
+and another one (target). The only restriction that exists for the <b>specobject
+</b>link is that the target feature must belong to the same PLM Representation Reference, 
+but not necessarily to the same container. The target feature is also called <b>
+referenced</b> feature.</p>
+<table>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAFmExtLinkingSpecObject.png" width="246" height="250">&lt;&lt;&lt;</td>
+	</tr>
+</table>
+<p>The lifecycles of the target feature and the source feature are not linked. When 
+the source feature is deleted, it does not imply the deletion of its referenced 
+features.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h3><a name="OSM1"></a>OSM Declaration</h3>
+<p>An attribute of type specobject, or a list of specobjects is declared 
+as in the below OSM file:</p>
+<table class="code" id="table5">
+	<tr>
+		<td>
+		<pre>...
+feature CAAFmExtMyExample #startup {
+        <b>specobject</b> CAAFmExt_Target 
+        <b>specobject</b> CAAFmExt_TargetList #list
+}
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Any quality (IN, OUT, NEUTRAL) can be assigned to a specobject link [<a href="#References">4</a>].</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="Part2"></a>The Component Link</h2>
+<h3><a name="Concept2"></a>Concept</h3>
+<p>A <b>component</b> link is more specialized than a specobject one. The target 
+feature also called <b>aggregated</b> feature, is now closely tied to the source 
+feature:&nbsp; if the source feature is removed, <i>all its aggregated ones</i> 
+(at all levels) will also be removed automatically. A feature can only be aggregated 
+once and must belong to the same PLM Representation Reference.</p>
+<p>Note that an aggregated feature does not prevent it from being referenced (in 
+a specobject link). This is illustrated below, where FB is aggregated by FA.1 and 
+also referenced by FD:</p>
+<p>
+<img border="0" src="images/CAAFmExtLinkingComponent.png" width="501" height="255"></p>
+<p>Unlike specobject links, the lifecycle of the target feature is handled by the 
+Feature Modeler: whenever a feature is deleted, the aggregated features will also 
+be deleted.</p>
+<p>An aggregated feature has only one aggregating feature which is returned with 
+the <code>GetParent </code>method of the <em>CATFmFeatureFacade</em> interface. 
+The<code>GetRootParent </code>method of the <em>CATFmFeatureFacade</em> interface 
+returns the last feature without parent. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h3><a name="OSM2"></a>OSM Declaration</h3>
+<p>An attribute of type component, or a list of components is declared 
+as in the below OSM file:</p>
+<table class="code" id="table6">
+	<tr>
+		<td>
+		<pre>...
+feature CAAFmExtMyExample #startup {
+        <strong>component</strong> CAAFmExt_Target 
+        <strong>component</strong> CAAFmExt_TargetList #list
+}
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Any quality (IN, OUT, NEUTRAL) can be assigned to a specobject link [<a href="#References">4</a>].</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article has presented the two kinds of links between features.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td style="height: 17px">[1]</td>
+		<td style="height: 17px"><a href="CAAV5V6FmExtTaLinkingFeatures2.htm">Understanding Link Attribute-2</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">
+		Feature Modeler Overview</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[3]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaApplicativeContainer.htm">
+		Understanding Applicative Containers</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[4]</td>
+		<td class="style1"><a href="CAAV5V6FmExtTaUpdateOverview.htm">Update 
+		Mechanism Overview</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [July 2012]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+/**
+* Copyright Dassault Systemes 2006
+* delmia.osm catalog skeleton
+* use this skeleton to create Machining catalog
+*/
+document `UserSetupCatalog.CATfct` {
+	history("zpp","","2012-07-26 08:25",0., 0ue5f0d896-0000-1c30-5010ff1500000009)
+	check_revision(0ue5f0d896-0000-1c30-5010ff1500000009)
+	
+	container `SPPLibCont` #root #isa(SPPLibCont) #uuid(0ue5f0d896-0000-1c30-5010ff1500000004) {
+		
+
+		feature UserSetupSU MfgUserDefinedPO@`ManufacturingActivities.feat` #startup #isa(`UserSetup`) {
+			synchronize()
+		}
+
+		feature UserSetup_vers1SU UserSetup #startup #isa(`UserSetup_vers1`) {
+			synchronize()
+		}
+
+		feature UserSetup_vers2SU UserSetup #startup #isa(`UserSetup_vers2`) {
+			synchronize()
+		}
+
+	}
+}
+
+
+// step1: CATfctEditorAssistant -create-new-catalog -catalog-name UserSetupCatalog.CATfct -with-client-id CLIENT -using-template delmia
+// step2: Modify UserSetupCatalog.osm body with this file body
+// step3: CATfctEditorAssistant -update-catalog -catalog-name UserSetupCatalog.CATfct -with-client-id CLIENT -with-osm ...\UserSetupCatalog.osm

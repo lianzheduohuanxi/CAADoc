@@ -1,0 +1,237 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Accessing Files and Folders</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Accessing Files and Folders</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to access files and
+      folders using CAA V5 portable automation objects.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>It creates a text file, fills it with data, copies this file and
+      re-extracts the data from the copy.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAInfFileAccess is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAInfFileAccessSource.htm" target="Source">CAAInfFileAccess.CATScript</a>
+      is located in the CAAScdInfUseCases module. <a href="macros/CAAInfFileAccess.CATScript">Execute
+      macro</a> (direct execution of the macro only works on windows).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAInfFileAccess includes five steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Delete">Deleting Existing Files if Needed</a></li>
+        <li><a href="#Create">Creating the Input File</a></li>
+        <li><a href="#Copy">Duplicating the Input File</a></li>
+        <li><a href="#Extract">Extracting Data from the Output File</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+ <font color="#0000FF">   Dim </font>sLF<font color="#0000FF"> as </font>String
+    sLF = Chr(10) 
+
+<font color="#0000FF">    Dim </font>sMessage<font color="#0000FF"> as </font>String
+    sMessage = InputBox (&quot;Enter a message&quot;, &quot;Message&quot;, &quot;Hello World&quot;)
+
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Get the file system object</font>
+<font color="#0000FF">    Dim </font>oFileSys<font color="#0000FF"> as </font>FileSystem
+<font color="#0000FF">    Set </font>oFileSys = CATIA.FileSystem
+
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Retrieve a folder for temporary files</font>
+<font color="#0000FF">    Dim </font>sTmpPath<font color="#0000FF"> as </font>String 
+    sTmpPath=CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+<font color="#0000FF">    If </font>(Not oFileSys.FolderExists(sTmpPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Tmp Path Defined&quot;
+<font color="#0000FF">    End If</font>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A variable is defined for the <i>LineFeed</i> character.&nbsp; The <i>InputBox</i>
+      function asks the user to enter a message string whose default value will
+      be &quot;Hello World&quot;.&nbsp;</p>
+      <p align="center"><img border="0" src="images/filac1.gif" width="363" height="153"></p>
+      <p>The <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'FileSystem');return false;"><i>FileSystem</i></a>
+      object is the root object for all file/folder access. Input and output
+      files will be created in the folder dedicated to temporary CATIA data. We
+      use the <a href="#" onclick="javascript:CAAlink('IDL', 'System', 'SystemService');return false;"><i>SystemService</i></a>
+      object to get its full path defined in the <i>CATTemp</i> environment
+      variable.</p>
+      <p>The existence of this folder is checked using the <code>FolderExists</code>
+      method of the <i>FileSystem</i> object.</p>
+      <h4><a name="Delete"></a> Deleting Existing Files if Needed</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' ------------------------------------------</font>
+    <font color="#008000">' Delete possibly existing input and output files</font>
+<font color="#0000FF">    Dim </font>sFilOu<font color="#0000FF"> As </font>String <font color="#008000">' Output file full path</font>
+    sFilOu = sTmpPath &amp; &quot;/caatmpfilou.txt&quot;
+<font color="#0000FF">    If </font>(oFileSys.FileExists(sFilou))<font color="#0000FF"> Then </font>
+        oFileSys.DeleteFile sFilOu
+<font color="#0000FF">    End If</font>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p><code>FileExists</code> and <code>DeleteFile</code>, two methods of the
+      <i>FileSystem</i> object are used to check the existence of the output
+      file and delete it if needed. The same operation is then performed on the
+      input file.</p>
+      <h4><a name="Create"></a> Creating the Input File</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+     <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Create file FilIn  </font>
+<font color="#0000FF">    Dim </font>oFilIn<font color="#0000FF"> As </font>File    
+<font color="#0000FF">    Set </font>oFilIn = oFileSys.CreateFile(sFilIn, FALSE)
+<font color="#0000FF">    Dim </font>oStream<font color="#0000FF"> As </font>TextStream
+<font color="#0000FF">    Set </font>oStream = oFilIn.OpenAsTextStream(&quot;ForWriting&quot;)
+    oStream.Write &quot;&lt;MESSAGE&gt;&quot;  &amp; sLF
+    oStream.Write &quot;&lt;VALUE&gt;&quot;
+    oStream.Write sMessage 
+    oStream.Write &quot;&lt;/VALUE&gt;&quot;   &amp; sLF
+    oStream.Write &quot;&lt;/MESSAGE&gt;&quot; &amp; sLF
+    oStream.Close
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>sFilIn contains the full path of the input file. This file is created
+      using the <code>CreateFile</code> method of the <i>FileSystem</i> object
+      that returns a <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'File');return false;"><i>File</i></a>
+      object. The <code>OpenAsTextStream</code> method allows to return a <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'TextStream');return false;"><i>TextStream</i></a>
+      object from the <i>File</i> object. The <code>ForWriting</code> option
+      specifies that the content of this file will be modified. This <i>TextStream</i>
+      object makes it possible to manipulate the file content as a stream of
+      text.</p>
+      <p>Successive uses of the <code>Write</code> method fill the input file.
+      In this case, the message is wrapped by XML-like tags. The <i>sLF</i>
+      variable is used to specify the end of a line. The text stream is then
+      closed using the <code>Close</code> method.</p>
+      <h4><a name="Copy"></a> Duplicating the Input File</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+     <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Duplicate FilIn in FilOu </font>
+    oFileSys.CopyFile sFilIn, sFilOu, FALSE
+... </pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>CopyFile</code> method of the <i>FileSystem</i> object
+      creates a copy of the input file. It uses its full name, contained in the <code>sFilIn</code>
+      variable and uses the content of the <code>sFilOu</code> variable as full
+      name of the copy.&nbsp;</p>
+      <h4><a name="Extract"></a> Extracting Data from the Output File</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' ---------------------------------------</font>
+    <font color="#008000">' Get the result from the output file  </font>
+<font color="#0000FF">    Dim </font>oFilOu<font color="#0000FF"> As </font>File
+<font color="#0000FF">    Set </font>oFilOu = oFileSys.GetFile(sFilOu)
+<font color="#0000FF">    Set </font>oStream = oFilOu.OpenAsTextStream(&quot;ForReading&quot;)
+
+<font color="#0000FF">    Dim </font>sBuffer<font color="#0000FF"> As </font>String
+    sMessage = &quot;&quot;
+    sBuffer = oStream.ReadLine
+    Do  Until oStream.AtEndOfStream
+        sMessage = sMessage &amp; sBuffer
+        sBuffer = oStream.ReadLine
+    Loop
+
+    oStream.Close
+
+    msgbox sMessage </pre>
+          </td>
+        </tr>
+      </table>
+      <p>Using the <code>GetFile</code> method, a File object is obtained for
+      the output file. <code>OpenAsTextStream</code> is then used to get a text
+      stream, but this time a <i>ForReading</i> usage is specified. The <code>ReadLine</code>
+      method is used in a loop to read each line of the output file. Each read
+      line is concatenated to the <code>sMessage</code> string. The end of the
+      file is detected using the <code>AtEndOfStream</code> method.&nbsp;</p>
+      <p>The <code>sMessage</code> variable now contains the whole content of
+      the output file. The <code>MsgBox</code> function is used to display this
+      content in a message box.</p>
+      <p align="center"><img border="0" src="images/filac2.gif" width="182" height="126"></p>
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to access files and folder using CAA V5 <i>FileSystem</i>,
+<i>SystemService</i>, <i>File</i> and <i>TextStream</i> automation objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td><i><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'FileSystem');return false;">FileSystem</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'System', 'SystemService');return false;">SystemService</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'File');return false;">File</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'TextStream');return false;">TextStream</a></i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

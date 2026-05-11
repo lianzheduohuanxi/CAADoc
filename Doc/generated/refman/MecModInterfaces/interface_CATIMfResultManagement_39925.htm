@@ -1,0 +1,191 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIMfResultManagement</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMfResultManagement"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIMfResultManagement</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMfResultManagement_39925','CATIMfResultManagement','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMfResultManagement</b>
+</p>
+<p>
+<b><i> Interface to create a generic naming scope without a procedural report.</i></b><br>
+
+ <b>Role:</b> This advanced interface is useful to create the genering naming scope (the result) of 
+ a new geometrical feature without input specification. To compute the result of a geometrical feature, there are two interfaces:
+  <ul>
+  <li><script type="text/javascript"> activateLinkAnchor('CATIMfProcReport','','CATIMfProcReport') </script> </li>   <p>A procedural report is used to create the scope</p>
+  <li>CATIMfResultManagement </li>
+   <p>The scope is created without the procedural report</p>
+ </ul>
+ This interface will be used in the 
+<script type="text/javascript"> activateLinkAnchor('CATIBuild','','CATIBuild') </script> interface implementation. <tt>CATIBuild</tt> enables you to build the result of the feature. The result consists in two 
+ parts:
+  <ul>
+   <li>The topological result:</li>
+    <p>There is a <tt>CATBody</tt>. It will be created by topological
+       operators. Refer to the NewTopologicalOperators framework.</p>
+    <li><b>A scope</b>: </li>
+    <p>It is an object which manages a stable access to the cells of the <tt>CATBody</tt>. It 
+     contains nodes for each following cells. A following cell is:
+     <ul>
+      <li>The faces of a solid,</li>
+      <li>The boundary edges and the faces of a shell,</li>
+      <li>The extremity vertices and the edges of a wire.</li>
+     </ul>
+   </ul>
+  This interface allows you to create this scope by two means:
+     <ul>
+       <li>The naming of the following cells is automatically computed</li>
+       <li>You associate yourself the name of the following cells</li>
+     </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateScopeResult(CATBody*)"><b>CreateScopeResult</b></a>(CATBody*)
+<dd>  Creates result of geometrical feature.
+ <dt> o 
+    <a href="#CreateScopeResult(CATBody*,CATLISTP(CATCell)*,CATListOfCATUnicodeString*)"><b>CreateScopeResult</b></a>(CATBody*,CATLISTP(CATCell)*,CATListOfCATUnicodeString*)
+<dd>  Creates result of the geometrical feature.
+ <dt> o 
+    <a href="#DeleteScopeResult()"><b>DeleteScopeResult</b></a>()
+<dd>  Deletes result of the geometrical feature.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateScopeResult"></a><a name="CreateScopeResult(CATBody*)"></a> <dt> o <b>CreateScopeResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateScopeResult</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iBody</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates result of geometrical feature.
+ <br><b>Role:</b> This method creates a scope for the feature. The naming associated with 
+ each following cell is automatically computed.</b>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBody</tt>
+   <dd>  The <tt>CATBody</tt> to associate with the geometrical feature.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateScopeResult"></a><a name="CreateScopeResult(CATBody*,CATLISTP(CATCell)*,CATListOfCATUnicodeString*)"></a> <dt> o <b>CreateScopeResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CreateScopeResult</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTP(CATCell)','CATLISTP(CATCell)*')</script> <td><tt>iGNUserCells</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString*')</script> <td><tt>iUserKeys</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates result of the geometrical feature.
+ <br><b>Role:</b> This method creates a scope for the feature. The naming associated with 
+ each following cell (iGNUserCells) is given by a key (iUserKeys).</b>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBody</tt>
+   <dd>  The <tt>CATBody</tt> to associate with the geometrical feature.
+ </dd>
+    <dt><tt> iGNUserCells</tt>
+   <dd>  The list of following cells to associate with key.
+ </dd>
+    <dt><tt> iUserKeys</tt>
+   <dd>  The list of corresponding key. Only number key are authorised.</dd>
+</dl>
+</dl>
+</dl>
+<a name="DeleteScopeResult"></a><a name="DeleteScopeResult()"></a> <dt> o <b>DeleteScopeResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>DeleteScopeResult</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Deletes result of the geometrical feature.
+ <br><b>Role:</b>You should use this method only used when the scope has been created 
+ and an error occurs in the 
+<script type="text/javascript"> activateLinkAnchor('CATIBuild','Build','CATIBuild.Build') </script> method. Before leaving the method, and in case of error, the scope must be deleted.
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMfResultManagement.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

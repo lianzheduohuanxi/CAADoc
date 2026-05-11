@@ -1,0 +1,70 @@
+Option Explicit
+'// COPYRIGHT DASSAULT SYSTEMES  2000
+'******************************************************************************
+' Purpose:       This CATScript demonstrates how to create an Area with
+'                a contour.
+' Assumptions:   This assumes that a macro is being executed interactively.
+' Author     :               
+' Languages  :   VBScript
+' CATIA Level:   V5R6
+' Locale     :   English
+'******************************************************************************
+
+
+Sub CATMain()
+   
+   ' On Error Resume Next
+
+   '----------------------------------------------
+   'Create a new product document
+   Dim objProdDoc        As ProductDocument
+   Dim objRootProd       As Product
+   Set objProdDoc      = CATIA.Documents.Add("Product")
+   Set objRootProd     = objProdDoc.Product
+
+   '----------------------------------------------
+   'Retrieving Root Product's Relative Axis and Position Information
+   Dim objMove           As Move
+   Dim objPosition       As Position
+   Set objMove      = objRootProd.Move
+   Set objPosition  = objRootProd.Position
+
+   '----------------------------------------------
+   ' Get ArrangementProduct
+   Dim objArrProd        As ArrangementProduct
+   Set objArrProd   = objRootProd.GetTechnologicalObject("ArrangementProduct")
+
+   '----------------------------------------------
+   ' Create Area without a contour under the Root Product
+   Dim objArea         As ArrangementArea
+   Dim dblAreaPos(11)  As Double
+
+   objPosition.GetComponents dblAreaPos
+   Set objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPos, 50.0)
+
+   '----------------------------------------------
+   ' Create Rectangle
+   Dim objRectangle      As ArrangementRectangle
+   Dim objArrProd1       As ArrangementProduct
+   Dim objAreaProd1      As Product
+   Dim objMove1          As Move
+   Dim objPosition1      As Position
+   Dim dblRectPos(11)    As Double
+
+   Set objAreaProd1  = objArea.GetTechnologicalObject("Product")
+   Set objArrProd1   = objArea.GetTechnologicalObject("ArrangementProduct")
+   Set objMove1      = objAreaProd1.Move
+   Set objPosition1  = objAreaProd1.Position
+
+   objPosition1.GetComponents dblRectPos
+   dblRectPos(9)  = 100.0
+   dblRectPos(10) = 100.0
+   dblRectPos(11) = 0.0
+   Set objRectangle = objArrProd1.ArrangementRectangles.AddRectangle (objMove1,dblRectPos, 50.0, 50.0)   
+
+   '---------------------------------------------
+   ' Add Rectangular contour to Area                    
+   objArea.ArrangementContours.AddRectangularContour(objRectangle)
+
+End Sub 
+

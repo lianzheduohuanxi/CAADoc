@@ -1,0 +1,172 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Openings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Openings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to create openings.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASfdCreateOpening is launched in CATIA [<a href="#References">1</a>]. 
+		First open <span lang="fr">Product1.CATProduct</span> in the 
+		<span lang="fr">CAAScdSfd</span>samples<span lang="fr">/CreateOpening</span> directory.</p>
+		<p><a href="CAASfdCreateOpeningSource.htm" target="Source">CAASfdCreateOpening.CATScript</a> 
+		is located in the CAAScdSfdUseCases.
+		<a href="macros/CAASfdCreateOpening.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASfdCreateOpening includes three steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory and Creating an Opening 
+			Using the Sketch Mode</a></li>
+			<li><a href="#Step3">Retrieving the Factory and Creating an Opening 
+			Using the 3D Object Mode</a></li>
+		</ol>
+		<p><img alt="" src="images/CAASfdCreateOpening.png"></p>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASfdCreateOpening.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+Sub CATMain()
+
+  Dim part1 As Part
+  Set part1 = CATIA.ActiveDocument.Part
+  Dim plate As SfmSuperPlate
+  Set plate = part1.FindObjectByName (&quot;Deck_005&quot;)
+
+  Dim plateref As Reference
+  Set plateref = part1.CreateReferenceFromObject (plate)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory and Creating an Opening Using 
+		the Sketch Mode</a></h4>
+		<p>This step describes how to get the Structure Functional Modeler factory 
+		object from the Part object thanks to the GetCustomerFactory method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  &#39;Create Opening Using Sketch Mode
+
+  Dim sketch As Sketch
+  Set sketch = part1.FindObjectByName (&quot;Sketch.19&quot;)
+  Dim sketchref As Reference
+  Set sketchref =part1.CreateReferenceFromObject(sketch)
+
+  Dim Factory As SfmFunctionFactory
+  Set Factory = part1.GetCustomerFactory (&quot;SfmFunctionFactory&quot;)
+  Dim OpeningUsingSketch As SfmOpening
+  Set OpeningUsingSketch = Factory. CreateOpening (&quot;FunctionalOpening&quot;,1,sketchref,plateref)
+
+  part1.Update
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Retrieving the Factory and Creating an Opening Using 
+		the 3D Object Mode</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  &#39;Create Opening Using 3D Object Mode
+
+  Dim Object As AnyObject 
+  Set Object =  part1.FindObjectByName(&quot;Volume Extrude.1&quot;)
+  Dim ObjectRef As Reference
+  Set ObjectRef = part1.CreateReferenceFromObject(Object)
+
+  Dim OpeningUsing3DObj  As SfmOpening
+  Set OpeningUsing3DObj  = Factory. CreateOpening(&quot;FunctionalOpening&quot;,0,ObjectRef, plateref)
+
+  part1.Update</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<p>The created openings are as show below.</p>
+		<p><img alt="" src="images/CAASfdCreateOpening2.png"></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create opening using the Sketch and the 3D Object 
+mode on a plate.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening 
+		an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

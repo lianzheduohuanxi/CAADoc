@@ -1,0 +1,62 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create a network of sections.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+Dim iNumber ' Number of sections in the network
+iNumber = 10
+
+Sub CATMain()
+
+    ' Retrieve the Sections collection
+    Dim cSections As Sections
+    Set cSections = CATIA.ActiveDocument.Product.GetTechnologicalObject("Sections")
+
+    ' Create the master section
+    Dim oMasterSection As Section
+    Set oMasterSection = cSections.Add
+
+    ' Retrieve data on master section
+    Dim Position(11)
+    oMasterSection.GetPosition Position
+    Dim dHeight As Double
+    dHeight = oMasterSection.Height
+    Dim dWidth As Double
+    dWidth = oMasterSection.Width
+    Dim dMin As Double
+    If (dWidth > dHeight) Then
+        dMin = dWeight
+    Else
+        dMin = dWidth
+    End If
+
+    ' Remove the master section
+    cSections.Remove oMasterSection
+    Set oMasterSection = Nothing
+
+    ' Create the network
+    Dim oSection As Section
+    Position(11) = Position(11) - dMin / 2
+    Dim I As Integer
+    For I = 1 To iNumber
+
+        ' Create section and force type
+        Set oSection = cSections.Add
+        oSection.Type = catSectionTypePlane
+
+        ' Modify position
+        Position(11) = Position(11) + dMin / iNumber
+        oSection.SetPosition Position
+
+        Set oSection = Nothing
+    Next
+
+    Set cSections = Nothing
+
+End Sub

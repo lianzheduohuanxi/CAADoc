@@ -1,0 +1,584 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface ICntMgmtWS</title>
+ </head>
+ <body>
+ <h2>Interface ICntMgmtWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSCntMgmtCpp.html">ENOVWSCntMgmtCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSCntMgmtIntf:ENOVWSCntMgmtIntf_ws:ICntMgmtWS</p>
+ <p><b>Role:</b> Interface for content management. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSCntMgmtIntf\ENOVWSCntMgmtIntf_ws\ICntMgmtWS.wsdl</code> </p>
+	<p><b><i><a href="TroubleShootingWebServices.html">Troubleshooting ENOVWSCntMgmtCpp</a></i></b></p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#AttachDocument"><b>AttachDocument()</b></a></dt>
+  <dd>Attaches existing Document to a Part Version or Instance.</dd>
+  <dt>o <a href="#CheckIn"><b>CheckIn()</b></a></dt>
+  <dd>Puts the given file into the vault, as the primary format of the target Document object.</dd>
+  <dt>o <a href="#CheckOut"><b>CheckOut()</b></a></dt>
+  <dd>Checks out the document file from the vault.</dd>
+  <dt>o <a href="#CreateDocument"><b>CreateDocument()</b></a></dt>
+  <dd>Creates document revision objects and attribute values based on the incoming data.</dd>
+  <dt>o <a href="#DeleteDocument"><b>DeleteDocument()</b></a></dt>
+  <dd>Allows deletion of document revisions that are in a deleteable state.</dd>
+  <dt>o <a href="#ExtractDocument"><b>ExtractDocument()</b></a></dt>
+  <dd>Returns the contents of the specified file that is part of the identified Document.</dd>
+  <dt>o <a href="#UpdateDocument"><b>UpdateDocument()</b></a></dt>
+  <dd>Updates existing Document objects.</dd>
+  <dt>o <a href="#VersionDocument"><b>VersionDocument()</b></a></dt>
+  <dd>Creates a new version from each Document Revision identified in iObjectIds.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="AttachDocument"><b>AttachDocument()</b></a></dt>
+  <dd>Attaches existing Document to a Part Version or Instance. Any locking requirements will be handled by this service. Synchronization is not addressed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iParentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Parent object identifier.</td>
+     </tr>
+     <tr>
+      <td>iDocumentIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Document Identifier(s).</td>
+     </tr>
+     <tr>
+      <td>iAttachType</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>"Representation" or "Documentation".</td>
+     </tr>
+     <tr>
+      <td>iDocRole</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>"Primary" or "Secondary".</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CheckIn"><b>CheckIn()</b></a></dt>
+  <dd>Puts the given file into the vault, as the primary format of the target Document object. The document file can be a new format, or replace a previously checked-out file.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iDocumentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The Document revision identifier.</td>
+     </tr>
+     <tr>
+      <td>iFileName</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The desired doc filename.</td>
+     </tr>
+     <tr>
+      <td>iVaultName</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The target vault name (optional, uses default).</td>
+     </tr>
+     <tr>
+      <td>iData</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#base64Binary');return false;">{http://www.w3.org/2001/XMLSchema}base64Binary</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Binary document file contents.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing the modified Document file object and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CheckOut"><b>CheckOut()</b></a></dt>
+  <dd>Checks out the document file from the vault. The returned file can be modified and put back in the vault.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iDocumentId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier of the Document Revision.</td>
+     </tr>
+     <tr>
+      <td>oData</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#base64Binary');return false;">{http://www.w3.org/2001/XMLSchema}base64Binary</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Binary document file contents.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing the checked-out document file object and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="CreateDocument"><b>CreateDocument()</b></a></dt>
+  <dd>Creates document revision objects and attribute values based on the incoming data. Successfully created documents will be returned in the output. If any attempt to create fails, a fault is returned and no creates are committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Document information to be created (required).</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing newly created Document objects and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="DeleteDocument"><b>DeleteDocument()</b></a></dt>
+  <dd>Allows deletion of document revisions that are in a deleteable state. Multiple documents can be deleted in one call. If the revision is the only revision, the Doc Master will also be deleted. If the document is instantiated, then it cannot be deleted.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifiers of the document revisions to delete.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="ExtractDocument"><b>ExtractDocument()</b></a></dt>
+  <dd>Returns the contents of the specified file that is part of the identified Document.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The identifier of the root Document object (required).</td>
+     </tr>
+     <tr>
+      <td>iFormat</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The mimetype/format of the desired file (required).</td>
+     </tr>
+     <tr>
+      <td>iSubFormat</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The secondary mimetype/format of the desired file (optional).</td>
+     </tr>
+     <tr>
+      <td>oData</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#base64Binary');return false;">{http://www.w3.org/2001/XMLSchema}base64Binary</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Returned document file binary data.</td>
+     </tr>
+     <tr>
+      <td>oResult</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing Document/DocFile business object and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="UpdateDocument"><b>UpdateDocument()</b></a></dt>
+  <dd>Updates existing Document objects. Updates each document with values passed in the input data structure and returns successfully updated document object attributes in the output. The document does not have to be locked, the web service implementation will handle locking requirements. If any attempt to update fails, a fault is returned and no updates are committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Document information to be updated (required).</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing updated document objects and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="VersionDocument"><b>VersionDocument()</b></a></dt>
+  <dd>Creates a new version from each Document Revision identified in iObjectIds. In the output data structure, all the new version objects are returned. The document does not have to be locked, the web service implementation will handle locking requirements. If any attempt to version fails, a fault is returned and no changes are committed.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectIds</td>
+      <td><a href="IdentifierArrayType.html">{urn:com:dassault_systemes:PPRGenericWS}IdentifierArrayType</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>List of Document identifiers to be versioned.</td>
+     </tr>
+     <tr>
+      <td>oObjects</td>
+      <td><a href="ENOVIA.html">{urn:com:dassault_systemes:plmdataset:ENOVIA}ENOVIA</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>Data structure containing successfully created Document Version objects and attributes.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

@@ -1,0 +1,137 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>About Globally Unique IDentifiers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>About Globally Unique IDentifiers</h3>
+      <em>Naming your interface with a label unique the world over for some
+      centuries</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the Globally Unique IDentifier (GUID) and shows
+      how to create one from your favorite workstation. It includes the
+      following sections:
+      <ul>
+        <li><a href="#100000"><strong>About Globally Unique IDentifiers</strong></a></li>
+        <li><a href="#200000"><strong>How to Get a Globally Unique IDentifier</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>About Globally Unique IDentifiers</h3>
+<p>A Globally Unique IDentifier (GUID) is intended to uniquely identify the
+interface wherever and whenever this interface is used. It is encoded on 128
+bits and is made to be unique over both space and time:
+<ul>
+  <li>48 bits ensure this uniqueness over space by catching the address of the
+    network card on the computer where the command which creates the GUID is
+    run. This address is unique and this guarantees that any GUID generated on a
+    given computer is different from any other GUID generated on another
+    computer.</li>
+  <li>A timestamp of 60 bits ensures the uniqueness over time, which represents
+    the count of 100-nanosecond intervals since 00:00:00.00, 15 October 1582.
+    This leaves room to generate GUIDs until approximately AD 3400.</li>
+</ul>
+<p>GUIDs where first created as UUIDs, for Universally Unique IDentifiers, by
+the Open Software Foundation (OSF) for the Remote Procedure Calls (RPC) of the
+Distributed Computing Environment (DCE). This is the reason why you can find
+sometimes UUID used instead of GUID, such as in the commands or utilities to
+generate them.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>How to Get a Globally Unique IDentifier</h3>
+<p>You can get a GUID for your interface as follows:
+<ul>
+  <li>With UNIX, the <code>uuid_gen -C</code> command returns a GUID like the
+    following:
+    <pre>= { 0x7c7b3737,
+    0x5358,
+    0x0000,
+    0x02,
+    {0x80, 0x02, 0x0b, 0x3e, 0x00, 0x00, 0x00} };</pre>
+    <p>To run this command, enter:
+    <ul>
+      <li><code>/etc/ncs/uuid_gen -C</code> with AIX</li>
+      <li><code>/usr/sbin/ncs/uuid_gen -C</code> with HP-UX</li>
+      <li>Sun does not provide today any means to generate a GUID</li>
+    </ul>
+    <p>You need then to do a bit editing to transform it as follows when
+    including it into the interface IDL file: <code>7c7b3737-5358-0000-0280020b3e000000</code></p>
+    <p>To include it into a C++ file, transform it as follows:</p>
+    <pre>= { 0x7c7b3737,
+    0x5358,
+    0x0000,
+    {0x02, 0x80, 0x02, 0x0b, 0x3e, 0x00, 0x00, 0x00} };</pre>
+  </li>
+  <li>With Windows, the command <code>uuidgen -s</code> returns a Global Unique
+    IDentifier as follows:
+    <pre>INTERFACENAME = { /* 7c7b3737-5358-0000-0280-020b3e000000 */
+    0x7c7b3737,
+    0x5358,
+    0x0000,
+    {0x02, 0x80, 0x02, 0x0b, 0x3e, 0x00, 0x00, 0x00}
+  };</pre>
+    <p>For an IDL interface, copy the commented value on the first line, paste
+    it, and remove the last hyphen to get <code>7c7b3737-5358-0000-0280020b3e000000</code>.</p>
+    <p>You can also run the <code>UUIDGEN.EXE</code> which returns only <code>7c7b3737-5358-0000-0280-020b3e000000</code>.
+    Don't forget to remove the last hyphen.</p>
+    <p>To include it into a C++ header file, you can take the hexadecimal values
+    as is.</p>
+    <pre>= { 0x7c7b3737,
+    0x5358,
+    0x0000,
+    {0x02, 0x80, 0x02, 0x0b, 0x3e, 0x00, 0x00, 0x00}
+  };</pre>
+    <p><b>Note</b>: <code>uuidgen</code> is usually located in <code>C:\Program
+    Files\Microsoft Visual Studio\Common\Tools</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

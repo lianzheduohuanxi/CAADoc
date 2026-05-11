@@ -1,0 +1,368 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Accessing  Feature Attributes</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with Features</h3>
+      <p><em>Adding Simple Attributes to Features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code >CAAV5V6OsmSimpleAttr</code> 
+		use case. This use case illustrates the elementary steps involved to valuate a 
+		feature attribute and further retrieve the values of the attribute. </p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6OsmSimpleAttr Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6OsmSimpleAttr Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6OsmSimpleAttr</a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6OsmSimpleAttr Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p> <strong>Note: </strong>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The most important learning from this Use Case for a user is to set and 
+retrieve the feature attribute values. The IP protection aspects will be 
+mentioned 
+too [<a href="#References">1</a>]</p>
+ 
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6OsmSimpleAttr Use Case</h2>
+<p><code >CAAV5V6OsmSimpleAttr</code> is a use case of the 
+<code >CAAV5V6ObjectSpecsModeler.edu</code> framework that 
+illustrates <code >FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="What"></a>What Does CAAV5V6OsmSimpleAttr Do</h3>
+<p>The main steps are:</p>
+<ul>
+	<li>Creating a Credential to handle the Feature to create</li>
+	<li>&nbsp;Instantiating the &quot;<code>CAAOsmNovel</code>&quot; StartUp, defined in the catalog 
+&quot;<strong>CAAOsmCatalogSU</strong>&quot;.</li>
+</ul>
+<table>
+	<caption><a name="Fig.1">Fig.1</a> StartUp Definition</caption>
+	<tr>
+		<td>
+		<img alt="" src="images/CAAOsmBook.gif" width="718" height="382">&nbsp;</td>
+	</tr>
+</table>
+<ul>
+	<li>Valuating and Retrieving its Author Attribute&nbsp; (own attribute) </li>
+	<li>Valuating and Retrieving its Title Attribute (inherited from the <code>CAAOsmBook</code>)</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6OsmSimpleAttr</h3>
+<p>To launch <code >CAAV5V6OsmSimpleAttr</code>, you will need to set up the build time environment, 
+then compile <code >CAAV5V6OsmSimpleAttr</code> along with its prerequisites, 
+set up the run time environment, and then execute the sample.</p>
+<pre>mkrun -c &quot;<i>CAAV5V6OsmSimpleAttr DocumentStorageName.CATPart</i>&quot;</pre>
+   <script type="text/javascript">insertLinkToTop();</script>
+   
+<h3><a name="Where"></a>Where to Find the CAAV5V6OsmSimpleAttr Code</h3>
+<p><code >CAAV5V6OsmSimpleAttr</code> code is located in the 
+<code >CAAV5V6OsmSimpleAttr.m</code> use case module of 
+the <code >CAAV5V6ObjectSpecsModeler.edu</code> framework:</p>
+<p>InstallRootDirectory\CAAV5V6ObjectSpecsModeler.edu\CAAV5V6OsmSimpleAttr.m</p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA installation. It is made of a unique source file named 
+<code>CAAV5V6OsmSimpleAttr.cpp</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are eight logical steps in <code>CAAV5V6OsmSimpleAttr</code>:</p>
+<ol>
+	<li><a href="#Create_Doc">Prolog</a></li>
+	<li><a href="#Creating Credentials">Creating Credentials</a></li>
+	<li><a href="#Creating Attribute Name">Creating Attribute 
+	Names</a></li>
+	<li><a href="#Instantiating CAAOsmNovel StartUp">Instantiating "CAAOsmNovel" StartUp</a> </li>
+	<li><a href="#Valuating the Author Attribute Own Attribute">Valuating 
+	the Author Attribute (Own Attribute)</a></li>
+	<li><a href="#Retrieving the Author Attribute">Retrieving the Author Attribute</a></li>
+	<li><a href="#Valuating and Retrieving Title Attribute Inherited Attribute">Valuating 
+	and Retrieving the Title Attribute (Inherited Attribute)</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Create_Doc"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description you may see CAAObjectSpecsModeler.edu 
+UC documentation. It further creates the <strong>Credentials</strong> [<a href="#References">1</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Creating Credentials"></a>Creating Credentials</h3>
+<p>This step is not the crux of the use case, nevertheless it is a fundamental 
+step. If you don't have a credential with appropriate authentication you could 
+not instantiate the &quot;CAAOsmNovel&quot; StartUp, like you couldn't fully handle the 
+feature coming from this Startup</p>
+				<pre class="code">
+...
+CATFmCredentials MyCredential;
+rc = MyCredential.<strong>RegisterAsApplicationBasedOn</strong>(CATFmFeatureModelerID,"CAAFmExtFeatureModeler");
+rc = MyCredential.<strong>RegisterAsCatalogOwner</strong>("CAAOsmCatalogSU","CAAOsmClientId");
+...
+</pre>
+				<p><code>MyCredential</code>, a <em>CATFmCredentials</em> class object will 
+	be used through this use case. Being the owner of the catalog defining the &quot;CAAOsmNovel&quot; 
+	you will have full right to and Get &amp; Set its attributes. <code>RegisterAsApplicationBasedOn</code><strong> </strong>&nbsp;call is mandatory for the 
+	instantiation [<a href="#References">1</a>]
+	</p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3><a name="Instantiating CAAOsmNovel StartUp"></a>Instantiating CAAOsmNovel StartUp</h3>
+<p>This step is explained in the &quot;Creating Feature&quot; [<a href="#References">2</a>]</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+... 
+CATFmStartUpFacade NovelStartUpFacade(MyCredential,"CAAOsmNovel");
+CATFmFeatureFacade <strong>oFeatFacadeOnNovel</strong>(<strong>MyCredential</strong>);
+rc = NovelStartUpFacade.<strong>InstantiateIn</strong>(MyContainerFacade,oFeatFacadeOnNovel);
+...</pre>
+			</td>
+		</tr>
+	</table>
+	<p><code>oFeatFacadeOnNovel</code> is the feature facade on the new feature. 
+	This facade contains the right credentials to be further fully handled.</p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3>Creating Attribute Names <a name="Creating Attribute Name"></a> </h3>
+<p>We start the first core step. </p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...			
+CATFmAttributeName AuthorAttrName("Author");
+CATFmAttributeName TitleAttrName("Title");
+...
+</pre>
+			</td>
+		</tr>
+	</table>
+	<p>The attribute is identified by a <em>CATFmAttributeName</em> class object. 
+	Each instance is created with as input the attribute's name.&nbsp; Here you 
+	retrieve &quot;Title&quot; and &quot;Author&quot; as depicted by [<a href="#Fig.1">Fig.1</a>]. 
+	if we have a class instead a basic string in the API to access the 
+	attribute's value, its because the <em>CATFmAttributeName</em> class keeps 
+	in internal data the attribute name as a key. </p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3><a name="Valuating the Author Attribute Own Attribute"></a>Valuating the Author
+	Attribute (Own Attribute)</h3>
+<p>First we set the value of the attribute in a <em>CATFmAttributeValue</em> 
+class object.</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...		
+CATUnicodeString AuthorOfBook = "Dumas";
+<strong>CATFmAttributeValue</strong> AuthorAsFmValue(AuthorOfBook);
+....
+</pre>
+			</td>
+		</tr>
+	</table>
+	<p>In few cases (string, int, double) there is a <em>CATFmAttributeValue</em> 
+	constructor with the respective type. Otherwise you use a method of the <em>CATFmAttributeValue</em> 
+	class to valuate the object. See hereafter with the Title attribute. </p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...		
+rc =  oFeatFacadeOnNovel.<strong>SetValue</strong>(AuthorAttrName,AuthorAsFmValue);
+...</pre>
+			</td>
+		</tr>
+	</table>
+	<p>The <code>SetValue</code> call of the <em>CATFmFeatureFacade</em> class&nbsp; 
+	valuates a feature attribute. This method is successful because the facade 
+	over the Novel feature, <code>oFeatFacadeOnNovel, </code>owns the 
+	accreditations to handle this attribute. </p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3><a name="Retrieving the Author Attribute"></a>Retrieving the Author
+Attribute</h3>
+<p>The process is the opposite of the valuation. First we get the value as a <em>CATFmAttributeValue</em> 
+class object:</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...			
+CATFmAttributeValue RetrievedValueAsFmValue;
+rc = oFeatFacadeOnNovel.<strong>GetValue</strong>(AuthorAttrName,RetrievedValueAsFmValue);  
+...
+</pre>
+			</td>
+		</tr>
+	</table>
+	<p>and then you decode it:</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...
+if ( SUCCEEDED(rc) 
+{			
+    CATUnicodeString oStrAuthor ;
+    AuthorAsFmValue.<strong>GetString</strong>(oStrAuthor);
+      
+    if ( RetrievedValueAsFmValue<strong>==</strong>AuthorAsFmValue) )
+    {
+...	  
+</pre>
+			</td>
+		</tr>
+	</table>
+	<p>Several things must be specified here:</p>
+<ul>
+	<li>The return of the GetString is not tested, because we know that our 
+	attribute is a string, so the method will be always successful</li>
+	<li>We have used the == operator to test the Get &amp; Set values</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Valuating and Retrieving Title Attribute Inherited Attribute"></a>
+Valuating and Retrieving &quot;Title&quot; Attribute (Inherited Attribute)</h3>
+<p>if you compare this code and the one for valuating the Author, it is 
+fundamentally the same one. </p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>CATUnicodeString TheThreeMusketeers = "The Three Musketeers";
+CATFmAttributeValue TitleAsFmValue(TheThreeMusketeers);
+rc =  oFeatFacadeOnNovel.<strong>SetValue</strong>(TitleAttrName,TitleAsFmValue);</pre>
+			</td>
+		</tr>
+	</table>
+	<p>
+	So why this piece of code ? in fact you must be aware when you handle 
+	inherited attributes.&nbsp; To be the owner of the catalog defining 
+	CAAOsmNovel is just enough to handle the own attributes of this StartUp. To 
+	handle the inherited attribute you must be granted to access them. In our 
+	use case, the method is successful because CAAOsmBook, the StartUp's parent 
+	of CAAOsmNovel is defined in the same catalog as CAAOsmNovel. </p>
+<p>
+	It is the same rule for the <code>GetValue</code> method.</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>
+...			
+rc = oFeatFacadeOnNovel.<strong>GetValue</strong>(TitleAttrName,RetrievedValueAsFmValue);  
+...
+</pre>
+			</td>
+		</tr>
+	</table>
+	<p>Note: we have re-used the same <em>CATFmAttributeValue</em> object to 
+	retrieve the Title value and the Author value, <code>RetrievedValueAsFmValue</code>. 
+	It seems logic because Title and Author are both string attributes, but it 
+	will be OK too if the Title attribute was an integer. A <em>CATFmAttributeValue</em> 
+	class object can be reused with different type of attribute. </p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>At last the document is saved and session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The Use Case fundamentally deals with setting an attribute value and 
+subsequently retrieving it. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+			<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials 
+			</a>
+		</td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+			<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcInstantiation.htm">Instantiating Features
+			</a>
+		</td>
+	</tr>
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: 1 [Aug 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

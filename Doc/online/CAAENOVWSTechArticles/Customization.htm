@@ -1,0 +1,245 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customization</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>CAA Web Services Home</h1>
+     </td>
+     <td valign="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customization</h3>
+     <p><em>Overview of accessing ENOVIA customized objects through ENOVIA LCA V5 CAA Web services</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article introduces the Customization use case, and explains how to 
+     access CAA ENOVIA customized objects through Web services.</p>
+     <ul>
+       <li><strong><a href="#where">Where to Find the ENOVIA.xsd</a></strong>
+       </li>
+       <li><strong><a href="#Base">ENOVIA Objects Supported for Customization</a> </strong></li>
+       <li><strong><a href="#how">How to Modify the ENOVIA.xsd for the 
+       Customized Objects</a></strong></li>
+       <li><b><a href="#example">Example of How to Request Customized Objects 
+       and Attributes</a></b></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <p>This section describes how to access ENOVIA customized objects through web 
+ services. One can only access customized objects available to Web services. 
+ Objects available to Web services are identified in ENOVIA.xsd. It is not the 
+ scope of this document to describe how to customize ENOVIA LCA objects. Please 
+ refer to CAA RADE documentation for the same.</p>
+ <p>To view customized data in the results, the ENOVIA.xsd needs to be updated/modified with customized information after the ENOVIA LCA objects are customized using CAA RADE 
+ tooling.</p>
+ <h3><a name="where"></a>Where to Find the ENOVIA.xsd</h3>
+ <p>The ENOVIA.xsd identifies the ENOVIA entities and attributes supported by 
+ the ENOVIA LCA V5 CAA Web services. This file can be found in your <code><strong>&lt;install 
+ path&gt;/resources/xsd</strong></code> directory.</p>
+ <h3><a name="Base"></a>ENOVIA Objects Supported for Customization</h3>
+ <p>ENOVIA LCA V5 CAA Web service supports customization of following objects:</p>
+ <ul>
+   <li>VPMBOProductInstance</li>
+   <li>VPMBOPartInstance </li>
+   <li>ENOVIA_VPMProductRootClass</li>
+   <li>ENOVIA_VPMPartVersion</li>
+   <li>ENOVIA_VPMDocumentRevision</li>
+   <li>ENOVIA_VPMDocFile</li>
+   <li>ENOVIA_ECO</li>
+   <li>ENOVIA_CMAFFECTED_OBJECT</li>
+   <li>ENOVIA_Action_Manufacturing</li>
+   <li>ENOVIA_Action_Design </li>
+   <li>ENOVIA_Action_Deliverable</li>
+   <li>ENOVIA_Action_Maintenance</li>
+   <li>ENOVIA_Action_Documentation</li>
+   <li>ENOVIA_Action_SignOff</li>
+   <li>ENOVIA_Action_ImpactAnalysis</li>
+   <li>ENOVIA_Action_PenetrationRequest.</li>
+ </ul>
+ <h3><a name="how"></a>How to Modify the ENOVIA.xsd for the Customized Objects</h3>
+ <p>Let’s assume that the base ENOVIA object ENOVIA_VPMDocumentRevision has been 
+ customized and the new object name is Customer_VPMDocumentVersion which belongs 
+ to the customized DOMAIN called XYZ.</p>
+ <p>Assume that the following attributes have been added to ENOVIA_VPMDocumentRevision<br>
+ CustomDocAttr1, Attribute Type = String<br>
+ CustomDocAttr2, Attribute Type = Integer</p>
+ <p>For Web services to be able to retrieve these attributes, ENOVIA.xsd has to 
+ be modified as follows:</p>
+ <ol>
+   <li>Copy ENOVIA.xsd as ENOVIA.xsd.backup.</li>
+   <li>Open ENOVIA.xsd and locate the complexType ENOVIA_VPMDocumentRevision 
+   definition &lt;xs:complexType name=&quot;ENOVIA_VPMDocumentRevision&quot; mixed=&quot;true&quot;&gt;.</li>
+   <li>Insert the CustomDocAttr1 and CustomDocAttr2 as elements inside the 
+   complex ENOVIA_VPMDocumentRevision definition.<br>
+&nbsp;<table class="code">
+   <tr>
+     <td><code><span style="font-size: 9pt">&lt;xs:element name=&quot;</span></code><font face="Courier New, Courier" style="font-size: 9pt">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt">.CustomDocAttr1&quot;
+     </span> </code>
+     <font face="Courier New, Courier" style="font-size: 9pt">form=&quot;unqualified&quot; 
+     nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;</font><code><span style="font-size: 9pt">/&gt;<br>
+     &lt;xs:element name=&quot;</span></code><font face="Courier New, Courier" style="font-size: 9pt">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt">.CustomDocAttr2&quot;
+     </span> </code>
+     <font face="Courier New, Courier" style="font-size: 9pt">form=&quot;unqualified&quot; 
+     nillable=&quot;true&quot; minOccurs=&quot;0&quot; </font> <code><span style="font-size: 9pt">
+     type=&quot;xs:int&quot; /&gt;</span></code></td>
+   </tr>
+ </table>
+   </li>
+   <li>Save the schema as ENOVIA.xsd. Please don't rename it.</li>
+ </ol>
+ <p>Updated XSD with customizations should look like this:</p>
+ <table class="code">
+   <tr>
+     <td><font face="Courier New" style="font-size: 9pt">&lt;xs:complexType name=&quot;ENOVIA_VPMDocumentRevision&quot; 
+     mixed=&quot;true&quot;&gt;<br>
+     <br>
+&nbsp;&nbsp; &lt;xs:sequence&gt;</b></font><code><b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element 
+     name=&quot;</b></code></span><font face="Courier New, Courier" style="font-size: 9pt; font-weight: 700">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt; font-weight: 700">.CustomDocAttr1&quot;
+     </span> </code>
+     <font face="Courier New, Courier" style="font-size: 9pt; font-weight: 700">
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;</font><code><span style="font-size: 9pt; font-weight: 700">/&gt;<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;</span></code><font face="Courier New, Courier" style="font-size: 9pt; font-weight: 700">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt; font-weight: 700">.CustomDocAttr2&quot;
+     </span> </code>
+     <font face="Courier New, Courier" style="font-size: 9pt; font-weight: 700">
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; </font> <code>
+     <span style="font-size: 9pt; font-weight: 700">type=&quot;xs:int&quot; /&gt;</span></code><font face="Courier New" style="font-size: 9pt"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_version&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_user&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_IsCheckedIn&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:boolean&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_CheckedOutUser&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_extension&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_status&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_IsExternal&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:boolean&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.C_created&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:dateTime&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.C_modified&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:dateTime&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMDocumentRevision.V_description&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMTPDocumentMaster.V_ID&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMTPDocumentMaster.V_name&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;ENOVIA_VPMTPDocumentMaster.V_type&quot; 
+     form=&quot;unqualified&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;Domain&quot; form=&quot;unqualified&quot; 
+     nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;Relation&quot; form=&quot;unqualified&quot; 
+     nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:NMTOKEN&quot;/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;xs:element name=&quot;CATJsyUUID&quot; form=&quot;unqualified&quot; 
+     nillable=&quot;true&quot; minOccurs=&quot;0&quot; type=&quot;xs:string&quot;/&gt; <br>&nbsp;&nbsp; &lt;/xs:sequence&gt;<br>
+     <br>
+&nbsp;&nbsp; &lt;xs:attribute name=&quot;id&quot; type=&quot;xs:NMTOKEN&quot; use=&quot;optional&quot; 
+     form=&quot;unqualified&quot;/&gt;<br>
+     <br>
+     &lt;/xs:complexType&gt;</font></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+   </tr>
+ </table>
+ <h3><a name="example"></a>Example of How to Request Customized Objects and Attributes</h3>
+ <p>The following query will return all Customer_VPMDocumentVersion belonging to the DOMIAN 
+ XYZ, that matches the criteria where the
+ <font face="Courier New" style="font-size: 9pt">
+ ENOVIA_VPMDocumentRevision.V_version</font> starts 
+ with &quot;ABC&quot; <font face="Courier New, Courier" style="font-size: 9pt">and 
+ ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt">.CustomDocAttr1 
+ contains &quot;DEF&quot;.</span></code>.</p>
+ <p>Customized attributes to be retrieved are listed by ATTRIBUTE NAME in the 
+ SELECT clause.</p>
+ <table class="code">
+   <tr>
+     <td><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+     &lt;FILTER CASESENSITIVE=&quot;FALSE&quot; LASTVERSION=&quot;FALSE&quot; RESULTSPERPAGE=&quot;-1&quot; 
+     STARTRANGEVALUE=&quot;&quot; ENDRANGEVALUE=&quot;&quot; MINORMAX=&quot;&quot;&gt;<br>
+&nbsp;&nbsp; &lt;SELECT&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OBJECT DOMAIN=&quot;CUSTOMER1&quot; 
+     NAME=&quot;</code><font face="Courier New" style="font-size: 9pt">ENOVIA_VPMDocumentRevision
+     </font><code>&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMPartMaster.V_name&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;ENOVIA_VPMPartVersion.V_user&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE 
+     NAME=&quot;</code><font face="Courier New, Courier" style="font-size: 9pt">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt">.CustomDocAttr1</span>&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/OBJECT&gt;<br>
+&nbsp;&nbsp; &lt;/SELECT&gt;<br>
+&nbsp;&nbsp; &lt;WHERE&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;FILTER_CONDITION OPERATOR=&quot;AND&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;ATTRIBUTE_FILTER&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;EXPRESSION 
+     OP=&quot;LIKE&quot; VALUE=&quot;ABC*&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &lt;ATTRIBUTE NAME=&quot;ENOVIA_VPMPartMaster.V_ID&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt; &lt;EXPRESSION 
+     OP=&quot;LIKE&quot; VALUE=&quot;*DEF*&quot;&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     &lt;ATTRIBUTE NAME=&quot;</code><font face="Courier New, Courier" style="font-size: 9pt">ENOVIA_VPMDocumentRevision</font><code><span style="font-size: 9pt">.CustomDocAttr1</span>&quot; /&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/EXPRESSION&gt;&lt;/ATTRIBUTE_FILTER&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/FILTER_CONDITION&gt; <br>
+&nbsp;&nbsp; &lt;/WHERE&gt;<br>
+     &lt;/FILTER&gt;</code></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>ENOVIA LCA V5 CAA Web service supports customized objects from the base types as listed 
+ and defined in ENOVIA.xsd. Modification of ENOVIA.xsd is needed for accessing 
+ customized objects through ENOVIA LCA V5 CAA Web services.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [May 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>
+
+

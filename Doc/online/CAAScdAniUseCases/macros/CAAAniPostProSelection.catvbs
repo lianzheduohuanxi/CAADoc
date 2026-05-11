@@ -1,0 +1,102 @@
+' COPYRIGHT DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Select groups and mesh part for visulization of image
+'   Assumtions:   Octree tetrahedron mesh part exists in the model
+'   Author:       bmw
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R16
+' ***********************************************************************
+
+Sub CATMain()
+
+' ----------------------------------------------------------- 
+' Optional: allows to find the sample wherever it's installed
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+' ----------------------------------------------------------- 
+
+
+' Open the CATAnalysis Document
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis")
+Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+Set oAnalysisManager = oAnalysisDocument.Analysis
+
+Set oAnalysisModels = oAnalysisManager.AnalysisModels
+
+Set oAnalysisModel = oAnalysisModels.Item(1)
+
+Set oAnalysisCases = oAnalysisModel.AnalysisCases
+
+Set oAnalysisCase = oAnalysisCases.Item(1)
+
+Set oAnalysisSets = oAnalysisCase.AnalysisSets
+
+Set oAnalysisSet = oAnalysisSets.Item("Restraints.1", catAnalysisSetSearchAll)
+
+Set analysisEntities1 = oAnalysisSet.AnalysisEntities
+
+Set analysisEntity1 = analysisEntities1.Item(1)
+
+'add selection (specificationgroups)  clamp on Image Von Mises stress (nodal values) (no selection before ReplaceMode=True)
+'============================================================================
+
+Set reference1 = oAnalysisManager.CreateReferenceFromObject(analysisEntity1)
+
+Set analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
+
+Set analysisImages1 = analysisSet2.AnalysisImages
+
+Set analysisImage1 = analysisImages1.Item("Von Mises stress (nodal values).1")
+
+analysisImage1.SetSelection reference1, True
+
+analysisImage1.Update 
+
+'add selection (usergroups) SurfaceGroup.1 on Image Von Mises stress (nodal values) (ReplaceMode=False)
+'=====================================================================
+
+Set analysisSets2 = oAnalysisModel.AnalysisSets
+
+Set analysisSet3 = analysisSets2.ItemByType("GroupSet")
+
+Set analysisEntities2 = analysisSet3.AnalysisEntities
+
+Set analysisEntity2 = analysisEntities2.Item(1)
+
+Set reference2 = oAnalysisManager.CreateReferenceFromObject(analysisEntity2)
+
+analysisImage1.SetSelection reference2, False
+
+analysisImage1.Update 
+
+'remove all selections on Image Von Mises stress (nodal values)
+'======================================
+
+analysisImage1.ResetSelection 
+
+analysisImage1.Update 
+
+'add selection (meshparts) OctreeTetrahedronMesh.1:Part1 on Image Von Mises stress (nodal values) (ReplaceMode=True)
+'==========================================================================
+
+Set analysisSets3 = oAnalysisModel.AnalysisSets
+
+Set oAnalysisMeshManager = analysisSets3.ItemByType("MSHMeshSet")
+
+Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+Set analysisMeshPart1 = oAnalysisMeshParts.Item("OCTREE Tetrahedron Mesh.1 : Part1")
+
+Set reference3 = oAnalysisManager.CreateReferenceFromObject(analysisMeshPart1)
+
+analysisImage1.SetSelection reference3, True
+
+analysisImage1.Update 
+
+End Sub

@@ -1,0 +1,319 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Managing Command Undo/Redo</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Command Undo/Redo</h3>
+      <em>Enabling the end user to undo and redo the command result</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to add undo/redo capabilities to a command to
+      enable the end user to undo and redo the command result when the command
+      is completed.
+      <ul>
+        <li><a href="#100000"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#200000"><strong>The Polyline Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Polyline Command Do</a></li>
+            <li><a href="#How">How to Launch the Polyline Command</a></li>
+            <li><a href="#Where">Where to Find the Polyline Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to manage the command undo/redo, that
+is how to undo and redo the command effect after the command has completed. It
+deals with a non transactional document model, that is a document model that
+doesn't include document object undo/redo by means of the CATIUndoTransaction
+interface implementation. As a consequence, the document object undo/redo must
+be coded in the undo/redo methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The Polyline Command Use Case</h3>
+<p>The Polyline command is a use case of the CAADialogEngine.edu framework that
+illustrates the DialogEngine framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Polyline Command Do</h4>
+<p>The Polyline commmand creates a polyline by successively indicating or
+selecting points, or entering their coordinates using a dialog box. A right
+click stops the polyline creation and exits the command. When the command is
+completed, and when other successive commands are also over, the command undo
+process can sequentially undo the command effects, starting from the last
+command and going up until the maximum number of undo is reached. Conversely,
+the polyline undone can be redone.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Polyline Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:
+<ul>
+  <li>Select File-&gt;New
+  <li>In the New box, select CAAGeometry and click OK
+  <li>Select Insert-&gt;Multi Lines-&gt;Polyline</li>
+  <li>Click to create the points that make up the polyline, and right click to
+    end</li>
+</ul>
+<p>You can create several polylines. Then, clicking undo several times removes
+the polylines in their creation reverse order, and clicking redo restores them
+in their cration order.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the Polyline Command Code</h4>
+<p>The Polyline command is made of a single class named <i>CAADegCreatePolylineCmd</i>
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the command undo/redo, there are four steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Declare the command undo/redo methods</td>
+    <td valign="top">Header file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the command undo/redo object</td>
+    <td valign="top">Command member function</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Provide the static undo and redo methods</td>
+    <td valign="top">Command member functions</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Provide the static deallocation method</td>
+    <td valign="top">Command member function</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring the Command Undo/Redo Methods</h4>
+<p>The command undo/redo methods are declared in the command class header file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATCommandGlobalUndo * GetGlobalUndo();
+
+  static void DeallocatePolyline(void * iUsefulData); 
+  static void UndoCreatePolyline(void * iUsefulData);
+  static void RedoCreatePolyline(void * iUsefulData); 
+...	</pre>
+    </td>
+  </tr>
+</table>
+<p>These methods are as follows:
+<ul>
+  <li><code>GetGlobalUndo</code> is a CATCommand redefined method that returns a
+    CATCommandGlobalUndo object. This object contains pointers to the
+    deallocation, undo, and redo methods to be accessed when the command itself
+    is deleted. <code>GetGlobalUndo</code> is called just before the command
+    completes</li>
+  <li><code>DeallocatePolyline</code> is a command static method that is called
+    to deallocate the polyline when the maximum number of undo steps is reached.
+    At this moment, the polyline cannot be redone, and the polyline stored for
+    redo must be deallocated</li>
+  <li><code>UndoCreatePolyline</code> is a command static method that is called
+    to undo the command result, that is the created polyline</li>
+  <li><code>RedoCreatePolyline</code> is a command static method that is called
+    to redo the command result.</li>
+</ul>
+<p>These last three methods are static because they should be accessible when
+the command has completed and is no more active. The class instance is deleted
+when the command undo process takes place.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Command Undo/Redo Object</h4>
+<p>The command undo/redo object is created using the <code>GetGlobalUndo</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATCommandGlobalUndo * CAADegCreatePolylineCmd::GetGlobalUndo()
+{
+  CATCommandGlobalUndo * pCommandUndoRedo = NULL;
+
+  if ( _EltPolyline )  <em>// The created polyline</em>
+  {
+    pCommandUndoRedo = new <strong>CATCommandGlobalUndo</strong>(
+       (CATGlobalUndoMethod)&amp; CAADegCreatePolylineCmd::UndoCreatePolyline,
+       (CATGlobalUndoMethod)&amp; CAADegCreatePolylineCmd::RedoCreatePolyline,
+       (void *) _EltPolyline,
+       (CATGlobalUndoMethod)&amp; CAADegCreatePolylineCmd::DeallocatePolyline);
+  }
+  return pCommandUndoRedo;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The CATCommandGlobalUndo instance returned by GetGlobalUndo contains pointers
+to
+<ul>
+  <li>The undo method</li>
+  <li>The redo method</li>
+  <li>The created polyline</li>
+  <li>The deallocation method.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Providing the Static Undo and Redo Methods</h4>
+<p>The <code>UndoCreatePolyline</code> and <code>RedoCreatePolyline</code>
+methods have the following signatures.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegCreatePolylineCmd::UndoCreatePolyline(void *iData)
+{
+  CAAISysPolyline * Elt  = (CAAISysPolyline *) iData;
+  if ( Elt )
+  {
+    ... <em>// Provide undo code here</em>
+  }
+}
+
+void  CAADegCreatePolylineCmd::RedoCreatePolyline(void *iData)
+{
+  CAAISysPolyline * Elt  = (CAAISysPolyline *) iData;
+  if ( Elt )
+  {
+    ... <em>// Provide redo code here
+</em>  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The pointer to the polyline is passed as a void *. Cast it to the appropriate
+interface pointer before using it to undo or redo the command result.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Providing the Static Deallocation Method</h4>
+<p>The <code>DeallocatePolyline</code> deallocates the created polyline when the
+maximum number of undo steps is reached.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegCreatePolylineCmd::DeallocatePolyline(void * iData)
+{
+  if (iData)
+  {
+    CAAISysPolyline * Elt  = (CAAISysPolyline *) iData;
+    if (Elt) Elt-&gt;<strong>Release</strong>();
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The pointer to the polyline is passed as a void *. Cast it to the appropriate
+interface pointer before releasing it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to add command undo/redo capabilities to a command
+using an undo/redo object that remains alive after the command is completed and
+that holds pointers to the created object, to command static undo and redo
+methods, and to a command static deallocation method of the created object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

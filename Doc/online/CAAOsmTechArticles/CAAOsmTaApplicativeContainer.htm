@@ -1,0 +1,365 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Applicative Container</title>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding Applicative Container</h3>
+      <p><em>Where are stored (persisted) the features?</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Any feature which is instantiated, is located within a container. 
+		When this persistent structure is created by the modeler's engine, it is 
+		called &quot;container&quot;, when it is created by an application, DS or CAA, it 
+		is named &quot;applicative container&quot;.&nbsp; The goal of this article is to 
+		give you all necessary information to choose the right container to 
+		instantiate your CAA feature, and how to create, use and manage an 
+		applicative container. </p>
+		<ul>
+			<li><a href="#What are Applicative Containers">What is a Container?</a></li>
+			<li><a href="#When Creating an Applicative Container">When Creating an Applicative Container?</a></li>
+			<li><a href="#How to Manage Applicative Container">How to Manage Applicative Container?</a><ul>
+			<li><a href="#Creation">Creation</a></li>
+			<li><a href="#Access by Name">Access by Name</a></li>
+			<li><a href="#Parsing the Contents">Parsing the Contents</a></li>
+		</ul>
+			</li>
+			<li><a href="#Standard DS Behavior Integration">Standard DS Behavior Integration</a></li>
+			<li><a href="#CATInit Implementation">Applicative Container 
+			Loading and Activation</a><ul>
+			<li><a href="#The Init Method Contents">Init Method Contents</a></li>
+			<li><a href="#The GetRootContainer Method Contents">GetRootContainer 
+			Method Contents</a></li>
+		</ul>
+			</li>
+			<li><a href="#Volatile Container">Volatile Container</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="What are Applicative Containers"></a>What is a Container?</h2>
+<p>A <b>Container</b> is an Object Modeler component which has a late type. Generally the contained elements are created by a 
+factory, an interface implemented by the container. Two example: <i>
+CATIGSMFactory</i>, implemented by CATPrtCont, a CATPart 
+container, and <i>CATGeoFactory</i> , implemented by CGMGeom, a CATPart 
+container too.</p>
+<p>A container can contain features or CATBaseUnknown objects. The CGMGeom 
+container contains geometrical 
+objects which are not features. Nevertheless you will see in the
+<a href="#Creation">Creation</a> section, that by CAA you could <b>only create container 
+for features</b>.&nbsp; </p>
+<p>There are two kinds of containers:</p>
+<ul>
+	<li><b>Modeler</b> <b>containers</b></li>
+</ul>
+<blockquote>
+	<p>There are containers managed by the Modeler: </p>
+	<ul>
+		<li>CATPart :&nbsp; three modeler containers 
+		: CATPrtCont, CGMGeom, CATMFBRP</li>
+		<li>CATDrawing :&nbsp; one container . There is no direct access on it, you 
+		have only access to the root feature</li>
+		<li>See your Modeler documentation for other cases.</li>
+	</ul>
+</blockquote>
+<ul>
+	<li><b>Applicative Containers</b></li>
+</ul>
+<blockquote>
+	<p>These container are created by&nbsp;applications. These applications can be DS or CAA.&nbsp; An example of DS 
+	applicative containers are electrical containers. In the next 
+sections you will have all the necessary information to create, use and manage 
+correctly your own applicative container. </p>
+	<p>But the first question is when it is necessary to create an 
+applicative container. It is purpose of the next section.</p>
+</blockquote>
+<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="When Creating an Applicative Container"></a>When Creating an Applicative Container?</h2>
+<p>You have just finished designing your new CAA 
+feature, now the question is where to store the new Startup instantiations. 
+The rule is as follows:</p>
+<ul>
+	<li>Your CAA feature, directly or indirectly, <b>derives</b> from a <b>DS 
+	StartUp</b>, in this case all instantiations must be done inside a <b>DS 
+	container</b>, the one managing these kinds of features,</li>
+	<li>Your CAA feature is a <b>feature extension,</b> 
+	the instantiations must be done inside an <b>applicative</b> <b>container</b> managed 
+	by your application,</li>
+	<li>Your CAA feature is created from &quot;<b>scratch</b>&quot; (also named 
+	an applicative feature), the instantiations 
+	must be done inside an <b>applicative</b> <b>container</b> too.</li>
+</ul>
+<p>If you are in the second and third situation, the whole article is for you, but 
+in the first case, the <a href="#Access by Name">Access by Name</a> and
+<a href="#Parsing the Contents">Parsing the Contents</a> sections can be 
+nevertheless useful. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+
+<h2><a name="How to Manage Applicative Container"></a>How to Manage Applicative Container?</h2>
+<p>This section deals with the elementary functions: creating, retrieving and 
+introspecting an applicative container. Nevertheless, the two sub-sections can be valid 
+for DS containers too. </p>
+<h3><a name="Creation"></a>Creation</h3>
+<p>The only way to create an applicative container is the global function : <em>CATCreateApplicativeContainer</em> </p>
+<pre class="code">HRESULT CATCreateApplicativeContainer(CATBaseUnknown ** oApplicativeContainer,
+				      CATDocument * iDocument,
+				      const CATIdent iContainerType,
+				      const IID& iInterfaceId,
+				      const CATIdent iContainerSuperType="",
+				      const CATUnicodeString& iIdentifier="");</pre>
+<p align="left">Have a look to each argument:</p>
+<table border="1" id="table2">
+	<tr>
+		<td><b>argument</b></td>
+		<td><b>meaning</b></td>
+	</tr>
+	<tr>
+		<td>oApplicativeContainer</td>
+		<td>It is the newly created container. It is a <code>iInterfaceId</code> 
+		interface pointer.</td>
+	</tr>
+	<tr>
+		<td>iDocument</td>
+		<td>The document containing the new container.</td>
+	</tr>
+	<tr>
+		<td>iContainerType</td>
+		<td>It represents the late type of the container. You will implement 
+		interfaces on this late type, like <i><a href="#CATInit Implementation">
+		CATInit</a>, </i>but also factories to create the elements for the 
+		container.<p>If you do not want specify a late type, use the &quot;<code>CATFeatCont</code>&quot; 
+		string instead. </td>
+	</tr>
+	<tr>
+		<td>iInterfaceId</td>
+		<td>The IID value of an interface implemented by the container. It can <i>
+		be CATBaseUnknown</i>, <i>CATIClientContainer</i>, <i>CATInit</i>, or any 
+		other interface implemented by the container.&nbsp; These three are the 
+		main generic ones.</td>
+	</tr>
+	<tr>
+		<td>iContainerSuperType </td>
+		<td>An applicative container can only be a CATFeatCont or a&nbsp; container 
+		deriving from CATFeatCont , so the possible values for <code>iContainerSuperType</code> 
+		depends on the iContainerType value:<ul>
+			<li>if iContainerType = &quot;<code>CATFeatCont</code>&quot;, <code>iContainerSuperType</code> 
+			can be &quot;&quot; or <code>&quot;CATFeatCont</code>&quot;</li>
+			<li>otherwise, <code>iContainerSuperType</code> can only be <code>&quot;CATFeatCont</code>&quot;</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>iIdentifier </td>
+		<td>It represents the identifier name of the container, the name to be retrieved, 
+		see the <a href="#Access by Name">next</a> section. BUT take note that it is 
+		strongly recommended to use the same name as the late type value, that 
+		is <code>iIdentifier</code> 
+		is equal to <code>iContainerType</code>. This is <i>mandatory</i> for saving 
+		your container in 3D XML file.
+		<p>If <code>iIdentifier</code> is an empty string, the name of the 
+		container is its late type. 
+		<p>Two containers of the same type can co-exist in the same stream, but 
+		their name must be different. </td>
+	</tr>
+</table>
+<p>Generally you create an applicative container like this:</p>
+<pre class="code">
+...
+CATBaseUnknown *pContainer = NULL ;
+CATDocument *pDoc =... ;
+::<strong>CATCreateApplicativeContainer</strong>(pContainer,pDoc,
+                             "MyContainerType",
+                             IID_CATBaseUnknown,&quot;CATFeatCont&quot;);                         
+...
+</pre>
+<h3><a name="Access by Name"></a>Access by Name</h3>
+<p>A container, applicative or not, can be retrieved from a CATDocument using its identifier name. This value is the 
+sixth argument of the <em>CATCreateApplicativeContainer</em> , or if no value, 
+its late type, the second argument of the same method. For DS container, refer 
+to the modeler documentation if container's named are exposed.</p>
+<p>The global function CATGetApplicativeContainer retrieves a container by its 
+name</p>
+<pre class="code">HRESULT <strong>CATGetApplicativeContainer</strong>(CATBaseUnknown ** oApplicativeContainer,
+				   CATDocument* iDocument,
+				   const IID& iInterfaceId,
+				   const CATUnicodeString& iIdentifier);</pre>
+<h3><a name="Parsing the Contents"></a></i>Introspecting the Contents</h3>
+<i>
+<p>The interface to use is <i>CATIClientContainer</i>. It is an interface 
+implemented by any <code>CATFeatCont</code> container. We have seen previously 
+that an applicative container can only contain features, so this interface is 
+available for your applicative container. </p>
+<p>Its unique method is <code>
+ListMembers</code> :</p>
+</i>
+<pre class="code">HRESULT ListMembers( const IID&  iIID, 
+ const CATUnicodeString  ClientID, 
+ CATListPtrCATBaseUnknown**  oLst)const =0  <i>
+</pre>
+<p>This method retrieves within a container, all features implementing a given interface 
+(IID). All the returned element can be used as IID interface pointer.</p>
+</i>
+<pre class="code">...
+CATIClientContainer *pMyContainer = ....;
+CATListPtrCATBaseUnknown * listfeatures = NULL ;
+pMyContainer-&gt;<b>ListMembers</b>(<b>IID_CATISpecObject</b>,ClientIdValue, &listfeatures);
+if (NULL != listfeatures )
+{
+     ...
+     <b>CATISpecObject</b> *pCurrentElement = (*listfeatures)[i];
+     ...
+}
+</pre> 
+<p>One you have through with the list, do nor forget to release its elements, and delete 
+it. </p>
+<p>The last not explained argument is &quot;<b>ClientID</b>&quot;. This mandatory 
+argument is the key of a Startup catalog. It means that <i>CATIClientContainer</i> 
+can only retrieve features whose you know the Startup catalog key. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="Standard DS Behavior Integration"></a>Standard DS Behavior Integration</h2>
+<p>By creating you own applicative container you benefit from all Feature 
+modeler capabilities: persistency, introspection, sometimes
+<a href="#CATInit Implementation">automatic loading</a>, and other facilities. 
+But the modeler responsible of the CATDocument 
+does not know the contents of your applicative containers, so it cannot <i>
+expose </i>the data as you would certainly like. That is the reason why, for some DS 
+behavior (mostly interactive ones), which require the knowledge of&nbsp; the applicative 
+container contents, the modeler delegates to a special object this introspection.&nbsp;This special object is a <b>Manager of Providers</b>. Each applicative container, which want to be invoked for a DS behavior, should 
+be previously declared to this manager. Each object which gives the behavior of 
+one applicative container for one behavior is named a &quot;Provider&quot;.</p>
+<p>These possibilities are valid for Product Modeler and Mechanical Modeler.</p>
+<p>For other modelers, have a look to their CAA documentation. </p>
+<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="CATInit Implementation"></a>Applicative Container Loading and 
+Activation</h2>
+<p>To be usable, an applicative container must be first either<b> loaded</b> in 
+session, or just <b>created</b> , and then to be <b>activated</b>. The 
+activation consists in to &quot;give the hand&quot; to the container in order to operate 
+some actions of initialization. It will be explained in details next. </p>
+<p>The loading and activation steps is depending on the context:</p>
+<ul>
+	<li>If the applicative container contains <b>feature extension </b>, 
+<ul>
+	<li>If <code>AddExtension 
+	</code>method of <i>CATIOsmExtendable</i></code> create the container, it 
+	will be automatically initialized after its creation,</li>
+	<li>when the CATDocument will be loaded in session, 
+	the application container will be automatically loaded and initialized</li>
+</ul>
+	</li>
+	<li>Otherwise, it is depening on the modeler</li>:<ul>
+		<li>Product Modeler case : all applicative containers are automatically 
+		loaded and initialized when CATProduct 
+		is loaded</li>
+		<li>Mechanical Modeler case : It is your responsibility to load and 
+		activate the applicative container contained in the CATPart</li>
+		<li>otherwise refer to the CAA documentation of your domain.</li>
+	</ul>
+	</ul>
+<p>The activation is done through the <a href="#CATInit Implementation">Init</a> 
+method of the <i>CATInit</i> interface. This interface must be implemented on the late type of your applicative 
+container, the second argument of the <a href="#Creation">creation</a> method.</p>
+<p>This activation is done for each instance of applicative container. Consider 
+this example:</p>
+<table border="0" id="table3">
+	<caption>Fig.2 Activation</caption>
+	<tr>
+		<td>
+		<img border="0" src="images/CAAOsmApplicativeContainer_activation.gif"></td>
+	</tr>
+</table>
+<p>The two streams (document) contain each one an instance of&nbsp; the applicative 
+container whose the late type is &quot;Appl. Container 2&quot;.&nbsp; Within Stream A, the 
+container contains 2 features, and within Stream B , three others. When the 
+activation of those containers will be requested, the <a href="#CATInit Implementation">Init</a> 
+method of the <i>CATInit</i> interface will be called for each one. </p>
+<h3><a name="The Init Method Contents"></a>The Init Method Contents</h3>
+<p>The contents of this method generally contains these three steps, and in this 
+order: </p>
+<ul>
+	<li>Declare the necessary providers (see
+	<a href="#Standard DS Behavior Integration">Standard DS Behavior Integration</a> 
+	section)</li>
+	<li>Connect each feature of the container to the &quot;event&quot; model tree using <i>
+	CATIModelEvents</i></li>
+	<li>Declare CCP format</li>
+</ul>
+<blockquote>
+<pre class="code">::SpecBindNativeFormat("<a href="#Creation">iContainerType</a>");</pre>
+	<p>where <code>iContainerType</code> is the container type, see previous 
+	section. </p>
+</blockquote>
+<p>If the first two can be useless, if you have no UI behaviors to implement, 
+the last one is mandatory.</p>
+<h3><a name="The GetRootContainer Method Contents"></a>The GetRootContainer 
+Method Contents</h3>
+<p>It depends on your applicative container contents. If the container contains 
+a feature which is unique, and represents a root, this method can return it, 
+otherwise the implementation can return NULL.</p>
+<h2><a name="Volatile Container"></a>Volatile Container</h2>
+<p>A container is normally a <b>persistent</b> structure, but you can have a <b>volatile container</b>. 
+It means that this specific container will not be saved when the stream is 
+stored. It is the way to create &quot;temporary 
+object&quot; while benefiting from Feature modeler capabilities. </p>
+<p>Imagine you want to handle temporary objects during a session. It is possible 
+using Object Modeler, but you will not take 
+advantage of the feature modeler capabilities like undo/ redo functionalities. </p>
+<p>A solution is to create an applicative container like it is described just 
+above, but moreover to declare it&nbsp; &quot;non persistent&quot; by implementing on it 
+the <i>CATIOsmVolatileContainer</i> interface. When the stream is saved, the container will be not 
+discarded. </p>
+<script type="text/javascript">insertLinkToTop()</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>In this article, we have described what is an application container, how it's 
+created, introspected and activated.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Oct 2007]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

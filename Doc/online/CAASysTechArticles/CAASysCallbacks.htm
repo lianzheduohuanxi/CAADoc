@@ -1,0 +1,808 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Callback Mechanism</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Callback Mechanism</h3>
+      <em>Making objects collaborate</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The callback mechanism is the way CAA V5 implements publish/subscribe
+      between objects. An object can play the role of an event publisher to warn
+      other objects which have subscribed for that object to call them whenever
+      a given event happens. The base class for event publishers and for event
+      subscribers are <strong>CATBaseUnknown</strong> and <strong>CATEventSubscriber</strong>.
+      Other types of callbacks exist for specific events, such as returning in
+      the main loop for onidle callbacks, exceeding a given time for timeout
+      callbacks, or modifying a file descriptor for file descriptor callbacks.
+      <ul>
+        <li><a href="#100000"><strong>What Is the Callback Mechanism?</strong></a></li>
+        <li><a href="#200000"><strong>Making an Object an Event Publisher and/or
+          Subscriber</strong></a></li>
+        <ul>
+          <li><a href="#300000">Deriving from CATBaseUnknown</a></li>
+          <li><a href="#400000">Deriving from CATEventSubscriber</a></li>
+        </ul>
+        <li><a href="#500000"><strong>Other Types of Callbacks</strong></a></li>
+        <ul>
+          <li><a href="#510000">OnIdle Callbacks</a></li>
+          <li><a href="#520000">TimeOut Callbacks</a></li>
+          <li><a href="#530000">File Descriptor Callbacks</a></li>
+        </ul>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>What Is the Callback Mechanism?</h3>
+<p>The callback mechanism offers the publish/subscribe capability. Let's remind
+what's the matter by means of a comparison taken from the daily life.</p>
+<p>When a newspaper issues, it publishes news for all the newspaper's readers,
+who can be classified into those who buy the newspaper every day, and those who
+receive it at home because they have subscribed to it. Each time the newspaper
+issues, a specific team mails the newspaper to the subscribers. This team also
+manages the subscriber list, records new subscribers, and deletes those who
+revoke their subscription or who do not pay their subscription fees when the
+subscription period is over.</p>
+<p>The callback mechanism is very near. An object (the newspaper company) can
+publish an event (the news), by means of a notification (the newspaper issue).
+This object requests its callback manager (the mailing team), to dispatch the
+notification to all the subscribers. A subscriber subscribes for a given event
+published by a given object, and the subscriber list is managed by the
+publishing object's callback manager.</p>
+<p>Note that in the real life, an object can be a publisher for certain events,
+and a subscriber for others. For example, a member of the newspaper company can
+subscribe to other newspapers or magazines. This is also the case with CAA V5
+and with your client applications.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Making an Object an Event Publisher and/or Subscriber</h3>
+<p>There are two ways of making an object an event publisher and/or subscriber:
+<ol>
+  <li>The most simple and common way is to derive from CATBaseUnknown. Global
+    functions allow for subscribers to subscribe and remove subscriptions, and
+    for publishers a default callback manager implemented as an extension of the
+    CATBaseUnknown class processes the dispatch without you need to worry about.
+    <strong>This is recommended way for most publish/subscribe usages</strong>.</li>
+  <li>Another way for advanced usages is to derive the publisher or the
+    subscriber class, or both, from the CATEventSubscriber class. This allows,
+    for example, an object to set a callback in place of another object if the
+    latter derives from CATEventSubscriber, and also to override the publishing
+    and subscribing methods to add your specific tasks.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="300000"></a>Deriving from CATBaseUnknown</h4>
+<p>This is the way you should use in most cases. To illustrate how to do, let's
+take the following example. Assume that your apartment is protected using an
+alarm that rings when a burglar attempts to enter when you are not there. In the
+daily life, the alarm notifies the burglar with the emitted sound that he should
+not stay here, and usually the burglar runs away. Maybe he knows how to
+neutralize the alarm, but this is another story.</p>
+<p>With this scenario, we have an event publisher, the alarm, and an event
+subscriber, the burglar. The alarm publishes the event &quot;I am
+triggered&quot; by means of the notification: &quot;the sound emitted&quot;. The
+burglar has few to do to subscribe to this event, since his ears do this for
+him. In our object world, instances of burglars have no ears and to make them
+advised burglars, we need to make them subscribe to such events if they don't
+want to be captured. In this case, we also need to design police objects, but
+this is also another story.</p>
+<p><img src="images/CAASysCallback1.gif" alt="CAASysCallback1.gif (5612 bytes)" width="622" height="263"></p>
+<p>This is how to create such objects, and make it run together:
+<ol>
+  <li>Create the publisher: the ApartmentAlarm class. It derives from the
+    CATBaseUnknown class and has a <code>BeginRinging</code> method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;
+
+class ApartmentAlarm : public CATBaseUnknown
+{
+  CATDeclareClass;
+  public:
+    ApartmentAlarm();
+    virtual ~ApartmentAlarm();
+    void BeginRinging();
+};</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Create the published notification: the AlarmRinging class. It derives from
+    the CATNotification class and its header file just includes the <code>CATDeclareClass</code>
+    macro:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATNotification.h&quot;
+class AlarmRinging : public CATNotification
+{
+  CATDeclareClass;
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>and its source file includes the <code>CATImplementClass</code> macro:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;AlarmRinging.h&quot;
+CATImplementClass(AlarmRinging,
+                  Implementation,
+                  CATBaseUnknown,
+                  CATNull);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>These macros are required to make a CAA V5 component from this class.</p>
+  </li>
+  <li>Now we need to code the <code>BeginRinging</code> method which publishes
+    this notification:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void ApartmentAlarm::BeginRinging()
+{
+  printf(&quot;Alarm begins to ring!\n&quot;);
+  AlarmRinging * RingingNotification = new AlarmRinging();
+  GetDefaultCallbackManager(this)-&gt;DispatchCallbacks
+             (RingingNotification, this);
+  delete RingingNotification;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>GetDefaultCallbackManager</code> methods returns the callback
+    manager attached as an extension to the CATBaseUnknown class from which the
+    ApartmentAlarm class derives. This callback manager publishes the
+    notification thanks to the <code>DispatchCallbacks</code> method.</p>
+  </li>
+  <li>The apartment alarm and the alarm ringing notification are ready to use.
+    We create now the subscriber: the AdvisedBurglar class, which must derive
+    from the CATBaseUnknown class, and include a method to call back when the
+    alarm ringing notification is published, here the <code>RunAway</code>
+    method.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATEventSubscriber.h&quot;
+#include &quot;ApartmentAlarm.h&quot;
+
+class AdvisedBurglar : public CATBaseUnknown
+{
+  public:
+    AdvisedBurglar();
+    virtual ~AdvisedBurglar();
+    void RunAway(CATCallbackEvent   iAlarmEvent,
+                 void             * iAlarm,
+                 CATNotification  * iAlarmNotification,
+                 CATSubscriberData  iBurglarData,
+                 CATCallback        iCallbackId);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CATEventSubscriber.h</code> file is included to get the <code>AddCallback</code>
+    global function signature.</p>
+    <p>The <code>RunAway</code> method signature is the one of any callback
+    method. Let's detail its parameters:
+    <ul>
+      <li><code>iAlarmEvent</code> is the event that happens. Since we do not
+        define any event, but only a notification, it will be passed to NULL</li>
+      <li><code>iAlarm</code> is the publisher object, that is the
+        ApartmentAlarm instance</li>
+      <li><code>iAlarmNotification</code> is the published notification, that is
+        the RingingNotification instance</li>
+      <li><code>iBurglarData</code> is data that the advised burglar could
+        request to execute the callback. It is set to NULL here</li>
+      <li><code>iCallbackId</code> is the identifier of the callback: it is a
+        long integer</li>
+    </ul>
+    <p>This <code>RunAway</code> method is called by the <code>DispatchCallbacks</code>
+    method we have inserted in the third step. Its body could be as follows:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void AdvisedBurglar::RunAway(
+            CATCallbackEvent   iAlarmEvent,
+            void             * iAlarm,
+            CATNotification  * iAlarmNotification,
+            CATSubscriberData  iBurglarData,
+            CATCallback        iCallbackId)
+{
+  ApartmentAlarm * RingingAlarm;
+  RingingAlarm = (ApartmentAlarm *) iAlarm;
+
+  printf(&quot;AdvisedBurglar: I RUN AWAY!!\n&quot;);
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The advised burglar should now, to be fully advised, set the callback.
+    Otherwise the <code>RunAway</code> method would never be called. To set this
+    callback, we add the method <code>ComeNearTheApartment</code> and the <code>_Alarm</code>
+    data member to the AdvisedBurglar class. The callback itself is set using
+    the <code>AddCallback</code> global function:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void AdvisedBurglar::ComeNearTheApartment(
+             ApartmentAlarm *iAlarm)
+{
+  _Alarm = iAlarm;              // Record the alarm
+  AddCallback(this,             // Set the callback
+              _Alarm,
+              AlarmRinging::ClassName(),
+              (CATSubscriberMethod)&amp;AdvisedBurglar::RunAway,
+              NULL);
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>To be more fully advised, the callback should be removed when it is
+    unused. Imagine a burglar that could hear the alarm of all the apartments he
+    tried to visit when they ring! To remove a callback, our advised burglar
+    uses the <code>RemoveCallback</code> method in the <code>RunAway</code>
+    method (new statements are shown in bold typeface):
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void AdvisedBurglar::RunAway(
+            CATCallbackEvent   iAlarmEvent,
+            void             * iAlarm,
+            CATNotification  * iAlarmNotification,
+            CATSubscriberData  iBurglarData,
+            CATCallback        iCallbackId)
+{
+  ApartmentAlarm * RingingAlarm;
+  RingingAlarm = (ApartmentAlarm *) iAlarm;
+  <strong>RemoveCallback(this, RingingAlarm, iCallbackId);</strong>
+
+  printf(&quot;AdvisedBurglar: I RUN AWAY!!\n&quot;);
+  <strong>_Alarm=NULL;</strong>
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>It could be also advisable to remove, or not to set the callback if it is
+    already set. The <code>ComeNearTheApartment</code> method is modified as
+    follows (new statements are shown in bold typeface):</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void AdvisedBurglar::ComeNearTheApartment(
+               ApartmentAlarm *iAlarm)
+{
+  <strong>if ( ! iAlarm ) return;</strong>    // No alarm
+  <strong>if ( _Alarm ) </strong>             // I know an alarm
+  <strong>{</strong>
+// This alarm is different from the current one
+    <strong>if ( _Alarm != iAlarm )</strong>
+    {
+     // remove all the callbacks I have set on that alarm
+     <strong>RemoveSubscriberCallbacks(this, _Alarm);</strong>
+    <strong>}</strong>
+// This alarm is the same than the current one
+    <strong>else</strong>
+<strong>      return</strong>; // nothing to do: callback already set
+  <strong>}</strong>
+  _Alarm = iAlarm;             // Record the alarm
+  AddCallback(this,            // Set the callback
+              _Alarm, AlarmRinging::ClassName(),
+              (CATSubscriberMethod)&amp;AdvisedBurglar::RunAway,
+              NULL);
+  printf(&quot;Burglar subscribes to the apartment alarm\n&quot;);
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>RemoveSubscriberCallbacks</code> method removes all the
+    callbacks set for a given couple of event subscriber, here the advised
+    burglar, and event publisher, here the apartment alarm. Another method, <code>RemoveCallbacksOn</code>,
+    is more selective, since it remove all the callbacks for a given couple of
+    event subscriber and event publisher, but for a given notification and for a
+    given CATSubscriberData instance.</p>
+  </li>
+</ol>
+<p>A simple program to make these objects run could be:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;AdvisedBurglar.h&quot;
+#include &quot;ApartmentAlarm.h&quot;
+
+main()
+{
+  ApartmentAlarm    * Alarm;
+  AdvisedBurglar    * Burglar;
+
+  Alarm = new ApartmentAlarm();
+  printf(&quot;Alarm created\n&quot;);
+
+  Burglar = new AdvisedBurglar();
+  printf(&quot;Burglar created\n&quot;);
+
+  Burglar-&gt;ComeNearTheApartment(Alarm);
+  printf(&quot;Burglar comes near the apartment\n&quot;);
+
+  Alarm-&gt;BeginRinging();
+  exit(0);
+  return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This program creates the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Alarm created
+Burglar created
+Burglar comes near the apartment
+Alarm begins to ring!
+AdvisedBurglar: I RUN AWAY!!</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="400000"></a>Deriving from CATEventSubscriber</h4>
+<p>Another way of publishing events or subscribing to events is to derive the
+publisher or the subscriber, or both, from the CATEventSubscriber class. They
+can coexist with publishers and subscribers which derive from the CATBaseUnknown
+class.</p>
+<p>Such publishers and subscribers have the same capabilities as if they derive
+from the CATBaseUnknown class, but since publishing and subscribing methods are
+their own methods instead of global functions, and since a publisher aggregates
+its callback manager, other objects can request them to publish or subscribe.</p>
+<p>To illustrate this, let's modify our advised burglar example as follows. We
+simply add a controlled door that the burglar attempts to open without the key,
+and this attempt publishes an attempt opening notification to which the alarm
+subscribes, and rings whenever this notification is published. To code this, we
+add a ControlledDoor class which derives from the CATEventSubscriber class, and
+thus includes a callback manager. This illustrates the publisher. To also
+illustrate the subscriber, we make the AdvisedBurglar class also derive from the
+CATEventSubscriber class instead of CATBaseUnknown.</p>
+<p><img src="images/CAASysCallback2.gif" alt="CAASysCallback2.gif (9755 bytes)" width="814" height="433"></p>
+<p>Below is the ControlledDoor class header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATEventSubscriber.h&quot;
+#include &quot;AttemptOpening.h&quot;
+
+class ControlledDoor : public CATEventSubscriber
+{
+  CATDeclareClass;
+  public:
+    ControlledDoor();
+    virtual ~ControlledDoor();
+};
+
+CATImplementClass(ControlledDoor, Implementation,
+                  CATBaseUnknown, CATNull);
+
+ControlledDoor::ControlledDoor() { }
+ControlledDoor::~ControlledDoor() { }</pre>
+    </td>
+  </tr>
+</table>
+<p>The AttemptOpening notification class is like the previous AlarmRinging
+notification class:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATNotification.h&quot;
+class AttemptOpening : public CATNotification
+{
+  CATDeclareClass;
+};
+
+CATImplementClass(AttemptOpening, Implementation,
+                  CATBaseUnknown, CATNull);</pre>
+    </td>
+  </tr>
+</table>
+<p>The AdvisedBurglar class constructor has an additional argument: the door
+instance, to store it as a data member. The <code>AttemptToOpenDoorWithoutKey</code>
+method is added to the AdvisedBurglar class to simulate the burglar behavior
+attempting opening the door. This method requests the door to publish an
+AttemptOpening notification class instance. This is made possible because the
+ControlledDoor class derives from the CATEventSubscriber class, the <code>DispatchCallbacks</code>
+method being a member function and not a global function can be called for that
+ControlledDoor instance. In the same way, the <code>AddCallback</code> method
+being also a member function instead of the global function, its signature
+changes by loosing its first parameter:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  AddCallback(_Alarm, AlarmRinging::ClassName(),
+              (CATSubscriberMethod)&amp;AdvisedBurglar::RunAway,
+             NULL);
+...
+
+void AdvisedBurglar::AttemptToOpenDoorWithoutKey()
+{
+  printf(&quot;Burglar attempts to open the door\n&quot;);
+  AttemptOpening * Attempt = new AttemptOpening();
+  printf(&quot;Door dispatches notification AttemptOpening\n&quot;); // Burglar requests
+  _Door-&gt;GetCallbackManager()-&gt;                          // door to publish
+           DispatchCallbacks(Attempt, _Door);              // opening attempt
+  delete Attempt;                                          // event
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30">
+The <code>RemoveCallback</code> method is also a member function, and looses its
+first parameter. Nevertheless, if you want to use the global functions, use the
+scope resolution operator <code>::</code> with the appropriate signature, such
+as for <code>AddCallback</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>::AddCallback(Subscriber,
+              Publisher,
+              Notification::ClassName(),             
+              Subscriber::MethodToCallback,
+              SubscriberData);</pre>
+    </td>
+  </tr>
+</table>
+<p>The program to make these objects run is modified as follows (new lines are
+in bold typeface, and the removed line is commented out):</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;AdvisedBurglar.h&quot;
+#include &quot;ApartmentAlarm.h&quot;
+
+main()
+{
+  ApartmentAlarm    * Alarm;
+  AdvisedBurglar    * Burglar;
+  <strong>ControlledDoor    * Door;</strong>
+  <strong>Door = new ControlledDoor();</strong>
+  printf(&quot;Door created\n&quot;);
+
+  Alarm = new ApartmentAlarm();
+  printf(&quot;Alarm created\n&quot;);
+
+  Burglar = new AdvisedBurglar();
+  printf(&quot;Burglar created\n&quot;);
+
+  printf(&quot;Burglar comes near the apartment\n&quot;);
+  Burglar-&gt;ComeNearTheApartment(Alarm);
+
+//Alarm-&gt;BeginRinging();
+  Burglar-&gt;AttemptToOpenDoorWithoutKey();
+  exit(0);
+  return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This program creates the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Door created
+Alarm created
+Burglar created
+Burglar comes near the apartment
+Burglar subscribes to the apartment alarm
+Burglar attempts to open the door
+Door dispatches notification AttemptOpening
+Alarm begins to ring!
+AdvisedBurglar: I RUN AWAY!!</pre>
+    </td>
+  </tr>
+</table>
+<p>CAA V5 has the following classes to handle the callback mechanism:</p>
+<p><img src="images/CAASysCallback3.gif" alt="CAASysCallback3.gif (5941 bytes)" width="611" height="333"></p>
+<p>The CATEventSubcriber class accommodates both the event publisher and the
+event subscriber. The pointer to the CATCallbackManager instance is used only if
+the object is an event publisher. Note that the CATCommand class derives from
+the CATEventSubscriber class, and thus all the objects that inherit from the
+CATCommand class are potential event publishers and subscribers. Events are
+usually designed as CATNotifcation instances, nevertheless the parameter <code>CATCallbackEvent</code>
+exists as a typedef for a char *.</p>
+<p>A subscriber subscribes to a publisher for a given event by means of the <code>AddCallback</code>
+method which also specifies the method to call, and revokes its subscription by
+means of the <code>RemoveCallback</code> method.</p>
+<p>A publisher declares the event to publish, or instantiate the notification to
+publish, and delegates to its callback manager by means of the <code>DispatchCallbacks</code>
+method the job of calling the subscriber registered method for each subscriber
+it manages in its subscriber's list for that event or notification.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Other Types of Callbacks</h3>
+<p>Interactive applications can set callbacks on a command in the following
+cases:
+<ul>
+  <li>They return in the main loop: OnIdle callbacks</li>
+  <li>After a given time: TimeOut callbacks</li>
+  <li>A given file descriptor is modified: File Descriptor callbacks.</li>
+</ul>
+<p>When such an event occurs, the application calls the command concerned on the
+method declared when setting the callback.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="510000"></a>OnIdle Callbacks</h4>
+<p>You can set OnIdle callbacks to do specific tasks whenever the application is
+waiting, for example for user input. Below is the header file of a very simple
+application that sets such a callback:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATInteractiveApplication.h&quot;
+
+class MyApplication : public CATInteractiveApplication
+{
+  public :
+    MyApplication();
+    virtual ~MyApplication();
+    virtual void BeginApplication();
+    virtual int  EndApplication();
+};
+static void OnIdleCallbackMethod();          // static method</pre>
+    </td>
+  </tr>
+</table>
+<p>Look at the source file below. The BeginApplication method sets an OnIdle
+callback. The <code>OnIdleCallbackMethod</code> method is requested to be called
+whenever the application returns in the event main loop. Since this application
+does nothing, it is always in the event loop, and we set a counter by means of
+the stop variable, which is incremented each time the callback method is called,
+and we stop to play when stop reaches the value 10.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;MyApplication.h&quot;
+
+static int stop = 0;
+MyApplication::MyApplication()
+             :CATInteractiveApplication(NULL, &quot;MyAppli&quot;)
+{ cout &lt;&lt;&quot;Constructing MyApplication&quot; &lt;&lt;endl; }
+
+MyApplication::~MyApplication ()
+{ cout &lt;&lt;&quot;Destructing MyApplication&quot; &lt;&lt;endl; }
+
+void MyApplication::BeginApplication ()
+{
+  cout &lt;&lt;&quot;Beginning MyApplication&quot; &lt;&lt;endl;
+  cout &lt;&lt;&quot;Setting an OnIdle callback&quot; &lt;&lt;endl;
+  Subscribe(CATSubscribeIdle, this, NULL,
+            (void (*)()) OnIdleCallbackMethod);
+}
+void OnIdleCallbackMethod()
+{
+  stop++;
+  cout &lt;&lt; &quot;In the OnIdle callback method - stop = &quot; &lt;&lt;
+          stop &lt;&lt;endl;
+  if ( stop == 10 )
+  {
+    cout &lt;&lt;&quot;Exiting MyApplication&quot;&lt;&lt;endl;
+    exit(0);
+  }
+  return;
+}
+
+int MyApplication::EndApplication()
+{
+  cout &lt;&lt;&quot;Ending MyApplication&quot;&lt;&lt;endl;
+  return 0;
+}
+
+MyApplication Appli;</pre>
+    </td>
+  </tr>
+</table>
+<p>This application produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Constructing MyApplication
+Beginning MyApplication
+Setting an OnIdle callback
+In the OnIdle callback method - stop = 1
+In the OnIdle callback method - stop = 2
+In the OnIdle callback method - stop = 3
+In the OnIdle callback method - stop = 4
+In the OnIdle callback method - stop = 5
+In the OnIdle callback method - stop = 6
+In the OnIdle callback method - stop = 7
+In the OnIdle callback method - stop = 8
+In the OnIdle callback method - stop = 9
+In the OnIdle callback method - stop = 10
+Exiting MyApplication
+Destructing MyApplication</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="520000"></a>TimeOut Callbacks</h4>
+<p>You can also set TimeOut callbacks, that is callbacks triggered after a given
+time elapsed. We keep the previous example, and we add a command, as a data
+member of the application, which sets a TimeOut callback in its constructor, and
+which is then called when this time is over.</p>
+<p>The command header file is as follows</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCommand.h&quot;
+
+class MyCATCommand : public CATCommand
+{
+  public :
+    MyCATCommand(CATApplication *Father);
+   ~MyCATCommand();
+    static void MyStaticMethod();
+    static int End;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The command <code>MyStaticMethod</code> static method is called by the
+callback set in the command constructor when 100 milliseconds elapsed:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATApplication.h&quot;
+#include &quot;MyCATCommand.h&quot;
+
+int MyCATCommand::End = 0;
+MyCATCommand::MyCATCommand(CATApplication * Father)
+         :CATCommand (Father)
+{
+  cout &lt;&lt; &quot;MyCommand sets a timeout callback&quot; &lt;&lt; endl;  // Call
+  Father-&gt;AddTimeOut( 100,(CATCommand*)this,NULL,                // MyStaticMethod
+                (void (*)()) MyCATCommand::MyStaticMethod);         // after 100ms
+}
+
+MyCATCommand::~MyCATCommand()
+{}
+
+void MyCATCommand::MyStaticMethod()
+{
+  cout &lt;&lt; &quot;MyStaticMethod is running&quot; &lt;&lt; endl;
+  End = 1;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>OnIdleCallbackMethod</code> is modified to make the application
+exit when the TimeOut callback is called, that is when it has set <code>End</code>
+to 1.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void OnIdleCallbackMethod()
+{
+  cout &lt;&lt;&quot;In the OnIdle callback method - End = &quot; &lt;&lt;
+         MyCATCommand::End &lt;&lt;endl;
+  if ( MyCATCommand::End == 1 ) {
+    cout &lt;&lt;&quot;Exiting MyApplication&quot;&lt;&lt;endl;
+    exit(0);
+  }
+  return;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This produces the following output:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>Constructing MyApplication
+Beginning MyApplication
+MyCommand sets a timeout callback
+Setting an OnIdle callback
+In the OnIdle callback method - End = 0
+In the OnIdle callback method - End = 0
+In the OnIdle callback method - End = 0
+In the OnIdle callback method - End = 0
+In the OnIdle callback method - End = 0
+In the OnIdle callback method - End = 0
+MyStaticMethod is running
+In the OnIdle callback method - End = 1
+Exiting MyApplication
+Destructing MyApplication</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="530000"></a>File Descriptor Callbacks</h4>
+<p>You can also set callbacks when file descriptors are modified. This applies
+generally to any entity homogeneous to a file, such as an input flow, a pipe, a
+socket, but not to disk files. The term file descriptor applies to UNIX and
+corresponds to file handle with Window.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The callback mechanism enables publish/subscribe between objects. Any object
+can publish events, and any object can subscribe to events published by any
+other object. The publisher delegates to its callback manager the job of calling
+the subscriber on their requested methods, and the management of the subscriber
+list.</p>
+<p>Objects can also subscribe to system events using onidle, timeout, and file
+descriptor callbacks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><font size="2"><a name="Ref1">[1]</a></font></td>
+    <td><font size="2">xxx</font></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

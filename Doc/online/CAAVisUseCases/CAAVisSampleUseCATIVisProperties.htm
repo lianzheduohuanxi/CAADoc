@@ -1,0 +1,746 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Modifying Object Graphical Properties</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Portal</h1>
+    </td>
+    <td valign="top">
+      <h2>Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Modifying Object Graphical Properties</h3>
+      <em>Using the CATIVisProperties interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the <i>CATIVisProperties</i> interface to
+      modify the graphical aspect of an object.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAGviApplyProperties Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAGviApplyProperties Do</a></li>
+            <li><a href="#How">How to Launch CAAGviApplyProperties</a></li>
+            <li><a href="#Where">Where to Find the CAAGviApplyProperties Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This article shows how to use the <i>CATIVisProperties</i> interface to
+retrieve or set the graphical properties for CATIA V5 features. This interface
+contains five main methods:</p>
+<ol>
+  <li><code>GetPropertiesAtt</code>, retrieves the properties</li>
+  <li><code>SetPropertiesAtt</code>, modifies the properties</li>
+  <p>These two methods function on the same principle: there is a <i>CATVisPropertiesValues</i>
+  instance and two keys:</p>
+  <ul>
+    <li>The type of the geometry represented by the <i>CATVisGeomType</i>
+      typedef: a point ( CATVPPoint), a line ( CATVPLine), an edge of a surface
+      (CATVPEdge), a surface (CATVPMesh) ...</li>
+    <li>The type of the property represented by the <i>CATVisPropertyType</i>
+      enum: the color (CATVPColor), the line width (CATVPWidth), the line type
+      (CATVPLineType )...</li>
+  </ul>
+  <p>These two keys specify the valid attributes on the instance.</p>
+  <li><code>ResetPropertiesAtt</code>, resets the properties to follow the
+    standard</li>
+  <li><code>GetStandardProperties</code>, retrieves the standard properties</li>
+  <p>These two methods, as the two above, also work with the same two keys. The
+  reset is done on a feature for a given type of geometry and for a given type
+  of property.</p>
+  <li><code>IsGeomTypeDefined</code>, tells if a given type of geometry is
+    recognized by the feature.</li>
+</ol>
+<p>In this article you will learn to:</p>
+<ul>
+  <li>Use these five methods</li>
+  <li>Handle the different geometry types and the different property types to
+    arrive at a specific visual effect</li>
+  <li>Handle the <i>CATVisPropertiesValues</i> instance.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAGviApplyProperties Use Case</h3>
+<p>CAAGviApplyProperties is a use case of the CAAGeometryVisualization.edu
+framework that illustrates Visualization and GeometryVisualization framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAGviApplyProperties Do</h4>
+<p>The goal of this use case is to change the graphic properties of some GSM
+features.It is based on a delivered Part document called &quot;CAAProperty&quot;
+[<a href="#Fig.1">Fig.1</a>], located in the <code>CAAGeometryVisualization.edu/InputData
+</code>directory. This document contains the following elements:</p>
+<table border="1" width="41%">
+  <tr>
+    <td width="13%">Point.1</td>
+    <td width="87%">a green,full square point</td>
+  </tr>
+  <tr>
+    <td width="13%">Line.1</td>
+    <td width="87%">a solid, pickable line</td>
+  </tr>
+  <tr>
+    <td width="13%">Extrude.1</td>
+    <td width="87%">a yellow surface</td>
+  </tr>
+  <tr>
+    <td width="13%">Sweep.2</td>
+    <td width="87%">a surface with standard color</td>
+  </tr>
+  <tr>
+    <td width="13%">Extrude.2</td>
+    <td width="87%">a hidden surface</td>
+  </tr>
+</table>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: The CAAProperty Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleCAAPropertyWithComment.jpg" width="479" height="635"></td>
+  </tr>
+</table>
+<p>By using the <i>CATIVisProperties </i>interface, these elements become:</p>
+<table border="1" width="41%">
+  <tr>
+    <td width="13%">Point.1</td>
+    <td width="87%">a red, cross point</td>
+  </tr>
+  <tr>
+    <td width="13%">Line.1</td>
+    <td width="87%">a dashed,no-pickable line</td>
+  </tr>
+  <tr>
+    <td width="13%">Extrude.1</td>
+    <td width="87%">a surface with standard color</td>
+  </tr>
+  <tr>
+    <td width="13%">Sweep.2</td>
+    <td width="87%">a transparent surface with red edges</td>
+  </tr>
+  <tr>
+    <td width="13%">Extrude.2</td>
+    <td width="87%">a visible surface</td>
+  </tr>
+</table>
+<p>The modified document is saved in the
+&quot;CAAPropertyWithNewProperties.CATPart<code>&quot; </code>document.<code> </code>[<a href="#Fig.2">Fig
+2</a>]</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: The CAAPropertyWithNewProperties
+    Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAVisSampleCAAPropertyMWithComment.jpg" width="479" height="635"></td>
+  </tr>
+</table>
+<p>For the Line.1feature, try going over on the line, it is not highlighted. For
+the Sweep.2 feature, turn the model, you can see through the surface because it
+is transparent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAGviApplyProperties</h4>
+<p>To launch CAAGviApplyProperties , you will need to set up the build time
+environment, then compile CAAGviApplyProperties along with its prerequisites,
+set up the run time environment [<a href="#References">1</a>]. Then execute the
+following command:</p>
+<p>mkrun -c CAAGviApplyProperties InputPath [OutputPath]</p>
+<p>where:</p>
+<ol>
+  <li><b>InputPath</b> : The path of the <code>CAAProperty.CATPart</code>
+    document included in the directory <code>CAAGeometryVisualization.edu/InputData</code>
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAGeometryVisualization.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAGeometryVisualization.edu\InputData</code></li>
+    </ul>
+  <li><b>OutputPath</b>: The path where the output file <code>CAAPropertyWithNewProperties.CATPart
+    </code>will be stored. If this path is empty, the output file is created in
+    the current directory.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAGviApplyProperties Code</h4>
+<p>The CAAGviApplyProperties use case is made of a main program located in the
+CAAGviApplyProperties.m module of the CAAGeometryVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAGeometryVisualization.edu\CAAGviApplyProperties.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAGeometryVisualization.edu/CAAGviApplyProperties.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The main steps of CAAGviApplyProperties are:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Retrieving Features to Modify</a></li>
+  <li><a href="#Step3">Modifying thePoint</a></li>
+  <li><a href="#Step4">Modifying the Line</a></li>
+  <li><a href="#Step5">Modifying the Sweep</a></li>
+  <li><a href="#Step6">Resetting Graphical Properties</a></li>
+  <li><a href="#Step7">Showing the Surface</a></li>
+  <li><a href="#Step8">Epilog</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAGviApplyProperties begins by creating a session, and opening the
+&quot;CAAProperty&quot; Part document. Next, it retrieves the root container of
+this Part as a pointer to <i>CATIPrtContainer</i>, <code>pIPrtCont.</code> This
+is the usual sequence for loading a Part document.
+<p>Thanks to the <code>GetPart</code> method on the root container we retrieve
+the Mechanical Part feature handled by the smart pointer <code>spPart.</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Retrieving Features to Modify</h4>
+<p>The five features are inside the same Open Body:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATLISTV(CATBaseUnknown_var) surfBodies;  
+
+  <b>CATIPartRequest</b> *pPartAsRequest = 0;
+  rc = spPart-&gt;<b>QueryInterface</b>(IID_CATIPartRequest, (void**)&amp;pPartAsRequest) ;
+
+  if ( SUCCEEDED(rc) )
+  {
+     const CATUnicodeString stdContext(&quot; &quot;); 
+  	  
+     pPartAsRequest-&gt;<b>GetSurfBodies</b>(stdContext, surfBodies);
+
+     if ( (<b>1 </b>!= surfBodies.Size()) &amp;&amp; ( NULL_var != surfBodies[1]) )
+     {
+        ...
+        return 1 ;
+     }
+
+     pPartAsRequest-&gt;Release();
+     pPartAsRequest = NULL ;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CATIPartRequest</i> interface pointer is retrieved on the Mechanical
+Part, pointed to by the <code>spPart</code> smart pointer, The <code>GetSurfBodies</code>
+method returns the list of the Open Bodies contained in the Part document, and
+in the case of the &quot;CAAProperty&quot; document, there is only one Open
+Body, so the size of the list is 1.</p>
+<p>The features inside the Open Body, pointed to by <code>surfBodies[1]</code>,
+are retrieved thanks to the <i>CATIDescendants</i> interface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIDescendants</b> * pIDescendantOnOpenBody1 = NULL ;
+  rc = surfBodies[1]-&gt;QueryInterface(IID_CATIDescendants, (void**)&amp;pIDescendantOnOpenBody1) ;
+
+  ...
+  <i>//The point - Point.1</i>
+  CATISpecObject_var <b>ThePoint</b> = pIDescendantOnOpenBody1-&gt;GetChildAtPosition(1);
+
+  <i>// The line  - Line.1</i>
+  CATISpecObject_var <b>TheLine</b> = pIDescendantOnOpenBody1-&gt;GetChildAtPosition(8);
+
+  <i>// The yellow surface - Extrude.1</i>
+  CATISpecObject_var <b>TheExtrude1Surface</b> = pIDescendantOnOpenBody1-&gt;GetChildAtPosition(15);
+
+  <i>// The sweep surface - Sweep.2</i>
+  CATISpecObject_var <b>TheSweep2Surface</b> = pIDescendantOnOpenBody1-&gt;GetChildAtPosition(10);
+
+  <i>// The hidden surface - Extrude.2 </i>
+  CATISpecObject_var <b>TheExtrude2Surface</b> = pIDescendantOnOpenBody1-&gt;GetChildAtPosition(20);
+  ...
+  pIDescendantOnOpenBody1-&gt;Release();
+  pIDescendantOnOpenBody1 = NULL ;
+...   </pre>
+    </td>
+  </tr>
+</table>
+<p>The position of each element has been determined in an interactive session.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Modifying the Point</h4>
+<p>The point, Point.1, is represented by the <code>ThePoint</code> smart pointer
+in the code.In the above picture [<a href="#Fig.1">Fig.1</a>], you can see that
+this point is green and its symbol is a full square. But before changing its
+graphical properties, we verify its current properties:</p>
+<p>Is it a green point ?</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIVisProperties</b> * pIPropertiesOnPoint = NULL ;
+  rc = ThePoint-&gt;QueryInterface(IID_CATIVisProperties, (void**)&amp;pIPropertiesOnPoint) ;
+  ...
+  
+  CATVisPropertiesValues               MyPropertyOnPoint ;
+  CATVisPropertyType PropTypeOnPoint = <b>CATVPColor</b> ;
+  CATVisGeomType GeomTypeOnPoint     = <b>CATVPPoint</b> ;
+
+  rc = pIPropertiesOnPoint-&gt;<b>GetPropertiesAtt</b>(MyPropertyOnPoint,
+	                                    PropTypeOnPoint,
+                                            GeomTypeOnPoint);
+  if ( rc == S_OK )
+  {
+     unsigned int r,g,b ;
+     MyPropertyOnPoint.<b>GetColor</b>(r,g,b);                                          
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We retrieve the <i>CATIVisProperties</i> interface pointer, <code>pIPropertiesOnPoint,
+</code>on the point. Thanks to this pointer and the <code>GetPropertiesAtt</code><b>
+</b>method we can retrieve the color of the point:</p>
+<ul>
+  <li>The <code>GetPropertiesAtt</code><b> </b>method<b> </b>returns the color
+    information in the <code>MyPropertyOnPoint </code>value.</li>
+  <li><code>PropTypeOnPoint </code>is a <code>CATVPColor</code> to indicate that
+    only the color property is asked.</li>
+  <li><code>GeomTypeOnPoint</code> is a <code>CATVPPoint</code> to indicate that
+    the type of the geometry is the point.</li>
+</ul>
+<p>The color is retrieved using the <code>GetColor</code> method on the <code>MyPropertyOnPoint</code>
+instance.</p>
+<p>Is it a full square point ?</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  PropTypeOnPoint = <b>CATVPSymbol</b>;
+  rc = pIPropertiesOnPoint-&gt;<b>GetPropertiesAtt</b>(MyPropertyOnPoint,
+	                                    PropTypeOnPoint,
+                                             GeomTypeOnPoint);
+
+  if ( rc == S_OK )
+  {
+     CATSymbolType symbol ;
+     MyPropertyOnPoint.<b>GetSymbolType</b>(symbol);
+     if ( symbol == FULLSQUARE )
+     {
+        ...
+     }                                        
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This follows the same principle as the color property, changing only the
+property type in order to retrieve the point symbol<code>.</code></p>
+<ul>
+  <li>The <code>GetPropertiesAtt</code><b> </b>method<b> </b>returns the point
+    symbol information in the <code>MyPropertyOnPoint </code>instance.</li>
+  <li><code>PropTypeOnPoint </code>is<code> a CATVPSymbol </code>to indicate
+    that only the point symbol property is asked</li>
+  <li><code>GeomTypeOnPoint</code> is still <code>CATVPPoint</code></li>
+</ul>
+<p>The point symbol is retrieved using the <code>GetSymbol </code>method on the <code>MyPropertyOnPoint</code>
+instance. <code>FULLSQUARE</code> is one of the values of the <i>CATSymbolType</i>
+enum.</p>
+<p>Now,let's change the color of the point:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  PropTypeOnPoint = <b>CATVPColor</b> ;
+  MyPropertyOnPoint.<b>SetColor</b>(255,0,0);
+  rc = pIPropertiesOnPoint-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnPoint,
+                                                PropTypeOnPoint,
+                                                GeomTypeOnPoint);              
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The color is set on the <i>CATVisPropertiesValues</i> instance, <code>MyPropertyOnPoint</code>,
+using the <code>SetColor</code> method. The color is defined by its three
+components red, green and blue.</p>
+<p>The color of the feature is modified by calling the <code>SetPropertiesAtt</code>
+method, using the <code>CATVPColor</code> as the property type and <code>CATVPPoint
+</code>as the geometry type.</p>
+<p>Finally, the symbol of the point is changed as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  PropTypeOnPoint = <b>CATVPSymbol</b> ;
+  MyPropertyOnPoint.<b>SetSymbolType</b>(CROSS);
+  rc = pIPropertiesOnPoint-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnPoint,
+                                             PropTypeOnPoint,
+                                             GeomTypeOnPoint); 
+  ...                                           
+  pIPropertiesOnPoint-&gt;Release();
+  pIPropertiesOnPoint = NULL;
+          
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The new symbol is set on the <i>CATVisPropertiesValues</i> instance, <code>MyPropertyOnPoint</code>,
+using the <code>SetSymbolType</code> method.<b> </b>The list of supported
+symbols is defined by the <i>CATSymbolType</i> enum. CROSS is one of them.</p>
+<p>The symbol of the feature is modified by calling the <code>SetPropertiesAtt</code>
+method using the <code>CATVPSymbol</code> as the property type and as always, <code>CATVPPoint
+as</code> geometry type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Modifying the Line</h4>
+<p>The line, Line.1, is represented by the <code>TheLine</code> smart pointer in
+the code.In the above picture [<a href="#Fig.1">Fig.1</a>], you can see that
+this line is a solid white line ended by two cross points.</p>
+<p>At first, it is interesting to check the type of geometry supported by a GSM
+Line feature:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIVisProperties * pIPropertiesOnLine = NULL ;
+  rc = TheLine-&gt;QueryInterface(IID_CATIVisProperties, (void**)&amp;pIPropertiesOnLine) ;
+
+  ...
+
+  CATVisGeomType TypeLine = <b>CATVPLine</b>;
+  CATVisGeomType TypeEdge = <b>CATVPEdge</b>;
+  HRESULT rc1 = pIPropertiesOnLine-&gt;<b>IsGeomTypeDefined</b>(TypeLine);
+  HRESULT rc2 = pIPropertiesOnLine-&gt;<b>IsGeomTypeDefined</b>(TypeEdge);
+  if ( SUCCEEDED(rc1) and FAILED(rc2) )
+  {
+     cout &lt;&lt;&quot; The GSM Line supports the line type and not the edge type&quot; &lt;&lt; endl;
+  }
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>IsGeomTypeDefined </code>method enables querying the element about
+the geometry type it supports.</p>
+<p>Now, let's change the type of the line from solid to dotted:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATVisPropertiesValues MyPropertyOnLine ;
+  CATVisPropertyType PropTypeOnLine = <b>CATVPLineType</b> ;  
+  CATVisGeomType GeomTypeOnLine = <b>CATVPLine</b> ;
+  ...
+  MyPropertyOnLine.<b>SetLineType</b>(2);
+  rc = pIPropertiesOnLine-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnLine,
+                                            PropTypeOnLine,
+                                            GeomTypeOnLine);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetLineType</code> method modifies the type of the line on the <i>CATVisPropertiesValues</i>
+instance. The argument of this method is an integer whose range is between 1 and
+63 (*). The type of line, corresponding to each value is customizable through
+the Tools/Options/General/Display/Linetype page.(*) The first height values are
+statics.</p>
+<p>The <code>SetPropertiesAtt</code> method modifies only the type of the line.
+To do this, we must specify that the type of the geometry, <code>GeomTypeOnLine</code>,
+is<code>CATVPLine</code> and the type of the property, <code>PropTypeOnLine</code>,
+is <code>CATVPLineType</code>.</p>
+<p>Finally, we transform the line from a pickable state to a no-pickable state.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  MyPropertyOnLine.<b>SetPickAttr</b>(CATNoPickAttr);
+  
+  GeomTypeOnLine = <b>CATVPGlobalType</b> ;
+  PropTypeOnLine = <b>CATVPPick</b> ;
+  rc = pIPropertiesOnLine-&gt;SetPropertiesAtt(MyPropertyOnLine,
+                                            PropTypeOnLine,
+                                            GeomTypeOnLine);
+  ...                                            
+  pIPropertiesOnLine-&gt;Release();
+  pIPropertiesOnLine = NULL;                                          
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetPickAttr</code> method modifies the pickable state of the <i>CATVisPropertiesValues</i>
+instance. <code>CATNoPickAttr</code> is the no-pickable state, and <code>CATPickAttr</code>
+is the pickable state.</p>
+<p>The property <code>CATVPPick </code>is not dedicated to a specific type of
+geometry: the feature is globally pickable or not. To be more precise, on a
+surface , for example, you cannot have its faces pickable and its edges
+no-pickable. So the type of the geometry is <code>CATVPGlobalType.</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Modifying the Sweep</h4>
+<p>The sweep, Sweep.2, is represented by the <code>TheSweep2Surface</code> smart
+pointer in the code.Notice this white surface in the above picture [<a href="#Fig.1">Fig.1</a>].</p>
+<p>At first, all the geometry types supported by a GSM surface are tested:</p>
+<ul>
+  <li>point (CATVPPoint) : to modify the CATPoint of the surface</li>
+  <li>lineic (CATVPEdge) : to modify the CATEdge of the surface</li>
+  <li>surfacic (CATVPMesh) : to modify the CATFace of the surface</li>
+  <li>CATVPGlobalType: to modify the show/no show, the pick/no pick and the
+    layer number.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIVisProperties * pIPropertiesOnSurface2 = NULL ;
+  rc = TheSweep2Surface-&gt;QueryInterface(IID_CATIVisProperties, (void**)&amp;pIPropertiesOnSurface2) ;
+
+  ...
+  
+  CATVisGeomType TypeEdge = CATVPEdge;
+  CATVisGeomType TypePoint = CATVPPoint;
+  CATVisGeomType TypeMesh = CATVPMesh;
+  CATVisGeomType TypeGlobal = CATVPGlobalType;
+
+  HRESULT rc3 = pIPropertiesOnSurface2-&gt;IsGeomTypeDefined(TypePoint);
+  HRESULT rc4 = pIPropertiesOnSurface2-&gt;IsGeomTypeDefined(TypeEdge);
+  HRESULT rc5 = pIPropertiesOnSurface2-&gt;IsGeomTypeDefined(TypeMesh);
+  HRESULT rc6 = pIPropertiesOnSurface2-&gt;IsGeomTypeDefined(TypeGlobal);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Next, the color of the surface and the width of its edges are changed:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATVisPropertiesValues MyPropertyOnSurface2 ;
+  CATVisPropertyType PropTypeOnSurface2 = <b>CATVPAllPropertyType</b> ;
+  CATVisGeomType GeomTypeOnSurface2     = <b>CATVPEdge</b> ;
+
+  rc = pIPropertiesOnSurface2-&gt;<b>GetPropertiesAtt</b>(MyPropertyOnSurface2,
+                                                PropTypeOnSurface2,
+                                                GeomTypeOnSurface2);
+  ...
+
+  MyPropertyOnSurface2.<b>SetColor</b>(230,0,0);
+  MyPropertyOnSurface2.<b>SetWidth</b>(4);
+
+  rc = pIPropertiesOnSurface2-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnSurface2,
+                                                PropTypeOnSurface2,
+                                                GeomTypeOnSurface2);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To change the color and the width, the <code>SetPropertiesAtt</code> method
+can be called twice: once with the <code>CATVPColor</code> property type and
+once with <code>CATVPWidth</code>. In the two calls, the type of the geometry is
+always <code>CATVPEdge</code>. But the feature can also be modified with one
+call in using the <code>CATVPAllPropertyType</code> property type. In this case,
+all the properties set on the <i>CATVisPropertiesValues</i> instance, <code>MyPropertyOnSurface2</code>,
+will be used by the <code>SetPropertiesAtt</code> method to modify the feature.
+So, it is really important to initialize <code>MyPropertyOnSurface2 </code>with
+the <code>GetPropertiesAtt</code> method, before modifying it.</p>
+<p><code>MyPropertyOnSurface2 </code>is modified by two methods: <code>SetColor</code>
+to associate a red color and <code>SetWidth</code> to set a new line width
+number. The width of a line<b> </b>is an integer whose range is between 1 and
+55. The width corresponding to each integer value is customizable through the
+Tools/Options/General/Display/Thickness &amp; Font page.</p>
+<p>Now, let's change the surfacic properties of the surface:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  PropTypeOnSurface2 = <b>CATVPAllPropertyType</b> ;
+  GeomTypeOnSurface2 = <b>CATVPMesh</b> ;
+  
+  rc = pIPropertiesOnSurface2-&gt;<b>GetPropertiesAtt</b>(MyPropertyOnSurface2,
+                                                PropTypeOnSurface2,
+                                                GeomTypeOnSurface2);
+  MyPropertyOnSurface2.<b>SetColor</b>(0,0,20);
+  MyPropertyOnSurface2.<b>SetOpacity</b>(50);
+
+  rc = pIPropertiesOnSurface2-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnSurface2,
+                                                PropTypeOnSurface2,
+                                                GeomTypeOnSurface2);
+
+  ...
+
+  pIPropertiesOnSurface2-&gt;Release();
+  pIPropertiesOnSurface2 = NULL;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The surfacic properties are represented by the <code>CATVPMesh</code>
+geometry type. As for the edge properties (see above) this can be done with one
+call to <code>SetPropertiesAtt</code> using the <code>CATVPAllPropertyType</code>
+property type, in order to change all the surfacic properties once.</p>
+<p>The <i>CATVisPropertiesValues</i> instance,<code>MyPropertyOnSurface2</code>,
+is initialized by the <code>GetPropertiesAtt </code>method. Next, the color
+(blue) and the degree of opacity are modified. The opacity is defined by an
+integer whose range is between 0 ( total transparency) and 255 (total opacity).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Resetting Graphical Properties</h4>
+<p>The surface, Extrude.1, is represented by the <code>TheExtrude1Surface</code>
+smart pointer in the code.In the above picture [<a href="#Fig.1">Fig.1</a>], you
+can recognize this yellow surface with its white edges.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIVisProperties</b> * pIPropertiesOnSurface1 = NULL ;
+  rc = TheExtrude1Surface-&gt;QueryInterface(IID_CATIVisProperties, (void**)&amp;pIPropertiesOnSurface1) ;
+ 
+  ...
+  
+  CATVisPropertiesValues MyPropertyOnSurface1 ;
+
+  CATVisPropertyType PropTypeOnSurface1 = <b>CATVPAllPropertyType</b>;
+  CATVisGeomType GeomTypeOnSurface1     = <b>CATVPMesh</b> ;
+  rc = pIPropertiesOnSurface1-&gt;<b>ResetPropertiesAtt</b>(PropTypeOnSurface1,GeomTypeOnSurface1);
+  ...
+
+  pIPropertiesOnSurface1-&gt;Release();
+  pIPropertiesOnSurface1 = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To reset a graphical property, two keys are necessary:</p>
+<ul>
+  <li>The type of property: In this case all the properties will be reset. The
+    first argument, <code>PropTypeOnSurface1</code>, is <code>CATVPAllpropertyType</code></li>
+  <li>The concerned geometry: here <code>CATVPMesh</code>, so the second
+    argument, <code>GeomTypeOnSurface1</code>, is <code>CATVPMesh</code> .</li>
+</ul>
+<p>The reset will be done on all the properties of the <i>CATFace</i> elements
+forming the surface: The color and the opacity.</p>
+<p>Resetting a graphical property means that the property, stored by the <i>CATIProperty</i>
+interface, is not used; a default value, defined by the implementation of the <code>GetStandardProperties</code>
+method, is used as &quot;standard&quot;.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Showing the surface</h4>
+<p>The surface, Extrude.2, is represented by the <code>TheExtrude2Surface</code>
+smart pointer in the code.In the above picture [<a href="#Fig.1">Fig.1</a>], you
+can not see it, it is hidden. In an interactive session, you can see it by going
+to the hidden space.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIVisProperties</b> * pIPropertiesOnSurface3 = NULL ;
+  rc = TheExtrude2Surface-&gt;QueryInterface(IID_CATIVisProperties, (void**)&amp;pIPropertiesOnSurface3) ;
+ 
+  ...
+
+  CATVisPropertiesValues MyPropertyOnSurface3 ;
+  CATVisPropertyType PropTypeOnSurface3 = <b>CATVPShow</b> ;
+  CATVisGeomType GeomTypeOnSurface3     = <b>CATVPGlobalType</b> ;
+  MyPropertyOnSurface3.<b>SetShowAttr</b>(CATShowAttr);
+
+  rc = pIPropertiesOnSurface3-&gt;<b>SetPropertiesAtt</b>(MyPropertyOnSurface3,
+                                                PropTypeOnSurface3,
+                                                GeomTypeOnSurface3);
+  ...
+
+  pIPropertiesOnSurface3-&gt;Release();
+  pIPropertiesOnSurface3 = NULL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The show/no show state is modifiable using the <code>CATVPGlobalType</code>
+geometry type and, of course, using the <code>CATVPShow </code>property type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Epilog</h4>
+<p>The last part of the CAAGviApplyProperties use case shows how to: save the
+CAAProperty.CATPart as CAAPropertyWithNewProperties.CATPart, removes it from the
+session and delete the session. This is also described in the &quot;Loading a
+Document&quot; use case (see Data Access entry in the Encyclopedia home page)</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article illustrates how to use the <i>CATIVisProperties</i> interface to
+modify or retrieve the graphical properties of a feature. It explains how to
+change:</p>
+<ul>
+  <li>The color of a point, an edge, a line, a face of a surface,</li>
+  <li>The selectability state, (pick/no-pick)</li>
+  <li>The visibility state,(show/no-show)</li>
+  <li>The width and the type of a line</li>
+</ul>
+<p>and how to reset graphic attributes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

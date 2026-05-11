@@ -1,0 +1,439 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Subscribing Explicitely to Events</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Subscribing Explicitely to Events</h3>
+      <i>Working with events and subscribers</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAVpiSimpleSubscription use case. This use
+      case explains how to subscribe explicitly to events, taking the example of
+      events fired by the Login Session object.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiSimpleSubscription Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiSimpleSubscription Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiSimpleSubscription</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiSimpleSubscription Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you different manners that can be used to
+explicitly subscribe to events and how to implement the dedicated callback
+interfaces to handle these events when they are raised.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiSimpleSubscription Use Case</h3>
+<p>CAAVpiSimpleSubscription is a use case of the CAAVPMInterfaces.edu framework
+that illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiSimpleSubscription Do</h4>
+<p>The CAAVpiSimpleSubscription use case processes to two different kinds of
+explicit subscriptions, then raises the events that have been subscribed to, and
+finally calls the corresponding subscribers back.</p>
+<p>The CAAVpiSimpleSubscription use case is related to the CAAVpiEventsObjects.m
+module where the subscriber class CAAVpiSimpleSubscriber is defined.</p>
+<p>More precisely, the program:</p>
+<ul>
+  <li>Creates an ENOVIA Session</li>
+  <li>Creates an ENOVIA Login Session and gets the event manager which is
+    necessary for subscription.</li>
+  <li>Makes the instances of CAAVpiSimpleSubscriber subscribe to the
+    SaveLoginSesion event</li>
+  <li>Saves the Login Session and closes the Session. The traces should show the
+    event SaveLoginSession being fired and the two subscribers being called
+    back.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiSimpleSubscription</h4>
+<p>To launch CAAVpiSimpleSubscription, you will need to set up the build time
+environment, then to compile CAAVpiSimpleSubscription along with its
+prerequisites, to set up the run time environment, and then to execute the use
+case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiSimpleSubscription</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiSimpleSubscription</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiSimpleSubscription Code</h4>
+<p>The CAAVpiSimpleSubscription use case is made of a main named
+CAAVpiSimpleSubscription.cpp located in the CAAVpiSimpleSubscription.m module
+and a class named CAAVpiSimpleSubscriber located in the CAAVpiEventObjects.m
+module of the CAAVPMInterfaces.edu framework.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiSimpleSubscription.m\(main)<br>
+      InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiEventObjects.m\(subscriber
+      class)</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiSimpleSubscription.m/(main)<br>
+      InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiEventObjects.m/(subscriber
+      class)</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven main steps in the CAAVpiSimpleSubscription use case:</p>
+<ol>
+  <li><a href="#CreateSession">Create a Session</a></li>
+  <li><a href="#CreateLoginSession">Create a Login Session</a></li>
+  <li><a href="#EventMgr">Get the Event Manager</a></li>
+  <li><a href="#CreateSubscriber">Create a <b>late</b> and an <b>early</b>
+    Subscribers</a></li>
+  <li><a href="#SubscribeOnInstance">Subscribe to event <i>SaveLoginSesion</i>
+    on the <b>instance</b> of the Login Session for the two kinds of Subscribers</a></li>
+  <li><a href="#SaveSession">Save the Login Session</a></li>
+  <li><a href="#CloseSession">Close the Sessions</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSession"></a>Create a Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // ---------------------------
+    // --&gt; 1. Open a VPM Session
+    // ---------------------------
+    //
+    cout &lt;&lt; &quot;main: Open VPM Session ... &quot; &lt;&lt; endl;
+    VPMSession* pSession = VPMSession::OpenSession();
+    if ( NULL == pSession ) 
+    {
+        cout &lt;&lt; &quot;Unable to Open a VPM Session&quot; &lt;&lt; endl;
+        return 1;
+    }
+    cout &lt;&lt; &quot;main: Open VPM Session done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateLoginSession"></a>Create a Login Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // -------------------------------
+    // --&gt; 2. Login Session creation
+    // -------------------------------
+    //
+    cout &lt;&lt; &quot;main: Create LoginSession ... &quot; &lt;&lt; endl;
+    const int NetWorkCommunication = 0;
+    CATIVpmLoginSession_var spLoginSession;
+    Rc = pSession-&gt;CreateLoginSession( &quot;MyUserID&quot;, &quot;MyPassword&quot;, &quot;MyRoleName&quot;, NetWorkCommunication, spLoginSession );
+    if ( FAILED(Rc) )
+    {
+        cout&lt;&lt;&quot;Unable to Create Login Session&quot;&lt;&lt;endl;
+        return 2;
+    }
+    cout &lt;&lt; &quot;main: Create LoginSession done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="EventMgr"></a>Get the Event Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // ------------------------------
+    // --&gt; 3. Get the Event Manager                                   
+    // ------------------------------
+    //
+    ENOVIEventManager_var spEventManager;
+    Rc = spLoginSession-&gt;get_ENOVEventManager( spEventManager );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to get the Event Manager from the Session&quot;&lt;&lt;endl;
+	return 5;
+    }
+    cout &lt;&lt; &quot;main: Get Event Manager done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Event Manager is used to subscribe to events on object types or
+instances. By implementing appropriate callback interfaces declared by the
+ENOVIA domains (here referred to as <i>early</i> subscribing) or a generic
+callback interface named ENOVISubscriberEvent (here referred to as <i>late</i>
+subscribing), clients can do some actions when events are raised by a given type
+or a given instance of object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSubscriber"></a>Create a <b>late</b> and an <b>early</b>
+Subscribers</h4>
+<p>As already stated, a <b>late</b> Subscriber is a class that implements the
+generic ENOVISubscriberEvent callback interface, which provide only two methods
+onReceive and onKo. The method onReceive is used to handle whatever event is
+raised. Consequently the implementation must take care of the name of the event
+and its publisher (available on the ENOVIEvent pointer) to behave as
+appropriate.</p>
+<p>An <b>early</b> Subscriber is a class that implements the specific callback
+interface provided by the publisher of the events of interest. For this use
+case, we are interested in the events emitted by the Session. Hence the early
+Subscriber will implement the ENOVISessionEvent callback interface.</p>
+<p>For simplicity, in this use case, the class CAAVpiSimpleSubscriber implements
+both ENOVISubscriberEvent and ENOVISessionEvent. To distinguish the two kinds of
+subscriber instances, a different name is given to these instances. This
+implementation can be found in the CAAVpiEventObjects module.</p>
+<p>In this step as soon as the subscribers are created, a query interface is
+carried out to retrieve the appropriate smart pointers the Subscribe method is
+waiting for.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // -----------------------------
+    // --&gt; 4. Subscribers creation
+    // --&gt; 4a. Late Subscriber
+    // -----------------------------
+    //
+    CAAVpiSimpleSubscriber* pLateSubscriber = new CAAVpiSimpleSubscriber(&quot;Late Subscriber&quot;);
+    ENOVISubscriberEvent_var spLateSubscriber ( pLateSubscriber );
+    if ( NULL_var == spLateSubscriber )
+    {
+	cout&lt;&lt;&quot;Unable to get a handler on Late Subscriber&quot;&lt;&lt;endl;
+        return 6;
+    }
+    pLateSubscriber-&gt;Release();
+    pLateSubscriber = NULL;
+    cout &lt;&lt; &quot;main: Get ENOVISubscriberEvent handler on Late Subscriber done &quot; &lt;&lt; endl;
+
+    //
+    // --------------------------
+    // --&gt; 4b. Early Subscriber
+    // --------------------------
+    //
+    CAAVpiSimpleSubscriber* pEarlySubscriber = new CAAVpiSimpleSubscriber(&quot;Early Subscriber&quot;);
+    ENOVISessionEvent_var spEarlySubscriber ( pEarlySubscriber );
+    if( NULL_var == spEarlySubscriber )
+    {
+ 	cout&lt;&lt;&quot;Unable to get a handler on Early Subscriber&quot;&lt;&lt;endl;
+        return 7;
+    }
+    pEarlySubscriber-&gt;Release();
+    pEarlySubscriber = NULL;
+    cout &lt;&lt; &quot;main: Get ENOVISessionEvent handler on Early Subscriber done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SubscribeOnInstance"></a>Subscribe to event <i>SaveLoginSesion</i>
+on the <b>instance</b> of the Login Session for the two kinds of Subscribers</h4>
+<p>This step performs the subscriptions. They are subscriptions on instance as
+the argument for the publisher is the ENOVIPublisher view of the just created
+Login Session.
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // ----------------------------------------
+    // --&gt; 5. Subscribe on Save Login Session 
+    // ----------------------------------------
+    //
+    EventName = &quot;SaveLoginSession&quot;;
+    ENOVIPublisher_var spEventPublisherInstance = spLoginSession;
+    if ( NULL_var == spEventPublisherInstance )
+    {
+        cout&lt;&lt;&quot;Unable to get a handler on Login Session&quot;&lt;&lt;endl;
+        return 8;        
+    }
+    cout &lt;&lt; &quot;main: Get ENOVIPublisher handler on Login Session done &quot; &lt;&lt; endl;
+
+    //
+    // ------------------------------------------------------------
+    // --&gt; 5a. LATE MODE Subscription by Subscriber 1 on INSTANCE
+    // ------------------------------------------------------------
+    //
+    Rc = spEventManager-&gt;Subscribe( EventName, spEventPublisherInstance, spLateSubscriber, &amp;cookie, ENOVIEvent::EventFireAfter );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to late subscribe on SaveLoginSession&quot;&lt;&lt;endl;
+	return 9;
+    }
+    cout &lt;&lt; &quot;main: Subscribe on instance to SaveLoginSession (after) in Late Mode done &quot; &lt;&lt; endl;
+    
+    //
+    // -------------------------------------------------------------
+    // --&gt; 5b. EARLY MODE Subscription by Subscriber 2 on INSTANCE
+    // -------------------------------------------------------------
+    //
+    Rc = spEventManager-&gt;Subscribe( EventName, spEventPublisherInstance, spEarlySubscriber, IID_ENOVISessionEvent, &amp;cookie, ENOVIEvent::EventFireBefore );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to early subscribe on SaveLoginSession&quot;&lt;&lt;endl;
+	return 10;
+    }
+    cout &lt;&lt; &quot;main: Subscribe on instance to SaveLoginSession (before) in Early Mode done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="SaveSession"></a>Save the Login Session</h4>
+<p>The interest of that step is to see the traces at execution time: you should
+see the two subscribers being called back on the right method at the right time
+(one before and one after the event is raised).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // --------------------------------
+    // --&gt; 6. Fire Save Login Session
+    // --------------------------------
+    //
+    cout &lt;&lt; &quot;main: Save Login Session ... &quot; &lt;&lt; endl;
+    Rc = spLoginSession-&gt;Save();
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Save Login Session&quot;&lt;&lt;endl;
+	return 11;
+    }
+    cout &lt;&lt; &quot;main: Save Login Session done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="CloseSession"></a>Close the Sessions</h4>
+<p>Each opened session must be closed as followed:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // --------------------------------------------
+    // --&gt; 7. Close Login Session and VPM Session
+    // --------------------------------------------
+    //
+    Rc = spLoginSession-&gt;Close();
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Close Login Session&quot;&lt;&lt;endl;
+	return 12;
+    }
+    cout &lt;&lt; &quot;main: Close Login Session done &quot; &lt;&lt; endl;
+
+    VPMSession::CloseSession();
+    cout &lt;&lt; &quot;main: Close VPM Session done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step concludes the CAAVpiSimpleSubscription use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated two ways to explicitly subscribe to events and
+how to be called back when they are raised.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The
+      ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Oct 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1</b> [Oct 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

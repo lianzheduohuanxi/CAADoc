@@ -1,0 +1,174 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The IdentityCard.h Special File</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The IdentityCard.h Special File</h3>
+      <em>Purpose and use</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tr>
+		<td><strong>Warning</strong>: The IdentityCard.h 
+		file format is <strong>deprecated</strong> starting with V5R24, and is 
+		replaced with XML. You should convert your IdentityCard.h files to XML ones. 
+		Refer to <a href="CAABtlMANIdCardXMLV5Mig.htm">Migrating Your Identity Cards 
+		to XML</a>. The following commands help you to do this:<ul>
+			<li>The <a href="../CAABtlQuickRefs/CAABtlMkICEV5.htm">mkICE</a> command enables you to interactively 
+			edit an XML Identity Card, or open a .h Identity Card to save it as 
+			an XML one.</li>
+			<li>The <a href="../CAABtlQuickRefs/CAABtlMkCreateICV5.htm">mkCreateIC</a> command enables 
+			you to create an empty Identity Card ready to be edited using mkICE.</li>
+			<li>The <a href="../CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm">mkIc2Xml</a> command enables you 
+			to convert a .h Identity Card to an XML one.</li>
+		</ul>
+		</td>
+	</tr>
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The <strong>IdentityCard.h</strong> file is one of the files needed to
+      build a program using the CAA Multi-Workspace Application Builder mkmk.
+      The aim of this article is to explain the purpose of this file, how to
+      write it and where it must be installed in the CAA FileTree.</p>
+      <ul>
+        <li><a href="#Purpose"><strong>Purpose</strong></a></li>
+        <li><a href="#Location"><strong>Location</strong></a></li>
+        <li><a href="#Content"><strong>Content</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<h3><a name="Purpose"></a>Purpose</h3>
+<p>Since almost all components (frameworks) are built upon other components, it
+is necessary:</p>
+<ul>
+  <li>To include at compile time the corresponding header files</li>
+  <li>To reference at link time the corresponding libraries.</li>
+</ul>
+<p>However the source files of a given component may include a lot of header
+files and, without the <strong>IdentityCard</strong> file, we must browse all
+the files to know the names of included header files and then find the names of
+the corresponding components.</p>
+<p>The IdentityCard file synthesizes these relationships between frameworks in
+order to get quickly the prerequisite frameworks.</p>
+<p><b>Warning</b>: The <b>IdentityCard</b> file of any framework must at least
+contain a statement to set the <b>System</b> framework as a prerequisite
+framework up to its public part, as follows:</p>
+<p align="center"><code><b>AddPrereqComponent (&quot;System&quot;,
+Public);</b></code></p>
+<p>You must be aware that a user has often not all frameworks in his/her own
+workspace, and that most of the prerequisite frameworks he/she needs are located
+in other workspaces. Thanks to the IdentityCard file(s), tools like mkmk gain an
+easy way to determine and then access prerequisite frameworks.</p>
+<h4>Basically</h4>
+<p>The figure below gives a summary of the use of IdentityCard files. An
+application is made of components:</p>
+<ul>
+  <li>Built or not upon other components.</li>
+  <li>Using the CAA architecture each component is known&nbsp;as a framework
+    possibly having prerequisite frameworks</li>
+  <li>Prerequisite frameworks of a given framework&nbsp;are specified in its
+    IdentityCard file.</li>
+</ul>
+<p align="center"><img border="0" src="images/IdCard2.gif" width="519" height="399"></p>
+<p>Note also that:</p>
+<ul>
+  <li>Every framework has an IdentityCard file&nbsp;which can be empty if it
+    does not need other component to implement its services. <i>This is not
+    shown in the figure.</i></li>
+  <li>Only frameworks that are directly used&nbsp;are specified in an
+    IdentityCard file.<br>
+    Remember the notions of public and private parts&nbsp;of a component: you
+    don't know how a framework is implemented, so you shouldn't know its own
+    prerequisites.</li>
+</ul>
+<p align="right"><a href="#Top">Top</a>]</p>
+<h3><a name="Location"></a>Location</h3>
+<p>Every framework must have an Identity Card file, named <em>IdentityCard.h</em>.</p>
+<p>This file is stored in directory <em>IdentityCard</em>, right under the
+framework root directory itself:.</p>
+<p>This file allows the framework to declare (the list of) its prerequisite
+frameworks.</p>
+<p align="center"><img border="0" src="images/FileTree18.gif" width="439" height="439"></p>
+<p>Conversely, to export a service a framework must just store the header file
+of its service in its <em>PublicInterfaces</em> directory.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Content"></a>Content</h3>
+<h4>Syntax and rules</h4>
+<p>The IdentityCard.h file is a text file containing depencies of the current framework.
+The syntax to declare a dependency is:</p>
+<pre><b><i>AddPrereqComponent(&quot;</i></b><i>&lt;framework name&gt;</i><b><i>&quot;, Public);</i></b></pre>
+<p>For architecture matter, any type of framework (code, test, education) cannot declare a prerequisite
+on any type of framework. The following table specifies prerequisite composition rules depending on framework type.<br />
+The table indicate if a a framework of type (Row header) can have a prerequisite on a framework of type (Column header).
+</p>
+<table>
+<tr><th>Framework type</th><th>Code</th><th>Test (.tst)</th><th>Edu  (.edu)</th></tr>
+<tr><th>Code</th><td>YES</td><td>NO</td><td>NO</td></tr>
+<tr><th>Test (.tst)</th><td>YES</td><td>YES</td><td>YES</td></tr>
+<tr><th>Edu (.edu)</th><td>YES</td><td>NO</td><td>YES</td></tr>
+</table>
+
+<h4>Examples</h4>
+
+<p>In the following example, source <i>themine.cpp </i>in <i>framework1/module1</i>
+needs header <i>otherservice.h </i>which is neither in module <i>module1</i>,
+nor in <i>framework1</i>, but in another framework named <i>framework2</i>.
+Thus, <i>framework1</i> needs to declare <i>framework2</i> as a prerequisite in
+its identity card:</p>
+<p align="center"><img border="0" src="images/IdCard.gif" width="439" height="399"></p>
+<p>The previous schema gives an example of a prerequisite between code
+frameworks, you can also have:</p>
+<ul>
+  <li>A prerequisite between an education framework (.edu) and a code framework
+    - when the education framework contains code samples which need code
+    frameworks to be implemented.</li>
+  <li>A prerequisite between an education framework and others education
+    frameworks - if the first framework contains documents which refer to
+    documents managed in others frameworks.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+Sub CATMain()
+
+    Set MyProductDoc = CATIA.ActiveDocument
+
+'   =========================
+'   Retrieve the root Product
+'   =========================
+    Dim RootProd As Product
+	Set RootProd = MyProductDoc.Product
+
+'   ==================================================	
+'   Retrieve Dressups Collection from the Root Product
+'   ==================================================	
+    Dim MyDressups As Dressups
+    Set MyDressups = RootProd.GetTechnologicalObject("Dressups")
+
+'   ========================================================	
+'   Retrieve All the mechanisms including the sub-mechanisms
+'   ========================================================	
+    Dim PossibleMecList As Mechanism
+	PossibleMecList = MyDressups.ListPossibleMechanisms()
+
+'   ========================================================	
+'   Retrieve All the mechanism's contexts 
+'   ========================================================	
+    Dim MecContextList As Product
+	MecContextList = MyDressups.ListMechanismsContext()
+
+'   ===========================================
+'   Compute the maximum rank of PossibleMecList
+'   ===========================================
+    Dim iMax As Integer
+    iMax  = ubound(PossibleMecList)
+
+    Dim i As Integer
+	Dim Meca As Mechanism
+	Dim MecaContext As Product
+
+'   =================================================
+'   Loop for automatic dressup creation only for sub-mechanisms
+'   =================================================
+	For i= 0  To iMax
+      Set Meca  = PossibleMecList(i)
+      Set MecaContext  = MecContextList(i)
+      if MecaContext.Name<>RootProd.Name then
+	    AutomaticDressup  RootProd , MyDressups , Meca , MecaContext
+      end if
+    Next 
+
+End Sub
+
+
+' ================================================================================
+' ================================================================================
+' This Subroutine creates automatically a new dressup 
+' ================================================================================
+' ================================================================================
+Sub AutomaticDressup(iRootProduct As Product, iDressups As Dressups, iMechanism As Mechanisms ,iContext As Product)
+
+'   =============================================================	
+'   Retrieve all the first level products under the Root Product
+'   =============================================================	
+
+    Dim FirsLevelProducts As Products
+	Set FirsLevelProducts=iRootProduct.Products
+    
+'   ===================================================	
+'   Create a new dressup object associate to iMechanism
+'   ===================================================	
+
+    Dim NewDressup As Dressup
+	Set NewDressup = iDressups.Add(iMechanism,iContext)
+
+'   =========================================	
+'   Loop on all the Products of the mechanism
+'   =========================================	
+    Dim NbLink As Integer
+    NbLink = iMechanism.NbProducts 
+
+    Dim NbProduct As Integer
+    NbProduct = FirsLevelProducts.Count 
+
+    Dim i As Integer
+	For i= 1  To NbLink 
+
+      Dim Link As Product
+	  Set Link = iMechanism.GetProduct(i)
+
+'     ===============================
+'     Loop on all first level Product
+'     ===============================
+
+      Dim ComparisonOK as Boolean    
+      Dim Product_j As Product      
+      For j =  1 To NbProduct 
+
+'       ==========================================
+'       Name comparison between link and Product_j
+'       ==========================================
+        Set Product_j  = FirsLevelProducts.item(j)
+		ComparisonOK = ComparProductName(Link,Product_j )
+
+		if ComparisonOK=True then
+
+'         =============================
+'         Link is attached to Product_j
+'         =============================
+          call NewDressup.Attach(Link,Product_j)
+
+        end if
+	  Next	 		            
+
+	Next 
+
+End Sub
+
+' ================================================================================
+' ================================================================================
+' This function compares the name between two products
+' iLink is a mechanism's part. All the mcechanism's Parts are suffixed by "_wireframe.1"
+' iProduct is OK for comparison if it contains the previous name without its suffix.
+' For instance, The comparison is OK for :
+' fix_wireframe.1 and designer_level_fix.1
+' ================================================================================
+' ================================================================================
+Function ComparProductName ( iLink As Product , iProduct As Product ) As Boolean
+
+'  ============================
+'  Return value is initialized
+'  ===========================
+   ComparProductName = False
+
+'  =======================
+'  suffix string definition
+'  =======================
+   Dim suffix As String
+   suffix = "_wireframe.1"
+
+'  ==================================
+'  Compute the suffix string position
+'  ==================================
+   Dim LinkNameWithOutsuffix As String
+   Dim suffixPos As Integer
+   suffixPos = InStr ( iLink.Name,suffix)
+
+'  ======================
+'  Suffix existence test 
+'  ======================
+   if ( suffixPos > 1 ) then 
+
+'     =======================================
+'     Compute link's name with out its suffix
+'     =======================================
+      LinkNameWithOutsuffix = Left  (iLink.Name, suffixPos-1)             
+	  Dim LinkNamePos As Integer
+
+'     ============================================================
+'     Does the product name contain the name with out its suffix ?
+'     ============================================================
+      LinkNamePos = InStr ( iProduct.Name,LinkNameWithOutsuffix)      
+	  if ( LinkNamePos > 0 ) then 
+         ComparProductName = True
+      end if  
+   end if	     
+End Function
+

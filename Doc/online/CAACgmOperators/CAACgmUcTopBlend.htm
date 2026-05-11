@@ -1,0 +1,195 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Blend</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+.style3 {
+				background-color: #FFFFFF;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Blend </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A blend is a surface that connects two wires with a skin. If the 
+		input wires are laid down on supports (it is not mandatory), the shape 
+		of resulting blend depends on the specifications related to the guides 
+		and the continuity between the blend and the surfaces supporting the 
+		input wires.</p>
+		<ul>
+						<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+						<li><a href="#UseCaseDescription">Use Case Description</a></li>
+						<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a blend, use the CATICGMTopBlend operator in GMOperatorsInterfaces. 
+This operator has to 
+be created by the CATCGMCreateTopBlend global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsBlendWithCouplingLines.m and CAAGMOperatorsBlendWithCouplingModes.m modules in CAAGMOperatorsInterfaces.edu 
+illustrate how to create a blend. These use cases create 
+the input data to be passed to the operator. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: With Coupling Lines</h3>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Blend Operation: Input Data (Three Guides and 
+	Supporting Surfaces) </caption>
+  <tr>
+    <td>
+    
+	<img alt="Blend Operation: Three Guides" src="images/CGM_blend_coupling_lines_0.png" width="250" height="220"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopBlend * pBlendOpe =::CATCGMCreateTopBlend(piGeomFactory,
+			 &topdata, piWireLyingOn1, piWireLyingOn0,
+                             piMainBody1,
+                             piMainBody0); 
+...
+pBlendOpe->SetCouplingLines(&guides);
+pBlendOpe->SetTransitionContinuity(1,2);  // curvature continuity at the first wire side
+pBlendOpe->SetTransitionContinuity(2,1);  // tangency continuity at the second wire side
+    
+pBlendOpe->Run();
+CATBody * pBodyBlend = pBlendOpe->GetResult();
+pBlendOpe->Release();
+pBlendOpe=NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Result of Blend Operation with Coupling 
+	Lines</caption>
+  <tr>
+    <td>
+	<img alt="Blend Operation: Result G1G2 Continuity" src="images/CGM_blend_coupling_lines_1.png" width="250" height="220"></td>
+     </tr>
+ </table>
+
+<h3><a name="References"></a><span class="style3">Case 2:&nbsp; Blend With 
+Coupling Mode</span></h3>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3</a> Blend Operation: Input Data (No Guides Coupling Mode Specified) </caption>
+  <tr>
+    <td>
+    	<img alt="Blend Operation: No Guides" src="images/CGM_blend_coupling_mode_0.png"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopBlend * pBlendOpe =::CATCGMCreateTopBlend(piGeomFactory,
+			 &topdata, piWireLyingOn1, piWireLyingOn0,
+                             piMainBody1,
+                             piMainBody0); 
+...
+pBlendOpe->SetCouplingMode(CATTopBlendCouplingMode_Edge);
+pBlendOpe->SetTransitionContinuity(1,2);  // curvature continuity at the first wire side
+pBlendOpe->SetTransitionContinuity(2,1);  // tangency continuity at the second wire side
+    
+pBlendOpe->Run();
+CATBody * pBodyBlend = pBlendOpe->GetResult();
+pBlendOpe->Release();
+pBlendOpe=NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+
+<p><br>
+you get this result:</p>
+<p>&nbsp;</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.4">Fig.4</a> Result of Blend Operation with Coupling 
+	Mode</caption>
+  <tr>
+    <td>
+	<img alt="Blend Operation: Result Coupling Mode" src="images/CGM_blend_coupling_mode_1.png" width="250" height="220"></td>
+     </tr>
+ </table>
+
+
+<h2>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[6]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

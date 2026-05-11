@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Generator" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+<title>Cameras (Object)</title>
+</head>
+
+<body>
+
+<pre><a href="#" onclick="javascript:dummylink();return false;">Object Explorer</a>  <a href="#" onclick="javascript:dummylink();return false;">Object Hierarchy</a>  <a href="#" onclick="javascript:dummylink();return false;">Previous</a>  <a href="#" onclick="javascript:dummylink();return false;">Next</a>  <a href="#" onclick="javascript:dummylink();return false;">Index</a></pre>
+<hr>
+<h1>Cameras<font size="-1"> (Object)</font></h1>
+<pre>
+<a href="#" onclick="javascript:dummylink();return false;">IUnknown</a>
+  |
+  +---<a href="#" onclick="javascript:dummylink();return false;">IDispatch</a>
+    |
+    +---<a href="#" onclick="javascript:dummylink();return false;">CATBaseUnknown</a>
+      |
+      +---<a href="#" onclick="javascript:dummylink();return false;">CATBaseDispatch</a>
+        |
+        +---<a href="#" onclick="javascript:dummylink();return false;">Collection</a>
+          |
+          +---Cameras
+ </pre>
+<hr>
+<br>
+<b><i>A collection of all the Camera objects currently attached to a Document
+object.</i></b><br>
+A camera can be created using the <a href="#" onclick="javascript:dummylink();return false;">Viewer.NewCamera</a>
+method of the <a href="#" onclick="javascript:dummylink();return false;">Viewer</a>
+object. The first seventh cameras of the collection are <a href="#" onclick="javascript:dummylink();return false;">Camera3D</a>
+objects and cannot be modified or removed. They can just be retrieved and used
+&quot;as is&quot;. They store the following viewpoints whose sight direction is
+always toward the 3D-axis system origin:
+<dl>
+  <dt>* iso
+  <dd>The origin is on a line with (1,1,1) as components with positive
+    coordinates
+  <dt>* front
+  <dd>The origin is on the x axis with a positive x coordinate
+  <dt>* back
+  <dd>The origin is on the x axis with a negative x coordinate
+  <dt>* left
+  <dd>The origin is on the y axis with a positive y coordinate
+  <dt>* right
+  <dd>The origin is on the y axis with a negative y coordinate
+  <dt>* top
+  <dd>The origin is on the z axis with a positive z coordinate
+  <dt>* bottom
+  <dd>The origin is on the z axis with a negative z coordinate
+</dl>
+<p>The cameras of the Cameras collection are available using the dialog box
+displayed by clicking the View-&gt;Defined Views menu.
+<hr>
+<dl>
+</dl>
+<dl>
+  <h2><a name="MethodIndex"></a>Function and Subroutine Index</h2>
+  <dt><a href="#Item"><b>Item</b></a>
+  <dd>Returns a camera using its index or its name from the Cameras collection.
+  <dt><a href="#Remove"><b>Remove</b></a>
+  <dd>Removes a camera from the Cameras collection.
+</dl>
+<h2><a name="Methods"></a>Methods</h2>
+<a name="Item"></a>
+<dl>
+  <dt>&nbsp;
+  <table>
+    <tr>
+      <td>o Func <b>Item</b>(
+      <td><a href="#" onclick="javascript:dummylink();return false;">CATVariant</a>
+      <td><tt>iIndex</tt>) As <a href="#" onclick="javascript:dummylink();return false;">Camera</a>
+  </table>
+  <dl>
+    <dd>Returns a camera using its index or its name from the Cameras
+      collection.
+      <dl>
+        <dt><b>Parameters:</b>
+        <dd>
+          <dl>
+            <dt><tt>iIndex</tt>
+            <dd>The index or the name of the camera to retrieve from the
+              collection of cameras. As a numerics, this index is the rank of
+              the camera in the collection. The index of the first camera in the
+              collection is 1, and the index of the last camera is Count. As a
+              string, it is the name you assigned to the camera using the <a href="#" onclick="javascript:dummylink();return false;">AnyObject.Name</a>
+              property.</dd>
+          </dl>
+      </dl>
+      <dl>
+        <dt><b>Returns:</b>
+        <dd>The retrieved camera
+        <dt><b>Example:</b>
+        <dd>This example retrieves in <tt>ThisCamera</tt> the ninth camera, and
+          in <tt>ThatCamera</tt> the camera named <tt>MyCamera</tt> in the
+          camera collection of the active document.
+          <pre>
+ Dim ThisCamera As Camera
+ Set ThisCamera = CATIA.ActiveDocument.Cameras.<font color="red">Item</font>(9)
+ Dim ThatCamera As Camera
+ Set ThatCamera = CATIA.ActiveDocument.Cameras.<font color="red">Item</font>(&quot;MyCamera&quot;)
+ </pre>
+      </dl>
+  </dl>
+  <a name="Remove"></a>
+  <dt>&nbsp;
+  <table>
+    <tr>
+      <td>o Sub <b>Remove</b>(
+      <td><a href="#" onclick="javascript:dummylink();return false;">CATVariant</a>
+      <td><tt>iIndex</tt>)
+  </table>
+  <dl>
+    <dd>Removes a camera from the Cameras collection.
+      <dl>
+        <dt><b>Parameters:</b>
+        <dd>
+          <dl>
+            <dt><tt>iIndex</tt>
+            <dd>The index or the name of the camera to remove from the
+              collection of cameras. As a numerics, this index is the rank of
+              the camera in the collection. The index of the first camera in the
+              collection is 1, and the index of the last camera is Count. As a
+              string, it is the name you assigned to the camera using the <a href="#" onclick="javascript:dummylink();return false;">AnyObject.Name</a>
+              property. You cannot remove the first seventh cameras in the
+              collection.</dd>
+          </dl>
+        <dt><b>Example:</b>
+        <dd>The following example removes the tenth camera and the camera named <tt>CameraToBeRemoved</tt>
+          in the camera collection of the active document.
+          <pre>
+ CATIA.ActiveDocument.Cameras.<font color="red">Remove</font>(10)
+ CATIA.ActiveDocument.Cameras.<font color="red">Remove</font>(&quot;CameraToBeRemoved&quot;)
+ </pre>
+      </dl>
+  </dl>
+  <hr>
+  <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</dl>
+
+</body>
+
+</html>

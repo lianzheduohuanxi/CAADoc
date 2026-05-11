@@ -1,0 +1,142 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To edit plates and advanced plates of different categories
+'                in the SFD workbench.
+'
+' Assumptions:   The Part document CAASfdEditPlate.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+  'RETRIEVING THE SUPERPLATES
+  Dim SuperPlates As References
+  Set SuperPlates = ManagerObj.GetSuperPlates
+  
+  Dim ShellSuperPlate1, ShellSuperPlate2, DeckSuperPlate, TBHSuperPlate As SfmSuperPlate
+  Set ShellSuperPlate1 = SuperPlates.Item(1)
+  Set ShellSuperPlate2 = SuperPlates.Item(2)
+  Set DeckSuperPlate = SuperPlates.Item(3)
+  Set TBHSuperPlate = SuperPlates.Item(4)
+  
+ 'Retrieving the SplitPlates of ShellSuperPlate
+  Dim ShellSplitPlateRefs As References
+  Set ShellSplitPlateRefs = ShellSuperPlate1.SplitPlates
+  
+  Dim ShellSplitPlateRef1, ShellSplitPlateRef2 As Reference
+
+  Set ShellSplitPlateRef1 = ShellSplitPlateRefs.Item(1)
+  Set ShellSplitPlateRef2 = ShellSplitPlateRefs.Item(2)
+  
+  'Getting Selection Object
+  Dim SelectionObj As Selection
+  Set SelectionObj = CATIA.ActiveDocument.Selection
+  
+  'Adding SplitPlate(as Reference) to Selection Object
+  SelectionObj.Add ShellSplitPlateRef1
+  
+  'To get SplitPlate1 as SfmSuperPlate
+  Dim ShellSplitPlate1 As SfmSuperPlate
+  Set ShellSplitPlate1 = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  'Retrieving and Modifying the Attributes of ChildPlate
+  Dim Thickness1 As Double
+  Dim material1 As String
+  Dim grade1 As String
+  ShellSplitPlate1.GetSplitPlateAttributes 1, Thickness1, material1, grade1
+  
+  ShellSplitPlate1.SetSplitPlateAttributes 1, 30, "Steel", "A42"
+ 
+ 'EDITING THE DECK SUPERPLATE
+  
+  SelectionObj.Add DeckSuperPlate
+  Dim DeckPlate As SfmSuperPlate
+  Set DeckPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  'Retrieving SuperPlate's Support
+  Dim DeckSupport As Reference
+  Set DeckSupport = DeckPlate.Support
+  
+  'Setting and Retrieving the SuperPlate's support offset
+  
+  DeckPlate.SupportOffset = "30.0"
+  Dim DeckSupportOffset As Double
+  DeckSupportOffset = DeckPlate.SupportOffset
+  
+  'Retrieving the SuperPlate's limit mode
+  Dim LimitMode As Long
+  LimitMode = DeckPlate.LimitMode
+  
+  'Retrieving the Limits Of SuperPlate
+  Dim DeckPlateLimits As References
+  Set DeckPlateLimits = DeckPlate.Limits
+  
+ 'EDITING THE TRANSVERSE BULKHEAD SUPERPLATE
+    
+  SelectionObj.Add TBHSuperPlate
+  Dim TBHPlate As SfmSuperPlate
+  Set TBHPlate = SelectionObj.FindObject("CATIASfmSuperPlate")
+  
+  'Getting Limits Of SuperPlate
+  Dim TBHPlateLimits As References
+  Set TBHPlateLimits = TBHPlate.Limits
+  'Setting 2nd Limit as Last Limit
+  TBHPlate.SetAsLastLimit (2)
+  'Adding One More Limit
+  Dim TBHPlateNewLimit As AnyObject
+  Set TBHPlateNewLimit = ObjPart.FindObjectByName("LONG.5")
+  Dim TBHPlateNewLimitRef As Reference
+  Set TBHPlateNewLimitRef = ObjPart.CreateReferenceFromObject(TBHPlateNewLimit)
+   
+  Dim TBHPlateNewOrnt As Long
+  TBHPlateNewOrnt = 4
+  TBHPlate.AddLimit TBHPlateNewLimitRef, TBHPlateNewOrnt
+  'Inverting the limit orientation of 4th Limit
+  TBHPlate.InvertLimit (4)
+  
+  'Retrieving and Modifying the Support of SuperPlate
+  Dim TBHPlateSupport As Reference
+  Set TBHPlateSupport = TBHPlate.Support
+  
+  Dim TBHPlateNewSupport As AnyObject
+  Set TBHPlateNewSupport = ObjPart.FindObjectByName("CROSS.100")
+  Dim TBHPlateNewSupportRef As Reference
+  Set TBHPlateNewSupportRef = ObjPart.CreateReferenceFromObject(TBHPlateNewSupport)
+  
+  TBHPlate.Support = TBHPlateNewSupportRef
+   
+  'To get Category
+  Dim TBHPlateCategory As String
+  TBHPlateCategory = TBHPlate.Category
+  'Retrieving and Modifying the thickness,material,grade of SuperPlate
+  Dim TBHPlateThickness As Double
+  TBHPlateThickness = TBHPlate.Thickness
+  Dim TBHPlateMaterial, TBHPlateGrade As String
+  TBHPlateMaterial = TBHPlate.Material
+  TBHPlateGrade = TBHPlate.Grade
+  
+  TBHPlate.Material = "Steel"
+  TBHPlate.Grade = "A45"
+  TBHPlate.Thickness = "35.0"
+  
+  'Updating The Part with All Modifications
+  ObjPart.Update
+End Sub

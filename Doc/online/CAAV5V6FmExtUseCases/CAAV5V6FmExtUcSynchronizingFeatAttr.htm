@@ -1,0 +1,480 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Synchronizing Feature Component Attribute</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style4 {
+	text-align: center;
+}
+.style5 {
+	color: #F27A02;
+	text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Synchronizing Feature Component Attribute</h3>
+      <p><em>How to synchronize component attributes of Features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtUnderstandingSynchro</code> 
+		use case. A feature component attribute is not inherited, as the other 
+		attributes are. This is because a component attribute valuation results 
+		in an aggregation of a feature under the parent feature. Since a feature 
+		can be aggregated essentially only under a single parent feature, a 
+		component attribute value cannot be inherited.&nbsp; </p>
+		<p>This use case is an illustration of the concepts described by the &quot;<strong>Understanding 
+		Component Synchronization</strong>&quot; [<a href="#References">1</a>] 
+		article.</p>
+		<p>An understanding of the <strong>Feature-Instance</strong> model (by a 
+		study of the technical article &quot;<strong>Feature Modeler Concepts</strong> 
+		&quot; [<a href="#References">2</a>]) and that of component-type attributes 
+		(by a study of the technical article on &quot;<strong>Understanding Feature 
+		Attributes</strong>&quot; [<a href="#References">3</a>]) is recommended 
+		before proceeding.&nbsp;</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtUnderstandingSynchro Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtUnderstandingSynchro Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtUnderstandingSynchro</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtUnderstandingSynchro Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The Use Case illustrates to an end-user the fundamental concepts involved in 
+synchronizing a feature instance attribute of type component with its reference. The attributes 
+are of type component and component-list, which implies the synchronization 
+actually involves an update of the features aggregated under the feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtUnderstandingSynchro Use Case</h2>
+<p><code>CAAV5V6FmExtUnderstandingSynchro </code>is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code> framework 
+that illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="What"></a>What Does CAAV5V6FmExtUnderstandingSynchro Do</h3>
+<p>The UC illustrates synchronization of a feature attribute. Primarily we deal 
+with two types of attributes namely. <strong>component</strong> and <strong>
+component list</strong>. Since we deal with component type attributes, we are 
+fundamentally dealing with aggregated features. This further involves two cases 
+that of immediate aggregation and that of a recursive aggregation.</p>
+<p>The UC defines 3 distinct scenarios:</p>
+<ul>
+	<li>
+	<a href="#Case 1: Feature with component type attributes (Immediate aggregation of features under a parent feature)">Feature with component type attributes 
+(Immediate aggregation of features under a parent feature)</a></li>
+	<li>
+	<a href="#Case 2: Feature with component-list type attributes (Immediate aggregation of a list of features under a parent feature)">Feature with component-list type attributes 
+(Immediate aggregation of a list of features under a parent feature)</a></li>
+	<li><a href="#Case 3: Synchronizing of feature attributes is not recursive">Synchronizing of feature attributes is not 
+recursive</a></li>
+</ul>
+<p>In this<strong>
+</strong>use case all StartUps are defined in the following catalog :<code>
+CAAFmExtCatalogForUnderstandingSynchro.CATfct. </code>By convention</p>
+<ul>
+	<li>A is either an instance of
+<strong>CAAFmExt_A_withCompAttr, or CAAFmExt_A_CAAFmExt_A_withListCompAttr</strong>&nbsp; 
+	or <strong>CAAFmExt_Arec</strong> (the scenario specifies it)</li>
+	<li><strong>B</strong>, <strong>C</strong>, <strong>D, E, F, G, H, I , J , U, V 
+	, W, </strong>and<strong> X </strong>&nbsp;are respectively&nbsp; instances of
+	<strong>CAAFmExt_B , CAAFmExt_C, ...&nbsp; </strong>. </li>
+	<li><strong>A'</strong> is an instance of <strong>A</strong> , <strong>B</strong>' 
+	is an instance of <strong>B</strong>, ....</li>
+	<li><strong>A''</strong> an instance of <strong>A'</strong> , <strong>B</strong>'' 
+	is an instance of <strong>B'</strong>, ....</li>
+</ul>
+<p>Lets us describe in details each scenario.</p>
+<h4><strong>
+<a name="Case 1: Feature with component type attributes (Immediate aggregation of features under a parent feature)">
+</a>Case 1</strong>: <strong>Feature with component type attributes 
+(Immediate aggregation of features under a parent feature)</strong></h4>
+<p>The UC executes on a feature model depicted in [<a href="#Fig.1">Fig.1</a>] 
+that follows. <strong>&nbsp;</strong></p>
+<table>
+	<caption class="style4"><a name="Fig.1"></a>Fig.1 Input Model</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig2.png" width="247" height="166">&nbsp;</td>
+	</tr>
+</table>
+<p><strong>A</strong>, a
+<strong>CAAFmExt_A_withCompAttr</strong> startup instance, aggregates <strong>B</strong>, <strong>C</strong>,
+<strong>D</strong> and <strong>E</strong> realized by valuating its 
+attributes <strong>attr1</strong>, <strong>attr2</strong>, <strong>attr3</strong> 
+and <strong>attr4</strong>.&nbsp; </p>
+<p>On instantiating <strong>A</strong>, it results in <strong>A'</strong>, 
+as depicted in [<a href="#Fig.1">Fig.1</a>]. <strong>A'</strong> now aggregates <strong>B'</strong>, <strong>
+C'</strong>, <strong>D'</strong> and <strong>E'. </strong>A 
+significant point to note here is that the aggregated features under the 
+instantiated feature <strong>A'</strong>, are distinct from those aggregated under the 
+reference feature <strong>A</strong>. This is owing to the fact that a feature can be 
+aggregated only under a single parent feature. Hence instantiating a parent 
+feature results in instantiation of the aggregated features as well.</p>
+<p>Next, the model is modified as depicted in the [<a href="#Fig.2">Fig.2</a>] 
+that follows.</p>
+<table>
+	<caption class="style4" style="width: 237px"><a name="Fig.2"></a>Fig. 2 Model for Synchronization</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig3.png" width="246" height="189"></td>
+	</tr>
+</table>
+<p><strong>A</strong> is updated by </p>
+<ul>
+	<li>Deleting <strong>B</strong>, which was aggregated under it</li>
+	<li>Replacing <strong>D</strong> with <strong>U</strong>, aggregated under it</li>
+</ul>
+<p><strong>A'</strong> is updated by</p>
+<ul>
+	<li>Deleting <strong>C'</strong>, which was aggregated under it</li>
+	<li>Replacing <strong>E'</strong> with <strong>V</strong>, aggregated under it</li>
+</ul>
+<p>Thus now we arrive at a feature model where our Feature Reference is 
+asynchronous with the Feature Instance. On synchronization of <strong>&nbsp;A'</strong> attributes, the resulting model&nbsp; is as depicted in [<a href="#Fig.3">Fig. 
+3</a>] below. It results in an update of <strong>A'</strong> which now 
+aggregates instances of features aggregated under <strong>A</strong>, if 
+those exist, realized by valuating each of the feature attributes. If a feature 
+attribute on the reference side does not aggregate a feature, it reflects on the 
+instance side as well, realized by destroying the corresponding feature 
+aggregated.</p>
+<table>
+	<caption class="style4" style="width: 186px"><a name="Fig.3"></a>Fig.3 
+	Synchronized Model</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig4.png" width="113" height="164"></td>
+	</tr>
+</table>
+<p>You'll observe thus that <strong>A'</strong> update results in</p>
+<ul>
+	<li><strong>B'</strong>, aggregated under it is destroyed. This is 
+	because <strong>A</strong> currently does not aggregate a feature under 
+	it, by realizing the valuation of its attribute <strong>attr1</strong>.&nbsp; 
+	As a result, <strong>A'</strong> attribute <strong>attr1</strong> on 
+	synchronization reflects the same state as that of <strong>A</strong>. This results in 
+	destroying the <strong>B'</strong> feature, aggregated beneath <strong>A'</strong>, realized by its 
+	attribute <strong>attr1</strong> valuation</li>
+	<li><strong>C''</strong> is a new feature aggregated under <strong>A'</strong> on 
+	synchronization, realized by valuating its attribute <strong>attr2</strong>. This happens 
+	since <strong>A' attr2</strong> attribute is valuated, on synchronization, so as to 
+	realize the aggregation of a new instance of <strong>C</strong>, which is an aggregation 
+	under <strong>A</strong>, realized by the valuation of its attribute 
+	<strong>attr2</strong></li>
+	<li><strong>U'</strong> is a new feature aggregated under <strong>A'</strong>, 
+	realized by valuating its attribute <strong>attr3</strong>. This happens since on 
+	synchronization of attribute <strong>attr3</strong> of <strong>A'</strong>, it is valuated such as to 
+	realize the aggregation of a new instance of <strong>U</strong>, the feature aggregated 
+	under <strong>A</strong>, realized by valuating its attribute <strong>attr3</strong></li>
+	<li><strong>E''</strong> is a new feature aggregated under <strong>A'</strong>, 
+	realized by valuating its attribute <strong>attr4</strong>. This happens 
+	since on synchronization of attribute <strong>attr4</strong> of <strong>A'</strong>, it is valuated such as to realize the aggregation of new 
+	instance of <strong>E</strong>, the feature aggregated under <strong>A</strong>, 
+	realized by valuating its attribute <strong>attr4</strong></li>
+</ul>
+<p>Next, we proceed to illustrate synchronization of a feature attribute of type 
+component list.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><strong>
+<a name="Case 2: Feature with component-list type attributes (Immediate aggregation of a list of features under a parent feature)">
+</a>Case 2</strong>: <strong>Feature with component-list type attributes 
+(Immediate aggregation of a list of features under a parent feature)</strong></h4>
+<p>The UC here illustrates the concept of synchronization for a feature 
+attribute of type <strong>component-list</strong>. One such feature <strong>A</strong>, 
+a is 
+as depicted below [<a href="#Fig.4">Fig. span class="style5">4</span></a>]]. </p>
+<table>
+	<caption class="style4" style="width: 226px"><a name="Fig.4"></a>Fig.4 Input Model/caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig5.png" width="376" height="148"></td>
+	</tr>
+</table>
+<p><strong>A, </strong>a<strong> CAAFmExt_A_withListCompAttr, </strong>aggregates </p>
+<ul>
+	<li><strong>B</strong> and <strong>C</strong>, realized by valuating its attribute
+	<strong>attr1</strong></li>
+	<li><strong>D</strong> and <strong>E</strong>, realized by valuating its attribute
+	<strong>attr2</strong></li>
+	<li><strong>F</strong> and <strong>G</strong>, realized by valuating its attribute
+	<strong>attr3</strong></li>
+	<li><strong>H</strong> and <strong>I</strong>, realized by valuating its attribute
+	<strong>attr4</strong></li>
+</ul>
+<p>On instantiating <strong>A</strong>, it results in <strong>A'</strong>, as depicted in [<a href="#Fig.4">Fig.4</a>] 
+above. </p>
+<p><strong>A'</strong> now aggregates instances of all features that are 
+aggregated under its reference <strong>A</strong>. Moreover the aggregation 
+is realized by valuating the same attributes on the instance side, as those that 
+exist on the reference side. It is worthwhile re-emphasizing here that the 
+aggregated features on the reference and instance side are distinct, since a 
+feature can be aggregated essentially under a single parent, at any given point 
+of time.</p>
+<p>Now the UC proceeds to illustrate the impact of synchronization on an 
+attribute of type <strong>component-list </strong>of a feature instance. To 
+begin with, the <strong>A</strong> and <strong>A'</strong> are modified as depicted in [<a href="#Fig.5">Fig.<span class="style5">5</span></a>] 
+below.</p>
+<table>
+	<caption class="style4" style="width: 247px"><a name="Fig.5"></a>Fig.5 Model for Synchronization</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig6.png" width="445" height="187"></td>
+	</tr>
+</table>
+<p>The modification consists of </p>
+<ul>
+	<li><strong>A</strong> now aggregates <strong>U</strong>, as well, realized by updating the value of 
+	its attribute <strong>attr1</strong></li>
+	<li><strong>A'</strong> now aggregates <strong>W</strong>, as well, realized by updating the value 
+	of its attribute <strong>attr2</strong></li>
+	<li><strong>A</strong> now aggregates <strong>V</strong> and 
+	<strong>V'</strong> aggregates <strong>X</strong>, both 
+	realized by updating the value of their attribute <strong>attr3</strong></li>
+	<li><strong>A</strong> no longer aggregates <strong>J</strong>, which is eventually destroyed</li>
+</ul>
+<p>With those changes to our basic feature model, we now proceed to synchronize 
+all attributes of&nbsp; <strong>A'</strong>. This synchronization results 
+in an update of our feature model as depicted in the [<a href="#Fig.6">Fig.<span class="style5">6</span></a>] 
+that follows.</p>
+<table>
+	<caption class="style4" style="width: 322px"><a name="Fig.6"></a>Fig.6 Synchronized Model</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig7.png" width="279" height="141"></td>
+	</tr>
+</table>
+<p>On Synchronization of each attribute of <strong>A'</strong>, it results in</p>
+<ul>
+	<li><strong>A'</strong> now aggregates <strong>U'</strong> (an instance of 
+	<strong>U</strong>, on the reference 
+	side) as well, realized by an update of its attribute <strong>attr1</strong> valuation</li>
+	<li><strong>A'</strong> which had explicitly aggregated <strong>W</strong> under it, 
+	pre-synchronization, remains intact post-synchronization</li>
+	<li><strong>A'</strong> now also aggregates <strong>V'</strong> (an instance of
+	<strong>V</strong>, on the 
+	reference side) under it, realized by an update of its attribute <strong>attr3</strong> 
+	valuation. An important point to note here is that <strong>X</strong> explicitly 
+	aggregated by <strong>A'</strong>, realized by updating the valuation of the same 
+	attribute <strong>attr3</strong>, remains intact. Another significant point to note is that 
+	the order of the aggregated features under the feature instance, are those 
+	under the feature reference followed by those under the feature instance, 
+	essentially in that order. Hence <strong>V'</strong> precedes <strong>X</strong>, in the list</li>
+	<li><strong>A'</strong> no longer aggregates <strong>J'</strong>, which is eventually destroyed, 
+	since <strong>J</strong>, no longer exists on the reference side and synchronization 
+	merely reflects this state on the instance side, as well</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><strong>
+<a name="Case 3: Synchronizing of feature attributes is not recursive"></a>Case 3</strong>: <strong>Synchronizing of feature attributes is not 
+recursive</strong></h4>
+<p>Consider the model below [<a href="#Fig.7">Fig.7</a>]. It consists of <strong>A</strong>, 
+a <strong>CAAFmExt_Arec</strong> Startup Instance, which aggregates 
+<strong>B </strong>(a<strong> </strong><strong>CAAFmExt_Brec</strong> ), realized by valuating its attribute <strong>attr1</strong>. Further
+<strong>B</strong> aggregates 
+<strong>D</strong> and <strong>E</strong>, realized by valuating its attribute 
+<strong>attr2</strong>. Thus, finally we 
+achieve here a recursive aggregation under the parent <strong>A</strong>.
+</p>
+<table>
+	<caption class="style4" style="width: 468px"><a name="Fig.7"></a>Fig.7 Input Model</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig8.png" width="421" height="133"></td>
+	</tr>
+</table>
+<p><strong>A</strong> is instantiated which results in <strong>A'</strong>. 
+The resulting <strong>A'</strong> aggregates <strong>B'</strong> which 
+in turn aggregates, <strong>D'</strong> and <strong>E'</strong>. The 
+features aggregated beneath <strong>A'</strong> are instances of corresponding features 
+aggregated under <strong>A</strong>. The instantiation is mandatory owing to the fact that 
+an aggregated feature can have only a single parent feature.</p>
+<p>We proceed to modify this model [<a href="#Fig.8">Fig.8</a>], to illustrate 
+the impact of synchronization in the steps ahead.&nbsp; </p>
+<table>
+	<caption class="style4" style="width: 274px"><a name="Fig.8"></a>Fig.8 Model for Synchronization</caption>
+	<tr>
+		<td>
+		<img alt="" src="../CAAV5V6FmExtTechArticles/images/CAAFmExtTaSynchroAggr_Fig9.png" width="431" height="138"></td>
+	</tr>
+</table>
+<p>The <strong>D</strong> aggregated under <strong>B</strong> is deleted. Next, 
+we call synchronization of the attribute <strong>attr1</strong> of <strong>A'</strong>. The model remains 
+unimpacted. In other words, <strong>D'</strong> still continues to exist recursively 
+aggregated under <strong>A'</strong>. The synchronization does not propagate down the 
+feature model aggregation hierarchy. </p>
+<p>Further we call synchronization on attribute <strong>attr2</strong> of
+<strong>B'. </strong>This synchronization now, results in the desired impact on 
+our feature model. <strong>attr2</strong> of
+<strong>B' </strong>only contains <strong>E'</strong>. Thus, it 
+illustrates that synchronization must be explicitly called on feature attributes 
+and one cannot rely on this synchronization propagating to all feature 
+attributes down the aggregation hierarchy, recursively.&nbsp;</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtUnderstandingSynchro<br>
+</h3>
+<p>To launch <code>CAAV5V6FmExtUnderstandingSynchro</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtUnderstandingSynchro
+</code>along with its prerequisites, set up the run time 
+environment, and then execute the sample.</p>
+<table class="code" id="table14">
+	<tr>
+		<td>
+		<pre>mkrun -c &quot;CAAV5V6FmExtUnderstandingSynchro<i> DocumentStorageName.CATPart</i>&quot;</pre>		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtUnderstandingSynchro Code</h3>
+<p><code>CAAV5V6FmExtUnderstandingSynchro </code>code is located in the 
+<code>CAAV5V6FmExtUnderstandingSynchro.m</code> use case module 
+of the <code>CAAV5V6FeatureModelerExt.edu </code>framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CAAV5V6FmExtUnderstandingSynchro.m</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA&nbsp; installation. It is made of a unique source file named 
+<code>CAAV5V6FmExtUnderstandingSynchro.cpp</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There is only a single step of relevance in the 
+CAAV5V6FmExtUnderstandingSynchro:</p>
+<ul>
+	<li><a href="#Create_doc">Prolog</a></li>
+	<li><a href="#Synchronizing feat attr">Synchronizing a Feature Attribute</a></li>
+	<li ><a href="#Epilog">Epilog</a></li>
+</ul>
+<p>An explanation of each of those steps follows:</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Create_doc"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see CAAObjectSpecsModeler.edu 
+V5 UC documentation. It further creates the <strong>Credentials</strong> to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Synchronizing feat attr"></a>Synchronizing a Feature 
+Attribute</h3>
+<p>This is the only and most relevant step of this UC. It details the step 
+involved to actually invoke the synchronization on a feature attribute. </p>
+<pre class="code">...
+<strong>CATFmAttributeName</strong> <strong>Attr1Name("Attr1")</strong>;
+<strong>CATFmCredentials MyCredential</strong>;
+...
+<strong>CATFmFeatureFacade oFeatFacadeOnFeatAA (MyCredential)</strong>
+...</pre>
+<p>The feature under consideration is represented by a <em>CATFmFeatureFacade</em> 
+type (oFeatFacadeOnFeatAA). We invoke synchronization on its attribute Attr1, in 
+the next step. This attribute is represented by Attr1Name, a <em>
+CATFmAttributeName</em> type.</p>
+<pre class="code">...
+rc = <strong>oFeatFacadeOnFeatAA.Synchronize(Attr1Name)</strong>;
+...</pre>
+<p>The call to synchronization simply involves invoking the Synchronize() 
+function of the <em>CATFmFeatureFacade</em> class. It takes a single input 
+namely. a <em>CATFmAttributeName</em> type (Attr1Name).&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>At last the document is saved and session is closed</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+		<p>This Use Case illustrates the concept of synchronization of a feature 
+		attribute. A feature is an instance of a StartUp or another feature. It 
+		is characterized by attributes. Any modification of this attribute value 
+		in the reference must essentially get reflected in the instances as 
+		well, down the feature instantiation hierarchy, going by the 
+		fundamentals of a Reference-Instance model. But this does not happen by 
+		default. An explicit synchronization call must be invoked on a feature 
+		attribute to realize its synchronization with its attribute value, in 
+		the reference, up the instantiation hierarchy.</p>
+<p>We fundamentally deal with a feature attribute of type <strong>component</strong> 
+and <strong>component-list</strong>. Thus the synchronization actually involves 
+an update of the features aggregated under feature instances, in sync with those 
+aggregated under the feature reference.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaSynchroAggr.htm">Understanding Component Synchronization</a></td>
+	</tr>
+	
+	<tr>
+		<td>[2]</td>
+		<td>		
+		<a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Concepts 
+		</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attributes</a></td>
+	</tr>
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Aug 2012]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

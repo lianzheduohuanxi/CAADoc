@@ -1,0 +1,65 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create an approbation stamp.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    Const CHAR_HEIGHT = 0.05
+    Const CHAR_WIDTH  = 0.03
+    Const ANCHOR_HEIGHT = -0.9
+    Const ANCHOR_WIDTH  = 0.0
+    Const EPSILON  = 0.5
+
+    'Acquire the name of the Responsible
+    Dim sRespName As String
+    sRespName = "John SMITH" 'Default value
+    sRespName = InputBox("What is your name ?", "Responsible name", sRespName)
+    If sRespName <> "" Then
+
+        ' Retrieve the AnnotatedViews collection
+        Dim cAnnotatedViews As AnyObject
+        Set cAnnotatedViews = CATIA.ActiveDocument.Product.GetTechnologicalObject("AnnotatedViews")
+
+        ' Create the AnnotatedView
+        Dim oAnnotatedView As AnyObject
+        Set oAnnotatedView = cAnnotatedViews.Add
+
+        ' Retrieve the Marker2Ds collection
+        Dim cMarker2Ds As Marker2Ds
+        Set cMarker2Ds = oAnnotatedView.Marker2Ds
+  
+        ' Create the text
+        Dim dPosition2(1)
+        dPosition2(0) = ANCHOR_WIDTH
+        dPosition2(1) = ANCHOR_HEIGHT
+        Dim oMarker2DText As Marker2D
+        Dim sText As String
+        sText = "ACME, Approved by " & sRespName & ", " & Cstr(Now)
+        Set oMarker2DText = cMarker2Ds.Add2DText (dPosition2, sText)
+
+        ' Create the frame
+        Dim dPosition4(3)
+        dPosition4(0) = ANCHOR_WIDTH  - CHAR_WIDTH*EPSILON
+        dPosition4(1) = ANCHOR_HEIGHT + CHAR_HEIGHT*EPSILON
+        dPosition4(2) = ANCHOR_WIDTH  + CHAR_WIDTH*(Len(sText) +EPSILON)
+        dPosition4(3) = ANCHOR_HEIGHT - CHAR_HEIGHT*(1 + EPSILON)
+        Dim oMarker2DRectangle As Marker2D
+        Set oMarker2DRectangle = cMarker2Ds.Add2DRectangle(dPosition4, 0)
+
+        ' Update the view
+        oAnnotatedView.Update
+
+        ' Apply the view
+        CATIA.ActiveDocument.GetWorkbench("NavigatorWorkbench").View oAnnotatedView
+
+    End If
+
+End Sub

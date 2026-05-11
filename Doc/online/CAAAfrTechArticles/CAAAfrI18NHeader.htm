@@ -1,0 +1,370 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Resources for Command Headers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Resources for Command Headers</h3>
+      <em>How to provide the title, help messages, and icons for command headers</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create the resource files, and fill them in
+      with the resources, for command headers. It is in connection with the
+      article describing the workshop creation [<a href="#References">1</a>],
+      since it uses as examples command headers created with this workshop.
+      <ul>
+        <li><a href="#100000"><strong>Declaring the Command Header Resource
+          Files</strong></a></li>
+        <li><a href="#200000"><strong>Filling in the Command Header CATNls File</strong></a></li>
+        <li><a href="#300000"><strong>Filling in the Command Header CATRsc File</strong></a></li>
+        <li><a href="#400000"><strong>Providing the Icons</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Declaring the Command Header Resource Files</h3>
+<p>If you use the macros <code>MacDefineHeader</code> and <code>MacImplementHeader</code>,
+or <code>MacDeclareHeader</code>, the resource files searched for at run time
+should have the same name than you command header class. This is the case of the
+CAAGeometryWksHeader [<a href="#References">1</a>].</p>
+<p>If you create the command header class by yourself, you need to declare the
+resource file to use. Assume the command header class is named MyHeaderClass.
+You should insert the <code>CATDeclareHeaderResources</code> macro in
+MyHeaderClass.h:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class MyHeaderClass : public CATCommandHeader
+{
+  CATDeclareClass;
+  CATDeclareHeaderResources;
+  public :
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>In MyHeaderClass.cpp, you should insert the <code>CATImplementHeaderResources</code>
+macro:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementHeaderResources(CommandHeaderClass,
+                            BaseCommandHeaderClass,
+                            ResourceFile);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>CommandHeaderClass</code> is the command header class name</li>
+  <li><code>BaseCommandHeaderClass</code> is the command header class from which
+    <code>CommandHeaderClass</code> derives</li>
+  <li><code>ResourceFile</code> is the name used to build the names of the
+    resource files associated with <code>CommandHeaderClass</code>. Using the <code>CommandHeaderClass</code>
+    name for this file in this macro is recommended.</li>
+</ul>
+<p>There are two command header resource files:
+<ol>
+  <li>The resource file containing the title and help messages in the English
+    language, and that can be translated into other languages. It is suffixed
+    using CATNls</li>
+  <li>The resource file containing the icons and other resources that should not
+    be translated. It suffixed by CATRsc</li>
+</ol>
+<p>The two resource files for the CAAGeometryWksHeader command header are then:
+CAAGeometryWksHeader .CATNls and CAAGeometryWksHeader .CATRsc. These files are
+located in the CNext\resources\msgcatalog directory of the framework containing
+the module where the command header source files are located. This directory
+includes subdirectories, one for each language into which the title and messages
+of the CAAGeometryWksHeader .CATNls file can be translated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Filling in the Command Header CATNls File</h3>
+<p>This file contains the resources for each of the command header instances:
+title and help messages, and category.</p>
+<p>Each resource is provided using a key and a text separated by the equal sign.
+The key is built as a concatenation of the command header resource file name, a
+dot, the command header identifier you defined as the first parameter of the <code>New</code>
+operator, a dot, and a keyword designating the appropriate resource. The message
+is enclosed using double quotes and ended using a semicolon. For example, the
+Query command of the Explore menu defined for the Geometry workshop in [<a href="#References">2</a>]
+has its title defined as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrGeometryWksHeader.CAAAfrQueryExploreHdr.Title     = &quot;Query&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>where:</p>
+<ul>
+  <li>CAAGeometryWksHeader is the command header resource file name</li>
+  <li>CAAAfrQueryExploreHdr is the identifier of the CAAGeometryWksHeader class
+    instance created for the Query command</li>
+  <li><code>Title</code> is the keyword dedicated to the title of the command</li>
+</ul>
+<p>The following is an extract of CAAGeometryWksHeader.CATNls, showing the
+resources for the Point and Circle commands:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//# CATNls resource file for the command header: CAAGeometryWksHeader
+//# used in the Geometry Workshop
+//# --------------------------------------------------------------
+
+...
+
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.Title     = &quot;Point&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.ShortHelp = &quot;Point&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.Help      = &quot;Creates points: indicate a point or enter coordinates&quot;;
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelp  = &quot;Point (Insert menu)
+Create points in two ways: 
+ 1- Indicate a point with the mouse left button 
+ 2- Enter the point coordinates in the dialog box
+This Command is in repeat mode, so you can create
+several points along the command life.
+To leave the command, select another command.&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.Category  = &quot;Element&quot; ;
+
+...
+
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Title     = &quot;Circle&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.ShortHelp = &quot;Circle&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Help      = &quot;Creates circles&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.LongHelp  = &quot;Circle (Insert menu)
+Create circles:
+ 1- Select a projection plane: 
+ 2- Indicate a point for the circle center 
+ 3- Move the mouse and indicate a point to define the radius.&quot;;
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Category  = &quot;Element&quot; ;
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Below is a reminder of the keywords used in the resource keys that can be
+found in the CATNls resource file:</p>
+<table border="0">
+  <tr>
+    <td valign="top">Title</td>
+    <td valign="top">Text displayed in the menu or submenu, and in the toolbar
+      if no icon is provided</td>
+  </tr>
+  <tr>
+    <td valign="top">Help</td>
+    <td valign="top">Text displayed in the status bar as the command help
+      message when the mouse is over the command in the toolbar or in the menu
+      or submenu</td>
+  </tr>
+  <tr>
+    <td valign="top">ShortHelp</td>
+    <td valign="top">Text displayed in a balloon as the command short help
+      message when the mouse is over the command. This is not applicable to
+      commands only located in menus or submenus</td>
+  </tr>
+  <tr>
+    <td valign="top">LongHelp</td>
+    <td valign="top">Text displayed in a balloon when the end user clicks <img border="0" src="../CAAIcons/images/I_WhatsThisP2.gif" width="24" height="24">,
+      which turns the mouse cursor as a question mark, and then clicks on the
+      icon representing the command. This is not applicable to commands located
+      only in menu or submenus</td>
+  </tr>
+  <tr>
+    <td valign="top">Mnemonic</td>
+    <td valign="top">An &quot;Alt+key&quot; keystroke combination that activates
+      menus, submenus, and menu items. The key character is underlined in the
+      menu, submenu, or menu item title, and therefore must belong to this
+      title. No duplicates should exist in the set of mnemonic keys for a given
+      menu or submenu. The case is ignored when using the mnemonic. The mnemonic
+      is declared in the workshop resource file for menus and submenus only. It
+      is declared in the command header resource file for menu items.</td>
+  </tr>
+  <tr>
+    <td valign="top">Category</td>
+    <td valign="top">An attribute associated with the command and used to sort
+      the commands in the Command tab page of the Customize window.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Filling in the Command Header CATRsc File</h3>
+<p>This file contains the icon names to be associated with the command header
+and displayed in the toolbars and in the menus. It can also include the
+LongHelpId, an pointer to the the URL where the file documenting the command is
+located.&nbsp;</p>
+<p>Each icon resource is provided using a key and a file name without suffix
+separated by the equal sign. The key is built as a concatenation of the command
+header resource file name, a dot, the command header identifier you defined as
+the first parameter of the <code>New</code> operator, a dot, and a keyword
+designating the appropriate resource. The message is enclosed using double
+quotes and ended using a semicolon. For example, the Point command header icon
+name to display in the Basic Elements toolbar is defined as follows</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrGeometryWksHeader.CAAAfrPointHdr.Icon.Normal     = &quot;I_CAAPoint&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>For the URL,&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CCAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = &quot;CAAAfrGeometryWksHeader.CAAAfrPointHdr&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>It is recommended to build the URL&nbsp; as a concatenation of the command
+header resource file name, a dot, the command header identifier you defined as
+the first parameter of the <code>New</code> operator.</p>
+<p>The following is an extract of CAAGeometryWksHeader.CATRsc, showing the
+resources for the Point and Circle commands:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//# CATRsc resource file for the command header: CAAGeometryWksHeader
+//# used in the Geometry Workshop
+//# --------------------------------------------------------------
+
+...
+CCAAAfrGeometryWksHeader.CAAAfrPointHdr.Icon.Normal     = &quot;I_CAAPoint&quot; ;
+CAAAfrGeometryWksHeader.CAAAfrPointHdr.LongHelpId      = &quot;CAAAfrGeometryWksHeader.CAAAfrPointHdr&quot; ;
+
+...
+CAAAfrGeometryWksHeader.CAAAfrCircleHdr.Icon.Normal    = &quot;I_CAACircle&quot; ;</pre>
+    </td>
+  </tr>
+</table>
+<p>Below is a reminder of the keywords used in the resource keys that can be
+found in the CATRsc resource file:</p>
+<table border="0">
+  <tr>
+    <td valign="top">Icon.Normal</td>
+    <td valign="top">Icon associated with the command and used in toolbars when
+      the command is available. The greyed icon associated with the command when
+      it is unavailable is computed from this one. The displayed icon is a
+      shadowed icon computed from the Normal one too.</td>
+  </tr>
+  <tr>
+    <td valign="top">Icon.Pressed</td>
+    <td valign="top">Icon associated with the command when it is pressed. This
+      keyword is kept for compatibility. If not explicitly specified through
+      this keyword, the Pressed icon is computed from the Normal one</td>
+  </tr>
+  <tr>
+    <td valign="top">Icon.Focused</td>
+    <td valign="top">Icon associated with the command when the mouse moves or is
+      located above. This keyword is kept for compatibility. If not explicitly
+      specified through this keyword, the Focused icon is computed from the
+      Normal one</td>
+  </tr>
+  <tr>
+    <td valign="top">Accelerator</td>
+    <td valign="top">A keystroke combination, such as &quot;Ctrl+key&quot;, used
+      to activate the command directly. The keystroke combination is written
+      beside the command title in the menu or submenu</td>
+  </tr>
+  <tr>
+    <td valign="top">LongHelpId</td>
+    <td valign="top">Identifier to associate a URL to the command. The URL is
+      stored in a&nbsp; mapping file.&nbsp;</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Providing the Icon Files</h3>
+<p>The icons are bit map files, suffixed by bmp. They must be provided in
+&quot;normal&quot; and &quot;small&quot; sizes. &quot;Normal&quot; size and
+&quot;small&quot; size icon files are respectively contained in the
+CNext\resources\graphic\icons\normal and CNext\resources\graphic\icons\small
+directories of the framework containing the module where the command headers are
+created. &quot;Normal&quot; icons, that is corresponding to default button
+state, must respectively have a size of 22 by 22 pixels and 16 by 16 pixels for
+&quot;normal&quot; and &quot;small&quot; sizes. When specified, the Pressed and
+Focused icons must respectively have a size of 24 by 24 pixels and 18 by 18
+pixels for &quot;normal&quot; and &quot;small&quot; sizes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The command header resources are provided in two files whose names are the
+command header class, or the name set by the <code>CATImplementHeaderResources</code>
+macro in the command header cpp file. One file is for those that can be
+translated and is suffixed CATNls, the other for the icon names or pointer to a
+help file and is suffixed CATRsc. The resources are provided using keys built
+with the identifier of the object to which they apply.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAAfrOverview.htm">Application Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleWorkbench.htm">Creating
+      a Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

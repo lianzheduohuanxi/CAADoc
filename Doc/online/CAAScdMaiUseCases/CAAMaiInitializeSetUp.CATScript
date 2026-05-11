@@ -1,0 +1,91 @@
+Language="VBSCRIPT"
+
+'*******************************************************************************************
+'*
+'*		Open an existing CATPart Document and then execute the Macro:
+'*
+'*		- Creates a new Process Document
+'*		- Starts Prismatic Machining Workbench
+'*		- Associates the Design Part will to the existing Set Up
+'*
+'*******************************************************************************************
+
+Sub CATMain()
+
+
+	'*******************************************************************************************
+	'*** Get current Part Document
+	'*******************************************************************************************
+
+	Dim thePartDoc As Document
+	Set thePartDoc = CATIA.ActiveDocument
+
+
+	'*******************************************************************************************
+	'Get the Product to be associated to the Set Up
+	'*******************************************************************************************
+	Dim theProduct As Product
+	Set theProduct = thePartDoc.Product
+	
+	'*******************************************************************************************
+	'Create Process Document
+	'*******************************************************************************************
+	CATIA.Documents.Add "Process"
+	Dim thePPRDoc As Document
+	Set thePPRDoc = CATIA.ActiveDocument
+
+	'*******************************************************************************************
+	'*** Load Prismatic Machining Workbench
+	'*******************************************************************************************
+
+	Dim theApplication As Application
+	Set theApplication = thePPRDoc.Application
+	theApplication.StartWorkbench ("ManufacturingProgramWorkbench")
+
+	'*******************************************************************************************
+	'*** Retrieve current Root Process 
+	'*******************************************************************************************
+
+	Dim theProcess As AnyObject
+	set theProcess = thePPRDoc.GetItem("Process")
+
+	'*******************************************************************************************
+	'*** Retrieve current SetUp
+	'*******************************************************************************************
+
+	Dim theSetup As ManufacturingSetup
+
+	If (theProcess.IsSubTypeOf("PhysicalActivity")) Then
+
+		Set childs = theProcess.ChildrenActivities
+		quantity = childs.Count
+
+		if quantity <= 0 then
+			Exit Sub
+		End if
+
+		NumberOfPO = 0
+
+		For I=1 To quantity
+			Set child = childs.Item(I)
+			If (child.IsSubTypeOf("ManufacturingSetup")) Then
+				Set theSetup = child
+				NumberOfPO = NumberOfPO +1
+				Exit For
+			End If
+		Next   
+	End If
+
+	if NumberOfPO <= 0 then
+	  Exit Sub
+	End if
+
+
+	'*******************************************************************************************
+	'*** Associate the Part to the Setup
+	'*******************************************************************************************
+
+	theSetup.Product = theProduct
+
+
+End Sub

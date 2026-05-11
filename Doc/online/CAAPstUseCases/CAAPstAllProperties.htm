@@ -1,0 +1,486 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 5.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Working With Flexible/Rigid Sub-Products</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Retrieving a Product's Properties</H3>
+        <P><EM>Using the CATIAttributesDescription<BR>
+        and CATIInstance Interfaces</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents the CAAPstAllProperties use case which 
+        illustrates how to obtain information on the properties of a product.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstAllProperties Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstAllProperties Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstAllProperties</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstAllProperties Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the <I>CATIAttributesDescription</I> and <I>CATIInstance</I> 
+interfaces, the properties of a product, including the user defined ones, can be 
+queried and retrieved. This is different from the
+<a href="CAAPstPrdProperties.htm">Retrieving a Product's Predefined Properties</A> 
+use case where only predefined properties are retrieved.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstAllProperties Use Case</H3>
+<P>CAAPstAllProperties is a use case of the CAAProductStructure.edu framework 
+that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstAllProperties Do</H4>
+<P>The goal of CAAPstAllProperties is to demonstrate the 
+CATIAAttributesDescription and CATIInstance interfaces. It performs the 
+following steps:</P>
+<UL>
+    <LI>Loads a  Product document</LI>
+    <LI>Displays all the properties of the Root Product and its components</LI>
+</UL>
+<P>Below&nbsp; is the  Product document that will be loaded in the use case. 
+It can be found in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstPrdProperties_Prod.CATProduct</TT></P>
+<P>
+<img border="0" src="images/CAAPstPrdProperties01.jpg" width="619" height="501"></P>
+<P>The CAAPstPrdProperties_Prod product consists of 2 parts: 
+CAAPstPrdProperties_Part<I>.1</I> and CAAPstPrdProperties_Part<I>.2</I>. Each 
+component's properties can be displayed using the contextual menu <I>Properties</I>. 
+For example, CAAPstPrdProperties_Prod properties:</P>
+<P>
+<img border="0" src="images/CAAPstPrdProperties03.jpg" width="455" height="553"></P>
+<P>The code in the use case will traverse the product structure and displays 
+each component's properties producing the output below with the 
+CAAPstPrdProperties_Prod<I>.</I>CATProduct document.</P>
+<P>Each line displays information on a property:</P>
+<UL>
+    <TABLE border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+        <TR>
+            <TD><FONT face="Arial">&#9679; </FONT>Property Name</TD>
+        </TR>
+        <TR>
+            <TD><FONT face="Arial">&#9679; </FONT>Value Type</TD>
+        </TR>
+        <TR>
+            <TD><FONT face="Arial">&#9679; </FONT>Value</TD>
+        </TR>
+    </TABLE>
+</UL>
+<P>The first section corresponds to the CAAPstPrdProperties_Prod product:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>Properties of CAAPstPrdProperties_Prod:
+          PartNumber ( String): CAAPstPrdProperties_Prod
+            Revision ( String): CAAPstPrdProperties_Prod Revision
+          Definition ( String): CAAPstPrdProperties_Prod Definition
+        Nomenclature ( String): CAAPstPrdProperties_Prod Nomenclature
+      DescriptionRef ( String): CAAPstPrdProperties_Prod Reference Description
+     DescriptionInst ( String): 
+              Source ( Source): Made
+    DefaultRepSource ( String): ** undefined **
+                Name ( String): CAAPstPrdProperties_Prod
+                  Id ( String): CAAPstPrdProperties_Prod
+               Owner (Feature): 
+     UserInfoComment ( String): ** undefined **
+           NamedURLs (   List): ** undefined **
+            String.1 ( String): CAA Product
+           Integer.1 (Integer): 1</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The following two sections show the properties of the 
+constituting components: CAAPstPrdProperties_Part<I>.1</I> and 
+CAAPstProperties_Part<I>.2</I>:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>Properties of CAAPstPrdProperties_Part:
+          PartNumber ( String): CAAPstPrdProperties_Part
+            Revision ( String): CAAPstPrdProperties_Part Revision
+          Definition ( String): CAAPstPrdProperties_Part Definition
+        Nomenclature ( String): CAAPstPrdProperties_Part Nomenclature
+      DescriptionRef ( String): CAAPstPrdProperties_Part Reference Description
+     DescriptionInst ( String): CAAPstPrdProperties_Part.1 Instance Description
+              Source ( Source): Bought
+    DefaultRepSource ( String): S:\R14\CAAPstPrdProperties_Part.CATPart
+                Name ( String): CAAPstPrdProperties_Part.1
+                  Id ( String): CAAPrdProperties_Part.1
+               Owner (Feature): CAAPstPrdProperties_Prod
+     UserInfoComment ( String): ** undefined **
+           NamedURLs (   List): ** undefined **
+            String.1 ( String): CAA Part
+           Integer.2 (Integer): 2001
+
+Properties of CAAPstPrdProperties_Part:
+          PartNumber ( String): CAAPstPrdProperties_Part
+            Revision ( String): CAAPstPrdProperties_Part Revision
+          Definition ( String): CAAPstPrdProperties_Part Definition
+        Nomenclature ( String): CAAPstPrdProperties_Part Nomenclature
+      DescriptionRef ( String): CAAPstPrdProperties_Part Reference Description
+     DescriptionInst ( String): CAAPstPrdProperties_Part.2 Instance Description
+              Source ( Source): Bought
+    DefaultRepSource ( String): S:\R14\CAAPstPrdProperties_Part.CATPart
+                Name ( String): CAAPstPrdProperties_Part.2
+                  Id ( String): CAAPstPrdProperties_Part.1
+               Owner (Feature): CAAPstPrdProperties_Prod
+     UserInfoComment ( String): ** undefined **
+           NamedURLs (   List): ** undefined **
+            String.1 ( String): CAA Part
+           Integer.2 (Integer): 2001</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstAllProperties</H4>
+<P>To launch CAAPstAllProperties:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment and build the 
+    CAAPstAllProperties.m module <TT>(see <a href="#[2]">[2]</a></TT>)</LI>
+    <LI>Execute the following command:<BR>
+    <BR>
+    <TT>mkrun -c &quot;CAAPstAllProperties <B><I>input.CATProduct</I></B>&quot;</TT></LI>
+</OL>
+<BLOCKQUOTE>
+    <UL>
+        <LI><TT><B><I>input.CATProduct</I></B></TT> - the path to the supplied 
+        document whose path is <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstPrdProperties_Prod.CATProduct</TT></LI>
+    </UL>
+</BLOCKQUOTE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstAllProperties Code</H4>
+<P>CAAPstAllProperties code is located in the CAAPstAllProperties.m module of 
+the CAAProductStructure.edu framework.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A><B>Step-by-Step</B></H3>
+<P>There are six logical steps in <I>CAAPstAllProperties</I>:</P>
+<OL>
+    <LI><A href="#LoadingDoc">Loading a Product Document</A></LI>
+    <LI><A href="#RetrievingRootProduct">Retrieving the Document's Root Product</A></LI>
+    <LI><A href="#DisplayingRootProduct">Displaying the Properties of the Root 
+    Product</A></LI>
+    <LI><A href="#DisplayingComponents">Displaying the Properties of the Root 
+    Product's Components</A></LI>
+    <LI><B><SPAN style="font-weight: 400"><A href="#Closing">Closing the Session</A></SPAN></B></LI>
+    <LI><A href="#Displaying">Displaying a Component's Properties </A></LI>
+</OL>
+<P>We will now detail each of those sections:</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="LoadingDoc"></A>Loading a Product Document</H4>
+<P>Generally, the first thing that is necessary in a batch program is the 
+creation of a new session. This is done using the <CODE>Create_Session</CODE> 
+global function. It is important not to forget to delete the session when the 
+program exits. Once the session is created, a CATProduct document can be loaded 
+with <TT>CATDocumentServices::OpenDocument</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>	CATSession *pSession = NULL;
+	rc = ::Create_Session(&quot;CAA_PrdProp_Session&quot;, pSession);
+...
+	//----------------------------------------------------------------------
+	// Opening an existing document with full path specified 
+	//----------------------------------------------------------------------
+	CATDocument *pDoc = NULL;
+	rc = CATDocumentServices::OpenDocument(argv[1], pDoc);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="RetrievingRootProduct"></A>Retrieving the Document's Root Product</H4>
+<P>In order to work with a product structure within the Product document, it 
+is necessary to access the <B>root product</B>. This is done using the <CODE>
+GiveDocRoots</CODE> method of <I>CATIDocRoots</I> which returns a list of all of 
+the roots within the document, the first one being the root product we are 
+looking for.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Search for the document's root product
+        //----------------------------------------------------------------------
+        CATIDocRoots* piDocRootsOnDoc = NULL;
+        rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,
+                                  (void**) &amp;piDocRootsOnDoc);
+...
+        CATListValCATBaseUnknown_var* pRootProducts = 
+                piDocRootsOnDoc-&gt;GiveDocRoots();
+        CATIProduct_var spRootProduct = NULL_var;
+
+        if (NULL != pRootProducts &amp;&amp; pRootProducts-&gt;Size() &gt; 0) { 
+                spRootProduct = (*pRootProducts)[1];
+...
+        } else {
+                cout &lt;&lt; &quot;Root product could not be obtained.&quot; &lt;&lt; endl;
+                return 5;
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="DisplayingRootProduct"></A>Displaying the Properties of the Root 
+Product</H4>
+<P>Once the Root Product is obtained, we need to query for its <i>CATIProduct</i> 
+interface which is passed to the <tt>PrintAllProperties</tt> function to display its 
+properties.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Get CATIProduct handle on the root product.
+        //----------------------------------------------------------------------
+        CATIProduct *piProductOnRoot = NULL;
+        if (spRootProduct != NULL_var)
+        rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                           (void**) &amp;piProductOnRoot);
+...
+        //----------------------------------------------------------------------
+        //Print the properties of the root product
+        //----------------------------------------------------------------------
+        PrintAllProperties(piProductOnRoot);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="DisplayingComponents"></A>Displaying the Properties of the Root 
+Product's Components</H4>
+<P>Next, we get the Root Product's components using <tt>GetAllChildren</tt>. For each of 
+these children, we query their <i>CATIProduct</i> interface and pass it to 
+<tt>PrintAllProperties</tt> to display their properties.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        //Get the root product's children
+        //----------------------------------------------------------------------
+        CATListValCATBaseUnknown_var* childrenList = 
+        piProductOnRoot-&gt;GetAllChildren();
+        if (NULL == childrenList || childrenList-&gt;Size() &lt;= 0) {
+                cout &lt;&lt; &quot;Could not retrieve Root product's children.&quot; &lt;&lt; endl;
+                return 8;
+        }
+...
+        CATIProduct_var spChild = NULL_var;
+        int childrenCount = childrenList-&gt;Size();
+        for (int i = 1; i &lt;= childrenCount; i++) {
+                spChild = (*childrenList)[i];
+
+                //--------------------------------------------------------------
+                // Get CATIProduct handle on the child product
+                //--------------------------------------------------------------
+                CATIProduct *piChildProduct = NULL;
+                if (NULL_var != spChild) {
+                        rc = spChild-&gt;QueryInterface(IID_CATIProduct,
+                                                     (void**) &amp;piChildProduct);
+...
+                }
+
+                //--------------------------------------------------------------
+                //Print the properties of the child part
+                //--------------------------------------------------------------
+                PrintAllProperties(piChildProduct);
+...
+        }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="Closing"></A>Closing the Session</B></P>
+<P>Before terminating the use case, we need to remove the document from the 
+session before closing it.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        //----------------------------------------------------------------------
+        // Remove opened document from session
+        //----------------------------------------------------------------------
+        rc = CATDocumentServices::Remove (*pDoc);
+...
+
+        //----------------------------------------------------------------------
+        //Delete the session 
+        //----------------------------------------------------------------------
+        rc = ::Delete_Session(&quot;CAA_PrdProp_Session&quot;);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Displaying"></A>Displaying a Component's Properties </H4>
+<P><tt>PrintAllProperties</tt> first retrieves information on the properties of a 
+component with the <I>CATIAttributesDescriptor</I> interface: the <TT>List</TT> 
+method returns a list of <tt>CATAttributeInfos</tt> describing each property.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>void PrintAllProperties(CATIProduct *iInstanceProd)
+{
+	HRESULT rc;</PRE>
+        <PRE>	if (iInstanceProd == NULL) {
+		cout &lt;&lt; &quot;InstanceProd is NULL!!&quot; &lt;&lt; endl;
+		return;
+	}
+	CATIAttributesDescription *piAttrDesc = NULL;
+	rc = iInstanceProd-&gt;QueryInterface(IID_CATIAttributesDescription,
+                                            (void **) &amp;piAttrDesc);
+...
+	CATIInstance *piInstance = NULL;
+	rc = iInstanceProd-&gt;QueryInterface(IID_CATIInstance,
+                                            (void **) &amp;piInstance);
+...
+	// List all the properties and their types
+	CATUnicodeString partNum = iInstanceProd-&gt;GetPartNumber();
+	cout &lt;&lt; endl &lt;&lt; &quot;Properties of &quot; &lt;&lt; partNum.ConvertToChar() &lt;&lt; &quot;:&quot;
+	     &lt;&lt; endl;
+	CATListValCATAttributeInfos attrInfoList;
+	rc = piAttrDesc-&gt;List(&amp;attrInfoList);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Of the <tt>CATAttributeInfos</tt> object obtained for each property, the <TT>
+Name</TT> member is then used to fetch the property value using the <I>
+CATIInstance</I> interface.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+	if (FAILED(rc)) {
+		cout &lt;&lt; &quot;Failed to List AttributesDescription&quot; &lt;&lt; endl;
+	} else {
+		int attrCount = attrInfoList.Size();
+		for (int i = 1; i &lt;= attrCount; i++) {
+			CATAttributeInfos attrInfo = attrInfoList[i];
+			const CATUnicodeString&amp; propertyName = attrInfo.Name();
+			const CATUnicodeString&amp; valueType = attrInfo.Type()-&gt;Name();
+			CATIValue *pValue = piInstance-&gt;GetValue(propertyName);
+			CATUnicodeString valueString;
+			if (pValue == NULL) {
+				valueString = &quot;** undefined **&quot;;
+			} else {
+				rc = pValue-&gt;AsString(valueString);
+				if (FAILED(rc))
+					valueString = &quot;** failed to convert **&quot;;
+			}
+			cout.width(20); cout.setf(ios::right);
+			cout &lt;&lt; propertyName.ConvertToChar();
+			cout &lt;&lt; &quot; (&quot;;
+			cout.width(7); cout.setf(ios::right);
+			cout &lt;&lt; valueType.ConvertToChar() &lt;&lt; &quot;): &quot;;
+			cout &lt;&lt; valueString.ConvertToChar() &lt;&lt; endl;
+		}
+	}
+...
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to access to a component properties:</P>
+<UL>
+    <LI>Loading a  Product document with <TT>CATDocumentServices::Open</TT></LI>
+    <LI>Retrieving the root product of the document with <TT>
+    CATIDocRoots::GiveDocRoots</TT> </LI>
+    <LI>Traversing the components returned by <TT>
+    CATIProduct::GetAllChildrenList</TT> on the root product</LI>
+    <LI>Accessing a component properties with <TT>CATIAttributesDescriptor
+    <FONT face="Arial">and</FONT> CATIInstance</TT></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[3]">[3]</a></TD>
+        <TD><a href="CAAPstPrdProperties.htm">Retrieving a Product's Predefined 
+        Properties</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <tr>
+        <TD valign="top">Version:1.1 [Aug 2004]</TD>
+        <TD valign="top">Document revised</TD>
+    </tr>
+    <TR>
+        <TD valign="top">Version: <STRONG><span style="font-weight: 400">1</span></STRONG> [Feb 2004]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2004, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

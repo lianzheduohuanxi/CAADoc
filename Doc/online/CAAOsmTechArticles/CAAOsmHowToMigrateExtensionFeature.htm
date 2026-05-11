@@ -1,0 +1,1232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+
+  
+  
+  <meta http-equiv="Content-Language" content="fr">
+
+
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+  
+  
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+
+
+  
+  
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+
+
+  
+  
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+
+
+  
+  
+  <title>Extension Features Migration</title>
+</head>
+
+
+<body>
+
+
+
+   
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Extension Features Migration</h3>
+      <p><em>How to migrate extension features to the new pattern</em></p>
+      </td>
+    </tr>
+
+     <tr>
+
+
+       <td class="tech" colspan="2">Technical Article</td>
+
+
+     </tr>
+
+
+</table>
+
+
+   
+<hr>
+   
+<p><br>
+
+
+   </p>
+
+
+   
+<table class="abstract">
+
+
+     <tbody>
+
+    <tr>
+
+
+       <td>
+       
+      
+      <h3><a name="Abstract"></a>Abstract</h3>
+
+
+       
+      
+      <p>This article deals with how to migrate extension feature to the new 
+       more robust APIs. </p>
+
+
+       
+      
+      <ul>
+
+
+         <li><a href="#Why"><b>Why the migration is needed</b></a>
+         
+          
+          <ul>
+
+
+           <li><a href="#ActivateDeactivateConcept">Activation deactivation 
+           concept</a></li>
+
+
+           <li><a href="#Overload">Overload</a>
+           
+              
+              <ul>
+
+
+             <li><a href="#QueryInterfaceOverload">QueryInterface overload</a>
+             </li>
+
+
+             <li><a href="#AttributesOverload">Attributes overload</a></li>
+
+
+           
+              
+              </ul>
+
+
+           </li>
+
+
+         
+          
+          </ul>
+
+
+         </li>
+
+
+         <li><b><a href="#WhatsNew"><b>What's New</b></a></b></li>
+
+
+         <li><b><a href="#HowToMigrate"><b>How to Migrate</b></a></b></li>
+
+
+         
+        
+        <ul>
+
+
+           <li><a href="#LegacyData">Legacy data and extensions catalog</a></li>
+
+
+           <li><a href="#CodeMigration">code migration</a></li>
+
+
+         
+        
+        </ul>
+
+
+         
+         <li><a href="#SummaryTasks"><b>Summary of Tasks</b></a></li>
+
+
+         <li><a href="#References"><b>References</b></a> </li>
+
+
+       
+      
+      </ul>
+
+
+       </td>
+
+
+     </tr>
+
+
+   
+  
+  </tbody>
+</table>
+
+
+   
+<hr>
+   
+<p><br>
+
+
+   To take advantage of this article you need to be familiar with the feature 
+   modeler and the extension feature concept. You can see article CAAOsmOverview 
+   [<a href="#References">1</a>] for the Feature Modeler overview and article 
+   CAAOsmHowToAddDataToAFeature [<a href="#References">2</a>] for the extension 
+   features.<br>
+
+
+   </p>
+
+
+   
+<h3><a name="Why"></a>Why the migration is needed<br>
+
+
+   </h3>
+
+
+   
+<p>First we will review the mechanism offered with old extension and 
+   highlight the weakness of this mechanism:</p>
+
+
+   
+<ol>
+
+
+     <li><span style="font-weight: bold;"></span><b>Activation deactivation</b>, 
+     this concept allows the user to switch "ON/OFF" data ans behaviors 
+     extensions on a base feature.</li>
+
+
+     <li><span style="font-weight: bold;"></span><b>Overload</b>, those data are 
+     added using "Feature Modeler" APIs. They are integrated in "Feature 
+     Modeler" basic mechanisms. They usually are part of the data model and have 
+     their own semantic.</li>
+
+
+   
+</ol>
+
+
+   
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+   
+<h4><a name="ActivateDeactivateConcept"></a>Activation deactivation concept</h4>
+
+
+   
+<p>The extension mechanism is based on applicative containers: within the 
+   working document, an extension is activated on a base feature in an 
+   applicative container. Activating an extension means that the base feature 
+   now has access to the extension's data and behaviors as to its own.&nbsp; All 
+   of the extensions of a given applicative container can be activated or 
+   deactivated at once. Several extensions from different applicative containers 
+   can also be active at the same time.<br>
+
+
+   Here we see that the activation deactivation concept may lead to hasardous 
+   behaviors depending on weither your extension is active or not. </p>
+
+
+   
+<p>It is important to note that the notion of active extensions is not 
+   persistent: when a document is opened, none of its previously active 
+   extensions is still current. In other words, it is necessary each time to 
+   specifically activate the necessary extension(s) in order for the base 
+   feature to be correctly extended in the given applicative context.<br>
+
+
+   If you add an extension to a base feature you want it to be active by 
+   default. Here you need to find a way to activate your extensions as they are 
+   not active by default. It can lead to complex initialisation phases or the 
+   use a dedicated command to activate extensions.</p>
+
+
+   
+<p>Morover, basic operations such as Delete or Copy can corrupt the model if 
+   the extensions are not correctly activated.</p>
+
+
+   
+<p style="text-align: right;">[<a href="#Top">Top</a>]</p>
+
+
+   
+<h4><a name="Overload"></a>Overload</h4>
+
+
+   
+<p>Adding an extension feature that implements an interface not implemented 
+   by the base feature will simulate the fact the base feature implements the 
+   interface. With a QueryInterface on the base feature you can retrieve a 
+   pointer on the extension feature implementation.<br>
+
+
+   Adding an extension feature allow the base feature to access to attributes 
+   defined on the extension feature as they were defined on the base feature.<br>
+
+
+   The interface CATISpecAttrAccess can retrieve the attributes defined on an 
+   active extension feature.<br>
+
+
+   You can find next some examples to illustrate the potential issues.</p>
+
+
+   
+<div style="text-align: right;">
+     [<a href="#Top">Top</a>]
+   </div>
+
+
+   
+<h4><a name="QueryInterfaceOverload"></a><span style="font-weight: normal;">
+   QueryInterface overload</span></h4>
+
+
+   
+<p>AppA is implementing CATIxxx on its FeatExt_A.<br>
+
+
+   AppB decides to implement CATIxxx on its FeatExt_B.<br>
+
+
+   Murphy&rsquo;s law makes the Base Feature having both extensions.<br>
+
+
+   QueryInterface is no longer safe on those features.<br>
+
+
+   Depending on the activation deactivation of extension feature the retrieved 
+   implmentation will change. <br>
+
+
+   <br>
+
+
+   <img style="width: 592px; height: 249px;" src="images/CAAOsmQI1.gif"><br>
+
+
+   <br>
+
+
+   AppB is implementing CATIxxx on its FeatExt.<br>
+
+
+   AppA decides to implement CATIxxx.<br>
+
+
+   QueryInterface is no longer safe on those features.<br>
+
+
+   <br>
+
+
+   <img style="width: 493px; height: 234px;" src="images/CAAOsmQI2.gif"><br>
+
+
+   </p>
+
+
+   
+<div style="text-align: right;">
+     [<a href="#Top">Top</a>]<br>
+
+
+   </div>
+
+
+   
+<h4><a name="AttributesOverload"></a><span style="font-weight: normal;">
+   Attributes overload</span><br>
+
+
+   </h4>
+
+
+   
+<p>AppB has an attribute dynamicTypeAttr on its FeatExt.<br>
+
+
+   AppA decides to add an attribute dynamicTypeAttr on its Base Feature A.<br>
+
+
+   GetAttribute is no longer safe on those features.<br>
+
+
+   <br>
+
+
+   <img style="width: 493px; height: 175px;" src="images/CAAOsmExtAttr1.gif"><br>
+
+
+   <br>
+
+
+   AppA and AppB have an attribute dynamicTypeAttr on their FeatExt<br>
+
+
+   If the Base Feature is having both extensions<br>
+
+
+   GetAttribute is no longer safe on those features:<br>
+
+
+   Which value do I return ?<br>
+
+
+   If those two attributes have different types, Set and Get operations have 
+   random results.<br>
+
+
+   <br>
+
+
+   <img style="width: 587px; height: 165px;" src="images/CAAOsmExtAttr2.gif"><br>
+
+
+   <br>
+
+
+   As implementation of an extension is completely independent of the base 
+   feature it can extends, it is impossible to control the behaviors with code 
+   review.<br>
+
+
+   </p>
+
+
+   
+<div style="text-align: right;">
+     [<a href="#Top">Top</a>]<br>
+
+
+     <br>
+
+
+   </div>
+
+
+   
+<div style="text-align: right;">
+     
+<div style="text-align: left;">
+       
+<h3><a name="WhatsNew"></a>What's new</h3>
+
+
+       
+<p style="height: 37px">To simplify activations mechanisms during open and avoid activation 
+       deactivation issues this concept is removed for the new extension 
+       feature. The new extension features are loaded at the same time as their 
+       base features.<br>
+
+
+       This will make simpler the initialisation phases and protect the data 
+       against data corruption.<br>
+
+
+       With new extension feature it's like all the extensions are activated by 
+       default.</p>
+
+
+       
+<p>Attribute and interface overload is removed from the new extension 
+       feature. The overload is no longer implicit, you need to access to your 
+       extension's attribute or interface's attribute explicitly from your 
+       extension. </p>
+
+
+       
+<p>New extensions' memory consumption is twice smaller.<span style="font-weight: bold;"></span></p>
+
+
+       
+<p align="right">[<a href="#Top">Top</a>]<br>
+
+
+       </p>
+
+
+       
+<h3><a name="HowToMigrate"></a>How to migrate</h3>
+
+
+       
+<p>Model migration need to be analysed on two sides:</p>
+
+
+       
+<ol>
+
+
+         <li><span style="font-weight: bold;">Data</span>, impacted data are 
+         data generated with former extensions (CATPart, CATProduct, CATDrawing, 
+         ...) and extension catalogs (CATFct).</li>
+
+
+         <li><span style="font-weight: bold;">Code</span>, all the code managing 
+         extensions.<br>
+
+
+         <br>
+
+
+         </li>
+
+
+       
+</ol>
+
+
+       
+<h4><a name="LegacyData"></a><span><span style="font-weight: normal;">
+       Data legacy and extensions catalog</span><br>
+
+
+       </span></h4>
+
+
+       
+<p>Data legacy as feature catalogs(.CATfct) are not impacted by the new APIs. In other 
+       words former extension features can be manipulated with new APIs.<br>
+
+
+       But new extension features can only be created and manipulated with the 
+       new APIs.</p>
+
+<p>Never re-create your extension feature catalog but use the new API to create new extension.</p>
+
+
+       
+<div style="text-align: right;">
+         [<a href="#Top">Top</a>]</div>
+
+
+       
+<h4><a name="CodeMigration"></a><span style="font-weight: normal;">Code 
+       migration</span><br>
+
+
+       </h4>
+
+
+       
+<p>This migration has two main difficulties:<br>
+
+
+       </p>
+
+
+       
+<ol>
+
+
+         <li>QueryInterface overload</li>
+
+
+         <li>The Activation code</li>
+
+
+       
+</ol>
+
+
+       
+<p>QueryInterface overload is not supported by new extension feature. 
+       This means that you have to check all
+       <span style="font-weight: bold; font-style: italic;">QueryInterface
+       </span><span style="font-weight: bold;"></span>on interfaces implemented 
+       on the extension features and replace them with
+       <span style="font-style: italic; font-weight: bold;">
+       CATIOsmExtendable::QueryExtension</span> if they are called on the base 
+       feature. You also have to check all
+       <span style="font-weight: bold; font-style: italic;">QueryInterface</span> 
+       on interfaces implemented on the base features. If the
+       <span style="font-weight: bold; font-style: italic;">QueryInterface</span> 
+       is called on the extension feature then insert a
+       <span style="font-weight: bold; font-style: italic;">
+       CATIOsmExtension::QueryBaseObject </span>to call the
+       <span style="font-weight: bold; font-style: italic;">QueryInterface</span> 
+       on the base feature.<br>
+
+
+       </p>
+
+
+       
+<p>The activation/deactivation mechanism is mixed with the 
+       creation/removal of extension feature.<br>
+
+
+       You need to identify and separate the creation/removal code from the 
+       activation/deactivation code. The creation/removal code can be easily 
+       migrated with the new APIs.<br>
+
+
+       With new extension feature it's like all the extensions are activated by 
+       default. As this behavior is not available with former extension 
+       features, they still need to be "manually" activated. So if you have to 
+       manage documents containing former extension features you need to keep 
+       the activation code. Then to stick with the new extension feature 
+       behavior you have to drop the deactivation code.<br>
+
+
+       </p>
+
+
+       
+<p>The code migration can be done in <span style="font-weight: bold;">
+       three phases</span>:</p>
+
+
+       
+<p>First, you need to replace the include files.<br>
+
+
+       </p>
+
+
+       
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2" cellspacing="2">
+
+
+         <tbody>
+
+    <tr>
+
+
+           <td>CATExtensionFactory.h<br>
+
+
+           </td>
+
+
+           <td>CATIOsmExtensionFactory.h </td>
+
+
+         </tr>
+
+
+         <tr>
+
+
+           <td>CATIExtension.h </td>
+
+
+           <td>CATIOsmExtension.h </td>
+
+
+         </tr>
+
+
+         <tr>
+
+
+           <td>CATIExtendable.h </td>
+
+
+           <td>CATIOsmExtendable.h </td>
+
+
+         </tr>
+
+
+         <tr>
+
+
+           <td>CATExtensionServices.h</td>
+
+
+           <td>CATOsmExtensionServices.h</td>
+
+
+         </tr>
+
+
+       
+  
+  </tbody>
+</table>
+
+
+       
+<p>Then proceed the methods migration except the
+       <span style="font-style: italic; font-weight: bold;">
+       CATIExtendable::ActivateExtension</span> in
+       <span style="font-style: italic; font-weight: bold;">
+       CATIOsmExtendable::AddExtension</span> migration.</p>
+
+
+       
+<p>Second, you need to check all
+       <span style="font-style: italic; font-weight: bold;">QueryInterface</span> 
+       on interfaces implemented on the extension features and replace them with
+       <span style="font-style: italic; font-weight: bold;">
+       CATIOsmExtendable::QueryExtension</span> if they are called on the base 
+       feature. <br>
+
+
+       In the same spirit, all access to extension features attributes with
+       <span style="font-style: italic; font-weight: bold;">CATISpecAttrAccess</span> 
+       must be reviewed to check that they are made on the extension feature and 
+       not the base feature.</p>
+
+
+       
+<p>From this point first tests can be made to check the behavior of using 
+       the new APIs with former extension features.<br>
+
+
+       </p>
+
+
+       
+<p>Last, complete the migration by replacing
+       <span style="font-style: italic; font-weight: bold;">
+       CATIExtendable::ActivateExtension</span> with
+       <span style="font-style: italic; font-weight: bold;">
+       CATIOsmExtendable::AddExtension</span><span style="font-style: italic;">.</span><br>
+
+</p>
+
+<p>Only if you have former extension in production:<br>
+
+If you already have some documents in production that contain former
+extension features to support those document you need to keep the
+activation code using <span style="font-style: italic; font-weight: bold;">
+       CATOsmExtensionServices::CATActivateExtensions</span>.<br>
+
+
+       </p>
+
+
+       
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+       
+<p align="right"><br>
+
+
+     </p>
+
+</div>
+
+
+   </div>
+
+
+   
+<hr>
+   
+<h3><a name="SummaryTasks"></a>Summary of Essential Tasks</h3>
+
+
+   
+<table border="1" width="100%">
+
+
+     <tbody>
+
+    <tr>
+
+
+       <td width="33%"><b>Former Method on CATExtensionServices:<br>
+
+
+       </b></td>
+
+
+       <td width="33%"><b>New Method on CATOsmExtensionServices:</b></td>
+
+
+       <td width="34%"><b>Comment</b>:</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td>CATActivateExtensions</td>
+
+
+       <td>CATActivateExtensions</td>
+
+
+       <td>Use only if you have to manage existing documents containing former 
+       extension features.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td>CATDeactivateExtensions</td>
+
+
+       <td>none</td>
+
+
+       <td>We don't recommend the use of activation/deactivation mechanism.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td>CATListUserExtensionsFromCatalog</td>
+
+
+       <td>CATOsmListUserExtensionsFromCatalog</td>
+
+
+       <td>Unchanged.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td>CATMakeExtensionLocal</td>
+
+
+       <td>none</td>
+
+
+       <td>This can be defined directly in the ressource file.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td><b>Former Method on CATIExtensionFactory:</b></td>
+
+
+       <td><b>New Method on CATIOsmExtensionFactory:</b></td>
+
+
+       <td></td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td>CreateExtension</td>
+
+
+       <td>CreateExtension</td>
+
+
+       <td>Unchanged.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td><b>Former Method on CATIExtension:</b></td>
+
+
+       <td><b>New Method on CATIOsmExtension:</b></td>
+
+
+       <td></td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code>GetID</code></td>
+
+
+       <td width="33%"><i>GetID</i></td>
+
+
+       <td width="34%">New method returns HRESULT.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code><span style="font-style: italic;">IsActive</span></code></td>
+
+
+       <td width="33%"><i>none</i></td>
+
+
+       <td width="34%">We recommend that you activate all extensions as soon as 
+       you use them.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code><span style="font-style: italic;">QueryBaseObject</span></code></td>
+
+
+       <td width="33%"><i>QueryBaseObject</i></td>
+
+
+       <td width="34%">Unchanged.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code><span style="font-style: italic;">
+       QueryExtensionRepresentative</span></code></td>
+
+
+       <td width="33%"><i>none</i></td>
+
+
+       <td width="34%">The use of representative is useless.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><b>Former Method on CATIExtendable:</b></td>
+
+
+       <td width="33%"><b>New Method on CATIOsmExtendable:</b></td>
+
+
+       <td width="34%"><br>
+
+
+       </td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td><code>ActivateExtension (Creation mode)</code></td>
+
+
+       <td><i>AddExtension</i></td>
+
+
+       <td>Add a new extension to a base feature.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code>ActivateExtension (Activation mode)<br>
+
+
+       </code></td>
+
+
+       <td width="33%"><i>none<br>
+
+
+       </i></td>
+
+
+       <td width="34%">To merge former extension concepts with the new pattern 
+       it is recommended to activate all extension features with 
+       CATOsmExtensionServices::CATActivateExtensions<br>
+
+
+       and avoid the usage of activation deactivation mechanisms</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code><span style="font-style: italic;">
+       ReactivateExtension</span></code></td>
+
+
+       <td width="33%"><i>none</i></td>
+
+
+       <td width="34%">See ActivateExtension.<br>
+
+
+       </td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td><code>DeactivateExtension (Remove mode)<br>
+
+
+       </code></td>
+
+
+       <td><i>RemoveExtension</i></td>
+
+
+       <td>Remove extension from a base feature.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code>DeactivateExtension (Deactvation mode)<br>
+
+
+       </code></td>
+
+
+       <td width="33%"><i>none</i></td>
+
+
+       <td width="34%">See ActivateExtension.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code>IsExtensionActive</code></td>
+
+
+       <td width="33%"><i>none</i></td>
+
+
+       <td width="34%">See ActivateExtension.</td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td width="33%"><code>QueryAllExtensions</code></td>
+
+
+       <td width="33%"><i>QueryAllExtensions or QueryApplicativeExtension<br>
+
+
+       </i></td>
+
+
+       <td width="34%">Small changes.<br>
+
+
+       </td>
+
+
+     </tr>
+
+
+   
+  
+  </tbody>
+</table>
+
+
+   
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+   
+<hr>
+   
+<h3><a name="References"></a>References</h3>
+
+
+   
+<table border="0" width="100%">
+
+
+     <tbody>
+
+    <tr>
+
+
+       <td valign="top">[1]</td>
+
+
+       <td><a href="CAAOsmOverview.htm">Feature Modeler Conceptual Overview</a></td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td valign="top">[2]</td>
+
+
+       <td>
+       <a href="CAAOsmHowToAddDataToAFeature.htm">How to Add Data to a Feature</a></td>
+
+
+     </tr>
+
+
+
+     <tr>
+
+
+       <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+
+
+     </tr>
+
+
+   
+  
+  </tbody>
+</table>
+
+
+   
+<hr>
+   
+<h3><a name="History"></a>History</h3>
+
+
+   
+<table width="100%">
+
+
+     <tbody>
+
+    <tr>
+
+
+       <td valign="top">Version: <strong>1</strong> [Fev 2005]</td>
+
+
+       <td valign="top">Document created</td>
+
+
+     </tr>
+
+
+     <tr>
+      <td>Version: <strong>2</strong> [Nov 2005]</td>
+      <td>Clarifications about data legacy</td>
+    </tr>
+
+
+     <tr>
+
+
+       <td valign="top"><br>
+
+
+       </td>
+
+
+       <td valign="top"><br>
+
+
+       </td>
+
+
+     </tr>
+
+
+     <tr>
+
+
+       <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+
+
+     </tr>
+
+
+   
+  
+  </tbody>
+</table>
+
+
+   
+<hr>
+   
+<p><i>Copyright &copy; 2005, Dassault Syst&egrave;mes. All rights reserved.</i> <br>
+
+
+   </p>
+
+
+
+  
+</body>
+</html>

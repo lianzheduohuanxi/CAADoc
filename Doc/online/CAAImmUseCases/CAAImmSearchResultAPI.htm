@@ -1,0 +1,225 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Retrieving VPM Identification</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>VPM Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Search Result API</h3>
+      <em>API to fill Search Result Window</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the way to execute a query on several objects and to display the search result window 
+	  fulfilled with the results using the API to fill Search Result Window and explains how to use it in a command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Search Result API and test Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Search Result API test Command Do</a></li>
+			<li><a href="#How">How to Launch the Search Result API test Command</a></li>
+            <li><a href="#Where">Where to Find the Search Result API test Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to explain how to use the Search Result API to develop a new command
+ to query for multiple objects and to display the search result window fulfilled with the results.
+ Use of this API is demonstrated by means of a Search API Test command. This command is available
+ from the Search workbench in the Seach API Test toolbar.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Search Result API and Test Command Use Case</h3>
+<p>The Search API Test command is a use case of the CAACATImmENOVIAProvider.edu framework that 
+ illustrates Search Result API capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Search Result API Test Command Do</h4>
+<p>CAAImmSearchAPITestCmd is a command which uses the Identifier Acquisition Agent to get the 
+ VPM Identification information and passes this information to the OpenSearchResultWindow function.
+ This function opens a new search result window and fulfills it with the result of the query.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Search Result API Test Command</h4>
+<p>To launch CAAImmSearchAPITestCmd, you will need to set up the build time environment,
+then compile CAAImmSearchAPITestCmd along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] in the following way: </p>
+<UL>
+  <LI>Run CNEXT on the command line.
+  <LI>Connect to Enovia using the command on Enovia V5 Toolbar.
+  <LI>Enter Login, Password and Enovia Server information and click OK to login.
+  <LI>Run Search command for a Document Revision or Part Version on Enovia V5 Toolbar.
+  <LI>Click on a Document Revision or a Part Version and run the CAAImmSearchAPITestCmd available in Search API Test toolbar. </LI></UL>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Search Result API test Command Code</h4>
+<p>The Search API Test command is made up of a single class named <i>CAAImmSearchAPITestCmd</i> 
+      located in the <i> CAAImmSearchAPITestCmd.m </i> module of the <i> CAACATImmENOVIAProvider.edu </i> framework :</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATImmENOVIAProvider.edu\CAAImmSearchAPITestCmd.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAACATImmENOVIAProvider.edu/CAAImmSearchAPITestCmd.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The following code illustrates how to call the SearchResult API:</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Test Command Structure</h4>
+<p>The Search API Test command derives from CATStateCommand.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAImmSearchAPITestCmd: public CATStateCommand
+{
+...
+public:
+	void BuildGraph();
+	void ActionCommand();
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>We make the call to the Search Result API in the <code>ActionCommand()</code> of the Test Command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Populating the arguments for Search Result API</h4>
+<p>The <code>OpenSearchResultWindow</code> is called in command <code>ActionCommand</code> method.
+The arguments to be passed to the API have to be populated as shown below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAImmSearchAPITestCmd::ActionCommand()
+{
+...
+CATUnicodeString iType = "DOCDIR/ENOVIA_VPMDocumentRevision";
+int iNb = 4;
+CATListOfCATUnicodeString iAttrNameList;
+CATListOfCATUnicodeString iArrayValueList[4];
+	
+iAttrNameList.Append("V_ID");
+iAttrNameList.Append("V_version");
+	
+iArrayValueList[0].Append("DocumentRevision_ID1");         //Used "DR_RZW_23Apr"
+iArrayValueList[0].Append("DocumentRevision_Version1");    //Used "---"
+
+iArrayValueList[1].Append("DocumentRevision_ID2");         //Used "DR_RZW_26Apr"
+iArrayValueList[1].Append("DocumentRevision_Version2");    //Used "---"
+
+iArrayValueList[2].Append("DocumentRevision_ID3");         //Used "Part1_RZW_23Apr"
+iArrayValueList[2].Append("DocumentRevision_Version3");    //Used "---"
+
+iArrayValueList[3].Append("DocumentRevision_ID4");         //Used "Part1_RZW_24Apr"
+iArrayValueList[3].Append("DocumentRevision_Version4");    //Used "---"
+
+HRESULT RC = CATImmCAAServices::OpenSearchResultWindow(iType,iAttrNameList,iNb,iArrayValueList);
+
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The above code snippet will search for four entities of type <code>DOCDIR/ENOVIA_VPMDocumentRevision</code>
+based on the attributes V_ID and V_Version and display the results in a new result window. Different types and
+attributes can be used to create a query.</p>
+<p><img src="images/CAAImmSearchResultAPI.jpg" alt="CAAImmSearchResultAPI.jpg " width="900" height="930"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Error Handling</h4>
+<p>In case the Search Result API fails to find any objects based on our query, the following error 
+message is shown.</p>
+<p><img src="images/CAAImmSearchResultAPIError.jpg" alt="CAAImmSearchResultAPIError.jpg " width="341" height="126"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows usage of the Search Result API and the way to create a query and use that
+query to fill the Search Result window. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+    <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+    <tr>
+    <td valign="top">Version: <strong>2</strong> [July 2007]</td>
+    <td valign="top">Document modified</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,305 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>KnowledgeInterfaces Interface CATICkeUnit</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../KnowledgeInterfaces.htm" href="../KnowledgeInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "KnowledgeInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICkeUnit"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>KnowledgeInterfaces Interface CATICkeUnit</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICkeUnit_26871','CATICkeUnit','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICkeUnit</b>
+</p>
+<p>
+<b><i>    Interface dedicated to unit management.</i></b><br>
+
+ <b>Role</b>: This interface gives access to unit properties.<br>
+ This interface is based on the International System Magnitude Management
+ called MKS.<br>
+ Each magnitude has a default unit corresponding to the MKS System<br>
+     for example : the default unit for length is meter<br>
+                   the default unit for weight is kilogram<br>
+                   etc...<br>
+ All conversion methods are working with this MKS unit on one side<br> 
+
+ <br>
+ Usage : <br>  
+    <br>
+   #include "CATCkeParmFactory.h"<br>
+   #include "CATICkeParmFactory.h"<br>
+   #include "CATICkeUnit.h"<br>
+<br>
+   // imagine fact is the current parameter factory<br>
+<br>
+   // creation of a unit with multiplication factor between it and the <br>
+   // MKS equal to 100<br>
+   CATICkeUnit_var centimetre = fact->CreateUnit ("Centimetre","cm",100);<br>
+   cout << centimetre->Name ();       // returns "Centimetre"<br>
+   cout << centimetre->Symbol ();     // returns "cm"<br>
+   cout << centimetre->Show (3);      // returns "300 cm" as 3 is given in MKS  <br>
+   cout << centimetre->Convert (1);   // returns 0.01 (m)  <br>
+   cout << centimetre->Value (1);     // returns 100  (cm) <br>
+   double d = 0;<br>
+   Assume (centimetre->DecodeReal ("2 m",d) == CATCke::False); // returns 2<br>
+   Assume (centimetre->DecodeReal ("203 cm",d) == CATCke::True); // returns 2.3 <br>
+   Assume (d == 2.3);<br>
+
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATICkeMagnitude','','CATICkeMagnitude') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Convert(double)"><b>Convert</b></a>(double)
+<dd>  Converts  a real in this unit to MKS.
+ <dt> o 
+    <a href="#DecodeReal(CATUnicodeString&amp;,double&amp;)"><b>DecodeReal</b></a>(CATUnicodeString&amp;,double&amp;)
+<dd>  Tries to decode a string (prefixed with unit or not) to a real.
+ <dt> o 
+    <a href="#GetMagnitude()"><b>GetMagnitude</b></a>()
+<dd>   Returns the magnitude of the unit.
+ <dt> o 
+    <a href="#InternalName()"><b>InternalName</b></a>()
+<dd>  Returns the internal name of this unit.
+ <dt> o 
+    <a href="#Name()"><b>Name</b></a>()
+<dd>  Returns the NLS name of this unit.
+ <dt> o 
+    <a href="#Show(double,int)"><b>Show</b></a>(double,int)
+<dd>  Returns a string showing a real (in MKS) in this unit.
+ <dt> o 
+    <a href="#ShowIso(double,int)"><b>ShowIso</b></a>(double,int)
+<dd>  Returns the value of the parameter in the current unit while respecting the ISO standard.
+ <dt> o 
+    <a href="#Symbol()"><b>Symbol</b></a>()
+<dd>  Returns the symbol of this unit.
+ <dt> o 
+    <a href="#Value(double)"><b>Value</b></a>(double)
+<dd>  Converts a real in MKS to this unit.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Convert"></a><a name="Convert(double)"></a> <dt> o <b>Convert</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>Convert</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValueInThisUnit</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts  a real in this unit to MKS.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> const</tt>
+   <dd> iValueInThisUnit value in this unit </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  value converted in MKS
+</dl>
+</dl>
+<a name="DecodeReal"></a><a name="DecodeReal(CATUnicodeString&amp;,double&amp;)"></a> <dt> o <b>DecodeReal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCke::Boolean','CATCke::Boolean')</script>  <b>DecodeReal</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStringToDecode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>oValueInMKS</tt>)<script type="text/javascript"> activateLink('=0',' const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Tries to decode a string (prefixed with unit or not) to a real.
+ Example: Decode "3mm"<br>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStringToDecode</tt>
+   <dd> string to be decoded. </dd>
+    <dt><tt> oValueInMKS</tt>
+   <dd> the double in output is in MKS </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  <br><b>Legal values</b>: the test can be either <tt>1</tt> if successful in decoding.
+ <tt>0</tt> if it isn't.
+</dl>
+</dl>
+<a name="GetMagnitude"></a><a name="GetMagnitude()"></a> <dt> o <b>GetMagnitude</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATICkeMagnitude','CATICkeMagnitude_var')</script>  <b>GetMagnitude</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns the magnitude of the unit. It may happen that a unit participate to several magnitudes.<br>
+  In this case, only the first found will be returned.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  the magnitude of the unit
+</dl>
+</dl>
+<a name="InternalName"></a><a name="InternalName()"></a> <dt> o <b>InternalName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>InternalName</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the internal name of this unit.
+ Example: "Millimeter".
+</dl>
+<a name="Name"></a><a name="Name()"></a> <dt> o <b>Name</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>Name</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the NLS name of this unit.
+ Example: "Millimeter".
+</dl>
+<a name="Show"></a><a name="Show(double,int)"></a> <dt> o <b>Show</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>Show</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValueInMKS</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNbDecimals</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a string showing a real (in MKS) in this unit.
+ Example: "2 cm".
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iValueInMKS</tt>
+   <dd> double in input is in MKS  </dd>
+    <dt><tt> iNbDecimals</tt>
+   <dd> number of decimals to use to show the number. If equal to zero, default nb of decimals</dd>
+</dl>
+</dl>
+</dl>
+<a name="ShowIso"></a><a name="ShowIso(double,int)"></a> <dt> o <b>ShowIso</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>ShowIso</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNbDecimals</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the value of the parameter in the current unit while respecting the ISO standard.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iValue</tt>
+   <dd>   Value of the parameter.
+ </dd>
+    <dt><tt> iNbDecimals</tt>
+   <dd>  Number of decimals to use to show the number. If equal to zero, the setting is used.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The value of the parameter in the current unit while respecting the ISO standard, 
+  <br>i.e. : if the setting called "Decimal places for read/write numbers" (used for the display of units) = 3
+  <br>and if the parameter's value in current unit (e.g. mm) = 0.001, 
+  <br> returns "0mm"
+  <br>otherwise, if parameter's value in current unit (e.g. mm) = 0.001,
+  <br> returns "0.001mm".
+</dl>
+</dl>
+<a name="Symbol"></a><a name="Symbol()"></a> <dt> o <b>Symbol</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>Symbol</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the symbol of this unit.
+ Example: "mm"
+</dl>
+<a name="Value"></a><a name="Value(double)"></a> <dt> o <b>Value</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>Value</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iValueInMKS</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts a real in MKS to this unit.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> const</tt>
+   <dd> iValueInMKS value in this unit </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  value converted in this unit
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICkeUnit.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>KnowledgeItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

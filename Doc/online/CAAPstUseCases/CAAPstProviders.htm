@@ -1,0 +1,843 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 12.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Using the Provider Mechanism</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Using the Provider Mechanism</H3>
+        <P><EM>Navigating through applicative containers and feature extensions</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article discusses the CAAPstProviders use case. This use case 
+        explains how to use the Product Modeler's &quot;Providers&quot; mechanism to 
+        integrate applicative data in the native behaviors of a Product 
+        document. </P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><A href="#UseCase"><STRONG>The CAAPstProviders Use Case</STRONG></A>
+            <UL>
+                <LI><A href="#What">What Does CAAPstProviders Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstProviders</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstProviders Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>This use case is intended to help you understand how to work with the 
+Provider mechanism of the Product Modeler. The Provider mechanism allows an 
+application to be integrated in the native behaviors of a product structure. For 
+example, a product structure may not be aware of the specific contents of each 
+applicative container or feature extension found in the Product document and yet 
+still be capable of taking these into account when performing native tasks, such 
+as navigation or visualization. Currently, four provider interfaces have been 
+defined:</P>
+<OL>
+    <LI><I>CATINavigateProvider</I> is the provider interface corresponding to
+    <I>CATINavigateObject</I> of the <B>ObjectModelerBase</B> framework.</LI>
+    <LI><I>CATI3DVisuProvider</I> is the provider interface corresponding to <I>
+    CATI3DGeoVisu</I> of the <B>Visualization</B> framework.</LI>
+    <LI><I>CATICtxMenuProvider</I> is the provider interface corresponding to <I>
+    CATIUIActivate</I> of the <B>ApplicationFrame</B> framework.</LI>
+    <LI><I>CATIParmProvider</I> is the provider interface corresponding to <I>
+    CATIParmPublisher</I> of the <B>LiteralFeatures</B> framework.</LI>
+</OL>
+<P>The implementation of any one of these interfaces is the actual provider. 
+Each provider supports a specific algorithm. When a provider declaration is 
+currently active, the implementation of the corresponding interface calls the 
+method implemented by the provider. In this use case, you will see how to create 
+and declare a provider in order to integrate one of the native behaviors listed 
+above.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstProviders Use Case</H3>
+<P>CAAPstProviders is a use case of the CAAProductStructure.edu framework that 
+illustrates ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstProviders Do</H4>
+<P>The goal of CAAPstProviders is to illustrate working with the Providers 
+mechanism. The example illustrated by this use case deals with <I>
+CATINavigateProvider</I> implementations. However, the provider mechanism shown 
+here is valid for all the other provider interfaces listed in the previous 
+section. </P>
+<P>The CAAPstProviders use case uses two files that must be found in the runtime 
+view when executing the use case: &quot;CAAPstExtCatalog.CATfct&quot; and 
+&quot;CAAPstProvider.CATProduct&quot;.&nbsp;</P>
+<P>The &quot;CAAPstExtCatalog.CATfct&quot; file contains the following extension 
+definition: </P>
+<P><FONT size="2"><B>Fig.1 CAAPstExtCatalog.CATfct</B></FONT> </P>
+<TABLE border="1" cellpadding="0" cellspacing="0" width="100%">
+    <TR>
+        <TD width="100%">
+        <img border="0" src="images/CAAPstProvidersExt.gif" width="301" height="80"></TD>
+    </TR>
+</TABLE>
+<P>The &quot;CAAPstProvider.CATProduct&quot; document structure can be viewed in two 
+different ways, depending on whether we want to see it from a data storage view 
+or from an interactive session view. The reason for this is that Provider 
+declarations and extensions activations are not persistent tasks, i.e., they are 
+not saved within the document data stream during the save operation. Therefore, 
+relationships between applicative data may only be established during an 
+interactive session.&nbsp; </P>
+<P>Following is the contents of the document as seen from a data storage view:</P>
+<P><FONT size="2"><B>Fig. 2 CAAPstProvider.CATProduct - Data StorageView</B></FONT>
+</P>
+<TABLE border="0" cellpadding="0" cellspacing="0" width="100%">
+    <TR>
+        <TD width="100%">
+        <img border="0" src="images/CAAPstProvidersDocStorage.gif" width="439" height="446"></TD>
+    </TR>
+</TABLE>
+<P>Now, here is the image of the same document's contents after it has been 
+loaded in an interactive session: </P>
+<P><FONT size="2"><B>Fig. 3 CAAPstProvider.CATProduct - Interactive View</B></FONT>
+</P>
+<TABLE border="1" cellpadding="0" cellspacing="0" width="100%">
+    <TR>
+        <TD width="100%">
+        <img border="0" src="images/CAAPstProvidersDocInteractiveCATIA.gif" width="666" height="448"></TD>
+    </TR>
+</TABLE>
+<P>Note that the applicative containers are not displayed in the navigation 
+tree. Likewise, feature attributes that do not themselves point to other 
+features are not displayed in the navigation tree either. What we do see in the 
+navigation tree is that the &quot;CAAOsmBook1&quot; feature is aggregated by the 
+&quot;CAAPstProviderSubProduct1&quot; and that it has a child called &quot;CAAOsmChapter1&quot; 
+which is itself a feature actually aggregated by an extension of &quot;CAAOsmBook1&quot;.</P>
+<P>Now, let's try to understand how the mechanism works. As you can see by 
+looking at the structure of the document in storage, the root product aggregates 
+a sub-product. However, the sub-product does not directly aggregate the contents 
+of the &quot;CAAPstBFCont&quot; applicative container as shown in the Interactive View. In 
+order for the sub-product to aggregate the contents of &quot;CAAPstBFCont&quot;, the 
+implementation of <I>CATINavigateObject</I> on the product must return the 
+children of &quot;CAAPstBFCont&quot;: this is done using a provider.&nbsp;</P>
+<P>Likewise, notice that the &quot;CAAOsmChapter1&quot; feature is not a direct child of 
+&quot;CAAOsmBook1&quot;, but rather the child of the extension of &quot;CAAOsmBook1&quot; called 
+&quot;CAAPstHistoricalNovel1&quot;. Because &quot;CAAOsmBook1&quot; does not necessarily know what, 
+if any, extensions have been activated on it, it cannot retrieve its extensions' 
+children directly from the <I>CATINavigateObject</I> implementation. A provider 
+created especially for this purpose must be declared instead.&nbsp;</P>
+<P>To summarize, then, the two objects implementing <I>CATINavigateObject</I> 
+must call specific providers in order to aggregate certain children they have no 
+specific knowledge of.&nbsp;</P>
+<P>Providers themselves are called in a generic fashion. In other words, they 
+are first declared to the document. Then, during the <I>CATINavigateObject</I> 
+implementation(s), the list of active providers is retrieved and each provider 
+is called in turn. It is within the provider code itself to determine the 
+identity of the parent caller in order to retrieve the children of the specific 
+object it is a provider for.</P>
+<P>You will see in the details of the use case how this is actually done. But 
+first, take a look at the diagram below representing the navigation process 
+illustrated by this use case:</P>
+<P><FONT size="2"><B>Fig. 4 CAAPstProviders Navigation Process</B></FONT> </P>
+<TABLE border="1" cellpadding="0" cellspacing="0" width="100%">
+    <TR>
+        <TD width="100%">
+        <img border="0" src="images/CAAPstProvidersNavigProcess.gif" width="524" height="578"></TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstProviders</H4>
+<P>To launch CAAPstProviders, you will need to set up the build time 
+environment, then compile the following modules:</P>
+<UL>
+    <LI>&nbsp;CAAPstEduContInit.m</LI>
+    <LI>&nbsp;CAAPstEduNavigBook.m&nbsp;</LI>
+    <LI>&nbsp;CAAPstEduNavigExtProv.m</LI>
+    <LI>&nbsp;CAAPstEduNavigFeatProv.m&nbsp;</LI>
+    <LI>&nbsp;CAAPstEduCtxMenuProv.m</LI>
+</UL>
+<P>Furthermore, verify that the runtime view contains:</P>
+<UL>
+    <LI>resources + graphic: CAAPstExtCatalog.CATfct and 
+    CAAPstProvider.CATProduct</LI>
+<!-- Removed IR IR-286751 - No need any longer
+	<LI>resources + msgcatalog: CAAPstHistoricalNovel.CATRsc</LI>
+-->
+    <LI>code + dictionary: CAAProductStructure.edu.dico&nbsp;</LI>
+</UL>
+<P>Now, you will need to set up the runtime environment, and then launch a CATIA 
+session. This is fully described in the referenced article [<A href="#References">1]</A>. 
+To launch the use case, simply select <CODE>&quot;File/Open&quot; and</CODE> open the 
+CAAPstProvider.CATProduct document found in the resources + graphic runtime 
+directory.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstProviders Code</H4>
+<P>The main CAAPstProviders code is found in the CAAProductStructure.edu 
+framework. It is composed of four modules as follows:</P>
+<UL>
+    <LI><B>CAAPstEduContInit.m</B> contains the CAAEPstInit.cpp source code 
+    which is a data extension of the &quot;CAAPstBFCont&quot; applicative container 
+    implementing the <I>CATInit</I> interface.&nbsp;</LI>
+    <LI><B>CAAPstEduNavigBook.m</B> contains the CAAEPstNavigateObject.cpp 
+    source code which is a data extensions of the &quot;CAAOsmBook&quot; feature late type 
+    implementing the <I>CATINavigateObject</I> interface.</LI>
+    <LI><B>CAAPstEduNavigExtProv.m</B> contains the CAAPstBookExtProvider 
+    impelementation class which is the provider implementing the <I>
+    CATINavigateProvider</I> interface on the &quot;CAAPstHistoricalNovel&quot; extension.</LI>
+    <LI><B>CAAPstEduNavigFeatProv.m</B> contains the CAAPstAppliContProvider 
+    implementation class which is the provider implementing the <I>
+    CATINavigateProvider</I> interface on the &quot;CAAPstBFCont&quot; applicative 
+    container.</LI>
+    <LI><B>CAAPstEduCtxMenuProv.m</B> contains the CAAPstCtxMenuProvider 
+    implementation class which is the provider implementing the <I>
+    CATICtxMenuProvider</I> interface.</LI>
+</UL>
+<TABLE>
+    <TR>
+        <TD>Windows</TD>
+        <TD><CODE>
+        InstallRootDirectory\CAAProductStructure.edu\CAAPstEduContInit.m, 
+        CAAPstEduNavigBook.m, CAAPstEduNavigExtProv.m, CAAPstEduNavigFeatProv.m 
+        and CAAPstEduCtxMenuProv.m</CODE></TD>
+    </TR>
+    <TR>
+        <TD>Unix</TD>
+        <TD><CODE>
+        InstallRootDirectory/CAAProductStructure.edu/CAAPstEduContInit.m, 
+        CAAPstEduNavigBook.m, CAAPstEduNavigExtProv.m, CAAPstEduNavigFeatProv.m 
+        and CAAPstEduCtxMenuProv.m</CODE></TD>
+    </TR>
+</TABLE>
+<P>where <CODE>InstallRootDirectory</CODE> is the root directory of your CAA V5 
+installation. </P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A>Step-by-Step</H3>
+<P>There are four logical steps in CAAPstProviders:</P>
+<OL>
+    <LI><A href="#ImplCtxMenuSubProd">Implementing <I>CATINavigateProvider</I> 
+    for the First Sub-Product</A></LI>
+    <LI><A href="#ImplNavigFeatureExt">Implementing <I>CATINavigateProvider</I> 
+    for the &quot;CAAOsmBook&quot; Feature's Extension</A></LI>
+    <LI><A href="#ImplInitAppliCont">Implementing <I>CATInit</I> for the 
+    &quot;CAAPstBFCont&quot; Aplicative Container</A></LI>
+    <LI><A href="#ImplNavigBookFeature">Implementing <I>CATINavigateObject</I> 
+    for the &quot;CAAOsmBook&quot; feature</A></LI>
+    <LI><A href="#ImplCtxMenuSubProd">Implementing <I>CATICtxMenuProvider </I>
+    for the First Sub-Product</A></LI>
+</OL>
+<P>We will now comment each of these sections by looking at the code.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="ImplNavigSubProd"></A>Implementing <I>CATINavigateProvider</I> for 
+the First Sub-Product</H4>
+<P>The provider implementation that returns the list of the children of the 
+&quot;CAAPstBFCont&quot; applicative container is found in the CAAPstAppliContProvider.cpp 
+file of the CAAPstEduNavigFeatProv.m module. It is an implementation class on 
+the <I>CATINavigateProvider</I> interface for a <CODE>CATNull</CODE> late type. 
+In other words, no dictionary entry is necessary. This provider implements the
+<CODE>GetChildren</CODE> method defined by the <I>CATINavigateProvider</I> 
+interface. However, it only returns the list of children if the parent caller is 
+the sub-product called &quot;CAAPstProviderSubProduct1&quot;.&nbsp;</P>
+<P>Remember that the <I>CATINavigateProvider</I> implementations are called 
+regardless of the current object. In other words, the <I>CATINavigateObject</I> 
+implementation on &quot;Product1&quot; or on &quot;CAAPstProviderSubProduct1&quot; is the same so 
+that the same provider will be called for each: It is the provider's 
+responsibility to return the list of children depending on the proper parent.&nbsp;</P>
+<P>1. Verify that the parent caller is &quot;CAAPstProviderSubProduct1.1&quot;</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE><B>HRESULT CAAPstAppliContProvider::GetChildren(CATBaseUnknown * pObj, CATLISTP(CATBaseUnknown) ** pListChildren) 
+</B>{
+    cout &lt;&lt; &quot;***** CAAPstAppliContProvider::GetChildren&quot; &lt;&lt; endl &lt;&lt; flush;
+
+    // This provider returns the list of the children found in the applicative
+    // container of the document only if the caller is the subproduct 
+    // named &quot;CAAPstProviderSubProduct1.1&quot;
+
+    // Retrieve a CATIProduct handle on the caller object
+    CATIProduct *piProductOnObj = NULL;
+    HRESULT rc = pObj -&gt; <B>QueryInterface</B> (IID_CATIProduct, 
+	                                (void**) &amp;piProductOnObj);
+    if (SUCCEEDED(rc))
+    {
+	// Retrieve the name of the product caller; if it is &quot;CAAPstProviderSubProduct1.1&quot;
+	// then create and return the list of the children of the applicative container.
+	CATUnicodeString productName;
+	rc = piProductOnObj -&gt; <B>GetPrdInstanceName</B>(productName);
+	piProductOnObj -&gt; <B>Release</B>();
+	piProductOnObj = NULL;
+	if (productName != &quot;CAAPstProviderSubProduct1.1&quot;)
+	{
+	    cout &lt;&lt; &quot;The caller is not the aggregating subproduct.&quot; &lt;&lt; endl &lt;&lt; flush;
+	    <B>return</B> S_OK;
+	}
+...   </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The parent caller is passed as an argument to the <CODE>GetChildren</CODE> 
+method (pObj). If a <I>CATIProduct</I> pointer can be retrieved on it, then use 
+the <CODE>GetPrdInstanceName</CODE> method to retrieve its name. If the 
+product's name is &quot;CAAPstProviderSubProduct1.1&quot;, then it is the proper parent 
+under which we want to list the contents of the base feature applicative 
+container. Otherwise, we return to the calling <CODE>GetChildren</CODE> method.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>2. Retrieve the base feature applicative container.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+          // Retrieve a pointer to the applicative container.
+          CATILinkableObject *piLinkableOnObj = NULL;
+          rc = pObj -&gt; <B>QueryInterface</B> (IID_CATILinkableObject,
+	                              (void**) &amp;piLinkableOnObj);
+          if (!SUCCEEDED(rc)) <B>return</B> E_FAIL;
+          CATDocument* pDoc = piLinkableOnObj-&gt;<B>GetDocument</B>();
+          piLinkableOnObj -&gt; <B>Release</B>();
+          piLinkableOnObj = NULL;
+		
+          CATUnicodeString appliContIdentifier(&quot;BaseFeatureContainer&quot;);
+          CATBaseUnknown *pApplicativeContainer = NULL;
+
+          rc = <B>::CATGetApplicativeContainer</B> (&amp;pApplicativeContainer,   
+                                             pDoc,                     
+	    			        IID_CATIContainer,  
+                                             appliContIdentifier);     
+          if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Applicative container retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+          else
+          {
+             cout &lt;&lt; &quot;ERROR in retrieving applicative container&quot; &lt;&lt; endl &lt;&lt; flush;
+             <B>return</B> E_FAIL;
+          }
+
+          // Retrieve a pointer to CATIClientContainer in order to list the members
+          // of the applicative container.
+          CATIClientContainer *piClientOnAppliCont = NULL;
+          rc = pApplicativeContainer -&gt; <B>QueryInterface</B>(IID_CATIClientContainer,
+                                                       (void**) &amp;piClientOnAppliCont);
+
+          pApplicativeContainer -&gt; <B>Release</B>();
+          pApplicativeContainer = NULL;
+
+          if (NULL == piClientOnAppliCont)
+          { 
+               cout &lt;&lt; &quot;ERROR in retrieving container pointer&quot; &lt;&lt; endl &lt;&lt; flush;
+               <B>return</B> E_FAIL;
+          }
+          else cout &lt;&lt; &quot;CATIClientContainer pointer retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>In order to retrieve a pointer to the applicative container, a <I>CATDocument</I> 
+pointer is necessary. This pointer can be retrieved using the <I>
+CATILinkableObject</I>::<CODE>GetDocument</CODE> method on the parent caller. 
+Then, the <CODE>CATGetApplicativeContainer</CODE> global function can be 
+executed, using the applicative container identifier as argument. Now, acquire a
+<I>CATIClientContainer</I> pointer on the applicative container to be used in 
+order to list the members of the container.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>3. Construct the list of the direct children of the sub-product (features of 
+the applicative container).</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+          // Retrieve the list of features in the applicative container
+          CATUnicodeString clientId(&quot;CAAOsmClientId&quot;); 
+          CATListPtrCATBaseUnknown *pMemberList = <B>new</B> CATListPtrCATBaseUnknown();
+          rc = piClientOnAppliCont -&gt; <B>ListMembers</B>(IID_CATISpecObject,
+                                                  clientId,  
+                                                  &amp;pMemberList);
+          piClientOnAppliCont -&gt; <B>Release</B>();
+          piClientOnAppliCont = NULL;
+
+          if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Member list retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+          else
+          {   
+	    cout &lt;&lt; &quot;ERROR in retrieving member list&quot; &lt;&lt; endl &lt;&lt; flush;
+	    <B>return</B> E_FAIL;
+          }
+
+          cout &lt;&lt; &quot;Number of members in applicative container: &quot; &lt;&lt; pMemberList-&gt;Size() &lt;&lt; endl &lt;&lt; flush;
+      
+          for(int i=1;i&lt;=pMemberList-&gt;<B>Size</B>();i++)
+          {
+	    (*pListChildren)-&gt;<B>Append</B>((*pMemberList)[i]);
+          }
+          <B>delete</B> pMemberList;
+          pMemberList = NULL;
+      }
+
+      <B>return</B> S_OK;
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Use the <CODE>ListMembers</CODE> method of <I>CATIClientContainer</I> to list 
+the members of type <I>CATISpecObject</I> found in the applicative container. 
+Then, loop through this list and append each member to the list of children to 
+be returned.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P><B><A name="ImplNavigFeatureExt"></A>Implementing <I>CATINavigateProvider</I> 
+for the &quot;CAAOsmBook&quot; Feature's Extension</B></P>
+<P>The provider implementation that returns the list of the children of the 
+&quot;CAAOsmBook1&quot; feature is found in the CAAPstBookExtProvider.cpp file of the 
+CAAPstEduNavigExtProv.m module. It is an implementation class on the <I>
+CATINavigateProvider</I> interface for a <CODE>CATNull</CODE> late type. In 
+other words, no dictionary entry is necessary. This provider implements the
+<CODE>GetChildren</CODE> method defined by the <I>CATINavigateProvider</I> 
+interface. However, it only returns the list of children if the parent caller is 
+the &quot;CAAOsmBook1&quot; feature: it knows that an extension aggregating another 
+feature instance on the &quot;NovelChapter&quot; attribute may be active.</P>
+<P>Remember that the <I>CATINavigateProvider</I> implementations are called 
+regardless of the current object. In other words, the <I>CATINavigateObject</I> 
+implementation on &quot;CAAOsmBook&quot; will call all of the providers that may be 
+currently active,&nbsp; whether or not they are pertinent to the &quot;CAAOsmBook1&quot; 
+feature.&nbsp;</P>
+<P>1. Verify that the parent caller is &quot;CAAOsmBook1&quot;.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE><B>HRESULT CAAPstBookExtProvider::GetChildren(CATBaseUnknown * pObj, CATLISTP(CATBaseUnknown) ** pListChildren) 
+{
+   </B>cout &lt;&lt; &quot;***** CAAPstBookExtProvider::GetChildren&quot; &lt;&lt; endl &lt;&lt; flush;
+
+   // This provider returns the children of the extension of the feature named
+   // &quot;CAAOsmBook1&quot;. If the caller object is not this feature, the provider
+   // simply returns.
+
+   // Retrieve a CATISpecObject pointer on the caller object.
+   CATISpecObject *piSpecObjectOnExtFeature = NULL;
+   HRESULT rc = pObj -&gt; <B>QueryInterface</B> (IID_CATISpecObject,
+		                     (void**) &amp;piSpecObjectOnExtFeature);
+
+   if (!SUCCEEDED(rc)) <B>return</B> S_OK;
+
+   CATUnicodeString specName = piSpecObjectOnExtFeature -&gt; <B>GetName</B>();
+   if (specName == &quot;CAAOsmBook1&quot;)
+   {     
+      ...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Retrieve a <I>CATISpecObject</I> pointer on the parent caller. If the pointer 
+is correctly retrieved, use the <CODE>GetName</CODE> method to test whether the 
+parent caller is actually the &quot;CAAOsmBook1&quot; feature, thus being applicable to 
+this provider.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>2. Retrieve and return the value of the &quot;NovelChapter&quot; attribute.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+      // Retrieve CATIOsmExtendable on the base feature
+      <b>CATIOsmExtendable</b> *piExtendableOnExtFeature = NULL; 
+      rc = piSpecObjectOnExtFeature -&gt; QueryInterface(<b>IID_CATIOsmExtendable</b>, 
+                                                      (void**) &amp;piExtendableOnExtFeature); 
+      piSpecObjectOnExtFeature -&gt; Release(); 
+      piSpecObjectOnExtFeature = NULL; 
+      if (FAILED(rc)) return E_FAIL; 
+
+      // Retrieve CATISpecAttrAccess on the extension
+      const char *extensionName = &quot;CAAPstHistoricalNovel&quot;; 
+      <b>CATISpecAttrAccess</b> *piAccessOnExtension = NULL; 
+      rc = piExtendableOnExtFeature-&gt;QueryExtension(extensionName, <b>
+                                                    IID_CATISpecAttrAccess</b>, 
+                                                    (void**) &amp;piAccessOnExtension); 
+      piExtendableOnExtFeature-&gt;Release(); 
+      piExtendableOnExtFeature = NULL; 
+      if (FAILED(rc)) return E_FAIL; 
+
+      // Retrieve the attribute key for the extensions component attribute
+      CATISpecAttrKey *<b>piKeyNovelChapter</b> = piAccessOnExtension -&gt; <b>GetAttrKey</b>(&quot;<b>NovelChapter</b>&quot;); 
+      if (NULL == piKeyNovelChapter) return E_FAIL; 
+
+      // Retrieve the feature value of the attribute
+      CATBaseUnknown *pChapter = NULL; 
+      pChapter = piAccessOnExtension -&gt; <b>GetSpecObject</b> (<b>piKeyNovelChapter</b>, 1); 
+      piAccessOnExtension -&gt; Release(); 
+      piAccessOnExtension = NULL; 
+      piKeyNovelChapter -&gt; Release(); piKeyNovelChapter = NULL; 
+
+      // Add the feature to the list of children 
+      if (NULL != pChapter) { 
+         if (NULL == *pListChildren) 
+            *pListChildren = new CATLISTP(CATBaseUnknown); 
+         (*pListChildren)-&gt;Append(pChapter); 
+      } else 
+         return E_FAIL;
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">To get an attribute value on the &quot;CAAPstHistoricalNovel&quot; extension, 
+we first need to retrieve a <i>CATISpecAttrAccess</i> pointer on the extension 
+itself. This is done by retrieving a <i>CATIOsmExtendable</i> pointer on the 
+feature and then use it to query for a &quot;CAAPstHistoricalNovel&quot; extension, to be 
+returned as a <i>CATISpecAttrAccess</i> pointer. </P>
+<P align="left">With this <I>CATISpecAttrAccess</I> pointer on the extension, 
+get the attribute key with the <CODE>GetAttrKey</CODE> method for the &quot;NovelChapter&quot; attribute, and 
+then use the
+<CODE>GetSpecObject</CODE> method to retrieve a pointer to the aggregated 
+feature. It is this feature that is appended to the list of the children of the 
+&quot;CAAOsmBook1&quot; parent.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P><B><A name="ImplInitAppliCont"></A>Implementing <I>CATInit</I> for the 
+&quot;CAAPstBFCont&quot; Applicative Container</B></P>
+<P>The implementation of the <I>CATInit</I> interface on the &quot;CAAPstBFCont&quot; 
+applicative container is found in the CAAEPstInit.cpp source code of the 
+CAAPstEduContInit.m module. It is called upon the selection of the <CODE>
+File/Open</CODE> command when the CAAPstProvider.CATProduct document is loaded 
+into the interactive session. Implementing this interface is necessary because, 
+as you have already seen, provider declarations and extensions activation are 
+not persistent operations, i.e., they are not saved with the document and must, 
+therefore, be re-initialized at the start of an interactive session.</P>
+<P>1. Retrieve the current document.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE><B>void CAAEPstInit::Init (CATBoolean iDestroyExistingData)   </B>
+  {
+     cout &lt;&lt; &quot;***** CAAPstBFCont: CAAEPstInit::Init&quot; &lt;&lt; endl &lt;&lt; flush;
+     // Retrieve the current document
+     CATILinkableObject *piLinkableOnCont = NULL;
+     HRESULT rc = this -&gt; <B>QueryInterface</B>(IID_CATILinkableObject,
+                                         (void**) &amp;piLinkableOnCont);
+     if (!SUCCEEDED(rc)) <B>return</B>;
+     CATDocument *pDoc = piLinkableOnCont -&gt; <B>GetDocument</B>();
+     piLinkableOnCont -&gt; <B>Release</B>();
+     piLinkableOnCont = NULL;
+     if (NULL == pDoc) <B>return</B>;     </PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The current document is retrieved using the <CODE>GetDocument</CODE> 
+method of <I>CATILinkableObject</I>, a pointer to which is acquired on the 
+current object (the applicative container) using <CODE>QueryInterface</CODE>.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>2. Declare Providers.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>    // Retrieve a CATIProviders pointer on the current document
+    CATIProviders *piProvidersOnDocument = NULL;
+    rc = pDoc -&gt; <B>QueryInterface</B>(IID_CATIProviders,
+                                (void**) &amp;piProvidersOnDocument);
+    if (!SUCCEEDED(rc)) <B>return</B>;
+
+    // Declare provider to list the children of the applicative container 
+    CAAPstAppliContProvider *pAppliContProvider = <B>new</B> CAAPstAppliContProvider();
+    rc = piProvidersOnDocument -&gt; <B>AddProvider</B> (IID_CATINavigateProvider,
+	                                       pAppliContProvider);
+    if (!SUCCEEDED(rc)) <B>return</B>;
+    else cout &lt;&lt; &quot;Applicative container provider declared OK&quot; &lt;&lt; endl;
+
+    // Declare provider for the contextual menu
+    CAAPstCtxMenuProvider *pCtxMenuProvider = <b>new</b> CAAPstCtxMenuProvider(); 
+    rc = piProvidersOnDocument -&gt; <b>AddProvider</b> (IID_CATICtxMenuProvider,
+                                               pCtxMenuProvider);
+    ...
+    if (!SUCCEEDED(rc)) <b>return</b>; 
+    else cout &lt;&lt; &quot;Applicative container provider declared OK&quot; &lt;&lt; endl; 
+
+    // Declare provider to list the children of an extended feature
+    CAAPstBookExtProvider *pBookExtProvider = <B>new</B> CAAPstBookExtProvider();
+    rc = piProvidersOnDocument -&gt; <B>AddProvider</B> (IID_CATINavigateProvider,
+	                                      pBookExtProvider);
+    ...
+    if (!SUCCEEDED(rc)) <B>return</B>;
+    else cout &lt;&lt; &quot;Extended feature provider declared OK&quot; &lt;&lt; endl;</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>Providers are declared on a <I>CATDocument</I> object using the <I>
+CATIProviders</I>::<CODE>AddProvider</CODE> method of ProductStructure. A <I>
+CATIProviders</I> pointer must, therefore, be acquired on the current document. 
+Then, each provider class is first instantiated and then declared to the 
+document using the <CODE>AddProvider</CODE> method. This method takes as a first 
+argument the name of the provider interface, in this case <I>
+CATINavigateProvider,</I> and in the second argument the pointer to the provider 
+class instance. Remember that the provider declaration is not persistent: if the 
+document is re-opened in another CATIA session, these provider declarations will 
+no longer be active.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>3. Activate extensions</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>     // Activate extensions (only required for former extensions) 
+     const char *appliContIdentifier = &quot;ExtensionContainer&quot;; 
+     rc = <b>CATOsmExtensionServices::CATActivateExtensions</b>(pDoc, 
+                                                         appliContIdentifier); 
+     if (FAILED(rc)) { 
+        cout &lt;&lt; &quot;ERROR activating extensions&quot; &lt;&lt; endl; 
+        return ; 
+     } else 
+        cout &lt;&lt; &quot;Extensions activated OK&quot; &lt;&lt; endl; 
+
+     <B>return</B>;
+  }</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The last task to be executed by the <CODE>Init </CODE>method is to activate 
+the former extensions of the document. Please note that this step is only 
+required for former extensions as newer extensions are always active. This is 
+done by calling the <i>CATActivateExtensions</i> method of the 
+CATOsmExtensionServices class with a CATDocument pointer on the document and the 
+container name &quot;ExtensionContainer&quot;.</P>
+<P>Now, all the providers and extensions needed are active. During the display 
+process, the navigation tree will be constructed by calling the existing 
+implementations of <I>CATINavigateObject</I> for each late type encountered.&nbsp;</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P><A name="ImplNavigBookFeature"></A><B>Implementing CATINavigateObject for the 
+&quot;CAAOsmBook&quot; Feature</B></P>
+<P>The implementation of <I>CATINavigateObject</I> for the &quot;CAAOsmBook&quot; late 
+type is found in the CAAEPstNavigateObject.cpp source file of the 
+CAAPstEduNavigBook.m module.In this implementation, you will see that several 
+providers are actually called but only one is valid for the &quot;CAAOsmBook&quot; parent 
+type. As you saw in the previous sections, the provider caller is not 
+responsible for knowing whether the provider being called is relevant for the 
+given parent type.</P>
+<P>1. List the active providers.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE><B>CATListValCATBaseUnknown_var * CAAEPstNavigateObject::GetChildren()
+</B>{
+  cout &lt;&lt; &quot;***** CAAOsmBook: CAAEPstNavigateObject::GetChildren&quot; &lt;&lt; endl;
+
+  CATListValCATBaseUnknown_var *pList = NULL ;
+  pList = <B>new</B> CATListValCATBaseUnknown_var();
+  
+  // Retrieve the list of declared providers
+
+  CATLISTP(CATBaseUnknown) *pListProvider = <B>new</B> CATLISTP(CATBaseUnknown);
+  CATLISTP(CATBaseUnknown) *pListChildren = NULL;
+
+  // Retrieve a CATILinkableObject pointer on the CAAOsmBook feature in order
+  // to get a CATDocument pointer to the document which contains it.
+  CATILinkableObject * piLinkableOnExtFeature = NULL;
+  HRESULT rc = this -&gt; <B>QueryInterface</B> (IID_CATILinkableObject,
+	                              (void**) &amp;piLinkableOnExtFeature);
+  if (!SUCCEEDED(rc)) <B>return</B> pList;
+
+  CATDocument *pDoc = piLinkableOnExtFeature -&gt; <B>GetDocument</B>();
+  piLinkableOnExtFeature -&gt; <B>Release</B>();
+  piLinkableOnExtFeature = NULL;
+  if (NULL == pDoc) <B>return</B> pList;
+
+  // Retrieve a CATIProviders pointer on the document.
+  CATIProviders * piProvidersOnDoc = NULL;
+  rc = pDoc -&gt; <B>QueryInterface</B> (IID_CATIProviders,
+	                      (void**) &amp;piProvidersOnDoc);
+  if (!SUCCEEDED(rc)) <B>return</B> pList;
+
+  // Retrieve a list of the providers that have been declared to the document.
+  rc = piProvidersOnDoc -&gt; <B>ListProviders</B> (CATINavigateProvider::ClassId(),
+	                                 &amp;pListProvider);
+  piProvidersOnDoc -&gt; <B>Release</B>();
+  piProvidersOnDoc = NULL;
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>First of all, it is necessary to initialize the different array variables for 
+the different lists of providers and children that will be retrieved. Then, 
+using the &quot;this&quot; pointer, get a <I>CATDocument</I> pointer to the document in 
+which &quot;this&quot; is contained using the <CODE>GetDocument</CODE> method of <I>
+CATILinkableObject</I>. Now, using the <I>CATDocument</I> pointer, we can get a 
+pointer to <I>CATIProviders</I> and execute the <CODE>ListProviders</CODE> 
+method to retrieve a list of all of the providers declared to the document for 
+the <I>CATINavigateProvider</I> interface.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<P>2. Construct the list of children retrieved from every active provider.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+  // For each declared provider, get the CATINavigateProvider interface pointer to
+  // execute the GetChildren method and append the list of children returned to the
+  // list to be constructed.
+
+  if(SUCCEEDED(rc))
+  {
+     int size = pListProvider-&gt;<B>Size</B>();
+     for (int i=size; i&gt;=1; i--)
+     {
+	// Retrieve a CATINavigateProvider pointer on the provider
+	CATINavigateProvider *piNav = NULL;
+	rc = (*pListProvider)[i] -&gt; <B>QueryInterface</B>(IID_CATINavigateProvider,
+		                                  (void**) &amp;piNav);
+	if (SUCCEEDED(rc))
+	{
+	    pListChildren = <B>new</B> CATLISTP(CATBaseUnknown);
+	    // Retrieve the list of the children of the current object 
+	    piNav -&gt; <B>GetChildren</B> (this, &amp;pListChildren);
+ 	    if (NULL != pListChildren)
+	 	for(int j=1;j&lt;=pListChildren-&gt;<B>Size</B>();j++)
+		{
+		   if((*pListChildren)[j])
+		   {
+		       // Append the child to the list being constructed.
+	    	       CATINavigateObject_var navChild ((*pListChildren)[j]);
+		       if(navChild!=NULL_var)
+			 pList-&gt;<B>Append</B>(navChild);
+			 (*pListChildren)[j]-&gt;<B>Release</B>();
+		  }
+	         }
+	    <B>delete</B> pListChildren;
+	    pListChildren = NULL;
+	    piNav-&gt;<B>Release</B>();
+	 }
+     }
+     <B>delete</B> pListProvider;
+  }
+  <B>return</B> pList;
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>If the list of providers has correctly been retrieved, loop through the list 
+and call the <CODE>GetChildren</CODE> method of each provider. (Remember that 
+the provider will return a valuated list of children depending on the identity 
+of the parent caller.) Then, if the list of children is not null, each child is 
+appended to the actual list of children that will be returned to the navigator.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="ImplCtxMenuSubProd"></A>Implementing <I>CATICtxMenuProvider</I> for 
+the First Sub-Product</H4>
+<P>The provider implementation that adds a contextual menu entry labeled 
+&quot;CAACtxMenuCmd&quot; is in the CAAPstCtxMenuProvider.cpp file of the 
+CAAPstEduCtxMenuProv.m module. It is an implementation class on the <I>
+CATICtxMenuProvider</I> interface for a <CODE>CATNull</CODE> late type. In other 
+words, no dictionary entry is necessary. This provider implements the <CODE>
+GetContextualMenu</CODE> method defined by the <I>CATICtxMenuProvider</I> 
+interface. However, it only creates a contextual menu entry if the caller is the 
+sub-product named &quot;CAAPstProviderSubProduct1.1&quot;.&nbsp;</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...
+
+HRESULT CAAPstCtxMenuProvider::<B>GetContextualMenu</B>(CATBaseUnknown *iObj,
+						 CATCmdContainer *oCtxMenu)
+{
+	// Retrieve a CATIProduct handle on the caller object
+	CATIProduct *piProductOnObj = NULL;
+	if (NULL == iObj) return E_FAIL;
+	HRESULT rc = iObj -&gt; QueryInterface (IID_CATIProduct, 
+					     (void**) &amp;piProductOnObj);
+	if (SUCCEEDED(rc)) {
+		// Retrieve the name of the product caller
+		// If it is &quot;CAAPstProviderSubProduct1.1&quot;
+		// then create a entry in the contextual menu
+		CATUnicodeString productName;
+		rc = piProductOnObj-&gt;GetPrdInstanceName(productName);
+		piProductOnObj-&gt;Release();
+		piProductOnObj = NULL;
+		if (productName == &quot;CAAPstProviderSubProduct1.1&quot;) {
+			NewAccess(CATCmdStarter, pStarter, CAACtxMenuStarter);
+			CATString cmdName(&quot;CAACtxMenuCmd&quot;);
+			SetAccessCommand(pStarter, cmdName);
+			SetAccessChild(oCtxMenu, pStarter);
+			return S_OK;
+		}
+	}
+	return E_FAIL;
+}</PRE>
+        <PRE>...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">The purpose of this implementation is to illustrate the <I>
+CATICtxMenuProvider</I> interface and as such does not provide any meaningful 
+user interaction. Please consult this article <A href="#[2]">[2]</A> for more 
+information on contextual menus.</P>
+<P><FONT size="2"><B>Fig. 5 CATICtxMenuProvider implementation</B></FONT></P>
+<P align="left">
+<img border="0" src="images/CAAPstProvidersCtxMenu.jpg" width="525" height="409"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="InShort"></A>In Short</H3>
+<P>A Provider is an implementation class of one of the supplied provider 
+interfaces. It is declared to the document at runtime. The implementations of 
+native interfaces use active providers to complement their behaviors: in other 
+words, providers will return specific information on applicative data that the 
+parent caller object has no direct knowledge of.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><A name="[1]">[1]</A></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><A name="[2]">[2]</A></TD>
+        <TD>
+        <a href="../CAAAfrUseCases/CAAAfrSampleContextualMenu.htm">
+        Inserting Commands in Contextual Menus</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">Version: <STRONG>3</STRONG> [Jul 2004]</TD>
+        <TD valign="top">CATICtxMenuProvider Added</TD>
+    </TR>
+    <TR>
+        <TD valign="top">Version: <STRONG>2</STRONG> [Feb 2004]</TD>
+        <TD valign="top">CATIIconProvider Removed </TD>
+    </TR>
+    <TR>
+        <TD valign="top">Version: <STRONG>1</STRONG> [May 2001]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

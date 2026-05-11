@@ -1,0 +1,193 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en_us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Retrieving Weld Information on Plate Objects</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Retrieving Weld Information on Plate Objects</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Target Icon" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to retrieve Weld information already set on SDD Plate Objects.</p>
+		<p>
+		<img alt="Starting Product" src="images/CAAScdStrWeldInfo03.png" width="638" height="475">
+		</p>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Information Icon" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAAStrWeldInfoOnPlate is launched in CATIA [<a href="#References">1</a>]. 
+		Some documents are needed.</p>
+		<ul>
+			<li><a href="CAAStrWeldInfoOnPlateSource.htm" target="Source">
+				CAAStrWeldInfoOnPlate.CATScript</a> 
+			is located in the CAAScdStrUseCases module.
+			<a href="macros/CAAStrWeldInfoOnPlate.CATScript">Execute macro</a> (Windows 
+			only).</li>
+			<li>The CAAStrWeldInfoOnPlate.CATPart containing the stiffener is located in the samples directory.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Scenario Icon" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAAStrWeldInfoOnPlate includes the following steps:</p>
+		<ol>
+			<li><a href="#Prolog">Prolog</a></li>
+			<li><a href="#Step1">Retrieving Factory Object from Part Document</a></li>
+			<li><a href="#Step2">Getting the Manager from Factory</a></li>
+			<li><a href="#Step3">Retrieving the Super Plates</a></li>
+			<li><a href="#Step4">Retrieving Split Plates of Super Plates</a></li>
+			<li><a href="#Step5">Retrieving Weld Features on the OperatedSplitPlate with Operating Element (Weld Use Case 1)</a></li>
+			<li><a href="#Step6">Retrieving Weld Attributes of Weld Use Case 1 Features</a></li>
+			<li><a href="#Step7">Retrieving Weld Features on the OperatedSplitPlate with No Operating Element (Weld Use Case 2)</a></li>
+			<li><a href="#Step8">Retrieving Weld Attributes of Weld Use Case 2 Features</a></li>
+		</ol>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Prolog"></a>Prolog</h4>
+		<p>Opens the CAAStrWeldInfoOnPlate.CATPart in CATIA.</p>
+		<pre class="code"><font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>ObjPart = CATIA.ActiveDocument.Part</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step1"></a>Retrieving Factory Object from Part Document</h4>
+		<p>This step describes how to get Structure Feature Factory. The Factory object is retrieved by adding object to nibble to the selection list.</p>
+		<pre class="code"><font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step2"></a>Getting the Manager from Factory</h4>
+<p>The Manager Object is obtained by GetManager.</p>
+		<pre class="code"><font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">Set </font>ManagerObj = FactoryObj.GetManager</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step3"></a>Retrieving the Super Plates</h4>
+<p>This step describes how to get the collection of Super Plates and how to get one specific element in it.</p>
+		<pre class="code"><font color="#008000">'Retrieving Super Plates</font>
+<font color="#0000FF">Dim </font>SuperPlates<font color="#0000FF"> As </font>References
+<font color="#0000FF">Set </font>SuperPlates = ManagerObj.GetSuperPlates
+
+<font color="#008000">'Retrieving Operating Super Plate</font>
+<font color="#0000FF">Dim </font>SuperPlate1<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">Set </font>SuperPlate1 = SuperPlates.Item(1)
+
+<font color="#008000">'Retrieving Operated Super Plate</font>
+<font color="#0000FF">Dim </font>SuperPlate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">Set </font>SuperPlate2 = SuperPlates.Item(2)</pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step4"></a>Retrieving Split Plates of Super Plates</h4>
+<p>This step describes how to get the collection of Split Plates and how to get one specific element in it.</p>
+		<pre class="code"><font color="#008000">'Retrieving the SplitPlates of SuperPlate1</font>
+<font color="#0000FF">Dim </font>OperatingSplitPlateRefs<font color="#0000FF"> As </font>References
+<font color="#0000FF">Set </font>OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+
+<font color="#008000">'Retrieving the SplitPlates of SuperPlate2</font>
+<font color="#0000FF">Dim </font>OperatedSplitPlateRefs<font color="#0000FF"> As </font>SfmSplitPlates
+<font color="#0000FF">Set </font>OperatedSplitPlateRefs = SuperPlate2.SplitPlatesObjects
+
+<font color="#0000FF">Dim </font>OperatingSplitPlate<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Set </font>OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+
+<font color="#0000FF">Dim </font>OperatedSplitPlate<font color="#0000FF"> As </font>SfmSplitPlate
+<font color="#0000FF">Set </font>OperatedSplitPlate = OperatedSplitPlateRefs.Item(1)</pre>
+<p>OperatedSplitPlate is the split plate on which weld features are created. Weld information resides on this plate.</p>
+<p>OperatingSplitPlate is the split plate which is used as one of the limit of the OperatedSplitPlate.</p>
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step5"></a>Retrieving Weld Features on the OperatedSplitPlate with Operating Element (Weld Use Case 1)</h4>
+<p>This step describes how to get the collection of Weld features with operating element and how to get one specific element in it.</p>
+		<pre class="code"><font color="#008000">'Weld Use Case 1 features.</font>
+<font color="#0000FF">Dim </font>ListWeldsUC1<font color="#0000FF"> As </font>SfmWelds
+<font color="#0000FF">Set </font>ListWeldsUC1 = OperatedSplitPlate.GetWelds(OperatingSplitPlate)
+
+<font color="#0000FF">Dim </font>WeldUC1Feature<font color="#0000FF"> As </font>SfmWeld
+<font color="#0000FF">Set </font>WeldUC1Feature = ListWeldsUC1.Item(1)</pre>
+
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step6"></a>Retrieving Weld Attributes of Weld Use Case 1 Features</h4>
+<p>This step describes how to get the weld information set on the Operated split plate.</p>
+		<pre class="code">ustrWeldTypeUC1 = WeldUC1Feature.WeldType
+ustrAddedMaterialUC1 = WeldUC1Feature.AddedMaterial
+ustrFitUpUC1 = WeldUC1Feature.FitUp
+ustrEdgePrepUC1 = WeldUC1Feature.EdgePreparation</pre>
+
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step7"></a>Retrieving Weld Features on the OperatedSplitPlate with No Operating Element (Weld Use Case 2)</h4>
+<p>This step describes how to get the collection of Weld features with operating element and how to get one specific element in it.</p>
+		<pre class="code"><font color="#008000">'Weld Use Case 2 features.</font>
+<font color="#0000FF">Dim </font>ListWeldsUC2<font color="#0000FF"> As </font>SfmWelds
+<font color="#0000FF">Set </font>ListWeldsUC2 = OperatedSplitPlate.GetWelds(Nothing)
+
+<font color="#0000FF">Dim </font>WeldUC2Feature<font color="#0000FF"> As </font>SfmWeld
+<font color="#0000FF">Set </font>WeldUC2Feature = ListWeldsUC2.Item(1)
+</pre>
+
+		<!-- -------------------------------comment--------------------------------- -->
+		<h4><a name="Step8"></a>Retrieving Weld Attributes of Weld Use Case 2 Features</h4>
+<p>This step describes how to get the weld information set on the Operated split plate with no operating element.</p>
+		<pre class="code">ustrWeldTypeUC2 = WeldUC2Feature.WeldType
+ustrAddedMaterialUC2 = WeldUC2Feature.AddedMaterial
+ustrFitUpUC2 = WeldUC2Feature.FitUp
+ustrEdgePrepUC2 = WeldUC2Feature.EdgePreparation
+
+
+<font color="#0000FF">End Sub</font></pre>
+		<!-- -------------------------------comment--------------------------------- -->
+		</td>
+	</tr>
+</table>
+<!-- -------------------------------comment--------------------------------- -->
+<p align="center">
+<img alt="End Task Icon" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to get weld information set on SDD Split Plate.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top" width="40">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a macro</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment--------------------------------- -->
+<p><i>Copyright © 1999-2013, Dassault Syst&#232;mes. All rights reserved.</i></p>
+
+</body>
+
+</html>

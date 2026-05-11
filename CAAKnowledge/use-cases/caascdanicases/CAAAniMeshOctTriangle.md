@@ -1,0 +1,180 @@
+---
+title: "Creating Octree Triangle Mesh Parts"
+category: "general"
+module: "CAAScdAniUseCases"
+tags: ["CATIA", "CAAAniMeshOctTriangle", "CAAScdAniUseCases"]
+source_file: "Doc\online\CAAScdAniUseCases\CAAAniMeshOctTriangle.htm"
+converted: "2026-05-11T17:31:51.677727"
+---
+
+## Analysis Modeler
+
+| 
+
+## Creating Octree Triangle Mesh Parts  
+  
+---|---  
+  
+* * *
+
+![](../CAAScrBase/images/atarget.gif) |  This use case shows how to create octree triangle mesh part in an existing analysis document. This scenario requires "FEM Surface (FMS) product". This macro opens an Analysis document. Octree trianlge mesh part is created and global specifications associated with this mesh part are set. The local specification: _MSHLocalMeshSize_ is created specifying the edge of the hole as support. The mesh part is updated to generate mesh. ![](images/OctreeTriangleMesh.gif)    
+---|---  
+![](../CAAScrBase/images/ainfo.gif) |  CAAAniMeshOctTriangle is launched in CATIA [1]. No open document is needed. [CAAAniMeshOctTriangle.catvbs](CAAAniMeshOctTriangleSource.htm) is located in the CAAScdAniUseCases module. [Execute macro](macros/CAAAniMeshOctTriangle.catvbs) (Windows only).    
+![](../CAAScrBase/images/ascenari.gif) |  CAAAniMeshOctTriangle includes the following steps:
+
+  1. Prolog
+  2. Extracting the List of Mesh Parts and Publications
+  3. Creating Mesh part and Assigning Values to its Attributes
+  4. Epilog
+
+
+
+#### Prolog
+
+| 
+    
+    
+    ...
+    
+    
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    
+      sDocPath=CATIA.SystemService.Environ("CATDocView")
+    
+        If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+          Err.Raise 9999,,"No Doc Path Defined"
+        End If
+    ' ----------------------------------------------------------- 
+    ' Open the Analysis document 
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, "online\CAAScdAniUseCases\samples\Surface.CATAnalysis")
+    Set oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+    
+    
+    ...  
+  
+---  
+  
+Open the Analysis document. The Analysis document is retrieved in the documentation installation path, this path has already been stored in the `sDocPath` variable. In the collection of documents, two documents can be retrieved; the Analysis document and the Part document. 
+
+#### Extracting the List of Mesh Parts and Publications
+    
+    
+    ...
+    
+    
+    ' Retrieve the Analysis Manager and Analysis Model
+    Set oAnalysisManager = oAnalysisDocument.Analysis
+    
+    
+    ' Retreive the part document from Analysis manager
+    Set oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+    Set partDocument = oAnalysisLinkedDocuments.Item(1)
+    Set product = partDocument.Product
+    
+    
+    ' Retrieve the analysis model from the list of models
+    Set oAnalysisModels = oAnalysisManager.AnalysisModels
+    Set oAnalysisModel = oAnalysisManager.Item(1)
+    
+    
+    ' Retrieve mesh manager and mesh part 
+    Set oAnalysisMeshManager = oAnalysisModel.MeshManager
+    Set oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+    
+    
+    
+    ' Retrieve publications from product and retrieve the published surface and edge
+    Set publications1 = product.Publications
+    Set pubEdge = publications1.Item("Edge")
+    Set pubSurf = publications1.Item("Round Hole.1")
+    
+    
+    ...  
+  
+---  
+  
+According to the general [ Analysis Document](../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm) structure, this macro uses some standard procedures to navigate or retrieve the required objects. First, from the **Document** , we find the **Analysis Manager Object** , the **Analysis Models** and the **Mesh Manager Objects**. The extraction of pre-defined geometric elements is done by using the Reference interface. This is equivalent to the selection of a B-Rep elements inside the interactive application. In this macro the reference is created from the published edge and published face.
+
+#### Creating the Mesh Part and Assigning Values to its Attributes.
+    
+    
+    ...
+    ' Add the new Octree Triangle mesh part to the list of mesh parts
+    Set  octreePart = meshPart.Add ("MSHPartOctree2D")
+    
+    
+    ' Add support from the published surface
+    octreePart.AddSupportFromPublication product, pubSurf
+    
+    
+    ' Set the global Specifications
+    octreePart.SetGlobalSpecification "SizeValue", "10.0 mm"
+    octreePart.SetGlobalSpecification "AbsoluteSageValue", "3.0 mm"
+    octreePart.SetGlobalSpecification "ElementOrder", "Parabolic"
+    octreePart.SetGlobalSpecification "MinSizeForSags", "0.5 mm"
+    octreePart.SetGlobalSpecification "MinGeometrySize", "0.5 mm"
+    octreePart.SetGlobalSpecification "AbsoluteSag", 1
+    octreePart.SetGlobalSpecification "AbsoluteSagValue", "1.1 mm"
+    octreePart.SetGlobalSpecification "ProportionalSag", 1
+    octreePart.SetGlobalSpecification "ProportionalSagValue", 0.5
+    octreePart.SetGlobalSpecification "MaxWarpAngle", "1.0 rad"
+    octreePart.SetGlobalSpecification "Criteria", "Shape"
+    octreePart.SetGlobalSpecification "MeshGeometryViolation", "1.2 mm"
+    octreePart.SetGlobalSpecification "InteriorSize", 2
+    octreePart.SetGlobalSpecification "InteriorSizeValue", "5.0 mm"
+    octreePart.SetGlobalSpecification "MinJacobian", 0.3
+    octreePart.SetGlobalSpecification "MaxAttempts", 2
+    
+    ' Add the domain specifications as local specifications and assign it attributes
+    Set meshspecs1 = octreePart.AnalysisMeshLocalSpecifications
+    Set spec1 = meshspecs1.Add("MSHLocalMeshSize")
+    spec1.SetAttribute "MSHMeshSizeMag", "1.0 mm"
+    spec1.AddSupportFromPublication "ConnectorList", Product, pubEdge
+    
+    'Update mesh part
+    octreePart.Update
+    ...  
+  
+---  
+  
+The association with the geometry of octree mesh part is established with the use of the method _AddSupportFromPublication._ All the global specifications are set using their names. To create a local mesh of specified size around an edge the global specification _MSHLocalMeshSize_  is created.
+
+#### Epilog
+    
+    
+    ...
+    End Sub
+    ...  
+  
+---  
+  
+To run the macro interactively CATDocView environment variable must be defined.  
+  
+ 
+
+![](../CAAScrBase/images/aendtask.gif)
+
+[Top]
+
+* * *
+
+#### In Short
+
+This use case has shown how to create octree triangle mesh parts and how to assign values to its local and global specifications.
+
+ 
+
+[Top]
+
+* * *
+
+#### References
+
+[1] |  [Replaying a Macro](../CAAScdInfUseCases/CAAInfLauchMacro.htm)  
+---|---  
+[Top]  
+  
+* * *
+
+_Copyright 2001, Dassault Systmes. All rights reserved._

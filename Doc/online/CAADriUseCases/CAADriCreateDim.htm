@@ -1,0 +1,395 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Distance Dimension on Interactive Geometry</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Drafting</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Distance Dimension on Interactive
+      Geometry</h3>
+      <em>How to create a distance dimension between two 2D lines</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADrwCreateDim.cpp use case. This use case
+      explains how to edit a dimension dress-up.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a>
+        <li><a href="#UseCase"><strong>The CAADrwCreateDim Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADrwCreateDim Do</a>
+            <li><a href="#How">How to Launch CAADrwCreateDimCmd</a></li>
+            <li><a href="#Where">Where to Find the CAADrwCreateDim Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case you will learn how to create an associative dimension on two
+2D lines.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADrwCreateDim Use Case</h3>
+<p>CAADrwCreateDim is a use case of the CAADraftingInterfaces.edu framework that
+illustrates DraftingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADrwCreateDim Do</h4>
+<p>This sample creates a dimension on two 2D lines in batch mode:</p>
+<table width="100%">
+  <caption>Fig. 2: The Model created by CAADrwCreateDim batch</caption>
+  <tr>
+    <td>
+      <p align="center"><img border="0" src="images/CAADrwCreateDim1.jpg" width="657" height="621"></p>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADrwCreateDim</h4>
+<p>To launch CAADrwCreateDim, you will need to set up the build time
+environment, then compile CAADrwCreateDim along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>When you launch the use case, pass the full pathname of the file into which
+you you want to store the created document as argument: for example
+Result.CATDrawing.
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td><code>e:&gt; CAADrwCreateDim Result.CATDrawing</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td><code>$ CAADrwCreateDim /u/users/Result.CATDrawing</code></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADrwCreateDim Code</h4>
+<p>The CAADrwCreateDim use case is made of one source file named
+CAADrwCreateDim.cpp located in the CAADrwCreateDim.m module of the
+CAADraftingInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwCreateDim.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwCreateDim.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six steps in CAADRWCreateDim:</p>
+<ol>
+  <li><a href="#Step1">Creating and Initializing the Document</a></li>
+  <li><a href="#Step2">Accessing the Drawing in the Document</a></li>
+  <li><a href="#Step3">Creating the Drawing Standard for Annotations</a>
+  <li><a href="#Step4">Creating a Geometric Elements in the Main View</a>
+  <li><a href="#Step5">Creating the distance dimension</a>
+  <li><a href="#Step6">Saving the Document and Exiting</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating and Initializing the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATDrawing document
+{
+   // Check arguments
+   if(2 != iArgc) return 1;
+   const char *pfileNameOut = iArgv[1];
+   
+   
+   // CREATE THE SESSION
+   // ==================
+   
+   CATSession *pSampleSession = NULL;
+   HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+   if (FAILED(hr)) return 1;
+   
+   
+   // DRAWING DOCUMENT CREATION
+   // =========================
+   
+   CATDocument* pDoc = NULL;
+   hr = CATDocumentServices::New(&quot;CATDrawing&quot;, pDoc); 
+   if (FAILED(hr))
+   {
+      // Ends session
+      ::Delete_Session(&quot;SampleSession&quot;);
+      return 2;
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for creating a CATIA document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Accessing the Drawing in the Document</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  // Gets the drawing feature using the CATIDftDocumentServices interface
+   CATIDrawing *piDrawing = NULL;
+   CATIDftDocumentServices *piDftDocServices = NULL;
+   CATIContainer_var spDrwcont = NULL_var;
+   CATISpecObject_var spSpecObj = NULL_var;
+   if (SUCCEEDED(pDoc-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+   {
+      piDftDocServices-&gt;GetDrawing(IID_CATIDrawing, (void **)&amp;piDrawing);
+      piDftDocServices-&gt;Release();
+      spSpecObj=piDrawing;
+      spDrwcont = spSpecObj-&gt;GetFeatContainer();
+   }
+   else return 3;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The root feature of a drawing document is the Drawing that is the feature
+that implements the CATIDrawing interface. We can get a pointer to CATIDrawing
+using the CATIDftDocumentServices interface, which is implemented by the
+document. The GetDrawing method first argument is the interface you want to get
+on the drawing.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the Drawing Standard for Annotations</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  if (!!spDrwcont) 
+   {
+      CATIDftStandardManager *piStdmgr = NULL;
+      HRESULT rc = spDrwcont-&gt;QueryInterface(IID_CATIDftStandardManager,(void**)&amp;piStdmgr);
+      if (SUCCEEDED(rc))
+      {
+         //  Find a standard in the list of allowed standards (ie. the list of .CATDrwSTD files in the reffiles directory)
+         CATIStringList *piListstd = NULL;
+         if ( SUCCEEDED(piStdmgr-&gt;GetAvailableStandards(&amp;piListstd)) )
+         {
+            wchar_t  *wstd = NULL;
+            unsigned int  nbrstd;
+            piListstd-&gt;Count(&amp;nbrstd);
+            CATUnicodeString stdname;
+            const CATUnicodeString ANSI_UncS = &quot;ANSI&quot;;</pre>
+      <pre>            for (unsigned int indice = 0; indice &lt; nbrstd; indice ++)
+            {
+               if ( SUCCEEDED ( piListstd-&gt;Item ( indice, &amp;wstd ) ) )
+               {
+                  stdname.BuildFromWChar(wstd);</pre>
+      <pre> 		  if ( stdname == ANSI_UncS ) 
+		  {
+                     // Import the ANSI standard in the document
+                     piStdmgr-&gt;ImportStandard (wstd);
+                     break;
+                  }
+               }
+            }
+            piListstd-&gt;Release();
+            piListstd=NULL;
+            
+         }
+         
+         piStdmgr-&gt;Release ();
+         piStdmgr=NULL;
+      }
+   }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The reffiles directory is&nbsp; accessible in runtime view.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the Geometric Elements in the Main View</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+ // We are working in main view of the current sheet
+   CATISheet_var spSheet = piDrawing-&gt;GetCurrentSheet();
+   piDrawing-&gt;Release();
+   CATIView_var spMainView = spSheet-&gt;GetMainView();
+   
+   
+   // GEOMETRY CREATION
+   // =================
+   // We now can create geometries in the main view after :
+   //   - Setting the view as the current one
+   //   - Getting the view geometry factory interface
+   spSheet-&gt;SetCurrentView(spMainView);
+   CATI2DWFFactory_var spGeomFactory = spMainView;
+      
+   double X[2] = { 100.0, 200.0};
+   double Z[2] ={ 50.0, 130.0};
+   double startPoint[2], endPoint[2];
+   
+   // Creation of lines
+   startPoint[0] = X[0];
+   startPoint[1] = Z[0];
+   endPoint[0] = X[1];
+   endPoint[1] = Z[0];
+   CATISpecObject_var spLine1 = spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+   
+   startPoint[0] = X[0];
+   startPoint[1] = Z[1];
+   endPoint[0] = X[1];
+   endPoint[1] = Z[1];
+   CATISpecObject_var spLine2 = spGeomFactory-&gt;CreateLine(startPoint, endPoint);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To create geometric elements in a view, the view has to be current.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Creating the Distance Dimension</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+   // Gets the view annotation factory
+   CATIDrwAnnotationFactory_var spAnnFactory = spMainView;
+   
+   // Vertical distance dimension creation between Line1 and Line2
+   CATDrwDimType dimType = DrwDimDistance;
+   CATDimDefinition dimDef;
+   CATIUnknownList * piSelectionsList =NULL;
+   CATIUnknownListImpl * piListsel = new CATIUnknownListImpl();
+   piListsel-&gt;QueryInterface(IID_CATIUnknownList, (void **) &amp;piSelectionsList);
+   piListsel-&gt;Release();
+   piListsel=NULL;
+   IUnknown * piLine1 = NULL;
+   IUnknown * piLine2 = NULL;
+   spLine1-&gt;QueryInterface(IID_IUnknown, (void **)&amp;piLine1);
+   spLine2-&gt;QueryInterface(IID_IUnknown, (void **)&amp;piLine2);
+   piSelectionsList-&gt;Add(0, piLine1);
+   piSelectionsList-&gt;Add(1, piLine2);
+   
+   CATIDrwDimDimension * piDimHoriz = NULL;
+   double pt1[2] = {10.0, 15.0};
+   double  * pts[2];
+   pts[0] = pt1;
+   pts[1] = pt1+1;
+   dimDef.Orientation = DrwDimAuto;
+   hr = spAnnFactory-&gt;CreateDimension(piSelectionsList,pts,dimType,&amp;dimDef,&amp;piDimHoriz);
+   
+   if (piLine1) piLine1-&gt;Release();
+   if (piLine2) piLine2-&gt;Release();
+   if (piDimHoriz) piDimHoriz-&gt;Release();
+   if (piSelectionsList) piSelectionsList-&gt;Release();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Saving the Document and Exiting</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...   
+  // Save the result
+  CATDocumentServices::SaveAs(*pDoc, (char *)pfileNameOut);
+   CATDocumentServices::Remove (*pDoc);
+   //Ends session and drops document	
+   ::Delete_Session(&quot;SampleSession&quot;);
+   
+   return 0;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This section represents the usual sequence for saving a newly created CATIA
+document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects and interfaces used when creating a dimension
+in a main view of a CATDrawing document. The Dimension is created using the <i>CATIDrwAnnotationFactory</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Lauching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p align="right"><a name="History"></a>History</p>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

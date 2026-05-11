@@ -1,0 +1,94 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      Given a CATProduct document,
+'                 this macro filters the parameters right below the root 
+'                 product.
+'                 Note: You cannot retrieve the list of parameters 
+'                 right below the root product by using the 
+'                 Product.Parameters attribute of the active document
+'                 because if you do this, you retrieve all the  
+'                 parameters of the CATProduct document (parameters    
+'                 right below the root product as well as parameters    
+'                 below components.
+'                 The trick is to determine whether a parameter which belongs
+'                 to the activedocument.Product.Parameters list belongs to 
+'                 one of the sub-component parameter list.
+'
+'   Assumptions:  This macro is intended to be run on  
+'                 any CATProduct with CATProduct documents as components
+'
+'
+'   Author:       Carole ROULLE , Pierre Grignon
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKniUseCases\samples\CAAKniClash.CATProduct")
+    Dim oDoc As Document
+    set oDoc = CATIA.Documents.Open(sFilePath)
+
+ ' Set the CATIA popup file alerts to False
+ ' It prevents to stop the macro at each alert during its execution
+ CATIA.DisplayFileAlerts = False
+
+ ' Retrieve your active document - CATIA is your application 
+ ' You get the active document by using the ActiveDocument property
+ ' on your application object
+ Dim oActiveDoc As Document 
+ Set oActiveDoc = CATIA.ActiveDocument 
+ 
+ Dim i,j,k As Integer
+ Dim BelongToComp As Integer
+ ' Check whether the document is a CATProduct
+ If (InStr(oActiveDoc.Name,".CATProduct")) <> 0  Then 
+
+    ' Scan the complete list of parameters                          
+    Dim oProductList As Products
+    Set oProductList = oActiveDoc.Product.Products
+    Dim S1 As String
+    For i = 1 to oActiveDoc.Product.Parameters.Count
+    S1 =  oActiveDoc.Product.Parameters.Item(i).Name
+    ' Use the BelongToComp flag to set the parameter status
+    ' Initial value = 0 (does not belong to a sub-component)
+    BelongToComp = 0
+       ' Scan each parameter list of a sub-component
+       For j = 1 to oProductList.Count
+          For k = 1 to oProductList.Item(j).Parameters.Count
+          ' If the document parameter is the same as the sub-component
+          ' parameter - Sets the flag to 1
+          if  S1 = oProductList.Item(j).Parameters.Item(k).name then 
+          BelongToComp = 1
+          end if 
+          next
+       Next  
+        ' if the flag is set to 0 - the document parameter
+        ' does not belong to ant sub-component 
+        ' Conclusion: it is right below the root
+        if BelongToComp = 0 then
+        msgbox S1
+       end if
+    Next    
+ Else 
+    MsgBox "The active document must be a CATProduct"
+End If
+
+End Sub

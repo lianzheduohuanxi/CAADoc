@@ -1,0 +1,189 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgControl</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgControl</h3>
+      <em>Base class for controls</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---CATDlgControl</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>CATDlgControl is the base class for all <a href="CAADlgObjectList.htm#controls">controls</a>:
+<ul>
+  <li><a href="CAADlgCATDlgCheckButton.htm">CATDlgCheckButton</a></li>
+  <li><a href="CAADlgCATDlgCombo.htm">CATDlgCombo</a></li>
+  <li><a href="CAADlgCATDlgEditor.htm">CATDlgEditor</a></li>
+  <li><a href="CAADlgCATDlgMultiList.htm">CATDlgMultiList</a></li>
+  <li><a href="CAADlgCATDlgPushButton.htm">CATDlgPushButton</a></li>
+  <li><a href="CAADlgCATDlgRadioButton.htm">CATDlgRadioButton</a></li>
+  <li><a href="CAADlgCATDlgScrollbar.htm">CATDlgScrollBar</a></li>
+  <li><a href="CAADlgCATDlgSelectorList.htm">CATDlgSelectorList</a></li>
+  <li><a href="CAADlgCATDlgSlider.htm">CATDlgSlider</a></li>
+  <li><a href="CAADlgCATDlgSpinner.htm">CATDlgSpinner</a></li>
+</ul>
+<p>and for the <a href="CAADlgObjectList.htm#indicators">indicators</a>:
+<ul>
+  <li><a href="CAADlgCATDlgLabel.htm">CATDlgLabel</a></li>
+  <li><a href="CAADlgCATDlgProgress.htm">CATDlgProgress</a></li>
+  <li><a href="CAADlgCATDlgSeparator.htm">CATDlgSeparator</a></li>
+</ul>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table>
+  <caption><a name="Containment"></a>Containment Parent</caption>
+  <tr>
+    <td>The parent of an instance of a class that derives from CATDlgControl
+      must be an instance of a class that derives from <a href="CAADlgCATDlgDocument.htm">CATDlgDocument</a>,
+      <a href="CAADlgCATDlgDialog.htm">CATDlgDialog</a>&nbsp; <a href="CAADlgCATDlgBox.htm">CATDlgBox</a>,
+      and <a href="CAADlgCATDlgToolBar.htm">CATDlgToolBar</a>. Some controls can
+      have a <a href="CAADlgCATDlgStatusBar.htm">CATDlgStatusBar</a> or a <a href="CAADlgCATDlgIconBox.htm">CATDlgIconBox</a>
+      as parent.</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3>Programmer's Guide</h3>
+<p>A CATDlgControl instance can be constructed as the base class of one of its
+derived class only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing Magnitudes and Units</h4>
+<p>CATDlgControl centralizes the unit management shared by the controls that can
+accept a numerical value. These controls are instances of the classes <a href="CAADlgCATDlgCombo.htm">CATDlgCombo</a>,
+<a href="CAADlgCATDlgEditor.htm">CATDlgEditor</a>, and <a href="CAADlgCATDlgSpinner.htm">CATDlgSpinner</a>.
+Magnitude and unit management is described in <a href="../CAADlgTechArticles/CAADlgManagingUnits.htm">Managing
+Magnitudes and Units</a>. It also gives the <a href="CAADlgMagnitudesAndUnits.htm">list
+of magnitudes and units</a> available, and the parameters to declare them.</p>
+<p>With a combo, and editor, or a spinner, you can manage magnitudes and units
+as follows. The examples use a pointer to a combo, but it could be a pointer to
+an editor or a spinner:
+<ul>
+  <li>Get or set the magnitude and its default unit to be used for the value
+    displayed or entered using the control. For example, set the magnitude for
+    the combo to pressure.
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get magnitude</em></td>
+        <td class="code">
+          <pre>...
+CATDlgCombo * pCombo;
+pCombo = new CATDlgCombo(pParent, &quot;ComboId&quot;,
+                         CATDlgCmdDouble|CATDlgCmbEntry);
+CATDlgControl::CATDlgMagnitude = ComboMagnitude;
+ComboMagnitude = pCombo-&gt;GetMagnitude();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set magnitude</em></td>
+        <td class="code">
+          <pre>...
+pCombo-&gt;SetMagnitude(CATDlgControl::Pressure);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You cannot choose the unit. This means that once you have set the
+    magnitude using SetMagnitude, you cannot set the unit using SetUnit. It is
+    the unit set at the <a href="CAADlgCATInteractiveApplication.htm">application</a>
+    level. If no unit is set for the application, the SI system is used, and
+    pressure values are expressed in Pascal (or N/m<sup>2</sup>).</p>
+  </li>
+  <li>Get or set the unit to be used for the value displayed or entered using
+    the control. For example, set the unit for the combo to&nbsp;square inches.
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get unit</em></td>
+        <td class="code">
+          <pre>...
+CATDlgControl::CATDlgUnit = ComboUnit;
+ComboUnit = pCombo-&gt;GetUnit();
+...</pre>
+        </td>
+      </tr>
+      <tr width="20%">
+        <td><em>get unit</em></td>
+        <td class="code">
+          <pre>...
+pCombo-&gt;SetUnit(CATDlgControl::SquareInch);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>You cannot choose the magnitude beforehand. It is set by the unit you
+    choose.</p>
+  </li>
+  <li>Get or set the precision of the value displayed. The precision is the
+    total number of digits displayed. It can range from 1 to 15 inclusively, the
+    default being 5.
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get precision</em></td>
+        <td class="code">
+          <pre>...
+int ComboPrecision = pCombo-&gt;GetPrecision();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set precision</em></td>
+        <td class="code">
+          <pre>...
+pCombo-&gt;SetPrecision(8);
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><img src="images/CATDlgControl.jpg" alt="CATDlgControl.jpg (4073 bytes)" width="95" height="81"></td>
+        <td>For example, the four editors shown beside have their precisions set
+          to 1, 4, 8, and 12 respectively, and all display the same length value
+          of 10,160,151.13 mm.</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

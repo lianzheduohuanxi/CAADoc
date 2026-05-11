@@ -1,0 +1,442 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Using the ENOVIObjectServiceCode user_exit to get the ItemInstances that share the same PartVersion in a ProductRootClass</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>Configuration Management</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>API's to execute ENOVIA V5 VPM commands from ENOVIA V5 VPM NAvigator</h3>
+      <i>Implementing ENOVIObjectServiceCode</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The document is related to the use case <code>CAAVpmPsEnovGetII</code>. 
+		It describes how to implement a user-exit command which can be triggered 
+		from ENOVIA V5 VPM Navigator client using the new API's for running server code.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The <code>CAAVpmPsEnovGetII</code> Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does <code>CAAVpmPsEnovGetII</code> Do</a></li>
+          <li><a href="#How">How to Launch <code>CAAVpmPsEnovGetII</code></a></li>
+          <li><a href="#Where">Where to Find the <code>CAAVpmPsEnovGetII</code> Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you implement the user-exit <code>ENOVIObjectServiceCode</code> that 
+is called by the client API <code>CATPDMCSServices::RunObjectService</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The <code>CAAVpmPsEnovGetII</code> Use Case</h3>
+<p><code>CAAVpmPsEnovGetII</code> is a use case of the CAAVpiInterfaces.edu framework that
+illustrates how to implement a server user-exit based on the API <i>ENOVIObjectServiceCode</i>, that is triggered 
+by the ENOVIA V5 VPM Navigator client API&nbsp; <code>CATPDMCSServices::RunObjectService</code> (See reference [<a href="#References">2</a>])</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does <code>CAAVpmPsEnovGetII</code> Do</h4>
+<p>The goal of the <code>CAAVpmPsEnovGetII</code> use case is to show how to implement the 
+<code>ENOVIObjectServiceCode</code> user-exit and more precisely its method <code>RunObjectServiceCode</code>. 
+It completes the explanations given in use case <i>Manipulating a persistent ENOVIA object from within the 
+ENOVIA V5 VPM Navigator environment</i> (see reference [<a href="#References">2</a>]), which 
+deals with the ENOVIA V5 VPM Navigator client side.</p>
+<p>The <code>RunObjectServiceCode</code> user-exit implementation of the use case <code>CAAVpmPsEnovGetII</code> 
+goes through the following steps:</p>
+<ul>
+  <li>Extracting the PartVersion of the ItemInstance given in input of <code>RunObjectServiceCode</code></li>
+  <li>Retrieving the ProductRootClass whose name is given in input of <code>RunObjectServiceCode</code></li>
+  <li>Retrieving all the ItemInstances located under the ProductRootClass</li>
+  <li>Returning the ItemInstances sharing the same PartVersion than the one of the input ItemInstance</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="How"></a>How to Launch <code>CAAVpmPsEnovGetII</code></h4>
+<p>To launch <code>CAAVpmPsEnovGetII</code>, you will need to set up the build-time
+environment, compile <code>CAAVpmPsEnovGetII</code> along with its prerequisites and then, 
+set up the run-time environment. <code>CAAVpmPsEnovGetII</code> is a server use case that is triggered from within the client
+use case named <i>Manipulating a persistent ENOVIA object from within the ENOVIA V5 VPM Navigator environment</i> 
+(reference [<a href="#References">2</a>]); so finally you'll need to launch it and the execution of 
+<code>CAAVpmPsEnovGetII</code> will follow automatically.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="Where"></a>Where to Find the <code>CAAVpmPsEnovGetII</code> Code</h4>
+<p>The <code>CAAVpmPsEnovGetII</code> use case is made of one class named
+CAAVpmPsEnovGetII located in the module CAAVpiServerCode.m of the framework CAAVPMInterfaces.edu.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiServerCode.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiServerCode.m/</tt></td>
+  </tr>
+</table>
+<p>Where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed. 
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The explanations of the <code>CAAVpmPsEnovGetII</code> implementation is split into five main steps:</p>
+<ol>
+  <li><a href="#Step1">Implementing the <code>ENOVIObjectServiceCode</code> user-exit</a></li>
+  <li><a href="#Step2">Retrieving the PRC and all the ItemInstances agregated under it</a></li>
+  <li><a href="#Step3">Retrieving the input ItemInstance and its Part Version</a></li>
+  <li><a href="#Step4">Selecting ItemInstances that shares the same Part Version than input ItemInstance</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="Step1"></a>Implementing the <code>ENOVIObjectServiceCode</code> user-exit</h4>
+<p>To implement the user-exit, the class <code>CAAVpmPsEnovGetII</code>, has to be defined as a late type object 
+that adheres to the <code>ENOVIObjectServiceCode</code> interface. This must be done with an extension mechanism,
+as shown by the lines below: the <code>CATImplementClass</code> instruction defines the <code>CAAVpmPsEnovGetII</code> 
+class as a late type object identitified by the "GetII" string.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATImplementClass(CAAVpmPsEnovGetII, DataExtension, CATBaseUnknown, GetII);
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The relation/link between the interface and its implementation has to be precised. Here we have chosen to defined
+the <code>CAAVpmPsEnovGetII</code> class  as a <code>TIEchain</code> implementation of the <code>ENOVIObjectServiceCode</code> interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include "TIE_ENOVIObjectServiceCode.h"
+TIEchain_ENOVIObjectServiceCode(CAAVpmPsEnovGetII);
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>RunObjectServiceCode()</code> method has to be implemented with respect of the following signature.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAAVpmPsEnovGetII::RunObjectServiceCode(CATLISTV(CATBaseUnknown_var)&amp; iObjectIds,
+                                                const char* ipString,
+                                                CATLISTV(CATBaseUnknown_var)&amp; oObjectIds,
+                                                char** opString)
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Concerning the method parameters... The <code>[iObjectIds]</code> input list contains an ItemInstance, 
+the <code>[ipString]</code> input string gives the V_ID of the PRC that is investigated in the method, 
+the <code>[oObjectIds]</code> ouput list is destinated to contain the ItemInstances sharing the same PartVersion 
+than the ItemInstance given by [iObjectIds], and finally the <code>[opString]</code> output string will be keeping a NULL value along the whole treatment, 
+as it has been chosen not to use it in this use case.</p>
+<p>Finally, don't forget to add the following line into the dictionnary file 
+(CAAVPMInterfaces.edu\CNext\code\dictionary\CAAVPMInterfaces.edu.dic) of the implementation framework.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+GetII          ENOVIObjectServiceCode     libCAAVpiServerCode
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The line is composed of the LateType of your implementation object: <code>GetII</code>, the name of Interface you want to implement: 
+<code>ENOVIObjectServiceCode</code> and the library containing the implementation code <code>libCAAVpiServerCode</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="Step2"></a>Retrieving the PRC and all the ItemInstances agregated under it</h4>
+<p>Input String [ipString] (which is, in this use case, the "V_Id" of a PRC) is transformed in a CATUnicodeString which is given to the <code>RetrievePRC</code>. 
+This method is able to retrieve a ProducRootClass from the ENOVIA V5 VPM database 
+giving its "V_Id" attribute.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString stPRCName = ipString;
+CATIAVPMProductRootClass * pPRC = NULL;
+<b>rc = RetrievePRC(stPRCName, pPRC);</b>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Once the PRC is retrieved, the <code>get_Tree</code> method is used to 
+gather all ItemInstances inserted under the PRC.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#define PS_ALL        -1001
+...
+ENOVIExpandable_var spExpandPRC(pPRC);
+
+if (spExpandPRC != NULL_var)
+{
+    CATLISTV(CATBaseUnknown_var) oListII;
+    
+    <b>rc = spExpandPRC-&gt;get_Tree(PS_ALL, oListII);</b>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="Step3"></a>Retrieving the input ItemInstance and the V_Id of its Part Version</h4>
+<p>Three steps to be followed in this sections. Firstl, get 
+the CATIAVPMItemInstance object from the input 
+list <code>[iObjectIds]</code>.</p> 
+ 
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if (iObjectIds[1] != NULL_var)
+{
+  // 1. Retrieve the II
+  CATIAVPMItemInstance * pII = NULL;
+  <b>rc = iObjectIds[1]-&gt;QueryInterface(IID_CATIAVPMItemInstance, (void**)&amp;pII);</b>
+
+  if (FAILED(rc) || (pII == NULL))
+  {
+    cout &lt;&lt; "**Error: QI for CATIAVPMItemInstance failed on [iObjectIds[1]]" &lt;&lt; endl;
+    rc = E_FAIL;
+  }
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<p>Second, retrieve the PartVersion from the obtained VPM ItemInstance thanks to 
+the <code>CATIAVPMItemInstance::GetPartVersion</code>;  </p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// 2. Retrieve the PV
+CATIAVPMPartVersion *pPV = NULL;
+<b>rc = pII-&gt;get_PartVersion(pPV);</b>
+pII-&gt;Release(); pII = NULL;
+
+if (FAILED(rc) || !pPV)
+{
+  cout &lt;&lt; "**Error: Unable to get PV of II [iObjectIds[1]]" &lt;&lt; endl;
+  rc = E_FAIL;
+}
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<p>and finally get&nbsp; the V_Id thanks to the <code>CATIVpmBOAttribute::GetAttributeValue</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString stPVName;
+  <b>rc = GetAttributeValue(pPV, "V_ID", stPVName);</b>
+  pPV-&gt;Release(); pPV = NULL;
+  ...
+}
+
+<b>HRESULT CAAVpmPsEnovGetII::GetAttributeValue(CATBaseUnknown *ipBase, CATUnicodeString stAttributeName, CATUnicodeString &amp;oAttrValue)</b>
+<b>{</b>
+  CATIVPMBOAttribute * pBOAttr = NULL;
+
+  ...
+  HRESULT rc = ipBase-&gt;QueryInterface(IID_CATIVPMBOAttribute, (void**)&amp;pBOAttr);
+  if (FAILED(rc) || (pBOAttr == NULL))
+    return E_FAIL;
+
+  CORBAAny cbAny;
+
+  <b>rc = pBOAttr-&gt;GetAttributeValue(stAttributeName,cbAny);</b>
+
+  pBOAttr-&gt;Release();
+  pBOAttr = NULL;
+
+  cbAny &gt;&gt; oAttrValue;
+  ...
+<b>}</b></pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table><p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h4><a name="Step4"></a>Selecting ItemInstances that shares the same Part Version than input ItemInstance</h4>
+<p>From the list returned by the <code>get_Tree</code> method, II's are caught and their V_Id is compared with
+the one of the input Iteminstance. When the V_Id matches, the II of the list is added to the [oObjectIds] output list.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int countII = oListII.Size();
+
+// Retrieve the PartVersion of each II
+for (int i = 1; i &lt;= countII; i++)
+{
+  if (oListII[i] != NULL_var)
+  {
+      CATIAVPMItemInstance *pII = NULL;
+      rc = oListII[i]-&gt;QueryInterface(IID_CATIAVPMItemInstance, (void**)&amp;pII);
+
+      if (SUCCEEDED(rc) &amp;&amp; pII != NULL)
+      {
+        // Retrieve the PV
+        CATIAVPMPartVersion * pPartVersion = NULL;
+        <b>rc = pII-&gt;get_PartVersion(pPartVersion);</b>
+
+        if (SUCCEEDED(rc) &amp;&amp; (pPartVersion != NULL))
+        {
+          // Retrieve the V_ID of the PV
+          CATUnicodeString stIIPVname;
+          <b>rc = GetAttributeValue(pPartVersion, "V_ID", stIIPVname);</b>
+          pPartVersion-&gt;Release(); pPartVersion = NULL;
+
+          if (SUCCEEDED(rc) &amp;&amp; stIIPVname.GetLengthInChar() &gt; 0)
+          {
+            // Compare the current V_ID with the one of the II given in input
+            <b>if (stIIPVname == stPVName)</b>
+            {
+              cout &lt;&lt; "Found an II of the same PV. Append it..." &lt;&lt; endl;
+              CATBaseUnknown_var unkObj(pII);
+
+              <b>if (!!unkObj) oObjectIds.Append(unkObj);</b>
+            }
+          }
+        }
+        pII-&gt;Release(); pII = NULL;
+      }
+    }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p><hr>
+
+<!---------------------------------comment------------------------------------->
+
+
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates how the <code>ENOVIObjectServiceCode::RunObjectServiceCode</code> user-exit can be used to implement customized 
+behavior on ENOVIA V5 VPM server. These business behaviors are triggered from within the CATIA V5/ENOVIA V5 VPM Navigator client thanks to the <code>CATPDMCSServices::RunObjectService</code> API.<br>
+(See Manipulating a persistent ENOVIA object from within the ENOVIA V5 VPM Navigator environment use case in 
+<i>CAACATImmENOVIAProviderDoc.edu/CAAImmUseCases.doc/src/CAAImmEV5CV5BindTestCmd.htm</i>) <br>
+As an example, a user-exit is implemented to retrieve from a ProductRootClass all the ItemInstances sharing the same Part Version.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>Client Use case Manipulating an ENOVIA Item Instance from within the ENOVIA V5 VPM Navigator environment
+    in <i>CAACATImmENOVIAProviderDoc.edu/CAAImmUseCases.doc/src/CAAImmEV5CV5BindTestCmd.htm</i></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKiiMechanismCreation.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2005</font>
+<font color="#0000FF">Option Explicit</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBSCRIPT"
+
+<font color="#008000">''*****************************************************************************
+' Purpose: This macro creates a dressup on a sub mechanism
+' in a specific product document
+' Assumptions: The product document used is called &quot;integrator_level.CATProduct&quot; .
+' It contains a root product called achitect_level.Product containing a 
+' wireframe mechanism, and a list of 3D products
+' Author: 
+' Languages: VBScript
+' Version: V5R16
+' Locales: US English
+'*****************************************************************************</font></pre>
+<pre>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' =========================
+' Retrieve the root product
+' =========================</font></pre>
+<pre>
+<font color="#0000FF">  Dim </font>RootProd<font color="#0000FF"> as </font>Product<font color="#0000FF">
+  Set </font>RootProd <font color="#0000FF">= </font>CATIA.ActiveDocument.Product</pre>
+<pre>
+<font color="#008000">' ================================================== 
+' Retrieve Dressups collection from the Root Product 
+' ================================================== </font></pre>
+<pre>
+ <font color="#0000FF"> Dim</font> MyDressups <font color="#0000FF">as</font> Dressups
+ <font color="#0000FF"> Set</font> MyDressups = RootProd.GetTechnologicalObject(&quot;Dressups&quot;)
+
+<font color="#008000">' ======================================================== 
+' Retrieve all the mechanisms including the sub-mechanisms  
+' ========================================================</font></pre>
+<pre>
+ <font color="#0000FF"> Dim</font> PossibleMecList <font color="#0000FF">as</font> Mechanism
+  PossibleMecList = MyDressups.ListPossibleMechanisms()
+
+<font color="#008000">' ======================================================== 
+' Retrieve All the mechanism's contexts 
+' ======================================================== </font></pre>
+<pre>
+<font color="#0000FF">  Dim</font> MecContextList <font color="#0000FF">as</font> Product
+  MecContextList = MyDressups.ListMechanismsContext()</pre>
+<pre>
+<font color="#008000">' ===========================================
+' Compute the maximum rank of PossibleMecList
+' ===========================================</font></pre>
+<pre>
+ <font color="#0000FF"> Dim </font> iMax <font color="#0000FF">as</font> Integer
+  iMax = ubound(PossibleMecList)
+
+ <font color="#0000FF"> Dim </font> i <font color="#0000FF">as</font> Integer
+ <font color="#0000FF"> Dim </font> Meca <font color="#0000FF">as</font> Mechanism
+ <font color="#0000FF"> Dim </font> MecaContext <font color="#0000FF">as</font> Product
+
+<font color="#008000">' =================================================
+' Loop for automatic dressup creation only for sub-mechanisms
+' =================================================</font></pre>
+<pre>
+<font color="#008000">  </font><font color="#0000FF">For</font> i= 0 To iMax
+    <font color="#0000FF">Set</font> Meca = PossibleMecList(i)
+    <font color="#0000FF">Set</font> MecaContext = MecContextList(i)
+    <font color="#0000FF">if</font> MecaContext.Name&lt;&gt;RootProd.Name <font color="#0000FF">then</font>
+       AutomaticDressup RootProd , MyDressups , Meca , MecaContext
+ <font color="#0000FF">   end if</font>
+ <font color="#0000FF"> Next</font> 
+
+<font color="#0000FF">End Sub</font>
+</pre>
+<pre>
+<font color="#008000">' ================================================================================
+' ================================================================================
+' This Subroutine creates automatically a new dressup 
+' ================================================================================
+' ================================================================================
+</font><font color="#0000FF">Sub</font> AutomaticDressup(iRootProduct <font color="#0000FF">as</font> Product, iDressups <font color="#0000FF">as</font> Dressups, iMechanism <font color="#0000FF">as</font> Mechanisms ,iContext <font color="#0000FF">as</font> Product)
+</pre>
+<pre>
+<font color="#008000">' ============================================================= 
+' Retrieve all the first level products under the root product
+' =============================================================</font></pre>
+<pre>
+<font color="#008000"> </font> <font color="#0000FF">Dim </font> FirsLevelProducts <font color="#0000FF">as</font> Products
+  <font color="#0000FF">Set </font>FirsLevelProducts=iRootProduct.Products
+</pre>
+<pre>
+<font color="#008000">' =================================================== 
+' Create a new dressup object associated to iMechanism
+' ===================================================</font></pre>
+<pre>
+<font color="#008000"> </font><font color="#0000FF"> Dim </font> NewDressup <font color="#0000FF">as</font> Dressup
+ <font color="#0000FF"> Set</font> NewDressup = iDressups.Add(iMechanism,iContext)
+</pre>
+<pre>
+<font color="#008000">' ========================================= 
+' Loop on all the products of the mechanism
+' =========================================</font></pre>
+<pre>
+<font color="#008000">  </font><font color="#0000FF">Dim </font> NbLink <font color="#0000FF">as</font> Integer
+  NbLink = iMechanism.NbProducts 
+
+ <font color="#0000FF"> Dim </font> NbProduct <font color="#0000FF">as</font> Integer
+  NbProduct = FirsLevelProducts.Count 
+
+ <font color="#0000FF"> Dim </font> i <font color="#0000FF">as</font> Integer
+  <font color="#0000FF">For </font>i<font color="#0000FF"> </font>= 1 <font color="#0000FF">To</font> NbLink 
+
+   <font color="#0000FF"> Dim </font> Link <font color="#0000FF">as</font> Product
+   <font color="#0000FF"> Set</font> Link = iMechanism.GetProduct(i)
+
+<font color="#008000">' ===============================
+' Loop on all first level Product
+' ===============================
+   </font><font color="#0000FF"> Dim </font> ComparisonOK <font color="#0000FF">as</font> Boolean 
+   <font color="#0000FF"> Dim </font> Product_j <font color="#0000FF">as</font> Product
+   <font color="#0000FF"> Dim </font> j <font color="#0000FF">as</font> integer 
+    <font color="#0000FF">For </font>j = 1 <font color="#0000FF">To</font> NbProduct 
+<font color="#008000">' ==========================================
+' Name comparison between link and Product_j
+' ==========================================
+     </font><font color="#0000FF">Set</font> Product_j <font color="#0000FF">=</font> FirsLevelProducts.item(j)
+     ComparisonOK <font color="#0000FF">=</font> ComparProductName(Link,Product_j )
+
+     <font color="#0000FF">if</font> ComparisonOK<font color="#0000FF">=</font>True <font color="#0000FF">then</font>
+<font color="#008000">' =============================
+' Link is attached to Product_j
+' =============================
+    </font>   <font color="#0000FF">call</font> NewDressup.Attach(Link,Product_j) 
+     <font color="#0000FF">end if</font>
+   <font color="#0000FF"> Next</font> 
+ <font color="#0000FF"> Next</font> 
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ================================================================================
+' ================================================================================
+' This function compares the name between two products.
+' iLink is a part of mechanism. All the mcechanism's Parts are suffixed by &quot;_wireframe.1&quot;
+' iProduct is OK for comparison if it contains the previous name without its suffix.
+' For instance, The comparison is OK for :
+' fix_wireframe.1 and designer_level_fix.1
+' ================================================================================
+' ================================================================================
+</font><font color="#0000FF">Function</font> ComparProductName ( iLink <font color="#0000FF">as</font> Product , iProduct <font color="#0000FF">as</font> Product ) <font color="#0000FF">as</font> Boolean
+
+<font color="#008000">' ============================
+' Return value is initialized
+' ===========================
+ </font> ComparProductName = False
+
+<font color="#008000">' =======================
+' suffix string definition
+' =======================
+</font><font color="#0000FF">  Dim </font> suffix <font color="#0000FF">as</font> String
+  suffix = &quot;_wireframe.1&quot;
+
+<font color="#008000">' ==================================
+' Compute the suffix string position
+' ==================================
+</font><font color="#0000FF">  Dim </font> LinkNameWithOutsuffix <font color="#0000FF">as</font> String
+<font color="#0000FF">  Dim </font> suffixPos <font color="#0000FF">as</font> Integer
+  suffixPos = InStr ( iLink.Name,suffix)
+
+<font color="#008000">' ======================
+' Suffix existence test 
+' ======================
+</font><font color="#0000FF">  if</font> ( suffixPos &gt; 1 ) <font color="#0000FF">then</font> 
+
+<font color="#008000">' =======================================
+' Compute the name of the link without its suffix
+' =======================================
+</font>    LinkNameWithOutsuffix = Left (iLink.Name, suffixPos-1) 
+<font color="#0000FF">    Dim </font> LinkNamePos <font color="#0000FF">as</font> Integer
+
+<font color="#008000">' ============================================================
+' Does the product name contain the name without its suffix ?
+' ============================================================
+ </font>   LinkNamePos = InStr ( iProduct.Name,LinkNameWithOutsuffix) 
+    <font color="#0000FF">if</font> ( LinkNamePos = 0 ) <font color="#0000FF">then</font> 
+      ComparProductName = True
+  <font color="#0000FF">  end if</font> 
+<font color="#0000FF">  end if</font> 
+<font color="#0000FF">End Function</font>
+</pre></body></html>
+

@@ -1,0 +1,266 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Create Test Objects</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Unit Test Manager</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Create Test Objects</h3>
+      <em>Creating XML test objects</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p class="header">This article shows you how to create different kinds of 
+		test objects.</p>
+		<ul>
+			<li><a href="#Task1">Designing Your Test Objects</a></li>
+			<li><a href="#Task2">How to Write Test Programs</a></li>
+			<li><a href="#Task21">Testing an Executable</a></li>
+			<li><a href="#Task22">Testing a Shared Library</a></li>
+			<li><a href="#Task23">Testing an Interactive Scenario</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Task1"></a>Designing Your Test Objects</h2>
+<p>Before writing any test objects, programs or scripts, you should ask and answer 
+some questions, such as:</p>
+<ul>
+	<li>What do you intend to test: a run time executable, a shared library, or 
+		an interactive scenario?
+		<p>Depending on the answer, the way to test is usually:</p>
+		<ul>
+			<li>Call the run time executable from a simple test object.</li>
+			<li>Write a test program as a run time executable that creates the objects 
+				and call their methods for a shared library. Call this test program 
+				from a test object.</li>
+			<li>Create a record for an interactive scenario which is also called 
+				from a test object.</li>
+		</ul>
+	</li>
+	<li>Does the tested scenario need data, such as a part, a product structure, 
+		or a briefcase as input?</li>
+	<li>Does the test need some initializations prior to be launched?</li>
+	<li>Does the test need some post processing, such as to compare its results 
+		with validated data that represent the test output when it correctly runs?</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Task2"></a>How to Write Test Programs</h2>
+<p>Test programs are located in test frameworks.</p>
+<table>
+	<caption>Fig. 1: The Application and Test Frameworks</caption>
+	<tr>
+		<td>
+		<img alt="File Tree" height="420" src="images/CAARqc0005.png" width="346"/></td>
+	</tr>
+</table>
+<p>The test frameworks are suffixed using the .tst extension. On the picture above, 
+CAAApplicationFrame.tst is the test framework of the application framework CAAApplicationFrame, 
+and sits in the same workspace than its companion framework.</p>
+<p>Like application frameworks, test frameworks include modules to contain test 
+code, such as CAAAfrTestModule1.m. Test modules have a similar structure than application 
+modules with a LocaInterfaces folder and an src folder, an Imakefile.mk file, and 
+can refer to header files in PrivateInterfaces, ProtectedInterfaces, and PublicInterfaces 
+folders, as well as pre-require headers from other test frameworks, and from application 
+frameworks.</p>
+<p>Compared with application frameworks, test frameworks include an additional FunctionTests 
+folder with the following contents:</p>
+<table class="fill">
+	<tr>
+		<th>Folder</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>InputData </td>
+		<td>You can store in it any data that could be used as input for your test 
+		programs. There is no particular suffix defined for such data.</td>
+	</tr>
+	<tr>
+		<td>Output </td>
+		<td>This folder is the repository of all output and data produced during 
+		test program executions. For instance, if a test program generates a file, 
+		this file should be generated in this folder. There is a subfolder to contain 
+		this output for each operating system you use to run your test objects.</td>
+	</tr>
+	<tr>
+		<td>OutputRef</td>
+		<td>This folder is used to store any &quot;reference&quot; data which allows 
+		a comparison between what is produced by test programs (output messages, 
+		files, and so on) with what should be produced when they run as designed. 
+		For example, if you want to test a program which automate some modifications 
+		on a CATIA model, you can first perform these modifications &quot;by hand&quot; 
+		and save the result in a file you store in the OutputRef directory, then 
+		make a comparison between this model and the one produced by the test program 
+		in the Output folder.</td>
+	</tr>
+	<tr>
+		<td>SwitchTestCases</td>
+		<td>This is the directory where switch test objects XML files are stored. 
+		These test objects are used to decide whether to switch the current level 
+		without replaying all the test objects. They should be representative of 
+		the framework and must validate the framework fundamentals.</td>
+	</tr>
+	<tr>
+		<td>TestCases</td>
+		<td>This is the directory where common test objects XML files are stored.</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Task21"></a>Testing an Executable</h3>
+<p>Testing an executable is quite the same that testing a library except the fact 
+that there isn&#39;t any additional program to write. All the test data should be 
+located somewhere under the FunctionTests directory.</p>
+<table>
+	<caption>Fig. 2: Running a Test Executable</caption>
+	<tr>
+		<td>
+		<img alt="Testing an Executable" height="311" src="images/CAARqc0006.png" width="198"/></td>
+		<td>The application framework CAAApplicationFrame includes EXE that need 
+		to be tested, such as CAAAfrEXE1 the source code of which is located in 
+		CAAAfrEXE1.m.
+		<p>The associated test framework CAAApplicationFrame.tst tests CAAAfrEXE1 
+		using the test object TestCase1.xml test file that defines the test running 
+		parameters and declares what needs to be executed, namely CAAAfrEXE1.exe.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;RequestedProduct value=&quot;MDE.prd&quot; /&gt;
+    &lt;Replayed value=&quot;false&quot; osConstraint=&quot;!intel_a&quot; /&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAAAfrEXE1&quot; osConstraint=&#8221;Windows_NT&#8221; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		<p>The test framework identity card must refer to its application framework:</p>
+		<pre class="code">&lt;prerequisite name="CAAApplicationFrame" access="Public"/&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Task22"></a>Testing a Shared Library</h3>
+<p>Unlike a executable, a library is not used alone. You must thus write a program 
+to access and test its services. So given a library, you can write one or more programs 
+that you deliver as modules of a test framework and a test object per test program.</p>
+<table>
+	<caption>Fig.3: Running a Test a Shared Library</caption>
+	<tr>
+		<td>
+		<img alt="Testing a Shared Library" height="459" src="images/CAARqc0004.png" width="198"/></td>
+		<td>The application framework CAAApplicationFrame includes shared libraries 
+		or DLLs that need to be tested, such as CAAAfrDLL1.m.
+		<p>The associated test framework CAAApplicationFrame.tst tests them using 
+		the test programs CAAAfrTestModule1.m and CAATestModule2.m, that are linked 
+		to the shared libraries or DLLs to test using their Imakefile.mk file:</p>
+		<pre class="code">BUILT_OBJECT_TYPE=LOAD MODULE
+LINK_WITH=CAAAfrDLL1</pre>
+		<p>The TestCase2.xml test file defines the test running parameters and declares 
+		what need to be executed, usually scripts (shell with Unix or .bat with 
+		Windows), modules or EXEs, and here namely the CAAAfrTestModule2.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;RequestedProduct value=&quot;MDE.prd&quot; /&gt;
+    &lt;Replayed value=&quot;false&quot; osConstraint=&quot;!intel_a&quot; /&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAAAfrTestModule2&quot; osConstraint=&#8221;Windows_NT&#8221; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		<p>The test framework identity card must refer to its application framework:</p>
+		<pre class="code">&lt;prerequisite name="CAAApplicationFrame" access="Public"/&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Task23"></a>Testing an Interactive Scenario</h3>
+<p>An interactive scenario needs first to be recorded and then replayed. This is 
+possible with CAA V5 only, using Interactive Test Capture (ITC). </p>
+<table>
+	<caption>Fig.4: Running a Test Recorded Interactive Scenario</caption>
+	<tr>
+		<td>
+		<img alt="Testing an Interactive Scenario" height="382" src="images/CAARqc0007.png" width="198"/></td>
+		<td>The application framework CAAApplicationFrame includes code that enables 
+		an end user to work interactively and&nbsp; that need to be tested.
+		<p>The associated test framework CAAApplicationFrame.tst tests this code 
+		using the test program CAAIntTes1.rec that records the interactive scenario 
+		played by the end user.</p>
+		<p>The TestCase3.xml test file defines the test running parameters and declares 
+		what need to be executed, that is, in this case, the record.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;RequestedProduct value=&quot;MDE.prd&quot; /&gt;
+    &lt;Replayed value=&quot;false&quot; osConstraint=&quot;!intel_a&quot; /&gt;
+    &lt;Environment&gt;
+      &lt;Record enable=&quot;true&quot; /&gt;
+    &lt;/Environment&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAAIntTest1&quot; osConstraint=&#8221;Windows_NT&#8221; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>A test object is made up of a test program, along with its input and output data, 
+the execution of which is described in an XML file. This test program can be the 
+executable module to test, an executable module testing one or several shared libraries, 
+or a the record of an interactive scenario.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="#">Tools Options</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

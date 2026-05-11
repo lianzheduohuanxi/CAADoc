@@ -1,0 +1,1668 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>CAA V5 C++ Interface and Class Documentation Rules</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>Rules and Standards</h1>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>CAA V5 C++ Interface and Class Documentation Rules</h3>
+     <p><em>Hints and tips to tag and write comments in your header files</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="1">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article gives you information on how you can document your 
+     interface and class header files using specific comments that are processed 
+     to build html files. </p>
+     <ul>
+       <li><a href="#What"><strong>What Do You Need to Document?</strong></a></li>
+       <li><a href="#How"><strong>How Do You Document?</strong></a></li>
+       <li><a href="#SimpleSample"><strong>A Simple Sample</strong></a></li>
+       <li><a href="#WritingComments"><strong>Writing Comments</strong></a>
+       <ul>
+         <li><a href="#WritingClassComments">Writing Class Comments</a></li>
+         <li><a href="#WritingInterfaceComments">Writing C++ Interface Comments</a></li>
+         <li><a href="#WritingConstructorComments">Writing Constructor Comments</a></li>
+         <li><a href="#WritingMethodComments">Writing Method Comments</a></li>
+         <li><a href="#WritingGlobalFunctionComments">Writing Global Function 
+         Comments</a></li>
+         <li><a href="#WritingMacroComments">Writing Macro and #define Comments</a></li>
+         <li><a href="#WritingCollectionComments">Writing Collection Comments</a></li>
+         <li><a href="#WritingEnumComments">Writing Enumeration Comments</a></li>
+         <li><a href="#WritingOperatorComments">Writing Operator Comments</a></li>
+         <li><a href="#WritingStructComments">Writing Structure Comments</a></li>
+         <li><a href="#WritingDataMemberComments">Writing Data Member Comments</a></li>
+         <li><a href="#WritingtypedefComments">Writing typedef and constant 
+         Comments</a></li>
+       </ul>
+       </li>
+       <li><a href="#Tips"><strong>Tips</strong></a></li>
+       <li><a href="#JavadocTags"><strong>mkman Tag Reference</strong></a></li>
+       <li><a href="#NamedFields"><strong>Named Field Reference</strong></a></li>
+       <li><a href="#Lifecycle"><strong>Lifecycle Rules</strong></a>
+       <ul>
+         <li><a href="#Lifecycle1">Memory Management for Non-scalar types 
+         (Except Interfaces)</a></li>
+         <li><a href="#Lifecycle2">Reference Counting for Interfaces</a></li>
+       </ul>
+       </li>
+       <li><a href="#htmlTags"><strong>html Tag Reference</strong></a></li>
+       <li><a href="#Hyperlinks"><strong>Setting Hyperlinks</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="What"></a>What Do You Need to Document?</h3>
+ <p>Each of the following entity declared as L1 must be documented. </p>
+ <ul>
+   <li>Class</li>
+   <li>Interface</li>
+   <li>Constructor</li>
+   <li>Method</li>
+   <li>Global function</li>
+   <li>Macro</li>
+   <li>Collection</li>
+   <li>Enumeration</li>
+   <li>Operator</li>
+   <li>Structure</li>
+   <li>Class or structure data members</li>
+   <li>typedef</li>
+ </ul>
+ <p>This applies to L1 entities that are located in the PublicInterfaces directories of the exposed frameworks. This includes 
+ members declared as public, and for classes that can be derived, members 
+ declared as protected.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="How"></a>How Do You Document?</h3>
+ <p>Interfaces, classes, and all the stuff they include, are documented thanks 
+ to information enclosed into specific comments inserted in the header files. 
+ The C++ statements and the comments are then processed to produce an organized 
+ set of html files in which you and the users of your interfaces and classes can 
+ navigate. These comments are as follows:</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre><font color="#CC0000"><b>/**</b></font>
+ <strong><font color="#CC0000">*</font></strong> This is a comment.
+ <strong><font color="#CC0000">*/</font></strong></pre>
+     </td>
+   </tr>
+ </table>
+ <p>They must begin by <strong><font color="#CC0000"><code>/**</code></font></strong> 
+ and end by <strong><font color="#CC0000"><code>*/</code></font></strong>. Each 
+ intermediate line must begin by a leading <font color="#CC0000"><strong><code>*</code></strong></font>. 
+ Never use such a comment for any other purpose than documentation, otherwise 
+ your internal comments will be processed and clearly readable, and moreover may 
+ pollute automatically generated lists and index.</p>
+ <p>A comment must be placed just before the line containing the declaration of 
+ the class, interface, method, etc., it is intended to describe.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>/**
+ * Base class for creating and for implementing interfaces.
+ * CATBaseUnknown supplies the infrastructure and the basic mechanisms
+ * to create interface abstract classes and to manage interface pointers.
+ */
+class ExportedByJS0CORBA CATBaseUnknown : public IDispatch
+{
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="SimpleSample"></a>A Simple Sample</h3>
+ <p>&nbsp;</p>
+ <p>
+ <img src="images/SampleClass1.jpg" alt="SampleClass1.jpg (92683 bytes)" width="562" height="612"></p>
+ <p>
+ <img src="images/SampleClass2.jpg" alt="SampleClass2.jpg (72469 bytes)" width="593" height="499"></p>
+ <p>
+ <img src="images/SampleClass3.jpg" alt="SampleClass3.jpg (54334 bytes)" width="563" height="472"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="WritingComments"></a>Writing Comments</h3>
+ <p>You will find below some tips to write comments for
+ <a href="#WritingClassComments">classes</a>,
+ <a href="#WritingInterfaceComments">interfaces</a>,
+ <a href="#WritingConstructorComments">constructors</a>,
+ <a href="#WritingMethodComments">methods</a>,
+ <a href="#WritingGlobalFunctionComments">global functions</a>,
+ <a href="#WritingEnumComments">enums</a>, <a href="#WritingOperatorComments">
+ operators</a>, <a href="#WritingStructComments">struct</a>,
+ <a href="#WritingDataMemberComments">data members</a>, and
+ <a href="#WritingtypedefComments">typedef</a>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingClassComments"></a>Writing Class Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Write short such as &quot;<strong>Class to xxx</strong>&quot;, or &quot;<strong>Class 
+     representing xxx</strong>&quot; for a class to use as is.</li>
+     <li>Write &quot;<strong>Base class to xxx</strong>&quot; for a class to derive.</li>
+   </ul>
+   </li>
+   <li>Write the class role, beginning with <b>Role</b>. This describes the 
+   class mission, for what purpose you have created it. It can also include a 
+   brief description of the class usage, namely using its main methods.</li>
+   <li>Other comments Usage?, On what it relies?</li>
+   <li>You can add a <b>See also</b> section to create hyperlinks to objects 
+   that are related to the class.</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+   <li>Describe how the class is implemented</li>
+   <li>Create hyperlinks to the base classes, since the class inheritance tree 
+   is automatically built with such hyperlinks</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocClass1Hdr.htm">
+     CATCommand.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocClass1Htm.htm">
+     CATCommand.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocClass2Hdr.htm">
+     CATUnicodeString.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocClass2Htm.htm">
+     CATUnicodeString.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingInterfaceComments"></a>Writing C++ Interface Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Write short roles for C++ interfaces: &quot;Interface to xxx&quot;, &quot;Interface 
+     for xxx&quot;, or &quot;Interface representing xxx&quot;</li>
+   </ul>
+   </li>
+   <li>Write the interface role, beginning with <b>Role</b>. This describes the 
+   interface mission, for what purpose you have created it. It can also include 
+   a brief description of the interface usage, namely using its main methods.</li>
+   <li>If the usage is U4, give the adapter class to use.</li>
+   <li>Leave room for flexibility if the interface must be fully implemented</li>
+   <li>You can add a <b>See also</b> section to create hyperlinks to objects 
+   that are related to the interface.</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+   <li>Describe how you would have implemented the interface</li>
+   <li>Create hyperlinks to the base interfaces, since the inheritance tree is 
+   automatically built with such hyperlinks</li>
+ </ul>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocInterface1Hdr.htm">
+     IClassFactory.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocInterface1Htm.htm">
+     IClassFactory.htm</a></td>
+     <td>A COM interface</td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocInterface2Hdr.htm">
+     CATIPrintable.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocInterface2Htm.htm">
+     CATIPrintable.htm</a></td>
+     <td>A CNext interface</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingConstructorComments"></a>Writing Constructor Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Write &quot;<strong>Constructs a xxx</strong>.&quot; For a constructor with 
+     parameters, try to qualify these parameters while keeping a short sentence. 
+     For example, write &quot;<strong>Constructs a 3D point given its coordinates.</strong>&quot;, 
+     or <strong>&quot;Constructs a smart interface pointer from a pointer to 
+     CATBaseUnknown.</strong>&quot;</li>
+     <li>Write &quot;<strong>Constructs an empty xxx</strong>.&quot; for a default 
+     constructor (a constructor without parameters)</li>
+     <li>Write &quot;<strong>Copy constructor</strong>.&quot; for a copy constructor</li>
+   </ul>
+   </li>
+   <li>Write additional comments if the short role is not enough</li>
+   <li>Build the list of parameters using the <strong>@param</strong> tag. 
+   Follow the CNext rules for input, output, and input/outpout parameters, and 
+   CNext parameter naming conventions.
+   <p><b>Reminder of CNext rules and naming conventions</b>
+   <ul>
+     <li>The parameters of member functions must all be named. The name is an 
+     important source of information for developers with regards to the meaning 
+     of the function.</li>
+     <li>The parameters of member functions belong to one these three 
+     categories: in, out or inout. To make this classification more explicit, 
+     the name of the parameter must begin with the prefix 'i' (in), 'o' (out) or 
+     'io' (inout). The first character of the name must be uppercase (ex: i<u>I</u>ndex, 
+     o<u>E</u>lement). See <a href="#Lifecycle">Lifecycle Rules</a> for 
+     parameter allocation.</li>
+   </ul>
+   </li>
+   <li>Use <strong>Legal values</strong> for each parameter, if this is 
+   meaningful and describe the default value, if any</li>
+   <li>Use <strong>Cyclic reference</strong> for each parameter if it is an 
+   interface pointer that the constructor keeps as a data member</li>
+   <li>Use <strong>Lifecycle rules deviation</strong> for each each parameter 
+   for which the constructor is in deviation with respect to the CNext lifecycle 
+   rules for objects, interface pointers, and smart pointers</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the constructor.</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+   <li>Let types alone in constructor signatures. Put dummy arguments instead 
+   and use them with @param</li>
+   <li>Create hyperlinks to the classes or enums used as types for parameters, 
+   since these links are automatically set up</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocConstructor1Hdr.htm">
+     CATUnicodeString.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocConstructor1Htm.htm">
+     CATUnicodeString.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingMethodComments"></a>Writing Method Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Begin the short role using an action verb, such as <strong>Analyzes</strong>,
+     <strong>Processes</strong>, <strong>Adds</strong>, <strong>Computes</strong>, 
+     etc.</li>
+     <li>Use <strong>Returns</strong> for a getter, that is a method that simply 
+     returns a value</li>
+     <li>Use <strong>Retrieves</strong> for a method whose role is to return a 
+     value using one of its parameters, even if it has a returned value</li>
+   </ul>
+   </li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Build the list of parameters using the <strong>@param</strong> tag. 
+   Follow the CNext rules for input, output, and input/outpout parameters, and 
+   CNext parameter naming conventions.
+   <p><a name="Reminder"></a><b>Reminder of CNext rules and naming conventions</b>
+   <ul>
+     <li>As a general rule, <strong>any method that gets a pointer to 
+     CATBaseUnknown</strong>, either as a returned value or as an output 
+     parameter, <strong>must describe the expected interface or class that 
+     stands at the end of the pointer</strong> in order that the method caller 
+     can efficiently use this pointer</li>
+     <li>The parameters of member functions must all be named. The name is an 
+     important source of information for developers with regards to the meaning 
+     of the function.</li>
+     <li>The parameters of member functions belong to one the these three 
+     categories: in, out or inout. To make this classification more explicit, 
+     the name of the parameter must begin with the prefix 'i' (in), 'o' (out) or 
+     'io' (inout). The first character of the name must be uppercase (ex: i<u>I</u>ndex, 
+     o<u>E</u>lement). See <a href="#Lifecycle">Lifecycle Rules</a> for 
+     parameter allocation.</li>
+   </ul>
+   <p>Begin an argument definition using the definite article <strong>The</strong>. 
+   For example, write <strong>The point coordinates</strong>, or <strong>The 
+   dialog agent</strong>. You can use <strong>A</strong> instead of <strong>The</strong> 
+   if there is a part of indetermination, such as <strong>A pointer to the 
+   IUnknown interface</strong>, if the pointer is not explicitly defined or used 
+   in the description beforehand.</li>
+   <li>Use <strong>Legal values</strong> for each parameter, if this is 
+   meaningful and describe the default value, if any</li>
+   <li>Use <strong>Cyclic reference</strong> for each parameter if it is an 
+   interface pointer that the method keeps as a data member</li>
+   <li>Use <strong>Lifecycle rules deviation</strong> for each each parameter 
+   for which the method is in deviation with respect to the CNext lifecycle 
+   rules for objects, interface pointers, and smart pointers</li>
+   <li>Use <strong>Overloads</strong> to describe several prototypes of the same 
+   method</li>
+   <li>Use <strong>Overrides</strong> to redefine an inherited method</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the method</li>
+   <li>Add a <strong>Returns</strong> section using the <strong>@return</strong> 
+   tag if the method returns a value, except for a getter</li>
+   <li>Use <strong>Legal values</strong> to describe <strong>each</strong> 
+   returned value, including <strong>each</strong> HRESULT value</li>
+   <li>Add a <strong>Throws</strong> section using the <strong>@exception</strong> 
+   tag if the method throws an exception</li>
+   <li>Set hyperlinks to the error classes thrown as exceptions thanks to the
+   <strong>@href</strong> tag</li>
+ </ul>
+ <p>Refer to <a href="#WritingInterfaceComments">interfaces</a> or
+ <a href="#WritingGlobalFunctionComments">global functions</a> for HRESULT 
+ examples.</p>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+   <li>Let types alone in methods signatures. Put dummy arguments instead and 
+   use them with @param</li>
+   <li>Create hyperlinks to the classes or enums used as types for parameters, 
+   since these links are automatically set up</li>
+ </ul>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocMethod1Hdr.htm">
+     CATDialogTransition.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocMethod1Htm.htm">
+     CATDialogTransition.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocMethod2Hdr.htm">
+     CyclicReference.cpp</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocMethod2Htm.htm">
+     CyclicReference.htm</a></td>
+     <td>Cyclic reference examples</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingGlobalFunctionComments"></a>Writing Global Function 
+ Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Begin the short role using an action verb, such as <strong>Creates</strong>,
+     <strong>Processes</strong>, <strong>Adds</strong>, <strong>Computes</strong>, 
+     etc.</li>
+   </ul>
+   </li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Build the list of parameters using the <strong>@param</strong> tag. 
+   Follow the CNext rules for input, output, and input/outpout parameters, and 
+   CNext parameter naming conventions.
+   <p><b>Reminder of CNext rules and naming conventions</b>
+   <ul>
+     <li>The parameters of member functions must all be named. The name is an 
+     important source of information for developers with regards to the meaning 
+     of the function.</li>
+     <li>The parameters of member functions belong to one the these three 
+     categories: in, out or inout. To make this classification more explicit, 
+     the name of the parameter must begin with the prefix 'i' (in), 'o' (out) or 
+     'io' (inout). The first character of the name must be uppercase (ex: i<u>I</u>ndex, 
+     o<u>E</u>lement). See <a href="#Lifecycle">Lifecycle Rules</a> for 
+     parameter allocation.</li>
+   </ul>
+   </li>
+   <li>Use <strong>Legal values</strong> for each parameter, if this is 
+   meaningful and describe the default value, if any</li>
+   <li>Use <strong>Cyclic reference</strong> for each parameter if it is an 
+   interface pointer that the constructor keeps as a data member</li>
+   <li>Use <strong>Lifecycle rules deviation</strong> for each each parameter 
+   for which the constructor is in deviation with respect to the CNext lifecycle 
+   rules for objects, interface pointers, and smart pointers</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the global function</li>
+   <li>Add a <strong>Returns</strong> section using the <strong>@return</strong> 
+   tag if the method returns a value</li>
+   <li>Use <strong>Legal value</strong> for the possible returned values</li>
+   <li>Add a <strong>Throws</strong> section using the <strong>@exception</strong> 
+   tag if the method returns a value</li>
+   <li>Set hyperlinks to the error classes thrown as exceptions thanks to the
+   <strong>@href</strong> tag</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the class role</li>
+   <li>Let types alone in global function signatures. Put dummy arguments 
+   instead and use them with @param</li>
+   <li>Create hyperlinks to the classes or enums used as types for parameters, 
+   since these links are automatically set up</li>
+ </ul>
+ <p>Refer to the following example:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocGlobalFunction1Hdr.htm">
+     CATInstantiateComponent.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocGlobalFunction1Htm.htm">
+     CATInstantiateComponent.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingMacroComments"></a>Writing Macro and #define Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period
+   <ul>
+     <li>Begin the short role using an action verb, such as <strong>Creates</strong>,
+     <strong>Processes</strong>, <strong>Adds</strong>, <strong>Computes</strong>, 
+     etc.</li>
+   </ul>
+   </li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Build the list of parameters using the <strong>@param</strong> tag. Don't 
+   change the parameter name, since they are used as is in the macro code</li>
+   <li>Use <strong>Legal values</strong> for each parameter, if this is 
+   meaningful and describe the default value, if any</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the macro</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the class role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocMacro1Hdr.htm">
+     CATMacForIUnknown.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro10Htm.htm">
+     CATDeclareClass.htm</a></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro11Htm.htm">
+     CATBeginImplementClass.htm</a></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro12Htm.htm">
+     CATEndImplementClass.htm</a></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro13Htm.htm">
+     CATAddClassExtension.htm</a></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro14Htm.htm">
+     CATImplementClass.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocMacro2Hdr.htm">
+     CATDlgEngUtility.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro2Htm.htm">
+     CATDlgEngBehavior.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocMacro3Hdr.htm">
+     CATGeometryType.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocMacro3Htm.htm">
+     CATGeometryType.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingCollectionComments"></a>Writing Collection Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Write a single comment just after the one that contains the @CAA2Level 
+   and @CAA2Usage tags.
+   <ul>
+     <li>Write first the @collection tag, followed by the collection class name. 
+     If this name is redefined by a typedef, use this redefined name&nbsp;</li>
+     <li>Go on with the short role. End it using a period</li>
+     <li>Begin the short role using <strong>Collection class for pointers to xxx</strong> 
+     for CATLISTP, or <strong>Collection class for xxx</strong> for CATLISTV</li>
+     <li>Give, the list of available methods:
+     <ul>
+       <li>If all methods are available, for a CATLISTP, write:&nbsp; <strong>
+       All the methods of pointer collection classes are available.</strong></li>
+       <li>If almost all methods are available, some of them being removed using 
+       #undef, write: <strong>All the methods of pointer collection classes are 
+       available, except the following:</strong>, and give the list of 
+       unavailable methods</li>
+       <li>If few methods are available, write: <strong>Only the following 
+       methods of pointer collection classes are available:</strong>, and give 
+       the list of available methods</li>
+     </ul>
+     </li>
+     <li>Write at the end: <strong>Refer to the articles dealing with 
+     collections in the encyclopedia.</strong></li>
+   </ul>
+   </li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the class role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocCollection1Hdr.htm">
+     CATListOfCATFrmWindow.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocCollection1Htm.htm">
+     CATListOfCATFrmWindow.htm</a></td>
+     <td>Collection with all methods</td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocCollection2Hdr.htm">
+     CATListOfCATDlgControl.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocCollection2Htm.htm">
+     CATListOfCATDlgControl.htm</a></td>
+     <td>Collection with almost all methods</td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocCollection3Hdr.htm">
+     CATListOfCATDlgNotify.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocCollection3Htm.htm">
+     CATListOfCATDlgNotify.htm</a></td>
+     <td>Collection with few methods</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingEnumComments"></a>Writing Enumeration Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period</li>
+   <li>Use only a name, or a qualified name, not a sentence.</li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Build the list of values using the <strong>@param</strong> tag. Insert a 
+   @param tag for each enumerated value</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the enum</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+   <li>Avoid having enum without identifier, such as<br>
+   <tt>enum {CATFirstValue, CATSecondValue};</tt><br>
+   otherwise, mkman can't refer to it</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocEnum1Hdr.htm">
+     CATCommandMode.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocEnum1Htm.htm">
+     CATCommandMode.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocEnum2Hdr.htm">
+     CATCommandMsg.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocEnum2Htm.htm">
+     CATCommandMsg.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingOperatorComments"></a>Writing Operator Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period</li>
+   <li>Depending on the operator, use the standard short roles if there is no 
+   overload and if the operator applies to class instances only.
+   <table height="400">
+     <tr>
+       <th>Operator</th>
+       <th>Short Role</th>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Equality operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>==</code></td>
+       <td>Equality operator.</td>
+     </tr>
+     <tr>
+       <td><code>!=</code></td>
+       <td>Inequality operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Relational operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>&lt;</code></td>
+       <td>Less-than operator.</td>
+     </tr>
+     <tr>
+       <td><code>&lt;=</code></td>
+       <td>Less-than or equal operator.</td>
+     </tr>
+     <tr>
+       <td><code>&gt;</code></td>
+       <td>Greater-than operator.</td>
+     </tr>
+     <tr>
+       <td><code>&gt;=</code></td>
+       <td>Greater-than or equal operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Prefix operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>++</code></td>
+       <td>Prefix increment operator.</td>
+     </tr>
+     <tr>
+       <td><code>--</code></td>
+       <td>Prefix decrement operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Postfix operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>[]</code></td>
+       <td>Subscripting operator.</td>
+     </tr>
+     <tr>
+       <td><code>.</code></td>
+       <td>Member-selection operator.</td>
+     </tr>
+     <tr>
+       <td><code>-&gt;</code></td>
+       <td>Member-selection operator.</td>
+     </tr>
+     <tr>
+       <td><code>++</code></td>
+       <td>Postfix increment operator.</td>
+     </tr>
+     <tr>
+       <td><code>--</code></td>
+       <td>Postfix decrement operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Unary operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>+</code></td>
+       <td>Unary plus operator.</td>
+     </tr>
+     <tr>
+       <td><code>-</code></td>
+       <td>Arithmetic-negation operator.</td>
+     </tr>
+     <tr>
+       <td><code>~</code></td>
+       <td>Bitwise-complement (or bitwise-NOT) operator.</td>
+     </tr>
+     <tr>
+       <td><code>!</code></td>
+       <td>Logical-negation (or logical-NOT)&nbsp; operator.</td>
+     </tr>
+     <tr>
+       <td><code>*</code></td>
+       <td>Indirection&nbsp;(or dereference) operator.</td>
+     </tr>
+     <tr>
+       <td><code>&amp;</code></td>
+       <td>Address-of operator.</td>
+     </tr>
+     <tr>
+       <td><code>()</code></td>
+       <td>Cast (or type cast, or conversion) operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Additive operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>+</code></td>
+       <td>Addition operator.</td>
+     </tr>
+     <tr>
+       <td><code>-</code></td>
+       <td>Subtraction operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Multiplicative operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>*</code></td>
+       <td>Multiplication operator.</td>
+     </tr>
+     <tr>
+       <td><code>/</code></td>
+       <td>Division operator.</td>
+     </tr>
+     <tr>
+       <td><code>%</code></td>
+       <td>Remainder (or modulus) operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Bitwise operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>&amp;</code></td>
+       <td>Bitwise AND operator.</td>
+     </tr>
+     <tr>
+       <td><code>^</code></td>
+       <td>Bitwise-exclusive-OR operator.</td>
+     </tr>
+     <tr>
+       <td><code>|</code></td>
+       <td>Bitwise-inclusive-OR operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Bitwise shift operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>&lt;&lt;</code></td>
+       <td>Bitwise left shift operator.</td>
+     </tr>
+     <tr>
+       <td><code>&gt;&gt;</code></td>
+       <td>Bitwise right shift operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Logical operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>&amp;&amp;</code></td>
+       <td>Logical-AND operator.</td>
+     </tr>
+     <tr>
+       <td><code>||</code></td>
+       <td>Logical-OR operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Assignment operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>=</code></td>
+       <td>Assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>*=</code></td>
+       <td>Multiplication assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>/=</code></td>
+       <td>Division assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>%=</code></td>
+       <td>Remainder (or modulus) assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>+=</code></td>
+       <td>Addition assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>-=</code></td>
+       <td>Subtraction assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>&lt;&lt;=</code></td>
+       <td>Left-shift assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>&gt;&gt;=</code></td>
+       <td>Right-shift assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>&amp;=</code></td>
+       <td>Bitwise-AND assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>^=</code></td>
+       <td>Bitwise-exclusive-OR assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>|=</code></td>
+       <td>Bitwise-inclusive-OR assignment operator.</td>
+     </tr>
+     <tr>
+       <td><code>&amp;=</code></td>
+       <td>Bitwise-AND assignment operator.</td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Other operators</strong></td>
+     </tr>
+     <tr>
+       <td><code>::</code></td>
+       <td>Scope resolution operator.</td>
+     </tr>
+     <tr>
+       <td><code>?:</code></td>
+       <td>Conditional-expression operator.</td>
+     </tr>
+     <tr>
+       <td><code>,</code></td>
+       <td>Sequential-evaluation (comma) operator.</td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <ul>
+   <li>If the operator is overloaded, or applies to different objects than the 
+   class instances, use an action verb (see example)</li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>If needed, use the <strong>@param</strong> tag for the parameter</li>
+   <li>Use <strong>Legal values</strong> for the parameter, if this is 
+   meaningful</li>
+   <li>If needed, use the <strong>@return</strong> tag.</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocOperator1Hdr.htm">
+     CAT4x4MatrixOperators.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocOperator1Htm.htm">
+     CAT4x4MatrixOperators.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingStructComments"></a>Writing Structure Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period</li>
+   <li>Use only a name, or a qualified name, not a sentence.</li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>If needed, add a <b>See also</b> section to create hyperlinks to objects 
+   or methods that are related to the struct</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocStructure1Hdr.htm">
+     CAT2DGeomTextPixmap.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocStructure1Htm.htm">
+     CAT2DGeomTextPixmap.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingDataMemberComments"></a>Writing Data Member Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period</li>
+   <li>Use only a name, or a qualified name, not a sentence.</li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Use <strong>Legal values</strong> if this is meaningful, and describe the 
+   default value set up when instantiating the class or structure, if any</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocDataMember1Hdr.htm">
+     CATExtIUIActivate.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocDataMember1Htm.htm">
+     CATExtIUIActivate.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="WritingtypedefComments"></a>Writing typedef and constant Comments</h4>
+ <p>Do: </p>
+ <ul>
+   <li>Begin with the short role. End it using a period</li>
+   <li>Use only a name, or a qualified name, not a sentence.</li>
+   <li>Write additional comments, if the short role is not enough, in the
+   <strong>Role</strong> section</li>
+   <li>Use the <strong>@param</strong> tag if the typedef defines:
+   <ul>
+     <li>A method prototype, insert a <strong>@param </strong>tag for each 
+     parameter</li>
+     <li>An int or a long used as a field of bits, insert a <strong>@param
+     </strong>tag for each meaningful bit, usually set using a #define. Do not 
+     comment the associated #define. Refer to examples given in
+     <a href="#WritingMacroComments">Writing Macro Comments</a></li>
+   </ul>
+   </li>
+   <li>Add a <strong>Returns</strong> section using the <strong>@return</strong> 
+   tag if a method prototype is defined with a return value</li>
+   <li>If needed, you can add a <b>See also</b> section to create hyperlinks to 
+   objects or methods that are related to the typedef of constant</li>
+ </ul>
+ <p>Don't: </p>
+ <ul>
+   <li>Forget the period at the end of the short role</li>
+ </ul>
+ <p>Refer to the following examples:</p>
+ <table>
+   <tr>
+     <th>Header File</th>
+     <th>html File</th>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocTypedef1Hdr.htm">
+     CATCommandMethod.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocTypedef1Htm.htm">
+     CATCommandMethod.htm</a></td>
+   </tr>
+   <tr>
+     <td><a href="../CAADocHeaderRef/CAADocTypedef2Hdr.htm">
+     CATCommandClientData.h</a></td>
+     <td><a href="../CAADocHeaderRef/CAADocTypedef2Htm.htm">
+     CATCommandClientData.htm</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Tips"></a>Tips</h3>
+ <p>These tips can help you in the following areas: </p>
+ <ul>
+   <li>Correctly writing <a href="#TipsHRESULT">HRESULT</a> legal values</li>
+   <li>Describing methods to scan <a href="#TipsList">lists</a> and retrieve 
+   items</li>
+   <li>Making sure that your <a href="#TipsLowLevel">weak typed</a> parameters 
+   or return values can be used</li>
+ </ul>
+ <p>These tags are:</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="TipsHRESULT"></a>Tips for HRESULT</h4>
+ <p>If your method returns only <code>S_OK</code> and <code>E_FAIL</code>, do 
+ not include a Returns section.</p>
+ <p>Otherwise, if the method can return more than <code>S_OK</code> and <code>
+ E_FAIL</code>, write your list of HRESULT legal values as follows:</p>
+ <pre>...
+ * @return
+ *   An HRESULT value. 
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:
+ *   &lt;dl&gt;
+ *     &lt;dt&gt;S_OK&lt;/dt&gt;
+ *     &lt;dd&gt;The component is successfully created
+ *         and the interface pointer is successfully returned&lt;/dd&gt;
+ *     &lt;dt&gt;E_FAIL &lt;/dt&gt;
+ *     &lt;dd&gt;The component was successfully created,
+ *         but the interface query failed&lt;/dd&gt;
+ *     &lt;dt&gt;E_NOINTERFACE &lt;/dt&gt;
+ *     &lt;dd&gt;The component was successfully created,
+ *         but the it doesn't implement the requested interface&lt;/dd&gt;
+ *     &lt;dt&gt;E_OUTOFMEMORY &lt;/dt&gt;
+ *     &lt;dd&gt;&lt;dd&gt;The component allocation failed&lt;/dd&gt;
+ *   &lt;/dl&gt;
+ */
+</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="TipsList"></a>Tips for Lists</h4>
+ <p>You usually provide methods to scan your lists and collections, and to 
+ retrieve a given object from the collection. It can be thanks to: </p>
+ <ul>
+   <li>An iterator with two methods: one to point to the collection first item, 
+   such as <code>InitTransitionList</code> below, the other to retrieve the 
+   pointed object and move the pointer to the next object, such as <code>
+   GetNextTransition</code>.
+   <pre>/**
+ * Points to the first command transition.
+ * @see #GetNextTransition 
+ */
+virtual void InitTransitionList();
+
+/**
+ * Returns the pointed command transition and points to the next one.
+ * &lt;br&gt;&lt;b&gt;Precondition&lt;/b&gt;: Set the pointer to the first command transition
+ * using @href #InitTransitionList before traversing out the command transition
+ * list using calls to GetNextTransition enclosed in a loop.
+ */
+virtual CATDialogTransition * GetNextTransition();</pre>
+   </li>
+   <li>A couple of methods: one to get the item count, such as <code>
+   GetElementTypeSize</code>, the other to retrieve the ith item, such as <code>
+   GetElementType</code>.
+   <pre>/**
+ * Returns the count of element types expected by the dialog agent.
+ * &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: 
+ * The count of element types ranges from 1 to n.
+ */
+int GetElementTypeSize();
+
+/**
+ * Returns an element type from those expected by the dialog agent using the element type index.
+ * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This method returns the &lt;tt&gt;iIndex&lt;/tt&gt;th element type
+ * from those expected by the dialog agent and set using the @href #SetElementType method. 
+ * @param iIndex
+ *   The index of the element type .
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: &lt;tt&gt;iIndex&lt;/tt&gt; range starts with 1, which is the default.
+ *   Use @href #GetElementTypeSize to get the element type count.
+ */
+CATClassId GetElementType(int iIndex = 1);</pre>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="TipsLowLevel"></a>Tips for Weak Typing</h4>
+ <p>Your methods have often weak typed parameters that you didn't want to 
+ specialize to ensure future evolutions. For example, a method takes a pointer 
+ to CATDlgControl as a parameter, but you expect in fact a pointer to a more 
+ specific interface. This can also be the case of a return value. The type into 
+ which the pointer must be cast to become usable, or the interface to query from 
+ the returned one must be described. Nowhere else will the client application 
+ programmer get this information.</p>
+ <pre>/**
+ * Retrieves the object that does what you want.
+ * @param oObject
+ *   The retrieved object.
+ *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: The object retrieved is an instance of a
+ *   a CATDlgCombo. Cast the pointer to CATDlgCombo to use it.
+ */
+public HRESULT GetObject(CATDlgControl ** oObject);</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="JavadocTags"></a>CNext Tag Reference</h3>
+ <p>Some specific tags are used to denote specific entities and generate html 
+ tags to present this information consistently. These tags begin with the &quot;at&quot; 
+ sign, or @. These tags are:</p>
+ <table width="100%">
+   <tr>
+     <th bgcolor="#66FFFF">Tag</th>
+     <th bgcolor="#66FFFF">Definition</th>
+   </tr>
+   <tr>
+     <td><a href="#collection">@collection</a></td>
+     <td>To identify and provide the name of a collection class</td>
+   </tr>
+   <tr>
+     <td><a href="#deprecated">@deprecated</a></td>
+     <td>To denote that an entity is deprecated</td>
+   </tr>
+   <tr>
+     <td><a href="#description">@description</a></td>
+     <td>To create a description section</td>
+   </tr>
+   <tr>
+     <td><a href="#exception">@exception</a></td>
+     <td>To create a Throws section to describe the exceptions thrown by the 
+     method</td>
+   </tr>
+   <tr>
+     <td><a href="#example">@example</a></td>
+     <td>To create an example section</td>
+   </tr>
+   <tr>
+     <td><a href="#hyperlink">@href</a></td>
+     <td>To create a hyperlink to other documented entities anywhere in the text</td>
+   </tr>
+   <tr>
+     <td><a href="#nodoc">@nodoc</a></td>
+     <td>To denote each entity that you don't want to see in the extracted html 
+     file</td>
+   </tr>
+   <tr>
+     <td><a href="#param">@param</a></td>
+     <td>To denote each method or global function parameter, enum value, struct 
+     member, and possibly typedef value</td>
+   </tr>
+   <tr>
+     <td><a href="#return">@return</a></td>
+     <td>To create a Returns section to describe the returned value of a method</td>
+   </tr>
+   <tr>
+     <td><a href="#see">@see</a></td>
+     <td>To create a See also section that contains hyperlinks to other 
+     documented entities, usually located at the end of the role of a class or 
+     method</td>
+   </tr>
+   <tr>
+     <td><a href="#som">@SOM and @EOM</a></td>
+     <td>To delimite a Macro Usage in a C++ header.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="collection"></a>@collection</h4>
+ <p>To identify and provide the name of a collection class. The comment should 
+ be inserted at the top of the file, just below the Level and Usage comment, and 
+ must be the only comment in the file.</p>
+ <pre>...
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U1
+ */
+
+/**
+ * <font color="#CC0000"><strong>@collection</strong></font> CATLISTP(CATUnicodeString)
+ * Collection class for Unicode strings.
+ * ...
+ */</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="deprecated"></a>@deprecated</h4>
+ <p>To denote each entity that should not be used.</p>
+ <pre>/**
+ * <font color="#CC0000"><strong>@deprecated </strong></font>V5R8
+ * Removes a file descriptor subscription from a command.
+ * This method will be replaced by @href myClass#myMethod
+ * The signature of the method has been changed to manage a new functionnality
+ * @param iFileDescriptor
+ *   The file descriptor.
+ * @param iToClient
+ *   The command for which the subscription is to be removed.
+ * @return 0 if the file descriptor subscription is successfully removed and 0 otherwise.
+ * @see #AddFileDescriptor
+ */
+      int RemoveFileDescriptor(int          iFileDescriptor,
+                               CATCommand * iToClient);</pre>
+ <p>The replacing entity, if any, can be specified using the <code>@see</code> 
+ or <code>@href</code> syntax, as follows:</p>
+ <pre>/**
+ * <font color="#CC0000"><strong>@deprecated </strong></font>V5R8 IUnknown#QueryInterface
+ * ...</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="description"></a>@description</h4>
+ <p>To create a description section to describe an object.</p>
+ <pre>/**
+ * Retrieves a reference to an element of <tt>self</tt>.
+ * @param coordIndex
+ *   [in] The index of the desired coordinate (e.g., DNBMath3D::X).
+ * @return
+ *   A reference to component <coordindex> of <tt>self</tt>.
+ * <strong><font color="#CC0000">@description </font></strong>
+ *   This function returns a reference to component <coordindex> of self.
+ */ 
+reference operator[]( CoordinateIndex coordIndex )</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="exception"></a>@exception</h4>
+ <p>To create a Throws section to describe the exceptions thrown by the method</p>
+ <pre>/**
+ * Checks that the class to document belongs to JJA's list.
+ * ...
+ * <font color="#CC0000"><strong>@exception</strong></font> @href CATSystemError if JJA's laptop is not connected to the network
+ */
+        HRESULT Check(CATBaseUnknown * pClass);</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="example"></a>@example</h4>
+ <p>To create an example section.</p>
+ <pre>/**
+ * Retrieves a reference to an element of <tt>self</tt>.
+ * @param coordIndex
+ *   [in] The index of the desired coordinate (e.g., DNBMath3D::X).
+ * @return
+ *   A reference to component <coordindex> of <tt>self</tt>.
+ * <strong><font color="#CC0000">@example </font></strong>
+ *   DNBVector3D vector;
+ *   vector[ DNBMath3D::X ] = 1.0;
+ *   vector[ DNBMath3D::Y ] = 2.0;
+ *   vector[ DNBMath3D::Z ] = 3.0;
+ *   DNBReal x = vector[ DNBMath3D::X ];
+ */ 
+reference operator[]( CoordinateIndex coordIndex )</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="hyperlink"></a>@href</h4>
+ <p>To create a hyperlink to other documented entities anywhere in the text.</p>
+ <pre>/**
+ * A collection of all the CATCamera instances attached to a document.
+ * A camera can be created using the <strong><font color="#CC0000">@href</font> CATViewer#NewCamera</strong> method.
+ * The first seventh cameras of the collection are <strong><font color="#CC0000">@href</font> CATCamera3D</strong>
+ * objects and cannot be modified or removed.
+ */
+interface CATIACameras : CATIACollection</pre>
+ <p>Do not use tags for monospace fonts (<code>&lt;tt&gt;</code> or <code>&lt;code&gt;</code>) 
+ in hyperlinks. See <a href="#Hyperlinks">Using Hyperlinks</a> to know which 
+ hyperlinks you can use.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="nodoc"></a>@nodoc</h4>
+ <p>To denote each entity that you don't want to see in the extracted html file.</p>
+ <pre>/**
+ * <font color="#CC0000"><strong>@nodoc</strong></font>
+ */
+   CATNotification * GetRadBModifyNotification() const;
+
+/** <strong><font color="#CC0000">@nodoc</font></strong> */
+    virtual l_CATDialog* GetLetterObject();
+
+/**
+  * <font color="#CC0000"><strong>@nodoc</strong></font>
+  * Sets the radio button state.
+  * @param iState
+  *   The radio button state.
+  *   &lt;b&gt;Legal values&lt;/b&gt;: It can be set to either
+  *   &lt;tt&gt;CATDlgCheck&lt;/tt&gt; to check the radio button or to
+  *   &lt;tt&gt;CATDlgUncheck&amp;lgt;/tt&gt; to uncheck it.
+  * @param iNotify
+  *   Requests that a notification be sent when the state is set.
+  *   This notification is an instance of the CATDlgRadBModifyNotification
+  *   class.
+  *   &lt;b&gt;Legal values&lt;/b&gt;: 0 to send the notification, and 1, or a non null
+  *   value, to prevent from sending it. 1 is the default.
+  */
+     void SetState(CATULong iState, int iNotify=1);</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="param"></a>@param</h4>
+ <p>To denote each method or global function parameter.</p>
+ <pre>/**
+ * Constructs a radio button.
+ * <strong><font color="#CC0000">@param</font></strong> <strong>iParent</strong>
+ *   The radio button command and containment parent. 
+ * <strong><font color="#CC0000">@param</font></strong> <strong>iObjectName</strong>
+ *   The radio button identifier.
+ *   This identifier is used to assign resources to the radio button,
+ *   namely its title displayed beside it.
+ * <strong><font color="#CC0000">@param</font></strong> <strong>iStyle</strong>
+ *   The radio button style. 
+ *   <strong>&lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:</strong> The default style expressed by the
+ *   NULL default value sets the radio button title to the right
+ *   of the radio button.
+ *   This is the only available style
+ */
+        CATDlgRadioButton(CATDialog       * <strong>iParent</strong>,
+                          const CATString &amp; <strong>iObjectName</strong>,
+                          CATDlgStyle       <strong>iStyle</strong>=NULL);</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="return"></a>@return</h4>
+ <p>To create a Returns section to describe the returned value of a method.</p>
+ <pre>/**
+ * Analyzes a notification received.
+ * ...
+ * <font color="#CC0000"><strong>@return</strong></font>
+ *   The notification propagation mode.
+ *   <strong>&lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:</strong> &lt;tt&gt;<tt>CATNotifTransmitToFather</tt>&lt;/tt&gt; (=0)
+ *   if the notification should go on along the command tree structure, or
+ *   &lt;tt&gt;<tt>CATNotifDontTransmitToFather</tt>&lt;/tt&gt; (=1) if it should stop.
+ */
+  virtual CATNotifPropagationMode AnalyseNotification(CATCommand      * iFromClient,
+                                                      CATNotification * iNotification);</pre>
+ <p>If the returned value can take all the values of the enum, the hyperlink set 
+ by mkman to the enum documentation can be enough. Nevertheless, if a only 
+ subset of these values can be returned, or if the meaning of is 
+ context-dependent, you must use the <strong>Legal values</strong> named field.</p>
+ <p>If the method returns a HRESULT, you can find examples in
+ <a href="#WritingGlobalFunctionComments">global functions</a>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="see"></a>@see</h4>
+ <p>To create a See also section that contains hyperlinks to other documented 
+ entities, usually located at the end of the role of a class or method. Use the 
+ comma to separate two successive entity.</p>
+ <pre>/**
+ * Base class for all collaborating objects.
+ * &lt;tt&gt;CATCommand&lt;/tt&gt; is the base class for all objects that need to collaborate by
+ * means of
+ * &lt;ul&gt;
+ * &lt;li&gt;The send/receive communication protocol&lt;/li&gt;
+ * &lt;li&gt;The callback mechanism.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;p&gt;&lt;tt&gt;CATCommand&lt;/tt&gt; supplies the methods to convey notifications and their
+ * associated data to the object either able to process user's requests in response
+ * to user interactions, or that has set callbacks on to user activable objects.
+ * <strong><font color="#CC0000">@see</font> CATCallbackManager, CATNotification</strong>
+ */
+ class ExportedByJS0FM CATCommand : public CATEventSubscriber </pre>
+ <p>Another example about an enumeration to refer to methods that are members of 
+ the same class that the enum.</p>
+ <pre>/**
+ * Subscribing type, used as parameter of the methods &lt;tt&gt;Subscribe&lt;/tt&gt; and
+ * &lt;tt&gt;RemoveSubscribe&lt;/tt&gt;. 
+ * @param CATSubscribeEndTransaction
+ *   The subscribing command must be called when the transaction is completed
+ * @param CATSubscribeIdle
+ *   The call must be performed when the process enters the main event loop
+ * <strong><font color="#CC0000">@see</font> #Subscribe, #RemoveSubscribe</strong>
+ */
+ enum
+ {
+   CATSubscribeEndTransaction=1,
+   CATSubscribeIdle =2
+ };</pre>
+ <p>See <a href="#Hyperlinks">Using Hyperlinks</a> to know which hyperlinks you 
+ can use.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="som"></a>@SOM and @EOM</h4>
+ <p><code>@SOM</code> (Start Of Macro) and <code>@EOM</code> (End Of Macro) 
+ delimit a macro usage in a C++ header. mkman does not replace the macro by its 
+ contents like the preprocessor. It simply identifies the enclosed statement as 
+ a macro and thus does not attempt to parse it, and copies the macro in the 
+ output html file as it is in the header file.</p>
+ <p>Header file:</p>
+ <pre>void  normalize()  /**<b><font color="#CC0000">@SOM</font></b>*/ DNB_THROW_SPEC((DNBEZeroVector)) /**<b><font color="#CC0000">@EOM</font></b>*/  ;</pre>
+ <p>HTML File:</p>
+ <dl>
+   <dt><a name="normalize"></a><a name="normalize()"></a>o <b>normalize</b></dt>
+   <table>
+     <tr>
+       <td>public void <b>normalize</b></td>
+       <td>(</td>
+       <td>)</td>
+       <td>DNB_THROW_SPEC((DNBEZeroVector))</td>
+     </tr>
+   </table>
+ </dl>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="NamedFields"></a>Named Field Reference</h3>
+ <p>Some comments may appear repeatitively, such as the parameter legal values, 
+ or the deviation to the lifecycle management. Use name fields to describe them. 
+ Available name fields are:</p>
+ <table width="100%">
+   <tr>
+     <th bgcolor="#66FFFF">Named Field html Tags</th>
+     <th bgcolor="#66FFFF">Definition</th>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;b&gt;Role&lt;/b&gt;:</strong></td>
+     <td>To describe the role of a class, an interface, a global function, an 
+     enum, a macro, a typedef</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Role&lt;/b&gt;:</strong></td>
+     <td>To describe the role of a method or data member</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Precondition&lt;/b&gt;:</strong></td>
+     <td>To describe the valid system context or state required before calling 
+     the method. Applies to methods</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Postcondition&lt;/b&gt;:</strong></td>
+     <td>To describe the system context or state that the method leaves or 
+     should leave when returning. Applies to methods</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;:</strong></td>
+     <td>To describe potential cycles between objects due to mutual interface 
+     pointers or smart pointers stored as data members, and that could never be 
+     released. Applies to method parameters. Refer to
+     <a href="../CAADocHeaderRef/CAADocMethod2Hdr.htm">
+     CyclicReference.cpp</a> and to
+     <a href="../CAADocHeaderRef/CAADocMethod2Htm.htm">
+     CyclicReference.htm</a> for examples.</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;:</strong></td>
+     <td>To describes parameter range of valid values, including the default 
+     value. Applies to method parameters</td>
+   </tr>
+   <tr>
+     <td valign="top"><strong>&lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;:</strong></td>
+     <td>To describe deviations with respect to <a href="#Lifecycle">lifecycle 
+     rules</a>. Applies to method parameters</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Lifecycle"></a>Lifecycle Rules</h3>
+ <h4><a name="Lifecycle1"></a>Memory Management for Non-scalar types (Except 
+ Interfaces)</h4>
+ <p>When calling member functions, parameters with non scalar types (structures, 
+ character strings, classes) memory must be allocated and deallocated according 
+ to strict rules in order to avoid memory leaks or untimely memory release. </p>
+ <ul>
+   <li><strong>in</strong> parameters must be allocated by the caller before 
+   calling the member function and freed by the caller after the function has 
+   returned</li>
+   <li><strong>out</strong> parameters must be allocated by the callee within 
+   the body of the member function. The caller is responsible for freeing the 
+   allocated memory after the function has returned.</li>
+   <li><strong>inout</strong> parameters must be allocated by the caller before 
+   calling the member function. The callee can optionally replace the sent value 
+   by a value of its own: it deallocates the value sent by the caller and 
+   allocates a new value. The caller is responsible for freeing returned values 
+   after the function has returned.</li>
+ </ul>
+ <p>There are two memory allocation mechanisms in C++: </p>
+ <ol>
+   <li>Heap allocation. It is done using the C++ new and delete operators. This 
+   mechanism can be used for all three kinds of parameters (in, out, inout). If 
+   you use other means, such as malloc and free, you must describe them</li>
+   <li>Stack allocation (auto variables). This mechanism can be only be used if 
+   the variable is allocated and deallocated in the same scope. Thus, it can 
+   only be used for in parameters.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Lifecycle2"></a>Reference Counting for Interfaces</h4>
+ <p>Parameters of type interface must use the rules defined by COM for memory 
+ management. COM defines two functions IUnknown::AddRef() and 
+ IUnknown::Release() to perform reference counting (see [<a href="#Rerefences">1</a>] for 
+	rules and examples).</p>
+ <p>AddRef must be called on interface pointers in the following situations: </p>
+ <ul>
+   <li>When writing a non-null interface pointer to a local variable.</li>
+   <li>When a callee writes a non-null interface pointer to an out or inout 
+   parameter of a member function.</li>
+   <li>When a callee returns a non-null interface pointer as the physical result 
+   of a function.</li>
+   <li>When writing a non-null interface pointer to a data member of an object.</li>
+ </ul>
+ <p>Release must be called on interface pointers in the following situations:
+ </p>
+ <ul>
+   <li>Prior to overwriting a non-null local variable or data member.</li>
+   <li>Prior to leaving the scope of a non-null local variable.</li>
+   <li>When a callee overwrites an inout parameter whose initial value is 
+   non-null. Note that out parameters are assumed to be null on input and must 
+   never be released by the callee.</li>
+   <li>Prior to leaving the destructor of an object that has a non-null 
+   interface pointer as a data member.</li>
+ </ul>
+ <p>Note that in the case of in parameters, it is not necessary to call AddRef 
+ before calling the member function and Release upon return of the member 
+ function.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="htmlTags"></a>html Tag Reference</h3>
+ <p>You can use html tags in your comments, except tags, such as &lt;H1&gt;, &lt;H2&gt;, as 
+ any other structuring tags. Main html tags you can use are:</p>
+ <table width="100%">
+   <tr>
+     <th bgcolor="#66FFFF" valign="top">Tag</th>
+     <th bgcolor="#66FFFF">Definition</th>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;br&gt;</tt></td>
+     <td>To insert a line break</td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;p&gt;</tt></td>
+     <td>To create a new paragraph</td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;b&gt;</tt>bold<tt>&lt;/b&gt;</tt></td>
+     <td>To enclose a text that should be rendered in boldface: <strong>bold</strong></td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;i&gt;</tt>italic<tt>&lt;/i&gt;</tt></td>
+     <td>To enclose a text that should be rendered in italic font: <em>italic</em></td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;tt&gt;</tt>monospace<tt>&lt;/tt&gt;</tt></td>
+     <td>To enclose a text that should be rendered in <tt>monospace</tt> font. 
+     You can also use <code>&lt;code&gt;</code> and <code>&lt;/code&gt;</code>. Use these 
+     tags to enclose class names, method names, enum values, etc. that you don't 
+     use as hyperlinks, that is that do not follow a <a href="#see">@see</a> or 
+     a <a href="#hyperlink">@href</a> tag</td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;pre&gt;</tt> and <tt>&lt;/pre&gt;</tt></td>
+     <td>To enclose lines that should be rendered with existing line breaks and 
+     using monospace font. It forces a line break</td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;ul&gt;</tt> and <tt>&lt;/ul&gt;</tt></td>
+     <td>To specify that the following block of text is a bulleted (or 
+     unordered) list. Each item begins with a <tt>&lt;li&gt;</tt></td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;ol&gt;</tt> and <tt>&lt;/ol&gt;</tt></td>
+     <td>To specify that the following block of text is an ordered list. Each 
+     item begins with a <tt>&lt;li&gt;</tt></td>
+   </tr>
+   <tr>
+     <td valign="top"><tt>&lt;dl&gt;</tt> and <tt>&lt;/dl&gt;</tt></td>
+     <td>To specify that the following block of text is a definition list. Each 
+     defined term is denoted with <tt>&lt;dt&gt;</tt>, and each associated definition 
+     is denoted using <tt>&lt;dd&gt;</tt></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Hyperlinks"></a>Setting Hyperlinks</h3>
+ <p>Hyperlink anchors are automatically generated on the following entities: </p>
+ <ul>
+   <li>For any documented class or interface, global enum, or global function, 
+   mkman creates an html file. This file can be used as a target for any 
+   hyperlink sets in any class or interface of the same framework, or of any 
+   prerequiring framework. Example: mkman generates CATBaseUnknown.htm from 
+   CATBaseUnknown.h, which can be used as a target in an hyperlink created using 
+   @see or @href, such as in:
+   <pre>... @href CATBaseUnknown ...
+...
+@see CATBaseUnknown</pre>
+   <p>Note that the htm suffix must not be used.</li>
+   <li>For each method or set of overloaded methods, a simple anchor is created 
+   with just the method name for the first method occurrence in the class, that 
+   you can use as a target of an hyperlink set in any class or interface of the 
+   same framework, or of any prerequiring framework.
+   <pre>Use @href CATCommand#CATCommand to instantiate commands.</pre>
+   <p>that sets the same hyperlinks as:</p>
+   <pre>&lt;a href=&quot;../System/CATCommand.htm#CATCommand&quot;&gt;CATCommand::CATCommand&lt;/a&gt;</pre>
+   <p>which reads in the html file as follows:</p>
+   <p>Use <font color="blue"><u>CATCommand::CATCommand</u></font> to instantiate 
+   commands.</p>
+   <p>This hyperlink leads to the beginning of the section where the first 
+   overloaded method is found.</p>
+   <p><b>Preferably, use this hyperlink in place of the following if you don't 
+   need to refer to a specific method among the set of overloaded methods.</b></li>
+   <li>For any entity documented in a class or an interface, mkman generates an 
+   anchor used in the index and that you can use as a target of an hyperlink set 
+   in any class or interface of the same framework, or of any prerequiring 
+   framework. Example: mkman generates the anchor:
+   <pre>CATCommand(CATCommand*,CATString*const)</pre>
+   <p>for the CATCommand constructor:</p>
+   <pre>CATCommand(CATCommand * iEventManager,
+           CATString  * const iName);</pre>
+   <p>Leading and trailing blanks are removed, as well as blanks and dummy 
+   arguments in signatures. You can refer to such a method as follows:</p>
+   <pre>... @href CATCommand#CATCommand(CATCommand*,CATString*const) ...</pre>
+   <p>that sets the hyperlink as:</p>
+   <pre>&lt;a href=&quot;../System/CATCommand.htm#CATCommand(CATCommand * iEventManager, CATString * const iName)&quot;&gt;CATCommand.CATCommand&lt;/a&gt;</pre>
+   <p>This hyperlink directly leads to the appropriate method.</p>
+   <p><b>Preferably, don't use this hyperlink. Use the preceding hyperlink 
+   instead if you don't need to refer to a specific method among the set of 
+   overloaded methods.</b></li>
+ </ul>
+ <p>Hyperlink syntax: </p>
+ <ul>
+   <li><code>@see CATBaseUnknown</code> or <code>@href CATBaseUnknown</code> 
+   sets an hyperlink to the class CATBaseUnknown. It can only be used from any 
+   entity that <strong>IS NOT</strong> a CATBaseUnknown member</li>
+   <li><code>@see CATBaseUnknown#AddRef</code> or <code>@href 
+   CATBaseUnknown#AddRef</code> sets an hyperlink to the CATBaseUnknown::AddRef 
+   method. It can only be used from any entity that <strong>IS NOT</strong> a 
+   CATBaseUnknown member</li>
+   <li><code>@see #AddRef</code> or <code>@href #AddRef</code> sets an hyperlink 
+   to the AddRef method.&nbsp; It can only be used from any entity that <strong>
+   IS</strong> a CATBaseUnknown member.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Rerefences"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td valign="top"><a href="CAADocCppCodingRules.htm">CAA V5 C++ Coding Rules</a>,
+     section <a href="CAADocCppCodingRules.htm#LifecycleRules">Lifecycle Rules</a></td>
+   </tr>
+ </table>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Dec 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

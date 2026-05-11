@@ -1,0 +1,471 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Swing Components in the Portal</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Swing Components in the Portal</h3>
+      <em>How to extend swing components and use the Portal look&amp;feel colors</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>The &quot;Portal Look and Feel&quot; is being developed in order to implement
+the ergonomic displays. If you want to create your own swing components, pay
+attention to the choice of colors. You should better use the current &quot;Look
+&amp; Feel&quot; colors instead of setting them statically in your code.
+<p>If you overwrite a Swing Component call the subclass in order to get the
+right colors.<br>
+If you create your own component, you can call the UIManager class in order to
+get each color defined by the current Look &amp; Feel. For example
+UIManager.getColor(&quot;Tree.background&quot;) returns the default color of the
+JTree background.</p>
+<p><b>Samples: Implementation of a TreeCellRenderer</b>
+<p><b>1 - If you override a Swing component:</b><br>
+In order to set the right color, you have to request them to the subclass.
+<p>Sample: Overwrite the DefaultTreeCellRenderer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class MyDefaultTreeCellRenderer extends DefaultTreeCellRenderer
+{
+  public MyDefaultTreeCellRenderer()
+  {
+    super();
+  }
+  public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
+                                                boolean leaf, int row, boolean hasFocus)
+  {
+    super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+
+    if (value instanceof TreeNodeWithIcon)
+        setIcon(((TreeNodeWithIcon)value).getIcon());
+
+    return this;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b>2 - If you create your own component:</b></p>
+<p>The Look and Feel defines a group of colors for each Swing component and
+stores them in the UIManager class. If you want to create your own component
+with the selected L&amp;F colors, you have to request them to the UIManager
+class.</p>
+<p>Sample: Create your on TreeCellRenderer with a JLabel.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class MyTreeCellRenderer extends JLabel
+                implements TreeCellRenderer
+{
+  public ZyTreeCellRenderer()
+  {
+    super();
+  }
+  public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,       
+                                                boolean leaf, int row, boolean hasFocus)
+  {
+    setText(value.toString());
+    if (sel)
+    {
+      setForeground(UIManager.getColor(&quot;Tree.selectionForeground&quot;));
+      setBackground(UIManager.getColor(&quot;Tree.selectionBackground&quot;));
+    }
+    else
+    {
+      setForeground(UIManager.getColor(&quot;Tree.textForeground&quot;));
+      setBackground(UIManager.getColor(&quot;Tree.textBackground&quot;));
+    }
+    if (value instanceof TreeNodeWithIcon)
+       setIcon(((TreeNodeWithIcon)value).getIcon());
+    return this;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><b>A list of key words defined for UIManager:</b>
+<p>&quot;Button.font&quot;,<br>
+&quot;Button.background&quot;,<br>
+&quot;Button.foreground&quot;,<br>
+&quot;Button.border&quot;,<br>
+&quot;Button.margin&quot;,<br>
+&quot;Button.textIconGap&quot;,<br>
+&quot;Button.textShiftOffset&quot;,<br>
+&quot;Button.disabledText&quot;,<br>
+&quot;Button.select&quot;,<br>
+&quot;Button.focus&quot;,</p>
+<p>&quot;ToggleButton.font&quot;,<br>
+&quot;ToggleButton.background&quot;,<br>
+&quot;ToggleButton.foreground&quot;,<br>
+&quot;ToggleButton.border&quot;,<br>
+&quot;ToggleButton.margin&quot;,<br>
+&quot;ToggleButton.textIconGap&quot;,<br>
+&quot;ToggleButton.textShiftOffset&quot;,<br>
+&quot;ToggleButton.select&quot;,<br>
+&quot;ToggleButton.text&quot;,<br>
+&quot;ToggleButton.disabledText&quot;,<br>
+&quot;ToggleButton.disabledSelectedText&quot;,<br>
+&quot;ToggleButton.disabledBackground&quot;,<br>
+&quot;ToggleButton.disabledSelectedBackground&quot;,<br>
+&quot;ToggleButton.focus&quot;,</p>
+<p>&quot;RadioButton.font&quot;,<br>
+&quot;RadioButton.background&quot;,<br>
+&quot;RadioButton.foreground&quot;,<br>
+&quot;RadioButton.border&quot;,<br>
+&quot;RadioButton.margin&quot;,<br>
+&quot;RadioButton.textIconGap&quot;,<br>
+&quot;RadioButton.textShiftOffset&quot;,<br>
+&quot;RadioButton.icon&quot;,<br>
+&quot;RadioButton.select&quot;,<br>
+&quot;RadioButton.focus&quot;,</p>
+<p>&quot;CheckBox.font&quot;,<br>
+&quot;CheckBox.background&quot;,<br>
+&quot;CheckBox.foreground&quot;,<br>
+&quot;CheckBox.border&quot;,<br>
+&quot;CheckBox.margin&quot;,<br>
+&quot;CheckBox.textIconGap&quot;,<br>
+&quot;CheckBox.textShiftOffset&quot;,<br>
+&quot;CheckBox.icon&quot;<br>
+&quot;CheckBox.disabledText&quot;,<br>
+&quot;Checkbox.select&quot;,<br>
+&quot;CheckBox.focus&quot;,</p>
+<p>&quot;ColorChooser.font&quot;,<br>
+&quot;ColorChooser.background&quot;,<br>
+&quot;ColorChooser.foreground&quot;,<br>
+&quot;ColorChooser.swatchesSwatchSize&quot;,<br>
+&quot;ColorChooser.swatchesRecentSwatchSize&quot;,<br>
+&quot;ColorChooser.swatchesDefaultRecentColor&quot;,<br>
+&quot;ColorChooser.rgbRedMnemonic&quot;,<br>
+&quot;ColorChooser.rgbGreenMnemonic&quot;,<br>
+&quot;ColorChooser.rgbBlueMnemonic&quot;,</p>
+<p>&quot;ComboBox.font&quot;,<br>
+&quot;ComboBox.background&quot;,<br>
+&quot;ComboBox.foreground&quot;,<br>
+&quot;ComboBox.selectionBackground&quot;,<br>
+&quot;ComboBox.selectionForeground&quot;,<br>
+&quot;ComboBox.disabledBackground&quot;,<br>
+&quot;ComboBox.disabledForeground&quot;,
+<p>&quot;FileChooser.cancelButtonMnemonic&quot;,<br>
+&quot;FileChooser.saveButtonMnemonic&quot;,<br>
+&quot;FileChooser.openButtonMnemonic&quot;,<br>
+&quot;FileChooser.updateButtonMnemonic&quot;,<br>
+&quot;FileChooser.helpButtonMnemonic&quot;,<br>
+&quot;FileChooser.newFolderIcon&quot;,<br>
+&quot;FileChooser.upFolderIcon&quot;,<br>
+&quot;FileChooser.homeFolderIcon&quot;,<br>
+&quot;FileChooser.detailsViewIcon&quot;,<br>
+&quot;FileChooser.listViewIcon&quot;,</p>
+<p>&quot;FileView.directoryIcon&quot;,<br>
+&quot;FileView.fileIcon&quot;,<br>
+&quot;FileView.computerIcon&quot;,<br>
+&quot;FileView.hardDriveIcon&quot;,<br>
+&quot;FileView.floppyDriveIcon&quot;,</p>
+<p>&quot;InternalFrame.titleFont&quot;,<br>
+&quot;InternalFrame.border&quot;,<br>
+&quot;InternalFrame.icon&quot;,<br>
+&quot;InternalFrame.maximizeIcon&quot;,<br>
+&quot;InternalFrame.minimizeIcon&quot;,<br>
+&quot;InternalFrame.iconifyIcon&quot;,<br>
+&quot;InternalFrame.closeIcon&quot;,<br>
+&quot;InternalFrame.activeTitleBackground&quot;,<br>
+&quot;InternalFrame.activeTitleForeground&quot;,<br>
+&quot;InternalFrame.inactiveTitleBackground&quot;,<br>
+&quot;InternalFrame.inactiveTitleForeground&quot;,</p>
+<p>&quot;DesktopIcon.border&quot;,<br>
+&quot;Desktop.background&quot;,</p>
+<p>&quot;Label.font&quot;,<br>
+&quot;Label.background&quot;,<br>
+&quot;Label.foreground&quot;,<br>
+&quot;Label.disabledForeground&quot;,<br>
+&quot;Label.disabledShadow&quot;,<br>
+&quot;Label.border&quot;,</p>
+<p>&quot;List.font&quot;,<br>
+&quot;List.background&quot;,<br>
+&quot;List.foreground&quot;,<br>
+&quot;List.selectionBackground&quot;,<br>
+&quot;List.selectionForeground&quot;,<br>
+&quot;List.focusCellHighlightBorder&quot;,<br>
+&quot;List.border&quot;,<br>
+&quot;List.cellRenderer&quot;,</p>
+<p>&quot;MenuBar.font&quot;,<br>
+&quot;MenuBar.background&quot;,<br>
+&quot;MenuBar.foreground&quot;,<br>
+&quot;MenuBar.border&quot;,</p>
+<p>&quot;MenuItem.font&quot;,<br>
+&quot;MenuItem.acceleratorFont&quot;,<br>
+&quot;MenuItem.background&quot;,<br>
+&quot;MenuItem.foreground&quot;,<br>
+&quot;MenuItem.selectionForeground&quot;,<br>
+&quot;MenuItem.selectionBackground&quot;,<br>
+&quot;MenuItem.disabledForeground&quot;,<br>
+&quot;MenuItem.acceleratorForeground&quot;,<br>
+&quot;MenuItem.acceleratorSelectionForeground&quot;,<br>
+&quot;MenuItem.border&quot;,<br>
+&quot;MenuItem.borderPainted&quot;,<br>
+&quot;MenuItem.margin&quot;,<br>
+&quot;MenuItem.checkIcon&quot;,<br>
+&quot;MenuItem.arrowIcon&quot;,</p>
+<p>&quot;RadioButtonMenuItem.font&quot;,<br>
+&quot;RadioButtonMenuItem.acceleratorFont&quot;,<br>
+&quot;RadioButtonMenuItem.background&quot;,<br>
+&quot;RadioButtonMenuItem.foreground&quot;,<br>
+&quot;RadioButtonMenuItem.selectionForeground&quot;,<br>
+&quot;RadioButtonMenuItem.selectionBackground&quot;,<br>
+&quot;RadioButtonMenuItem.disabledForeground&quot;,<br>
+&quot;RadioButtonMenuItem.acceleratorForeground&quot;,<br>
+&quot;RadioButtonMenuItem.acceleratorSelectionForeground&quot;,<br>
+&quot;RadioButtonMenuItem.border&quot;,<br>
+&quot;RadioButtonMenuItem.borderPainted&quot;,<br>
+&quot;RadioButtonMenuItem.margin&quot;,<br>
+&quot;RadioButtonMenuItem.checkIcon&quot;,<br>
+&quot;RadioButtonMenuItem.arrowIcon&quot;,</p>
+<p>&quot;CheckBoxMenuItem.font&quot;,<br>
+&quot;CheckBoxMenuItem.acceleratorFont&quot;,<br>
+&quot;CheckBoxMenuItem.background&quot;,<br>
+&quot;CheckBoxMenuItem.foreground&quot;,<br>
+&quot;CheckBoxMenuItem.selectionForeground&quot;,<br>
+&quot;CheckBoxMenuItem.selectionBackground&quot;,<br>
+&quot;CheckBoxMenuItem.disabledForeground&quot;,<br>
+&quot;CheckBoxMenuItem.acceleratorForeground&quot;,<br>
+&quot;CheckBoxMenuItem.acceleratorSelectionForeground&quot;,<br>
+&quot;CheckBoxMenuItem.border&quot;,<br>
+&quot;CheckBoxMenuItem.borderPainted&quot;,<br>
+&quot;CheckBoxMenuItem.margin&quot;,<br>
+&quot;CheckBoxMenuItem.checkIcon&quot;,<br>
+&quot;CheckBoxMenuItem.arrowIcon&quot;,</p>
+<p>&quot;Menu.font&quot;,<br>
+&quot;Menu.acceleratorFont&quot;,<br>
+&quot;Menu.background&quot;,<br>
+&quot;Menu.foreground&quot;,<br>
+&quot;Menu.selectionForeground&quot;,<br>
+&quot;Menu.selectionBackground&quot;,<br>
+&quot;Menu.disabledForeground&quot;,<br>
+&quot;Menu.acceleratorForeground&quot;,<br>
+&quot;Menu.acceleratorSelectionForeground&quot;,<br>
+&quot;Menu.border&quot;,<br>
+&quot;Menu.borderPainted&quot;,<br>
+&quot;Menu.margin&quot;,<br>
+&quot;Menu.checkIcon&quot;,<br>
+&quot;Menu.arrowIcon&quot;,<br>
+&quot;Menu.consumesTabs&quot;,</p>
+<p>&quot;PopupMenu.font&quot;,<br>
+&quot;PopupMenu.background&quot;,<br>
+&quot;PopupMenu.foreground&quot;,<br>
+&quot;PopupMenu.border&quot;,</p>
+<p>&quot;OptionPane.font&quot;,<br>
+&quot;OptionPane.background&quot;,<br>
+&quot;OptionPane.foreground&quot;,<br>
+&quot;OptionPane.messageForeground&quot;,<br>
+&quot;OptionPane.border&quot;,<br>
+&quot;OptionPane.messageAreaBorder&quot;,<br>
+&quot;OptionPane.buttonAreaBorder&quot;,<br>
+&quot;OptionPane.minimumSize&quot;,<br>
+&quot;OptionPane.errorIcon&quot;,<br>
+&quot;OptionPane.informationIcon&quot;,<br>
+&quot;OptionPane.warningIcon&quot;,<br>
+&quot;OptionPane.questionIcon&quot;,</p>
+<p>&quot;Panel.font&quot;,<br>
+&quot;Panel.background&quot;,<br>
+&quot;Panel.foreground&quot;,</p>
+<p>&quot;ProgressBar.font&quot;,<br>
+&quot;ProgressBar.foreground&quot;,<br>
+&quot;ProgressBar.background&quot;,<br>
+&quot;ProgressBar.selectionForeground&quot;,<br>
+&quot;ProgressBar.selectionBackground&quot;,<br>
+&quot;ProgressBar.border&quot;,<br>
+&quot;ProgressBar.cellLength&quot;,<br>
+&quot;ProgressBar.cellSpacing&quot;,</p>
+<p>&quot;Separator.shadow&quot;,<br>
+&quot;Separator.highlight&quot;,</p>
+<p>&quot;ScrollBar.background&quot;,<br>
+&quot;ScrollBar.foreground&quot;,<br>
+&quot;ScrollBar.track&quot;,<br>
+&quot;ScrollBar.trackHighlight&quot;,<br>
+&quot;ScrollBar.thumb&quot;,<br>
+&quot;ScrollBar.thumbHighlight&quot;,<br>
+&quot;ScrollBar.thumbDarkShadow&quot;,<br>
+&quot;ScrollBar.thumbLightShadow&quot;,<br>
+&quot;ScrollBar.border&quot;,<br>
+&quot;ScrollBar.minimumThumbSize&quot;,<br>
+&quot;ScrollBar.maximumThumbSize&quot;,</p>
+<p>&quot;ScrollPane.font&quot;,<br>
+&quot;ScrollPane.background&quot;,<br>
+&quot;ScrollPane.foreground&quot;,<br>
+&quot;ScrollPane.border&quot;,<br>
+&quot;ScrollPane.viewportBorder&quot;,</p>
+<p>&quot;Viewport.font&quot;,<br>
+&quot;Viewport.background&quot;,<br>
+&quot;Viewport.foreground&quot;,</p>
+<p>&quot;Slider.foreground&quot;,<br>
+&quot;Slider.background&quot;,<br>
+&quot;Slider.highlight&quot;,<br>
+&quot;Slider.shadow&quot;,<br>
+&quot;Slider.focus&quot;,<br>
+&quot;Slider.border&quot;,<br>
+&quot;Slider.focusInsets&quot;,</p>
+<p>&quot;SplitPane.background&quot;,<br>
+&quot;SplitPane.highlight&quot;,<br>
+&quot;SplitPane.shadow&quot;,<br>
+&quot;SplitPane.border&quot;,<br>
+&quot;SplitPane.dividerSize&quot;,</p>
+<p>&quot;TabbedPane.font&quot;,<br>
+&quot;TabbedPane.background&quot;,<br>
+&quot;TabbedPane.foreground&quot;,<br>
+&quot;TabbedPane.lightHighlight&quot;,<br>
+&quot;TabbedPane.highlight&quot;,<br>
+&quot;TabbedPane.shadow&quot;,<br>
+&quot;TabbedPane.darkShadow&quot;,<br>
+&quot;TabbedPane.focus&quot;,<br>
+&quot;TabbedPane.textIconGap&quot;,<br>
+&quot;TabbedPane.tabInsets&quot;,<br>
+&quot;TabbedPane.selectedTabPadInsets&quot;,<br>
+&quot;TabbedPane.tabAreaInsets&quot;,<br>
+&quot;TabbedPane.contentBorderInsets&quot;,<br>
+&quot;TabbedPane.tabRunOverlay&quot;,</p>
+<p>&quot;Table.font&quot;,<br>
+&quot;Table.foreground&quot;,<br>
+&quot;Table.background&quot;,<br>
+&quot;Table.selectionForeground&quot;,<br>
+&quot;Table.selectionBackground&quot;,<br>
+&quot;Table.gridColor&quot;,<br>
+&quot;Table.focusCellBackground&quot;,<br>
+&quot;Table.focusCellForeground&quot;,<br>
+&quot;Table.focusCellHighlightBorder&quot;,<br>
+&quot;Table.scrollPaneBorder&quot;,<br>
+&quot;TableHeader.font&quot;,<br>
+&quot;TableHeader.foreground&quot;,<br>
+&quot;TableHeader.background&quot;,<br>
+&quot;TableHeader.cellBorder&quot;,</p>
+<p>&quot;TextField.font&quot;,<br>
+&quot;TextField.background&quot;,<br>
+&quot;TextField.foreground&quot;,<br>
+&quot;TextField.inactiveForeground&quot;,<br>
+&quot;TextField.selectionBackground&quot;,<br>
+&quot;TextField.selectionForeground&quot;,<br>
+&quot;TextField.caretForeground&quot;,<br>
+&quot;TextField.caretBlinkRate&quot;,<br>
+&quot;TextField.border&quot;,<br>
+&quot;TextField.margin&quot;,<br>
+&quot;TextField.keyBindings&quot;,</p>
+<p>&quot;PasswordField.font&quot;,<br>
+&quot;PasswordField.background&quot;,<br>
+&quot;PasswordField.foreground&quot;,<br>
+&quot;PasswordField.inactiveForeground&quot;,<br>
+&quot;PasswordField.selectionBackground&quot;,<br>
+&quot;PasswordField.selectionForeground&quot;,<br>
+&quot;PasswordField.caretForeground&quot;,<br>
+&quot;PasswordField.caretBlinkRate&quot;,<br>
+&quot;PasswordField.border&quot;,<br>
+&quot;PasswordField.margin&quot;,<br>
+&quot;PasswordField.keyBindings&quot;,</p>
+<p>&quot;TextArea.font&quot;,<br>
+&quot;TextArea.background&quot;,<br>
+&quot;TextArea.foreground&quot;,<br>
+&quot;TextArea.inactiveForeground&quot;,<br>
+&quot;TextArea.selectionBackground&quot;,<br>
+&quot;TextArea.selectionForeground&quot;,<br>
+&quot;TextArea.caretForeground&quot;,<br>
+&quot;TextArea.caretBlinkRate&quot;,<br>
+&quot;TextArea.border&quot;,<br>
+&quot;TextArea.margin&quot;,<br>
+&quot;TextArea.keyBindings&quot;,</p>
+<p>&quot;TextPane.font&quot;,<br>
+&quot;TextPane.background&quot;,<br>
+&quot;TextPane.foreground&quot;,<br>
+&quot;TextPane.selectionBackground&quot;,<br>
+&quot;TextPane.selectionForeground&quot;,<br>
+&quot;TextPane.caretForeground&quot;,<br>
+&quot;TextPane.caretBlinkRate&quot;,<br>
+&quot;TextPane.inactiveForeground&quot;,<br>
+&quot;TextPane.border&quot;,<br>
+&quot;TextPane.margin&quot;,<br>
+&quot;TextPane.keyBindings&quot;,
+<p>&quot;EditorPane.font&quot;,<br>
+&quot;EditorPane.background&quot;,<br>
+&quot;EditorPane.foreground&quot;,<br>
+&quot;EditorPane.selectionBackground&quot;,<br>
+&quot;EditorPane.selectionForeground&quot;,<br>
+&quot;EditorPane.caretForeground&quot;,<br>
+&quot;EditorPane.caretBlinkRate&quot;,<br>
+&quot;EditorPane.inactiveForeground&quot;,<br>
+&quot;EditorPane.border&quot;,<br>
+&quot;EditorPane.margin&quot;,<br>
+&quot;EditorPane.keyBindings&quot;,
+<p>&quot;TitledBorder.font&quot;,<br>
+&quot;TitledBorder.titleColor&quot;,<br>
+&quot;TitledBorder.border&quot;,
+<p>&quot;ToolBar.font&quot;,<br>
+&quot;ToolBar.background&quot;,<br>
+&quot;ToolBar.foreground&quot;,<br>
+&quot;ToolBar.dockingBackground&quot;,<br>
+&quot;ToolBar.dockingForeground&quot;,<br>
+&quot;ToolBar.floatingBackground&quot;,<br>
+&quot;ToolBar.floatingForeground&quot;,<br>
+&quot;ToolBar.border&quot;,<br>
+&quot;ToolBar.separatorSize&quot;,
+<p>&quot;ToolTip.font&quot;,<br>
+&quot;ToolTip.background&quot;,<br>
+&quot;ToolTip.foreground&quot;,<br>
+&quot;ToolTip.border&quot;,
+<p>&quot;Tree.font&quot;,<br>
+&quot;Tree.background&quot;,<br>
+&quot;Tree.foreground&quot;,<br>
+&quot;Tree.hash&quot;,<br>
+&quot;Tree.textForeground&quot;,<br>
+&quot;Tree.textBackground&quot;,<br>
+&quot;Tree.selectionForeground&quot;,<br>
+&quot;Tree.selectionBackground&quot;,<br>
+&quot;Tree.selectionBorderColor&quot;,<br>
+&quot;Tree.editorBorder&quot;,<br>
+&quot;Tree.leftChildIndent&quot;,<br>
+&quot;Tree.rightChildIndent&quot;,<br>
+&quot;Tree.rowHeight&quot;,<br>
+&quot;Tree.scrollsOnExpand&quot;,<br>
+&quot;Tree.openIcon&quot;,<br>
+&quot;Tree.closedIcon&quot;,<br>
+&quot;Tree.leafIcon&quot;,<br>
+&quot;Tree.expandedIcon&quot;,<br>
+&quot;Tree.collapsedIcon&quot;,<br>
+&quot;Tree.changeSelectionWithFocus&quot;,<br>
+&quot;Tree.drawsFocusBorderAroundIcon&quot;,</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

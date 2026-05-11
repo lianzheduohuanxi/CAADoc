@@ -1,0 +1,294 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating an Helix</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating an Helix</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article explains how to create a geometric helix by using the CATGeoFactory::CreateHelix 
+		API.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsCreateHelix Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsCreateHelix Do?</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsCreateHelix</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsCreateHelix 
+				Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you create a geometric helix, then transform 
+it into a wire.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsCreateHelix Use Case</h2>
+<p>CAAGMOperatorsCreateHelix is a use case of the CAAGMOperatorsInterfaces.edu framework 
+that illustrates how to create a geometric helix and convert it into a wire.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsCreateHelix Do?</h3>
+<p>The CAAGMOperatorsCreateHelix use case:</p>
+<ul>
+	<li>Creates the geometry factory, CATSoftwareConfiguration and CATTopData.</li>
+	<li>Creates an helix with a constant pitch and a constant radius and creates 
+	the body associated with the helix.</li>
+	<li>Creates an helix with a variable pitch and a constant radius and creates 
+	the body associated with the helix.</li>
+	<li>Writes the model and closes the container.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsCreateHelix</h3>
+<p>To launch CAAGMOperatorsCreateHelix, you will need to set up the build time environment, 
+then compile CAAGMOperatorsCreateHelix.m along with its prerequisites, set up the 
+run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>If you simply type CAAGMOperatorsCreateHelix with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsCreateHelix e:\helix.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAATopCreateHelix Code</h3>
+<p>The CAAGMOperatorsCreateHelix use case is made of a main named CAATopCreateHelix.cpp 
+located in the CAAGMOperatorsCreateHelix.m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsCreateHelix.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The use case is divided into the following steps:</p>
+<ul>
+	<li><a href="#Step1">Creating the Geometry Factory, CATSoftwareConfiguration 
+	and CATTopData</a></li>
+	<li><a href="#Step2">Creating an Helix with a Constant Pitch and Constant Radius</a></li>
+	<li><a href="#Step3">Creating an Helix with a Variable Pitch and a Variable 
+	Radius</a></li>
+	<li><a href="#Step4">Writing the Model and Closing the Container</a></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step1"></a>Creating the Geometry Factory, CATSoftwareConfiguration 
+and CATTopData</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
+This creation is done by the global function <code>::CATCreateCGMContainer</code>. 
+Notice that the factory can be defined by reading a NCGM file that was previously 
+stored. In that case, the global function <code>::CATLoadCGMContainer</code> must 
+be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<pre>CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+CATTopData topdata(pConfig);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step2"></a>Creating an Helix with a Constant Pitch and Constant Radius</h3>
+<p>An helix with a constant pitch is created by using the CATGeoFactory::CreateHelix 
+API. With this method, you can specify either a constant radius (last argument set 
+to 0) or a linear variation coefficient for the radius (number of mm per helix turn).</p>
+<p>With the code below:</p>
+<pre class="code">// (a) - Create the CATHelix
+CATHelix * pHelix0 = piGeomFactory-&gt;CreateHelix(helixAxis, /* the axis oz */
+B,                                                          /* the origin */
+90*CATDegreeToRadian,                       /* the start angle in radians */
+7*CAT2PI,                                     /* the end angle in radians */ 
+20,                                                          /* the pitch */ 
+1,                            /* the orientation with respect to the axis */
+0);                            /* the radius evolution = number of mm/turn*/</pre>
+<p>You get the helix below:</p>
+<table>
+	<tr>
+		<td>
+		<img alt="Helix" src="images/CAACgmTophelix1.gif" width="240" height="229"></td>
+		<td>Note that the origin point (B) does not belong to the helix as the start 
+		angle is set to 90 deg. To have the origin confused with the starting point, 
+		you should specify a start angle of 0.<p>
+		<img alt="Helix Seen from Top" src="images/CAACgmTophelix0.gif" width="214" height="144"></p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step3"></a>Creating an Helix with a Variable Pitch and a Variable Radius</h3>
+<p>To create an helix with a variable pitch and a variable radius (with a linear 
+or not linear variation), you must use the CATHelix::Set API which takes CATLaws 
+as arguments. Prior to calling this method, you must:</p>
+<ol>
+	<li>Initialize the data for the helix to be created. To do this, use the CATGeoFactory::CreateHelix 
+	method.</li>
+	<li>Compute the length of the initial helix by using the CATICGMDynMassProperties1D 
+	operator. A suitable length is required for the CATLaw creation. If you pass 
+	an inconsistent length to the CATLaw and CATHelix::Set method, you will get 
+	a throw.</li>
+</ol>
+<h4>Creating the Radius Law</h4>
+<p>A linear radius law is used as it can be used both for a constant and a linear 
+law.</p>
+<pre class="code">// (c) - create the radius linear law: radius is 100
+CATLaw * radiusLaw = ((CATLaw*)(piGeomFactory -&gt; CreateLinearLaw(0.0, 100.0, theLength1, 100)));</pre>
+<h4>Creating the ZLaw as a CATCompositeLaw</h4>
+<p>The ZLaw defines how the Z coordinate varies versus the CATCrvParam. A composite 
+law with one CATMathFunctionX of degree 2 is defined (z = 0.02*CATCrvParam <sup>
+2</sup>).</p>
+<pre class="code">// (d) - create the law which defines how the 
+// helix is developed along the helix axis
+// at the beginning of the curve, the z coordinate is 0.
+// at the end of the curve, the Z coordinate is 0 + 0 + 0.02*(CATCrvParam)**2
+const CATMathFunctionX ** Functions1 = new const CATMathFunctionX * [1];
+double array1[3] = {0.0,0,0.02}; 
+Functions1[0] = new CATMathPolynomX(2,array1); 
+CATLaw * ZLaw = (CATLaw*)piGeomFactory-&gt;CreateCompositeLaw (1,LimitParameters1,Functions1);</pre>
+<h4>Creating the theta law as a linear law</h4>
+<pre class="code">// (e) - create the linear law for the angle (number of turns = 9)
+// at the beginning of the curve, the number of turns is 0
+// at the end it is 9.
+CATLaw * thetaLaw = ((CATLaw*)(piGeomFactory -&gt; CreateLinearLaw(0.0, 0.0, theLength1, 9*CAT2PI)));</pre>
+<h4>Setting the New Helix Parameters</h4>
+<p>The arguments 4 to 6 allow you to modify the helix shape by applying a coefficient 
+to the coordinates. The effect of these parameters is illustrated below.</p>
+<pre class="code">// The vector which defines the helix axis (Oz)
+CATMathVector iUnitZ (0.,0.,1.); 
+// The vector to be used as reference for angles and turns (Ox)
+CATMathVector iUnitu (1.,0.,0.); 
+
+pHelix1-&gt;Set(O, iUnitZ, iUnitu, 
+                1, 1, 1,     // no ratio applied to the helix coordinates
+                radiusLaw,   // the radius law
+                ZLaw,        // the law along z
+                thetaLaw,    // the theta law
+                90*CATDegreeToRadian,   // the start angle
+                1);                     // the orientation</pre>
+<p>For how to create a skin, see the CAAGMOperatorsOverview 
+use case [<a href="#References">2</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="KV"></a>The Created Helix</h4>
+<table>
+	<tr>
+		<td>constant radius = 100.0<br>
+		Z = 0.02*CATCrvParam <sup>2<br>
+		</sup>ThetaLaw = linear [0, 9 * 360deg]<br>
+		CATCrvParam Max = 125.664 -&gt; Z max = 315.827<br>
+		no ratio applied to coordinates</td>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Helix" src="images/CAACgmTophelix2.gif" width="463" height="240"></td>
+	</tr>
+</table>
+<p>What you get if you modify the radius law:</p>
+<table>
+	<tr>
+		<td>linear variation radius = 100.0 - 150.0<br>
+		Z = 0.02*CATCrvParam <sup>2<br>
+		</sup>ThetaLaw = linear [0, 9 * 360deg]<br>
+		CATCrvParam Max = 125.664 -&gt; Z max = 315.827<br>
+		no ratio applied to coordinates</td>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Helix" src="images/CAACgmTophelix3.gif" width="484" height="210"></td>
+	</tr>
+</table>
+<p>What you get if you apply a ratio to the x coordinate</p>
+<table>
+	<tr>
+		<td>linear variation radius = 100.0 - 150.0<br>
+		Z = 0.02*CATCrvParam <sup>2<br>
+		</sup>ThetaLaw = linear [0, 9 * 360deg]<br>
+		CATCrvParam Max = 125.664 -&gt; Z max = 315.827<br>
+		pHelix1-&gt;Set(O, iUnitZ, iUnitu, <br>
+		2, 1, 1, // ratio = 2; applied to the x coordinate</td>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Helix" src="images/CAACgmTophelix4.gif" width="423" height="331"></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step4"></a>Writing the Model and Closing the Container</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2005]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

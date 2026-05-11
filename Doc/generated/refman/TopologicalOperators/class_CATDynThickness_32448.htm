@@ -1,0 +1,220 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperators Class CATDynThickness</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperators.htm" href="../TopologicalOperators.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperators";	}
+		function getCurrentObjectName() { 
+ 	return "CATDynThickness"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperators <script type="text/javascript" > writeClassCharacteristic(); </script> CATDynThickness</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATDynThickness_32448','CATDynThickness','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATDynThickness</b>
+</p>
+<p>
+<b><i> Interface representing the topological operator of thickness.</i></b><br>
+
+ A thickness operation blows or shrinks the faces of a volume.
+ Each face may have its own offset value. The offset values
+ may be negative: the body is shrunk.
+ This operator can also be used to offset a shell. In this case, it is recommended to use the
+ SetSharpBorderMode API with the optimization parameter.
+ As all the topological operators, the input objects are not modified. The resulting body is
+ a new one, that you can get by using the <tt>CATDynOperator::GetResult</tt> method.
+ To use it:
+<ul>
+ <li>Create it with the <tt>CATCreateDynThickness</tt> global function.
+ <li>Tune it with appropriate options, using the <tt>SetXxx</tt> methods. 
+ <li>Run it
+ <li>Get the resultin body with the <tt>GetResult</tt> method. If you do not want 
+ to keep these resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove them from the  geometric factory, after the operator deletion.
+<li>delete it after use  with the usual C++ <tt>delete</tt> operator.
+</ul>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATDynThickness()"><b>~CATDynThickness</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Append(CATLISTP(CATFace)&amp;,CATLength)"><b>Append</b></a>(CATLISTP(CATFace)&amp;,CATLength)
+<dd>  Defines the offset value for a given list of faces of a body to thick.
+ <dt> o 
+    <a href="#SetDefaultOffsetValue(CATLength)"><b>SetDefaultOffsetValue</b></a>(CATLength)
+<dd>  Defines the offset value that applies to all the body to thicken.
+ <dt> o 
+    <a href="#SetFreezeMode(CATBodyFreezeMode)"><b>SetFreezeMode</b></a>(CATBodyFreezeMode)
+<dd>  Defines the state of the resulting body.
+ <dt> o 
+    <a href="#SetSharpBorderMode(short)"><b>SetSharpBorderMode</b></a>(short)
+<dd>  Defines how borders are transformed in the neighborhood of sharp edges.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATDynThickness"></a><a name="~CATDynThickness()"></a> <dt> o <b>~CATDynThickness</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATDynThickness</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Append"></a><a name="Append(CATLISTP(CATFace)&amp;,CATLength)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Append</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>iSpecialOffset</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffset</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the offset value for a given list of faces of a body to thick.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSpecialOffset</tt>
+   <dd> The list of the pointers to faces. The faces must belong to the body to thick.
+ </dd>
+    <dt><tt> iOffset</tt>
+   <dd> The offset value for the faces of <tt>iSpecialOffset</tt>. If <tt>iOffset < 0</tt>,
+ the faces are shrunk.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDefaultOffsetValue"></a><a name="SetDefaultOffsetValue(CATLength)"></a> <dt> o <b>SetDefaultOffsetValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDefaultOffsetValue</b>(<td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iOffsetValue</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the offset value that applies to all the body to thicken.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOffsetValue</tt>
+   <dd> The offset value for all the faces. If <tt>iOffsetValue <0 </tt>,
+ the faces are shrunk.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFreezeMode"></a><a name="SetFreezeMode(CATBodyFreezeMode)"></a> <dt> o <b>SetFreezeMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFreezeMode</b>(<td><script type="text/javascript"> activateLink('CATBodyFreezeMode','CATBodyFreezeMode')</script> <td><tt>iOnOrOff</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the state of the resulting body.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOnOrOff</tt>
+   <dd> The state of the resulting body.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSharpBorderMode"></a><a name="SetSharpBorderMode(short)"></a> <dt> o <b>SetSharpBorderMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSharpBorderMode</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iSharpBorderOptimisation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines how borders are transformed in the neighborhood of sharp edges.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSharpBorderOptimisation</tt>
+   <dd> <br><b>Legal values:</b>
+ <dl><dt>0</dt><dd>Optimization not required
+ <dt>1</dt><dd>Optimization required (the skin is handled like a volume)
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATDynThickness.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalOperators</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

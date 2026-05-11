@@ -1,0 +1,209 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Switching on and off All the Environments' Shadows of a Product</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Real Time Rendering</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Switching on and off All the Environments' Shadows
+      of a Product</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to switch off the shadows
+      of a the current document, and how to switch them on again.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>switch_ShadowsEnv is launched in CATIA. An existing
+      document called &quot;TestLight.CATProduct&quot; must be found in the
+      CATDocView. It needs &quot;Back.CATPart&quot; and
+      &quot;Hole.CATPart&quot;.</p>
+      <p><a href="switch_ShadowsEnvSource.htm" target="Source">switch_ShadowsEnv.CATScript
+      </a>is located in the CAAScdRscUseCases module. <a href="macros/switch_ShadowsEnv.CATScript">Execute
+      macro </a>(windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>switch_ShadowsEnv includes three steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#SwitchOFF">Switching off Shadows</a></li>
+        <li><a href="#SwitchON">Switching on Shadows</a></li>
+      </ol>
+      <p><a name="Prolog"></a><b>Prolog</b></p>
+      <table class="code">
+        <tr>
+          <td width="100%">
+            <pre>
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch On Lights&quot;
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oProductDocument<font color="#0000FF"> As </font>Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oProductDocument.Name, &quot;.CATProduct&quot;) Then
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch Off Shadows&quot;
+		Exit Sub
+	End If
+
+	<font color="#008000">' Accessing the Root Product</font>
+	Dim oRootProduct<font color="#0000FF"> As </font>Document
+	Set oRootProduct = oProductDocument.Product
+
+	<font color="#008000">' Accessing the collection of rendering lights</font>
+	Dim oLights<font color="#0000FF"> As </font>RenderingLights
+	Set oLights = oRootProduct.GetItem(&quot;CATRscRenderingLightVBExt&quot;)
+
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int
+	Dim oLight<font color="#0000FF"> As </font>RenderingLight
+	Dim oTab(3)<font color="#0000FF"> As </font>CATSafeArrayVariant
+
+	<font color="#008000">' Create the parameter</font>
+	Dim oParams<font color="#0000FF"> As </font>Parameters
+	Dim oReadParam<font color="#0000FF"> As </font>Parameter
+	Dim oParam<font color="#0000FF"> As </font>Parameter
+	Dim sParamValue<font color="#0000FF"> As </font>String
+	Set oParams = oProductDocument.Product.Parameters
+
+	On Error Resume Next
+	Set oParam = oParams.Item(&quot;LightsShadowsStatus&quot;)
+	...</pre>
+          </td>
+      </table>
+      <p align="left">At first, this macro tests if a document is active in
+      CATIA and if this document is a CATProduct. Then it access to the valid
+      root document and to the collection of rendering environments. After that
+      the macro tests if the knowledge parameter exists. This parameter is used
+      in order to remember which shadow was active.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="SwitchOFF"></a>Switching off Shadows</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">''''''''' switch OFF '''''''''</font>
+		<font color="#008000">' Environments loop</font>
+		For I=1<font color="#0000FF"> To </font>oRenderingEnvironments.Count
+			Set oRenderingEnvironment = oRenderingEnvironments.Item(I)
+
+			<font color="#008000">' Select the active env</font>
+			If 1=oRenderingEnvironment.ActiveStatus<font color="#0000FF"> Then</font>
+				iTypeEnv = oRenderingEnvironment.GetType
+				sParamValue = oRenderingEnvironment.Name &amp; &quot;=&quot;
+
+				<font color="#008000">' Walls loop</font>
+				For J=1<font color="#0000FF"> To </font>6
+					<font color="#008000">' Adapt to the env type</font>
+					If (J&lt;=2 And iTypeEnv&lt;&gt;2) Or (J&lt;=4 And J&gt;=3 And iTypeEnv=1) Or (J&gt;=5) <font color="#0000FF"> Then</font>
+						Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(J)
+						If 1=oRenderingEnvironmentWall.ShadowsStatus<font color="#0000FF"> Then</font>
+							sParamValue = sParamValue &amp; J
+							oRenderingEnvironmentWall.ShadowsStatus = 0
+						End If
+					End If
+				Next
+				Exit For
+			End If
+		Next
+
+		<font color="#008000">' Create the parameter</font>
+		oParams.CreateString &quot;EnvironmentsShadowsStatus&quot;, sParamValue
+		oParams.Item(&quot;EnvironmentsShadowsStatus&quot;).Hidden = True
+		...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The macro deactivates environments' shadows. And it creates the string
+      to be saved by the parameter.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="SwitchON"></a>Switching on Shadows</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	Else <font color="#008000">''''''''' switch ON '''''''''</font>
+
+		<font color="#008000">' Parse the parameter value</font>
+		Dim aTab<font color="#0000FF"> As </font>Array
+		sParamValue = oParam.ValueAsString <font color="#008000">' read the parameter value</font>
+		aTab = Split(sParamValue, &quot;=&quot;)
+
+		Set oRenderingEnvironment = oRenderingEnvironments.Item(aTab(0))
+		If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">' env not exist</font>
+			msgbox &quot;Impossible to find the environment '&quot; &amp; aTab(0) &amp; &quot;'&quot;, vbOKOnly, &quot;Switch On Environmemts' Shadows&quot;
+		Else
+			For I=0<font color="#0000FF"> To </font>Len(aTab(1))
+				Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(Mid(aTab(1), I, 1))
+				oRenderingEnvironmentWall.ShadowsStatus = 1
+			Next
+		End If
+
+		<font color="#008000">' Remove parameter</font>
+		oParams.Remove &quot;EnvironmentsShadowsStatus&quot;
+
+	End If
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The macro reactivates environments' shadows. And it destroys the
+      parameter.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case presents a macro which can be useful for the demos with CATIA.
+It gives the possibility to deactivate the environments' shadows, and the
+ability to reactivate only thoses which where ON.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

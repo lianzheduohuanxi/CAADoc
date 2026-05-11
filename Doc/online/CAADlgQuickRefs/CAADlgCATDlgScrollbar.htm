@@ -1,0 +1,210 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgScrollBar</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgScrollBar</h3>
+      <em>Scrolls windows and boxes</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgScrollbar</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Scroll Bar</caption>
+  <tr>
+    <td><img src="images/CATDlgScrollBar.gif" alt="CATDlgScrollBar.gif (4029 bytes)" width="158" height="129"></td>
+    <td>The scroll bar allows to set scrolling facilities to a scrollable dialog
+      object. A scroll bar consists in a field (a shaft) ended on both sides by
+      a scroll arrow between which an indicator (a scroll box, or thumb) shows
+      the location of the data displayed with respect to the whole data. A
+      scroll bar can be horizontal or vertical.</td>
+  </tr>
+</table>
+<p>Use scroll bar whenever you display areas that don't fit in the available
+space.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgCtrHorizontal</td>
+    <td>The scrollbar is horizontal. This is the default.</td>
+  </tr>
+  <tr>
+    <td>CATDlgCtrVertical</td>
+    <td>The scrollbar is vertical.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgScrollBarModifyNotification</td>
+    <td><code>GetScrollBarModifyNotification</code></td>
+    <td>Whenever the scroll arrows or the shaft is clicked</td>
+  </tr>
+  <tr>
+    <td>CATDlgScrollBarDragNotification</td>
+    <td><code>GetScrollBarDragNotification</code></td>
+    <td>Whenever the scroll box is dragged.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The scroll bar is assigned to a scrollable area.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing Scroll Bars</h4>
+<p>Construct scroll bars as follows:</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>Horizontal</em></td>
+    <td class="code">
+      <pre>_pHScrollBar = new CATDlgScrollBar (iParent, &quot;HScrollBarId&quot;)</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Vertical</em></td>
+    <td class="code">
+      <pre>_pVScrollBar = new CATDlgScrollBar (iParent, &quot;VScrollBarId&quot;,
+                                    CATDlgCtrVertical);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Scrolling Range</h4>
+<p>The scroll bar range is managed using two parameters: a minimum value and a
+maximum value. The <code>GetScrollRange</code> and <code>SetScrollRange</code>
+methods enable their management:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int Min, Max;
+_pScrollBar-&gt;GetScrollRange(Min, Max);
+...
+Min = 0;
+Max = 100;
+_pScrollBar-&gt;SetScrollRange(Min, Max);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Scroll Box Position</h4>
+<p>The scroll box position is managed using the two methods <code>GetScrollPos</code>
+and <code>SetScrollPos</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int ScrollBoxPosition = _pScrollBar-&gt;GetScrollPos();
+...
+ScrollBoxPosition = 25;
+int Notify = 0;
+_pScrollBar-&gt;SetScrollPos(ScrollBoxPosition, Notify);</pre>
+    </td>
+  </tr>
+</table>
+<p>Set the first parameter to the scroll box position you require, and the
+parameter <code>Notify</code> to a non null value if you want the corresponding
+notification to be sent. Otherwise set to 0, no notification is sent. The scroll
+box position must be set in the range defined by the minimum and maximum values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Scroll Box Size</h4>
+<p>The scroll box size is managed using the two methods <code>GetScrollBoxSize</code>
+and <code>SetScrollBoxSize</code>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int ScrollBoxSize = _pScrollBar-&gt;GetScrollBoxSize();
+...
+ScrollBoxSize = 5;
+int Notify = 0;
+_pScrollBar-&gt;SetScrollBoxSize(ScrollBoxSize);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Scroll Bar</h4>
+<p>Set a callback on a scroll bar, for example, for scroll box drag, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pScrollBar,                                    // scroll bar 
+  _pScrollBar-&gt;<code>GetScrollBarDragNotification</code>(),    // notification
+  (CATCommand)&amp;Container::MethodToExecute,        // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Scroll Bar</h4>
+<p>The scroll bar title should be set by the resource file using a key built
+with the identifier you declare as the second parameter of the scroll bar
+constructor. It is never displayed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/DSDoc.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Creating a Module</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating a Module</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This task shows you how to create a module in a framework.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span>
+		<p class="header">Open a workspace containing at least a framework.</p>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<ol class="task">
+	<li>
+	<p>In the <kbd>3DS Workspace Explorer</kbd>, right click the name of framework 
+	for which you want to create a module, and click <kbd>New Module</kbd>.</p>
+	<p>The <kbd>3DS - New Module</kbd> dialog box opens.</p>
+	</li>
+	<li>
+	<p>In <kbd>Name</kbd>, type the name you want to assign to the module. Refer 
+	to the
+	<a href="#" onclick="CAAlinkOutOfPreqs('CAADocTechArticles/CAADocCppNamingRules.htm');">
+	CAA V5 C++ Naming Rules</a>.</p>
+	</li>
+	<li>
+	<p>In the <kbd>Module type</kbd> list, select the appropriate module build 
+	type.</p>
+	<p>The module type is declared in the Imakefile.mk file.</p>
+	<table class="fill">
+		<tr>
+			<th>Type</th>
+			<th>Description</th>
+			<th>Imakefile.mk</th>
+		</tr>
+		<tr>
+			<td><kbd>Dynamic Link Library (dll)</kbd></td>
+			<td>Windows Dynamic-Link Library (.dll).</td>
+			<td><code>BUILT_OBJECT_TYPE=SHARED LIBRARY</code></td>
+		</tr>
+		<tr>
+			<td><kbd>Executable (exe)</kbd></td>
+			<td>Windows executable file (.exe).</td>
+			<td><code>BUILT_OBJECT_TYPE=LOAD MODULE</code></td>
+		</tr>
+		<tr>
+			<td><kbd>Archive (lib)</kbd></td>
+			<td>Windows library (.lib).</td>
+			<td><code>BUILT_OBJECT_TYPE=ARCHIVE</code></td>
+		</tr>
+		<tr>
+			<td><kbd>None</kbd></td>
+			<td>Module not built.</td>
+			<td><code>BUILD=NO</code></td>
+		</tr>
+		<tr>
+			<td><kbd>Web module (.mweb)</kbd></td>
+			<td>Web module (.mweb).</td>
+			<td><code>BUILT_OBJECT_TYPE=WEB</code></td>
+		</tr>
+		<tr>
+			<td><kbd>External web module (.mwebext)</kbd></td>
+			<td>External web module (.mwebext).</td>
+			<td><code>BUILT_OBJECT_TYPE=WEB</code></td>
+		</tr>
+		<tr>
+			<td><kbd>Resource</kbd></td>
+			<td>Run time resource module (.m).</td>
+			<td><code>BUILT_OBJECT_TYPE = RUNTIME DATA</code></td>
+		</tr>
+	</table>
+	</li>
+	<li>
+	<p>In <kbd>Header exposition</kbd>, select the scope of the module's APIs.</p>
+	<p>This sets the location of the module ExportedBy file and must match the higher 
+	level of APIs this module exposes.</p>
+	<table class="fill">
+		<tr>
+			<th>Scope</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td><kbd>Private: header only visible for this framework</kbd></td>
+			<td>The module's APIs scope is private. The ExportedBy file and the 
+			API header files are located in the PrivateInterfaces folder.<br />
+			The common usage is that the module's APIs are framework internal APIs 
+			that can be called from the framework only. The private scope must usually 
+			not be used to access these internal APIs from other frameworks.</td>
+		</tr>
+		<tr>
+			<td><kbd>Protected: header shared with team</kbd></td>
+			<td>The module's APIs scope is protected. The ExportedBy file is located 
+			in the ProtectedInterfaces folder.<br />
+			The common usage is that some or all of the module's APIs are modeler 
+			of component internal APIs that can be called from the framework and 
+			from the frameworks that collaborate to make up the modeler or the component, 
+			thus &quot;header shared with the team&quot;. These API header files 
+			are located in the ProtectedInterfaces folder. The protected scope must 
+			usually not be used to access these APIs from other frameworks that 
+			do not collaborate to make up to the modeler or component.<br />
+			Nevertheless, some other module's API headers can be located in the 
+			PrivateInterfaces folder and are not part of the protected scope, but 
+			of the private scope. </td>
+		</tr>
+		<tr>
+			<td><kbd>Public: header with an external visibility</kbd></td>
+			<td>The module's APIs scope is public. The ExportedBy file is located 
+			in the PublicInterfaces folder.<br />
+			The common usage is that some or all of the module's APIs are external 
+			APIs that can be called from any frameworks. These API header files 
+			are located in the PublicInterfaces folder.<br />
+			Nevertheless, some other module's API headers can be located in the 
+			ProtectedInterfaces and/or PrivateInterfaces folders and are not part 
+			of the public scope, but of the protected or private scope. </td>
+		</tr>
+	</table>
+	</li>
+	<li>
+	<p>Click <kbd>Finish</kbd>.</p>
+	<p>The module is created.</p>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

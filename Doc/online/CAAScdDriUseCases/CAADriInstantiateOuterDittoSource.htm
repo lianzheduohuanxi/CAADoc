@@ -1,0 +1,142 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAADriInstantiateOuterDitto.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre><font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro allows you to instantiate a ditto in </font>
+<font color="#008000">'                 a view from a ditto in another document</font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:     English </font>
+<font color="#008000">'   CATIA Level: V5R11</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Open the drawing document containing the existing ditto</font>
+<font color="#0000FF">    Dim </font>oDrawingSource<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingSource = CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing&quot;)
+    
+    <font color="#008000">' Retrieve the sheet containing the ditto to be copied</font>
+<font color="#0000FF">    Dim </font>oSheetSource<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheetSource = oDrawingSource.Sheets.Item(&quot;Sheet.3&quot;)
+    
+    <font color="#008000">' Retrieve the view containing the ditto to be copied</font>
+<font color="#0000FF">    Dim </font>oViewSource<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oViewSource = oSheetSource.Views.Item(&quot;View.1&quot;)
+    
+    <font color="#008000">' Retrieve the ditto</font>
+<font color="#0000FF">    Dim </font>oDitto<font color="#0000FF"> As </font>DrawingComponent
+<font color="#0000FF">    Set </font>oDitto = oViewSource.Components.Item(1)
+    
+    <font color="#008000">' Create an object of selection for the source document</font>
+<font color="#0000FF">    Dim </font>oSelectionSource<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelectionSource = oDrawingSource.Selection
+    
+    <font color="#008000">' Clear the selection</font>
+    oSelectionSource.Clear
+    <font color="#008000">' Add the ditto to be duplicated in the selection</font>
+    oSelectionSource.Add oDitto
+    <font color="#008000">' Copy the view</font>
+    oSelectionSource.Copy
+    <font color="#008000">' Clear the selection</font>
+    oSelectionSource.Clear
+    
+    <font color="#008000">' Open the drawing document where the ditto will be instantiated</font>
+<font color="#0000FF">    Dim </font>oDrawingTarget<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingTarget<font color="#0000FF"> </font>= CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoTarget.CATDrawing&quot;)
+    CATIA.ActiveWindow.ActiveViewer.Reframe
+    
+    <font color="#008000">' Retrieve the sheet where the ditto will be instantiated</font>
+<font color="#0000FF">    Dim </font>oSheetTarget<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheetTarget = oDrawingTarget.Sheets.Item(&quot;Sheet.1&quot;)
+    oSheetTarget.Activate
+
+    <font color="#008000">' Retrieve the view where the ditto will be instantiated</font>
+<font color="#0000FF">    Dim </font>oViewTarget<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oViewTarget = oSheetTarget.Views.Item(&quot;View.3&quot;)
+    
+    <font color="#008000">' Indicate the ditto location</font>
+<font color="#0000FF">    Dim </font>ReturnStatus<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>iDittoCoordinates(1)
+<font color="#0000FF">    Dim </font>oDraw
+<font color="#0000FF">    Set </font>oDraw = oDrawingTarget
+    ReturnStatus = oDraw.Indicate2D(&quot;Indicate the ditto location&quot;, iDittoCoordinates)
+       
+    <font color="#008000">' Create an object of selection for the target document</font>
+<font color="#0000FF">    Dim </font>oSelectionTarget<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">    Set </font>oSelectionTarget = oDrawingTarget.Selection
+    
+    <font color="#008000">' Clear the selection</font>
+    oSelectionTarget.Clear
+    <font color="#008000">' Add the view in the selection, where the ditto will be instantiated</font>
+    oSelectionTarget.Add oViewTarget
+    <font color="#008000">' Paste the clipboard</font>
+    oSelectionTarget.Paste
+    <font color="#008000">' Clear the selection</font>
+    oSelectionTarget.Clear
+    
+    <font color="#008000">' Retrieve the drawing components collection of the target drawing view</font>
+<font color="#0000FF">    Dim </font>o2DComponents<font color="#0000FF"> As </font>DrawingComponents
+<font color="#0000FF">    Set </font>o2DComponents = oViewTarget.Components
+    
+    <font color="#008000">' Retrieve the ditto and define its location</font>
+<font color="#0000FF">    Dim </font>o2DComponent<font color="#0000FF"> As </font>DrawingComponent
+<font color="#0000FF">    Set </font>o2DComponent = o2DComponents.Item(&quot;DrwDetail.1&quot;)
+    o2DComponent.X = iDittoCoordinates(0)
+    o2DComponent.Y = iDittoCoordinates(1)
+    
+    <font color="#008000">' Retrieve the modifiable text of the ditto</font>
+<font color="#0000FF">    Dim </font>oText<font color="#0000FF"> As </font>DrawingText
+<font color="#0000FF">    Set </font>oText = o2DComponent.GetModifiableObject(1)
+    
+    <font color="#008000">' Modify the modifiable text value</font>
+<font color="#0000FF">    Dim </font>ReturnValue<font color="#0000FF"> As </font>String
+    ReturnValue = InputBox(&quot;Enter a value&quot;, &quot;&quot;, &quot;New Value For Text&quot;)
+    oText.Text = ReturnValue
+
+    <font color="#008000">' Clear the variables</font>
+<font color="#0000FF">    Set </font>oText = Nothing
+<font color="#0000FF">    Set </font>o2DComponent = Nothing
+<font color="#0000FF">    Set </font>o2DComponents = Nothing
+<font color="#0000FF">    Set </font>oSelectionTarget = Nothing
+<font color="#0000FF">    Set </font>oDraw = Nothing
+<font color="#0000FF">    Set </font>oViewTarget = Nothing
+<font color="#0000FF">    Set </font>oSheetTarget = Nothing
+<font color="#0000FF">    Set </font>oDrawingTarget = Nothing
+<font color="#0000FF">    Set </font>oSelectionSource = Nothing
+<font color="#0000FF">    Set </font>oViewSource = Nothing
+<font color="#0000FF">    Set </font>oSheetSource = Nothing
+<font color="#0000FF">    Set </font>oDrawingSource = Nothing
+    
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

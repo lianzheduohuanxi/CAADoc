@@ -1,0 +1,1117 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Editing Combined Curves</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Editing Combined Curves</h3>
+      <em>Implementing CATIEdit through a dialog box and a state dialog command</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3">
+      <p><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating a New
+      Geometrical Feature : The Combined Curve</a>  <b>&gt; Editing Combined Curves</b></p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The main goal of this use case is to describe how to edit Combined Curves
+      interactively.&nbsp;
+      <ul>
+        <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+        <li><a href="#UseCase"><b>The CAAMmrCombinedCurveUI Use Case</b></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrCombinedCurveUI Do</a></li>
+            <li><a href="#V5R13 Modifications to Take the Ordered Set Into Account">V5R13
+              Modifications to Take the Ordered Set Into Account</a></li>
+            <li><a href="#How">How to Launch CAAMmrCombinedCurveUI</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrCombinedCurveUI Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains how to edit Combined Curves interactively. You will
+learn to:</p>
+<ul>
+  <li>Implement the <i>CATIEdit</i> Interface so that an interactive Combined
+    Curve edition command is launched when the end user double-clicks an
+    instance, that is either in 3D or in the specification tree,</li>
+  <li>Create a new state dialog command managing the successive steps of the
+    dialog,</li>
+  <li>Instantiate a Combined Curve edition dialog box,</li>
+  <li>Use an update command to build the Combined Curve.</li>
+</ul>
+<p>Moreover, the state command can be also used to create new instances. Consequently, this article gives you also explanations to create
+a command to instantiate Combined Curves interactively. However, to light the
+article, the piece of code which makes the instantiation has been off-set in the referenced article [<a href="#References">1</a>].</p>
+<p>The use case intent
+is to help you make your first step in the interactive edition world. Some more
+sophisticated examples are provided with Dialog and DialogEngine frameworks. The
+point of this use case is to show an example of an edition command taking full
+advantage of services provided by Mechanical Modeler Frameworks.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrCombinedCurveUI Use Case</h3>
+<p>CAAMmrCombinedCurveUI is a use case of the CAAMechanicalModeler.edu framework
+that illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrCombinedCurveUI Do</h4>
+<p>The CAAMmrCombinedCurveUI use case enables you to edit an existing combined
+curve through a state command and a dialog box. Here is a picture showing the
+edition of the combined curve included in the <code>CAACombinedCurve</code>.<code>CATPart</code>
+document. This file is located in the InputData directory of the
+CAAMechanicalModeler.edu framework.</p>
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a> The Combined Curve Edition</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrCombinedCurveEdition.jpg" width="494" height="362"></td>
+  </tr>
+</table>
+<p>The next figure summarizes the architecture of the Combined Curve edition
+pattern.</p>
+<ul>
+  <li>Blue: new class names created in this Use Case.</li>
+  <li>Green: type of objects your are advise to reuse or derive from.</li>
+  <li>Red: Interface CombinedCurve implements in this Use Case.</li>
+</ul>
+<table>
+  <tr>
+    <td>
+    <img border="0" src="images/CombinedCurveInteractiveArchitecture.gif" width="560" height="507"></td>
+  </tr>
+</table>
+<ul>
+  <li>
+    <p>The <i>CATIEdit</i> interface links the Combined Curve to its <b>edition
+      state dialog command</b>, called <i>CAAMmrCombCrvPanelStCmd</i>. This
+      command can make the creation or the modification of an instance.</p>
+  </li>
+  <li>
+    <p>This command derives from <i>CATMMUIPanelStateCmd</i> to benefit from
+      command edition standard behaviors.</p>
+  </li>
+  <li>
+    <p>It uses specific import agents of type <i>CATFeatureImportAgent</i> to
+      acquire geometry in a multi-model context, and instantiates a <b>dialog
+      box</b> that recounts the Combined Curve's input modifications.</p>
+  </li>
+  <li>In order to achieve its integration in the Build mechanism, this
+      command uses the standard Update command of type <i>CATPrtUpdateCom</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="V5R13 Modifications to Take the Ordered Set Into Account"></a>V5R13
+Modifications to Take the Ordered Set Into Account</h4>
+<p align="left">The <i> CAAMmrCombCrvPanelStCmd</i> command class has been modified
+in V5R13 to take the ordered set [<a href="#References">2</a>][<a href="#References">3</a>] into account.
+There are three main modifications:</p>
+<ol>
+  <li>
+    <p align="left"><b>Current feature management</b>
+    <p>The&nbsp; specifications are the following:</p>
+    <ul>
+      <li>The edited feature is the current one during the command life. At the
+        end of the command the previous current feature is restored.</li>
+      <li>The created feature is set or stays (*) the current on at the end of
+        the command.</li>
+    </ul>
+    <p>(*) In the <i> CAAMmrCombCrvPanelStCmd</i> command the new feature is created at the
+end of the command, but generally the creation is done at the beginning. In the
+first case, the feature is <b>set</b> current at the end of the command,
+otherwise it <b>stays</b> current at the end.&nbsp;</p>
+<table border="0">
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrCombinedCurveEdition2.jpg" width="342" height="317"></td>
+      </tr>
+</table>
+<p>On this above picture <code>CombinedCurve.2</code> is into an ordered set (an Ordered Geometrical Set). When it is being edited, you can
+see that it is the current feature since it is underlined.</p>
+
+<p>The management of the current feature has been processed by the <a href="#Overriding Activate, Deactivate and Cancel methods to Manage Current Feature">Overriding
+        Activate, Deactivate and Cancel methods to Manage Current Feature</a>
+section.</p>
+<li><b>Aggregation management</b></li>
+  <p>When aggregating a feature into an ordered set you should take care of the
+  position of the current feature. The new feature is located after the current
+  feature. This management, specific to the creation mode, is detailed in the
+  referenced article [<a href="#References">1</a>] which deals with the
+  instantiation of the combined curve.&nbsp;</p>
+
+<li><b>Absorption management&nbsp; </b>&nbsp;</li>
+  <p>When a geometrical feature [<a href="#References">4</a>] is inserted into
+  an ordered set, or when a surfacic feature [<a href="#References">4</a>] is
+  modified into a such set, you must call the <code> Insert</code> method of the <i>CATMmrLinearBodyServices</i>
+  class. This call has been integrated just after the update of the combined
+  curve, in the <a href="#Step5"> OkAction</a> method.</p>
+
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrCombinedCurveUI</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+a New Geometrical Feature: The Combined Curve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrCombinedCurveUI Code</h4>
+<p>The CAAMmrCombinedCurveUI use case is made of a several classes located in
+the CAAMmrCombinedCurveUI.m module of the CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrCombinedCurveUI.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrCombinedCurveUI.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The code for this use case is made of the following classes:</p>
+<ul>
+  <li>The extension of Combined Curve that implements <i>CATIEdit</i> is <i>CAAEMmrCombinedCurveEdit</i></li>
+  <li>The state dialog command is <i>CAAMmrCombCrvPanelStCmd</i></li>
+  <li>The Combined Curve edition dialog box is <i>CAAMmrCombinedCurveDlg</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The CAAMmrCombinedCurveUI is divided into the following steps:
+<ol>
+  <li>Implementing <i>CATIEdit </i>
+    [<a href="#References">5</a>]
+    <ul>
+      <li><a href="#Step1">Declaring CATIEdit Implementation</a></li>
+      <li><a href="#Step2">Coding the Activate Method to Launch the Combined
+        Curve Edition Command</a></li>
+    </ul>
+  </li>
+  <li><a href="#How to launch the creation command through an header command">How
+    to launch the Creation Command through an Header of Command</a></li>
+  <li>Creating the Combined Curve edition state dialog command. This command
+    manages the edition dialog. It may be called to edit an existing Combined
+    Curve Feature ( &quot;edition mode&quot;, thanks to <i>CATIEdit</i>
+    implementation ) or to create a new one ( &quot;creation mode&quot;, thanks
+    to an icon provided in a toolbar using an add-in [<a href="#References">6</a>]).
+    <ul>
+      <li><a href="#Step3">Constructing the Command</a></li>
+      <li><a href="#Step4">Coding the BuildGraph Method</a></li>
+      <li><a href="#Step5">Coding the OkAction Method</a></li>
+      <li><a href="#Coding the CancelAction Method">Coding the CancelAction
+        Method</a></li>
+      <li><a href="#Overriding Activate, Deactivate and Cancel methods to Manage Current Feature">Overriding
+        Activate, Deactivate and Cancel methods to Manage Current Feature</a></li>
+      <li><a href="#Step6">Overriding Methods from the Parent Command
+        CATMMUIPanelStateCmd</a></li>
+      <li><a href="#Step7">Other Places of Interest: Highlighting Geometry and
+        Enabling OK Button Sensitivity</a></li>
+    </ul>
+  </li>
+  <li>Creating the Combined Curve edition dialog box</li>
+  <ul>
+  <li><a href="#Step8">Creating the Combined Curve Edition Dialog Box</a></li>
+  </ul>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring CATIEdit Implementation</h4>
+<p>As usual, to implement an interface you first need to use the TIE macro.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATImplementClass ( CAAEMmrCombinedCurveEdit ,
+                    DataExtension ,
+                    <b>CATIEdit</b> ,
+                    CombinedCurve );
+
+<b>CATImplementBOA</b>(CATIEdit, CAAEMmrCombinedCurveEdit);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro is used in conjunction with the
+<code>CATDeclareClass</code> macro in the class header file to express that the 
+class is part of a CAA V5 Object Modeler component. Its argument read as follows:
+</p>
+<ol>
+  <li>CAAEMmrCombCrvInputDescription: the class name </li>
+  <li><code>DataExtension</code>: the CAA V5 Object Modeler class type.&nbsp; </li>
+  <li><code>CATIEdit: </code>The name of implemented interface </li>
+  <li><code>CombinedCurve</code>: the name of the extended component </li>
+</ol>
+<p>The <code>CATImplementBOA</code> macro replaces the <code>TIE_CATIEdit</code> 
+macro. Its arguments are the BOA-implemented interface and the extension class 
+name respectively.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Coding the Activate Method to Launch the Combined Curve
+Edition Command</h4>
+<p>The method <code>Activate</code> of the interface <i>CATIEdit</i> is called
+whenever the user shows his willingness to edit a feature, for example when
+double clicking on a feature node in the feature tree. It returns a pointer on a
+<i>CATCommand</i>. This <i>CATCommand</i> (here called <i>CAAMmrCombCrvPanelStCmd</i>)
+is the feature edition command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATCommand * CAAEMmrCombinedCurveEdit::<b>Activate</b>(CATPathElement *ipPath)
+{
+  // Gets a pointer on CAAIMmrCombinedCurve in edition
+  CAAIMmrCombinedCurve* piCombinedCurve = NULL;
+  HRESULT rc = QueryInterface(IID_CAAIMmrCombinedCurve,
+                              (void**) &amp;piCombinedCurve);
+  if ( FAILED(rc) )
+    return NULL;
+
+  // Creates the edition command
+  CATCommand *pCommand = <b>new CAAMmrCombCrvPanelStCmd</b>(piCombinedCurve);
+
+  // Releases useless pointer
+  piCombinedCurve-&gt;Release();
+  piCombinedCurve = NULL ;
+
+  return pCommand;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="How to launch the creation command through an header command"></a>How
+to launch the Creation Command through an Header Command ?</h4>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATCreateExternalObject.h&quot; 
+CATCreateClass(CAAMmrCombCrvPanelStCmd);</pre>
+        </td>
+      </tr>
+    </table>
+<p align="left">These two lines enables the frame to launch the command thanks
+to an header of command.</p>
+<!---------------------------------comment------------------------------------->
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Step3"></a>Constructing the Command</h4>
+<p>The Combined Curve edition/creation state dialog command constructor:</p>
+<ul>
+  <li>Derives from <i>CATMMUIPanelStateCmd</i>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CAAMmrCombCrvPanelStCmd::CAAMmrCombCrvPanelStCmd
+                                       (CAAIMmrCombinedCurve *ipiCombinedCurve)
+                       : <b>CATMMUIPanelStateCmd</b>(&quot;CombinedCurveCommand&quot;)</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This derivation is very helpful, since it provides several default
+    behaviors you will not have to implement by yourself.</p>
+  </li>
+  <li>Managing the edition/creation mode
+  </li>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+_mode = 0 ;
+if ( NULL != ipiCombinedCurve )
+{
+   _mode = 1 ;
+   ...
+...</pre>
+        </td>
+      </tr>
+    </table>
+  <p><code>_mode</code> is a data member of <i>CAAMmrCombCrvPanelStCmd,</i>
+    and returned by the <code>GetMode</code> method - see the <a href="#Step6">Overriding Methods from the Parent Command
+        CATMMUIPanelStateCmd</a> section.&nbsp;</p>
+  <li>Queries the input of the Combined Curve to edit
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+rc = ipiCombinedCurve-&gt;<b>GetCurve</b>(1, &amp;_piSpecOnCurve1);
+if ( FAILED(rc) )
+  return ;
+
+rc = ipiCombinedCurve-&gt;<b>GetDirection</b>(1, &amp;_piSpecOnDir1);
+if ( FAILED(rc) )
+  return ;
+
+rc = ipiCombinedCurve-&gt;<b>GetCurve</b>(2, &amp;_piSpecOnCurve2);
+if ( FAILED(rc) )
+  return ;
+
+rc = ipiCombinedCurve-&gt;<b>GetDirection</b>(2, &amp;_piSpecOnDir2);
+if ( FAILED(rc) )
+  return ;
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Thanks to <i>CAAIMmrCombinedCurve</i>, it is very easy to ask the
+    Combined Curve its input curves and directions. You do not have to worry
+    about the details of the Combined Curve feature implementation [<a href="#References">7</a>].&nbsp;</p>
+    <p>This part is done only in edition mode, when <code>ipiCombinedCurve</code>  is not null.&nbsp;</p>
+  </li>
+  <li>Instantiates, builds and fills the edition dialog box.
+    <p>This Combined Curve edition dialog box is very basic. A description of
+    this dialog box's code is available below. See the <a href="#Step8">Creating the Combined Curve Edition Dialog Box</a>
+    section.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+_panel = <b>new CAAMmrCombinedCurveDlg</b>();
+
+_panel-&gt;<b>Build</b>(); 
+
+<b>UpdatePanelFields</b>();
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <p>The build of a dialog box must be always outside the dialog class
+  constructor. The names of the Combined Curve input curves and directions appear in the
+    dialog box fields in case of edition <a href="#Fig.1">Fig.1</a>, otherwise the &quot;noselection&quot;
+  string appears.&nbsp;</p>
+  
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Coding the BuildGraph Method</h4>
+<p>The <code>BuildGraph</code> method describes how the command works.</p>
+<ul>
+<li>Instantiates acquisition agents to decode user selections
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pCurveAgent     = <b>new CATFeatureImportAgent</b>(&quot;CurveAgent&quot;,      NULL,
+                                             NULL, MfNoDuplicateFeature) ;
+_pDirectionAgent = <b>new CATFeatureImportAgent</b>(&quot;DirectionAgent&quot; , NULL ,
+                                             NULL, MfNoDuplicateFeature) ;</pre>
+        </td>
+      </tr>
+    </table>
+  <li>It customizes acquisition agents behaviors (one to decode curves, another
+    to decode directions).
+    <table class="code">
+      <tr>
+        <td>
+          <pre>// _pCurveAgent to select a curve
+_pCurveAgent -&gt; <b>SetOrderedElementType</b> ( &quot;CATIMfMonoDimResult&quot; );
+_pCurveAgent -&gt; <b>AddOrderedElementType</b> ( &quot;CATCurve&quot;            );
+_pCurveAgent -&gt; AddOrderedElementType ( &quot;CATEdge&quot;             );
+_pCurveAgent -&gt; AddOrderedElementType ( &quot;CATWire&quot;             );
+_pCurveAgent -&gt; <b>SetBehavior</b>      ( CATDlgEngWithPrevaluation | 
+                                   CATDlgEngWithCSO          | 
+                                   CATDlgEngOneShot           );
+_pCurveAgent -&gt; <b>SetAgentBehavior</b> ( MfPermanentBody           | 
+                                   MfLastFeatureSupport      | 
+                                   MfRelimitedFeaturization   );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This acquisition agent will first look for any objects implementing <i>CATIMfMonoDimResult</i>,
+    then <i>CATCurve</i>, etc.</p>
+    <p>CATFeatureImportAgent.h Documentation details the possible options.</p>
+  </li>
+  <li>Then, it creates two dialog states (wait for a curve, wait for a
+    direction) and states transitions.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>//-----------------------------------------------------------------------------
+// Command States
+//-----------------------------------------------------------------------------
+
+// Uses &quot;PanelStates&quot; instead of standard &quot;DialogStates&quot;.
+// Theses states are provided by father class CATMMUIPanelStateCommand.
+// They make it possible for you not to worry about transition to 
+// OK and Cancel States.
+
+// Curve selection state
+CATDialogState *WaitForCurveState= <b>GetInitial<u>Panel</u>State</b>
+                               (&quot;Select a curve or another input field&quot;);
+WaitForCurveState -&gt; AddDialogAgent ( _pCurveAgent           ); 
+WaitForCurveState -&gt; AddDialogAgent ( _pDirection1FieldAgent ); 
+WaitForCurveState -&gt; AddDialogAgent ( _pDirection2FieldAgent ); 
+WaitForCurveState -&gt; AddDialogAgent ( _pCurve1FieldAgent     ); 
+WaitForCurveState -&gt; AddDialogAgent ( _pCurve2FieldAgent     ); 
+
+// Direction selection state
+CATDialogState *WaitForDirectionState= <b>AddPanelState</b>
+                            (&quot;Select a direction or another input field&quot;);
+WaitForDirectionState -&gt; AddDialogAgent ( _pDirectionAgent       );
+WaitForDirectionState -&gt; AddDialogAgent ( _pCurve1FieldAgent     );
+WaitForDirectionState -&gt; AddDialogAgent ( _pCurve2FieldAgent     );
+WaitForDirectionState -&gt; AddDialogAgent ( _pDirection1FieldAgent ); 
+WaitForDirectionState -&gt; AddDialogAgent ( _pDirection2FieldAgent ); 
+
+//-----------------------------------------------------------------------------
+// Transitions
+//-----------------------------------------------------------------------------
+
+// From Curve to Curve ( click on several curves to change of curve )
+AddTransition ( WaitForCurveState , WaitForCurveState , 
+                IsOutputSetCondition ( _pCurveAgent ) ,
+                Action ( ( ActionMethod ) &amp;CAAMmrCombCrvPanelStCmd::CurveSelected ) );
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Deriving from <i>CATMMUIPanelStateCmd</i> requests to call <code><b>GetInitialPanelState</b></code><b>
+    </b>instead of <code>GetInitialState</code> and<b> </b><code><b>AddPanelState</b></code>
+    instead of <code>AddState</code>.</p>
+    <p>Here is a figure representing the four possible states of this command
+    and their transitions.</p>
+    <p><img border="0" src="images/CombinedCurveCmdStates.gif" width="648" height="452"></p>
+    <p><b>Note</b>: thanks to parent command class <i>CATMMUIPanelStateCmd</i>
+    (green), you only have to code two of them (black).</p>
+  </li>
+  <li>Transitions are validated by agent acquisition or change of dialog box
+    field focus (callbacks sending notifications)
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_pCurve1FieldAgent     -&gt; <b>AcceptOnNotify</b> ( _panel-&gt;GetField(1) , 
+                                      _panel-&gt;GetField(1)-&gt;<b>GetListSelectNotification</b>() );
+_pCurve2FieldAgent     -&gt; AcceptOnNotify ( _panel-&gt;GetField(3) , 
+                                      _panel-&gt;GetField(3)-&gt;GetListSelectNotification() );
+_pDirection1FieldAgent -&gt; AcceptOnNotify ( _panel-&gt;GetField(2) , 
+                                      _panel-&gt;GetField(2)-&gt;GetListSelectNotification() );
+_pDirection2FieldAgent -&gt; AcceptOnNotify ( _panel-&gt;GetField(4) , 
+                                      _panel-&gt;GetField(4)-&gt;GetListSelectNotification() );</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Coding the OkAction Method</h4>
+<p>This method is called when users press on the OK button of the Combined Curve
+edition dialog box. Transitions to this OK state are provided by parent Command <i>CATMMUIPanelStateCmd</i>.</p>
+<p>In case this edition command is used to <b>modify</b> a Combined Curve, it
+just modifies the Combined Curve’s input Curves and Direction.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// edition mode
+
+// Updates the combine with its new curves inputs.
+HRESULT rc;
+
+rc = _piCombinedCurve -&gt; <b>SetCurve</b>     ( 1 , _piSpecOnCurve1 );
+if ( FAILED(rc) ) 
+  return FALSE;
+
+rc = _piCombinedCurve -&gt; <b>SetDirection</b> ( 1 , _piSpecOnDir1   );
+if ( FAILED(rc) ) 
+  return FALSE;
+
+rc = _piCombinedCurve -&gt; <b>SetCurve</b>     ( 2 , _piSpecOnCurve2 );
+if ( FAILED(rc) ) 
+  return FALSE;
+
+rc = _piCombinedCurve -&gt; <b>SetDirection</b> ( 2 , _piSpecOnDir2   );
+if ( FAILED(rc) ) 
+  return FALSE;</pre>
+    </td>
+  </tr>
+</table>
+<p>When this command is used to <b>create</b> a new Combined Curve (creation
+mode), first it retrieves a geometrical features set, and then aggregates the new feature&nbsp; inside the
+set.
+The explanations of these two steps have been off-set in the referenced use case [<a href="#References">1</a>].&nbsp;</p>
+<p>Whatever the command mode (creation or edition), the <code>OKaction</code>
+method updates the Combined Curve. To do so, it creates a new update
+command of type <i>CATPrtUpdateCom</i>. This command updates only the combined
+curve (in manual update mode) or the whole part (automatic update mode). This
+command&nbsp; encapsulates interactive error management ( edit / delete, etc...).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATPrtUpdateCom *pUpdateCommand =  <b>new CATPrtUpdateCom</b> ( 
+                        piSpecOnCombinedCurve ,  // the feature to update, translated into part-&gt;update 
+                                                 // in	 case of automatic update setting
+                        1                     ,  // respects update interactive setting 
+                                                 // ( manual / automatic )
+                        GetMode()            );  // creation or modification. Prevents the user from 
+                                                 // creating a feature in error </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">After the update step, if the feature is inside an ordered set,
+whatever the command mode (creation or edition), you must call the <code>Insert</code>
+method of the <i>CATMmrLinearBodyServices</i> class.&nbsp;&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBaseUnknown_var spBUOnCC = piSpecOnCombinedCurve ;
+rc = CATMmrLinearBodyServices::<b>Insert</b>(spBUOnCC);</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The last step consists in to modify the graphic properties of
+the new combined curve. The
+graphic properties are changed by this way:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CATIVisProperties</b> *piGraphPropOnCombinedCurve = NULL;
+rc = piSpecOnCombinedCurve-&gt;QueryInterface( IID_CATIVisProperties, 
+                                                        (void**)&amp; piGraphPropOnCombinedCurve);
+ 
+CATVisPropertiesValues Attribut;
+Attribut.SetColor(255, 255, 0); // yellow
+Attribut.SetWidth(4);           // medium thickness
+piGraphPropOnCombinedCurve-&gt;<b>SetPropertiesAtt</b>(Attribut, <b>CATVPAllPropertyType</b>, <b>CATVPLine</b>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Coding the CancelAction Method"></a>Coding the
+CancelAction Method</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAAMmrCombCrvPanelStCmd::CancelAction(void *)
+{
+    if (_editor) _editor -&gt; <b>UnsetRepeatedCommand</b>();
+    return TRUE ; 
+} </pre>
+    </td>
+  </tr>
+</table>
+<p align="left">This code enables you to unset the repeat mode when the Cancel
+or Close icon are pushed by the end user.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Overriding Activate, Deactivate and Cancel methods to Manage Current Feature"></a>Overriding
+Activate, Deactivate and Cancel methods to Manage Current Feature</h4>
+<p>The management of the current feature, a specificity of an ordered set, has been
+implemented through the
+Activate, Deactivate, and Cancel methods of the <i>CATCommand</i> class [<a href="#References">8</a>].&nbsp;</p>
+<ul>
+<li><a name="Activate">Activate</a></li>
+<p>This method is called when the command takes the focus.&nbsp;In this step, if
+the edited feature is into an ordered set, the current feature is kept, and the
+edited feature is set the current one.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStatusChangeRC CAAMmrCombCrvPanelStCmd::Activate (CATCommand * iCmd,
+                                                     CATNotification * iNotif)
+{
+    if ( (NULL!= iNotif) &amp;&amp; (0 == <b>GetMode</b>()) &amp;&amp; (NULL !=_piCombinedCurve) ) 
+    {
+       CATBoolean IsInsideOrderedBody = FALSE ;
+       HRESULT rc = <a href="#IsCombCrvInsideOGS">IsCombCrvInsideOrderedBody</a>(IsInsideOrderedBody );
+       if ( SUCCEEDED(rc) &amp;&amp; (TRUE == IsInsideOrderedBody ) )
+       {     
+...
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The first part consists in to check the edition mode (<code>GetMode</code>=0),
+and in case of edition mode, check the type of the set
+aggregating the combined curve (<code><a href="#IsCombCrvInsideOGS">IsCombCrvInsideOrderedBody</a></code>).</p>
+<p>Once the two checks are done, you can keep the current feature and set the
+edited combined curve as the current one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          if (((CATStateActivateNotification *) iNotif) -&gt; GetType() 
+                 ==  CATStateActivateNotification::<b>Begin</b>)
+          {              
+             _spSpecObjOnPreviousCurrentFeat = <b>GetCurrentFeature</b>();
+          }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>If it is the first activation, the current feature is kept to be restored at
+the <a href="#Cancel">end of the command</a>, or when the command is <a href="#Deactivate">deactivated</a>.&nbsp;&nbsp;<code>_spSpecObjOnPreviousCurrentFeat</code>
+is a data member of the <i>CAAMmrCombCrvPanelStCmd</i> class. It is initialized
+with <code>GetCurrentFeature</code>, a method of the <i>CATMMUIPanelStateCmd</i> class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+          CATISpecObject * pSpecObjectOnCombCrv = NULL ;
+          rc = _piCombinedCurve-&gt;QueryInterface(IID_CATISpecObject,
+                                                  (void**) &amp;pSpecObjectOnCombCrv);
+          if (SUCCEEDED(rc))
+          {
+             <b>SetCurrentFeature</b>(pSpecObjectOnCombCrv);
+
+             pSpecObjectOnCombCrv-&gt;Release();
+             pSpecObjectOnCombCrv = NULL ;
+          }
+       }
+
+    }
+    return (CATStatusChangeRCCompleted) ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Then the edited combined curve is set as the current one thanks to the same <code>SetCurrentFeature</code> 
+method of the <i>CATMMUIPanelStateCmd</i> class.&nbsp;</p>
+<li><a name="Deactivate">Deactivate</a></li>
+<p>This method is called when the command loses the focus. It means when the
+command is deactivated by a shared command. You should restore the feature which
+was the current one before the <i> CAAMmrCombCrvPanelStCmd</i> launching.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStatusChangeRC CAAMmrCombCrvPanelStCmd::Deactivate (CATCommand * iCmd,
+                                                     CATNotification * iNotif)
+{
+    if ( 0 == <b>GetMode</b>() )
+    {
+       CATBoolean IsInsideOrderedBody = FALSE ;
+       HRESULT rc = <a href="#IsCombCrvInsideOGS">IsCombCrvInsideOrderedBody</a>(IsInsideOrderedBody );
+       if ( SUCCEEDED(rc) &amp;&amp; (TRUE == IsInsideOrderedBody ) )
+       {
+          <b>SetCurrentFeature</b>(_spSpecObjOnPreviousCurrentFeat);
+       }
+    }
+    return (CATStatusChangeRCCompleted) ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_spSpecObjOnPreviousCurrentFeat</code> is the feature kept in the <a href="#Activate">Activate</a>
+method. The <code>SetCurrentFeature</code>
+method is a method of the <i>CATMMUIPanelStateCmd</i> class.&nbsp;This part of code is done
+only in case of ordered set and in edition mode.&nbsp;In creation mode, the combined
+curve being not yet created, the current feature has not been modified by the <i>
+CAAMmrCombCrvPanelStCmd</i> command.</p>
+
+<li><a name="Cancel">Cancel</a></li>
+<p>This method is called when the state command completes, or when an exclusive
+command takes the focus and requests the command to be deleted.</p>
+<p>The first part consists in to restore the current feature such as before the
+command starts.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATStatusChangeRC CAAMmrCombCrvPanelStCmd::Cancel (CATCommand * iCmd,
+                                                     CATNotification * iNotif)
+{
+    CATBoolean IsInsideOrderedBody = FALSE ;
+    HRESULT rc = <a href="#IsCombCrvInsideOGS">IsCombCrvInsideOrderedBody</a>(IsInsideOrderedBody );
+
+    if ( (<b>0</b> == <b>GetMode</b>()) &amp;&amp; SUCCEEDED(rc) &amp;&amp; (TRUE ==IsInsideOrderedBody ) )
+    {
+       <b>SetCurrentFeature</b>(_spSpecObjOnPreviousCurrentFeat);     
+    }
+..</pre>
+    </td>
+  </tr>
+</table>
+<p><code>_spSpecObjOnPreviousCurrentFeat</code> is the feature kept in the <a href="#Activate">Activate</a>
+method. The <code>SetCurrentFeature</code>
+method is a method of the <i>CATMMUIPanelStateCmd</i> class.&nbsp;This part of code is done
+only in case of ordered set and in edition mode (<code>GetMode</code>=0). In creation
+mode the current feature has not been
+modified by the <i> CAAMmrCombCrvPanelStCmd</i> command.</p>
+<p>The second part of this <code> Cancel</code> method consists in to set current the new
+combined curve. It is done only in creation mode (<code>GetMode</code>=1). <code>_piCombinedCurve</code>
+is the data member which holds the edited and created combined curve.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    
+    if ( (<b>1</b> == <b>GetMode</b>()) &amp;&amp; SUCCEEDED(rc) &amp;&amp; (NULL!=_piCombinedCurve) 
+        &amp;&amp; (TRUE ==IsInsideOrderedBody) ) 
+    {
+       CATISpecObject * pSpecObjectOnCombCrv = NULL ;
+       rc = _piCombinedCurve-&gt;QueryInterface(IID_CATISpecObject,
+                                                  (void**) &amp;pSpecObjectOnCombCrv);
+       if (SUCCEEDED(rc))
+       {
+          <b>SetCurrentFeature</b>(pSpecObjectOnCombCrv);
+
+          pSpecObjectOnCombCrv-&gt;Release();
+          pSpecObjectOnCombCrv = NULL ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The last part consists in to call the <code>Cancel</code> method of the <i>CATMMUIPanelStateCmd</i>
+which can contain specific code.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    return CATMMUIPanelStateCmd::<b>Cancel</b>(iCmd,iNotif);
+}</pre>
+    </td>
+  </tr>
+</table>
+</ul>
+<p><a name="IsCombCrvInsideOGS"></a>In the three methods, the <code> IsCombCrvInsideOrderedBody</code> 
+local method has been used to check if the combined curve is inside an ordered
+set.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>CATISpecObject</b> * pSpecObjectOnCombCrv = NULL ;
+rc = _piCombinedCurve-&gt;QueryInterface(IID_CATISpecObject,
+                                                  (void**) &amp;pSpecObjectOnCombCrv);
+if ( SUCCEEDED(rc) )
+{ 
+   CATISpecObject * pFatherCC = NULL ;
+   pFatherCC = pSpecObjectOnCombCrv-&gt;<b>GetFather</b>();
+   if ( NULL != pFatherCC )
+   {
+      <b>CATIGSMTool</b> *piGSMToolFatherCC = NULL;
+      rc = pFatherCC-&gt;QueryInterface ( IID_CATIGSMTool, (void**) &amp;piGSMToolFatherCC);
+      if ( SUCCEEDED(rc) )
+      {
+         int IsAnOrderedBody = -1 ;
+         piGSMToolFatherCC-&gt;<b>GetType</b>(IsAnOrderedBody) ;
+         if ( 1 == IsAnOrderedBody )
+         {
+            oIsInsideOrderedBody = TRUE ;
+         } </pre>
+    </td>
+  </tr>
+</table>
+<p>First you retrieve the feature aggregating the combined curve. It is possible
+thanks <i>CATISpecObject</i> and its <code>GetFather</code> method. Then you
+check the type of the aggregating feature. The <i>CATIGSMTool</i> interface is implemented on the
+GSMTool and HybridBody StartUp,
+and finally <code>GetType</code> gives you the type (<code>1</code>=ordered set,
+<code>0</code>= non ordered set).&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Overriding Methods from the Parent Command
+CATMMUIPanelStateCmd</h4>
+<p>To take full advantage of the services provided by deriving from <i>CATMMUIPanelStateCmd</i>,
+three very simple methods must be overridden.</p>
+<ul>
+  <li><code>CAAMmrCombCrvPanelStCmd::GiveMyFeature</code> returns the feature
+    that is being created or edited.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecObject_var CAAMmrCombCrvPanelStCmd::GiveMyFeature()
+{
+  CATISpecObject_var MyFeature(_piCombinedCurve);
+  return MyFeature;
+} </pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>_piCombinedCurve</code> is a data member of&nbsp; <i>CAAMmrCombCrvPanelStCmd.
+    </i>It is the argument of the class constructor. </p>
+
+  </li>
+  <li><code>CAAMmrCombCrvPanelStCmd::GiveMyPanel</code> returns the edition
+    dialog box so that parent command can create automatic transitions to OK and
+    Cancel states.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgDialog* CAAMmrCombCrvPanelStCmd::GiveMyPanel()
+{
+  // Used by parent class CATMMUiPanelStateCommand to be notified of events
+  // sent by the OK and CANCEl press button.
+  return (_panel);
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>_panel</code> is a data member of&nbsp; <i>CAAMmrCombCrvPanelStCmd</i><i>,</i>
+    initialized in the constructor.&nbsp; </p>
+  </li>
+  <li><code>CAAMmrCombCrvPanelStCmd::GetMode</code> that returns creation mode
+    or edition mode.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int CAAMmrCombCrvPanelStCmd::GetMode()
+{
+  // This very simple method checks if the user is creating or editing the Combined Curve.
+  // This data is used by parent command CATMMUIPanelStateCommand and by CATPrtUpdateCom.
+  // They both provide standard edition command behavior:
+  // for example, it is not possible to create a sick Combined Curve 
+  // ( a Combined Curve generating an error )
+
+  return _mode;  // 0 : edit mode 
+                 // 1 : creation mode
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>_mode</code> is a data member of&nbsp; <i>CAAMmrCombCrvPanelStCmd</i><i>,</i>
+    initialized in the constructor. If the argument of the method is NULL, it is
+    a creation otherwise an edition. </p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Other Places of Interest: Highlighting Geometry and
+Enabling OK Button Sensitivity</h4>
+<p>Highlighting geometry is very useful when editing a feature. This part of
+code is called when the dialog box focus switches from one a field to another.
+It highlights the corresponding geometric element.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>if ( piSpecOnGeomElem != NULL )
+{
+  // uses this pointer to build a path element
+ 
+  CATIBuildPath *piBuildPath = NULL;
+  HRESULT rc = piSpecOnGeomElem-&gt;QueryInterface( IID_CATIBuildPath, 
+                                                 (void**) &amp;piBuildPath );
+  if ( SUCCEEDED(rc) )
+  {
+    CATPathElement Context = _editor-&gt;<b>GetUIActiveObject</b>();
+    CATPathElement *pPathElement = NULL ;
+
+    rc = piBuildPath<b>-&gt;ExtractPathElement(&amp;Context,&amp;pPathElement);</b>
+    if (pPathElement != NULL)
+    {
+       <b>_HSO-&gt;AddElement(pPathElement</b>); // the geometrical element corresponding to the 
+                                    // active field is now highlighted
+        pPathElement-&gt;Release(); pPathElement = NULL ;                  
+    }
+    piBuildPath-&gt;Release(); // do not forget to release useless pointers
+    piBuildPath = NULL ;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The OK button must not be pressed if all of the four input curves and
+directions are not set. The OK button sensitivity can be managed as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMmrCombCrvPanelStCmd::CheckOKSensitivity()
+{
+  if ( _piSpecOnCurve1 != NULL &amp;&amp;
+       _piSpecOnDir1   != NULL &amp;&amp;
+       _piSpecOnCurve2 != NULL &amp;&amp;
+       _piSpecOnDir2   != NULL )
+    <b>_panel-&gt;SetOKSensitivity(CATDlgEnable);</b>
+  else
+    <b>_panel-&gt;SetOKSensitivity(CATDlgDisable);</b>
+  return;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step8"></a>Creating the Combined Curve Edition Dialog Box</h4>
+<p>This edition dialog box is very basic. It is a not resizable and provides an
+OK button and a Cancel button.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAMmrCombinedCurveDlg::CAAMmrCombinedCurveDlg()
+               : <b>CATDlgDialog</b>( (CATApplicationFrame::GetApplicationFrame())-&gt;GetMainWindow(),
+                 &quot;CombinedCurve&quot;,
+                 <b>CATDlgGridLayout</b> | <b>CATDlgWndOK</b> | <b>CATDlgWndCANCEL</b> | <b>CATDlgWndNoResize</b> )</pre>
+    </td>
+  </tr>
+</table>
+<p><b>Note</b>: this dialog box could be used by another command, since it does
+not know the Combined Curve edition state dialog command.</p>
+<p>Thanks to its grid layout, it is easy to add some <i> CATDlgLabel</i> and <i>CATDlgSelectionList</i>:</p>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/CombinedCurvePanelDefinition.gif" width="412" height="211"></td>
+    <td>This figure shows the Combined Curve edition dialog box.
+      <p>Two types of objects are used:</p>
+      <ol>
+        <li><i>CATDlgLabel</i> for the texts</li>
+        <li><i>CATDlgSelectorList</i> for the input fields.</li>
+      </ol>
+      <p>Rows and Columns are numbered starting from 0.</td>
+  </tr>
+</table>
+<p>Here is the code corresponding to the top row:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// Creates the CATDlgLabel for the input field's names.
+
+<b>_label_curve1</b> = new <b>CATDlgLabel</b>( this , CATString(&quot;labelc1&quot;) );
+CATUnicodeString Promptc1 = &quot;<b>First Curve</b> :&quot;;
+_label_curve1 -&gt;SetTitle(Promptc1);
+...
+// Creates the four input fields.
+CATUnicodeString Prompt_nosel = &quot;<b>no selection</b>&quot;;
+<b>_sel_curve1</b> = new <b>CATDlgSelectorList</b>(this,
+                                     CATString(&quot;selc1&quot;),
+                                     CATDlgDataModify);
+_sel_curve1-&gt;SetVisibleTextHeight(1);
+_sel_curve1-&gt;SetLine(Prompt_nosel,0,CATDlgDataModify);
+...
+// first column: labels.
+cst.Column=0;
+cst.Row=0; <b>_label_curve1</b> -&gt; <b>SetGridConstraints</b>(cst);
+// second column: input fields.
+cst.Column=1;
+cst.Row=0; <b>_sel_curve1</b> -&gt; <b>SetGridConstraints</b>(cst);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to manage Combined Curve interactive.</p>
+<p>It first shows how to implement the <i>CATIEdit</i> interface to activate
+Combined Curve edition.</p>
+<p>Then, it creates a Combined Curve edition state dialog command, whose main
+points are to:</p>
+<ul>
+  <li>Derive from <i>CATMMUIPanelStateCommand</i>.</li>
+  <li>Use <i>CATFeatureImportAgent</i> acquisition agents to decode any type of
+    geometry in any context.</li>
+  <li>Manage the current feature if the combined curve is into an ordered set.</li>
+  <li>Launch an update command of type <i>CATPrtUpdateCom</i> to update the
+    Combined Curve.</li>
+  <li>Call the <code>Insert</code> method of the <i>CATMmrLinearBodyServices</i>
+    class if the combined curve is into an ordered set.</li>
+</ul>
+<p>Finally, this use case briefly presents a basic Combined Curve edition dialog
+box.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrCombinedCurveInstantiation.htm">Instantiating Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Contents of the Specification Container- Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrOrderLinearBody.htm">Order
+      and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The
+      Contents of the Specification Container- Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleObjectEdit.htm">Editing
+      Objects</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrCombinedCurveAddIn.htm">Creating an Add-in in the Shape
+      Design Workbench</a>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAMmrCombinedCurveInterface.htm">Creating Combined Curve's Interface
+      of Type</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAADegTechArticles/CAADegCommandModel.htm">The
+      CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Oct 2003]</td>
+    <td valign="top">Document Updated- Ordered Geometrical Set integration</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Jan 2005]</td>
+    <td valign="top">CATImplementBOA usage instead TIE_CATIEdit</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+

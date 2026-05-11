@@ -1,0 +1,445 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Browsing an Electrical Network</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Harness Installation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Browsing an Electrical Network</h3>
+      <em>How to retrieve connected objects</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAEhiNetwork</i> use case. This use case
+      explains how to navigate within an electrical network.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAEhiNetwork Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEhiNetwork Do</a></li>
+            <li><a href="#How">How to Launch CAAEhiNetwork</a></li>
+            <li><a href="#Where">Where to Find the CAAEhiNetwork Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to browse electrical objects within
+product structure and analyze electrical connectivities between objects.
+<p>Following operations are detailed is this use case :
+<ul>
+  <li>How to initialise electrical environment.</li>
+  <li>How to retrieve all electrical products in product structure.</li>
+  <li>How to retrieve electrical connectors linked to bundle segment</li>
+  <li>How to retrieve connected connectors.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEhiNetwork Use Case</h3>
+<p>CAAEhiNetwork is a use case of the CAAElecHarnessItf.edu framework that
+illustrates the ElecHarnessItf framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEhiNetwork Do</h4>
+<p>The goal of CAAEhiNetwork is to navigate within an electrical network and to
+analyse electrical connectivities. The existing product structure is found under
+the pathname of the document passed as an argument to this program.</p>
+<p><img border="0" src="images/CAAEhiNetwork.jpg" width="726" height="548"></p>
+<p>Above is a CATIA image of a product structure we will use as an example.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEhiNetwork?</h4>
+<p>To launch CAAEhiNetwork, you will need to set up the build time environment,
+then compile CAAEhiNetwork.cpp along with its prerequisites, set up the run time
+environment, and then execute the use case. This is fully described in the
+referenced article [<a href="#References">2</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAEhiNetwork input.CATProduct&quot;</pre>
+<ul>
+  <li><b>input.CATProduct</b> - the path to the existing external CATProduct to
+    be browsed. You may reference the supplied CATProduct document called
+    &quot;CAA_EhiSample.CATProduct&quot; found in:
+    	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic</pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">2</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the <i>CAAEhiNetwork</i> Code?</h4>
+<p>CAAEhiNetwork code is located in the CAAEhiNetwork.m use case module of the
+CAAElecHarnessItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAElecHarnessItf.edu/CAAEhiNetwork.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAElecHarnessItf.edu\CAAEhiNetwork.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named <b>CAAEhiNetwork</b><b>.cpp</b>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six logical steps in <i>CAAEhiNetwork</i>:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initialize">Initializing Electrical Environment</a></li>
+  <li><a href="#Get_Network">Retrieving; all Electrical Products under Root
+    Product and Select one Bundle Segment to Analyze</a></li>
+  <li><a href="#Get_Connector">Retrieving Connectors linked to Bundle Segment</a></li>
+  <li><a href="#Get_Connected">Retrieving Connectors connected to Bundle Segment
+    Connectors</a></li>
+  <li><a href="#Close">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>Once the current session has been created, the CATProduct document can be
+loaded into the session . pDoc is a pointer to this document.</p>
+<p>The root product of the document is retrieved . pRootProduct is a CATIProduct
+handle to the root product.</p>
+<p>Methodology describing how to load a CATProduct document and how to retrieve
+the root product is described in <a href="#References">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initialize"></a>Initializing Electrical Environment</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>CATIEleDocServices * piElecDocServices = NULL;
+  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to
+electrical object or electrical attributes</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get_Network"></a>Retrieving all Electrical Product under Root
+Product and Select one Bundle Segment to Analyze</h4>
+<p>We use generic method CATIProduct::GetAllChildren to retrieve all products
+under root product.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListProduct = NULL;
+  pListProduct = piRootProduct-&gt;GetAllChildren(CATIProduct::ClassName());
+  piRootProduct -&gt; Release();
+  piRootProduct = NULL ;
+  
+  int NumberOfProduct = 0;
+  if ( (NULL!=pListProduct) &amp;&amp; pListProduct-&gt;Size() ) 
+  {
+    NumberOfProduct = pListProduct-&gt;Size();	
+    cout &lt;&lt; &quot;&gt; number of products found : &quot;&lt;&lt; NumberOfProduct &lt;&lt; endl &lt;&lt; flush;
+  }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>We extract the list of electrical object from list of products by using
+CATIEhiNetwork interfaces.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListNetworkObject = new CATLISTV(CATBaseUnknown_var);
+  int NumberOfNetworkObject = 0;
+  CATIEhiNetwork * piNetworkObject = NULL;
+  int i=0;
+  
+  for ( i=1; i&lt;= NumberOfProduct; i++ )
+  {
+    if ( SUCCEEDED( (*pListProduct)[i]-&gt;QueryInterface(IID_CATIEhiNetwork,(void**) &amp;piNetworkObject)))
+    {
+      pListNetworkObject-&gt;Append((*pListProduct)[i]);
+      piNetworkObject-&gt;Release();
+      piNetworkObject=NULL;
+    }
+  }
+ 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>First bundle segment found in list is selected to be analyzed ( <i>CATIEhiBundleSegment</i>
+interface is used to extract bundle segment from list of electrical objects ).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATIEhiBundleSegment * piBundleSegment = NULL;
+</pre>
+      <pre>  int rank = 1;
+  while ( rank&lt;=NumberOfNetworkObject &amp;&amp; 
+    FAILED((*pListNetworkObject)[rank]-&gt;QueryInterface(IID_CATIEhiBundleSegment,(void**) &amp;piBundleSegment))
+    )
+    rank++;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get_Connector"></a>Retrieving Electrical Connectors linked to the
+Bundle Segment</h4>
+<p>The generic methods to retrieve objects connected to an electrical object are
+the following :</p>
+<ol>
+  <li>Get connection points of object using <code>CATIEhiNetwork::ListConnectorPoints</code>
+    method .</li>
+  <li>For each connection point , get connected connection points using <code>CATIEhiNetworkExtremity::ListConnectedConnectorPoints</code>
+    method .</li>
+  <li>For each connected connector point found , retrieve associated electrical
+    object using <code>CATIEhiNetworkExtremity::GetElectricalObject</code>
+    method .</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListConnector = new CATLISTV(CATBaseUnknown_var);</pre>
+      <pre>  if ( SUCCEEDED(piBundleSegment-&gt;QueryInterface(IID_CATIEhiNetwork,(void**) &amp;piNetworkObject)) )
+  {
+    CATListValCATBaseUnknown_var* pListConnectorPoint = NULL;
+    piNetworkObject-&gt;ListConnectorPoints(&amp;pListConnectorPoint);
+    if ( NULL!=pListConnectorPoint )
+    {
+      int NumberOfConnectorPoint = pListConnectorPoint-&gt;Size();
+      CATIEhiNetworkExtremity * piNetworkExtremity = NULL;
+      
+      for ( i=1; i&lt;=NumberOfConnectorPoint; i++ )
+      {
+        CATListValCATBaseUnknown_var* pListConnected = NULL;
+        (*pListConnectorPoint)[i]-&gt;QueryInterface(IID_CATIEhiNetworkExtremity,(void**) &amp;piNetworkExtremity);
+        if ( NULL != piNetworkExtremity )
+        {
+          piNetworkExtremity-&gt;ListConnectedConnectorPoints(&amp;pListConnected);
+          if ( NULL != pListConnected )
+          {
+            int NumberOfConnected = pListConnected-&gt;Size();
+            CATBaseUnknown * piConnectedObject=NULL;
+            CATIEhiNetworkExtremity * piConnectedExtremity = NULL;
+            for ( int j=1; j&lt;=NumberOfConnected; j++ )
+            {
+              (*pListConnected)[j]-&gt;QueryInterface(IID_CATIEhiNetworkExtremity,(void**) &amp;piConnectedExtremity);
+              if ( NULL != piConnectedExtremity )
+              {
+                piConnectedExtremity-&gt;GetElectricalObject(&amp;piConnectedObject);
+                piConnectedExtremity-&gt;Release();
+                piConnectedExtremity=NULL;						  
+                if ( NULL != piConnectedObject )
+                {
+                  CATBaseUnknown_var spObject = piConnectedObject;
+                  if ( NULL_var != spObject ) pListConnector-&gt;Append(spObject);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This first example illustrates method to retrieve electrical connectors
+linked to bundle segment (pListConnector).</p>
+<p align="right">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Get_Connected"></a>Retrieving Connectors connected to Bundle
+Segment Connectors</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>  CATListValCATBaseUnknown_var* pListConnectedConnector = new CATLISTV(CATBaseUnknown_var);</pre>
+      <pre>  int NumberOfConnectedConnector = 0; 
+  
+  int NumberOfConnector = pListConnector-&gt;Size();
+  cout &lt;&lt; &quot;&gt; number of connected connector ? &quot;&lt;&lt; endl &lt;&lt; flush;
+
+  for ( i=1; i&lt;=NumberOfConnector; i++ )
+  {
+    cout &lt;&lt; &quot;   process connector number &quot;&lt;&lt; i &lt;&lt;endl &lt;&lt; flush;
+    
+    if ( SUCCEEDED((*pListConnector)[i]-&gt;QueryInterface(IID_CATIEhiNetwork,(void**) &amp;piNetworkObject)) )
+    {
+      // -- retrieving connector points of electrical connector
+      CATListValCATBaseUnknown_var* pListConnectorPoint = NULL;
+      piNetworkObject-&gt;ListConnectorPoints(&amp;pListConnectorPoint);
+      
+      if ( NULL!=pListConnectorPoint )
+      {
+        int NumberOfConnectorPoint = pListConnectorPoint-&gt;Size();
+        CATIEhiNetworkExtremity * piNetworkExtremity = NULL;
+        cout &lt;&lt; &quot;      number of connector point = &quot;&lt;&lt; NumberOfConnectorPoint &lt;&lt;endl &lt;&lt; flush;
+        
+        for ( int j=1; j&lt;=NumberOfConnectorPoint; j++ )
+        {
+          cout &lt;&lt; &quot;        process connector point &quot;&lt;&lt; j &lt;&lt;endl &lt;&lt; flush;
+          CATListValCATBaseUnknown_var* pListConnected = NULL;
+          (*pListConnectorPoint)[j]-&gt;QueryInterface(IID_CATIEhiNetworkExtremity,(void**) &amp;piNetworkExtremity);
+          if ( NULL != piNetworkExtremity )
+          {
+            piNetworkExtremity-&gt;ListConnectedConnectorPoints(&amp;pListConnected);
+            if ( NULL != pListConnected )
+            {
+              int NumberOfConnected = pListConnected-&gt;Size();
+              cout &lt;&lt; &quot;          number of connected connector point &quot;&lt;&lt; NumberOfConnected &lt;&lt;endl &lt;&lt; flush;
+              CATBaseUnknown * piConnectedObject=NULL;
+              CATIEhiNetworkExtremity * piConnectedExtremity = NULL;
+              for ( int k=1; k&lt;=NumberOfConnected; k++ )
+              {
+                (*pListConnected)[k]-&gt;QueryInterface(IID_CATIEhiNetworkExtremity,(void**) &amp;piConnectedExtremity);
+                if ( NULL != piConnectedExtremity )
+                {
+                  piConnectedExtremity-&gt;GetElectricalObject(&amp;piConnectedObject);
+                  piConnectedExtremity-&gt;Release();
+                  piConnectedExtremity=NULL;	
+                  
+                  if ( NULL != piConnectedObject )
+                  {
+                    CATIElecAttrAccess * piElecAttribute = NULL;
+                    CATUnicodeString ElecType = &quot;unknown&quot;;
+                    CATUnicodeString BundleSegmentType = &quot;ElecBundleSegment&quot;;
+                    if ( SUCCEEDED( piConnectedObject-&gt;QueryInterface(IID_CATIElecAttrAccess,(void**) &amp;piElecAttribute) ))
+                    {
+                      piElecAttribute-&gt;GetElecType(ElecType);
+                      
+                      if ( ElecType != BundleSegmentType )
+                      {
+                        CATBaseUnknown_var spObject = piConnectedObject;
+                        if ( NULL_var != spObject ) pListConnectedConnector-&gt;Append(spObject);												
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Second example illustrates the way to retrieve connectors connected bundle
+segment connectors ( pListConnectedConnector ).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Close"></a>Epilog</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...</pre>
+      <pre>rc = CATDocumentServices::Remove(*pDoc);
+...
+rc = ::Delete_Session(sessionName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Opened documents are removed and session is deleted before exit.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case is has demonstrated how to browse electrical objects within
+product structure and analyze electrical connectivity between objects.
+<p>Following operations have been detailed is this use case :
+<ul>
+  <li>How to activate electrical environment using the <code>Initialize </code>method
+    of <i>CATIEleDocServices</i>.</li>
+  <li>How to filter electrical product from list of product using the
+    CATIEhiNetwork interface</li>
+  <li>How to get connector points of an electrical object using <code>ListConnectorPoints</code>
+    method of CATIEhiNetwork<i>.</i></li>
+  <li>How to get connected connector points using <code>ListConnectedConnectorPoints
+    </code>of <i>CATIEhiNetworkExtremity.</i></li>
+  <li>How to get the electrical object associated with connector point using <code>GetElectricalObject</code>
+    of <i>CATIElecAttrAccess</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAALifUseCases/CAALifParamPers.htm">Using
+      Persistent Parameters</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAALifTechArticles/CAALifUnits.htm">About
+      Units</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,239 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>mkscc Quick Reference</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>mkscc Quick Reference</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="quick">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The mkscc command checks source code for validity 
+		against some programming rules.<br />
+		This command takes as input parameters the type of run and the pattern of 
+		sources or frameworks to analyze.<br />
+		The errors detected are reported in html or text format.</p>
+						<ul>
+							<li><a href="#Synopsis">Synopsis</a></li>
+							<li><a href="#Usage">Usage</a></li>
+							<li><a href="#Options">Options</a></li>
+							<li><a href="#Examples">Examples</a>
+								<ul>
+									<li><a href="#Ex1">Analyzing 
+										Every Frameworks</a></li>
+									<li><a href="#Ex2">Analyzing 
+										Only One Framework</a></li>
+									<li><a href="#Ex3">Analyzing 
+										Only One Module</a></li>
+									<li><a href="#Ex4">Using 
+										Your Own Setting File</a></li>
+									<li><a href="#Ex5">Analyzing 
+										Only what needs to be analyze</a></li>
+								</ul>
+							</li>
+							<li><a href="#References">References</a></li>
+							<li><a href="#History">History</a></li>
+						</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Synopsis"></a>Synopsis</h2>
+<p><strong>mkscc</strong> [<strong>-W</strong> WSPath] [<strong>-a</strong>|-<strong>lFW</strong> FWlist|framework [framework]|module [module]]
+[<strong>-jobs</strong> #] [<strong>-xmlFilter</strong> lg,xmlfile] [<strong>-settings</strong> 
+lg,XMLFilePath] [<strong>-html</strong>
+html_output_dir] [-<strong>noFilter</strong>] [<strong>-h</strong>]</p>
+<h2><a name="Usage"></a>Usage</h2>
+<p>You must specify the source code to analyze. You can specify :</p>
+<ul>
+	<li>-a to check the entire workspace.</li>
+	<li>a framework, a list of frameworks or a list of modules.</li>
+</ul>
+<p>You can specify the rules activated during the run :</p>
+<ul>
+	<li>specify to not filter results ( some FW are filtered and don't show all errors)</li>
+	<li>specify your own filter file</li>
+	<li>specify a sub-list of rules using your own setting file</li>
+</ul>
+<p>You can specify an output directory for html output. If the directory does 
+not exist, it will be created. If none is specified, the default output will be 
+WS\toolsdata\mkcsc\reporting</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Options"></a>Options</h2>
+<p>The <strong>mkscc</strong> command accepts the following options:</p>
+<table class="fill">
+	<tr>
+		<th>Option</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>-W path</code></td>
+		<td>The full pathname of the working workspace if not the current directory.</td>
+	</tr>
+	<tr>
+		<td><code>-h</code></td>
+		<td>Displays the usage of the command and the help of a list of common 
+		options.</td>
+	</tr>
+	<tr>
+		<td><code>-a</code></td>
+		<td>Considers all frameworks of the current workspace or, if in a 
+		framework, all modules of the current framework.</td>
+	</tr>
+	<tr>
+		<td><code>-lFW file</code></td>
+		<td>The full pathname of a file that lists names, one per line, of 
+		frameworks to consider.</td>
+	</tr>
+	<tr>
+		<td><code>-lMod file</code></td>
+		<td>The full pathname of a file that lists names, one per line, of 
+		frameworks to consider.</td>
+	</tr>
+	<tr>
+		<td><code>-jobs number</code></td>
+		<td>Activates the multi-process mode and sets the number of jobs with 
+		parameter value, ignored with '-nomp'.</td>
+	</tr>
+	<tr>
+		<td><code>-nomp</code></td>
+		<td>Deactivates the multi-process mode, all tasks are performed in the main process.</td>
+	</tr>
+	<tr>
+		<td><code>-noFilter</code></td>
+		<td>To skip the mkcs filtering. </td>
+	</tr>
+	<tr>
+		<td><code>-settings lg,XMLFilePath</code></td>
+		<td>Specify your own setting file. Tool language AND XML settings file (lg 
+		= cpp or java). </td>
+	</tr>
+	<tr>
+		<td><code>-xmlFilter lg,XMLFilePath</code></td>
+		<td>Specify your own filter file. Tool language AND XML settings file (lg = cpp or java). </td>
+	</tr>
+	<tr>
+		<td><code>-html dirname</code></td>
+		<td>A directory name for the reporting output.. If the output directory does not exist, it 
+		will be created. dirname will contain a file named &quot;_Index.html&quot;, 
+		which is the main report file. If this option is not specified, the 
+		default output directory is used: WS\toolsdata\mkcsc\reporting </td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Examples"></a>Examples</h2>
+<p>Let&#39;s consider the following Workspace named MyWorkspace.</p>
+<table>
+	<tr>
+		<td>This Workspace includes two frameworks:
+		<ol>
+			<li>FW1</li>
+			<li>FW2</li>
+		</ol>
+		</td>
+		<td>
+		<img alt="My Workspace Root" src="images/WSTree.png" width="299" height="304"/></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Ex1"></a>Analyzing Every Frameworks</h3>
+<p>Every source file, of every module, of frameworks FW1 
+and FW2 will be analyzed, with default check settings. Assuming that 
+tool is launched from E:\MyWorkspace. Output will be generated in E:\Csc.out\_Index.html.</p>
+<pre class="code">E:
+cd E:\MyWorkspace
+<strong>mkscc</strong> -a -html E:\Csc.out
+</pre>
+
+<h3><a name="Ex2"></a>Analyzing Only One Framework</h3>
+<p>Every source file, of every module, of framework FW1 will be 
+analyzed. Output will be generated in E:\Csc.out\Main.html.</p>
+<pre class="code">E:
+cd E:\MyWorkspace\FW1
+<strong>mkscc</strong> -html E:\Csc.out</pre>
+<p>If the tool is not launched from the framework directory, you can create a file containing the list of framework to check.</p>
+<pre class="code">E:
+cd E:\MyWorkspace
+<strong>mkscc</strong> -lFW E:\MyWorkspace\myFWList.txt -html E:\Csc.out</pre>
+<p>With myFWList.txt with the following content:</p>
+<pre class="code">
+FW1</pre>
+
+<h3><a name="Ex3"></a>Analyzing Only One Module</h3>
+<p>Only module E:\MyWorkspace\FW1\FW1mod1.m will be analyzed.
+Output will be generated in E:\Csc.out\Main.html.</p>
+<pre class="code">E:
+cd E:\MyWorkspace\FW1\FW1mod1.m
+<strong>mkscc</strong> -html E:\Csc.out</pre>
+<p>If the tool is not launched from the module directory, you can like for the FW example create a file with modules to check</p>
+<pre class="code">E:
+cd E:\MyWorkspace
+<strong>mkscc</strong> lMod E:\MyWorkspace\myModList -html E:\Csc.out</pre>
+<h3><a name="Ex4"></a>Using Your Own Setting File</h3>
+<p>Let&#39;s assume that you wrote your own setting file, E:\Settings_User.xml [<a href="#References">1</a>].
+</p>
+<p>If you want to use only this setting file (no delivered setting file will be 
+taken into account):</p>
+<pre class="code"><strong>mkscc</strong> -a -settings E:\Settings_User.xml -html E:\Csc.out</pre>
+<h3><a name="Ex5"></a>Analyzing Only what needs to be analyze</h3>
+<p> mkscc work by delta, meaning that it will check only what is necessary like mkmk is doing during the build.
+If you modify a header, mkscc will check the header and all the files having this header in 
+dependency.
+In order this to work, you need to run a full check of your workspace one time</p>
+<pre class="code">E:
+cd E:\MyWorkspace
+mkscc -a
+</pre>
+
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

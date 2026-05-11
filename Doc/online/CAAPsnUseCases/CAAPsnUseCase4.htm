@@ -1,0 +1,1248 @@
+<html>
+
+
+
+<head>
+
+<meta http-equiv="Content-Language" content="en-us">
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+
+<meta name="ProgId" content="FrontPage.Editor.Document">
+
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+
+<title>CATProduct Black Box Creation</title>
+
+</head>
+
+
+
+<body>
+
+
+
+<table width="100%">
+
+  <tr>
+
+    <td valign="top">
+
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+
+    </td>
+
+    <td>
+
+      <h2>CATIA - ENOVIA VPM V4 Interoperability</h2>
+
+    </td>
+
+    <td rowspan="2" align="right" valign="top">
+
+      <h3><a name="Top"></a>CATProduct Black Box Creation and Update</h3>
+
+      <em>Creating and Updating a CATProduct Black Box from a existing Structure Exploded assembly in batch</em></td>
+
+  </tr>
+
+  <tr>
+
+    <td class="use" colspan="2">Use Case</td>
+
+  </tr>
+
+</table>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+
+  <tr>
+
+    <td>
+
+      <h3>Abstract</h3>
+
+      <p>This article discusses the CAAPsnUseCase4 use case. This use case
+
+      explains how to create a CATProduct Black Box (Publication Exposed) from a Structure Exposed assembly already existing in the ENOVIA VPM V4 database and 
+
+      how to attach the CATProduct Black Box to the Root part of the assembly. 
+
+      The Black Box creation is performed in batch from Windows platform.
+
+      This use case makes reference to the <a href="./CAAPsnUECreate.htm">CAAPsnUECreate use case</a> which explains
+
+      how implement the <tt>CATIPDMUECreate</tt> user exit required to set the attributes for the parts and documents 
+
+      that will be created in ENOVIA vpm V4. It also contains an implementation of the <tt>CATIPDMUECreate</tt> 
+
+      and <tt>CATIPDMUnixNTMapping</tt> interfaces that are not explained in detail in this use case.</p>
+
+      <ul>
+
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+
+        <li><a href="#UseCase"><strong>The <i>CAAPsnUseCase4</i> Use Case</strong></a>
+
+          <ul>
+
+            <li><a href="#What">What Does <i>CAAPsnUseCase4</i> Do</a></li>
+
+            <li><a href="#How">How to Launch <i>CAAPsnUseCase4</i></a></li>
+
+            <li><a href="#Where">Where to Find the <i>CAAPsnUseCase4</i> Code</a></li>
+
+          </ul>
+
+        </li>
+
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+
+        <li><strong><a href="#References">References</a></strong></li>
+
+      </ul>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+
+<p>This use case is an example of how to use the 
+
+<tt>SetPDMProperties</tt>, 
+
+<tt>CATOpenConfiguredAssemblyInVPM</tt>, 
+
+<tt>CATCreateVPMSession</tt>, 
+
+<tt>CATLoadChildrenFromVPM</tt>, 
+
+<tt>CATCompleteSessionFromVPM</tt>, 
+
+<tt>CATSaveInVPMFromCATIA</tt>, 
+
+<tt>CATCloseAssemblyInVPM</tt> and 
+
+<tt>SaveAsInVPM</tt>
+
+methods.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The <i><b>CAAPsnUseCase4</b></i> Use Case</h3>
+
+<p><i>CAAPsnUseCase4</i>&nbsp;is a use case of the <b>CAAPSNInteroperability.edu</b>
+
+framework that illustrates the PSNInteroperability framework capabilities.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does <i>CAAPsnUseCase4</i> Do</h4>
+
+<p>The goal of <i>CAAPsnUseCase4</i>&nbsp; is to create a CATProduct Black Box reflecting the complete structure 
+
+of an Exploded mode assembly existing in ENOVIA vpm V4. The CATProduct is attached on the Root part of this assembly.
+
+The Root part is identified by its COID. The COID can be retrieved by executing the following Select statement against
+
+the VPM database. If you have previously executed <i>CAAPsnUseCase1</i> which imports a file base assembly in ENOVIA vpm,
+
+You can use "Root assembly" as the Root part:
+
+ <table class="code">
+
+  <tr>
+
+    <td>
+
+     <pre>select "$COID", s_part_number from VPMENV.PART_LIST where s_part_number = 'Root assembly'
+
+</pre>
+
+    </td>
+
+  </tr>
+
+ </table>
+
+
+
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+
+   id="AutoNumber1">
+
+     <caption><a name="Fig.1">Fig.1</a>: &nbsp; Sample assembly structure in ENOVIA vpm  V4&nbsp; 
+
+     </caption>
+
+     <tr>
+
+        <td><img border="2" src="images/UseCase4-1.jpg" width="1057" height="255"> </td>
+
+     </tr>
+
+   </table>
+
+   </p>
+
+<p>As a result of the execution of the use case, the following product structure is created in ENOVIA vpm V4</p>
+
+ <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+
+   id="AutoNumber1">
+
+     <caption><a name="Fig.1">Fig.2</a>: &nbsp; Assembly structure after CATProduct Black Box creation &nbsp; 
+
+     </caption>
+
+     <tr>
+
+       <td ><img border="2" src="images/UseCase4-2.jpg" width="1054" height="328"> </td>
+
+     </tr>
+
+   </table>
+
+<p><b>Note</b>Running this use case creates new data in ENOVIA vpm V4. Prior to running it, we advise you
+
+ to check if similar document already exist in ENOVIA vpm as shown in the following panel:</p>
+
+ <table border="0" style="border-collapse: collapse" bordercolor="#111111"   id="AutoNumber3">
+
+     <tr>
+
+       <td width=50%><img border="0" src="images/UseCase1-4c.jpg" width="567" height="237"> </td>
+
+     </tr>
+
+   </table>
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch <i>CAAPsnUseCase4</i></h4>
+
+<p>To launch CAAPsnUseCase4, you will need to set up the build time environment,
+
+then compile CAAPsnUseCase4 along with its prerequisites, set up the run time
+
+environment, and then execute the use case [<a href="#References">1</a>].  
+
+To launch it, execute the following command:</p>
+
+   <pre>mkrun -c &quot;CAAPsnUseCase4 Coid hostName user pwd role server &quot;</pre>
+
+   <p>where </p>
+
+   <ul>
+
+    <li><code>Coid </code> is&nbsp;the Coid of the <b>Root part</b> of the Structure Exploded assembly. </li>
+
+    <li><code>hostName</code> is&nbsp;the name of the Unix host on which the communication server will be launched.</li>
+
+    <li><code>user</code> is&nbsp;the user name used for the database connection.</li>
+
+    <li><code>pwd</code> is&nbsp;the password used for the database connection.</li>
+
+    <li><code>role</code> is&nbsp;the ENOVIA vpm role used to access the database.</li>
+
+    <li><code>server</code> is&nbsp;the name of the server in the option settings.</li>
+
+   </ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the <i>CAAPsnUseCase4</i> Code</h4>
+
+<p><i>CAAPsnUseCase4</i> code is located in the <b>CAAPsnUseCase4.m</b> use case
+
+module of the <b>CAAPSNInteroperability.edu </b>framework:</p>
+
+<table>
+
+   <tr>
+
+    <td>Windows</td>
+
+    <td><code>InstallRootDirectory/CAAPSNInteroperability.edu/CAAPsnUseCase4.m</code></td>
+
+  </tr>
+
+  <tr>
+
+    <td>Unix</td>
+
+    <td><code>InstallRootDirectory\CAAPSNInteroperability.edu\CAAPsnUseCase4.m</code></td>
+
+  </tr>
+
+</table>
+
+<p>where <i><code>InstallRoot</code></i> is the root directory of your CAA V5
+
+installation. It is made of a unique source file named CAAPsnUseCase4.cpp.
+
+</p>
+
+<p align="right">[<a href="#Top">Top</a>]
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+
+<p>There are ten logical steps in CAAPsnUseCase4:</p>
+
+<ol>
+
+  <li><a href="#Prolog">Prolog</a></li>
+
+  <li><a href="#InitBatch">Initializing batch communication with ENOVIA vpm V4</a></li>
+
+  <li><a href="#Connect">Connecting to ENOVIA vpm V4</a></li>
+
+  <li><a href="#Open_Ass">Opening the Structure Exploded assembly in session</a></li>
+
+  <li><a href="#PDMProperties">Setting PDM properties on documents</a></li>
+
+  <li><a href="#Save_BB">Saving the CATProduct Black Box in ENOVIA vpm V4</a></li>
+
+  <li><a href="#Close_Ass">Closing the Structure Exploded assembly</a></li>
+
+  <li><a href="#Update_BB">Updating the CATProduct Black Box in ENOVIA vpm V4</a></li>
+
+  <li><a href="#Disconnect_doc">Closing communication with ENOVIA vpm V4</a></li>
+
+  <li><a href="#Epilog">Epilog</a></li>
+
+</ol>
+
+<p>We will now comment each of those sections by looking at the code.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Retrieving arguments</h4>
+
+<ol>
+
+  <li>Retrieves arguments
+
+    <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>...
+
+CATUnicodeString Coid  = argv[1] ;
+
+CATUnicodeString hostName  = argv[2] ;
+
+char * pHostName = argv[2] ;
+
+CATUnicodeString user  = argv[3] ;
+
+CATUnicodeString pwd  = argv[4] ;
+
+CATUnicodeString role  = argv[5] ;
+
+CATUnicodeString server  = argv[6] ;
+
+...</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>CAAPsnUseCase4 begins by retrieving the arguments from the command line. 
+
+    Arguments are extracted in sequence: the full path of the root assembly document,
+
+    the name of the Unix host, 
+
+    the ENOVIA vpm user and password used for database authentication, 
+
+    the role of this user 
+
+    and the option settings server name.</p>
+
+  </li>
+
+  <li>Check environment
+
+    <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>...
+
+char* pCAAPathToShell; 
+
+CATLibStatus result = ::CATGetEnvValue(&quot;<b>CV5VpmStart</b>&quot;, &pCAAPathToShell);
+
+if ( (CATLibError == result) || ( NULL == pCAAPathToShell) )
+
+{
+
+	cout &lt;&lt; &quot;CV5VpmStart environment variable is not set&quot; &lt;&lt; endl &lt;&lt; flush;
+
+	<b>return </b>1;
+
+}
+
+cout &lt;&lt; &quot; The unix shell script is &quot; &lt;&lt; pCAAPathToShell &lt;&lt; &quot; on host &quot; &lt;&lt; hostName.ConvertToChar() &lt;&lt; endl;
+
+...</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>Then the <code>CV5VpmStart</code> environment variable is checked. It contains the name of the Unix
+
+     directory where the <code>StartVPMBatchFromV5Batch.sh</code> shell script is located.</p>
+
+  </li>
+
+  <li>Creates the session
+
+    <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>...
+
+char *sessionName = &quot;CAA2_Sample_Session&quot;;
+
+CATSession *pSession = NULL;
+
+HRESULT rc = <b>::Create_Session</b>(sessionName,
+
+                              pSession);
+
+if ((FAILED(rc)) || (NULL == pSession))
+
+{
+
+   cout &lt;&lt; &quot;ERROR in creating session&quot; &lt;&lt; endl &lt;&lt; flush;
+
+   <b>return </b>1;
+
+}
+
+...</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>Since this is a batch program, it is first necessary to open a new
+
+    session before beginning to work with documents. Do not forget that this
+
+    session needs to be deleted at the end of the program. 
+
+    To open a new session, use the <code>Create_Session</code>
+
+    global function.</p>
+
+  </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="InitBatch"></a>Initializing batch communication with ENOVIA vpm V4</h4>
+
+<ol>
+
+
+
+  <li>Initializes communication with ENOVIA vpm V4
+
+    <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>...
+
+rc = <b>::CATInitBatchOnHost</b>( pHostName );
+
+if (SUCCEEDED(rc)) cout &lt;&lt; &quot;Communication with ENOVIA vpm is set&quot; &lt;&lt; endl &lt;&lt; flush;
+
+else
+
+{
+
+   cout &lt;&lt; &quot;ERROR establishing communication with ENOVIA vpm&quot; &lt;&lt; endl &lt;&lt; flush;
+
+   //Always deleting session before exiting
+
+   ::Delete_Session(pSessionName);
+
+   <b>return</b> 1;
+
+}
+
+...</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>Now that the session is opened, you can establish the communication channel with ENOVIA vpm using
+
+    the <code>CATInitBatchOnHost</code> global method. This method establishes the connection with ENOVIA VPM V4 
+
+    running on indicated Unix host. 
+
+    If there is no server running to which the application can connect to, 
+
+    a new ENOVIA VPM V4 server is launched on the dedicated Unix host.</p>
+
+  </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Connect"></a>Connecting to ENOVIA vpm V4</h4>
+
+<ol>
+
+  <li>Connects to ENOVIA vpm V4
+
+      <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>rc = <b>::CATConnectToVPM</b>(server, user, pwd, role );
+
+if (FAILED(rc))
+
+{
+
+   cout &lt;&lt; &quot;ERROR in server authentication&quot; &lt;&lt; endl &lt;&lt; flush;
+
+   //Always deleting session before exiting
+
+   ::Delete_Session(pSessionName);
+
+   <b>return</b> 1;
+
+}</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>Now that the connection to ENOVIA vpm is established, you can connect to the database 
+
+    using the <code>CATConnectToVPM</code> global method. This method establishes the database connection
+
+    using user and password for authentication.</p>
+
+  </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Open_Ass"></a>Opening the Structure Exploded assembly in session</h4>
+
+<ol>
+
+  <li>Open the Root part in the ENOVIA vpm server memory 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+//You are using the default VPM environment
+
+CATUnicodeString CompId = "3030303030303030";
+
+CATUnicodeString Env = "VPMENV  "; 
+
+CATUnicodeString Table = "PART_LIST         ";
+
+CATLISTV(CATUnicodeString)*  lvConfiguration  =  NULL; 
+
+CATDocument *  pDocRoot  =  NULL;
+
+
+
+//First, you must perform the assembly expand in VPM server memory
+
+rc = ::<b>CATOpenConfiguredAssemblyInVPM</b> ( lvConfiguration,
+
+                                       <b>Coid</b>,
+
+                                       CompId,
+
+                                       Env,
+
+                                       Table,
+
+                                       server);
+
+
+
+if (SUCCEEDED(rc)) 
+
+{                                
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>Now that the session is opened, you can open the root part of the Structure Exploded assembly using 
+
+     the <code>CATOpenConfiguredAssemblyInVPM</code> global method. 
+
+     This method requires, as a first parameter, a list of Configuration Handler. 
+
+     In this use case, we do not use a configured assembly so the list is a NULL pointer. 
+
+     The second parameter is the <code>Coid</code> of the root part passed in argument of the use case.
+
+     The <code>Compid</code> is set to <code>"3030303030303030"</code> which is the expected hexadecimal value
+
+     for <b>PART_LIST</b> table rows.
+
+     </p>
+
+  </li>
+
+  <li>Create a CATProduct document to receive the assembly structure 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+// New CATProduct Document to receive Root part
+
+rc  =  ::<b>CATCreateVPMSession</b> ( <b>pDocRoot</b>, Coid, CompId, Env, Table, server );  
+
+	
+
+if (SUCCEEDED(rc) &&  (NULL  !=  pDocRoot)) 
+
+{                                
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>Now that the Structure Exploded is opened in the VPM server memory,
+
+     you use the <code>CATCreateVPMSession</code> global method to attach this Structure Exploded
+
+     to a new CATProduct type document. You reuse the same <code>Coid</code>, <code>CompId</code>, <code>Env</code>, <code>Table</code>.
+
+     </p>
+
+   </li>
+
+  <li>Load all the assembly children in the CATProduct document 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+int nbLevel = 0;
+
+rc = ::<b>CATLoadChildrenFromVPM</b> ( pDocRoot, <b>nbLevel</b> );
+
+			
+
+if (SUCCEEDED(rc)) 
+
+{                               
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>You then request to create in this new CATProduct document all the product structure children
+
+     of the Structure Exploded assembly by using the  <code>CATLoadChildrenFromVPM</code> global method.
+
+     You set the <code>nbLevel</code> argument to zero to retrieve all the children.
+
+     </p>
+
+   </li>
+
+     <li>Load applicative data 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+rc = ::<b>CATCompleteSessionFromVPM </b> ( pDocRoot );
+
+			
+
+if (SUCCEEDED(rc)) 
+
+{                               
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>Finaly, you complete the CATProduct structure with all applicative data associated to the whole product struture
+
+	 by using the <code>CATCompleteSessionFromVPM </code> global method.
+
+     </p>
+
+   </li>
+
+</ol> 
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="PDMProperties"></a>Setting PDM properties on documents</h4>
+
+<ol>
+
+ <li>Reset of PDM properties on the CATProduct document 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+CATLISTP(CATDocument)*  ToResetDocuments  =  NULL;  
+
+CATLISTP(CATDocument)*  ResetDocuments  =  NULL;  
+
+ 
+
+ToResetDocuments  =  new  CATLISTP(CATDocument);  
+
+ToResetDocuments->Append( <b>pDocRoot</b> );  
+
+	
+
+rc  =  CATPDMServices::<b>ResetPDMDocuments</b> ( ToResetDocuments,  ResetDocuments );  
+
+  
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>You use the <code>ResetPDMDocuments</code> statis method of <i>CATPDMServices</i> to reset PDM properties 
+
+     	of the CATProduct prior to set new properties.
+
+  </p>
+
+  </li>
+
+   <li>Setting new PDM properties on the CATProduct document 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+rc = CATVPMServices::<b>SetPDMProperties</b> ( <b>pDocRoot</b>, 
+
+			CATVPMServices::VPM1,
+
+			<b>CATVPMServices::PermanentBlackBox</b> );
+
+	
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>The CATProduct document must be stored in Publication Exposed mode to become a CATProduct Black Box.
+
+     You use the <code>SetPDMProperties</code> static method of <i>CATVPMServices</i> to set 
+
+     the <code>CATVPMServices::PermanentBlackBox</code> mode.
+
+  </p>
+
+  </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Save_BB"></a>Saving the CATProduct Black Box in ENOVIA vpm V4</h4>
+
+<ol>
+
+ <li>Save the CATProduct Black box document
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+CATBoolean UnloadAfterSave = FALSE;
+
+rc = <b>::CATSaveInVPMFromCATIA</b>( pDocRoot, UnloadAfterSave );
+
+if (FAILED(rc))
+
+{
+
+   cout &lt;&lt; &quot;ERROR in Saving document in Enovia vpm&quot; &lt;&lt; endl &lt;&lt; flush;
+
+}
+
+
+
+rc = <b>::CATCommitVPM</b>();
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>
+
+     You use the <code>CATSaveInVPMFromCATIA</code> global method to save the CATProduct Black Box document. 
+
+     You use the <code>CATCommitVPM</code> global method to commit the Save transaction in ENOVIA vpm.</p>
+
+ </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Close_Ass"></a>Closing the Structure Exploded assembly</h4>
+
+<ol>
+
+ <li>Closing the Structure Exploded assembly
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+rc = ::<b>CATCloseAssemblyInVPM</b>();
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>You use the <code>CATCloseAssemblyInVPM</code> global method to close the Structure Exploded assembly
+
+     opened previously by using <code>CATOpenConfiguredAssemblyInVPM</code> .</p>
+
+ </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Update_BB"></a>Updating the CATProduct Black Box in ENOVIA vpm V4</h4>
+
+<ol>
+
+ <li>Retrieving the Identification of the CATProduct Black box to update
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+CATUnicodeString printableId;
+
+CATBaseUnknown *  pDocUnknown = pDocRoot ;
+
+
+
+rc = CATPDMServices::<b>GetPrintableId</b> ( pDocUnknown, printableId );
+
+
+
+CATUnicodeString UpdateCoid = printableId.SubString(0,16);
+
+CATUnicodeString UpdateCompid = printableId.SubString(16,16);
+
+CATUnicodeString UpdateEnv = printableId.SubString(32,8);
+
+CATUnicodeString UpdateTable = printableId.SubString(40,18);
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>
+
+     You use the <code>GetPrintableId</code> static method of <i>CATPDMServices</i> to retrieve the PDM identifier of the document 
+
+     comming from ENOVIA vpm V4.</p>
+
+ </li>
+
+  <li>Updating the CATProduct Black box 
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+CATVPMServices::SaveAsMode <b>iMod</b> = <b>CATVPMServices::KeepModified</b>;
+
+rc= CATVPMServices::<b>SaveAsInVPM</b> (  <b>pDocRoot</b>,
+
+				UpdateCoid,
+
+				UpdateCompid,
+
+				UpdateEnv,
+
+				UpdateTable,
+
+				server,
+
+				<b>iMod</b>); 
+
+
+
+if (SUCCEEDED(rc))
+
+{
+
+	cout &lt;&lt; "Commit transaction in ENOVIA vpm" &lt;&lt; endl &lt;&lt; flush;
+
+	rc = ::<b>CATCommitVPM()</b>;
+
+	if (FAILED(rc))
+
+	{
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>The CATProduct Black Box initialy created in ENOVIA VPM V4 is updated 
+
+     by using the <code>SaveAsInVPM</code> static method of <i>CATVPMServices</i>.
+
+      You use the <code>CATCommitVPM</code> global method to commit the Save transaction in ENOVIA vpm.
+
+    </p>
+
+ </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Disconnect_doc"></a>Closing communication with ENOVIA vpm V4</h4>
+
+<ol>
+
+ <li>Disconnect from ENOVIA vpm V4
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>...
+
+rc = <b>::CATDisconnectFromVPM</b>();
+
+...</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>
+
+     You use the <code>CATDisconnectFromVPM</code> global method to disconnect from ENOVIA VPM V4 .</p>
+
+  </li>
+
+ <li>Terminate the V5 session
+
+     <table class="code">
+
+       <tr>
+
+         <td>
+
+         <pre>rc = <b>::CATTerminateBatch</b>();</pre>
+
+         </td>
+
+       </tr>
+
+     </table>
+
+     <p>
+
+     You use the <code>CATTerminateBatch</code> global method to terminate the V5 session.</p>
+
+  </li>
+
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Epilog"></a>Deleting the session</h4>
+
+<ol>
+
+  <li>Deletes the session
+
+    <table class="code">
+
+      <tr>
+
+        <td>
+
+          <pre>rc = <b>::Delete_Session</b>(sessionName);</pre>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <p>Do not forget to delete the session at the end of the program using the <code>Delete_Session</code>
+
+    global function!</p>
+
+  </li>
+
+</ol>
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+
+<p>This use case has demonstrated how to create a CATProduct Black Box in ENOVIA vpm V4.</p>
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+
+<table width="100%">
+
+  <tr>
+
+    <td valign="top">[1]</td>
+
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+
+      and Launching a CAA V5 Use Case</a></td>
+
+  </tr>
+
+  <tr>
+
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+
+  </tr>
+
+</table>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+
+  <tr>
+
+    <td valign="top">Version: <strong>1</strong> [Oct 2005]</td>
+
+    <td valign="top">Document created</td>
+
+  </tr>
+
+  <tr>
+
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+
+  </tr>
+
+</table>
+
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+<ul>
+
+</ul>
+
+
+
+</body>
+
+
+
+</html>
+

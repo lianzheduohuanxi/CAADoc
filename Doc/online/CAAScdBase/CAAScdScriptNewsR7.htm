@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+<meta version="1">
+<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>What's New in V5R7 in CAA V5 Automation Objects</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<h1 align="right"><a name="Top"></a>What's New in V5R7 in CAA V5 Automation
+Objects</h1>
+<hr>
+<p>There are new modification in <b>V5R7sp5</b>:</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="3" bgcolor="#000080"><font color="#FFFFFF"><em><strong>Modified
+      methods and properties</strong></em></font></td>
+  </tr>
+  <tr>
+    <td width="56%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Publication', 'Valuation'); return false;">Publication::Valuation
+      (Property Read/Write)</a></td>
+    <td width="12%" valign="top">SP1</td>
+    <td width="42%">Previously inoperative. The argument type has been changed
+      from <code>Reference</code> to <code>CATBaseDispatch</code> and is so
+      upward compatible.</td>
+  </tr>
+  <tr>
+    <td width="56%">File::Path (Property Read)<br>
+      File::ParentFolder (Property Read/Write)<br>
+      Folder::Path (Property Read)<br>
+      Folder::ParentFolder (Property Read/Write)</td>
+    <td width="12%" valign="top">SP4</td>
+    <td width="42%" valign="top">The <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'File'); return false;">File
+      </a>object and the <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Folder'); return false;">Folder</a>
+      object now inherit from the <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'FileComponent'); return false;">FileComponent</a>
+      Object and those methods have been moved to the new base class, now
+      allowing polymorphism when processing&nbsp; both type of objects.&nbsp;<br>
+      No impact on macros, VB/VBA projects must refresh their references to the <i>CATIA
+      V5 InfInterfaces Object library</i> type library.</td>
+  </tr>
+  <tr>
+    <td width="56%" valign="top">CATIAExpertCheckRuntime::Comment (Property
+      Read/Write)</td>
+    <td width="12%" valign="top">SP4</td>
+    <td width="42%">Method has been moved to the base class: <a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseComponentRuntime', 'Comment'); return false;">ExpertRuleBaseComponentRuntime::Comment
+      (Property Read/Write)</a>. No impact on macros, VB/VBA projects must
+      refresh their references to the <i>CATIA V5 GenKnowledgeInterfaces Object
+      library</i> type library..</td>
+  </tr>
+  <tr>
+    <td width="56%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseRuntime', 'RuleBaseEdition'); return false;">CATIAExpertRuleBaseRuntime::RuleBaseEdition
+      (Property Read)<br>
+      </a><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseRuntime', 'RuleSet'); return false;">CATIAExpertRuleBaseRuntime::RuleSet
+      (Property Read)</a></td>
+    <td width="12%" valign="top">SP4</td>
+    <td width="42%">Previously inoperative. Signature modifications now allows
+      return values to be correctly handled. No impact on macros, VB, VBA.
+      Signature of generated .h files in CAA has changed.</td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="3" bgcolor="#000080"><font color="#FFFFFF"><em><strong>Suppressed
+      methods and properties</strong></em></font></td>
+  </tr>
+  <tr>
+    <td width="56%" valign="top">File::returnIID (Property Write)<br>
+      Folder::returnIID (Property Write)</td>
+    <td width="12%" valign="top">SP5</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="56%" valign="top">StrMember::SectionFolder (Property Write)</td>
+    <td width="12%" valign="top">SP5</td>
+    <td width="42%">Was inoperative, has been removed from exposition.</td>
+  </tr>
+</table>
+<hr>
+<p>The end of this article presents automation object, methods and properties
+that have been added <b>in V5R7, since V5R6 GA</b> to enhance CAA V5 automation
+capabilities, support functional evolutions and correct defects. Some of those
+modification already exist on V5R6 service packs. A few properties and methods
+have been modified or suppressed. VB and VBScripts code using those methods may
+have to be modified. VB projects using the corresponding objects must be
+recompiled.&nbsp;</p>
+<p><a href="#NewClass">New classes</a><br>
+<a href="#NewMethod">New methods and properties</a><br>
+<a href="#Modif">Modified methods and properties</a><br>
+<a href="#Suppress">Suppressed classes, methods and properties</a></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="NewClass"></a><font color="#FFFFFF"><em><strong>New
+      classes</strong></em></font></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Drafting</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingComponent'); return false;">DrawingComponent</a></td>
+    <td width="42%">Represents a drawing ditto.</td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingComponents'); return false;">DrawingComponents</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Infrastructure</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Workbench'); return false;">Workbench</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Misc</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATSchPlatformInterfaces', 'SchWorkbench'); return false;">SchWorkbench</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Part Design</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Rotate'); return false;">Rotate</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Scaling2'); return false;">Scaling2</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Symmetry'); return false;">Symmetry</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Translate'); return false;">Translate</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Product Structure</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'AssemblyConvertor'); return false;">AssemblyConvertor</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Structure Design</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'StructureInterfaces', 'StrFoundation'); return false;">StrFoundation</a></td>
+    <td width="42%">A Structure Foundation object.</td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'StructureInterfaces', 'StrFoundations'); return false;">StrFoundations</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td width="24%"><b><i>Wireframe and Surface</i></b></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeBump'); return false;">HybridShapeBump</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeLineBisecting'); return false;">HybridShapeLineBisecting</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeSphere'); return false;">HybridShapeSphere</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%"></td>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeWrapCurve'); return false;">HybridShapeWrapCurve</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%" valign="top" colspan="3">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="NewMethod"></a><font color="#FFFFFF"><em><strong>New
+      methods and Properties</strong></em></font></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisEntity', 'AddSupportFromConstraint'); return false;">AnalysisEntity::AddSupportFromConstraint</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisManager', 'CreateReferenceFromGeometry'); return false;">AnalysisManager::CreateReferenceFromGeometry</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisManager', 'CreateReferenceFromObject'); return false;">AnalysisManager::CreateReferenceFromObject</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisModel', 'AdaptivityManager'); return false;">AnalysisModel::AdaptivityManager</a>
+      (Property Read)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisSets', 'AddExistingSet'); return false;">AnalysisSets::AddExistingSet</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Activity', 'GetTechnologicalObject'); return false;">Activity::GetTechnologicalObject</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Items', 'Add'); return false;">Items::Add</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DMAPSInterfaces', 'Resources', 'Add'); return false;">Resources::Add</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingSheet', 'GetPaperHeight'); return false;">DrawingSheet::GetPaperHeight</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingSheet', 'GetPaperWidth'); return false;">DrawingSheet::GetPaperWidth</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingSheet', 'SetPaperHeight'); return false;">DrawingSheet::SetPaperHeight</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingSheet', 'SetPaperWidth'); return false;">DrawingSheet::SetPaperWidth</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingText', 'InsertVariable'); return false;">DrawingText::InsertVariable</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingView', 'Components'); return false;">DrawingView::Components</a>
+      (Property Read)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingView', 'GetViewName'); return false;">DrawingView::GetViewName</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'DrawingView', 'SetViewName'); return false;">DrawingView::SetViewName</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'DraftingInterfaces', 'GenerativeViewBehavior', 'UnBreakoutNum'); return false;">GenerativeViewBehavior::UnBreakoutNum</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertReportObject', 'getTupleSize'); return false;">ExpertReportObject::getTupleSize</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseComponentRuntimes', 'ShallowCount'); return false;">ExpertRuleBaseComponentRuntimes::ShallowCount</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseComponentRuntimes', 'ShallowItem'); return false;">ExpertRuleBaseComponentRuntimes::ShallowItem</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseComponentRuntimes', 'ShallowRemove'); return false;">ExpertRuleBaseComponentRuntimes::ShallowRemove</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseRuntime', 'Import'); return false;">ExpertRuleBaseRuntime::Import</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseRuntime', 'ImportFromFile'); return false;">ExpertRuleBaseRuntime::ImportFromFile</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'AddSubElement'); return false;">HybridShapeAssemble::AddSubElement</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'GetConnex'); return false;">HybridShapeAssemble::GetConnex</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'GetDeviation'); return false;">HybridShapeAssemble::GetDeviation</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'GetSimplify'); return false;">HybridShapeAssemble::GetSimplify</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'GetSubElement'); return false;">HybridShapeAssemble::GetSubElement</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'GetSuppressMode'); return false;">HybridShapeAssemble::GetSuppressMode</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'RemoveSubElement'); return false;">HybridShapeAssemble::RemoveSubElement</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'SetConnex'); return false;">HybridShapeAssemble::SetConnex</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'SetDeviation'); return false;">HybridShapeAssemble::SetDeviation</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'SetSimplify'); return false;">HybridShapeAssemble::SetSimplify</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeAssemble', 'SetSuppressMode'); return false;">HybridShapeAssemble::SetSuppressMode</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewBump'); return false;">HybridShapeFactory::AddNewBump</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewLineBisecting'); return false;">HybridShapeFactory::AddNewLineBisecting</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewLineBisectingOnSupport'); return false;">HybridShapeFactory::AddNewLineBisectingOnSupport</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewLineBisectingOnSupportWithPoint'); return false;">HybridShapeFactory::AddNewLineBisectingOnSupportWithPoint</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewLineBisectingWithPoint'); return false;">HybridShapeFactory::AddNewLineBisectingWithPoint</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewSphere'); return false;">HybridShapeFactory::AddNewSphere</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'AddNewWrapCurve'); return false;">HybridShapeFactory::AddNewWrapCurve</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeFactory', 'ChangeFeatureName'); return false;">HybridShapeFactory::ChangeFeatureName</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeSplit', 'Support'); return false;">HybridShapeSplit::Support</a>
+      (Property Read/Write)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeTrim', 'Simplify'); return false;">HybridShapeTrim::Simplify</a>
+      (Property Read/Write)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATGSMIDLItf', 'HybridShapeTrim', 'Support'); return false;">HybridShapeTrim::Support</a>
+      (Property Read/Write)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Application', 'InputBox'); return false;">Application::InputBox</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Application', 'MsgBox'); return false;">Application::MsgBox</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'PageSetup', 'Scaling1To1'); return false;">PageSetup::Scaling1To1</a>
+      (Property Read/Write)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'SendToService', 'SetDirectoryFile'); return false;">SendToService::SetDirectoryFile</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'SendToService', 'SetDirectoryOneFile'); return false;">SendToService::SetDirectoryOneFile</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relation', 'GetInParameter'); return false;">Relation::GetInParameter</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relation', 'GetOutParameter'); return false;">Relation::GetOutParameter</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relation', 'NbInParameters'); return false;">Relation::NbInParameters</a>
+      (Property Read)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relation', 'NbOutParameters'); return false;">Relation::NbOutParameters</a>
+      (Property Read)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relations', 'CreateLaw'); return false;">Relations::CreateLaw</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'KnowledgeInterfaces', 'Relations', 'CreateSetOfEquations'); return false;">Relations::CreateSetOfEquations</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingActivity', 'ToolAssembly'); return false;">ManufacturingActivity::ToolAssembly</a>
+      (Property Read)</td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingOperation', 'SetTool'); return false;">ManufacturingOperation::SetTool</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingProgram', 'GetNCOutputFile'); return false;">ManufacturingProgram::GetNCOutputFile</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory', 'AddNewRotate2'); return false;">ShapeFactory::AddNewRotate2</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory', 'AddNewScaling2'); return false;">ShapeFactory::AddNewScaling2</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory', 'AddNewSymmetry2'); return false;">ShapeFactory::AddNewSymmetry2</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory', 'AddNewTranslate2'); return false;">ShapeFactory::AddNewTranslate2</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'StructureInterfaces', 'StrObjectFactory', 'ExtendProductAsFoundation'); return false;">StrObjectFactory::ExtendProductAsFoundation</a></td>
+    <td width="42%"></td>
+  </tr>
+  <tr>
+    <td width="24%" valign="top" colspan="3">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="3" bgcolor="#000080"><a name="Modif"></a><font color="#FFFFFF"><em><strong>Modified
+      methods and properties</strong></em></font></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisEntity', 'AddSupportFromPart'); return false;">AnalysisEntity::AddSupportFromPart</a></td>
+    <td width="42%">Due to problems for recording interactions using the
+      precedent signature, the capability to add a support from a Part
+      sub-element is now provided by <a href="#" onclick="javascript:CAAlink('IDL', 'CATAnalysisInterfaces', 'AnalysisEntity', 'AddSupportFromProduct'); return false;">AnalysisEntity::AddSupportFromProduct</a>&nbsp;
+      <p>The following code:</p>
+      <pre><code>   oAnalysisEntity.AddSupportFromPart(oPart, oRef)</code></pre>
+      <p>may be replaced by:</p>
+      <pre><code>   oAnalysisEntity.AddSupportFromPart(oPart<b>.Product</b>, oRef)</code></pre>
+      <p>The name of the method has been kept with a different signature to add
+      a support from a part in a product.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'GenKnowledgeInterfaces', 'ExpertRuleBaseRuntime', 'Report'); return false;">ExpertRuleBaseRuntime::Report</a></td>
+    <td width="42%">A new <code>boolean</code> parameter has been added that
+      allows to specify if a browser must be launched or not on the generated
+      report.&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top"><a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingMachine', 'Comment'); return false;">ManufacturingMachine::Comment</a>
+      (Property Read)</td>
+    <td width="42%">The parameter is now inout instead of out. Transparent to
+      VB/VBScript users but impacted VB projects must be recompiled.</td>
+  </tr>
+  <tr>
+    <td width="24%" valign="top" colspan="3">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+  <tr>
+    <td width="24%" valign="top" colspan="2" bgcolor="#000080"><a name="Suppress"></a><font color="#FFFFFF"><em><strong>Suppressed
+      methods, classes and properties</strong></em></font></td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top">AssemblyFeature::BooleanOperation,<br>
+      AssemblyFeature::Hole,<br>
+      AssemblyFeature::Pocket,<br>
+      AssemblyFeature::Split</td>
+    <td width="42%">
+      <p align="JUSTIFY"><font color="#000000">Those methods have been removed.
+      Each <i>AssemblyFeature</i> object (<i>AssemblySplit</i>, <i>AssemblyRemove</i>,
+      <i>AssemblyPocket</i> and <i>AssemblyHole</i>) now inherits from <i>AssemblyFeature</i>,
+      the specific methods of each object are so now directly available on the
+      object retrieved from the <i>AssemblyFeatures</i> collection. For example,
+      the following code:</font></p>
+      <pre><code>  For each oAsmFeat in oAssemblyFeatures
+     MsgBox oAsmFeat.<b>Split().</b>SplittingSide()
+  Next</code></pre>
+      <p align="JUSTIFY"><font color="#000000">Must be replaced by:</font></p>
+      <pre>  <code>For each oAsmFeat in oAssemblyFeatures
+       MsgBox oAsmFeat.SplittingSide()
+  Next</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top">HybridShapeLineNormalCrv,<br>
+      HybridShapeFactory::AddNewLineNormalCrv</td>
+    <td width="42%">The corresponding interactive command has disappeared since
+      V5R2. This object and the associated creation method of the <code>HybridShapeFactory</code>
+      object have so been removed.&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="34%" valign="top">ManufacturingProgram::GetOutputFile</td>
+    <td width="42%">Has been renamed into <a href="#" onclick="javascript:CAAlink('IDL', 'ManufacturingInterfaces', 'ManufacturingProgram', 'GetNCOutputFile'); return false;">ManufacturingProgram::GetNCOutputFile</a></td>
+  </tr>
+  <tr>
+    <td width="24%" valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+</body>
+
+</html>

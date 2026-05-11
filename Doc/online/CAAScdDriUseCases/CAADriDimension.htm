@@ -1,0 +1,288 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Dimensions Checking</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Interactive Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Dimensions Checking</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This macro shows you how to find dimensions pointed by text leader in
+      Drawing document.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This macro works on current drawing document.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAADriDimension has to be launch in CATIA [<a href="#References">1</a>].
+      Open CAADriDimension.CATDrawing document below sample directory.</p>
+      <!----------------------------------comment------------------------------------->
+
+      <p><a href="CAADriDimensionSource.htm">CAADriDimension.CATScript</a> is
+      located in the CAADriUseCases module.&nbsp; <a href="macros/CAADriDimension.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAADriDimension includes nine steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Reading current Drawing Document of the CATIA
+          Session</a>&nbsp;</li>
+        <li><a href="#Step3">Scanning all the Sheets</a></li>
+        <li><a href="#Step4">Scanning all the Views of the current Sheet</a></li>
+        <li><a href="#Step5">Scanning all texts of the current View</a></li>
+        <li><a href="#Step6">Scanning all Leaders&nbsp; and check if a Dimension
+          is pointed by leader</a></li>
+        <li><a href="#Step7">Reading Tolerances and Frame of the Dimension</a></li>
+        <li><a href="#Step8">Highlighting Text to show wrong Dimension</a></li>
+        <li><a href="#Step9">Restore current Sheet and current Views</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The CATIA prompts are disabled thanks to the <code>DisplayFileAlerts</code>
+      property of the <i>Application</i> object set to <code>False</code>.</p>
+      <h4><a name="Step2"></a>Reading current Drawing Document of the CATIA
+      Session</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+<font color="#008000">' Get the drawing document</font>
+<font color="#0000FF">    </font><font color="#0000FF">Set </font>DrwDoc= CATIA.ActiveDocument
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <h4><img border="0" src="images/img012.jpg" width="1162" height="896"></h4>
+      &nbsp;
+      <p>Here is the Drawing document.&nbsp;</p>
+      <h4><a name="Step3"></a>Scanning all the Sheets</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#008000">' Retrieve the drawing document's sheets collection</font>
+<font color="#0000FF">    Set </font>DrwSheet = DrwDoc.Sheets
+
+    <font color="#008000">' Retrieve the active sheet to restore it at the end of the macro</font>
+<font color="#0000FF">    Set </font>SheetToRestore = oDrwSheets.ActiveSheet
+
+    <font color="#008000">' Scan all the sheet of the Drawing document</font>
+    For numsheet = 1<font color="#0000FF"> To </font>DrwSheets.Count
+
+   <font color="#0000FF">   Set </font>CurrentSheet = DrwSheets.Item(numsheet)
+      <font color="#008000">' Active Currentsheet</font>
+      CurrentSheet.Activate
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Sheets collection is retrieved from the <code>DrwDoc</code> object
+      using the <code>Sheets</code> method.<br>
+      </p>
+      <h4><a name="Step4"></a><b>Scanning all the Views of the current Sheet</b></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">'get the Views' collection </font>
+<font color="#0000FF">   Set </font>DrwViews = CurrentSheet.Views
+
+   <font color="#008000">'Read the current view to restore it at the end of the macro</font>
+<font color="#0000FF">   Set </font>ViewToRestore = DrwViews.ActiveView</pre>
+            <pre>   <font color="#008000">'Scan all the view of the current Sheet</font>
+   
+<font color="#0000FF">   For </font>numview = 1<font color="#0000FF"> To </font>DrwViews.Count
+   
+<font color="#0000FF">      Set </font>CurrentView = DrwViews.Item(numview)
+      
+      <font color="#008000">'Active the current view</font>
+      CurrentView.Activate
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Views collection is retrieved from Sheet object using the Views
+      method.</p>
+      <h4><a name="Step5"></a><b>Scanning all the Texts of the current View</b></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">'Get the Texts' collection </font>
+<font color="#0000FF">   Set </font>DrwTexts = CurrentView.Texts</pre>
+            <pre>
+   <font color="#008000">'Scan all the Texts of the current View</font>
+   
+<font color="#0000FF">   For </font>numtxt = 1<font color="#0000FF"> To </font>DrwTexts.Count
+   
+<font color="#0000FF">      Set </font>CurrentText = DrwTexts.Item(numtxt)
+   ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>the Texts collection is retrieved from View object using the Texts
+      method.</p>
+      <h4><a name="Step6"></a><b>Scanning all Leaders&nbsp; and check if a
+      Dimension is pointed by leader</b></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">'Get the Leaders' collection </font>
+<font color="#0000FF">   Set </font>DrwLeaders = CurrentText.Leaders
+
+   <font color="#008000">'Scan all the Leader of the current Text</font>
+   
+<font color="#0000FF">   For </font>numlead = 1<font color="#0000FF"> To </font>DrwLeaders.Count
+   
+<font color="#0000FF">     Set </font>CurrentLeader = DrwLeaders.Item(numlead)</pre>
+            <pre>     <font color="#008000">' Manage error on HeadTarget method when</font>
+     <font color="#008000">' no element is pointed by the text leader.</font>
+     On Error Resume Next
+     <font color="#008000">' Get object pointed on the leader</font>
+<font color="#0000FF">     Set </font>ElemDispatch = Nothing
+<font color="#0000FF">     Set </font>ElemDispatch = CurrentLeader.HeadTarget
+     NomObj = TypeName(ElemDispatch)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      The Leaders collection is retrieved from Text object using the Leaders
+      method. HeadTarget method returns a CATBaseDispath object.
+      <p>If no element is pointed by the leader&nbsp; the method returns fail.</p>
+      <h4><a name="Step7"></a>Reading Tolerances and Frame of the Dimension</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   <font color="#008000">' A dimension is pointed by text leader</font>
+<font color="#0000FF">     If </font>NomObj = &quot;DrawingDimension&quot; Then
+                            
+       <font color="#008000">' Get the dimension object</font>
+<font color="#0000FF">       Dim </font>PointedDim<font color="#0000FF"> As </font>DrawingDimension
+<font color="#0000FF">       Set </font>PointedDim = ElemDispatch
+                   
+       <font color="#008000">' Read dimension tolerances</font>
+       PointedDim.GetTolerances oTolType, oTolName, oUpTolS, oLowTolS, oUpTolD, oLowTolD, oDisplayMode
+    
+       <font color="#008000">' Read dimension frame type</font>
+       TypeFrame = PointedDim.ValueFrame
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>TypeName method returns the name of the pointed element.<br>
+      .</p>
+      <h4><a name="Step8"></a>Highlighting text to show the wrong Dimension</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">'&nbsp; If dimension does not respect the criteria text leader object is highlighted</font>
+<font color="#0000FF">
+   If </font>oTolType &lt;&gt; 0 Or TypeFrame &lt;&gt; catFraRectangle<font color="#0000FF"> Then</font>
+     DrwSelect.Add CurrentText
+     DrwSelect.VisProperties.SetRealColor 255, 0, 0, 0
+     DrwSelect.VisProperties.SetRealWidth 6, 1
+<font color="#0000FF">   End If</font>
+<b>...</b></pre>
+          </td>
+        </tr>
+      </table>
+      <p>Text appearance is changed by using VisProperties capabilities of
+      Select object.</p>
+      <p><img border="0" src="images/img013.jpg" width="1162" height="897" align="center"></p>
+      <h4><a name="Step9"></a>Restore Current Sheet and Current Views of the
+      Drawing document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   <font color="#008000">'Restore the view</font>
+    ViewToRestore.Activate
+
+<font color="#0000FF">    Next</font>
+
+ <font color="#0000FF"> Next </font>
+
+ <font color="#008000">'Restore the Drawing Document sheet</font>
+ SheetToRestore.Activate
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>By this way the Drawing document keep his state before macro
+      processing.</p>
+      <p><br>
+      End of the macro.</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to get dimension pointed by a Text leader.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">Drawing
+      Document</a></i>, <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a><i>,
+      </i><a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm"><i>DrawingView</i></a><i>,</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

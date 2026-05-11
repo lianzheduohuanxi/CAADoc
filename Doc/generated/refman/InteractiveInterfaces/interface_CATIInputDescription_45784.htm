@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>InteractiveInterfaces Interface CATIInputDescription</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../InteractiveInterfaces.htm" href="../InteractiveInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "InteractiveInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIInputDescription"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>InteractiveInterfaces Interface CATIInputDescription</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIInputDescription_45784','CATIInputDescription','0');</script>
+<p><b>Usage: you can reimplement this interface by deriving the supplied <a href="../InteractiveInterfaces/class_CATIniInputDescriptionAdaptor_65593.htm">CATIniInputDescriptionAdaptor</a> adapter class.</b></p>
+<hr>
+<p>
+ interface <b>CATIInputDescription</b>
+</p>
+<p>
+<b><i>   Interface defining feature integration to the linearity concepts
+ applied to Ordered Geometrical Set.</i></b><br>
+
+ <br><b>Role:</b>
+ This interface should be implemented for features 
+ to insert into an Ordered Geometrical Set (see <script type="text/javascript"> activateLinkAnchor('CATIGSMTool','','CATIGSMTool') </script> ). <br>It says through 
+<script type="text/javascript"> activateLinkAnchor('','GetFeatureType','GetFeatureType') </script> method whether a feature generates a new "geometrical base" or modifies an existing geometry.</br>
+ Ordered Geometrical Set has introduced the concept of <b>absorbed feature</b>
+ (a feature F1 is absorbed if there is a feature F2 modifying F1 as input,
+ F1 is called absorbed feature and F2 absorbant feature). A modification
+ feature gives the list of the input features that are modified
+ (see 
+<script type="text/javascript"> activateLinkAnchor('','GetListOfModifiedFeatures','GetListOfModifiedFeatures') </script> ). Among them, one feature is considered as the main input (see 
+<script type="text/javascript"> activateLinkAnchor('','GetMainInput','GetMainInput') </script> ). 
+ <br><br>The absorbed features have to be consistent with the result
+ of the feature. That is to say, if the feature is a geometrical element, their
+ inputs have to be also geometrical elements and the inputs behaviors (shape/volume/solid)
+ have to be the same as the feature behavior (see 
+<script type="text/javascript"> activateLinkAnchor('CATIMf3DBehavior','','CATIMf3DBehavior') </script> ), if the feature is a shape the inputs have to be shapes.
+ <br><br>Absorption impacts, among other things, visualization (absorbed
+ features are not displayed), graphic properties management (feature properties
+ inherit from his main input feature properties), selection (absorbed
+ feature cannot be selected in specification tree), result body (see 
+<script type="text/javascript"> activateLinkAnchor('CATIBodyRequest','','CATIBodyRequest') </script> ), insertion.
+ <br><br>
+ The following table shows the rules which must be ensured regarding the methods results.
+ For instance, GetMainInput applied to a creation feature (GetFeatureType returning
+ FeatureType_Creation) must return E_FAIL and the argument oMainInput must be set to Nul.
+ <pre>
+ ====================================================================================
+ |    GetFeatureType    |    GetMainInput      |     GetListOfModifiedFeatures      |
+ |                      | Returns   oMainInput | Returns   ioListOfModifiedFeatures |
+ ====================================================================================
+ |      Creation        |  E_FAIL       Nul    |  E_FAIL           {}               |
+ ====================================================================================
+ |  ContextualCreation  |   S_OK       Input   |  E_FAIL           {}               |
+ ====================================================================================
+ |    Modification      |   S_OK       Input1  |   S_OK    {Input1[, Input2, ...]}  |
+ ====================================================================================
+ </pre>
+ <p><b>BOA information</b>: this interface can be implemented
+ using the BOA (Basic Object Adapter).
+ To know more about the BOA, refer to the CAA Encyclopedia home page. 
+ Click Middleware at the bottom left, then click the Object Modeler tab page.
+ Several articles deal with the BOA.</p>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetFeatureType(CATIInputDescription::FeatureType&amp;)"><b>GetFeatureType</b></a>(CATIInputDescription::FeatureType&amp;)
+<dd>    Retrieves the type of the feature.
+ <dt> o 
+    <a href="#GetListOfModifiedFeatures(CATListValCATBaseUnknown_var&amp;)"><b>GetListOfModifiedFeatures</b></a>(CATListValCATBaseUnknown_var&amp;)
+<dd>    Retrieves the list of absorbed features.
+ <dt> o 
+    <a href="#GetMainInput(CATBaseUnknown_var&amp;)"><b>GetMainInput</b></a>(CATBaseUnknown_var&amp;)
+<dd>    Retrieves the main input specification of the feature.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#FeatureType"><b>FeatureType</b></a>
+<dd>  Type of the feature.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetFeatureType"></a><a name="GetFeatureType(CATIInputDescription::FeatureType&amp;)"></a> <dt> o <b>GetFeatureType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetFeatureType</b>(<td><script type="text/javascript"> activateLink('CATIInputDescription::FeatureType','CATIInputDescription::FeatureType&amp;')</script> <td><tt>ioFeatureType</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+   Retrieves the type of the feature. 
+   <br><b>Role:</b><br>This method retrieves the type of the feature. In most cases, the type is 
+   fixed but it can also be variable according to its inputs (e.g. GSD split is a modification
+   feature if the "Element to cut" is a shape and a creation feature if the "Element to cut" is a
+   solid) or to feature parameters (e.g. GSD extrapol is a modification feature if option
+   "Assemble result" is checked and a Creation feature otherwise). If returns E_FAIL ioFeatureType 
+   must be set to FeatureType_Unset.
+   
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioFeatureType</tt>
+   <dd>   The type of the feature.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <b>Legal values</b>: 
+   <ul>
+     <li>S_OK  : ioFeatureType correctly valuated.</li>
+     <li>E_FAIL: Unexpected failure.</li>
+   </ul>
+</dl>
+</dl>
+<a name="GetListOfModifiedFeatures"></a><a name="GetListOfModifiedFeatures(CATListValCATBaseUnknown_var&amp;)"></a> <dt> o <b>GetListOfModifiedFeatures</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetListOfModifiedFeatures</b>(<td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var&amp;')</script> <td><tt>ioListOfModifiedFeatures</tt>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+   Retrieves the list of absorbed features.
+   <br><b>Role:</b><br>This method returns the input specifications modified by the feature (e.g.
+   for a GSD split the list contains the "Element to cut" feature) which are called absorbed features.
+   <br>This method is relevant only for the features of type <tt>FeatureType_Modification</tt>.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioListOfModifiedFeatures</tt>
+   <dd>   The list of absorbed features. It can't be void.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     <b>Legal values</b>: 
+   <ul>
+   <li>S_OK: The type of the feature is <tt>FeatureType_Modification</tt> and there is no error.</li>
+   <li>E_FAIL: If the type of the feature is <tt>FeatureType_Creation</tt> or
+   <tt>FeatureType_ContextualCreation</tt> or there is an error</li>
+   </ul>
+</dl>
+</dl>
+<a name="GetMainInput"></a><a name="GetMainInput(CATBaseUnknown_var&amp;)"></a> <dt> o <b>GetMainInput</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetMainInput</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>oMainInput</tt>)<script type="text/javascript"> activateLink('0',' = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+   Retrieves the main input specification of the feature. 
+   <br><b>Role:</b> This method returns the main input specification of the feature. This is only
+   relevant for <tt>FeatureType_Modification</tt> and <tt>FeatureType_ContextualCreation</tt> feature.<br>
+   For <tt>FeatureType_Modification</tt> feature, the MainInput has to be one of the list returned
+   by 
+<script type="text/javascript"> activateLinkAnchor('','GetListOfModifiedFeatures','GetListOfModifiedFeatures') </script>. In case of multiple inputs (e.g. GSD Trim and GSD Join),   the choice can be arbitrary or favoring one particular input. The main input is used essentially
+   for graphic properties propagation.<br>
+   For <tt>FeatureType_ContextualCreation</tt> feature, the MainInput is not an absorbed feature,
+   it's the singular input with which the feature result is closely associated.
+
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oMainInput</tt>
+   <dd>   The main input of the feature.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     <b>Legal values</b>: 
+   <ul>
+     <li>S_OK: The type of the feature is <tt>FeatureType_Modification</tt> or 
+              <tt>FeatureType_ContextualCreation</tt>, and there is no error.</li>
+     <li>E_FAIL: If the type of the feature is <tt>FeatureType_Creation</tt> or there is an error.</li>
+   </ul>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="FeatureType"> <dt> o <b>FeatureType</b>
+<dl>
+  <dd>
+<pre>
+enum <b>FeatureType</b> {
+  FeatureType_Unset,
+  FeatureType_Creation,
+  FeatureType_Modification,
+  FeatureType_ContextualCreation
+}
+</pre>
+ Type of the feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> FeatureType_Unset</tt>
+   <dd> Used for default assignment. 
+ </dd>
+    <dt><tt> FeatureType_Creation</tt>
+   <dd> The feature creates matter. A GSD Line is a creation feature. 
+ </dd>
+    <dt><tt> FeatureType_Modification</tt>
+   <dd> The feature modifies another feature. A GSD Split is a modification feature. 
+ </dd>
+    <dt><tt> FeatureType_ContextualCreation</tt>
+   <dd> The feature creates matter but is closely associated with a specific feature. A GSD Offset is a contextual creation
+ feature, it creates geometry contextually to a master feature.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIInputDescription.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATInteractiveInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

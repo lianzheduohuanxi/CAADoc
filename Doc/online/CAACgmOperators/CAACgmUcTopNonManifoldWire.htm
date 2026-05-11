@@ -1,0 +1,146 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Non-Manifold Wire </title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating a Non-Manifold Wire </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p align="left">Most operations can be performed on non-manifold bodies, 
+		but not all.&nbsp; When creating an interactive command, it is 
+		recommended to allow the user to check whether he accepts 
+		to generate a non-manifold result. Here are examples of operations you 
+		cannot perform on non-manifold bodies:</p>
+		<ul>
+			<li>extruding or filling a profile which has a closed portion 
+			as well as a free edge
+			</li>
+			<li>joining a non-manifold body to another body.
+			</li>
+		</ul>
+		<p align="left">If the command cannot complete due to the non-manifold 
+		nature of the input bodies, it is necessary to remove some sub-elements 
+		in order to obtain appropriate manifold bodies. But the operation which 
+		consists in removing sub-elements can only be applied to manifold 
+		domains. If your body is not made up of correct manifold domains, you 
+		won't be able to clean or transform your initial body. 
+		<p align="left">Note that CGM services allow you to create non-manifold 
+		bodies while usually the interactive commands break the 
+		created bodies into appropriate domains. That way, the resulting bodies 
+		are non-manifold-like but contain sub-elements easy to be manipulated.
+		</p>
+		<p align="left">This use case illustrates how to create a non-manifold 
+		wire and project it onto a plane.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>You can create a non-manifold wire by assembling lines using the
+CATICGMHybAssemble operator. This wire can be 
+projected onto a surface by using the CATICGMHybProject operator.</p>
+<h2><a name="UseCaseDescription">Use Case Description<a></h2>
+<p>The CAAGMOperatorsTopWireAssembly.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to create a non-manifold wire and project it onto a plane.If you are not already 
+familiar with geometric modeler use cases, go to <a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<table border="0">
+</table>
+<p>The code below creates a multi-domain wire from three lines:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>
+CATICGMHybAssemble* pHybOp = ::CATCGMCreateTopAssemble(piGeomFactory, &topdata,&bodies);	  
+if (NULL!=pHybOp)
+  {
+pHybOp->Run();
+piAssembledBody = pHybOp->GetResult();
+pHybOp->Release();
+pHybOp = NULL;
+  }   
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0">
+  <caption><a name="Fig.1">Fig.1</a> The non-manifold wire</caption>
+  <tr>
+    <td>
+	<img alt="non manifold wire" src="images/CGM_nonManifold_0.png" width="250" height="220">&nbsp; </td>
+  </tr>
+</table>
+<p>The created non-manifold wire can be projected onto the plane.</p>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

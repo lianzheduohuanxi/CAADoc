@@ -1,0 +1,931 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>Consuming the ENOVWSCntMgmtCpp CAA Web Service</title>
+</head>
+<body>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <h1>CAA Web Services Home</h1>
+                </td>
+                <td valign="top">
+                    <h2>&nbsp;</h2>
+                </td>
+                <td rowspan="2" align="right" valign="top">
+                    <h3><a name="Top"></a>Consuming the ENOVWSCntMgmtCpp CAA Web Service</h3>
+                    <em>Using the ENOVWSCntMgmtCpp CAA Web Service for document management</em></td>
+            </tr>
+            <tr>
+                <td class="use" colspan="2">Use Case</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- HEADER --------------------------------------------------------------------------------------- HEADER -->
+    <table class="abstract">
+        <tbody>
+            <tr>
+                <td>
+                    <h3>Abstract</h3>
+                    <p>This article discusses the <strong>CAAENOVWSDotNet1_1Client</strong> use case. It describes how to use
+                        the C# client binding that can be generated using the wsdl.exe utility in order to consume the <strong>ENOVWSCntMgmtCpp
+                            CAA Web service</strong>. It provides a sample usage scenario that demonstrates how to handle lifecycle
+                        management.</p>
+                    <ul>
+                        <li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+                        <li><a href="#2"><strong>The CAAENOVWSDotNet1_1Client Use Case</strong></a>
+                            <ul>
+                                <li><a href="#2.1">What Does CAAENOVWSDotNet1_1Client Do</a></li>
+                                <li><a href="#2.2">Where To Find the CAAENOVWSDotNet1_1Client Code</a></li>
+                                <li><a href="#2.3">How to Launch CAAENOVWSDotNet1_1Client</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#3"><strong>Step-by-step</strong></a></li>
+                        <li><a href="#InShort"><strong>In Short</strong></a></li>
+                        <li><a href="#References"><strong>References</strong></a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- SECTION 1 --------------------------------------------------------------------------------- SECTION 1 -->
+    <h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+    <p>This use case demonstrates how to write a client application that consumes the ENOVWSCntMgmtCpp CAA Web
+        service. It helps you to:</p>
+    <ul>
+        <li>Generate the C# client binding for the ENOVWSCntMgmtCpp CAA Web service,</li>
+        <li>Configure and use the generated proxy,</li>
+        <li>Understand a sample usage scenario of the ENOVWSCntMgmtCpp CAA Web service.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2 --------------------------------------------------------------------------------- SECTION 2 -->
+    <h3><a name="2"></a>The CAAENOVWSDotNet1_1Client Use Case</h3>
+    <p>CAAENOVWSDotNet1_1Client is a use case of the CAAENOVWS.edu framework that illustrates the ENOVWSCntMgmtCpp
+        CAA Web service capabilities.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.1 ----------------------------------------------------------------------------- SECTION 2.1 -->
+    <h4><a name="2.1"></a>What Does CAAENOVWSDotNet1_1Client Do</h4>
+    <p>The sample usage scenario delivered with this use case contains the following steps:</p>
+    <ul>
+        <li>Create two Documents,</li>
+        <li>Create a Part,</li>
+        <li>Attach the two Documents to the Part,</li>
+        <li>Check in a file for the Document,</li>
+        <li>Check out the file for the Document.</li>
+    </ul>
+    <p>The ENOVWSProdStructCpp CAA Web service is used in support of the primary objective of this use case,
+        which is to manage documents using the ENOVWSCntMgmtCpp CAA Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.2 ----------------------------------------------------------------------------- SECTION 2.2 -->
+    <h4><a name="2.2"></a>Where To Find the CAAENOVWSDotNet1_1Client Code</h4>
+    <p>The CAAENOVWSDotNet1_1Client use case is made of several classes located in both <b>CAAENOVWSDotNet1_1Client.m</b>
+        and <b>CAAENOVWSDotNet1_1ClientBase.m</b> modules of the <b>CAAENOVWS.edu</b> framework:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code><br>
+                    <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p>The CAAENOVWSDotNet1_1ClientBase.m module (library) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSCntMgmtCppProxy.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSCntMgmtCppWrapper.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSCntMgmtCppProxy.cs</b> file contains the C# client binding generated using the wsdl.exe
+        utility. A C# client binding consists of a proxy and several types definitions. The <b>CAAENOVWSCntMgmtCppWrapper.cs</b>
+        file contains a class that describes how to configure the generated proxy and how to invoke its methods.</p>
+    <p>The CAAENOVWSDotNet1_1Client.m module (executable) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSDotNet1_1Client.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSCntMgmtCppUseCase.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSDotNet1_1Client.cs</b> file contains the main program. It parses the command line inputs
+        and starts up the use case. The <b>CAAENOVWSCntMgmtCppUseCase.cs</b> file contains the sample use case
+        scenario.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.3 ----------------------------------------------------------------------------- SECTION 2.3 -->
+    <h4><a name="2.3"></a>How to Launch CAAENOVWSDotNet1_1Client</h4>
+    <p>To run the CAAENOVWSDotNet1_1Client use case, you will need to build both CAAENOVWSDotNet1_1ClientBase.m
+        and CAAENOVWSDotNet1_1Client.m modules. The use case code can be built using either the CAA V5 buildtime
+        environment, or Visual Studio .NET 2003 as explained in [<a href="#References">1</a>].</p>
+    <p>You can then execute the command described below:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w <i>&lt;URI&gt;</i> -e <i>&lt;ENOVIA username&gt;</i> -u <i>&lt;Basic
+                    Authentication username&gt;</i> -p <i>&lt;Basic Authentication password&gt;</i> -t ENOVWSCntMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;URI&gt;</i></code>: is the root URI of the Web application where the ENOVWSCntMgmtCpp CAA
+            Web service is deployed,</li>
+        <li><code><i>&lt;ENOVIA username&gt;</i></code>: is a valid username declared in the ENOVIA P&amp;O database,</li>
+        <li><code><i>&lt;Basic Authentication Username&gt;</i> and <i>&lt;Basic Authentication Password&gt;</i></code>:
+            are a valid set of credentials for authentication on the remote Web server. </li>
+    </ul>
+    <p>Here follows a sample command, to be updated with your own environment configuration:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t
+                    ENOVWSCntMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The same executable is used to launch all of the available ENOVIA CAA Web services use cases. The <code>
+        -t</code> option is used to choose the target use case to run.</p>
+    <p>When building the modules with the CAA V5 buildtime environment, the CAAENOVWSDotNet1_1Client executable
+        can be launched from the following location:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\intel_a\code\clr</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3 --------------------------------------------------------------------------------- SECTION 3 -->
+    <h3><a name="3"></a>Step-by-step</h3>
+    <p>The following section first explains how to generate the C# client binding for the ENOVWSCntMgmtCpp CAA
+        Web service demonstrated. The remaining sections describe how to configure the generated proxy and how
+        to consume the Web service:</p>
+    <ol>
+        <li><a href="#3.1">Creating the C# Client Binding</a></li>
+        <li><a href="#3.2">Instantiating and Configuring the Generated Proxy</a></li>
+        <li><a href="#3.3">Creating Documents</a></li>
+        <li><a href="#3.4">Attaching Documents to Parts</a></li>
+        <li><a href="#3.5">Checking In Documents</a></li>
+        <li><a href="#3.6">Checking Out Documents</a></li>
+        <li><a href="#3.7">Sample Usage Scenario</a></li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.1 ----------------------------------------------------------------------------- SECTION 3.1 -->
+    <h4><a name="3.1"></a>Creating the C# Client Binding</h4>
+    <p>Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using
+        the wsdl.exe utility.</p>
+    <p>Here follows a sample command in order to generate the C# client binding for the ENOVWSCntMgmtCpp CAA
+        Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>wsdl /namespace:com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientgen.enovwscntmgmtcpp /username:wpsadmin
+                    /password:wpsadmin /out:CAAENOVWSCntMgmtCppProxy.cs http://stophe1dsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSCntMgmtImpl:ENOVWSCntMgmtImpl:ENOVWSCntMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The server name, port, and context root URI information must be updated to match the server where the
+        ENOVWSCntMgmtCpp CAA Web service has been deployed. The <code>/username</code> and <code>/username</code>
+        options are required to authenticate on the Web server hosting the Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.2 ----------------------------------------------------------------------------- SECTION 3.2 -->
+    <h4><a name="3.2"></a>Instantiating and Configuring the Generated Proxy</h4>
+    <p>In order to consume an implementation of the ENOVWSCntMgmtCpp CAA Web service deployed on a target Web
+        server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must
+        then be configured in order to manage authentication on the remote Web server, timeout, and session
+        management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.</p>
+    <p>The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and
+        to unmarshall SOAP responses to objects. The following code describes how to instantiate and configure
+        it:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppWrapper {<br>
+                    &nbsp; <font color="#0000ff">private const string</font> SERVICE_ID = "urn:com:dassault_systemes:ENOVWSCntMgmtImpl:ENOVWSCntMgmtImpl:ENOVWSCntMgmtCpp";<br>
+                    &nbsp; <font color="#0000ff">private</font> CAAENOVWSCntMgmtCppProxy proxy = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public</font> CAAENOVWSCntMgmtCppWrapper(<br>
+                    &nbsp; &nbsp; CookieContainer container,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> uri,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credUser,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credPwd,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">int</font> timeOut) {<br>
+                    &nbsp; &nbsp; proxy = <font color="#0000ff">new</font> CAAENOVWSCntMgmtCppProxy();<br>
+                    &nbsp; &nbsp;
+                    <br />
+                    &nbsp; &nbsp; <font color="#008000">// Compute the SOAP endpoint URI value that bounds to the deployed 
+                        <br />
+                        &nbsp; &nbsp; // implementation of the ENOVWSCntMgmtCpp CAA Web service</font><br>
+                    &nbsp; &nbsp; proxy.Url = uri + "servicerouter?service=" + SERVICE_ID;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Required for HTTP session state management</font><br>
+                    &nbsp; &nbsp; proxy.CookieContainer = container; <strong>(1)</strong><br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Required for the Basic Authentication mechanism</font><br>
+                    &nbsp; &nbsp; ICredentials credentials = <font color="#0000ff">new</font> NetworkCredential(credUser,
+                    credPwd);<br>
+                    &nbsp; &nbsp; proxy.Credentials = credentials; <strong>(2)</strong><br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Increase the default client time-out</font><br>
+                    &nbsp; &nbsp; proxy.Timeout = timeOut; <strong>(3)</strong><br>
+                    &nbsp; }<br />
+                    }</code></td>
+            </tr>
+        </tbody>
+        <tbody>
+        </tbody>
+    </table>
+    <p><strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed
+        using either the same or multiple proxy instances, the <code>CookieContainer</code> property must be
+        set on the proxy. This is mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+        <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+        <code>Credentials </code>property on the proxy. The values specified must match a valid set of credentials
+        for the Basic Authentication mechanism,<br>
+        <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues
+        at runtime, such as losing the HTTP connection before receiving the SOAP responses. The value specified
+        in the code is in milliseconds.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.3 ----------------------------------------------------------------------------- SECTION 3.3 -->
+    <h4><a name="3.3"></a>Creating Documents</h4>
+    <p>To create documents, you can use the following method available through the generated proxy interface:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="CreateDocument"></a><code><font color="#0000ff">public</font> Status CreateDocument(ENOVIA
+                    iObjects, <font color="#0000ff">ref</font> ENOVIA oObjects)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>This method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iObjects</code></td>
+                <td>&nbsp; ENOVIA_VPMDocumentRevision object with a unique V_ID for ENOVIA_VPMTPDocumentMaster</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oUserContexts</code></td>
+                <td>&nbsp; Return the created document revision object</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#CreateDocument">CreateDocument</a></code>
+        method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">public</font> ENOVIA CreateDocument(<br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font>
+                    docID, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> docName, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> domain) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (docID == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document ID is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (docName == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document name is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (domain == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document domain is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; ENOVIA_VPMDocumentRevision vpmDocumentRevision = 
+                    <br />
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> ENOVIA_VPMDocumentRevision();<br>
+                    &nbsp; &nbsp; vpmDocumentRevision.Domain = domain;<br>
+                    &nbsp; &nbsp; vpmDocumentRevision.ENOVIA_VPMTPDocumentMasterV_ID = docID;<br>
+                    &nbsp; &nbsp; vpmDocumentRevision.ENOVIA_VPMTPDocumentMasterV_name = docName;<br>
+                    <br>
+                    &nbsp; &nbsp; ENOVIA_VPMDocumentRevision[] vpmDocumentRevisions = 
+                    <br />
+                    &nbsp; &nbsp; &nbsp; { vpmDocumentRevision };<br>
+                    &nbsp; &nbsp; ENOVIA input = <font color="#0000ff">new</font> ENOVIA();<br>
+                    &nbsp; &nbsp; input.ENOVIA_VPMDocumentRevision = vpmDocumentRevisions;<br>
+                    &nbsp; &nbsp; ENOVIA resultSet = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = proxy.CreateDocument(input, <font color="#0000ff">ref</font>
+                        resultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to create document(s)",
+                    e);<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> Exception("Failed to create document(s)");<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> resultSet;<br>
+                    &nbsp; }<br>
+                    <br />
+                    &nbsp; <font color="#0000ff">public string</font>[] GetENOVIA_VPMDocumentRevisionUUIDs(ENOVIA resultSet)
+                    {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument exception:
+                    ENOVIA result set is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; ENOVIA_VPMDocumentRevision[] vpmDocumentRevisions = 
+                    <br />
+                    &nbsp; &nbsp; &nbsp; resultSet.ENOVIA_VPMDocumentRevision;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (vpmDocumentRevisions == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to retrieve
+                    ENOVIA_VPMDocumentRevision objects");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font>[] vpmDocumentRevisionUUIDs = 
+                    <br />
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">new
+                        string</font>[vpmDocumentRevisions.Length];<br>
+                    &nbsp; &nbsp; <font color="#0000ff">for</font> (<font color="#0000ff">int</font> i = 0; i &lt; vpmDocumentRevisions.Length;
+                    i++) {
+                    <br>
+                    &nbsp; &nbsp; &nbsp; vpmDocumentRevisionUUIDs[i] = vpmDocumentRevisions[i].CATJsyUUID;<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> vpmDocumentRevisionUUIDs;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The <code>GetENOVIA_VPMDocumentRevisionUUIDs</code> method is used to scan the ENOVIA result set returned
+        and retrieve the UUIDs of the created documents.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.4 ----------------------------------------------------------------------------- SECTION 3.4 -->
+    <h4><a name="3.4"></a>Attaching Documents to Parts</h4>
+    <p>To attach documents to parts, you can use the following method available through the generated proxy
+        interface:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="AttachDocument"></a><code><font color="#0000ff">public</font> Status AttachDocument(Identifier
+                    iParentId, Identifier[] iDocumentIds, <font color="#0000ff">string</font> iAttachType, <font color="#0000ff">string</font> iDocRole)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>A ENOVIA LCA V5 Part Object should be existing.</p>
+    <p>This method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iParentId</code></td>
+                <td>&nbsp; Part object identifier</td>
+            </tr>
+            <tr>
+                <td><code>[in] iDocumentIds</code></td>
+                <td>&nbsp; Document Identifier(s)</td>
+            </tr>
+            <tr>
+                <td><code>[in] iAttachType</code></td>
+                <td>&nbsp; &quot;Representation&quot; or &quot;Documentation&quot;</td>
+            </tr>
+            <tr>
+                <td><code>[in] iDocRole</code></td>
+                <td>&nbsp; &quot;Primary&quot; or &quot;Secondary&quot;</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#AttachDocument">AttachDocument</a></code>
+        method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">private</font> Identifier ToIdentifier(string id) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (id == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    identifier value is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier identifier = <font color="#0000ff">new</font> Identifier();<br>
+                    &nbsp; &nbsp; identifier.Identifier1 = CAAENOVWSUtils.ConvertFromHexToBinary(id);<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> identifier;<br>
+                    &nbsp; }<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">private</font> Identifier[] ToIdentifierArray(<font color="#0000ff">string</font>[]
+                    ids) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (ids == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    identifiers array is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier[] identifiers = <font color="#0000ff">new</font> Identifier[ids.Length];<br>
+                    &nbsp; &nbsp; <font color="#0000ff">for</font> (<font color="#0000ff">int</font> i = 0; i &lt; ids.Length;
+                    i++) {<br>
+                    &nbsp; &nbsp; &nbsp; identifiers[i] = ToIdentifier(ids[i]);<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> identifiers;<br>
+                    &nbsp; }<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public void</font> AttachDocument(<br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> partUUID,
+                    <br />
+                    &nbsp; &nbsp;
+                    <font color="#0000ff">string</font>[] docUUIDs, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> attachType, 
+                    <br />
+                    &nbsp; &nbsp; <font
+                        color="#0000ff">string</font> role) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (partUUID == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    part reference UUID is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (docUUIDs == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document UUID array is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (attachType == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    attach type is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (role == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    role is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier partId = ToIdentifier(partUUID);<br>
+                    &nbsp; &nbsp; Identifier[] docIds = ToIdentifierArray(docUUIDs);<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; proxy.AttachDocument(partId, docIds, attachType, role);</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to attach document(s)",
+                    e);<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.5 ----------------------------------------------------------------------------- SECTION 3.5 -->
+    <h4><a name="3.5"></a>Checking In Documents</h4>
+    <p>To check in documents, you can use the following method available through the generated proxy interface:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="CheckIn"></a><code><font color="#0000ff">public</font> Status CheckIn(Identifier iDocumentId,
+                    <font color="#0000ff">string</font> iFileName, <font color="#0000ff">string</font> iVaultName, <font color="#0000ff">byte</font>[] iData, <font color="#0000ff">ref</font> ENOVIA oResult)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>This method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iDocumentId</code></td>
+                <td>&nbsp; The Document revision identifier</td>
+            </tr>
+            <tr>
+                <td><code>[in] iFileName</code></td>
+                <td>&nbsp; The desired doc filename</td>
+            </tr>
+            <tr>
+                <td><code>[in] iVaultName</code></td>
+                <td>&nbsp; The target vault name (optional, uses default)</td>
+            </tr>
+            <tr>
+                <td><code>[in] iData</code></td>
+                <td>&nbsp; Binary document file contents</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oResult</code></td>
+                <td>&nbsp; Modified Document file object and attributes</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#CheckIn">CheckIn</a></code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">public</font> ENOVIA CkeckIn(<br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> docUUID,
+                    <br />
+                    &nbsp; &nbsp;
+                    <font color="#0000ff">string</font> fileName, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">strin</font>g vaultName, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">
+                        byte</font>[] data) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (docUUID == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document UUID is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (fileName == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    filename is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (vaultName == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    Vault name is null");<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">else if</font> (data == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    data byte array is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier docId = ToIdentifier(docUUID);<br>
+                    &nbsp; &nbsp; ENOVIA resultSet = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; proxy.CheckIn(docId, fileName, vaultName, data, <font color="#0000ff">
+                        ref</font> resultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to check in
+                    document(s)", e);<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> Exception("Failed to check in document(s)");<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> resultSet;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.6 ----------------------------------------------------------------------------- SECTION 3.6 -->
+    <h4><a name="3.6"></a>Checking Out Documents</h4>
+    <p>To check out documents, you can use the following method available through the generated proxy interface:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="CheckOut"></a><code><font color="#0000ff">public</font> Status CheckOut(Identifier iDocumentId,
+                    <font color="#0000ff">ref byte</font>[] oData, <font color="#0000ff">ref</font> ENOVIA oResult)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>This method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iDocumentId</code></td>
+                <td>&nbsp; Identifier of the Document Revision</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oData</code></td>
+                <td>&nbsp; Binary document file contents</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oResult</code></td>
+                <td>&nbsp; ENOVIA result set containing the checked-out document file object and attributes</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#CheckOut">CheckOut</a></code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">public</font> ENOVIA CheckOut(<font color="#0000ff">string</font> docUUID)
+                    {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (docUUID == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    document UUID is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier docId = ToIdentifier(docUUID);<br>
+                    &nbsp; &nbsp; ENOVIA resultSet = <font color="#0000ff">null</font>;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">byte</font>[] data = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = proxy.CheckOut(docId, ref data, <font color="#0000ff">ref</font>
+                        resultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to attach document",
+                    e);<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> Exception("Failed to check out document(s)");<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> resultSet;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.7 ----------------------------------------------------------------------------- SECTION 3.7 -->
+    <h4><a name="3.7"></a>Sample Usage Scenario</h4>
+    <p>The following code depends on:</p>
+    <ul>
+        <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">3</a>]
+            for details,</li>
+        <li>the CAAENOVWSProdStructCppWrapper class to create/delete a part. See [<a href="#References">4</a>],</li>
+        <li>the CAAENOVWSCntMgmtCppWrapper class to handle document management. See this document.</li>
+    </ul>
+    <p>It demonstrates a sample usage scenario for the ENOVWSCntMgmtCpp CAA Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSCntMgmtCppUseCase {<br>
+                    &nbsp; <font color="#0000ff">private string</font> uri = <font color="#0000ff">null</font>;<br>
+                    &nbsp; <font color="#0000ff">private string</font> credUser = <font color="#0000ff">null</font>;<br>
+                    &nbsp; <font color="#0000ff">private string</font> credPwd = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public</font> CAAENOVWSCntMgmtCppUseCase(<br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font>
+                    uri, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credUser, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credPwd) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.uri = uri;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.credUser = credUser;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.credPwd = credPwd;<br>
+                    &nbsp; }<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public void</font> RunSampleUsageScenario(<font color="#0000ff">string</font>
+                    enoviaUser) {<br>
+                    &nbsp; &nbsp; enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = <font
+                        color="#0000ff">null</font>;<br>
+                    &nbsp; &nbsp; enoposapplicationbinderimpl.SessionToken sessionToken = <font color="#0000ff">null</font>;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 1 - Instantiate and configure the proxies<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Create a CookieContainer object to maintain the HTTP session
+                        <br />
+                        &nbsp; &nbsp; &nbsp; // state accross proxies</font><br>
+                    &nbsp; &nbsp; &nbsp; CookieContainer container = <font color="#0000ff">new</font> CookieContainer();<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Instantiate wrapper client classes</font><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">int</font> timeOut = 360000;<br>
+                    &nbsp; &nbsp; &nbsp; <strong>binderWrapper =
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, timeOut);<br>
+                        &nbsp; &nbsp; &nbsp; enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper prodStructWrapper =
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, timeOut);<br>
+                        &nbsp; &nbsp; &nbsp; enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper =
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, timeOut);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 2 - Open session with ENOVIA LCA V5<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Get user contexts</font><br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">string</font>[] userContexts = binderWrapper.GetUserContexts(enoviaUser);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Log in using the first available context</font><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (userContexts.Length == 0) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("No context
+                    found for the user specified");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <strong>sessionToken = binderWrapper.Login(userContexts[0]);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 3 - Create 2 documents<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docId1 = "CAAWSCnt1" + Environment.TickCount;
+                    // the VID has to be unique
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docName1 = "Doc1" + docId1;<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> domain = "DOCDIR";<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwscntmgmtcpp.ENOVIA createDocResultSet1 = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.CreateDocument(docId1,
+                        docName1, domain);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">string</font>[] docUUIDs1 = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; createDocResultSet1);</strong><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (docUUIDs1.Length > 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Invalid state:
+                    more than 1 document was returned");<br>
+                    &nbsp; &nbsp; &nbsp; } <font color="#0000ff">else if</font> (docUUIDs1.Length != 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to create
+                    the document");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docUUID1 = docUUIDs1[0];<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(createDocResultSet1, 1);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docId2 = "CAAWSCnt2" + Environment.TickCount;<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docName2 = "Doc2" + docId2;<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwscntmgmtcpp.ENOVIA createDocResultSet2 = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.CreateDocument(docId2,
+                        docName2, domain);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">string</font>[] docUUIDs2 = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; createDocResultSet2);</strong><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (docUUIDs2.Length > 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Invalid state:
+                    more than 1 document was returned");<br>
+                    &nbsp; &nbsp; &nbsp; } <font color="#0000ff">else if</font> (docUUIDs2.Length != 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to create
+                    the document");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> docUUID2 = docUUIDs2[0];<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(createDocResultSet2, 1);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 4 - Create part<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font>
+                    <br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> partNumber = "CAAWSCntPrt" + Environment.TickCount;<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwsprodstructcpp.ENOVIA createPartResultSet = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; prodStructWrapper.CreatePartRef(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <font
+                        color="#0000ff">new string</font>[] { partNumber }, "PRODUCT", "FALSE");</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">string</font>[] partRefUUIDs = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; prodStructWrapper.GetENOVIA_VPMPartVersionUUIDs(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; createPartResultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (partRefUUIDs.Length > 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Invalid state:
+                    more than 1 part reference was returned");<br>
+                    &nbsp; &nbsp; &nbsp; } <font color="#0000ff">else if</font> (partRefUUIDs.Length != 1) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to create
+                    part reference");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> partRefUUID = partRefUUIDs[0];<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(createPartResultSet, 1);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 5 - Attach document to part<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> attachType = "Primary";&nbsp;<br />
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> role ="Documentation";&nbsp;<br />
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font>[] docUUIDs = { docUUID1, docUUID2 };<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>cntMgmtWrapper.AttachDocument(partRefUUID, docUUIDs, attachType, role);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 6 - Check in document<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> fileName = "CAAFileTestForCntCheckIn.txt";<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> vaultName = "";<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> fileContent = "asasasasasaasasasasaskljadlkfhslkdfhsdlfhklsdh;asdhjl;dfhsdhjksdfhkshjkshjksdhfjksdhfjksd";<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">byte</font>[] data = (<font color="#0000ff">new</font> UnicodeEncoding()).GetBytes(fileContent);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwscntmgmtcpp.ENOVIA checkInResultSet = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.CkeckIn(docUUID1,
+                        fileName, vaultName, data);</strong>
+                    <br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(checkInResultSet, 1);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 7 - Check out document<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwscntmgmtcpp.ENOVIA checkOutResultSet = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; cntMgmtWrapper.CheckOut(docUUID1);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(checkOutResultSet, 1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; ...<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">finally</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 8 - Terminate opened session<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// The session must be closed even if a call to a method on the
+                        ENOVWSQueryCpp
+                        <br>
+                        &nbsp; &nbsp; &nbsp; // CAA Web service fails</font><br>
+                    &nbsp; &nbsp; &nbsp; <strong>binderWrapper.Logout(sessionToken);</strong><br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The <code>CAAENOVWSUtils.DisplayResults</code> method can be found at:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>,</li>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- IN SHORT ----------------------------------------------------------------------------------- IN SHORT -->
+    <hr>
+    <h3><a name="InShort"></a>In Short</h3>
+    <p>This use case explains how to use the C# client binding generated using the wsdl.exe utility in order
+        to consume the ENOVWSCntMgmtCpp CAA Web service. It also gives an overview of the available method:</p>
+    <ul>
+        <li><a href="#CreateDocument"><code>CreateDocument</code></a>: create documents,</li>
+        <li><a href="#AttachDocument"><code>AttachDocument</code></a>: attach documents to parts,</li>
+        <li><a href="#CheckIn"><code>CheckIn</code></a>: check in a file for a document,</li>
+        <li><a href="#CheckOut"><code>CheckOut</code></a>: check out a file for a document.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- REFERENCES ------------------------------------------------------------------------------- REFERENCES -->
+    <hr>
+    <h3><a name="References"></a>References</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">[1]</td>
+                <td valign="top" align="left"><a href="#">Building and Launching a CAA Web Service Use Case</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[2]</td>
+                <td><a href="#">Generating a C# Client Binding</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[3]</td>
+                <td><a href="../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm">
+                    Consuming the ENOPosApplicationBinderImpl CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[4]</td>
+                <td><a href="CAAENOVWSProdStructCppDotNetClient.htm">Consuming the ENOVWSProdStructCpp CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- FOOTER ------------------------------------------------------------------------------------- FOOTER -->
+    <hr>
+    <h3><a name="History"></a>History</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">Version: <strong>1</strong> [Jan 2006]</td>
+                <td valign="top">Document created</td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <!----------------------------------------------------------------------------->
+    <hr>
+    <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+

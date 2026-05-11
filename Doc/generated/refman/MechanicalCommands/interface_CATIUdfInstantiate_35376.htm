@@ -1,0 +1,655 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MechanicalCommands Interface CATIUdfInstantiate</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MechanicalCommands.htm" href="../MechanicalCommands.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MechanicalCommands";	}
+		function getCurrentObjectName() { 
+ 	return "CATIUdfInstantiate"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MechanicalCommands Interface CATIUdfInstantiate</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIUdfInstantiate_35376','CATIUdfInstantiate','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIUdfInstantiate</b>
+</p>
+<p>
+<b><i> Interface to instantiate a template reference.</i></b><br>
+
+ <br><b>Role</b>: Interface that enables the instantiation of a <tt>template</tt> reference.<br>
+ <p>The <tt>template</tt> can be a <tt>User Feature</tt>, a <tt>Power Copy</tt>, a <tt>Document Template</tt>,
+ and in that case, they have been created with the <script type="text/javascript"> activateLinkAnchor('CATIUdfFactory','','CATIUdfFactory') </script> interface and defined with the 
+<script type="text/javascript"> activateLinkAnchor('CATIUdfFeature','','CATIUdfFeature') </script> interface.<br> But it can also be a <tt>Machining Process</tt>, an <tt>Action</tt>, or a
+ set of features like an <tt>Ordered Geometrical Set</tt>, a <tt>Body</tt>, ...
+ <p>The instantiation process depends on the reference: it can be based on a <tt>Copy/Paste</tt> mechanism,
+ or on an <tt>Instance/Reference</tt> mechanism.
+ Refer to the CAA Encyclopedia article entitled 'An Overview of Power Copies and User Features' for details
+ about the different mechanisms of instantiation in the case of <tt>Power Copies</tt> and <tt>User Features</tt>.<br>
+ <p>However the instantiation process remains identical: you need to call the methods of this interface in the right order:
+ <ol>
+ <li><b>First Step: Initialization</b>:<br>
+ It is the step where you define the destination of instantiation.<br>
+ There are two different methods: only one of them should be called depending on what you want to instantiate.<br>
+ <ul>
+ <li>
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPath','SetDestinationPath') </script> :<br> This method should be called when you want to instantiate the reference <tt>template</tt>:<br>
+ <ul>
+ <li>in a Product context: where a new Part may be created on the fly.</li>
+ <li>in a Part context, when you do not need to indicate the location of insertion of the created objects.</li>
+ </ul></li>
+ <li>
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPathOfInsertion','SetDestinationPathOfInsertion') </script> :<br> This method should be called when you want to instantiate the reference <tt>template</tt> in a Part context and indicate
+ the location of insertion of the created objects.<br>
+ You can retrieve the default destination using the 
+<script type="text/javascript"> activateLinkAnchor('','GetDefaultDestinationOfInsertion','GetDefaultDestinationOfInsertion') </script> method.</li> </ul></li>
+ <li><b>Second Step: Input valuation</b>:<br>
+ It is the step where you valuate the inputs, either manually or automatically.<br>
+ Use 
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','GetOldInput','GetOldInput') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','GetNewInput','GetNewInput') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','GetNewInputPathElement','GetNewInputPathElement') </script> to retrieve the inputs values either on the reference or on the instance.<br> Use 
+<script type="text/javascript"> activateLinkAnchor('','FilterInput','FilterInput') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','SetNewInput','SetNewInput') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','UseIdenticalName','UseIdenticalName') </script> to valuate the inputs.</li> <li><b>Third Step: Parameters modification</b>:<br>
+ This step is optional: use the 
+<script type="text/javascript"> activateLinkAnchor('','GetParameters','GetParameters') </script> method to retrieve the published parameters and modify their values.</li> <li><b>Fourth Step: Validation</b>:<br>
+ It is the step where the reference is instantiated. After the 
+<script type="text/javascript"> activateLinkAnchor('','Instantiate','Instantiate') </script> method, you can not modify the inputs and parameters values anymore.</li> <li><b>Fith Step: Analyse</b><br>
+ This step is optional: use the 
+<script type="text/javascript"> activateLinkAnchor('','GetInstantiated','GetInstantiated') </script> method to retrieve the created feature, and 
+<script type="text/javascript"> activateLinkAnchor('','SetDisplayName','SetDisplayName') </script> to modify its name.<br> To retrieve this name, use 
+<script type="text/javascript"> activateLinkAnchor('','GetDisplayName','GetDisplayName') </script> .</li> <li><b>Sixth Step: Ending of the instantiation process</b>:<br>
+ Use 
+<script type="text/javascript"> activateLinkAnchor('','EndInstantiate','EndInstantiate') </script> method to end the instantiation process.</li> <li><b>Seventh Step: Reset once the instantiation process is fully completed</b>:<br>
+ Use 
+<script type="text/javascript"> activateLinkAnchor('','Reset','Reset') </script> method to clean up data when instantiation is terminated.</li> </ol>
+ </ul>
+ Only the third and fifth steps are optional, while all others are <b>mandatory</b>.<br>
+ Refer to the CAA Encyclopedia article entitled 'Instantiating a User Feature Reference'
+ for details  about the usage of this interface.
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIUdfFactory','','CATIUdfFactory') </script>, <script type="text/javascript"> activateLinkAnchor('CATIUdfFeature','','CATIUdfFeature') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#EndInstantiate()"><b>EndInstantiate</b></a>()
+<dd>  Ends the instantiation process.
+ <dt> o 
+    <a href="#FilterInput(int,CATPathElement*,CATPathElement**)"><b>FilterInput</b></a>(int,CATPathElement*,CATPathElement**)
+<dd>  Filters the selection for the valuation of one input of the instance.
+ <dt> o 
+    <a href="#GetDefaultDestinationOfInsertion(CATPathElement*,CATPathElement*&amp;,CATUnicodeString&amp;)"><b>GetDefaultDestinationOfInsertion</b></a>(CATPathElement*,CATPathElement*&amp;,CATUnicodeString&amp;)
+<dd>   Retrieves the default destination path and its relative position.
+ <dt> o 
+    <a href="#GetDisplayName(CATUnicodeString&amp;)"><b>GetDisplayName</b></a>(CATUnicodeString&amp;)
+<dd>  Retrieves the name of the reference template.
+ <dt> o 
+    <a href="#GetFilterInputMessage(CATUnicodeString&amp;)"><b>GetFilterInputMessage</b></a>(CATUnicodeString&amp;)
+<dd>  Gets an information message explaining the FilterInput failure.
+ <dt> o 
+    <a href="#GetInstantiated(CATBaseUnknown_var)"><b>GetInstantiated</b></a>(CATBaseUnknown_var)
+<dd>  Retrieves the instantiated feature.
+ <dt> o 
+    <a href="#GetNewInput(int)"><b>GetNewInput</b></a>(int)
+<dd>  Retrieves one input of the instance.
+ <dt> o 
+    <a href="#GetNewInputPathElement(int,CATPathElement*&amp;)"><b>GetNewInputPathElement</b></a>(int,CATPathElement*&amp;)
+<dd>  Retrieves the path of one input of the instance.
+ <dt> o 
+    <a href="#GetOldInput(int)"><b>GetOldInput</b></a>(int)
+<dd>  Retrieves one input of the reference template.
+ <dt> o 
+    <a href="#GetOldInputs(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)"><b>GetOldInputs</b></a>(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)
+<dd>  Retrieves the list of all the inputs of the reference along with their role.
+ <dt> o 
+    <a href="#GetParameters(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)"><b>GetParameters</b></a>(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)
+<dd>  Retrieves the list of all published parameters along with their role.
+ <dt> o 
+    <a href="#Instantiate(CATBaseUnknown_var&amp;)"><b>Instantiate</b></a>(CATBaseUnknown_var&amp;)
+<dd>  Validates the instantiation.
+ <dt> o 
+    <a href="#Reset()"><b>Reset</b></a>()
+<dd>   This method has to be called at the end of the instantiation.
+ <dt> o 
+    <a href="#SetDestinationPath(CATPathElement*,CATPathElement*&amp;,CATBaseUnknown_var&amp;)"><b>SetDestinationPath</b></a>(CATPathElement*,CATPathElement*&amp;,CATBaseUnknown_var&amp;)
+<dd>  Sets the destination path for the instantiation.
+ <dt> o 
+    <a href="#SetDestinationPathOfInsertion(CATPathElement*,CATUnicodeString&amp;)"><b>SetDestinationPathOfInsertion</b></a>(CATPathElement*,CATUnicodeString&amp;)
+<dd>   Sets the destination path and position for the instantiation.
+ <dt> o 
+    <a href="#SetDisplayName(CATUnicodeString&amp;)"><b>SetDisplayName</b></a>(CATUnicodeString&amp;)
+<dd>  Sets the name of the instantiated feature.
+ <dt> o 
+    <a href="#SetNewInput(int,CATPathElement*)"><b>SetNewInput</b></a>(int,CATPathElement*)
+<dd>  Sets one input of the instance at a given position.
+ <dt> o 
+    <a href="#UseIdenticalName(CATBaseUnknown_var)"><b>UseIdenticalName</b></a>(CATBaseUnknown_var)
+<dd>  Valuates automatically all the inputs of the instance.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="EndInstantiate"></a><a name="EndInstantiate()"></a> <dt> o <b>EndInstantiate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>EndInstantiate</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Ends the instantiation process.
+ <br><b>Role</b>: After this call, the instantiation is ended.<br>
+ All the links to the reference are broken.
+ In case of <tt>User Feature</tt> instantiation, you can modify the created instance using the 
+<script type="text/javascript"> activateLinkAnchor('CATIUdfFeatureInstance','','CATIUdfFeatureInstance') </script> interface. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd> 
+</dl>
+</dl>
+<a name="FilterInput"></a><a name="FilterInput(int,CATPathElement*,CATPathElement**)"></a> <dt> o <b>FilterInput</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>FilterInput</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iSelection</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement**')</script> <td><tt>oFilteredSelection</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Filters the selection for the valuation of one input of the instance.
+ <br><b>Role</b>: This method is called during the selection made by the user to valuate a given input at the <tt>iPos</tt> position.
+ The filter is done on <tt>Replace</tt> compliancy.
+ The output of this method is a new CATPathElement, <tt>oFilteredSelection</tt>, and if this path is not empty it is the new input.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPos</tt>
+   <dd>  Input position, from 1 to the size of the list returned by </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script>  
+    <dt><tt> iSelection</tt>
+   <dd>  A <tt>CATPathElement</tt> with the new object, this path must contain the full selection
+   path for a valid import mechanism in multidocument context.
+ </dd>
+    <dt><tt> oFilteredSelection</tt>
+   <dd>  A subpath of <tt>iSelection</tt> containing the authorized feature for the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetNewInput','SetNewInput') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>   <code>E_FAIL</code> if the selection is not valid for the input valuation, <code>S_OK</code> otherwise.
+</dl>
+</dl>
+</dl>
+<a name="GetDefaultDestinationOfInsertion"></a><a name="GetDefaultDestinationOfInsertion(CATPathElement*,CATPathElement*&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>GetDefaultDestinationOfInsertion</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDefaultDestinationOfInsertion</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPartPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*&amp;')</script> <td><tt>oDefaultDestinatioPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oDefaultRelativePosition</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Retrieves the default destination path and its relative position.
+ <br><b>Role</b>: This method is used in combination with 
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPathOfInsertion','SetDestinationPathOfInsertion') </script> . Use it to retrieve the default destination feature and the default position of the insertion when it is defined.<br>
+ For example, in case of mechanical features, the default destination is the current feature. If this feature is a set of features, the relative
+ position is <tt>Inside</tt>, otherwise it is <tt>After</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPartPath</tt>
+   <dd>  The complete path of a Part where the instantiated elements will be created.<br>
+ </dd>
+    <dt><tt> oDefaultDestinatioPath</tt>
+   <dd>  The complete path of the default destination feature.
+ </dd>
+    <dt><tt> oDefaultRelativePosition</tt>
+   <dd>  The default destination position.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <ul><li><code>S_OK</code> when the default destination path is retrieved.</li>
+  <li><code>E_FAIL</code> when no default destination is valid. In that case, a CATError is raised, explining why there is no valid destination.</li></ul>
+</dl>
+</dl>
+<a name="GetDisplayName"></a><a name="GetDisplayName(CATUnicodeString&amp;)"></a> <dt> o <b>GetDisplayName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetDisplayName</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iReferenceName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the name of the reference template.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iReferenceName</tt>
+   <dd>  It is the name of the reference <tt>template</tt>.<br>
+  Note that this name is not modifiable even if you use the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetDisplayName','SetDisplayName') </script> method as this last method applies on the instance and not on the reference.
+ 
+  <dt> <b>Returns:</b> 
+  <dd> 
+</dl>
+</dl>
+</dl>
+<a name="GetFilterInputMessage"></a><a name="GetFilterInputMessage(CATUnicodeString&amp;)"></a> <dt> o <b>GetFilterInputMessage</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetFilterInputMessage</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oMsg</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets an information message explaining the FilterInput failure.
+ <br><b>Role:</b> This method is called by standard instantiation command after the call of 
+<script type="text/javascript"> activateLinkAnchor('','FilterInput','FilterInput') </script> . The goal is to customize the tooltip shown on selection agent to provide more information to the user. This can be used in customized
+ instantiation commands to help the user in the instantiation process. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oMsg</tt>
+   <dd> The message that can be used as an help for the end user. 
+ In the standard instantiation command, if this message is not empty after the call of this method,
+ the tooltip of the selection agent is modified with it
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK if the method succeeds, E_FAIL otherwise
+</dl>
+</dl>
+<a name="GetInstantiated"></a><a name="GetInstantiated(CATBaseUnknown_var)"></a> <dt> o <b>GetInstantiated</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script>  <b>GetInstantiated</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script> <td><tt>iFrom</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the instantiated feature.
+ <br><b>Role</b>: Use this method to retrieve a pointer to the new instance.<br>
+ You can call this method only after the 
+<script type="text/javascript"> activateLinkAnchor('','Instantiate','Instantiate') </script> method, and only before the 
+<script type="text/javascript"> activateLinkAnchor('','EndInstantiate','EndInstantiate') </script> method.<br> Use this method <b>only</b> in the case of a <tt>User Feature</tt> instantiation.  
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFrom</tt>
+   <dd>   This.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The instantiated object.
+</dl>
+</dl>
+<a name="GetNewInput"></a><a name="GetNewInput(int)"></a> <dt> o <b>GetNewInput</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script>  <b>GetNewInput</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves one input of the instance.
+ <br><b>Role</b>: Use this method to retrieve the input set by the 
+<script type="text/javascript"> activateLinkAnchor('','SetNewInput','SetNewInput') </script> method or  after the 
+<script type="text/javascript"> activateLinkAnchor('','UseIdenticalName','UseIdenticalName') </script> method. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPos</tt>
+   <dd>  Input position, from 1 to the size of the list returned by </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script>  
+  <dt> <b>Returns:</b> 
+  <dd>    NULL_var if the <tt>iPos</tt>th input is not valuated otherwise the input of the current instance.
+</dl>
+</dl>
+</dl>
+<a name="GetNewInputPathElement"></a><a name="GetNewInputPathElement(int,CATPathElement*&amp;)"></a> <dt> o <b>GetNewInputPathElement</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetNewInputPathElement</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*&amp;')</script> <td><tt>oPath</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the path of one input of the instance.
+ <br><b>Role</b>: Use this method to retrieve the path of an input set by the 
+<script type="text/javascript"> activateLinkAnchor('','SetNewInput','SetNewInput') </script> method or  after the 
+<script type="text/javascript"> activateLinkAnchor('','UseIdenticalName','UseIdenticalName') </script> method.<br> Warning, this path can be different from the one set in the 
+<script type="text/javascript"> activateLinkAnchor('','SetNewInput','SetNewInput') </script> method: for example, the new input can be the result of an import  of the given input. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPos</tt>
+   <dd>  The input position, from 1 to the size of the list returned by </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script> 
+    <dt><tt> oPath</tt>
+   <dd>  The returned path element. It has to be released after use if method returs S_OK.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    E_FAIL if <tt>iPos</tt> position is outside the authorized range, otherwise S_OK.
+</dl>
+</dl>
+<a name="GetOldInput"></a><a name="GetOldInput(int)"></a> <dt> o <b>GetOldInput</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script>  <b>GetOldInput</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves one input of the reference template.
+ <br><b>Role</b>: Use this method to retrieve the input of the reference <tt>template</tt> located at the <tt>iPos</tt> position.<br>
+ You get the same result when getting the <tt>iPos</tt>th element of the list given by the 
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script> method.  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPos</tt>
+   <dd>  Input position, from 1 to the size of the list returned by </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script>  
+  <dt> <b>Returns:</b> 
+  <dd>    The <tt>iPos</tt>th input feature.
+</dl>
+</dl>
+</dl>
+<a name="GetOldInputs"></a><a name="GetOldInputs(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)"></a> <dt> o <b>GetOldInputs</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetOldInputs</b>(<td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var*&amp;')</script> <td><tt>oOldValues</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString*&amp;')</script> <td><tt>oRoleList</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the list of all the inputs of the reference along with their role.
+ <br><b>Role</b>: Use this method to retrieve the inputs of the reference <tt>template</tt>
+ along with their role (defined by the 
+<script type="text/javascript"> activateLinkAnchor('CATIUdfFeature','SetInputRole','CATIUdfFeature.SetInputRole') </script> method). 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOldValues</tt>
+   <dd>  The list of inputs of the reference <tt>template</tt>.
+ </dd>
+    <dt><tt> oRoleList</tt>
+   <dd>  The list of NLS texts to help the user to better understand the inputs.
+  This list has always the same size as the oOldValues list.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <code>S_OK</code> if the inputs are retrieved correctly, <code>E_FAIL</code> if there is a problem while retrieving the inputs.
+</dl>
+</dl>
+<a name="GetParameters"></a><a name="GetParameters(CATListValCATBaseUnknown_var*&amp;,CATListOfCATUnicodeString*&amp;)"></a> <dt> o <b>GetParameters</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetParameters</b>(<td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var*&amp;')</script> <td><tt>oParamList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString*&amp;')</script> <td><tt>oRoleList</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the list of all published parameters along with their role.
+ <br><b>Role</b>: Use this method to retrieve all published parameters in order to change their value.
+ But it is not necessary to modify them.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oParamList</tt>
+   <dd>  The list of published parameters.
+ </dd>
+    <dt><tt> oRoleList</tt>
+   <dd>  The list of roles dedicated to each published parameter. The list has the same size as <tt>oParamList</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Instantiate"></a><a name="Instantiate(CATBaseUnknown_var&amp;)"></a> <dt> o <b>Instantiate</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Instantiate</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>iDestination</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Validates the instantiation.
+ <br><b>Role</b>: The new instance is now created, you can get a pointer to this instance when it exists,
+ using the 
+<script type="text/javascript"> activateLinkAnchor('','GetInstantiated','GetInstantiated') </script> method (Indeed, for <tt>Power Copy</tt> instantiation in <tt>One Step</tt> mode, no instance is created).<br>
+ After this call you can not modify its inputs and its parameters anymore.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDestination</tt>
+   <dd>  The Part destination of instantiation.<br>
+  <ul><li>For User Feature, there is no need to set a destination. Then the <tt>iDestination</tt> argument is NULL_var.</li>
+  <li>For Power Copy, the destination is the Part where the instantiation should be done.<br>
+  <ul><li>In case you use the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPath','SetDestinationPath') </script> method, it is the first argument of this method if it is a Part,  otherwise it is the last argument of the method if the first agument is a Product.</li>
+  <li>In case you use the 
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPathOfInsertion','SetDestinationPathOfInsertion') </script> method, it is the Part containing the destination feature of the first  argument of this method.</li></ul></ul>
+ 
+  <dt> <b>Returns:</b> 
+  <dd>   <code>E_FAIL</code> if the instantiation fails, <code>S_OK</code> otherwise.
+</dl>
+</dl>
+</dl>
+<a name="Reset"></a><a name="Reset()"></a> <dt> o <b>Reset</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Reset</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+  This method has to be called at the end of the instantiation.
+ <br><b>Role</b>: It cleans memory, resets the template so that it can be re-instantiated. 
+ Its call is mandatory for Document Templates instantiation.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <code>S_OK</code>
+</dl>
+</dl>
+<a name="SetDestinationPath"></a><a name="SetDestinationPath(CATPathElement*,CATPathElement*&amp;,CATBaseUnknown_var&amp;)"></a> <dt> o <b>SetDestinationPath</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetDestinationPath</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*&amp;')</script> <td><tt>oDestinationPath</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>oDestination</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the destination path for the instantiation.
+ <br><b>Role:</b> This is the first step of the instantiation process.<br>
+ Use this method when you want to instantiate a <tt>template</tt> reference in a Product context
+ or if you want to instantiate it in a Part context without specifying the location of insertion of the created features.<br>
+ If you want to set this location, you should use the other method 
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPathOfInsertion','SetDestinationPathOfInsertion') </script> . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPath</tt>
+   <dd>  It is the complete path of a Part or a Product where the instantiated elements will be created.<br>
+  The created features will be set in the current set of features of the active Part.<br>
+  <ul><li>If <tt>iPath</tt> represents the path of a Part, this Part is the destination Part.</li>
+  <li>If <tt>iPath</tt> represents the path of a Product, a new Part may be automatically created depending on the reference.</li></ul>
+ </dd>
+    <dt><tt> oDestinationPath</tt>
+   <dd>  <ul>
+  <li>This value is NULL if <tt>iPath</tt> is the complete path of a Part</li>
+  <li>This value is the complete path of the created Part (when it exists).<tt>iPath</tt> is then the complete path of a Product.</li>
+  </ul>
+  The command must UIactivate this new path before modifying the inputs, this is mandatory
+  to create links between documents (<tt>Reference Elements</tt> in the Part).
+ </dd>
+    <dt><tt> oDestination</tt>
+   <dd>  <ul>
+  <li>This value is NULL_var if <tt>iPath</tt> is the complete path of a Part.</li>
+  <li>This Value is the pointer of the created Part (when it exists). <tt>iPath</tt> is then complete path of a Product.</li>
+  </ul></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDestinationPathOfInsertion"></a><a name="SetDestinationPathOfInsertion(CATPathElement*,CATUnicodeString&amp;)"></a> <dt> o <b>SetDestinationPathOfInsertion</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetDestinationPathOfInsertion</b>(<td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iPathOfInsertion</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iRelativePosition</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets the destination path and position for the instantiation.
+ <br><b>Role</b>: This is the first step of the instantiation process.<br>
+ Use this method when you want to instantiate a <tt>template</tt> reference in a Part context and specify the location
+ of insertion of the created features.<br>
+ If you do not need to specify the location of insertion, or if you want to instantiate the <tt>template</tt> reference in a 
+ Product context, you should use the other 
+<script type="text/javascript"> activateLinkAnchor('','SetDestinationPath','SetDestinationPath') </script> method. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPathOfInsertion</tt>
+   <dd>  The complete path of the feature where you want to insert the result of the instantiation.<br>
+  <ul><li>If this destination feature is a set of features (like a <tt>Geometrical Set</tt>, a <tt>Body</tt>, ...), the instantiation is done
+  either inside or after it, depending on the <tt>iRelativePosition</tt> argument.</li>
+  <li>Otherwise if the destination feature is not a set of features, the instantiation is done after it and the <tt>iRelativePosition</tt> is
+  imperatively positioned on <tt>After</tt>.</li></ul>
+ </dd>
+    <dt><tt> iRelativePosition</tt>
+   <dd>  The position of insertion relatively to the destination feature.<br>
+  For mechanical features, it is either <tt>After</tt> or <tt>Inside</tt>, depending on the destination feature.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <ul><li><code>S_OK</code> when the destination of insertion is valid.</li>
+  <li><code>E_FAIL</code> when the destination of insertion is not valid. An error message is then raised with a CATError.<br>
+  It is the case for example when you set a <tt>Body</tt> as destination of insertion of a <tt>Power Copy</tt> that contains a
+  <tt>Geometrical Set</tt> and you use the <tt>Inside</tt> position. As a <tt>Geometrical Set</tt> can not be inserted inside a <tt>Body</tt>,
+ the method returns E_FAIL and an error message explaining why the destination is not possible is raised.</li></ul>
+</dl>
+</dl>
+<a name="SetDisplayName"></a><a name="SetDisplayName(CATUnicodeString&amp;)"></a> <dt> o <b>SetDisplayName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetDisplayName</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iName</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the name of the instantiated feature.
+ <br><b>Role</b>: Use this method to modify the name of the instance in the case of a <tt>User Feature</tt> instantiation.<br>
+ The default name is the name of the <tt>User Feature</tt> reference followed by a number. This name is returned by 
+<script type="text/javascript"> activateLinkAnchor('','GetDisplayName','GetDisplayName') </script> .<br> This method is available <b>only</b> if the reference object is a single object (not available for <tt>PowerCopy</tt> with multiple features
+ for example).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>  The new name of the instance.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <code>S_OK</code>
+</dl>
+</dl>
+<a name="SetNewInput"></a><a name="SetNewInput(int,CATPathElement*)"></a> <dt> o <b>SetNewInput</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetNewInput</b>(<td> const <script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATPathElement','CATPathElement*')</script> <td><tt>iSelection</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets one input of the instance at a given position.
+ <br><b>Role</b>: Use this method to valuate the input located at the <tt>iPos</tt> position of the instance.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPos</tt>
+   <dd>  Input position, from 1 to the size of the list returned by </dd>
+<script type="text/javascript"> activateLinkAnchor('','GetOldInputs','GetOldInputs') </script>  
+    <dt><tt> iSelection</tt>
+   <dd>  A <tt>CATPathElement</tt> with the object. This path must contain the full selection
+  path for a valid import mechanism in multidocument context.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <code>E_FAIL</code> if the valuation fails, <code>S_OK</code> otherwise.
+</dl>
+</dl>
+<a name="UseIdenticalName"></a><a name="UseIdenticalName(CATBaseUnknown_var)"></a> <dt> o <b>UseIdenticalName</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UseIdenticalName</b>(<td> const <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script> <td><tt>iRoot</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Valuates automatically all the inputs of the instance.
+ <br><b>Role</b>: This method tries to find a feature for each input, looking for features having
+ the same 
+<script type="text/javascript"> activateLinkAnchor('CATIAlias','','CATIAlias') </script> name than the role of the input. <br>After this method, some inputs may be still unvaluated. Test the valuation 
+ with the 
+<script type="text/javascript"> activateLinkAnchor('','GetNewInput','GetNewInput') </script> method.  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRoot</tt>
+   <dd>  The location where to search for the inputs.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   <code>E_FAIL</code> if the <tt>iRoot</tt> argument is not valid, <code>S_OK</code> otherwise.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIUdfInstantiate.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATUdfInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

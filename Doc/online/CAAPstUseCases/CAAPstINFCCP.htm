@@ -1,0 +1,460 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Enabling Cut, Copy and Paste Operations on New Features in a Product
+Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Enabling Cut, Copy and Paste Operations on New
+      Features in a Product Document</h3>
+      <em>Cutting, Copying and Pasting new features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAPstIntegrateNewFeatures.htm">CAAPstIntegrateNewFeatures</a> &gt; <a href="CAAPstINFCreateDocument.htm">CAAPstINFCreateDocument</a>
+      &gt; <a href="CAAPstINFInitCont.htm">CAAPstINFInitCont</a> &gt;&nbsp; <a href="CAAPstINFNavigate.htm">CAAPstINFNavigate</a>
+      &gt; <a href="CAAPstINFVisu.htm">CAAPstINFVisu</a> &gt; <a href="CAAPstINFGraphicalProperties.htm">CAAPstINFGraphicalProperties</a>&nbsp;
+      &gt; CAAPstINFEdit &gt; <b>CAAPstINFCCP</b> &gt; <a href="CAAPstINFDelete.htm">CAAPstINFDelete</a>
+      &gt; <a href="CAAPstINFUpdate.htm">CAAPstINFUpdate</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPstINFCCP use case. This use case
+      explains how to implement cut, copy and paste operations on features
+      created in applicative containers in a Product document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPstINFCCP Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPstINFCCP Do</a></li>
+            <li><a href="#Launch">How to Launch CAAPstINFCCP&nbsp;</a></li>
+            <li><a href="#Where">Where to Find the CAAPstINFCCP Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#StepByStep">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to illustrate how to program the necessary tasks
+that allow features to be cut or copied and pasted on to another root. In this
+example, the paste operation takes place within the same applicative container
+but on a different root. There are basically two different tasks to be
+programmed:</p>
+<ol>
+  <li>Append the objects extracted that are be pasted pasted to a new root. This
+    task must be programmed on the Root on which the paste is to occur.</li>
+  <li>Update the receiving root node with the objects contained in the extracted
+    list in order to complete the paste operation.</li>
+</ol>
+<p>In order to accomplish these tasks, it is necessary to create an extension
+class of the existing <i>CATICutAndPastable </i>adapter class called <i>ObjectCCP_Spec</i>.</p>
+<p>You should already be familiar with the CAAPstIntegrateNewFeatures use case
+article [<a href="#References">1</a>] in order to more easily understand the
+context of this particular use case. A general pre-requisite knowledge of the
+Feature Modeler may be required to fully understand this sample. You may want to
+review the basics of the Feature Modeler by looking over the &quot;Feature
+Modeler Overview&quot; technical article [<a href="#References">2</a>]. You may
+also want to look over the &quot;Working with Cut, Copy and Paste
+Operations&quot; use case of the Feature Modeler [<a href="#References">3</a>].&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPstINFCCP Use Case</h3>
+<p>The CAAPstINFCCP a use case that is part of the CAAPstIntegrateNewFeatures
+use case defined in the CAAProductStructure.edu framework that illustrates the
+integration of ObjectSpecsModer, ObjectModelerBase and ApplicationFrame
+framework capabilities in the scope of a Product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the CAAPstINFCCP Use Case Do</h4>
+<p>This use case shows how to enable cut, copy and paste operations on features
+in applicative containers. It also shows how to enable the cut, copy and paste
+operations in the contextual menu for these features as well.</p>
+<p>The <i>ObjectCCP_Spec</i> adapter of <i>CATICutAndPastable</i> is used to
+perform the cut, copy and paste operations. However, since these features are
+particular &quot;from scratch&quot; features created in applicative containers,
+some specific tasks need to be overridden.</p>
+<p>There are two <i>CATICsoFilter</i> implementations as well. The first filters
+the operations available on the &quot;CAAPstINFRoot&quot; features which enable
+only the &quot;Paste&quot; operation to be selected. The second filters the
+operations available on the other features which can be cut or copied but not
+pasted.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h4><a name="Launch"></a>How to Launch the CAAPstINFCCP Use Case</h4>
+<p>See the section entitled &quot;How to Launch the CAAPstIntegrateNewFeatures
+Use Case&quot; in the &quot;<a href="CAAPstIntegrateNewFeatures.htm">Integrating
+New Features in a Product Structure</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p>Specifically, the code described in this article is executed during the
+following scenario:</p>
+<p>Launch <b>CATIA</b>. When the application is ready, follow the scenario
+described below:
+<ul>
+  <li>
+    <p>Select <b>File</b> + <b>Open</b> and select the <b><code>CAAPstINFDocument.CATProduct
+    </code></b>in the <code>CAAProductStructure.edu/CNext/resources/graphic</code>
+    directory or select the document you created yourself by executing the batch
+    program described in the previous step.&nbsp;</p>
+  <li>
+    <p><b>Collapse</b> the &quot;CAAPstINFRoot1&quot; node by selecting the
+    &quot;+&quot; symbol: notice that this root aggregates seven features of
+    which five are of type &quot;CAAPstINFPoint&quot;, one
+    &quot;CAAPstINFLine&quot; and one &quot;CAAPstINFWire&quot;.</p>
+  <li>
+    <p><b>Display the contextual menu</b> on the &quot;CAAPstINFPoint1&quot;
+    feature.&nbsp;</p>
+  <li>
+    <p><b>Select &quot;Copy&quot;</b>.</p>
+  <li>
+    <p><b>Display the contextual menu </b>on the &quot;CAAPstINFRoot2&quot;
+    feature.</p>
+  <li>
+    <p><b>Select &quot;Paste&quot;</b>. Notice that a new feature,
+    &quot;CAAPstINFPoint1.1&quot; has been aggregated to the
+    &quot;CAAPstINFRoot2&quot; feature by copy/paste. The new point has the same
+    coordinate values as the point it is copied from, so its geometry cannot be
+    visualized.&nbsp;</p>
+</ul>
+<p>The CAAPstINFDocument.CATProduct document that can be found in the
+CNext/resources/graphic directory of the CAAProductStructure.edu
+framework.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPstINFDelete Code</h4>
+<p>This use case describes the implementation class of the <i>CATICutAndPastable</i>
+interface on the one hand for the &quot;CAAPstINFRoot&quot; feature, called <i>CAAEPstINFCCPRoot</i>,
+which is found in the CAAEPstINFCCPRoot.cpp source file and CAAEPstINFCCPRoot.h
+header file and on the other hand for the &quot;CAAPstINFPoint&quot;,
+&quot;CAAPstINFLine&quot; and &quot;CAAPstINFWire&quot; features, called <i>CAAEPstINFCCPFeature</i>,
+which is found in the CAAEPstINFCCPFeature.cpp source file and
+CAAEPstINFCCPFeature.h header file. Both of these implementations can be found
+in the CAAPstINFModeler.m shared library. It also describes the implementation
+of the <i>CATICSOFilter</i> interface, on the one hand for the
+&quot;CAAPstINFRoot&quot; feature called <i>CAAEPstINFCSORoot</i>, which is
+found in the CAAEPstINFCSORoot.cpp source file and CAAEPstINFCSORoot.h header
+file and on the other hand for all the other geometrical objects called <i>CAAEPstINFCSOFeature
+</i>which is found in the CAAEPstINFCSOFeature.cpp source file and
+CAAEPstINFCSOFeature.h header file. Both of these implementations can be found
+in the CAAPstINFCommands.m shared library.</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAProductStructure.edu\CAAPstINFModeler.m
+        and CAAPstINFCommands.m</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAProductStructure.edu/CAAPstINFModeler.m
+        and CAAPstINFCommands.m</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="StepByStep"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAAPstINFCCP:</p>
+<ol>
+  <li><a href="#CCPRoot">Implementing the <i>CATICutAndPastable</i> Interface
+    for Root Features</a></li>
+  <li><a href="#CCPFeatures">Implementing the <i>CATICutAndPastable</i>
+    Interface for Point, Line and Wire Features</a></li>
+  <li><a href="#CSORoot">Implementing the <i>CATICSOFilter</i> Interface for
+    Root Features</a></li>
+  <li><a href="#CSOFeature">Implementing the <i>CATICSOFilter</i> Interface for
+    Point, Line and Wire Features</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CCPRoot"></a>Implementing the <i>CATICutAndPastable</i>
+Interface for Root Features</b></p>
+<p align="left">1. Overriding the <code>BoundaryExtract</code> method of <i>ObjectCCP_Spec</i>.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>int CAAEPstINFCCPRoot::BoundaryExtract (ListOfVarBaseUnknown &amp;pObjectsAlreadyInBoundary, 
+                                        const ListOfVarBaseUnknown *pObjectsToAdd, 
+                                        const CATFormat *pAnImposedFormat) const</b>
+{
+   cout &lt;&lt;&quot;******CAAEPstINFCCPRoot::BoundaryExtract&quot;&lt;&lt;endl;
+
+   // Retrieve a list of the root's children
+   int num = 0;
+   CAAIPstINFRoot *piRoot = NULL;
+   CATBaseUnknown *pRoot = (CATBaseUnknown*) this;
+   HRESULT rc = pRoot -&gt; <b>QueryInterface</b>(IID_CAAIPstINFRoot,
+	                               (void**) &amp;piRoot);
+   if (FAILED(rc)) <b>return</b> num;
+ 
+   CATListValCATBaseUnknown_var *pList = NULL;
+   rc = piRoot -&gt; <b>GetChildren</b>(&amp;pList);
+
+   piRoot-&gt;<b>Release</b>();
+   piRoot = NULL;
+
+   if (SUCCEEDED(rc) &amp;&amp; pList)
+   {
+       for (int i=1; i&lt;=pList-&gt;<b>Size</b>(); i++)
+       {
+           pObjectsAlreadyInBoundary.<b>Append</b>((*pList)[i]);
+           num ++;
+       }
+   }
+   else cout &lt;&lt; &quot;Error in GetChildren.&quot; &lt;&lt; endl;
+
+   <b>delete</b> pList;
+   pList = NULL;
+
+   <b>return</b> num;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">This method is called whenever a cut or copy has been requested
+on a &quot;CAAPstINFPoint&quot;, &quot;CAAPstINFLine&quot; or
+&quot;CAAPstINFWire&quot; feature in order to add the new feature to the list of
+extracted objects that need to be pasted on the root.&nbsp;</p>
+<p align="left">First of all, a <i>CAAIPstINFRoot</i> pointer is retrieved on
+the current object. Remember that the <i>CAAIPstINFRoot</i> interface handles
+the retrieving and setting of data on the &quot;CAAPstINFRoot&quot; feature.
+This interface is described in detail in the &quot;Creating New Features
+&quot;From Scratch&quot; in a Product Document&quot; use case [<a href="#References">4</a>].
+Using the pointer to <i>CAAIPstINFRoot</i>, we can call the <code>GetChildren</code>
+method to retrieve the list of the features already aggregated to this root.
+Then, we can append the features selected to be pasted to the new root.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left">2. Overriding the <code>BoundaryRemove</code> and <code>Remove</code>
+methods of ObjectCCP_Spec.</p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>int CAAEPstINFCCPRoot::BoundaryRemove (ListOfVarBaseUnknown &amp;pObjectsAlreadyInBoundary, 
+                                       const ListOfVarBaseUnknown *pObjectsToRemove, 
+                                       const CATFormat *pAnImposedFormat) const</b>
+{
+     cout &lt;&lt;&quot;******CAAEPstINFCCPRoot::BoundaryRemove&quot;&lt;&lt;endl;
+  
+     <b>return</b> 0; // prohibit the removal of the root
+}
+
+<b>int CAAEPstINFCCPRoot::Remove (ListOfVarBaseUnknown &amp;pObjectToRemove,
+			    const CATFormat *pAnImposedFormat)</b>
+{
+     cout &lt;&lt;&quot;******CAAEPstINFCCPRoot::Remove&quot;&lt;&lt;endl;
+
+     <b>return</b> 0; // prohibit the removal of the root
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">These methods are empty. Nevertheless, they need to be
+overridden in order to prevent the root node from being deleted.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CCPFeatures"></a>Implementing the <i>CATICutAndPastable</i>
+Interface for Point, Line and Wire Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre><b>int CAAEPstINFCCPFeature::Update (CATBaseUnknown_Associations &amp;pAssociationOfObjects, 
+                                  const CATFormat *pAnImposedFormat , 
+                                  ListOfVarBaseUnknown *pToCurObjects)</b>
+{
+    cout &lt;&lt; &quot;*********** CAAEPstINFCCPFeature::Update&quot; &lt;&lt; endl;
+
+    //Add this object to the root
+    HRESULT rc;
+    int num = 0;
+    // As long as the list is not null, search for the root node
+    if ((NULL != pToCurObjects) &amp;&amp; (pToCurObjects-&gt;<b>Size</b>())) 
+    {
+        CATPathElement *pPath = (CATPathElement*)(CATBaseUnknown*)(*pToCurObjects)[1];
+        CAAIPstINFRoot *piRoot = NULL;
+        if (NULL != pPath)
+        {
+            rc = pPath -&gt; <b>Search</b>(IID_CAAIPstINFRoot, (void**) &amp;piRoot);
+        }
+        if (SUCCEEDED(rc)) 
+        {
+	   // Paste the object under the root
+            CATISpecObject *piSpecObjectOnThis = NULL;
+	   rc = this -&gt; <b>QueryInterface</b> (IID_CATISpecObject,
+		                       (void**) &amp;piSpecObjectOnThis);
+	   if (SUCCEEDED(rc))
+	   {
+	       piRoot -&gt; <b>AddChild</b> (piSpecObjectOnThis);
+	       piSpecObjectOnThis -&gt; <b>Release</b>();
+	       piSpecObjectOnThis = NULL;
+	   }
+          
+            piRoot-&gt;<b>Release</b>();
+            piRoot = NULL;
+
+            num = 1;
+	}
+    }
+  
+    // Update
+    num = ObjectCCP_SPEC::<b>Update</b>(pAssociationOfObjects,
+	                        pAnImposedFormat,
+	                        pToCurObjects);
+
+    return num;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">This method is executed on a &quot;CAAPstINFPoint&quot;,
+&quot;CAAPstINFLine&quot; or &quot;CAAPstINFWire&quot; feature that is to be
+pasted to a new root node.&nbsp;</p>
+<p align="left">In this method, the root node to be pasted is searched for in
+the list of objects passed as an argument. When it is found, the new feature to
+be pasted is aggregated to it using the <code>AddChild</code> method of the <i>CAAIPstINFRoot</i>
+local interface. Then, the Update method of <i>ObjectCCP_Spec</i> is called to
+perform the necessary internal tasks relating to the Update operation of the CCP
+mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CSORoot"></a>Implementing the <i>CATICSOFilter</i>
+Interface for Root Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>HRESULT CAAEPstINFCSORoot::CommandIsAvailable (const char *pHeaderID, const CATCSO *pCSO)
+{
+    cout &lt;&lt; &quot;******CAAEPstINFCSORoot::CommandIsAvailable&quot; &lt;&lt; endl;
+    HRESULT result;
+    result = E_FAIL;
+  
+    if (!strcmp(pHeaderID, &quot;Paste&quot;)) 
+       result = S_OK;
+
+    <b>return</b> result;	
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The implementation of the <i>CATICSOFilter</i> interface on the
+&quot;CAAPstINFRoot&quot; feature defines which operations of the contextual
+menu are available for this particular feature type. Because this is a root
+feature, the only operation allowed is the &quot;Paste&quot;.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="left"><b><a name="CSOFeature"></a>Implementing the <i>CATICSOFilter</i>
+Interface for Point, Line and Wire Features</b></p>
+<table class="code" width="773">
+  <tr>
+    <td width="765">
+      <pre>HRESULT CAAEPstINFCSO::CommandIsAvailable (const char *pHeaderID, const CATCSO *pCSO)
+{
+    cout &lt;&lt; &quot;******CAAEPstINFCSO::CommandIsAvailable&quot; &lt;&lt; endl;
+    return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">By providing an empty implementations, all of the contextual
+menu operations are made available for the features implementing this interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAAPstINFCCP use case has shown you how to program the cut, copy and
+paste operations for features created &quot;from scratch&quot; in applicative
+containers. You have seen how to derive from the <i>ObjectCCP_Spec</i> adapter
+of <i>CATICutAndPastable</i> in order to override certain methods to perform
+specific tasks related to these features. You have also seen how to make the
+cut, copy and paste operations available in the contextual menu of these
+features by implementing the <i>CATICSOFilter</i> interface.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td><a href="CAAPstIntegrateNewFeatures.htm">Integrating New Features in a
+        Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td>Feature Modeler Overview</td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td>Working with Cut, Copy and Paste Operations</td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td><a href="CAAPstINFCreateDocument.htm">Creating New Features &quot;From
+        Scratch&quot; in a Product Document</a></td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [June 2002]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

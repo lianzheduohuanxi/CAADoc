@@ -1,0 +1,323 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Exporting a Material Library to a Text File</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Materials</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Exporting a Material Library to a Text File</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to export an
+      existing&nbsp; material library in a text format and/or an html format.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a><a name="How">exportMaterialLibrary</a> is launched
+      in CATIA. An existing document called &quot;MyCatalog.CATMaterial&quot;
+      must be found in the CATDocView.</p>
+      <p><a href="exportMaterialLibrarySource.htm" target="Source">exportMaterialLibrary.CATScript
+      </a>is located in the CAAScdMatUseCases module. <a href="macros/exportMaterialLibrary.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>exportMaterialLibrary includes four steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#CreateFolderAndFile">Create the folder and the file for
+          output</a></li>
+        <li><a href="#Declarations">Declarations</a></li>
+        <li><a href="#WriteProperties">Write material properties into output
+          files</a></li>
+      </ol>
+      <p><a name="Prolog"></a><b>Prolog</b></p>
+      <table class="code" width="1062">
+        <tr>
+          <td width="1054">
+            <pre>
+	<font color="#008000">' Get the file system object</font>
+	Dim oFileSys<font color="#0000FF"> as </font>FileSystem
+	Set oFileSys = CATIA.FileSystem
+
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' Test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox &quot;A material library document must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oCat<font color="#0000FF"> As </font>Document
+	Set oCat = CATIA.ActiveDocument
+
+	<font color="#008000">' Test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oCat.Name, &quot;.CATMaterial&quot;) Then
+		msgbox &quot;A material library document must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	<font color="#008000">' Test if the document has been saved to disc</font>
+	If &quot;&quot;=oCat.Path Then
+		msgbox &quot;A material library saved to disc must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	...
+</pre>
+          </td>
+      </table>
+      <p align="left">At first, this macro tests if a document is active in
+      CATIA, if this document is a CATMaterial one and if this catalog has
+      already been saved to disc.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="CreateFolderAndFile"></a>Create the folder and the file for
+      output</h4>
+      <table class="code" width="823" height="132">
+        <tr>
+          <td width="815" height="128">
+            <pre>	...</pre>
+            <pre><font color="#008000">	' Create folder for outputs</font>
+	Dim sFolderPath<font color="#0000FF"> As </font>String
+	sFolderPath = oCat.Path &amp; sSep &amp; sName &amp; &quot;_Exported&quot;
+	If oFileSys.FolderExists(sFolderPath) Then
+		MsgBox &quot;WARNING: Directory &quot; &amp; sFolderPath &amp; Chr(10) &amp; Chr(9) &amp; &quot;  already exists and will be recreated&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		DeleteFolderRecursive oFileSys, sFolderPath, sSep
+		
+		On Error Resume Next
+		Dim CreatedFolder<font color="#0000FF"> As </font>Folder
+		Set CreatedFolder = oFileSys.CreateFolder(sFolderPath)
+		Set CreatedFolder = NOTHING
+		Dim erreur<font color="#0000FF"> As </font>Integer
+		erreur = Err.Number
+		Err.Clear
+		If (erreur &lt;&gt; 0) Then
+			MsgBox  &quot;ERROR: Impossible to create folder &quot; &amp; sFolderPath &amp; Chr(10)  &amp; Chr(9) &amp; &quot;Folder may be in use&quot;, vbOKOnly, &quot;Export Material Library&quot;
+			Err.Raise erreur
+			Exit Sub
+		End If
+	Else
+	   	oFileSys.CreateFolder(sFolderPath)
+	End If
+
+	<font color="#008000">' Create the name of the output file</font>
+	Dim sFileOutPath<font color="#0000FF"> As </font>String
+	sFileOutPath = sFolderPath &amp; sSep &amp; sName &amp; &quot;.matlib&quot;
+
+	<font color="#008000">' Create the material library text file</font>
+	Dim oFileOut<font color="#0000FF"> As </font>File    
+	Set oFileOut = oFileSys.CreateFile(sFileOutPath, FALSE)
+	Dim oStream<font color="#0000FF"> As </font>TextStream
+	Set oStream = oFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+	<font color="#008000">' Header of the output file</font>
+	oStream.Write &quot;##############################################################################&quot; &amp; Chr(10)
+	oStream.Write &quot;#                                                                            #&quot; &amp; Chr(10)
+	oStream.Write &quot;#                     MATERIAL LIBRARY TEXT FILE                             #&quot; &amp; Chr(10)
+	oStream.Write &quot;#                                                                            #&quot; &amp; Chr(10)
+	oStream.Write &quot;##############################################################################&quot; &amp; Chr(10)
+	oStream.Write Chr(10) &amp; Chr(10)
+	oStream.Write &quot;LIBRARY=&quot; &amp; sName &amp; Chr(10)
+
+	... </pre>
+          </td>
+        </tr>
+      </table>
+      <p align="left">The macro starts to create a new folder
+      &quot;MyCatalog&quot; under the material catalog directory, where all
+      results files are created.</p>
+      <p align="left">If folder already exists, a warning message is emitted and
+      the macro try to recreate it.</p>
+      <p align="left">The material catalog is exported under 2 different format:</p>
+      <ul>
+        <li>
+          <p align="left">Text format, in a file named
+          &quot;MyCatalog.matlib&quot;&nbsp;</li>
+        <li>
+          <p align="left">HTML format, in several html files whose header file
+          is named &quot;MyCatalog.html&quot;</li>
+      </ul>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="Declarations"></a>Declarations</h4>
+      <table class="code" width="427">
+        <tr>
+          <td width="419">
+            <pre><font color="#008000">	</font>...</pre>
+            <pre><font color="#008000">' Declarations</font>
+	Dim oFamilies<font color="#0000FF"> As </font>MaterialFamilies
+	Dim oFamily<font color="#0000FF"> As </font>MaterialFamily
+	Dim I<font color="#0000FF"> As </font>Int, J<font color="#0000FF"> As </font>Int, K<font color="#0000FF"> As </font>Int
+	Dim oMaterials<font color="#0000FF"> As </font>Materials
+	Dim oMaterial<font color="#0000FF"> As </font>Material
+	Dim oRenderingMaterial<font color="#0000FF"> As </font>RenderingMaterial
+	Dim oAnalysisMaterial<font color="#0000FF"> As </font>AnalysisMaterial
+	Dim oTab(3)<font color="#0000FF"> As </font>CATSafeArrayVariant
+	Dim iNum<font color="#0000FF"> As </font>Short
+	Dim iNumDouble<font color="#0000FF"> As </font>Double
+	Dim sTemp<font color="#0000FF"> As </font>String
+
+	<font color="#008000">' Create the html family output file</font>
+	Dim oFamilyHtmlFileOut<font color="#0000FF"> As </font>File    
+	Dim oFamilyHtmlStream<font color="#0000FF"> As </font>TextStream
+	Dim oMaterialHtmlFileOut<font color="#0000FF"> As </font>File    
+	Dim oMaterialHtmlStream<font color="#0000FF"> As </font>TextStream</pre>
+            <pre>	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="WriteProperties"></a>Write material properties into output
+      files</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>	...</pre>
+            <pre>
+	<font color="#008000">' Init families</font>
+	Set oFamilies = oCat.Families
+
+	<font color="#008000">' Family loop</font>
+	For I = 1<font color="#0000FF"> To </font>oFamilies.Count
+
+		<font color="#008000">' Init family</font>
+		Set oFamily = oFamilies.Item(I)
+		oStream.Write Chr(9) &amp; &quot;FAMILY=&quot; &amp; oFamily.Name &amp; Chr(10)
+		<font color="#008000">' Create image folder</font>
+		oFileSys.CreateFolder(sFolderPath &amp; sSep &amp; oFamily.Name)
+
+		<font color="#008000">' Init materials</font>
+		Set oMaterials = oFamily.Materials
+
+		<font color="#008000">' Html families table</font>
+		If ((I-1) Mod 3) = 0<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;TR&gt;&quot; &amp; Chr(10)
+		End If
+		oHtmlStream.Write &quot;&lt;TD&gt;&quot;
+		If oMaterials.Count &gt;0<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;A href='&quot; &amp; oFamily.Name &amp; &quot;.html'&gt;&lt;IMG src='&quot; &amp; oFamily.Name &amp; sSep &amp; oMaterials.Item(1).Name &amp; &quot;.jpg'&gt;&lt;/A&gt;&quot;
+		End If
+		oHtmlStream.Write &quot;&lt;/TD&gt;&quot; &amp; Chr(10)
+		oHtmlStream.Write &quot;&lt;TD width=200&gt;&lt;A href='&quot; &amp; oFamily.Name &amp; &quot;.html' OnMouseOver=''&gt;&quot; &amp; oFamily.Name &amp; &quot;&lt;/A&gt;&lt;/TD&gt;&quot; &amp; Chr(10)
+		If ((I Mod 3) = 0) Or (I=oFamilies.Count)<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;/TR&gt;&quot; &amp; Chr(10)
+		End If
+
+		<font color="#008000">' Html family page</font>
+		Set oFamilyHtmlFileOut = oFileSys.CreateFile(sFolderPath &amp; sSep &amp; oFamily.Name &amp; &quot;.html&quot;, FALSE)
+		Set oFamilyHtmlStream = oFamilyHtmlFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+		<font color="#008000">' Header of the family html output file</font>
+		HtmlHeader oFamilyHtmlStream, &quot;FAMILY '&quot; &amp; oFamily.Name &amp; &quot;' OF THE MATERIAL LIBRARY '&quot; &amp; sName &amp; &quot;'&quot;, &quot;This page presents a family of the material library '&lt;A href='&quot; &amp; sName &amp; &quot;.html'&gt;&quot; &amp; sName &amp; &quot;&lt;/A&gt;' used for CATIA V5.&quot;, oFamily.Name, 20
+
+		<font color="#008000">' Material loop</font>
+		For J = 1<font color="#0000FF"> To </font>oMaterials.Count
+
+			<font color="#008000">' Init material</font>
+			Set oMaterial = oMaterials.Item(J)
+			oStream.Write Chr(9) &amp; Chr(9) &amp; &quot;MATERIAL=&quot; &amp; oMaterial.Name &amp; Chr(10)
+ 
+			<font color="#008000">' Save icon</font>
+			oMaterial.GetIcon(sFolderPath &amp; sSep &amp; oFamily.Name &amp; sSep) <font color="#008000">' &amp; oMaterial.Name &amp; &quot;.jpg&quot;)</font>
+
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The format of text file generated looks like:</p>
+      <table class="code" width="897">
+        <tr>
+          <td width="889">
+            <p>##############################################################################<br>
+            # #<br>
+            # MATERIAL LIBRARY TEXT FILE #<br>
+            # #<br>
+            ##############################################################################<br>
+            <br>
+            <br>
+            LIBRARY=MyCatalog<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            FAMILY=Construction<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            MATERIAL=Concrete<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            PROPERTY=Rendering</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            MappingType=3<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            AdaptiveCoeff=0<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            PreviewSize=50<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            AmbientCoefficient=0.800000011920929<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            DiffuseCoefficient=1<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            SpecularCoefficient=0<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            SpecularExponent=0<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            TransparencyCoefficient=0<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b>.....</b><br>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p>The html format allows to present graphically the several material
+      families, and allows to navigate into these families to display each
+      material and its rendering and analysis properties:</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case presents a macro which can be useful to send a material library
+to an external user.</p>
+<p>The text format file generated is very simple to allow easy material
+properties modifications with a common text editor. By modifying the macro, this
+text format can also be easily customized.</p>
+<p>The html format can be more useful to make a graphical presentation of a
+material catalog content. It also offers a material preview icon for each
+material.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

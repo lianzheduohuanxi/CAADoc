@@ -1,0 +1,859 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>
+      Consuming the ENOPosApplicationBinderImpl CAA Web Service
+    </title>
+  </head>
+  <body>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            <h1>
+              CAA Web Services Home
+            </h1>
+          </td>
+          <td valign="top">
+            <h2>
+              &nbsp;
+            </h2>
+          </td>
+          <td rowspan="2" align="right" valign="top">
+            <h3>
+              <a name="Top" id="Top"></a>Consuming the ENOPosApplicationBinderImpl CAA Web Service
+            </h3><em>Using the ENOPosApplicationBinderImpl CAA Web service in order to log on to ENOVIA LCA V5</em>
+          </td>
+        </tr>
+        <tr>
+          <td class="use" colspan="2">
+            Use Case
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <table class="abstract">
+      <tbody>
+        <tr>
+          <td>
+            <h3>
+              Abstract
+            </h3>
+            <p>
+              This article discusses the <strong>CAAENOPosAppBinderImplAxis1_3Client</strong> use case. It describes
+              how to use the Java client binding that can be generated using the Axis WSDL2Java emitter in order to
+              consume the <strong>ENOPosApplicationBinderImpl CAA Web service</strong>. It provides a sample usage
+              scenario that demonstrates how to manage a session with an ENOVIA LCA V5 system.
+            </p>
+            <ul>
+              <li>
+                <a href="#1"><strong>What You Will Learn With This Use Case</strong></a>
+              </li>
+              <li>
+                <a href="#2"><strong>The CAAENOPosAppBinderImplAxis1_3Client Use Case</strong></a>
+                <ul>
+                  <li>
+                    <a href="#2.1">What Does CAAENOPosAppBinderImplAxis1_3Client Do</a>
+                  </li>
+                  <li>
+                    <a href="#2.2">Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code</a>
+                  </li>
+                  <li>
+                    <a href="#2.3">How to Launch CAAENOPosAppBinderImplAxis1_3Client</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3"><strong>Step-by-step</strong></a>
+              </li>
+              <li>
+                <a href="#InShort"><strong>In Short</strong></a>
+              </li>
+              <li>
+                <a href="#References"><strong>References</strong></a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="1"></a>What You Will Learn With This Use Case
+    </h3>
+    <p>
+      This use case demonstrates how to write a client application that consumes the ENOPosApplicationBinderImpl CAA
+      Web service. It helps you to:
+    </p>
+    <ul>
+      <li>Generate the Java client binding for the ENOPosApplicationBinderImpl CAA Web service,
+      </li>
+      <li>Write a wrapper class that instantiates the generated proxy, configures it, and uses it to remotely invoke
+      methods on the CAA Web service,
+      </li>
+      <li>Write a class that demonstrates a sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service,
+      using the wrapper class mentioned above.
+      </li>
+    </ul>
+    <p>
+      This article also provides guidances on how to build and run the sample client application using <strong>IRAD
+      (IBM Rational Application Developer) 6.0</strong>, although any other Java IDE (Integrated Development
+      Environment) or stand-alone JDK/JRE (Java Development Kit/Java Runtime Environment) could be used for that
+      purpose.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h3>
+      <a name="2"></a>The CAAENOPosAppBinderImplAxis1_3Client Use Case
+    </h3>
+    <p>
+      CAAENOPosAppBinderImplAxis1_3Client is a use case of the CAAPLMSecurity.edu framework that illustrates the
+      ENOPosApplicationBinderImpl CAA Web service capabilities.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.1"></a>What Does CAAENOPosAppBinderImplAxis1_3Client Do
+    </h4>
+    <p>
+      The sample usage scenario delivered with this use case contains the following steps:
+    </p>
+    <ul>
+      <li>Retrieve the contexts (or roles) available for a user specified in parameter, and then display the results to
+      the standard output,
+      </li>
+      <li>Select the first context available from the result list and use it to log on to ENOVIA LCA V5,
+      </li>
+      <li>Log out from ENOVIA LCA V5 and terminate the opened session.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.2"></a>Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code
+    </h4>
+    <p>
+      The CAAENOPosAppBinderImplAxis1_3Client use case is made of several classes located in the
+      <strong>CAAENOPosAppBinderImplAxis1_3Client.mj</strong> module of the <strong>CAAPLMSecurity.edu</strong> framework:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <strong>Windows</strong>:
+            <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderImplAxis1_3Client.mj\src</code><br>
+
+            <strong>Unix</strong>:
+            <code><em>&lt;Install&gt;</em>/CAAPLMSecurity.edu/CAAENOPosAppBinderImplAxis1_3Client.mj/src</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: the directory where the CAA CD-ROM is installed.
+      </li>
+    </ul>
+    <p>
+      The sample Java resources generated using the Axis WSDL2Java emitter are delivered in the following directory
+      (<strong>Windows</strong>):
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\CATServiceExceptionType.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\ENOPosApplicationBinderImpl.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\ENOPosApplicationBinderImplLocator.java<br>
+
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\IApplicationBinder.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\IApplicationBinderBindingStub.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\Identifier.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\SessionToken.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\Status.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\holders\SessionTokenHolder.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Output-package&gt;</em>\holders\StringArrayTypeHolder.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>:
+        <code><em>&lt;Install&gt;</em>\CAAPLMSecurity.edu\CAAENOPosAppBinderImplAxis1_3Client.mj\src</code>,
+      </li>
+      <li>
+        <code><em>&lt;Install&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Output-package&gt;</em></code>: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client\generated
+        (based on the output package value specified when using the WSDL2Java emitter).
+      </li>
+    </ul>
+    <p>The CAAENOPosAppBinderImplAxis1_3Client module contains the other following resources:</p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code><em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOPosApplicationBinderImplClient.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOPosApplicationBinderImplUseCase.java<br>
+            <em>&lt;Source&gt;</em>\<em>&lt;Root-package&gt;</em>\CAAENOPosApplicationBinderImplWrapper.java</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;Source&gt;</em></code>: same as above,
+      </li>
+      <li>
+        <code><em>&lt;Root-package&gt;</em></code>: com\dassault_systemes\caaplmsecurity\caaenoposappbinderaxis1_3client.
+      </li>
+    </ul>
+    <p>
+      The <strong>CAAENOPosApplicationBinderImplWrapper</strong> class describes how to configure the generated 
+      proxy and how to invoke its methods. The <strong>CAAENOPosApplicationBinderImplUseCase</strong> class 
+      demonstrates a sample use case scenario of the ENOPosApplicationBinderImpl CAA Web service. 
+      The <strong>CAAENOPosApplicationBinderImplClient</strong> class contains the main program. It parses the 
+      command line inputs and starts up the use case.
+    </p>
+    <p>
+      This use case has a dependency on the <strong>CustomSessionHandler</strong> class which is available in the 
+      <strong>CAAJAXRPCHTTPSessionHandler.mj</strong> module of the <strong>CAAWebServices.edu</strong> 
+      framework. Please refer to [<a href="#References">1</a>] for details on HTTP session management and where
+      to find the related class.
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="2.3"></a>How to Launch CAAENOPosAppBinderImplAxis1_3Client
+    </h4>
+    <p>
+      To launch the CAAENOPosAppBinderImplAxis1_3Client use case, you will need to set up a buildtime environment,
+      build the code along with its prerequisites, set up a runtime configuration and then execute the use case. You
+      can see [<a href="#References">2</a>] for details on how to perform these steps within the IRAD 6 environment.
+    </p>
+    <p>
+      The sample usage scenario delivered within this use case consists of a class declaring a main method that takes
+      several options as parameters, as described below:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w <em>&lt;URI&gt;</em> -e <em>&lt;ENOVIA username&gt;</em> -u
+            <em>&lt;Basic Authentication username&gt;</em> -p <em>&lt;Basic Authentication password&gt;</em></code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <code><em>&lt;URI&gt;</em></code>: is the root URI of the Web application where the ENOPosApplicationBinderImpl
+        CAA Web service is deployed,
+      </li>
+      <li>
+        <code><em>&lt;ENOVIA username&gt;</em></code>: is a valid username declared in the ENOVIA P&amp;O database,
+      </li>
+      <li>
+        <code><em>&lt;Basic Authentication Username&gt;</em> and <em>&lt;Basic Authentication Password&gt;</em></code>:
+        are a valid set of credentials for authentication on the remote Web server.
+      </li>
+    </ul>
+    <p>
+      Here follows a sample command, to be updated with your own environment configuration:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>-w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p><!-- ========================================================================= -->
+    <h3>
+      <a name="3"></a>Step-by-step
+    </h3>
+    <p>
+      The following section first explains how to generate the Java client binding for the ENOPosApplicationBinderImpl
+      CAA Web service demonstrated. The remaining sections then describe the code that must be written in order to
+      consume this Web service:
+    </p>
+    <ol>
+      <li>
+        <a href="#3.1">Creating the Java Client Binding</a>
+      </li>
+      <li>
+        <a href="#3.2">Instantiating and Configuring the Generated Proxy</a>
+      </li>
+      <li>
+        <a href="#3.3">Retrieving User Contexts</a>
+      </li>
+      <li>
+        <a href="#3.4">Logging On To ENOVIA LCA V5</a>
+      </li>
+      <li>
+        <a href="#3.5">Logging Out From ENOVIA LCA V5</a>
+      </li>
+      <li>
+        <a href="#3.6">Sample Usage Scenario</a>
+      </li>
+    </ol>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.1"></a>Creating the Java Client Binding
+    </h4>
+    <p>
+      Please refer to [<a href="#References">3</a>] for details on how to generate the Java client binding using the
+      Axis WSDL2Java emitter.
+    </p>
+    <p>
+      Here follows a sample command in order to generate the Java client binding for the ENOPosApplicationBinderImpl CAA
+      Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o C:\CAAPLMSecurity\src -p
+            com.dassault_systemes.caaplmsecurity.caaenoposappbinderaxis1_3client.generated
+            http://karindsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOPosWS:ENOPosAppliBinder:ENOPosApplicationBinderImpl</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The server name, port, and context root URI information must be updated to match the server where the CAA Web
+      service has been deployed. The list of generated resources is available from the above section: 
+      "<a href="#2.2">Where To Find the CAAENOPosAppBinderImplAxis1_3Client Code</a>".
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.2"></a>Instantiating and Configuring the Generated Proxy
+    </h4>
+    <p>
+      In order to be able to consume the ENOPosApplicationBinderImpl CAA Web service implementation that has been
+      deployed on a target server, you first need to retrieve an instance of the <code>IApplicationBinderBindingStub</code>
+      generated class (also referred to as the <strong>proxy</strong>). It is a common best practice to manipulate an
+      instance through its related interface whenever available. The WSDL2Java emitter produces an interface that is
+      implemented by the <code>IApplicationBinderBindingStub</code> class: <code>IApplicationBinder</code>. It
+      describes the available methods for the remote CAA Web service.
+    </p>
+    <p>
+      <img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height= "30"> &nbsp; Although the <code>IApplicationBinderBindingStub</code> class can be directly instantiated using its
+      own set of constructors, the Axis User's Guide recommends to discard this approach. Instead, the recommended
+      approach is to use another generated class for that purpose: <code>ENOPosApplicationBinderImplLocator</code>. It
+      implements the <code>ENOPosApplicationBinderImpl</code> interface.
+    </p>
+    <p>
+      The following code describes how to instantiate the generated proxy. Such proxy is used in order to marshall
+      method calls and objects to SOAP requests, and to unmarshall SOAP responses to objects. This proxy must be
+      configured in order to manage authentication on the remote Web server, timeout, and session management.
+      Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String SERVICE_ID = <font color="#2A00FF">"urn!com!dassault_systemes!ENOPosWS!ENOPosAppliBinder!ENOPosApplicationBinderImpl"</font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> IApplicationBinder proxy = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String clientId,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String uri,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credUser,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credPwd,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>int</strong></font> timeOut) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Compute the SOAP endpoint URI value that bounds to the deployed<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;// implementation of the ENOPosApplicationBinderImpl CAA Web service</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String endpoint = uri + <font color="#2A00FF">"servicerouter?service="</font> + SERVICE_ID;<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Retrieve proxy instance</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;ENOPosApplicationBinderImplLocator locator = <font color="#7F0055"><strong>new</strong></font> ENOPosApplicationBinderImplLocator();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;try {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proxy = locator.getENOPosApplicationBinderImplPort(<font color="#7F0055"><strong>new</strong></font> URL(endpoint));<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (MalformedURLException e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (ServiceException e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Required for HTTP session state management</font> <strong>(1)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;((IApplicationBinderBindingStub) proxy).setMaintainSession(<font color="#7F0055"><strong>true</strong></font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (clientId != <font color="#7F0055"><strong>null</strong></font>) {<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Required to maintain HTTP session state accross services</font> <strong>(2)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerInfo info = <font color="#7F0055"><strong>new</strong></font> HandlerInfo();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerClass(CustomSessionHandler.<font color="#7F0055"><strong>class</strong></font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map handlerConfig = <font color="#7F0055"><strong>new</strong></font> HashMap();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handlerConfig.put(CustomSessionHandler.CLIENT_ID, clientId);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;info.setHandlerConfig(handlerConfig);<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HandlerRegistry registry = locator.getHandlerRegistry();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String portName = locator.getENOPosApplicationBinderImplPortWSDDServiceName();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QName name = <font color="#7F0055"><strong>new</strong></font> QName(portName);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List chain = registry.getHandlerChain(name);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chain.add(info);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Required for the Basic Authentication mechanism</font> <strong>(3)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (credUser != <font color="#7F0055"><strong>null</strong></font> &amp;&amp; credUser != <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IApplicationBinderBindingStub) proxy).setUsername(credUser);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((IApplicationBinderBindingStub) proxy).setPassword(credPwd);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Increase the default client time-out</font> <strong>(4)</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;((IApplicationBinderBindingStub) proxy).setTimeout(timeOut);<br>
+		    }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed using the
+      same proxy instance, the <code>setMaintainSession</code> method must be used. This is mandatory in the context of
+      ENOVIA LCA V5 CAA Web services,<br>
+      <strong>(2)</strong>: in order to maintain the HTTP session state between successive calls performed using distinct
+      proxy instances, a JAX-RPC custom handler must be configured on the proxy. This is mandatory in the context of 
+      ENOVIA LCA V5 CAA Web services. You can refer to [<a href="#References">1</a>] for details,<br>
+      <strong>(3)</strong>: when security is enabled, it is mandatory to set the <code>username</code> and
+      <code>password</code> attributes on the generated proxy. The values specified must match a valid set of
+      credentials for the Basic Authentication mechanism,<br>
+      <strong>(4)</strong>: the default timeout value can be increased in order to avoid potential issues at runtime,
+      such as losing the HTTP connection before receiving the SOAP responses. The sample value specified in the code is in
+      milliseconds.<br>
+    </p>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.3"></a>Retrieving User Contexts
+    </h4>
+    <p>
+      In order to log on to ENOVIA LCA V5, you must first retrieve the contexts associated with a given user declared
+      in the P&amp;O (People &amp; Organization) database. This can be achieved using the following method, which is
+      available through the generated <code>IApplicationBinder</code> proxy interface:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="getUserContexts" id="getUserContexts"></a><code><font color="#7F0055"><strong>public</strong></font> Status
+            getUserContexts(String iUserName, StringArrayTypeHolder oUserContexts)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException,
+            CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iUserName</code>
+          </td>
+          <td>
+            &nbsp; The name of a user declared in the P&amp;O database
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oUserContexts</code>
+          </td>
+          <td>
+            &nbsp; The list of contexts allowed for the specified user (for example VPMDESIGNER.VPM.DEFAULT)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#getUserContexts"><code>getUserContexts</code></a>
+      method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> String[] getUserContexts(String username) <font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Holder instance used as in/out parameter</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;StringArrayTypeHolder contextsHolder = new StringArrayTypeHolder();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Status status = proxy.getUserContexts(username, contextsHolder);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to get user contexts"</font>, t);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (contextsHolder == <font color="#7F0055"><strong>null</strong></font> || contextsHolder.value == <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to get user contexts"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return</strong></font> contextsHolder.value;<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.4"></a>Logging On To ENOVIA LCA V5
+    </h4>
+    <p>
+      You can then log on to ENOVIA LCA V5 with one of the contexts available for the user specified using the
+      following method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="bindToApplication" id="bindToApplication"></a><code><font color="#7F0055"><strong>public</strong></font> Status bindToApplication(String iSelectedUserContext, SessionTokenHolder oSessionId)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      This method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSelectedUserContext</code>
+          </td>
+          <td>
+            &nbsp; The context to use in order to log on to ENOVIA LCA V5
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>[in/out] oSessionId</code>
+          </td>
+          <td>
+            &nbsp; The session identifier, if any (may be null)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#bindToApplication"><code>bindToApplication</code></a>
+      method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> SessionToken login(String context) <font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Holder instance used as in/out parameter</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SessionTokenHolder sessionTokenHolder = <font color="#7F0055"><strong>new</strong></font> SessionTokenHolder();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Status status = proxy.bindToApplication(context, sessionTokenHolder);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw</strong></font> e;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to log in"</font>, t);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;SessionToken sessionToken = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (sessionTokenHolder != <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sessionToken = sessionTokenHolder.value;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>return</strong></font> sessionToken;<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.5"></a>Logging Out From ENOVIA LCA V5
+    </h4>
+    <p>
+      You can finally log off from ENOVIA LCA V5 and terminate the opened session using the following method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <td>
+            <a name="releaseFromApplication" id="releaseFromApplication"></a><code><font color="#7F0055"><strong>public</strong></font> Status releaseFromApplication(SessionToken iSessionId)<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>throws</strong></font> RemoteException, CATServiceExceptionType</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The method accepts the following parameters:
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <code>[in] iSessionId</code>
+          </td>
+          <td>
+            &nbsp;The session identifier retrieved through the call to <a href="#bindToApplication"><code>bindToApplication</code></a>, if any (may be null)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      The following code demonstrates the use of the <a href="#releaseFromApplication"><code>releaseFromApplication</code></a> method:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplWrapper {<br>
+            &nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public void</strong></font> logout(SessionToken sessionToken) <font color="#7F0055"><strong>throws</strong></font> Exception {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<strong>Status status = proxy.releaseFromApplication(sessionToken);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"Status: "</font> + status.getStatus());<br>
+            &nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;throw e;<br>
+            &nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Throwable t) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"Failed to log out"</font>, t);<br>
+            &nbsp;&nbsp;}<br>
+    		}</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <h4>
+      <a name="3.6"></a>Sample Usage Scenario
+    </h4>
+    <p>
+      The following code depends on the CAAENOPosApplicationBinderImplWrapper class described above. It demonstrates a
+      sample usage scenario for the ENOPosApplicationBinderImpl CAA Web service:
+    </p>
+    <table class="code">
+      <tbody>
+        <tr>
+          <!-- Not using <pre></pre> because it doesn't print right -->
+          <td>
+            <code><font color="#7F0055"><strong>public class</strong></font> CAAENOPosApplicationBinderImplUseCase {<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String uri = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String credUser = <font color="#7F0055"><strong>null</strong></font>;<br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>private</strong></font> String credPwd = <font color="#7F0055"><strong>null</strong></font>;<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public</strong></font> CAAENOPosApplicationBinderImplUseCase(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String uri,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credUser,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;String credPwd) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.uri = uri;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.credUser = credUser;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.credPwd = credPwd;<br>
+            &nbsp;&nbsp;}<br>
+            <br>
+            &nbsp;&nbsp;<font color="#7F0055"><strong>public void</strong></font> runSampleUsageScenario(String enoviaUser) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>try</strong></font> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 1 - Instantiate and configure the proxy<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String clientId = <font color="#7F0055"><strong>new</strong></font> Long(System.currentTimeMillis()).toString();<br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// Instantiate the wrapper client class</font><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>CAAENOPosApplicationBinderImplWrapper wrapper = <font color="#7F0055"><strong>new</strong></font> CAAENOPosApplicationBinderImplWrapper(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientId, uri, credUser, credPwd, 360000);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 2 - Get and display contexts for the user specified<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>String[] userContexts = wrapper.getUserContexts(enoviaUser);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 3 - Log on to ENOVIA with the first available context<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (userContexts.length == 0) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>throw new</strong></font> Exception(<font color="#2A00FF">"No context found for the user specified"</font>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SessionToken sessionToken = wrapper.login(userContexts[0]);</strong><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3F7F5F">// ------------------------------------------------------------<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Step 4 - Log out from ENOVIA<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------------</font><br>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>wrapper.logout(sessionToken);</strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (CATServiceExceptionType c) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"\tError code: "</font> + c.getCode());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"\tError message: "</font> + c.getMessage());<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>if</strong></font> (c.getErrorArguments() != <font color="#7F0055"><strong>null</strong></font>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] errorArguments = c.getErrorArguments();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"\tError arguments: "</font> + errorArguments.length);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7F0055"><strong>for</strong></font> (<font color="#7F0055"><strong>int</strong></font> i = 0; i &lt; errorArguments.length; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2A00FF">"\t\tArgument["</font> + i + <font color="#2A00FF">"]: "</font> + errorArguments[i]);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <font color="#7F0055"><strong>catch</strong></font> (Exception e) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="InShort" id="InShort"></a>In Short
+    </h3>
+    <p>
+      This use case explains how to use the Java client binding generated using the Axis WSDL2Java emitter in order to
+      consume the ENOPosApplicationBinderImpl CAA Web service. It also gives an overview of the available methods:
+    </p>
+    <ul>
+      <li>
+        <a href="#getUserContexts"><code>getUserContexts</code></a>: retrieve the contexts associated with a given user
+        declared in the P&amp;O database,
+      </li>
+      <li>
+        <a href="#bindToApplication"><code>bindToApplication</code></a>: log on to ENOVIA LCA V5 using a specific
+        context,
+      </li>
+      <li>
+        <a href="#releaseFromApplication"><code>releaseFromApplication</code></a>: log off from ENOVIA LCA V5 in order
+        to terminate an opened session.
+      </li>
+    </ul>
+    <p align="right">
+      [<a href="#Top">Top</a>]
+    </p>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="References" id="References"></a>References
+    </h3>
+    <table border="0" width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            [1]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSMaintainSessionWithAxis.htm">Maintaining the
+            Session State</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [2]
+          </td>
+          <td valign="top" align="left">
+            <a href="../CAAWSUseCases/CAAWSBuildAndLaunchUsingAxis.htm">Building
+            and Launching a CAA Web Service Use Case</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            [3]
+          </td>
+          <td>
+            <a href="../CAAWSTechArticles/CAAWSClientUsingAxis.htm">Generating a
+            Java Client Binding</a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <h3>
+      <a name="History" id="History"></a>History
+    </h3>
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td valign="top">
+            Version: <strong>1</strong> [Apr 2005]
+          </td>
+          <td valign="top">
+            Document created
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Jan 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        </tr>
+        <tr>
+          <td valign="top" align="right" colspan="2">
+            [<a href="#Top">Top</a>]
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- ========================================================================= -->
+    <hr>
+    <p><i>Copyright &#169; 1994-2006, Dassault Syst&#232;mes. All rights reserved.</i></p>
+  </body>
+</html>

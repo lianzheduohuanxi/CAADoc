@@ -1,0 +1,64 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>About Subs and Functions</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>About Subs and Functions</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>A method exposed by an objects is called by Visual Basic:</p>
+<ul>
+  <li>a <b>Sub</b> if it doesn't return any value</li>
+  <li>a <b>Function</b> if its does.</li>
+</ul>
+<p>Be careful when the methods requests arguments. To pass arguments to a <b>Sub</b>
+with Visual Basic Script, do not use parentheses as follows:</p>
+<blockquote>
+  <pre>Object.Sub arg1, arg2, arg3</pre>
+</blockquote>
+<p>But use parentheses with a <b>Function</b>:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> ReturnedObject <font color="#0000FF">As</font> AnyObject
+<font color="#0000FF">Set</font> ReturnedObject = Object.Function (arg1, arg2, arg3)</pre>
+</blockquote>
+<p>You must use <b>Set</b> only if the returned value is an object, but not if
+it is a character string or a number. Nevertheless, character string and number
+defined as CATIA literals are objects and <b>Set</b> must be used if a <b>Function</b>
+returns a literal object.</p>
+<p>Finally, you don't have to use <b>Set</b> if you store your return value in a
+<b>Property</b>:</p>
+<blockquote>
+  <pre>myObject.aggregatedObject = Object.Function (arg1, arg2, arg3)</pre>
+</blockquote>
+<p>because there is no actual <i>aggregatedObject</i> variable, a property is a
+syntactical shortcut for <i>accessor</i> methods, here <i>get_aggregatedObject</i>
+and <i>set_aggregatedObject</i>, allowing to present those methods as an
+attribute of the object. The previous syntax is so equivalent to:</p>
+<blockquote>
+  <pre>myObject.set_aggregatedObject( Object.Function (arg1, arg2, arg3) )</pre>
+</blockquote>
+<p>and no <b>Set</b> is required.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

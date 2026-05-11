@@ -1,0 +1,1135 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+    <title>Consuming the ENOVWSChgMgmtCpp CAA Web Service</title>
+</head>
+<body>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <h1>CAA Web Services Home</h1>
+                </td>
+                <td valign="top">
+                    <h2>&nbsp;</h2>
+                </td>
+                <td rowspan="2" align="right" valign="top">
+                    <h3><a name="Top"></a>Consuming the ENOVWSChgMgmtCpp CAA Web Service</h3>
+                    <em>Using the ENOVWSChgMgmtCpp CAA Web service for change management</em></td>
+            </tr>
+            <tr>
+                <td class="use" colspan="2">Use Case</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- HEADER --------------------------------------------------------------------------------------- HEADER -->
+    <table class="abstract">
+        <tbody>
+            <tr>
+                <td>
+                    <h3>Abstract</h3>
+                    <p>This article discusses the <strong>CAAENOVWSDotNet1_1Client</strong> use case. It describes how to use
+                        the C# client binding that can be generated using the wsdl.exe utility in order to consume the <strong>ENOVWSChgMgmtCpp
+                            CAA Web service</strong>. It provides a sample usage scenario that demonstrates how to handle lifecycle
+                        management.</p>
+                    <ul>
+                        <li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+                        <li><a href="#2"><strong>The CAAENOVWSDotNet1_1Client Use Case</strong></a>
+                            <ul>
+                                <li><a href="#2.1">What Does CAAENOVWSDotNet1_1Client Do</a></li>
+                                <li><a href="#2.2">Where To Find the CAAENOVWSDotNet1_1Client Code</a></li>
+                                <li><a href="#2.3">How to Launch CAAENOVWSDotNet1_1Client</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#3"><strong>Step-by-step</strong></a></li>
+                        <li><a href="#InShort"><strong>In Short</strong></a></li>
+                        <li><a href="#References"><strong>References</strong></a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- SECTION 1 --------------------------------------------------------------------------------- SECTION 1 -->
+    <h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+    <p>This use case demonstrates how to write a client application that consumes the ENOVWSCntMgmtCpp CAA Web
+        service. It helps you to:</p>
+    <ul>
+        <li>Generate the C# client binding for the ENOVWSChgMgmtCpp CAA Web service,</li>
+        <li>Configure and use the generated proxy,</li>
+        <li>Understand a sample usage scenario of the ENOVWSChgMgmtCpp CAA Web service.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2 --------------------------------------------------------------------------------- SECTION 2 -->
+    <h3><a name="2"></a>The CAAENOVWSDotNet1_1Client Use Case</h3>
+    <p>CAAENOVWSDotNet1_1Client is a use case of the CAAENOVWS.edu framework that illustrates the ENOVWSChgMgmtCpp
+        CAA Web service capabilities.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.1 ----------------------------------------------------------------------------- SECTION 2.1 -->
+    <h4><a name="2.1"></a>What Does CAAENOVWSDotNet1_1Client Do</h4>
+<p>This use case calls following methods:</p>
+<ul>
+	<li><code>createAction method to create an action.</code></li>
+	<li><code>createDocument </code>method from
+	ENOVWSCntMgmtCpp CAA&nbsp;Web service to create a 
+	document.</li>
+	<li>createPartRef method from 
+	ENOVWSProdStructCpp web service to create 
+	a part version.</li>
+	<li>addAffectedObject method to add the document and part version to the 
+	action.</li>
+	<li>getAffectedObejects method to retrieve the affected objects for the 
+	given action.</li>
+	<li>removeAffectedObject method to remove the affected objects from the 
+	action. </li>
+</ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.2 ----------------------------------------------------------------------------- SECTION 2.2 -->
+    <h4><a name="2.2"></a>Where To Find the CAAENOVWSDotNet1_1Client Code</h4>
+    <p>The CAAENOVWSDotNet1_1Client use case is made of several classes located in both <b>CAAENOVWSDotNet1_1Client.m</b>
+        and <b>CAAENOVWSDotNet1_1ClientBase.m</b> modules of the <b>CAAENOVWS.edu</b> framework:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code><br>
+                    <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p>The CAAENOVWSDotNet1_1ClientBase.m module (library) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSChgMgmtCppProxy.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSChgMgmtCppWrapper.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSChgMgmtCppProxy.cs</b> file contains the C# client binding generated using the wsdl.exe
+        utility. A C# client binding consists of a proxy and several types definitions. The <b>CAAENOVWSChgMgmtCppWrapper.cs</b>
+        file contains a class that describes how to configure the generated proxy and how to invoke its methods.</p>
+    <p>The CAAENOVWSDotNet1_1Client.m module (executable) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSDotNet1_1Client.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSChgMgmtCppUseCase.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSDotNet1_1Client.cs</b> file contains the main program. It parses the command line inputs
+        and starts up the use case. The <b>CAAENOVWSChgMgmtCppUseCase.cs</b> file contains the sample use case
+        scenario.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.3 ----------------------------------------------------------------------------- SECTION 2.3 -->
+    <h4><a name="2.3"></a>How to Launch CAAENOVWSDotNet1_1Client</h4>
+    <p>To run the CAAENOVWSDotNet1_1Client use case, you will need to build both CAAENOVWSDotNet1_1ClientBase.m
+        and CAAENOVWSDotNet1_1Client.m modules. The use case code can be built using either the CAA V5 buildtime
+        environment, or Visual Studio .NET 2003 as explained in [<a href="#References">1</a>].</p>
+    <p>You can then execute the command described below:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w <i>&lt;URI&gt;</i> -e <i>&lt;ENOVIA username&gt;</i> -u <i>&lt;Basic
+                    Authentication username&gt;</i> -p <i>&lt;Basic Authentication password&gt;</i> -t ENOVWSChgMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;URI&gt;</i></code>: is the root URI of the Web application where the ENOVWSChgMgmtCpp CAA
+            Web service is deployed,</li>
+        <li><code><i>&lt;ENOVIA username&gt;</i></code>: is a valid username declared in the ENOVIA P&amp;O database,</li>
+        <li><code><i>&lt;Basic Authentication Username&gt;</i> and <i>&lt;Basic Authentication Password&gt;</i></code>:
+            are a valid set of credentials for authentication on the remote Web server. </li>
+    </ul>
+    <p>Here follows a sample command, to be updated with your own environment configuration:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t
+                    ENOVWSChgMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The same executable is used to launch all of the available ENOVIA CAA Web services use cases. The <code>
+        -t</code> option is used to choose the target use case to run.</p>
+    <p>When building the modules with the CAA V5 buildtime environment, the CAAENOVWSDotNet1_1Client executable
+        can be launched from the following location:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\intel_a\code\clr</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3 --------------------------------------------------------------------------------- SECTION 3 -->
+    <h3><a name="3"></a>Step-by-step</h3>
+    <p>The following section first explains how to generate the C# client binding for the ENOVWSChgMgmtCpp CAA
+        Web service demonstrated. The remaining sections describe how to configure the generated proxy and how
+        to consume the Web service:</p>
+    <ol>
+        <li><a href="#3.1">Creating the C# Client Binding</a></li>
+        <li><a href="#3.2">Instantiating and Configuring the Generated Proxy</a></li>
+	<li><a href="#createAction">Creating Action</a></li>
+		<li><a href="#addAffectedObject">Adding Affected Objects</a></li>
+	<li><a href="#removeAffectedObject">Removing Affected Objects</a> </li>
+	<li><a href="#getAffectedObjects">Retrieving Affected Objects</a> </li>
+		<li><a href="#addAssociatedObject">Adding Associated Objects</a></li>
+	<li><a href="#removeAssociatedObject">Removing Associated Objects</a> </li>
+		<li><a href="#getAssociatedObjects">Retrieving AssociatedObjects</a> 
+		</li>
+		<li><a href="#3.4">Sample Usage Scenario</a></li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.1 ----------------------------------------------------------------------------- SECTION 3.1 -->
+    <h4><a name="3.1"></a>Creating the C# Client Binding</h4>
+     <p>Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using
+        the wsdl.exe utility.</p>
+    <p>Here follows a sample command in order to generate the C# client binding for the ENOVWSChgMgmtCpp CAA
+        Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>wsdl /namespace:com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientgen.enovwschgmgmtcpp /username:wpsadmin
+                    /password:wpsadmin /out:CAAENOVWSChgMgmtCppProxy.cs http://stophe1dsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSChgMgmtImpl:ENOVWSChgMgmtImpl:ENOVWSChgMgmtCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The server name, port, and context root URI information must be updated to match the server where the
+        ENOVWSChgMgmtCpp CAA Web service has been deployed. The <code>/username</code> and <code>/username</code>
+        options are required to authenticate on the Web server hosting the Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.2 ----------------------------------------------------------------------------- SECTION 3.2 -->
+    <h4><a name="3.2"></a>Instantiating and Configuring the Generated Proxy</h4>
+    <p>In order to consume an implementation of the ENOVWSChgMgmtCpp CAA Web service deployed on a target Web
+        server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must
+        then be configured in order to manage authentication on the remote Web server, timeout, and session
+        management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.</p>
+    <p>The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and
+        to unmarshall SOAP responses to objects. The following code describes how to instantiate and configure
+        it:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td>
+				<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+				<pre>   private const string SERVICE_ID = &quot;urn:com:dassault_systemes:ENOVWSChgMgmtImpl:ENOVWSChgMgmtImpl:ENOVWSChgMgmtCpp&quot;;
+   private CAAENOVWSChgMgmtCppProxy proxy = null;</pre>
+				<pre>   public CAAENOVWSChgMgmtCppWrapper(
+	CookieContainer container, 
+	string uri, 
+	string credUser, 
+	string credPwd,
+	int timeOut) {
+	proxy = new CAAENOVWSChgMgmtCppProxy();
+	// Compute the SOAP endpoint URI value that bounds to the deployed implementation of the 
+	// ENOVWSChgMgmtCpp CAA Web service
+	proxy.Url = uri + &quot;servicerouter?service=&quot; + SERVICE_ID;</pre>
+				<pre>	// Required for HTTP session state management
+	proxy.CookieContainer = container;</pre>
+				<pre>	// Required for the Basic Authentication mechanism
+	ICredentials credentials = new NetworkCredential(credUser, credPwd);
+	proxy.Credentials = credentials; </pre>
+				<pre>	// Increase the default client time-out
+	proxy.Timeout = timeOut;
+  }</pre>
+				<pre>}</pre>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed
+        using either the same or multiple proxy instances, the <code>CookieContainer</code> property must be
+        set on the proxy. This is mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+        <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+        <code>Credentials </code>property on the proxy. The values specified must match a valid set of credentials
+        for the Basic Authentication mechanism,<br>
+        <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues
+        at runtime, such as losing the HTTP connection before receiving the SOAP responses. The value specified
+        in the code is in milliseconds.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="createAction"></a>Creating Action</h4>
+<p>To create action in ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table30">
+	<tbody>
+		<tr>
+			<td><code>Status createAction(ENOVIA iobjects,<br>
+			&nbsp;ENOVIAHolder oObjects) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<p>This method accepts the following parameters:</p>
+<table id="table31">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjects</code></td>
+			<td>&nbsp;List of actions to be created</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oObjects</code></td>
+			<td>&nbsp;The successfully created objects are returned</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>createAction</code>
+method:</p>
+<table class="code" id="table32">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public ENOVIA CreateAction(String[] actionNumbers,
+			String domain,
+			String priority) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'createAction' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (actionNumbers == null) {
+		throw new ApplicationException(&quot;Action number array is null&quot;);
+	} else if (domain == null) {
+		throw new ApplicationException(&quot;Environment domain is null&quot;);
+	} 
+	Console.Out.WriteLine(&quot;Environment domain: &quot; + domain);</pre>
+			<pre>	for (int i = 0; i &lt; actionNumbers.Length; i++) {
+		Console.Out.WriteLine(&quot;Action number[&quot; + i + &quot;]: &quot; + actionNumbers[i]);
+	}
+	// Create input data
+	ENOVIA_Action_Design[] actionDesign = new ENOVIA_Action_Design[actionNumbers.Length];
+	for (int i = 0; i &lt; actionNumbers.Length; i++) {
+		actionDesign[i] = new ENOVIA_Action_Design();
+		actionDesign[i].Domain = domain;
+		actionDesign[i].ENOVIA_AFLActionV_name = actionNumbers[i];
+		actionDesign[i].ENOVIA_AFLActionV_priority = priority;
+	}</pre>
+			<pre>	ENOVIA input = new ENOVIA();
+	input.ENOVIA_Action_Design = actionDesign;
+	ENOVIA resultSet = null;
+</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.CreateAction(input, ref resultSet);
+		Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to create action(s)&quot;, e);
+	}</pre>
+			<pre>	// Process output data
+	if (resultSet == null) {
+		throw new Exception(&quot;Failed to create action(s)&quot;);
+	}
+	return resultSet;
+  }</pre>
+			<p>}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="addAffectedObject"></a>Adding Affected Objects</h4>
+<p>To add 'affected objects' in ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table33">
+	<tbody>
+		<tr>
+			<td><code>Status addAffectedObjects(</code><font SIZE="2">dIentifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iInputObjectIds</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iOutputObjectIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table34">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="710">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iInputObjectIds</code></td>
+			<td width="710">&nbsp;List of Input affected objects identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iOutputObjectIds</code></td>
+			<td width="710">&nbsp;List of output affected Object identifier</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>addAffectedObjects</code>
+method:</p>
+<table class="code" id="table35">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public ENOVIA GetAffectedObjects(string ecoUUID, string[] objTypes, string selectExpression) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'GetAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (ecoUUID == null) {
+		throw new ApplicationException(&quot;Illegal argument: ECO UUID is null&quot;); 
+	}
+	Console.Out.WriteLine(&quot;ECO UUID: {0}&quot;, ecoUUID);</pre>
+			<pre>	// Create input data
+	Identifier ecoId = ToIdentifier(ecoUUID);
+	SelectExpression selectExp = new SelectExpression();
+	selectExp.Value = selectExpression;
+	ENOVIA resultSet = null;</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.GetAffectedObjects(ecoId, selectExp, objTypes, ref resultSet);
+		Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+	} catch (Exception e) {
+		throw new ApplicationException(&quot;Failed to get affected object(s)&quot;, e);
+	}</pre>
+			<pre>	// Process output data
+	if (resultSet == null) {
+		throw new ApplicationException(&quot;Failed to get affected object(s)&quot;);
+	}
+	return resultSet;
+  }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="removeAffectedObject"></a>Removing Affected Objects</h4>
+<p>To remove 'affected objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table36">
+	<tbody>
+		<tr>
+			<td><code>Status removeAffectedObjects(Identifier iActionId,<br>
+			&nbsp;&nbsp;Identifier[] iObjIds) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table37">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="730">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjfIds</code></td>
+			<td width="730">The list of to be removed affected object 
+			identifiers</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>removeAffectedObjects</code>
+method:</p>
+<table class="code" id="table38">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public void RemoveAffectedObject(String actionUUID,
+				   String[] affectedObjUUIDs) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'removeAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (actionUUID == null) {
+		throw new ApplicationException(&quot;Action UUID is null&quot;);
+	}
+	Console.Out.WriteLine(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>	// Create input data
+	Identifier actionID = ToIdentifier(actionUUID);
+	Identifier[] affectedObjIDs = ToIdentifierArray(affectedObjUUIDs);
+		</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.RemoveAffectedObject(actionID,
+							affectedObjIDs);</pre>
+			<pre>		Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to remove affected object(s)&quot;, e);
+	}		</pre>
+			<pre>  }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<h4><a name="getAffectedObjects"></a>Retrieving Affected Objects</h4>
+<p>To get 'affected objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table39">
+	<tbody>
+		<tr>
+			<td><code>Status getAffectedObjects(Identifier iObjectId,<br>
+			&nbsp;&nbsp;SelectExpression iSelect,<br>
+			&nbsp;&nbsp;StringArrayType iObjTypes,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table40">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="716">&nbsp;The identifier of the target EC object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iSelect</code></td>
+			<td width="716">&nbsp;Select Expression subscribing to the attributes to be&nbsp;
+			returned on the result set 'affected objects'. See [<a href="#References">3</a>]
+			for details on SelectExpression</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjTypes</code></td>
+			<td width="716">&nbsp;List of affected object types (eg., Documents, Part Instance, Part
+			Version, Product) to be returned. If this list is empty all affected objects
+			will be returned</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td width="716">&nbsp;Return affected object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>getAffectedObjects</code>
+method:</p>
+<table class="code" id="table41">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>public ENOVIA GetAffectedObjects(string ecoUUID, string[] objTypes, string selectExpression) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'GetAffectedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (ecoUUID == null) {
+		throw new ApplicationException(&quot;Illegal argument: ECO UUID is null&quot;); 
+	}
+	Console.Out.WriteLine(&quot;ECO UUID: {0}&quot;, ecoUUID);</pre>
+			<pre>	// Create input data
+	Identifier ecoId = ToIdentifier(ecoUUID);
+	SelectExpression selectExp = new SelectExpression();
+	selectExp.Value = selectExpression;
+	ENOVIA resultSet = null;</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.GetAffectedObjects(ecoId, selectExp, objTypes, ref resultSet);
+		Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+	} catch (Exception e) {
+		throw new ApplicationException(&quot;Failed to get affected object(s)&quot;, e);
+	}</pre>
+			<pre>	// Process output data
+	if (resultSet == null) {
+		throw new ApplicationException(&quot;Failed to get affected object(s)&quot;);
+	}
+	return resultSet;
+  }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="addAssociatedObject"></a>Adding Associated Objects</h4>
+<p>To add associated objectsin ENOVIA LCA V5 use the following method, which is 
+available through the generated <code> IChgMgmtWS</code> proxy interface:&nbsp;</p>
+<table class="code" id="table42">
+	<tbody>
+		<tr>
+			<td><code>Status addAssocitedObjects(I</code><font SIZE="2">dentifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">dentifier iObjectId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">IIdentifier[] iModIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table43">
+	<tbody>
+		<tr>
+			<td><code>[in] iActionId</code></td>
+			<td width="710">&nbsp;The identifier of the action</td>
+		</tr>
+		<tr>
+			<td><code>[in] iInputObjectIds</code></td>
+			<td width="710">&nbsp;List of Input associated objects identifier</td>
+		</tr>
+		<tr>
+			<td><code>[in] iModIds</code></td>
+			<td width="710">&nbsp;List of mods</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>addAssociatedObjects</code>
+method:</p>
+<table class="code" id="table44">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public void AddAssociatedObject(String actionUUID,
+				String toAssociateObjUUID,
+				String[] modUUIDs) {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'addAssociatedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (actionUUID == null) {
+		throw new ApplicationException(&quot;Action UUID is null&quot;);
+	}
+	Console.Out.WriteLine(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>	// Create input data
+	Identifier actionID = ToIdentifier(actionUUID);
+	Identifier toAssociateObjIDs = ToIdentifier(toAssociateObjUUID);
+	Identifier[] modIDs = ToIdentifierArray(modUUIDs);</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.AddAssociatedObject(actionID,
+							toAssociateObjIDs,
+							modIDs);</pre>
+			<pre>		Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to add associated object(s)&quot;, e);
+	}	</pre>
+			<pre>  }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="removeAssociatedObject"></a>Removing Associated Objects</h4>
+<p>To remove associated objects from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table45">
+	<tbody>
+		<tr>
+			<td><code>Status removeAssociatedObjects(</code><font SIZE="2">Identifier 
+			iActionId,</font><code><br>
+			&nbsp;&nbsp;</code><font SIZE="2">Identifier[] iObjectIds</font><code>) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table46">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="720">&nbsp;The identifier of the action object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iObjectIds</code></td>
+			<td width="720">&nbsp;Return associated object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>removeAssociatedObject</code>
+method:</p>
+<table class="code" id="table47">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public void RemoveAssociatedObject(String actionUUID,
+	 			String[] objsToRemove)  {
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'addAssociatedObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (actionUUID == null) {
+		throw new ApplicationException(&quot;Action UUID is null&quot;);
+	}
+	Console.Out.WriteLine(&quot;Action UUID: &quot; + actionUUID);</pre>
+			<pre>	// Create input data
+	Identifier actionID = ToIdentifier(actionUUID);</pre>
+			<pre>	Identifier[] objsToRemoveIDs = ToIdentifierArray(objsToRemove);</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try {
+		Status status = proxy.RemoveAssociatedObject(	actionID,
+								objsToRemoveIDs);</pre>
+			<pre>		Console.Out.WriteLine(&quot;Status: &quot; + status.Status1);
+	} catch (Exception e) {
+		throw new Exception(&quot;Failed to remove associated object(s)&quot;, e);
+	}	</pre>
+			<pre>  }</pre>
+			}</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<h4><a name="getAssociatedObjects"></a>Retrieving Associated Objects</h4>
+<p>To get 'associated objects' from ENOVIA LCA V5 use the following method, which
+is available through the generated <code> IChgMgmtWS</code> proxy
+interface:&nbsp;</p>
+<table class="code" id="table48">
+	<tbody>
+		<tr>
+			<td><code>Status getAssociatedObjects(Identifier iObjectId,<br>
+			&nbsp;&nbsp;SelectExpression iSelect,<br>
+			&nbsp;&nbsp;ENOVIAHolder oResult) throws RemoteException,
+			CATServiceExceptionType;</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>This method accepts the following parameters:</p>
+<table id="table49">
+	<tbody>
+		<tr>
+			<td><code>[in] iObjectId</code></td>
+			<td width="712">&nbsp;The identifier of the target EC object</td>
+		</tr>
+		<tr>
+			<td><code>[in] iSelect</code></td>
+			<td width="712">&nbsp;Select Expression subscribing to the attributes to be&nbsp;
+			returned on the result set 'affected objects'. See [<a href="#References">3</a>]
+			for details on SelectExpression</td>
+		</tr>
+		<tr>
+			<td><code>[in/out] oResult</code></td>
+			<td width="712">&nbsp;Return associated object list</td>
+		</tr>
+	</tbody>
+</table>
+<p>The following code demonstrates the use of the <code>getAssociatedObjects</code>
+method:</p>
+<table class="code" id="table50">
+	<tbody>
+		<tr>
+			<!-- Not using <pre></pre> because it doesn't print right -->
+			<td>
+			<pre>public class CAAENOVWSChgMgmtCppWrapper {</pre>
+			<pre>....</pre>
+			<pre>  public ENOVIA getAssociatededObjects(String actionUUID,
+	                                 String selectExpression){
+	Console.Out.WriteLine(&quot;&gt;&gt;&gt; Invoking 'getAssociatededObjects' on ENOVWSChgMgmtCpp CAA Web service proxy&quot;);
+	if (actionUUID == null) 
+	{
+		throw new ApplicationException(&quot;ECO UUID is null&quot;);
+	}
+	Console.Out.WriteLine(&quot;ACTION UUID: &quot; + actionUUID);
+	// Create input data
+	Identifier actionId = ToIdentifier(actionUUID);
+	SelectExpression selectExp = new SelectExpression();
+	selectExp.Value = selectExpression;
+	ENOVIA resultSet = null;</pre>
+			<pre>	// Invoke method on remote CAA Web service
+	try 
+	{
+		Status status = proxy.GetAssociatedObjects(actionId, selectExp,  ref resultSet);
+		Console.Out.WriteLine(&quot;Status: {0}&quot;, status.Status1);
+	} 
+	catch (Exception e) 
+	{
+		throw new ApplicationException(&quot;Failed to get associated object(s)&quot;, e);
+	}</pre>
+			<pre>	// Process output data
+	if (resultSet == null) 
+	{
+		throw new ApplicationException(&quot;Failed to get associated object(s)&quot;);
+	}
+	return resultSet;
+  }</pre>
+			<pre>}</pre></td>
+		</tr>
+	</tbody>
+</table>
+	<p>
+    <!-- SECTION 3.3 ----------------------------------------------------------------------------- SECTION 3.3 -->
+    </p>
+	<p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.4 ----------------------------------------------------------------------------- SECTION 3.4 -->
+    <h4><a name="3.4"></a>Sample Usage Scenario</h4>
+    <p>The following code depends on:
+    </p>
+    <ul>
+      <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">4</a>] 
+		for details 
+      </li>
+      <li>the CAAENOVWSChgMgmtCppWrapper class to manage change management</li>
+		<li>the CAAENOVWSProdStructCppWrapper[<a href="#References">5</a>]
+		class to create part reference</li>
+		<li>the CAAENOVWSCntMgmtCppWrapper [<a href="#References">6</a>]class to create document</li>
+    </ul>
+    <p>It demonstrates a sample usage scenario for the ENOVWSChgMgmtCpp CAA Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td>
+				<pre>public class CAAENOVWSChgMgmtCppUseCase {
+  private string uri = null;
+  private string credUser = null;
+  private string credPwd = null;</pre>
+				<pre>  public CAAENOVWSChgMgmtCppUseCase(string uri, string credUser, string credPwd) {
+	this.uri = uri;
+	this.credUser = credUser;
+	this.credPwd = credPwd;
+  }</pre>
+				<pre>  public void RunSampleUsageScenario(string enoviaUser) {</pre>
+				<pre>	bool success = false;
+	Exception exception = null;
+	enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = null;
+	enoposapplicationbinderimpl.SessionToken sessionToken = null;
+	try {
+	// ------------------------------------------------------------
+	// Step 1 - Instantiate and configure the proxies
+	// ------------------------------------------------------------</pre>
+				<pre>	Console.Out.WriteLine(&quot;STEP 1: Instantiating and configuring CAA Web services proxies&quot;);
+		</pre>
+				<pre>	// Create a CookieContainer object to maintain the HTTP session state accross proxies
+	CookieContainer container = new CookieContainer();</pre>
+				<pre>	// Instantiate the wrapper client classes
+	int timeOut = 360000;
+	binderWrapper = 
+	  new enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper
+	  (container, uri, credUser, credPwd, timeOut);
+	enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper = 
+	  new enovwsquerycpp.CAAENOVWSQueryCppWrapper
+	 (container, uri, credUser, credPwd, timeOut);
+	enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper chgMgmtWrapper = 
+	  new enovwschgmgmtcpp.CAAENOVWSChgMgmtCppWrapper
+	  (container, uri, credUser, credPwd, timeOut);
+	enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper cntMgmtWrapper = 
+	  new enovwscntmgmtcpp.CAAENOVWSCntMgmtCppWrapper
+	  (container, uri, credUser, credPwd, timeOut);
+	enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper prodStructWrapper = 
+	  new enovwsprodstructcpp.CAAENOVWSProdStructCppWrapper
+	  (container, uri, credUser, credPwd, timeOut);</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 2 - Open session with ENOVIA LCA V5
+	// ------------------------------------------------------------</pre>
+				<pre>	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 2: Opening session with ENOVIA LCA V5&quot;);
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>	// Get user contexts
+	string[] userContexts = binderWrapper.GetUserContexts(enoviaUser);
+	Console.Out.WriteLine(&quot;Found {0} context(s) in database&quot;, userContexts.Length);
+	Console.Out.WriteLine(&quot;Displaying list of available contexts:&quot;);
+	for (int i = 0; i &lt; userContexts.Length; i++) {
+		Console.Out.WriteLine(&quot;Context[{0}]: {1}&quot;, i, userContexts[i]);
+	}</pre>
+				<pre>	// Log in using the first available context
+	if (userContexts.Length == 0) {
+		throw new ApplicationException(&quot;No context found for the user specified&quot;);
+	}
+	sessionToken = binderWrapper.Login(userContexts[0]);
+</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 3 - Change management use case : Create Action
+	// ------------------------------------------------------------
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 3: Creating Action&quot;);
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	long t=System.DateTime.Now.Ticks;        
+	String uniqueStr = t.ToString();</pre>
+				<pre>	String carAction = &quot;Action design CAR&quot; + uniqueStr;
+	String[] actionID = {carAction};
+	actionID[0] = carAction;
+	String actionDomain = &quot;APLAFL&quot;;
+	String actionPriority = &quot;Routine&quot;;
+			</pre>
+				<pre>	enovwschgmgmtcpp.ENOVIA newAction = chgMgmtWrapper.CreateAction(actionID,
+					actionDomain,
+					actionPriority);
+													</pre>
+				<pre>	String[] newActionUUIDs = chgMgmtWrapper.GetENOVIA_Action_DesignUUIDs(newAction);
+	if (newActionUUIDs.Length != 1) 
+	{
+		throw new Exception(&quot;Failed to create action&quot; + newActionUUIDs);
+	}
+		</pre>
+				<pre>	String newActionUUID = newActionUUIDs[0];
+ 			</pre>
+				<pre>	CAAENOVWSUtils.DisplayResults(newAction, 1);
+</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 4 - Change management use case : Create Document
+	// ------------------------------------------------------------
+	Console.Out.WriteLine(&quot;----------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 4: Creating  document&quot;);
+	Console.Out.WriteLine(&quot;----------------------------------------------------------------------------&quot;);
+</pre>
+				<pre>	String docId1 = &quot;CAR Owners manual&quot; + uniqueStr;</pre>
+				<pre>	String docName1 = &quot;CAA Client&quot; + docId1;
+	String docDomain = &quot;DOCDIR&quot;;</pre>
+				<pre>	enovwscntmgmtcpp.ENOVIA createDocResultSet1 = cntMgmtWrapper.CreateDocument(docId1,
+				docName1,
+				docDomain);</pre>
+				<pre>	String[] docUUIDs1 = cntMgmtWrapper.GetENOVIA_VPMDocumentRevisionUUIDs(createDocResultSet1);
+	if (docUUIDs1.Length &gt; 1) 
+	{
+		throw new Exception(
+			&quot;Invalid state: more than 1 document was returned&quot;);
+	} 
+	else if (docUUIDs1.Length != 1) 
+	{
+		throw new Exception(&quot;Failed to create the document&quot;);
+	}
+	String docUUID1 = docUUIDs1[0];</pre>
+				<pre>	CAAENOVWSUtils.DisplayResults(createDocResultSet1, 1);
+			</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 5- Change management use case : Create PV
+	// ------------------------------------------------------------
+	Console.Out.WriteLine(&quot;-----------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 5: Creating  PV&quot;);
+	Console.Out.WriteLine(&quot;-----------------------------------------------------------------------------&quot;);
+			</pre>
+				<pre>	String envDomain = &quot;PRODUCT&quot;;</pre>
+				<pre>	String configurable = &quot;FALSE&quot;;
+	String partNumber1 = &quot;CAR Axle&quot; + uniqueStr;</pre>
+				<pre>	String[] partNumbers = { partNumber1 };</pre>
+				<pre>	// Create the one part references
+	enovwsprodstructcpp.ENOVIA createPartRefResultSet = prodStructWrapper.CreatePartRef(partNumbers,
+		  		envDomain,
+				configurable);</pre>
+				<pre>	String[] partRefUUIDs = prodStructWrapper.GetENOVIA_VPMPartVersionUUIDs(createPartRefResultSet);
+	if (partRefUUIDs.Length &gt; 1) 
+	{
+		throw new Exception(
+			&quot;Invalid state: more than 1 part references were returned&quot;);
+	} 
+	else if (partRefUUIDs.Length != 1) 
+	{
+		throw new Exception(&quot;Failed to create the 1 part references&quot;);
+	}
+	String partRefUUID1 = partRefUUIDs[0];</pre>
+				<pre>	CAAENOVWSUtils.DisplayResults(createPartRefResultSet, 1);			</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 6 - Change management use case : Add Affected Object
+	// ------------------------------------------------------------
+	Console.Out.WriteLine(&quot;----------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 6: Add Affected Object&quot;);
+	Console.Out.WriteLine(&quot;----------------------------------------------------------------------------&quot;);
+			</pre>
+				<pre>	String[] inputAO = {partRefUUID1};
+	String[] outputAO = {docUUID1};
+			</pre>
+				<pre>	chgMgmtWrapper.AddAffectedObject(newActionUUID,inputAO,outputAO);	
+		</pre>
+				<pre>        Console.Out.WriteLine(&quot;----------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 7: Getting affected objects&quot;);
+	Console.Out.WriteLine(&quot;------------------------------------------------------------------------------&quot;);</pre>
+				<pre>        String[] objTypes = null;
+	</pre>
+				<pre>	enovwschgmgmtcpp.ENOVIA affectedObjectsResultSet = chgMgmtWrapper.GetAffectedObjects(newActionUUID,
+                                                                             objTypes,
+                                                                             null);
+</pre>
+				<pre>	CAAENOVWSUtils.DisplayResults(affectedObjectsResultSet, 2);
+			</pre>
+				<pre>	String[] affectedObjectUUID = 
+	    chgMgmtWrapper.GetENOVIA_Input_Associated_ObjectUUIDs(affectedObjectsResultSet);
+			</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 8 - Change management use case : Remove  Affected Object
+	// ------------------------------------------------------------
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 8: Remove Affected Object&quot;);
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+			</pre>
+				<pre>	chgMgmtWrapper.RemoveAffectedObject(newActionUUID,affectedObjectUUID);	       
+			</pre>
+				<pre>	// ------------------------------------------------------------
+	// Step 9 - Get affected objects
+	// ------------------------------------------------------------</pre>
+				<pre>	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 9: Getting affected objects&quot;);
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>	enovwschgmgmtcpp.ENOVIA affectedObjectsResultSet1 = 
+				                    chgMgmtWrapper.GetAffectedObjects(newActionUUID,
+									objTypes,null);</pre>
+				<pre>	CAAENOVWSUtils.DisplayResults(affectedObjectsResultSet1, 1);			    
+</pre>
+				<pre>	success = true;
+	} catch (Exception e) {
+		exception = e;
+	} finally {
+	// ------------------------------------------------------------
+	// Step 10 - Terminate opened session
+	// ------------------------------------------------------------</pre>
+				<pre>	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);
+	Console.Out.WriteLine(&quot;STEP 10: Terminating opened session with ENOVIA LCA V5&quot;);
+	Console.Out.WriteLine(&quot;--------------------------------------------------------------------------------&quot;);</pre>
+				<pre>	// The session must be closed even if a call to a method on the ENOVWSQueryCpp 
+	// CAA Web service fails
+	binderWrapper.Logout(sessionToken);
+	}
+			</pre>
+				<pre>	if (success) {
+		Console.Out.WriteLine(&quot;================================================================================&quot;);
+		Console.Out.WriteLine(&quot;Use case execution successful&quot;);
+		Console.Out.Flush();
+		Console.Out.Close();
+		Environment.Exit(0);
+	} else {
+		Console.Out.Flush();
+		Console.Out.Close();
+		Console.Error.WriteLine(&quot;================================================================================&quot;);
+		Console.Error.WriteLine(&quot;Use case execution failed&quot;);
+		Console.Error.WriteLine(exception.Message);
+		Console.Error.WriteLine(&quot;Details:&quot;);
+		if (exception.InnerException != null) {
+			Console.Error.WriteLine(exception.InnerException); // handles ApplicationException launched from the use case
+		} else {
+			Console.Error.WriteLine(exception); // handles unexpected exception
+		}
+		Console.Error.Flush();
+		Console.Error.Close();
+		Environment.Exit(-1);
+	}
+  }
+}</pre>
+&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The <code>CAAENOVWSUtils.DisplayResults</code> method can be found at:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>,</li>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- IN SHORT ----------------------------------------------------------------------------------- IN SHORT -->
+    <hr>
+    <h3><a name="InShort"></a>In Short</h3>
+    <p>This use case explains how to use the Java client binding generated using 
+	the Axis WSDL2Java emitter in order to consume the ENOVWSChgMgmtCpp CAA Web 
+	service. It also gives an overview of the methods available for 
+	ENOVWSChgMgmtCpp web services:</p>
+	<ul style="margin-bottom: 2mm">
+		<li>
+		<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+		<a href="#createAction">createAction</a></code>: Creates action(s) from 
+		input replica and returns the created action Attributes-Values in output 
+		replica. </li>
+		<li><a href="#addAffectedObject">addAffectedObjects</a>:Add objects as 
+		input or output affected objects manually under a given action, so that 
+		all the modifications are controlled through the Action. ECOs are not 
+		supported. </li>
+		<li><a href="#removeAffectedObject">removeAffectedObjects</a>:Remove the 
+		links to the objects that are controlled by Action as affected objects. 
+		ECOs are not supported. </li>
+		<li>
+		<code style="font-family: 'Courier New', Courier; font-size: 110%; font-weight: normal">
+		<a href="#getAffectedObjects">getAffectedObjects</a></code>: Returns a 
+		list of objects that are affected by an Engineering Change/Action. </li>
+		<li><a href="#addAssociatedObject">addAssociatedObjects</a>:Associates 
+		an Enovia object like Documents,Part version etc to a given action 
+		object and existing Enovia Modification. </li>
+		<li><a href="#removeAssociatedObject">removeAssociatedObjects</a>:Remove 
+		the association of configured objects or Enovia Parts, Documents etc, 
+		from a given input action. </li>
+		<li><a href="#getAssociatedObjects">getAssociatedObjects</a>:Returns a 
+		list of configured objects with their attributes-values and uuid of the 
+		Enovia object like Documents, Part version etc, that are associated to 
+		an Action.</li>
+	</ul>
+	<p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- REFERENCES ------------------------------------------------------------------------------- REFERENCES -->
+    <hr>
+    <h3><a name="References"></a>References</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">[1]</td>
+                <td valign="top" align="left"><a href="#">Building and Launching a CAA Web Service Use Case</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[2]</td>
+                <td><a href="#">Generating a C# Client Binding</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[3]</td>
+                <td><a href="../CAAENOVWSTechArticles/SelectExpression.htm">Using SelectExpression</a></td>
+            </tr>
+            <tr>
+                <td valign="top" height="21">[4]</td>
+                <td height="21">
+				<a href="../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm">Consuming the ENOPosApplicationBinderImpl CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top" height="21">[5]</td>
+                <td height="21">
+				<a href="CAAENOVWSProdStructCppDotNetClient.htm">Consuming the ENOVWSProdStructCpp CAA Web Service</a></td>
+            </tr>
+			<tr>
+                <td valign="top" height="21">[6]</td>
+                <td height="21"><a href="CAAENOVWSCntMgmtCppDotNetClient.htm">
+				Consuming the ENOVWSCntMgmtCpp CAA Web Service</a></td>
+            </tr>
+            <tr>
+                <td valign="top">&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- FOOTER ------------------------------------------------------------------------------------- FOOTER -->
+    <hr>
+    <h3><a name="History"></a>History</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">Version: <strong>1</strong> [Jan 2006]</td>
+                <td valign="top">Document created</td>
+            </tr>
+            <tr>
+          <td valign="top">
+            Version: <strong>2</strong> [Feb 2006]
+          </td>
+          <td valign="top">
+            Document updated
+          </td>
+        	</tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

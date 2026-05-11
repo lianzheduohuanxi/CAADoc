@@ -1,0 +1,229 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMAdvancedRemoveFaceOpe</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMAdvancedRemoveFaceOpe"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMAdvancedRemoveFaceOpe</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMAdvancedRemoveFaceOpe_62547','CATICGMAdvancedRemoveFaceOpe','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMAdvancedRemoveFaceOpe</b>
+</p>
+<p>
+<b><i> Class defining a topological operator which removes a set of faces from a volume or a skin.</i></b><br>
+<br>
+ This operator does not change the dimension of the body: a volume remains a volume, a skin remains a skin.<br>
+ Note that the specified faces to be removed are not propagated, you need to provide a consistent set of faces.
+ The operation completes when the body can be closed by extrapolation of the faces which were adjacent to
+ the ones removed. Neighbouring faces extrapolations should not generate any tangency configuration.<br>
+ Unlike CATIPGMRemoveFace operator, CATIPGMPersistentOperator is able to apply special treatments
+ when it is judged necessary for the operation to succeed. For instance, local regularization can be applied
+ in order to avoid twisting of extrapolated geometries.<br>
+ To use this operator, you must:
+ <ul>
+ <li>Create it with the <tt>CATPGMCreateAdvancedRemoveFaceOpe</tt> global function
+ <li>Tune it with appropriate options, using the <tt>SetXxx</tt> or <tt>Append</tt> methods.
+ <li>Run it
+ <li>Get the result with the <tt>GetResult</tt> method. If you do not want to keep the resulting body,
+    use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the geometric factory, after the operator deletion. <li>Release the operator with the <tt>Release</tt> method after use.
+ </ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Append(CATLISTP(CATFace)&amp;)"><b>Append</b></a>(CATLISTP(CATFace)&amp;)
+<dd>  Appends a list of faces to be removed.
+ <dt> o 
+    <a href="#AppendLimiting(CATFace*,CATBody*,CATOrientation)"><b>AppendLimiting</b></a>(CATFace*,CATBody*,CATOrientation)
+<dd>  Appends a limiting body related to a face to be partially removed.
+ <dt> o 
+    <a href="#GetAllTrickyFaces(CATLISTP(CATFace)&amp;,CATListOfInt&amp;)"><b>GetAllTrickyFaces</b></a>(CATLISTP(CATFace)&amp;,CATListOfInt&amp;)
+<dd>  Returns the complete list of faces when the operation cannot fully complete .
+ <dt> o 
+    <a href="#SetAllowLocalRegularization(short)"><b>SetAllowLocalRegularization</b></a>(short)
+<dd>  Allow a local smoothing of a tricky faces
+ 
+ <dt> o 
+    <a href="#SetDeviationAllowed(CATLength)"><b>SetDeviationAllowed</b></a>(CATLength)
+<dd>  Sets the deviation allowed by the user.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Append"></a><a name="Append(CATLISTP(CATFace)&amp;)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Append</b>(<td> const <script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>iFacesToRemove</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a list of faces to be removed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFacesToRemove</tt>
+   <dd> The list of pointers to faces to remove.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AppendLimiting"></a><a name="AppendLimiting(CATFace*,CATBody*,CATOrientation)"></a> <dt> o <b>AppendLimiting</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AppendLimiting</b>(<td><script type="text/javascript"> activateLink('CATFace','CATFace*')</script> <td><tt>iFaceToRelimit</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iLimitingBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATOrientation','CATOrientation')</script> <td><tt>iOri</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a limiting body related to a face to be partially removed.
+ The limiting body must be mono-shell mono-face.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFaceToRemove</tt>
+   <dd> The face to relimit.
+ </dd>
+    <dt><tt> iLimitingBody</tt>
+   <dd> The limiting body.
+ </dd>
+    <dt><tt> iOri</tt>
+   <dd> The orientation related to the shell indicating the side to remove.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetAllTrickyFaces"></a><a name="GetAllTrickyFaces(CATLISTP(CATFace)&amp;,CATListOfInt&amp;)"></a> <dt> o <b>GetAllTrickyFaces</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetAllTrickyFaces</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATFace)','CATLISTP(CATFace)&amp;')</script> <td><tt>oAllTrickyFaces</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfInt','CATListOfInt&amp;')</script> <td><tt>oAllDiags</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the complete list of faces when the operation cannot fully complete .
+ The list can include faces that could not be removed but also pathological closing faces.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oAllTrickyFaces</tt>
+   <dd> The list of tricky faces
+ </dd>
+    <dt><tt> oAllDiags</tt>
+   <dd> The list of diagnoses.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetAllowLocalRegularization"></a><a name="SetAllowLocalRegularization(short)"></a> <dt> o <b>SetAllowLocalRegularization</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAllowLocalRegularization</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iAllowLocalRegularization</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Allow a local smoothing of a tricky faces
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAllowLocalRegul</tt>
+   <dd> 0 - Regularization is disabled
+ 1 - Allow the operator to apply a regularization on the input body to avoid surfaces to twist when extrapolated.
+     This mode is used by default at the creation of the operator.
+</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDeviationAllowed"></a><a name="SetDeviationAllowed(CATLength)"></a> <dt> o <b>SetDeviationAllowed</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDeviationAllowed</b>(<td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iDeviation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the deviation allowed by the user.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDeviation</tt>
+   <dd> Represents the maximum value of the deviation. This value must be positive.
+ Default value is 100 * factory resolution
+</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMAdvancedRemoveFaceOpe.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

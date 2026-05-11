@@ -1,0 +1,348 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>STEP Overview</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td valign="top">
+     <h2>PDM Object Hub</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>STEP Overview</h3>
+     <p><br>
+     <em>Understanding STEP, Express, and SDAI</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>STEP is the industry digital product model data standard used worldwide 
+     to exchange data between companies and their partners, suppliers, and 
+     customers. This article briefly describes STEP and its main components.<br>
+     </p>
+     <ul>
+       <li><a href="#STEP"><b>What Is STEP?</b></a></li>
+       <li><a href="#Part11"><b>Part 11 - The EXPRESS Language</b></a></li>
+       <li><a href="#Part21"><b>Part 21 - Clear Text Encoding of the Exchange 
+       Structure</b></a></li>
+       <li><a href="#Part22"><b>Part 22 - The Standard Data Access Interface 
+       (SDAI)</b></a></li>
+       <li><a href="#EXPRESS-X"><b>The EXPRESS-X Mapping Language</b></a></li>
+       <li><a href="#InShort"><b>In Short</b></a></li>
+       <li><a href="#References"><b>References</b></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="STEP"></a>What Is STEP?</h3>
+ <p>STEP, acronym for <b>St</b>andard for the <b>E</b>xchange of <b>P</b>roduct 
+ Model Data, is a a set of ISO standards (ISO 10303) that describes how to 
+ represent and exchange digital product data. STEP addresses the main industry 
+ sectors: mechanical, electricity &amp; electronics, consumer goods, architecture 
+ and construction, etc. STEP goes far beyond other data exchange standards 
+ because it is designed to represent and give access to data during the whole 
+ product's design stages and lifecycle, and supports design, manufacturing, and 
+ maintenance, as well as data reusability and concurrent engineering.</p>
+ <p>STEP is divided into parts, such as:</p>
+ <ul>
+   <li>Part 11: The EXPRESS information modeling language to describe data 
+   models</li>
+   <li>Part 21: An EXPRESS-driven data exchange file specification to save data 
+   model into files</li>
+   <li>Part 22: An EXPRESS-driven application programming interface (SDAI, 
+   acronym for Standard Data Access Interface) to manipulate (create, delete, 
+   retrieve, set, etc.) EXPRESS defined data. This API is bound to the C (Part 
+   24), C++ (Part 23), and Java languages.</li>
+   <li>The EXPRESS-X mapping language to enable mapping between two data models.</li>
+ </ul>
+ <p>Some parts define international standard for industry-specific data models. 
+ They are also named Application Protocols. Examples of such APs are:</p>
+ <ul>
+   <li>AP 203: Configuration Controlled 3D Assemblies</li>
+   <li>AP 214: Automotive Design</li>
+ </ul>
+ <p>The figure below shows these different STEP parts.</p>
+ <p>
+ <img border="0" src="images/CAAVseStepOverview.gif" width="519" height="393"></p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Part11"></a>Part 11 - The EXPRESS Language</h3>
+ <p>EXPRESS is a language to describe data models. An <b>EXPRESS schema</b> 
+ contains a data model made up of <b>classes</b> that are themselves made up of
+ <b>attributes</b>, <b>references</b>, <b>aggregates</b>, and <b>rules</b>.</p>
+ <p>In V5, an EXPRESS schema is built with mkmk. The schema is stored in an 
+ express-suffixed file and stored in the PublicInterfaces, ProtectedInterfaces, 
+ or PrivatedInterfaces folder of a framework, or in the LocalInterfaces folder 
+ of a module. The module must have the same name than the schema. mkmk builds 
+ the module and generates a shared library of DLL from the schema.</p>
+ <p>Below is an excerpt of the ENOV_DATAX EXPRESS schema contained in the 
+ ENOV_DATAX.express file you can find in the runtime view \startup\STEP\samples 
+ folder.</p>
+ <pre>SCHEMA ENOV_DATAX;
+...
+TYPE operation = ENUMERATION OF
+  (DELETE,REPLACE);
+END_TYPE; 
+...
+ENTITY ENOVExVPMDocFile SUBTYPE OF (ENOVExchangeable);
+  Q_PathExist       : integer;
+  Q_path            : string(256);
+  Q_Last_ci_name    : OPTIONAL string(256);
+  V_iterationformat : ENOVExVPMDocumentIterationFormat;
+END_ENTITY;
+...</pre>
+ <p>The keyword <code>SCHEMA</code> defines the schema name, that is ENOV_DATAX. 
+ The keyword <code>TYPE</code> defines basic data, such as an enumeration named
+ <code>operation</code> with two possible values: <code>DELETE</code> and <code>
+ REPLACE</code>.</p>
+ <p>A class description is enclosed between the keywords <code>ENTITY</code> and
+ <code>END_ENTITY</code>, such as <code>ENOVExVPMDocFile</code> which us a 
+ subtype of the <code>ENOVExchangeable</code> entity described elsewhere in the 
+ schema. This allows for classification, or parent-child links between classes. 
+ The subclass is a specialization of the superclass. This particularly means 
+ that the attributes of <code>ENOVExchangeable</code> are inherited by <code>
+ ENOVExVPMDocFile</code>. In addition, <code>ENOVExVPMDocFile</code> has four 
+ attributes of its own. Some have a simple type. For example, <code>Q_PathExist</code> 
+ is an integer, and <code>Q_path</code> is a character string limited to 256 
+ characters, as well as <code>Q_Last_ci_name</code> which is optional, that is, 
+ that may not be valued without <code>ENOVExVPMDocFile</code> be inconsistent. 
+ The last attribute, <code>V_iterationformat</code>, refers to another entity 
+ also defined elsewhere in the schema.</p>
+ <p>If a class is defined with the keyword <code>ABSTRACT SUPERTYPE</code>, that 
+ means this entity cannot be instantiate directly. A subtype will be 
+ instantiated.</p>
+ <p>An attribute may have a simple type: real, integer, number, logical, 
+ boolean, binary, or string.</p>
+ <p>An attribute may also be an aggregate, such as an array, a bag, a list, or a 
+ set. For example, the Q_Path_II attribute is an optional collection of ordered 
+ strings. Since the attribute is optional, the number of strings may be 0.</p>
+ <pre>...
+  Q_Path_II  : OPTIONAL LIST[0:?] OF string;
+...</pre>
+ <p>Other aggregates exist:</p>
+ <ul>
+   <li>Array: a fixed size ordered collection</li>
+   <li>Bag: an unordered collection with possible duplication</li>
+   <li>Set: an unordered collection without duplication&nbsp;</li>
+ </ul>
+ <p>Rules are&nbsp; For example, the following class includes a rule.</p>
+ <pre>ENTITY ENOVExAFLHistory SUBTYPE OF (ENOVExchangeable);
+...
+  V_operation : string(20);
+...
+WHERE
+  WR1: V_operation IN ['creation','promotion','close','promoteobject','add','move','cut','replace'];
+...
+END_ENTITY;</pre>
+ <p>The keyword <code>WHERE</code> defines a rule onto the attribute <code>
+ V_operation</code> that must take one of the values listed between the square 
+ brackets. This rule is a domain rule that constrains the values of an 
+ attribute. Other rule types exist:</p>
+ <ul>
+   <li>Unique rule to indicate that the value of the attribute designated using 
+   the keyword <code>UNIQUE</code> is associated with only one instance of that 
+   class
+   <pre>ENTITY ENOVExAFLBaseAction SUBTYPE OF (ENOVExAFLPSAction);
+UNIQUE
+    UR1 : V_name;
+END_ENTITY;</pre>
+   </li>
+   <li>Inverse rule to set a link between a class and an attribute or a class, 
+   thanks to the keyword <code>INVERSE</code>
+   <pre>ENTITY ENOVExAFLAction SUBTYPE OF (ENOVExchangeable);
+...
+  C_histories : OPTIONAL SET [0:?] OF ENOVExAFLHistory;
+...
+END_ENTITY;
+...
+ENTITY ENOVExAFLHistory SUBTYPE OF (ENOVExchangeable);
+...
+INVERSE
+    C_action : ENOVExAFLAction FOR C_histories;
+...
+END_ENTITY;</pre>
+   </li>
+   <li>Derive rule to compute the value of an attribute from the values of other 
+   attributes</li>
+ </ul>
+ <p>EXPRESS allows for references to other schemas for reuse purpose.</p>
+ <pre>REFERENCE FROM CATIA_DATAX
+  (CATIA2DPoint, CATIA3DPoint,
+   CATIA2DCurve, CATIA3DCurve));</pre>
+ <p>Refer to the <a href="#References">Internet sites</a> referenced at the 
+ bottom of this article for reference materials about these keywords and more 
+ information about EXPRESS.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Part21"></a>Part 21 - Clear Text Encoding of the Exchange 
+ Structure</h3>
+ <p>The part 21 describes the format used to store an SDAI model into a file. 
+ The SDAI interfaces allows an SDAI model to be saved to or loaded from a part 
+ 21 encoded file. Such a file has a step suffix. For example, below is an 
+ excerpt of the CAR.step&nbsp; file you can find in the runtime view 
+ \startup\STEP\samples folder.</p>
+ <pre>ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION($,'1');
+
+FILE_NAME($,'2000-01-31T17:24:16+00:00',$,$,$,$,$);
+
+FILE_SCHEMA(('VPM12_fidji'));
+
+!FILE_SCHEMA_VERSION(1,1);
+
+ENDSEC;
+DATA;
+#2=cdma_id('3D3D91B1369B4E4F','3030303030303030','VPM1','PART_LIST',#1);
+#15=cdma_id('3D3D91B1369B4E4F','3D3D91B136C00A13','VPM1','$EXTcar',#14);
+...
+#49=event_sequence(':Promote','DSGproposed','01062000175858','PMA','No Comment');
+#50=event_sequence(':Promote','DSGin work','01062000175900','PMA','No Comment');
+...
+ENDSEC;
+END-ISO-10303-21;</pre>
+ <p>This file is made of a header that refers to the schema VPM12_fidji using 
+ the keyword <code>FILE_SCHEMA</code>, and of a data part that begins with the 
+ keyword <code>DATA</code>, where each entity instance is described on one line 
+ begining with the # sign followed by a unique number, the entity name being 
+ followed by its attribute values between the parentheses.</p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Part22"></a>Part 22 - The Standard Data Access Interface (SDAI)</h3>
+ <p>The EXPRESS schema models product data. SDAI defines an API to create such 
+ models in memory and handle them. This API is made up of a set of C/C++ 
+ functions.&nbsp;</p>
+ <p>CAA V5 provides access to this API through a set of C++ classes located in 
+ the framework
+ <a href="#" onclick="javascript:CAAlink('CPP', 'SDMRuntime');return false;">
+ SDMRuntime</a>. For example:</p>
+ <ul>
+   <li>SdaiModel: contains all the class instances of a schema</li>
+   <li>SdaiEntity: represents a class, that is how a class is described using&nbsp; 
+   EXPRESS <code>ENTITY</code> keyword in the schema</li>
+   <li>SdaiEntityDefinition: represents a class, that is how a class is 
+   described using&nbsp; EXPRESS <code>ENTITY</code> keyword in the schema</li>
+   <li>SdaiAttribute: represents an attribute</li>
+   <li>SdaiAppInstance: represents the application instance, that is an instance 
+   of a class as described in a Part 21 file</li>
+   <li>SdaiString: represents a&nbsp; character string</li>
+   <li>SdaiInteger: represents an integer</li>
+   <li>SdaiAggr: represents an aggregate.</li>
+ </ul>
+ <p>Note that the word class used to name the object described using the EXPRESS
+ <code>ENTITY</code> keyword in the schema is often referred to as entity in 
+ SDAI.</p>
+ <p>SDAI entity instances are called<b> <span style="font-weight: 400">
+ Application Data and are defined </span></b>in the SDAI <b>
+ <span style="font-weight: 400">Parameter Data Schema that relies in the SDAI 
+ Dictionary Schema.</span></b></p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="EXPRESS-X"></a>The EXPRESS-X Mapping Language</h3>
+ <p>EXPRESS-X is about describing how to map an EXPRESS schema onto another 
+ EXPRESS schema. This enables you to convert data models expressed according to 
+ an EXPRESS schema into the same data models expressed according another EXPRESS 
+ schema. For example, EXPRESS-X is used to map the ENOVIA VPM EXPRESS schema 
+ onto the ENOVIA V5 EXPRESS schema. Using this mapping, a VPM SDAI data model 
+ expressed according to the ENOVIA VPM EXPRESS schema can be converted into an 
+ ENOVIA V5 data model expressed according to the ENOVIA V5 EXPRESS schema and 
+ then imported in ENOVIA V5.</p>
+ <p>EXPRESS-X is a structural data mapping language defined as a part of STEP. 
+ It is made up of language elements that allow an unambiguous specification of 
+ the relationship between a source schema and a target schema, that is, of the 
+ relations between source entities and target entities. Mapping the source 
+ entities to the target entities consists in defining the constraints on the 
+ relations between one of several source entities and a target entity. These 
+ constraints must be satisfied to convert an instance of a source entity to an 
+ instance of the target entity. </p>
+ <p><img border="0" src="images/CAAVseExpressx.gif" width="270" height="265"></p>
+ <p align="right"><a href="#Top">[Top]</a></p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>STEP is a a set of ISO standards (ISO 10303) that describes how to represent 
+ and exchange digital product data. It is made up of:</p>
+ <ul>
+   <li>A modeling language (EXPRESS) to describe data models</li>
+   <li>A data exchange file specification to save data model into files</li>
+   <li>An application programming interface (SDAI) to manipulate EXPRESS defined 
+   data</li>
+   <li>A mapping language (EXPRESS-X) to enable mapping between two data models.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="#" onclick="javascript:CAAlinkUrl('http://www.steptools.com/library/standard/');return false;">
+     STEP ISO 10303 background articles home page in the STEP Tools, Inc 
+     Internet site</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="#" onclick="javascript:CAAlinkUrl('http://www.steptools.com/library/express-x/e-x-ch1.pdf');return false;">
+     STEP Database Tutorial</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td>
+     <a href="#" onclick="javascript:CAAlinkUrl('http://pdesinc.aticorp.org/');return false;">
+     The STEP Technology home page of the PDES, Inc Internet site</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td><a href="CAAVseExpressXOperators.htm">EXPRES-X Operators</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[5]</td>
+     <td><a href="CAAVseExpressXKeywords.htm">EXPRES-X Keywords</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <b>1</b> [Jan 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <!---------------------------------comment------------------------------------->
+ <hr>
+ <p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

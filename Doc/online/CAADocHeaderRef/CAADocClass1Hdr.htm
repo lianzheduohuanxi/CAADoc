@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATCommand</title>
+</head>
+
+<body>
+
+<pre>
+...
+/**
+ * Base class for all objects that need to collaborate through notifications.
+ * &lt;b&gt;Role&lt;/b&gt;: To provide the basic command behavior, that is, to
+ * send notifications, that usually depicts a user interaction, to other commands
+ * and to receive notifications sent by other commands.
+ * This behavior is known as the send/receive communication protocol.
+ * &lt;p&gt;
+ * All the existing commands are organized as a tree structure.
+ * Each command has a parent command and possibly children.
+ * The parent is passed as a parameter of the command constructor.
+ * &lt;p&gt;
+ * When the end-user interacts with the application, system events are produced
+ * that are turned into notifications, and sent to either the command
+ * that is involved, such as the push button pushed by the end user,
+ * or to the command that is the nearest to the 
+ * user interaction, such as the manipulator set onto a document object's representation
+ * selected by the end user in a graphics viewer.
+ * &lt;p&gt;
+ * The notification is sent from command to command along the tree structure
+ * until it can be processed.
+ * If no command able to process the notification is
+ * found, it is sent to the command selector that resends it to
+ * the active command.
+ * This can decide to process the notification,
+ * or otherwise to do something else, possibly nothing.
+ *
+ * @see CATCallbackManager, CATNotification
+ */
+class ExportedByJS0FM CATCommand : public CATEventSubscriber
+{
+...
+</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Synchronizing component instances with the catalog reference</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Synchronizing component instances with the catalog reference</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to update component instances after
+         the changes in the corresponding catalog reference.<p>
+             The update of the component instances in the document is done through the corresponding
+             local reference component.As a result of the update, both the local reference and
+             all the component instances are synchronized with the corresponding reference component
+             in the catalog.</p>
+     <p>This macro opens the CAASCH_SyncCompInst.CATProduct document.</p>
+     </td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchSyncCompInst is launched in CATIA [<a href="#References">1</a>]. 
+     No open document is needed.<p><a href="CAASchSyncCompInstSource.htm">CAASchSyncCompInst.CATScript </a>is located in the CAAScdSchUseCases 
+     module. <a href="macros/CAASchSyncCompInst.CATScript">Execute macro</a> 
+     (Windows only).</p>
+		</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchSyncCompInst includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Update component instances">Update component instances</a></li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first loads CAASCH_SyncCompInst.CATProduct.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    
+    <font color="#008000">' Open the schematic document</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>sFilePath<br>
+&nbsp;&nbsp;&nbsp; sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "online\CAAScdSchUseCases\samples\CAASCH_SyncCompInst.CATProduct")<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)&nbsp;</td>
+       </tr>
+     </table>
+     <p>Next, the macro acquires the schematic root object from the document. 
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objPrdRoot<font color="#0000ff"> As </font>Product<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objSchRoot<font color="#0000ff"> As </font>SchematicRoot<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objPrdRoot = objSchDoc.Product
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp; End If</font></td>
+       </tr>
+     </table>
+     <p>
+         Then, the SchUpdateInstances interface is requested on the schematic root. This
+         interface provides a method for updating component instances.</p>
+         <p>
+             <table class="code">
+                 <tr>
+                     <td width="100%">
+                         &nbsp; &nbsp; <font color="#008000">' Get SchUpdateInstances interface on the schematic
+                             root.
+                             <br />
+                             &nbsp; &nbsp; </font><span style="color: #0000ff">Dim </span>objUpdateInstances<font
+                                 color="#0000ff">As </font>SchUpdateInstances<br />
+                         <font color="#0000ff"></font>
+                         <br />
+                         <font color="#0000ff">&nbsp; &nbsp; If </font>( Not ( objSchRoot Is Nothing ) )<font
+                             color="#0000ff"> Then</font><br />
+                         <font color="#0000ff">&nbsp; &nbsp; &nbsp;&nbsp; Set </font>objUpdateInstances =
+                         objSchRoot.GetInterface ("CATIASchUpdateInstances",objSchRoot)
+                         <br />
+                         <font color="#0000ff">&nbsp; &nbsp; End If</font></td>
+                 </tr>
+             </table>
+         </p>
+         <p>
+             The SchematicRoot interface provides the GetRefComponents method to find 
+     a list of all the Schematic eference components in the model. The macro 
+     takes the first one in the list and specifically requests for the 
+     SchComponent interface.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;<span style="color: #008000"> &nbsp; ' Find a list of reference component in the model</span><br />
+             <span style="color: #0000ff">&nbsp; &nbsp; Dim </span>objLCompRefs<font color="#0000ff">As
+             </font>SchListOfObjects<br />
+             <span style="color: #0000ff">&nbsp; &nbsp; Dim </span>objCompRef<font color="#0000ff">As
+             </font>SchComponent<br />
+             <span style="color: #0000ff">&nbsp; &nbsp; If </span>( Not ( objSchRoot Is Nothing
+             ) )<font color="#0000ff"> Then</font><br />
+             <font color="#0000ff">&nbsp; &nbsp; &nbsp;&nbsp; Set </font>objLCompRefs = objSchRoot.GetRefComponents<br />
+             <br />
+             <span style="color: #008000">&nbsp; &nbsp; &nbsp;&nbsp; ' Get the first reference component
+             </span><span style="color: #0000ff">
+                 <br />
+             </span><span style="color: #0000ff">&nbsp; &nbsp; &nbsp;&nbsp; If </span>( Not (
+             objLCompRefs Is Nothing ) )<font color="#0000ff">Then</font><br />
+             <font color="#0000ff">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Set </font>objCompRef = objLCompRefs.Item (1,&quot;CATIASchComponent&quot;)<br />
+             <span style="color: #0000ff">&nbsp; &nbsp; &nbsp;&nbsp; End If</span><br />
+             <font color="#0000ff">&nbsp; &nbsp; End If&nbsp;</font>&nbsp;</td>
+       </tr>
+     </table>
+     <h4><a name="Update component instances"></a>Update component instances</h4>
+     <p>The macro calls UpdateAllInstancesFromReference method of SchUpdateInstance interface
+         to update all the component instances for the specified reference component.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;<span style="color: #008000"> &nbsp; ' Synchronize component instances of the
+                 first reference component
+                 <br />
+                 &nbsp; &nbsp; </span><span style="color: #0000ff">If </span>( Not ( objCompRef
+             Is Nothing ) And _<br />
+             &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; Not ( objUpdateInstances Is Nothing ) )<font color="#0000ff">Then<br />
+             </font>
+             <br />
+             &nbsp; &nbsp; &nbsp;&nbsp; objUpdateInstances.UpdateAllInstancesFromReference objCompRef<br />
+             <br />
+             <span style="color: #008000"></span><font color="#0000ff">&nbsp; &nbsp; End If <span
+                 style="color: #008000">'--- If ( Not ( objCompRef Is Nothing )</span></font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to update component instances after the changes in the corresponding
+     catalog reference. A message logging the status of the critical steps is 
+ displayed at the end of the use case.</p>
+ <p>
+ <img border="0" src="images/CAASchSyncCompInst_01.jpg" width="300" height="146"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

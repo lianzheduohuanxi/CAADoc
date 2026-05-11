@@ -1,0 +1,539 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Build/Update Mechanism</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+	margin-left: 44px;
+}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Build/Update Protocol</h3>
+      <p><em>Automatic updating of features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the CAAV5V6FmExtBuildUpdate use case. Any 
+		modification of an input attribute value of a feature, renders it outdated and 
+		at times inconsistent. This calls for updating the feature. The Feature 
+		Modeler Update engine rebuilds the feature, by calling its
+		<i>CATIFmFeatureBehaviorCustomization</i >
+
+		<code>Build</code > method implementation.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtBuildUpdate Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtBuildUpdate Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtBuildUpdate</a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6FmExtBuildUpdate Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This Use Case, most importantly teaches an end-user the steps involved in 
+updating (rebuilding) a user defined feature, on modification of its sp_IN 
+attribute values. The user thus becomes aware of the Build-Update protocol in 
+place for the features.</p>
+<p>More specifically, the UC implements on a user define feature, the Build 
+method of the <em>CATIFmFeatureBehaviorCustomization</em> Interface, primarily 
+responsible for building a feature.</p>
+<p>A basic understanding of the Build/Update protocol 
+is useful, before you proceed with this UC.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtBuildUpdate Use Case</h2>
+<p>CAAV5V6FmExtBuildUpdate is a use case of the CAAV5V6FeatureModelerExt.edu framework that 
+illustrates FeatureModelerExt framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtBuildUpdate Do</h3>
+<p>The CAAV5V6FmExtBuildUpdate use case uses two feature StartUps, &quot;CAAOsmAdd<code>&quot;</code> 
+and &quot;CAAOsmSquare&quot;, defined in the CAAOsmCatalogSU catalog. </p>
+<ul>
+	<li>The &quot;<strong>CAAOsmAdd</strong>&quot; feature is characterized by the two attributes namely. 
+&quot;First&quot; and &quot;Second&quot; (both of type sp_IN). The attribute &quot;Sum&quot; (sp_OUT type) is 
+computed as a sum of the two attributes &quot;First&quot; and &quot;Second&quot;.</li>
+	<li>The &quot;<strong>CAAOsmSquare</strong>&quot; feature is characterized by attribute &quot;Square&quot;&nbsp; 
+(sp_OUT type) which is computed as a square of the attribute &quot;Num&quot; (sp_IN 
+	type). The &quot;Num&quot; attribute value coming from the &quot;Sum&quot; attribute of one 
+	CAAOsmAdd feature.</li>
+</ul>
+<p>&nbsp;</p>
+<table>
+	<caption><a name="Fig._1">Fig. 1</a> The Feature dependency</caption>
+	<tr>
+		<td><img src="images/CAAFmExtBuildUpdate_Fig1.gif"></td>
+	</tr>
+</table>
+<p>A feature is considered updated (correctly built) if its sp_OUT attribute value is computed with its sp_IN attribute values, at any point of time. This computation is typically implemented in the 
+<em>CATIFmFeatureBehaviorCustomization</em> Build method. This method is invoked by the Feature Modeler Update engine, each time on feature  update (manual or automatic)</p>
+<p>The main scenario of the use case is as follows:</p>
+<ul>
+	<li>&nbsp;Instantiates &quot;CAAOsmAdd&quot; StartUp (<code>CAAOsmAdd1</code>) and 
+valuates its &quot;First&quot; attribute to 3 and its &quot;Second&quot; attribute to 4</li>
+	<li>instantiates the &quot;CAAOsmSquare&quot; StartUp (<code>CAAOsmSquare1</code>).
+	</li>
+	<li>Creates a link between the <code>CAAOsmAdd1 </code>and <code>CAAOsmSquare1
+	</code>feature instances, as depicted in the [<a href="#Fig._1">Fig.1</a>].&nbsp;The
+	<code>CAAOsmSquare1 </code>&quot;Num&quot; attribute points to the <code>CAAOsmAdd1
+	</code>&quot;Sum&quot; attribute, meaning the &quot;Num&quot; attribute is remotely valuated by 
+	the value stored in &quot;Sum&quot;. <em>Please note that the link is between feature 
+instances, and does not occur at the feature definition (StartUp, CATFct) level.</em></li>
+	<li>Update <code>CAAOsmSquare1 , </code>we retrieve its &quot;Square&quot; 
+attribute value which works out to 49 (3+4 = 7, 7*7 = 49)</li>
+	<li>modifies the CAAOsmAdd1 &quot;First&quot; attribute value to 5.</li>
+	<li>Update <code>CAAOsmSquare1 , </code>&nbsp;retrieve its &quot;Square&quot; attribute value. This 
+time it works out to 81 (5+4 =9, 9*9=81)</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtBuildUpdate</h3>
+<p>To launch <code>CAAV5V6FmExtBuildUpdate</code >, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtBuildUpdate</code > along with its prerequisites, 
+set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<i>CAAV5V6FmExtBuildUpdate DocumentStorageName.CATPart</i>&quot;</p>
+
+
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtBuildUpdate Code</h3>
+<p><code>CAAV5V6FmExtBuildUpdate</code > code is located in the 
+<code>CAAV5V6FmExtBuildUpdate.m</code > use case module of 
+the <code>CAAV5V6FeatureModelerExt.edu</code > framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CAAV5V6FmExtBuildUpdate.m</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA&nbsp; installation. It is made of&nbsp; three source 
+file namely</p>
+<ul>
+	<li><code>CAAEV5V6FmExtBehaviorCustomizationAdd.cpp</code >, which 
+	has the <code>CATIFmExtBehaviorCustomization</code > Build 
+	implementation for the CAAOsmAdd feature</li>
+	<li><code>CAAEV5V6FmExtBehaviorCustomizationSquare.cpp</code >, 
+	which has the <code>CATIFmExtBehaviorCustomization</code > 
+	Build implementation for the CAAOsmSquare feature</li>
+	<li><code>CAAV5V6FmExtBuildUpdateMain.cpp</code >, which contains 
+	the Main UC</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The steps in CAAV5V6FmExtBuildUpdate </p>
+<ol>
+	<li><a href="#CATIFmFeatureBehaviorCustomization Implementation">Implementing the CATIFmFeatureBehaviorCustomization Interface</a></li>
+	<li><a href="#Add Build">The CAAOsmAdd Build Implementation</a></li>
+	<li><a href="#Square Build">The CAAOsmSquare Build Implementation</a></li>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Link the Feats">Linking the CAAOsmSquare feature to the CAAOsmAdd feature</a></li>
+	<li><a href="#Call Update">Updating the CAAOsmSquare feature</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h3><a name="CATIFmFeatureBehaviorCustomization Implementation"></a>CATIFmFeatureBehaviorCustomization Implementation</h3>
+<p>This interface is implementable with the BOA mechanism; It implies to create 
+a header file and a source file for your StartUp late type [<a href="#References">2</a>] 
+ . Here extract of code 
+for the <code>CAAOsmAdd</code> late type.</p>
+<ul>
+	<li>For the header </li>
+</ul>
+<p>A new class, CAAEV5V6FmExtBehaviorCustomizationAdd is created. Its header file is as follows.&nbsp; </p>
+<pre  class="code">...
+class <strong>CAAEV5V6FmExtBehaviorCustomizationAdd</strong>:  public CATFmFeatureCustomizationAdaptor
+{
+  CATDeclareClass;
+public:
+     virtual HRESULT <strong>Build</strong>();
+private:
+	
+      // Standard constructors and destructors for an implementation class
+      CAAEV5V6FmExtBehaviorCustomizationAdd();
+      virtual ~CAAEV5V6FmExtBehaviorCustomizationAdd();
+};
+...</pre>
+<p>The class is deriving from the adaptor 
+class <em>CATFmFeatureCustomizationAdaptor</em> class. So on your own class, you only 
+have to add the methods to overriden.</p>
+<ul>
+	<li>For the source</li>
+</ul>
+<pre  class="code">...
+<strong>CATImplementClass</strong>(CAAEV5V6FmExtBehaviorCustomizationAdd,
+		  DataExtension, 
+		  CATIFmFeatureBehaviorCustomization,
+		  <strong>CAAOsmAdd</strong>);
+...
+<strong>CATImplementBOA</strong>(CATIFmFeatureBehaviorCustomization,CAAEV5V6FmExtBehaviorCustomizationAdd);
+...</pre>
+<p> <code>CAAOsmAdd</code> is the late type implementing <em>CATIFmFeatureBehaviorCustomization</em>. 
+CAAEV5V6FmExtBehaviorCustomizationAdd is the class implementing the data extension. </p>
+<p>Don't forget to update the dictionary file (CAAV5V6FeatureModelerExt.edu\CNext\code\dictionary\CAAV5V6FeatureModelerExt.edu.dico), and to add an entry point for the 
+new implementation.</p>
+<pre  class="code">...
+<strong>CAAOsmAdd</strong> CATIFmFeatureBehaviorCustomization  libCAAV5V6FmExtBuildUpdate
+...</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Add Build"></a>The CAAOsmAdd Build Implementation</h3>
+<p>The Build method of the <i>CATIFmFeatureBehaviorCustomization</i >
+ implemented on a specs 
+feature is responsible for building it. This method is typically invoked by the 
+Feature Modeler Update engine, to update the features, which are either outdated 
+or inconsistent or both.</p>
+<h4 class="style1">Computing the &quot;SUM&quot; from &quot;First&quot; and &quot;Second&quot; Attribute 
+Values</h4>
+<p>We are now in the Build implementation. It fundamentally involves computing the 
+sp_OUT attribute values, with the sp_IN attribute values as input.&nbsp; In the 
+code that follows, we retrieve the &quot;First&quot; and &quot;Second&quot; attribute (sp_IN type) 
+values of the &quot;CAAOsmAdd&quot; feature. These two values are added to valuate the 
+&quot;Sum&quot; attribute (sp_OUT type).</p>
+<p>First, we have to create&nbsp; a credential object to be further able to 
+handle the feature attributes, see the referenced article about Credentials [<a href="#References">3</a>]. </p>
+<table class="code">
+	<tr>
+		<td><pre>...
+ HRESULT <strong>CAAEV5V6FmExtBehaviorCustomizationAdd::Build</strong>()
+{
+   <strong>CATFmCredentials</strong> MyCredential;
+   MyCredential.RegisterAsApplicationBasedOn(CATFmFeatureModelerID,"CAAV5V6FmExtFeatureModeler");
+   MyCredential.RegisterAsCatalogOwner("CAAOsmCatalogSU","CAAOsmClientId");
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p>So then, we can create a facade with this credentials and the feature 
+implementing the interface, <code>this</code>.
+</p>
+<table class="code">
+	<tr>
+		<td><pre>...	<strong>
+   CATFmFeatureFacade FmFeatFacadeOnCAAOsmAddOp(MyCredentials,this)</strong>;
+...	</pre>
+	</td>
+	</tr>
+</table>
+<p>Now, we are ready to retrieve the CAAOsmAddOp feature attributes.</p>
+<table class="code">
+	<tr>
+		<td><pre>...
+   CATFmAttributeKey AddFirstAttrKey(&quot;First&quot;);
+
+  <strong> int iFirstAttr</strong> = 0;
+   CATFmAttributeValue FmAttrValue;
+   rc =  <strong>FmFeatFacadeOnCAAOsmAddOp.GetValue</strong>(AddFirstAttrKey,FmAttrValue);
+   ...
+   rc = FmAttrValue.GetInteger(<strong>iFirstAttr</strong>);
+   ...
+   rc = FmAttrValue.GetInteger(<strong>iSecondAttr</strong>);
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p>The &quot;First&quot; attribute value is assigned to the iFirstAttr, an <strong>int</strong> 
+type.</p>
+<p>On similar lines,
+the &quot;Second&quot; attribute value is stored in the iSecondAttr, an <strong>int</strong> 
+type.</p>
+<p>Next, we simply compute the sum of &quot;First&quot; and &quot;Second&quot; attribute value. The 
+result is assigned to the &quot;Sum&quot; attribute of the &quot;CAAOsmAdd&quot; StartUp.</p>
+<table class="code">
+	<tr>
+		<td><pre>...	
+   CATFmAttributeKey AddSumAttrKey("Sum");
+...
+  <strong> int iSumAttr = iFirstAttr + iSecondAttr</strong>;
+   FmAttrValue.SetInteger(iSumAttr);
+   rc =  <strong>FmFeatFacadeOnCAAOsmAddOp.SetValue</strong>(AddSumAttrKey,FmAttrValue);
+...
+</pre>
+	</td>
+	</tr>
+</table>
+
+<p>The SetValue method of the <code>CATFmFeatureFacade</code > class, sets a value to a 
+feature attribute.</p>
+<p>Now that we have finally computed the &quot;Sum&quot; attribute value (sp_OUT), with 
+the latest &quot;First&quot; and &quot;Second&quot; attribute (sp_IN) values, we come to an end of 
+the Build implementation for a &quot;CAAOsmAdd&quot; feature. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h3><a name="Square Build"></a>The CAAOsmSquare Build Implementation</h3>
+<p>On similar lines as for the &quot;CAAOsmAdd&quot; feature, we implement Build for 
+&quot;CAAOsmSquare&quot;. The Build primarily retrieves the &quot;Num&quot; (sp_IN) 
+attribute value. It computes the square of the value retrieved and assigns it to 
+the &quot;Square&quot; attribute.&nbsp; </p>
+<h4 class="style1">Computing the &quot;Square&quot; from the&nbsp; &quot;Num&quot; 
+Attribute Value</h4>
+<p>We are now in the Build implementation. It simply retrieves the &quot;Num&quot; 
+attribute value, squares it and assigns the resulting value to the &quot;Square&quot; 
+attribute. </p>
+<table class="code">
+	<tr>
+		<td><pre>HRESULT <strong>CAAEV5V6FmExtBehaviorCustomizationSquare::Build</strong>()
+{
+...
+   CATFmCredentials MyCredential;
+   MyCredential.RegisterAsApplicationBasedOn(CATFmFeatureModelerID,"CAAFmExtFeatureModeler");
+   MyCredential.RegisterAsCatalogOwner("CAAOsmCatalogSU","CAAOsmClientId");
+   
+   CATFmAttributeKey SqrNumAttrKey("Num");
+   CATFmAttributeKey SqrSqrAttrKey("Square");
+
+  <strong> CATFmFeatureFacade FmFeatFacadeOnCAAOsmSquare(MyCredentials,this)</strong>;
+   CATFmAttributeValue FmAttrValue;
+  <strong> int iNum</strong> = 0;
+   rc =  <strong>FmFeatFacadeOnCAAOsmSquare.GetValue</strong>(SqrNumAttrKey,FmAttrValue);
+   ...
+   rc = <strong>FmAttrValue.GetInteger(iNum)</strong>;
+
+   ...  
+  <strong> int iSqr = iNum*iNum</strong>;
+   FmAttrValue.SetInteger(iSqr);
+   rc =  <strong>FmFeatFacadeOnCAAOsmSquare.SetValue</strong>(SqrSqrAttrKey,FmAttrValue);
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p>To begin with we create a Feature Facade on the CAAOsmSquare feature. It is 
+<code>FmFeatFacadeOnCAAOsmSquare</code >, a <i>CATFmFeatureFacade</i > type.</p>
+<p>The &quot;Num&quot; attribute value is assigned to the iNum, an <strong>int</strong> 
+type.&nbsp; We square iNum, and the result is assigned to iSqr, an <strong>int</strong> 
+type. </p>
+<p>Finally, the SetValue method of the <em>CATFmFeatureFacade</em> class, assigns the 
+value stored in iSqr to the &quot;Square&quot; attribute of &quot;CAAOsmSquare&quot;. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h3><a name="Prolog"></a>Prolog&nbsp; </h3>
+<p>It valuates the&nbsp; &quot;First&quot; attribute of the CAAOsmAdd feature to 3. 
+The &quot;Second&quot; attribute is valuated to 4. </p>
+<p>We next instantiate a &quot;CAAOsmSquare&quot; feature. What follows is the step which 
+links the &quot;CAAOsmSquare&quot; feature with the &quot;CAAOsmAdd&quot; feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Link the Feats"></a>Linking the CAAOsmSquare feature to the CAAOsmAdd feature</h3>
+<p>We create a link between the CAAOsmSquare and CAAOsmAdd feature. The &quot;Num&quot; 
+attribute (sp_IN type) of the CAAOsmSquare feature is remotely valuated with the 
+value assigned to the &quot;Sum&quot; attribute (sp_OUT type) of the CAAOsmAdd feature. 
+This remote valuation primarily involves</p>
+<ul>
+	<li>Retrieving the Remote Feature as a <i>CATFmAttributeValue</i > type</li>
+	<li>Remotely valuate the attribute &quot;Num&quot; of the CAAOsmSquare feature </li>
+</ul>
+<h4 class="style1">Retrieve the Remote Feature as a CATFmAttributeValue type</h4>
+<p>An attribute value is handled as a <i>CATFmAttributeValue</i > type in our code. The 
+Remote Feature is treated as one, in the code below.</p>
+<table class="code">
+	<tr>
+		<td><pre>...
+  <strong> CATFmFeatureFacade </strong>oFeatFacadeOnAddInst;
+   ...
+   CATFmAttributeValue FmAttrValue;
+  <strong> </strong>oFeatFacadeOnAddInst<strong>.GetFeatureAsValue(</strong>FmAttrValue<strong>)</strong>;
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p>oFeatFacadeOnAddInst, a <i>CATFmFeatureFacade</i > type which represents the feature 
+facade on the CAAOsmAdd instance retrieved earlier (refer Prolog)</p>
+<p>The GetFeatureAsValue() method of the <i>CATFmFeatureFacade</i > class, returns our 
+CAAOsmAdd feature translated to a <i>CATFmAttributeValue</i > type (FmAttrValue).</p>
+<h4 class="style1">Remotely Valuating the attribute &quot;Num&quot; of the CAAOsmSquare 
+feature</h4>
+<p class="style1">The CAAOsmSquare &quot;Num&quot; attribute is valuated with the value of 
+the &quot;Sum&quot; attribute associated with the remote &quot;CAAOsmAdd&quot; feature. </p>
+<table class="code">
+	<tr>
+		<td><pre>...
+   CATFmAttributeKey AddSumAttrKey("Sum");
+   CATFmAttributeKey SqrNumAttrKey("Num");
+   ...
+  <strong> CATFmFeatureFacade oFeatFacadeOnSquareInst</strong>;
+   ...
+   rc = oFeatFacadeOnSquareInst<strong>.SetRemoteValuation</strong>(SqrNumAttrKey,FmAttrValue,AddSumAttrKey);
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p><code>oFeatFacadeOnSquareInst</code >, a <i>CATFmFeatureFacade</i > type which represents the 
+feature facade on the CAAOsmSquare instance retrieved earlier (refer Prolog)</p>
+<p>The <code>SetRemoteValuation</code > method of the 
+<i>CATFmFeatureFacade</i > valuates an attribute 
+of the CAAOsmSquare (local) feature, with that of an CAAOsmAdd (remote) feature. The arguments include</p>
+<ul>
+	<li>SqrNumAttrKey, a <i>CATFmAttributeValue</i > type, associated with the &quot;Num&quot; 
+	attribute of the &quot;CAAOsmSquare&quot; feature (key to an attribute of the local 
+	feature for valuation)</li>
+	<li>FmAttrValue, a <i>CATFmAttributeValue</i > type associated with the &quot;CAAOsmAdd&quot; 
+	instance (the remote feature translated to an equivalent <em>CATFmAttributeValue</em> 
+	type)</li>
+	<li>AddSumAttrKey, a <i>CATFmAttributeValue</i > type, associated with the &quot;Sum&quot; 
+	attribute of the &quot;CAAOsmAdd&quot; feature (key to the attribute of the remote 
+	feature)</li>
+</ul>
+<p>Thus the &quot;CAAOsmSquare&quot; Num attribute is 
+remotely valuated by the value assigned to the &quot;CAAOsmAdd&quot; Sum attribute.&nbsp; 
+A link is thus established between the two features, and we restate here that this link is between the feature instances, meaning the link does 
+not exist at the feature definition level (StartUps in CATFct) </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Call Update"></a>Updating the &quot;CAAOsmSquare&quot; 
+feature</h3>
+<p>The Update on a feature can either be invoked manually or it can happen 
+automatically. </p>
+<table class="code">
+	<tr>
+		<td><pre>...
+   rc =<strong> oFeatFacadeOnSquareInst.Update()</strong>;
+...	</pre>
+	</td>
+	</tr>
+</table>
+
+<p><code>oFeatFacadeOnSquareInst</code >, is a 
+<i>CATFmFeatureFacade</i > type, on the Feature Facade 
+over the &quot;CAAOsmSquare&quot; instance. The Update method of the <i>CATFmFeatureFacade</i >  
+class, triggers the update on the &quot;CAAOsmSquare&quot; feature. What follows is better 
+understood with the schematic Fig.1 above.</p>
+<p>On calling &quot;Update&quot; of the &quot;CAAOsmSquare&quot; feature, the sequence of operations 
+that follow are listed below</p>
+<ul>
+	<li>&quot;Num&quot; is first requested to update as it is an<code> sp_IN </code>attribute 
+	of the <code>CAAOsmSquare</code> feature.</li>
+	<li>In order to update &quot;Num&quot;, &quot;Sum&quot; is requested to update because it is pointed 
+	to by &quot;Num&quot;.</li>
+	<li>In order to update &quot;Sum&quot;, we need to update the &quot;<code>CAAOsmAdd1</code>&quot;<code>
+	</code>feature because it is the owner of the &quot;Sum&quot;<code> sp_OUT </code>attribute.</li>
+	<li>To update the &quot;<code>CAAOsmAdd1</code>&quot; feature, the<code> sp_IN </code>
+	attributes &quot;First&quot; and &quot;Second&quot; are requested to update: the &quot;<code>CAAOsmAdd</code>&quot; 
+	Build operation is then executed. &quot;Sum&quot; is assigned the value resulting from the &quot;<code>CAAOsmAdd</code>&quot; 
+	Build and its update stamp is modified.</li>
+	<li>The &quot;Sum&quot; and &quot;Num&quot; update stamps are compared and since they are different, 
+	the &quot;Sum&quot; stamp is copied into the &quot;Num&quot; stamp, triggering the &quot;<code>CAAOsmSquare</code>&quot; 
+	Build as &quot;Num&quot; is an <code>sp_IN</code> attribute.</li>
+	<li>The &quot;<code>CAAOsmSquare1</code>&quot; feature is built and the value of &quot;Square&quot; 
+	is set by the &quot;<code>CAAOsmSquare</code>&quot; Build result.</li>
+</ul>
+<h3>Epilog<a name="Epilog"></a></h3>
+<p>Lastly the document is saved and session is closed.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The Use Case illustrates the Build/Update protocol for the user defined specs 
+features.&nbsp; Any modification in the sp_IN attribute value of a feature 
+renders it outdated.&nbsp; This calls for rebuilding the feature, which involves 
+calling its <i>CATIFmFeatureBehaviorCustomization</i >
+ Build method. The implementation 
+simply involves computing the sp_OUT attribute values with the sp_IN attribute 
+values, held as input.</p>
+<p>The Use Case scenario instantiates a &quot;CAAOsmSquare&quot; feature with its &quot;Num&quot; 
+attribute (sp_IN type) remoted valuated by the &quot;Sum&quot; attribute (sp_OUT) value of 
+a &quot;CAAOsmAdd&quot; feature.&nbsp;&nbsp; On modification of the &quot;Sum&quot; attribute value, 
+both features are rendered outdated. An update on the &quot;CAAOsmSquare&quot; feature, 
+then triggers a rebuild of the feature it points to, namely. the &quot;CAAOsmAdd&quot; 
+feature, followed by its own rebuild.</p>
+<p>The Update on an outdated feature could either be manually invoked or be done 
+automatically. The Feature Modeler Update engine then takes over, to invoke a 
+rebuild on all dependent features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUpdateOverview.htm">Understanding Update Protocol</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaNamingFeatures.htm">Understanding Feature Naming</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding 
+		Credentials</a></td>
+	</tr>
+		
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: <b>1</b> [July 2012]</td>
+		<td>Document created</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

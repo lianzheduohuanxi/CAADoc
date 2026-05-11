@@ -1,0 +1,280 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Controling VPMDocumentRevision Saved from an External Application</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>ENOVIA V5</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Controling VPMDocumentRevision Saved from an
+      External Application</h3>
+      <i>Implementing </i>ENOVIUESaveFile</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<br>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      The document is related to the use case CAAVpiENOVIUESaveFile.&nbsp;<br>
+      It describes how to implement a user-exit to control the object on which a
+      File/Save<br>
+      will be performed from an external application,&nbsp; CATIA V5 for example
+      .
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiENOVIUESaveFile Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiENOVIUESaveFile Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiENOVIUESaveFile</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiENOVIUESaveFile Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This Use-Case will show you how to implement the interface and user-exit called
+ENOVIUESaveFile .<br>
+This User Exit allow you to control the object on which a File/Save is performed
+by the LCA external application Plug-in whenever a Document
+(ENOVIDocumentRevision)&nbsp; is saved into LCA.<br>
+This UseCase show you how to limit the number of iterations when we save a
+document from CATIA V5 to ENOVIA LCA.<br>
+This interface may also be used to update or modify the intended saved object.<br>
+It allow you more generally, to perform any action of your choice, whenever a
+Document is saved from an external application into ENOVIA.<br>
+This Use Case is especially aimed at helping you to implement your own
+ENOVIUESaveFile User-Exit.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiENOVIUESaveFile Use Case</h3>
+CAAVpiENOVIUESaveFile is a use case of the CAAVPMInterfaces.edu framework.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiENOVIUESaveFile Do</h4>
+This user-exit sample gives the application designer an insight on how to modify
+the preferred iteration (the one exposed to the user) on a save-file event
+initiated by an external application.
+<p>To do so, the use case goes through the following steps:
+<ul>
+  <li>Implement the user-exit method called &quot;GetObject (CATBaseUnknown
+    *&amp; oObject)&quot; in file
+    CAAVpiENOVISaveFile.m/src/CAAVpiENOVIUESaveFile.cpp by performing the
+    following steps:</li>
+  <ul>
+    <li>Test the value of int cUserExit.</li>
+    <li>If cUserExit = 0,&nbsp; return S_FALSE =&gt; create a new iteration</li>
+    <li>If cUserExit = 1 , delete the non preferred &amp; return S_FALSE.</li>
+    <li>If cUserExit = 2 , Retrieve the non preferred. Set it preferred. Return
+      it in oObject + S_OK</li>
+  </ul>
+</ul>
+The actual implementation of the user-exit is contained in the file
+CAAVpiENOVIUESaveFile.cpp.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiENOVIUESaveFile</h4>
+Launch the use case, CAAVpiENOVIUESaveFile, as follows:
+<ul>
+  <li>First uncomment the following line in the dictionary file
+    (CAAVPMInterfaces.edu/CNext/code/dictionary/CAAVPMInterfaces.edu.dic):
+    #ENOVIA_VPMDocumentRevision&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ENOVIUESaveFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    libCAAVpiENOVISaveFile</li>
+  <li>Set&nbsp; int cUserExit to the value of your choice 0,1 or 2 by uncomment
+    the right line at the beginning of CAAVpiENOVIUESaveFile::GetObject method.</li>
+  <li>Then compile CAAVpiENOVIUESaveFile with its prerequisites.</li>
+  <li>Create a new document from your external application.</li>
+  <li>Save it to LCA.</li>
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiENOVIUESaveFile Code</h4>
+The CAAVpiENOVIUESaveFile Use Case is located in the module
+CAAVpiENOVISaveFile.m of the framework CAAVPMInterfaces.edu.<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiENOVISaveFile.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiENOVISaveFile.m/</tt></td>
+  </tr>
+</table>
+<p>Where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are seven main steps in CAAVpiENOVIUESaveFile code:
+<ol>
+  <li><a href="#impDocRev">The User Exit itself extends
+    ENOVIA_VPMDocumentRevision</a></li>
+  <li><a href="#cUserExit value">Set/Read&nbsp; the cUserExit value</a></li>
+  <li><a href="#cUserExit0:">If cUserExit = 0:</a></li>
+  <ol>
+    <li>Return S_FALSE.</li>
+    <li>=&gt; A new iteration will be created.</li>
+  </ol>
+  <li><a href="#UserExit1or2">If cUserExit = 1 or 2:</a></li>
+  <ol>
+    <li>Get all iteration of current ENOVIA_VPMDocumentRevision.</li>
+    <li>Abort (return S_FASE ) if the number of iteration is smaller than 2.</li>
+  </ol>
+  <li><a href="#cUserExit1">If cUserExit = 1:</a></li>
+  <ol>
+    <li>Restrict the number of iterations to 2:</li>
+    <li>Delete all non prefered &amp; return S_FALSE</li>
+    <li>=&gt; A new iteration will be created.</li>
+  </ol>
+  <li><a href="#cUserExit2">If cUserExit = 2:</a></li>
+  <ol>
+    <li>Retrieve the first non prefered Iteration.</li>
+    <li>Set it prefered.</li>
+    <li>Return it in oObject + S_OK</li>
+    <li>=&gt; the prefered iteration will be overwritten.</li>
+  </ol>
+</ol>
+We will now comment each of these sections in detail.
+<p><!---------------------------------comment------------------------------------->
+<h4><a name="impDocRev"></a>The User Exit itself extends
+ENOVIA_VPMDocumentRevision.</h4>
+<img src="images/UESaveFileDataExtention.gif" nosavewidth= "337"height= "67"> 
+<p>Extending ENOVIA_VPMDocumentRevision with your user exit allow the LCA plugin
+code<br>
+to make your User Exit pointing to the Document Revision currently intended to
+be saved.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="cUserExit value"></a>Set/Read&nbsp; the cUserExit value</h4>
+<img src="images/UESaveFilecUserExit.gif" nosavewidth= "309"height= "64"> 
+<p>This allow you to choose the behaviour of the User Exit.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<br>
+<a name="cUserExit0:"></a><b>cUserExit = 0:</b>
+<p>Return S_FALSE:
+<p><img src="images/UESaveFilecUserExit0.gif" nosavewidth= "427"height= "88"> 
+<p>A new iteration will be created thereafter by Enovia.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="UserExit1or2"></a>UserExit = 1 or 2</h4>
+Get all iterations of current ENOVIA_VPMDocumentRevision.
+<p><img src="images/UESaveFilecUserExit12GetIteration.gif" nosavewidth= "508"height= "303"> 
+<p>Abort (return S_FASE ) if the number of iteration is smaller than 2:
+<p><img src="images/UESaveFilecUserExit12IterationInf2.gif" nosavewidth= "159"height= "33"> 
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="cUserExit1"></a>cUserExit = 1</h4>
+Restrict the number of iterations to 2: Delete all non preferred &amp; return
+S_FALSE.
+<p><img src="images/UESaveFilecUserExit1DelIteration.gif" nosavewidth= "411"height= "325"> 
+<p>A new iteration will thereafter be created by Enovia.<br>
+&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="cUserExit2"></a>cUserExit = 2</h4>
+Retrieve the first non preferred Iteration.
+<p><img src="images/UESaveFilecUserExit2Retrieve1Iteration.gif" nosavewidth= "411"height= "237"> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...<br>
+<img src="images/UESaveFilecUserExit2Retrieve1bIteration.gif" nosavewidth= "543"height= "52"> 
+<p>Set it preferred,
+<p><img src="images/UESaveFilecUserExit2Retrieve2Iteration.gif" nosavewidth= "544"height= "189"> <br>
+and Return it in oObject + S_OK.
+<p><img src="images/UESaveFilecUserExit2.gif" nosavewidth= "152"height= "136"> 
+<p>As a consequence, this iteration will be exposed to the User In Enovia.<br>
+And the initially preferred iteration will be overwritten.<br>
+&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This use case demonstrates how the user-exit technique can be used in the Catia
+Plugin to implement a customized saving-behaviour.<br>
+As an example, a user-exit that limit the number of document iterations while
+saving in ENOVIA is described.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Nov 2003]</td>
+    <td valign="TOP">Document created by BRL</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>mkodt</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>mkodt</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Getting Started</h3>
+      <em>mkodt command reference</em></td>
+  </tr>
+  <tr>
+    <td class="quick">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p class="header">The <strong>mkodt</strong> command runs test objects. 
+		This article describes the command options, gives usage examples, and the 
+		command main error return codes.</p>
+		<ul>
+			<li><a href="#Synopsis">Synopsis</a></li>
+			<li><a href="#Description">Description</a></li>
+			<li><a href="#Options">Options</a></li>
+			<li><a href="#Examples">Examples</a></li>
+			<li><a href="#Diagnostics">Diagnostics</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Synopsis"></a>Synopsis</h2>
+<p>mkodt can be run in contextual or descriptive mode:</p>
+<ul>
+	<li>Contextual mode: mkodt is run from a framework directory and applies to 
+		test objects of this framework:
+		<p><strong>mkodt</strong> [<strong>-htX</strong>] <strong>-D</strong>
+		[<strong>-s</strong> shell | <strong>-a</strong> ][<strong>-html</strong>][<strong>-xml</strong>]</p>
+	</li>
+	<li>Descriptive mode: mkodt is run from any directory and applies to the workspace 
+		and frameworks passed using appropriate options:
+		<p><strong>mkodt</strong> [<strong>-hkqStX</strong>]
+<!--		[<strong>-B</strong> debugger <strong>-b</strong> program] -->
+		[<strong>-d</strong> wsabspath [<strong>-F</strong> 
+		framework | <strong>-FWList</strong> file] | <strong>-W</strong> wsrelpath 
+		| [<strong>-a</strong> | <strong>-L</strong> scriptlist1 | <strong>-l</strong> 
+		scriptlist2 | <strong>-s</strong> ODTName]] [<strong>-NOMaxTime</strong>] 
+		[<strong>-NoPert</strong>] [<strong>-o</strong> output] [<strong>-p</strong> 
+		path] [<strong>-r</strong> rtpath] [<strong>-UpdateInit</strong>] [<strong>-html</strong>] 
+		[<strong>-xml</strong>] <strong>-ExcludFW</strong> fileFWExcluded
+		<strong>-PriorityFW</strong> fileFWPriority</p>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Description"></a>Description</h2>
+<p>Runs test objects described by XML files that describe either executable modules, 
+bat files, or records delivered in test frameworks. Using its options, <strong>mkodt</strong> 
+gives the choice of running one test object or all the test objects found either 
+in a given framework or workspace.</p>
+<p><strong>mkodt</strong> is available with the mkmk commands, and can be accessed 
+after setting the TCK [<a href="#References">1</a>].</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Options"></a>Options</h2>
+<p>mkodt accepts the following options:</p>
+<table class="fill">
+	<colgroup span="1" valign="top">
+	</colgroup>
+	<tr>
+		<th>Option</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>-a</code></td>
+		<td>Replays all the test objects of the current folder. When the current 
+		folder is:
+		<ul>
+			<li>A workspace, mkodt -a replays all the test objects of the workspace.</li>
+			<li>A framework, or the <em>FunctionTests</em> folder of a framework, 
+				mkodt - a replays all the test objects of the framework.</li>
+			<li>Either the <em>TestCases</em> or <em>SwitchTestCases</em> folder, 
+				mkodt -a replays all the test objects of the folder.</li>
+		</ul>
+		</td>
+	</tr>
+<!--
+	<tr>
+		<td><code>-B debugger</code></td>
+		<td>Turns the debugger mode on and specifies the debugger to use. Useful 
+		with the <code>-b</code> option. According to the operating system, available 
+		debuggers are (first one is the default):
+		<table>
+			<tr>
+				<th>Operating System</th>
+				<th>Debuggers</th>
+			</tr>
+			<!--
+			<tr>
+				<td>Solaris</td>
+				<td>workshop, dbx</td>
+			</tr>
+
+
+			<tr>
+				<td>Irix</td>
+				<td>cvd, dbx</td>
+			</tr>
+
+			<tr>
+				<td>AIX</td>
+				<td>xldb, dbx, IBM Debugger for AIX (idebug and irmtdbgc)</td>
+			</tr>
+			<tr>
+				<td>HP_UX</td>
+				<td>dde</td>
+			</tr>
+			<tr>
+				<td>Windows</td>
+				<td>devenv</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-b program</code></td>
+		<td>Uses the debugger on the given <code>program</code>. This program must 
+		be a executable module containing a main, located in the workspace run time 
+		view.</td>
+	</tr>
+-->
+	<tr>
+		<td><code>-D</code></td>
+		<td>Sets the display mode for debug purposes, that is, opens a window (&quot;xterm&quot; 
+		or &quot;DOS&quot;) for interactive testing. This window is opened in the 
+		same environment that the one used by the test object, thus it is possible 
+		to check for the value of environment variables. Available in contextual 
+		mode only.</td>
+	</tr>
+	<tr>
+		<td><code>-d wsabspath</code></td>
+		<td>Specifies the root folder of the workspace from which to get the test 
+		objects. The path to this folder must be absolute. With Windows, this path 
+		can be either a UNC path or use a mapped network drive.
+		<p>Examples:</p>
+		<table>
+			<tr>
+				<th>Path Type</th>
+				<th>Example</th>
+			</tr>
+			<tr>
+				<td>Windows UNC Path</td>
+				<td>
+				<pre class="code">mkodt -s ODTName -d \\lw5psrdsy\home\users\psr\MyWorkspace</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>Windows Mapped Network Drive Path</td>
+				<td>
+				<pre class="code">mkodt -s ODTName -d e:\users\psr\MyWorkspace</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>UNIX Path</td>
+				<td>
+				<pre class="code">mkodt -s ODTName -d /u/users/psr/MyWorkspace</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The folder pathname concatenation [<a href="#References">2</a>] where 
+		the module or EXE are searched for is set to the workspace designated by 
+		the <code>-d</code> option, concatenated to its prerequisite workspaces 
+		as declared using the mkGetPreq command. This option sets the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable [<a href="#References">3</a>] to this value. See also 
+		the <code>-p</code> and <code>-r</code> options.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-ExcludFW fileFWExcluded</code></td>
+		<td>Excludes a list of test framework from a replay. The file <em>fileFWExcluded</em> 
+		must have the following format:
+		<pre>FW1.tst
+FW2.tst
+FW3.tst</pre>
+		<p>When using this option, pay attention to not use the <code>-L</code> 
+		or <code>-l</code> options, and to carefully use the <code>-PriorityFW</code> 
+		option.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-F framework</code></td>
+		<td>Specifies a framework or several frameworks of the workspace. This option 
+		is to be used with an option that specifies the test objects to run, that 
+		is the <code>-a</code>, the <code>-s</code>, or the <code>-l</code> option.</td>
+	</tr>
+	<tr>
+		<td><code>-FWList file</code></td>
+		<td>Specifies a file containing a list of frameworks. This option is to 
+		be used with an option that specifies the test objects to run, that is the
+		<code>-a</code>, the <code>-s</code>, or the <code>-l</code> option.</td>
+	</tr>
+	<tr>
+		<td><code>-h</code></td>
+		<td>Displays the mkodt help</td>
+	</tr>
+	<tr>
+		<td><code>-k</code></td>
+		<td>Keeps the temporary folder set using the <code>ADL_ODT_TMP</code> environment 
+		variable [<a href="#References">3</a>]. Otherwise, this temporary folder 
+		is deleted at the end of the replay.</td>
+	</tr>
+	<tr>
+		<td><code>-L file1</code></td>
+		<td>Reads the file <em>file1</em> containing a list of test objects to execute. 
+		These test objects can be in different frameworks of the workspace. <em>
+		file1</em> must have the following format:
+		<pre>FW1.tst Type ODTName1
+FW2.tst Type ODTName2
+FW3.tst Type ODTName3</pre>
+		<p>Where <code>Type</code> can be either <em>TestCases</em> or <em>SwitchTestCases</em>, 
+		and <code>ODTNamex</code> is the test object XML file name, without the 
+		extension .xml. If the path of <em>file1</em> is not specified, this file 
+		must be either in the current folder or in the workspace root folder.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-l file2</code></td>
+		<td>Reads the file <em>file2</em> containing a list of test objects to execute.
+		<em>file2</em> must have the following format:
+		<pre>ODTName1
+ODTName2
+ODTName3</pre>
+		<p>Where <code>ODTNamex</code> is the test object XML file name, without 
+		the extension .xml. If the path of <em>file2</em> is not specified, this 
+		file must be either in the current folder or in the workspace root folder.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-NOMaxTime</code></td>
+		<td>Disables the supervision of the test object&#39;s execution elapsed 
+		time. No limit is set. Otherwise, the maximum execution elapsed time is 
+		five minutes by default, and can be changed thanks to the <code>ODT_MAX_TIME</code> 
+		environment variable [<a href="#References">3</a>] up to 60 minutes.</td>
+	</tr>
+	<tr>
+		<td><code>-NoPert</code></td>
+		<td>Disables the pertinence measure for an ODT. The pertinence step is not executed 
+		[<a href="#References">4</a>]. You can also use the <code>ODT_PERTINENCE</code> environment variable [<a href="#References">3</a>].</td>
+	</tr>
+	<tr>
+		<td><code>-o output</code></td>
+		<td>Specifies an output folder [<a href="#References">5</a>] and sets the
+		<code>ADL_ODT_OUT</code> environment variable [<a href="#References">3</a>].
+		<p>The results of mkodt (ODTName.traces and ODTName.mkodt_results files) 
+		are created by default in the <em>&lt;Framework.tst&gt;/FunctionTests/Output/&lt;OS&gt;</em>, 
+		where <em>&lt;OS&gt;</em> is the identifier of the operating system used 
+		to run mkodt [<a href="#References">6</a>].</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-p path</code></td>
+		<td>Specifies the folder pathname concatenation [<a href="#References">2</a>] 
+		where the module or EXE are searched for, and sets the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable to this value [<a href="#References">3</a>]. Folder 
+		pathnames are separated by a <code>:</code> (colon) with UNIX and a
+		<code>;</code> (semicolon) with Windows. See also the <code>-d</code> and
+		<code>-r</code> options.</td>
+	</tr>
+	<tr>
+		<td><code>-PriorityFW file3</code></td>
+		<td>Reads the file <em>file3</em> file containing a list of test frameworks 
+		the test objects of which are to be replayed as a priority, that is, before 
+		the other test objects belonging to other frameworks. <em>file3</em> file 
+		must have the following format:
+		<pre>FW1.tst
+FW2.tst
+FW3.tst</pre>
+		<p>If the path of <em>file3</em> is not specified, this file must be either 
+		in the current folder or in the workspace root folder.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-q</code></td>
+		<td>Quiet mode. Displays in the command prompt only one line per test object 
+		replayed, and whether it succeeds or fails.<p>For each test object replayed, 
+		mkodt displays:</p>
+		<pre class="code">## RUNNING ODT [CAASystem.tst CAASysEnvVar] (1 / 1)
+elapsed_time: 00 min 06 sec
+## ++ CAASysEnvVar : Test execution successful code 0</pre>
+		<p>When using the -q option, mkodt displays:</p>
+		<pre class="code">## CAASystem.tst   CAASysEnvVar : OK</pre>
+		<p>See also the <code>-d</code> and <code>-p</code> options.</p>
+		</td>
+	</tr>
+	<tr>
+		<td><code>-r rtpath</code></td>
+		<td>Specifies the folder pathname concatenation [<a href="#References">2</a>] 
+		where the modules or EXE are searched for without setting or changing the
+		<code>ADL_ODT_CONCATENATION</code> environment variable [<a href="#References">3</a>] 
+		value. Folder pathnames are separated by a <code>:</code> (colon) with UNIX 
+		and a <code>;</code> (semicolon) with Windows.</td>
+	</tr>
+	<tr>
+		<td><code>-S</code></td>
+		<td>Searches test objects in <em>SwitchTestCases</em> instead of <em>TestCases</em> 
+		by default.</td>
+	</tr>
+	<tr>
+		<td><code>-s ODTName</code></td>
+		<td>Lists the test object(s) to run. <code>ODTName</code> is the test object 
+		XML file name, without the extension .xml.
+		<p>To run a single test object, type:</p>
+		<pre class="code">mkodt -s ODTName</pre>
+		<p>To run several test objects, say three for example, type:</p>
+		<pre class="code">mkodt -s ODTName1 ODTName2 ODTName3</pre>
+		</td>
+	</tr>
+	<!-- makes no sense with mkodt XML - Uses the time shel command
+	<tr>
+		<td><code>-t</code></td>
+		<td>Reports the time spent for the execution</td>
+	</tr>
+-->
+	<!-- ODTInit not supported with mkodt XML 
+	<tr>
+		<td><code>-UpdateInit</code></td>
+		<td>Deletes the directory generated by <code>ODTInit</code></td>
+	</tr>
+-->
+	<tr>
+		<td><code>-W wsrelpath</code></td>
+		<td>Specifies the workspace root directory using a relative path from the
+		<code>$HOME</code> directory. Valid with UNIX only.</td>
+	</tr>
+	<tr>
+		<td><code>-X</code></td>
+		<td>Forces output display. By default, program&#39;s outputs are not displayed, 
+		and this option forces them to be displayed</td>
+	</tr>
+	<tr>
+		<td><code>-html</code></td>
+		<td>Provides with an html view of the results of the replay. Generates an 
+		html file tree which gathers the results by framework and for each ODT displays 
+		links to its traces and shows you the return code alongside other valuable 
+		pieces of information. Html output is located by default in&nbsp; &lt;<em>Output&gt;</em>/ToolsData/TestAuto/mkodt/&lt;<em>OS</em>&gt;/<em>odt_name</em>_mkodt_result.html, 
+		where <em>&lt;OS&gt;</em> is the identifier of the operating system used 
+		to run mkodt [<a href="#References">6</a>]. You can change this default 
+		output folder using the <code>-o</code> option.&nbsp; </td>
+	</tr>
+	<tr>
+		<td><code>-xml</code></td>
+		<td>Generates xml mkodt results for every replayed odt. xml data sums up 
+		general results and may output additional information that are specific 
+		to the replay. Used for collecting results in databases. Location: &lt;<em>Output&gt;</em>/<em>&lt;FW.tst&gt;</em>/FunctionTests/Output/<em>&lt;OS&gt;/odt_name</em>_mkodt_result.xml, 
+		where <em>&lt;OS&gt;</em> is the identifier of the operating system used 
+		to run mkodt [<a href="#References">6</a>]. You can change this default 
+		output folder using the <code>-o</code> option.&nbsp; </td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Examples"></a>Examples</h2>
+<ul class="wide">
+	<li>To run the test objects whose shells are listed in the shell file in contextual 
+		mode.
+		<pre class="code">mkodt -D -s shell</pre>
+	</li>
+	<li>To run, with UNIX only, all the test objects in a given workspace by specifying 
+		the workspace root relative directory path.
+		<pre class="code">mkodt -a -W MyWorkspace</pre>
+	</li>
+	<li>To run, with UNIX only, all the test objects of a given framework of a given 
+		workspace by specifying the workspace root relative directory path.
+		<pre class="code">mkodt -a -W MyWorkspace -F fwname</pre>
+	</li>
+	<li>To run all the test objects in a given workspace by specifying the absolute 
+		workspace root directory or folder.
+		<table class="fill">
+			<tr>
+				<td>UNIX</td>
+				<td>
+				<pre class="code">mkodt -a -d /u/users/psr/MyWorkspace</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>Windows</td>
+				<td>
+				<pre class="code">mkodt -a -d e:\users\psr\MyWorkspace</pre>
+				</td>
+			</tr>
+		</table>
+	</li>
+	<li>To run all the test objects in a given workspace by specifying the absolute 
+		workspace root directory or folder, and generate the output in a given folder/directory 
+		instead of the default <em>FunctionTests/Output</em> in each framework.
+		<table class="fill">
+			<tr>
+				<td>UNIX</td>
+				<td>
+				<pre class="code">mkodt -a -d /u/users/psr/MyWorkspace -o /u/users/psr/output</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>Windows</td>
+				<td>
+				<pre class="code">mkodt -a -d e:\users\psr\MyWorkspace -o e:\users\psr\output</pre>
+				</td>
+			</tr>
+		</table>
+	</li>
+	<li>To run all the test objects in a given workspace by specifying the workspace 
+		root directory or folder, and generate the output in a given folder/directory 
+		instead of the default <em>FunctionTests/Output</em> in each framework, 
+		using the executable programs located in a local directory and resetting 
+		the <code>ADL_ODT_CONCATENATION</code> variable to this folder/directory.
+		<table class="fill">
+			<tr>
+				<td>UNIX</td>
+				<td>
+				<pre class="code">mkodt -d /u/lego/CXR24/BSFTST -a -o /u/users/psr/output -p /u/users/psr/steplib/CXR24/LocalWS</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>Windows</td>
+				<td>
+				<pre class="code">mkodt -d \\dsone\rnd\CXR24\BSFTST -a -o e:\users\psr\output -p e:\steplib\CXR24\LocalWS</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The common content of the <code>ADL_ODT_CONCATENATION</code> and of the 
+		runtime concatenation used is either <code>/u//u/users/psr/steplib/CXR24/LocalWS</code> 
+		with UNIX or <code>e:\steplib\CXR24\LocalWS</code> with Windows.</p>
+	</li>
+	<li>To run all the test objects in a given workspace by specifying the workspace 
+		workspace root directory or folder, and generate the output in a given folder/directory 
+		instead of the default <em>FunctionTests/Output</em> in each framework, 
+		using the executable programs located in a local directory without resetting 
+		the <code>ADL_ODT_CONCATENATION</code> variable.
+		<table class="fill">
+			<tr>
+				<td>UNIX</td>
+				<td>
+				<pre class="code">mkodt -d /u/lego/CXR24/BSFTST -a -o /u/users/psr/output -r /u/users/psr/steplib/CXR24/LocalWS</pre>
+				</td>
+			</tr>
+			<tr>
+				<td>WWindows</td>
+				<td>
+				<pre class="code">mkodt -d \\dsone\rnd\CXR24\BSFTST -a -o e:\users\psr\output -r e:\steplib\CXR24\LocalWS</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The content of the <code>ADL_ODT_CONCATENATION</code> variable is unchanged 
+		and the directory in which the programs are searched for is either <code>
+		/u/users/psr/steplib/CXR24/LocalWS</code> with UNIX or <code>e:\steplib\CXR24\LocalWS</code> 
+		with Windows.</p>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Diagnostics"></a>Diagnostics</h2>
+<p>Possible exit status values are:</p>
+<table class="fill">
+	<tr>
+		<th>Code</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>Successful completion</td>
+	</tr>
+	<tr>
+		<td>&gt;0</td>
+		<td>Failure because any of the following</td>
+	</tr>
+</table>
+<p>The following return code list contains all the known mkodt return codes and 
+all the characteristics RECORD or BATCH return code.</p>
+<table class="fill">
+	<colgroup>
+		<col align="center" span="1" />
+	</colgroup>
+	<tr>
+		<th>Error Code</th>
+		<th>Returned by</th>
+		<th>Reason</th>
+	</tr>
+	<tr>
+		<td><strong>1</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>
+		<ul>
+			<li>CATRecordCapture: error in the path for the CATCommandSelector (the 
+				name of the control has changed)</li>
+			<li>Kill in max_time: ODTs reply exceed the defined max_time</li>
+			<li>Server killed.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>3</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Return error code in batch.</td>
+	</tr>
+	<tr>
+		<td><strong>4</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>ENOVIA: connection with java.</td>
+	</tr>
+	<tr>
+		<td><strong>6</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>CATRecordCapture: data not find at the specified path.</td>
+	</tr>
+	<tr>
+		<td><strong>10</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Error in the selection agent: object not found.</td>
+	</tr>
+	<tr>
+		<td><strong>19</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Macro execution problem.</td>
+	</tr>
+	<tr>
+		<td><strong>32</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Drafting macro problem.</td>
+	</tr>
+	<tr>
+		<td><strong>40</strong></td>
+		<td>mkodt</td>
+		<td>TSTPROVIDER problem during initialization.</td>
+	</tr>
+	<tr>
+		<td><strong>45</strong></td>
+		<td>mkodt</td>
+		<td>Problem during execution of GetVPLMProvider, PLMDBSetupB (for ENOVIA/VPMENV 
+		ODT type), ManagedReplay not found (for MANAGED ODT type) or ODT is not 
+		compatible with a given ENOVIA server.</td>
+	</tr>
+	<tr>
+		<td><strong>46</strong></td>
+		<td>mkodt</td>
+		<td>No CLIENT/COMMON/SERVER type detected in ODT shell-script.</td>
+	</tr>
+	<tr>
+		<td><strong>47</strong></td>
+		<td>mkodt</td>
+		<td>CTDReplay command: problem during execution</td>
+	</tr>
+	<tr>
+		<td><strong>50</strong></td>
+		<td>mkodt</td>
+		<td>ODTInit phases KO.</td>
+	</tr>
+	<tr>
+		<td><strong>51</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Bad CATRep management.</td>
+	</tr>
+	<tr>
+		<td><strong>55</strong></td>
+		<td>mkodt</td>
+		<td>Forbidden usage of rm in ODT shell-script (rm authorized on tmp dir 
+		only).</td>
+	</tr>
+	<tr>
+		<td><strong>56</strong></td>
+		<td>mkodt</td>
+		<td>Forbidden export of PATH, LIBPATH, SH_LIBPATH, LD_LIBRARY_PATH in ODT 
+		shell-script.</td>
+	</tr>
+	<tr>
+		<td><strong>58</strong></td>
+		<td>mkodt</td>
+		<td>Forbidden usage of mkrun ODT shell-script.</td>
+	</tr>
+	<tr>
+		<td><strong>66</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Geometry-Topology has detected one severe errors.</td>
+	</tr>
+	<tr>
+		<td><strong>67</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Core Dump: too many calls to Release!</td>
+	</tr>
+	<tr>
+		<td><strong>77</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Memory leaks.</td>
+	</tr>
+	<tr>
+		<td><strong>84</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Container not closed, Geometric Modeler memory problem / Object destruction 
+		(bad implementation in application).</td>
+	</tr>
+	<tr>
+		<td><strong>85</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Geometric Modeler memory problem / Object destruction (bad implementation 
+		in application).</td>
+	</tr>
+	<tr>
+		<td><strong>86</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Geometric Modeler memory problem / Object destruction (bad implementation 
+		in application).</td>
+	</tr>
+	<tr>
+		<td><strong>99</strong></td>
+		<td>mkodt</td>
+		<td>Kill in max_time (the opening process is too long).</td>
+	</tr>
+	<tr>
+		<td><strong>101</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Cannot find a dll (Tools/Options on HP).</td>
+	</tr>
+	<tr>
+		<td><strong>102</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>ENOVIA Database connection problem.</td>
+	</tr>
+	<tr>
+		<td><strong>126</strong></td>
+		<td>shell command</td>
+		<td>Shell access permission not correct (chmod 777 *.sh).</td>
+	</tr>
+	<tr>
+		<td><strong>127</strong></td>
+		<td>shell command</td>
+		<td>Library/Module not found.</td>
+	</tr>
+	<tr>
+		<td><strong>134</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Core dump: visualization (event management, CATPathElement, etc.).</td>
+	</tr>
+	<tr>
+		<td><strong>138</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Core dump: visualization.</td>
+	</tr>
+	<tr>
+		<td><strong>139</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Core dump: pointer NULL.</td>
+	</tr>
+	<tr>
+		<td><strong>255</strong></td>
+		<td>RECORD/BATCH</td>
+		<td>Batch ODTs return code.</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="#" onclick="CAAlinkOutOfPreqs('CAACenWeb/CAACenV5RADETCKHome.htm'); return false;">
+		Tool Configuration Key</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAARqjTa0003.htm">How to Concatenate Run Time Environments</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAARqjQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAARqjQr0001.htm">How to Replay Test Objects</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAARqjTa0005.htm">How to Use and Change the Output Folder</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

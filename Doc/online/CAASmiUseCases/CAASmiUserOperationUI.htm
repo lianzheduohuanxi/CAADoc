@@ -1,0 +1,397 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing the Surface Machining Operation Editor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>3 Axis Surface Machining</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing the Surface Machining Operation Editor</h3>
+      <i>Customize default operation tab pages</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAASmiUserOperationUI use case. It explains
+      how to customize strategy, tool and macros tab pages of the surface
+      machining operation editor.</p>
+      <p>This paper accompanies the <i>Surface Machining Operation Sample</i> [<a href="#References">1</a>],
+      but it can be used for any Manufacturing Activities.<br>
+      </p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASmiUserOperationUI Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASmiUserOperationUI Do</a></li>
+            <li><a href="#How">How to Launch CAASmiUserOperationUI</a></li>
+            <li><a href="#Where">Where to Find the CAASmiUserOperationUI Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>When a surface machining operation is edited by double clicking or through
+its contextual menu, a default dialog box is displayed.</p>
+<p>This use case is intended to help you to customize some of the tab pages of
+this panel. This involves the following:</p>
+<ul>
+  <li>Implementing <i>CATIMfgStrategyActivity</i> to overload Strategy tab page.
+    <img border="0" src="images/CAASmiOperationUIStrategyIcon.jpg" width="61" height="28"></li>
+  <li>Implementing <i>CATIMfgMacroEditorActivity</i> to overload Macros tab
+    page. <img border="0" src="images/CAASmiOperationUIMacrosIcon.jpg" width="60" height="26"></li>
+  <li>Implementing <i>CATIMfgToolActivity</i> to define Tool tab page. <img border="0" src="images/CAASmiOperationUIToolIcon.jpg" width="57" height="27"></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASmiUserOperationUI Use Case</h3>
+<p>CAASmiUserOperationUI is a use case of the CAASurfaceMachiningItf.edu
+framework that illustrates Surface Machining capabilities. It is a part of the
+sample described in the technical article [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASmiUserOperationUI Do</h4>
+<p>This use case customizes three tab pages of the <b>CAASmgOperation</b>
+editing panel:</p>
+<ol>
+  <li>CAASmgOperation has 1 strategy parameter
+    <p><img border="0" src="images/CAASmiOperationUIStrategy.jpg" width="414" height="158"></p>
+  </li>
+  <li>CAASmgOperation has 2 macros parameters
+    <p><b><img border="0" src="images/CAASmiOperationUIMacros.jpg" width="413" height="179"></b></p>
+  </li>
+  <li>CAASmgOperation has 2 allowed types of tool and an End Mill default tool:
+    <p><img border="0" src="images/CAASmiOperationUITool.jpg" width="417" height="550"></p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASmiUserOperationUI</h4>
+<p>This use case is a part of <i>Surface Machining Operation Sample</i> [<a href="#References">1</a>].
+You should build all the modules of this sample at a time to be able to launch
+it [<a href="#References">2</a>].</p>
+<p>Don't forget to edit the interface dictionary located in:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CNext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed, and uncomment the appropriate lines by removing the '#' character.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASmiUserOperationUI Code</h4>
+<p>This use case is made of source files located in the CAASmiUserOperationUI.m
+module of the CAASurfaceMachiningItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAASurfaceMachiningItf.edu\CAASmiUserOperationUI.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAASurfaceMachiningItf.edu/CAASmiUserOperationUI.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAASmiUserOperationUI:</p>
+<ol>
+  <li><a href="#Step1">Implementing CATIMfgStrategyActivity</a></li>
+  <li><a href="#Step2">Implementing CATIMfgMacroEditorActivity</a></li>
+  <li><a href="#Step3">Implementing CATIMfgToolActivity</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing CATIMfgStrategyActivity</h4>
+<p>To overload the strategy tab page, we should create an extension class that
+will implement <i>CATIMfgStrategyActivity</i></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Tie the implementation to its interface
+#include &quot;TIE_CATIMfgStrategyActivity.h&quot;
+TIE_CATIMfgStrategyActivity( CAAESmiUserOperationStrategyEditor);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In <i>GetMainPanelEditor, </i>we create a frame that contains the
+frame-editor of our strategy parameter &quot;CAAStep&quot;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  oFrame = new CATDlgFrame (iFather, &quot;StrategyFrame&quot;, CATDlgGridLayout|CATDlgFraNoTitle);
+  if (oFrame)
+  {
+    // Gets strategy parameter
+    CATIMfgActivityParameters * pActivityParameters = NULL;
+    oRC = QueryInterface(IID_CATIMfgActivityParameters, (void**) &amp;pActivityParameters);
+    if (SUCCEEDED(oRC))
+    {
+      CATBaseUnknown_var spBaseParm = NULL_var; 
+      oRC = pActivityParameters-&gt;FindElement(&quot;CAAStep&quot;,spBaseParm);
+      CATICkeParamFrame_var spParamFrame (spBaseParm);
+      if (!!spParamFrame)
+      {
+        ...
+        // Creates a frame-editor linked to the parameter
+        CATDlgFrame *pDlgFrame = spParamFrame-&gt;GetInPanelEdition(NULL_var,oFrame,CATCkeWithSpinner|CATCkeNoLabel);
+        if (pDlgFrame)
+          pDlgFrame-&gt;SetGridConstraints( 0, 1, 1, 1, CATGRID_4SIDES);
+        ...
+  }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing CATIMacroEditorActivity</h4>
+<p>To overload the macros tab page, we should create an extension class that
+will implement <i>CATIMacroEditorActivity</i></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+// Tie the implementation to its interface
+#include &quot;TIE_CATIMfgMacroEditorActivity.h&quot;
+TIE_CATIMfgMacroEditorActivity( CAAESmiUserOperationMacroEditor);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In <i>GetMainPanelEditor, </i>we create a frame that contains frame-editors
+of our macros parameters &quot;CAAToolAngle&quot; and
+&quot;CAAApproachDistance&quot;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  oFrame = new CATDlgFrame (iFather, &quot;MacrosFrame&quot;, CATDlgGridLayout|CATDlgFraNoTitle);
+  if (oFrame)
+  {
+    ...
+    // CAAToolAngle
+    oRC = pActivityParameters-&gt;FindElement(&quot;CAAToolAngle&quot;,spBaseParm);
+    CATICkeParamFrame_var spParamFrame (spBaseParm);
+    if (!!spParamFrame)
+    {
+      ...
+      // Creates a frame-editor linked to the parameter
+      CATDlgFrame *pDlgFrame = spParamFrame -&gt;GetInPanelEdition(NULL_var, oFrame  ,CATCkeWithSpinner|CATCkeNoLabel);
+      if (pDlgFrame)
+          pDlgFrame-&gt;SetGridConstraints( 0, 1, 1, 1, CATGRID_4SIDES);
+    }
+
+    //CAAApproachDistance
+    oRC = pActivityParameters-&gt;FindElement(&quot;CAAApproachDistance&quot;,spBaseParm);
+    spParamFrame = spBaseParm;
+    if (!!spParamFrame)
+    {
+      ...
+      // Creates a frame-editor linked to the parameter
+      CATDlgFrame *pDlgFrame = spParamFrame -&gt;GetInPanelEdition(NULL_var, oFrame  ,CATCkeWithSpinner|CATCkeNoLabel);
+      if (pDlgFrame)
+          pDlgFrame-&gt;SetGridConstraints( 1, 1, 1, 1, CATGRID_4SIDES);
+  }
+  ...  
+ } 
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<ol>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Implementing CATIMfgToolActivity</h4>
+<p>To customize tool tab page, we should create an extension class that will
+implement <i>CATIMfgToolActivity</i>. This interface offers services to manage
+allowed and default tools. If you like to overload the whole tab page, see the <i>CAAMaiToolEditionCustomization</i>
+use case [<a href="#References">3</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;TIE_CATIMfgToolActivity.h&quot;
+TIE_CATIMfgToolActivity( CAAESmiUserOperationToolEditor);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In <i>GetAuthorizedToolTypeList, </i>we set the types of allowed tools of our
+operation</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> HRESULT CAAESmiUserOperationToolEditor::GetAuthorizedToolTypeList (CATListOfCATUnicodeString &amp; oToolTypeList)
+ {
+   // Allowed Tools
+   oToolTypeList.Append(CATEMfgEndMillTool);
+   oToolTypeList.Append(CATEMfgDrillTool);
+
+   return S_OK;
+ }
+</pre>
+    </td>
+  </tr>
+</table>
+<p>In <i>CreateDefaultTool, </i>we set the default tool of our operation</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAESmiUserOperationToolEditor::CreateDefaultTool (CATBaseUnknown_var &amp; oTool)
+{
+  ...
+      // Retrieves Resource Factory
+  if (!!spResourceContainer)
+  {
+    CATIMfgResourceFactory * pResourceFactory = NULL;
+    oRC = spResourceContainer-&gt;QueryInterface(IID_CATIMfgResourceFactory, (void**) &amp;pResourceFactory);
+    if (SUCCEEDED(oRC))
+    {
+      // Creates Default Tool
+      CATUnicodeString ToolTypeToCreate = MfgEndMillTool;
+      oTool = pResourceFactory-&gt;CreateResource(ToolTypeToCreate);
+      pResourceFactory-&gt;Release();
+      pResourceFactory = NULL;
+
+      // Defines a Default tool for our user operation
+      if(!!oTool)
+      {
+        CATIMfgTool * pMfgTool = NULL;
+        oRC = oTool-&gt;QueryInterface(IID_CATIMfgTool, (void**) &amp;pMfgTool);
+        if (SUCCEEDED(oRC))
+        {
+          pMfgTool-&gt;SetDefaultValues();
+          pMfgTool-&gt;SetDefaultName();
+          pMfgTool-&gt;Release();
+          pMfgTool = NULL;
+        }
+
+        CATIMfgActivity * pActivity = NULL;
+        oRC = QueryInterface(IID_CATIMfgActivity, (void**) &amp;pActivity);
+        if (SUCCEEDED(oRC))
+        {
+          pActivity-&gt;SetDefaultTool(oTool);
+          pActivity-&gt;Release();
+          pActivity = NULL;
+        }
+      }
+    }
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to customize strategy, tool and
+macros tab pages of the editing dialog panel of a surface machining operation.
+How to customize geometry tab page is described in the next use cases [<a href="#References">4</a>]
+&amp; [<a href="#References">5</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASmiTechArticles/CAASmiOperationSampleOverview.htm">Surface
+      Machining Operation Sample Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAMaiUseCases/CAAMaiToolEditionCustomization.htm">Customizing
+      Tool Editor for Drilling Tool</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAASmiUserOperationWithUserMF.htm">Managing Geometry with User
+      Machining Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAASmiUserOperationWithMA.htm">Managing Geometry with Machining
+      Areas</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

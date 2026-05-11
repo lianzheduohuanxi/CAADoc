@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+<TITLE>Creating Surface Mesh Parts</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link href="../CAAScrBase/caav5.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Creating Surface Mesh Parts</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to create Octree triangle 
+		mesh part on an existing analysis document. This scenario requires &quot;FEM 
+		Surface (FMS) product&quot;.</P>
+		<P>The macro open an Analysis document. Mesh part surface mesh is created 
+		and global specifications associated with this mesh part are set. The local 
+		specification: <I>MSHLocalMeshSize</I> is created, specifying the edge of 
+		the hole as support. Finally mesh part is updated to generate mesh.</P>
+		<P ALIGN="center">
+		<img height="105" src="images/BasicSurfMesh.gif" width="530" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniMeshBasicSurf is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniMeshBasicSurfSource.htm">CAAAniMeshBasicSurf.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniMeshBasicSurf.catvbs">Execute macro</A> (Windows only).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniMeshBasicSurf includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Extracting the List of Mesh Parts and Publications</A></LI>
+			<LI><A HREF="#Navigate">Creating Mesh part and Assigning Values to its 
+			Attributes</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39;Optional: allows to find the sample wherever it&#39;s installed</FONT>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39;----------------------------------------------------------- </FONT></PRE>
+				<PRE><FONT COLOR="#008000">&#39;Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Surface.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisDocument = CATIA.Documents.Open(sFilePath)</PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path is already stored in the
+		<CODE>sDocPath</CODE> variable. If this cariable is not valuated then error 
+		is raised. In the collection of documents, two documents can be retrieved; 
+		the Analysis document and the Part document.</P>
+		<H4><A NAME="Reference"></A>Extracting the List of Mesh Parts and Publications</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retrieve the Analysis Manager and Analysis Model</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisManager = oAnalysisDocument.Analysis</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retreive the part document from Analysis manager</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisLinkedDocument = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set</FONT> partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set</FONT> product = partDocument.Product
+			</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retrieve the analysis model from the list of models</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModel = oAnalysisManager.Item(1)</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retrieve mesh manager and mesh part </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Retrieve publications from product and retrieve the published surface and edge</FONT>
+<FONT COLOR="#0000FF">Set</FONT> publications1 = product.Publications
+<FONT COLOR="#0000FF">Set</FONT> pubEdge = publications1.Item(&quot;Edge&quot;)
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, the <B>Analysis Models</B> and 
+		the <B>Mesh Manager Objects</B>. The extraction of pre-defined geometric 
+		elements is done by using the Reference interface. This is equivalent to 
+		the selection of a B-Rep elements inside the interactive application. In 
+		this macro the reference is created from the published face.</P>
+		<H4><A NAME="Navigate"></A>Creating the Mesh Part and Assigning Values to 
+		its Attributes.</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+<FONT COLOR="#008000">&#39;Add the new basic surface mesh part to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set  </FONT>surfPart = meshPart.Add (&quot;MSHPartBasicSurf&quot;)</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39;Add support from the published surface</FONT>
+surfPart.AddSupportFromPublication product, pubSurf</PRE>
+				<PRE><FONT COLOR="#008000">&#39;Set the global Specifications</FONT>
+surfPart.SetGlobalSpecification &quot;GlobalMethod&quot;, 1
+surfPart.SetGlobalSpecification &quot;QuadsOnly&quot;, 2
+surfPart.SetGlobalSpecification &quot;ElementOrder&quot;, &quot;Parabolic&quot;
+surfPart.SetGlobalSpecification &quot;DedicatedMesh&quot;, 1
+surfPart.SetGlobalSpecification &quot;GlobalSize&quot;, &quot;10.0 mm&quot;
+surfPart.SetGlobalSpecification &quot;Offset&quot;, &quot;15.0 mm&quot;
+surfPart.SetGlobalSpecification &quot;TopologySize&quot;, &quot;20.0 mm&quot;
+surfPart.SetGlobalSpecification &quot;TopologySag&quot;, 2
+surfPart.SetGlobalSpecification &quot;SharpEdges&quot;, 1
+surfPart.SetGlobalSpecification &quot;FaceAngle&quot;, &quot;0 deg&quot;
+surfPart.SetGlobalSpecification &quot;OffsetFromThickness&quot;, 1
+surfPart.SetGlobalSpecification &quot;MeshRelSag&quot;, 1
+surfPart.SetGlobalSpecification &quot;MeshRelSagValue&quot;, &quot;0.1 mm&quot;
+surfPart.SetGlobalSpecification &quot;CurveCapture&quot;, 1
+surfPart.SetGlobalSpecification &quot;CurveCaptureTol&quot;, &quot;1.1 mm&quot;
+surfPart.SetGlobalSpecification &quot;MeshCapture&quot;, 1
+surfPart.SetGlobalSpecification &quot;MeshCaptureTol&quot;, &quot;1.1 mm&quot;
+surfPart.SetGlobalSpecification &quot;MeshAbsSag&quot;, 1
+surfPart.SetGlobalSpecification &quot;MeshAbsSaglValue&quot;, &quot;1.1 mm&quot;</PRE>
+				<PRE><FONT COLOR="#008000">&#39;Create local specification</FONT>
+<FONT COLOR="#0000FF">Set</FONT> meshSpecs = surfPart.AnalysisMeshLocalSpecifications
+<FONT COLOR="#0000FF">Set </FONT>spec = meshSpecs.Add(&quot;MSHTopProjectCurve&quot;)
+spec.AddSupportFromPublication &quot;ConnectorList&quot;, product1, pubCurve
+spec.SetAttribute &quot;Tolerance&quot;, &quot;500 mm&quot;</PRE>
+				<PRE><FONT COLOR="#0000FF">Set </FONT>spec = meshSpecs.Add(&quot;MSHTopProjectPoint&quot;)
+spec.AddSupportFromPublication &quot;ConnectorList&quot;, product1, pubPoint
+spec.SetAttribute &quot;Tolerance&quot;, &quot;500 mm&quot;</PRE>
+				<PRE><FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+</PRE>
+				<P>surfPart.Update</P>
+				<PRE></PRE>
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><FONT COLOR="#000000"><SPAN STYLE="font-weight: 400">Here parameters 
+		are set with their respective units, this helps in setting up of the parameters 
+		independent of the unit settings. Calling update on the mesh part computes 
+		the mesh.</SPAN></FONT></H4>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...
+ End Sub
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView environment 
+		variables must be defined.</P>
+		</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to create basic surface mesh parts and how to assign 
+values to its global specifications.</P>
+<P>&nbsp;</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

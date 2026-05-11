@@ -1,0 +1,319 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Generic Naming Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Generic Naming Overview</h3>
+      <em>Accessing sub-elements</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article gives a short description of the Generic Naming mechanism
+      used in V5. Having a hands-on experience of the Modeler Feature [<a href="#References">1</a>]
+      and the Topologic Modeler [<a href="#References">2</a>] is necessary to
+      take full benefits from this article.</p>
+      <ul>
+        <li><strong><a href="#Objectives of GN">Objectives of Generic Naming</a></strong></li>
+        <li><strong><a href="#Principles">Principles</a></strong>
+          <ul>
+            <li><b><a href="#Interactive selection">Interactive Selection</a></b></li>
+  
+          <li><b><a href="#GN Graph">Generic Naming Graph</a></b></li>
+          <li><b><a href="#Graph generation">Graph Generation</a></b></li>
+          <li><b><a href="#Featurization">Featurization</a></b></li>
+          </ul>
+        <li><b><a href="#BRep Feature Management">BRep Feature Management</a></b>
+          <ul>
+            <li><b><a href="#BRep Features and Objects">Object of Selection versus BRep
+              Features</a></b></li>
+            <li><b><a href="#Options for Featurization">Options for Featurization</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Objectives of GN"></a>Objectives of Generic Naming</h3>
+<p>In V5, a feature cannot reference directly a topology as a specification [<a href="#References">1</a>].
+The main raison is that geometry and topology can be deleted and replaced during
+an update. In fact topological objects are unstable.</p>
+<p>Consider the following example. The use has created a sweep that uses the
+resulting edge of a spline feature as a profile. Suppose now, that the sweep
+references the edge directly using its geometrical tag. Whenever the user
+modifies the spline, the topology is deleted and replaced by a new one that may
+have a different tag.</p>
+<p>The tag used by the sweep is now referencing an element that no longer
+exists. The sweep cannot be recalculated.</p>
+<table border="0">
+ <caption><i><a name="Fig.1">Fig.1</a>: The Unstable Topological Tag</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrGN1.jpg"></td>
+  </tr>
+</table>
+<p>The solution implemented in V5 to overcome this problem is to use a name
+instead of a direct reference to the topology. In our example [<a href="#Fig.1">Fig.1</a>], instead
+of pointing directly to the edge, the sweep will store a name that describe
+precisely this cell, for instance &quot;result edge of the feature
+Spline.1&quot;. Even after an update the sweep will be able to find the correct
+topology in the result by interpreting the name.</p>
+<p>Such a name is called a <b>generic name </b>or a stable name. It provides a
+stable way to reference a topological cell. Generic names are managed by the
+Generic Naming layer of the V5.</p>
+<p>Generic names can be made persistent and stored in some specific features,
+called BRep features. BRep features are always hidden to the end-user. They are
+aggregated by other features and are used as input specifications. The interface
+to manage these features is <i>CATIMfBRep</i>  (MechanicalModeler).</p>
+<table border="0">
+  <tr>
+  <caption><i><a name="Fig.2">Fig.2</a>: Generic Naming for a Cell</i></caption>
+    <td><img border="0" src="images/CAAMmrGN2.jpg"></td>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Principles"></a>Principles</h3>
+<h4><a name="Interactive selection"></a>Interactive Selection</h4>
+<p>When a user selects interactively a topological cell, CATIA automatically
+calculates a generic name for this cell and stores it in a temporary object.
+This object is an object of selection (not a feature) managed by the <i>CATIBRepAccess</i>
+interface (MecModInterfaces). This object of selection is a temporary handler on the
+cell. From an object of selection it is possible to access the feature that own the cells
+or the cell itself.&nbsp;</p>
+<p>CATIA calculates the generic naming by reading a kind of history graph of the
+topological objects. This graph describes the construction relations that exist
+between the cells of several bodies.</p>
+<h4><a name="GN Graph"></a>Generic Naming Graph</h4>
+<p>The graph used by the generic naming is generated during the update process.
+The purpose of this graph is to help the application to build generic names for
+selected elements. This graph is made of scopes and nodes.</p>
+<p>To each mechanical feature is associated with only one scope. The scope makes
+the link between the feature and its topological result (a <i>CATBody</i>). A
+scope contains one or several nodes. Each node is linked to a cell of the result
+<i>CATBody</i>.</p>
+<p>A node can also reference a node of a different scope is there is a
+construction relationship between the two cells. Nodes that do not have ancestor
+relationship can have a complementary info that helps in identifying the node.</p>
+<p>In the example below, we show a simplified view of the graph generated by a
+Sketch and a Pad. In this figure [<a href="#Fig.3">Fig.3</a>],&nbsp;the node (n1) which is linked to
+the side face of the Pad (the one in gray) references the node (n2) which is
+linked to the Line.1of the Sketch. This relationship expresses the fact that the
+face has been generated from the line.</p>
+<table border="0">
+ <caption><i><a name="Fig.3">Fig.3</a>: Generic Naming Graph</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrGN3.jpg"></td>
+  </tr>
+</table>
+<p>In this example, the generic name of the grayed face will be: Face generated
+by Pad.1, from the edge of Sketch.1/Line.1.&nbsp;</p>
+<p>We can see that every side face of the Pad will have a different name.
+However, it is not possible to distinguish the top and the bottom face of the
+Pad. Both are built using the same elements. In that case it is necessary to add
+some information to the nodes of the top and bottom faces.</p>
+<p>For a Pad, the top face will have the complementary information Top and the
+bottom face will have the info Bottom.</p>
+<table border="0">
+<caption><i><a name="Fig.4">Fig.4</a>: Added Information</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrGN4.jpg"></td>
+  </tr>
+</table>
+<p>This added info will be used to build the generic name. In our example the
+name of the top face will be: Face generated by Pad.1 with info Top.</p>
+<p>Not all the cells of a <i>CATBody</i> needs to be tracked by the nodes of a
+graph. In the above example, we can see that each edge is shared by only two
+faces. Therefore it is possible to identify an edge by saying that it is the
+common edge between two given faces.</p>
+<p>Therefore, the generic naming graph will no keep track of every topological
+cells. It will only follow:</p>
+<ul>
+  <li>The faces of a solid</li>
+  <li>The boundary edges and the faces of a shell</li>
+  <li>The extremity vertices and the edges of a wire.</li>
+</ul>
+<h4><a name="Graph generation"></a>Graph Generation</h4>
+<p>The graph is generated during the update process of the Part document. Each
+mechanical feature is responsible for the generation of its own scope and nodes.
+This is generally done in the <code>Build</code> method of the <i>CATIBuild</i>
+interface [<a href="#References">3</a>].</p>
+<h4><a name="Featurization"></a>Featurization</h4>
+<p>To be used as a specification, the object of selection that contains the generic name
+must be transformed in a persistent object called a BRep feature. This process
+is called the featurization. It is the topic of the next paragraph.</p>
+<h3><a name="BRep Feature Management"></a>BRep Feature Management</h3>
+<h4><a name="BRep Features and Objects"></a>Object of Selection versus BRep Features</h4>
+<p>An object of selection is a temporary object that is returned when the user selects or
+pre-selects a geometry. A BRep feature is a persistent object that stores the
+name of a topological cell. This name can be used later on to retrieve the cell.
+Only a BRep feature can be referenced as an input specification by another
+feature.&nbsp;</p>
+<p>A <i>CATPathElement</i> (Visualization) can return BRep object. It
+will never return a BRep feature. The <i>CATIFeaturize</i> interface can be used
+to create a BRep feature from an object of selection.</p>
+<p>It is also possible to use a <i>CATFeatureImportAgent</i>&nbsp; (DialogEngine)
+instead of <i>CATPathElementAgent</i> (DialogEngine) to generate automatically a
+BRep feature from a selected cell.</p>
+<h4><a name="Options for Featurization"></a>Options for Featurization</h4>
+<p>Several options are available when performing a featurization either manually
+using <i>CATIFeaturize</i> or automatically using a <i>CATFeatureImportAgent</i>
+. These options are:</p>
+<ul>
+  <li><a href="#F mode">MfNoFeaturization, MfRelimitedFeaturization OR
+    MfFunctionalFeaturization</a></li>
+  <li><a href="#Support Feature">MfSelectingFeatureSupport, MfLastFeatureSupport
+    OR MfInitialFeatureSupport</a></li>
+  <li><a href="#Tempo versus Perm Body">MfTemporaryBody OR MfPermanentBody</a></li>
+  <li><a href="#Duplicate versus no duplicate">MfDuplicate OR MfNoDuplicate</a></li>
+</ul>
+<h5><a name="F mode"></a>Featurization mode</h5>
+<ul>
+  <li><b>MfNoFeaturization</b>, indicates that the acquisition agent should not
+    create a BRep feature, but should only create an return a BRep object. <i>CATIFeaturize</i>
+    must be called afterwards to get a BRep feature.</li>
+  <li><b>MfRelimitedFeaturization, </b>indicates that the featurization should
+    be performed in relimited mode. This option should be used when the
+    boundaries (or the shape) of the selected cell is important (fillet, draft,
+    projection)</li>
+  <li><b>MfFunctionalFeaturization, </b>indicates that the featurization should
+    be performed in functional mode. This option should be used when the shape
+    of the selected cell is not important (support plan of a sketch).</li>
+</ul>
+<h5><a name="Support Feature"></a>Support Feature</h5>
+<p>This option will determine which feature (or scope) will be used to solve the
+BRep name and find the pointed cell.</p>
+<ul>
+  <li><b>MfSelectingFeatureSupport:</b> indicates that the support of the BRep
+    feature should be the selected feature. It means that the cell pointed by
+    the Brep will always belong to the selected feature.</li>
+  <li><b>MfLastFeatureSupport: </b>indicates that the support of the BRep
+    feature should be the one where the selected cell appeared with the same
+    shape for the first time.</li>
+  <li><b>MfInitialFeatureSupport: </b>Indicates that the support of the BRep
+    feature should be the one that has created the selected cell without taking
+    into account any modification.</li>
+</ul>
+<h5><a name="Tempo versus Perm Body"></a>Temporary versus Permanent Body</h5>
+<p>This option will determine is the BRep feature should have its one scope.</p>
+<ul>
+  <li><b>MfTemporaryBody:</b> with this option the BRep feature will have an
+    incomplete scope. The BRep cannot be used as an input specification of a
+    procedural report.&nbsp;</li>
+  <li><b>MfPermanentBody: </b>with this option the BRep feature will have an
+    complete scope and can be used in a procedural report. In other words, the <i>CATBody</i>
+    of the feature can be used by a topological operator [<a href="#References">3</a>]</li>
+</ul>
+<h5><a name="Duplicate versus no duplicate"></a>Duplicate versus No Duplicate</h5>
+<p>This option should not be set. The default value should always be used.</p>
+<h5><a name="Example"></a>Example</h5>
+<p>Here an example to illustrate the options:</p>
+<table border="0">
+<caption><i><a name="Fig.5">Fig.5</a>: Supported Options</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrGN5.jpg"></td>
+  </tr>
+</table>
+<p>Suppose that the user has selected the face in gray, in the result body of
+the Hole (Hole.1). Now let's consider the creation of a BRep feature from this
+selected cell.</p>
+<p>The <b> first</b> option will determine if the BRep should point specifically on the
+relimited geometry of if is should point on the functional, in that case both
+faces will not be distinguish.</p>
+<ul>
+  <li>Relimited featurization: The BRep will point specifically on the left cell
+    of the Hole.1 (the one in gray)</li>
+  <li>Functional featurization: The BRep will point on both faces without any
+    possibility to distinguish them</li>
+</ul>
+<p>The <b> second</b> option (support type) will determine which feature is used to
+search for the cell</p>
+<ul>
+  <li>Selecting feature support: the support feature is the hole, the cell
+    returned by the BRep will be the one referenced by the hole. if the hole is
+    deleted then the BRep will dangle.</li>
+  <li>Last feature support: the support feature is the last feature where the
+    cell has been modified. here it will be the Pocket. This is the most stable
+    option for a relimited featurization</li>
+  <li>Initial feature support: the support feature is the first feature that
+    contains the cell. here it will be the Pad. This is the most stable option
+    for a functional&nbsp; featurization</li>
+</ul>
+<p>Usually BRep will be created using one of the two sets of options:</p>
+<ul>
+  <li>Functional&nbsp; featurization + Initial feature support</li>
+  <li>Relimited featurization + Last feature support</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topological
+      Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrBuildIntegrating.htm">Integrating a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

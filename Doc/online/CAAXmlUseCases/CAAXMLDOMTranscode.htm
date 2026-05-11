@@ -1,0 +1,347 @@
+<html>
+
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Reading and writing XML documents with DOM</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Reading and Writing XML Documents with DOM</h3>
+			<em>Using the DOM API to parse existing XML files and saving DOM
+			trees as XML files using various encodings</em></td>
+		</tr>
+		<tr>
+			<td class="use" colspan="2">Use Case</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article shows how to parse existing XML files using the DOM
+			API and how to save a DOM tree to disk as an XML file with the proper
+			encoding.</p>
+			<ul>
+				<li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+				<li><a href="#UseCase"><strong>The CAAXMLDOMTranscode Use Case</strong></a>
+				<ul>
+					<li><a href="#What">What Does CAAXMLDOMTranscode Do</a></li>
+					<li><a href="#How">How to Launch CAAXMLDOMTranscode</a></li>
+					<li><a href="#Where">Where to Find the CAAXMLDOMTranscode Code</a></li>
+				</ul>
+				</li>
+				<li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+				<li><a href="#InShort"><strong>In Short</strong></a></li>
+				<li><a href="#References"><strong>References</strong></a></li>
+			</ul>
+
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows how to go back and forth between XML files and
+in-memory DOM trees. You will first learn to construct an in-memory DOM
+tree from an XML file using a DOM parser. You will learn to configure
+the parser to make it validating or non validating. The use case will
+then show you how to create an XML file from an in-memory DOM tree. It
+will show you how to configure the parser to obtain an XML file with the
+encoding you want.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAXMLDOMTranscode Use Case</h3>
+<p>The CAAXMLDOMTranscode Use Case is a use case of the CAAXMLParser.edu
+framework that illustrates XMLParser framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAXMLDOMTranscode Do</h4>
+<p>This use case implements a simple XML file transcoder: a program,
+which converts XML files from one encoding to another. The transcoder
+parses an existing XML file using the DOM API, then saves it under the
+specified name using the requested encoding.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAXMLDOMTranscode</h4>
+<p>To launch CAAXMLDOMTranscode, you will need to set up the build time
+environment, then compile CAAXMLDOMTranscode along with its
+prerequisites, set up the run time environment, and then execute the use
+case [<a href="#References">1</a>].</p>
+<p>The use case should be launched as follows from the command line:</p>
+<pre>CAAXMLDOMTranscode (-utf8|-utf16) <code>&lt;infilepath> &lt;outfilepath></code></pre>
+<p>where:</p>
+<ul>
+	<li><code>(-utf8|-utf16)</code> is the choice of the encoding to use
+	for the transcoded XML file.</li>
+	<li><code>&lt;infilepath></code> is the path of the XML file which you
+	want to read.</li>
+	<li><code>&lt;outfilepath></code> is the path where the transcoded XML
+	file will be saved.</li>
+</ul>
+
+<p>A sample XML file is provided with the use case. To
+use it, launch the following command from the command line:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>CAAXMLDOMTranscode -utf16
+			InstallRoot\OS\resources\xml\CAAXMLDOMTranscode\CAAXMLDOMTranscode.xml
+			C:\TEMP\CAAXMLDOMTranscode_utf16.xml</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>CAAXMLDOMTranscode -utf16
+			InstallRoot/OS/resources/xml/CAAXMLDOMTranscode/CAAXMLDOMTranscode.xml
+			/tmp/CAAXMLDOMTranscode_utf16.xml</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where:</p>
+<ul>
+	<li><code>InstallRoot</code> is the directory in which you have
+	installed the run time part or the product line</li>
+	<li><code>OS</code> is the directory containing the installed code
+	<ul>
+		<li><code>aix_a</code> for 32-bit AIX</li>
+		<li><code>hpux_b</code> for HP-UX</li>
+		<li><code>solaris_a</code> for Solaris</li>
+		<li><code>intel_a</code> for 32-bit Windows</li>
+		<li><code>win_b64</code> for 64-bit Windows</li>
+	</ul>
+	</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAXMLDOMTranscode Code</h4>
+<p>The CAAXMLDOMTranscode use case is made of one file located in the
+CAAXMLDOMTranscode.m module of the CAAXMLParser.edu framework:</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Windows</td>
+			<td><code>InstallRootDirectory\CAAXMLParser.edu\CAAXMLDOMTranscode.m\</code></td>
+		</tr>
+		<tr>
+			<td>Unix</td>
+			<td><code>InstallRootDirectory/CAAXMLParser.edu/CAAXMLDOMTranscode.m/</code></td>
+		</tr>
+	</tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the
+CAA CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To parse a DOM document and save it to disk, there are four main
+steps:</p>
+<table width="100%">
+	<tbody>
+		<tr>
+			<th>#</th>
+			<th>
+			<p align="left">Step</p>
+			</th>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step1">1</a></td>
+			<td valign="top">Create the V5 DOM Component</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step2">2</a></td>
+			<td valign="top">Parse the XML Document Without Validation</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step3">3</a></td>
+			<td valign="top">Write DOM Tree With the Proper Encoding</td>
+		</tr>
+		<tr>
+			<td valign="top"><a href="#Step4">4</a></td>
+			<td valign="top">Manage Errors</td>
+		</tr>
+	</tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1">Create the V5 DOM Component</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLDOMDocumentBuilder_var builder;
+HRESULT hr = <b>::CreateCATIXMLDOMDocumentBuilder</b>(builder);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>The first step to work with DOM is to instantiate the V5 DOM
+component. The V5 DOM component can be created by calling the <code>CreateCATIXMLDOMDocumentBuilder</code>
+global function. This function returns a V5 handler on the <i>CATIXMLDOMDocumentBuilder</i>
+interface, which is the main interface for the V5 DOM component. Using
+this interface you will be able to create documents (either by parsing
+an existing XML file, as here, or from scratch) and save existing
+documents to disk. Note that the code above does not specify the CLSID
+of the component to use, so the default DOM component (XML4C3) will be
+used. See <a href="#Ref3">[3] and <a href="#Ref4">[4]</a> if you want to
+use another V5 DOM component.</a></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2">Parse the XML Document Without Validation</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATListOfCATUnicodeString readOptions;
+readOptions.Append("CATDoValidation");
+CATListOfCATUnicodeString readOptionValues;
+readOptionValues.Append("false");
+
+CATIDOMDocument_var document;
+hr = builder-><b>Parse</b>(inputFile, document, readOptions, readOptionValues);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To parse an XML document, invoke the <code>Parse</code> method from the <i>CATIXMLDOMDocumentBuilder</i>
+interface. The parser can run in two modes: non-validating and
+validating. You determine what mode is used in the <code>Parse</code> method
+using the <code>"CATDoValidation"</code> option. Options are passed to the
+parser using two <i>CATListOfCATUnicodeStrings</i>. The first one
+contains the option names, the second one contains the option values.
+For the purpose of this use case, we just want to transcode the XML file
+from one encoding to another, so we will disconnect XML validation. For
+a discussion of non-validating parsers versus validating parsers and how
+to choose which parser to instantiate, please see <a href="#Ref3">[3]
+and <a href="#Ref4">[4]</a>.</a></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3">Write DOM Tree With the Proper Encoding</a></h4>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+CATListOfCATUnicodeString writeOptions;
+writeOptions.Append(<b>"CATEncoding"</b>);
+CATListOfCATUnicodeString writeOptionValues;
+if (strcmp(argv[1], "-utf8") == 0) {
+	writeOptionValues.Append(<b>"UTF-8"</b>);
+} else {
+	writeOptionValues.Append(<b>"UTF-16"</b>);
+}
+hr = builder-><b>WriteToFile</b>(document, outputFile, writeOptions, writeOptionValues);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To create the XML document, which corresponds to the DOM tree, call
+the <code>WriteToFile</code> method. It takes as a parameter the path of the
+XML document to be created. The <code>WriteToFile</code> method also accepts
+the <code>CATEncoding</code> option to control the encoding used in the
+resulting file. Options are passed to the parser using two <i>CATListOfCATUnicodeStrings</i>.
+The first one contains the option names, the second one contains the
+option values.</p>
+
+<p>If the <code>CATEncoding</code> option is not specified, the resulting
+document will use the default (UTF-8) encoding. Note that the "encoding"
+attribute will not be specified in the XML declaration. However, the XML
+specification indicates that if the encoding attribute is not specified,
+XML parsers should consider that the document uses the UTF-8 encoding. Not
+all encodings are supported by the parser. For a discussion of supported
+encodings and write options, see <a href="#Ref3">[3]</a> and <a
+	href="#Ref4">[4]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4">Manage Errors</a></h4>
+<p>The XMLParser framework uses the <i>HRESULT</i> / <i>CATError</i> mechanism to
+manage errors. Make sure to use the <code>CATError::CATGetLastError</code>
+to obtain all the available error diagnostics when using XMLParser. More
+information about V5 error management is available here <a href="#Ref2">[2]</a>
+and <a href="#Ref4">[4]</a>.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows you how to read and write XML documents using the
+DOM API.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+			and Launching a CAA V5 Use Case</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</td>
+			<td><a href="../CAASysTechArticles/CAASysErrors.htm">
+			Managing Errors Using HRESULT</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref3"></a>[3]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlV5Overview.htm"> Using
+			XML in V5</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref4"></a>[4]</td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlTipsAndTricks.htm">XML
+			Tips and Tricks</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [May 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

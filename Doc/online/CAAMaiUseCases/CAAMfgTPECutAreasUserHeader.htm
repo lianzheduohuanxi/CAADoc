@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding Commands in the Toolbar of the Cut Areas Command</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Adding Commands in the Toolbar of the Cut Areas
+      Command</h3>
+      <i>Implementing CATIMfgTPECutAreasUserHeader</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article discusses the CAAMfgTPECutAreasUserHeader use case.
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAMfgTPECutAreasUserHeader Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAMfgTPECutAreasUserHeader Do</a></li>
+          <li><a href="#How">How to Launch CAAMfgTPECutAreasUserHeader</a></li>
+          <li><a href="#Where">Where to Find the CAAMfgTPECutAreasUserHeader
+            Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to help you insert your own command in the cut areas
+tool bar of the tool path editor.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMfgTPECutAreasUserHeader Use Case</h3>
+CAAMfgTPECutAreasUserHeader is a use case of the CAAToolPathEditorItf.edu
+framework that illustrates ToolPathEditor framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAMfgTPECutAreasUserHeader Do</h4>
+CAAMfgTPECutAreasUserHeader help you to insert your own command in the cut areas
+tool bar as shown on <a href="#Fig1">Fig.1</a>.<br>
+&nbsp;
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The cut area tool bar</caption>
+  <tr>
+    <td><img src="images/CAAMfgCutAreaToolBar.jpg" border="0" width="493" height="149"></td>
+  </tr>
+</table>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMfgTPECutAreasUserHeader</h4>
+To launch CAAMfgTPECutAreasUserHeader, you will need to:
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMfgTPEAddCmdInCutAreaToolBar.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Decomment the dictionary</li>
+  <pre># Decomment this line to run CAAMfgTPEAddCmdInCutAreaToolBar Sample
+#CAA#CAAMfgTPEM3xAddin                  CATISmgProgramAddin            libCAAMfgTPEAddToolBar
+#CAA#CATM3xAreaModificationAlgoDriver   CATIMfgTPECutAreasUserHeader   libCAAMfgTPEAddCmdInCutAreaToolBar
+#CAA#ManufacturingActivity              CATIMfgTPEExtraVisu            libCAAMfgTPEAddCmdInCutAreaToolBar
+</pre>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMfgToolPath.CATPart file located in:</li>
+  <table width="100%">
+    <tr>
+      <td>Windows</td>
+      <td><tt>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CNext\resources\graphic</tt></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><tt>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CNext/resources/graphic</tt></td>
+    </tr>
+  </table>
+  <p><img src="images/CAAMfgTPEDisplayDistance01.jpg" border="0" width="482" height="417">
+  <li>Using the Start menu, select the Surfacic Machining workbench in Machining<br>
+    &nbsp;
+    <p>&nbsp;<br>
+    &nbsp;<br>
+    &nbsp;
+    <p><img src="images/CAAMfgTPEDisplayDistance02.jpg" border="0" width="275" height="417">
+    <p>This displays the PPR document:
+    <p><img src="images/CAAMfgTPEDisplayDistance03.jpg" border="0" width="327" height="267"></p>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a sweeping
+    operation using the Sweeping command in the Insert-&gt;Machining
+    Operations-&gt;sweeping</li>
+  <li>Select a body, then do replay to compute the tool path</li>
+  <li>In the PPR tree, lock the operation</li>
+  <li>An icon appears under the activity of sweeping</li>
+  <li>In Tool Path Management tool bar, click on Edit Tool Path command</li>
+  <li>In new sweeping dialog, click on Area Modification</li>
+  <li>Then, Tool Path Editor tool bar is updated with commands <a href="#Fig1">Fig.1</a></li>
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMfgTPECutAreasUserHeader Code</h4>
+The CAAMfgTPECutAreasUserHeader use case is made of a class named <i>CAAMfgTPECutAreasUserHeader</i>
+located in the CAAMfgTPEAddCmdInCutAreaToolBar.m module of the
+CAAToolPathEditorItf.edu framework:<br>
+&nbsp;
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CAAMfgTPEAddCmdInCutAreaToolBar.m</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CAAMfgTPEAddCmdInCutAreaToolBar.m</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There is one logical step in CAAMfgTPECutAreasUserHeader:
+<ul>
+  <li><a href="#Step1">Implementing CATIMfgTPECutAreasUserHeader</a></li>
+</ul>
+We now comment these section by looking at the code.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Implementing CATIMfgTPECutAreasUserHeader</h4>
+The class that will implement the command is named <i>CAAMfgTPECutAreasUserHeader</i>.<br>
+Create the CAAMfgTPECutAreasUserHeader header file:<br>
+&nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAMfgTPECutAreasUserHeader: public CATBaseUnknown
+{
+&nbsp; CATDeclareClass;
+&nbsp; public:
+&nbsp;&nbsp;&nbsp; // Standard constructors and destructors for an implementation class
+&nbsp;&nbsp;&nbsp; // -----------------------------------------------------------------
+&nbsp;&nbsp;&nbsp; CAAMfgTPECutAreasUserHeader ();
+&nbsp;&nbsp;&nbsp; virtual ~CAAMfgTPECutAreasUserHeader ();
+&nbsp;&nbsp;&nbsp; /**
+&nbsp;&nbsp;&nbsp;&nbsp; * Implements a function from an interface.
+&nbsp;&nbsp;&nbsp;&nbsp; * @see ToolPathEditorInterfaces.CATIMfgTPECutAreasUserHeader#GetHeaders
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; HRESULT GetHeaders (CATListValCATString &amp; ioHeadersList ) ;
+&nbsp; private:
+&nbsp;&nbsp;&nbsp; // The copy constructor and the assignment operator must not be implemented
+&nbsp;&nbsp;&nbsp; // ------------------------------------------------------------------------
+&nbsp;&nbsp;&nbsp; CAAMfgTPECutAreasUserHeader (CAAMfgTPECutAreasUserHeader &amp;);
+&nbsp;&nbsp;&nbsp; CAAMfgTPECutAreasUserHeader&amp;
+&nbsp;&nbsp;&nbsp; operator=(CAAMfgTPECutAreasUserHeader&amp;);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAMfgTPECutAreasUserHeaderclass</i> C++-derives from <i>CATBaseUnknown</i>.
+The class has a constructor, a destructor, and the method of the interface <i>CATIMfgTPECutAreasUserHeader</i>.
+<p>First you have to implement the method GetHeaders, which will provide you
+with getting the standard headers and to give the application yours own headers
+of command.<br>
+&nbsp;
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAMfgTPECutAreasUserHeader::GetHeaders (CATListValCATString &amp; ioHeadersList)
+{
+&nbsp; HRESULT hRes= S_OK;
+&nbsp; // User's list of Headers of command.
+&nbsp; ioHeadersList.Append(CATString(&quot;TPEPolylineSelectionUser&quot;));
+&nbsp; ioHeadersList.Append(CATString(&quot;TPEOnePointSelectionUser&quot;));
+&nbsp; return hRes;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>You have to fill the list which the name of yours owns headers of command. As
+a result, these commands are added in the cut area tool bar of the tool path
+editor. These commands are always activated.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This article provides an example on how to customize the cut area tool bar of
+the tool path editor.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jan 2003]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

@@ -1,0 +1,350 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>About VB, VBA, Debug, and Portability</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>About VB, VBA, Debug, and
+      Portability</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<h2>Tips about VB and VBA</h2>
+<p>Since V5R7 Dassault Systemes products based on the V5 
+Platform don't use anymore the Basic Script scripting engine on Unix platforms. 
+The <code>CATScript</code> language has been kept for compatibility and is processed by a vbscript scripting engine after removal of the typing information.</p>
+<p>This has no impact on macros but you may still experience 
+the following problem when recording macros in <code>CATScript</code> language and copy/pasting 
+the result in a VB/VBA project . </p>
+<p>The typing requirement are incompatible for Basic Script code and VB code.
+When a <b><a name="VBAbstractObject"></a>method returns an abstract object </b>like
+the <b>ActiveDocument</b> method that returns a <b>Document</b>,<b> </b>Basic
+Script expects the variable in which the return value will be stored to be of
+the type declared by the signature of the method:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> oDoc <font color="#0000FF">As</font> Document
+<font color="#0000FF">Set</font> oDoc = CATIA.ActiveDocument <font color="#008000">' returns a Document</font></pre>
+</blockquote>
+<p>If this document is a <b>PartDocument</b> you can then use specific methods
+or properties like the Part property that does not exist on the general <b>Document</b>
+but only on the <b>PartDocument</b>:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> oPart <font color="#0000FF">As</font> Part
+<font color="#0000FF">Set</font> oPart = oDoc.Part</pre>
+</blockquote>
+<p>When using VB, you will need a PartDocument object to use the Part property:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> oDoc <font color="#0000FF">As</font> <b>Part</b>Document
+<font color="#0000FF">Set</font> oDoc = CATIA.ActiveDocument <font color="#008000">' returns a Document
+
+</font><font color="#0000FF">Dim</font> oPart <font color="#0000FF">As</font> Part
+<font color="#0000FF">Set</font> oPart = oDoc.Part</pre>
+</blockquote>
+<p>For documentation examples, we choose as much as possible a VBScript/Basic
+Script portable syntax. So, when copy/pasting samples from the documentation in
+a VB project, you will have to proceed to take care of virtual objects.</p>
+<p>You will also have to take care of <b><a name="VBArrays"></a>methods
+with array parameters</b> like in the following example where we extract and
+display the multiple possible values of a <b>StringParameter </b>in VBScript or
+BasicScript:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> strParam1 <font color="#0000FF">As</font> StrParam
+<font color="#0000FF">Set</font> strParam1 = parameters1.Item(&quot;STRING&quot;)
+
+iSize = strParam1.GetEnumerateValuesSize()
+
+<font color="#0000FF">Redim</font> myArray(iSize-1)
+strParam.GetEnumerateValues myArray
+
+<font color="#0000FF">For </font>i = 0 <font color="#0000FF">To </font>iSize-1
+    msgbox myArray(i)
+<font color="#0000FF">Next</font></pre>
+</blockquote>
+<p>Copy/pasting this piece of code in a VB project may lead, depending on your
+VB/VBA level to a compilation error because VB may be unable to deal with the
+signatures that we use for our array types and issues the following message:</p>
+<blockquote>
+<p><code>Function or interface marked as restricted, or the 
+function uses an automation type not supported by Visual Basic.</code></p>
+</blockquote>
+<p>A simple workaround is to un-type
+the variable on which the method is applied.</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> strParam1 <font color="#008000">' <b>As StrParam</b> </font>
+<font color="#0000FF">Set</font> strParam1 = parameters1.Item(&quot;STRING&quot;)
+
+iSize = strParam1.GetEnumerateValuesSize()
+
+<font color="#0000FF">Redim</font> myArray(iSize-1)
+strParam.GetEnumerateValues myArray
+
+<font color="#0000FF">For </font>i = 0 <font color="#0000FF">To </font>iSize-1
+    msgbox myArray(i)
+<font color="#0000FF">Next</font>
+</pre>
+</blockquote>
+<p>When the array is the only argument of a method, the following syntax, 
+using parenthesis, 
+should be avoided:</p>
+<blockquote>
+  <pre><font color="#0000FF">Redim</font> myArray(15)
+strParam.GetEnumerateValues (myArray)
+</pre></blockquote>
+<p>For methods that are not functions (meaning that they do not have a return 
+value), this syntax requires to pass the argument by 
+reference which may not work in some cases. The right syntax uses either no 
+parenthesis:</p>
+<blockquote>
+  <pre>strParam.GetEnumerateValues myArray</pre>
+  </blockquote>
+<p>or the <b>call</b> keyword: </p><blockquote>
+  <pre><font color="#0000FF">call</font> strParam.GetEnumerateValues (myArray)
+</pre></blockquote>
+<h2>Script Debugger</h2>
+<p>When developing in-process macros, you can use Microsoft (R) Script Debugger
+than you can download freely from Microsoft (R) web site. Once installed, an
+error or a <b>Stop </b>order in the script will give hand to the debugger:</p>
+<blockquote>
+  <pre><font color="#0000FF">For </font>i = 0 <font color="#0000FF">To </font>Ubound(myArray)
+    <b><font color="#0000FF">Stop</font></b>
+    msgbox myArray(i)
+<font color="#0000FF">Next</font></pre>
+</blockquote>
+<p>See the Script Debugger's documentation for more information on how to
+proceed.</p>
+<h2>Portability</h2>
+<p>On windows&nbsp; platform, CAA V5 scripting capability relies on the VBScript 
+engine provided by the platform and requires VBScript 5.0 as a minimum level. On 
+Unix platforms, a VBScript 3.0 engine is installed when the Version 5 is 
+installed.</p>
+<p>Portable macros must so avoid usage of VBScript features that appeared after 
+version 3.0 of the language. Information on version in which VBscript language 
+elements appeared can be found in the scripting section of the Microsoft 
+Developers Network site.</p>
+<p>The <a href="../CAAScrTechArticles/CAAScrScriptCodingRules.htm">
+CAA V5 Automation Coding Rules</a> Technical Article contains portability rules 
+that describe in more details a few points that must also be considered to write portable code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2>Inter releases compatibility</h2>
+<h3>Virtual Function Tables compatibility</h3>
+<p>The CAA V5 Automation Object Model evolves with each new release. The list of the methods of an object may change. 
+Depending on the way VB or VBA calls those methods this may have an impact on your application even if a new method has been added.
+<p>The following code for example:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> oObject
+oObject.DoThis
+</pre>
+</blockquote>
+<p>Where oObject is not typed, will perform a late binding call to <i>DoThis</i>, using the <i>Invoke</i> method at build time and leaving <i>oObjet</i> perform the actual call to <i>DoThis</i> at runtime inside its implementation of <i>Invoke</i>. The following code however:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> oObject <font color="#008000"> <b>As</b> </font> SpecificTypeOfObject
+oObject.DoThat
+</pre>
+</blockquote>
+<p>will perform an early binding call, meaning basically that a description of the virtual function table of <i>oObject</i> will be re-created from the information available in the type library describing the <i>SpecificTypeOfObject</i> type and the call will be made using a position in this table.
+<p>If, on a new release, the order of methods in this virtual function table changes, which may be the case when adding new methods, the application will call the wrong method leading to difficult-to-debug runtime problems.
+<p>Moreover, the description extracted by VB/VBA from the type library doesn't seem to be always refreshed when the type library changes. Meaning that recompiling the project may not correct the problem. Here is a method that solves this problem:</p> 
+<ul>
+<li>open you VB or VBA project
+<li>remove all references to V5 type libraries using the <i>Project/References</i> or <i>Tools/References</i> menu items.
+<li>save and close the project
+<li>re-open the project and add again the needed references.
+</ul>
+<h3>Obsolete Typelibs</h3>
+<p>Some type libraries may become obsolete and disappear on a new V5 release.
+ If an existing VBA project has references on a type library that doesn't
+ exist anymore. If your access rights allow you to modify the Windows Registry,
+ references to those libraries are automatically removed when opening the 
+ CATVBA file. If it's not the case, the following message may be experienced
+ when launching a macro:</p>
+<blockquote><pre>
+CNEXT CATScriptError Message Scripting ERR_1000 <br>
+Execute the script "XXXXX" |XXXXX=<br>
+The script entry point could not be found.<br>
+XXXXX<br>
+Define a "CATMain" procedure which will be the entry point of the script.<br>
+
+</pre></blockquote>
+<p>To avoid this, launch VBA (Alt-F11) and use the <i>Tools/References</i> menu item
+ to launch the <i>References</i> panel. In this panel, uncheck the reference to the
+ concerned type library and click on OK.
+<p> This problem may also occur in VBA project of non V5 applications.</p>
+
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="TwoVersions"></a>Running Two Versions or Releases on the Same Machine</h3>
+<p>You may need to run two, for example, CATIA or DELMIA versions on the same machine. 
+For example, you want to run V5R27 and V5R28, or V5R27 and <strong>3D</strong>EXPERIENCER2017x. If you want 
+to run macros, note that CATIA or DELMIA use a scripting server associated with 
+a given version/release, and so you cannot concurrently run macros in two different 
+CATIA or DELMIA application windows running two different versions.</p>
+<p>To switch running macros from one version to another one, say from V5R27 to 
+<strong>3D</strong>EXPERIENCER2017x, 
+do the following:</p>
+<ul>
+	<li>Close all CATIA or DELMIA windows.</li>
+	<li>Unset the V5R27 scripting server: 	<ol>
+		<li>Open a prompt window in administrator mode.</li>
+		<li>Change to the folder in which you installed CATIA or DELMIA.<p>By default, 
+		this folder is:</p>
+		<p><code>C:\Program Files\Dassault Systemes\B27\win_b64\code\bin</code></p>
+		<p>Replace <code>win_b64</code> with <code>intel_a</code> if you run a 32 bit version.</p>
+<!--
+		<ul>
+			<li><code>C:\Program Files\Dassault Systemes\B27\intel_a\code\bin</code> 
+			if you run a 32 bit version</li>
+			<li><code>C:\Program Files\Dassault Systemes\B27\win_b64\code\bin</code> 
+			if you run a 64 bit version.</li>
+		</ul>
+-->
+		</li>
+		<li>Run the following command:
+		<pre class="code">catstart -run &quot;V5RegServer -unset CATIA&quot;</pre>
+		</li>
+		<li>This command is a silent command. Wait about for one minute to let it 
+		complete.</li>
+	</ol>
+	</li>
+	<li>Set the <strong>3D</strong>EXPERIENCER2017x scripting server:
+	<ol>
+		<li>Open a prompt window in administrator mode.</li>
+		<li>Change to the folder in which you installed CATIA or DELMIA.<p>By default, 
+		this folder is:</p>
+		<p><code>C:\Program Files\Dassault Systemes\B419\win_b64\code\bin</code></p>
+		<p>Replace <code>win_b64</code> with <code>intel_a</code> if you run a 32 bit version.</p>
+<!--
+		<ul>
+			<li><code>C:\Program Files\Dassault Systemes\B419\intel_a\code\bin</code> 
+			if you run a 32 bit version</li>
+			<li><code>C:\Program Files\Dassault Systemes\B419\win_b64\code\bin</code> 
+			if you run a 64 bit version.</li>
+		</ul>
+-->
+		</li>
+		<li>Run the following command:<pre class="code">catstart -run &quot;DSYAdmRegSrv -set CATIA&quot; [ -env MyV6Environment -DirEnv MyV6EnvDirectory]</pre>
+		</li>
+		<li>This command is a silent command. Wait about for one minute to let it 
+		complete before starting CATIA or DELMIA V6R2011.</li>
+	</ol>
+	</li>
+</ul>
+<p>To unset a V6/<strong>3D</strong>EXPERIENCE scripting server, use the -unset option of the DSYAdmRegSrv command. 
+In the same way, to set a V5 scripting server, use the -set option of the V5RegServer 
+command.</p>
+<p>In V5 many environment files can be created in any folders, so it is recommended to use
+the <code>-end</code> and the <code>-direnv</code> options. In V6/<strong>3D</strong>EXPERIENCE only one environment file
+is created at installation time and is located in the CATEnv folder of the installation folder,
+so those options can be omitted unless you are using Apps created with the CAA C++ API.</p>
+
+
+<h3> Support of boolean type in CATVBA</h3>
+<p>There is a known limitation concerning the usage of the Boolean type in the 
+V5 Automation methods invoked from VBA. In V5 applications, the Boolean type<br>
+is defined as an 'unsigned char' where the VBA definition is a short. When a V5 
+method returns True, the returned integer value is 1, though VBA is expecting 
+-1.
+Because of this difference, the following VBA code will not work as expected (the method boolMethod returns True):</p>
+	<blockquote><p><code><font color="#0000FF">If </font>myObj.boolMethod() = 
+	True <font color="#0000FF">Then</font> <font color="#008000">// This test will fail</font><br>
+	...<br>
+	<font color="#0000FF">End If</font>
+</code></p></blockquote>
+
+<p>to correct this limitation, you have to write some code like this :</p>
+<blockquote>
+	<p><code><font color="#0000FF">If </font>myObj.boolMethod() 
+	<font color="#0000FF">Then</font> 
+	<font color="#0000FF">End If</font>
+</code></p></blockquote>
+<p>or</p> 
+<blockquote><p><code>
+	<font color="#0000FF">If </font>myObj.boolMethod() != 
+	False <font color="#0000FF">Then</font>
+	<br>...<br>
+	<font color="#0000FF">End If</font>
+</code></p></blockquote>
+<p>For the same reason, the 'Not' operator cannot be applied directly on the 
+returned value of such method:</p>
+<blockquote><p><code><font color="#0000FF">Not</font>(myObj.boolMethod())</code></p></blockquote>
+<p>will return True instead of returning False. To use correctly the 'Not' operator you have to use a variable to store the 
+boolean value before applying the operator :
+</p>
+<blockquote>
+<p><code><font color="#0000FF">Dim</font> myBool<br>
+myBool = myObj.boolMethod()<br>
+<font color="#0000FF">Not</font>(myBool)
+</code></p></blockquote>
+<p>will correctly return False<br>
+</p>
+<p>
+Note that this limitation is specific to VBA and is not concerning VBScript.</p>
+
+<p>Another very specific problem may occur when using a VBA class featuring a function that returns a boolean. In the following example:</p>
+<pre class="code">
+<span class="keyword">Sub</span> CATMain()
+    <span class="keyword">Dim</span> oClass1 <span class="keyword">As</span> Class1
+    <span class="keyword">Set</span> oCLass1 = <span class="keyword">New</span> Class1    
+    <span class="keyword">Dim</span> bReture <span class="keyword">As</span> Boolean
+    bReture = oClass.IsRetureBooleanFunction()
+    
+    <span class="keyword">Dim</span> RefreshDisp <span class="keyword">As</span> Boolean
+    CATIA.RefreshDisplay = False
+    RefreshDisp = CATIA.RefreshDisplay
+    Debug.Print " CASE FALSE : False expected=" &amp; CInt(False) &amp; " False returned=" &amp; CInt(RefreshDisp)
+    CATIA.RefreshDisplay = True
+    RefreshDisp = CATIA.RefreshDisplay
+    Debug.Print " CASE TRUE : True expected=" &amp; CInt(True) &amp; " True returned= " &amp; CInt(RefreshDisp)
+<span class="keyword">End</span> <span class="keyword">Sub</span>
+</pre>
+<p>The class <code>Class1</code> offers the <code>IsRetureBooleanFunction</code> function:</p>
+<pre class="code"><span class="keyword">Function</span> IsRetureBooleanFunction() <span class="keyword">As</span> Boolean
+    IsRetureBooleanFunction = True
+<span class="keyword">End</span> <span class="keyword">Function</span>
+</pre>
+<p>The execution of <code>CATMain</code> shows that the value returned by <code>CATIA.RefreshDisplay</code> is always invalid.
+A simple workaround consists in declaring the <code>IsRetureBooleanFunction</code> function this way:</p>
+<pre class="code"><span class="keyword">Function</span> IsRetureBooleanFunction() <span class="keyword">As</span> <strong>Variant</strong>
+    IsRetureBooleanFunction = True
+<span class="keyword">End</span> <span class="keyword">Function</span>
+</pre>
+<h3>Limitation for VBA in a 64 bit context when a macro program
+declares a function</h3>
+<p>The following kind of declaration:</p>
+<blockquote><p><code>
+<font color="#0000FF">Private Declare Function </font>MyFunctionNameInDll <font color="#0000FF">Lib</font> "E:\My.dll" (...) <font color="#0000FF">As</font> ...</code></p></blockquote>
+<p>is not possible in a 64 bit context if the <code>My.dll</code> is a 64 bit dll.
+The V5 VBA integration for 64 bit applications is based on a separate
+32 bit application dedicated to VBA. A DLL referenced by a VBA macro must so be a 32 bit one. 
+Moreover, such a 32-bit dll cannot use the dlls from the V5 installation that are, in that case, 64 ones.
+</p>
+
+<h3>Usage if the VBA DoEvent function</h3>
+<p>The general purpose of the VBA function <code>DoEvent</code> is to allow the System
+ to manage input events so that the UI becomes more responsive.</p>
+<p>Beside this function is generally dangerous because it can generate
+unexpected reentrancy. CATIA infrastructure is not architectured to manage
+ event treatment while the process is blocked into a VBA macro execution.
+ Calling <code>DoEvent</code> while a macro is executed can so lead to 
+unpredictable behavior.</p>
+<p>Using <code>DoEvent</code> in VBA macros is not recommended.</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1999-2017, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

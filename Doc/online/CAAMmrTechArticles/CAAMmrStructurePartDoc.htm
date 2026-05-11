@@ -1,0 +1,440 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Structure of a Part Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Structure of a Part Document</h3>
+      Description of the Part's containers</td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Like any V5 document, a Part document contains a certain number of
+      containers. This article describes them and explains their
+      functionalities. This article is included
+      in a set of documents presented in the &quot;Mechanical
+      Modeler Overview&quot; article [<a href="#References">1</a>].</p>
+      <ul>
+        <li><b><a href="#The Containers of a Part Document">The Containers of a Part Document</a></b>
+          <ul>
+            <li><strong><a href="#The Product C">The Product
+          Container</a></strong>
+            </li>
+            <li><strong><a href="#The Spec C">The Specification Container</a></strong></li>
+            <li><strong><a href="#The Scope C">The Scope Container</a></strong></li>
+            <li><strong><a href="#The Geom C">The Geometrical Container</a></strong></li>
+          </ul>
+        </li>
+        
+        <li><b><a href="#Links between containers">Links between a Part's Containers</a></b>
+          <ul>
+                     </ul>
+        </li>
+              <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The Containers of a Part Document"></a>The Containers of a Part
+Document</h3>
+<p>Like any V5 document, a Part document contains a certain number of containers.
+The containers specific to a Part document are shown in the picture below [<a href="#Fig.1">Fig.1</a>]:</p>
+ <table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Part Document Containers</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrPadSpecTreeAccolade.jpg" width="425" height="171"></td>
+  </tr>
+</table>
+
+<p>The four containers: the product container (<b>CATProdCont</b>), the
+specification container (<b>CATPrtCont</b>), the scope container (<b>CATMFBRP</b>)
+and the geometrical container (<b>CGMGeom</b>) are strongly linked and work
+together as will be described in the last section. But first, here is a
+description of their contents and functionalities.</p>
+<h4><b><a name="The Product C"></a>The Product Container</b></h4>
+<p>Any Part document has a Product container named CATProdCont. It contains an
+ASMProduct feature which serves as the reference for all the instantiations of the Part
+document in Product documents. In the picture below [<a href="#Fig.2">Fig.2</a>],
+<code>Part1.1</code> is an instance of the ASMProduct feature contained in
+a Part document.&nbsp;</p>
+ <table>
+  <caption><i><a name="Fig.2">Fig.2</a>: A Part Document inside a Product
+    Document</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrProduct.jpg" width="424" height="301"></td>
+  </tr>
+</table>
+
+<p>The Product instance (here <code>Part1.1</code>) contains the position of the Part inside the Product
+document. The&nbsp; Product
+Structure use case entitled &quot;Positioning Products in a Product Document&quot; [<a href="#References">2</a>] explains how to retrieve and
+define the position of a sub-product.&nbsp;</p>
+<p>The ASMProduct feature, retrievable by the <i>CATIPrtPart</i>  interface (MecModInterfaces), also
+enables the creation of publications.&nbsp;Refer to the <i>CATIPrdObjectPublisher </i>interface
+of the Product Structure framework for more details.</p>
+
+<h5>Retrieving the Part Document from a Product Instance</h5>
+
+<p>The components of a Product document are ASMProduct feature handling by the <i>CATIProduct</i>
+interface. Consider below, <code>ispProduct,</code> a&nbsp; such element. The <code>GetReferenceProduct</code><code>
+</code>method retrieves the reference feature contained in the CATProdCont
+container of the Part document. Thanks this feature, the&nbsp; <i>CATILinkableObject</i>
+interface gives you the Part document containing this feature.&nbsp;</p>
+
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIProduct</b>_var spRef = ispProduct-&gt;<b>GetReferenceProduct</b>();
+  
+  if ( NULL_var != spRef )
+  {
+     <b>CATILinkableObject</b> * piLinkableObject = NULL;
+     rc = spRef-&gt;QueryInterface( IID_CATILinkableObject, (void**)&amp; piLinkableObject );                            
+
+     if ( SUCCEEDED(rc) )
+     {
+        // Do not release the document pointer
+        <b>CATDocument</b> * pDocument = NULL ;
+        pDocument = piLinkableObject-&gt;<b>GetDocument</b>();
+...  </pre>
+      </td>
+    </tr>
+  </table>
+
+<h5>Retrieving&nbsp; the Product Container&nbsp;</h5>
+
+<p>The <i>CATIContainerOfDocument</i>   (MecModInterfaces) implemented on the Part
+document enables the retrieval of a pointer to the product container.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATDocument * pDocument = ...   
+  <b>CATIContainerOfDocument</b> * pIContainerOfDocumentOnDoc = NULL ;
+  HRESULT rc = pDocument-&gt;QueryInterface(IID_<b>CATIContainerOfDocument</b>, 
+                              (void**)&amp;pIContainerOfDocumentOnDoc)
+  if (SUCCEEDED(rc) )
+  {
+      <b>CATIContainer</b> * pIContainer = NULL ;
+      rc = pIContainerOfDocumentOnDoc-&gt;<b>GetProductContainer</b>(pIContainer);
+  
+  }
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+
+<h4><b><a name="The Spec C"></a>The Specification Container</b></h4>
+<p>The specification container, named CATPrtCont, contains the design of the
+mechanical object. This design is defined by mechanical features which can be
+seen in the specification tree&nbsp; [<a href="#Fig.3">Fig.3</a>]:</p>
+ <table>
+  <caption><i><a name="Fig.3">Fig.3</a>: Specification Tree</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrPadSimple.jpg" width="258" height="181"></td>
+  </tr>
+</table>
+<p>Part1, xy plane, yz plane, zx plane, PartBody, Sketch and Pad.2 are mechanical
+features. There are three kinds of mechanical features:</p>
+<ul>
+  <li>The <b>Part</b> feature: the main feature containing the design of the
+    object to be built.</li>
+  <li>The <b> geometrical</b>   <b>features sets</b>: the features containing
+    either other geometrical features sets, or geometrical features.</li>
+  <li>The <b> geometrical</b>   <b>features</b>: those which hold a topological result (a <i>CATBody </i>[<a href="#References">3</a>])</li>
+</ul>
+<p>The &quot;Contents of the Specification Container&quot; articles details the
+Part feature [<a href="#References">4</a>], the geometrical features sets [<a href="#References">5</a>],
+and the
+geometrical features&nbsp; [<a href="#References">6</a>].</p>
+<h5>Retrieving&nbsp; the Specification
+Container</h5>
+<p>There are three ways to retrieve this container:</p>
+  <ol>
+  <li>Using <i>CATIContainerOfDocument</i>          (MecModInterfaces)&nbsp;implemented
+    on the Part Document</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATDocument * pDocument = ...   
+  CATIContainerOfDocument * pIContainerOfDocumentOnDoc = NULL ;
+  HRESULT rc = pDocument-&gt;QueryInterface(IID_<b>CATIContainerOfDocument</b>, 
+                              (void**)&amp;pIContainerOfDocumentOnDoc)
+  if (SUCCEEDED(rc) )
+  {
+      <b>CATIContainer</b> * pIContainer = NULL ;
+      rc = pIContainerOfDocumentOnDoc-&gt;<b>GetSpecContainer</b>(pIContainer);
+  
+  }
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <li>Using <i>CATInit </i> (ObjectModelerBase) implemented on all V5 documents</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATInit * pInitOnDoc = NULL ;
+  HRESULT rc = pDocument-&gt;QueryInterface(IID_<b>CATInit</b>, (void**)&amp;pInitOnDoc ) ;
+  if ( SUCCEEDED(rc) )
+  {
+     <b>CATIPrtContainer</b> *pIPrtCont = NULL ;
+     pIPrtCont = (CATIPrtContainer*) 
+                    pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;);
+  }
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>In the case of a Part document, the root container is CATPrtCont.&nbsp;</p>
+  <li>Using <i>CATISpecObject</i> implemented on all features</li>
+  <li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATISpecObject * pSpecObjectOnFeat = NULL ;
+  HRESULT rc = pMyFeat-&gt;QueryInterface(IID_<b>CATISpecObject</b>, (void**)&amp;pSpecObjectOnFeat ) ;
+  if ( SUCCEEDED(rc) )
+  {
+     <b>CATIContainer_var</b> spISpecCont = pSpecObjectOnFeat-&gt;<b>GetFeatContainer</b>();
+  }
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+    <p>where <code>pMyFeat</code> is a pointer on any feature. <code>spISpecCont</code>
+    is a handle on the CATPrtCont container.</li>
+  </ol>
+<p><b><a name="The Scope C"></a>The Scope Container</b></p>
+<p>During the design, it can be useful to select an edge, or a face, for
+example, to create a
+form. These topological objects will be the inputs of a mechanical feature. But a feature cannot reference directly a topology as specification. The main
+reason is that geometry and topology can be deleted during an
+update. Consequently topological objects are unstable. The solution implemented in V5
+to overcome this problem is to use a name instead of a direct reference to the
+topology. Such a name is called a <b>generic name</b>  [<a href="#References">7</a>]. It
+provides a stable way to reference a topological cell.&nbsp;</p>
+<p>The 
+Scope container contains the objects, or scopes, used by Generic Naming.</p>
+
+<h5>Retrieving&nbsp; the 
+Scope
+Container</h5>
+
+<p>The <i>CATIContainerOfDocument</i>   (MecModInterfaces) implemented on the Part
+document enables the retrieval of a pointer to the scope container.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATDocument * pDocument = ...   
+  <b>CATIContainerOfDocument</b> * pIContainerOfDocumentOnDoc = NULL ;
+  HRESULT rc = pDocument-&gt;QueryInterface(IID_<b>CATIContainerOfDocument</b>, 
+                              (void**)&amp;pIContainerOfDocumentOnDoc)
+  if (SUCCEEDED(rc) )
+  {
+      <b>CATIContainer</b> * pIContainer = NULL ;
+      rc = pIContainerOfDocumentOnDoc-&gt;<b>GetBRepContainer</b>(pIContainer);
+  
+  }
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+<p><b><a name="The Geom C"></a>The Geometrical Container</b></p>
+<p>Mechanical features essentially capture the design intent
+of the end user. When it comes to computing the shapes that correspond to this
+intent, they rely on an underlying modeler, the <em>topological objects</em>
+modeler.&nbsp;[<a href="#References">8</a>]</p>
+<p>The geometrical container contains the topological results of the geometrical features.
+Refer to the &quot;Specification/Result Mechanism Applied to Mechanical Features&quot; [<a href="#References">9</a>]&nbsp;article
+for details on this topic.</p>
+<h5>Retrieving&nbsp; the Geometrical Container</h5>
+<p>The <i>CATIContainerOfDocument</i>   (MecModInterfaces) implemented on the Part
+document enables the retrieval of a pointer to the geometrical container.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATDocument * pDocument = ...   
+  <b>CATIContainerOfDocument</b> * pIContainerOfDocumentOnDoc = NULL ;
+  HRESULT rc = pDocument-&gt;QueryInterface(IID_<b>CATIContainerOfDocument</b>, 
+                              (void**)&amp;pIContainerOfDocumentOnDoc)
+  if (SUCCEEDED(rc) )
+  {
+      <b>CATIContainer</b> * pIContainer = NULL ;
+      rc = pIContainerOfDocumentOnDoc-&gt;<b>GetResultContainer</b>(pIContainer);
+  
+  }
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+<p align="left"><code>pIContainerOfDocumentOnDoc</code> implements for example
+the <i>CATIGeoFactory</i> interface.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Links between containers"></a>Links between a Part's Containers</h3>
+
+<p>All the mechanical features are included in the specification container.
+Among the mechanical features, one can find the geometrical features. A geometrical
+feature has the particularity of having a result which holds a topological
+result. The topological result, a <i>CATBody</i>, is included in the geometrical
+container. The scope which guaranties the naming stability of the sub-elements of
+the <i>CATBody </i>is contained in the scope container.</p>
+
+ <table>
+  <caption><i><a name="Fig.4">Fig.4</a>: Links between the containers</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrContainerLinks.jpg"></td>
+  </tr>
+</table>
+               
+
+               
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+
+<p>The Part document contains four main containers:</p>
+
+<ul>
+  <li>CATProdCont</li>
+</ul>
+<blockquote>
+  <p>The Product container which contains the reference to enable the instantiation
+  of the Part
+  in Product documents</p>
+</blockquote>
+<ul>
+  <li>CATPrtCont</li>
+</ul>
+<blockquote>
+  <p>The Specification container which contains the mechanical features</p>
+</blockquote>
+<ul>
+  <li>CATMFBRP</li>
+</ul>
+<blockquote>
+  <p>The scope container which contains the objects necessary to access the
+  sub-elements of the topology</p>
+</blockquote>
+<ul>
+  <li>CGMGeom</li>
+</ul>
+<blockquote>
+  <p>The geometrical container which contains the topological results of the
+  mechanical features.</p>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrMechModOverview.htm">Mechanical
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAPstUseCases/CAAPstMovable.htm">Positioning Products in a Product Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAATobTechArticles/TopoModel.htm">The
+      CGM Topological Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrContentsSpecCont0.htm">The Contents of the Specification
+      Container - The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification
+      Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the Specification
+      Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAMmrGenericNaming.htm">Generic Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concept</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism
+      Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [May 2004]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

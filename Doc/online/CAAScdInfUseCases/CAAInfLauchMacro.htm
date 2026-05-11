@@ -1,0 +1,140 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Adding a Macro as a Command in a Toolbar</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Launching a CAA V5 Automation Use Case</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p>CAA V5 Automation Uses Cases are macros that may access existing files. To 
+make replaying such macros as straightforward as possible, they&nbsp; most of 
+the time follows coding conventions that may require specific SetUp of the V5 
+session. This article explains:</p>
+<blockquote>
+	<p><a href="#WhereToFind">where to find CAA V5 Automation Uses Cases macros,</a></p>
+	<p><a href="#HowToLaunch">how to launch a macro,</a></p>
+	<p><a href="#SpecificSetups">which specific setup may be required. </a></p>
+</blockquote>
+<p><u>Note:</u> topics explained in this article, launching macros and 
+retrieving existing files from the documentation installation, do not doesn't 
+apply to documentation in HtmlHelp format or accessed through a http server.</p>
+<h3><a name="WhereToFind"></a>Where to find CAA V5 Automation Uses Cases macros</h3>
+<p>Samples come with a documentation that most of the time contains the name of 
+the macro and the module it belongs to.</p>
+<p align="center">
+<img border="1" src="images/CAALaunch7a.jpg" width="873" height="517"></p>
+<p>A module is the folder, in the documentation installation, that contains the documentation 
+of the sample along with the macros, located in the <code>macros</code> sub folder, and 
+required documents in any, located in the <code>samples</code> sub folder. </p>
+<p>The URL pointed by the <i>Execute Macro</i> text directly points on the macro 
+and can be used, on Windows plaforms, to launch the replay of the macro. </p>
+<p align="center">
+<img border="1" src="images/CAALaunch7b.jpg" width="869" height="516"></p>
+<p>&nbsp;</p>
+<p>A few samples documentations only contain a html view of the content of the 
+macro, in this case, the macro must be retrieved from the documentation file, 
+for example</p>
+<p><code>&nbsp;&nbsp;&nbsp; xxx/myModule/myMacroSource.htm</code></p>
+<p>is the documentation view of the </p>
+<p>&nbsp;&nbsp;&nbsp; <code>xxx/myModule/macros/myMacro.catvbs</code> or <code>
+xxx/myModule/macros/myMacro.CATScript</code></p>
+<p>macro.</p>
+<h3><a name="HowToLaunch"></a>How to launch a macro</h3>
+<p>Macros can also be launched from the V5 session.</p>
+<p>&nbsp;</p>
+<table width="976">
+  <tr>
+    <td width="32"><img border="0" src="images/atarget.gif" width="32" height="32"></td>
+    <td width="873">
+      <p>This task explains how to launch a CAA V5 Automation Use case macro</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="32"><img border="0" src="images/ascenari.gif" width="32" height="32"></td>
+    <td width="873">
+      <ol>
+        <li>Select the <b>Tools-&gt;Macro-&gt;Macros... </b>command to display
+          the Macro dialog box, </li>
+      </ol>
+		<p align="center"><br>
+		<img border="0" src="images/CAALaunch1.jpg" width="542" height="268"></p>
+		<ol start="2">
+        <li> Select the macro to be launched.</li>
+		<li> Click the Run button.</li>
+      </ol>
+    	<p>&nbsp;</td>
+  </tr>
+  </table>
+<p>Please note that the Macro Library must be set to the folder containing the 
+macro. </p>
+<p>For more details, on how to run a macro, and set macro libraries, consult in 
+the V5 documentation, <i>Infrastructure Solutions</i>, <i>Infrastructure Users 
+Guide</i>, the <i>Recording, Running And Editing Macros</i> topic.</p>
+<h3><a name="SpecificSetups"></a>Specific Setups</h3>
+<p>Unless explicitely specified, CAA Automation Use Cases macros that use 
+documents search those documents in a location relative to where the 
+documentation is installed and look for the documentation installation path in 
+the <code>CATDocView</code> environment variable. If this variable is required by the macro but not set, when running the 
+macro, the <i>No Doc Path Defined</i> error message is diplayed:</p>
+<p align="center">
+<img border="0" src="images/CAALaunch6.jpg" width="448" height="232"> </p>
+<p>If it is set to a place where documents cannot be retrieved, an error message
+<i>Cannot Load Document</i> is displayed.</p>
+<ul>
+	<li>If you access the CAA V5 Automation documentation in a <u>V5 product 
+	documentation installation</u> linked to a V5 product installation, this 
+	variable is already set to</li>
+</ul>
+<blockquote>
+	<blockquote>
+		<p><code>&lt;DocInstallation&gt;</code></p>
+	</blockquote>
+	<p>To be able to replay macros directly from the documentation, use the <i>Environment Editor</i> to create a <i>
+	new User Environment</i> and 
+	set the value to:</p>
+	<blockquote>
+		<p><code>&lt;DocInstallation&gt;/&lt;Language&gt;</code></p>
+	</blockquote>
+	<p>Where &lt;Language&gt; is the language for which the documentation has been 
+	installed (for example <code>&lt;DocInstallation&gt;/English</code>).</p>
+	<p><u>Remark:</u> you have to use the <i>Environment Editor</i> for this 
+	purpose, you cannot use the <i>Tools Options</i> commands.</p>
+</blockquote>
+<ul>
+	<li>If you access the CAA V5 Automation documentation in a <u>CAA installation</u>, 
+	use the <i>Environment Editor</i> to create a <i>new User Environment</i> and 
+	set the value to:</p>
+	<blockquote>
+		<p><code>&lt;CAAInstallation&gt;/CAADoc/Doc</code></p>
+	</blockquote>
+	<p>For more details, on how to create and modifiy <i>Environments</i>, 
+	consult in the V5 documentation, <i>Infrastructure Solutions</i>, <i>
+	Installation And Deployment Guide</i>, the <i>Managing Environments</i> 
+	topic.</p>
+</blockquote>
+<p align="center"><img border="0" src="images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

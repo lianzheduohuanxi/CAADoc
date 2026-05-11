@@ -1,0 +1,436 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The CAA Command Model</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The CAA Command Model</h3>
+      <em>Understanding commands and how they work</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article introduces the commands as the key objects allowing for
+      CAA application interactivity.
+      <ul>
+        <li><a href="#100000"><strong>Why Commands?</strong></a></li>
+        <li><a href="#200000"><strong>What Is a CAA Command?</strong></a></li>
+        <li><a href="#300000"><strong>CAA Command Typology</strong></a></li>
+        <li><a href="#400000"><strong>The Command Tree Structure</strong></a></li>
+        <li><a href="#500000"><strong>Command Running Mode and Command Focus and
+          Lifecycle Management</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="100000"></a>Why Commands?</h3>
+<p>The high-level interactivity proposed by CAA requires that the basic
+interactive mechanisms be processed efficiently and consistently. These
+interactive mechanisms make it possible to:
+<ul>
+  <li>Propose to the end user the appropriate tools to do intended tasks,
+    possibly using different ways</li>
+  <li>Provide appropriate dialog sequences to do and undo any kind of simple or
+    complex task</li>
+  <li>Manage the end user intent from the mouse click to the active command</li>
+  <li>Enable document object access and update</li>
+</ul>
+<p>The last two items illustrate a part of the Model View Controller (MVC)
+paradigm. CAA offers an object that provides these mechanisms as its behavior:
+the CAA command. It is the key object to make up the CAA User Interface Model
+interactive.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>What Is a CAA Command?</h3>
+<p>A CAA command is an instance of a class deriving from the CATCommand class
+and that supports these interactive mechanisms:
+<ul>
+  <li>Propose to the end user the appropriate tools to do intended tasks,
+    possibly using different ways
+    <ul>
+      <li>Commands are shown in menus and toolbars [<a href="#References">1</a>]
+        and can be triggered and executed from there</li>
+      <li>Commands are encapsulated by the direct manipulation</li>
+      <li>Commands can be triggered by the object's contextual menu</li>
+    </ul>
+  </li>
+  <li>Provide appropriate dialog sequences to do and undo any kind of simple or
+    complex task
+    <ul>
+      <li>Commands are instances of different command classes to allow the
+        application programmer to create and cover all possible kinds of tasks</li>
+      <li>Commands feature a global and a local undo mechanisms to make it
+        possible to recover a previous document state among the successive
+        document states, as if they were stacked</li>
+    </ul>
+  </li>
+  <li>Manage the end user intent from the mouse click to the active command
+    <ul>
+      <li>Command instances build a run time parent/child tree structure</li>
+      <li>Commands use the Send/Receive notification protocol [<a href="#References">2</a>]
+        along this tree structure to convey notifications created by end user
+        interactions to the appropriate command</li>
+      <li>Command use a callback mechanism based on the Send/Receive
+        notification protocol, or on typed events, with a callback manager set
+        by default on each command, to enable the appropriate command to receive
+        only the notifications that it can process</li>
+    </ul>
+  </li>
+  <li>Enable document object access and update
+    <ul>
+      <li>Commands use a protocol to access document objects&nbsp;through their
+        selected representation in a view</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>CAA Command Typology</h3>
+<p>CAA commands fall into the following categories:
+<ul>
+  <li>Commands seen by the end user as commands and referred to as <em>dialog
+    commands</em>. These dialog commands can be:
+    <ul>
+      <li><em>One-shot commands</em> that are run with no possible additional
+        choice from the end user. The class of a one-shot command should
+        directly derive from the <i>CATCommand</i> class</li>
+      <li><em>Dialog boxes</em> [<a href="#References">3</a>] that enable the
+        end user to enter parameter values or select options. The class of a
+        dialog box class should derive from the <i>CATDlgDialog</i> class</li>
+      <li><em>State dialog commands</em> [<a href="#References">4</a>]: they are
+        built as state machines, to make up high level dialog commands with
+        states and transitions between these states. The class of a state dialog
+        command should derive from the <i>CATStateCommand</i> class.</li>
+    </ul>
+    <p>These dialog commands are available to the end user through menu items in
+    the menu bar, icons or combos in toolbars, or menu items in objects'
+    contextual menus. They are triggered thanks to a command starter that stands
+    for the command behind the push item in the menu bar or push button
+    featuring an icon in a toolbar. This command starter is associated with a
+    command header that holds the command class name and the shared library or
+    DLL containing the command executable code. As soon as the end user clicks
+    the push item or icon, the link is made with the corresponding command
+    starter that requests the command header to load the appropriate shared
+    library or DLL and instantiates the command class.</p>
+  </li>
+  <li>Commands seen by the end user, but either
+    <ul>
+      <li>Not seen as commands, such as a control in a dialog box, or a dialog
+        box part of a state command</li>
+      <li>Implicitly handled using the object direct manipulation, such as
+        manipulators.</li>
+    </ul>
+  </li>
+</ul>
+<h4>One-shot Commands</h4>
+<p>These are commands that are run from their beginning to their end from a
+single user interaction, with no means to stop them. Their dialog is limited to
+selecting the push item or the icon in a toolbar that represent them, and can
+display a confirmation dialog before proceeding.</p>
+<h4>Dialog Box Commands</h4>
+<p>These are commands that appear to the end user as a dialog box.&nbsp;The
+dialog box is the command itself, rather than being part of another command. The
+dialog sequence is limited to entering parameter values, or selecting options,
+and clicking push buttons such as OK, Apply, or Cancel.</p>
+<h4>State Dialog Commands</h4>
+<p>These are commands modeled as state machines. They can have several states.
+Each state lets the end user select objects, enter parameters, or choose
+options. Transitions depend on conditions set on what the end user selects,
+enters, or chooses. If these conditions are met, transitions trigger actions
+when skipping to the next state to progress to the command completion. Dialog
+boxes can be used to allow for parameter or option input.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="400000"></a>The Command Tree Structure</h3>
+<p>At run time, most of the CAA commands make a tree structure. Each command is
+usually created with a parent command (or father command), either passed as a
+parameter in the command class constructor, or using the <i> CATCommand</i> base class
+constructor, or possibly set or reset using the <i>CATCommand</i> <code>SetFather</code>
+method. This parent has itself a parent, and so on up to the root of the tree
+named the command selector, a specific command that manages the availability and
+life cycle of dialog commands. Commands created without a parent, that is with a
+NULL parent, have automatically the command selector as parent. The figure below
+is a view of a CAA session as its command tree structure.</p>
+<table border="0">
+<caption>Fig.1: The Command Tree Structure</caption>
+  <tr>
+    <td><img border="0" src="images/CAAAfrUnderstandingLayout9.jpg" width="586" height="491"></td>
+  </tr>
+</table>
+<p>This figure shows that:</p>
+<ul>
+  <li>At the top of the command tree, there is a <i>CATCommandSelector</i> class
+    instance created by the V5 application. It is the parent of commands with
+    NULL as parent if there is no current editor.&nbsp;</li>
+  <li>Each editor which controls the visualization of a document [<a href="#References">5</a>]
+    creates a <i>CATCommandSelector</i> class instance whose the parent is the
+    top command selector. This command selector is itself the parent (
+    CATCommand sense) of:
+    <ul>
+      <li>All the windows of the document (<i>CATFrmWindow </i>class instances),</li>
+    </ul>
+  </li>
+  
+    <ul>
+      <li>Commands created with NULL as parent.&nbsp;</li>
+    </ul>
+  <li>A dialog box, dependent of the document's life cycle, is created under a
+    decorator. This decorator is created it self by the editor of the document.
+    Whereas, a dialog box, independent of the document's life cycle, is created
+    under the <i>CATApplicationDocument</i> class instance. It is an unique
+    instance returned by the <code>GetApplicationDocument</code> method of the <i>CATApplicationFrame</i>
+    class [<a href="#References">5</a>].</li>
+</ul>
+<p>The dialog command seen by the end user and that is currently running is
+named the active command. It is said to have the focus, one command being active
+at a given instant. The command selector manages the focus and gives it to, or
+takes it from, the dialog commands that the end user selects.</p>
+<p><img src="images/CAAAfrCommandTree2.gif" alt="CAAAfrCommandTree2.gif (21264 bytes)" width="711" height="279"></p>
+<p>The command tree structure is used to convey end user intents from the object
+that detects the event up to the object that is able to process it. This is
+devoted to the Send/Receive notification protocol. For example, in a dialog box,
+the OK push button is a command created as a child of the dialog box itself, or
+as one of its subcommands, such as an invisible frame that groups the OK, Apply,
+and Cancel push buttons. By setting a callback on the push button, the dialog
+box expects to catch the end user intent when the end user will click OK. The
+method executed when such an event occurs is a member function of the dialog box
+class, declared as part of the callback.</p>
+<p>The object selected by the end user can be something else than a command. For
+example, in a viewer, an object representation is usually selected. In this
+case, a manipulator, that is another form of a command, is associated with the
+representation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="500000"></a><a>Command Running Mode and Command Focus and Lifecycle
+Management</a></h3>
+<p>The command selector manages the focus between the commands. It receives the
+notifications sent by commands below it to react to end user interactions that
+climb up along the command tree structure and that were not caught and processed
+by another command. It sends these notifications to the active command. To
+enable this management, a dialog command has a running (or start) mode. It can
+be set as:
+<ul>
+  <li><strong>Exclusive</strong>: an exclusive command is known by the command
+    selector. It requests the command selector to clean the command stack before
+    beginning to run and taking the focus, including the previous active
+    command. All commands present in the stack are canceled, that is called on
+    their <code>Cancel</code> method. Use <code>CATCommandModeExclusive</code>
+    to set a command as exclusive</li>
+  <li><strong>Shared</strong>: a shared command is known by the command
+    selector. It coexists with other commands already present in the stack, and
+    requests the command selector to deactivate the active command before it
+    takes the focus. Use <code>CATCommandModeShared</code> to set a command as
+    shared.</li>
+  <li><strong>Undefined</strong>: an undefined command is unknown by the command
+    selector. It can run in parallel with the active command known by the
+    command selector. Use <code>CATCommandModeUndefined</code> to set a command
+    as undefined. Note that a state dialog command cannot be set as undefined.</li>
+</ul>
+<table>
+  <tr>
+    <td><img src="images/CAAAfrCommandTree4.gif" alt="CAAAfrCommandTree4.gif (3433 bytes)" width="378" height="105"></td>
+    <td valign="top"><strong>Exclusive</strong>: The active command is run in
+      the exclusive mode. No other command exists on the command stack.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAAAfrCommandTree3.gif" alt="CAAAfrCommandTree3.gif (3776 bytes)" width="382" height="123"></td>
+    <td valign="top"><strong>Shared</strong>: The active command is run in the
+      shared mode. Other commands can be deactivated on the command stack If
+      any, they are all shared commands, except the lower command that may be
+      exclusive.</td>
+  </tr>
+</table>
+<p>A dialog command known by the command selector, that is created either as
+exclusive or shared, is managed by the command selector using the three methods <code>Activate</code>,
+<code>Desactivate</code>, and <code>Cancel</code>. As a general rule, these
+methods do the following:
+<ul>
+  <li><code>Activate</code> is called when the dialog command takes the focus,
+    if it is set as an exclusive or shared command. This happens in three cases:</li>
+  <ol>
+    <li>The command is just selected by the end user. The command class is
+      instantiated and the dialog starts from the beginning</li>
+    <li>The command is a state dialog command in repeat mode. Each time the
+      command completes, it resumes from the beginning</li>
+    <li>The command restarts at the state that was current when a shared command
+      took the focus from it.</li>
+  </ol>
+  <p><code>Activate</code> can be used to create temporary objects that are
+  needed from the beginning, either because they help the end user to perform
+  the command, such as the outline of the created object, or a rubber band that
+  follows the mouse, both known as interactive objects and added to the set of
+  interactive objects (ISO), or construction objects that can be helpful.</p>
+  <li><code>Desactivate</code> is called when a shared command takes the focus
+    from the active command. The active command becomes inactive, is frozen in
+    its current state and put in the command stack. When the shared command will
+    complete, the frozen command will be reactivated from its current state
+    using the <code>Activate</code> method. <code>Desactivate</code> should hide
+    temporary objects created by <code>Activate</code>, or by the action
+    methods, such as a dialog box, or temporary interactive objects that should
+    be removed from the ISO. Some objects should be deleted, such as the rubber
+    band, that will never be restored as it were since it follows the mouse.</li>
+  <li><code>Cancel</code> is called when the command completes if it is a state
+    dialog command, or when an exclusive command takes the focus and requests
+    the command to be deleted. When the command completes, the focus is given to
+    the default command (usually Select). <code>Cancel</code> must delete or
+    release temporary objects created by the command, possibly after having
+    removed them from the ISO.</li>
+</ul>
+<p>The following table shows a summary of when these methods are called, and
+what they should contain, depending on the command type and running mode.</p>
+<table rules="rows">
+  <tr>
+    <th>Command Type</th>
+    <th>Possible Running Modes</th>
+    <th>Activate</th>
+    <th>Desactivate</th>
+    <th>Cancel</th>
+  </tr>
+  <tr>
+    <td rowspan="2">One shot</td>
+    <td valign="center">Exclusive</td>
+    <td valign="top">Called when the end user selects the command. Should
+      contain the body of the command and should request the command <a href="#destruction">destruction</a>
+      (*) when the job completes</td>
+    <td valign="top">Called when a shared command takes the focus. Should never
+      be called if <code>Activate</code> includes a request to delete the
+      command, since in this case, the command completes before the end user can
+      select another command. Otherwise, should hide its temporary objects.</td>
+    <td valign="top">Called when an exclusive command takes the focus. Never
+      called if <code>Activate</code> includes a request to delete the command.
+      Otherwise, should do a clean up of&nbsp; the command temporary objects ans
+      request the command <a href="#destruction">destruction</a> (*)</td>
+  </tr>
+  <tr>
+    <td valign="center">Undefined</td>
+    <td valign="top">Never called</td>
+    <td valign="top">Never called</td>
+    <td valign="top">Never called</td>
+  </tr>
+  <tr>
+    <td>Dialog box</td>
+    <td valign="center">Exclusive or Shared</td>
+    <td valign="top">Called when the end user selects the command or when the
+      command takes the focus again after being put on the command stack by a
+      shared command. Shows the dialog box by default. The dialog box creation
+      should be made in the constructor.</td>
+    <td valign="top">Called when a shared command takes the focus. Hides the
+      dialog box by default</td>
+    <td valign="top">Called when an exclusive command takes the focus. Hides the
+      dialog box box by default. Should request its <a href="#destruction">destruction</a>
+      (*)</td>
+  </tr>
+  <tr>
+    <td>State dialog command</td>
+    <td valign="center">Exclusive or Shared</td>
+    <td valign="top">Called as soon as the end user selects the command or when
+      the command takes the focus again after being put on the command stack by
+      a shared command. Should not contain the body of the command, since this
+      is the role of the BuildGraph method, but can contain the creation of
+      interactive objects that can be useful to the command.</td>
+    <td valign="top">Called when a shared command takes the focus. Should hide
+      its temporary objects, such as dialog boxes, and delete interactive
+      objects</td>
+    <td valign="top">Called when an exclusive command takes the focus, or when
+      the command completes. The command is automatically deleted</td>
+  </tr>
+</table>
+<p><a name="destruction">*</a> Requesting a command destruction is made using
+the <code>RequestDelayedDestruction</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAA commands are key objects to provide interactivity. They can have the
+one-shot, dialog boxes, or state dialog command type, depending from their base
+class. They can run in exclusive, shared, or undefined mode depending on their
+type.</p>
+<p>Most of them build a tree structure at run time, used to convey notifications
+emanating from end user interactions, up to the appropriate command, that is the
+command able to perform the end user intent. The command at the top of the tree
+structure, named the command selector, sends orphan notifications to the active
+command and manages the command focus thanks to the <code>Activate</code>, <code>Desactivate</code>,
+and <code>Cancel</code> methods that each command should override.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrIntegratingCommand.htm">Making
+      Your Dialog Commands Available</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysSendReceive.htm">The
+      Send/Receive Communication Protocol</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADlgUseCases/CAADlgSampleGettingStarted.htm">Getting
+      Started with Dialog Boxes</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAADegGettingStarted.htm">Getting Started with State Dialog
+      Commands</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrLayoutV5.htm">Understanding
+      the Application Frame Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

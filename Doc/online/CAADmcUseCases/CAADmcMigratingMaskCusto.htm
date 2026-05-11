@@ -1,0 +1,294 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Migrating Existing ENOVIA Masks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Data Model Customizer for ENOVIA</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Migrating Existing ENOVIA Masks</h3>
+      <em>Customizing ENOVIA</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to migrate customized masks from an ENOVIA
+      version N to a subsequent version of ENOVIA. The masks used in this
+      sections are only samples. It would be too long to explain all the
+      steps of an original DS mask, which can contain more than 4 000 lines. But
+      we will present this migration as if the sample file was a DS mask,
+      created during ENOVIA installation and customized then.&nbsp;&nbsp;
+      <ul>
+        <li><a href="#What do we want to do"><b>What Do You Want to Do?</b></a>
+        <li><a href="#Retrieving needed masks for merging"><b>Retrieving Needed
+          Masks for Merging</b></a>
+        <li><a href="#Writing rules file"><b>Writing Rules Files</b></a>
+        <li><a href="#Migrating ENOVIA customized masks"><b>Migrating ENOVIA
+          Customized Masks</b></a>
+      </ul>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="What do we want to do"></a>What Do You Want to Do?</h3>
+<p>You have used our ENOVIA Release N for a while, and to improve effectiveness, you have customized the default Dassault Systemes masks. Now you want to migrate from ENOVIA Release N to ENOVIA Release N+1, and you would like to keep our masks customization, and also to take advantage of the new Release functionalities. That is why you need to migrate your Release N masks to new Realease N+1 masks. </p>
+    <p><strong>Note:</strong> Upgrade script must be run only if there is data model modification between 2 releases. No data model change since V5R21 until V5R27</p>
+<h3><a name="Retrieving needed masks for merging"></a>Retrieving Needed Masks
+for Merging</h3>
+<p>To run the masks merger, the following files are required:</p>
+<ol>
+  <li>Mask DEF N (Default mask Release N)</li>
+  <li>Mask CUST N (Customized mask Release N)</li>
+  <li>Mask DEF N+1(Default mask Release N+1)</li>
+</ol>
+<p>To get these files, run the following command:</p>
+<p>1. <code>$PREFIX$ </code> <i><code>-run &quot;VPMPeopleUpdate -savemask /home/data/MaskMigration/DefaultN&quot;</code></i></p>
+<p>2. <code>$PREFIX$ -run &quot;VPMPeopleImport -savemask /home/data/MaskMigration/CustoN&quot;</code></p>
+<p>3. Then, run the ENOVIA LCA database migration  
+using the <i>Upgrade521_Enovia.sh</i> command. If you have customized your 
+database using RADE tools,migrate your CAA Workspace and launch a publish 
+on it. To do so, run : <code>$PREFIX$ </code> <i><code>-run &quot;VPMPeopleUpdate -savemask /home/data/MaskMigration/DefaultN+1&quot;</code></i></p>
+  <p align="left"><i>where :</i>
+  <ul>
+    <li><b>On Windows</b>: PREFIX =
+      <code>$ENOVIA_INSTALLATION_PATH$/$OS$/code/bin/CATSTART</code></li>
+    <li><b>On UNIX</b>: PREFIX =
+      <code>$ENOVIA_INSTALLATION_PATH$/$OS$/code/command/catstart</code></li>
+  </ul>
+<p>For further details on <b>VPMPeopleImport</b>, refer to <var>ENOVIA V5 LifeCycle Applications Documentation: Administration Tasks: People, Organization and Security Tools</var>.</p>
+<p>You have now three masks which can be compared to evaluate
+      which change must be done.</p>
+<div align="left">
+  <table border="0" cellpadding="0" style="border-collapse: collapse" width="50%" id="table1">
+    <tr>
+      <td><img border="0" src="images/CATVBTMaskMergerInRun1.gif"></td>
+    </tr>
+  </table>
+</div>
+<h3><a name="Writing rules file"></a>Writing Rules Files</h3>
+If you have a look at&nbsp; <font color="#FF0000"><a href="../CAADmcTechArticles/UnderstandingMigratingMaskCusto.htm">Understanding
+      migration of customized mask</a></font>, you can discover that a behavior already exists to deal with conflicting issues, while merging. 
+But in
+      some cases, a user can keep an attribute which have been added to
+      default DS mask N+1, while another decides to ignore this attribute (or any
+      other element in a mask). So, this RADE tool provides you with the opportunity to 
+    create rules file. So, when an alternative choice occurs, the merger
+      engine first tries to find a rule that matches with the current node,
+      then it applies this rule.
+      So writing rules is really important!
+      <p>Here, we have our 3 mask files.</p>
+      <p>Between the default mask N and N+1, you can see that E5 has been
+      added to our new default mask, and E4 has been removed from the old mask.</p>
+      <p>However, if you have a look at the customized mask, the entity E4 is
+      used and has been customized. And the entity E3 has been removed, and E2
+      has been added...</p>
+      <p>With the default behavior of the merger, you can expect that E4 will be
+      removed from the new generated mask, E2 and E5 will be added.</p>
+      <p>Let's assume that you want to keep entity E4.&nbsp; You must write some rules to
+      explain this.</p>
+      <p>You keep the entity E4 which appears in the customized mask:</p>
+      <p>&nbsp;<b><font face="SymbolMono BT">&nbsp; --® </font></b>keep custo
+      E::E4</p>
+      <p>As Keep action operates on the sub tree, define orders for
+      the subtree. Here only one property is met. So you only want to keep the
+      property alias appearing in the customized mask for entity E4:</p>
+      <p><b><font face="SymbolMono BT">&nbsp; --® </font></b>keep custo
+      E::E4/_::alias</p>
+      <p>You rules file is stored in: <code>/home/data/MaskMigration/Rules.txt</code></p>
+      <div align="left">
+        <table border="0" cellpadding="0" style="border-collapse: collapse" width="10%" id="table2">
+          <tr>
+            <td><img border="0" src="images/CATVBTMaskMergerInRunRule.gif"></td>
+          </tr>
+        </table>
+</div>
+<h3><a name="Migrating ENOVIA customized masks"></a>Migrating ENOVIA Customized
+Masks</h3>
+<p>Once you have retrieved all needed files for the migration, run
+the merger application.<br>
+So, launch the CATVBTMaskMerger command as follows :</p>
+<div style="width: 1153; height: 268; border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1">
+  <p align="center"><code>&nbsp;&nbsp;$PREFIX$ </code> <i><code>-run &quot;CATVBTMaskMerger FILE1
+  FILE2 FILE3 FILE4 -rule RULE&quot; </code> </i><code>-direnv $EnvDir$ -env $EnvName$ </code>
+  <p align="left"><i>where :</i>
+  <ul>
+    <li><b>On Windows</b>: PREFIX =
+      $RADE_INSTALLATION_PATH$/$OS$/code/bin/CATSTART</li>
+    <li><b>On UNIX</b>: PREFIX =
+      $RADE_INSTALLATION_PATH$/$OS$/code/command/catstart<br>
+      &nbsp;</li>
+    <li><b>RADE_INSTALLATION_PATH</b> is the location where you installed the
+      RADE CD.</li>
+    <li><b>OS</b> is the operating system tag (eg. solaris_a, intel_a, aix_a, hpux_b, ....).</li>
+    <li><b>FILE1</b> is the path of the file containing Dassault Systemes masks
+      - version Rn</li>
+    <li><b>FILE2</b> is the path of the file containing Dassault Systemes masks
+      - version Rn+1
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    <li><b>FILE3</b> is the path of the file containing customized masks -
+      version Rn&nbsp;</li>
+    <li><b>FILE4</b> is the path of the file containing Dassault Systemes masks
+      - version Rn+1 (result of this command).&nbsp;</li>
+    <li><b>RULE</b> is the rules file used in the merger engine. By default,
+      recommendations are followed in the merger engine, so this file is not
+      mandatory.<br>
+      In the case you do not use a rules file,&nbsp; remove &quot;-rule&quot;.</li>
+    <li><b><code>EnvName</code></b> is the name of the RADE environment (
+      Default is : <code>CAA_RADE.V5R14.B14 )</code></li>
+    <li><b><code>EnvDir</code></b> is the environment folder</li>
+  </ul>
+</div>
+<p>In this example:</p>
+<p><code>/home/data/DassaultSystemes/B14/aix_a/code/bin/catstart<i><br>
+&nbsp;&nbsp;</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-run &quot;CATVBTMaskMerger<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+/home/data/MaskMigration/DefaultN/DEFAULT.custo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+/home/data/MaskMigration/DefaultN+1/DEFALUT.custo&nbsp;&nbsp;&nbsp;<font color="#282187"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</font>/home/data/MaskMigration/CustoN/customaskN.custo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+/home/data/MaskMigration/CustoN+1/newcustomask.custo<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;-rule 
+/home/data/MaskMigration/Rules.txt<i>&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+</i>-env CAA_RADE.V5R14.B14 -diren /home/data/DassaultSystemes/CATEnv</code></p>
+<p>The following charts explain the different steps while merging these 3 masks:</p>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun2.gif"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun3.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun4.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun5.gif"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun6.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun7.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun8.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun9.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun10.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun11.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun12.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun13.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun14.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun15.gif"></p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><img border="0" src="images/CATVBTMaskMergerInRun16.gif"></p>
+<p>&nbsp;</p>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p>Import the new mask into the database using the following command:</p>
+<p><code>$PREFIX$ </code> <i><code>-run &quot;VPMPeopleImport&nbsp; /home/data/MaskMigration/CustoN+1/newcustomask.custo&quot;</code></i></p>
+  <p align="left"><i>where :</i>
+  <ul>
+    <li><b>On Windows</b>: PREFIX =
+      $ENOVIA_INSTALLATION_PATH$/$OS$/code/bin/CATSTART</li>
+    <li><b>On UNIX</b>: PREFIX =
+      $ENOVIA_INSTALLATION_PATH$/$OS$/code/command/catstart</li>
+  </ul>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><font color="#FF0000"><a href="../CAADmcTechArticles/UnderstandingMigratingMaskCusto.htm">Understanding
+      migration of customized mask</a></font></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>For more details on ENOVIA masks, refer to <var>ENOVIA V5 LifeCycle
+      Applications Documentation: Enterprise Architecture Foundation: Enterprise Architecture Administration Guide: 
+    Administration tasks: Understanding Object Access Control.</var></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [March 2006]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [October 2016]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

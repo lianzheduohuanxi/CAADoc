@@ -1,0 +1,349 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Converting Print Files</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM Enterprise Architecture</h1>
+     </td>
+     <td valign="top">
+     <h2>3D Visualization - Print</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Converting Print Files</h3>
+     <p><em>Creating a TIFF file from a CGM file</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAAPrtChangeFormat use case. This use case 
+     explains how to convert an input file encoded using a given format into an 
+     output file encoded using another format. </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAAPrtChangeFormat Use Case</strong></a>
+       <ul>
+         <li><a href="#What">What Does CAAPrtChangeFormat Do</a></li>
+         <li><a href="#How">How to Launch CAAPrtChangeFormat</a></li>
+         <li><a href="#Where">Where to Find the CAAPrtChangeFormat Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show how to convert an input file encoded using 
+ a given format into an output file encoded using another format. To do this, 
+ you'll learn how to create a print file image from the input file, a print 
+ device, print parameters, and how to generate the output file encoded using the 
+ target format.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAAPrtChangeFormat Use Case</h3>
+ <p>CAAPrtChangeFormat is a use case of the CAAPrint.edu framework that 
+ illustrates Print framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAAPrtChangeFormat Do</h4>
+ <p>CAAPrtChangeFormat is a batch program that reads a CGM file from the command 
+ line and converts it into a TIFF file.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAPrtChangeFormat</h4>
+ <p>To launch CAAPrtChangeFormat, you will need to set up the build time 
+ environment, then compile CAAPrtChangeFormat along with its prerequisites, set 
+ up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>In addition, the <code>CAAPrtOut</code> environment variable should be set 
+ to the directory into which you want to create the resulting TIFF file, prior 
+ to launching CAAPrtChangeFormat with the path of the input CGM file as 
+ argument.</p>
+ <ul>
+   <li>With Windows
+   <table class="code">
+     <tr>
+       <td>
+       <pre>E:&gt;set CAAPrtOut=DirForOutputTIFFFile     
+E:&gt;CAAPrtChangeFormat InstallRootDirectory\CAAPrint.edu\CNext\resources\graphic\images\CAAPrtChangeFormat.cgm</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table class="code">
+     <tr>
+       <td>
+       <pre>$ export CAAPrtOut=DirForOutputTIFFFile     
+$ CAAPrtChangeFormat InstallRootDirectory/CAAPrint.edu/CNext/resources/graphic/images/CAAPrtChangeFormat.cgm</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p>where:</p>
+ <ul>
+   <li><code>DirForOutputTIFFFile</code> is the directory where the TIFF will be 
+   created</li>
+   <li><code>InstallRootDirectory</code> is the directory into which the CAA 
+   CD-ROM were unloaded</li>
+   <li><code>CAAPrtChangeFormat.cgm</code> is a sample CGM file. You can use 
+   other CGM files you may have at hand.</li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAPrtChangeFormat Code</h4>
+ <p>The CAAPrtChangeFormat use case is made of a single source file located in 
+ the CAAPrtChangeFormat.m module of the CAAPrint.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>
+     InstallRootDirectory\CAAPrint.edu\CAAPrtChangeFormat.m\src\CAACPrtChangeFormat.cpp</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>
+     InstallRootDirectory/CAAPrint.edu/CAAPrtChangeFormat.m/src/CAACPrtChangeFormat.cpp</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>To create the CGM to TIFF CAAPrtChangeFormat format converter, there are six 
+ main steps:</p>
+ <ol>
+   <li><a href="#Step1">Initializing the Printer Manager</a></li>
+   <li><a href="#Step2">Creating a Print File Image from the Input File</a></li>
+   <li><a href="#Step3">Creating a Print Raster File Device</a></li>
+   <li><a href="#Step4">Defining Print Parameters</a></li>
+   <li><a href="#Step5">Writing the Output File</a></li>
+   <li><a href="#Step6">Cleaning the Application and Closing the Printer Manager</a></li>
+ </ol>
+ <p>Some preliminary tasks are not described. They deal with retrieving the 
+ input file name, finding out the output file directory, and building the output 
+ file name. The input file name is retrieved from the command line in the <code>
+ InputName</code> variable, such as TestFile.cgm. The file extension is compared 
+ with cgm. The output file directory is given by the <code>CAAPrtOut</code> 
+ environment variable, which you have to export. The output file name uses the 
+ input file name and changes its suffix to tif, such as TestFile.tif and is 
+ stored in the <code>TmpFile</code> variable.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Initializing the Printer Manager</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>#include &quot;CATPrintFileImage.h&quot;   <em>// To create an image from the input file</em>
+#include &quot;CATPrintParameters.h&quot;  <em>// To define print parameters</em>
+#include &quot;CATPrintFileDevice.h&quot;  <em>// To create a file device</em>
+...
+
+int main(int argc, char* argv[])
+{
+  int ReturnCode = 0;
+  ... <em>// Retrieving the input file name, setting the output file directory, and
+  ... // building the output file name is not described here</em>
+     
+  <b>CATPrinterManager::Begin()</b>;
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>As soon as the input file is retrieved and the output file directory and 
+ name are set, the printer manager is initialized.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Creating a Print File Image from the Input File</h4>
+ <p>As soon as the input file is retrieved and the output file directory and 
+ name are set,&nbsp;the print file image can be built from the input file.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre><em>  ...</em>     
+  CATPrintFileImage *pImage;
+  pImage = new <strong>CATPrintFileImage</strong>(InputName, &quot;CGM&quot;);
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This print file image is an instance of the <i>CATPrintFileImage</i> class 
+ instantiated from the input file. The input file format is passed as the second 
+ argument, here CGM. The print file image created holds the input file in memory 
+ and the CGM interpreter to enable the file interpretation as soon as this will 
+ be asked.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step3"></a>Creating a Print Raster File Device</h4>
+ <p>The print raster file device should be next instantiated.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>  ...
+  CATPrintFileDevice *pDevice;
+  pDevice = new <strong>CATPrintFileDevice</strong>( (const char*) TmpFile, &quot;RASTER&quot; );
+  ...   </pre>
+     </td>
+   </tr>
+ </table>
+ <p>The print raster file device represents the output logical unit for a real 
+ device. It is made of a TIFF generator and of a stream into which the TIFF 
+ image writing will be performed. For this reason, the output file name and the 
+ RASTER type, that stands for TIFF, are passed as arguments.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step4"></a>Defining Print Parameters</h4>
+ <p>A print parameter object should be defined to be associated with the print 
+ file image to convert.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>  ...
+  <strong>CATPrintParameters</strong> Parameters;
+
+  Parameters.<strong>SetWhitePixel</strong>(1);                               <em>// Print white pixels white</em>
+  Parameters.<strong>SetMapToPaper</strong>(1);                               <em>// Resize image to match paper forma</em>t
+  Parameters.<strong>SetBanner</strong>(&quot;CAAPrtChangeFormat&quot;);                <em>// Add a banner</em>
+  Parameters.<strong>SetBannerPosition</strong>(CATPRINT_TOP);                <em>// at the top of the image</em>
+  Parameters.<strong>SetLineWidthSpecificationMode</strong>(CATPRINT_SCALED); <em>// Change line width with scale</em>
+  Parameters.<strong>SetLineTypeSpecificationMode</strong>(CATPRINT_SCALED);  <em>// Change non continuous lines with scale</em>
+ 
+  float imageWidth=0, imageHeight=0;
+  int result = pImage-&gt;<strong>GetSize</strong>(imageWidth, imageHeight); <em>// Retrieve input file dimensions</em>
+  if (result)
+  { 
+    // Set the output image dimensions: width increases from 50%, height doesn't change
+    CATPrintForm CurrentForm = Parameters.<strong>GetCurrentForm</strong>();
+    CurrentForm().<strong>SetSize</strong>(imageWidth*1.5, imageHeight);
+  } 
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The print parameters are taken into account to create the output image. The 
+ following parameters are set: </p>
+ <ul>
+   <li>White pixels are kept white (for a print on white paper, it can be 
+   convenient to print them in black)</li>
+   <li>The image is resized to match the paper size</li>
+   <li>A banner with the text &quot;CAAPrtChangeFormat&quot; is printed at the top of the 
+   image</li>
+   <li>The line width are changed with respect to the scale</li>
+   <li>The size of the dashes is changed with respect to the scale</li>
+   <li>The image size is changed in order to keep the same height, but to 
+   increase its with 50%. To do this, the input file image size is retrieved 
+   using the <code>GetSize</code> method, and the new size is set as a print 
+   parameter through the <i>CATPrintForm</i> instance retrieved using the <code>
+   GetCurrentForm</code> method from <code>parameters</code>.</li>
+ </ul>
+ <p>Other print parameters take their default values.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Writing the Output File</h4>
+ <p>The file conversion can now take place.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>  ...
+  if ( !pImage-&gt;<strong>Print</strong>(pDevice, Parameters) )
+  {
+    cout &lt;&lt; &quot; Error during printing &quot; &lt;&lt; endl;
+    ReturnCode = 1;
+  }    
+  ...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The <code>Print</code> method converts the print file image from CGM to TIFF 
+ using the parameters set, and writes the output to the print raster file 
+ device.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Cleaning the Application and Closing the Printer 
+ Manager</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>  ...
+  delete pDevice;
+  delete pImage;
+  <b>CATPrinterManager::End()</b>;
+  return ReturnCode;
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Simply don't forget to delete allocated objects, close the Printer Manager, 
+ and return the appropriate return code.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the objects involved when converting a print file, here 
+ encoded using CGM, into another file encoded using another format, here TIFF. 
+ These objects are the print file image, the print raster file device, and the 
+ set of parameters that are needed to create the TIFF file.</p>
+ <p>First, the Printer Manager is initialized. Then, a <i>CATPrintFileImage</i> 
+ instance is created using the input file, and a <i>CATPrintFileDevice</i> 
+ instance is created using the target file format to accommodate the output TIFF 
+ file. A <i>CATPrintParameters</i> instance is created and valued using the 
+ appropriate setters to hold the intended print parameters. Finally, the <code>
+ Print</code> method of the <i>CATPrintFileImage</i> class is used to generate 
+ the TIFF file, and the Printer Manager is closed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Lauching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

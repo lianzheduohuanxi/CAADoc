@@ -1,0 +1,155 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- Cpl_Catwsc_Caadoc -->
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+  <title>Interface ILCMgmtWS</title>
+ </head>
+ <body>
+ <h2>Interface ILCMgmtWS </h2>
+ <p><b>Services supporting this interface:</b><br>
+  <a href="ENOVWSLCMgmtCpp.html">ENOVWSLCMgmtCpp</a><br>
+ </p>
+ <hr>
+ <p><b>Namespace:</b> urn:com:dassault_systemes:ENOVWSLCMgmtIntf:ENOVWSLCMgmtIntf_ws:ILCMgmtWS</p>
+ <p><b>Role:</b> Interface for change management. </p>
+ <p><b>WSDL Interface Document Relative Path:</b> <code>\resources\wsdl\ENOVWSLCMgmtIntf\ENOVWSLCMgmtIntf_ws\ILCMgmtWS.wsdl</code> </p>
+ <hr>
+ <h2>Operation Index</h2>
+ <dl>
+  <dt>o <a href="#ApplyTransition"><b>ApplyTransition()</b></a></dt>
+  <dd>Applies a transition from the list of possible transitions in order to change the state of an object.</dd>
+  <dt>o <a href="#GetTransitions"><b>GetTransitions()</b></a></dt>
+  <dd>Gets the list of possible transitions on a given object from the current state.</dd>
+ </dl>
+ <h2>Operations</h2>
+  <dl>
+  <dt>o <a name="ApplyTransition"><b>ApplyTransition()</b></a></dt>
+  <dd>Applies a transition from the list of possible transitions in order to change the state of an object. The object does not have to be locked, the web service implementation will handle locking requirements.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier for the object to transition.</td>
+     </tr>
+     <tr>
+      <td>iTransitionName</td>
+      <td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-2/#string');return false;">{http://www.w3.org/2001/XMLSchema}string</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>The transition name to apply.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+  <dl>
+  <dt>o <a name="GetTransitions"><b>GetTransitions()</b></a></dt>
+  <dd>Gets the list of possible transitions on a given object from the current state. The entries returned can be used to update the status of the object using ApplyTransition.  </dd>
+  <dl>
+   <dt><b>Parameters:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Direction</th>
+      <th>Nillable</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>iObjectId</td>
+      <td><a href="Identifier.html">{urn:com:dassault_systemes:PPRGenericWS}Identifier</a></td>
+      <td>in</td>
+      <td>true</td>
+      <td>Identifier for ENOVIA_ECO, ENOVIA_VPMDocumentRevision, or ENOVIA_VPMPartVersion.</td>
+     </tr>
+     <tr>
+      <td>oTransitionNames</td>
+      <td><a href="stringArrayType.html">{urn:com:dassault_systemes:CATJWSInfra}stringArrayType</a></td>
+      <td>in, out</td>
+      <td>true</td>
+      <td>List of possible transitions.</td>
+     </tr>
+     <tr>
+      <td>retval</td>
+      <td><a href="Status.html">{urn:com:dassault_systemes:PPRGenericWS}Status</a></td>
+      <td>out</td>
+      <td>true</td>
+      <td>Status of the operation.</td>
+     </tr>
+    </tbody>
+   </table>
+  </dl>
+  <dl>
+   <dt><b>Faults:</b></dt>
+   <dd><table cellpadding="2" cellspacing="2">
+    <thead>
+     <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>error</td>
+      <td><a href="CATServiceExceptionType.html">{urn:com:dassault_systemes:CATJWSInfra}CATServiceExceptionType</td>
+      <td>Raised if an error occurs while processing the request</td>
+     </tr>
+    </tbody>
+   </table></dd>
+  </dl>
+ </dl>
+ <hr>
+ <p><i>Copyright &#169; 1994-2005, Dassault Syst&#232;mes. All rights reserved.</i></p>
+ </body>
+</html>
+

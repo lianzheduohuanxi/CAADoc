@@ -1,0 +1,336 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Retrieving VPM Identification</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>VPM Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Retrieving VPM Identification</h3>
+      <em>Retrieving information about existing object</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the way to retrieve VPM Identification information about Part Version
+      or Document Revision object using an Identification Acquisition Agent and explains how to use it in a command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Acquisition Agent and test Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Acquisition Agent test Command Do</a></li>
+			<li><a href="#How">How to Launch the Acquisition Agent test Command</a></li>
+            <li><a href="#Where">Where to Find the Agent test Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to explain how to obtain VPM identification information 
+ about a selected object in either 'Query-Result' or 'Explorer' windows of the VPM Navigator. 
+ Use of such an Agent is demonstrated by means of an Agent test command from an Explorer window.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Acquisition Agent and test Command Use Case</h3>
+<p>The Agent test Command is a use case of the CAACATImmENOVIAProvider.edu framework that 
+ illustrates Identifier Acquisition Agent capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Agent test Command Do</h4>
+<p>CAAImmIdAcqAgentTestCmd is a state dialog command which returns the VPM Identification 
+  information using the Identifier Acquisition Agent and is described by the following UML 
+  statechart diagram.</p>
+<p><img src="images/CAAIdAgentStatechart.jpg" alt="CAAIdAgentStatechart.jpg " width="492" height="220"></p>
+<p>The dialog is as follows:</p>
+<table>
+  <tr>
+    <td><img src="images/CAAIdAgentDlg.jpg" alt="CAAIdAgentDlg.jpg " width="684" height="443"></td>
+    <td>Select a Part Version or Document Revision Object from VPMNavigator tree.</td>
+  </tr>
+</table>
+<p>The command returns with the VPM Identification information on the object selected. The command is then complete.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Agent test Command</h4>
+<p>To launch CAAImmIdAcqAgentTestCmd , you will need to set up the build time environment,
+then compile CAAImmIdAcqAgentTestCmd along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] in the following way: </p>
+<UL>
+  <LI>Run CNEXT on the command line.
+  <LI>Connect to Enovia using the command on Enovia V5 Toolbar.
+  <LI>Enter Login, Password and Enovia Server information and click OK to login.
+  <LI>Run Search command for a product on Enovia V5 Toolbar.
+  <LI>Right-Click on a Product and run Send To VPM Navigator.
+  <LI>Click on a Document Revision or Part Version and run the CAAImmIdAcqAgentTestCmd available from VPM Navigator workbench. </LI></UL>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the Agent test Command Code</h4>
+<p>The Agent test command is made up of a single class named <i>CAAImmIdAcqAgentTestCmd</i> 
+      located in the <i> CAAImmIdAcqAgentTestCmd.m </i> module of the <i> CAACATImmENOVIAProvider.edu </i> framework :</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATImmENOVIAProvider.edu\CAAImmIdAcqAgentTestCmd.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAACATImmENOVIAProvider.edu/CAAImmIdAcqAgentTestCmd.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To retrieve VPM Identification information using the Acquisition Agent, following steps should be followed:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Declare the Identification Acquisition agent</td>
+    <td valign="top">Header file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Instantiate the Acquisition agent</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Assign the Acquisition agent to the Initial state</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create a transition from the Initial state triggered by the Acquisition agent valuation</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Retrieve the VPM Identification</td>
+    <td valign="top">Transition action method <code>ActionCommand</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Release the Acquisition agent</td>
+    <td valign="top">Destructor</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring the Acquisition Agent</h4>
+<p>The agent test command derives from CATSTateCommand.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAImmIdAcqAgentTestCmd: public CATStateCommand
+{
+...
+private:
+	CATImmIdentifierAcquisitionAgent* _ImmIdentifierAcquisition;
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>A pointer to the Acquisition agent is declared as a private data member. 
+  This Acquisition agent is an instance of the CATPathElement class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Instantiating the Acquisition Agent</h4>
+<p>The Acquisition agent is intantiated in the command <code>BuildGraph</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAImmIdAcqAgentTestCmd::BuildGraph()
+{
+...
+_ImmIdentifierAcquisition = new CATImmIdentifierAcquisitionAgent();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Assigning the Acquisition agent to a dialog state</h4>
+<p>Still in the <code>BuildGraph</code> method, the SelectImmersiveObject state is created, 
+  and the Acquisition agent is added to this state. This makes it possible to value the Acquisition 
+  agent when this state becomes the active one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  pFirstState = GetInitialState("SelectImmersiveObject");
+  pFirstState->AddDialogAgent(_ImmIdentifierAcquisition);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>This Agent test command is a single stage command. The <code> GetInitialState </code> method 
+ retrieves a dialog state and adds it to the states managed by the dialog command. 
+  The <code> AddDialogAgent</code> method adds the Acquisition agent to the state. 
+  This acquisition agent supports selection of a single object only. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating transition from start state to the end of command</h4>
+<p>The transition between the initial state and the end of command is created in the <code> BuildGraph </code> method. 
+ This transition is triggered when the Acquisition agent is valued, that is when the end user clicks a Part Version 
+ or a Document Revision.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  AddTransition(pFirstState, NULL,
+    IsOutputSetCondition(_ImmIdentifierAcquisition), 
+    Action ((ActionMethod)&CAAImmIdAcqAgentTestCmd::ActionCommand, NULL, NULL, (void*)NULL));
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>AddTransition</code> method creates a transition and adds it to the
+transitions managed by the dialog command. Pointers to the transition's source and target states 
+are the first and second arguments respectively. In this case, the second parameter is nulled to 
+indicate that the end of command. The transition trigger is defined in the guard condition as the first 
+condition to be checked using the <code> IsOutputSetCondition </code> method applied to the 
+Acquisition agent. This condition returns True when the Acquisition agent is valued. When the condition 
+method returns True the transition is fired. In this case, the <code> ActionCommand(void *)</code> action method is executed. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Retrieving the VPM Identification</h4>
+<p>When the guard condition returns true, 
+the <code> ActionCommand(void*) </code> method is executed. In this method, the Acquisition agent 
+object is used to retrieve Identification information as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean CAAImmIdAcqAgentTestCmd::ActionCommand(void* data)
+{
+	CATUnicodeString domainType = _ImmIdentifierAcquisition->GetType();
+	
+	CATListOfCATUnicodeString oNM;
+	CATListOfCATUnicodeString oVA;
+	
+	hr=_ImmIdentifierAcquisition->GetIdentifiers(oNM, oVA);
+	
+	if(SUCCEEDED(hr)){
+	  CATUnicodeString id_value=oVA[1];
+	  CATUnicodeString version_value=oVA[2];
+	  CATUnicodeString att_name=oNM[1];
+	  CATUnicodeString att_vname=oNM[2];
+	  ...
+	}
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>First, using the <code> GetType </code>function, the type of the acquired object is returned 
+in the form of 'Domain/Type'. For example, If a PartVersion object is acquired in the PRODUCT domain, 
+the returned string will be PRODUCT/ENOVIA_VPMPartVersion. </p>
+<p>Secondly, using the <code>GetIdentifiers </code>method, the identifiers of Enovia VPM object are 
+acquired. For example, If a PartVersion object is selected by the end user, the identifiers V_ID and V_version 
+for that object will be returned.
+</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Releasing the Acquisition agent</h4>
+<p>It is recommended to deallocate the agent at the end of the command, or when its use is finished in the following way,</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>if(_ImmIdentifierAcquisition){
+		    _ImmIdentifierAcquisition->RequestDelayedDestruction();
+	     }
+             _ImmIdentifierAcquisition=NULL;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows usage of the VPM Identifier Acquisition agent and the way to 
+retrieve the VPM Identification information for a selected Part Version or Document Revision. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+    <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAGsiCreateOpenBody.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2000</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Create a Open Bodies </font>
+<font color="#008000">'   Assumtions:   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' Creating  a Part Document </font>
+<font color="#0000FF">  Dim </font>PartDocument1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">  Set </font>PartDocument1 = CATIA.Documents.Add  ( "Part" ) 
+ 
+<font color="#008000">' Retrieving a Part HybridBodies collection for attaching OpenBodies     </font>
+<font color="#0000FF">  Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">  Set </font>hybridBodies1 = PartDocument1.Part.HybridBodies
+
+<font color="#008000">' Add an first OpenBody  </font>
+<font color="#0000FF">  Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody1 = hybridBodies1.Add()
+
+<font color="#008000">' Add a second OpenBody  </font>
+<font color="#0000FF">  Dim </font>OpenBody2<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody2 = hybridBodies1.Add()
+
+<font color="#008000">' Updating CATIA PArt </font>
+  PartDocument1.Part.Update 
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

@@ -1,0 +1,682 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Dialog Class CATDlgStdFile</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../Dialog.htm" href="../Dialog.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "Dialog";	}
+		function getCurrentObjectName() { 
+ 	return "CATDlgStdFile"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>Dialog <script type="text/javascript" > writeClassCharacteristic(); </script> CATDlgStdFile</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATDlgStdFile_10263','CATDlgStdFile','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATDlgStdFile</b>
+</p>
+<p>
+<b><i> Class delivering a file or folder selection box.</i></b><br>
+
+ <b>Role</b>: Enables a file or folder selection.
+ This window offers a file selection box with a filter to 
+ apply to search for files or a folder selection box.
+ <p>
+ Under Windows, a standard Windows file or folder selection box is displayed. 
+ <br>As so, the box texts follow the installation language of the Operatings System and not the language
+ selected for this software.
+ <br>Under Unix, a window partly emulating a Windows file or folder selection box is displayed. 
+ <p>
+ This window is used to list, select, open or save files or to list
+ and select folders.
+ <p>
+ The purpose of most methods below is to initialize the file/folder selection 
+ box. Once the box ended, the application will have to interfere
+ only when the following events occur:
+ <ul>
+ <li>CATDiaOKNotification (when, according to the type of window, the Open, Save or OK push button is pressed)</li>
+ <li>CATDiaCANCELNotification (when the CANCEL push button is pressed)</li>
+ </ul>
+ In the meantime, all the dialog is managed by this software.</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle)"><b>CATDlgStdFile</b></a>(CATDialog*,CATString&amp;,CATDlgStyle)
+<dd>  Constructs a folder selection box.
+ <dt> o 
+    <a href="#CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle,CATListOfCATUnicodeString&amp;)"><b>CATDlgStdFile</b></a>(CATDialog*,CATString&amp;,CATDlgStyle,CATListOfCATUnicodeString&amp;)
+<dd>  Constructs a Save file selection box.
+ <dt> o 
+    <a href="#CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle,CATDlgStyle,CATListOfCATUnicodeString&amp;)"><b>CATDlgStdFile</b></a>(CATDialog*,CATString&amp;,CATDlgStyle,CATDlgStyle,CATListOfCATUnicodeString&amp;)
+<dd>  Constructs an Open file selection box.
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetActiveFilterIndex()"><b>GetActiveFilterIndex</b></a>()
+<dd>  Gets the active item in the type filter combo.
+ <dt> o 
+    <a href="#GetDirectoriesLabel()"><b>GetDirectoriesLabel</b></a>()
+<dd>  Gets the directories label.
+ <dt> o 
+    <a href="#GetDirectory(CATUnicodeString&amp;)"><b>GetDirectory</b></a>(CATUnicodeString&amp;)
+<dd>  Gets the directory whose contents is currently displayed.
+ <dt> o 
+    <a href="#GetFilesLabel()"><b>GetFilesLabel</b></a>()
+<dd>  Gets the files label.
+ <dt> o 
+    <a href="#GetFilterLabel()"><b>GetFilterLabel</b></a>()
+<dd>  Gets the filter label.
+ <dt> o 
+    <a href="#GetFilterPattern(CATUnicodeString&amp;)"><b>GetFilterPattern</b></a>(CATUnicodeString&amp;)
+<dd>  Gets the current filter (open context and save context).
+ <dt> o 
+    <a href="#GetFilterStrings(CATUnicodeString*,CATString*,int)"><b>GetFilterStrings</b></a>(CATUnicodeString*,CATString*,int)
+<dd>  Gets the type filter combo strings.
+ <dt> o 
+    <a href="#GetReadOnlyState()"><b>GetReadOnlyState</b></a>()
+<dd>  Gets the file access type (open context only).
+ <dt> o 
+    <a href="#GetSelection(CATUnicodeString*,int)"><b>GetSelection</b></a>(CATUnicodeString*,int)
+<dd>  Gets the selected files or the selected folder.
+ <dt> o 
+    <a href="#GetSelection(CATUnicodeString&amp;)"><b>GetSelection</b></a>(CATUnicodeString&amp;)
+<dd>  Gets the selected file or folder.
+ <dt> o 
+    <a href="#GetSelectionCount()"><b>GetSelectionCount</b></a>()
+<dd>  Gets the selected files count or the selected folder count.
+ <dt> o 
+    <a href="#GetSelectionLabel()"><b>GetSelectionLabel</b></a>()
+<dd>  Gets the selection label.
+ <dt> o 
+    <a href="#SetActiveFilterIndex(int)"><b>SetActiveFilterIndex</b></a>(int)
+<dd>  Sets the active item in the type filter combo.
+ <dt> o 
+    <a href="#SetDirectoriesLabel(CATUnicodeString&amp;)"><b>SetDirectoriesLabel</b></a>(CATUnicodeString&amp;)
+<dd>  Overwrites the default directories label.
+ <dt> o 
+    <a href="#SetDirectory(CATUnicodeString&amp;)"><b>SetDirectory</b></a>(CATUnicodeString&amp;)
+<dd>  Sets the directory whose contents is currently displayed.
+ <dt> o 
+    <a href="#SetFileName(CATUnicodeString&amp;)"><b>SetFileName</b></a>(CATUnicodeString&amp;)
+<dd>  Sets the file name field contents.
+ <dt> o 
+    <a href="#SetFilesLabel(CATUnicodeString&amp;)"><b>SetFilesLabel</b></a>(CATUnicodeString&amp;)
+<dd>  Overwrites the default files label.
+ <dt> o 
+    <a href="#SetFilterLabel(CATUnicodeString&amp;)"><b>SetFilterLabel</b></a>(CATUnicodeString&amp;)
+<dd>  Overwrites the default filter label.
+ <dt> o 
+    <a href="#SetFilterPattern(CATUnicodeString&amp;)"><b>SetFilterPattern</b></a>(CATUnicodeString&amp;)
+<dd>  Sets the filter string (open context and save context).
+ <dt> o 
+    <a href="#SetFilterStrings(CATUnicodeString*,CATString*,int)"><b>SetFilterStrings</b></a>(CATUnicodeString*,CATString*,int)
+<dd>  Sets the type filter combo strings.
+ <dt> o 
+    <a href="#SetListAvailableExtensions(CATListOfCATUnicodeString&amp;)"><b>SetListAvailableExtensions</b></a>(CATListOfCATUnicodeString&amp;)
+<dd>  nodoc
+ not implemented on Windows.
+ <dt> o 
+    <a href="#SetReadOnlyState(int)"><b>SetReadOnlyState</b></a>(int)
+<dd>  Sets the file access to the read only value (open context only).
+ <dt> o 
+    <a href="#SetSelectionLabel(CATUnicodeString&amp;)"><b>SetSelectionLabel</b></a>(CATUnicodeString&amp;)
+<dd>  Overwrites the default selection label.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATDlgStdFile"></a><a name="CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle)"></a> <dt> o <b>CATDlgStdFile</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATDlgStdFile</b>(<td><script type="text/javascript"> activateLink('CATDialog','CATDialog*')</script> <td><tt>iParent</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iDialogObjectName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgStyle','CATDlgStyle')</script> <td><tt>iStyle</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a folder selection box.
+ <br><b>Role</b>: Constructs a folder selection box. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The parent of the CATDlgStdFile object.
+   The parent must be an instance of a class that derives 
+   from CATDlgDocument.
+ </dd>
+    <dt><tt> iDialogObjectName</tt>
+   <dd>   The dialog object name. 
+ </dd>
+    <dt><tt> iStyle</tt>
+   <dd>   The application window style. .
+   <br><b>Legal values</b>: <tt>NULL (default)</tt> 
+   or <tt>CATDlgWndModal</tt> if the file window is modal (that is, no interaction is possible outside 
+   this window as long as it is displayed). Under Windows, the window is always modal.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATDlgStdFile"></a><a name="CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle,CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>CATDlgStdFile</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATDlgStdFile</b>(<td><script type="text/javascript"> activateLink('CATDialog','CATDialog*')</script> <td><tt>iParent</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iDialogObjectName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgStyle','CATDlgStyle')</script> <td><tt>iStyle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iavailableExtensions</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a Save file selection box.
+ <br><b>Role</b>: Constructs a file selection box dedicated to saving files.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The parent of the CATDlgStdFile object.
+   The parent must be an instance of a class that derives 
+   from CATDlgDocument. * @param iDialogObjectName
+   The dialog object name. 
+ </dd>
+    <dt><tt> iStyle</tt>
+   <dd>   The application window style. 
+   <br><b>Legal values</b>: <tt>NULL (default)</tt> 
+   or <tt>CATDlgWndModal</tt> if the file window is modal (that is, no interaction is possible outside 
+   this window as long as it is displayed). Under Windows, the window is always modal.
+
+ </dd>
+    <dt><tt> iavailableExtensions</tt>
+   <dd>   Defines a list of filters for the open context.
+   You may pass an empty list and define the types of files using
+   </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetFilterStrings','SetFilterStrings') </script>.
+</dl>
+</dl>
+</dl>
+<a name="CATDlgStdFile"></a><a name="CATDlgStdFile(CATDialog*,CATString&amp;,CATDlgStyle,CATDlgStyle,CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>CATDlgStdFile</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATDlgStdFile</b>(<td><script type="text/javascript"> activateLink('CATDialog','CATDialog*')</script> <td><tt>iParent</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iDialogObjectName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgStyle','CATDlgStyle')</script> <td><tt>iStyle</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDlgStyle','CATDlgStyle')</script> <td><tt>iStdStyle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iavailableExtensions</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an Open file selection box.
+ <br><b>Role</b>: Constructs a file selection box dedicated to opening files.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParent</tt>
+   <dd>   The parent of the CATDlgStdFile object.
+   The parent must be an instance of a class that derives 
+   from CATDlgDocument.
+ </dd>
+    <dt><tt> iDialogObjectName</tt>
+   <dd>   The dialog object name. 
+ </dd>
+    <dt><tt> iStyle</tt>
+   <dd>   The application window style. 
+   <br><b>Legal values</b>:
+   <tt>NULL (default)</tt> 
+   <tt>CATDlgWndModal</tt> if the file window is modal (that is, no interaction is possible outside 
+   this window as long as it is displayed). Under Windows the window is always modal.
+
+ </dd>
+    <dt><tt> iStdStyle</tt>
+   <dd>   Defines the activity of differents check buttons. You can cumulate several
+   styles using a logical or.
+   <br><b>Legal values</b>:
+   <tt>CATDlgStdFileMultisel</tt> if the file window enables the
+   file multiple selection, or
+   <tt>CATDlgStdFileReadOnly</tt> so that the
+   file window contains a check button for the read mode. Under Windows,
+   the check button is available whatever the style.
+   <tt>CATDlgStdFileOverwritePrompt</tt> if the file window is dedicated to saving files,
+   causes the window to generate a message box if the selected file already exists.
+   The user must confirm whether to overwrite the file.
+ </dd>
+    <dt><tt> iavailableExtensions</tt>
+   <dd>   Defines a list of filters for the open context.
+   You may pass an empty list and define the types of files using
+   </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetFilterStrings','SetFilterStrings') </script>.
+</dl>
+</dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetActiveFilterIndex"></a><a name="GetActiveFilterIndex()"></a> <dt> o <b>GetActiveFilterIndex</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetActiveFilterIndex</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the active item in the type filter combo.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The active item.
+</dl>
+</dl>
+<a name="GetDirectoriesLabel"></a><a name="GetDirectoriesLabel()"></a> <dt> o <b>GetDirectoriesLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetDirectoriesLabel</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the directories label.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  iLabel   The directories label.
+</dl>
+</dl>
+<a name="GetDirectory"></a><a name="GetDirectory(CATUnicodeString&amp;)"></a> <dt> o <b>GetDirectory</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetDirectory</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oCurrentDirectory</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the directory whose contents is currently displayed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oCurrentDirectory</tt>
+   <dd>    The current directory path.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFilesLabel"></a><a name="GetFilesLabel()"></a> <dt> o <b>GetFilesLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetFilesLabel</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the files label.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  iLabel   The files label.
+</dl>
+</dl>
+<a name="GetFilterLabel"></a><a name="GetFilterLabel()"></a> <dt> o <b>GetFilterLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetFilterLabel</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the filter label.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  iLabel   The filter label.
+</dl>
+</dl>
+<a name="GetFilterPattern"></a><a name="GetFilterPattern(CATUnicodeString&amp;)"></a> <dt> o <b>GetFilterPattern</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetFilterPattern</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oCurrentFilter</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the current filter (open context and save context).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oCurrentFilter</tt>
+   <dd>   The current filter.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetFilterStrings"></a><a name="GetFilterStrings(CATUnicodeString*,CATString*,int)"></a> <dt> o <b>GetFilterStrings</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetFilterStrings</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>oTypeDescriptionList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString*')</script> <td><tt>oTypeExtensionsList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iInputAllocatedSize</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the type filter combo strings.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTypeDescriptionList</tt>
+   <dd>   The type filter descriptions array.
+ </dd>
+    <dt><tt> oTypeExtensionsList</tt>
+   <dd>   The type filter extensions array.
+ </dd>
+    <dt><tt> iInputAllocatedSize</tt>
+   <dd>   The size you allocated for oTypeDescriptionList and oTypeExtensionsList.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetReadOnlyState"></a><a name="GetReadOnlyState()"></a> <dt> o <b>GetReadOnlyState</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetReadOnlyState</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the file access type (open context only).
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The boolean value specifying if the access is read only.
+</dl>
+</dl>
+<a name="GetSelection"></a><a name="GetSelection(CATUnicodeString*,int)"></a> <dt> o <b>GetSelection</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetSelection</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>oSelections</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iInputAllocatedSize</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the selected files or the selected folder.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSelections</tt>
+   <dd>   The selected files names or the selected folder name.
+ </dd>
+    <dt><tt> iInputAllocatedSize</tt>
+   <dd>   The size you allocated for the oSelections parameter.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetSelection"></a><a name="GetSelection(CATUnicodeString&amp;)"></a> <dt> o <b>GetSelection</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetSelection</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oSelection</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the selected file or folder.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSelection</tt>
+   <dd>   The selected file or folder.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetSelectionCount"></a><a name="GetSelectionCount()"></a> <dt> o <b>GetSelectionCount</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetSelectionCount</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the selected files count or the selected folder count.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The selected files count or the selected folder count.
+</dl>
+</dl>
+<a name="GetSelectionLabel"></a><a name="GetSelectionLabel()"></a> <dt> o <b>GetSelectionLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>GetSelectionLabel</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the selection label.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  iLabel   The selection label.
+</dl>
+</dl>
+<a name="SetActiveFilterIndex"></a><a name="SetActiveFilterIndex(int)"></a> <dt> o <b>SetActiveFilterIndex</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetActiveFilterIndex</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iActiveItem</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the active item in the type filter combo.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iActiveItem</tt>
+   <dd>   The active item.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDirectoriesLabel"></a><a name="SetDirectoriesLabel(CATUnicodeString&amp;)"></a> <dt> o <b>SetDirectoriesLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDirectoriesLabel</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLabel</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Overwrites the default directories label.
+ Ignored on Windows.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLabel</tt>
+   <dd>   The label for the directories.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDirectory"></a><a name="SetDirectory(CATUnicodeString&amp;)"></a> <dt> o <b>SetDirectory</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDirectory</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCurrentDirectory</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the directory whose contents is currently displayed.
+ <br>Under Windows, the method is ignored if called after window is displayed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentDirectory</tt>
+   <dd>   The directory path to be made current</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFileName"></a><a name="SetFileName(CATUnicodeString&amp;)"></a> <dt> o <b>SetFileName</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFileName</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt></tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the file name field contents.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFileName</tt>
+   <dd>   The file name field contents.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFilesLabel"></a><a name="SetFilesLabel(CATUnicodeString&amp;)"></a> <dt> o <b>SetFilesLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFilesLabel</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLabel</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Overwrites the default files label.
+ Ignored on Windows.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLabel</tt>
+   <dd>   The label for the files.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFilterLabel"></a><a name="SetFilterLabel(CATUnicodeString&amp;)"></a> <dt> o <b>SetFilterLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFilterLabel</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLabel</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Overwrites the default filter label.
+ Ignored on Windows.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLabel</tt>
+   <dd>   The label for the filter.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFilterPattern"></a><a name="SetFilterPattern(CATUnicodeString&amp;)"></a> <dt> o <b>SetFilterPattern</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFilterPattern</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iCurrentFilter</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the filter string (open context and save context).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCurrentFilter</tt>
+   <dd>   The current filter.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFilterStrings"></a><a name="SetFilterStrings(CATUnicodeString*,CATString*,int)"></a> <dt> o <b>SetFilterStrings</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFilterStrings</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iTypeDescriptionList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATString','CATString*')</script> <td><tt>iTypeExtensionsList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iTypeFilterCount</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the type filter combo strings.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeDescriptionList</tt>
+   <dd>   The type filter descriptions array.
+ </dd>
+    <dt><tt> iTypeExtensionsList</tt>
+   <dd>   The type filter extensions array.
+ </dd>
+    <dt><tt> iTypeFilterCount</tt>
+   <dd>   The type filter count.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetListAvailableExtensions"></a><a name="SetListAvailableExtensions(CATListOfCATUnicodeString&amp;)"></a> <dt> o <b>SetListAvailableExtensions</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetListAvailableExtensions</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iavailableExtensions</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ nodoc
+ not implemented on Windows. Is an alternative to SetFilterStrings
+ Sets the list of available extensions (open context and save context).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iavailableExtensions</tt>
+   <dd>   The current list.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetReadOnlyState"></a><a name="SetReadOnlyState(int)"></a> <dt> o <b>SetReadOnlyState</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetReadOnlyState</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iFlag</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the file access to the read only value (open context only).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFlag</tt>
+   <dd>   The boolean value.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSelectionLabel"></a><a name="SetSelectionLabel(CATUnicodeString&amp;)"></a> <dt> o <b>SetSelectionLabel</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSelectionLabel</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLabel</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Overwrites the default selection label.
+ Ignored on Windows.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLabel</tt>
+   <dd>   The label for the selection.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATDlgStdFile.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATDlgStandard</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,435 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>DialogEngine Class CATDiaAction</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../DialogEngine.htm" href="../DialogEngine.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "DialogEngine";	}
+		function getCurrentObjectName() { 
+ 	return "CATDiaAction"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>DialogEngine <script type="text/javascript" > writeClassCharacteristic(); </script> CATDiaAction</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATDiaAction_14471','CATDiaAction','0');</script>
+<p><b>Usage: you can derive this class.</b></p>
+<hr>
+<p>
+ public class <b>CATDiaAction</b>
+</p>
+<p>
+<b><i> Base class to create a command action.</i></b><br>
+
+ <b>Role</b>: An action is a task without interaction with the end user.
+ An action may be
+ <ul>
+ <li>linked to a transition. In this case, the action is executed when the
+  transition fires. </li>
+ <li>a state entry action. In this case, the action is executed when 
+ entering the state. </li>
+ <li>a state exit action. In this case, the action is executed when 
+ leaving the state. </li>
+ </ul>
+ Moreover, a <tt>CATDiaAction</tt> object manages the action undo/redo. 
+ But, it must only undo/redo not transactional objects, that is to say 
+ the objects which don't belong to a model which implements the 
+ CATIUndoTransaction interface, because such a model undoes and redoes 
+ its objects itself.
+ <br>To create an action, you can derive this class and override the methods:
+ <ul>
+ <li><script type="text/javascript"> activateLinkAnchor('','Do','Do') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','BeforeUndo','BeforeUndo') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','AfterUndo','AfterUndo') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','BeforeRedo','BeforeRedo') </script> </li> <li>
+<script type="text/javascript"> activateLinkAnchor('','AfterRedo','AfterRedo') </script> </li> </ul>
+ or use the 
+<script type="text/javascript"> activateLinkAnchor('CATStateCommand','Action','CATStateCommand.Action') </script> method and give as arguments  the addresses of methods to execute the action.  
+ <br>Actions must be created in the 
+<script type="text/javascript"> activateLinkAnchor('CATStateCommand','BuildGraph','CATStateCommand.BuildGraph') </script> method. 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATDialogState','','CATDialogState') </script>, <script type="text/javascript"> activateLinkAnchor('CATDialogTransition','','CATDialogTransition') </script>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATDiaAction(CATString&amp;)"><b>CATDiaAction</b></a>(CATString&amp;)
+<dd>  Constructs an action.
+ <dt> o 
+    <a href="#~CATDiaAction()"><b>~CATDiaAction</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AfterRedo(void*)"><b>AfterRedo</b></a>(void*)
+<dd>  Redoes the action effects after the transactional redo.
+ <dt> o 
+    <a href="#AfterUndo(void*)"><b>AfterUndo</b></a>(void*)
+<dd>  Undoes the action effects after the transactional undo.
+ <dt> o 
+    <a href="#BeforeRedo(void*)"><b>BeforeRedo</b></a>(void*)
+<dd>  Redoes the action effects before the transactional redo.
+ <dt> o 
+    <a href="#BeforeUndo(void*)"><b>BeforeUndo</b></a>(void*)
+<dd>  Undoes the action effects before the transactional undo.
+ <dt> o 
+    <a href="#Do(void*)"><b>Do</b></a>(void*)
+<dd>  Executes the action.
+ <dt> o 
+    <a href="#SetAfterRedoMethod(ActionMethod)"><b>SetAfterRedoMethod</b></a>(ActionMethod)
+<dd>  Sets the method to redo the action after the transactional redo.
+ <dt> o 
+    <a href="#SetAfterUndoMethod(ActionMethod)"><b>SetAfterUndoMethod</b></a>(ActionMethod)
+<dd>  Sets the method to undo the action after the transactional undo.
+ <dt> o 
+    <a href="#SetBeforeRedoMethod(ActionMethod)"><b>SetBeforeRedoMethod</b></a>(ActionMethod)
+<dd>  Sets the method to redo the action before the transactional redo.
+ <dt> o 
+    <a href="#SetBeforeUndoMethod(ActionMethod)"><b>SetBeforeUndoMethod</b></a>(ActionMethod)
+<dd>  Sets the method to undo the action before the transactional undo.
+ <dt> o 
+    <a href="#SetData(void*)"><b>SetData</b></a>(void*)
+<dd>  Sets data which may be useful to execute or undo/redo the action.
+ <dt> o 
+    <a href="#SetExecuteMethod(ActionMethod)"><b>SetExecuteMethod</b></a>(ActionMethod)
+<dd>  Sets the method to execute the action.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATDiaAction"></a><a name="CATDiaAction(CATString&amp;)"></a> <dt> o <b>CATDiaAction</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATDiaAction</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iName</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an action.
+ <br><b>Role</b>: Use it only when deriving the <tt>CATDiaAction</tt> 
+ class, otherwise use the 
+<script type="text/javascript"> activateLinkAnchor('CATStateCommand','Action','CATStateCommand.Action') </script> method to create an action.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>   The name of the action. May be useful for debug.</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATDiaAction"></a><a name="~CATDiaAction()"></a> <dt> o <b>~CATDiaAction</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATDiaAction</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AfterRedo"></a><a name="AfterRedo(void*)"></a> <dt> o <b>AfterRedo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>AfterRedo</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Redoes the action effects after the transactional redo.
+ <br><b>Role</b>: Redefine this method when deriving <tt>CATDiaAction</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   The data specified by the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetData','SetData') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>     The CATBoolean value used to combine actions.
+   In an OrAction, the second action is executed only if the first
+   action returns TRUE.
+</dl>
+</dl>
+</dl>
+<a name="AfterUndo"></a><a name="AfterUndo(void*)"></a> <dt> o <b>AfterUndo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>AfterUndo</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Undoes the action effects after the transactional undo.
+ <br><b>Role</b>: Redefine this method when deriving <tt>CATDiaAction</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   The data specified by the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetData','SetData') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>     The CATBoolean value used to combine actions.
+   In an OrAction, the second action is executed only if the first
+   action returns TRUE.
+</dl>
+</dl>
+</dl>
+<a name="BeforeRedo"></a><a name="BeforeRedo(void*)"></a> <dt> o <b>BeforeRedo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>BeforeRedo</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Redoes the action effects before the transactional redo.
+ <br><b>Role</b>: Redefine this method when deriving <tt>CATDiaAction</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   The data specified by the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetData','SetData') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>     The CATBoolean value used to combine actions.
+   In an OrAction, the second action is executed only if the first
+   action returns TRUE.
+</dl>
+</dl>
+</dl>
+<a name="BeforeUndo"></a><a name="BeforeUndo(void*)"></a> <dt> o <b>BeforeUndo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>BeforeUndo</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Undoes the action effects before the transactional undo.
+ <br><b>Role</b>: Redefine this method when deriving <tt>CATDiaAction</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   The data specified by the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetData','SetData') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>     The CATBoolean value used to combine actions.
+   In an OrAction, if the second action is executed only if the first
+   action returns TRUE.
+</dl>
+</dl>
+</dl>
+<a name="Do"></a><a name="Do(void*)"></a> <dt> o <b>Do</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>Do</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Executes the action.
+ <br><b>Role</b>: Redefine this method when deriving <tt>CATDiaAction</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   The data specified by the </dd>
+<script type="text/javascript"> activateLinkAnchor('','SetData','SetData') </script> method. 
+  <dt> <b>Returns:</b> 
+  <dd>     The CATBoolean value used to combine actions.
+   In an OrAction, the second action is executed only if the first
+   action returns TRUE.
+</dl>
+</dl>
+</dl>
+<a name="SetAfterRedoMethod"></a><a name="SetAfterRedoMethod(ActionMethod)"></a> <dt> o <b>SetAfterRedoMethod</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAfterRedoMethod</b>(<td><script type="text/javascript"> activateLink('ActionMethod','ActionMethod')</script> <td><tt>iMeth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the method to redo the action after the transactional redo.
+ <br><b>Role</b>: This method must be a method of the CATStateCommand 
+ object which defines the statechart.
+ <br>Do not use <tt>SetAfterRedoMethod</tt> if you derive the 
+ <tt>CATDiaAction</tt> class.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMeth</tt>
+   <dd>   The method which redoes the action.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetAfterUndoMethod"></a><a name="SetAfterUndoMethod(ActionMethod)"></a> <dt> o <b>SetAfterUndoMethod</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAfterUndoMethod</b>(<td><script type="text/javascript"> activateLink('ActionMethod','ActionMethod')</script> <td><tt>iMeth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the method to undo the action after the transactional undo.
+ <br><b>Role</b>: This method must be a method of the CATStateCommand 
+ object which defines the statechart.
+ <br>Do not use <tt>SetAfterUndoMethod</tt> if you derive the 
+ <tt>CATDiaAction</tt> class.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMeth</tt>
+   <dd>   The method which undoes the action.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetBeforeRedoMethod"></a><a name="SetBeforeRedoMethod(ActionMethod)"></a> <dt> o <b>SetBeforeRedoMethod</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetBeforeRedoMethod</b>(<td><script type="text/javascript"> activateLink('ActionMethod','ActionMethod')</script> <td><tt>iMeth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the method to redo the action before the transactional redo.
+ <br><b>Role</b>: This method must be a method of the CATStateCommand 
+ object which defines the statechart.
+ <br>Do not use <tt>SetBeforeRedoMethod</tt> if you derive the 
+ <tt>CATDiaAction</tt> class.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMeth</tt>
+   <dd>   The method which redoes the action.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetBeforeUndoMethod"></a><a name="SetBeforeUndoMethod(ActionMethod)"></a> <dt> o <b>SetBeforeUndoMethod</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetBeforeUndoMethod</b>(<td><script type="text/javascript"> activateLink('ActionMethod','ActionMethod')</script> <td><tt>iMeth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the method to undo the action before the transactional undo.
+ <br><b>Role</b>: This method must be a method of the CATStateCommand 
+ object which defines the statechart.
+ <br>Do not use <tt>SetBeforeUndoMethod</tt> if you derive the 
+ <tt>CATDiaAction</tt> class.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMeth</tt>
+   <dd>   The method which undoes the action.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetData"></a><a name="SetData(void*)"></a> <dt> o <b>SetData</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetData</b>(<td><script type="text/javascript"> activateLink('void','void*')</script> <td><tt>iData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets data which may be useful to execute or undo/redo the action.
+ <br><b>Role</b>: This data will be given as the argument of the 
+ <tt>ActionMethod</tt> methods.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iData</tt>
+   <dd>   An object that can be useful for the action.
+   <br><b>Warning</b>: A copy of <tt>iData</tt> is kept. 
+   Deallocate this object only at the end of the command.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetExecuteMethod"></a><a name="SetExecuteMethod(ActionMethod)"></a> <dt> o <b>SetExecuteMethod</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetExecuteMethod</b>(<td><script type="text/javascript"> activateLink('ActionMethod','ActionMethod')</script> <td><tt>iMeth</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets the method to execute the action.
+ <br><b>Role</b>: This method must be a method of the CATStateCommand 
+ object which defines the statechart.
+ <br>Do not use <tt>SetExecuteMethod</tt> if you derive the 
+ <tt>CATDiaAction</tt> class.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMeth</tt>
+   <dd>   The method which does the action.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATDiaAction.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATDialogEngine</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

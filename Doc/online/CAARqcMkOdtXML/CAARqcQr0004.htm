@@ -1,0 +1,149 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>Finding a Folder or a File</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>mkodt</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Finding a Folder or a File</h3>
+      <em>Finds a folder or a file in a workspace</em></td>
+  </tr>
+  <tr>
+    <td class="quick">Quick Reference</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+		<p class="header">This article gives you a procedure to find out a given 
+		input data or an executable in the workspace run time concatenation or framework 
+		concatenation, whatever the location of this data, and whatever the location 
+		from which the test object is replayed. This enables you to replay test 
+		objects using such data without any modifications from any locations, including 
+		your BSF.</p>
+		<ul>
+			<li><a href="#Windows">WhichDir.bat for Windows</a></li>
+			<li><a href="#UNIX">WhichDir.sh for UNIX</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Windows"></a>WhichDir.bat for Windows</h2>
+<p>The WhichDir.bat file is:</p>
+<pre class="code">@echo off
+setlocal
+
+echo %1 | findstr "^%OS%" &gt; NUL
+if %ERRORLEVEL% NEQ 0 (
+  for %%I in (%1) do (
+    if exist "%%~$ADL_ODT_CONCATENATION:I" (
+      echo %%~$ADL_ODT_CONCATENATION:I
+      exit /b 0
+    )
+  )
+) else (
+  for %%I in (%1) do (
+    if exist "%%~$MKMK_LST_RTV:I" (
+      echo %%~$MKMK_LST_RTV:I
+      exit /b 0
+    )
+  )
+)
+echo %1_Not_Found
+exit /b 1</pre>
+<p>You can copy this file in the CNext\code\command folder of one of your frameworks 
+and run mkCreateRunTimeView to have it in your run time view, and to be able to 
+use it from any bat file [<a href="#References">1</a>] of any other test frameworks.</p>
+<p>This bat file can be used from another bat file run by a test object as follows, 
+for example to find out where 3DEXPERIENCE.exe is located:</p>
+<pre class="code">for /F "delims=" %%i in ( 'WhichDir %OS%\code\bin\3DEXPERIENCE.exe' ) do set CNEXT_PATH=%%i</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UNIX"></a>WhichDir.sh for UNIX</h2>
+<p>WhichDir Shell Procedure for UNIX</p>
+<pre class="code">WhichDir()
+{
+  printf "%s" "$*"| grep "^$OS" &gt; $ADL_ODT_NULL 2&gt;&amp;1
+  if [ $? != 0 ];then
+    for WSPREQ in $ADL_ODT_CONCATENATION
+    do
+      if [ "$WSPREQ" != "" ]
+      then
+        if [ -d $WSPREQ/$1 -o -r $WSPREQ/$1 ]
+        then
+          echo $WSPREQ/$*
+          return 0
+        fi
+      fi
+    done
+    printf "%s\n" "${1}_Not_Found"
+    return 1
+  else
+    IFS=":"
+    for WSPREQ in $MKMK_LST_RTV
+    do
+      if [ "$WSPREQ" != "" ]
+      then
+        if [ -d $WSPREQ/$1 -o -r $WSPREQ/$1 ]
+        then
+          unset IFS
+          echo $WSPREQ/$*
+          return 0
+        fi
+      fi
+    done
+    unset IFS
+    printf "%s\n" "${1}_Not_Found"
+    return 1
+  fi 
+}</pre>
+<p>You can copy this file in the CNext/code/command directory of one of your frameworks 
+and run mkCreateRunTimeView to have it in your run time view, and to be able to 
+use it from any shell file [<a href="#References">1</a>] of any other test frameworks.</p>
+<p>This procedure can be used from another shell file run by a test object as follows, 
+for example to find out where the 3DEXPERIENCE module is located:</p>
+<pre class="code">CNEXT_PATH=$(WhichDir $OS/code/bin/3DEXPERIENCE)</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcTa0006.htm">How to Create Scripts as Test Objects</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

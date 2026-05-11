@@ -1,0 +1,58 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Compute clash and filter results.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active and some components selected.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">'Acquire the filtering value</font>
+<font color="#0000FF">    Dim </font>sFilterValue<font color="#0000FF"> As </font>String
+    sFilterValue = "-1." 'Default value
+    sFilterValue = InputBox("What is the filtering value ?", "Filtering value", sFilterValue)
+<font color="#0000FF">    If </font>(sFilterValue &lt;&gt; "") Then
+<font color="#0000FF">       Dim </font>dFilterValue<font color="#0000FF"> As </font>Double
+       dFilterValue = Cdbl(sFilterValue)
+
+       <font color="#008000">' Retrieve the Clashes collection</font>
+<font color="#0000FF">       Dim </font>cClashes<font color="#0000FF"> As </font>Clashes
+<font color="#0000FF">       Set </font>cClashes = CATIA.ActiveDocument.Product.GetTechnologicalObject("Clashes")
+
+       <font color="#008000">' Create a clash with selected components and compute it</font>
+<font color="#0000FF">       Dim </font>oClash<font color="#0000FF"> As </font>Clash
+<font color="#0000FF">       Set </font>oClash = cClashes.AddFromSel
+       oClash.ComputationType = catClashComputationTypeInsideOne
+       oClash.InterferenceType = catClashInterferenceTypeContact
+       oClash.Compute
+
+       <font color="#008000">' Filter conflicts</font>
+<font color="#0000FF">       Dim </font>cConflicts<font color="#0000FF"> As </font>Conflicts
+<font color="#0000FF">       Set </font>cConflicts = oClash.Conflicts
+<font color="#0000FF">       Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">       For </font>I = 1<font color="#0000FF"> To </font>cConflicts.Count
+<font color="#0000FF">           Dim </font>oConflict<font color="#0000FF"> As </font>Conflict
+<font color="#0000FF">           Set </font>oConflict = cConflicts.Item(I)
+<font color="#0000FF">           If </font>(oConflict.Type = catConflictTypeClash)<font color="#0000FF"> Then</font>
+<font color="#0000FF">               If </font>(oConflict.Value > dFilterValue)<font color="#0000FF"> Then</font>
+                   oConflict.Status = catConflictStatusIrrelevant
+                   oConflict.Comment = "Automatic filter : penetration less than " & dFilterValue
+<font color="#0000FF">               End If</font>
+           ElseIf (oConflict.Type = catConflictTypeContact)<font color="#0000FF"> Then</font>
+               oConflict.Status = catConflictStatusIrrelevant
+               oConflict.Comment = "Automatic filter : contact"
+<font color="#0000FF">           End If</font>
+<font color="#0000FF">       Next</font>
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

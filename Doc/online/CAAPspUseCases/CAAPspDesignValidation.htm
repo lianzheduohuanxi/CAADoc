@@ -1,0 +1,1331 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding a Design Validation Check</title>
+<style type="text/css">
+.highlight { color: #FF0000; }
+.comment { color: #009900; }
+.pre { color: #000099; }
+.string { color: #990000; }
+.char { color: #009900; }
+.float { color: #996600; }
+.int { color: #999900; }
+.bool { color: #000000; font-weight: bold; }
+.type { color: #FF6633; }
+.flow { color: #0000FF; }
+.keyword { color: #0000FF; }
+.operator { color: #000000; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top" width="40%">
+      <h3><a name="Top"></a>Adding a Design Validation Check</h3>
+      <em>How to add a design validation check.</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAADVTubeAttributes use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAADVTubeAttributes Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAADVTubeAttributes Do</a></li>
+            <li><a href="#How">How to Launch CAADVTubeAttributes</a></li>
+            <li><a href="#Where">Where to Find the CAADVTubeAttributes
+              Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to add a design check to the design validation process.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADVTubeAttributes Use Case</h3>
+<p>CAADVTubeAttributes is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADVTubeAttributes Do</h4>
+<p>CAADVTubeAttributes checks tube size and material to see if they are authorized.
+CATPlantShipInterfaces methods are used to test that a product is a tube, to retrieve
+the tubing line, to read attributes from the tube and its tubing line and to test those
+attributes against design criteria.</p>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADVTubeAttributes</h4>
+<p>To use CAADVTubeAttributes, you will need to set up the build time
+environment, then compile CAADVTubeAttributes along with its prerequisites, set up
+the run time environment. This is fully described
+in the referenced article [<a href="#References">1</a>]. 
+You then execute CATIA and use the Design Validation command. 
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAADVTubeAttributes Code</h4>
+<p>CAADVTubeAttributes code is consists of four files located in the CAAPspDesignValidation.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table style="border: solid 1px #000000">
+  <tr>
+    <td style="border: solid 1px #000000">Windows</td>
+    <td style="border: solid 1px #000000">
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspDesignValidation.m\LocalInterfaces\<span class="highlight">CAADVTubeAttributes.h</span></code><br/>
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspDesignValidation.m\LocalInterfaces\<span class="highlight">CAAViolationTubeAttributes.h</span></code><br/>
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspDesignValidation.m\src\<span class="highlight">CAADVTubeAttributes.cpp</span></code><br/>
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspDesignValidation.m\src\<span class="highlight">CAAViolationTubeAttributes.cpp</span></code><br/>
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CNext\code\dictionary\<span class="highlight">CAAPlantShipInterfaces.edu.dico</span></code><br/>
+      <code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CNext\resources\msgcatalog\<span class="highlight">CAAPspDesignValidation.CATNls</span></code><br/>
+    </td>
+  </tr>
+  <tr>
+    <td style="border: solid 1px #000000">Unix</td>
+    <td style="border: solid 1px #000000">
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/<span class="highlight">CAADVTubeAttributes.h</span></code><br/>
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/LocalInterfaces/<span class="highlight">CAAViolationTubeAttributes.h</span></code><br/>
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/src/<span class="highlight">CAADVTubeAttributes.cpp</span></code><br/>
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspDesignValidation.m/src/<span class="highlight">CAAViolationTubeAttributes.cpp</span></code><br/>
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CNext/code/dictionary/<span class="highlight">CAAPlantShipInterfaces.edu.dico</span></code><br/>
+      <code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CNext/resources/msgcatalog/<span class="highlight">CAAPspDesignValidation.CATNls</span></code><br/>
+    </td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. 
+</p>
+<p>
+This sample uses two C++ source files: CAADVTubeAttributes.cpp and CAAViolationTubeAttributes.cpp. 
+CAADVTubeAttributes.cpp defines the validation check.
+CAAViolationTubeAttributes.cpp defines the violation that is created when the validation check fails.
+Each source file has a corresponding header (.h) file.
+There are also two supporting data files CAAPlantShipInterfaces.edu.dico and CAAPspDesignValidation.CATNls.
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAADVTubeAttributes and CAAViolationTubeAttributes are classes that that provide information to the Design Validation command.
+   The remainder of this document describes the various parts of these classes.</p>
+<ol>
+  <li><a href="#Design Check Header">Design Check Header</a></li>
+  <li><a href="#Check for Violation">Check for Violation</a></li>
+  <li><a href="#Get Background Data">Get Background Data</a></li>
+  <li><a href="#Get Attribute Data">Get Attribute Data</a></li>
+  <li><a href="#Test Attribute Data">Test Attribute Data</a></li>
+  <li><a href="#Store and Report Violation Data">Store and Report Violation Data</a></li>
+  <li><a href="#Support Files">Support Files</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Design Check Header"></a>Design Check Header</h4>
+<p>
+CAADVTubeAttributes header is mostly explanatory comments and necessary include files.
+It also contains the class contructors.
+Take special note of the CATImplementClass macro.
+This macro defines the class as implementing a CAA interface.
+It is very important to properly code this macro so that CATIA will recognize the implementation.
+CATImplementClass has four arguments.
+The first is the name of the class itself, CAADVTubeAttributes.
+The second, CodeExtension, defines this class as only extending code.
+It stores no data.
+The third, CATEAPspDesignValidation, is the base class of this implementation.
+All design check classes should be based on CATEAPspDesignValidation.
+Finally CAATubAttr defines the type of object this class is an implementation.
+CATIA will call this class when the CATIPspDesignValidation interface is called on a CAATubAttr object.
+A different object type should be used for each new design check implementation.
+Immediately after CATImplementClass are the statements that tie CAADVTubeAttributes to CATIPspDesignValidation.
+</p>
+<p>
+The method GetValidationChecks is also in the header.
+GetValidationChecks is part of the CATIPspDesignValidation interface.
+It is necessary to define the validation checks this class performs.
+From it you can see that CAADVTubeAttributes performs the "TubeSize" and "TubeMaterial" checks.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+<span class="comment">/**
+ * @quickreview eml 07:04:25 Replace tabs with spaces.
+ * @fullreview eml svo 07:04:24 Creation
+ */</span><span class="comment">
+//=============================================================================
+// COPYRIGHT DASSAULT SYSTEMES  2007
+//=============================================================================
+//  
+//  Component Identifier: CAADVTubeAttributes.cpp
+//  
+//=============================================================================
+//  
+//  Implementation Notes:
+//
+//  This checks tube attributes.
+//  Input attributes:
+//    Operating Pressure (from line)
+//    Nominal Size
+//    Material Category
+//
+//  Output attributes:
+//    Allowed nominal sizes.
+//    Allowed material.
+//
+//  Violation Object ---&gt; CATCloViolation_Atr 
+//
+//
+//  HRESULT return has the following meaning:
+//
+//         CATReturnSuccess (S_OK) ...... Design violation detected &amp; Violation object created
+//         S_FALSE ... No violation found (or Check not applicable)
+//         CATReturnFailure (E_FAIL) .... Violation check not performed due to invalid input/errors
+//
+//
+//=============================================================================
+//
+// Creation:  2007 April 23                                    Eric Miller
+//
+//=============================================================================
+
+</span><span class="pre">
+#include "CAADVTubeAttributes.h"
+
+#include "CAAViolationTubeAttributes.h"
+
+#include "CATError.h"
+#include "CATErrorMacros.h"
+
+#include "CATEsuDeletionMacro.h"
+
+#include "CATIPspAttribute.h"
+#include "CATIPspGroupable.h"
+#include "CATIPspLogicalLine.h"
+#include "CATIPspObject.h"
+#include "CATICkeParm.h"
+#include "IUnknown.h"
+#include "CATIUnknownList.h"
+#include "CATObject.h"
+#include "CATISpecObject.h"
+#include "CATUnicodeString.h"
+</span>
+CATImplementClass<span class="operator">(</span> CAADVTubeAttributes<span class="operator">,</span> 
+                   CodeExtension<span class="operator">,</span> 
+                   CATEAPspDesignValidation<span class="operator">,</span><span class="comment">  // adaptor
+</span>                   CAATubAttr<span class="operator"> );</span><span class="pre">
+
+#include &lt;TIE_CATIPspDesignValidation.h&gt;
+</span>TIE_CATIPspDesignValidation<span class="operator">(</span>CAADVTubeAttributes<span class="operator">);</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+// Constructor
+//-----------------------------------------------------------------------------
+</span>CAADVTubeAttributes<span class="operator">::</span>CAADVTubeAttributes<span class="operator">():</span>CATEAPspDesignValidation<span class="operator"> () {}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+// Destructor
+//-----------------------------------------------------------------------------
+</span>CAADVTubeAttributes<span class="operator">::~</span>CAADVTubeAttributes<span class="operator">() {}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+//  CATIPspDesignValidation methods
+//-----------------------------------------------------------------------------
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetValidationChecks<span class="operator">(</span> CATListValCATUnicodeString<span class="operator">&amp;</span> oChecks<span class="operator"> )
+{</span>
+
+  oChecks<span class="operator">.</span>RemoveAll<span class="operator">();</span>
+  oChecks<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeSize"</span><span class="operator"> );</span>
+  oChecks<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeMaterial"</span><span class="operator"> );</span><span class="flow">
+
+  return</span> CATReturnSuccess<span class="operator">;
+}</span>
+....  
+....
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Check for Violation"></a>Check for Violation</h4>
+<p>
+CAADVTubeAttributes uses three methods to perform its checks.
+The primary method is IsObjectAViolation which is required by the CATIPspDesignValidation interface.
+IsObjectAViolation determines which checks need to be performed and calls methods to do appropriate checks.
+It passes any found violations back in the oViolation list.
+IsObjectAViolation performs two checks, "TubeSize" and "TubeMaterial."
+"TubeSize" and "TubeMaterial" are also keys to the <a href="#Support Files">natural language file (NLS)</a>.
+It calls CheckTubeSize to check for an authorized tube size.
+It calls CheckTubeMaterial to check for an authorized tube material for the given size.
+CheckTubeSize and CheckTubeMaterial are very similar.
+Both gather background class data (classification, validation type and resource) needed for the check.
+They then make sure the input object is a tube and get its tubing line.
+After that they get needed attribute parameters and data from the parameters.
+The parameters used in this simple example are operating pressure from the tubing line and 
+nominal size and material from the tube.
+Finally they test for a violation and return a violation in the list if one is found.
+CheckTubeSize tests for a size violation and reports a "TubeSize" violation if found.
+CheckTubeMaterial tests for a material violation and reports a "TubeMaterial" violation if found.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+....  
+....
+<span class="comment">
+//-----------------------------------------------------------------------------
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>IsObjectAViolation<span class="operator">(</span><span class="keyword"> const</span> CATBaseUnknown<span class="operator">*</span> iObject<span class="operator">,</span><span class="keyword">
+
+                                                 const</span> CATListValCATUnicodeString<span class="operator">&amp;</span> iChecks<span class="operator">,</span>
+                                                 CATListPV<span class="operator">**</span> oViolation<span class="operator">,</span><span class="keyword"> 
+                                                 const</span><span class="type"> unsigned int</span><span class="operator">&amp;</span> iErrorFile<span class="operator"> )
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;
+  *</span>oViolation<span class="operator"> =</span> NULL<span class="operator">;</span><span class="comment">
+
+  //--------------------------------------------------------------------------
+  // Declare variables here to avoid memory leaks from thrown errors
+  //--------------------------------------------------------------------------
+  // Variables that need release handling.
+
+  // Variables that do not need release handling.
+
+</span><span class="type">  int</span> numChecks<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+
+  CATTry<span class="operator">
+  {</span><span class="comment">
+
+    // Determine which checks were requested
+</span><span class="type">    int</span> numChecks<span class="operator"> =</span> iChecks<span class="operator">.</span>Size<span class="operator">();</span><span class="flow">
+
+    if</span><span class="operator"> (</span>iObject<span class="operator"> &amp;&amp;</span><span class="int"> 
+        0</span><span class="operator"> &lt;=</span> numChecks<span class="operator">)
+    {</span>
+
+      returnCode<span class="operator"> =</span> S_FALSE<span class="operator">;</span><span class="comment"> // Input OK, now most failure because test not applicable.
+</span><span class="flow">
+      if</span><span class="operator"> (</span> SUCCEEDED<span class="operator">(</span>returnCode<span class="operator">) &amp;&amp;</span> iChecks<span class="operator">.</span>Locate<span class="operator"> (</span><span class="string">"TubeSize"</span><span class="operator">) &gt;</span><span class="int"> 0</span><span class="operator"> )
+      {</span>
+
+        HRESULT rcCheck<span class="operator"> =</span> CheckTubeSize<span class="operator">(</span>iObject<span class="operator">,</span> 
+                                        oViolation<span class="operator">,</span> 
+                                        iErrorFile<span class="operator">);</span><span class="flow">
+        if</span><span class="operator"> (</span>S_FALSE<span class="operator"> !=</span> rcCheck<span class="operator">)</span>
+
+          returnCode<span class="operator"> =</span> rcCheck<span class="operator">;
+      }</span><span class="flow">
+      if</span><span class="operator"> (</span> SUCCEEDED<span class="operator">(</span>returnCode<span class="operator">) &amp;&amp;</span> iChecks<span class="operator">.</span>Locate<span class="operator"> (</span><span class="string">"TubeMaterial"</span><span class="operator">) &gt;</span><span class="int"> 0</span><span class="operator"> )
+      {</span>
+
+        HRESULT rcCheck<span class="operator"> =</span> CheckTubeMaterial<span class="operator">(</span>iObject<span class="operator">,</span> 
+                                            oViolation<span class="operator">,</span> 
+                                            iErrorFile<span class="operator">);</span><span class="flow">
+        if</span><span class="operator"> (</span>S_FALSE<span class="operator"> !=</span> rcCheck<span class="operator">)</span>
+
+          returnCode<span class="operator"> =</span> rcCheck<span class="operator">;
+      }
+
+    }</span><span class="comment"> // End if valid input.
+</span><span class="operator">  }</span><span class="comment"> // End CATTry
+</span>
+  CATCatch<span class="operator">(</span> CATError<span class="operator">,</span> pError<span class="operator"> )
+  {</span>    
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span><span class="flow">
+  return</span> returnCode<span class="operator">;
+}</span>
+
+....  
+....
+<span class="comment">
+//-----------------------------------------------------------------------------
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>CheckTubeSize<span class="operator">(</span><span class="keyword">const</span> CATBaseUnknown<span class="operator">*</span> iObject<span class="operator">,</span>
+
+                                           CATListPV<span class="operator">**</span> oViolation<span class="operator">,</span><span class="keyword"> 
+                                           const</span><span class="type"> unsigned int</span><span class="operator">&amp;</span> iErrorFile<span class="operator">)
+{</span>
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span><span class="comment">
+
+  //--------------------------------------------------------------------------
+  // Declare variables here to avoid memory leaks from thrown errors
+  //--------------------------------------------------------------------------
+  // Variables that need release handling.
+</span>  CATISpecObject<span class="operator">*</span> piObjectSpec<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspLogicalLine<span class="operator"> *</span>piLogicalLine<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATIPspAttribute<span class="operator">*</span> piAttr<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATICkeParm<span class="operator"> *</span>piPressureParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATICkeParm<span class="operator"> *</span>piNominalSizeParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATICkeParm<span class="operator"> *</span>piMaterialParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CAAViolationTubeAttributes<span class="operator"> *</span>pViolation<span class="operator"> =</span> NULL<span class="operator">;</span><span class="comment">
+
+  // Variables that do not need release handling.
+</span>  HRESULT rcInternal<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span>
+
+  CATUnicodeString uClassification<span class="operator">;</span>
+  CATUnicodeString uValidationType<span class="operator">;</span>
+  CATUnicodeString uNLSResource<span class="operator">;</span>
+  CATUnicodeString uPartType<span class="operator">;</span>
+  CATUnicodeString uPartName<span class="operator">;</span><span class="type">
+
+  double</span> pressure<span class="operator"> =</span><span class="float"> 0.0</span><span class="operator">;</span>
+  CATUnicodeString uPressure<span class="operator">;</span>
+  CATUnicodeString uNominalSize<span class="operator">;</span>
+
+  CATUnicodeString uMaterial<span class="operator">;</span>
+  CATUnicodeString uAuthorizedSizes<span class="operator">;</span>
+
+  CATTry<span class="operator">
+  {</span><span class="comment">
+    // Get classification
+
+</span>    GetClassification<span class="operator"> (</span>uClassification<span class="operator">);</span><span class="comment">
+
+    // Get validation type
+</span>    GetType<span class="operator"> (</span>uValidationType<span class="operator">);</span><span class="comment">
+
+    // Get resource for NLS.
+</span>    GetResource<span class="operator"> (</span>uNLSResource<span class="operator">);</span><span class="flow">
+
+
+    if</span><span class="operator"> (</span>iObject<span class="operator"> &amp;&amp; 
+        !</span>uClassification<span class="operator">.</span>IsNull<span class="operator">() &amp;&amp; 
+        !</span>uValidationType<span class="operator">.</span>IsNull<span class="operator">() &amp;&amp; 
+        !</span>uNLSResource<span class="operator">.</span>IsNull<span class="operator">())
+    {</span>
+
+      returnCode<span class="operator"> =</span> S_FALSE<span class="operator">;</span><span class="comment"> // Input OK, now most failure because test not applicable.
+
+      // Get spec object.
+</span><span class="flow">      if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(((</span>CATBaseUnknown<span class="operator">*)</span>iObject<span class="operator">)-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATISpecObject<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piObjectSpec<span class="operator">)) &amp;&amp;</span> 
+          piObjectSpec<span class="operator">)
+      {</span>
+
+        uPartType<span class="operator"> =</span> piObjectSpec<span class="operator">-&gt;</span>GetType<span class="operator"> ();</span>
+        uPartName<span class="operator"> =</span> piObjectSpec<span class="operator">-&gt;</span>GetName<span class="operator"> ();</span><span class="comment">
+
+        // Test that object is a tube.
+</span><span class="flow">        if</span><span class="operator"> (</span>piObjectSpec<span class="operator">-&gt;</span>IsSubTypeOf<span class="operator">(</span><span class="string">"CATTubStraightTube"</span><span class="operator">) ||</span> 
+            piObjectSpec<span class="operator">-&gt;</span>IsSubTypeOf<span class="operator">(</span><span class="string">"CATTubBendableTube"</span><span class="operator">))
+        {</span><span class="flow">
+
+          if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetLogicalLine<span class="operator">(</span>piObjectSpec<span class="operator">,</span> piLogicalLine<span class="operator">)))
+          {</span><span class="comment">
+
+            // Get attributes needed for calculation.
+</span><span class="flow">            if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piLogicalLine<span class="operator">,</span><span class="string"> "Operating pressure"</span><span class="operator">,</span> piPressureParm<span class="operator">)) &amp;&amp;</span> 
+                SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piObjectSpec<span class="operator">,</span><span class="string"> "Nominal size"</span><span class="operator">,</span> piNominalSizeParm<span class="operator">)) &amp;&amp;</span> 
+                SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piObjectSpec<span class="operator">,</span><span class="string"> "MaterialCategory"</span><span class="operator">,</span> piMaterialParm<span class="operator">)))
+            {</span><span class="comment">
+
+              // Get test data.
+</span>              rcInternal<span class="operator"> =</span> GetTestData<span class="operator">(</span>piPressureParm<span class="operator">,</span> 
+                                       piNominalSizeParm<span class="operator">,</span> 
+                                       piMaterialParm<span class="operator">,</span> 
+                                       pressure<span class="operator">,</span> 
+                                       uPressure<span class="operator">,</span> 
+                                       uNominalSize<span class="operator">,</span> 
+                                       uMaterial<span class="operator">);</span><span class="flow">
+
+              if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator">))
+              {</span><span class="comment">
+                // Test nominal size against rules.
+</span>                rcInternal<span class="operator"> =</span> TestTubeSize<span class="operator">(</span>pressure<span class="operator">,</span> 
+                                          uNominalSize<span class="operator">,</span> 
+                                          uAuthorizedSizes<span class="operator">);</span><span class="flow">
+
+                if</span><span class="operator"> (</span>CATReturnSuccess<span class="operator"> ==</span> rcInternal<span class="operator">)
+                {</span><span class="comment"> // Have a violation
+</span>                  pViolation<span class="operator"> =</span><span class="keyword"> new</span> CAAViolationTubeAttributes<span class="operator"> (</span>uValidationType<span class="operator">,</span><span class="string"> "TubeSize"</span><span class="operator">,</span> uNLSResource<span class="operator">);</span><span class="flow">
+
+                  if</span><span class="operator"> (</span>pViolation<span class="operator">)
+                  {</span><span class="comment">
+                    // Set violation info.
+</span>                    pViolation<span class="operator">-&gt;</span>SetInfo<span class="operator">(</span>uPressure<span class="operator">,</span> 
+                                        uNominalSize<span class="operator">,</span> 
+                                        uMaterial<span class="operator">,</span> 
+                                        uAuthorizedSizes<span class="operator">);</span><span class="comment">
+
+                    // Add violation to output list.
+</span>                    AddViolation<span class="operator"> (</span>oViolation<span class="operator">,</span> pViolation<span class="operator">);
+                  }</span><span class="comment"> // End if valid violation pointer.
+</span><span class="operator">                }</span><span class="comment"> // End if violation returned.
+
+</span><span class="operator">              }</span><span class="comment"> // End if succeeded getting test data.
+</span><span class="operator">            }</span><span class="comment"> // End if valid attributes.
+</span><span class="operator">          }</span><span class="comment"> // End if valid logical line.
+</span><span class="operator">        }</span><span class="comment"> // End if tube.
+</span><span class="operator">      }</span><span class="comment"> // End if valid spec object.
+
+</span><span class="operator">    }</span><span class="comment"> // End if valid input and supporting data.
+</span><span class="operator">  }</span><span class="comment"> // End CATTry
+</span>
+  CATCatch<span class="operator">(</span> CATError<span class="operator">,</span> pError<span class="operator"> )
+  {</span>    
+    rcInternal<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span>  CATEsuDeleteBaseUnknown<span class="operator">(</span>piObjectSpec<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piLogicalLine<span class="operator">);</span>
+
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piAttr<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piPressureParm<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piNominalSizeParm<span class="operator">);</span>
+
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piMaterialParm<span class="operator">);</span><span class="flow">
+
+  if</span><span class="operator"> (</span>FAILED<span class="operator">(</span>rcInternal<span class="operator">))
+  {</span>
+    returnCode<span class="operator"> =</span> rcInternal<span class="operator">;
+  }</span><span class="flow">
+
+  else if</span><span class="operator"> (</span>oViolation<span class="operator"> &amp;&amp; *</span>oViolation<span class="operator">)
+  {</span>
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+  }</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>CheckTubeMaterial<span class="operator">(</span><span class="keyword">const</span> CATBaseUnknown<span class="operator">*</span> iObject<span class="operator">,</span>
+
+                                               CATListPV<span class="operator">**</span> oViolation<span class="operator">,</span><span class="keyword"> 
+                                               const</span><span class="type"> unsigned int</span><span class="operator">&amp;</span> iErrorFile<span class="operator">)
+{</span>
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span><span class="comment">
+
+  //--------------------------------------------------------------------------
+  // Declare variables here to avoid memory leaks from thrown errors
+  //--------------------------------------------------------------------------
+  // Variables that need release handling.
+</span>  CATISpecObject<span class="operator">*</span> piObjectSpec<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspLogicalLine<span class="operator"> *</span>piLogicalLine<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATIPspAttribute<span class="operator">*</span> piAttr<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATICkeParm<span class="operator"> *</span>piPressureParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATICkeParm<span class="operator"> *</span>piNominalSizeParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATICkeParm<span class="operator"> *</span>piMaterialParm<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CAAViolationTubeAttributes<span class="operator"> *</span>pViolation<span class="operator"> =</span> NULL<span class="operator">;</span><span class="comment">
+
+  // Variables that do not need release handling.
+</span>  HRESULT rcInternal<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span>
+
+  CATUnicodeString uClassification<span class="operator">;</span>
+  CATUnicodeString uValidationType<span class="operator">;</span>
+  CATUnicodeString uNLSResource<span class="operator">;</span>
+  CATUnicodeString uPartType<span class="operator">;</span>
+  CATUnicodeString uPartName<span class="operator">;</span><span class="type">
+
+  double</span> pressure<span class="operator"> =</span><span class="float"> 0.0</span><span class="operator">;</span>
+  CATUnicodeString uPressure<span class="operator">;</span>
+  CATUnicodeString uNominalSize<span class="operator">;</span>
+
+  CATUnicodeString uMaterial<span class="operator">;</span>
+  CATUnicodeString uAuthorizedMaterialForSize<span class="operator">;</span>
+
+  CATTry<span class="operator">
+  {</span><span class="comment">
+    // Get classification
+
+</span>    GetClassification<span class="operator"> (</span>uClassification<span class="operator">);</span><span class="comment">
+
+    // Get validation type
+</span>    GetType<span class="operator"> (</span>uValidationType<span class="operator">);</span><span class="comment">
+
+    // Get resource for NLS.
+</span>    GetResource<span class="operator"> (</span>uNLSResource<span class="operator">);</span><span class="flow">
+
+
+    if</span><span class="operator"> (</span>iObject<span class="operator"> &amp;&amp; 
+        !</span>uClassification<span class="operator">.</span>IsNull<span class="operator">() &amp;&amp; 
+        !</span>uValidationType<span class="operator">.</span>IsNull<span class="operator">() &amp;&amp; 
+        !</span>uNLSResource<span class="operator">.</span>IsNull<span class="operator">())
+    {</span>
+
+      returnCode<span class="operator"> =</span> S_FALSE<span class="operator">;</span><span class="comment"> // Input OK, now most failure because test not applicable.
+
+      // Get spec object.
+</span><span class="flow">      if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(((</span>CATBaseUnknown<span class="operator">*)</span>iObject<span class="operator">)-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATISpecObject<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piObjectSpec<span class="operator">)) &amp;&amp;</span> 
+          piObjectSpec<span class="operator">)
+      {</span>
+
+        uPartType<span class="operator"> =</span> piObjectSpec<span class="operator">-&gt;</span>GetType<span class="operator"> ();</span>
+        uPartName<span class="operator"> =</span> piObjectSpec<span class="operator">-&gt;</span>GetName<span class="operator"> ();</span><span class="comment">
+
+        // Test that object is a tube.
+</span><span class="flow">        if</span><span class="operator"> (</span>piObjectSpec<span class="operator">-&gt;</span>IsSubTypeOf<span class="operator">(</span><span class="string">"CATTubStraightTube"</span><span class="operator">) ||</span> 
+            piObjectSpec<span class="operator">-&gt;</span>IsSubTypeOf<span class="operator">(</span><span class="string">"CATTubBendableTube"</span><span class="operator">))
+        {</span><span class="flow">
+
+          if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetLogicalLine<span class="operator">(</span>piObjectSpec<span class="operator">,</span> piLogicalLine<span class="operator">)))
+          {</span><span class="comment">
+
+            // Get attributes needed for calculation.
+</span><span class="flow">            if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piLogicalLine<span class="operator">,</span><span class="string"> "Operating pressure"</span><span class="operator">,</span> piPressureParm<span class="operator">)) &amp;&amp;</span> 
+                SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piObjectSpec<span class="operator">,</span><span class="string"> "Nominal size"</span><span class="operator">,</span> piNominalSizeParm<span class="operator">)) &amp;&amp;</span> 
+                SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator"> =</span> GetObjectAttribute<span class="operator">(</span>piObjectSpec<span class="operator">,</span><span class="string"> "MaterialCategory"</span><span class="operator">,</span> piMaterialParm<span class="operator">)))
+            {</span><span class="comment">
+
+              // Get test data.
+</span>              rcInternal<span class="operator"> =</span> GetTestData<span class="operator">(</span>piPressureParm<span class="operator">,</span> 
+                                       piNominalSizeParm<span class="operator">,</span> 
+                                       piMaterialParm<span class="operator">,</span> 
+                                       pressure<span class="operator">,</span> 
+                                       uPressure<span class="operator">,</span> 
+                                       uNominalSize<span class="operator">,</span> 
+                                       uMaterial<span class="operator">);</span><span class="flow">
+
+              if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcInternal<span class="operator">))
+              {</span><span class="comment">
+                // Test nominal size against rules.
+</span>                rcInternal<span class="operator"> =</span> TestTubeMaterial<span class="operator">(</span>pressure<span class="operator">,</span> 
+                                              uNominalSize<span class="operator">,</span> 
+                                              uMaterial<span class="operator">,</span> 
+                                              uAuthorizedMaterialForSize<span class="operator">);</span><span class="flow">
+
+                if</span><span class="operator"> (</span>CATReturnSuccess<span class="operator"> ==</span> rcInternal<span class="operator">)
+                {</span><span class="comment"> // Have a violation
+</span>                  pViolation<span class="operator"> =</span><span class="keyword"> new</span> CAAViolationTubeAttributes<span class="operator"> (</span>uValidationType<span class="operator">,</span><span class="string"> "TubeMaterial"</span><span class="operator">,</span> uNLSResource<span class="operator">);</span><span class="flow">
+
+                  if</span><span class="operator"> (</span>pViolation<span class="operator">)
+                  {</span><span class="comment">
+                    // Set violation info.
+</span>                    pViolation<span class="operator">-&gt;</span>SetInfo<span class="operator">(</span>uPressure<span class="operator">,</span> 
+                                        uNominalSize<span class="operator">,</span> 
+                                        uMaterial<span class="operator">,</span> 
+                                        uAuthorizedMaterialForSize<span class="operator">);</span><span class="comment">
+
+                    // Add violation to output list.
+</span>                    AddViolation<span class="operator"> (</span>oViolation<span class="operator">,</span> pViolation<span class="operator">);
+                  }</span><span class="comment"> // End if valid violation pointer.
+</span><span class="operator">                }</span><span class="comment"> // End if violation returned.
+
+</span><span class="operator">              }</span><span class="comment"> // End if succeeded getting test data.
+</span><span class="operator">            }</span><span class="comment"> // End if valid attributes.
+</span><span class="operator">          }</span><span class="comment"> // End if valid logical line.
+</span><span class="operator">        }</span><span class="comment"> // End if tube.
+</span><span class="operator">      }</span><span class="comment"> // End if valid spec object.
+
+</span><span class="operator">    }</span><span class="comment"> // End if valid input and supporting data.
+</span><span class="operator">  }</span><span class="comment"> // End CATTry
+</span>
+  CATCatch<span class="operator">(</span> CATError<span class="operator">,</span> pError<span class="operator"> )
+  {</span>    
+    rcInternal<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span>  CATEsuDeleteBaseUnknown<span class="operator">(</span>piObjectSpec<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piLogicalLine<span class="operator">);</span>
+
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piAttr<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piPressureParm<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piNominalSizeParm<span class="operator">);</span>
+
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piMaterialParm<span class="operator">);</span><span class="flow">
+
+  if</span><span class="operator"> (</span>FAILED<span class="operator">(</span>rcInternal<span class="operator">))
+  {</span>
+    returnCode<span class="operator"> =</span> rcInternal<span class="operator">;
+  }</span><span class="flow">
+
+  else if</span><span class="operator"> (</span>oViolation<span class="operator"> &amp;&amp; *</span>oViolation<span class="operator">)
+  {</span>
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+  }</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span>
+....  
+....
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Background Data"></a>Get Background Data</h4>
+<p>
+CAADVTubeAttributes has three methods which get background data.
+These methods are overridden from its base class, CATEAPspDesignValidation.
+GetClassification provides the classification type which in this case is Validation_Object.
+It indicates that CAADVTubeAttributes processes single objects.
+GetResource gives the resource (file) that contains NLS information and is described <a href="#Support Files">below</a>.
+GetColumnTitles gives the names of the data columns used in the violation report.
+TubeAttributeColPressure, TubeAttributeColSize, TubeAttributeColMaterial and TubeAttributeColAuthorized are keys in the NLS file.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+....  
+....
+<span class="comment">
+//----------------------------------------------------------------------------- 
+//  CATEAPspDesignValidation  methods
+//-----------------------------------------------------------------------------
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetClassification<span class="operator">(</span> CATUnicodeString<span class="operator">&amp;</span> oClassification<span class="operator"> )
+{</span>
+
+  oClassification<span class="operator"> =</span> Validation_Object<span class="operator">;</span><span class="flow">
+  return</span> CATReturnSuccess<span class="operator">;
+}</span>
+
+HRESULT CAADVTubeAttributes<span class="operator">::</span>GetResource<span class="operator">(</span> CATUnicodeString<span class="operator">&amp;</span> oName<span class="operator"> )
+{</span>
+
+  oName<span class="operator"> =</span><span class="string"> "CAAPspDesignValidation"</span><span class="operator">;</span><span class="flow">
+  return</span> CATReturnSuccess<span class="operator">;
+}</span><span class="comment">
+
+//----------------------------------------------------------------------------- 
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetColumnTitles<span class="operator">(</span> CATListValCATUnicodeString<span class="operator">&amp;</span> oTitles<span class="operator"> )
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+  oTitles<span class="operator">.</span>RemoveAll<span class="operator">();</span>
+  CATListValCATUnicodeString column<span class="operator">;</span><span class="comment">
+
+  // From CAAPspDesignValidation.CATNls file
+</span>  column<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeAttributeColPressure"</span><span class="operator"> );</span>
+  column<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeAttributeColSize"</span><span class="operator"> );</span>
+
+  column<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeAttributeColMaterial"</span><span class="operator"> );</span>
+  column<span class="operator">.</span>Append<span class="operator">(</span><span class="string"> "TubeAttributeColAuthorized"</span><span class="operator"> );</span><span class="flow">
+
+  if</span><span class="operator"> (</span> GetDescriptions<span class="operator">(</span> column<span class="operator">,</span> oTitles<span class="operator"> ) )</span>
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span>
+....  
+....
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Get Attribute Data"></a>Get Attribute Data</h4>
+<p>
+CAADVTubeAttributes has three routines which support attribute data gathering.
+GetLogicalLine get the tubing line (generically called a logical line) for a tube.
+GetObjectAttribute gets an attribute associated with an object and returns it as a knowledgeware parameter.
+GetTestData extracts needed operating pressure, nominal size and material from its input parameters.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+....  
+....
+<span class="comment">
+//----------------------------------------------------------------------------- 
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetLogicalLine<span class="operator">(</span><span class="keyword">const</span> IUnknown<span class="operator"> *</span>ipiLogicalLineMember<span class="operator">,</span> 
+                                            CATIPspLogicalLine<span class="operator"> *&amp;</span>opiLogicalLine<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+  opiLogicalLine<span class="operator"> =</span> NULL<span class="operator">;</span><span class="comment">
+
+  // Define memory pointers
+</span>  CATIPspGroupable<span class="operator"> *</span>piMemberGroupable<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIUnknownList<span class="operator"> *</span>piListMemberGroups<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  IUnknown<span class="operator"> *</span>piUnk<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="flow">
+
+    if</span><span class="operator"> (</span>ipiLogicalLineMember<span class="operator"> &amp;&amp;</span> 
+        SUCCEEDED<span class="operator">(((</span>IUnknown<span class="operator">*)</span>ipiLogicalLineMember<span class="operator">)-&gt;</span>QueryInterface<span class="operator"> (</span>IID_CATIPspGroupable<span class="operator">, (</span><span class="type">void</span><span class="operator"> **)&amp;</span>piMemberGroupable<span class="operator">)) &amp;&amp;</span> 
+        piMemberGroupable<span class="operator">)
+    {</span><span class="comment">
+
+      // Get logical lines
+</span><span class="flow">      if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>piMemberGroupable<span class="operator">-&gt;</span>ListGroups<span class="operator">(</span>NULL<span class="operator">, &amp;</span>piListMemberGroups<span class="operator">)) &amp;&amp;</span>
+
+          piListMemberGroups<span class="operator">)
+      {</span><span class="comment">
+        // Get groups
+</span><span class="type">        unsigned int</span> piListMemberLinesSize<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+        piListMemberGroups<span class="operator">-&gt;</span>Count<span class="operator">(&amp;</span>piListMemberLinesSize<span class="operator">);</span><span class="comment">
+
+        // Find group that is logical line.
+</span><span class="flow">        for</span><span class="operator"> (</span><span class="type">unsigned int</span> iiGroup<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span> iiGroup<span class="operator"> &lt;</span> piListMemberLinesSize<span class="operator"> &amp;&amp; !</span>opiLogicalLine<span class="operator">;</span> iiGroup<span class="operator">++)
+        {</span>
+
+          CATEsuDeleteBaseUnknown<span class="operator">(</span>piUnk<span class="operator">);</span><span class="flow">
+          if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>piListMemberGroups<span class="operator">-&gt;</span>Item<span class="operator">(</span>iiGroup<span class="operator">, &amp;</span>piUnk<span class="operator">)) &amp;&amp;</span>
+
+              piUnk<span class="operator">)
+          {</span>
+            piUnk<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATIPspLogicalLine<span class="operator">, (</span><span class="type">void</span><span class="operator"> **)&amp;</span>opiLogicalLine<span class="operator">);
+          }</span><span class="comment"> // End if valid logical line.
+
+</span><span class="operator">        }</span><span class="comment"> // End loop on groups.
+</span><span class="operator">      }</span><span class="comment"> // End if have logical lines
+</span><span class="operator">    }</span><span class="comment"> // End if valid member groupable
+</span><span class="operator">  }</span><span class="comment"> // End CATTry
+</span>
+
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span>  CATEsuDeleteBaseUnknown<span class="operator">(</span>piMemberGroupable<span class="operator">);</span>
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piUnk<span class="operator">);</span>
+
+  CATEsuDeleteBaseUnknown<span class="operator">(</span>piListMemberGroups<span class="operator">);</span><span class="flow">
+
+  if</span><span class="operator"> (</span>opiLogicalLine<span class="operator">)</span>
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span><span class="comment">
+
+//----------------------------------------------------------------------------- 
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetObjectAttribute<span class="operator">(</span><span class="keyword">const</span> IUnknown<span class="operator"> *</span>ipiObject<span class="operator">,</span> 
+                                                CATUnicodeString iuAttributeName<span class="operator">,</span> 
+                                                CATICkeParm<span class="operator"> *&amp;</span>opiAttributeParm<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+  opiAttributeParm<span class="operator"> =</span> NULL<span class="operator">;</span><span class="comment">
+
+  // Define memory pointers
+</span>  CATIPspAttribute<span class="operator"> *</span>piObjectPspAttr<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="flow">
+
+    if</span><span class="operator"> (</span>ipiObject<span class="operator"> &amp;&amp;</span> 
+        SUCCEEDED<span class="operator">(((</span>IUnknown<span class="operator">*)</span>ipiObject<span class="operator">)-&gt;</span>QueryInterface<span class="operator"> (</span>IID_CATIPspAttribute<span class="operator">, (</span><span class="type">void</span><span class="operator"> **)&amp;</span>piObjectPspAttr<span class="operator">)) &amp;&amp;</span> 
+        piObjectPspAttr<span class="operator">)
+    {</span>
+
+      returnCode<span class="operator"> =</span> piObjectPspAttr<span class="operator">-&gt;</span>GetLiteral<span class="operator">(</span>iuAttributeName<span class="operator">, &amp;</span>opiAttributeParm<span class="operator">);
+    }
+  }</span><span class="comment"> // End CATTry
+</span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+
+</span>  CATEsuDeleteBaseUnknown<span class="operator">(</span>piObjectPspAttr<span class="operator">);</span><span class="flow">
+
+  if</span><span class="operator"> (</span>opiAttributeParm<span class="operator">)</span>
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span><span class="comment">
+
+//----------------------------------------------------------------------------- 
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>GetTestData<span class="operator">(</span><span class="keyword">const</span> CATICkeParm<span class="operator"> *</span>ipiPressureParm<span class="operator">,</span><span class="keyword"> 
+                                         const</span> CATICkeParm<span class="operator"> *</span>ipiNominalSizeParm<span class="operator">,</span><span class="keyword"> 
+                                         const</span> CATICkeParm<span class="operator"> *</span>ipiMaterialParm<span class="operator">,</span><span class="type"> 
+                                         double</span><span class="operator"> &amp;</span>oPressure<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>ouPressure<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>ouNominalSize<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>ouMaterial<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+  oPressure<span class="operator"> =</span><span class="float"> 0.0</span><span class="operator">;</span>
+  ouPressure<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span>
+
+  ouNominalSize<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span>
+  ouMaterial<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span><span class="comment">
+
+  // Define memory pointers
+</span>
+  CATICkeInst_var spPressureValue<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="flow">
+    if</span><span class="operator"> (</span>ipiPressureParm<span class="operator"> &amp;&amp;</span> 
+        ipiNominalSizeParm<span class="operator"> &amp;&amp;</span> 
+        ipiMaterialParm<span class="operator">)
+    {</span>
+
+      spPressureValue<span class="operator"> =</span> ipiPressureParm<span class="operator">-&gt;</span>Value<span class="operator">();</span><span class="flow">
+      if</span><span class="operator"> (!!</span>spPressureValue<span class="operator">)</span>
+
+        oPressure<span class="operator"> =</span> spPressureValue<span class="operator">-&gt;</span>AsReal<span class="operator">();</span><span class="comment"> // AsReal returns SI unit Pa (N/m2).
+</span>      ouPressure<span class="operator"> =</span> ipiPressureParm<span class="operator">-&gt;</span>Show<span class="operator">();</span>
+
+      ouNominalSize<span class="operator"> =</span> ipiNominalSizeParm<span class="operator">-&gt;</span>Show<span class="operator">();</span>
+      ouMaterial<span class="operator"> =</span> ipiMaterialParm<span class="operator">-&gt;</span>Show<span class="operator">();</span>
+
+      returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+    }
+  }</span><span class="comment"> // End CATTry
+</span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+
+</span><span class="flow">
+  return</span> returnCode<span class="operator">;
+}</span>
+....  
+....
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Test Attribute Data"></a>Test Attribute Data</h4>
+<p>
+Finally CAADVTubeAttributes has two methods for testing tube data.
+TestTubeSize is a simple check to see if the tube has the proper nominal size for the operating pressure on the tubing line.
+TestTubeMaterial is a likewise simple check that tests tube material against tube nominal size.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+....  
+....
+<span class="comment">
+//----------------------------------------------------------------------------- 
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>TestTubeSize<span class="operator">(</span><span class="keyword">const</span><span class="type"> double</span><span class="operator"> &amp;</span>iPressure<span class="operator">,</span><span class="keyword"> 
+                                          const</span> CATUnicodeString<span class="operator"> &amp;</span>iuNominalSize<span class="operator">,</span> 
+                                          CATUnicodeString<span class="operator"> &amp;</span>ouAuthorizedSizes<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> S_FALSE<span class="operator">;</span>
+  ouAuthorizedSizes<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span><span class="comment">
+
+  // Define memory pointers
+</span>
+  CATListValCATUnicodeString listAuthorizedSizes<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="comment">
+    // Set valid nominal sizes.
+</span><span class="flow">    if</span><span class="operator"> (</span><span class="float">0.0</span><span class="operator"> &lt;=</span> iPressure<span class="operator"> &amp;&amp;</span><span class="float"> 100000.0</span><span class="operator"> &gt;=</span> iPressure<span class="operator">)
+    {</span>
+
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1/4in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"5/16in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"3/8in"</span><span class="operator">);</span>
+
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1/2in"</span><span class="operator">);
+    }</span><span class="flow">
+    else if</span><span class="operator"> (</span><span class="float">200000.0</span><span class="operator"> &gt;=</span> iPressure<span class="operator">)
+    {</span>
+
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1/2in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"5/8in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"3/4in"</span><span class="operator">);</span>
+
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1 1/4in"</span><span class="operator">);
+    }</span><span class="flow">
+    else if</span><span class="operator"> (</span><span class="float">300000.0</span><span class="operator"> &gt;=</span> iPressure<span class="operator">)
+    {</span>
+
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1 1/4in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"1 1/2in"</span><span class="operator">);</span>
+      listAuthorizedSizes<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"2in"</span><span class="operator">);
+    }</span><span class="comment">
+
+    // Test for violation.      
+</span><span class="flow">    if</span><span class="operator"> (!</span>listAuthorizedSizes<span class="operator">.</span>Locate<span class="operator">(</span>iuNominalSize<span class="operator">))
+    {</span><span class="comment"> // Nominal size is not authorized.
+</span>      returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span><span class="flow">
+
+      for</span><span class="operator"> (</span><span class="type">int</span> iiSize<span class="operator"> =</span><span class="int"> 1</span><span class="operator">;</span> iiSize<span class="operator"> &lt;=</span> listAuthorizedSizes<span class="operator">.</span>Size<span class="operator">();</span> iiSize<span class="operator">++)
+      {</span><span class="flow">
+
+        if</span><span class="operator"> (</span><span class="int">1</span><span class="operator">==</span> iiSize<span class="operator">)
+        {</span>
+          ouAuthorizedSizes<span class="operator"> =</span> listAuthorizedSizes<span class="operator">[</span>iiSize<span class="operator">];
+        }</span><span class="flow">
+
+        else</span><span class="operator">
+        {</span>
+          ouAuthorizedSizes<span class="operator"> +=</span><span class="string"> ", "</span><span class="operator"> +</span> listAuthorizedSizes<span class="operator">[</span>iiSize<span class="operator">];
+        }
+      }
+    }
+  }</span><span class="comment"> // End CATTry
+
+</span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span><span class="flow">
+  return</span> returnCode<span class="operator">;
+}</span><span class="comment">
+
+//----------------------------------------------------------------------------- 
+
+</span>HRESULT CAADVTubeAttributes<span class="operator">::</span>TestTubeMaterial<span class="operator">(</span><span class="keyword">const</span><span class="type"> double</span><span class="operator"> &amp;</span>iPressure<span class="operator">,</span><span class="keyword"> 
+                                              const</span> CATUnicodeString<span class="operator"> &amp;</span>iuNominalSize<span class="operator">,</span><span class="keyword"> 
+                                              const</span> CATUnicodeString<span class="operator"> &amp;</span>iuMaterial<span class="operator">,</span> 
+                                              CATUnicodeString<span class="operator"> &amp;</span>ouAuthorizedMaterialForSize<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> S_FALSE<span class="operator">;</span>
+  ouAuthorizedMaterialForSize<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span><span class="comment">
+
+  // Define memory pointers
+</span><span class="type">
+  int</span> nomSizeIndex<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span><span class="type">
+  int</span> iiSize<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+
+  CATUnicodeString uCurrentSize<span class="operator">;</span>
+  CATListValCATUnicodeString listAuthorizedMaterials<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="comment">
+    // Set valid materials for this size.
+</span><span class="flow">    if</span><span class="operator"> (</span>iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"1/4in"</span><span class="operator">) ||</span> 
+        iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"5/16in"</span><span class="operator">) ||</span> 
+        iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"3/8in"</span><span class="operator">) ||</span> 
+        iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"1/2in"</span><span class="operator">) ||</span> 
+        iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"5/8in"</span><span class="operator">))
+    {</span>
+
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Carbon steel"</span><span class="operator">);</span>
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Stainless steel"</span><span class="operator">);
+    }</span><span class="flow">
+    else if</span><span class="operator"> (</span>iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"5/8in"</span><span class="operator">) ||</span> 
+             iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"3/4in"</span><span class="operator">) ||</span> 
+             iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"1in"</span><span class="operator">) ||</span> 
+             iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"1 1/4in"</span><span class="operator">))
+    {</span>
+
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Carbon steel"</span><span class="operator">);</span>
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Stainless steel"</span><span class="operator">);</span>
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Copper"</span><span class="operator">);
+    }</span><span class="flow">
+
+    else if</span><span class="operator"> (</span>iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"1 1/2in"</span><span class="operator">) ||</span> 
+             iuNominalSize<span class="operator">.</span>Compare<span class="operator">(</span><span class="string">"2in"</span><span class="operator">))
+    {</span>
+
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Copper"</span><span class="operator">);</span>
+      listAuthorizedMaterials<span class="operator">.</span>Append<span class="operator">(</span><span class="string">"Aluminum"</span><span class="operator">);
+    }</span><span class="comment">
+
+    // Test for violation.      
+</span><span class="flow">    if</span><span class="operator"> (!</span>listAuthorizedMaterials<span class="operator">.</span>Locate<span class="operator">(</span>iuMaterial<span class="operator">))
+    {</span><span class="comment"> // Material is not authorized
+</span>      returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;</span><span class="flow">
+
+      for</span><span class="operator"> (</span><span class="type">int</span> iiSize<span class="operator"> =</span><span class="int"> 1</span><span class="operator">;</span> iiSize<span class="operator"> &lt;=</span> listAuthorizedMaterials<span class="operator">.</span>Size<span class="operator">();</span> iiSize<span class="operator">++)
+      {</span><span class="flow">
+
+        if</span><span class="operator"> (</span><span class="int">1</span><span class="operator">==</span> iiSize<span class="operator">)
+        {</span>
+          ouAuthorizedMaterialForSize<span class="operator"> =</span> listAuthorizedMaterials<span class="operator">[</span>iiSize<span class="operator">];
+        }</span><span class="flow">
+
+        else</span><span class="operator">
+        {</span>
+          ouAuthorizedMaterialForSize<span class="operator"> +=</span><span class="string"> ", "</span><span class="operator"> +</span> listAuthorizedMaterials<span class="operator">[</span>iiSize<span class="operator">];
+        }
+      }
+    }
+  }</span><span class="comment"> // End CATTry
+
+</span>
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    returnCode<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span>
+
+  CATEndTry<span class="operator">;</span><span class="comment">
+
+  // Release memory
+</span><span class="flow">
+  return</span> returnCode<span class="operator">;
+}</span>
+....  
+....
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Store and Report Violation Data"></a>Store and Report Violation Data</h4>
+<p>
+The CAAViolationTubeAttributes class stores and reports violation data for a tube attribute violation.
+It is based on CATPspCheckViolation which should be the base for all violation classes.
+The constructor takes inputs of the type of check, the name of the check and the NLS resource for the check.
+These are data used by the Design Validation command and need to be set on all violations.
+</p>
+<p>
+CAAViolationTubeAttributes also stores data for pressure, nominal size, material and authorized values.
+These data are specific to the violation and can be any data that is relevant.
+The SetInfo method sets the data for the violation.
+The CAADVTubeAttributes design check calls this routine.
+Since no other code uses this method, its design and interface are specific to the current design check.
+</p>
+<p>
+The next method, GetCheckViolationData, is used by the Design Validation command and should be overridden.
+GetCheckViolationData returns the number of rows of data.
+For CAAViolationTubeAttributes this is always one.
+(A related method, GetRowCount, is implemented in the base class, CATPspCheckViolation, to return one(1).
+If you design a violation with more than one row you should also override GetRowCount.)
+GetCheckViolationData also returns an array of lists of strings.
+Each element in the array corresponds to one row of data.
+Since CAAViolationTubeAttributes only has one row of data, only the first element ([0]) of the array is set.
+Each item in the list corresponds to a column of data.
+CAAViolationTubeAttributes sets four columns of data, which correspond to the four column titles returned by <a href="#Get Background Data">CAADVTubeAttributes::GetColumnTitles</a>
+The Design Validation command shows each data element in its appropriate column when reporting violations.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+<span class="comment">/**
+ * @quickreview eml 07:04:25 Replace tabs with spaces.
+ * @fullreview eml svo 07:04:24 Creation
+ */</span><span class="comment">
+//=============================================================================
+// COPYRIGHT Dassault Systemes 2006
+//=============================================================================
+//
+// CAAViolationTubeAttributes.cpp
+//
+//=============================================================================
+//
+// Implementation notes:  Violation object
+//
+//=============================================================================
+//
+// Creation:  2007 April 23                                    Eric Miller
+//
+//=============================================================================
+</span><span class="pre">
+#include "CAAViolationTubeAttributes.h"
+
+#include "CATError.h"
+#include "CATErrorMacros.h"
+#include "CATUnicodeString.h"
+
+</span><span class="comment">
+//-----------------------------------------------------------------------------
+// CAAViolationTubeAttributes : constructor
+//-----------------------------------------------------------------------------
+</span>CAAViolationTubeAttributes<span class="operator">::</span>CAAViolationTubeAttributes<span class="operator">(</span><span class="keyword">const</span> CATUnicodeString<span class="operator">&amp;</span> iType<span class="operator">,</span><span class="keyword">
+                                                       const</span> CATUnicodeString<span class="operator">&amp;</span> iCheck<span class="operator">,</span><span class="keyword">
+
+                                                       const</span> CATUnicodeString<span class="operator">&amp;</span> iResource<span class="operator">)
+  :</span>CATPspCheckViolation<span class="operator">(</span> iType<span class="operator">,</span> iCheck<span class="operator">,</span> iResource<span class="operator"> )
+{</span> 
+  _uPressure<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span>
+
+  _uNominalSize<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span>
+  _uMaterial<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;</span>
+  _uAuthorizedValues<span class="operator"> =</span><span class="string"> ""</span><span class="operator">;
+}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+// CAAViolationTubeAttributes : destructor
+//-----------------------------------------------------------------------------
+</span>CAAViolationTubeAttributes<span class="operator">::~</span>CAAViolationTubeAttributes<span class="operator">()
+{}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+</span><span class="type">void</span> CAAViolationTubeAttributes<span class="operator">::</span>SetInfo<span class="operator">(</span>CATUnicodeString<span class="operator"> &amp;</span>iuPressure<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>iuNominalSize<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>iuMaterial<span class="operator">,</span> 
+                                         CATUnicodeString<span class="operator"> &amp;</span>iuAuthorizedValues<span class="operator">)
+{</span>
+
+  _uPressure<span class="operator"> =</span> iuPressure<span class="operator">;</span>
+  _uNominalSize<span class="operator"> =</span> iuNominalSize<span class="operator">;</span>
+  _uMaterial<span class="operator"> =</span> iuMaterial<span class="operator">;</span>
+
+  _uAuthorizedValues<span class="operator"> =</span> iuAuthorizedValues<span class="operator">;
+}</span><span class="comment">
+
+//-----------------------------------------------------------------------------
+</span>HRESULT CAAViolationTubeAttributes<span class="operator">::</span>GetCheckViolationData<span class="operator">(</span><span class="type">int</span><span class="operator">&amp;</span> oRow<span class="operator">,</span> 
+                                                          CATListValCATUnicodeString<span class="operator">**</span> oLValues<span class="operator">)
+{</span>
+
+  HRESULT returnCode<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+
+  oRow<span class="operator"> =</span><span class="int"> 1</span><span class="operator">;
+
+  *</span>oLValues<span class="operator"> =</span><span class="keyword"> new</span> CATListValCATUnicodeString<span class="operator">[</span>oRow<span class="operator">];</span><span class="flow">
+
+  if</span><span class="operator"> ( *</span>oLValues<span class="operator"> )
+  {
+    (*</span>oLValues<span class="operator">)[</span><span class="int">0</span><span class="operator">].</span>Append<span class="operator">(</span>_uPressure<span class="operator">);
+    (*</span>oLValues<span class="operator">)[</span><span class="int">0</span><span class="operator">].</span>Append<span class="operator">(</span>_uNominalSize<span class="operator">);
+    (*</span>oLValues<span class="operator">)[</span><span class="int">0</span><span class="operator">].</span>Append<span class="operator">(</span>_uMaterial<span class="operator">);
+    (*</span>oLValues<span class="operator">)[</span><span class="int">0</span><span class="operator">].</span>Append<span class="operator">(</span>_uAuthorizedValues<span class="operator">);</span>
+
+    returnCode<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+  }</span><span class="flow">
+
+  return</span> returnCode<span class="operator">;
+}</span>
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Support Files"></a>Support Files</h4>
+<p>
+There are two support files for the CAADVTubeAttributes design check code.
+The first is a dictionary file that tells CATIA that CAADVTubeAttributes is an implementation of a predefined CAA interface.
+This file is CAAPlantShipInterfaces.edu.dico whose contents are shown below.
+The line defining CAADVTubeAttributes is highlighted in red.
+The line shows the object name (CAATubAttr) declared in the CAADVTubeAttributes file.
+It also shows that it implements the CATIPspDesignValidation interface in the CAAPspDesignValidation library.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+# COPYRIGHT DASSAULT SYSTEMES 2004
+#======================================================================
+#CAAPlantShipInterfaces.edu
+#======================================================================
+
+PipingLayout        CATIPspKweUserAttr      libCAAPspDefineUserProperties
+
+#
+# Design validation implementations
+<span class="highlight">CAATubAttr          CATIPspDesignValidation libCAAPspDesignValidation</span>
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+The second support file provides natural language capability.
+Since the code is reporting to users, the output should be in the language they are using.
+CATIA uses NLS files to allow changing the language of output without changing code.
+The NLS file for CAADVTubeAttributes is CAAPspDesignValidation.CATNls, whose contents are shown below.
+The left-hand column contains keys that the code uses to select a line in the file.
+The right-hand column contains the natural language strings that correspond to the keys.
+To change the file to another language change the contents of the right-hand column.
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+TubeAttributeColPressure   = "Pressure";
+TubeAttributeColSize       = "Size";
+TubeAttributeColMaterial   = "Material";
+TubeAttributeColAuthorized = "Authorized Values";
+TubeSize                   = "Tube unauthorized size";
+TubeMaterial               = "Tube unauthorized material for size";
+      </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to add a
+design check to the design validation command. Specifically, it has illustrated:</p>
+<ul>
+  <li>Writing the necessary design check header.</li>
+  <li>Checking an object for a violation.</li>
+  <li>Supplying Design Validation background data.</li>
+  <li>Retrieving and using attribute data.</li>
+  <li>Storing and reporting violation data.</li>
+  <li>Creating necessary support files.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [April 2007]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

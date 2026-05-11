@@ -1,0 +1,275 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Structure Objects</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Structure Design</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating Structure Objects</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create structure
+      objects.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>It retrieves a Product document , creates some members, plates and end
+      plates.</p>
+      <p><img border="0" src="images/CAAScdStrImg1.jpg" width="540" height="371"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAStrCreationOfStructureObjects is launched in CATIA
+      [<a href="#References">1</a>]. Some documents are needed.</p>
+      <ul>
+        <li><a href="CAAStrCreationOfStructureObjectsSource.htm" target="Source">CAAStrCreationOfStructureObjects.CATScript</a>
+          is located in the CAAScdStrUseCases module. <a href="macros/CAAStrCreationOfStructureObjects.CATScript">Execute
+          macro</a> (windows only).</li>
+        <li>The document Product1.CATProduct is located in the CAAScdStrUseCases
+          module in the samples\grille directory. Grid.CATPart is linked to the
+          previous document and it contains the grid used by the macro.</li>
+        <li>The CATPart containing the section is located in the samples
+          directory.</li>
+      </ul>
+      <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAStrCreationOfStructureObjects includes five
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Step1">Creating ends of members</a></li>
+        <li><a href="#Step2">Creating members</a></li>
+        <li><a href="#Step3">Creating a plate</a> on top of the previous members</li>
+        <li><a href="#Step4">Creating end plates on members</a></li>
+      </ol>
+      <p>&nbsp;</p>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#0000FF">Dim </font>doc<font color="#0000FF"> As </font>Document
+
+<font color="#0000FF">    Dim </font>StrWorkbench<font color="#0000FF"> As </font>StrWorkbench
+<font color="#0000FF">    Dim </font>strFactory<font color="#0000FF"> As </font>StrObjectFactory
+
+<font color="#0000FF">    Set </font>doc = CATIA.ActiveDocument
+<font color="#0000FF">    Dim </font>rootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>rootProduct = doc.Product
+
+<font color="#0000FF">    Set </font>StrWorkbench = doc.GetWorkbench(&quot;StrWorkbench&quot;)
+<font color="#0000FF">    Set </font>strFactory = rootProduct.GetTechnologicalObject(&quot;StructureObjectFactory&quot;)
+
+<font color="#0000FF">    Dim </font>documents<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">    Set </font>documents = CATIA.Documents
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This step describes how to get the structure object factory.</p>
+      <h4><a name="Step1"></a>Creating ends of members</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+  <font color="#008000">' column 1</font>
+<font color="#0000FF">    Dim </font>reference11<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference11 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.12;(Brp:(GSMPlane.3);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.12)&quot;)
+<font color="#0000FF">    Dim </font>extremity11<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity11 = strFactory.AddDefExtFromReference(reference11, 0)
+
+<font color="#0000FF">    Dim </font>reference12<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference12 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.11;(Brp:(xy-plane);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.11)&quot;)
+<font color="#0000FF">    Dim </font>extremity12<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity12 = strFactory.AddDefExtFromReference(reference12, 0)
+
+    <font color="#008000">' column 2</font>
+<font color="#0000FF">    Dim </font>reference21<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference21 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.9;(Brp:(GSMPlane.3);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.9)&quot;)
+<font color="#0000FF">    Dim </font>extremity21<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity21 = strFactory.AddDefExtFromReference(reference21, 0)
+
+<font color="#0000FF">    Dim </font>reference22<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference22 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.8;(Brp:(xy-plane);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.8)&quot;)
+<font color="#0000FF">    Dim </font>extremity22<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity22 = strFactory.AddDefExtFromReference(reference22, 0)
+
+    <font color="#008000">' column 3</font>
+<font color="#0000FF">    Dim </font>reference31<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference31 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.5;(Brp:(xy-plane);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.5)&quot;)
+<font color="#0000FF">    Dim </font>extremity31<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity31 = strFactory.AddDefExtFromReference(reference31, 0)
+
+<font color="#0000FF">    Dim </font>reference32<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference32 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.6;(Brp:(GSMPlane.3);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.6)&quot;)
+<font color="#0000FF">    Dim </font>extremity32<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity32 = strFactory.AddDefExtFromReference(reference32, 0)
+
+    <font color="#008000">' column 4</font>
+<font color="#0000FF">    Dim </font>reference41<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference41 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.3;(Brp:(GSMPlane.3);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.3)&quot;)
+<font color="#0000FF">    Dim </font>extremity41<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity41 = strFactory.AddDefExtFromReference(reference41, 0)
+
+<font color="#0000FF">    Dim </font>reference42<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>reference42 = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.2;(Brp:(xy-plane);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.2)&quot;)
+<font color="#0000FF">    Dim </font>extremity42<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">    Set </font>extremity42 = strFactory.AddDefExtFromReference(reference42, 0)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>We have to define all the ends we need to define the members. All&nbsp;
+      these ends are on grid geometry.</p>
+      <h4><a name="Step2"></a>Creating members</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#0000FF">dim </font>sectionName<font color="#0000FF"> as </font>string
+    sectionName = <font color="#0000FF">InputBox</font>(&quot;Section path&quot;,&quot;Parameters&quot;, &quot;...\HEA120.CATPart&quot;)
+    
+    <font color="#008000">' column 1    </font>
+<font color="#0000FF">    Dim </font>docSection1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>docSection1 = documents.Read(sectionName)
+
+<font color="#0000FF">    Dim </font>section1<font color="#0000FF"> As </font>StrSection
+<font color="#0000FF">    Set </font>section1 = strFactory.AddSection(docSection1)
+
+<font color="#0000FF">    dim </font>member1<font color="#0000FF"> as </font>StrMember
+<font color="#0000FF">    Set </font>member1 = strFactory.AddMember(section1, &quot;catStrCenterCenter&quot;, 0, extremity11, extremity12, &quot;Column&quot;)
+        
+    <font color="#008000">' column 2</font>
+<font color="#0000FF">    Dim </font>docSection2<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>docSection2 = documents.Read(sectionName)
+
+<font color="#0000FF">    Dim </font>section2<font color="#0000FF"> As </font>StrSection
+<font color="#0000FF">    Set </font>section2 = strFactory.AddSection(docSection2)
+
+<font color="#0000FF">    dim </font>member2<font color="#0000FF"> as </font>StrMember
+<font color="#0000FF">    Set </font>member2 = strFactory.AddMember(section2, &quot;catStrCenterCenter&quot;, 0, extremity21, extremity22, &quot;Column&quot;)
+        
+    <font color="#008000">' column 3</font>
+<font color="#0000FF">    Dim </font>docSection3<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>docSection3 = documents.Read(sectionName)
+
+<font color="#0000FF">    Dim </font>section3<font color="#0000FF"> As </font>StrSection
+<font color="#0000FF">    Set </font>section3 = strFactory.AddSection(docSection3)
+
+<font color="#0000FF">    dim </font>member3<font color="#0000FF"> as </font>StrMember
+<font color="#0000FF">    Set </font>member3 = strFactory.AddMember(section3, &quot;catStrCenterCenter&quot;, 0, extremity31, extremity32, &quot;Column&quot;)
+        
+    <font color="#008000">' column 4</font>
+<font color="#0000FF">    Dim </font>docSection4<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>docSection4 = documents.Read(sectionName)
+
+<font color="#0000FF">    Dim </font>section4<font color="#0000FF"> As </font>StrSection
+<font color="#0000FF">    Set </font>section4 = strFactory.AddSection(docSection4)
+
+<font color="#0000FF">    dim </font>member4<font color="#0000FF"> as </font>StrMember
+<font color="#0000FF">    Set </font>member4 = strFactory.AddMember(section4, &quot;catStrCenterCenter&quot;, 0, extremity41, extremity42, &quot;Column&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Members are created using the section document and ends defined in the
+      previous step. The variable sectionName has to be valuated with the
+      section path.</p>
+      <h4><a name="Step3"></a>Creating end-plates</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#0000FF">Dim </font>plate1<font color="#0000FF"> As </font>StrPlate
+<font color="#0000FF">    Set </font>plate1 = strFactory.AddRectangularEndPlate(member1, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, &quot;EndPlate&quot;)
+	
+<font color="#0000FF">    Dim </font>plate2<font color="#0000FF"> As </font>StrPlate
+<font color="#0000FF">    Set </font>plate2 = strFactory.AddRectangularEndPlate(member2, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, &quot;EndPlate&quot;)
+	
+<font color="#0000FF">    Dim </font>plate3<font color="#0000FF"> As </font>StrPlate
+<font color="#0000FF">    Set </font>plate3 = strFactory.AddRectangularEndPlate(member3, catStartExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, &quot;EndPlate&quot;)
+	
+<font color="#0000FF">    Dim </font>plate4<font color="#0000FF"> As </font>StrPlate
+<font color="#0000FF">    Set </font>plate4 = strFactory.AddRectangularEndPlate(member4, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, &quot;EndPlate&quot;)</pre>
+            <pre>...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>End plates are created at&nbsp; the base of each member.</p>
+      <h4><a name="Step4"></a>Creating a plate</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+    <font color="#0000FF">Dim </font>contour(3)<font color="#0000FF"> As </font>Reference
+
+<font color="#0000FF">    Set </font>contour(0) = rootProduct.CreateReferenceFromName("Produit1/Column_2/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;9999)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10018)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+<font color="#0000FF">    Set </font>contour(1) = rootProduct.CreateReferenceFromName("Produit1/Column_4/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10039)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;2);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10058)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+<font color="#0000FF">    Set </font>contour(2) = rootProduct.CreateReferenceFromName("Produit1/Column_5/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10068)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10069)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+<font color="#0000FF">    Set </font>contour(3) = rootProduct.CreateReferenceFromName("Produit1/Column_3/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10029)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10030)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+
+<font color="#0000FF">    Dim </font>support<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">    Set </font>support = rootProduct.CreateReferenceFromName(&quot;Produit1/grid/!Plane.3&quot;)
+
+<font color="#0000FF">    Dim </font>plate<font color="#0000FF"> As </font>StrPlate
+<font color="#0000FF">    Set </font>plate = strFactory.AddPlate(support, 0.005, catStrStandardOrientation, contour, 0.0, &quot;PlateType&quot;)</pre>
+            <pre>...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>We have created a plate on top of the four members. The contour is
+      defined by the selection of&nbsp; vertices on these members.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create structure objects</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

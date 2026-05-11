@@ -1,0 +1,188 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CAA V5 StartUp Consistency and Data Compatibility</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 StartUp Consistency and Data Compatibility</h3>
+      <em>Managing StartUp evolutions between releases to ensure upward data
+      compatibility</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how you can modify the StartUps stored in the
+      StartUp catalogs while ensuring that documents relying on these catalogs
+      remain legible.
+      <ul>
+        <li><a href="#100000"><strong>Why Managing Feature Compatibility?</strong></a></li>
+        <li><a href="#200000"><strong>Modifying StartUp Structure</strong></a></li>
+        <li><a href="#300000"><strong>Modifying StartUp Hierarchy</strong></a></li>
+        <li><a href="#400000"><strong>Modifying StartUp Catalogs</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Why Managing StartUp Compatibility?</h3>
+<p>When moving from a CATIA release to another one, you legitimately expect that
+upward data compatibility be ensured. When working with features, this upward
+data compatibility is easy to obtain if you understand the feature underlying
+mechanisms, and if you follow basic feature compatibility rules.</p>
+<p>The CATIA Feature Modeler relies on the prototype/instance paradigm. The
+first instance, called the StartUp, provides its derived instances with their
+basic type and behaviors. To make it possible to share StartUps between
+documents, and also for memory size and performance reasons, StartUps are stored
+in catalogs. If StartUp catalogs do no change from a CATIA release to a next
+one, the upward compatibility is automatically ensured. In addition, if they are
+modified in the next release, some simple consistency rules to apply when
+modifying them ensure that a document relying on, or created using, these
+catalogs in a previous CATIA release can be read in a next one. In other words,
+ensuring StartUp catalog consistency ensures upward document/feature
+compatibility.</p>
+<p>To do this, the rules to follow and apply when modifying StartUps and StartUp
+catalogs are classified into:</p>
+<ul>
+  <li>Rules for StartUp structure</li>
+  <li>Rules for StartUp hierarchy</li>
+  <li>Rules for StartUp catalogs.</li>
+</ul>
+<p>These rules are checked when creating or modifying a StartUp catalog thanks
+to the StartUp catalog compiler/checker available before delivery. If a given
+StartUp catalog doesn't match one of these rules, the corresponding .feat file
+is not generated.</p>
+<p>Some applications do not manage StartUp catalogs, and create their StartUps
+on the fly when they create their containers. These applications manage
+themselves the upward compatibility of their data.</p>
+<p>This article uses the following notation: V5Rn and V5Rp designate two
+releases of CATIA, where p is greater than n.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Modifying StartUp Structure</h3>
+<p>The structure of a StartUp can be modified according to the following rules:</p>
+<ol>
+  <li>Adding an attribute in V5Rp is possible.<br>
+    This is possible thanks to the CATIA Feature Modeler dynamicity.
+    Applications written for V5Rn will go on running without taking care of the
+    new attribute. In V5Rp, the synchronization mechanism automatically adds the
+    attribute to any instance that has not it. If this attribute is accessed, it
+    is valued using the StartUp attribute value, if this value exists. The
+    application must either provide a default value that is suitable with its
+    process, or values the attribute when accessing it on the instance</li>
+  <li>Deleting an attribute in V5Rp is also possible.<br>
+    This is possible again thanks to the CATIA Feature Modeler dynamicity. If
+    the attribute were overridden on the instance, it then becomes autonomous
+    from the one of the StartUp, and everything happens as if this attribute
+    were added on the instance in V5Rp. If the attribute were not overridden on
+    the instance, it then disappears from the instance when the instance is
+    read. The application must then be consistent: deleting an attribute from a
+    StartUp in a catalog implies removing the code that accesses this attribute
+    from the application</li>
+  <li>Moving an attribute from a StartUp to one of its base StartUps is
+    possible.<br>
+    Since the StartUp from which the attribute is removed derives from the
+    StartUp to which it is moved, this attribute will remain visible because it
+    becomes inherited. This makes it possible to share this attribute by several
+    StartUps. The application must check that the attribute value remains
+    consistent with the values it could have on the initial StartUps and must
+    generate the appropriate access keys</li>
+  <li>If you want to modify the type of an attribute, the new type must be
+    compatible from the inheritance standpoint.
+    <ul>
+      <li>For a simple type attribute, such as tk_integer, tk_double, or
+        tk_string, the attribute is valued using a class that is specific to the
+        CATIA Feature Modeler, and not thanks to a literal. Changing for a
+        literal is thus not possible, because it would imply to change the
+        attribute type to tk_specobject</li>
+      <li>For a feature type attribute, the modification of a tk_specobject to
+        tk_component, or the reverse, is not possible, because aggregation
+        implies mechanisms specific to the data structure, such as the life
+        cycle management of an aggregated object that is not left to this object</li>
+    </ul>
+  </li>
+  <li>You can't modify the sp_XX facet of an attribute of a StartUp.<br>
+    This modification cannot be dynamically propagated to the instance for which
+    this attribute is local.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Modifying StartUp Hierarchy</h3>
+<ol>
+  <li>You can't delete a StartUp.<br>
+    The links wouldn't be restored, even if the StartUp attributes were assigned
+    to its parent StartUp. In addition, any instance of the StartUp would loose
+    all the behaviors associated with this StartUp</li>
+  <li>You can insert a new StartUp in the catalog StartUp hierarchy.<br>
+    This is equivalent to locally adding attributes and enriches the behaviors
+    of the instances in V5Rp</li>
+  <li>You can change the name of a StartUp.<br>
+    The key to retrieve it is its type</li>
+  <li>You can't add a StartUp into a catalog if a StartUp with the same type
+    exists in one of the prerequisite catalogs</li>
+  <li>You can't move a StartUp from one catalog to another one, even if links
+    exist between these catalogs.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Modifying StartUp Catalogs</h3>
+<p>If a catalog existed in V5Rn, you cannot, in V5Rp:</p>
+<ol>
+  <li>Change its name or its UID</li>
+  <li>Cut it up into several catalogs, because the links when retrieving a
+    StartUp would not be solved</li>
+  <li>Cut it up into several sub containers, for the same reason.
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>To ensure upward data compatibility with features relying on StartUp catalogs
+while modifying these catalogs, rules should be observed that deal with StartUp
+structure, hierarchy, and catalogs.</p>
+<p align="right"><a href="#Top">Top</a></p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

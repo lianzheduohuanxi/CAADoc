@@ -1,0 +1,387 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces InstanceFactory (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "InstanceFactory"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>InstanceFactory<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_InstanceFactory_27199','InstanceFactory','0');</script>
+<b><i>   Represents the CATIAInstanceFactory.</i></b><br>
+
+ <b>Role</b>:
+ This interface is used to create a new instance of a shape reference (<script type="text/javascript"> activateLinkAnchor('ShapeInstance','','ShapeInstance') </script> ) or a hybrid shape reference (
+<script type="text/javascript"> activateLinkAnchor('HybridShapeInstance','','HybridShapeInstance') </script> ) in case of the instantiation of a <tt>User Feature</tt>.<br> It is also used to instantiate a <tt>Power Copy</tt> reference.<br><br>
+ This interface contains two protocols of instantiation:<br>
+ <ul>
+ <li>The first protocol is dedicated to <tt>User Feature</tt> instantiation only.<br>
+ It is defined by a single method: 
+<script type="text/javascript"> activateLinkAnchor('','AddInstance','AddInstance') </script> . It creates a shape or hybrid shape instance depending on the result of the <tt>User Feature</tt>.<br>
+ Use this method when you want to perform only one instantiation of the reference.
+ Read the document containing the <tt>User Feature</tt> reference and instantiate it.<br>
+ As the document containing the reference is released from the session at the end of the instantiation,
+ it is not recommmended to use this method if you want to perform several instantiations of the same reference in a loop.<br>
+ In that case, prefer the second protocol of instantiation.</li>
+ <li>The second protocol is dedicated to both <tt>User Feature</tt> and <tt>Power Copy</tt> instantiations.<br>
+ It is defined by several methods that must be called in order.<br>
+ <ul>
+ <li>For <tt>User Feature</tt> instantiation, these methods are an alternative way of the 
+<script type="text/javascript"> activateLinkAnchor('','AddInstance','AddInstance') </script> method.<br> It is recommended to use the second protocol to perform several instantiations of the same reference in a loop.<br></li>
+ <li>For <tt>Power Copy</tt> instantiation, it is the only way of instantiating a reference.<br></li>
+ </ul>
+ The instantiation process is composed of three major steps:<br>
+ <ol>
+ <li>The first step 
+<script type="text/javascript"> activateLinkAnchor('','BeginInstanceFactory','BeginInstanceFactory') </script> consists in initializing the 
+<script type="text/javascript"> activateLinkAnchor('InstanceFactory','','InstanceFactory') </script> with the reference and the document where it is stored.<br>This step must be called once at the beginning whatever the number of instantiations are done.</li>
+ <li> Optional step 
+<script type="text/javascript"> activateLinkAnchor('','InstantiationMode','InstantiationMode') </script> allow the user to specify the mode of the instantiation, that is to say "After" or "Inside".<br>  If this method is not called, the instantiation mode will be chosen according to the BeginInstantiate method.</li>
+ <li>The second step is the instantiation itself: it is composed of five methods that must be called in the order.<br>
+ This set of five methods can be called in a loop in order to make several instantiations.<br>
+ <ol>
+ <li>The method 
+<script type="text/javascript"> activateLinkAnchor('','BeginInstantiate','BeginInstantiate') </script> is used to initialize all data of the reference.</li> <li>The method 
+<script type="text/javascript"> activateLinkAnchor('','PutInputData','PutInputData') </script> is used to set a value to any input of the reference.</li> <li>The method 
+<script type="text/javascript"> activateLinkAnchor('','GetParameter','GetParameter') </script> is used to retrieve any parameter of the reference in order to modify its value.</li> <li>The method 
+<script type="text/javascript"> activateLinkAnchor('','Instantiate','Instantiate') </script> is used to duplicate the reference. It returns the created instance when it does exist.</li> <li>The method 
+<script type="text/javascript"> activateLinkAnchor('','EndInstantiate','EndInstantiate') </script> is used to indicate that the instantiation is done.</li> </ol>
+ <li>The third step 
+<script type="text/javascript"> activateLinkAnchor('','EndInstanceFactory','EndInstanceFactory') </script> consists in ending the instantiation and cleaning the 
+<script type="text/javascript"> activateLinkAnchor('InstanceFactory','','InstanceFactory') </script>.<br> When doing several instantiations in a loop, this step must be called just once at the end of all instantiations.</li>
+ </ol>
+ </ul>
+<hr>
+<dl>
+ <h2><a name="PropertyIndex"></a>Property Index</h2>
+ <dt>
+    <a href="#InstantiationMode"><b>InstantiationMode</b></a>
+<dd>  Sets the mode of instantiation to "Inside" or "After".
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#AddInstance"><b>AddInstance</b></a>
+<dd>  Creates a new instance of a shape or hybrid shape.
+ <dt>
+    <a href="#BeginInstanceFactory"><b>BeginInstanceFactory</b></a>
+<dd>  Initializes the instantiation process with the document containing the reference.
+ <dt>
+    <a href="#BeginInstantiate"><b>BeginInstantiate</b></a>
+<dd>  Initializes the data of the reference.
+ <dt>
+    <a href="#EndInstanceFactory"><b>EndInstanceFactory</b></a>
+<dd>  Ends the instantiation process.
+ <dt>
+    <a href="#EndInstantiate"><b>EndInstantiate</b></a>
+<dd>  Ends the instantiation of the reference.
+ <dt>
+    <a href="#GetParameter"><b>GetParameter</b></a>
+<dd>  Retrieves a parameter of the reference by its name.
+ <dt>
+    <a href="#Instantiate"><b>Instantiate</b></a>
+<dd>  Instantiates the reference in the current document.
+ <dt>
+    <a href="#PutInputData"><b>PutInputData</b></a>
+<dd>  Sets a value to an input of the reference.
+</dl>
+ <h2><a name="Properties"></a>Properties</h2> <br>
+<a name="InstantiationMode"><dt>
+
+<table><tr><td>o Property <b>InstantiationMode</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iInstantiationModeBSTR</tt>) (Write Only)</table></dt>
+<dl>
+  <dd>
+ Sets the mode of instantiation to "Inside" or "After".
+ <br><b>Role</b>:
+ This method should be called BEFORE the method BeginInstantiate to take into account the desired instantiation mode.<br>
+ It is used to set the destination path of insertion of the template reference.
+ <! @sample >
+ <dl><dt>
+ <b>Example:</b>
+ <dd>
+ The following example shows how to determine the instantiation mode (Mode's value is "Inside" or "After"):
+ <pre>
+ InstanceFactory.<font color="red">InstantationMode</font> = Mode
+ </pre>
+ </dl>
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="AddInstance"><dt>
+
+<table><tr><td>o Func <b>AddInstance</b>(<td><script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> <td><tt>iReference</tt>) As <script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> </table></dt>
+<dl>
+  <dd>
+ Creates a new instance of a shape or hybrid shape.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iReference</tt>
+   <dd>   The reference shape or hybrid shape.
+ <! @sample >
+ </dl>
+ <dt><b>Example:</b>
+ <dd>
+ This example creates the instance <tt>NewInstance</tt> in the part.
+ <pre>
+ Set NewInstance = instanceFactory.<font color="red">AddInstance</font>(reference)
+ </pre>
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="BeginInstanceFactory"><dt>
+
+<table><tr><td>o Sub <b>BeginInstanceFactory</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iNameOfReference</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iNameOfDocument</tt>)</table></dt>
+<dl>
+  <dd>
+ Initializes the instantiation process with the document containing the reference.
+ <br><b>Role</b>:
+ Use this method to start instantiating a reference in the current document.<br>
+ In that method, the document containing the reference is locked in session.<br>
+ It will be unlocked in the last step 
+<script type="text/javascript"> activateLinkAnchor('','EndInstanceFactory','EndInstanceFactory') </script> . 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNameOfReference</tt>
+   <dd>	The name of the reference to be instantiated.
+ </dd>
+    <dt><tt> iDocumentFileName</tt>
+   <dd>  The name of the file containing the document where to find the reference to be instantiated.
+ <! @sample >
+ </dl>
+ <dt>
+ <b>Example:</b>
+ <dd>
+ The following example initializes the factory with a document and a reference:
+ <pre>
+ InstanceFactory.<font color="red">BeginInstanceFactory</font>"NameOfReference","c:\tmp\NameOfDocument.CATPart"
+ </pre>
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="BeginInstantiate"><dt>
+
+<table><tr><td>o Sub <b>BeginInstantiate</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Initializes the data of the reference.
+ <br><b>Role</b>:
+ This is the first method of the second step of instantiation.<br>
+ It is used to initialize all data of the reference in the factory.
+ <! @sample >
+ <dl><dt>
+ <b>Example:</b>
+ <dd>
+ The following example shows how to initialize the factory:
+ <pre>
+ InstanceFactory.<font color="red">BeginInstantiate</font>
+ </pre>
+ </dl>
+</dl>
+<a name="EndInstanceFactory"><dt>
+
+<table><tr><td>o Sub <b>EndInstanceFactory</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Ends the instantiation process.
+ <br><b>Role</b>:
+ Use this method to end the instantiation process.<br>
+ In that method the document containing the reference is unlocked and released from the session.
+ <! @sample >
+ <dl><dt>
+ <b>Example:</b>
+ <dd>
+ The following example shows how to end the instantiation:
+ <pre>
+ InstanceFactory.<font color="red">EndInstanceFactory</font>
+ </pre>
+ </dl>
+</dl>
+<a name="EndInstantiate"><dt>
+
+<table><tr><td>o Sub <b>EndInstantiate</b>(<td>)</table></dt>
+<dl>
+  <dd>
+ Ends the instantiation of the reference.
+ <br><b>Role</b>:
+ This is the fifth and last method of the second step of instantiation.<br>
+ It is used to end the instantiation: after this step, all the links to the
+ reference are broken.
+ <! @sample >
+ <dl><dt>
+ <b>Example:</b>
+ <dd>
+ The following example shows how to end the instantiation:
+ <pre>
+ InstanceFactory.<font color="red">EndInstantiate</font>
+ </pre>
+ </dl>
+</dl>
+<a name="GetParameter"><dt>
+
+<table><tr><td>o Func <b>GetParameter</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>) As <script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves a parameter of the reference by its name.
+ <br><b>Role</b>:
+ This is the third method of the second step of instantiation.<br>
+ This step is optional.<br>
+ It is used to retrieve a parameter of the reference in order to change
+ its value, using the <tt>ValuateFromString</tt> method of the <tt>Parameter</tt> interface.<br>
+ It has to be called on each parameter whose value has to be changed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>   The name of the parameter.
+ <! @sample >
+ </dl>
+ <dt>
+ <b>Example:</b>
+ <dd>
+ The following example retrieves a parameter on the reference:
+ <pre>
+ Set parameter = InstanceFactory.<font color="red">GetParameter</font>("Parameter1")
+ </pre>
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="Instantiate"><dt>
+
+<table><tr><td>o Func <b>Instantiate</b>(<td>) As <script type="text/javascript"> activateLink('AnyObject','AnyObject')</script> </table></dt>
+<dl>
+  <dd>
+ Instantiates the reference in the current document.
+ <br><b>Role</b>:
+ This is the fourth method of the second step of instantiation.<br>
+ It is used to duplicate or instantiate the data of the reference.<br>
+ <ul>
+ <li>In case of <tt>Power Copy</tt> instantiation, the data are duplicated and there is
+ no created instance.</li>
+ <li>In case of <tt>User Feature</tt> instantiation, the data are instantiated and an
+ instance is created and returned.</li>
+ </ul>
+ <! @sample >
+ <dl><dt>
+ <b>Example:</b>
+ <dd>
+ The following example instantiates the reference:
+ <pre>
+ Set Instance = InstanceFactory.<font color="red">Instantiate</font>
+ </pre>
+ </dl>
+</dl>
+<a name="PutInputData"><dt>
+
+<table><tr><td>o Sub <b>PutInputData</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR')</script> <td><tt>iName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseDispatch','CATBaseDispatch')</script> <td><tt>iInput</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets a value to an input of the reference.
+ <br><b>Role</b>:
+ This is the second method of the second step of instantiation.<br>
+ It is used to set a value to any input of the reference.<br>
+ It has to be called on each input of the reference.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>   The name of the input.
+ </dd>
+    <dt><tt> iInput</tt>
+   <dd>   The element to set as the new value of the input.
+   <br>All types of </dd>
+</dl>
+<script type="text/javascript"> activateLinkAnchor('Boundary','','Boundary') </script> object are possibly supported. <! @sample >
+ </dl>
+ <dt>
+ <b>Example:</b>
+ <dd>
+ The following example sets a value to an input of the reference:
+ The input is a point and its name is Input1. 
+ <pre>
+ InstanceFactory.<font color="red">PutInputData</font> "Input1",point1
+ </pre>
+ </dl>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

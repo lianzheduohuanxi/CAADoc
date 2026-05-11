@@ -1,0 +1,260 @@
+Language="VBSCRIPT"
+
+'*****************************************************************************
+'*
+'*		Description:
+'*			Sample of a VB Script macro which retrieves a Design pattern 
+'*                and Design Holes and which creates a machining pattern linked 
+'*			to these Features.
+'*                    
+'*      Related Resources: 
+'*			Plate-VBSample01.CATPart
+'*      Use:
+'*			1- Open "Plate-VBSample01.CATPart"
+'*			2- Go into workbench "Prismatic Manufacturing Programmer"
+'*			3- Run this macro
+'*                    
+'*                           Created by Dassault Systemes
+'*
+'*****************************************************************************
+
+Sub CATMain()
+
+'*******************************************************************************************
+'*
+'* Creating the machining pattern
+'*
+'*******************************************************************************************
+
+'--------------------------------------
+' Retrieve the active CATProcess document
+'--------------------------------------
+
+ Dim MfgDoc1 As Document
+ Set MfgDoc1 = CATIA.ActiveDocument
+
+'--------------------------------------
+' Retrieve the current setup
+'--------------------------------------
+
+'*** Retrieve current Process Root
+
+ Dim ActivityRef As AnyObject
+ Set ActivityRef = MfgDoc1.GetItem("Process")
+
+ Dim Setup1 As ManufacturingSetup
+ Dim childs As Activities
+ Dim child As Activity
+
+ If (ActivityRef.IsSubTypeOf("PhysicalActivity")) Then
+
+    Set childs = ActivityRef.ChildrenActivities
+    quantity = childs.Count
+
+    If quantity <= 0 Then
+      Exit Sub
+    End If
+
+    NumberOfSetup = 0
+
+    For I=1 To quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf("ManufacturingSetup")) Then
+			Set Setup1 = child
+			NumberOfSetup = NumberOfSetup +1
+			Exit For
+		End If
+    Next
+     
+ End If
+
+ If NumberOfSetup <= 0 Then
+      Exit Sub
+ End If
+
+'*** Retrieve current Product linked to the current setup
+
+ Dim Prod As Product
+ Set Prod = SetUp1.Product
+
+'--------------------------------------
+' Retrieve the Manufacturing View
+'--------------------------------------
+
+Dim MfgView As ManufacturingView
+Set MfgView = Setup1.GetManufacturingView 
+
+'--------------------------------------
+' Create a Machining Pattern
+'--------------------------------------
+
+Dim Features As ManufacturingFeatures
+Set Features = MfgView.ManufacturingFeatures
+
+Dim ManPattern As ManufacturingPattern 
+Set ManPattern = Features.Add ("MfgPatternUsage")
+
+'*******************************************************************************************
+'*
+'* Retrieving the design pattern and the holes
+'*
+'*******************************************************************************************
+
+'--------------------------------------
+' Retrieve the Design Pattern and the Design Holes
+'--------------------------------------
+
+'*** Retrieve design pattern 
+
+Dim documents1 As Documents
+Set documents1 = CATIA.Documents
+
+Dim partDocument1 As Document
+Set partDocument1 = documents1.Item("Plate-VBSample01.CATPart")
+
+Dim part1 As Part
+Set part1 = partDocument1.Part
+
+Dim bodies1 As Bodies
+Set bodies1 = part1.Bodies
+
+Dim body1 As Body
+Set body1 = bodies1.Item("MechanicalTool.1")
+
+Dim shapes1 As Shapes
+Set shapes1 = body1.Shapes
+
+Dim designpattern As Shape
+Set designpattern = shapes1.Item("RectPattern.1")
+
+'*** Retrieve design holes
+
+Dim designhole1 As Shape
+Dim designhole2 As Shape
+Dim designhole3 As Shape
+Dim designhole4 As Shape
+
+Set designhole1 = shapes1.Item("Hole.1")
+Set designhole2 = shapes1.Item("Hole.2")
+Set designhole3 = shapes1.Item("Hole.3")
+Set designhole4 = shapes1.Item("Hole.4")
+
+'*******************************************************************************************
+'*
+'* Assigning the Design Features to the Machining Pattern
+'*
+'*******************************************************************************************
+
+'--------------------------------------
+' Assign these Design Features to the Machining Pattern
+'--------------------------------------
+
+ManPattern.AddPosition designpattern,Prod,0
+ManPattern.AddPosition designhole1 ,Prod,0
+ManPattern.AddPosition designhole2 ,Prod,0
+ManPattern.AddPosition designhole3 ,Prod,0
+ManPattern.AddPosition designhole4 ,Prod,1
+
+'*******************************************************************************************
+'*
+'* Modifying a parameter of the Machining Pattern
+'*
+'*******************************************************************************************
+ 
+'--------------------------------------
+' Modify the Jump Distance of the Machining Pattern  
+'--------------------------------------
+
+Dim Jump As Parameter
+Set Jump = ManPattern.GetAnAttribute("JumpDistance") 
+
+Jump.ValuateFromString ("50mm")
+
+'*******************************************************************************************
+'*
+'* Deactivating/Activating points of the Machining Pattern
+'*
+'*******************************************************************************************
+ 
+'--------------------------------------
+' Deactivating the point number 3 of the Machining Pattern
+'--------------------------------------
+
+ManPattern.DeactivatePoint 3
+
+'--------------------------------------
+' Activating the point number 4 of the Machining Pattern
+'--------------------------------------
+
+ManPattern.ActivatePoint 4
+
+'*******************************************************************************************
+'*
+'* Reading Numbers / Setting as Start Point / Reversing Numbering
+'*
+'*******************************************************************************************
+ 
+'--------------------------------------
+' Read Numbers                                              
+'--------------------------------------
+
+Dim Numbers() As VARIANT
+ManPattern.GetNumbers Numbers
+
+'--------------------------------------
+' Set the point number 2 as start point                               
+'--------------------------------------
+
+ManPattern.StartPoint 2
+
+'--------------------------------------
+' Reverse Numbering                                              
+'--------------------------------------
+
+ManPattern.Reverse
+
+'*******************************************************************************************
+'*
+'* Managing Part Surface on the Machining Pattern
+'*
+'*******************************************************************************************
+
+'--------------------------------------
+' Add a part surface to the Machining Pattern  
+'--------------------------------------
+
+Dim sel As Selection
+set sel = MfgDoc1.Selection
+
+Dim MyTab(1)
+
+MyTab(0)="Face"
+MyTab(1)="Plane"
+
+RC = sel.SelectElement2 (MyTab,"Select a Part Surface",True)
+
+Dim PS As AnyObject
+
+set SelectedElement  = sel.Item(1)
+set PartSurface = SelectedElement.Value
+
+ManPattern.AddPartSurface PartSurface,Prod,1
+
+'--------------------------------------
+' Remove the part surface of the Machining Pattern  
+'--------------------------------------
+
+ManPattern.RemovePartSurfaces 
+
+'--------------------------------------
+' Modify the Top Mode of the Machining Pattern  
+' Legal values: MfgProjectPattern and MfgTopPattern 
+'--------------------------------------
+
+Dim TopMode As Parameter
+Set TopMode = ManPattern.GetAnAttribute("TopMode") 
+TopMode.ValuateFromString ("MfgProjectPattern")
+
+
+End Sub
+

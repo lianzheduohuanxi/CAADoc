@@ -1,0 +1,104 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASfdEditOpening.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To edit openings.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASfmEditOpening.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>part1<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>part1 = CATIA.ActiveDocument.Part
+
+  <font color="#008000">'Get the OpeningObject for Opening_038</font>
+<font color="#0000FF">  Dim </font>Opening1<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>Opening1 = part1.FindObjectByName("Opening_038")
+
+<font color="#0000FF">  Dim </font>Sel1<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">  Set </font>Sel1 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening1
+
+<font color="#0000FF">  Dim </font>OpeningObject1<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>OpeningObject1= Sel1.FindObject("CATIASfmOpening")
+
+  <font color="#008000">'Get the OpeningObject for Opening_040</font>
+<font color="#0000FF">  Dim </font>Opening2<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>Opening2 = part1.FindObjectByName("Opening_040")
+
+<font color="#0000FF">  Dim </font>Sel2<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">  Set </font>Sel2 = CATIA.ActiveDocument.Selection
+  Sel2.Add Opening2
+
+<font color="#0000FF">  Dim </font>OpeningObject2<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>OpeningObject2= Sel2.FindObject("CATIASfmOpening")
+
+  <font color="#008000">'Get the OpeningObject for Opening_043</font>
+<font color="#0000FF">  Dim </font>Opening3<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>Opening3 = part1.FindObjectByName("Opening_043")
+
+<font color="#0000FF">  Dim </font>Sel3<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">  Set </font>Sel3 = CATIA.ActiveDocument.Selection
+  Sel1.Add Opening3
+
+<font color="#0000FF">  Dim </font>OpeningObject3<font color="#0000FF"> As </font>SfmOpening
+<font color="#0000FF">  Set </font>OpeningObject3= Sel3.FindObject("CATIASfmOpening")
+
+  <font color="#008000">'Get the mode in which Opening_038 and Opening_040 is created</font>
+<font color="#0000FF">  Dim </font>CreationMode1<font color="#0000FF"> As </font>Long
+  CreationMode1 = OpeningObject1.CreationMode
+  MsgBox CreationMode1
+
+<font color="#0000FF">  Dim </font>CreationMode2<font color="#0000FF"> As </font>Long
+  CreationMode2 = OpeningObject2.CreationMode
+  MsgBox CreationMode2
+
+  <font color="#008000">'Get the Intersecting Element for Opening_038</font>
+<font color="#0000FF">  Dim </font>IntersectingElem1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>IntersectingElem1 = OpeningObject1.IntersectingElement
+
+  <font color="#008000">'Modify the creation mode to Sketch Mode for Opening_040.</font>
+  <font color="#008000">'Then assign a sketch as intersecting element to this opening</font>
+  OpeningObject2.CreationMode = 1
+
+<font color="#0000FF">  Dim </font>Sketch<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">  Set </font>Sketch = part1.FindObjectByName("Sketch.11")
+<font color="#0000FF">  Dim </font>sketchref<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>sketchref = part1.CreateReferenceFromObject(Sketch)
+  OpeningObject2.IntersectingElement = sketchref
+
+
+  <font color="#008000">'Get the current Direction of Opening_043 and then set a new direction</font>
+<font color="#0000FF">  Dim </font>GetDir<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>GetDir = OpeningObject3.Direction
+
+<font color="#0000FF">  Dim </font>SketchAsDir<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">  Set </font>SketchAsDir = part1.FindObjectByName("Sketch.14")
+<font color="#0000FF">  Dim </font>PutDir<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>PutDir = part1.CreateReferenceFromObject(SketchAsDir)
+  OpeningObject3.Direction  = PutDir
+
+
+  <font color="#008000">'GetMathDirection for Opening_043. This will return the direction in Vector Form.</font>
+
+<font color="#0000FF">  Dim </font>GetMathDir(3)
+  GetMathDir(3) = OpeningObject3.GetDirection
+<font color="#0000FF">  Dim </font>x1, y1, z1<font color="#0000FF"> As </font>Double
+  x1 = GetMathDir(0)
+  y1 = GetMathDir(1)
+  z1 = GetMathDir(2)
+
+  part1.Update
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

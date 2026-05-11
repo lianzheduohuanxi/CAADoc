@@ -1,0 +1,357 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>Adopting XML Test Objects</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Adopting XML Test Objects</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article is shows you how to move your shell test 
+		objects to XML ones.</p>
+		<ul>
+			<li><a href="#XML">Replacing Shell Test Objects with XML Ones</a>
+			<ul>
+				<li><a href="#Module">Launching an Executable Module</a></li>
+				<li><a href="#Record">Launching a Record</a></li>
+			</ul>
+			</li>
+			<li><a href="#Part2">Replacing Specific Commands</a>
+			<ul>
+				<li><a href="#ODTInit">Replacing ODTInit</a></li>
+				<li><a href="#SetODTParam">Replacing SetODTParam</a></li>
+				<li><a href="#WhichDir">Replacing WhichDir</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="XML"></a>Replacing Shell Test Objects with XML Ones</h2>
+<p>Test object are written in XML. You should roughly create an XML file for each 
+shell file in the FunctionTests/TestCases folder of your test frameworks.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Module"></a>Launching an Executable Module</h3>
+<p>This is the case when either you test an application executable module, or when 
+you test one or several shared libraries using an executable module you have written 
+to call and test the shared libraries objects and functions.&nbsp; </p>
+<p>To launch an executable module, you can fall in the following cases:</p>
+<ul class="wide">
+	<li>For example, the shell file can simply calls the executable module to test, 
+		such as in:
+		<pre class="code"># Batch program which demonstrate callback usage.
+#
+CAASysCallBack
+exit $?</pre>
+		<p>In this case, you can call the executable module from within the CAASysCallback.xml 
+		file.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Target desc=&quot;Batch program which demonstrate callback usage.&quot;/&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAASysCallback&quot;/&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		<p>And run it as follows:</p>
+		<pre class="code">E:\MyWorkspace&gt;mkodt -s CAASysCallback</pre>
+	</li>
+	<li>If you pass parameters executable module to test, such as in:
+		<pre class="code"># We will create MyTempDirectory in the Directory $ADL_ODT_TMP
+
+CAASysFileOperations $ADL_ODT_TMP MyTempDirectory
+exit $?</pre>
+		<p>In this case, you can call the executable module and pass parameters 
+		from within the CAASysFileOperations.xml file.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Target desc=&quot;We will create MyTempFolder in the temprary folder ADL_ODT_TMP.&quot;/&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAASysFileOperations %ADL_ODT_TMP% MyTempFolder&quot;/&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		<p>And run it as follows:</p>
+		<pre class="code">E:\MyWorkspace&gt;mkodt -s CAASysFileOperations</pre>
+	</li>
+	<li>If you need to perform some initializations or post processing, such as 
+		in:
+		<pre class="code"># Batch program which reads a cgm file and generates a raster file.
+#
+
+export CAAPrtOut=$ADL_ODT_OUT
+
+CAAPrtChangeFormat $ADL_ODT_IN/CAAPrtChangeFormat.cgm
+exit $?</pre>
+		<p>In this case, create a bat file, such as CAAPrtChangeFormat.bat as show 
+		below:</p>
+		<pre class="code">rem Batch program which reads a cgm file and generates a raster file.
+
+set CAAPrtOut=%ADL_ODT_OUT%
+
+CAAPrtChangeFormat %ADL_ODT_IN%\CAAPrtChangeFormat.cgm
+</pre>
+		<p>Refer to this bat file in the CAAPrtChangeFormat.xml file.</p>
+		<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Target desc=&quot;Batch program which reads a cgm file and generates a raster file.&quot;/&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CMD /C CAAPrtChangeFormat.bat&quot; osConstraint=&quot;win_b64&quot; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+		<p>And run it as follows:</p>
+		<pre class="code">E:\MyWorkspace&gt;mkodt -s CAAPrtChangeFormat</pre>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Record"></a>Launching a Record</h3>
+<p>A record is declared using the SetODTParam command:</p>
+<pre class="code"># Test the graphic properties combo
+
+SetOdtParam TYPE=RECORD
+
+CAACafGrapPropCombo
+
+exit $?</pre>
+<p>To replace this shell file, create the CAACafGrapPropCombo.xml file:</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    &lt;Target desc=&quot;Test the graphic properties combo.&quot;/&gt;
+    &lt;Environment&gt;
+      &lt;Record enable=&quot;true" /&gt;
+    &lt;/Environment&gt;
+  &lt;/Definition&gt;
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CAACafGrapPropCombo&quot; osConstraint=&quot;win_b64&quot; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>And run it as follows:</p>
+<pre class="code">E:\MyWorkspace&gt;mkodt -s CAACafGrapPropCombo</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part2"></a>Replacing Specific Commands</h2>
+<p>The specific commands you can use in a test object shell file are ODTInit, SetODTParam, 
+and WhichDir.</p>
+<h3><a name="ODTInit"></a>Replacing ODTInit</h3>
+<p>ODTInit launches an initialization shell before launching the test program. In 
+addition, if successive test objects declare the same shell using ODTInit, this 
+shell is launched once, and its initializations are shared by the successive test 
+objects, unless a test object declares a new shell using ODTInit.</p>
+<p>To replace ODTInit:</p>
+<ol>
+	<li>Create a bat file with Windows or a shell file with UNIX that you refer 
+		to in the <code>Command</code> tag of the test object XML file.</li>
+	<li>With Windows, migrate the shell file declared by ODTInit to a bat file.</li>
+	<li>Call this bat or the shell file declared by ODTInit in the bat or shell 
+		file you refer to in the Command tag of the test object XML file.</li>
+</ol>
+<p>Compared with ODTInit, this initialization procedure will not be called once, 
+but whenever test objects require it.</p>
+<p>For example, this shell file uses ODTInit:</p>
+<pre class="code"># Test the graphic properties combo
+
+ODTInit RunThisProcedure
+
+CAACafGrapPropCombo
+
+exit $?</pre>
+<p>To replace ODTInit, first create the CAACafGrapPropCombo.bat</p>
+<pre class="code"># Test the graphic properties combo
+
+rem Insert below the migrated contents of RunThisProcedure to bat
+...
+
+CAACafGrapPropCombo</pre>
+<p>Refer to the CAACafGrapPropCombo.bat in the CAACafGrapPropCombo.xml file:</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  ...
+  &lt;Execution&gt;
+    &lt;Command value=&quot;CMD /C CAACafGrapPropCombo.bat&quot; osConstraint=&quot;win_b64&quot; /&gt;
+  &lt;/Execution&gt;
+&lt;/ODT&gt;</pre>
+<p>And run it as follows:</p>
+<pre class="SetODTParam">E:\MyWorkspace&gt;mkodt -s CAACafGrapPropCombo</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="SetODTParam"></a>Replacing SetODTParam</h3>
+<p>SetODTParam sets the values of parameters used by the test object. These parameters 
+are:</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="osname"></a>Replay_osname</h4>
+<p><code>Replay_osname</code> sets an operating system or an operating system family 
+with which the test object must not be replayed. For example, to prevent a test 
+object from being replayed with Windows 32 bit, the test object shell file contains 
+the following line before calling the test program:</p>
+<pre class="code">SetODTParam Replay_intel_a=NO</pre>
+<p>To replace this parameter, use the <code>Replayed</code> tag [x] in the Definition 
+section of the test object XML file.</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;	
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    ...
+    &lt;Replayed value="false" osConstraint="intel_a" /&gt;
+    ...
+  &lt;/Definition&gt;
+...</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="maxtime"></a>max_time</h4>
+<p><code>max_time</code> sets the test object replay maximum elapsed time, expressed 
+in minutes. This time is five minutes by default, and it can be extended up to 60 
+minutes. For example, to reset the test object replay maximum elapsed time to 15 
+minutes, the test object shell file contains the following line before calling the 
+test program:</p>
+<pre class="code">SetODTParam max_time=15</pre>
+<p>To replace this parameter, use the <code>MaxTime</code> tag [x] in the Definition 
+section of the test object XML file.</p>
+<pre class="code">&lt;?xml version=&quot;1.0&quot;?&gt;	
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    ...
+    &lt;MaxTime value=&quot;15" /&gt;
+    ...
+  &lt;/Definition&gt;
+...</pre>
+<p>Note that you can manage this replay maximum elapsed time for a single test object, 
+as shown above, but also for all the test objects replayed during an mkodt run [y].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="TYPE"></a>TYPE</h4>
+<p><code>TYPE</code> sets the type of the test object. This is not supported by 
+XML test objects, except for the value <code>RECORD</code>. For example, to reset 
+the test object replay maximum elapsed time to 15 minutes, the test object shell 
+file contains the following line before calling the test program:</p>
+<pre class="code">SetODTParam TYPE=RECORD</pre>
+<p>To replace this parameter, use the <code>Record</code> tag [x] in the Definition 
+section of the test object XML file.</p>
+<pre class="code"> &lt;?xml version=&quot;1.0&quot;?&gt;	
+&lt;ODT Version=&quot;1.0&quot;&gt;
+  &lt;Definition&gt;
+    ...
+    &lt;Record enable=&quot;true" /&gt;
+    ...
+  &lt;/Definition&gt;
+...</pre>
+<p>Note that you can manage this replay maximum elapsed time for a single test object, 
+as shown above, but also for all the test objects replayed during an mkodt run [y].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h4><a name="USER"></a>USER</h4>
+<p><code>USER</code> sets the name of the end user who replays the test object. 
+This is not supported by XML test objects.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="WhichDir"></a>Replacing WhichDir</h3>
+<p><code>WhichDir</code> finds a folder or a file in either:</p>
+<ul>
+	<li>The run time path name concatenation which is the value of the <code>MKMK_LST_RTV</code> 
+		environment variable, if the folder or file path name begins with the operating 
+		system identifier.</li>
+	<li>The workspace concatenation which is the value of the <code>ADL_ODT_CONCATENATION</code> 
+		environment variable, if the folder or file path name begins with a framework 
+		name.</li>
+</ul>
+<p>To replace <code>WhichDir</code>, use the WhichDir bat or shell procedure [<a href="#References">z</a>] 
+called from the one referred to in the test object XML file. </p>
+<ol>
+	<li>Create a bat file with Windows or a shell file with UNIX that you refer 
+		to in the <code>Command</code> tag of the test object XML file.</li>
+	<li>Copy the WhichDir.bat or WhichDir.sh file [<a href="#References">z</a>] 
+		to the CNext/code/command folder of one of your test frameworks. This file 
+		will then be located in the run time view the path of which will be set 
+		in the <code>PATH</code> environment variable.</li>
+	<li>Call this WhichDir bat or shell file in the bat or shell file you refer 
+		to in the <kbd>Command</kbd> tag of the test object XML file to set a variable 
+		you can use when referring to this file or folder.</li>
+</ol>
+<p>For example, to retrieve the location of 3DEXPERIENCE.exe in the run time path 
+name concatenation:</p>
+<pre class="code">set CNEXT_PATH=WhichDir %OS%\code\bin\3DEXPERIENCE.exe</pre>
+<p>Replace this with:</p>
+<pre class="code">for /F "delims=" %%i in ( 'WhichDir %OS%\code\bin\3DEXPERIENCE.exe' ) do set CNEXT_PATH=%%i</pre>
+<p>To retrieve in the workspace concatenation a file located in a framework folder 
+that is not part of the run time view: </p>
+<pre class="code">set PART1=WhichDir CAAVisualization.edu\CNext\resources\cgr\CUBES.cgr</pre>
+<p>Replace this with:</p>
+<pre class="code">for /F "delims=" %%i in ( 'WhichDir CAAApplicationFrame.edu\InputData\CAAAfrPart1.CATPart' ) do set PART1=%%i</pre>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: To retrieve the 
+		files that are located in either the test framework Input, Output, or OutputRef 
+		folders, use the <code>ADL_ODT_IN</code>, <code>ADL_ODT_OUT</code>, or
+		<code>ADL_ODT_REF</code> environment variables respectively [<a href="#References">t</a>].</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The shell file called by mkodt using the -s option is replaced by an XML file 
+that refers to either an executable module or a record using its <kbd>Command</kbd> 
+tag. Parameters can be passed to the executable module. If initializations or post 
+processing are necessary before calling the executable module, create a bat file 
+that performs them, call the executable module from this bat file, and refer to 
+the bat file in the XML file <kbd>Command</kbd> tag.</p>
+<p>The specific commands ODTInit, SetODTParam, and WhichDir are replaced with bat 
+files or XML tags, </p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqjQr0003.htm">XML Tag Reference</a></td>
+	</tr>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqjTa0010.htm">How to Modify the Replay Maximum Elapsed 
+		Time</a></td>
+	</tr>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqjQr0004.htm">Finding a Folder or a File</a></td>
+	</tr>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqjQr0002.htm">Environment Variables</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2015]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2015, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

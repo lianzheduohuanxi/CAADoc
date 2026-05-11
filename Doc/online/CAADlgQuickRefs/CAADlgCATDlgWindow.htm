@@ -1,0 +1,234 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgWindow</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgWindow</h3>
+      <em>Base class for windows</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---CATDlgWindow</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>CATDlgWindow is the base class for all dialog window classes. All the tasks
+described here consequently apply to any dialog window instance. Its derived
+classes are:</p>
+<ul>
+  <li><a href="CAADlgCATDlgDocument.htm">CATDlgDocument</a></li>
+  <li><a href="CAADlgCATDlgDialog.htm">CATDlgDialog</a></li>
+  <li><a href="CAADlgCATDlgNotify.htm">CATDlgNotify</a></li>
+  <li><a href="CAADlgCATDlgFile.htm">CATDlgFile</a>.</li>
+</ul>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The window layout uses tabulations</td>
+  </tr>
+  <tr>
+    <td>CATDlgGridLayout</td>
+    <td>The window layout uses a <a href="../CAADlgTechArticles/CAADlgGridLayout.htm">grid</a>. This is the recommended way of arranging
+      objects in a dialog window</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgWindSizeNotification</td>
+    <td><code>GetWindSizeNotification</code></td>
+    <td>When the window is resized</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindCloseNotification</td>
+    <td><code>GetWindCloseNotification</code></td>
+    <td>When the window is closed</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindMoveNotification</td>
+    <td><code>GetWindMoveNotification</code></td>
+    <td>When the window is moved</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindMaximizeNotification</td>
+    <td><code>GetWindMaximizeNotification</code></td>
+    <td>When the window is maximized</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindMinimizeNotification</td>
+    <td><code>GetWindMinimizeNotification</code></td>
+    <td>When the window is minimized</td>
+  </tr>
+  <tr>
+    <td>CATDlgWindRestoreNotification</td>
+    <td><code>GetWindRestoreNotification</code></td>
+    <td>When the window is restored to its previous size after being minimized
+      or maximized</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The methods described below are valid for the derived classes <a href="CAADlgCATDlgDocument.htm">CATDlgDocument</a>
+and <a href="CAADlgCATDlgDialog.htm">CATDlgDialog</a> only, because <a href="CAADlgCATDlgNotify.htm">CATDlgNotify</a>
+and <a href="CAADlgCATDlgFile.htm">CATDlgFile</a> do not allow for dialog
+children.</p>
+<p>The programming tasks fall into the following topics:</p>
+<ul>
+  <li><a href="#100000">Constructing a Dialog Window</a></li>
+  <li><a href="#400000">Managing the Window Size</a></li>
+  <li><a href="#200000">Setting a Callback on a Dialog Window</a></li>
+  <li><a href="../CAADlgTechArticles/CAADlgGridLayout.htm">Managing the Window Layout Using a Grid</a></li>
+  <li><a href="#500000">Setting a Title to a Dialog Window</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="100000"></a>Constructing a Dialog Window</h4>
+<p>A CATDlgWindow can be constructed as the base class of one of its derived
+class only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="400000"></a>Managing the Window Size</h4>
+<p>You can do the following to manage the size of a dialog window.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>Get maximum window size</em></td>
+    <td class="code">
+      <pre>int Height, Width;
+_pWindow-&gt;GetMaximumSize(&amp;Height, &amp;Width);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Make the window content occupy the full screen</em></td>
+    <td class="code">
+      <pre>// The window content occupies the full screen
+_pWindow-&gt;SetFullScreen(1);
+// The window is restored to its previous size
+_pWindow-&gt;SetFullScreen(0);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Maximize</em></td>
+    <td class="code">
+      <pre>_pWindow-&gt;Maximize();</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Minimize</em></td>
+    <td class="code">
+      <pre>_pWindow-&gt;Minimize();</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Restore</em></td>
+    <td class="code">
+      <pre>_pWindow-&gt;Restore();</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Is maximized?</em></td>
+    <td class="code">
+      <pre>if (_pWindow-&gt;IsMaximized())
+  ... // The window is maximized
+else
+  ... // The window is NOT maximized</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Is minimized?</em></td>
+    <td class="code">
+      <pre>if (_pWindow-&gt;IsMinimized())
+  ... // The window is minimized
+else
+  ... // The window is NOT minimized</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="200000"></a>Setting a Callback on a Dialog Window</h4>
+<p>Set a callback on a dialog window as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pWindow,                                     // window 
+  _pWindow-&gt;GetWindCloseNotification(),         // notification
+  (CATCommand)&amp;Container::MethodToExecute,      // method to execute 
+  CATCommandClientData iUsefulData);            // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="300000"></a>Managing the Window Layout Using a Grid</h4>
+<p>This is explained in <a href="../CAADlgTechArticles/CAADlgGridLayout.htm">Arranging
+Dialog Objects Using Grid</a>. Layout using a grid is available only if the
+CATDlgGridLayout style is used in the window constructor.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="500000"></a>Setting a Title to a Dialog Window</h4>
+<p>The dialog window title should be on the derived class instance and set by
+the resource file using a key built with the identifier you declare as the
+second parameter of the dialog window constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,471 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and modifying a Web</title>
+</head>
+
+<body>
+
+<table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Aerospace Sheet Metal Design</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating and modifying a Web</h3>
+     <p><em>Using the aerospace sheet metal factory and public interface to create or modify a web 
+     feature</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ 
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the <b>CAAStmWeb</b> use case. This use 
+     case explains how to create or modify a Web feature.
+     A <b>Web</b> is the base feature for all other aerospace sheet metal features.[<a href="#References">1</a>]</p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><a href="#UseCase"><b>The CAAStmWeb Use Case</b>
+       <ul>
+         <li></a><a href="#What">What Does CAAStmWeb Do</a></li>
+         <li><a href="#How">How to Launch CAAStmWeb </a></li>
+         <li><a href="#Where">Where to Find the CAAStmWeb Code</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#Step">Step-by-Step</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will You Learn With This Use Case</h3>
+ <p>This use case learns how to use the aerospace sheet metal factory and the Web public interface 
+ to create , display or modify a Web.
+ Its main intent is to introduce important concepts about the way to create or modify
+ aerospace sheet metal features.</p>
+ <h3><a name="UseCase"></a>The CAAStmWeb Use Case</h3>
+ <p>CAAStmWeb is a use case of the CAAAerospaceSheetMetal.edu framework 
+ that illustrates the creation or modification of a Web feature.</p>
+ <p>;<a name="What"></a>What Does CAAStmWeb Do</p>
+ <p>This use case will show you the different steps to create or modify a Web.</p>
+ <p>More precisely this sample :</p>
+ <blockquote>
+   <ul>
+     <li>Read and analyse an input data (.txt) file. </li>
+     <li>Create a session.</li>
+     <li>Open a CATPart document including the necessary geometric input features.</li>
+     <li>Create the Web feature if it does't exist in the input Part.</li>
+     <li>Set the values of the parameters of the Web.</li>
+     <li>Update the Part.</li>
+     <li>Save the result in a new CATPart document.</li>
+     <li>Close the session.</li>
+   </ul>
+ </blockquote>
+ <p>With this sample, you will have in batch mode the same capabilities than an interactive session.</p>
+ <p>The input data file contains the same fields than the UI Web command panel :</p>
+ <p><img border="0" src="images/WebTxt.jpg" width="439" height="259"></p>
+ <p>Some samples of input data are provided in <b>Data.d</b> directory.</p>
+ <p>The structure of this file is simple :</p>
+ <p>KEYWORD: when a keyword is encountered a boolean is set to TRUE : the corresponding data is to set.</p>
+ <p>More details about available KEYWORDS are provided in front of the sample source file.</p>
+ <p>i.e. : The input data file above will create a Web with features read in 
+ CAATestBasicGeometry.CATPart :</p>
+ <p><img border="0" src="images/BasicGeometry.jpg" width="659" height="551"></p>
+ <p>Remark that the <b>Sheet Metal Parameters</b> feature must exist in the input Part ( see the spec 
+ tree above ).</p>
+ <p>The sample will create a Web with Plane.1 as <b>Support</b> and Extrude.1, Fill.1, 
+ Sketch.4 and Sketch.3 as <b>Boundary</b> :</p>
+ <p><img border="0" src="images/Web.jpg" width="660" height="566"></p>
+ <p> </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAStmWeb</h4>
+ <p>To launch CAAStmWeb, you will need to set up the build time 
+ environment, then compile CAAStmWeb along with its 
+ prerequisites, and set up the run time environment, and then execute the use 
+ case [<a href="#References">2</a>].</p>
+ <p>Launch the use case as follows: </p>
+ <ul>
+   <li>Before launching the use case :
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>Edit the File : CAATestCreateWeb.txt</pre>
+       <pre>                Customize the fields INPUT and OUTPUT</pre>
+       <pre>                Specify the Paths where the .CATParts files will be retrieved and saved</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>On Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:\CAAStmWeb inputDirectory\CAATestCreateWeb.txt</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>On UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ CAAStmWeb inputDirectory/CAATestCreateWeb.txt</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p>where:</p>
+ <table>
+   <tr>
+     <td><code>inputDirectory</code></td>
+     <td>The directory into which CAATestCreateWeb.txt<code> is found
+     </code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAStmWeb Code</h4>
+ <p>The CAAStmWeb use case is made of main program located in the 
+ CAAStmWeb.m module of the CAAAerospaceSheetMetal.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAerospaceSheetMetal.edu\CAAStmWeb.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAerospaceSheetMetal.edu/CAAStmWeb.m/</code></td>
+   </tr>
+ </table>
+ <p>The input CAATestCreateWeb.txt and CAATestCreateWeb.CATPart are proposed in Data.d directory of 
+ CAAAerospaceSheetMetal.edu </p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAerospaceSheetMetal.edu\Data.d\Web
+     </code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAerospaceSheetMetal.edu/Data.d/Web</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are 7 main steps in CAAStmWeb : </p>
+ <ol>
+   <li><a href="#ReadInput">Read and analyse input data</a></li>
+   <li><a href="#Initialize">Create a session</a></li>
+   <li><a href="#Create">Create the Web feature</a></li>
+   <li><a href="#Parameters">Set of the Web parameters</a></li>
+   <li><a href="#Update">Update the Part feature</a></li>
+   <li><a href="#Save">Save the result</a></li>
+   <li><a href="#Close">Close the session</a></li>
+ </ol>
+ <p>We will now comment each of those sections by looking at the code of the 
+ main method of the file CAAStmWeb.cpp.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="ReadInput"></a>Read and analyse input data</h4>
+ <p>CAAStmWeb sample will first read and analyse an input data file. </p>
+ <p>Note : some services are provided in the class <b>CAAStmServices</b>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+
+CAAStmServices CAASmaTools;
+
+rc = CAASmaTools.AnalyseWebInputData (InputDataFilePath, CAAWebInput);
+...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The method AnalyseWebInputData will read the input data file and store the data in the class CAAStmInputData:
+ i.e : if the method <b>GetSupportGeomToSet() </b>returns TRUE it means that the Support is to set.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+
+class ExportedByCAAStmServices CAAStmInputData
+  {
+  public:
+    
+    CAAStmInputData();
+    virtual ~CAAStmInputData();
+    
+    /**
+     * <b>Role</b>: Methods to get the Input Data.
+     *
+     */
+    
+    // General Data :
+    // --------------
+
+    CATUnicodeString          GetInputPartPath  ();
+    CATUnicodeString          GetOutputPartPath ();
+    CATUnicodeString          GetLengthUnit     ();
+    
+    CATBoolean                GetDisplay ();
+    ...
+
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Initialize"></a>Create a session</h4>
+ <p>Create a session and open the CATPart Document : this step has no specificity.
+ It is a call to standard functionalities :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>     
+  ...
+  
+  // create a session
+  char *       pSessionName = "CAAStmWeb";
+  CATSession * pSession     = NULL; 
+    
+  rc = Create_Session (pSessionName, pSession); 
+    
+  ...
+  
+  // Load the input Document
+
+  rc = CATDocumentServices::OpenDocument((CAAWebInput.InputPartPath).ConvertToChar(), pDocument);
+  
+  ...
+  
+  // Retrieve the Part Feature and the Aerospace Sheet Metal Factory :
+      
+    CATIPrtContainer * piPrtCont = (CATIPrtContainer *) piInit -> GetRootContainer("CATIPrtContainer");
+    
+    if(NULL != piPrtCont)
+      { 
+      spPrtPartSpec = piPrtCont -> GetPart(); 
+    
+      if(NULL_var != spPrtPartSpec)
+        {
+  
+  ...
+  
+  rc = piPrtCont -> QueryInterface(IID_CATIAerospaceSheetMetalFactory, (void **)& piAslFactory);
+  
+  ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Create"></a>Create the Web feature</h4>
+ <p>Create a Web feature using <b>CreateWeb </b>method of <b>
+	CATIAerospaceSheetMetalFactory </b>: this method will create all internal 
+ features and links between the attributes of the Web. Due to only one Web may exist in a Part we try 
+ first to find if a Web exist :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+    ...
+ 
+    // Try to retrieve the Web Feature :
+    
+    rc = CAASmaTools.FindWeb (piPrtPartSpec, &piWebSpec);
+      
+    ...
+
+      // No Web found : creation of a new one
+      
+      rc = piAslFactory -> CreateWeb ((CATISpecObject *) spPrtPartSpec, &piWebSpec);
+      ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Parameters"></a>Set of the Web parameters</h4>
+ <p>Set the Web parameters according to the values stored in CAAWebInput</p>
+ <p>i.e : Support : set a CATISpecObject pointer</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+
+      if(SUCCEEDED(rc) && (CAAWebInput.GetSupportGeomToSet()))
+        {
+        // Search the Web Support input specification :
+        CATISpecObject * pSupportSpec = NULL;
+
+        rc = CAASmaTools.FindFeatureInSpecTree (spPrtPartSpec, CAAWebInput.SupportGeomName, &pSupportSpec);
+
+        if(SUCCEEDED(rc) && (NULL != pSupportSpec))  
+          {
+          // Set the Web Support :
+          rc = piStmWeb -> SetSupport(pSupportSpec);
+          ...
+</pre>
+     </td>
+   </tr>
+ </table>
+  
+ <p>i.e : Material orientation : set a CATOrientation</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+
+      if(SUCCEEDED(rc) && (CAAWebInput.GetMaterialOrientToSet()))
+        {
+        rc = piStmWeb -> SetMaterialOrient(CAAWebInput.MaterialOrient);
+        ...
+</pre>
+     </td>
+   </tr>
+ </table>
+
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Update"></a>Update the Part feature</h4>
+ <p>We suggest to update the Part Feature instead of the Web to force all internal links of the Web to re-build : </p>
+ <p>This step is not necessary if "DISPLAY:" has been chosen.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    ...
+   
+    rc = CAASmaTools.Update (piPrtPartSpec);
+    ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Save"></a>Save the result</h4>
+ <p>Save the result Part in a new CATPart file.</p>
+ <p>This step is NOT applied if "DISPLAY:" has been chosen.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    ...
+    
+    // Save the Document 
+    rc = CATDocumentServices::SaveAs (*pDocument, (CAAWebInput.OutputPartPath).ConvertToChar());
+    ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Close"></a>Close the session</h4>
+ <p>Release the interface pointers and close the session.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>  ...
+ 
+  // Releases on Interfaces :
+  if(NULL != piAslFactory)
+    {
+    piAslFactory -> Release();
+    piAslFactory = NULL;
+    }
+  if(NULL != piStmWeb)
+    {
+    piStmWeb -> Release();
+    piStmWeb = NULL;
+    }
+  if(NULL != piWebSpec)
+    {
+    piWebSpec -> Release();
+    piWebSpec = NULL;
+    }
+
+  // Close the document
+  rc = CATDocumentServices::Remove (*pDocument);
+  
+  ...
+  
+  // End session
+  rc = Delete_Session (pSessionName);
+  ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case has demonstrated the way to create, display or modify a Web feature. </p>
+ <p></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [January 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAerospaceSheetMetalArticles/CAAAerospaceSheetMetalFeatures.htm">An Overview of the Aerospace Sheet Metal Design Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+    <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+</html>

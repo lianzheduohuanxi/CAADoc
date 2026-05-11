@@ -1,0 +1,191 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+  </script>
+  <title>Derivative Design Copy Scenario</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)</h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Derivative Design Copy Scenario</h3>
+       <em>Process example for a Derivative Design Copy scenario</em></td>
+     </tr>
+     <tr>
+       <td class="tech" colspan="2">Technical Article</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article explains the principles, and gives a step by step 
+       scenario of Derivative Design Copy operation for a CATIA V5 and an 
+       external PDM System integration [<a href="#References">1</a>].<br>
+       </p>
+       <ul>
+         <li><b><a href="#Rename Scenario">Derivative Design Copy Scenario</a></b></li>
+         <li><b><a href="#Rename Scenario Detailed Steps">Derivative Design Copy 
+         Scenario Detailed Steps</a></b></li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Rename Scenario"></a>Derivative Design Copy Scenario</h3>
+   <p>Derivative Design Copy is a scenario whereby a consistent set of documents 
+   stored in a PDM system is duplicated to allow manage a derivative design 
+   variant of this set. </p>
+   <p></p>
+   <p>This operation is implemented by: </p>
+   <ul>
+     <li>Computing the consistent set of documents the selected document belongs 
+     to</li>
+     <li>Performing the PDM Check-Out [<a href="#References">2</a>] operation 
+     for each document of the consistent set of documents </li>
+     <li>Renaming [<a href="#References">3</a>] the documents in the context of 
+     the consistent set, and updating the document links information</li>
+     <li>Performing the PDM Check-In [<a href="#References">4</a>] operation for 
+     each document of the new consistent set of documents </li>
+   </ul>
+   <p>This scenario, developed in the <a href="#Rename Scenario Detailed Steps">
+   Derivative Design Copy Scenario Detailed Steps</a> section, can be also 
+   presented by this Diagram:</p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber2">
+     <caption>Fig.1: The Derivative Design Copy Scenario Diagram</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiDerivativeDesignCopySchema.jpg" width="657" height="441"></td>
+     </tr>
+   </table>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Rename Scenario Detailed Steps"></a>Derivative Design Copy 
+   Scenario Detailed Steps</h3>
+   <p>This section details step by step the Derivative Design Copy scenario. 
+   But, no API will be given, you should refer to the elementary PX1 use cases, 
+   or the CATxPDMInterfaces framework API documentation, to have implementation 
+   details. </p>
+   <p>The Integration can implement the Derivative Design Copy scenario as an 
+   interactive CATIA command running within the CATIA session context. It 
+   proposes a Document Selection dialog box displaying the list of CATIA V5 
+   documents stored in the external PDM. The end users chooses a document to 
+   process.</p>
+   <p>A CATIA session is open.</p>
+   <ol>
+     <li>The user <b>starts</b> the Derivative Design Copy command</li>
+     <li>Integration <b>displays</b> the dialog box enabling the seach for a 
+     document in PDM system, and the ed user<ol>
+       <li>Locates the document in the displayed list</li>
+       <li>Chooses the rule for renaming the documents</li>
+       <li>Clicks OK button to confirm the selection</li>
+     </ol>
+     </li>
+     <li>Integration <b>computes</b> the list of documents to be checked out 
+     from<ol>
+       <li>The consistent set of documents the selected document belongs to&nbsp;
+       </li>
+       <li>The list of parents documents linked to the selected document</li>
+       <li>For each document to be checked-out&nbsp; (5.1 + 5.2)</li>
+       <li>If one of the document to be checked-out already exists in the user 
+       Work area</li>
+       <ul>
+         <li>If the document is already loaded in session, Derivative Design 
+         Copy operation must be cancelled</li>
+         <li>Otherwise, the user Work area must be cleared</li>
+       </ul>
+       </li>
+       <li>If one is locked or checked-out by another user, Derivative Design 
+       Copy operation must be cancelled</li>
+     </ol>
+     </li>
+     <li>Integration <b>computes</b> and <b>&nbsp;checks </b>on each document 
+     identified in step 4<ol>
+       <li>Computes the new document names applying the chosen rule for renaming</li>
+       <li>None of the new document names does already exist in the PDM system</li>
+     </ol>
+     </li>
+     <li>Integration <b>reserves</b> the new document names in the PDM system</li>
+     <li>Integration <b>performs</b> the Check-Out [<a href="#References">2</a>] 
+     operation for all documents identified in step 4. The documents are 
+     transferred in the user Work area</li>
+     <li>Integration <b>renames</b> all the documents in the user Work area in 
+     the context of the consistent set</li>
+     <li>Integration <b>opens</b> the renamed documents in CATIA V5 session</li>
+     <li>Integration <b>updates</b> the properties of the renamed documents</li>
+     <li>Integration <b>saves</b> the modified documents in the user Work area</li>
+     <li>Integration <b>removes</b> the renamed documents from the session</li>
+     <li>Integration <b>performs</b> the Check-In [<a href="#References">4</a>] 
+     operation for the new consistent set of documents </li>
+     <li>Integration <b>stops</b> the Derivative Design Copy command</li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td><a href="CAAXpiIntegrationOverview.htm">CATIA V5 and an External PDM 
+       System Integration Principles</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td><a href="CAAXpiCheckOutScenario.htm">Check-Out Scenario </a></td>
+     </tr>
+     <tr>
+       <td valign="top">[3]</td>
+       <td><a href="CAAXpiRenameScenario.htm">Rename Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[4]</td>
+       <td><a href="CAAXpiCheckInScenario.htm">Check-In Scenario </a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2005]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

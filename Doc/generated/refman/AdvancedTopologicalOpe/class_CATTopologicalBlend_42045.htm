@@ -1,0 +1,409 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>AdvancedTopologicalOpe Class CATTopologicalBlend</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../AdvancedTopologicalOpe.htm" href="../AdvancedTopologicalOpe.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "AdvancedTopologicalOpe";	}
+		function getCurrentObjectName() { 
+ 	return "CATTopologicalBlend"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>AdvancedTopologicalOpe <script type="text/javascript" > writeClassCharacteristic(); </script> CATTopologicalBlend</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATTopologicalBlend_42045','CATTopologicalBlend','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATTopologicalBlend</b>
+</p>
+<p>
+<b><i> </i></b><br>
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R10 CATTopBlend
+ Class defining the topological operator that connects two wires with a skin.
+ <br> Continuity criteria can be precised: G0, G1 or G2 if the supporting surfaces of the wires
+ are given, G0 otherwise.
+ <br>The CATTopologicalBlend operator creates the resulting blend
+ separately from the inputs: the topology of the input bodies is not used to define the topology
+ of the resulting body.  
+<ul>
+ <li>A CATTopologicalBlend operator is created with the <tt>CATCreateTopologicalBlend</tt> global function;
+ it must be directly deleted with the usual C++ <tt>delete</tt> operator after use. It is is not streamable. 
+<li>Options can be precised with the <tt>SetXxx</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method. 
+<li>The result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.Although several sucessive 
+ <tt>Run</tt>s with different inputs
+ are possible, it is strongly recommended to <tt>Run</tt> it only once.
+ <li>The journal corresponding to the blend operation is not yet implemented.
+</ul>
+</dl>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#~CATTopologicalBlend()"><b>~CATTopologicalBlend</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetMode()"><b>GetMode</b></a>()
+<dd>  Returns the mode of creation of the blend surface.
+ <dt> o 
+    <a href="#GetResult()"><b>GetResult</b></a>()
+<dd>  Returns the result of <tt>this</tt> operator.
+ <dt> o 
+    <a href="#GetTwistTreatment()"><b>GetTwistTreatment</b></a>()
+<dd>  Returns the level of the twist detection (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#GetValidity()"><b>GetValidity</b></a>()
+<dd>  Returns the result of the twist detection.
+ <dt> o 
+    <a href="#SetBasicTangencyContinuityMode(CATBlendTgContMode)"><b>SetBasicTangencyContinuityMode</b></a>(CATBlendTgContMode)
+<dd>  Defines the way of construction of the second rank of control points of the blend surface
+ (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetDefaultConfiguration(CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;)"><b>SetDefaultConfiguration</b></a>(CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;)
+<dd>  Retrieves the default orientations taken by <tt>this</tt> operator (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetMode(CATLONG32)"><b>SetMode</b></a>(CATLONG32)
+<dd>  Defines the mode of creation of the blend surface (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetTransitionContinuity(CATLONG32,CATLONG32)"><b>SetTransitionContinuity</b></a>(CATLONG32,CATLONG32)
+<dd>  Defines the continuity criteria to take into account for a given wire (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetTransitionOrientation(CATLONG32,CATLONG32)"><b>SetTransitionOrientation</b></a>(CATLONG32,CATLONG32)
+<dd>  Defines the relative orientation of the wire (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetTwistTreatment(CATLONG32)"><b>SetTwistTreatment</b></a>(CATLONG32)
+<dd>  Defines the level of twist detection (<tt>ADVANCED mode</tt>).
+ <dt> o 
+    <a href="#SetWireOrientation(CATLONG32,CATLONG32)"><b>SetWireOrientation</b></a>(CATLONG32,CATLONG32)
+<dd>  Defines the relative orientation of the wire (<tt>ADVANCED mode</tt>).
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="~CATTopologicalBlend"></a><a name="~CATTopologicalBlend()"></a> <dt> o <b>~CATTopologicalBlend</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATTopologicalBlend</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetMode"></a><a name="GetMode()"></a> <dt> o <b>GetMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetMode</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the mode of creation of the blend surface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The mode of the blend surface.
+ <br><b>Legal values</b>:
+ <dl><dt>0</dt><dd> Analytical mode: the control points of the wire are taken to build the blend surface.
+ In some cases depending on the input geometry, the surface canot be created.
+ <dt>1</dt><dd> Geometrical mode: the blend surface is computed by tracing (or marching) the solution 
+ along the wire.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetResult"></a><a name="GetResult()"></a> <dt> o <b>GetResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBody','CATBody *')</script>  <b>GetResult</b>(<td>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the result of <tt>this</tt> operator.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the created body. You must delete it with the 
+<script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script>  method if you do not want to keep it.
+</dl>
+</dl>
+<a name="GetTwistTreatment"></a><a name="GetTwistTreatment()"></a> <dt> o <b>GetTwistTreatment</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetTwistTreatment</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the level of the twist detection (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The level.
+ <br><b>Legal values:</b>
+ <dl><dt>0</dt><dd>No twist detection.
+ <dt>1</dt><dd>A twist detection (this is a rough computation that may be too strict).
+ This is the default value.
+</dl>
+</dl>
+</dl>
+<a name="GetValidity"></a><a name="GetValidity()"></a> <dt> o <b>GetValidity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetValidity</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the result of the twist detection.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of the twist detection.
+ <br><b>Legal values</b>:
+ <dl><dt>1</dt><dd>The surface is not twisted and was computed.
+ <dt>0</dt><dd>The surface is twisted and the blend was not computed.
+ <dt>-1</dt><dd>No diagnosis (in case of </tt>twist detection level = 0</tt>).
+ </dl>
+</dl>
+</dl>
+<a name="SetBasicTangencyContinuityMode"></a><a name="SetBasicTangencyContinuityMode(CATBlendTgContMode)"></a> <dt> o <b>SetBasicTangencyContinuityMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetBasicTangencyContinuityMode</b>(<td> const <script type="text/javascript"> activateLink('CATBlendTgContMode','CATBlendTgContMode')</script> <td><tt>iBlendTgContMode</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the way of construction of the second rank of control points of the blend surface
+ (<tt>ADVANCED mode</tt>).
+ <br>In case of analytical mode and G1 or G2 continuity.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBlendTgContMode</tt>
+   <dd> The way of construction. By default, it is set to <tt>CATBlendCrossTgCont</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetDefaultConfiguration"></a><a name="SetDefaultConfiguration(CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;,CATLONG32&amp;)"></a> <dt> o <b>SetDefaultConfiguration</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDefaultConfiguration</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oWireOrientationSide1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oWireOrientationSide2</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oTransitionOrientationSide1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>oTransitionOrientationSide2</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the default orientations taken by <tt>this</tt> operator (<tt>ADVANCED mode</tt>).
+ <br>The operator does an analysis of the inputs, in order to avoid twisted surfaces for examples.
+ This method returns the relative orientations found after this analysis.
+ Let <tt>T=oWireOrientationSide * (Tangent Vector to Wire)</tt> be the tangent to the wire, 
+ corrected by the default orientation. Let now <tt>N</tt> be the normal to the skin body.
+ The transition orientation defines how the blend goes from the initial wires: it takes the 
+ direction of <tt>oTransitionOrientationSide*(T^N)</tt>, where <tt>^</tt> is the vectorial product.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oWireOrientationSide1</tt>
+   <dd> The default orientation of the first wire.
+ <br><b>Legal values</b>: <tt>1</tt> if the first wire is taken with its natural orientation, </tt>-1</tt>
+ for an opposite orientation.
+ </dd>
+    <dt><tt> oWireOrientationSide2</tt>
+   <dd> The default orientation of the second wire. Not use in case of extrapolation.
+ <br><b>Legal values</b>: <tt>1</tt> if the second wire is taken with is natural orientation, </tt>-1</tt>
+ for an opposite orientation.
+ </dd>
+    <dt><tt> oTransitionOrientationSide1</tt>
+   <dd> The transition from the first wire.
+ </dd>
+    <dt><tt> oTransitionOrientationSide2</tt>
+   <dd> The transition from the second wire.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetMode"></a><a name="SetMode(CATLONG32)"></a> <dt> o <b>SetMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetMode</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the mode of creation of the blend surface (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The mode of the blend surface.
+ <br><b>Legal values</b>:
+ <dl><dt>0</dt><dd> Analytical mode: in case of simple geometrical wire 
+ (such as iso-parametric line on a surface  in G1 or G2 continuity or
+ Nurbs in case of G0 continuity), the control points of the wire are taken to build the blend surface.
+ In some cases depending on the input geometry, the surface cannot be created.
+ <dt>1</dt><dd> Geometrical mode: the blend surface is computed by tracing (or marching) the solution 
+ along the wire.
+ <dt>2</dt><dd> Automatic mode: automatically choose the more appropriate mode 
+ (default mode in <tt>BASIC</tt> use)
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTransitionContinuity"></a><a name="SetTransitionContinuity(CATLONG32,CATLONG32)"></a> <dt> o <b>SetTransitionContinuity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransitionContinuity</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iWhichWire</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTransitionContinuity</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the continuity criteria to take into account for a given wire (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWhichWire</tt>
+   <dd> The first (1) or the second (2) input wire.
+ </dd>
+    <dt><tt> iTransitionContinuity</tt>
+   <dd> The continuity criteria
+ <br><b>Legal values</b>: <tt>0</tt> for G0 continuity, <tt>1</tt> for G1 continuity, 
+ <tt>2</tt> for G2 continuity.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTransitionOrientation"></a><a name="SetTransitionOrientation(CATLONG32,CATLONG32)"></a> <dt> o <b>SetTransitionOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransitionOrientation</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iSide</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iTransitionOrientation</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the relative orientation of the wire (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWhichWire</tt>
+   <dd> The first (1) or the second (2) input wire.
+ </dd>
+    <dt><tt> iTransitionContinuity</tt>
+   <dd> The relative transition with respect to the default given by the <tt>SetDefaultConfiguration</tt> 
+ method.
+ <br><b>Legal values</b>: <tt>1</tt> if the transition of the <tt>iWhichWire</tt> wire is the default
+ computed by <tt>this</tt> operator, <tt>-1</tt> for the opposite transition.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTwistTreatment"></a><a name="SetTwistTreatment(CATLONG32)"></a> <dt> o <b>SetTwistTreatment</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTwistTreatment</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iLevel</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the level of twist detection (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLevel</tt>
+   <dd> The level.
+ <br><b>Legal values:</b>
+ <dl><dt>0</dt><dd>No twist detection.
+ <dt>1</dt><dd>A twist detection (this is a rough computation that may be too strict).
+ This is the default value.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetWireOrientation"></a><a name="SetWireOrientation(CATLONG32,CATLONG32)"></a> <dt> o <b>SetWireOrientation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetWireOrientation</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iWhichWire</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iWireOrientation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the relative orientation of the wire (<tt>ADVANCED mode</tt>).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iWhichWire</tt>
+   <dd> The first (1) or the second (2) input wire.
+ </dd>
+    <dt><tt> iWireOrientation</tt>
+   <dd> The relative orientation with respect to the default given by the <tt>SetDefaultConfiguration</tt> 
+ method.
+ <br><b>Legal values</b>: <tt>1</tt> if the orientation of the <tt>iWhichWire</tt> wire is the default
+ computed by <tt>this</tt> operator, <tt>-1</tt> for the opposite orientation.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATTopologicalBlend.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATAdvancedTopologicalOpe</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

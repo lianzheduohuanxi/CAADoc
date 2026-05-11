@@ -1,0 +1,402 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Command</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Command</h3>
+      <em>Creating a new command and adding it in a CATlet workshop</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a Command in the Portal.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The FoodStoreSelectionCommand Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does FoodStoreSelectionCommand Do</a></li>
+            <li><a href="#How">How to Launch FoodStoreSelectionCommand</a></li>
+            <li><a href="#Where">Where to Find the FoodStoreSelectionCommand
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a new Command and how to add
+it to a CATlet Workshop.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The FoodStoreSelectionCommand Use Case</h3>
+<p>The FoodStoreSelectionCommand is a use case of the CAAJApplicationFrame.edu
+framework that illustrates the creation of a new Command and its integration in
+the Portal application. This use case uses the Command, CommandBeanInfo and CSO
+class of the PortalBase framework.</p>
+<p>A command can be considered as an extension of your CATlet. It allows to add
+interactive actions to a CATlet, without modifying the CATlet. A command is a
+functionality which can be started with an icon selection by the end user. The
+command can do a treatment and stop, or launching interactive dialog with the
+end user.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does FoodStoreSelectionCommand Do</h4>
+<table>
+  <tr>
+    <td><img src="images/FoodStoreToolBar.jpg" alt="FoodStoreToolBar.jpg (20534 bytes)" width="50" height="144"></td>
+    <td>The FoodStoreSelectionCommand use case creates a new command which
+      listens to user interactions with food items and updates the content of
+      the current selection managed by the CSO object associated with the
+      CATlet. This use case shows how to create and add commands to a CATlet.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch FoodStoreSelectionCommand</h4>
+<p>To launch the FoodStoreSelectionCommand, you will need to set up the build
+time environment, then compile FoodStoreSelectionCommand and FoodStoreCATlet
+along with their prerequisites, set up the run time environment, and then
+execute the use case [<a href="#References">1</a>].</p>
+<p>Specify the FilePrefix CAAGw0 in the Portal launching command, logon to the
+Portal and do the following steps:
+<ul>
+  <li>Select the CATlet list Workbook. (If you already have a personal Workbook
+    list customization and the CATlet list Workbook does not appear, then
+    customize your personal Workbook list and add the CATlet list Workbook)</li>
+  <li>In the WebInfo part, double click on the FoodStore CATlet item which will
+    add the CATlet in the WebSpace part.</li>
+  <li>The FoodStoreSelectionCommand is the default selected command of the
+    FoodStoreCATlet, so it is already selected at the launch of the CATlet and
+    you can select and unselect some food items of the CATlet</li>
+</ul>
+<p><img border="0" src="images/FoodStoreSelection.jpg" alt="images/FoodStoreSelection.jpg" width="409" height="383"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the FoodStoreSelectionCommand Code</h4>
+<p>The FoodStoreSelectionCommand use case is one part of the Food Store use
+case. It is made of 2 classes named FoodStoreSelectionCommand and
+FoodStoreSelectionBeanInfo located in the CAAGw0FoodStore.mj module of the
+CAAJApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAJApplicationFrame.edu\CAAGw0FoodStore.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAJApplicationFrame.edu/CAAGw0FoodStore.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the FoodStoreSelectionCommand, there are five steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the selection command class file</td>
+    <td valign="top">FoodStoreSelectionCommand.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the selection command BeanInfo class file</td>
+    <td valign="top">FoodStoreSelectionCommandBeanInfo.java</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the Workshop file for the CATlet commands
+      description</td>
+    <td valign="top">FoodStoreCATlet.workshop</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Associate the Workshop file to the CATlet</td>
+    <td valign="top">CAAGw0CATletList.xml</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Selection Command Class</h4>
+<p>The FoodStoreSelectionCommand file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class FoodStoreSelectionCommand extends <b>Command
+			</b>	       implements FoodListener
+{
+  public FoodStoreSelectionCommand()
+  {
+    // --- initializes fields
+    ...
+  }
+
+  <b>public void initialize()</b>
+   {
+    cso = getMasterCATlet().getCSO();
+
+    // --- subscribes to FoodEvents from the view
+    ((FoodStoreView)getMasterCATlet().getView()).addFoodListener(this);
+   }
+
+  <b>public void cleanup()</b>
+   {
+    cso = null;
+
+    // --- subscribes to FoodEvents from the view
+    ((FoodStoreView)getMasterCATlet().getView()).removeFoodListener(this);
+   } 
+
+  <b>public void start()</b>
+   {     
+     // --- does specific code for command start (called when the Command Represenation is selected
+     ...
+   }
+  
+  <b>public void stop()</b>
+   {     
+     // --- does specific code for command stop (called when the Command Represenation is unselected
+     ...
+   }
+  
+  public void foodCategorySelected(FoodEvent evt)
+   {
+   }
+  
+  public void foodItemSelected(FoodEvent evt)
+   {     
+     // --- add or remove item containing in the FoodEvent from the CSO
+     ...
+   }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreSelectionCommand</em> derives from basic <i>Command</i> class.
+It implements the Command abstract methods <i>initialize(), start(), stop()</i>,
+and <i>resume() called during</i> the creation, activation, deactivation and
+destruction of the Command.</p>
+<p>The life cycle of a command is a follow: When a end user selects the command
+representation (in this use case, a round button in the right toolbar) the
+command is created, and called successively on <i>initialize</i> and <i>start</i>
+methods. The command does its action, and after informs the CommandSelector
+(with an event), that it has finished its works. Then the command is called
+successively on the <i>stop</i> and <i>cleanup</i> methods, and it is destroyed.
+When a command is selected, it can be interrupted by a new selected command. In
+this case the first command is called on <i>suspend</i>, and will be called on <i>resume</i>
+as soon as the second command is finished.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Selection Command BeanInfo Class</h4>
+<p>The FoodStoreSelectionCommandBeanInfo is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class FoodStoreSelectionCommandBeanInfo extends <b>CommandBeanInfo</b>
+{
+  <b>...</b>
+      </pre>
+      <pre> public BeanDescriptor <b>getBeanDescriptor()</b>
+  {
+   BeanDescriptor desc=super.getBeanDescriptor();
+   desc.setDisplayName(FoodStoreLanguage.getWidgetsString(&quot;Select&quot;));
+   return desc;
+  }
+      
+ public Image <b>getIcon</b>(int iconKind)
+  {
+   // --- creates and returns the command icons for the specified iconKind
+   ...
+  }
+<b>...</b>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>FoodStoreSelectionCommandBeanInfo</em> derives from CommandBeanInfo. It
+overrides the <i>getIcon()</i> and <i>getBeanDescriptor()</i> methods of the <i>CommandBeanInfo</i>,
+in order to specify its icons representation and its NLS display name for the
+end user.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Workshop file</h4>
+<p>The commands of a CATlet are described in a Workshop file, structured as a
+Java properties file. The FoodStoreCATlet.workshop contains the FoodStoreCATlet
+toolbar description with the Selection command. The FoodStoreCATlet is as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre># --- FoodStoreCATlet workshop description ---
+
+<b>CATWorkshop</b>=FoodStoreWorkshop
+<b>FoodStoreWorkshop.Title</b>=FoodStoreCATlet
+<b>FoodStoreWorkshop.ResourceFile</b>=basewidgets
+<b>FoodStoreWorkshop.RightToolbar</b>=Container1
+<b>FoodStoreWorkshop.DefaultHeader</b>=Header1
+
+
+# --- Header description ---
+
+Header1.CommandClass=c<b>om.dassault_systemes.japplicationframe.caa.catlet.command.FoodStoreSelectionCommand</b>
+Header1.Classname=com.dassault_systemes.catweb.base.catlet.command.PermanentCommandHeader
+Header1.Icon=Resources/I_Select.gif
+Header1.IconFocus=Resources/IF_Select.gif
+...
+
+# --- Right toolbar description ---
+
+Container1.Type=CmdContainer
+Container1.Title=caddie Commands
+Container1.Child=Starter1
+
+Starter1.Type=CmdStarter
+Starter1.Header=Header1
+Starter1.Next=Starter2
+
+...
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The Food Store Workshop file header defines the Header1 as the default
+selected header, so it defines the <i>FoodStoreSelectionCommand</i> as the
+default selected command. A command does not need to manage its representation.
+The view of a command is managed by the command header, which can use the
+default representation if no one is specified in the Workshop file (no
+declaration of <i>Header.Classname</i> for the command). In the use case, the
+Command Header associated to the Selection command is the <i>PermanentCommandHeader</i>.
+This header specifies that the selection command is not destroyed when
+unselected, unlike default command header (<i>CmdHeader</i>) which creates the
+command when it is selected and destroys it when it is unselected (See how to
+create your customize Command Header [<a href="#References">2</a>])</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Associating the Workshop File to the CATlet</h4>
+<p>The link between Workshop file and CATlet is done in the CATletList
+configuration file as follow.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+&lt;CATlet icon=&quot;Resources/I_Wk13.gif&quot; 
+        label=&quot;Food store&quot; 
+        label.fr=&quot;Alimentation&quot;
+        label.en=&quot;Food store&quot; 
+        label.de=&quot;Food store&quot;
+        label.ja=&quot;Food store&quot; 
+        help=&quot;&quot;
+        help.fr=&quot;&quot;
+        help.en=&quot;&quot;
+        help.de=&quot;&quot;
+        help.ja=&quot;&quot;
+	<b>workshop=&quot;FoodStoreCATlet.workshop&quot;</b>
+        url=&quot;bean://com.dassault_systemes.japplicationframe.caa.catlet.FoodStoreCATlet&quot;&gt;
+&lt;/CATlet&gt;...</pre>
+    </td>
+  </tr>
+</table>
+<p>The FoodStoreCATlet.workshop is automatically read by the application, and
+the commands is created and added to the toolbar of the CATlet without
+modification of the CATlet.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A command can be considered as an extension of your CATlet. It allows to add
+interactive actions to a CATlet, without modifying the CATlet. A command is a
+functionality which can be started with an icon selection by the end user. The
+command can do a treatment and stop, or launching interactive dialog with the
+end user. This use case show how to create a new command, the needed classes and
+how to associate a Command to a CATlet. The commands extend the <i>Command</i>
+class, and override the abstract methods of the creation, activation,
+deactivation and destruction. A command does not need to manage its
+representation. The view of a command is managed by the command header (See how
+to create your customize Command Header [<a href="#References">2</a>]).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Building and Launching a CAA Enovia V5 Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAJafFoodStoreSelectionCommandHeader.htm">Creating a customize
+      Command Header</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

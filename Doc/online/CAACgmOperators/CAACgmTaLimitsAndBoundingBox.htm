@@ -1,0 +1,292 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:g_vml_="urn:schemas-microsoft-com:vml" xmlns:g_o_="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Limits and Bounding Boxes of Geometrical Objects </title>
+<style type="text/css">
+.style1 {
+				text-decoration: underline;
+}
+.style2 {
+				color: #FF0000;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Limits and Bounding Boxes of Geometrical Objects</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Geometrical objects such as curves and surfaces are constructed which 
+		initial limits which can be modified afterwards. Modifying limits can be 
+		a matter of troubles if the concepts behind limits are not fully 
+		understood. Bounding boxes (CATMathBox) are mathematical objects computed with 
+		respect to limits. This article explains how to deal with limits and 
+		bounding boxes.</p>
+		<ul>
+			<li><a href="#KindsOfLimits">Different 
+			Kinds of Limits</a></li>
+			<li><a href="#Dealing">Dealing with Limits</a>
+							<li><a href="#Manipulating_Maximum_Limits">
+							Manipulating Maximum Limits</a></li>
+					</li>
+			<li><a href="#BoundingBoxes">Bounding Boxes of Curves and 
+			Surfaces</a><ul>
+							<li><a href="#The_External_or_Global_Bounding_Box">
+							External or Global Bounding Box</a></li>
+							<li><a href="#Internal_Bounding_Boxes">Internal 
+							Bounding Box</a></li>
+							<li><a href="#Accuracy_of_Bounding_Box_Computation">
+							Accuracy of Bounding Box Computation</a></li>
+			</ul>
+			</li>
+			<li><a href="#In_Short">In Short</a> </li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="KindsOfLimits">Different Kinds of Limits</a></h2>
+<p>Curves and surfaces have two types of limits: </p>
+<ol>
+				<li>the maximum limits, outside of which no valid topology can 
+				be created. These limits are the ones computed at creation. Creating or extending a topology beyond the geometry 
+				maximum 
+				limits is not permitted. The 
+				<a href="CAACgmTaTopDataChecker.htm">Data Checker</a> detects such 
+				abnormalities. In order to achieve topology extension, 
+				operators dedicated to extrapolation (for example CATICGMTopExtrapolWireOpe) 
+				can modify the maximum limits of the underlying geometry. The 
+				maximum limits are described by the <tt>CATCrvLimit</tt> class. </li>
+				<li>the current limits which are limits which have been 
+				redefined after creation. Their purpose is to restrict the 
+				geometry to be taken into account for an operation. Current limits are 
+				also handled by the <tt>CATCrvLimit</tt> class and they must be 
+				created within the range of maximum limits.</li>
+</ol>
+<h2><a name="Dealing">Dealing with Limits</a></h2>
+<p>When dealing with curves and surfaces, the initial or maximum limits may not 
+suit your application needs, just because your application has to run on a 
+restricted portion of the geometries. </p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Computing the minimum distance between two 
+	curves with maximum limits and restricted portion of the geometries</caption>
+  <tr>
+     <td><img alt="DistanceMin before SetLimits" src="images/CGM_curvelimit_0.png" width="250" height="220">&nbsp;</td>
+	 <td><img alt="DistanceMin After SetLimits" src="images/CGM_curvelimit_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   <tr>
+     <td class="style4">CASE A<br>
+		Curve in yellow and curve in green<br>
+		with their initial or maximum limits:<br>
+		Minimum distance is 0</td>
+	 <td class="style4">CASE B<br>
+		Portion of the yellow curve to be taken into<br>
+		account for a new operation<br>
+		Minimum distance is &gt; 0</td>
+   </tr>
+
+</table>
+
+<p>To do this, you must use the <tt>SetLimits</tt> method which is provided by some operators.</p>
+<p>Operators such as:</p>
+<ul>
+				<li>CATICGMDistanceMinPtCrv</li>
+				<li>CATICGMDistanceMinCrvCrv</li>
+				<li>CATICGMDistanceMinPtSur</li>
+				<li>CATICGMProjectionPtCrv</li>
+				<li>CATICGMProjectionCrvSur</li>
+				<li>CATICGMInclusionPtSur</li>
+				<li>CATICGMInclusionPtCrv</li>
+				<li>CATICGMIntersectionCrvSur</li>
+				<li>CATICGMIntersectionSurSur</li>
+				<li>CATICGMReflectCurve</li>
+				<li>CATICGMEdgeCurveComputation</li>
+				<li>CATICGMTopSkin</li>
+</ul>
+<p>provide a <tt>SetLimits</tt> method.&nbsp;To compute the minimum distance 
+between two curves (<a href="#Fig.1">Fig.1</a>), you have to 
+use the <tt>CATICGMDistanceMinCrvCrv::SetLimits</tt> method.</p>
+
+<p class="style2"><strong>WARNING</strong></p>
+
+<br>
+Current limits should only be used as temporary repository in applications which 
+control completely all the calls and operations onto geometry.
+<span class="style1">Note that this is not the case when a geometric modeler 
+operator is called as no operator guarantees the stability of current limits.</span> Any call to a geometric modeler operator can 
+potentially modify the current limits of the input curves or surfaces. <br>
+<h2><a name="Manipulating_Maximum_Limits">Manipulating Maximum Limits</a></h2>
+<p>The maximum limits remain data attached to the geometry. However, they can be modified by extrapolation operators (CATICGMTopExtrapolWireOpe 
+for example). If a wire (topological object) relying on a curve is to be 
+extended beyond the curve maximum limits, the operator extrapolates the curve.</p>
+<p>The maximum limits should be used with care for geometry which is essentially 
+infinite. For example, the maximum limits of planes and lines extend across the 
+entire model domain (see
+<a href="../CAACgmModel/CAACgmTaGobModelSizeAndInfinite.htm">About Model 
+Size and Infinite</a>). </p>
+<h2><a name="BoundingBoxes">Bounding Boxes of Curves and Surfaces</a></h2>
+<h3><a name="The_External_or_Global_Bounding_Box">External or Global Bounding Box</a></h3>
+<p>This is a bounding box encompassing the global geometry with its maximum limits 
+or its current limits, depending of the limits which are passed to the <tt>CATCurve::GetBox</tt> 
+(or <tt>CATSurface::GetBox)</tt>.</p>
+<p>
+&nbsp;</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig. 2 Maximum and current external bounding boxes</a></caption>
+  <tr>
+     <td><img alt="curve maximum bounding box" src="images/CGM_curve_maxBB_0.png" width="250" height="220">&nbsp;</td>
+		 <td><img alt="curve current bounding boxes" src="images/CGM_curve_currentBB_0.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   <tr>
+     <td>Curve max bounding box, <br>
+		corresponds to the creation limits.<br>
+		CATCurve::GetBox with max limits</td>
+		 <td>Curve in yellow is a relimitation of the <br>
+		white curve (CATCurve::SetLimits)<br>
+		CATCurve::GetBox with new limits</td>
+   </tr>
+
+</table>
+
+	<p>
+	The <tt>CATGeometry::GetBoundingBox</tt> method can also be used to retrieve the 
+	external bounding box. It is based on the current limits.</p>
+
+<h3>
+<a name="Internal_Bounding_Boxes">Internal Bounding Boxes</a></h3>
+<p>
+The internal bounding boxes are mathematical boxes encompassing the internal 
+arcs of a curve or the internal patches of a surface. The internal boxes can be 
+computed:</p>
+<ul>
+				<li>either according to the maximum limits. In this case you 
+				have to use GetInternalMaxBoundingBox</li>
+				<li>or according to the current limits. In this case you have to 
+				use GetInternalBoundingBox. The resulting bounding boxes are the 
+				intersection between the global bounding box with current limits 
+				and the internal maximum bounding boxes.</li>
+</ul>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3 Internal bounding boxes</a></caption>
+  <tr>
+   	 <td><img alt="curve maximum internal bounding boxes" src="images/CGM_curve_maxInternalBB_0.png" width="250" height="220">&nbsp;</td>
+	    </tr>
+   
+</table>
+
+<h3><a name="Accuracy_of_Bounding_Box_Computation">Accuracy of Bounding Box Computation</a></h3>
+<p>A bounding box is a portion of the 3D space that fully encompasses the 
+geometry. It is an estimate of the space surrounding the geometry and is not 
+intended to provide an accurate result. The computation is a trade-off between 
+accuracy and performance that sacrifices the former. The bounding boxes of 
+canonical shapes is generally tight to the object while the bounding box of the 
+same shapes described in the form of Nurbs for example is not tight.</p>
+<h3><a name="In_Short">In Short</a></h3>
+<table style="width: 100%">
+				<tr>
+								<td style="width: 664px" class="style5">To</td>
+								<td class="style5">Use</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Retrieve the CATMathBox 
+								of a Curve or Surface based on the maximum 
+								limits</td>
+								<td>
+								<ul>
+												<li><tt>CATCurve::GetBox</tt>, <tt>CATSurface::GetBox</tt> 
+												with maximum limits</li>
+								</ul>
+								</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Retrieve the CATMathBox 
+								of a Curve or Surface based on the current 
+								limits</td>
+								<td>
+								<ul>
+												<li><tt>CATCurve::GetBox</tt>, <tt>CATSurface::GetBox</tt> 
+												with current limits </li>
+												<li><tt>CATGeometry::GetBoundingBox</tt></li>
+								</ul>
+								</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Retrieve the internal 
+								CATMathBox of a Curve or Surface based on the 
+								maximum limits</td>
+								<td>
+								<ul>
+												<li><tt>CATCurve::GetInternalMaxBoundingBox</tt>, 
+												<tt>CATSurface::GetInternalMaxBoundingBox</tt>
+												</li>
+								</ul>
+								</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Retrieve the internal 
+								CATMathBox of a Curve or Surface based on the 
+								current limits</td>
+								<td>
+								<ul>
+												<li><tt>CATCurve::GetInternalBoundingBox</tt>, 
+												<tt>CATSurface::GetInternalBoundingBox</tt></li>
+								</ul>
+								</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Run an operator within 
+								a restricted range of limits</td>
+								<td>
+								<ul>
+												<li><tt><em>Operator</em>::SetLimits</tt></li>
+								</ul>
+								</td>
+				</tr>
+				<tr>
+								<td style="width: 664px">Modify the limits of a 
+								curve or surface</td>
+								<td>
+								<ul>
+												<li><tt>CATCurve::SetLimits, 
+												CATSurface::SetLimits</tt></li>
+								</ul>
+								</td>
+				</tr>
+</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="History">History</a></h3>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

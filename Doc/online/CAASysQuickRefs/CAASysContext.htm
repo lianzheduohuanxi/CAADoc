@@ -1,0 +1,105 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Execution Context</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Execution Context</h3>
+      <em>The way to control where your request can be executed</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains what is the execution context and which values it
+      can take. It includes the following sections:
+      <ul>
+        <li><a href="#100000"><strong>What Is the Execution Context?</strong></a></li>
+        <li><a href="#200000"><strong>The Execution Context Valid Values</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Is the Execution Context?</h3>
+<p>When you request the creation of an object using an object factory, you can
+indicate, with Windows only, whether this object should be created in the
+current process, that is the process running the client application, or could be
+created in another process on the same or on another machine.</p>
+<p>It is usually passed as an input argument to the function or method called.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The Execution Context Valid Values</h3>
+<p>The execution context can take the following basic values.</p>
+<table width="100%">
+  <tr>
+    <td valign="top"><code>CLSCTX_INPROC_SERVER</code></td>
+    <td>The client application only accepts objects created and run in the same
+      process.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CLSCTX_INPROC_HANDLER</code></td>
+    <td>The client application uses only in-proc handlers.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CLSCTX_LOCAL_SERVER</code></td>
+    <td>The client application uses only objects created and run in a different
+      process than the client application, but running on the same machine.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CLSCTX_REMOTE_SERVER</code></td>
+    <td>The client application uses only objects created and run on different
+      machines.</td>
+  </tr>
+</table>
+<p>These basic values can be combined using the bitwise OR operator to make
+compound values. For example:
+<ul>
+  <li>To create and run in-process objects, use <code>CLSCTX_INPROC_SERVER|CLSCTX_INPROC_HANDLER</code></li>
+  <li>To create and run objects whatever their origin, use <code>CLSCTX_INPROC_SERVER|CLSCTX_INPROC_HANDLER|CLSCTX_LOCAL_SERVER|CLSCTX_REMOTE_SERVER</code></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,353 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Understanding the Basics of the Visualization Process</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding the Basics of the Visualization
+      Process</h3>
+      <em>Creating and displaying representations in a viewer</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a <i>CAT3DFaceGP</i> class instance to
+      tesselate a torus and how to display it using a <i>CAT3DCustomRep</i>
+      instance.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVisBasicAppli Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVisBasicAppli Do</a></li>
+            <li><a href="#How">How to Launch CAAVisBasicAppli</a></li>
+            <li><a href="#Where">Where to Find the CAAVisBasicAppli Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains how to create representations, to set their graphic
+attributes, to compute their bounding sphere, and how to display them in a
+viewer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVisBasicAppli Use Case</h3>
+<p>CAAVisBasicAppli is a use case of the CAAVisualization.edu framework that
+illustrates Vizualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVisBasicAppli Do</h4>
+<p>CAAVisBasicAppli includes an interactive application that displays a 3D
+navigation viewer in its document window. This viewer shows a simple model
+representation made of a cuboid and a sphere. They are displayed as soon as the
+application is launched.</p>
+<p><img border="0" src="images/CAAVisSampleBasic.jpg" width="479" height="429"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVisBasicAppli</h4>
+<p>To launch CAAVisBasicAppli, you will need to set up the build time
+environment, then compile CAAVisBasicAppli along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVisBasicAppli Code</h4>
+<p>The CAAVisBasicAppli use case is made of two classes named <i>CAAVisBasicApplication</i>
+and <i>CAAVisBasicWindow</i> located in the CAAVisBasicAppli.m module of the
+CAAVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisBasicAppli.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisBasicAppli.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create a 3D navigation viewer instance</td>
+    <td valign="top"><code>CreateViewer</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create a 3D representation bag</td>
+    <td valign="top"><code>CreateModelRepresentation</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the cuboid 3D representations</td>
+    <td valign="top"><code>CreateModelRepresentation</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Set graphic attributes to the representation</td>
+    <td valign="top"><code>CreateModelRepresentation</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Compute the graphic representation bounding box</td>
+    <td valign="top"><code>CreateModelRepresentation</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Add the representation to the representation bag</td>
+    <td valign="top"><code>CreateModelRepresentation</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Display the representation bag and its children</td>
+    <td valign="top"><code>VisualizeModel</code> method</td>
+  </tr>
+</table>
+<p>Only the cuboid is taken as an example and described. All the methods belong
+to the <i>CAAVisBasicWindow</i> class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a 3D Navigation Viewer Instance</h4>
+<p>The 3D navigation viewer is an instance of the <i>CATNavigation3DViewer</i>
+class. It is created in the <code>CreateViewer</code> method of the <i>CAAVisBasicWindow</i>
+class that is called when the application is launched.
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBasicWindow::CreateViewer()
+{
+  _p3DViewer = new CATNavigation3DViewer(this,
+                                         &quot;3DViewerId&quot;,
+                                         CATDlgFraNoTitle,
+                                         800, 450);
+  _p3DViewer-&gt;SetBackgroundColor(0.2f,0.2f,0.6f);
+  Attach4Sides(_p3DViewer);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>_pViewer</code> pointer to the 3D navigation viewer is kept as a
+data member of the <i>CAAVisBAseView</i> class. Its parameter are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>this</code></td>
+    <td valign="top">The viewer parent in the dialog containment tree structure
+      and in the command tree structure [a]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>3DViewer</code></td>
+    <td valign="top">The viewer identifier</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CATDlgFraNoTitle</code></td>
+    <td valign="top">The viewer has no title [b]</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>850, 450</code></td>
+    <td valign="top">The viewer width and height expressed in pixels</td>
+  </tr>
+</table>
+<p>The <code>SetBackGroundColor</code> method sets the viewer background color
+to a shade of blue. The <code>Attach4Sides</code> method attaches the four sides
+of the viewer to those of the window. This makes the viewer occupy the whole
+window space.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a 3D Representation Bag</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBasicWindow::CreateModelRepresentation()
+{
+  _pTheModelToDisplay = new CAT3DBagRep();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreateModelRepresentation</code> of <i>CAAVisBasicWindow</i> begins
+by creating the representation bag to attach to the viewer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the Cuboid 3D Representation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathPointf  Corner      (-20.f, -20.f,  0.f);
+  CATMathVectorf FirstVector ( 20.f,   0.f,  0.f);
+  CATMathVectorf SecondVector(  0.f,  20.f,  0.f);
+  CATMathVectorf ThirdVector (  0.f,   0.f, 20.f);
+
+  CAT3DCuboidRep * pCuboid = new CAT3DCuboidRep(Corner,
+                                                FirstVector,
+                                                SecondVector,
+                                                ThirdVector);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The cuboid geometric components are created. These comprise a point and three
+vectors that define the three edges starting from this point. They are then
+passed to the <i>CAT3DCuboidRep</i> constructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h4><a name="Step4"></a>Setting Graphic Attributes to the Representation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  if ( NULL != pCuboid )
+  {
+    pCuboid-&gt;SetColor(YELLOW);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The cuboid is now yellow.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Computing the Graphic Representation Bounding Box</h4>
+<p>The graphic representation needs a bounding box to improve the display
+process.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATMathPoint Center = Corner + (FirstVector + SecondVector + ThirdVector)/2;
+  float Radius = (float) Corner.DistanceTo(Center);
+  CAT3DBoundingSphere BoundingSphere(Center,Radius);
+  pCuboid-&gt;SetBoundingElement(BoundingSphere);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This bounding box is sphere whose center is the cuboid center, and whose
+radius is the distance between this center and the point used as corner when
+defining the cuboid. The bounding box is used to decide whether the
+representation should be displayed with respect to the current viewpoint without
+interpreting the representation itself, thus increasing display performance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Adding the Representation to the Representation Bag</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  _pTheModelToDisplay-&gt;AddChild(*pCuboid);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The created representation is added to the representation bag thanks to the <code>AddChild</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Displaying the Representation Bag and Its Children</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBasicWindow::VisualizeModel()
+{
+  if ( (NULL != _p3DViewer) &amp;&amp; ( NULL != _pTheModelToDisplay) )
+  {    
+    _p3DViewer-&gt;AddRep((CAT3DRep*)_pTheModelToDisplay);
+    _p3DViewer-&gt;Draw();
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The representation bag is added to viewer, and the viewer is asked to draw
+itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved in the visualization process. A
+representation bag is first created to contain the other representations. Each
+representation is then created with its own geometric characteristics, can be
+assigned attributes, and its bounding sphere is computed. Each representation is
+added to the representation bag, and the bag is set to the viewer. Then the
+viewer is asked to draw itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

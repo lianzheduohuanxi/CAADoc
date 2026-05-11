@@ -1,0 +1,106 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>Deprecated CATGitGSMGeom Function Removed</title>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h1>CAA V5 Encyclopedia</h1>
+     </td>
+     <td align="right">
+     <h3><a name="Top"></a>Deprecated CATGitGSMGeom Function Removed</h3>
+     <p><em>How to cope without it </em></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p>Deprecated global function <code>CATGitGSMGeom</code> of the GSMInterfaces 
+ framework is now removed.</p>
+ <p><code>CATGitGSMGeom</code> was a global function to be used when you wanted 
+ to derive from the Shape Design StartUp defining a GSMGeom object. This global 
+ function in fact encapsulated a call to the Feature Modeler standard function 
+ to create StartUps: <code>CATOsmSUFactory</code>. Since V5R13, <code>
+ CATGitGSMGeom</code> is deprecated, and we recommend to directly use this 
+ Feature Modeler function <code>CATOsmSUFactory</code> instead. Now in V5R15,
+ <code>CATGitGSMGeom</code> is removed. As a consequence, if you have not yet 
+ changed your applications to use <code>CATOsmSUFactory</code>, this code will 
+ not build. To avoid this, you should:</p>
+ <ul>
+   <li>For existing StartUps created before V5R15<ul>
+     <li>Change your code to use <code>CATOsmSUFactory</code> instead of <code>
+     CATGitGSMGeom</code> to avoid compilation error, as shown below</li>
+     <li>DO NOT RUN this code TO REGENERATE THE CATALOGS. Once StartUps are 
+     generated, there is no need to regenerate them later on. THERE IS NO IMPACT 
+     ON THE PREVIOUS GENERATED CATALOGS</li>
+   </ul>
+   </li>
+   <li>For new StartUps created starting with V5R15<ul>
+     <li>Create the StartUp creation code using the example below using <code>
+     CATOsmSUFactory</code></li>
+     <li>Run it to generate the StartUps. </li>
+   </ul>
+   </li>
+ </ul>
+ <p>&nbsp;</p>
+ <h3>How to Create a StartUp Deriving from GSMGeom?</h3>
+ <pre>// ObjectSpecsModeler Service 
+//-------------------------------------------------------------------------
+#include &quot;CATOsmSUFactory.h&quot;
+...
+// Factory to create a new StartUp deriving from the Shape Design &quot;GSMGeom&quot; late type.
+//-------------------------------------------------------------------------
+HRESULT rc = E_FAIL;
+
+// Predefined variables
+CATUnicodeString CatalogName   = &quot;CATHybridShape&quot;;
+CATUnicodeString SuperTypeName = &quot;GSMGeom&quot;;
+CATBoolean       publicSU      = FALSE;
+CATBoolean       derivableSU   = FALSE;
+
+// CAA Developer defined variables
+const CATUnicodeString *iTypeName = &quot;MyStartUpType&quot;; // The late type of the new StartUp to be created
+CATICatalog *ipiClientCatalog     = &quot;MyCatalog&quot;;     // The name of the catalog in which the new StartUp is to be created
+CATISpecObject *opiStartUp        = NULL;            // The new StartUp created
+
+rc = ::CATOsmSUFactory(&amp;opiStartUp,
+                       iTypeName,
+                       ipiClientCatalog,
+                       &amp;SuperTypeName,
+                       &amp;CatalogName,
+                       publicSU,
+                       derivableSU); 
+if (SUCCEEDED(rc) &amp;&amp; (NULL != opiStartUp)) {
+  ...
+}
+</pre>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

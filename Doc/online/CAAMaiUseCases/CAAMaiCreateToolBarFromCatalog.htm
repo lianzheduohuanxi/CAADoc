@@ -1,0 +1,304 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing (User Defined) Features for Macro Motions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>All Machining Workbenches</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing the Prismatic workbench to create 
+		operations from Machining Processes referenced in Catalogs</h3>
+      <em>Implementing the </em><i>CATIMfgMachiningProcessLog</i> <em>interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiCreateToolBarFromCatalog use case and
+      explains how to use the <i>CATIMfgCatalogServices </i>manufacturing interface. 
+		It describes a short cut to access to the Machining Process 
+		instantiation without using the catalog browser.</p>
+		<p>A prerequisite is to refer to the<i> CATIManufacturingProgramAddin
+		</i>interface for more details about the complete customization of a 
+		workbench</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The <u>
+        CAAMaiCreateToolBarFromCatalog U</u>se
+          Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAMaiCreateToolBarFromCatalog Do</a></li>
+            <li><a href="#How">How to Use CAAMaiCreateToolBarFromCatalog</a></li>
+            <li><a href="#Where">Where to Find the 
+            CAAMaiCreateToolBarFromCatalog
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to create your own toolbars and sub-toolbars&nbsp; 
+in the Prismatic Machining workbench with command headers lauching commands from 
+catalog components.&nbsp; These components are Machining Processes referenced in 
+catalogs and when the command is launched, the Machining Process instantiation 
+panel is displayed.</p>
+<ul>
+  <li>Describing the different steps dedicated to the knowhow of the company 
+	through the customization.</li>
+  <li>Implementing&nbsp; the methods of
+<i>CATIManufacturingProgramAddin </i>to create toolbars and sub-toolbars 
+	dedicated to the Machining Processes instantiation</li>
+  <li><a href="#Advise">Advising to well define the dedicated commands</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiCreateToolBarFromCatalog Use Case</h3>
+<p>CAAMaiCreateToolBarFromCatalog is a use case of the CAAManufacturingItf.edu
+framework in the CAAMaiCreateToolBarFromCatalog.m module that illustrates
+ManufacturingInterfaces framework capabilities and specially their customization.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiCreateToolBarFromCatalog Do</h4>
+<p>The CAAMaiCreateToolBarFromCatalog use case illustrates a use of the <i>
+CATIMfgCatalogServices</i> through an implementation of
+<i>CATIManufacturingProgramAddin </i>interface. It enables the customer to </p>
+<ul>
+  <li>Create one tool bar and two sub-toolbars</li>
+	<li>Create commands headers that will launch Machining Process instantiation 
+	from catalogs components</li>
+</ul>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Use CAAMaiCreateToolBarFromCatalog</h4>
+<p>To use CAAMaiCreateToolBarFromCatalog, you will need to:</p>
+<ul>
+  <li>Set up the <b>build time </b>environment, then compile 
+	CAAMaiCreateToolBarFromCatalog.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#CAA#' character:</p>
+    <pre>CAAMaiAddinCmd  CATIMfgManufacturingProgramAddin libCAAMaiCreateToolBarFromCatalog</pre>
+  </li>
+  <li>Set up the <b>run time</b> environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Go to the Prismatic Machining workbench</li>
+  <li>Look for the &quot;NCToolBar&quot; and its sub-toolbars</li>
+	<li>Select one of the icons in the sub-toolbars that will launch the 
+	Machining Process instantiation window (the same one when double-clicking in 
+	a Machining Process component from a catalog through the catalog browser</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiCreateToolBarFromCatalog Code</h4>
+<p>The CAAMaiCreateToolBarFromCatalog use case code is
+located in the CAAMaiCreateToolBarFromCatalog.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\</code><code>CAAMaiCreateToolBarFromCatalog.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/</code><code>CAAMaiCreateToolBarFromCatalog.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are two logical steps in CAAMaiCreateToolBarFromCatalog:</p>
+<ol>
+  <li><a href="#Step1">Creating the commands headers to launch Machining Process 
+	instantiation form catalogs components</a></li>
+  <li><a href="#Advise">Creating the tool bar and its sub-toolbars </a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a command header launching Machining Prcoesses 
+instantiation</h4>
+<p style="margin-left: 4">The CAAMaiStandardMPCom.cpp file illustrates how to 
+access to the machining process instantiation command through the <b>
+CATIMfgCatalogServices</b> interface.</p>
+<p style="margin-left: 4">The following code enables to access to the 
+CATIMfgCatalogServices :</p>
+<font size="2">
+<p style="margin-top: 0; margin-bottom: 0">CATIMfgCatalogServices *piServices=NULL;</p>
+</font>
+<p style="margin-top: 0; margin-bottom: 0"><font SIZE="2" COLOR="#0000ff">
+CATString</font><font SIZE="2"> ClassName(</font><font SIZE="2" COLOR="#800000">&quot;CATMfgCatalogServices&quot;</font><font size="2">);</p>
+<p style="margin-top: 0; margin-bottom: 0">CATInstantiateComponent (ClassName,CATIMfgCatalogServices::ClassId(),(</font><font SIZE="2" COLOR="#0000ff">void</font><font SIZE="2">**)&amp;piServices);</p>
+</font>
+<p style="margin-left: 4">Then the <b>BuildMfgStartupMPPath</b> method builds a 
+complete path from a catalog name, by analysing the <i>CATInstallPath</i> 
+environment variable and the &quot;<i>startup\Manufacturing\Processes</i>&quot; relative 
+path :</p><font SIZE="2">
+<p style="margin-top: 0; margin-bottom: 0"></font>
+<font SIZE="2" COLOR="#0000ff">CATUnicodeString</font><font SIZE="2"> 
+CatalogName = </font><font SIZE="2" COLOR="#800000">&quot;MP_demo.catalog&quot;</font><font SIZE="2">;</p>
+<p style="margin-top: 0; margin-bottom: 0"></font>
+<font SIZE="2" COLOR="#0000ff">CATUnicodeString</font><font SIZE="2"> Path;</p>
+<p style="margin-top: 0; margin-bottom: 0">HRESULT Res = piServices-&gt;BuildMfgStartupMPPath(CatalogName, 
+Path);</p>
+</font>
+<p style="margin-left: 4">In this case, the MP_demo.catalog file is delivered in 
+the standard Machining configuration (look at intel_a\<i>startup\Manufactruing\Processes
+</i>path<i> under Windows </i>or<i> </i>intel_a/<i>startup/Manufactruing/Processes
+</i>path under Unix). Any other method to build the path can be used.</p>
+<p style="margin-left: 4">The <b>LaunchMPApplication</b> method launches the 
+Machining Process instantiation and looks like the instantiation from the 
+catalog browser :</p>
+<p style="margin-left: 4">
+<img border="0" src="images/CAAMaiCreateToolBar4.jpg" width="340" height="400"></p>
+<font SIZE="2">
+<p style="margin-top: 0; margin-bottom: 0"></font>
+<font SIZE="2" COLOR="#0000ff">CATUnicodeString</font><font SIZE="2"> 
+PathChapter = </font><font SIZE="2" COLOR="#800000">&quot;Chapter.1/Drilling 
+Processes&quot;</font><font SIZE="2">;</p>
+<p style="margin-top: 0; margin-bottom: 0"></font>
+<font SIZE="2" COLOR="#0000ff">CATUnicodeString</font><font SIZE="2"> NomMPRef =
+</font><font SIZE="2" COLOR="#800000">&quot;Standard Drilling&quot;</font><font SIZE="2">;</p>
+<p style="margin-top: 0; margin-bottom: 0"></font>
+<font SIZE="2" COLOR="#0000ff">CATString</font><font SIZE="2"> Keyword = </font>
+<font SIZE="2" COLOR="#800000">&quot;Standard_Drilling&quot;</font><font SIZE="2">;</p>
+<p style="margin-top: 0">Res = piServices-&gt;LaunchMPApplication(Path, PathChapter, 
+NomMPRef, Keyword);</p>
+</font>
+<ul>
+	<li>
+	<p style="margin-left: 4">The Path argument is the same as the path returned 
+	by the previous method.</li>
+	<li>
+	<p style="margin-left: 4">The PathChapter argument describes the path to 
+	access the Machining Process inside the catalog</li>
+	<li>
+	<p style="margin-left: 4">The NomMPRef argument is the Machining Process 
+	Name in the catalog</li>
+</ul>
+<p style="margin-left: 4">The Keyword argument enables to customize the 
+Machining Process name at the instantiation. It has to be defined in the 
+resources\msgcatalog\CATMfgMachProcessCatalogAccess.CATNls file but it is not a 
+prerequisite</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the
+&quot;NCToolbar&quot; toolbar and its sub-toolbars</h4>
+<p>The CAAMaiAddinCmd.cpp file declares all the command headers and organizes 
+the toolbars.</p>
+<p>Two commands are declared from the <b>SampleCmdHdr</b> command header in the 
+CreateCommands method. These headers are linked to the CAAMaiStandardMPCom and 
+CAAMaiStandardMPCom2 commands. This is there that the customer will declare his 
+own commands. The command icons are defined in the <b>SampleCmdHdr.CATRsc</b> 
+resource file of the <b>CAAManufacturingItf.edu</b> framework</p>
+<p>A sub-toolbars sample is proposed in the CreateToolbars method : the toolbar 
+contains two sub-toolbars with two commands each one.</p>
+<p>The tool bar :
+<img border="0" src="images/CAAMaiCreateToolBar1.jpg" width="115" height="108"> 
+The 2 sub-toolbars :
+<img border="0" src="images/CAAMaiCreateToolBar2.jpg" width="76" height="60"> 
+and <img border="0" src="images/CAAMaiCreateToolBar3.jpg" width="80" height="62"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Advise"></a>Advise</h4>
+<p>It is important to set the command headers icons in the <b>
+SampleCmdHdr.CATRsc</b> resource file to be able to launch the Machining Process 
+instantiation.</p>
+<p>You can use commands from Machining Processes catalogs and official commands 
+in your tool bars (Let's have a look in the CATMfgHeader.CATRsc file).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the <i>
+CATIMfgCatalogServices</i>
+interface dedicated to the workbench customization. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2008]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2008, Dassault Systèmes. All rights reserved.</i></p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,583 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Topology Concepts</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Topology Concepts</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This paper presents the general topological concepts that are supported 
+		by CATIA V5.</p>
+		<p>After defining the topology, the basic entities (cell, domain, body) 
+		are precisely described. Then, non-manifold topologies are introduced and 
+		illustrated. A summarized chart allows the reader to visualize the links 
+		between those different concepts. </p>
+		<ul>
+			<li><a href="#Introduction">Topology for Geometric Design</a></li>
+			<li><a href="#Objects">The Basic Topological Objects</a>
+			<ul>
+				<li><a href="#Cell">Cell</a></li>
+				<li><a href="#Domain">Domain</a></li>
+				<li><a href="#Body">Body</a></li>
+				<li><a href="#Example">Example</a></li>
+			</ul>
+			</li>
+			<li><a href="#Manifold">The Manifold and Non Manifold Concepts</a>
+			<ul>
+				<li><a href="#Definition">Definition</a></li>
+				<li><a href="#Dividing">Dividing a Body into Domains</a></li>
+			</ul>
+			</li>
+			<li><a href="#Restrictions">Restrictions Regarding Non-Manifold Bodies</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Introduction"></a>Topology for Geometric Design</h2>
+<p>Topology allows to represent objects, by detailing their boundaries and the connections 
+between their different parts. This figure shows an example of the topological description 
+of a simple shell object.</p>
+<table>
+	<caption>Fig 1: A Topological Description of a Shell Object</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoConcepts1.gif" alt="Shell Object Topological Description" width="279" height="199"></td>
+		<td>
+		<ul>
+			<li>The shell object is made of one topological 2D entity called a face 
+			(F).</li>
+			<li>The face F is the limitation of the surface S by four connected 
+			1D boundaries called edges (E1, E2, E3, E4).</li>
+			<li>Each edge (E1, for example) is a limitation of a geometric curve 
+			(C), lying on the surface. It is bounded by two vertices (V1, V2).</li>
+			<li>The edges are connected by their vertices to bound the face.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p>&quot;Regular&quot; objects are called manifold. Objects presenting &quot;hairs&quot; or &quot;scales&quot;, 
+are called non-manifold. The use of non manifold topology is very useful to simplify 
+the representation of objects: in an early stage of design, a thin stiffener of 
+a solid object may be represented as a 2D element (&quot;scale&quot;).</p>
+<table>
+	<caption>Fig 2: An Example of a Non-manifold Object</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoConcepts2.gif" alt="Non-manifold Object" width="279" height="199"></td>
+		<td>In this object, a stiffener has been modeled as a 2D topological element 
+		(the face F). The edge E1 is an external boundary of the face F, but is 
+		also immersed into a face of the 3D object V: this is a non-manifold configuration.
+		<p>The object B without the face F is manifold.</p>
+		</td>
+	</tr>
+</table>
+<p>See <a href="#Manifold">The Manifold and Non Manifold Concepts</a> for a detailed 
+presentation of these concepts.</p>
+<p>CGM uses the technology called &quot;cell complexes&quot; (see the paper of Rossignac for 
+instance), which allows to: </p>
+<ul>
+	<li>Handle multidimensional concepts in an unified way</li>
+	<li>Represent all manifold and non-manifold objects.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Objects"></a>Basic Topological Objects</h2>
+<p>The topology manages three types of entities: </p>
+<ul>
+	<li>The cell: most basic topological entity.</li>
+	<li>The domain: set of connected cells grouped to define boundaries.</li>
+	<li>The body: the &quot;concrete&quot; object to model.</li>
+</ul>
+<p>We detail here these entities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Cell"></a>Cell</h3>
+<p>A <em>cell</em> is a connected limitation of an underlying geometry.</p>
+<p>There are four types of cells according to the dimension of the space in which 
+they lie.</p>
+<table class="fill">
+	<colgroup align="center" span="1">
+	</colgroup>
+	<colgroup align="center" span="2">
+	</colgroup>
+	<colgroup align="center" span="3">
+	</colgroup>
+	<tr>
+		<th>Space Dimension</th>
+		<th>Cell Type</th>
+		<th>Associated geometry</th>
+	</tr>
+	<tr>
+		<td>0</td>
+		<td>Vertex</td>
+		<td>Point</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Edge</td>
+		<td>Curve</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Face</td>
+		<td>Surface</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Volume</td>
+		<td>3D Space</td>
+	</tr>
+</table>
+<p>Cells of upper dimensions are bounded by cells of lower dimensions: a volume 
+is the limitation of the 3D space by faces, a face is the limitation of a surface 
+by edges and an edge is the limitation of a curve by vertices.</p>
+<table>
+	<caption>Fig 3: Examples of Cells</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoCell.gif" alt="Cell Examples" width="478" height="358"></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Domain"></a>Domain</h3>
+<p>A <em>domain</em> is a set of cells of dimension n connected by cells of dimension 
+n-1. A domain can possibly contain only one cell.</p>
+<p>Domains are useful to manipulate altogether the boundaries of a cell of upper 
+dimension. If a face, for instance, is bounded by four connected edges, all those 
+edges are conveniently grouped into a domain. Like cells, domains bear specific 
+names according to what they actually contain.</p>
+<table class="fill">
+	<colgroup align="center" span="1">
+	</colgroup>
+	<colgroup align="center" span="2">
+	</colgroup>
+	<colgroup align="center" span="3">
+	</colgroup>
+	<tr>
+		<th>A ...</th>
+		<th>is a set of ...</th>
+		<th>bounding ...</th>
+	</tr>
+	<tr>
+		<td>loop</td>
+		<td>edges connected by vertices</td>
+		<td>a face</td>
+	</tr>
+	<tr>
+		<td>vertex in face</td>
+		<td>one vertex</td>
+		<td>a face</td>
+	</tr>
+	<tr>
+		<td>lump</td>
+		<td>volumes connected by faces</td>
+		<td>the 3D space</td>
+	</tr>
+	<tr>
+		<td>shell</td>
+		<td>faces connected by edges</td>
+		<td>the 3D space or a volume</td>
+	</tr>
+	<tr>
+		<td>wire</td>
+		<td>edges connected by vertices</td>
+		<td>the 3D Space</td>
+	</tr>
+	<tr>
+		<td>vertex in volume</td>
+		<td>one vertex</td>
+		<td>the 3D Space or a volume</td>
+	</tr>
+</table>
+<p>Lumps, shells, wires and vertices in volume are boundaries of 3D entities. Loops 
+and vertices in faces are boundaries of 2D entities. No domain is associated to 
+the boundaries of edges (1D entities): vertices directly bounds edges, because such 
+domain does not bring any added value to the model.</p>
+<table>
+	<caption>Fig 4: Examples of Domains</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoDomain.gif" alt="Domain Examples" width="479" height="359"></td>
+		<td>
+		<ul>
+			<li>A loop is a set of edges connected by vertices bounding a face.</li>
+			<li>A shell is a set of faces connected by edges bounding a volume.</li>
+			<li>A wire is a set of edges connected by vertices in the 3D space.</li>
+			<li>A vertex in face is immersed into the face. In the case of the figure, 
+			it represents the connection between the face F and the cone C: this 
+			is a non manifold configuration.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p>Domains can define outer, inner, or immersed frontiers: vertex in face or vertex 
+in volume are typical immersed boundaries. Notice that loops (resp. shell) can also 
+be immersed into a face (resp. volume), but this type of domain is always called 
+a loop (resp. shell) and not a &quot;edge in face&quot; (resp. &quot;face in volume&quot;).</p>
+<p>Reading the different definitions of the domains, you can see that two faces 
+(resp. two volumes) cannot be connected only by a vertex (resp. by an edge or a 
+vertex). In this case, it will be necessary to have two shells (resp. two lumps). 
+Domains define manifold components inside non-manifold objects.</p>
+<table>
+	<caption>Fig 5: Domains Define Manifold Components Inside Non-manifold Objects</caption>
+	<tr>
+		<td rowspan="2">
+		<img src="images/CAACgmTobTopoConcepts3.gif" alt="Domains" width="479" height="359"></td>
+		<td>The cubes C1 and C2 have the face F in common. They can be grouped in 
+		the same lump.</td>
+	</tr>
+	<tr>
+		<td>The cubes C3 and C4 have only the edge E in common: they must be put 
+		into different lumps, because a lump is a set of volumes connected by faces. 
+		Each lump is a manifold component of the non-manifold global object.</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Body"></a>Body</h3>
+<p>A <em>body</em> is a set of domains non necessarily connected (with non common 
+boundary of any dimension). Bodies must satisfy the following properties: </p>
+<ol>
+	<li>Any cell bounding a cell in a body also belongs to the body.</li>
+	<li>The intersection of the underlying geometry for any two cells in a body 
+	is also the underlying geometry for a cell ( and this cell must belong to the 
+	body, following the property 1). In other words, &quot;no intersection of the underlying 
+	geometries without having a cell representing the intersection&quot;.</li>
+</ol>
+<table>
+	<caption>Fig 6: The Intersection of the Geometry of Two Cells Is the Geometry 
+	of a Cell of the Same Body</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoBody.gif" alt="Intersection" width="478" height="358"></td>
+		<td><strong>Property 1</strong>:<br>
+		Let F1 be a face of the body B. The edge E, boundary of F1, has also to 
+		belong to the body B.
+		<p><strong>Property 2</strong>:<br>
+		If faces F1 and F2 (lying on surfaces F1 and F2 respectively) are cells 
+		of the body B, then the edge E, lying on the intersection of S1 and S2, 
+		has to exist and is also a cell of B.</p>
+		</td>
+	</tr>
+</table>
+<p>The body only references domains, even if there is only one cell in the domain. 
+See the example of the following section: the body contains only one volume, but 
+it contains it through the lump domain.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Example"></a>Example</h3>
+<p>This example shows the breaking up into cells and domains of a body representing 
+a cuboid with a cavity. In order to keep things clear, some relations have not been 
+displayed.</p>
+<table>
+	<caption>Fig 7: Decomposition of a Body into Domains and Cells</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobTopoExample.gif" alt="Body Decomposition " width="478" height="358"></td>
+		<td>The body is composed of a Lump made of one Volume.
+		<p>The Volume has two shell boundaries: an inner and an outer Shell.</p>
+		<p>Each Shell is made of six Faces.</p>
+		<p>Each Face is bounded by a Loop.</p>
+		<p>Each Loop owns 4 Edges and each Edge is bounded by two Vertices.</p>
+		<p>Notice that each edge is used by two faces and each vertex is also referred 
+		three times.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Manifold"></a>The Manifold and Non Manifold Concepts</h2>
+<h3><a name="Definition"></a>Definition</h3>
+<p>CGM allows you to create and use manifold and non-manifold bodies. Mathematically 
+speaking, a N-manifold object is a set of points which neighborhood is represented 
+by a N-dimensional bowl. Take a lump domain (resp. shell, loop). If for each point 
+of this domain, there exists a neighborhood of the domain equivalent to <em>only 
+one</em> piece of a sphere (resp. disk, segment), the lump (resp. shell, loop) is 
+3D (resp. 2D, 1D ) -manifold. Otherwise, it is non manifold.</p>
+<p>The following figures shows examples of manifold and non manifold objects. The 
+place where there are non manifold are highlighted. The bodies can be: </p>
+<ul>
+	<li>Singular: if there exists cells of dimension n that are only connected by 
+	cells of dimension n-2. (B4, B5, C4, C5).</li>
+	<li>Heterogeneous: mixing of domains of different dimensions in the same body 
+	(C6).</li>
+	<li>General: cells of dimension n with more than 2 connections with other cells 
+	of same dimension (A2, B6).</li>
+</ul>
+<table class="fill">
+	<tr>
+		<th>&nbsp;</th>
+		<th>Manifold</th>
+		<th>Non-manifold</th>
+	</tr>
+	<tr>
+		<td>1D_</td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldA1.gif" alt="TopoConceptsNonManifoldA1.gif (1273 bytes)" width="159" height="159"></td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldA2.gif" alt="TopoConceptsNonManifoldA2.gif (1421 bytes)" width="159" height="159"></td>
+	</tr>
+	<tr>
+		<td>2D_</td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldB1.gif" alt="TopoConceptsNonManifoldB1.gif (1369 bytes)" width="159" height="159"></td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldB2.gif" alt="TopoConceptsNonManifoldB2.gif (1729 bytes)" width="159" height="159"></td>
+	</tr>
+	<tr>
+		<td>3D_</td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldC1.gif" alt="TopoConceptsNonManifoldC1.gif (1726 bytes)" width="159" height="159"></td>
+		<td>
+		<img src="images/CAACgmTobTopoConceptsNonManifoldC2.gif" alt="TopoConceptsNonManifoldC2.gif (1919 bytes)" width="159" height="159"></td>
+	</tr>
+</table>
+<p>The non-manifold topology offers several benefits: </p>
+<ul>
+	<li>Allows the simplified representation of parts: a very slight slot inside 
+	an object can be represented as a face immersed into a volume in an early stage 
+	of design, a stiffener can be modeled as a face, etc.</li>
+	<li>Allows topological operations to always return a solution. Even if the final 
+	result is manifold, intermediate steps can be non manifold. A topological operation 
+	on manifold bodies may return non-manifold configurations: let be a cube. Let 
+	now be a cylinder which is tangent to the cube and inside it. These two objects 
+	are manifold. Operate now the union of the cube and the cylinder: the resulting 
+	body is non manifold. Split now by a plane: the final result is manifold, although 
+	an intermediate body is not. This scenario is illustrated by the following figure:
+	<table>
+		<caption>Fig 8: An Intermediate Result Is Non-manifold While the Final Result 
+		Is Manifold</caption>
+		<tr>
+			<td>
+			<img src="images/CAACgmTobTopoConcepts4.gif" alt="Intermediate and Final Results" width="479" height="359"></td>
+			<td></td>
+		</tr>
+	</table>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Dividing"></a>Dividing a Body into Domains</h3>
+<p>When a body contains non connected cells, or non-manifold configurations, it 
+will be necessary to divide it into several manifold domains. The following steps 
+insure the unique decomposition of a body into domains: </p>
+<ol>
+	<li>If there are non connected sets of cells, put them in different domains.</li>
+	<li>Separate domains of different dimensions.
+	<table>
+		<caption>Fig 9: Decomposition of an Heterogeneous Body into Domains and 
+		Cells</caption>
+		<tr>
+			<td>
+			<img src="images/CAACgmTobTopoConceptsDivide1.gif" alt="Heterogeneous Body Decomposition" width="479" height="359"></td>
+			<td>The body references two domains:
+			<ul>
+				<li>A Lump for the 3D part of the body.</li>
+				<li>A Shell for the 2D stiffener.</li>
+			</ul>
+			<p>The face F6 (resp. F7) has two loops: one for the external boundary, 
+			the other for defining the &quot;edge on face&quot; E1 (resp. E2). This edge is 
+			also referenced as a boundary of the face Face: this allows the connection 
+			between the 3D and 2D domains.</p>
+			<p>(In order to keep things clear, some relations have not been displayed.)</p>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>Put into different lumps (resp. shells), volumes (resp. faces) with only 
+	a common edge or with only common vertices (resp. with only common vertices).
+	<table>
+		<caption>Fig 10: Decomposition of a Singular Body into Domains and Cells</caption>
+		<tr>
+			<td>
+			<img src="images/CAACgmTobTopoConceptsDivide2.gif" alt="Singular Body Decomposition" width="479" height="359"></td>
+			<td>The two faces F1 and F2 have only the vertex V in common: Each face 
+			has is own shell.
+			<p>The edge E14, E15, E21, E22 have the vertex V in common: this vertex 
+			allows the connection between the two domains.</p>
+			<p>(In order to keep things clear, some relations have not been displayed.)</p>
+			</td>
+		</tr>
+	</table>
+	</li>
+	<li>Split domains containing cells with a common boundary with two other cells:
+	<ol>
+		<li>In two parts if the boundary does not cut right across one cell of the 
+		domain
+		<table width="90%">
+			<caption>Fig11: Decomposition of a General Body into Domains and Cells 
+			(First Case)</caption>
+			<tr>
+				<td>
+				<img src="images/CAACgmTobTopoConceptsDivide3.gif" alt="General Body Decomposition" width="479" height="359"></td>
+				<td>The edge E21 of the face F2 also bounds the face F1. It is then 
+				referenced by two loops, Loop2 for F2 and L defining an immersed 
+				domain of the face F1.
+				<p>(In order to keep things clear, some relations have not been 
+				displayed.)</p>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li>In three parts otherwise.
+		<table>
+			<caption>Fig12: Decomposition of a General Body into Domains and Cells 
+			(Second Case)</caption>
+			<tr>
+				<td>
+				<img src="images/CAACgmTobTopoConceptsDivide4.gif" alt="General Body Decomposition" width="479" height="359"></td>
+				<td>The edge E is no more immersed: it is part of the external boundaries 
+				of the three faces. In this case, the body has three shells.
+				<p>If the body only contains the two faces F1 and F2, it would only 
+				have a one shell made of the two faces.</p>
+				<p>(In order to keep things clear, some relations have not been 
+				displayed.)</p>
+				</td>
+			</tr>
+		</table>
+		</li>
+	</ol>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Restrictions"></a>Restrictions Regarding Non-Manifold Bodies</h2>
+<p>Most operations can be performed on non-manifold bodies, but not all. The trend 
+is to allow the user to check whether he accepts to generate a non-manifold result. 
+For example, you won&#39;t be able to extrude or fill a profile which has a closed portion 
+but exhibits a free edge and unless you uncheck the &quot;Manifold&quot; check box, you won&#39;t 
+be able to join a non-manifold body to another body.</p>
+<p>If you try to manipulate non-manifold bodies by using a CATIA interactive command, 
+you will get a message warning you that the body is non-manifold. Usually, you won&#39;t 
+be able to complete the intended operation unless you make your initial body manifold. 
+CATIA dialogs allow you to remove sub-elements in order to obtain appropriate manifold 
+bodies. But the operation which consists in removing sub-elements can only be applied 
+to manifold domains. If your body is not made up of correct manifold domains, you 
+won&#39;t be able to clean or transform your initial body. This is why
+<a href="#Dividing">&quot;Dividing a Body into Domains&quot;</a> is of importance. </p>
+<p>Note that CGM services allow you to create non-manifold bodies while usually 
+the CATIA workbenches will &quot;break&quot; the created bodies into appropriate domains. 
+That way, the resulting bodies are non-manifold-like but contain sub-elements easy 
+to be manipulated. The examples below illustrate this strategy.</p>
+<p><strong><em>Example 1: Using a NON-MANIFOLD Body in a Join Operation</em></strong></p>
+<table>
+	<tr>
+		<td>Create a three-edge body (see figure on the right-hand side) by assembling 
+		three concurrent wires (use CATTopWire then CATHybAssemble). This body is 
+		made up of <strong>four vertices and three edges</strong>. It is clearly 
+		non-manifold. You can check this by using the CATBody::GetCellsHighestDimension 
+		method.<p>If you try to join the highlighted body (a line) with the three-edge 
+		body by using the Join interactive command, you will get the message:</p>
+		<p>&quot;Update error: Non Manifold Body&quot;.</p>
+		</td>
+		<td>
+		<img alt="Non-manifold Body" src="images/CAACgmTobnonManifp.jpg" width="285" height="191"></td>
+	</tr>
+	<tr>
+		<td>Now, if you try to remove the edge that makes the resulting body non-manifold 
+		(use the &quot;Sub-Elements to Remove&quot; tab in the &quot;Join Definition&quot; dialog box), 
+		you will get the message:
+		<p>&quot;Bad topology&quot;.</p>
+		<p>This message tells you that the sub-element to be deleted is not <em>
+		<strong>fully</strong></em> contained into a domain. Actually, it shares 
+		a vertex with two other wires. You cannot go further in your operation, 
+		you must rebuild the initial body to make it manifold or divide it into 
+		manifold domains as indicated <a href="#Dividing">above</a>. In this case, 
+		the best would consist in dividing the body into three single-edge wires 
+		not sharing any vertices. </p>
+		</td>
+		<td>
+		<img alt="Non-manifold Body" src="images/CAACgmTobnonManifp2.jpg" width="287" height="183"></td>
+	</tr>
+</table>
+<p><strong><em>Example 2: Using a MANIFOLD Body in a Join Operation (to be compared 
+with Example 1)</em></strong></p>
+<table>
+	<tr>
+		<td>Given a three-edge manifold body looking like the one above but made 
+		up of three wires and six vertices, if you try to join the highlighted body 
+		(a line) with the three-edge body, you will get also the message:
+		<p>&quot;Update error: Non Manifold Body&quot;.</p>
+		<p>But now, if you try to remove the edge that makes the resulting body 
+		non-manifold (use the &quot;Sub-Elements to Remove&quot; tab in the &quot;Join Definition&quot; 
+		dialog box), CATIA will remove it and the join operation will complete.</p>
+		</td>
+		<td>
+		<img alt="Three-edge Non-manifold Body" src="images/CAACgmTobnonManifp3.jpg" width="285" height="180"></td>
+	</tr>
+	<tr>
+		<td colspan="2">When you try to create a non-manifold body by using the 
+		Sketcher commands, the created body will be non-manifold-like, but actually 
+		it will be automatically divided into manifold domains so that further operations 
+		requiring to remove unappropriate elements will be made easier. The Sketcher 
+		sticks to this strategy.</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>The body is a set a domains, that contains connected cells , that are bounded 
+	by domains of lower dimensions, etc.</li>
+	<li>Rules are established to provide an unique decomposition of the body.</li>
+	<li>The following diagram summarizes the relations between the domains and the 
+	cells. The arrow domain-&gt;cell represents the relation &#39;is composed of&#39;. The 
+	arrow cell-&gt;domain represents the relation &#39;is bounded by&#39;.</li>
+</ul>
+<table>
+	<caption>Fig13: Topological Objects Diagram</caption>
+	<tr>
+		<td><a name="Diagram"></a>
+		<img src="images/CAACgmTobTopoConceptsRelations.gif" alt="Topological Objects Diagram" width="478" height="358"></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric Modeler</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Mar 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

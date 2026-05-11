@@ -1,0 +1,61 @@
+#ifndef CAAIASysSprockets_idl
+#define CAAIASysSprockets_idl
+
+// COPYRIGHT DASSAULT SYSTEMES 2002
+
+#include "CATIACollection.idl"
+#include "CATVariant.idl"
+#include "CAAIASysSprocket.idl"
+#include "CATSafeArray.idl"
+
+/**
+ * Interface to describe a collection of @href Sprocket objects
+ */
+interface CAAIASysSprockets : CATIACollection {
+	/**
+	 * Returns the item described located at position <tt>index</tt> the @href Sprocket collection.
+	 * @param iIndex
+	 * the index of the element. Can be either the position of the element in the @href Sprocket
+	 * list, the name of the @href Sprocket, or a @href Sprocket (in this latter case, the @href Sprocket
+	 * itself is returned if it is in the collection)
+	 * @return
+	 * the @href Sprocket at the specified index.
+	 */
+	HRESULT Item(in CATVariant iIndex, out /*IDLRETVAL*/ CAAIASysSprocket oSprocket);
+
+	/**
+	 * Appends to the collection all the @href Sprocket not currently in the collection
+	 * @param iSprocketArray
+	 * An array of @href Sprocket to append
+	 */
+	HRESULT AddAll(in CATSafeArrayVariant iSprocketArray);
+
+	/**
+	 * Converts the collection to a VB Array
+	 * @param ioArray
+	 * A VB array in which the @href Sprocket of the collection will be copied.
+	 * The array must be allocated in VB with the proper size prior to making the call
+	 * to toArray
+     * <dl>
+     * <dt><b>Example:</b>
+     * <dd>
+     * This example converts the collection to a VB Array.
+     * <pre>
+     * ReDim SprocketsArray(MySprockets.Count)
+     * MySprockets.<font color="red">ToArray </font> SprocketsArray
+     * </pre>
+     * </dl>
+	 */
+	HRESULT ToArray(inout CATSafeArrayVariant ioArray);
+};
+
+// Interface name : CAAIASysSprockets
+#pragma ID CAAIASysSprockets "DCE:b9baf840-2f74-11d6-804d0010b5fa1031"							 	
+#pragma DUAL CAAIASysSprockets
+
+// VB object name : Sprockets
+#pragma ID Sprockets "DCE:ba1e4b70-2f74-11d6-804d0010b5fa1031"
+#pragma ALIAS CAAIASysSprockets Sprockets
+
+#endif // CAAIASysSprockets_idl
+

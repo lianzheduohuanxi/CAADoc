@@ -1,0 +1,247 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample checks how to check if two parts are connected.
+'                 Furthermore, if the parts are connected they are disconnected.
+'   Assumption:   Looks for document CAAPspEduIn.CATProduct
+'                 Looks for objects  V-117 and Gasket-012
+'               
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspDisconnectParts.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+    '-----------------------------------------------
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    
+    
+    Dim ePspIDLDomainID   As CatPspIDLDomainID    
+    Dim iIdx            As Integer
+
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( Not( objPspApplication Is Nothing )  ) Then        
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+
+    '-----------------------------------------------------------------------
+    ' Get list of physical (3D) objects in the Piping domain
+    '-----------------------------------------------------------------------
+    Dim objLPhysicals     As PspListOfObjects
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+        
+        Set objLPhysicals = objPspAppFactory.ListPhysicals( objPrdRoot, catPspIDLCATPIP)
+        
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+
+    '
+    ' --------------------------------------------------------------
+    ' Get PspConnectable object corresponding to  Valve with ID=V-117 
+    ' and Gasket whose ID = Gasket-012    
+    ' ---------------------------------------------------------------
+
+    Dim objValveCtbl    As  PspConnectable
+    Dim objGasketCtbl   As  PspConnectable
+    
+    If ( Not ( objLPhysicals Is Nothing ) And _
+       ( objLPhysicals.Count > 0 ) ) Then      
+      Set objValveCtbl  = FindPipingPartByID (objLPhysicals, "V-117")
+      Set objGasketCtbl = FindPipingPartByID (objLPhysicals,"Gasket-012")
+
+    End If
+    
+    '-----------------------------------------------------------------------
+    ' Get Connnected objects on the valve to see if Gasket-012 is connected 
+    ' to V-117
+    '-----------------------------------------------------------------------
+
+    If ( Not (objValveCtbl Is Nothing)  And _
+         Not (objGasketCtbl Is Nothing)) Then
+      strMessage_g = strMessage_g & "Found Valve and Gasket"  & vbCr               
+    
+      Dim objLClassFilter        As CATIAPspListOfBSTRs
+      Dim objLCntbles            As PspListOfObjects
+      Dim objLCntrsOnThisObj     As PspListOfObjects
+      Dim objLCntrsOnConnected   As PspListOfObjects     
+                  
+      Dim iIdxOfGasket         As Integer
+      
+      iIdxOfGasket = 0
+      Set objLClassFilter = Nothing
+      objValveCtbl.ListConnectables objLClassFilter, objLCntbles, _
+                           objLCntrsOnThisObj,  objLCntrsOnConnected 
+              
+
+      If ( Not ( objLCntbles Is Nothing ) ) Then       
+        Dim objAIDCntbl            As PspID
+        strMessage_g = strMessage_g & _
+          "Number of Connected objects= " &  objLCntbles.Count & vbCr          
+
+        For iIdx = 1 To objLCntbles.Count 
+          Set objAIDCntbl = objLCntbles.Item (iIdx, "CATIAPspID")          
+          Dim strCntdID As String
+          If ( Not (objAIDCntbl Is Nothing) ) Then
+            strCntdID = objAIDCntbl.GetID
+            If ( strCntdID = "Gasket-012" ) Then
+              iIdxOfGasket = iIdx
+              Exit For          ' Exit out of the for loop
+            End If             
+          End If           
+        Next      
+      End If
+
+      '---------------------------------------
+      ' To Disconnect V-117 and Gasket-012
+      '  get correspoding connectors from the lists objLCntrsOnThisObj
+      ' and objLCntrsOnConnected at location at index=iIdxOfGasket
+      '---------------------------------------
+
+      If ( iIdxOfGasket > 0 ) Then
+        Dim objPspCntrValve   As PspConnector
+        Dim objPspCntrGasket  As PspConnector
+        Dim bIsConnected      As Boolean
+
+        Set objPspCntrValve = objLCntrsOnThisObj.Item (iIdxOfGasket, "CATIAPspConnector")          
+        Set objPspCntrGasket = objLCntrsOnConnected.Item (iIdxOfGasket, "CATIAPspConnector")          
+
+        If ( Not(objPspCntrValve Is Nothing)  And _
+             Not(objPspCntrGasket Is Nothing)) Then
+          strMessage_g = strMessage_g & "V-117 and Gasket-012 are connected at: "  & vbCr               
+          strMessage_g = strMessage_g & "   V-117 ctr       =" & objPspCntrValve.ConnectorName & vbCr               
+          strMessage_g = strMessage_g & "   Gasket-012 ctr  =" &  objPspCntrGasket.ConnectorName _
+                            & vbCr               
+          
+          objPspCntrValve.Disconnect objPspCntrGasket
+                    
+          strMessage_g = strMessage_g & "V-117 and Gasket-012 successfully disconnected"  & vbCr               
+                            
+        End If
+      Else
+        strMessage_g = strMessage_g & "V-117 and Gasket-012 are not connected."  & vbCr                
+      End If  '--- index of connected object  (iIdxOfGasket ) > 0
+    End if
+   
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | FindPipingPartByID functions
+' | 
+' | Input: objLPhysicalsArg        : PspListOfObjects object
+' |         strIDArg               : ID of an object that looking for
+' |        
+' | Output: PspConnectable object having ID = strIDArg
+' -----------------------------------------------------------------------------
+
+Private Function FindPipingPartByID ( objLPhysicalsArg     As PspListOfObjects, _                                     
+                                      strIDArg As String )   As PspConnectable
+   
+    Dim intNbPhysical     As Integer
+    Dim iIndex            As Integer
+    Dim objPspID          As PspID
+    Dim strID             As String
+       
+    ' ------------------------------------------------
+    ' Setting the output of the function to Nothing
+    '
+    
+    Set FindPipingPartByID = Nothing
+
+    If ( Not ( objLPhysicalsArg Is Nothing ) ) Then  
+      intNbPhysical = objLPhysicalsArg.Count
+      
+      For iIndex = 1 To intNbPhysical      
+        Set objPspID = objLPhysicalsArg.Item (iIndex,"CATIAPspID")
+ 
+        If ( Not ( objPspID Is Nothing )) Then
+           '--------------------
+           ' Check if ID matches
+           If ( strIDArg = objPspID.GetID )   Then                   
+             Set FindPipingPartByID = objLPhysicalsArg.Item (iIndex,"CATIAPspConnectable")
+             Exit For     ' Exit out of the for loop                  
+           End If 
+        End IF
+      Next '----- End of loop index=iIndex
+    End If
+        
+End Function                               
+
+

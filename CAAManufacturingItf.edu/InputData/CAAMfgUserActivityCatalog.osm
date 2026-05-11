@@ -1,0 +1,53 @@
+// Create a "Plunge" MfgFeedrateParameter
+feature MyPlungeFeedrate MfgFeedrateParameter@`Manufacturing.feat` {
+	Value = new_literal(LINEARFEEDRATE,750.)
+}
+		
+// Create a "retract" MfgFeedrateParameter
+feature MyRetractFeedrate MfgFeedrateParameter@`Manufacturing.feat` {
+	Value = new_literal(LINEARFEEDRATE,800.)
+	Mode  = new_literal(Boolean,false)
+}
+
+// Create a "finishing" MfgSpindleParameter
+feature MyFinishingSpindle MfgSpindleParameter@`Manufacturing.feat` {
+	Value = new_literal(ANGULARSPINDLESPEED,20.)
+}
+
+// First user Startup deriving from MfgUserDefinedMO
+// --------------------------------------------------
+feature UserActivityWithMASU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivityWithMA) {
+	AuthorizedItems=["CATIM3xFeature"]
+	Representation="I_CAAMfgOperationWithMA"
+				
+	synchronize()
+
+	// Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+	this->StrategyParameters->AddStrategyParameter(CAAOffset,LENGTH,0.0)
+		    					
+}
+						
+// Second user Startup deriving from MfgUserDefinedMO
+// --------------------------------------------------
+feature UserActivitySU MfgUserDefinedMO@`ManufacturingActivities.feat` #startup #isa(UserActivity) {
+	AuthorizedItems=["CAAIMfgUserMachFeature"]
+	Representation="I_CAAMfgOperation"		
+				
+	synchronize()
+		    
+	// Step 1 : Use behavior defined on MfgParameter to create new Strategy parameters on new user startup
+	this->StrategyParameters->AddStrategyParameter(Offset,LENGTH,0.0)	
+	this->StrategyParameters->AddStrategyParameter(NbOfCuts,Integer,1)	
+	this->StrategyParameters->AddStrategyParameter(CAAToolAngle,ANGLE,2.0)	
+	this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,0.02)
+	this->StrategyParameters->AddStrategyParameter(CAAApproachDistance,LENGTH,0.02)
+	this->StrategyParameters->AddStrategyParameter(CAAStep,LENGTH,0.1)
+		
+	// Step 2 : Create an additional strategy parameter
+	this->StrategyParameters->AddStrategyParameter(AdditionalParam,Real,5.5)
+				
+	// Step 3 : Create additional feedrate parameters
+	this->FeedrateParameters->AddFeedrateParameter(MFG_FEED_PLUNGE,MyPlungeFeedrate)	
+	this->FeedrateParameters->AddFeedrateParameter(MFG_FEED_RETRACT,MyRetractFeedrate)	
+	this->FeedrateParameters->AddFeedrateParameter(MFG_SPINDLE_FINISH,MyFinishingSpindle)	
+}

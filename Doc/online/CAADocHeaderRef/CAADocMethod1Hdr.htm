@@ -1,0 +1,329 @@
+<html>
+
+ <head>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Method Documentation Example</title>
+ </head>
+
+ <body>
+
+ <pre>&lt;html&gt;
+
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot;&gt;
+&lt;meta name=&quot;GENERATOR&quot; content=&quot;Microsoft FrontPage 5.0&quot;&gt;
+&lt;meta name=&quot;ProgId&quot; content=&quot;FrontPage.Editor.Document&quot;&gt;
+&lt;link rel=&quot;Stylesheet&quot; type=&quot;text/css&quot; href=&quot;../../CAADocStyleSheets.doc/src/caav5.css&quot;&gt;
+&lt;title&gt;CATGeometryType&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;pre&gt;#ifndef CATDialogTransition_h
+#define CATDialogTransition_h
+
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U1
+ */
+
+#include &quot;DI0STATE.h&quot;
+
+class CATDiaAction;
+class CATCommand;
+class CATDialogState;
+class CATCmdEvent;
+
+#include &quot;CATStateCondition.h&quot;
+#include &quot;CATUnicodeString.h&quot;
+#include &quot;CATListOfCATDialogState.h&quot;
+#include &quot;CATListOfCATBaseUnknown.h&quot;
+#include &quot;CATListOfInt.h&quot;
+
+
+/**
+ * Class to create a command transition.
+ * &lt;b&gt;Role&lt;/b&gt;: A transition is one of the main elements of a state dialog 
+ * command which is a state machine that uses states to let the end user 
+ * input the requested parameters, and transitions between states to process 
+ * these input parameters and progress in the statechart.
+ * &lt;br&gt;Do not use the &lt;tt&gt;CATDialogTransition&lt;/tt&gt; constructor to create a 
+ * transition but the @href CATStateCommand#Addtransition method.
+ * &lt;br&gt;A transition must have at least one source state, a target state which
+ * may be NULL, and may be associated with a condition and an action.
+ * &lt;br&gt;
+ * Transitions must be created in the @href CATStateCommand#BuildGraph method.
+ * @see CATDialogState, CATStateCondition, CATDiaAction
+ */
+
+class ExportedByDI0STATE CATDialogTransition:public CATBaseUnknown
+{
+public:
+
+   /** @nodoc */
+   CATDeclareClass;
+
+   virtual ~CATDialogTransition ();
+ 
+   // complete the construction of a transition
+
+    /*-------------------------*/
+    //     ACTIONS
+    /*-------------------------*/     
+
+ /**
+  * Sets the transition action.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This action is executed when a transition fires.
+  * &lt;br&gt;Since a transition has only one action, successive calls to 
+  * &lt;tt&gt;SetAction&lt;/tt&gt; for the same transition successively overwrite the 
+  * action.
+  * @param iAction
+  *   The action.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;: A copy of &lt;tt&gt;iAction&lt;/tt&gt; is kept and
+  *   AddRef'ed. It is Released at the end of the command before the command 
+  *   destructor call.
+  *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: &lt;tt&gt;iAction&lt;/tt&gt; may be set to NULL to cancel 
+  *   an action inherited from the command base class. 
+  */
+   virtual void SetAction(CATDiaAction *iAction);
+
+ /**
+  * Returns the transition action.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This action is executed when a transition fires.
+  * @return
+  *   The action.
+  *   &lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;: This method doesn't AddRef the 
+  *   returned value.
+  */
+   virtual CATDiaAction * GetAction() const ;
+
+
+    /*-------------------------*/
+    //     CONDITIONS
+    /*-------------------------*/     
+
+ /**
+  * Sets the transition condition.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This condition must evaluate TRUE to make the transition
+  * fire. 
+  * &lt;br&gt;Since a transition has only one condition, successive calls to 
+  * &lt;tt&gt;SetCondition&lt;/tt&gt; for the same transition successively overwrite the 
+  * condition.
+  * @param iCond
+  *   The condition.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;: A copy of &lt;tt&gt;iCond&lt;/tt&gt; is kept and 
+  *   AddRef'ed. It is Released at the end of the command before the command 
+  *   destructor call.
+  *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: &lt;tt&gt;iCond&lt;/tt&gt; may be set to NULL to cancel 
+  *   a condition inherited from the command base class. 
+  */
+   virtual void SetCondition(CATStateCondition *iCond);
+
+ /**
+  * Returns the transition condition.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This condition must evaluate TRUE to make the transition
+  * fire. 
+  * @return 
+  *   The condition.
+  *   &lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;: This method doesn't AddRef the 
+  *   returned value.
+  */
+    virtual CATStateCondition * GetCondition() const;
+
+
+    /*-------------------------*/
+    //     STATES
+    /*-------------------------*/     
+
+ /**
+  * Adds a source state to the transition.
+  * @param iState
+  *   The state.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;: A pointer to the state is kept, and 
+  *   AddRef'ed. It is Released at the end of the command before the command
+  *   destructor call or when the state is removed.
+  */
+   void  AddInitialState(CATDialogState *iState) ;
+
+ /**
+  * Removes a source state from the transition.
+  * @param iState
+  *   The state.
+  */
+   void RemoveInitialState(CATDialogState * iState);
+
+ /**
+  * Returns the count of source states.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: The count of source states ranges from 1 to n.
+  * @return
+  *   The source state count.
+  */
+   int GetInitialStateNumber() ;
+
+ /**
+  * Returns a source state using the source state index.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This method returns the &lt;tt&gt;iIndex&lt;/tt&gt;th source state.
+  * @param iIndex
+  *   The index.
+  *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: &lt;tt&gt;iIndex&lt;/tt&gt; range starts with 1, which is 
+  *   the default.
+  *   Use @href #GetInitialStateNumber to get the source state count.
+  * @return
+  *   The state.
+  *   &lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;: This method doesn't AddRef the
+  *    returned value.
+  */
+   CATDialogState * GetInitialState(int iIndex = 1) ;
+
+ /**
+  * Sets the target state.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: Since a transition has only one target state, successive
+  * calls to &lt;tt&gt;SetFinalState&lt;/tt&gt; for the same transition successively 
+  * overwrite the target state.
+  * @param iState
+  *   the state.
+  *   &lt;br&gt;&lt;b&gt;Cyclic reference&lt;/b&gt;: A copy of &lt;tt&gt;iState&lt;/tt&gt; is kept and
+  *   AddRef'ed. It is Released at the end of the command before the command
+  *   destructor call or when the state is removed.
+  *   &lt;br&gt;&lt;b&gt;Legal values&lt;/b&gt;: &lt;tt&gt;iState&lt;/tt&gt; may be set to NULL to cancel 
+  *   a state inherited from the command base class. 
+  */
+   void SetFinalState(CATDialogState * iState);
+
+ /**
+  * Returns the target state.
+  * @return
+  *   The state.
+  *   &lt;br&gt;&lt;b&gt;Lifecycle rules deviation&lt;/b&gt;: This method doesn't AddRef the 
+  *   returned value.
+  */
+   CATDialogState        * GetFinalState() const;
+
+
+    /*-------------------------*/
+    //     RESOURCE ID
+    /*-------------------------*/     
+
+ /**
+  * Sets the resource identifier.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This identifier is used to retrieve the Undo/Redo titles 
+  * in the command message file.
+  * @param iId
+  *   The resource identifier.
+  */
+   void SetResourceID( const CATString&amp; iId );
+
+ /**
+  * Retrieves the resource identifier.
+  * &lt;br&gt;&lt;b&gt;Role&lt;/b&gt;: This identifier is used to retrieve the Undo/Redo titles
+  * in the command message file.
+  * @return
+  *   The resource identifier.
+  */
+   CATString&amp; GetResourceID() ;
+
+
+
+    /*-------------------------*/
+    //     FOR INTERNAL USE 
+    /*-------------------------*/     
+   
+   /* transition creation is hidden in the CATStateCommand::AddTransition method */ 
+/** @nodoc */
+   CATDialogTransition (CATDialogState *, CATDialogState *);
+/** @nodoc */
+   CATDialogTransition ();
+
+
+
+   // get the elements which compose the transition
+
+/** @nodoc */
+   void SetCommand(CATCommand * ) ;
+/** @nodoc */
+   CATCommand       * GetCommand() const;
+
+/** @nodoc */
+   void InitInitialStateList();
+/** @nodoc */
+   CATDialogState * GetNextInitialState();
+
+/** @nodoc */
+   void ReleaseComponents();
+
+    /* for CAA2 L2 */
+/** @nodoc */
+   CATCmdEvent * GetEvent(int num);
+/** @nodoc */
+   int GetEventNumber();
+/** @nodoc */
+   void AddEvent(CATCmdEvent * Event);
+/** @nodoc */
+   void RemoveEvent(CATCmdEvent * Event);
+/** @nodoc */
+   boolean IsTriggered(); 
+/** @nodoc */
+   void  InitEventStatus();
+   
+ 
+   /* execution of the condition and action associated with the transition */
+/** @nodoc */
+   boolean Precondition () ;
+/** @nodoc */
+   void ExecuteTransition  (int InitialStateNumber =1) ;
+/** @nodoc */
+   void BeforeUndo  (int InitialStateNumber =1) ;
+/** @nodoc */
+   void BeforeRedo  (int InitialStateNumber =1) ;
+/** @nodoc */
+   void AfterUndo  (int InitialStateNumber =1) ;
+/** @nodoc */
+   void AfterRedo  (int InitialStateNumber =1) ;
+
+/** @nodoc */
+   void Dump (int official=0) ;
+
+
+   /* management of UndoTitle */
+/** @nodoc */
+   CATUnicodeString&amp; GetUndoTitle();
+/** @nodoc */
+   CATUnicodeString&amp; GetRedoTitle();
+/** @nodoc */
+   void SetUndoTitle(const CATUnicodeString &amp;Text);
+/** @nodoc */
+   void SetRedoTitle(const CATUnicodeString &amp;Text);
+
+protected:
+
+    /*------------------*/
+    // internal data 
+    /*------------------*/
+
+   CATLISTP (CATDialogState)       _initialStateList; 
+   CATLISTP (CATBaseUnknown)       _EventList; 
+   CATListOfInt                    _StatusList; 
+
+   CATDialogState      *_finalState ;   
+   // state command which builds the graph
+   CATCommand     *_command    ;  
+   CATStateCondition   *_condition ;   
+   CATDiaAction        *_action     ;   
+
+   CATUnicodeString   _UndoTitle;
+   CATUnicodeString   _RedoTitle;
+   CATString          _resourceID;
+   int _InitialStateListIndice;
+   int _offTraces;
+   
+};
+#endif
+</pre>
+
+ </body>
+
+</html>

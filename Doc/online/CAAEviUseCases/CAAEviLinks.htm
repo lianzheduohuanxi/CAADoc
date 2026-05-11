@@ -1,0 +1,422 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Links Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Links Interface</h3>
+      <em>Creating and Deleting Links between Objects</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the ENOVICWLinks interface of the
+      ENOVInterfaces framework to add and remove links between existing Change
+      Management objects, i.e., Engineering Change Orders, Actions, and
+      Engineering Change Requests.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEviLinks Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAEviLinks Do?</a></li>
+            <li><a href="#How">How to Launch CAAEviLinks</a></li>
+            <li><a href="#Where">Where to Find the CAAEviLinks Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to add links between existing ECOs,
+Actions, and ECRs. You will learn how to add a Design Action, to an existing
+Engineering Change Order as a deliverable. You would use this operation if for
+example a certain Action has to be completed to accomplish a project or a
+product modification. The required action is attached as a deliverable to an ECO
+which controls the project or modification. The ECO cannot be released until the
+deliverable is completed, ensuring that all necessary work is accomplished.</p>
+<p>You will also learn how to link one ECO to another related ECO. You would use
+this link to attach a prerequisite ECO, that is, an ECO that must be completed
+before the linking ECO can be completed. Similarly, a Hierarchy link can be used
+to attach a whole tree of ECOs that represent the total work that must be
+completed before the controlling or parent ECO can be completed.</p>
+<p>Finally, you will learn how to link two Actions together. The ENOVInterfaces
+framework contains the interface ENOVICWLinks which allows you to directly add
+and remove links between an existing Actions and ECOs.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEviLinks Use Case</h3>
+<p>CAAEviLinks is a use case of the CAAENOVInterfaces.edu framework that
+illustrates how you use the ENOVICWLinks interface to add and remove links
+between existing ECOs and Actions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEviLinks Do?</h4>
+<p>CAAEviLinks begins by opening a VPM session and creating a login a session.
+Then the ECO and Action Managers are retrieved. To set up the demonstration, two
+ECOs are created with the necessary parameters as well as a Design Action and a
+Manufacturing Action. For more information on how to create ECOs and Actions,
+refer to use cases CAAEviEcoManager and CAAEviActionManager. After the necessary
+objects are created, the ENOVICWLinks interface is used to add and remove the
+links between ECOs and Actions.</p>
+<p>The ENOVInterfaces interface/methods shown here are:</p>
+<ul>
+  <li><b>ENOVIBOCWLinks.h - CreateRelatedEcLink</b></li>
+  <li><b>ENOVIBOCWLinks.h - CreateHierarchyEcLink</b></li>
+  <li><b>ENOVIBOCWLinks.h - CreateDeliverableLink</b></li>
+  <li><b>ENOVIBOCWLinks.h - CreateNewLink</b></li>
+  <li><b>ENOVIBOCWLinks.h - RemoveLink</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEviLinks</h4>
+
+<p>To launch CAAEviLinks, you will need to set up the build time
+environment, then compile CAAEviLinks.cpp along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>]. The required
+interfaces can be found in the ENOVInterfaces, VPMInterfaces, VPMPersistency,
+and System frameworks.</p>
+<p>When the use case is built and the run time environment set, from the directory where the executable file is stored, 
+type the following to execute the use case:</p>
+<p><code>CAAEviLinks EnoviaUserLoginId EnoviaUserPasswd Role</code></p>
+<p>Where:</p>
+<ul>
+	<li><code>CAAEviLinks</code> is the use case executable name.</li>
+	<li><code>EnoviaUserLoginId</code> is the login identifier of the 
+		ENOVIA user you intend use to run the use case.</li>
+	<li><code>EnoviaUserPasswd</code> is the password of this user.</li>
+	<li><code>Role</code> is the role of this user, such as 
+		VPMADMIN.ADMIN.DEFAULT.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEviLinks Code</h4>
+<p>The CAAEviLinks use case is made of a single file located in the
+CAAEviLinks.m module of the CAAENOVInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVInterfaces.edu\CAAEviLinks.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVInterfaces.edu/CAAEviLinks.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAEviLinks use case is shown
+here. After the preliminary set up of creating the ECOs and Actions, there are
+five logical steps:</p>
+<ol>
+  <li><a href="#Step1">Create a Related EC link between two ECOs</a></li>
+  <li><a href="#Step2">Create a Hierarchy link between two ECOs</a></li>
+  <li><a href="#Step3">Create a deliverable link between an ECO and a Design
+    Action</a></li>
+  <li><a href="#Step4">Create a parent link between a Design Action and a
+    Manufacturing Action</a></li>
+  <li><a href="#Step5">Remove a link</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Create a Related EC link between two ECOs</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+     </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Create Related EC Link (Prerequisite) from Eco1 to Eco2
+
+    CATUnicodeString RelLinkType(&quot;ENOVIA_V506ec_prerequ&quot;);
+    CATIVpmAFLLink_var RelECLink = NULL_var;
+    ENOVICWLinks_var spLink(Eco1);
+        
+    rc = spLink-&gt;CreateRelatedEcLink(RelLinkType, Eco2, RelECLink);
+   
+    if (RelECLink==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in creating Related EC Link.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 6;
+    }
+    cout &lt;&lt; &quot;Created Related EC Link successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>First, the link-to ECO is <b>Eco2</b>. The link type <b>RelLinkType</b> is
+    set to &quot;ENOVIA_V506ec_prerequ&quot;.</li>
+  <li>The ECO object, <b>Eco1</b>, is cast as a ENOVICWLinks type - <b>spLink</b>.</li>
+  <li>Then, <b>spLink</b> calls method <b>CreateRelatedEcLink</b>.</li>
+  <li>The method returns S_OK if successful and the link <b>RelECLink</b> is
+    created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Create a Hierarchy link between two ECOs</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;
+         </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+  //--- Create Hierarchy Link from Eco1 to Eco2
+
+    CATIVpmAFLLink_var HierLink = NULL_var;
+        
+    rc = spLink-&gt;CreateEcHierarchyLink(Eco2, HierLink);
+   
+    if (HierLink==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in create Hierarchy Link.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 7;
+    }
+    cout &lt;&lt; &quot;Created Hierarchy Link successfully.&quot; &lt;&lt; endl &lt;&lt; flush;    
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>First, the link-to ECO is <b>Eco2</b>.</li>
+  <li>The ECO object, <b>Eco1</b>, is cast as a ENOVICWLinks type - <b>spLink</b>.</li>
+  <li>Then, <b>spLink</b> calls method <b>CreateEcHierarchyLink</b>.</li>
+  <li>The method returns S_OK if successful and the link <b>HierLink</b> is
+    created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Create a deliverable link between an ECO and a Design
+Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;</pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Create a Deliverable Link from Eco1 to the Design Action
+
+    CATIVpmAFLLink_var LinkObj = NULL_var;
+    boolean IsPaste = FALSE;
+                
+    rc = spLink-&gt;CreateDeliverableLink(DsgAct, LinkObj, IsPaste);
+   
+    if (LinkObj==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR to Add Deliverable Link.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 8;
+    }
+    cout &lt;&lt; &quot;Created Deliverable Link successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>First, the link-to action is the Design Action, <b>DsgAct</b>.</li>
+  <li>The ECO object, <b>Eco1</b>, is cast as a ENOVICWLinks type - <b>spLink</b>.
+    The boolean <b>IsPaste</b> indicates if the link is being made as a result
+    of a cut and paste.</li>
+  <li>Then, <b>spLink</b> calls method <b>CreateDeliverableLink</b>.</li>
+  <li>The method returns S_OK if successful and the link <b>LinkObj</b> is
+    created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Create a Parent link between a Design Action and a
+Manufacturing Action</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+     </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Create a Parent Link from Design Action to Mfg Action
+
+    CATUnicodeString LinkType(&quot;ENOVIA_AFLParent&quot;);
+    CATIVpmAFLLink_var ActLink = NULL_var;
+    ENOVICWLinks_var spLnk(DsgAct);
+        
+    rc = spLnk-&gt;CreateNewLink(LinkType, MfgAct, ActLink);
+
+    if (ActLink==NULL_var||!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in Create Link from Design Action to Mfg Action.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 9;
+    }
+    cout &lt;&lt; &quot;Created Parent Link from Design Action to Mfg Action successfully.&quot; &lt;&lt; endl; 
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>First, the link-to ECO is <b>MfgAct</b>. The link type <b>LinkType</b> is
+    set to &quot;ENOVIA_AFLParent&quot;.</li>
+  <li>The Design Action object, <b>DsgAct</b>, is cast as a ENOVICWLinks type - <b>spLnk</b>.</li>
+  <li>Then, <b>spLnk</b> calls method <b>CreateNewLink</b>.</li>
+  <li>The method returns S_OK if successful and the link <b>ActLink</b> is
+    created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Remove a link</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWLinks.h&quot;
+    #include &quot;CATIVpmAFLLink.h&quot;
+         </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+  //--- Remove Parent Link from Design Action to Mfg Action 
+
+    rc = spLnk-&gt;RemoveLink(ActLink);
+   
+    if (!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in removing Parent Link.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 10;
+    }
+    cout &lt;&lt; &quot;Removed Parent Link between Actions successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+    
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>With the Design Action, <b>DsgAct</b>, cast as a ENOVICWLinks type - <b>spLnk,
+    </b>a call is made to method <b>RemoveLink</b> passing the link object <b>ActLink</b>
+    as an argument.</li>
+  <li>The method returns S_OK if successful and the link <b>ActLink</b> is
+    deleted.</li>
+  <li>The <b>RemoveLink</b> method is used for all types of links on both ECOs
+    and Actions.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Use the ENOVICWLinks interface available in the ENOVInterfaces framework to
+add and remove links on existing Actions and ECOs.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

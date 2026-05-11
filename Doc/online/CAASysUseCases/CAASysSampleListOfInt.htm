@@ -1,0 +1,388 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using Lists of Integers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using Lists of Integers</h3>
+      <em>Creating and managing one or several lists of simple types</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and manage a list of simple types,
+      illustrated by a list of integers.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysCollections Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysCollections Do</a></li>
+            <li><a href="#How">How to Launch CAASysCollections</a></li>
+            <li><a href="#Where">Where to Find the CAASysCollections Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and manage a list of
+simple types.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysCollections Case</h3>
+<p>CAASysCollections is a set of use cases of the CAASystem.edu framework that
+illustrates the collection management capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysCollections Do</h4>
+<p>This use case shows summarizes the collection management capabilities:</p>
+<ul>
+  <li>Lists of simple types</li>
+  <li>Lists of pointers</li>
+  <li>Lists of values</li>
+  <li>Sets of <i>CATString</i> class instances</li>
+  <li>Hash tables</li>
+</ul>
+<p>This article describes the list of simple type capabilities, taking a list of
+integers as example.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysCollections</h4>
+<p>To launch CAASysCollections, you will need to set up the build time
+environment, then compile CAASysCollections along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASysCollections Code</h4>
+<p>The CAASysCollections use case is made of a file located in the
+CAASysCollections.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysCollections.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysCollections.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The following capabilities offered by lists of integers are described in the
+following steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>
+      <p align="left">Step</p>
+    </th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create and fill in a list of integers</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Replace items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Locate items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Quick sort the list</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Remove duplicates</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Exchange items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Copy items from/to an array</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">8</a></td>
+    <td valign="top">Remove/insert items</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step9">9</a></td>
+    <td valign="top">Intersect two lists</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating and Filling in a List of Integers</h4>
+<p>A list of integers is created as an instance of the <i>CATListOfInt</i>
+class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include  &quot;CATListOfInt.h&quot;
+...
+void CAAListsSample()
+{
+  CATListOfInt listOfInt;
+
+  int	i1 = 5;
+  listOfInt.<b>Append</b> ( 0 );
+  listOfInt.Append ( i1 );
+  listOfInt.Append ( 6 );
+  listOfInt.Append ( 77 );
+  listOfInt.Append ( 888 );
+  listOfInt.Append ( 9999 );
+  listOfInt.Append ( 0 );
+  listOfInt.Append ( 0 );
+  listOfInt.Append ( 0 );
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Append</code> method appends each value to the list. The list
+contains nine integers 0, 5, 6, 77, 888, 9999, 0, 0, 0 stored in this order.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Replacing Item Values</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  listOfInt[5] = 92380; // Instead of 888
+  listOfInt[7] = listOfInt[2] ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Items can be accessed thanks to their rank in the list, as with tables. Note
+that this rank begins with 1. The list always contains nine integers: 0, 5, 6,
+77, 92380, 9999, 5, 0, 0.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Locating Items</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  cout &lt;&lt; &quot;Locate (9999)  == &quot;	&lt;&lt; listOfInt.<b>Locate</b> (9999) &lt;&lt; endl;
+  cout &lt;&lt; &quot;Locate (0)     == &quot;  &lt;&lt; listOfInt.Locate (0)    &lt;&lt; endl;
+  cout &lt;&lt; &quot;Locate (0, 3)  == &quot;  &lt;&lt; listOfInt.Locate (0, 3) &lt;&lt; endl;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Locate</code> method returns the rank of a given value in the list.
+The second parameter indicates the rank from which the search begins, defaulted
+to the first item. The returned value is the rank found, or 0 if no item is
+found with this value. This code provides the following output:
+<table class="code">
+  <tr>
+    <td>
+      <pre>Locate (9999)  == 6
+Locate (0)     == 1
+Locate (0, 3)  == 8</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Quick Sorting the List</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  listOfInt.<b>QuickSort</b>();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>QuickSort</code> method sorts the list by increasing order. The
+list is now 0, 0, 0, 5, 5, 6, 77, 9999, 92380.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Removing Duplicates</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  listOfInt.<b>RemoveDuplicates</b>();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>RemoveDuplicates</code> method removes items whose value is found
+with a lower rank item. When an item is removed, all subsequent item ranks are
+decreased by 1. The list now contains six items, since two duplicates of 0, and
+a duplicate of 5 are removed: 0, 5, 6, 77, 9999, 92380.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Exchanging Items</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  listOfInt.<b>Swap</b>(1, 2);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Swap</code> method exchanges item values using their ranks. The
+code above exchanges the values of the first two items. The list is now: 5, 0,
+6, 77, 9999, 92380.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Copying Items from/to an Array</h4>
+<p>A list of integers can be copied in a C array of integers.
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  int *rgArray = new int[listOfInt.<b>Size</b>()];
+  listOfInt.<b>FillArray</b>(rgArray , listOfInt.Size());
+  CATListOfInt *plistOfInt = new <b>CATListOfInt</b>(rgArray, listOfInt.Size());
+  delete [] rgArray;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The array size is set using the <code>Size</code> method that returns the
+number of items in the list. Then, then <code>FillArray</code> method fills the
+array with the list. The second parameter is the number of items to put in the
+array. It is here the full list. A new list of integers can be created an filled
+in from an array. The second constructor parameter is the number of array items
+to copy in the list.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Removing/Inserting Items</h4>
+<p>A list of integers is created using the
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+                                     // 5, 0, 6, 77, 9999, 92380
+  plistOfInt-&gt;<b>RemovePosition</b>(1);     // 0, 6, 77, 9999, 92380
+  plistOfInt-&gt;RemovePosition(3);     // 0, 6, 9999, 92380
+  plistOfInt-&gt;<b>InsertAt</b>(2, 1313);     // 0, <b>1313</b>, 6, 9999, 92380
+  plistOfInt-&gt;InsertAt(5, 12345);    // 0, 1313, 6, 9999, <b>12345</b>, 92380
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>RemovePosition</code> method removes the item whose rank is passed
+as parameter. When an item is removed, all subsequent item ranks are decreased
+by 1. The <code>InsertAt</code> method insert at the rank passed as the first
+parameter the value passed as the second parameter. When an item is inserted,
+all subsequent item ranks are increased by 1. The list was:<br>
+5, 0, 6, 77, 9999, 92380.<br>
+and is now:<br>
+0, 1313, 6, 9999, 12345, 92380.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Intersecting Two Lists</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATListOfInt listOfIntInter;
+  CATListOfInt::<b>Intersection</b>(*plistOfInt, listOfInt, listOfIntInter);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Intersection</code> method copies the items whose value is found in
+the two lists <code>plistOfInt</code> and <code>listOfInt</code> in the newly
+created list <code>listOfIntInter</code>. The list contents are:
+<table>
+  <tr>
+    <td><code>plistOfInt</code></td>
+    <td>5, 0, 6, 77, 9999, 92380</td>
+  </tr>
+  <tr>
+    <td><code>listOfInt</code></td>
+    <td>0, 1313, 6, 9999, 12345, 92380</td>
+  </tr>
+  <tr>
+    <td><code>listOfIntInter</code></td>
+    <td>0, 6, 9999, 92380</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create and use a list of integers. The same
+capabilities are available with lists of floats or lists of doubles.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

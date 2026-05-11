@@ -1,0 +1,355 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Catalog Architecture</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - Catalog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Catalog Architecture</h3>
+      <em>Global and internal view of catalog documents</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article details&nbsp;the global view and the internal
+view of the Catalog architecture.&nbsp;</p>
+          <ul>
+            <li><a href="#Introduction"><b>Introduction</b></a></li>
+            <li><strong><a href="#Catalog architecture">Catalog Architecture</a></strong></li>
+                      <li><strong><a href="#General Model Description">Catalog Document Model
+              </a></strong><a href="#General Model Description"><strong> Description</strong>
+              </a>
+                        <ul>
+                          <li><strong><a href="#Catalog document model description - definition">Definition</a></strong></li>
+                          <li><strong><a href="#Catalog document model description- Proto/Inst mechanism">Prototype/Instance
+                            Mechanism for the Description</a></strong></li>
+                          <li><strong><a href="#Catalog document model description- the queryresult object">The
+                            QueryResult Object</a></strong></li>
+                        </ul>
+            </li>
+            <li><strong><a href="#Part Family Model Description">Part Family
+              Model Description</a></strong></li>
+            <li><strong><a href="#PQ Model Description">Persistent Query Model </a></strong><a href="#PQ Model Description"><strong> Description</strong>
+              </a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+
+<p>Users often need a way of storing and classifying the many objects they have
+at their disposal, whether they be screws, ball bearings or computer parts.
+These objects may number tens of thousands, each with its own specific
+characteristics such as shape, color, size, diameter, length, etc. To facilitate
+fast and easy retrieval of such objects and avoid time-wasting redesign, Version
+5 offers the possibility of creating catalogs.&nbsp;</p>
+<p>A catalog is a V5 document and is in the form of a tree structure made up of:&nbsp;</p>
+<ol>
+  <li><b>Components: </b>it is a reference to an external entity such as feature
+    (e.g. User Feature, Power Copy), V5 documents (e.g. Part, Product)&nbsp;
+  <li><b>Families (end chapters): </b>it is a set of components &nbsp;
+  <li><b>Chapters: </b>a chapter references others chapters and families. It is
+    a way of classifying the elements it refers to
+  <li><b>Keywords: </b>a keyword describes the chapter and the family content.
+    You can associate keywords to chapters and families and thus, perform
+    searches by keyword value to filter their contents.</li>
+</ol>
+<p>This external catalog view is internally described by three object types:</p>
+<ol>
+  <li><b>Keyword:&nbsp;</b> it is like a property represented by a simple type
+    (integer, real, double) or a knowledge type ( Length, Mass, Volume, Time
+    ...)
+  <li><b>Description: </b>it contains a reference to an object (chapter, file,
+    description, feature) and keyword values&nbsp;
+  <li><b>Chapter : </b>it contains descriptions and keywords</li>
+</ol>
+<p>This article presents the <a href="#Catalog architecture">Catalog
+Architecture</a> in the first paragraph to place the Catalog document in the V5
+architecture, and so explains how you can you integrate in this architecture.</p>
+
+<p>The rest of the article is to describe the internal view of the Catalog
+document:&nbsp;</p>
+
+<ul>
+  <li>The <a href="#General Model Description">Catalog Document </a>description&nbsp;</li>
+  <li>The <a href="#Part Family Model Description">Part Family</a> description</li>
+  <li>The <a href="#PQ Model Description">Persistent Query</a> description</li>
+</ul>
+<p>Before reading it, it is important to already be familiar with the basic
+Catalog notions, see the referenced article [<a href="#References">1</a>], and
+with the basic Knowledge notions, see the referenced Knowledge home page [<a href="#References">2</a>]</p>
+
+<h3><a name="Catalog architecture"></a>Catalog Architecture</h3>
+<p>The Catalog architecture is the following [<a href="#Fig.1">Fig.1</a>]: a common API, two
+different user interfaces (CATIA and ENOVIA) and two storage modes (file and
+data base). You can use the same API to work on CATIA catalogs (file based) or on
+Enovia catalogs (stored in data base).</p>
+  <table>
+<caption><i><a name="Fig.1">Fig.1</a>: Catalog Architecture</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewArchi.gif" width="630" height="427">
+</td>
+</tr>
+</table>
+
+<p>The Catalog API is defined in the ComponentsCatalogsInterfaces framework.
+There are several domains coveraged by these interfaces:</p>
+<ul>
+  <li><i>CATICatalogChapterFactory</i> to create a chapter</li>
+  <li><i>CATICatalogChapter, CATICatalogDescription </i>and<i>
+    CATICatalogKeyword</i> to handle the features of the catalog document</li>
+  <li><i>CATICatalogQuery </i>and<i> CATICatalogQueryResult</i> to do and obtain
+    a query on a chapter</li>
+  <li><i>CATICatalogPersistentQuery</i> for the Persistent Query&nbsp;</li>
+  <li><i>CATICatalogBrowserFactory</i> to create a Catalog Browser and <i>CATICatalogBrowse</i>
+    to handle it</li>
+  <li><i>CATICatalogInstantiation, CATICatalogSynchronize </i>and<i>&nbsp;
+    CATICatalogEnable </i>to link a new type of component to a description.</li>
+</ul>
+
+<h3><a name="General Model Description"></a>Catalog Document Model Description</h3>
+<p>A catalog is made up of chapters, keywords and descriptions.</p>
+<h4><a name="Catalog document model description - definition"></a>Definition</h4>
+  <table>
+<caption><i><a name="Fig.2">Fig.2</a>: Catalog Model Description</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewModel1.gif" width="625" height="486">
+</td>
+</tr>
+</table>
+<p>The root container of the catalog document implements the <i>CATICatalogChapterFactory</i> interface. As usual, to retrieve the root
+container of a document, use the <i>CATInit</i> interface and its <code>GetRootContainer</code>
+method.&nbsp;</p>
+<p>All the chapters, created by the <i>CATICatalogChapterFactory</i> 
+are in the same root container.&nbsp;</p>
+<p>The description has a link to an object (<code>_ReferencedObject</code>)
+which can be&nbsp;</p>
+<ul>
+  <li>a file (Part, Product,...),&nbsp;</li>
+  <li>a feature (User Feature, Power copy,...),&nbsp;&nbsp;</li>
+  <li>a chapter ( to create a chapters tree structure)</li>
+  <li>a description (See the <a href="#PQ Model Description">persistent query</a>
+    model)</li>
+</ul>
+<p>This object can be retrieved by the <code>GetObject</code>
+        method of the <i>CATICatalogDescription</i> interface. In the chapter's
+case, see the &quot;Description&quot; sub-section in the Catalog Overview
+article [<a href="#References">1</a>] to have details about this method.</p>
+<p>The keyword has a name (<code>_Name</code>) and has a type (<code>_Type</code>).
+The type is a knowledge type [2]. For the keyword value see the next paragraph.</p>
+<p><b><a name="Catalog document model description- Proto/Inst mechanism"></a>Prototype/Instance
+Mechanism for Descriptions</b></p>
+<p>This mechanism [<a href="#References">3</a>] enables to kept on the reference
+description, at least, the keywords default value. Although the reference description is not visible
+by CAA API the default values are accessible through the chapter API.</p>
+  <table>
+<caption><i><a name="Fig.3">Fig.3</a>: Prototype/Instance Mechanism for Description</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewModel2.gif" width="366" height="347">
+</td>
+</tr>
+</table>
+
+<p>The keyword value management is the following:</p>
+  <ul>
+  <li>an own value set on the instance description&nbsp;</li>
+  <li>otherwise, the default value set&nbsp; on the Ref. description</li>
+  <li>oherwise, the keyword is &quot;Unset&quot;</li>
+  </ul>
+  
+<p><b><a name="Catalog document model description- the queryresult object"></a>The
+QueryResult Object</b></p>
+<p>The <i>QueryResult</i>  object does not appear in <a href="#Fig.2">Fig.2</a>
+because it does not exist in a catalog document. It is a temporary object to filter
+a chapter. This  object is used in three cases:</p>
+<ol>
+  <li>When the description contains a link to a chapter, the <code>GetObject</code>
+    method on a <i>CATICatalogDescription</i> interface returns such object,</li>
+  <li>When a persistent query is associated with a chapter,&nbsp;</li>
+  <li>As result of a query on a chapter.</li>
+</ol>
+ <table>
+<caption><i><a name="Fig.4">Fig.4</a>: QueryResult Model Description</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewModel3.gif" width="618" height="408">
+</td>
+</tr>
+</table>
+<p>The <i> QueryResult</i> object has a chapter behavior (it implements <i>CATICatalogChapter</i>).
+Its descriptions are a sub-set of the filtered chapter's descriptions. Notice
+its link to the filtered chapter (the&nbsp;red arrow).&nbsp;</p>
+
+<h3><a name="Part Family Model Description"></a>Part Family Model Description</h3>
+
+<p>A Part family is a set of descriptions coming from the design table
+of a document (only Part document are now integrated).&nbsp;&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.5">Fig.5</a>: Part Family Model Description</i></caption>
+<tr>
+<td>
+<img border="0" src="images/CAACciCatalogOverviewModel4.gif" width="469" height="488">
+</td>
+</tr>
+</table>
+<p>The family is a chapter and its keywords come at least from the headers <b> </b>of its design
+tables [2]. Those keywords are automatically created when you add a Part family in a
+chapter. You can also add keywords on such family.&nbsp;</p>
+<ul>
+  <li><b>Reference Description </b>contents
+    <ul>
+      <li>Not directly visible by CAA API</li>
+      <li>One for each Part with design table</li>
+      <li>Could be synchronized with design table through the Edit/Links command
+        to add/remove the generated descriptions (the instance descriptions)</li>
+      <li><code>_KeywordValue: </code>The keyword&nbsp; of the chapter. The keyword values
+        are the default values.</li>
+    </ul>
+  </li>
+  <li><b>Instance Description </b>contents
+    <ul>
+      <li>Visible by CAA API</li>
+      <li>For a Reference Description, there are as many instance descriptions as
+        configuration rows in the design table.&nbsp;</li>
+      <li><code>_KeywordValue:</code>The keyword values are those of one row of the design table
+        if the keywords come from the design table, otherwise it is the value
+        of the keyword set by CAA API or by the end user through the Catalog
+        Editor.</li>
+      <li>It keeps the PartNumber value (mandatory to retrieve the appropriate design
+        table row for instantiation)</li>
+      <li><code>_ReferencedObject</code>: It has a link to the resolved part (part updated with the
+        appropriate configuration of the design table if the resolution has been launched)</li>
+    </ul>
+  </li>
+</ul>
+<h3><a name="PQ Model Description"></a>Persistent Query Model Description</h3>
+<p>Another way of creating descriptions in a chapter is using persistent queries.
+It is a query done on an external chapter (chapter from an another catalog).&nbsp;</p>
+  <table>
+<caption><i><a name="Fig.6">Fig.6</a>: Persistent Query Model Description</i></caption>
+<tr>
+<td>
+&nbsp; <img border="0" src="images/CAACciCatalogOverviewModel5.gif" width="619" height="484">
+</td>
+</tr>
+</table>
+
+<p>The chapter has keywords but in opposite to the Part family case, it is only end
+user keywords.&nbsp;</p>
+
+<ul>
+  <li><b>Ref Description</b> contents
+    <ul>
+      <li>Not directly visible by CAA API</li>
+      <li>One for each persistent query associate with the chapter</li>
+      <li>Could be synchronized by the Edit/Links command. A synchronization will
+        re-launch all
+        recursive queries on the pointed chapter. The instance descriptions are
+        updated.</li>
+      <li><code>_KeywordValue</code>: The keyword of the chapter. The values of
+        these keywords are those that you set using the <i>CATICatalogPersistentQuery</i>
+        interface.&nbsp;</li>
+    </ul>
+  </li>
+  <li><b>Instance Description </b>contents
+    <ul>
+      <li>Visible by CAA API</li>
+      <li>For a Ref Description (so for each persistent query), there are as many descriptions
+        as descriptions matching the query in the external catalog.</li>
+      <li>For a Ref Description, its resulting instance descriptions are
+        generated only if the query is solved (<code>ResolveQuery</code> method)</li>
+      <li><code>_KeywordValue: </code>As usual, the keywords of the chapter can be valuated</li>
+      <li><code>_ReferencedObject: </code>The external description&nbsp;</li>
+    </ul>
+  </li>
+</ul>
+<p>The keyword value management is the following:</p>
+  <ul>
+  <li>an own value set on the instance description&nbsp;</li>
+  <li>otherwise, the default value set by the persistent query on the
+    Ref description</li>
+  <li>otherwise, the default value set by the family&nbsp;on an object not
+    represented on the previous schema <a href="#Fig.6">Fig.6</a></li>
+  <li>oherwise, the keyword is &quot;Unset&quot;</li>
+  </ul>
+  
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article describes the catalog architecture and the internal view of a
+catalog document.&nbsp;</p>
+<p align="right"><i></i>[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="892">
+  <tr>
+    <td valign="top" width="91">[1]</td>
+    <td width="787"><a href="CAACciCatalogOverview.htm">Catalog Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91">[2]</td>
+    <td width="787"><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="91">[3]</td>
+    <td width="787"><a href="../CAALifQuickRefs/CAALifHome.htm">Knowledge
+      Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" width="884">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Aug 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

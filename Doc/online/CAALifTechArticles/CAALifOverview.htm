@@ -1,0 +1,295 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="fr">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Literal Feature Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Knowledge Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Literal Feature Overview</h3>
+      <em>The benefits of using parameters and relations</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The purpose of this article is to explain the benefits of using
+      parameters and relations from a developer standpoint. To keep up with the
+      material discussed in this article, it is better to have a prerequisite
+      knowledge of the parameter, formula and design table principles from an
+      end user point of view. If you are a brand new on these subjects, take a
+      look at the <i>Knowledge Advisor User's Guide</i>. It is also absolutely
+      required to dabble with the ObjectSpecsModeler principles.</p>
+      <ul>
+        <li><a href="#Introduction"><b>Introduction</b></a></li>
+        <li><a href="#Some Basic Capabilities"><b>Some Basic Capabilities</b></a></li>
+        <ul>
+          <li><a href="#Accessing the Feature Attributes in F(x)">Accessing the
+            Feature Attributes in <i>F(x)</i></a></li>
+          <li><a href="#Adding Knowledgeware Relations">Adding Knowledgeware
+            Relations</a></li>
+          <li><a href="#Using Specific Editing Capabilities">Using Specific
+            Editing Capabilities</a></li>
+        </ul>
+        <li><a href="#Other Benefits"><b>Other Benefits</b></a>
+          <ul>
+            <li><a href="#Manipulators">Manipulators</a></li>
+            <li><a href="#Event Managing">Event Managing</a></li>
+            <li><a href="#Unit and Magnitude Management">Units and Magnitude
+              Management</a></li>
+            <li><a href="#Adding User Functions">User Functions</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><b>In Short</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Introduction"></a>Introduction</h3>
+<p><i>Parameters</i> are those objects you manipulate when you edit a feature in
+order to display or modify its properties. <i>Relations</i> are objects whereby
+you specify that a parameter is defined with respect to others. As an end user,
+you can create parameters from the &quot;Formulas&quot; dialog box as well as
+from most workbenches.</p>
+<p>Parameters are referred to as <i>literals</i>. Parameters and relations as
+well as the services to manage them are all described in the KnowledgeInterfaces
+framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Some Basic Capabilities"></a>Some Basic Capabilities</h3>
+<p>A hole is a mechanical feature which is defined by its type (simple, tapered,
+etc.), its extension (blind, up to last, etc.)and its parameters: its diameter,
+its depth, its threading and some others characteristics depending or not on the
+hole type.</p>
+<p>When you edit a hole, you display a panel with the values of the hole
+characteristics. All these characteristics are defined in the CATIA internal
+code as feature attributes (CATISpecAttribute).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Accessing the Feature Attributes in F(x)"></a>Accessing the Feature
+Attributes in <i>F(x)</i></h4>
+<p>When you click the <img border="0" src="images/I_FormulaP2.gif" width="24" height="24">
+icon, most of the hole characteristics are displayed in the parameter list. To
+be displayed and managed by the &quot;Formulas&quot; dialog box services, the
+hole feature as well as its parameters must fulfill two main conditions edicted
+by the KnowledgeInterfaces framework:</p>
+<ul>
+  <li>the hole type feature must be &quot;published&quot;, i.e. it must
+    implement the <b>CATIParmPublisher</b> interface</li>
+  <li>and its attributes must be implemented as parameters provided by the
+    KnowledgeInterfaces framework.</li>
+</ul>
+<p>In the mechanical modeler, all the features implement CATIParmPublisher from
+the very beginning.</p>
+<p><img border="0" src="images/KhwParameters.gif" width="527" height="387"></p>
+<p>From <i>F(x)</i>, you can access the values of the hole parameters and modify
+them as well, you can add a formula to these parameters and you are also warned
+when a parameter is constrained by a formula (the value field is grayed out).</p>
+<p>If you define your own feature and want to make your feature attributes
+displayed and managed in <img border="0" src="images/I_FormulaP2.gif" width="24" height="24">,
+you must implement your attributes as parameters.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Adding Knowledgeware Relations"></a>Adding Knowledgeware Relations</h4>
+<p>There is another advantage of implementing attributes as CATICkeParm objects:
+you can constrain a parameter by a rule or use it in a check and benefit from
+all the advantages provided by the knowledgeware products (Knowledge Advisor for
+example).</p>
+<p><img border="0" src="images/KwrConstraints.gif" width="569" height="394"></p>
+<p>In the figure above, the hole diameter named PartBody\Hole.1\Diameter is
+constrained by a rule. The value field of the &quot;Edit name or value of the
+current parameter is grayed out. You are warned by a push button (not simply an
+icon) that the hole diameter is constrained by a relation. You can't modify the
+hole diameter value. Clicking the push button opposite the value field displays
+the relation edition box.</p>
+<p>Relations only take CATICkeParm objects as their arguments. Relations are
+objects that implement the CATICkeRelation interface.</p>
+<p>You can create your own relations. To do so, you must create the appropriate
+CATICkeRelation object by using one of the methods provided by the
+CATICkeParmFactory interface. This is explained and exemplified in the Creating
+and Managing Relations article [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Using Specific Editing Capabilities"></a>Using Specific Editing
+Capabilities</h4>
+<p>Back to our hole example. If the hole diameter is constrained by a rule:</p>
+<ul>
+  <li>the value field of the &quot;Edit name or value of the current
+    parameter&quot; is grayed out to prevent you from modifying the diameter
+    value</li>
+  <li>a push button opposite the value field gives you a clue about the type of
+    relation constraining the diameter (formula, rule, check or design table)</li>
+  <li>clicking the push button opposite the value field displays the relation
+    editor.</li>
+</ul>
+<p>You can find these editing capabilities not only in <img border="0" src="images/I_FormulaP2.gif" width="24" height="24">
+but also in the hole edition box (the dialog box which is displayed when you
+click the hole feature in the geometry area or in the specification tree).</p>
+<p>The hole edition box uses the capabilities provided by the CATICkeParamFrame
+interface. These capabilities operate on CATICkeParm objects constrained by
+CATICkeRelation objects.</p>
+<table>
+  <tr>
+    <td><img border="0" src="images/KwrConstraints0.gif" width="279" height="44"></td>
+    <td><i>Portion of the <img border="0" src="images/I_FormulaP2.gif" width="24" height="24">
+      dialog box which is managed by the LiteralsEditor framework.</i></td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/KwrConstraints1.gif" width="229" height="32"></td>
+    <td><i>Portion of the Hole edition box managed by the LiteralsEditor
+      framework.</i></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Other Benefits"></a>Other Benefits</h3>
+<p>The other benefits deal with manipulators, event managing, unit and magnitude
+management, and adding user functions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Manipulators"></a>Manipulators</h4>
+<p>When editing a parameter, right-clicking the value field displays a
+contextual menu which provides you with commands to help you select the value to
+be assigned to a parameter.<br>
+<img border="0" src="../CAALifUseCases/images/KwxManipul.gif" width="472" height="371"></p>
+<p>When you modify the parameter value, you use the use the <img border="0" src="../CAALifUseCases/images/KwxSpinner.gif" width="17" height="18">
+arrows to increment or decrement the amount to be specified. This object which
+appears to the end-user as up and down arrows is called a <i>spinner</i>. The
+object which describes how the spinner behaves is called a <i>manipulator</i>.</p>
+<p>You can describe a manipulator as an object which has bounds, which
+increments or decrements its value by a certain number of the appropriate units
+etc. The manipulator dictates the lower and upper bounds of the parameter value
+(Range command in the contextual menu), the number of steps to be memorized by
+the system when you add a new step from the Change Step command or a list of
+authorized values for multiple-value parameters.</p>
+<p>A manipulator is a LiteralFeatures capability which can be accessed on
+CATICkeParm objects. For information on how to create a manipulator, see Using
+Manipulators [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Event Managing"></a>Event Managing</h4>
+<p>The KnowledgeInterfaces framework provides you with a number of services
+whereby you can be notified whenever certain types of events occur. These events
+are:</p>
+<ul>
+  <li>the parameter value modification or &quot; ChangeValue&quot; event</li>
+  <li>the parameter rename</li>
+  <li>the modification of the parameter appearance or &quot;Change Visu&quot;
+    event</li>
+  <ul>
+    <li>when the visibility changes (hidden command)</li>
+    <li>when the access rights are modified</li>
+    <li>when the relation constraining the parameter is either set or unset,
+      activated or deactivated</li>
+    <li>when the magnitude current unit changes</li>
+  </ul>
+  <li>the parameter delete.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Unit and Magnitude Management"></a>Unit and Magnitude Management</h4>
+<p>Literals support a large number of units and <i>magnitudes i.e.</i>
+quantities expressed in specific units. Length,<br>
+Angle and Time are magnitudes for example.</p>
+<p>See About Units [<a href="#References">3</a>] for information on the services
+provided to manage units.</p>
+<p>Magnitudes are managed through a dictionary, see Using Persistent Parameters
+[<a href="#References">4</a>] for examples illustrating how to use units and
+magnitudes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Adding User Functions"></a>Adding User Functions</h4>
+<p>Parameters can be constrained by relations. Within a relation, you can use
+other parameters as well as operators and functions. If the default functions do
+not suit your application needs, you can add new functions. These new functions
+will be used by the end-user from the dictionary.</p>
+<p>See Writing a User Function [<a href="#References">5</a>] for more
+information on how to write a user functions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>The KnowledgeInterfaces framework provides you with services to publish your
+features and integrate your feature attributes to the <i>F(x)</i> capabilities.
+When your feature attributes meet the LiteralFeatures requirements, you can
+benefit from additional knowledgeware capabilities:</p>
+<ul>
+  <li>specifications of relations</li>
+  <li>manipulators</li>
+  <li>editing capabilities</li>
+  <li>unit and magnitude management</li>
+  <li>user functions.</li>
+</ul>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAALifUseCases/CAALifFormRuleChecks.htm">Creating
+      and Managing Relations</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAALifUseCases/CAALifParamManip.htm">Using
+      Manipulators</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAALifUnits.htm">About Units</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAALifUseCases/CAALifParamPers.htm">Using
+      Persistent Parameters</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAALifUseCases/CAALifUserFunctions.htm">Writing a
+      User Function</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

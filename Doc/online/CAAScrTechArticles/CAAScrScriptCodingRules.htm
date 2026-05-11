@@ -1,0 +1,408 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAA V5 Automation Coding Rules</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" colspan="2" valign="top">
+      <h2><a name="Top"></a>CAA V5 Automation Coding Rules</h2>
+      <em>Rules, hints and tips to write Automation code</em></td>
+  </tr>
+  <tr>
+    <td class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td bgcolor="#F0F0FF">
+      <h3>Abstract</h3>
+      <p>This article presents how to program scripts using Dassault Systemes V5
+      product lines scripting capabilities.
+      <ul>
+        <li><a href="#General considerations"><b>General Rules and Principles</b></a></li>
+        <li><a href="#Testability"><b>Rules for Ensuring Testability</b></a></li>
+        <li><a href="#Rules for writing cross-platform scripts"><b>Rules for
+          Writing Cross-Platform Scripts</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="General considerations"></a>General Rules and Principles</h3>
+<p>This document targets scripts developed using Dassault Systemes V5 scripting languages. It does not cover all topics needed to develop
+a complex application using for example Visual Basic but most of the rules still
+apply to this kind of application.</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[g1]">[g1]</a> Use Option Explicit</h4>
+<p>It prevents the compiler/interpreter to automatically create non declared
+variables, possibly hiding misspelled accesses to existing variables.&nbsp;</p>
+<p>It has to be the very first directive:&nbsp;</p>
+<blockquote>
+  <pre><font color="#0000FF">Option Explicit</font>
+...</pre>
+</blockquote>
+<p>If you are using a recorded macro as a basis, remove the valuation of the
+&quot;Language&quot; variable instead of declaring it like in:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> Language <font color="#0000FF">As</font> String <font color="#008000">' Useless: remove</font>
+Language=&quot;VBScript&quot;    <font color="#008000">' Useless: remove</font></pre>
+</blockquote>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Statement is present</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; Y</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[g2]"></a>[g2] Handle Errors</h4>
+<p>If errors are not systematically handled which is often the case when using
+scripting languages a lot of unpredictable events can take place before the end
+user identifies a problem.&nbsp;As a default behavior the interpreter will stop
+and display an error message box whenever an error is raised.&nbsp;<br>
+When you want to take corrective actions on an error, disabling the automatic
+error handing mechanism using &quot;On Error Resume Next&quot; becomes
+mandatory.&nbsp;</p>
+<ul>
+  <li>Keep as much as possible the automatic error handling mechanism active</li>
+  <li>When you deactivate it, isolate its use to places where it's mandatory and
+    explicitly handle all errors meanwhile :</li>
+</ul>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> CATIA <font color="#0000FF">As</font> Object
+<font color="#0000FF">On Error Resume Next</font>      <font color="#008000">' Disable automatic error handling</font>
+    <font color="#0000FF">Set</font> CATIA=GetObject(,&quot;CATIA.Application&quot;)
+    iErr = Err.Number     <font color="#008000">' For BasicScript parser (Unix)</font>
+    <font color="#0000FF">If</font> (iErr &lt;&gt; 0) <font color="#0000FF">Then</font>   <font color="#008000">' Manually handle all errors</font>
+       <font color="#0000FF">On Error Goto 0</font>    <font color="#008000">' Invalidates the Resume Next and clears the error
+</font>        set CATIA=CreateObject(&quot;CATIA.Application&quot;)
+    <font color="#0000FF">End If</font>
+<font color="#0000FF">On Error Goto 0</font>           <font color="#008000">' Invalidates the Resume Next and clears the error</font></pre>
+</blockquote>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of lines between an &quot;On Error
+      Resume Next&quot; and an &quot;On Error Goto 0&quot; that are&nbsp;<br>
+      not followed by a block &quot;If (Err.number &lt;&gt; 0) ... End If&quot;</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[g3]"></a>[g3] For out-process application, use CATIA as the name
+of the root Object</h4>
+<p>It simplifies reuse of recorded macros and reuse in an in-process context:</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> <b>CATIA</b> <font color="#0000FF">As</font> Object
+<font color="#0000FF">Set</font> CATIA=GetObject(,&quot;CATIA.Application&quot;)
+...</pre>
+</blockquote>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of GetObject or CreateObject
+      concerning CATIA for which the receiving variable is not named
+      &quot;CATIA&quot;</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[g4]"></a>[g4] Declare Supported Languages, And Initial Release</h4>
+<p>The following comments are Mandatory. Valid values for <i>Language </i>are
+&quot;VBScript&quot;, &quot;CATScripts&quot;, &quot;VB&quot; or
+&quot;VBA&quot;,&nbsp; <i>Release</i> identifies the first supported CAAV5
+release.&nbsp;</p>
+<blockquote>
+  <pre>' Languages: VBScript&nbsp;
+' Release:   V5R6&nbsp;</pre>
+</blockquote>
+<p>Look in <a href="#[r1]">[1]</a> for a complete standard header.</p>
+<p>Note that BasicScript is kept for compatibility purpose.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: The two statements are present and contain
+      valid values</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; Y</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><b><a name="[g5]"></a>[g5] Always type your variables (VB/VBA/CATScript)</b><p>
+Typing objects eases programation and debug:
+<p><code><font color="#0000FF">Dim</font> VariableOfTypeX <b><font color="#0000FF">As</font>
+TypeX<br>
+</b></code><br>
+An exception is when you need to use a method of an object that takes an array 
+as an argument (see the <i>About <span lang="en-us">VB</span>, VBA, Debug, and 
+      Portability</i> article). In this case you won't be able to type your 
+object (VB/VBA refuses to compile).</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%">Metrics:<br>
+      Number of Dim statements without an As statement&nbsp;<br>
+      Number of wrongly defined types</td>
+    <td width="17%">
+      <p align="left"><b>Objectives</b>:<br>
+      0<br>
+      0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="Testability"></a>Rules for Ensuring Testability</h3>
+<p>To allow integration in automated test suites, automation scripts must follow
+specific rules.</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[t1]">[t1] </a>Always give a default value to InputBox</h4>
+<p>In a test case context, this default value will be used as the result of
+InputBox&nbsp;</p>
+<blockquote>
+  <pre><font color="#0000FF">Dim</font> sName <font color="#0000FF">As</font> String
+<font color="#0000FF">Set</font> sName = InputBox (&quot;Enter Body Name: &quot;, &quot;&quot;, <b>&quot;NEWBODY&quot;</b>)</pre>
+</blockquote>
+<p align="left">When using MsgBox, if you store the returned value, it will be
+set to 0.</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of InputBox without a 3rd parameter.</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h4><a name="[t2]">[t2] </a>Use Err.Raise to exit on error</h4>
+<p>In a test case context, an error needs to be identified as such.&nbsp;</p>
+<p>Use MsgBox for information messages and Err.Raise for errors. The first and
+third parameters must be valuated, like in:</p>
+<blockquote>
+  <pre><font color="#0000FF">If </font>(iShape &gt; oShapes.Count)<font color="#0000FF"> Then</font>
+    <b>Err.Raise</b> _
+        <b>9999</b>,_                     <font color="#008000">' Number greater than 1000</font>
+        &quot;MyMacro&quot;,_                <font color="#008000">' Optional: Name of the Script or the sub
+       </font> <b>&quot;Shape Number is too big&quot;</b>&nbsp; <font color="#008000">' Explicit error message</font>
+<font color="#0000FF">End If</font></pre>
+</blockquote>
+<p>Don't use:</p>
+<blockquote>
+  <pre><font color="#0000FF">If </font>(iShape &gt; oShapes.Count)<font color="#0000FF"> Then</font>
+    MsgBox &quot;ERROR: Shape Number is too big&quot;, VBOkOnly
+    <font color="#0000FF">Exit Sub</font>
+<font color="#0000FF">End If</font></pre>
+</blockquote>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: None (program semantics involved)</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>: None</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="Rules for writing cross-platform scripts"></a>Rules for Writing
+Cross-Platform CATScripts or VBScripts</h3>
+<p>CATScripts language has been kept ofr compatibility purpose. It is processed 
+by a VBScript engine after removal of typing information. CATIA V5 uses slightly different 
+VBScript interpreters depending on the platform it is being run on. Even though these interpreters have a lot in
+common, they also have their own behaviors and list of supported features.&nbsp;</p>
+<hr>
+<p><b><a name="[p1]">[p1]</a> Use only  CAA V5 objects</b>
+<p>On windows you can use the CreateObject and GetObject functions to access to 
+ActiveX objects. This is not possible on Unix.<p>If a CAA V5 alternative exists, use it. A good example of this is filesystem
+acess:
+<ul>
+  <li>&nbsp;VBScript provides access to the filesystem through a set of ActiveX
+    objects bundled with the Windows Scripting Host (<code>CreateObject(&quot;Scripting.FileSystemObject&quot;</code>).</li>
+</ul>
+<p>This is not portable and can be replaced by the portable V5 <code>FileSystem</code>,
+<code>File</code>, <code>Folder</code> interface family, accessible from the
+Application object (<code>CATIA.FileSystem</code>).</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of GetObject or CreateObject</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p><b><a name="[p6]">[p2] </a>Use CATIA.SystemService.ConcatenatePaths to manage 
+paths concatenation</b>
+<p>Some scripts may require to calculate folder paths using a concatenation of 
+paths from different sources. For example, the following calculates a file 
+absolute path 
+from the content of an environment variable (ROOT_FOLDER) and a litteral value:
+<blockquote>
+<pre><font color="#0000FF">Dim</font> sRootPath <font color="#0000FF">As</font> String
+sRootPath=CATIA.SystemService.Environ(&quot;ROOT_FOLDER&quot;)
+<font color="#0000FF">Dim</font> sFilePath <font color="#0000FF">As</font> String
+sFilePath = sRootPath &amp; &quot;/drw/myDrawing.CATDrawing&quot;
+<font color="#0000FF">Set</font> oDrawingDocument = CATIA.Documents.Open(sFilePath)</pre>
+</blockquote>
+<p>
+This is not portable, assuming that the environment variable will contain a 
+valid path for the platform on which the macro runs:<br>
+&nbsp;<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="74%" id="AutoNumber1" align="center">
+  <tr>
+    <td width="17%" align="center">Platform</td>
+    <td width="27%" align="center">ROOT_FOLDER value</td>
+    <td width="56%" align="center">sFilePath value</td>
+  </tr>
+  <tr>
+    <td width="17%">Unix</td>
+    <td width="27%">/u/users/me</td>
+    <td width="56%">/u/users/me/drw/myDrawing.CATDrawing</td>
+  </tr>
+  <tr>
+    <td width="17%">Windows</td>
+    <td width="27%">E:\me</td>
+    <td width="56%">E:\me/drw/myDrawing.CATDrawing</td>
+  </tr>
+</table>
+<p>
+not all CAA V5 functions will be able to deal with a path like the second one, containing at 
+the same time '/' and '\' characters as separators.<p>
+<p>
+<p>Use the <code>ConcatenatePaths</code> function for that purpose, it allows to always get a 
+path containing the right separators:<blockquote>
+<pre><font color="#0000FF">Dim</font> sRootPath <font color="#0000FF">As</font> String
+sRootPath=CATIA.SystemService.Environ(&quot;ROOT_FOLDER&quot;)
+<font color="#0000FF">Dim</font> sFilePath <font color="#0000FF">As</font> String
+<font color="#008000">' here you can use '/' or '\' in the constant part of the path</font>
+sFilePath = CATIA.SystemService.ConcatenatePaths(sRootPath, &quot;drw/myDrawing.CATDrawing&quot;)
+<font color="#0000FF">Set</font> oDrawingDocument = CATIA.Documents.Open(sFilePath)</pre>
+</blockquote>
+<p>
+resulting in the following:<br>
+&nbsp;<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="74%" id="AutoNumber2" align="center">
+  <tr>
+    <td width="17%" align="center">Platform</td>
+    <td width="27%" align="center">ROOT_FOLDER value</td>
+    <td width="56%" align="center">sFilePath value</td>
+  </tr>
+  <tr>
+    <td width="17%">Unix</td>
+    <td width="27%">/u/users/me</td>
+    <td width="56%">/u/users/me/drw/myDrawing.CATDrawing</td>
+  </tr>
+  <tr>
+    <td width="17%">Windows</td>
+    <td width="27%">E:\me</td>
+    <td width="56%">E:\me\drw\myDrawing.CATDrawing</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table border="1" width="100%">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of string containing '/' or '\' 
+    caracters and used in a string concatenation operation</td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p><b><a name="[p6]0">[p3] </a>Use conversion operators to provide Strings as 
+input of MsgBox/InputBox</b>
+<p>The VBScript MsgBox and InputBox functions are slightly less permissive on 
+Unix than on Windows. They only accept String parameters. For example to 
+correctly use the MsgBox function with an integer variable, use the VBScript 'CStr' 
+conversion function to convert the integer into a string, like described below:<blockquote>
+	<pre><font color="#0000FF" face="Courier New">Dim</font><font face="Courier New" size="2"> i </font><font color="#008000" face="Courier New"> </font><font face="Courier New" size="2">
+i = 10 </font><font color="#008000">' Store an Integer value in i</font><font face="Courier New" size="2">
+MsgBox CStr(i)</font>
+</pre>
+</blockquote>
+<table border="1" width="100%" id="table1">
+  <tr>
+    <td width="83%"><b>Metrics</b>: Number of usage of InputBox/MsgBox using 
+	impicit conversion </td>
+    <td width="17%">
+      <p align="left"><b>Objective</b>:&nbsp; 0</td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td><a name="History"></a><strong><em>References</em></strong></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[r1]">[1]</a></td>
+    <td valign="top"><a href="CAAScrScriptCodePresentation.htm">CAA V5
+      Automation Code Presentation Rules</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>3.0</strong> [Jan 2006]</font></td>
+    <td valign="top"><font size="2">Document updated.</font></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>2.0</strong> [May 2004]</font></td>
+    <td valign="top"><font size="2">Document updated.</font></td>
+  </tr>
+  <tr>
+    <td valign="top"><font size="2">Version: <strong>1.0</strong> [Jan 2000]</font></td>
+    <td valign="top"><font size="2">Document created</font></td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

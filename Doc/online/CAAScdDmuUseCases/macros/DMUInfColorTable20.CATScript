@@ -1,0 +1,172 @@
+' COPYRIGHT DASSAULT SYSTEMES 2002
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Change the color of products using a color randomly selected in a table.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+Dim iMax ' Number of colors in the table minus one
+iMax = 19
+
+' ***********************************************************************
+'
+' Purpose:  Add a product in a group.
+'
+' Inputs :  oNode    Product     the product
+'           oGroup   Product     the array of group
+'           iIndex   Integer     the index of the product
+'
+' ***********************************************************************
+Sub TreatANode(ByRef oNode, ByRef oGroup, ByRef iIndex)
+
+    Dim iNumberOfSubComponent As Integer
+    iNumberOfSubComponent = oNode.Products.Count
+
+    If (iNumberOfSubComponent = 0) Then
+        ' Add the leaf to the group
+        oGroup(iIndex).AddExplicit oNode
+        ' Prepare the next index
+        iIndex = iIndex + 1
+        If (iIndex > iMax) Then
+            iIndex = 0
+        End If
+    Else
+       ' Treat the subcomponents
+       Dim I As Integer
+       For I = 1 to iNumberOfSubComponent
+           Call TreatANode(oNode.Products.Item(I), oGroup, iIndex)
+       Next
+    End If
+
+End Sub 
+
+' ***********************************************************************
+'
+' Purpose:  Main.
+'
+' ***********************************************************************
+Sub CATMain()
+
+    ' Build the color table (oColor(i,0) = Red, oColor(i,1) = Green, oColor(i,2) = Blue)
+    Dim oColor(19,2)
+    
+    'Red
+    ocolor(0,0)=255
+    ocolor(0,1)=0
+    ocolor(0,2)=0
+    'Dark Red
+    ocolor(1,0)=220
+    ocolor(1,1)=90
+    ocolor(1,2)=90
+    'Light Red
+    ocolor(2,0)=255
+    ocolor(2,1)=150
+    ocolor(2,2)=150
+    'Fushia
+    ocolor(3,0)=255
+    ocolor(3,1)=150
+    ocolor(3,2)=230
+    'Green
+    ocolor(4,0)=60
+    ocolor(4,1)=255
+    ocolor(4,2)=30
+    'Dark Green
+    ocolor(5,0)=30
+    ocolor(5,1)=190
+    ocolor(5,2)=30
+    'Light Green
+    ocolor(6,0)=190
+    ocolor(6,1)=255
+    ocolor(6,2)=130
+    'Green-blue
+    ocolor(7,0)=80
+    ocolor(7,1)=255
+    ocolor(7,2)=160
+    'Blue
+    ocolor(8,0)=80
+    ocolor(8,1)=225
+    ocolor(8,2)=255
+    'Dark Blue
+    ocolor(9,0)=90
+    ocolor(9,1)=140
+    ocolor(9,2)=255
+    'Light Blue
+    ocolor(10,0)=180
+    ocolor(10,1)=255
+    ocolor(10,2)=255
+    'Yellow
+    ocolor(11,0)=255
+    ocolor(11,1)=255
+    ocolor(11,2)=30
+    'Dark Yellow
+    ocolor(12,0)=128
+    ocolor(12,1)=128
+    ocolor(12,2)=30
+    'Yellow-orange
+    ocolor(13,0)=255
+    ocolor(13,1)=190
+    ocolor(13,2)=70
+    'Brown
+    ocolor(14,0)=160
+    ocolor(14,1)=90
+    ocolor(14,2)=60
+    'Light Brown
+    ocolor(15,0)=200
+    ocolor(15,1)=170
+    ocolor(15,2)=140
+    'Pink
+    ocolor(16,0)=220
+    ocolor(16,1)=0
+    ocolor(16,2)=220
+    'Mauve
+    ocolor(17,0)=190
+    ocolor(17,1)=90
+    ocolor(17,2)=255
+    'Grey
+    ocolor(18,0)=128
+    ocolor(18,1)=128
+    ocolor(18,2)=128
+    'White
+    ocolor(19,0)=200
+    ocolor(19,1)=200
+    oColor(19,2)=200
+
+    ' Retrieve the root product
+    Dim oRoot_Product As AnyObject
+    Set oRoot_Product = CATIA.ActiveDocument.Product
+
+    ' Retrieve the selection object
+    Dim oSelection As Selection
+    Set oSelection = CATIA.ActiveDocument.Selection
+    
+    ' Build the groups of products which will share the same color
+    Dim oGroup(20)
+    Dim cGroups As Groups
+    Set cGroups = oRoot_Product.GetTechnologicalObject("Groups")
+    Dim I as integer
+    For I = 0 to 19
+        Set oGroup(I) = cGroups.Add
+    Next
+
+    ' Build the groups by exploring recursively all nodes in the product structure
+    Dim iIndex
+    iIndex = 0
+    Call TreatANode(oRoot_Product, oGroup, iIndex)
+
+    ' Set the colors
+    For I = 0 to 19
+        oGroup(I).FillSelWithExtract
+        oSelection.VisProperties.SetRealColor oColor(I,0), oColor(I,1), oColor(I,2), 1
+        cGroups.Remove oGroup(I).Name
+        Set oGroup(I) = Nothing
+    Next
+    oSelection.Clear
+    
+    Set oSelection = Nothing
+    Set oRoot_Product = Nothing
+
+End Sub

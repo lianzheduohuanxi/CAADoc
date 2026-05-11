@@ -1,0 +1,38 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAInfOpenDocument.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:       Open an Existing Document.</font>
+<font color="#008000">'   Assumtions:   Looks for CAAInfReadDocument.CATPart</font>
+<font color="#008000">'                         in the CATDocView   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:   VBScript</font>
+<font color="#008000">'   Locales:        English </font>
+<font color="#008000">'   CATIA Level:  V5R7 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' -----------------------------------------------------------------------------------------------</font>
+    <font color="#008000">' Optional: allows to find the sample wherever it may be installed</font>
+<font color="#0000FF">    Dim </font>sDocPath<font color="#0000FF"> As </font>String
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------------------------------ </font>
+   
+    <font color="#008000">'Open the document and add it as the last item of the collection of documents.</font>
+    <font color="#008000">'Create and display a new window for the document.</font>
+    <font color="#008000">'Activate the document and its window.</font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+       "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+<font color="#0000FF">    Dim </font>iPartDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>iPartDoc = CATIA.Documents.Open(sFilePath)
+   
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

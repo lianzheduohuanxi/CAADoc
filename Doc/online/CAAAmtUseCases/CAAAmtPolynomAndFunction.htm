@@ -1,0 +1,198 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating and Manipulating Polynomials and Functions</title>
+<style type="text/css">
+.style4 {
+	font-family: Courier;
+}
+.style6 {
+	color: #008000;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating and Manipulating Polynomials and Functions</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article explains how to create two polynomials F and G, define 
+		the fraction F/G and compute this fraction.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">The APIs to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">The APIs to be Used</a></h2>
+<ol>
+	<li>To construct the F and G polynomials, use the CATMathPolynomX::CATMathPolyNomX constructor.</li>
+	<li>To construct the fraction F/G, write a class deriving from CATMathFunctionX and implementing at 
+	least the CATMathFunctionX::Duplicate, CATMathFunctionX::DeepDuplicate&nbsp; 
+	and CATMathFunctionX::Eval methods. This class is named CAAMyFract in the 
+	use case CAAAmtFraction.m in CAAAdvancedMathematics.edu.</li>
+	<li>To compute the fraction of polynomials, use the&nbsp; CAAMyFract::Eval 
+	method you have written.</li>
+</ol>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAAmtFraction.m module in CAAAdvancedMathematics.edu 
+illustrates how to create and manipulate mathematical functions and polynomials (CATMathFunctionX and CATMathPolynomX).</p>
+
+<p>To launch CAAAmtFraction, you will need to set up the build time environment, then compile CAAAmtFraction.m along with its prerequisites, set up the run time environment, and then execute the use case.
+The CAAAmtFraction use case is made of a main named CAAAmtFraction.cpp located in the CAAAmtFraction.m module of the CAAAdvancedMathematics.edu framework: InstallRootFolder\CAADoc\CAAAdvancedMathematics.edu\CAAAmtFraction.m\
+where InstallRootFolder is the folder where the API CD-ROM is installed.
+<p>This use case requires the CAAMyFraction.m module which has to be declared in the ImakeFile.mk file. This module define the user function. 
+Just type <tt>CAAAmtFraction</tt> to run the use case and take a look at the standard output, there is no output file.
+<h3>Creating a Polynomial</h3>
+<p>The array of coefficients and degree must be specified as arguments of the 
+CATMathPolynomX constructor. Given this polynomial&nbsp;&nbsp; </p>
+<ul>
+	<li>f1(x) = 1 + 2x
+ </li>
+</ul>
+<p>you must define an array specifying its coefficients
+<span class="style4">{ a<sup>0</sup>, a<sup>1</sup>,..., a<sup>i</sup>
+}</span>, as well as its degree (1) in the CATMathPolynomX constructor:
+</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+double array1[2] = {1,2};                                    <span class="style6"><strong>// f(x) = 1 + 2x </strong></span>
+CATMathPolynomX *pNumerator = new CATMathPolynomX(1,array1); <span class="style6"><strong>// degree 1</strong></span>
+</pre>
+		</TD>
+    </TR>
+</TABLE>
+<h3>Creating a User Function</h3>
+<p>A user function must be a class deriving from CATMathFunctionX. A constructor 
+must be implemented and you must 
+write an Eval function to compute the fraction F / G.&nbsp; A DeepDuplicate 
+method is also to be implemented as the user function points to other functions 
+(P and Q polynomials).
+
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATMathFunctionX * CAAMyFract::DeepDuplicate() const
+{ 
+  ...
+    CATMathFunctionX* P = _P->DeepDuplicate(); 
+    CATMathFunctionX* Q = _Q->DeepDuplicate();
+    return new CAAMyFract(P, Q); 
+  ... 
+}
+</TD>
+    </TR>
+</TABLE>
+<h3>Computing the Fraction </h3>
+<p>The fraction is computed by using the CAAMyFract::Eval method you have 
+implemented.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+double CAAMyFract::Eval(const double & t) const
+{ 
+ ...
+  double q = _Q->Eval(t); 
+  if (q == 0.)
+  {
+    cout &lt&lt "q == 0 " &lt&lt endl;
+    return CATMathInfinite;
+  }
+  return _P->Eval(t) / q;
+}
+</pre>
+</TD>
+    </TR>
+</TABLE>
+
+<p>The code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+val = 0.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction1->Eval(val) &lt&lt endl;
+val = 1.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction1->Eval(val) &lt&lt endl;
+val = 2.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction1->Eval(val) &lt&lt endl;
+</pre>
+</TD>
+    </TR>
+</TABLE>
+<p>returns this message on the standard output:</p>
+<pre>
+ Value [0]=0.5
+ Value [1]=0.857143
+ Value [2]=1
+</pre>
+<h3>Duplicating the Fraction</h3>
+<p>The CAAMyFract::DeepDuplicate function which is defined above duplicates the 
+polynomials which are required to compute the fraction. That way, if you delete 
+the initial fraction as well as the initial polynomials after duplication, the 
+duplicated function manages to compute the fraction as the referred to 
+polynomials are copied.</p>
+<p>The code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+cout  &lt&lt "Evaluate the duplicated fraction" &lt&lt endl;
+val = 0.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction2->Eval(val) &lt&lt endl;
+val = 1.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction2->Eval(val) &lt&lt endl;
+val = 2.0 ; cout &lt&lt " Value [" &lt&lt val &lt&lt "]=" &lt&lt myFraction2->Eval(val) &lt&lt endl;</TD>
+    </TR>
+</TABLE>
+<p>returns this message on the standard output:</p>
+<pre>
+ Value [0]=0.5
+ Value [1]=0.857143
+ Value [2]=1</pre>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [March 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

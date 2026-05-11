@@ -1,0 +1,276 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Building and Launching a CAA V5 JDialog Use Case</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>JAVA Interactive Dashboard</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Building and Launching a CAA V5 JDialog Use Case</h3>
+     <p><em>How to set up the environment, compile and execute a JDialog use 
+     case</em></td>
+   </tr>
+   <tr>
+     <td class="tech" hcolspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article explains how to build and execute a JDialog use case. In 
+     this article, you will find the steps to retrieve a use case in <em>IBM 
+		Rational Software Development Platform</em>, build it in <em>IBM 
+		Rational Software Development Platform </em>and test it in a &quot;<i>Websphere 
+     test server</i>&quot; through <em>IRAD </em>or through a simple Internet 
+     Explorer. Then, this article explains how to deploy the JDialog use case in 
+     a <i>Websphere Application Server</i> for production.</p>
+     <ul>
+       <li><a href="#Before_starting"><b>Before Starting</b></a></li>
+       <li><a href="#Creating_JAVA_WEB_Project"><b>Creating a Web Project in IBM 
+       Rational Software Development Platform and Opening it as a CAA V5 
+       Workspace</b></a></li>
+       <li><a href="#Retrieve_USE_CASE"><b>Retrieving a Use Case in IBM Rational 
+		Software Development Platform</b></a></li>
+       <li><a href="#Define_ENVIRONMENT"><b>Defining a Build Environment and 
+       Building the Use Case</b></a></li>
+       <li><b><a href="#Testing_USE_CASE">Testing the Use Case in a Websphere 
+       Test Server</a></b></li>
+       <li><b><a href="#Deploy">Deploying the Use Case in a Websphere 
+       Application Server</a></b></li>
+       <li><b><a href="#Execute_in_WAS">Executing the Use Case in Websphere 
+       Application Server</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <h3><a name="Before_starting"></a>Before Starting</h3>
+ <p>Before starting, install the JID product provided on the RADE 
+ CD. Make sure that <em>IBM Rational Software Development Platform </em>has 
+ previously been installed on the machine because the RADE installation detects 
+ it and installs the JAVA Interactive Dashboard within the <em>IBM Rational 
+	Software Development Platform </em>environment. If you install <em>
+ IBM Rational Software Development Platform </em>after JID, launch 
+ manually the Setup tool provided with RADE. Refer to [<a href="#References">1</a>] 
+ for more information on the Setup tool.</p>
+ <p>Once the JAVA Interactive Dashboard has been installed for <em>IBM Rational 
+	Software Development Platform</em>, you can start <em>IBM Rational Software 
+	Development Platform</em>. If the <code><font color="#008040">CAA</font></code>
+ <code><font color="#008040">Project</font></code> menu is not available in your 
+ JAVA Perspective, customize <em>IBM Rational Software Development Platform
+ </em>to make it available, as described in [<a href="#References">2</a>]. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Creating_JAVA_WEB_Project"></a>Creating a Web Project in <em>IBM 
+	Rational Software Development Platform </em>and Opening it as a CAA V5 
+ Workspace</h3>
+ <ol>
+   <li>From the <code><font color="#008040"> File</font></code> 
+   menu, select <code><font color="#008040">New-&gt;Project</font></code>. 
+   The New Project window opens.</li>
+   <li>Expand the <code><font color="#008040">Web</font></code> 
+   node and select <code><font color="#008040">Dynamic Web Project</font></code>. Click <code>
+   <font color="#008040">Next</font></code>. The New Dynamic Web Project window 
+   opens.</li>
+   <li>Enter the project name and click <code><font color="#008040">Browse</font></code> 
+   in the Project location field to change the location if different from the 
+   default location. </li>
+   <li>In the Servlet version combo box, select <code><font color="#008040">2.4</font></code>.
+   Click <code><font color="#008040">Show Advanced</font></code>. </li>
+   <li>In the Target server combo box, select <code><font color="#008040">
+   Websphere Application Server</font></code>.</li>
+   <li>Select the DefaultEAR if different from the default one.</li>
+   <li>Do not modify the <i>Context root. </i></li>
+   <li>Click <code><font color="#008040">Finish</font></code>. </li>
+ </ol>
+ <p>The new web project is created. Open it as a CAAV5 Workspace:</p>
+ <ol>
+   <li>Right-click the new web project in the <code><font color="#008040">
+   Navigator View</font></code> and select <code><font color="#008040">Open 
+   CAAV5 Workspace</font></code> from the contextual menu. The Open CAAV5 
+   Workspace dialog box opens.</li>
+   <li>In the Open with combo box, select <code><font color="#008040">Mkmk</font></code>. 
+   The Workspace directory is already valuated.</li>
+   <li>Select the tool level in the <code><font color="#008040">Tool Level</font></code> 
+   combo box. Click <code><font color="#008040">OK</font></code> when done.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ 
+ <h3><a name="Retrieve_USE_CASE"></a>Retrieving a Use Case in IBM Rational 
+	Software Development Platform </h3>
+ <ol>
+   <li>From the <code><font color="#008040">CAA Project</font></code> menu, 
+   select <code><font color="#008040">Copy Framework...</font></code> The Copy 
+   Framework dialog box opens.</li>
+   <li>In the <i>Reference WS list where FW are searched fo</i>r field, click
+   <code><font color="#008040">Add</font></code> to add the origin directory of 
+   the framework containing your use case (ex: CAA_install_dir\CAADoc).</li>
+   <li>Enter the name of the framework to be copied, containing the use case 
+   (ex: CAAJDialog.edu) or click the <code><font color="#008040">...</font></code> 
+   button to select it.</li>
+   <li>Check at least the 2 copy options <code><font color="#008040">Module 
+   directories copied</font></code> and <code><font color="#008040">Copy Data 
+   directories</font></code> and click <code><font color="#008040">OK</font></code> 
+   when done.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Define_ENVIRONMENT"></a>Defining a Build Environment and 
+ Building the Use Case</h3>
+ <ol>
+   <li>Right-click the web project in the <code><font color="#008040">Navigator view</font></code>, and select
+   <code><font color="#008040">Run-&gt;Run on server</font></code> from the 
+   contextual menu. The Server Selection window opens.</li>
+   <li>If you already have an <i>existing server</i> as Websphere v6.0 
+   Test Environment, you can use this one. If not, you 
+   need to <i>Create a new server</i> and select Websphere version/ Test Environment.</li>
+   <li>From the <code><font color="#008040">CAA Project</font></code>
+   menu, select <code><font color="#008040">Update/Generate Source 
+   Folders...</font></code>, and check the module containing the use case 
+   in the Select Java module to update Eclipse project source folders. Click
+   <code><font color="#008040">OK</font></code> when done.</li>
+   <li>From the <code><font color="#008040">CAA Project</font></code>
+   menu, select <code><font color="#008040">Get Prerequisites...</font></code>
+   to define you build prerequisites.</li>
+   <li>In the Prerequisites window, select the <code><font color="#008040">
+   Access prerequisites from their origin location</font></code> access 
+   mode.</li>
+   <li>Click <code><font color="#008040">Add</font></code> to add the CAA 
+   installation directory in the Origin for prerequisites frameworks
+   field. Click <code><font color="#008040">OK</font></code> when done.</li>
+ </ol>
+   <table width="100%">
+     <tr>
+       <td width="3%" valign="top">
+       <img border="0" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+       <td width="97%" valign="top">The java source of your use case should be 
+       automatically built. But you can also build it using the mkmk tool. To do 
+       so, from the <code><font color="#008040">CAA Project</font></code>
+       menu, select <code><font color="#008040">Mkmk...</font></code></td>
+     </tr>
+   </table>
+ <ol start="7">
+   <li>Select you module directory containing the use case, and select at least 
+   the option <code><font color="#008040">Update makefiles (-u)</font></code>. 
+   Click <code><font color="#008040">OK</font></code> when done.</li>
+   <li>Now that the use case is successfully built, create your runtime view 
+   before testing the use case execution. To do so, from the <code>
+   <font color="#008040">CAA Project</font></code> menu, select <code>
+   <font color="#008040">Create /Update Runtime View...</font></code> Do not
+   modify the default options, and click <code><font color="#008040">OK</font></code>.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Testing_USE_CASE"></a>Testing the Use Case in a <i>Websphere Test 
+ Server</i></h3>
+ <p>If the <i>Websphere Test Server</i> is running, stop it, republish it and 
+ restart.</p>
+ <p>There are two ways to test the use case. You can run it inside IRAD 
+ itself, or through a simple Internet explorer browser:</p>
+ <ol>
+   <li>Inside IRAD:</li>
+   <p>Go in the Server perspective and enter the following URL in the Web 
+   Browser:</p>
+   <p><code>http://localhost:9080/your_webproject_name/html/xmldlg_use_case_name</code></p>
+   <p>where xmldlg_use_case_name is the name of the XMLDlg file associated with 
+   your JDialog use case, without extension.</p>
+   <p>Example: <code>http://localhost:9080/MyWebProject/html/SmartDictionary1</code></li>
+   <li>With Internet Explorer: Enter the same URL</li>
+ </ol>
+ <h3><a name="Deploy"></a><b>Deploying the Use Case in a Websphere Application 
+ Server</b></h3>
+ <p>Once your use case is running correctly in a Websphere Test Server in IRAD, you can deploy it in a WAS for production. </p>
+ <p>Prerequisites for this step are:</p>
+ <ul>
+   <li>You have a <i><b>WAS 6.0.2</b></i> installation on your machine</li>
+   <li>You have <i><b>IBM db2</b></i> on your machine</li>
+   <li>You have a <i><b>3dcom</b></i> installation on your machine</li>
+ </ul>
+ <p>All mandatory steps are described in the following documentation:<u><font color="#0000FF"><b><i> 
+ </i></b></font></u><font color="#0000FF"><i><u>3dcom Installation guide / 
+ Installing Version 5 / Integrating Modular 3d com into IBM Websphere 
+ Application Server</u></i></font></p>
+ <p>In short, mandatory steps are:</p>
+ <ul>
+   <li>Creating a DB2 Database for Settings Persistency (to do only at the first 
+   Application deployment).</li>
+   <li>Creating a DB2 Data Source in the Websphere Application Server (to do 
+   only at the first Application deployment).</li>
+   <li>Generating and Deploying a 3d com Web Application in a WebSphere 
+   Application Server (For this step, there is only one difference, while using 
+   the WASSetupUI command. The difference is that you need to specify a 
+   concatenation of 2 directories in the Source tab page: enter first the 
+   runtimeview directory of your workspace containing the JDialog UseCase, and 
+   then the runtimeview directory of the 3dcom installation (ex:
+   e:\3dcom\B14\intel_a). 
+   Note that the order of the 2 runtimeviews is important (your workspace must 
+   be before the 3dcom installation). This order can the changed with <i>Up</i> 
+   and <i>Down</i> buttons.</li>
+ </ul>
+ <h3><a name="Execute_in_WAS"></a>Executing the Use Case in Websphere 
+ Application Server</h3>
+   <ul>
+     <li>Start the Application Server from the administrative console.</li>
+     <li>Open Internet Explorer and enter the following URL:
+       <p><font color="#008000"><code>http://machine_name:port_number/rootURI_for_the_Application/html/xmldlg_use_case_name</code></font></p>
+       <p>where xmldlg_use_case_name is the name of the XMLDlg file associated 
+       with your JDialog use case, without typing the extension.</p>
+     </li>
+   </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td>[1]</td>
+     <td><a href="../CAAVbtQuickRefs/CAAVBTRSAInstall.htm">
+     Installing Rational Applications with DS Plugins</a></td>
+   </tr>
+   <tr>
+     <td>[2]</td>
+     <td><a href="../CAAVbtQuickRefs/CAAVBTJavaDashboardirad6.htm">
+     Customizing IBM Rational Software 
+		Development Platform</a> </td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <b>1</b> [May 2003]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <b>2</b> [May 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

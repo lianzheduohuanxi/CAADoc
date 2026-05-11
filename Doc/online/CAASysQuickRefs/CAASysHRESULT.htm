@@ -1,0 +1,110 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>What Is HRESULT?</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>What Is HRESULT?</h3>
+      <em>A standard return value for all your interface methods</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the HRESULT return value and shows how to test it
+      using macros to take appropriate actions. It includes the following
+      sections:
+      <ul>
+        <li><a href="#100000"><strong>About HRESULT</strong></a></li>
+        <li><a href="#200000"><strong>How to Test a Returned HRESULT?</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>About HRESULT</h3>
+<p><code>HRESULT</code> is a Microsoft specific return value to report execution
+conditions to calling functions. <code>QueryInterface</code> in both COM and
+CNext returns an <code>HRESULT</code>. The methods you expose in your interfaces
+should also return an <code>HRESULT</code>. They so become OLE compliant.</p>
+<p><code>HRESULT</code> is encoded on 32 bits and is divided into three areas.
+The first bit is the severity and reports whether the method called succeeds or
+fails. The following 15 bits contain the facility code which gives information
+about the type and the origin of the return code, and the last 16 bits contain
+the actual return code the method is returning. Here is a map of the HRESULT's
+structure.</p>
+<p><img src="images/CAASysHRESULT.gif" alt="CAASysHRESULT.gif (2896 bytes)" width="470" height="153"></p>
+<p>Common <code>HRESULT</code> codes fall in the following categories. A
+successful return code contains S_ in its name, while a failure code contains E_
+in its name.
+<ul>
+  <li><code>S_OK</code> to report that the function succeeds</li>
+  <li><code>S_FALSE</code> to report that the function succeeds, but returns the
+    boolean value False
+  <li><code>E_NOINTERFACE</code> returned by <code>QueryInterface</code> to
+    report that the queried object doesn't support the requested interface</li>
+  <li><code>E_UNEXPECTED</code> to report an unexpected failure</li>
+  <li><code>E_OUTOFMEMORY</code> to report that the function called cannot
+    allocate the required memory</li>
+  <li><code>E_FAIL</code> to report an unspecified failure.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>How to Test a Returned HRESULT?</h3>
+<p>You should never test the <code>HRESULT</code> value, but use the <code>SUCCEEDED</code>
+or <code>FAILED</code> macros as follows:</p>
+<pre>HRESULT rc = pCATBaseUnKnownOnComp-&gt;QueryInterface(IID_CATIXX,
+                                                   (void**) &amp;pIXXOnComp);
+if (FAILED(rc))
+{
+  ... // Process the error
+}
+else if (SUCCEEDED(rc))
+{
+  pIXXOnComp-&gt;MXX1();
+  ...</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

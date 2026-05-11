@@ -1,0 +1,91 @@
+Option Explicit
+
+Sub CATMain()
+
+' -----------------------------------------------------------
+' Get CAIEngine
+Dim CAIEngine As StiEngine
+Set CAIEngine = CATIA.GetItem("CAIEngine") 
+
+' -----------------------------------------------------------
+' Decide to run without any user interaction
+Dim bUI As Boolean
+if ( CAIEngine.UseGraphicalUI ) Then
+    CAIEngine.UseGraphicalUI = False
+    bUI = true
+End If
+
+' -----------------------------------------------------------
+' Connect to the database (if not already connected)
+Dim bConnect As Boolean
+bConnect = false
+If Not CAIEngine.IsConnected() Then
+    CAIEngine.Connect "joe", ""
+    bConnect = true
+End If
+
+' -----------------------------------------------------------
+' Creating new CATPart document
+Dim PartDoc As PartDocument
+Set PartDoc = CATIA.Documents.Add("Part")
+
+' -----------------------------------------------------------
+' Save document in SMARTEAM
+Dim PartDocDBItem As StiDBItem
+Set PartDocDBItem = CAIEngine.GetStiDBItemFromAnyObject(PartDoc)
+CAIEngine.Save PartDocDBItem
+
+' -----------------------------------------------------------
+' Once saved, retrieve corresponding SMARTEAM classid & objectid
+Dim cid As Integer
+Dim oid As Integer
+cid = CAIEngine.GetSMARTEAMClassID(PartDocDBItem)
+oid = CAIEngine.GetSMARTEAMObjectID(PartDocDBItem)
+
+' -----------------------------------------------------------
+' Perform Check-In operation on the document
+' (this will close the document from the CATIA session and
+' file will be removed from the disk)
+CAIEngine.LifeCycleCheckIn PartDocDBItem
+
+' -----------------------------------------------------------
+' Create new Product
+Dim ProductDoc As ProductDocument
+Set ProductDoc = CATIA.Documents.Add("Product")
+
+' -----------------------------------------------------------
+' Retrieve checked-in Part document from SMARTEAM database and
+' get a local copy in the user work directory
+Dim CheckedInPartDBItem As StiDBItem
+Set CheckedInPartDBItem = CAIEngine.BuildFileDBItemFromSmarTeamID(oid, cid)
+
+' -----------------------------------------------------------
+' Insert the part in the new Product
+Dim tPath(1)
+tPath(0) = CheckedInPartDBItem.GetDocumentFullPath()
+ProductDoc.Product.Products.AddComponentsFromFiles tPath, "All"
+
+' -----------------------------------------------------------
+' Save the Product in SMARTEAM
+Dim ProductDocDBItem As StiDBItem
+Set ProductDocDBItem = CAIEngine.GetStiDBItemFromAnyObject(ProductDoc)
+CAIEngine.Save ProductDocDBItem
+
+' -----------------------------------------------------------
+' Perform Release operation on the Product document
+CAIEngine.LifeCycleRelease ProductDocDBItem
+
+' -----------------------------------------------------------
+' Disconnect from the database in case we had to connect at the
+' beginning of the script
+If bConnect Then
+    CAIEngine.Disconnect
+End If
+
+' -----------------------------------------------------------
+' Reset UseGraphicalUI option
+If bUI Then
+    CAIEngine.UseGraphicalUI = true
+End If
+
+End Sub

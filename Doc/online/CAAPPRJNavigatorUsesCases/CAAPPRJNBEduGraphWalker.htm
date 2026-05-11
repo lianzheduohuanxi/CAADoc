@@ -1,0 +1,292 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Including an External Data Source in 3d com Navigator</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3D com</h1>
+    </td>
+    <td valign="top">
+    <h2>3d com Navigator</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+    <h3><a name="Top"></a>Including an External Data Source in 3d com Navigator</h3>
+    <p><i>Working with PortalUID and the GraphWalker interface</i></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article shows how to browse external data in 3d com Navigator. </p>
+    <ul>
+      <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+      <li><b><a href="#UseCase">The CAAPPRJNBEduGraphWalker Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAPPRJNBEduGraphWalker Do</a></li>
+          <li><a href="#How">How to Launch CAAPPRJNBEduGraphWalker</li>
+          <li></a><a href="#Where">Where to Find the CAAPPRJNBEduGraphWalker Code</a></li>
+        </ul>
+      </li>
+      <li><b><a href="#Step">Step-by-Step</a></b></li>
+      <li><b><a href="#InShort">In Short</a></b></li>
+      <li><b><a href="#Special Case: LCA Adapter">Special Case: LCA Adapter</a></b></li>
+      <li><b><a href="#References">References</a></b></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to include simple browsing of any kind 
+of external data source in the navigator graph of 3d com Navigator. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPPRJNBEduGraphWalker Use Case</h3>
+<p>CAAPPRJNBEduGraphWalker is a use case of the CAAPPRJNavigatorBase.edu framework 
+that illustrates PPRJNavigatorBase framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPPRJNBEduGraphWalker Do</h4>
+<p>The CAAPPRJNBEduGraphWalker use case shows the inclusion of the local file system 
+in the 3d com Navigator as a data source for browsing. On Windows systems, it maps 
+the E:\ drive to a bookmark in the favorites tree that can be sent to the navigator 
+for further graphic expansion. On Unix systems, it does the same but the root path 
+is /tmp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPPRJNBEduGraphWalker </h4>
+<p>To launch CAAPPRJNBEduGraphWalker , you will need to set up the build time environment, 
+then compile CAAPPRJNBEduGraphWalker along with its prerequisites, set up the run 
+time environment, and then launch 3d com Navigator as usually done [<a href="#References">1</a>].</p>
+<p align="center">
+<img border="0" src="images/CAAGraphWalkerServices.jpg" width="626" height="226"></p>
+<p>Open the navigator Services Administration panel. The CAA Locale File adapter 
+should appear in the &quot;source&quot; combo box. Select it. Then enter a blank space in 
+the &quot;Web Service&quot; text field the keyword &quot;auto&quot; in the Start Command text field. 
+Then click the button &quot;Add&quot; then click &quot;Ok&quot; at the upper right of the panel window.</p>
+<table width="100%">
+  <tr>
+    <td>
+    <img border="0" src="images/CAAGraphWalkerConf.jpg" width="180" height="186"></td>
+    <td>
+    <img border="0" src="images/CAAGraphWalkerConfPanel.jpg" width="468" height="207"></td>
+  </tr>
+</table>
+<p>Then, using the favorites configuration panel as an administrator, press the 
+&quot;Update data source&quot; button. The new data source, &quot;CAA locale file&quot; will then appear 
+in the folder &quot;All network&quot; of the favorites tree.</p>
+<p>
+<img border="0" src="images/CAAGraphWalkerFavorites.jpg" width="209" height="192"></p>
+<p>You can now browse the new data source by sending that new bookmark to the relationship 
+navigator.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPPRJNBEduGraphWalker Code</h4>
+<p>The CAAPPRJNBEduGraphWalker code is located in the CAAPPRJNavigatorBase.edu framework. 
+In this example, two java classes and several java property files are needed.</p>
+<ul>
+  <li>The PPRTestGraphWalker.java file is a basic implementation of the <i>GraphWalkeIF</i> 
+    interface</li>
+  <li>The PPRTestGraphNode.java file is a basic implementation of the <i>GRaphNodeIF</i> 
+    interface</li>
+  <li>The CAAPPRJNavigatorBase.XMLFolderIndex makes the new source appear in the 
+    favorites tree</li>
+  <li>The CATNls files are used for internationalization</li>
+  <li>The CAALocaleFile.XMLAdapter is used to register the data in 3d com Navigator.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>A graph walker is defined as follows: it is a java class implementing the GraphWalker 
+interface (<i>GraphWalkerIF</i>) and thus giving access to a particular data source. 
+The main input argument for graph walker methods is a PortalUID, which is used for 
+two basic tasks:</p>
+<ol>
+  <li>To retrieve that particular node as a root node for further expansion</li>
+  <li>To retrieve the children of that particular node.</li>
+</ol>
+<p>The output of a GraphWalker is basically made of GraphNodes, objects that implements 
+the <i>GraphNodeIF</i> interface. These objects are only used to provide a graphical 
+representation of the browsed data.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a New Data Source Implementation</h4>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+public class PPRTestGraphNode implements GraphNodeIF
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>See the PPRTestGraphWalker.java file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Registering the Data Source in 3d com Navigator</h4>
+<table class="code">
+  <tr>
+    <td>
+    <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;Adapter Description=&quot;Access Information for CAALocaleFile Adapter&quot; Name=&quot;CAALocaleFile&quot; MsgCatalog=&quot;CAALocaleFile&quot;&gt;
+  &lt;Impl Id=&quot;GraphWalker&quot; Value=&quot;com.dassault_systemes.CAAPPRNJNavigatorBaseEduGraphWalker.PPRTestGraphWalker&quot;/&gt;
+&lt;/Adapter&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>To register the new data source, a file with .XMLAdapter extension is needed 
+in the runtime view under the path resources\pprregistry\access. You can deliver 
+other *.XMLAdapter files in the runtime view.</p>
+<p>The format of that file is XML. The exact tags as above must all be present. 
+Only the values can be set as follows:</p>
+<ul>
+  <li>The description of the adapter is optional</li>
+  <li>The name is mandatory</li>
+  <li>The msgcatalog is optional</li>
+  <li>The parameter Id in the Impl tag must be set to GraphWalker</li>
+  <li>The Value parameter gives the name of the class to implement the data source, 
+    using the <i>GraphWalkerIF</i> interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the Bookmark in the Favorites Tree to Access the 
+New Data Source</h4>
+<table class="code">
+  <tr>
+    <td>
+    <pre>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;FolderIndex&gt;
+  &lt;Folder Name=&quot;Administratornetwork&quot; Authorized=&quot;Admin&quot; Category=&quot;network&quot;&gt;
+    &lt;Document Name=&quot;CAALocaleFile&quot; UID=&quot;UID/CAALocaleFile/default/root.DEFAULTTREEROOT?Nickname=CAA Locale File Tree&quot; Type=&quot;DEFAULTTREEROOT&quot;/&gt;
+  &lt;/Folder&gt;
+&lt;/FolderIndex&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>This is the CAAPPRJNavigatorBase.XMLFolderIndex file. You can deliver new *.XMLFolderIndex 
+files for new sources. This files make the new data source appear in the favorite 
+tree. For now, it is mandatory that the tag Folder and its various parameters remain 
+unchanged. Otherwise, the bookmark cannot be correctly managed using the favorites 
+configuration panel.</p>
+<p>The Name parameter in the Document tag can be set freely. </p>
+<p>The UID of the bookmark must be constructed as follows:</p>
+<pre>UID/[name of the data source as in Adapter Name in the XMLAdapter  file]/default/root.DEFAULTREEROOT?Nickname=[The name of the bookmark as appears on the screen]</pre>
+<p>The TYPE is always <code>DEFAULTTREEROOT</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>These use case shows a way to create a new data source for browsing in 3d com 
+Navigator</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Special Case: LCA Adapter"></a>Special Case: LCA Adapter</h3>
+<p><b>In order to visualize custom metadata through the ENOVIA V5 adapter the following 
+topics must be followed:</b></p>
+<p>In order to visualize custom metadata through the ENOVIA V5 adapter the following 
+topics must be followed:</p>
+<ul>
+  <li>Add the mapping for the custom type<ul>
+    <li>Create a properties file in resources\pprregistry\types\ENOVIA</li>
+    <li>File name format is &quot;UNIQUETYPENAME=MODELER.TYPE&quot;</li>
+    <li>For custom BO types, the MODELER must be the custom modeler, but the TYPE 
+      must be the original BO type definition, not the custom type defined in the 
+      custom modeler. <br>
+      Example: custom doc type would be CustomDoc=CUSTOM.ENOVIA_VPMDocFile</li>
+    </ul>
+  </li>
+  <li>Add the inheritance to any existing type<ul>
+    <li>In the docs\javacommon\ENOVWebObjectUNIQUETYPENAME.properties file</li>
+    <li>Format is &quot;Parent=UNIQUEPARENTTYPENAME&quot;</li>
+    <li>Parent may be a real type in the server metadata or a &quot;functional&quot; inheritance 
+      to a virtual type such as the virtual &quot;DocCommon&quot; parent of DocRevision and 
+      Document.</li>
+    </ul>
+  </li>
+  <li>Add the definition of the relationships on this object<ul>
+    <li>In the docs\javacommon\ENOVWebObjectUNIQUETYPENAME.properties file</li>
+    <li>Can add relationships defined as attributes in the server metadata file<br>
+      Rel.#.Name=&lt;relationship name&gt;<br>
+      Rel.#.Attribute=&lt;metadata attribute name&gt;</li>
+    <li>Define the data type of the objects in this relationship<br>
+      Rel.#.DisplayType=AFLAttachment</li>
+    <li>Define which relationships are displayed to the end user or which are hidden</li>
+    <li>Define the display order for the relationships</li>
+    <li>Add the translations for the relationship names to the docs\javacommon\ENOVWebLabelsUNIQUETYPENAME.properties 
+      file<br>
+      Relationship.&lt;relationship name&gt;=&lt;label&gt;</li>
+    </ul>
+  </li>
+  <li>Add this new type to an application area designation on the search panels<ul>
+    <li>For a new search grouping with a list of types:<ul>
+      <li>Define resources\pprregistry\search\SEARCHGROUP.XMLSearchInfoGroup</li>
+      </ul>
+    </li>
+    <li>To add just one type to an existing group<ul>
+      <li>Modify the containing group file definition resources\pprregistry\search\GROUP..XMLSearchInfoGroup</li>
+      <li>Create a dynamic extension to the original groups file as<br>
+        resources\pprregistry\search\UNIQUETYPENAME.XMLSearchType</li>
+      <li>Add translation entry to the appropriate CATNls file referenced from the 
+        xml entries you created above.</li>
+      <li>Would be nice to have a view of the quick search entries accumulated from 
+        the various search groups (for quick search bar).</li>
+      </ul>
+    </li>
+    </ul>
+  </li>
+</ul>
+<p></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAAVbtTechArticles/CAAVbtReplayJDialogUseCaseirad6.htm">
+    Building and Launching a CAA V5 JDialog Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Jun 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i> </p>
+
+</body>
+
+</html>

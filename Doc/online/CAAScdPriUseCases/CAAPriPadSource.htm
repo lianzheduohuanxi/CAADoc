@@ -1,0 +1,88 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAPriPad.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2001</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Creates constraints between assembly Parts using Publications</font>
+<font color="#008000">'   Assumtions:   Looks for CAAPriPad.CATPart in the DocView   </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R7 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Open the Part document </font>
+<font color="#0000FF">    Dim </font>oDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    set </font>oDoc = CATIA.Documents.Open(sDocPath &amp; _
+                 &quot;\online\CAAScdPriUseCases\samples\CAAPriPad.CATPart&quot;)
+
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>oPart = oDoc.Part
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part body in the part</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oBody<font color="#0000FF"> As </font>Body
+<font color="#0000FF">Set </font>oBody = oPart.Bodies.Item  ( &quot;PartBody&quot; ) 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the sketch in the body</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oSketch<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">Set </font>oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; ) 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Create the pad with a default first limit</font>
+<font color="#008000">' ------------</font>
+MsgBox &quot;Click OK to create the pad.&quot;
+<font color="#0000FF">Dim </font>oPad<font color="#0000FF"> As </font>Pad
+<font color="#0000FF">Set </font>oPad = oPart.ShapeFactory.AddNewPad  ( oSketch, 20.000000 ) 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Define the pad first limit</font>
+<font color="#008000">' ------------</font>
+MsgBox &quot;Click OK to set the pad first limit to 40mm.&quot;
+oPad.FirstLimit.Dimension.Value = 40.000000
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Define the pad to be symmetric relative to the sketch plane</font>
+<font color="#008000">' ------------</font>
+MsgBox &quot;Click OK to mirror the extrusion offset.&quot;
+oPad.IsSymmetric = True
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

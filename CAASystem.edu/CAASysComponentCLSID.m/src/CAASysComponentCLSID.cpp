@@ -1,0 +1,8 @@
+#include "CAASysComponentCLSID.h"
+
+const CLSID CLSID_CAASysComponent = { /* 876db66d-b22b-435a-8c91-607db2d33663 */
+    0x876db66d,
+    0xb22b,
+    0x435a,
+    {0x8c, 0x91, 0x60, 0x7d, 0xb2, 0xd3, 0x36, 0x63}
+  };

@@ -1,0 +1,1058 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>RADE</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>RADE</h1>
+		</td>
+		<td valign="top">
+		<h2>Data Model Customizer for ENOVIA</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>DMC for ENOVIA LCA</h3>
+		<p><em>Customizing the ENOVIA Database</em></p>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article describes how to customize the ENOVIA LCA database using 
+		the Data Model Customizer in <em>Rational Software Architect Designer</em>.</p>
+		<ul>
+			<li><strong><a href="#Before You Start">Before You Start</a></strong></li>
+			<li><a href="#Overview"><strong>Overview</strong></a>
+			<ul>
+				<li><a href="#Use of Rational Rose as interactive design tool">
+				Using of Rational Software Architect Designer as an Interactive Design 
+				Tool</a></li>
+			</ul>
+			</li>
+			<li><a href="#Take_care_of_this"><strong>Before You Start</strong>
+			</a></li>
+			<li><a href="#What_do_you_want_to_do"><strong>What Do You Want to 
+			Do?</strong></a>
+			<ul>
+				<li><strong>
+				<a href="#Creating a UML Project">Creating a UML Project</a></strong></li>
+				<li><strong>
+				<a href="#Defining Prerequisites for DMC">Defining Prerequisites 
+				for DMC</a></strong></li>
+				<li><a href="#CreateNewCusto"><strong>
+				Creating a New ENOVIA LCA Customization</strong></a> </li>
+				<li><a href="#Details_about_customization">Creating an Object 
+				Modeler</a> </li>
+				<li><a href="#Adding Attributes to an Object">Adding Attributes 
+				to Objects</a><ul>
+					<li><a href="#Adding Attributes to a New Object">Adding an 
+					Attribute to a New Object</a> </li>
+					<li><a href="#Adding Attributes to an Existing Object">
+					Adding an Attribute to an Existing Object</a></li>
+					<li>
+					<a href="#Adding a Relationship Type Attribute to a New Object">
+					Adding a Relationship Type Attribute to a New Object</a></li>
+					<li>
+					<a href="#Adding a Relationship Type Attribute to an Existing Object">
+					Adding a Relationship Type Attribute to an Existing Object</a></li>
+				</ul>
+				</li>
+				<li><a href="#editing an attribute">Editing an Attribute</a></li>
+				<li><a href="#Overloading an Attribute">Overloading an Attribute</a></li>
+				<li><a href="#Add_Index">Adding an Index</a></li>
+				<li><a href="#Editing a Modeler Object">Editing a Modeler Object</a></li>
+				<li><a href="#Increasing the Size of a String Type Attribute">
+				Modifying the Attributes of a Modeler</a></li>
+				<li>
+				<a href="#Modifying an existing custo">Modifying an Existing 
+				Customization</a></li>
+				<li><a href="#Generate dictionary">Generating the Dictionary 
+				File</a></li>
+				<li><a href="#Import Dictionary">Importing Metadata</a></li>
+				<li><a href="#Publish">Publishing your Customization</a></li>
+				<li><a href="#HowToDeploy">Deploying your Customization</a></li>
+			</ul>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <h1>Before You Start
+	<a name="Before You Start"></a></h1>
+<p>Make sure you have:</p>
+<ul>
+	<li>Checked <kbd>ENOVIA Designer Studio</kbd> 
+	and <kbd>CAA - Web Application Composer</kbd> in the 
+	CAA V5 Development Environment Setup window. To find out more, see <var>
+	customizing the RADE Interactive Tools</var>.</li>
+	<li>Run the process described in
+	<a href="#" onclick="CAAlinkOutOfPreqs('CAAVbtQuickRefs/CAAVBTRSAInstall.htm'); return false;">
+	Installing Rational Software Architect Designer</a>.</li>
+</ul>
+<h1><a name="Overview"></a>Overview</h1>
+<h2><a name="Use of Rational Rose as interactive design tool"></a>
+Using Rational Software Architect Designer as an Interactive Design Tool</h2>
+<p>The <em>Data Modeler Customizer</em> is an interactive tool integrated to 
+Rational Software Architect Designer. You can design new customizations 
+in UML (Unified Modeling Language) using Rational Software Architect Designer Integrated 
+Design Environment. Use a dedicated wizard to create a brand new LCA 
+customization and manage it through the DMC specific 
+menus embedded within Rational Software Architect Designer interface. With these new 
+menus, it becomes very easy to define new modeler objects and their attributes, 
+or to modify them. You will see at all time the logical and graphical view of 
+your customization content. When your design is correct, you can launch the 
+metadata generation from Rational Software Architect Designer. Then, the &quot;.metadata&quot; file is generated in 
+the <code>CNext/code/dictionary </code>directory of your current active 
+framework and the model is stored in a UML file suffixed &quot;.mdl&quot;. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h1 align="left"><a name="Take_care_of_this"></a>
+Before You Start</h1>
+<p>You are going to work in two different views, the <code><font color="#008040">
+Perspective</font></code> <code><font color="#008040">Modeling</font></code> 
+View and the <code><font color="#008040">Navigator</font></code> View. To access 
+both views:</p>
+<ol>
+	<li>From the <code><font color="#008040">Window</font></code> menu,&nbsp; select
+	<code><font color="#008040">Open perspective-&gt;Other</font></code>. In the
+	<code><font color="#008040">Select</font></code> <code>
+	<font color="#008040">Perspective</font></code> dialog box, select
+	<font color="#008040"><code>Modelin</code></font><code><font color="#008040">g 
+	(default)</font></code>. Click <code><font color="#008040">OK</font></code> 
+	when done.</li>
+	<li>From the <code><font color="#008040">Window</font></code> menu,&nbsp; select
+	<code><font color="#008040">Window-&gt;Show View-&gt;Other</font></code>. In the
+	<code><font color="#008040">Show View </font></code>dialog box, select <code>
+	<font color="#008040">Navigator</font></code>. Click <code>
+	<font color="#008040">OK</font></code> when done.</li>
+</ol>
+<p align="left">Before customizing any model, you must know the names and 
+composition of your model.</p>
+<p align="left">On&nbsp;the one hand, some cases are simple because your 
+customization will be accepted, and names have no consequence on its further 
+use. The only restriction is the name length which is limited to 12 characters. 
+But this limitation is applied to all model customizations.<br>
+For ECO/ECR, you can either create a model which inherits from ECO or ECR, or 
+from both, and all names are allowed to customize your model. Actions and Config 
+follow the same principle.</p>
+<p align="left">On the other hand, the customization of some models requires 
+rigor and knowledge of the composition of the model.<br>
+Two examples are presented to attest this fact.</p>
+<ul type="circle">
+	<li>
+	<p>To customize a Product, you MUST create three objects which respectively 
+	inherit from <code><font color="#008040">VPMPartMaster</font></code>, <code>
+	<font color="#008040">VPMPartVersion</font></code> and <code>
+	<font color="#008040">VPMItemInstance</font></code>. In this case, names 
+	have a great importance. Indeed, each name of customized object must comply 
+	with the name of the inherited object: The suffix name must be the same as 
+	the one of&nbsp; the inherited parent. Moreover, each prefix name must be 
+	identical for the 3 objects.<br>
+	<img alt="" src="images/CAADmcTakeCareOfThis.gif"><br>
+	In the same way, to customize a Document, you MUST create five objects&nbsp;which 
+	inherit from <code><font color="#008040">VPMSecuredFile</font></code>, <code>
+	<font color="#008040">VPMDocumentIteration</font></code>, <code>
+	<font color="#008040">VPMdocumentIterationFormat</font></code>, <code>
+	<font color="#008040">VPMDocumentRevision</font></code>, <code>
+	<font color="#008040">VPMTPdocumentMaster</font></code>, with the same 
+	specifications as for Product.</p>
+	</li>
+</ul>
+<blockquote>
+	<p align="left">
+	<img alt="" src="images/CAADmcTakeCareOfThisDoc.gif"></p>
+</blockquote>
+<h1><a name="What_do_you_want_to_do"></a>What Do 
+You Want to Do?</h1>
+<p>There are multiple ways to customize the data model:</p>
+<ul>
+	<li>By creating new sets of objects.</li>
+	<li>By adding new objects to an existing set of objects.</li>
+	<li>By adding attributes to an existing object.</li>
+</ul>
+<p>Whichever way is chosen, all these cases are handled in the same way: 
+Creating a new modeler object. For example, if you add attributes to an existing 
+LCA object, create a new modeler object that &quot;extends&quot; the LCA object using 
+inheritance and let LCA use this extended object rather than the original one.</p>
+<p>Note that whenever you customize an LCA application, you create a new UML 
+model, as well as a new &quot;.metadata&quot; file. All modeler objects you create are 
+stored in this new model, and are kept separate from the LCA original models (or 
+somebody else's customization). It is always very important to keep your 
+customized data schemas separate from the original LCA data schema, to allow you 
+to upgrade the LCA release without destroying or losing your work.</p>
+<p>As far as the CAA file tree is concerned, an ENOVIA Application corresponds 
+to a framework. This framework contains:</p>
+<ul>
+	<li>The UML model (under the directory PublicInterfaces/<i>FrameworkName</i>.<b>emx</b>).</li>
+	<li>A dictionary file. This dictionary contains the objects that will be 
+	used in the ENOVIA runtime (under the directory CNext/code/dictionary/<i>FrameworkName</i>.<b>metadata</b>)</li>
+</ul>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<h2>Creating a UML Project <a name="Creating a UML Project"></a></h2>
+<ol>
+	<li>From the <code><font color="#008040">File</font></code> menu, select
+	<code><font color="#008040">New-&gt;Project-&gt;Modeling-&gt;UML Project</font></code>.</li>
+	<li>Enter the name of the project in the <code><font color="#008040">Project 
+	name</font></code> field click <code><font color="#008040">Next&gt;</font></code> 
+	and <code><font color="#008040">Finish</font></code>.</li>
+	<li>In the <code><font color="#008040">Navigator</font></code> view, 
+	right-click your project and select <code><font color="#008040">Open as a 
+	DMC project...</font></code><div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" id="table37">
+			<tr>
+				<td width="31" valign="top">
+				<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+				<td valign="top">
+				<ul>
+					<li>If a workspace has already been opened, this step is not 
+					required. If you want to create a customization in another 
+					workspace, you need to close Rational Software Architect 
+					Designer and reopen it.</li>
+					<li>To access the <code><font color="#008040">Navigator</font></code> 
+					view, select 
+					<code><font color="#008040">Window-&gt;Show 
+					View-&gt;Other-&gt;Navigator</font></code>.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</li>
+	<li>In the <code><font color="#008040">Open a DMC Project</font></code> 
+	window, select the tool level, <code><font color="#008040">V5R21_B21</font></code> 
+	in this example and click <code><font color="#008040">Next&gt;</font></code>.</li>
+	<li>See <a href="#Defining Prerequisites for DMC">Defining Prerequisites for 
+	DMC</a> for next steps.
+	<p>Note that if your ENOVIA V5 VPM server is located on a UNIX 
+	machine, you need to select the <code><font color="#008040">Build on UNIX</font></code> 
+	checkbox and enter associated <code><font color="#008040">UNIX Host, UNIX 
+	Login and UNIX image directory</font></code> in order to access to the 
+	remote UNIX machine and manage a copy of the Windows customization workspace 
+	to UNIX side.</p>
+	</li>	
+</ol>
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<h2><strong>Defining Prerequisites for DMC <a name="Defining Prerequisites for DMC"></a></strong>
+</h2>
+<p>In the second panel of <code><font color="#008040">Open as a DMC</font></code> 
+command:</p>
+<ol>
+<li>If you have already defined your prerequisites, click <code>
+	<font color="#008040">Cancel</font></code>.</li>
+<li>Else click <code><font color="#008040">Add</font></code> to select the 
+prerequisites frameworks and select your prerequisites directories in the right 
+order.</li>
+	<li>Click <code><font color="#008040">Finish</font></code>. </li>
+</ol>
+<p>Warning: if the ENOVIA server is installed on a UNIX machine, you need to 
+define prerequisites on Windows side doing the following way:</p>
+<ol>
+<li>
+Click on button <code><font color="#008040">Create ENOVIA V5 VPM prerequisites 
+on NT</font></code>
+<ol>
+<li>In the field <code><font color="#008040">ENOVIA Installation directory on UNIX</font></code> 
+enter full path of ENOVIA CAA installation on UNIX side.</li>
+<li>In the field <code><font color="#008040">ENOVIA target Workspace NT</font></code> 
+enter full path of a directory where prerequisites are going to be copied from 
+UNIX to the Windows local machine.</li>
+<li>In the field <code><font color="#008040">Unix Password</font></code> enter the 
+password for the UNIX login ID used to access the UNIX machine indicated above 
+in the panel.</li>
+<li>Click OK.</li>
+</ol>
+A list of frameworks and resources are then copied in the Windows target 
+directory.
+</li>
+<li>Uncheck button <code><font color="#008040">On UNIX</font></code></li>
+<li>In the <code><font color="#008040">Origin for prerequisites Frameworks</font></code> 
+group box, click <code><font color="#008040">Add...</font></code> button.</li>
+<li>Enter first the path to ENOVIA CAA installation on Windows side</li>
+<li>Secondly enter the path to the directory where prerequisites have been 
+copied from UNIX to WINDOWS previously </li>
+<li>Click <code><font color="#008040">Finish </font></code></li>
+</ol>
+
+<p>Note that once your prerequisites are defined using the <code><font color="#008040">
+Open as a DMC</font></code> command, you can still modify them at any time using 
+the
+<code><font color="#008040">DMC Project-&gt;Define Prerequisites for DMC</font></code> 
+command.</p>
+<p>Warning: if you get some error message during prerequisites computation 
+saying that a framework is not found, please check:</p>
+<ul>
+<li>if the ENOVIA CAA installation path on Windows side is specified in first 
+position of the prerequisites concatenation, else modify the order of 
+prerequisite directories</li>
+<li>if this framework is found in the ENOVIA CAA installation path on Windows 
+side, else you have to install additional ENOVIA products on Windows side and re-launch ENOVIA CAA installation in order to retrieve associated CAA code 
+frameworks</li>
+</ul> 
+
+
+<p align="right">&nbsp;[<a href="#Top">Top</a>]</p>
+<h2><a name="CreateNewCusto"></a>Creating a New 
+ENOVIA LCA Customization</h2>
+<ol>
+	<li>From the <code><font color="#008040">File</font></code> menu, select
+	<code><font color="#008040">New-&gt;Other</font></code>.</li>
+	<li>Expand the <code><font color="#008040">DMC elements</font></code> node, 
+	select <font color="#008040"><code>New LCA Customization</code></font><code><font color="#008040">
+	</font></code>and click <code><font color="#008040">Next&gt;</font></code>. The
+	<code><font color="#008040">Create New ENOVIA PLM Customization</font></code> 
+	window opens.</li>
+	<li>Enter the name of the application in the <font color="#008040"><code>
+	Application</code></font><code><font color="#008040"> name</font></code> 
+	field.</li>
+	<li>Click <code><font color="#008040">...</font></code> to select the <code>
+	<font color="#008040">Super Class</font></code>, click <code>
+	<font color="#008040">Next&gt;</font></code> and <code><font color="#008040">
+	Finish</font></code>.<div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" id="table4">
+			<tr>
+				<td>
+				<img alt="" border="1" src="images/lcacusto.gif" width="91" height="110"></td>
+			</tr>
+		</table>
+	</div>
+	</li>
+</ol>
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" id="table25">
+		<tr>
+			<td width="31" valign="top">
+			<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+			<td valign="top">If you want to derive a customization from another 
+			customization, do not forget to set the&nbsp; CAA derivable option to Yes 
+			when creating a new modeler object. This way, the customization will 
+			be available in the Super class list of the New Modeler Object 
+			window.</td>
+		</tr>
+	</table>
+</div>
+<p align="right">&nbsp;</p>
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" id="table5">
+		<tr>
+			<td width="31" valign="top">
+			<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+			<td valign="top">When creating a new modeler, the super classes 
+			available in the <font color="#008040"><code>Create a Modeler </code>
+			</font>window depend on the <font color="#008040"><code>Super Class</code></font> 
+			you have chosen in the <font color="#008040"><code>New LCA 
+			Customization</code></font> window (see graphic above). The table 
+			below details the modeler classes available for each customization 
+			class.<div align="left">
+				<table cellpadding="0" style="border-collapse: collapse" id="table6">
+					<tr>
+						<td width="62">
+						<h4>Actions</h4>
+						</td>
+						<td width="90">
+						<h4>ADMPSM</h4>
+						</td>
+						<td width="88">
+						<h4>Config</h4>
+						</td>
+						<td width="117">
+						<h4>Document</h4>
+						</td>
+						<td width="118">
+						<h4>ECOECR</h4>
+						</td>
+						<td width="92">
+						<h4>People</h4>
+						</td>
+						<td width="173">
+						<h4>Product Structure</h4>
+						</td>
+						<td>
+						<h4>Standard Part</h4>
+						</td>
+					</tr>
+					<tr>
+						<td width="62" valign="top">
+						<img alt="" src="images/modelercusto2.gif"></td>
+						<td width="90" valign="top">
+						<img alt="" src="images/modelercusto3.gif"></td>
+						<td width="88" valign="top">
+						<img alt="" src="images/modelercusto4.gif" width="102" height="53"></td>
+						<td width="117" valign="top">
+						<img alt="" src="images/modelercusto5.gif" width="149" height="105"></td>
+						<td width="118" valign="top">
+						<img alt="" src="images/modelercusto6.gif" width="46" height="26"></td>
+						<td width="92" valign="top">
+						<img alt="" src="images/modelercusto7.gif" width="64" height="77"></td>
+						<td width="173" valign="top">
+						<img alt="" src="images/modelercusto1.gif"></td>
+						<td valign="top">
+						<img alt="" src="images/modelercusto8.gif" width="126" height="117"></td>
+					</tr>
+				</table>
+			</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Details_about_customization"></a>Creating an Object Modeler </h3>
+<ol>
+	<li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+    <li>From the <code><font color="#008040">File</font></code> menu, select
+	<code><font color="#008040">Other-&gt;DMC elements-&gt;New Modeler Object</font></code>. 
+	Click <code><font color="#008040">Next&gt;</font></code>. The <code>
+	<font color="#008040">New Modeler Object </font></code>window opens.</li>
+	<li>Enter the class name in the <code><font color="#008040">Class name</font></code> 
+	field, CustoDesignAction in this example.<br>
+	Carefully choose the class name, it will be forbidden to modify it after 
+	creating the customization.</li>
+	<li>Select the <code><font color="#008040">Super Class</font></code> in the 
+	list (<code><font color="#008040">Action_Design</font></code> in this 
+	example). Click <code><font color="#008040">Next&gt;</font></code>.</li>
+</ol>
+<blockquote>
+	<blockquote>
+		<p align="center">
+		<img alt="" src="../CAADmcUseCases/images/CAADmcCustoActionModeler.gif" width="559" height="486">
+		</p>
+	</blockquote>
+</blockquote>
+<ol>
+	<li value="4">Click <code><font color="#008040">Insert</font></code> in the <code>
+	<font color="#008040">Attributes</font></code> field to add attributes.</li>
+	<li>Click <code><font color="#008040">Insert</font></code> in the <code>
+	<font color="#008040">Index</font></code> field to add attributes. The 
+	object will be created in a package corresponding to his access.</li>
+	<li>Click <code><font color="#008040">OK</font></code> to confirm the object 
+	modeler&nbsp;creation. </li>
+</ol>
+<p>The wizard generates a new framework containing a new UML model importing the 
+modeler objects defined in the original parent application.</p>
+<p>The wizard generates also a file .ENOVApp which contains the application 
+name, the application which is customized (as the parent application) and the 
+list of the prerequisite frameworks and their dictionary file names.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2>Adding Attributes to Objects
+<a name="Adding Attributes to an Object"></a></h2>
+<h3>Adding Attributes to a New Object<a name="Adding Attributes to a New Object"></a></h3>
+<ol>
+	<li>In the <code><font color="#008040">New Modeler Object</font></code> 
+	window, click <code><font color="#008040">Insert</font></code> in the <code>
+	<font color="#008040">Attributes</font></code> field.</li>
+	<li>Enter the name of the attribute in the <code><font color="#008040">Name</font></code> 
+	field.<br>
+	Carefully choose the name, it will be forbidden to modify it after creating 
+	the customization.</li>
+	<li>Select its type in the list.</li>
+	<li>Select the size of this attribute and specify if need be its visibility 
+	and Access.</li>
+	<li>Click <code><font color="#008040">OK</font></code> when done.</li>
+	<li>Repeat the above steps for each attribute your want to create.<div align="center">
+		<table cellpadding="0" style="border-collapse: collapse" width="20%" id="table11">
+			<tr>
+				<td>
+				<img alt="" border="1" src="images/CAADmcEditAtt.gif" width="371" height="266"></td>
+			</tr>
+		</table>
+	</div>
+	</li>
+</ol>
+<h3>Adding Attributes to an Existing Object
+<a name="Adding Attributes to an Existing Object"></a></h3>
+<p align="left">In the diagram, select the class, and click square <code><font color="#008040">
+				Add Attribute</font></code>. Enter the name of the new attribute and edit it in the Properties view and <code><font color="#008040">Advanced</font></code>
+     tab. Set the <code><font color="#008040">Visibility</font></code>,
+	<code><font color="#008040">Mandatory</font></code>, ... properties.
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" width="20%" id="table1">
+		<tr>
+			<td>
+			<img alt="" border="1" src="images/CAADmcEditAtt2.gif"></td>
+		</tr>
+	</table>
+</div>
+<h3 align="left">Adding a Relationship Type Attribute to a New Object
+<a name="Adding a Relationship Type Attribute to a New Object"></a></h3>
+<p align="left">When you select a type in Type list when creating a new 
+attribute, the basic types are available. If you have already created classes, 
+their names are displayed in this list. To create an attribute based on such a 
+class, select the class in the Type list.&nbsp; </p>
+<h3 align="left">Adding a Relationship Type Attribute to an Existing Object
+<a name="Adding a Relationship Type Attribute to an Existing Object"></a></h3>
+<p align="left">You can add a Relationship type attribute to an existing object:</p>
+<ol>
+	<li>In the diagram, right-click the class, and select <font color="#008040">
+	<code>Add UML-</code></font><code>&gt;Attribute</code>.
+	</li>
+	<li>Enter the name of the new attribute and edit it in the <code><font color="#008040">
+	Properties</font></code> 
+	view.</li>
+	<li>In the <code><font color="#008040">Advanced</font></code> tab, modify the <code><font color="#008040">
+	Visibility</font></code>,
+	<code><font color="#008040">Mandatory</font></code>, ... properties.</li>
+	<li>In the <code><font color="#008040">Stereotypes</font></code> tab, click <code>
+	<font color="#008040">Apply Stereotypes...</font></code> 
+	and check <code><font color="#008040">RADE_AttributeRelation</font></code>.</li>
+</ol>
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" width="50%" id="table38">
+		<tr>
+			<td>
+			<img alt="" border="1" src="images/CAADmcEditAtt4.gif"></td>
+		</tr>
+	</table>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="editing an attribute"></a>Editing an Attribute</h2>
+<ol>
+	<li>In the <code><font color="#008040">Main </font></code>view of the class 
+	diagram, click the attribute that you want to edit.<div align="center">
+		<table cellpadding="0" style="border-collapse: collapse" width="20%" id="table12">
+			<tr>
+				<td>
+				<img alt="" border="1" src="images/editattribute.gif"></td>
+			</tr>
+		</table>
+	</div>
+	</li>
+	<li>Click the <code><font color="#008040">Properties</font></code> tab<div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" id="table13">
+			<tr>
+				<td>
+				<ul>
+					<li>Click <code><font color="#008040">General</font></code> 
+					if you want to modify its visibility, its qualifiers, its 
+					type, its value or its multiplicity.</li>
+					<li>Click <code><font color="#008040">Advanced</font></code> 
+					if you want to modify its type for example or other 
+					parameters.<div align="left">
+						<table cellpadding="0" style="border-collapse: collapse" width="100%" id="table14">
+							<tr>
+								<td>
+								<img alt="" border="1" src="images/editattribute2.gif"></td>
+							</tr>
+						</table>
+					</div>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2>Overloading an Attribute <a name="Overloading an Attribute"></a></h2>
+<p>Only relationship type attributes can be overloaded. The attribute to 
+overload must:</p>
+<ul>
+	<li>Keep exactly the same naming as defined in the Super Class.</li>
+	<li>Point to a Class inheriting from the Super Class.</li>
+</ul>
+<div align="center">
+	<center>
+	<table cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+		<tr>
+			<td>
+			<img alt="" src="images/CAADmc2.jpg" width="620" height="427"></td>
+		</tr>
+	</table>
+	</center></div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Add_Index"></a>Adding an Index to an 
+Object</h2>
+<ol>
+	<li>In the <code><font color="#008040">New Modeler Object</font></code> 
+	window, click <code><font color="#008040">Insert</font></code> in the <code>
+	<font color="#008040">Index</font></code> field.</li>
+	<li>Enter the name of the index in the <code><font color="#008040">Name</font></code> 
+	field.</li>
+	<li>Specify if this index will be unique or not.</li>
+	<li>Select the attributes which are referenced by the index.</li>
+	<li>Click <code><font color="#008040">OK</font></code> when done.<div align="center">
+		<table cellpadding="0" style="border-collapse: collapse" width="20%" id="table7">
+			<tr>
+				<td>
+				<img alt="" src="../CAADmcTechArticles/images/CAADmcEditIndex.jpg" width="408" height="382"></td>
+			</tr>
+		</table>
+	</div>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3>Editing a Modeler Object <a name="Editing a Modeler Object"></a></h3>
+<ol>
+	<li>In the <code><font color="#008040">Main </font></code>view of the class 
+	diagram, click the class that you want to edit.<div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" width="40%" id="table19">
+			<tr>
+				<td>
+				<img alt="" border="1" src="images/editclass1.gif"></td>
+			</tr>
+		</table>
+	</div>
+	</li>
+	<li>Click the <code><font color="#008040">Properties</font></code> tab.<div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" id="table17">
+			<tr>
+				<td>
+				<ul>
+					<li>Click <code><font color="#008040">General</font></code> 
+					if you want to modify its visibility, and to indicate if it 
+					is abstract or leaf.</li>
+					<li>Click <code><font color="#008040">Advanced</font></code> 
+					if you want to modify its type for example or other 
+					parameters.<div align="left">
+						<table cellpadding="0" style="border-collapse: collapse" width="100%" id="table18">
+							<tr>
+								<td>
+								<img alt="" border="1" src="images/editclass2.gif" width="593" height="409"></td>
+							</tr>
+						</table>
+					</div>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</li>
+</ol>
+<p>You cannot modify the name or the Super Class of the modeler object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2 align="left">Modifying the Attributes of a Modeler <a name="Increasing the Size of a String Type Attribute"></a>
+</h2>
+<p align="left">You can modify the attributes of a modeler on condition that 
+this attribute is of String type and you want to increase its size. </p>
+<ol>
+	<li>
+	<p align="left">Create a workspace migrating an existing workspace to a 
+	subsequent version. The generated data is located in the following 
+	directory: <code>
+	Workspace_name/framework_name/CNext/code/dictionary/module.DMCRules</code>.</p>
+	</li>
+	<li>
+	<p align="left">Open the generate file in a text editor and perform the 
+	modification.</p>
+	<div align="left">
+		<table cellpadding="0" style="border-collapse: collapse" id="table20">
+			<tr>
+				<td width="398" valign="top">
+				<img alt="" border="1" src="images/CAADMCeditattribute.gif" width="376" height="165"></td>
+				<td valign="top">
+				<ul>
+					<li>Edit the <code>MaxLength</code>&nbsp; field and enter the 
+					desired string length.</li>
+					<li>Change the <code>Modified</code> status to &quot;<code>Y</code>&quot;.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</li>
+	<li>
+	<p align="left">Publish the changes.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Modifying an existing custo"></a>
+Modifying an Existing Customization</h2>
+<h3>Adding a new Object Modeler to an Existing Customization
+<a name="Adding a new Object Modeler to an Existing Customization"></a></h3>
+<ol>
+	<li>In the Navigator view, right-click your project and select <code>
+	<font color="#008040">Open as a DMC project...</font></code></li>
+	<li>If your prerequisites have already been defined click Cancel in the 
+	opening window. If not, select the tool level and click <code>
+	<font color="#008040">Next&gt;</font></code>. Click <code>
+	<font color="#008040">Close</font></code> in the Initializing window. Click
+	<code><font color="#008040">Add</font></code> to select the prerequisites 
+	frameworks, select your prerequisites and click <code><font color="#008040">
+	Finish</font></code>.</li>
+	<li><a href="#Details_about_customization">Create an Object Modeler</a>.</li>
+</ol>
+<h3>Adding an Attribute to an Existing Object
+<a name="Adding an Attribute to an Existing Object"></a></h3>
+<p align="left">In the diagram, select an attribute and click the square 
+				(see picture below). Enter the name of the new attribute and 
+				edit it in the Properties view.<div align="left">
+					<table cellpadding="0" style="border-collapse: collapse" width="50%" id="table35">
+						<tr>
+							<td>
+							<img alt="" border="1" src="images/CAADmcEditAtt2.gif" width="283" height="163"></td>
+						</tr>
+					</table>
+				</div>
+				
+<p align="left">If you do not have access to the Properties view, select<code><font color="#008040"> 
+Window-&gt;Show View-&gt;Properties</font></code>. Then in this properties view you can 
+set the visibility in the General section, and all other RADE_Attributes values 
+in the <code><font color="#008040">Advanced</font></code> section.</p>
+<p align="left">If you want to derive an other class for your customization, select
+	<code><font color="#008040">File-&gt;Other-&gt;DMC elements-&gt;New Modeler Object</font></code>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Generate dictionary"></a>Generating 
+the Dictionary File</h2>
+<ol>
+    <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+	<li>From the <code><font color="#008040">DMC Project</font></code> menu, 
+	select Generate<font color="#008040"><code> VPM </code></font>
+	<font color="#008040"><code>Dictionary file</code></font>. The following 
+	window is displayed.</li>
+</ol>
+<p align="center">
+<img alt="" src="../CAADmcUseCases/images/CAADmcCustoActionGenMetadata.gif"></p>
+<p>The wizard creates <i>MyAction.metadata</i> under the directory <kbd>
+MyAction/CNext/code/dictionary</kbd>. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Import Dictionary"></a>Importing Metadata</h2>
+<ol>
+	<li>From the <code><font color="#008040">DMC Project</font></code> menu, 
+	select <code><font color="#008040">Import VPM Dictionary file</font></code>. 
+	The following window is displayed. This command is designed to ensure 
+	coherence between the UML model and the dictionary file. </li>
+</ol>
+<div align="center">
+	<center>
+	<table cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+		<tr>
+			<td>
+			<img alt="" src="../CAADmcTechArticles/images/CAADmcImport.jpg" width="356" height="479"></td>
+		</tr>
+	</table>
+	</center></div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Publish"></a>Publishing Your Customization</h2>
+<ol>
+	<li>Select <code><font color="#008040">DMC Project-&gt;Publish VPM Dictionary 
+	file in Database</font></code>. Click <code><font color="#008040">OK</font></code>. 
+	The data are published. Check if the settings are correctly valuated and 
+	click <code><font color="#008040">OK</font></code> to launch the Publish 
+	command to finish the scenario.</li>
+</ol>
+<div align="center">
+	<center>
+	<table cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18">
+		<tr>
+			<td><img alt="" src="images/CAADmcPublish.gif"></td>
+		</tr>
+	</table>
+	</center></div>
+<p>&nbsp;</p>
+<table>
+	<tr>
+		<td>
+		<h4>Setting</h4>
+		</td>
+		<td>
+		<h4>Explanation</h4>
+		</td>
+	</tr>
+	<tr>
+		<td><code>CATSettingPath</code></td>
+		<td>The path of the CATSettings directory of your ENOVIA LCA 
+		installation</td>
+	</tr>
+	<tr>
+		<td><code>ENOVDataBaseAliasName</code></td>
+		<td>The name of your database</td>
+	</tr>
+	<tr>
+		<td><code>ENOVDataBaseType</code></td>
+		<td>The type of your database: db2 and oracle is supported</td>
+	</tr>
+	<tr>
+		<td><code>ENOVDB2_HOME</code></td>
+		<td>If you have a db2 database type: the HOME directory of the db2 user</td>
+	</tr>
+	<tr>
+		<td><code>ENOVDBAID</code></td>
+		<td>The ENOVIA LCA administrator</td>
+	</tr>
+	<tr>
+		<td><code>ENOVDBAPSSD</code></td>
+		<td>The password of the ENOVIA LCA administrator</td>
+	</tr>
+	<tr>
+		<td><code>ENOVIALevel</code></td>
+		<td>The release level of ENOVIA LCA: must be <code>V5Rn</code>, where n 
+		is the release number</td>
+	</tr>
+	<tr>
+		<td><code>ENOVORACLE_HOME</code></td>
+		<td>If you have a oracle database type: the oracle installation</td>
+	</tr>
+	<tr>
+		<td><code>ENOVOutputDirectory</code></td>
+		<td>At the end of the publish, RADE copy some required files in this 
+		directory. This directory can be use to deploy the customization on a 
+		another database.</td>
+	</tr>
+	<tr>
+		<td><code>ENOVSimulate</code></td>
+		<td>If you inform YES: RADE build the library and generate the database 
+		script but don't update the database. If you inform NO: the database is 
+		updated.</td>
+	</tr>
+	<tr>
+		<td><code>ENOVTableSpace</code></td>
+		<td>The name of your tablespace</td>
+	</tr>
+	<tr>
+		<td><code>TNS_ADMIN</code></td>
+		<td>If you have a oracle database type, it's the name of you TNSADMIN.</td>
+	</tr>
+</table>
+<p>The publish update your test or production server runtime with your 
+customization.</p>
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" id="table30">
+		<tr>
+			<td width="31" valign="top">
+			<img alt="" src="../CAAIcons/images/warning.gif" width="30" height="30"></td>
+			<td valign="top">When publishing your customization, *.metadata.off 
+			files are generated. Do not delete them, they will be used at the 
+			next publication.</td>
+		</tr>
+	</table>
+</div>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h2><a name="Deploy"></a>Deploying your Customization</h2>
+<h3><a name="DeployAddedValue"></a>Why use the deployment mechanism?</h3>
+<ul>
+	<li>You can test the customization on a Development ENOVIA server before 
+	making it available in Production environment</li>
+	<li>There is no need to install RADE on the production ENOVIA server machine</li>
+	<li>There is a separation of responsibilities between LCA Data structure 
+	analyst and LCA Server administrator.</li>
+	<li>There is a single documented procedure ( in the next article ) to:<ul>
+		<li>Update data structures</li>
+		<li>Update database tables</li>
+		<li>Modify administration settings</li>
+		<li>Update customized object masks</li>
+	</ul>
+	</li>
+</ul>
+<p>&nbsp;</p>
+<p>
+<img alt="" src="images/CAADmcDeploy3.gif"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="HowToDeploy"></a>How to deploy a customization?</h3>
+<p>The deployment process will</p>
+<ul>
+	<li>Create a new RADE directory to store customized files</li>
+	<li>Create a new environment file </li>
+	<li>Generate SQL order </li>
+	<li>Update database</li>
+	<li>Add customized modelers in ADMIN database</li>
+	<li>Import Default Mask generated by RADE</li>
+</ul>
+<p>STEP 1: Make a customization with RADE tools. Publish the customization and 
+check in ENOVIA LCA that the customization is available.</p>
+<p>STEP 2: Check prerequisites for deployment</p>
+<ul>
+	<li>The Development Server and the Production Server should be installed on 
+	the same operating system</li>
+	<li>In the $ENOVOutput directory ( generated during publishing process ), 
+	you should have
+	<ul>
+		<li>*.custo files , *.metadata files, VPMSearchEntityDefinition.xml, 
+		VPMLightNode.xml, ActionRules.xml under $OS/code/dictionary</li>
+		<li>*.param files under $OS/reffiles/DBMS/Generator</li>
+		<li>*.CustomEnv.sh under $ENOVOutput</li>
+	</ul>
+	</li>
+</ul>
+<div align="left">
+	<table cellpadding="0" style="border-collapse: collapse" id="table10">
+		<tr>
+			<td width="31" valign="top">
+			<img alt="" src="../CAAIcons/images/information.gif" width="31" height="30"></td>
+			<td valign="top">
+			<ul>
+				<li>You can make your customization on DB2 and deploy it on 
+				ORACLE ( or the other way around )</li>
+				<li>You can deploy your customization on a customize database</li>
+			</ul>
+			</td>
+		</tr>
+	</table>
+</div>
+<p>STEP 3:&nbsp;</p>
+<ol>
+	<li>cd to the &quot;code/command&quot; directory under your ENOVIA LCA product install 
+	path. This path appears like one of the following :&nbsp;&nbsp;&nbsp;&nbsp;</li>
+</ol>
+<blockquote>
+	<blockquote>
+		<blockquote>
+			<ul>
+				<li><i>~/aix_a/code/command</i></li>
+				<li>&nbsp;<i>~/solaris_a/code/command</i></li>
+				<li>&nbsp;<i>~/hpux_b/code/commandf</i>&nbsp;</li>
+			</ul>
+		</blockquote>
+	</blockquote>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+under the directory where you installed the product.</p>
+<ol>
+	<li>Create a command file containing all the parameters you will need to run 
+	the deployment script. The parameters should all wrap continuously as one 
+	line. WARNING: Because the command line contains the user/password of the 
+	LCA admin, maintain the confidentiality of this command file.<br>
+	The command line is as follows:</li>
+</ol>
+<p><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+./DeployRadeCusto.sh ...</i></p>
+<table>
+	<tr>
+		<td width="15%"><code>-DBVendor</code></td>
+		<td width="85%">ORACLE or DB2</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-DBName&nbsp;</code></td>
+		<td width="85%">The name of your database</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-DBAdmHome</code></td>
+		<td width="85%">The home directory of Oracle Id or the DB2 instance ID</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-TbsName</code></td>
+		<td width="85%">The tablespace name used by ENOVIA LCA for its database 
+		tables</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-IdxTbsName</code></td>
+		<td width="85%">The tablespace name used by ENOVIA LCA for its indexes</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-TableOwner</code></td>
+		<td width="85%">The ID that is creator/owner of database tables</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-AdmUsr</code></td>
+		<td width="85%">The ENOVIA LCA administrative user ID ( often the same 
+		as TableOwner )</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-AdmPwd&nbsp;</code></td>
+		<td width="85%">The AdmUser password</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-DBAID</code></td>
+		<td width="85%">The database administrator ID</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-DBAPwd</code></td>
+		<td width="85%">The database administrator password</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-EnvDir</code></td>
+		<td width="85%">The full directory path to the CATEnv directory</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-EnvName</code></td>
+		<td width="85%">The name of the &quot;ENOVIA_LCA~&quot; file in CATEnv directory 
+		without the &quot;.sh&quot;</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-InitRADECustoDir</code></td>
+		<td width="85%">The ENOVOutput directory of the publish</td>
+	</tr>
+	<tr>
+		<td width="15%"><code>-RADECustoDir&nbsp;</code></td>
+		<td width="85%">The directory where you want to deploy the 
+		customization&nbsp;</td>
+	</tr>
+</table>
+<p>For command line help with this script, simple type:</p>
+<blockquote>
+	<p align="left"><i>DeployRadeCusto.sh &lt;return&gt;</i></p>
+</blockquote>
+<p>from the UNIX command line and it will return some help text.<br>
+Here are two sample executable files, one for Oracle and one for DB2</p>
+<p><b>DB2:&nbsp;</b><br>
+<i>./DeployRadeCusto.sh -DBVendor DB2 -DBName ENOVRADE -DBAID db2adm7 -DBAPwd 
+db2adm7 -DBAdmHome /home/data/db2adm7 -TbsName TBS1_8K -IdxTbsName TBS1_8K 
+-TableOwner EV5ADM&nbsp; -AdmUsr ev5adm -AdmPwd EV5ADM&nbsp; -EnvDir /CATEnv 
+-EnvName ENOVIA_LCA.V5R11.B11 -InitRADECustoDir 
+/home/data/ev5adm/MSDEV/CustoOutput -RADECustoDir /home/data/vpm5adm/RADECusto</i></p>
+<p><b>ORACLE:<br>
+</b><i>./DeployRadeCusto.sh -DBVendor ORACLE&nbsp; -DBName ORARADE -DBAID ora7 
+-DBAPwd ora7 -DBAdmHome /home/oracle/8.1.7 -TbsName TBS1_8K -IdxTbsName TBS1_8K 
+-TableOwner EV5ADM&nbsp; -AdmUsr ev5adm -AdmPwd EV5ADM&nbsp; -EnvDir /CATEnv 
+-EnvName ENOVIA_LCA.V5R11.B11 -InitRADECustoDir 
+/home/data/ev5adm/MSDEV/CustoOutput -RADECustoDir /home/data/vpm5adm/RADECusto</i></p>
+<p>4 - Run the file script from the Unix command line. Information status 
+messages appears. Some steps will take several minutes, during which no 
+additional messages will appear.</p>
+<p>5 - Run ./enoviastart -env <i>ENOVIA_LCA.V5R11.B11</i> -direnv <i>/CATEnv</i> 
+-object &quot;-senv <i>WorkspaceEnv</i> -sdirenv <i>
+/home/data/vpm5adm/RADECusto/CATEnv</i>&quot; to test your deployment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="#" onclick="CAAlinkOutOfPreqs('CAAVbtQuickRefs/CAAVBTRSAInstall.htm'); return false;">Installing Rational Software Architect Designer</a></td>
+	</tr>
+	<tr>
+		<td align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [May 2001]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top">Version: <strong>2</strong> [January 2007]</td>
+		<td valign="top">Document updated</td>
+	</tr>
+	<tr>
+		<td align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+
+</body>
+
+</html>

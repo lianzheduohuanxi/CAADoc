@@ -1,0 +1,276 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspGroup, CATIAPspGroupable  and CATIAPspLogicalLine
+'  
+'   Asumption : Looks  for document CAAPsp3DEduIn.CATProduct.              
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String 
+    Dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ----------------------------------------------------------------
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct" )
+
+    
+    'MsgBox strMessage_g
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "----------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspLogicalLine.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    Dim objLLogLines      As PspListOfObjects  
+    
+    Dim objPspGroup       As PspGroup
+    Dim objPspID          As PspID
+    Dim objPspLogLine     As PspLogicalLine
+    
+    
+    Dim ePspIDLDomainID   As CatPspIDLDomainID    
+    Dim intIdx          As Integer
+    Dim intNbLogLines   As Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( objPspApplication Is Nothing  ) Then
+        strMessage_g = strMessage_g & "Unable to get objPspApplication" & vbCr               
+      Else
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+    '-----------------------------------------------------------------------
+    ' Get a list of logical lines instances, then get PspGroup handle
+    ' to the first logical line instance obtained 
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+      
+
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then      
+        Set objLLogLines = objPspAppFactory.ListLogicalLines (objPrdRoot)
+        If ( Not ( objLLogLines Is Nothing ) ) Then
+          intNbLogLines = objLLogLines.Count
+
+          strMessage_g = strMessage_g & _
+                    "Number of Logical Lines=" & intNbLogLines & vbCr              
+
+          If ( intNbLogLines > 0 ) Then
+            Set objPspGroup = objLLogLines.Item(1,"CATIAPspGroup")
+            Set objPspLogLine = objLLogLines.Item(1,"CATIAPspLogicalLine")
+            Set objPspID = objLLogLines.Item(1,"CATIAPspID")
+            If ( Not (objPspID Is Nothing) ) Then
+              strMessage_g = strMessage_g & "Logical line object ID =" &  objPspID.GetID & vbCr               
+            End If 
+
+          End if
+        End If       
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    '  List members (CATIAPspGroup)
+    '-----------------------------------------------------------------------
+
+    Dim objLMembers          As PspListOfObjects  
+     
+    Dim objPspGroupable      As PspGroupable
+    Dim objPspGroupableRem   As PspGroupable
+    Dim objPspIDMember       As PspID
+    
+    
+    If ( Not ( objPspGroup Is Nothing )) Then      
+      Dim objLCntrs            As PspListOfObjects            
+                     
+      Set objLMembers = objPspGroup.Members         
+
+      If ( Not ( objLMembers Is Nothing ) ) Then       
+        strMessage_g = strMessage_g & _
+          "Number of Members= " &  objLMembers.Count & vbCr                      
+    
+        For intIdx = 1 To objLMembers.Count      
+          Set objPspGroupable = objLMembers.Item (intIdx, "CATIAPspGroupable")                            
+          Set objPspIDMember = objLMembers.Item (intIdx, "CATIAPspID")          
+
+          If ( Not (objPspIDMember Is Nothing) ) Then
+            strMessage_g = strMessage_g & "Member ID =" &  objPspIDMember.GetID & vbCr               
+          End If                   
+        Next 
+
+        '-----------------------------------------
+        ' Query PspGroupable methods
+        '-----------------------------------------
+
+        If ( Not ( objPspGroupable Is Nothing ) ) Then                
+          QueryGroupable objPspGroupable
+
+          '-------------------------------------
+          ' Remove member
+          '-------------------------------------
+          If ( Not ( objPspGroupable Is Nothing ) ) Then       
+            strMessage_g = strMessage_g &   "Removing member= " & _
+                objPspIDMember.GetID   & vbCr              
+            objPspGroup.RemoveMember objPspGroupable           
+            
+            '-------------------------------------
+            ' Add member
+            '-------------------------------------     
+            
+            strMessage_g = strMessage_g & _
+                "Adding member= " &  objPspIDMember.GetID & vbCr              
+            objPspGroup.AddMember objPspGroupable                   
+          End If               
+        End If
+
+      End If        
+    End if
+
+    '-----------------------------------------------------------------------
+    '  GetFromTo information (CATIAPspLogicalLine)
+    '-----------------------------------------------------------------------
+
+    Dim objLFromMajorMembers          As PspListOfObjects  
+    Dim objLFromMinorMembers          As PspListOfObjects  
+    Dim objLToMajorMembers          As PspListOfObjects  
+    Dim objLToMinorMembers          As PspListOfObjects  
+    If ( Not ( objPspLogLine Is Nothing )) Then      
+      objPspLogLine.GetFromTo objLFromMajorMembers, objLFromMinorMembers,  _
+                              objLToMajorMembers, objLToMinorMembers
+
+      If ( Not ( objLFromMajorMembers Is Nothing )) Then      
+        strMessage_g = strMessage_g & _
+          "Number of From-Major Members is: " & objLFromMajorMembers.Count  & vbCr  
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of From-Major Members is 0"  & vbCr  
+      End If
+
+      If ( Not ( objLFromMinorMembers Is Nothing )) Then      
+        strMessage_g = strMessage_g & _
+           "Number of From-Minor Members is: " & objLFromMinorMembers.Count & vbCr  
+        
+      Else       
+        strMessage_g = strMessage_g & _
+           "Number of  From-Minor Members is 0"  & vbCr  
+      End If
+
+      If ( Not ( objLToMajorMembers Is Nothing )) Then      
+        strMessage_g = strMessage_g & _
+          "Number of To-Major Members is: " & objLToMajorMembers.Count  & vbCr  
+        
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of  To-Major Members is 0"  & vbCr   
+      End If
+
+      If ( Not ( objLToMinorMembers Is Nothing )) Then      
+        strMessage_g = strMessage_g & _
+            "Number of  To-Minor Members is 0"  & objLToMinorMembers.Count & vbCr   
+      Else       
+        strMessage_g = strMessage_g & _
+                "Number of  To-Minor Members is 0"  & vbCr   
+      End If
+
+    End If
+
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+
+' -----------------------------------------------------------------------------
+' | QueryGroupable methods 
+' | 
+' | Input: objPspGroupableArg        : PspGroupable object
+' |        
+' |        
+' -----------------------------------------------------------------------------
+
+Private Sub QueryGroupable (objPspGroupableArg As PspGroupable)      
+
+    Dim objPspGroups       As PspGroup    
+
+    If ( Not ( objPspGroupableArg Is Nothing ) ) Then         
+      ' ---------------------------
+      ' Get Groups
+      ' ---------------------------
+
+      Set objPspGroups = objPspGroupableArg.Groups
+
+      If ( Not ( objPspGroups Is Nothing ) ) Then         
+        strMessage_g = strMessage_g & _
+          "Number of Groups =" & objPspGroups.Count & vbCr              
+      End If      
+    End If
+
+End Sub
+
+

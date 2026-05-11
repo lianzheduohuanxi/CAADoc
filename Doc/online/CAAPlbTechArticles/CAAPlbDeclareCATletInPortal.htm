@@ -1,0 +1,224 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>How to Declare a CATlet in the Portal</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How to Declare a CATlet in the Portal</h3>
+      <em>The declaration of an application inside the ENOVIA Portal</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to declare an application inside the ENOVIA
+      Portal, either in the CATletList.xml file for the first time you launch
+      the Portal, or WebTopConfiguration_user.xml file for any subsequent Portal
+      launch.</p>
+      <ul>
+        <li><a href="#First"><b>First Time Declaration: the CATletList.xml file</b></a></li>
+        <li><a href="#Next"><b>Next-time Declaration: the
+          WebTopConfiguration_user.xml File</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="First"></a>First Time Declaration: the CATletList.xml file</h3>
+<p>The CATlets list and position are specified in an xml document named
+CATletList.xml. As for most of the Portal configuration file, this file can also
+be prefixed by third party applications to have a custom CATletList.xml file.<br>
+Here is an example of a CATletList.xml file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<b>&lt;CATletList&gt;
+  &lt;BrowserCATlets&gt;
+    &lt;CATlet</b> icon=&quot;Resources/IF_W_Search.gif&quot;
+            label=&quot;SearchTreeCATlet&quot;
+            help=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            help.fr=&quot;/help/french/ptlug/ptlugbt0700.htm&quot;
+            help.en=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            mode=&quot;CONNECTED&quot;
+            url=&quot;bean://com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet?serializedData=SearchProject.xml&quot;&gt;
+    <b>&lt;/CATlet&gt;</b>
+
+    <b>&lt;CATlet</b> icon=&quot;Resources/IF_Files.gif&quot;
+            label=&quot;RemoteTreeCATlet&quot;
+            help=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            help.fr=&quot;/help/french/ptlug/ptlugbt0700.htm&quot;
+            help.en=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            help.de=&quot;/help/german/ptlug/ptlugbt0700.htm&quot;
+            help.ja=&quot;/help/japanese/ptlug/ptlugbt0700.htm&quot;
+            mode=&quot;CONNECTED&quot;
+            url=&quot;bean://com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet?serializedData=FileTreeProject.xml&quot;&gt;
+    <b>&lt;/CATlet&gt;</b>
+
+   <b> &lt;CATlet </b>icon=&quot;Resources/IF_Files_local.gif&quot;
+            label=&quot;LocalTreeCATlet&quot;
+            help=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            help.fr=&quot;/help/french/ptlug/ptlugbt0700.htm&quot;
+            help.en=&quot;/help/english/ptlug/ptlugbt0700.htm&quot;
+            url=&quot;bean://com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet?serializedData=LocalFileTreeProject.xml&quot;&gt;
+    <b>&lt;/CATlet&gt;
+  </b><b>&lt;/BrowserCATlets&gt;</b>
+
+  <b>&lt;ViewerCATlets&gt;
+    &lt;CATlet </b>icon=&quot;Resources/I_Lite3D.gif&quot;
+            label=&quot;3DRemoteCATlet&quot;
+            help=&quot;/help/english/ptlug/ptlugwd0600.htm&quot;
+            help.fr=&quot;/help/french/ptlug/ptlugwd0600.htm&quot;
+            help.en=&quot;/help/english/ptlug/ptlugwd0600.htm&quot;
+            mode=&quot;CONNECTED&quot;
+            url=&quot;bean://com.dassault_systemes.catweb.remote.controller.RemoteCATlet3D&quot;&gt;
+    <b>&lt;/CATlet&gt;
+  &lt;/ViewerCATlets&gt;</b>
+
+  <b>&lt;OtherCATlets&gt;
+    &lt;CATlet </b>icon=&quot;Resources/PerfMeter.gif&quot;
+            label=&quot;PerformanceCATlet&quot;
+            help=&quot;/help/README_en.htm&quot;
+            help.fr=&quot;/help/README_fr.htm&quot;
+            help.en=&quot;/help/README_en.htm&quot;
+            url=&quot;bean://com.dassault_systemes.catweb.perfmeter.PerfCATlet&quot;&gt;
+    <b>&lt;/CATlet&gt;
+  &lt;/OtherCATlets&gt;
+&lt;/CATletList&gt;</b></pre>
+    </td>
+  </tr>
+</table>
+<p>The CATlet declaration is contained between the tag CATletList. The CATlets
+can be arranged into three categories:</p>
+<ul>
+  <li>The browser CATlets category declared with the tag &lt;BrowserCATlets&gt;
+    contains the CATlet that will be located inside the WebInfo part of the
+    Portal. A tab will be added in the WebInfo part for each CATlet declared in
+    this category.</li>
+  <li>The viewer CATlets category declared with the tag &lt;ViewerCATlets&gt;
+    contains the CATlet that will appears inside the WebSpace part of the
+    Portal.</li>
+  <li>The third category, the other CATlets, declared with the tag
+    &lt;OtherCATlets&gt; contains CATlets that fit in neither previous
+    categories.</li>
+</ul>
+<p>Each CATlet is declared with the tag CATlet. This tag contains many
+attributes that will describe all information relative to the CATlet.
+<ul>
+  <li>The <i>icon</i> attribute specifies the icon path that will represent the
+    CATlet inside the Portal. This path is usually relative to the Portal
+    runtime installation</li>
+  <li>The <i>label</i><b> </b>attribute describes a NLS label for the CATlet.
+    The NLS translation of the label that will be used is extracted from the
+    dsdskwidgets_xx.properties. If the matching attribute cannot be found, the
+    default attribute label is taken into account</li>
+  <li>The <i>help</i> attribute specifies a path on a html documentation for the
+    CATlet. The help path is described by the attribute <i>help.locale</i> where
+    locale is the selected locale at runtime (fr, en, de ...).</li>
+  <li>The <i>url</i> attribute describes the CATlet class name as well as some
+    customization at startup. For more details about this url syntax, refers to
+    the PortalURI paper.</li>
+  <li>The <i>multiThread</i> attribute tells if the CATlet can support multi
+    threading or not. This attribute can take the value true or false. A false
+    value means that the CATlet will always be instantiated inside the AWT-event
+    thread. This is very useful for Swing CATlets.</li>
+  <li>The <i>mode</i> attribute tells in which mode the CATlet is intended to
+    run: when connected to a server, when running as a nomad or simply in both
+    mode. Given the current mode and this attribute value the CATlet may or may
+    not appear inside the Webtop. The right values for this attribute are BOTH,
+    CONNECTED and NOMADE (all three in uppercases)</li>
+</ul>
+<p>This declaration is called &quot;first-time&quot; declaration because the
+browser CATlet category is initialized from this file only the first time you
+launch the Portal. As this categories can be configured at runtime by each user,
+this list is saved in an other xml file named WebTopConfiguration_user.xml and
+is currently stored on the server (usually in $HOME/CATSetting of the user). A
+backup of this file is stored at each new connection. and is suffixed by
+&quot;.bak&quot;. When the Portal has no server connection, this file is saved
+in the /tmp of the client.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Next"></a>Subsequent Declarations: the WebTopConfiguration_user.xml
+File</h3>
+<p>The next time you launch the Portal, the CATlet list for the browsers will be
+read from the WebTopConfiguration_user.xml file that is currently stored in the
+user's settings directory (usually $HOME/CATSettings on the server)<br>
+Here is an example of such a file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;WebTopConfiguration&gt;
+    &lt;Tab icon=&quot;Resources/IF_W_Search.gif&quot;
+         isShared=&quot;false&quot;
+         mode=&quot;CONNECTED&quot;
+         multiThread=&quot;true&quot;
+         name=&quot;Search Tree&quot;
+         originalSerializedData=&quot;SearchProject.xml&quot;
+         url=&quot;bean://com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet?serializedData=Search_Tree_ddl.xml&quot;
+         visible=&quot;true&quot;&gt;
+    &lt;/Tab&gt;
+
+    &lt;Tab icon=&quot;Resources/IF_Files.gif&quot;
+         isShared=&quot;false&quot;
+         mode=&quot;CONNECTED&quot;
+         multiThread=&quot;true&quot;
+         name=&quot;Remote File Tree&quot;
+         originalSerializedData=&quot;FileTreeProject.xml&quot;
+         url=&quot;bean://com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet?serializedData=FileTreeProject.xml&quot;
+         visible=&quot;true&quot;&gt;
+     &lt;/Tab&gt;
+   &lt;/WebTopConfiguration&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p>This file contains only some of the information described in the
+CATletList.xml file as the other needed information will be taken from this last
+file. Note that the content of this file may evolve in the future. Other
+information than a list of CATlets may be also described in this file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

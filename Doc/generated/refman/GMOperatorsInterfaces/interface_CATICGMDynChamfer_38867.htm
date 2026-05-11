@@ -1,0 +1,165 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMDynChamfer</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMDynChamfer"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMDynChamfer</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMDynChamfer_38867','CATICGMDynChamfer','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMDynChamfer</b>
+</p>
+<p>
+<b><i> Class defining the operator to chamfer edges of a 3D body or a skin body.</i></b><br>
+
+ <br>Several chamfering operations (called ribbons, <tt>CATDynChamferRibbon</tt>) 
+ can be defined in the same operator. 
+ By default, a ribbon is automatically propagated by following the tangential
+ continuity of its support, but this propagation can be switched off.
+<br>
+ The CATICGMDynChamfer operator follows the global frame of the topological operators and satisfies the smart mechanism: the
+ input bodies are not modified. A new resulting body is created, 
+ possibly sharing data with the input bodies.
+<ul>
+ <li>A CATICGMDynChamfer operator is created with the <tt>CATCGMCreateDynChamfer</tt> global function:
+ It must be directly released with the <tt>Release</tt> method after use. It is not streamable. 
+<li>Options can be precised (such as the faces or edges to chamfer) with the <tt>SetXxx</tt> 
+ or <tt>Append</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method. 
+<li>In both cases, the result is accessed with the <tt>GetResult</tt> method. If you do not want 
+ to keep the resulting body, use the <script type="text/javascript"> activateLinkAnchor('CATICGMContainer','Remove','CATICGMContainer.Remove') </script> method to remove it from the  geometric factory.
+</ul>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Append(CATDynChamferRibbon*)"><b>Append</b></a>(CATDynChamferRibbon*)
+<dd>  Appends a ribbon to <tt>this</tt> chamfering operator.
+ <dt> o 
+    <a href="#SetPrevisualizationOnly()"><b>SetPrevisualizationOnly</b></a>()
+<dd>  Asks for the computation of the construction paths of the chamfer, even though the chamfering operation
+ cannot be completely run.
+ <dt> o 
+    <a href="#SetTrueMultiRibbonOnly()"><b>SetTrueMultiRibbonOnly</b></a>()
+<dd>  Defines the type of computation in case of multi ribbons configurations.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Append"></a><a name="Append(CATDynChamferRibbon*)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Append</b>(<td><script type="text/javascript"> activateLink('CATDynChamferRibbon','CATDynChamferRibbon*')</script> <td><tt>iRibbonToAppend</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Appends a ribbon to <tt>this</tt> chamfering operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRibbonToAppend</tt>
+   <dd> The pointer to the ribbon to add to <tt>this</tt> operator.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetPrevisualizationOnly"></a><a name="SetPrevisualizationOnly()"></a> <dt> o <b>SetPrevisualizationOnly</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetPrevisualizationOnly</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Asks for the computation of the construction paths of the chamfer, even though the chamfering operation
+ cannot be completely run.
+ <br>To use in debug purpose, in order to understand the configuration.
+</dl>
+<a name="SetTrueMultiRibbonOnly"></a><a name="SetTrueMultiRibbonOnly()"></a> <dt> o <b>SetTrueMultiRibbonOnly</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTrueMultiRibbonOnly</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the type of computation in case of multi ribbons configurations.
+ By default, the <tt>Run</tt> method compute all the ribbons and then intersect them
+ together. Moreover, if this computation failed, another computation is launched, taken one ribbon 
+ after the other.
+ If called, this method only allows the <tt>Run</tt> method to execute the first step.
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMDynChamfer.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

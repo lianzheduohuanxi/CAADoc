@@ -1,0 +1,204 @@
+var objet=new Array; 
+     objet["class"]=new Array; 
+     objet["exception"]=new Array; 
+     objet["collection"]=new Array; 
+     objet["notification"]=new Array; 
+     objet["interface"]=new Array; 
+     objet["struct"]=new Array; 
+     objet["enum"]=new Array; 
+     objet["define"]=new Array; 
+     objet["typedef"]=new Array; 
+     objet["function"]=new Array; 
+ 	var DSCharacteristic=new Array ; 
+ objet["class"]["ENOVIVaultDocument"]=0;
+objet["class"][0]="../ENOVaultClientCPP/class_ENOVIVaultDocument_29857.htm";
+objet["collection"]["ENOVIVaultDocumentColl"]=0;
+objet["collection"][0]="../ENOVaultClientCPP/class_ENOVIVaultDocumentColl_37600.htm";
+objet["class"]["ENOVIVaultError"]=1;
+objet["class"][1]="../ENOVaultClientCPP/class_ENOVIVaultError_24825.htm";
+objet["class"]["ENOVIVaultReadIterator"]=2;
+objet["class"][2]="../ENOVaultClientCPP/class_ENOVIVaultReadIterator_37749.htm";
+objet["class"]["ENOVIVaultResultSet"]=3;
+objet["class"][3]="../ENOVaultClientCPP/class_ENOVIVaultResultSet_31691.htm";
+objet["class"]["ENOVIVaultSession"]=4;
+objet["class"][4]="../ENOVaultClientCPP/class_ENOVIVaultSession_28185.htm";
+objet["collection"]["ENOVIVaultSessionColl"]=1;
+objet["collection"][1]="../ENOVaultClientCPP/class_ENOVIVaultSessionColl_35534.htm";
+objet["class"]["ENOVIVaultSessionFactory"]=5;
+objet["class"][5]="../ENOVaultClientCPP/class_ENOVIVaultSessionFactory_42944.htm";
+objet["class"]["ENOVIVaultUserSession"]=6;
+objet["class"][6]="../ENOVaultClientCPP/class_ENOVIVaultUserSession_35954.htm";
+objet["collection"]["ENOVIVaultUserSessionColl"]=2;
+objet["collection"][2]="../ENOVaultClientCPP/class_ENOVIVaultUserSessionColl_44879.htm";
+objet["collection"]["SEQUENCE_octetColl"]=3;
+objet["collection"][3]="../ENOVaultClientCPP/class_SEQUENCE_octetColl_28898.htm";
+objet["define"]["S_DATAREMAINING"]=0;
+objet["define"][0]="../ENOVaultClientCPP/define_S_DATAREMAINING_22142.htm";
+objet["define"]["VAULT_E_ALREADYOPENED"]=1;
+objet["define"][1]="../ENOVaultClientCPP/define_VAULT_E_ALREADYOPENED_30166.htm";
+objet["define"]["VAULT_E_CACHED"]=2;
+objet["define"][2]="../ENOVaultClientCPP/define_VAULT_E_CACHED_21055.htm";
+objet["define"]["VAULT_E_CLIENTFILEACCESSDENIED"]=3;
+objet["define"][3]="../ENOVaultClientCPP/define_VAULT_E_CLIENTFILEACCESSDENIED_46188.htm";
+objet["define"]["VAULT_E_CLIENTFILECANTACCESS"]=4;
+objet["define"][4]="../ENOVaultClientCPP/define_VAULT_E_CLIENTFILECANTACCESS_42429.htm";
+objet["define"]["VAULT_E_CLIENTFILECANTCREATEORTRUNCATE"]=5;
+objet["define"][5]="../ENOVaultClientCPP/define_VAULT_E_CLIENTFILECANTCREATEORTRUNCATE_67490.htm";
+objet["define"]["VAULT_E_CLIENTFILENOTFOUND"]=6;
+objet["define"][6]="../ENOVaultClientCPP/define_VAULT_E_CLIENTFILENOTFOUND_39281.htm";
+objet["define"]["VAULT_E_CLOSEFILEFAILED"]=7;
+objet["define"][7]="../ENOVaultClientCPP/define_VAULT_E_CLOSEFILEFAILED_32899.htm";
+objet["define"]["VAULT_E_CORBA_SYS_EXCEPT"]=8;
+objet["define"][8]="../ENOVaultClientCPP/define_VAULT_E_CORBA_SYS_EXCEPT_36403.htm";
+objet["define"]["VAULT_E_CORBA_UNKNOWN_EXCEPT"]=9;
+objet["define"][9]="../ENOVaultClientCPP/define_VAULT_E_CORBA_UNKNOWN_EXCEPT_44307.htm";
+objet["define"]["VAULT_E_DBCOMMITERROR"]=10;
+objet["define"][10]="../ENOVaultClientCPP/define_VAULT_E_DBCOMMITERROR_30759.htm";
+objet["define"]["VAULT_E_DBCONNECTIONERROR"]=11;
+objet["define"][11]="../ENOVaultClientCPP/define_VAULT_E_DBCONNECTIONERROR_37538.htm";
+objet["define"]["VAULT_E_DBDELETEERROR"]=12;
+objet["define"][12]="../ENOVaultClientCPP/define_VAULT_E_DBDELETEERROR_30472.htm";
+objet["define"]["VAULT_E_DBERROR"]=13;
+objet["define"][13]="../ENOVaultClientCPP/define_VAULT_E_DBERROR_22649.htm";
+objet["define"]["VAULT_E_DBINSERTERROR"]=14;
+objet["define"][14]="../ENOVaultClientCPP/define_VAULT_E_DBINSERTERROR_30902.htm";
+objet["define"]["VAULT_E_DBUPDATEERROR"]=15;
+objet["define"][15]="../ENOVaultClientCPP/define_VAULT_E_DBUPDATEERROR_30615.htm";
+objet["define"]["VAULT_E_DELETEDOCUMENTFAILED"]=16;
+objet["define"][16]="../ENOVaultClientCPP/define_VAULT_E_DELETEDOCUMENTFAILED_42341.htm";
+objet["define"]["VAULT_E_ERROR"]=17;
+objet["define"][17]="../ENOVaultClientCPP/define_VAULT_E_ERROR_20723.htm";
+objet["define"]["VAULT_E_INCOMPATIBLEOPENMODE"]=18;
+objet["define"][18]="../ENOVaultClientCPP/define_VAULT_E_INCOMPATIBLEOPENMODE_42714.htm";
+objet["define"]["VAULT_E_INSERTDOCUMENTFAILED"]=19;
+objet["define"][19]="../ENOVaultClientCPP/define_VAULT_E_INSERTDOCUMENTFAILED_42703.htm";
+objet["define"]["VAULT_E_INVALIDMETHODUSE"]=20;
+objet["define"][20]="../ENOVaultClientCPP/define_VAULT_E_INVALIDMETHODUSE_35476.htm";
+objet["define"]["VAULT_E_INVALIDOPENMODE"]=21;
+objet["define"][21]="../ENOVaultClientCPP/define_VAULT_E_INVALIDOPENMODE_33465.htm";
+objet["define"]["VAULT_E_INVALIDPROPERTY"]=22;
+objet["define"][22]="../ENOVaultClientCPP/define_VAULT_E_INVALIDPROPERTY_34402.htm";
+objet["define"]["VAULT_E_INVALIDSTATUS"]=23;
+objet["define"][23]="../ENOVaultClientCPP/define_VAULT_E_INVALIDSTATUS_30915.htm";
+objet["define"]["VAULT_E_INVALIDTRANSACTION"]=24;
+objet["define"][24]="../ENOVaultClientCPP/define_VAULT_E_INVALIDTRANSACTION_39172.htm";
+objet["define"]["VAULT_E_INVALIDUSERSESSION"]=25;
+objet["define"][25]="../ENOVaultClientCPP/define_VAULT_E_INVALIDUSERSESSION_39737.htm";
+objet["define"]["VAULT_E_IOERROR"]=26;
+objet["define"][26]="../ENOVaultClientCPP/define_VAULT_E_IOERROR_22806.htm";
+objet["define"]["VAULT_E_ITEMNOTCLOSE"]=27;
+objet["define"][27]="../ENOVaultClientCPP/define_VAULT_E_ITEMNOTCLOSE_29145.htm";
+objet["define"]["VAULT_E_JDBCDRIVERLOADFAILED"]=28;
+objet["define"][28]="../ENOVaultClientCPP/define_VAULT_E_JDBCDRIVERLOADFAILED_41967.htm";
+objet["define"]["VAULT_E_LASTCALLTOREPETE"]=29;
+objet["define"][29]="../ENOVaultClientCPP/define_VAULT_E_LASTCALLTOREPETE_35518.htm";
+objet["define"]["VAULT_E_MAXDBCONNREACHED"]=30;
+objet["define"][30]="../ENOVaultClientCPP/define_VAULT_E_MAXDBCONNREACHED_34581.htm";
+objet["define"]["VAULT_E_MAX_FILE_SIZE_EXCEEDED"]=31;
+objet["define"][31]="../ENOVaultClientCPP/define_VAULT_E_MAX_FILE_SIZE_EXCEEDED_47513.htm";
+objet["define"]["VAULT_E_MEDIUMFULL"]=32;
+objet["define"][32]="../ENOVaultClientCPP/define_VAULT_E_MEDIUMFULL_26264.htm";
+objet["define"]["VAULT_E_MISSINGPROPERTY"]=33;
+objet["define"][33]="../ENOVaultClientCPP/define_VAULT_E_MISSINGPROPERTY_34628.htm";
+objet["define"]["VAULT_E_MODIFYBYANOTHERTRANSACTION"]=34;
+objet["define"][34]="../ENOVaultClientCPP/define_VAULT_E_MODIFYBYANOTHERTRANSACTION_57345.htm";
+objet["define"]["VAULT_E_MOVEFILEFAILED"]=35;
+objet["define"][35]="../ENOVaultClientCPP/define_VAULT_E_MOVEFILEFAILED_31385.htm";
+objet["define"]["VAULT_E_NOMASTER_REF"]=36;
+objet["define"][36]="../ENOVaultClientCPP/define_VAULT_E_NOMASTER_REF_29350.htm";
+objet["define"]["VAULT_E_NOTRANSACTION"]=37;
+objet["define"][37]="../ENOVaultClientCPP/define_VAULT_E_NOTRANSACTION_30643.htm";
+objet["define"]["VAULT_E_NOUSERSESSION_FOUND"]=38;
+objet["define"][38]="../ENOVaultClientCPP/define_VAULT_E_NOUSERSESSION_FOUND_42173.htm";
+objet["define"]["VAULT_E_NOVAULTDOCUMENT_DELETED"]=39;
+objet["define"][39]="../ENOVaultClientCPP/define_VAULT_E_NOVAULTDOCUMENT_DELETED_49910.htm";
+objet["define"]["VAULT_E_NOVAULTDOCUMENT_FOUND"]=40;
+objet["define"][40]="../ENOVaultClientCPP/define_VAULT_E_NOVAULTDOCUMENT_FOUND_46196.htm";
+objet["define"]["VAULT_E_NOVAULTDOC_FOUND"]=41;
+objet["define"][41]="../ENOVaultClientCPP/define_VAULT_E_NOVAULTDOC_FOUND_35962.htm";
+objet["define"]["VAULT_E_OFFLINE"]=42;
+objet["define"][42]="../ENOVaultClientCPP/define_VAULT_E_OFFLINE_22414.htm";
+objet["define"]["VAULT_E_OPENEDBYANOTHERTRANSACTION"]=43;
+objet["define"][43]="../ENOVaultClientCPP/define_VAULT_E_OPENEDBYANOTHERTRANSACTION_57150.htm";
+objet["define"]["VAULT_E_OPENEFILEFAILED"]=44;
+objet["define"][44]="../ENOVaultClientCPP/define_VAULT_E_OPENEFILEFAILED_32876.htm";
+objet["define"]["VAULT_E_OPENTRANSACTIONFAILED"]=45;
+objet["define"][45]="../ENOVaultClientCPP/define_VAULT_E_OPENTRANSACTIONFAILED_44622.htm";
+objet["define"]["VAULT_E_READFILEFAILED"]=46;
+objet["define"][46]="../ENOVaultClientCPP/define_VAULT_E_READFILEFAILED_31114.htm";
+objet["define"]["VAULT_E_READ_ONLY"]=47;
+objet["define"][47]="../ENOVaultClientCPP/define_VAULT_E_READ_ONLY_25258.htm";
+objet["define"]["VAULT_E_REFVAULTDOCUMENT_MISSINGPARAMETERS"]=48;
+objet["define"][48]="../ENOVaultClientCPP/define_VAULT_E_REFVAULTDOCUMENT_MISSINGPARAMETERS_80766.htm";
+objet["define"]["VAULT_E_REFVAULTDOCUMENT_NOTVALUATED"]=49;
+objet["define"][49]="../ENOVaultClientCPP/define_VAULT_E_REFVAULTDOCUMENT_NOTVALUATED_63119.htm";
+objet["define"]["VAULT_E_SEEKFILEFAILED"]=50;
+objet["define"][50]="../ENOVaultClientCPP/define_VAULT_E_SEEKFILEFAILED_31239.htm";
+objet["define"]["VAULT_E_SERVER_COMM_FAILURE"]=51;
+objet["define"][51]="../ENOVaultClientCPP/define_VAULT_E_SERVER_COMM_FAILURE_41807.htm";
+objet["define"]["VAULT_E_TRANSCOMMITFAILED"]=52;
+objet["define"][52]="../ENOVaultClientCPP/define_VAULT_E_TRANSCOMMITFAILED_36845.htm";
+objet["define"]["VAULT_E_TRANSNOTPREPARED"]=53;
+objet["define"][53]="../ENOVaultClientCPP/define_VAULT_E_TRANSNOTPREPARED_35594.htm";
+objet["define"]["VAULT_E_TRANSPREPARED"]=54;
+objet["define"][54]="../ENOVaultClientCPP/define_VAULT_E_TRANSPREPARED_30429.htm";
+objet["define"]["VAULT_E_TRANSPREPAREFAILED"]=55;
+objet["define"][55]="../ENOVaultClientCPP/define_VAULT_E_TRANSPREPAREFAILED_38544.htm";
+objet["define"]["VAULT_E_TRANSROLLBACKFAILED"]=56;
+objet["define"][56]="../ENOVaultClientCPP/define_VAULT_E_TRANSROLLBACKFAILED_40163.htm";
+objet["define"]["VAULT_E_UNKNOWNVAULTALIASNAME"]=57;
+objet["define"][57]="../ENOVaultClientCPP/define_VAULT_E_UNKNOWNVAULTALIASNAME_45300.htm";
+objet["define"]["VAULT_E_UNKNOWN_METHOD"]=58;
+objet["define"][58]="../ENOVaultClientCPP/define_VAULT_E_UNKNOWN_METHOD_32639.htm";
+objet["define"]["VAULT_E_UPDATEDOCUMENTFAILED"]=59;
+objet["define"][59]="../ENOVaultClientCPP/define_VAULT_E_UPDATEDOCUMENTFAILED_42452.htm";
+objet["define"]["VAULT_E_VAULTDOCUMENTNOTOPEN"]=60;
+objet["define"][60]="../ENOVaultClientCPP/define_VAULT_E_VAULTDOCUMENTNOTOPEN_43899.htm";
+objet["define"]["VAULT_E_VAULTDOCUMENT_ALREADYVALUATED"]=61;
+objet["define"][61]="../ENOVaultClientCPP/define_VAULT_E_VAULTDOCUMENT_ALREADYVALUATED_65063.htm";
+objet["define"]["VAULT_E_VAULTDOCUMENT_MISSNIGPARAMETERS"]=62;
+objet["define"][62]="../ENOVaultClientCPP/define_VAULT_E_VAULTDOCUMENT_MISSNIGPARAMETERS_71608.htm";
+objet["define"]["VAULT_E_VAULTDOCUMENT_NOTVALUATED"]=63;
+objet["define"][63]="../ENOVaultClientCPP/define_VAULT_E_VAULTDOCUMENT_NOTVALUATED_55331.htm";
+objet["define"]["VAULT_E_WRITEFAULT"]=64;
+objet["define"][64]="../ENOVaultClientCPP/define_VAULT_E_WRITEFAULT_26415.htm";
+objet["define"]["VAULT_E_WRITEFILEFAILED"]=65;
+objet["define"][65]="../ENOVaultClientCPP/define_VAULT_E_WRITEFILEFAILED_33064.htm";
+objet["define"]["VAULT_HRESULT"]=66;
+objet["define"][66]="../ENOVaultClientCPP/define_VAULT_HRESULT_20680.htm";
+function getDsCharacteristic(name,itype) { 
+     var dsCh = null; 
+     if (name!=null && itype!=null && itype == "class") { 
+         dsCh = DSCharacteristic[name]; 
+     } 
+     if (dsCh == null) { 
+        dsCh=itype; 
+    }   
+    return dsCh; 
+ } 
+ function locateObject(name,itype,NorP){ 
+ if(name==null || itype==null || NorP==null) return 0; 
+ var type = getDsCharacteristic(name,itype);    
+ var findnum=objet[type][name]; 
+ var findobj;   
+ if(NorP==1 && findnum!=null){ findobj=objet[type][findnum+1];} 
+ else {findobj=objet[type][findnum-1];}       
+ //alert(findobj); 
+ if(findobj!=null){      
+   return 1; 
+ }else{ 
+    return 0; 
+ } 
+ } 
+ function openLinkNP(name,itype,NorP){ 
+ if(name==null || itype==null || NorP==null) return 0; 
+ var type = getDsCharacteristic(name,itype);    
+ var findnum=objet[type][name]; 
+ var findobj;   
+ if(NorP==1 && findnum!=null){ findobj=objet[type][findnum+1];} 
+ else {findobj=objet[type][findnum-1];}       
+ //alert(findobj); 
+ if(findobj!=null){ 
+     this.location=findobj; 
+ } 
+ }

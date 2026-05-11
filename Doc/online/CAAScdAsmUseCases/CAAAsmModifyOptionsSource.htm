@@ -1,0 +1,135 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAAsmModifyOptions.catvbs</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2004</font>
+Language="VBSCRIPT"
+
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Gets and modifies Assembly Design options</font>
+<font color="#008000">'   Assumtions:      </font>
+<font color="#008000">'   Languages:    VBSCRIPT</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15</font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' ----------------------------</font>
+<font color="#008000">' Get the settings controller</font>
+<font color="#008000">' ----------------------------</font>
+
+<font color="#0000FF">Set </font>settingControllers1 = CATIA.SettingControllers
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Assembly / General options</font>
+<font color="#008000">' ------------------------------</font>
+
+<font color="#0000FF">Set </font>asmGeneralSetting = settingControllers1.Item("CATAsmGeneralSettingCtrl")
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Get/Set the options values</font>
+<font color="#008000">' ------------------------------</font>
+
+asmGeneralSetting.AutoUpdateMode = catManualUpdate
+autoUpdt = asmGeneralSetting.AutoUpdateMode
+msgbox "Automatic Update mode = " & autoUpdt
+
+asmGeneralSetting.UpdateStatusMode = catAutomaticCompute
+updtStatus = asmGeneralSetting.UpdateStatusMode
+msgbox "Update Status computation mode = " & updtStatus
+
+asmGeneralSetting.AutoSwitchToDesignMode = catAutoSwitchUnavailable
+autoSwitch = asmGeneralSetting.AutoSwitchToDesignMode
+msgbox "Automatic switch to Design Mode option = " & autoSwitch
+
+asmGeneralSetting.MoveWithFixTExtendMode = catAskIfExtendMoveToFixT
+moveFixT = asmGeneralSetting.MoveWithFixTExtendMode
+msgbox "Move components involved in a Fix Together mode = " & moveFixT
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Lock/Unlock informations</font>
+<font color="#008000">' ------------------------------</font>
+
+asmGeneralSetting.SetAutoUpdateModeLock True
+isModified = asmGeneralSetting.GetAutoUpdateModeInfo (adminlevel, locked)
+msgbox "Automatic Update : administrator level = " & adminlevel & " - lock status = " & locked
+
+asmGeneralSetting.SetUpdateStatusModeLock False
+isModified = asmGeneralSetting.GetUpdateStatusModeInfo (adminlevel, locked)
+msgbox "Update Status computation : administrator level = " & adminlevel & " - lock status = " & locked
+
+asmGeneralSetting.SetAutoSwitchToDesignModeLock True
+isModified = asmGeneralSetting.GetAutoSwitchToDesignModeInfo (adminlevel, locked)
+msgbox "Automatic switch to Design Mode : administrator level = " & adminlevel & " - lock status = " & locked
+
+asmGeneralSetting.SetMoveWithFixTExtendModeLock False
+isModified = asmGeneralSetting.GetMoveWithFixTExtendModeInfo (adminlevel, locked)
+msgbox "Move components involved in a Fix Together : administrator level = " & adminlevel & " - lock status = " & locked
+
+<font color="#008000">' --------------------------------------------</font>
+<font color="#008000">' SaveRepository</font>
+<font color="#008000">' --------------------------------------------</font>
+
+asmGeneralSetting.SaveRepository
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Assembly / Constraint Options</font>
+<font color="#008000">' ------------------------------</font>
+
+<font color="#0000FF">Set </font>asmConstraintSetting = settingControllers1.Item("CATAsmConstraintSettingCtrl")
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Get/Set the options values</font>
+<font color="#008000">' ------------------------------</font>
+
+asmConstraintSetting.PasteComponentMode = catPasteWithCstOnCopyAndCut
+paste = asmConstraintSetting.PasteComponentMode
+msgbox "Component constraints creation after a Paste = " & paste
+
+asmConstraintSetting.ConstraintCreationMode = catUsePublishedGeometryAnyLevel
+pub = asmConstraintSetting.ConstraintCreationMode
+msgbox "Selectable elements to create a constraint = " & pub
+
+asmConstraintSetting.QuickConstraintMode = catVerifiedConstraintFirst
+<font color="#0000FF">Dim </font>newArray(5)
+newArray(0) = "CATAsmPerpendType"
+newArray(1) = "CATAsmSurfContactType"
+newArray(2) = "CATAsmAngleType"
+newArray(3) = "CATAsmDistanceType"
+newArray(4) = "CATAsmCoincidenceType"
+newArray(5) = "CATAsmParallelType"
+asmConstraintSetting.SetQuickConstraintOrderedList newArray
+quick = asmConstraintSetting.QuickConstraintMode
+<font color="#0000FF">Dim </font>array
+array = asmConstraintSetting.GetQuickConstraintOrderedList()
+msgbox "Quick Constraint creation mode = " & quick
+msgbox "ordered list : " & array(0) & " - " & array(1) & " - " & array(2) & " - " & array(3) & " - " & array(4) & " - " & array(5) 
+
+<font color="#008000">' ------------------------------</font>
+<font color="#008000">' Lock/Unlock informations</font>
+<font color="#008000">' ------------------------------</font>
+
+asmConstraintSetting.SetPasteComponentModeLock False
+isModified = asmConstraintSetting.GetPasteComponentModeInfo (adminlevel, locked)
+msgbox "Component constraints creation after a Paste : admin level = " & adminlevel & " - locked = " & locked
+
+asmConstraintSetting.SetConstraintCreationModeLock True
+isModified = asmConstraintSetting.GetConstraintCreationModeInfo (adminlevel, locked)
+msgbox "Selectable elements to create a constraint : admin level = " & adminlevel & " - locked = " & locked
+
+asmConstraintSetting.SetQuickConstraintModeLock True
+isModified = asmConstraintSetting.GetQuickConstraintModeInfo (adminlevel, locked)
+msgbox "Quick Constraint creation : admin level = " & adminlevel & " - locked = " & locked
+
+<font color="#008000">' --------------------------------------------</font>
+<font color="#008000">' SaveRepository, Rollback and ResetToDefault</font>
+<font color="#008000">' --------------------------------------------</font>
+asmConstraintSetting.SaveRepository
+
+<font color="#008000">' -------------</font>
+<font color="#008000">' The End...</font>
+<font color="#008000">' -------------</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

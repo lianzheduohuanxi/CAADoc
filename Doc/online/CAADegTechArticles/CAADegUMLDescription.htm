@@ -1,0 +1,372 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Describing State Dialog Commands Using UML</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Describing State Dialog Commands Using UML</h3>
+      <em>The tools that UML provides to design you state dialog commands</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>State dialog commands can be easily designed using state machines, and
+      described using statechart diagrams expressed using the Unified Modeling
+      Language (UML) as a dialog description tool. This article introduces the
+      sate machines and the graphical formalism of the UML.
+      <ul>
+        <li><a href="#100000"><strong>State Machines</strong></a></li>
+        <li><a href="#200000"><strong>Statechart Diagrams</strong></a>
+          <ul>
+            <li><a href="#210000">Example of the Line Command</a></li>
+            <li><a href="#220000">Graphical Notation Standard</a></li>
+            <li><a href="#230000">Simple and Composite States</a></li>
+          </ul>
+        </li>
+        <li><a href="#300000"><strong>Dialog Agents</strong></a>
+          <ul>
+            <li><a href="#310000">Dialog Agents and Input-Driven Transitions</a></li>
+            <li><a href="#320000">Dialog Agents Enable Straightforward
+              Statechart Diagrams</a></li>
+            <li><a href="#330000">Dialog Agents and Conditions</a></li>
+          </ul>
+        </li>
+        <li><a href="#400000"><strong>An Artificial Interlocutor</strong></a>
+          <ul>
+            <li><a href="#410000">Interacting with the Line Command</a></li>
+            <li><a href="#420000">One-Shot Input</a></li>
+            <li><a href="#430000">Repeated Input</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>State Machines</h3>
+<p>A <em>state machine</em> reacts to events applied to it by external objects,
+according to the Unified Modeling Language (UML) semantics [<a href="#References">1</a>].
+Dialog state commands are modeled as state machines. A state machine describes
+an object's behavior as a graph made of <em>states</em> linked between them
+using incoming and outgoing <em>transitions</em>. A transition is usually
+triggered thanks to an <em>event</em>, and usually checks that a <em>guard
+condition</em> evaluates to true before executing the <em>action</em> associated
+with the state. The transition <em>source state</em> becomes <em>inactive</em>
+and the transition <em>target state</em> becomes <em>active</em>. The <em>initial
+state</em> and the <em>final state</em> are <em>pseudo states</em> between which
+the state machine states range.</p>
+<p>A state machine is divided into <em>steps</em>, and the fundamental
+assumption is that events are processed in sequence. Each event stimulates a <em>run-to-completion</em>
+step. This simplifies transitions in a state machine, since any incoming event
+is processed only after the state machine has reached a stable <em>state
+configuration</em>.</p>
+<p>Transitions can be triggered not only by events, but also by conditions, or
+both. They can be also automatically triggered, or&nbsp; automatically triggered
+with respect to a guard condition.</p>
+<p>A state can be decomposed into substates, and is there called a <em>composite
+state</em>. Two refinement ways are possible: sequential substates, that is
+substates that are linked with transitions in sequence, one being active at a
+given instant, and concurrent substates that are mutually exclusive substates
+that are active at the same time. Each substate can be in turn refined.</p>
+<p>Transitions can be assembled in clusters of transitions named <em>compound</em>
+transitions, or <em>complex</em> transitions by UML notation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Statechart Diagrams</h3>
+<p>A statechart diagram is intended to graphically represent a state machine.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000"></a>Example of the Line Command</h4>
+<p>UML provides a means to describe and graphically represent state machines
+using statechart diagrams, that prove useful when designing dialog state
+commands. Let's take the example of the Line command [<a href="#References">2</a>].
+The Line command, as any state dialog command, could be described as a state
+machine and represented using the UML notation [<a href="#References">3</a>] as
+shown in Fig. 1.</p>
+<table>
+  <tr>
+    <td><img src="images/GettingStartedStateChart.gif" alt="GettingStartedStateChart.gif (9621 bytes)" width="569" height="271"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Fig. 1: The Line Command Statechart Diagram</em></td>
+  </tr>
+</table>
+<p>The state machine progresses from the initial state to the final state. The
+dialog flow starts with the initial state, which is a pseudo state that has no
+incoming transition. The command is never in the initial state that
+automatically skips to the first state. This first state is dedicated to the
+start point input and is shown as a state vertex using a round corner box that
+displays the state name. A prompt linked to the first state can invite the end
+user to indicate this start point. The transition between the first state and
+the second state is triggered as soon as the end user indicates a valid point.
+This happens when the expected event is detected (the mouse left key is
+pressed), and when the guard condition is satisfied. The transition action, that
+is create a temporary point, is executed. A prompt linked to the second state
+can then invite the end user to indicate the end point. The transition to the
+final state is triggered as soon as the end user indicates a valid point. This
+creates the line. The final state is reached, and the command completes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Graphical Notation Standard</h4>
+<p>We use the UML notation [<a href="#References">3</a>]</p>
+<table>
+  <tr>
+    <td><em>State vertices</em></td>
+    <td>Round corner boxes showing the state name</td>
+    <td align="center"><img src="images/SMState.jpg" alt="SMState.jpg (2385 bytes)" width="122" height="42"></td>
+  </tr>
+  <tr>
+    <td><em>Transitions</em></td>
+    <td>Arrows between state vertices</td>
+    <td align="center"><img src="images/SMTransition.jpg" alt="SMTransition.jpg (883 bytes)" width="12" height="54"></td>
+  </tr>
+  <tr>
+    <td><em>Initial state</em></td>
+    <td>A small solid filled circle</td>
+    <td align="center"><img src="images/SMInitialState.jpg" alt="SMInitialState.jpg (905 bytes)" width="21" height="20"></td>
+  </tr>
+  <tr>
+    <td><em>Final state</em></td>
+    <td>A circle surrounding a small solid filled circle</td>
+    <td align="center"><img src="images/SMFinalState.jpg" alt="SMFinalState.jpg (1124 bytes)" width="29" height="27"></td>
+  </tr>
+  <tr>
+    <td><em>Events</em></td>
+    <td>Text</td>
+    <td>left-mouse-down</td>
+  </tr>
+  <tr>
+    <td><em>Guard conditions</em></td>
+    <td>Text between square brackets</td>
+    <td>[point indicated &amp;&amp; point valid]</td>
+  </tr>
+  <tr>
+    <td><em>Actions</em></td>
+    <td>Text beginning with a slash</td>
+    <td>/ create line</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>Simple and Composite States</h4>
+<p>Command input can be a bit more complex than the one of the Line command
+shown above. A composite input can be necessary when an applicative task
+requires at least two input without taking care of the order in which they are
+provided by the user. This is a common situation as illustrated by a Sphere
+creation dialog:
+<ul>
+  <li>&quot;<em>A sphere is created when the user has provided a center <strong>and</strong>
+    a radius</em>&quot;.</li>
+</ul>
+<p>With simple states, the statechart diagram could be as shown in Fig. 2.</p>
+<table>
+  <tr>
+    <td><img src="images/SphereSimpleStatechart.gif" alt="SphereSimpleStatechart.gif (6419 bytes)" width="345" height="322"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Fig. 2: The Sphere Command Statechart Diagram with
+      Simple States</em></td>
+  </tr>
+</table>
+<p>But composite input can be also described thanks to concurrent composite
+states. A composite state is the result of a state decomposed into substates. It
+is said to be concurrent if the decomposition results in substates that are all
+active, or non-concurrent if one only is active. Each substate can in turn be
+refined into its own substates.</p>
+<p>Using a concurrent composite state, the sphere dialog statechart diagram is
+simplified, as shown in Fig. 3. It is made of a single concurrent composite
+state between the initiaml and the final states, that includes two concurrent
+substates. These two substates are active when the state machine transitions
+from the initial state to the concurrent composite state. Each substate is shown
+as a&nbsp; nested statechart diagram, including its own initial state, and its
+own final state. Both final states must have been reached to trigger the
+transition that creates the sphere.</p>
+<table>
+  <tr>
+    <td><img src="images/SphereCompositeState.gif" alt="SphereCompositeState.gif (4147 bytes)" width="566" height="170"></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Fig. 3: The Sphere Command Statechart Diagram with a
+      Concurrent Composite State</em></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Dialog Agents</h3>
+<p>A <em>dialog agent</em> translates a user interaction into a user input. This
+translation is managed by a state machine that is encapsulated by the dialog
+agent. As an example, the indication agent interprets a left button mouse click
+as a 2D-coordinate input.</p>
+<p><img src="images/DialogAgentStateMachine.gif" alt="DialogAgentStateMachine.gif (2555 bytes)" width="398" height="103"></p>
+<p>The dialog agent hides the details of how a user interaction, here a mouse
+click in a 2D viewer, is translated as a user input, that is 2D coordinates.</p>
+<p>The keypoint is that dialog agents strenghtens the MVC model by shifting from
+an <em>event-driven</em> dialog to an <em>input-driven </em>dialog: using a
+indication agent allows a dialog command to read 2D coordinates without taking
+care of how the end user provides them, for example by keying numeric values or
+by clicking the left button of the mouse in a 2D viewer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Dialog Agents and Input-Driven Transitions</h4>
+<p>The new representation highlights event encapsulation by using <em>input-driven</em>
+transitions instead of <em>event-driven</em> transitions.</p>
+<p>An <em>input-driven</em> transition is a kind of condition-driven transition
+which requires a user input. The condition has a validation responsibility
+toward the end user input: the input may be constrained. For example, the
+position should be within the drawing sheet ([position within sheet?]), or
+elsewhere ([position?]).</p>
+<p><img src="images/DialogAgentStateMachine2.gif" alt="DialogAgentStateMachine2.gif (3900 bytes)" width="418" height="202"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Dialog Agents Enable Straightforward Statechart
+Diagrams</h4>
+<p>Using dialog agents simplifies further the Sphere dialog:</p>
+<p><img src="images/DialogAgentStateMachine3.gif" width="592" height="208" alt="DialogAgentStateMachine3.gif (5186 bytes)"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Dialog Agents and Conditions</h4>
+<p>Statechart diagrams representing state dialog commands are often
+input-driven. This characteristic impacts the test of conditions:
+<ul>
+  <li>In a traditional state machine, condition-driven transitions are tested as
+    soon as a state becomes active.</li>
+  <li>In a statechart of a state dialog command, the input-driven transitions
+    are tested only after an end user input. This makes sense because a
+    condition may become true only if new input has been provided.</li>
+</ul>
+<p>Some dialogs contain ambiguous conditions. In this case the transition order
+is crucial: the first transition which matches the user interaction wins while
+the others are not even warned.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>An Artificial Interlocutor</h3>
+<p>A state dialog command embodies a part of the developer's know-how to
+interact with the end user like an alter-ego. This section shows how this
+interactivity takes place.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>Interacting with the Line Command</h4>
+<p>From the user's point of view, the Line dialog follows a step by step
+scenario:</p>
+<p><img src="images/LineCmdStatechart.gif" alt="LineCmdStatechart.gif (9222 bytes)" width="446" height="332"></p>
+<p>In the case of the Line command, the dialog agent to acquire points is
+recycled after the first transition to be reused in the second transition as if
+it were a new one.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>One-Shot Input</h4>
+<p>Once a valid input has been provided, the agent becomes inactive (this is
+shown by the checkmark): the user is no more prompted to provide an input.</p>
+<p><strong>Graphical Representation:</strong> <img src="images/depg0a10.gif" alt="depg0a10.gif (907 bytes)" width="12" height="12">
+The <em>checkmark </em>symbolizes a valid input.</p>
+<p>The one-shot input behavior doesn't make a difference in the Line command
+dialog but it is not the case with the Sphere command dialog:</p>
+<p><img src="images/SphereStatechart.gif" alt="SphereStatechart.gif (5599 bytes)" width="333" height="275"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="430000"></a>Repeated Input</h4>
+<p>A <em>repeater</em> agent is not deactivated by a user input as opposed to a <em>one-shot</em>
+agent (default mode). If we set the radius agent as a repeater in the Sphere
+dialog, the user will be able to modify the radius as long as the center is not
+provided.</p>
+<p><strong>Graphical Representation</strong>: <img src="images/depg0aa2.gif" alt="depg0aa2.gif (917 bytes)" width="12" height="12">
+The repeat mark symbolizes a repeater agent.</p>
+<p>The repeated input behavior for the radius input of the Sphere command dialog
+enables the end user to modify the radius value after it was input, as long as
+the center is not input.</p>
+<p><img src="images/SphereStatechartRepeat.gif" alt="SphereStatechartRepeat.gif (5735 bytes)" width="332" height="274"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A state dialog command is modeled as a state machine and can be graphically
+represented using a statechart diagram expressed using the Unified Modeling
+Language (UML).</p>
+<p>Dialog agents are specific encapsulated state machines that simplifies the
+dialog by replacing several states and event-driven transitions by a composite
+state and a simple input-driven transition. Dialog agents can be valued in one
+shot, or proposed again for input value mùodification. They can also be
+recycled.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><font size="2">Unified Modeling Language - UML Semantics version 1.1</font></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAADegGettingStarted.htm">Getting Started with State Dialog
+      Commands</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td>Unified Modeling Language - UML Notation Guide version 1.1</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

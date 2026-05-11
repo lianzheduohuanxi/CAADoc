@@ -1,0 +1,69 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Create an approbation stamp.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    Const CHAR_HEIGHT = 0.05
+    Const CHAR_WIDTH  = 0.03
+    Const ANCHOR_HEIGHT = -0.9
+    Const ANCHOR_WIDTH  = 0.0
+    Const EPSILON  = 0.5
+
+    <font color="#008000">'Acquire the name of the Responsible</font>
+<font color="#0000FF">    Dim </font>sRespName<font color="#0000FF"> As </font>String
+    sRespName = "John SMITH" 'Default value
+    sRespName = InputBox("What is your name ?", "Responsible name", sRespName)
+<font color="#0000FF">    If </font>sRespName &lt;&gt; "" Then
+
+        <font color="#008000">' Retrieve the AnnotatedViews collection</font>
+<font color="#0000FF">        Dim </font>cAnnotatedViews<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">        Set </font>cAnnotatedViews = CATIA.ActiveDocument.Product.GetTechnologicalObject("AnnotatedViews")
+
+        <font color="#008000">' Create the AnnotatedView</font>
+<font color="#0000FF">        Dim </font>oAnnotatedView<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">        Set </font>oAnnotatedView = cAnnotatedViews.Add
+
+        <font color="#008000">' Retrieve the Marker2Ds collection</font>
+<font color="#0000FF">        Dim </font>cMarker2Ds<font color="#0000FF"> As </font>Marker2Ds
+<font color="#0000FF">        Set </font>cMarker2Ds = oAnnotatedView.Marker2Ds
+  
+        <font color="#008000">' Create the text</font>
+<font color="#0000FF">        Dim </font>dPosition2(1)
+        dPosition2(0) = ANCHOR_WIDTH
+        dPosition2(1) = ANCHOR_HEIGHT
+<font color="#0000FF">        Dim </font>oMarker2DText<font color="#0000FF"> As </font>Marker2D
+<font color="#0000FF">        Dim </font>sText<font color="#0000FF"> As </font>String
+        sText = "ACME, Approved by " & sRespName & ", " & Cstr(Now)
+<font color="#0000FF">        Set </font>oMarker2DText = cMarker2Ds.Add2DText (dPosition2, sText)
+
+        <font color="#008000">' Create the frame</font>
+<font color="#0000FF">        Dim </font>dPosition4(3)
+        dPosition4(0) = ANCHOR_WIDTH  - CHAR_WIDTH*EPSILON
+        dPosition4(1) = ANCHOR_HEIGHT + CHAR_HEIGHT*EPSILON
+        dPosition4(2) = ANCHOR_WIDTH  + CHAR_WIDTH*(Len(sText) +EPSILON)
+        dPosition4(3) = ANCHOR_HEIGHT - CHAR_HEIGHT*(1 + EPSILON)
+<font color="#0000FF">        Dim </font>oMarker2DRectangle<font color="#0000FF"> As </font>Marker2D
+<font color="#0000FF">        Set </font>oMarker2DRectangle = cMarker2Ds.Add2DRectangle(dPosition4, 0)
+
+        <font color="#008000">' Update the view</font>
+        oAnnotatedView.Update
+
+        <font color="#008000">' Apply the view</font>
+        CATIA.ActiveDocument.GetWorkbench("NavigatorWorkbench").View oAnnotatedView
+
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

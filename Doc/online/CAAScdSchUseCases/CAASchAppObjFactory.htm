@@ -1,0 +1,544 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Building a Schematic Reference Component</title>
+ <link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>Schematics Platform Modeler</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Building a Schematic Reference Component</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Learn"></a>This macro shows you how to build a 
+     schematic reference component. Instances of this reference component can 
+     then be placed in design documents.<p>This macro opens the document 
+     CAASCH_Detail01.CATProduct that contains three component symbols. One of 
+     the symbols will be used as the graphical representation of the reference 
+     component to be built. Two connectors will also be added to the reference 
+     component. </p>
+     <p>To illustrate the usage of this reference component, an instance of this 
+     reference will be placed in the design document and a schematic route will 
+     be created connected to the connector in the component instance, which is 
+     inherited from the reference.</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td width="93%"><a name="How"></a>CAASchAppObjFactory is launched in CATIA 
+     [<a href="#References">1</a>]. No open document is needed.<p>Special 
+		environment must be available to successfully run this macro:</p>
+		<ul>
+			<li>Prerequisites:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>RADE must be installed.</li>
+				<li>CAASchPlatformModeler.edu must exist in CAADoc folder.</li>
+			</ol>
+		</blockquote>
+		<ul>
+			<li>Setup:</li>
+		</ul>
+		<blockquote>
+			<ol>
+				<li>Build CAASchAppBase.m and CAASchAppUtilities.m, located in 
+				CAASchPlatformModeler.edu (RADE is required). </li>
+				<li>Copy generated DLLs, CAASchAppBase.dll and 
+				CAASchAppUtilities.m, respectively, to the run-time environment 
+				folder &quot;intel_a\code\bin.&quot;</li>
+				<li>Copy CAASCHEDUApp.CATfct, located CAASchPlatformModeler.edu\CNext\resources\graphic, 
+				to the run-time environment folder &quot;intel_a\resources\graphic.&quot;</li>
+				<li>Copy CAASchPlatformModeler.edu\CNext\code\dictionary\CAASchPlatformModeler.edu.dico 
+				to the run-time environment folder &quot;intel_a\code\dictionary.&quot;</li>
+			</ol>
+		</blockquote>
+		<p>
+     <a href="CAASchAppObjFactorySource.htm">CAASchAppObjFactory.CATScript</a> 
+     is located in the CAAScdSchUseCases module.
+     <a href="macros/CAASchAppObjFactory.CATScript">Execute macro</a> (Windows 
+     only).</td>
+   </tr>
+   <tr>
+     <td width="7%" valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td width="93%"><a name="Step"></a>CAASchAppObjFactory includes the 
+     following steps:<ol>
+       <li><a href="#Prolog">Prolog</a></li>
+       <li><a href="#Create Reference Component">Create a schematic reference 
+       component</a></li>
+       <li><a href="#Add Connectors">Add two connectors to the reference 
+       component</a></li>
+       <li><a href="#Place instance">Place an instance of the reference 
+       component </a></li>
+       <li><a href="#Create Route">Create a schematic route instance</a></li>
+       <li><a href="#Connect">Connect the route instance to the component 
+       instance</a></li>
+     </ol>
+     <h4><a name="Prolog"></a>Prolog</h4>
+     <p>The macro first loads CAASCH_Detail01.CATProduct that contains 3 
+     schematic component symbols.</p>
+     <p>
+     <img border="0" src="images/CAASchAppObjFactory_01.jpg" width="543" height="423"></p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#008000">&nbsp;&nbsp;&nbsp; ' Open the schematic document </font>
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>sFilePath<br>
+&nbsp;&nbsp;&nbsp; sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "online\CAAScdSchUseCases\samples\CAASCH_Detail01.CATProduct")<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Next, the macro acquires the schematic root object from the document. 
+     The schematic root is the top node of the object instance tree in a 
+     schematic document.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objPrdRoot<font color="#0000ff"> As </font>Product<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    Dim </font>objSchRoot<font color="#0000ff"> As </font>SchematicRoot<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchDoc Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Set </font>objPrdRoot = objSchDoc.Product
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject(&quot;SchematicRoot&quot;)<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp; End If</font><br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>From this schematic root object the following factory objects can be 
+     obtained.</p>
+     <ol>
+       <li>Application object factory (in this case the application is 
+       &quot;CAASCHEDU_SamplePID&quot;) creates application objects independent of the 
+       Schematic platform.</li>
+       <li>Schematic base object factory. This factory creates the schematic 
+       extensions and associates them to application objects.</li>
+       <li>Schematic temporary list factory. This factory creates various kinds 
+       of lists that are not persistent. They are only available in the current 
+       session and are not saved in the model.</li>
+     </ol>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objAppObjFact<font color="#0000FF"> As </font>SchAppObjectFactory<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchBaseFact<font color="#0000FF"> As </font>SchBaseFactory<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    Dim </font>objSchTempListFact<font color="#0000FF"> As </font>SchTempListFactory<br>
+         <br>
+
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;    If </font>( Not ( objSchRoot Is Nothing ) )<font color="#0000FF"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">' Get all the necessary factories.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <font color="#008000">'-----------------------------------------------------------------------</font><br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objAppObjFact = objSchRoot.GetApplObjFactFromVirtualType (&quot;CAASCHEDU_SamplePID&quot;)<br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objSchBaseFact = objSchRoot.GetSchBaseFactory
+         <br>
+<font color="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       Set </font>objSchTempListFact = objSchRoot.GetTemporaryListFactory<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Create Reference Component"></a>Creating a schematic reference 
+     component</h4>
+     <p>The macro calls the AppCreateCompRef method to create an application 
+     reference object. In this use case, the &quot;CAASCHEDU_SamplePID&quot; sample 
+     application implements this method to create the appropriate object that 
+     suits its needs. The schematic platform is totally transparent to how the 
+     application does this. </p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">' Ask application to create a component reference</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objAppObjFact.AppCreateCompRef &quot;CAASCHEDUCompressFunc&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objAppCompRef<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>A graphical representation (a symbol) is needed to define a schematic 
+     reference component. The macro searches the model to find an appropriate 
+     one by calling the method GetComponentSymbol. An appropriate symbol is the 
+     one that has not been associated to any schematic component.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Find a unassociated component symbol in the document</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'---------------------------------------------------------------------</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Set </font>objSchSymbol = GetComponentSymbol (objSchRoot)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>Next, after successfully obtaining the application object and the 
+     graphical representation, the marco calls the CreateSchComponent method to 
+     create and to associate a schematic component extension to the application 
+     object. This method is implemented by the Schematic Platform.</p>
+     <p>Note that, a temporary list of object is created to contain the graphic 
+     representation. This list is input (the second argument) to the function 
+     CreateSchComponent.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>( Not ( objSchSymbol Is Nothing ) )<font color="#0000ff"> Then</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              Set </font>objSchListGRR = objSchTempListFact.CreateListOfObjects<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              If </font>( Not ( objSchListGRR Is Nothing ) )<font color="#0000ff"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchListGRR.Append objSchSymbol<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                 Set </font>objSchCompRef = objSchBaseFact.CreateSchComponent ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objAppCompRef, objSchListGRR)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Add Connectors"></a>Add two connectors to the reference 
+     component</h4>
+     <p>To add connectors to the reference component just created, we need a 
+     different interface (&quot;CATIASchCompConnector&quot;) on the reference component 
+     class. Given a different interface handle (on the same reference component) 
+     objAppCompRef, we can obtain the necessary interface handle by using the 
+     GetInterface method. This method is implemented on the schematic root 
+     object class.</p>
+     <p>The following data needs to be defined when creating a connector.</p>
+     <ol>
+       <li>The x-y coordinates of the connector position with respect to the 
+       axis of the symbol.</li>
+       <li>The x-y coordinates of the connector alignment vector with respect to 
+       the axis of the symbol.</li>
+     </ol>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'---------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Add two connectors to the reference component</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'---------------------------------------------------------------------&nbsp;&nbsp;   </font>
+         <br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Dim </font>objSchCntr<font color="#0000ff"> As </font>SchCompConnector<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Dim </font>objSchAppCntr<font color="#0000ff"> As </font>SchAppConnector<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Dim </font>objSchCntrLoc<font color="#0000ff"> As </font>SchCntrLocation<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Set </font>objSchCntr = objSchRoot.Ge<font color="#0000ff">tInt</font>erface (&quot;CATIASchCompConnector&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchCompRef)<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>( Not ( objSchCntr Is Nothing ) )<font color="#0000ff"> Then</font><br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              Dim </font>iCntr<font color="#0000ff"> As </font>Integer<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              Dim </font>db2CntrPos (2)<font color="#0000ff"> As </font>CATSafeArrayVariant<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              Dim </font>db2CntrVec (2)<font color="#0000ff"> As </font>CATSafeArrayVariant<br>
+&nbsp;&nbsp; <br>
+   
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              For </font>iCntr = 1<font color="#0000ff"> To </font>2<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                Set </font>objSchCntrLoc = Nothing<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <font color="#008000">'-------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#008000">' connector position and alignment vector are in coordinates</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#008000">' relative the origin of the reference component graphical</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#008000">' representation (the detail axis).</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <font color="#008000">'-------------------------------------------------------------</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                If </font>( iCntr = 1 )<font color="#0000ff"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPos(0) = 30.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPos(1) = 10.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrVec(0) = 1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrVec(1) = 0.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPos(0) = -30.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrPos(1) = 10.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrVec(0) = -1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2CntrVec(1) = 0.0<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchCntr.AddConnector &quot;Piping_Connector&quot;, objSchSymbol, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Db2CntrPos, objSchAppCntr
+         <br>
+         <br>
+&nbsp;&nbsp;&nbsp; 
+
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Place instance"></a>Place an instance of the schematic 
+     reference component in the current document</h4>
+     <p>To create an instance in a specific document, we need to use the 
+     PlaceInSpace method of the interface CATIASchComponent2. We can obtain this 
+     interface from the schematic reference object through the GetInterface 
+     method.</p>
+     <p>We also need to specify the positioning matrix for the graphical 
+     representation of the component instance. This matrix consists of six real 
+     numbers (double). The first four numbers defines the axes (x-axis and 
+     y-axis) and the last two numbers defines the x-y position of the symbol 
+     instance.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Place an instance of reference just created in an empty space in </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' the design document</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Note that the target document is an input to PlaceInSpace</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' Component instance (to be created below) orientation matrix.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' x-axis = (1.0,0.0)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' y-axis = (0.0,1.0)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">' origin = (100.0,100.0)</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#008000">'-------------------------------------------------------------------</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Dim </font>db6Matrix(6)<font color="#0000ff"> As </font>CATSafeArrayVariant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(0)=1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(1)=0.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(2)=0.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(3)=1.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(4)=100.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db6Matrix(5)=100.0<br>
+&nbsp; <br>
+  
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           Set </font>objSchComp2Ref = objSchRoot.GetInterface ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;CATIASchComponent2&quot;,objAppCompRef)<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           If </font>( Not ( objSchComp2Ref Is Nothing ) )<font color="#0000ff"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchComp2Ref.PlaceInSpace objSchSymbol,db6Matrix, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchDoc,objSchCompInst<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Create Route"></a>Create a schematic route instance</h4>
+     <p>To create a schematic route instance we need to specify the x-y 
+     coordinates of all the points defining the segments of the route path (a 
+     polyline). In this use case, the macro will find a position that matches 
+     one of the connector position in the schematic component instance we have 
+     just created in previous step, and will use that to define the first point 
+     of the route. </p>
+     <p>Given a schematic component instance, we can obtain the 
+     CATIASchCompatible interface from it. This interface can be used to check 
+     whether this component instance can be connected to a specific type of 
+     schematic route. In this use case, the type of the route to be created is 
+     one that includes a &quot;CAASCHEDUConnector&quot; at each of its two ends.</p>
+     <p>IsTargetOKForRoute is called for the checking. It returns a flag 
+     bCompatible and if this flag is TRUE, then the route we are going to create 
+     is compatible with the component instance and can be connected to it. It 
+     also returns a list of compatible connectors of the component instance that 
+     can be used in the next call GetBestCntrForRoute. This call returns a 
+     handle on a connector (of the component instance). The x-y coordinates of 
+     the position of this connector defines the first route points.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            Set </font>objSchCompCompat = objSchRoot.Ge<font color="#0000ff">tInt</font>erface ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;CATIASchCompatible&quot;,objSchCompInst)<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            If </font>( Not ( objSchCompCompat Is Nothing ) And _
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objSchGRRCompInst Is Nothing ) )<font color="#0000ff"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchCompCompat.IsTargetOKForRoute &quot;CAASCHEDUConnector&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchGRRCompInst, objLCntrs, bCompatible<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+               <font color="#008000">'---------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <font color="#008000">'&nbsp; IsTargetOKRoute returns a list of compatible connectors</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <font color="#008000">'&nbsp; on the target component if the component is compatible to</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <font color="#008000">'&nbsp; be connected to the start point of the route.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <font color="#008000">'---------------------------------------------------------------</font><br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Dim </font>objSchGRRInst<font color="#0000ff"> As </font>SchGRR<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Dim </font>objAppCntrCompBest<font color="#0000ff"> As </font>SchAppConnector<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Dim </font>objLDbOut<font color="#0000ff"> As </font>SchListOfDoubles<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Dim </font>db2SelectPt(2)<font color="#0000ff"> As </font>CATSafeArrayVariant<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(0) = 130.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db2SelectPt(1) = 110.0<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               Set </font>objSchGRRInst = objSchRoot.Ge<font color="#0000ff">tInt</font>erface ( _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;CATIASchGRR&quot;,objSchGRRCompInst)<br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               If </font>( Not ( objLCntrs Is Nothing ) And&nbsp; _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Not ( objSchGRRInst Is Nothing ) And bCompatible )<font color="#0000ff"> Then</font><br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <font color="#008000">'------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <font color="#008000">'&nbsp; GetBestCntrForRoute returns a connector from</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <font color="#008000">'&nbsp; the output list that is closest </font>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <font color="#008000">'&nbsp; to a user selection point.</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <font color="#008000">'------------------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchCompCompat.GetBestCntrForRoute db2SelectPt, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchGRRInst, objLCntrs, objLDbOut, objAppCntrCompBest<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <p>The macro calls the AppCreateRoute method to create an application route 
+     instance. In this use case, the P&amp;ID application implements this method to 
+     create the appropriate object that suits its needs. The schematic platform 
+     is totally transparent to how the application does this. </p>
+     <p>Method CreateSchRouteByPoints is called to create and to associate a 
+     schematic route instance to the application object. Note that an array of 
+     doubles specifying the x-y coordinates of the route points is input to the 
+     method. The first two doubles in the array is an output of the previous 
+     call.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray(0) = 0.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray(1) = 0.0<br>
+&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
+                 <font color="#0000ff">&nbsp;Int</font>NbCoord = objLDbOut.Count<br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  If </font>(IntNbCoord &gt; 1)<font color="#0000ff"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray(0) = objLDbOut.Item(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray(1) = objLDbOut.Item(2)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objAppObjFact.AppCreateRoute &quot;CAASCHEDUFuncString&quot;, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objAppRouteRef, strLogLineID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <br>
+         <br>
+
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  If </font>( Not ( objAppCompRef Is Nothing ) )<font color="#0000ff"> Then</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strMessage = strMessage &amp;&nbsp; _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;application reference route created&quot; &amp; vbCr<br>
+         <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objSchBaseFact.CreateSchRouteByPoints objAppRouteRef, _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dbPtArray, objSchRoute&nbsp;
+         <br>
+&nbsp;&nbsp;&nbsp;  
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     <h4><a name="Connect"></a>Connect the route instance to the component 
+     instance</h4>
+     <p>The newly created route instance is connected to the component instance 
+     via their connectors.</p>
+     <table class="code">
+       <tr>
+         <td width="100%">&nbsp;&nbsp;&nbsp;    <font color="#008000">...</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <font color="#008000">'-----------------------------------------------------</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <font color="#008000">' Connect &quot;Connector A&quot; to &quot;Connector B&quot;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         <font color="#008000">'-----------------------------------------------------</font><br>
+<font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                         Set </font>objAppConnection = objAppCntrCompBest.AppConnect _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (objAppCntrRouteBest)<br>
+&nbsp;&nbsp;&nbsp;
+    <font color="#008000">...</font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case shows how to build a schematic component reference with 
+ connectors. In addition, it shows how to create an instance of the reference. A 
+ message logging the status of the critical steps is displayed at the end of the 
+ use case. </p>
+ <p>
+ <img border="0" src="images/CAASchAppObjFactory_02.jpg" width="789" height="374"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p><hr>
+ <!---------------------------------comment----------------------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment----------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

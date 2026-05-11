@@ -1,0 +1,181 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Installing CAA V5 API Products in Batch Mode with UNIX</title>
+ <style type="text/css">
+.auto-style1 {
+	text-align: right;
+}
+</style>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td>
+     <h1>CAA V5 Encyclopedia</h1>
+     </td>
+     <td align="right">
+     <h2><a name="Top"></a>Installing CAA V5 API Products in Batch Mode with 
+     UNIX</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table width="100%">
+ <col valign="top" span="1">
+   <tr>
+     <td>
+     <img alt="Info" src="images/CAAPdiainfo.gif" width="32" height="32"></td>
+     <td>The <code>start</code> batch command lets you install CAA 
+     V5 without the graphical user interface. You can install all CAA Version 5 
+     APIs configurations and products in batch mode.
+     <p>Note that, if your Version 5 software is delivered on more than one 
+     CD-ROM, you must copy all the software to the same directory.</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>To perform a batch installation, change directory to the 
+     CD-ROM mount point and enter the command:<pre>./start</pre>
+     <p>with at least one of the arguments below.</p>
+     <p><code>start [-code &quot;RTInstallDir&quot;] [-u &quot;CAAInstallDir&quot;] [-newdir] 
+     -list|-all|-l &quot;list_to_unload&quot; [-s] [-v] [-h]</code></p>
+     <p>start Command Syntax</p>
+     <table>
+      <col valign="top" span="1">
+       <tr>
+         <td><nobr><code>-code &quot;RTInstallDir&quot;</code></nobr></td>
+         <td>Specifies the directory where you have installed the run time part 
+         of the configurations and products for which you want to install the 
+			APIs. Make sure the directory path is enclosed like this: &quot;install dir&quot; 
+         if the directory name contains spaces. The default installation 
+         directory is:<br>
+         <code>/usr/DassaultSystemes/B28</code></td>
+       </tr>
+       <tr>
+         <td><nobr><code>-u &quot;CAAInstallDir&quot;</code></nobr></td>
+         <td class="auto-style1">Specifies the CAA APIs installation directory, if you wish to 
+         install the CAA APIs in another directory than the one used to install 
+         the run time part of the configurations and products. Make sure the 
+         directory path is enclosed like this: &quot;unload dir&quot; if the directory 
+         name contains spaces. The default unload directory is:<br>
+         <code>/usr/DassaultSystemes/B28</code></td>
+       </tr>
+       <tr>
+         <td><code>-newdir</code></td>
+         <td>Creates the unload directory if it doesn't exist</td>
+       </tr>
+       <tr>
+         <td><code>-list</code></td>
+         <td>Lists the configurations and products on the CD-ROM</td>
+       </tr>
+       <tr>
+         <td><code>-all</code></td>
+         <td>Unloads all the configurations and the products on the CD-ROM</td>
+       </tr>
+       <tr>
+         <td><nobr><code>-l &quot;list_to_unload&quot;</code></nobr></td>
+         <td>Specifies the list of configurations and/or products to unload. You 
+         have to type the list of configurations and/or products, which you can 
+         obtain by running the command using the &quot;list&quot; argument. In the list, 
+         configuration names look like this: ME2.slt, and product names look 
+         like this: KIN.prd. These are the names you must type with a caa2 
+         suffix, such as ME2.slt.caa2 or KIN.prd.caa2. Separate the names using 
+         a blank.<br>
+         The arguments <b><code>-list, -all </code></b>and <b><code>-l 
+         &quot;list_to_unload&quot; </code></b>are mutually exclusive.</td>
+       </tr>
+       <tr>
+         <td><code>-s</code></td>
+         <td>Silent mode</td>
+       </tr>
+       <tr>
+         <td><code>-v</code></td>
+         <td>Verbose mode</td>
+       </tr>
+       <tr>
+         <td><code>-h</code></td>
+         <td>Displays help</td>
+       </tr>
+       <tr>
+         <td></td>
+         <td><b>Reminder</b>: If you run the command without arguments, 
+         the installation will be started using the graphical user interface.</td>
+       </tr>
+       <tr>
+         <td colspan="2" align="center">
+         <img alt="End Task" src="images/CAAPdiaendtask.gif" width="64" height="32"></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <h3>Examples</h3>
+ <p>The following examples install CAA Version 5 APIs in batch mode. </p>
+ <ul>
+   <li>To install the CAA Version 5 APIs of the <code>Conf</code> configuration 
+   and of the <code>Prod</code> product in the same directory than the run time 
+   in verbose mode, type the following command:
+   <pre>start -code &quot;RTInstallDir&quot; -l &quot;Conf.slt.caa2 Prod.prd.caa2&quot; -v</pre>
+   <p>where:</p>
+   <table>
+     <tr>
+       <td><code>RTInstallDir</code></td>
+       <td>The directory where you have installed the run time part of the <code>
+       Conf</code> configuration and the <code>Prod</code> product</td>
+     </tr>
+     <tr>
+       <td><code>Conf.slt.caa2</code></td>
+       <td>The CAA V5 APIs of the <code>Conf</code> configuration</td>
+     </tr>
+     <tr>
+       <td><code>Prod.prd.caa2</code></td>
+       <td>The CAA V5 APIs of the <code>Prod</code> product</td>
+     </tr>
+   </table>
+   <p>&nbsp;</li>
+   <li>To install the CAA Version 5 APIs of the <code>Conf </code>configuration 
+   and the <code>Prod</code> product in another directory than the run time in 
+   verbose mode, type the following command:
+   <pre>start -code &quot;RTInstallDir&quot; -u &quot;CAAInstallDir&quot; -newdir -l &quot;Conf.slt.caa2 Prod.prd.caa2&quot; -v</pre>
+   <p>where:</p>
+   <table>
+     <tr>
+       <td><code>RTInstallDir</code></td>
+       <td>The directory where you have installed the run time part of the <code>
+       Conf</code> configuration and the <code>Prod</code> product</td>
+     </tr>
+     <tr>
+       <td><code>CAAInstallDir</code></td>
+       <td>The directory where you want to install the CAA V5 APIs of the <code>
+       Conf</code> configuration and the <code>Prod</code> product</td>
+     </tr>
+     <tr>
+       <td><code>Conf.slt.caa2</code></td>
+       <td>The CAA V5 APIs of the <code>Conf</code> configuration</td>
+     </tr>
+     <tr>
+       <td><code>Prod.prd.caa2</code></td>
+       <td>The CAA V5 APIs of the <code>Prod</code> product</td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright &#169; 1999-2017, Dassault Syst&#232;mes. All rights reserved.</i><br>
+Special Notices 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesCATIA.htm">CAA V5 CATIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesDELMIA.htm">CAA V5 DELMIA</a> | 
+<a href="../CAADocQuickRefs/CAADocSpecialNoticesENOVIA.htm">CAA V5 ENOVIA</a></p>
+
+ </body>
+
+</html>

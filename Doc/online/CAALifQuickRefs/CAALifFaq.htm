@@ -1,0 +1,150 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Frequently Asked Questions</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Frequently Asked Questions</h3>
+     <em></em></td>
+   </tr>
+   <tr>
+     <td class="quick"><b>Quick Reference</b></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>Here is a quick-access list of all the FAQs we have received from CAA 
+     partners as well as DS internal developers. The questions are sorted by 
+     area of interest. In answers, links to the relevant documents or use cases 
+     are provided for a more detailed information.</p>
+     <p>They deal with the Knowledge modeler, that is, the KnowledgeInterfaces 
+     frameworks.</p>
+     <p><b>Retrieving Factories and Dictionaries</b><br>
+     <a href="#retrieveFunctionFactory">How do I get a handler on the function 
+     factory (CATICkeFunctionFactory)?</a><br>
+     <a href="#retrieveParameterFactory">How do I get a handler on the parameter 
+     factory (CATICkeParmFactory)?</a><br>
+     <a href="#retrieveParameterDictionary">How do I get a handler on the 
+     parameter dictionary (CATIParmDictionary)?</a></p>
+     <p><b>Relations</b><br>
+     <a href="#createVolatileFormulas">How do I create volatile formulas?</a><br>
+     <a href="#formulasUpdate">How do I indicate that a relation must be updated 
+     along with the Part?</a></p>
+     <p><b>Parameters</b><br>
+     <a href="#retrieveUnits">How do I retrieve the current unit of a parameter?</a><br>
+     <a href="#paramInstanciation">When parameters are put on reference objects 
+     what happens if I instantiate the reference?</a><br>
+     <a href="#notification">How do I retrieve the parameter that emits a 
+     'Change Value Notification'?</a></p>
+     <p><b>Compilation</b><br>
+     <a href="#comperror">I have a compilation error in CATCkeBoolean.h</a></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h1>Retrieving Factories and Dictionaries</h1>
+ <p><a name="retrieveFunctionFactory"></a><b>How do I get a handler on the 
+ function factory (CATICkeFunctionFactory)?</b> </p>
+ <p>Use the static method <code>CATCkeGlobalFunctions::GetFunctionFactory</code>.<br>
+ </p>
+ <p><a name="retrieveParameterFactory"></a><b>How do I get a handler on the 
+ parameter factory (CATICkeParmFactory)?</b> </p>
+ <p>A pointer to the parameter factory interface can be retrieved from a feature 
+ container using <code>QueryInterface</code>.</p>
+ <p><a name="retrieveParameterDictionary"></a><b>How do I get a handler on the 
+ parameter dictionary (CATIParmDictionary)?</b> </p>
+ <p>Use the static method <code>CATCkeGlobalFunctions::GetParmDictionary</code>.</p>
+ <!---------------------------------comment------------------------------------->
+ <h1><a name="Relation"></a>Relations</h1>
+ <p><a name="createVolatileFormulas"></a><b>How do I create volatile formulas?</b>
+ </p>
+ <p>It is impossible to create volatile formulas with the current state of the 
+ CAA API.</p>
+ <p><a name="formulasUpdate"></a><b>How do I indicate that a relation must be 
+ updated along with the Part?</b></p>
+ <p>Use the <code>IntegrateToUpdate</code> of the <i>CATICkeRelationExp</i> 
+ interface.</p>
+ <!---------------------------------comment------------------------------------->
+ <h1>Parameters</h1>
+ <p><a name="retrieveUnits"></a><b>How do I retrieve the current unit of a 
+ parameter?</b> </p>
+ <p>First retrieve the type of the parameter, and then use <code>QueryInterface</code> 
+ on the type for finding the magnitude.</p>
+ <pre>//spPp1 is a smart pointer to the parameter.
+CATICkeType_var spType = spPp1-&gt;Type();
+if(spType != NULL_var )
+{
+  cout &lt;&lt; &quot; Type name is (CATICkeType::Name(): &quot; &lt;&lt; spType-&gt;Name().CastToCharPtr() &lt;&lt; endl;
+  HRESULT rc = spType -&gt; QueryInterface(IID_CATICkeMagnitude, (void**) &amp;piMagnitude);
+  if (SUCCEEDED(rc)) 
+  {	  
+    cout &lt;&lt; &quot; Magnitude name is (CATICkeMagnitude::Name): &quot; &lt;&lt; piMagnitude-&gt;Name().CastToCharPtr() &lt;&lt; endl;
+  }
+  CATICkeUnit_var  unit = magn-&gt;CurrentUnit();
+}</pre>
+ <p><a name="paramInstanciation"></a><b>When parameters are put on reference 
+ objects what happens if I instantiate the reference?</b> </p>
+ <p>If this object is instantiated the parameters of the instance are the 
+ parameters of the reference object. </p>
+ <p><a name="notification"></a><b>How do I retrieve the parameter that emits a 
+ 'Change Value Notification'?</b> </p>
+ <p>The second argument of the method triggered as callback when the parameter 
+ emits a &quot;change value notification&quot; is the parameter itself.</p>
+ <pre>void CAALifMyFeatureEventsExt::OnChangeValueEvent
+             (CATCallbackEvent iEvent,
+                         void* iFrom,
+              CATNotification* iNotification,
+              CATSubscriberData iInfo,
+              CATCallback iCallback)
+{
+  //Retrieve the parameter that sent the event.
+  CATBaseUnknown* cbup = (CATBaseUnknown*)iFrom;
+  CATICkeParm_var spToParameter = cbup;
+}</pre>
+ <!---------------------------------comment------------------------------------->
+ <h1>Compilation</h1>
+ <p><b><a name="comperror"></a>I have a compilation error in CATCkeBoolean.h</b>
+ </p>
+ <p>This problem can occur on UNIX platform due to a conflict with MOTIF 
+ headers. The correct way to handle this is to include the following code before 
+ all other includes in the file producing the error.</p>
+ <pre>#define CATCkeDefs_h
+#include &quot;CATCke.h&quot;</pre>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Dec 2001]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

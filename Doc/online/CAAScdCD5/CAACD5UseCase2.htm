@@ -1,0 +1,316 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>ENOVIA V6 Integration</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>ENOVIA V6 Integration</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Saving Documents into ENOVIA V6</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>The following Use Cases show how to use CD5 Automation Objects to perform Save operations from CATIA V5 to ENOVIA V6.</p>
+      <!----------------------------------comment------------------------------------->
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>The basic object for Save Operation is CD5SaveOperation, which is created from the CD5EngineV6R2014x object and can target the active document as well as the whole session.</p>
+      <p>It will be possible to customize the CD5SaveOperation to globally modify its behavior: manage not saved documents, save into ENOVIA folders, retain Lock / create a new Version for all the items in the scope of the operation.</p>
+      <p>It will also be possible to customize it at item level: rename an embedded component, target a specific/next revision, include/exclude from the operation.</p>
+      <p>Finally, it will be possible to run the operation silently or to open the advanced save panel as per the customization done so far and let the user validate it manually.</p>
+      <!----------------------------------comment------------------------------------->
+      <p><u>Prerequisites:</u></p>
+	  <p>Some documents are loaded in CATIA session.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This use case will first describe the preliminary steps:</p>
+      <ul>
+        <li><a href="#Pre1">Retrieve CD5EngineV6R2014x object</a></li>
+        <li><a href="#Pre2">Connect to ENOVIA V6</a></li>
+        <li><a href="#Pre3">Create basic object for Save Operation</a></li>
+      </ul>
+		
+      <p>It will then go through following capabilities:</p>
+      <ol>
+        <li><a href="#Step1">Perform a Quick Save (provided the documents are saved on disk)</a></li>
+        <li><a href="#Step2">Manage non saved documents</a></li>
+        <li><a href="#Step3">Configure Retain Lock</a></li>
+        <li><a href="#Step4">Configure Create/Override Version</a></li>
+        <li><a href="#Step5">Define target revisions</a></li>
+        <li><a href="#Step6">Rename embedded components</a></li>
+        <li><a href="#Step7">Include/Exclude an item from the operation</a></li>
+        <li><a href="#Step8">Generate Custom Derived Outputs</a></li>
+        <li><a href="#Step9">Present a pre-filled Advanced Save dialog</a></li>
+      </ol>
+      <h4><a name="Pre1"></a>Retrieve CD5EngineV6R2014x object</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Get CD5Engine</font>
+    <font color=#0000ff>Dim </font>CD5Engine<font color=#0000ff> As </font>CD5EngineV6R2014x
+    <font color=#0000ff>Set </font>CD5Engine = CATIA.GetItem("CD5EngineV6R2014x")
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The entry point of the ENOVIA V6 Integration is the "ENOVIA V6 Integration Engine".
+      <br>This object is retrieved using the GetItem method of CATIA object.</p>
+      <h4><a name="Pre2"></a>Connect to ENOVIA V6</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Connect to ENOVIA V6 (if not already connected)</font>
+    <font color=#0000ff>Dim </font>IsAlreadyConnected<font color=#0000ff> As </font>Boolean
+    IsAlreadyConnected = CD5Engine.IsConnected
+    <font color=#0000ff>If </font>( Not IsAlreadyConnected )<font color=#0000ff> Then</font>
+        <font color=#008000>' Connect with login, password, security context</font>
+        CD5Engine.Connect "MyUser","MyPassword","VPLMLeader.Company Name.Standard"
+    <font color=#0000ff>End If</font>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>ENOVIA V6 Integration supports the connection without specifying a security context. In this case the default one is used.
+	  <br>Here we first check if CATIA is already connected to ENOVIA V6. If this is not the case then we perform the connection.</p>
+      <h4><a name="Pre3"></a>Create basic object for Save Operation</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Create a Save Operation object on the whole CATIA session</font>
+    <font color=#0000ff>Dim</font> oCD5SaveOperation<font color=#0000ff> As </font>CD5SaveOperation
+    <font color=#0000ff>Set</font> oCD5SaveOperation = CD5Engine.CreateSaveOperation(CD5SaveOperation_Session)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>It is also possible to target the active document only (CD5SaveOperation_ActiveDocument) or its window (CD5SaveOperation_CurrentEditor).</p>
+      <h4><a name="Step1"></a>Perform a Quick Save (provided the documents are saved on disk)</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Run the Save Operation with default options (Quick Save)</font>
+    oCD5SaveOperation.Run()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This is equivalent to menu item ENOVIA V6 -> Save.</p>
+      <h4><a name="Step2"></a>Manage non saved documents</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Authorize the Save Operation object to Save documents on Disk</font>
+    oCD5SaveOperation.AllowDiskSave = True
+	
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This way it is not a prerequisite to save documents on disk before performing the Save.</p>
+      <h4><a name="Step3"></a>Configure Retain Lock</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Retain Lock on all the items</font>
+    oCD5SaveOperation.RetainLock = True
+	
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <h4><a name="Step4"></a>Configure Create/Override Version</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Create new version on all items in the scope of the Save Operation</font>
+    oCD5SaveOperation.CreateVersion = True
+	
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>NB: To override versions, this property should be set to False.</p>  
+      <h4><a name="Step5"></a>Define target revisions</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Get the list of items targeted by the Save Operation</font>
+    <font color=#0000ff>Dim</font> oCD5SaveItems <font color=#0000ff>As</font> CD5SaveItems
+    <font color=#0000ff>Set</font> oCD5SaveItems = oCD5SaveOperation.Items
+	
+    <font color=#008000>' Get the first item</font>
+    <font color=#0000ff>Dim</font> oFirstItem <font color=#0000ff>As</font> CD5SaveItem
+    <font color=#0000ff>Set</font> oFirstItem = oCD5SaveItems.Item(1)
+	
+    <font color=#008000>' case 1: target a custom revision</font>
+    oFirstItem.Revision = "H"
+	
+    <font color=#008000>' case 2: target next revision</font>
+    oFirstItem.Revision = oFirstItem.NextRevision
+
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()	
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The target revision can be customized or set to the next revision.</p>
+      <h4><a name="Step6"></a>Rename embedded components</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Get the available Autoname Series from the Engine</font>
+    <font color=#0000ff>Dim</font> myANSeries <font color=#0000ff>As</font> CATBSTR
+    myANSeries = CD5Engine.GetAutonameSeries("CATIA Embedded Component")(0)
+
+    <font color=#008000>' Get the list of items targeted by the Save Operation</font>
+    <font color=#0000ff>Dim</font> oCD5SaveItems <font color=#0000ff>As</font> CD5SaveItems
+    <font color=#0000ff>Set</font> oCD5SaveItems = oCD5SaveOperation.Items
+
+    <font color=#008000>' Loop on all items</font>
+    <font color=#0000ff>For</font> i=1 <font color=#0000ff>To</font> oCD5SaveItems.Count
+
+        <font color=#008000>' Get the item at position i</font>
+        <font color=#0000ff>Dim</font> oCurrentItem <font color=#0000ff>As</font> CD5SaveItem
+        <font color=#0000ff>Set</font> oCurrentItem = oCD5SaveItems.Item(i)
+
+        <font color=#008000>' Rename it if it is an embedded component</font>
+        <font color=#0000ff>If</font> ( (oCurrentItem.Type = "CATIA Embedded Component") <font color=#0000ff>And</font> (oCurrentItem.Status = CD5SaveItem_ECNameNotUnique) ) <font color=#0000ff>Then</font>
+            oCurrentItem.ObjectName = oCD5Engine.GenerateAutoname(myANSeries,1)(0)
+        <font color=#0000ff>End If</font>
+
+    <font color=#0000ff>Next</font>
+
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()	
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>It is also possible to enter a custom string for oCurrentItem.ObjectName.</p>  
+      <h4><a name="Step7"></a>Include/Exclude an item from the operation</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Get the list of items targeted by the Save Operation</font>
+    <font color=#0000ff>Dim</font> oCD5SaveItems <font color=#0000ff>As</font> CD5SaveItems
+    <font color=#0000ff>Set</font> oCD5SaveItems = oCD5SaveOperation.Items
+	
+    <font color=#008000>' Get the second item</font>
+    <font color=#0000ff>Dim</font> oSecondItem <font color=#0000ff>As</font> CD5SaveItem
+    <font color=#0000ff>Set</font> oSecondItem = oCD5SaveItems.Item(2)
+	
+    <font color=#008000>' Exclude item from the Save Operation</font>
+    oSecondItem.Included = False
+	
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()	
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>To include an item into the Save operation, this property should be set to True.</p>
+      <h4><a name="Step8"></a>Generate Custom Derived Outputs</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Get the list of items targeted by the Save Operation</font>
+    <font color=#0000ff>Dim</font> oCD5SaveItems <font color=#0000ff>As</font> CD5SaveItems
+    <font color=#0000ff>Set</font> oCD5SaveItems = oCD5SaveOperation.Items
+	
+    <font color=#008000>' Get the first item</font>
+    <font color=#0000ff>Dim</font> oFirstItem <font color=#0000ff>As</font> CD5SaveItem
+    <font color=#0000ff>Set</font> oFirstItem = oCD5SaveItems.Item(1)
+		
+    <font color=#008000>' Get the list of all possible derived outputs for this item</font>
+    <font color=#0000ff>Dim</font> oPossibleDerivedOutputs <font color=#0000ff>As</font> CATSafeArrayVariant
+    oPossibleDerivedOutputs = oFirstItem.PossibleDerivedOutputs
+
+    <font color=#008000>' Generate all possible derived outputs for this item</font>
+    oFirstItem.DerivedOutputs = oPossibleDerivedOutputs
+	
+    <font color=#008000>' Run the Save Operation</font>
+    oCD5SaveOperation.Run()	
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>It is also possible to enter a custom string for oCurrentItem.ObjectName.</p>  
+      <h4><a name="Step9"></a>Present a pre-filled Advanced Save dialog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color=#008000>' Open Advanced Save Panel as per all the customizations performed so far on the Save Operation</font>
+    oCD5SaveOperation.ShowPanel()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>This will replace the oCD5SaveOperation.Run() call as the Save Operation itself will be performed once the user has validated the Save panel with OK button.</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use ENOVIA V6 Integration Save functionality.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

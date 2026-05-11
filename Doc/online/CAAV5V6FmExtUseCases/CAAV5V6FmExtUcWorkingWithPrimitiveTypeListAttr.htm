@@ -1,0 +1,1180 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working with a List of Primitive Types Attribute</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+
+.style11 {
+	list-style-type: circle;
+}
+
+.style14 {
+
+}
+
+.style15 {
+	font-family: "Courier New", Courier;
+	font-size: 9pt;
+	color: #976970;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with a List of Primitive Type Attribute</h3>
+      <p><em>How to work with the list of Primitive types of attributes</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtPrimitiveTypeListAttrMgt</code> 
+		use case. It illustrates working with a list of primitive type 
+		attributes. Before you proceed please read the article [<a href="#References">1</a>] 
+		for a basic understanding of the feature attributes.&nbsp; </p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtPrimitiveTypeListAttrMgt Use Case</a>
+			<ul>
+				<li><a href="#What">What Does 
+				CAAV5V6FmExtPrimitiveTypeListAttrMgt Do</a></li>
+				<li><a href="#How">How to Launch 
+				CAAV5V6FmExtPrimitiveTypeListAttrMgt</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtPrimitiveTypeListAttrMgt Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The user learns working with a list of primitive types attribute. We 
+consider an integer and string, as our primitive types for our current study. 
+The key learning are:</p>
+<ul>
+	<li>A list attribute is either locally valuated (valuation mode immediate) 
+	or inherits its value (valuation mode inherited) from its reference</li>
+	<li>When a list attribute is not set or is explicitly unset, the call to 
+	retrieve its value returns S_FALSE (and not FAILURE)</li>
+	<li>A locally assigned value may be overridden by an inherited value, simply 
+	by a call to RestoreInheritance()</li>
+	<li>Illustrates append, insert, remove, swap, move, overwrite and locate a value in 
+	a list</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtPrimitiveTypeListAttrMgt Use Case</h2>
+<p> <code>CAAV5V6FmExtPrimitiveTypeListAttrMgt</code> is a use case of the 
+<code>CAAV5V6FeatureModelerExt.edu</code> framework that 
+illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAV5V6FmExtPrimitiveTypeListAttrMgt Do</h3>
+<p>The UC illustrates working with list of primitive type attributes. For this 
+purpose, it refers to a feature &quot;CAAFmExtLists&quot;. The StartUp exists in the 
+CAAFmExtElementCatalog and its definition follows:&nbsp;</p>
+<table>
+	<tr>
+		<td><pre class="code">document `CAAFmExtElementCatalog.CATfct` {
+	container RootCont #root {
+	  <strong>feature CAAFmExtLists</strong> #startup {
+            <strong>   int MyListOfInteger #list
+               string MyListOfString #list </strong>
+               <strong>MyListOfString = ["firststring","secondstring","thirdstring"]</strong>
+ ...</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The feature is characterized two attributes &quot;MyListOfIneger&quot;, a list of 
+integer and &quot;MyListOfString&quot;, a list of strings. The &quot;MyListOfString&quot; attribute 
+is explicitly assigned the default values, while the &quot;MyListOfInteger&quot; attribute 
+is not explicitly set. We have dedicated UCs which deal with the subject of 
+Modeling a StartUp [<a href="#References">2</a>].</p>
+<p>To begin with, we instantiate the &quot;CAAFmExtLists&quot; StartUp. The steps of the 
+execution follow (In bold, we highlight the objective)</p>
+<p><strong>Working with Feature Attribute &quot;MyListOfInteger&quot; of type &quot;List Of 
+Integer&quot;</strong></p>
+<ul>
+	<li>&nbsp;Retrieves the attribute valuation mode. This is the state 
+	immediately after feature instantiation. It is an inherited valuation and 
+	attribute type is int</li>
+	<li>&nbsp;Retrieves the attribute value. The call returns S_FALSE, since the 
+	attribute value not explicitly set. Moreover the size of list is 0</li>
+	<li>&nbsp;Append a value (7) to the empty list. The valuation mode is 
+	immediate (local). Its the same for the steps that follow, unless otherwise 
+	specified</li>
+	<li>&nbsp;Creates a standalone list. Populate it with a single value (5). 
+	Assign our attribute value with this newly created list</li>
+	<li>&nbsp;Insert an integer (4) at the beginning of the list. The list 
+	contents are (4,5)</li>
+	<li>&nbsp;Insert an integer (3) at an intermediate position of the list. The 
+	list contents are now (4,3,5)</li>
+	<li>&nbsp;Insert an integer (2) at the end of the list. &nbsp;The list contents are now (4,3,5,2)</li>
+	<li>&nbsp;Remove a value at the index position 3 of the list. The list 
+	contents are (4,3,2)</li>
+	<li>&nbsp;Swap values at index position 1 and 3 of the list. The list 
+	contents are (2,3,4)</li>
+	<li>&nbsp;Move value at index 1 to 3. The list is updated to (3,4,2)</li>
+	<li>&nbsp;Overwrite the value at index 3 with value 6. The list is now 
+	(3,4,6)</li>
+	<li>&nbsp;Locate value 4 in the list. It outputs index 2</li>
+	<li>&nbsp;Insert value 4 now at the beginning of the list. The list contents 
+	become (4,3,4,6)</li>
+	<li>&nbsp;Locate the value 4 in the list. This time it outputs 1, the lower 
+	of the two indices 1 and 3, at which the value 4 occurs in the list</li>
+	<li>&nbsp;Unset the attribute. It results in an empty list. It is 
+	significant to note that the call to retrieve the attribute value returns 
+	S_FALSE. It is also of significance to note that the valuation mode is 
+	Immediate, implying unsetting an attribute is considered as a kind of local 
+	valuation<br>
+	</li>
+</ul>
+<p><strong>Working with Feature Attribute &quot;MyListOfString&quot; of type &quot;List Of 
+String&quot;</strong></p>
+<ul>
+	<li>Retrieves the attribute valuation mode.&nbsp; It is the state 
+	immediately after feature instantiation. It is an inherited valuation and 
+	attribute type is string.&nbsp; The list contents are {firststring, 
+	secondstring, thirdstring}, the default values inherited from the StartUp 
+	OSM</li>
+	<li>Sets the list attribute with an empty list. To accomplish this it 
+	initially creates a standalone empty list and then assigns it to our feature 
+	attribute</li>
+	<li>The valuation mode is Immediate. It is the same for the steps that 
+	follow, unless otherwise specified</li>
+	<li>Of course the list is empty. Though it is significant to note that the 
+	call to retrieve the attribute value returns S_OK, inspite of the list being 
+	empty, since the attribute was explicitly set</li>
+	<li>Append the string &quot;MyString&quot; to our empty list.</li>
+	<li>Restore inheritance of our attribute value. This overrides our locally 
+	defined value (a list with a single element &quot;MyString&quot;) with that inherited 
+	from the StartUp. The list contents now are {firststring, secondstring, 
+	thirdstring}, the default values inherited from the StartUp OSM</li>
+	<li>Unset the list attribute. It results in an empty list. It is significant to note that the call to retrieve the attribute value 
+	returns S_FALSE. It is also of significance to note that the valuation mode is 
+	Immediate, implying unsetting an attribute is considered as a kind of local 
+	valuation</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtPrimitiveTypeListAttrMgt </h3>
+<p>To launch <code>CAAV5V6FmExtPrimitiveTypeListAttrMgt</code>, you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtPrimitiveTypeListAttrMgt </code>along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<p>mkrun -c &quot;<code>CAAV5V6FmExtPrimitiveTypeListAttrMgt</code><i> DocumentStorageName.CATPart
+</i>&quot;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtPrimitiveTypeListAttrMgt Code</h3>
+<p><code>CAAV5V6FmExtPrimitiveTypeListAttrMgt</code> code is located in the
+<span class="style1"><code>CAAV5V6FmExtPrimitiveTypeListAttrMgt.m</code></span> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\</code><span class="style1"><code>CCAAV5V6FmExtPrimitiveTypeListAttrMgt.m</code></span></p>
+<p>where <code>InstallRootDirectory</code> 
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<span class="style1"><code>CCAAV5V6FmExtPrimitiveTypeListAttrMgt.cpp</code></span>.
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>In addition, the UC also refers to the Catalogs <code>
+CAAFmExtElementCatalog.CATfct</code>. The Catalogs are provided at the 
+location</p>
+<p> <code>
+InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CNext\resources\graphic</code></p>
+<p>and by running the mkrtv tool, user copies it to the WS RTV.</p>
+<p>In addition we have also provided the OSM files corresponding to this 
+catalog at the location below, just in case you would like to generate the
+<code>CATfct</code> with the <code>
+CATfctEditorAssistant</code> tool [<a href="#References">3</a>]</p>
+<p><code>InstallRootDirectory\CAADoc\CAAV5V6FeatureModelerExt.edu\InputData</code></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The logical steps in <code>CAAFmExtPrimitiveTypeAttrListMgt</code>:</p>
+<ul >
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#The ConfirmAttrInfo() routine">The ConfirmAttrInfo() routine</a></li>
+	<li><a href="#DisplayListValue routine">The DisplayListValues() routine</a></li>
+	<li><a href="#Initializing the local variable">Initializing the Local Variables</a></li>
+	<li><a href="#Instantiating the feature">Instantiating a &quot;CAAFmExtLists&quot; feature</a></li>
+	<li><a href="#Working with a feature attr of type list of int">Working with a Feature Attribute of type &quot;List Of Integer&quot;</a><ul >
+		<li><a href="#Feat attr info on instantiation">Feature Attribute Information on Instantiation</a></li>
+		<li><a href="#Appending a value to an empty list">Appending a Value to an Empty List</a></li>
+		<li><a href="#Valuating a list with an empty list">Valuating a List with another List</a></li>
+		<li><a href="#Insert an element at the beginning">Insert an element at the beginning of a List</a></li>
+		<li><a href="#Insert an element at an intermediate position">Insert an element at an intermediate position of a List</a></li>
+		<li><a href="#Insert an element at the end of the list">Insert an element at the end of the List</a></li>
+		<li><a href="#Remove a value at an index position">Remove a Value at an index position in a List 
+		</a></li>
+		<li><a href="#Swap values in a list">Swap values in a List</a></li>
+		<li><a href="#Move a value in a list to a new position">Move a Value in a List to a New Position</a></li>
+		<li><a href="#Overwrite a value at an index position in a list">Overwrite a Value at an index position in a List</a></li>
+		<li><a href="#Locate a value in a list">Locate a Value in a List</a></li>
+		<li><a href="#Unset a list attri">Unset a List Attribute</a></li>
+	</ul>
+	</li>
+	<li><a href="#Working with a feature attribute of type list of string">Working with a Feature Attribute of type &quot;List Of String&quot;</a><ul >
+		<li><a href="#Feat attr info on instantiation 2">Feature Attribute Information on Instantiation</a></li>
+		<li><a href="#Set a list attr with an empty list">Set a List attribute with an Empty List</a></li>
+		<li><a href="#Append a value to an empty list">Append a Value to an Empty List</a></li>
+		<li><a href="#Restore inheritance of a list attr value">Restore Inheritance of the List Attribute Value</a></li>
+		<li><a href="#Unset the list attr str">Unset the List Attribute </a>
+		</li>
+	</ul>
+	</li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ul>
+<p>We will go further to detail each step.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prolog"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see CAAObjectSpecsModeler.edu V5 
+UC documentation from Features homepage. It further creates the <strong>Credentials</strong> to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="The ConfirmAttrInfo() routine"></a>The ConfirmAttributeInfo() routine</h3>
+<p>The <code>ConfirmAttributeInfo</code> routine, used all along this use case, checks and validates the 
+contents of a <em>CATFmAttributeValuationInfo</em> class instance. 
+This class, that you get from a <em>CATFmFeatureFacace</em> class, gives information about 
+an feature's attribute. The implementation follows.</p>
+<table>
+	<tr>
+		<td><pre class="code">HRESULT <strong>ConfirmAttributeInfo</strong>(CATFmFeatureFacade          &amp; iFeatFacadeOnFeat,
+                             CATFmAttributeName          &amp; iAttrName,
+                             CATFmAttributeValuationMode   iValuationMode,
+                             CATFmAttributeAndValueKind    TypeOfListContents)
+{
+   HRESULT rc = E_FAIL;
+   <strong>CATFmAttributeValuationInfo</strong> AttrValuationInfo;
+   rc = iFeatFacadeOnFeat.<strong>GetAttributeValuationInfo</strong>(iAttrName,AttrValuationInfo);
+
+   if (SUCCEEDED(rc))
+   {
+      if ( FALSE == AttrValuationInfo.<strong>m_IsList)</strong> rc = E_FAIL;
+
+      // Checks specific to each case
+      if ( (AttrValuationInfo.<strong>m_ValuationMode</strong> != iValuationMode) ||
+           (AttrValuationInfo.<strong>m_Type</strong> != TypeOfListContents) ) rc = E_FAIL;
+ ...
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The routine inputs are:</p>
+<ul>
+	<li><code >iFeatFacadeOnFeat</code>, a <i >CATFmFeatureFacade</i> type is the feature whose 
+	attribute is analyzed</li>
+	<li><code >iAttrName</code>, a <i >CATFmAttributeName</i> type represents the attribute</li>
+	<li><code>iValuationMode</code>, a <i >CATFmAttributeValuationMode</i> type, an enum representing the expected attribute 
+	valuation mode. The possible modes are namely. Immediate, Inherited, 
+	Redirected 
+
+	</li>
+	<li><code >iTypeOfListContents</code>, a <em>CATFmAttributeAndValueKind</em> type, an enum which 
+	defines identifiers for each primitive type. The contents of our list is one 
+	of this type.&nbsp; </li>
+</ul>
+<p>The call to <code >GetAttributeValuationInfo</code> of the
+<i >CATFmFeatureFacade</i> class retrieves a feature attribute valuation info. Its inputs are</p>
+<ul>
+	<li><code >iAttrName</code>, a <i>CATFmAttributeName</i> type represents the attribute </li>
+	<li><code >AttrValuationInfo</code>, a <em>CATFmAttributeValuationInfo</em> type, contains the attribute valuation info
+</ul>	
+<p>The tests are:</p>
+<ul>
+	<li>The input attribute must be a list : <code>m_IsList</code> 
+	, the class member variable of <em>CATBoolean</em> type must be always TRUE 
+	.</li>
+	<li>The input attribute has the expected type : we compare <code>m_</code><span class="style15">Type</span>, the class member variable of an enum 
+type (<i>CATFmAttributeValuationKind </i>) with the input value. </li>
+	<li>The input attribute has the expected valuation mode 
+	: we compare <code>m_ValuationMode</code>, the class member variable of an enum 
+type (<i>CATFmAttributeValuationMode </i>) with the input value. </li>
+</ul>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<h3><a name="DisplayListValue routine"></a>The DisplayListValues() 
+Routine</h3>
+<p>The routine displays the list contents. </p>
+<table>
+	<tr>
+		<td><pre class="code">HRESULT DisplayListValues (CATFmFeatureFacade &amp; iFeatFacadeOnFeat,
+                           CATFmAttributeName &amp; iAttrName )
+{
+    HRESULT rc = E_FAIL;
+    CATFmAttributeValue AttrValueOnTheListValue;
+    rc = iFeatFacadeOnFeat.<strong>GetValue</strong>(iAttrName,AttrValueOnTheListValue);
+    if (SUCCEEDED(rc))
+    {
+            int iListSize = AttrValueOnTheListValue.<strong>Size</strong>();
+            CATFmAttributeValue AttrValueOnListElement;
+            if (CATFmKind_int == AttrValueOnTheListValue.<strong>Kind</strong>())
+            {
+                for (int i=1; i&lt;=iListSize; i++)
+                {
+                    AttrValueOnListElement = AttrValueOnTheListValue[i];
+                    int iListElement;
+                    AttrValueOnListElement.<strong>GetInteger</strong>(iListElement);
+                 }
+ ...</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>Its inputs are:</p>
+<ul>
+	<li><code >iFeatFacadeOnFeat</code>, a <i >CATFmFeatureFacade</i> type which represents the 
+	feature</li>
+	<li><code >iAttrName</code>, a <i >CATFmAttributeName</i> type, an identifier for the attribute
+	</li>
+</ul>
+<p style="height: 30px">A call to <code >GetValue</code>() of the 
+<i >CATFmFeatureFacade</i> class retrieves an attribute 
+value, <code >AttrValueOnTheListValue</code>, a 
+<i >CATFmAttributeValue</i> type. The details of the 
+steps involved is a subject of the UC [<a href="#References">5</a>]. Our feature 
+is characterized by attributes of type list. Hence, to begin with we retrieve 
+the size of this list, with a call to <code >Size</code>() of the 
+<i >CATFmAttributeValue</i> class.</p>
+<p>We next retrieve the type of elements contained in this list. The call to 
+<code >Kind</code>() of the <em>CATFmAttributeValue</em> class returns the primitive type (a
+<code >CATFmAttributeAndValueKind</code> type). We are primarily concerned only with two types namely. int 
+(<code >CATFmKind_int</code>) and string (<code >CATFmKind_string</code>). </p>
+<p>We parse through the list and each value we retrieve is a 
+<i >CATFmAttributeValue</i>  
+type (<code >AttrValueOnListElement</code>).&nbsp; To extract the actual value, we either call 
+<code >GetInteger</code>() or <code >GetString</code>() of the
+<i >CATFmAttributeValue</i> class, based on the 
+primitive type we are currently working with.</p>
+<p>The contents of the list are displayed, as a result of this invocation.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+
+<h3><a name="Initializing the local variable"></a>Initializing the Local 
+Variables</h3>
+<p>We initialize the constants required through our UC execution, at the 
+beginning inside main().</p>
+
+<table>
+	<tr>
+		<td><pre class="code">
+<strong>CATFmAttributeName ListOfIntAttrName("MyListOfInteger")</strong>;
+<strong>CATFmAttributeName ListOfStringAttrName("MyListOfString")</strong>;</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+
+<p>The list attribute is identified by its <i >CATFmAttributeName</i> equivalent. We 
+create two such equivalents</p>
+<ul>
+	<li><code >ListOfIntAttrName</code>, to identify the feature attribute &quot;MyListOfInteger&quot;</li>
+	<li><code >LListOfStringAttrName</code>, to identify the feature attribute &quot;MyListOfString&quot;</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+
+
+
+<h3><a name="Instantiating the feature"></a>Instantiating a &quot;CAAFmExtLists&quot; feature</h3>
+<p>The UC instantiates a &quot;CAAFmExtLists&quot; feature. Its definition occurs in a 
+previous section. Since the UC is focussed on managing a list of primitive type 
+attributes, you'll notice the startup is characterized by
+an attribute &quot;MyListOfInteger&quot;, a list of integer and &quot;MyListOfString&quot; a &quot;list 
+of string&quot; type.</p>
+<p>We instantiate the &quot;CAAFmExtLists&quot; StartUp, in the code that follows. The 
+details of the steps involved are dealt in the UC [<a href="#References">6</a>].</p>
+<table>
+	<tr>
+		<td><pre class="code">
+...
+CATFmStartUpFacade SUFacadeOnCAAFmExtLists(MyCredential,&quot;CAAFmExtLists&quot;);
+
+CATFmFeatureFacade FeatFacadeOnCAAFmExtLists1(MyCredential);
+rc = SUFacadeOnCAAFmExtLists.<strong>InstantiateIn</strong>(MyContainerFacade,FeatFacadeOnCAAFmExtLists1);
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+	<p><code >FeatFacadeOnCAAFmExtLists1</code>, a 
+	<i >CATFmFeatureFacade</i> type is the feature 
+	output. We'll refer to it as a &quot;list feature&quot; in the sections that follow. 
+	It is associated with the credentials of a feature modeler client as well an 
+	authorization to access the &quot;CAAFmExtElementCatalog&quot; features</p>
+ 
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Working with a feature attr of type list of int"></a>Working with a Feature 
+Attribute of type &quot;List Of Integer&quot;</h3>
+<p>In this section, we focus on the feature attribute &quot;MyListOfInteger&quot;. We 
+update this attribute value in different ways and retrieve its information like 
+its valuation mode, attribute values as a result.</p>
+<h4><a name="Feat attr info on instantiation"></a>Feature Attribute Information on Instantiation</h4>
+<p>We instantiated the list feature from its StartUp in the earlier section. As 
+a result, the feature inherits its attribute values from its reference Startup. 
+The call to <code >ConfirmAttributeInfo</code>() that follows confirms
+the feature attribute info.</p>
+<table>
+	<tr>
+		<td><pre class="code"> rc = <strong>ConfirmAttributeInfo</strong>(FeatFacadeOnCAAFmExtLists1,ListOfIntAttrName,<strong>CATFmInherited,CATFmKind_int</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>The call above confirms the &quot;MyListOfInteger&quot; attribute valuation mode 
+is <code>
+CATFmInherited</code><strong> </strong>&nbsp;and the contents of the list are of type integer. We 
+proceed to parse the &quot;MyListOfInteger&quot; attribute for its contents.</p>
+<table>
+	<tr>
+		<td><pre class="code">rc = <strong>DisplayListValues</strong> (FeatFacadeOnCAAFmExtLists1,ListOfIntAttrName);
+if (rc != <strong>S_FALSE</strong>)  return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>Please note that we confirm that the return of <code >DisplayListValues</code>() is 
+<code>S_FALSE</code>. The return is significant, since the list is not explicitly set so far,&nbsp; 
+the underlying call to <code >GetValue</code>() of the 
+	<i >CATFmFeatureFacade</i> class, to seek the 
+value of MyListOfInteger attribute returns <code>S_FALSE</code>. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+
+
+<h4><a name="Appending a value to an empty list"></a>Appending a Value to an Empty 
+List</h4>
+<p>To begin with, as we saw in the previous step, MyListOfInteger is empty. We 
+begin populating here.</p>
+<table>
+	<tr>
+		<td><pre class="code">int iValue = 7;
+<strong>CATFmAttributeValue</strong> AttrValueForSet ;
+AttrValueForSet.<strong>SetInteger</strong>(iValue);
+rc = FeatFacadeOnCAAFmExtLists1.<strong>AppendValue</strong>(ListOfIntAttrName,AttrValueForSet);
+...</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>It is a two step process</p>
+<ul>
+	<li>Create a <i >CATFmAttributeValue</i> type. Set it with an integer value 7 
+	with a call to <code >SetInteger</code>() of 
+	<i >CATFmAttributeValue</i>. </li>
+	<li>Append this value to the list attribute associated with the feature with 
+	a call to <code>AppendValue</code>() of the  
+	<i >CATFmFeatureFacade</i> class. Its input arguments 
+	are<ul>
+		<li class="style11">&nbsp;<code >ListOfIntAttrName</code>, a 
+		<i >CATFmAttributeName</i> type 
+		representing the feature attribute &quot;MyListOfInteger&quot;. It was intialized 
+		in an earlier step</li>
+		<li class="style11">&nbsp;<code >AttrValueForSet</code>, a 
+		<i >CATFmAttributeValue</i> type 
+		valuated with 7 </li>
+	</ul>
+
+
+	</li>
+</ul>
+	<p>	We proceed to confirm the details our list attribute.&nbsp;</p>
+<table>
+	<tr>
+		<td><pre class="code"> rc = ConfirmAttributeInfo(FeatFacadeOnCAAFmExtLists1,ListOfIntAttrName,<strong>CATFmImmediate,CATFmKind_int</strong>);
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>The call to <code >ConfirmAttributeInfo</code>() confirms that attribute "MyListOfInteger&quot; 
+is locally valuated <code>
+CATFmImmediate</code><strong>. </strong>The data contained in the list is of type int. </p>
+<p>The values in the list are displayed in the next step. The output indicates list size as 1 and the list content is 
+<strong>7</strong>..</p>
+
+<table>
+	<tr>
+		<td><pre class="code">rc = DisplayListValues(FeatFacadeOnCAAFmExtLists1,ListOfIntAttrName);
+if (rc != <strong>S_OK</strong>)  return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>There is another way to begin populating an empty list. In the previous case, we saw one way of accomplishing this, by appending an integer 
+
+to an empty list.&nbsp; What follows is an alternative way of doing so.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h4><a name="Valuating a list with an empty list"></a>Valuating a List with another 
+List</h4>
+<p>Alternatively, we can create a list with an integer externally and assign it, 
+as a whole to our list attribute. In other words it implies assigning one list 
+to the other.</p>
+<table>
+	<tr>
+		<td><pre class="code">
+iValue = 5;
+AttrValueForSet<strong>.BuildFromCArrayOfInt</strong>(&amp;iValue,1);
+rc = FeatFacadeOnCAAFmExtLists1<strong>.SetValue</strong>(ListOfIntAttrName,AttrValueForSet);
+if (FAILED(rc))  return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>It is a two step process</p>
+<ul>
+	<li>Create a <i >CATFmAttributeValue</i> type. Set it with an integer array 
+	with a single value 5 with a call to <code >BuildFromCArrayOfInt</code> of the 
+	<i >CATFmAttributeValue</i> class.&nbsp; The arguments input are<ul>
+		<li class="style11">&nbsp;&amp;iValue, an int* type. It refers to an integer value 5
+		</li>
+		<li class="style11">1, an int type representing the index in the integer 
+		array, assigned with the value above</li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li>Next we call <code >SetValue</code>() of the
+	<i >CATFmFeatureFacade</i> class, to set the 
+	list attribute with this value</li>
+	</ul>
+	<p>Yet again, the list is locally valuated (<code>CATFmImmediate</code>) and we have 
+	<strong>5</strong>  as an output when the list values are displayed. 
+	</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h4><a name="Insert an element at the beginning"></a>Insert an element at the 
+beginning of a List</h4>
+<p>We insert an integer 4 at the beginning of the &quot;MyListOfInteger&quot; list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+iValue = 4;
+AttrValueForSet.SetInteger(iValue);    
+rc = FeatFacadeOnCAAFmExtLists1.<strong>InsertValue</strong>(ListOfIntAttrName,<strong>1</strong>,AttrValueForSet);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The InsertValue() call of the
+	<i >CATFmFeatureFacade</i> class takes the inputs:</p>
+<ul>
+	<li><code >ListOfIntAttrName</code>, a  
+		<i >CATFmAttributeName</i> type which represents the 
+	&quot;MyListOfInteger&quot; attribute for update</li>
+	<li>1, an integer representing the index at which the value will be inserted. 1 implies&nbsp; the beginning of the list 	</li>
+	<li><code >AttrValueForSet</code>, a <i >CATFmAttributeValue</i> type represents the attribute value for insertion. 
+	We create a <i >CATFmAttributeValue</i> equivalent of the integer 4, with a call to 
+
+	<code >SetInteger</code>() of the <i >CATFmAttributeValue</i> class</li>
+</ul>
+	<p>The list contents now are: <strong>(4,5)</strong>.You'll observe that when a value is inserted in a list at its start (index 1), the existing values are 
+
+simply pushed by an index to the right. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+
+<h4><a name="Insert an element at an intermediate position"></a>Insert an element at an 
+intermediate position of a List</h4>
+<p>This time we insert an integer 3, at the centre of the &quot;MyListOfInteger&quot; 
+list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+iValue = 3;
+AttrValueForSet.SetInteger(iValue);
+rc = FeatFacadeOnCAAFmExtLists1.I<strong>nsertValue</strong>(ListOfIntAttrName,<strong>2</strong>,AttrValueForSet);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>Yet again we call <code >InsertValue</code>() of the 
+	<i >CATFmFeatureFacade</i> class. Since the 
+list already has two elements in it, inserting in between implies the index of 
+insertion is 2.</p>
+<p>The <i >CATFmAttributeValue</i> type equivalent for the integer 3 is created, with a call to 
+<code >SetInteger</code> as before.
+The list contents update to <strong>(4,3,5)</strong></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Insert an element at the end of the list"></a>Insert an element at the end of 
+the List</h4>
+<p>Let us now insert an integer 2 at the end of the &quot;MyListOfInteger&quot; list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+iValue = 2;
+AttrValueForSet.SetInteger(iValue);
+rc = FeatFacadeOnCAAFmExtLists1.<strong>InsertValue</strong>(ListOfIntAttrName,<strong>4</strong>,AttrValueForSet);
+</pre>
+		</td>
+	</tr>
+</table>
+
+<p>Since the insertion is at the end and the list already has 3 elements in it, 
+the new element is inserted at index 4.&nbsp; 
+The contents of the list now are: <strong>(4,3,5,2) </strong>
+</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Remove a value at an index position"></a>Remove a Value at an index 
+position in a List</h4>
+<p>We now remove an element at index 3 of the &quot;MyListOfInteger&quot; list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1.<strong>RemovePosition</strong>(ListOfIntAttrName,<strong>3</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>&nbsp;The <code >RemovePosition</code>() 
+
+call of the  
+	<i >CATFmFeatureFacade</i> class, takes the index as an input. It is the 
+value at this index which will be removed. 
+
+As a result, the list contents now are <strong>(4,3,2)</strong>
+
+</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Play with elements of a list"></a>Play with elements of a List</h3>
+<p>By &quot;playing&quot;, we imply we neither add or remove an element from the list, but 
+will simply rearrange them. This might either involving swapping the values or 
+simply moving it to another position.</p>
+
+
+<h4><a name="Swap values in a list"></a>Swap values in a List</h4>
+<p>We swap the elements at index 1 and 3 of our list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1.<strong>SwapPositions</strong>(ListOfIntAttrName,<strong>1,3</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>We accomplish this with a call to <code >SwapPositions</code>() of the 
+	<i >CATFmFeatureFacade</i>  
+class. The two index values for swap are its key inputs.</p>
+<p>The &quot;MyListOfInteger&quot; list contents after swap is: <strong>(2,3,4)</strong></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Move a value in a list to a new position"></a>Move a Value in a List to a 
+new Position</h4>
+<p>We move the value at index 1 to index 3, for our list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1.<strong>MoveInPosition</strong> (ListOfIntAttrName,<strong>1,3</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The MoveInPosition of the 
+	<i >CATFmFeatureFacade</i> class, moves the value from its 
+original index position to a target position. In the process all elements in the 
+list move by those many indices, along the length of the list, and on reaching 
+its end, the path wraps around to the first index. The logic could be easily 
+seen in our resulting list which evolves as <strong>(3,4,2)</strong>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Overwrite a value at an index position in a list"></a>Overwrite a Value at an index 
+position in a List</h4>
+<p>We overwrite the value at index 3 with 6, in our list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+iValue = 6;
+AttrValueForSet.SetInteger(iValue);
+rc = FeatFacadeOnCAAFmExtLists1.<strong>ReplaceValueAtIndex</strong>(ListOfIntAttrName,<strong>3,AttrValueForSet</strong>);
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call to <code >ReplaceValueAtIndex</code> of the 
+	<i >CATFmFeatureFacade</i> class simply overwrites the value at an index within a list with a new value. The 
+
+index and the new attribute value for overwrite are among the input arguments 
+for the call. As a result, our list contents now are:&nbsp; <strong>(3,4,6)</strong></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Locate a value in a list"></a>Locate a Value in a List</h4>
+<p>Here we simply retrieve the index at which an input value occurs, inside a 
+list. We locate the value 4 in our list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+AttrValueForSet.SetInteger(4);
+int oLocateIndex = 0;
+rc = FeatFacadeOnCAAFmExtLists1<strong>.LocateValue</strong>(ListOfIntAttrName,AttrValueForSet,oLocateIndex,1,0);
+...
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The <code >LocateValue</code> call of the
+	<i >CATFmFeatureFacade</i> class, retrieves the index at 
+which an input value is located within a list. Thus, it returns 2, as an index 
+position, at which the input value 4 occurs, in our list.</p>
+<p>If a value occurs at multiple index positions in a list, the index retrieved 
+is that at which the value occurs first. Let us confirm that by inserting the 
+value &quot;4&quot; at the beginning of the list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1.<strong>InsertValue</strong>(ListOfIntAttrName,<strong>1,AttrValueForSet</strong>);
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The InsertValue call of the 
+	<i >CATFmFeatureFacade</i> class inserts the value &quot;4&quot; at 
+index &quot;1&quot; (beginning) of the list. The list contents are now updated to <strong>
+(4,3,4,6)</strong>, which implies the value &quot;4&quot; occurs at index 1 as well as 3, 
+in the list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc =<strong> FeatFacadeOnCAAFmExtLists1.LocateValue</strong>(ListOfIntAttrName,AttrValueForSet,oLocateIndex,1,0);
+<strong>if (1 != oLocateIndex)) return 1</strong>;</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>Yet again, we call <code >LocateValue</code> to locate "4". It returns 1, the lower of the 
+two indices at which 4 occurs, in our list.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Unset a list attri"></a>Unset a List Attribute</h4>
+<p>Let us study what happens on an Unset of an attribute of type &quot;list of int&quot;?&nbsp;</p>
+<table>
+	<tr>
+		<td><pre class="code">rc = FeatFacadeOnCAAFmExtLists1.<strong>UnsetValue</strong> (ListOfIntAttrName);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call to UnsetValue of the 
+	<i >CATFmFeatureFacade</i> class unsets an attribute 
+value, in this case the &quot;MyListOfInteger&quot; list attribute.&nbsp;  </p>
+<p>On Unset, we confirm the attribute valuation mode is <code>
+CATFmImmediate</code>. 
+Meaning, on Unset, an attribute is still considered as &quot;locally valuated&quot;. What 
+is of real significance is the content of the list on Unset. The call to 
+<code >DisplayListValues</code>() follows.</p>
+
+<table>
+	<tr>
+		<td><pre class="code">rc = <strong>DisplayListValues</strong>(FeatFacadeOnCAAFmExtLists1,ListOfIntAttrName);
+if (rc != <strong>S_FALSE</strong>)  return 1<span class="style14">;</span></pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call of course confirms that the list is empty (list size = 0). But most 
+importantly, its worthwhile noting that the underlying call to 
+<code >GetValue</code>() of the  
+	<i >CATFmFeatureFacade</i> class returns S_FALSE.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Working with a feature attribute of type list of string"></a>Working with a Feature 
+Attribute of type &quot;List Of String&quot;</h3>
+<p>In priniciple, working with a &quot;list of string&quot; is the same as &quot;list of 
+integer&quot;, except that in the current case</p>
+<ul>
+	<li>we deal with a different primitive type, a string</li>
+	<li>the list is default valuated explicitly in the StartUp OSM</li>
+	<li>the APIs involved for certain operations are those dedicated for a 
+	string type</li>
+</ul>
+<h4><a name="Feat attr info on instantiation 2"></a>Feature Attribute Information on Instantiation</h4>
+<p>In an earlier step, we instantiated the &quot;CAAFmExtLists&quot; StartUp (referred as 
+List Feature). The resulting feature is characterized with an attribute 
+&quot;MyListOfString&quot;, a list of string type. It is default valuated explicitly, as 
+we saw in the StartUp definition, in an earlier section. We proceed to 
+illustrate working with this feature attribute and to analyse it under various 
+conditions.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = ConfirmAttributeInfo(FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName,<strong>CATFmInherited,CATFmKind_string</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call to <code >ConfirmAttributeInfo</code>() provides us with information of a feature attribute and its valuation. The routine was detailed in an 
+
+earlier section. Since we do not explicitly valuate the "MyListOfString" attribute in our code, the value is inherited from its StartUp 
+reference. As a result its valuation mode is <code>CATFmInherited</code>.
+</p>
+<p>At the same time, we confirm the elements in our list are of type string (<code >CATFmKind_string</code>, a
+<i>CATFmAttributeAndValueKind</i> enum type which 
+
+represents the primitive types)
+
+</p>
+<p>The list contents are <strong>("firststring","secondstring","thirdstring")</strong>, the default valuation in the StartUp definition.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h4><a name="Set a list attr with an empty list"></a>Set a List attribute with an 
+Empty List</h4>
+<p>We now overwrite the list contents with an empty list. We create an empty 
+list, to begin with.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+<strong>CATFmAttributeValue</strong> AttrValueValuatedToEmptyStringList = CATFmAttributeValue::<strong>CreateEmptyList</strong>(CATFmKind_string);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call to the static routine <code >CreateEmptyList</code>() of the 
+<i >CATFmAttributeValue</i> 
+class, creates an empty list, assigns it to a  
+<i >CATFmAttributeValue</i>type 
+equivalent (<code >AttrValueValuatedToEmptyStringList</code>) which is finally returned. We 
+proceed to overwrite the &quot;MyListOfString&quot; feature attribute value.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1<strong>.SetValue</strong>(ListOfStringAttrName,<strong>AttrValueValuatedToEmptyStringList</strong>);</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>The <code >SetValue</code>() call of the  
+	<i >CATFmFeatureFacade</i> sets a feature attribute value. 
+Its inputs are:</p>
+<ul>
+	<li><code >ListOfStringAttrName</code>, a 
+	<i >CATFmAttributeName</i> type representing the 
+	&quot;MyListOfString&quot; feature attribute. Its initialization was detailed in an 
+	earlier step</li>
+	<li><code >AttrValueValuatedToEmptyStringList</code>, a 
+	<i >CATFmAttributeValue</i> type, 
+	which we just created to represent an empty list
+	
+	</li>
+</ul>
+	<p>	Having assigned an empty list we proceed to retrieve the attribute valuation 
+	information 
+</p> 
+
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = <strong>ConfirmAttributeInfo</strong>(FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName,<strong>CATFmImmediate</strong>,CATFmKind_string);
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>This time, the list type is string and the attribute is considered valuated 
+locally (<code>CATFmImmediate</code>), as depicted by the inputs to the 
+<code >ConfirmAttributeInfo</code>() call.<br>
+We next retrieve the attribute value.</p>
+<table>
+	<tr>
+		<td><pre class="code">rc = <strong>DisplayListValues</strong> (FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName);
+<strong>if (rc != S_OK)  return 1</strong>;</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The list size is obviously 0, since its an empty list. A point to note here 
+is that the <code >GetValue</code>() call of the
+	<i >CATFmFeatureFacade</i> class is S_OK in this 
+case, though the list is empty, since the list is explicitly valuated with 
+another list, though empty. </p>
+<p>The list is also empty, when a list attribute is not set or explicitly Unset. 
+But in that case <code >GetValue</code>() returns S_FALSE.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Append a value to an empty list"></a>Append a Value to an Empty 
+List</h4>
+<p>We append a string &quot;MyString&quot;&nbsp;to the empty list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+CATUnicodeString str1("MyString");
+AttrValueForSet.SetString(str1);
+rc = FeatFacadeOnCAAFmExtLists1<strong>.AppendValue</strong>(ListOfStringAttrName,AttrValueForSet);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The <code >AppendValue</code>() call of the
+	<i >CATFmFeatureFacade</i> class appends a value to a list. As usual, we create a
+	<i >CATFmAttributeValue</i> type equivalent 
+
+of the string "MyString" we intend to append, with a call to 
+<code >SetString</code>() of the  
+	<i >CATFmAttributeValue</i> class. 
+
+</p>
+<p>We display the List contents. It outputs a single string "<strong>MyString</strong>".
+
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<h4><a name="Restore inheritance of a list attr value"></a>Restore Inheritance of the 
+List Attribute Value</h4>
+<p>Our list attribute was locally valuated in the earlier step. We restore its 
+inheritance, implying override its local value with the one inherited from its 
+reference.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1<strong>.RestoreInheritance</strong>(ListOfStringAttrName);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The call to <code >RestoreInheritance</code>() of the
+	<i >CATFmFeatureFacade</i> class, as the API 
+name suggests, restores the inheritance of an attribute value. Its input is 
+simply the attribute name. We proceed to confirm the attribute info. </p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = <strong>ConfirmAttributeInfo</strong>(FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName,<strong>CATFmInherited</strong>,CATFmKind_string);</pre>
+		</td>
+	</tr>
+</table>
+
+
+<p>The attribute valuation mode is now &quot;<code>CATFmInherited </code>and 
+the type remains string. We proceed to display the list contents. It is again <strong>(&quot;firststring&quot;,&quot;secondstring&quot;,&quot;thirdstring&quot;)</strong>, the default 
+valuation in the StartUp definition. </p>
+<p>The next question is what happens on Unset of a list of string attribute? We 
+proceed to study that in the steps ahead.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Unset the list attr str"></a>Unset the List Attribute </h4>
+<p>We unset the &quot;MyListOfString&quot; attribute here. We illustrate it is distinct 
+from explicitly setting it to an empty list.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = FeatFacadeOnCAAFmExtLists1<strong>.UnsetValue</strong> (ListOfStringAttrName);
+</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>The call to <code >UnsetValue</code> of the
+	<i >CATFmFeatureFacade</i> class unsets an attribute 
+value.&nbsp; We see its impact in the steps ahead.</p>
+<table>
+	<tr>
+		<td><pre class="code">...
+rc = <strong>ConfirmAttributeInfo</strong>(FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName,<strong>CATFmImmediate</strong>,CATFmKind_string);</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>Though Unset, the attribute valuation mode is still <code>CATFmImmediate</code>, 
+meaning an unset is considered as a local valuation. The contents of the list 
+are of type string. </p>
+<p>We proceed to display the contents of the list.</p>
+<table>
+	<tr>
+		<td><pre class="code">rc = <strong>DisplayListValues</strong> (FeatFacadeOnCAAFmExtLists1,ListOfStringAttrName);
+if (rc != <strong>S_FALSE</strong>)  return 1;</pre>
+		</td>
+	</tr>
+</table>
+
+
+
+<p>Of course the list is empty. Its size is depicted as 0. </p>
+<p>What is worthwhile noting in the code extract above, is the return of the 
+<code >DisplayListValues</code>() call. It returns <code>S_FALSE</code>, which is infact the return of the 
+underlying <code >GetValue</code> call of the 
+	<i >CATFmFeatureFacade</i> class. <br>
+This implies that when an attribute is unset, the call to retrieve its value 
+returns <code>S_FALSE</code>. </p>
+<p>This is distinct from a previous case when we explicitly set our list 
+attribute with an empty list. In that case the call to <code >GetValue</code>() returned<code> S_OK</code>.</p>
+
+
+<script type="text/javascript">insertLinkToTop();</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><h3>
+<a name="Epilog"></a>Epilog</h3>
+<p>Lastly the document is saved and the session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The objective of the UC is to illustrate working with feature attributes. A 
+feature attribute is either recursively inherited from its reference, up the 
+instantiation hierarchy. An attribute value can also be locally defined thus 
+overriding the value inherited. The inheritance is thus broken, and consequently 
+the feature is rendered as a reference too, for instantiation down the 
+hierarchy. </p>
+<p>One may also do a reverse engineering, meaning to restore the inheritance of a 
+locally overridden attribute value. In this case, the feature ceases to be a 
+reference.</p>
+<p>The UC also illustrates that unsetting an attribute value is distinct from 
+setting its value to 0</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature 
+		Attributes</a></td>
+	</tr>
+
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps</a></td>
+	</tr>
+	
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps: Creating StartUps in Catalogs</a></td>
+	</tr>
+<tr>
+		<td style="height: 14px">[4]</td>
+		<td style="height: 14px"><a href="CAAV5V6FmExtUcAppliCont.htm">Working with Applicative Container</a></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAAV5V6FmExtUcSimpleAttr.htm">Accessing Feature Attributes</a></td>
+	</tr>
+	
+
+	
+	<tr>
+		<td>[6]</td>
+		<td><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating	Features</a></td>
+	</tr>
+	
+	
+	
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: 1 [Aug 2012]</td>
+		<td valign="top">Creation</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+
+

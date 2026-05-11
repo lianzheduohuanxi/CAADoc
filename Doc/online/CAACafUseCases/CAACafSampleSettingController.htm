@@ -1,0 +1,1013 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Setting Controller</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Setting Controller</h3>
+      <em>Encapsulating the access to the setting file</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a setting controller.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACafCtrlToolsOptions Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACafCtrlToolsOptions Do</a></li>
+            <li><a href="#How">How to Launch CAACafCtrlToolsOptions</a></li>
+            <li><a href="#Where">Where to Find the CAACafCtrlToolsOptions Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a setting controller
+component in order to encapsulate and ensure a unique access to a setting file.
+The setting controller enables several applications to access the parameters
+stored in a setting file, without having to know about the internal storage
+details. Setting controller ensures a consistent access to a setting file for
+different applications, the Tools/Options command being the most important of
+these applications.</p>
+<p>This article describes a concrete use case of a setting controller. For more
+explanations, refer to the technical article [<a href="#References">1</a>] on
+the topic.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACafCtrlToolsOptions Use Case</h3>
+<p>CAACafCtrlToolsOptions is a use case of the CAACATIAApplicationFrm.edu
+framework that illustrates the CATIAApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAACafCtrlToolsOptions Do</h4>
+<p>CAACafCtrlToolsOptions creates the setting controller for a setting file. The
+options are used in our <code>CAAGeometry</code> document.</p>
+<p>This setting controller is used by the Elements property page accessible with
+the Tools/Options command. The use case &quot;Creating a Property Page for
+Application Properties&quot; [<a href="#References">2</a>] describes how to
+create this property page.</p>
+<p><img border="0" src="images/CAACafSampleToolsOptions2.jpg" width="706" height="525"></p>
+<p>This property page displays three parameters which are inside the following
+frames:</p>
+<ol>
+  <li>The &quot;<b>Identifier</b>&quot; frame is used to modify and display the
+    visibility of the element's identifiers. The elements are created through
+    commands of the <code>CAAV5 Geometrical Creation</code> workbench. The
+    element identifiers can be permanently:
+    <ul>
+      <li>Hidden</li>
+      <li>Shown</li>
+      <li>Shown only when elements are pre-selected, i.e., when the cursor is
+        located above them.<br>
+      </li>
+    </ul>
+  </li>
+  <li>The &quot;<b>Max Points/Curve</b>&quot; frame is used to modify and
+    display the maximum number of points used to discretize a curve.</li>
+  <li>The &quot;<b>Im</b><b>plicit Points</b>&quot; frame is used to modify and
+    display the visibility of implicit points. Those can be shown or hidden.</li>
+</ol>
+<p>These three parameters are saved in the <code><b>CAACafGeometryElt</b></code>
+setting file and must always be accessible through the <code><b>CAACafGeometryEltSettingCtrl</b>
+</code>setting controller. This controller is a component which implements the
+following interfaces:
+<ul>
+  <li><b><i>CATIIniSettingManagment</b></i><br>
+    This interface, defined in the InteractiveInterfaces framework, manages
+    general methods of the setting repository: <code>Commit, Save,</code> etc.</li>
+  <li><b><i>CAAICafGeometryEltSettingAtt</b></i><br>
+    This interface, dedicated to the current setting file, allows each
+    application to get and set the parameters without having to know about the
+    internal storage details.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACafCtrlToolsOptions</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACafCtrlToolsOptions Code</h4>
+<p>The CAACafCtrlToolsOptions use case is made of classes and interfaces located
+in the CAACafCtrlToolsOptions.m module and in the ProtectedInterfaces directory
+of the CAACATIAApplicationFrm.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafCtrlToolsOptions.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafCtrlToolsOptions.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These classes and interfaces are:</p>
+<table width="100%">
+  <tr>
+    <td><i>CAAICafGeometryEltSettingAtt</i></td>
+    <td>Interface to access each parameter</td>
+  </tr>
+  <tr>
+    <td><i>TIE_CAAICafGeometryEltSettingAtt</i></td>
+    <td>TIE to this interface</td>
+  </tr>
+  <tr>
+    <td><i>CAACafGeometryEltSettingCtrl</i></td>
+    <td>Setting controller component main class</td>
+  </tr>
+  <tr>
+    <td><i>CAAECafGeometryEltSettingAtt</i></td>
+    <td>Setting controller component extension class that implements <i>CAAICafGeometryEltSettingAtt</i></td>
+  </tr>
+  <tr>
+    <td><i>CAAECafSettingManagmentForGeometryElt</i></td>
+    <td>Setting controller component extension class that implements <i>CATIIniSettingManagment</i></td>
+  </tr>
+  <tr>
+    <td><i>GetCAACafGeometryEltSettingCtrl</i></td>
+    <td>Factory function to retrieve the setting controller</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a setting controller, there are five main steps:</p>
+<ol>
+  <li><a href="#Step1">Creating </a><a href="#Step3">the Interface to Access
+    Each Parameter</a></li>
+  <li><a href="#Step2">Creating the Setting Controller Component Main Class</a></li>
+  <li><a href="#Step3">Implementing CAAICafGeometryEltSettingAtt</a></li>
+  <li><a href="#Step4">Implementing CATIIniSettingManagment</a></li>
+  <li><a href="#Step5">Creating the Factory for the Setting Controller</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Interface to Access Each Parameter</h4>
+<p>The <i>CAAICafGeometryEltSettingAtt</i> interface is dedicated to the access
+of the three parameters:
+<ul>
+  <li>Visualize the element's identifier ( Hide, Show, Show in pre-select mode)</li>
+  <li>Define the maximum points used to discretize a curve</li>
+  <li>Visualize an implicit point (Hide, Show)</li>
+</ul>
+<ul>
+  <li><b>Header file</b></li>
+  <p>Here is the <code>CAAICafGeometryEltSettingAtt</code> header file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;IUnknown.h&quot;
+          
+#include &quot;CAACafCtrlToolsOptions.h&quot;
+extern IID <b>IID_CAAICafGeometryEltSettingAtt</b>;
+
+class CATString;
+class CATSettingInfo ;
+          
+class ExportedByCAACafCtrlToolsOptions CAAICafGeometryEltSettingAtt : public <b>IUnknown</b>
+{
+  public :
+    virtual  HRESULT   <b>Initialize</b>() = 0;
+
+    virtual  HRESULT   <b>GetIdentifierVisibility</b>(CATString &amp; oIdVisibility)        = 0;
+    virtual  HRESULT   <b>SetIdentifierVisibility</b>(const CATString &amp; iIdVisibility)  = 0;
+    virtual  HRESULT   <b>GetInfoIdentifierVisibility</b>(CATSettingInfo * oInfo)  = 0;
+ 
+    virtual  HRESULT   <b>GetMaxPointCurve</b>(int &amp; oMaxPoint)        = 0;
+    virtual  HRESULT   <b>SetMaxPointCurve</b>(const int iMaxPoint)  = 0;
+    virtual  HRESULT   <b>GetInfoMaxPointCurve</b>(CATSettingInfo ** oInfoArray, int * oNbSettingInfo)  = 0;
+
+    virtual  HRESULT   <b>GetImplPointVisibility</b>(CATString &amp; oImplPointVisibility)        = 0;
+    virtual  HRESULT   <b>SetImplPointVisibility</b>(const CATString &amp; iImplPointVisibility)  = 0;    
+    virtual  HRESULT   <b>GetInfoImplPointVisibility</b>(CATSettingInfo * oInfo)  = 0;
+    
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>This Object Modeler interface derives from the <i>IUnknown</i> interface.
+  Like any interface, it has an IID declared as IID_ followed by the interface
+  name. This interface is exported by the <code>CAACafCtrlToolsOptions.m</code>
+  module.</p>
+  <p>This interface defines:</p>
+  <ul>
+    <li><code>One Initialize</code> method. Refer to the &quot;The Setting
+      Controller&quot; technical article [<a href="#References">1</a>] for more
+      details about this important method.</li>
+    <li>For each parameter three methods:</li>
+    <ul>
+      <li><code><b>Set</b>xxx </code>to<code> </code>modify the parameter (<code>SetIdentifierVisibility,
+        SetMaxPointCurve and SetImplPointVisibility)</code></li>
+      <li><code><b>Get</b>xxx </code>to retrieve<code> </code>the parameter (<code>GetIdentifierVisibility,
+        GetMaxPointCurve and GetImplPointVisibility)</code></li>
+      <li><code><b>GetInfo</b>xxx </code>to retrieve the <i>CATSettingInfo</i>
+        instance necessary to construct the dialog object acting as a lock (<code>G</code><code>etInfoIdentifierVisibility,
+        GetInfoMaxPointCurve and GetInfoImplPointVisibility)</code></li>
+    </ul>
+  </ul>
+  <p>&nbsp;</p>
+  <li><b>Source file</b></li>
+  <p>Here is the <code>CAAICafGeometryEltSettingAtt</code> source file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &lt;CAAICafGeometryEltSettingAtt.h&gt;
+
+IIID IID_CAAICafGeometryEltSettingAtt={ /* 8a2969d2-0e0d-11d5-85c1-00108335648a */
+    <b>0x8a2969d2,
+    0x0e0d,
+    0x11d5,
+    {0x85, 0xc1, 0x00, 0x10, 0x83, 0x35, 0x64, 0x8a}</b>
+  };</pre>
+      </td>
+    </tr>
+  </table>
+  <p>This file includes a GUID [<a href="#References">3</a>], shown in bold
+  typeface.</p>
+  <li><b>TIE file</b>: to enable components to implement this interface, a file
+    named TIE_CAAICafGeometryEltSettingAtt.tsrc must be created in the src
+    directory, and it must contain:<br>
+  </li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CAAICafGeometryEltSettingAtt.h&quot;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The Multi-Workspace Application Builder (mkmk) will generate the TIE for
+  this interface, this is the TIE_CAAICafGeometryEltSettingAtt.h found in the
+  ProtectedGenerated directory.</p>
+  <li>Modify the <b>iid</b> file</li>
+  <p>Located in the CNext/code/dictionary, directory modify or create the
+  CAACATIAApplicationFrm.edu.idd file by including the following line:
+  <table class="code">
+    <tr>
+      <td>
+        <pre>{8a2969d2-0e0d-11d5-85c1-00108335648a}  CAAICafGeometryEltSettingAtt</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The first part is the GUID [<a href="#References">3</a>] defined two steps
+  before, and the second part is the name of the interface.</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Setting Controller Component Main Class</h4>
+<ol>
+  <li><b>Header file</b></li>
+  <p>Here is the <code>CAACafGeometryEltSettingCtrl</code> header file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATBaseUnknown.h&quot;  
+#include &quot;<b>CATIniCleanerSettingCtrl</b>.h&quot; 
+
+class  CAACafGeometryEltSettingCtrl : public CATBaseUnknown
+{  
+   <b>CATDeclareClass</b>;
+
+   public:
+ 
+   CAACafGeometryEltSettingCtrl();
+   virtual ~CAACafGeometryEltSettingCtrl(); 
+
+   static HRESULT <b>GetSettingController</b>(CAACafGeometryEltSettingCtrl ** oCtrl);
+
+ private:
+   CAACafGeometryEltSettingCtrl(const CAACafGeometryEltSettingCtrl &amp;iObjectToCopy);
+   CAACafGeometryEltSettingCtrl &amp; operator = (const CAACafGeometryEltSettingCtrl &amp;iObjectToCopy);
+
+ private:
+   static CATIniCleanerSettingCtrl <b>_CleanerCtrl</b> ;
+};
+          </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CAACafGeometryEltSettingCtrl</code> C++ class derives from <i>CATBaseUnknown</i>.
+  The <code>CATDeclareClass</code> macro declares that the <code>CAACafGeometryEltSettingCtrl
+  </code>class belongs to a component. The copy constructor and the
+  &quot;=&quot; operator are set as private to prevent the compiler from
+  automatically creating them as public.</p>
+  <p>The <code>CAACafGeometryEltSettingCtrl </code>component class is created
+  only once during a session. The <code>GetSettingController</code> method
+  returns the unique pointer to this class. To manage the destruction of this
+  pointer, an instance of the <i>CATIniCleanerSettingCtrl</i> class is used. The
+  <code>_CleanerCtrl</code> static data member contains this unique pointer.</p>
+  <li><b>Source file</b></li>
+  <p>Here is the <code>CAACafGeometryEltSettingCtrl</code> source file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CAACafGeometryEltSettingCtrl.h&quot;
+#include &quot;CAAICafGeometryEltSettingAtt.h&quot;
+#include &quot;CATIIniSettingManagment.h&quot;
+#include &quot;CATErrorDef.h&quot;
+#include &quot;CATBoolean.h&quot;
+
+CATIniCleanerSettingCtrl CAACafGeometryEltSettingCtrl::<b>_CleanerCtrl</b> ;
+
+<b>CATImplementClass(CAACafGeometryEltSettingCtrl, 
+                     Implementation, 
+                     CATBaseUnknown , 
+                     CATNull);</b>
+
+CAACafGeometryEltSettingCtrl::CAACafGeometryEltSettingCtrl()
+{
+}
+
+CAACafGeometryEltSettingCtrl::~CAACafGeometryEltSettingCtrl()
+{
+} 
+...
+          </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>_CleanerCtrl </code>static data member is created.</p>
+  <p>The <code>CATImplementClass</code> macro declares that the <code>CAACafGeometryEltSettingCtrl</code><b>
+  </b>class is a component main class thanks to the <code>Implementation</code>
+  keyword, and it also OM-derives [<a href="#References">4</a>] from <i>CATBaseUnknown</i>.</p>
+  <p>The constructor and destructor are empty.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+HRESULT CAACafGeometryEltSettingCtrl::<b>GetSettingController</b>
+                                      (CAACafGeometryEltSettingCtrl ** oCtrl)
+{
+ HRESULT rc = S_OK ;
+
+        if ( NULL != oCtrl )
+        {
+           *oCtrl = NULL ;
+
+           CATBaseUnknown * pCtrl = _CleanerCtrl.<b>GetController</b>();
+           if ( NULL == pCtrl )
+           {
+               CAACafGeometryEltSettingCtrl * SettingController = NULL;
+               SettingController = new <b>CAACafGeometryEltSettingCtrl</b>();
+               if ( NULL == SettingController )
+               {
+                  rc = E_OUTOFMEMORY ;
+               }else
+               {
+                  CATBoolean Init = FALSE ;
+
+                  // The Initialization is mandatory
+                  <b>CAAICafGeometryEltSettingAtt</b> * pISettingAtForCtrl = NULL ;
+                  rc = SettingController-&gt;QueryInterface(IID_CAAICafGeometryEltSettingAtt,
+                                                        (void**) &amp;pISettingAtForCtrl );
+                  if ( SUCCEEDED(rc) )
+                  {
+                     rc = pISettingAtForCtrl-&gt;<b>Initialize</b>();
+                     if ( SUCCEEDED(rc) )
+                     {
+                        <b>CATIIniSettingManagment</b> * pIMgtAtForCtrl = NULL ;
+                        rc = SettingController-&gt;QueryInterface(IID_CATIIniSettingManagment,
+                                                               (void**) &amp;pIMgtAtForCtrl );
+                        if ( SUCCEEDED(rc) )
+                        {
+                           // For the first Roolback 
+                           pIMgtAtForCtrl-&gt;<b>Commit</b>() ;                      
+
+                           pIMgtAtForCtrl-&gt;Release();
+                           pIMgtAtForCtrl = NULL; 
+
+                           // The cleaner keeps the unique instance
+                           _CleanerCtrl.<b>SetController</b>(SettingController);
+
+                           *oCtrl = SettingController ;
+                           Init = TRUE ;
+                        }
+
+                     }
+                     pISettingAtForCtrl-&gt;Release();
+                     pISettingAtForCtrl = NULL ;
+                  }
+
+                  if ( FALSE == Init ) 
+                  {
+                     SettingController-&gt;Release() ;
+                     SettingController = NULL ; 
+                  }
+               }
+           }else  
+           {
+              *oCtrl = (CAACafGeometryEltSettingCtrl *) pCtrl ;
+           }
+                
+        }else rc = E_FAIL ;
+
+        return rc ;
+}</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The goal of this method is to return a pointer to the <code>CAACafGeometryEltSettingCtrl
+  </code>class. This unique pointer is saved in the <code>_CleanerCtrl </code>data
+  member.</p>
+  <p>Before setting the new controller in <code>_CleanerCtrl, </code>using the <code></code><code>SetController</code>
+  method, it is first necessary to execute the following methods:</p>
+  <ul>
+    <li>The <code>Initialize</code> method of the <i>CAAICafGeometryEltSettingAtt</i>
+      interface</li>
+    <li>The <code>Commit</code> method of the <i>CATIIniSettingManagment</i>
+      interface</li>
+  </ul>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Implementing CAAICafGeometryEltSettingAtt</h4>
+<p>The implement class is the <code>CAAECafGeometryEltSettingCtrl </code>class<code>.</code>
+<ol>
+  <li><b>Header file</b></li>
+  <p>Here is the <code>CAAECafGeometryEltSettingCtrl</code> header file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATBaseUnknown.h&quot;
+class CATSettingRepository ;
+
+#include &quot;CAAICafGeometryEltSettingAtt.h&quot; 
+class CAAECafGeometryEltSettingAtt: public CATBaseUnknown
+{
+  CATDeclareClass;
+
+  public:
+
+    CAAECafGeometryEltSettingAtt();
+    virtual ~CAAECafGeometryEltSettingAtt();
+
+    virtual  HRESULT   <b>Initialize</b>() ;
+
+    virtual  HRESULT   <b>GetIdentifierVisibility</b>(CATString &amp; oIdVisibility)   ;
+
+    virtual  HRESULT   <b>SetIdentifierVisibility</b>(const CATString &amp; iIdVisibility)  ;
+
+    virtual  HRESULT   <b>GetInfoIdentifierVisibility</b>(CATSettingInfo * oInfo)  ;
+
+
+    virtual  HRESULT   <b>GetMaxPointCurve</b>(int &amp; oMaxPoint)       ;
+
+    virtual  HRESULT   <b>SetMaxPointCurve</b>(const int iMaxPoint)  ;
+
+    virtual  HRESULT   <b>GetInfoMaxPointCurve</b>(CATSettingInfo ** oInfoArray, int * oNbSettingInfo)  ;
+
+
+    virtual  HRESULT   <b>GetImplPointVisibility</b>(CATString &amp; oImplPointVisibility)        ;
+    
+    virtual  HRESULT   <b>SetImplPointVisibility</b>(const CATString &amp; iImplPointVisibility)  ;
+
+    virtual  HRESULT   <b>GetInfoImplPointVisibility</b>(CATSettingInfo * oInfo)  ;
+
+  private:
+
+    CAAECafGeometryEltSettingAtt(const CAAECafGeometryEltSettingAtt &amp;iObjectToCopy);
+    CAAECafGeometryEltSettingAtt &amp; operator = (const CAAECafGeometryEltSettingAtt &amp;iObjectToCopy);
+
+  private:
+
+    CATSettingRepository *   _pSettingRep     ;
+};
+#endif</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CAAECafGeometryEltSettingAtt</code> C++ class derives from <i>CATBaseUnknown</i>.
+  The <code>CATDeclareClass</code> macro declares that the <code>CAAECafGeometryEltSettingAtt
+  </code>class belongs to a component. The copy constructor and the
+  &quot;=&quot; operator are set as private to prevent the compiler from
+  automatically creating as public.</p>
+  <p>The public methods other than the constructor and the destructor, are
+  methods defined in the <i>CAAICafGeometryEltSettingAtt</i> interface.</p>
+  <p>In the private data section, <b>_pSettingRep</b> is a pointer to the <i>CATSettingRepository</i>
+  [<a href="#References">5</a>] used to access the attributes of the setting
+  file.</p>
+  <p>&nbsp;</p>
+  <li><b>Source file</b></li>
+  <p>Here is the <code>CAAECafGeometryEltSettingCtrl</code> source file:</p>
+  <ul>
+    <li>It is a<b> Data Extension</b> of the <code>CAACafGeometryEltSettingCtrl</code>
+      setting controller</li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAECafGeometryEltSettingAtt.h&quot;
+#include &quot;CATString.h&quot;
+#include &quot;CATSettingRepository.h&quot;
+
+#include &quot;TIE_CAAICafGeometryEltSettingAtt.h&quot;
+TIE_CAAICafGeometryEltSettingAtt(CAAECafGeometryEltSettingAtt);
+
+CATImplementClass(CAAECafGeometryEltSettingAtt,
+                  DataExtension,
+                  CATBaseUnknown,
+                  <b>CAACafGeometryEltSettingCtrl</b>);
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>CAAECafGeometryEltSettingAtt</code> class states that it
+    implements the <i>CAAICafGeometryEltSettingAtt</i> interface thanks to the <code>TIE_CAAICafGeometryEltSettingAtt</code>
+    macro. This extension class is dedicated to the controller component. The <code>CATImplementClass</code>
+    macro declares that the <code>CAAECafGeometryEltSettingAtt</code> class is a
+    data extension class, thanks to the <code>DataExtension</code> keyword, and
+    that it extends the component whose main class is <code>CAACafGeometryEltSettingCtrl</code>.
+    The third parameter must always be set to <i>CATBaseUnknown</i> (unused
+    parameter)</p>
+    <li><b><code><a name="Constructor - Destructor- Setting Att">Constructor -
+      Destructor</a></code></b></li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAECafGeometryEltSettingAtt::CAAECafGeometryEltSettingAtt():_pSettingRep(NULL)
+{
+   _pSettingRep = CATSettingRepository::<b>GetRepository</b>(&quot;<b>CAACafGeometryElt</b>&quot;) ;
+}
+
+CAAECafGeometryEltSettingAtt::~CAAECafGeometryEltSettingAtt()
+{
+   _pSettingRep = NULL ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In the constructor, the setting repository pointer for the <code>CAACafGeometryElt.CATSetting
+    </code>file<code> </code>is retrieved. In the destructor, this pointer is
+    set to NULL. No <code>Release</code> should be involved on this pointer the
+    System framework already takes care of the life cycle of those objects.</p>
+    <li>The<b> <code>Initialize</code> </b>method</li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT CAAECafGeometryEltSettingAtt::Initialize()
+{
+
+  HRESULT rc = S_OK ;
+  HRESULT rctemp = E_FAIL ;
+
+  CATString ident ;
+  rctemp =  <b>GetIdentifierVisibility</b>(ident);
+  if ( FAILED(rctemp) )
+	  rc = rctemp ;
+
+  rctemp = <b>GetImplPointVisibility</b>(ident);
+  if ( FAILED(rctemp) )
+	  rc = rctemp ;
+
+  int value ;
+  rc = <b>GetMaxPointCurve</b>(value);
+  if ( FAILED(rctemp) )
+	  rc = rctemp ;
+  
+  return rc ;
+
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The method calls <b>all</b> the <code>Getxxx</code> method: <code>GetIdentifierVisibility,
+    GetImplPointVisibility </code>and<code> GetMaxPointCurve. </code>The method
+    returns rctemp if at least one call fails.</p>
+    <p>It is important to call each <code>Getxxx</code> method to ensure that
+    the default values, given in the <code>Getxxx</code> methods, are defined
+    and put onto the repository.</p>
+    <li>The<b> <code>GetIdentifierVisibility</code></b> method</li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT   CAAECafGeometryEltSettingAtt::GetIdentifierVisibility(
+                                        CATString &amp; oIdVisibility)  
+{
+  HRESULT rc = E_FAIL ;
+
+  if ( NULL != _pSettingRep )
+  {
+     CATString Ident(&quot;<b>IdHide</b>&quot;);
+     long flag = _pSettingRep-&gt;<b>ReadSetting</b>(&quot;<b>Identifier</b>&quot;,&amp;Ident);
+     if ( 1 == flag )
+     {
+         oIdVisibility = Ident ;
+	 rc =S_OK;
+     }
+  }
+  return rc ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The goal of this method is to return information about how the
+    identifiers are visualized. This information is stored in the setting
+    repository under the &quot;<code>Identifier</code>&quot; attribute. The call
+    to the <code>ReadSetting</code> method of the <i>CATSettingRepository</i>
+    class, using <code>Identifier </code>as first argument, retrieves the
+    information as it is currently in the setting repository.</p>
+    <p>The <code>Ident</code> variable is initialized with a default value. When
+    there is no administration setting file, this default value is the reset
+    value.</p>
+    <li>The <b><code>SetIdentifierVisibility</code></b> method</li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT   CAAECafGeometryEltSettingAtt::SetIdentifierVisibility(
+                                        const CATString &amp; iIdVisibility) 
+{
+  HRESULT rc = E_FAIL ;
+
+  CATString StIdHide(&quot;IdHide&quot;);
+  CATString StIdShow(&quot;IdShow&quot;);
+  CATString StIdPreSelectShow(&quot;IdPreSelectShow&quot;);
+
+  if ( (StIdHide == iIdVisibility) || 
+       (StIdShow == iIdVisibility) ||
+       (StIdPreSelectShow == iIdVisibility) )
+  {
+     if ( NULL != _pSettingRep )
+     {
+         CATString Ident = iIdVisibility ;
+
+         long flag = _pSettingRep-&gt;<b>WriteSetting</b>(&quot;Identifier&quot;,&amp;Ident);
+	 if ( 1 == flag )
+         {
+	    rc =S_OK;
+         }
+     }
+  }
+  return rc ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The goal of this method is to modify the information about how the
+    identifiers are visualized. This information is stored in the setting
+    repository under the &quot;<code>Identifier</code>&quot; attribute. The call
+    to the <code>WriteSetting</code> method of the <i>CATSettingRepository</i>
+    class, using <code>Identifier </code>as first argument, modifies this
+    information. The validity of the input data is checked before modifying the
+    repository (not necessary if the first argument is an enum ).</p>
+    <li>The <b><code>GetInfoIdentifierVisibility</code></b> method</li>
+    <br>
+    &nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT   CAAECafGeometryEltSettingAtt::GetInfoIdentifierVisibility(
+                                           CATSettingInfo * oInfo,int iFlag )  
+{
+                                                                         
+  HRESULT rc = E_FAIL ;
+
+  if ( NULL != _pSettingRep )
+  {
+     long flag = _pSettingRep-&gt;<b>GetInfo</b>(&quot;Identifier&quot;,oInfo, iFlag) ;
+		
+     if ( 0 == flag )
+     {
+        rc = S_OK ;
+     }
+  }
+  return rc ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This method calls the <code>GetInfo</code><b> </b>method<b> </b>of the <i>CATSettingRepository</i>
+    class with <code>Identifier</code> as first argument, and returns the unique
+    <i>CATSettingInfo</i> dedicated to this parameter.</p>
+    <li>The <code>GetInfoMaxPointCurve</code> method</li>
+    <br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT   CAAECafGeometryEltSettingAtt::GetInfoMaxPointCurve(
+                                           CATSettingInfo ** oInfoArray, int *oNbSettingInfo )  
+{
+    HRESULT rc = E_FAIL ;
+
+    if ( (NULL != _pSettingRep) &amp;&amp; ( NULL != oNbSettingInfo) &amp;&amp; ( NULL != oInfoArray ) )
+    {
+
+       *oNbSettingInfo = 0 ;
+       *oInfoArray = NULL ;
+
+       CATSettingInfo info ;
+       long flag = _pSettingRep-&gt;GetInfo(&quot;MaxPointCurve&quot;,&amp;info) ;
+		
+       if ( 0 == flag )
+       {
+          *oNbSettingInfo = 1 ;
+          *oInfoArray = new CATSettingInfo [*oNbSettingInfo] ;
+          (*oInfoArray)[0] = info ;
+
+          rc = S_OK ;
+       }
+    }
+    return rc ;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>This method returns an array of <i>CATSettingInfo</i> and not one <i>CATSettingInfo</i>.
+    In this use case a mere pointer to <i>CATSettingInfo</i> is enough since the
+    parameter is represented by one attribute. However the array of <i>CATSettingInfo</i>
+    pointer example is given in case your parameter is represented by several
+    attributes or you are unsure about possible internal storage evolution.</p>
+  </ul>
+  <li><b>Interface dictionary</b></li>
+  <p>In the interface dictionary dedicated to the CAACATIAApplicationFrm.edu
+  framework, it is necessary to add the following line to indicate that the <i>CAACafGeometryEltSettingCtrl</i>
+  component implements the <i>CAAICafGeometryEltSettingAtt</i> interface in the <code>CAACafCtrlToolsOptions</code>
+  module.</p>
+  <pre>CAACafGeometryEltSettingCtrl CAAICafGeometryEltSettingAtt libCAACafCtrlToolsOptions</pre>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Implementing CATIIniSettingManagment</h4>
+<p>The <i>CATIIniSettingManagment</i> interface manages general methods of the
+setting repository. The implemention class is the <code>CAAECafSettingManagmentForGeometryElt
+</code>class<code>.</code></p>
+<ol>
+  <li><b>Header file</b></li>
+  <p>Here is the <code>CAAECafSettingManagmentForGeometryElt</code> header file:</p>
+  <code>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CATIIniSettingManagment.h&quot; 
+#include &quot;CATEIniSettingManagment.h&quot; 
+
+class CAAECafSettingManagmentForGeometryElt: public <b>CATEIniSettingManagment</b>
+{
+  CATDeclareClass;
+
+  public:
+
+    CAAECafSettingManagmentForGeometryElt();
+
+    virtual ~CAAECafSettingManagmentForGeometryElt();
+
+  private:
+
+    CAAECafSettingManagmentForGeometryElt(const CAAECafSettingManagmentForGeometryElt &amp;iObjectToCopy);
+    CAAECafSettingManagmentForGeometryElt &amp; operator = (const CAAECafSettingManagmentForGeometryElt &amp;iObjectToCopy);
+
+};</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CAAECafSettingManagmentForGeometryElt</code> C++ class derives
+  from <i>CATEIniSettingManagment</i>. This adapter class is defined in the
+  InteractiveInterfaces framework. The <code>CATDeclareClass</code> macro
+  declares that the CAAECafSettingManagmentForGeometryElt class belongs to a
+  component. The copy constructor and the &quot; =&quot; operator are set as
+  private to prevent the compiler from automatically creating as public.</p>
+  <li><b>Source file</b></li>
+  </code>
+  <p>Here is the <code>CAAECafSettingManagmentForGeometryElt</code> source file:</p>
+  <code>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;CAAECafSettingManagmentForGeometryElt.h&quot;
+
+#include &quot;TIE_CATIIniSettingManagment.h&quot;
+TIE_CATIIniSettingManagment(CAAECafSettingManagmentForGeometryElt);
+
+CATImplementClass(CAAECafSettingManagmentForGeometryElt,
+                  DataExtension,
+                  CATBaseUnknown,
+                  <b>CAACafGeometryEltSettingCtrl</b>);
+
+CAAECafSettingManagmentForGeometryElt::CAAECafSettingManagmentForGeometryElt():
+                   CATEIniSettingManagment(&quot;<b>CAACafGeometryElt</b>&quot;)
+{
+}
+
+CAAECafSettingManagmentForGeometryElt::~CAAECafSettingManagmentForGeometryElt()
+{
+}</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CAAECafSettingManagmentForGeometryElt</code> class states that it
+  implements the <i>CATIIniSettingManagment</i> interface thanks to the <code>TIE_CATIIniSettingManagment</code>
+  macro. This extension class is dedicated to the controller component. The <code>CATImplementClass</code>
+  macro declares that the <code>CAAECafSettingManagmentForGeometryElt</code>
+  class is a data extension class, thanks to the <code>DataExtension</code>
+  keyword and that it extends the component whose main class is <code>CAACafGeometryEltSettingCtrl</code>.
+  The third parameter must always be set to <i>CATBaseUnknown</i>; it makes no
+  sense here as it.</p>
+  <p>The constructor calls the constructor of the <i>CATEIniSettingManagment</i>
+  adaptor using the name of the setting file, <code>CAACafGeometryElt</code><b>,
+  </b>the same name as in the CAAECafGeometryEltSettingAtt constructor. Refer to
+  the <a href="#Constructor - Destructor- Setting Att">Constructor-Destructor </a>section
+  in previous step.</p>
+  <p>The destructor is empty.</p>
+  </code>
+  <li><b>Interface dictionary</b></li>
+  <p>In the interface dictionary dedicated to the CAACATIAApplicationFrm.edu
+  framework, it is necessary to add the following line in order to declare that
+  the <i>CAACafGeometryEltSettingCtrl</i> component implements the <i>CATIIniSettingManagment</i>
+  interface in the <code>CAACafCtrlToolsOptions</code> module.</p>
+  <pre>CAACafGeometryEltSettingCtrl CATIIniSettingManagment libCAACafCtrlToolsOptions</pre>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+  <!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating the Factory for the Setting Controller</h4>
+<p>The <i>CAACafGeometryEltSettingCtrl</i> header class is located in a
+LocalInterfaces directory, so that the only way to retrieve a pointer on it, is
+to use the public global function. This function returns a pointer to an
+interface implemented by the setting controller component.</p>
+<ol>
+  <li><b>Header file</b></li>
+  <p>Here is the <code>GetCAACafGeometryEltSettingCtrl</code> header file:</p>
+  <code>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;IUnknown.h&quot;  
+#include &quot;CAACafCtrlToolsOptions.h&quot; 
+
+HRESULT ExportedByCAACafCtrlToolsOptions
+        <b>GetCAACafGeometryEltSettingCtrl</b>(const IID &amp; iInterfaceIdentifier ,
+                                        void ** oInterfacePointer) ;</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>GetCAACafGeometryEltSettingCtrl</code> global function is
+  exported by the <code>CAACafCtrlToolsOptions</code> module.</p>
+  </code>
+  <li><b>Source file</b></li>
+  <p>Here is the <code>GetCAACafGeometryEltSettingCtrl</code> source file:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>#include &quot;GetCAACafGeometryEltSettingCtrl.h&quot; 
+#include &quot;CAACafGeometryEltSettingCtrl.h&quot;    
+#include &quot;CATErrorDef.h&quot; 
+
+HRESULT <b>GetCAACafGeometryEltSettingCtrl</b>(const IID &amp; iInterfaceIdentifier,
+                                       void     ** oInterfacePointer)
+{
+   HRESULT rc = S_OK ;
+
+   if ( NULL != oInterfacePointer )
+   {
+       CAACafGeometryEltSettingCtrl * pCtrl = NULL ;
+       rc = ::CAACafGeometryEltSettingCtrl::<b>GetSettingController</b>(&amp;pCtrl);
+       if ( SUCCEEDED(rc) &amp;&amp; ( NULL != pCtrl) )
+       {
+         rc = pCtrl-&gt;<b>QueryInterface</b>(iInterfaceIdentifier,oInterfacePointer);
+  
+         pCtrl-&gt;Release();
+         pCtrl= NULL ;
+       } 
+       else
+       {
+           rc = E_FAIL ;
+       }
+   }else rc = E_FAIL ;
+
+   return rc ;
+}</pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>GetSettingController</code> method of the<b> </b><i>CAACafGeometryEltSettingCtrl</i>
+  class is called to the retrieve the unique pointer of the <i>CAACafGeometryEltSettingCtrl</i>
+  class. Then, a <code>QueryInterface</code> on the input interface is called,
+  to retrieve the requested interface pointer.</p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create a setting controller through the
+creation of:</p>
+<ul>
+  <li>An interface to manage each parameter of the setting file.</li>
+  <li>A main component class for the setting controller which implements
+    <ul>
+      <li>The interface, defined here before</li>
+      <li>The <i>CATIIniSettingManagment</i> interface defined in the
+        InteractiveInterfaces framework</li>
+    </ul>
+  </li>
+  <li>A global function to retrieve an interface pointer to this setting
+    controller</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAACafTechArticles/CAACafSettingController.htm">The
+      Setting Controller</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAACafSampleToolsOptions.htm">Creating a Property Page for
+      Application Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About
+      Globally Unique IDentifiers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysSettingRepositories.htm">Setting
+      Repositories and Attributes</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

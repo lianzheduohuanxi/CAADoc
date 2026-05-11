@@ -1,0 +1,405 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Sets of Constraints in an Assembly</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Assembly Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Sets of Constraints in an Assembly</h3>
+      <em>Create a set and group constraints under it</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAsmCstSet use case. This use
+      case explains how to create sets of constraints.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAAsmCstSet Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAAsmCstSet Do</a></li>
+            <li><a href="#How">How to Launch CAAAsmCstSet</a></li>
+            <li><a href="#Where">Where to Find the CAAAsmCstSet Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA Assembly Design. Its main intent is to create and  manage sets of constraints. More specifically, you will learn how to:</p>
+<ul>
+  <li>Load a document in session. The name of the document to load is a parameter of the command.</li>
+  <li>Create root set and add three children sets under it.</li>
+  <li>Group constraints under these sets.</li>
+  <li>Move a set in another set.</li>
+  <li>Remove a set.</li>
+  <li>Delete a set.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAsmCstSet Use Case</h3>
+<p>CAAAsmCstSet is a use case of the CAAAssemblyUI.edu framework that
+illustrates the CATAssemblyInterfaces framework capabilities.</p>
+<p>Before discussing the use case, some main concepts have to be introduced:</p>
+<ul>
+  <li>
+    <p>A product can contain many constraints defined between its components</li>
+  <li>
+    <p>Constraints can be classified or grouped in specification tree as per requirement.</li>
+  <li>
+    <p>Constraint status is not taken in to account while grouping: deactivated and even broken constraints can be grouped.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAsmCstSet Do ?</h4>
+<p>CAAAsmCstSet does the following:</p>
+<ul>
+  <li>Opens a CATProduct document.</li>
+  <li>Creates a root set and add three sets in it.</li>
+  <li>Move constraints named "Coincidence" under 3rd set.</li>
+  <li>Move 2nd set under 1st set.</li>
+  <li>Delete 1st set.</li>
+  <li>Remove 3rd set from its father set.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAsmCstSet</h4>
+<p>To launch CAAAsmCstSet, you will need to set up the build time
+environment, then compile CAAAsmCstSet along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAAsmCstSet InputDirectory\SetDeContraintes.CATProduct </pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAAsmCstSet InputDirectory/SetDeContraintes.CATProduct </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><code>InputDirectory:</code></td>
+      <td>The directory into which the document SetDeContraintes.CATProduct is stored, usually in the
+        resources directory of your RuntimeView</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAsmCstSet Code</h4>
+<p>The CAAAsmCstSet use case is located in the
+CAAAsmCstSet.m module of the CAAAssemblyUI.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAssemblyUI.edu\CAAAsmCstSet.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAssemblyUI.edu/CAAAsmCstSet.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight main steps in CAAAsmCstSet:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Creating a root set under the root product and adding three sets under it</a></li>
+  <li><a href="#Step3">Get all constraints under the root product</a></li>
+  <li><a href="#Step4">Move constraints named "Coincidence" under 3rd set</a></li>
+  <li><a href="#Step5">Move 2nd set under 1st set</a></li>
+  <li><a href="#Step6">Delete 1st set</a></li>
+  <li><a href="#Step7">Remove 3rd set from its father set</a></li>
+  <li><a href="#Step8">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAAsmCstSet begins by checking that the command lines contains one 
+argument with the command name "CAAAsmCstSet". Then it creates a session, and load the
+document which name is this argument. If the document does not exist a code 11 is returned.</p>
+<p> Then CAAAsmCstSet retrieves the document's root product, handled by the pointer spRootProduct
+which is a pointer to CATIProduct interface.
+This is the usual sequence to browse a product structure [<a href="#References">3</a>] and find the root product pointer
+to CATIProduct, from the document whose name is the argument SetDeContraintes.CATProduct above.</p>
+<table width="100%">
+  <tr>
+    <td><code>spRootProduct</code></td>
+    <td>A pointer to <i>CATIProduct</i> onto the root product of the document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a root set under the root product and adding three sets under it</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      int Created = 0;
+      CATIAsmCstSetFeature_var rootSet;
+      HRESULT hr_root = CATAsmConstraintSetServices::GetRootSet( <b>spRootProduct</b>, rootSet, TRUE );
+      if ( SUCCEEDED( hr_root ) &amp;&amp; NULL_var != rootSet)
+      {
+        CATIAsmCstSetFeature_var iPreviousSet ;
+        CATIAsmCstSetFeature_var newSet1;
+        CATIAsmCstSetFeature_var newSet2;
+        CATIAsmCstSetFeature_var newSet3;
+      
+        HRESULT rc1 = CATAsmConstraintSetServices::AddNewSetChild(rootSet,newSet1,iPreviousSet);
+        HRESULT rc2 = CATAsmConstraintSetServices::AddNewSetChild(rootSet,newSet2,iPreviousSet);
+        iPreviousSet = newSet1;
+        HRESULT rc3 = CATAsmConstraintSetServices::AddNewSetChild(rootSet,newSet3,iPreviousSet);
+        
+        if( SUCCEEDED(rc1) &amp;&amp; SUCCEEDED(rc2) &amp;&amp; SUCCEEDED(rc3) &amp;&amp; NULL_var != newSet1 &amp;&amp; NULL_var != newSet2 &amp;&amp; NULL_var != newSet3 )
+        {
+           Created = 1;
+        }
+      }
+      // Created set to one means that a root set and three child sets are created.
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<table>
+  <caption>Fig. 1: Product Document with three sets under the root set</caption>
+  <tr>
+    <td>
+     <img alt="Product Document" src="images/CstSet1.jpg" width="718" height="741"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+ <h4><a name="Step3"></a>Get all constraints under the root product</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      CATLISTV(CATBaseUnknown_var) cstChildrenList;
+      rc = rootSet-&gt;ListCstChildren(cstChildrenList);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Move constraints named "Coincidence" under 3rd set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      CATListValCATISpecObject_var listFromSet;
+      CATLISTV(CATBaseUnknown_var) cstToGroup;
+      for( int idxCst=1; idxCst &lt;= cstChildrenList.Size(); idxCst++)
+      {
+        CATIAlias_var alias( cstChildrenList[idxCst] );
+        if( NULL_var != alias )
+        {
+          CATUnicodeString cstName = alias-&gt;GetAlias();
+          if( cstName.SearchSubString("Coincidence") &gt; 0 )
+          {
+            cstToGroup.Append( cstChildrenList[idxCst] ); 
+            listFromSet.Append( rootSet );
+          }
+        }
+      }
+      
+      HRESULT rc2 = newSet3-&gt;MoveConstraintsFrom(listFromSet, cstToGroup);
+      // If rc2 succeeds, constraints are moved to 3rd set.
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<table>
+ <caption>Fig. 2: Product Document with constraints named "Coincidence" under Set.3</caption>
+ <tr>
+   <td>
+    <img alt="Product Document" src="images/CstSet2.jpg" width="718" height="741"></td>
+ </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Move 2nd set under 1st set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      rc = newSet1-&gt;MoveSetFrom(rootSet, newSet2  , NULL_var);
+      // If rc succeeds, 2nd set is moved under 1st set.
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<table>
+ <caption>Fig. 3: Product Document with Set.2 under Set.1</caption>
+ <tr>
+   <td>
+    <img alt="Product Document" src="images/CstSet3.jpg" width="718" height="741"></td>
+ </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Delete 1st set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      LifeCycleObject_var lco_set(newSet1);
+      if (NULL_var != lco_set)
+      {
+        lco_set-&gt;remove();
+        lco_set = NULL_var;
+      }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<table>
+ <caption>Fig. 4: Product Document after deletion of Set.1</caption>
+ <tr>
+   <td>
+    <img alt="Product Document" src="images/CstSet4.jpg" width="718" height="741"></td>
+ </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Remove 3rd set from its father set</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      CATIAsmCstSetFeature_var fatherSet;
+      if( SUCCEEDED( newSet3-&gt;GetFatherSet( fatherSet ) ) &amp;&amp; NULL_var != fatherSet )
+      {
+        rc = fatherSet-&gt;RemoveSetChild( newSet3 );
+        // If rc succeeds, 3rd set is removed.
+      }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<table>
+ <caption>Fig. 5: Product Document after deletion of Set.3</caption>
+ <tr>
+   <td>
+    <img alt="Product Document" src="images/CstSet5.jpg" width="718" height="535"></td>
+ </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step8"></a>Epilog</h4>
+<p>The document is removed and the session is closed</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      CATDocumentServices::Remove(*pProductDocument);
+      Delete_Session("Session_ASSEMBLY");
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to group constraints under sets by using the interface CATIAsmCstSetFeature</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [July 2015]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2015, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

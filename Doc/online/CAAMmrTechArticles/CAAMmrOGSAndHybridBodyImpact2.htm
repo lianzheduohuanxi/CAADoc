@@ -1,0 +1,606 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Mechanical Modeler Novelties- Impacts</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Mechanical Modeler Novelties- Impacts</h3>
+      <i><em>&nbsp;V5R13 &amp; V5R14 novelties</em></i></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Since V5R13, Mechanical Modeler has introduced novelties which can 
+      imply modifications in your existing code, or can have consequences on the 
+      way to lead up your new developments.</p>
+      <p>The article has been cut in two parts, the first one presents the 
+      novelties [<a href="#References">1</a>], and the current one exposes the 
+      consequences in term of code for each kind of CAA applications.</p>
+      <p>This article requires Mechanical Modeler knowledge. However to help the 
+      reader, along the paragraphs, technical articles explaining Mechanical 
+      Modeler concepts  are referenced.</p>
+          <ul>
+            <li><b><a href="#Read Part Contents">Read Part Contents</a></b></li>
+            <li><b><a href="#Geometrical Feature Instantiation">Geometrical
+              Feature Instantiation</a></b><ul>
+            <li><b><a href="#Surfacic Feature Instantiation">Surfacic Feature 
+            Instantiation</a></b></li>
+            <li><b><a href="#Solid Feature Instantiation">Solid Feature 
+            Instantiation</a></b></li>
+          </ul>
+            </li>
+            <li><b><a href="#Geometrical Feature Usage">Geometrical Feature
+              Usage</a></b></li>
+            <li><b>
+            <a href="#User Feature and Power Copy Instantiation and Usage">User Feature and
+              Power Copy Instantiation and Usage</a></b></li>
+            <li><b><a href="#CAA Geometrical Feature Creation">CAA Geometrical
+              Feature Creation</a></b></li>
+            <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+          </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><b><a name="Read Part Contents"></a><span style="font-weight: 400">Read Part Contents</li>
+</span></b></h3>
+  <p>You are an application consulting the contents of a Part document in
+  order to perform analysis or to do data transfers. You should know how
+  to <b> retrieve</b> the geometrical features of a set
+  [<a href="#References">2</a>], and their topological <b>result</b>
+  [<a href="#References">3</a>].</p>
+  <p>To retrieve the
+  contents of a set in order to retrieve its result, do not more use the <i>CATIDescendants</i>  interface,
+  but use the <b><i>CATIBodyRequest</i></b>&nbsp;interface. There are, at least,
+  two reasons:</p>
+    <ol>
+    <li>The <i>CATIBodyRequest </i> interface returns the relevant features of the set by excluding the
+  absorbed features
+  [<a href="#References">4</a>]. These features are not drawn, and even if they have a geometrical <b></b> result,
+      you must not take them into account.&nbsp;</li>
+  <li>The <i>CATIBodyRequest </i> 
+    interface directly retrieves the Solid feature which is the feature holding 
+  the result of a Body feature.&nbsp; Since the 
+  Body feature [<a href="#References">2</a>] can also contain surfacic features, its result is not more the last
+  feature of the set, easily retrieval by <i>CATIDescendants</i>, but  it is the last <b> 
+  <span style="font-weight: 400">solid</span></b> feature of the set.</li>
+  </ol>
+
+  <p>Read the referenced article [<a href="#References">3</a>] for more 
+  information about the behavior and usage of the <i>CATIBodyRequest</i> 
+  interface.</p>
+
+  <p> Nevertheless, if you need all the
+  aggregated geometrical features of a set, you can always use the <code>GetDirectChildren</code>
+  method of <i>CATIDescendants</i> with the <i>CATIGeometricalElement3D</i>
+  interface as filter.&nbsp;</p>
+
+  <h3><b><span style="font-weight: 400">
+  <a name="Geometrical Feature Instantiation"></a>Geometrical Feature
+    Instantiation</span></b></li> </h3>
+
+  <p>You are an application instantiating Dassault Systemes
+  (DS) or CAA geometrical features.&nbsp;The first question to solve is: <b>where</b>
+  will be inserted the new feature? Answering this question enables you to know the
+  valid geometrical features sets to insert your feature. Then, you could know
+  the impacts in your existing code. This section is divided in two parts:</p>
+  <ul>
+  <li> For surfacic features, refer to the
+  <a href="#Surfacic Feature Instantiation">Surfacic Feature Instantiation<b>
+  </b></a>section.</li>
+  <li> For solid features, refer to the <a href="#Solid Feature Instantiation">Solid
+  Feature Instantiation</a> section.&nbsp;</li>
+
+  </ul>
+
+  <h4><b><a name="Surfacic Feature Instantiation"></a>Surfacic Feature Instantiation</b></h4>
+
+  <p>You are an application instantiating Dassault Systemes
+  (DS) or CAA surfacic features. You can have three strategies
+  to choose the valid geometric features set:</p>
+
+  <ol>
+  <li><a name="You do not care of the geometrical features set&nbsp;"></a>You do not care of the geometrical features set&nbsp;</li>
+  <p>It means that the surfacic feature can be inserted equally into a Body, into an Ordered Geometrical set, or into a Geometrical Set.&nbsp;Using
+  this solution, you are DS compliant.&nbsp;&nbsp;</p>
+  <li><a name="You do not want an insertion into a solid and surfacic features set"></a>You do not want
+    an insertion into a solid and surfacic features set</li> (Body feature)<p>It means that the surfacic 
+  feature can be only inserted into a surfacic features set: either into an Ordered Geometrical set, or into a 
+  Geometrical Set, but not into a Body feature.</p>
+
+    <li><a name="You only want an insertion into a Geometrical Set"></a>You only want
+    an insertion into a Geometrical Set</li>
+  <p>It means that the surfacic feature will be always inserted into a non
+  ordered surfacic features set. You may choose this solution if do you not want 
+  to disturb your clients, or your end users. They will have the same 
+  interactive behavior as before V5R13.</p>
+
+  </ol>
+  <p>Now, for each strategy, the following table [<a href="#Tab.1">Tab.1</a>] summarizes 
+  the checks to do in your existing code. </p>
+  <table border="1" width="616">
+  <caption><a name="Tab.1">Tab.1</a> Surfacic Feature Instantiation Impacts&nbsp;</caption>
+    <tr>
+      <td width="100"><b>Strategic choice</b></td>
+      <td width="114"><b><i>CATIGSMProceduralView </i>&nbsp;use</b></td>
+      <td width="191"><b>Interface to filter a valid set</b></td>
+      <td width="74"><b>Insert the feature into the set</b></td>
+      <td width="62"><b>Migration between V5R13 and V5R14</b></td>
+    </tr>
+    <tr>
+      <td width="100">You do not care of the geometrical features set&nbsp;</td>
+      <td width="114">possible</td>
+      <td width="191">CATIGSMTool</td>
+      <td width="74">impact</td>
+      <td width="62">no</td>
+    </tr>
+    <tr>
+      <td width="100">You do not want an insertion into a solid and surfacic 
+      features set</td>
+      <td width="114">no more possible</td>
+      <td width="191">CATIMmiGeometricalSet</td>
+      <td width="74">impact</td>
+      <td width="62">R14 only</td>
+    </tr>
+    <tr>
+      <td width="100">You only want an insertion into a Geometrical Set</td>
+      <td width="114">no more possible</td>
+      <td width="191">CATIMmiNonOrderedGeometricalSet</td>
+      <td width="74">no impact</td>
+      <td width="62">no</td>
+    </tr>
+  </table>
+  <ul>
+  <li>The <b>first</b> column describes your strategy</li>
+  <li>If your code use the <i>CATIGSMProceduralView </i>interface, and its <code>InsertInProceduralView</code>
+  method, the <b>second</b> column shows if you can always use it. If you cannot 
+  use it, you should modify your code to do yourself the two steps which are 
+  described in the next point. Nevertheless, if you can always use it, do not 
+  forget to see the second step of the next point.
+  <p>-&gt; The <i>CATIGSMProceduralView interface</i> is not always possible because this interface allows the integration in any kind of
+      geometrical features set.&nbsp;</p>
+  <li><p>The elementary steps to insert a new feature in a
+  geometrical features set are:</p></li>
+   <ol>
+   <li>Retrieve
+  or create a valid geometrical features set </li>
+   <p>The <b>third</b> column names the interface which enables you to filter the
+   valid geometrical features set. If the current set, retrieval by the <code>GetCurrentTool</code>
+   method of the <i>CATIPrtPart</i> interface, does not implement the given
+   interface, the DS strategy is to create a new Geometrical Set. Check in your existing code the
+   filtering interface.&nbsp;</p>
+
+  <li>Insert the new surfacic feature
+  
+  into the set &nbsp;</li>
+   <p>The <b>forth</b> column shows if you have an impact in this step.&nbsp; </p>
+   <p>For those which did not use <i>CATIGSMProceduralView</i>, or cannot use it 
+   now, the following code shows, in bold, the lines to add in your existing 
+   code:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATIGSMTool *pIGSMToolOnMyTool = .... ;
+  
+  <b>int TypeOrderedSet = -1 ;
+  piGSMTool-&gt;GetType(TypeOrderedSet);</b>
+  <b>if (TypeOrderedSet == 1 ) 
+  {
+      aggregates </b>the new surfacic feature in pIGSMToolOnMyTool. 
+      
+  }else</b>
+  {// your previous code
+  }
+  
+  Update the feature
+  
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The way to aggregate the feature into the set is detailed in the "How Insert a Geometrical Feature into a Geometrical Features Set&quot; section of the referenced article [<a href="#References">1</a>].</p>
+<p>For every body, after the aggregation, you must call the <code>Insert</code> 
+method of the <i>CATMmrLinearBodyServices</i> class [<a href="#References">4</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  
+  <b>if (TypeOrderedSet == 1) 
+  {
+      CATMmrLinearBodyServices::Insert(pointerOnNewFeature);  
+  }</b>
+  ...</pre>
+    </td>
+  </tr>
+</table>
+  </ol>
+  <li><p>The <b> fifth</b> column shows if you have an impact in R14, if you have already
+  done a migration in R13 to take the Ordered Geometrical Set into account.</p></li>
+  </ul>
+  <p>Whatever the choice, you must check that the feature to insert implement <i>CATIInputDescription.</i>
+  It is mandatory for any surfacic features. For DS surfacic features, the
+  implementation has been done. You have only to check your CAA surfacic
+  features.</p>
+  <p>You can refer to the Combined Curve use case [<a href="#References">5</a>], 
+  where the three choices have been implemented.&nbsp; </p>
+    <h4><b><span style="font-weight: 400"><a name="Solid Feature Instantiation">
+    </a> </span> Solid Feature Instantiation </b>
+
+  </h4>
+  <p>You are an application instantiating Dassault Systemes
+  (DS) or CAA solid features. There are two cases to consider:</p>
+  <ul>
+  <li> DS solid features&nbsp;&nbsp;</li>
+  <p> Factories creating DS solid features, automatically integrate the solid feature in the current Body.&nbsp;</p>
+  
+  <li> CAA solid features&nbsp;&nbsp;</li>
+  <p>Your code to insert the feature into a set is based on the <i>CATIMechanicalTool</i> 
+  interface. So the insertion will be now either into a MechanicalTool, or an
+  HybridBody.&nbsp;</p>
+  <p>To aggregate the solid feature into the set there is no impact. But, after the update of your feature, you
+  must call the <code>Insert</code> method of the <i>CATMmrLinearBodyServices</i>
+  class if the set is a solid and surfacic features set.&nbsp;In bold, the new
+  lines to add in your existing code:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  Update the feature
+  CATIMechanicalTool *pIMechToolOnMyTool = .... ;
+  <b>CATIGSMTool *pIGSMOnMyTool= NULL ;
+  rc = pIMechToolOnMyTool-&gt;QueryInterface(IID_CATIGSMTool,(void)**&amp;pIGSMOnMyTool);
+  if (SUCCEEDED(rc) ) 
+  {
+      CATMmrLinearBodyServices::Insert(pointerOnNewFeature);  
+  }</b>
+  ...</pre>
+    </td>
+  </tr>
+</table>
+  </ul>
+  <h3><b><span style="font-weight: 400">
+<a name="Geometrical Feature Usage"></a>Geometrical Feature Usage</li> </span>
+    </b> </h3>
+
+  <p>You are an application handling geometrical features, in other words your
+  application modifies the contents of a set, modifies inputs of a feature, or
+  delete a feature. The following table [<a href="#Tab.2">Tab.2</a>] summarizes the prohibited operations, and the
+  new line of code
+  to write depending on the type of the set where the operation is done.&nbsp; </p>
+  <table border="2" width="579" height="137">
+  <caption><a name="Tab.2">Tab.2</a>  Impact Depending on the Type of
+    Set </caption>
+    <tr>
+      <td width="168" height="1" colspan="2"><b>Operation&nbsp;Types</b></td>
+      <td align="center" width="171" height="1">&nbsp;<b>OGS</b></td>
+      <td align="center" width="88" height="1">&nbsp;<b>Body</b></td>
+      <td align="center" width="116" height="1">&nbsp;<b>GS</b></td>
+    </tr>
+    <tr>
+      <td width="145" height="50">Moving surfacic features&nbsp;coming from a GS</td>
+      <td width="23" align="center" height="50"> to</td>
+      <td width="171" align="center" height="50"> 
+      <p align="center">impossible</p>
+      </td>
+      <td width="88" align="center" height="50">impossible</td>
+      <td width="116" align="center" height="50">
+        <p align="center">no impact</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="145" height="50">Moving surfacic features&nbsp;coming from an
+        OGS/Body</td>
+      <td width="23" align="center" height="50"> to</td>
+      <td width="171" align="center" height="50"> 
+      impossible
+      </td>
+      <td width="88" align="center" height="50">impossible</td>
+      <td width="116" align="center" height="50">
+        impossible
+      </td>
+    </tr>
+    <tr>
+      <td width="145" height="48">Reordering features&nbsp;</td>
+      <td width="23" align="center" height="48"> into</td>
+      <td width="171" align="center" height="48"> 
+        <p align="center">impossible</p>
+      </td>
+      <td width="88" align="center" height="48">impossible</td>
+      <td width="116" align="center" height="48">
+        <p align="center">no impact</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="145" height="16">Modifying feature inputs</td>
+      <td width="23" align="center" height="16"> into</td>
+      <td width="171" align="center" height="16"> 
+        <p align="left">After the update of the feature, 
+      <br>add an <code>Insert</code>  call</p>
+      </td>
+      <td width="88" align="center" height="16"> 
+        <p align="center">no impact</td>
+      <td width="116" align="center" height="16">
+        <p align="center">no impact</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="145" height="16">Deleting features</td>
+      <td width="23" align="center" height="16"> into</td>
+      <td width="171" align="center" height="16"> 
+        impossible
+      </td>
+      <td width="88" align="center" height="16"> 
+        impossible</td>
+      <td width="116" align="center" height="16">
+        <p align="center">no impact
+      </td>
+    </tr>
+  </table>
+  <p>Some explanations:</p>
+  <ul>
+  <li>No impact means that your existing code does not need any modification</li>
+  <li>It is the <code>Insert</code> method of the <i>CATMmrLinearBodyServices</i></li>
+  <li>It is impossible to reorder a feature inside an ordered set (OGS/Body) - Do not use
+    <i>CATIPrtProceduralView</i>&nbsp;and its <code> reorder</code> method.</li>
+  <li>It is impossible to move a feature to an ordered set,
+    or coming from an ordered set.</li>
+  </ul>
+  <p>Consequently, in your existing code, you must check the type of the set, and then execute the code depending on its
+  type such as described just above [<a href="#Tab.3">Tab.2</a>].</p>
+  <h3><b><span style="font-weight: 400">
+  <a name="User Feature and Power Copy Instantiation and Usage"></a>User Feature 
+  and Power Copy Instantiation and Usage &nbsp;</li> </span></b></h3>
+  <p>If you have an application instantiating Power Copy or User feature [<a href="#References">6</a>]
+  you
+  have nothing to do since the software of instantiation automatically manages
+  the insertion into a set whatever its type.&nbsp;</p>
+  
+  <p> For a User feature, solid or surfacic, you do not have to
+  implement the <i>CATIInputDescription</i> interface. It is automatically
+  managed by the User Feature software.</p>
+  
+  <p>If you have implemented the <i><b>CATIEdit</b></i>
+  interface on your &quot;typed&quot; surfacic User Feature, the only one impact
+  is to manage the current feature in the edition command. You should
+  set as current the edited instance, and restore the old current feature
+  once the edition is ended. Otherwise (for a solid User Feature), you have no impact,
+  because the current feature must be already managed by your command.&nbsp;</p>
+  
+  <p>The following table [<a href="#Tab.3">Tab.3</a>] summarizes these purposes:</p>
+  
+  <table border="1" width="597">
+  <caption><a name="Tab.3">Tab.3</a> User Feature and Power Copy Impacts</caption>
+    <tr>
+      <td width="126"><b>Operation</b></td>
+      <td align="center" width="233"><b><i>CATIInputDescription</i>&nbsp;</b>&nbsp;&nbsp;implementation</td>
+      <td align="center" width="216"><b>Edition</b></td>
+    </tr>
+    <tr>
+      <td width="126">Power Copy</td>
+      <td align="center" width="233">no implementation</td>
+      <td align="center" width="216">always impossible</td>
+    </tr>
+    <tr>
+      <td width="126">Surfacic User Feature</td>
+      <td align="center" width="233">no implementation</td>
+      <td align="center" width="216">manage the current feature such as
+        described below</td>
+    </tr>
+    <tr>
+      <td width="126">Solid User Feature&nbsp;</td>
+      <td align="center" width="233">no implementation</td>
+      <td align="center" width="216">no impact</td>
+    </tr>
+  </table>
+  <p>
+  For a surfacic User Feature, you can refer to the CAAMcaUdfEdition use case [<a href="#References">7</a>],
+  for a detailed implementation. This use case highlights the added lines
+  in the existing command.&nbsp;</p>
+  <p>If you have already done the migration in R13, your code is still valid for
+  the R14.</p>
+<h3><b><span style="font-weight: 400">
+<a name="CAA Geometrical Feature Creation"></a>CAA Geometrical Feature Creation</li></span></b></h3>
+<p>If you have an application
+  creating CAA geometrical feature [<a href="#References">8</a>], the following
+  table [<a href="#Tab.4">Tab.4</a>] summarizes the impacts in your existing 
+code. </p>
+  <table border="1" width="649">
+  <caption><a name="Tab.4">Tab.4</a> CAA Geometrical Feature Creation Impacts</caption>
+    <tr>
+      <td width="49"></td>
+      <td width="153"><b><i>CATIInputDescription</i>&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;
+        implementation</td>
+      <td width="229" valign="top">
+        <p align="center"><b>Creation </b> Command&nbsp;</p>
+      </td>
+      <td width="190"><b>Edition </b> Command<b> </b> (<i>CATIEdit </i>implementation<i>)</i></td>
+    </tr>
+    <tr>
+      <td width="49">Solid feature</td>
+      <td width="153">NO</td>
+      <td width="229">
+        * Manage the valid set -&nbsp;see the <a href="#Solid Feature Instantiation"> Solid
+            feature Instantiation</a> section&nbsp;
+        <br><br>* Add an <code>Insert</code>  call&nbsp;after the update of the feature&nbsp;
+      </td>
+      <td width="190" valign="middle">
+ no impact
+      </td>
+    </tr>
+    <tr>
+      <td width="49">Surfacic feature&nbsp;</td>
+      <td width="153">YES&nbsp;</td>
+      <td width="229" valign="top">
+        * Manage the valid set - see the 
+        <a href="#Surfacic Feature Instantiation">Surfacic Feature Instantiation</a><b>
+            </b> section.&nbsp;
+            <br>
+        <br>* If creation into an OGS/Body :
+        <br>&nbsp;&nbsp; - Manage the current feature <font size="1">(1)</font>&nbsp;&nbsp;
+        <br>&nbsp;&nbsp; - Add an <code>Insert</code>  call&nbsp;after the update of the feature&nbsp;
+      </td>
+      <td width="190" valign="top">
+        If feature is into OGS/Body :<p>&nbsp; - Manage the current
+        feature&nbsp;<font size="1">(2)</font>
+        <br>&nbsp; - Add an <code>Insert</code>  call&nbsp;after the update of the
+            feature&nbsp;
+            <br><br>Otherwise no modification
+      </td>
+    </tr>
+  </table>
+  <p>Some explanations:</p>
+  <ul>
+  <li>The <i>CATIInputDescription</i> implementation is not necessary for a 
+  solid feature, since the first solid feature of a Body is
+    always a
+  feature of creation, and the others are always a feature of modification. For
+    a surfacic feature it is mandatory.</li>
+  <li>All your creation command must manage the valid geometrical features set
+    depending on your strategic choice. It is explained in the 
+  <a href="#Geometrical Feature Instantiation">Geometrical Feature
+    Instantiation</a> section.&nbsp;</li>
+  <li>About the current feature management
+    <ul>
+      <li>For a solid feature, there is no need to add the management of the current
+        feature in your existing code, because it already does it.&nbsp;</li>
+      <li>For a surfacic feature
+        <ul>
+          <li>In the command of creation, the feature newly created must be set the
+    current one during the command (if the feature is created at the beginning
+    of the command), and stay (or become) the current one leaving the command. <font size="1">(1)</font>&nbsp;</li>
+          <li>In a command of edition, the edited feature must be set the current one
+    during the time of the command. The previous current feature must be
+    restored at the end of the command. <font size="1">(2)</font>&nbsp;</li>
+        </ul>
+      </li>
+    </ul>
+    </li>
+  <li>It is the <code>Insert</code> method of the <i>CATMmrLinearBodyServices </i>class&nbsp;</li>
+  <li>In your commands of creation and edition, check that you use the <i>CATFeatureImportAgent</i>
+    class to select the input of your features.&nbsp;&nbsp;</li>
+  
+  </ul>
+  <p>You can refer to the Combined Curve use case for the implementation of the
+  <i>CATIInputDescription</i>  interface [<a href="#References">9</a>], and a
+  sample of existing command of creation and edition, updated to integrate the
+  R13 and R14 novelties[<a href="#References">10</a>].</p>
+ 
+ <p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>V5R13 and V5R14 have introduced novelties which can involved your existing 
+code. The main code impacts are:</p>
+<ul>
+  <li>Use <i>CATIBodyRequest</i>&nbsp; in place of <i>CATIDescendants </i>to 
+  retrieve the topological result of the set</li>
+  <li>Use the Insert method of the <i>CATMmrLinearBodyServices </i>if the 
+  feature is integrated in an ordered set.</li>
+  <li>Use the <i>CATFeatureImportAgent</i> class in your edition/creation 
+  command</li>
+  <li>Eventually manage the current feature in your edition/creation command</li>
+  <li>Implement <i>CATIInputDescription</i> on your CAA surfacic feature</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrOGSAndHybridBodyImpact1.htm">Mechanical Modeler Novelties 
+    - Presentation</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification Container-
+      Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrOrderLinearBody.htm">Order and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInstantiation.htm">Instantiating Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">An Overview of Power Copies and User Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMcaUseCases/CAAMcaUdfEdit.htm">Creating a
+      Command to Edit a User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAMmrCreatingNewFeat.htm">Creating a New StartUp Deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInputDescription.htm">Integrating
+      Combined Curves inside Ordered Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIEdit.htm">Editing Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Mar 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

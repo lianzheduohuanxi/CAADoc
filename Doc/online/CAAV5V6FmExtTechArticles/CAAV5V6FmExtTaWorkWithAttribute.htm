@@ -1,0 +1,430 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Working with CATFmAttributeValue class</title>
+
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Working with CATFmAttributeValue Class</h3>
+      <p><em>Explains the different methods of the CATFmAttributeValue class and also the Use-Case</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article presents the different methods of the 
+		<em>CATFmAttributeValue</em>. The code presented in this article is the 
+		analysis of the use case </p>
+		<ul>
+			<li><a href="#Where to find the code">Where to Find 
+			the Code</a></li>
+			<li><a href="#Constructors With Value as Input">Constructors</a></li>
+			<li><a href="#Useful Methods">Useful Methods</a></li>
+			<li><a href="#Single Value Management">Single Value Management</a><ul>
+				<li><a href="#For Primitive Value">For Primitive Value</a></li>
+				
+			</ul>
+			</li>
+			<ul>
+				<li><a href="#For Feature Value">For Feature Value</a></li>
+			</ul>
+			<li><a href="#Multiple Value Management">Multiple value Management</a></li>
+			<li><a href="#Conversion Methods">Conversion Methods </a>
+			<ul>
+				<li><a href="#Buildxxx methods">BuildFrom methods</a></li>
+				<li><a href="#Convertxxx methods">ConvertTo methods</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Where to find the code"></a>Where to Find the Code</h2>
+<p>The code is located in the <code>CAAV5V6FmExtWorkingWithAttrValue.m</code> use case module of the
+<code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\</code><code>CAAV5V6FmExtWorkingWithAttrValue</code><code>.m</code></p>
+<p>where <code>InstallRootDirectory</code> [<a href="#References">3</a>] 
+is the root directory of your CAA installation. It is made of a unique source 
+file named
+<code>CAAV5V6FmExtWorkingWithAttrValue.cpp</code></p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+<h2><a name="Constructors With Value as Input"></a>Constructors</h2>
+<p>The <em>CATFmAttributeValue</em> class provides three kinds of <strong>constructors</strong> :</p>
+<ol>
+	<li>An empty constructor. </li>
+	<li>A copy constructor</li>
+	<li>With a value as input. The value can only be an integer, a 
+	CATUnicodeString,&nbsp; or a double.</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Useful Methods"></a>Useful Methods</h2>
+<p>On a CATFmAttributeValue class instance, three methods are important</p>
+<ul>
+	<li><strong>Size</strong>
+	<p>An instance without value, is a class whose the size is zero. The size can be greater than one if the attribute is a list.&nbsp; 
+	When only one value is associated with the instance, the size is 1.&nbsp; 
+	Examples </p>
+	<ul>
+		<li>CATFmAttribute MyValue ;&nbsp;&nbsp;&nbsp; ( size = 0) </li>
+		<li>CATFmAttributeValue MyVal (2.3).&nbsp; size = 1</li>
+		<li>CATfmAttributeValue MyVal&nbsp; +&nbsp;&nbsp; MyVal-&gt;SetInteger(1) ;&nbsp; 
+		size = 1 ;</li>
+		<li>CATFmAttributeValue MyVal +&nbsp; MyVal-&gt;Append(CATFmAttributeValue 
+		(1.3)) + MyVal-&gt;Append(CATFmAttributeValue (1.4)), size = 2</li>
+	</ul></li>
+	<li><strong>Kind</strong>
+	<p>This method returns a CATFmAttributeAndValueKind. This enumeration is 
+	without ambiguity for the basic type ( boolean, int, external, feature).&nbsp; 
+	Two cases are more &quot;specific&quot;:</p>
+	<ul>
+		<li><code>CATFmKind_void</code> : While the class is without a value</li>
+		<li><code>CATFmKind_any</code> : when the class has a list of value with different 
+		types :&nbsp;&nbsp;&nbsp; MyVal-&gt;Append(CATFmAttributeValue 
+		(1.3)) + MyVal-&gt;Append(CATFmAttributeValue (&quot;String&quot;)). <br>
+		(This kind of class has no sense for a feature attribute)</li>
+	</ul>
+	</li>
+	<li><strong>Clear</strong> <p>This method removes the value associated to the instance. After this call, the size of the class instance is zero. </p></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Single Value Management"></a>Single Value Management</h2>
+<p>This section deals with the methods to get the value associated with a 
+class instance, when its value is unique, and to valuate it with a unique value. 
+The methods Get, and Set are fundamentally built on the same schema, and have 
+the same specifications. </p>
+<ul>
+	<li><strong>Getxxx</strong> <br>
+	<p>Just below one example, </p>
+	<pre class="code">HRESULT <strong>GetString</strong>(CATUnicodeString&amp; oUnicodeString) const;</pre>
+
+	 <p>These kinds of methods fail if</p><ul>
+		<li>The class is without a value, or contains more than one value, 
+		in other words&nbsp;its size is not exactly 1</li>
+		<li>The type of the value is not correct (GetString fails if the 
+		value is an integer)</li>
+	</ul>
+	</li>
+	<li><strong>Setxxx</strong> <p>Just below one example, </p>
+	<pre class="code">CATFmAttributeValue&amp; <strong>SetString</strong>(const CATUnicodeString&amp; iUnicodeString);</pre>
+
+	 <p>These kind of methods is without HRESULT. </p> 
+   </li>
+</ul>
+<p>Even if they are almost identical, lets us present them one by one. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="For Primitive Value"></a>For Primitive Value</h3>
+<p>The table sums up methods name according to the type.</p>
+<table >
+	<tr>
+		<th>Type</th>
+		<th>Getxxx</th>
+		<th>Setxxx</th>
+		<th>Argument</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>boolean</td>
+		<td>GetBoolean</td>
+		<td>SetBoolean</td>
+		<td>CATBoolean</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>byte</td>
+		<td>GetByte</td>
+		<td>SetByte</td>
+		<td>unsigned char (8 bits)</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>integer</td>
+		<td>GetInteger</td>
+		<td>SetInteger</td>
+		<td>integer (32bits)</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>double</td>
+		<td>GetDouble</td>
+		<td>SetDouble</td>
+		<td>double (64 bits)</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>string</td>
+		<td>GetString</td>
+		<td>SetString</td>
+		<td>CATUnicodeString</td>
+		<td>&nbsp;</td>
+	</tr>
+	
+
+</table>
+<p>One example extracted from the use case <a href="#Where to find the code">#</a></p>
+		 <pre class="code">
+...
+CATFmAttributeValue AttrValueWithDefaultConstructor;
+unsigned char iByte = 3;
+AttrValueWithDefaultConstructor.<strong>SetByte</strong>(iByte);
+...
+unsigned char iByte = 0;
+AttrValueWithDefaultConstructor.<strong>GetByte</strong>(iByte);
+...
+</pre>
+<p>The byte could be expressed as an integer between [0..255], [0x00..0xFF], or an 
+ASCII value between 0 and 255.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="For Feature Value"></a>For Feature Value</h3>
+<p>Conversely to the other types, there are more methods. </p>
+<p>for <strong>Get</strong> purpose :</p>
+	<pre class="code">
+HRESULT <strong>GetFeature</strong>(CATFmFeatureFacade&amp; oFeatureFacade) const;
+HRESULT QueryInterfaceOnFeature(const IID &amp; iIID, void ** oPtr) const;
+CATBaseUnknown_var <strong>GetFeature</strong>() const;  
+</pre>
+
+	
+	 <p>The first two methods fail if the class does not contain a unique and 
+		valid feature (valid is explained just below) </p>
+<p>For <strong>Set</strong> purpose</p>
+	<pre class="code">
+CATFmAttributeValue&amp; <strong>SetFeature</strong>(const CATFmFeatureFacade&amp; iFeatureFacade);
+CATFmAttributeValue&amp; <strong>SetFeature</strong>(const CATBaseUnknown* iObject);
+</pre>
+
+	
+	 <p>The feature passed either explicitly as a <em>CATBaseUnknown</em> 
+		pointer, or through a facade bound to the feature, is kept by the class 
+		instance as a pointer, but it is a &quot;weak&quot; link. In other words, the
+		<code>SetFeature</code> methods do not AddRef the feature pointer. So 
+		the&nbsp; feature associated with a class instance can be &quot;invalid&quot; when 
+		the implementation class of the feature is invalided, or deleted. It is the case when 
+		the feature is deleted.&nbsp; </p>
+	<pre class="code">
+CATFmAttributeValue Value;
+Value.<strong>SetFeature</strong>(pIOnMyfeature);
+CATFmFeatureFacade facade (Credential,pIOnMyfeature) ;
+facade-&gt;<strong>DeleteSelf</strong>();
+CATFmFeatureFacade FacadeTest ;
+rc = Value.<strong>GetFeature</strong>(FacadeTest );  // rc = E_FMINVALIDFEATURE 
+</pre>
+
+	
+<p>The feature being logically deleted (it does not exist anymore in a 
+container), its implementation class is invalided. </p>
+			 
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Multiple Value Management"></a>Multiple Value Management</h2>
+<p>You retrieve the usual methods to manage a list:</p>
+<ul>
+	<li><strong>operator []</strong>, to get the i value</li>
+	<li>HRESULT <strong>Get</strong>(int iIndex, CATFmAttributeValue &amp; oValue) const;, to get the i value</li>
+	<li>HRESULT <strong>Set</strong>(int iIndex,const CATFmAttributeValue &amp; iValue);, to change the i value</li>
+	<li><strong>Append</strong> ( at the end)</li>
+	<li><strong>Insert</strong> ( to add a new value at a given position)</li>
+	<li><strong>Remove</strong> ( to remove one element of the list)</li>
+	<li><strong>Swap</strong> , to switch 2 values in the list</li>
+	<li><strong>CreateEmptyList</strong>, it initializes a list of zero element 
+	with a specific type.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Conversion Methods"></a>Conversion Methods</h2>
+<h3><a name="Buildxxx methods"></a>BuildFromxxx methods</h3>
+<p>These methods enables you to easily assign a list of xxx to a class instance. 
+There are&nbsp;two groups of methods:</p>
+<ul>
+	<li><strong>BuildFromCArrayOf</strong>xxx, where xxx = Boolean, Byte, Int, 
+	Double, String.
+	<pre class="code">CATFmAttributeValue&amp; <strong>BuildFromCArrayOfBoolean</strong>(const CATBoolean* iArrayOfBoolean,int iSize);
+CATFmAttributeValue&amp; <strong>BuildFromCArrayOfByte</strong>(const unsigned char* iArrayOfByte,int iSize);
+CATFmAttributeValue&amp; <strong>BuildFromCArrayOfInt</strong>(const int* iArrayOfInteger,int iSize);
+CATFmAttributeValue&amp; <strong>BuildFromCArrayOfDouble</strong>(const double* iArrayOfDouble,int iSize);
+CATFmAttributeValue&amp; <strong>BuildFromCArrayOfString</strong>(const CATUnicodeString* iArrayOfUnicodeString,int iSize);
+</pre>
+
+	<p>These methods creates a list with the input values. The type of the class 
+	instance will be defined by the method name. </p>
+	<p>One example extracted from the use case <a href="#Where to find the code">#</a></p>
+	<pre class="code">
+...
+unsigned char iArrayOfByte[] = { 'G', 'a', 3, 0x0F};
+AttrValueSample.<strong>BuildFromCArrayOfByte</strong>(iArrayOfByte,4);
+...
+CATUnicodeString iArrayOfString[2] ;
+iArrayOfString[0] = "Hello";
+iArrayOfString[1] = "World";
+AttrValueSample.<strong>BuildFromCArrayOfString</strong>(iArrayOfString,2);
+...
+CATBoolean iArrayOfByte1[] = { TRUE, FALSE, };
+AttrValueSample.<strong>BuildFromCArrayOfBoolean</strong>(iArrayOfByte1,2);
+...
+</pre>
+<p>The <code>BuildFromCArrayOfxxx</code> is recommended for small lists, and 
+lists you know the size of. For example when you know that the position of 
+a point is given by three doubles (x,y,z). </p>
+	</li>
+	<li><strong>BuildFromListOf</strong>xxx, where xxx=Double, String, Features<pre class="code">CATFmAttributeValue&amp; <strong>BuildFromListOfDouble</strong>(const CATRawColldouble&amp; iListOfDouble); 
+CATFmAttributeValue&amp; <strong>BuildFromListOfString</strong>(const CATListValCATUnicodeString&amp; iListOfUnicodeString);
+CATFmAttributeValue&amp; <strong>BuildFromListOfFeatures</strong>(const CATListValCATBaseUnknown_var&amp; iListOfFeature);
+</pre>
+<p>These methods creates a list with the input values. The type of the class 
+	instance will be defined by the method name. </p>
+	<p>and Int</p>
+	<pre class="code">CATFmAttributeValue&amp; <strong>BuildFromListOfInt</strong>(const CATRawCollint&amp; iListOfInt,<strong>CATFmAttributeAndValueKind iKind=CATFmKind_int</strong>);</pre>
+ <p>Unlike the previous method, this one can convert the input 
+	integer list in another format such as integer, boolean or byte.</p>
+	<p>One example extracted from the use case <a href="#Where to find the code">#</a></p>
+	<pre class="code">
+...
+<strong>CATListValCATUnicodeString</strong> iListOfUnicodeString;
+CATUnicodeString UnicodeStr1("Hello");
+iListOfUnicodeString.Append();
+CATUnicodeString UnicodeStr2("World");
+iListOfUnicodeString.Append(UnicodeStr2);
+AttrValueSample.<strong>BuildFromListOfString</strong>(iListOfUnicodeString);
+...
+<strong>#include "CATListOfDouble.h"</strong> 
+<strong>CATRawColldouble</strong> iListOfDouble;
+iListOfDouble.Append(1.4);
+iListOfDouble.Append(-3.84);
+iListOfDouble.Append(100.2);
+AttrValueSample.<strong>BuildFromListOfDouble</strong>(iListOfDouble);
+...
+<strong>CATListValCATBaseUnknown_var</strong> iListOfFeature;
+iListOfFeature.Append(FeatFacadeOnDeleteList.GetFeature());
+iListOfFeature.Append(FeatFacadeOnDeleteBasic1.GetFeature());
+iListOfFeature.Append(FeatFacadeOnDeleteBasic2.GetFeature());
+AttrValueSample.<strong>BuildFromListOfFeatures</strong>(iListOfFeature);
+...
+<strong>#include "CATListOfInt.h" </strong>
+CATRawCollint iListOfInt;
+iListOfInt.Append(1);
+iListOfInt.Append(0);
+iListOfInt.Append(1);
+iListOfInt.Append(8);
+AttrValueBuiltFromListOfInt.<strong>BuildFromListOfInt</strong>(iListOfInt,CATFmKind_int);
+</pre>
+<p>The <code>BuildFromListOfxxx </code>can always be used. Note that you don't have to manage the list 
+size allocation. </p>
+	</li>
+	
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Convertxxx methods"></a>ConvertToxxx methods</h3>
+<p>These methods enable you to retrieve the value as a list of xxx. 
+There are&nbsp;two groups of methods:</p>
+<ul>
+	<li><strong>ConvertToCArrayOf</strong>xxx, where xxx = Boolean, Byte, Int, 
+	Double, String. 
+	<p>Just below on example:</p>
+	<pre class="code">HRESULT <strong>ConvertToCArrayOfBoolean</strong>(CATBoolean * oArrayOfBoolean,int iArraySize) const;
+HRESULT <strong>ConvertToCArrayOfByte</strong>(unsigned char* oArrayOfByte,int iArraySize) const;
+HRESULT <strong>ConvertToCArrayOfInt</strong>(int* oArrayOfInteger,int iArraySize) const;
+HRESULT <strong>ConvertToCArrayOfDouble</strong>(double* oArrayOfDouble,int iArraySize) const;
+HRESULT <strong>ConvertToCArrayOfString</strong>(CATUnicodeString* oArrayOfString,int iArraySize) const;
+</pre>
+
+	<p>These methods reset and fill in the list with the values of the class 
+	instance. The type of the class instance must match the method name, and
+	<code>iArraySize</code> must be exactly the size of the list of the current
+	<em>CATFmAttributeValue</em>. The size given as input is an information for 
+	the developer when reading his/her code. </p>
+	<p>One example extracted from the use case <a href="#Where to find the code">#</a></p>
+	<pre class="code">
+...
+double oArrayOfDouble[5] ;
+rc = AttrValueSample.<strong>ConvertToCArrayOfDouble</strong>(oArrayOfDouble,5);
+...
+</pre>
+<p style="height: 15px">The C<code>onvertToCArrayOfxxx</code> is recommended 
+for small lists, and for lists which you know the size of. Otherwise you have to manage 
+the de-allocation.</p>
+	</li>
+	<li><strong>ConvertToListOf</strong>xxx, where xxx=Double, String, Features,
+	<pre class="code">HRESULT <strong>ConvertToListOfInt</strong>(CATRawCollint&amp; oListOfInteger) const; 
+HRESULT <strong>ConvertToListOfDouble</strong>(CATRawColldouble&amp; oListOfDouble) const;
+HRESULT <strong>ConvertToListOfString</strong>(CATListValCATUnicodeString&amp; oListOfString) const;
+HRESULT <strong>ConvertToListOfFeatures</strong>(CATListValCATBaseUnknown_var&amp; oListOfFeature) const;</pre>
+	<p>These methods reset and fill in the list with the values of the class 
+	instance. The type of the class 
+	instance must match the method name. </p>
+	<p>and Int</p>
+	<pre class="code">HRESULT <strong>ConvertToListOfInt</strong>(CATRawCollint&amp; oListOfInteger) const; 
+</pre>
+	<p>These methods reset and fill in the list with the values of the class 
+	instance. The type of the class instance can be integer, boolean and byte.</p>
+	<pre class="code">HRESULT <strong>ConvertToListOfInt</strong>(CATRawCollint&amp; oListOfInteger) const; 
+HRESULT <strong>ConvertToListOfDouble</strong>(CATRawColldouble&amp; oListOfDouble) const;
+HRESULT <strong>ConvertToListOfString</strong>(CATListValCATUnicodeString&amp; oListOfString) const;
+HRESULT <strong>ConvertToListOfFeatures</strong>(CATListValCATBaseUnknown_var&amp; oListOfFeature) const;</pre>
+	<p>One example extracted from the use case <a href="#Where to find the code">#</a></p>
+	<pre class="code">CATRawColldouble oListOfDouble;
+rc = AttrValueSample.<strong>ConvertToListOfDouble</strong>(oListOfDouble);</pre>
+
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article explained the methods of the <em>CATFmAttributeValue</em> class.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAAV5V6FmExtTaLinkingFeatures2.htm">Understanding Link Attribute - 2</a></td>
+	</tr>
+
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [July 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

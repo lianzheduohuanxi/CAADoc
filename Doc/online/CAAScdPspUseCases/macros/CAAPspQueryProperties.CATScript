@@ -1,0 +1,388 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrates the use of IDL interfaces
+'                 CATIAPspAttribute and CATIAPspID 
+'  
+'   Assumption:   Looks for document CAAPspEduIn.CATProduct.  
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+Dim strMessage_g As String
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String 
+    Dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+    
+
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspQueryProperties.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+       
+    ' Find the top node of the Distribute System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    Dim objPspID         As PspID
+
+    Dim objPspAttribute   As PspAttribute
+    Dim objPspPhysical    As PspPhysical
+    Dim objLPhysicals     As PspListOfObjects
+    Dim intNbPhysical     As Integer
+    Dim ePspIDLDomainID   As CatPspIDLDomainID
+    Dim objLStrAttrNames  As PspListOfBSTRs
+
+    Dim intIndex          As Integer
+    Dim intNbAttr         As Integer
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( Not(objPspApplication Is Nothing ) ) Then        
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+
+    '-----------------------------------------------------------------------
+    ' Get PspPhysical object
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+                        
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory",objPspApplication )      
+
+      If ( Not ( objPspAppFactory Is Nothing ) ) Then
+
+        Set objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+        If ( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count > 0 ) ) Then      
+          Set objPspPhysical =  objLPhysicals.Item( 1, "CATIAPspPhysical" )
+        End If
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    ' Get PspID object and query ID information
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) ) Then  
+      Set objPspID = objPspWorkbench.GetInterface("CATIAPspID",objPspPhysical )      
+
+      If( Not ( objPspID Is Nothing )) Then
+        QueryPspID objPspID
+      End if
+
+    End If
+    
+
+    '-----------------------------------------------------------------------
+    ' Get PspAttribute object and query Attribute information
+    '-----------------------------------------------------------------------
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) ) Then  
+        
+      Set objPspAttribute = objPspWorkbench.GetInterface("CATIAPspAttribute",objPspPhysical )      
+      
+      If ( Not ( objPspAttribute Is Nothing ) ) Then        
+     
+        '----------------------------------------------------------------------
+        ' List Attributes for CATPIP domain
+        '----------------------------------------------------------------------
+        
+        Set objLStrAttrNames= objPspAttribute.ListAttributes (ePspIDLDomainID )
+       
+        If ( Not ( objLStrAttrNames Is Nothing ) ) Then   
+          intNbAttr = objLStrAttrNames.Count
+          If ( intNbAttr > 0 ) Then            
+            QueryPspAttribute objPspWorkbench, objPspAttribute, objLStrAttrNames              
+          End If 
+        End If
+      End If              
+      
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objLPhysicals
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | QueryPspID methods 
+' | 
+' | Input: objPspIDArg        : PspID object
+' |        
+' |        
+' -----------------------------------------------------------------------------
+
+Private Sub QueryPspID (objPspIDArg As PspID)  
+    Dim strID            As String 
+    Dim str2ID           As String     
+    Dim strGenIDNoSeq    As String     
+    Dim strGenAndPutID   As String     
+    Dim strNewID         As String     
+    Dim bIsIDGenerated   As Boolean
+
+    strMessage_g =  strMessage_g & _
+      "     --------Display ID information -----    " & vbCrLf
+    
+    If ( Not ( objPspIDArg Is Nothing ) ) Then         
+      strID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &  "Object ID =" & strID & vbCr                       
+      
+      strNewID = strID & "NewID"
+
+      objPspIDArg.SetID strNewID
+
+      str2ID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &  "New ID set =" & str2ID & vbCr                       
+
+      '----------------------------------------------------------
+      ' Generate ID without regenerating sequence num
+      '----------------------------------------------------------
+
+      strGenIDNoSeq = objPspIDArg.GenIDNoGenSeqNum
+
+      '----------------------------------------------------------
+      ' Generate and Put ID on the object
+      '----------------------------------------------------------
+
+      strGenAndPutID = objPspIDArg.GenAndPutID
+
+      strMessage_g = strMessage_g &  "Generated ID =" & strGenAndPutID & vbCr                       
+     
+      '----------------------------------------------------------
+      ' Is ID generated
+      '----------------------------------------------------------
+  
+  
+      bIsIDGenerated = objPspIDArg.IsIDGenerated
+      If ( bIsIDGenerated   ) Then
+        strMessage_g = strMessage_g &  "ID is generated " & vbCr         
+      Else
+        strMessage_g = strMessage_g &  "ID is not generated " & vbCr         
+      End If
+
+    End If 
+
+End Sub
+
+' -----------------------------------------------------------------------------
+' | QueryPspAttribute methods 
+' | 
+' | Input: objPspWorkbenchArg : PspWorkbench object
+' |        objPspIDArg        : PspID object
+' |        objLStrAttrNamesArg: PspListOfBSTRs object  
+' -----------------------------------------------------------------------------
+
+
+Private Sub QueryPspAttribute (objPspWorkbenchArg As PspWorkbench, _
+                               objPspAttributeArg As PspAttribute, _
+                               objLStrAttrNamesArg As PspListOfBSTRs )  
+
+    Dim intNbAttr       As Integer
+    Dim intIdx          As Integer
+    Dim strAttrName     As String     
+    Dim strAttrValue    As String     
+
+    Dim eAttrDataType           As  CatPspIDLAttrDataType
+    Dim objAttrParam            As  Parameter
+    Dim objAttrRealParam        As  RealParam
+    Dim objAttrDimensionParam   As  Dimension
+    Dim objAttrUnit             As  Unit
+    Dim bIsDiscrete             As  Boolean
+    Dim bIsDerived              As  Boolean
+    Dim iDiscreteType           As  Short
+    Dim objLIntDiscreteVals     As  PspListOfLongs
+    Dim objLStrDiscreteVals     As  PspListOfBSTRs
+    Dim objLStrEncDiscreteVals  As  PspListOfBSTRs
+    Dim objLStrDecDiscreteVals  As  PspListOfBSTRs
+
+    strMessage_g =  strMessage_g & _
+      "     --------Display Attribute information -----    " & vbCrLf
+
+    intNbAttr = objLStrAttrNamesArg.Count
+
+    strMessage_g = strMessage_g &  "Number of Attributes = " & intNbAttr & vbCrLf
+    
+    If ( Not ( objPspAttributeArg Is Nothing ) And _
+         Not ( objPspWorkbenchArg Is Nothing )) Then
+
+      If ( intNbAttr > 12 ) Then
+        intNbAttr = 12
+        strMessage_g = strMessage_g &  "Displaying first 12 attributes" & vbCr
+      End If 
+
+      For intIdx = 1 To intNbAttr      
+        strAttrName = objLStrAttrNamesArg.Item (intIdx)
+
+        '-----------------------------------------------------
+        ' Getting type, Discrete, Derived status of the attribute
+        '-------------------------------------------------------
+
+        eAttrDataType = objPspAttributeArg.GetType (strAttrName)
+
+        iDiscreteType = objPspAttributeArg.IsDiscrete ( strAttrName, bIsDiscrete)
+
+        bIsDerived =  objPspAttributeArg.IsDerived (strAttrName)
+        
+        If ( bIsDerived ) Then
+          strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+          strMessage_g = strMessage_g &  "  is Derived" & vbCr        
+        
+        End If '------ bIsDerived
+      
+        '-------------------------------------------------
+        ' Handling Integer, String and boolean attributes
+        '-------------------------------------------------
+
+        If ( (eAttrDataType = catPspIDLInteger ) Or _            
+            (eAttrDataType = catPspIDLString ) Or _ 
+            (eAttrDataType = catPspIDLBoolean ) ) Then                      
+
+          Set objAttrParam = objPspAttributeArg.GetParameter (strAttrName)          
+   
+          If ( Not( objAttrParam Is Nothing) ) Then
+            strAttrValue = objAttrParam.ValueAsString                        
+            strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+            strMessage_g = strMessage_g &  " = " & strAttrValue 
+          End If 
+
+          If ( bIsDiscrete ) Then
+            strMessage_g = strMessage_g &  "  is Discrete" 
+            
+            '--------------------------------------------
+            ' Get discrete values for String attribute
+            '--------------------------------------------
+            If (eAttrDataType = catPspIDLString  )Then
+              If ( iDiscreteType = 1) Then
+                Set objLStrDiscreteVals = _
+                  objPspAttributeArg.ListStringDiscreteValues  (strAttrName )                                                                                            
+              End If
+
+              If ( iDiscreteType = 2) Then
+                          
+                objPspAttributeArg.ListEncodedDecodedDiscreteValues strAttrName, _
+                                 ObjLStrEncDiscreteVals, ObjLStrDecDiscreteVals            
+                                                            
+              End If
+            End If    
+
+            '--------------------------------------------
+            ' Get discrete values for Integer attribute
+            '--------------------------------------------
+            
+            If (eAttrDataType = catPspIDLInteger  )Then
+              If ( iDiscreteType = 1) Then
+                Set objLIntDiscreteVals = _
+                  objPspAttributeArg.ListIntegerDiscreteValues (strAttrName )                                                                                            
+              End If
+
+              If ( iDiscreteType = 2) Then
+                          
+                objPspAttributeArg.ListEncodedDecodedDiscreteValues strAttrName, _
+                                 ObjLStrEncDiscreteVals, ObjLStrDecDiscreteVals            
+                                                            
+              End If
+            End If           
+                   
+          End If
+          strMessage_g = strMessage_g & vbCr
+        End If         
+
+        '-------------------------------------------------
+        ' Handling Real (Double) attribute
+        ' Some attribute could be with magnitude
+
+        If( (eAttrDataType = catPspIDLDouble ) ) Then                                          
+          Set objAttrRealParam = objPspAttributeArg.GetParameter (strAttrName)
+
+          If ( Not( objAttrRealParam Is Nothing) ) Then          
+            ' -------------------------------------
+            ' Checking if CATIADimension handle
+            ' can be obtained from Real parameter
+            Set objAttrDimensionParam = objPspWorkbenchArg.GetInterface( _
+                                    "CATIADimension",objAttrRealParam )   
+                                       
+            strAttrValue = objAttrRealParam.ValueAsString
+            strMessage_g = strMessage_g &  "  Attribute " & strAttrName 
+            strMessage_g = strMessage_g &  " = " & strAttrValue
+              
+          End If 
+
+          ' ---------------------------------------------
+          ' Getting Unit handler from the Dimension object
+          ' ----------------------------------------------
+
+          If ( Not( objAttrDimensionParam Is Nothing) ) Then
+            Set objAttrUnit = objAttrDimensionParam.Unit                                      
+          End If 
+
+          If ( Not( objAttrUnit Is Nothing) ) Then            
+            strMessage_g = strMessage_g &  " , unit = " & objAttrUnit.Symbol           
+          End If 
+
+          If ( bIsDiscrete ) Then
+            strMessage_g = strMessage_g &  "  is Discrete"             
+          End If
+          strMessage_g = strMessage_g & vbCr
+        End If  ' Real attribute
+
+      Next ' End for loop index = intIdx
+    End If  ' Not ( objPspAttributeArg Is Nothing )
+End Sub
+
+
+

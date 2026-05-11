@@ -1,0 +1,762 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Build/Update Mechanism</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Feature Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Build/Update Mechanism</h3>
+      <em>Automatic updating of features</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the <i>CAAOsmBuildUpdate</i> use case. This use
+      case explains the mechanism of the feature modeler's Build/Update, also
+      called the &quot;Feature Update Engine&quot;.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAOsmBuildUpdate Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOsmBuildUpdate Do</a></li>
+            <li><a href="#How">How to Launch CAAOsmBuildUpdate</a></li>
+            <li><a href="#Where">Where to Find the CAAOsmBuildUpdate Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you understand the Build/Update mechanism
+of the feature modeler. Its main intent is to explain how to define build
+operations and how the update mechanism works by executing them and thus
+updating the features. More specifically, you will learn how to:</p>
+<ul>
+  <li>Build a feature by implementing the <i>CATIBuild</i> interface</li>
+  <li>Update a feature by executing its build operation.</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of what a feature object is, how it is created, as well as how the
+Build/Update Mechanism actually works [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><b>Note :-</b> Use-Case with the same scenario as of this use-case but with the use of V6 APIs is available 
+<a href="#References">[<span class="style1">5]</span></a>. Please read the Preparing for V6 Feature Modeler-Overview article 
+[<a href="#References">4</a>]</p>
+<hr>
+
+
+
+<h3><a name="UseCase"></a>The CAAOsmBuildUpdate Use Case</h3>
+<p>CAAOsmBuildUpdate is a use case of the CAAObjectSpecsModeler.edu framework
+that illustrates ObjectSpecsLegacy framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAOsmBuildUpdate Do</h4>
+<p>The CAAOsmBuildUpdate use case uses two feature StartUps, &quot;CAAOsmAdd<code>&quot;</code>
+and &quot;CAAOsmSquare&quot;, that were created in the CAAOsmCatalogSU.
+The features created from these StartUps, &quot;CAAOsmAdd1&quot; and
+&quot;CAAOsmSquare1&quot;, are inter-related: When the values of the attributes
+of one are changed, the values of the attributes of the other must be updated.
+Here is what the two features look like:</p>
+<p><img alt="" src="images/CAAOsmBU1.gif" width="519" height="369"></p>
+<p>Note that the <b><code>sp_IN</code></b> and<code> </code><b><code>sp_OUT</code>
+</b>keywords are attribute qualities that are set when the StartUp's attributes
+are initially defined. Their role has been explained in detail in the previous
+section.
+<p>The &quot;Sum&quot; attribute value is calculated from the values of the
+&quot;First&quot; and &quot;Second&quot; attributes which are both the input
+parameters of the <i>CAAOsmAddOp</i> Build operation. If you modify either
+value, the &quot;CAAOsmAdd1&quot; feature data will be inconsistent. To make
+your feature consistent, you must build it or rebuild it.
+<p>Now, let's focus on the &quot;CAAOsmSquare1&quot;<code> </code>feature. Its
+&quot;Num&quot; attribute points to the &quot;Sum&quot; attribute of
+&quot;CAAOsmAdd1&quot;. Modifying either &quot;First&quot; or &quot;Second&quot;
+will require successively the rebuilding of the &quot;CAAOsmAdd1&quot; and
+&quot;CAAOsmSquare1&quot; features. Otherwise, the feature data will be
+inconsistent. Here is a schematic representation of how the update of the
+&quot;CAAOsmSquare1&quot;<code> </code>feature actually works:</p>
+<p><img alt="" src="images/CAAOsmBU2.gif" width="561" height="256"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOsmBuildUpdate</h4>
+<p>To launch CAAOsmBuildUpdate, you will need to set up the build time
+environment, then compile CAAOsmBuildUpdate along with its prerequisites, set up
+the run time environment, and then execute the sample.&nbsp;</p>
+<p>mkrun -c &quot;CAAOsmBuildUpdate CAAOsmCatalogSU.CATfct
+DocumentStorageName.CATPart&quot;</p>
+<p> This is fully described
+in the referenced article [<a href="#References">2</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAOsmCatalogSU</b>.<b>CATfct</b> - is the name of the catalog without
+    the storage path and with the .CATfct extension. The catalog must be found
+    under the current workspace &quot;os&quot;/resources/graphic file directory.
+    Normally, it should be stored in the CAAObjectSpecsModeler.edu/CNext/resources/graphic
+    file directory. Then, the &quot;Update Runtime View&quot; command creates
+    the proper run-time environment.&nbsp;</li>
+  <li><b>DocumentStorageName.CATPart</b> - the entire pathname, name and
+    extension (.CATPart) under which the new document is to be stored.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAOsmBuildUpdate Code</h4>
+<p>CAAOsmCatalogSU code is located in the CAAOsmBuildUpdate.m use case module of
+the CAAObjectSpecsModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAObjectSpecsModeler.edu\CAAOsmBuildUpdate.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAObjectSpecsModeler.edu/CAAOsmBuildUpdate.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAAOsmBuildUpdate.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are nine logical steps in CAAOsmBuildUpdate:</p>
+<ol>
+  <li><a href="#create_doc">Prolog</a></li>
+  <li><a href="#Getting_the_CATOsmSUHandler">Getting the CATOsmSUHandler on the 
+	StartUps of the Catalog</a></li>
+  <li><a href="#create_catadd">Creating the <code>CAAOsmAdd1</code> Feature</a></li>
+  <li><a href="#build_catadd">Defining the Build Operation for CAAOsm<code>Add</code></a></li>
+  <li><a href="#create_catsquare">Creating the <code>CAAOsmSquare1</code>
+    Feature</a></li>
+  <li><a href="#build_catsquare">Defining the Build Operation for <code>CAAOsmSquare</code></a></li>
+  <li><a href="#relate">Relating Attributes Between <code>CAAOsmAdd1</code> and <code>CAAOsmSquare1</code></a></li>
+  <li><a href="#update">Updating <code>CAAOsmquare1</code></a></li>
+  <li><a href="#save_doc">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="create_doc"></a>Prolog</h4>
+<p>See the referenced article <a href="#References">[3]</a> for a detailed
+description of the steps to go through when creating a new document.</p>
+<p>In this use case, we create a new &quot;Part&quot; document: <i>CATDocument</i>
+<code>*pDoc</code>, and retrieve its root container: <i>CATIContainer</i> <code>*piRootContainer</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Getting_the_CATOsmSUHandler">Getting the CATOsmSUHandler on the 
+StartUps of the Catalog</a></h4>
+<p>It means getting a handler on the StartUps of the catalog that will be needed 
+in order to retrieve StartUps from the catalog.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATUnicodeString CatalogName= argv[1];
+CATUnicodeString clientId(&quot;CAAOsmClientId&quot;);
+CATUnicodeString addOpSUType("CAAOsmAdd");
+
+CATOsmSUHandler <strong>addOpSUHandler</strong>(addOpSUType, clientId, CatalogName);
+
+</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<h4><a name="create_catadd"></a>Creating the <code>Add1</code> Feature</h4>
+<ol>
+  <li>Retrieve &quot;CAAOsmAdd&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+
+// Get a CATISpecObject handle on the CAAOsmAdd StartUp
+
+	CATISpecObject_var spaddOpSU = NULL_var;
+
+	rc = addOpSUHandler.RetrieveSU(spaddOpSU);
+	if (NULL_var != spaddOpSU &amp;&amp; SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmAdd StartUp retrieved OK&quot; &lt;&lt; endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieving CAAOsmAdd StartUp&quot; &lt;&lt; endl &lt;&lt; flush;
+		return 6;
+	}
+
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The &quot;CAAOsmAdd1&quot; feature is an instance of the StartUp
+    &quot;CAAOsmAdd&quot; of type &quot;CAAOsmAdd&quot; defined in the<i>
+    CAAOsmCatalogSU</i> use case. In order to create it, we must first retrieve
+    the StartUp from the catalog. A StartUp is retrieved from the catalog using
+    the<i> </i> <em>CATOsmSUHandler</em><code><i>::</i>RetrieveSU </code>method. This method
+    directly returns a <em>CATISpecObject_var </em>pointer in <code>spaddOpSU.</code></p>
+  </li>
+  <li>Get &quot;CAAOsmAdd&quot; StartUp's attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnAdd = NULL;
+rc = spaddOpSU-&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                               (void**) <b>&amp;piSpecAttrAccessOnAdd</b>);
+if (FAILED(rc))
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+
+CATISpecAttrKey *piKeyFirst = piSpecAttrAccessOnAdd -&gt;
+		<b>GetAttrKey</b>(&quot;First&quot;);
+if (NULL == piKeyFirst)
+{
+   <i>(Process ERROR:  Release pointers and return.)</i>
+}
+
+CATISpecAttrKey *piKeySecond = piSpecAttrAccessOnAdd -&gt;
+		<b>GetAttrKey</b>(&quot;Second&quot;);
+if (NULL == piKeySecond)
+{
+   <i>Process ERROR:  Release pointers and return.)</i>
+}
+
+CATISpecAttrKey *piKeySum = piSpecAttrAccessOnAdd -&gt; 
+		<b>GetAttrKey</b>(&quot;Sum&quot;);
+if (NULL == piKeySum)
+{
+   <i>Process ERROR:  Release pointers and return.)</i>
+}
+
+piSpecAttrAccessOnAdd -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Instantiate &quot;CAAOsmAdd&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+CATUnicodeString Add1(&quot;CAAOsmAdd1&quot;);
+CATISpecObject_var spAddOpInst1 = NULL_var;
+
+rc = addOpSUHandler.Instanciate(spAddOpInst1, piRootContainer, Add1);
+if (NULL_var != spAddOpInst1 &amp;&amp; SUCCEEDED(rc))
+	cout &lt;&lt; &quot;CAAOsmAdd SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+	cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmAdd SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	piRootContainer -&gt; Release();
+	return 3;
+}
+
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We instantiate the StartUp to create the new feature
+    &quot;CAAOsmAdd1&quot;.</p>
+  </li>
+  <li>Valuate &quot;CAAOsmAdd1&quot; attributes
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnAdd1 = NULL;
+rc = spAddOpInst1 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                  (void**) <b>&amp;piSpecAttrAccessOnAdd1</b>);
+if (FAILED(rc))
+{
+   (<i>Process ERROR:  Release pointers and return.)</i>
+}
+
+piSpecAttrAccessOnAdd1 -&gt; <b>SetInteger</b>(piKeyFirst, 1);
+piSpecAttrAccessOnAdd1 -&gt; <b>SetInteger</b>(piKeySecond, 2);
+piKeySecond -&gt; <b>Release</b>();
+<i>(... Continued after description of the &quot;Add&quot; Build operation.)</i></pre>
+        </td>
+      </tr>
+    </table>
+    <p>We valuate &quot;CAAOsmAdd1&quot; attributes using a <i>CATISpecAttrAccess</i>
+    handle on the new instance and the <code>SetInteger</code> method.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="build_catadd"></a>Defining the Build Operation for CAAOsm <code>Add
+(CAAOsmAddOp.cpp)</code></h4>
+<p>Defining the Build operation for the &quot;CAAOsmAdd&quot;-type feature means
+implementing the <code>Build</code> method of the <i>CATIBuild</i> interface.
+Note that in this use case, the <i>CATIBuild</i> implementation is a separate
+C++ file, but is included in the same load module as the main. No dictionary
+entry is, therefore, necessary. However, if <i>CATIBuild</i> were implemented in
+its own shared library, a dictionary entry would be necessary in order for the
+Build operation to be found and executed.</p>
+<ol>
+  <li>Define interface implementation
+    <table class="code">
+      <tr>
+        <td>
+          <pre><b>TIE_CATIBuild</b>(CAAOsmAddOp);
+
+<b>CATImplementClass</b>(CAAOsmAddOp, 
+		  DataExtension,
+                  CATBaseUnknown,
+		  CAAOsmAdd);
+
+<b>HRESULT CAAOsmAddOp::Build()</b></pre>
+        </td>
+      </tr>
+    </table>
+    <p>As for any interface implementation, the <code>TIE</code> and <code>CATImplementClass</code>
+    commands are necessary in order to define the interface being implemented as
+    a <b>data extension</b> of &quot;CAAOsmAdd&quot;-type features.</p>
+  </li>
+  <li>Get current feature's attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnAdd = NULL;
+HRESULT rc = this -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                    (void**) <b>&amp;piSpecAttrAccessOnAdd</b>);
+if (FAILED(rc))
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATISpecAttrAccess for CAAOsmAdd&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 1;
+}
+ 
+CATISpecAttrKey *piKeyFirst = piSpecAttrAccessOnAdd -&gt; 
+		<b>GetAttrKey</b>(&quot;First&quot;);
+if (NULL == piKeyFirst)
+{
+   cout &lt;&lt; &quot;ERROR in retrieving First key&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}
+
+CATISpecAttrKey *piKeySecond = piSpecAttrAccessOnAdd -&gt;
+		<b>GetAttrKey</b>(&quot;Second&quot;);
+if (NULL == piKeySecond)
+{
+   cout &lt;&lt; &quot;ERROR in retrieving Second key&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}
+
+CATISpecAttrKey *piKeySum = piSpecAttrAccessOnAdd -&gt; 
+		<b>GetAttrKey</b>(&quot;Sum&quot;);
+if (NULL == piKeySum)
+{
+   cout &lt;&lt; &quot;ERROR in retrieving Sum key&quot; &lt;&lt; endl &lt;&lt; flush;
+  <b> return</b> 2;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>What the Build operation for CAAOsm<code>Add </code>does is to simply
+    retrieve the values of its input attributes, add them together and store the
+    resulting value in its output attribute. In order to retrieve the
+    attributes, it needs to get a <i>CATIAttrAccess</i> handle using the <i><code>this</code></i>
+    pointer and uses it to retrieve the attribute keys using <code>GetAttrKey</code>.</p>
+  </li>
+  <li>Retrieve and valuate attributes
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int f = 0;
+int s = 0;
+f = piSpecAttrAccessOnAdd -&gt; <b>GetInteger</b>(piKeyFirst);
+s = piSpecAttrAccessOnAdd -&gt; <b>GetInteger</b>(piKeySecond);
+piSpecAttrAccessOnAdd -&gt; <b>SetInteger</b>(piKeySum, f+s);
+int printVal = 0;
+printVal = piSpecAttrAccessOnAdd -&gt; <b>GetInteger</b>(piKeySum);
+cout &lt;&lt; &quot;The value of sum is &quot; &lt;&lt; printVal &lt;&lt; endl &lt;&lt; flush;
+
+piSpecAttrAccessOnAdd -&gt; <b>Release</b>();
+piKeyFirst -&gt; <b>Release</b>();
+piKeySecond -&gt;<b> Release</b>();
+piKeySum -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now, using the keys, we retrieve the values of &quot;First&quot; and
+    &quot;Second&quot; using the <code>GetInteger </code>method, add them
+    together, and store the resulting value in &quot;Sum&quot; attribute using <code>SetInteger</code>.</p>
+    <p>Note that the pointers acquired through <code>GetAttrKey</code> must be
+    released when no longer needed!</p>
+    <p>The update of &quot;Sum&quot; also updates the value of &quot;Num&quot;
+    in the <code>Square</code> feature, as you will see a little later.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="create_catsquare"></a>Creating the CAAOsm<code>Square1</code>
+Feature</h4>
+<p>The &quot;CAAOsmSquare1&quot; feature is also an instance of the StartUp
+defined in the<i> CAAOsmCatalogSU</i> use case.</p>
+<ol>
+  <li>Retrieve &quot;CAAOsmSquare&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre><i>(... Continued)</i>
+CATBaseUnknown *pSquareSU = NULL;
+CATUnicodeString squareSUType(&quot;CAAOsmSquare&quot;);
+CATOsmSUHandler squareSUHandler(squareSUType, clientId, CatalogName);
+
+// Get a CATISpecObject handle on the CAAOsmSquare StartUp
+
+	CATISpecObject_var spSquareSU = NULL_var;
+
+	rc = squareSUHandler.RetrieveSU(spSquareSU);
+	if (NULL_var != spSquareSU &amp;&amp; SUCCEEDED(rc))
+		cout &lt;&lt; &quot;CAAOsmSquare StartUp retrieved OK&quot; &lt;&lt;  endl &lt;&lt; flush;
+    else
+	{
+		cout &lt;&lt; &quot;ERROR in retrieving CAAOsmSquare StartUp&quot; &lt;&lt; endl &lt;&lt; flush;
+		return 6;
+	}
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>As with the &quot;CAAOsmAdd1&quot; feature, in order to create a new
+    feature, we must first retrieve the StartUp from the catalog using the <code>RetrieveSU</code>
+    method and get a <i>CATISpecObject</i> handle on the StartUp.</p>
+  </li>
+  <li>Get &quot;CAAOsmSquare&quot; StartUp's attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnSq = NULL;
+rc = spSquareSU -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                                  (void**) <b>&amp;piSpecAttrAccessOnSq</b>);
+if (FAILED(rc))
+{
+   (<i>Process ERROR:  Release pointers and return.)</i>
+}
+ 
+CATISpecAttrKey *piKeyNum = piSpecAttrAccessOnSq -&gt; 
+		<b>GetAttrKey</b>(&quot;Num&quot;);
+if (NULL == piKeyNum)
+{
+   (<i>Process ERROR:  Release pointers and return.)</i>
+}
+
+CATISpecAttrKey *piKeySquare = piSpecAttrAccessOnSq -&gt;
+		<b>GetAttrKey</b>(&quot;Square&quot;);
+if (NULL == piKeySquare)
+{
+   (<i>Process ERROR:  Release pointers and return.)</i>
+}
+	  
+piSpecAttrAccessOnSq -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now, before actually creating the new feature, we get the attribute keys
+    from the StartUp.</p>
+  </li>
+  <li>Instantiate &quot;CAAOsmSquare&quot; StartUp
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+CATUnicodeString square1(&quot;CAAOsmSquare1&quot;);
+CATISpecObject_var spSqInst1 = NULL_var;
+
+rc = squareSUHandler.Instanciate(spSqInst1, piRootContainer, square1);
+
+if (NULL_var != spSqInst1 &amp;&amp; SUCCEEDED(rc))
+	cout &lt;&lt; &quot;CAAOsmSquare SU instance 1 created OK&quot; &lt;&lt; endl &lt;&lt; flush;
+else
+{
+	cout &lt;&lt; &quot;ERROR in creating instance 1 of CAAOsmSquare SU&quot; &lt;&lt; endl &lt;&lt; flush;
+	piRootContainer -&gt; Release();
+	return 3;
+}
+          
+<i>(... Continued after description of the &quot;Square&quot; Build operation.)</i></pre>
+        </td>
+      </tr>
+    </table>
+    <p>Finally, we can instantiate the StartUp to create the new feature
+    &quot;CAAOsmSquare1&quot;.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="build_catsquare"></a>Defining the Build Operation for CAAOsm<code>Square
+(CAAOsmSquareOp.cpp)</code></h4>
+<ol>
+  <li>Define interface implementation
+    <table class="code">
+      <tr>
+        <td>
+          <pre><b>TIE_CATIBuild</b>(CAAOsmSquareOp);
+
+<b>CATImplementClass</b>(CAAOsmSquareOp,
+		  DataExtension,
+                  CATBaseUnknown,
+		  CAAOsmSquare);
+
+<b>HRESULT CAAOsmSquareOp::Build()</b></pre>
+        </td>
+      </tr>
+    </table>
+    <p>As for any interface implementation, the <code>TIE</code> and<code>
+    CATImplementClass </code>commands are necessary in order to define the
+    interface being implemented as a <b>data extension</b> of
+    &quot;CAAOsmSquare&quot;-type features.</p>
+  </li>
+  <li>Get current feature's attribute keys
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISpecAttrAccess *piSpecAttrAccessOnSquare = NULL;
+HRESULT rc = this -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess,
+                                    (void**) <b>&amp;piSpecAttrAccessOnSquare</b>);
+if (FAILED(rc))
+{
+   cout &lt;&lt; &quot;ERROR in QueryInterface on CATISpecAttrAccess for CAAOsmSquare&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 1;
+}
+ 
+
+CATISpecAttrKey *piKeyNum = piSpecAttrAccessOnSquare -&gt;
+		<b>GetAttrKey</b>(&quot;Num&quot;);
+if (NULL == piKeyNum)
+{
+   cout &lt;&lt; &quot;ERROR in retrieving Num key&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}
+
+CATISpecAttrKey *piKeySquare = piSpecAttrAccessOnSquare -&gt; 
+		<b>GetAttrKey</b>(&quot;Square&quot;);
+if (NULL == piKeySquare)
+{
+   cout &lt;&lt; &quot;ERROR in retrieving Square key&quot; &lt;&lt; endl &lt;&lt; flush;
+   <b>return</b> 2;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>What the Build operation fo<code>r &quot;</code>CAAOsm<code>Square&quot; </code>does
+    is to simply retrieve the value of its input attribute, &quot;Num&quot;,
+    squares it and stores the result in its output attribute,
+    &quot;Square&quot;. In order to retrieve the attributes, it needs to get a <i>CATIAttrAccess</i>
+    using the <i><code>this</code></i> pointer and uses it to retrieve the
+    attribute keys using <code>GetAttrKey</code>.</p>
+  </li>
+  <li>Retrieve and valuate attributes
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int val = 0;
+val = piSpecAttrAccessOnSquare -&gt; <b>GetInteger</b>(piKeyNum);
+piSpecAttrAccessOnSquare -&gt; <b>SetInteger</b>(piKeySquare, val*val);
+...	
+piSpecAttrAccessOnSquare -&gt; <b>Release</b>();
+piKeyNum -&gt; <b>Release</b>();
+piKeySquare -&gt; <b>Release</b>();</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the keys, we retrieve the value of &quot;Num&quot; (which is based
+    on the value of &quot;Sum&quot; from CAAOsm<code>Add</code>) using <code>GetInteger</code>,
+    we square it, and store the resulting value in the &quot;Square&quot;
+    attribute using <code>SetInteger</code>.</p>
+    <p>Do not forget to release the pointers!</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="relate"></a>Relating Attributes Between CAAOsm<code>Add1</code> and
+CAAOsm<code>Square1</code></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATISpecAttrAccess *piSpecAttrAccessOnSq1 = NULL;
+rc = spSqInst1 -&gt; <b>QueryInterface</b>(IID_CATISpecAttrAccess, 
+                                 (void**) <b>&amp;piSpecAttrAccessOnSq1</b>);
+if (FAILED(rc))
+{
+   (<i>Process ERROR:  Release pointers and return.)</i>
+}
+
+piSpecAttrAccessOnSq1-&gt;<b>SetSpecAttribute</b>(piKeyNum,
+		                        spAddInst1,
+					piKeySum);
+
+piKeySum -&gt; <b>Release</b>();
+piKeyNum -&gt; <b>Release</b>();</pre>
+    </td>
+  </tr>
+</table>
+<p>The attribute &quot;Num&quot; of the &quot;CAAOsmSquare1&quot; feature
+depends on the value of the attribute &quot;Sum&quot; of the
+&quot;CAAOsmAdd1&quot; feature. In order to define this relationship, we must
+set the one to be equal to the other. This is done by <code>SetSpecAttribute</code>
+using a <i>CATISpecAttrAccess</i> handle on the &quot;CAAOsmSquare1&quot;
+feature and referencing the &quot;CAAOsmAdd1&quot; feature, the
+&quot;CAAOsmAdd1&quot; attribute key &quot;Sum&quot; and the
+&quot;CAAOsmSquare1&quot; attribute key &quot;Num&quot; as parameters:</p>
+<ul>
+  <li>piKeyNum - &quot;CAAOsmquare1&quot; attribute &quot;Num&quot;</li>
+  <li>spAddInst1 - &quot;CAAOsmAdd1&quot; feature</li>
+  <li>piKeySum - &quot;CAAOsmAdd1&quot; attribute &quot;Sum&quot;</li>
+</ul>
+<!---------------------------------comment------------------------------------->
+<h4><a name="update"></a>Updating CAAOsm<code>Square1</code></h4>
+<p>Now that the features have been created and their Build operations defined,
+let's see what happens when an<code> <b>Update</b> </code>is requested on the
+&quot;CAAOsmSquare1&quot; feature:</p>
+<ul>
+  <li>&quot;Num&quot; is first requested to update as it is an<code> sp_IN </code>attribute
+    of the <code>CAAOsmSquare</code> feature.</li>
+  <li>In order to update &quot;Num&quot;, &quot;Sum&quot; is requested to update
+    because it is pointed to by &quot;Num&quot;.</li>
+  <li>In order to update &quot;Sum&quot;, we need to update the &quot;<code>CAAOsmAdd1</code>&quot;<code>
+    </code>feature because it is the owner of the &quot;Sum&quot;<code> sp_OUT </code>attribute.</li>
+  <li>To update the &quot;<code>CAAOsmAdd1</code>&quot; feature, the<code> sp_IN
+    </code>attributes &quot;First&quot; and &quot;Second&quot; are requested to
+    update: the &quot;<code>CAAOsmAdd</code>&quot; Build operation is executed.
+    &quot;Sum&quot; is set a value resulting from the &quot;<code>CAAOsmAdd</code>&quot;
+    Build and its update stamp is modified.</li>
+  <li>The &quot;Sum&quot; and &quot;Num&quot; update stamps are compared and
+    since they are different, the &quot;Sum&quot; stamp is copied into the
+    &quot;Num&quot; stamp, triggering the &quot;<code>CAAOsmSquare</code>&quot;
+    Build as &quot;Num&quot; is an <code>sp_IN</code> attribute.</li>
+  <li>The &quot;<code>CAAOsmSquare1</code>&quot; feature is built and the value
+    of &quot;Square&quot; is set by the &quot;<code>CAAOsmSquare</code>&quot;
+    Build result.</li>
+</ul>
+<p>Here is how to update the &quot;CAAOsmSquare1&quot; feature:</p>
+<table class="code" width="155">
+  <tr>
+    <td width="154">
+      <pre>...	
+spSqInst1 -&gt; <b>Update</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">To update the &quot;CAAOsmSquare1&quot; feature, use the <code>Update</code>
+method of <i>CATISpecObject</i>.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="save_doc"></a>Epilog</h4>
+<p>Before saving the document, release all of the pointers that will no longer
+be used:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>piUpdateOnSqInst1 -&gt; <b>Release</b>();
+
+piSpecAttrAccessOnSq1 -&gt; <b>Release</b>();
+
+piKeySquare -&gt; <b>Release</b>();</pre>
+    </td>
+  </tr>
+</table>
+<p>See the referenced article [<a href="#References">3</a>] for a detailed
+description of the steps to go through when saving a document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how the Build/Update mechanism works and how
+to use it to update one's features. Specifically, it has illustrated:</p>
+<ul>
+  <li>Implementing the <i>CATIBuild</i> interface in order to build a feature
+    during the update operation</li>
+  <li>Performing the default update operation using the <code>Update</code>
+    method of <i>CATISpecObject</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">Creating
+      a New Document</a></td>
+  </tr>
+      <tr>
+    <td valign="top">[4]</td>
+    <td>
+	<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FeatureModelerExtOverview.htm">
+		Preparing for V6 Feature Modeler-Overview </a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAV5V6OsmUcBuildUpdate.htm">Build-Update Use-Case 
+	with V6 APIs</a></td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Nov 2000]</td>
+    <td valign="top">Document modified</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

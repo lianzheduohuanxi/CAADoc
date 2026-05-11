@@ -1,0 +1,615 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATOBMInterfaces Interface CATIVariableManagement</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATOBMInterfaces.htm" href="../CATOBMInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATOBMInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIVariableManagement"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATOBMInterfaces Interface CATIVariableManagement</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIVariableManagement_39321','CATIVariableManagement','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIVariableManagement</b>
+</p>
+<p>
+<b><i> Interface to manage the variables of behaviors and Dynamic Types (Tecnological Objects).</i></b><br>
+<br>
+
+		The variables are defined by several properties :<br>
+		<ul><b>	<li>a name.</b><br>
+		<b>		<li>a quality </b>: Input, output or neutral as defined via <script type="text/javascript"> activateLinkAnchor('TCIO','','TCIO') </script>.<br>		<b>		<li>a Knowledgeware Type describing the type of the variable</b>. In the following methods, it is refered as "VarType".<br>
+						ex : Volume, Length, Pointer, List, ...<br>
+		<b>		<li>a Knowledgeware Type for the pointed object by the variable</b>. In the following methods, it is refered as "PointedVarType"<br>
+			This type is necessary only for the list and pointer variables. In that case, you can specify the Knowledware type of the objects pointed by the Pointer or stored in the List. The default value is "ObjectType" and it can be overloaded by using 
+<script type="text/javascript"> activateLinkAnchor('','SetVariableType','SetVariableType') </script>.<br>			For other variables, this notion is not used and "PointedVarType" should be set to NULL.
+		</ul>
+	<br>see 
+<script type="text/javascript"> activateLinkAnchor('CATIType','','CATIType') </script>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetLinkedVariable(CATUnicodeString*,TCIO,CATBaseUnknown**)"><b>GetLinkedVariable</b></a>(CATUnicodeString*,TCIO,CATBaseUnknown**)
+<dd>        Retrieves the variable or the feature pointed via the link.
+ <dt> o 
+    <a href="#GetUserAccess(CATUnicodeString*,TCIO,CATIVariableManagement::UserAccessMode&amp;)"><b>GetUserAccess</b></a>(CATUnicodeString*,TCIO,CATIVariableManagement::UserAccessMode&amp;)
+<dd>        Retreives the user acces mode of a variable of a given quality.
+ <dt> o 
+    <a href="#GetVariable(CATUnicodeString*,TCIO,CATBaseUnknown**)"><b>GetVariable</b></a>(CATUnicodeString*,TCIO,CATBaseUnknown**)
+<dd>        Retreives a variable of a given quality.
+ <dt> o 
+    <a href="#GetVariableAccess(CATBaseUnknown*,CATUnicodeString&amp;,TCIO&amp;)"><b>GetVariableAccess</b></a>(CATBaseUnknown*,CATUnicodeString&amp;,TCIO&amp;)
+<dd>        Retreives the name and quality of a variable.
+ <dt> o 
+    <a href="#GetVariableInfos(CATUnicodeString*,TCIO,CATIType**,CATIType**,CATIVariableManagement::UserAccessMode&amp;,CATBoolean&amp;)"><b>GetVariableInfos</b></a>(CATUnicodeString*,TCIO,CATIType**,CATIType**,CATIVariableManagement::UserAccessMode&amp;,CATBoolean&amp;)
+<dd>        Retreives the characteristics of a variable of a given quality.
+ <dt> o 
+    <a href="#GetVariableType(CATUnicodeString*,TCIO,CATIType**,CATIType**)"><b>GetVariableType</b></a>(CATUnicodeString*,TCIO,CATIType**,CATIType**)
+<dd>        Retreives the Knowledgeware type of the object pointed by a variable of a given quality.
+ <dt> o 
+    <a href="#GetVariableValue(CATUnicodeString*,TCIO,CATIValue**)"><b>GetVariableValue</b></a>(CATUnicodeString*,TCIO,CATIValue**)
+<dd>        Retreives the value of a variable of a given quality.
+ <dt> o 
+    <a href="#GetVariablesNames(TCIO,CATIType*,CATIType*,CATListOfCATUnicodeString**)"><b>GetVariablesNames</b></a>(TCIO,CATIType*,CATIType*,CATListOfCATUnicodeString**)
+<dd>        Returns the variables names matching given criterion.
+ <dt> o 
+    <a href="#IsLocalVariable(CATUnicodeString*,TCIO,CATBoolean&amp;)"><b>IsLocalVariable</b></a>(CATUnicodeString*,TCIO,CATBoolean&amp;)
+<dd>        Indicates if a variable of a given quality is local to this object.
+ <dt> o 
+    <a href="#LinkVariables(CATUnicodeString*,TCIO,CATBaseUnknown*)"><b>LinkVariables</b></a>(CATUnicodeString*,TCIO,CATBaseUnknown*)
+<dd>        Creates a link between two variables.
+ <dt> o 
+    <a href="#SetVariableType(CATUnicodeString*,TCIO,CATIType*)"><b>SetVariableType</b></a>(CATUnicodeString*,TCIO,CATIType*)
+<dd>        Sets the expected knowledgeware type of the object pointed by a variable of a given quality.
+ <dt> o 
+    <a href="#SetVariableValue(CATUnicodeString*,TCIO,CATIValue*)"><b>SetVariableValue</b></a>(CATUnicodeString*,TCIO,CATIValue*)
+<dd>        Valuates a variable of a given quality.
+ <dt> o 
+    <a href="#Unset(CATUnicodeString*,TCIO)"><b>Unset</b></a>(CATUnicodeString*,TCIO)
+<dd>        Unsets a variable.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#UserAccessMode"><b>UserAccessMode</b></a>
+<dd>  Rights defined on a variable.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetLinkedVariable"></a><a name="GetLinkedVariable(CATUnicodeString*,TCIO,CATBaseUnknown**)"></a> <dt> o <b>GetLinkedVariable</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetLinkedVariable</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown**')</script> <td><tt>oVariable</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retrieves the variable or the feature pointed via the link.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the pointing variable. Must belong to this object.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of variable.
+   </dd>
+    <dt><tt> oVariable</tt>
+   <dd>		The variable or the feature linked with the one, of name iName,  belonging to this behavior.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetUserAccess"></a><a name="GetUserAccess(CATUnicodeString*,TCIO,CATIVariableManagement::UserAccessMode&amp;)"></a> <dt> o <b>GetUserAccess</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetUserAccess</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIVariableManagement::UserAccessMode','CATIVariableManagement::UserAccessMode&amp;')</script> <td><tt>oUserAccess</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives the user acces mode of a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> oUserAccessMode</tt>
+   <dd>       User Access Mode of the variable
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariable"></a><a name="GetVariable(CATUnicodeString*,TCIO,CATBaseUnknown**)"></a> <dt> o <b>GetVariable</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariable</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown**')</script> <td><tt>oVariable</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> oVariable</tt>
+   <dd>      The variable of the given name and quality found on the behavior. It can be a literal, a list or a pointer.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariableAccess"></a><a name="GetVariableAccess(CATBaseUnknown*,CATUnicodeString&amp;,TCIO&amp;)"></a> <dt> o <b>GetVariableAccess</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariableAccess</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iVariable</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>oName</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('TCIO','TCIO&amp;')</script> <td><tt>oQuality</tt>)<script type="text/javascript"> activateLink('=0','=0 ')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives the name and quality of a variable.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVariable</tt>
+   <dd>      Pointer to a variable
+   </dd>
+    <dt><tt> oName</tt>
+   <dd>       Name of the variable
+   </dd>
+    <dt><tt> oQuality</tt>
+   <dd>      Quality of the variable    
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariableInfos"></a><a name="GetVariableInfos(CATUnicodeString*,TCIO,CATIType**,CATIType**,CATIVariableManagement::UserAccessMode&amp;,CATBoolean&amp;)"></a> <dt> o <b>GetVariableInfos</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariableInfos</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType','CATIType**')</script> <td><tt>oVarType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType','CATIType**')</script> <td><tt>oPointedVarType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIVariableManagement::UserAccessMode','CATIVariableManagement::UserAccessMode&amp;')</script> <td><tt>oUserAccessMode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oIsLocal</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives the characteristics of a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the required variable.
+   </dd>
+    <dt><tt> oVarType</tt>
+   <dd>       Knowledgeware type of the retreived variable.
+	</dd>
+    <dt><tt> oPointedVarType</tt>
+   <dd>		if any, Knowledgeware type of the object pointed by the variable.
+   </dd>
+    <dt><tt> oUserAccessMode</tt>
+   <dd>       User Access Mode retreived.
+	</dd>
+    <dt><tt> oIsLocal</tt>
+   <dd>		<b>CATTrue</b> if the variable iName is local.<br>
+       <b>CATFalse</b> if not.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariableType"></a><a name="GetVariableType(CATUnicodeString*,TCIO,CATIType**,CATIType**)"></a> <dt> o <b>GetVariableType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariableType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType','CATIType**')</script> <td><tt>oVarType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIType','CATIType**')</script> <td><tt>oPointedVarType</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives the Knowledgeware type of the object pointed by a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> oVarType</tt>
+   <dd>      Knowledgeware type of the retreived variable.  
+   </dd>
+    <dt><tt> oPointedVarType</tt>
+   <dd>      if any, Knowledgeware type of the object pointed by the variable.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariableValue"></a><a name="GetVariableValue(CATUnicodeString*,TCIO,CATIValue**)"></a> <dt> o <b>GetVariableValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariableValue</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIValue','CATIValue**')</script> <td><tt>oValue</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Retreives the value of a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the required variable.
+   </dd>
+    <dt><tt> oValue</tt>
+   <dd>      Value of the variable.    
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="GetVariablesNames"></a><a name="GetVariablesNames(TCIO,CATIType*,CATIType*,CATListOfCATUnicodeString**)"></a> <dt> o <b>GetVariablesNames</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetVariablesNames</b>(<td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType','CATIType*')</script> <td><tt>iVarType</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType','CATIType*')</script> <td><tt>iPointedVarType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString**')</script> <td><tt>oVariables</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Returns the variables names matching given criterion.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the required variables
+   </dd>
+    <dt><tt> iVarType</tt>
+   <dd>      Knowledgeware type of the required variables.
+   </dd>
+    <dt><tt> iPointedVarType</tt>
+   <dd>      if any, Knowledgeware type of the object pointed by the variable
+   </dd>
+    <dt><tt> oVariables</tt>
+   <dd>       List of variables names.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="IsLocalVariable"></a><a name="IsLocalVariable(CATUnicodeString*,TCIO,CATBoolean&amp;)"></a> <dt> o <b>IsLocalVariable</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>IsLocalVariable</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean&amp;')</script> <td><tt>oIsLocal</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Indicates if a variable of a given quality is local to this object.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> oIsLocal</tt>
+   <dd>       <b>CATTrue</b> if the variable iName is local.<br>
+       <b>CATFalse</b> if not.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="LinkVariables"></a><a name="LinkVariables(CATUnicodeString*,TCIO,CATBaseUnknown*)"></a> <dt> o <b>LinkVariables</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>LinkVariables</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown*')</script> <td><tt>iVariable</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Creates a link between two variables.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the pointing variable. Must belong to this object.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>       Quality of the variable.
+   </dd>
+    <dt><tt> iVariable</tt>
+   <dd>      Pointed object. It can be another variable (literal, list or pointer) or a feature.
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="SetVariableType"></a><a name="SetVariableType(CATUnicodeString*,TCIO,CATIType*)"></a> <dt> o <b>SetVariableType</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetVariableType</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIType','CATIType*')</script> <td><tt>iType</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Sets the expected knowledgeware type of the object pointed by a variable of a given quality.
+	Relevant only for pointer and list variables. For other variables, the Knowledge type is set at creation
+   and cannot be changed afterwards.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> iType</tt>
+   <dd>      New knowledge type for the object pointed by the variable.   
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="SetVariableValue"></a><a name="SetVariableValue(CATUnicodeString*,TCIO,CATIValue*)"></a> <dt> o <b>SetVariableValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetVariableValue</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIValue','CATIValue*')</script> <td><tt>iValue</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Valuates a variable of a given quality.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>      Quality of the variable.
+   </dd>
+    <dt><tt> iValue</tt>
+   <dd>      New value for the variable.    
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+<a name="Unset"></a><a name="Unset(CATUnicodeString*,TCIO)"></a> <dt> o <b>Unset</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Unset</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString*')</script> <td><tt>iName</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('TCIO','TCIO')</script> <td><tt>iQuality</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+       Unsets a variable.
+   
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iName</tt>
+   <dd>      Name of the variable to unset.
+   </dd>
+    <dt><tt> iQuality</tt>
+   <dd>       Quality of the variable.    
+   </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>        An HRESULT.
+    <br><b>Legal values</b>:
+    <dl>
+      <dt>S_OK
+      <dd>The method has been executed successfully.
+      <dt>E_FAIL
+      <dd>An error has been encountered during the execution of the method. 
+    </dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="UserAccessMode"> <dt> o <b>UserAccessMode</b>
+<dl>
+  <dd>
+<pre>
+enum <b>UserAccessMode</b> {
+  NotSeen,
+  ReadOnly,
+  ReadWrite
+}
+</pre>
+ Rights defined on a variable.
+ Used to define how a parameter can be used through BKT.<br>
+  
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> <tt>NotSeen</tt></tt>
+   <dd> this parameter is not seen by the user.<br>  </dd>
+    <dt><tt> <tt>ReadOnly</tt></tt>
+   <dd> the parameter will be seen but won't be modified, may be used as input of a relation.<br>  </dd>
+    <dt><tt> <tt>ReadWrite</tt></tt>
+   <dd> Default value:the parameter can be modified, and used as output of a relation<br></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIVariableManagement.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATOBMItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

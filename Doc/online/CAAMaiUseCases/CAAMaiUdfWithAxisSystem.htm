@@ -1,0 +1,429 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing (User Defined) Features Referencing Axis Systems</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>All Machining workbenches</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing (User Defined) Features Referencing Axis
+      Systems</h3>
+      <em>Implementing the </em><i>CATIMfgMappingForMachiningAxis</i> <em>interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiUdfForMachiningAxis use case and
+      explains how to implement the <i>CATIMfgMappingForMachiningAxis</i>
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The <u>CAAMaiUdfForMachiningAxis U</u>se
+          Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAMaiUdfForMachiningAxis Do</a></li>
+            <li><a href="#How">How to Use CAAMaiUdfForMachiningAxis</a></li>
+            <li><a href="#Where">Where to Find the CAAMaiUdfForMachiningAxis
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use Machining Axis Systems
+from&nbsp; User Defined Feature data, by implementing the <i>CATIMfgMappingForMachiningAxis</i>
+manufacturing interface. This involves the following:</p>
+<ul>
+  <li>Overviewing the User Defined Features functionality in a manufacturing
+    context</li>
+  <li>Implementing the <i>GetAxisSystem</i>&nbsp; method of <i>CATIMfgMappingForMachiningAxis</i>
+    to set the machining axis of a &quot;Machining Axis System change&quot; by
+    using &quot;<i>CATIUdfFeatureInstance</i>&quot; and &quot;<i>CATIUdfFeatureUser</i>&quot;
+    User Features CAA interfaces and the &quot;<i>CATIMfgMappingRuleName</i>&quot;
+    Machining CAA interface</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiUdfForMachiningAxis Use Case</h3>
+<p>CAAMaiUdfForMachiningAxis is a use case of the CAAManufacturingItf.edu
+framework in the CAAMaiUserDefFeatureMapping.m module that illustrates
+ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiUdfForMachiningAxis Do</h4>
+<p>CAAMaiUdfForMachiningAxis illustrates an implementation of
+CATIMfgMappingForMachiningAxis interface for the User Defined Features
+identified by the UdfFeature type. This implementation enables to set the Axis
+System of a Machining Axis System Change defined in the Machining Process. A
+such implementation can be done to any feature that is used as input of the
+Machining Process instantiation window.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Use CAAMaiUdfForMachiningAxis</h4>
+<p>To use CAAMaiUdfForMachiningAxis, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiUserDefFeatureMapping.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#'
+    character:</p>
+    <pre>UdfFeature CATIMfgMappingForMachiningAxis libCAAMaiUserDefFeatureMapping</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiUdfForMachiningAxisInstance.CATProcess file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>Apply any Machining Process containing a Machining Axis System Change, for
+    example the &quot;MachiningProcessWithAxisSystemChange&quot; Machining
+    Process in the CAAMaiMachiningProcessWithAxisSystemChange.CATProcess file</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiUdfForMachiningAxis Code</h4>
+<p>The CAAMaiUdfForMachiningAxis use case is made of a class named <i>CAAMaiUdfForMachiningAxis</i>
+located in the CAAMaiUserDefFeatureMapping.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\</code><code>CAAMaiUserDefFeatureMapping.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/</code><code>CAAMaiUserDefFeatureMapping.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are three logical steps in CAAMaiUdfForMachiningAxis:</p>
+<ol>
+  <li><a href="#Step1">Implementing the CATIMfgMappingForMachiningAxis Interface
+    for UdfFeature Types</a></li>
+  <li><a href="#Step2">Creating a User Defined Feature Template and Generating
+    Instances</a></li>
+  <li><a href="#Step3">Applying the
+    &quot;MachiningProcessUsingAxisSystemChange&quot; Machining Process on a
+    User Defined Feature Instance</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing the CATIMfgMappingForMachiningAxis
+Interface for UdfFeature Types</h4>
+<p style="margin-left: 4">The CAAMaiUdfForMachiningAxis.cpp file uses the
+&quot;CATIUdfFeatureInstance&quot; interface to access to the User Defined
+Feature information - then, the right data is accessed by its right role name -
+and the &quot;CATIMfgMappingRuleName&quot; interface to access to &quot;mapping
+rule name&quot; tag which defines the using context of the feature . See below a
+part of the implementation:</p>
+<p style="margin-left: 4">This part of code enables to access to the
+&quot;mapping rule name&quot; defined in the operation of machining process</p>
+<table class="code" height="238">
+  <tr>
+    <td height="234">
+      <pre style="margin-top: 0">...
+//----------------------------------------------------------------------
+// Read the mapping rule name associated to the operation 
+//----------------------------------------------------------------------
+CATUnicodeString MappingRuleName = &quot;&quot;;
+<b>CATIMfgMappingRuleName</b> *piMappRuleName = NULL;
+RetCode = this-&gt;QueryInterface(IID_CATIMfgMappingRuleName,(void **)&amp;piMappRuleName);
+if (SUCCEEDED(RetCode) &amp;&amp; NULL != piMappRuleName) 
+{
+ MappingRuleName = piMappRuleName-&gt;GetMappingRuleName();
+ piMappRuleName-&gt;Release();
+ piMappRuleName = NULL;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p style="margin-left: 4; margin-top: 0">Then, when executing Catia, the value
+of the MappingRuleName variable can be &quot;AxialUdfWithAxisMap&quot;
+corresponding to the Machining Process definition &nbsp;&nbsp;</p>
+<p>&nbsp;According to this variable, the implementation is looking for the right
+User Feature geometry:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre style="margin-top: 0; margin-bottom:0">...
+  CATUnicodeString GeometryName;</pre>
+      <pre style="margin-top: 0; margin-bottom:0">  if (MappingRuleName == &quot;<b>AxialUdfWithAxisMap</b>&quot;)</pre>
+      <pre style="margin-top: 0; margin-bottom:0">  {
+   GeometryName = &quot;...&quot;;
+  }
+  else 
+   GeometryName = &quot;...&quot;;
+  }
+  CATBaseUnknown_var Geometry;
+  if (SUCCEEDED(RetCode))
+  {
+    CATBaseUnknown *piUdf = NULL;
+    RetCode = this-&gt;QueryInterface(IID_CATBaseUnknown,(void **)&amp;piUdf);
+    if (SUCCEEDED(RetCode) &amp;&amp; NULL != piUdf) 
+    {
+     RetCode = CAAMaiUdfUtilities::GetUdfGeometry (piUdf, GeometryName, Geometry);
+     piUdf-&gt;Release();
+     piUdf = NULL;
+    }
+  }
+
+...</pre>
+      <pre style="margin-top: 0">// Generic method to get a User Feature geometry from its role name</pre>
+      <pre style="margin-top: 0; margin-bottom:0">HRESULT CAAMaiUdfUtilities::GetUdfGeometry (CATBaseUnknown * iUdf, </pre>
+      <pre style="margin-top: 0; margin-bottom:0">        CATUnicodeString iGeometryName, CATBaseUnknown_var &amp;oGeometry)
+{
+ oGeometry = NULL_var;</pre>
+      <pre style="margin-top: 0; margin-bottom:0"> HRESULT RC = E_FAIL;
+ if (NULL == iUdf) return RC;
+
+ //--------------------------------------------------------------------------
+ // Get your object as a CATIUdfFeatureInstance
+ //--------------------------------------------------------------------------
+ CATIUdfFeatureInstance *piUdfFeatureInstance = NULL;
+ RC = iUdf-&gt;QueryInterface(IID_CATIUdfFeatureInstance,(void **)&amp;piUdfFeatureInstance);
+ //--------------------------------------------------------------------------
+ // Your object is a CATIUdfFeatureInstance: we can use the associated methods
+ //--------------------------------------------------------------------------
+ if (SUCCEEDED(RC) &amp;&amp; NULL != piUdfFeatureInstance)
+ { 
+  CATUnicodeString role = &quot;&quot;;
+  CATBaseUnknown_var spGeom;
+ 
+  //----------------------------------------------------------------------
+  // Read the Inputs number: this is the geometrical inputs of your Udf
+  // defined when creating the Udf template
+  //----------------------------------------------------------------------
+  int InputNb = 0;
+  RC = piUdfFeatureInstance-&gt;GetInputsNumber(InputNb);
+
+  int i = 1;
+  while (SUCCEEDED(RC) &amp;&amp; i &lt;= InputNb &amp;&amp; role != iGeometryName)
+  {
+   RC = piUdfFeatureInstance-&gt;GetInputRole(i, role);
+   //----------------------------------------------------------------------
+   // The right Input is found
+   //----------------------------------------------------------------------
+   if (role == iGeometryName)
+   {
+    RC = piUdfFeatureInstance-&gt;GetInput(i,spGeom);
+   }
+   i++;
+  }
+  //----------------------------------------------------------------------
+  // The right Input was not found
+  //----------------------------------------------------------------------
+  if (FAILED(RC) || role != iGeometryName)
+  {
+   //----------------------------------------------------------------------
+   // Analyse the Outputs : this is the geometrical outputs of your Udf
+   // added in the Outputs List when creating the Udf template
+   //----------------------------------------------------------------------
+   CATListValCATBaseUnknown_var * oOutputs = NULL;
+   CATIUdfFeatureUser *piUdfFeatureUser = NULL;
+
+   RC = iUdf-&gt;QueryInterface(IID_CATIUdfFeatureUser,(void **)&amp;piUdfFeatureUser);
+   if (SUCCEEDED(RC) &amp;&amp; NULL != piUdfFeatureUser)
+   { 
+    //----------------------------------------------------------------------
+    // Read the Outputs list
+    //----------------------------------------------------------------------
+    piUdfFeatureUser-&gt;GetOutputs (oOutputs);
+    int OutputNb = 0;
+    if (NULL != oOutputs) OutputNb = oOutputs-&gt;Size();
+
+    //----------------------------------------------------------------------
+    // At least, one output is available
+    //----------------------------------------------------------------------
+    if (0 &lt; OutputNb)
+    {
+     for (int i = 1; i &lt;= OutputNb &amp;&amp; role != iGeometryName; i++)
+     {
+      RC = piUdfFeatureUser-&gt;GetOutputRole (i, role);
+      //----------------------------------------------------------------------
+      // The right Output is found
+      //----------------------------------------------------------------------
+      if (role == iGeometryName)
+      {
+       spGeom = (*oOutputs)[i];
+      }
+     } 
+    }
+    if (NULL != oOutputs) delete oOutputs;
+   }
+   if (NULL != piUdfFeatureUser) piUdfFeatureUser-&gt;Release();
+   piUdfFeatureUser = NULL;
+  }
+
+  oGeometry = spGeom;
+ }
+
+ if (NULL_var != oGeometry)
+  RC = S_OK;
+ else
+  RC = E_FAIL;
+
+ if (NULL != piUdfFeatureInstance) piUdfFeatureInstance-&gt;Release();
+ piUdfFeatureInstance = NULL;
+
+ return (RC);
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>Update the interface dictionary, that is a file named, for example in this
+case, CAAManufacturingItf.edu.dico, whose directory's pathname is concatenated
+at run time in the CATDictionaryPath environment variable, and containing the
+following declaration to state that the <i>UdfFeature</i> feature implements the
+<i>CATIMfgMappingForMachiningAxis</i> interface, and whose code is located in
+the libCAAMaiUserDefFeatureMapping shared library or DLL. Pay attention to
+remove the comment (#) in the supplied dictionary.</p>
+<pre>UdfFeature CATIMfgMappingForMachiningAxis libCAAMaiUserDefFeatureMapping</pre>
+<p>The CAAManufacturingItf.edu.dico file is located in:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating a User Defined Feature Template and Generating
+Instances</h4>
+<p>Here, you will find specific informations according to the implementation of
+the <i>CATIMfgMappingForMachiningAxis</i> interface. You can access to the User
+Defined Feature commands under the Shape or Part Design Workbenches, then edit
+the UserHoleWithAxisSystem User feature under the UserFeatures tree, and display
+the different tab-pages, specially Inputs and Outputs ones.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Applying the
+&quot;MachiningProcessUsingAxisSystemChange&quot; Machining Process</h4>
+To apply this machining process, update the&nbsp;
+&quot;CAAPrismaticMachiningItf.edu.dico&quot; file that enables to use a
+Machining Axis System Change for the described user feature.
+<ul>
+  <li>Open the &quot;Manufacturing Features View&quot;</li>
+  <li>Open the &quot;CAAMaiMachiningProcesses.catalog&quot; catalog in the
+    installation directory (see above), then select the
+    &quot;MachiningProcessUsingAxisSystemChange&quot; process</li>
+  <li>Select either in the model, or in the Manufacturing View, the
+    &quot;UdfHoleWithNCMacroData.1&quot; User Defined Feature.</li>
+  <li>Select the &quot;OK&quot; command</li>
+</ul>
+<p align="center">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, to machine User Defined Features. It shows how to implement the <i>CATIMfgMappingForMachiningAxis</i>
+interface to be authorized to assign geometry&nbsp; to the geometrical macro
+motions when instantiating a machining process. This is an elementary step to do
+this.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

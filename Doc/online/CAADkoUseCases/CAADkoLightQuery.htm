@@ -1,0 +1,391 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Running Light Query</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>EBOM Part &amp; Assembly Detailing</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Running Light Query</h3>
+      <em>Running Light Query</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to run a Light Query to get data on objects and delete all the memory used to run that query.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADkoLightQuery Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADkoLightQuery Do</a></li>
+            <li><a href="#How">How to Launch CAADkoLightQuery</a></li>
+            <li><a href="#Where">Where to Find the CAADkoLightQuery Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+     </td>
+   </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to run a Light Query.</p>
+
+<p>To get information on the objects found in the memory of the session or in the database, a query has to be run. The information is then used
+to execute business processes: make some checks, print some reports, modify the objects. The query gets the objects matching a predicate, and all
+the attributes of those objects are accessible. The objects are loaded in memory.<br>
+The first problem with that traditional query is that it is time consuming: all the attribute values are read from the database even though just
+a few of them will be used, and loading the objects in memory takes time. The second problem is that once the objects are in memory, they can't be
+removed from the session's server memory. After a while, depending on the number of objects, the memory gets full.<p>
+To remedy those problems, the Light Query has been implemented. Light Query is using a small structure to hold the attribute values, structure that
+is deleted once the query is done. The objects are not loaded in memory. The improvements are found on the time spent to execute the query and on the
+memory spent to execute the process. Inside the Light Query, only the attributes values asked for in input are retrieved.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADkoLightQuery Use Case</h3>
+<p>CAADkoLightQuery is a use case of the CAAVPMDesktopObjects.edu framework that
+illustrates VPMDesktopObjects, VPMInterfaces and VPMPersistency framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADkoLightQuery Do</h4>
+
+<p>CAADkoLightQuery is a stand-alone executable that runs a Light Query to get a list of Part Instances and print some information about those Part Instances.<p>
+
+CATIVpmLightQueryManager is used to run the Light Query and get the Part Instances.</p>
+
+<ol>
+<li>
+In this use case, we set up the Light Query to get the Part Instances matching a filter. We define if the query is case sensitive or not, if it has to be run in database and memory or database only.
+We select the list of attributes that we want to get. We define the attribute used to sort the results.
+</li>
+<li>
+On the results, we print the Part Number and the UUID (unique identifier) of each Part Instance.
+</li>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADkoLightQuery</h4>
+<p>To launch CAADkoLightQuery, you will need to set up the build time environment,
+then compile CAADkoLightQuery along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADkoLightQuery Code</h4>
+<p>The CAADkoLightQuery use case is made of a single file located in
+the CAADkoLightQuery.m module of the CAAVPMDesktopObjects.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoLightQuery.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoLightQuery.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAADkoLightQuery:</p>
+<ol>
+  <li><a href="#Step1">Get the Light Query Manager</a></li>
+  <li><a href="#Step2">Define the Light Query parameter</a></li>
+  <li><a href="#Step3">Run the Light Query</a></li>
+  <li><a href="#Step4">Use the results to print some information</a></li>
+  <li><a href="#Step5">Delete the Light Query result structure</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step1"></a>Get the Light Query Manager</h5>
+The Light Query Manager is an extension of the Factory Manager, it is retrieved by a simple Query Interface from the latter.<br>
+The code is therefore :
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   CATIVpmFactoryManager_var theManager = NULL_var;
+   RC = Session-&gt;GetVPMObjectFactory( theManager );
+   CATIVpmLightQueryManager_var LightQueryManager( theManager );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step2"></a>Define the Light Query parameter</h5>
+The first part is to define the entity on which the query will be run, and the predicate to apply for this query. This is not new to Light Query and is done the same way, with the same API
+than before. Here we define the query on the VPMItemInstance entity with a predicate on the V_ID attribute of the Part Master.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   CATIVpmPathExpression_var PathExpr = CreatePathExpression( "VPMItemInstance", "V_PV.V_master.V_ID" );
+   CORBAAny cvalue;
+   CATUnicodeString SearchValue = NameBase + "%";
+   cvalue &lt;&lt; SearchValue;
+   CATIVpmPredicate_var WhereClause = ::IsLike( PathExpr, cvalue );
+   CATIVpmQuery_var Query = CreateQuery( "VPMItemInstance", NULL_var, WhereClause );
+      </pre>
+    </td>
+  </tr>
+</table>
+The query is defined to be case sensitive.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   Query-&gt;SetCaseSensitive();
+      </pre>
+    </td>
+  </tr>
+</table>
+The Light Query can be run in database only or in database and memory. The next parameter sets the run in database and memory.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   QueryType TypeOfQuery = DatabaseAndMemory;
+      </pre>
+    </td>
+  </tr>
+</table>
+We define the list of attributes for which we want to get the values in the result. This is the Select Clause of the query. The attributes that can be used in the Select Clause are
+defined in the metadata file defining the entity. For the lock information, two additional string attributes can be used: LOCKUSER and LOCKSTATUS. For the site ownership information, the
+additional binary attribute OWNERSITE can be used.<br>
+If the entity on which the query is run is linked to another entity by a direct relationship attribute (not multi-valuated, not inverse), then the attributes of that linked entity can
+also be used in the Select Clause. Here, we put some attributes of the Part Version entity, the Part Master entity, the parent PRC, the parent AR and the parent ItemInstance.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   // We define the Select Clause. This is the list of attributes for which we want the values on the parts matching the Where Clause, result of the query.
+   CATListOfCATUnicodeString SelectClause;
+
+   // We can get some attributes on the instance
+   SelectClause.Append( "VPMItemInstance::V_instance_ID" );
+   SelectClause.Append( "VPMItemInstance::V_user" );
+   SelectClause.Append( "VPMItemInstance::C_created" );
+   SelectClause.Append( "VPMItemInstance::V_organization" );
+   SelectClause.Append( "VPMItemInstance::V_discipline" );
+   SelectClause.Append( "VPMItemInstance::V_level" );
+   SelectClause.Append( "VPMItemInstance::V_status" );
+   SelectClause.Append( "VPMItemInstance::V_volume_x1" );
+   SelectClause.Append( "VPMItemInstance::V_PV" );
+   SelectClause.Append( "VPMItemInstance::LOCKUSER" );
+   SelectClause.Append( "VPMItemInstance::OWNERSITE" );
+
+   // We can get some attributes on the Part Version
+   SelectClause.Append( "VPMItemInstance::V_PV.C_created" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_user" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_version" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_status" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master" );
+   SelectClause.Append( "VPMItemInstance::V_PV.LOCKUSER" );
+   SelectClause.Append( "VPMItemInstance::V_PV.OWNERSITE" );
+
+   // We can get some attributes on the Part Master
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master.V_ID" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master.C_created" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master.V_user" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master.V_name" );
+   SelectClause.Append( "VPMItemInstance::V_PV.V_master.V512_IsConfigured" );
+
+   // We can get some attributes on the Parent PRC
+   SelectClause.Append( "VPMItemInstance::V_parent_PRC.V_ID" );
+
+   // We can get some attributes on the Parent AR, if there is one
+   SelectClause.Append( "VPMItemInstance::V_AR.V_instance_ID" );
+
+   // We can get some attributes on the Parent II, if there is one
+   SelectClause.Append( "VPMItemInstance::V_parent_II.V_instance_ID" );
+   SelectClause.Append( "VPMItemInstance::V_parent_II.V_discipline" );
+      </pre>
+    </td>
+  </tr>
+</table>
+Finally, we choose the attribute used to sort the results. This attribute can be undefined (empty), so that no sort is applied on the results. If the attribute is defined, it must be
+one of the attributes of the Select Clause. It can be an attribute of type string, integer, date or real. Any attempt to sort the results on another type of attribute will result in
+a failure.<br>
+Here we sort the results according to the values of the V_level integer attribute on the VPMItemInstance entity.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   CATUnicodeString SortAttr( "VPMItemInstance::V_level" );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step3"></a>Run the Light Query</h5>
+This step is easy, it just consists in calling the RunLightQuery method to execute the query.<br>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+   RC = LightQueryManager-&gt;RunLightQuery( Query, SelectClause, SortAttr, TypeOfQuery, oQueryResult );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step4">Use the results to print some information</a></h5>
+First the Part Number attribute (the attribute V_ID on the PartMaster entity) values are read for each Part Instance in the result. Getting the values is done with the method getAllValuesForAttributes.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      CATUnicodeString PartNumberAttributeName( "VPMItemInstance::V_PV.V_master.V_ID" );
+      _SEQUENCE_CORBAAny PartNumberValues;
+      CATListOfInt IsSet;
+      RC = oQueryResult-&gt;getAllValuesForAttribute( PartNumberAttributeName, PartNumberValues, IsSet );
+      </pre>
+    </td>
+  </tr>
+</table>
+The values are put in a sequence of CORBAAny objects. The method fills a list of integers, IsSet, that have the value 1 if the attribute is set (has a defined value) or 0 if the attribute is unset (the
+attribute does not have a value). If the IsSet flag is set to 0, then the value found in the CORBAAny is meaningless.<br>
+Once we have the values, we print them out:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      int nbValues = PartNumberValues.length();
+      for( int i=1; i&lt;=nbValues; i++ )
+      {
+         CATUnicodeString PartNumber;
+         PartNumberValues[i-1] &gt;&gt; PartNumber;
+
+         TRACE &lt;&lt; "Part at index " &lt;&lt; i &lt;&lt; " has a Part Number ";
+         if ( IsSet[i] == 1 )
+         {
+            TRACE &lt;&lt; "with value : " &lt;&lt; PartNumber &lt;&lt; endl;
+         }
+         else
+         {
+            TRACE &lt;&lt; "unset" &lt;&lt; endl;
+         }
+      }
+      </pre>
+    </td>
+  </tr>
+</table>
+After that, we get the unique identifiers (UUID) of each Part Instance. This is done by calling the static method getUUIDs on the interface ENOVLightQueryToFullObjectsServices.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      CATListOfInt Indexes;
+      CATLISTV(_SEQUENCE_octet) UUIDs;
+      RC = ENOVLightQueryToFullObjectsServices::getUUIDs( Indexes, UUIDs, oQueryResult );
+      int nbUUIDs = UUIDs.Size();
+      for( i=1; i &lt;= nbUUIDs; i++ )
+      {
+         TRACE &lt;&lt; "Part at index " &lt;&lt; i &lt;&lt; " has the UUID : " &lt;&lt; GetHexaValue( UUIDs[i] ) &lt;&lt; endl;
+      }
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step5">Delete the Light Query result structure</a></h5>
+It is very important at the end to delete the structure used by the Light Query to retrieve the data. No object has been loaded in memory during the Light Query,
+but all the attribute values and object identifiers are stored in that structure. Deleting the structure will ensure that the server memory at the end of the
+Light Query is the same as the memory at the start of the Light Query.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      delete oQueryResult; oQueryResult = NULL;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+Running Light Query on the server consists in getting the Light Query Manager, defining the parameters of the Light Query, running the Light Query, reading the results of the Light Query and
+deleting the result structure to clean all the memory used by the Light Query.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2013]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

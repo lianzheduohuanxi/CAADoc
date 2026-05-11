@@ -1,0 +1,288 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAGsiCreatePtLnAndConvertToDatum.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+Language="VBSCRIPT"
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">Dim </font>documents1<font color="#0000FF"> As </font>Documents
+<font color="#0000FF">Set </font>documents1 = CATIA.Documents
+
+<font color="#008000">' Open CATPart </font>
+<font color="#008000">' ----------------------------------------------------------</font>
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Open CAAGsiStart.CATPart  "
+
+<font color="#008000">' Open CATIA Part : CAAGsiCreateJoinSurface.CATPart </font>
+<font color="#0000FF">Dim </font>sDocPath<font color="#0000FF"> As </font>String
+sDocPath=CATIA.SystemService.Environ("CATDocView")
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  DocPath = "&amp;sDocPath 
+
+<font color="#0000FF">Dim </font>partDocument1<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Set </font>partDocument1 = documents1.Open(sDocPath & "\online\CAAScdGsiUseCases\samples\CAAGsiStart.CATPart")
+
+<font color="#0000FF">Dim </font>part1<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>part1 = partDocument1.Part
+
+<font color="#0000FF">Dim </font>hybridShapeFactory1<font color="#0000FF"> As </font>Factory
+<font color="#0000FF">Set </font>hybridShapeFactory1 = part1.HybridShapeFactory
+
+<font color="#0000FF">Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">Set </font>hybridBodies1 = part1.HybridBodies
+
+<font color="#0000FF">Dim </font>hybridBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">Set </font>hybridBody1 = hybridBodies1.Item("Open_body.1")
+
+<font color="#008000">' Declarations </font>
+<font color="#008000">' ----------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>max<font color="#0000FF"> as </font>integer
+max=20
+
+
+<font color="#0000FF">Dim </font>hybridShapePointCoord1<font color="#0000FF"> As </font>HybridShapePointCoord
+<font color="#0000FF">Dim </font>hybridShapePointCoord2<font color="#0000FF"> As </font>HybridShapePointCoord
+
+<font color="#0000FF">Dim </font>reference1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>reference2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>hybridShapeLinePtPt1<font color="#0000FF"> As </font>HybridShapeLinePtPt
+
+<font color="#0000FF">Dim </font>reference3<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>originElements1<font color="#0000FF"> As </font>OriginElements
+<font color="#0000FF">Dim </font>hybridShapePlaneExplicit1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">Dim </font>reference4<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>hybridShapeIntersection1<font color="#0000FF"> As </font>HybridShapeIntersection
+
+<font color="#0000FF">Dim </font>reference5<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>hybridShapePointExplicit1<font color="#0000FF"> As </font>HybridShapePointExplicit
+<font color="#0000FF">Dim </font>VisPropSet1<font color="#0000FF"> As </font>VisPropertySet
+
+<font color="#0000FF">Dim </font>hybridShapeLineExplicit1<font color="#0000FF"> As </font>HybridShapeLineExplicit
+
+
+<font color="#0000FF">Dim </font>selection1
+<font color="#0000FF">Dim </font>parameters1<font color="#0000FF"> As </font>Parameters
+<font color="#0000FF">Dim </font>intParam1<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">Dim </font>parameters2<font color="#0000FF"> As </font>Parameters
+<font color="#0000FF">Dim </font>realParam1<font color="#0000FF"> As </font>Parameter
+
+
+<font color="#0000FF">Set </font>selection1 = CATIA.ActiveDocument.Selection
+
+<font color="#0000FF">Set </font>parameters1 = part1.Parameters
+<font color="#0000FF">Set </font>intParam1 = parameters1.Item("Num_Of_Points_Created")
+intParam1.Value = 0
+
+<font color="#0000FF">Set </font>parameters2 = part1.Parameters
+<font color="#0000FF">Set </font>realParam1 = parameters2.Item("Percentage_Completed")
+realParam1.Value = 0.00
+
+
+<font color="#008000">' Array </font>
+<font color="#008000">' ----------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>TabExt ()
+<font color="#0000FF">Dim </font>TabMil ()
+<font color="#0000FF">Dim </font>TabLine()
+<font color="#0000FF">Dim </font>TabLineExpl()
+<font color="#0000FF">Dim </font>TabPtExpl()
+
+
+ReDim TabExt(2*max)
+ReDim TabMil(max)
+ReDim TabLine(max)
+ReDim TabLineExpl(max)
+ReDim TabPtExpl(max)
+
+
+
+<font color="#0000FF">Dim </font>Pi<font color="#0000FF"> As </font>double
+<font color="#0000FF">Dim </font>R<font color="#0000FF"> As </font>double  
+<font color="#0000FF">Dim </font>Omega<font color="#0000FF"> As </font>double
+
+R    = 50.0000
+Pi   = 3.14116  
+Omega= 2*Pi/max  
+
+<font color="#0000FF">Dim </font>i<font color="#0000FF"> as </font>integer
+<font color="#0000FF">Dim </font>angle<font color="#0000FF"> As </font>double  
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' GSD Geometrie Creation 	</font>
+<font color="#008000">' ------------------------------------------------------</font>
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Create Points and Lines "
+
+for i=1<font color="#0000FF"> to </font>max
+
+  
+   <font color="#008000">'Create two points</font>
+    Angle = Omega * (i-1)
+ 	
+<font color="#0000FF">    Set </font>TabExt(2*i-1)   = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle), R*sin(Angle), 100.000000)  
+    hybridBody1.AppendHybridShape  TabExt(2*i-1) 
+    part1.InWorkObject =  TabExt(2*i-1) 
+<font color="#0000FF">    Set </font>TabExt(2*i)  = hybridShapeFactory1.AddNewPointCoord(R*cos(Angle+2*Pi/3), R*sin(Angle+2*Pi/3), -100.000000)
+    hybridBody1.AppendHybridShape  TabExt(2*i)
+    part1.InWorkObject = TabExt(2*i)
+
+   <font color="#008000">'Draw line</font>
+<font color="#0000FF">    Set </font>reference1 = part1.CreateReferenceFromObject(TabExt(2*i-1))
+<font color="#0000FF">    Set </font>reference2 = part1.CreateReferenceFromObject(TabExt(2*i))
+<font color="#0000FF">    Set </font>TabLine(i)  = hybridShapeFactory1.AddNewLinePtPt(reference1, reference2)
+    hybridBody1.AppendHybridShape TabLine(i)
+    part1.InWorkObject = TabLine(i)
+
+    
+   <font color="#008000">'Generate Intersection Point</font>
+<font color="#0000FF">    Set </font>reference3 = part1.CreateReferenceFromObject(TabLine(i))
+<font color="#0000FF">    Set </font>originElements1 = part1.OriginElements
+<font color="#0000FF">    Set </font>hybridShapePlaneExplicit1 = originElements1.PlaneXY
+<font color="#0000FF">    Set </font>reference4 = part1.CreateReferenceFromObject(hybridShapePlaneExplicit1)
+<font color="#0000FF">    Set </font>TabMil(i) = hybridShapeFactory1.AddNewIntersection(reference3, reference4)
+    hybridBody1.AppendHybridShape TabMil(i) 
+    part1.InWorkObject = TabMil(i)
+
+    
+    <font color="#008000">'update Num_Of_Points_Created parameter</font>
+   <font color="#0000FF"> int</font>Param1.Value = i
+
+    
+    <font color="#008000">'update Percentage_Completed parameter</font>
+    realParam1.Value = i/max *100
+
+<font color="#0000FF">next</font>
+part1.Update
+
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Convert to Datum </font>
+<font color="#008000">' ------------------------------------------------------</font>
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Convert to Datum "
+
+
+<font color="#008000">' Add OpenBodys   for datum point and for datum line</font>
+<font color="#0000FF">Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">Dim </font>OpenBody2<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">Dim </font>referencebody<font color="#0000FF"> As </font>Reference
+
+<font color="#0000FF">Set </font>OpenBody1 = hybridBodies1.Add()
+<font color="#0000FF">Set </font>referencebody = part1.CreateReferenceFromObject(OpenBody1)	
+hybridShapeFactory1.ChangeFeatureName referencebody  , "DatumPointBody" 
+
+<font color="#0000FF">Set </font>OpenBody2 = hybridBodies1.Add()
+<font color="#0000FF">Set </font>referencebody = part1.CreateReferenceFromObject(OpenBody2)	
+hybridShapeFactory1.ChangeFeatureName referencebody ,  "DatumLineBody" 
+
+<font color="#008000">' Loop on element to convert </font>
+for i=1<font color="#0000FF"> to </font>max
+
+   <font color="#008000">'Isolate Intersection point</font>
+<font color="#0000FF">    Set </font>reference5 = part1.CreateReferenceFromObject(TabMil(i))
+<font color="#0000FF">    Set </font>TabPtExpl(i) = hybridShapeFactory1.AddNewPointDatum(reference5)
+    OpenBody1.AppendHybridShape TabPtExpl(i)
+    part1.InWorkObject = TabPtExpl(i)
+
+    
+   hybridShapeFactory1.DeleteObjectForDatum reference5
+
+   <font color="#008000">'Isolate the line</font>
+<font color="#0000FF">    Set </font>reference5 = part1.CreateReferenceFromObject(TabLine(i))
+<font color="#0000FF">    Set </font>TabLineExpl(i) = hybridShapeFactory1.AddNewLineDatum(reference5)
+    OpenBody2.AppendHybridShape TabLineExpl(i)
+    part1.InWorkObject = TabLineExpl(i)
+     
+    hybridShapeFactory1.DeleteObjectForDatum reference5
+
+<font color="#0000FF">next </font>
+part1.Update 
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Delete Useless points </font>
+<font color="#008000">' ------------------------------------------------------</font>
+for i=1<font color="#0000FF"> to </font>max
+    selection1.Clear()
+    selection1.Add(TabExt(2*i-1))
+    selection1.Add(TabExt(2*i))
+    selection1.Delete
+<font color="#0000FF">next </font>
+part1.Update
+
+<font color="#008000">' ------------------------------------------------------</font>
+<font color="#008000">' Change graphic properties(color)  and datum names  </font>
+<font color="#008000">' ------------------------------------------------------</font>
+Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Update graphic properties and names "
+<font color="#0000FF">Dim </font>referencedat1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Dim </font>referencedat2<font color="#0000FF"> As </font>Reference
+
+<font color="#008000">' Loop on element to modify </font>
+for i=1<font color="#0000FF"> to </font>max
+    <font color="#008000">' -- Points </font>
+    <font color="#008000">' Change Color of Middle Point  </font>
+    selection1.Clear()
+    selection1.Add(TabPtExpl(i))
+<font color="#0000FF">    Set </font>VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor 255,<font color="#0000FF"> int</font>(255*(i-1)/max),<font color="#0000FF"> int</font>(255*(1-((i-1)/max)) ), 1
+ 
+    <font color="#008000">' Rename  </font>
+    NewName ="PointDatum" & "." & i	
+<font color="#0000FF">    Set </font>referencedat1 = part1.CreateReferenceFromObject(TabPtExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat1 ,NewName 	
+
+    <font color="#008000">' -- Lines </font>
+    <font color="#008000">' Change Color of Line  	</font>
+    selection1.Clear()
+    selection1.Add(TabLineExpl(i))
+<font color="#0000FF">    Set </font>VisPropSet1 = selection1.VisProperties
+    VisPropSet1.SetRealColor<font color="#0000FF"> int</font>(255*(i-1)/max), 255,<font color="#0000FF"> int</font>(255*(1-((i-1)/max)) ), 1 
+    
+    <font color="#008000">' Rename </font>
+    NewName = "LineDatum" & "." & i
+<font color="#0000FF">    Set </font>referencedat2  = part1.CreateReferenceFromObject(TabLineExpl(i))
+    hybridShapeFactory1.ChangeFeatureName referencedat2 ,NewName 	
+<font color="#0000FF">next </font>
+
+
+EnvSave = Catia.SystemService.Environ("CAA_GSD_SAVE")
+Catia.SystemService.Print "EnvSave=" & EnvSave
+<font color="#0000FF">If </font>( EnvSave &lt;&gt; "" ) Then
+  <font color="#008000">' ---------------------------------------------------------------------------</font>
+  <font color="#008000">' Save As </font>
+  <font color="#008000">' ---------------------------------------------------------------------------</font>
+
+  <font color="#008000">' Note : Optional -  allows to specify where document should be saved</font>
+   sTmpPath = Catia.SystemService.Environ("CATTemp")
+<font color="#0000FF">   If </font>(Not Catia.FileSystem.FolderExists(sTmpPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,"No Tmp Path Defined"
+<font color="#0000FF">   End If</font>
+
+   <font color="#008000">' Save </font>
+   Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  SaveAs in :" & sTmpPath & "\CAAGsiCreatePtLnAndConvertToDatum.CATPart"
+   partDocument1.SaveAs sTmpPath & "\CAAGsiCreatePtLnAndConvertToDatum.CATPart"
+<font color="#0000FF">End If</font>
+
+
+EnvVar = Catia.SystemService.Environ("CAA_GSD_EXIT")
+Catia.SystemService.Print "EnvVar=" & EnvVar
+<font color="#0000FF">If </font>( EnvVar &lt;&gt; "" ) Then
+ 
+   On Error Resume Next 
+   CATIA.DisplayFileAlerts = False	 
+  <font color="#008000">' ---------------------------------------------------------------------------</font>
+  <font color="#008000">' Close </font>
+  <font color="#008000">' ---------------------------------------------------------------------------</font>
+   Catia.SystemService.Print "(CAAGsiCreatePtLnAndConvertToDatum)  Close and Quit "
+   partDocument1.Close 
+ 
+
+  <font color="#008000">' -------------------------------------------------------------</font>
+  <font color="#008000">' Exit Catia </font>
+  <font color="#008000">' -------------------------------------------------------------</font>
+    Catia.SystemService.Print "Catia.Quit"
+    Catia.Quit
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">End Sub </font>
+
+
+
+
+
+
+</pre></body></html>
+
+

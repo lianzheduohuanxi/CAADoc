@@ -1,0 +1,343 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Integrating New Features in CATIA</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Feature Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Integrating New Features in CATIA</h3>
+      <em>What interfaces need to be implemented in order for a new feature to
+      be correctly integrated in CATIA?&nbsp;</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><a name="Abstract"></a>Abstract</h3>
+      <p>This article describes the interfaces that need to be implemented in
+      order to integrate a new feature defined &quot;from scratch&quot; in the
+      basic CATIA behaviors. Note that a specific article describing the
+      integration of new features derived from other existing Dassault Systemes
+      features may also be available under the corresponding application's
+      documentation section.
+      <ul>
+        <li><a href="#Behaviors"><b>Overview of Basic CATIA Behaviors</b></a>
+          <ul>
+            <li><a href="#Cut/Copy/Paste/Delete">Cut/Copy/Paste/Delete</a></li>
+            <li><a href="#Editing">Editing</a></li>
+            <li><a href="#Generic Properties">Generic Properties</a></li>
+            <li><a href="#Geometrical Visualization">Geometrical Visualization</a></li>
+            <li><a href="#Persistency of Feature Name">Persistency of Feature
+              Name</a></li>
+            <li><a href="#Publication of Knowledge Parameters">Publication of
+              Knowledge Parameters</a></li>
+            <li><a href="#Replace">Replace</a></li>
+            <li><a href="#Specification Tree Visualization and Navigation">Specification
+              Tree Visualization and Navigation</a></li>
+            <li><a href="#Update">Update</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#In Short">In Short</a></b>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Behaviors"></a>Overview of Basic CATIA Behaviors</h3>
+<p>This document takes into account a certain number of basic CATIA behaviors
+that need to be considered whenever you create a new feature. This section
+describes each of them.</p>
+<ul>
+  <li><b><a name="Cut/Copy/Paste/Delete">Cut/Copy/Paste/Delete</a>.</b></li>
+  <p>In order to have access to CCP and Delete operations, these options must be
+  selectable in the Edit or contextual menus. These options are filtered by the <i>CATICSOFilter</i>
+  interface. This means that, depending on the context (workshop, to be
+  precise), this interface may already have been implemented by the <code>UIActive</code>
+  object and some operations may have been disabled. By default, if the <i>CATICSOFilter</i>
+  interface has not been implemented on the <code>UIActive</code> object, all
+  operations are enabled. In a Product document, the CCP and Delete operations
+  have been disabled on non-Product features. This means that the new feature
+  must itself implement the <i>CATICSOFilter</i> interface in order to enable
+  CCP and Delete operations.&nbsp;In a Part document, since the <i>CATICSOFilter</i>
+  interface has not been implemented, you should not have to consider this
+  interface.&nbsp;</p>
+  <p>The CCP and Delete operations themselves are managed by the <i>CATICutAndPastable</i>
+  and <i>LifeCycleObject</i> interfaces. These interfaces are implemented on
+  selectable CATIA features.</p>
+  <li><a name="Editing"><b>Editing</b></a><b>.</b></li>
+  <p>Editing a feature occurs through a dialog box that is displayed upon either
+  double-clicking on the feature or using the right button of the mouse on the
+  feature to display its contextual menu, then selecting the &quot;Define&quot;
+  command in the sub-menu section. The dialog box contains all of the modifiable
+  attribute values currently valid for the selected feature. This editing
+  capability is managed by the <i>CATIEdit</i> interface. When the <i>CATIEdit</i>
+  interface is implemented on a feature, it is also possible to further expand
+  the contextual sub-menu with new commands by implementing the <i>CATIContextualSubMenu</i>
+  interface. See the &quot;Editing Objects&quot; use case found with the
+  ApplicationFrame framework documentation.</p>
+  <li><b><a name="Generic Properties">Generic Properties</a>.</b></li>
+  <p>The <i>CATIProperty</i> interface manages the ability to add, retrieve and
+  delete generic properties defined on features.</p>
+  <li><b><a name="Geometrical Visualization">Geometrical Visualization</a>.</b></li>
+  <p>A feature's geometrical visualization is managed by any C++ interface
+  deriving from <i>CATIVisu</i>: <i>CATI3DGeoVisu</i>, <i>CATI2DGeoVisu</i>,
+  etc. You must at least implement one visualization interface to display the
+  newly features. Note, that it is possible to implement several interfaces
+  deriving from <i>CATIVisu</i> for the same StartUp [<a href="#References">1</a>].&nbsp;</p>
+  <p>A feature's graphical properties are managed by the <i>CATIVisProperties</i>
+  interface. You should implement it to associate graphical properties to the
+  features [<a href="#References">2</a>].</p>
+  <p>The <i>CATIModelEvents</i> interface manages sending event notifications in
+  the case where the visualization of the feature has been modified and needs to
+  be refreshed. The implementation of this interface is not mandatory, but
+  strongly recommended, because it is essentially used for performance reasons
+  in order to force the visualization of only the part of the geometry that has
+  been modified instead of forcing a re-visualization of the entire geometry.</p>
+  <li><b><a name="Persistency of Feature Name">Persistency of Feature Name</a>.</b></li>
+  <p>The <i>CATIAlias</i> interface manages the persistency of a feature's name.
+  A default implementation of this interface does exist, the <code>GetAlias</code>
+  method is based on the <code>GetDisplayName</code> method of the <i>CATISpecObject
+  </i>interface, and the <code>SetAlias</code> method modifies the default
+  external name. BUT the default <code>SetAlias</code> implementation does not
+  manage the persistency, it means that you must implement <i>CATIAlias</i> to
+  keep a user name. You can refer to the article entitled &quot;Feature Modeler
+  Overview&quot; for details about the StartUp internal and external names [<a href="#References">3</a>].</p>
+  <p>To implement <i>CATIAlias</i> , you should respect the following
+  recommendations:</p>
+  <blockquote>
+    <ul>
+      <li>Define a string attribute to store the object's applicative internal
+        name (&quot;AppKey&quot;).</li>
+      <li>The external name returned by <code>GetAlias</code> must be <b>computed
+        </b>(*) with:</li>
+    </ul>
+    <blockquote>
+      <ul>
+        <li>&quot;AppKey&quot;, This attribute enables you to look for a NLS
+          string thanks to your own reference name, and not with the internal
+          name of the StartUp.</li>
+        <li>an NLS resource file,</li>
+        <li>and if needed with <code>GetDisplayName</code> of <i>CATISpecObject </i>(for
+          example to retrieve the index value).</li>
+      </ul>
+    </blockquote>
+  </blockquote>
+  <p>(*)Never store a name that can be displayed in a NLS context.&nbsp;</p>
+  <li><b><a name="Publication of Knowledge Parameters">Publication of Knowledge
+    Parameters</a>.</b></li>
+  <p>The <i>CATIParmPublisher</i> interface allows the publication of a
+  feature's parameters.</p>
+  <li><b><a name="Replace">Replace</a></b>.</li>
+  <p>The <i>CATIReplace</i> interface allows replacing the valuation of one
+  attribute by another object.&nbsp;</p>
+  <li><b><a name="Specification Tree Visualization and Navigation">Specification
+    Tree Visualization and Navigation</a>.</b></li>
+  <p>Visualizing a feature in the specification tree and enabling further
+  navigation of the feature itself is managed by the <i>CATINavigateObject</i>
+  interface. This interface is implemented on all natively-defined CATIA
+  features, i.e., features defined in applications provided by Dassault
+  Systemes. Its methods return the name of the feature and a list of its
+  children. When a feature is added to the specification tree under an existing
+  node, that parent node must be capable of listing it as its child. The feature
+  itself must also be capable of listing any of the features it may be pointing
+  to. The <i>CATINavigModify</i> interface allows a specific icon to be
+  specified for a given feature. You can use the methods of <i>CATIRedrawEvent</i>
+  to force a refresh of the specification tree whenever a modification has been
+  made. See the ObjectModelerBase use case entitled &quot;The Object
+  Navigator&quot; [<a href="#References">4</a>] for a detailed example of the
+  navigation process.</p>
+  <li><b><a name="Update">Update</a>.</b></li>
+  <p>The <i>CATIBuild</i> interface allows the re-calculation of a feature's
+  results as part of the general update process whose execution is triggered by
+  the <code>Update</code> method of <i>CATISpecObject</i>. See the
+  ObjectSpecsModeler use case entitled &quot;The Build/Update Mechanism&quot;
+  for a detailed example [<a href="#References">5</a>].</p>
+</ul>
+<h3><a name="In Short"></a>In Short</h3>
+<p>This section summarizes in table form the interfaces to taken into account
+when a new feature is defined &quot;from scratch&quot;, i.e., not derived from
+any existing Dassault Systemes feature. Here are the explanations of the
+different CAA interface implementation possibilities based on the last two
+columns of the table:</p>
+<ul>
+  <li><b>Existing Default Implementation&nbsp; AND Possible</b>: This means that
+    an existing default implementation of the corresponding interface is
+    available but you may override it if the specificity of your feature
+    requires it.</li>
+  <li><b>No Existing Default Implementation&nbsp; AND Mandatory</b>: This means
+    that no default implementation of the corresponding interface is available
+    and that the implementation of the interface is mandatory in order for the
+    feature to access this behavior.</li>
+  <li><b>No Existing Default Implementation&nbsp; AND Possible</b>: This means
+    that no default implementation of the corresponding interface is available
+    but that it may be possible to implement the interface in order for the
+    feature to access this behavior.&nbsp;</li>
+</ul>
+<p>&nbsp;
+<table border="1" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="33%">
+      <p align="center"><b>Behavior</b></td>
+    <td width="28%" valign="top">
+      <p align="center"><b>Interface</b></td>
+    <td width="20%" valign="top" align="center">
+      <p align="center"><b>Existing Default Implementation (Yes/No)</b></td>
+    <td width="53%" valign="top" align="center">
+      <p align="center"><b>CAA Implementation (Mandatory/Possible)</b></td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Cut/Copy/Paste/Delete">Cut/Copy/Paste/Delete</a></td>
+    <td width="28%" valign="top"><i>CATICutAndPastable</i>
+      <p><i>LifeCycleObject</i>
+      <p><i>CATICSOFilter</i></td>
+    <td width="20%" valign="top" align="center">Yes
+      <p>Yes
+      <p>No</td>
+    <td width="53%" valign="top" align="center">Possible
+      <p>Possible</p>
+      <p align="center">Possible&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Editing">Editing</a></td>
+    <td width="28%" valign="top"><i>CATIEdit</i>
+      <p><i>CATIContextualSubMenu</i></p>
+    </td>
+    <td width="20%" valign="top" align="center">No
+      <p>No</p>
+    </td>
+    <td width="53%" valign="top" align="center">Mandatory
+      <p>Mandatory</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Geometrical Visualization">Geometrical
+      Visualization</a></td>
+    <td width="28%" valign="top"><i>CATI3DGeoVisu</i>
+      <p><i>CATIVisProperties</i>
+      <p><i>CATIModelEvents</i></td>
+    <td width="20%" valign="top" align="center">No
+      <p>No
+      <p>No</td>
+    <td width="53%" valign="top" align="center">Mandatory
+      <p>Mandatory</p>
+      <p>&nbsp; Possible&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Persistency of Feature Name">Persistency of
+      Feature Name</a></td>
+    <td width="28%" valign="top"><i>CATIAlias</i></td>
+    <td width="20%" valign="top" align="center">Yes</td>
+    <td width="53%" valign="top" align="center">&nbsp; Mandatory</td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Publication of Knowledge Parameters">Publication
+      of Knowledge Parameters</a></td>
+    <td width="28%" valign="top"><i>CATIParmPublisher</i></td>
+    <td width="20%" valign="top" align="center">No</td>
+    <td width="53%" valign="top" align="center">Mandatory</td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Replace">Replace</a></td>
+    <td width="28%" valign="top"><i>CATIReplace</i></td>
+    <td width="20%" valign="top" align="center">No</td>
+    <td width="53%" valign="top" align="center">Mandatory</td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Specification Tree Visualization and Navigation">Specification
+      Tree Visualization and Navigation</a></td>
+    <td width="28%" valign="top"><i>CATINavigateObject</i>
+      <p><i>CATINavigModify</i></td>
+    <td width="20%" valign="top" align="center">No
+      <p>No</td>
+    <td width="53%" valign="top" align="center">Mandatory
+      <p>Mandatory</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="33%"><a href="#Update">Update</a></td>
+    <td width="28%" valign="top"><i>CATIBuild</i></td>
+    <td width="20%" valign="top" align="center">No</td>
+    <td width="53%" valign="top" align="center">Mandatory</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<b>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Using the Visualization Manager</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td>Graphical Properties</td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAOsmOverview.htm">Feature Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbGeoNavigate.htm">The
+      Object Navigator</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAOsmUseCases/CAAOsmBuildUpdate.htm">The
+      Build/Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [June 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+</b>
+
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+'COPYRIGHT DASSAULT SYSTEMES 2000-2001
+Option Explicit
+Dim Language as String
+Language="VBSCRIPT"
+
+'*****************************************************************************
+' Purpose:      This macro creates a simulable mechanism
+'               in a specific product document
+' Assumptions:  The product document used is called "ForKinMacro.CATProduct".
+'               It contains a root product called Product1,
+'               and two parts called "PartKIN_1" and "PartKIN_2".
+'               In turn "PartKIN_1.CATPart" and "PartKIN_2.CATPart" 
+'                  each contain at least a line called Line.1
+' Author:       
+' Languages:    VBScript
+' Version:      V5R6
+' Locales:      US English
+'*****************************************************************************
+
+Sub CATMain()
+
+    '==================================================================
+    ' 1-Prolog
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 1.a-Retrieve the root product and the first sub-product
+    '------------------------------------------------------------------
+    Dim oRootProduct As AnyObject
+    Set oRootProduct = CATIA.ActiveDocument.Product
+
+    '------------------------------------------------------------------
+    ' 1.b-Retrieve the first sub-product to be used as fixed part 
+    '------------------------------------------------------------------
+    Dim oProductToFix As Product
+    Set oProductToFix = oRootProduct.Products.Item(1)
+	
+    '------------------------------------------------------------------
+    ' 1.c-Switch the entire product to design mode
+    '------------------------------------------------------------------
+    oRootProduct.ApplyWorkMode DESIGN_MODE
+
+    '------------------------------------------------------------------
+    ' 1.d-Retrieve references to the geometry used for joint creation
+    '------------------------------------------------------------------
+    Dim sRefName As String
+    sRefName =  "Product1/PartKIN_1.1/!Line.1"
+    Dim oReferenceLine1 As Reference
+    Set oReferenceLine1 = oRootProduct.CreateReferenceFromName  ( sRefName ) 
+    sRefName =  "Product1/PartKIN_2.1/!Line.1"
+    Dim oReferenceLine2 As Reference
+    Set oReferenceLine2 = oRootProduct.CreateReferenceFromName  ( sRefName )
+
+    '==================================================================
+    ' 2-Create a new empty mechanism
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 2.a-Retrieve the Mechanisms Collection from the Product
+    '------------------------------------------------------------------
+    Dim cTheMechanisms As AnyObject
+    Set cTheMechanisms = oRootProduct.GetTechnologicalObject("Mechanisms")
+ 
+    '------------------------------------------------------------------
+    ' 2.b-Create a new mechanism 
+    '------------------------------------------------------------------
+    Dim oNewMechanism As Mechanism
+    Set oNewMechanism = cTheMechanisms.Add()
+
+    '------------------------------------------------------------------
+    ' 2.c-Check the number of mechanisms (expected to be one)
+    '------------------------------------------------------------------
+    Dim iNbmech As Integer
+    iNbmech =cTheMechanisms.Count
+ 
+    '------------------------------------------------------------------
+    ' 2.d-Retrieve the name of the Mechanism
+    '------------------------------------------------------------------
+    Dim sMechanismName As String
+    sMechanismName = oNewMechanism.Name
+
+    '==================================================================
+    ' 3-Create the fixed part in this mechanism
+    '==================================================================
+    oNewMechanism.FixedPart = oProductToFix
+
+
+    '==================================================================
+    ' 4-Create a cylindrical (actuator) joint in this mechanism
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 4.a-Prepare an array of references used for the joint
+    '------------------------------------------------------------------
+    Dim aVar1(1)
+    Set aVar1(0) = oReferenceLine1
+    Set aVar1(1) = oReferenceLine2
+
+    '------------------------------------------------------------------
+    ' 4.b-Create the joint
+    '------------------------------------------------------------------
+    Dim oNewJoint as Joint
+    Set oNewJoint = oNewMechanism.AddJoint("CATKinCylindricalJoint",aVar1)
+
+    '------------------------------------------------------------------
+    ' 4.c-Check the number of joints (expected to be one)
+    '------------------------------------------------------------------
+    Dim iNbjnt As Integer
+    iNbjnt = oNewMechanism.NbJoints
+
+    '==================================================================
+    ' 5-Create 2 commands on that joint 
+    '==================================================================
+    Dim oNewCommand1 as MechanismCommand
+    Dim oNewCommand2 as MechanismCommand
+    Set oNewCommand1 = oNewMechanism.AddCommand("CATKinLengthCmd",oNewJoint)
+    Set oNewCommand2 = oNewMechanism.AddCommand("CATKinAngleCmd",oNewJoint)
+
+ 
+End Sub

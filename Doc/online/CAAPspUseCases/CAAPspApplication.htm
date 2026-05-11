@@ -1,0 +1,610 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Initializing and Querying Plant Ship Applications</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems</h1>
+    </td>
+    <td valign="top">
+      <h2>Distributive Systems</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Initializing and Querying Plant Ship Applications</h3>
+      <em>How to initialize and query an application and domain</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPspApplication use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAPspApplication Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAPspApplication Do</a></li>
+            <li><a href="#How">How to Launch CAAPspApplication</a></li>
+            <li><a href="#Where">Where to Find the CAAPspApplication Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to activate a Plant Ship
+application, query its domain information, and get the name and location of the
+application resources.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAPspApplication Use Case</h3>
+<p>CAAPspApplication is a use case of the CAAPlantShipInterfaces.edu framework
+that illustrates CATPlantShipInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAPspApplication Do</h4>
+<p>The goal of&nbsp; CAAPspApplication is to show you how to use the
+CATPlantShipInterfaces methods to query and obtain application and domain
+related information from the objects in a design document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAPspApplication</h4>
+<p>To launch CAAPspApplication, you will need to set up the build time
+environment, then compile CAAPspApplication along with its prerequisites, set up
+the run time environment, and then execute the sample. This is fully described
+in the referenced article [<a href="#References">1</a>]. When launching the use
+case, you must pass the following arguments:</p>
+<ul>
+  <li><b>CAAPspEduIn.CATProduct</b> - the entire pathname, name and extension
+    (.CATProduct) of the input drawing. Normally, it should be stored in the
+    CNext/resources/graphic directory of the CAAPlantShipInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAPspApplication Code</h4>
+<p>CAAPspApplication code is located in the CAAPspApplication.m use case module of
+the CAAPlantShipInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPlantShipInterfaces.edu\CAAPspApplication.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspApplication.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; two unique source files named
+CAAPspApplicationMain.cpp and CAAPspApplication.cpp.</p>
+<p>Additional prerequisite code is located in the CAAPspUtilities.m directory of the same framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAAPspApplication:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Creating">Creating an Application Object and Obtaining the
+    CATIPspApplication, CATIPspClass and CATIPspResource Interfaces</a></li>
+  <li><a href="#Querying">Initializing and Querying the Piping Design
+    Application&nbsp;</a></li>
+  <li><a href="#Retrieving Application">Retrieving the Names of the Application, Domain,
+    and Feature Catalogs</a></li>
+  <li><a href="#Retrieving Classes">Retrieving the Class Names of the
+    Application Start-Up Objects</a></li>
+  <li><a href="#Retrieving Resources">Retrieving the Resource Names and Locations of
+    the Application Resources</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we open an input document containing some Equipment and
+Piping Design objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAPspApplication code is derived from the CAAPspBaseEnv base class.
+The base class contains functionality common to the other CAAPsp samples.
+Initializing the environment involves the following method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAPspBaseEnv::CreateCATProductEnv</pre>
+    </td>
+  </tr>
+</table>
+<p>This method performs the following functions:</p>
+<ul>
+  <li>Creating a session, namely &quot;Session DSA CAAPspBaseEnv
+    CATProduct&quot;.</li>
+  <li>Loading the input document.</li>
+  <li>Initializing the document using the <i>CATInit</i> interface Init.</li>
+  <li>Retrieving the pointer to the root container object.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creating"></a>Creating an Application Object and
+Obtaining the CATIPspApplication, CATIPspClass and CATIPspResource Interfaces</h4>
+<p>Create an application late type object and obtain the <i>CATIPspApplication,
+CATIPspClass, CATIPspResource </i>interface pointers from this&nbsp; application
+object.&nbsp;&nbsp; The Piping Design application (CATPiping) is used for this
+sample since the input document was created in the Piping Design workbench.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATObject *piObj = new CATObject(&quot;CATPiping&quot;);
+if ( NULL != piObj )
+{
+   //  Find CATIPspApplication interface 
+   rc = piObj-&gt;QueryInterface(IID_CATIPspApplication,(void **)&amp;piApplication);
+   //  Find CATIPspClass interface
+   rc = piObj-&gt;QueryInterface(IID_CATIPspClass,(void **)&amp;piClass);
+   //  Find CATIPspResource interface
+   rc = piObj-&gt;QueryInterface(IID_CATIPspResource,(void **)&amp;piResource);
+   piObj-&gt;Release();
+   piObj = NULL;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Querying"></a>Initializing and Querying the Piping Design
+Application</h4>
+<p>To initialize or activate an application means to make all its resources
+(catalogs, sample data, design rules, etc.) visible and available.&nbsp; These
+application resources are defined by the project administrator in a Project
+Resource Management file at project setup time.&nbsp; After the application is
+initialized, the <i> CATIPspApplication</i> interface is used to get the following
+information:</p>
+<ul>
+  <li>List of domain names that the Piping Design application belongs to</li>
+  <li>Main domain name of the application if it belongs to more than one domain</li>
+  <li>If the application is a 3D application</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>       //----------------------------------------------------------------------
+       //  Activate the Piping application
+       //----------------------------------------------------------------------
+       if ( SUCCEEDED(piApplication-&gt;Initialization(piRootCont)) )
+          cout &lt;&lt; &quot;Piping application initialized&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  List domains supported by this application
+       //----------------------------------------------------------------------
+       CATICStringList *pListDomains = NULL;
+       if ( SUCCEEDED(piApplication-&gt;ListDomains(&amp;pListDomains)) &amp;&amp;
+             NULL != pListDomains )
+       {
+          unsigned int size = 0; 
+          if ( SUCCEEDED(pListDomains-&gt;Count(&amp;size)) )
+          {
+             int NumOfDomains = (int)size;
+             cout &lt;&lt; &quot;Number of domains for this application: &quot; &lt;&lt; NumOfDomains &lt;&lt; endl;
+             for (int j = 0; j &lt; NumOfDomains; j++ )
+             {
+                char *DomainName = NULL;
+                pListDomains-&gt;Item(j,&amp;DomainName);
+                if ( DomainName )
+                {
+                   cout &lt;&lt; DomainName &lt;&lt; endl;
+                   delete [] DomainName; DomainName = NULL;
+                }
+             }
+          }
+          pListDomains-&gt;Release();  pListDomains = NULL;
+       }
+
+       //----------------------------------------------------------------------
+       //  Is application a 3D application?
+       //----------------------------------------------------------------------
+       CATBoolean Is3D;
+       rc = piApplication-&gt;Is3DApplication(&amp;Is3D);
+       if ( Is3D )
+          cout &lt;&lt; &quot;Piping is a 3D application&quot; &lt;&lt; endl;
+
+       //----------------------------------------------------------------------
+       //  Get the application main domain name
+       //----------------------------------------------------------------------
+       if ( SUCCEEDED(piApplication-&gt;GetApplicationDomain(sDomain)) )
+          cout &lt;&lt; &quot;Application's main domain: &quot; &lt;&lt; sDomain &lt;&lt; endl;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Application"></a>Retrieving the Names of the Application,
+Domain, and Feature Catalogs</h4>
+<p>The <i> CATIPspDomainEnvironment</i> interface is used to obtain the Feature catalog
+name, the User Defined Dictionary name and the 3D application name associated to
+the domain.</p>
+<table border="0" width="80%">
+  <tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; Get the domain feature
+      catalog name<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATUnicodeString FeatFileName;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( SUCCEEDED(piDomainEnv->GetFeatFile(FeatFileName)) )<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; "Domain feature catalog: "<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &lt;&lt; FeatFileName.ConvertToChar() &lt;&lt; endl;<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; Get the domain user defined
+      feature catalog name<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATUnicodeString UserFeatFile;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( SUCCEEDED(piDomainEnv-&gt;GetUserFeatFile(UserFeatFile))
+      )<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt;
+      &quot;Domain user defined feature catalog:&nbsp; &quot;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &lt;&lt; UserFeatFile.ConvertToChar()
+      &lt;&lt; endl;<br>
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; Get the 3D application name
+      associated to this domain<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      //-------------------------------------------------------------------<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATString ApplName;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( SUCCEEDED(piDomainEnv-&gt;Get3DApplication(ApplName))
+      )<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; "3D application name: " &lt;&lt; ApplName &lt;&lt; endl;<br>
+    </td>
+  </tr>
+</table>
+<p>The <i> CATIPspObject</i> interface is used to obtain the application and domain name
+of any object in the document.&nbsp;&nbsp; The <i> CATIPspObject</i> interface pointer
+can be obtained from any physical object, function object, logical line or
+connector in the document.&nbsp;&nbsp; In this sample, we get the <i> CATIPspObject</i>
+interface pointer from a physical object.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    //-------------------------------------------------------------------------
+    //  Get a physical object in the document and find its 
+    //  CATIPspObject interface 
+    //-------------------------------------------------------------------------
+    CATIPspPhysical *piPhysical = GetAPhysicalObject();
+    if ( NULL != piPhysical )
+    {
+       rc = piPhysical-&gt;QueryInterface(IID_CATIPspObject,(void**)&amp;piObject);
+       piPhysical-&gt;Release();
+       piPhysical = NULL;
+    }
+
+    //-------------------------------------------------------------------------
+    //  CATIPspObject methods
+    //------------------------------------------------------------------------- 
+    if ( NULL != piObject )
+    {
+       CATString sApplName;
+       CATString sDomainName;
+       piObject-&gt;GetApplicationName(sApplName);
+       piObject-&gt;GetDomainName(sDomainName);
+
+       piObject-&gt;Release();
+       piObject = NULL;
+    }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Classes"></a>Retrieving the Class Names of the Application Start-Up Objects</h4>
+<p>To retrieve the application Start-Up object classes, the <i>CATIPspClass</i>
+interface is used.&nbsp;&nbsp; Using the methods of this interface you can get a
+list of class names for Physical Parts, Function Parts, Connectors, Connections,
+and Logical Lines.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    if ( NULL != piClass )
+    {
+       CATICStringList *pList = NULL;
+       unsigned int ListSize = 0; 
+
+       if ( SUCCEEDED(piClass-&gt;ListStartUpPhysicalParts(&amp;pList)) 
+            &amp;&amp; NULL != pList )
+       {
+          pList-&gt;Count(&amp;ListSize);
+          cout &lt;&lt; &quot;Number of physical part classes found: &quot; &lt;&lt; (int)ListSize &lt;&lt; endl;
+          pList-&gt;Release();  pList = NULL; ListSize = 0;
+       }
+
+       if ( SUCCEEDED(piClass-&gt;ListStartUpFunctionParts(&amp;pList))
+            &amp;&amp; NULL != pList )
+       {
+          pList-&gt;Count(&amp;ListSize);
+          cout &lt;&lt; &quot;Number of function part classes found: &quot; &lt;&lt; (int)ListSize &lt;&lt; endl;
+          pList-&gt;Release();  pList = NULL; ListSize = 0;
+       }
+
+       if ( SUCCEEDED(piClass-&gt;ListStartUpConnectors(&amp;pList))
+            &amp;&amp; NULL != pList )
+       {
+          pList-&gt;Count(&amp;ListSize);
+          cout &lt;&lt; &quot;Number of connector classes found: &quot; &lt;&lt; (int)ListSize &lt;&lt; endl;
+          pList-&gt;Release();  pList = NULL; ListSize = 0;
+       }
+
+       if ( SUCCEEDED(piClass-&gt;ListStartUpConnections(&amp;pList))
+            &amp;&amp; NULL != pList )
+       {
+          pList-&gt;Count(&amp;ListSize);
+          cout &lt;&lt; &quot;Number of connection classes found: &quot; &lt;&lt; (int)ListSize &lt;&lt; endl;
+          pList-&gt;Release();  pList = NULL; ListSize = 0;
+       }
+
+       if ( SUCCEEDED(piClass-&gt;ListStartUpLogicalLines(&amp;pList))
+            &amp;&amp; NULL != pList )
+       {
+          pList-&gt;Count(&amp;ListSize);
+          cout &lt;&lt; &quot;Number of logical line classes found: &quot; &lt;&lt; (int)ListSize &lt;&lt; endl;
+          pList-&gt;Release();  pList = NULL; ListSize = 0;
+       }
+
+       piClass-&gt;Release();
+       piClass = NULL;
+    }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Resources"></a>Retrieving the Resource Names and Locations
+of the Application Resources</h4>
+<p>The application resources are defined in a Project Resource Management xml
+file by the project administrator.&nbsp; The <i>CATIPspResource</i> interface is
+used to retrieve the resource name keyword, the directory paths, file names or
+data for these resources.&nbsp; Certain resources may not be available or
+defined for the active application.&nbsp; When the resource is not defined, the <i>CATIPspResource
+</i>method will fail to return the resource information.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>    if ( NULL != piResource )
+    {
+       CATUnicodeString Blank = &quot;&quot;;
+       CATUnicodeString ResourceName;
+       CATUnicodeString Path, Directory, FileName, Flag;
+       CATUnicodeString DomainName = sDomain;
+
+       //-------------------------------------------------------------------
+       //  Get the line catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetLineCatalogPath(Blank,Path,ResourceName)) )
+       {
+          cout &lt;&lt; &quot;Line catalog resource name: &quot; &lt;&lt; ResourceName.ConvertToChar() &lt;&lt; endl;
+          //----------------------------------------------------------------
+          //  Get a resource's path given a resource name
+          //----------------------------------------------------------------
+          if ( SUCCEEDED(piResource-&gt;GetResourcePath(ResourceName,Path)) )
+             cout &lt;&lt; &quot;Line catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+       }
+
+       //-------------------------------------------------------------------
+       //  Get the zone catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetZoneCatalogPath(Blank,Path,ResourceName)) )
+          cout &lt;&lt; &quot;Zone catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the ID schema directory
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetIDSchemaDir(DomainName,Directory,ResourceName)) )
+          cout &lt;&lt; &quot;ID Schema directory: &quot; &lt;&lt; Directory.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the user dictionary file name
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetUserDictFileName(DomainName,FileName,ResourceName)) )
+          cout &lt;&lt; &quot;User dictionary file name: &quot; &lt;&lt; FileName.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the ID Sequence number directory
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetIDSequenceNumberDir(Directory,ResourceName)) )
+          cout &lt;&lt; &quot;ID Sequence number directory: &quot; &lt;&lt; Directory.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the discrete values directory
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetDiscreteValuesDir(Directory,ResourceName)) )
+          cout &lt;&lt; &quot;Discrete values directory: &quot; &lt;&lt; Directory.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the standards catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetStandardsCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Standards catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the design rules catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetDesignRulesCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Design rules catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the Specification catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetSpecificationCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Specification catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the Insulation Specification catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetInsulationSpecCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Insulation Specification catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the part catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetPartCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Part catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the On/Off sheet catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetOffsheetCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;On/Off sheet catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the resolved part catalog directory path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetResolvedPartCatalogDir(Directory,ResourceName)) )
+          cout &lt;&lt; &quot;Resolved part catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the graphic representation filename
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetGraphicRepFileName(FileName,ResourceName)) )
+          cout &lt;&lt; &quot;Graphic representation filename: &quot; &lt;&lt; FileName.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the file containing a list of valid classes for the
+       //  active discipline
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetDisciplineClassesFileName(FileName,ResourceName)) )
+          cout &lt;&lt; &quot;Discipline classes filename: &quot; &lt;&lt; FileName.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the connector attribute filename.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetCntrAttrFileName(FileName,ResourceName)) )
+          cout &lt;&lt; &quot;Connector attribute filename: &quot; &lt;&lt; FileName.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the report definition directory.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetReportDefinitionDir(Directory,ResourceName)) )
+          cout &lt;&lt; &quot;Report definition directory: &quot; &lt;&lt; Directory.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the annotation catalog path
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetAnnotationCatalogPath(Path,ResourceName)) )
+          cout &lt;&lt; &quot;Annotation catalog path: &quot; &lt;&lt; Path.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the graphic names directory used in a schematics application.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetGraphicNamesDir(Directory,ResourceName)) )
+          cout &lt;&lt; &quot;Graphic names directory: &quot; &lt;&lt; Directory.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the flag that indicates if 3D application placement
+       //  is schematic driven.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetSchematicDrivenFlag(Flag,ResourceName)) )
+       {
+          cout &lt;&lt; &quot;Schematic driven flag resource name: &quot; &lt;&lt; ResourceName.ConvertToChar() &lt;&lt; endl;
+          //----------------------------------------------------------------
+          //  Get a resource's value given a resource name
+          //----------------------------------------------------------------
+          if ( SUCCEEDED(piResource-&gt;GetResourceValue(ResourceName,Flag)) )
+             cout &lt;&lt; &quot;Schematic driven flag: &quot; &lt;&lt; Flag.ConvertToChar() &lt;&lt; endl;
+       }
+
+       //-------------------------------------------------------------------
+       //  Get the flag that indicates if 3D application placement
+       //  is function driven.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetFunctionDrivenFlag(Flag)) )
+          cout &lt;&lt; &quot;Function driven flag: &quot; &lt;&lt; Flag.ConvertToChar() &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the growth factor value.
+       //-------------------------------------------------------------------
+       double Value;
+       if ( SUCCEEDED(piResource-&gt;GetGrowthFactorValue(Value)) )
+          cout &lt;&lt; &quot;Growth factor value: &quot; &lt;&lt; Value &lt;&lt; endl;
+
+       //-------------------------------------------------------------------
+       //  Get the cable clearance value.
+       //-------------------------------------------------------------------
+       if ( SUCCEEDED(piResource-&gt;GetCableClearanceValue(Value)) )
+          cout &lt;&lt; &quot;Cable clearance value: &quot; &lt;&lt; Value &lt;&lt; endl;
+
+       piResource-&gt;Release();
+       piResource = NULL;
+    }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Psp interfaces to initialize
+and query an application.&nbsp; Specifically, it has illustrated:</p>
+<ul>
+  <li>Obtaining the necessary Psp Interfaces</li>
+  <li>Activating an application</li>
+  <li>Querying for application and domain names</li>
+  <li>Querying for application object classes</li>
+  <li>Querying for application resources</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [March 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

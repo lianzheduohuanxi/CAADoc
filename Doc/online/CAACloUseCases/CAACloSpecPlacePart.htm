@@ -1,0 +1,635 @@
+<html>
+
+<head>
+ <meta http-equiv="Content-Language" content="en">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<style type="text/css">
+  .highlight { color: #FF0000; }
+  .comment { color: #009900; }
+  .pre { color: #000099; }
+  .string { color: #990000; }
+  .char { color: #009900; }
+  .float { color: #996600; }
+  .int { color: #999900; }
+  .bool { color: #000000; font-weight: bold; }
+  .type { color: #0000FF; }
+  .flow { color: #0000FF; }
+  .keyword { color: #000000; font-weight: bold; }
+  .operator { color: #000000; font-weight: bold; }
+  div.abstract { background-color: #F0F0FF; width: 100%; margin-bottom: 2mm; margin-top: 2mm}
+  ul.NoMarker {list-style-type: none}
+  ul.code {list-style-type: none; background-color: #E0E0E0; width: 100%; margin-bottom: 2mm; margin-top: 2mm}
+  div.code { background-color: #E0E0E0; width: 100%; margin-bottom: 2mm; margin-top: 2mm; font-family: Courier New, Courier; font-size: 110%; font-weight: normal;}
+  span.code { background-color: #E0E0E0; font-family: Courier New, Courier; font-size: 110%; font-weight: normal;}
+.style1 {
+	font-weight: bold;
+}
+</style>
+
+<title>Placing Spec Parts</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Equipment &amp; Systems</h1>
+		</td>
+		<td valign="top">
+		<h2>Distributive Systems</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top" width="40%">
+		<h3><a name="Top"></a>Placing Spec Parts</h3>
+		<em>How to place spec parts</em></td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+<tr>
+<td>
+	<h3>Abstract</h3>
+	<p>This article discusses the CAACloSpecPlacePart use case.</p>
+	<ul>
+		<li><strong><a href="#Overview">Overview</a></strong>
+		<ul>
+			<li><a href="#What You Will Learn">What You Will Learn</a></li>
+			<li><a href="#What CAACloSpecPlacePart Does">What 
+			CAACloSpecPlacePart Does</a></li>
+			<li><a href="#How to Launch CAACloSpecPlacePart">How to Launch 
+			CAACloSpecPlacePart</a></li>
+			<li><a href="#Where to Find CAACloSpecPlacePart Files">Where to Find 
+			CAACloSpecPlacePart Files</a></li>
+		</ul>
+		</li>
+		<li><strong><a href="#Step">Step-by-Step</a></strong>
+		<ul>
+			<li><a href="#Initialization">Initialization</a></li>
+			<li><a href="#Use Case Execution">Use Case Execution</a></li>
+			<li><a href="#Parts in Space">Parts in Space</a></li>
+		</ul>
+		</li>
+		<li><strong><a href="#InShort">In Short</a></strong></li>
+		<li><strong><a href="#References">References</a></strong></li>
+	</ul>
+	</td>
+</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Overview"></a>Overview</h3>
+<p>CAACloSpecPlacePart is a use case of the CAACommonLayoutItf.edu framework.</p>
+<p>It illustrates the following.</p>
+<ul>
+<li>CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun and CATICloPartRules 
+interfaces that are implemented by CATCommonLayout.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What You Will Learn"></a>What You Will Learn</h4>
+<p>This use case is intended to show you how to:</p>
+<ul>
+<li>Get the part number using the CATIPspDefinePhysicalPart interface.</li>
+<li>Get function type using the CATICloPartRules interface. </li>
+<li>Place spec part using the CATIPspPlacePartOnRun interface.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What CAACloSpecPlacePart Does"></a>What CAACloSpecPlacePart Does</h4>
+<p>CAACloSpecPlacePart places tubing part. It places a union in space.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How to Launch CAACloSpecPlacePart"></a>How to Launch 
+CAACloSpecPlacePart</h4>
+<p>To launch CAACloSpecPlacePart, you will need to set up the build time 
+environment, then compile CAACloSpecPlacePart along with its prerequisites, set 
+up the run time environment, and then execute the sample. This is fully 
+described in the referenced article[<a href="#Reference 1">1</a>].</p>
+<p>Launch the use case with the following command.</p>
+<pre class="code">
+CAACloSpecPlacePart  MyRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct<a href="#Footnote 1"><sup>1</sup></a>
+</pre>
+<p>
+where MyRootDirectory is the pathname of the root directory where you copied and 
+built the use case.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where to Find CAACloSpecPlacePart Files"></a>Where to Find 
+CAACloSpecPlacePart Files</h4>
+<p>The CAACloSpecPlacePart code consists of three files located in the 
+CAACloSpecPlacePart.m use case module of the CAACommonLayoutItf.edu framework:
+</p>
+<pre class="code">
+InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/LocalInterfaces/<span class="highlight">CAACloSpecPlacePart.h</span>
+InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/src/<span class="highlight">CAACloSpecPlacePart.cpp</span>
+InstallRootDirectory/CAACommonLayoutItf.edu/CAACloSpecPlacePart.m/src/<span class="highlight">CAACloSpecPlacePartMain.cpp</span>
+</pre>
+where <code>InstallRootDirectory</code> is the root directory of your CAA V5 
+installation<a href="#Footnote 1"><sup>1</sup></a>.
+<p>This sample uses two C++ source files: CAACloSpecPlacePartMain cpp and 
+CAACloSpecPlacePart.cpp. CAACloSpecPlacePartMain.cpp holds the main method which 
+initiates the sample code. CAACloSpecPlacePart.cpp defines the class that places 
+parts. CAACloSpecPlacePart has a corresponding header (.h) file.</p>
+<p>The CAACloSpecPlacePart also uses three data files: </p>
+<pre class="code">
+InstallRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/<span class="highlight">CAACloEduRuns.CATProduct</span>
+InstallRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/<span class="highlight">CATTubTubingLine20010507183018970.CATProduct</span>
+InstallRootDirectory/CAACommonLayoutItf.edu/CNext/resources/graphic/CAACloEduRuns/<span class="highlight">TubingWP.CATProduct</span>
+</pre>
+<p>CAACloEduRuns.CATProduct is the main data model for the use cases. It is the 
+file which should be referenced in the execution command line. 
+CATTubTubingLine20010507183018970.CATProduct and TubingWP.CATProduct are used by 
+CAACloEduRuns.CATProduct. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The remainder of this document describes the various parts of 
+CAACloSpecPlacePartMain.cpp and CAACloSpecPlacePart.cpp.</p>
+<ul>
+	<li><a href="#Initialization">Initialization</a></li>
+	<li><a href="#Use Case Execution">Use Case Execution</a></li>
+	<li><a href="#Parts in Space">Parts in Space</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initialization"></a>Initialization</h4>
+<p>CAACloSpecPlacePartMain.cpp contains the main method that initiates 
+processing. It reads the command line argument to find the path of the data file 
+to be processed. It also creates the CAACloSpecPlacePart class and calls the 
+DoSample method of CAACloSpecPlacePart.</p>
+<pre class="code">
+	<span class="comment">// COPYRIGHT DASSAULT SYSTEMES 2011
+//=============================================================================
+//
+// CAACloSpecPlacePartMain
+//
+//  This sample illustrates how to use the CAA Plant Ship interfaces to place spec parts.
+//
+//
+//  Prerequisite: 
+//  -------------------
+//  This sample uses the input drawing CAACloEduRuns.CATProduct.
+//
+//  Running the program:
+//  -------------------
+//  To run this program, you can use the command:
+//  
+//        CAACloSpecPlacePart MyRootDirectory/CAAPlantShipInterfaces.edu/CNext/graphic/CAACloEduRuns/CAACloEduRuns.CATProduct
+//  
+//  where MyRootDirectory is the pathname of the root directory where you copied and built the use case.
+//
+//=============================================================================
+//
+</span><span class="pre">#include &lt;iostream.h&gt;
+#include &lt;string.h&gt;
+
+</span><span class="comment">
+// This framework
+</span><span class="pre">#include &quot;CAACloSpecPlacePart.h&quot;
+</span><span class="comment">
+// System
+</span><span class="pre">#include &quot;CATErrorMacros.h&quot;
+#include &quot;CATUnicodeString.h&quot;
+</span><span class="comment">
+//=============================================================================
+//   Main
+//=============================================================================
+</span><span class="type">int</span><span class="keyword"> main</span><span class="operator"> (</span><span class="type">int</span> argc<span class="operator">,</span><span class="type"> char</span><span class="operator"> **</span>argv<span class="operator">)
+{</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;Start main CAACloSpecPlacePart&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;
+  </span><span class="type">
+  int</span> rc<span class="operator"> =</span><span class="int"> 0</span><span class="operator">;</span>
+
+  HRESULT rcError<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span>
+
+  CATUnicodeString FileToBeLoaded<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CAACloSpecPlacePart myObject<span class="operator">;</span>
+
+
+  CATTry<span class="operator"> 
+  {</span><span class="flow">
+    if</span><span class="operator"> (</span>argc<span class="operator"> &gt;</span><span class="int"> 1</span><span class="operator">)
+    {</span>
+
+      FileToBeLoaded<span class="operator"> =</span> argv<span class="operator">[</span><span class="int">1</span><span class="operator">];
+    }</span><span class="flow">
+
+    if</span><span class="operator"> (</span>FileToBeLoaded<span class="operator">.</span>IsNull<span class="operator">())
+    {</span>
+
+       cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;**** must input the file name of &quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+       cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;a CATProduct with Piping application objects &quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;
+    }</span><span class="flow">
+
+    else</span><span class="operator">
+    {</span>
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;FileToBeLoaded = &quot;</span><span class="operator"> &lt;&lt;</span> FileToBeLoaded<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+      rcError<span class="operator"> =</span> myObject<span class="operator">.</span>DoSample<span class="operator">(</span>FileToBeLoaded<span class="operator">);
+    }
+  }</span>
+
+	CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+	{</span>
+
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;error in main &quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+    rcError<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+	}</span><span class="comment"> // end CATCatch
+
+</span>
+  CATEndTry<span class="operator">;</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloPlacePart rcError = &quot;</span><span class="operator"> &lt;&lt;</span> rcError<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+
+  if</span><span class="operator"> (</span>FAILED<span class="operator">(</span>rcError<span class="operator">))
+  {</span> 
+    rc<span class="operator"> =</span><span class="int"> 999</span><span class="operator">;</span>
+    CATError<span class="operator"> *</span>pError<span class="operator"> =</span> CATError<span class="operator">::</span>CATGetLastError<span class="operator">(</span>rcError<span class="operator">);</span><span class="flow">
+
+    if</span><span class="operator"> (</span>pError<span class="operator">)
+    {</span>
+      cout<span class="operator"> &lt;&lt;</span> pError<span class="operator">;</span>
+      Flush<span class="operator">(</span>pError<span class="operator">);
+    }
+  }</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloSpecPlacePart rc = &quot;</span><span class="operator"> &lt;&lt;</span> rc<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;End main CAACloSpecPlacePart&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+
+  return</span> rc<span class="operator">;
+}</span>
+</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Use Case Execution"></a>Use Case Execution</h4>
+<p>The CAACloSpecPlacePart DoSample method runs the use cases. It starts by 
+calling CreateCATProductEnv to load the input data model and create a CATIA 
+product environment. CreateCATProductEnv is part of the CAAPspBaseEnvProtected 
+class which is defined in these files.</p>
+<pre class="code">
+InstallRootDirectory/CAAPlantShipInterfaces.edu/PublicInterfaces/<span class="highlight">CAAPspBaseEnvProtected.h</span>
+InstallRootDirectory/CAAPlantShipInterfaces.edu/CAAPspUtilities.m/src/<span class="highlight">CAAPspBaseEnvProtected.cpp</span>
+</pre>
+<p>After CAACloSpecPlace calls CreateCATProductEnv it calls ApplicationInit to 
+initialize the Tubing application. ApplicationInit is also a part of the 
+CAAPspBaseEnvProtected class. With the data model and application properly 
+initialized DoSample runs the use case. The use case get the part number, 
+function type and use this information to place part in space. It then sets 
+specification on placed part. The code for DoSample is shown below.</p>
+<pre class="code"><span class="comment">//=============================================================================
+//  Execute the CAACloSpecPlacePart sample code.
+//=============================================================================
+</span>HRESULT CAACloSpecPlacePart<span class="operator">::</span>DoSample<span class="operator">(</span><span class="keyword">const</span> CATUnicodeString<span class="operator"> &amp;</span>iuFileToBeLoaded<span class="operator">)
+{</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;============================================================&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;===       CAACloSpecPlacePart::DoSample                      ===&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;============================================================&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot; File: &quot;</span><span class="operator"> &lt;&lt;</span> iuFileToBeLoaded<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+  HRESULT rc<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span><span class="comment">
+
+  // Interface pointer variables used below in the try section.
+</span>
+
+  CATTry<span class="operator"> 
+  {</span><span class="comment">
+
+    //  Load input document
+</span>    CreateCATProductEnv<span class="operator">(</span>iuFileToBeLoaded<span class="operator">);</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;Product environment created.&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="comment">
+
+    //  Initialize Tubing Design application
+</span>    ApplicationInit<span class="operator">(</span><span class="string">&quot;CATTubing&quot;</span><span class="operator">);</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;Tubing application initialized.&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+    <span class="comment">// Place a part in space.</span>
+    HRESULT rcSpace<span class="operator"> =</span> PlaceSpecPartInSpace<span class="operator">();</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;rcSpace = &quot;</span><span class="operator"> &lt;&lt;</span> rcSpace<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="comment">
+
+
+    
+    // Set return code.
+</span><span class="flow">    if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rcSpace<span class="operator">))</span>
+      rc<span class="operator"> =</span> CATReturnSuccess<span class="operator">;
+  }</span><span class="comment"> // end CATTry
+</span>
+	CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+	{</span>
+
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloSpecPlacePart::DoSample *** Error Caught ***&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+    cout<span class="operator"> &lt;&lt;</span> pError<span class="operator">;</span>
+
+    rc<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+	}</span><span class="comment"> // end CATCatch
+</span>
+  CATEndTry<span class="operator">;</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloSpecPlacePart::DoSample rc = &quot;</span><span class="operator"> &lt;&lt;</span> rc<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+  return</span> rc<span class="operator">;
+}</span></pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Parts in Space"></a>Parts in Space</h4>
+<p>CAACloSpecPlacePart places an union in space. The union is placed by the 
+method PlaceSpecPartInSpace. PlaceSpecPartInSpace first performs setup necessary 
+for placing any part. It calls GetChildObject to find the tubing work package 
+(TubingWP.1) which is a child of the data model's root product. It finds the 
+tubing line in TubingWP.1 using the method GetALogicalLine. Both GetChildObject 
+and GetALogicalLine are part of CAAPspBaseEnvProtected. It gets a tubing 
+application object and derives CATIPspDefinePhysicalPart, CATIPspPlacePartOnRun 
+and CATICloPartRules interface objects respectively from the application object.</p>
+<p>After accomplishing its setup duties PlaceSpecPartInSpace begins its major 
+work of placing a union. The first step is to find the correct union in the 
+catalog. The CATIPspDefinePhysicalPart method GetPartNumbers is used to find a 
+list of PartNumbers. GetPartNumbers takes standard, Part Type, Specification 
+name and Logical Line as input arguments and the List of PartNumbers is returned 
+in the output argument, oListPartNumbers. For finding the reference part in the 
+catalog the CATIPspPlacePartOnRun interface&#8217;s method GetReferencePartFromCatalog 
+is used. GetReferencePartFromCatalog takes standard as an input to help decode 
+attribute values. It also can accept a specification (&quot;spec&quot;). In the sample the 
+spec is set to null so no specification is used. If spec is set the catalog 
+search will be limited to parts that meet the given specification. Part type and 
+part number are the key arguments that define the part which is being looked 
+for. The part number is taken from the List of part numbers returned by the 
+GetPartNumbers method; here the first part number in the list is passed as an 
+argument. The parent product is also sent to GetReferencePartFromCatalog. This 
+helps GetReferencePartFromCatalog decode various names more efficiently. The 
+found reference product is returned in the argument, piReferencePart. And the 
+corresponding catalog part name is returned in the last argument, 
+uCatalogPartName.
+ </p>
+ <p>In order to get the Function types the CATICloPartRules interface&#8217;s 
+	GetPartFunctions method is used. It takes the reference product 
+	piReferencePart returned by GetReferencePartFromCatalog, the standard, the 
+	specification name and nominal size as input arguments and returns list of 
+	function types and list of section types lFunctionTypes and lSectionTypes 
+	respectively as output arguments.</p>
+<p>The second part placement step is to position and properly place an instance 
+product in the data model. This is accomplished using PlacePartInSpace. 
+PlacePartInSpace accepts the same standard for input as was used for 
+GetReferencePartFromCatalog. It accepts the first function type from the list of 
+the function types returned by the GetPartFunctions method which tracks the 
+purpose of the instance part. The reference part is sent to PlacePartInSpace to 
+define the part being placed. The logical line defines the tubing line into 
+which the new part will become a member. The new part ID can be specified. In 
+the sample code the ID is null which instructs the part placement engine to 
+generate the part ID according to its preset rules. Up direction, horizontal 
+orientation and position all define how the new part is positioned. The new 
+instance part is returned in piInstancePart.</p>
+<p>Catalog part name returned by GetReferencePartFromCatalog needs to be set on 
+the new part this is done by the CATIPspPlacePartOnRun interface&#8217;s 
+SetCatalogPartName method which takes new part instance piInstancePart and 
+catalog name uCatalogPartName as input arguments. The specification is set on 
+the part instance by using CATIPspDefinePhysicalPart interface&#8217;s 
+SetSpecification method which takes new part instance piInstancePart and 
+specification name uSpecNameas input arguments.</p>
+<p>Apart from using PlaceSpecPartInSpace method, user can use other part 
+placement APIs available in the CATIPspPlacePartOnRun to place part on run, on 
+connector and then set specification using SetSpecification method to spec 
+driven part.
+</p>
+<p>The code for PlaceSpecPartInSpace is shown below.</p>
+
+<pre class="code"><span class="comment">//=============================================================================
+//  Place parts in space.
+//=============================================================================</span>
+HRESULT CAACloSpecPlacePart<span class="operator">::</span>PlaceSpecPartInSpace<span class="operator">()
+{</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;============================================================&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;===       CAACloSpecPlacePart::PlaceSpecPartInSpace              ===&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string">&quot;============================================================&quot;</span><span class="operator">&lt;&lt;</span> endl<span class="operator">;</span>
+
+  HRESULT rc<span class="operator"> =</span> CATReturnFailure<span class="operator">;</span><span class="comment">
+
+  // Interface pointer variables used below in the try section.
+</span>  CATObject<span class="operator"> *</span>piAppObject<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspDefinePhysicalPart<span class="operator"> *</span>piDefPhyPart<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATICloPartRules<span class="operator"> *</span>piPartRules<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspPlacePartOnRun<span class="operator"> *</span>piPlacePart<span class="operator"> =</span> NULL<span class="operator">;</span>
+  IUnknown<span class="operator"> *</span>piReferencePart<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIProduct<span class="operator"> *</span>piParentProduct<span class="operator"> =</span> NULL<span class="operator">;</span>
+  CATIPspLogicalLine<span class="operator"> *</span>piLogicalLine<span class="operator"> =</span> NULL<span class="operator">;</span>
+  IUnknown<span class="operator"> *</span>piInstancePart<span class="operator"> =</span> NULL<span class="operator">;</span>
+
+  CATUnicodeString uCatalogPartName<span class="operator"> =</span><span class="string"> &quot;&quot;</span><span class="operator">;</span>
+  CATUnicodeString uPlacePartErrorMessage<span class="operator">;</span>
+  CATUnicodeString uStandard<span class="operator"> =</span><span class="string"> &quot;SSTL&quot;</span><span class="operator">;</span>
+  CATUnicodeString uSpecName<span class="operator"> =</span><span class="string"> &quot;SS150R&quot;</span><span class="operator">;</span>
+  CATUnicodeString uPartType<span class="operator"> =</span><span class="string"> &quot;Union&quot;</span><span class="operator">;</span>
+  CATUnicodeString uPartNumber<span class="operator">;</span>
+  CATUnicodeString uFunctionType<span class="operator">;</span>
+  
+  CATUnicodeString uPlacedPartID<span class="operator">;</span>
+  CATMathDirection upDirection<span class="operator">;</span>
+  CATMathDirection horizontalOrientation<span class="operator">;</span>
+  CATMathPoint position<span class="operator">;</span>
+  CATMathPoint ctrPosition<span class="operator">;</span>
+  CATMathDirection ctrAlign<span class="operator">;</span>
+  CATMathDirection ctrUp<span class="operator">;</span>
+
+  CATTry<span class="operator"> 
+  {</span>
+    <span class="comment">// Get application object.</span>
+    piAppObject<span class="operator"> =</span><span class="keyword"> new</span> CATObject<span class="operator">(</span><span class="string">&quot;CATTubing&quot;</span><span class="operator">);</span>
+
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piAppObject = &quot;</span><span class="operator"> &lt;&lt;</span> piAppObject<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+
+    if</span><span class="operator"> (</span>piAppObject<span class="operator">)
+    {</span>
+
+      piParentProduct<span class="operator"> = (</span>CATIProduct<span class="operator">*)</span>GetChildObject<span class="operator">(</span>IID_CATIProduct<span class="operator">,</span><span class="string"> &quot;TubingWP.1&quot;</span><span class="operator">);</span>
+
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piParentProduct = &quot;</span><span class="operator"> &lt;&lt;</span> piParentProduct<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+      piLogicalLine<span class="operator"> =</span> GetALogicalLine<span class="operator">(</span>piParentProduct<span class="operator">);</span>
+
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piLogicalLine = &quot;</span><span class="operator"> &lt;&lt;</span> piLogicalLine<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+      
+      if<span class="operator"> (</span>
+            SUCCEEDED<span class="operator">(</span>piAppObject<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATIPspDefinePhysicalPart<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piDefPhyPart<span class="operator">))</span> <span class="operator"> &amp;&amp;</span> 
+            SUCCEEDED<span class="operator">(</span>piAppObject<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATIPspPlacePartOnRun<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piPlacePart<span class="operator">))</span> <span class="operator"> &amp;&amp;</span> 
+            SUCCEEDED<span class="operator">(</span>piAppObject<span class="operator">-&gt;</span>QueryInterface<span class="operator">(</span>IID_CATICloPartRules<span class="operator">,(</span><span class="type">void</span><span class="operator">**)&amp;</span>piPartRules<span class="operator">))
+          )
+       {</span>
+	cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piDefPhyPart = &quot;</span><span class="operator"> &lt;&lt;</span> piDefPhyPart<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+	cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piPlacePart = &quot;</span><span class="operator"> &lt;&lt;</span> piPlacePart<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+	cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piPartRules = &quot;</span><span class="operator"> &lt;&lt;</span> piPartRules<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+
+
+      <span class="comment">// Get the part number</span>
+      CATUnicodeString oListPartNumbers<span class="operator">;</span>
+
+      piDefPhyPart<span class="operator">-&gt;</span>GetPartNumbers<span class="operator">(</span>uStandard<span class="operator">,</span> 
+                                   uPartType<span class="operator">,</span> 
+                                   uSpecName<span class="operator">,</span> 
+                                   piLogicalLine<span class="operator">,</span> 
+                                   oListPartNumbers<span class="style1">);</span>
+
+       uPartNumber<span class="operator"> =</span> oListPartNumbers<span class="operator">[</span>1<span class="operator">]</span><span class="operator">;</span>
+      
+      <span class="comment">// Get reference part</span>
+      rc<span class="operator"> =</span> piPlacePart<span class="operator">-&gt;</span>GetReferencePartFromCatalog<span class="operator"> (</span>uStandard<span class="operator">,</span> 
+                                                     uSpecName<span class="operator">,</span> 
+                                                     uPartType<span class="operator">,</span> 
+                                                     uPartNumber<span class="operator">,</span> 
+                                                     piParentProduct<span class="operator">,</span> 
+                                                     piReferencePart<span class="style1">,</span>
+                                                     uCatalogPartName<span class="style1">);</span>
+
+      cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piReferencePart = &quot;</span><span class="operator"> &lt;&lt;</span> piReferencePart<span class="operator"> &lt;&lt;</span><span class="string"> &quot;uCatalogPartName = &quot;</span><span class="operator"> &lt;&lt;</span> uCatalogPartName<span class="operator">.</span>ConvertToChar<span class="operator">() &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+
+      if</span><span class="operator"> (</span>SUCCEEDED<span class="operator">(</span>rc<span class="operator">) &amp;&amp;</span> 
+          piReferencePart<span class="operator">)
+      {</span>
+      
+       <span class="comment">// Get the Function type.</span>
+       CATListOfCATUnicodeString lFunctionTypes<span class="operator">;</span>
+       CATListOfInt lSectionTypes<span class="operator">;</span>
+       CATUnicodeString uNominalSize <span class="operator">=</span><span class="string"> &quot;1/4in&quot;<span class="operator">;</span>
+       
+       piPartRules<span class="operator">-&gt;</span>GetPartFunctions<span class="operator">(</span>piReferencePart<span class="operator">,</span>
+       			             </span>uStandard<span class="operator">,</span> 
+                                     uPartType<span class="operator">,</span> 
+                                     uSpecName<span class="operator">,</span> 
+                                     uNominalSize<span class="operator">,	</span> 
+                                     lFunctionTypes<span class="operator">,</span>
+                                     lSectionTypes<span class="style1">);</span>
+                                     
+        uFunctionType<span class="operator"> =</span> lFunctionTypes<span class="operator">[</span>1<span class="operator">]</span><span class="operator">;</span>
+
+        // Place part in space.
+        uPlacedPartID<span class="operator"> =</span><span class="string"> &quot;&quot;</span><span class="operator">;</span><span class="comment"> // Null string uses name generated by PP engine
+
+</span>        upDirection<span class="operator">.</span>SetCoord<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int"> 0</span><span class="operator">,</span><span class="int"> 1</span><span class="operator">);</span><span class="comment"> // Part up direction parallel to z-axis.
+</span>        horizontalOrientation<span class="operator">.</span>SetCoord<span class="operator">(</span><span class="int">0</span><span class="operator">,</span><span class="int">1</span><span class="operator">,</span><span class="int">0</span><span class="operator">);</span><span class="comment"> // Align part parallel to y-axis.
+</span>        position<span class="operator">.</span>SetCoord<span class="operator">(</span><span class="int">1000</span><span class="operator">,</span><span class="int">2000</span><span class="operator">,</span><span class="int">4000</span><span class="operator">);</span><span class="comment"> // Position part at (1000, 2000, 4000) in mm.
+</span>        
+	    rc<span class="operator"> =</span> piPlacePart<span class="operator">-&gt;</span>PlacePartInSpace<span class="operator"> (</span>uStandard<span class="operator">,</span> 
+                                            uFunctionType<span class="operator">,</span> 
+                                            piReferencePart<span class="operator">,</span> 
+                                            piParentProduct<span class="operator">,</span> 
+                                            piLogicalLine<span class="operator">,</span> 
+                                            uPlacedPartID<span class="operator">,</span> 
+                                            upDirection<span class="operator">,</span> 
+                                            horizontalOrientation<span class="operator">,</span> 
+                                            position<span class="operator">,</span> 
+                                            piInstancePart<span class="operator">);</span>
+
+         cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;piInstancePart = &quot;</span><span class="operator"> &lt;&lt;</span> piInstancePart<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+
+         if</span><span class="operator"> (</span>piInstancePart<span class="operator">)
+         {</span>
+        <span class="comment">  // Set catalog part name</span>
+          piPlacePart<span class="operator">-&gt;</span>SetCatalogPartName<span class="operator">(</span>piInstancePart<span class="operator">,</span>uCatalogPartName<span class="operator">);</span>
+        <span class="comment">
+          // Set specification.</span> 
+          piDefPhyPart<span class="operator">-&gt;</span>SetSpecification<span class="operator">(</span>piInstancePart<span class="operator">,</span>uSpecName<span class="operator">);</span>
+          
+          <span class="comment">// Verification</span> 
+          <span class="comment">// Specification set and Function type used, can be verified by saving the document and</span>
+          <span class="comment">// Launching the CATIA. (Go to properties of the placed part, by right clicking the mouse.)</span>    
+
+         <span class="operator">}</span> 
+         else<span class="operator">
+         {</span>
+          rc<span class="operator"> =</span> CATReturnFailure<span class="operator">;
+         }
+       }<span class="comment">//piReferencePart</span>
+<span class="flow">       if</span> (FAILED(rc))
+       {
+        piPlacePart-&gt;GetErrorMessage(uPlacePartErrorMessage);
+        cout &lt;&lt;<span class="string"> &quot;uPlacePartErrorMessage = &quot;</span> &lt;&lt; uPlacePartErrorMessage &lt;&lt; endl;
+       }
+      }</span><span class="comment"> // piDefPhyPart piPlacePart piPartRules
+     }</span><span class="comment"> // piAppObject
+</span><span class="operator">   }</span><span class="comment"> // end CATTry
+
+</span>	
+  CATCatch<span class="operator"> (</span>CATError<span class="operator">,</span> pError<span class="operator">)
+  {</span>
+    cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloPlacePart::PlacePartInSpace *** Error Caught ***&quot;</span><span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span>
+	 
+    cout<span class="operator"> &lt;&lt;</span> pError<span class="operator">;</span>
+	 
+    rc<span class="operator"> =</span> CATReturnError<span class="operator">(</span>pError<span class="operator">);
+  }</span><span class="comment"> // end CATCatch
+
+</span>
+  CATEndTry<span class="operator">;</span><span class="flow">
+
+  if</span><span class="operator"> (</span>piAppObject<span class="operator">) {</span>piAppObject<span class="operator">-&gt;</span>Release<span class="operator">();</span> piAppObject<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piDefPhyPart<span class="operator">) {</span>piDefPhyPart<span class="operator">-&gt;</span>Release<span class="operator">();</span> piDefPhyPart<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piPlacePart<span class="operator">) {</span>piPlacePart<span class="operator">-&gt;</span>Release<span class="operator">();</span> piPlacePart<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piPartRules<span class="operator">) {</span>piPartRules<span class="operator">-&gt;</span>Release<span class="operator">();</span> piPartRules<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piReferencePart<span class="operator">) {</span>piReferencePart<span class="operator">-&gt;</span>Release<span class="operator">();</span> piReferencePart<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piParentProduct<span class="operator">) {</span>piParentProduct<span class="operator">-&gt;</span>Release<span class="operator">();</span> piParentProduct<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piLogicalLine<span class="operator">) {</span>piLogicalLine<span class="operator">-&gt;</span>Release<span class="operator">();</span> piLogicalLine<span class="operator"> =</span> NULL<span class="operator">;}</span><span class="flow">
+  if</span><span class="operator"> (</span>piInstancePart<span class="operator">) {</span>piInstancePart<span class="operator">-&gt;</span>Release<span class="operator">();</span> piInstancePart<span class="operator"> =</span> NULL<span class="operator">;}</span>
+
+  cout<span class="operator"> &lt;&lt;</span><span class="string"> &quot;CAACloSpecPlacePart::PlacePartSpecInSpace rc = &quot;</span><span class="operator"> &lt;&lt;</span> rc<span class="operator"> &lt;&lt;</span> endl<span class="operator">;</span><span class="flow">
+  return</span> rc<span class="operator">;
+}</span>
+</pre>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the CATIPspDefinePhysicalPart, 
+CATIPspPlacePartOnRun and CATICloPartRules interfaces to place parts in space. 
+Specifically, it has illustrated how to:
+</p>
+<ul>
+	<li>Initialize the CATIA product environment and tubing application.</li>
+	<li>Place part in space.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top"><a name="Reference 1"></a>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Footnotes"></a>Footnotes</h3>
+<table width="100%">
+	<tr>
+		<td valign="top"><a name="Footnote 1"></a>1. This document uses 
+		Unix-style forward slash (/) to separate directory names. Windows users 
+		should use backslash (\) instead of forward slash (/). </td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [January 2011]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

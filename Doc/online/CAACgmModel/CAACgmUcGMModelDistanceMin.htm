@@ -1,0 +1,224 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Computing the Minimum Distance between Geometries</title>
+<style type="text/css">
+.style3 {
+				color: #FB7203;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Computing the Minimum Distance between Geometries</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The minimum distance between a point and a surface as well as the 
+		point matching this minimum distance can be computed.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+
+<p>To compute the minimum distance between:
+
+<ul>
+				<li>a cartesian point and a surface, use the CATICGMDistanceMinPtSur operator. This operator is created by the CATCGMCreateDistanceMin global 
+function which is defined in the CATCGMCreateDistanceMinPtSur.h header of the GMModelInterfaces framework.
+				</li>
+				<li>a cartesian point and a curve, use the CATICGMDistanceMinPtCrv operator. This operator is created by the CATCGMCreateDistanceMin global 
+function which is defined in the CATCGMCreateDistanceMinPtCrv.h header of the GMModelInterfaces framework.
+				</li>
+				<li>two curves, use the CATICGMDistanceMinCrvCrv operator. This operator is created by the CATCGMCreateDistanceMin global 
+function which is defined in the CATCGMCreateDistanceMinCrvCrv.h header of the GMModelInterfaces framework.
+				</li>
+</ul>
+
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelDistanceMinOpe.m module in CAAGMModelInterfaces.edu illustrates 
+how to compute the minimum distance between two geometries. This use case 
+creates its own input data. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: Minimum Distance between a Cartesian Point and a Surface</h3>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Minimum Distance between a&nbsp; Point and 
+	a Surface : Input Data</caption>
+  <tr>
+    <td><img alt="Projection Point on Surface: Input" src="images/CGM_projection_ptSur_1.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMDistanceMinPtSur * pDistMinPtSurOpe =::CATCGMCreateDistanceMin(piGeomFactory,
+		pConfig,
+		piCartP1, 
+		piNurbsSurface, TRUE); 
+...
+// d - retrieves the distance, resulting point and CATSurParam
+//         
+double dist1 = pDistMinPtSurOpe->GetDistance();
+cout &lt;&lt; "distance point - surface " &lt;&lt; dist1 &lt;&lt; endl;
+CATPointOnSurface * pPtOnSur = pDistMinPtSurOpe->GetPointOnSurface() ;
+...
+</pre>
+	</TD>
+    </TR>
+</TABLE>
+generates this message on the standard output:
+<pre>
+distance point - surface 21.5346
+</pre>
+<p>A projection point is created on the surface. The minimum distance is 21.535mm</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Minimum Distance between Point and Surface : 
+	Projection Point</caption>
+  <tr>
+    <td><img alt="Projection Point on Surface: Ouput" src="images/CGM_projection_ptSur_2.png"></td>
+   </tr>
+</table>
+
+<h2>Case 2 : Minimum Distance between a Point and a Curve</h2>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Distance Minimum between a Point and a 
+	Curve : Input Data</caption>
+  <tr>
+    <td>
+	<img alt=" Distance Minimum between a Point and a 
+	Curve : Input Data" src="images/CGM_distancemin_ptcrv_0.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMDistanceMinPtCrv * pDistMinPtCrvOpe =::CATCGMCreateDistanceMin(piGeomFactory,
+		pConfig,
+		piCartP1, 
+		pNurbsCurve, ADVANCED); 
+...
+pDistMinPtCrvOpe->Run();
+//     d - retrieves the distance, resulting point and CATSurParam
+//         
+double dist2= pDistMinPtCrvOpe->GetDistance();
+cout &lt;&lt; "distance point - curve "&lt;&lt; dist2 &lt;&lt; endl;
+CATPointOnCurve * ptOnCrv = pDistMinPtCrvOpe->GetPointOnCurve() ;	</pre>
+	</TD>
+    </TR>
+</TABLE>
+generates this message on the standard output:
+<pre>
+distance point - curve 32.0743
+</pre>
+<p>A projection point is created on the curve. The minimum distance is 32.0743mm</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Distance Minimum between a&nbsp; Point and Curve : Output Data</caption>
+  <tr>
+    <td><img alt="Projection Point on Surface: Ouput" src="images/CGM_distancemin_ptcrv_1.png"></td>
+   </tr>
+</table>
+
+<h3>Case 3 : Minimum Distance between Two Curves</h3>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3</a> Distance Minimum between Two Curves : Input Data</caption>
+  <tr>
+    <td>
+	<img alt="Distance Minimum between Two Curves: Input Data" src="images/CGM_distancemin_crvcrv_0.png"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMDistanceMinCrvCrv * pDistMinCrvCrvOpe =::CATCGMCreateDistanceMin(piGeomFactory,
+		pConfig,
+		pLine, 
+		pNurbsCurve); 
+...
+pDistMinCrvCrvOpe->Run();
+//     c - retrieves the distance min between both curves
+//         zero is expected as one end of the line is located on the curve
+double dist3= pDistMinCrvCrvOpe->GetDistance();
+cout &lt;&lt; "distance curve - curve "&lt;&lt; dist3 &lt;&lt; endl;</pre>
+	</TD>
+    </TR>
+</TABLE>
+generates this message on the standard output:
+<pre>
+distance curve - curve 0
+</pre>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[4]</td>
+		<td class="style3">
+		<a href="CAACgmUcGMModelOpeOverw.htm">How to Use Geometric Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Dec 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

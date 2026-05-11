@@ -1,0 +1,885 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Interfaces for Automation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Interfaces for Automation</h3>
+      <em>Making your interfaces available from scripting languages</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Automation Interfaces are special interfaces that allow CAA V5
+      programming from simple scripting languages and macro recording and
+      replay. In this article, we describe what these interfaces require from a
+      technical standpoint, as well as the proper methodology to create them..
+      <ul>
+        <li><a href="#100000"><strong>Making Interfaces for Automation</strong></a></li>
+        <li><a href="#200000"><strong>Interface Exposition</strong></a></li>
+        <li><a href="#400000"><strong>IDispatch, CATBaseDispatch and CATIABase</strong></a></li>
+        <li><a href="#500000"><strong>The Type Library</strong></a></li>
+        <li><a href="#600000"><strong>Publishing Your Interfaces</strong></a></li>
+        <ul>
+          <li><a href="#620000">Exposed Interfaces</a></li>
+          <li><a href="#630000">Journalizable Interfaces</a></li>
+          <li><a href="#640000">Declaring for Automation</a></li>
+        </ul>
+        <li><a href="#700000"><strong>Creating the IDL Files</strong></a>
+          <ul>
+            <li><a href="#710000">Properties and Methods</a></li>
+            <li><a href="#720000">The Rules to Follow for Macro Portability</a></li>
+          </ul>
+        </li>
+        <li><a href="#800000"><strong>The Interface Coding Check List</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Making Interfaces for Automation</h3>
+<p>Declaring objects by means of interfaces is nice and the benefits that we
+could get from this are the following: objects are accessed by client
+applications through their interfaces, and actual implementations are never
+directly manipulated. Interface inheritance, implementation inheritance, and
+extensions are key features that make the CAA V5 model powerful, versatile,
+incremental, which enable to customize and extend the objects it provides, as
+well as enable data distribution.</p>
+<p>Another key topic is to enable them for Automation and for journalling.
+Automation means that interfaces can be accessed from a scripting language and
+thus be used by user scripts. Journalling means recording a script from an
+interactive user scenario. This script can be replayed as is, or after
+modifications, to automate repetitive tasks. Interfaces making this possible are
+called CAA V5 interfaces for Automation. This is possible thanks to the
+interface exposition, which makes it possible to access CAA V5 interface and
+their methods from macros written in interpreted languages such as Visual Basic,
+VB Script, JScript, and Basic Script. The CAA V5 interfaces for Automation have
+this ability because the signatures of their methods have specific limitations
+to match scripting language calling possibilities.</p>
+<p>CAA V5 runs on Windows and hosts the scripting engine for VBScript. It runs
+also on UNIX and hosts the scripting engine for Basic Script. Other scripting
+engines can be used out-process for Automation with Windows. But for
+journalling, only the VB syntax is currently available, and it is Basic Script
+that is generated in journalized macros. These scripting languages are not fully
+compatible. In order to make interfaces that can be called in both environments,
+and to create macros on Windows that can be run on UNIX or the reverse, the
+rules stated in this article must strictly be observed. Otherwise, macro
+portability cannot be guaranteed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Interface Exposition</h3>
+<p>Up to now, we have declared interfaces in such a way that they can take
+advantage of the CAA V5 model features, but we did nothing for exposition. Let's
+call these interfaces standard interfaces. Two other kinds of interfaces deal
+with interface exposition, explained below in capability growing order:
+<ol>
+  <li><strong>Exposed interfaces</strong> can be called from a scripting
+    language and are available for Automation. You need to include them in a
+    tplib file to indicate to mkmk to generate the type library.</li>
+  <li><strong>Journalizable interfaces</strong>: in addition to exposed
+    interface capabilities, they can be used for journalling user interactive
+    scenarios to build scripts. These scripts can be replayed as is for test,
+    debug, or analyze purposes, but are usually used as skeletons to write more
+    comprehensive scripts.</li>
+</ol>
+<p>From the client application programmer standpoint, there is no difference
+between a standard interface and an interface belonging to one of the two kinds
+above. However, exposed and journalizable interface IDL files include CAA V5
+pragma directives that request to generate a type library used by scripting
+languages to retrieve these interfaces and execute the code of their methods to
+which they point.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>IDispatch, CATBaseDispatch and CATIABase</h3>
+<p>The base interface for exposed and journalizable interfaces is IDispatch,
+supplied by CAA V5 for UNIX and by the Component Object Model (COM) for Windows.
+IDispatch derives from IUnknown and provides the following methods, as shown in
+the <code>IDispatch.idl</code> file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;IUnknown.idl&quot;
+#pragma ID IDispatch &quot;DCE:00020400-0000-0000-C000000000000046&quot;
+
+interface IDispatch
+{
+  HRESULT GetTypeInfoCount(out unsigned long oNumberOfTypeInfo);
+
+  HRESULT GetTypeInfo(in unsigned long iindex,
+                      in unsigned long ilangId,
+                      out unsigned long opTypeInfo);
+
+  HRESULT GetIDsOfNames(in IID forFuture,
+                        in WCHAR iArrayOfNames,
+                        in unsigned long iNbNames,
+                        in unsigned long iLangId,
+                        out long oArrayOflong);
+
+  HRESULT Invoke(in long ilongMember,
+                 in IID  forFuture,
+                 in unsigned long iLangId,
+                 in unsigned short iFlags, 
+                 in DISPPARAMS iPdisparams,
+                 in unsigned long oPvaresult,
+                 in EXCEPINFO oPexcepinfo,
+                 in unsigned long oPuArgErr);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The IDispatch interface supplied by CAA V5 is exactly the same that the one
+of COM, making interfaces portable from UNIX to Windows for OLE and the reverse.
+The CATBaseDispatch interface derives from IDispatch, since both CAA V5 and
+Windows use a <code>#define</code> statement to see this interface as a
+structure to gain inheritance capabilities.</p>
+<pre>#define interface struct</pre>
+<p>With Windows, the CATBaseDispatch class provides an implementation for <code>GetTypeInfoCount</code>,
+<code>GetTypeInfo</code>, <code>GetIdsOfNames</code> and <code>Invoke</code>,
+exposed as pure virtual functions in the <code>IDispatch.h</code> header file,
+avoiding to implement them whenever you implement an exposable, exposed or
+journalizable interface and thus contributing to code factorization.</p>
+<p>Let's have a look at <code>GetIdsOfNames</code> and <code>Invoke</code>.
+Given a method name, <code>GetIdsOfNames</code> returns its dispatch ID, or
+DISPID, which is a long integer (and not a GUID [<a href="#References">1</a>]).
+The DISPID is the identifier of the method inside the interface. <code>Invoke</code>
+uses then the DISPID as first argument to call the concerned method. This is
+called <strong>late binding</strong>, and is a run time binding, because the
+actual method to call is determined at run time using a call to <code>GetIdsOfNames</code>
+and not thanks to a build time mechanism. This matches the need of interpreted
+languages.</p>
+<p>It is quite different with a build time mechanism, such as the one used with
+C++. Interfaces are represented using abstract classes. An abstract class is
+represented in memory as an area accessible using a pointer, which is the
+interface pointer. This pointer gives access to a table storing pointers to the
+methods of the TIE object that ties the interface to its current implementation.
+This table is called vtbl, short for class virtual function table. When the
+client calls a method using an interface pointer, this pointer is the pointer to
+the vtbl of the interface base class, and the appropriate method is called
+thanks to a shift of the appropriate offset to locate the pointer to this
+method. The vtbl is created when the abstract class is built, and the call in
+the client application is transformed into the appropriate call instruction when
+the client is compiled. So everything is created at build time. This is known as
+the <strong>vtbl binding</strong>, and is a build time binding.</p>
+<p>vtbl binding is much faster than late binding in common situations, namely
+when objects are not distributed.&nbsp;</p>
+<p>The <i>CATIABase</i> interface derives from the <i>CATBaseDispatch</i>
+interface and is the base interface from which all the interfaces you will
+publish must derive if you want to make them exposed or journalizable, except
+your collection interfaces that you must derive from <i>CATIACollection</i>.</p>
+<p><img border="0" src="images/CAASysAutomation1.gif" width="515" height="258"></p>
+<p>The <i>CATIABase</i> interface is implemented by the <i>CATBaseObject</i>
+class, for two purposes:
+<ol>
+  <li>The main purpose is to provide the <code>ObjFromId</code> method to
+    determine reference to objects the first time these objects are met</li>
+  <li>The second purpose is to provide the following methods for Visual Basic
+    with OLE to manage unresolved object retrieval:</li>
+  <ul>
+    <li><code>get_Application</code> to retrieve the application object</li>
+    <li><code>get_Parent</code> to retrieve the object's parent object</li>
+    <li><code>get_Name</code> to retrieve the object's name</li>
+    <li><code>GetItem</code> to manage unresolved objects.</li>
+  </ul>
+</ol>
+<p>The CATIACollection interface is implemented by the CATBaseCollection class
+and provides the following method implementations:
+<ul>
+  <li><code>get_Application</code> to retrieve the application object</li>
+  <li><code>get_Parent</code> to retrieve the object's parent object</li>
+  <li><code>GetItem</code> to manage unresolved objects.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>The Type Library</h3>
+<p>To provide type information at run time for the scripts, COM offers the type
+library. This makes it possible for the interpreted language to access the
+methods by means of the virtual function table of the object and to ensure run
+time type checking like C++ run time does.</p>
+<p>The type library is a compiled version of a set of IDL files. It contains the
+description of all the interfaces, all the method prototypes, properties, and
+all the parameters they require along with their types. It is built using the
+CAA V5 IDL compiler [<a href="#References">2</a>].</p>
+<p>You can scan a type library thanks to the OLE/COM Object Viewer with Windows.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>Publishing Your Interfaces</h3>
+<p>All the CAA V5 interfaces are coded using the IDL, acronym for the Interface
+Definition Language. Some CAA V5 pragmas enable to declare in the IDL file the
+kind of the interface described and the objects to build.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="620000"></a>Exposed Interfaces</h4>
+<p>They derive from CATIABase and include in their IDL file a ID declaration.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#pragma ID CATIAExposed &quot;DCE:7c1b4ba8-5c25-0000-0280020bcb000000&quot;
+<b>#pragma DUAL CATIAExposed
+#pragma ID AccessName &quot;DCE:73a1e08a-d8c4-11d0-a59f00a0c9575177&quot;
+#pragma ALIAS CATIAExposed AccessName</b>
+interface CATIAExposed : CATIABase {
+...
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>An exposed interface must be declared in the type library.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="630000"></a>Journalizable Interfaces</h4>
+<p>To make a journalizable interface from an exposed interface, just add the
+comment <code>/*IDLREP*/</code> in the IDL file, preferably as the first line of
+the file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>/*IDLREP*/</b>
+#pragma ID CATIJournalizable &quot;DCE:7c1b4ba8-5c25-0000-0280020bcb000000&quot;
+#pragma DUAL CATIJournalizable
+#pragma ID AccessName &quot;DCE:73a1e08a-d8c4-11d0-a59f00a0c9575177&quot;
+#pragma ALIAS CATIJournalizable AccessName
+interface CATIJournalizable : CATIABase
+
+...
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>As an exposed interface, a journalizable interface must be declared in the
+type library.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="640000"></a>Declaring for Automation</h4>
+<p>If you want to take advantage of Automation capabilities, you need to declare
+the interfaces in a type library source file, suffixed by <code>tplib</code>.
+This is an example of such a file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>/*IDLREP*/
+#pragma REPID INFITF &quot;DCE:14f197b2-0771-11d1-a5b100a0c9575177&quot;
+#pragma REPBEGIN INFITF
+
+#pragma REPREQ PreReqTypeLib
+
+#include &quot;CATIApplication.idl&quot;
+#include &quot;CATIPageSetup.idl&quot;
+#include &quot;CATIWindow.idl&quot;
+
+#pragma REPEND INFITF</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>INFITF</code> is the type library name</li>
+  <li><code>CATIApplication.idl</code>, <code>CATIPageSetup.idl</code> and <code>CATIWindow.idl</code>
+    the files containing the interfaces</li>
+  <li><code>REPID</code>, <code>REPBEGIN</code> and <code>REPEND</code> are
+    keywords to declare respectively the type library name and its GUID, the
+    beginning and the end of the interfaces to include in the type library</li>
+  <li><code>REPREQ</code> declares the prerequisite type libraries.</li>
+</ul>
+<p>The IDL compiler [<a href="#References">2</a>] builds the run time type
+library from such a source file and stores it in a shared library with UNIX or a
+DLL with Windows.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="700000"></a>Creating the IDL Files</h3>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="710000"></a>Properties and Methods</h4>
+<p>A property is equivalent to a data member in C++. A property is accessed from
+scripting languages using the property name, but the IDL file includes two
+functions with the reserved prefixes get_ and put_ to get the property value and
+to set it respectively. These functions have one and only one argument.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="720000"></a>The Rules to Follow for Macro Portability</h4>
+<p>These rules deal with the&nbsp; types, the way complex types are handled, the
+interface inheritance, and the signature types.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5>The Supported Parameter Types</h5>
+<p>Compared to C++, scripting languages have parameter type support
+restrictions. The parameters of the method signatures must be of the following
+types.</p>
+<table>
+  <thead>
+    <tr>
+      <th valign="top"><b>Exposed Type Name</b>
+      <th valign="top"><b>Type Description</b>
+      <th valign="top"><b>CAA V5</b><b> IDL Syntax for that Type</b>
+    </tr>
+  </thead>
+  <tr>
+    <td valign="top">Boolean</td>
+    <td valign="top">Can take the two values True and False</td>
+    <td valign="top">boolean</td>
+  </tr>
+  <tr>
+    <td valign="top">Integer</td>
+    <td valign="top">Signed integer coded using 16 bits</td>
+    <td valign="top">short</td>
+  </tr>
+  <tr>
+    <td valign="top">Long</td>
+    <td valign="top">Signed integer coded using 32 bits</td>
+    <td valign="top">long</td>
+  </tr>
+  <tr>
+    <td valign="top">Single</td>
+    <td valign="top">Floating number coded using 32 bits</td>
+    <td valign="top">float</td>
+  </tr>
+  <tr>
+    <td valign="top">Double</td>
+    <td valign="top">Floating number coded using 64 bits</td>
+    <td valign="top">double</td>
+  </tr>
+  <tr>
+    <td valign="top">BSTR</td>
+    <td valign="top">Character string coded using the Unicode</td>
+    <td valign="top">CATBSTR</td>
+  </tr>
+  <tr>
+    <td valign="top">Variant</td>
+    <td valign="top">Can contain any of the above types</td>
+    <td valign="top">CATVariant</td>
+  </tr>
+  <tr>
+    <td valign="top">SafeArray(Variant)</td>
+    <td valign="top">Variant array. This type can be used as an input, or as an
+      input/output parameter only</td>
+    <td valign="top">CATSafeArrayVariant</td>
+  </tr>
+  <tr>
+    <td valign="top">Object</td>
+    <td valign="top">OLE Automation interface</td>
+    <td valign="top">&lt;interface name&gt;</td>
+  </tr>
+  <tr>
+    <td valign="top">Error code</td>
+    <td valign="top">Error code coded on 32 bits</td>
+    <td valign="top">HRESULT</td>
+  </tr>
+  <tr>
+    <td valign="top">Enum</td>
+    <td valign="top">Enumeration</td>
+    <td valign="top">Enum</td>
+  </tr>
+</table>
+<p>The following OLE Automation types are not supported</p>
+<table border="0">
+  <thead>
+    <tr>
+      <td valign="top"><b>Exposed Type Name</b></td>
+      <td valign="top"><b>Type Description</b></td>
+    </tr>
+  </thead>
+  <tr>
+    <td valign="top">Byte</td>
+    <td valign="top">Non signed integer coded using 32 bits</td>
+  </tr>
+  <tr>
+    <td valign="top">Currency</td>
+    <td valign="top">Amount expressed in a given currency</td>
+  </tr>
+  <tr>
+    <td valign="top">SafeArray(&lt;type&gt;)</td>
+    <td valign="top">Array of &lt;type&gt;, where type is not Variant</td>
+  </tr>
+  <tr>
+    <td valign="top">Decimal</td>
+    <td valign="top">High precision decimal number coded using 16 bytes</td>
+  </tr>
+  <tr>
+    <td valign="top">Date</td>
+    <td valign="top">Date</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5>The Complex Type Handling</h5>
+<p>The complex types, that is BSTR, SafeArray(Variant), and Variant are never
+handled directly, but only using the CAA V5 types, that is CATUnicodeString,
+any[], and any respectively. Functions to convert from/to these types are
+provided. For example, the CATUnicodeString class provides the <code>BuildFroBSTR</code>
+method to build a CATUnicodeString class instance from a BSTR, and <code>ConvertToBSTR</code>
+to convert a CATUnicodeString class instance into a BSTR. The
+CATAutoConversions.h file provides global functions to convert Variants.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5>The Interface Inheritance</h5>
+<p>All the exposed interfaces must derive from one out of the two following
+interfaces:
+<ul>
+  <li>CATIACollection for collection interfaces, that is interfaces that
+    describe an object list</li>
+  <li>CATIABase for any other interface</li>
+</ul>
+<p>These interfaces expose methods to match some of the scripting engine
+requirements. This is explained in <a href="#400000">IDispatch, CATBaseDispatch
+and CATIABase</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5>The Parameter Directional Attribute</h5>
+<p>The method parameter types must be coded with IDL in the method signature
+with a directional attribute. An input parameter is declared with the <code>in</code>
+directional attribute, while an output parameter is declared with the <code>out</code>
+directional attribute. A parameter passed in both directions is declared with <code>inout</code>.
+For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT MyExposedMethod(in    &lt;type&gt; iparameter,
+                        inout &lt;type&gt; ioparameter);</pre>
+    </td>
+  </tr>
+</table>
+<p><code>MyExposedMethod</code> has an in parameter and an inout parameter.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5>The Signature Types</h5>
+<p>The methods exposed in an interface fall among one of the four following
+types:
+<ol>
+  <li><strong>Property reading function</strong>s. They are prefixed using <code>get_</code>.
+    This prefix is dedicated to property reading functions and must not be used
+    for any other function. Property reading functions have a single parameter
+    preceded by <code>out /*IDLRETVAL*/</code> which returns the read property
+    value. Their signatures is as follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT get_&lt;<em>propertyName</em>&gt; ( (out /*IDLRETVAL*/) &lt;type&gt; &lt;<em>parameterName</em>&gt; );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>For example:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT get_FileName(out/*IDLRETVAL*/ CATBSTR oString);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Property writing functions</strong>. They are prefixed using <code>put_</code>.
+    This prefix is dedicated to property writing functions and must not be used
+    for any other function. Property writing functions have a single parameter
+    preceded by <code>in</code> which passes the property value. Their
+    signatures is as follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT put_&lt;<em>propertyName</em>&gt; ( (in) &lt;type&gt; &lt;<em>parameterName</em>&gt; );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>For example:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT put_FileName(in CATBSTR iString);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Sub procedures</strong>. They perform actions, but don't return a
+    value.Their signatures is as follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT &lt;<em>subProcName</em>&gt; ( ((in|out|inout)  &lt;type&gt; &lt;<em>parameterName</em>&gt;) * );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>For example:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT Update(in iTimeStamp);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Function procedures</strong>. Like Sub procedures, Function
+    procedures perform actions, but also return a value. One of the parameters
+    for IDL and C++ is designated as the scripting language function return
+    value. This parameter must be preceded by <code>out /*IDLRETVAL*/</code> and
+    must be the last parameter in the signature.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT &lt;<em>functionProcName</em>&gt; ( ((in|out|inout) &lt;type&gt; &lt;<em>parameterName</em>&gt;)* , out /*IDLRETVAL*/ &lt;type&gt; &lt;returnedParameterName&gt;);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>For example:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT GetLastItemInList(in CATIACollection iList, out /*IDLRETVAL*/ CATIABase oItem);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p>You cannot put two methods with the same name and different signatures in the
+same interface: method overloading is not supported.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4>Properties</h4>
+<p>A <strong>read/write property</strong> is created by declaring the property
+using a #pragma, and a couple of get_/put_ methods. For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#pragma PROPERTY Name
+  HRESULT get_Name (out /*IDLRETVAL*/ CATBSTR oNameValue);
+  HRESULT put_Name (in  CATBSTR iNameValue);</pre>
+    </td>
+  </tr>
+</table>
+<p>The Name property is declared using the #pragma PROPERTY. The two methods
+show that is is a read/write property. The get_Name method parameter is declared
+as out and /*IDLRETVAL*/ forces the parameter as a return value for the
+scripting function.</p>
+<p>A <strong>read/only property</strong> is created by declaring the property
+using a #pragma, and a single get_ method. For example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#pragma PROPERTY ActiveDocument
+  HRESULT get_ActiveDocument (out /*IDLRETVAL*/ CATIADocument oDocument);</pre>
+    </td>
+  </tr>
+</table>
+<p>The Name property is declared using the #pragma PROPERTY. The get_ method
+shows that it is a read/only property. As for a read/write property, the
+get_Name method parameter is declared as out and /*IDLRETVAL*/ forces the
+parameter as a return value for the scripting function.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="800000"></a>The Interface Coding Check-List</h3>
+<p>Refer to the following check-list to make sure that the interfaces you write
+will match IDL, COM, CORBA, and CAA V5 rules. This check-list includes Visual
+Basic compatibility requirements.
+<ol>
+  <li>Use one file per interface, suffixed with <code>idl</code>. Example: <code>MyInterface.idl</code></li>
+  <li>An exposed interface derives from CATBaseDispatch</li>
+  <li>A journalizable interface is an exposed interface with the following
+    comment as first line:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>/*IDLREP*/</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Each interface method returns an <code>HRESULT</code></li>
+  <li>Each interface method parameter is declared as <code>in</code>, <code>out</code>
+    or <code>inout</code> parameter
+    <p><code>in &lt;type&gt;</code> means for C++ <code>&lt;type&gt; *</code> if
+    type is an interface</p>
+    <p><code>out &lt;type&gt;</code> means for C++ <code>&lt;type&gt; * &amp;</code>
+    if type is an interface or <code>&lt;type&gt; &amp;</code> if type is a base
+    type.</p>
+  </li>
+  <li>Any identifier must not begin with <code>put_</code> or <code>get_</code>,
+    except for properties</li>
+  <li>An interface cannot have optional parameters</li>
+  <li><code>int</code> and <code>void *</code> types are not available</li>
+  <li>A method can not be overloaded: two methods with the same name and
+    different signatures cannot exist in an interface</li>
+  <li>Properties are declared with #pragma PROPERTY statements
+    <table class="code">
+      <tr>
+        <td>
+          <pre>
+#pragma PROPERTY PropertyName
+  HRESULT get_PropertyName (out /*IDLRETVAL*/ &lt;type&gt; oPropertyValue);
+  HRESULT put_PropertyName (in  &lt;type&gt; iPropertyValue);
+</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>An IDL file can not define a constant</li>
+  <li><code>CATSafeArray</code> type used as method parameters can not have more
+    than one dimension</li>
+  <li><code>CATBSTR</code> type must always be used for character strings</li>
+  <li>An <code>enum</code> can be defined if it meets the three conditions
+    below:
+    <ul>
+      <li>It is not identified using a GUID</li>
+      <li>A type is defined from the <code>enum</code> using the <code>typedef</code>
+        statement</li>
+      <li>The first <code>enum</code> element is not initialized. It is valued
+        to 0 by the IDL compiler [<a href="#References">2</a>].</li>
+    </ul>
+  </li>
+  <li>Check that your declared types for parameters and returned values match
+    the following table for methods. No other type is available:
+    <table border="0">
+      <tr>
+        <th valign="top"><strong>Visual Basic</strong>
+        <th valign="top"><strong>CAA V5 IDL</strong>
+        <th valign="top"><strong>CAA V5</strong><strong> C++</strong>
+      </tr>
+      <tr>
+        <td valign="top">Integer</td>
+        <td valign="top">short</td>
+        <td valign="top">short</td>
+      </tr>
+      <tr>
+        <td valign="top">Long</td>
+        <td valign="top">long</td>
+        <td valign="top">long</td>
+      </tr>
+      <tr>
+        <td valign="top">Single</td>
+        <td valign="top">float</td>
+        <td valign="top">float</td>
+      </tr>
+      <tr>
+        <td valign="top">Double</td>
+        <td valign="top">double</td>
+        <td valign="top">double</td>
+      </tr>
+      <tr>
+        <td valign="top">Byte</td>
+        <td valign="top">octet</td>
+        <td valign="top">octet</td>
+      </tr>
+      <tr>
+        <td valign="top">Boolean</td>
+        <td valign="top">boolean</td>
+        <td valign="top">boolean</td>
+      </tr>
+      <tr>
+        <td valign="top"></td>
+        <td valign="top">HRESULT</td>
+        <td valign="top">HRESULT</td>
+      </tr>
+      <tr>
+        <td valign="top">String</td>
+        <td valign="top">CATBSTR</td>
+        <td valign="top">CATBSTR</td>
+      </tr>
+      <tr>
+        <td valign="top">Object</td>
+        <td valign="top">CATBaseDispatch *</td>
+        <td valign="top">CATBaseDispatch *</td>
+      </tr>
+      <tr>
+        <td valign="top">Array</td>
+        <td valign="top">CATSafeArray</td>
+        <td valign="top">CATSafeArray</td>
+      </tr>
+      <tr>
+        <td valign="top">Variant</td>
+        <td valign="top">CATVariant</td>
+        <td valign="top">CATVariant</td>
+      </tr>
+    </table>
+  </li>
+  <li>Check that your declared types for parameters and returned values match
+    the following table for property get_ and put_ methods. No other type is
+    available:
+    <table border="0">
+      <tr>
+        <th valign="top"><strong>Visual Basic</strong>
+        <th valign="top"><strong>CAA V5 IDL</strong>
+        <th valign="top"><strong>CAA V5 C++</strong>
+      </tr>
+      <tr>
+        <td valign="top">Integer</td>
+        <td valign="top">short</td>
+        <td valign="top">short</td>
+      </tr>
+      <tr>
+        <td valign="top">Long</td>
+        <td valign="top">long</td>
+        <td valign="top">long</td>
+      </tr>
+      <tr>
+        <td valign="top">Single</td>
+        <td valign="top">float</td>
+        <td valign="top">float</td>
+      </tr>
+      <tr>
+        <td valign="top">Double</td>
+        <td valign="top">double</td>
+        <td valign="top">double</td>
+      </tr>
+      <tr>
+        <td valign="top">Byte</td>
+        <td valign="top">octet</td>
+        <td valign="top">octet</td>
+      </tr>
+      <tr>
+        <td valign="top">Boolean</td>
+        <td valign="top">boolean</td>
+        <td valign="top">boolean</td>
+      </tr>
+      <tr>
+        <td valign="top"></td>
+        <td valign="top">HRESULT</td>
+        <td valign="top">HRESULT</td>
+      </tr>
+      <tr>
+        <td valign="top">String</td>
+        <td valign="top">CATBSTR</td>
+        <td valign="top">CATBSTR</td>
+      </tr>
+      <tr>
+        <td valign="top">Object</td>
+        <td valign="top">CATBaseDispatch *</td>
+        <td valign="top">CATBaseDispatch *</td>
+      </tr>
+      <tr>
+        <td valign="top">Array</td>
+        <td valign="top">CATSafeArray</td>
+        <td valign="top">CATSafeArray</td>
+      </tr>
+      <tr>
+        <td valign="top">Variant</td>
+        <td valign="top">CATVariant</td>
+        <td valign="top">CATVariant</td>
+      </tr>
+    </table>
+  </li>
+  <li>An exposed or a journalizable interface must have an ID, must be declared
+    as dual, and must have an exposed name:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#pragma ID CATIAExposed &quot;DCE:7c1b4ba8-5c25-0000-0280020bcb000000&quot;
+#pragma DUAL CATIAExposed
+#pragma ID AccessName &quot;DCE:73a1e08a-d8c4-11d0-a59f00a0c9575177&quot;
+#pragma ALIAS CATIAExposed AccessName</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p>The CATVariant stands for the Variant in Visual Basic, and for the any type
+of IDL, but you must use CATVariant in your IDL file. You should use it whenever
+you don't know the type of the parameter that Visual Basic will use, or if this
+type may vary.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>To be available form a scripting language, an interface must derive from
+CATIABase, or CATIACollection, and the class that implements it must derive from
+CATBaseDispatch, or CATBaseCollection, which provides an implementation of the
+methods declared by IDispatch. Its methods must also comply with the specific
+Automation signature restrictions.</p>
+<p>Depending on the statements you put in the interface's IDL file, your
+interface can be exposable, exposed, or journalizable. It can include properties
+and methods the client applications can use on instances of objects implementing
+the interface.</p>
+<p>The <a href="#800000">Interface Coding Check-List</a> helps you to be right
+the first time.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About Globally
+      Unique IDentifiers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAASysIDLCompiler.htm">The CAA V5 IDL Compiler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

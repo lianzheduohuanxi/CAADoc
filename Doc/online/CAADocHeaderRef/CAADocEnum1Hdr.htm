@@ -1,0 +1,54 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATCommandMode</title>
+</head>
+
+<body>
+
+<pre>
+#ifndef CATCommandMode_h
+#define CATCommandMode_h
+
+// COPYRIGHT DASSAULT SYSTEMES 1999
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U1
+ */
+
+/**
+ * Command running mode.
+ * @param CATCommandModeShared
+ *   The command is known by the command selector.
+ *   As soon as the command is selected, the command selector
+ *   deactivates the previous active command, that is, withdraws
+ *   the focus and puts it into the command stack from where it can be
+ *   reactivated later on,
+ *   and gives the focus to the selected command to make
+ *   it the active one.
+ * @param CATCommandModeExclusive
+ *   The command is known by the command selector.
+ *   As soon as the command is selected, the command selector
+ *   deletes the previous active command
+ *   and gives the focus to the selected command to make
+ *   it the active one.
+ * @param CATCommandModeUndefined
+ *   The command is ignored by the command selector.
+ *   It cannot be deleted or deactivated if another command is selected
+ *   while it runs, and it runs until it completes.
+ */
+enum CATCommandMode{CATCommandModeShared    =1,
+                    CATCommandModeExclusive =0,
+                    CATCommandModeUndefined =3};
+
+#endif
+</pre>
+
+</body>
+
+</html>

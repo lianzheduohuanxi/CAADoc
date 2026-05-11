@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMModelInterfaces Interface CATICGMLengthFromBodyOnWire</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMModelInterfaces.htm" href="../GMModelInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMModelInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMLengthFromBodyOnWire"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMModelInterfaces Interface CATICGMLengthFromBodyOnWire</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMLengthFromBodyOnWire_52588','CATICGMLengthFromBodyOnWire','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMLengthFromBodyOnWire</b>
+</p>
+<p>
+<b><i> Class defining the operator that computes the length between two point bodies.</i></b><br>
+
+ This operator can be used in two modes.
+ In BASIC mode, the operation is run at the operator creation. In this mode,
+ you have to read the resulting distance, and release the operator, as in the following 
+ example:
+ <pre>CATICGMLengthFromBodyOnWire * Op =  CATICGMLengthFromBodyOnWire (factory,vertex1,vertex2); 
+ double distance = Op->GetDistance(NULL,NULL);
+ Op->Release();</pre>
+ If you need specific parameters, use the ADVANCED mode:
+ <ul>
+ <li> Create the operator ,
+ <li> Set parameters,
+ <li> Run,
+ <li> Get the resulting distance,
+ <li> Delete the operator.
+ </ul>
+ Example:
+ <pre> 
+ CATICGMLengthFromBodyOnWire * Op =  CATICGMLengthFromBodyOnWire (factory,vertex1,vertex2); 
+ Op->SetSupport(Wire); // on a wire
+ Op->Run();
+ CATMathPoint Point1, Point2;
+ double distance = Op->GetDistance(&Point1,&Point2);
+ Op->Release();
+ </pre></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetDistance(CATMathPoint*,CATMathPoint*)"><b>GetDistance</b></a>(CATMathPoint*,CATMathPoint*)
+<dd>  Returns the computed distance.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Runs the operator in <tt>ADVANCED</tt> mode.
+ <dt> o 
+    <a href="#SetEdge(CATEdge*)"><b>SetEdge</b></a>(CATEdge*)
+<dd>  Defines a new edge along which the distance is computed.
+ <dt> o 
+    <a href="#SetEdge(CATBody*)"><b>SetEdge</b></a>(CATBody*)
+<dd>  Defines a new wire body along which the distance is computed.
+ <dt> o 
+    <a href="#SetVertices(CATBody*,CATBody*)"><b>SetVertices</b></a>(CATBody*,CATBody*)
+<dd>   Defines the new vertices between which the distance is computed.
+ <dt> o 
+    <a href="#SetVertices(CATVertex*,CATVertex*)"><b>SetVertices</b></a>(CATVertex*,CATVertex*)
+<dd>   Defines the new vertices between which the distance is computed.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetDistance"></a><a name="GetDistance(CATMathPoint*,CATMathPoint*)"></a> <dt> o <b>GetDistance</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLength','CATLength')</script>  <b>GetDistance</b>(<td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>iMathPoint1</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>iMathPoint2</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the computed distance.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMathPoint1</tt>
+   <dd> A pointer to the mathematical definition of the first point. 
+ <br>If <tt>NULL</tt>, this argument is not computed.
+ </dd>
+    <dt><tt> iMathPoint2</tt>
+   <dd> A pointer to the mathematical definition of the second point.
+ <br>If <tt>NULL</tt>, this argument is not computed.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The computed distance.
+ <br>Sample: to retrieve the distance and the mathematical definition of the first point:
+ <pre>CATMathPoint Point1;
+ double distance = Op->GetDistance(&Point1,NULL);</pre>
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Runs the operator in <tt>ADVANCED</tt> mode.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  A diagnosis.
+ <br>Legal values</tt>: 0 if some arguments of the operator are invalid, 1 otherwise.
+</dl>
+</dl>
+<a name="SetEdge"></a><a name="SetEdge(CATEdge*)"></a> <dt> o <b>SetEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetEdge</b>(<td><script type="text/javascript"> activateLink('CATEdge','CATEdge*')</script> <td><tt>iNewEdge</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a new edge along which the distance is computed.
+ <br>To use in <tt>ADVANCED</tt> mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewEdge</tt>
+   <dd> A pointer to the edge along which the distance is computed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetEdge"></a><a name="SetEdge(CATBody*)"></a> <dt> o <b>SetEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetEdge</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iNewEdge</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines a new wire body along which the distance is computed.
+ <br>To use in <tt>ADVANCED</tt> mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewEdge</tt>
+   <dd> A pointer to the wire body along which which the distance is computed.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetVertices"></a><a name="SetVertices(CATBody*,CATBody*)"></a> <dt> o <b>SetVertices</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetVertices</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iNewVertex1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>iNewVertex2</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Defines the new vertices between which the distance is computed.
+ <br>To use in <tt>ADVANCED</tt> mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewVertex1</tt>
+   <dd> A pointer to the first vertex.
+ </dd>
+    <dt><tt> iNewVertex2</tt>
+   <dd> A pointer to the second vertex.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetVertices"></a><a name="SetVertices(CATVertex*,CATVertex*)"></a> <dt> o <b>SetVertices</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetVertices</b>(<td><script type="text/javascript"> activateLink('CATVertex','CATVertex*')</script> <td><tt>iNewVertex1</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATVertex','CATVertex*')</script> <td><tt>iNewVertex2</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Defines the new vertices between which the distance is computed.
+ <br>To use in <tt>ADVANCED</tt> mode.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewVertex1</tt>
+   <dd> A pointer to the first vertex.
+ </dd>
+    <dt><tt> iNewVertex2</tt>
+   <dd> A pointer to the second vertex.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMLengthFromBodyOnWire.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMModelInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

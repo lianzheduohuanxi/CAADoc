@@ -1,0 +1,112 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>CATPDMBase Global Function ExtractDocsToFileDirectory</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../CATPDMBase.htm" href="../CATPDMBase.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "CATPDMBase";	}
+		function getCurrentObjectName() { 
+ 	return "ExtractDocsToFileDirectory"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CATPDMBase Global Function ExtractDocsToFileDirectory</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('HRESULT',' HRESULT')</script>  <b>ExtractDocsToFileDirectory</b>(<td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iListV_ID</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iListRevision</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iDirectory_PATH</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iListFileNameToChange</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Client side API to enable the extraction of a document whithout any pointed and Force RerouteLinks for pointed
+
+ <br><b>Role</b>: Enable the extraction of a document:
+	From Vault to a file directory.
+	Without any pointed document.
+	Otherwise, pointed links are rerouted from EnoviaLink to File Type Link 
+
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iListV_ID</tt>
+   <dd> [in]   Name of each ENOVIA Document Master to extract (V_ID attribute value)
+ </dd>
+    <dt><tt> iListRevision</tt>
+   <dd> [in]   Name of each ENOVIA Document Revision (V_version attribute value)
+ </dd>
+    <dt><tt> iDirectory_PATH</tt>
+   <dd> [in]   the path where documents have to be extracted.
+ </dd>
+    <dt><tt> iListFileNameToChange</tt>
+   <dd> [in]   Fill this list if you want to rename document during extraction!
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    <code>S_OK</code> if everything ran ok, otherwise...
+   <code>E_FAIL</code> if an unrecoverable error occurs
+   <code>E_INVALIDARG</code> if an arg does not match e.g:
+		iListV_ID.Size != iListRevision.Size
+		iListFileNameToChange.Size != 0 AND iListFileNameToChange.Size != iListRevision.Size
+		iListFileNameToChange.Size != 0 AND several identical string in iListFileNameToChange
+
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATPDMInteropServices.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

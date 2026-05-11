@@ -1,0 +1,544 @@
+<html>
+
+<head>
+<title>Multi-axis Machining Algorithms</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta content="Microsoft FrontPage 6.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<link href="../CAADocStyleSheets/caav5.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Machining</h1>
+		</td>
+		<td valign="top">
+		<h2>Machining Algorithms</h2>
+		</td>
+		<td valign="top" align="right" rowspan="2">
+		<h3><a name="Top"></a>Multi-axis Machining Algorithms</h3>
+		<i>Creating points with multi-axis machining algorithms</i></td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article discusses the CAASmaMultiAxisAlgorithms use case and explains 
+		how to use multi-axis machining algorithms.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a> </li>
+			<li><a href="#UseCase">The CAASmaMultiAxisAlgorithms Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAASmaMultiAxisAlgorithms Do</a>
+				</li>
+				<li><a href="#How">How to Launch CAASmaMultiAxisAlgorithms</a>
+				</li>
+				<li><a href="#Where">Where to Find the CAASmaMultiAxisAlgorithms 
+				Code</a> </li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a> </li>
+			<li><a href="#InShort">In Short</a> </li>
+			<li><a href="#References">References</a> </li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you run multi-axis machining algorithms. Its 
+main intent is to explain how to set parameters, compute and read results of machining 
+algorithms, which are:</p>
+<ul>
+	<li>multi-axis sweeping: tool path is executed in vertical parallel planes 
+	and is normal to the part surface</li>
+	<li>multi-axis contour driven: tool path sweeps between two guide contours 
+	or out an area by following contours parallel to a reference contour and is 
+	normal to the part surface</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASmaMultiAxisAlgorithms Use Case</h3>
+<p>CAASmaMultiAxisAlgorithms is a use case of the CAASurfaceMachiningAlgoItf.edu 
+framework that illustrates the SurfaceMachiningAlgoInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAASmaMultiAxisAlgorithms Do</h4>
+<p>CAASmaMultiAxisAlgorithms creates geometrical points, that follow tool paths 
+computed by multi-axis sweeping and multi-axis contour driven algorithms.</p>
+<table width="100%">
+	<tr>
+		<td>
+		<img height="328" alt="The geometry of the Part" src="images/CAASmaGeometry.jpg" width="630" border="0">
+		</td>
+		<td valign="middle">It opens a Part document, finds the first geometrical 
+		set and retrieves geometry of PARTS1, PARTS2, GUIDE1 and GUIDE2.</td>
+	</tr>
+	<tr>
+		<td>
+		<img height="368" alt="Points created by multi-axis sweeping" src="images/CAASmaResultSweeping.jpg" width="630" border="0">
+		</td>
+		<td valign="middle">It runs a multi-axis sweeping algorithm on PARTS1 and 
+		creates a first set of points (points lying on the surface are green).</td>
+	</tr>
+	<tr>
+		<td>
+		<img height="253" alt="Points created by multi-axis contour driven" src="images/CAASmaResultContourDriven.jpg" width="630" border="0">
+		</td>
+		<td valign="middle">It runs a multi-axis contour driven algorithm on PARTS2 
+		between GUIDE1 and GUIDE2 and creates a second set of points.</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASmaMultiAxisAlgorithms</h4>
+<p>To launch CAASmaMultiAxisAlgorithms, you will need to set up the build time environment, 
+then compile CAASmaMultiAxisAlgorithms along with its prerequisites, set up the 
+run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>To launch the use case, execute the following command:</p>
+<p>mkrun -c &quot;CAASmaMultiAxisAlgorithms Filename&quot;</p>
+<p>where Filename is the path of a Part document. You can use the <code>CAAMultiAxisAlgorithms</code><code>.CATPart
+</code>located:</p>
+<table id="Table1">
+	<tr>
+		<td>Unix</td>
+		<td><code>InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/InputData</code></td>
+	</tr>
+	<tr>
+		<td>Windows</td>
+		<td><code>InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\InputData</code></td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAASmaMultiAxisAlgorithms Code</h4>
+<p>The use case code is located in the CAASmaMultiAxisAlgorithms.m module of the 
+CAASurfaceMachiningAlgoItf.edu framework:</p>
+<table width="100%">
+	<tr>
+		<td>Windows</td>
+		<td><code>InstallRootDirectory\CAASurfaceMachiningAlgoItf.edu\CAASmaMultiAxisAlgorithms.m</code></td>
+	</tr>
+	<tr>
+		<td>Unix</td>
+		<td><code>InstallRootDirectory/CAASurfaceMachiningAlgoItf.edu/CAASmaMultiAxisAlgorithms.m</code></td>
+	</tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAASmaMultiAxisAlgorithms:</p>
+<ol>
+	<li><a href="#Step1">Opening a Part document and retrieving geometries</a>
+	</li>
+	<li><a href="#Step2">Creating a Process document and initializing manufacturing 
+	environment</a> </li>
+	<li><a href="#Step3">Running the multi-axis sweeping algorithm</a> </li>
+	<li><a href="#Step4">Running the multi-axis contour driven algorithm</a>
+	</li>
+	<li><a href="#Step5">Creating sets of points from tool paths</a> </li>
+</ol>
+<p>We will now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Opening a Part document and retrieving geometries</h4>
+<p>First, we need to get geometries used by machining algorithms.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>
+   CATDocument *pPartDoc = NULL;
+   rc = <b>CATDocumentServices::OpenDocument</b>(InputPathName, pPartDoc);
+   ...
+   CATIPartRequest_var spPartRequest(spPart); 
+   if (NULL_var != spPartRequest)
+   { 
+      CATListValCATBaseUnknown_var ListOfSurfacicSets;
+      spPartRequest-&gt;<b>GetSurfBodies</b>(CATUnicodeString (&quot;&quot;), ListOfSurfacicSets);
+      ...</pre>
+		</td>
+	</tr>
+	<pre></pre>
+</table>
+<p>The <code>CATDocumentServices::OpenDocument</code> static method opens the part 
+document from the location given as first argument of the main program. From the 
+root container of the part, we get the <i>CATIPartRequest</i> interface and use 
+it to access to the first geometrical set of the part.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;  CATIDescendants_var spDescOnSurfacicSet = ListOfSurfacicSets[1];
+&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spDescOnSurfacicSet)
+&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATListValCATISpecObject_var ListOfGeometricalElts;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spDescOnSurfacicSet-&gt;<b>GetDirectChildren</b>(CATIGeometricalElement::ClassName(), ListOfGeometricalElts);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int ig=1;ig&lt;=NbGeometricalElts;ig++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATIGeometricalElement_var spGeomElement = ListOfGeometricalElts[ig];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spGeomElement)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATBody_var spBody = spGeomElement-&gt;<b>GetBodyResult</b>();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
+</pre>
+		</td>
+	</tr>
+</table>
+<p>We scan its children features thanks to <code>GetDirectChildren</code>, and get 
+the topological result with <code>GetBodyResult</code>.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spBody-&gt;GetAllCells(ListOfCells,2);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int i=1;i&lt;=NbCells;i++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATFace_var spFace = ListOfCells[i];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spFace)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (0 != IsParts1) <b>ListOfParts1</b>.Append(spFace);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  else <b>ListOfParts2</b>.Append(spFace);
+			...</pre>
+		</td>
+	</tr>
+</table>
+<p>From features called PARTS1 and PARTS2, we get the faces and fill the according 
+lists <code>ListOfParts1</code> and <code>ListOfParts2</code>.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spBody-&gt;GetAllCells(ListOfCells,1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int i=1;i&lt;=NbCells;i++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATEdge_var spEdge = ListOfCells[i];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spEdge)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATEdgeCurve * pEdgeCurve = spEdge-&gt;GetCurve();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATCurve_var spCurve = pEdgeCurve;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spCurve)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (0 != IsGuide1) <b>ListOfGuide1</b>.Append(spCurve);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  else <b>ListOfGuide2</b>.Append(spCurve);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...</pre>
+		</td>
+	</tr>
+</table>
+<p>From features called GUIDE1 and GUIDE2, we get the curves and fill the according 
+lists <code>ListOfGuide1</code> and <code>ListOfGuide2</code>.</p>
+<p align="right">[<a href="#Top">Top</a>] </p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a Process document and initializing manufacturing 
+environment <br></h4>
+<p>To store algorithms results, we need to get a machining tool path container.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>&nbsp;  CATDocument *pProcessDoc = NULL;
+&nbsp;  rc = <b>CATDocumentServices::New</b>(&quot;Process&quot;, pProcessDoc );
+&nbsp;  ...
+&nbsp;  CATIMfgMachiningContainer * piMfgEnvt = NULL;
+&nbsp;  piProcessContainer-&gt;QueryInterface(CATIMfgMachiningContainer::ClassId(), (void**)&amp;piMfgEnvt);
+&nbsp;  if (piMfgEnvt)
+&nbsp;  {
+&nbsp;&nbsp;&nbsp;  piMfgEnvt-&gt;<b>InitContainer</b>(FALSE,0);
+&nbsp;&nbsp;&nbsp;  ...
+&nbsp;&nbsp; }
+&nbsp;  CATIContainer_var spTPContainer;
+&nbsp;  CATIMfgManufacturingFactories *piFact =NULL;
+&nbsp;  CATString ClassName(&quot;CATMfgManufacturingFactories&quot;);
+&nbsp;  ::CATInstantiateComponent (ClassName, CATIMfgManufacturingFactories::ClassId(), (void**)&amp; piFact);
+&nbsp;  if (piFact)
+&nbsp;  {
+&nbsp;&nbsp;&nbsp;  piFact-&gt;<b>GetManufacturingToolPathFactory</b>(spTPContainer);
+&nbsp;&nbsp;&nbsp;  ...
+</pre>
+		</td>
+	</tr>
+</table>
+<p>The <code>CATDocumentServices::OpenDocument</code> static method creates a process 
+document. From the root container of the process, we initialize the machining containers 
+with <code>InitContainer</code> and we get the tool path container thanks to the
+<i>CATIMfgManufacturingFactories</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a><a href="#Step3">Running the multi-axis sweeping algorithm</a>
+</h4>
+<table class="code">
+	<tr>
+		<td>
+		<pre>&nbsp;  <b>CATIMfgMultiAxisAlgorithm</b> *piMMSweepingAlgo =NULL;
+&nbsp;  ::CATInstantiateComponent (&quot;<b>CATMfgAlgoMultiAxisSweeping</b>&quot;, CATIMfgMultiAxisAlgorithm::ClassId(), (void**)&amp; piMMSweepingAlgo);
+&nbsp;  ...
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>SetValue</b>(MfgAlgMachiningTolerance,0.1); <i>// Machining tolerance</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;SetValue(MfgAlgMaxDiscretizationStep,100.); <i>// Maximum discretization step</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;SetValue(MfgAlgMaxDistance,10.); <i>// Distance on part</i>
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>SetDirection</b>(MfgAlgViewDirection,XVector); <i>// View dir</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;SetDirection(MfgAlgStartDirection,YVector); <i>// Start dir</i>
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>SetSurfacicGeometry</b>(MfgAlgParts,ListOfParts1); <i>// Parts</i>
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>AddMacroSyntax</b>(1,&quot;START&quot;); <i>// Approach macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>AddMacroTangentMotion</b>(1,10.,90.,0.);
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>AddMacroToAPlaneMotion</b>(1,MacroPlane);
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroSyntax(2,&quot;END&quot;); <i>// Retract macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroToAPlaneMotion(2,MacroPlane);
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroSyntax(3,&quot;START&quot;); <i>// Linking Approach macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>AddMacroAxialMotion</b>(3);
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroSyntax(4,&quot;END&quot;); <i>// Linking Retract macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroAxialMotion(4);
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroSyntax(5,&quot;START&quot;); <i>// Return in a level Approach macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>AddMacroCircularMotion</b>(5,90.,90.,10.);
+
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroSyntax(6,&quot;END&quot;); <i>// Return in a level Retract macro</i>
+&nbsp;  rc = piMMSweepingAlgo-&gt;AddMacroCircularMotion(6,90.,90.,10.);
+&nbsp;  ... 
+&nbsp;  CATBaseUnknown_var spSweepingTP;
+&nbsp;  rc = piMMSweepingAlgo-&gt;<b>ComputeToolPath</b>(spTPContainer,spSweepingTP);
+</pre>
+		</td>
+	</tr>
+</table>
+<p>First we create an instance of the multi-axis sweeping algorithm with the
+<code>CATInstantiateComponent</code> global function, the instance name is &quot;<code>CATMfgAlgoMultiAxisSweeping</code>&quot;, 
+we can also use <code>MultiAxisSweepingInstanceName</code> constant. Then we set parameters trough 
+the <i>CATIMfgMultiAxisAlgorithm</i> interface. </p>
+<p><code>SetValue</code> method is used to set the following numerical parameters:</p>
+<ul>
+	<li><code>MfgAlgMachiningTolerance</code>: Machining tolerance, it is the maximum 
+	allowed distance between the theoretical and computed tool path</li>
+	<li><code>MfgAlgMaxDiscretizationStep</code>: Maximum discretization step, it 
+	ensures linearity between points that are far apart</li>
+	<li><code>MfgAlgMaxDiscretizationAngle</code>: Maximum discretization angle, 
+	it specifies the maximum angular change of tool axis between tool positions</li>
+	<li><code>MfgAlgMaxDistance</code>: Distance on part, it defines the maximum 
+	distance between two consecutive tool paths</li>
+	<li><code>MfgAlgMachiningMode</code>: Tool path style, the cutting mode is one 
+	way or zigzag</li>
+	<li><code>MfgAlgStepoverSide</code>: Stepover side, it determines the side of 
+	the machining direction<br>
+</li>
+</ul>
+<p><code>SetDirection</code> method sets a direction:</p>
+<ul>
+	<li><code>MfgAlgViewDirection</code>: View direction</li>
+	<li><code>MfgAlgStartDirection</code>: Start direction</li>
+</ul>
+<p><code>SetSurfacicGeometry</code> method sets the geometry of the parts. The call 
+of this method is mandatory.</p>
+<p>Macros motions are defined by one or several elementary motions with the following 
+methods:</p>
+<ul>
+	<li><code>AddMacroAxialMotion</code>: along the tool axis</li>
+	<li><code>AddMacroTangentMotion</code>: tangent at its end to the tool path
+	</li>
+	<li><code>AddMacroRampingMotion</code>: following a slope </li>
+	<li><code>AddMacroCircularMotion</code>: in a arc</li>
+	<li><code>AddMacroToAPlaneMotion</code>: up to a plane </li>
+	<li><code>AddMacroAlongALineMotion</code>: along a vector </li>
+	<li><code>AddMacroSyntax</code>: insert a user syntax </li>
+</ul>
+<p><code>SetTool</code> method sets a manufacturing tool. If we don&#39;t call it, then 
+a default ball end tool will be used during computation.</p>
+<p>At last, <code>ComputeToolPath</code> creates and returns a tool path. It is 
+created in the container pointed by <code>spTPContainer</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a><a href="#Step4">Running the multi-axis contour driven algorithm</a>
+</h4>
+<table class="code">
+	<tr>
+		<td>
+		<pre>  <b> CATIMfgMultiAxisAlgorithm</b> *piMMContourDriven =NULL;
+&nbsp;  ::CATInstantiateComponent (&quot;<b>CATMfgAlgoMultiAxisContourDriven</b>&quot;, CATIMfgMultiAxisAlgorithm::ClassId(), (void**)&amp; piMMContourDriven);
+&nbsp;  ...
+&nbsp;  rc = piMMContourDriven-&gt;<b>SetValue</b>(MfgAlgMachiningTolerance,0.1); <i>// Machining tolerance</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgMaxDistance,10.); <i>// Distance on part</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgOffsetOnGuide1,-1.); <i>// Offset on guide 1</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgOffsetOnGuide2,-1.); <i>// Offset on guide 2</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgContouringMode,1); <i>// Between Contour guiding strategy</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetValue(MfgAlgMachiningMode,1); <i>// One-way tool path style</i>
+
+&nbsp;  CATMathVector NormalView(2.,0.,1.);
+&nbsp;  rc = piMMContourDriven-&gt;<b>SetDirection</b>(MfgAlgViewDirection,NormalView); <i>// View dir</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetDirection(MfgAlgStartDirection,YVector); <i>// Start dir</i>
+
+&nbsp;  rc = piMMContourDriven-&gt;<b>SetSurfacicGeometry</b>(MfgAlgParts,ListOfParts2); <i>// Parts</i>
+&nbsp;  rc = piMMContourDriven-&gt;<b>SetWireFrameGeometry</b>(MfgAlgGuide1,ListOfGuide1); <i>// First guide</i>
+&nbsp;  rc = piMMContourDriven-&gt;SetWireFrameGeometry(MfgAlgGuide2,ListOfGuide2); <i>// Second guide</i>
+
+&nbsp;  rc = piMMContourDriven-&gt;<b>AddMacroSyntax</b>(1,&quot;START&quot;); /<i>/ Approach macro</i>
+&nbsp;  rc = piMMContourDriven-&gt;<b>AddMacroTangentMotion</b>(1,10.,90.,0.);
+&nbsp;  rc = piMMContourDriven-&gt;<b>AddMacroToAPlaneMotion</b>(1,MacroPlane);
+
+&nbsp;  rc = piMMContourDriven-&gt;AddMacroSyntax(2,&quot;END&quot;); <i>// Retract macro</i>
+&nbsp;  rc = piMMContourDriven-&gt;AddMacroTangentMotion(2,10.,90.,0.);
+&nbsp;  rc = piMMContourDriven-&gt;AddMacroToAPlaneMotion(2,MacroPlane);
+&nbsp;  ...
+&nbsp;  CATBaseUnknown_var spContourDrivenTP;
+&nbsp;  rc = piMMContourDriven-&gt;<b>ComputeToolPath</b>(spTPContainer,spContourDrivenTP);
+</pre>
+		</td>
+	</tr>
+</table>
+<p>First we create an instance of the multi-axis contour driven algorithm with the
+<code>CATInstantiateComponent</code> global function, the instance name is &quot;<code>CATMfgAlgoMultiAxisContourDriven</code>&quot;, 
+we can also use <code>MultiAxisContourDrivenInstanceName</code> constant. Then we set parameters trough 
+the <i>CATIMfgMultiAxisAlgorithm</i> interface. </p>
+<p><code>SetValue</code> method sets numerical parameters. All parameters of multi-axis 
+sweeping are available for multi-axis contour driven. Additional parameters are:</p>
+<ul>
+	<li><code>MfgAlgOffsetOnGuide1</code>: Offset on guide 1</li>
+	<li><code>MfgAlgOffsetOnGuide2</code>: Offset on guide 2</li>
+	<li><code>MfgAlgPositionOnGuide1</code>: Position with respect to the guide 
+	1</li>
+	<li><code>MfgAlgPositionOnGuide2</code>: Position with respect to the guide 
+	2</li>
+	<li><code>MfgAlgContouringMode</code>: Guiding strategy, it is between contours 
+	or parallel contour</li>
+	<li><code>MfgAlgFromToContour</code>: Direction in parallel contour mode, it 
+	starts from the guide or it is done up to the guide</li>
+</ul>
+<p><code>SetSurfacicGeometry</code> method sets the geometry of the parts. The call 
+of this method is mandatory.</p>
+<p><code>SetWireFrameGeometry</code> method sets one of the following geometry:</p>
+<ul>
+	<li><code>MfgAlgGuide1</code>: First guide, it is a mandatory geometry</li>
+	<li><code>MfgAlgGuide2</code>: Second guide, it is a mandatory geometry in between 
+	contours mode</li>
+	<li><code>MfgAlgStop1</code>: First stop , it delimits the ends of paths</li>
+	<li><code>MfgAlgStop2</code>: Second stop, it delimits the ends of paths</li>
+	<li><code>MfgAlgLimitLine</code>: Limiting contour, it defines a limit to the 
+	part surface and is also available for multi-axis sweeping algorithm</li>
+</ul>
+<p>Direction, tool and macro motions are defined like in the multi-axis sweeping 
+algorithm.</p>
+<p>At last, <code>ComputeToolPath</code> creates and returns a tool path. It is 
+created in the container pointed by <code>spTPContainer</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a><a href="#Step5">Creating sets of points from tool paths</a></h4>
+<p>Finally we scan information of tool paths and create points in the part document.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>&nbsp;  ...
+&nbsp;  CATIPrtContainer_var spPrtContainer = ispPartContainer;
+&nbsp;  if (NULL_var != spPrtContainer)
+&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;  CATISpecObject_var spRootPart = spPrtContainer-&gt;GetPart();
+&nbsp;&nbsp;&nbsp;&nbsp;  spMechRootFactory-&gt;<b>CreateGeometricalSet</b>(&quot;&quot;,spRootPart,ospGeomSet);&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;  }
+&nbsp;  ...
+&nbsp;  <b>CATIMfgTPMultipleMotion</b>_var spMultipleMotion ((*pListOfMultipleMotion)[1]);
+&nbsp;  if (NULL_var != spMultipleMotion)
+&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;  spMultipleMotion-&gt;GetNumberOfSubTrajects(NbSubTrajects);
+&nbsp;&nbsp;&nbsp;&nbsp;  for (int ia=1;ia&lt;=NbSubTrajects;ia++)
+&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATIMfgTPMultipleMotion::SubTrajectType SubTrajectType;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spMultipleMotion-&gt;<b>GetSubTrajectType</b>(ia,SubTrajectType);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (CATIMfgTPMultipleMotion::UserSyntax == SubTrajectType) <i>// Syntax defined in macros</i>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATUnicodeString Syntax;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spMultipleMotion-&gt;GetUserSyntaxCharacteristics(ia,Syntax);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (0 != Syntax.Compare(&quot;START&quot;)) GreenColor = 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  else if (0 != Syntax.Compare(&quot;END&quot;)) GreenColor = 0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  }
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  else <i>// Traject</i>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  int StartNumber =0, EndNumber =0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spMultipleMotion-&gt;<b>GetStartAndEndNumber</b>(ia,StartNumber,EndNumber);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  for (int ib=StartNumber;ib&lt;=EndNumber;ib++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  double x=0.,y=0.,z=0.;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spMultipleMotion-&gt;<b>GetTipPoint</b>(ib,x,y,z);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  double Coord [3] = {x,y,z};
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATIGSMPoint_var spGSMPoint = spGSMFactory-&gt;<b>CreatePoint</b>(Coord);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (1 == GreenColor) <i>// Points lying on parts will be green</i>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATIVisProperties_var spGraphicsPoint = spGSMPoint;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  if (NULL_var != spGraphicsPoint)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  CATVisPropertiesValues VisProperties;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  VisProperties.SetColor(0, 255, 0); // Green color
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  spGraphicsPoint-&gt;<b>SetPropertiesAtt</b>(VisProperties, CATVPColor, CATVPPoint);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ...</pre>
+		</td>
+	</tr>
+</table>
+<p>First we create a new geometrical set in the part container with <code>CreateGeometricalSet</code> 
+method. Then we get a pointer on <i>CATIMfgTPMultipleMotion</i> and we scan the 
+tool path. For each sub-trajects, we get the type with <code>GetSubTrajectType</code> 
+and the position of tool path points with <code>GetTipPoint</code>.</p>
+<p>Points are created in the new geometrical set thanks to the <code>CreatePoint</code> 
+method of <i>CATIGSMFactory</i> interface. </p>
+<p>With the help of &quot;<code>START</code>&quot; and &quot;<code>END</code>&quot; user syntax defined in macros motions, we know which points 
+are on the part surface and we colored them in green thanks to <code>SetPropertiesAtt</code> 
+method of <i>CATIVisProperties</i> interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+	<li>Inputs of machining algorithms are several geometries and a tool path 
+	container</li>
+	<li>Numerical values, directions, geometry, tool and macros can be defined 
+	with <i>CATIMfgMultiAxisAlgorithm </i>interface</li>
+	<li>Output is a tool path, containing information that can be used outside 
+	machining context</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Mar 2006]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

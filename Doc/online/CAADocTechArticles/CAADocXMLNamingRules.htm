@@ -1,0 +1,371 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>CAA V5 XML Naming Rules</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CAA V5 XML Naming Rules</h3>
+      <em>Standard names for public CAA V5 XML entities</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="1">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>As CAA V5 introduces a number of different programming entities, naming
+      conventions have been developed in order to avoid name collisions inside
+      and outside the CAA environment, and to make things clearer for its
+      developers. This article describes these naming conventions for XML
+      entities.</p>
+      <ul>
+        <li><strong><a href="#General principles">General Principles</a></strong>
+        <li><strong><a href="#Global Rules">Global rule</a></strong>
+        <li><strong><a href="#Entities associated to a directory">Entities
+          Associated with a Directory</a></strong>
+        <li><strong><a href="#Java Entities associated with a file">Entities
+          Associated with a File</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="General principles"></a>General Principles</h3>
+<p>The following general principles have been established when choosing rules
+for CAA V5 names:
+<ol>
+  <li><strong>Brand-based prefixes</strong>. A <a name="prefix"></a><em>prefix</em>
+    [<a href="#Ref1">1</a>] is used for most entities that may collide with
+    other entities of the same nature, but developed outside the Dassault
+    Systèmes (DS) Group. It denotes the DS origin of the entity. Other entity
+    suppliers, and in particular CAA partners, are expected not to begin their
+    names with DS reserved prefixes. Prefixes are based on DS brand names,
+    because of their perennity : <b>V5 is the default prefix for all DS
+    cross-brands resources </b>(CAT for CATIA, ENOV for ENOVIA, DELM for DELMIA)
+  <li><a name="FWaliases"></a><strong>Aliases for frameworks</strong>. All
+    frameworks are assigned a short 3-letter alias with first letter capitalized
+    (e.g., V5Dialog-&gt; Dlg) [<a href="#Ref2">2</a>]. This alias is used as a
+    shortcut for the framework name for building other framework related names.
+    It is referred to as &lt;FWAlias&gt; in the remaining of this document.
+    Framework aliases will be defined in the framework's identity card. Trigrams
+    are typically used to name entities that are associated to frameworks (eg
+    modules). Since all modules from all frameworks are merged at runtime into
+    common repositories (e.g., RuntimeView), trigrams provides a mean of
+    avoiding conflicts. For a given framework FW, the same trigram applies to
+    the framework and to its associated FW.tst and FW.edu frameworks.
+  <li><a name="English"></a><strong>English</strong>. Names are based on
+    American English words.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]&nbsp;</p>
+<h3><a name="Global Rules"></a>Global Rule</h3>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name</th>
+    <th width="25%">Entity Nature</th>
+    <th width="35%">Naming Rule</th>
+    <th width="25%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>1-All</strong></td>
+    <td valign="top">All</td>
+    <td valign="top"><strong>V5&lt;EntityName&gt;</strong>
+      <ul>
+        <li>Name length should not exceed 27 characters</li>
+        <li>Names are composed using [A-Z][a-z][0-9] symbol range. Other symbols
+          (such as \, -, /, ; _and the like) are forbidden</li>
+      </ul>
+    </td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a directory"></a>Entities Associated with a
+Directory</h3>
+<p>The entity and the directory that contain it must have the same name.</p>
+<p><strong>Note</strong>: V5 can be replaced by other valid prefixes (such as
+CAA, CAT, ENOV, and DELM) in the patterns below.</p>
+<table width="100%" height="682">
+  <tr>
+    <th width="15%" height="18">Entity Name
+    <th width="15%" height="18">Entity Nature</th>
+    <th width="40%" height="18">Directory Naming Rule</th>
+    <th width="20%" height="18">Notes</th>
+    <th width="10%" height="18">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top" height="68"><strong>1-XML Schema repository</strong></td>
+    <td valign="top" height="68">Physical grouping of XML Schema.</td>
+    <td valign="top" height="68"><strong>V5&lt;FWName&gt;/CNext/resources/xsd/</strong></td>
+    <td valign="top" height="68">If the naming rule based on the framework name
+      is not used for file name in this directory, then a subdirectory unique to
+      the particular application should be used.</td>
+    <td valign="top" height="68">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top" height="66"><strong>2-XML instance documents repository</strong></td>
+    <td valign="top" height="66">Physical grouping of XML document instances.</td>
+    <td valign="top" height="66"><strong>V5&lt;FWName&gt;/CNext/resources/xml/</strong></td>
+    <td valign="top" height="66">If the naming rule based on the framework name
+      is not used for file name in this directory, then a subdirectory unique to
+      the particular application should be used.<br>
+      &nbsp;<br>
+      This directory should be used to store pre-defined XML instance documents,
+      like examples of XML files complying to a specific XML schema. This
+      directory must not be used to generate XML files.</td>
+    <td valign="top" height="66">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top" height="66"><strong>3-XML transform scripts repository</strong></td>
+    <td valign="top" height="66">Physical grouping of XML transform scripts.</td>
+    <td valign="top" height="66"><strong>V5&lt;FWName&gt;/CNext/resources/xsl/</strong></td>
+    <td valign="top" height="66">If the naming rule based on the framework name
+      is not used for file name in this directory, then a subdirectory unique to
+      the particular application should be used.</td>
+    <td valign="top" height="66">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top" height="66"><b>4 - WSDL declaration files repository</b></td>
+    <td valign="top" height="66">Physical grouping of WSDL declaration files.</td>
+    <td valign="top" height="66"><strong>V5&lt;FWName&gt;/CNext/resources/wsdl/</strong></td>
+    <td valign="top" height="66">If the naming rule based on the framework name
+      is not used for file name in this directory, then a subdirectory unique to
+      the particular application should be used.</td>
+    <td valign="top" height="66"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Examples of such directories:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathematics/CNext/resources/xsd/
+CATMathematics/CNext/resources/xml/
+CATMathematics/CNext/resources/xsl/
+CATMathematics/CNext/resources/wsdl/</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="100%">
+  <tr>
+    <th width="15%" height="18">Entity Name
+    <th width="15%" height="18">Entity Nature</th>
+    <th width="40%" height="18">Directory Naming Rule</th>
+    <th width="20%" height="18">Notes</th>
+    <th width="10%" height="18">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top" height="1"><b>5-XML Namespaces</b></td>
+    <td valign="top" height="1">Physical and logical grouping of XML Schemas,
+      WSDL declarations, etc. in a naming structure.</td>
+    <td valign="top" height="1"><b>http://dassaultsystemes.com/&lt;fwkname&gt;[/&lt;suffix&gt;]</b></td>
+    <td valign="top" height="1">&lt;fwkname&gt; is the name of the framework in
+      lowercase letters.<br>
+      The optional &lt;suffix&gt; is an extra name, a descriptive noun or noun
+      phrase, in mixed case with the first letter of each word capitalized.<br>
+      A namespace is a logical identifier, used as an hint by the XML processor
+      to locate actual resources. The URL notation recommended here helps to
+      assign unique names to namespaces. The URL does not have to be an actual
+      Internet URL: copy-pasting such an URL in an Internet browser is not
+      likely to lead to actual pages.&nbsp;<br>
+      For a use by another company than Dassault Systèmes, the <code>http://dassaultsystemes.com/</code>
+      prefix must be replaced by another one, for example one reflecting the
+      author's company.</td>
+    <td valign="top" height="1">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="left">For example, the following element declaration show the use of
+an XML schema namespace in a framework called CATMathematics, with the
+'/Matrices' suffix to group matrix-related type and element definitions.
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#0000ff">&lt;</font><font color="#800000">xsd:schema</font><font color="#ff0000"> targetNamespace</font><font color="#0000ff">=&quot;</font>http://dassaultsystemes.com/catmathematics/Matrices&quot;<font color="#0000ff">
+</font>            <font color="#ff0000">xmlns</font><font color="#0000ff">=&quot;</font>http://dassaultsystemes.com/catmathematics/Matrices<font color="#0000ff">&quot;
+</font>            <font color="#ff0000">xmlns:xsd</font><font color="#0000ff">=&quot;</font>http://www.w3.org/2001/XMLSchema<font color="#0000ff">&quot;</font><font color="#ff0000">
+            elementFormDefault</font><font color="#0000ff">=&quot;</font>qualified<font color="#0000ff">&quot;&gt;</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>] 
+<!---------------------------------comment------------------------------------->
+<h3><a name="Java Entities associated with a file"></a>Entities Associated with
+a File</h3>
+<p>One of the main purposes of the naming rules is to insure the uniqueness of
+the files. As regards the XML document files, uniqueness of XML instances,
+schemas, transform scripts, must be done at the framework scope.</p>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><b>6-XML Schema</b></td>
+    <td valign="top">Standard XML Schema declaration</td>
+    <td valign="top"><b>&lt;fwkname&gt;&lt;Name&gt;.xsd</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p>Example:</p>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><b>7-XMLinstance document</b></td>
+    <td valign="top">Standard XML document</td>
+    <td valign="top"><b>&lt;fwkname&gt;&lt;Name&gt;.xml</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Example:</p>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><b>8-XMLtransform script</b></td>
+    <td valign="top">Standard XML transform script</td>
+    <td valign="top"><b>&lt;fwkname&gt;&lt;Name&gt;.xsl</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Example:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border="0" width="100%">
+  <tr>
+    <th width="15%">Entity Name
+    <th width="15%">Entity Nature</th>
+    <th width="40%">Entity and File Naming Rule</th>
+    <th width="20%">Notes</th>
+    <th width="10%">Metrics</th>
+  </tr>
+  <tr>
+    <td valign="top"><b>7-XMLinstance document</b></td>
+    <td valign="top">Standard XML document</td>
+    <td valign="top"><b>&lt;fwkname&gt;&lt;Name&gt;.xml</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>8-XMLtransform script</b></td>
+    <td valign="top">Standard XML transform script</td>
+    <td valign="top"><b>&lt;fwkname&gt;&lt;Name&gt;.xsl</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>9- Web Services messages and portTypes declarations</b></td>
+    <td valign="top">Standard WSDL declaration file</td>
+    <td valign="top"><b>&lt;fwkname&gt;</b><b>&lt;Name&gt;Declarations.wsdl</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized except for the
+      first letter (to keep elements named by a simple noon in lower case).<br>
+      WSDL declaration files must import XML schemas declaration files they
+      depend on.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>10- Web Services bindings and services declarations</b></td>
+    <td valign="top">Standard WSDL service file</td>
+    <td valign="top"><b>&lt;fwkname&gt;</b><b>&lt;Name&gt;Services.wsdl</b></td>
+    <td valign="top">The name should be a descriptive noun or noun phrase, in
+      mixed case with the first letter of each word capitalized except for the
+      first letter (to keep elements named by a simple noon in lower case).<br>
+      WSDL services files must import WSDL declaration files they depend on.<br>
+      &lt;fwkname&gt; is the name of the framework in lowercase letters.</td>
+    <td valign="top">Nb of deviations / Nb of entities</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[<a name="Ref1">1</a>]</td>
+    <td><a href="CAADocNamingRules.htm">CAA V5 Naming Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[<a name="Ref2">2</a>]</td>
+    <td><a href="../CAADocQuickRefs/CAADocFWTrigrams.htm">Trigrams
+      for Frameworks</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[<a name="Ref3">3</a>]</td>
+    <td><a href="CAADocXMLPgRules.htm">CAA V5 XML Coding Rules</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Sep 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

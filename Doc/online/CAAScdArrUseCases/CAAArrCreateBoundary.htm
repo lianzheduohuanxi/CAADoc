@@ -1,0 +1,228 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating an ArrangementBoundary Object</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Arrangement</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating an ArrangementBoundary Object</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create an
+      ArrangementBoundary object under a Product.</p>
+      <p>This macro opens a new Product document and retrieves the <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementBoundaries');return false;"><i>ArrangementBoundaries</i></a>
+      collection from the Root <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a>
+      via the <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementProduct');return false;"><i>ArrangementProduct</i></a>
+      object. It then adds an <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementBoundary');return false;"><i>ArrangementBoundary</i></a>
+      object. Once the <i>ArrangementBoundary</i> object is created, the
+      individual <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementNode');return false;"><i>ArrangementNode</i></a>'s
+      that make up the object are retrieved and the bend radius is applied on
+      them.</p>
+      <p align="center"><img border="0" src="images/CAAArrCreateBoundary.jpg" width="556" height="385"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAArrCreateBoundary is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAArrCreateBoundarySource.htm">CAAArrCreateBoundary.CATScript
+      </a>is located in the CAAScdArrUseCases module. <a href="macros/CAAArrCreateBoundary.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p align="center">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAArrCreateBoundary includes the following steps:</p>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Reference">Obtaining the ArrangementProduct Object and the
+          Associated Movable Object from the Root Product</a></li>
+        <li><a href="#Navigate">Creating the ArrangementBoundary Object under
+          the ArrangementBoundaries Collection Object</a></li>
+        <li><a href="#bound">Modifying Properties (Defining a Rectangular
+          Section, Changing the Visualization Mode and Bend Radii of the Nodes)
+          of the Newly Created ArrangementBoundary object</a></li>
+        <li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <h4><a name="prolog"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">'Create a new product document</font>
+<font color="#0000FF">   Dim </font>objProdDoc       <font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">   Dim </font>objRootProd      <font color="#0000FF"> As </font>Product
+<font color="#0000FF">   Set </font>objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
+<font color="#0000FF">   Set </font>objRootProd     = objProdDoc.Product
+   ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Once the new Product document has been created, fetch the <i>ArrangementProduct</i>
+      and the associated movable object from the root product of the new product
+      document.</p>
+      <h4><a name="Reference"></a>Obtaining the ArrangementProduct Object and
+      the Associated Movable Object from the Root Product</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">'Retrieving Root Product's Relative Axis and Position Information</font>
+<font color="#0000FF">   Dim </font>objMove          <font color="#0000FF"> As </font>Move
+<font color="#0000FF">   Set </font>objMove      = objRootProd.Move
+
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">' Get ArrangementProduct</font>
+<font color="#0000FF">   Dim </font>objArrProd       <font color="#0000FF"> As </font>ArrangementProduct
+<font color="#0000FF">   Set </font>objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <i>ArrangementBoundaries</i> object is a collection object that
+      manages <i>ArrangementBoundary</i> object's under a given <i>ArrangementProduct</i>.
+      The movable object serves as the relative axis for the new <i>ArrangementBoundary</i>
+      object to be created.</p>
+      <h4><a name="Navigate"></a>Creating the ArrangementBoundary Object under
+      the ArrangementBoundaries Collection Object</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   <font color="#008000">' Create ArrangementBoundary under the Root Product</font>
+<font color="#0000FF">   Dim </font>dblBoundaryPoints(75)     <font color="#0000FF"> As </font>Double
+<font color="#0000FF">   Dim </font>dblMathDirection(3)       <font color="#0000FF"> As </font>Double
+<font color="#0000FF">   Dim </font>objArrBoundary            <font color="#0000FF"> As </font>ArrangementBoundary
+
+
+   dblBoundaryPoints(0)   =  300.0
+   dblBoundaryPoints(1)   =  100.0
+   dblBoundaryPoints(2)   =  0.0
+
+   dblBoundaryPoints(3)   =  441.42
+   dblBoundaryPoints(4)   =  158.58
+   dblBoundaryPoints(5)   =  1.25
+
+ ... 
+
+   dblBoundaryPoints(69)  =  158.58
+   dblBoundaryPoints(70)  =  158.58
+   dblBoundaryPoints(71)  =  28.75
+
+   dblBoundaryPoints(72)  =  300.0
+   dblBoundaryPoints(73)  =  100.0
+   dblBoundaryPoints(74)  =  30
+
+
+   dblMathDirection(0) = 1.0
+   dblMathDirection(1) = 0.0
+   dblMathDirection(2) = 0.0
+
+<font color="#0000FF">   Set </font>objArrBoundary             = objArrProd.ArrangementBoundaries.AddBoundary(objMove, _
+                                                                                 dblBoundaryPoints, _
+                                                                                 dblMathDirection)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The newly created <i>ArrangementBoundary</i> object is visualized as a
+      curve and does not have any section definition. In addition the nodes do
+      not have any bend radius. We therefore define a rectangular section and
+      change the visualization mode to solid.</p>
+      <h4><a name="bound"></a>Modifying Properties (Defining a Rectangular
+      Section, Changing the Visualization Mode and Bend Radii of the Nodes) of
+      the Newly Created ArrangementBoundary Object</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   objArrBoundary.SectionType     = CatArrangementRouteSectionRectangular
+   objArrBoundary.SectionWidth    = 10.0
+   objArrBoundary.SectionHeight   = 10.0 
+   objArrBoundary.VisuMode        = CatArrangementRouteVisuModeSolid
+
+   <font color="#008000">' Define Bend Radius of Nodes</font>
+<font color="#0000FF">   Dim </font>intK <font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   For </font>intK = 1<font color="#0000FF"> To </font>objArrBoundary.Nodes.Count
+   objArrBoundary.Nodes.Item(intK).BendRadius = 10.0
+<font color="#0000FF">   Next</font>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Here we define a rectangular section and change the visualization mode
+      to <code>CatArrangementRouteVisuModeSolid</code>. A bend radius of 10 mm
+      is then applied to each of the <i>ArrangementNodes</i> that makes up the
+      object.</p>
+      <h4><a name="Epilog"></a>Epilog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+ End Sub</pre>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create an <i>ArrangementBoundary</i> object
+within a product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementBoundaries');return false;">ArrangementBoundaries</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;">Product</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementProduct');return false;">ArrangementProduct</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementBoundary');return false;">ArrangementBoundary</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementNode');return false;">ArrangementNode</a>.</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

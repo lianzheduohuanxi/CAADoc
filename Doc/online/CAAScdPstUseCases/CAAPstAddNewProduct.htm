@@ -1,0 +1,225 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding a New Product</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Product Structure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Adding a New Product</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to create a simple product
+      structure containing two parts. It assumes that the CATDocView has been
+      initialized so that it references the path leading to the two part
+      documents, CAAPstPad1_1.CATPart and CAAPstPad1_2.CATPart</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>The macro creates a new Product document and retrieves its root
+      product. Next, it retrieves the product collection under the root product.
+      A new product is then added to which is associated a new master shape
+      representation from an existing external Part document. This same process
+      is repeated for a second new product.</p>
+      <p>Here is an image of the resulting product structure:</p>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="100%"><img border="0" src="image/CAAPstAddNewProduct.jpg" height="323"></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAAPstAddNewProduct is launched in CATIA [<a href="#References">1</a>].
+      No previously opened document is needed.</p>
+      <p><a href="CAAPstAddNewProductSource.htm" target="Source">CAAPstAddNewProduct.CATScript
+      </a>is located in the CAAScdPstUseCases module. <a href="macros/CAAPstAddNewProduct.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAAPstAddNewProduct includes five steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#FirstNewProduct">Adding a New Product</a></li>
+        <li><a href="#FirstMasterShape">Assigning a Master Shape Representation
+          to the New Product</a></li>
+        <li><a href="#SecondNewProduct">Adding a Second New Product</a></li>
+        <li><a href="#SecondMasterShape">Assigning a Master Shape Representation
+          to the Second New Product</a></li>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+      <font color="#008000">'Create a new product document by adding a document with the Product type
+      'to the document collection of the CATIA application. 
+      </font><font color="#0000FF">Dim</font> oProductDoc <font color="#0000FF">As</font> Document
+      <font color="#0000FF">Set</font> oProductDoc = CATIA.Documents.<b>Add</b>(&quot;Product&quot;)
+
+      <font color="#008000">'Retrieve the root product.</font>
+      <font color="#0000FF">Dim</font> oRootProduct <font color="#0000FF">As</font> Product
+      <font color="#0000FF">Set</font> oRootProduct = oProductDoc.Product
+
+      <font color="#008000">'Declare the root product's part number and name.</font>
+      oRootProduct.PartNumber = &quot;Root&quot;
+      oRootProduct.Name = &quot;The_Root_Product&quot;
+
+      <font color="#008000">'Retrieve the product's collection under the root product.</font>
+      <font color="#0000FF">Dim</font> oRootChildren <font color="#0000FF">As</font> Products
+      <font color="#0000FF">Set</font> oRootChildren = oRootProduct.Products 
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A new Product document is created using the <code>Add</code> method of
+      the documents collection (<i>Documents </i>object). Next, the root product
+      of the document is retrieved using the <code>Product</code> property of
+      the <i>ProductDocument </i>object. A Part number and name are assigned to
+      the root product.&nbsp; Finally, the product's collection is retrieved
+      using the <code>Products</code> property of the <i>Product </i>object. New
+      Products within this collection will later be added to construct the
+      product structure.&nbsp;</p>
+      <h4><a name="FirstNewProduct"></a>Adding a New Product&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+      <font color="#008000">'Add a new product to the collection. This adds both a product reference
+      'and a product component.
+      </font><font color="#0000FF">Dim</font><font color="#008000"> </font>oChildProduct1<font color="#008000"> </font><font color="#0000FF">As</font><font color="#008000"> </font>Product
+      <font color="#0000FF">Set</font> oChildProduct1 = oRootChildren.<b>AddNewProduct</b>(&quot;Child_1_Type&quot;)
+
+      <font color="#008000">'Declare the part number and name for this product.</font>
+      oChildProduct1.PartNumber = &quot;Child_001&quot;
+      oChildProduct1.Name = &quot;1st_Child&quot;
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A new product is added to the collection using the <code>AddNewProduct</code>
+      method of the <i>Products </i>object. The new product is then assigned a
+      part number and name which will allow its identification in the product
+      structure tree.</p>
+      <h4><a name="FirstMasterShape"></a>Assigning a Master Shape Representation
+      to the New Product</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">'Add a representation to this product using an existing part and reframe
+    'the viewer to display the part completely.
+    </font>oChildProduct1.<b>AddMasterShapeRepresentation</b> sDocPath &amp; &quot;CAAPstPad1_1.CATPart&quot;
+    CATIA.ActiveWindow.ActiveViewer.<b>Reframe</b>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Using the <code>AddMasterShapeRepresentation</code> method of the <i>Product
+      </i>object, an existing Part from an external Part document is added to
+      the product. The Part document is found in the documentation installation
+      path which has already been stored in the <code>sDocPath</code> variable.
+      In order to ensure that the visualization will be adequate, the viewer
+      must be reframed.&nbsp;</p>
+      <h4><a name="SecondNewProduct"></a>Adding a Second New Product&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+      <font color="#008000">'Add another product to the root product's collection.  This adds both
+      'a product reference and a product component.
+      </font><font color="#0000FF">Dim</font> oChildProduct2 <font color="#0000FF">As</font> Product
+      <font color="#0000FF">Set</font> oChildProduct2 = oRootChildren.AddNewProduct(&quot;Child_2_Type&quot;)
+<font color="#008000">
+
+      'Declare the part number and name for this product.
+      </font>oChildProduct2.PartNumber = &quot;Child_002&quot;
+      oChildProduct2.Name = &quot;2nd_Child&quot;
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A second new product is added to the collection in the same way as the
+      first. The new product is also assigned a part number and name which will
+      allow its identification in the product structure tree.</p>
+      <h4><a name="SecondMasterShape"></a>Assigning a Master Shape
+      Representation to the Second New Product</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">'Add a representation to this product using an existing part and reframe
+    'the viewer to display the part completely.
+    </font>oChildProduct2.<b>AddMasterShapeRepresentation</b> sDocPath &amp; &quot;CAAPstPad1_2.CATPart&quot;
+    CATIA.ActiveWindow.ActiveViewer.<b>Reframe</b>()
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Using the <code>AddMasterShapeRepresentation</code> method of the <i>Product
+      </i>object, another existing Part from a second external Part document is
+      added to the product and the viewer is reframed.</p>
+    </td>
+  </tr>
+</table>
+<! ---------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a simple product structure containing
+two parts. Specifically, it has illustrated using:</p>
+<ul>
+  <li>The <code>Add</code> method of the <font size="2"><i>Documents </i>object
+    to create a new Product document.</font></li>
+  <li>The <code>Product</code> property of the <i>ProductDocument </i>object to
+    retrieve the root product of the document.</li>
+  <li>The <code>Products</code> property of the <i>Product</i> object to
+    retrieve the product collection.</li>
+  <li>The <code>AddNewProduct</code> method<font size="2"> of the <i>Products</i>
+    object to add a new product to the collection.</font></li>
+  <li>The <code>AddMasterShapeRepresentation</code> method<font size="2"> of the
+    <i>Product</i> object to add a new part under an existing product.</font></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

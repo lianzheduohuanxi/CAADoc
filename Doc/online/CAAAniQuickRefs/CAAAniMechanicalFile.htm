@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <title>Mechanical File</title>
+    <meta name="vs_showGrid" content="True">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+      <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+      </script>
+  </head>
+  <body>
+    <table width="100%">
+      <tr>
+        <td valign="top">
+          <h1>Analysis Solution</h1>
+        </td>
+        <td valign="top">
+          <h2>Analysis Modeler</h2>
+        </td>
+        <td rowspan="2" align="right" valign="top">
+          <h3><a name="Top"></a>Mechanical File</h3>
+          <p><em>The physic's dictionary inside CATIA</em></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="quick" colspan="2">Quick Reference</td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <table class="abstract">
+      <tr>
+        <td>
+          <h3>Abstract</h3>
+          <p>This article describes the way all physical types are defined inside the 
+            analysis modeler. The intent of this dictionary is to define a physics 
+            independent of the solver that is used. This allows to have standard definition 
+            for data exchange and also coupling of analysis kind.</p>
+          <ul>
+            <li>
+              <b><a href="#M">The "Mechanical File"</a></b></li>
+			<li>
+              <b><a href="#ProcessMechanical">The declaration of new physical 
+				types : PROCESS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b>
+				<font color="#800080"><b>NEW R18</b></font></li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <p><a name="M"></a>All the physical types are defined in the "Mechanical" File. 
+      This file is delivered with standard CATIA installation in XML language 
+      (extensible markup language). For general rules and recommendation about XML 
+      consideration inside CAAV5, refer to <A href="#[1]" name="Ref1">[1]</A>.
+    </p>
+    <P>
+      For development purpose, you can&nbsp;extend this file. In order to be 
+      completed, the standard dictionary is delivered inside the CAA analysis 
+      documentation under the "<STRONG>CAAAniTechArticles.doc\PhysicalTypes</STRONG>" 
+      directory, with an 
+		<a href="../CAAAniTechArticles/PhysicalTypes/HTML/Mechanical.htm">HTML</a> view. Remember that usage of this&nbsp;physical types 
+      dictionary extension functionality&nbsp;is limited to development phases. The 
+      license associated to development tools is requested while loading the extended 
+      XML file.
+    </P>
+    <p>The steps to respect to extend the physical types dictionary are the 
+      following:</p>
+    <ul>
+      <li>
+        Copy the <STRONG>Mechanical.xml</STRONG> file from the documentation to your 
+        development framework in the "<b>CNext\reffiles\SIM</b>" directory.
+        You can also use the XML version that is provided in the CATIARuntime 
+        installation. This is located in
+      <table id="table3">
+  <tr>
+    <td><b>Windows</b></td>
+    <td><code><i>InstallRootDirectory</i>\intel_a\reffiles\SIM\<i>CATIALevel</i>\</code></td>
+  </tr>
+  <tr>
+    <td><b>Unix</b></td>
+    <td><code><i>InstallRootDirectory</i>/intel_a/reffiles/SIM/<i>CATIALevel</i>/</code></td>
+  </tr>
+</table>
+<p>where <i> <code><b>InstallRootDirectory</b></code></i> is the directory where the CAA CD-ROM
+is installed, <code><i><b>CATIALevel</b></i> </code>and is the version level you 
+have installed. As example, <code><i><b>CATIALevel</b></i></code> is set to 51700 for V5 
+Release 17.</p>
+      <li>
+        Add a new XML element <STRONG>PhysicalDescriptionPackage</STRONG> in the XML 
+        element <STRONG>PhysicalDescriptionDirectory</STRONG>.
+      <li>
+        Add your new physical types in the <STRONG>PhysicalDescriptionPackage</STRONG>
+      you have created before.
+      <li>
+        Update the CATIA &quot;Run time view&quot;, with the mkCreateRuntimeView command.<li>
+      This new file will be loaded if&nbsp; CATIA detects that you have a development 
+      environment, it means that we will control that you have a development licence 
+      installed. Two ways can be used:
+    
+      <ul>
+        <li>Copy the content of the directory "ProductIC" of your RADE installation to the 
+          "ProductIC" directory of the CATIA installation without replacing existing 
+          files.
+        <li>Or create a new workspace in which you copy the os/code/ProductIC of the CAA 
+            RADE and complete your prerequisite by using the mkGetPreq command with this 
+            new workspace.</li>
+      </ul>
+      <li>
+        Activate CDC licence in the&nbsp; Tools/Option Licencing Menu.</li>
+    </ul>
+    <p>Once your validation is done, send your new physical types to <i>Dassault 
+        Systèmes</i> in order to integrate them inside the standard dictionary with 
+      the next version of CATIA. For this, you must deliver the request in CAA V5 Web 
+      Forum @<a href="#" onclick="javascript:CAAlinkUrl('http://www.caav5.com/');return false;">www.caav5.com</a>. 
+      Remember that new physical types must be understood by other solvers.</p>
+    <p><b>Note
+        <span style="FONT-WEIGHT: 400">that</span></b> since R14 Release, default 
+      installation wizard propose you to install CAA tools and CATIA Runtime in the 
+      same directory. The drawback, if you accept this, is that you will no more be 
+      able to activate the CDC license in Tools/Option. So, prefer to install in 
+      separate directories or is your installation is already done, rename the file <b>os\reffiles\CAARADEProducts.txt</b>
+      that is used to filter CAA product in Tools/Option.
+    </p>
+    <p><b><span style="FONT-WEIGHT: 400">Also, </span>os</b> is the directory 
+      corresponding to your operating system.</p>
+	<h4><a name="ProcessMechanical"></a>Process for declaration of new physical 
+	types on the coming release</h4>
+	<p>If you need to declare new physical types in the official Mechanical File 
+	on the next level of release, you have to follow the following process :</p>
+	<ol>
+		<li>Fill in the following spread sheet where you will have to describe 
+		the new physical types, a scenario of use and some other information.<p>&nbsp;&nbsp;&nbsp; 
+		The template <b>NewPhysicalTypeRequest.xls</b> is located in <b>
+		CAAAniQuickRefs</b><STRONG>.doc</STRONG> directory.&nbsp;&nbsp;&nbsp; </li>
+		<li>Send it to the hotline or to the CAA SIMULIA V5 Partners Support.</li>
+	</ol>
+    <p align="right"><a href="#Top">[Top]</a></p>
+    <HR>
+    <!---------------------------------comment------------------------------------->
+    <H3><A name="References">References</A></H3>
+    <TABLE id="Table2" width="100%">
+      <TR>
+        <TD vAlign="top"><A name="[1]">[1]</A></TD>
+        <TD vAlign="top"><a href="../CAADocTechArticles/CAADocXMLPgRules.htm">CAA 
+            V5 XMLProgramming Rules</A></TD>
+      </TR>
+      <TR>
+        <TD vAlign="top" align="right" colSpan="2">[<A href="#Top">Top</A>]</TD>
+      </TR>
+    </TABLE>
+    <HR>
+    <!---------------------------------comment------------------------------------->
+    <h3><a name="History"></a>History</h3>
+    <table width="100%" id="Table1">
+      <tr>
+        <td valign="top" width="50%">Version: <strong>1</strong> [Fev 2003]</td>
+        <td valign="top" width="50%">Document created</td>
+      </tr>
+      <tr>
+        <td valign="top" width="50%">Version: <strong>2</strong> [Fev 2005]</td>
+        <td valign="top" width="50%">R15</td>
+      </tr>
+      <tr>
+        <td valign="top" width="50%">Version: <strong>3</strong> [Fev 2007]</td>
+        <td valign="top" width="50%">XML version for R17</td>
+      </tr>
+      <tr>
+        <td valign="top" align="right" colspan="2" width="100%">[<a href="#Top">Top</a>]</td>
+      </tr>
+    </table>
+    <hr>
+    <!---------------------------------comment------------------------------------->
+    <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+    <p>&nbsp;</p>
+  </body>
+</html>

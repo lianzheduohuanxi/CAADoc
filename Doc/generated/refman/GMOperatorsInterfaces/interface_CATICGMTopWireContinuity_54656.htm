@@ -1,0 +1,238 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMTopWireContinuity</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMTopWireContinuity"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMTopWireContinuity</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMTopWireContinuity_54656','CATICGMTopWireContinuity','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMTopWireContinuity</b>
+</p>
+<p>
+<b><i>=============================================================================
+
+ CATICGMTopWireContinuity
+ -----------------
+ Compute continuity information at the vertices of a wire body.</i></b><br>
+
+ The wire body has a single wire domain that may be open or closed.
+ Operator returns :
+ - the G order of continuity at each vertex ( G0, G1 or G2 )
+ - the distance gap between incident edges at each vertex
+ - the angular gap between tangents to edges at each vertex, in degrees.
+ - the G2 curvature ratio at each vertex, in ]0..1]
+<ul>
+ <li>A <tt>CATICGMTopWireContinuity</tt> operator is created with the <ttCATCreateTopWireContinuity</tt> global function:
+ It must be directly released with the <tt>Release</tt> method after use. It is not streamable.
+ <li>Optional parameter MeasureMode can be specified before using the <tt>Run</tt> method.
+ <li>The continuity order of the vertex is accessed by the <tt>GetGOrder</tt> method which takes the vertex index as an
+ argument.
+ <li>The position and continuity gaps are accessed by the <tt>GetDeltaPt</tt> and <tt>GetDeltaTg</tt> methods. The ratio
+ <li> of the smaller to the larger curvature is returned by the <tt>GetRatioCv</tt> method.
+</ul></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetDeltaPt(int,CATLength&amp;)"><b>GetDeltaPt</b></a>(int,CATLength&amp;)
+<dd>  GetDeltaPt : returns oL = G0 gap between points at vertex iVertex
+ 
+ <dt> o 
+    <a href="#GetDeltaTg(int,CATAngle&amp;)"><b>GetDeltaTg</b></a>(int,CATAngle&amp;)
+<dd>  GetDeltaTg : returns oA = G1 gap between tangents at vertex iVertex, in degrees
+ 
+ <dt> o 
+    <a href="#GetGOrder(int,CATFrFContinuity&amp;)"><b>GetGOrder</b></a>(int,CATFrFContinuity&amp;)
+<dd>  GetGOrder : returns G continuity order of vertex with rank iVertex
+ 
+ <dt> o 
+    <a href="#GetTolCv()"><b>GetTolCv</b></a>()
+<dd>  <dt> o 
+    <a href="#GetTolPt()"><b>GetTolPt</b></a>()
+<dd>  <dt> o 
+    <a href="#GetTolTg()"><b>GetTolTg</b></a>()
+<dd>  <dt> o 
+    <a href="#NbVertex()"><b>NbVertex</b></a>()
+<dd>  Get the number of vertices in the wire
+ Vertex index ranges from 1 to NbVertex()
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  Run : compute continuity informations on body wire
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetDeltaPt"></a><a name="GetDeltaPt(int,CATLength&amp;)"></a> <dt> o <b>GetDeltaPt</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetDeltaPt</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iVertex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength&amp;')</script> <td><tt>oL</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ GetDeltaPt : returns oL = G0 gap between points at vertex iVertex
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVertex</tt>
+   <dd> rank of vertex. Same as rank in wirebody for open curves,
+ add 1 to index of wire body for closed curves
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  returns 0 if OK, nonzero on error
+</dl>
+</dl>
+<a name="GetDeltaTg"></a><a name="GetDeltaTg(int,CATAngle&amp;)"></a> <dt> o <b>GetDeltaTg</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetDeltaTg</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iVertex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATAngle','CATAngle&amp;')</script> <td><tt>oA</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ GetDeltaTg : returns oA = G1 gap between tangents at vertex iVertex, in degrees
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVertex</tt>
+   <dd> rank of vertex. Same as rank in wirebody for open curves,
+ add 1 to index of wire body for closed curves
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  returns 0 if OK, nonzero on error
+</dl>
+</dl>
+<a name="GetGOrder"></a><a name="GetGOrder(int,CATFrFContinuity&amp;)"></a> <dt> o <b>GetGOrder</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script>  <b>GetGOrder</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iVertex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATFrFContinuity','CATFrFContinuity&amp;')</script> <td><tt>oGOrder</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ GetGOrder : returns G continuity order of vertex with rank iVertex
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iVertex</tt>
+   <dd> rank of vertex. Same as rank in wirebody for open curves, 
+ add 1 to index of wire body for closed curves
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  returns 0 if OK, nonzero on error
+</dl>
+</dl>
+<a name="GetTolCv"></a><a name="GetTolCv()"></a> <dt> o <b>GetTolCv</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetTolCv</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetTolPt"></a><a name="GetTolPt()"></a> <dt> o <b>GetTolPt</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATLength','CATLength')</script>  <b>GetTolPt</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetTolTg"></a><a name="GetTolTg()"></a> <dt> o <b>GetTolTg</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script>  <b>GetTolTg</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="NbVertex"></a><a name="NbVertex()"></a> <dt> o <b>NbVertex</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>NbVertex</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Get the number of vertices in the wire
+ Vertex index ranges from 1 to NbVertex()
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Run : compute continuity informations on body wire
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMTopWireContinuity.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

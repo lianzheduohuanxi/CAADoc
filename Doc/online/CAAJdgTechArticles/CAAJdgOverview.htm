@@ -1,0 +1,433 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATJDialog Overview</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - CATJDialog</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATJDialog Overview</h3>
+      <em>A first glance at JDialog components</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article introduces the CATJDialog framework architecture and
+      components.
+      <ul>
+        <li><a href="#overview"><strong>Overview</strong></a></li>
+        <li><strong><a href="#whatis">What is JDialog?</a></strong></li>
+        <li><a href="#classtree"><strong>The CATJDialog Framework Class Tree</strong></a></li>
+        <li><a href="#classdef"><strong>The CATJDialog Framework Class
+          Definition</strong></a>
+          <ul>
+            <li><a href="#containers">Containers</a>
+              <ul>
+                <li><a href="#CATDocumentManager">CATDocumentManager</a></li>
+                <li><a href="#CATDialogBox">CATDialogBox</a></li>
+                <li><a href="#CATFrame">CATFrame</a></li>
+                <li><a href="#CATWebPartFrame">CATWebPartFrame</a></li>
+                <li><a href="#CATTabPage">CATTabPage</a></li>
+                <li><a href="#CATWizard">CATWizard</a></li>
+              </ul>
+            </li>
+            <li><a href="#components">Components</a>
+              <ul>
+                <li><a href="#basicwidgets">Basic Widgets</a></li>
+                <li><a href="#CATLink">CATLink</a></li>
+                <li><a href="#CATWebLink">CATWebLink</a></li>
+                <li><a href="#CATUploadButton">CATUploadButton</a></li>
+                <li><a href="#CATToolbar">CATToolbar</a></li>
+                <li><a href="#CATTable">CATTable</a></li>
+                <li><a href="#CATTree">CATTree</a></li>
+                <li><a href="#CATViewer">CATViewer</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#remarks"><strong>Remarks on JDialog</strong></a>
+          <ul>
+            <li><a href="#Extendibility">Extendibility</a></li>
+            <li><a href="#Stateless">Stateless architecture</a></li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="overview"></a>Overview</h3>
+<p>You will find below:
+<ul>
+  <li>a short introduction to JDialog,</li>
+  <li>the CATJDialog framework class tree</li>
+  <li>the definition for all the CATJDialog Framework widgets, illustrated
+    whenever possible.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="whatis"></a>What is JDialog?</h3>
+<p>JDialog is a window toolkit written in Java for Web Application Server
+infrastructures (such as J2EE or .NET). It provides a collection of graphical
+components to build advanced User Interfaces (UI). It is able to render the UI
+through several client platforms (standard web browsers or Wintop V5 client) -
+independently from the model.</p>
+<p>Its main characteristics are:</p>
+<ul>
+  <li>HTML Rendering:
+    <ul>
+      <li>Customizable Look &amp; Feel with XML abstract definition</li>
+      <li>Dynamic image generation</li>
+      <li>JavaScript Tree widget</li>
+      <li>Contextual menus</li>
+      <li>3D Viewing (V5 Visualization ActiveX)</li>
+      <li>Multi browser capability (Internet Explorer / Netscape)</li>
+    </ul>
+  </li>
+  <li>UI Modeler:
+    <ul>
+      <li>Java API, fully dynamic, unified callback services</li>
+      <li>XML format for Builder support</li>
+      <li><a href="#Extendibility">Extendable</a>:
+        <ul>
+          <li>Publish aggregate of widgets as a widget</li>
+          <li>Custom widgets with specific rendering</li>
+        </ul>
+      </li>
+      <li><a href="#Stateless">Supports stateless applications</a></li>
+      <li>NLS services: Message catalogs, supports per client locale</li>
+      <li>Recording capability for Application testing
+        <ul>
+          <li>Wizard for TestCase creation</li>
+          <li>Integrated in mkodt</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Platform abstraction
+    <ul>
+      <li>Client side:
+        <ul>
+          <li>Modeler independent from client</li>
+          <li>'Renderer' architecture for multiple client platform support
+            <ul>
+              <li>HTML rendering</li>
+              <li>Wintop V5 client rendering</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Server side:
+        <ul>
+          <li>Support for WebSphere and .NET</li>
+          <li>Applications must be Java and using 1.1 API to run on both</li>
+        </ul>
+      </li>
+      <li>IBM WebSphere Portal Server integration:
+        <ul>
+          <li>Publish JDialog UI as Portlets without application change</li>
+        </ul>
+      </li>
+      <li>V5 Wintop rendering:
+        <ul>
+          <li>XML/HTTP communication between java server side application and V5
+            frame</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="classtree"></a>The CATJDialog Framework Class Tree</h3>
+<p>Below are the CATJDialog Framework classes used in dialog windows and
+arranged in a tree showing the inheritance links.</p>
+<p><img border="0" src="images/ClassTree.gif" width="667" height="446"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="classdef"></a>The CATJDialog Framework Class Definitions</h3>
+<p>The CATJDialog framework includes two main widget types:
+<ol>
+  <li>The <strong>containers</strong> to contain and arrange component objects.</li>
+  <li>The <strong>components</strong> which are atomic objects to fill the
+    containers.</li>
+</ol>
+<p>Every widget offers two kinds of control:</p>
+<ol>
+  <li><b>Notifications</b>: events that may be raised from the user (ex:
+    &quot;ButtonActivated&quot; on a <code>CATButton</code>),</li>
+  <li><b>Properties</b>: properties that may be accessed (get and/or set) from
+    the application (ex: &quot;Title&quot; on a <code>CATButton</code>).</li>
+</ol>
+<p>All widget classes derive from the abstract class <code>CATDialog</code>
+which defines common properties, notifications and services. These include:
+<ul>
+  <li>Properties: name, relationship with other containers, visibility, ...</li>
+  <li>Notifications related to the widget lifecycle: Create, Destroy, NewChild,
+    RemoveChild, ...</li>
+  <li>Services: NLS, search in the component hierarchy, session management, ...</li>
+</ul>
+<p><u>Note</u>: the notification mechanism is implemented by <code>CATCallbackSource</code>
+(from which <code>CATDialog</code> derives). A &quot;callback source&quot;
+exposes a set of notifications that it may send, and provides methods to
+register/unregister to those notifications.</p>
+<p>To have a complete description of the classes interface, refer to the <a href="#" onclick="javascript:CAAlinkJava('catjdialog');return false;">javadoc</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="containers"></a>Containers</h4>
+<p>The containers are used to contain one or several components and to handle
+them as a whole, for example for layout purposes.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="CATDocumentManager"></a>CATDocumentManager (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATDocumentManager');return false;">javadoc</a>)</h5>
+<p>The <b>document manager</b> is the top container (it may be assimilated to
+the top window where the command is executing). It manages commands lifecycle,
+and offers services to <b>activate</b> a new command (replacing the current
+one), to <b>stack</b> a new command (over the current one) and to <b>unstack</b>
+the current command (switching back to the previous one).</p>
+<p><img border="0" src="images/CATDocumentManagerSample.gif" width="829" height="590"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATDialogBox"></a>CATDialogBox (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATDialogBox');return false;">javadoc</a>)</h5>
+<h5>A <b>dialog box</b> is a sub-command with a finite lifetime. When it's
+activated, it temporarily overlaps the running command. It is generally
+destroyed when one of its &quot;OK&quot;, &quot;Apply&quot; or
+&quot;Cancel&quot; buttons is pressed, switching back to the running command.</h5>
+<p><img border="0" src="images/CATDialogBoxSample.gif" width="615" height="420"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATFrame"></a>CATFrame (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATFrame');return false;">javadoc</a>)</h5>
+<div align="left">
+  <table border="0" cellpadding="0">
+    <tr>
+      <td width="469"><img border="0" src="images/CATFrameSample.gif" width="467" height="306"></td>
+      <td valign="top">
+        <p>The <b>frame</b> is designed to group and arrange several widgets. It
+        provides a grid layout implementation that allows advanced layouts.
+        <p><u>Note</u>: it's the only container that allows more than one child.</td>
+    </tr>
+  </table>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATWebPartFrame"></a>CATWebPartFrame (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATWebPartFrame');return false;">javadoc</a>)</h5>
+<div align="left">
+  <table border="0" cellpadding="0">
+    <tr>
+      <td width="296"><img border="0" src="images/CATWebPartFrameSample.gif" width="294" height="190"></td>
+      <td>
+        <p>The <b>web part frame</b> outlines a zone with a frame (and a
+        possible title) for grouping widgets having something in common from the
+        user or from the application point of view. It can contain a single
+        object (this object could be a frame itself containing as many objects
+        as you want).</td>
+    </tr>
+  </table>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATTabPage"></a>CATTabPage (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTabPage');return false;">javadoc</a>)</h5>
+<div align="left">
+  <table border="0" cellpadding="0">
+    <tr>
+      <td width="379"><img border="0" src="images/CATTabPageSample.gif" width="379" height="253"></td>
+      <td>The <b>tab page</b> gathers a set of pages, one page being shown at a
+        time. It presents a tab index at the top to select the page to show. A
+        page is a widget.</td>
+    </tr>
+  </table>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATWizard"></a>CATWizard</h5>
+<p>A <b>wizard</b> is a tool that helps the user accomplish a complex task in a
+step-by-step fashion. Once a step has been filled in with required data, the
+user may switch to the <i>next</i> step, until the <i>end</i> of the wizard (the
+task is then fulfilled), or until the task is <i>cancelled</i>. At any time, the
+user may come <i>back</i> to a previous step to change it. In the wizard
+container, each step is represented by a widget (possibly a frame).
+<p><img border="0" src="images/CATWizardSample.gif" width="777" height="551">
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="components"></a>Components</h4>
+<h5><a name="basicwidgets"></a>Basic widgets</h5>
+<table border="0" cellpadding="0">
+  <tr>
+    <td width="296"><img border="0" src="images/AllWidgetSample.gif" width="421" height="630"></td>
+    <td valign="top">The <b>label</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATLabel');return false;">javadoc</a>)is
+      a static <i>text</i> and/or <i>image</i> used to add information to UI. It
+      may be rendered as a title or a simple text, depending on its <i>level</i>
+      value.
+      <p>&nbsp;</p>
+      <p>The <b>button</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATButton');return false;">javadoc</a>)
+      is a control dedicated to <i>trigger</i> an action. Use the button
+      whenever you want to execute an action as soon as the user requests it.</p>
+      <p>&nbsp;</p>
+      <p>The <b>text field</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTextField');return false;">javadoc</a>)
+      allows character strings to be keyed in. Two kinds of text fields exist:
+      the single-line text field that accepts input on one line only, while the
+      multi-line text field enables you to enter text spanning on several lines.
+      It can be <i>disabled</i> and turned into a <i>password</i> field. Use the
+      text field whenever you want the user to key in a character string without
+      predefined values.</p>
+      <p>&nbsp;</p>
+      <p>The <b>checkbox</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATCheckBox');return false;">javadoc</a>)
+      allows for selecting several options among all the options proposed, that
+      is several can be in the &quot;on&quot; state while the others are in the
+      &quot;off&quot; state. Use checkboxes whenever you propose to the end user
+      a choice among several inclusive options, that is when several options can
+      be selected at the same time.</p>
+      The <b>radiobutton</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATRadioButton');return false;">javadoc</a>)
+      allows for selecting mutually exclusive options, that is one radio button
+      is in the &quot;on&quot; state and all the others are in the
+      &quot;off&quot; state. Use radio buttons whenever you propose to the end
+      user a choice among several exclusive options, that is when one option
+      only can be selected.
+      <p>&nbsp;</p>
+      <p>The <b>combobox</b> (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATComboBox');return false;">javadoc</a>)
+      allows to select a value or an option by selecting a character string from
+      a predefined list. Use the combo whenever you want the user to select a
+      character string in a list.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATLink"></a>CATLink (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATLink');return false;">javadoc</a>)</h5>
+<p>A <b>link</b> is a label (text and/or image) with a specific rendering, that
+is triggered when clicked. Application is notified when such an event occurs.
+Use a link whenever you want to provide <i>navigation</i> behavior to the end
+user.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATWebLink"></a>CATWebLink (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATWebLink');return false;">javadoc</a>)</h5>
+<p>A <b>web link</b> is an external URL (for example to the World Wide Web).
+It's lifecycle is external to the application, the application is never notified
+when it's activated.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATUploadButton"></a>CATUploadButton (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATUploadButton');return false;">javadoc</a>)</h5>
+<p>From the graphical point of view, an <b>upload button</b> looks like a
+button. When it's pressed, an upload dialog box is raised to let the user choose
+a file to download. The application is notified when a file has been selected.</p>
+<p><img border="0" src="images/CATUploadSample.gif" width="780" height="470"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATToolbar"></a>CATToolbar (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATToolBar');return false;">javadoc</a>)</h5>
+<table border="0" cellpadding="0">
+  <tr>
+    <td width="296"><img border="0" src="images/CATToolBarSample.gif" width="447" height="183"></td>
+    <td>The <b>tool bar</b> is designed to gather application tools, represented
+      by icons. It can be either vertical or horizontal.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATTable"></a>CATTable (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTable');return false;">javadoc</a>)</h5>
+<table border="0" cellpadding="0">
+  <tr>
+    <td width="296"><img border="0" src="images/CATTableSample.gif" width="398" height="333"></td>
+    <td>A <b>table</b> is designed to group connected values within a set of
+      finite lists. Cells may contain several <i>data types</i>: text, image,
+      link, checkbox, ... A table allows several <i>selection modes</i>: single
+      or multiple lines and/or cells. It also provides a service for managing <i>popup
+      menu</i> on selected items. When the table model is bigger than a
+      customizable limit, its rendering is <i>fragmented</i> (&quot;next&quot;
+      and &quot;back&quot; arrow buttons).</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATTree"></a>CATTree (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTree');return false;">javadoc</a>)</h5>
+<table border="0" cellpadding="0">
+  <tr>
+    <td width="296"><img border="0" src="images/CATTreeSample.gif" width="324" height="308"></td>
+    <td>A <b>tree</b> is designed to present data having <i>hierarchic</i>
+      relationships. Tree items are represented by an icon and a text. The tree
+      provides a services for managing <i>popup menu</i> on selected items.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h5><a name="CATViewer"></a>CATViewer (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATViewer');return false;">javadoc</a>)</h5>
+<p>The class CATViewer is a 3D viewer widget (based on the V5 Visualization
+ActiveX).</p>
+<p><img border="0" src="images/CATViewerSample.gif" width="800" height="530"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="remarks"></a>Remarks on JDialog</h3>
+<p>As we've seen in the introduction, the JDialog UI Modeler is
+&quot;extendable&quot; and &quot;supports stateless architectures&quot;. Let's
+explain those notions a bit more precisely.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Extendibility"></a>Extendibility</h4>
+<p>The CATJDialog Framework is extendable. That is it can be enriched with new
+widgets. It provides two ways of publishing new widgets:</p>
+<ul>
+  <li><b>User Dialog</b>: this is an aggregate of widgets whose controller class
+    extends CATUserDialog (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATUserDialog');return false;">javadoc</a>),</li>
+  <li><b>Custom Widget</b>: this is a widget developed from scratch with its own
+    renderers.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Stateless"></a>Solutions for stateless applications</h4>
+<p>When developing a web application, memory management is a major concern. The
+JDialog architecture is designed to bring solutions on this issue:</p>
+<ul>
+  <li>Widgets with possible large amounts of data (such as trees, tables and
+    menus) never hold reference on the data itself, but request it only when
+    needed (at render time). This is done through model interfaces, feeding the
+    widget with data (see <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTreeModel');return false;">CATTreeModel</a>,
+    <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATTableModel');return false;">CATTableModel</a>
+    and <a href="#" onclick="javascript:CAAlinkJava('catjdialog', 'CATMenuModel');return false;">CATMenuModel</a>).</li>
+  <li>For tables and trees, there is also a mechanism aimed at optimizing data
+    access. Here is a rendering sequence:
+    <ol>
+      <li>the model is warned that the widget is going to be rendered: it should
+        then initialize its recovery environment (database, servlet, ...),</li>
+      <li>then the model is asked for several data,</li>
+      <li>and finally it is warned that rendering has complete: it should now
+        proceed to its recovery environment cleanup.</li>
+    </ol>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

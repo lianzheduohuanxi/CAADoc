@@ -1,0 +1,423 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Axis Systems</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Solution</h1>
+    </td>
+    <td valign="top">
+      <h2>Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Axis Systems</h3>
+      <em>Using CATIMf3DAxisSystemManager</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the
+      <em> CATIMf3DAxisSystemManager </em>interface.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrAxisSystemManagement Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrAxisSystemManagement Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrAxisSystemManagement</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrAxisSystemManagement Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to use the <em>CATIMf3DAxisSystemManager </em>interface to:</p>
+<ul>
+  <li>Retrieve all the axis systems of a Part document,</li>
+  <li>Set an axis system as the current one,</li>
+  <li>Transform point and vector coordinates in the current axis system.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrAxisSystemManagement Use Case</h3>
+<p>CAAMmrAxisSystemManagement is a use case of the CAAMechanicalModeler.edu framework that
+illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrAxisSystemManagement Do</h4>
+<p>CAAMmrAxisSystemManagement lists all the axis systems of a Part document,
+sets as current an axis system, and transforms the (0,0,0) point and the
+(0,0,1) vector in this current axis system.<p>If you use the <code>CAAAxisSystemCreation_Save</code>
+Part document created by the CAAMmrAxisSystemCreation use case [<a href="#References">1</a>]
+:</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>: The </i>CAAAxisSystemCreation_Save
+Part document</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemMngt3.jpg" width="555" height="444"></td>
+  </tr>
+</table>
+
+<p>The list
+of axis systems is the following: (*)</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemMngt1.jpg"></td>
+  </tr>
+</table>
+<p>You can see in the <a href="#Fig.1">Fig-1</a> that there is no axis system
+with the <img border="0" src="images/CAAMmrAxisSystemMngt4.jpg" width="20" height="22">
+ icon, so there is no axis system as current. The AS_Standard axis system is set as standard:
+(*)</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemMngt2.jpg"></td>
+  </tr>
+</table>
+<p>The origin of the absolute axis system and the z vector are translated in the AS_Standard axis
+system:&nbsp;&nbsp;(*)</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemMngt5.jpg"></td>
+  </tr>
+</table>
+<p>The AS_Standard characteristics are the following:</p>
+
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAMmrAxisSystemMngt6.jpg" width="513" height="185"></td>
+  </tr>
+</table>
+<p>*) It is an extract of the CAAMmrAxisSystemManagement output traces.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrAxisSystemManagement</h4>
+<p>To launch CAAMmrAxisSystemManagement , you will need to set up the build time environment,
+then compile CAAMmrAxisSystemManagement along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">2</a>]. To
+launch the use case execute the command:</p>
+<p>mkrun -c CAAMmrAxisSystemManagement Filename CurrentAS [OutputPath]</p>
+<p>where</p>
+<ul>
+  <li><b> Filename : </b>The complete filename of a Part document containing axis systems.
+    You can use the <code>CAAAxisSystemCreation_Save</code><code> </code>Part
+    document included in the <code>CAAMechanicalModeler.edu/InputData </code>directory&nbsp;
+    <ul>
+      <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+      <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+    </ul>
+  </li>
+  <li><b> CurrentAS :</b><b> </b>The name of an axis system to set as current.
+    With the <code>AbsoluteAS</code> string,                    the absolute axis system becomes the current one.
+    With the <code>CAAAxisSystemCreation_Save</code> Part document as <code>Filename</code>
+    argument, you can test &quot;AS_Standard&quot;, &quot;AS_AxisRotation&quot;,
+    &quot;AS_EulerAngles&quot;, &quot;AS_Explicit&quot; or &quot;AS_AxisStandardOriAxisDir&quot;.</li>
+  <li><b>OutputPath : </b>Directory to save the input Part document which has
+    been modified by the batch. If this string is empty, a <code>CAAAxisSystemManagement</code>
+    Part document is created in the current directory.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrAxisSystemManagement Code</h4>
+<p>The CAAMmrAxisSystemManagement use case is made of one module, CAAMmrAxisSystemManagement.m,&nbsp;
+found in the the CAAMechanicalModeler.edu framework and containing a single
+source program, CAAMmrTestManagement.cpp:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrAxisSystemManagement.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrAxisSystemManagement.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are eight logical steps in CAAMmrAxisSystemManagement:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Retrieves the CATIMf3DAxisSystemManager Interface Pointer">Retrieves
+    the CATIMf3DAxisSystemManager Interface Pointer</a></li>
+  <li><a href="#Displays the Count of Axis Systems">Displays the Count of Axis Systems</a></li>
+  <li><a href="#Finds the Current Axis System">Finds the Current Axis System</a></li>
+  <li><a href="#Finds the Input Axis System in the Axis System List">Retrieves the
+    Input Axis System in the Axis System List</a></li>
+  <li><a href="#Sets the New Current Axis System">Sets the New Current Axis System</a></li>
+  <li><a href="#Transforms the (0,0,0) Point and the (0,0,1) Vector in the Current Axis System">Transforms the (0,0,0)
+    Point and the (0,0,1) Vector in the Current Axis System&nbsp;</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>CAAMmrAxisSystemManagement begins by creating a session, and opening the
+input Part document. Next it retrieves the root container of this Part as a
+pointer to <i>CATIPrtContainer</i>, <code>pIPrtContOnDocument.</code>
+This is the usual sequence for loading a Part document [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieves the CATIMf3DAxisSystemManager Interface Pointer"></a>Retrieves
+the CATIMf3DAxisSystemManager Interface Pointer</h4>
+<p>The <i>CATIMf3DAxisSystemManage</i>r interface is implemented by the root
+container, <code>pIPrtContOnDocument,</code> which is also the specification
+container of the Part document [<a href="#References">4</a>].</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIMf3DAxisSystemManager</b> * pIMf3DAxisSystemManagerOnFeatCont = NULL ;
+  rc = pIPrtContOnDocument-&gt;QueryInterface(IID_CATIMf3DAxisSystemManager,
+                                      (void **) &amp; pIMf3DAxisSystemManagerOnFeatCont);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Displays the Count of Axis Systems"></a>Displays the Count of Axis
+Systems</h4>
+<p><code>pIMf3DAxisSystemManagerOnFeatCont</code> is the <i>CATIMf3DAxisSystemManager</i>
+interface pointer. The <code>GetAxisSystems</code> method retrieves the list of
+axis systems in the Part document.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATLISTV</b>(CATIMf3DAxisSystem_var) ListAxisSystem ;
+  rc = pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>GetAxisSystems</b>(ListAxisSystem);
+  ...
+
+  int nbAS = ListAxisSystem.Size();
+  cout &lt;&lt;&quot;   There are &quot; &lt;&lt; nbAS &lt;&lt; &quot; axis system(s) in the document&quot; &lt;&lt; endl;
+  for ( int i= 1 ; i &lt;= nbAS  ; i++)
+  {
+     CATIMf3DAxisSystem_var spMf3DAxisSystemOnAS= ListAxisSystem[i] ;
+     if ( NULL_var != spMf3DAxisSystemOnAS)
+     {
+        CATIAlias_var spAliasOnCurrentAS = spMf3DAxisSystemOnAS;
+        if ( NULL_var != spAliasOnCurrentAS )
+        {
+            cout&lt;&lt;&quot;      &quot;&lt;&lt; spAliasOnCurrentAS-&gt;GetAlias().ConvertToChar() &lt;&lt; endl;
+        }
+     }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Finds the Current Axis System"></a>Finds the Current Axis System</h4>
+<p>The <code>GetCurrentAxisSystem</code><b> </b>method retrieves the current
+axis system. If the returned value is NULL_var, no axis system is current.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIMf3DAxisSystem_var</b> spMf3DAxisSystemOnCurrentAS ;
+  rc=pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>GetCurrentAxisSystem</b>(spMf3DAxisSystemOnCurrentAS);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Finds the Input Axis System in the Axis System List"></a>Retrieves the
+Input Axis System in the Axis System List</h4>
+<p>The second argument, <code>iArgv[2]</code>, of the use case is the name of an
+axis system to set as current. If this name is &quot;AbsoluteAS&quot;, no axis
+system should be current. The goal of this section is to find this axis system
+in the list of axis systems retrieved in
+the &quot;<a href="#Displays the Count of Axis Systems">Displays the Count of Axis
+Systems</a>&quot; section (<code>ListAxisSystem</code>).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString NewCurrentAxisName = iArgv[2] ;
+  CATUnicodeString AbsoluteAS = &quot;AbsoluteAS&quot; ;
+  CATBoolean Found = FALSE ;
+
+  if ( (AbsoluteAS != NewCurrentAxisName) &amp;&amp; (OldCurrentAxisName != NewCurrentAxisName) )
+  {
+      int i = 1 ;
+      while ( (FALSE == Found) &amp;&amp; ( i&lt;= nbAS ))
+      {
+          CATIMf3DAxisSystem_var spMf3DAxisSystem = ListAxisSystem[i];
+          if ( NULL_var != spMf3DAxisSystem )
+          {
+             CATIAlias_var spAliasOnCurrentAS = spMf3DAxisSystem ;
+             if ( NULL_var != spAliasOnCurrentAS )
+             {
+                if ( NewCurrentAxisName == spAliasOnCurrentAS-&gt;GetAlias() )
+                {
+                    Found = TRUE ;
+                    spMf3DAxisSystemOnCurrentAS = spMf3DAxisSystem;
+                }
+             }
+          }
+          i++ ;
+      }
+      if ( FALSE == Found)
+      {
+         cout &lt;&lt; &quot;   The  &quot; &lt;&lt; NewCurrentAxisName &lt;&lt;&quot; has not been found&quot; &lt;&lt; endl;
+         NewCurrentAxisName = OldCurrentAxisName ;
+      }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">If the input axis system has been found ( <code>Found</code> is
+equal to <code>TRUE</code>), <code>spMf3DAxisSystemOnCurrentAS</code>, a <i>CATIMf3DAxisSystem</i>
+interface pointer declared in the &quot;<a href="#Finds the Current Axis System">Finds the Current Axis System</a>&quot; section, contains the pointer on
+this axis system. <code>OldCurrentAxisName</code> is the name of the axis system
+found in the &quot;<a href="#Finds the Current Axis System">Finds the Current Axis System</a>&quot;
+section. If there is no current axis system, the name is AbsoluteAS.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Sets the New Current Axis System"></a>Sets the Input Axis System as
+Current</h4>
+<p>If the input axis system is &quot;AbsoluteAS &quot;, no axis system should be
+current, the <code>SetCurrentAxisSystem </code>method argument is NULL_var. But,
+if the input axis system has been found, the <code>SetCurrentAxisSystem </code>method
+argument is <code>spMf3DAxisSystemOnCurrentAS</code> the <i>CATIMf3DAxisSystem</i>
+interface pointer on the input axis system.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  if ( AbsoluteAS == NewCurrentAxisName)
+  {
+     rc = pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>SetCurrentAxisSystem</b>(NULL_var);
+     ...
+  }else if ( TRUE == Found )
+  {
+     rc = pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>SetCurrentAxisSystem</b>(spMf3DAxisSystemOnCurrentAS);
+     ...
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Transforms the (0,0,0) Point and the (0,0,1) Vector in the Current Axis System"></a>Transforms the (0,0,0)
+Point and the (0,0,1) Vector in the Current Axis System&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  if ( AbsoluteAS != NewCurrentAxisName)
+  {
+     CATMathPoint PointToConvert (.0,.0,.0) ;
+     CATMathPoint ConvertedPoint;
+     
+     rc = pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>ConvertPointCoordinates</b>(TRUE,
+                                                     PointToConvert,ConvertedPoint);
+     ...
+     
+     CATMathVector VectorToConvert (.0,.0,1.0) ;
+     CATMathVector ConvertedVector;
+     rc = pIMf3DAxisSystemManagerOnFeatCont-&gt;<b>ConvertVectorCoordinates</b>(TRUE,
+                                                     VectorToConvert,ConvertedVector);                                
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first argument of the <code>ConvertPointCoordinates</code><b> </b>and <code>ConvertVectorCoordinates</code>
+methods specifies the coordinates system of conversion: TRUE : the current axis
+system , FALSE the absolute axis system.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The last actions of the use case are the following: save as the Part
+document, close it and delete the session. It is also described in the Creating
+a Load Document use case [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the <i>CATIMf3DAxisSystemManager</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrAxisSystemCreation.htm">Creating Axis Systems</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading
+      a Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">The
+      Structure of the Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Apr 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

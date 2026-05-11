@@ -1,0 +1,64 @@
+<html>
+<head><meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Windows</title>
+</head>
+<body>
+<pre>#ifndef CATIAWindows_IDL
+#define CATIAWindows_IDL
+/*IDLREP*/
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U3
+ */
+// COPYRIGHT DASSAULT SYSTEMES 1997
+#include "CATIACollection.idl"
+#include "CATVariant.idl"
+#include "CatArrangeStyle.idl"
+
+interface CATIAWindow;
+
+    /**
+     * A collection of all the Window objects currently managed by the
+     * application.
+     */
+interface CATIAWindows : CATIACollection
+{
+    /**
+     * Returns a window using its index or its name from the Windows collection.
+     * @param iIndex
+     *   The index or the name of the window to retrieve from
+     *   the collection of windows.
+     *   As a numerics, this index is the rank of the window
+     *   in the collection.
+     *   The index of the first window in the collection is 1, and
+     *   the index of the last window is Count.
+     *   As a string, it is the name you assigned to the window using
+     *   the @href CATIABase#Name property.
+     * @return The retrieved window
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * This example returns in &lt;tt&gt;ThisWindow&lt;/tt&gt; the third window
+     * in the collection, and in &lt;tt&gt;ThatWindow&lt;/tt&gt; the window named
+     * &lt;tt&gt;MyWindow&lt;/tt&gt;.
+     * &lt;pre&gt;
+     * Dim ThisWindow As Window
+     * Set ThisWindow = CATIA.Windows.&lt;font color="red"&gt;Item&lt;/font&gt;(3)
+     * Dim ThatWindow As Window
+     * Set ThatWindow = CATIA.Windows.&lt;font color="red"&gt;Item&lt;/font&gt;("MyWindow")
+     * &lt;/pre&gt;
+     */
+  HRESULT Item(in CATVariant iIndex, out /*IDLRETVAL*/ CATIAWindow oWindow);
+
+#endif</pre>
+</body>
+</html>
+
+
+
+
+
+

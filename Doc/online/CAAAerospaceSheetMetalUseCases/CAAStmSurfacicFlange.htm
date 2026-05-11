@@ -1,0 +1,524 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Modifying a Surfacic Flange</title>
+</head>
+
+<body>
+
+<table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Aerospace Sheet Metal Design</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating and Modifying a Surfacic Flange</h3>
+     <p><em>Using the aerospace sheet metal factory and public interface to create or modify a 
+     Surfacic Flange 
+     feature</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ 
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the <b>CAAStmSurfacicFlange</b> use case. This use 
+     case explains how to create or modify a Surfacic Flange feature.
+     A Surfacic Flange is a feature to stiffen another aerospace sheet metal feature.[<a href="#References">1</a>]</p>
+     <ul>
+       <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+       <li><a href="#UseCase"><b>The CAAStmSurfacicFlange Use Case</b>
+       <ul>
+         <li></a><a href="#What">What Does CAAStmSurfacicFlange Do</a></li>
+         <li><a href="#How">How to Launch CAAStmSurfacicFlange </a></li>
+         <li><a href="#Where">Where to Find the CAAStmSurfacicFlange Code</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#Step">Step-by-Step</a></b></li>
+       <li><b><a href="#InShort">In Short</a></b></li>
+       <li><b><a href="#References">References</a></b></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will You Learn With This Use Case</h3>
+ <p>This use case learns how to use the aerospace sheet metal factory and the Surfacic Flange public interface 
+ to create , display or modify a Surfacic Flange.
+ Its main intent is to introduce important concepts about the way to create or modify
+ aerospace sheet metal features.</p>
+ <h3><a name="UseCase"></a>The CAAStmSurfacicFlange Use Case</h3>
+ <p>CAAStmSurfacicFlange is a use case of the CAAAerospaceSheetMetal.edu framework 
+ that illustrates the creation or modification of a Surfacic Flange feature.</p>
+ <h4><a name="What"></a>What Does CAAStmSurfacicFlange Do</h4>
+ <p>This use case will show you the different steps to create or modify a Surfacic Flange.</p>
+ <p>More precisely this sample :</p>
+ <blockquote>
+   <ul>
+     <li>Read and analyse an input data (.txt) file. </li>
+     <li>Create a session.</li>
+     <li>Open a CATPart document including the necessary geometric input features.</li>
+     <li>Create the Surfacic Flange feature no Surfacic Flange is asked to modify.</li>
+     <li>Set the values of the parameters of the Surfacic Flange.</li>
+     <li>Update the Part.</li>
+     <li>Save the result in a new CATPart document.</li>
+     <li>Close the session.</li>
+   </ul>
+ </blockquote>
+ <p>With this sample, you will have in batch mode the same capabilities than an interactive session.</p>
+ <p>The input data file contains the same fields than the UI Surfacic Flange command panel :</p>
+ <p><img border="0" src="images/SurfacicFlangeTxt.jpg" width="576" height="243"></p>
+ <p>Some samples of input data are provided in <b>Data.d</b> directory.</p>
+ <p>The structure of this file is simple :</p>
+ <p>KEYWORD: when a keyword is encountered a boolean is set to TRUE : the corresponding data is to set.</p>
+ <p>More details about available KEYWORDS are provided in front of the sample source file.</p>
+ <p>i.e. : The input data file above will create a Surfacic Flange with features read in 
+ CAATestCreateFlangeSurf.CATPart :</p>
+ <p><img border="0" src="images/BasicWeb.jpg" width="682" height="536"></p>
+ <p>Remark that the <b>Sheet Metal Parameters</b> feature and the Base Feature 
+ (i.e. : Web.1 ) must exist in the input Part ( see the spec 
+ tree above ).</p>
+ <p>The sample will create a SurfacicFlange with Web.1 as <b>Base Feature</b> and Extrude.1 as
+ <b>Support</b> :</p>
+ <p><img border="0" src="images/SurfacicFlange.jpg" width="660" height="566"></p>
+ <p> </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAAStmSurfacicFlange</h4>
+ <p>To launch CAAStmSurfacicFlange, you will need to set up the build time 
+ environment, then compile CAAStmSurfacicFlange along with its 
+ prerequisites, and set up the run time environment, and then execute the use 
+ case [<a href="#References">2</a>].</p>
+ <p>Launch the use case as follows: </p>
+ <ul>
+   <li>Before launching the use case :
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>Edit the File : CAATestCreateFlangeSurf.txt</pre>
+       <pre>                Customize the fields INPUT and OUTPUT</pre>
+       <pre>                Specify the Paths where the .CATParts files will be retrieved and saved</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>On Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:\CAAStmSurfacicFlange inputDirectory\CAATestCreateFlangeSurf.txt</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>On UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ CAAStmSurfacicFlange inputDirectory/CAATestCreateFlangeSurf.txt</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p>where:</p>
+ <table>
+   <tr>
+     <td><code>inputDirectory</code></td>
+     <td>The directory into which CAATestCreateFlangeSurf.txt<code> is found
+     </code></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAAStmSurfacicFlange Code</h4>
+ <p>The CAAStmSurfacicFlange use case is made of main program located in the 
+ CAAStmSurfacicFlange.m module of the CAAAerospaceSheetMetal.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAerospaceSheetMetal.edu\CAAStmSurfacicFlange.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAerospaceSheetMetal.edu/CAAStmSurfacicFlange.m/</code></td>
+   </tr>
+ </table>
+ <p>The input CAATestCreateSurfacicFlange.txt and CAATestCreateSurfacicFlange.CATPart are proposed in Data.d directory of 
+ CAAAerospaceSheetMetal.edu </p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAAAerospaceSheetMetal.edu\Data.d\SurfacicFlange
+     </code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAAAerospaceSheetMetal.edu/Data.d/SurfacicFlange</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are 7 main steps in CAAStmSurfacicFlange : </p>
+ <ol>
+   <li><a href="#ReadInput">Read and analyse input data</a></li>
+   <li><a href="#Initialize">Create a session</a></li>
+   <li><a href="#Create">Create the SurfacicFlange feature</a></li>
+   <li><a href="#Parameters">Set of the SurfacicFlange parameters</a></li>
+   <li><a href="#Update">Update the Part feature</a></li>
+   <li><a href="#Save">Save the result</a></li>
+   <li><a href="#Close">Close the session</a></li>
+ </ol>
+ <p>We will now comment each of those sections by looking at the code of the 
+ main method of the file CAAStmSurfacicFlange.cpp.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="ReadInput"></a>Read and analyse input data</h4>
+ <p>CAAStmSurfacicFlange sample will first read and analyse an input data file. </p>
+ <p>Note : some services are provided in the class <b>CAAStmServices</b>.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>     ...
+    CAAStmServices CAASmaTools;
+
+    rc = CAASmaTools.AnalyseSurfacicFlangeInputData (InputDataFilePath, CAASurfacicFlangeInput);
+    ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The method AnalyseSurfacicFlangeInputData will read the input data file and store the data in the class CAAStmInputData :
+ i.e : if the method <b>GetSupportGeomToSet () </b> returns TRUE it means that the Support is to set.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+
+class ExportedByCAAStmServices CAAStmInputData
+  {
+  public:
+    
+    CAAStmInputData();
+    virtual ~CAAStmInputData();
+    
+    /**
+     * <b>Role</b>: Methods to get the Input Data.
+     *
+     */
+    
+    // General Data :
+    // --------------
+
+    CATUnicodeString          GetInputPartPath  ();
+    CATUnicodeString          GetOutputPartPath ();
+    CATUnicodeString          GetLengthUnit     ();
+    
+    CATBoolean                GetDisplay ();
+    
+    ...
+
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p> </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Initialize"></a>Create a session and Check the input Part</h4>
+ <p>Create a session and open the CATPart Document : this step has no specificity.
+ It is a call to standard functionalities :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>     
+  ...
+  
+  // create a session
+  char *       pSessionName = "CAAStmSurfacicFlange";
+  CATSession * pSession     = NULL; 
+    
+  rc = Create_Session (pSessionName, pSession); 
+    
+  ...
+  
+  // Load the input Document
+
+  rc = CATDocumentServices::OpenDocument((CAAFlangeInput.InputPartPath).ConvertToChar(), pDocument);
+  
+  ...
+  
+  // Retrieve the Part Feature and the Aerospace Sheet Metal Factory :
+      
+    CATIPrtContainer * piPrtCont = (CATIPrtContainer *) piInit -> GetRootContainer("CATIPrtContainer");
+    
+    if(NULL != piPrtCont)
+      { 
+      spPrtPartSpec = piPrtCont -> GetPart(); 
+    
+      if(NULL_var != spPrtPartSpec)
+        {
+ 
+  ...
+  
+  rc = piPrtCont -> QueryInterface(IID_CATIAerospaceSheetMetalFactory, (void **)& piAslFactory);
+  
+  ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Create"></a>Create the SurfacicFlange feature</h4>
+ <p>Create a SurfacicFlange feature using <b>CreateSurfacicFlange </b>method of 
+	<b>CATIAerospaceSheetMetalFactory </b>: this method will create all internal 
+ features and links between the attributes of the SurfacicFlange. If a modification is asked the Surfacic Flange
+ will be retrieved :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+    ...
+    if(CAAFlangeInput.GetModifFlange())
+      {
+      // Try to retrieve the SurfacicFlange Feature :
+      rc = CAASmaTools.FindFeatureInSpecTree (spPrtPartSpec, CAAFlangeInput.ModifFlangeName, &piFlangeSurfSpec);
+      ...
+      
+    else
+      {
+      // creation of a new SurfacicFlange
+      rc = piAslFactory -> CreateSurfacicFlange ((CATISpecObject *) spPrtPartSpec, &piFlangeSurfSpec);
+      ... 
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Parameters"></a>Set of the SurfacicFlange parameters</h4>
+ <p>Set the SurfacicFlange parameters according to the the values stored in CAAFlangeInput</p>
+ <p>i.e : Support Geometry : set a CATISpecObject pointer</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+      if(SUCCEEDED(rc) && (CAAFlangeInput.GetSupportGeomToSet()))
+        {
+        // Search the Support input specification :
+        CATISpecObject * pSupportSpec = NULL;
+
+        rc = CAASmaTools.FindFeatureInSpecTree (spPrtPartSpec, CAAFlangeInput.SupportGeomName, &pSupportSpec);
+
+        if(SUCCEEDED(rc) && (NULL != pSupportSpec))  
+          {
+          // Set the Support Geometry :
+          rc = piStmFlangeSurf -> SetSupport (pSupportSpec);
+          ...
+</pre>
+     </td>
+   </tr>
+ </table>
+
+ <p>i.e : EOP : Length From OML : Valuate a CATICkeParm pointer</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+      if(SUCCEEDED(rc) && (CAAFlangeInput.GetEOPLengthToSet()))
+        {
+        if((CAAFlangeInput.EOPTypeName) == "Length From OML")
+          {
+          CATICkeParm * piEOPLengthParam = NULL;
+
+          rc = piStmFlangeSurf -> GetEOPLength (&piEOPLengthParam);
+      
+          if(SUCCEEDED(rc) && (NULL != piEOPLengthParam))
+            {
+            // Valuate the Literal ::
+            double MKSVal = CAASmaTools.ConvertLengthToMKS (CAAFlangeInput.LengthUnit,
+                                                            CAAFlangeInput.EOPLengthValue);  // MKS Units
+
+            piEOPLengthParam -> Valuate(MKSVal);
+            ...
+</pre>
+     </td>
+   </tr>
+ </table>
+  
+ <p>i.e : Base Feature orientation : set a CATOrientation</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+      if(SUCCEEDED(rc) && (CAAFlangeInput.GetBaseFeatureOrientToSet()))
+        { 
+        rc = piStmFlangeSurf -> SetBaseFeatureOrient (CAAFlangeInput.BaseFeatureOrient);
+        ...
+</pre>
+     </td>
+   </tr>
+ </table>
+
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Update"></a>Update the Part feature</h4>
+ <p>We suggest to update the Part Feature instead of the SurfacicFlange to force all internal links of the SurfacicFlange to re-build : </p>
+ <p>This step is not necessary if "DISPLAY:" has been chosen.</p>
+ 
+  <p>Before updating the Surfacic Flange it is necessary to check the internal links :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+      // Check Surfacic Flange Internal Structure before updating :
+      if(SUCCEEDED(rc))
+        {
+        rc = piStmFlangeSurf -> CheckInternalStructure ((CATISpecObject *) spPrtPartSpec);
+        ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Update the Part :</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    
+    ...
+    // Update the Part : to ensure all internal Surfacic Flange links to re-build
+
+    rc = CAASmaTools.Update ((CATISpecObject *) spPrtPartSpec);
+    ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Save"></a>Save the result</h4>
+ <p>Save the result Part in a new CATPart file.</p>
+ <p>This step is not necessary if "DISPLAY:" has been chosen.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>    
+     ...
+     // Save the Document 
+    
+     rc = CATDocumentServices::SaveAs (*pDocument, (CAAFlangeInput.OutputPartPath).ConvertToChar());
+     ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Close"></a>Close the session</h4>
+ <p>Release the interface pointers and close the session.</p>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> 
+      ...
+ 
+  // Releases on Interfaces :
+  if(NULL != piAslFactory)
+    {
+    piAslFactory -> Release();
+    piAslFactory = NULL;
+    }
+  if(NULL != piPrtPartSpec)
+    {
+    piPrtPartSpec -> Release();
+    piPrtPartSpec = NULL;
+    }
+  if(NULL != piStmFlangeSurf)
+    {
+    piStmFlangeSurf -> Release();
+    piStmFlangeSurf = NULL;
+    }
+  if(NULL != piFlangeSurfSpec)
+    {
+    piFlangeSurfSpec -> Release();
+    piFlangeSurfSpec = NULL;
+    }
+
+  // Close the document
+  rc = CATDocumentServices::Remove (*pDocument);
+  
+  ...
+  
+  // End session
+  rc = Delete_Session (pSessionName);
+  ...
+</pre>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case has demonstrated the way to create, display or modify a Surfacic Flange feature. </p>
+ <p></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [January 2005]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAerospaceSheetMetalArticles/CAAAerospaceSheetMetalFeatures.htm">An Overview of the Aerospace Sheet Metal Design Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+    <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+<hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+</html>

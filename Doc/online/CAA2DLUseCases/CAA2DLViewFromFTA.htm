@@ -1,0 +1,508 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating 2D Layout Views from FTA Components</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>2D Layout for 3D Design</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a><a href="CAA2DLViewFromFTA.htm">Creating 2D Layout 
+		Views from FTA Components</a></h3>
+     <p>How to create 2DL Views from View or Capture created in 3D Functional 
+		Tolerancing &amp; Annotation Application</td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAA2DLCreate2DLViewFromFTA use case. This use 
+		case explains how to create a 2DL View from a 3D 
+		Functional Tolerancing &amp; Annotation View or FTA Capture.</p>
+		<p>&nbsp;&nbsp;&nbsp; <b>2DL</b> means: 2D Layout for 3D Design, this is 
+		the name of the CATIA application.</p>
+		<p>&nbsp;&nbsp;&nbsp; <b>FTA</b> means: Functional Tolerancing &amp; 
+		Annotation, this is the name of the CATIA application. </p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAA2DLCreate2DLViewFromFTA&nbsp; Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAA2DLCreate2DLViewFromFTA&nbsp; Do</a></li>
+         <li><a href="#How">How to Launch CAA2DLCreate2DLViewFromFTA </a></li>
+         <li><a href="#Where">Where to Find the CAA2DLCreate2DLViewFromFTA&nbsp; Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>This use case is intended to show you how to access callouts in generative 
+ views.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAA2DLCreate2DLViewFromFTA&nbsp; Use Case</h3>
+ <p>CAA2DLCreate2DLViewFromFTA&nbsp; is a use case of the CAADrafting2DLInterfaces.edu framework that 
+ illustrates Drafting2DLInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAA2DLCreate2DLViewFromFTA&nbsp; Do?</h4>
+ <table height="657" width="100%">
+   <tr>
+     <td height="31">
+     <p align="left">Fig. 1: Initial Document</td>
+   </tr>
+   <tr>
+     <td height="14">
+     <p align="center">
+     <a href="images/CAA2DLViewFromFTA1.jpg">
+     <img border="0" src="images/CAA2DLViewFromFTA1.jpg" width="463" height="393"></a></td>
+   </tr>
+   <tr>
+     <td height="14">
+     <p align="center">Fig. 1 represents a part document containing an 
+		Annotation Set with FTA views and FTA captures.</td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p>&nbsp;</p>
+ <table height="640" width="100%">
+   <tr>
+     <td height="14">
+     <p align="center">Fig. 2 The Document modified by the Use Case</td>
+   </tr>
+   <tr>
+     <td height="14">
+     <p align="center">
+     <a href="images/CAA2DLViewFromFTA2.jpg">
+     <img border="0" src="images/CAA2DLViewFromFTA2.jpg" width="458" height="493"></a></td>
+   </tr>
+   <tr>
+     <td height="14">
+     <p align="center">Fig. 2 represents the Part document modified by the 
+     use case program. </p>
+     <p align="center">A Layout Root has been created with the same standard 
+		than FTA Annotation standard, then, two 2DL Views have been created from 
+		the FTA FrontView.1 and FTA Capture.1. A 2DL filter has been created 
+		from the FTA capture filter during the 2DL View creation from the 
+		capture.</td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAA2DLCreate2DLViewFromFTA </h4>
+ <p>To launch CAA2DLCreate2DLViewFromFTA , you will need to set up the build time environment, 
+ then compile CAA2DLCreate2DLViewFromFTA&nbsp; along with its prerequisites, set up the run time 
+ environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>When you launch the use case, pass the full pathname of the CATPart file as 
+ argument. A Part document is delivery in the following path: 
+ CAADrafting2DLInterfaces.edu\CNext\resources\graphic\CAA2DLPartWithFTA.CATPart.
+ </p>
+ <ul>
+   <li>With Windows
+   <table width="100%">
+     <tr>
+       <td>
+       <pre>e:&gt; mkrun -c cmd
+CAA2DLCreate2DLViewFromFTA  c:\...\CAA2DLPartWithFTA.CATPart c:\CAA2DLPartWithFTA.CATPart</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table width="100%">
+     <tr>
+       <td>
+       <pre>$ mkrun -c cmd
+CAA2DLCreate2DLViewFromFTA  /u/users/.../CAA2DLPartWithFTA.CATPart /u/users/.../CAA2DLPartWithFTA.CATPart</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAA2DLCreate2DLViewFromFTA&nbsp; Code</h4>
+ <p>The CAA2DLCreate2DLViewFromFTA&nbsp; use case is made of a single source file named 
+ CAA2DLCreate2DLViewFromFTA .cpp located in the CAA2DLCreate2DLViewFromFTA .m module of the 
+ CAADrafting2DLInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAADrafting2DLInterfaces.edu\CAA2DLCreate2DLViewFromFTA .m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAADrafting2DLInterfaces.edu/CAA2DLCreate2DLViewFromFTA .m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are seven steps in CAA2DLCreate2DLViewFromFTA :</p>
+ <ol>
+   <li><a href="#Opening">Opening a Part Document</a></li>
+   <li><a href="#Accessing">Retrieving the TPS Set</a></li>
+   <li><a href="#Accessing">Retrieving the Part Root from the container</a></li>
+   <li><a href="#Fact2D">Creating the 2DL Layout Root</a></li>
+   <li><a href="#Accessing">Retrieving the FTA Active View and the Capture</a></li>
+   <li><a href="#FactAnn">Creating the 2DL View From FTA components</a></li>
+   <li><a href="#Saving">Saving the Part Document and Exiting</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Opening"></a>Opening a Part Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main(int iArgc, // Number of arguments (2) 
+char** iArgv) // Path to the new *.CATPart document
+{
+  // Check arguments
+  if(3 != iArgc) return 1;
+  const char *pfileNamePart = iArgv[1];
+  const char *pfileNameOut = iArgv[2];
+  
+  // CREATE THE SESSION
+  // ==================
+  CATSession *pSampleSession = NULL;
+  HRESULT hr = ::Create_Session(&quot;SampleSession&quot;,pSampleSession);
+  if (FAILED(hr)) return 1;
+
+
+  // READ THE PART DOCUMENT 
+  // ======================
+  CATDocument *pDocPart = NULL;
+  if( SUCCEEDED(CATDocumentServices::OpenDocument(pfileNamePart, pDocPart)) &amp;&amp; pDocPart)
+  {
+    CATInit_var spInitOnDoc(pDocPart);
+    if(NULL_var != spInitOnDoc)
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for loading a CATIA document [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Accessing"></a><a href="#Accessing">Retrieving the TPS Set</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+// Retrieves the TPS Component: The TPS Set
+//=========================================
+CATITPSDocument *piTPSDoc= NULL;
+CATITPSSet *piTPSSet = NULL;
+if (SUCCEEDED(spInitOnDoc-&gt;QueryInterface(IID_CATITPSDocument,(void **)&amp;piTPSDoc)) &amp;&amp; piTPSDoc)
+{
+  CATITPSList *piTPSList = NULL;
+  if (SUCCEEDED(piTPSDoc-&gt;GetSets(&amp;piTPSList)) &amp;&amp; piTPSList)
+  {
+    unsigned int nbSet;
+    piTPSList-&gt;Count(&amp;nbSet);
+    // Only one set in the Part Document
+    if (nbSet &gt; 0)
+    {
+      CATITPSComponent *piTPSCmp = NULL;
+      if (SUCCEEDED(piTPSList-&gt;Item(0,&amp;piTPSCmp)) &amp;&amp; piTPSCmp)
+      {
+        piTPSCmp-&gt;QueryInterface(IID_CATITPSSet,(void **)&amp;piTPSSet);
+        if (piTPSSet)
+        cout &lt;&lt; &quot; The active TPS Set is correctly retrieved&quot; &lt;&lt; endl;
+        piTPSCmp-&gt;Release();piTPSCmp=NULL;
+      }
+    }
+    piTPSList-&gt;Release();piTPSList=NULL;
+  }
+  piTPSDoc-&gt;Release();piTPSDoc=NULL;
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The Annotation Set is aggregated by the Mechanical Part. CATITPSDocument 
+	allows to retrieve the Annotation Set from the document. When the document 
+	is a CATProduct, several Annotation Sets may be retrieved if the recursive 
+	mode is activated [<a href="#References">3</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Accessing Callouts"></a><a href="#Accessing">Retrieving the Part 
+	Root from the container</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// Retrieves the Part Root from the container
+// ===========================================
+CATIPrtContainer * piPrtCont = (CATIPrtContainer*) spInitOnDoc-&gt;GetRootContainer(&quot;CATIPrtContainer&quot;); 
+if (piPrtCont)
+{
+  // Get the part feature of the container.
+  CATIPrtPart_var spPart = piPrtCont-&gt;GetPart();
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>GetPart method defined in CATIPrtPart interface returns the Mechanical Part.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Fact2D"></a><a href="#Fact2D">Creating the 2DL Layout Root</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// Creates the 2DLayout Root
+// =========================
+if (NULL_var != spPart)
+{
+  CATI2DLayoutLayout *pi2DLayout = NULL;
+  cout &lt;&lt; &quot;call CAT2DLayoutServices::GetLayout2DL&quot; &lt;&lt; endl;
+  CAT2DLayoutServices::GetLayout2DL(spPart,&amp;pi2DLayout);
+
+  if (!pi2DLayout)
+  {
+    cout &lt;&lt; &quot;No 2DL. A 2DL must be created &quot;&lt;&lt; endl;
+    CATListOfCATUnicodeString lstStd;
+    if (SUCCEEDED(CAT2DLayoutServices::GetAvailable2DLayoutStandards(lstStd)))
+    {
+      cout &lt;&lt; &quot;nb std in the environment = &quot; &lt;&lt; lstStd.Size() &lt;&lt; endl;
+      for ( int indice = 1 ; indice &lt;= lstStd.Size() ; indice ++ )
+      cout &lt;&lt; &quot;lstStd (&quot;&lt;&lt; indice &lt;&lt; &quot;) = &quot; &lt;&lt; lstStd[indice].ConvertToChar() &lt;&lt; endl;
+      // The fifth standard defined in the list is choosen (ISO_3D)
+      // The 2DL standard and FTA standard must be identical
+      CATUnicodeString myStd = lstStd[5];
+      cout &lt;&lt; &quot; myStd = &quot; &lt;&lt; myStd.ConvertToChar() &lt;&lt; endl;
+
+      CATListOfCATUnicodeString lstSheetStyle;
+      if (SUCCEEDED(CAT2DLayoutServices::GetListOfSheetStyles(myStd,lstSheetStyle)))
+      {
+        for (int indice = 1 ; indice &lt;= lstSheetStyle.Size() ; indice ++ )
+        cout &lt;&lt; &quot;lstSheetStyle (&quot;&lt;&lt; indice &lt;&lt; &quot;) = &quot; &lt;&lt; lstSheetStyle[indice].ConvertToChar() &lt;&lt; endl;
+      }
+      CATUnicodeString mySheetStyle = lstSheetStyle[2];
+      cout &lt;&lt; &quot; mySheetStyle = &quot; &lt;&lt; mySheetStyle.ConvertToChar() &lt;&lt; endl;
+
+      // Creates the 2DLayuout Root
+      if (SUCCEEDED(CAT2DLayoutServices::CreateLayout2DL(spPart,myStd, mySheetStyle,&amp;pi2DLayout)) &amp;&amp; pi2DLayout)
+        cout &lt;&lt; &quot; The 2DL is correctly created&quot; &lt;&lt; endl;
+    }
+  }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>Only one 2D Layout Root may be created in the Part document. GetLayout 
+	method defined in CAT2DLayoutServices allows to check is a 2D Layout Root 
+	already exists in the document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Getting Geometric"></a><a href="#Accessing">Retrieving the FTA 
+	Active View and the Capture</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// Retrieves the FTA Active View and the Capture
+// =============================================
+CATBaseUnknown *piTPSViewBU = NULL;
+CATBaseUnknown *piTPSCaptureBU1 = NULL;
+CATBaseUnknown *piTPSCaptureBU2 = NULL;
+
+if (piTPSSet)
+{
+  CATITPSView *piTPSView = NULL; 
+  piTPSSet-&gt;GetActiveView(&amp;piTPSView);
+  if (piTPSView)
+  {
+    piTPSView-&gt;QueryInterface(IID_CATBaseUnknown,(void **)&amp;piTPSViewBU);
+    piTPSView-&gt;Release();piTPSView=NULL;
+    cout &lt;&lt; &quot; The active TPS View is correctly retrieved&quot; &lt;&lt; endl;
+  }
+  CATITPSCaptureList *piTPSCaptList = NULL;
+  piTPSSet-&gt;GetCaptures (&amp;piTPSCaptList);
+  piTPSSet-&gt;Release();piTPSSet=NULL;
+  if (piTPSCaptList)
+  {
+    unsigned int nbCapt;
+    piTPSCaptList-&gt;Count(&amp;nbCapt);
+    // there is at least one capture in the Part Document
+    if (nbCapt &gt; 0)
+    {
+      CATITPSCapture *piTPSCapture = NULL;
+      if (SUCCEEDED(piTPSCaptList-&gt;Item(0,&amp;piTPSCapture)) &amp;&amp; piTPSCapture)
+      {
+        piTPSCapture-&gt;QueryInterface(IID_CATBaseUnknown,(void **)&amp;piTPSCaptureBU1);
+        cout &lt;&lt; &quot; The first capture is correctly retrieved&quot; &lt;&lt; endl;
+        piTPSCapture-&gt;Release();piTPSCapture=NULL;
+      }
+      if (SUCCEEDED(piTPSCaptList-&gt;Item(1,&amp;piTPSCapture)) &amp;&amp; piTPSCapture)
+      {
+        piTPSCapture-&gt;QueryInterface(IID_CATBaseUnknown,(void **)&amp;piTPSCaptureBU2);
+        cout &lt;&lt; &quot; The 2nd capture is correctly retrieved&quot; &lt;&lt; endl;
+        piTPSCapture-&gt;Release();piTPSCapture=NULL;
+      }
+    }
+    piTPSCaptList-&gt;Release();piTPSCaptList=NULL;
+  }
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <h4><a name="FactAnn"></a><a href="#FactAnn">Creating the 2DL View From FTA 
+	components</a></h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...</pre>
+		<pre>// Retrieves the 2DL Sheet
+// =======================
+if (pi2DLayout)
+{
+  CATI2DLayoutSheet *pi2DLSheet = NULL;
+  pi2DLayout-&gt;GetActiveSheet(&amp;pi2DLSheet);
+  if (pi2DLSheet)
+  {</pre>
+		<pre>     cout &lt;&lt; &quot; The active 2DL Sheet is correctly retrieved&quot; &lt;&lt; endl;</pre>
+		<pre>     double pt1Coord[2] = {20.0,40.0};
+     CATI2DLayoutView *pi2DLayoutView = NULL;
+     cout &lt;&lt; &quot;Start the 2DL view creation from 3D FTA View&quot; &lt;&lt; endl;
+     if (SUCCEEDED(pi2DLSheet-&gt;CreateView2DLFromFTA (piTPSViewBU, pt1Coord, &amp;pi2DLayoutView)))
+     {
+       cout &lt;&lt; &quot;View has been correctly created&quot; &lt;&lt; endl;
+       pi2DLayoutView-&gt;Release();pi2DLayoutView=NULL;
+      }
+      double pt2Coord[2] = {600.0,40.0};
+      CATI2DLayoutView *pi2DLayoutView1 = NULL;
+      cout &lt;&lt; &quot;Start the 2DL view creation from the 1st 3D FTA Capture&quot; &lt;&lt; endl;
+      if (SUCCEEDED(pi2DLSheet-&gt;CreateView2DLFromFTA (piTPSCaptureBU1, pt2Coord, &amp;pi2DLayoutView1)))
+      {
+        cout &lt;&lt; &quot;View has been correctly created&quot; &lt;&lt; endl;
+        pi2DLayoutView1-&gt;Release();pi2DLayoutView1=NULL;
+      }
+      double pt3Coord[2] = {800.0,40.0};
+      CATI2DLayoutView *pi2DLayoutView2 = NULL;
+      cout &lt;&lt; &quot;Start the 2DL view creation from the 2nd 3D FTA Capture&quot; &lt;&lt; endl;
+</pre>
+		<pre>      // This view can not be created because the capture is not associated to a view annotation plane
+      if (SUCCEEDED(pi2DLSheet-&gt;CreateView2DLFromFTA (piTPSCaptureBU2, pt3Coord, &amp;pi2DLayoutView2)))
+      {
+        cout &lt;&lt; &quot;View has been correctly created&quot; &lt;&lt; endl;
+        pi2DLayoutView2-&gt;Release();pi2DLayoutView2=NULL;
+      }
+      else
+        cout &lt;&lt; &quot;The View can not be created&quot; &lt;&lt; endl;
+     }
+     pi2DLSheet-&gt;Release();pi2DLSheet=NULL;
+   }
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The 2D Layout Root aggregates one or several 2DL sheets. A 2DL Sheet 
+	aggregates one 2DL Main View one 2DL Background View. CATI2DLayout sheets 
+	contains methods to create 2DL View. The created 2DL View will be 
+	automatically aggregated by the 2DL Sheet.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Saving"></a>Saving the Document and Exiting</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...
+  // Save the result
+   CATDocumentServices::SaveAs(*pDocPart, (char *)pfileNameOut);
+   CATDocumentServices::Remove (*pDocPart);
+
+  return 0;
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for saving a newly created CATIA 
+ document [<a href="#References">3</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the way to :</p>
+ <ol>
+   <li>Open a Part document.</li>
+   <li>Retrieving the TPS Set </li>
+   <li>Retrieving the Part Root from the container.</li>
+	<li>Retrieving the FTA components from the Annotation Set</li>
+   <li>Creating 2DLayout View from FTA components.</li>
+   <li>Save the document.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Lauching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">
+     Load an existing Document</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[3]</td>
+     <td>
+     <a href="../CAATpiTechArticles/CAATpiTPSOverview.htm">
+		3D Functional Tolerancing &amp; Annotation</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Feb 2007]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Collection</title>
+</head>
+
+<body>
+
+<pre>#ifndef CATIACameras_IDL
+#define CATIACameras_IDL
+/*IDLREP*/
+
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U3
+ */
+// COPYRIGHT DASSAULT SYSTEMES 1997
+
+#include "CATIACollection.idl"
+#include "CATVariant.idl"
+
+interface CATIACamera;
+
+    /**
+     * A collection of all the Camera objects currently attached to a
+     * Document object.
+     * A camera can be created using the @href CATIAViewer#NewCamera method of
+     * the @href CATIAViewer object.
+     * The first seventh cameras of the collection are @href CATIACamera3D
+     * objects and cannot be modified or removed.
+     * They can just be retrieved and used "as is". They store the following
+     * viewpoints whose sight direction is always toward the 3D-axis system
+     * origin:
+     * &lt;dl&gt;  
+     *   &lt;dt&gt;* iso
+     *   &lt;dd&gt;The origin is on a line with (1,1,1) as components with
+     *       positive coordinates
+     *   &lt;dt&gt;* front
+     *   &lt;dd&gt;The origin is on the x axis with a positive x coordinate
+     *   &lt;dt&gt;* back
+     *   &lt;dd&gt;The origin is on the x axis with a negative x coordinate
+     *   &lt;dt&gt;* left
+     *   &lt;dd&gt;The origin is on the y axis with a positive y coordinate
+     *   &lt;dt&gt;* right
+     *   &lt;dd&gt;The origin is on the y axis with a negative y coordinate
+     *   &lt;dt&gt;* top
+     *   &lt;dd&gt;The origin is on the z axis with a positive z coordinate
+     *   &lt;dt&gt;* bottom
+     *   &lt;dd&gt;The origin is on the z axis with a negative z coordinate
+     * &lt;/dl&gt;  
+     * &lt;p&gt;The cameras of the Cameras collection are available using the
+     * dialog box displayed by clicking the View-&gt;Defined Views menu.
+     */
+interface CATIACameras : CATIACollection
+{
+    /**
+     * Returns a camera using its index or its name from the Cameras collection.
+     * @param iIndex
+     *   The index or the name of the camera to retrieve from
+     *   the collection of cameras.
+     *   As a numerics, this index is the rank of the camera
+     *   in the collection.
+     *   The index of the first camera in the collection is 1, and
+     *   the index of the last camera is Count.
+     *   As a string, it is the name you assigned to the camera using
+     *   the @href CATIABase#Name property.
+     * @return The retrieved camera
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * This example retrieves in &lt;tt&gt;ThisCamera&lt;/tt&gt; the ninth camera,
+     * and in &lt;tt&gt;ThatCamera&lt;/tt&gt; the camera named
+     * &lt;tt&gt;MyCamera&lt;/tt&gt; in the camera collection of the active document. 
+     * &lt;pre&gt;
+     * Dim ThisCamera As Camera
+     * Set ThisCamera = CATIA.ActiveDocument.Cameras.&lt;font color="red"&gt;Item&lt;/font&gt;(9)
+     * Dim ThatCamera As Camera
+     * Set ThatCamera = CATIA.ActiveDocument.Cameras.&lt;font color="red"&gt;Item&lt;/font&gt;("MyCamera")
+     * &lt;/pre&gt;
+     */
+    HRESULT Item(in CATVariant iIndex, out /*IDLRETVAL*/ CATIACamera oCamera);
+
+    /**
+     * Removes a camera from the Cameras collection.
+     * @param iIndex
+     *   The index or the name of the camera to remove from
+     *   the collection of cameras.
+     *   As a numerics, this index is the rank of the camera
+     *   in the collection.
+     *   The index of the first camera in the collection is 1, and
+     *   the index of the last camera is Count.
+     *   As a string, it is the name you assigned to the camera using
+     *   the @href CATIABase#Name property.
+     *   You cannot remove the first seventh cameras in the collection.
+     * &lt;/dl&gt;
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * The following example removes the tenth camera and the camera named
+     * &lt;tt&gt;CameraToBeRemoved&lt;/tt&gt; in the camera collection
+     * of the active document.
+     * &lt;pre&gt;
+     * CATIA.ActiveDocument.Cameras.&lt;font color="red"&gt;Remove&lt;/font&gt;(10)
+     * CATIA.ActiveDocument.Cameras.&lt;font color="red"&gt;Remove&lt;/font&gt;("CameraToBeRemoved")
+     * &lt;/pre&gt;
+     */
+    HRESULT Remove(in CATVariant iIndex);
+};
+
+// Interface Name : CATIACameras
+#pragma ID CATIACameras "DCE:80ba682e-7c1b-0000-0280030ba6000000"
+#pragma DUAL CATIACameras
+
+// VB Object Name : Cameras
+#pragma ID Cameras "DCE:80ba6836-fd20-0000-0280030ba6000000"
+#pragma ALIAS CATIACameras Cameras
+
+// Include of forward interfaces
+//#include "CATIACamera.idl"
+
+#endif</pre>
+
+</body>
+
+</html>

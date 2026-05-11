@@ -1,0 +1,29 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Invert the selection.
+'   Assumptions : A CATProduct document should be active and some components selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' Retrieve the Groups collection
+    Dim cGroups As AnyObject
+    Set cGroups = CATIA.ActiveDocument.Product.GetTechnologicalObject("Groups")
+
+    ' Create a group with selected products
+    Dim oGroup As Group
+    Set oGroup = cGroups.AddFromSel
+
+    ' Fill the selection
+    oGroup.FillSelWithInvert
+
+    ' Delete the group
+    cGroups.Remove 1
+
+End Sub

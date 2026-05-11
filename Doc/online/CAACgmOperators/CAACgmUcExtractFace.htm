@@ -1,0 +1,141 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extract a Face from a Solid</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Extract a Face from a Solid</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>You can create a 2D body from a face belonging to a solid. This very 
+		basic operation is illustrated in the CAAGMOperatorsExtractFace use case 
+		of the CAAGMOperatorsInterfaces.edu framework.<br>
+		</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To extract a face from a solid, use the CATICGMTopExtractFace operator in 
+GMOperatorsInterfaces. This operator has to be created using the 
+CATCGMCreateTopExtractFace global function. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsExtractFace.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how to extract a face. This use case creates its own input 
+data.</p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>In this example, a cube is created and the bottom face is extracted.<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Extract Face Input </caption>
+   <tr>
+    <td>
+	<img alt="Extract Face Input" src="images/CGM_extract_face_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMTopExtractFace* pExtractFaceOp = CATCGMCreateTopExtractFace(pGeomFactory, &topData, pFace);
+...
+pExtractFaceOp->Run();
+CATBody* pExtractFaceBody = pExtractFaceOp->GetResult();
+pExtractFaceOp->Release();
+pExtractFaceOp = NULL;
+...
+CATLONG32 ioMaxDim = -1;
+CATBoolean ioHomogeneity = FALSE;
+pExtractFaceBody->GetCellsHighestDimension(ioMaxDim, ioHomogeneity);
+CATLISTP(CATCell) faces;
+pExtractFaceBody->GetAllCells(faces, 2);
+// We expect to obtain a skin body with one face
+if (2 != ioMaxDim || 1 != faces.Size())
+ {
+    ::CATCloseCGMContainer(pGeomFactory);
+    return (1);
+  }
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Extract Face Result </caption>
+   <tr>
+    <td>
+	<img alt="Extract Face Result" src="images/CGM_extract_face_1.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

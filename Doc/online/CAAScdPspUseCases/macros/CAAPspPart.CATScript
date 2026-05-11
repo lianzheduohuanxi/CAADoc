@@ -1,0 +1,317 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspPartConnector, CATIAPspPhysicalProduct
+'  
+'                 
+'                 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct" )
+
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspPart.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+
+    ' Find the top node of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product 
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory
+    
+    Dim objPspPhysicalPrd As PspPhysicalProduct
+    
+    
+    Dim ePspIDLDomainID   As CatPspIDLDomainID    
+    Dim iIdx            As Integer
+
+
+    ePspIDLDomainID = catPspIDLCATPIP            
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( objPspApplication Is Nothing  ) Then
+        strMessage_g = strMessage_g & "Success in getthing objPspApplication" & vbCr      
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...
+    
+    '-----------------------------------------------------------------------
+    ' Get PspPhysicalProduct object
+    '-----------------------------------------------------------------------
+    
+
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) ) Then
+      Dim objLPhysicals     As PspListOfObjects                  
+      Set objPspAppFactory = objPspWorkbench.GetInterface("CATIAPspAppFactory", _
+                                                objPspApplication )      
+    
+      Set objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+      If ( Not ( objLPhysicals Is Nothing ) And _
+         ( objLPhysicals.Count > 0 ) ) Then      
+        Set objPspPhysicalPrd =  objLPhysicals.Item( 1, "CATIAPspPhysicalProduct" )
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+ 
+    
+    '-----------------------------------------------------------------------
+    ' Get ID of the object
+    '-----------------------------------------------------------------------
+
+    
+    Dim objPspPhyID       As PspID
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysicalPrd Is Nothing ) ) Then  
+    
+      Set objPspPhyID = objPspWorkbench.GetInterface("CATIAPspID", _
+                                                    objPspPhysicalPrd )      
+
+      If ( Not (objPspPhyID Is Nothing) ) Then
+        strMessage_g = strMessage_g & "Physical Product object ID =" &  objPspPhyID.GetID & vbCr               
+      End If 
+
+    End If
+
+    Dim objPspPartCntr        As PspPartConnector
+    Dim objLCntrs             As PspListOfObjects
+    
+    If( Not ( objPspPhysicalPrd Is Nothing )) Then
+
+                  
+                     
+      Set objLCntrs = objPspPhysicalPrd.Connectors 
+        
+
+      If ( Not ( objLCntrs Is Nothing ) ) Then       
+        strMessage_g = strMessage_g & _
+          "Number of Part Connectors= " &  objLCntrs.Count & vbCr          
+        
+        '----------------------------------------
+        ' Getting the first PspPartConnector
+        Set objPspPartCntr = objLCntrs.Item (1, "CATIAPspPartConnector")          
+        
+      End If        
+    End if
+
+    '-----------------------------------------------------------------------
+    ' Get PspPartConnector Information
+    '-----------------------------------------------------------------------
+ 
+    Dim objFaceCntr      As  Reference  
+    Dim objAlignCntr     As  Reference  
+    Dim objOrientnCntr   As  Reference  
+    Dim eFaceType        As  CatPspIDLPartConnectorType 
+    Dim eAlignType       As  CatPspIDLPartConnectorType 
+    Dim eClockType       As  CatPspIDLPartConnectorType 
+
+
+    If ( Not ( objPspPartCntr Is Nothing ) ) Then       
+      Dim objRelAxisPrd  As Product
+    
+      Dim dbX            As Double
+      Dim dbY            As Double
+      Dim dbZ            As Double
+
+      Dim objLDbPosition   As PspListOfDoubles
+      Dim objLDbMathPlane  As PspListOfDoubles
+      Dim objLDbAlignDir   As PspListOfDoubles
+      Dim objLDbUpDir      As PspListOfDoubles
+      
+
+      Set objFaceCntr = objPspPartCntr.GetFaceConnector        
+      Set objAlignCntr = objPspPartCntr.GetAlignmentConnector          
+      Set objOrientnCntr = objPspPartCntr.GetOrientationConnector
+
+      eFaceType  = objPspPartCntr.FaceType
+      eAlignType = objPspPartCntr.AlignType
+      eClockType = objPspPartCntr.ClockType
+
+      Set objRelAxisPrd = Nothing
+      
+      Set objLDbPosition = objPspPartCntr.GetPosition (objRelAxisPrd)
+      Set objLDbAlignDir = objPspPartCntr.GetAlignmentDirection( _
+                                                    objRelAxisPrd)
+      Set objLDbUpDir = objPspPartCntr.GetUpDirection (objRelAxisPrd)    
+          
+      Set objLDbMathPlane = objPspPartCntr.GetConnectorMathPlane( _
+                                                     objRelAxisPrd )
+      If ( Not ( objLDbPosition Is Nothing ) ) Then        
+            
+        strMessage_g = strMessage_g & _
+             "Position of the connector:"  & vbCr    
+    
+        dbX = objLDbPosition.Item( 1 )
+        dbY = objLDbPosition.Item( 2 )
+        dbZ = objLDbPosition.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X= " & dbX 
+        strMessage_g = strMessage_g & " ,Y= " & dbY 
+        strMessage_g = strMessage_g & " ,Z= " & dbZ & vbCr                                                   
+
+      End If
+
+      If ( Not ( objLDbAlignDir Is Nothing ) ) Then        
+            
+        strMessage_g = strMessage_g & _
+             "Alignment vector:"  & vbCr    
+    
+        dbX = objLDbAlignDir.Item( 1 )
+        dbY = objLDbAlignDir.Item( 2 )
+        dbZ = objLDbAlignDir.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                   
+
+      End If
+
+      If ( Not ( objLDbUpDir Is Nothing ) ) Then        
+            
+        strMessage_g = strMessage_g & _
+             "Up direction vector:"  & vbCr    
+    
+        dbX = objLDbUpDir.Item( 1 )
+        dbY = objLDbUpDir.Item( 2 )
+        dbZ = objLDbUpDir.Item( 3 )
+        
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+
+      End If
+
+      If ( Not ( objLDbMathPlane Is Nothing ) ) Then        
+            
+        strMessage_g = strMessage_g & _
+             "Connector math plane:"  & vbCr    
+    
+        dbX = objLDbMathPlane.Item( 1 )
+        dbY = objLDbMathPlane.Item( 2 )
+        dbZ = objLDbMathPlane.Item( 3 )
+        
+        strMessage_g = strMessage_g & _
+             "     Plane origin:"  & vbCr    
+        strMessage_g = strMessage_g & "      X= " & dbX 
+        strMessage_g = strMessage_g & " ,Y= " & dbY 
+        strMessage_g = strMessage_g & " ,Z= " & dbZ & vbCr                                                                     
+
+        dbX = objLDbMathPlane.Item( 4 )
+        dbY = objLDbMathPlane.Item( 5 )
+        dbZ = objLDbMathPlane.Item( 6 )
+
+        strMessage_g = strMessage_g & _
+             "     Plane Z-direction vector:"  & vbCr    
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+        
+        dbX = objLDbMathPlane.Item( 7 )
+        dbY = objLDbMathPlane.Item( 8 )
+        dbZ = objLDbMathPlane.Item( 9 )
+
+        strMessage_g = strMessage_g & _
+             "     Plane Y-direction vector:"  & vbCr    
+        strMessage_g = strMessage_g & "      X-dir= " & dbX 
+        strMessage_g = strMessage_g & " ,Y-dir= " & dbY 
+        strMessage_g = strMessage_g & " ,Z-dir= " & dbZ & vbCr                                                                     
+      End If            
+    End If          
+
+    ' -----------------------------------
+    ' Add a new connector
+    ' -----------------------------------
+
+    Dim objNewPspPartCntr        As PspPartConnector
+
+    If( Not ( objPspPhysicalPrd Is Nothing )) Then
+
+      Dim strCtrType As String
+      strCtrType   =  "CATPspMechPartConnector"
+      
+      Set objNewPspPartCntr = objPspPhysicalPrd.AddConnector( _
+                       strCtrType, objFaceCntr,eFaceType, _                            
+                       objAlignCntr, eAlignType, _
+                       objOrientnCntr, eClockType )
+
+      If( Not ( objNewPspPartCntr Is Nothing )) Then
+         strMessage_g = strMessage_g & _
+           "Add a new Part connector OK "  & vbCr          
+
+      End If
+
+    End If
+
+    ' -----------------------------------
+    ' Remove connector
+    ' -----------------------------------
+
+    If( Not ( objPspPhysicalPrd Is Nothing )) Then
+      If( Not ( objNewPspPartCntr Is Nothing )) Then
+        objPspPhysicalPrd.RemoveConnector objNewPspPartCntr
+      End If  
+    End If
+
+   
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+

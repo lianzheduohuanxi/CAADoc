@@ -1,0 +1,342 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIMfBRepFactory</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMfBRepFactory"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIMfBRepFactory</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMfBRepFactory_29784','CATIMfBRepFactory','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMfBRepFactory</b>
+</p>
+<p>
+<b><i> Interface to create BRep features.</i></b><br>
+
+ <b>Role</b>:
+ A BRep feature can be created from symbolic information:
+ the source shape feature <tt>iPrint</tt>, 
+ a key word <tt>iKey</tt> and, if needed, 
+ a profile element <tt>iProfileElement</tt> of a sketch.
+ <br>For example, the face BRep feature associated with the lateral face of Pad.3 
+ extruded from Line.7 is created with 
+ <tt>iPrint=Pad.3</tt>, 
+ <tt>iKey=MfKeyExtrudedFrom</tt>,
+ <tt>iProfileElement=Line.7</tt>.
+ <br>Another example, the face BRep feature associated with the top face of Pad.6 is created with
+ <tt>iPrint=Pad.6</tt>,
+ <tt>iKey=MfKeyTop</tt>,
+ <tt>iProfileElement=NULL_var</tt>.
+ <br>The edge BRep feature is specified with symbolic information related to its two adjacent faces.
+ <br>The vertex BRep feature is specified with symbolic information related to all its adjacent faces.
+ <br><b>Legal values</b>: Key words are:
+ <ul><li><tt>MfKeyNone</tt>,
+ <li><tt>MfKeyTop</tt> available for pad, pocket, rib, slot, stiffener,
+ <li><tt>MfKeyBottom</tt> available for pad, pocket, rib, slot, stiffener,
+ <li><tt>MfKeyExtrudedFrom</tt> available for pad, pocket, rib, slot, stiffener, shaft, groove,
+ <li><tt>MfKeyStart</tt> available for shaft, groove,
+ <li><tt>MfKeyEnd</tt> available for shaft, groove,
+ <li><tt>MfKeyOutsideThickness</tt> available for shell,
+ <li><tt>MfKeyInsideThickness</tt> available for shell.</ul>
+ <dl>
+  <dt> Example: </dt>
+  <dd> <pre class="code"> <pre>
+ +-----------+-----------------------------------------------------------+
+ ! Output    !                       Input                               !   
+ +-----------+-----------------+------------------------+----------------+
+ ! BRep type ! print           ! key                    !  profil        !   
+ +===========+=================+========================+================+
+ ! Face      ! Pad.1           ! MfKeyTop               !  NULL          !  
+ !           +-----------------+------------------------+----------------+
+ !           ! Pad.1           ! MfKeyTop               !  NULL          !  
+ !           +-----------------+------------------------+----------------+
+ !           ! Pad.1           ! MfKeyExtrudedFrom      !  Line.1        !
+ !           +-----------------+------------------------+----------------+
+ !           ! Revol.1         ! MfKeyExtrudedFrom      !  Line.1        !
+ !           +-----------------+------------------------+----------------+
+ !           ! Revol.1         ! MfKeyEnd               !  Line.1        !
+ !           +-----------------+------------------------+----------------+
+ !           ! Revol.1         ! MfKeyStart             !  Line.1        !
+ !           +-----------------+------------------------+----------------+
+ !           ! Sweep.1         ! MfKeyExtrudedFrom      !  Line.1        !
+ !           ! Sweep.1         ! MfKeyExtrudedFrom      !  Line.2        !
+ !           +-----------------+------------------------+----------------+   
+ !           ! Fillet.1        ! MfKeyNone              !  NULL          !
+ !           ! Edge.1          ! MfKeyNone              !  NULL          !
+ !           +-----------------+------------------------+----------------+
+ !           ! Draft.1         ! MfKeyNone              !  NULL          !
+ !           ! Face.1          ! MfKeyNone              !  NULL          !
+ !           +-----------------+------------------------+----------------+
+ !           ! Fillet.1        ! MfKeyNone              !  NULL          !
+ !           ! Face.1          ! MfKeyNone              !  NULL          !
+ !           ! Face.2          ! MfKeyNone              !  NULL          !
+ !           +-----------------+------------------------+----------------+
+ !           ! Fillet.1        ! MfKeyNone              !  NULL          !
+ !           ! Face.1          ! MfKeyNone              !  NULL          !
+ !           ! Face.2          ! MfKeyNone              !  NULL          !
+ !           ! FaceToRemove.3  ! MfKeyNone              !  NULL          !
+ !           +-----------------+------------------------+----------------+         
+ !           ! Shell.1         ! MfKeyNone              !  NULL          !
+ !           ! face.1          ! MfKeyInsideThickness   !  NULL          !
+ !           +-----------------+------------------------+----------------+
+ !           ! Shell.1         ! MfKeyNone              !  NULL          !
+ !           ! face.1          ! MfKeyOutsideThickness  !  NULL          !
+ +-----------+-----------------+------------------------+----------------+
+ ! Edge      ! Pad.1           ! MfKeyTop               !  NULL          !  
+ !           ! Pad.1           ! MfKeyExtrudedFrom      !  Line.1        !  
+ !           +-----------------+------------------------+----------------+
+ !           ! Pad.1           ! MfKeyBottom            !  NULL          !  
+ !           ! Pad.2           ! MfKeyExtrudedFrom      !  Line.3        !  
+ +-----------+-----------------+------------------------+----------------+
+ ! Vertex    ! Pad.1           ! MfKeyTop               !  NULL          !  
+ !           ! Pad.1           ! MfKeyExtrudedFrom      !  Line.3        !  
+ !           ! Pad.1           ! MfKeyExtrudedFrom      !  Line.4        !  
+ !           +-----------------+------------------------+----------------+
+ !           ! Pad.1           ! MfKeyTop               !  NULL          !  
+ !           ! Pad.2           ! MfKeyBottom            !  NULL          !  
+ !           ! Pad.3           ! MfKeyExtrudedFrom      !  Line.4        !  
+ +-----------+-----------------+------------------------+----------------+
+ </pre>
+ </pre></dd>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATIFeaturize','','CATIFeaturize') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateMfFBRep(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)"><b>CreateMfFBRep</b></a>(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)
+<dd>  Creates a face, edge or vertex functional BRep feature from symbolic information.
+ <dt> o 
+    <a href="#CreateMfIntersectionEdge(CATIBRepAccess_var&amp;,CATMfFeaturizeMode,CATBaseUnknown_var&amp;)"><b>CreateMfIntersectionEdge</b></a>(CATIBRepAccess_var&amp;,CATMfFeaturizeMode,CATBaseUnknown_var&amp;)
+<dd>  Creates an intersection edge BRep Feature.
+ <dt> o 
+    <a href="#CreateMfPointOnEdge(CATISpecObject_var&amp;,double,CATIContainer_var&amp;)"><b>CreateMfPointOnEdge</b></a>(CATISpecObject_var&amp;,double,CATIContainer_var&amp;)
+<dd>  Creates a point on edge BRep feature.
+ <dt> o 
+    <a href="#CreateMfPointOnEdge(CATISpecObject_var&amp;,CATMathPoint&amp;,CATIContainer_var&amp;)"><b>CreateMfPointOnEdge</b></a>(CATISpecObject_var&amp;,CATMathPoint&amp;,CATIContainer_var&amp;)
+<dd>  Creates a point on edge BRep feature.
+ <dt> o 
+    <a href="#CreateMfRBRep(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)"><b>CreateMfRBRep</b></a>(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)
+<dd>  Creates a face, edge or vertex relimited BRep feature from symbolic information.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateMfFBRep"></a><a name="CreateMfFBRep(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)"></a> <dt> o <b>CreateMfFBRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIMfBRep','CATIMfBRep_var')</script>  <b>CreateMfFBRep</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)&amp;')</script> <td><tt>iPrint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iKeys</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)&amp;')</script> <td><tt>iProfileElements</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIContainer_var','CATIContainer_var&amp;')</script> <td><tt>iWorkCont</tt><td><tt>=NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a face, edge or vertex functional BRep feature from symbolic information.
+ <br><b>Note:</b>The three first list must have the same size.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPrint</tt>
+   <dd> List of source shape features.
+ </dd>
+    <dt><tt> iKeys</tt>
+   <dd> List of key words.
+ <br><b>Legal values</b>:
+ <tt>MfKeyTop</tt>, <tt>MfKeyBottom</tt>, <tt>MfKeyStart</tt>, <tt>MfKeyEnd</tt>.
+ </dd>
+    <dt><tt> iProfileElements</tt>
+   <dd> List of profile elements.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> Support.
+ </dd>
+    <dt><tt> iWorkCont</tt>
+   <dd> BRep feature is created in <tt>iWorkCont</tt> container.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateMfIntersectionEdge"></a><a name="CreateMfIntersectionEdge(CATIBRepAccess_var&amp;,CATMfFeaturizeMode,CATBaseUnknown_var&amp;)"></a> <dt> o <b>CreateMfIntersectionEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIMfBRep','CATIMfBRep_var')</script>  <b>CreateMfIntersectionEdge</b>(<td> const <script type="text/javascript"> activateLink('CATIBRepAccess_var','CATIBRepAccess_var&amp;')</script> <td><tt>iSelectingObject</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMfFeaturizeMode','CATMfFeaturizeMode')</script> <td><tt>imode</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATBaseUnknown_var','CATBaseUnknown_var&amp;')</script> <td><tt>isupport</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates an intersection edge BRep Feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSelectingObject</tt>
+   <dd> The possible values are: <ul>
+ <li> NULL_var for an empty intersection edge which afterwards must be set with appropriate attributes using </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIMfIntersectionEdge','','CATIMfIntersectionEdge') </script> services.</li> <li> a selecting object corresponding to an edge, and this kind of creation is then equivalent to 
+<script type="text/javascript"> activateLinkAnchor('CATIFeaturize','FeaturizeR','CATIFeaturize.FeaturizeR') </script>.</li></ul> 
+    <dt><tt> imode</tt>
+   <dd> Featurization mode, which should be, at least:<ul>
+ <li><tt>MfFeaturizeIntersection</tt></li>
+ <li><tt>MfFeaturizeC1Intersection</tt></li> 
+ <li><tt>MfFeaturizeC1Intersection|MfFeaturizeSubElement</tt></li></ul>
+ </dd>
+    <dt><tt> isupport</tt>
+   <dd> The explicit support, e.g. the feature of resolution
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The 
+<script type="text/javascript"> activateLinkAnchor('CATIMfIntersectionEdge','','CATIMfIntersectionEdge') </script> BRep Feature.
+</dl>
+</dl>
+<a name="CreateMfPointOnEdge"></a><a name="CreateMfPointOnEdge(CATISpecObject_var&amp;,double,CATIContainer_var&amp;)"></a> <dt> o <b>CreateMfPointOnEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIMfPointOnEdge','CATIMfPointOnEdge_var')</script>  <b>CreateMfPointOnEdge</b>(<td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>iEdge</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iRatio</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIContainer_var','CATIContainer_var&amp;')</script> <td><tt>iWorkCont</tt><td><tt>=NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a point on edge BRep feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdge</tt>
+   <dd> Edge BRep feature.
+ </dd>
+    <dt><tt> iRatio</tt>
+   <dd> Ratio.
+ </dd>
+    <dt><tt> iWorkCont</tt>
+   <dd> BRep feature is created in <tt>iWorkCont</tt> container.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateMfPointOnEdge"></a><a name="CreateMfPointOnEdge(CATISpecObject_var&amp;,CATMathPoint&amp;,CATIContainer_var&amp;)"></a> <dt> o <b>CreateMfPointOnEdge</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIMfPointOnEdge','CATIMfPointOnEdge_var')</script>  <b>CreateMfPointOnEdge</b>(<td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>iEdge</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIContainer_var','CATIContainer_var&amp;')</script> <td><tt>iWorkCont</tt><td><tt>=NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a point on edge BRep feature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iEdge</tt>
+   <dd> Edge BRep feature.
+ </dd>
+    <dt><tt> iPoint</tt>
+   <dd> Point.
+ </dd>
+    <dt><tt> iWorkCont</tt>
+   <dd> BRep feature is created in <tt>iWorkCont</tt> container.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateMfRBRep"></a><a name="CreateMfRBRep(CATLISTV(CATISpecObject_var)&amp;,CATListOfCATUnicodeString&amp;,CATLISTV(CATISpecObject_var)&amp;,CATISpecObject_var&amp;,CATIContainer_var&amp;)"></a> <dt> o <b>CreateMfRBRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATIMfBRep','CATIMfBRep_var')</script>  <b>CreateMfRBRep</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)&amp;')</script> <td><tt>iPrint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iKeys</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLISTV(CATISpecObject_var)','CATLISTV(CATISpecObject_var)&amp;')</script> <td><tt>iElementsDeProfil</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>iSupport</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATIContainer_var','CATIContainer_var&amp;')</script> <td><tt>iWorkCont</tt><td><tt>=NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a face, edge or vertex relimited BRep feature from symbolic information.
+ <br><b>Note:</b>The three first list must have the same size.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPrint</tt>
+   <dd> List of source shape features.
+ </dd>
+    <dt><tt> iKeys</tt>
+   <dd> List of key words.
+ <br><b>Legal values</b>:
+ <tt>MfKeyTop</tt>, <tt>MfKeyBottom</tt>, <tt>MfKeyStart</tt>, <tt>MfKeyEnd</tt>.
+ </dd>
+    <dt><tt> iElementsDeProfil</tt>
+   <dd> List of profile elements.
+ </dd>
+    <dt><tt> iSupport</tt>
+   <dd> Support.
+ </dd>
+    <dt><tt> iWorkCont</tt>
+   <dd> BRep feature is created in <tt>iWorkCont</tt> container.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMfBRepFactory.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

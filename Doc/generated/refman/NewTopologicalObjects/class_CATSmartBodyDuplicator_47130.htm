@@ -1,0 +1,425 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>NewTopologicalObjects Class CATSmartBodyDuplicator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../NewTopologicalObjects.htm" href="../NewTopologicalObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "NewTopologicalObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATSmartBodyDuplicator"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>NewTopologicalObjects <script type="text/javascript" > writeClassCharacteristic(); </script> CATSmartBodyDuplicator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATSmartBodyDuplicator_47130','CATSmartBodyDuplicator','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATSmartBodyDuplicator</b>
+</p>
+<p>
+<b><i> Class defining an operator that duplicates the touched cells (and the cells depending on these
+ touched cells) of a body.</i></b><br>
+
+ <br>This is used in the context of the "smart mechanism".
+ After its creation a CATToplogy is modifiable.
+   It becomes non-modifiable when a body containing it is frozen.
+   The smart duplicator only duplicates the touched cells and 
+   the domains impacted by the touched cells.
+<br>As any operator, the duplicator is created, run, read,and deleted.
+ Sample:
+ <pre>// anEdge is a cell belonging to FrozenBody.
+	anEdge->Touch(FrozenBody);
+ //  Create an empty body to input the duplicated cells
+ CATBody * NewBody= CATGeoCreateBody(GeoFactory);
+	CATSmartBodyDuplicator * SmartDupl=NewBody->CreateSmartDuplicator(FrozenBody);
+	SmartDupl->Run();
+ // Retrieves the mapping between the touched edge and its copy:
+ CATEdge * DuplicatedEdge = (CATEdge *)	(SmartDupl->GetDuplicatedCell(anEdge));
+ // clean the memory
+	delete SmartDupl;</pre>
+ <br>NOTE:
+ <br>Throughout this header documentation, 
+ the term "lying on link" refers to a piece of information which is contained in
+ the cell to be duplicated. This piece of information gives a clue as to whether
+ the duplicated cell is lying on the cell the original cell was lying on (the link).  
+  .</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATSmartBodyDuplicator(CATGeoFactory*,CATTopData&amp;)"><b>CATSmartBodyDuplicator</b></a>(CATGeoFactory*,CATTopData&amp;)
+<dd>  Constructs a body duplicator.
+ <dt> o 
+    <a href="#CATSmartBodyDuplicator(CATGeoFactory*,CATTopData&amp;,CATExtTopOperator*)"><b>CATSmartBodyDuplicator</b></a>(CATGeoFactory*,CATTopData&amp;,CATExtTopOperator*)
+<dd>  Constructs a body duplicator.
+ <dt> o 
+    <a href="#~CATSmartBodyDuplicator()"><b>~CATSmartBodyDuplicator</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AddInitialBody(CATBody*)"><b>AddInitialBody</b></a>(CATBody*)
+<dd>  Adds another body to compute the impacts of a touched CATTopology.
+ <dt> o 
+    <a href="#AddLogFilter(CATGeometricType)"><b>AddLogFilter</b></a>(CATGeometricType)
+<dd> Adds a new type to be logged inside the journal of <tt>this</tt> duplicator.
+ <dt> o 
+    <a href="#GetDuplicateLyingOn()"><b>GetDuplicateLyingOn</b></a>()
+<dd>  Returns the lying on link of a duplicated cell.
+ <dt> o 
+    <a href="#GetDuplicatedBody()"><b>GetDuplicatedBody</b></a>()
+<dd>  Returns the pointer to the body inside which the duplicated cells are created.
+ <dt> o 
+    <a href="#GetDuplicatedCell(CATCell*)"><b>GetDuplicatedCell</b></a>(CATCell*)
+<dd>   Returns the mapping between a touched cell and its copy.
+ <dt> o 
+    <a href="#GetDuplicatedDomain(CATDomain*)"><b>GetDuplicatedDomain</b></a>(CATDomain*)
+<dd>  Returns the mapping between a touched domain and its copy.
+ <dt> o 
+    <a href="#GetFullDuplication()"><b>GetFullDuplication</b></a>()
+<dd>  Returns a value indicating how the edges and vertices are duplicated by <tt>this</tt>.
+ <dt> o 
+    <a href="#GetInitialBodies(CATLISTP(CATBody)&amp;)"><b>GetInitialBodies</b></a>(CATLISTP(CATBody)&amp;)
+<dd>  Retrieves the list of the bodies that are taken into account by <tt>this</tt> duplicator.
+ <dt> o 
+    <a href="#GetJournal()"><b>GetJournal</b></a>()
+<dd>  Returns the pointer to the journal of <tt>this</tt> iterator.
+ <dt> o 
+    <a href="#ResetLogFilter()"><b>ResetLogFilter</b></a>()
+<dd>   Resets the filter on the cells for the journal.
+ <dt> o 
+    <a href="#SetDuplicateLyingOn(CATCGMDuplicateLyingOn)"><b>SetDuplicateLyingOn</b></a>(CATCGMDuplicateLyingOn)
+<dd>   Specifies the lying on link of a duplicated cell.
+ <dt> o 
+    <a href="#SetFullDuplication(short)"><b>SetFullDuplication</b></a>(short)
+<dd>   Specifies how the edges and vertices are to be duplicated by <tt>this</tt>.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATSmartBodyDuplicator"></a><a name="CATSmartBodyDuplicator(CATGeoFactory*,CATTopData&amp;)"></a> <dt> o <b>CATSmartBodyDuplicator</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATSmartBodyDuplicator</b>(<td><script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script> <td><tt>iFactory</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATTopData','CATTopData&amp;')</script> <td><tt>iData</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a body duplicator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFactory</tt>
+   <dd> The factory where objects are created.
+ </dd>
+    <dt><tt> iTopData</tt>
+   <dd> The object defining the CATSoftwareConfiguration and the CATCGMJournalList.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATSmartBodyDuplicator"></a><a name="CATSmartBodyDuplicator(CATGeoFactory*,CATTopData&amp;,CATExtTopOperator*)"></a> <dt> o <b>CATSmartBodyDuplicator</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATSmartBodyDuplicator</b>(<td><script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script> <td><tt>iFactory</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATTopData','CATTopData&amp;')</script> <td><tt>iData</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATExtTopOperator','CATExtTopOperator*')</script> <td><tt>iExtensible</tt><td><tt>=NULL</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a body duplicator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFactory</tt>
+   <dd> The factory where objects are created.
+ </dd>
+    <dt><tt> iTopData</tt>
+   <dd> The object defining the CATSoftwareConfiguration and the CATCGMJournalList.
+ </dd>
+    <dt><tt> iExtensible</tt>
+   <dd> The optional dedicated extension object to delegate the computation (mandatory for polyhedral management)</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATSmartBodyDuplicator"></a><a name="~CATSmartBodyDuplicator()"></a> <dt> o <b>~CATSmartBodyDuplicator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATSmartBodyDuplicator</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AddInitialBody"></a><a name="AddInitialBody(CATBody*)"></a> <dt> o <b>AddInitialBody</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>AddInitialBody</b>(<td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>NewInitialBody</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds another body to compute the impacts of a touched CATTopology.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewInitialBody</tt>
+   <dd> The pointer to another body to take into account.</dd>
+</dl>
+</dl>
+</dl>
+<a name="AddLogFilter"></a><a name="AddLogFilter(CATGeometricType)"></a> <dt> o <b>AddLogFilter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>AddLogFilter</b>(<td><script type="text/javascript"> activateLink('CATGeometricType','CATGeometricType')</script> <td><tt>iTypeToFilter</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+Adds a new type to be logged inside the journal of <tt>this</tt> duplicator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeToFilter</tt>
+   <dd> The type of geometry to add to the log.
+ <br>Sample: After <tt>ResetLogFilter + AddLogFilter(CATEdgeType) </tt>, only edges are logged. 
+ After <tt>ResetLogFilter + AddLogFilter(CATEdgeType) + AddLogFilter(CATShellType)</tt>, 
+              edges and shells are logged.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetDuplicateLyingOn"></a><a name="GetDuplicateLyingOn()"></a> <dt> o <b>GetDuplicateLyingOn</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATCGMDuplicateLyingOn','CATCGMDuplicateLyingOn')</script>  <b>GetDuplicateLyingOn</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the lying on link of a duplicated cell.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The mode of duplication.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt><tt>CatCGMLyingOnNoCopy</tt></dt><dd>A duplicated cell contains no lying on link.
+ <dt><tt>CatCGMLyingOnDuplicated</tt><dd>Lying on links are duplicated on a duplicated cell.
+ <dt><tt>CatCGMLyingOnTransfered</tt><dd>Lying on links are transfered from an original cell to the duplicated cell.
+ </dl>
+</dl>
+</dl>
+<a name="GetDuplicatedBody"></a><a name="GetDuplicatedBody()"></a> <dt> o <b>GetDuplicatedBody</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATBody','CATBody*')</script>  <b>GetDuplicatedBody</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer to the body inside which the duplicated cells are created.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the body, tha must be not frozen.
+</dl>
+</dl>
+<a name="GetDuplicatedCell"></a><a name="GetDuplicatedCell(CATCell*)"></a> <dt> o <b>GetDuplicatedCell</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCell','CATCell*')</script>  <b>GetDuplicatedCell</b>(<td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>iBeforeDuplication</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns the mapping between a touched cell and its copy.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBeforeDuplication</tt>
+   <dd> The pointer to the touched cell.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the corresponding duplicated cell.
+</dl>
+</dl>
+<a name="GetDuplicatedDomain"></a><a name="GetDuplicatedDomain(CATDomain*)"></a> <dt> o <b>GetDuplicatedDomain</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script>  <b>GetDuplicatedDomain</b>(<td><script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script> <td><tt>iBeforeDuplication</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the mapping between a touched domain and its copy.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBeforeDuplication</tt>
+   <dd> The pointer to the touched domain.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the corresponding duplicated domain.
+</dl>
+</dl>
+<a name="GetFullDuplication"></a><a name="GetFullDuplication()"></a> <dt> o <b>GetFullDuplication</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('short','short')</script>  <b>GetFullDuplication</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a value indicating how the edges and vertices are duplicated by <tt>this</tt>.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The duplication mode.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt><tt>0</tt></dt><dd>Default mode: the touched edges and vertices are not duplicated when they bound faces.
+ <dt><tt>1</tt></dt><dd>Full duplication: all the touched cells and their impacts are duplicated.
+ </dl>
+</dl>
+</dl>
+<a name="GetInitialBodies"></a><a name="GetInitialBodies(CATLISTP(CATBody)&amp;)"></a> <dt> o <b>GetInitialBodies</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInitialBodies</b>(<td><script type="text/javascript"> activateLink('CATLISTP(CATBody)','CATLISTP(CATBody)&amp;')</script> <td><tt>ioResult</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the list of the bodies that are taken into account by <tt>this</tt> duplicator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioResult</tt>
+   <dd> The list of the bodies. As part of the class, this list must not be directly deleted.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetJournal"></a><a name="GetJournal()"></a> <dt> o <b>GetJournal</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script>  <b>GetJournal</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the pointer to the journal of <tt>this</tt> iterator.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The pointer to the journal.
+</dl>
+</dl>
+<a name="ResetLogFilter"></a><a name="ResetLogFilter()"></a> <dt> o <b>ResetLogFilter</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>ResetLogFilter</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Resets the filter on the cells for the journal.
+ <br> By default, all cells and domains are logged.
+</dl>
+<a name="SetDuplicateLyingOn"></a><a name="SetDuplicateLyingOn(CATCGMDuplicateLyingOn)"></a> <dt> o <b>SetDuplicateLyingOn</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetDuplicateLyingOn</b>(<td><script type="text/javascript"> activateLink('CATCGMDuplicateLyingOn','CATCGMDuplicateLyingOn')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Specifies the lying on link of a duplicated cell. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The mode of lying on links duplication.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt><tt>CatCGMLyingOnNoCopy</tt></dt><dd>A duplicated cell contains no lying on link.
+ <dt><tt>CatCGMLyingOnDuplicated</tt><dd>Lying on links are duplicated on a duplicated cell.
+ <dt><tt>CatCGMLyingOnTransfered</tt><dd>Lying on links are transfered from an original cell to the duplicated cell.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetFullDuplication"></a><a name="SetFullDuplication(short)"></a> <dt> o <b>SetFullDuplication</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>SetFullDuplication</b>(<td><script type="text/javascript"> activateLink('short','short')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Specifies how the edges and vertices are to be duplicated by <tt>this</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> The mode of duplication.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt><tt>0</tt></dt><dd>Default mode: the touched edges and vertices are not duplicated when they bound faces.
+ <dt><tt>1</tt></dt><dd>Full duplication: all the touched cells and their impacts are duplicated.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATSmartBodyDuplicator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATTopologicalObjects</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

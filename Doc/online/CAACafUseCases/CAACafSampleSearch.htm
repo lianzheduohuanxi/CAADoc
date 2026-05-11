@@ -1,0 +1,1569 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Search Queries</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Search Queries</h3>
+      <em>How to create queries to look for objects in V5 document ?</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and launch queries to look for objects
+      in V5 documents.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACafSearch Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACafSearch Do</a></li>
+            <li><a href="#How">How to Launch CAACafSearch</a></li>
+            <li><a href="#Where">Where to Find the CAACafSearch Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and launch queries to
+look for objects in V5 documents. You will specially learn:</p>
+<ul>
+  <li>To create simple criterion (like in the General tab page of the Search
+    command),</li>
+  <li>To create knowledge types and attributes based criterion (like in the Advanced tab page of the Search command),</li>
+  <li>To create composed criterion (and, or , except operations between two
+    criteria),</li>
+  <li>To create a criterion from a string expressed in NLS or Transformat format,</li>
+  <li>To launch a query,</li>
+  <li>To set the found objects in the PSO (pre-highlight selected object),</li>
+</ul>
+<p>Before getting to the use case itself, it is important to already be familiar
+with the basic notions of the Search. See the referenced article [<a href="#References">1</a>]
+for an overview.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACafSearch Use Case</h3>
+<p>CAACafSearch is a use case of the CAACATIAApplicationFrm.edu framework that
+illustrates InteractiveInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACafSearch Do</h4>
+<p>The CAACafSearch use case is a state command [<a href="#References">2</a>]
+integrated in the frame V5 thanks to an add-in of the General workshop [<a href="#References">3</a>].&nbsp;It
+means that the command is available whatever the open document.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>: The Search Demonstrator Command&nbsp;</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAACafSampleSearchAddin.jpg"></td>
+  </tr>
+</table>
+<p>This command, the <b>Search Demonstrator...</b> command,&nbsp; proposes to
+the end user the choice between pre-defined criteria and several contexts thanks to this
+user interface:</p>
+<table border="0">
+<caption><i><a name="Fig.2">Fig.2</a>: The Search Demonstrator Dialog Box</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAACafSampleSearchDlg.jpg"></td>
+  </tr>
+</table>
+<p>There are height pre-defined criteria which are the following:</p>
+<table border="0">
+<caption><i><a name="Fig.3">Fig.3</a>: The Criterion List</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAACafSampleSearchQueries.jpg"></td>
+    <td valign="middle"><p>All the criteria will be created and deleted at the beginning of the state command.
+      Only the text of the criteria (in NLS or Transformat format) will be kept
+      before its destruction. When the end user clicks the Launch button, an
+      action method is triggered. In this method, a criterion is re-created from
+      the text. A query with this criterion and with the current context is launched.</p>
+      <p>&nbsp;</td>
+  </tr>
+</table>
+<p>There are four contexts which are the following:</p>
+<table border="0" width="630">
+<caption><i><a name="Fig.4">Fig.4</a>: The Context List</i></caption>
+
+  <tr>
+    <td width="386"><img border="0" src="images/CAACafSampleSearchcxt.jpg"></td>
+    <td width="294">Refer to the technical article [<a href="#References">1</a>]
+      for more details about these four contexts.</td>
+  </tr>
+</table>
+<p>When the end user clicks on the Launch button, the count of found elements is
+displayed in the editor and the elements are pre-highlighted.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.5">Fig.5</a>: A Query Result</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAACafSampleSearchResult.jpg"></td>
+    <td valign="top">This picture shows the result for the first query. Three
+      elements are highlighted in the specification tree. In the visible space
+      of the 3D viewer, only the point and the extrude are pre-highlighted.&nbsp;The
+      sketch will appear in&nbsp; pre-highlighted mode if you switch to the
+      hidden space.&nbsp;</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACafSearch</h4>
+<p>To launch CAACafSearch , you will need to set up the build time environment,
+then compile CAACafSearch along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">4</a>].&nbsp;</p>
+<p>But just before launching the execution, edit the CAAApplicationFrame.edu.dico
+interface dictionary file located in the dictionary directory of the
+CAAApplicationFrame.edu framework:</p>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CNext\code\dictionary\</code></td>
+    </tr>
+    <tr>
+      <td>UNIX</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CNext/code/dictionary/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines, and then run mkCreateRuntimeView.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+#CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The two line deal with the General workshop add-in described in the CAAAfrGeneralWksAddin
+use case [<a href="#References">3</a>] located in the CAAAfrGeneralWksAddin.m
+module (CAAApplicationFrame.edu framework)</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:</p>
+<ol>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li><b>File Selection</b> Dialog box click <b>CAACafSearch.CATPart</b>  (*) and
+    click <b>Open</b></li>
+  <li>On the <b>Edit </b>menu, click <b>Search Demonstrator...</b></li>
+  <li>In the&nbsp;<b>Search Demonstrator</b> Dialog box choose a criterion and a
+    context</li>
+  <li>Push <b>Launch</b>&nbsp;</li>
+  <li>Click <b>Close</b></li>
+  <li>On the <b>File </b>menu, click <b>Open</b></li>
+  <li><b>File Selection</b> Dialog box click <b>CAACafSearch.CATProduct</b> (*) and
+    click <b>Open</b></li>
+  <li>On the <b>Edit </b>menu, click <b>Search Demonstrator...</b></li>
+  <li>In the&nbsp;<b>Search Demonstrator</b> Dialog box choose a criterion and a
+    context&nbsp;</li>
+  <li>Push <b>Launch</b>&nbsp;</li>
+  <li>Click <b>Close</b></li>
+</ol>
+<p>(*) The document is located in the InputData&nbsp;directory of the
+CAACATIAApplicationFrm.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\InputData\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/InputData/</code></td>
+  </tr>
+</table>
+<p align="left">where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACafSearch Code</h4>
+<p>The CAACafSearch use case is made of several classes located in
+the CAACafSearch.m module of the CAACATIAApplicationFrm.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAA</code><code>CATIAApplicationFrm</code><code>.edu\CAACafSearch.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAA</code><code>CATIAApplicationFrm</code><code>.edu/CAACafSearch.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>There are three classes:</p>
+<table border="1" cellpadding="3">
+  <tr>
+    <td valign="top">CAACafSearchCmd</td>
+    <td valign="top">The state command which creates the queries and enables the end user
+      to launch them and see the result in the PSO. Only the piece of code in
+      relationship with the Search API will be explained here.</td>
+  </tr>
+  <tr>
+    <td valign="top">CAACafSearchDlg</td>
+    <td valign="top">The dialog box associated with the <i>CAACafSearchCmd</i> state
+      command. This class will be not detailed here.</td>
+  </tr>
+  <tr>
+    <td valign="top">CAACafLaunchNextQueryNotification</td>
+    <td valign="top">The notification sent by the <i>CAACafSearchDlg</i> command when the
+      end user clicks the Launch button. This notification will be received by
+      the <i>CAACafSearchCmd</i> command to valuate a dialog agent [<a href="#References">5</a>]
+      and trigger an action to launch the query and display the result. This class will be
+      not detailed here.</td>
+  </tr>
+</table>
+<p>The pre-requisite code is the add-in of the General workshop. This add-in
+contains the Search Demonstrator command. Refer to the Where to Find the CAAAfrGeneralWksAddin
+Code
+section of the CAAAfrGeneralWksAddin [<a href="#References">3</a>] use case for
+details.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAACafSearch:</p>
+<ol>
+  <li><a href="#Creating the Engine, Context and Services Components">Creating the Engine, Context and Services Components</a></li>
+  <li><a href="#Creating Queries">Creating Criteria</a>
+  </li>
+  <li><a href="#Launching Queries">Launching Queries</a></li>
+  <li><a href="#Displaying Found Objects in PSO">Displaying Found Objects in PSO</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Engine, Context and Services Components"></a>Creating
+the Engine, Context and Services Components</h4>
+
+<p>In the <i>CAACafSearchCmd</i> class constructor, the Search components always
+used during the state command are created. Each component (xxx) is instantiated
+by the <i>CATCreateInstance</i> global function and thanks a CLSID contained in
+the CATIniSearchxxxComponent file [<a href="#References">6</a>]</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATIIniSearchServices.h&quot;
+#include &quot;CATIIniSearchEngine.h&quot;
+#include &quot;CATIIniSearchContext.h&quot;
+#include &quot;<b>CATIniSearch</b>Engine<b>Component</b>.h&quot;
+#include &quot;CATIniSearch<b>Context</b>Component.h&quot;
+#include &quot;CATIniSearch<b>Services</b>Component.h&quot;
+...      
+    ::<b>CATCreateInstance</b>(<b>CLSID_CATIniSearchEngineComponent</b>, NULL, 0, 
+                                     <b>IID_CATIIniSearchEngine</b>,
+                                     (void**)&amp;_pIniSearchEngineOnCurrentEngine);
+
+    ::CATCreateInstance(<b>CLSID_CATIniSearchContextComponent</b>, NULL, 0, 
+                                     <b>IID_CATIIniSearchContext,</b>
+                        (void**)&amp;_pIniSearchContextOnCurrentContext);
+
+
+    ::CATCreateInstance(<b>CLSID_CATIniSearchServicesComponent</b>, NULL, 0, 
+                                     <b>IID_CATIIniSearchServices</b>,
+                                     (void**)&amp;_pIniSearchServices);</pre>
+      <pre>...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first component is the Search engine component. It is handled by <code>_pIniSearchEngineOnCurrentEngine</code>&nbsp;
+a <i>CATIIniSearchEngine</i><b> </b>interface pointer. It will be used in an
+action method of the <i>CAACafSearchCmd</i> to launch the query selected by the
+end user.&nbsp;</p>
+<p>The second component is the Search context component. It is handled by <code>_pIniSearchContextOnCurrentContext</code>
+a <i>CATIIniSearchContext</i><b> </b>interface pointer. Before launching the
+query, the context selected by the end user will be retrieved from the <i>CAACafSearchDlg
+</i>
+class instance. The context component is one parameter of the query, the second being
+the criterion.&nbsp;</p>
+<p>The third component is a component of services. It is handled by <code> _pIniSearchServices</code>
+a <i>CATIIniSearch</i><i>Services</i><b> </b>interface pointer.</p>
+<p>The service's component is used in the <a href="#Creating Queries">Creating
+Queries</a> section for the <a href="#Name Based Query">Name Based Criterion</a>,
+and like the first two components, in the <a href="#Launching Queries">Launching
+Queries</a>  section too.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating Queries"></a>Creating Criteria</h4>
+<p> eight criteria (<a href="#Fig.3">Fig. 3</a>) are created in a method called by the <i>CAACafSearchCmd</i>
+constructor. For each criterion the methodology is the same:&nbsp;</p>
+<ol>
+  <li>The criterion is created</li>
+  <li>Its text is kept in a global list&nbsp;</li>
+  <li>The
+criterion
+is deleted.&nbsp;</li>
+</ol>
+<p> The text is kept for two raisons:&nbsp; to build the contents of the CAACafSearchDlg's
+combo and to re-create the criterion just before <a href="#Launching Queries">launching
+the query.</a></p>
+<p>Simple criteria:</p>
+<ul>
+      <li><a href="#Color and Visibility Based Query">Color Based Criterion</a></li>
+      <li><a href="#Color and Visibility Based Query">Color and Visibility Based
+        Criterion</a></li>
+      <li><a href="#Type and Thickness Line Based Query">Type and Thickness Line
+        Based Criterion</a></li>
+      <li><a href="#Layer Based Query">Layer Based Criterion</a></li>
+      <li><a href="#Name Based Query">Name Based Criterion</a></li>
+</ul>
+<p>Advanced criteria:</p>
+<ul>
+      <li><a href="#Retrieving the Type Dictionary">Retrieving the Type
+        Dictionary</a></li>
+      <li><a href="#Query Based on a Dimension Attribute">Criterion Based on a
+        Dimension Attribute</a></li>
+      <li><a href="#Query Based on a String Attribute">Criterion Based on a String
+        Attribute</a></li>
+      <li><a href="#Query Based on an User Attribute">Criterion Based on an User
+        Attribute</a></li>
+</ul>
+
+<p>&nbsp;</p>
+<ul>
+  <li><b><a name="Color Based Query"></a>Color Based Criterion</b></li>
+  <p><b>Goal</b>: Retrieve all the objects with the red color (255,0,0).</p>
+  <p>First the color criterion component is created. <code>pIniSearchColorCriterion
+  </code>is a <i>CATIIniSearchColorCriterion</i> interface pointer and an handle
+  of the component.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIIniSearchColorCriterion * pIniSearchColorCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchColorCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchColorCriterion,
+                         (void**)&amp;<b>pIniSearchColorCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Thanks, to the <i>CATIIniSearchColorCriterion</i> interface, the color
+parameters can be set:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  unsigned int *Color = new unsigned int[3];
+  Color[0]=255; Color[1]=0; Color[2]=0;
+  CATUnicodeString ColorName;
+         
+  rc = pIniSearchColorCriterion-&gt;<b>FindColorNameFromRGBColorCode</b>(Color,ColorName);
+  ...
+  rc = pIniSearchColorCriterion-&gt;<b>SetParameters</b>(Color[0],Color[1],Color[2],
+                                   <b>CATIniSearchEnumeration::Equal</b>,
+                                   ColorName);
+  delete []Color;
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>FindColorNameFromRGBColorCode</code> method retrieves from the
+  three color components the name of the color. If no name exists, the method
+  returns E_FAIL. There are 48 (basic colors) + 16 (custom colors) names
+  possible. This name, <code>ColorName</code>, is set as argument of the <code>SetParameters</code>
+  method to be displayed in the criterion <a href="#Text 1">text</a>.</p>
+
+  <p>Finally, the text of the criterion is retrieved.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchColorCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetNLSQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text 1"></a>It is the following text:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>Color=Basic 25</pre>
+    </td>
+  </tr>
+</table>
+  <p>The name &quot;Basic 25&quot; is the name of the red color.</p>
+
+<li><b><a name="Color and Visibility Based Query"></a>Color and Visibility
+  Based Criterion</b></li>
+  <p><b>Goal</b>: Retrieve all the objects with the color (253,4,191) and which
+  are visible.</p>
+  <p>First the color criterion component is created. <code>pIniSearchColorCriterion
+  </code>is a <i>CATIIniSearchColorCriterion</i>  interface pointer and an handle of the component. </p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchColorCriterion</b> * pIniSearchColorCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchColorCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchColorCriterion,
+                         (void**)&amp;<b>pIniSearchColorCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then the three color components are set as argument of the color component but
+  not the name of the color. See the <a href="#Text critere 2">text</a> of the
+  criterion.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  unsigned int *Color = new unsigned int[3];
+  Color[0]=253; Color[1]=4; Color[2]=191;
+ 
+  rc = pIniSearchColorCriterion-&gt;<b>SetParameters</b>(Color[0],Color[1],Color[2],
+                                   CATIniSearchEnumeration::<b>Equal</b>);
+  delete []Color;                         
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then, the visibility criterion component is created. <code>pIniSearchVisibilityCriterion
+  </code>is a <i>CATIIniSearchVisibilityCriterion</i>  interface pointer and an handle of the component. </p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchVisibilityCriterion</b> * pIniSearchVisibilityCriterion = NULL ;
+  rc = ::CATCreateInstance(CLSID_CATIniSearchVisibilityCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchVisibilityCriterion,
+                         (void**)&amp;<b>pIniSearchVisibilityCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The value of the criteria, <code>CATShowAttr</code>, and the sign of
+  comparison, <code>Equal</code>, are set with the <code>SetParameters</code>
+  method.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchVisibilityCriterion-&gt;SetParameters(
+                                          CATIIniSearchVisibilityCriterion::<b>CATShowAttr</b>,
+                                          CATIniSearchEnumeration::<b>Equal</b>);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination of the two criteria just above
+  created. It is an And
+  operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchAndCriterion</b> * pIniSearchAndCriterion = NULL ;
+  rc = ::CATCreateInstance(CLSID_CATIniSearchAndCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchAndCriterion,
+                         (void**)&amp;<b>pIniSearchAndCriterion</b>);</pre>
+    </td>
+  </tr>
+</table>
+  <p>The color and the visibility criteria are set as argument of the
+  combination criterion:&nbsp;</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = pIniSearchAndCriterion-&gt;<b>SetParameters</b>(pIniSearchVisibilityCriterion,
+                                           pIniSearchColorCriterion);     
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a NLS text.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetNLSQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 2"></a>It is the following text:</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>(Visibility=Visible &amp; Color='(253,141,91)')</pre>
+    </td>
+  </tr>
+</table>
+  <p>Note that the color is with the (r, g, b) format since the name of the
+  color has not been set as parameter of the criterion.</p>
+<li><b><a name="Type and Thickness Line Based Query"></a>Type and Thickness
+  Line Based Criterion</b></li>
+  <p><b>Goal</b>: Retrieve all the dotted lines whose the thickness is
+  superior to .1mm.&nbsp;</p>
+
+  <p>First the dashed (line type) criterion component is created. <code>pIniSearchDashedCriterion
+  </code>is a <i>CATIIniSearchDashedCriterion</i>  interface pointer and an handle of the component. </p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchDashedCriterion</b> * pIniSearchDashedCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchDashedCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchDashedCriterion,
+                         (void**)&amp;<b>pIniSearchDashedCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then the value of the line type and the sign of comparison are set as argument.
+  The value of the line type can be an index value, refer to the <code>Get</code>/<code>SetLineType</code> methods of the <i>CATVisPropertiesValues</i> class for the
+  possible values, or can be a string. In our sample, it is the
+  &quot;Dotted&quot; string. It is a NLS name. The &quot;Dashed&quot; combo in the Search
+  command displays all the NLS names.&nbsp;</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = pIniSearchDashedCriterion-&gt;SetParameters(&quot;<b>Dotted</b>&quot;,
+                                   CATIniSearchEnumeration::<b>Equal</b>);                   
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then, the weight criterion component is created. <code>pIniSearchWeightCriterion</code>
+  is a <i>CATIIniSearchWeightCriterion</i>  interface pointer and an handle of the component. </p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchWeightCriterion</b> * pIniSearchWeightCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchWeightCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchWeightCriterion,
+                         (void**)&amp;<b>pIniSearchWeightCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then the value of the criteria and the sign of comparison are set.&nbsp;</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  float weight = .1f ;
+  rc = pIniSearchWeightCriterion-&gt;SetParameters(weight,
+                                   CATIniSearchEnumeration::<b>Superior</b>); 
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination of the two criteria just above
+  created. It is an And
+  operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchAndCriterion</b> * pIniSearchAndCriterion = NULL ;
+  rc = ::CATCreateInstance(CLSID_CATIniSearchAndCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchAndCriterion,
+                         (void**)&amp;<b>pIniSearchAndCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The dashed and the weight criteria are set as argument of the combination
+  criterion.&nbsp;</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchAndCriterion-&gt;<b>SetParameters</b>(pIniSearchWeightCriterion,
+                                                     pIniSearchDashedCriterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a NLS text.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetNLSQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 3"></a>It is the following text</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>(Weight&gt;0.1mm &amp; Dashed=Dotted)</pre>
+    </td>
+  </tr>
+</table>
+
+<li><a name="Layer Based Query"></a><b>Layer Based Criterion</b></li>
+  <p><b>Goal</b>: Retrieve all the objects which are either on layer 2 or on the
+  layer 3.</p>
+
+  <p>First a layer criterion component is created. <code>pIniSearchLayer2Criterion</code>
+  is a <i>CATIIniSearchLayerCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchLayerCriterion</b> * pIniSearchLayer2Criterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchLayerCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchLayerCriterion,
+                         (void**)&amp;<b>pIniSearchLayer2Criterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The index of the layer is set with the <code>SetParameters</code> method.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString LayerIndex ;
+  LayerIndex.<b>BuildFromNum</b>(2);
+  rc = pIniSearchLayer2Criterion-&gt;<b>SetParameters</b>(LayerIndex,
+                                   CATIniSearchEnumeration::<b>Equal</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>Then a second layer criterion component is created. <code>pIniSearchLayer3Criterion</code>
+  is a <i>CATIIniSearchLayerCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchLayerCriterion</b> * pIniSearchLayer3Criterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchLayerCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchLayerCriterion,
+                         (void**)&amp;<b>pIniSearchLayer3Criterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The index of the layer is also set with the <code>SetParameters</code> method.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString LayerIndex ;
+  LayerIndex.<b>BuildFromNum</b>(3);
+  rc = pIniSearchLayer3Criterion-&gt;<b>SetParameters</b>(LayerIndex,
+                                   CATIniSearchEnumeration::<b>Equal</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination of the two criteria just above
+  created. It is an
+Or operation.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchOrCriterion</b> * pIniSearchOrCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchOrCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchOrCriterion,
+                         (void**)&amp;<b>pIniSearchOrCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The two layer criteria are set as argument of the combination
+  criterion.&nbsp;</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchOrCriterion-&gt;<b>SetParameters</b>(pIniSearchLayer2Criterion,
+                                             pIniSearchLayer3Criterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a NLS text.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchOrCriterion -&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetNLSQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 4"></a>It is the following text</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>(Layer=2 + Layer=3)</pre>
+    </td>
+  </tr>
+</table>
+
+<li><a name="Name Based Query"></a><b>Name Based Criterion</b></li>
+  <p><b>Goal</b>: Retrieve all the objects whose the name begins by the &quot;Line&quot; string but
+  which does not contain the &quot;Width&quot; string. The first string is not
+  case sensitive whereas the second one is case sensitive.&nbsp;</p>
+
+  <p>First a first name criterion component is created. <code>pIniSearchNameLineCriterion</code>
+  is a <i>CATIIniSearchNameCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchNameCriterion</b> * pIniSearchNameLineCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchNameCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchNameCriterion,
+                         (void**)&amp;<b>pIniSearchNameLineCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The name is &quot;Line*&quot;, where * is not the wild card. The <code>CorrectString</code>&nbsp;
+  method enables you to create a string where the * character will be interpreted as
+  the star character and not as the wild card. The second argument of the <code>CorrectString</code>&nbsp;
+  method specifies that the input string do not contain a wild card. See the <a href="#Text critere 5">text</a>
+  of the criterion.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString Name = &quot;&quot; ;
+  CATUnicodeString StringToCorrect = &quot;Line*&quot; ;
+  _pIniSearchServices-&gt;<b>CorrectString</b>(StringToCorrect,FALSE,Name);
+</pre>
+    </td>
+  </tr>
+</table>
+  <p>The string is associated with the name component thanks to the <code>SetParameters</code>
+  method. The string is not case sensitive, it means that the following strings
+  are valid: Line, line, LINE.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATBoolean CaseSensibility = FALSE ;
+  rc = pIniSearchNameLineCriterion-&gt;<b>SetParameters</b>(Name,CaseSensibility,
+                                   CATIniSearchEnumeration::Equal);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then, the second name criterion component is created. <code>pIniSearchNameWidthCriterion</code>
+  is a <i>CATIIniSearchNameCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchNameCriterion</b> * pIniSearchNameWidthCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchNameCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchNameCriterion,
+                         (void**)&amp;<b>pIniSearchNameWidthCriterion</b>);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The string is associated with the name component thanks to the <code>SetParameters</code>
+  method. In this case, the star character is the wild card, no correction of
+  the string is
+  necessary. The string is case sensitive, it means that only the
+  &quot;Width&quot; string is valid.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString Name = &quot;*Width*&quot; ;
+  CATBoolean <b>CaseSensibility</b> = TRUE ;
+  rc = pIniSearchNameWidthCriterion-&gt;<b>SetParameters</b>(Name,CaseSensibility,
+                                   CATIniSearchEnumeration::Equal);
+       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination of the two criteria just above
+  created. It is an Except operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchExceptCriterion</b> * pIniSearchExceptCriterion = NULL ;
+  rc = ::CATCreateInstance(CLSID_CATIniSearchExceptCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchExceptCriterion,
+                         (void**)&amp;<b>pIniSearchExceptCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The two name criteria are set as argument of the combination
+  criterion.&nbsp;The order is important.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchVisibilityCriterion-&gt;<b>SetParameters</b>(pIniSearchNameLineCriterion,
+                                                     pIniSearchNameWidthCriterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a Transformat text [<a href="#References">1</a>].</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetTransFormatQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 5"></a>It is the following text</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>(Name=Line'*' - Name_CAP=*Width*)</pre>
+    </td>
+  </tr>
+</table>
+
+  <p>The string <code>Name</code> means that the string is not case sensitive
+  whereas <code>Name_CAP </code>means that it is case sensitive.&nbsp;</p>
+
+<li><a name="Retrieving the Type Dictionary"></a><b>Retrieving the Type Dictionary</b></li>
+  <p>An advanced criterion is composed of a knowledge type based criterion. This
+  type, a <i>CATIType</i>, can be retrieved thanks to a dictionary [<a href="#References">1</a>].</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATITypeDictionary_var</b> pITypeDictionaryOnCurrentDic ;
+  pITypeDictionaryOnCurrentDic = <b>CATGlobalFunctions::GetTypeDictionary</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>pITypeDictionaryOnCurrentDic</code> will be used in the further
+  sections.</p>
+<li><a name="Query Based on a Dimension Attribute"></a><b>Criterion Based on a
+  Dimension Attribute&nbsp;</b></li>
+  <p><b>Goal</b>: Retrieve all the Hole features whose the diameter is superior
+  or equal to 10mm.</p>
+
+  <p>First a type criterion component is created. <code>pIniSearchTypeCriterion</code>
+  is a <i>CATIIniSearchTypeCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchTypeCriterion</b> * pIniSearchTypeCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchTypeCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchTypeCriterion,
+                         (void**)&amp;<b>pIniSearchTypeCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The type associated with the Hole feature is retrieved thanks to the <code>FindTypeInPackage</code>
+  method. Refer to the Search technical article [<a href="#References">1</a>]
+  for details about the two first argument of this method. In this case, <code>Hole</code>
+  is a type of the <code>PartDesign</code> package.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIType_var TypePtr;
+  rc = pITypeDictionaryOnCurrentDic-&gt;<b>FindTypeInPackage</b>(&quot;Hole&quot;,&quot;PartDesign&quot;,TypePtr);                                                                                                                  
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then the type (a <i>CATIType</i> interface pointer) can be set as
+  argument of the type component. The last argument of the <code>SetParameters</code>
+  method is the internal name of the workbench which contains this type. The
+  list of workbenches appears in the &quot;Workbench&quot; combo of the Search
+  command. Refer to the technical article to know how to retrieve their
+  internal name [<a href="#References">1</a>].&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchTypeCriterion-&gt;<b>SetParameters</b>(TypePtr,
+                                   CATIniSearchEnumeration::Equal,&quot;<b>CATPrtSearch</b>&quot;);                                                                                                               
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The Diameter attribute is an attribute of type dimension. So, a dimension criterion component is created. <code>pIniSearchDimensionCriterion</code><b>
+  </b>is a <i>CATIIniSearchDimensionCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchDimensionCriterion</b> * pIniSearchDimensionCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchDimensionCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchDimensionCriterion,
+                         (void**)&amp;<b>pIniSearchDimensionCriterion</b>);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The&nbsp;dimension component&nbsp; is valuated with the internal name of
+  the attribute [<a href="#References">1</a>], with the value of comparison and the sign of comparison.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString AttributeInternalName = &quot;Diameter&quot; ;
+  CATUnicodeString AttributeValue = &quot;10.0mm&quot; ;
+  CATUnicodeString AttributeNLSName = &quot;Diameter&quot; ;
+
+  rc = pIniSearchDimensionCriterion-&gt;<b>SetParameters</b>(AttributeInternalName, 
+                                               AttributeValue,
+                                               CATIniSearchEnumeration::<b>SupEqual</b>, 
+                                               AttributeNLSName);
+       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination between the type and the attribute
+  criterion just above created.
+  It is necessary an And operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchAndCriterion</b> * pIniSearchAndCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchAndCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchAndCriterion,
+                         (void**)&amp;<b>pIniSearchAndCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The two name criteria are set as argument of the combination
+  criterion.&nbsp;The order is important, the type criterion must be the first.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchAndCriterion-&gt;<b>SetParameters</b>(pIniSearchTypeCriterion,
+                                                     pIniSearchDimensionCriterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a Transformat text [<a href="#References">1</a>].</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetTransFormatQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 6"></a>It is the following text</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATPrtSearch.Hole.Diameter&gt;=10mm</pre>
+    </td>
+  </tr>
+</table>
+  <p>In a transformat string, all the name are internal names. <code>CATPrtSearch</code>
+  is the internal name of the workbench which contains the type. <code>Hole</code>
+  is the name of the type, and <code>Diameter</code> is the name of the
+  attribute.</p>
+
+<li><a name="Query Based on a String Attribute"></a><b>Criterion Based on a String
+  Attribute</b></li>
+  <p><b>Goal</b>: Retrieve all the Product features whose the Part Number name
+  begins by the &quot;CAAPart&quot; string.</p>
+
+  <p>First a type criterion component is created. <code>pIniSearchTypeCriterion</code>
+  is a <i>CATIIniSearchTypeCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchTypeCriterion</b> * pIniSearchTypeCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchTypeCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchTypeCriterion,
+                         (void**)&amp;<b>pIniSearchTypeCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The type associated with the Product feature is retrieved thanks to the <code>FindTypeInPackage</code>
+  [<a href="#References">1</a>] method.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATIType_var TypePtr;
+  rc = pITypeDictionaryOnCurrentDic-&gt;FindTypeInPackage(&quot;<b>Product</b>&quot;,&quot;<b>ProductPackage</b>&quot;, TypePtr);                                                                                                                                                                                              
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Then the type ( a <i>CATIType</i> interface pointer ) can be set as
+  argument of the type component. The last argument of the <code>SetParameters</code>
+  method is the internal name [<a href="#References">1</a>] of the workbench which
+  contains this type.&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchTypeCriterion-&gt;SetParameters(TypePtr,
+                                   CATIniSearchEnumeration::<b>Equal,</b>
+                                   &quot;<b>CATProductSearch</b>&quot;);                                                                                                              
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The &quot;Part Number&quot; attribute is an attribute of type string. So, a
+  string criterion component is created. <code>pIniSearchStringCriterion</code><b>
+  </b>is a <i>CATIIniSearchStringCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchStringCriterion</b> * pIniSearchStringCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchStringCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchStringCriterion,
+                         (void**)&amp;<b>pIniSearchStringCriterion</b><b> </b>);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The&nbsp;string component&nbsp; is valuated with the internal name of
+  the attribute [<a href="#References">1</a>]&nbsp; with the value of comparison and the sign of comparison.
+  The last
+  argument of the method is the NLS Name of the attribute. This parameter is
+  optional, but if you don't set it, and no document which contains this
+  attribute has been loaded, the <code>GetNlSQuery</code> method will return
+  E_FAIL.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString AttributeInternalName = &quot;<b>PartNumber</b>&quot; ;
+  CATUnicodeString AttributeNLSName = &quot;Part Number&quot; ;
+  CATUnicodeString AttributeValue        = &quot;CAAPart*&quot; ;
+  CATBoolean CaseSensibility             = FALSE ;
+  rc = pIniSearchStringCriterion-&gt;<b>SetParameters</b>(AttributeInternalName, 
+                                               AttributeValue,
+                                               CaseSensibility ,
+                                               CATIniSearchEnumeration::<b>Equal</b>,
+                                               AttributeNLSName);  
+       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination between the type and the attribute
+  criterion just above created.
+  It is necessary an And operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchAndCriterion</b> * pIniSearchAndCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchAndCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchAndCriterion,
+                         (void**)&amp;<b>pIniSearchAndCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The two name criteria are set as argument of the combination
+  criterion.&nbsp;The order is important, the type criterion must be the first.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchAndCriterion-&gt;<b>SetParameters</b>(pIniSearchTypeCriterion,
+                                             pIniSearchStringCriterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a TransFormat text [<a href="#References">1</a>].</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetTransformatQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 7"></a>It is the following text</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATProductSearch.Product.PartNumber=&quot;CAAPart*&quot;</pre>
+    </td>
+  </tr>
+</table>
+  <p>In a transformat string, all the name are internal names. <code>CATProductSearch</code>
+  is the internal name of the workbench which contains the type. <code>Product</code>
+  is the name of the type, and <code>PartNumber</code> is the name of the
+  attribute. Compare with the next criterion <a href="#Text critere 8">text</a>.</p>
+
+<li><a name="Query Based on an User Attribute"></a><b>Criterion Based on an User
+  Attribute</b></li>
+  <p><b>Goal</b>: Retrieve all the Product features whose the value of the
+  CAAAttr user attribute is inferior or equal to .1</p>
+
+  <p>First a type criterion component is created. <code>pIniSearchTypeCriterion</code>
+  is a <i>CATIIniSearchTypeCriterion</i>  interface pointer and an handle of the component. See the previous section for the details.</p>
+
+  <p>The &quot;CAAAttr&quot; attribute is an user attribute. So, an User criterion component is created.
+  <code>pIniSearchUserCriterion</code> is a <i>CATIIniSearchUserCriterion</i>  interface pointer and an handle of the component. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchUserCriterion</b> * pIniSearchUserCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchUserCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchUserCriterion,
+                         (void**)&amp;<b>pIniSearchUserCriterion</b>);
+
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The&nbsp;user component&nbsp; is valuated with the internal name of
+  the attribute [<a href="#References">1</a>], with the value of comparison and the sign of comparison.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATUnicodeString AttributeInternalName = &quot;CAAAttr&quot; ;
+  CATUnicodeString AttributeValue = &quot;.1&quot; ;
+  rc = pIniSearchUserCriterion-&gt;<b>SetParameters</b>(AttributeInternalName, 
+                                               AttributeValue,
+                                               CATIniSearchEnumeration::<b>InfEqual</b>);  
+       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The third criterion is a logical combination between the type and the attribute
+  criterion just above created.
+  It is necessary an And operation.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchAndCriterion</b> * pIniSearchAndCriterion = NULL ;
+  rc = ::<b>CATCreateInstance</b>(CLSID_CATIniSearchAndCriterionComponent, NULL, 0,
+                         IID_CATIIniSearchAndCriterion,
+                         (void**)&amp;<b>pIniSearchAndCriterion</b>);
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The two name criteria are set as argument of the combination
+  criterion.&nbsp;The order is important, the type criterion must be the first.</p>
+  <table class="code">
+  <tr>
+    <td>
+      <pre>...
+  rc = pIniSearchAndCriterion-&gt;<b>SetParameters</b>(pIniSearchTypeCriterion,
+                                             pIniSearchStringCriterion);       
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>Finally, the text of the criterion is retrieved. It is a NLS text [<a href="#References">1</a>].&nbsp;</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   <b>CATIIniSearchCriterion</b> * pSearchCriterion = NULL ;
+   rc = pIniSearchAndCriterion-&gt;QueryInterface(IID_CATIIniSearchCriterion,
+                                                  (void**) &amp;pSearchCriterion);
+   ...
+      CATUnicodeString Text = &quot;&quot; ;
+      pSearchCriterion-&gt;<b>GetNLSQuery</b>(Text);
+   ...
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><a name="Text critere 8"></a>It is the following text</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>'Product Structure'.Product.CAAAttr&lt;=.1</pre>
+    </td>
+  </tr>
+</table>
+  <p>It is a NLS string, so all the names are translated. <code>'Product
+  Structure'</code> is the name of the workbench, <code>Product</code> is the
+  name of the type and <code>'CAAAttr' </code>is the name of the attribute.
+  Compare with the previous criterion <a href="#Text critere 8">text</a>.</p>
+
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Launching Queries"></a>Launching Queries</h4>
+<p align="left">The end user has pushed the Launch button - See <a href="#Fig.2"> Fig
+2</a> - an action
+method of the <i>CAACafSearchCmd</i>
+ class is trigerred. This action method should first re-create the criterion
+from a text, retrieve the current context and then launch a query.&nbsp;</p>
+<p align="left">First the text of the criterion is retrieved from the end user
+selection.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int CriterionIndex = -1 ;
+  _pSearchDlg-&gt;<b>GetCurrentCriterion</b>(CriterionIndex);
+
+  <b>CATUnicodeString</b> CriterionText = &quot;&quot;;
+  if ( NULL != _pListCriterionTexts )
+  {
+     if ( (CriterionIndex &gt;= 1) &amp;&amp; (CriterionIndex &lt;= _pListCriterionTexts-&gt;Size()) )
+     {
+        CriterionText = (*<b>_pListCriterionTexts</b>)[CriterionIndex];
+     }
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Then, the context is retrieved with the <code>GetCurrentContext</code><b>
+</b>method, a <i>CAACafSearchDlg</i> class method.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATIIniSearchContext::Scope</b> ContextValue = CATIIniSearchContext::Everywhere ;
+  _pSearchDlg-&gt;<b>GetCurrentContext</b>(ContextValue);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">A criterion is re-created thanks to the <code>DecodeStringToCriterion
+</code>method of the <i>CATIIniSearchServices</i> interface. <code>_pIniSearchServices
+</code>is an handle on the service's component created in the <a href="#Creating the Engine, Context and Services Components">Creating the Engine, Context and Services Components</a>
+section. <code>CriterionText</code> is the text of the criterion, just above
+retrieved, and <code>pIniSearchCriterion</code> is the <i>CATIIniSeachCriterion</i>
+interface pointer on the newly criterion. The second argument, <code>FALSE</code>,
+means that in case of error, no window will be launched.&nbsp;</p>
+<table class="code" height="98">
+  <tr>
+    <td height="94">
+      <pre>...
+     CATIIniSearchCriterion * pIniSearchCriterion = NULL ;
+     rc = _pIniSearchServices-&gt;<b>DecodeStringToCriterion</b>(CriterionText,
+                                                        FALSE,
+                                                        pIniSearchCriterion);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">After the criterion creation, the context component can be
+updated with the current scope. <code> _pIniSearchContextOnCurrentContext</code> is an handle
+on the context component created in the <a href="#Creating the Engine, Context and Services Components">Creating the Engine, Context and Services Components</a>
+section.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ rc = _pIniSearchContextOnCurrentContext-&gt;<b>SetScope</b>(ContextValue);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Then, the query is composed by using the context and the
+criterion. <code> _pIniSearchEngineOnCurrentEngine</code> is an handle on the search engine
+component created in the <a href="#Creating the Engine, Context and Services Components">Creating the Engine, Context and Services Components</a>
+section.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ rc = _pIniSearchEngineOnCurrentEngine-&gt;<b>SetCriterionAndContext</b>(pIniSearchCriterion,
+                                                 _pIniSearchContextOnCurrentContext);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Finally, the query can be launched. The default argument of the <code>LaunchSearchOnDocument</code>
+method, <code>NULL,</code> is used. It means that the search is done on the
+current document.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ rc = _pIniSearchEngineOnCurrentEngine-&gt;<b>LaunchSearchOnDocument</b>()
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The result of the search is analyzed in the next section.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Displaying Found Objects in PSO"></a>Displaying Found
+Objects in PSO</h4>
+<p align="left">The found objects should be pre-highlighted. They will be set in
+the <i>CATPSO</i> instance associated with the current document (in fact the
+editor of the current document). This instance, <code>_pPso</code>, has been
+retrieved in the <i>CAACafSearchCmd</i> class constructor such as:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATFrmEditor * pEditor = <b>GetEditor</b>();
+  if ( NULL !=  pEditor )
+  {
+      _pPso = pEditor-&gt;<b>GetPSO</b>();
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The <code>GetEditor</code> method is a <i>CATStateCommand</i>
+method. It retrieves the <i>CATFrmEditor</i> class instance associated with the
+active document. This instance has created the <i>CATPSO</i> class instance [<a href="#References">6</a>].</p>
+<p align="left">The <code>GetFoundObjects</code> method of the <i>CATIIniSeachEngine
+</i>
+interface retrieves all the found objects. The returned value, <code>pListOfFoundObjects,</code>
+is a <i>CATSO</i> object, it means that the method returns a list of complete
+paths. Each value of the list is a <i>CATPathElement (</i>Visualization<i> </i>framework<i>)</i>.
+Note that <code>pListOfFoundObjects</code><code> </code>cannot be NULL, because
+the <code>GetFoundObjects</code> method returns <code>E_FAIL</code>  if no object
+are found.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  <b>CATSO</b> * pListOfFoundObjects = NULL ;
+  int nbelt = 0 ;
+  _pIniSearchEngineOnCurrentEngine-&gt;<b>GetFoundObjects</b>(pListOfFoundObjects);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Since several objects can be found, the complete path of the
+objects are set in the <i>CATPSO</i> thanks to the <code>AddElements</code>
+method, and after the last addition, the <code>EndAddElements</code> is called.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  nbelt = pListOfFoundObjects-&gt;<b>GetSize</b>();
+        
+  if ( NULL != _pPso )
+  {
+     for ( int i= 0 ; i &lt; nbelt ; i++ )
+     {
+        CATBaseUnknown * pCurrent = (*pListOfFoundObjects)[i] ;
+        if ( NULL != pCurrent )
+        {
+                 _pPso-&gt;<b>AddElements</b>(pCurrent);
+        }
+      }
+      _pPso-&gt;<b>EndAddElements</b>();
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to use the Search API to create queries and launch
+them.&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAACafTechArticles/CAACafSearch.htm"> Search Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegTechArticles/CAADegGettingStarted.htm">Getting
+      Started with State Dialog Commands</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm">Making Your Document Independent Command Available in All Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADegUseCases/CAADegSampleDialogWithAgent2.htm">Associating
+      a Dialog Box with a Dialog Agent - 2</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMSimpleCmpCLSID.htm">Instantiating a Component Using its CLSID</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrOverview.htm">Application
+      Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [May 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

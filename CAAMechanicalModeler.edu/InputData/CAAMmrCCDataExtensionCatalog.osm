@@ -1,0 +1,29 @@
+// COPYRIGHT DASSAULT SYSTEMES 2007
+//
+// This document defines the content of CAAMmrCCDataExtensionCatalog.CATfct in "OSM Language".
+// With this language quite similar to XML, we are going to define StartUps Inheritance and their attributes.
+// Please refer to CAA Article dedicated to OSM in FeatureModeler Encyclopedia for more information.
+
+//Defines Catalog name
+document `CAAMmrCCDataExtensionCatalog.CATfct` 
+{
+  //StartUp are aggregated in the Catalog Root Cont
+	container CATFeatCont #root
+  {
+    //Defines the Catalog Manager i.e. the catalog where ascendant StartUp (in inheritance view) are defined
+		catalog_manager `ObjectSpecsModeler.feat` 
+		
+    //We declare a New StartUp "CAAMmrCCDataExtension" designing an Extension 
+    //This New StartUp is derivated from FeatExt defined in ObjectSpecsModeler.feat
+    //It has 2 Attributes: 
+    //- GeomFeature with sp_IN quality. It is the Input of CAAMmrCCDataExtension for Update Mechanism
+    //- Length with sp_OUT quality. This Attribute will aggregate a Parameter representing the output length,
+    //  This length is computed during the Update Mechanism.
+
+    feature CAAMmrCCDataExtension#2 FeatExt#1@`ObjectSpecsModeler.feat` #startup #extension
+    {
+			specobject GeomFeature #in
+			component Length #out
+		}
+	}
+}

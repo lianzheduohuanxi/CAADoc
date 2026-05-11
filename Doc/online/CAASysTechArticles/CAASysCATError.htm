@@ -1,0 +1,667 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using an Error Class with HRESULTs or Exceptions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Using an Error Class with HRESULTs or Exceptions</h3>
+      <em>Associating information with errors</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to use error classes and messages, and how to
+      create new ones.
+      <ul>
+        <li><a href="#100000"><b>What Are Error Classes?</b></a></li>
+        <li><a href="#200000"><b>Instantiating Existing Error Classes</b></a></li>
+        <li><a href="#300000"><b>Filling In the Error Message with Run Time
+          Parameter Values</b></a></li>
+        <li><a href="#400000"><b>Setting the Error Type and Identifier</b></a></li>
+        <li><a href="#430000"><b>Informing the End User with a Prompt Box</b></a></li>
+        <li><a href="#440000"><b>Tracing the Error</b></a></li>
+        <li><a href="#450000"><b>Analyzing the Error</b></a>
+        <li><a href="#500000"><b>Creating New Error Messages</b></a></li>
+        <li><a href="#600000"><b>Creating New Error Classes</b></a></li>
+        <li><a href="#InShort"><b>In Short</b></a></li>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Are Error Classes?</h3>
+<p>When you design and code your methods, and when the process goes out of the
+scope you have determined without being able to recover, you either return to
+the caller a HRESULT value stating that an error occurs or throw an exception.
+You associate with this HRESULT or make up the exception with an error class
+instance to convey the error severity, the error message, possibly filled with
+parameters you get from your method's variable values to show why the method
+goes out of its scope, and if the error class has data members, you can pass
+these variable values using these data members to the caller or exception
+catcher.</p>
+<p>Dealing with error classes includes mainly:</p>
+<ul>
+  <li><a href="#200000">Instantiating Existing Error Classes</a></li>
+  <li><a href="#300000">Filling In the Error Message with Run Time Parameter
+    Values</a></li>
+  <li><a href="#400000">Setting the Error Type and Identifier</a></li>
+  <li>Possibly <a href="#500000">Creating New Error Messages</a></li>
+  <li>Possibly <a href="#600000">Creating New Error Classes</a>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="200000"></a>Instantiating Existing Error Classes</h3>
+<p>When you want to convey information with a returned HRESULT or throw an
+exception, you need to instantiate an existing error class</p>
+<p>Choose an existing error class that matches the error. Avoid to create new
+error classes. In the same way, choose an existing error message that matches
+the error. Avoid to create new ones.</p>
+<p>When you want to convey information with a returned HRESULT or throw an
+exception, you need to instantiate an existing error class, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATResourceError * pError = new CATResourceError(&quot;FileERR_2000&quot;,
+                                                   &quot;CATFileErrorCatalog&quot;); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The first parameter is the error message key, without the possible suffix
+used as a descriptor, and the second parameter is the error message catalog file
+name, without extension. The file is named in this case CATFileErrorCatalog.CATNls
+and should be found in the directory concatenation set by the CATMsgCatalogPath
+environment variable at run time.</p>
+<p>An error class that is not created using the macros may have additional
+constructor arguments, and may have initialization methods to call. If the error
+class you use has data members, they are intended to pass parameter values to
+the caller or exception catcher. Use run time values of appropriate variables of
+your method to value these parameters.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="300000"></a>Filling In the Error Message with Run Time Parameter
+Values</h3>
+<p>If the error message includes parameters to value at run time, you should
+supply these values. To do this, convert the appropriate variables of your
+methods as CATUnicodeString instances, and assign them to the error class
+instance just created to build the message with these values.</p>
+<ul>
+  <li>For a character string or a CATString instance, do the following:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  char * pFileName = &quot;CATError.CATNls&quot;;
+  CATUnicodeString Param1(pFileName);
+
+  CATString FolderName(&quot;msgcatalog&quot;);
+  char * pFolderName = FolderName.CastToCharPtr(); // First cast the CATString instance into a char *
+  CATUnicodeString Param2(pFolderName);
+
+  pError-&gt;<code>SetNLSParameters</code>(2, &amp;Param1, &amp;Param2);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The parameter names, such as <code>Param1</code> has no importance. They
+    should just be converted to <i>CATUnicodeString</i> instances and passed to
+    the error class using the appropriate method, here the <code>SetNLSParams</code>
+    method. The first parameter is the count of parameters to pass, and these
+    parameters should then be passed in the same order than in the message file.
+    In this case, the variable <code>pFileName</code> is supposed to be a
+    pointer to char, thus allowing the use of a <i>CATUnicodeString</i>
+    constructor. The second one is a <i>CATString</i> instance, and must first
+    be converted into a pointer to char using the <code>CastToCharPtr</code>
+    method before being passed to the <i>CATUnicodeString</i> constructor.</p>
+  </li>
+  <li>For a numeric parameter, use the <code>BuildFromNum</code> method, as
+    follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  int i = 10;
+  double x = 2.45;
+
+  CATUnicodeString Param1, Param2;
+  Param1.BuildFromNum(i);
+  Param2.BuildFromNum(x);
+
+  pError-&gt;<code>SetNLSParameters</code>(2, &amp;Param1, &amp;Param2);
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The parameter to convert into a <i>CATUnicodeString</i> class instance
+    with <code>BuildFromNum</code> can be an int, a long, an unsigned long, a
+    double, or a long double.</p>
+</ul>
+<p>If the message to use is a single one, use the <code>SetNLSParameters</code>
+method. If you have a composite message, set the parameters, if any, for each
+message of your composite message separately using the <code>SetNLSRequestParams</code>,
+<code>SetNLSDiagnosticParams</code>, and <code>SetNLSAdviceParams</code> methods
+respectively. Refer to <a href="#500000">Creating New Error Messages</a> to know
+more about error messages.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Setting the Error Type and Identifier</h3>
+<p>The error type and identifier are associated with the error to help the
+caller understand what happens and how to handle the error.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>Setting the Error Type</h4>
+<p>The type of the error describes its severity. An error can have the following
+types, whose values are taken from the <code>CATErrorType</code> enumeration,
+and the associated prompts are as follows:</p>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/CAASysError1.jpg" width="360" height="178"></td>
+    <td><code>CATErrorTypeCritical</code>: a real problem occurs, and the method
+      cannot complete. It returns when the problem occurs. This is the default
+      if you don't set the error type. The associated prompt box must be an
+      instance of the <code>CATDlgNotify</code> class with the <code>CATDlgNfyError</code>
+      style.</td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/CAASysError4.jpg" width="360" height="178"></td>
+    <td><code>CATErrorTypeFatal</code>: the method stops with no possible
+      recovery. The associated prompt box must be an instance of the <code>CATDlgNotify</code>
+      class with the <code>CATDlgNfyAbortRetryIgnore</code> style.</td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/CAASysError2.jpg" width="360" height="178"></td>
+    <td><code>CATErrorTypeWarning</code>: something happens that doesn't stop
+      the method which completes, but returns a warning. The associated prompt
+      box must be an instance of the <code>CATDlgNotify</code> class with the <code>CATDlgNfyWarning</code>
+      style.</td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/CAASysError3.jpg" width="360" height="178"></td>
+    <td><code>CATErrorTypeInformation</code>: there is no error and the method
+      successfully completes, but this information can be handy. The associated
+      prompt box must be an instance of the <code>CATDlgNotify</code> class with
+      the <code>CATDlgNfyInformation</code> style.</td>
+  </tr>
+</table>
+<p>The type is set using the <code>SetType</code> method. It takes the error
+type as parameter:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  pError-&gt;SetType(CATErrorTypeFatal);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>Setting the Error Identifier</h4>
+<p>The error identifier is part of the message key and deduced from it when
+passed to the constructor. Refer to <a href="#500000">Creating New Error
+Messages</a> to know which part of the message key is used as error identifier.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="430000"></a>Informing the End User with a Prompt Box</h3>
+<p>You can send the error message to the end user in a prompt box using a <i>CATDlgNotify</i>
+class instance, as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CATDlgNotify * pPromptBox = new CATDlgNotify(pParent, &quot;Error&quot;, CATDlgNfyAbortRetryIgnore);
+  pPromptBox-&gt;SetTitle(pOccurringError-&gt;GetNLSSource());
+  pPromptBox-&gt;SetText(pOccurringError-&gt;GetNLSMessage());
+  pPromptBox-&gt;SetVisibility(CATDlgShow);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>User the following styles according to the error type [<a href="#References">2</a>]:</p>
+<table>
+  <tr>
+    <td>
+      <p align="center"><strong>Error Type</strong></td>
+    <td>
+      <p align="center"><strong>Style</strong></td>
+  </tr>
+  <tr>
+    <td><code>CATErrorTypeCritical</code></td>
+    <td><code>CATDlgNfyError</code></td>
+  </tr>
+  <tr>
+    <td><code>CATErrorTypeFatal</code></td>
+    <td><code>CATDlgNfyAbortRetryIgnore</code></td>
+  </tr>
+  <tr>
+    <td><code>CATErrorTypeWarning</code></td>
+    <td><code>CATDlgNfyWarning</code></td>
+  </tr>
+  <tr>
+    <td><code>CATErrorTypeInformation</code></td>
+    <td><code>CATDlgNfyInformation</code></td>
+  </tr>
+</table>
+<p>You should simply set the title using the <code>GetNSLSource</code> method,
+and the text using the <code>GetNSLMessage</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="440000"></a>Tracing the Error</h3>
+<p>If the error is a major one, you must trace it. Error traceability is
+possible using two macros:</p>
+<ul>
+  <li><code>CATSysLogAbend</code> that logs a message passed as parameter, the
+    source where it is called, and the line in the source in the abend log, and:<br>
+    <ul>
+      <li>In a customer environment, it then resumes running</li>
+      <li>In a development environment, it abends.</li>
+    </ul>
+    <p>The code where the trace is located must not contain any test or branch
+    instruction:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>if (NULL == pPointer)
+{
+  ... // Cleaning
+  <b>CATSysLogAbend</b>(&quot;This pointer should never be NULL&quot;);
+  return <b>CATReturnFailure</b>;
+}    </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>CATSysLogError</code> that logs a message like <code>CATSysLogAbend</code>
+    in the potential abend log, but doesn't abend, either in a customer or
+    development environment. Its typical use is to test an argument:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>if (NULL == pInputPointer)
+{
+  ... // Cleaning
+  <b>CATSysLogError</b>(&quot;Invalid NULL input pointer&quot;);
+  return <b>CATReturnFailure</b>;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>The messages are passed as character strings to be logged in the abend log.
+They must be written in correct english since they can be read by the customer.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="450000"></a>Analyzing the Error</h3>
+<p>You can can analyze the error class instance using the following methods:</p>
+<table width="100%">
+  <tr>
+    <th><b>Data to Analyze</b></th>
+    <th><b>Method</b></th>
+    <th><b>Comment</b></th>
+  <tr>
+    <td valign="top">Error class base class name</td>
+    <td valign="top"><code>IsAKindOf</code></td>
+    <td valign="top">The error class base class name helps you determine which
+      kind of error happens</td>
+  </tr>
+  <tr>
+    <td valign="top">Error class name</td>
+    <td valign="top"><code>ClassName</code></td>
+    <td valign="top">The error class name helps you call the class methods or
+      retrieve data members, if any</td>
+  </tr>
+  <tr>
+    <td valign="top">Return code</td>
+    <td valign="top"><code>GetReturnCode</code></td>
+    <td valign="top">The return code helps you determine the code returned</td>
+  </tr>
+  <tr>
+    <td valign="top">Error severity</td>
+    <td valign="top"><code>GetInformationOnErrorType</code></td>
+    <td valign="top">The error severity helps you decide if the error is
+      critical, fatal, a warning, or an information</td>
+  </tr>
+  <tr>
+    <td valign="top">Error context</td>
+    <td valign="top"><code>GetSourceContext</code></td>
+    <td valign="top">The source context is the name of the application that
+      issues the error (CATIA by default)</td>
+  </tr>
+  <tr>
+    <td valign="top">Error source</td>
+    <td valign="top"><code>GetNLSSource</code></td>
+    <td valign="top">The error source is made up of a concatenation of the
+      source context, the error message catalog file name, and the error message
+      key</td>
+  </tr>
+  <tr>
+    <td valign="top">Error identifier</td>
+    <td valign="top"><code>GetId</code></td>
+    <td valign="top">The error identifier helps you precisely identify the error</td>
+  </tr>
+  <tr>
+    <td valign="top">Error message key</td>
+    <td valign="top"><code>GetMsgId</code></td>
+    <td valign="top">The error message key helps you determine the message
+      associated with the error</td>
+  </tr>
+  <tr>
+    <td valign="top">Error message catalog</td>
+    <td valign="top"><code>GetMsgCatalog</code></td>
+    <td valign="top">The error message catalog helps you determine where the
+      error message is stored</td>
+  </tr>
+  <tr>
+    <td valign="top">Error message</td>
+    <td valign="top"><code>GetNLSMessage</code></td>
+    <td valign="top">The error message is retrieved as built by the caller with
+      parameters valued</td>
+  </tr>
+  <tr>
+    <td valign="top">Request part of the message</td>
+    <td valign="top"><code>GetNLSRequest</code></td>
+    <td valign="top">As above, for the Request part of the error message</td>
+  </tr>
+  <tr>
+    <td valign="top">Diagnostic part of the message</td>
+    <td valign="top"><code>GetNLSDiagnostic</code></td>
+    <td valign="top">As above, for the Diagnostic part of the error message</td>
+  </tr>
+  <tr>
+    <td valign="top">Advice part of the message</td>
+    <td valign="top"><code>GetNLSAdvice</code></td>
+    <td valign="top">As above, for the Advice part of the error message</td>
+  </tr>
+  <tr>
+    <td valign="top">Source file name</td>
+    <td valign="top"><code>GetSourceFileName</code></td>
+    <td valign="top">The source file name is the path name of the source file in
+      which the error occurs</td>
+  </tr>
+  <tr>
+    <td valign="top">Source line number</td>
+    <td valign="top"><code>GetSourceLineNumber</code></td>
+    <td valign="top">The source line number is the number of the line in the
+      source filewhere the error occurs</td>
+  </tr>
+</table>
+<p>If the error is a major one, you must trace the error, as described in <a href="#440000">Tracing
+the Error</a>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="500000"></a>Creating New Error Messages</h3>
+<p>The message associated with the error is stored in a message catalog file.
+This allows for message translation or customization. The message catalog file
+should be created as a text file in the CNext\resources\msgcatalog directory for
+the english version, and in:
+<ul>
+  <li>CNext\resources\msgcatalog\German for the german version</li>
+  <li>CNext\resources\msgcatalog\French for the french version</li>
+  <li>CNext\resources\msgcatalog\Japanese for the japanese version</li>
+</ul>
+<p>and should be suffixed using CATNls. This file is put in the run time view
+thanks to the mkCreateRuntimeView command, and found using the CATMsgCatalogPath
+environment variable set by the mkrun command.</p>
+<p>Assume that the following message is extracted from the
+CAAFileErrorCatalog.CATNls file.</p>
+<p>An error message is associated with a key that must be unique in the message
+file and used in the code to fetch the message. It is generally a composite
+message, made of three elementary messages, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+FileERR_1999.Request    = &quot;Attempt to open the file /p&quot;;
+FileERR_1999.Diagnostic = &quot;This file is not found&quot;; 
+FileERR_1999.Advice     = &quot;Locate this file or try another one&quot;;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Messages have the following structure.</p>
+<p><img border="0" src="images/CAASysError1.gif" width="505" height="134"></p>
+<p>The key must be unique in a message catalog file, and is built using a prefix
+of your own, here <code>File</code>, followed by the error identifier, here <code>ERR_1999</code>.
+The descriptor is separated from the key by a dot, like a suffix, such as <code>Diagnostic</code>.
+The prefix and the descriptor are not required, but the error identifier must
+always be <code>ERR_nnnn</code>, where <code>ERR</code> is required and <code>nnnn</code>
+must be an integer. The error identifier must also be unique for a given message
+catalog file.</p>
+<p>Even if you think to write three different messages with the three
+descriptors given above, they are handled as a single message using the message
+key. Nevertheless, you need to set their parameters using the <code>SetNLSRequestParams</code>,
+<code>SetNLSDiagnosticParams</code>, and <code>SetNLSAdviceParams</code> methods
+respectively.You can also create a message without descriptors, such as the
+following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+FileERR_2000 = &quot;File /p not found.\nTry another one.&quot;;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When you write your error messages, classify the information to pass to the
+end user using the descriptor:
+<ul>
+  <li>Request: describes the attempted action that fails</li>
+  <li>Diagnostic: describes the cause of the failure</li>
+  <li>Advice: describes what to do for the attempted action to succeed, or gives
+    a by-pass.</li>
+</ul>
+<p>As any message, an error message can contain parameters. The value of these
+parameters are set at run time. To include parameters in your message, use the <code>/p</code>
+keyword. You can also use <code>/P</code>, or <code>/p1</code>, <code>/p2</code>,
+or also <code>/P1</code>, <code>/P2</code>, and so on. Each time such a keyword
+is found in the message, it is candidate to be filled in by a run time value. If
+no value is passed for a given parameter, it is replaced by ?? in the displayed
+message. The following is an example of an error message with parameters.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>SketchLimitERR_0010.Request    = &quot;The selected elements /p1 and /p2 cannot be relimited&quot;;
+SketchLimitERR_0010.Diagnostic = &quot;Lengthed elements cannot be relimited.\nTheir lengthes are:
+\t/P1 for first element /p2
+\t/P3 for second element /p4
+They are converted into distances.&quot;;
+SketchLimitERR_0010.Advice     = &quot;To relimit, do not select lengthed elements&quot;; </pre>
+    </td>
+  </tr>
+</table>
+<p>Note that you can use special characters, such as \n or \t. This message is
+displayed at run time in a prompt as follows:</p>
+<p><img border="0" src="images/CAASysError1.jpg" width="360" height="178"></p>
+<p>The title of the prompt box is made of the error source, that is, the
+concatenation of the running context, the error message catalog file, and the
+error message key. The running context, here CNext, is the name of the
+application from which the error is issued. The messages are displayed in the
+Request-Diagnostic-Advice order. The icon shown in the prompt box depends on the
+<a href="#400000">error type</a> set at run time.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="600000"></a>Creating New Error Classes</h3>
+<p>An error class can be used for several errors dealing with a common topic.
+The error class you can create and instantiate should derive from one of the
+five following classes, since you should never derive from <i>CATError</i>
+directly:</p>
+<p><img border="0" src="images/CAASysCATError.jpg" width="564" height="143"></p>
+<p>These classes provide a first error classification:
+<ul>
+  <li><i>CATInputError</i> is dedicated to end user input when the input is out
+    of the scope of the method</li>
+  <li><i>CATInternalError</i> is for your internal algorithm or process errors</li>
+  <li><i>CATResourceError</i> reports errors such as disk failure, memory
+    overflow, and so on</li>
+  <li><i>CATSystemError</i> reports system errors. <b>Don't use it</b></li>
+  <li><i>CATCOMErrors</i> is reserved to COM interfaces. <b>Don't use it</b></li>
+</ul>
+<p>You can refine this classification. For example, the <i>CATFileError</i>
+class could be dedicated to file errors and derive from <i>CATResourceError</i>.
+It is created using macros and have the following header file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATResourceError.h&quot;
+
+class CATFileError : public CATResourceError
+{
+  public:
+  CATDeclareError(CATFileError, CATResourceError)
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>and the following source file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATFileError.h&quot;
+
+CATImplementError(CATFileError, CATResourceError);
+
+CATImplementNLSErrorClass(CATFileError);</pre>
+    </td>
+  </tr>
+</table>
+<p>The macros create the class at build time.</p>
+<p>You can also want to pass useful parameters to your callers, for example
+those that you use to fill in the message associated with the error such as the
+name of the file in error. Using these parameters values, the callers may decide
+what to do. Create such as class as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATResourceError.h&quot;
+
+class CATFileError : public CATResourceError
+{
+  public:
+    CATDeclareError(CATFileError, CATResourceError)
+    CATFileError(const char * iMsgId, const char * iMsgCatalog, char * iFileName);
+    HRESULT SetFileName(char *  iFileName);
+    HRESULT GetFileName(char ** oFileName);
+  private:
+    char * _FileName;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;The source file of this class could be as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATFileError.h&quot;
+
+CATImplementError(CATFileError, CATResourceError);
+
+CATImplementNLSErrorClass(CATFileError);
+
+CATFileError::CATFileError(const char * iMsgId, const char * iMsgCatalog, char * iFileName)
+            : CATResourceError(iMsgId, iMsgCatalog)
+{
+  _FileName = iFileName;
+}
+
+HRESULT CATFileError::SetFileName(char *  iFileName)
+{
+  _FileName = iFileName;
+  CATReturnSuccess;
+}
+
+HRESULT CATFileError::GetFileName(char ** oFileName)
+{
+  if (NULL != oFileName)
+  {
+    *oFileName = _FileName;
+    CATReturnSuccess;
+  }
+  else
+    CATReturnFailure;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Error class instances can be associated with returned HRESULTs or exceptions, along with an error
+identifier and a message that can include parameters values from the method current state.&nbsp;
+If the method is located at the appropriate level, a prompt can be issued to the end user.
+Errors can be traced using the <code>CATSysLogAbend</code> and <code>CATSysLogError</code>
+macros. If necessary, new error messages and new error classes can be created.
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocTechArticles/CAADocErrorsRules.htm">CAA V5 Error Processing Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAASysErrors.htm">Managing Errors Using HRESULT</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysExceptions.htm">Managing Errors Using Exceptions</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Nov 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

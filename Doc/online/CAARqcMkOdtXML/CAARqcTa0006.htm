@@ -1,0 +1,229 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<title>How to Create Scripts as Test Objects</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Create Scripts as Test Objects</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows how to create scripts as test objects 
+		to replay your test programs and add some initializations before and/or 
+		some post processing after them that you do not want to or cannot include 
+		in these test programs.</p>
+		<ul>
+			<li><a href="#Why">Why Creating Scripts</a></li>
+			<li><a href="#What">What to Do in a Script</a>
+			<ul>
+				<li><a href="#What1">Setting Environment Variables</a></li>
+				<li><a href="#What2">Running Initializations</a></li>
+				<li><a href="#What3">Calling Your Test Program</a></li>
+				<li><a href="#What4">Comparing Test Output with Reference Data</a></li>
+				<li><a href="#What5">Processing Return Codes</a></li>
+			</ul>
+			</li>
+			<li><a href="#Where">Where to Put Your Scripts</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Why"></a>Why Creating Scripts</h2>
+<p>Before replaying a test object, some initializations may be necessary. For example, 
+you may need to set the values of some environment variables, or find the input 
+data the test object needs as input before actually starting the test. When the 
+test program ends, you may want to clean possible created output, perform checks 
+to compare some output data with reference data to make sure that the tested code 
+runs as specified, or retrieve and process error codes.</p>
+<p>The way to do this is to use a bat or a shell file in place of an executable 
+in the <kbd>Command</kbd> tag of the test object XML file. This file does the initializations, 
+call the test program, and when this ends, runs the post processing.</p>
+<p>For example, you may use a specific environment variable <code>MyEnvVar</code> 
+for a given purpose that you may set at a value depending on the test program that 
+uses it, and you want to process the test program return code.</p>
+<pre class="code">@echo off
+setlocal
+
+set MyEnvVar=ValueForThisODT
+
+MyTestProgram
+
+echo ERRORLEVEL = %ERRORLEVEL%
+if %ERRORLEVEL% NEQ 0 (
+  rem Report the error in you corporate dashboard
+} else {
+  rem Report that the test program runs well 
+}
+
+exit /b %ERRORLEVEL%
+</pre>
+<p>You can also use a script file to launch the same test program several times, 
+each of them with a different set of input parameters. </p>
+<pre class="code">@echo off
+setlocal
+...
+
+set arg1=arg1Value1
+set arg2=arg2Value1
+
+MyTestProgram %arg1% %arg2%
+
+echo ERRORLEVEL = %ERRORLEVEL%
+if %ERRORLEVEL% NEQ 0 (
+  rem Report the error
+  exit /b %ERRORLEVEL%
+}
+
+rem Go on with next test 
+set arg1=arg1Value2
+set arg2=arg2Value2
+
+MyTestProgram %arg1% %arg2%
+...</pre>
+<p>You can also check whether the replay environment is correctly set before launching 
+the test program.</p>
+<pre class="code">@echo off
+setlocal
+...
+
+if defined myVar {
+  rem Proceed with the test program
+  ...
+}else {
+  rem Process the error and exit
+  ...
+}
+</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="What"></a>What to Do in a Script</h2>
+<p>The following consists of examples of what can be done, and no doubt that you 
+will find other numerous things to do in such scripts.</p>
+<p>The script should, as usual, run a prolog which can include setting environment 
+variables and running some initialization steps. Then the script should call your 
+test program. When this program returns, the script can possibly compare the output 
+data with data you have created as reference and that represents what is expected 
+when the test program runs well, and finally process possible error code when something 
+went wrong.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What1"></a>Setting Environment Variables</h3>
+<p>You may have designed your test programs to get information or data from environment 
+variables dedicated to your own business, the values of which must be set prior 
+to launch it. This is the appropriate place to set their values.</p>
+<p>These environment variables can be used to pass data as arguments of the test 
+programs, such as data read to run the test program, data output by the test program, 
+and possibly reference data to validate the output data.</p>
+<pre class="code">@echo off
+setlocal
+
+set INPUTDATA=%ADL_ODT_IN%\InputDataForThisODT.CATPart
+set OUTPUTDATA=%ADL_ODT_OUT%\OutputDataForThisODT.CATPart
+set REFDATA=%ADL_ODT_REF%\ReferenceDataForThisODT.CATPart
+
+MyTestProgram %INPUTDATA% %OUTPUTDATA%
+...</pre>
+<p>The <code>ADL_ODT_IN</code>, <code>ADL_ODT_OUT</code>, and <code>ADL_ODT_REF</code> 
+environment variables are those of mkodt [<a href="#References">1</a>].</p>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The environment 
+		variables used by mkodt [<a href="#References">1</a>] must be set before 
+		launching the mkodt command. Setting their values in a script has no effect, 
+		since mkodt gets their values when it is launched, and keeps them during 
+		the whole run. </td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What2"></a>Running Initializations</h3>
+<p>You may also need to run some initializations, such as copying data from the 
+Input folder to the temporary folder to be able to modify it during the test program 
+replay:</p>
+<pre class="code">...
+cp %ADL_ODT_IN%\myData %ADL_ODT_TMP%
+...</pre>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What3"></a>Calling Your Test Program</h3>
+<p>When all your initializations are done, you can call your test program. </p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What4"></a>Comparing Test Output with Reference Data</h3>
+<p>If the test program runs a part of your application code that creates data, making 
+sure that this code runs well is necessary, but not sufficient. A good practice 
+is to create with the application the data that the test program also creates. When 
+you have validated this data, you can keep it as reference, and whenever the test 
+program outputs its own data, compare this output data with the reference data you 
+have validated.</p>
+<p>The appropriate location of this reference data is the folder FunctionTests/OutputRef 
+of your test framework. This folder can be retrieved thanks to the <code>ADL_ODT_REF</code> 
+environment variable [<a href="#References">1</a>].</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What5"></a>Processing Return Codes</h3>
+<p>You can process the test program return code, and possible post processes, to 
+report the way the test program behave during its replay. This may feed your dashboards, 
+launch other jobs, send mails, and so on.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Where"></a>Where to Put Your Scripts</h2>
+<p>Your scripts must be available for execution whenever mkodt launches an XML test 
+object referring to one of them. The best place is the folder CNext/code/command 
+of your test frameworks. Running the mkCreateRuntimeView pushes these files in the 
+runtime view, in the folder &lt;OS&gt;/code/command, where &lt;OS&gt; is the identifier 
+of the operating system used to run mkodt [<a href="#References">2</a>], that mkodt 
+inserts in the <code>PATH</code> environment variable during its run.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>Running a script lo launch your test program enables you to add pre and post 
+process to the test. For example, pre process can be used to initialize what the 
+test program may need, and post process can be used to compare output data with 
+a reference that you have validated, and process return codes. Scripts must be located 
+in the CNext/code/command of your test frameworks.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAARqcQr0002.htm">Environment Variables</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

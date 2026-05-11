@@ -1,0 +1,335 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Conveying End User Intent from Mouse to Controller</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Conveying End User Intent from Mouse to Controller</h3>
+      <em>How the end user actions on the mouse become object modifications</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The mouse is the main device used to interact with CATIA. The end user
+      should be able to perform many kinds of actions with only three buttons
+      and mouse moves. The mouse quickly delegates the end user intended actions
+      to manipulators set onto the representations of the model objects. Here we
+      present the notification protocol used to standardize the end user
+      intents.
+      <ul>
+        <li><a href="#100000"><strong>What Happens when the End User Plays with
+          the Mouse?</strong></a></li>
+        <li><a href="#200000"><strong>The Manipulator States Reflecting the End
+          User Interactions</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Happens when the End User Plays with the Mouse</h3>
+<p>When the end user moves the mouse above, drags, clicks or double-clicks on an
+object, this is to do something on this object. Manipulators allows for mapping
+behaviors on objects, as if they could propose themselves the available tools to
+manipulate objects. In addition, manipulators provide consistent user interface
+guidelines through the reactivity of the model objects when the mouse is located
+or moves on the representations which stand for them.</p>
+<p>A representation is then controlled by the manipulator. It's the way to
+define what happens when:
+<ul>
+  <li>The mouse is located or moves above a representation controlled by a
+    manipulator: the representation is preactivated, ready to be manipulated. It
+    can be highlighted, and handles can appear to allow for manipulating it</li>
+  <li>The left button of the mouse is pressed on this representation: the
+    representation is activated</li>
+  <li>The mouse drags the representation with the left button pressed to move it
+    or drags a handle of the representation to deform it: the representation is
+    being manipulated</li>
+  <li>The left button of the mouse is double clicked on a representation: the
+    represented model object is asked to edit itself by providing an editing
+    dialog window</li>
+  <li>The right button of the mouse is pressed on this representation: the model
+    object is asked to show the contextual actions that can be performed against
+    it. A contextual menu is displayed</li>
+  <li>The mouse is located or moves on a representation while the the help key
+    or the F1 key is pressed: help is asked on the represented model object.</li>
+</ul>
+<p>The different end user actions introduced above set the manipulator in
+different states that we can define using a finite state machine.</p>
+<p>The state of a manipulator is composite and made of three parts:
+<ol>
+  <li>The <i>interactive</i> part describes the action of the end user on the
+    manipulator at a given time. It is encoded using the MState member data of
+    the class CATManipulator</li>
+  <li>The device part describes if a manipulator is current for dragging, that
+    is can be used from now on by non-pointing devices (devices which cannot
+    choose objects on the screen such as key arrow or space ball). It is encoded
+    using the MDeviceState member data of the CATManipulator class</li>
+  <li>The <i>edit</i> part describes if the popup containing the dialog for
+    editing parameters to move or deform the object is there or not. It is
+    encoded using the MEditState member data of the CATManipulator class.</li>
+</ol>
+<p>This figure shows the states of a manipulator (in boxes) and the
+notifications sent when shifting from one state to another (along the arrows)
+due to end-user interactions represented by the mouse, here with the first
+manipulator style used (left button pressed):</p>
+<p><img src="images/CAAVisViewerProtocol.gif" alt="CAAVisViewerProtocol.gif (11027 bytes)" width="427" height="431"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The Manipulator States Reflecting the End User
+Interactions</h3>
+<p>The following table describes the notifications received by a manipulator
+that controls a representation and the states it takes depending on the events
+due to the user interactions.</p>
+<table rules="ROWS">
+  <tr>
+    <td rowspan="2" colspan="1"><b>What happens when</b></td>
+    <td rowspan="2" colspan="1"><b>Notification sent</b></td>
+    <td rowspan="1" colspan="3" align="center"><b>State is or becomes</b></td>
+  </tr>
+  <tr>
+    <td rowspan="1" colspan="1"><b>MState</b></td>
+    <td rowspan="1" colspan="1"><b>MDeviceState</b></td>
+    <td rowspan="1" colspan="1"><b>MEditState</b></td>
+  </tr>
+  <tr valign="top">
+    <td>The mouse is not located above the representation</td>
+    <td>None</td>
+    <td>InNormal</td>
+    <td>UnPlugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The mouse intersects the representation</td>
+    <td>Preactivate</td>
+    <td>InPreactivate</td>
+    <td>UnPlugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The mouse moves above the representation</td>
+    <td>Move</td>
+    <td>InPreactivate</td>
+    <td>UnPlugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The left button is pressed above the representation</td>
+    <td>Activate followed by BeginManipulate</td>
+    <td>InActivate followed by InManipulate</td>
+    <td>Plugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The representation is dragged with the left button down</td>
+    <td>Manipulate</td>
+    <td>InManipulate</td>
+    <td>Plugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The left button is released</td>
+    <td>EndManipulate</td>
+    <td>InNormal</td>
+    <td>Plugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The left button is pressed above another representation not controlled
+      by the manipulator or above the background</td>
+    <td>EndActivate</td>
+    <td>InNormal</td>
+    <td>UnPlugged</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The right button is pressed above the representation</td>
+    <td>Context</td>
+    <td>InContext</td>
+    <td>Remains as is</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The contextual task ends</td>
+    <td>EndContext</td>
+    <td>InNormal</td>
+    <td>Remains as is</td>
+    <td>NotRunning</td>
+  </tr>
+  <tr valign="top">
+    <td>The left button is double clicked above a representation</td>
+    <td>Edit</td>
+    <td>InPreactivate</td>
+    <td>Plugged</td>
+    <td>Running</td>
+  </tr>
+  <tr valign="top">
+    <td>The editing task ends</td>
+    <td>EndEdit</td>
+    <td>InPreactivate</td>
+    <td>Plugged</td>
+    <td>NotRunning</td>
+  </tr>
+</table>
+<p>The viewer reacts to the user interactions by publishing update
+notifications. The object, father of the manipulator in the command tree
+structure, needs to subscribe to these notifications by means of the callback on
+send/receive mechanism through the <tt>AddAnalyseNotificationCB</tt> method.
+This object, which is often the current interactive command, triggers then the
+appropriate method to assign an edit window if MEditState is set to Running, or
+a contextual menu if MState is set to InContext, or let the manipulator do its
+job if MState is set to Manipulate.</p>
+<p>The manipulator states are fully described below.
+<dl>
+  <dt><b>MState InNormal</b></dt>
+  <dd>The mouse is not yet located above the representation controlled by the
+    manipulator</dd>
+  <dt><b>MState InPreactivate</b></dt>
+  <dd>The mouse moves and at a given time intersects a representation controlled
+    by the manipulator without pressing any button. At this moment, the
+    manipulator receives a Preactivate notification, sets MState to
+    InPreactivate and defines the preactivation of the representation. To do
+    this, the manipulator sends a Preactivate notification to its father in the
+    command tree structure, that is to the instance of the CATCommand class or
+    one of its derived class used as one of the manipulator constructor
+    arguments. This notification is an instance of the CATPreactivate class.<br>
+    For example, a manipulator used for selection will usually highlight the
+    representation.<br>
+    When the mouse moves on a representation with a preactivated manipulator,
+    that is a manipulator with MState set to InPreactivate, the viewer publishes
+    a Move notification as long as the mouse moves and remains located above the
+    representation.<br>
+    When the mouse leaves the representation, the manipulator receives an
+    EndPreactivate notification. By default, it sends an EndPreactivate
+    notification to its father and sets MState to InNormal.</dd>
+  <dt><b>MState InActivate</b></dt>
+  <dd>A manipulator has MState set to InPreactivate. The end user clicks on the
+    mouse left button. The manipulator receives an Activate notification and
+    sets MState to InActivate. By default, a notification, instance of the
+    CATActivate class, is sent to its father. This notification must be
+    interpreted as &quot;I have taken this element&quot;. The manipulator
+    MDeviceState is set to Plugged. If a different manipulator was already
+    plugged, its MDeviceState turns to Unplugged. When a manipulator is plugged,
+    it can receive the notifications of the devices used to manipulate, such as
+    the space ball, the keyboard, the mouse, and so forth.</dd>
+  <dt><b>MState InManipulate</b></dt>
+  <dd>A manipulator has MDeviceState set to Plugged. It has subscribed to the
+    BeginManipulate notification. The left button of the mouse is pressed on the
+    representation. If the manipulator MState was not set to InActivate before
+    the mouse left button is pressed, it is first set to InActivate before then
+    be set to InManipulate until the end user releases the mouse.<br>
+    The viewer sends a BeginManipulate notification which includes the x and y
+    pixel coordinates of the mouse location. The manipulator receives it through
+    the publish/subscribe mechanism and sends a notification, instance of the
+    CATBeginManipulate class, to its father. In most cases, a mathematical
+    transformation along with a matrix and a vector are initialized to identity
+    and sent as part of the notification.<br>
+    When the object is dragged, that is, for example, when the mouse moves with
+    the left button down, or when the space ball is pressed, or when the arrow
+    down key is pressed, the viewer publishes a Manipulate notification.
+    Depending on the device used to manipulate, the manipulator updates the
+    mathematical transformation between the previous position of the graphical
+    object and the current value resulting from the manipulation. A
+    notification, instance of the class CATGenerateEvent, is sent by the
+    manipulator. The command attached to the manipulator receives this
+    transformation, possibly modifies it to satisfy the applicative constraints,
+    and deforms or moves the appropriate model objects accordingly.<br>
+    When the mouse left button is released, a CATEndManipulate notification is
+    sent and the manipulator MState returns to InNormal. If the mouse remains on
+    the representation, a Preactivate notification is sent and the MState is set
+    to InPreactivate.</dd>
+  <dt><b>MState InContext</b></dt>
+  <dd>A manipulator has MState set to InPreactivate. The end user presses the
+    mouse right button. A Context notification is sent to the manipulator which
+    MState is set to InContext. This one creates a contextual menu and sends a
+    notification, instance of the CATContext class, to its father. The father
+    command can then put items in this contextual menu and connect to these
+    items by means of the publish/subscribe mechanism and the <tt>AddAnalyseNotificationCB</tt>
+    method. When an item is chosen, the command which is attached to this item
+    is called back and executes its applicative task. When the callback ends,
+    the manipulator receives the EndContext notification and kills the
+    contextual menu. MState returns to InNormal.<br>
+    The contextual menu is specific to each manipulator and is redefined each
+    time a contextual action is asked on a manipulator.</dd>
+  <dt><b>MStateEdit Running</b></dt>
+  <dd>A manipulator is preactivated or activated and the associated
+    representation is double clicked. If the manipulator was only preactivated,
+    it first becomes activated. An Edit notification is published by the viewer.
+    The default behavior of the manipulator consists in sending a notification,
+    instance of the CATEdit class to its father. The command connected to the
+    manipulator can decide to value the MEditState of the manipulator to Running
+    to associate dialog with it. The command must create a popup and assign it
+    to the manipulator. This popup is supposed to contain dialog components,
+    such as alphanumeric fields, slider, other specific representations with new
+    manipulators, and so forth, for changing the values exported by the
+    manipulator. The destruction of these elements occurs when the command
+    receives the CATEndEdit notification, that is when the manipulator leaves
+    the edit state. The manipulator MEditState returns to NotRunning when the
+    edit popup is destroyed when the end-user presses ok, cancel or close). In
+    most cases, the command will not define the contents of the edit popup. A
+    specific manipulator, such as a translation or a rotation manipulator, will
+    have its own edition window to define the value of the event exported by the
+    manipulator.<br>
+    A non trivial use of the edit state can be to have a manipulator for
+    selection connected to a set of objects. Its behavior when MEditState is
+    turned to Running can consist in displaying the controlled representations
+    in the edit window and assigning them specific manipulators to deform the
+    model object geometry. Leaving the edit window turns MEditState to
+    NotRunning and destroys the manipulators used for the deformation.</dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>When the end user uses the mouse, the different actions are transformed into
+notifications the system sends to the viewer. Each notification sent reflects
+the mouse state and movement which themselves reflect the end user intent.</p>
+<p>Providing manipulators which subscribe to these notifications bring to the
+objects manipulated the behavior you wish to match the end user's expected
+actions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

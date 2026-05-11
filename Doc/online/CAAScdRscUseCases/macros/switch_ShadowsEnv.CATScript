@@ -1,0 +1,118 @@
+Option Explicit
+
+' COPYRIGTH DASSAULT SYSTEMES 2003
+
+' ***********************************************************************
+'   Purpose:		Switch on and off all the environment' shadows of a product
+'
+'   Version:		1.0
+'   Author:			bmb
+'   Languages:		VBScript 
+'   Locales:		English 
+'   CATIA Level:	V5R12 
+' ***********************************************************************
+
+
+' Main 
+Sub CATMain()
+
+	' Get the documents collection
+	Dim oCollection As Documents
+	Set oCollection = CATIA.Documents
+
+	' test if no document is open
+	If 0=oCollection.Count Then 
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch On Lights"
+		Exit Sub
+	End If
+
+	 ' Get material library
+	Dim oProductDocument As Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	' test if the active document is a material library (CATMaterial)
+	If 0=InStr(oProductDocument.Name, ".CATProduct") Then
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch Off Shadows"
+		Exit Sub
+	End If
+
+	' Accessing the Root Product
+	Dim oRootProduct As Document
+	Set oRootProduct = oProductDocument.Product
+
+	' Accessing the collection of rendering env
+	Dim oRenderingEnvironments As RenderingEnvironments
+	Set oRenderingEnvironments = oRootProduct.GetItem("CATRscRenderingEnvironmentVBExt")
+
+	' Declarations
+	Dim I As Int, J As Int
+	Dim oRenderingEnvironment As RenderingEnvironment
+	Dim oRenderingEnvironmentWalls As RenderingEnvironmentWalls
+	Dim oRenderingEnvironmentWall As RenderingEnvironmentWall
+	Dim iTypeEnv As Int
+
+	' Create the parameter
+	Dim oParams As Parameters
+	Dim oReadParam As Parameter
+	Dim oParam As Parameter
+	Dim sParamValue As String
+	Set oParams = oProductDocument.Product.Parameters
+
+	On Error Resume Next
+	Set oParam = oParams.Item("EnvironmentsShadowsStatus")
+
+	If Err <> 0 Then ''''''''' switch OFF '''''''''
+		' Environments loop
+		For I=1 To oRenderingEnvironments.Count
+			Set oRenderingEnvironment = oRenderingEnvironments.Item(I)
+
+			' Select the active env
+			If 1=oRenderingEnvironment.ActiveStatus Then
+				iTypeEnv = oRenderingEnvironment.GetType
+				sParamValue = oRenderingEnvironment.Name & "="
+
+				' Walls loop
+				For J=1 To 6
+					' Adapt to the env type
+					If (J<=2 And iTypeEnv<>2) Or (J<=4 And J>=3 And iTypeEnv=1) Or (J>=5)  Then
+						Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(J)
+						If 1=oRenderingEnvironmentWall.ShadowsStatus Then
+							sParamValue = sParamValue & J
+							oRenderingEnvironmentWall.ShadowsStatus = 0
+						End If
+					End If
+				Next
+				Exit For
+			End If
+		Next
+
+		' Create the parameter
+		oParams.CreateString "EnvironmentsShadowsStatus", sParamValue
+		oParams.Item("EnvironmentsShadowsStatus").Hidden = True
+
+
+	Else ''''''''' switch ON '''''''''
+
+		' Parse the parameter value
+		Dim aTab As Array
+		sParamValue = oParam.ValueAsString ' read the parameter value
+		aTab = Split(sParamValue, "=")
+
+		Set oRenderingEnvironment = oRenderingEnvironments.Item(aTab(0))
+		If Err <> 0 Then ' env not exist
+			msgbox "Impossible to find the environment '" & aTab(0) & "'", vbOKOnly, "Switch On Environmemts' Shadows"
+		Else
+			For I=0 To Len(aTab(1))
+				Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(Mid(aTab(1), I, 1))
+				oRenderingEnvironmentWall.ShadowsStatus = 1
+			Next
+		End If
+
+		' Remove parameter
+		oParams.Remove "EnvironmentsShadowsStatus"
+
+	End If
+
+End Sub
+
+

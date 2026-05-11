@@ -1,0 +1,134 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Migrating Your Identity Cards to XML</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Migrating Your Identity Cards to XML</h3>
+      <em>From .h to .xml</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The <strong>IdentityCard</strong> file is encoded in XML starting with 
+		V6R2012x. The IdentityCard.h format is still supported, but you are strongly 
+		encouraged to migrate your Identity Cards to XML. You can migrate your Identity 
+		Card files using either mkICE or mkIc2Xml.</p>
+		<ul>
+			<li><a href="#mkICE">Using mkICE</a></li>
+			<li><a href="#mkIc2Xml">Using mkIc2Xml</a></li>
+			<li><a href="#Reference">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="mkICE"></a>Using mkICE</h2>
+<ol class="task">
+	<li>
+	<p>In a command prompt located at the root folder of your workspace and initialized 
+	with the appropriate TCK using the tck_init and tck_profile commands, type mkICE 
+	[<a href="#Reference">2</a>].</p>
+	<p>The <kbd>Identity Card Editor</kbd> dialog window opens.</p>
+	</li>
+	<li>
+	<p>On the <kbd>File</kbd> menu, click <kbd>Open from .h</kbd>.</p>
+	<p>The <kbd>Open</kbd> dialog box opens.</p>
+	</li>
+	<li>
+	<p>Navigate you workspace to find the IdentityCard.h file to migrate and click
+	<kbd>Open</kbd>.</p>
+	<p>The IdentityCard.h file content is converted to XML and displayed.</p>
+	</li>
+	<li>
+	<p>On the <kbd>File</kbd> menu, click <kbd>Save</kbd>.</p>
+	<p>The IdentityCard.xml is saved.</p>
+	</li>
+	<li>
+	<p>Delete the IdentityCard.h file.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="mkIc2Xml"></a>Using mkIc2Xml</h2>
+<ol class="task">
+	<li>
+	<p>In a command prompt located at the root folder of your workspace and initialized 
+	with the appropriate TCK using the tck_init and tck_profile commands, type mkIc2Xml 
+	followed by the names of your frameworks [<a href="#Reference">3</a>].</p>
+	<p>For example:</p>
+	<pre class="code">
+&gt;ls *\IdentityCard\*.h
+A.edu/IdentityCard/IdentityCard.h  A.tst/IdentityCard/IdentityCard.h  A/IdentityCard/IdentityCard.h
+&gt;<strong>mkIc2Xml A A.edu A.tst</strong>
+== Starting generation: 3 framework(s) to do
+A Done [1/3]
+A.edu Done [2/3]
+A.tst Done [3/3]
+== Generation done
+&gt;ls *\IdentityCard\*.xml
+A.edu/IdentityCard/IdentityCard.xml  A.tst/IdentityCard/IdentityCard.xml  A/IdentityCard/IdentityCard.xml</pre>
+	</li>
+	<li>
+	<p>Delete the IdentityCard.h files of you frameworks.</p>
+	</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Reference"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="#" onclick="CAAlinkOutOfPreqs('CAADocTechArticles/CAADocBADErrors.htm'); return false">
+		Framework Architecture Rules</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="../CAABtlQuickRefs/CAABtlMkICEV5.htm">mkICE</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="../CAABtlQuickRefs/CAABtlMkIc2XmlV5.htm">mkIc2Xml</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

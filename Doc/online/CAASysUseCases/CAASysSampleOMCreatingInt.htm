@@ -1,0 +1,302 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Interfaces</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Interfaces</h3>
+      <em>Declaring component expected type and behavior</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create interfaces.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysGeoModelInf Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysGeoModelInf Do</a></li>
+            <li><a href="#How">How to Launch CAASysGeoModelInf</a></li>
+            <li><a href="#Where">Where to Find the CAASysGeoModelInf Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create interfaces&nbsp; that
+declare either a type or a behavior that a component [<a href="#References">1</a>]
+can implement [<a href="#References">2</a>] and that can be used in client
+application [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASysGeoModelInf Use Case</h3>
+<p>CAASysGeoModelInf is a use case of the CAASystem.edu framework that
+illustrates CATIA System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAASysGeoModelInf Do</h4>
+<p>This use case gives a set of interfaces whose header files are located in the
+PublicInterfaces directory. The <i>CAAISysCircle</i> interface is taken as an
+example in this article to describe the steps of an interface creation. This
+interface is a type interface for a circle component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysGeoModelInf</h4>
+<p>To launch CAASysGeoModelInf, you will need to set up the build time
+environment, then compile CAASysGeoModelInf along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">3</a>].</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+CATIA is ready, do the following:
+<ul>
+  <li>Select File-&gt;New
+  <li>In the New box, select CAAGeometry and click OK
+  <li>Create several geometric objects such as points, lines, planes, and so on,
+    using the Basic Elements toolbar, or using the same commands in the Insert
+    menu.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysGeoModelInf Code</h4>
+<p>The CAASysGeoModelInf use case is made of several classes located in the
+CAASysGeoModelInf.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysGeoModelInf.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysGeoModelInf.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create an interface such as <i>CAAISysCircle</i>, there are three main
+steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the <i>CAAISysCircle</i> interface header file</td>
+    <td valign="top">CAAISysCircle.h file in PublicInterfaces</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the <i>CAAISysCircle</i> interface source file</td>
+    <td valign="top">CAAISysCircle.cpp file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the <i>CAAISysCircle</i> interface TIE</td>
+    <td valign="top">TIE_CAAISysCircle.tsrc file</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the CAAISysCircle Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef CAAISysCircle_H
+#define CAAISysCircle_H
+
+#include &quot;CATBaseUnknown.h&quot;   // Needed to derive from CATBaseUnknown
+
+<b>#include &quot;CATMathPoint.h&quot;     // Needed by GetCenter &amp; SetCenter -&gt; class CATMathPoint; ??
+#include &quot;CATMathVector.h&quot;    // Needed by SetPlane &amp; GetPlanar -&gt; class CATMathVector; ??</b>
+
+#include &quot;CAASysGeoModelInf.h&quot;  // Needed to export the IID and the class
+
+// Global Unique IDentifier defined in .cpp 
+<b>extern ExportedByCAASysGeoModelInf IID IID_CAAISysCircle</b>;
+
+<b>class ExportedByCAASysGeoModelInf CAAISysCircle</b> : public CATBaseUnknown
+{
+  // Used in conjunction with CATImplementInterface in the .cpp file 
+  <b>CATDeclareInterface</b>;
+
+  public :
+
+    <b>virtual</b> <b>HRESULT</b> SetPlane (const CATMathVector &amp; iNormal, 
+                              const CATMathVector &amp; iAxis)   =0 ;
+    virtual HRESULT SetCenter(const CATMathPoint &amp; iCenter)  =0 ;
+    virtual HRESULT SetRadius(const float iRadius)           =0 ;
+
+    virtual HRESULT GetPlane (CATMathVector &amp; oNormal,
+                              CATMathVector &amp; oAxis)  const  =0 ;   
+    virtual HRESULT GetCenter(CATMathPoint &amp; oCenter) const  =0 ;
+    virtual HRESULT GetRadius(float &amp; oRadius)        const  =0 ;
+};
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAISysCircle</i> interface IID (Interface IDentifier) [<a href="#References">4</a>]
+is declared using the <code>extern</code> keyword to enable client application
+to ask for <i>CAAISysCircle</i> interface pointers. The <i>CAAISysCircle</i>
+interface is an abstract class. All its methods are consequently declared as
+pure virtual, using the <code>virtual</code> keyword and by placing <code>=0</code>
+at the end of their declarations. <i>CAAISysCircle</i> derives from <i>CATBaseUnknown</i>,
+as any interface. The <code>CATDeclareInterface</code> macro declares that the
+abstract class <i>CAAISysCircle</i> is an interface. There is neither
+constructor nor destructor, since this class cannot ne instantiated.</p>
+<p>To define a circle in the 3D space, three data should be set:</p>
+<ul>
+  <li>The plane on which the circle lies</li>
+  <li>The point used as the circle center</li>
+  <li>The circle radius.</li>
+</ul>
+<p>The three methods <code>SetPlane</code>, <code>SetCenter</code>, and <code>SetRadius</code>
+set this data, and the associated <code>GetPlane</code>, <code>G</code><code>etCenter</code>
+and <code>GetRadius</code> methods retrieve it. They all return an <code>HRESULT</code>
+[<a href="#References">5</a>]. Note that the parameters of the setter methods
+are declared as <code>const</code>, and thus cannot be modified by these
+methods. In the same way, the getter methods are declared as read-only using the
+<code>const</code> keywords placed after the closing parenthesis. Both setter
+and getter methods use references to components as parameters. This is to
+simplify the implementation code that have to deal with the Mathematics
+framework that uses references extensively. Otherwise, pointers could also be
+used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating the CAAISysCircle Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAISysCircle.h&quot;
+
+IID <b>IID_CAAISysCircle</b>={ /* f281aba4-d4b4-11d3-b7f5-0008c74fe8dd */
+    0xf281aba4,
+    0xd4b4,
+    0x11d3,
+    {0xb7, 0xf5, 0x00, 0x08, 0xc7, 0x4f, 0xe8, 0xdd}
+  };
+
+<b>CATImplementInterface</b>(CAAISysCircle, CATBaseUnknown);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAISysCircle</i> interface source file gives the value of <i>CAAISysCircle</i>
+IID [<a href="#References">4</a>]. The <code>CATImplemenInterface</code> macro
+declares that the <i>CAAISysCircle</i> interface OM-derives [<a href="#References">6</a>]
+from <i>CATBaseUnknown</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the CAAISysCircle Interface TIE</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAISysCircle.h&quot;</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAISysCircle</i> interface TIE is created by the code builder mkmk
+using a simple include of the CAAISysCircle.h file in the
+TIE_CAAISysCircle.tsrc. This file should be located in the same src directory
+than CAAISysCircle.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create an interface as an abstract class, and how
+to create the interface TIE.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritance</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAASysQuickRefs/CAASysGUID.htm">About Globally
+      Unique IDentifiers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysQuickRefs/CAASysHRESULT.htm">What Is
+      HRESULT?</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

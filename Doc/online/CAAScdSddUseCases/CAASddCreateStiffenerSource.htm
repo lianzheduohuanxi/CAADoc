@@ -1,0 +1,104 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASddCreateStiffener.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">'---------------------------------------------------------------------------</font>
+<font color="#008000">'COPYRIGHT DASSAULT SYSTEMES 2011</font>
+
+<font color="#008000">' ****************************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:       To create members.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Assumptions:   The Part document CAASddCreateStiffer.CATPart should be active</font>
+<font color="#008000">'</font>
+<font color="#008000">' Author:</font>
+<font color="#008000">' Languages:     VBScript</font>
+<font color="#008000">' Version:       V5R21</font>
+<font color="#008000">' Locales:       English</font>
+<font color="#008000">' CATIA Level:   V5R21</font>
+<font color="#008000">'</font>
+<font color="#008000">' ****************************************************************************</font>
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">  Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">  Set </font>ObjPart = CATIA.ActiveDocument.Part
+      
+  <font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">  Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">  Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  <font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">  Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">  Set </font>ManagerObj = FactoryObj.GetManager
+
+<font color="#008000">'RETRIEVING THE SUPERPLATES</font>
+  
+<font color="#0000FF">  Dim </font>SuperPlates<font color="#0000FF"> As </font>References
+<font color="#0000FF">  Set </font>SuperPlates = ManagerObj.GetSuperPlates
+  
+<font color="#0000FF">  Dim </font>ShellSuperPlate, DeckSuperPlate, TBHSuperPlate<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">  Set </font>ShellSuperPlate = SuperPlates.Item(1)
+<font color="#0000FF">  Set </font>DeckSuperPlate = SuperPlates.Item(2)
+<font color="#0000FF">  Set </font>TBHSuperPlate = SuperPlates.Item(3)
+  
+<font color="#008000">'CREATING SHELL STIFFENER</font>
+ <font color="#008000">'Defining Support for Stiffener</font>
+<font color="#0000FF">  Dim </font>webSupport1<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>webSupport1 = ObjPart.FindObjectByName("LONG.8")
+<font color="#0000FF">  Dim </font>webSupportRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>webSupportRef1 = ObjPart.CreateReferenceFromObject(webSupport1)
+  
+<font color="#0000FF">  Dim </font>ShellStiffener1<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>ShellStiffener1 = FactoryObj.AddSuperStiffener("ShellStiffener", "WT15x54", ShellSuperPlate, webSupportRef1)
+  
+<font color="#0000FF">  Dim </font>webSupport2<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>webSupport2 = ObjPart.FindObjectByName("CROSS.105")
+<font color="#0000FF">  Dim </font>webSupportRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>webSupportRef2 = ObjPart.CreateReferenceFromObject(webSupport2)
+  
+<font color="#0000FF">  Dim </font>ShellStiffener2<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>ShellStiffener2 = FactoryObj.AddSuperStiffener("ShellStiffener", "C12x25", ShellSuperPlate, webSupportRef2)
+  
+  <font color="#008000">'Limiting Stiffener2 By Stiffener1</font>
+  
+<font color="#0000FF">  Dim </font>StiffenerLimitRef1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>StiffenerLimitRef1 = ObjPart.CreateReferenceFromObject(ShellStiffener1)
+  
+  ShellStiffener2.SetProfileLimit 1, StiffenerLimitRef1
+  
+<font color="#008000">'CREATING DECK STIFFENER</font>
+ <font color="#008000">'Defining Support for Stiffener on DeckPlate</font>
+<font color="#0000FF">  Dim </font>webSupport3<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>webSupport3 = ObjPart.FindObjectByName("LONG.0")
+<font color="#0000FF">  Dim </font>webSupportRef3<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>webSupportRef3 = ObjPart.CreateReferenceFromObject(webSupport3)
+  
+<font color="#0000FF">  Dim </font>DeckStiffener1<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>DeckStiffener1 = FactoryObj.AddSuperStiffener("DeckStiffener", "HP12x63", DeckSuperPlate, webSupportRef3)
+  
+<font color="#008000">'CREATING TRANSVERSE BULKHEAD STIFFENER</font>
+ <font color="#008000">'Defining Support</font>
+<font color="#0000FF">  Dim </font>webSupport4<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>webSupport4 = ObjPart.FindObjectByName("LONG.-5")
+<font color="#0000FF">  Dim </font>webSupportRef4<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>webSupportRef4 = ObjPart.CreateReferenceFromObject(webSupport4)
+  
+<font color="#0000FF">  Dim </font>TBHStiffener1<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>TBHStiffener1 = FactoryObj.AddSuperStiffener("TransBulkhdStiffener", "C12x25", TBHSuperPlate, webSupportRef4)
+  
+<font color="#0000FF">  Dim </font>webSupport5<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">  Set </font>webSupport5 = ObjPart.FindObjectByName("DECK.2")
+<font color="#0000FF">  Dim </font>webSupportRef5<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>webSupportRef5 = ObjPart.CreateReferenceFromObject(webSupport5)
+  
+<font color="#0000FF">  Dim </font>TBHStiffener2<font color="#0000FF"> As </font>SfmStiffener
+<font color="#0000FF">  Set </font>TBHStiffener2 = FactoryObj.AddSuperStiffener("TransBulkhdHorStiffener", "HP12x63", TBHSuperPlate, webSupportRef5)
+  
+  <font color="#008000">'Limiting Stiffener2 By Stiffener1</font>
+  
+<font color="#0000FF">  Dim </font>StiffenerLimitRef2<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>StiffenerLimitRef2 = ObjPart.CreateReferenceFromObject(TBHStiffener1)
+  
+  TBHStiffener2.SetProfileLimit 1, StiffenerLimitRef2
+  
+  ObjPart.Update
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

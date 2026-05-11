@@ -1,0 +1,691 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Sending a Data Message to an Interactive Application</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Sending a Data Message to an Interactive Application</h3>
+      <em>Using the backbone to send a message with data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to make two interactive applications
+      communicate, and how one of them can send a data message that conveys a
+      text, and how the other can receive the message.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADlgBBSender and CAADlgBBReceiver
+          Use Cases</strong></a>
+          <ul>
+            <li><a href="#What">What Do CAADlgBBSender and CAADlgBBReceiver Do</a></li>
+            <li><a href="#How">How to Launch CAADlgBBSender and CAADlgBBReceiver</a></li>
+            <li><a href="#Where">Where to Find the CAADlgBBSender and
+              CAADlgBBReceiver Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how an interactive application can
+declare that it will send or receive messages, how to filter the messages to
+receive, and how to send and receive messages using the backbone objects of the
+System framework. The message taken as an example conveys a text.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADlgBBSender and CAADlgBBReceiver Use Cases</h3>
+<p>CAADlgBBSender and CAADlgBBReceiver are use cases of the CAADialog.edu
+framework that illustrates the Dialog and System frameworks capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Do CAADlgBBSender and CAADlgBBReceiver Do</h4>
+<p>This use case illustrates two interactive applications. One behaves as a
+message sender, and the other as a message receiver. The message is a data
+message that conveys a text. The message sender displays an entry field in which
+the end user types the message text and clicks the Send button to send the
+message. The message receiver displays a field in which the text of the received
+message is printed.</p>
+<table width="100%">
+  <tr>
+    <td><img border="0" src="images/CAADlgBBSender.jpg" width="220" height="53"></td>
+    <td><img border="0" src="images/CAADlgBBReceiver.jpg" width="195" height="52"></td>
+  </tr>
+</table>
+<p>Both the message sender and the message receiver are interactive applications
+launched by instantiating a class that derives from <i>CATInteractiveApplication</i>.
+To send the message, the message sender connects to the backbone bus, declares
+itself, instantiates the message component using the text entered in the text
+field of its window, and sends it.</p>
+<p>The message receiver needs to instantiate a message handler to receive the
+message. Such a message handler is a component that implements the <i>CATIMessageReceiver</i>
+interface. In addition, the message receiver subscribes to a notification that
+the message handler will request a message manager to dispatch along with the
+message text. To receive the message, the message receiver connects to the
+backbone bus, declares itself, declares the message to receive, instantiates the
+message handler, associates itself with the message to receive and with the
+message handler. As soon as the message is sent, it is retrieved by the message
+handler that requests the message manager to dispatch a notification that
+carries the message text, and to which the message receiver has subscribed. The
+message receiver called back method extract the message text from the
+notification and prints it in the window text field.</p>
+<p>Compared to batch applications that intend to receive messages [<a href="#References">1</a>]
+[<a href="#References">2</a>], there is no need to create and enter a waiting
+loop, since the interactive application includes one already. The message
+conveys data [<a href="#References">5</a>] made of a text. It is not described.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADlgBBSender and CAADlgBBReceiver</h4>
+<p>To launch CAADlgBBSender and CAADlgBBReceiver, you will need to set up the
+build time environment, then compile CAADlgBBSender and CAADlgBBReceiver along
+with its prerequisites, set up the run time environment [<a href="#References">3</a>]
+in two different windows, and then execute the use case.</p>
+<p>To execute the use case:
+<ul>
+  <li>With Windows, successively type in the DOS window command line the two
+    module names:
+    <pre>CAADlgBBSender
+CAADlgBBReceiver</pre>
+  </li>
+  <li>With UNIX, successively type in the shell window command line the two
+    module names with &quot;&amp;&quot; to launch them in background mode:
+    <pre>CAADlgBBSender &amp;
+CAADlgBBReceiver &amp;</pre>
+  </li>
+</ul>
+<p>Type a text in the Backbone Sender window text field, and click Send. The
+text is printed in the Backbone Receiver window text field.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADlgBBSender and CAADlgBBReceiver
+Code</h4>
+<p>The CAADlgBBSender and CAADlgBBReceiver use case are made of several classes
+located in the CAADlgBBSender.m and CAADlgBBReceiver.m module of the
+CAADialog.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADialog.edu\CAADlgBBSender.m\<br>
+      InstallRootDirectory\CAADialog.edu\CAADlgBBReceiver.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADialog.edu/CAADlgBBSender.m/<br>
+      InstallRootDirectory/CAADialog.edu/CAADlgBBReceiver.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The message component is made of several classes located in the
+CAADlgBBMessage.m module of the CAADialog.edu framework, and in addition
+implements the CAAIDlgDataRequest interface located in the PrivateInterfaces
+directory and in the CAADlgBBMessageInt.m module of the CAADialog.edu framework.
+They are not described in this article. Refer to the messages described in the
+CAASystem.edu framework [<a href="#References">4</a>] [<a href="#References">5</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create interactive applications that send and receive a data message,
+there are seven main steps:</p>
+<ol>
+  <li><a href="#Step1">Creating the Message Sender</a></li>
+  <li><a href="#Step2">Sending the Message</a></li>
+  <li><a href="#Step3">Creating the Message Handler</a></li>
+  <li><a href="#Step4">Creating the Message Manager</a></li>
+  <li><a href="#Step5">Creating the Message Receiver</a></li>
+  <li><a href="#Step6">Receiving the Message</a></li>
+  <li><a href="#Step7">Removing the Message Handler</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the Message Sender</h4>
+<p>The message sender is an interactive application whose class is <i>CAADlgBBSender</i>.
+Its main method is <code>BeginApplication</code> where the application window is
+instantiated. The window class is <i>CAADlgBBSenderWindow</i> whose <code>Build</code>
+method connects to the backbone bus by calling its <code>BackboneInit</code>
+method before creating the controls and setting a callback to react when the
+Send button is clicked. Below is the <code>BackboneInit </code>method</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT CAADlgBBSenderWindow::BackboneInit()
+{
+  HRESULT  rc = E_FAIL;
+  // Retrieves an instance of a backbone bus (default bus)
+  _pICommunicator = ::<b>CATGetBackboneConnection</b>();
+  if ( NULL != _pICommunicator )
+  {
+     CATApplicationClass ApplicationSenderId = &quot;CAADlgBBSender&quot;;
+     rc =_pICommunicator-&gt;<b>Declare</b>(ApplicationSenderId);
+     ... //Process failing declaration
+  }
+  return rc;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>First, a connection to the backbone bus must be established. This is possible
+thanks to the global function <code>CATGetBackboneConnection</code> that returns
+a pointer to the <i>CATICommunicator</i> interface stored in the <code>_pICommunicator</code>
+data member. Then, the message sender creates its application class identifier
+and declares it to the backbone bus using the method <code>Declare</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Sending the Message</h4>
+<p>The message is sent by the callback set to the push button activation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgBBSenderWindow::PushSend(CATCommand         * iSendingCommand, 
+                                    CATNotification    * iSentNotification, 
+                                    CATCommandClientData iUsefulData)
+{
+  CATUnicodeString Line;
+  _pEditor-&gt;<b>GetLine</b>(Line);
+  CAAIDlgDataRequest * pIDataRequest = NULL;
+  HRESULT rc = ::<b>CATInstantiateComponent</b>(&quot;CAADlgBBEditorMessage&quot;,
+                                         IID_CAAIDlgDataRequest,
+                                         (void **)&amp;pIDataRequest);
+  if ( SUCCEEDED(rc) )
+  {
+    pIDataRequest-&gt;<b>SetData</b>(Line.CastToCharPtr());
+
+    CATICommMsg * pICommMsg =NULL;
+    rc = pIDataRequest-&gt;QueryInterface(<b>IID_CATICommMsg</b>,(void**)&amp;pICommMsg);
+                                                 
+    if ( SUCCEEDED(rcb) )
+    {
+      CATApplicationClass ReceiverApplicationId = &quot;CAADlgBBReceiver&quot;;
+      rc = _pICommunicator-&gt;<b>SendRequest</b>(ReceiverApplicationId, pICommMsg);
+      pICommMsg-&gt;Release();
+      pICommMsg = NULL;
+    }
+    pIDataRequest-&gt;Release();
+    pIDataRequest = NULL;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>When you click Send, this method is called, and the message sender can send
+the message. It first retrieves the text entered in the text field, a <i>CATDlgEditor</i>
+instance, thanks to the <code>GetLine</code> method. Then it instantiates the
+message component <i>CAADlgBBEditorMessage</i> using the <code>CATInstantiateComponent</code>
+global function, which returns a pointer to <i>CAAIDlgDataRequest</i> interface.
+This interface is created for this message to enable it to set and get its data,
+that is, the message text. The message text is passed to the message component
+thanks to the <code>SetData</code> method of <i>CAAIDlgDataRequest</i>, and then
+the message is sent using the <code>SendRequest</code> method of <i>CATICommunicator</i>,
+specifying the target message receiver identifier and the message to send as a
+pointer to <i>CATICommMsg</i>. This message receiver identifier must be the same
+than the one declared by the message receiver itself in its own <code><a href="#Step5">BackboneInit</a></code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the Message Handler</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+class CATICommMsg;
+
+class  CAADlgBBEditorMessageHandler : public CATBaseUnknown
+{
+   CATDeclareClass;
+   public:
+      CAADlgBBEditorMessageHandler();
+      virtual ~CAADlgBBEditorMessageHandler();
+
+      // CATIMessageReceiver Interface
+      void HandleMessage(CATICommMsg * iMessage);
+
+  private:
+      CAADlgBBEditorMessageHandler(const CAADlgBBEditorMessageHandler &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAADlgBBEditorMessageHandler</i> class belongs to a component, thanks
+to the <code>CATDeclareClass</code> macro, C++ derives from <i>CATBaseUnknown</i>,
+and implements <i>CATIMessageReceiver</i>, whose single method is <code>HandleMessage</code>.
+Note that the copy constructor is set as private, and is not implemented in the
+source file. This prevents the compiler from creating the copy constructor as
+public without you know.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAADlgBBEditorMessageHandler.h&quot;
+#include &lt;CATErrorDef.h&gt; // for the SUCCEEDED macro 
+#include &quot;CAAIDlgDataRequest.h&quot;
+#include &quot;CAADlgBBMessageManager.h&quot;
+
+#include &quot;TIE_CATIMessageReceiver.h&quot;
+<b>TIE_CATIMessageReceiver(CAADlgBBEditorMessageHandler);</b>
+
+<b>CATImplementClass(CAADlgBBEditorMessageHandler,
+                  Implementation,
+                  CATBaseUnknown,
+                  CATNull);
+</b>
+CAADlgBBEditorMessageHandler::CAADlgBBEditorMessageHandler(){}
+
+CAADlgBBEditorMessageHandler::~CAADlgBBEditorMessageHandler(){}
+
+void CAADlgBBEditorMessageHandler::<b>HandleMessage</b>(CATICommMsg* iMessage)
+{
+  if ( NULL != iMessage )
+  {
+    CAAIDlgDataRequest * pIRequest = NULL;
+    HRESULT rcb = iMessage-&gt;QueryInterface(IID_CAAIDlgDataRequest,(void**) &amp;pIRequest);
+    if ( SUCCEEDED(rcb) )
+    {
+       char * Text = NULL;
+       pIRequest-&gt;GetData(&amp;Text);
+       pIRequest-&gt;Release();
+       pIRequest= NULL;
+
+       CAADlgBBMessageManager * pManager = CAADlgBBMessageManager::<b>GetManager</b>();
+       pManager-&gt;<b>EventToDispatch</b>(Text);
+        
+       delete [] Text;
+       Text = NULL;
+
+       pManager-&gt;Release();
+       pManager= NULL;
+    }
+  } 
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAADlgBBEditorMessageHandler</i> class states that it implements the <i>CATIMessageReceiver</i>
+interface thanks to the <code>TIE_CATIMessageReceiver</code> macro. The <code>CATImplementClass</code>
+macro declares that the <i>CAADlgBBEditorMessageHandler </i>class is a component
+main class thanks the <code>Implementation</code> keyword, and that the
+component OM-derives [<a href="#References">6</a>] from <i>CATBaseUnknown</i>.
+Any component main class declared as an <code>Implementation</code> must
+C++-derive and OM-derive from the same class. The <i>CATIMessageReceiver</i>
+interface <code>HandleMessage</code> method is called by the backbone bus and a
+pointer to the message is passed. A pointer to <i>CAAIDlgDataRequest</i> is
+retrieved from the message to get the message text. Then, the message manager of
+the message receiver application is retrieved. The message text is passed to the
+message manager thanks to the <code>EventToDispatch</code> method.</p>
+<p>The framework interface dictionary is updated to declare that <i>CAADlgBBEditorMessageHandler</i>
+implements the <i>CATIMessageReceiver</i>&nbsp; interface in the
+libCAADlgBBReceiver shared library or DLL. This interface dictionary is a file
+located in the CNext\code\dictionary directory, and is named CAADialog.edu.dico.
+There is one and only one interface dictionary per framework, named using the
+framework name suffixed by dico.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAADlgBBEditorMessageHandler CATIMessageReceiver  libCAADlgBBReceiver
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the Message Manager</h4>
+<p>The message manager is a component that dispatches a notification that
+carries the message text.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &lt;CAADlgBBMessageManager.h&gt;
+#include &lt;CAADlgBBMessageNotification.h&gt;
+#include &quot;CATCallbackManager.h&quot;
+
+CATImplementClass(CAADlgBBMessageManager,Implementation,CATBaseUnknown,CATNull);
+
+CAADlgBBMessageManager * CAADlgBBMessageManager::_Manager = NULL;
+
+CAADlgBBMessageManager::CAADlgBBMessageManager()
+{}
+
+CAADlgBBMessageManager::~CAADlgBBMessageManager()
+{}
+
+void CAADlgBBMessageManager::<b>EventToDispatch</b>(char * iText)
+{
+  CATCallbackManager * pCBManager = ::<b>GetDefaultCallbackManager</b>(this);
+  if ( NULL != pCBManager )
+  {
+     CAADlgBBMessageNotification * pNotification = new CAADlgBBMessageNotification(iText);
+
+     pCBManager-&gt;<b>DispatchCallbacks</b>(pNotification, this);
+
+     pNotification-&gt;Release();
+     pNotification = NULL;
+  }	
+}
+
+CAADlgBBMessageManager * CAADlgBBMessageManager::<b>GetManager</b>()
+{
+  if ( NULL == _Manager )
+  {
+    _Manager = new CAADlgBBMessageManager();
+  }
+  _Manager-&gt;AddRef();
+  return _Manager;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The message manager is created as a component and is unique. It is
+instantiated by the <code>GetManager</code> static method. The <code>EventToDispatch</code>
+method retrieves the default callback manager associated with any component,
+instantiates a <i>CAADlgBBMessageNotification</i> class that takes the message
+text as a data member, and request the default callback manager to dispatch this
+notification, to which the message receiver application will subscribe.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Creating the Message Receiver</h4>
+<p>The message receiver is an interactive application. It has a window, instance
+of the class <i>CAADlgBBReceiverWindow</i>, that carries out the main tasks of
+connecting to the backbone bus and receiving the message. Below is the <code>Build</code>
+method of&nbsp; <i>CAADlgBBReceiverWindow.</i></p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADlgBBReceiverWindow::<b>Build</b>()
+{
+  HRESULT Init = <b>BackboneInit</b>();
+
+  if ( SUCCEEDED(Init) )
+  {
+     CATDlgFrame  * pFrame  = new CATDlgFrame(this, &quot;FrameId&quot;, CATDlgFraNoFrame | CATDlgGridLayout );
+  
+     CATDlgLabel  * pLabel  = new CATDlgLabel (pFrame,&quot;LabelEditorId&quot;);
+     pLabel-&gt;SetGridConstraints(0,0,1,1,CATGRID_LEFT);
+
+     _pEditor = new CATDlgEditor(pFrame,&quot;EditorId&quot;,CATDlgEdtReadOnly);
+     _pEditor-&gt;SetGridConstraints(0,1,1,1,CATGRID_LEFT); 
+  
+     _pMessageManager = CAADlgBBMessageManager::<b>GetManager</b>();
+     ::<b>AddCallback</b>(this,
+                   _pMessageManager,
+                   &quot;CAADlgBBMessageNotification&quot;,
+                   (CATSubscriberMethod)&amp;CAADlgBBReceiverWindow::ModifyEditor,
+                   NULL);
+  }
+  AddAnalyseNotificationCB(this,
+                           GetWindCloseNotification(),
+                           (CATCommandMethod)&amp;CAADlgBBReceiverWindow::Exit, NULL);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Build</code> method first call the <code>BackboneInit</code>
+method, and if this method succeeds, creates the controls. Then it retrieves the
+message manager thanks to the static method <code>GetManager</code> of <i>CAADlgBBMessageManager</i>,
+and sets a callback, that is, subscribes to an event, using the <code>AddCallback</code>
+global function whose arguments are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>this</code></td>
+    <td>The event subscriber, that is, the message receiver application window</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>_pMessageManager</code></td>
+    <td>The event publisher, which is here the message manager</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>CAADlgBBMessageNotification</code></td>
+    <td>The event to subscribe. It is the class name of the notification that is
+      sent by the message manager</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>(CATSubscriberMethod)&amp;CAADlgBBReceiverWindow::ModifyEditor</code></td>
+    <td>The method to call back when such a notification is received</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>NULL</code></td>
+    <td>Possible useful data that could be sent with the notification</td>
+  </tr>
+</table>
+<p>The <code>BackboneInit</code> method is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAADlgBBReceiverWindow::<b>BackboneInit</b>()
+{
+  HRESULT rc = E_FAIL;
+  _pICommunicator = ::<b>CATGetBackboneConnection</b>();
+  if ( NULL == _pICommunicator )
+      ... // Process failure
+  else
+  {
+    CATApplicationClass ReceiverApplicationId = &quot;CAADlgBBReceiver&quot;;
+    rc= _pICommunicator-&gt;<b>Declare</b>( ReceiverApplicationId );
+    if ( FAILED(rc) )
+      ... // Process failure
+    else
+    {
+      CATMessageClass MessageClassName = &quot;CAADlgBBEditorMessage&quot;; 
+      CAADlgBBEditorMessageHandler * pHandlerForMessage = NULL;
+      pHandlerForMessage = new <b>CAADlgBBEditorMessageHandler</b>();
+
+      if ( NULL != pHandlerForMessage )
+      {
+        rc = pHandlerForMessage-&gt;QueryInterface(<b>IID_CATIMessageReceiver</b>,
+                                                (void**)&amp; _pIMessageReceiver);
+        if ( SUCCEEDED(rc) )
+        {
+          rc = _pICommunicator-&gt;<b>AssociateHandler</b>(ReceiverApplicationId, 
+                                                 MessageClassName,
+                                                 _pIMessageReceiver);
+          ... // Process failure
+        }
+        pHandlerForMessage-&gt;Release();
+        pHandlerForMessage = NULL;
+      }
+    }
+  }
+  return rc;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>First, a connection to the backbone bus must be established. This is possible
+thanks to the global function <code>CATGetBackboneConnection</code> that returns
+a pointer to the <i>CATICommunicator</i> interface. Once the connection is
+established, the message receiver sets its application identifier and declares
+it to the backbone bus using the method <code>Declare</code>. Note that this
+identifier is used by the message sender when sending the message using the <code><a href="#Step2">SendRequest</a></code>
+method. Then the message receiver instantiates the message handler, asks the
+message handler for a pointer to <i>CATIMessageReceiver</i>, and declares to the
+backbone bus that it will receive the declared messages using the designated
+handler, thanks to the <code>AssociateHandler</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Receiving the Message</h4>
+<p>The message is received thanks to the message handler that retrieves the
+message manager, and requests it to dispatch a notification that carries the
+message text. The message receiver has subscribed to this notification, and the
+callback method designated is then called. This method is the <code>ModifyEditor</code>
+method below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAADlgBBReceiverWindow::ModifyEditor(CATCallbackEvent  ievent,
+                                          void             *ipublisher,
+                                          CATNotification  *iNotification,
+                                          CATSubscriberData iData,
+                                          CATCallback       iCallback)
+{
+   char * Text = NULL;
+   CAADlgBBMessageNotification * iNotif = (CAADlgBBMessageNotification*) iNotification;
+
+   iNotif-&gt;GetText(&amp;Text);
+   _pEditor-&gt;SetLine(Text);
+
+   delete [] Text;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>ModifyEditor</code> retrieves the message text from the notification,
+and assigns it to the editor thanks to the <code>SetLine</code> method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Removing the Message Handler</h4>
+<p>The message handler should be removed when no messages are to be received any
+longer. This is done here in the message receiver application window destructor.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAADlgBBReceiverWindow::~CAADlgBBReceiverWindow()
+{ 
+  _pApplication = NULL;
+  _pEditor = NULL;
+
+  if ( NULL !=  _pICommunicator )
+  {
+    if ( NULL != _pIMessageReceiver )
+    {
+      CATMessageClass MessageClassName = &quot;CAADlgBBEditorMessage&quot;; 
+      _pICommunicator-&gt;<b>RemoveHandler</b>(&quot;CAADlgBBReceiver&quot;,
+                                     MessageClassName,
+                                     _pIMessageReceiver);
+      _pIMessageReceiver-&gt;Release();
+      _pIMessageReceiver = NULL;
+    }
+    _pICommunicator-&gt;Release();
+    _pICommunicator = NULL;
+  }
+  if ( NULL != _pMessageManager )
+  {
+    _pMessageManager-&gt;Destroy();      
+    _pMessageManager = NULL;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The data members are released and nullified. The message handler is removed
+thanks to the <code>RemoveHandler</code> method of <i>CATICommunicator</i>. Its
+arguments are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>CAADlgBBReceiver</code></td>
+    <td>The message receiver identifier</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>MessageClassName</code></td>
+    <td>The message class name to which the message handler is dedicated</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>_pIMessageReceiver</code></td>
+    <td>The message handler</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create interactive applications that send and
+receive backbone messages. The receiving application identifier must be known by
+the message sender.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleBBSendRecSimpleMsg.htm">Sending
+      a Backbone Simple Message to an Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleBBSendRecDataMsg.htm">Sending
+      a Backbone Data Message to an Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleBBSimpleMsg.htm">Creating
+      a Backbone Simple Message</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleBBDataMsg.htm">Creating
+      a Backbone Data Message</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

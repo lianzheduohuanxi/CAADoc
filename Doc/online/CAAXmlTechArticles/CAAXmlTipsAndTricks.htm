@@ -1,0 +1,534 @@
+<html>
+<head>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>XML tips and tricks</title>
+</head>
+
+<body>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>XML Tips and Tricks</h3>
+			<em>Tips for making the best use of the XMLParser framework</em></td>
+		</tr>
+		<tr>
+			<td class="tech" colspan="2">Technical Article</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article presents several tips to help you make the best use
+			of the XMLParser framework.</p>
+			<ul>
+				<li><a href="#100000"><strong>Frequently used Patterns</strong></a></li>
+				<ul>
+					<li><a href="#110000">Manage Errors Using the V5 HRESULT / CATError
+					Pattern</a></li>
+					<li><a href="#120000">Use CLSIDs to Create the Right Parser
+					component</a></li>
+					<li><a href="#130000">Pass Options Using CATListOfCATUnicodeStrings</a></li>
+				</ul>
+				<li><a href="#200000"><strong>Validation Tips</strong></a></li>
+				<ul>
+					<li><a href="#210000">Default Parsers Are Validating</a></li>
+					<li><a href="#220000">How to Reference a DTD</a></li>
+					<li><a href="#230000">How to Reference an XSD Schema</a></li>
+				</ul>
+				<li><a href="#300000"><strong>XML Generation Tips</strong></a></li>
+				<ul>
+					<li><a href="#310000">Encoding Defaults to UTF-8</a></li>
+					<li><a href="#320000">Use the CATIndentation and
+					CATIndentationCharacter Options to Control Formatting</a></li>
+					<li><a href="#330000">Use CATSortAttributes for Stable Output</a></li>
+				</ul>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Frequently used Patterns</h3>
+<p>The XMLParser framework uses several patterns to help you get used to
+the API more quickly.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="110000">Manage Errors Using the V5 HRESULT / CATError
+Pattern</a></h4>
+<p>The XMLParser framework uses the HRESULT / CATError mechanism to
+manage errors.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>if (FAILED(hr)) {
+    CATUnicodeString message = "XMLParser call has failed:\n";
+    CATError* error = <b>CATError::CATGetLastError</b>(hr);
+    if (error != NULL) {
+        message.Append(error->GetNLSMessage());
+        error->Release();
+        error = NULL;
+    }
+    CATError::CATCleanLastError();
+    cerr &lt;&lt; message.ConvertToChar() &lt;&lt; endl;
+}</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>XML parsers have rich error reporting capabilities and will often
+give you a precise diagnostic when an operation fails. For instance,
+when parsing an XML file, the parser will give you a message like the
+one below telling you:</p>
+<ul>
+	<li>the URI of the invalid XML resource.</li>
+	<li>a line and column number to locate the error precisely.</li>
+	<li>an error message to help you to fix the not well-formed or invalid
+	XML input.</li>
+</ul>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>XMLParser call has failed:
+SAX parse exception : Expected an attribute name
+SystemId : car_invalid.xml
+Line : 6
+Column : 12</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>In the same way, when you are building a DOM tree, the parser will
+also tell you precisely which well-formedness rule has been broken if
+you try to make an incorrect operation. Make sure to use the <code>CATError::CATGetLastError</code>
+function to obtain the associated CATError to help you debug your XML
+developments. More information about V5 error management is available
+here <a href="#Ref2">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="120000">Use CLSIDs to Create the Right Parser Component</a></h4>
+<p></p>
+<p>The XMLParser framework provides several V5 DOM components, which all
+implement the <i>CATIXMLDOMDocumentBuilder</i> interface, but offer different
+features (DTD validation, XSD schema validation). If you do not specify
+which component to use, the default DOM component (XML4C3) will be used.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLDOMDocumentBuilder_var builder;
+HRESULT hr = <b>::CreateCATIXMLDOMDocumentBuilder</b>(builder);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>If you want to use a specific V5 DOM component (say XML4C5 since you
+want DOM with schema validation), add the CLSID of the component as an
+extra parameter to your call to <code>CreateCATIXMLDOMDocumentBuilder</code>.</p>
+<p></p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLDOMDocumentBuilder_var builder;
+HRESULT hr = ::CreateCATIXMLDOMDocumentBuilder(builder<b>, CLSID_XML4C5_DOM</b>);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>SAX components use the same pattern. The following code instantiates
+the default SAX component (XML4C3):</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLSAXFactory_var factory;
+hr = <b>::CreateCATIXMLSAXFactory</b>(factory);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>To use a specific V5 SAX component (say XML4C5 since you want SAX
+with schema validation), add the CLSID of the component as an extra
+parameter to your call to <code>CreateCATIXMLSAXFactory</code>.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLSAXFactory_var factory;
+HRESULT hr = ::CreateCATIXMLSAXFactory(factory, <b>CLSID_XML4C5_SAX</b>);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30"> Note that some
+DOM methods take as a parameter objects coming from the SAX object
+model. DOM and SAX V5 component can work together only if they are
+backed by the same parser (XML4C3 DOM can work with XML4C3 SAX, but not
+with XML4C5 SAX). For more details on V5 DOM and SAX components, see <a
+	href="#Ref2">[2]</a>.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="130000">Pass Options Using CATListOfCATUnicodeStrings</a></h4>
+<p>Several methods of the XMLParser framework (for instance: <code>CATIXMLDOMDocumentBuilder::Parse</code>,
+<code>CATIXMLDOMDocumentBuilder::Write</code>, <code>CATIXMLSAXFactory::CreateParser</code>)
+accept options. Options are passed to these methods using two <i>CATListOfCATUnicodeStrings</i>.
+The first one contains the option names, the second one contains the
+option values. For instance, the following code instructs a DOM
+component to generate a file, which uses the UTF-16 encoding and indents
+the output with one TAB character per indentation level:</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>CATIXMLDOMDocumentBuilder_var builder;
+...
+CATListOfCATUnicodeString writeOptions;
+writeOptions.Append(<b>"CATEncoding"</b>);
+writeOptions.Append(<b>"CATIndentation"</b>);
+writeOptions.Append(<b>"CATIndentationCharacter"</b>);
+CATListOfCATUnicodeString writeOptionValues;
+writeOptionValues.Append("UTF-16");
+writeOptionValues.Append("1");
+writeOptionValues.Append("\t");
+hr = builder->WriteToFile(document, outputFile, <b>writeOptions, writeOptionValues</b>);
+...</pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Validation Tips</h3>
+<p>When parsing XML files, you will have to decide if you want to use
+the grammar validation capabilities of the parser, or not. This section
+explains how to turn validation on and off.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000">Default Parsers Are Validating</a></h4>
+<p>DOM and SAX parsers can run in two modes: non-validating and
+validating. Non validating parsers just verify that the XML document is
+well-formed, whereas validating parsers verify that that the XML
+document is both well-formed and valid. To activate/deactivate
+validation, use the <code>CATDoValidation</code> option. The following code
+shows how to turn off validation for a SAX1 parser:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>...
+<b>CATListOfCATUnicodeString options;
+CATListOfCATUnicodeString optionValues;
+options.Append("CATDoValidation");
+optionValues.Append("false");</b>
+CATISAXParser_var parser;
+hr = factory->CreateParser(parser, <b>options</b>, <b>optionValues</b>);
+...</pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30">If no option is
+specified, a validating parser will be used. A validating parser
+requires the document to have an associated DTD or XSD schema at a
+location the parser can access. If the document does not specify its DTD
+or XSD schema, the parsing will fail. For instance the following XML
+document cannot be parsed by a validating parser, but will work fine
+with a non-validating parser.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+&lt;car/>
+    ^
+    |
+Cannot be validated because there is no reference to an XSD schema or a DTD
+</pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000">How to Reference a DTD</a></h4>
+<p>To use a validating parser, you need to pass to the parser a document
+which references a grammar. If your grammar is a DTD, this reference
+takes the form of a document type declaration. This declaration appears
+on the second line of the XML document, after the XML declaration and
+can take one of three forms:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;!-- System ID --></pre></td>
+		</tr>
+	</tbody>
+</table>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;!DOCTYPE car PUBLIC "automotive" "automotive.dtd">
+&lt;!-- Combination of a public and system ID --></pre></td>
+		</tr>
+	</tbody>
+</table>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;!DOCTYPE car [
+&lt;!ELEMENT car (part)+>
+&lt;!ELEMENT part (#PCDATA)>
+&lt;!ATTLIST part name ID #REQUIRED
+          quantity CDATA #IMPLIED>]>
+&lt;!-- Embedded DTD --></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>If the DTD is specified in an external resource, as in the two first
+forms, the parser will use the system ID to try to locate the resource.
+The system ID can be either a URI relative to the position of the XML
+document, or an absolute URI. You can also use a <i>CATISAXEntityResolver</i>
+to help the parser locate the external resource. For more information on
+this possibility, see <a href="#Ref3">[4]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000">How to Reference an XSD Schema</a></h4>
+<p>To use a validating parser, you need to pass to the parser a document
+which references a grammar. If your grammar is an XSD schema, this
+reference takes the form of special attributes of the <code>http://www.w3.org/2001/XMLSchema-instance</code>
+namespace. These attributes appear in the start tag of the first element
+defined in the grammar. There are two attributes, depending on whether
+several XSDs need to be imported.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version='1.0' ?>
+&lt;car xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  <b>xsi:noNamespaceSchemaLocation="automotive.xsd"</b>
+  xmlns="urn:com:dassault_systemes:automotive">...&lt;/car>
+&lt;!-- without namespaces --></pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version='1.0' ?>
+&lt;car xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  <b>xsi:schemaLocation="urn:com:dassault_systemes:automotive automotive.xsd"</b>
+  xmlns="urn:com:dassault_systemes:automotive">...&lt;/car>
+&lt;!-- with namespaces --></pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>The schema is always specified in an external resource. The parser
+will use the value of the system ID contained in the <code>noNamespaceSchemaLocation</code>
+and <code>schemaLocation</code> attributes to try to locate the resource.
+The system ID can be either a URI relative to the position of the XML
+document, or an absolute URI. You can also use a <i>CATISAXEntityResolver</i>
+to help the parser locate the external resource. For more information on
+this possibility, see <a href="#Ref3">[4]</a>.</p>
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30"> Note that schema
+validation depends on namespaces. Make sure to activate the <code>CATEnableNameSpaces</code>
+option in the <code>CATIXMLDOMDocumentBuilder::Parse</code> and <code>CATIXMLSAXFactory::CreateParser</code>
+when using schemas.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>XML Generation Tips</h3>
+<p>This section explains how to customize XML documents generated by the
+<code>CATIXMLDOMDocumentBuilder::Write</code> and <code>CATIXMLDOMDocumentBuilder::WriteToFile</code>
+methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000">Encoding Defaults to UTF-8</a></h4>
+<p>The <code>CATIXMLDOMDocumentBuilder::WriteToFile</code> method accepts
+the "CATEncoding" option to explicitely specify the encoding used by the
+resulting document. If you do not specify this option, you will have an
+XML file with no <code>encoding</code> attribute specified in the XML
+declaration. The file itself uses the UTF-8 encoding. This corresponds
+to the default behavior of XML parsers as per the section F1 of the XML
+specification. See <a href="#Ref3">[3]</a> for more information.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?></pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p>If you use the "CATEncoding" option, you will have an XML file with
+an <code>encoding</code> attribute set to "UTF-8". This second approach is
+recommended.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0" <b>encoding="UTF-8"</b>?></pre></td>
+		</tr>
+	</tbody>
+	<tbody></tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000">Use the CATIndentation and CATIndentationCharacter
+Options to Control Formatting</a></h4>
+<p>Humans and XML parsers tend not to treat white space (indentations,
+line feeds) in the same way. Whereas humans view it as a hint of the
+structure of the underlying XML document, they are just wasted space for
+an XML parser. If you open XML files, which contain no white space in a
+text editor, they will look like this:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">&lt;car>&lt;!--list of part
+s for a convertible car-->&lt;part name="seat" quantity="2">&lt;/
+part>&lt;part name="wheel" quantity="4"/>&lt;part name="engine" q
+uantity="1">low consumption engine&lt;/part>&lt;part name="body" 
+quantity="1">weight must be &lt; 1200 kg&lt;/part>&lt;/car></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>If your XML files need to be manually edited by humans or for
+debugging purposes, you might want to use the <code>CATIndentation</code>
+and <code>CATIndentationCharacter</code> options of the <code>CATIXMLDOMDocumentBuilder::WriteToFile</code>
+and <code>CATIXMLDOMDocumentBuilder::Write</code> methods. These options
+enable you to indent the generated XML, making it much easier to read.
+The <code>CATIndentationCharacter</code> specifies the character to use for
+indentation (tabulation or space), whereas the <code>CATIndentation</code>
+option is a positive integer specifying how many indentation characters
+to use for each level. Using these options, you will get a more readable
+XML file:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;car>
+ &lt;!--list of parts for a convertible car-->
+ &lt;part name="seat" quantity="2">&lt;/part>
+ &lt;part name="wheel" quantity="4"/>
+ &lt;part name="engine" quantity="1">low consumption engine&lt;/part>
+ &lt;part name="body" quantity="1">weight must be &lt; 1200 kg&lt;/part>
+&lt;/car></pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="warning.gif (206 bytes)" width="30" height="30"> Note however that
+these two XML files are not equivalent. If you use the <code>CATIndentation</code>
+and <code>CATIndentationCharacter</code> options, white space is inserted in
+the XML document. Depending on the grammar file, this might or might not
+be allowed. Furthermore, the resuting DOM structure will be altered,
+since <i>CATIDOMText</i> nodes will be inserted at various places in
+the DOM tree to represent this white space. An alternative approach to
+these options is not to display XML in the console or a text editor, but
+to use an XML-enabled tool to view the XML, such as a web browser, or a
+dedicated XML editor.</p>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000">Use CATSortAttributes for Stable Output</a></h4>
+<p>The XML specification does not mandate that XML attributes appear in
+a specific order within a tag. Therefore, XML attributes are often
+stored internally in hashtables by parser implementations. The
+consequence of this implementation choice is that the ordering of XML
+attributes is not preserved when reading an XML file and writing it back
+to disk. This can be a problem if you want to make comparisons between
+two XML files. To avoid this problem, the <code>CATIXMLDOMDocumentBuilder::WriteToFile</code>
+supports the <code>"CATSortAttributes"</code> option. If you use this option,
+attributes will be sorted in ascending order by qualified name.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p></p>
+<p>This article presents several tips to help you make the best use of
+the XMLParser framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="../CAASysTechArticles/CAASysErrors.htm">
+			Managing Errors Using HRESULT</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</font></td>
+			<td><a href="../CAAXmlTechArticles/CAAXmlV5Overview.htm">Using
+			XML in V5</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref3"></a>[3]</td>
+			<td><a href="#"	onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/REC-xml/');return false;">Extensible
+			Markup Language (XML) 1.0 (Third Edition) - W3C Recommendation 04 February 2004</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref4"></a>[4]</td>
+			<td><a href="../CAAXmlUseCases/CAAXMLSAXResolver.htm">Fetching an 
+            External Entity with SAX</a></td>
+		</tr>
+	</tbody>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [Apr 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The CGM Topological Model</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The CGM Topological Model</h3>
+      <em>How the Topological Concepts are implemented</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article details how CGM V5 implements the concepts of the topology
+      used to bound geometric objects. The topological operations are not
+      handled here.</p>
+      <p>First, the main interfaces (CATBody, CATDomain, CATCell) are presented,
+      followed by their mutual relationships, and their validity range. The
+      smart mechanism allowing to reuse topology from body to body is explained
+      in a second part. The last part is more specific about the objects
+      management.
+      <ul>
+        <li><a href="#Objects"><strong>The Topological Objects</strong></a>
+          <ul>
+            <li><a href="#CATBody">CATBody</a></li>
+            <li><a href="#CATDomain">CATDomain and CATCell</a></li>
+            <li><a href="#GeometryOrientation">Relative Orientation between a
+              CATCell and its Underlying Geometry</a></li>
+            <li><a href="#Orientation">Location of a CATDomain Bounding a
+              CATCell</a></li>
+            <li><a href="#Matter">Matter Side</a></li>
+            <li><a href="#List">List of the CATEdges inside a CATLoop</a></li>
+            <li><a href="#Orientation of a CATCell inside a CATDomain">Orientation
+              of a CATCell inside a CATDomain</a></li>
+            <li><a href="#Example">Methodology</a></li>
+            <li><a href="#Validity">Validity of the Topological Objects</a></li>
+          </ul>
+        </li>
+        <li><a href="#Smart"><strong>The Smart Concept</strong></a></li>
+        <li><a href="#Model"><strong>The Object Management</strong></a>
+          <ul>
+            <li><a href="#CATGeoFactory">CATGeoFactory: the Factory of the
+              CATBody</a></li>
+            <li><a href="#CATBodyFactory">CATBody: the Factory of the CATCells
+              and CATDomains</a></li>
+            <li><a href="#Navigation">Navigation</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Objects"></a>The CGM Topological Objects</h3>
+<p>The Topological Objects interfaces allow to handle the body and all the types
+of topological domains and cells described in Topological Concepts. They give
+means to navigate through the topological graph, but do not operate bodies: the
+operations are brought by the TopologicalOperators interfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATBody"></a>CATBody</h4>
+<p>The CATBody interface implements the concept of topological body [<a href="#References">2</a>].
+A CATBody is a geometric object, which handles a set of non necessarily
+connected cells and refers, directly or indirectly, all the cells needed for its
+construction. It offers tools to
+<ul>
+  <li>Navigate through itself</li>
+  <li>Create the topological CATCells and CATDomains: in this sense, it is a
+    factory for these topological objects.</li>
+</ul>
+<p>The building up of a CATBody takes several steps
+<ul>
+  <li>Create a void CATBody.</li>
+  <li>Create CATCells and CATDomains with their mutual relationships. A CATCell
+    is bounded by CATDomains which define an inner or an outer frontier. A
+    CATDomain may also be immersed in a CATCell.</li>
+  <li>Associate them with the underlying geometry.</li>
+  <li>Attach the first level of domain(s) defining the CATBody.</li>
+  <li>Declare the completion of the CATBody and freeze it (this will be possible
+    only if it satisfies to all the validity criteria, see <a href="#Validity">Validity
+    of the Topological Objects</a>). It now can be used for topological
+    operations, but cannot be modified anymore. It is necessary to make a copy
+    of a frozen CATBody into a non-frozen one, in order to be able to perform
+    modifications. Hence, topological operators do never modify input bodies,
+    but retrieve the result into a new body.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATDomain"></a>CATDomain and CATCell</h4>
+<p>CATDomain and CATCell interfaces implement the concept of topological domains
+and cells [<a href="#References">2</a>]. They offer navigation methods, and all
+Get and Set methods on their attributes.</p>
+<p>The following arrays present the mapping between the concepts and the CGM
+interfaces.</p>
+<table border="2" cellspacing="0" cellpadding="3" width="100%">
+  <tr>
+    <th width="13%">Space Dimension</th>
+    <th width="20%">Cell (concepts)</th>
+    <th width="25%">CATCell</th>
+    <th width="21%">Associated CATGeometry</th>
+    <th width="23%">Bounded by</th>
+  </tr>
+  <tr>
+    <td align="center">0</td>
+    <td align="center">Vertex</td>
+    <td align="center">CATVertex</td>
+    <td align="center">CATMacroPoint</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center">1</td>
+    <td align="center">Edge</td>
+    <td align="center">CATEdge</td>
+    <td align="center">CATEdgeCurve</td>
+    <td align="center">CATVertex</td>
+  </tr>
+  <tr>
+    <td align="center">2</td>
+    <td align="center">Face</td>
+    <td align="center">CATFace</td>
+    <td align="center">CATSurface</td>
+    <td align="center">CATLoop, CATVertexInFace</td>
+  </tr>
+  <tr>
+    <td align="center">3</td>
+    <td align="center">Volume</td>
+    <td align="center">CATVolume</td>
+    <td align="center">&nbsp;</td>
+    <td align="center">CATShell, CATWire, CATVertexInVolume</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table border="2" cellspacing="0" cellpadding="3" width="100%">
+  <tr>
+    <th width="13%">&nbsp;</th>
+    <th width="20%">Domain in 3D body (concepts)</th>
+    <th width="25%">CATDomain</th>
+    <th width="23%">Bounding</th>
+  </tr>
+  <tr>
+    <td align="center">0</td>
+    <td align="center">VertexInVolume</td>
+    <td align="center">CATVertexInVolume</td>
+    <td align="center">CATBody, CATVolume</td>
+  </tr>
+  <tr>
+    <td align="center">1</td>
+    <td align="center">Wire</td>
+    <td align="center">CATWire</td>
+    <td align="center">CATBody, CATVolume</td>
+  </tr>
+  <tr>
+    <td align="center">2</td>
+    <td align="center">Shell</td>
+    <td align="center">CATShell</td>
+    <td align="center">CATBody, CATVolume</td>
+  </tr>
+  <tr>
+    <td align="center">3</td>
+    <td align="center">Lump</td>
+    <td align="center">CATLump</td>
+    <td align="center">CATBody</td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Domain in 2D body (concepts)</th>
+    <th>CATDomain</th>
+    <th>Bounding</th>
+  </tr>
+  <tr>
+    <td align="center">0</td>
+    <td align="center">VertexInFace</td>
+    <td align="center">CATVertexInFace</td>
+    <td align="center">CATFace</td>
+  </tr>
+  <tr>
+    <td align="center">1</td>
+    <td align="center">Loop</td>
+    <td align="center">CATLoop</td>
+    <td align="center">CATFace</td>
+  </tr>
+</table>
+<p>The general object diagram is now presented.</p>
+<table>
+  <caption>Fig. 1: Topological objects diagram</caption>
+  <tr>
+    <td><img src="images/TopoDiagram.gif" width="479" height="359"></td>
+    <td></td>
+  </tr>
+</table>
+<p>Notice:
+<ul>
+  <li>There is no domain associated with an edge boundary: a vertex bounds
+    directly an edge.</li>
+  <li>A CATLoop is not necessarily closed. If it corresponds to an immersed
+    domain of a face, it is necessarily open.</li>
+  <li>The CATDomains are manifold objects [<a href="#References">2</a>]: hence,
+    it is sometimes necessary to divide a domain to satisfy this criterion.
+    <table>
+      <caption>Fig. 2: Examples of manifold and non manifold objects</caption>
+      <tr>
+        <td><img src="images/TopoModelNonManifold.gif" width="478" height="358"></td>
+        <td></td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>We discuss now on the relationships and relative orientations between these
+objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="GeometryOrientation"></a>Relative Orientation Between a CATCell and
+its Underlying Geometry</h4>
+<p>A CATCell is a topological limitation of an underlying geometry (see also [<a href="#References">3</a>]).
+<ul>
+  <li>The geometry of a vertex is a CATMacroPoint.</li>
+  <li>The geometry of an edge is a CATEdgeCurve.</li>
+  <li>The geometry of a face is a CATSurface.</li>
+</ul>
+<p>The CATCell is oriented with regards to its underlying geometry.
+<dl>
+  <dt><code>CATOrientationNegative</code></dt>
+  <dd>the cell orientation is reversed with regards to the geometry orientation.</dd>
+  <dt><code>CATOrientationPositive</code></dt>
+  <dd>the cell orientation is the geometry orientation.</dd>
+  <dt><code>CATOrientationUnknown</code></dt>
+  <dd>the cell orientation is not defined.</dd>
+</dl>
+<table width="100%">
+  <caption>Fig. 3: Orientation of the cell with regards to its geometry</caption>
+  <tr>
+    <td><img src="images/TopoModelOrientation1.gif" alt="TopoModelOrientation2.gif (3983 bytes)" width="479" height="359"></td>
+    <td>The edge V1-V2 is oriented from V2 to V1. Its orientation with regards
+      to the geometry is inverted (<tt>CATOrientationNegative</tt>)
+      <p>Face has the same orientation as the orientation of the underlying
+      surface. (<tt>CATOrientationPositive</tt>)</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Orientation"></a>Location of a CATDomain Bounding a CATCell</h4>
+<ul>
+  <li>A CATDomain is a set of connected CATCells of same dimension that bound a
+    cell of higher dimension. If it bounds a CATCell of dimension n, the
+    CATDomain contains cells of dimension n-1. If immersed in a cell of
+    dimension n, it contains cells of dimension less or equal to n-1.</li>
+  <li>A CATDomain bounds directly an unique CATCell of higher dimension or by a
+    CATBody (for CATLump, CATShell, CATWire and CATVertexInVolume domains)</li>
+  <li>It is located with regards to this bounded CATCell (or CATBody) thanks to
+    an attribute:</li>
+  <dl>
+    <dt><code>CATLocationInner</code></dt>
+    <dd>For internal boundaries (holes into a faces or cavities into a volumes).</dd>
+    <dt><code>CATLocationOuter</code></dt>
+    <dd>For external boundaries.</dd>
+    <dt><code>CATLocationFull</code></dt>
+    <dd>All cells of the domain to create are immersed into the containing cell
+      , but does not cut the cell in parts (non-manifold topology).</dd>
+    <dt><code>CATLocationIn3DSpace</code></dt>
+    <dd>For creation into a body.</dd>
+  </dl>
+  <table width="90%">
+    <caption>Fig. 4: Location of a cell</caption>
+    <tr>
+      <td><img src="images/TopoModelOrientation2.gif" alt="TopoModelOrientation1.gif (6556 bytes)" width="479" height="359"></td>
+      <td>Face is bounded by 3 loop domains:
+        <p>L1 is its external boundary: <tt>CATLocationOuter</tt></p>
+        <p>L2 is an internal loop: <tt>CATLocationInner</tt></p>
+        <p>L3 is an immersed loop: <tt>CATLocationFull</tt></td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Matter"></a>Matter Side</h4>
+<p>The relative orientation between the cell and its underlying geometry and the
+type of location of the boundaries are not sufficient to precisely defined the
+relationships between the cells. It remains to be declared on which side is the
+matter, when a bounding cell is run along.</p>
+<p>The CATSide attribute defines the matter side on a bounding cell of a cell.
+This attribute is independent of the geometric orientation (CATOrientation), but
+must be consistent with the location (CATLocation).</p>
+<table border="2" width="100%">
+  <tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>CATFace</th>
+    <th>CATEdge</th>
+    <th>CATVertex</th>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>CATVolume</b></td>
+    <td><code>CATSideLeft</code></td>
+    <td>The face normal points inside the volume</td>
+    <td>Impossible</td>
+    <td>Impossible</td>
+  </tr>
+  <tr>
+    <td><code>CATSideRight</code></td>
+    <td>The face normal points outside the volume</td>
+    <td>Impossible</td>
+    <td>Impossible</td>
+  </tr>
+  <tr>
+    <td><code>CATSideFull</code></td>
+    <td>The face is immersed into the volume</td>
+    <td>The edge is immersed into the volume</td>
+    <td>The vertex is immersed into the volume</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>CATFace</b></td>
+    <td><code>CATSideLeft</code></td>
+    <td>&nbsp;</td>
+    <td>Standing along the face direction and watching in the direction of the
+      edge leads to have the matter to your left.
+    <td>Impossible</td>
+  </tr>
+  <tr>
+    <td><code>CATSideRight</code></td>
+    <td>&nbsp;</td>
+    <td>Standing along the face direction and watching in the direction of the
+      edge leads to have the matter to your right.</td>
+    <td>Impossible</td>
+  </tr>
+  <tr>
+    <td><code>CATSideFull</code></td>
+    <td>&nbsp;</td>
+    <td>The edge is immersed into the face</td>
+    <td>The vertex is immersed into the face</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>CATEdge</b></td>
+    <td><code>CATSideLeft</code></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>The vertex is at the edge beginning</td>
+  </tr>
+  <tr>
+    <td><code>CATSideRight</code></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>The vertex is at the edge end</td>
+  </tr>
+  <tr>
+    <td><code>CATSideFull</code></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>Impossible</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="List"></a>List of the CATEdges inside a CATLoop</h4>
+<p>The CATEdges must always be appended inside an inner or outer CATLoop in the
+order found by letting the matter on the left side, when the you stand along the
+normal of the face. This is independent on the orientation of the CATEdge
+itself.</p>
+<table width="100%">
+  <caption>Fig. 5: Order of the edges inside the loop</caption>
+  <tr>
+    <td><img src="images/TopoModelOrientation4.gif" alt="TopoModelOrientation4.gif (9149 bytes)" width="479" height="359"></td>
+    <td>Top:
+      <p>The order for defining the outer loop is E1, E2, E3 (or E2, E3, E1; or
+      E3, E1, E2). All other order is wrong.</p>
+      <p>The order for defining the inner loop is I1, I2, I3 (or I2, I3, I1; or
+      I3, I1, I2). All other order is wrong.</p>
+      <p>Bottom:</p>
+      <p>The order for defining the outer loop is E3, E2, E1 (or E2, E1, E3; or
+      E1, E3, E2). All other order is wrong.</p>
+      <p>The order for defining the inner loop is I3, I2, I1 (or I2, I1, I3; or
+      I1, I3, I2). All other order is wrong.</td>
+  </tr>
+</table>
+<p>Notice the CATSide attributes associated with the CATEdges.</p>
+<p>A boundary cell operator always returns the CATCells in the order they have
+been defined inside the CATLoop. When a cell bounds a domain twice, the boundary
+cell operator returns the cell twice: once with the<code>CATSideLeft</code>
+attribute, once with the <code>CATSideRight attribute</code>. This configuration ,
+allowed by the CGM topological model, is however to avoid: some topological
+operators does not hold it in a first version.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Orientation of a CATCell inside a CATDomain"></a>Orientation of a
+CATCell inside a CATDomain</h4>
+<p>A CATDomain is globally oriented. Each CATCell also owns its own orientation.
+It is the reason why it is necessary to set the <tt>CATOrientation</tt> of a
+CATCell with regards to the CATDomain that contends it. If this CATDomain is
+itself a boundary, it is equivalent to give the <tt>CATOrientation</tt> of the
+CATCell with regards to the CATDomain, or to define the <tt>CATSide</tt> of the
+CATCell (see the example of the cube below).</p>
+<table width="100%">
+  <caption>Fig. 6: Orientation of a cell inside a domain</caption>
+  <tr>
+    <td><img src="images/TopoModelOrientation3.gif" alt="TopoModelOrientation3.gif (5285 bytes)" width="479" height="359"></td>
+    <td>The global orientation of the shells are represented by the black
+      arrows.
+      <p>The orientation of each face is drawn in light blue.</p>
+      <p>The faces S2, C2, C4 must have the attribute <tt>CATOrientationNegative</tt>
+      to keep the consistency of the shell domain. The matter side is then <tt>CATSideRight</tt>
+      for the faces C2 and C4, and <tt>CATSideLeft</tt> for the faces C1 and C3
+      (no matter side for S1, S2, S3, that do not bound a CATDomain).</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Example"></a>Methodology</h4>
+<p>Do the following steps for managing the different orientations:
+<ul>
+  <li>Define the <tt>CATOrientation</tt> of the CATCell with regards to the
+    geometry orientation (choose the orientation of the underlying geometry as
+    much as possible)</li>
+  <li>Define the CATDomain that bounds the CATCell: set the type of boundary (<tt>CATLocation</tt>).
+    For a CATFace, give the list of the CATEdges by letting the matter on the
+    left when you stand along the face direction.</li>
+  <li>Set the matter side <tt>CATSide</tt> for each CATCell, with regards to its
+    own orientation or define the <tt>CATOrientation</tt> of the CATCell with
+    regards to the CATDomain it belongs to</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Validity"></a>Validity of the Topological Objects</h4>
+<p>The validity of the objects is checked at the CATBody completion. The CATBody
+cannot be frozen if one of the following rules is not fulfilled:
+<ol>
+  <li>The geometry of a CATVertex is a CATMacroPoint and the geometry of the
+    CATEdge is a CATEdgeCurve.</li>
+  <li>The geometry of the points of the CATMacroPoint and the geometry of the
+    bounded cells must be consistent. Hence,
+    <ul>
+      <li>A CATVertex bounding a CATEdge is related to a CATMacroPoint
+        containing a CATPointOnEdgeCurve</li>
+      <li>A CATVertex immersed into a CATFace is related to a CATMacroPoint
+        containing a CATPointOnSurface.</li>
+      <li>A CATVertex immersed into the space is related to a CATMacroPoint
+        representing any type of CATPoint.</li>
+    </ul>
+  </li>
+  <li>The geometry of the curves of an CATEdgeCurve and the geometry of the
+    bounded cells must be consistent:
+    <ul>
+      <li>A CATEdge bounding a CATFace is related to a CATEdgeCurve containing a
+        CATPCurve.</li>
+      <li>A CATEdge immersed into the space is related a CATEdgeCurve
+        representing any type of CATCurves.</li>
+    </ul>
+  </li>
+  <li>A CATLoop is declared to be done as the loop is defined in terms of
+    topology AND geometry. Inner and outer loops must be closed. Full (immersed)
+    loop must not be closed.</li>
+  <li>A CATShell (res.CATLoop) does not cut right across a CATVolume (reps.
+    CATFace). This rule is required. However, it is not tested for a matter of
+    performance.</li>
+  <li>The iterator of the face edges always scans all the edges by letting the
+    matter on the left side, whatever the type of loop (inner or outer) they
+    belong to.</li>
+  <li>Compatibility between the <tt>CATSide</tt> and <tt>CATLocation</tt>
+    attributes</li>
+  <li>Closed topological cells: the CGM topological modeler allows such
+    configurations, but some topological operators do not hold them for the
+    moment. Avoid their use.
+    <ul>
+      <li>Closed circle with the same vertex at the beginning and the end of the
+        edge.</li>
+      <li>Cylinder with an unique closed face: the surface cylinder is closed
+        and an edge is laid down on the closure. The loop uses the edge, one way
+        up, the other way down.</li>
+      <li>Cylinder with an unique closed face and two loops on the bottom and up
+        circles.</li>
+      <p><i>Hence, a cell must not be bounded several times by the same cell of
+      lower dimension. </i>For representing such objects, it will be necessary
+      to use more than one cell .</p>
+    </ul>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Smart"></a>The Smart Concept</h3>
+<p>The topological model allows domains to share cells with other domains (in
+the same body or in different bodies). This property minimizes the model size.
+On the other hand, a cell may belong to several domains and bodies. Hence, it is
+necessary to precise the context of the body or the domain, for getting its
+parents.</p>
+<p>This property is used by the topological operators. A topological operator
+often has frozen bodies as input operands. These bodies cannot be modified
+anymore. However, the topological operator exactly knows what it wants to
+modify. Then, it only duplicates the touched part of the body, and shares the
+untouched cells. For doing that, it uses a <tt>CATSmartBodyDuplicator</tt>.</p>
+<p>The following example shows the Boolean difference between a cuboid and a
+cylinder that is totally included into the cuboid. In this case, all the faces
+of each initial body are shared with the resulting body.</p>
+<table>
+  <caption>Fig. 7: Illustration of the smart concept</caption>
+  <tr>
+    <td><img src="images/TopoSmart.gif" width="479" height="359"></td>
+    <td>This figure illustrates the smart concept: the initial bodies are not
+      modified.
+      <p>A new one is created, sharing existing topology.</p>
+      <p>Notice that the boundaries of the upper and lower faces of the cylinder
+      are made of two edges, for satisfying the validity rules about closed
+      cells.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Model"></a>The Object Management</h3>
+<p>The object persistency is realized through the use of a document, that can be
+any user Document. A geometric container of CATGeoFactory type must be
+initialized to allow the creation of the geometric and topological objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATGeoFactory"></a>CATGeoFactory: the Factory of the CATBody</h4>
+<p>The CATGeoFactory is the factory of all geometric objects in general hence it
+is the factory of the CATBody, that is a geometric object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATBodyFactory"></a>CATBody: the Factory of the CATCells and
+CATDomains</h4>
+<p>In turn, the CATBody allows to create CATCells and CATDomains of all
+dimensions inside a geometric container. These objects are however not directly
+attached to the CATBody that created them. Only the first level of domains will
+be directly related to the CATBody.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Navigation"></a>Navigation</h4>
+<p>Different tools allows to easily navigate though the topology.
+<ul>
+  <li>At the CATBody level: list of all the first level domains, hashtable of
+    all the cells of a given dimension, bounding edges list of a set of faces,
+    etc.</li>
+  <li>At the CATDomain level: recursive and non recursive scans of the domain
+    cells, etc.</li>
+  <li>At the CATCell level: iterator of the bounding cells, search of adjacent
+    cells, etc.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>The CATBody, CATDomain and CATCell interfaces implements the concepts of
+    the topological objects: A CATBody is made of CATDomain(s), that contains
+    connected bounding CATCells linked to underlying geometry, etc. Three types
+    of relative orientations precise their relationships:
+    <ul>
+      <li>A CATCell owns an orientation with respect to its underlying geometry</li>
+      <li>A CATDomain is an inner, outer or immersed boundary of a CATCell or of
+        a CATBody</li>
+      <li>The CATSide defines the matter side of a CATCell when one of its
+        bounding CATCell is run along.</li>
+    </ul>
+  </li>
+  <li>Rules are established to insure the validity of a CATBody.</li>
+  <li>CATBodies may share CATCells (smart concept).</li>
+  <li>The CATGeoFactory creates the CATBodies, the CATBody creates the CATCells
+    and CATDomains.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAAGobTechArticles/GeoObjects.htm">The
+      CGM Objects</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="TopoConcepts.htm">Topology Concepts</a></td>
+  </tr>
+  <tr>
+    <td>[3]</td>
+    <td><a href="TopoCreate.htm">How to Associate Topology with Geometry</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</code>
+
+</body>
+
+</html>

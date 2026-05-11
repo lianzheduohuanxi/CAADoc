@@ -1,0 +1,177 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2005
+
+' *****************************************************************************
+'   Purpose:      This sample illustrats the use of IDL interfaces
+'                 CATIAPspLightPart
+'  
+'   Assumption:   Looks for document CAAPspEduIn.CATProduct.  
+'                 Looks for an object Weld-011 ( PspLightPart)
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R15 
+' *****************************************************************************
+
+'--- strMessage_g is a global variable visible to all private Sub/Function
+
+Dim strMessage_g As String
+
+
+Sub CATMain()
+
+    ' ------------------------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    dim sDocFullPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+    End If
+
+    ' ------------------------------------------------------------------------- 
+    ' Open the Distributive system document 
+    Dim objPspDoc As Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       "online\CAAScdPspUseCases\samples\CAAPsp3DEduIn.CATProduct" )
+    
+    
+    Set objPspDoc = CATIA.Documents.Open(sDocFullPath)
+
+    strMessage_g = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage_g = strMessage_g & _
+      "Output traces from CAAPspLightPart.CATScript" & vbCrLf
+
+
+    Dim objPrdRoot        As Product
+    Dim objPspWorkbench   As PspWorkbench
+    
+
+    ' ---------------------------------------------------------
+    ' Find the top node (PspWorkbench) of the Distributive System object tree - .  
+    
+    If ( Not ( objPspDoc Is Nothing ) ) Then
+      Set objPrdRoot = objPspDoc.Product       
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspWorkbench = objPrdRoot.GetTechnologicalObject ("PspWorkbench")
+      End If
+    End If
+
+
+    Dim objPspApplication As PspApplication
+    Dim objPspAppFactory  As PspAppFactory    
+
+    '-----------------------------------------------------------------------
+    ' Get PspWorkBench, PspApplication 
+    '-----------------------------------------------------------------------
+
+    If ( objPspWorkbench Is Nothing  ) Then
+      strMessage_g = strMessage_g & "Unable to get PspWorkbench" & vbCr                
+    Else
+      strMessage_g = strMessage_g & "Success in getting PspWorkbench" & vbCr                           
+    End If
+    
+
+    If ( Not ( objPspWorkbench Is Nothing ) ) Then
+      Set objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+      If ( Not( objPspApplication Is Nothing )  ) Then        
+        objPspApplication.Initialization()             
+      End If
+    End If '--- If ( Not ( objPspWorkbench Is Nothing )...    
+
+    '
+    ' ----------------------------------------------------
+    ' Get a Product whose instance name is Weld-011
+    ' and then get handler to PspLightPart
+    ' ----------------------------------------------------
+    Dim objWeld           As Product
+    Dim objPspLightPart   As PspLightPart
+    
+    If ( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPrdRoot Is Nothing ) ) Then
+    
+      Set objWeld = objPrdRoot.Products.Item("Weld-011")                    
+      If ( Not ( objPrdRoot Is Nothing ) ) Then
+        Set objPspLightPart = objPspWorkbench.GetInterface("CATIAPspLightPart", _
+                                                objWeld )                  
+      End If
+
+    End If '--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication
+    
+    '-----------------------------------------------------------------------
+    ' Get PspLightPart object information
+    '-----------------------------------------------------------------------
+
+    Dim objRelAxisPrd  As Product
+    Dim objLDefPoints  As PspListOfDoubles
+    
+    Dim iIdx         As Integer
+    Dim iNbPts         As Integer
+
+    Dim dbX            As Double
+    Dim dbY            As Double
+    Dim dbZ            As Double
+    Dim db6Array(6) As CATSafeArrayVariant
+       
+
+    Set objRelAxisPrd = Nothing
+    If ( Not ( objPspLightPart Is Nothing ) ) Then         
+
+      strMessage_g = strMessage_g & "Success in getting PspLightPart Weld-011" & vbCr      
+
+      ' ----------------------------------------
+      ' Setting up array of definition of points 
+      ' -----------------------------------------
+        
+      db6Array(0)=0.5
+      db6Array(1)=0.0
+      db6Array(2)=0.0
+      db6Array(3)=4.0
+      db6Array(4)=0.0
+      db6Array(5)=0.0
+
+      objPspLightPart.SetDefinition  objRelAxisPrd, db6Array
+
+      ' ----------------------------------------
+      ' Get definition points of the light part
+      ' ----------------------------------------
+
+      Set objLDefPoints = objPspLightPart.GetDefinition ( _       
+                            objRelAxisPrd )      
+
+      '-----------------------------------------
+      ' Display information on Definition points
+      '-----------------------------------------
+      If ( Not ( objLDefPoints Is Nothing ) ) Then        
+        
+        iNbPts =  objLDefPoints.Count / 3
+        strMessage_g = strMessage_g & _
+               "Number of definition points =" &  iNbPts & vbCr    
+        For iIdx = 1 To objLDefPoints.Count Step 3                   
+          dbX = objLDefPoints.Item( iIdx )
+          dbY = objLDefPoints.Item( iIdx + 1 )
+          dbZ = objLDefPoints.Item( iIdx + 2 )
+  
+          strMessage_g = strMessage_g & "Definition pt " &  vbCr                                 
+          strMessage_g = strMessage_g & "      X= " & dbX & vbCr                                 
+          strMessage_g = strMessage_g & "      Y= " & dbY & vbCr                                 
+          strMessage_g = strMessage_g & "      Z= " & dbZ & vbCr                                 
+          
+        Next                      
+
+      End If
+                
+    End If ' End of  If ( Not ( objPspLightPart is Nothing...
+
+    strMessage_g = strMessage_g & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage_g
+
+End Sub
+
+
+
+

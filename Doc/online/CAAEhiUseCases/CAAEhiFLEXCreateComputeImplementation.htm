@@ -1,0 +1,495 @@
+<html>
+	<head>
+		<title>Equipment</title>
+		<meta http-equiv="Content-Language" content="fr">
+		<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<h1><span lang="en-us">Equipment</span>
+						&amp; Systems Engineering</h1>
+				</td>
+				<td valign="top">
+					<h2>Electrical Harness Installation</h2>
+				</td>
+				<td rowspan="2" align="right" valign="top">
+					<h3><a name="Top"></a>Computing FLEX segment moduli</h3>
+					<p><em>How to implement your own algorithm to compute FLEX segment Equivalent Young 
+							Modulus, Equivalent RatioToBend and Equivalent RatioToTwist</em></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="use" colspan="2">Use Case</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+					<p>This use case explains how to create your proper algorithm to compute the 
+						Equivalent Young Modulus, Equivalent RatioToBend and Equivalent RatioToTwist of 
+						a segment. We call "segment" a portion of a bundle segment where the physical 
+						properties are constant.</p>
+					<ul>
+						<li>
+							<strong><a href="#Learn">Modifying the interface dictionary of the framework 
+									CAAElecHarnessItf.edu</a></strong>
+						<li>
+							<a href="#UseCase"><strong>Building the CAAEhiFLEXImpl component</strong></a>
+						<li>
+							<strong><a href="#References">References</a></strong></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Learn"></a>Modifying the interface dictionary of the framework 
+			CAAElecHarnessItf.edu</h3>
+		<p>The dictionary is called CAAElecHarnessItf.edu.dic and is located in the 
+			following path :
+		</p>
+		<table>
+			<tr>
+				<td>Windows</td>
+				<td><code>InstallRootDirectory\CAAElecHarnessItf.edu\CNEXT\code\dictionary</code></td>
+			</tr>
+			<tr>
+				<td>Unix</td>
+				<td><code>InstallRootDirectory/CAAElecHarnessItf.edu/CNEXT/code/dictionary</code></td>
+			</tr>
+		</table>
+		<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5 
+			installation.&nbsp;
+		</p>
+		<p>
+		</p>
+		<p>To activate your code, you have to uncomment the following line :
+		</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>#ElecBranchableC           CATIEhiFLEX         libCAAEhiFLEXImpl</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The interface dictionary declares that the <i>ElecBranchableC </i>object 
+			implements the <i>CATIEhiFLEX </i>interface and that the code to load into 
+			memory to use this interface is located in the libCAAEhiFLEXImpl shared library 
+			or DLL. To have more details, you can refer to the referenced articles [<a href="#References">1</a>] 
+			and [<a href="#References">2</a>]</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="UseCase"></a>Building the CAAEhiFLEXImpl component</h3>
+		<p>&nbsp;</p>
+		<p>CAAEhiFLEXImpl is a CATIA component exposing the CATIEhiFLEX interface. For the 
+			definition of components and interfaces, you can refer to the referenced 
+			articles [<a href="#References">1</a>] and [<a href="#References">2</a>]</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What does CAAEhiFLEXImpl do ?</h4>
+		<p>The goal of CAAEhiFLEXImpl is to compute the Equivalent Young Modulus, the 
+			Equivalent RatioToBend and&nbsp; the Equivalent RatioToTwist of a segment 
+			function of the wires, wiregroups and internal splices inside the segment, the 
+			protections covering it and its geometrical&nbsp;characteristics.
+		</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="How"></a>How to build CAAEhiFLEXImpl ?</h4>
+		<p>To launch CAAEhiFLEXImpl, you will need to set up the build time environment, 
+			then compile CAAEhiFLEXImpl along with its prerequisites as described in [<a href="#References">3</a>]</p>
+		<p>To do that, you must use the mkmk command (refer to [<a href="#References">4</a>] 
+			for more explanations)</p>
+		<p><i>$ cd ws_root_dir/CAAElecHarnessItf.edu/CAAEhiFLEXImpl.m</i><br>
+			<i><font face="Courier">$ mkmk</font></i>
+		</p>
+		<p>or
+		</p>
+		<p><i>$ cd ws_root_dir/CAAElecHarnessItf.edu</i><br>
+			<i>$ mkmk CAAEhiFLEXImpl.m</i>
+		</p>
+		<p>After, to test your component, you will have to run CATIA typing CNEXT on the 
+			command line (refer to [<a href="#References">5</a>]) , and to follow the 
+			scenario given in the referenced chapter [<a href="#References">4</a>
+		]
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to find the <i>CAAEhiFLEXImpl</i> code?</h4>
+		<p>CAAEhiFLEXImpl code is located in the CAAEhiFLEXImpl.m module of the 
+			CAAElecHarnessItf.edu framework:</p>
+		<table width="674">
+			<tr>
+				<td width="53">Windows</td>
+				<td width="611"><code> InstallRootDirectory\CAAElecHarnessItf.edu\CAAEhiFLEXImpl.m</code></td>
+			</tr>
+			<tr>
+				<td width="53">Unix</td>
+				<td width="611"><code> InstallRootDirectory/CAAElecHarnessItf.edu/CAAEhiFLEXImpl.m</code></td>
+			</tr>
+		</table>
+		<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5 
+			installation. It is made of a unique source file named <b>CAAGetFLEXEquivalentModulusExt.cpp</b>. 
+			<!---------------------------------comment------------------------------------->
+		</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<h4><a name="How"></a>Description of the extension class</h4>
+		<p>The extension class is called CAAGetFLEXEquivalentModulusExt.h and is located in 
+			the LocalInterfaces of the CAAEhiFLEXImpl.m module of the CAAElecHarnessItf.edu 
+			framework:</p>
+		<table>
+			<tr>
+				<td>Windows</td>
+				<td><code> InstallRootDirectory\CAAElecHarnessItf.edu\CAAEhiFLEXImpl.m\LocalInterfaces</code></td>
+			</tr>
+			<tr>
+				<td>Unix</td>
+				<td><code> InstallRootDirectory/CAAElecHarnessItf.edu/CAAEhiFLEXImpl.m/LocalInterfaces</code></td>
+			</tr>
+		</table>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>#ifndef CAAGetFLEXEquivalentModulusExt_H
+#define CAAGetFLEXEquivalentModulusExt_H
+
+#include "CATBaseUnknown.h"
+
+#include "CATIEhiFLEX.h"
+
+class CATListValCATBaseUnknown_var;
+//-----------------------------------------------------------------------
+
+/**
+* Class extending the object "ElecBranchableC".
+* &lt;br&gt;
+* It implements the interfaces :
+* &lt;ol&gt;
+* &lt;li&gt;@see ElecHarnessItf.CATIEhiFLEX
+* &lt;/ol&gt;
+* Using this prefered syntax will enable mkdoc to document your class.
+*/
+class CAAGetFLEXEquivalentModulusExt: public CATBaseUnknown
+{
+CATDeclareClass;
+
+public:
+
+// Standard constructors and destructors for an implementation class
+// -----------------------------------------------------------------
+CAAGetFLEXEquivalentModulusExt ();
+virtual ~CAAGetFLEXEquivalentModulusExt ();
+
+/**
+* Implements the method GetFLEXEquivalentModulus from the interface
+* CATIEhiFLEX
+*
+* Returns the value of the Equivalent Young Modulus (in N/m2) and 
+* Equivalent RatioToBend and Equivalent RatioToTwist function of
+* the values of the wires/wiregroups and protections contained 
+* in it. Also function of the profile type and dimensions of the
+* segment, and the flexibility of the bundle segment.
+*
+* @param iListOfWireWireGroup
+* The list of the Wire(s) and/or WireGroup(s) in the segment.
+* 
+* @param iOrderedListOfProtectionReference
+* The list of the Protections(s) covering successively the segment.
+*
+* @param ipInternalSpliceReferenceList <BR>* The list of the Internal Splice(s) inside the the segment.<BR>*<BR><BR><BR>* @param iProfile
+* The type of the profile. It can be either Circular, Elliptical, Rectangular or Noprofile.
+*
+* @param iProfileLength1
+* The major dimension of the profile (in mm).
+*
+* @param iProfileLength2
+* The minor dimension of the profile (in mm).
+*
+* @param iBundleSegmentFlexibility
+* The list of the Protections(s) covering successively the segment.
+*
+* @param oYoungModulusEquivalent
+* The value of the equivalent Young Modulus (in N/m2) of the segment.
+*
+* @param oEquivalentRatioToBend
+* The value of the equivalent Ratio-To-Bend of the segment.
+*
+* @param oEquivalentRatioToTwist
+* The value of the equivalent Ratio-To-Twist of the segment.
+*/
+HRESULT GetFLEXEquivalentModulus (CATListValCATBaseUnknown_var * ipListOfWireWireGroup , 
+                                  CATListValCATBaseUnknown_var * ipOrderedListOfProtectionReference ,<BR> 
+                                  CATListValCATBaseUnknown_var * ipInternalSpliceReferenceList ,
+                                  CATEhiProfileType iProfile , double iProfileLength1 , double iProfileLength2 ,
+                                  int iBundleSegmentFlexibility , double &amp; oYoungModulusEquivalent , 
+                                  double &amp; oEquivalentRatioToBend , double &amp; oEquivalentRatioToTwist );
+
+
+private:
+// The copy constructor and the equal operator must not be implemented
+// -------------------------------------------------------------------
+CAAGetFLEXEquivalentModulusExt (CAAGetFLEXEquivalentModulusExt &amp;);
+CAAGetFLEXEquivalentModulusExt&amp; operator=(CAAGetFLEXEquivalentModulusExt&amp;);
+
+};
+
+//-----------------------------------------------------------------------
+
+#endif</pre>
+				</td>
+			</tr>
+		</table>
+		<p>For more details about what is an extension class, you can refer to the 
+			referenced article [<a href="#References">1</a>]</p>
+		<h4><a name="How"></a>Description of the implemented method</h4>
+		<p>The code of the implemented method is contained in the source file named <b>CAAGetFLEXEquivalentModulusExt.cpp.</b></p>
+		<p>Firstly&nbsp; we include the adhesion of our class 
+			CAAGetFLEXEquivalentModulusExt with interface CATIEhiFLEX as like :&nbsp;</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>#include "TIE_CATIEhiFLEX.h"
+TIE_CATIEhiFLEX(CAAGetFLEXEquivalentModulusExt);
+
+CATImplementClass( CAAGetFLEXEquivalentModulusExt, CodeExtension, CATBaseUnknown, ElecBranchableC);
+</pre>
+				</td>
+			</tr>
+		</table>
+		<p>The unique method is called <b>GetFLEXEquivalentModulus</b>. It takes as input 
+			the list of the routable objects&nbsp; wires and/or wiregroups contained in the 
+			segment (CATListValCATBaseUnknown_var *), the ordered stack of protections over 
+			the segment (CATListValCATBaseUnknown_var *), the type of profile<br>
+			(CATEhiProfileType) of this segment and its dimensions in mm (double), the 
+			value flexibility of the flexibility slider of the corresponding bundle 
+			segment.
+			<br>
+			It returns the value of the Equivalent Young Modulus (in N/m2) and Equivalent 
+			RatioToBend and Equivalent RatioToTwist of the segment.</p>
+		<p>The calculation is based upon the desired combination of all the input 
+			parameters.</p>
+		<p>First we initialize the HRESULT and the respective size of the list of routable 
+			objects and the list of protections.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>...
+//==========================================================================
+// GetFLEXEquivalentModulus
+//==========================================================================
+HRESULT CAAGetFLEXEquivalentModulusExt::GetFLEXEquivalentModulus(CATListValCATBaseUnknown_var * ipListOfWireWireGroup , 
+                                                                 CATListValCATBaseUnknown_var * ipOrderedListOfProtectionReference ,<BR>								 CATListValCATBaseUnknown_var * ipInternalSpliceReferenceList,
+                                                                 CATEhiProfileType iProfile ,
+                                                                 double iProfileLength1 , double iProfileLength2 ,
+                                                                 int iBundleSegmentFlexibility , 
+                                                                 double &amp; oYoungModulusEquivalent , 
+                                                                 double &amp; oEquivalentRatioToBend ,
+                                                                 double &amp; oEquivalentRatioToTwist)
+{
+  HRESULT HR=E_FAIL;
+  int nbOfWiresWireGroups= ipListOfWireWireGroup ? ipListOfWireWireGroup-&gt;Size(): 0;
+  int nbOfProtections= ipOrderedListOfProtectionReference ? ipOrderedListOfProtectionReference -&gt;Size():0;<BR> int nbOfSplices=ipInternalSpliceReferenceList ? ipInternalSpliceReferenceList -&gt;Size():0;
+  ...
+}</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Then we structure our code based on the type of profile given as input.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>...
+if(iProfile == Circular)
+{
+  ...
+}
+else if(iProfile == Elliptical)
+{
+  ...
+}
+else if(iProfile == Rectangular)
+{
+  ...
+}
+else
+{
+  ...
+}
+...</pre>
+				</td>
+			</tr>
+		</table>
+		<p>&nbsp;&nbsp;Concerning the circular type of profile we based the calculation on 
+			the number of protections covering in the segment and their type.
+		</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>if(iProfile == Circular)
+{
+  oYoungModulusEquivalent=1.24*10e09; 
+  oEquivalentRatioToBend=1/1000; 
+  oEquivalentRatioToTwist=10; 
+  const CATUnicodeString ElecType("_Elec_Type"); 
+  CATUnicodeString ProtectionType; 
+  for(int i=1;i&lt;=nbOfProtections ;i++) 
+  { 
+    CATIProduct_var hProtection =(*ipOrderedListOfProtectionReference )[i]; 
+    CATIElecAttrAccess_var hElecAttrAccess(hProtection); 
+    CATICkeParm_var hTypeCkeParm; 
+    HRESULT RC = hElecAttrAccess-&gt;GetAttribute(ElecType, hTypeCkeParm); 
+    if (!!hTypeCkeParm) 
+       ProtectionType = hTypeCkeParm-&gt;Value()-&gt;AsString(); 
+    if(ProtectionType=="ElecTape") 
+    { 
+      if(oEquivalentRatioToBend&lt;1) oEquivalentRatioToBend=oEquivalentRatioToBend*3; 
+      oEquivalentRatioToTwist=oEquivalentRatioToTwist*2; 
+    } 
+    else 
+    { 
+      if(oEquivalentRatioToBend&lt;=1/100 &amp;&amp; oEquivalentRatioToTwist&lt;=100) 
+      { 
+        oEquivalentRatioToBend=oEquivalentRatioToBend*100; 
+        oEquivalentRatioToTwist=oEquivalentRatioToTwist*10; 
+      } 
+      else 
+      { 
+        oEquivalentRatioToBend=1; 
+        oEquivalentRatioToTwist=100; 
+      } 
+    } 
+  } <BR>  const CATUnicodeString ElecEquivThickness("Elec_Equivalent_Thickness");<BR>  double elecEquivThickness=0.; <BR>  for(int k=1;k&lt;=nbOfSplices;k++)<BR>  { <BR>     CATIProduct_var hSplice =(*ipInternalSpliceReferenceList)[k];<BR>     CATIElecAttrAccess_var hElecAttrAccess(hSplice); <BR>     CATICkeParm_var hEquivThicknessCkeParm; <BR>     HRESULT RC = E_FAIL; <BR>     if(!!hElecAttrAccess)<BR>          hElecAttrAccess-&gt;GetAttribute(ElecEquivThickness, hEquivThicknessCkeParm);<BR>     if (!!hEquivThicknessCkeParm) <BR>          elecEquivThickness = elecEquivThickness+hEquivThicknessCkeParm-&gt;Value()-&gt;AsReal(); <BR>  }<BR>  if(elecEquivThickness&gt;0)<BR>  { <BR>    oEquivalentRatioToBend=oEquivalentRatioToBend*10; <BR> 
+  } 
+  HR=S_OK; 
+     }</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Concerning the elliptical type of profile we based the calculation on its 
+			dimensions and the Flexibility slider.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>else if(iProfile == Elliptical) 
+     { 
+  if(iProfileLength1 &lt; 10 &amp;&amp; iProfileLength2 &gt; 2 ) 
+  { 
+    oYoungModulusEquivalent=10e08; 
+    oEquivalentRatioToBend=1/100; 
+    oEquivalentRatioToTwist=10; 
+  } 
+  else 
+  { 
+    if(iBundleSegmentFlexibility&lt;3) 
+    { 
+      oYoungModulusEquivalent=1.24*10e11; 
+      oEquivalentRatioToBend=1; 
+      oEquivalentRatioToTwist=100; 
+    } 
+    else 
+    { 
+      oYoungModulusEquivalent=10e10; 
+      oEquivalentRatioToBend=1/2; 
+      oEquivalentRatioToTwist=10; 
+    } 
+  } 
+  HR=S_OK;  
+     }</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Concerning the rectangular type of profile we based the calculation on the 
+			number of routable objects in the segment.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>else if(iProfile == Rectangular) 
+     { 
+  oYoungModulusEquivalent=1.24*10e11; 
+  oEquivalentRatioToBend=1/10; 
+  oEquivalentRatioToTwist=10; 
+  if(nbOfWiresWireGroups&lt;2) 
+  { 
+    oYoungModulusEquivalent=10e07; 
+  } 
+  else 
+  { 
+    oYoungModulusEquivalent=1.24*10e11; 
+  } 
+  HR=S_OK; 
+     }</pre>
+				</td>
+			</tr>
+		</table>
+		<p>Finally we return whether the implementation succeeded or not.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>...
+ return HR;
+}</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">[1]&nbsp;</td>
+				<td>
+					<a href="../CAASysUseCases/CAASysSampleOMCreatingCmp.htm">
+						Creating components</a>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">[2]</td>
+				<td>
+					<a href="../CAASysUseCases/CAASysSampleOMCreatingInt.htm">
+						Creating interfaces</a>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top">[3]</td>
+				<td>
+					<a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</a>
+				</td>
+			</tr>
+			<tr>
+				<td valign="top" width="1">[4]</td>
+				<td width="1529"><a href="CAAEhiFLEXComputeBundleSegment.htm">Testing your own 
+						computation algoritm</a></td>
+			<tr>
+				<td valign="top" width="1">[5]</td>
+				<td width="1529"><a href="../CAABtlQuickRefs/CAABtlMkHandBook.htm">Using 
+						mkmk</a></td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">Version: <strong>1</strong> [December 2004]</td>
+				<td valign="top">Document created</td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

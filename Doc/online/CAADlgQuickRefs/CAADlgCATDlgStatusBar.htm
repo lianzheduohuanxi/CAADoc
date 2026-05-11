@@ -1,0 +1,227 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgStatusBar</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgStatusBar</h3>
+      <em>Displays application or window information</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgBar.htm">CATDlgBar</a>
+        |
+        +---CATDlgStatusBar</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><em>The Status Bar</em></caption>
+  <tr>
+    <td><img src="images/CATDlgStatusBar.jpg" alt="CATDlgStatusBar.jpg (4517 bytes)" width="687" height="28"></td>
+  </tr>
+  <tr>
+    <td>The status bar is used to display temporary or permanent information
+      information related to the application status, such as the prompts of the
+      active command or its messages, and a keyboard entry field that used by
+      the application PowerInput. It is generally located at the bottom of the
+      window. It can also include push buttons, check buttons, radio buttons,
+      and labels.</td>
+  </tr>
+</table>
+<p>Use the status bar when you want to give applicatoin status information.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgEditModifyNotification</td>
+    <td><code>GetEditModifyNotification</code></td>
+    <td>Whenever the end user edits the PowerInput entry field</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The parent of a status bar must be an instance of the class CATDlgDocument,
+which can contain only one status bar instance. The labels or buttons instances
+which have a status bar as father are arranged from left to right in their
+creation order, left of a defaulted message area.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Status Bar</h4>
+<p>Construct a status bar as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>_pStatusbar = new CATDlgStatusBar(iParent, iName)</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the PowerInput</h4>
+<p>You can set or get the PowerInput mode:
+<ul>
+  <li>set the PowerInput mode with the SetPowerInputMode method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int PowerInputMode = 1;
+_pStatusbar-&gt;SetPowerInputMode(PowerInputMode);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Valid values are:</p>
+    <table>
+      <tr>
+        <td>1</td>
+        <td>The PowerInput is enabled</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>The PowerInput is disabled</td>
+      </tr>
+    </table>
+  </li>
+  <li>get the PowerInput mode with the GetPowerInputMode method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int PowerInputMode;
+PowerInputMode= _pStatusbar-&gt;GetPowerInputMode();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>You can set or get the PowerInput label:</p>
+<ul>
+  <li>set the PowerInput label with the SetPowerInputLabel method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString PowerInputLabel = ... ;
+_pStatusbar-&gt;SetPowerInputLabel(PowerInputLabel);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the PowerInput label with the GetPowerInputLabel method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString PowerInputLabel;
+PowerInputLabel = _pStatusbar-&gt;GetPowerInputLabel();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>You can set or get the PowerInput text:</p>
+<ul>
+  <li>set the PowerInput text with the SetPowerInputText method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString PowerInputText = ... ;
+_pStatusbar-&gt;SetPowerInputText(PowerInputText);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the PowerInput text with the GetPowerInputText method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATUnicodeString PowerInputText;
+PowerInputText = _pStatusbar-&gt;GetPowerInputText();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>You can set the PowerInput state with the SetPowerInputState method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int PowerInputState = ... ;
+_pStatusbar-&gt;SetPowerInputText(PowerInputText);</pre>
+    </td>
+  </tr>
+</table>
+<p>Valid values are:</p>
+<table>
+  <tr>
+    <td>0</td>
+    <td>The PowerInput entry must be associated with the active dialog box</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>The PowerInput entry was caught by the <strong>CATApplicationDocument</strong></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>The PowerInput entry cannot be decoded</td>
+  </tr>
+</table>
+<p>You can get the PowerInput field separator with the GetFieldSeparator method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATUnicodeChar PowerInputSeparator;
+PowerInputSeparator = _pStatusbar-&gt;GetFieldSeparator();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extrema of a Solid</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Progress Bar</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A progress bar is an object which indicates the progress of a task. 
+		CATIA provides several ways to manage progress bars in applications. The 
+		geometric modeler itself provides developers with a way to specify the 
+		progress rate of an algorithm. In your algorithm (the Run of an 
+		operator for example), you have to create a progress bar then mark 
+		out your code or put milestones reflecting the estimate progress of the 
+		global task when the current step is reached.<br>
+		The progress bar can also be associated with an interrupt function 
+		which returns whether the task is to be interrupted. Another capability 
+		of the CGM progress bars consists of nested progress bars which apply to 
+		operators calling other operators having their own progress bars.&nbsp;
+		</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Classes to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Classes to be Used</a></h2>
+<p>The CATCGMProgressBar class defines the geometric modeler progress bar. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsProgressBar.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to implement a progress bar in two operators A and B, operator B 
+being called by operator A.&nbsp; Operator B iterates over the creation of 
+topological points, an easy way to specify some progress rates. A function is 
+associated with the progress bars so that each time a progress rate is specified 
+in either operator, the progress rate is displayed on the standard output. In a 
+true application, an interruption function would be usually written by the 
+calling application. This interruption function would detect a user interaction 
+to stop the current operation. No user interaction would allow the operator to 
+proceed to the next step. </p>
+<p>This use case is made up of several parts</p>
+<ul>
+				<li>&nbsp;The main program (CAAprogressBar.cpp) creates and runs 
+				operator A. </li>
+				<li>CAAOpeA.cpp defines an operator with a progress bar. Two 
+				progress rates are specified for operator A. Operator B is 
+				called by operator A and a nested progress bar is created for 
+				operator B. A function is associated with operator B progress 
+				bar.</li>
+				<li>CAAOpeB.cpp defines an operator which creates points.&nbsp;The number of iterations within the loop to create points is 
+				used to specify progress rates. </li>
+				<li>the interruption function is defined in InterruptFc.cpp.</li>
+</ul>
+<p>This use case creates its own input data. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>Running this use case displays the progress rates of operator A as well as 
+the &quot;nested&quot; progress rates of operator B. The progress bars of 
+operators A and B is illustrated in figure below.</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Operator B nested progress bar</caption>
+  <tr>
+    <td>
+	<img alt="Nested Progress Bars" src="images/CGM_progress_bar_0.png"></td>
+   </tr>
+</table>
+
+<h3><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+		</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="History">History</a></h3>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

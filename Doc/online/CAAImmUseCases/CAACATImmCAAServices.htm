@@ -1,0 +1,322 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Filtering a PRC by a configuration Handler</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>VPM Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Filtering a PRC by a configuration Handler</h3>
+      <em>Filtering the explore windows of a PRC by a LCA configuration Handler</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows the way to filter the explore windows of a PRC by a LCA configuration Handler using the public interface CATImmCAAServices and explains how to use it in a command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CATImmCAAServices and test Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the CATImmCAAServices test Command Do</a></li>
+			<li><a href="#How">How to Launch the CATImmCAAServices test Command</a></li>
+            <li><a href="#Where">Where to Find the CATImmCAAServices test Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to explain how to filter the explore windows of a PRC by a LCA configuration Handler using the public interface CATImmCAAServices. 
+Use of such a test case is demonstrated by means of a test command (CAAImmCAAServicesTestCmd) from an Explorer window.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CATImmCAAServices and test Command Use Case</h3>
+<p>The test Command is a use case of the CAACATImmENOVIAProvider.edu framework that 
+ illustrates CATImmCAAServices interface capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the CATImmCAAServices test Command Do</h4>
+<p>CAAImmCAAServicesTestCmd is a command which returns the CurrentRootIdentifiers,the associated configuration handlers and sets/resets the configuration handler(s) in a VPM explore window.</p>
+<p>The icon for the CAAImmCAAServicesTestCmd is included in the CAAImmIdAcqAgentTestCmd toolbar  as follows:</p>
+<table>
+  <tr>
+    <td><img src="images/CAAImmCAAServicesTestCmd.jpg" alt="CAAImmCAAServicesTestCmd.jpg " width="684" height="443"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the CAAImmCAAServicesTestCmd command</h4>
+<p>To launch CAAImmCAAServicesTestCmd , you will need to set up the build time environment,
+then compile CAAImmCAAServicesTestCmd along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>] in the following way: </p>
+<UL>
+  <LI>Run CNEXT on the command line.
+  <LI>Connect to Enovia using the command on Enovia V5 Toolbar.
+  <LI>Enter Login, Password and Enovia Server information and click OK to login.
+  <LI>Open a PRC from the VPM Navigator window.
+  <LI>Run the CAAImmCAAServicesTestCmd available from VPM Navigator workbench.This command has been included in CAAImmIdAcqAgentTestCmd toolbar.</LI></UL>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAImmCAAServicesTestCmd Code</h4>
+<p>The test command is made up of a single class named <i>CAAImmCAAServicesTestCmd</i> 
+      located in the <i> CAAImmCAAServicesTestCmd.m </i> module of the <i> CAACATImmENOVIAProvider.edu </i> framework :</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAACATImmENOVIAProvider.edu\CAAImmCAAServicesTestCmd.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAACATImmENOVIAProvider.edu/CAAImmCAAServicesTestCmd.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To filter the explore windows of a PRC by a LCA configuration Handler, following steps should be followed:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Declare the CATImmCAAServices object</td>
+    <td valign="top">Header file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Instantiate the CATImmCAAServices object</td>
+    <td valign="top"><code>Initialise</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Get the Current Root and its Identifiers in the VPMNAV window</td>
+    <td valign="top"><code>Initialise</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Get the ConfigFilter(s) assosiated with the PRC</td>
+    <td valign="top"><code>Initialise</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Set/Reset the Config filter.</td>
+    <td valign="top"><code>Activate</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Release the CATImmCAAServices object</td>
+    <td valign="top">Destructor</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declare the CATImmCAAServices object</h4>
+<p>The CAAImmCAAServicesTestCmd command derives from CATCommand.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAAImmCAAServicesTestCmd: public CATCommand
+{
+...
+private:
+	   CATImmCAAServices* _ImmServiceObj;
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>In addition some other private members of the type CATUnicodeString and CATListOfCATUnicodeString are defined which contain the information about the root identifiers and their names, configuration filters and their names.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Instantiate the CATImmCAAServices object</h4>
+<p>The CATImmCAAServices object is instantiated in the command <code>Initialise</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int Initialise()
+{
+...
+_ImmServiceObj = new CATImmCAAServices();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Get the Current Root and its Identifiers in the VPMNAV window</h4>
+<p>Still in the <code>Initialise</code> method,the current root and its identifiers are obtained using GetCurrentRootIdentifiers method of the CATImmCAAServices class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+hr = _ImmServiceObj->GetCurrentRootIdentifiers(_oIdentifierNames,_oIdentifierValues,_oRootType);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>If the <code>GetCurrentRootIdentifiers</code> method  fails then a faliure message is displayed and the execution of the command ends.
+On success the name of identifier of the PRC, its value and the root type is displayed.
+ </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Get the ConfigFilter(s) assosiated with the PRC</h4>
+<p>The ConfigFilter(s) associated with the PRC are also obtained in the <code> Initialise </code> method. 
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  hr = _ImmServiceObj->GetPRCConfigFilter(_oIdentifierNames,_oIdentifierValues,_oCHdsNames,_oCHdsValues);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>If the <code>GetPRCConfigFilter</code> method fails or no configuration handler associated with the PRC is found then an appropriate message or a  faliure message is displayed and the execution of the command ends.On success the names of the configuration handlers associated with the PRC are displayed. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Set/Reset the Config filter</h4>
+<p>If there are one or more configuration handlers associated with the PRC then the user is asked to set/reset the configuration handler on a PRC by choosing OK/Cancel option from the dialog box. Pressing OK sets the first of the configuration handler(s) in the list of configuration handler(s) while pressing Cancel resets(removes) the configuration set on the PRC. 
+This is done in the <code>Activate</code> method of the test command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATDlgNotify* pRunDlg = new CATDlgNotify(CATApplicationFrame::GetFrame()->GetMainWindow (), "VPM_Identification",CATDlgNfyOKCancel|CATDlgWndModal);
+   int a = pRunDlg->DisplayBlocked(type_message, title);
+   pRunDlg->RequestDelayedDestruction();
+   pRunDlg = NULL;
+
+   CATListOfCATUnicodeString CHdsNames;
+   CATListOfCATUnicodeString CHdsValues;
+   if( a == 2 )
+   {
+      CHdsNames.Append("ID");
+      CHdsValues.Append("");
+   }
+   else 
+   {
+      CHdsNames.Append(_oCHdsNames[1]);
+      CHdsValues.Append(_oCHdsValues[1]);
+   }
+   
+   int b = Set( _oIdentifierNames,_oIdentifierValues,CHdsNames,CHdsValues);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Using the<code> Set </code>function, the configuration handler is set/reset depening on the choice of user.
+The set function in turn calls the<code> SetPRCConfigFilter </code>of the CATImmCAAServices class</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+ hr = _ImmServiceObj->SetPRCConfigFilter(iPRCIdentifiersNames,iPRCIdentifiersValues,iCHdsNames,iCHdsValues);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The user is then notified about the success or faliure of the function through a notify box.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Release the CATImmCAAServices object</h4>
+<p>It is recommended to deallocate the CATImmCAAServices object at the end of the command, or when its use is finished in the following way,</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+   if(_ImmServiceObj)
+   {
+      delete _ImmServiceObj;
+      _ImmServiceObj=NULL;
+   }	
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the way to filter the explore windows of a PRC by a LCA configuration Handler using the public interface CATImmCAAServices and explains how to use it in a command. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+    <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [July 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

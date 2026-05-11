@@ -1,0 +1,81 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAADriUpdateSheets.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2000</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language=&quot;VBScript&quot;
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      This macro allows you to update all the sheets contained</font>
+<font color="#008000">'                 in all Drawing document of a specified folder</font>
+<font color="#008000">'   Assumptions:      </font>
+<font color="#008000">'   Author: </font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+
+    <font color="#008000">' Set the file system object containig the folder</font>
+<font color="#0000FF">    Dim </font>oFileSys<font color="#0000FF"> As </font>FileSystem
+<font color="#0000FF">    Set </font>oFileSys = CATIA.FileSystem 
+
+    <font color="#008000">' ----------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    Dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+<font color="#008000">'    If (Not oFileSys.FolderExists(sDocPath)) Then</font>
+<font color="#008000">'      Err.Raise 9999,,&quot;No Doc Path Defined&quot;</font>
+<font color="#008000">'    End If</font>
+    <font color="#008000">' ----------------------------------------------------------- </font>
+
+    <font color="#008000">' Define the path's folder where we are looking for Drawing documents</font>
+<font color="#0000FF">    Dim </font>sFolderPath<font color="#0000FF"> As </font>String
+    sFolderPath = InputBox( &quot;Enter a folder path:&quot;, &quot;Update All Sheets Of a Folder&quot;, _
+                            sDocPath &amp; &quot;\online\CAAScdDriUseCases\samples&quot;)
+<font color="#0000FF">    If </font>(Not oFileSys.FolderExists(sFolderPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,sFolderPath &amp; &quot;: This Folder does not exist&quot;
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Set the folder object</font>
+<font color="#0000FF">    Dim </font>oFolder<font color="#0000FF"> As </font>Folder 
+<font color="#0000FF">    Set </font>oFolder = oFileSys.GetFolder(sFolderPath) 
+
+    <font color="#008000">' Loop on the files collection of the folder</font>
+    <font color="#008000">' For Each File In Folder.Files</font>
+<font color="#0000FF">    Dim </font>iI, iJ
+<font color="#0000FF">    For </font>iI = 1<font color="#0000FF"> To </font>oFolder.Files.Count
+<font color="#0000FF">        Dim </font>oFile<font color="#0000FF"> As </font>Object
+<font color="#0000FF">        Set </font>oFile = oFolder.Files.Item(iI)
+    
+        <font color="#008000">'  Retrieve in the files collection only the Drawing documents from its extension</font>
+<font color="#0000FF">        If </font>InStr(oFile.Name, &quot;.CATDrawing&quot;) &lt;&gt; 0 Then
+
+            <font color="#008000">' Set and open a Drawing document</font>
+<font color="#0000FF">            Dim </font>oDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF">            Set </font>oDoc = CATIA.Documents.Open(oFile.Path)
+            MsgBox &quot;Updating Document &quot; &amp; oFile.Path, 0  ' VBOKOnly
+
+            <font color="#008000">' Loop on the sheets collection of the drawing document</font>
+            <font color="#008000">' For Each sheet In oDoc.Sheets </font>
+<font color="#0000FF">            For </font>iJ = 1<font color="#0000FF"> To </font>oDoc.Sheets.Count
+                <font color="#008000">' Update the sheet even is not necessary</font>
+                oDoc.Sheets.Item(iJ).ForceUpdate 
+<font color="#0000FF">            Next</font>
+
+            <font color="#008000">' Save the Drawing document</font>
+            <font color="#008000">' oDoc.Save</font>
+            <font color="#008000">' Close the Drawing document</font>
+            oDoc.Close
+<font color="#0000FF">        End If</font>
+
+<font color="#0000FF">    Next</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

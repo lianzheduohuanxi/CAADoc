@@ -1,0 +1,251 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>DraftingInterfaces Interface CATIDftStandardMediator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../DraftingInterfaces.htm" href="../DraftingInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "DraftingInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIDftStandardMediator"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>DraftingInterfaces Interface CATIDftStandardMediator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIDftStandardMediator_45552','CATIDftStandardMediator','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIDftStandardMediator</b>
+</p>
+<p>
+<b><i> <b>Role</b>: Interface dedicated to the management and synchronization of a document-wide DFT-Standard.</i></b><br>
+
+ For documents on which the CATIDftStandardMediator interface can be requested, there should be
+ a <b>SINGLE</b> DFT-standard.
+ The multiple drafting-based application instances coexisting in the same document are supposed 
+ to share this DFT-standard. 
+ Consequently, any modification of it <b>MUST</b> be done through this interface rather than through CATIDftStandardManager.
+
+ <br>
+ <b>NOTE</b>: The DFT-standard is a version number and the set of key/value used by drafting elements in order to 
+ customize their  behavior (for example: color, shape, but also how given features should react to a given 
+ interaction).
+ In order to retrieve theses key/values pair, we usually use a dedicated interface.@see CATIDftStandard.
+
+ <br>
+ An embedded standard can be switched (standard A to standard B) or upgraded (standard A version x to standard A version y).
+ Both a switch and an upgrade consist in the replacement of the embedded standard A with a standard B whose characteristics
+ will be taken from the ressources/standard/drafting/B.xml file.
+ However, features can have a custom way of adapting to the new standard according to the import strategy (switch or upgrade).
+ For example, in drafting a switch of standard will reset the sheet's format to the default format of the new standard.
+ However during an upgrade, the sheet's format will remain roughly the same.
+
+ <b>WARNING</b>: any switch or upgrade requires that the target standard has a greater version number that the source standard.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CheckStandardCanBeImported(CATUnicodeString&amp;)"><b>CheckStandardCanBeImported</b></a>(CATUnicodeString&amp;)
+<dd>  Checks whether the XML standard identified by the given name can be imported.
+ <dt> o 
+    <a href="#ImportDftStandard(CATUnicodeString&amp;,CATIContainer*)"><b>ImportDftStandard</b></a>(CATUnicodeString&amp;,CATIContainer*)
+<dd>  Switch the DFT-standard in the document to the given standard <b>for</b> the given drafting-like container.
+ <dt> o 
+    <a href="#InitializeDftStandard(CATUnicodeString&amp;,CATIContainer*)"><b>InitializeDftStandard</b></a>(CATUnicodeString&amp;,CATIContainer*)
+<dd>  Initialize the DFT-standard in the document to the given standard <b>for</b> the given drafting-like container.
+ <dt> o 
+    <a href="#UpgradeDftStandard(CATIContainer*)"><b>UpgradeDftStandard</b></a>(CATIContainer*)
+<dd>  Upgrade the embeded DFT-standard in the document <b>for</b> the given drafting-like container.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CheckStandardCanBeImported"></a><a name="CheckStandardCanBeImported(CATUnicodeString&amp;)"></a> <dt> o <b>CheckStandardCanBeImported</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CheckStandardCanBeImported</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNewStd</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Checks whether the XML standard identified by the given name can be imported.
+ This method is typically used in order to construct the list of available standards for import.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewStd</tt>
+   <dd> The name of the standard.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  An <tt>HRESULT</tt> value.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>S_OK</tt>     <dd> Success. the XML standard can be used.
+ <dt> <tt>S_FALSE </tt> <dd> Success. The standard cannot be imported, check the version number.
+ <dt> <tt>E_FAIL</tt>   <dd> Error. Internal error or the XML standard is inconsistant.
+ </dl>
+</dl>
+</dl>
+<a name="ImportDftStandard"></a><a name="ImportDftStandard(CATUnicodeString&amp;,CATIContainer*)"></a> <dt> o <b>ImportDftStandard</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ImportDftStandard</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNewStd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>iContainer</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Switch the DFT-standard in the document to the given standard <b>for</b> the given drafting-like container.
+ See this interface description for more explanation about switches.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewStd</tt>
+   <dd> The name of the standard xml file which should be imported and used globally (see this interface description).
+ </dd>
+    <dt><tt> iContainer</tt>
+   <dd> The container whose standard is to be changed and will consequently impact other DFT containers.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  An <tt>HRESULT</tt> value.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>S_OK</tt>     <dd> Sucess.
+ <dt> <tt>S_FALSE</tt>  <dd> The version number of the standard in the xml file you want to import is lower than 
+                             the version number of the embeded standard (see the warning this interface description).
+ <dt> <tt>E_FAIL</tt>   <dd> Preconditions not met or internal critical error. The model can potentially be corrupted and unusable.
+ </dl>
+</dl>
+</dl>
+<a name="InitializeDftStandard"></a><a name="InitializeDftStandard(CATUnicodeString&amp;,CATIContainer*)"></a> <dt> o <b>InitializeDftStandard</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InitializeDftStandard</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iNewStd</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>iContainer</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Initialize the DFT-standard in the document to the given standard <b>for</b> the given drafting-like container.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewStd</tt>
+   <dd> The name of the standard xml file which should be imported and used globally (see this interface description).
+ </dd>
+    <dt><tt> iContainer</tt>
+   <dd> The container whose standard is to be initialized for the first time to iNewStd.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  An <tt>HRESULT</tt> value.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>S_OK</tt>     <dd> Success.
+ <dt> <tt>S_FALSE</tt>  <dd> There are existing containers in this document whose standard cant be changed to iNewStd.
+                             Check the version number of the standard you want to import (see this interface description).
+ <dt> <tt>E_FAIL</tt>   <dd> Preconditions not met or internal critical error. The model can potentially be corrupted and unusable.
+ </dl>
+</dl>
+</dl>
+<a name="UpgradeDftStandard"></a><a name="UpgradeDftStandard(CATIContainer*)"></a> <dt> o <b>UpgradeDftStandard</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UpgradeDftStandard</b>(<td><script type="text/javascript"> activateLink('CATIContainer','CATIContainer*')</script> <td><tt>iContainer</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Upgrade the embeded DFT-standard in the document <b>for</b> the given drafting-like container.
+ See this interface description for more explanation about upgrades.
+
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iContainer</tt>
+   <dd> The container for which the standard is upgraded.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  An <tt>HRESULT</tt> value.
+ <br><b>Legal values</b>:
+ <dl>
+ <dt> <tt>S_OK</tt>     <dd> Sucess.
+ <dt> <tt>S_FALSE</tt>  <dd> The version number of the standard in the xml file you want to import is lower than 
+                             the version number of the embeded standard (see this interface description).
+ <dt> <tt>E_FAIL</tt>   <dd> Preconditions not met or internal critical error. The model can potentially be corrupted and unusable.
+ </dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIDftStandardMediator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATDraftingInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

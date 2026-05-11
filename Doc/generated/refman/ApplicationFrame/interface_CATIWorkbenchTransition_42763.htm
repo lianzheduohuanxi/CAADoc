@@ -1,0 +1,176 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>ApplicationFrame Interface CATIWorkbenchTransition</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../ApplicationFrame.htm" href="../ApplicationFrame.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "ApplicationFrame";	}
+		function getCurrentObjectName() { 
+ 	return "CATIWorkbenchTransition"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>ApplicationFrame Interface CATIWorkbenchTransition</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIWorkbenchTransition_42763','CATIWorkbenchTransition','0');</script>
+<p><b>Usage: you can reimplement this interface by deriving the supplied <a href="../ApplicationFrame/class_CATExtIWorkbenchTransition_47656.htm">CATExtIWorkbenchTransition</a> adapter class.</b></p>
+<hr>
+<p>
+ interface <b>CATIWorkbenchTransition</b>
+</p>
+<p>
+<b><i> Interface to create transition between workbenches.</i></b><br>
+
+ <b>Role</b>: Changing the current workbench to another is one of the 
+ methods proposed to the end user to go on with his/her job with another set of tools. 
+ To avoid discontinuity in the process and ensure smooth transitions between workbenches, 
+ these transitions should have been designed and implemented. <br>
+ <br>
+ The goal of this interface is to answer to this question: the document 1 is activated with
+ the workbenchA, the workbench B is selected in the Start menu, what happens ? 
+ The workbench B is activated but with which document ?
+ <ul>
+ <li> The same document ? </li>
+ <li> An another document of the same type as the document 1? </li>
+ <li> A new document from another type  ?</li>
+ <li> What happens if document 1 contains a document which can match the workbench B ?
+ </ul>
+ 
+ You should implement the CATIWorkbenchTransition interface, for each workshop, using an 
+ extension of a late type made of the workshop identifier suffixed 
+ by <b>_trans</b>, such as <tt>MyWorkshop_trans</tt> for the MyWorkshop'workshop.To do 
+ this you should make a class that derives from  <script type="text/javascript"> activateLinkAnchor('CATExtIWorkbenchTransition','','CATExtIWorkbenchTransition') </script>.  
+ The aim of this implementation is only to activate the right workshop if needed. Then the
+ activation of the requested workbench is done automatically.
+ <p><b>BOA information</b>: this interface CANNOT be implemented
+ using the BOA (Basic Object Adapter).
+ To know more about the BOA, refer to the CAA Encyclopedia home page.
+ Click Middleware at the bottom left, then click the Object Modeler tab page.
+ Several articles deal with the BOA.</p>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#DoTransition(CATString&amp;,CATString&amp;,CATString&amp;,CATString&amp;)"><b>DoTransition</b></a>(CATString&amp;,CATString&amp;,CATString&amp;,CATString&amp;)
+<dd>  Handles or not the transition if possible.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="DoTransition"></a><a name="DoTransition(CATString&amp;,CATString&amp;,CATString&amp;,CATString&amp;)"></a> <dt> o <b>DoTransition</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>DoTransition</b>(<td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iFromWorkshop</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iFromWorkbench</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iToWorkshop</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATString','CATString&amp;')</script> <td><tt>iToWorkbench</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Handles or not the transition if possible.
+<br><b>Role</b>: Transitions ( from and) to your workbench should be designed knowing that
+ CATIA calls the workshops involved in the transition on their
+ <tt>DoTransition</tt> methods in the following order:
+ <br>
+ <ol>
+ <li>The active workshop,  <tt>iFromWorkshop</tt></li>
+ <li>The selected workshop, or the workshop to which the selected workbench 
+     belongs, <tt>iToWorkshop</tt></li>
+ </ol>
+ <br>
+ Any of them can decide what to do when a transition occurs. CATIA calls them in 
+ that order until one of them decides.If the active workshop decides, the selected is not
+ called. However the selected workshop generally decides,  
+ since incoming transitions only should be implemented. If none decides, this means that
+ the transition involves two workbenches of the same workshop, and simply switches 
+ these workbenches.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFromWorkshop</tt>
+   <dd>    The active workshop
+ </dd>
+    <dt><tt> iFromWorkbench</tt>
+   <dd>    The active workbench
+ </dd>
+    <dt><tt> iToWorkshop</tt>
+   <dd>    The selected workshop, or the workshop to which the selected workbench 
+     belongs.
+ </dd>
+    <dt><tt> iToWorkbench</tt>
+   <dd>    The selected workbench
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     1 if handled, 0 otherwise
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIWorkbenchTransition.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATApplicationFrame</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,646 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Analysis Process</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td valign="top">
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Analysis Process</h3>
+      <em>The standard processes for CATAnalysisCharacCollector manipulation</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains the list of processes provided with the analysis
+      modeler in order to convert the CATAnalysisCharacCollector data. It
+      includes the following section:
+      <ul>
+        <li><a href="#SPMProcessAbsoluteValue"><b><u>SPMProcessAbsoluteValue</u></b></a></li>
+        <li><a href="#SPMProcessAbsOrderEigenValue"><b><u>SPMProcessAbsOrderEigenValue</u></b></a></li>
+        <li><a href="#SPMProcessComplex"><b><u>SPMProcessComplex</u></b></a></li>
+        <li><a href="#SPMProcessComponent"><b><u>SPMProcessComponent</u></b></a></li>
+        <li><a href="#SPMProcessInterval"><b><u>SPMProcessInterval</u></b></a></li>
+        <li><a href="#SPMProcessLamina"><b><u>SPMProcessLamina</u></b></a></li>
+        <li><a href="#SPMProcessLinear"><b><u>SPMProcessLinear</u></b></a></li>
+        <li><a href="#SPMProcessNormalize"><b><u>SPMProcessNormalize</u></b></a></li>
+        <li><a href="#SPMProcessPrincipalValue"><b><u>SPMProcessPrincipalValues</u></b></a></li>
+        <li><a href="#SPMProcessSmi"><b><u>SPMProcessSmi</u></b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>We have defined some standard processes. They are used to filter values or to
+apply a mathematical computation on the input characteristic. All these
+processes will be listed below.&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="20%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Process Name</b></td>
+    <td width="50%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Process Definition</b></td>
+    <td width="30%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>&nbsp;Input Parameters</b></td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessAbsoluteValue">SPMProcessAbsoluteValue</a></td>
+    <td width="50%">This process is used to compute the absolute value of a
+      scalar.</td>
+    <td width="30%">No parameter</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessAbsOrderEigenValue">SPMProcessAbsOrderEigenValue</a></td>
+    <td width="50%">This process is used to reorder an eigen tensor (depending
+      on the absolute value).</td>
+    <td width="30%">No parameter</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessComplex">SPMProcessComplex</a></td>
+    <td width="50%">This process filters the given part of complex ( real ,
+      imaginary, phase or modulus).</td>
+    <td width="30%">One INTEGER parameter : real =0, imaginary=1, phase=2,
+      modulus=3 (default value : real)</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessComponent">SPMProcessComponent</a></td>
+    <td width="50%">This process filters the given component.</td>
+    <td width="30%">One INTEGER parameter : the component number to keep (0=C1,
+      1=C2,...) (default value : 0=C1)</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessInterval">SPMProcessInterval</a></td>
+    <td width="50%">This process filters the values of characteristic belonging
+      to intervals defined by their limits (up to 5 coefficients). The defined
+      intervals may be included or excluded.
+      <p>&nbsp;
+      I-----------I-----------I-----------I-----------I-----------I-----------I</p>
+      <p>-00&nbsp;&nbsp;&nbsp;&nbsp; Coef1&nbsp;&nbsp; Coef2&nbsp;&nbsp;&nbsp;
+      Coef3&nbsp;&nbsp; Coef4&nbsp;&nbsp;&nbsp; Coef5&nbsp;&nbsp;&nbsp;&nbsp;
+      +00</p>
+    </td>
+    <td width="30%">From one to six INTEGER parameters : describing if intervals
+      are included ( 1=[coefi,coefj], 2=[coefi,coefj[, 3=]coefi,coefj],
+      4=]coefi,coefj[ ) or excluded (0).
+      <p>From zero to five FLOAT parameters giving the limits of intervals
+      (Coefi values).</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessLamina">SPMProcessLamina</a></td>
+    <td width="50%">This process filters the given lamina number</td>
+    <td width="30%">One INTEGER parameter : the lamina number to keep. (default
+      = first lamina =0)</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessLinear">SPMProcessLinear</a></td>
+    <td width="50%">This process computes <b>y</b>=<b>ax</b>+<b>b</b>&nbsp; (<b>x</b>
+      is the input characteristic, <b>y</b> the output characteristic, <b>a</b>
+      and <b>b </b>are given coefficients).</td>
+    <td width="30%">Two FLOAT parameters : <b>a</b> and <b>b</b> coefficients (
+      default values : a=1.f b=0.f)</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessNormalize">SPMProcessNormalize</a></td>
+    <td width="50%">This process is used to normalize a vector</td>
+    <td width="30%">No parameter</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessPrincipalValue">SPMProcessPrincipalValues</a></td>
+    <td width="50%">This process is used to change a full or symmetrical tensor
+      to an eigen tensor</td>
+    <td width="30%">No parameter</td>
+  </tr>
+  <tr>
+    <td width="20%"><a href="#SPMProcessSmi">SPMProcessSmi</a></td>
+    <td width="50%">This process filters the given layer (upper, mid, lower or
+      upper_lower)</td>
+    <td width="30%">One INTEGER parameter : describing the layer to keep. (upper
+      = 0 , mid = 1, lower = 2) (default&nbsp; value = upper = 0). The
+      upper_lower option needs two INTEGERS (upper = 0 and lower = 2)</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessAbsoluteValue">SPMProcessAbsoluteValue</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR</td>
+    <td width="35%">SCALAR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D</td>
+    <td width="35%">1D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessAbsOrderEigenValue">SPMProcessAbsOrderEigenValue</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">EIGEN_VALUES</td>
+    <td width="35%">EIGEN_VALUES</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL</td>
+    <td width="35%">LOCAL, GLOBAL</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessComplex">SPMProcessComplex</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">COMPLEX, COMPLEX_DOUBLE&nbsp;</td>
+    <td width="35%">REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR, VECTOR</td>
+    <td width="35%">SCALAR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessComponent">SPMProcessComponent</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+    <td width="35%">SCALAR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessInterval">SPMProcessInterval</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR</td>
+    <td width="35%">SCALAR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessLamina">SPMProcessLamina</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessLinear">SPMProcessLinear</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessNormalize">SPMProcessNormalize</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">VECTOR</td>
+    <td width="35%">SCALAR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessPrincipalValue">SPMProcessPrincipalValue</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">TENSOR, SYMMETRICAL_TENSOR</td>
+    <td width="35%">EIGEN_VALUES</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL</td>
+    <td width="35%">LOCAL</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ImageDefinition"></a> <a name="SPMProcessSmi">SPMProcessSmi</a></h4>
+<p>&nbsp;</p>
+<table border="2" cellspacing="1" width="100%">
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Version</b></p>
+    </td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Input Characteristic</b></td>
+    <td width="35%" bgcolor="#3399FF" bordercolor="#00FFFF">
+      <p align="center"><b>Output Characteristic</b></td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Value Types</b></td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+    <td width="35%">SHORT, INTEGER, REAL, DOUBLE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Types</b></td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+    <td width="35%">SCALAR, VECTOR, TENSOR, EIGEN_VALUES, SYMMETRICAL_TENSOR</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Mathematical
+      Dimensions</b></td>
+    <td width="35%">1D, 2D, 3D</td>
+    <td width="35%">1D, 2D, 3D</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>RefFrame</b>
+      &nbsp;</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+    <td width="35%">LOCAL, GLOBAL, NONE</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>Category</b>
+      &nbsp;</td>
+    <td width="35%">NODE, ELEMENT</td>
+    <td width="35%">NODE, ELEMENT</td>
+  </tr>
+  <tr>
+    <td width="25%" bgcolor="#3399FF" bordercolor="#00FFFF"><b>ValuesAreCombined</b></td>
+    <td width="35%">TRUE, FALSE</td>
+    <td width="35%">TRUE, FALSE</td>
+  </tr>
+</table>
+<p align="left">&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

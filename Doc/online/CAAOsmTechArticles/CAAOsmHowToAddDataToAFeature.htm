@@ -1,0 +1,556 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>How to Add Data to a Feature</title>
+</head>
+<body>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open
+Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>How
+to Add
+Data to a Feature</h3>
+      <p><span style="font-style: italic;">Different ways </span><em>of
+extending base features</em></p>
+      </td>
+    </tr>
+    <tr>
+      <td class="tech" colspan="2">Technical
+Article</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tbody>
+    <tr>
+      <td>
+      <h3><a name="Abstract"></a>Abstract</h3>
+      <p>This article deals with
+how to add data to a feature. </p>
+      <ul>
+        <li><a href="#Introduction"><b>Adding
+data to a feature</b></a>
+          <ul>
+            <li><a href="#NonPersistent">Non Persistent Data</a></li>
+            <li><a href="#Persistent">Persistent Data</a>
+              <ul>
+                <li><a href="#Properties">Properties</a> </li>
+                <li><a href="#Attributes">Attributes</a></li>
+                <li><a href="#Aggregation">Aggregation</a></li>
+              </ul>
+            </li>
+            <li><a href="#Behaviors">Behaviors</a></li>
+            <li><a href="#ExtensionFeatures">Extension Features</a></li>
+            <ul>
+              <li><a href="#ExtensionFeaturesData">Data</a></li>
+              <li><a href="#ExtensionFeaturesBehaviors">Behaviors</a></li>
+              <li><a href="#InstanceReference">Instance Reference</a></li>
+				<li><a href="#Applicative Container">Applicative Container</a></li>
+            </ul>
+          	<li><a href="#SummaryTasks">Summary
+of Tasks</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><b>In
+Short</b></a></li>
+        <li><a href="#References"><b>References</b></a> </li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<h2><a name="Introduction"></a>Adding
+data to a feature</h2>
+<p style="text-align: left;">This
+article is an advanced article about adding data to a feature. You must
+know what is a feature and the basic principles of the feature modeler
+and the object modeler. So to really take advantage of this article you
+should see the referenced article [<a href="#References">1</a>].</p>
+<p>The different types of data
+that you might want to add to a feature:<br>
+</p>
+<ol>
+  <li><span style="font-weight: bold;">N</span><b>on
+Persistent data</b>, those data are
+not added using "Feature Modeler" APIs, and therefore are not
+integrated in basic "Feature Modeler" mechanisms such as Data
+persistence, Undo/Redo, Copy/Paste. They usually are temporary data
+used to enhance performances.</li>
+  <li><span style="font-weight: bold;">P</span><b>ersistent
+data</b>, those data are added using
+"Feature Modeler" APIs. They are integrated in "Feature Modeler" basic
+mechanisms. They usually are part of the data model and have their own
+semantic.</li>
+  <li><strong>Behaviors</strong>,
+in object programming adding data is not enough you might want to add
+behavior implementing interfaces. <br>
+  </li>
+  <li><span style="font-weight: bold;">Extension features</span>,
+this mechanism allows to add both data and behavior to a feature (then
+referenced as the "base feature") through an extension
+feature.&nbsp; This way of adding data is more memory consuming
+but has other advantages.<br>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="NonPersistent"></a>N<b>on
+Persistent Data</b></h3>
+<p>Non persistent data can easily
+be added by creating a "System Data Extension", you can see the
+Creating Components article [<a href="#References">6</a>]
+to learn more about Data Extension. In this case data and the feature
+become one entity, they share the same life cycle. We can also imagine
+to use an external C++ data structure that would only point to features
+and manage associated data.</p>
+<p>As all data model modifications
+must be supported during the whole lifecycle of the data, it is
+interesting to add data without impacting the persistency. It's a very
+easy and safe way to add data. But, it is not integrated with "Feature
+Modeler" Undo/Redo or Copy/Paste.<br>
+</p>
+<p style="text-align: right;">[<a href="#Top">Top</a>]</p>
+<h3><a name="Persistent"></a>P<b>ersistent
+data</b></h3>
+<p>Once you&nbsp; have
+performed some thinking about your data model, you might want to make it
+persistent. Beware of this kind of modifications as you should be able
+to support them during the whole data lifecycle.<br>
+Persistent data available are of three kinds:</p>
+<ul>
+	<li><a href="#Properties">Properties</a>,
+they can be added to a feature with the 
+	<span
+ style="font-weight: bold; font-style: italic;">CATIProperty</span>
+interface.</li>
+	<li><a href="#Attributes">Attributes</a>,
+they are declared in the feature's StartUp and are manipulated with
+	<span
+ style="font-style: italic;"><strong>CATISpecAttrAccess</strong></span>.</li>
+	<li><a href="#Aggregation">Aggregation</a>
+is a way of adding data using tk_component attribute declared in the
+feature's StartUp.<br></li>
+</ul>
+<h4><a name="Properties"></a>Properties
+</h4>
+<p>
+Properties
+are the easiest way to add basic data on any feature.<p>
+Only basic types are supported:<br>
+<ul>
+	<li>
+	<h4>C++ short type</h4></li>
+	<li>
+	<h4>C++ unsigned short type</h4></li>
+	<li>
+	<h4>C++ long type</h4></li>
+	<li>
+	<h4>C++ unsigned long type</h4></li>
+	<li>
+	<h4>C++ double type</h4></li>
+	<li>
+	<h4>C++ unsigned char type (no
+support of unicode)</h4></li>
+</ul>
+<p>Properties support is
+integrated in Data persistence, Undo/Redo, Copy/Paste. This means that
+your data will be saved, modifications are kept during run time to
+allow Undo/Redo operations and finally those data are copied with the
+feature in case of "Paste as specified".</p>
+<p>The Instance Reference
+mechanism is not supported with Properties. This means that if you
+instanciate a feature that has properties defined, the properties are
+not defined on the instance.</p>
+
+<p>See reference article [<a
+ href="#References">1</a>] for a detailed description of the Instance Reference 
+concept</p>
+<div style="text-align: right;">
+<br>
+</div>
+<h4><a name="Attributes"></a>Attributes</h4>
+<p>
+Attributes are part of a feature description. Attributes are like
+"slots" attached to feature objects in which data are stored. </p>
+<p>The most efficient way to use attribute is to declare them on the
+feature's StartUp. Attributes not valuated on the instance have no
+memory cost. </p>
+<p>Attributes can also be added dynamically on any instance using the <i>CATISpecObject</i>
+interface, with this usage memory consumption and performances are not
+optimal.</p>
+<p>Attributes support is integrated in all Feature Modeler mechanisms (Data persistence,
+Undo/Redo, Copy/Paste,Instance-Reference, ...).</p>
+<br>
+<img alt="" src="images/CAAOsmAttr1.jpg" height="373" width="375"><br>
+Attributes are declared on the startup.<br>
+You can set the default values on the startup.<br>
+On instances, only the overloaded attributes are stored. <br>
+<br>
+See the referenced article [<a href="#References">1</a>]
+for a detailed description of the attributes concept.<br>
+<br>
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+</div>
+<h4><a name="Aggregation"></a>Aggregation</h4>
+<p>Aggregation is an advanced way
+of the attribute way of adding data. Some features declare a
+tk_component attribute which is dedicated to external applications that
+want to add data on a feature. Aggregating your feature to another make
+them share the same life cycle.</p>
+<br>
+<img alt="" src="images/CAAOsmAggreg1.jpg" height="393" width="545"><br>
+<br>
+See the referenced article [<a href="#References">1</a>]
+and the CAAOsmAggregatedAttr [<a href="#References">5</a>]
+use case for a detailed description of the aggregation concept.<br>
+</p>
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+<br>
+</div>
+<h3><a name="Behaviors"></a>Behaviors</h3>
+<p>Behaviors are added by
+implementing an interface on a feature. If you implement an interface
+on a StartUp all features of the same type will benefit of this new
+behavior.</p>
+<p>As you cannot overload interfaces already implemented, you must use the
+provider mechanism. This mechanism is available on a limited number of
+interfaces, such as: <em>CATINavigateObject
+</em>, <em>CATI3DGeoVisu
+</em>, <em>CATIIcon
+</em>, <em>CATIUIActivate
+</em>, etc. See the "Using the
+Provider Mechanism" use case in the PPR/Product section of the CAA
+documentation encyclopedia. Some behaviors can be re-implemented to
+overload the behavior.</p>
+ 
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+</div>
+<h3><a name="ExtensionFeatures"></a>
+Extension Features</h3>
+<p>A feature can be enriched by
+adding one or several extension features on it. Extension feature
+allows to add data and behaviors to a feature. <br>
+<br>
+Extensions are objects that are defined in catalogs like StartUps, and are described 
+in CATfct file created by CATfctEditorAssistant tool. An extension
+feature is added in an applicative container, the applicative
+container is declared in the osm file. You can only add one
+extension of each kind. <br>
+They share the same life cycle as the base feature. Which means that
+the deletion of a base feature leads to the deletion of all the
+extensions, but the deletion of an extension feature doesn't lead to
+the base feature deletion. Deleting an extension is done by removing it
+from the base feature, an extension feature cannot exist without a base
+feature.<br>
+The base feature is copied with its extensions.<br>
+As features, extension features are integrated in Undo/Redo mechanism.<br>
+<br>
+Adding and removing extension is performed using the <em><strong>
+CATIOsmExtendable</strong></em>
+interface, which is implemented by default on all features. This
+interface also provides services to retrieve extension features from
+the base feature. Extension features can retrieve their base feature
+using the interface <em><strong>CATIOsmExtension</strong></em>.
+<br>
+&nbsp;<br>
+</p>
+<p><img alt="" src="images/CAAOsmFeatExt1.jpg" height="503" width="479"> </p>
+<p><b><span style="font-weight: 400;">Properties of the extension
+feature are declared in a OSM file: <span
+ style="font-weight: bold;">TheNameOfMyExtensionFeature</span></span></b>.osm<br>
+</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td> <font SIZE="2">
+		<p>#creation::parameter={&quot;ContType&quot;:&quot;CATFeatCont&quot;,&quot;Container&quot;:&quot;CAAOsmApplication1&quot;,&quot;Extends&quot;:[&quot;CAAOsmNovel&quot;],&quot;IsLocal&quot;:true}</p>
+		</font><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The above creation parameter is now must to be declared in a osm file. This 
+statement contains information regarding different parameters namely 
+ContainerType, Container name, Base Feature name, and instantiation property [<a href="#References">2</a>].</p>
+<p>You have to declare the
+type and name of container where the extension features will rely once they are added on
+a base feature.</p>
+<p>You have to declare the base
+features that you want to extend with the extension feature. An osm file is effective for the concerned extension feature and the
+extension features that inherit from it. The extension feature can extend all declared base features and the features that inherit
+from them.</p>
+<p> Extension features are defined
+as "local" by default, this means that if you instantiate a base
+feature that has been extended, only the extensions that are not
+"local" are re-instantiated
+on the base feature instance.</p>
+<p>Attributes can be added to the
+extension feature as other features. Attributes added on extension
+feature can have quality (sp_IN, sp_OUT, sp_NEUTRAL), these
+Build/Update characteristics are supported.<br>
+</p>
+<p>Using extension feature is more
+powerful because it allows you to overload modelization but also
+heavier than using properties or dynamic attributes. Try to consider
+those alternative possibilities before using extension feature. <br>
+</p>
+<p>See the&nbsp; CAAOsmManageExtensions
+use case [<a href="#References">3</a>]
+for examples showing how feature objects can be extended.</p>
+<h4><a name="ExtensionFeaturesData"></a>Data</h4>
+<p>
+Extension features are features so it is possible to add attributes on
+them like any other features. It is possible to add several extensions
+to one base feature. </p>
+<p>You cannot add extension features to an extension feature.</p>
+<p>
+See the referenced article [<a href="#References">1</a>]
+for a detailed description of the attributes concept.</p>
+</h4>
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+</div>
+<h4><a name="ExtensionFeaturesBehaviors"></a>
+ Behaviors <br>
+</h4>
+<p>
+Extensions can implement interfaces that can be retrieved&nbsp;
+from the base feature through  <strong style="font-weight: 400">CATIOsmExtendable</strong> 
+interface. This interface is implemented by default on all features and
+has a  <code>QueryExtension</code>
+method that allows to retrieve a pointer on an interface implemented on
+the extension.</p>
+<br>
+</p>
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+</div>
+<h4>
+<a name="InstanceReference"></a>Instance
+Reference</h4>
+<p>
+By default an extension is "local". This mean that the extension it is
+not re-instanciated when the base feature is re-instanciated.</p>
+<p>If the extension is not "local" (this must be specified in the resource
+file) then the extension is re-instanciated with the base feature.</p>
+<p>
+See the referenced article [<a href="#References">1</a>]
+for a detailed description of the instance reference concept.</p>
+<h4><a name="Applicative Container"></a>Applicative Container</h4>
+<p>Just above, we have seen that feature extension instances are created inside 
+an applicative container whose the name is defined by the <code>Container</code> 
+keyword in the OSM file . </p>
+<table class="code" id="table3">
+	<tr>
+		<td>
+		<pre>ExtensionFeature.<b>Container</b>=&quot;<b>CAAOsmApplication2</b>&quot;;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p><b>Who</b> creates this applicative container ? There are two possibilities :</p>
+<ul>
+	<li>You want always create yourself the applicative container: in this case
+	<code>AddExtension</code> method of <i>CATIOsmExtendable</i> will fail if 
+	the applicative container does not exist in the CATDocument containing the base feature.</li>
+	<li>You want benefit feature modeler capabilities: add this line in the osm file 
+	where extension startup is defined</li>
+</ul>
+<blockquote>
+	<table class="code" id="table4">
+		<tr>
+			<td>
+			<pre>#creation::parameter={&quot;ContType&quot;:&quot;CATFeatCont&quot;,&quot;Container&quot;:&quot;CAAOsmApplication1&quot;,&quot;Extends&quot;:[&quot;CAAOsmNovel&quot;],&quot;IsLocal&quot;:true}
+...</pre></td>
+		</tr>
+	</table>
+	<ul>
+		<li><code>ContType</code> is the container type : CATFeatCont or a 
+		specific type if you want implement interfaces on this container. </li>
+		<li><code>Container</code> is the name of the container : 
+		CAAOsmApplication1</li>
+		<li><code>Extends</code> is the Base Feature name for which the feature 
+		extension is defined.</li>
+	</ul>
+</blockquote>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>Consequently, you have noted that by construction, feature extension can only 
+be instantiated inside an applicative container located in the same&nbsp; 
+CATDocument as those containing the base feature.<br>
+</p>
+<div style="text-align: right;">
+[<a href="#Top">Top</a>]<br>
+</div>
+<h3><a name="SummaryTasks"></a>Summary
+of Essential Tasks</h3>
+<table border="1" width="100%">
+  <tbody>
+    <tr>
+      <td width="33%"><b>Method
+Name</b>:</td>
+      <td width="33%"><b>Interface
+Name</b>:</td>
+      <td width="34%"><b>Function</b>:</td>
+    </tr>
+    <tr>
+      <td>define_properties,
+get_property_value, ...<br>
+      </td>
+      <td><span style="font-style: italic;">CATIProperty</span><br>
+      </td>
+      <td>Add, set and get
+properties<br>
+      </td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td><br>
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td>SetDouble, SetBoolean,
+SetSpecObject, ...<br>
+      </td>
+      <td><span style="font-style: italic;">CATISpecAttrAccess</span><br>
+      </td>
+      <td>Set an attribute value<br>
+      </td>
+    </tr>
+    <tr>
+      <td>GetDouble, GetBoolean,
+GetSpecObject, ...<br>
+      </td>
+      <td style="font-style: italic;">CATISpecAttrAccess</td>
+      <td>Get an attribute value</td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td><br>
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td width="33%"><code>QueryApplicativeExtension</code></td>
+      <td width="33%"><i>CATIOsmExtension</i></td>
+      <td width="34%">Returns
+the extension in the requested container corresponding to the requested
+interface.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>QueryAllExtensions</code></td>
+      <td width="33%"><i>CATIOsmExtendable</i></td>
+      <td width="34%">Returns
+all the extensions implementing the requested interface.</td>
+    </tr>
+    <tr>
+      <td width="33%"><code>QueryBaseObject</code></td>
+      <td width="33%"><i>CATIOsmExtension</i></td>
+      <td width="34%">Returns
+the base feature object associated to the current extension.</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In
+Short</h3>
+<p>Extending a feature is a basic
+need to customize application but as it's model manipulation it is
+important to overview the different ways of doing it.</p>
+<p>Before adding data you should
+ask yourself if you want to add persistent data or not and if the data
+you want to add is going to be added on every instance of the feature.
+Depending on your issues you must choose the lighter way to add data.</p>
+<p>When you add model element such
+as properties, attributes or extension beware of their naming. The only
+way to retrieve those elements created on the fly is by using their
+name. To avoid indeterminism it is mandatory that all those names are
+unique. One option is to use specific prefixes to name those
+entity.&nbsp; See the referenced article [<a href="#References">4</a>]
+for a review of the naming concept. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td><a href="CAAOsmOverview.htm">Feature Modeler Conceptual
+Overview</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td><a href="CAAOsmTaOsmMigration.htm">How to move from C++ to OSM</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmManageExtensions.htm">Working
+with Feature Extensions</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td> <a href="../CAADocTechArticles/CAADocCppNamingRules.htm">CAA
+V5 C++ Naming Rules</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[5]</td>
+      <td><a href="../CAAOsmUseCases/CAAOsmAggregatedAttr.htm">Aggregating
+Features to Features</a></td>
+    </tr>
+    <tr>
+      <td>[6]<br>
+      </td>
+      <td> <a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+Components</a><br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong>
+[Feb 2005]</td>
+      <td valign="top">Document
+created</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<hr><!---------------------------------comment------------------------------------->
+<p><i>Copyright
+&copy; 2005, Dassault Syst&egrave;mes. All rights reserved.</i></p>
+<!-- Mirrored from dsweb2e/caaV5/V5R14/online/CAAOsmTechArticles/CAAOsmOverview.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 15 Oct 2004 13:02:53 GMT -->
+</body>
+</html>

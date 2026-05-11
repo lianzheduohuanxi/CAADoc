@@ -1,0 +1,16 @@
+---
+title: "ENOVaultClientCPP Modifications"
+category: "general"
+module: "CAACenAPIChangesR7"
+tags: []
+source_file: "Doc\online\CAACenAPIChangesR7\ENOVaultClientCPP.htm"
+converted: "2026-05-11T17:33:52.021219"
+---
+
+CAA API Modifications|  ENOVaultClientCPP  |   
+---|---|---  
+  
+* * *
+
+**Entity|  Modification| To Do** | ENOVaultClientCPP/Protected/ENOVIVaultReadIterator.h/ENOVIVaultReadIterator/ENOVIVaultReadIterator| MHBDM|   
+---|---|---

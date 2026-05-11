@@ -1,0 +1,653 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Octree Mesher</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Analysis Solution</h1>
+    </td>
+    <td valign="top">
+      <h2>Analysis Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Octree Mesher</h3>
+      <p><em>The description of all attributes of the Octree mesh part</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<table class="abstract" height="294">
+  <tr>
+    <td height="290">
+      <h3>Abstract<br>
+      <br>
+      </h3>
+      <div align="center">
+        <center>
+        <table border="2" width="90%" height="71">
+          <tr>
+            <td height="65" align="center">
+              <blockquote>
+                <p align="left"><b><i><br>
+                The creation of an Octree mesh part </i></b>: when user want to
+                create a mesh part, he must give it's &quot;late type&quot; to
+                indicate what type of mesh part he want to create, in this case
+                the mesh part wanted is the Octree one and it's late type is
+                &quot;<b>MSHPartOctree3D</b>&quot; for a tri-dimensional mesh
+                (to mesh a solid with tetrahedron elements) and &quot;<b>MSHPartOctree2D</b>&quot;
+                for a surface mesh (to mesh a surface with triangle elements).</p>
+              </blockquote>
+            </td>
+          </tr>
+        </table>
+        </center>
+      </div>
+      <p>The following reference article shows the different attributes of an <b>Octree
+      mesh part</b>.<br>
+      There is two different categories of attributes: global and local ones
+      associated to the Octree mesh part.</p>
+      <blockquote>
+        <p><strong>&nbsp;<a href="#MeshAtt">The Attributes:</a></strong></p>
+        <ul>
+          <li><a href="#SizeValue">SizeValue</a></li>
+          <li><a href="#ElementOrder">ElementOrder</a></li>
+          <li><a href="#MaxWarpAngle">MaxWarpAngle</a></li>
+          <li><a href="#MinJacobian">MinJacobian</a></li>
+          <li><a href="#ProportionalSag">ProportionalSag</a></li>
+          <li><a href="#ProportionalSagValue">ProportionalSagValue</a></li>
+          <li><a href="#AbsoluteSag">AbsoluteSag</a></li>
+          <li><a href="#AbsoluteSagValue">AbsoluteSagValue</a></li>
+          <li><a href="#Criteria">Criteria</a></li>
+          <li><a href="#MinGeometrySize">MinGeometrySize</a></li>
+          <li><a href="#MinSizeForSag">MinSizeForSags</a></li>
+          <li><a href="#MeshGeometryViolation">MeshGeometryViolation</a></li>
+          <li><a href="#InteriorSize">InteriorSize</a></li>
+          <li><a href="#MaxInteriorSize">MaxInteriorSize</a></li>
+          <li><a href="#MaxAttempts">MaxAttempts</a></li>
+        </ul>
+        <p><b><a href="#MeshLocalAtt">The Local Specifications:</a></b></p>
+        <p><i><a href="#ConnectorList">Local specifications supports</a></i></p>
+        <ul>
+          <li><a href="#LocalMeshSize">MSHLocalMeshSize</a></li>
+          <li><a href="#LocalMeshSag">MSHLocalMeshSag</a></li>
+          <li><a href="#LocalMeshImposedPoints">MSHLocalMeshImposedPoints</a></li>
+          <li><a href="#LocalMeshDistribution">MSHLocalMeshDistribution</a></li>
+        </ul>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h2><a name="MeshAtt"></a>All attributes of the Octree mesh part</h2>
+<p>All attributes referenced in this document drive the octree mesh and define
+precisely what type of mesh is wanted by user.&nbsp;&nbsp;&nbsp;</p>
+<h4><a name="SizeValue"></a>SizeValue<a name="ElementOrder"><br>
+</a></h4>
+<table border="1" width="100%" height="22">
+  <tr>
+    <td width="33%" valign="middle" align="left" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this argument is a <b><i>double </i></b>valuated to the
+        wanted size for mesh elements (it is an objective).</p>
+      </blockquote>
+    </td>
+    <td width="67%" valign="middle" align="left" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the global size of the mesh ( it's an
+        objective, Octree mesher tried to approach nearest possible from this
+        size).<br>
+        <b>WARNING</b>: the size value is the objective size for
+        &quot;skin&quot; mesh, for 3-dimensional mesh user must give an interior
+        size, else 3D Octree mesher tried to create interior element as biggest
+        as possible.&nbsp;</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<h4 align="left"><a name="ElementOrder">ElementOrder<br>
+</a></h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is an <i><b>integer </b></i>valuated to,</p>
+        <ul>
+          <li><b>1 </b>if user want to mesh with linear elements (<i>TR3</i>&nbsp;
+            <i>or</i> <i>TR4 depending from the type of Octree mesh part: 2D or
+            3D)</i>;</li>
+          <li><b>2</b> if user want to mesh with parabolic elements (<i>TR6 or</i>
+            <i>TR10</i>).</li>
+        </ul>
+      </blockquote>
+    </td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Attribute which specifies the degree of elements that user want to
+        create: there is two possibilities, linear elements (TR3 or TR4 <i>depending
+        from the Octree mesh part type (2D or 3D)</i>) and parabolic elements
+        (TR6 or TR10).</p>
+      </blockquote>
+    </td>
+    <td width="20%" bgcolor="#C0C0C0"><img border="0" src="images/ElementType2.jpg" width="482" height="201"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="MaxWarpAngle"></a>MaxWarpAngle<br>
+</h4>
+<table border="1" width="100%" height="104">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>:this argument is a <b><i>double</i></b> valuated to
+        the&nbsp; wanted max warp angle for elements (radian).</p>
+      </blockquote>
+    </td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the maximum warp angle accepted for a
+        quadratic triangle element.<br>
+        <br>
+        <i>Explanations</i>: for a quadratic triangle element the warp angle is
+        the maximum angle between two normals of a couple of sub-triangles
+        (formed by the connection between nodes and intermediate nodes). In the
+        right example the maximum warp angle of the element is:</p>
+        <p align="left"><img border="0" src="images/WarpEq.jpg" width="271" height="64"></p>
+      </blockquote>
+    </td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <p align="center"><img border="0" src="images/WarpAngle.jpg" width="224" height="191"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="MinJacobian"></a>MinJacobian<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="30%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this argument is a <i><b>double </b></i>valuated to the
+        wanted minimum size for <i>Jacobian </i>value for each&nbsp; element.</p>
+      </blockquote>
+    </td>
+    <td width="30%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the minimum <i>Jacobian</i> accepted for each
+        element of the mesh.</p>
+      </blockquote>
+    </td>
+    <td width="25%" bgcolor="#C0C0C0">
+      <p align="center"><img border="0" src="images/Jacobian.jpg" width="280" height="273"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="ProportionalSag"></a>ProportionalSag<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this argument is an <i><b>integer&nbsp;</b></i> valuated
+        to,</p>
+        <ul>
+          <li><b>1 </b>if user don't want to apply mesh with proportional sag;</li>
+          <li><b>2 </b>if user&nbsp; want to apply mesh with proportional
+            sag.&nbsp;</li>
+        </ul>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies if the mesh is created with an imposed
+        proportional minimum sag. This attribute is linked to the
+        &quot;ProportionalSagValue&quot; attribute.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<h4><a name="ProportionalSagValue"></a>ProportionalSagValue<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b>type</b>: this argument is a <b><i>double </i></b>valuated to the
+        wanted proportional sag.&nbsp;</p>
+      </blockquote>
+    </td>
+    <td width="45%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Attribute which specifies the size of the maximum relative sag
+        accepted, this attribute is active when the &quot;ProportionalSag&quot;
+        attribute is active only. The relative sag is calculated by the quotient
+        between the Sag and the length of the edge of a mesh element: <b><var>Sag/Length</var></b>.</p>
+      </blockquote>
+    </td>
+    <td width="20%" bgcolor="#C0C0C0"><img border="0" src="images/SagFig1.jpg" width="261" height="138"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="AbsoluteSag"></a>AbsoluteSag<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="50%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is an <i><b>integer&nbsp;</b></i> valuated to,</p>
+        <ul>
+          <li><b>1 </b>if user don't want to apply mesh with absolute sag;</li>
+          <li><b>2 </b>if user&nbsp; want to apply mesh with absolute sag.&nbsp;</li>
+        </ul>
+      </blockquote>
+      <p>&nbsp;</td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Attribute which specifies if the mesh is created with an imposed
+        absolute minimum sag. This attribute is linked to the
+        &quot;AbsoluteSagValue&quot; attribute.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<h4><a name="AbsoluteSagValue"></a>AbsoluteSagValue<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b>type</b>: this argument is a <b><i>double </i></b>valuated to the
+        wanted proportional sag.&nbsp;</p>
+      </blockquote>
+    </td>
+    <td width="45%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Attribute which specifies the size of the maximum absolute sag
+        accepted, this attribute is active when the &quot;AbsoluteSag&quot;
+        attribute is active only. The maximum size of the sag is imposed and
+        contrary to the proportional sag this one doesn't take in account the
+        &quot;local&quot; size of the mesh: in other terms if the curvature
+        radius of the geometry is big, the imposed sag can imply a very small
+        size for the mesh.</p>
+        <p><i>Example:</i> in the right picture the curvature radius is biggest
+        in the first case, that's why, in order to satisfy the imposed sag
+        condition, the size of the mesh is smaller than in the second case.</p>
+      </blockquote>
+    </td>
+    <td width="20%" bgcolor="#C0C0C0"><img border="0" src="images/AbsoluteSag.jpg" width="255" height="212"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Criteria"></a>Criteria<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is an <i><b>integer&nbsp;</b></i> valuated to,</p>
+        <ul>
+          <li><b>1 </b>if user want to respect &quot;Skewness&quot; factor for
+            the mesh;</li>
+          <li><b>2 </b>if user want to respect &quot;Stretch&quot; factor for
+            the mesh;</li>
+          <li><b>3 </b>if user want to respect &quot;Shape&quot; factor for the
+            mesh.</li>
+        </ul>
+      </blockquote>
+    </td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Attribute which specify the factor that user want to respect for the
+        elements of the mesh. Octree mesher provide the possibility for user to
+        control one of these arguments.</p>
+      </blockquote>
+    </td>
+    <td width="34%" bgcolor="#C0C0C0"><img border="0" src="images/Criteria.jpg" width="558" height="219"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="MinGeometrySize"></a>MinGeometrySize<br>
+<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="23%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this argument is a <i><b>double </b></i>valuated to the
+        wanted minimum size under which geometry is ignored for mesh
+        specifications.</p>
+      </blockquote>
+    </td>
+    <td width="45%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the minimum size for considered geometry: in
+        other terms, under this size geometry is not taking in account for the
+        mesh.</p>
+        <p>The right example represent a small face ( edges which formed this
+        face are smaller than the required minimum geometry size). For octree
+        mesher this face is assimilated to a point (see the right picture).</p>
+      </blockquote>
+    </td>
+    <td width="34%" bgcolor="#C0C0C0"><img border="0" src="images/MinGeometrySize.jpg" width="510" height="166"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="MinSizeForSag"></a>MinSizeForSags<br>
+<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is a <b><i>double</i></b> valuated to the
+        minimum size for elements even if the sag required a smaller size for
+        mesh.</p>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the minimum size for mesh. An
+        &quot;objective&quot; size for mesh is specified (&quot;SizeValue&quot;
+        attribute) but the constrain sag required may implies the decrease of
+        the mesh size in order to satisfy it's condition, that's why a minimum
+        size condition exist even if the Octree mesher tries to approach the
+        global mesh size specified.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="MeshGeometryViolation"></a>MeshGeometryViolation<br>
+<br>
+</h4>
+<table border="1" width="100%" height="10%">
+  <tr>
+    <td width="55%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is an <i><b>integer&nbsp;</b></i> valuated to,</p>
+        <ul>
+          <li><b>1 </b>if user don't want to apply a minimum size for mesh
+            elements;</li>
+          <li><b>2 </b>if user&nbsp; want to apply a minimum size for mesh
+            elements.</li>
+        </ul>
+      </blockquote>
+    </td>
+    <td width="60%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the minimum size for a mesh edge, in order to
+        optimize the regularity of the mesh, user can apply the suppression of
+        small mesh elements by activation of this attribute.&nbsp;</p>
+        <p>The right example show the difference between an octree mesh without
+        mesh edges suppression (the highest picture) and with the suppression of
+        smallest mesh edges.</p>
+      </blockquote>
+    </td>
+    <td width="20%" bgcolor="#C0C0C0"><img border="0" src="images/SmallEdgeSuppr1.gif" width="265" height="109">
+      <p><img border="0" src="images/SmallEdgeSuppr2.gif" width="269" height="111"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="InteriorSize"></a>InteriorSize<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is an <i><b>integer&nbsp;</b></i> valuated to,</p>
+        <ul>
+          <li><b>1 </b>if user don't want to apply an imposed maximum interior
+            size for mesh;</li>
+          <li><b>2 </b>if user&nbsp; want to apply an&nbsp;&nbsp;&nbsp;&nbsp;
+            maximum imposed interior size for mesh.&nbsp;</li>
+        </ul>
+        <p><b>WARNING</b>: this attribute is active when the part is an octree
+        3D only (because interior size has no sense for surface mesh).</p>
+      </blockquote>
+      <p>&nbsp;</td>
+    <td width="40%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies if user want to apply an imposed maximum size
+        for the interior size of the 3D mesh; because, by default, Octree mesher
+        tried to mesh the interior of the solid as biggest as possible. This
+        attribute provide to user the possibility to limit this expansion by
+        imposing a maximum size.<br>
+        <i>Example</i>: On the right example, the first picture represent the
+        mesh without imposed interior size contrary to the second one where the
+        interior size was imposed at the same size than the global mesh size
+        (the mesh is more regular) .</p>
+      </blockquote>
+    </td>
+    <td width="34%" bgcolor="#C0C0C0"><img border="0" src="images/MaxIntSize1.jpg" width="257" height="272"><img border="0" src="images/MaxIntSize2.jpg" width="258" height="272"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="MaxInteriorSize"></a>MaxInteriorSize<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b><br>
+        type</b>: this argument is a <b><i>double </i></b>valuated to the wanted
+        proportional sag.&nbsp;</p>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attributes which specifies the value of the imposed interior size for 3D
+        mesh when the &quot;InteriorSize&quot; attribute is active.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="MaxAttempts"></a>MaxAttempts<br>
+</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this argument is an <b><i>integer </i></b>valuated to the
+        number of attemps for launching Octree algorithm if the mesh of the
+        solid failed.</p>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        Attribute which specifies the maximum number of attempts to launch the
+        Octree algorithm if the mesh has failed.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p align="right">&nbsp; [<a href="#Top">Top</a>]</p>
+<h2><a name="MeshLocalAtt"></a>All local specifications of the Octree mesh part</h2>
+<h4><a name="ConnectorList"></a>Local Specifications supports</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        These specifications adhere to <b><a href="../CAAAniTechArticles/CAAAniPreproOverview.htm#EntityIft">CATISamAnalysisEntity</a></b>
+        interface. For each one, a geometrical support must be set (it is the
+        default behavior) as explained in the documentation about <b><a href="../CAAAniTechArticles/CAAAniPreproOverview.htm#EntityIft">CATISamAnalysisEntity</a></b>&nbsp;interface.
+        More over, authorized supports must be defined.</p>
+        <p>For each following local specification, the additional parameters
+        will be detailed and the authorized supports types will be defined.</p>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<h4><a name="LocalMeshSize"></a>MSHLocalMeshSize</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p align="left"><br>
+        <b>type</b>: this specification is used in order to specify a local mesh
+        size to <b><i>faces or edges </i><span style="font-weight: 400">of the
+        geometry: you must set a parameter associated to this attribute:</span></b></p>
+        <ul>
+          <li>&quot;<font color="#0000FF"><b>MSHMeshSizeMag</b></font>&quot;: it
+            is a length (<b>double</b>).</li>
+        </ul>
+        <p>Authorized supports: 1D or 2D supports are authorized</p>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <blockquote>
+                <p>&nbsp;</p>
+                <p>Specification&nbsp; which define a local size for mesh in a
+                set of faces or edges.</p>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="LocalMeshSag"></a>MSHLocalMeshSag</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this specification is used in order to specify a local mesh
+        sag to <b><i>faces or edges </i><span style="font-weight: 400">of the
+        geometry: you must set a parameter associated to this attribute:</span></b></p>
+        <ul>
+          <li>&quot;<b><font color="#0000FF">MSHMeshSagMag</font></b>&quot;: it
+            is a length (<b>double</b>).</li>
+        </ul>
+        <p>Authorized supports: 1D or 2D supports are authorized.</p>
+      </blockquote>
+    </td>
+    <td width="67%" bgcolor="#C0C0C0">
+      <blockquote>
+        <blockquote>
+          <blockquote>
+            <blockquote>
+              <blockquote>
+                <p><br>
+                Specification&nbsp; which define a local sag for mesh in faces
+                of edges. See also the definition of the <a href="#ProportionalSagValue">sag</a>.<br>
+                &nbsp;</p>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<h4 align="right"><span style="font-weight: 400">[<a href="#Top">Top</a>]</span></h4>
+<h4><a name="LocalMeshImposedPoints"></a>MSHLocalMeshImposedPoints</h4>
+<table border="1" width="1429">
+  <tr>
+    <td width="24%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><b>type</b>: this specification is used in order to impose mesh
+        (nodes) on points of the geometry.</p>
+        <p>Authorized supports: 0D supports are authorized only.</p>
+      </blockquote>
+    </td>
+    <td width="28%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p>Specification which specify imposed nodes of the mesh.<br>
+        &nbsp;</p>
+      </blockquote>
+    </td>
+    <td width="50%" bgcolor="#C0C0C0"><img border="0" src="images/ImposedPoint1.jpg" width="223" height="247"><img border="0" src="images/ImposedPoint2.jpg" width="226" height="244"></td>
+    <td width="253" bgcolor="#C0C0C0">&nbsp;</td>
+  </tr>
+</table>
+<h4 align="right"><span style="font-weight: 400">[<a href="#Top">Top</a>]</span></h4>
+<h4><a name="LocalMeshDistribution"></a>MSHLocalMeshDistribution</h4>
+<table border="1" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <blockquote>
+        <p><br>
+        <b>type</b>: this specification is used in order to impose a mesh
+        distribution on&nbsp; edges of the geometry, you must set a parameter <b><span style="font-weight: 400">associated
+        to this attribute</span></b>:</p>
+        <ul>
+          <li>&quot;<b><font color="#0000FF">MSHNumberOfEdges</font><span style="font-weight: 400">&quot;:
+            it is</span></b> an integer which specify the number of mesh edges
+            wanted on the specified geometry.</li>
+        </ul>
+        <p>Authorized supports: 1D supports are authorized only.</p>
+      </blockquote>
+    </td>
+    <td width="34%" bgcolor="#C0C0C0">&nbsp;
+      <blockquote>
+        <p>Specification which specify an imposed mesh distribution on edges of
+        the geometry.</p>
+      </blockquote>
+      <p align="center"><img border="0" src="images/ImposedDistribution1.jpg" width="345" height="162"></p>
+    </td>
+    <td width="20%" bgcolor="#C0C0C0"><img border="0" src="images/ImposedDistribution2.jpg" width="299" height="262"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%" height="44">
+  <tr>
+    <td valign="top" height="18">Version: <strong>1</strong> [Mar 2004]</td>
+    <td valign="top" height="18">Document created.</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="18">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

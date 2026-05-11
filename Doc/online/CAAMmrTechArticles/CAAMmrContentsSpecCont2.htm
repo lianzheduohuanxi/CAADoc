@@ -1,0 +1,803 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Contents of the Specification Container - Geometrical Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Contents of the Specification Container -
+      Geometrical Features</h3>
+      <em>What are the geometrical features?</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The &quot;Structure of the Part Document&quot; article [<a href="#References">1</a>]
+      shows that the Part document contains four main containers, one of which
+      is the
+      specification container. This container contains the mechanical
+      features. The mechanical features can be divided in three categories:</p>
+
+      <ul>
+        <li>The <b>Part</b> feature: the main feature containing the design of
+          the object to be built, and in particular geometrical features sets
+        <li>The <b>geometrical</b> <b>features sets</b>: the features containing
+          either other geometrical features sets, or geometrical features.
+        <li>The <b>geometrical</b> <b>features</b>: those which hold a
+          topological result.
+      </ul>
+      <p>This article is the last of a trilogy. Its aim is to detail the third category:
+      what are the geometrical features, their type, the existing geometrical features, and how they are
+      aggregated by geometrical features sets. The first article [<a href="#References">2</a>] details the
+      Part feature: what is the
+      Part feature, how is it created, how is it retrieved in a Part
+      document ?. At last, the second article [<a href="#References">3</a>] details the
+      geometrical features sets: their type, how are they created, how are they
+      retrieved in a Part document.</p>
+      <p>All these articles are included in a set of documents
+      presented in the &quot;Mechanical Modeler Overview&quot; article. [<a href="#References">4</a>].&nbsp;</p>
+
+      <ul>
+              
+            <li><strong><a href="#The Geometrical Feature">The GeometricalElement Features</a></strong>
+              <ul>
+                <li><a href="#The Mechanical StartUp Tree"><b>The Mechanical
+                  StartUps Tree</b></a></li>
+                <li><strong><a href="#Classification by Topology">Classification
+                  by Topology</a>&nbsp;</strong></li>
+              </ul>
+            </li>
+       
+            <li><b><a href="#Solid versus Surfacic Feature">Solid versus Surfacic
+              Feature</a></b>
+            </li>
+       
+        <li><strong><a href="#Form versus contextual feature">Form versus Contextual Feature</a></strong>
+          <ul>
+            <li><strong><a href="#Definition Form/Contextual">Definition</a></strong></li>
+            <li><strong><a href="#First Feature for a MTool">The First Feature
+              of a PartBody/Body</a></strong></li>
+            <li><strong><a href="#The Feature Polarity">The Feature Polarity</a></strong></li>
+          </ul>
+            </li>
+            <li><strong><a href="#Creation versus Modification (Absorbent) Feature">Creation
+              versus Modification Feature</a></strong></li>
+        <li><strong><a href="#datum versus spec feat">Datum versus Specification Feature</a></strong>
+          <ul>
+            <li><strong><a href="#Definition Datum">Definition</a></strong></li>
+            <li><strong><a href="#Creating Interactively a datum">Creating
+              Interactively a Datum</a></strong></li>
+            <li><strong><a href="#Creating a Datum by Code">Creating a Datum by
+              Code</a></strong></li>
+          </ul>
+            </li>
+        <li><strong><a href="#Existing Features">Existing Features</a></strong>
+          <ul>
+            <li><b><a href="#The Part Design Features">The Part Design  Features</a></b></li>
+            <li><b><a href="#The GSD Features">The Generative Shape Design
+              Features</a></b></li>
+          </ul>
+        </li>
+        <li><b><a href="#Inserting a Geom feat into a MRoot">Inserting a Geometrical
+          Feature inside a Geometrical Features Set</a></b></li>
+       
+                <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+     <table>
+</table>
+
+<h3><a name="The Geometrical Feature"></a>The GeometricalElement Features</h3>
+
+<p>A geometrical feature is a mechanical feature to which the update mechanism,
+through the <i>CATIBuild</i>  [<a href="#References">5</a>] interface, associates a topological result.
+This section presents an overview of these features thanks to the <a href="#The Mechanical StartUp Tree">Mechanical
+StartUps tree</a> and explains how a <a href="#Classification by Topology">classification</a>
+in relationship with the topology of the feature can be done.</p>
+
+<h4><a name="The Mechanical StartUp Tree"></a>The Mechanical StartUps Tree</h4>
+
+<p>The
+geometrical features derive from the GeometricalElement StartUp [<a href="#References">6</a>]. The
+picture [<a href="#Fig.1">Fig.1</a>] below is an extract of the mechanical
+StartUps tree:</p>
+
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: GeometricalElement Architecture</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrGElt3DDiagram.jpg" width="482" height="430"></td>
+  </tr>
+</table>
+
+<h4><a name="Classification by Topology"></a>Classification by Topology</h4>
+
+<p>There are some interfaces, implemented (*) on the GeometricalElement3D
+StartUp, which
+enables you to classify a geometrical feature by its topological result [<a href="#References">5</a>].
+These interfaces are useful to filter selections, it means that you can use them
+in agent of selection for example.&nbsp;</p>
+
+<ul>
+  <li><i>CATIMfPoint</i>, <i>CATTIMfLine</i> and <i>CATIMfPlane</i></li>
+  <p>The <i>CATBody</i> associated with the feature is a equivalent to a Point (<i>CATPoint</i>)
+  , a Line (CATLine), a Plane (CATPlane) respectively.</p>
+  <li><i>CATIMfInfiniteResult</i></li>
+<p>All the domains (<i>CATDomain</i>) of the <i>CATBody</i> associated with
+  the feature are infinite. (infinite line or plane)</p>
+  <li><i>CATIMfZeroDimResult</i>, <i>CATIMfMonoDimResult</i>, <i>CATIMfBiDimResult</i>
+    and <i>CATIMfTriDimResult</i>&nbsp;</li>
+  <p>All the domains (<i>CATDomain</i>) of the <i>CATBody</i> associated with
+  the feature have the same dimension of&nbsp; 0,1, 2 or 3 respectively.</p>
+</ul>
+<p>(*)The implementation is &quot;conditional&quot;. It means that a <code>QueryInterface</code>
+call on these interfaces will be successful only if the feature requires the
+specificity of the interface. However, be aware that a feature may change of
+type during its life.</p>
+
+<h3><a name="Solid versus Surfacic Feature"></a>Solid versus Surfacic Feature</h3>
+
+<p>A <b>solid</b> feature is a feature only referencing 3D geometry whereas a <b>surfacic</b>
+feature is a feature referencing&nbsp; 0D, 1D, 2D or 3D geometry.&nbsp;</p>
+
+<ul>
+  <li>Points are surfacic features of zero dimension,</li>
+  <li>Wires (including the sketches) are surfacic features of one dimension,</li>
+  <li>Surfaces are surfacic features of two dimension,</li>
+  <li>Volumes are surfacic features of three dimension. [<a href="#References">13</a>]</li>
+</ul>
+<p>In the general
+case, a feature deriving from the MechanicalShapeFeature StartUp is a solid feature and a feature deriving from the GSMGeom or GeometricalElement3D StartUps is
+a surfacic feature [<a href="#Fig.1">Fig.1</a>]. But there are at least two exceptions. The
+EdgeFillet feature, deriving from the MechanicalContextualFeature StartUp, can be
+locally a surfacic feature if it is aggregated in a GSMTool. Inversely, the Loft
+feature, deriving from the GSMGeom StartUp, can be locally a solid feature if it
+is aggregated in an HybridBody.&nbsp;</p>
+
+<p>However, if this kind of behavior is possible for Dassault Systemes features, it is
+impossible for your features. A CAA geometrical feature deriving from
+MechanicalContextualFeature or MechanicalFormFeature is necessarily a solid feature, whereas a
+CAA feature deriving from GSMGeom or GeometricalElement3D is a
+surfacic feature [<a href="#References">7</a>].</p>
+
+<p> The <i>CATIMf3DBehavior</i> interface enables you to know if a geometrical
+feature is solid or surfacic. These interface groups together methods which are
+exclusives:</p>
+
+<ul>
+  <li>For a solid feature, the <code>IsASolid</code> method returns <code>S_OK</code>,
+    and the other methods return <code>E_FAIL</code>,</li>
+  <li>For a surfacic feature, the <code>IsAShape</code> method returns <code>S_OK</code>,
+    and the other methods return <code>E_FAIL</code>.</li>
+</ul>
+<p>For the volumes, the <code>IsAShape</code> method returns <code>S_OK</code>,
+since a volume is a surfacic feature, but also the <code>IsAVolume</code> method
+of the <i>CATIMf3DBehavior</i>2 interface.</p>
+
+<p> A solid feature can be only included in a solid and surfacic features set, in other words
+a PartBody or a Body feature, as compared to a surfacic
+feature which can be included into any geometrical features set: a Geometrical Feature Set,
+an Ordered Geometrical Set, a PartBody, or a Body.&nbsp;</p>
+
+<h3><strong><a name="Form versus contextual feature"></a></strong>Form versus Contextual Feature</h3>
+
+<p>A solid feature can either be a form or a contextual feature.&nbsp;</p>
+
+<h4><a name="Definition Form/Contextual"></a>Definition</h4>
+
+<p>A Pad, a Pocket, a Groove, are different features: some add matter, while
+some remove it. However, they share a common point: they have a <em>Form</em>
+and are therefore called <em>Form features</em>. What exactly are they ?</p>
+<p>Take a Groove for instance. From its input parameters, a Curve and a closed
+Sketch, one can easily derive a shape (a <em>Form) </em>by sliding the Sketch
+along the Curve. The resulting solid has then to be operated with the Part's
+shape as it exists prior to the definition of the Groove, by removing matter
+(thanks to a boolean difference operation in this case).&nbsp;</p>
+<p>The fact that these features can be applied by first computing their <em>form
+</em>and then operating the form with the current shape of the geometrical
+features set defines the
+form feature. The form of such
+a feature is sometimes called its <em>footprint.</em></p>
+<p>In contrast to Form features, Contextual features, cannot be applied by first
+computing a standalone footprint, and then operating it with the
+current set. Fillets, Drafts, and generally all <em>Dress
+up features </em>fall into this category, because their shape is determined not
+only by their own input parameters, but also by the local topology of the target
+set. Contextual features do not have a footprint.</p>
+
+The
+
+  <i>CATIShapeFeatureProperties</i>&nbsp;(MechanicalModeler) enables the
+retrieval of the
+status of the solid feature.<h4><a name="First Feature for a MTool"></a>First Feature for a
+PartBody/Body</h4>
+
+<p>The first feature in a PartBody [<a href="#References">3</a>] cannot be a contextual
+feature because at this point there is no matter in the Part to operate upon. This constraint does
+not exist for the Body features. Since their ultimate goal is to be operated with
+the PartBody, the matter on which their first feature will operate will be
+provided by the PartBody. As a consequence, their first feature can be a contextual
+feature.</p>
+
+<h4><a name="The Feature Polarity"></a>The Feature Polarity</h4>
+
+<p>It must be noted that the fact that some features add and others
+remove matter from the Part is not linked to the form/contextual classification.
+A Draft is a contextual feature that adds matter, while a Chamfer, also contextual, removes it. A Revolution and a Pocket are form features that create
+and remove matter respectively.&nbsp;</p>
+
+<p>Adding or removing matter defines the polarity of the solid feature. The
+
+  <i>CATIShapeFeatureProperties</i>&nbsp;interface (MechanicalModeler) returns the
+polarity of the solid feature.</p>
+
+<p>Note: The polarity of a Body/PartBody, which is the polarity of its first
+solid feature, is given by the same interface.&nbsp;</p>
+
+<h3><a name="Creation versus Modification (Absorbent) Feature"></a>Creation
+versus Modification Feature&nbsp;</h3>
+
+<p>This distinction between a feature of creation and a feature of modification
+is meaningful for features inside an ordered set [<a href="#References">8</a>].
+The interface specifying the classification is <i>CATIInputDescription </i>(InteractiveInterfaces).&nbsp;</p>
+
+<p>A feature of <b>creation</b> is a feature creating matter from its input
+specifications. For example, a line created from two points is a feature of
+creation. A feature of <b>modification</b> is a feature modifying one or several
+of its input specifications. For example, a split is a feature of modification.
+The <code>GetFeatureType</code> method of the <i>CATIInputDescription</i>
+enables you to specify the type of your feature. This type is not necessarily
+fixed, it can be dependant of the values of inputs.</p>
+
+<p>A feature of modification is also named an <b>absorbent</b> feature for the
+following behaviors on its modified inputs also named <b>absorbed</b>
+features:&nbsp;</p>
+
+<ul>
+  <li>The absorbed feature are not drawn,</li>
+  <li>They do not appear in the result of the surfacic body [<a href="#References">9</a>],</li>
+  <li>They are not selectable.</li>
+</ul>
+<table border="0">
+<caption><a name="Fig.2">Fig.2</a> Ordered Set</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrPart2OGS.jpg" width="324" height="260"></td>
+    <td><img border="0" src="images/CAAMmrOGSPartwithOGS.jpg" width="293" height="259"></td>
+  </tr>
+</table>
+<p>The right picture [<a href="#Fig.2">Fig.2</a>] shows the result of the split operation of <code>Extrude.1</code>
+(a surface) by the plane <code>Plane.1</code>. <code>Split.1</code> is the
+feature representing the result. If you see the left picture [<a href="#Fig.2">Fig.2</a>]
+which shows the
+model before the split operation, you can note on the right that <code>Extrude.1</code>
+is not drawn.&nbsp;</p>
+<p>The absorbed features are returned by the <code>GetListOfModifiedFeatures</code>
+method of <i>CATIInputDescription.</i> It can be one or several features, but
+all are an input of the absorbent feature, and have the <b> same
+dimension as it</b>.&nbsp;</p>
+<p>One of these absorbed features is privileged. It is the feature returned by
+the <code>GetMainInput</code> method. This feature has two roles:</p>
+<ul>
+  <li>It gives the <b>graphic properties</b> to the absorbent feature</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAMmrPart2MainInput1.jpg" width="526" height="236"></td>
+    </tr>
+  </table>
+  <p>The color of Feat3, a feature of modification which has two inputs, is
+  given by its main input, here it is Input2.&nbsp;</p>
+  <li>In case of <b>reorder</b> of a feature of modification, the moved feature has for new
+    input the main input of the previous feature</li>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAMmrPart2MainInput2.jpg"></td>
+    </tr>
+  </table>
+  <p>If Feat4, a feature of modification, is moved before Feat3, the input of
+  Feat4 becomes Input2 (the main input).</p>
+
+</ul>
+    
+
+
+
+<p>If your feature is a feature of creation, the <code>GetListOfModifiedFeatures</code>
+and <code>GetMainInput</code> methods must return <code>E_FAIL</code>.&nbsp;</p>
+
+<h3><a name="datum versus spec feat"></a>Datum versus Specification Feature</h3>
+
+<h4><a name="Definition Datum"></a>Definition</h4>
+
+<p>One of the major strengths of the Feature modeler [<a href="#References">6</a>]
+is that it allows the construction of a feature from other features. The result
+of one feature can be the inputs of another feature so that one can reach a linked flow of features characterizing the design intent. The modification of
+one of the parameters of one feature in the chain does not break the design
+since the update allows just the recalculation of the final result. We,
+therefore, have a record of the construction.</p>
+
+<p>For some applications, this record is useless. So we have introduced the
+notion of a mechanical feature without history. This is the <b>datum</b>. A datum is a
+feature without input geometrical specifications.&nbsp;</p>
+
+<p>A datum is not a specific feature: it is an existing feature with the
+&quot;datum&quot; status. It can be, for example, a GSMPoint, a GSMLine, a
+GSMPlane or a GeometricalElement3D feature. The <i>CATIMf3DBehavior</i> interface
+and its <code>IsaDatum</code> method returns the status of the
+feature.&nbsp;</p>
+
+<p><font size="1">(*)</font><font size="1"> </font>GSMPoint, GSMLine and
+GSMPlane are StartUps deriving from GSMGeom but not representing on the given UML
+schema [<a href="#Fig.1">Fig.1</a>].</p>
+
+<p>Creating a datum can be done for other reasons:&nbsp;</p>
+
+<ul>
+  <li>To hide the design,</li>
+  <li>To keep the geometry without historical interest,</li>
+  <li>To apply constraints&nbsp;more easily&nbsp;.</li>
+</ul>
+<h4><a name="Creating Interactively a datum"></a>Creating Interactively a Datum</h4>
+<p>The way to create a datum depends on the current application:</p>
+<ul>
+  <li>In the Generative Shape Design application, you can use the&nbsp;CreateDatum&nbsp;setting:</li>
+   <table>
+  <caption><i><a name="Fig.3 a">Fig.3 a</a>: Datum in GSD</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrDatumWire.jpg" width="365" height="306"></td>
+  </tr>
+</table>
+  <p>The <code>Line.1</code> feature has been created with the <code>Point.1</code>
+  and <code>Point.2</code> features. But before executing the Line command, the <img border="0" src="images/I_Isolated.jpg" width="22" height="22"> 
+  CreateDatum setting has been activated. Next, the <code> Point.1</code> has
+  been moved, but the line has not changed. (Points are represented by white
+  crosses, and the line ends by two black dots).</p>
+  <li>In the&nbsp; Part Design application, you can use the sequence of the Copy&nbsp; &amp; Paste Special
+    commands:</li>
+     <table>
+  <caption><i><a name="Fig.3 b">Fig.3 b</a>: Datum in Part Design</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrDatumSolid.jpg" width="294" height="192"></td>
+  </tr>
+</table>
+  <p>The <code>PartBody</code> has been selected, and with the contextual menu,
+  the Copy/Paste Special command with the &quot;Paste As Result&quot; option has
+  been executed. The <code> Solid.1 </code>feature has been created.</p>
+  <p>Note: If the &quot;Paste As Special With Link&quot; is chosen, this means that a link
+  to the original feature has been kept. A modification in the feature
+  modifies the datum after an update.</p>
+</ul>
+
+<h4><a name="Creating a Datum by Code"></a>Creating a Datum by Code</h4>
+
+<p>There are three ways to code the creation of a datum:</p>
+
+<ol>
+  <li>Using the <i> CATIIsolate</i> interface (MechanicalModeler)&nbsp;</li>
+  <p>This interface enables the transformation of an existing feature to a feature
+  without specifications.&nbsp;But this interface is only available for few
+  features: Point, Line, Plane, Circle.</p>
+  <li>Using the <i> CATIDatumFactory</i> interface (MechanicalModeler)&nbsp;</li>
+  <p>A feature is created using a <i>CATBody</i>. Based on this topological object, a surface, a plane, a point, a solid feature is created.&nbsp;</p>
+
+  <p>There are two available methods:</p>
+
+  <ul>
+  <li><code>InstantiateDatum(CATBody* iBody,CATISpecObject* &amp;oDatumFeature)</code></li>
+  <p>This method creates the scope [<a href="#References">10</a>] with an
+  automatic naming.&nbsp;</p>
+  <li><code>InstantiateDatum(CATBody* iBody,CATLISTP(CATCell)* iGNUserCells,CATListOfCATUnicodeString* iUserKeys,CATISpecObject* &amp;oDatumFeature)</code></li>
+  <p>This method enables driving yourself the naming of the following cells.
+  The &quot;Creating a Result Without Procedural Report&quot; chapter of the
+  article entitled &quot;Integrating the New
+  Mechanical Feature in the Update Mechanism&quot; [<a href="#References">5</a>]
+  gives the details to fill these lists.</p>
+
+  </ul>
+
+  <p>The created features are the following:</p>
+
+  <ol>
+    <li>if the <i>CATBody</i> contains one domain with only one vertex, it is a <b> Point</b> feature implementing
+      the <i>CATIGSMPoint</i> interface.</li>
+    <li>if the <i>CATBody</i> contains one domain with one edge, it is a <b>Line</b>
+      feature implementing the <i>CATIGSMLine</i> interface.</li>
+    <li>if the <i>CATBody</i> contains one domain with one CATPlane element, it
+      is a <b>Plane</b> feature implementing the <i>CATIGSMPlane </i>interface.</li>
+    <li>if the <i>CATBody</i> contains one domain with one CATCircle element, it
+      is a <b>Circle</b> feature implementing the <i>CATIGSMCircle </i>interface.</li>
+    <li>if the <i>CATBody</i> contains several domains with the same dimension 0,
+      it is a <b>GSMZeroDim</b> feature implementing the <i>CATIMfZeroDimResult </i>interface</li>
+    <li>if the <i>CATBody</i> contains several domains with the same dimension 1,it
+      is a <b>GSMMonoDim</b> feature implementing the <i>CATIMfMonoDimResult </i>interface</li>
+    <li>if the <i>CATBody</i> contains several domains with the same dimension 2,
+      it is a <b>GSMBiDim</b> feature implementing the <i>CATIMfBiDimResult</i>
+      interface</li>
+    <li>if the <i>CATBody</i> contains several domains with the same dimension
+      3, it is a <b>Solid</b> feature implementing the <i>CATIMfTriDimResult</i>
+      interface</li>
+    <li>otherwise the feature is a <b> GeometricalElement3D</b></li>
+  </ol>
+  <p>Caution: With the second <code>InstantiateDatum</code> method, with the
+  list of cells and the list of keys, a GeometricalElement3D is created instead
+  a basic feature (Point, Line, Plane, Circle).</p>
+
+  <li>By creating your own feature</li>
+  <p>In certain cases, the topology is not fixed, it must be generated at each
+  update. In this case, you should create a new geometrical feature which will
+  derive from the GeometricalElement3D [<a href="#Fig.1">Fig.1</a>] StartUp.&nbsp;
+  The &quot;Creating a New StartUp Deriving from a Mechanical StartUp&quot; article [<a href="#References">7</a>]
+  gives all the steps to create it. This feature must necessarily implement the following interfaces:</p>
+  <ul>
+  <li><i>CATIBuild</i></li>
+  <p>Refer to the &quot;Creating a Result Without Procedural Report&quot; section of the &quot;Integrating the New
+  Geometrical Feature in the Update Mechanism&quot; article [<a href="#References">5</a>]</p>
+  <li><i>CATIMf3DBehavior</i></li>
+  <p>The new feature is a surfacic feature and a datum feature:</p>
+  <ul>
+  <li>IsASolid should returns E_FAIL</li>
+  <li>IsAShape should returns S_OK</li>
+  <li>IsADatum&nbsp; should returns S_OK</li>
+  </ul>
+  </ul>
+  <p>For the other behaviors, refer to the article entitled
+  &quot;Integrating a New Mechanical Feature in V5&quot; [<a href="#References">11</a>].</p>
+</ol>
+
+<h3><a name="Existing Features"></a>Existing Features</h3>
+
+<p>Dassault Systemes provides Mechanical features through applications such as Part Design or
+Generative Shape Design.&nbsp; This section lists them, as well as the related interfaces that manage them.</p>
+
+<h4><a name="The Part Design Features"></a>The <b>Part Design</b>  Features</h4>
+
+<p> They are not represented on the
+GeometricalElement Architecture UML Schema [<a href="#Fig.1">Fig.1</a>], most of
+them derive
+from the Solid feature.&nbsp;</p>
+<ul>
+<li> The <b>solid</b> <b>features</b>: you can create them with the <i>CATIPrtFactory</i>
+ (PartInterfaces) interface:</li>
+
+<ul>
+  <li>Contextual feature:
+    <ul>
+      <li>Fillet</li>
+      <li>Chamfer</li>
+      <li>Split</li>
+      <li>...</li>
+    </ul>
+  </li>
+  <li>Form feature
+    <ul>
+      <li>Pad</li>
+      <li>Pocket</li>
+      <li>Groove</li>
+      <li>Shaft</li>
+      <li>...</li>
+    </ul>
+  </li>
+</ul>
+<li>The <b>volumes </b>also<b> </b>with the&nbsp; <i>CATIPrtFactory</i>
+ (PartInterfaces) interface:
+  <ul>
+    <li>Draft ,&nbsp;</li>
+    <li>Seewing ,&nbsp;</li>
+    <li>Shell,</li>
+    <li><font face="Helv">...</font></li>
+  </ul>
+</li>
+<li>The <b> surfacic operations</b> [<a href="#References">3</a>]: also with the&nbsp; <i>CATIPrtFactory</i>
+ (PartInterfaces) interface:</li>
+    <ul>
+      <li>Split,</li>
+      <li>Close Surface</li>
+      <li>...</li>
+    </ul>
+    <li>The <b>boolean operations</b> [<a href="#References">3</a>]: With the <i>CATIPrtBooleanFactory</i> interface
+      (PartInterfaces)&nbsp;
+      <ul>
+        <li>Add</li>
+        <li>Remove</li>
+        <li>Intersect</li>
+        <li>Assemble</li>
+      </ul>
+</li>
+</ul>
+<h4><a name="The GSD Features"></a>The Generative Shape Design Features.&nbsp;</h4>
+<p>These features derive from
+the GSMGeom feature. [<a href="#Fig.1">Fig.1</a>]. You can create them with the <i>CATIGSMFactory</i>
+ (GSMInterfaces) interface:</p>
+<ul>
+  <li>Element 0D, 1D, 2D
+    <ul>
+      <li>Point</li>
+      <li>Line</li>
+      <li>Plane</li>
+      <li>Extrude&nbsp;</li>
+    </ul>
+  </li>
+  <li>Transformation feature
+    <ul>
+      <li>Translation</li>
+      <li>Rotation</li>
+      <li>...&nbsp;</li>
+    </ul>
+  </li>
+  <li>Dress-up&nbsp;</li>
+</ul>
+
+<h3><a name="Inserting a Geom feat into a MRoot"></a>Inserting a Geometrical
+Feature inside a Geometrical Features Set</h3>
+<p>The geometrical features sets are the PartBody feature, the Body features,
+the Ordered Geometrical Set features, and the Geometrical Set features [<a href="#References">3</a>].&nbsp;</p>
+<p>Before going further, let us review the vocabulary</p>
+<ul>
+  <li><b>Aggregate</b> a feature into a set is the operation consisting in to
+    add the feature into the set</li>
+  <li><b>Insert</b> a feature into a set is first an aggregation, and then a
+    operation to manage the order into the set.</li>
+</ul>
+<p>This insertion is depending on three things:</p>
+<ol>
+  <li>The factory creating the feature</li>
+  <p>The features created by the <i>CATIGSMFactory</i> interface (<a href="#The GSD Features">The Generative Shape Design
+Features</a>  section) are to be aggregated after their creation, whereas the
+features created by the <i>CATIPrtFactory/CATIPrtBooleanFactory</i> interfaces (<a href="#The Part Design Features">The
+Part Design  Features</a>  section) are automatically included in the current
+set.&nbsp;</p>
+  <p> Consequently, for features created by the <i>CATIGSMFactory</i>  interface, and for your CAA features (surfacic
+or not), read the <a href="#How to aggregate the geometrical features into a geometrical features set?">How
+  to aggregate a geometrical feature into a geometrical features set </a>section
+  for explanations about the aggregation.&nbsp;</p>
+  <li>The type of the feature.</li> 
+  <p>To aggregate a solid feature, the used interface
+    is not the same as for a surfacic feature. The methodology is explained in
+  the <a href="#How to aggregate the geometrical features into a geometrical features set?">How
+  to aggregate a geometrical feature into a geometrical features set </a>section.</p>
+  <li>The type of the geometrical features set. </li>
+  <p>Whatever the factory, and whatever the type of the feature, if the set is
+  ordered, the aggregation is not sufficient. After the aggregation and after the
+  update of the feature, you must invoke the <code>Insert</code> method of the <i> CATMmrLinearBodyServices</i>
+    class. This method manages the re-root of the features into the ordered set.
+  [<a href="#References">8</a>].</p>
+</ol>
+<h4><a name="How to aggregate the geometrical features into a geometrical features set?">How
+to aggregate a geometrical feature into a geometrical features set?</a></h4>
+<p>To aggregate a <b>solid</b> feature inside a PartBody or a Body, the <code>InsertInProceduralView</code>
+  method of the <i>CATIPrtProceduralView</i>&nbsp; interface must necessarily be used.&nbsp; Refer to the &quot;A
+  Chain of Features&quot;
+section of the &quot;Specification/Result Mechanism Applied to Mechanical Feature&quot; article
+[<a href="#References">8</a>].</p>
+  <p>For any <b>surfacic</b> feature you can use the <i>CATIDescendant</i>
+  interface. But, if the surfacic feature derives from GSMGeom, it is
+  recommended to use the <code>InsertInProceduralView</code>
+  method of the <i>CATIGSMProceduralView.&nbsp;</i></p>
+  <p>If the set is ordered, the new feature must be located just after the current feature, if
+  the current feature is into the set, otherwise located at the end of the
+  set. The both <code>InsertInProceduralView</code>
+  methods manage the right location. If you use the <i>CATIDescendant</i>, here
+  it is a piece of code to manage the good location:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>...
+int pos = 0 ;
+CATISpecObject_var CurrentElt = <b>GetCurrentFeature</b>() ;
+if ( NULL_var != CurrentElt)
+{
+   pos = pIDescendantsOnGSMTool-&gt;<b>GetPosition</b>(CurrentElt);                   
+}
+
+if ( 0 == pos )
+{
+   pIDescendantsOnGSMTool-&gt;<b>Append</b>(piSpecOnCombinedCurve);
+}else
+{
+                 
+   pIDescendantsOnGSMTool-&gt;<b>AddChild</b>(piSpecOnCombinedCurve,pos+1);
+}
+...</pre>
+      </td>
+    </tr>
+  </table>
+  <p>It is an extract of the combined curve use case [<a href="#References">12</a>]
+  where:</p>
+  <ul>
+  <li><code>GetCurrentFeature</code> is a method of the command where is extract
+    this code</li>
+  <li><code>pIDescendantsOnGSMTool</code>, is a <i>CATIDescendant interface </i>pointer
+    on the set</li>
+  <li><code>piSpecOnCombinedCurve</code> is a <i>CATISpecObject</i> interface
+    pointer on the feature to aggregate</li>
+  <li>If the current feature is not inside the set, the value of <code>pos</code>
+    is zero. The new combined curve is aggregated at the end of the set thanks
+    to the <code>Append</code> method.</li>
+  <li>If the current feature is inside the set, the value of <code>pos</code> is
+    not nul. The new combined curve is aggregated just after the current feature
+    thanks to the <code>Addchild</code> method.</li>
+  </ul>
+  <p>There is another advantage to use the <i>CATIGSMProceduralView</i> instead
+  of the <i>CATIDescendants</i> interface for a surfacic feature. The first
+  interface creates a Geometrical Set, if the current set is not a surfacic set.
+  It is possible if the PartBody or the Body features have been instantiated
+  from the MechanicalTool StartUp. It means that your Part document was created
+  before the R14.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+
+<p>The specification container is one of the containers of the Part document. It
+groups together the mechanical features. Among these are the geometrical
+features which hold a topological result. There are two kinds of
+geometrical features:</p>
+
+<ul>
+  <li>The <b>solid</b> feature</li>
+</ul>
+<blockquote>
+  <p>In most cases, this is the feature deriving from the MechanicalShapeFeature
+  StartUp. It is aggregated either by the PartBody, or a Body. Both are solid
+  and surfacic features sets. There are the <b> form</b> features having a footprint and the
+  <b> contextual</b> features
+  which need an initial form to be computed with it.&nbsp;</p>
+</blockquote>
+<ul>
+  <li>The <b>surfacic</b> feature:</li>
+</ul>
+<blockquote>
+  <p>In most cases, this is the feature deriving either from the GSMGeom StartUp
+  or the GeometricalElement3D StartUp. It is aggregated either by Ordered
+  Geometrical Set, or a Geometrical Set. Both are surfacic features sets.&nbsp;</p>
+</blockquote>
+<p>A solid feature or a surfacic feature can be a datum. A datum is a feature
+without specifications, it contains only the result, a <i>CATBody</i>.</p>
+
+<p>To insert a geometrical feature into a set:&nbsp;</p>
+
+<ul>
+  <li>Use the appropriate interface according to the type of the feature:
+    <ul>
+      <li><i>CATIPrtProceduralView</i>
+        for a solid feature</li>
+      <li> <i>CATIDescendants</i>
+        for a surfacic feature</li>
+      <li> <i>CATIGSMProceduralView</i>
+        for a surfacic feature derving from the GSMTool StartUp</li>
+    </ul>
+  </li>
+  <li>After the update, Invoke the <code>Insert</code> method
+  of the <i>CATMmrLinearBodyService</i> if the set is ordered.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrStructurePartDoc.htm">The Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrContentsSpecCont0.htm">The Contents of the Specification Container -
+      The Part Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification Container -
+      Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAAMmrMechModOverview.htm">Mechanical
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMmrBuildIntegrating.htm">Integrating the New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="CAAMmrCreatingNewFeat.htm">Creating a New StartUp Deriving from
+      a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAMmrOrderLinearBody.htm">Order and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism
+      Applied to Mechanical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="CAAMmrGenericNaming.htm">Generic Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[11]</td>
+    <td><a href="CAAMmrFeatureIntegration.htm">Integrating a New Mechanical
+      Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[12]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInstantiation.htm">Instantiating
+      Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[13]</td>
+    <td>Volume Form Features</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>   [Dec 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jun 2003]</td>
+    <td valign="top">Document updated to specify the feature's classification</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>3</strong> [Nov 2003]</td>
+    <td valign="top">Document updated for OGS integration</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>4</strong> [Nov 2003]</td>
+    <td valign="top">Document updated for R14 novelties</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,779 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Viewer Feedback</title>
+</head>
+
+<body>
+
+<a name="Top"></a>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Viewer Feedback</h3>
+      <em>How to retrieve information on interactions coming from viewers</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to retrieve and analyze information on interactions coming
+      from viewers. These interactions can be mouse motion or press/release
+      button.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAACafViewerFeedback Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAACafViewerFeedback Do</a></li>
+            <li><a href="#How">How to Launch CAACafViewerFeedback</a></li>
+            <li><a href="#Where">Where to Find the CAACafViewerFeedback Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to retrieve and analyze information on interactions coming
+      from viewers. You will learn how to:</p>
+<ul>
+  <li>Activate or deactivate the sending of event when interactions occur in a 
+	viewer<br>
+	The activation/deactivation mode is called the <b> feedback</b> mode.<li>
+	Analyze the notification associated with the event<br>
+	The notification is a <i>CATVisViewerFeedbackEvent</i>
+  notification class.<li>Display on the screen information contained in the 
+	notification<br>
+	Information will be displayed in the main 2D viewpoint of the viewer.
+  
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAACafViewerFeedback Use Case</h3>
+<p>CAACafViewerFeedback is a use case of CAACATIAApplicationFrm.edu and
+CAAApplicationFrame.edu frameworks that
+illustrates Visualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAACafViewerFeedback Do</h4>
+<p>CAACafViewerFeedback use case enables you to activate or deactivate the
+feedback mode on the current viewer. This switch is possible thanks to a
+command set in an add-in of the General workshop [<a href="#References">1</a>].</p>
+<p>The Viewer Feedback demonstrator
+command, see pictures below, is represented by a check button. When the button is
+&quot;ON&quot; (right picture), the feedback mode is active. When the button is
+&quot;OFF&quot; (left picture), the feedback mode is not active.</p>
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCheckHeaderAddinOff.jpg" width="269" height="176"></td>
+    <td><img border="0" src="images/CAAAfrCheckHeaderAddinOn.jpg" width="273" height="181"></td>
+  </tr>
+</table>
+<p>When the feedback mode is active in the current viewer you can see:</p>
+<ul>
+  <li>Only the mouse position, if there is no element under the mouse
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAAfrCheckHeaderMouseCoord.jpg" width="438" height="202"></td>
+  </tr>
+</table>
+</li>
+<li>The mouse position, the intersection point coordinates, and the path
+  of all elements under the mouse.
+<table border="0">
+  <tr>
+    <td><img border="0" src="images/CAAVisViewerFeedbackAll.jpg" width="465" height="249"></td>
+  </tr>
+</table>
+  <p>On this picture you can see that there is only one selected element.</p>
+</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAACafViewerFeedback</h4>
+<p>To launch CAACafViewerFeedback, you will need to set up the build time
+environment, then compile CAACafViewerFeedback along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>But just before launching the execution, edit the
+CAAApplicationFrame.edu.dico interface dictionary file in the dictionary
+directory of your runtime view:</p>
+<pre><b>InstallRootDirectory</b>\<b>OS</b>\code\dictionary\</pre>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed and <b>OS</b> is a directory the name of which depends on the operating 
+system. Refer to [<a href="#References">2</a>] 
+to get the list of the currently supported operating systems and their 
+associated directory names..</p>
+<p>In this file, remove the &quot;<b>#</b>&quot; character before the two
+following lines:</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>...
+#CAAAfrGeneralWksAddin       CATIWorkbenchAddin          libCAAAfrGeneralWksAddin  
+#CAAAfrGeneralWksAddin       CATIAfrGeneralWksAddin      libCAAAfrGeneralWksAddin
+...</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The two line deal with the General workshop add-in described in the
+CAAAfrGeneralWksAddin use case [<a href="#References">1</a>] located in the
+CAAAfrGeneralWksAddin.m module (CAAApplicationFrame.edu framework)</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:</p>
+<ul>
+  <li>On the <b>File </b>menu, click <b>New</b></li>
+  <li>In the <b> New</b> box, select any kind of document type and click <b>OK</b></li>
+  <li>On the <b>View </b>menu, click <b>Viewer Feedback Demonstrator</b></li>
+  <li><b>Move </b>the mouse on the viewer</li>
+  <li><b>Create</b> elements</li>
+  <li><b>Move </b>the mouse on the viewer and <b>pass over</b> the newly
+    elements</li>
+  <li>On the <b>View </b>menu, click <b>Viewer Feedback Demonstrator</b></li>
+  <li><b>Move </b>the mouse on the viewer and <b>pass over </b>the newly
+    elements</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAACafViewerFeedback Code</h4>
+<p>The CAACafViewerFeedback use case is made of several classes located:</p>
+<ul>
+  <li>In
+the CAAAfrGeneralWksAddin.m module of the CAAApplicationFrame.edu framework:</li>
+  <p>This module contains an add-in of the general workshop which defines a
+  toolbar with the &quot;Viewer Feedback Demonstrator&quot; command. This part
+  of the use case is not explained in this article. You can you refer to the
+  add-in article [<a href="#References">1</a>] for more details.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeneralWksAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeneralWksAddin.m/</code></td>
+  </tr>
+</table>
+<li>In
+the CAACafViewerFeedback.m module of the CAACATIAApplicationFrm.edu framework:</li>
+  <p>This module contains <i>CAACafViewerFeedbackManager </i>and <i>CAACafViewerFeedbackCmd </i>
+  classes.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAACATIAApplicationFrm.edu\CAACafViewerFeedback.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAACATIAApplicationFrm.edu/CAACafViewerFeedback.m/</code></td>
+  </tr>
+</table>
+  <p>Only one instance of the <i>CAACafViewerFeedbackManager </i>class is
+  created during
+  the session. This class manages the current viewer and the feedback mode on
+  the current viewer. It means how to receive notifications sent
+  by the viewer, and once received, how to decode it to display some information
+  in the 2D Viewpoint of the viewer. The <i>CAACafViewerFeedbackCmd</i> command,
+  explained in the &quot;Creating a Command with Options in the &quot;Tools
+  Palette&quot; Toolbar&quot; article [<a href="#References">3</a>],
+  informs the <i></i>unique <i>CAACafViewerFeedbackManager </i>class
+  instance to activate or deactivate the feedback mode.</p>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in the CAACafViewerFeedback use case:</p>
+<ol>
+  <li><a href="#Creating the CAACafViewerFeedbackManager Class Header">Creating the CAACafViewerFeedbackManager Class
+    Header</a></li>
+  <li><a href="#Activating the Feedback Mode">Activating the Feedback Mode</a></li>
+  <li><a href="#Deactivating the Feedback Mode">Deactivating the Feedback Mode</a></li>
+  <li><a href="#Decoding the CATVisViewerFeedbackEvent Notification">Decoding the CATVisViewerFeedbackEvent Notification</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the CAACafViewerFeedbackManager Class Header"></a>Creating
+the CAACafViewerFeedbackManager Class Header</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// System Framework
+#include &quot;CATBaseUnknown.h&quot;      // Needed to derive from 
+#include &quot;CATEventSubscriber.h&quot;  // To set callback
+
+class CAT2DBagRep ;              // The graphic representation of the feedback
+class CATViewer ;                // The viewer with the visual feedback
+class CATNotification ;          // for callback methods
+class CATUnicodeString ;         // 
+class CATPathElement ;           // 
+
+class CAACafViewerFeedbackManager : public CATBaseUnknown
+{
+  public :
+
+   CAACafViewerFeedbackManager ();
+
+   virtual ~CAACafViewerFeedbackManager();  
+	
+   static void <b>GetManager</b>(CAACafViewerFeedbackManager ** opManager);
+
+   void <b>SetViewerFeedbackOn</b>();
+
+   void <b>SetViewerFeedbackOff</b>();
+
+  private : 
+
+   void <b>ViewerFeedbackCB</b>          (CATCallbackEvent  iEventAlarm,
+                           void             *iAlarm,
+                           CATNotification  *iNotifAlarm,
+                           CATSubscriberData iBurglarData,
+                           CATCallback       iCallBack );
+
+   void <b>WindowActivatedCB</b>          (CATCallbackEvent  iEventAlarm,
+                           void             *iAlarm,
+                           CATNotification  *iNotifAlarm,
+                           CATSubscriberData iBurglarData,
+                           CATCallback       iCallBack );
+
+   void <b>WindowDeactivatedCB</b>          (CATCallbackEvent  iEventAlarm,
+                           void             *iAlarm,
+                           CATNotification  *iNotifAlarm,
+                           CATSubscriberData iBurglarData,
+                           CATCallback       iCallBack );
+
+ 
+   void <b>PathElementString</b>(CATPathElement   * ipPath, 
+                           CATUnicodeString &amp; oPathName) ;
+
+   void <b>ChangeBagPosition</b>(float Xpos, float Ypos) ;
+   
+   CAACafViewerFeedbackManager(const CAACafViewerFeedbackManager &amp;iObjectToCopy);
+   CAACafViewerFeedbackManager &amp; operator = (const CAACafViewerFeedbackManager &amp;iObjectToCopy);
+
+  private :
+   CATViewer     * <b>_pCurrentViewer</b> ;
+   CAT2DBagRep   * <b>_pInformationsToDisplay</b>;
+
+   <b>CATCallback</b>     _ViewerFeedbackCB ;
+   CATCallback     _WindowActivatedCB ;
+   CATCallback     _WindowDeactivatedCB ;
+   CATCallback     _WindowDeletedCB ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>This class contains the following methods:</p>
+<ul>
+  <li><code>GetManager</code>: it is a static method which manages
+    the singleton.</li>
+  <li><code>SetViewerFeedbackOn:</code> actives the feedback mode - see the <a href="#Activating the Feedback Mode">Activating the Feedback Mode</a>
+    section</li>
+  <li><code>SetViewerFeedbackOff:</code> deactivates the feedback mode - see the <a href="#Deactivating the Feedback Mode">Deactivating the Feedback Mode</a>
+    section</li>
+  <li><code>ViewerFeedbackCB</code>: this method is a callback
+    method to analyze the <a href="#Decoding the CATVisViewerFeedbackEvent Notification">CATVisViewerFeedback
+    notification</a></li>
+  <li><code>WindowActivatedCB and WindowDeactivatedCB</code>: these two methods
+    are callback methods to manage window activation, deactivation and deletion.
+    The first one calls the <code>SetViewerFeedbackOn</code> method if the
+    feedback mode is active, and the second method calls the <code>SetViewerFeedbackOff</code>
+    method.</li>
+  <li><code>PathElementString</code>: It is a service to translate
+    in a string a <i>CATPathElement</i>. For each element of the path, the <i>CATIAlias</i>
+    interface is called.</li>
+  <li><code>ChangeBagPosition</code>: this method is also a service
+    to move the text near the mouse position. <a href="#ChangeBagPosition">Click
+    here to see the code.</a></li>
+</ul>
+<p>and contains the following data:</p>
+<ul>
+  <li>_<code>pCurrentViewer</code>: it is one viewer of the current
+    window.</li>
+  <li><code>_pInformationsToDisplay</code>: it is the graphic representation which
+    groups together texts</li>
+  <li><code>_ViewerFeedbackCB</code>: it is the identifier of the viewer
+    callback.</li>
+  <li><code>_WindowxxxCB</code>: there are the identifiers of the window
+    callbacks</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Activating the Feedback Mode"></a>Activating the Feedback Mode</h4>
+<p>The <code>SetViewerFeedbackOn </code>method consists in first to retrieve a
+viewer:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAACafViewerFeedbackManager::SetViewerFeedbackOn()
+{
+    if ( NULL == _pCurrentViewer )
+    {
+       <b>CATFrmLayout</b> * pCurrentLayout= CATFrmLayout::<b>GetCurrentLayout</b>();
+       if ( NULL != pCurrentLayout )
+       {
+          <b>CATFrmWindow</b> * pCurrentWindow = pCurrentLayout-&gt;<b>GetCurrentWindow</b>();
+
+          if ( NULL != pCurrentWindow )
+          {
+              _pCurrentViewer = pCurrentWindow-&gt;<b>GetViewer</b>();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This viewer is one of the current window (it is the choice of this
+command). The <i>CATFrmLayout</i> [<a href="#References">4</a>] is the
+class which manages all the windows all the session.</p>
+<p>Then, once you have a viewer, you can activate the feedback mode:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...
+       if ( NULL != _pCurrentViewer )
+       {         
+          _pCurrentViewer-&gt;<b>SetFeedbackMode</b>(TRUE);
+          if (0 == _ViewerFeedbackCB)
+          {
+             _ViewerFeedbackCB = ::<b>AddCallback</b>(this,
+                            _pCurrentViewer, 
+                            <b>CATViewer</b>::<b>VIEWER_FEEDBACK_UPDATE</b>(), 
+                            (CATSubscriberMethod) &amp; CAACafViewerFeedbackManager::<b>ViewerFeedbackCB</b>, NULL);
+          }
+       }</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>SetFeedbackMode</code> method with <code>TRUE</code> actives the
+feedback mode. It means that now the viewer sends notifications when an
+interaction occurs. To receive these notifications, the command sets a
+callback.</p>
+<ul>
+  <li><code>this</code> : the event subscriber</li>
+  <li><code>_pCurrentViewer</code> : the publisher</li>
+  <li><code>CATViewer::VIEWER_FEEDBACK_UPDATE</code>(): the dispatched
+    CATCallbackEvent [<a href="#References">5</a>]</li>
+  <li><code>ViewerFeedbackCB</code>: the callback method - See the <a href="#Decoding the CATVisViewerFeedbackEvent Notification">Decoding the CATVisViewerFeedbackEvent Notification</a>
+    section</li>
+  <li><code>NULL</code>: no argument</li>
+</ul>
+<p><code>_ViewerFeedbackCB</code> is an identifier of the callback, it is
+important to keep it for the callback deletion. See the <a href="#Deactivating the Feedback Mode"> <code>SetViewerFeedbackOn </code></a> method</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Deactivating the Feedback Mode"></a>Deactivating the Feedback Mode</h4>
+<p>The <code>SetViewerFeedbackOn </code>method consists in to cancel the
+feedback mode on the current viewer.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAACafViewerFeedbackManager::SetViewerFeedbackOff()
+{
+    if ( NULL != _pCurrentViewer)
+    {
+       _pCurrentViewer-&gt;<b>SetFeedbackMode</b>(FALSE);
+
+       if (NULL != <b>_pInformationsToDisplay</b>)
+       {
+          _pCurrentViewer-&gt;<b>RemoveRep</b>(_pInformationsToDisplay);
+
+          _pInformationsToDisplay-&gt;<b>Destroy</b>();
+          _pInformationsToDisplay = NULL;
+       }
+       _pCurrentViewer-&gt;<b>Draw</b>();
+
+       if (0 != _ViewerFeedbackCB)
+       {
+          ::<b>RemoveCallback</b>(this,_pCurrentViewer,<b>_ViewerFeedbackCB</b>) ;
+          _ViewerFeedbackCB = 0 ;
+       }
+       _pCurrentViewer = NULL ; 
+    }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>There are four steps:</p>
+<ol>
+  <li>Deactivate the feedback mode: It is done with the <code>SetFeedbackMode</code>
+    method with <code> FALSE</code> as argument. It means that now the viewer will do not send
+    notifications when an interaction will occurs.</li>
+  <li>Remove the graphic representation created in the <code>ViewerFeedbackCB</code>
+    method. <code>_pInformationsToDisplay</code> is first removed from the
+    viewer and then deleted. The <code>Destroy</code> method deletes the graphic
+    representation and its contents, if it is a bag.</li>
+  <li>Refresh the viewer: It is the role of the <code>Draw</code> method</li>
+  <li>Removes the callback coming from the viewer: <code>_ViewerFeedbackCB</code>
+    is the identifier returns by the <code>AddCallback</code> method. See the <a href="#Activating the Feedback Mode"> <code>SetViewerFeedbackOn </code></a> method.</li>
+  <li><code>_pCurrentViewer</code>, returned by the <code>GetViewer</code>
+    method of <i>CATFrmWindow, </i>is not &quot;AddReffed&quot; by this method,
+    so you have just to reset the pointer.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Decoding the CATVisViewerFeedbackEvent Notification"></a>Decoding the CATVisViewerFeedbackEvent Notification</h4>
+<p>The <code>ViewerFeedbackCB</code> method consists in to decode the
+notification contained in the callback event, and to display in the main 2D
+viewpoint of the viewer, the information of the notification.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAACafViewerFeedbackManager::ViewerFeedbackCB( CATCallbackEvent   event,
+                                              void             * client,
+                                              CATNotification  * iNotification,
+                                              CATSubscriberData  data,
+                                              CATCallback        callback)
+{
+  if ( NULL != _pCurrentViewer )
+  {
+     if (NULL != _pInformationsToDisplay)
+     {
+        _pCurrentViewer-&gt;<b>RemoveRep</b>(_pInformationsToDisplay);
+
+        _pInformationsToDisplay-&gt;<b>Destroy</b>();
+        _pInformationsToDisplay = NULL;
+     }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>ViewerFeedbackCB</code> method is called each time the viewer sends
+an event. So the graphic representation, <code>_pInformationsToDisplay</code>,
+previously created, should be first removed from the viewer and deleted.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>     CATVisViewerFeedbackEvent * pFeedbackEvent = NULL ;
+     if ( NULL != iNotification )
+     {
+        pFeedbackEvent = (<b>CATVisViewerFeedbackEvent</b>*) iNotification;
+     }
+
+     if (NULL != pFeedbackEvent)
+     {
+         CATViewer * pViewerPublisher = pFeedbackEvent-&gt;<b>GetViewer</b>();
+         if ( (NULL != pViewerPublisher) &amp;&amp; ( pViewerPublisher <b>==</b> _pCurrentViewer) )
+         {
+            _pInformationsToDisplay = new <b>CAT2DBagRep</b>();
+            _pCurrentViewer-&gt;<b>AddRep</b>(_pInformationsToDisplay);
+            ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The third argument of the <code>ViewerFeedbackCB</code> method is the notification
+containing the information. This notification, <code>iNotification</code>, is a <i>CATVisViewerFeedbackEvent</i><b>
+</b>class. This class instance contains the viewer which has published the
+event. <code>GetViewer</code> retrieves it, it is <code>pViewerPublisher</code>.
+This viewer should be released at this end of the method. This value enables you to check that
+the current viewer, <code>_pCurrentViewer,</code> kept by the manager, is the
+same as the notification's sender. Once the check is validated, a new
+graphic representation can be built.</p>
+<p> <code>_pInformationsToDisplay</code> is a 2D bag added to the viewer thanks
+to the <code>AddRep</code> method. This method adds the 2D representation to the
+main 2D viewpoint. <code>_pInformationsToDisplay</code> will have several children depending on the notification's contents.
+The <code>ViewerFeedbackCB</code>  method analyses and displays a text for :</p>
+<ol>
+  <li><a href="#The mouse position in screen coordinates">The mouse position in screen coordinates</a></li>
+  <li><a href="#The mouse position in model coordinates">The intersection point
+    with the selected geometry</a></li>
+  <li><a href="#The elements under the mouse">The elements under the mouse</a></li>
+</ol>
+<p>These three steps are described below.</p>
+<ol>
+  <li><a name="The mouse position in screen coordinates"></a>The mouse position in screen coordinates</li>
+  <p>Before to detail the code, a picture to explain the screen
+  coordinates:</p>
+  <table border="0" width="672">
+    <tr>
+      <td width="362"><img border="0" src="images/CAAVisViewerFeedbackScreenCoord.jpg" width="479" height="287"></td>
+      <td width="310">If (Xpos,Ypos) are the screen coordinates of the mouse,
+        <ul>
+          <li>Xpos ranges from 0 to width-1</li>
+          <li>Ypos ranges from 0 to height-1</li>
+        </ul>
+        <p>where width and height are the support (<i>CATSupport</i>) dimensions.</p>
+      </td>
+    </tr>
+  </table>
+<table class="code">
+  <tr>
+    <td>
+      <pre>           int XPos, YPos;
+           pFeedbackEvent-&gt;<b>GetMousePosition</b>(&amp;XPos, &amp;YPos);
+
+           <b>ChangeBagPosition</b>(XPos,YPos);
+
+           float <b>points</b>[2];
+           points[0] = 8.0f;
+           points[1] = 8.0f;
+
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>GetMousePosition</code> returns the mouse position in screen
+  coordinates. This position serves to locate the 2D bag. The <code>ChangeBagPosition</code>
+  method locates <code>_pInformationsToDisplay</code>  near the mouse. <code>points</code> is an array of two floats which
+  is used to locate the
+  child representations in the 2D bag.</p>
+  <p> The position of a child is a position in
+  the bag axis system as shown in the picture below:</p>
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAVisViewerFeedbackBagPos.jpg" width="487" height="282"></td>
+      <td>(u,v) is the bag axis system
+        <p>(Xpos,Ypos) is the mouse position in screen coordinates</p>
+        <p>The <code>ChangeBagPosition</code>
+        method transforms (Xpos,Ypos) is model coordinates.</td>
+    </tr>
+  </table>
+  <p><a name="ChangeBagPosition"></a>Here is the code of the <code>ChangeBagPosition</code>
+  method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAACafViewerFeedbackManager::ChangeBagPosition(float Xpos, float Ypos)
+{
+        CATSupport &amp; Support = _pCurrentViewer-&gt;<b>GetSupport</b>();
+
+        float width, height, MMInSupportUnit, RatioWH ;
+
+        Support.<b>GetWidthAndHeight</b>(width,height);
+
+        MMInSupportUnit = Support.<b>GetMMInSupportUnit</b>();
+        RatioWH = Support.<b>GetRatioWH</b>();
+
+        CAT2DViewpoint &amp; VP2D = _pCurrentViewer-&gt;<b>GetMain2DViewpoint</b>() ;
+
+        CATMathPoint2Df ModelPos;
+        VP2D.<b>ComputeModelFromPixel</b>( Xpos,Ypos, 
+                                    ModelPos.x, ModelPos.y, 
+                                    width, height, 
+                                    MMInSupportUnit, 
+                                    RatioWH);
+       
+        CATMathVector2Df U,V ;
+        <b>CAT3x3Matrix</b> Matrix(U,V,ModelPos);
+       _pInformationsToDisplay-&gt;<b>SetMatrix</b>(Matrix);
+    }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>(ModelPos.x, ModelPos.y)</code> is the mouse position in model
+  coordinates. The <code>ComputeModelFromPixel</code> method transforms a 2D
+  point from screen coordinates to model coordinates.</p>
+  <p>Come back to the <code>ViewerFeedbackCB</code> method:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+           char MousePositionBuffer[200];
+           sprintf(MousePositionBuffer, &quot;Mouse Coordinates : X=%d Y=%d&quot;, <b>XPos</b>, <b>YPos</b>);
+
+           CAT2DAnnotationTextRep * pMousePositionTextRep = NULL ;
+           pMousePositionTextRep = new <b>CAT2DAnnotationTextRep</b>( points, 
+                                                             MousePositionBuffer, 
+                                                             BASE_LEFT);
+
+           if (NULL != pMousePositionTextRep)
+           {
+              _pInformationsToDisplay-&gt;<b>AddChild</b>(*pMousePositionTextRep);
+           }
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>pMousePositionTextRep</code> is a <i>CAT2DAnnotationTextRep</i> class
+  instance to display the mouse position screen coordinates.</p>
+  <li><a name="The mouse position in model coordinates"></a>The intersection
+    point with the selected geometry</li>
+  <p>Before to detail the code, a picture to explain the intersection point.</p>
+
+  <table border="0">
+    <tr>
+      <td><img border="0" src="images/CAAVisViewerFeedbackInters.jpg" width="489" height="348"></td>
+      <td>The point symbolized by a bold circle is the intersection point of the line
+        and the nearest selected geometry. This point is in model coordinates.</td>
+    </tr>
+  </table>
+  <p><code>GetIntersection</code><b> </b>returns a <i>CATGraphicElementIntersection</i>
+  class instance pointer. This class contains as public data a <i>CATMathPoint</i>
+  . <code>point</code> is the intersection point. If there is nothing
+  under the mouse, <code>GetIntersection</code><b> </b>returns NULL.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+           <b>CATGraphicElementIntersection</b>* pIntersection = pFeedbackEvent-&gt;<b>GetIntersection</b>();
+
+           if (NULL != pIntersection)
+           {
+              <b>points</b>[1] += 8.0f;
+
+              char IntersectionBuffer[200];
+
+              sprintf(IntersectionBuffer, 
+                 &quot;Intersection Coordinates : X=%.2f Y=%.2f Z=%.2f&quot;, 
+                  <b>pIntersection-&gt;point.GetX</b>(), 
+                  <b>pIntersection-&gt;point.GetY</b>(), 
+                  <b>pIntersection-&gt;point.GetZ</b>());
+
+              CAT2DAnnotationTextRep * pIntersectionTextRep = NULL ;
+              pIntersectionTextRep = new <b>CAT2DAnnotationTextRep</b>( points, 
+                                                  IntersectionBuffer, BASE_LEFT);
+
+              if (NULL != pIntersectionTextRep)
+              {
+                 _pInformationsToDisplay-&gt;<b>AddChild</b>(*pIntersectionTextRep);
+              }
+
+              pIntersection-&gt;<b>Release</b>();
+              pIntersection = NULL;
+           }
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p><code>pMousePositionTextRep</code> is a <i>CAT2DAnnotationTextRep</i> class
+  instance which contains the intersection point coordinates.</p>
+
+  <li><a name="The elements under the mouse"></a>The elements under the mouse</li>
+  <p><code>GetElementsUnder</code><b> </b>returns the list of elements under the
+  mouse. This list can be empty. The elements in this list are sorted, the first
+  (0 index) being the nearest, and the last ( n-1) the further. Each element is a
+  <i>CATPathElement</i> from the geometry to the root.</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+           CATSO* SO = pFeedbackEvent-&gt;<b>GetElementsUnder</b>();
+
+           if (NULL != SO)
+           {
+              int SOSize = SO-&gt;<b>GetSize</b>() ;
+              for ( int i= 0 ; i &lt; SOSize ; i++)
+              {
+                 CATPathElement * pPathElement = (CATPathElement*) ((*SO)[i]) ;
+
+                 CATUnicodeString PathElementName = &quot;&quot;;
+                 <b>PathElementString</b>(pPathElement,PathElementName);
+
+                 char Buffer[200];
+                 sprintf(Buffer, &quot;   : %d / %d&quot;, i+1,SO-&gt;GetSize());
+          
+                 CATUnicodeString Count(Buffer);
+                 PathElementName.Append(Buffer) ;
+
+                 points[1] += 8.0f;
+
+                 CAT2DAnnotationTextRep* pElementTextRep = NULL ;
+                 pElementTextRep = new <b>CAT2DAnnotationTextRep</b>( points, 
+                                                          PathElementName.CastToCharPtr(), 
+                                                          BASE_LEFT);
+
+                 if (NULL != pElementTextRep)
+                 {
+                    _pInformationsToDisplay-&gt;<b>AddChild</b>(*pElementTextRep);
+                 }
+              }
+              SO-&gt;<b>Release</b>();
+              SO = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>This piece of code is a loop from the first element to the last. For each
+  path, <code>PathElementString</code>
+  converts a path in a string. This string is the input of a new <code>CAT2DAnnotationTextRep</code>
+  class instance.</p>
+
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to receive information from a viewer when
+interactions occur. These information are inside a <i> CATVisViewerFeebackEvent</i>
+notification class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleGeneralWksAddin.htm">Making Your Document Independent Command Available in All Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrCmdPalette.htm">Creating a Command with Options in the &quot;Tools Palette&quot; Toolbar</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrLayoutV5.htm">Understanding the Application Frame Layout</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysTechArticles/CAASysCallbacks.htm">The Callback Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Aug 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

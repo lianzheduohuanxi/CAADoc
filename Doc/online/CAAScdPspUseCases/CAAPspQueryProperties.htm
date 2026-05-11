@@ -1,0 +1,336 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Querying Properties and Object ID </title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Querying Properties and Object ID</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This use case is intended to show you how to access
+      properties and ID data using a macro.</p>
+      <p>This macro opens the document CAAPspEduIn.CATProduct. Using the root
+      node of the document, it obtains a physical object. It then
+      gets PspID and PspAttribute interface handle on the physical object to
+      obtain ID and attribute information.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAPspQueryProperties is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPspQueryPropertiesSource.htm">CAAPspQueryProperties.CATScript</a>
+      is located in the CAAScdPspUseCases module. <a href="macros/CAAPspQueryProperties.CATScript">Execute
+      macro </a> (windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAPspQueryProperties includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Get a PspID object">Get a PspID Object</a></li>
+        <li><a href="#Query ID information">Query ID Information</a></li>
+        <li><a href="#Get a PspAttribute object">Get PspAttribute object</a></li>
+        <li><a href="#Get List of attributes">Get List of Attributes</a></li>
+        <li><a href="#Get PspAttribute information">Get Attribute Information</a></li>
+        <li><a href="#Attribute values depending on type">Get Attribute Values
+      Depending on Types</a></li>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>The macro first loads Distributive System document
+      CAAPspEduIn.CATProduct containing Equipment and Piping Design objects.</p>
+      <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i>
+      to point to the directory and <i>sDocFullPath</i> to point to full path
+      name of the document.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+    
+	sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct&quot; )
+
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i>PspWorkbench</i> object from the
+      document using the top node of the object tree in a Distributive
+      System document</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' ---------------</font>
+    <font color="#008000">'  Find the top node of the Distribute System object tree - .</font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objPspDoc.Product 
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspApplication</i> object corresponding to
+      Piping application and initializes the data.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( Not(objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspAppFactory</i> object on the application
+      object.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+                        
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAppFactory&quot;,objPspApplication )
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get a PspID object"></a>Get a PspID Object</h4>
+      <p>Using the <i>ListPhysicals</i> method of <i> PspAppFactory</i>
+      it obtains a list of
+      physical objects in the Piping domain under the root product. Note that
+      the output of this method is a list of objects. The member of this list
+      can be retrieved using the Item method. The second argument of this method
+      specifies a particular interface to be returned on this object.</p>
+      <p>It then uses the first physical object and obtains a <i> PspID</i> interface
+      handle on the object.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#0000FF">    Set </font>objLPhysicals = objPspAppFactory.ListPhysicals ( objPrdRoot , catPspIDLCATPIP)
+<font color="#0000FF">        If </font>( Not ( objLPhysicals Is Nothing ) And _
+           ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">          Set </font>objPspPhysical =  objLPhysicals.Item( 1, &quot;CATIAPspPhysical&quot; )
+<font color="#0000FF">        End If</font>
+<font color="#0000FF">      End If</font>
+
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing ) and objPspApplication</font>
+    
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get PspID object and query ID information</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+<font color="#0000FF">      Set </font>objPspID = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspID&quot;,objPspPhysical )
+<font color="#008000">    ...</font></pre>
+      <h4><a name="Query ID information"></a>Query ID Information</h4>
+      <p>It then calls local Subroutine <i>QueryPspID</i> to query ID information.</p>
+      <pre><font color="#008000">    ...</font>
+     If( Not ( objPspID Is Nothing ))<font color="#0000FF"> Then</font>
+        QueryPspID objPspID
+<font color="#0000FF">      End if</font>
+    <font color="#008000">...</font></pre>
+      <p>The <i>PspID </i>interface is used to obtain the following
+      information:</p>
+      <ul>
+        <li>Get current IDby calling <i>GetID</i> method
+        <li>Set a new ID by calling <i>SetID</i> method</li>
+        <li>Generate ID without regenerating a new sequence number but retaining
+          the current sequence number, if it exists. This attained using the
+          method <i>GenIDNoGenSeqNum</i></li>
+        <li>Generate ID with a new sequence number (it it exists) and store IDby
+          calling <i>GenAndPutID</i>
+        <li>Check if current ID of the object is generated as per the ID schema
+          by calling method <i>IsIDGenerated</i>
+      </ul>
+      <pre><font color="#008000">    ...</font>
+    Private Sub QueryPspID (objPspIDArg<font color="#0000FF"> As </font>PspID)  
+<font color="#0000FF">    Dim </font>strID           <font color="#0000FF"> As </font>String 
+<font color="#0000FF">    Dim </font>str2ID          <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strGenIDNoSeq   <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strGenAndPutID  <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>strNewID        <font color="#0000FF"> As </font>String     
+<font color="#0000FF">    Dim </font>bIsIDGenerated  <font color="#0000FF"> As </font>Boolean
+
+    strMessage_g =  strMessage_g &amp; _
+      &quot;     --------Display ID information -----    &quot; &amp; vbCrLf
+    
+<font color="#0000FF">    If </font>( Not ( objPspIDArg Is Nothing ) )<font color="#0000FF"> Then         </font>
+      strID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &amp;  &quot;Object ID =&quot; &amp; strID &amp; vbCr
+      
+      strNewID = strID &amp; &quot;NewID&quot;
+
+      objPspIDArg.SetID strNewID
+
+      str2ID = objPspIDArg.GetID
+      strMessage_g = strMessage_g &amp;  &quot;New ID set =&quot; &amp; str2ID &amp; vbCr
+
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Generate ID without regenerating sequence num</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+
+      strGenIDNoSeq = objPspIDArg.GenIDNoGenSeqNum
+
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Generate and Put ID on the object</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+
+      strGenAndPutID = objPspIDArg.GenAndPutID
+
+      strMessage_g = strMessage_g &amp;  &quot;Generated ID =&quot; &amp; strGenAndPutID &amp; vbCr                       
+     
+      <font color="#008000">'----------------------------------------------------------</font>
+      <font color="#008000">' Is ID generated</font>
+      <font color="#008000">'----------------------------------------------------------</font>
+    
+      bIsIDGenerated = objPspIDArg.IsIDGenerated
+<font color="#0000FF">      If </font>( bIsIDGenerated   )<font color="#0000FF"> Then</font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get a PspAttribute object"></a>Get a PspAttribute 
+      Object</h4>
+      <p>It then calls <i>Ge<font color="#0000FF">tInt</font>erface</i> method
+      on <i> PspWorkbench</i> on the physical object to get a <i> PspAttribute</i> interface
+      handle.</p>
+      <pre>    <font color="#008000">...</font>
+      <font color="#0000FF">If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspPhysical Is Nothing ) )<font color="#0000FF"> Then  </font>
+        
+<font color="#0000FF">      Set </font>objPspAttribute = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAttribute&quot;,objPspPhysical )
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get List of attributes"></a>Get List of Attributes</h4>
+      <p>The macros calls <i>ListAttributes</i> on the <i> PspAttribute</i>
+      object to get a list of attribute Piping domain. It then calls local
+      private subroutine QueryPspAttribute to query information on each
+      attribute.</p>
+      <pre>    <font color="#008000">...</font>
+        <font color="#008000">'----------------------------------------------------------------------</font>
+        <font color="#008000">' List Attributes for CATPIP domain</font>
+        <font color="#008000">'----------------------------------------------------------------------</font>
+        
+<font color="#0000FF">        Set </font>objLStrAttrNames= objPspAttribute.ListAttributes (ePspIDLDomainID )
+       
+<font color="#0000FF">        If </font>( Not ( objLStrAttrNames Is Nothing ) )<font color="#0000FF"> Then   </font>
+         <font color="#0000FF"> int</font>NbAttr = objLStrAttrNames.Count
+<font color="#0000FF">          If </font>(<font color="#0000FF"> int</font>NbAttr &gt; 0 )<font color="#0000FF"> Then</font>
+            QueryPspAttribute objPspWorkbench, objPspAttribute, objLStrAttrNames  
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get PspAttribute information"></a>Get Attribute Information</h4>
+      <p>The macro uses local private subroutine <i> QueryPspAttribute</i> to obtain
+      additional information for each of the attribute</p>
+      <ul>
+        <li>Attribute type
+        <li>Discrete type of the attribute.
+        <li>Derived status of an attribute i.e whether attribute is deriving
+          attribute from a logical line</li>
+      </ul>
+      <pre>    <font color="#008000">...</font>
+Private Sub QueryPspAttribute (objPspWorkbenchArg<font color="#0000FF"> As </font>PspWorkbench, _
+                               objPspAttributeArg<font color="#0000FF"> As </font>PspAttribute, _
+                               objLStrAttrNamesArg<font color="#0000FF"> As </font>PspListOfBSTRs )  
+    <font color="#008000">...</font>
+<font color="#0000FF">      For </font>intIdx = 1 To<font color="#0000FF"> int</font>NbAttr      
+        strAttrName = objLStrAttrNamesArg.Item (intIdx)
+
+        <font color="#008000">'-----------------------------------------------------</font>
+        <font color="#008000">' Getting type, Discrete, Derived status of the attribute</font>
+        <font color="#008000">'-------------------------------------------------------</font>
+
+        eAttrDataType = objPspAttributeArg.GetType    (strAttrName)
+        iDiscreteType = objPspAttributeArg.IsDiscrete (strAttrName, bIsDiscrete)
+        bIsDerived    = objPspAttributeArg.IsDerived  (strAttrName)
+    <font color="#008000">...</font></pre>
+      <h4><a name="Attribute values depending on type"></a>Get Attribute Values
+      Depending on Types</h4>
+      <p>To get value of each attribute it calls method <i>GetParameter </i>to
+      get CATIAParameter or its derived objects .<i> </i>To get value of an
+      attribute in string format use method <i>ValueAsString </i>method on<i>
+      CATIAParameter </i>object. To get attribute value that could be
+      double integer, or boolean use derived objects like CATIAIntParam,
+      CATIARealParam and CATIABoolParam respectively.</p>
+      <pre>     <font color="#008000">...</font>
+<font color="#0000FF">       If </font>( (eAttrDataType = catPspIDLInteger ) Or _            
+            (eAttrDataType = catPspIDLString ) Or _ 
+            (eAttrDataType = catPspIDLBoolean ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">          Set </font>objAttrParam = objPspAttributeArg.GetParameter (strAttrName)
+<font color="#0000FF">          If </font>( Not( objAttrParam Is Nothing) )<font color="#0000FF"> Then</font>
+            strAttrValue = objAttrParam.ValueAsString
+     <font color="#008000">...</font></pre>
+      <p>For real type attribute that have a unit, use <i>Ge<font color="#0000FF">tInt</font>erface</i>
+      method of PspWorkbench object on the Parameter object to get a
+      handle on CATIADimension object.</p>
+      <p>It calls property <i>Unit</i> on CATIADimension object to get
+      CATIUnit interface object.</p>
+      <pre><font color="#008000">    ...</font>          
+<font color="#008000">        '-------------------------------------------------</font>
+        <font color="#008000">' Handling Real (Double) attribute</font>
+        <font color="#008000">' Some attribute could be with magnitude and unit</font>
+
+        If( (eAttrDataType = catPspIDLDouble ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">          Set </font>objAttrRealParam = objPspAttributeArg.GetParameter (strAttrName)
+
+<font color="#0000FF">          If </font>( Not( objAttrRealParam Is Nothing) )<font color="#0000FF"> Then</font>
+            <font color="#008000">' -------------------------------------</font>
+            <font color="#008000">' Checking if CATIADimension handle</font>
+            <font color="#008000">' can be obtained from Real parameter</font>
+<font color="#0000FF">            Set </font>objAttrDimensionParam = objPspWorkbenchArg.Ge<font color="#0000FF">tInt</font>erface( _
+                                    &quot;CATIADimension&quot;,objAttrRealParam )
+    <font color="#008000">...</font>
+          <font color="#008000">' ---------------------------------------------</font>
+          <font color="#008000">' Getting Unit handler from the Dimension object</font>
+          <font color="#008000">' ----------------------------------------------</font>
+
+<font color="#0000FF">          If </font>( Not( objAttrDimensionParam Is Nothing) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">            Set </font>objAttrUnit = objAttrDimensionParam.Unit
+    <font color="#008000">...</font></pre>
+      <p>It obtains symbol of the unit used call property <i>Symbol</i> on
+      CATIUnit interface object.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">       If </font>( Not( objAttrUnit Is Nothing) )<font color="#0000FF"> Then</font>
+            strMessage_g = strMessage_g &amp;  &quot; , unit = &quot; &amp; objAttrUnit.Symbol
+<font color="#0000FF">          End If </font>
+    <font color="#008000">...</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case shows how to obtain ID and properties information on a object
+in an
+existing document. A message logging the status of the critical steps is
+displayed at the end of the use case.</p>
+<p><img border="0" src="images/CAAPspProperties_01.jpg" width="707" height="694"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspQueryProperties.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

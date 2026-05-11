@@ -1,0 +1,17 @@
+# COPYRIGHT DASSAULT SYSTEMES 2008
+#
+# CAADlgBurger application designer using IDD product
+#
+
+BUILT_OBJECT_TYPE=LOAD MODULE
+
+LINK_WITH = DI0PANV2 JS0FM JS0GROUP CATSysTS
+
+OS = Windows_NT 
+LOCAL_LDFLAGS = $(SUB_WIN)            
+MKMFC_DEPENDENCY = yes
+
+OS = SunOS
+SYS_LIBS = -lXm -lXt -lX11
+
+

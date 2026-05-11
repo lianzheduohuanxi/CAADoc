@@ -1,0 +1,212 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Splitting a Wire</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Splitting a Shell</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A shell can be split by another shell or a wire.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a><ul>
+							<li><a href="#ShellByShell">Case 1: Split a Shell by a Shell</a></li>
+							<li><a href="#ShellByShell1">Case 2: Split a Shell by a Shell (Extrapolation id Needed)</li>
+							<li><a href="#ShellByWire">Case 3: Split a Shell by a Wire</a></li>
+			</ul>
+			</li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<a name="OpeToBeUsed"><h2>Operator to be Used</h2></a>
+<p>To split a shell, use the CATICGMHybSplit operator in GMOperatorsInterfaces.
+This operator is created by the CATCGMCreateTopSplitShell global function in 
+which the last argument (CATHybSelectionMode) defines the partitions to be kept. </p>
+<a name="UseCaseDescription"><h2>Use Case Description</h2></a>
+<p>The CAAGMOperatorsSplitShell.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how split a shell. This use case is to be run with the splitShellInputs.NCGM input file which is delivered in CAAGMOperatorsInterfaces.edu/FunctionTests/InputData. 
+</p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<a name="ShellByShell"><h3>Case 1: Split a Shell by a Shell </h3></a>
+The CATHybSelectionMode identifies which partitions of the split body are kept. 
+For a shell cut by a shell:
+<dl>
+<dt>POSITIVE_POSITIVE_SIDE or POSITIVE_NEGATIVE_SIDE</dt>
+<dd>The partitions to keep are pointed to by the orientation of the cutting 
+shell.</dd>
+<dt>NEGATIVE_POSITIVE_SIDE or NEGATIVE_NEGATIVE_SIDE</dt>
+<dd>The partitions to remove are pointed to by the orientation of the cutting 
+shell.</dd>
+<dt>BOTH_SIDES</dt>
+<dd>Should not be used.</dd>
+</dl>
+<p>With the input data below:<br>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Split a shell by a shell (shell orientation 
+	in blue - shell to be split in light green - splitting shell in dark green)</caption>
+   <tr>
+    <td>
+	<img alt="SplitShellByShell Input Data 0" src="images/CGM_splitShellByShell_0.png" width="250" height="220"></td>
+	<td>
+	<img alt="SplitShellByShell Input Data 0" src="images/CGM_splitShellByShell_01.png" width="250" height="220"></td>
+    <td>
+	<img alt="SplitShellByShell Input Data 0" src="images/CGM_splitShellByShell_02.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMHybSplit * pSplitShellByShellOpe = CATCGMCreateTopSplitShell (piGeomFactory, &topdata, pShell1, pShell2,
+		NEGATIVE_NEGATIVE_SIDE);
+...
+pSplitShellByShellOpe->Run();
+CATBody * pSplitShellByShellResult = pSplitShellByShellOpe->GetResult();
+...
+pSplitShellByShellOpe->Release(); pSplitShellByShellOpe=NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Split a shell by a shell: result </caption>
+   <tr>
+    <td>
+	<img alt="Split a shell by a shell: Result" src="images/CGM_splitShellByShell_1.png" width="250" height="220"></td>
+   </tr>
+   </table>
+<p>The same result is obtained if you specify NEGATIVE_POSITIVE_SIDE for the CATHybSelectionMode. </p>
+<a name="ShellByShell1"><h3>Case 2: Split a Shell by a Shell (Extrapolation is Needed)</h3></a>
+<p>If the shell to be split is the one in dark green and the splitting shell the 
+one in light green, with the code below:
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMHybSplit * pSplitShellByShellOpe1 = CATCGMCreateTopSplitShell (piGeomFactory, &topdata, pShell2, pShell1,
+		NEGATIVE_NEGATIVE_SIDE);
+...
+pSplitShellByShellOpe1->Run();
+CATBody * pSplitShellByShellResult1 = pSplitShellByShellOpe1->GetResult();
+...
+pSplitShellByShellOpe1->Release(); pSplitShellByShellOpe1=NULL;</pre>
+        </TD>
+    </TR>
+</TABLE>
+
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3</a> Split a shell by a shell: extrapolation is needed</caption>
+   <tr>
+    <td>
+	<img alt="Split a Shell by a Shell (extrapolation is needed)" src="images/CGM_splitShellByShell_2.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+<a name="ShellByWire"><h3>Case 3: Split a Shell by a Wire</h3></a>
+With the input data below: 
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.4">Fig.4</a> Split a Shell by a Wire: Splitting Wire in 
+	green - wire and shell orientations in blue </caption>
+   <tr>
+    <td>
+	<img alt="Split a shell by a wire: Result" src="images/CGM_splitShellByWire_0.png" width="250" height="220">&nbsp;</td>
+   </tr>
+   </table>
+and the code below:
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATICGMHybSplit * pSplitShellByWireOpe = CATCGMCreateTopSplitShell (piGeomFactory, &topdata,
+                   pShell1, pBodyWire1,NEGATIVE_NEGATIVE_SIDE);
+... 
+pSplitShellByWireOpe->Run();
+CATBody * pSplitShellByWireResult = pSplitShellByWireOpe->GetResult();
+...
+pSplitShellByWireOpe->Release(); pSplitShellByWireOpe=NULL;
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.5">Fig.5</a> Split a Shell by a Wire (wire in right): Result </caption>
+   <tr>
+    <td>
+	<img alt="Split a shell by a wire: Result" src="images/CGM_splitShellByWire_1.png" width="250" height="220"></td>
+   </tr>
+   </table>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

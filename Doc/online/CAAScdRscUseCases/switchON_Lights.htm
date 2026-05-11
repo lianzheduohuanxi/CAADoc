@@ -1,0 +1,178 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Switching on the Lights</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Real Time Rendering</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Switching on the Lights</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ----------------------------------comment------------------------------------>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to switch on all the
+      lights of a the current document.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>switchON_Ligths is launched in CATIA. An existing
+      document called &quot;TestLight.CATProduct&quot; must be found in the
+      CATDocView. It needs &quot;Back.CATPart&quot; and
+      &quot;Hole.CATPart&quot;.</p>
+      <p><a href="switchON_LigthsSource.htm" target="Source">switchON_Ligths.CATScript
+      </a>is located in the CAAScdRscUseCases module. <a href="macros/switchON_Ligths.CATScript">Execute
+      macro </a>(windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>switchON_Ligths includes five steps:</p>
+      <ol>
+        <li><a href="#DocCol">Accessing the Collection of Documents</a></li>
+        <li><a href="#ProdDoc">Accessing the Product Document</a></li>
+        <li><a href="#RootProd">Accessing the Root Product</a></li>
+        <li><a href="#LightCol">Accessing the Collection of Rendering Lights</a></li>
+        <li><a href="#SwitchLight">Switching on All the Lights</a></li>
+      </ol>
+      <p><a name="DocCol"></a><b>Accessing the Collection of Documents</b></p>
+      <table class="code">
+        <tr>
+          <td width="100%">
+            <pre>
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch On Lights&quot;
+		Exit Sub
+	End If
+	...</pre>
+          </td>
+      </table>
+      <p align="left">Access the collection of documents and test if it is not
+      empty.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="ProdDoc"></a>Accessing the Product Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	 <font color="#008000">' Get material library</font>
+	Dim oProductDocument<font color="#0000FF"> As </font>Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oProductDocument.Name, &quot;.CATProduct&quot;) Then
+		msgbox &quot;A product document must be active to execute this macro.&quot;, vbOKOnly, &quot;Switch On Lights&quot;
+		Exit Sub
+	End If
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Access the product document and test if it is really a CATProduct.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="RootProd"></a>Accessing the Root Product</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	<font color="#008000">' Accessing the Root Product</font>
+	Dim oRootProduct<font color="#0000FF"> As </font>Document
+	Set oRootProduct = oProductDocument.Product
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="LightCol"></a>Accessing the Collection of Rendering Lights</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	<font color="#008000">' Accessing the collection of rendering lights</font>
+	Dim oLights<font color="#0000FF"> As </font>RenderingLights
+	Set oLights = oRootProduct.GetItem(&quot;CATRscRenderingLightVBExt&quot;)
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="SwitchLight"></a>Switching on All the Lights</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>
+	...
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int
+	Dim oLight<font color="#0000FF"> As </font>RenderingLight
+
+	<font color="#008000">' Ligths loop</font>
+	For I=1<font color="#0000FF"> To </font>oLights.Count
+		Set oLight = oLights.Item(I)
+		oLight.ActiveStatus = 1
+	Next
+	...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Going through the lights collection and switch on all.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown the way of going through a collection and how to
+change a parameter like the ActiveStatus.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

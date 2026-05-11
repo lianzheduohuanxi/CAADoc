@@ -1,0 +1,529 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>exportMaterialLibrary.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:		Export a material library to a text file</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Version:		1.0</font>
+<font color="#008000">'   Author:			BMB</font>
+<font color="#008000">'   Languages:		CATScript </font>
+<font color="#008000">'   Locales:		English </font>
+<font color="#008000">'   CATIA Level:	V5R12 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#008000">' Main </font>
+<font color="#0000FF">Sub </font>CATMain()
+
+	<font color="#008000">' Get the file system object</font>
+	Dim oFileSys<font color="#0000FF"> as </font>FileSystem
+	Set oFileSys = CATIA.FileSystem
+
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' Test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox &quot;A material library document must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oCat<font color="#0000FF"> As </font>Document
+	Set oCat = CATIA.ActiveDocument
+
+	<font color="#008000">' Test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oCat.Name, &quot;.CATMaterial&quot;) Then
+		msgbox &quot;A material library document must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	<font color="#008000">' Test if the document has been saved to disc</font>
+	If &quot;&quot;=oCat.Path Then
+		msgbox &quot;A material library saved to disc must be active to execute this macro.&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		Exit Sub
+	End If
+
+	<font color="#008000">' Determine the file separator</font>
+	Dim sSep<font color="#0000FF"> As </font>String
+	sSep = oFileSys.FileSeparator
+
+	<font color="#008000">' Get name of the material library</font>
+	Dim sName<font color="#0000FF"> As </font>String
+	sName = Left(oCat.Name, InStr(oCat.Name, &quot;.CATMaterial&quot;)-1)
+
+	<font color="#008000">' Create folder for outputs</font>
+	Dim sFolderPath<font color="#0000FF"> As </font>String
+	sFolderPath = oCat.Path &amp; sSep &amp; sName &amp; &quot;_Exported&quot;
+	If oFileSys.FolderExists(sFolderPath) Then
+		MsgBox &quot;WARNING: Directory &quot; &amp; sFolderPath &amp; Chr(10) &amp; Chr(9) &amp; &quot;  already exists and will be recreated&quot;, vbOKOnly, &quot;Export Material Library&quot;
+		DeleteFolderRecursive oFileSys, sFolderPath, sSep
+		
+		On Error Resume Next
+		Dim CreatedFolder<font color="#0000FF"> As </font>Folder
+		Set CreatedFolder = oFileSys.CreateFolder(sFolderPath)
+		Set CreatedFolder = NOTHING
+		Dim erreur<font color="#0000FF"> As </font>Integer
+		erreur = Err.Number
+		Err.Clear
+		If (erreur &lt;&gt; 0) Then
+			MsgBox  &quot;ERROR: Impossible to create folder &quot; &amp; sFolderPath &amp; Chr(10)  &amp; Chr(9) &amp; &quot;Folder may be in use&quot;, vbOKOnly, &quot;Export Material Library&quot;
+			Err.Raise erreur
+			Exit Sub
+		End If
+	Else
+	   	oFileSys.CreateFolder(sFolderPath)
+	End If
+	
+	<font color="#008000">' Create the name of the output file</font>
+	Dim sFileOutPath<font color="#0000FF"> As </font>String
+	sFileOutPath = sFolderPath &amp; sSep &amp; sName &amp; &quot;.matlib&quot;
+
+	<font color="#008000">' Create the material library text file</font>
+	Dim oFileOut<font color="#0000FF"> As </font>File    
+	Set oFileOut = oFileSys.CreateFile(sFileOutPath, FALSE)
+	Dim oStream<font color="#0000FF"> As </font>TextStream
+	Set oStream = oFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+	<font color="#008000">' Header of the output file</font>
+	oStream.Write &quot;##############################################################################&quot; &amp; Chr(10)
+	oStream.Write &quot;#                                                                            #&quot; &amp; Chr(10)
+	oStream.Write &quot;#                     MATERIAL LIBRARY TEXT FILE                             #&quot; &amp; Chr(10)
+	oStream.Write &quot;#                                                                            #&quot; &amp; Chr(10)
+	oStream.Write &quot;##############################################################################&quot; &amp; Chr(10)
+	oStream.Write Chr(10) &amp; Chr(10)
+	oStream.Write &quot;LIBRARY=&quot; &amp; sName &amp; Chr(10)
+
+	<font color="#008000">' Create the name of the html output file</font>
+	Dim sHtmlFileOutPath<font color="#0000FF"> As </font>String
+	sHtmlFileOutPath = sFolderPath &amp; sSep &amp; sName &amp; &quot;.html&quot;
+
+	<font color="#008000">' Create the html output file</font>
+	Dim oHtmlFileOut<font color="#0000FF"> As </font>File    
+	Set oHtmlFileOut = oFileSys.CreateFile(sHtmlFileOutPath, FALSE)
+	Dim oHtmlStream<font color="#0000FF"> As </font>TextStream
+	Set oHtmlStream = oHtmlFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+	<font color="#008000">' Header of the html output file</font>
+	HtmlHeader oHtmlStream, &quot;MATERIAL LIBRARY '&quot; &amp; sName &amp; &quot;'&quot;, &quot;This page presents a material library used for CATIA V5.&quot;, sName, 20
+
+	<font color="#008000">' Declarations</font>
+	Dim oFamilies<font color="#0000FF"> As </font>MaterialFamilies
+	Dim oFamily<font color="#0000FF"> As </font>MaterialFamily
+	Dim I<font color="#0000FF"> As </font>Int, J<font color="#0000FF"> As </font>Int, K<font color="#0000FF"> As </font>Int
+	Dim oMaterials<font color="#0000FF"> As </font>Materials
+	Dim oMaterial<font color="#0000FF"> As </font>Material
+	Dim oRenderingMaterial<font color="#0000FF"> As </font>RenderingMaterial
+	Dim oAnalysisMaterial<font color="#0000FF"> As </font>AnalysisMaterial
+	Dim oTab(3)<font color="#0000FF"> As </font>CATSafeArrayVariant
+	Dim iNum<font color="#0000FF"> As </font>Short
+	Dim iNumDouble<font color="#0000FF"> As </font>Double
+	Dim sTemp<font color="#0000FF"> As </font>String
+
+	<font color="#008000">' Create the html family output file</font>
+	Dim oFamilyHtmlFileOut<font color="#0000FF"> As </font>File    
+	Dim oFamilyHtmlStream<font color="#0000FF"> As </font>TextStream
+	Dim oMaterialHtmlFileOut<font color="#0000FF"> As </font>File    
+	Dim oMaterialHtmlStream<font color="#0000FF"> As </font>TextStream
+
+	<font color="#008000">' Init families</font>
+	Set oFamilies = oCat.Families
+
+	<font color="#008000">' Family loop</font>
+	For I = 1<font color="#0000FF"> To </font>oFamilies.Count
+
+		<font color="#008000">' Init family</font>
+		Set oFamily = oFamilies.Item(I)
+		oStream.Write Chr(9) &amp; &quot;FAMILY=&quot; &amp; oFamily.Name &amp; Chr(10)
+		<font color="#008000">' Create image folder</font>
+		oFileSys.CreateFolder(sFolderPath &amp; sSep &amp; oFamily.Name)
+
+		<font color="#008000">' Init materials</font>
+		Set oMaterials = oFamily.Materials
+
+		<font color="#008000">' Html families table</font>
+		If ((I-1) Mod 3) = 0<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;TR&gt;&quot; &amp; Chr(10)
+		End If
+		oHtmlStream.Write &quot;&lt;TD&gt;&quot;
+		If oMaterials.Count &gt;0<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;A href='&quot; &amp; oFamily.Name &amp; &quot;.html'&gt;&lt;IMG src='&quot; &amp; oFamily.Name &amp; sSep &amp; oMaterials.Item(1).Name &amp; &quot;.jpg'&gt;&lt;/A&gt;&quot;
+		End If
+		oHtmlStream.Write &quot;&lt;/TD&gt;&quot; &amp; Chr(10)
+		oHtmlStream.Write &quot;&lt;TD width=200&gt;&lt;A href='&quot; &amp; oFamily.Name &amp; &quot;.html' OnMouseOver=''&gt;&quot; &amp; oFamily.Name &amp; &quot;&lt;/A&gt;&lt;/TD&gt;&quot; &amp; Chr(10)
+		If ((I Mod 3) = 0) Or (I=oFamilies.Count)<font color="#0000FF"> Then</font>
+			oHtmlStream.Write &quot;&lt;/TR&gt;&quot; &amp; Chr(10)
+		End If
+
+		<font color="#008000">' Html family page</font>
+		Set oFamilyHtmlFileOut = oFileSys.CreateFile(sFolderPath &amp; sSep &amp; oFamily.Name &amp; &quot;.html&quot;, FALSE)
+		Set oFamilyHtmlStream = oFamilyHtmlFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+		<font color="#008000">' Header of the family html output file</font>
+		HtmlHeader oFamilyHtmlStream, &quot;FAMILY '&quot; &amp; oFamily.Name &amp; &quot;' OF THE MATERIAL LIBRARY '&quot; &amp; sName &amp; &quot;'&quot;, &quot;This page presents a family of the material library '&lt;A href='&quot; &amp; sName &amp; &quot;.html'&gt;&quot; &amp; sName &amp; &quot;&lt;/A&gt;' used for CATIA V5.&quot;, oFamily.Name, 20
+
+		<font color="#008000">' Material loop</font>
+		For J = 1<font color="#0000FF"> To </font>oMaterials.Count
+
+			<font color="#008000">' Init material</font>
+			Set oMaterial = oMaterials.Item(J)
+			oStream.Write Chr(9) &amp; Chr(9) &amp; &quot;MATERIAL=&quot; &amp; oMaterial.Name &amp; Chr(10)
+ 
+			<font color="#008000">' Save icon</font>
+			oMaterial.GetIcon(sFolderPath &amp; sSep &amp; oFamily.Name &amp; sSep) <font color="#008000">' &amp; oMaterial.Name &amp; &quot;.jpg&quot;)</font>
+
+			<font color="#008000">' Html materials table</font>
+			If ((J-1) Mod 5) = 0<font color="#0000FF"> Then</font>
+				oFamilyHtmlStream.Write &quot;&lt;TR&gt;&quot; &amp; Chr(10)
+			End If
+			oFamilyHtmlStream.Write &quot;&lt;TD width=120 height=120 align='center'&gt;&quot;
+			If oMaterials.Count &gt;0<font color="#0000FF"> Then</font>
+				oFamilyHtmlStream.Write &quot;&lt;A href='&quot; &amp; oFamily.Name &amp; sSep &amp; oMaterial.Name &amp; &quot;.html'&gt;&lt;IMG src='&quot; &amp; oFamily.Name &amp; sSep &amp; oMaterial.Name &amp; &quot;.jpg'&gt;&lt;/A&gt;&lt;BR&gt;&quot;
+			End If
+			oFamilyHtmlStream.Write &quot;&lt;A href='&quot; &amp; oFamily.Name &amp; sSep &amp; oMaterial.Name &amp; &quot;.html'&gt;&quot; &amp; oMaterial.Name &amp; &quot;&lt;/A&gt;&lt;/TD&gt;&quot; &amp; Chr(10)
+			If ((J Mod 5) = 0) Or (I=oMaterials.Count)<font color="#0000FF"> Then</font>
+				oFamilyHtmlStream.Write &quot;&lt;/TR&gt;&quot; &amp; Chr(10)
+			End If
+
+			<font color="#008000">' Html material page</font>
+			Set oMaterialHtmlFileOut = oFileSys.CreateFile(sFolderPath &amp; sSep &amp; oFamily.Name &amp; sSep &amp; oMaterial.Name &amp; &quot;.html&quot;, FALSE)
+			Set oMaterialHtmlStream = oMaterialHtmlFileOut.OpenAsTextStream(&quot;ForWriting&quot;)
+
+			<font color="#008000">' Header of the material html output file</font>
+			HtmlHeader oMaterialHtmlStream, &quot;MATERIAL '&quot; &amp; oMaterial.Name &amp; &quot;' OF THE FAMILY '&quot; &amp; oFamily.Name &amp; &quot;' IN THE MATERIAL LIBRARY '&quot; &amp; sName &amp; &quot;'&quot;, &quot;This page presents a material of the family '&lt;A href='..&quot; &amp; sSep &amp; oFamily.Name &amp; &quot;.html'&gt;&quot; &amp; oFamily.Name &amp; &quot;&lt;/A&gt;' in the material library '&lt;A href='..&quot; &amp; sSep &amp; sName &amp; &quot;.html'&gt;&quot; &amp; sName &amp; &quot;&lt;/A&gt;' used for CATIA V5.&quot;, oMaterial.Name, 0
+
+			<font color="#008000">' Html insert image of the material</font>
+			oMaterialHtmlStream.Write &quot;&lt;TR&gt;&lt;TD rowspan=100 valign='top' width=100&gt;&lt;IMG src='&quot; &amp; oMaterial.Name &amp; &quot;.jpg'&gt;&lt;/TD&gt;&quot; &amp; Chr(10)
+			oMaterialHtmlStream.Write &quot;&lt;TD width=150 bgcolor='white'&gt;&lt;B&gt;PARAMETER&lt;/B&gt;&lt;/TD&gt;&lt;TD bgcolor='white'&gt;&lt;B&gt;VALUE&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&quot; &amp; Chr(10)
+
+ 			<font color="#008000">' Test if rendering data exist</font>
+			If oMaterial.ExistRenderingData = 1<font color="#0000FF"> Then</font>
+				<font color="#008000">' Init RenderingMaterial</font>
+				Set oRenderingMaterial = oMaterial.RenderingMaterial
+				oStream.Write Chr(9) &amp; Chr(9) &amp; Chr(9) &amp; &quot;PROPERTY=Rendering&quot; &amp; Chr(10)
+				HtmlRowMaterial oMaterialHtmlStream, &quot;PROPERTY&quot;, &quot;RENDERING&quot;
+
+				<font color="#008000">' Rendering proporties</font>
+
+				<font color="#008000">' one variable mode</font>
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;MappingType=&quot; &amp; oRenderingMaterial.MappingType &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;AdaptiveCoeff=&quot; &amp; oRenderingMaterial.AdaptiveCoeff &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;PreviewSize=&quot; &amp; oRenderingMaterial.PreviewSize &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;AmbientCoefficient=&quot; &amp; oRenderingMaterial.AmbientCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;DiffuseCoefficient=&quot; &amp; oRenderingMaterial.DiffuseCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SpecularCoefficient=&quot; &amp; oRenderingMaterial.SpecularCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SpecularExponent=&quot; &amp; oRenderingMaterial.SpecularExponent &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TransparencyCoefficient=&quot; &amp; oRenderingMaterial.TransparencyCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;RefractionCoefficient=&quot; &amp; oRenderingMaterial.RefractionCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ReflectivityCoefficient=&quot; &amp; oRenderingMaterial.ReflectivityCoefficient &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;EnvironmentImage=&quot; &amp; oRenderingMaterial.EnvironmentImage &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ReflectionMode=&quot; &amp; oRenderingMaterial.ReflectionMode &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ReflectionHeight=&quot; &amp; oRenderingMaterial.ReflectionHeight &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ReflectionLength=&quot; &amp; oRenderingMaterial.ReflectionLength &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureType=&quot; &amp; oRenderingMaterial.TextureType &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;Bump=&quot; &amp; oRenderingMaterial.Bump &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureImage=&quot; &amp; oRenderingMaterial.TextureImage &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;FlipU=&quot; &amp; oRenderingMaterial.FlipU &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;FlipV=&quot; &amp; oRenderingMaterial.FlipV &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;RepeatU=&quot; &amp; oRenderingMaterial.RepeatU &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;RepeatV=&quot; &amp; oRenderingMaterial.RepeatV &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ScaleU=&quot; &amp; oRenderingMaterial.ScaleU &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ScaleV=&quot; &amp; oRenderingMaterial.ScaleV &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;PositionU=&quot; &amp; oRenderingMaterial.PositionU &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;PositionV=&quot; &amp; oRenderingMaterial.PositionV &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;Orientation=&quot; &amp; oRenderingMaterial.Orientation &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ColorNumber=&quot; &amp; oRenderingMaterial.ColorNumber &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureComplexity=&quot; &amp; oRenderingMaterial.TextureComplexity &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureAmplitude=&quot; &amp; oRenderingMaterial.TextureAmplitude &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureVeinAmplitude=&quot; &amp; oRenderingMaterial.TextureVeinAmplitude &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TexturePerturbation=&quot; &amp; oRenderingMaterial.TexturePerturbation &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureGain=&quot; &amp; oRenderingMaterial.TextureGain &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TextureTurbulence=&quot; &amp; oRenderingMaterial.TextureTurbulence &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ChessboardTileWidth=&quot; &amp; oRenderingMaterial.ChessboardTileWidth &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ChessboardTileHeight=&quot; &amp; oRenderingMaterial.ChessboardTileHeight &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ChessboardOffset=&quot; &amp; oRenderingMaterial.ChessboardOffset &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ChessboardJointWidth=&quot; &amp; oRenderingMaterial.ChessboardJointWidth &amp; Chr(10) 
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;ChessboardJointHeight=&quot; &amp; oRenderingMaterial.ChessboardJointHeight &amp; Chr(10) 
+
+				<font color="#008000">' Html one variable mode</font>
+				HtmlRowMaterial oMaterialHtmlStream, &quot;MappingType&quot;, oRenderingMaterial.MappingType
+				HtmlRowMaterial oMaterialHtmlStream, &quot;AdaptiveCoeff&quot;, oRenderingMaterial.AdaptiveCoeff
+				HtmlRowMaterial oMaterialHtmlStream, &quot;PreviewSize&quot;, oRenderingMaterial.PreviewSize
+				HtmlRowMaterial oMaterialHtmlStream, &quot;AmbientCoefficient&quot;, oRenderingMaterial.AmbientCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, &quot;DiffuseCoefficient&quot;, oRenderingMaterial.DiffuseCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, &quot;SpecularCoefficient&quot;, oRenderingMaterial.SpecularCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, &quot;SpecularExponent&quot;, oRenderingMaterial.SpecularExponent
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TransparencyCoefficient&quot;, oRenderingMaterial.TransparencyCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, &quot;RefractionCoefficient&quot;, oRenderingMaterial.RefractionCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, &quot;EnvironmentImage&quot;, oRenderingMaterial.EnvironmentImage
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ReflectionMode&quot;, oRenderingMaterial.ReflectionMode
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ReflectionHeight&quot;, oRenderingMaterial.ReflectionHeight
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ReflectionLength&quot;, oRenderingMaterial.ReflectionLength
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureType&quot;, oRenderingMaterial.TextureType
+				HtmlRowMaterial oMaterialHtmlStream, &quot;Bump&quot;, oRenderingMaterial.Bump
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureImage&quot;, oRenderingMaterial.TextureImage
+				HtmlRowMaterial oMaterialHtmlStream, &quot;FlipU&quot;, oRenderingMaterial.FlipU
+				HtmlRowMaterial oMaterialHtmlStream, &quot;FlipV&quot;, oRenderingMaterial.FlipV
+				HtmlRowMaterial oMaterialHtmlStream, &quot;RepeatU&quot;, oRenderingMaterial.RepeatU
+				HtmlRowMaterial oMaterialHtmlStream, &quot;RepeatV&quot;, oRenderingMaterial.RepeatV
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ScaleU&quot;, oRenderingMaterial.ScaleU
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ScaleV&quot;, oRenderingMaterial.ScaleV
+				HtmlRowMaterial oMaterialHtmlStream, &quot;PositionU&quot;, oRenderingMaterial.PositionU
+				HtmlRowMaterial oMaterialHtmlStream, &quot;PositionV&quot;, oRenderingMaterial.PositionV
+				HtmlRowMaterial oMaterialHtmlStream, &quot;Orientation&quot;, oRenderingMaterial.Orientation
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ColorNumber&quot;, oRenderingMaterial.ColorNumber
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureComplexity&quot;, oRenderingMaterial.TextureComplexity
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureAmplitude&quot;, oRenderingMaterial.TextureAmplitude
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureVeinAmplitude&quot;, oRenderingMaterial.TextureVeinAmplitude
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TexturePerturbation&quot;, oRenderingMaterial.TexturePerturbation
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureGain&quot;, oRenderingMaterial.TextureGain
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TextureTurbulence&quot;, oRenderingMaterial.TextureTurbulence
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ChessboardTileWidth&quot;, oRenderingMaterial.ChessboardTileWidth
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ChessboardTileHeight&quot;, oRenderingMaterial.ChessboardTileHeight
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ChessboardOffset&quot;, oRenderingMaterial.ChessboardOffset
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ChessboardJointWidth&quot;, oRenderingMaterial.ChessboardJointWidth
+				HtmlRowMaterial oMaterialHtmlStream, &quot;ChessboardJointHeight&quot;, oRenderingMaterial.ChessboardJointHeight
+
+				<font color="#008000">' array mode</font>
+				oRenderingMaterial.GetAmbientColor(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;AmbientColor=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;AmbientColor&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.GetDiffuseColor(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;DiffuseColor=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;DiffuseColor&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.GetSpecularColor(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SpecularColor=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;SpecularColor&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.GetTransparencyColor(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;TransparencyColor=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;TransparencyColor&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.Get3DTextureScale(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;3DTextureScale=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;3DTextureScale&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.Get3DTexturePosition(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;3DTexturePosition=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;3DTexturePosition&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+				oRenderingMaterial.Get3DTextureOrientation(oTab)
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;3DTextureOrientation=&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; Chr(10) 
+				HtmlRowMaterial oMaterialHtmlStream, &quot;3DTextureOrientation&quot;, oTab(0) &amp; &quot; / &quot; &amp; oTab(1) &amp; &quot; / &quot; &amp; oTab(2)
+
+				<font color="#008000">' index mode</font>
+				sTemp = &quot;&quot;
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;3DTextureColor=&quot;
+				For K = 0<font color="#0000FF"> To </font>oRenderingMaterial.ColorNumber-1
+					oRenderingMaterial.Get3DTextureColor K, oTab
+					oStream.Write &quot;:&quot; &amp; K &amp; &quot;:&quot; &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2)
+					sTemp = sTemp &amp; oTab(0) &amp; &quot;/&quot; &amp; oTab(1) &amp; &quot;/&quot; &amp; oTab(2) &amp; &quot;&lt;BR&gt;&quot;
+				Next
+				HtmlRowMaterial oMaterialHtmlStream, &quot;3DTextureColor&quot;, sTemp
+				oStream.Write Chr(10) 
+
+				sTemp = &quot;&quot;
+				oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;3DTextureColorCoefficient=&quot;
+				For K = 0<font color="#0000FF"> To </font>oRenderingMaterial.ColorNumber-1
+					oRenderingMaterial.Get3DTextureColorCoefficient K, iNumDouble
+					oStream.Write &quot;:&quot; &amp; K &amp; &quot;:&quot; &amp; iNumDouble
+					sTemp = sTemp &amp; iNumDouble &amp; &quot; &quot;
+				Next
+				HtmlRowMaterial oMaterialHtmlStream, &quot;3DTextureColorCoefficient&quot;, sTemp
+				oStream.Write Chr(10) 
+			End If
+
+ 			<font color="#008000">' Test if analysis data exist</font>
+			If oMaterial.ExistAnalysisData = 1<font color="#0000FF"> Then</font>
+				<font color="#008000">' Init AnalysisMaterial</font>
+				Set oAnalysisMaterial = oMaterial.AnalysisMaterial
+
+				<font color="#008000">' Analysis proporties</font>
+
+				<font color="#008000">' Isotropic Material</font>
+				If oAnalysisMaterial.GetType = &quot;MATERIAL_ISOTROPIC&quot; Then
+					oStream.Write Chr(9) &amp; Chr(9) &amp; Chr(9) &amp; &quot;PROPERTY=AnalysisIsotropic&quot; &amp; Chr(10)
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMDensity=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMDensity&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMThermalExpansion=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMYoungModulus=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMYoungModulus&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMPoissonRatio=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMPoissonRatio&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMShearModulus=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMShearModulus&quot;) &amp; Chr(10) 
+
+					<font color="#008000">' Html Isotropic Material</font>
+					HtmlRowMaterial oMaterialHtmlStream, &quot;PROPERTY&quot;, &quot;ANALYSIS_ISOTROPIC&quot;
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMDensity&quot;, oAnalysisMaterial.GetValue(&quot;SAMDensity&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMThermalExpansion&quot;, oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMYoungModulus&quot;, oAnalysisMaterial.GetValue(&quot;SAMYoungModulus&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMPoissonRatio&quot;, oAnalysisMaterial.GetValue(&quot;SAMPoissonRatio&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMShearModulus&quot;, oAnalysisMaterial.GetValue(&quot;SAMShearModulus&quot;)
+
+				End If
+
+				<font color="#008000">' Orthotropic Material</font>
+				If oAnalysisMaterial.GetType = &quot;MATERIAL_ORTHOTROPIC&quot; Then
+					oStream.Write Chr(9) &amp; Chr(9) &amp; Chr(9) &amp; &quot;PROPERTY=AnalysisOrthotropic&quot; &amp; Chr(10)
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMDensity=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMDensity&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMYoungModulus_11=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMYoungModulus_11&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMYoungModulus_22=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMYoungModulus_22&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMPoissonRatio_12=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMPoissonRatio_12&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMShearModulus_12=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMShearModulus_12&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMShearModulus_1Z=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMShearModulus_1Z&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMShearModulus_2Z=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMShearModulus_2Z&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMTensileStressLimit_X=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMTensileStressLimit_X&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMTensileStressLimit_Y=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMTensileStressLimit_Y&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMCompressiveStressLimit_X=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMCompressiveStressLimit_X&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMCompressiveStressLimit_Y=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMCompressiveStressLimit_Y&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMThermalExpansion_X=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion_X&quot;) &amp; Chr(10) 
+					oStream.Write Chr(9)&amp;Chr(9)&amp;Chr(9)&amp;Chr(9)&amp; &quot;SAMThermalExpansion_Y=&quot; &amp; oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion_Y&quot;) &amp; Chr(10) 
+
+					<font color="#008000">' Html Orthotropic Material</font>
+					HtmlRowMaterial oMaterialHtmlStream, &quot;PROPERTY&quot;, &quot;ANALYSIS_ORTHOTROPIC&quot;
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMDensity&quot;, oAnalysisMaterial.GetValue(&quot;SAMDensity&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMYoungModulus_11&quot;, oAnalysisMaterial.GetValue(&quot;SAMYoungModulus_11&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMYoungModulus_22&quot;, oAnalysisMaterial.GetValue(&quot;SAMYoungModulus_22&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMPoissonRatio_12&quot;, oAnalysisMaterial.GetValue(&quot;SAMPoissonRatio_12&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMShearModulus_12&quot;, oAnalysisMaterial.GetValue(&quot;SAMShearModulus_12&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMShearModulus_1Z&quot;, oAnalysisMaterial.GetValue(&quot;SAMShearModulus_1Z&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMShearModulus_2Z&quot;, oAnalysisMaterial.GetValue(&quot;SAMShearModulus_2Z&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMTensileStressLimit_X&quot;, oAnalysisMaterial.GetValue(&quot;SAMTensileStressLimit_X&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMTensileStressLimit_Y&quot;, oAnalysisMaterial.GetValue(&quot;SAMTensileStressLimit_Y&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMCompressiveStressLimit_X&quot;, oAnalysisMaterial.GetValue(&quot;SAMCompressiveStressLimit_X&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMCompressiveStressLimit_Y&quot;, oAnalysisMaterial.GetValue(&quot;SAMCompressiveStressLimit_Y&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMThermalExpansion_X&quot;, oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion_X&quot;)
+					HtmlRowMaterial oMaterialHtmlStream, &quot;SAMThermalExpansion_Y&quot;, oAnalysisMaterial.GetValue(&quot;SAMThermalExpansion_Y&quot;)
+				End If
+
+			End If
+
+			<font color="#008000">' End of material html file</font>
+			HtmlEnd oMaterialHtmlStream
+
+			<font color="#008000">' Close html family stream</font>
+			oMaterialHtmlStream.Close
+
+		Next
+
+		<font color="#008000">' End of family html file</font>
+		HtmlEnd oFamilyHtmlStream
+
+		<font color="#008000">' Close html family stream</font>
+		oFamilyHtmlStream.Close
+	Next
+
+	<font color="#008000">' End of html file</font>
+	HtmlEnd oHtmlStream
+
+	<font color="#008000">' Close streams</font>
+	oStream.Close
+	oHtmlStream.Close
+
+	<font color="#008000">' End message</font>
+	msgbox &quot;Operation succeed.&quot; &amp; Chr(10) &amp; &quot;The location of the created files is :&quot; &amp; Chr(10) &amp; Chr(10) &amp; sFolderPath &amp; sSep, vbOKOnly, &quot;Export Material Library&quot;	
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'************************************************************************************</font>
+<font color="#008000">'	Subs and Functions code</font>
+<font color="#008000">'************************************************************************************</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	DeleteFolderRecursive</font>
+<font color="#008000">'	Delete a folder and all the files or folders in it</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Sub DeleteFolderRecursive(oFileSys, sPath, sSep)
+
+	<font color="#008000">' Get folder</font>
+	Dim oFolder<font color="#0000FF"> As </font>Folder
+	Set oFolder = oFileSys.GetFolder(sPath)
+
+	<font color="#008000">' Get files collection</font>
+	Dim oFiles<font color="#0000FF"> As </font>Files
+	Set oFiles = oFolder.Files
+
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int
+
+	<font color="#008000">' Delete all files</font>
+	For I = 1<font color="#0000FF"> To </font>oFiles.count
+		oFileSys.DeleteFile(sPath &amp; sSep &amp; oFiles.Item(1).Name)
+	Next
+
+	<font color="#008000">' Get subfolders collection</font>
+	Dim oSubFolders<font color="#0000FF"> As </font>CATIAFolders
+	Set oSubFolders = oFolder.SubFolders
+
+	<font color="#008000">' Delete all folders</font>
+	For I = 1<font color="#0000FF"> To </font>oSubFolders.count
+		DeleteFolderRecursive oFileSys, sPath &amp; sSep &amp; oSubFolders.Item(1).Name, sSep
+	Next
+
+	<font color="#008000">' Delete folder</font>
+	oFileSys.DeleteFolder(sPath)
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	HtmlHeader</font>
+<font color="#008000">'	Write the header of html files in the specified stream</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Sub HtmlHeader(oStream, sTitle, sComment, sName, iCellSpacing)
+
+	oStream.Write &quot;&lt;HTML&gt;&lt;HEAD&gt;&lt;TITLE&gt;&quot; &amp; sTitle &amp; &quot;&lt;/TITLE&gt;&lt;/HEAD&gt;&quot; &amp; Chr(10)
+	oStream.Write &quot;&lt;BODY bgcolor='wheat' alink='red' link='navy' vlink='blueviolet'&gt;&quot; &amp; Chr(10)
+	oStream.Write &quot;&lt;CENTER&gt;&quot; &amp; sComment &amp; &quot;&lt;/CENTER&gt;&lt;HR&gt;&quot; &amp; Chr(10)
+	oStream.Write &quot;&lt;TABLE border=0 align='center' cellspacing=&quot; &amp; iCellSpacing &amp; &quot;&gt;&lt;TR&gt;&lt;TD colspan=6 align='center' bgcolor='navy'&gt;&lt;DIV style='font-size:30px;color:#FFFFFF'&gt;&lt;B&gt;&quot; &amp; UCase(sName) &amp; &quot;&lt;/B&gt;&lt;/DIV&gt;&lt;/TD&gt;&lt;/TR&gt;&quot; &amp; Chr(10)
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	HtmlEnd</font>
+<font color="#008000">'	Write the end of html files in the specified stream</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+Public Sub HtmlEnd(oStream)
+
+	oStream.Write &quot;&lt;/TABLE&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;CENTER&gt;DASSAULT SYSTEMES - CATIA V5 - Copyright 2003&lt;/CENTER&gt;&quot; &amp; Chr(10)
+	oStream.Write &quot;&lt;/BODY&gt;&lt;/HTML&gt;&quot; &amp; Chr(10)
+
+<font color="#0000FF">End Sub</font>
+
+
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#008000">'	HtmlRowMaterial</font>
+<font color="#008000">'	Write the material row of html files</font>
+<font color="#008000">'------------------------------------------------------------------------------------</font>
+<font color="#0000FF">Dim </font>iBool<font color="#0000FF"> As </font>Int
+iBool = 0
+Public Sub HtmlRowMaterial(oStream, sParam, sValue)
+
+	oStream.Write &quot;&lt;TR&gt;&lt;TD width=250&quot;
+
+	If iBool<font color="#0000FF"> Then</font>
+		oStream.Write &quot; bgcolor='bisque'&quot;
+	End If
+	
+	oStream.Write &quot;&gt;&quot;
+	If sParam = &quot;PROPERTY&quot; Then
+		oStream.Write &quot;&lt;B&gt;&quot; &amp; sValue &amp; &quot;&lt;/B&gt;&quot;
+	Else
+		oStream.Write sParam
+	End If
+	oStream.Write &quot;&lt;/TD&gt;&lt;TD&quot;
+
+	If iBool<font color="#0000FF"> Then</font>
+		oStream.Write &quot; bgcolor='bisque'&quot;
+		iBool = 0
+	Else
+		iBool = 1
+	End If
+
+	oStream.Write &quot;&gt;&quot;
+	If sParam &lt;&gt; &quot;PROPERTY&quot; Then
+		oStream.Write &quot;&quot; &amp; sValue
+	End If
+	oStream.Write &quot;&lt;/TD&gt;&lt;/TR&gt;&quot; &amp; Chr(10)
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

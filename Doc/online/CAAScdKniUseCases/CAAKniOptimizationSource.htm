@@ -1,0 +1,126 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAKniOptimization.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Dim </font>Language<font color="#0000FF"> as </font>String
+Language="VBScript"
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:    This macro shows how to create and run an optimization feature.</font>
+<font color="#008000">'               It shows the follwing steps.</font>
+<font color="#008000">'               - Creates two parameters and a formula</font>
+<font color="#008000">'               - Creates and sets up the optimization feature</font>
+<font color="#008000">'               - Runs the optimization.	</font>
+<font color="#008000">'</font>
+<font color="#008000">'   The optimization problem consists in finding the value of x that minimizes fx.</font>
+<font color="#008000">'   knowing that fx = x*x + 8.</font>
+<font color="#008000">'   The objective is fx and the free parameter is x.</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Assumption: This macro is intended to be run on a newly created part document.	</font>
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English (United States)</font>
+<font color="#008000">'   CATIA Level:  V5R7 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' Set the CATIA popup file alerts to False</font>
+<font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+CATIA.DisplayFileAlerts = False
+
+<font color="#008000">' Retrieve your active document - CATIA is your application </font>
+<font color="#008000">' You get the active document by using the ActiveDocument property</font>
+<font color="#008000">' on your application object</font>
+<font color="#0000FF">Dim </font>oActiveDoc<font color="#0000FF"> As </font>Document 
+<font color="#0000FF">Set </font>oActiveDoc = CATIA.ActiveDocument 
+ 
+<font color="#008000">' Check whether the document is a CATPart</font>
+<font color="#0000FF">If </font>(InStr(oActiveDoc.Name,".CATPart")) &lt;&gt; 0  Then 
+
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document relations.</font>
+        <font color="#008000">' The statements below are only valid when the active</font>
+        <font color="#008000">' document is a CATPart</font>
+<font color="#0000FF">        Dim </font>oRelations<font color="#0000FF"> As </font>Relations
+<font color="#0000FF">        Set </font>oRelations = oActiveDoc.Part.Relations
+
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document parameters.</font>
+<font color="#0000FF">        Dim </font>oParameters<font color="#0000FF"> As </font>Parameters 
+<font color="#0000FF">        Set </font>oParameters = oActiveDoc.Part.Parameters        
+
+        <font color="#008000">' Create Real type parameter as objective to be optimized. </font>
+<font color="#0000FF">        Dim </font>oFx<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">        Set </font>oFx = oParameters.CreateReal("Real1", 199 )
+        oFx.Rename "fx"
+
+        <font color="#008000">' Create Real type parameter as free parameter.</font>
+<font color="#0000FF">        Dim </font>oX<font color="#0000FF"> As </font>Parameter
+<font color="#0000FF">        Set </font>oX = oParameters.CreateReal("Real2", 299 )
+        oX.Rename "x" 
+
+        <font color="#008000">' Create a formula to be optimized.</font>
+<font color="#0000FF">        Dim </font>oFormula<font color="#0000FF"> As </font>Formula
+<font color="#0000FF">        Set </font>oFormula = oRelations.CreateFormula(                     _
+                                   "Objective",                      _
+                                   "This is the objective function.",_
+                                   oFx,                              _
+                                   "x*x + 8.0") 
+
+        <font color="#008000">' Retrieve the collection object which contains</font>
+        <font color="#008000">' all the document optimizations.</font>
+<font color="#0000FF">        Dim </font>oOptimizations<font color="#0000FF"> As </font>Optimizations
+<font color="#0000FF">        Set </font>oOptimizations = oRelations.Optimizations
+        
+        <font color="#008000">' Create the optimization feature.</font>
+<font color="#0000FF">        Dim </font>oOptimization1<font color="#0000FF"> As </font>Optimization
+<font color="#0000FF">        Set </font>oOptimization1 = oOptimizations.CreateOptimization()
+        oOptimization1.OptimizationType = catMinimum
+        oOptimization1.AlgorithmType = catSimulatedAnnealing
+
+
+        <font color="#008000">'Set up the optimization feature attributes.</font>
+        oOptimization1.MaxEvalsNb = 300
+        oOptimization1.UseMaxTime = True
+        oOptimization1.MaxTime = 2 <font color="#008000">'2 minutes.</font>
+        oOptimization1.UseMaxEvalsWoImprovement = True
+        oOptimization1.MaxEvalsWoImprovement = 20
+
+
+        <font color="#008000">'Set up the free parameters of the optimization and their steps (this is optional).</font>
+	<font color="#008000">'The step helps the algorithm to get an order of magnitude of the changes of values</font>
+	<font color="#008000">'acceptable for each free parameters.</font>
+<font color="#0000FF">        Dim </font>oFreeParameters<font color="#0000FF"> As </font>FreeParameters
+<font color="#0000FF">        Set </font>oFreeParameters = oOptimization1.FreeParameters
+        oFreeParameters.AddFreeParameter(oX)
+	
+        <font color="#008000">'The following is optional, but usually reducing the range of input parameters helps to</font>
+        <font color="#008000">'solve the problem faster. In this case there only is one free parameter but optimizations</font>
+        <font color="#008000">' can be run with multiple free parameters.</font>
+<font color="#0000FF">        Dim </font>p<font color="#0000FF"> As </font>FreeParameter
+<font color="#0000FF">        For </font>Each p<font color="#0000FF"> in </font>oFreeParameters
+                p.Step = 0.1
+                p.InfRange = -1000
+                p.SupRange = 2000
+<font color="#0000FF">        Next</font>
+
+        <font color="#008000">'Set the parameter that must be optimized.</font>
+        oOptimization1.ObjectiveParameter = oFx 
+        msgbox "Before optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
+
+        <font color="#008000">'Running the optimization without the progress bar dialog box (False).</font>
+        oOptimization1.Run False
+
+        msgbox "After optimisation :" & oFx.Name & " =  " & oFx.Value & " and " & oX.Name & " = " & oX.Value
+			       
+        <font color="#008000">' Update the document</font>
+        CATIA.ActiveDocument.Part.Update 
+
+
+
+else 
+   MsgBox "The active document must be a CATPart"
+<font color="#0000FF">End If</font>
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>

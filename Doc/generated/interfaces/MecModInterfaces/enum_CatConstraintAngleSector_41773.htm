@@ -1,0 +1,131 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Enumeration CatConstraintAngleSector</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CatConstraintAngleSector"; } 
+	function getCurrentType() { 
+ 	return "enum"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>CatConstraintAngleSector <font size=-1>(Enumeration)</font></h1>
+<pre>
+enum <b>CatConstraintAngleSector</b> {
+  catCstAngleSector0,
+  catCstAngleSector1,
+  catCstAngleSector2,
+  catCstAngleSector3
+}
+</pre>
+<b><i> Special constraint property for angle constraints.</i></b><br>
+
+ <br>
+ It only applies to the constraints of type Angle or PlanarAngle.
+ <br>		
+ The geometric elements of an angle constraint (e.g. : 2 lines or 2 planes)
+ divide the sketch or the space in 4 regions which are called angular 
+ sectors, numbered from 0 to 3.
+ By default, the constraint is created in the sector number 0.
+ One angular sector corresponds exactly to particular values 
+ of the Dimension.Value, the Side and the Orientation.
+ When changing the angular sector, the Dimension.Value, Side and Orientation
+ are also modified.  
+      
+  1  / 0
+ ---/--- 
+  2/   3
+
+ By default, the constraint is created in the sector number 0.
+ One angle sector corresponds exactly to particular values 
+ of the Dimension.Value, the Side and the Orientation.
+ When changing the angle sector, the Dimension.Value, 
+ Side and Orientation are also modified.  
+ 
+ <dl>
+  <dt> <b>Values:</b>
+  <dd>
+    <dl>
+    <dt><tt> AngleSector=0</tt>
+   <dd>    The default sector of a constraint.      
+        Dimension.Value = angle 
+        Orientation     = catCstOrientSame
+        Side            = catCstSidePositive
+ </dd>
+    <dt><tt> AngleSector=1</tt>
+   <dd>        Dimension.Value = angle-180 if angle>180
+                         abs(angle)+180 otherwise
+        Orientation     = catCstOrientOpposite
+        Side            = catCstSidePositive
+ </dd>
+    <dt><tt> AngleSector=2</tt>
+   <dd>        Dimension.Value = abs(540-angle) if angle>180
+                         180-fabs(angle) otherwise
+        Orientation     = catCstOrientOpposite
+        Side            = catCstSideNegative
+ </dd>
+    <dt><tt> AngleSector=3</tt>
+   <dd>        Dimension.Value = 360-abs(angle)
+        Orientation     = catCstOrientSame
+        Side            = catCstSideNegative
+</dd>
+</dl>
+</dl>
+<hr>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

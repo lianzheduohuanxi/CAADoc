@@ -1,0 +1,694 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Connecting Electrical Objects</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>Equipment &amp; Systems Engineering</h1>
+		</td>
+		<td valign="top">
+		<h2>Electrical Library</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Connecting Electrical Objects</h3>
+		<em>How to connect an electrical single connector with another electrical 
+		single connector, a back shell or a mounting equipment</em></td>
+	</tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article discusses the ElecDeviceItf use case. This use case explains 
+		how to connect an electrical single connector with another electrical single 
+		connector or back shell or mounting equipment, or how to connect an electrical 
+		mounting equipment with an electrical equipment.</p>
+		<ul>
+			<li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+			<li><b><a href="#UseCase">The CAAElecConnectDevices Use Case</a></b>
+			<ul>
+				<li><a href="#What">What does CAAElecConnectDevices do</a></li>
+				<li><a href="#How">How to Launch CAAElecConnectDevices</a></li>
+				<li><a href="#Where">Where to Find the CAAElecDevices code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step"><b>Step-by-Step</b></a></li>
+			<li><b><a href="#InShort">In Short</a></b></li>
+			<li><b><a href="#history">History</a></b></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming with 
+CATIA ELB Interfaces. Its main intent is to allow you to connect an electrical single 
+connector with another electrical single connector or back shell or mounting equipment, 
+or how to connect an electrical mounting equipment with an electrical equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAElecConnectDevices Use Case</h3>
+<p>CAAElecConnectDevices is a use case of the CAAElecDeviceItf.edu framework that 
+illustrates the CATIA ELB interfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAElecConnectDevice Do</h4>
+<p>The goal of CAAElecConnectDevice use case is to show how to connect electrical 
+single connector with a back shell or with another single connector or with a mounting 
+equipment, or how to connect an equipment with a mounting equipment. To do that, 
+the methods of the interfaces which define the behaviour of electrical devices are 
+used, such as <i>CATIElbSingleConnector </i>for example<i>.</i></p>
+<p align="center">
+<img border="0" src="images/CAAElb1.jpg" width="657" height="589"></p>
+<p>Above is a CATIA image of the electrical model which is used in our sample.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAElecConnectDevices</h4>
+<p>To launch CAAElecConnectDevices, you will need to set up the build time environment, 
+then compile CAAElecConnectDevices along with its prerequisites, set up the run 
+time environment, and then execute the sample.</p>
+<p>To launch the use case, execute the following command:</p>
+<pre>mkrun -c &quot;CAAElecConnectDevices input.CATProduct output.CATProduct&quot;</pre>
+<ul>
+	<li><b>input.CATProduct</b> - the path to the existing external CATProduct to 
+	be browsed. You may reference the supplied CATProduct document called &quot;MAIN_PRODUCT.CATProduct&quot; 
+	found in:
+	<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic\CAAElecDeviceConnection</pre>
+	<p>where <b>InstallRootDirectory</b> is the root directory of your CAA V5 installation, 
+	and <b>OS</b> is a directory the name of which depends on the operating system. 
+	Refer to [<a href="#References">1</a>] to get the list of the currently supported 
+	operating systems and their associated directory names.</p>
+	</li>
+	<li><b>output.CATProduct</b> - the path of the file to save in the main document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAElecConnectDevices Code</h4>
+<p>The CAAElecConnectDevices sample is made of a single class named CAAElecConnectDevices 
+located in the CAAElecConnectDevices.m module of the CAAElecDeviceItf.edu framework:</p>
+<table>
+	<tr>
+		<td>Windows</td>
+		<td><code>InstallRootDirectory\CAAElecDeviceItf.edu\CAAElecConnectDevices.m\</code></td>
+	</tr>
+	<tr>
+		<td>Unix</td>
+		<td><code>InstallRootDirectory/CAAElecDeviceItf.edu/CAAElecConnectDevices.m/</code></td>
+	</tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p>This sample deals with the following classes:</p>
+<table>
+	<tr>
+		<td><i>IUnknown</i></td>
+		<td>Base Class for the References and Instances</td>
+	</tr>
+	<tr>
+		<td><i>CATSessionServices</i></td>
+		<td>Class for managing the session</td>
+	</tr>
+	<tr>
+		<td><i>CATDocument</i></td>
+		<td>Class for the document base class</td>
+	</tr>
+	<tr>
+		<td><i>CATDocumentServices</i></td>
+		<td>Class for managing document in the session</td>
+	</tr>
+	<tr>
+		<td><i>CATIDocRoots</i></td>
+		<td>Class for browsing root object in document</td>
+	</tr>
+	<tr>
+		<td><i>CATIProduct</i></td>
+		<td>Interface dedicated to define product behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIEleDocServices</i></td>
+		<td>Interface dedicated electrical environment initialisation</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbSingleConnector</i></td>
+		<td>Interface for defining single connector behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbConnectorCnctPt</i></td>
+		<td>Interface for defining electrical connector connection point behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbBackShell</i></td>
+		<td>Interface for defining electrical back shell behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbBackShellCnctPt</i></td>
+		<td>Interface for defining electrical back shell connection point behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbEquipment</i></td>
+		<td>Interface for defining electrical equipment behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbMountingEquipment</i></td>
+		<td>Interface for defining electrical mounting equipment behaviour</td>
+	</tr>
+	<tr>
+		<td><i>CATIElbCavity</i></td>
+		<td>Interface for defining electrical cavity behaviour</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We will now first comment the Electrical environment and it’s components creation 
+by looking at the code of the CAAElecDevice. There are 17 logical steps in CAAElecDevice:</p>
+<table width="100%">
+	<tr>
+		<td><b>#</b></td>
+		<td><b>Step</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step1">1</a></td>
+		<td valign="top">Creating the session and opening an existing CATProduct</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step2">2</a></td>
+		<td valign="top">Retrieving the root product of the CATProduct document</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step3">3</a></td>
+		<td valign="top">Initializing Electrical Environment</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step4">4</a></td>
+		<td valign="top">Retrieving all electrical single connector and back shell 
+		under the root product</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step5">5</a></td>
+		<td valign="top">Selecting the single connector which part number is &quot;First_Single_Connector&quot;.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step6">6</a></td>
+		<td valign="top">Retrieving the list of back shell connector point defined 
+		on the first single connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step7">7</a></td>
+		<td valign="top">Connecting the first single connector with the back shell 
+		which part number is &quot;Second_Back_Shell&quot;.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step8">8</a></td>
+		<td valign="top">Selecting the single connector which part number is &quot;Second_Single_Connector&quot;.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step10">9</a></td>
+		<td valign="top">Retrieving the list of back shell connection point defined 
+		on the second single connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step11">10</a></td>
+		<td valign="top">Connecting the second single connector with the back shell 
+		which part number is &quot;First_Back_Shell&quot;.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step12bis">11</a></td>
+		<td valign="top">Retrieving the list of connector connection point defined 
+		on the first single connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step13">12</a></td>
+		<td valign="top">Connecting the first single connector with the second single 
+		connector.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step13">13</a></td>
+		<td valign="top">Retrieving all equipments under the root product</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step13">14</a></td>
+		<td valign="top">Retrieving all mounting equipments under the root product</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step11">15</a></td>
+		<td valign="top">Connecting the third single connector with the mounting 
+		equipment which part number is &quot;First_Mounting_Equipment&quot;.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step11">16</a></td>
+		<td valign="top">Connecting the second mounting equipment with the first 
+		equipment</td>
+	</tr>
+	<tr>
+		<td valign="top"><a href="#Step18">17</a></td>
+		<td valign="top">Epilog</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the session and opening an existing CATProduct</h4>
+<p>We need a <i>CATSession</i> pointer to create the Session.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATSession *pSession = NULL;
+char *sessionName = &quot;CAA_ElbConnectDevice_Session&quot;;
+HRESULT rc = ::Create_Session(sessionName,pSession);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>We need a CATDocument pointer to open the document.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATDocument *pDoc = NULL;</pre>
+		<pre>rc = CATDocumentServices::OpenDocument(argv[1], pDoc);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Once the current session has been created, the CATProduct document can be loaded 
+into the session . pDoc is a pointer to this document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step2"></a>Retrieving the root product of the CATProduct document</h4>
+<p>We need a <i>CATProduct</i> pointer to retrieve the root product.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>....
+  CATIProduct* piRootProduct = NULL;  
+  CATIDocRoots * pDocRoots = NULL;
+  rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,(void**) &amp;pDocRoots);
+...
+  CATListValCATBaseUnknown_var* pListRootProduct = pDocRoots-&gt;GiveDocRoots();
+...
+  
+  if ( pListRootProduct &amp;&amp; pListRootProduct-&gt;Size() )
+  {  
+    rc = (*pListRootProduct)[1]-&gt;QueryInterface(IID_CATIProduct,(void**) &amp;piRootProduct );
+  }
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Initializing Electrical Environment</h4>
+<p>We initialize the Document by using CATIEleDocServices interface pointer and 
+the method Initialize() on it.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  CATIEleDocServices * piElecDocServices = NULL;  
+  rc = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**) &amp;piElecDocServices );
+  if ( SUCCEEDED(rc) &amp;&amp; piElecDocServices )
+  {
+    rc = piElecDocServices-&gt;Initialize();
+  }
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Initializing the electrical environment is mandatory to enable access to electrical 
+object or electrical attributes.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step4"></a>Retrieving all electrical single connector and back shell 
+under the root product</h4>
+<p>We need a generic method GetAllChildren() of interface CATIProduct to retrieve 
+all single connector and back shell defined under the root product.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  CATListValCATBaseUnknown_var* pListElbSingleConnector = NULL;
+  pListElbSingleConnector = piRootProduct-&gt;GetAllChildren(CATIElbSingleConnector::ClassName());
+    
+  int NumberOfSingleConnector = 0;
+  if ( (NULL!=pListElbSingleConnector) &amp;&amp; pListElbSingleConnector-&gt;Size() ) 
+  {NumberOfSingleConnector = pListElbSingleConnector-&gt;Size();
+... 
+  CATListValCATBaseUnknown_var* pListElbBackShell = NULL;
+  pListElbBackShell = piRootProduct-&gt;GetAllChildren(CATIElbBackShell::ClassName());
+  piRootProduct -&gt; Release();
+  piRootProduct = NULL ;
+  
+  int NumberOfBackShell = 0;
+  if ( (NULL!=pListElbBackShell) &amp;&amp; pListElbBackShell-&gt;Size() ) 
+  {
+    NumberOfBackShell = pListElbBackShell-&gt;Size();
+  }
+...	</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Selecting the single connector which part number is &quot;First_Single_Connector&quot;</h4>
+<p>We select the first single connector defined under the root product using the
+<i>CATIElbSingleConnector</i> interface pointer.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbSingleConnector * pFirst_SingleConnector = NULL;
+rc = (*pListElbSingleConnector)[2]-&gt;QueryInterface(IID_CATIElbSingleConnector,(void**) &amp;pFirst_SingleConnector);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Retrieving the list of back shell connection point defined 
+on the first single connector</h4>
+<p>We use method ListBackShellCnctPt() of <i>CATIElb</i>SingleConnector interface 
+to find the list of back shell defined on the first single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATListValCATBaseUnknown_var * pListBackShellCnctPt = NULL;
+rc = pFirst_SingleConnector-&gt;ListBackShellCnctPts(pListBackShellCnctPt);
+
+int SizeBackShellCnctPt = pListBackShellCnctPt ? pListBackShellCnctPt-&gt;Size() :0;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb2.jpg" width="600" height="287"></p>
+<p>Above is a CATIA image of connectors defined on the first single connector</p>
+<p align="center">
+<img border="0" src="images/CAAElb5.gif" width="628" height="200"></p>
+<p>Above is a CATIA image of the second back shell.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Connecting the first single connector with the back shell 
+which part number is &quot;Second_Back_Shell&quot;</h4>
+<p>We need the method ConnectBackShell() of the interface <i>CATIElbSingleConnector</i> 
+to connect the back shell with the first single connector using a back shell connection 
+point.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  CATIElbBackShellCnctPt_var hElbBackShellCnctPt(pElbBackShellCnctPt);
+  pElbBackShellCnctPt-&gt;Release();
+  pElbBackShellCnctPt = NULL;
+  int  StatusOfGeometricalConstraint= 0;
+  rc = pFirst_SingleConnector-&gt;ConnectBackShell(hElbBackShellCnctPt,hSecond_BackShell,  StatusOfGeometricalConstraint);
+... </pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb3.jpg" width="671" height="397"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Selecting the single connector which part number is &quot;Second_Single_Connector&quot;</h4>
+<p>We select the second single connector defined under the root product using the
+<i>CATIElbSingleConnector</i> interface pointer.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbSingleConnector * pSecond_SingleConnector = NULL;
+rc = (*pListElbSingleConnector)[1]-&gt;QueryInterface(IID_CATIElbSingleConnector,(void**) &amp;pSecond_SingleConnector);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>Retrieving the list of back shell connection point defined 
+on the second single connector</h4>
+<p>The list of back shell connection point of the second single connector is found 
+using the same method used for the first single connector..</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+rc = pSecond_SingleConnector-&gt;ListBackShellCnctPts(pListBackShellCnctPt);
+SizeBackShellCnctPt = pListBackShellCnctPt ? pListBackShellCnctPt-&gt;Size() :0;
+...
+rc = (*pListBackShellCnctPt)[1] -&gt; QueryInterface(IID_CATIElbBackShellCnctPt ,(void**) &amp; pElbBackShellCnctPt);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb4.jpg" width="534" height="194"></p>
+<p>Above is a CATIA image of second single connector.</p>
+<p align="center">
+<img border="0" src="images/CAAElb4.gif" width="646" height="314"></p>
+<p>Above is a CATIA image of the first back shell.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step11"></a>Connecting the second single connector with the back shell 
+which part number is &quot;First_Back_Shell&quot;</h4>
+<p>We need the method ConnectBackShell() of <i>CATIElbSingleConnector</i> interface 
+to connect the first single connector with the back shell.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbBackShell_var hFirst_BackShell ( (*pListElbBackShell)[1]) ;
+rc = pSecond_SingleConnector-&gt;ConnectBackShell(hElbBackShellCnctPt ,hFirst_BackShell,  StatusOfGeometricalConstraint);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb6.jpg" width="775" height="300"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step12bis"></a>Retrieving the list of connector connection point defined 
+on the first single connector</h4>
+<p>We need the method ListConnectorsCnctPts of <i>CATIElbSingleConnector</i> interface 
+to find the list of connectors connection point defined on the single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATListValCATBaseUnknown_var * pListConnectorCnctPt = NULL;
+rc = pFirst_SingleConnector-&gt;ListConnectorCnctPts(pListConnectorCnctPt);
+int SizeListConnectorCnctPt = pListConnectorCnctPt  ? pListConnectorCnctPt -&gt;Size() : 0;
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb7.jpg" width="463" height="234"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step13"></a>Connecting the first single connector with the second single 
+connector</h4>
+<p>We need the method ConnectSingleConnector() of <i>CATIElbSingleConnector</i> 
+interface to connect the first single connector with the second single connector.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+CATIElbSingleConnector_var hSecond_SingleConnector(pSecond_SingleConnector);
+rc = pFirst_SingleConnector-&gt;ConnectSingleConnector(hElecConnectorCnctPt,hSecond_SingleConnector,StatusOfGeometricalConstraint);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb8.jpg" width="794" height="399"></p>
+<p>Above is a CATIA image of the connection between first and second single connector</p>
+<p>Above is a CATIA image of the tree of connectivity of connector shell. We can 
+see its list of cavity.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step4"></a>Retrieving all equipments under the root product</h4>
+<p>We use the generic method GetAllChildren() of interface CATIProduct to retrieve 
+all equipments defined under the root product. pFirst_Equipment is a pointer on 
+the equipment called &quot;First_Equipment&quot;.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  CATListValCATBaseUnknown_var* pListElbEquipment = NULL;
+  pListElbEquipment = piRootProduct-&gt;GetAllChildren(CATIElbEquipment::ClassName());
+
+  // selecting the first equipment : &quot;First_Equipment&quot;
+  // ------------------------------------------------------------
+  CATIElbEquipment * pFirst_Equipment= NULL;
+  rc = (*pListElbEquipment)[1]-&gt;QueryInterface(IID_CATIElbEquipment,(void**) &amp;pFirst_Equipment);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb14.jpg" width="619" height="534"></p>
+<p>Above is a CATIA image of the equipment &quot;First_Equipment&quot;.</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Retrieving all mounting equipments under the root product</h4>
+<p>We use the generic method GetAllChildren() of interface CATIProduct to retrieve 
+all mounting equipments defined under the root product.</p>
+<p>pFirst_MountingEquipment is a pointer on the mounting equipment called &quot;First_Mounting_Equipment&quot;.</p>
+<p>pSecond_MountingEquipment is a pointer on the mounting equipment called &quot;Second_Mounting_Equipment&quot;.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+  CATListValCATBaseUnknown_var* pListElbMountingEquipment = NULL;
+  pListElbMountingEquipment = piRootProduct-&gt;GetAllChildren(CATIElbMountingEquipment::ClassName());
+
+  // selecting the first equipment : &quot;First_Mounting_Equipment&quot;
+  // ------------------------------------------------------------
+  CATIElbEquipment * pFirst_MountingEquipment= NULL;
+  rc = (*pListElbMountingEquipment)[1]-&gt;QueryInterface(IID_CATIElbMountingEquipment,(void**) &amp;pFirst_MountingEquipment);
+
+  // selecting the mounting equipment : &quot;Second_Mounting_Equipment&quot;
+  // -------------------------------------------------------------
+  CATIElbMountingEquipment * pSecond_MountingEquipment= NULL;
+  rc = (*pListElbMountingEquipment)[2]-&gt;QueryInterface(IID_CATIElbMountingEquipment,(void**) &amp;pSecond_MountingEquipment);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb15.jpg" width="534" height="459"></p>
+<p>Above is a CATIA image of the mounting equipment &quot;Second_Mounting_Equipment&quot; 
+.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step8"></a>Connecting the third single connector with the first mounting 
+equipment</h4>
+<p>The method AddDevice of CATIElbMountingEquipment is used to link the third single 
+connector with the first mounting equipment :</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+   // search a cavity on the mounting equipment :
+   CATListValCATBaseUnknown_var * pListCavities = NULL;
+   rc = pFirst_MountingEquipment-&gt;ListCavities(pListCavities);
+
+   CATIElbCavity * pElecCavity = NULL;
+   rc = (*pListCavities)[1]-&gt;QueryInterface(IID_CATIElbCavity,(void **) &amp; pElecCavity) ;
+
+   // search a CATBaseUnknown on the single connector :
+
+   CATBaseUnknown * pUnkOfConnector = NULL;
+   rc = pThird_SingleConnector-&gt;QueryInterface(IID_CATBaseUnknown,(void**) &amp;pUnkOfConnector);
+
+   //
+   // connecting the first mounting equipment and the third single connector
+
+   rc = pFirst_MountingEquipment-&gt;AddDevice(pElecCavity,pUnkOfConnector,StatusOfGeometricalConstraint);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb17.jpg" width="701" height="608"></p>
+<p>Above is a CATIA image showing the link between the third single connector and 
+the first mounting equipment</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step8"></a>Connecting the second mounting equipment and the first equipment</h4>
+<p>The method AddDevice of CATIElbMountingEquipment is used to link the second mounting 
+equipment with the first equipment :</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>...
+   // search a cavity on the mounting equipment :
+   CATListValCATBaseUnknown_var * pListCavities = NULL;
+   rc = pSecond_MountingEquipment-&gt;ListCavities(pListCavities);
+
+   rc = (*pListCavities)[1]-&gt;QueryInterface(IID_CATIElbCavity,(void **) &amp; pElecCavity) ;
+
+   // search a CATBaseUnknown on the single connector :
+
+   CATBaseUnknown * pUnkOfEquipment = NULL;
+   rc = pFirst_Equipment-&gt;QueryInterface(IID_CATBaseUnknown,(void**) &amp;pUnkOfEquipment);
+
+   //
+   // connecting the second mounting equipment and the first equipment :
+
+   rc = pSecond_MountingEquipment-&gt;AddDevice(pElecCavity,pUnkOfConnector,StatusOfGeometricalConstraint);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="center">
+<img border="0" src="images/CAAElb18.jpg" width="1056" height="833"></p>
+<p>Above is a CATIA image showing the link between the second mounting equipment 
+and the first equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step18"></a>Epilog</h4>
+<p>Removing document from session and closing the session.</p>
+<table class="code">
+	<tr>
+		<td>
+		<pre>  CATBoolean iSavePointedIfNecessary = TRUE; 
+  rc = CATDocumentServices::SaveAs ( *pDoc,argv[2],&quot;.CATProduct&quot;,iSavePointedIfNecessary );
+...
+rc = CATDocumentServices::Remove(*pDoc);
+rc = ::Delete_Session(sessionName);
+...</pre>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to connect electrical devices such as 
+single connector with a single connector, a back shell or mounting equipment, and 
+also the way to connect an equipment with a mounting equipment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a CAA V5 Use Case</a></td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="history"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [March 2003]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

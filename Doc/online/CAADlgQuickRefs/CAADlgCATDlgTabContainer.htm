@@ -1,0 +1,177 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgTabContainer</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgTabContainer</h3>
+      <em>Groups object properties consistently in a single place</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgBox.htm">CATDlgBox</a>
+        |
+        +---CATDlgTabContainer</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Tab Container</caption>
+  <tr>
+    <td><img src="images/ListTabContainer.jpg" alt="ListTabContainer.jpg (9112 bytes)" width="247" height="122"></td>
+    <td>The tab container is a dialog box used to show, and possibly to modify
+      the properties of an object, or of an application. Its is also known as a
+      property sheet. It contains tab pages, also known as property pages. It
+      enables the end user to work with many properties gathered in a single
+      place, rather than to display several dialog boxes accessed each from a
+      different menu. Each property page contains various controls to set values
+      or options for the property. When the end user clicks on a tab,&nbsp; the
+      corresponding property page comes to the foreground and hides the others.</td>
+  </tr>
+</table>
+<p>Use tab containers whenever you propose properties of objects or applications
+that must be presented consistently, even if they can be accessed from different
+commands or menus.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgTabSelectNotification</td>
+    <td><code>GetTabSelectNotification</code></td>
+    <td>Whenever a tab is selected.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>Each tab container is an instance of the CATDlgTabContainer class. It
+contains tab pages which are instances of the CATDlgTabPage class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Constructing a Tab Container</h4>
+<p>You should construct a tab container as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>pTabContainer  = new CATDlgTabContainer (iParent, iName);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Managing the Tab Pages</h4>
+<p>You can manage the tab pages with the following methods:
+<ul>
+  <li>get the number of pages using the GetPageCount method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfPages = pTabContainer-&gt;GetPageCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get the selected page index using the GetSelectedPage method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int SelectedPageIndex = pTabContainer-&gt;GetSelectedPage();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get a pointer to the selected page using the GetSelectedPagePtr method:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDlgTabPage * pSelectedPage;
+pSelectedPage = pTabContainer-&gt;GetSelectedPagePtr();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>set the selected page using either its index or a pointer:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>using its index</em></td>
+        <td class="code">
+          <pre>int PageToSelectIndex = 3;
+pTabContainer-&gt;SetSelectedPage(PageToSelectIndex);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>using a pointer</em></td>
+        <td class="code">
+          <pre>CATDlgTabPage * pPageToSelect = ...
+pTabContainer-&gt;SetSelectedPage(pPageToSelect);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4>Setting a Callback on an Editor</h4>
+<p>Set a callback on an editor to be informed whenever the end user modify the
+text as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  pTabContainer,                              // tab container 
+  pTabContainer-&gt;<code>GetTabSelectNotification</code>(),  // notification
+  (CATCommand)&amp;Container::MethodToExecute,    // method to execute 
+  CATCommandClientData iUsefulData);          // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

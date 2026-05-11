@@ -1,0 +1,455 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding a Toolbar to the Product Structure Workbench</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+    <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>Adding a Toolbar to the Product Structure Workbench</h3>
+    <p><em>Implementing the CATIPrsConfigurationAddin Interface</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article presents the CAAPuiPrsConfigAddin use case which illustrates 
+    how to create a toolbar that is active in the Product Structure workbench.</p>
+    <ul>
+      <li><strong><a href="#What You Will Learn With This Use Case">What You Will 
+        Learn With This Use Case</a></strong></li>
+      <li><strong><a href="#The CAAPstContextualProduct Use Case">The CAAPuiPrsConfigAddin 
+        Use Case</a></strong>
+        <ul>
+          <li><a href="#What Does CAAPstContextualProduct Do">What Does CAAPuiPrsConfigAddin 
+            Do</a></li>
+          <li><a href="#How to Launch CAAPstContextualProduct">How to Launch CAAPuiPrsConfigAddin</a></li>
+          <li><a href="#Where to Find the CAAPstContextualProduct Code">Where to 
+            Find the CAAPuiPrsConfigAddin Code</a></li>
+        </ul>
+      </li>
+      <li><strong><a href="#Step-by-Step">Step-by-Step</a></strong></li>
+      <li><strong><a href="#InShort">In Short</a></strong></li>
+      <li><strong><a href="#References">References</a></strong></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="What You Will Learn With This Use Case"><font size="3">What You Will 
+Learn With This Use Case</font></a></h3>
+<p>By implementing the <i>CATIPrsConfigurationAddin</i>, a toolbar with its commands 
+can be made active in the Product Structure workshop. For a toolbar to be active 
+in any Product Structure workshop, please refer to article <a href="#[6]">[6]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The CAAPstContextualProduct Use Case"><font size="3">The CAAPuiPrsConfigAddin 
+Use Case</font></a></h3>
+<p>CAAPuiPrsConfigAddin is a use case of the CAAProductStructureUI.edu framework 
+that illustrates the ProductStructureUI framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What Does CAAPstContextualProduct Do">What Does CAAPuiPrsConfigAddin 
+Do</a></h4>
+<p>The goal of CAAPuiPrsConfigAddin is to demonstrate how to implement the <i>CATIPrsConfigurationAddin</i> 
+interface. It consists of the following parts:</p>
+<ul>
+  <li>Code to create the toolbar and the layout of the commands</li>
+  <li>Code to be executed when the command is selected</li>
+  <li>Resource definition for the visual aspects of the interface</li>
+</ul>
+<p>
+<img border="0" src="images/CAAPuiPrsConfigAddin00.jpg" width="614" height="400"></p>
+<p>Our toolbar appears on top of the CATIA frame and contains a single command represented 
+by the
+<img border="0" src="images/CAAPuiPrsConfigAddin_I.gif" width="22" height="22"> 
+icon.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How to Launch CAAPstContextualProduct">How to Launch CAAPuiPrsConfigAddin</a></h4>
+<p>To launch CAAPuiPrsConfigAddin:</p>
+<ol>
+  <li>Set the current directory to <i>InstallRoot</i><tt>/CAAProductStructureUI.edu</tt></li>
+  <li>Set up&nbsp; the build time environment and build the <tt>CAAPuiPrsConfigAddin.m</tt> 
+    module (see reference <a href="#[1]">[1]</a>)</li>
+  <li>Edit the&nbsp; <tt>CNext/code/dictionary/CAAProductStructureUI.edu.dico
+    </tt>dictionary by uncommenting the line containing <tt>CATIPrsConfigurationAddin</tt>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre># CAAPuiPrsConfigAddin use case
+#CAAPuiPrsConfigAddin CATIPrsConfigurationAddin libCAAPuiPrsConfigAddin</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Install the dictionary and other resource files by executing <tt>mkCreateRuntimeView</tt></li>
+  <li>Start CATIA by executing <tt>mkrun</tt></li>
+  <li>Display the toolbar named &quot;Toolbar 2&quot; if necessary:<br>
+    <br>
+    <img border="0" src="images/CAAPuiPrsConfigAddin01.jpg" width="612" height="702"><br>
+    <br>
+&nbsp;</li>
+  <li>Click on the command and a dialog box will appear:<br>
+    <br>
+    <img border="0" src="images/CAAPuiPrsConfigAddin03.jpg" width="612" height="399"><br>
+&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where to Find the CAAPstContextualProduct Code">Where to Find the CAAPuiPrsConfigAddin 
+Code</a></h4>
+<p>CAAPuiPrsConfigAddin code is located in the CAAPuiPrsConfigAddin.m module of 
+the CAAProductStructureUI.edu framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><b><a name="Step-by-Step"><font size="3">Step-by-Step</font></a></b></h3>
+<p>There are three parts in <i>CAAPuiPrsConfigAddin</i>:</p>
+<ol>
+  <li><a href="#Toolbar Creation and Layout">Toolbar Creation and Layout</a></li>
+  <li><a href="#Command Implementation">Command Implementation</a></li>
+  <li><a href="#User Interface">User Interface</a></li>
+</ol>
+<p>We will now detail each of those sections:</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Toolbar Creation and Layout">Toolbar Creation and Layout</a></h4>
+<p>The implementation of <i>CATIPrsConfigurationAddin</i> is provided by our <tt>
+CAAPuiPrsConfigAddin</tt> class. Its purpose is to create the toolbar and to do 
+the layout the commands on it. Only two methods need be defined:
+<a href="#CreateToolbars"><tt>CreateToolbars</tt></a> and
+<a href="#CreateCommands"><tt>CreateCommands</tt></a>.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+class CAAPuiPrsConfigAddin: public CATBaseUnknown {
+
+CATDeclareClass;
+
+public:
+
+        // Standard constructors and destructors for an implementation class
+        // -----------------------------------------------------------------
+        CAAPuiPrsConfigAddin();
+        virtual ~CAAPuiPrsConfigAddin();
+
+        /**
+         * @see ApplicationFrame.CATIWorkbenchAddin#CreateToolbars
+         */
+        CATCmdContainer * CreateToolbars();
+
+        /**
+         * @see ApplicationFrame.CATIWorkbenchAddin#CreateCommands
+         */
+        void CreateCommands();
+
+private:
+        // The copy constructor and the equal operator must not be implemented
+        // -------------------------------------------------------------------
+        CAAPuiPrsConfigAddin(CAAPuiPrsConfigAddin &amp;);
+        CAAPuiPrsConfigAddin&amp; operator=(CAAPuiPrsConfigAddin&amp;);
+
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The purpose of the <tt>CreateToolbars</tt> method is to create all the command 
+headers of our toolbar. In this case a toolbar named <tt>CAAToolbar</tt> with a 
+command named <tt>CAAPuiPrsConfigAddinCmd1</tt> is created.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+CATCmdContainer * CAAPuiPrsConfigAddin::CreateToolbars ()<a name="CreateToolbars"></a>
+{
+        CAAPuiPrsConfigAddinTRACE(&quot;&gt;&gt; CAAPuiPrsConfigAddin::CreateToolbars()&quot;);
+
+        // Declaration of toolbar for Addin
+        NewAccess(CATCmdContainer, pToolbarContainer,
+                  CAAPuiPrsConfigAddinToolbar);
+        NewAccess(CATCmdStarter, pCommandStarter,
+                  CAAPuiPrsConfigAddinStarter);
+
+        // Arranging the command within the toolbar
+        SetAccessCommand(pCommandStarter, &quot;CAAPuiPrsConfigAddinCmd1&quot;);
+        SetAccessChild(pToolbarContainer, pCommandStarter);
+
+        int visibleFlag = 1;
+        AddToolbarView (pToolbarContainer, visibleFlag, Top);
+
+        CAAPuiPrsConfigAddinTRACE(&quot;&lt;&lt; CAAPuiPrsConfigAddin::CreateToolbars()&quot;);
+        return pToolbarContainer;
+}
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The purpose of the <tt>CreateCommands</tt> method is to create all the command 
+headers of our toolbar. Instead of using <font face="Arial">the </font><tt>MacDeclareHeader</tt> 
+macro to define the <tt>CAAPuiPrsConfigAddinHeader<font face="Arial"> </font>
+</tt>command header class <font face="Arial">(</font>like in the
+<a href="CAAPuiPRDWorkshopConfig.htm">Creating a Product Workbench</a> and
+<a href="CAAPuiPRDWorkshopAddin.htm">Adding a Toolbar to all Product Workbenches</a> 
+use cases), it is defined &quot;manually&quot; with extra code to handle ENOVIA LCA integration. 
+Please refer to article <a href="#[7]">[7]</a> for more information.</p>
+<p>Here a command named <tt>CAAPuiPrsConfigAddinCmd1</tt> is created. It is located 
+in the <tt>CAAPuiPrsConfigAddin</tt> shared library and its class is <tt>CAAPuiPrsConfigAddinCmd</tt>. 
+The ShowProduct identifier will be used to locate resources related to this command.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+
+#include &quot;CAAPuiPrsConfigAddinHeader.h&quot;
+
+...
+
+void CAAPuiPrsConfigAddin::CreateCommands ()<a name="CreateCommands"></a>
+{
+        CAAPuiPrsConfigAddinTRACE(&quot;&gt;&gt; CAAPuiPrsConfigAddin::CreateCommands()&quot;);
+
+        // Instantiates the command header for the command
+        new CAAPuiPrsConfigAddinHeader
+                (&quot;CAAPuiPrsConfigAddinCmd1&quot;, // command name
+                 &quot;CAAPuiPrsConfigAddin&quot;,     // lib name
+                 &quot;CAAPuiPrsConfigAddinCmd&quot;,  // class name
+                 (void*) NULL);
+
+        CAAPuiPrsConfigAddinTRACE(&quot;&lt;&lt; CAAPuiPrsConfigAddin::CreateCommands()&quot;);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Command Implementation">Command Implementation</a></h4>
+<p>The command that gets executed must be of a class named <tt>CAAPuiPrsConfigAddinCmd</tt> 
+as specified by <a href="#CreateCommands"><tt>CAAPuiPrsConfigAddin::CreateCommands</tt></a>. 
+This class must also derives from the <tt>CATCommand</tt> class. The only method 
+we need to override is the <tt>Activate</tt> method.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+class CAAPuiPrsConfigAddinCmd: public CATCommand {
+
+public:
+
+        CAAPuiPrsConfigAddinCmd();
+        virtual ~CAAPuiPrsConfigAddinCmd();
+
+        /**
+         * Activates our command.
+         * @param iFromClient 
+         * The command that requests to activate the current one.
+         * @param iEvtDat
+         * The notification sent.
+         */
+        virtual CATStatusChangeRC Activate(CATCommand * iFromClient,
+                                           CATNotification * iEvtDat);
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the <tt>Activate</tt> method, we just get the current window and display its 
+title in a dialog box</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+CATStatusChangeRC CAAPuiPrsConfigAddinCmd::Activate(CATCommand *iFromClient, 
+CATNotification *iEvtDat)
+{
+        CAAPuiPrsConfigAddinTRACE (&quot;&gt;&gt; CAAPuiPrsConfigAddinCmd::Activate&quot;);
+
+        CATApplicationFrame *pApplication = CATApplicationFrame::GetFrame(); 
+        if (NULL != pApplication) { 
+                CATDlgWindow * pMainWindow = pApplication-&gt;GetMainWindow();
+                CATDlgNotify *pNotifyDlg = new CATDlgNotify
+                        (pMainWindow, &quot;CAAPuiPrsConfigAddin&quot;, CATDlgNfyOK);
+                if (NULL != pNotifyDlg) {
+                        pNotifyDlg-&gt;DisplayBlocked
+                                (&quot;Hello World!&quot;,
+                                 &quot;CAAPuiPrsConfigAddin UseCase&quot;);
+                        pNotifyDlg-&gt;RequestDelayedDestruction(); 
+                }
+        }
+        RequestDelayedDestruction();
+
+        CAAPuiPrsConfigAddinTRACE (&quot;&lt;&lt; CAAPuiPrsConfigAddinCmd::Activate&quot;);
+        return CATStatusChangeRCCompleted;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Now that we have completed the code implementation, we need to take 
+care of the user interface with the help of resource files.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="User Interface">User Interface</a></h4>
+<p>There are two visible objects: the toolbar and its command.</p>
+<p>The title of the toolbar named <tt>CAAPuiPrsConfigAddinToolbar</tt> is defined 
+by the <tt>CAAPuiPrsConfigAddin.CATNls</tt> which can be found in <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+directory.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>CAAPuiPrsConfigAddinToolbar.Title = &quot;Toolbar 2&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The resources of the <tt>CAAPuiPrsConfigAddinCmd1</tt> are defined 
+by three files:</p>
+<ol>
+  <li>
+    <p align="left"><tt>CAAPuiPrsConfigAddinHeader.CATNls</tt> (located in the
+    <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+    directory):</p>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>CAAPuiPrsConfigAddinHeader.CAAPuiPrsConfigAddinCmd1.Title = &quot;cmd2&quot;;
+CAAPuiPrsConfigAddinHeader.CAAPuiPrsConfigAddinCmd1.Help = &quot;cmd2 long help text&quot;;
+CAAPuiPrsConfigAddinHeader.CAAPuiPrsConfigAddinCmd1.ShortHelp = &quot;cmd2 info&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="left"><br>
+    These texts correspond to the screen tip, the documentation line and the command 
+    prompt input:<br>
+    <img border="0" src="images/CAAPuiPrsConfigAddin02.jpg" width="612" height="399"><br>
+&nbsp;</p>
+  </li>
+  <li>
+    <p align="left"><tt>CAAPuiPrsConfigAddinHeader.CATRsc</tt> (located in the
+    <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+    directory) defines the bitmap name for the command icon:</p>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>CAAPuiPrsConfigAddinHeader.CAAPuiPrsConfigAddinCmd1.Icon.Normal=&quot;CAAPuiPrsConfigAddin_I&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="left">&nbsp;</p>
+  </li>
+  <li>
+    <p align="left"><tt>CAAPuiPrsConfigAddin_I.gif</tt> (located in the <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/graphic/icons/normal</tt> 
+    directory) contains the bitmap the command icon:
+    <img border="0" src="images/CAAPuiPrsConfigAddin_I.gif" width="22" height="22"></p>
+    <p align="left">&nbsp;</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="InShort"><font size="3">In Short</font></a></h3>
+<p>This use case has demonstrated how to create a toolbar with a command:</p>
+<ul>
+  <li>Implement the <i>CATIPrsConfigurationAddin</i> interface to create a toolbar 
+    and layout the commands</li>
+  <li>Derive from CATCommand to implement the command action</li>
+  <li>Define resource files for the user interface</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"><font size="3">References</font></a></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="[1]">[1]</a></td>
+    <td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[2]">[2]</a></td>
+    <td>
+    <a href="../CAAAfrTechArticles/CAAAfrOverview.htm">
+    Application Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[3]">[3]</a></td>
+    <td>
+    <a href="../CAADegTechArticles/CAADegCommandModel.htm">
+    The CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[4]">[4]</a></td>
+    <td>
+    <a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+    Creating an Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[5]">[5]</a></td>
+    <td><a href="CAAPuiPRDWorkshopConfig.htm">Creating a Product Workbench</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[6]">[6]</a></td>
+    <td><a href="CAAPuiPRDWorkshopAddin.htm">Adding a Toolbar to all Product Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[7]">[7]</a></td>
+    <td>
+    <a href="#" onclick="javascript:linkUrl('../../CAAPstTechArticles/CAAPstSafeSave.htm');return false">
+    Integration with ENOVIA LCA</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"><font size="3">History</font></a></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><b>Version: </b><strong>1.2</strong><b> [Aug 2004]</b></td>
+    <td valign="top"><b>Document revised</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Version: <strong>1.1</strong> [Feb 2004]</b></td>
+    <td valign="top"><b>&quot;Integration with ENOVIA LCA&quot; reference added</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Version: </b><strong>1</strong><b> [Oct 2003]</b></td>
+    <td valign="top"><b>Document created</b></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

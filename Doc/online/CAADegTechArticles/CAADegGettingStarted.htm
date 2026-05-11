@@ -1,0 +1,854 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Getting Started with State Dialog Commands</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Getting Started with State Dialog Commands</h3>
+      <em>A first simple but complete example of a state dialog command</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows, using an example, how to design and program a state
+      dialog command, and how to make it available. The example is a command
+      that creates lines in the 3D space, named the Line command.
+      <ul>
+        <li><a href="#200000"><strong>Designing the Line Command</strong></a>
+          <ul>
+            <li><a href="#210000">Dialog Specification</a></li>
+            <li><a href="#220000">Dialog Description</a></li>
+          </ul>
+        </li>
+        <li><a href="#300000"><strong>Creating the Line Command</strong></a>
+          <ul>
+            <li><a href="#310000">Declaring the State Dialog Command Class</a></li>
+            <li><a href="#320000">Managing the Command Lifecycle</a></li>
+            <li><a href="#330000">Defining End User Input</a></li>
+            <li><a href="#340000">Linking States and Providing Behavior</a></li>
+            <li><a href="#350000">Providing Condition and Action Methods</a></li>
+            <li><a href="#360000">Providing the Command Resources</a></li>
+          </ul>
+        </li>
+        <li><a href="#400000"><strong>Integrating the Line Command into the
+          Application</strong></a>
+          <ul>
+            <li><a href="#410000">Creating the Line Command Creation Function</a></li>
+            <li><a href="#420000">Creating the Line Command Header</a></li>
+            <li><a href="#430000">Providing the Line Command Header Resources</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Designing the Line Command</h3>
+<p>The Line command is a <em>state dialog command</em>. It is an interactive
+command running in the application frame and that creates line geometrical
+elements. A state dialog command is a state machine that uses states to let the
+end user input the requested parameters, and transitions between states to
+process these input parameters and progress in the statechart.</p>
+<p>The Line command allows the end user to create a line by providing two
+points. To simplify the example, it does not feature any undo capability.</p>
+<p>Designing a dialog command follows these steps:
+<ul>
+  <li>Dialog specification</li>
+  <li>Dialog description.</li>
+</ul>
+<p>Once the state dialog command is designed, you can create a class and the
+methods to provide the command behavior. Then, you can integrate it into the
+application to make it available for its targeted document type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000"></a>Dialog Specification</h4>
+<p>The Line command creates a line when the end user has provided two points.
+This simple task may be described by the following dialog between the end user
+and the Line command:
+<ul>
+  <li>Line command: &quot;Ready to create a Line. Indicate the start
+    point&quot;.</li>
+  <li>End user (indicating point coordinates with the mouse): &quot;This is the
+    start point&quot;.</li>
+  <li>Line command: &quot;Now indicate the end point&quot;.</li>
+  <li>End user (indicating point coordinates with the mouse): &quot;This is the
+    end point&quot;.</li>
+</ul>
+<p>And the Line command creates the line using the two points input using the
+mouse indication.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>Dialog Description</h4>
+<p><em>Statechart diagrams</em> allow you to describe a state dialog command as
+a state machine in a graphical format. The Unified Modeling Language (UML) is
+used for such diagrams.</p>
+<p><img src="images/GettingStartedStateChart.gif" alt="GettingStartedStateChart.gif (9621 bytes)" width="569" height="271"></p>
+<p>The dialog flow starts with the initial state, which is a pseudo state that
+has no incoming transition. The command is never in the initial state that
+automatically skips to the first state. This first state is dedicated to the
+start point input and is shown in the box using its <a href="#330000">state
+identifier</a>. A prompt linked to the first state can invite the end user to
+indicate this start point. The transition between the first state and the second
+state is triggered as soon as the end user indicates a valid point. This happens
+when the expected event is detected (the mouse left key is pressed), and when
+the guard condition is satisfied. The transition action, that is create a
+temporary point, is executed. A prompt linked to the second state can then
+invite the end user to indicate the end point. The transition to the final state
+is triggered as soon as the end user indicates a valid point. This creates the
+line.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Creating the Line Command</h3>
+<p>The Line command creation is described as a step-by-step process to follow
+the statechart diagram. Some parts of the code are not shown, such as the line
+creation in the document. The complete code can be found in the CAADegGeoCommands.m module of the
+CAADialogEngine.edu framework.</p>
+<p>The Line command is created as the CAADegCreateLineCmd class deriving from the
+CATStateCommand class that is provided as a template for all state dialog
+commands. The CAADegCreateLineCmd class creation follows the following steps:
+<ul>
+  <li><a href="#310000">Declaring the State Dialog Command Class</a>: This step
+    includes the declaration of the objects and methods needed by the Line
+    command</li>
+  <li><a href="#320000">Managing the Command Lifecycle</a>: This is necessary to
+    decide what should happen when the command completes, and when another
+    command is selected while the Line command is not completed</li>
+  <li><a href="#330000">Defining End User Input</a>: The dialog receives the
+    point coordinates by means of CATIndicationAgent class instances created and
+    associated with the states in the overridden CATStateCommand <code>BuildGraph</code>
+    method</li>
+  <li><a href="#340000">Linking States and Providing Behavior</a>: This is done
+    using transitions created in the <code>BuildGraph</code> method</li>
+  <li><a href="#350000">Providing Condition and Action Methods</a>: Condition
+    methods check the indicated point, and action methods create and display a
+    temporary point for the first transition, and the 3D line for the second
+    one.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Declaring the State Dialog Command Class</h4>
+<p>This shows how to create the class header file.&nbsp;The main to do is:
+<ul>
+  <li><strong>Subclassing</strong>: any dialog command is modeled as a class. A
+    state dialog command must derive from the CATStateCommand class.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>class CAADegCreateLineCmd : public CATStateCommand</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Resources</strong>: they are located in the file CAADegCreateLineCmd.CATNls you will store in your framework's
+    CNext\resources\msgcatalog directory. Resources of a state dialog command
+    are the prompts you can associate with each state, and the undo prompts. The
+    base class must be set as the second parameter.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Lifecycle</strong>: the command lifecycle is managed using its
+    constructor and destructor, and using the methods <code>Activate</code>, <code>Desactivate</code>,
+    and <code>Cancel</code>. <code>Activate</code> is called when the Line
+    command takes the focus, <code>Desactivate</code> is called when a shared
+    command takes the focus, and thus leaves the Line command on the command
+    stack in its current state, and <code>Cancel</code> is called when the
+    command completes, or when an exclusive command takes the focus and requests
+    the Line command to be deleted.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
+CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);
+CATStatusChangeRC Cancel     (CATCommand * iCmd, CATNotification * iNotif);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Statechart</strong>: the statechart is implemented by overriding
+    the <code>BuildGraph</code> method.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>virtual void BuildGraph();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Dialog agent</strong>: a single dialog agent to both detect the
+    end user click and return the location of the point clicked is enough, since
+    it is valued in the first state, and then can be recycled during the first
+    transition to be reused as a new one for the second state. The
+    CATIndicationAgent class is appropriate for such a dialog agent. It is
+    declared as a data member to be used in different methods.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATIndicationAgent * _daIndication;</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Guard conditions</strong>: they are provided as methods of the CAADegCreateLineCmd class.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBoolean  CheckStartPoint(void * iUsefulData);
+CATBoolean  CheckEndPoint(void * iUsefulData);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Actions</strong>: they are also provided as methods of the CAADegCreateLineCmd class. <code>CreatePoint</code> is for the first transition
+    to create a temporary point, and <code>CreateLine</code> is for the second
+    transition to create the line.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBoolean  CreatePoint(void * iUsefulData);
+CATBoolean  CreateLine(void * iUsefulData);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>The complete header file is provided below.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATStateCommand.h&quot;
+#include &quot;CATMathPoint.h&quot;
+
+class CATISO;
+class CATIndicationAgent;
+class CAAISysPoint;
+
+class CAADegCreateLineCmd : public CATStateCommand
+{
+  CATDeclareClass;
+  CmdDeclareResource(CAADegCreateLineCmd,CATStateCommand);
+  public :
+    CAADegCreateLineCmd();
+    virtual ~CAADegCreateLineCmd();
+
+    CATStatusChangeRC Activate   (CATCommand * iCmd, CATNotification * iNotif);
+    CATStatusChangeRC Desactivate(CATCommand * iCmd, CATNotification * iNotif);
+    CATStatusChangeRC Cancel     (CATCommand * iCmd, CATNotification * iNotif);
+
+    virtual void BuildGraph();
+
+    CATBoolean  CheckStartPoint(void * iUsefulData);
+    CATBoolean  CheckEndPoint(void * iUsefulData);
+    CATBoolean  CreatePoint(void * iUsefulData);
+    CATBoolean  CreateLine(void * iUsefulData);
+    
+  private :
+      void NewLine(const CATMathPoint &amp;iPoint); // To actually create the line
+      
+  private :
+    CATIndicationAgent  * _daIndication;
+    CAAISysPoint        * _FirstPoint;        // Temporary point
+    CATISO              * _ISO;               // To display the temporary point
+    CATBaseUnknown      * _RootObject;        // Used by NewLine and condition methods
+    CATBaseUnknown      * _RootContainer;     // Used by NewLine
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The methods and data members that are not mentioned above are used by the
+dialog agent, or used to show the temporary point created, or finally to
+actually create the line and update the document with the new line.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>Managing the Command Lifecycle</h4>
+<p>The command lifecycle is managed using the constructor and the destructor,
+and using the three methods <code>Activate</code>, <code>Desactivate</code>, and
+<code>Cancel</code>.
+<ul>
+  <li><strong>Constructor</strong>: it creates the command as an exclusive one
+    thanks to the second argument of the CATStateCommand constructor set to <code>CATCommandModeExclusive</code>.
+    A command that creates or modifies the document must always be declared as
+    exclusive. The command identifier is passed as the first parameter of the
+    CATStateCommand constructor.&nbsp; The command constructor includes code to
+    enable object creation in the document that is not shown here.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAADegCreateLineCmd::CAADegCreateLineCmd()
+                : CATStateCommand(&quot;CreateLineCmdId&quot;, CATCommandModeExclusive),
+                  _daIndication(NULL), _FirstPoint(NULL)
+{ ... // Include code to access the document }
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Destructor</strong>: it requests the destruction of the dialog
+    agent created in the <code>BuildGraph</code> method, and deletes or releases
+    data members created or retrieved in the constructor.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAADegCreateLineCmd::~CAADegCreateLineCmd()
+{
+  if ( NULL != _daIndication )
+  {
+    _daIndication-&gt;<b>RequestDelayedDestruction</b>();
+    _daIndication = NULL;
+  }
+  ... // delete or release other data members
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong><code>Activate</code></strong> is called when the Line command
+    takes the focus. This happen in two cases:
+    <ol>
+      <li>The command is just selected by the end user. The CAADegCreateLineCmd is
+        instantiated and the dialog starts from the beginning</li>
+      <li>The command restarts at the state that was current when a shared
+        command took the focus from it.</li>
+    </ol>
+    <p><code>Activate</code> is not overridden here, since the default behavior
+    provided by the base class CATCommand is enough. <code>CATCommand::Activate</code>
+    simply returns <code>CATStatusChangeRCCompleted</code> to state that the
+    command normally takes the focus.</p>
+  </li>
+  <li><strong><code>Desactivate</code></strong> is called when a shared command
+    takes the focus. The Line command is frozen in its current state and put in
+    the command stack. When the shared command will complete, the frozen Line
+    command will be reactivated from its current state using the <code>Activate</code>
+    method. <code>Desactivate</code> is not overridden here, since the default
+    behavior provided by the base class CATCommand is enough. <code>CATCommand::Desactivate</code>
+    simply returns <code>CATStatusChangeRCCompleted</code> to state that the
+    command normally looses the focus.</li>
+  <li><strong><code>Cancel</code></strong> is called when the Line command
+    completes, or when an exclusive command takes the focus and requests the
+    Line command to be deleted. When the Line command completes, the focus is
+    given to the default command (usually Select). <code>Cancel</code> must
+    delete or release temporary objects created by the command, possibly after
+    having removed them from the sets of objects. In this example, this code
+    could be put in the destructor, but if the command were declared in repeat
+    mode, this must be located here and nothing else should be done.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATStatusChangeRC CAADegCreateLineCmd::Cancel(CATCommand * iCmd, CATNotification * iNotif)
+{
+  if ( _FirstPoint ) 
+  {
+    _ISO-&gt;RemoveElement(_FirstPoint);
+    _FirstPoint-&gt;Release();
+    _FirstPoint = NULL ;
+  }
+  return (CATStatusChangeRCCompleted);
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="330000"></a>Defining the End User Input</h4>
+<p>The end user input is defined in the <code>BuildGraph</code> method by
+creating the states, creating the dialog agent(s), and plugging the dialog
+agent(s)&nbsp; to these states.
+<ol>
+  <li><strong>Creating the dialog states</strong>. They are created using:
+    <ul>
+      <li>The <code>GetInitialState</code> method for the first state
+        <table class="code">
+          <tr>
+            <td>
+              <pre>CATDialogState *stStartState = GetInitialState(&quot;stStartPointId&quot;);</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+      <li>The <code>AddDialogState</code> method for the second state
+        <table class="code">
+          <tr>
+            <td>
+              <pre>CATDialogState *stEndState = AddDialogState(&quot;stEndPointId&quot;);</pre>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+    <p>Note that:
+    <ul>
+      <li>The <em>stStartPointId</em> and <em>stEndPointId</em> arguments are
+        used in the CAADegCreateLineCmd.CATNls file to assign state prompts to
+        these states. Refer to <a href="CAADegResources.htm">Assigning Resources</a></li>
+      <li>Neither the initial state nor the final state are explicitly created</li>
+      <li>The states are automatically deleted when the command itself is
+        deleted.</li>
+    </ul>
+  </li>
+  <li><strong>Creating the dialog agent</strong>. The Line command uses one
+    instance of the CATIndicationAgent class to read the start point and the end
+    point input by the end user. The end user clicks in the screen plane, but
+    the indication happens in fact in a plane defined thanks to the <code>SetMathPlane</code>
+    method that assigns this plane to the dialog agent. In this command, the
+    plane is a projection plane&nbsp; parallel to the screen plane. It is the
+    default plane, when the <code>SetMathPlane</code> is not used.&nbsp; The point clicked on the
+    screen is projected onto this plane.&nbsp;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>_daIndication = new CATIndicationAgent(&quot;PointIndication&quot;);
+</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Plugging the dialog agent to these states</strong>. This dialog
+    agent is enabled when it is plugged to a dialog state. This is done using
+    the <code>AddDialogAgent</code> method.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>stStartState-&gt;AddDialogAgent(_daIndication);
+stEndState-&gt;AddDialogAgent(_daIndication);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <code>BuildGraph</code> method is as follows:</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAADegCreateLineCmd::BuildGraph()
+{
+  CATDialogState * stStartState = GetInitialState(&quot;stStartPointId&quot;);
+  CATDialogState * stEndState = AddDialogState(&quot;stEndPointId&quot;);
+
+  _daIndication = new CATIndicationAgent(&quot;PointIndication&quot;);
+  _daIndication-&gt;SetMathPlane(_ProjPlane);
+
+  stStartState-&gt;AddDialogAgent(_daIndication);
+  stEndState-&gt;AddDialogAgent(_daIndication);
+...
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="340000"></a>Linking States and Providing Behavior</h4>
+<p>The states are linked with transitions that trigger actions if the guard
+conditions are satisfied.
+<ul>
+  <li><strong>Connecting states with transitions</strong>. The <code>AddTransition</code>
+    method connects a <em>source</em> state set as its first argument to a <em>target</em>
+    state sets as its second argument. The other arguments are used for
+    conditions and actions.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogTransition * pFirstTransition = AddTransition(SourceState, TargetState, ...)</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Two transitions are created: one between the first state and the second
+    state, and one between the second state and the final state. The transition
+    between the initial state and the first state is implicit and should not be
+    created. Note that the final state is referred to by the <code>NULL</code>
+    value. Ellipsis show temporarily missing arguments.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogTransition * pFirstTransition = AddTransition(stStartState, stEndState, ...);
+
+CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL, ...);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Defining input validation using guard conditions</strong>. A guard
+    condition is defined using the address of the method to execute to check the
+    condition&nbsp; passed to the <code>Condition</code> method.
+    <p>For each point, the Line command checks two conditions:
+    <ol>
+      <li>If a point has been provided by the end user. This condition is
+        implemented by using the <code>IsOutputSetCondition</code> method
+        provided to check that the point indication dialog agent is valued.</li>
+      <li>For the start point, if the point can be created, and for the end
+        point, if it is not identical to the start point in addition to its
+        ability to be created. These conditions are implemented by the <code>CheckStartPoint</code>
+        and <code>CheckEndPoint</code> methods of the CAADegCreateLineCmd class.</li>
+    </ol>
+    <p>These two conditions are merged in a composite condition. This composite
+    condition is provided as the third argument of the <code>AddTransition</code>
+    method and implemented by means of the <code>AndCondition</code> method.
+    Ellipsis show temporarily missing arguments.</p>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDialogTransition * pFirstTransition = AddTransition(stStartState, stEndState,
+   <strong>AndCondition(IsOutputSetCondition(_daIndication),
+                Condition((ConditionMethod) &amp; CAADegCreateLineCmd::CheckStartPoint)),</strong> 
+     ...);
+
+  CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
+     <strong>AndCondition(IsOutputSetCondition(_daIndication), 
+                  Condition((ConditionMethod) &amp; CAADegCreateLineCmd::CheckEndPoint)),</strong>	
+     ...);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Defining actions</strong>. An action is defined using the address
+    of the method to execute to perform the action passed to the <code>Action</code>
+    method. The action is then added to a transition by using it as the last
+    argument of the <code>AddTransition</code> method. The complete source code
+    of the <code>BuildGraph</code> method is as follows:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAADegCreateLineCmd::BuildGraph()
+{
+  CATDialogState * stStartState = GetInitialState(&quot;stStartPointId&quot;);
+  CATDialogState * stEndState = AddDialogState(&quot;stEndPointId&quot;);
+
+  _daIndication = new CATIndicationAgent(&quot;StartPointIndication&quot;);
+ 
+  stStartState-&gt;AddDialogAgent(_daIndication);
+  stEndState-&gt;AddDialogAgent(_daIndication);
+
+  CATDialogTransition * pFirstTransition = AddTransition(stStartState, stEndState,
+     AndCondition(IsOutputSetCondition(_daIndication),
+                  Condition((ConditionMethod) &amp; CAADegCreateLineCmd::CheckStartPoint)),
+     <strong>Action((ActionMethod) &amp; CAADegCreateLineCmd::CreatePoint));</strong>
+
+  CATDialogTransition * pSecondTransition = AddTransition(stEndState, NULL,
+     AndCondition(IsOutputSetCondition(_daIndication), 
+                  Condition((ConditionMethod) &amp; CAADegCreateLineCmd::CheckEndPoint)),
+     <strong>Action((ActionMethod) &amp; CAADegCreateLineCmd::CreateLine));</strong>
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="350000"></a>Providing Condition and Action Methods</h4>
+<p>This is the implementation of the command behavior declared using the <code>BuildGraph</code>
+method. The two condition methods are as follows:
+<ol>
+  <li>The <code>CheckStartPoint</code> method checks that the point can be
+    created, that is, that&nbsp; the object that holds the point factory, here <code>_RootObject</code>,
+    exists.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBoolean CAADegCreateLineCmd::CheckStartPoint(void * iDummy)
+{
+  CATBoolean ret = TRUE;
+  if ( ! _RootObject ) ret = FALSE;
+  return ret;
+}
+</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The <code>CheckEndPoint</code> retrieves the end point from the dialog
+    agent as a CATMathPoint2D instance on the projection plane of the dialog
+    agent using the <code>GetValue</code> method. The <code>GetMathPlane</code>
+    retrieves the projection plane. It converts it as a
+    CATMathPoint instance, that is a 3D point, using the <code>EvalPoint</code>
+    method, and compares the distance between start and end points to a minimum
+    tolerance <code>EPSILON</code>. If the two points are identical with respect
+    to this tolerance, the dialog agent is recycled to be reused in the second
+    state that becomes current again, because <code>FALSE</code> is returned.
+    This enables the end user to select another end point. Otherwise, <code>TRUE</code>
+    is returned.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBoolean CAADegCreateLineCmd::CheckEndPoint(void * iDummy)
+{
+  CATBoolean ret = TRUE;
+  if ( _FirstPoint ) 
+  {
+    CATMathPoint2D point2D = _daIndication-&gt;<b>GetValue</b>();
+    CATMathPoint EndPoint;
+    CATMathPlane ProjPlane = _daIndication-&gt;<b>GetMathPlane</b>();
+    ProjPlane .<b>EvalPoint</b>(point2D.GetX(),point2D.GetY(), EndPoint);
+
+    float x,y,z ;
+    _FirstPoint-&gt;GetCoord(x,y,z);
+    CATMathPoint StartPoint(x,y,z);
+    if ( EndPoint.DistanceTo(StartPoint) &lt; EPSILON ) 
+    { 
+      ret = FALSE;
+      _daIndication-&gt;<b>InitializeAcquisition</b>(); // Recycle dialog agent
+    }
+  }
+  else ret = FALSE;
+  return ret;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p>The two action methods are as follows:
+<ol>
+  <li>The <code>CreatePoint</code> method is called when the first transition is
+    triggered. It creates the start point as a temporary point and puts it in
+    the Interactive Set of Objects (this is not described here). It then
+    recycles the dialog agent that can be reused for the second state.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATBoolean CAADegCreateLineCmd::CreatePoint(void * iDummy)
+{
+  ... // Include here the code to create the first 3D point 
+  _daIndication-&gt;InitializeAcquisition(); // Recycle dialog agent
+  return TRUE;
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The <code>CreateLine</code> method creates the line. It takes the start
+    point as argument and retrieves the end point from the dialog agent.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATBoolean CAADegCreateLineCmd::CreateLine(void * iData)
+{
+  ... // Include here the code to create the line
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="360000"></a>Providing the Command Resources</h4>
+<p>The command resources are the prompts displayed in the status bar for each
+state. They are stored in the CAADegCreateLineCmd.CATNls file located in your
+framework's CNext\resources\msgcatalog directory. This file contains the
+following prompts, associated with the identifiers set for each states in <a href="#330000">Defining
+End User Input</a>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAADegCreateLineCmd.stStartPointId.Message = &quot;Click to indicate the first point&quot;;
+CAADegCreateLineCmd.stEndPointId.Message   = 
+&quot;Move the mouse and click to indicate the second point&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Integrating the Line Command into the Application</h3>
+<p>The Line command is integrated into the application by following these steps:
+<ul>
+  <li><a href="#410000">Create the Line command creation function</a> in the CAADegCreateLineCmd.cpp file</li>
+  <li><a href="#420000">Create a command header</a> for the Line command and put
+    it in a workshop, a workbench, or an add-in to the appropriate workshop or
+    workbench. You will find information in The Command Headers and in Creating
+    a Workshop for Your Document, Creating Workbenches, and Adding Commands to
+    Existing Workshops and Workbenches</li>
+  <li><a href="#430000">Provide the command header resources</a>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>Creating the Line Command Creation Function</h4>
+<p>The <code>CATCreateClass</code> macro inserted in the command class CAADegCreateLineCmd.cpp file creates a creation function for the Line command. This
+enables the command class to be instantiated by the application using a command
+header. This macro is provided by the CATCreateExternalObject.h header file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATCreateExternalObject.h&quot;
+CATCreateClass(CAADegCreateLineCmd);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>Creating the Line Command Header</h4>
+<p>The command header class should be created in the chosen workshop, workbench,
+or add-in class using the <code>MacDeclareHeader</code> macro. The command
+header is an instance of this class created in the <code>CreateCommands</code>
+method of the workshop, workbench, or add-in class. Then the command header is
+associated with a command starter and arranged with the other commands in the <code>CreateWorkshop</code>,
+<code>CreateWorkbench</code>, or <code>CreateToolbars</code> method of the
+workshop, workbench, or add-in class respectively.</p>
+<p>The Line command header is created in the Geometry workshop. <code>MacDeclareHeader</code>
+creates the CAAGeometryHeader class for the header file, and this class is
+instantiated in the <code>CreateCommands</code> method. It is then put in the
+Insert menu, associated with a command starter and arranged after the Point
+command in the <code>CreateWorkshop</code> method, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCommandHeader.h&quot;
+MacDeclareHeader(CAAGeometryHeader);
+...
+void Geometry::CreateCommands()
+{
+  ...
+  new CAAGeometryHeader(&quot;Line&quot;,                  // Command header identifier
+                        &quot;CATDegEduGeometryCmd&quot;,  // Command shared library or DLL
+                        &quot;CAADegCreateLineCmd&quot;,      // Command class
+                        (void *) NULL);          // Argument to pass to the command
+  ...
+}
+...
+CATCmdWorkshop * Geometry::CreateWorkshop()      
+{
+  ...
+  NewAccess(CATCmdStarter,pLineInsert,LineInsert);
+  SetAccessCommand(pLineInsert,&quot;Line&quot;);
+  SetAccessNext(pPointInsert,pLineInsert);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="430000"></a>Providing the Line Command Header Resources</h4>
+<p>You should now provide the resources for the command header. They are stored
+in files located in your framework's CNext\resources\msgcatalog directory. The
+resource keys are built using the command header class name concatenated to the
+command header identifier using a dot, that is, <code>CAAGeometryHeader.Line</code>,
+concatenated to other keywords depending on the resources. These resources
+include:
+<ul>
+  <li>The command name, tooltip, help displayed in the status bar, and long help
+    displayed in a box using the keywords <code>Title</code>, <code>ShortHelp</code>,
+    <code>Help</code>, and <code>LongHelp</code> respectively. They are stored
+    in the CAAGeometryHeader.CATNls file.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAGeometryHeader.Line.Title     = &quot;Line&quot; ;
+CAAGeometryHeader.Line.ShortHelp = &quot;Line&quot; ;
+CAAGeometryHeader.Line.Help      = &quot;Creates lines: indicate 2 points&quot; ;
+CAAGeometryHeader.Line.LongHelp  = &quot;Line (Insert menu)
+Create lines:
+ 1- Indicate the first point:
+    click with the left button: a cross appears 
+ 2- Indicate the second point:
+    click with the left button: the cross disappears and the line is created.&quot;;
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>The command icon to be used in toolbars or in front of the command name in
+    menus. This is the first icon set with the <code>Icon.Normal</code> keyword. This
+    is stored in the CAAGeometryHeader.CATRsc file, and the icon files are
+    stored in the CNext\resources\graphic\icons directory as bmp files.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CAAGeometryHeader.Line.Icon.Normal    = &quot;I_EduLine&quot;;
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A state dialog command is a dialog command designed as a state machine, each
+state enabling end user input, that enables the end user to pass from state to
+state using transitions between these states triggered when requested events
+happen and when requested guard conditions are satisfied, and that execute the
+declared actions. It is modeled using a class deriving from the CATStateCommand
+class.</p>
+<p>The statechart diagram is implemented using the <code>BuildGraph</code>
+method, and the command life cycle is managed by the <code>Activate</code>, <code>Desactivate</code>,
+and <code>Cancel</code> methods in addition to the command class constructor and
+destructor.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

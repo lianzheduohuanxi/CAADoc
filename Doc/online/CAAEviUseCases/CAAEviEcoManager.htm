@@ -1,0 +1,313 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The ECO Manager Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The ECO Manager Interface</h3>
+      <em>Creating and deleting ECOs</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the ENOVIBOEcoManager interface of the
+      ENOVInterfaces framework to create and delete Engineering Change Orders in
+      the Change Management domain.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEviEcoManager Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAAEviEcoManager Do?</a></li>
+          <li><a href="#How">How to Launch CAAEviEcoManager</a></li>
+          <li><a href="#Where">Where to Find the CAAEviEcoManager Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create and delete Engineering
+Change Orders in the Change Management domain. ECOs are used to control and
+direct the modification or development of a product. The ENOVInterfaces
+framework contains the ENOVIBOEcoManager interface which allows you to directly
+create and delete the ECO which may then be manipulated as desired.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEviEcoManager Use Case</h3>
+<p>CAAEviEcoManager is a use case of the CAAENOVInterfaces.edu framework that
+illustrates the creation and deletion of Engineering Change Orders.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEviEcoManager Do?</h4>
+<p>CAAEviEcoManager begins by opening a VPM session and creating a login a
+session. Then the ECO Manager is retrieved. The necessary parameters are created
+and the manager is directly used to create and delete the ECO.
+<p>The ENOVInterfaces interface/methods shown are as follows:</p>
+<ul>
+  <li><b>ENOVIBOEcoManager.h - GetBOManager</b></li>
+  <li><b>ENOVIBOEcoManager.h - CreateNewEco</b></li>
+  <li><b>ENOVIBOEcoManager.h - RemoveEco</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEviEcoManager</h4>
+
+<p>To launch CAAEviEcoManager, you will need to set up the build time
+environment, then compile CAAEviEcoManager.cpp along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>]. The required
+interfaces can be found in the ENOVInterfaces, VPMInterfaces, VPMPersistency,
+and System frameworks.</p>
+<p>When the use case is built and the run time environment set, from the directory where the executable file is stored, 
+type the following to execute the use case:</p>
+<p><code>CAAEviEcoManager EnoviaUserLoginId EnoviaUserPasswd Role</code></p>
+<p>Where:</p>
+<ul>
+	<li><code>CAAEviEcoManager</code> is the use case executable name.</li>
+	<li><code>EnoviaUserLoginId</code> is the login identifier of the 
+		ENOVIA user you intend use to run the use case.</li>
+	<li><code>EnoviaUserPasswd</code> is the password of this user.</li>
+	<li><code>Role</code> is the role of this user, such as 
+		VPMADMIN.ADMIN.DEFAULT.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEviEcoManager Code</h4>
+<p>The CAAEviEcoManager use case is made of a single file located in the
+CAAEviEcoManager.m module of the CAAENOVInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVInterfaces.edu\CAAEviEcoManager.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVInterfaces.edu/CAAEviEcoManager.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAEviEcoManager use case is
+shown here. There are three logical steps in the CAAEviEcoManager use case:</p>
+<ol>
+  <li><a href="#Step1">Get the ECO manager</a></li>
+  <li><a href="#Step2">Create an Engineering Change Order</a></li>
+  <li><a href="#Step3">Delete the Engineering Change Order</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Get the ECO manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVIBOEcoManager.h&quot;
+  </pre>
+    </td>
+  </tr>
+</table>
+<p>This include statement gives access to the interface demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Get ENOVIBOEcoManager
+
+    ENOVIBOEcoManager_var spEcoMgr = GetBOManager(); 
+    if ( spEcoMgr == NULL_var ) 
+    {  
+    	cout &lt;&lt; &quot;ERROR in getting Eco Manager.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+  	return 2;
+    }
+    cout &lt;&lt; &quot;Got EcoManager successfully.&quot; &lt;&lt; endl &lt;&lt; flush;    
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>After the VPM session is opened, you can simply retrieve the object
+    managers with a call to <b>GetBOManager</b>().</li>
+  <li>Here, the ECO manager is called <b>spEcoMgr</b>.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Create an Engineering Change Order</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVIBOEcoManager.h&quot;
+    #include &quot;CATIEnovCMEco.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+	 </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    //--- Create an Engineering Change Order 
+    
+    CATIEnovCMEco_var Eco = NULL_var;
+    CATUnicodeString EcoType(&quot;ECO&quot;);
+    CATUnicodeString EcoVersion(&quot;1&quot;);
+    CATUnicodeString EcoName(&quot;MyEco&quot;);
+    CATUnicodeString EcoPriority(&quot;Routine&quot;);
+    CATUnicodeString EcoTypeCode(&quot;Release&quot;);
+    CATUnicodeString EcoInitialAbstract(&quot;This is a CAA ECO.&quot;);
+ 
+    rc = spEcoMgr-&gt;CreateNewEco( EcoType, 
+                                 EcoVersion,
+                                 Eco,
+                                 EcoName,
+                                 EcoPriority,
+                                 EcoTypeCode,
+                                 EcoInitialAbstract );
+                                  
+    if ( !SUCCEEDED(rc) || Eco==NULL_var )
+    {  
+    	cout &lt;&lt; &quot;ERROR in creating ECO.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 3;
+    } 
+       
+    cout &lt;&lt; &quot;Created new Engineering Change Order successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>With the ECO manager <b>spEcoMgr</b> a call to member method <b>CreateNewEco</b>
+    is made. The arguments passed are <b>EcoType</b> (&quot;ECO&quot;), <b>EcoVersion</b>
+    (&quot;1&quot;), <b>EcoName</b> (&quot;MyEco&quot;), <b>EcoPriority</b>
+    (&quot;Routine&quot;), <b>EcrTypeCode</b> (&quot;Release&quot;), and <b>EcoInitialAbstract</b>
+    (&quot;This is a CAA ECO&quot;).</li>
+  <li>The method creates a CATIEnovCMEco object (<b>Eco</b>) and returns S_OK
+    when successfully completed. E_FAIL is returned if the create is not
+    successful.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step3"></a>Remove an Engineering Change Order</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVIBOEcoManager.h&quot;
+    #include &quot;CATIEnovCMEco.h&quot;
+	 </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements are required for the following operations.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Delete Engineering Change Order
+
+    boolean delActions = FALSE; 
+    rc = spEcoMgr-&gt;RemoveEco(Eco, delActions);
+                                  
+    if ( !SUCCEEDED(rc))
+    {  
+    	cout &lt;&lt; &quot;ERROR in deleting ECO.&quot; &lt;&lt; endl &lt;&lt; flush;
+    	VPMSession::CloseSession();
+       	return 4;
+    }    
+    cout &lt;&lt; &quot;Deleted Engineering Change Order successfully.&quot; &lt;&lt; endl &lt;&lt; flush;
+</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;
+<ol>
+  <li>With the ECO manager <b>spEcoMgr</b> a call to member method <b>RemoveEco</b>
+    is made. The arguments passed are the <b>Eco</b> and the boolean variable <b>delActions</b>
+    which determines if the ECO's attached action are to be deleted also.</li>
+  <li>The method deletes the object (<b>Eco</b>) and returns S_OK when
+    successfully completed. E_FAIL is returned if the delete is not successful.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Use the ENOVIBOEcoManager interface to create and delete ECOs. You can
+retrieve the ECO Manager with <b>GetBOManager</b>().</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

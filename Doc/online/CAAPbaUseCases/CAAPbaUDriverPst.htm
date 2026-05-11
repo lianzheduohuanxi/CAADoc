@@ -1,0 +1,1253 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Developing a Driver</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Portal Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>3d com Navigator</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Developing a Driver</h3>
+      <em>How to develop a driver in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAPLBADriverPst use case. This use case
+      explains how to implement the interfaces in order to create a new driver.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAPLBADriverPst Implementation Use Case</a></b>
+          <ul>
+            <li><a href="#What">What Does CAAPLBADriverPst Do</a></li>
+            <li><a href="#How">How to Launch CAAPLBADriverPst</a></li>
+            <li><a href="#Where">Where to Find the CAAPLBADriverPst Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you develop a Driver in ENOVIA Portal.<br>
+Its main intent is to allow you to access and expose hierarchical data.<br>
+The data for this use case comes from a pst format file, that is an ENOVIA VPM
+format used to store a product structure.<br>
+We will define three types of data:</p>
+<ul>
+  <li>The pst file type</li>
+  <li>The part type</li>
+  <li>The catia model type.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Driver Implementation Use Case</h3>
+<p>CAAPLBADriverPst is a use case of the CAAPortalBaseApps.edu framework that
+illustrates the ENOVIA CATJDataAccessBasicModel framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAPLBADriverPst Do</h4>
+<p>This driver provides the end user with a query tool to his data. From the
+query results, the user can bookmark any item in the results list. Then the user
+can navigate through the tree structure represented by this bookmark.</p>
+<p>These data come from the pst files located in a path given as a parameter to
+the driver.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAPLBADriverPst</h4>
+<p>Before launching ENOVIA Portal and using the new driver, you have to compile
+it and declare it in some environment files.</p>
+<ol>
+  <li><a href="#Compil">Compilation</a></li>
+  <li><a href="#Config">Environment files for the driver</a></li>
+  <li><a href="#DriverUse">Driver Use</a></li>
+</ol>
+<h5><a name="Compil"></a>Compilation</h5>
+<p>You have to compile the java files and make a jar file thanks to the <i>mkmk</i>
+command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Config"></a>Environment files for the Driver</h5>
+<p>In order to add this new driver, you have to modify:</p>
+<ul>
+  <li>the property file dsar.properties</li>
+  <li>the property file Driver.properties</li>
+  <li>the xml file SearchProject.xml</li>
+</ul>
+<p>The original files must be copied from the official RuntimeView in:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootServerDirectory\intel_a\docs\java</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootServerDirectory/$OS/docs/java</code></td>
+  </tr>
+</table>
+<p>For help purpose, modified files are provided in:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPortalBaseApps.edu\Data.d\DriverPst</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPortalBaseApps.edu/Data.d/DriverPst</code></td>
+  </tr>
+</table>
+<p>At last, the modified files must be put in:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\JAVA\docs\java</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/JAVA/docs/java</code></td>
+  </tr>
+</table>
+<p>instead of the existing ones.</p>
+<p>Additionnally a <i>mkCreateRuntimeView</i> command must be performed so that
+all additional resources are copied to the RuntimeView.</p>
+<h6>dsar.properties</h6>
+<p>Modification of the dsar.properties file to register the new jar file in the
+CATlet where this jar will be used:<br>
+in BookmarkTreeCATlet dependencies (you have to increment the number of dsar):</p>
+<!-- <table class="code">
+  <tr>
+    <td>
+      <pre>...
+catlet.11=com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet
+<strong>catlet.11.nbdsar=30</strong>
+catlet.11.dsar.0=PortalBookmarkTree.dsar
+...
+<strong>catlet.11.dsar.29=CAAPLBADriverPst.jar</strong>
+...</pre>
+    </td>
+  </tr>
+</table> -->
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CLASS: com.dassault_systemes.catweb.bookmarktree.BookmarkTreeCATlet
+PortalBookmarkTree.dsar
+...
+<strong>CAAPLBADriverPst.jar</strong>
+...</pre>
+    </td>
+  </tr>
+</table>
+<h6>Driver.properties</h6>
+<p>Modification of the Driver.properties file to add the new driver:<br>
+This file contains the list of all the drivers and the information to use it.<br>
+Increment the number of drivers.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>group=13</b>
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>You must specify the path of the class that implements the Driver2 interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>group.12.element=1
+group.12.name=Pst Driver
+group.12.element.0.classname=com.dassault_systemes.CAAPortalBaseApps.CAAPLBADriverPst.PstDriverImpl
+group.12.element.0.label=Pst Driver</b></pre>
+    </td>
+  </tr>
+</table>
+<p>You have the possibility to specify different parameters, each parameter is
+composed of a keyword and a value. These parameters are given to the driver at
+the execution ( more details will be provided in the implementation of the
+Driver2 interface).</p>
+<p><b>Caution</b>: in parameter.0.value, make sure that you replace the
+InstallRootDirectory occurence by your real installation path (this parameter
+indicates the location of the input pst files).</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><b>group.12.element.0.nbParameter=1
+group.12.element.0.parameter.0.keyword=PstFilesPath
+group.12.element.0.parameter.0.value=<code><u><font color="#0000FF">InstallRootDirectory</font></u></code>/CAAPortalBaseApps.edu/CNext/docs/sample/pstFiles</b></pre>
+    </td>
+  </tr>
+</table>
+<h6>SearchProject.xml</h6>
+<p>To add the bookmark &quot;DriverPst queries&quot; and the sub-bookmark
+&quot;Query all&quot; in the Search Tree ( to access the driver query window),
+you have to add this lines in SearchProject.xml.:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...&lt;/BOOKMARK&gt;&lt;/folder&gt;<b>
+&lt;folder NAME=&quot;DriverPst queries&quot;&gt;
+&lt;BOOKMARK NAME=&quot;Query All&quot; 
+url=&quot;http://localhost/casta/type.com.casta.generic.Query/?CATLET_TYPE=JAVAQUERYTOOL&amp;amp;Specification=Query_PstDriver&quot;&gt;
+&lt;/BOOKMARK&gt;&lt;/folder&gt;</b>
+...
+&lt;/Tab&gt;&lt;/SerializedData&gt;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+
+<h5><a name="DriverUse"></a>Driver Use</h5>
+<p>Step 1 - Launch ENOVIA Portal and select the Search Tree workbook</p>
+<p align="center"><img border="0" src="images/PstDriverUse1.jpg" width="860" height="620"></p>
+<p>Note the new &quot;DriverPst queries&quot; bookmark that has appeared in the
+Search Tree workbook. If you cannot see it, the reason may be that you see a
+previous version of the Search Tree workbook. To update the Search Tree
+workbook: delete it and add it again.</p>
+<p>Step 2 - Open the &quot;DriverPst queries&quot; bookmark, right click on the
+&quot;Query All&quot; sub-bookmark and select &quot;Activate&quot;.</p>
+<p align="center"><img border="0" src="images/PstDriverUse3.jpg" width="831" height="573"></p>
+<p>Note that as a result the &quot;SampleDriver Query&quot; CATlet has been
+instantiated in the webspace.</p>
+<p>Step 3 - Enter the % query string in the SampleQuery Driver CATlet and press
+the submit button.</p>
+<p>As a result, the list of all the .pst files located in the PstFilesPath is
+displayed.</p>
+<p align="center"><img border="0" src="images/PstDriverUse4.jpg" width="831" height="573"></p>
+<p>Step 4 - Double-click on the &quot;SampleStructure1.pst&quot; result and
+select the Search Tree workbook as target workbook</p>
+<p align="center"><img border="0" src="images/PstDriverUse5.jpg" width="199" height="243"></p>
+<p>Note that as a result a bookmark to the selected result is created in the
+Search Tree workbook.</p>
+<p>Step 5 - Open the &quot;shortcut of SampleStructure1.pst&quot; bookmark and
+navigate in the product structure by opening the different nodes.</p>
+<p align="center"><img border="0" src="images/PstDriverUse6.jpg" width="831" height="641"></p>
+<p>Note that you can display the properties of each leaf or node of the
+hierarchical tree by clicking on the Properties tab of the webtree.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAPLBADriverPst Code</h4>
+<p>The CAAPLBADriverPst use case is made of five classes named:</p>
+<ul>
+  <li>PstParser</li>
+  <li>PstDriverImpl</li>
+  <li>PstMetdataImpl</li>
+  <li>PstDataImpl</li>
+  <li>PstPersistantDataImpl</li>
+</ul>
+<p><code>in the java package named
+com.dassault_systemes.CAAPortalBaseApps.CAAPLBADriverPst</code></p>
+<p>These classes are located in the CAAPLBADriverPst.mj module of the
+CAAPortalBaseApps.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAPortalBaseApps.edu\CAAPLBADriverPst.mj\src\com\dassault_systemes\CAAPortalBaseApps\CAAPLBADriverPst</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAPortalBaseApps.edu\CAAPLBADriverPst.mj/src/com/dassault_systemes/CAAPortalBaseApps/CAAPLBADriverPst</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a driver for data access, there are eight main steps.</p>
+<table>
+</table>
+<ol>
+  <li><a href="#BServices">Reading the Input Data Using BrowserServices</a></li>
+  <li><a href="#DriverIF">Implementing the Interface Driver2</a></li>
+  <li><a href="#SecurityIF">Implementing the Mandatory Interface SecurityIF</a></li>
+  <li><a href="#EnvIF">Implementing the Mandatory Interface EnvironmentIF</a></li>
+  <li><a href="#MetaIF">Implementing the Mandatory Interface MetadataIF</a></li>
+  <li><a href="#DataIF">Implementing the Mandatory Interface DataIF</a></li>
+  <li><a href="#PersistantIF">Implementing the Optional Interface
+    persistantDataIF, to Bookmark</a></li>
+  <li><a href="#Query">Creating the File Query_SampleDriverPst.properties</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="BServices"></a>Reading the Input Data Using BrowserServices</h4>
+<p>The hierarchical data for this Driver come from a pst file. This file will be
+parsed to construct hash tables containing the data for the use case.
+<ul>
+  <li>nodeChildHashtable to get the identifiers of the child nodes from the
+    identifier of a node.</li>
+  <li>attributesHashtable to get the attributes of a node from its identifier.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class PstParser
+{
+  public static Hash table _nodeChildHashtable  = new Hashtable();
+  public static Hashtable _attributesHashtable = new Hashtable();
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To access a file you have to use the class
+com.dassault_systemes.catweb.tools.browser.BrowserServices. This class
+encapsulates specificities of Java Virtual Machines and different browsers.<br>
+From a file name it returns a File Object and a FileInputStream Object then a
+BufferReader constructed from this stream enables the parsing.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public PstParser( String iFilePath, String iFileName)
+  {
+    try
+    {
+      if( !(_parsedPst.contains(iFileName)) )
+      {
+        BrowserServices   bs                  = BrowserServices.get();
+        File              file_src            = bs.getFile(iFilePath+File.separator+iFileName);
+        FileInputStream   fileInputStream_src = bs.newFileInputStream(file_src);
+        InputStreamReader inputStream_src     = new InputStreamReader(fileInputStream_src);
+        BufferedReader    source              = new BufferedReader(inputStream_src);
+...<em>  </em></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="DriverIF"></a>Implementing the Interface Driver2</h4>
+<p>Creation of a new class PstDriverImpl which implements the interface
+com.dassault_systemes.catweb.databackend.dataType.Driver2.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class PstDriverImpl implements Driver2
+{
+  <em>// An interface in order to get some services on the driver</em>
+  private DriverServicesIF _servicesIF = null ;
+
+  <em>//The Frame window containing the Portal</em>
+  private Frame _frame = null ;
+
+  <em>// Mandatory interfaces known by the driver</em>
+  private defaultSecurityIFImpl    _security   = null ;
+  private defaultEnvironmentIFImpl _environment = null ;
+  private PstMetadataImpl          _metadata   = null ;  
+  private PstDataImpl              _data       = null ;
+
+ <em> // Optional interface known by the driver</em>
+  private PstPersistantDataImpl _persistantData = null ;  
+  
+ <em> // Path</em> to the pst files, only for the use case
+  private String _pstFilesPath = null;
+...<em>  </em></pre>
+    </td>
+  </tr>
+</table>
+<p>The goal of the Driver2 interface is to provide all the services required by
+a driver.<br>
+This interface provides methods dealing with:
+<ul>
+  <li>the lifecycle of the driver</li>
+  <li>the identity of the driver</li>
+  <li>the authorizations on this driver</li>
+  <li>access to other interfaces</li>
+</ul>
+<p>Driver2 interface also enables the Driver to get the interfaces to access and
+manage the data.</p>
+<p>Before the instantiation of the Driver, the Portal retrieves the information,
+possibly set as parameters, in the Driver.properties file. This information is
+given to the Driver, just after its instantiation, with the setParameter method
+(iKeywordValues contains the information) and could be used in the lifecycle of
+the Driver. For more details see <a href="#Config">Configuration of the Driver</a>.<br>
+For this use case, the information retrieved from the Driver.properties file is
+the location of the pst files.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...<em>
+ </em> public void setParameter(KeywordValue[] iKeywordValues) 
+  {
+    String pstFilesPath_tmp = iKeywordValues[0].getValue();
+    _pstFilesPath = pstFilesPath_tmp.replace('/', File.separatorChar);
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Life Cycle:</p>
+<p>A driver is instantiated through the traditional static method
+java.lang.class.forName. Then the start method is called with an
+InformationObject parameter which provides all the information it needs for its
+life: the Frame, the DriverServicesIF interface.<br>
+The java.awt.Frame is a the top-level window containing the Portal.<br>
+The DriverServicesIF interface allows the driver to display text in the
+&quot;Messages&quot; window with the setText method.<br>
+At the end of the session, the driver is called on stop.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public void start(InformationObject iInformation)
+  {
+    if (iInformation!=null)
+    {
+      java.lang.Object obj1=<strong>iInformation.getProperty(&quot;Frame&quot;)</strong>;
+      if (obj1!=null)
+      { 
+        _frame=(Frame)obj1;
+      }
+      java.lang.Object obj2=<strong>iInformation.getProperty(&quot;DriverServices&quot;)</strong>;
+      if (obj2!=null)
+      {
+        _services=(DriverServicesIF)obj2 ;
+        _services.setText(&quot;PstDriver started&quot;);
+      } 
+    }
+    ...
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Identity:</p>
+<p>Just after the start method, it is asked to give its system identity. The
+System identity will be used to store some persistant information about data. So
+be careful, don't change it after you release the driver into production.<br>
+This name must be the same as the label defined in Driver.properties.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...<em>
+ </em> public String getName()
+  {
+    return &quot;Pst Driver&quot;; 
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Licensing:</p>
+<p>Then the licensing is checked. ENOVIA Portal lets you decide whether the
+licensing for this driver is ok. ENOVIA Portal does not own the licensing
+because in fact , you can prerequisite another licensing system (for example,
+the PDM System when you run some of its libraries) and it will not be aware of
+this.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public boolean isLicensingOK()
+  {
+    return true ;
+  }   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Access to other interfaces:
+<p>ENOVIA Portal needs to retrieve the implementations of the four mandatory
+interfaces from the driver:
+<ul>
+  <li>SecurityIF for the user authentification</li>
+  <li>EnvironmentIF</li>
+  <li>MetadataIF</li>
+  <li>DataIF to access and manage the data</li>
+</ul>
+<p>Moreover if you want optional services like bookmarking on the driver, you
+have to implement the corresponding optional interface:
+<ul>
+  <li>persistantDataIF</li>
+</ul>
+<p>The objects implementing the interfaces can be instantiated in the start
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public void start(InformationObject iInformation)
+  {
+    ...
+    _security       = new defaultSecurityIFImpl();
+    _environment    = new defaultEnvironmentIFImpl();
+    _metadata       = new PstMetadataImpl();
+    _data           = new PstDataImpl(_metadata, _pstFilesPath);
+    _persistantData = new PstPersistantDataImpl(_metadata, _pstFilesPath);
+  }
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>The four mandatory interfaces are returned to ENOVIA Portal by the Driver,
+with get methods.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>... 
+  public SecurityIF getSecurityIF()
+  {
+    return (SecurityIF)(_security) ;
+  }
+
+  public EnvironmentIF getEnvironmentIF()
+  {
+    return (EnvironmentIF)(_environment) ;
+  }
+
+  public MetadataIF getMetadataIF()
+  {
+    return (MetadataIF)(_metadata) ;
+  }
+
+  public  DataIF getDataIF()
+  {
+    return (DataIF)(_data) ;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The getSupportedInterface method enables ENOVIA Portal to ask for any
+optional interface by its full java class name.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public java.lang.Object getSupportedInterface(String interfaceName) 
+  {
+    if(interfaceName.equals(&quot;com.dassault_systemes.catweb.databackend.dataType.persistantDataIF&quot;))
+      return _persistantData;
+    else
+      return null;
+  }
+... </pre>
+    </td>
+  </tr>
+</table>
+<p>Anyway, only this optional interface is available, in the current code
+version.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="SecurityIF"></a>Implementing the Mandatory Interface SecurityIF</h4>
+<p>The driver is asked for its SecurityIF interface whose implementation checks
+the security or licensing. There are 3 calls on this interface.
+<ul>
+  <li>isUserChecked is called first to retrieve whether the user has the access
+    authority.</li>
+</ul>
+<ul>
+  <li>If isUserChecked returns false, the showDialog method is called. You can
+    implement anything you want in this method which returns nothing. Remember
+    you have a Frame Object, you can launch a dialog window to retrieve a
+    password. Then isUserChecked is called again.</li>
+</ul>
+<ul>
+  <li>If the first or second call to isUserChecked returns true, the application
+    continues. In the other case the driver is stopped. In the two cases,
+    getDisplayableInformation is called to retrieve a String Object that will be
+    displayed in the &quot;Messages&quot; window.</li>
+</ul>
+<p>This use case uses a default implementation of SecurityIF:
+defaultSecurityIFImpl. In this default implementation, isUserChecked always
+returns true.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="EnvIF"></a>Implementing the Mandatory Interface EnvironmentIF</h4>
+<p>If you want to organize data into Environments, you have to use this
+interface. For example, you may use 2 types of parts object, parts targeted for
+the production, and others for the marketing. Then you can define an environment
+for producing parts and another for marketing parts. These different
+environments implies different attributes, for example the producing parts
+contain the attributes &quot;name&quot;, &quot;type&quot;, &quot;maturity&quot;
+and the marketing parts the attributes &quot;name&quot;, &quot;color&quot;. The
+end-users will choose which environment they need. So, there will be one PEType:
+&quot;part&quot; with two sets of PEAttributes for each environment. Every
+PENode or PELeaf of this type has to belong to one of this two environments. The
+environment of a PENode or a PELeaf is contained in its Uuid.<br>
+This interface contains three methods:
+<ul>
+  <li>getEnvironmentList which returns all the environment available as an array
+    of Strings.<br>
+  </li>
+  <li>If the returned array is not empty then, the getDisplayableInformation
+    method is called. If the returned array is null or empty then, the
+    showDialog method is called. This method returns nothing. In fact you can do
+    what you want in this method. Then the getEnvironmentList method is called
+    again.</li>
+</ul>
+<ul>
+  <li>getDisplayableInformation is called in order to display some information.</li>
+</ul>
+<p>There is no environment in this use case, it uses a default implementation of
+EnvironmentIF: defaultEnvironmentIFImpl. In this default implementation,
+getEnvironmentList returns the environment &quot;default&quot; and the user will
+not choose an environment.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="MetaIF"></a>Implementing the Mandatory Interface MetaDataIF</h4>
+<p>The purpose of this interface is to describe the types of data managed by the
+driver.<br>
+The data could have different types. For example this driver will provide 3
+types of objects: part, model and the third type is the file (.pst) that
+contains the structure.<br>
+A new class: PstMetadataImpl is created to implement the interface MetadataIF.<br>
+This interface contains one method: getTypes, which returns an array of PEType
+Objects.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class PstMetadataImpl implements MetadataIF
+{ 
+  private PEType[] _aType = null ;
+
+  public PEType[] getTypes()
+  {     
+    if( _aType == null)
+    {
+      _aType = new PEType[3];
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>There are three parameters to construct the different PETypes of this system.
+<ul>
+  <li>A name: here &quot;PART_LIST&quot;, &quot;CATIA_MODEL&quot; and &quot;pst
+    file&quot;. This name is the unique identifier of the PEType.<br>
+  </li>
+  <li>When you query on your data, the query will be effective for a particular
+    PEType. So you have to declare whether the type is queryable: false
+    indicates that this type is not queryable and true indicates that this type
+    is queryable. There, only the type &quot;pst file&quot; is queryable.<br>
+    2 kinds of queries string or extended query are available. In order to say
+    which query types you are supporting use the setSupportedQueries method.
+    Here the query is allowed with a search string (value 0) and with the
+    extended query (value 1).<br>
+  </li>
+  <li>The PEType contains also an icon, this icon will be associated with every
+    PENode or PELeaf of this type.<br>
+    This icon is a .gif file with the format 16x16.<br>
+    &quot;Resources/I_BodyYellow.gif&quot; is the path to the first icon, in the
+    jar file.<br>
+    I_BodyYellow is a new icon created for the use case. This icon is located
+    in:
+    <table>
+      <tbody>
+        <tr>
+          <td>Windows</td>
+          <td><code>InstallRootDirectory\CAAPortalBaseApps.edu\CAAPLBADriverPst.mj\lib\</code><code>Resources</code></td>
+        </tr>
+        <tr>
+          <td>Unix</td>
+          <td><code>InstallRootDirectory/CAAPortalBaseApps.edu/CAAPLBADriverPst.mj/lib/</code><code>Resources</code></td>
+        </tr>
+    </table>
+    <p>and is automatically put in the jar with mkmk.<br>
+    The icons iDBmodel01 and iDBdocument01 are already contained in the jar of
+    the WebTree.</p>
+  </li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      _aType[0] = new PEType(&quot;PART_LIST&quot;, false, &quot;Resources/I_BodyYellow.gif&quot;);
+      _aType[1] = new PEType(&quot;CATIA_MODEL&quot;, false, &quot;Resources/iDBmodel01.gif&quot;);
+      _aType[2] = new PEType(&quot;PST_FILE&quot;, true, &quot;Resources/iDBdocument01.gif&quot;);
+
+      int[] aFileQuery = new int[2] ;
+      fileQuery[0]=0;
+      fileQuery[1]=1;
+      types[2].setSupportedQueries(aFileQuery);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Each type of data (PEType) is described by different attributes: the
+PEAttributes.</p>
+<p>A PEAttribute is defined by:</p>
+<ul>
+  <li>its name (the unique identifier),</li>
+  <li>its alias (the name seen by the user),</li>
+  <li>the PEType to which it is tied, the last value is not used for the moment:
+    put to 0.</li>
+</ul>
+<p>Then the PART_LIST type is described by 4 attributes: NAME, MATURITY, DATE,
+CREATOR.<br>
+The visible name of a PENode or PELeaf, in the WebTree, is the concatenation of
+the values of visible attributes. That's why you have to indicate the visibility
+of each attribute: 1 means that the attribute is visible, 0 means the attribute
+is not visible (more generally, the visibility value indicates the position in
+the visible name). Thus, in the use case, the visible name of a node that is a
+PART_LIST type, is only composed of the value of the &quot;NAME&quot; attribute.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      PEAttribute[] aPartAtt = new PEAttribute[4];
+
+      aPartAtt[0] = new PEAttribute(&quot;NAME&quot;,&quot;Name&quot;,_aType[0],0);
+      aPartAtt[0].setTreeVisibility(1); //visible
+
+      aPartAtt[1] = new PEAttribute(&quot;MATURITY&quot;,&quot;Maturity&quot;,_aType[0],0);
+      aPartAtt[1].setTreeVisibility(0); //not visible
+
+      aPartAtt[2] = new PEAttribute(&quot;DATE&quot;,&quot;Creation date&quot;,_aType[0],0);
+      aPartAtt[2].setTreeVisibility(0); //not visible
+
+      aPartAtt[3] = new PEAttribute(&quot;CREATOR&quot;,&quot;Creator&quot;,_aType[0],0);
+      aPartAtt[3].setTreeVisibility(0); //not visible
+	 
+      _aType[0].setAttributes(aPartAtt);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>If you allow extended query on a PEType, you have to indicate which
+PEAttributes can be used in the query by specifying operators for these
+attributes.<br>
+Here an extended query is allowed on the size attribute of a pst file since the
+operators less, equal and greater are associated with this attribute.<br>
+You can also specify help values or authorized values for the operand with the
+setHelpValues and setAuthorizedValues methods.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+      PEAttribute[] aPstFileAtt = new PEAttribute[4];
+
+      aPstFileAtt[0] = new PEAttribute(&quot;NAME&quot;,&quot;Name&quot;,_aType[2],0);
+      aPstFileAtt[0].setTreeVisibility(1);
+
+      aPstFileAtt[1] = new PEAttribute(&quot;PATH&quot;,&quot;Path&quot;,_aType[2],0);
+      aPstFileAtt[1].setTreeVisibility(0);
+
+      aPstFileAtt[2] = new PEAttribute(&quot;SIZE&quot;,&quot;Size&quot;,_aType[2],0);
+      aPstFileAtt[2].setTreeVisibility(0);
+      <strong>String[] operators = {&quot;&lt;=&quot;,&quot;=&quot;,&quot;&gt;=&quot;};
+      aPstFileAtt[2].setOperators(operators);</strong>
+
+      aPstFileAtt[3] = new PEAttribute(&quot;RIGHTS&quot;,&quot;Rights&quot;,_aType[2],0);
+      aPstFileAtt[3].setTreeVisibility(0);
+	 
+      _aType[2].setAttributes(aPstFileAtt);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="DataIF"></a>Implementing the Mandatory Interface DataIF</h4>
+<p>The DataIF interface enables the display and the query of data. It is
+implemented in a new PstDataImpl class instantiated by the driver. Two methods
+have to be implemented:
+<ul>
+  <li>QueryRoot to find data from a query</li>
+  <li>openNode to expand a node.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+public class PstDataImpl implements DataIF
+{ 
+  <em>// Instance of the interface MetadatIF, to know the types</em>
+  private MetadataIF _metadata = null;
+
+  <em>// Path to the pst files for this use case</em>
+  private String _pstFilesPath = null;
+
+  public PstDataImpl(PstMetadataImpl iMDimpl, String iPstFilesPath)
+  {
+    _metadata = iMDimpl;
+    _pstFilesPath = iPstFilesPath;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The QueryRoot method concerns the data whose type has been declared queryable
+in the implementation of the MetadataIF interface. QueryRoot searches the
+objects which meet the conditions expressed by a query and which belong to a
+specified environment.<br>
+The query may be simple (Search String) or more complex (Extended Query). In
+this case it is in the form of an array of (operand, operator, value)); the
+operands and the possible operators having also been defined in the
+implementation of the MetadataIF interface.<br>
+For this use case, the simple query (Search String) and the Extended Query are
+only supported, for the PEType &quot;file pst&quot;.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public PELeaf[] QueryRoot(java.lang.Object iSearch, PEType iTypeOfObject, String iEnvironment)
+  {
+    BrowserServices bs  = BrowserServices.get();
+    <em>// Get the directory containing the pst files</em>
+    File directory      = bs.getFile(_pstFilesPath);
+    <em>// Get the list of the file in this directory</em>
+    String [] aFileList = directory.list();
+
+    PELeaf[] aNodesToBack  = null;
+    Vector nodesToBack_tmp = new Vector();
+
+    for( int i=0; i&lt;aFileList.length; i++)
+    {
+ <em>     // the search is only performed on the pst files</em>
+      if ( aFileList[i].indexOf(&quot;.pst&quot;) != -1 )
+      {
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The simple query is done on the pst file name. The string &quot; % &quot; is
+the wildcard which gives access to all the pst files.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	if( iSearch instanceof String )
+	{
+	  String stringSearch = (String)(iSearch);
+	  if( stringSearch.equals(&quot;%&quot;) ||
+	      fileList[i].equals(stringSearch) )
+	  {
+	    File pstFile = bs.getFile(_pstFilesPath+File.separator+aFileList[i]);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The attributes of the returned PELeaf are set to the PELeaf (or PENode) with
+the setAttributeValues method. The array of String containing these attributes
+has to be filled in the same order as the order used to set the attributes in
+the PEType in PstMetaDataImpl.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	    String[] aPstFileAtt = new String[4];
+
+	    aPstFileAtt[0] = aFileList[i];   <em>//Name</em>
+            aPstFileAtt[1] = _pstFilesPath;  <em>//Path</em>
+            aPstFileAtt[2] = Long.toString(pstFile.length());  <em>//Size</em>
+            aPstFileAtt[3] = (pstFile.canRead()?&quot;r&quot;:&quot;&quot;) + (pstFile.canWrite()?&quot;w&quot;:&quot;&quot;);  <em>//Rights</em>
+
+	    PENode pstFileNode = new PENode(new defaultUuidImpl(aFileList[i]),iTypeOfObject,null);
+            pstFileNode.setAttributeValues(aPstFileAtt);
+	    
+	    nodesToBack_tmp.addElement(pstFileNode);
+	  }
+	}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The extended query involves only the size attribute of the pst file, with the
+operators &quot;&lt;=&quot;, &quot;=&quot; and &quot;&gt;=&quot;.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+	else
+	{
+	  ElementOfQuery[] extendedSearch = (ElementOfQuery[])(iSearch);
+	  try
+	  {
+	    File pstFile = bs.getFile(_pstFilesPath+File.separator+aFileList[i]);
+	    long sizeAttribute = pstFile.length();
+	    for (int j=0; j&lt;extendedSearch.length; j++)
+	    {
+	      String operator = extendedSearch[j].getOperator();
+	      Long operand = Long.valueOf(extendedSearch[j].getOperand());
+	      if( (operator.equals(&quot;&lt;=&quot;) &amp;&amp; sizeAttribute &lt;= operand.longValue())||
+		  (operator.equals(&quot;=&quot; ) &amp;&amp; sizeAttribute == operand.longValue())||
+		  (operator.equals(&quot;&gt;=&quot;) &amp;&amp; sizeAttribute &gt;= operand.longValue()) )
+	      {
+		String[] aPstFileAtt = new String[4];
+
+                aPstFileAtt[0] = aFileList[i];   <em>//Name</em>
+                aPstFileAtt[1] = _pstFilesPath;  <em>//Path</em>
+                aPstFileAtt[2] = Long.toString(sizeAttribute);  <em>//Size</em>
+                aPstFileAtt[3] = (pstFile.canRead()?&quot;r&quot;:&quot;&quot;) + (pstFile.canWrite()?&quot;w&quot;:&quot;&quot;);  <em>//Rights</em>
+
+		PENode pstFileNode = new PENode(new defaultUuidImpl(fileList[i]),iTypeOfObject,null);
+		pstFileNode.setAttributeValues(aPstFileAtt);
+
+		nodesToBack_tmp.addElement(pstFileNode);
+	      }
+	    }
+	  }
+	  catch(NumberFormatException e)
+	  {
+	    e.printStackTrace();
+	  }
+	}
+      }
+    }
+    aNodesToBack = new PELeaf[nodesToBack_tmp.size()];
+    nodesToBack_tmp.copyInto(aNodesToBack);
+    return aNodesToBack;
+  }      
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The openNode method must return the children of a Node. This method is called
+each time the user clicks on a node to open it.<br>
+In this use case, only pst file and PART_LIST are nodes, and could be opened.<br>
+If a pst file node is opened, it returns the PART_LIST node which is the root of
+the product structure.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  public PELeaf[] openNode(PENode iNode)   
+  {
+    PEType[] aTypes        = _metadata.getTypes();
+    PELeaf[] aNodesToBack  = null;
+    Vector nodesToBack_tmp = new Vector();
+	
+    String nodeUuid = ((defaultUuidImpl)(iNode.getUuid())).getIdent();
+
+    if ( (iNode.getType().getName()).equals(&quot;PST_FILE&quot;) )
+    {
+      PstParser pst = new PstParser(_pstFilesPath, nodeUuid);
+
+      String partListRootUuid = (String)(PstParser._rootPartHashtable.get(nodeUuid));
+      String[] attributes = (String[])(PstParser._attributesHashtable.get(partListRootUuid));
+
+      String[] aPartAtt = new String[4];
+      aPartAtt[0] = attributes[2];  <em>//Name</em>
+      aPartAtt[1] = attributes[3]+&quot;%&quot;;  <em>//Maturity</em>
+      aPartAtt[2] = attributes[4];  <em>//Date</em>
+      aPartAtt[3] = attributes[5];  <em>//Creator</em>
+
+      PENode partList = new PENode(new defaultUuidImpl(partListRootUuid),aTypes[0],null);
+      partList.setAttributeValues(aPartAtt);
+
+      nodesToBack_tmp.addElement(partList);
+    }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>If a PART_LIST node is open, the children are PART_LIST or CATIA_MODEL.<br>
+A PART_LIST is represented by a PENode whereas a CATIA_MODEL is representedby a
+PELeaf since it doesn't have children.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    else
+    {
+      <em>//gets the identifiers of the Part_List that are children of the node</em>
+      String[] partListChild = (String[])(PstParser._nodeChildHashtable.get(nodeUuid));
+
+      for( int i=partListChild.length-1; i&gt;=0; i--)
+      {
+        String[] attributes = (String[])(PstParser._attributesHashtable.get(partListChild[i]));
+
+	if( attributes[1].equals(&quot;PART_LIST&quot;) )
+	{
+	  String[] aPartAtt = new String[4];
+          aPartAtt[0] = attributes[2];  <em>//Name</em>
+          aPartAtt[1] = attributes[3]+&quot;%&quot;;  <em>//Maturity</em>
+          aPartAtt[2] = attributes[4];  <em>//Date</em>
+          aPartAtt[3] = attributes[5];  <em>//Creator</em>
+
+	  PENode partList = new PENode(new defaultUuidImpl(partListChild[i]),types[0],null);
+	  partList.setAttributeValues(aPartAtt);
+
+	  nodesToBack_tmp.addElement(partList);
+	}
+	else <em>//it is a CATIA_MODEL</em>
+	{
+	  String[] aModelAtt = new String[4];
+          aModelAtt[0] = attributes[2];  <em>//Name</em>
+          aModelAtt[1] = attributes[3];  <em>//Type</em>
+          aModelAtt[2] = attributes[4];  <em>//Date</em>
+          aModelAtt[3] = attributes[5];  <em>//Creator</em>
+
+	  PELeaf catiaModel = new PELeaf(new defaultUuidImpl(partListChild[i]),types[0]);
+	  catiaModel.setAttributeValues(aModelAtt);
+
+	  nodesToBack_tmp.addElement(catiaModel);
+	}
+      }
+    }
+
+    aNodesToBack = new PELeaf[nodesToBack_tmp.size()];
+    nodesToBack_tmp.copyInto(aNodesToBack);
+
+    <em>// Attaches the children to the father Node</em>
+    <strong>iNode.setChildren(aNodesToBack)</strong>;
+
+    return aNodesToBack ; 	       
+  }   
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that the children must not only be returned by the OpenNode method but
+also be set to the input code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="PersistantIF"></a>Implementing the Optional Interface
+persistantDataIF, to Bookmark</h4>
+<p><br>
+The persistantdataIF contains the methods used to bookmark data in the WebTree.<br>
+Two methods have to be implemented:
+<ul>
+  <li>isQueryableByUuid</li>
+  <li>restoreFromUuid.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>...
+public class PstPersistantDataImpl implements persistantDataIF
+{
+  // Instance of the interface MetadatIF, to know the types
+  private MetadataIF _metadata = null;
+ 
+</em>  <em>// Path to the pst files for this use case
+  private String _pstFilesPath = null;
+  
+  public SamplePersistantDataImpl(SampleMetadataImpl iMDimpl, String iPstFilesPath )
+  {
+    _metadata = iMDimpl;
+    _pstFilesPath = iPstFilesPath;
+  }
+...</em></pre>
+    </td>
+  </tr>
+</table>
+<p>isQueryableByUuid returns a boolean indicating if the PENode or the PELeaf is
+bookmarkable.<br>
+The information stored in the bookmark is:
+<ul>
+  <li>the unique identifier and the environment of the bookmarked PELeaf (or
+    PENode). These two pieces of information are contained in the Uuid</li>
+  <li>the name of the PEType</li>
+  <li>the Context (not used for the moment).</li>
+</ul>
+<p>For this use case, all the data are bookmarkable.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>...</em>
+  public boolean isQueryableByUuid(Uuid iObjectRequested, String iTypeName, Context iContext)
+  {
+    return true;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>restoreFromUuid returns the bookmarked PELeaf. The information given to
+restore the PELeaf are:
+<ul>
+  <li>the Uuid, containing the identifier and the environment (not used for this
+    sample)</li>
+  <li>the name of the PEType</li>
+  <li>the Context (not used for the moment).</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre><em>...</em>
+  public PELeaf restoreFromUuid(Uuid iObjectRequested, String iTypeName, Context iContext)
+  {
+    PELeaf   leaf  = null;
+    PEType[] types = _metadata.getTypes();
+    String   uuid  = iObjectRequested.getIdent();
+ 
+    if( iTypeName.equals(&quot;PST_FILE&quot;) )
+    {
+      BrowserServices bs = BrowserServices.get();
+      File pstFile = bs.getFile(_pstFilesPath+File.separator+uuid);
+
+      String[] aPstFileAtt = new String[4];
+      aPstFileAtt[0] = uuid;  <em>//Name</em>
+      aPstFileAtt[1] = _pstFilesPath;  <em>//Path</em>
+      aPstFileAtt[2] = Long.toString(pstFile.length());  <em>//Size</em>
+      aPstFileAtt[3] = (pstFile.canRead()?&quot;r&quot;:&quot;&quot;) + (pstFile.canWrite()?&quot;w&quot;:&quot;&quot;);  <em>//Rights</em>
+
+      
+      leaf = new PENode(new defaultUuidImpl(uuid),types[2],null);
+      leaf.setAttributeValues(aPstFileAtt);
+    }
+    else 
+    {
+      String fileName = uuid.substring(uuid.lastIndexOf(&quot;'&quot;)+1);
+
+      PstParser pst = new PstParser(_pstFilesPath, fileName);
+
+      if( iTypeName.equals(&quot;PART_LIST&quot;) )
+      {
+        String[] attributes = (String[])(PstParser._attributesHashtable.get(uuid));
+        String[] aPartAtt = new String[4];
+        aPartAtt[0] = attributes[2];  <em>//Name</em>
+        aPartAtt[1] = attributes[3]+&quot;%&quot;;  <em>//Maturity</em>
+        aPartAtt[2] = attributes[4];  <em>//Date</em>
+        aPartAtt[3] = attributes[5];  <em>//Creator</em>
+
+        leaf = new PENode(new defaultUuidImpl(uuid),types[0],null);
+        leaf.setAttributeValues(aPartAtt);
+      }
+      else if( iTypeName.equals(&quot;CATIA_MODEL&quot;) )
+      {
+        String[] attributes = (String[])(PstParser._attributesHashtable.get(uuid));
+        String[] aModelAtt = new String[4];
+        aModelAtt[0] = attributes[2];  <em>//Name</em>
+        aModelAtt[1] = attributes[3];  <em>//Type</em>
+        aModelAtt[2] = attributes[4];  <em>//Date</em>
+        aModelAtt[3] = attributes[5];  <em>//Creator</em>
+
+        leaf = new PELeaf(new defaultUuidImpl(uuid),types[1]);
+        leaf.setAttributeValues(aModelAtt);
+      }
+    }          
+          
+    return leaf;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Query"></a>Creating the File Query_PstDriver.properties</h4>
+<p>The Query_PstDriver.properties file is referenced in the &quot;Query
+All&quot; sub-bookmark that has been defined in SearchProject.xml file. The
+inner mechanism is that when the &quot;Query All&quot; sub-bookmark is
+activated, the Query CATlet is instantiated with the Query_PstDriver.properties
+file as a parameter.</p>
+<p>The file Query_PstDriver.properties specifies different properties of the
+query window:</p>
+<ul>
+  <li>the name of the query window,</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>nameofQuery=SampleDriver Query
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>the kind of query that will be proposed (if this query is supported by the
+    queried PEType),</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+typeOfQuery=Casta.StringSearch
+# other solution Casta.ExtendedQuery
+...</pre>
+    </td>
+  </tr>
+</table>
+<ul>
+  <li>all the queryable PETypes, specifying the names of the PETypes
+    (&quot;Casta.All&quot; is the wild card for all the PETypes) and the name of
+    the Driver to access these PETypes.<br>
+    Though all the PETypes of Pst Driver should be queriable, only the &quot;pst
+    file&quot; type is constructed as queriable, so only the &quot;pst
+    file&quot; type is proposed in the query window.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+nbTypes=1
+Types.0.id=Casta.All
+Types.0.driver_id=Sample Driver</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates the way to create a driver in ENOVIA Portal by
+using interfaces of databackend.dataType.<br>
+First the <i>Driver2</i> interface must be implemented by a new class which must
+also provide the implementation of mandatory interfaces: <i>MetadatIF, DataIF</i><em>,
+SecurityIF, EnvironmentIF, </em>and optional interfaces such as <i>persistantdataIF</i>.
+Some default implementations are supplied by Dassault Systèmes.<br>
+At last, a new property file must describe this driver.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

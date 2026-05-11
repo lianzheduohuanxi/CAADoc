@@ -1,0 +1,1015 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>InfInterfaces VisPropertySet (Object)</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../InfInterfaces.htm" href="../InfInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "InfInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "VisPropertySet"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>VisPropertySet<font size=-1> (Object)</font></h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_VisPropertySet_21585','VisPropertySet','0');</script>
+<b><i> Represents the graphic properties for the current selection.</i></b><br>
+
+ <b>Role</b>: We retrieve the graphic properties of the current selection 
+ thanks to <script type="text/javascript"> activateLinkAnchor('Selection','VisProperties','Selection.VisProperties') </script> <br>
+ <br><b> The graphic properties are:</b>
+ <ul>
+ <li><i>The Color</i></li>
+ <br>The Color is defined by 3 components (red,green,blue). Each component ranges from 0 to 255
+ <li><i>The Opacity</i></li>
+ <br>The opacity is defined from 255 (total opacity) to 0 (total transparency). 
+ In Material visualization mode the transparency is real, so the element
+ is truly  more or less opaque. But in another visualization mode, the transparency is a 
+ simulation, so if the opacity is between 0 and 254 the element is transparent but with the same 
+ visual effect and if the opacity is 255 the element is opaque.   
+ <li><i>The width of a line</i></li>
+ <br> Each index defines a width  customizable in Tools/Options.
+ <li><i>The type of a line</i></li>
+ <br>Solid, Dashed, ...
+ <li><i>The symbol of a point</i></li>
+ <br>Star, Dot, ...
+ </ul>
+ <b>A partial modification of an object</b>
+ <br>A part (for example) contains faces, edges, lines, points. Interactively with the Edit 
+ Properties command the end user can change their color, their line type and so one. To 
+ go faster there is the Graphic Toolbar which contains a sub-set of properties.
+ So this interface follows the behavior of the graphic toolbar. The color, the line type ...
+ is applicated to the sub-element of the object defined by the application, and that you can
+ retrieve in the graphic toolbar.   
+ <br><br>
+ <b>A multiple selection</b>
+ <br>When we modify a graphic property using the Setxxx methods, we modify 
+ one by one each element of the current selection. 
+ <br>When we read a graphic property using the Getxxx methods, we retrieve an information
+ which is valid for all elements of the current selection.
+ <br><br>
+ <b>Real versus Visible graphic properties</b>
+ <br>Elements of the current selection are inside a specification tree:
+ <pre>
+   Example :
+    
+   Product0
+        Part1
+           Part3
+        Part2
+
+ </pre>
+ In this sample, product0 and Part1 are nodes and Part3 and Part2 are leaves.
+ <br>Each element (node and leaf) of this tree has its own graphic properties: that is 
+ the <b>"Real"</b> graphic properties.
+ <br>But there is an inheritance mecanism, so each element has also <b>"Visible"</b> 
+ graphic properties. An element can be displayed with an another graphic properties that 
+ its real graphic properties.
+ <br><br><b>The inheritance is the following</b>: 
+ <br>From the root of the tree, the first node with 
+ an inheritance flag to 1, gives its property to each element below it. 
+ For each graphic property there is an independantly inheritance. 
+ <pre>
+   Example with the color property: ( color inheritance flag, color)
+    
+   Product0    (1,red)
+        Part1    (0,blue)
+           Part3   (1,green)
+        Part2    (0,Yellow)
+
+ </pre> 
+ In this sample the real colord of the product0 is red, blue for the part1, 
+ green for the part3 and yellow for the part2. But the visible color of each element
+ is red, because the product0 gives the red color at all the tree.
+
+ 
+<dl>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('Selection','','Selection') </script>
+</dl>
+<hr>
+<dl>
+</dl>
+<dl>
+ <h2><a name="MethodIndex"></a>Method Index</h2>
+ <dt>
+    <a href="#GetLayer"><b>GetLayer</b></a>
+<dd>  Returns the layer for the current selection.
+ <dt>
+    <a href="#GetPick"><b>GetPick</b></a>
+<dd>  Returns the state pick mode for the current selection.
+ <dt>
+    <a href="#GetRealColor"><b>GetRealColor</b></a>
+<dd>  Retrieves the real color for the current selection.
+ <dt>
+    <a href="#GetRealInheritance"><b>GetRealInheritance</b></a>
+<dd>  Retrieves the real inheritance flag for the current selection.
+ <dt>
+    <a href="#GetRealLineType"><b>GetRealLineType</b></a>
+<dd>  Retrieves the real line type for the current selection.
+ <dt>
+    <a href="#GetRealOpacity"><b>GetRealOpacity</b></a>
+<dd>  Retrieves the real opacity for the current selection.
+ <dt>
+    <a href="#GetRealWidth"><b>GetRealWidth</b></a>
+<dd>  Retrieves the real line width for the current selection.
+ <dt>
+    <a href="#GetShow"><b>GetShow</b></a>
+<dd>  Returns the state show mode for the current selection.
+ <dt>
+    <a href="#GetSymbolType"><b>GetSymbolType</b></a>
+<dd>  Retrieves the symbol type for the current selection.
+ <dt>
+    <a href="#GetVisibleColor"><b>GetVisibleColor</b></a>
+<dd>  Retrieves the displayed (visible) color for the current selection.
+ <dt>
+    <a href="#GetVisibleInheritance"><b>GetVisibleInheritance</b></a>
+<dd>  Checks if the real property is hidden.
+ <dt>
+    <a href="#GetVisibleLineType"><b>GetVisibleLineType</b></a>
+<dd>  Retrieves the displayed (visible) line type for the current selection.
+ <dt>
+    <a href="#GetVisibleOpacity"><b>GetVisibleOpacity</b></a>
+<dd>  Retrieves the displayed (visible) opacity for the current selection.
+ <dt>
+    <a href="#GetVisibleWidth"><b>GetVisibleWidth</b></a>
+<dd>  Retrieves the displayed (visible) line width for the current selection.
+ <dt>
+    <a href="#SetLayer"><b>SetLayer</b></a>
+<dd>  Sets the layer for the current selection.
+ <dt>
+    <a href="#SetPick"><b>SetPick</b></a>
+<dd>  Sets the state pick mode for the current selection.
+ <dt>
+    <a href="#SetRealColor"><b>SetRealColor</b></a>
+<dd>  Sets the real color and the color inheritance flag for the current selection.
+ <dt>
+    <a href="#SetRealLineType"><b>SetRealLineType</b></a>
+<dd>  Sets the real line type and the line type inheritance flag for the current selection.
+ <dt>
+    <a href="#SetRealOpacity"><b>SetRealOpacity</b></a>
+<dd>  Sets the opacity and the opacity inheritance flag for the current selection.
+ <dt>
+    <a href="#SetRealWidth"><b>SetRealWidth</b></a>
+<dd>  Sets the real line width and the line width inheritance flag for the current selection.
+ <dt>
+    <a href="#SetShow"><b>SetShow</b></a>
+<dd>  Sets the state show mode for the current selection.
+ <dt>
+    <a href="#SetSymbolType"><b>SetSymbolType</b></a>
+<dd>  Sets the symbol type.
+</dl>
+ <h2><a name="Methods"></a>Methods</h2> <br>
+<a name="GetLayer"><dt>
+
+<table><tr><td>o Func <b>GetLayer</b>(<td><script type="text/javascript"> activateLink('CatVisLayerType','CatVisLayerType')</script> <td><tt>oLayerType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oLayerValue</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the layer for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLayerType</tt>
+   <dd>  the type of the layer <br>
+  When the type is equal to catVisLayerNone, the layer of the current selection is "none". <br>
+  When the type is equal to catVisLayerBasic, the layer of the currection selection is indicated by the following parameter. <br>
+ </dd>
+    <dt><tt> oLayerValue</tt>
+   <dd>  A value between 0 to 1000 <br>
+  This parameter is usefull only when the type of the layer is catVisLayerBasic.
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve layer of current selection.
+ <pre>
+ Dim layer
+ layer = CLng(0) 
+ Dim layertype As CatVisLayerType
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetLayer layertype, layer
+ If (layertype = catVisLayerNone) Then 
+ MsgBox "Layer None"
+ End If
+ If (layertype = catVisLayerBasic) Then 
+ MsgBox "layer =" & layer
+ End If
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetPick"><dt>
+
+<table><tr><td>o Func <b>GetPick</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyPick','CatVisPropertyPick')</script> <td><tt>oPick</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the state pick mode for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve pick mode of current selection.
+ <pre>
+ Dim pickstate As CatVisPropertyPick
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetPick pickstate
+ MsgBox "pick = " & pickstate
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetRealColor"><dt>
+
+<table><tr><td>o Func <b>GetRealColor</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oRed</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oGreen</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oBlue</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the real color for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oRed</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> oGreen</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> oBlue</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same real color, so 
+ oRed, oGreen and oBlue are valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The real color is not the same for all elements of the current selection, so 
+ oRed, oGreen and oBlue are not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve real colors of current selection.
+ <pre>
+ Dim r, g, b 
+ r = CLng(0) 
+ g = CLng(0) 
+ b = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetRealColor r, g, b 
+ MsgBox "r = " & r & " g = " & g & " b = " & b 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetRealInheritance"><dt>
+
+<table><tr><td>o Func <b>GetRealInheritance</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyType','CatVisPropertyType')</script> <td><tt>iPropertyType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oInheritance</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the real inheritance flag for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPropertyType</tt>
+   <dd>  The type of property: Color, Opacity, Line Width, Line Type 
+ </dd>
+    <dt><tt> oInheritance</tt>
+   <dd> <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance 
+ <dt><tt>1</tt>
+ <dd>Heritance
+ </dl>
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same real inheritance flag 
+ for the iPropertyType , so oInheritance is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The real inheritance flag for iPropertyType is not the same for all elements of the current selection,
+ so oInheritance is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve inheritance of current selection.
+ <pre>
+ Dim inhLineType, inhWidth, inhColor, inhOpacity
+ inhLineType = CLng(0) 
+ inhWidth = CLng(0) 
+ inhColor = CLng(0) 
+ inhOpacity = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetRealInheritance catVisPropertyLineType, inhLineType
+ visProperties1.GetRealInheritance catVisPropertyWidth, inhWidth
+ visProperties1.GetRealInheritance catVisPropertyColor, inhColor
+ visProperties1.GetRealInheritance catVisPropertyOpacity, inhOpacity
+ MsgBox "Inheritance : linetype = " & inhLineType & "width =" & inhWidth & "Colour ="  & inhColor & "Opacity =" & inhOpacity
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetRealLineType"><dt>
+
+<table><tr><td>o Func <b>GetRealLineType</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oLineType</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the real line type for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLineType</tt>
+   <dd> The value ranges from 1 to 63. Each indice is a line type customizable in
+ the page Tools/Options/General/Display/Line Type.
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same real line type , so 
+ oLineType is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The real line type is not the same for all elements of the current selection,
+ so oLineType is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oLineType is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve real line type of current selection.
+ <pre>
+ Dim linetype
+ linetype = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetRealLineType linetype
+ MsgBox "linetype = " & linetype
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetRealOpacity"><dt>
+
+<table><tr><td>o Func <b>GetRealOpacity</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oOpacity</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the real opacity for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOpacity</tt>
+   <dd>  a value between 0 (total transparency) and 255 (total opacity)
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same real opacity value, so 
+ oOpacity is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The real opacity value is not the same for all elements of the current selection, so 
+ oOpacity is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oOpacity is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve real opacity of current selection.
+ <pre>
+ Dim op
+ op = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetRealOpacity op 
+ MsgBox "opacity = " & op
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetRealWidth"><dt>
+
+<table><tr><td>o Func <b>GetRealWidth</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oLineWidth</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the real line width for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLineWidth</tt>
+   <dd> The value ranges from 1 to 63. Each indice is a thickness customizable in
+ the page Tools/Options/General/Display/thickness.
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same real width , so 
+ oLineWidth is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The real width is not the same for all elements of the current selection,
+ so oLineWidth is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oLineWidth is not valid
+ </dl>	
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve real line width of current selection.
+ <pre>
+ Dim width
+ width = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetRealWidth width
+ MsgBox "width = " & width
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetShow"><dt>
+
+<table><tr><td>o Func <b>GetShow</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyShow','CatVisPropertyShow')</script> <td><tt>oShow</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Returns the state show mode for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve show mode of current selection.
+ <pre>
+ Dim showstate As CatVisPropertyShow
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetShow showstate
+ MsgBox "show = " & showstate
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetSymbolType"><dt>
+
+<table><tr><td>o Func <b>GetSymbolType</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oSymbolType</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the symbol type for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oSymbolType</tt>
+   <dd> The symbol type. See </dd>
+</dl>
+<script type="text/javascript"> activateLinkAnchor('','SetSymbolType','SetSymbolType') </script> to have values. 
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same symbol type , so 
+ oLineType is valid
+ <dt><tt>catVisPropertiesUnDefined</tt>
+ <dd>The symbol type is not the same for all elements of the current selection,
+ so oLineType is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oSymbolType is not valid
+ </dl>
+ </dd>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve symbol line type of current selection.
+ <pre>
+ Dim symbol
+ symbol = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetSymbolType symbol
+ MsgBox "Symbol = " & symbol
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetVisibleColor"><dt>
+
+<table><tr><td>o Func <b>GetVisibleColor</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oRed</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oGreen</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oBlue</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the displayed (visible) color for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oRed</tt>
+   <dd>  a value between 0 and 255
+ </dd>
+    <dt><tt> oGreen</tt>
+   <dd>  a value between 0 and 255
+ </dd>
+    <dt><tt> oBlue</tt>
+   <dd>  a value between 0 and 255
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same visible color, so 
+ oRed, oGreen and oBlue are valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The visible color is not the same for all elements of the current selection, so 
+ oRed, oGreen and oBlue are not valid
+ </dl>	
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve displayed colors of current selection.
+ <pre>
+ Dim r, g, b 
+ r = CLng(0) 
+ g = CLng(0) 
+ b = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetVisibleColor r, g, b 
+ MsgBox "r = " & r & " g = " & g & " b = " & b 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetVisibleInheritance"><dt>
+
+<table><tr><td>o Func <b>GetVisibleInheritance</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyType','CatVisPropertyType')</script> <td><tt>iPropertyType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oInheritance</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Checks if the real property is hidden.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPropertyType</tt>
+   <dd>  The type of property : Color, Opacity, Line Width, Line Type 
+ </dd>
+    <dt><tt> oInheritance</tt>
+   <dd> <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance: All parents of each element of the current selection have an inheritance
+ flag to 0.
+ <dt><tt>1</tt>
+ <dd>Heritance: one parent of each element, perhaps the element itself, as a inheritance 
+ flag to 1. 
+ </dl>
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same inheritance flag 
+ for the iPropertyType , so oInheritance is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The inheritance flag for iPropertyType is not the same for all elements of the current selection,
+ so oInheritance is not valid
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="GetVisibleLineType"><dt>
+
+<table><tr><td>o Func <b>GetVisibleLineType</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oLineType</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the displayed (visible) line type for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLineType</tt>
+   <dd> A value ranges from 1 to 63. 
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same visible line type , so 
+ oLineType is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The visible line type is not the same for all elements of the current selection,
+ so oLineType is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oLineType is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve displayed line type of current selection.
+ <pre>
+ Dim linetype
+ linetype = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetVisibleLineType linetype
+ MsgBox "linetype = " & linetype
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetVisibleOpacity"><dt>
+
+<table><tr><td>o Func <b>GetVisibleOpacity</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oOpacity</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the displayed (visible) opacity for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oOpacity</tt>
+   <dd>  a value between 0 (total transparency) and 255 (total opacity)
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same visible opacity value, so 
+ oOpacity is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The visible opacity value is not the same for all elements of the current selection, so 
+ oOpacity is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oOpacity is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve displayed opacity of current selection.
+ <pre>
+ Dim op
+ op = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetVisibleOpacity op 
+ MsgBox "opacity = " & op
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="GetVisibleWidth"><dt>
+
+<table><tr><td>o Func <b>GetVisibleWidth</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>oLineWidth</tt>) As <script type="text/javascript"> activateLink('CatVisPropertyStatus','CatVisPropertyStatus')</script> </table></dt>
+<dl>
+  <dd>
+ Retrieves the displayed (visible) line width for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLineWidth</tt>
+   <dd> A value ranges from 1 to 63. 
+ </dd>
+    <dt><tt> oStatus</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>catVisPropertyDefined</tt>
+ <dd>All elements in the current selection have the same visible width , so 
+ oLineWidth is valid
+ <dt><tt>catVisPropertyUnDefined</tt>
+ <dd>The visible width is not the same for all elements of the current selection,
+ so oLineWidth is not valid
+ <dt><tt>catVisProperty?</tt>
+ <dd>At least one element of the current selection is not concerned by 
+ this property, so oLineWidth is not valid
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to retrieve displayed line width of current selection.
+ <pre>
+ Dim width
+ width = CLng(0) 
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.GetVisibleWidth width
+ MsgBox "width = " & width
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetLayer"><dt>
+
+<table><tr><td>o Sub <b>SetLayer</b>(<td><script type="text/javascript"> activateLink('CatVisLayerType','CatVisLayerType')</script> <td><tt>iLayerType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLayerValue</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the layer for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLayerType</tt>
+   <dd>  the type of the layer
+ </dd>
+    <dt><tt> iLayerValue</tt>
+   <dd>  A value between 0 to 1000 <br>
+  This parameter is used only when the type of the layer is catVisLayerBasic.
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change layer of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetLayer catVisLayerBasic, 100
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetPick"><dt>
+
+<table><tr><td>o Sub <b>SetPick</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyPick','CatVisPropertyPick')</script> <td><tt>iPick</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the state pick mode for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change pick mode of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetPick catVisPropertyNoPickAttr
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetRealColor"><dt>
+
+<table><tr><td>o Sub <b>SetRealColor</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iRed</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iGreen</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iBlue</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iInheritance</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the real color and the color inheritance flag for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iRed</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> iGreen</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> iBlue</tt>
+   <dd>  A value between 0 and 255
+ </dd>
+    <dt><tt> iInheritance</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance 
+ <dt><tt>1</tt>
+ <dd>Heritance
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change colour of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetRealColor 255,0,0,1 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetRealLineType"><dt>
+
+<table><tr><td>o Sub <b>SetRealLineType</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLineType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iInheritance</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the real line type and the line type inheritance flag for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineType</tt>
+   <dd> The value ranges from 1 to 63. Each indice is a line type customizable in
+ the page Tools/Options/General/Display/Line Type.
+ </dd>
+    <dt><tt> iInheritance</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance 
+ <dt><tt>1</tt>
+ <dd>Heritance
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change line type of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetRealLineType 4,1 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetRealOpacity"><dt>
+
+<table><tr><td>o Sub <b>SetRealOpacity</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iOpacity</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iInheritance</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the opacity and the opacity inheritance flag for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOpacity</tt>
+   <dd>  A value between 0 (total transparency) and 255 (total opacity). 
+ </dd>
+    <dt><tt> iInheritance</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance 
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change opacity of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetRealOpacity 128,1 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetRealWidth"><dt>
+
+<table><tr><td>o Sub <b>SetRealWidth</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLineWidth</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iInheritance</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the real line width and the line width inheritance flag for the current selection.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLineWidth</tt>
+   <dd> The value ranges from 1 to 63. Each indice is a thickness customizable in
+ the page Tools/Options/General/Display/thickness.
+ </dd>
+    <dt><tt> iInheritance</tt>
+   <dd> <b>Legal value:</b>
+ <dl>
+ <dt><tt>0</tt>
+ <dd>No heritance 
+ <dt><tt>1</tt>
+ <dd>Heritance
+ </dl>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change line width of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetRealWidth 4,1 
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetShow"><dt>
+
+<table><tr><td>o Sub <b>SetShow</b>(<td><script type="text/javascript"> activateLink('CatVisPropertyShow','CatVisPropertyShow')</script> <td><tt>iShow</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the state show mode for the current selection.
+ <br><b>Note</b>: This property is global for the object.
+ 
+<dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change show mode of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetShow catVisPropertyNoShowAttr
+ </pre></pre></dd>
+</dl>
+</dl>
+<a name="SetSymbolType"><dt>
+
+<table><tr><td>o Sub <b>SetSymbolType</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iSymbolType</tt>)</table></dt>
+<dl>
+  <dd>
+ Sets the symbol type.
+ <br><b>Note:</b>There is no heritage for symbols. That is why there is only one function
+ "SetSymbolType"  and no function "SetRealSymbolType" or "SetVisibleSymbolType"
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSymbolType</tt>
+   <dd>	The symbol type
+	<br><b>legal values</b>:
+	<ul>
+	<li> 1 : a cross which looks like a "X".</li>
+	<li> 2 : a cross which looks like a "+"</li>
+	<li> 3 : an unfilled circle</li>
+	<li> 4 : two unfilled concentric circles</li>
+	<li> 5 : a filled circle</li>
+	<li> 6 : a filled square</li>
+	<li> 7 : a star which is the union of a 2D marker CROSS ,a 2D marker PLUS and a 2D marker DOT</li>
+	<li> 8 : a dot </li>
+	<li> 9 : a smalldot (one pixel)</li>
+	<li> 10 : a kind of arrow which points to the bottom-left
+	<pre>
+	     /
+	|  /
+	|/__
+	</pre>
+	</li>
+	<li> 11 : a kind of arrow which points to the top-rigth
+	<pre>
+	    ___ 	
+	      /| 
+	    /  |
+	  /
+	</pre>
+	</li>
+	<li> FULLCIRCLE2 : a big 12</li>
+	<li> FULLSQUARE2 : a big 13</li>
+	</ul>
+ </dd>
+</dl>
+  <dt> Example: </dt> 
+  <dd> <pre class="code">  The following sample shows how to change symbol type of current selection.
+ <pre>
+ Set visProperties1 = CATIA.ActiveDocument.Selection.VisProperties 
+ visProperties1.SetSymbolType 4
+ </pre></pre></dd>
+</dl>
+</dl>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

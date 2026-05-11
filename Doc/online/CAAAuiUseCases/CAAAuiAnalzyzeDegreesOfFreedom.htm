@@ -1,0 +1,362 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Analyzing Degrees of Freedom of a Component in an Assembly</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Assembly Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Analyzing Degrees of Freedom of a Component in an Assembly</h3>
+      <em>Retrieve a sub-component named "DoF" under the root product and analyzes its degrees of freedom</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAAsmAnalyzeFreedoms use case. This use
+      case explains how to analyze the degrees of freedom of a component in a product.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAAsmAnalyzeFreedoms Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAAsmAnalyzeFreedoms Do</a></li>
+            <li><a href="#How">How to Launch CAAAsmAnalyzeFreedoms</a></li>
+            <li><a href="#Where">Where to Find the CAAAsmAnalyzeFreedoms Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use the capability of analyzing the degrees 
+of freedom of a component product which can be constrained. More specifically, you will learn how to:</p>
+<ul>
+  <li>Load a document in session. The name of the document to load is a parameter of the command.</li>
+  <li>Find the root product, and retrieve a child of it, named "DoF".</li>
+  <li>If found, computes the degrees of freedom of this "DoF" component,  and analyze each of them.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAsmAnalyzeFreedoms Use Case</h3>
+<p>CAAAsmAnalyzeFreedoms is a use case of the CAAAssemblyUI.edu framework that
+illustrates the ConstraintModeler framework capabilities.</p>
+<p>Before discussing the use case, some main concepts have to be introduced:</p>
+<ul>
+  <li>
+    <p>A product can contain some constraints defined between its components</li>
+  <li>
+    <p>Each of these components can have from 0 to 6 degrees of freedom with regards to these constraints : translation(s), rotation(s) or screw.
+    </li>
+  <li>
+    <p>The analyzis is done not relatively, but absolutely: typically, it means that 
+	if there is no fixed component, each component will have 6 degrees of freedom whatever the constraint network between them is.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAAsmAnalyzeFreedoms Do ?</h4>
+<p>CAAAsmAnalyzeFreedoms does the following:</p>
+<ul>
+  <li>Opens a CATProduct document.</li>
+  <li>Searches for a component named "DoF" among all the children (components) of the root product of the document.</li>
+  <li>If no child is named "DoF", error code 20 is returned.</li>
+  <li>If a component named "DoF" is found, it computes its number of degrees of freedom.</li>
+  <li>For each of these degrees, retrieves the associated logical and mathematical information.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAAsmAnalyzeFreedoms</h4>
+<p>To launch CAAAsmAnalyzeFreedoms, you will need to set up the build time
+environment, then compile CAAAsmAnalyzeFreedoms along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAAsmAnalyzeFreedoms InputDirectory\Fou.CATProduct </pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAAsmAnalyzeFreedoms InputDirectory/Fou.CATProduct </pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tbody>
+    <tr>
+      <td><code>InputDirectory:</code></td>
+      <td>The directory into which the document Fou.CATProduct is stored, usually in the
+        resources directory of your RuntimeView</td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAsmAnalyzeFreedoms Code</h4>
+<p>The CAAAsmAnalyzeFreedoms use case is located in the
+CAAAsmAnalyzeFreedoms.m module of the CAAAssemblyUI.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAssemblyUI.edu\CAAAsmAnalyzeFreedoms.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAssemblyUI.edu/CAAAsmAnalyzeFreedoms.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five main steps in CAAAsmAnalyzeFreedoms:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Scanning the root product chilfren to retrieve the component named "DoF"</a></li>
+  <li><a href="#Step3">Compute the number of degrees of freedom of "DoF" component</a></li>
+  <li><a href="#Step4">Analyze all these eventual degrees of freedom</a></li>
+  <li><a href="#Step5">Epilog</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAAsmAnalyzeFreedoms begins by checking that the command lines contains one 
+argument with the command name "CAAAsmAnalyzeFreedoms". Then it creates a session, and load the
+document which name is this argument. If the document does not exist a code 11 is returned.</p>
+<p> Then CAAAsmAnalyzeFreedoms retrieves the document's root product, handled by the pointer spRootProduct
+which is a pointer to CATIProduct interface.
+This is the usual sequence to browse a product structure [<a href="#References">3</a>] and find the root product pointer
+to CATIProduct, from the document which name is the argument Foo.CATProduct above.</p>
+<table width="100%">
+  <tr>
+    <td><code>spRootProduct</code></td>
+    <td>A pointer to <i>CATIProduct</i> onto the root product of the document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Scanning the root product chilfren to retrieve the component named "DoF"</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+   CATIProduct_var P_i;
+   int Found= 0;
+   CATListValCATBaseUnknown_var * Components = <b>spRootProduct</b>->GetChildren();
+   if( Components!= NULL )
+   {
+	  int NChildren = Components->Size( );
+	  for( int ch_i = 1 ; ch_i <=NChildren ; ch_i++ )
+	  {
+		  P_i =(*Components)[ch_i];
+		  CATIAlias_var Alias =P_i;
+		  if( NULL_var !=Alias )
+		  {
+			  CATUnicodeString Str=Alias->GetAlias();
+			  if( Str =="DoF")
+			  { Found=1; break;}
+		  } 
+		  
+	  }
+	  delete Components;
+	  Components = NULL;
+   }
+   // Found set to one means that a component name "DoF" was found
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Compute the number of degrees of freedom of "DoF" component</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+	   int <b>oNbDegreesOfFreedom</b>=0;
+	   CATIDegreesOfFreedom_var Degrees = P_i;
+	   if(Degrees!=NULL_var)
+	   {
+		  CATDoFStatusEnum Valid;
+		  HRESULT hr=Degrees-><b>GetNbDegreesOfFreedom</b>(Valid,<b>oNbDegreesOfFreedom</b>);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The oNbDegreesOfFreedom variable  gives the expected information whenever the request is valid.
+The request is valid when the output argument Valid of method <b>GetNbDegreesOfFreedom</b> is valuated to DoF_Acceptable. 
+Note that the theoritical possible values for these argument are :</p>
+<table width="100%">
+  <tr>
+    <td><code>DoF_Acceptable</code></td>
+    <td>The request was succesfull</td>
+  </tr>
+   <tr>
+    <td><code>DoF_KONotUpdated</code></td>
+    <td>The degrees of freedom could not be computed because the root product is not up to date</td>
+  </tr>
+   <tr>
+    <td><code>DoF_KONoFather</code></td>
+    <td>The request has no sense because the component has no father bloc.</td>
+  </tr>
+   <tr>
+    <td><code>DoF_KONotABloc</code></td>
+    <td>The request has no sens because the component is not a bloc. Note that a product is always a bloc.</td>
+  </tr>
+   <tr>
+    <td><code>DoF_KOOther</code></td>
+    <td>There was an internal problem.Please report as a bug.</td>
+  </tr>
+</table>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Analyze all these eventual degrees of freedom</h4>
+<p>The function <b>GetDegreesOfFreedom</b> returns the type of the degree of freedom (<b>oType</b>) and the mathematical data associated
+to it (<b>oData</b>). there are 3 types of freedom : translation, rotation or screw. 
+Screw is the combination of a rotation and a translation parallel to the axis of the rotation.</p>
+</p> <b>GetDegreesOfFreedom</b> must be called <b>on the same smart pointer</b> on which the function <b>GetNbDegreesOfFreedom</b> was called. Indeed,
+the first method <b>GetNbDegreesOfFreedom</b> computes all the necessary information  ans stores them in the smart pointer. These information are just returned
+to the user when he calls the second function <b>GetDegreesOfFreedom</b>.
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+      for(int i=1;i&lt;=oNbDegreesOfFreedom;i++)
+	    {
+		  CATDoFTypeEnum oType;
+		  double oData[]={0.,0.,0.,0.,0.,0.,0.};
+//        <b>"Degrees" must be the smart pointer on which the function GetNbDegreesOfFreedom was called</b>
+		  HRESULT hr = Degrees-><b>GetDegreesOfFreedom(i,oType,oData)</b>;
+		  if(oType==DoF_Translation)
+	        {
+//            the freedom number i  is a <b>TRANSLATION</b>
+//            the <b>translation vector is </b>(oData[0],oData[1],oData[2])</b>
+		    }
+		  else if(oType==DoF_Rotation)
+	        {
+//            the freedom number i  is a <b>ROTATION</b>
+//            the <b>direction</b> of its axis is <b>(oData[0],oData[1],oData[2])</b> 
+//            the <b>pole</b> of      its axis is <b>(oData[3],oData[4],oData[5])</b>
+		    }
+		  else if(oType==DoF_Screw)
+		    {
+//            the freedom number i  is a <b>SCREW</b>
+//            the <b>direction</b> of the screw        is <b>(oData[0],oData[1],oData[2])</b>
+//            the <b>pole</b> of the axis of the screw is <b>(oData[3],oData[4],oData[5])</b>
+//            the <b>pitch</b> </b>is <b>oData[6] </b>
+		    }
+  ...</pre>
+    </td>
+  </tr>
+</table>
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Epilog</h4>
+<p>The documeznt is removed and the session is closed</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+     CATDocumentServices::Remove(*pProductDocument);
+     Delete_Session("Session_ASSEMBLY");
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to analyze a component product under a root product
+by calling the 2 functions <b>GetNbDegreesOfFreedom</b> and <b>GetDegreesOfFreedom</b> on the smart pointer to interface CATIDegreesOfFreedom 
+(on which adherates the component product)</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

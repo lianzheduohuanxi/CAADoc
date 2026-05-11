@@ -1,0 +1,520 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using a Tessellation Operator</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using a Tessellation Operator</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the CAAGMOperatorsTesBody use case. This tutorial 
+		explains how to use the a Tessellation operator.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#Tessellation Parameters">Tessellation Parameters</a></li>
+			<li><a href="#How to Use a Tessellation Operator">How to Use a Tessellation 
+			Operator</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsTesBody Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMOperatorsTesBody Do</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsTesBody</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsTesBody Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This use case is intended to help you use the tessellation classes. The article 
+first recalls the parameters that are used to tune the tessellation process, then 
+explains how to use a tessellation operator to tessellate an object.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Tessellation Parameters"></a>Tessellation Parameters</h2>
+<p>The tessellation computes a geometric discretization from geometric curves [<a href="#References">3</a>], 
+surfaces [<a href="#References">4</a>], or topological bodies, edges, or faces [<a href="#References">1</a>,<a href="#References">2</a>]. 
+The results of their tessellation can then be used by applications which need to 
+work with discretized data, such as visualization, mesh, or numerical control applications.</p>
+<table>
+	<caption>Fig. 1: The Tessellation of a Quarter of Hemisphere</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTesTessellation0.gif" alt="Quarter of Hemisphere Tessellation" width="267" height="261"></td>
+		<td>The surfaces, faces, and the skin of the topological bodies are paved 
+		with triangles. The curves and topological edges are discretized with linear 
+		segments called bars. The extremities of the bars are called points.
+		<p>Fig 1. shows an example of triangles generation on a quarter of hemisphere.</p>
+		</td>
+	</tr>
+</table>
+<p>Three parameters tune the tessellation result.</p>
+<dl>
+	<dt><em>Sag</em></dt>
+	<dd>Defines the maximum distance between a bar and the object to tessellate</dd>
+	<dt><em>Step</em></dt>
+	<dd>Defines the maximum length of a bar.</dd>
+	<dt><em>Angle</em></dt>
+	<dd>Defines the maximum angle between the normals at each bar end.</dd>
+</dl>
+<p>By default, <em>Step</em> is infinite (in this case, it is not taken into account), 
+and <em>Angle</em> is set to <em>Pi/2</em>.</p>
+<table>
+	<caption>Fig. 2: The Parameters of a Tessellation Operator</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTesTessellation1.gif" width="479" height="359" alt="Tessellation Operator Parameters"></td>
+		<td>
+		<p>The <em>Sag</em> parameter takes the curvature of the objects into account. 
+		A lower sag creates bars that are &quot;nearer&quot; the object to tessellate.</p>
+		<p>The <em>Step</em> acts on the length of the generated bars. A higher 
+		step generates longer bars.</p>
+		<p>Now, imagine a semicircle whose radius is less than the <em>Sag</em> 
+		value and than the <em>Step/Pi</em>. If the tessellation only takes into 
+		account these two prameters, it would ignore this object. The <em>Angle</em> 
+		parameter allows you to catch the semicircle: the tessellation operator 
+		will create a new point as soon as the angle between the tangent at the 
+		extremities of the bars is more than <em>Angle</em>. In the figure <em>Angle</em> 
+		is set to <em>Pi/2</em>.</p>
+		</td>
+	</tr>
+</table>
+<p><strong>Note</strong>: The parameter values are indicative values that can be 
+sometimes locally overhang. Moreover, for a triangle discretization, the criteria 
+are checked for the bars, not for all the points of the triangle interior.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="How to Use a Tessellation Operator"></a>How to Use a Tessellation Operator</h2>
+<p>The tessellation of an object is made by the use of specific operators. There 
+is an operator per type of object to tessellate:</p>
+<ul>
+	<li><code>CATICGMBodyTessellator</code> to tessellate a topological body.</li>
+	<li><code>CATICGMCellTessellator</code> to tessellate one or several topological 
+	edges or faces.</li>
+</ul>
+<p>They are built on the same scheme, which is the general scheme of a CGM operator. 
+To use it:</p>
+<ul>
+	<li>Create the operator instance.</li>
+	<li>Optionally, add new curves, surfaces, cells to tessellate.</li>
+	<li>Run the operator.</li>
+	<li>Retrieve the results.</li>
+	<li>Delete the operator instance.</li>
+</ul>
+<p>The results for curves and topological edges are given by the means of an array 
+of computed points. The results for surfaces, topological faces and bodies are given 
+as isolated triangles, strips of triangles, fans of triangles, the last two being 
+provided for minimizing the memory size. Exceptionally, polygons are returned. In 
+other words, the tessellation process outputs as few triangles as possible. In peculiar, 
+if you tessellate a cube, no isolated triangles are output.</p>
+<table>
+	<caption>Fig. 3: The Various Result Formats</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTesTessellation2.gif" alt="Various Result Formats" width="479" height="359"></td>
+		<td>
+		<p>An isolated triangle is defined by its three points (V1,V2,V3).</p>
+		<p>A fan of triangles is a list of triangles, such that the first point 
+		of the list with any two consecutive points define a triangle.</p>
+		<p>A strip of triangles is a list of points, such that any three consecutive 
+		points define a triangle.</p>
+		</td>
+	</tr>
+</table>
+<p>The algorithm tries, as far as possible, to return the triangles as strips or 
+fans. But it happens that it returns them as isolated triangles, although it could 
+find strips or fans. In some rare cases, polygons can be returned if the algorithm 
+failed to tessellate them.</p>
+<table>
+	<caption>Fig. 4: The Polygon Case</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTesTessellationEx.gif" alt="Polygon Case" width="119" height="119"></td>
+		<td>In case of some perturbed surface, the tessellation can lead to a rare 
+		configuration as in Fig 4. The polygon (V40, V41, V42, V43) represents a 
+		3D twisted area, and fails to be expressed in terms of triangles.</td>
+	</tr>
+</table>
+<p>As many tessellation objects can be generated, the results of a tessellation 
+operator are retrieved by the mean of iterators, one iterator per object type:</p>
+<table class="fill">
+	<tr>
+		<td>generated object</td>
+		<td><code>Iterator name</code></td>
+	</tr>
+	<tr>
+		<td>points</td>
+		<td><code>CATCGMTessPointIter</code></td>
+	</tr>
+	<tr>
+		<td>triangles</td>
+		<td><code>CATCGMTessTrianIter</code></td>
+	</tr>
+	<tr>
+		<td>strips</td>
+		<td><code>CATCGMTessStripeIter</code></td>
+	</tr>
+	<tr>
+		<td>fans</td>
+		<td><code>CATCGMTessFanIter</code></td>
+	</tr>
+	<tr>
+		<td>polygons</td>
+		<td><code>CATCGMTessPolyIter</code></td>
+	</tr>
+</table>
+<p>These iterators are all built on the same scheme. To use them:</p>
+<ul>
+	<li>Ask for the number of objects that the operator has computed.</li>
+	<li>Initialize the iterator.</li>
+	<li>Increment the iterator.</li>
+	<li>Retrieve one object.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsTesBody Use Case</h2>
+<p>CAAGMOperatorsTesBody is a use case of the CAAGMOperatorsInterfaces.edu framework 
+that illustrates the tessellation capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMOperatorsTesBody Do</h3>
+<p>This use case creates a body representing a quarter of hemisphere. Then it defines 
+a tessellation operator, runs it, and uses the results to create lines representing 
+the generated bars. Finally, it clears the environment.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsTesBody</h3>
+<p>To launch CAAGMOperatorsTesBody, you will need to set up the build time environment, 
+then compile CAAGMOperatorsTesBody.m along with its prerequisites, set up the run 
+time environment, and then execute the use case [<a href="#References">5</a>].</p>
+<p>If you simply type CAAGMOperatorsTesBody with no argument, the use case executes, 
+but doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMOperatorsTesBody e:\Tessellation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case [<a href="#References">6</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsTesBody Code</h3>
+<p>The CAAGMOperatorsTesBody use case is made of a main named CAATesBody.cpp located 
+in the CAAGMOperatorsTesBody.m module of the CAAGMOperatorsInterfaces.edu framework:</p>
+<p><code>InstallRootDirectory\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsTesBody.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">5</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are five logical sections in CAAGMOperatorsTesBody:</p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Creates theTopological Body">Creating the Topological Body</a> 
+	representing a topological sphere</li>
+	<li><a href="#The Global Scheme of the Operator">Tessellating the Body</a></li>
+	<li><a href="#Using the iterators to retrieve the results">Using the Iterators 
+	to Retrieve the Results</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model And 
+	Closings the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the CATICGMObject. 
+This creation is done by the global function <code>::CATCreateCGMContainer</code>. 
+Notice that the factory can be defined by reading a NCGM file that was previously 
+stored. In that case, the global function <code>::CATLoadCGMContainer</code> must 
+be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates theTopological Body"></a>Creating the<span lang="fr">
+</span>Topological Body</h3>
+<p>The body is created on the boundary of a geometric sphere (limited to a quarter 
+of hemisphere).</p>
+<pre class="code">// Creates the geometric sphere ...
+ CATSphere * piSphere=piGeomFactory-&gt;<strong>CreateSphere</strong>
+     (CATMathAxis(CATMathPoint(20,0,0)),10,0,CATPIBY2,0,CATPIBY2);
+ if (NULL==piSphere)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+	
+ //
+ // ... <a name="and the body"></a>and the body
+ //
+ CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration(); // defines an open configuration
+ // creates the data of the operator : configuration + journal
+ CATTopData topdata(pConfig,NULL);                                        
+ CATSurLimits limits;
+ piSphere-&gt;GetLimits(limits);                                         // retrieves the sphere limits
+ // now creates the operator
+ CATICGMTopSkin *pSkinOper = <strong>::CATCGMCreateTopSkin</strong> (piGeomFactory,&amp;topdata,piSphere,&amp;limits); 
+ 
+ if (NULL==pSkinOper)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+ pSkinOper-&gt;<strong>Run</strong>();
+ CATBody * piBody=pSkinOper-&gt;<strong>GetResult</strong>();
+ if (NULL==piBody)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+pSkinOper-&gt;<strong>Release</strong>();
+pSkinOper = NULL;
+// Releases the configuration
+pConfig-&gt;<strong>Release</strong>();</pre>
+<p>The geometry is created by the <code>CreateSphere</code> method of <code>CATGeoFactory</code>. 
+The body is created by the topological operator <code>CATICGMTopSkin</code>. To 
+use the operator:</p>
+<ul>
+	<li>Defines the configuration, that is to say the level of software you want 
+	to use to run the operator. By default, define an open configuration as in this 
+	use case to run with the current level. Moreover here, the pointer to the journal 
+	is set to <code>NULL</code> in the operator data. So that the journal is not 
+	filled.</li>
+	<li>Create it.</li>
+	<li>Run it.</li>
+	<li>Get the resulting body.</li>
+	<li>Delete it. Then, the configuration is released after use.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="The Global Scheme of the Operator"></a>Tessellating the Body</h3>
+<p>In this use case <code>piBody</code> is the pointer to the body to tessellate.</p>
+<pre class="code"> //
+ // create the operator
+ double sag   = 0.2;
+ CATICGMBodyTessellator * pTessellator =:: <strong>CATCGMCreateBodyTessellator</strong>(piBody,sag);
+ if (NULL!=pTessellator)
+ {
+ pTessellator -&gt; <strong>Run</strong>();
+	
+ //
+ // Get the results
+ //
+ CATBoolean isPlanar=FALSE;
+ CATCGMTessPointIter *    pVertices  = NULL;
+ CATCGMTessStripeIter *   pStrips    = NULL;
+ CATCGMTessFanIter *      pFans      = NULL;
+ CATCGMessPolyIter *     pPolygons  = NULL;
+ CATCGMTessTrianIter *    pTriangles = NULL;
+	
+ // Retrieve all the body faces. 
+ //
+ CATLISTP(CATCell) faces;
+ piBody-&gt;GetAllCells( faces,2); // faces are cells of dimension 2
+ int numberOfFaces = faces.Size();
+
+ // Scan  the result for one face
+ for (int i=1 ; i&lt;=numberOfFaces ; i++)
+ { 
+   // 
+   // for each face, retrieve the tessellation results.
+   //
+   CATFace * piFace = (CATFace*) faces[i];	
+   pTessellator -&gt; <strong>GetFace</strong>(piFace,
+                           isPlanar,
+                           &amp;pVertices,
+                           &amp;pStrips,
+                           &amp;pFans,
+                           &amp;pPolygons,
+                           &amp;pTriangles);
+    // use the results (<a href="#Using the iterators to retrieve the results">see Using the Iterators to Retrieve the Results</a>)
+    //  ...... //
+ }
+ //
+ // delete the operator
+ <strong>pTessellator-&gt;Release();
+ pTessellator = NULL</strong>;
+}</pre>
+<p>The operator <code>pTesselator</code> is created with the body to tessellate 
+and the requested sag value. Then, call the <code>Run</code> method on the operator 
+. The results are retrieved by dedicated iterators, allocated by the <code>GetFace</code> 
+method. These iterators are deleted at the operator deletion.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Using the iterators to retrieve the results"></a>Using the Iterators 
+to Retrieve the Results</h3>
+<p>Now, the following section explains how to use these iterators. Results can be 
+retrieved in one shot: in this case, the arrays, such as <code>aCoord</code> and
+<code>aNuPts</code> must be allocated and deallocated by the caller. The use case 
+shows how to use the retrieved tessellation results in order to create geometric 
+lines, but only the strips case is detailed here.</p>
+<ul>
+	<li>First, all the coordinates of the points are retrieved in the <code>aCoord</code> 
+	array, that was already allocated.</li>
+	<li>Then, the strips are read, using the <code>CATTessStripeIter</code> iterator:
+	<ul>
+		<li>Retrieve the number of points of each strip: their sum is the size of 
+		the array <code>aNuPts</code> to allocate.</li>
+		<li>This array is filled in by the indexes of the points defining the strips: 
+		you access directly the point coordinates using these indexes.</li>
+	</ul>
+	</li>
+	<li>At least, the arrays are deallocated.</li>
+</ul>
+<pre class="code">float  (* aCoord)[3]= NULL;
+int * aNuPts        = NULL;
+CATLine * piLn      = NULL;
+//
+// Points (in one shot)
+//
+if(NULL != pVertices)
+{
+   long nbp=pVertices-&gt;<strong>GetNbPoint</strong>();
+   <strong>aCoord</strong> = new float[nbp][3];
+   pVertices-&gt;<strong>GetPointXyzAll</strong>(aCoord); // all the coordinates in one shot
+} 
+//
+// strips (one by one) 
+//
+if(NULL != pStrips)
+{
+  // size of the maximum allocation: use the iterator
+  long nbs=0;
+  while (0==(pStrips-&gt;<strong>IsExhausted</strong>()))       // last strip?
+  {
+    nbs=CATMax(nbs,pStrips-&gt;<strong>GetStriNbPts</strong>()); // the result of the current strip
+    pStrips-&gt;<strong>GoToNext</strong>();                     // next strip
+  }
+
+  //
+  // allocation
+  //
+  <strong>aNuPts</strong>=new int[nbs];
+  //
+  // from the beginning again to retrieve the results
+  //
+  pStrips-&gt;Reset();                          //initialize the strip iterator
+  while (0==(pStrips-&gt;IsExhausted()))        // last one?
+  { 
+    nbs=pStrips-&gt;GetStriNbPts();
+    pStrips-&gt;<strong>GetStriNuPts</strong>(aNuPts);
+    // create some interior lines of the strip from the results
+    for (int j=0;j&lt;nbs-1;j++)
+    {
+    piLn= piGeomFactory-&gt;CreateLine(
+      CATMathPoint(aCoord[aNuPts[j]][0],
+                   aCoord[aNuPts[j]][1],
+                   aCoord[aNuPts[j]][2]),
+      CATMathPoint(aCoord[aNuPts[j+1]][0],
+                   aCoord[aNuPts[j+1]][1],
+                   aCoord[aNuPts[j+1]][2]) );
+  }
+  // ..... //
+  pStrips-&gt;GoToNext();                      // next one
+}
+<strong>delete [] aNuPts;
+aNuPts = NULL;</strong>
+} 
+<strong>if (NULL!=aCoord) delete [] aCoord;
+aCoord = NULL;</strong> </pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<ul>
+	<li>The tessellation operators compute a discretized geometry from geometric 
+	(curve, surface) or topological (body, face, vertex) objects according to a 
+	sag, a step and an angle parameter.</li>
+	<li>They follow the general scheme of a CGM operator. Results are presented 
+	by means of iterators.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaTobTopoConcepts.htm">Topology Concepts</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmTaTobTopoModel.htm">The CGM Topological Model</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmTaGobCurves.htm">The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAACgmTaGobSurfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td><a href="CAACgmUcGemBrowser.htm">Browsing the Geometric Container</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [dec 2006]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

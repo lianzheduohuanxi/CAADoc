@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Document Understanding</title>
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - File</h2>
+		</td>
+		<td rowspan="2" align="right" valign="top">
+		<h3><a name="Top"></a>Document Understanding</h3>
+		<em>A description of Non-V5 Documents</em><em> Import/Export </em></td>
+	</tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>This article describes some of the non-V5 documents that are supported 
+		by Dassault Syst&#232;mes and explains their characteristics.</p>
+		<ul>
+			<li><strong><a href="#Part1">General Information</a></strong></li>
+			<li><strong><a href="#Part2">3D-IGES Format</a></strong></li>
+			<li><strong><a href="#InShort">STEP Format</a></strong></li>
+			<li><strong><a href="#References">References</a></strong></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part1"></a>General Information</h3>
+Non-V5 Documents can be converted with CATDocumentServices:
+<ul>
+	<li>Non-V5 documents can be <strong>imported</strong> into V5 with the OpenDocument 
+	command <a href="#References">[1]</a>.
+	<p>For all types of non-CATIA Documents, OpenDocument may create more than one 
+	Document in the V5 session:</p>
+	<ul>
+		<li>One Document of the type of the format</li>
+		<li>One (or more) other V5 Document, resulting of the conversion, depending 
+		on format imported and input data.</li>
+	</ul>
+	</li>
+	<li>The command to <strong>export</strong> a V5 Document to a non-V5 Document 
+	file is the SaveAs command <a href="#References">[2]</a>.</li>
+</ul>
+<p>The V5 Documents are described in the Overview article
+<a href="#References">[3]</a>.</p>
+<p>The detail of the elements that are imported/exported and the particular settings 
+can be found in the User documentation for each format.</p>
+<p>Below is an <strong>overview</strong> of two of them, processing 3D Exact Brep 
+Geometry with graphical attributes and Product Structure.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part2"></a>3D-IGES Format</h3>
+<p>IGES, the <strong>I</strong>nitial <strong>G</strong>raphics <strong>E</strong>xchange
+<strong>S</strong>pecification, is an ANSI standard to represent and exchange 3D 
+and 2D data.</p>
+<p>See also: <a href="#" onclick="javascript:CAAlinkUrl('http://www.iges5x.org'); return false;">http://www.iges5x.org</a> and
+<a href="#" onclick="javascript:CAAlinkUrl('http://ts.nist.gov/Standards/iges'); return false;">http://ts.nist.gov/Standards/iges</a></p>
+<p>3D-IGES files can have the extensions: .igs or .IGS (2D-IGES files: .ig2 or .IG2).</p>
+<p><strong>OpenDocument</strong></p>
+<p>In standard mode, an IGES file imported into V5 generates a CATDocument of type 
+&quot;igs&quot; and a Part Document <a href="#References">[3]</a>.</p>
+<p>With user settings to create a product structure (in IGES.CATSettings), the result 
+of import can be a CATDocument of type &quot;igs&quot; and a Product Document with its associated 
+Part Document(s) <a href="#References">[3]</a>, depending 
+on the input data to be converted.</p>
+<p><strong>SaveAs</strong></p>
+<p>A V5 Document (CATPart, CATShape or CATProduct) exported to <span lang="fr">the </span>IGES format will 
+generate an IGES Document (all data in the same file).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>STEP Format</h3>
+<p>STEP, the <strong>St</strong>andard for the <strong>E</strong>xchange of
+<strong>P</strong>roduct Model Data, is a comprehensive ISO standard (ISO 10303) 
+that describes how to represent and exchange digital product information.</p>
+<p>See also: CAx Implementor Forum: 
+<a href="#" onclick="javascript:CAAlinkUrl('http://www.cax-if.org'); return false;">http://www.cax-if.org</a>  and
+<a href="#" onclick="javascript:CAAlinkUrl('http://www.prostep.org'); return false;">http://www.prostep.org</a></p>
+STEP files can have the extensions: .stp , .step , .STP or .STEP .
+<p><strong>OpenDocument</strong></p>
+<p>A STEP file imported into V5 generates a CATDocument of type &quot;stp&quot; or &quot;step&quot; 
+and either a Part Document or a Product Document with its associated Part Document(s) 
+or Part and Product Document(s)
+<a href="#References">[3]</a>, depending on the input 
+data to be converted and the user settings.</p>
+<p><strong>SaveAs</strong></p>
+<p>A V5 Document (CATPart, CATShape or CATProduct) exported to STEP may generate 
+one or more STEP Documents, depending on the input data to be converted and the 
+user settings.</p>
+<p>Some STEP Documents can have references to external native V4 or V5 files (.CATPart,
+.cgr , .model).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAOmbUseCases/CAAOmbLoadDoc.htm">Loading a Document</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAOmbUseCases/CAAOmbExportType.htm">Exporting a Document 
+		Format Type</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[3]</td>
+		<td><a href="CAAOmbDocumentOverview.htm">Document 
+		Overview <em>(Description of Part and Product Documents)</em></a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Jan 2009]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2009, Dassault Syst&#232;mes</i><i>, Dassault Syst&#232;mes Provence</i><i>. 
+All rights reserved.</i></p>
+
+</body>
+
+</html>

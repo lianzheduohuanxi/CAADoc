@@ -1,0 +1,60 @@
+Option Explicit
+Language="VBSCRIPT"
+
+' COPYRIGTH DASSAULT SYSTEMES 2003
+
+' ***********************************************************************
+'   Purpose:		Switch on all the ligths of a product
+'
+'   Version:		1.0
+'   Author:			bmb
+'   Languages:		VBScript 
+'   Locales:		English 
+'   CATIA Level:	V5R11 
+' ***********************************************************************
+
+
+' Main 
+Sub CATMain()
+
+	' Get the documents collection
+	Dim oCollection As Documents
+	Set oCollection = CATIA.Documents
+
+	' test if no document is open
+	If 0=oCollection.Count Then 
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch On Lights"
+		Exit Sub
+	End If
+
+	 ' Get material library
+	Dim oProductDocument As Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	' test if the active document is a material library (CATMaterial)
+	If 0=InStr(oProductDocument.Name, ".CATProduct") Then
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch On Lights"
+		Exit Sub
+	End If
+
+	' Accessing the Root Product
+	Dim oRootProduct As Document
+	Set oRootProduct = oProductDocument.Product
+
+	' Accessing the collection of rendering lights
+	Dim oLights As RenderingLights
+	Set oLights = oRootProduct.GetItem("CATRscRenderingLightVBExt")
+
+	' Declarations
+	Dim I As Int
+	Dim oLight As RenderingLight
+
+	' Ligths loop
+	For I=1 To oLights.Count
+		Set oLight = oLights.Item(I)
+		oLight.ActiveStatus = 1
+	Next
+
+End Sub
+
+

@@ -1,0 +1,172 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Pocket</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Part Design</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating Pocket</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create a pocket from a
+      sketch.</p>
+      <p>This macro opens the <a href="samples/CAAPriPocket.CATPart">CAAPriPocket.CATPart</a>
+      document that contains a pad with a sketch on one of its faces.&nbsp;<br>
+      &nbsp;It creates <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Pocket');return false;"><i>Pocket</i></a>
+      object from a <a href="#" onclick="javascript:CAAlink('IDL', 'SketcherInterfaces', 'Sketch');return false;"><i>Sketch</i></a><i>
+      </i>object with a <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'ShapeFactory');return false;"><i>ShapeFactory</i></a>
+      method and a update it.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAPriPocket is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPriPocketSource.htm">CAAPriPocket.CATScript</a> is located
+      in the CAAScdPriUseCases module. <a href="macros/CAAPriPocket.CATScript">Execute
+      macro</a> (windows only).</p>
+      <p align="center">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAPriPocket includes the following steps:</p>
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Creating the Pocket</a></li>
+        <li><a href="#Step3">Modifying the Pocket First Limit</a></li>
+      </ol>
+      <h4>Prolog<a name="Step1"></a></h4>
+      <p>The macro first loads CAAPriPocket.CATPart that contains a sketch:
+      Sketch.2&nbsp;</p>
+      <p>This object have been created with the Sketcher workbench.&nbsp;</p>
+      <p><img border="0" src="images/img005.jpg" hspace="40" width="375" height="250"></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>oPart = CATIA.ActiveDocument.Part
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part body in the part</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oBody<font color="#0000FF"> As </font>Body
+<font color="#0000FF">Set </font>oBody = oPart.Bodies.Item  ( &quot;PartBody&quot; ) 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the sketch in the body</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Dim </font>oSketch<font color="#0000FF"> As </font>Sketch
+<font color="#0000FF">Set </font>oSketch = oBody.Sketches.Item  ( &quot;Sketch.1&quot; ) 
+   ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Once the part document has been loaded, the <code>oPart</code>, <code>oBody</code>
+      and <code>oSketch</code> variables are declared to receive the instance of
+      the part, the partbody and the sketch.</p>
+      <h4>Creating the Pocket<a name="Step2"></a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' ------------</font>
+<font color="#008000">' Create the pocket with a default first limit</font>
+<font color="#008000">' ------------</font>
+MsgBox &quot;Click OK to create the pocket.&quot;
+<font color="#0000FF">Dim </font>oPocket<font color="#0000FF"> As </font>Pocket
+<font color="#0000FF">Set </font>oPocket= oPart.ShapeFactory.AddNewPocket    ( oSketch, 20.000000 ) 
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+...
+</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <i>Pocket</i> object is created from the o<code>Sketch</code>
+      object with a default first limit of 20mm. The <i>Pocket</i> object
+      is&nbsp;created using the <code>AddNewPocket</code> method of the <i>ShapeFactory</i>
+      object.</p>
+      <p>The <i>Pocket</i> is then updated with the following result.</p>
+      <p><img border="0" src="images/img006.jpg" hspace="40" width="375" height="250"></p>
+      <h4>Modifying the pad first limit<a name="Step3"></a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+<font color="#008000">' ------------</font>
+<font color="#008000">' Define the pocket first limit</font>
+<font color="#008000">' ------------</font>
+MsgBox &quot;Click OK to set the pocket first limit to 30mm.&quot;
+oPocket.FirstLimit.Dimension.Value = 30.000000
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Update the part</font>
+<font color="#008000">' ------------</font>
+oPart.Update 
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <code>FirstLimit</code> property of the <i>Pocket</i> object is set
+      to 30mm.</p>
+      <p><img border="0" src="images/img007.jpg" hspace="40" width="375" height="250"></p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create and modify a pocket using macros.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

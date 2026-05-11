@@ -1,0 +1,563 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Instantiating a Component using its CLSID</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Instantiating a Component using its CLSID</h3>
+      <em>Implementing IClassFactory and using CATCreateInstance</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to instantiate a CAA V5 component using its
+      CLSID.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysComponentCreateCLSID Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysComponentCreateCLSID Do</a></li>
+            <li><a href="#How">How to Launch CAASysComponentCreateCLSID</a></li>
+            <li><a href="#Where">Where to Find the CAASysComponentCreateCLSID
+              Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create the CLSID for your CAA V5
+component and how client applications can instantiate your component using its
+CLSID. The component referred to this use case is the CAASysComponent component
+mentioned in [<a href="#References">1</a>]. This component represents an object
+with two facets, each of them being supported using an interface:</p>
+<ol>
+  <li><i>CATICreateInstance</i> to allow the component to be instantiated by
+    client applications using the <code>CATInstantiateComponent</code> global
+    function;</li>
+  <li><i>CAAISysMyInterface</i> to print a message on the screen.</li>
+</ol>
+<p>Creating these interfaces and their implementations is not described here.
+You can refer to other articles dealing with this topic [<a href="#References">2</a>]
+[<a href="#References">3</a>].</p>
+<p>Here we will learn how to allow this component to be instantiated by client
+applications using the <code>CATCreateInstance</code> global function.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysComponentCreateCLSID Use Case</h3>
+<p>CAASysComponentCreateCLSID is a use case of the CAASystem.edu framework that
+illustrates the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysComponentCreateCLSID Do</h4>
+<p>This use case shows the steps to follow to create the CLSID of a basic
+component to enable client applications to instantiate it.</p>
+<p>As in use case [<a href="#References">1</a>], this component is made of the <i>CAASysComponent</i>
+main class, of the <i>CAAESysCreateInstanceForComponent</i> and <i>CAAESysMyInterfaceForComponent</i>
+extension classes.</p>
+<p>For our purpose, it is also made of the <i>CAASysComponentFactory</i> class
+that implements the <i>IClassFactory</i> interface to enable the component
+creation using its CLSID.</p>
+<p>Finally the component's implementation library must define the <code>CATDllGetClassObject</code>
+entry point.</p>
+<p>The main program instantiates this component, retrieves a pointer to the <i>CAAISysMyInterface</i>
+interface this component implements and use this pointer to call a method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysComponentCreateCLSID</h4>
+<p>You first need to build CAASysComponentCreateCLSID. To do this, you will need
+to set up the build time environment, then compile all the CAASysComponent*.m
+modules along with their prerequisites as described in [<a href="#References">4</a>].
+Launch CAASysComponentCreateCLSID itself.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysComponentCreateCLSID Code</h4>
+<p>The CAASysComponentCreateCLSID use case is made of five modules:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysComponent*.m</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysComponent*.m</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>These modules are:</p>
+<ol>
+  <li>CAASysComponentImpl.m that contains the component main class, the
+    extension class that implements <code>CATICreateInstance</code>, the class
+    that implements <code>IClassFactory</code>, and the implementation of <code>CATDllGetClassObject</code></li>
+  <li>CAASysComponentCLSID.m that contains the definition of the component
+    CLSID, the corresponding header being located in the PublicInterfaces
+    directory of the CAASystem.edu framework</li>
+  <li>CAASysComponentInt.m that contains the <code>CAAISysMyInterface</code>
+    interface and its TIE, the interface header being located in the
+    PublicInterfaces directory of the CAASystem.edu framework</li>
+  <li>CAASysComponentExt.m that contains the extension class that implements <i>CAAISysMyInterface</i></li>
+  <li>CAASysComponentCreateCLSID.m that contains the main program that
+    instantiates the component using its CLSID</li>
+</ol>
+<p>Some parts of these modules are described in [<a href="#References">1</a>].
+We only deal here with the new code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create and use the CLSID of the <i>CAASysComponent</i>, there are five
+main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Declare and define the <i>CAASysComponent</i> CLSID</td>
+    <td valign="top">PublicInterfaces\CAASysComponentCLSID.h and
+      CAASysComponentCLSID.m\src\CAASysComponentCLSID.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Implement the <i>IClassFactory</i> interface</td>
+    <td valign="top">CAASysComponent.m\src\CAASysComponentFactory.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Implement the <code>CATDllGetClassObject</code> function</td>
+    <td valign="top">CAASysComponent.m\src\CAASysGetClassObject.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Update the dictionary</td>
+    <td valign="top">CAASystem.edu.dico and CAASystem.edu.clsid files in
+      CNext\code\dictionary</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Instantiate and use the component</td>
+    <td valign="top">CAASysComponentCreateCLSID.m\src\CAASysMain.cpp</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declare and define the <i>CAASysComponent</i> CLSID</h4>
+Declaration in the CAASysComponentCLSID.h header file:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// System Framework
+#include &quot;IUnknown.h&quot;
+	
+#ifdef _WINDOWS_SOURCE
+#ifdef __CAASysComponentCLSID
+#define ExportedByCAASysComponentCLSID __declspec(dllexport)
+#else
+#define	ExportedByCAASysComponentCLSID __declspec(dllimport)
+#endif
+#else
+#define ExportedByCAASysComponentCLSID
+#endif
+
+extern &quot;C&quot; ExportedByCAASysComponentCLSID const CLSID CLSID_CAASysComponent;
+      </pre>
+    </td>
+  </tr>
+</table>
+Definition in the CAASysComponentCLSID.cpp source file:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#include &quot;CAASysComponentCLSID.h&quot;
+
+const CLSID CLSID_CAASysComponent = { /* 876db66d-b22b-435a-8c91-607db2d33663 */
+    0x876db66d,
+    0xb22b,
+    0x435a,
+    {0x8c, 0x91, 0x60, 0x7d, 0xb2, 0xd3, 0x36, 0x63}
+  };
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>The CLSID of a component is nothing more than a GUID that uniquely identify
+your component. CLSIDs for components are equivalent to IIDs for interfaces.</p>
+<p>The CLSID of a component <code>CAASysComponent</code> is referred to by the
+symbol <code>CLSID_CAASysComponent</code> which is exported by the
+CAASysComponentCLSID library.</p>
+<p>To be able to use the CLSID of a component, it is sufficient for client
+applications to include the CLSID declaration header and to link the code with
+the CLSID library.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Implement the <i>IClassFactory</i> interface</h4>
+Declaration in the CAASysComponentFactory.h header file:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#include &quot;CATBaseUnknown.h&quot; // Needed to derive from CATBaseUnknown
+
+class CAASysComponentFactory : public CATBaseUnknown
+{
+    // Used in conjunction with CATImplementClass in the .cpp file
+    CATDeclareClass;
+    
+    public:
+    
+    CAASysComponentFactory();
+    virtual ~CAASysComponentFactory();
+    
+    virtual HRESULT __stdcall CreateInstance(IUnknown * iUnkOuter, const IID &amp;iIid, void ** oObject);
+    virtual HRESULT __stdcall LockServer(int iLock);
+    
+    private:
+    
+    // Not implemented
+    CAASysComponentFactory(const CAASysComponentFactory &amp;);
+    // Not implemented
+    CAASysComponentFactory &amp; operator = (const CAASysComponentFactory &amp;);
+};
+      </pre>
+    </td>
+  </tr>
+</table>
+Definition in the CAASysComponentFactory.cpp source file:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#include &quot;CAASysComponentFactory.h&quot; // This class declaration
+
+#include &quot;iostream.h&quot; // For output
+#include &quot;CATErrorDef.h&quot;
+#include &quot;CAASysComponent.h&quot; // The component to create
+
+// OM Implementation
+CATImplementClass(CAASysComponentFactory, Implementation, CATBaseUnknown, CATNull);
+
+CAASysComponentFactory::CAASysComponentFactory()
+{
+    cout &lt;&lt; &quot;CAASysComponentFactory::CAASysComponentFactory()&quot; &lt;&lt; endl;
+}
+
+CAASysComponentFactory::~CAASysComponentFactory()
+{
+    cout &lt;&lt; &quot;CAASysComponentFactory::~CAASysComponentFactory()&quot; &lt;&lt; endl;
+}
+
+// To create the TIE object
+#include &quot;TIE_IClassFactory.h&quot;
+TIE_IClassFactory( CAASysComponentFactory );
+
+HRESULT __stdcall CAASysComponentFactory::LockServer(int iLock)
+{
+    return S_OK;
+}
+
+HRESULT __stdcall CAASysComponentFactory::CreateInstance(IUnknown * iUnkOuter, const IID &amp;iIid, void ** oObject)
+{
+    CAASysComponent * pCAASysComponent = new CAASysComponent();
+    if(NULL == pCAASysComponent) return E_OUTOFMEMORY;
+    
+    HRESULT hr = pCAASysComponent-&gt;QueryInterface(iIid, oObject);
+    
+    pCAASysComponent-&gt;Release();
+    pCAASysComponent = NULL;
+    
+    return hr;
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CAASysComponentFactory</code> class implements the <code>IClassFactory</code>
+interface.</p>
+<p>As can be seen, the <code>IClassFactory</code> interface has two methods but
+only <code>CreateInstance</code> is useful for our purpose, which is to
+instantiate our component. The actual implementation is very similar to the
+implementation of the <code>CreateInstance</code> method of the <code>CATICreateInstance</code>
+interface as described in [<a href="#References">1</a>]. The difference here is
+that a query interface is immediately done to retrieve a pointer to an interface
+implemented by our component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Implement the <code>CATDllGetClassObject</code> function</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// System Framework
+#include &quot;IUnknown.h&quot;
+#include &quot;CATErrorDef.h&quot;
+#include &quot;CATCmpGuid.h&quot;
+
+// This Framework
+#include &quot;CAASysComponentFactory.h&quot; // The component factory to create
+#include &quot;CAASysComponentCLSID.h&quot; // CLSID declaration of the component
+
+#ifdef _WINDOWS_SOURCE
+#define ExportedByCAASysComponentImpl __declspec(dllexport)
+#else
+#define ExportedByCAASysComponentImpl
+#endif
+
+extern &quot;C&quot; HRESULT ExportedByCAASysComponentImpl CATDllGetClassObject(const CLSID &amp; rclsid, const IID &amp; riid, void ** ppv)
+{
+    HRESULT hr = E_NOTIMPL;
+    
+    if (CATCmpGuid(&amp;rclsid, &amp;CLSID_CAASysComponent))
+    {
+        CAASysComponentFactory * pCAASysComponentFactory = new CAASysComponentFactory();
+        if(NULL == pCAASysComponentFactory) return E_OUTOFMEMORY;
+        
+        hr = pCAASysComponentFactory-&gt;QueryInterface(riid, ppv);
+        
+        pCAASysComponentFactory-&gt;Release();
+        pCAASysComponentFactory = NULL;
+    }
+    
+    return hr;
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>Defining the factory for our component is not enough. For our component to be
+actually instantiable by CLSID in client applications, the library where it is
+defined must implement the function <code>CATDllGetClassObject</code> which will
+be the real entry point to the component.</p>
+<p>What <code>CATDllGetClassObject</code> is doing ?</p>
+<p>Its purpose is just to instantiate the component factory and to return a
+pointer to the <code>IClassFactory</code> interface that the component factory
+implements.</p>
+<p>Note that a comparison on the <code>CAASysComponent</code> CLSID is made at
+the beginning to ensure we create the right factory for the component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Updating the Dictionary</h4>
+CAASystem.edu.dico extract:
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAASysComponentFactory IClassFactory  libCAASysComponentImpl
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary declares that the <i>CAASysComponentFactory</i>
+class implements the <i>IClassFactory</i> interface and that the code to load
+into memory to use this interface is located in the libCAASysComponentImpl
+shared library or DLL.</p>
+<p>CAASystem.edu.clsid:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+{876db66d-b22b-435a-8c91-607db2d33663} CAASysComponent CAASysComponentImpl
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The component dictionary links together the CLSID, the name of the component <i>CAASysComponent</i>,
+and the shared library or DLL where the entry point <code>CATDllGetClassObject</code>
+is defined (which is the component implementation library, CAASysComponentImpl).</p>
+<p>Note that the prefix <i>lib</i> is omitted in the library name.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Instantiating and Using the Component</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// System Framework
+#include &quot;CATErrorDef.h&quot;              // For the FAILED macro
+#include &quot;CATCreateInstance.h&quot;        // For the global function to create the component by CLSID
+
+// This componennt Framework
+#include &quot;CAAISysMyInterface.h&quot;       // An interface implemented by the component
+#include &quot;CAASysComponentCLSID.h&quot;     // For the CLSID of the component
+
+// C++ standard library    
+#include <iostream.h>     // To display traces
+
+int main()
+{
+
+  cout &lt;&lt; &quot;The CAASysComponentCreateCLSID Sample begins .....&quot;&lt;&lt; endl;
+
+ 
+  // -------------------------------------------------------------------------------
+  // Creates the component and retrieves a CAAISysMyInterface interface pointer
+  // -------------------------------------------------------------------------------
+
+  CAAISysMyInterface * piSysMyInterfaceOnComponent = NULL; 
+  HRESULT rc = ::CATCreateInstance( CLSID_CAASysComponent, NULL, 0, 
+                                         IID_CAAISysMyInterface,
+                                         (void**)&amp;piSysMyInterfaceOnComponent);   
+                                          
+  if ( FAILED (rc) )
+  {
+       cout &lt;&lt; &quot; Problem in the component Creation&quot;&lt;&lt; endl;
+       return 1 ;
+  }
+
+  //-----------------------------------------------------------------------
+  //The component is created, and we can use the returned interface pointer 
+  //-----------------------------------------------------------------------
+  piSysMyInterfaceOnComponent-&gt;Print();
+
+  //-----------------------------
+  // Pointer no any longer needed
+  //-----------------------------
+  piSysMyInterfaceOnComponent-&gt;Release();
+  piSysMyInterfaceOnComponent = NULL;
+
+
+  cout &lt;&lt; endl &lt;&lt; &quot;The CAASysComponentCreateCLSID Sample is finished.&quot;&lt;&lt; endl &lt;&lt; endl ;
+
+  return 0 ;
+}
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysComponent</i> component is instantiated using the <code>CATCreateInstance</code>
+global function to which the following parameters should be passed:</p>
+<table>
+  <tr>
+    <td><code>CLSID_CAASysComponent</code></td>
+    <td>The component CLSID, that uniquely identifies the component</td>
+  </tr>
+  <tr>
+    <td><code>NULL</code></td>
+    <td>Must always be NULL</td>
+  </tr>
+  <tr>
+    <td><code>0</code></td>
+    <td>Must always be 0</td>
+  <tr>
+    <td><code>IID_CAAISysMyInterface</code></td>
+    <td>The IID of the interface with which the client application wants to
+      handle the component and to which a pointer is asked</td>
+  </tr>
+  <tr>
+    <td><code>piSysMyInterfaceOnComponent</code></td>
+    <td>The pointer to that interface</td>
+  </tr>
+</table>
+<p>Once the component is instantiated and handled using a pointer to the
+requested interface, the client application can go on using the component. No
+link is necessary between the client application and the component code. Only
+the library defining the component CLSID is needed for linkage purpose
+(CAASysComponentCLSID). <code>CATCreateInstance</code> and the implemented
+interfaces isolates the two codes and are used as a contract between them to
+ensure that they will go on running as planned, and that modification to the
+component's code will not affect the client application and will ensure run time
+compatibility.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a factory for a component by using its
+CLSID. The component factory class implements the <i>IClassFactory</i> interface
+and the entry point function <code>CATDllGetClassObject</code> is implemented in
+the component library to instantiate the component factory class. The component
+dictionary declares the correspondence between the component CLSID, the
+component name, and the component implementation library. <code>CATCreateInstance</code>
+is used to instantiate the component knowing its CLSID and returns a pointer to
+the interface requested by the client application.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAASysSampleOMSimpleCmp.htm">Creating and Instantiating a
+      Component</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

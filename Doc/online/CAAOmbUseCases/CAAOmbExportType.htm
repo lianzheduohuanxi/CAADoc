@@ -1,0 +1,246 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Exporting a Document Format Type</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Document - File</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Exporting a Document Format Type</h3>
+      <em>Saving a document under a user-defined format type</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAAOmbExportType use case. This use case
+      explains how to save an existing document under a specific, user-defined
+      format type.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAAOmbExportType Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAOmbExportType Do</a></li>
+            <li><a href="#How">How to Launch CAAOmbExportType</a></li>
+            <li><a href="#Where">Where to Find CAAOmbExportType Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you understand how to save an existing
+document under another format type that you yourself have defined. This may be
+useful when you have specific operations that need to be performed while saving
+a document.&nbsp;
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAOmbExportType Use Case</h3>
+<p>CAAOmbExportType is a use case of the CAAObjectModelerBase.edu framework that
+illustrates ObjectModelerBase framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAOmbExportType Do</h4>
+<p>The goal of CAAOmbExportType is to save an existing document under another
+format type defined by the user. It shows how to define the new format type and
+how to implement the <i>CATIExportTypeManager</i> interface's methods in order
+to save the document under the new format type.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAOmbExportType</h4>
+<p>To launch CAAOmbExportType, you will need to set up the build time environment,
+then compile CAAOmbExportType.m along with its prerequisites and set up the run time
+environment. This is fully described in the
+referenced article [<a href="#References">1</a>]. To launch the use case,
+you must perform the following steps:</p>
+<ul>
+  <li>Edit the <code>CAAObjectModelerBase.edu.dico</code> file found in the <code>CAAObjectModelerBase.edu/CNext/code/dictionary</code>
+    directory of your workspace: delete the # character in front of the <code>CATProduct_OmbExportType</code>
+    document type and update the runtime view.</li>
+  <li>Open a CATIA interactive session.</li>
+  <li>Select <code>File/Open</code> or <code>File/Create</code> on a Product
+    document.</li>
+  <li>Select <code>File/SaveAs</code> on the current Product document.</li>
+  <li>In the <code>File/SaveAs</code> dialog box, select the &quot;OmbExportType&quot;
+    document type.</li>
+  <li>In the <code>File/SaveAs</code> dialog box, selection the directory and
+    name under which the document is to be saved.</li>
+  <li>Click on the &quot;<code>Save</code>&quot; button to save the document
+    under the new format type.&nbsp;</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAOmbExportType Code</h4>
+<p>CAAOmbExportType code is located in the CAAOmbExportType.m use case module of the
+CAAObjectModelerBase.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAAObjectModelerBase.edu/CAAOmbExportType.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAAObjectModelerBase.edu\CAAOmbExportType.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAAEOmbExportTypeData.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are two logical steps in CAAOmbExportType:</p>
+<ol>
+  <li><a href="#NewFormat">Defining the New Document Format Type</a></li>
+  <li><a href="#Implement">Implementing <i>CATIExportTypeManager</i></a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="NewFormat"></a>Defining the New Document Format Type</h4>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATProduct_OmbExportType  CATIExportTypeManager	      libCAAOmbExportType</pre>
+        </td>
+      </tr>
+    </table>
+<p>A new document format type is simply defined by adding a new entry in the
+current framework's dictionary. This new entry will cause the <code>File/SaveAs</code>
+dialog box to list the new format type among the types defined to the save
+operation. The first parameter, <code>CATProduct_OmbExportType</code>, indicates
+that the <b>exporting</b> document is a Product-type document (i.e., a document
+having a .CATProduct suffix) and that the <b>exported</b> document format type
+is &quot;OmbExportType&quot;, which will also be the suffix of the saved
+document. The second parameter indicates that this new document type will
+implement the <i>CATIExportTypeManager</i> interface in order to define the
+specific save operations necessary to export the new document. The last
+parameter is the name of the library in which the implementation module is to be
+found.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Implement"></a>Implementing <i>CATIExportTypeManager</i>&nbsp;</h4>
+<p>See the Object Modeler articles [<a href="#References">2</a>] for a detailed
+explanation about interface implementations.</p>
+<p>The implementation of <i>CATIExportTypeManager</i> is found in the
+CAAOmbExportType.m module defining the <code>CAAEOmbExportTypeData</code>
+implementation class.</p>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre><b>CATImplementClass</b>( <b>CAAEOmbEExportTypeData</b>,
+	           CodeExtension,
+		   CATBaseUnknown, 
+	           <b>CATProduct_OmbExportType</b> );</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass </code>macro defines the implementation class <code>CAAEOmbExportTypeData</code>
+as a code extension implementing the <code>CATProduct_OmbExportType</code> late
+type.</p>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>#include &quot;TIE_CATIExportTypeManager.h&quot;
+<b>TIE_CATIExportTypeManager</b>( CAAEOmbExportTypeData );</pre>
+    </td>
+  </tr>
+</table>
+<p>The above statement indicates that this is an implementation of the <i>CATIExportTypeManager</i>
+interface.</p>
+<table class="code" width="386">
+  <tr>
+    <td width="378">
+      <pre>HRESULT <b>CAAEOmbExportTypeData::ExportData</b> ( CATDocument *pDoc,
+                                            CATUnicodeString path )
+{
+    cout &lt;&lt; &quot;************** Begin ExportData 1&quot; &lt;&lt; endl &lt;&lt; flush;
+    HRESULT rc = <b>CATDocumentServices::SaveAs</b> (*pDoc, 
+		                              path);
+
+    return rc;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In this case, the document is simply saved using the <code>SaveAs </code>method
+of <i>CATDocumentServices</i>. However, it is in this method that you must code
+any specific save operations necessary for your new document type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to:</p>
+<ul>
+  <li>Add a new dictionary entry in order to define a new document format type
+    to be made available in the <code>File/SaveAs</code> dialog box.</li>
+  <li>Implement the <i>CATIExportTypeManager</i> interface order to define
+    specific save operations for the new document type.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMCreatingCmp.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [June 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

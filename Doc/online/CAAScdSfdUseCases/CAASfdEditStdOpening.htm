@@ -1,0 +1,175 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Standard Openings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Functional Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Standard Openings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to edit openings.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASfdEditStdOpening is launched in CATIA [<a href="#References">1</a>].
+		First open CAASfdCreateOpening.CATPart in the samples directory. The 
+		macro first creates openings using the Offset-Offset strategy. This is 
+		not described here. </p>
+		<p><a href="CAASfdEditStdOpeningSource.htm" target="Source">CAASfdEditStdOpening.CATScript</a>
+		 is located in the CAAScdSfdUseCases.
+		<a href="macros/CAASfdEditStdOpening.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASfdEditStdOpening includes three steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Editing the Contour</a></li>
+			<li><a href="#Step3">Editing the Position</a></li>
+		</ol>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASfdEditStdOpening.CATPart in CATIA and create the 
+		openings. See <a href="CAASfdCreateStdOpening.htm">Creating Standard 
+		Openings</a> and the CAASfdOffset_Offset.CATScript macro.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+Sub CATMain()
+  Dim part1 As Part
+  Set part1 = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Editing the Contour</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  Dim GetName As String
+  Dim GetParam As SfmStandardContourParameters
+
+  StdOpening.GetContour GetName, GetParam
+
+  Dim Nb As Long
+  Nb = GetParam.Count
+
+  Dim ParamName1 As String
+  Dim ParamValue1 As Parameter
+
+  For i = 1 To Nb
+    Set ParamValue1 = GetParam.Item(i)
+    ParamName1 = ParamValue1.Name
+
+    If ParamName1 = "Sfm_Width" Then
+      ParamValue1.ValuateFromString ("1000mm")
+    End If
+    If ParamName1 = "Sfm_Height" Then
+      ParamValue1.ValuateFromString ("1000mm")
+    End If
+    If ParamName1 = "Sfm_CornerRadius" Then
+      ParamValue1.ValuateFromString ("25mm")
+    End If
+  Next
+
+  StdOpening.SetContour GetName, GetParam  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Editing the Position</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  Dim pName As String
+  Dim pStrategyParams As SfmStandardPosStrategyParameters
+  StdOpening.GetPositioningStrategy pName, pStrategyParams
+
+  Dim UrefNew As Reference
+  Set UrefNew = Part1.FindObjectByName("CROSS.70")
+
+  Dim URefListint1 As SfmReferences
+  Set URefListint1 = Factory.SfmReferences
+  URefListint1.Add UrefNew
+
+  pStrategyParams.SetPosParamData "CATSfmPosOffsetOffset", 40, URefListint1, 25, VrefList, 30
+
+  StdOpening.SetPositioningStrategy pName, pStrategyParams
+
+  part1.Update  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit standard openings.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

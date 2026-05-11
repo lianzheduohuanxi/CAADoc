@@ -1,0 +1,49 @@
+Sub CATMain()
+Dim StrWorkbench As StrWorkbench
+Dim strFactory As StrObjectFactory
+
+Set doc = CATIA.ActiveDocument
+Dim rootProduct As Product
+Set rootProduct = doc.Product
+   
+Set StrWorkbench = doc.GetWorkbench("StrWorkbench")
+    
+Dim strPlates As strPlates
+Set strPlates = rootProduct.GetTechnologicalObject("StructurePlates")
+   
+Dim selection1 As Selection
+Set selection1 = doc.Selection
+
+selection1.Search "Name='StrCutout.1',all"
+
+Dim CutoutToEdit As StrCutoutFeature
+Set CutoutToEdit = selection1.Item(1).Value
+
+'Get the Cutout Type
+Dim FormingMode As String
+FromingMode = CutoutToEdit.CutoutType
+
+'Get the Current Contour
+Dim CurrentContour As Reference
+Set CurrentContour = CutoutToEdit.Contour
+
+'Get the Current Direction Element
+Dim CurrentDirElement As Reference
+Set CurrentDirElement = CutoutToEdit.DirectionElement
+
+'Set the New Direction Element
+
+Set documents1 = CATIA.Documents
+Set partDocument1 = documents1.Item("Grid.CATPart")
+Set part1 = partDocument1.Part
+
+Set Newdir = part1.FindObjectByName("Sketch.4")
+Set NewDirElement = part1.CreateReferenceFromObject(Newdir)
+CutoutToEdit.DirectionElement = NewDirElement
+
+'Set the New Contour
+Dim NewContour As Reference
+Set NewContour = rootProduct.CreateReferenceFromName("Product1/Grid/!Sketch.2")
+CutoutToEdit.Contour = NewContour
+
+End Sub

@@ -1,0 +1,708 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding a New List Dialog</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3d com</h1>
+    </td>
+    <td valign="top">&nbsp;</td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>Adding a New List Dialog</h3>
+    <em>How to add a new dialog and execute multiple server commands from it</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article shows how to add a new panel in the Portal transient area
+    and execute multiple Update Object commands from it.</p>
+    <ul>
+      <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+      <li><a href="#UseCase"><b>The CAALCANavCustoList Use Case</b></a>
+        <ul>
+          <li><a href="#What">What Does CAALCANavCustoList Do</a></li>
+          <li><a href="#How">How to Launch CAALCANavCustoList</a></li>
+          <li><a href="#Where">Where to Find CAALCANavCustoList Code</a></li>
+        </ul>
+      </li>
+      <li><a href="#Step"><b>Step-by-Step</b></a></li>
+      <li><a href="#InShort"><b>In Short</b></a></li>
+      <li><a href="#References"><b>References</b></a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you add a new dialog in the Portal transient
+area. This dialog is created with the CATJDialog APIs. It is displayed by selecting one or more rows in a list and clicking
+a new icon added to the Toolbar and the Contextual Menu.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALCANavCustoList Use Case</h3>
+<p>CAALCANavCustoList is a use case of the CAALCANavigator.edu framework
+that illustrates the LCANavigator customization capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALCANavCustoList Do</h4>
+<p>For CAALCANavCustoList create a new command named <b>custolist</b> and associate a new icon with it.
+For the command to be executed, implement the <code>execute</code> function in a class extending <i>LCANavCommand</i>.
+Finally create a new CATJDialog panel named <b>CustoList</b> which controller is <code>CAALcnCustoListController.java</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALCANavCustoList</h4>
+<p>To launch CAALCANavCustoList, you will need to set up the build time environment, customize the runtime view,
+then compile CAALCANavCustoList along with its prerequisites, set up the run
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Customize the untime view: Replace in the runtime view CustoTestGeneric.xml and rename it to Generic.xml</p>
+<ul>
+	<li>Create 2 actions</li>
+    <li>Quick Search the 2 actions</li>
+    <li>Select the 2 actions and click L icon</li>
+    <p align="center"><img border="0" src="images/CustoList1.jpg" width="780" height="562"></p>
+    <li>Enter a description value and click OK</li>
+    <p align="center"><img border="0" src="images/CustoList2.jpg" width="780" height="562"></p>
+    <li>When returning to the initial list, description value is changed for both selected actions</li>
+    <p align="center"><img border="0" src="images/CustoList3.jpg" width="780" height="562"></p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALCANavCustoList Code</h4>
+<p>The CAALCANavCustoList use case is made of a single module
+CAALcnCustoList.mj module of the CAALCANavigator.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALCANavigator.edu\CAALcnCustoList.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALCANavigator.edu/CAALcnCustoList.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the <b>custolist</b>
+command and its panel, there are four steps:</p>
+<ol>
+  <li><a href="#Step1">Creating a the New Command</a></li>
+  <li><a href="#Step2">Creating a New Icon for the Command</a></li>
+  <li><a href="#Step3">Implementing the execute Function</a></li>
+  <li><a href="#Step4">Creating the New CATJDialog Panel</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a the New Command</h4>
+<p>Name the new command: <b>custolist</b>.</p>
+<p>To map the new command to the desired action defined in the new command class :</p>
+<p>Create/Update manually the properties files to be deployed in the runtime view.</p>
+<p>Create:/resources/pprregistry/command/definition/custolist.xml  with the following content:</p>
+<p><pre>&lt;Command name="custolist" readonly="true" icon="$/I_CMD_custolist.gif" msgcatalog="CustoList"/&gt;</pre></p>
+<p>Update (for this new command to apply to all LCA types): /resources/pprregistry/command/ENOVIA/assignment/Generic.xml</p>
+<p>Add the following line:
+	<pre>&lt;Command  name="custolist"    multiRowEnabled="false" enablement="true"  visibility="true"/&gt;</pre>
+</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a New Icon for the Command</h4>
+<p>Create a new icon of 16x16 pixels identifying the new command on the Toolbar/Contextual
+menu:</p>
+<ul>
+  <li>Name it: <b>I_CMD_custolist</b></li>
+  <li>Place it in: Resources/graphic/icons/small</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Implementing the execute Function</h4>
+<p>In the new class <code>CAALcnCustobase.CAALcnCustocmds.command.custolist.Generic.java</code> extending <i>LCANavCommand</i> implements the <code>
+execute</code> function:</p>
+   <table class="code">
+      <tr>
+        <td>
+        <b> This new class implement the "custolist" command for </b>
+		<b> the object type "Generic" (the parent of all types.)</b>
+		<ul>
+		   <li>Retrieve the UUIDs of the selected objects and make sure that at least one is retrieved</li>
+		   <li>For each UUID find the highest WebType parent and make sure it is the same for all.</li>
+		   <li>Stack the CustoproList panel with the UUIDs for which the new list will be displayed</li>
+        </ul>
+        <pre>...
+public void execute( CATSession iSession ){
+  //Get the list of input objects
+  String[] uuids = getUUIDs( iSession );
+  if( uuids == null || uuids.length == 0 ) {
+    return;
+  }
+  String webType = null;
+  String prevWebType = null;
+  ENOVIDataObject[] queryResults = new ENOVIDataObject[uuids.length];
+  for( int i=0; i&lt;uuids.length; i++){
+    queryResults[i] =  LCANavUtils.getDataObject( iSession, uuids[i], ENOVTypeMask.EDIT_MASK );
+    ENOVWebType type = queryResults[i].getWebType();
+    //Check that all selected objects derive from the same parent and pass
+    //parent name to the CulstoList dialog
+    //This is done prior calling ErrorOncheckAttributes(), because two objects deriving
+    //from two different parents may have identical attribute names.
+
+    //For that find the highest WebType parent except GENERIC, DOCCOMMON, ACTCOMMON, RSCBASE
+    String parentName = null;
+    webType = type.getNoun();
+    while (true) {
+      parentName = type.getParent();
+      if (parentName == null
+        || parentName.equalsIgnoreCase("GENERIC")
+        || parentName.equalsIgnoreCase("DOCCOMMON")
+        || parentName.equalsIgnoreCase("ACTCOMMON")
+        || parentName.equalsIgnoreCase("RSCBASE"))
+      {
+        break;
+      }else{
+        webType = parentName;
+        type = ENOVWebType.getWebType(parentName);
+      }
+    }
+    if (prevWebType == null)
+	  prevWebType = webType;
+	else {
+	  if (! prevWebType.equals(webType) ) {
+	    MessageStack.pushInfoMessage( "custolist", "ObjectsOfDifferentTypes", null, iSession );
+		showStatusMessage( iSession, false );
+		return;
+	  }
+	}
+  }
+  if ( ! ErrorOncheckAttributes(queryResults))  {
+    MessageStack.pushInfoMessage( "custolist", "ObjectsOfDifferentTypes", null, iSession );
+	showStatusMessage( iSession, false );
+	return;
+  }
+  iSession.setVolatileProperty("ENOVIDataObjects", queryResults);
+  String parms = "DATAOBECTS=ENOVIDataObjects"+";"+"WEBTYPE="+webType;
+  this.stackSingleObjectDialog( iSession, "CustoList", parms );
+}
+...</pre>
+        </td>
+      </tr>
+ <tr>
+    <td>
+    <p>Because of type the customization which allows for additonal
+	 attributes on derived types, check for same attribute names for all selected objects
+     and same editable attribute names for all selected objects.
+     There is still a risk that two new attributes on two derived types
+     of the same parent have the same name but are of different types.
+     This risk is minimal and checking type equality is not necessary.</p>
+    <pre>...
+private boolean ErrorOncheckAttributes(ENOVIDataObject[] iQueryResults) {
+  Vector vAttr = null;
+  Vector vEditableAttr = null;
+  int iNrAtt = 0;
+  int iNrEditAtt=0;
+  boolean bFirst = true;
+  for (int i=0; i&lt;iQueryResults.length; i++ ) {
+    if (vEditableAttr == null) {
+      vEditableAttr = new Vector();
+      vAttr = new Vector();
+    }else{
+      bFirst = false;
+    }
+    Enumeration e = iQueryResults[i].getAttributes();
+    int iTotalAtt=0;
+    int iEditAtt=0;
+    while(e.hasMoreElements()){
+      ENOVIAttribute att = (ENOVIAttribute)e.nextElement();
+      iTotalAtt++;
+      if (bFirst) {
+        vAttr.addElement(att.getName());
+      }else
+        if ( ! vAttr.contains(att.getName()))
+          return false;
+
+      if (att.isEditable()){
+        iEditAtt++;
+        if (bFirst){
+          vEditableAttr.addElement(att.getName());
+        }else
+          if ( ! vEditableAttr.contains(att.getName()))
+            return false;
+      }
+    }
+    if (iNrAtt  == 0){
+      iNrAtt  = iTotalAtt;
+      iNrEditAtt = iEditAtt;
+    }else{
+      if (iTotalAtt != iNrAtt || iEditAtt != iNrEditAtt)
+        return false;
+    }
+  }
+  return true;
+}
+...</pre>
+     </td>
+    </tr>
+    </table>
+  </li>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the New CATJDialog Panel</h4>
+<p>Create the new CATJDialog panel <b>CustoList</b> to be displayed in the
+transient area. The new controller extends <i>LCANavDialogController</i></p>
+<table class="code">
+  <tr>
+    <td>
+    <p>Call super in Create for the controller to automatically retrieve the document:</p>
+    <pre>...
+  public void onCreate(CATDialog iDialog, CATNotification iNotification, Object iData){
+    super.onCreate( iDialog, iNotification, iData );
+    _btnSelectAll.setTitle("Select All");
+    _date = new CATDateEditor( _frameActions, "date" );
+    _frameActions.setConstraints( _date, new GC(3, 0, 1, 1, GC.LEFT|GC.TOP, GC.NOFILL) );
+    _date.setVisibility(false);
+    _select = new CATComboBox( _frameActions, "select" );
+    _frameActions.setConstraints( _select, new GC(3, 0, 1, 1, GC.LEFT|GC.TOP, GC.NOFILL) );
+    _select.setVisibility(false);
+    _text = new CATTextField( _frameActions, "text" );
+    _frameActions.setConstraints( _text, new GC(3, 0, 1, 1, GC.LEFT|GC.TOP, GC.NOFILL) );
+    _text.setVisibility(false);
+ }
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Implement the onDocumentChanged method:</p>
+    <ul>
+	  <li>Retrieve the selected UUIDs</li>
+	  <li>Retrieve the corresponding objects</li>
+	  <li>Fill the table with the retrieved objects</li>
+	  <li>Fill combo box with editable column names</li>
+	  <li>Select all rows</li>
+	</ul>
+    <pre>...
+public void onDocumentChanged(CATDialog iDialog, CATNotification iNotification, Object iData) {
+  String dataObjects = (String)getParameter("DATAOBECTS");
+  _queryResults = (ENOVIDataObject[])iDialog.getSession().getVolatileProperty(dataObjects);
+  _webType = (String)getParameter("WEBTYPE");
+  if (fillTable())
+    fillColumnComboBox();
+  onSelectAll( iDialog, iNotification, iData);
+}
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Fill the list table with objects</p>
+    <ul>
+	  <li>Retrieve logon token</li>
+	  <li>Create a ENOVDataPPRTablemodel</li>
+	  <li>Add the model to the table to display the list</li>
+	</ul>
+    <pre>...
+  private boolean fillTable(){
+	if( _queryResults == null || _queryResults.length == 0 )
+	  return false;
+	_model = new ENOVDataPPRTableModel( _tableResults, _webType, _queryResults, getLogonToken(), true);
+	_model.setPreferencePrefix("custolist");//List Specific Preferences
+	_tableResults.setKeyModel( _model );
+	_tableResults.setMultipleSelection( true );
+	return true;
+  }
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p>Upon column selection fill combo box:</p>
+    <pre>...
+  private void fillColumnComboBox(){
+    ENOVIDataObject dob = _queryResults[0];
+    Enumeration e = dob.getAttributes();
+    while(e.hasMoreElements()) {
+  	  ENOVIAttribute attr = (ENOVIAttribute)e.nextElement();
+  	  if (attr.isEditable()  && ! (attr.getName().indexOf("ID")&gt;-1))
+  		_cbColumns.addItem(attr.getAlias());
+  	}
+  	if (_cbColumns.getItemCount()&gt;0){
+  	  _cbColumns.setSelection(0);
+  	  onColumnSelected(_cbColumns,null, null );
+  	}
+  }
+  ...</pre>
+    </td>
+  </tr>
+  <tr>
+      <td>
+      <p>onColunnSelected callback:</p>
+      <ul>
+	    <li>Loop in the rows</li>
+	    <li>Depending on the object type displays the right widget</li>
+	    <li>Fill the widget with authorized or help values</li>
+	  </ul>
+      <pre>...
+  public void onColumnSelected(CATDialog iDialog, CATNotification iNotification, Object iData){
+	String textDefaultValue = null;
+	Vector vAllAuthorizedValues = new Vector();
+	_vCommonIntValue = new Vector();
+	_vCommonExtValue = new Vector();
+	int index = ((CATComboBox)iDialog).getSelectionIndex();
+	for (int i=0; i&lt;_queryResults.length; i++){
+	  ENOVIDataObject dataObj =  _queryResults[i];
+	  Enumeration enum = dataObj.getAttributes();
+	  while (enum.hasMoreElements()){
+	    ENOVIAttribute attr = (ENOVIAttribute)enum.nextElement();
+	    String sal = attr.getAlias();
+	    if (attr.getAlias().equals(((CATComboBox)iDialog).getSelection())) {
+	      _changedAttrName = attr.getName();
+	      ENOVAttributeType attType = attr.getType();
+	      if( attType == ENOVAttributeType.DATE_TYPE ) {
+	      if (i==0) {
+	        _date.setVisibility(true);
+	        _select.setVisibility(false);
+	        _text.setVisibility(false);
+	        Object attrVal = attr.getDefaultInternalValue();
+            if( attrVal instanceof Date ){
+	          CATDate cDate = new CATDate( (Date)attrVal );
+	          _date.setDate( cDate );
+	        }
+	      }
+	    } else if (attr.valueTranslatable()) {
+	      if ( i==0 ){
+	        _date.setVisibility(false);
+	        _select.setVisibility(true);
+	        _text.setVisibility(false);
+	        getComboValues(attr);
+	      }
+	    }else{
+	      if ( i==0 ){
+	        _date.setVisibility(false);
+	        _select.setVisibility(false);
+	        _text.setVisibility(true);
+	        _text.setText("");
+	        _text.setExpectedFormat( "" );
+	        if (attr.isRequired())
+	          _text.setExpectedFormat( "." );
+	        if (attType.equals(ENOVAttributeType.INTEGER_TYPE)){
+	          if (attr.isRequired())
+	            _text.setExpectedFormat("^[0-9]+$");
+	          else
+	            _text.setExpectedFormat("^[0-9]*$");
+	        }
+	        Object attrVal = attr.getDefaultExternalValue();
+	        if( attrVal != null ){
+	          if( attrVal instanceof String[] )
+	            _text.setText( arrayToString((String[])attrVal) );
+	        }
+	      }
+	    }
+	  }
+    }
+    if (_select.isDisplayed()){
+      try{
+	    if (_vCommonIntValue != null){
+	      _select.setItems(_vCommonIntValue.elements());
+	      String[] extValues = new String[_vCommonExtValue.size()];
+	      _vCommonIntValue.copyInto(extValues);
+	      _select.setItemTranslator( new LCACATTranslator(_select.getItemList(), extValues, false ) );
+	    }
+	  }catch (Exception e) {;}
+	}
+  }
+    ...</pre>
+      </td>
+  </tr>
+   <tr>
+          <td>
+          <p>Retrieve authorized and help values for combo box</p>
+          <pre>...
+  private void getComboValues(ENOVIAttribute attr){
+	String[] extValue = null;
+	String[] intValue = attr.getInternalAuthorizedValues();
+	if( intValue != null && intValue.length > 0 ) {
+	   extValue = attr.getAuthorizedValues();
+	}else{
+	   intValue = attr.getInternalHelpValues();
+	   extValue = attr.getHelpValues();
+	}
+  }
+        ...</pre>
+          </td>
+  </tr>
+  <tr>
+          <td>
+          <p>Unstack the panel on onCancel calback</p>
+          <pre>...
+  public void onCancel(CATDialog iDialog, CATNotification iNotification, Object iData){
+	CATDocumentManager docManager = CATDocumentManager.getDocumentManager(_dialogBox);
+	if (docManager != null)
+	  docManager.unstack();
+  }
+        ...</pre>
+          </td>
+  </tr>
+   <tr>
+            <td>
+            <p>onApply callback. Update objects</p>
+            <pre>...
+  public void onApply(CATDialog iDialog, CATNotification iNotification, Object iData){
+	String[] keys = _tableResults.getSelectedKeys();
+	if (keys == null){
+	  MessageStack.pushInfoMessage( "custolist", "NoRowSelected", null, iDialog.getSession());
+	  showStatusMessage( false );
+	  return;
+	}else{
+	  _bSave = save(keys, iDialog, iNotification, iData);
+	}
+  }
+          ...</pre>
+            </td>
+  </tr>
+   <tr>
+              <td>
+              <p>onOK callback: Execute onApply + onCancel</p>
+              <pre>...
+  public void onOK(CATDialog iDialog, CATNotification iNotification, Object iData){
+	_bSave = false;
+	onApply(iDialog, iNotification, iData);
+	if (_bSave)
+	  onCancel(iDialog, iNotification, iData);
+  }
+            ...</pre>
+              </td>
+  </tr>
+   <tr>
+                <td>
+                <p>onSelectall callback</p>
+                <pre>...
+  public void onSelectAll(CATDialog iDialog, CATNotification iNotification, Object iData){
+	PortalUID[] puid = LCAJPortalUtils.getPortalUIDs(iDialog.getSession(),_queryResults );
+	String[] keys = new String[puid.length];
+	for (int i=0; i&lt;puid.length; i++)
+	  keys[i] = puid[i].toString();
+	_tableResults.setSelectedKeys(keys);
+  }
+              ...</pre>
+                </td>
+  </tr>
+   <tr>
+                  <td>
+                  <p>Retrieve the selected objects on which to apply the update</p>
+                  <pre>...
+   private ENOVIDataObject getDataObjectFromKey(String key, CATSession iSession){
+	 PortalUID[] puid = LCAJPortalUtils.getPortalUIDs(iSession,_queryResults );
+	 for (int i=0; i&lt; puid.length; i++){
+	   if (puid[i].toString().equals(key))
+	     return _queryResults[i];
+	 }
+	 return null;
+   }
+                ...</pre>
+                  </td>
+  </tr>
+   <tr>
+                    <td>
+                    <p>Save method. Update all selected objects</p>
+                    <pre>...
+  private boolean save(String[] keys, CATDialog iDialog, CATNotification iNotification, Object iData) {
+	boolean bSaveOk = true;
+	for (int i=0; i&lt;keys.length; i++){
+	  EVIDataObject dobj = getDataObjectFromKey( keys[i], iDialog.getSession());
+	  if (updateDataObject( dobj)){
+	    boolean ok = validateDataObject(dobj);
+	    if (ok){
+		  ENOVIClientCommand cmd = ENOVCommandFactory.createClientCommand( getCommandName(dobj), getLogonToken() );
+		  cmd.setParameter( "object", dobj, false );
+		  ok = cmd.execute();
+		  MessageStack.pushMessages( cmd, _session, i==0? true : false );
+		  showStatusMessage( ok );
+		  if (!ok) {
+		    restoreObject(dobj);
+			bSaveOk = false;
+		  }
+		}else{
+		  restoreObject(dobj);
+		  bSaveOk = false;
+		}
+	  }else{
+	    MessageStack.pushInfoMessage( "custolist", "RequiredField", null, iDialog.getSession());
+	    bSaveOk = false;
+	  }
+	}
+	showStatusMessage( bSaveOk );
+	return bSaveOk;
+  }
+                  ...</pre>
+                    </td>
+  </tr>
+   <tr>
+                    <td>
+                    <p>Return server command name</p>
+                    <pre>...
+   private String getCommandName(ENOVIDataObject dataObj){
+	 String noun = dataObj.getObjectType();
+	 String cmd = ENOVWebType.getWebType( noun ).getCommandName( "lcaedit" );
+	 if( cmd == null ) cmd = "UpdateObjectCommand";
+	   return cmd;
+   }
+                  ...</pre>
+                    </td>
+  </tr>
+  <tr>
+                      <td>
+                      <p>Update object to be saved</p>
+                      <pre>...
+   private boolean updateDataObject( ENOVIDataObject iDataObj){
+	 boolean ok = false;
+	 ENOVIType type = iDataObj.getType();
+	 Enumeration enum = type.getAttributes();
+	 while( enum.hasMoreElements() ){
+	   ENOVIAttribute attr = (ENOVIAttribute)enum.nextElement();
+	   if (attr.getName().equals(_changedAttrName)){
+	     ENOVAttributeType attrType = attr.getType();
+	     Object val = null;
+	     if( attrType == ENOVAttributeType.DATE_TYPE ){
+		   CATDate cDate = _date.getDate();
+		   if( cDate != null )
+		     val = new Date( cDate.getTime() );
+		 }
+		 else if( attr.valueTranslatable() ){//Combo box and Check box
+		   val = _select.getSelection();
+		 }else{
+		   val = _text.getText();
+		 }
+		 if( val != null ){
+		   if ( ! (attr.isRequired() &&  ((String)val).length() == 0)){
+		     iDataObj.setAttrValue( attr.getID(), val );
+		     ok = true;
+           }
+		 }
+	   }
+	 }
+	 return ok;
+   }
+                    ...</pre>
+                      </td>
+  </tr>
+  <tr>
+                    <td>
+                    <p>Restore object if save failed</p>
+                    <pre>...
+   private void restoreObject( ENOVIDataObject dobj){
+	 String uuid = dobj.getObjectUUID();
+	 ENOVIDataObject oldObj = LCANavUtils.getDataObject( _dialogBox.getSession(), uuid, ENOVTypeMask.EDIT_MASK );
+	 for (int i=0; i&lt;_queryResults.length; i++){
+	   if (_queryResults[i].equals(dobj)){
+	     _queryResults[i] = oldObj;
+	     break;
+	   }
+	 }
+   }
+                  ...</pre>
+                    </td>
+  </tr>
+   <tr>
+                      <td>
+                      <p>Validate object before saving</p>
+                      <pre>...
+   private boolean validateDataObject( ENOVIDataObject iObject ){
+	 boolean ok = true;
+	 Enumeration attrEnum = iObject.getType().getAttributes();
+	 while( attrEnum.hasMoreElements() ){
+	   ENOVIAttribute attr = (ENOVIAttribute)attrEnum.nextElement();
+	   if( attr.isRequired() ){
+		 Object val = iObject.getAttrValue( attr );
+		 boolean thisOneOk = true;
+		 if( val == null ){
+		   thisOneOk = false;
+		 }
+	     else if( String.valueOf(val).trim().length() == 0 ){
+		   thisOneOk = false;
+		 }
+         if( !thisOneOk ){
+		   ok = false;
+		   String[] parms = new String[] { attr.getAlias() };
+		   MessageStack.pushErrorMessage( "custolist", "Message.MissingRequired", parms, _session );
+		 }
+	   }
+	 }
+	 return ok;
+   }
+                    ...</pre>
+                      </td>
+  </tr>
+</table>
+<p>Create the <b>CustoList.CATNls</b> file with the following content for all new NLS values</p>
+
+<p>Title="My Customized List";</p>
+<p>NoRowSelected = "No row has been selected";</p>
+<p>RequiredField = "Field is required";</p>
+<p>NotUpdatableObject = "This type of object cannot be updated in LCANav";</p>
+<p>ObjectsOfDifferentTypes = "Selection must comprise objects of the same type";</p>
+<p>OnlyOneObjectSelected = "More then one row must be selected";</p>
+<p>SelectAll.Title = "Select All";</p>
+<p>Frame1.FrameToolbar.SelectAll.Title = "Select All";</p>
+<p>Command.custolist.title = "Customized List";</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows hwo to create a command that can be executed from a new CATJDialog
+panel in the Portal transient area. First a new comand is created thanks to RADE,
+and a new icon is associated with it. Then the command code is created by extending
+<i>LCANavCommand</i> to implement the <code>execute</code> function. The CATJDialog
+panel is finally created along with its different callbacks to allow for triggering
+the server command.&nbsp; </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jun 2005]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

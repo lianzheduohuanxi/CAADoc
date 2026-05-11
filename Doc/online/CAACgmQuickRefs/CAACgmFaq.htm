@@ -1,0 +1,450 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Frequently Asked Questions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Frequently Asked Questions</h3>
+      <em></em></td>
+  </tr>
+  <tr>
+    <td class="quick"><b>Quick Reference</b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>Here is a quick-access list of all the FAQs we have received from CAA
+      partners as well as DS internal developers. The questions are sorted by
+      area of interest. In answers, links to the relevant documents or use cases
+      are provided for a more detailed information.
+      <p><b>General<br>
+      </b><a href="#geometric or topological level?">Should I work at the
+      geometric or topological level?</a><br>
+      <a href="#Start">How to start using the geometric and topological classes
+      and interfaces?</a><br>
+      <a href="#mathematical classes?">How to start using the mathematical
+      classes?</a></p>
+      <p><b>Geometry</b><br>
+      <a href="#forign">What do I have to do to in brief to create an attribute?</a><br>
+      <a href="#attributeidentifier?">How can I retrieve an attribute
+      identifier?</a><br>
+      <a href="#CATMathPoint and a CATPoint?">What is the difference between a
+      CATMathPoint and a CATPoint?</a><br>
+      <a href="#3D point">How to get the 3D point corresponding to a surface
+      parameter?</a><br>
+      <a href="#explain?">While projecting a point on curve or surface, the
+      operator does not return the expected value. Can you explain?</a><br>
+      <a href="#Is the first arc number">Is the first arc number of a curve
+      equal to 1?</a><br>
+      <a href="#How to create Bézier">How to create Bézier curve?</a><br>
+      <a href="#orientation of CATPCircle?">How is defined the orientation of
+      CATPCircle?</a><br>
+      <a href="#surfaces of my own type?">How to create and use curves or
+      surfaces of my own type?</a><br>
+      <a href="#max limits?">Can you explain the difference between current
+      limits and max limits?</a><br>
+      <a href="#redefinelim">How do I redefine the limits of a curve?</a><br>
+      <a href="#retrivelim">How do I retrieve the current limits of a curve?</a><br>
+      <a href="#maxlim">How do I retrieve the maximum limits of a&nbsp; curve?</a><br>
+      <a href="#retrieve the edge-curve limits">Given an edge, how can I get the
+      extremities related to this edge on the edge curve?</a><br>
+      <a href="#attached CATPCurve?">Given an edge bounded by a face, how can I
+      retrieve the limits of the attached CATPCurve?</a><br>
+      <a href="#SetGeometryOnFace?">What should I use to attach a geometry to an
+      edge, CATEdge::SetCurve or CATEdge::SetGeometryOnFace?</a><br>
+      <a href="#Cananedgecurve">Can an edge-curve represent only one CATCurve,
+      even if the edge bounds two faces?</a><br>
+      <a href="#twoCATP">Can two CATPCurves/CATCurve share the same end points?
+      Can I re-use the CATPointOnEdgeCurve defined on one edge-curve for another
+      edge-curve?</a><br>
+      <a href="#How to copy an object?">How to copy an object?</a><br>
+      <a href="#3D point">How to get the surface parameters of a 3D point?</a><br>
+      <a href="#What is the gap">What is the gap below which two objects cannot
+      be differentiated ?</a><br>
+      <a href="#gaptol">What method can I use to determine whether the body is
+      having gaps larger than what CATIA can tolerate?</a></p>
+      <i><b>Topology<br>
+      </b></i><a href="#multi run">Can I create several objects from a
+      topological operator in ADVANCED mode?</a><br>
+      <a href="#Does CATopRevol">Does CATopRevol create a skin or volume body?</a><br>
+      <a href="#usecells">Do I use the cells and domains to build a body, or
+      topological operators?</a><br>
+      <a href="#computeskin">How to compute the area of a skin body?</a><br>
+      <a href="#surface of a skin body?">How to get the surface of a skin body?</a><br>
+      <a href="#GetMatterSide and GetSideOnFace methods?&nbsp;" href="#GetMatterSide and GetSideOnFace methods?&nbsp;">Can
+      you tell the difference between the GetMatterSide and GetSideOnFace
+      methods?&nbsp;</a><br>
+      <a href="#edgetobeinserted">When an edge is to be inserted into a loop,
+      should I add it explicitly (CATCell::AddDomain) to the loop?</a><br>
+      <a href="#edge2">When an edge is to be inserted into a loop, should I use
+      the CATCell::AddBoundingCell method</a>?<br>
+      <a href="#Done1">Does loop-&gt;Done() check topology as well as geometry?</a><br>
+      <a href="#Done2">Do all the edges of a loop need to have geometry before
+      calling loop-&gt;Done?</a><b><br>
+      </b><a href="#Done3">When should I use loop-&gt;Done() in an application?
+      Can I call this method at the very last end of my application?</a><br>
+      <a href="#Done4">If loop-&gt;Done()is not called, are further topological
+      queries affected?</ba><br>
+      </a>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h1>General</h1>
+<p><a name="geometric or topological level?"><b>Should I work at the geometric
+or topological level?</b></a>
+<p>The geometry is the support of the topology. The power of the topology is to
+describe all the connections between the objects. Hence, work at the topological
+level.
+<p><a name="Start"><b>How to start using the geometric and topological classes
+and interfaces?</b></a>
+<p>The geometric objects are created by <code>CATGeoFactory</code>. <code>CATGeoFactory</code>
+derives from <code>CATICGMContainer</code>, that manages the geometric objects:
+scan, removal. To create or load a <code>CATGeoFactory</code>, use the global
+functions <code>::CATCreateCGMContainer</code> and <code>::CATLoadCGMContainer</code>
+respectively. See: <a href="../CAAGobUseCases/CAAGobNurbs.htm#Creates the Geometry Factory">CAAGobNurbs</a>,
+<a href="../CAATopUseCases/CAATopSpline.htm#Creates the Geometry Factory">CAATopSpline.</a>
+<p><a name="mathematical classes?"><b>How to start using the mathematical
+classes?</b></a></p>
+<p>The mathematical classes do not need any initialization.<br>
+See: <a href="../CAAMthUseCases/CAAMthBase.htm">CAAMthBase</a>,
+<a href="../CAAAmtUseCases/CAAAmtForeign.htm">CAAAmtForeign</a>.
+   <!---------------------------------comment------------------------------------->
+
+<dl>
+  <h1><a name="Geometry"></a>Geometry</h1>
+  <p><a name="forign"><b>What do I have to do to in brief to create an
+  attribute?</b></a>
+  <p>Basically, to create an attribute you must use the CreateAttribute method
+  of the CATGeoFactory factory. This method returns a CATICGMAttribute interface
+  whereby you can manipulate the created attribute. But actually, the data which
+  describe your attribute are specified in the form of an attribute
+  implementation which is passed as the argument of the CreateAttribute method.
+  As a developer, the trick is then to write the appropriate attribute
+  implementation.&nbsp; This has to be done prior to doing anything else. Here
+  is a summary of what you have to do to implement an attribute.
+  <ol>
+    <li>Write the header defining your attribute. The CATCGMDeclareAttribute
+      macro should be used to declare the new attribute class and the attribute
+      class from which the new attribute derives (CATCGMAttribute,
+      CATCGMStreamAttribute or any other attribute class).</li>
+    <li>Write the related implementation. The <nobr>CATCGMImplAttribute macro<font color="#000080"><b>
+      </b></font></nobr>should be used to specify the new attribute class, the
+      attribute class from which the new attribute derives and the application
+      name.</li>
+    <li>Declare the application name in the dictionary</li>
+    <li>Check your Imakefile.mk. It must contain the IID declarations.</li>
+  </ol>
+  <p><a name="attributeidentifier?"><b>How can I retrieve an attribute
+  identifier?</b></a></p>
+  <p>There are two ways (See: CAAGobAttributeCreation and CAAGobAttributeRead).
+  <ol>
+    <li>by using the CATCGMAttrId::FindAttrId static method
+      <p><font size="2" face="Courier New">const char* iAttr =
+      &quot;CAAGobAttributeManagement&quot;;<br>
+      const char* iDomainName = &quot;CAAGobAT&quot;;<br>
+      const CATCGMAttrId* pAttrId = CATCGMAttrId::FindAttrId(iAttr,iDomainName);
+      <nobr>CAAGobAttributeManagement * piAttr1 =(CAAGobAttributeManagement *)
+      CATCGMAttribute::CreateAttribute(pAttrId);</nobr></font></p>
+    </li>
+    <li>or by using the UAIDPtr macro
+      <p><nobr><font face="Courier New" size="2">CAAGobAttributeManagement *
+      piAttr1 =(CAAGobAttributeManagement *)
+      CATCGMAttribute::CreateAttribute(UAIDPtr(CAAGobAttributeManagement));</font></nobr></p>
+    </li>
+  </ol>
+  <p><a name="CATMathPoint and a CATPoint?"><b>What is the difference between a
+  CATMathPoint and a CATPoint?</b></a>
+  <p>A <code>CATMathPoint</code> instance is transient, it cannot be streamed. A
+  <code>CATPoint</code> instance is persistent when stored on a file. It is
+  created by <code>CATGeoFactory</code>.
+  <p><a name="3D point"><b>How to get the 3D point corresponding to a surface
+  parameter?</b></a>
+  <p>This is the evaluation: <code>CATSurface::Evalxxx</code>. See: <a href="../CAAGobUseCases/CAAGobCreation.htm#First corner">CAAGobCreation.</a>
+  <p><a name="explain?"><b>While projecting a point on curve or surface, the
+  operator does not return the expected value. Can you explain?</b></a>
+  <p>The projection operator returns all the solutions of the operation. The
+  first value returned by the iterator is not necessarily the closest to the
+  initial point. To only retrieve the closest projection point, use <code>CATDistanceMinPtCv</code>
+  or <code>CATDistanceMinPtSur</code>.
+  <p><a name="Is the first arc number"><b>Is the first arc number of a curve
+  equal to 1?</b></a>
+  <p>Not always. Do never make any assumption on the parameterization of a
+  geometric object. If the object is extrapolated, its first arc number can be
+  negative.
+  <p><a name="How to create Bézier"><b>How to create Bézier curve?</b></a>
+  <p>A Bézier curve is a particular case of NURBS curve. Hence, there is no
+  dedicated interface for that element. A special constructor <code>CATNurbsCurve</code>
+  allows you to directly create a NURBS that is Bézier. See: <a href="../CAAGobUseCases/CAAGobNurbs.htm#Creates a Bézier curve">CAAGobNurbs.</a>
+  <p><a name="How to create a CATEdgeCurve?"><b>How to create a CATEdgeCurve?</b></a>
+  <p>The derived types can be created as follows:
+  <ul>
+    <li>The <code>CreateSimCurve</code> method of the <code>CATGeoFactory</code>
+      for <code>CATSimCurve</code></li>
+    <li>The <code>CATEdgeCurveComputation</code> geometric operator for <code>CATMergeCurve</code>:
+      this automatically computes the mapping between the curves of the edge
+      curve</li>
+    <li>The <code>CATIntersectionSurSur</code> geometric operator for <code>CATIntCurve</code>.</li>
+  </ul>
+  <p><a name="orientation of CATPCircle?"><b>How is defined the orientation of <code>CATPCircle</code>?</b></a>
+  <p>The circle arcs are always oriented counter clockwise, whatever the order
+  of the input parameters. Hence, it is necessary to compute the <code>CATPCurve</code>
+  orientation to be used in <code>CATSkinOperator</code>. See: <a href="../CAATopUseCases/CAATopOverview.htm#Defining the Orientations Of the Curves In the Profile">CAATopOverview</a>
+  <p><a name="surfaces of my own type?"><b>How to create and use curves or
+  surfaces of my own type?</b></a>
+  <p>To introduce your own type of curves and surfaces, you must first define
+  the corresponding mathematical definition (by deriving a class from <code>CATMathFunctionX</code>
+  or <code>CATMathFunctionXY</code>). Then, you must create the data class (<code>CATForeignCurveData</code>
+  or <code>CATForeignSurfaceData</code>) to be later use in <code>CATIForeignCurve</code>
+  or <code>CATIForeignSurface</code>. See: <a href="../CAAAmtUseCases/CAAAmtForeign.htm">CAAAmtForeign</a>,
+  <a href="../CAAGobUseCases/CAAGobForeign.htm">CAAGobForeign</a>
+  <p><a name="max limits?"><b>Can you explain the difference between current
+  limits and max limits?</b></a>
+  <p>The max limits define the domain inside which the curve or surface can be
+  evaluated. The limits are the domain defined at the curve or surface creation,
+  according to the input parameters. A line created by two points has limits
+  defined by these two points. But it can be evaluated outside the limits: the
+  max limits are infinite. The idea of limits is meaningless in the topology
+  context - but when associating topology with geometry, you need define limits.
+  These limits depend on the cell boundaries which cannot be infinite. When
+  manipulating geometric curves, you can redefine the limits specified at
+  creation.&nbsp; The main interest of this operation is that you can apply a
+  geometric operator only to this portion of the curve.
+  <p><a name="redefinelim"><b>How do I redefine the limits of a curve?</b></a>
+  <p>You must:
+  <ol>
+    <li>construct the CATCrvParam intended to be used as new limits</li>
+    <li>construct the new CATCrvLimits</li>
+    <li>use the CATCurve::SetLimits method</li>
+  </ol>
+  <p><nobr><font face="Courier New" size="2">CATCrvParam
+  middleParm(0.5,maxLimits);<br>
+  const CATCrvLimits newLimits(startlimit ,middleParm);<br>
+  pCurve-&gt;SetLimits(newLimits);</font></nobr>
+</dl>
+<dl>
+  <p><a name="retrivelim"><b>How do I retrieve the current limits of a curve?</b></a>
+  <p>To get the current limit of a curve, use the CATCurve::GetLimits,
+  CATCurve::GetStartLimit or&nbsp; CATCurve::GetEndLimit method. But this only
+  applies to geometry. To retrieve the extremities related to an edge on a
+  curve, you should use CATEdge::GetVerticesParamsOnEdgeCurve.
+  <p><a name="maxlim"><b>How do I retrieve the maximum limits of a&nbsp; curve?</b></a>
+  <p>To get the maximum limits of a curve, use the CATCurve::GetMaxLimits
+  method.
+  <p><a name="retrieve the edge-curve limits"><b>Given an edge, how can I get
+  the extremities related to this edge on the edge curve?</b></a>
+  <p>The method to be used to retrieve the extremities related to an edge on an
+  edge curve&nbsp; is CATEdge::GetVerticesParamsOnEdgeCurve.
+  <p><nobr><font size="2" face="Courier New">CATEdge * edge = ...;<br>
+  CATMathPoint oEdgeCurveStartPt, oEdgeCurveEndPt;<br>
+  CATCrvParam oEdgeCurveStartParam, oEdgeCurveEndParam;<br>
+  edge-&gt;<b>GetVerticesParamsOnEdgeCurve</b>(&amp;oEdgeCurveStartParam,
+  &amp;oEdgeCurveEndParam);<br>
+  CATEdgeCurve*edgeCurve=edge-&gt;GetCurve();<br>
+  edgeCurve-&gt;Eval(oEdgeCurveStartParam, CATCrvEvalCommand::EvalPoint,
+  &amp;oEdgeCurveStartPt);<br>
+  edgeCurve-&gt;Eval(oEdgeCurveEndParam, CATCrvEvalCommand::EvalPoint,
+  &amp;oEdgeCurveEndPt);</font></nobr></p>
+  <p><a name="attached CATPCurve?"><b>Given an edge bounding a face, how can I
+  retrieve the limits of the attached CATPCurve?</b></a>
+  <p>The CATEdge::GetGeometryOnFace allows you to retrieve the limits of the
+  attached PCurve. See <a href="#retrieve the edge-curve limits">How can I
+  retrieve the limits of an edge-curve</a>? for how to get the edgeCurve
+  pointer.
+  <p><nobr><font size="2" face="Courier New">CATEdge * edge = ...;<br>
+  CATFace * face = ...;<br>
+  CATEdgeCurve * edgeCurve = ... ;<br>
+  CATCrvParam oPCurveStartParam, oPCurveEndParam;<br>
+  CATSide edgeSide = edge-&gt;GetMatterSide(face);<br>
+  CATPCurve * pCurve = edge-&gt;GetGeometryOnFace(face, edgeSide, NULL,
+  &amp;oPCurveStartParam, &amp;oPCurveEndParam);<br>
+  CATMathPoint oPCurveStartPt, oPCurveEndPt;<br>
+  pCurve-&gt;Eval(oPCurveStartParam, CATCrvEvalCommand::EvalPoint,
+  &amp;oPCurveStartPt);<br>
+  pCurve-&gt;Eval(oPCurveEndParam, CATCrvEvalCommand::EvalPoint,
+  &amp;oPCurveEndPt);</font></nobr></p>
+  <p><a name="SetGeometryOnFace?"><b>What should I use to attach a geometry to
+  an edge, CATEdge::SetCurve or CATEdge::SetGeometryOnFace?</b></a>
+  <p>These methods provide you with quite different capabilities. The concept of
+  an edge (CATEdge) is only meaningful in the topology context. The geometric
+  representation of a CATEdge is basically a CATEdgeCurve.&nbsp; A CATEdgeCurve
+  can represents geometrically several edges. By using the SetCurve method, you
+  associate an already created CATEdgeCurve with a CATEdge. The geometry
+  associated with the CATEdge plays a role with respect to the other faces
+  bounded by this edge.<br>
+  When you use the SetGeometryOnFace method, you assign a PCurve to an edge with
+  respect to an underlying face.&nbsp; The operation is different.
+  <p><a name="Cananedgecurve"><b>If an edge bounds two faces, can the edge curve
+  related to this face represent only one CATPCurve ?</b></a>
+  <p>NO - If an edge border several faces: the edge curve represents (at least)
+  as many CATPCurves as there are faces bounded by this edge (see: <a href="../CAATobUseCases/CAATobTetra.htm#Gets the curve parameter">CAATobTetra</a>).
+  If the edge only borders a face: the edge curve represents (at least) one
+  CATPCurve. If the edge belongs to a CATWire: the edge curve represents a
+  CATCurve of any type.
+  <p><a name="twoCATP"><b>Can I re-use the CATPointOnEdgeCurve defined on one
+  edge-curve for another edge-curve?</b></a>
+  <p>NO-When you create a CATPointOnEdgeCurve point, you actually create this
+  point with respect to a CATPCurve limit as well as the edge curve on which the
+  point is intended to be created. This point cannot be reused for another edge
+  because it is labelled with these parameters. The usual methodology behind a
+  CATPointOnEdgeCurve is to use them to create macropoints intended to be used
+  later on to set the geometry of edge vertices. See: <a href="../CAATobUseCases/CAATobTetra.htm#Gets the curve parameter">CAATobTetra</a>.
+  <p><a name="How to copy an object?"><b>How to copy an object?</b></a>
+  <p><code>CATCloneManager</code> manages all the copy mechanism. In particular,
+  it manages the links between objects during the copy. See: <a href="../CAAGobUseCases/CAAGobCreation.htm#Clones the CATPLine">CAAGobCreation.</a>
+  <p><a name="How to get the surface parameters of a 3D point?"><b>How to get
+  the surface parameters of a 3D point?</b></a>
+  <p>If the point is known to be on the surface, and if the surface is
+  canonical, you can directly use <code>CATSurface::GetParam</code>. In the
+  other cases, use the <code>CATProjectionPtSur</code> operator. This operator
+  can also be used in case of canonical surface. Do never make any assumption on
+  the parameterization of the geometric objects. See: <a href="../CAATobUseCases/CAATobTetra.htm#Gets the curve parameter">CAATobTetra</a>,
+  <a href="../CAATopUseCases/CAATopOverview.htm#Defines points on the plane">CAATopOverview</a>,
+  <a href="../CAATopUseCases/CAATopJournal.htm#Defines points on the plane">CAATopJournal</a>
+  (for <code>GetParam</code>)<a href="../CAAGobUseCases/CAAGobCreation.htm#First corner"></a>
+  <p><a name="What is the gap"><b>What is the gap below which two objects cannot
+  be differentiated ?</b></a>
+  <p>CGM manages a parameter called the <i>resolution</i> which represents the
+  minimum length of an object. Confusion zones are managed through this
+  parameter -&nbsp; you won't be about to make the difference between two
+  objects when the gap in between is smaller than the resolution. The resolution
+  in Version 5 is 10 <sup>-3</sup> model unit(mm). You cannot change this
+  resolution.
+  <p><a name="gaptol"><b>What method can I use to determine whether the body is
+  having gaps larger than what CATIA can tolerate?</b></a>
+  <p>You can use CATEdgeCurve-&gt;GetMaxGap().
+  <h1>Topology</h1>
+</dl>
+         <!---------------------------------comment------------------------------------->
+<dl>
+  <p><b><a name="multi run">Can I create several objects from a topological
+  operator in ADVANCED mode?</a></b>
+  <p>Definitely NO - One operator - One run. Multi run is not allowed for an
+  operator. Within an application, you are required to delete the operator prior
+  to creating a new one and run it in order to create a new object.
+  <p><a name="Does CATopRevol"><b>Does <code>CATopRevol</code> create a skin or
+  volume body?</b></a>
+  <p>If the input body is a wire, it creates a skin body. If the input body is a
+  skin body, it creates a volume body
+  <p><a name="usecells"><b>Do I use the cells and domains to build a body, or
+  topological operators?</b></a>
+  <p>The topological operators allows you to get rid of the tricky direct
+  topological construction from the cells. So use them to create the bodies. The
+  cell and domain interfaces can be used to scan the topological structure, or
+  to retrieve the underlying geometry. See: <a href="../CAATobUseCases/CAATobTetra.htm">CAATobTetra</a>,
+  <a href="../CAATopUseCases/CAATopOverview.htm">CAATopOverview</a>
+  <p><a name="computeskin"><b>How to compute the area of a skin body?</b></a>
+  <p>Use the <code>CATDynMassProperties3D</code> operator, and get the area with
+  <code>GetWetArea</code>.
+  <p><a name="surface of a skin body?"><b>How to get the surface of a skin body?</b></a>
+  <p>A skin body is a body containing a shell domain. This shell is a connection
+  of several faces. Each face has a geometry, that can be accessed by <code>CATFace::GetSurface</code>.
+  More generally, the geometry of a cell is retrieved with <code>CATCell::GetGeometry</code>.
+  See: <a href="../CAATopUseCases/CAATopJournal.htm#Creates a Circle on the Underlying Surface of the Face">CAATopJournal</a>
+  (to get the surface), <a href="../CAATopUseCases/CAATopJournal.htm#input profile body">CAATopJournal</a>
+  (to get the shell domain), <a href="../CAATobUseCases/CAATobTetra.htm#Recovers the geometry">CAATobTetra</a>
+  (to get the geometry of a cell).
+  <p><a name="GetMatterSide and GetSideOnFace methods?&nbsp;"><b>Can you tell
+  the difference between the GetMatterSide and GetSideOnFace methods?&nbsp;</b></a>
+  <p>GetSideOnFace is a CATEdge method. As such it can only be applied to a
+  CATEdge object to retrieve the matter side on a given face. The argument must
+  be a CATFace. GetMatterSide is a CATCell method which can be applied to any
+  type of cell (vertex, edge or face) to retrieve the matter side on a given
+  cell. The type of the cell specified as the argument must be higher than <i>this</i>
+  in the topology hierarchy. In other words, you can apply GetMatterSide:
+  <ul>
+    <li>to a vertex as long as the argument specified in the method is an edge
+    <li>to an edge as long as the argument specified in the method is a face
+    <li>to a face as long as the argument specified in the method is a volume.
+  </ul>
+  <p>Note: Given <i>this</i> an edge, specifying a CATVolume as the argument of
+  GetMatterSide results in a throw (to be avoided).<br>
+  If you want to retrieve the matter side of an edge on a face, you can use
+  either method.
+  <p><a name="edgetobeinserted"><b>When an edge is to be inserted into a loop,
+  should I add it explicitly to the loop?</b></a>
+  <p>You can always use the AddCell method of the CATDomain interface - But that
+  way, you just specify your topology. If you need specify the geometry as well
+  you must call the SetGeometryOnFace method. Actually you can use either
+  method:</p>
+  <p><nobr><font face="Courier New" size="2"><i>myFace</i>-&gt;AddBoundingCell(<i>theEdge</i>,
+  <i>theSide</i>, <i>theLoop</i>, <i>theUnderlyingGeometry</i>);</font></nobr>
+  <p><nobr><font face="Courier New" size="2">or</font></nobr></p>
+  <p><i>theLoop</i>-&gt;AddCell(<nobr><font face="Courier New" size="2"><i>theEdge</i>,
+  <i>theSide</i></font></nobr>);<br>
+  <nobr><font face="Courier New" size="2"><i>theEdge</i></font></nobr>-&gt;SetGeometryOnFace(<nobr><font face="Courier New" size="2"><i>myFace</i></font></nobr>,<nobr><font face="Courier New" size="2"><i>theSide</i></font></nobr>,<nobr><font face="Courier New" size="2"><i>theUnderlyingGeometry</i></font></nobr>,NULL,NULL);</p>
+  <p>You don't need specify the start and end vertices in SetGeometryOnFace if
+  the edge geometry is already defined (NULL value can be passed for the
+  arguments 4 and 5 of SetGeometryOnFace). Otherwise, you must specify the Poec
+  related to the edge in SetGeometryOnFace.</p>
+  <p><a name="edge2"><b>When an edge is to be inserted into a loop, should I use
+  the CATCell::AddBoundingCell method</b></a>
+  <p>YES - You set the topology as well as the geometry in a single operation.
+  See: <a href="../CAATobUseCases/CAATobTetra.htm">CAATobTetra</a>.
+  <p><b><a name="Done1">Does loop-&gt;Done() check topology as well as geometry?</a></b></p>
+  <p>The Done() method checks that all the cells of a loop have an associated
+  geometry. If the geometry is not fully defined, the method results in a Throw.</p>
+  <p>In <a href="../CAATobUseCases/CAATobTetra.htm">CAATobTetra</a>,
+  if you replace:</p>
+  <p><nobr><font face="Courier New" size="2">piFaceyz-&gt;AddBoundingCell(piEdge30,CATSideRight,piLoopyz,piPLineyz20);<br>
+  piFaceyz-&gt;AddBoundingCell(piEdge23,CATSideRight,piLoopyz,piPLineyz12);<br>
+  piFaceyz-&gt;AddBoundingCell(piEdge20,CATSideLeft,piLoopyz,piPLineyz01);<br>
+  piLoopyz-&gt;Done();</font></nobr></p>
+  <p>with</p>
+  <p><nobr><font face="Courier New" size="2">piFaceyz-&gt;AddBoundingCell(piEdge30,CATSideRight,piLoopyz,NULL);<br>
+  piFaceyz-&gt;AddBoundingCell(piEdge23,CATSideRight,piLoopyz,NULL);<br>
+  piFaceyz-&gt;AddBoundingCell(piEdge20,CATSideLeft,piLoopyz,NULL);<br>
+  piLoopyz-&gt;Done();</font></nobr></p>
+  <p>the edge to be inserted in the piLoopyz have no associated geometry,
+  piLoopyz-&gt;Done() results in a throw.</p>
+  <p><b><a name="Done2">Do all the edges of a loop need to have geometry before
+  calling loop-&gt;Done?</a></b></p>
+  <p>See question above. You get a Throw if not all the edges of a loop have an
+  associated geometry.</p>
+  <p><b><a name="Done3">When should I use loop-&gt;Done() in an application? Can
+  I call this method at the very last end of my application?</a></b></p>
+  <p><i>loop</i>-&gt;Done() should be called when the construction of a body is
+  finished. Not calling Done() may lead to unpredictable results when further
+  operations are carried out on the body.</p>
+  <p><a name="Done4"><b>If loop-&gt;Done()</a> is not called, are further
+  topological queries affected?</b></p>
+  <p>NO. You can make any topological query on the body.</p>
+  <p>&nbsp;</p>
+</dl>
+<hr>
+         <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+         <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,1205 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Using TCKs for Accessing Tools</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top"><h1>RADE</h1>
+    </td>
+    <td valign="top"><h2>Environment Manager</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top"><h3><a name="Top"></a>Using TCKs for Accessing
+    Tools</h3>
+    <p><em>Using TCK commands for managing various tools' installations</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td><h3>Abstract</h3>
+    <p>This article is intended for people willing to know more about TCKs. There are two
+    kinds of commands: user and administrator commands. The first section gives explanations
+    about the purpose of the use of TCKs, the second one presents the user commands while the
+    third section gives the command for administrating TCKs at a site level. <ul>
+      <li><b><a href="#Overview">Overview</a></b> <ul>
+          <li><a href="#TCK attributes">TCK Attributes</a></li>
+          <li><a href="#Site or local management">Site or Local Management</a></li>
+          <li><a href="#Site and local management">Site and Local Management</a></li>
+        </ul>
+      </li>
+      <li><b><a href="#TCKInstallationPanel">TCK Box in RADE Installation
+        Program</a></b>
+        <ul>
+          <li><a href="#LocalInstallation">&quot;Local&quot; Installation</a></li>
+          <li><a href="#ClientInstallation">&quot;Client&quot; Installation</a></li>
+          <li><a href="#ServerInstallation">&quot;Server&quot; Installation</a></li>
+        </ul>
+      </li>
+      <li><b><a href="#UserCommands">User Commands</a></b> <ul>
+          <li><a href="#Listing defined TCKs">Listing Defined TCKs</a></li>
+          <li><a href="#Accessing tools associated with a TCK">Accessing Tools Associated with a TC</a>K</li>
+          <li><a href="#Registering local tools installations">Registering Local Tools Installations</a></li>
+        </ul>
+      </li>
+      <li><b><a href="#AdminCommands">Administrator Commands</a></b> <ul>
+          <li><a href="#Starting a TCK server">Starting a TCK Server</a></li>
+          <li><a href="#Pinging or stopping a TCK server">Pinging or Stopping a TCK Server</a></li>
+          <li><a href="#Registering a new TCK">Registering a New TCK</a></li>
+          <li><a href="#Modifying TCK information">Modifying TCK's Information</a></li>
+          <li><a href="#Removing a TCK">Removing a TCK</a></li>
+          <li><a href="#Associating env variables with TCKs">Associating Environment Variables with
+            TCKs</a></li>
+          <li><a href="#Retrieving the type of TCK installation">Retrieving the Type of TCK
+            Installation</a></li>
+        </ul>
+      </li>
+      <li><b><a href="#References">References</a></b></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Overview"></a>Overview</h3>
+
+<p>TCK stands for <b>T</b>ool <b>C</b>onfiguration <b>K</b>ey and is a label identifying a
+specific installation of a set of tools. Different TCKs can be defined for either 
+
+<ul>
+  <li>installing different tools</li>
+  <li>installing different set of tools</li>
+  <li>installing different levels of the same tools</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="TCK attributes"></a>TCK Attributes</h4>
+
+<p>Any TCK is defined by a set of attributes and a set of tools: 
+
+<ul>
+  <li>A unique identifier.<br>
+    It is what we call the TCK, that is to say the string identifying a set of tools when
+    running a TCK command.</li>
+  <li>The author (read-only).<br>
+    The login name of the user who created the TCK.</li>
+  <li>The last modification date (read-only).<br>
+    Any modification on an existing TCK causes this date to be updated.</li>
+  <li>A set of environment variables.<br>
+    They are used only when TCKs are managed by a TCK server.<br>
+    They are set in the user's environment before calling tools's profiles.</li>
+  <li>A set of tools.<br>
+    Tools can be shared by TCKs and each tool is defined by a set of attributes. <ul>
+      <li>A unique identifier.<br>
+        It is a string used by TCK commands to specified a particular tool.</li>
+      <li>The last modification date (read-only).<br>
+        Any modification on an existing tool causes this date to be updated.</li>
+      <li>A set of profiles.<br>
+        Any tool can own one Unix profile and one Windows-NT profile.<br>
+        If two different profiles exist on the same platform, then two different tools must be
+        declared.</li>
+    </ul>
+  </li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Site or local management"></a>Site or Local Management</h4>
+
+<p>TCKs can be created either locally on each user's machine or on a specific host that we
+call the TCK server host.</p>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP" width="50%"><img src="images/TCKFig2.gif" alt="TCKFig2.gif (2075 bytes)" width="240" height="180"></td>
+    <td valign="TOP" width="50%">When a TCK is declared locally on a given machine, this TCK
+    is accessible for every users working on that machine. <p>Conversely, each machine has its
+    own defnitions of TCKs and there is no communication between them.</td>
+  </tr>
+  <tr>
+    <td valign="TOP" width="50%"><img src="images/TCKFig3.gif" alt="TCKFig3.gif (2323 bytes)" width="240" height="180"></td>
+    <td valign="TOP" width="50%">When a TCK is managed by a TCK server, any user is able to
+    use this TCK from his/her machine and any change performed on the server is seen by users.
+    <p>By this way any client machine communicates with the server machine to retrieve TCK
+    information and these information are managed on only one host.</td>
+  </tr>
+</table>
+
+<p><a name="Type of installation"></a>The ability to perform local registration or to
+retrieve information from a TCK server depends on the type of TCK installation chosen when
+installing the CAA2 Development Toolkit product: 
+
+<ol>
+  <li>If the &quot;NoServer&quot; setup was chosen, only local registrations are possible.</li>
+  <li>If the &quot;Client&quot; setup was chosen, both local and remote registrations are
+    possible.</li>
+  <li>However, it is not possible to launch a TCK server on that host.</li>
+  <li>If the &quot;Server&quot; setup was chosen, the host is considered as being the TCK
+    server host and then a TCK server can be launched.</li>
+</ol>
+
+<p>To know which kind of installation has been set up on a machine, consult this <a
+href="#Retrieving the type of TCK installation">section</a>.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Site and local management"></a>Site and Local Management</h4>
+
+<p>TCK commands support two levels of registration: 
+
+<ul>
+  <li>TCKs defined at site level : they correspond to TCKs managed by a TCK server and they
+    can be used from any host where a &quot;<a href="#Type of installation">Client</a>&quot;
+    installation has been done.</li>
+  <li>TCKs defined at host level : they correspond to TCKs defined locally on a machine and
+    they can be used only from that machine. Local registrations can be done on any host where
+    a &quot;NoServer&quot; or &quot;Client&quot; installation has been done.</li>
+</ul>
+
+<p>Depending on the way TCKs are registered, there can be several definitions of the same
+TCK (site and local). Here is some explanations for understanding which TCK is chosen by
+TCK commands. 
+
+<ul>
+  <li>If a &quot;NoServer&quot; installation has been set up, only local registrations are
+    available and there is only one definition for a given TCK.</li>
+  <li>If a &quot;Client&quot; or &quot;Server&quot; installation has been set up, both site
+    and local registrations can be done. In this case, there are three situations: <ul>
+      <li>A given TCK exists only locally: this TCK will be chosen automatically.</li>
+      <li>A given TCK exists only on the TCK server: this TCK will be chosen automatically.</li>
+      <li>A given TCK exists both locally and on the TCK server: a temporary TCK is generated by
+        selecting all the tools defined in the two TCKs. However, if the same tool is found in
+        both TCKs, the local tool definition is selected.</li>
+    </ul>
+  </li>
+</ul>
+<b>
+
+<p>What is the interest of having a TCK defined both on current host and on the TCK
+server?</b></p>
+
+<p>It is easier for installing new tools or new versions of tools to declare them on a
+single host (the TCK server host). However, if some tools are composed of big modules, the
+local network might be heavily loaded by users running the tools over the network. In this
+case it is interesting to install tools on users' machines to avoid network access: 
+
+<ul>
+  <li>For a daily use of tools, it is advised to install tools locally on users' machine.</li>
+  <li>For a non frequent use, the use of a TCK server avoids the installation of tools on all
+    machines.</li>
+</ul>
+
+<p>Another interest of having two definitions of the same TCK is when testing an
+application based upon tools managed by TCKs. If a new version of a given tool must be
+tested, this new version of the tool can be installed on a host and declared locally the
+official TCK but with a different location for the associated tool.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="TCKInstallationPanel"></a>TCK Box in RADE Installation Program</h3>
+
+<p>This section describes the different installations that are available from
+the TCK Box displayed when installing the CAA RADE V5 CD-ROM.</p>
+
+<p><a name="LocalInstallation"></a>&quot;Local&quot; Installation</p>
+
+<p>This installation corresponds to the choice &quot;No Server Setup&quot; in
+the figure hereafter. It is proposed by default and corresponds to an
+installation which is visible only from the current host. However it is shared
+by all users working on this host.</p>
+
+<p>The TCKs corresponding to the new installation will be added to the ones that
+have been installed already on the current host (use <a href="#Listing defined TCKs">tck_list</a>
+to list them).</p>
+
+<p><img border="0" src="images/CAATck1.jpg" width="830" height="536"></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="ClientInstallation"></a>&quot;Client&quot; Installation</p>
+
+<p>This installation corresponds to the choice &quot;Client Setup&quot; in the
+figure hereafter. The purpose of the &quot;client&quot; installation is to
+generate a tck_init profile which is suitable for accessing a TCK server that is
+running on the host specified in the &quot;Server Name&quot; field and using the
+port number specified in the &quot;Communication port for TCK server&quot;
+field.</p>
+
+<p>The interest of choosing the &quot;Client&quot; installation is when a
+&quot;Server&quot; installation has been done on another host and for a CAA RADE
+installation path <u>that is visible from the other hosts on the local network</u>.
+In that case, the &quot;Client&quot; installation can be done on all other hosts
+by specifying the host where the &quot;Server&quot; installation has been done
+and the same port as given for this &quot;Server&quot; installation.</p>
+
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+If the &quot;Server&quot; installation was performed on a UNIX platform with the 
+user &quot;root&quot;, it is mandatory to run other &quot;Client&quot; installations 
+with a user named &quot;root&quot; or &quot;CAA&quot;. Otherwise the &quot;Client&quot; 
+installations will not be able to modify the TCKs created by the &quot;Server&quot; installation.</P>
+
+<P>At the end of the &quot;Server&quot; installation a TCK daemon has been started, running 
+with the user &quot;root&quot;. The TCKs created by this installation is owned by the user &quot;CAA&quot;. 
+When modifying an existing TCK, the server checks that you are the owner of this TCK or the 
+same user that is running the TCK server. In this case, only the user &quot;CAA&quot; and 
+the user &quot;root&quot; are allowed to modify the TCK. The &quot;Client&quot; installation 
+on Windows, which will use the existing TCK server running on UNIX, will try to update the 
+TCK on the server to add the Windows profiles for each tools (mkmk, mkCheckSource, 
+mkodt.). 
+If the user used for the &quot;Client&quot; installation is neither &quot;CAA&quot; nor &quot;root&quot;, 
+the TCK server will not allow the modification of the TCK.</P>
+
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+It is important that the directory where the CAA RADE V5 CD-ROM has been
+installed on the TCK server is seen with <u>the same path</u> from hosts where a
+&quot;Client&quot; installation has been done.</p>
+
+<p><img border="0" src="../CAAIcons/images/information.gif" width="31" height="30">
+It is possible to specify a TCK server corresponding to an older RADE
+installation. If this TCK server is running while installing the new version,
+the new TCKs will be registered automatically in this server.</p>
+
+<p><img border="0" src="images/CAATck2.jpg" width="830" height="536"></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p><a name="ServerInstallation"></a>&quot;Server&quot; Installation</p>
+
+<p>This installation corresponds to the choice &quot;Server Setup&quot; in the
+figure hereafter. Its purpose is to install RADE on one host and to start a TCK
+server on this host in order to let other hosts to access this installation.
+Here are the steps to go through to achieve such an installation:</p>
+
+<ol>
+  <li>Perform a &quot;Server&quot; installation using the path P, on host X and
+    using port Y (note that X must be the host where the installation being
+    done)</li>
+  <li>Start the TCK server on X as follows (example given for UNIX platform and
+    Sun operating system)<table class="code">
+      <tr>
+        <td><pre>$ . P/solaris_a/code/command/tck_init
+$ tck_server
+Starting TCK server...
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Perform a &quot;<a href="#ClientInstallation">Client</a>&quot;
+    installation on each host from which you want to access the
+    &quot;Server&quot; installation</li>
+  <li>Mount X:P on each &quot;Client&quot; host using the same path P ((example
+    given for UNIX platform, Sun operating system and using a &quot;hard&quot;
+    mount):<table class="code">
+      <tr>
+        <td><pre>$ mount X:P /
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Execute the tck_init profile of the &quot;Client&quot; installation:<table class="code">
+      <tr>
+        <td><pre>$ . &lt;local_client_installation_path&gt;/solaris_a/code/command/tck_init
+$ tck_profile V5R11
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p><img border="0" src="../CAAIcons/images/information.gif" width="31" height="30">
+It is possible to specify a TCK server corresponding to an older RADE
+installation. If this TCK server is running while installing the new version,
+the new TCKs will be registered automatically in this server.</p>
+<p><img border="0" src="images/CAATck3.jpg" width="830" height="536"></p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="UserCommands"></a>User Commands</h3>
+
+<p>User commands are the subset of TCK commands that can be useful for any users.</p>
+
+<p>These commands are available as soon as the current environment has been set up [<a
+href="#References">1</a>].</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Listing defined TCKs"></a>Listing Defined TCKs</h4>
+
+<p>The <b>tck_list</b> command displays either TCK defined at site level or on current
+host. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_list [TCK] [-tool Tool] [-all] [-local|-server] [-off] [-admin] [-h|-help|-?]</code></dt>
+      <dd><pre>[TCK]: when no TCK is specified, all TCKs are selected.
+If this parameter is set, all TCKs whose identifier contains the given string are selected.
+This parameter is not case-sensitive.</pre>
+        <pre>[-tool Tool]: this option is used to select TCKs containing the given tool
+or containing at least one tool whose identifier contains the given string.
+This parameter is not case-sensitive.</pre>
+        <pre>[-all]: this option is used to display all information about the selected TCKs.
+Without this option, only TCK and tool identifiers are displayed.</pre>
+        <pre>[-local|-server]: these options are useful for selecting either TCK defined locally or in a TCK server.
+When the -local option is used, only the TCKs that are defined locally are selected.
+When the -server option is used, only the TCKs that are defined in a TCK server are selected.
+Without any of these options, the command will select TCKs defined both locally and in a TCK server.
+The -all option can be used to know where is defined a TCK or a tool.</pre>
+        <pre>[-off]: to restrict display to official TCKs only. Default is official and administration TCKs.
+By default, any new TCK is created as an official TCK.</pre>
+      </dd>
+      <dd><pre>[-admin]: to restrict display to administration TCKs only. Default is official and administration TCKs.
+By default, any new TCK is created as an official TCK.
+</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The command displays all information related to TCKs managed on a site (by a TCK server)
+    or declared locally on current host.<br>
+    As tools can be shared by several TCKs, the -tool option is useful for listing all TCKs
+    owning a given tool specially when the tool's characteristics are being modified and one
+    wants to know all TCKs that will be impacted by that changes. <p>The -local option is used
+    to know if some local tool installations have been performed on current host.</p>
+  </dd>
+  <dt>Examples</dt>
+  <dd>To display all TCK identifiers along with tool identifiers: <table class="code">
+      <tr>
+        <td><pre>$ tck_list</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To display all TCKs whose identifier contains the string &quot;V5_6B2015&quot;:</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_list V5_6B2015</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To display all TCKs containing at least one tool whose identifier contains the string
+    &quot;Mkmk&quot;:</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_list &#8211;tool Mkmk</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To display all information for all TCKs whose identifier contains the string
+    &quot;V5_6B2015&quot; and having at least one tool whose identifier contains the tring
+    &quot;Mkmk&quot;:</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_list V5_6B2015 &#8211;tool Mkmk &#8211;all</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<blockquote>
+  <p>To display all official TCKs and leaving hidden all administrative TCKs:</p>
+  <table class="code">
+    <tr>
+      <td><pre>$ tck_list &#8211;off</pre>
+      </td>
+    </tr>
+  </table>
+  <p>To use the -all option to know if a TCK or a tool is defined locally on
+  current host:</p>
+  <table class="code">
+    <tr>
+      <td><pre>$ tck_list &#8211;all
+V5R9_T01 CAA 2002/11/30-06:55:13 <font color="#FF0000"><b>local</b></font>
+ Type = Official
+ Mkmk_V5R9_T09 2002/11/30-06:55:13 <b><font color="#FF0000">local</font></b>
+    Windows NT: C:\Program Files\Dassault Systemes\V5R9_T09\intel_a\code\command\mkinit.bat
+ SCM_V5R9_T09 2002/11/30-06:55:13 <b><font color="#FF0000">local</font></b>
+    Windows NT: C:\Program Files\Dassault Systemes\V5R9_T09\intel_a\code\command\adl_profile_cli.bat
+</pre>
+      </td>
+    </tr>
+  </table>
+</blockquote>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Accessing tools associated with a TCK"></a>Accessing Tools Associated with a
+TCK</h4>
+
+<p>Given a TCK identifier, the <b>tck_profile</b> command sets up the current environment
+to give access to the tools belonging to this TCK. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_profile [TCK] [-tool Tool &#133;] [-ws ws_root_directory] [-update] [-force]
+        [-h|-help|-?]</code></dt>
+      <dd><pre>[TCK]: identifier of a TCK defined either on current host or at site level.
+This parameter is not case-sensitive.</pre>
+        <pre>[-tool Tool &#8230;]: this option is used for limiting the environment setting to the tools whose identifiers are specified.
+Without this option, all tools belonging to the TCK are selected.
+This parameter is not case-sensitive.</pre>
+        <pre>[-ws ws_root_directory]: this option is used to specified a path to a &quot;CNext&quot; workspace
+and it leads to changing the current working directory to that directory.
+The directory must be accessible from the current host.</pre>
+        <pre>[-update]: this option is meaningful only when TCKs are declared both on current host and on a TCK server host.
+It is used for replacing the local information by those managed by the TCK server.
+Note that if you want to change local information without taking them from a TCK server, you must use the <a
+href="#Registering local tools installations">tck_update_local</a> command.</pre>
+        <pre>[-force]: this option ensures that the tool's profiles will be executed even the given TCK has been already used in the current environment.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The tck_profile command is the command to be used for setting up a working environment
+    with the tools belonging to a given TCK.<br>
+    The main command parameter is a TCK identifier. The purpose of the command is to set some <a
+    href="#Associating env variables with TCKs">environment variables</a> and to execute all
+    the profiles that have been defined for all tools belonging to the TCK. Note that two
+    profiles can be defined for a tool (Windows-NT and Unix) but the command will execute only
+    the profile corresponding to the current platform. <p>If a path to a workspace is
+    specified, it becomes the current working directory.</p>
+    <p>For performance considerations, the tck_profile command does not execute tool's
+    profiles when it is called twice in the same environment for the same TCK. However the
+    command checks for the last modification date of the TCK to know if its definition has
+    changed since the last execution: <ul>
+      <li>if a new tool has been associated with a TCK, the TCK last modification date has changed</li>
+      <li>if a tool definition has been modified, the TCK modification has changed</li>
+      <li>if a variable value has been changed, the TCK modification has changed</li>
+    </ul>
+  </dd>
+  <dt>Examples</dt>
+  <dd>To access tools associated with the &quot;V5R4_SP1&quot; TCK, on Windows-NT platform,
+    execute: <table class="code">
+      <tr>
+        <td><pre>$ tck_init.bat
+$ tck_profile V5R4
+...
+<i>some messages from tools' profiles</i>
+...
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To access tools associated with the &quot;V5R4_SP1&quot; TCK, on Unix platform,
+    execute:</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ . tck_init
+$ tck_profile V5R4
+...
+<i>some messages from tools' profiles</i>
+...
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Registering local tools installations"></a>Registering Local Tools
+Installations</h4>
+
+<p>The <b>tck_update_local</b> command is used for registering or updating TCKs on the
+current host.</p>
+
+<p>Its purpose is to declare on current host a profile for a given tool and for a given
+TCK. After the triplet (TCK, Tool, Profile) has been registered, the environment can be
+set up by executing the tck_profile command with the given TCK as parameter. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_update_local TCK -tool Tool [-profile profile_path] [-remove] [-h|-help|-?]</code></dt>
+      <dd><pre>TCK: identifier of the TCK for which the tool is being registered, modified or removed.
+This parameter is not case-sensitive.</pre>
+        <pre>-tool Tool: identifier of the tool being registered, modified or removed.
+This parameter is not case-sensitive.</pre>
+        <pre>[-profile profile_path]: path to the profile to execute for setting the environment.
+This profile must be suitable for the platform where the command is executed (Windows-NT or Unix).</pre>
+        <pre>[-remove]: this option is used for removing the association of the tool with the TCK.
+The local tool definition is not destroyed since can be shared by several TCKs.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The tck_update_local command has two behaviours regarding the way TCKs are managed on
+    the local network: <ul>
+      <li>If there is no TCK server, the command is used for creating, modifying and removing TCKs
+        on current host.</li>
+      <li>If a TCK server is available, the command is used to declare locally TCKs defined either
+        on current host only or managed by the server but for which different tools' profiles must
+        be used for the current host.</li>
+    </ul>
+    <p>When a TCK is defined both on the TCK server and on a given host, any TCK command that
+    is executed on that host will select tools from the local TCK (for those existing in both
+    declarations). The figure below shows what profiles are selected regarding the
+    declarations of TCKs:</p>
+    <table>
+      <tr>
+        <th>TCK Definition on Server</th>
+        <th></th>
+        <th>TCK Definition on Current Host</th>
+        <th></th>
+        <th>Executing<br>
+        <i>tck_profile TCK</i><br>
+        will give</th>
+      </tr>
+      <tr>
+        <td><pre>TCK = {
+ Tool1
+  profile = file_1
+ Tool2
+  profile = file_2
+}</pre>
+        </td>
+        <td align="center">X</td>
+        <td align="center">nothing</td>
+        <td align="center"><img src="images/TCKarrow.gif" width="72" height="72"></td>
+        <td><pre>TCK = {
+ Tool1
+  profile = file_1
+ Tool2
+  profile = file_2
+}</pre>
+        </td>
+      </tr>
+      <tr>
+        <td><pre>TCK = {
+ Tool1
+  profile = file_1
+ Tool2
+  profile = file_2
+}</pre>
+        </td>
+        <td align="center">X</td>
+        <td><pre>TCK = {
+ <b>Tool1</b>
+  <b>profile = file_3</b>
+ <b>Tool2</b>
+  <b>profile = file_4</b>
+}</pre>
+        </td>
+        <td align="center"><img src="images/TCKarrow.gif" width="72" height="72"></td>
+        <td><pre>TCK = {
+ <b>Tool1</b>
+  <b>profile = file_3</b>
+ <b>Tool2</b>
+  <b>profile = file_4</b>
+}</pre>
+        </td>
+      </tr>
+      <tr>
+        <td><pre>TCK = {
+ Tool1
+  profile = file_1
+ Tool2
+  profile = file_2
+}</pre>
+        </td>
+        <td align="center">X</td>
+        <td><pre>TCK = {
+ <b>Tool1</b>
+  <b>profile = file_3</b>
+}</pre>
+        </td>
+        <td align="center"><img src="images/TCKarrow.gif" width="72" height="72"></td>
+        <td><pre>TCK = {
+ <b>Tool1</b>
+  <b>profile = file_3</b>
+ <b>Tool2</b>
+  <b>profile = file_2</b>
+}</pre>
+        </td>
+      </tr>
+      <tr>
+        <td><pre>TCK = {
+ Tool1
+  profile = file_1
+}</pre>
+        </td>
+        <td align="center">X</td>
+        <td><pre>TCK = {
+ <b>Tool3</b>
+  <b>profile = file_5</b>
+ <b>Tool4</b>
+  <b>profile = file_6</b>
+}</pre>
+        </td>
+        <td align="center"><img src="images/TCKarrow.gif" width="72" height="72"></td>
+        <td><pre>TCK = {
+ <b>Tool1</b>
+  <b>profile = file_1</b>
+ <b>Tool3</b>
+  <b>profile = file_5</b>
+ <b>Tool4</b>
+  <b>profile = file_6</b>
+}</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+  <dt>Examples</dt>
+  <dd>To declare on current host two versions &quot;V1&quot; and &quot;V2&quot; of the
+    &quot;Txxx&quot; tool, others tools being those declared on the TCK server: <table
+    class="code">
+      <tr>
+        <td><pre>$ tck_update_local V1 -tool TxxxV1 -profile e:\local\tools\TxxxV1\profile.bat
+$ tck_update_local V2 -tool TxxxV2 -profile e:\local\tools\TxxxV2\profile.bat
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To declare on current host the &quot;Txxx&quot; tool in two different TCKs: Note that
+    the second command does not specify the profile because the same tool identifier is used
+    and then the corresponding profile is already registered.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_update_local V1 -tool TxxxV1 -profile e:\local\tools\TxxxV1\profile.bat
+$ tck_update_local V2 -tool TxxxV1
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To change the profile associated with a tool: Note that all TCKs owning the same tool
+    will be impacted as well.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_update_local V1 -tool TxxxV1 -profile e:\local\tools\TxxxV1\Txxx_init.bat
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To replace, in &quot;V1&quot; TCK, the &quot;TxxxV1&quot; tool by the
+    &quot;TxxxV2&quot; tool: Note that as there are two different identifiers for the two tool
+    versions it is necessary to use the -remove option to remove the first tool.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_update_local V1 -tool TxxxV2 -profile e:\local\tools\TxxxV2\profile.bat
+$ tck_update_local V1 -tool TxxxV1 -remove
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="AdminCommands"></a>Administrator Commands</h3>
+
+<p>The commands listed below are available as soon as the current environment has been set
+up [<a href="#References">1</a>].</p>
+
+<p>These commands are needed only when managing TCKs with a TCK server. If there is no TCK
+server, only the <a href="#UserCommands">user commands</a> can work.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Starting a TCK server"></a>Starting a TCK Server</h4>
+
+<p>The <b>tck_server </b>command starts a TCK server on the current host.</p>
+
+<p>It's usual to have a single TCK server registering tools' installations on a local
+network. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_server [-port port_number] [-h|-help|-?]</code></dt>
+      <dd><pre>[-port port_number]: if the default port is busy,
+another port can be specified using this option.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The TCK server can be launched without specifying any option since the environment has
+    been set when executing the tck_init profile. <p>If the launching is successful, the
+    command ends but leaving the TCK server running in background.</p>
+    <p>If the -port option is used to specified another port than the default one, each client
+    must be updated as well: <ul>
+      <li>log on each client host</li>
+      <li>edit the tck_init [<a href="#References">1</a>] file and change the value of the
+        TCK_SERVER_PORT variable.</li>
+    </ul>
+  </dd>
+  <dt>Example</dt>
+  <dd><table class="code">
+      <tr>
+        <td><pre>$ tck_server
+Starting TCK server...
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Pinging or stopping a TCK server"></a>Pinging or Stopping a TCK Server</h4>
+
+<p>The <b>tck_server_admin</b> command is used to stop a TCK server or to check if one is
+running. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_server_admin [-host host_name] [-port port_number] -ping|-stop [-h|-help|-?]</code></dt>
+      <dd><pre>[-host host_name]: if the server is not running on the current host, this option is used to specify that host.
+[-port port_number]: if the default port is busy, another port can be specified using this option.
+-ping: this option causes the command to submit a request to the TCK server and returns a zero code
+if there a response to the request.
+-stop: this option is used for asking the server for stop.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The tck_server_admin command can be used from any host where a &quot;Client&quot; TCK
+    installation has been done and by specifying the right TCK server host and port number.</dd>
+  <dt>Examples</dt>
+  <dd>To test if a server is running (from any host) <table class="code">
+      <tr>
+        <td><pre>$ tck_server_admin -ping
+The TCK server is running on &quot;bjork&quot;, port 23400.
+
+$ echo %errorlevel%
+0</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To stop a server (from any host)</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_server_admin -stop
+
+$ tck_server_admin -ping
+# TCK - 0406: The TCK server is not running on &quot;bjork&quot;, port 23400.
+
+$ echo %errorlevel%
+5</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Registering a new TCK"></a>Registering a New TCK</h4>
+
+<p>The <b>tck_create </b>command is used to register a new TCK in the server, changes in
+an existing TCK can be done using the <a href="#Modifying TCK information">tck_modify</a>
+command. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_create TCK [-from TCK] [-admin] [-h|-help|-?]</code></dt>
+      <dd><pre>TCK: identifier of the TCK to be created.
+This parameter is not case-sensitive.</pre>
+        <pre>[-from TCK]: this option takes as parameter the identifier of an existing TCK.
+This TCK is used for proposing defaults when creating the new one (variables, associated tools).</pre>
+        <pre>[-admin]: this option indicates that the new TCK is not created for administration and not for all users.
+See -admin and -off options of the tck_list command.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The command is an interactive command and prompts the user for entering information, the
+    execution falls down in three steps: <ol>
+      <li>Description of the new TCK<br>
+        The tool asks to enter a brief description of the purpose of the new TCK. This description
+        will be displayed by the tck_list command afterwards.</li>
+      <li>Variable definitions<br>
+        The variables are those defined in the <a href="#Associating env variables with TCKs">variable
+        file</a>. Each variable name is displayed with its default value and the command waits for
+        the user to enter the new value or to keep the default one.</li>
+      <li>Tool definitions<br>
+        The information to enter for each tool are the identifier and the Unix and Windows-NT
+        profiles, it is not mandatory to specify a profile on both platforms since a tool may
+        exist on only one.<br>
+        If the identifier corresponds to an existing tool, its profiles are displayed for
+        information (they cannot be edited).</li>
+    </ol>
+    <p>When the -from option is used to specify a reference TCK, the execution falls down in
+    four steps: <ol>
+      <li>Description of the new TCK<br>
+        The tool asks to enter a brief description of the purpose of the new TCK. This description
+        will be displayed by the tck_list command afterwards. As this description should be
+        associated with only one TCK, there is no default proposed.</li>
+      <li>Variables definitions<br>
+        The default values are not those defined in the <a
+        href="#Associating env variables with TCKs">variable file</a> but the ones defined for the
+        reference TCK.</li>
+      <li>Existing tool definitions<br>
+        The tools associated with the reference TCK are listed and they can be kept or ignored.</li>
+      <li>New tool definitions<br>
+        The last step is the same as without the -from option: new tool can be associated to the
+        new TCK.<br>
+        If somes already exist, their profiles are listed but cannot be modified.</li>
+    </ol>
+    <p>When the -from option is used, it is not possible to skip a tool definition. The <a
+    href="#Removing a TCK">tck_remove</a> command can be used afterwards for removing a tool
+    definition.</p>
+    <p><b>Note</b>: it is not possible to refuse to associate a variable with a TCK. Either
+    the default value is kept or a new value is entered. If some variables are specific to
+    some TCKs or tools, they should be set up in tool profiles and not defined in the TCK
+    variable file.</p>
+    <p>Here are the different use cases: <ol>
+      <li>Creation of a new TCK with new tools<br>
+        Run the command &lt;tck_create tck&gt; and enter the values for the different variables,
+        then enter the tool identifier and its Unix and Windows-NT profiles. If there is no
+        profile on one platform, just press &quot;ENTER&quot; when the command prompts for it.<br>
+        The commands loops on tool definitions and ends when no tool identifier is entered.</li>
+      <li>Creation of a new TCK with both new and existiing tools<br>
+        Run the command &lt;tck_create tck&gt; and enter the values for the different variables,
+        then enter a tool identifier. If this identifier corresponds to an existing tool, its
+        profiles are listed but cannot be modified.<br>
+        The commands loops on tool definitions and ends when no tool identifier is entered.</li>
+      <li>Creation of a new TCK having the same tools as another one<br>
+        Run the command &lt;tck_create tck -from tck2&gt; where tck2 already exists. The command
+        lists the identifiers of tools associated with tck2 and they can be kept (by pressing
+        &quot;ENTER&quot;) or replaced by new tool (by entering new tool identifiers). When all
+        tck2's tools have been listed, the command prompts for entering a tool identifier and ends
+        when no one is entered.</li>
+    </ol>
+  </dd>
+  <dt>Examples</dt>
+  <dd>In the following examples, the TCK variable file contains only one variable
+    (&quot;Release&quot;). Defaults are proposed between '[]'. <p>Creation of a new
+    &quot;CXR4&quot; TCK with two tools &quot;mkmkcxr4&quot; and &quot;adl&quot;, these tools
+    are not yet defined in the system. The command ends when no identifier is entered.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_create CXR4
+Associated comment [ENTER to skip] = tools for level CXR4
+Release [-] = CXR4
+Tool identifier [ENTER to terminate]: mkmkcxr4
+Unix profile [ENTER to skip]: /u/users/bsfr/mkmk_profile_cxr4
+Windows NT profile [ENTER to skip]: //lisa/tools/mkmk_profile_cxr4.bat
+Tool identifier [ENTER to terminate]: adl
+Unix profile [ENTER to skip]: /u/env/adlbin/adl_profile
+Windows NT profile [ENTER to skip]: //lisa/tools/adl_profile.bat
+Tool identifier [ENTER to terminate]:
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Creation of a new &quot;CXR4&quot; TCK with two tools &quot;mkmkcxr4&quot; and
+    &quot;adl&quot;, the &quot;adl&quot; tools already exists in the system.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_create CXR4
+Associated comment [ENTER to skip] = tools for level CXR4
+Release [-] = CXR4
+Tool identifier [ENTER to terminate]: mkmkcxr4
+Unix profile [ENTER to skip]: /u/users/bsfr/mkmk_profile_cxr4
+Windows NT profile [ENTER to skip]: //lisa/tools/mkmk_profile_cxr4.bat
+Tool identifier [ENTER to terminate]: adl
+Unix profile = /u/env/adlbin/adl_profile
+Windows NT profile = //lisa/tools/adl_profile.bat
+Tool identifier [ENTER to terminate]:
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In this example, the -from option is used to get the same tools as those associated
+    with the reference TCK.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_create CXR5 &#8211;from CXR4
+Associated comment [ENTER to skip] = tools for level CXR5
+Release [CXR4] = CXR5
+Tool identifier [mkmkcxr4]:
+Unix profile = /u/users/bsfr/mkmk_profile_cxr4
+Windows NT profile = //lisa/tools/mkmk_profile_cxr4.bat
+Tool identifier [adl]:
+Unix profile = /u/env/adlbin/adl_profile
+Windows NT profile = //lisa/tools/adl_profile.bat
+Tool identifier [ENTER to terminate]:
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Modifying TCK information"></a>Modifying TCK's Information</h4>
+
+<p>The<strong> tck_modify</strong> command is used for changing the definition of an
+existing TCK managed by a TCK server. For modifying an existing local TCK, use
+the tck_update_local command instead. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_modify TCK [-tool Tool] [-h|-help|-?]</code></dt>
+      <dd><pre>TCK: identifier of the TCK to be modified.
+This parameter is not case-sensitive.</pre>
+        <pre>[-tool Tool]: identifier of a tool associated with the TCK.
+This option is used for limiting modifications to the tools whose identifier contains this string.
+This parameter is not case-sensitive.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>When no option is specified, the command starts by asking for a new TCK identifier, if
+    the TCK is not to be renamed, then press &quot;ENTER&quot;. After that, the associated
+    type (official or administration) and comment are listed and can be changed. Then the
+    variable are listed and their value can be changed. In the next step, all tools are listed
+    and their identifier and profiles can be changed. When the command has gone through all
+    tool definitions, it prompts for entering new tools (then press &quot;ENTER&quot; when no
+    more tool is to be defined). <p>When the -tool option is used, only tools whose identifier
+    contains this string are proposed for modifications and the command ends when they have
+    been listed (no new tool can be specified).</p>
+    <p>When a tool identifier is changed, the profiles associated with the old tool are
+    proposed as defaults.</p>
+    <p>If one tool profile is modified, all TCKs having the same tool are impacted
+    automatically.</p>
+    <p>There are time stamps for TCKs and tools, here is how they works: <ul>
+      <li>Each time the command tck_modify is executed, the last modification date of the TCK is
+        set to the current date/time.</li>
+      <li>Each time a tool is modified, its last modification date is set to the current date.</li>
+      <li>If one tool is proposed for modifications but no value is entered, the time stamp is not
+        changed.<br>
+        To change the time stamp without changing definitions, at least one characteristic must be
+        entered, even if is the same value as the default.</li>
+    </ul>
+  </dd>
+  <dt>Examples</dt>
+  <dd><pre>In the following examples, the TCK variable file contains only one variable (&quot;Release&quot;).</pre>
+    <pre>Defaults are proposed between '[]'.</pre>
+    <pre>In the following example, the &quot;mkmkcxr3&quot; tool is replaced by the &quot;mkmkcxr4&quot; tool.</pre>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_modify CXR4 -tool mkmkcxr3
+Tool identifier [mkmkcxr3]: mkmkcxr4
+Unix profile [ENTER to skip] = /u/users/bsfr/mkmk_profile_cxr4
+Windows NT profile [ENTER to skip] = //lisa/tools/mkmk_profile_cxr4.bat
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In the following example, the location of the Windows-NT profile of the
+    &quot;mkmkcxr4&quot; tool is modified. Note that all TCKs having the &quot;mkmkcxr4&quot;
+    tool will see this new location.</p>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_modify CXR4 -tool mkmkcxr4
+Tool identifier [mkmkcxr4]:
+Unix profile [/u/users/bsfr/mkmk_profile_cxr4] =
+Windows NT profile [//lisa/tools/mkmk_profile_cxr4.bat] = //ginger/tools/mkmk_profile_cxr4.bat
+$</pre>
+        </td>
+      </tr>
+    </table>
+    <pre>In the following example, no option is specified and all information are proposed for modifications.</pre>
+    <table class="code">
+      <tr>
+        <td><pre>$ tck_modify CXR4
+TCK identifier [CXR4] =
+Type (O|A) [Official] =
+Associated comment [Tools for level CXR4] =
+Release [CXR4] =
+Tool identifier [mkmkcxr3] = mkmkcxr4
+Unix profile [/u/users/bsfr/cxr3/mkmk_profile] = /u/users/bsfr/cxr4/mkmk_profile
+Windows NT profile [\\lisa\tools\mkmk_profile_cxr3.bat] = \\lisa\tools\mkmk_profile_cxr4.bat
+Tool identifier [adl] =
+Unix profile [/u/env/adlbin/adl_profile] =
+Windows NT profile [\\lisa\tools\adl_profile.bat] =
+Tool identifier [ENTER to terminate] =
+$</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Removing a TCK"></a>Removing a TCK</h4>
+
+<p>The<strong> tck_remove</strong> command is used for removing a TCK or the association
+between a tool and a TCK. 
+
+<dl>
+  <dt>Syntax</dt>
+  <dd><dl>
+      <dt><code>tck_remove TCK [-tool Tool] [-h|-help|-?]</code></dt>
+      <dd><pre>TCK: identifier of the TCK to remove or from which a tool is to be removed.
+This parameter is not case-sensitive.</pre>
+        <pre>[-tool Tool]: identifier of a tool to removed from the TCK.
+This parameter is not case-sensitive.
+Only the tool is removed, the TCK remains valid.</pre>
+      </dd>
+    </dl>
+  </dd>
+  <dt>Usage</dt>
+  <dd>The command is useful for fixing incorrect information or removing obsolete TCKs and
+    tools. <p>If a tool is shared by several TCKs, it is removed only in the given TCK.</p>
+    <p>This command cannot be used for removing the variable in a TCK because only variables
+    meaningful for any TCK should have been defined in the TCK server. The only way for
+    removing a variable is to remove its definition in the the <a
+    href="#Associating env variables with TCKs">variable file</a> and to restart server, then
+    to use the<a href="#Modifying TCK information"> tck_modify</a> command for removing the
+    variable from each TCK.</p>
+  </dd>
+  <dt>Examples</dt>
+  <dd>In the following example, the command is used to remove the &quot;mkmk&quot; tool from
+    the &quot;CXR4&quot; TCK.<table class="code">
+      <tr>
+        <td><pre>$ tck_remove CXR4 -tool mkmk</pre>
+        </td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Associating env variables with TCKs"></a>Associating Environment Variables
+with TCKs</h4>
+
+<p>When using a TCK server, a set of environment variables can be associated with all TCKs
+managed by this server. Note that the purpose of this feature is not to defined different
+variables for different TCKs but for all TCKs: the setting of particular variable might be
+done inside tools' profiles.</p>
+
+<p>The variables names are defined in the file whose path is given by the <i>TCK_VAR_FILE</i>
+environment variable. This variable is set in the working environment after having
+executed the tck_init [<a href="#References">1</a>] file.</p>
+
+<p>Each time a new TCK is being created (see <a href="#Registering a new TCK">tck_create</a>),
+or an existing TCK is being modified (see <a href="#Modifying TCK information">tck_modify</a>),
+the command prompts the user for setting each variable.</p>
+
+<p>The TCK_VAR_FILE can be edited for addiing, modifying or removing some variables: the
+file can contain empty lines or lines of the form</p>
+
+<pre># a comment</pre>
+
+<p>or</p>
+
+<pre>VARIABLE VALUE</pre>
+
+<p>A variable must be defined only once.<br>
+Spaces or tabulations before a variable name or between the name and the value are ignored
+but are kept when found in value.</p>
+
+<p>After the file has been edited, the TCK server must be restarted because the server
+loads the file in main memory.</p>
+
+<p>Note that the new definition set has no direct impact on defined TCKs but the changes
+will be taken into account by TCK editing commands: 
+
+<ul>
+  <li>for setting new variables, use the tck_modify command that will propose all variables
+    including the new ones</li>
+  <li>for removing variables, use the tck_modify command that will propose only variables
+    defined in the variable file and will remove obsolete variable by side effect (it won't be
+    proposed since no more managed by the TCK server).</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Retrieving the type of TCK installation"></a>Retrieving the Type of TCK
+Installation</h4>
+
+<p>This information is useful when deciding to manage TCKs by a server and checking that
+the TCK installation on a given host is a &quot;Client&quot; installation.</p>
+
+<p>To retrieve this information 
+
+<ul>
+  <li>Log on the host to be checked</li>
+  <li>Set up the environment to access TCK commands (using the tck_init [<a href="#References">1</a>]
+    profile).</li>
+  <li>Check the value of the TCK_NO_SERVER environment variable:</li>
+  <ul>
+    <li>If this variable is <u>not</u> defined, you have a &quot;Client&quot; installation.</li>
+    <li>if this variable is defined, you have a &quot;NoServer&quot; installation.</li>
+  </ul>
+</ul>
+
+<p>In the case where you need to access a TCK server from a host where there is a
+&quot;NoServer&quot; installation, you must (re)install the CAA2 Development Toolkit
+products and select the &quot;Client&quot; setup in the TCK installation panel.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAATckSetEnvironment.htm">Getting Access to the CAA V5 Tools</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1.1</strong>  [Nov 2002]</td>
+    <td valign="top">Update of tck_list command</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

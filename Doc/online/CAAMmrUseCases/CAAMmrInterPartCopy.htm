@@ -1,0 +1,943 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Copying Mechanical Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>&nbsp;</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Copying Mechanical Features</h3>
+      <em>Using CATMmrInterPartCopy</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to copy mechanical features using
+      <em>CATMmrInterPartCopy. </em>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrInterIntraPartCopy Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrInterIntraPartCopy Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrInterIntraPartCopy</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrInterIntraPartCopy Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case explains the usage of the
+      <em>CATMmrInterPartCopy</em>
+      to copy mechanical features. Its presents:</p>
+<ul>
+  <li>How to copy mechanical features with or without an Assembly context,</li>
+  <li>How to choose the type of copy, with or without link.</li>
+</ul>
+<p>In the <a href="#What">What Does CAAMmrInterIntraPartCopy Do</a> section, all 
+the copies done by the code are presented by pictures, and commented. It gives 
+you an overview of the
+      <em>CATMmrInterPartCopy</em>
+      possibilities, and the result of the copies. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrInterIntraPartCopy Use Case</h3>
+<p>CAAMmrInterIntraPartCopy is a use case of the CAAMechanicalModeler.edu framework that
+illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrInterIntraPartCopy Do</h4>
+
+<p>This use case uses a Product document containing instances of Part documents.</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+<caption><a name="Fig.1">Fig.1</a> The CAAMmrPartCopy Document</caption>
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrPartCopyProduct.jpg" width="521" height="313"></td>
+  </tr>
+</table>
+<p align="left">The CAAMmrPartCopy document contains one of the <code>CAAMmrPartCopy_Comp3</code> 
+Part 
+document, and two instances of the <code>
+CAAMmrPartCopy_Comp1</code> Part document.</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+<caption><a name="Fig.2">Fig.2</a> The CAAMmrPartCopy_Comp1 Document</caption>
+
+  <tr>
+    <td valign="top">
+    <img border="0" src="images/CAAMmrPartCopyComp1.jpg" width="315" height="239"></td>
+      </tr>
+</table>
+<p>The<code>
+CAAMmrPartCopy_Comp1</code> document only contains geometrical features sets [<a href="#References">2</a>].</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+<caption><a name="Fig.3">Fig.3</a> The CAAMmrPartCopy_Comp3 Document</caption>
+
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrPartCopyComp3.jpg" width="429" height="489"></td>
+  </tr>
+</table>
+<p align="left">The <code>
+CAAMmrPartCopy_Comp3</code> document contains some points, one pad, and an 
+invisible surface 
+(an extruded sketch which is splitted: the result is not visible because <code>Split.1</code> is not the 
+current feature. Refer to the article entitled &quot;Order and Absorption Concept [<a href="#References">3</a>]).&nbsp; </p>
+<p align="left">These four documents, the two Part documents and the two Product 
+documents are located in the <code>InputData</code> directory<code> </code>of the
+  <code>CAAMechanicalModeler.edu </code>framework. </p>
+<p align="left">The batch carries out a series of copies between mechanical features: </p>
+<ul>
+  <li>
+<p align="left"><b>From </b> <code>CAAMmrPartCopy_Comp3 </code><b>to </b> <code>
+CAAMmrPartCopy_Comp1</code></p> 
+<table border="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" height="144">
+  <tr>
+    <td height="16"><b>Source <span style="font-weight: 400">(</span></b><code>CAAMmrPartCopy_Comp3)</code></td>
+    <td height="16"><b>Target <span style="font-weight: 400">(</span></b><code>CAAMmrPartCopy_Comp1)</code></td>
+  </tr>
+  <tr>
+    <td height="16"><code> PartBody</code></td>
+    <td height="16"><code>Part </code> </td>
+  </tr>
+  <tr>
+    <td height="16"><code>Point.1</code></td>
+    <td height="16"><code>Part</code></td>
+  </tr>
+  <tr>
+    <td height="16"><code>Point.2</code></td>
+    <td height="16"><code>PartBody</code></td>
+  </tr>
+  <tr>
+    <td height="15"><code>Point.3</code></td>
+    <td height="15"><code>Geometrical Set.1</code></td>
+  </tr>
+  <tr>
+    <td height="12"><code>Geometrical Set.1</code></td>
+    <td height="12"><code>Part</code></td>
+  </tr>
+  <tr>
+    <td height="15"><code>Ordered Geometrical Set.2</code></td>
+    <td height="15"><code> PartBody</code></td>
+  </tr>
+  <tr>
+    <td height="15"><code>Ordered Geometrical Set.2</code></td>
+    <td height="15"><code>Ordered Geometrical Set.3</code></td>
+  </tr>
+</table>
+</li>
+<p align="left">These copies are done with four alternatives:</p>
+<ul>
+<li>Out of Assembly context and&nbsp;with &quot;As Result with Link&quot; option -&gt; See 
+[<a href="#Fig.4">Fig.4 -left</a>]&nbsp; for the result</li>
+<li>Out of Assembly context and with &quot;As Result  &quot; option -&gt; See [<a href="#Fig.4">Fig.4 
+-right</a>]&nbsp; 
+for the result</li>
+<li>In Assembly context and&nbsp;with &quot;As Result with Link&quot; option -&gt; See 
+[<a href="#Fig.5">Fig.5- left</a>] for the result</li>
+<li>In Assembly context and&nbsp;with &quot;As Result&quot; option -&gt; See [<a href="#Fig.5">Fig.5- 
+right</a>] for the 
+result</li>
+</ul>
+<p>Note that the copies out of Assembly context, are equivalent to open 
+separately the two Part documents, and to do the copies. </p>
+  <li><p><b>From </b> <code>CAAMmrPartCopy_Comp3 </code><b>to</b><code> CAAMmrPartCopy_Comp3</code></p> 
+<table border="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+  <tr>
+    <td><b>Source <span style="font-weight: 400">(</span></b><code>CAAMmrPartCopy_Comp3)</code></td>
+    <td><b>Target <span style="font-weight: 400">(</span></b><code>CAAMmrPartCopy_Comp3)</code></td>
+  </tr>
+  <tr>
+    <td><code> PartBody</code></td>
+    <td><code>Part </code> </td>
+  </tr>
+  <tr>
+    <td><code>Point.1</code></td>
+    <td><code>Part</code></td>
+  </tr>
+  <tr>
+    <td><code>Point.2</code></td>
+    <td><code>PartBody</code></td>
+  </tr>
+  <tr>
+    <td><code>Point.3</code></td>
+    <td><code>Ordered Geometrical Set.2</code></td>
+  </tr>
+  </table>
+  </li>
+  <p>These copies are done with two alternatives:</p>
+
+<ul>
+  <li>with &quot;As Result with Link&quot; option -&gt; See [<a href="#Fig.6">Fig.6-left</a>] for the result</li>
+  <li>with &quot;As Result &quot; option -&gt; See [<a href="#Fig.6">Fig.6-right</a>] for the result</li>
+
+</ul>
+
+</ul>
+<p>Now the result of these copies are presenting according to the different 
+alternatives. </p>
+<ol>
+  <li><b><span style="font-weight: 400">
+  <a href="#Copies from two documents out of the Assembly context.">Copies from two documents out of Assembly 
+context.</a></span></b></li>
+  <li><b><span style="font-weight: 400">
+  <a href="#Copies from two documents In Assembly context.">Copies from two documents In Assembly 
+context.</a></span></b></li>
+  <li><a href="#Copies from the same document">Copies into the same document.</a></li>
+</ol>
+<p>&nbsp;</p>
+<ol>
+<li><a name="Copies from two documents out of the Assembly context."><b>Copies from two documents</b> <b>out of the Assembly 
+context.</b></li> </a>
+<p>It consists to copy mechanical features from <code>CAAMmrPartCopy_Comp3</code> 
+to <code>CAAMmrPartCopy_Comp1.</code></p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" width="607">
+<caption><a name="Fig.4">Fig.4 </a>&nbsp;Copies from <code>CAAMmrPartCopy_Comp3</code> 
+to <code>CAAMmrPartCopy_Comp1 </code> Out of Assembly Context&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </caption>
+
+  <tr>
+    <td width="316">
+    <p align="center"><b>&nbsp;Copy As Result With Link&nbsp; </b> </td>
+    <td width="289">
+    <p align="center"><b>Copy As Result&nbsp; </b> </td>
+  </tr>
+
+  <tr>
+    <td width="563" colspan="2" >
+    <p align="center">
+    <img border="0" src="images/CAAMmrInterPartCopyResultNPS.jpg" width="605" height="561"></td>
+  </tr>
+</table>
+<p align="left">These two images show the <code>CAAMmrPartCopy_Comp1</code> 
+after the copies. The four existing sets of this Part document are surrounded in 
+yellow.&nbsp; </p>
+<p align="left">First considerations:</p>
+<ul><li>On the left, the&nbsp; &quot;<b>As result with link</b>&quot; copies. </li>
+<p>It means that the geometry is copied, but in case of original feature 
+modification, the copied result can be updated. Note that some 
+icons (<img border="0" src="images/CAAMmrInterPartCopyIcon3.jpg" width="40" height="38">,<img border="0" src="images/CAAMmrInterPartCopyIcon1.jpg" width="37" height="35">) have the ? symbol. This 
+symbol means that 
+the original document is not opened. If the original document is opened, here 
+the <code>CAAMmrPartCopy_Comp3</code> Part document,<code> </code>the 
+same icons becomes (<img border="0" src="images/CAAMmrInterPartCopyIcon9.jpg" width="37" height="39"> 
+, <img border="0" src="images/CAAMmrInterPartCopyIcon8.jpg" width="40" height="38">). 
+If you change the coordinates of a point in the original document, the icon of&nbsp; the copied feature becomes :&nbsp;
+<img border="0" src="images/CAAMmrInterPartCopyIcon10.jpg" width="37" height="31"> 
+. To synchronize the copied feature, either the synchronization is automatically 
+done in the update ( See Tools options), or you explicitly synchronize 
+the feature using the Synchronize command. </p>
+  </li>
+  <li>On the right, the&nbsp; &quot;<b>As result</b>&quot; (without link) 
+copies.</li>
+<p> It means that  the geometry is copied, but in case of original 
+feature modification, the copied result will be never updated.</p>
+  </li>
+</ul>
+<blockquote>
+<p align="left">Note that the same icons are now:
+<img border="0" src="images/CAAMmrInterPartCopyIcon4.jpg" width="39" height="37"> 
+and
+<img border="0" src="images/CAAMmrInterPartCopyIcon2.jpg" width="35" height="35">.&nbsp; </p>
+</blockquote>
+<p align="left"><a name="Another considerations: Fig4">Other considerations:</a></p>
+<ul>
+  <li>
+<p align="left"><code>PartBody,</code> from <code>CAAMmrPartCopy_Comp3,</code> 
+copied into the <code>Part</code> of CAAMmrPartCopy_Comp1<code> </code>is <code>
+Body.2</code></p>
+  </li>
+  <li>
+<p align="left"><code>Point.1,</code> from <code>CAAMmrPartCopy_Comp3,</code>copied into the <code>Part</code> of <code>CAAMmrPartCopy_Comp1</code> is<code> 
+Point.1.</code></p>
+  <ul>
+    <li>
+<p align="left">On the left, <code>Point.1</code> 
+is located under the <code>
+External References</code> feature, the mechanical feature which groups together 
+the external references. </p>
+    </li>
+    <li>
+<p align="left">On the right, <code>Point.1 </code>is a datum [<a href="#References">4</a>]. It is aggregated under <code>
+Geometrical Set.2, </code>the current geometrical feature set of <code>
+CAAMmrPartCopy_Comp1 </code>- Note
+that <code>Geometrical Set.2</code> is underlined. </p>
+    </li>
+  </ul>
+  </li>
+  <li>
+<p align="left"><code>Point.2,</code> from <code>CAAMmrPartCopy_Comp3,</code>copied into the <code>PartBody</code> of <code>CAAMmrPartCopy_Comp1</code> is<code> 
+Point.2.</code> From R14, It is possible to insert a surfacic feature into a Body 
+feature.</p>
+  </li>
+  <li>
+<p align="left"><code>Point.3,</code> from <code>CAAMmrPartCopy_Comp3,</code> 
+copied into <code>Geometrical Set.1</code> of <code>CAAMmrPartCopy_Comp1</code> 
+is <code>Point.3</code></p>
+  </li>
+  <li>
+<p align="left"><code>Geometrical Set.1,</code> from <code>CAAMmrPartCopy_Comp3, </code> 
+copied into <code>the Part</code> feature of <code>CAAMmrPartCopy_Comp1</code> 
+is on left, <code>Geometrical Set.5</code>, and on right, <code> Geometrical 
+Set.4</code>. This difference comes from that on left, External References has 
+been created. Except, this naming's difference, you can note that both contain 
+datum features. The contents of <code>Geometrical Set.1</code> has been copied 
+with the &quot;As result&quot; option in the two cases. In a future version, the &quot;As Result 
+With link&quot; for a geometrical features set will be possible. Note that today, 
+interactively this kind of copy is impossible.</p>
+  </li>
+  <li>
+  <p align="left"><code>Ordered Geometrical Set.2, </code>from <code>
+  CAAMmrPartCopy_Comp3,  </code>copied <code>
+  into the PartBody of CAAMmrPartCopy_Comp1 is Ordered Geometrical 
+  Set.6. </code>
+<ul>
+  <li>
+  <p align="left">On the left, and on the right the same icon:
+    <img border="0" src="images/CAAMmrInterPartCopyIcon5.jpg" width="25" height="25"> 
+  - It is the same problem as for <code>Geometrical Set.1</code>. Whatever the 
+  copy option, the contents of an <code>Ordered Geometrical Set</code> is 
+  copied with the &quot;As Result&quot; option.</li>
+  <li>
+  <p align="left"><code>Sketch.2</code> included into <code>Ordered Geometrical 
+  Set.2 </code>is not copied. Sketches are never copied such as interactively.</li>
+  <li>
+  <p align="left"><code>Extrude.1</code> is not copied, <code>Surface.2</code>&nbsp; 
+  is the &quot;result&quot; of&nbsp; <code>Split.1</code>, an absorbent feature. [<a href="#References">3</a>]. </li>
+</ul>
+  </li>
+  <li>
+  <p align="left"><code>Ordered Geometrical Set.2</code>, from <code>
+  CAAMmrPartCopy_Comp3,  </code>copied into the <code>
+  Ordered Geometrical Set.3</code> of <code>
+  CAAMmrPartCopy_Comp1</code> is <code>
+  Ordered Geometrical Set.7</code></p></li>
+</ul>
+<li><a name="Copies from two documents In Assembly context."><b>Copies from two documents</b> <b>In Assembly 
+context.</b></li> </a>
+<p>It is always the same copies from <code>CAAMmrPartCopy_Comp3 
+to CAAMmrPartCopy_Comp1</code>, but now in Assembly context.</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" width="671">
+<caption><a name="Fig.5">Fig.5</a>&nbsp;Copies from <code>CAAMmrPartCopy_Comp3 
+to CAAMmrPartCopy_Comp1</code> In Assembly Context </caption>
+
+  <tr>
+    <td width="349">
+    <p align="center"><b>&nbsp;Copy As&nbsp; Result with link</b></td>
+    <td width="318">
+    <p align="center"><b>Copy As Result&nbsp; </b></td>
+  </tr>
+
+  <tr>
+    <td width="669" colspan="2"  >
+    <p align="center">
+    <img border="0" src="images/CAAMmrInterPartCopyResultPS.jpg" width="745" height="639"></td>
+  </tr>
+</table>
+<p align="left">These two images show the <code>CAAMmrPartCopy </code>document 
+after the copies. The four existing sets of this Part document are surrounded in 
+yellow.&nbsp;&nbsp; </p>
+<p align="left">First considerations are about the <b>Product's icons</b>.</p>
+<p align="left">The Part origin of the features is the <code>
+CAAMmrPartCopy_Comp3</code> document. They are copied in an instance of the
+<code>CAAMmrPartCopy_Comp1</code> Part document. (CAAMmrPartCopy_Comp1.1). So 
+sometimes, you can also read Ref/Inst copies. </p>
+<ul>
+  <li>
+<p align="left">Before the copy, on the [<a href="#Fig.1">Fig.1</a>] you can see 
+the following icons before each Product instance:
+<img border="0" src="images/CAAMmrInterPartCopyIcon11.jpg" width="35" height="35"></p>
+  </li>
+  <li>
+<p align="left">After the copy, and in copy &quot;As Result&quot;, the icons are always
+<img border="0" src="images/CAAMmrInterPartCopyIcon11.jpg" width="35" height="35">. </p>
+  </li>
+  <li>
+<p align="left">But in case of &quot;As Result with link&quot; copy option, the icons 
+become
+<img border="0" src="images/CAAMmrInterPartCopyIcon12.jpg" width="39" height="39"> 
+before<code> CAAMmrPartCopy_Comp1.1</code>, and
+<img border="0" src="images/CAAMmrInterPartCopyIcon13.jpg" width="37" height="41"><code>
+</code>before<code> CAAMmrPartCopy_Comp1.2. </code> </p>
+  </li>
+</ul>
+<p align="left">Second considerations are about the <b>copies's location</b>.</p>
+<p align="left">You can see on [<a href="#Fig.5">Fig.5</a>] that two results are 
+ 
+coincident: The yellow pad (from <code>CAAMmrPartCopy_Comp1.1)</code> and the grey 
+one (from <code>CAAMmrPartCopy_Comp3)</code> are coincident. On the Product 
+instance links to <code>CAAMmrPartCopy_Comp1.1</code>, a positioning matrix, computed from the matrix of&nbsp; <code>CAAMmrPartCopy_Comp3</code> 
+and <code>CAAMmrPartCopy_Comp1.1,</code> is stored<code>. </code> </p>
+<p align="left">Otherwise, about the <b>result of the copies</b> with (on the left), 
+or without link (on the right) it is the same comments as for copies without 
+Assembly context ([<a href="#Fig.4">Fig.4</a>]). </p>
+<li><a name="Copies from the same document"><b>Copies into the same document </b> </li>
+</a>
+<p>In this last case, copies are done from and to the <code>CAAMmrPartCopy_Comp3</code> 
+Part document.</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7" width="711">
+<caption><a name="Fig.6">Fig.6</a>&nbsp;Copies Inside <code>CAAMmrPartCopy_Comp3 </code> </caption>
+  <tr>
+    <td valign="middle" width="341">
+    <p align="center"><b>Copy As&nbsp;Result with link</b></td>
+    <td valign="middle" width="366">
+    <p align="center"><b>Copy As Result&nbsp; </b>
+    </td>
+  </tr>
+  <tr>
+    <td width="336" valign="top">
+    <img border="0" src="images/CAAMmrInterPartCopyResultComp3AsResultWL.jpg" width="337" height="501"></td>
+    <td width="373">
+    <img border="0" src="images/CAAMmrInterPartCopyResultComp3AsResult.jpg" width="361" height="501"></td>
+  </tr>
+</table>
+<p>These two images show the <code>CAAMmrPartCopy_Comp3</code> Part document 
+after the copies.  </p>
+<p align="left">First considerations:</p>
+<ul>
+  <li>
+<p align="left">On the left, the&nbsp; &quot;<b>As result with link</b>&quot; copies. 
+See the icons:&nbsp;
+<img border="0" src="images/CAAMmrInterPartCopyIcon6.jpg" width="32" height="36"> 
+for the solid, and
+<img border="0" src="images/CAAMmrInterPartCopyIcon7.jpg" width="30" height="29"> 
+for the points. It means that the geometry has been copied with the &quot;As result 
+with link&quot; option within the Part document.</p>
+  </li>
+  <li>
+<p align="left">On the right, the&nbsp; &quot;<b>As result</b>&quot; (without link) 
+copies. The same icons are now the icons representing a datum:
+<img border="0" src="images/CAAMmrInterPartCopyIcon4.jpg" width="39" height="37"> 
+and
+<img border="0" src="images/CAAMmrInterPartCopyIcon2.jpg" width="35" height="35">.&nbsp; </p>
+  </li>
+</ul>
+<p align="left">About the copies themself:</p>
+<ul>
+  <li>
+<p align="left"><code>Body.1</code> is the copy of <code>PartBody</code>. The 
+geometry are of course at the same location. </p>
+  </li>
+  <li>
+<p align="left"><code>Point.4</code> is the copy of <code>Point.1</code>. The
+<code>Part</code> feature being the destination, <code>Point.4</code> is 
+included before the current feature of <code>Ordered Geometrical Set.2.</code> 
+On [<a href="#Fig.3">Fig.3</a>] you can see that <code>Sketch.1</code> is the 
+current feature. So the new point is created just before it [<a href="#References">3</a>]. 
+( <code>Point.6</code> will be created after)</p>
+  </li>
+  <li>
+<p align="left"><code>Point.5</code> is the copy of <code>Point.2.</code> <code>
+PartBody</code> being the destination, <code>Point.4</code> is included in the 
+Body feature, like it is possible since the V5R14 level.</p>
+  </li>
+  <li>
+<p align="left"><code>Point.6</code> is the copy of <code>Point.3.</code> Such 
+as <code>Point.4</code>, the new point is created before <code>Sketch.1</code> 
+into<code> </code><code>Ordered Geometrical Set.2</code></p>
+  </li>
+</ul>
+</ol>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrInterIntraPartCopy</h4>
+<p>To launch CAAMmrInterIntraPartCopy, you will need to set up the build time 
+environment, then compile CAAMmrInterIntraPartCopy along with its prerequisites, 
+set up the run time environment, and then execute the use case [<a href="#References">5</a>]. 
+To launch the use case, execute the following steps:</p>
+<ol>
+  <li><b>Copy</b> the following documents in another directory</li>
+  <ul> <li> <code>
+CAAMmrPartCopy_Comp3.CATPart,
+    CAAMmrPartCopy_Comp1.CATPart,
+    CAAMmrPartCopy.CATProduct, CAAMmrProduct2.CATProduct</code></li>  </ul>
+    <p>They are located in the <code>CAAMechanicalModeler.edu/InputData</code>
+  <code>directory  </code><ul>
+    <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+    </li>
+    <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code>
+    </li>
+  </ul>
+      <li>
+<pre><b>mkrun</b> -c &quot;CAAMmrInterIntraPartCopy InputPath Copy_Option PS_Option &quot;</pre>
+  </li>
+<pre>where</pre>
+<ul>
+  <li><b>InputPath: <span style="font-weight: 400">your directory containing the 
+  four documents.</span></b></li>
+  <li><b>Copy_Option: </b>
+  <ul>
+    <li>1 :&nbsp; Copy with link</li>
+    <li>Other: Copy as Result</li>
+  </ul>
+  </li>
+  <li><b>PS_Option:&nbsp; </b>
+  <ul>
+    <li>PS: Copy in Assembly context</li>
+    <li>Other: Copy out of Assembly context</li>
+  </ul>
+  </li>
+
+</ul>
+<li><b>Read</b> the modified documents</li>
+<p>The input documents, those of your directory, are modified, and contain the 
+result of the copies.</p>
+</ol>
+
+<p>Some examples:</p>
+<ul>
+  <li>mkrun -c &quot;CAAMmrInterIntraPartCopy InputPath NPS 1 &quot;</li>
+</ul>
+<blockquote>
+  <p>To copy the mechanical features, out of the Assembly context, and with &quot;As 
+  Result with link&quot; option. See the results, <a href="#Fig.4">Fig.4</a> and
+  <a href="#Fig.6">Fig.6</a>, both on the left</p>
+</blockquote>
+<ul>
+  <li>mkrun -c &quot;CAAMmrInterIntraPartCopy InputPath NPS 2 </li>
+</ul>
+<blockquote>
+  <p>To copy the mechanical features, out of the Assembly context, and with &quot;As 
+  Result&quot; option. See the results, <a href="#Fig.4">Fig.4</a> and
+  <a href="#Fig.6">Fig.6</a>, both on the right</p>
+</blockquote>
+<ul>
+  <li>mkrun -c &quot;CAAMmrInterIntraPartCopy InputPath PS 1&quot;</li>
+</ul>
+<blockquote>
+  <p>To copy the mechanical features, in Assembly context, and with &quot;As Result 
+  with link&quot; option. See the results,<a href="#Fig.5"> Fig.5</a>, on the left</p>
+</blockquote>
+<ul>
+  <li>mkrun -c &quot;CAAMmrInterIntraPartCopy InputPath PS 2&quot;<p>To copy 
+  the mechanical features, in Assembly context, and with &quot;As Result&quot; option. See 
+  the results,<a href="#Fig.5"> Fig.5</a>, on the right</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrInterIntraPartCopy Code</h4>
+<p>The CAAMmrInterIntraPartCopy use case is made of a single source file named 
+CAAMmrInterIntraPartCopyMain.cpp located in the CAAMmrInterIntraPartCopy.m 
+module of the CAAMechanicalModeler.edu framework</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrInterIntraPartCopy.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrInterIntraPartCopy.m/</code></td>
+  </tr>
+</table>
+<p>The use case uses two global functions, <i>CAAMmrGetGeometry</i> and <i>
+CAAMmrGetPartFromProduct,</i> which are defined in the following directory:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrUtilities.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrUtilities.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAAMmrInterIntraPartCopy:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Copying out of Assembly Context">Copying out of Assembly Context</a></li>
+  <li><a href="#Copying in Assembly Context">Copying in Assembly Context </a></li>
+  <li><a href="#Epilog">Saving Documents</a></li>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>All the copies shown in the &quot;<a href="#What">What Does CAAMmrInterIntraPartCopy Do</a>&quot; section are 
+not there detailed. Only two of them are given to explain the usage of the <i>CATMmrInterPartCopy</i> 
+class. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+
+<p>CAAMmrInterIntraPartCopy begins by creating a session, and opening the input 
+Product document. Next it retrieves all the Product components begining with its 
+root product,<code>piProductOnRoot</code>. This is the usual sequence for loading a Product document [<a href="#References">6</a>].
+</p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATListValCATBaseUnknown_var * pListDirectChildren = piProductOnRoot-&gt;<b>GetChildren</b>(); 
+
+// Comp1 and Comp2
+CATIProduct_var spComp1 = (*pListDirectChildren)[1] ;
+CATIProduct_var spComp2 = (*pListDirectChildren)[2] ;
+
+delete pListDirectChildren ;
+pListDirectChildren = NULL ;
+pListDirectChildren = spComp2-&gt;GetChildren(); 
+
+// Comp3
+CATIProduct_var spComp3 = (*pListDirectChildren)[1] ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>From the two Product documents, <code>spComp1</code> and <code>spComp3</code>, 
+their <code>MechanicalPart</code> feature is retrieved thanks the <i>
+CAAMmrGetPartFromProduct </i>global function. Once the Part feature is retrieved, the useful mechanical features 
+are retrieved using the <i>CAAMmrGetGeometry </i>global function. The contents 
+of these two global functions being not 
+essential for the use case, the code is not detailed here; refer to the source 
+files otherwise.&nbsp;</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Copying out of Assembly Context"></a>Copying out of Assembly 
+Context</h4>
+
+<p>The copy of <code>Point.3</code> (<code>CAAMmrPartCopy_Comp3</code>) into <code>
+Ordered Geometrical Set.2 (CAAMmrPartCopy_Comp3)</code> is detailed. The new 
+feature 
+is <code>Point.6</code>. You can see the result on the [<a href="#Fig.6">Fig.6</a>].&nbsp; 
+The copy is done with five steps. </p>
+
+<ol>
+<li>Create a <i>CATMmrInterPartCopy</i> class instance.</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b><span style="font-weight: 400">CATISpecObject_var</span> <span style="font-weight: 400">SourceToCopy</span></b> = spOnPoint3OfComp3 ;
+CATISpecObject_var Target = spOnOrderedGeomSet2OfComp3 ;
+CATMmrInterPartCopy * ptCATMmrInterPartCopy = new <b>CATMmrInterPartCopy</b> 
+                                                       (SourceToCopy,Target) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spOnPoint3OfComp3</code> and <code>spOnOrderedGeomSet2OfComp3</code> 
+are smart pointers on <code>Point.3</code> and <code>Ordered Geometrical Set.2</code>, 
+two mechanical features of the <code>
+CAAMmrPartCopy_Comp3</code> Part document See [<a href="#Fig.3">Fig.3</a>]. 
+Refer to the code of the use case, the way to retrieve these two pointers. </p>
+<li>Set the copy option thanks the <code>SetLinkMode</code> method.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ptCATMmrInterPartCopy -&gt;<b>SetLinkMode</b>(CopyWithLink);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>CopyWithLink</code> is a <i>CATBoolean</i> value. It is valuated according to 
+the Copy_Option argument of the program. See the <a href="#How">How to Launch CAAMmrInterIntraPartCopy</a> 
+section. If the argument is <code>1</code>, the <code>value of CopyWithLink</code> is TRUE, otherwise&nbsp; its value is FALSE. If you do not use the <code>
+SetLinkMode</code> method, the option of copy depends on the &quot;Keep link with 
+selected object&quot; option.</p>
+
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+<caption><a name="Fig.7">Fig.7</a>&nbsp;Tools Options</caption>
+
+  <tr>
+    <td>
+    <img border="0" src="images/CAAMmrInterPartCopyTO.jpg" width="579" height="337"></td>
+  </tr>
+</table>
+
+<li>Execute the copy using the <code>Run</code> method. </li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ErrorMsg = &quot;&quot; ;
+rc = ptCATMmrInterPartCopy -&gt;<b>Run</b>(&amp;ErrorMsg);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<li>Retrieve the result thanks to the <code>GetResult</code> 
+method.</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = ptCATMmrInterPartCopy -&gt;<b>GetResult</b>(Result);
+if ( SUCCEEDED(rc) &amp;&amp; (NULL_var != Result) )
+{
+    CATIAlias_var spAlias = Result ;
+    if ( NULL_var != spAlias )
+    {
+       cout &lt;&lt;&quot; The result of the copy is&quot; ;
+       cout &lt;&lt;&quot; &quot; &lt;&lt; spAlias-&gt;GetAlias().CastToCharPtr() &lt;&lt; endl &lt;&lt; endl;
+     }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step is of course optional.</p>
+<li>Delete the <i>CATMmrInterPartCopy</i> class instance.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>delete</b> ptCATMmrInterPartCopy ;
+ptCATMmrInterPartCopy = NULL ;</pre>
+    </td>
+  </tr>
+</table>
+<p>To copy another mechanical feature you must come back to the first step. </p>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Copying in Assembly Context"></a>Copying in Assembly Context</h4>
+
+<p>The copy of <code>Point.1</code> of <code>CAAMmrPartCopy_Comp3</code> into 
+the Part feature of <code>CAAMmrPartCopy_Comp1.1 </code>is detailed. The new 
+feature is <code>Point.1</code>. You can the result on the [<a href="#Fig.6">Fig.4</a>]. 
+These copy is done with six steps.</p>
+<ol>
+<li>Create a <i>CATMmrInterPartCopy</i> class instance.</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre><b><span style="font-weight: 400">CATISpecObject_var</span> </b>SourceToCopy = spOnPoint1OfComp3 ;
+CATISpecObject_var Target = spSpecObjectOnMechPartOfComp1;
+CATMmrInterPartCopy * ptCATMmrInterPartCopy = new <b>CATMmrInterPartCopy</b> (SourceToCopy,Target) ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>spOnPoint1OfComp3</code> is a smart pointer on <code>Point.1 </code>of <code>
+the CAAMmrPartCopy_Comp3</code> document [<a href="#Fig.3">Fig.3</a>]<code>.</code>
+<code>spSpecObjectOnMechPartOfComp1</code> is a smart pointer on the <code>Part</code> 
+feature of the <code>CAAMmrPartCopy_Comp1</code> document<code> </code>[<a href="#Fig.3">Fig.2</a>]. 
+Refer to the code of the use case, the way to retrieve these two pointers. </p>
+<li>Set the copy option thanks the <code>SetLinkMode</code> method.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ptCATMmrInterPartCopy -&gt;<b>SetLinkMode</b>(CopyWithLink);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p><code>CopyWithLink</code> is a <i>CATBoolean</i> value. It is valuated according to 
+the Copy_Option argument of the program. See the <a href="#How">How to Launch CAAMmrInterIntraPartCopy</a> 
+section. If the argument is <code>1</code>, the <code>value of CopyWithLink</code> is TRUE, otherwise&nbsp; its value is FALSE. If you do not use the <code>
+SetLinkMode</code> method, the option of copy depends on the &quot;Keep link with 
+selected object&quot; option. See [<a href="#Fig.7">Fig.7</a>]</p>
+
+<li>Set the Assembly Context</li>
+
+<p>Until then, no difference with the previous copy. But if you use <code>
+SetSourceInstance</code>, and the <code>SetTargetInstance</code> you are in 
+Assembly context. </p>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ptCATMmrInterPartCopy -&gt;SetSourceInstance(spComp3);
+ptCATMmrInterPartCopy -&gt;SetTargetInstance(spComp1);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<h4><span style="font-weight: 400"><code>spComp3</code> and <code>spComp1</code> 
+are smart pointers on a <i>CATIProduct</i> 
+interface retrieved in the <a href="#Prolog">prolog</a>&nbsp;step. <code>spComp3</code> is a pointer on the </span> <code>
+CAAMmrPartCopy_Comp3</code><span style="font-weight: 400"> Product instance, and <code>
+spComp1 </code>pointer on the </span> <code>CAAMmrPartCopy_Comp1.1</code><span style="font-weight: 400"> 
+Product instance</span></h4>
+
+<p>
+<img border="0" src="../CAAIcons/images/caution.gif" width="32" height="32"></p>
+
+<ol>
+  <li>Using the <i>CATMmrInterPartCopy</i> constructor with <i>CATISpecObject</i> 
+  as argument, it is mandatory to call these two<b> </b>methods to be in 
+  Assembly Context.</li> Do not call only one: the two calls are mandatory.<li>However, if you use the <i>CATMmrInterPartCopy</i> constructor with <i>
+  CATPathElement</i> as argument, calling the two methods is useless if 
+  the paths already contain the Product. </li>
+</ol>
+   <p>If 
+  you do not specify the product context, so if you do not use these two methods, 
+   you are copying features without Assembly context.&nbsp; So it is the result that 
+  you can see on the [<a href="#Fig.4">Fig.4</a>].</p>
+<li>Execute the copy using the <code>Run</code> method. </li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+ErrorMsg = &quot;&quot; ;
+rc = ptCATMmrInterPartCopy -&gt;<b>Run</b>(&amp;ErrorMsg);
+...</pre>
+    </td>
+  </tr>
+</table>
+
+<li>Retrieve the result thanks to the <code>GetResult</code> 
+method.</li>
+
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+rc = ptCATMmrInterPartCopy -&gt;<b>GetResult</b>(Result);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step is of course facultative.</p>
+<li>Delete the <i>CATMmrInterPartCopy</i> class instance.</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>delete</b> ptCATMmrInterPartCopy ;
+ptCATMmrInterPartCopy = NULL ;</pre>
+    </td>
+  </tr>
+</table>
+<p>To copy another mechanical feature you must come back to the first step. </p>
+
+</ol>
+<h4><a name="Saving documents"></a>Saving Documents</h4>
+
+<p>The four modified documents: <code>
+CAAMmrPartCopy_Comp3.CATPart, CAAMmrPartCopy_Comp1.CATPart, CAAMmrPartCopy.CATProduct </code>
+and <code>
+CAAMmrProduct2.CATProduct</code> are saved using the <code>SaveAs</code> method 
+of the <i>CATDocumentServices</i> class. </p>
+<ol>
+  <li>The input documents are rewritten, and are not saved under another name 
+  because of contextual links. Let us consider the following schema summing ups 
+  the link's information that you retrieve in the Edit/Links command.<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9">
+    <tr>
+      <td>
+      <img border="0" src="images/CAAMmrInterPartCopySave.jpg" width="483" height="327"></td>
+    </tr>
+  </table>
+   <p>If you first save the Product with another name, the saved document 
+   pointes to Comp1.1 which will be after saved under another name </p>
+   <p>If you first save Comp1.1 with another name, the saved document pointes to 
+   Product1 which will be after saved under another name </p>
+     <li>Do not use the <code>Save </code>method which does not work in batch mode.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>All the documents are removed from the session using the <code>Remove</code> method 
+of the <i>CATDocumentServices</i> class, and then the session is closed using 
+the global function named <code>Delete_Session</code>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown different kind of copies, and explained the usage of 
+the <i>CATMmrInterPartCopy</i> class. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%" height="32">
+  <tr>
+    <td valign="top" height="12">[1]</td>
+    <td height="12"></td>
+  </tr>
+  <tr>
+    <td valign="top" height="12">[2]</td>
+    <td height="12">
+    <a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The 
+    Contents of the Specification Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="12">[3]</td>
+    <td height="12">
+    <a href="../CAAMmrTechArticles/CAAMmrOrderLinearBody.htm">Order 
+    and Absorption Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="12">[4]</td>
+    <td height="12">
+    <a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">The 
+    Contents of the Specification Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" height="12">[5]</td>
+    <td height="12"><a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a> </td>
+  </tr>
+  <tr>
+    <td valign="top" height="12">[6]</td>
+    <td height="12">
+    <a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" height="16">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Oct 2004]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

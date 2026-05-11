@@ -1,0 +1,210 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Join Surface</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Generative Shape Design</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Join Surface</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p>This macro shows how to create geometry from existing geometry in a
+      CATPart document.</p>
+      <p><img border="0" src="images/GsiJoin.jpg" width="502" height="340"></p>
+      <!----------------------------------comment------------------------------------->
+      <p>The macro opens a CATIA Part Document and creates a Join surface using
+      pre-existing geometry (Fill and Extrude).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAGsiCreateJoinSurface is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+
+      <!----------------------------------comment------------------------------------->
+      <p><a href="CAAGsiCreateJoinSurfaceSource.htm">CAAGsiCreateJoinSurface.CATScript</a>
+      is located in the CAAScdGsiUseCases module.&nbsp; <a href="macros/CAAGsiCreateJoinSurface.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAGsiCreateJoinSurface includes five steps:</p>
+      <ol>
+        <li><a href="#Step1">Opening the Part Document</a>&nbsp;</li>
+        <li><a href="#Step2">Retrieving the Current Open Body</a></li>
+        <li><a href="#Step3">Creating References for Oobjects Used as Input for
+          the Join</a></li>
+        <li><a href="#Step4">Creating the Join</a></li>
+        <li><a href="#Step5">Setting the Created Join as the Current Working
+          Object</a></li>
+        <li><a href="#Step6">Updating the Part Document</a></li>
+      </ol>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step1"></a>Opening the Part Document &nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Opening a CATIA Part document  : CAAGsiCreateJoinSurface.CATPart </font>
+<font color="#0000FF">  Dim </font>sDocPath<font color="#0000FF"> As </font>String
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">  Dim </font>oPartDocument<font color="#0000FF"> As </font>PartDocument
+<font color="#0000FF">  Set </font>oPartDocument = CATIA.Documents.Open(sDocPath &amp; &quot;\online\CAAScdGsiUseCases\samples\CAAGsiCreateJoinSurface.CATPart&quot;)</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Opens the starting CATIA Part document that is used for creating new
+      wireframe and surface objects (In this test case a join).</p>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step2"></a>Retrieving the Current Open Body</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Retrieving the active OpenBody </font>
+<font color="#0000FF">  Dim </font>hybridBodies1<font color="#0000FF"> As </font>HybridBodies
+<font color="#0000FF">  Set </font>hybridBodies1 = oPartDocument.Part.HybridBodies
+
+<font color="#0000FF">  Dim </font>OpenBody1<font color="#0000FF"> As </font>HybridBody
+<font color="#0000FF">  Set </font>OpenBody1 = hybridBodies1.Item(&quot;Open_body.2&quot;)</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves the OpenBody containing initial objects. It&nbsp; will be
+      re-used for creating the&nbsp; Join&nbsp;</p>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step3"></a><b>Creating References for Objects Used as Input
+      for the Join</b></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Creating a reference for the Fill.1 object  </font>
+<font color="#0000FF">  Dim </font>hybridShapeFill1<font color="#0000FF"> As </font>HybridShape
+<font color="#0000FF">  Set </font>hybridShapeFill1 = OpenBody1.HybridShapes.Item(&quot;Fill.1&quot;)
+
+<font color="#0000FF">  Dim </font>reference1<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">  Set </font>reference1 = oPartDocument.Part.CreateReferenceFromObject(hybridShapeFill1)
+
+<font color="#008000">' Creating a reference for the Extrude.1 object </font>
+<font color="#0000FF">  Dim </font>hybridShapeExtrude1<font color="#0000FF"> As </font>HybridShape
+<font color="#0000FF">  Set </font>hybridShapeExtrude1 = OpenBody1.HybridShapes.Item(&quot;Extrude.1&quot;)</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Fill and the Extrude surfaces used as input for the Join, are
+      converted into reference.</p>
+      <p>This operation is required in order to use the&nbsp;objects as input
+      for the Join, all objects used as input in IDL method interfaces are to be
+      converted as references and passed in creation methods .</p>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step4"></a><b>Creating the Join&nbsp;</b></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre><font color="#008000">' Retrieving Wireframe and Shape Design Factory </font>
+<font color="#0000FF">  Dim </font>hybridShapeFactory1<font color="#0000FF"> As </font>Factory
+<font color="#0000FF">  Set </font>hybridShapeFactory1 = oPartDocument.Part.HybridShapeFactory
+
+<font color="#008000">' Creating a Join (also named assemble) between Fill.1 and Extrude.1 </font>
+<font color="#0000FF">  Dim </font>hybridShapeAssemble1<font color="#0000FF"> As </font>HybridShapeAssemble
+<font color="#0000FF">  Set </font>hybridShapeAssemble1 = hybridShapeFactory1.AddNewJoin(reference1, reference2)</pre>
+            <pre><font color="#008000">' Inserting the join in the current OpenBody </font>
+  OpenBody1.AppendHybridShape hybridShapeAssemble1</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Method <b>AddNewJoin</b> is a method of the HybridShapeFactory IDL
+      Interface</p>
+      <p>Once created,&nbsp; the join has to be inserted&nbsp; in an OpenBody.
+      In the test case,&nbsp; the OpenBody containing the input geometry is
+      re-used. .&nbsp;<br>
+      Note : A new OpenBody should have been&nbsp; created in order to insert
+      the join in a separate OpenBody.</p>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step5"></a>Setting the Created Join as the Current Working
+      Object&nbsp;</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Making Join as active object in CATIA Part  </font>
+  oPartDocument.Part.InWorkObject = hybridShapeAssemble</pre>
+          </td>
+        </tr>
+      </table>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Step6"></a>Updating the Part Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre> <font color="#008000">' Updating CATIA Part Document  </font>
+  oPartDocument.Part.Update</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The Part has to be updated to&nbsp; generate&nbsp; the geometrical
+      representation of the created objects.&nbsp;<br>
+      Once this done , the updated objects are visible in the 3D window and in
+      the specification tree&nbsp;<br>
+      Note: It is recommended to launch the Part update once all new objects
+      have been created and inserted in an OpenBody</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create geometry in a Macro starting from
+existing geometry in a CATPart.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdGsiTechArticles/CAAGsiTocHybridShape.htm">Hybrid
+      Shapes Automation Objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

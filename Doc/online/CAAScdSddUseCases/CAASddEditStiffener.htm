@@ -1,0 +1,280 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Editing Stiffeners</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Editing Stiffeners</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Learn"></a>This macro shows you how to modify stiffeners of different categories.
+		This macro modifies existing stiffeners created using the <a href="CAASddCreateStiffener.htm">CAASddCreateStiffener</a> macro.</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="How"></a>CAASddEditStiffener is launched in CATIA [<a href="#References">1</a>].
+		First open CAASddEditStiffener.CATPart in the samples directory.</p>
+		<p><a href="CAASddEditStiffenerSource.htm" target="Source">CAASddEditStiffener.CATScript</a>
+		 is located in the CAAScdSddUseCases.
+		<a href="macros/CAASddEditStiffener.CATScript">Execute macro</a> (Windows 
+		only).</p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%">
+		<p><a name="Step"></a>CAASddEditStiffener includes seven steps:</p>
+		<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Retrieving the Factory from the Part Document</a></li>
+			<li><a href="#Step3">Getting the Manager from the Factory</a></li>
+			<li><a href="#Step4">Retrieving the Super Stiffeners</a></li>
+			<li><a href="#Step5">Retrieving and Modifying Split Stiffeners</a></li>
+			<li><a href="#Step6">Modifying a Stiffener on a Shell Plate</a></li>
+			<li><a href="#Step7">Updating the Part Document</a></li>
+		</ol>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step1">Prolog</a></h4>
+		<p>Opens the CAASddEditStiffener.CATPart in CATIA.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>
+<span class="keyword">Sub</span> CATMain ()
+  <span class="keyword">Dim</span> ObjPart <span class="keyword">As</span> Part
+  <span class="keyword">Set</span> ObjPart = CATIA.ActiveDocument.Part
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step2">Retrieving the Factory from the Part Document</a></h4>
+		<p>This step describes how to get the Structure Functional Modeler factory. 
+		The SfmFactory Object will be used for creating Structure Functional Modeler 
+		objects.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Factory Object</span>
+  <span class="keyword">Dim</span> FactoryObj <span class="keyword">As</span> SfmFactory
+  <span class="keyword">Set</span> FactoryObj = ObjPart.GetCustomerFactory ("SfmFactory")
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step3">Getting the Manager from the Factory</a></h4>
+		<p>The SfmManager object is obtained by the GetManager method.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Get the Manager Object</span>
+  <span class="keyword">Dim</span> ManagerObj <span class="keyword">As</span> SfmManager
+  <span class="keyword">Set</span> ManagerObj = FactoryObj.GetManager
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step4">Retrieving the Super Stiffeners</a></h4>
+		<p>This step describes how to get the collection of stiffeners
+		and how to get one specific element in it.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'RETRIEVING THE SUPERSTIFFENERS</span>
+  <span class="keyword">Dim</span> SuperStiffeners <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SuperStiffeners = ManagerObj.GetSuperStiffeners
+  <span class="keyword">Dim</span> SuperStiffener1, SuperStiffener2, SuperStiffener3 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> SuperStiffener1 = SuperStiffeners.Item(1)
+  <span class="keyword">Set</span> SuperStiffener2 = SuperStiffeners.Item(3)
+  <span class="keyword">Set</span> SuperStiffener3 = SuperStiffeners.Item(4)
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step5">Retrieving and Modifying Split Stiffeners</a></h4>
+		<p>This step describes how to get seamed stiffeners.
+		In this case, seamed stiffeners are on the deck.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'Retrieving The Seamed Stiffeners on Deck</span>
+  <span class="keyword">Dim</span> SplitStiffeners <span class="keyword">As</span> References
+  <span class="keyword">Set</span> SplitStiffeners = SuperStiffener2.SplitProfiles
+  <span class="keyword">Dim</span> SplitStiffener1, SplitStiffener2 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> SplitStiffener1 = SplitStiffeners. Item(1)
+  <span class="keyword">Set</span> SplitStiffener2 = SplitStiffeners. Item(2)
+  <span class="keyword">Set</span> SelectionObj = CATIA.ActiveDocument.Selection
+
+  <span class="comment">'DECK STIFFENER</span>
+  SelectionObj.Add SplitStiffener1
+  <span class="keyword">Dim</span> DeckStiffener1 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> DeckStiffener1 = SelectionObj.FindObject("CATIASfmStiffener")
+
+ <span class="comment">'Checking Name and the Support</span>
+  <span class="keyword">Dim</span> stiff name  <span class="keyword">As</span> String
+  stiff name = DeckStiffener1.Name
+  <span class="keyword">Dim</span> DeckStiffSupport <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> DeckStiffSupport = DeckStiffener1.Support
+
+  <span class="comment">'Applying Material and Grade</span>
+  DeckStiffener1.Material = "Aluminium"
+  DeckStiffener1.Grade = "A47"
+
+  <span class="comment">'Retrieving and Modifying the side and section Orientation</span>
+  <span class="keyword">Dim</span> SideOrient, SectionOrient <span class="keyword">As</span> Long
+  SideOrient = DeckStiffener1.SideOrientation
+  SectionOrient = DeckStiffener1.SectionOrientation
+  <span class="keyword">Dim</span> DeckStiff1SideOrnt, DeckStiff1SectionOrnt <span class="keyword">As</span> Long
+  DeckStiff1SectionOrnt = -1
+  DeckStiff1SideOrnt = 6
+  DeckStiffener1.SideOrientation = DeckStiff1SideOrnt
+  DeckStiffener1.SectionOrientation = DeckStiff1SectionOrnt
+
+  <span class="comment">'Modifying the Section</span>
+  <span class="keyword">Dim</span> DeckStiffSectionName <span class="keyword">As</span> String
+  DeckStiffSectionName = DeckStiffener1.SectionName
+  DeckStiffener1.SectionName = "WT15x54"
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step6">Modifying a Stiffener on a Shell Plate</a></h4>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre>  ...
+  <span class="comment">'SHELL STIFFENER</span>
+  SelectionObj. Add SuperStiffener1
+  <span class="keyword">Dim</span> ShellStiffener1 <span class="keyword">As</span> SfmStiffener
+  <span class="keyword">Set</span> ShellStiffener1 = SelectionObj.FindObject("CATIASfmStiffener")
+
+  <span class="comment">'Retrieving and Modifying Websupport of ShellStiffener</span>
+  <span class="keyword">Dim</span> ShellStiffWebSupport <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellStiffWebSupport = ShellStiffener1.WebSupport
+  <span class="keyword">Dim</span> webSupport1 <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> webSupport1 = ObjPart.FindObjectByName("LONG.0")
+  <span class="keyword">Dim</span> webSupportRef1 <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> webSupportRef1 = ObjPart.CreateReferenceFromObject(webSupport1)
+  ShellStiffener1.WebSupport = webSupportRef1
+
+  <span class="comment">'Getting Molded Surface Of ShellStiffener</span>
+  <span class="keyword">Dim</span> ShellStiffMoldedSurface <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellStiffMoldedSurface = ShellStiffener1.GetMoldedSurface
+
+   <span class="comment">'Modifying Anchor Point</span>
+  <span class="keyword">Dim</span> ShellStiffAnchorPt <span class="keyword">As</span> String
+  ShellStiffAnchorPt = ShellStiffener1.AnchorPoint
+  ShellStiffener1.AnchorPoint = "catStrWebCenter"
+
+  <span class="comment">'Getting And Setting Profile Limit</span>
+  <span class="keyword">Dim</span> StiffNewLimit <span class="keyword">As</span> AnyObject
+  <span class="keyword">Set</span> StiffNewLimit = ObjPart.FindObjectByName("CROSS.90")
+  <span class="keyword">Dim</span> StiffNewLimitRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> StiffNewLimitRef = ObjPart.CreateReferenceFromObject(StiffNewLimit)
+  ShellStiffener1.SetProfileLimit 1, StiffNewLimitRef
+  <span class="keyword">Dim</span> ShellStiffLimitRef <span class="keyword">As</span> Reference
+  <span class="keyword">Set</span> ShellStiffLimitRef = ShellStiffener1.GetProfileLimit(1)
+
+  <span class="comment">'Returning and Setting the AngleMode</span>
+  <span class="keyword">Dim</span> StiffAngleMode <span class="keyword">As</span> Integer
+  StiffAngleMode = ShellStiffener1.AngleMode
+  <span class="keyword">Dim</span> StiffAngleMode2 <span class="keyword">As</span> Long
+  StiffAngleMode2 = 2
+  <span class="keyword">Dim</span> AngleModeValidity <span class="keyword">As</span> Boolean
+  AngleModeValidity = ShellStiffener1.IsAngleModeValid(StiffAngleMode2)
+  ShellStiffener1.AngleMode = StiffAngleMode2
+
+  <span class="comment">'Getting WebSupportOffSet of ShellStiffener</span>
+  ShellStiffener1.webSupportOff<span class="keyword">Set</span> = "30"
+  <span class="keyword">Dim</span> ShellStiffwebSupportOff<span class="keyword">Set</span> <span class="keyword">As</span> Double
+  ShellStiffwebSupportOff<span class="keyword">Set</span> = ShellStiffener1.webSupportOffset
+  ...</pre>
+				</td>
+			</tr>
+		</table>
+		<!-- -------------------------------comment---------------------------------- -->
+		<h4><a name="Step7">Updating the Part Document</a></h4>
+		<p>Update the Part.</p>
+		<table class="code">
+			<tr>
+				<td width="100%">
+				<pre> ...
+  <span class="comment">'Updating The Part with All Modifications</span>
+  ObjPart.Update
+<span class="keyword">End Sub</span></pre>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top"></td>
+		<td width="93%">
+		<p align="center">
+		<img alt="" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+		</td>
+	</tr>
+	<!-- -------------------------------comment---------------------------------- -->
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to edit stiffeners.</p>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top">[2]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!-- -------------------------------comment---------------------------------- -->
+<p><i>Copyright © 1999-2011, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,401 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Browsing a Process Document</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Process Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Browsing a Process Document</h3>
+      <em>Retrieving items attached to activities</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAADmiBrowse use case. This use case
+      explains how to browse a process document and retrieve items associated to
+      activities.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAADmiBrowse Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADmiBrowse Do</a></li>
+            <li><a href="#How">How to Launch CAADmiBrowse</a></li>
+            <li><a href="#Where">Where to Find the CAADmiBrowse Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you browse an existing process document.
+Specifically, you will learn how to:
+<ul>
+  <li>Get the number and list of activities of a given type</li>
+  <li>Get the number and list of items attached to the activity</li>
+  <li>Retrieve the name and type of a given item</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADmiBrowse Use Case</h3>
+<p>CAADmiBrowse is a use case of the CAADMAPSInterfaces.edu framework that
+illustrates CATIA DMAPSInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADmiBrowse Do?</h4>
+<p>The goal of CAADmiBrowse is to illustrate browsing a process document
+containing activities and items associated to activities. See the
+CAADmiGenerProcess use case <a href="#References">[1]</a> for a detailed
+description of how such a process document is created. This use case uses:
+<ul>
+  <li><code>GetNumberOfChild</code> and <code>GetChild </code>of <i>CATISPPChildManagement</i>
+    in order to get the number and list of activities under the root activity of
+    the process document</li>
+  <li><code>GetNumberOfItems</code> and <code>GetItems</code> of <i>CATISPPItemMgt</i>
+    in order to get the number and list of items associated to a given activity</li>
+  <li><code>GetLabel</code> and <code>GetType</code> of <i>CATISPPItem</i> in
+    order to get the name and type of a given item.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADmiBrowse?</h4>
+<p>To launch CAADmiBrowse, you will need to set up the build time environment,
+then compile CAADmiBrowse along with its prerequisites, set up the run time
+environment, and then execute the sample. This is fully described in the
+referenced article <a href="#References">[2]</a>.&nbsp;</p>
+<p> To launch the use case,
+execute the following command:</p>
+<pre>mkrun -c &quot;CAADmiBrowse Process.CATProcess ActivityType&quot;</pre>
+<ul>
+  <li><b>Process.CATProcess </b>- path name of an existing process document
+    (note that the associated <code>.act</code> document has to be in the same
+    directory as the document to be browsed). You may reference the supplied .CATProcess
+    document called &quot;CAADmiTestProcess.CATProcess&quot; found in:
+<pre><b>InstallRootDirectory</b>\<b>OS</b>\resources\graphic</pre>
+<p>where <b>InstallRootDirectory</b> is the root directory of your 
+CAA V5 installation, and <b>OS</b> is a directory the name of which depends on the operating 
+system. Refer to [<a href="#References">2</a>] 
+to get the list of the currently supported operating systems and their 
+associated directory names.</p>
+</li>
+  <li><b>ActivityType</b> - the kind of activity that we want to filter our
+    browse operation on. This activity type must exist in the associated <code>.act</code>
+    activities library document. For example, you may enter &quot;CAADmiAssembly&quot;
+    as an activity type.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find CAADmiBrowse Code?</h4>
+<p>CAADmiBrowse code is located in the CAADmiBrowse.m use case module of the
+CAADMAPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAADMAPSInterfaces.edu/CAADmiBrowse.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAADMAPSInterfaces.edu\CAADmiBrowse.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAADmiBrowse.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p style="background-color: #FFFFFF">There are six logical steps in
+CAADmiBrowse:</p>
+<ol>
+  <li><a href="#LoadingDoc">Loading a Process Document</a></li>
+  <li><a href="#RetrievingRootActivity">Retrieving the Root Activity</a></li>
+  <li><a href="#RetrievingActivities">Retrieving the Number and List of
+    Activities under the Root Activity</a></li>
+  <li><a href="#RetrievingItems">Retrieving the Number and List of Items
+    Associated to an Activity</a></li>
+  <li><a href="#RetrievingItemNameType">Retrieving the Name and Type of an Item</a></li>
+  <li><a href="#EndingSession">Ending the Session</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="LoadingDoc"></a>Loading a Process Document</h4>
+<ol>
+  <li>Create the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT rc = E_FAIL;
+...
+CATSession* pSession = NULL;
+rc = <b>::Create_Session</b>(&quot;CAA2_Sample_Session&quot;, pSession);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Generally, the first thing that is necessary in a batch program is the
+    creation of a new session. This is done using the <code>Create_Session</code>
+    global function. It is important not to forget to delete the session at the
+    end of your batch program.</p>
+  </li>
+  <li>Load the process document
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument* pProcessDoc = NULL;
+rc = <b>CATDocumentServices::Open</b>(argv[1],pProcessDoc);
+if ( FAILED(rc) || (NULL==pProcessDoc)) <b>return 2</b>;
+cout &lt;&lt; endl &lt;&lt; &quot;CAAPpbBrowse.m:	process document opened : &quot;
+	&lt;&lt; argv[1] &lt;&lt; endl &lt;&lt; flush;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now that we have a current session, we load a process document using the <i>CATDocumentServices</i><code>::Open</code>
+    method, to which we pass the entire pathname of the process document in the
+    first argument. The name of the process document is itself a first argument
+    passed to this program.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="RetrievingRootActivity"></a>Retrieving the Root Activity</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATInit *piInitOnDoc = NULL;
+rc = pProcessDoc -&gt; <b>QueryInterface</b>(IID_CATInit,
+                                   (void**) &amp;piInitOnDoc);
+if (FAILED(rc) ) return 5;
+CATISPPProcessContainer *piProcessCont = (CATISPPProcessContainer* )
+        pInitOnDoc -&gt; <b>GetRootContainer</b>(&quot;CATISPPProcessContainer&quot;);
+if ( NULL == piProcessCont ) <b>return</b> 3;
+piInitOnDoc -&gt; <b>Release</b>();
+piInitOnDoc = NULL;
+    
+CATLISTV(CATBaseUnknown_var) *pProcessList = 
+        piProcessCont-&gt;<b>GetAllProcess</b>();
+piProcessCont -&gt; <b>Release</b>();
+piProcessCont = NULL;
+if ((NULL == pProcessList) || ((*pProcessList).Size() &lt; 1))
+{ 
+   cout &lt;&lt; &quot;** ERROR empty list of process &quot; &lt;&lt; endl;
+   if ((*pProcessList).Size() &gt; 0) <b>delete</b> pProcessList;
+   <b>return</b> 4;
+}
+cout &lt;&lt; &quot; number of processes in the document : &quot;&lt;&lt; (*pProcessList).Size()
+	&lt;&lt; endl &lt;&lt; flush;
+
+// root activity is the first of the list of processes.
+CATISPPActivityRoot_var spActivityRoot = (*pProcessList)[1];
+<b>delete</b> pProcessList;</pre>
+    </td>
+  </tr>
+</table>
+<p>The document's root container is retrieved using the <code>GetRootContainer</code>
+method of <i>CATInit</i> which is directly cast to a <i>CATISPPProcessContainer</i>
+handle. Using this handle, we can get a list of all the processes contained in
+the document using the <code>GetAllProcess</code> method. The root activity is
+the first process in the list and we retrieve it in a <i>CATISPPActivityRoot</i>
+handle.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="RetrievingActivities"></a>Retrieving the Number and List of
+Activities under the Root Activity</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// handle on CATISPPChildManagement on the process. 
+CATISPPChildManagement *piChildMgtOnActivity = NULL;
+rc = spActivityRoot -&gt; <b>QueryInterface</b>(IID_CATISPPChildManagement,
+                                      (void**) &amp;piChildMgtOnActivity);
+if (FAILED(rc)) <b>return</b> 5;
+
+// get activities children of type given in argument.
+cout &lt;&lt; &quot; number of children under root activity : &quot;&lt;&lt; 
+piChildMgtOnActivity -&gt; <b>GetNumberOfChild</b>() &lt;&lt; endl &lt;&lt; flush;
+cout &lt;&lt; &quot; same, but filtered with given type: &quot; &lt;&lt; argv[2] &lt;&lt;&quot; : &quot; &lt;&lt; 
+      piChildMgtOnActivity -&gt; <b>GetNumberOfChild</b>(argv[2]) &lt;&lt; endl &lt;&lt; flush;
+
+CATListValCATBaseUnknown_var *pListChildren = 
+      piChildMgtOnActivity-&gt;<b>GetChild</b>(argv[2]);
+piChildMgtOnActivity-&gt;<b>Release</b>();</pre>
+    </td>
+  </tr>
+</table>
+<p>In order to get the number and list of activities under the root activity of
+the process document, we first need to get <i>CATISPPChildManagement</i> handle
+on the root. Using it, we can get the number of children using <code>GetNumberOfChild</code>
+to find out how many total activities there are and also how many activities of
+a given type there are. To filter on a given activity type, we simply pass to <code>GetNumberOfChild</code>
+the activity type defined in the second argument of the program.</p>
+<p>Using the process document created in the CAADmiGenerProcess use case [<a href="#References">1</a>],
+if we pass &quot;CAADmiPlace&quot; as an activity type, our trace would read:</p>
+<pre>number of children under root activity : 5
+same, but filtered with given type: CAADmiPlace: 2</pre>
+<p>Next, to actually retrieve a list of the activities of the process document,
+we use the <code>GetChild </code>method of <i>CATISPPChildManagement</i>. We can
+pass the activity type to this method as well, thereby retrieving only the
+activities of a given type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="RetrievingItems"></a>Retrieving the Number and List of Items
+Associated to an Activity</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>if ((NULL != pListChildren ) &amp;&amp; ((*pListChildren).Size() != 0))
+{
+   CATBaseUnknown_var spAssemblyActivity = <b>(*pListChildren)[1]</b>;
+   <b>delete</b> pListChildren;
+   pListChildren=NULL;
+
+   // get list of items concerned by activity.
+   CATISPPItemMgt *piItemMgtOnActivity = NULL;
+   rc = spAssemblyActivity -&gt; <b>QueryInterface</b>(IID_CATISPPItemMgt,
+                                             (void**) &amp;piItemMgtOnActivity);
+   if (FAILED(rc)) return 5;
+
+   cout &lt;&lt; &quot; number of items associated to root activity : &quot;
+         &lt;&lt; piItemMgtOnActivity-&gt;<b>GetNumberOfItems()</b> &lt;&lt; endl &lt;&lt; flush;
+   CATListValCATBaseUnknown_var *pItemsLists =
+         piItemMgtOnActivity-&gt;<b>GetItems</b>();
+   piItemMgtOnActivity-&gt;<b>Release</b>();
+   piItemMgtOnActivity = NULL;
+   if ((NULL == pItemsLists) || ((*pItemsLists).Size() == 0)) 
+         <b>return </b>6;
+   ...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, if the list of children is not empty, we get the first activity and find
+the items associated to it. In order to do this, we need a <i>CATISPPItemMgt</i>
+handle which is used to get the number of items using the <code>GetNumberOfItems</code>
+method and to actually retrieve the items in a list using the <code>GetItems</code>
+methods. Still using the same example as above, our traces would now read:</p>
+<pre>number of items associated to root activity : 2</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="RetrievingItemNameType"></a>Retrieving the Name and Type of an Item</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>   CATBaseUnknown_var spFirstItem = <b>(*pItemsLists)[1]</b>;
+   <b>delete</b> pItemsLists;
+   pItemsLists = NULL;
+		
+   // Informations on items
+   CATISPPItem *piItemOnItem = NULL;
+   rc = spFirstItem -&gt; <b>QueryInterface</b>(IID_CATISPPItem,
+                                      (void**) &amp;piItemOnItem);
+   if (FAILED(rc)) <b>return</b> 5;
+		
+   CATUnicodeString LabelItem = piItemOnItem-&gt;<b>GetLabel</b>();
+   
+   piItemOnItem-&gt;<b>Release</b>();
+   piItemOnItem=NULL;
+
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Based on the first item in the list, we illustrate retrieving the name
+(label) and type of the item. To do this, we need a <i>CATISPPItem</i> handle on
+the first item in the list. Next, using the <code>GetLabel</code> method, we can
+get the name of the item, and using the <code>GetType</code> method, we get the
+type of the item.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="EndingSession"></a>Ending the Session</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// remove opened document
+rc = <b>CATDocumentServices::Remove</b> (*pProcessDoc);
+if (!SUCCEEDED(rc)) <b>return</b> 7;
+	
+// delete the session, removes the opened documents also.
+// never forget to delete a creating session after usage.
+	
+rc = <b>::Delete_Session</b>(&quot;CAA2_Sample_Session&quot;); </pre>
+    </td>
+  </tr>
+</table>
+<p>It is always a good idea to remove any opened document from the session
+before actually deleting the session itself and ending the program. Use the <i>CATDocumentServices</i><code>::Remove</code>
+method to do this and delete the session using the <code>Delete_Session</code>
+global function.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has illustrated how to browse a process document. It retrieves
+all the processes of the document using the <code>GetAllProcess</code> method of
+<i>CATISPPProcessContainer</i>, then it retrieves activities using the <code>GetChild</code>
+method of <i>CATISPPChildManagement </i>and items using the <code>GetItems </code>method
+of <i>CATISPPItemMgt </i>for which it can also retrieve the name using the <code>GetLabel</code>
+method and type using the <code>GetType</code> method, both found in the <i>CATISPPItem</i>
+interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAADmiGenerProcess.htm">Creating a New Process Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,529 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Enabling the Build Deactivation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Enabling the Build Deactivation</h3>
+      <em>Implementing CATIMechanicalProperties</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3">
+      <p><a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating a New
+      Geometrical Feature : The V5V6ExtCombined Curve</a>  <b>&gt; Enabling the Build 
+      Deactivation</b></p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+       <p>This article discusses the implementation of <i>CATIMechanicalProperties</i> interface for V5V6ExtCombinedCurve feature. 
+        <br>It is a copy of the implementation of the same interface for CombinedCurve features, described in the article 
+		&quot;Enabling the Combined Curve's Result Deactivation&quot;[<a href="#References">4</a>], rewritten with V6 
+		backported interfaces.</p>
+ 
+<p>
+        The <i>CATIMechanicalProperties</i> interface enables a geometrical feature to manage its activation or deactivation 
+        in the update mechanism [<a href="#References">1</a>]
+     
+      , thus the build of it's geometrical result. The &quot;desactivated&quot; feature 
+		will not have any geometry in the 3D geometry space and will have a 
+		specific mask in the specification tree.
+		</p> 
+		<p>
+		In the original V5 CombinedCurve Use case, the activation/desactivation was done by forcing 
+an update of the CombinedCurve feature, so  that it's geometry was either rebuilt or suppressed.
+One of the characteristics of the new V6 Feature Modeler is that it is less permissive than the V5 modeler.
+ In this example, the consequence is that it's not longer
+possible to force the update of a feature if none of its "In" attributes has changed.  Thus, we have had to
+add an "In" attribute in the V5V6ExtCombinedCurve StartUp, called "V5V6Desactive",&nbsp; 
+		that stores an activation status.  </p>
+
+      
+     <ul>
+        <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+        <li><a href="#UseCase"><b>The CAAV5V6ExtMmrCombinedCurve Use Case</b></a>
+          <ul>
+            <li><a href="#What">What Does CAAV5V6ExtMmrCombinedCurve Do</a></li>
+            <li><a href="#How">How to Launch CAAV5V6ExtMmrCombinedCurve</a></li>
+            <li><a href="#Where">Where to Find the CAAV5V6ExtMmrCombinedCurve Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case describes the implementation of the <i>CATIMechanicalProperties
+</i><b><span style="font-weight: 400">interface. This interface has three 
+methods:</span></b></p>
+<ul>
+  <li><code>IsInactive</code>: It returns the 
+  status of the feature for the update mechanism. </li>
+  <li><code>Activate</code>: It sets that the feature is active for the build</li>
+  <li><code>InActivate</code>: It unsets that the feature is active for the build</li>
+</ul>
+<p>If the first method, used by the implementation of the <i>CATI<span lang="fr">FmFeatureBehavior</span></i>&nbsp; 
+interface [<a href="#References">2</a>], just returns a value, the last two ones 
+modify the status value, and regenerate the visualization of the combined curve. 
+You will learn how to do that. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAV5V6ExtMmrCombinedCurve Use Case</h3>
+<p>CAAV5V6ExtMmrCombinedCurve is a use case of the CAAV5V6MechanicalModeler.edu framework
+that illustrates Mechanical Modeler capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAV5V6ExtMmrCombinedCurve Do</h4>
+
+<p>This use case implements the <i>CATIMechanicalProperties</i> on the V5V6ExtCombinedCurve. 
+To enable the end user to choose the status of the feature (Active or not 
+[<a href="#References">3</a>]), a command has been integrated in the 
+sub-contextual menu of the V5V6ExtCombinedCurve.</p>
+
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+<caption>Fig.1: Contextual Menu</caption>
+  <tr>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvActivated.jpg" width="345" height="105"></td>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvContextualMenuDeac.jpg" width="351" height="101"></td>
+
+  </tr>
+  </table>
+  <p>When the end user selects a Combined Curve, and rights click, depending on 
+  the current state of the feature's instance, it can either activate or 
+  deactivate it. On the above picture, </p>
+<ul>
+  <li>When the Activate command is proposed, it means that the current state of 
+  the feature is &quot;deactivated&quot;. The Activate command (a DS command)  calls the <code>Activate</code> method of 
+  the <i>CATIMechanicalProperties </i><b>
+<span style="font-weight: 400">interface to rebuild the combined curve and 
+  refresh the visualization. See <a href="#Fig.2">Fig.2 </a>on left.</span></b></li>
+  <li>When the Deactivate command is proposed, it means that the current state 
+  of the feature is &quot;activated&quot;. The Deactivate command&nbsp;calls the <code>
+  InActivate</code> method of 
+  the <i>CATIMechanicalProperties </i><b>
+<span style="font-weight: 400">interface to force the build of the combined 
+  curve and refresh the visualization. See <a href="#Fig.2">Fig.2 </a>on right.&nbsp; </span></b></li>
+</ul>
+  <p>&nbsp;</p>
+<table border="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+<caption><a name="Fig.2">Fig.2</a>: An Active (left) or Deactivate (right) 
+Combined Curve </caption>
+  <tr>
+    <td>
+    <img border="0" src="../CAAMmrUseCases/images/CAAMmrCatalogIntegration-PartCombCrv.jpg" width="296" height="391"></td>
+    <td><img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvDeactivated.jpg" width="331" height="467"></td>
+  </tr>
+</table>
+<p>On left, the feature is active, and on right it is inactive: the mask of the 
+icon is different
+<img border="0" src="../CAAMmrUseCases/images/CAAMmrCombCrvMaskDeactivation.jpg" width="44" height="36">, 
+and the combined curve is not drawing. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch  CAAV5V6ExtMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAV5V6ExtMmrCombinedCurveOverview.htm">Creating
+a New Geometrical Feature: The V5V6ExtCombinedCurve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p>Launch CATIA, when the application is ready, follow the scenario described 
+below:</p>
+<ul>
+  <li>On the <b>File</b> menu click <b>Open</b> </li>
+  <li>in the <b>File Selection</b> dialog box retrieve the <b>
+  CAAV5V6ExtCombinedCurve.CATPart</b> <a href="#(*)">(*)</a> document and click <b>Open</b>
+  </li>
+  <li>In the <b>Start</b> menu choose <b>Mechanical Design </b>and click <b>
+  Wireframe and Surface</b> <b>Design</b> </li>
+  <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Deactivate&nbsp; </b>
+  </li>
+  <li><b>Right</b> click the <b>V5V6ExtCombinedCurve </b>and select <b>Activate&nbsp; </b>
+  </li>
+</ul>
+<p><a name="(*)">(*)</a> The file is located in the directory <code>
+CAAMechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAV5V6ExtMechanicalModeler.edu/InputData</code>
+  </li>
+  <li>Windows : <code>InstallRootDirectory\CAAV5V6ExtMechanicalModeler.edu\InputData</code>
+  </li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the  CAAV5V6ExtMmrCombinedCurve Code</h4>
+<p>The  CAAV5V6ExtMmrCombinedCurve use case is made of a one class, the
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp</i> class, located in
+the CAAV5V6ExtMmrCombinedCurve.m module of the CAAV5V6MechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAV5V6MechanicalModeler.edu\</code><code>CAAV5V6ExtMmrCombinedCurve.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAV5V6MechanicalModeler.edu/</code><code>CAAV5V6ExtMmrCombinedCurve.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>This use case is divided into two main steps:</p>
+<ul>
+  <li><a href="#Implementing the CAAEMmrCombinedCurveMechProp Class">Defining the
+   <i>CAAEV5V6ExtMmrCombinedCurveMechProp</i> 
+   Class </a>
+  </li>
+  <li><a href="#Implementing the CAAEMmrCombinedCurveMechProp Class">Implementing 
+  the <i>CAAEV5V6ExtMmrCombinedCurveMechProp</i>
+  Class </a>
+<ul>
+  <li><a href="#Coding the Inactive Method">Coding the IsInactive method</a></li>
+  <li><a href="#Coding the Activate Method">Coding the Activate Method</a></li>
+    <li><a href="#Coding the Inactivate Method">Coding the Inactivate Method</a></li>
+</ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Defining the CAAEMmrCombinedCurveMechProp Class"></a>Defining the
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp Class</i></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;  
+class CAAEV5V6ExtMmrCombinedCurveMechProp: public CATBaseUnknown
+{
+   CATDeclareClass;
+
+   public:
+
+      CAAEV5V6ExtMmrCombinedCurveMechProp ();
+      virtual ~CAAEV5V6ExtMmrCombinedCurveMechProp ();
+
+      virtual int <b>IsInactive</b>() const ;
+      virtual void <b>Activate</b>() ;
+      virtual void <b>InActivate</b>() ;
+
+   private:
+
+      CAAEV5V6ExtMmrCombinedCurveMechProp (CAAEV5V6ExtMmrCombinedCurveMechProp &amp;iObjectToCopy);
+      CAAEV5V6ExtMmrCombinedCurveMechProp&amp; operator=(CAAEV5V6ExtMmrCombinedCurveMechProp &amp;iObjectToCopy);
+
+   <b>private:
+      int _status ;</b>
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp</i> C++ class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the
+<i>CAAEMmrCombinedCurveMechProp</i>
+class belongs to a component. The copy constructor and the &quot;=&quot;
+operator are set as private to prevent the compiler from automatically creating
+as public.</p>
+<p>The <i>CATIMechanicalProperties</i> interface contains three methods to override:</p>
+<ul>
+  <li><code><a href="#Coding the Inactive Method">IsInactive</a></code>: Returns the 
+  status of the feature</li>
+  <li><code><a href="#Coding the Activate Method">Activate</a></code>: Sets that the feature is active for the build</li>
+  <li><code><a href="#Coding the Inactivate Method">InActivate</a></code>: Unsets that the feature is active for the build</li>
+</ul>
+<p>In this sample, the status is kept by a data member, <code>_status</code>. 
+But in your own implementation, it is strongly recommended to use a new 
+knowledge parameter associated with an attribute of the combined curve.</p>
+<ul>
+  <li>The end user can 
+control the parameter in the Fx command (DS command),</li>
+  <li>The parameter is persistent,</li>
+  <li>Modifying the parameter automatically update the geometrical feature.</li>
+</ul>
+<p>The value of the state is the same whatever the implementation code:</p>
+<ul>
+  <li>0 : the combined curve is active for the build&nbsp; (The default value 
+  initialized in the constructor)</li>
+  <li>1 : the combined curve is de-active for the build </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Implementing the CAAEMmrCombinedCurveMechProp Class">I</a>mplementing the
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp Class</i></h4>
+<p>As usual, to implement an interface you first need to use the TIE macro.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATImplementClass ( CAAEV5V6ExtMmrCombinedCurveMechProp ,
+                    DataExtension , 
+                    CATBaseUnknown ,
+                    <b>V5V6ExtCombinedCurve</b> );
+
+#include &quot;<b>TIE_CATIMechanicalProperties.h</b>&quot;  
+TIE_CATIMechanicalProperties(CAAEV5V6ExtMmrCombinedCurveMechProp);</pre>
+    </td>
+  </tr>
+</table>
+<p>The
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp</i> class states that it implements the <i>
+CATIMechanicalProperties</i> interface thanks to the <code>
+TIE_CATIMechanicalProperties&nbsp;</code>macro. This extension class is dedicated to 
+this component, and the <code>CATImplementClass</code> macro declares that the
+<i>CAAEV5V6ExtMmrCombinedCurveMechProp</i> class is data extension class, thanks to the
+<code>DataExtension</code> keyword, and that it extends the component whose main 
+class is V5V6ExtCombinedCurve. The third parameter must always be set to <i>
+CATBaseUnknown</i>, makes no sense, and is unused for extensions.&nbsp; </p>
+<p>Do not forget to update the interface dictionary. Here it is an extract of 
+the CAAV5V6MechanicalModeler.edu.dico file located in the 
+CAAV5V6MechanicalModelerEduRcsCNext.m\src\CNext\code\dictionary directory of the 
+CAAV5V6MechanicalModeler.edu framework.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+V5V6ExtCombinedCurve               CATIMechanicalProperties                libCAAV5V6ExtMmrCombinedCurve
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Coding the Inactive Method"></a>Coding the Inactive Method </h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int CAAEV5V6ExtMmrCombinedCurveMechProp::IsInactive() const
+{
+   return _status ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This method only returns the value of <code>_status</code>, the data member. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Coding the Activate Method"></a>Coding the Activate 
+Method</h4>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAAEV5V6ExtMmrCombinedCurveMechProp::Activate() 
+{
+
+   <b>_status = 0 ;</b>
+   RefreshCombinedCurve();
+...</pre>
+        </td>
+      </tr>
+    </table>
+<p align="left">The <code>Activate</code> method sets that the geometrical 
+feature must be taken into account in the update mechanism. 
+So the value of
+
+   <code>_status</code>, the data member, is 
+set to 0. 
+<br><code>RefreshCombinedCurve </code> is an internal method that modifies the "V5V6desactive" attribute, updates the 
+visualization of feature in the 3D geometry area and in the specification tree. The same method is called during Desactivate process. </p> 
+
+<p>Lets look into the RefreshCombinedCurve method: 
+
+<p> In order to modify the "V5V6Desactive" attribute, we must declare the necessary credentials for our V5V6ExtCombinedCurve 
+application. This requires three keys: the ClientId, the PartnerId (for all mechanical modeler use cases we will 
+use "CAAMmrExtMechanicalModeler") and the catalog name. </p>
+
+ <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  
+  // Get credentials for Combined Curve application
+  CATUnicodeString ClientId("SAMPLES");
+  CATUnicodeString PartnerId = "CAAMmrExtMechanicalModeler";
+  CATUnicodeString CatalogName("CAAV5V6ExtMmrCombinedCurveCatalog");
+  CATFmCredentials CredentialForCC;
+  rc = CredentialForCC.RegisterAsApplicationBasedOn(CATFmFeatureModelerID, PartnerId);
+  if (SUCCEEDED(rc))
+		rc = CredentialForCC.RegisterAsCatalogOwner(CatalogName,ClientId);
+
+  if (FAILED(rc))
+    return rc;
+  
+  // Attribute key
+  CATFmAttributeName AttrKey = CATFmAttributeName("V5V6Desactive");
+
+  // Get the Combined Curve feature facade
+  CATFmFeatureFacade FeatFacadeOnCombinedCurve(CredentialForCC, this);
+
+  // Modify the attribute value
+  CATFmAttributeValue FmAttrValue;
+  FmAttrValue.SetInteger(_status);
+  rc = FeatFacadeOnCombinedCurve.SetValue(AttrKey, FmAttrValue);
+  if (FAILED(rc))
+    return rc;
+          
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The next step enables us to update the specification tree. It enables to 
+    modify the icon of the feature. If the feature is deactivated, a mask 
+    showing the deactivation is 
+    applied to the icon. See <a href="#Fig.2">Fig.2</a></p>
+ <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  <b>CATIRedrawEvent</b> * piRedrawEvent = NULL; 
+  rc = QueryInterface(IID_CATIRedrawEvent, (void**)&amp;piRedrawEvent);
+ 
+  piRedrawEvent-&gt;<b>Redraw</b>();
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+ <table class="code">
+      <tr>
+        <td>
+    <p>&nbsp;</p>
+			<p>The last action consists in updating all  viewers  containing a 
+    representation of the V5V6ExtCombinedCurve. You should do it to re-visualize the 
+    feature after the update. </p>
+          <pre>...
+  <b>CATIModelEvents</b> * piModelEvent = NULL; 
+  rc = QueryInterface(IID_CATIModelEvents, (void**)&amp;piModelEvent);
+
+  <b>CATModify</b> notif = this;
+  piModelEvent-&gt;<b>Dispatch</b>(notif);
+
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+<!---------------------------------comment------------------------------------->
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Coding the Inactivate Method"></a>Coding the InActivate Method</h4>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>void CAAEMmrCombinedCurveMechProp::InActivate() 
+{
+
+   <b>_status = 1 ;</b>
+...</pre>
+        </td>
+      </tr>
+    </table>
+
+<p>The <code>InActivate</code> method sets that the geometrical 
+feature must not be taken into account [<a href="#References">1</a>] in the 
+update mechanism. 
+So the value of
+
+   <b><span style="font-weight: 400"><code>_status</code>, the data member, is 
+set to 1. </span></b></p>
+
+<p>It is the only difference with the <code>
+<a href="#Coding the Activate Method">Activate</a></code> method, the other steps are 
+identical: modify the &quot;V5V6Desactive&quot; attribute, redraw the specification tree, and update the 
+viewers. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to implement the <i>CATIMechanicalProperties</i> 
+interface. 
+In the activate or Inactivate methods you should:</p>
+<ol>
+  <li>Set the value of the status - Use a Knowledge parameter </li>
+  <li>Update the specification tree to modify the mask of the icon </li>
+  <li>Update  viewers to re-visualize the feature which has been  
+  updated</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">Integrating a New Geometrical Feature in
+the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAV5V6ExtMmrCombinedCurveBuild.htm">Building V5V6ExtCombinedCurve's Result</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAV5V6ExtMmrCombCrvSubMenu.htm">Adding a Contextual Sub-Menu</a></td>
+  </tr>
+  <tr>
+    <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIMechPop.htm">
+    Enabling Combined Curve's Result Desactivation</a></td>
+  </tr>
+
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2012]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+</body>
+

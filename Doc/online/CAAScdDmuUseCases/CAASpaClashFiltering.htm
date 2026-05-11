@@ -1,0 +1,138 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Computing a Clash and Filtering Results</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Space Analysis</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Computing a Clash and Filtering Results</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use clashes to compute
+      and filter an interference: all conflicts with a given type or with a
+      penetration depth greater than a given value will be declared as
+      irrelevant with a comment. The macro assumes that a CATProduct has been
+      loaded and that some components are selected.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This image shows the selection state before the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaClashFiltering1-sm.gif"></p>
+      <p>&nbsp;</p>
+      <p>This image shows the result of the macro in the clash panel :</p>
+      <p align="center"><img border="0" src="images/CAASpaClashFiltering2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAASpaClashFiltering is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAASpaClashFilteringSource.htm" target="Source">CAASpaClashFiltering.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAASpaClashFiltering.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAASpaClashFiltering includes four steps:</p>
+      <ol>
+        <li><a href="#Acquisition">Acquiring the filtering value</a></li>
+        <li><a href="#Clashes">Retrieving the clashes collection</a></li>
+        <li><a href="#Clash">Creation and computation of the clash</a></li>
+        <li><a href="#Filter">Filtering of the conflicts</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Acquisition"></a>Acquiring the filtering value</h4>
+      <p>The <i>dFilterValue</i> value is acquired with a Inputbox.</p>
+      <p align="center"><img border="0" src="images/CAASpaClashFiltering3-sm.gif"></p>
+
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Clashes"></a>Retrieving the clashes collection</h4>
+      <p>The <i>cClashes</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clashes'); return false;">Clashes</a></code>
+      ) is the factory to create <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clash'); return false;">Clash</a></code>
+      object : this collection is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Clashes&quot;</code>, on the root
+      product of the active document.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Clash"></a>Creation and computation of the clash</h4>
+      <p>The <i>oClash</i> object is created using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clashes', 'AddFromSel'); return false;">AddFromSel</a></code>
+      method on the <i>cClashes</i> collection to take into account all selected
+      components, modified with the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clash', 'ComputationType'); return false;">ComputationType</a></code>
+      and the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clash', 'InterferenceType'); return false;">InterferenceType</a></code>
+      methods to perform the right computation, and then computed with the <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clash', 'Compute'); return false;">Compute</a></code>
+      method.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Filter"></a>Filtering of the conflicts</h4>
+      <p>A loop is done on all the conflicts using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Clash', 'Conflicts'); return false;">Conflicts</a></code>
+      on <i>oClash</i>, to get <i>cConflicts</i> collection, <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflicts', 'Count'); return false;">Count</a></code>
+      to read the number of conflicts and <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflicts', 'Item'); return false;">Item</a></code>
+      to access each of them, <i>oConflict</i>.</p>
+      <p>The filtering is done using <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflict', 'Type'); return false;">Type</a></code>
+      and <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflict', 'Value'); return false;">Value</a></code>
+      methods, on <i>oConflict</i>, to get the results.</p>
+      <p>If needed, the status and the comment of the conflict are modified with
+      <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflict', 'Status'); return false;">Status</a></code>
+      and <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Conflict', 'Comment'); return false;">Comment</a></code>
+      methods.</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use Clash in order to compute and filter an
+interference. Specifically, it has illustrated how to :</p>
+<ul>
+  <li>create and use Clashes</li>
+  <li>create and use Conflicts</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocSPA.htm">Space
+      Analysis automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

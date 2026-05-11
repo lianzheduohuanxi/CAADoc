@@ -1,0 +1,495 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a CAA V5 Batch</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Middleware</h1>
+    </td>
+    <td valign="top">
+      <h2>BatchInfrastructure</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a CAA V5 Batch</h3>
+      Writing and using a CAA V5 Batch</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAABatBatchSample use case. This use case 
+		explains how to implement and use a simple CAA V5 Batch.<ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAABatBatchSample Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does </a><a href="#UseCase">
+			<strong style="font-weight: 400">CAABatBatchSample</strong></a><a href="#What"> Do</a></li>
+            <li><a href="#How">How to Launch </a><a href="#UseCase">
+			<strong style="font-weight: 400">CAABatBatchSample</strong></a></li>
+            <li><a href="#Where">Where to Find the</a><a href="#UseCase"><strong style="font-weight: 400">CAABatBatchSample</strong></a><a href="#Where"> Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>A V5 batch is a non interactive program which fits 3 principles.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - The code is implemented in a 
+library, by the &#8220;batchmain&#8221; function. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - The batch is described in a XML 
+file known as &#8220;file descriptor&#8221;. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Its inputs and outputs are 
+described in one to card-index XML file known as &#8220;parameter file&#8221;. <br>
+<br>
+This use case is intended to help you to make your first steps in creating your 
+own CAA V5 Batch. The main points are:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Write the batchmain library <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Write your Batch Descriptor file
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Write your Batch Parameter file <br>
+&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAABatBatchSample Use Case</h3>
+<p>CAABatBatchSample is a use case of the CAABatchInfrastructure.edu framework 
+that illustrates the batch infrastructure capabilities.<br>
+&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAABatBatchSample Do</h4>
+<p>This batch sample takes as input a list of .model files and renames it to .CATPart 
+files.<br>
+<br>
+Warning: this batch sample does not convert model file to CATPart file. It is 
+only about renaming the files.<br>
+&nbsp;<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAABatBatchSample</h4>
+<p><b>The Parameter file</b><br>
+<br>
+The parameter file syntax is decided by the batch author, depending on the Batch 
+Infrastructure rules.<br>
+<br>
+The parameter file used in this sample is<i><br>
+&nbsp;</i></p>
+<table class="code" height="74" id="table1">
+  <tr>
+    <td>
+      <pre><i>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE root SYSTEM &quot;Parameters.dtd&quot; &gt;
+&lt;root batch_name=&quot;BatchSample&quot; &gt;
+&lt;inputParameters&gt;
+&lt;file id=&quot;file1&quot; filePath=&quot;XXX\CAABatchInfrastructure.edu\Data.d\ATTRIBUTCXR1.model&quot; type=&quot;bin&quot;/&gt;
+&lt;file id=&quot;file2&quot; filePath=&quot;XXX\CAABatchInfrastructure.edu\Data.d\BOBINE.model&quot; type=&quot;bin&quot;/&gt;
+&lt;file id=&quot;file3&quot; filePath=&quot;XXX\CAABatchInfrastructure.edu\Data.d\CUBE.model&quot; type=&quot;bin&quot;/&gt;
+&lt;simple_arg id=&quot;action&quot; value=&quot;1&quot;/&gt; 
+&lt;/inputParameters&gt;
+&lt;outputParameters&gt;
+&lt;folder id=&quot;out_dir&quot; folderPath=&quot;&quot; type=&quot;bin&quot; extension=&quot;CATPart&quot; /&gt;
+&lt;/outputParameters&gt;
+
+&lt;/root&gt;</i></pre>
+    </td>
+  </tr>
+</table>
+<p><i><br>
+</i>where:<br>
+<br>
+&nbsp;&nbsp;&nbsp; oBatchSample is the name of the descriptor file. <br>
+&nbsp;&nbsp;&nbsp; o&lt;inputParameters&gt; and &lt;/inputParameters&gt; are the tags used 
+to define the input parameters section. <br>
+&nbsp;&nbsp;&nbsp; o&lt;outputParameters&gt; and &lt;/outputParameters&gt; are the tags used 
+to define the output parameters section. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o &#8220;XXX\ATTRIBUTCXR1.model&#8221; is the 
+full path of the input file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o folderPath attribute is the full 
+path for the output directory. If this attribute is set to &#8220;&#8221;, such as in the 
+example, the directory defined with the $BATCH_HOME variable is used.<br>
+<br>
+The Parameters.dtd file used to check the xml files syntax is provided by the 
+Batch Infrastructure and is used for all batches.<br>
+<br>
+<b>The Descriptor file:</b><br>
+<br>
+The Descriptor file allows the system to make a list of all the available 
+batches. It must be stored in the Framework/CNext/resources/batchdesc directory.<br>
+<br>
+It is created once by the batch author and should not be changed by user. <br>
+The descriptor file used in this sample is<i><br>
+&nbsp;</i></p>
+<table class="code" height="74" id="table2">
+  <tr>
+    <td>
+      <pre><i>The descriptor file used in this sample is
+
+&lt;?xml version='1.0' encoding='UTF-8' standalone='no' ?&gt;
+&lt;!DOCTYPE batch SYSTEM &quot;BatchDescriptor.dtd&quot;&gt;
+
+&lt;batch name=&quot;BatchSample&quot; 
+description=&quot;Sample batch&quot; 
+commandline=&quot;CATBatch CAABatBatchSample&quot; /&gt;</i></pre>
+    </td>
+  </tr>
+</table>
+<p><i><br>
+</i>where:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o BatchSample is the batch name.<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o CAABatBatchSample is the name of 
+the library to load, i.e. the library where the batchmain is implemented.<br>
+<br>
+The BatchDescriptor.dtd file used to check the xml files syntax is provided by 
+the Batch Infrastructure and is used for all batches.<br>
+&nbsp;</p>
+<p><br>
+To launch the use case you have to follow the following steps:<br>
+<br>
+&nbsp;&nbsp;&nbsp; · Edit the parameter file ParamSample.xml in the 
+CAABatchInfrastructure.edu/Data.d directory<br>
+<br>
+&nbsp;&nbsp;&nbsp; · Change the &#8220;file1&#8221; &#8220;file2&#8221; and &#8220;file3&#8221; values, by 
+completing the path with the full path on your machine<br>
+<br>
+&nbsp;&nbsp;&nbsp; · Set up the run time environment (mkrun on build time 
+installation and catstart on runtime installation)<br>
+<br>
+&nbsp;&nbsp;&nbsp; · Launch the following command</p>
+<table class="code" height="34" id="table3">
+  <tr>
+    <td>
+      <pre>CATBatch XXX/ParamSample.xml</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAABatBatchSample</h4>
+<p>The CAABatBatchSample use case is made of a single function named batchmain 
+located in the CAABatBatchSample.m module of the CAABatchInfrastructure.edu 
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><font face="Courier">InstallRootDirectory\CAABatchInfrastructure.edu\ 
+	CAABatBatchSample.m\</font></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><font face="Courier">InstallRootDirectory/CAABatchInfrastructure.edu/ 
+	CAABatBatchSample.m/</font></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps to implement <i>CATBatBatchSample</i>:</p>
+<ol>
+  <li><a href="#Step1">Initializing the completion state</a></li>
+  <li><a href="#Step2">Using the batch log</a></li>
+  <li><a href="#Step3">Retrieving CATIBatch Interface </a></li>
+  <li><a href="#Step4">Retrieving Input parameters</a></li>
+  <li><a href="#Step5">Retrieving field=value argument by its id</a></li>
+  <li><a href="#Step6">Retrieves the output parameters</a></li>
+  <li><a href="#Step7">Renaming input files</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Initializing the completion state</h4>
+<table class="code" height="74">
+  <tr>
+    <td>
+      <pre>CATBatStatePubCAA* pub = CATBatStatePubCAA::GetCAAStatePub();
+
+pub-&gt;SetBatchState(10);</pre>
+    </td>
+  </tr>
+</table>
+<p>The CATBatStatePubCAA object is used to publish a completion state for the 
+batch.<br>
+<br>
+The method SetBatchState allows the batch author to set the completion state of 
+the task during the batch<br>
+execution.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Using the batch log</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBatchLogCAA::PutInLog(&quot;filepath: &quot;);
+CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
+
+CATBatchLogCAA::PutInLog(&quot;\n&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>The batch author can write in a batch log during the program execution. It 
+allows the system to log information about<br>
+what the batch is doing. It can be useful if the batch end abnormally. <br>
+This log is written in the $BATCH_HOME/uuid/uuidLog.txt file. The default value 
+for BATCH_HOME is /tmp (on UNIX) or<br>
+C:\temp (on Windows) and uuid is a generated identifier for each batch execution<br>
+The only parameter allowed in the PutInLog method is a string.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Retrieving CATIBatch Interface</h4>
+<table class="code" height="34">
+  <tr>
+    <td>
+      <pre>CATIBatchCAA* batch = GetCATIBatchCAA();</pre>
+    </td>
+  </tr>
+</table>
+<p>The XML parameter file is read, at batch start, and an XML tree is generated 
+in memory. CATIBatch is the main interface to access XML parameters tree from 
+the batch.</p>
+<p>Interfaces CATIBatchElementCAA (for a tag) and CATIBatchElementsCAA (for a 
+list of tags) can be retrieved from CATIBatchCAA allowing accessing the whole 
+XML tree</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Retrieving Input parameters </h4>
+<table class="code" height="74">
+  <tr>
+    <td>
+      <pre>//Retrieves InputParameters section from the XML parameter file
+CATIBatchElementCAA* inputParameters = NULL;
+HRESULT hr = batch-&gt;get_InputParametersCAA(inputParameters);
+
+//Retieves all the &lt;file&gt; tags included in the inputParameters section
+CATIBatchElementsCAA* inputFiles = NULL;
+hr = inputParameters-&gt;get_FileListCAA(inputFiles);
+
+// We scan the list of &lt;file&gt; 
+long childrenCount = 0;
+hr = inputFiles-&gt;get_Count(childrenCount);
+CATIBatchElementCAA * elem = NULL;
+CATListOfCATUnicodeString listOfV4Files;
+
+for ( int i = 0; i&lt;childrenCount; i++ )
+{
+	hr = inputFiles-&gt;ItemCAA( i, elem );
+// for each &lt;file&gt; we retrieve the file path corresponding to the attribute &quot;filePath&quot; of the
+// &lt;file&gt; tag.
+	CATUnicodeString usfile_path;
+	elem-&gt;get_Path(usfile_path); 
+
+
+// We write this path in the log of the batch available in $BATCH_HOME/uuid/uuidLog.txt 
+// at the end of the execution. Default for BATCH_HOME is /tmp or C:\temp and uuid is a
+// generated identifier for each batch execution.
+	CATBatchLogCAA::PutInLog(&quot;filepath: &quot;);
+	CATBatchLogCAA::PutInLog(usfile_path.CastToCharPtr() );
+	CATBatchLogCAA::PutInLog(&quot;\n&quot;);
+...
+
+//We store the file path in a list for later use
+l	istOfV4Files.Append( usfile_path ); 
+
+}
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>&#8220;get_FileListCAA&#8221; is a method which extracts all the &lt;file&gt; tags from the 
+input parameters. This method is used because we know that in our particular 
+sample, the input parameters contains a file list. <br>
+<br>
+An other call could have been:<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elem-&gt;ParameterCAA(&#8220;file1&#8221;, inputFile 
+) ;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elem-&gt;ParameterCAA(&#8220;file2&#8221;, inputFile 
+) ;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elem-&gt;ParameterCAA(&#8220;file3&#8221;, inputFile 
+) ;<br>
+<br>
+where<br>
+<br>
+&nbsp;&nbsp;&nbsp; · &#8220;file1&#8221; &#8220;file2&#8221; and &#8220;file3&#8221; are the id of the tags you want 
+to retrieve in the parameter file<br>
+<br>
+&nbsp;&nbsp;&nbsp; · inputFile is a CATIBatchElementCAA pointer to those tags<br>
+<br>
+&#8220;get_Path&#8221; is a method which extracts a &#8220;file path&#8221; type argument only from 
+&lt;file&gt; and &lt;folder&gt; tags. All those methods are listed and commented in 
+CATIBatchElementCAA and CATIBatchElementsCAA.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Retrieving field=value argument by its id</h4>
+<table class="code" height="74">
+  <tr>
+    <td>
+      <pre>//We retrieve the &lt;simple_arg&gt; tag 
+CATIBatchElementCAA* oAction = NULL;
+CATUnicodeString usId = &quot;action&quot;;
+
+// The Parameter method can be used to retrieve any tag (&lt;file&gt;, &lt;folder&gt;, &lt;simple_arg&gt;)
+giving 
+// in the value of its &quot;id&quot; attribute. Here the tag is &lt;simple_arg id=&quot;action&quot; value=&quot;1&quot;/&gt;
+hr = inputParameters-&gt;ParameterCAA(usId, oAction);
+
+...</pre>
+		<pre>// As we know the type of our value we directly call the right cast method to get it as a
+long.
+long action = 0;
+
+hr = oAction-&gt;LongArg(action); 
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The tag &lt;simple_arg&gt; allows the batch author to describe &#8220;field=value&#8221; like 
+arguments using the XML syntax.<br>
+<br>
+&#8220;LongArg&#8221; is a method used to retrieve the value of a long type argument. 
+Equivalent methods exist on CATIBatchElementCAA interface according to the type 
+expected for the given tag value (e.g StringArg() )<br>
+&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Retrieves the output parameters</h4>
+<table class="code" height="74">
+  <tr>
+    <td>
+      <pre>//Retrieves the outputParameters section
+CATIBatchElementCAA * outputParameters = NULL;
+hr = batch-&gt;get_OutputParametersCAA(outputParameters);
+
+//We retrieve the tag which id=&quot;out_dir&quot;, our output directory
+CATIBatchElementCAA* oDir = NULL;
+usId = &quot;out_dir&quot;;
+
+hr = outputParameters-&gt;ParameterCAA(usId, oDir);
+
+// We retrieve the path of this directory (value of the attribute &quot;folderPath&quot;)
+CATUnicodeString us_path;
+oDir-&gt;get_Path(us_path);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The output parameters are read in the parameter file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Renaming input files</h4>
+<table class="code" height="74">
+  <tr>
+    <td>
+      <pre>char in_filename[CATMaxPathSize];
+char in_dirname[CATMaxPathSize];
+
+char out_fullfilename[CATMaxPathSize];
+CATUnicodeString out_fullfilename_us;
+
+CATBatchLogCAA::PutInLog(&quot;Output Creation \n&quot;);
+
+for (int ii=1; ii&lt;=listOfV4Files.Size(); ii++)
+{
+	memset(in_filename, '\0', CATMaxPathSize);
+	memset(in_dirname, '\0', CATMaxPathSize);
+	memset(out_fullfilename, '\0', CATMaxPathSize);
+
+	CATSplitPath( listOfV4Files[ii].CastToCharPtr(), in_dirname, in_filename);
+
+	char* ptr = NULL;
+	CATSysStrtok(in_filename, &quot;.&quot;, &amp;ptr);
+	sprintf(out_fullfilename, &quot;%s%c%s.CATPart&quot;, us_path.ConvertToChar() , dir_delim, in_filename);
+
+	CATBatchLogCAA::PutInLog(&quot;creating output : &quot;);
+	CATBatchLogCAA::PutInLog(out_fullfilename);
+	CATBatchLogCAA::PutInLog(&quot;\n&quot;);
+	out_fullfilename_us = out_fullfilename;
+
+	CATFCopy(&amp;(listOfV4Files[ii]), &amp;out_fullfilename_us, 0);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The input files are renamed with the .CATPart extension. This is the purpose 
+of the batch.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create and launch a V5 batch<p align="right"><i>[</i><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [March 2006]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

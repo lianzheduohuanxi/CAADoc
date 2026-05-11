@@ -1,0 +1,91 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAAniMeshNodesToNodesConnection.catvbs</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre>
+<font color="#008000">&#39; COPYRIGTH DASSAULT SYSTEMES 2000</font>
+
+<font color="#008000">&#39; ***********************************************************************</font>
+<font color="#008000">&#39;   Purpose:      Open an analysis document</font>
+<font color="#008000">&#39;                 Create nodes to nodes welding connection mesh part</font>
+<font color="#008000">&#39;                 assign the nodes to nodes analysis connection as support</font>
+<font color="#008000">&#39;                 specify the global specifications</font>
+<font color="#008000">&#39;   Assumptions:   Looks for WeldConnection.CATAnalysis in the directory and surface Analysis Connection</font>
+<font color="#008000">&#39;   Author:       bmw</font>
+<font color="#008000">&#39;   Languages:    VBScript</font>
+<font color="#008000">&#39;   Locales:      English </font>
+<font color="#008000">&#39;   CATIA Level:  V5R16</font>
+<font color="#008000">&#39; ***********************************************************************</font>
+
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+
+
+<font color="#008000">&#39; Open the Analysis document </font>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\WeldConnections.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<font color="#008000">&#39; Retrieve the analysis Manager </font>
+<font color="#0000FF">Set </font>oAnalysisManagar = oAnalysisDocument.Analysis
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisManagar.AnalysisSets
+
+<font color="#008000">&#39; Retrieve the part document and product</font>
+<font color="#0000FF">Set </font>oAnalysisLinkedDocuments = oAnalysisManagar.LinkedDocuments
+<font color="#0000FF">Set </font>partDocument = oAnalysisLinkedDocuments.Item(1)
+<font color="#0000FF">Set </font>product = partDocument.Product
+
+<font color="#008000">&#39; Retreive the analysis model</font>
+<font color="#0000FF">Set </font>oAnalysisModels = oAnalysisManagar.AnalysisModels
+<font color="#0000FF">Set </font>oAnalysisModel = oAnalysisModels.Item(1)
+
+<font color="#008000">&#39;Retrieve the mesh manager and list of mesh parts</font>
+<font color="#0000FF">Set </font>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<font color="#0000FF">Set </font>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+
+<font color="#008000">&#39;Retrieve the connection design manager and connection</font>
+<font color="#0000FF">Set </font>connection = oAnalysisSet.ItemByType(&quot;ConnectionDesignManager&quot;)
+<font color="#0000FF">Set </font>connSet = connection.AnalysisSets
+<font color="#0000FF">Set </font>conn = connSet.ItemByType(&quot;ConnectionDesignSet&quot;)
+<font color="#0000FF">Set </font>entity = conn.AnalysisEntities
+<font color="#0000FF">Set </font>surfConn  = entity.Item(4)
+
+<font color="#008000">&#39;Create reference from the surface analysis connection</font>
+<font color="#0000FF">Set </font>reference1 = oAnalysisManagar.CreateReferenceFromObject(surfConn)
+
+<font color="#008000">&#39;Add new nodes to nodes connection mesh part to the list of mesh parts</font>
+<font color="#0000FF">Set </font>nodeMesh = oAnalysisMeshParts.Add (&quot;MSHPartConnPointPoint&quot;) 
+
+<font color="#008000">&#39;Assign previously created reference as support</font>
+nodeMesh.AddSupportFromReference NOTHING, reference1
+
+<font color="#008000">&#39;Assign values to its global specifications</font>
+nodeMesh.SetGlobalSpecification &quot;Tolerance&quot;, 10.
+nodeMesh.SetGlobalSpecification &quot;StopUpdateOnError&quot;, 2
+nodeMesh.SetGlobalSpecification &quot;MiddleCombination&quot;, 12
+
+<font color="#008000">&#39;Update the mesh part</font>
+nodeMesh.Update
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

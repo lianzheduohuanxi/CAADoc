@@ -1,0 +1,57 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Class System.CATCommand</title>
+</head>
+<body bgcolor=white>
+<pre><font color="blue"><u>All Frameworks</u>  <u>Class Hierarchy</u>  <u>This Framework</u>  <u>Next</u>  <u>Index</u></font></pre>
+<hr>
+<h1>Class System.CATCommand</h1>
+<pre>
+<font color="blue"><u>System.IUnknown</u></font>
+  |
+  +---<font color="blue"><u>System.IDispatch</u></font>
+    |
+    +---<font color="blue"><u>System.CATBaseUnknown</u></font>
+      |
+      +---<font color="blue"><u>System.CATEventSubscriber</u></font>
+        |
+        +---CATCommand
+ </pre>
+<hr><br>
+
+<dl>
+ <dt>public class <b>CATCommand</b></dt>
+</dl>
+<p>
+<b><i> Base class for all objects that need to collaborate through notifications.</i></b><br>
+
+ All the existing commands are organized as a tree structure.
+ Each command has a parent command and possibly children.
+ The parent is passed as a parameter of the command constructor.
+ <p>
+ When the end-user interacts with the application, system events are produced
+ that are turned into notifications, and sent to either the command
+ that is involved, such as the push button pushed by the end user,
+ or to the command that is the nearest to the 
+ user interaction, such as the manipulator set onto a document object's representation
+ selected by the end user in a graphics viewer.
+ <p>
+ The notification is sent from command to command along the tree structure
+ until it can be processed.
+ If no command able to process the notification is
+ found, it is sent to the command selector that resends it to
+ the active command.
+ This can decide to process the notification,
+ or otherwise to do something else, possibly nothing.
+
+ <dl>
+  <dt> <b>See also:</b> 
+  <dd> <font color="blue"><u>CATCallbackManager</u></font>, <font color="blue"><u>CATNotification</u></font>
+</dl>
+<hr>
+
+</body>
+</html>

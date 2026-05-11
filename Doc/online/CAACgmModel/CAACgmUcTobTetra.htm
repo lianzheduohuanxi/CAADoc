@@ -1,0 +1,1024 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using the Topological Objects</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using the Topological Objects</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The goal of this use case is to understand the topological model of the 
+		geometric modeler, by creating a tetrahedron only with the GMModelInterfaces 
+		resources. Topological objects can also be directly created by topological 
+		operators, and the use of topological operators (mostly defined in the GMOperatorsInterfaces 
+		framework) is the recommended way rather than using the basic tools of the 
+		GMModelInterfaces framework.</p>
+		<p>The navigation in a topological structure is also discussed.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#General features on Mathematical Classes">The Principle</a></li>
+			<li><a href="#UseCase">The CAAGMModelTetra Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelTetra Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelTetra</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelTetra Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The topological model is fully described in technical articles [<a href="#References">1</a>] 
+[<a href="#References">2</a>]. The use case shows how to use the GMModelInterfaces 
+to create and explore topological objects.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="General features on Mathematical Classes"></a>The Principle</h2>
+<p>The intent of this section is to recall some important notions about the topological 
+model.</p>
+<p>The topology manages the Boundary Representation of an object: what it bounds 
+and how.</p>
+<p>A <em>cell</em> is the lowest level of topological objects. There are four types 
+of cells:</p>
+<ul>
+	<li>A <em>volume</em> is a part of the space bounded by faces.</li>
+	<li>A <em>face</em> is a part of a surface bounded by edges.</li>
+	<li>An <em>edge</em> is a part of curve bounded by vertices.</li>
+	<li>A <em>vertex</em> is the topology of the point.</li>
+</ul>
+<p>Connected cells of same dimension are grouped into <em>domains</em> to define 
+the boundary of another cell. We can now detail the above definitions:</p>
+<ul>
+	<li>A set of connected volumes is called a <em>lump</em>.</li>
+	<li>A volume is a part of the space bounded by shells (sets of connected faces).</li>
+	<li>A face is a part of a surface bounded by loops (sets of connected edges).</li>
+	<li>An edge is a part of a curve bounded by vertices (no domain associated in 
+	this case).</li>
+	<li>A shell that does not bound a volume defines a skin.</li>
+	<li>A set of connected edges that does not bound a face is called a <em>wire</em>.</li>
+	<li>A vertex alone in the space is a <em>vertex in volume</em>.</li>
+</ul>
+<p>The <em>body</em> is the highest level of topological object: it is a set of 
+lumps, shells, wires, and vertices in volume. The topological operators operate 
+on bodies,... and it is often much more simpler to use a topological operator than 
+to create the topology from scratch!</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelTetra Use Case</h2>
+<p>CAAGMModelTetra is a use case of the CAAGMModelInterfaces.edu framework that 
+illustrates the GMModelInterfaces framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelTetra Do</h3>
+<p>The use case details the creation of the geometry and of the topology of the 
+tetrahedron. Moreover, it scans the created topology.</p>
+<table>
+	<caption>Fig. 1: The Topological Structure of the Tetrahedron</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobCAATobTetra1.gif" alt="Tetrahedron Topological Structure" width="480" height="355"></td>
+		<td>The tetrahedron is a volume bounded by a shell containing 4 faces. Each 
+		face is bounded by a loop containing 3 edges, and two adjacent faces have 
+		a common edge: the edge makes the connection between the faces. Hence, there 
+		are 6 edges in the whole body. In the same way, edges are bounded (and connected) 
+		by vertices: there are four vertices.</td>
+	</tr>
+</table>
+<p>The topology bounds the geometry. Hence, the geometry of a vertex is a point, 
+the geometry of a curve and the geometry of a face is a surface. In the CATIA geometric 
+model, any kind of CATSurface can be the geometry of a CATFace. But the geometry 
+of a CATEdge can only be a special type of curve called CATEdgeCurve, and the geometry 
+of a CATVertex can only be a special type of point called CATMacroPoint.</p>
+<ul>
+	<li>A CATEdgeCurve represents several curves. Take the common edge of two faces, 
+	each face having its own surface. The CATEdgeCurve represents the CATPCurve 
+	on the first surface and the CATPCurve on the second surface. Then, a gap can 
+	exist between the two CATPCurve, if they are not exactly identical: this gap 
+	might be not greater than the factory resolution [<a href="#References">4</a>], 
+	except for imported models, when the initial gap was greater.</li>
+	<li>A CATMacroPoint represents several points, the points on each curve of the 
+	edges bounded by a vertex.</li>
+</ul>
+<table>
+	<caption>Fig. 2: The Edge Curve</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobCAATobTetra2.gif" alt="Edge Curve" width="480" height="355"></td>
+		<td>The CATEdgeCurve is the geometric representation of a curve, that internally 
+		has several facets. In the case of Fig. 2, the CATEdgeCurve represents the 
+		geometry of the intersection between two surfaces, that is to say the CATPCurves 
+		lying on the two surfaces.
+		<p>The CATPCurve is able to map a parameter (<code>P(w1)</code>) on one 
+		curve to its equivalent on the other curve (<code>P(w2)</code>): the evaluation 
+		of <code>P(w1)</code> on CATPCurve1 and the evaluation of <code>P(w2)</code> 
+		on CATPCurve2 give the same 3D location.</p>
+		</td>
+	</tr>
+</table>
+<p>The description of the geometry and of the cells is not sufficient to describe 
+the topology: there is still to define the inside and outside of the objects. Several 
+orientation properties must be set, that will be described when needed in the use 
+case:</p>
+<ul>
+	<li>The relative orientation between the geometry and the topology.</li>
+	<li>The relative orientation of a cell inside its domain.</li>
+	<li>The location of a domain: does it represent an internal or external boundary?</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelTetra</h3>
+<p>To launch CAAGMModelTetra, you will need to set up the build time environment, 
+then compile CAAGMModelTetra.m along with its prerequisites, set up the run time 
+environment, and then execute the use case [<a href="#References">5</a>].</p>
+<p>If you simply type CAAGMModelTetra with no argument, the use case executes, but 
+doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMModelTetra e:\TetraCreation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelTetra Code</h3>
+<p>The CAAGMModelTetra use case is made of a main named CAATobTetra.cpp located 
+in the CAAGMModelTetra.m module of the <code>CAAGMModelInterfaces</code>.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelTetra.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">5</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The use case is divided into the following steps:</p>
+<ul>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Creates the Geometry">Creating the Geometry</a></li>
+	<li><a href="#Creates the Vertices">Creating the Vertices</a></li>
+	<li><a href="#Creates the Edges">Creating the Edges</a></li>
+	<li><a href="#Creates the Loops and Faces">Creating the Loops and Faces</a></li>
+	<li><a href="#Creates the Shell">Creating the Shell</a></li>
+	<li><a href="#Creates the Volume">Creating the Volume</a></li>
+	<li><a href="#Creates the Lump">Creating the Lump</a></li>
+	<li><a href="#Completes the Body">Completing and Freezing the Body</a></li>
+	<li><a href="#Scans the Topological Structure">Scanning the Topological Structure</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model and 
+	Closing the Container</a></li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (CATGeoFactory) creates and manages all the <code>CATICGMObject</code> 
+(and the curves and surfaces in particular) [<a href="#References">4</a>]. This 
+creation is done by the global function <code>::CATCreateCGMContainer</code>. Notice 
+that the factory can be defined by reading a NCGM file that was previously stored. 
+In that case, the global function <code>::CATLoadCGMContainer</code> must be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry"></a>Creating the Geometry</h3>
+<p>The topology is a logical information describing the boundary of geometric objects: 
+so, first create the geometry!</p>
+<p>To create planes, directly use the <code>CreatePlane</code> method of the
+<code>CATGeoFactory</code>. If NULL pointers are returned, close the factory and 
+return an error.</p>
+<pre class="code">  CATPlane * piPlanexy = piGeomFactory-&gt;<strong>CreatePlane</strong>(CATMathPoint(),
+                                                    CATMathPoint(1,0,0),
+                                                    CATMathPoint(0,1,0));
+  CATPlane * piPlaneyz = piGeomFactory-&gt;CreatePlane(CATMathPoint(),
+                                                    CATMathPoint(0,1,0),
+                                                    CATMathPoint(0,0,1));
+  CATPlane * piPlanexz = piGeomFactory-&gt;CreatePlane(CATMathPoint(),
+                                                    CATMathPoint(1,0,0),
+                                                    CATMathPoint(0,0,1));
+  CATPlane * piPlanec  = piGeomFactory-&gt;CreatePlane(CATMathPoint(10,0,0),
+                                                    CATMathPoint(0,10,0),
+                                                    CATMathPoint(0,0,10));
+ <em> // is all right?</em>
+  if (NULL==piPlanexy || NULL==piPlaneyz || NULL==piPlanexz || NULL==piPlanec) 
+  {
+    ::CATCloseCGMContainer(piGeomFactory);
+    return (1);	
+  }</pre>
+<p>Now, create <code>CATPLine</code> on the planes. A <code>CATPLine</code> is a 
+line defined in the parameter space of a surface: it is natively on the surface. 
+To define it, two parameters are needed: the parameters of the start and end limits 
+of the line. But the parameterization of the CGM surfaces is not public: the way 
+to map a parameter into a 3D point is not published. The ways to define a <code>
+CATSurParameter</code> are:</p>
+<ul>
+	<li>To project a 3D point on the surface with the geometric operator <code>CATICGMProjectionPtSur</code>.</li>
+	<li>To use the <code>CATSurface::GetParam</code> method (only for canonical 
+	surfaces and a point that is known to be on the surface): It is the way used 
+	in the use case.</li>
+	<li>To use the barycentric constructor, after retrieving the limits (<code>CATSurface::GetLimits</code>) 
+	of the surface: this way is illustrated in the <code>CAAGMModelCreation</code> 
+	use case [<a href="#References">6</a>].</li>
+</ul>
+<p>The following code creates the <code>CATPLine</code>.</p>
+<pre class="code">  // <a name="PLines on Planexy"></a>PLines on Planexy
+  CATSurParam Pxy0,Pxy1,Pxy2;
+  // <a name="Gets the curve parameter"></a>Gets the curve parameter corresponding to the Mathematical point
+  // This is only possible here, because we know that the Point is on the plane
+  // If the surface were not canonical, or if the point were not on the surface,
+  // we might use a projection operator.
+  piPlanexy-&gt;GetParam(CATMathPoint(0 , 0,0),Pxy0); 
+  piPlanexy-&gt;GetParam(CATMathPoint(10, 0,0),Pxy1);
+  piPlanexy-&gt;GetParam(CATMathPoint(0 ,10,0),Pxy2);
+  
+  // Creates the plines from the parameters	
+  CATPLine * piPLinexy01 = piGeomFactory-&gt;CreatePLine( Pxy0, Pxy1, piPlanexy );
+  CATPLine * piPLinexy12 = piGeomFactory-&gt;CreatePLine( Pxy1, Pxy2, piPlanexy );
+  CATPLine * piPLinexy20 = piGeomFactory-&gt;CreatePLine( Pxy2, Pxy0, piPlanexy );
+
+  // PLines on Planeyz	
+  CATSurParam Pyz0,Pyz1,Pyz2;
+  piPlaneyz-&gt;GetParam(CATMathPoint(0 , 0, 0),Pyz0); 
+  piPlaneyz-&gt;GetParam(CATMathPoint(0 ,10, 0),Pyz1);
+  piPlaneyz-&gt;GetParam(CATMathPoint(0 , 0,10),Pyz2);		
+  CATPLine * piPLineyz01 = piGeomFactory-&gt;CreatePLine( Pyz0, Pyz1, piPlaneyz );
+  CATPLine * piPLineyz12 = piGeomFactory-&gt;CreatePLine( Pyz1, Pyz2, piPlaneyz );
+  CATPLine * piPLineyz20 = piGeomFactory-&gt;CreatePLine( Pyz2, Pyz0, piPlaneyz );
+		
+  // PLines on Planexz	
+  CATSurParam Pxz0,Pxz1,Pxz2;
+  piPlanexz-&gt;GetParam(CATMathPoint(0 , 0, 0),Pxz0); 
+  piPlanexz-&gt;GetParam(CATMathPoint(10, 0, 0),Pxz1);
+  piPlanexz-&gt;GetParam(CATMathPoint(0 , 0,10),Pxz2);		
+  CATPLine * piPLinexz01 = piGeomFactory-&gt;CreatePLine( Pxz0, Pxz1, piPlanexz );
+  CATPLine * piPLinexz12 = piGeomFactory-&gt;CreatePLine( Pxz1, Pxz2, piPlanexz );
+  CATPLine * piPLinexz20 = piGeomFactory-&gt;CreatePLine( Pxz2, Pxz0, piPlanexz );
+
+  // PLines on Planec	
+  CATSurParam Pc0,Pc1,Pc2;  
+  piPlanec-&gt;GetParam(CATMathPoint(10,0,0),Pc0);                                   
+  piPlanec-&gt;GetParam(CATMathPoint(0,10,0),Pc1);
+  piPlanec-&gt;GetParam(CATMathPoint(0,0,10),Pc2);		
+  CATPLine * piPLinec01 = piGeomFactory-&gt;CreatePLine( Pc0, Pc1, piPlanec );
+  CATPLine * piPLinec12 = piGeomFactory-&gt;CreatePLine( Pc1, Pc2, piPlanec );
+  CATPLine * piPLinec20 = piGeomFactory-&gt;CreatePLine( Pc2, Pc0, piPlanec );
+
+  // is all right?
+  if (NULL==piPLineyz01 || NULL==piPLineyz12 || NULL==piPLineyz20 ||
+      NULL==piPLinexy01 || NULL==piPLinexy12 || NULL==piPLinexy20 ||
+      NULL==piPLinexz01 || NULL==piPLinexz12 || NULL==piPLinexz20 ||
+      NULL==piPLinec01  || NULL==piPLinec12  || NULL==piPLinec20 )
+  {
+      ::CATCloseCGMContainer(piGeomFactory);
+      return (1);	
+  }</pre>
+<p>The <code>CATPCurve</code> must be used to create the real geometry of the edge: 
+the <code>CATEdgeCurve</code>. In the use case case, as the geometry are planes, 
+we know that the two <code>CATPCurve</code> of an edge curve have no gap: we can 
+directly create the edge curve using the <code>CreateSimCurve</code> method of the
+<code>CATGeoFactory</code>. Another way is to use the geometric intersection operator
+<code>CATIntersectionSurSur</code>, that can output the intersection of two surface 
+as an edge curve.</p>
+<table>
+	<caption><a name="Fig. 3"></a>Fig. 3: The Geometry of the Tetrahedron</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmTobCAATobTetra3.gif" alt="Tetrahedron Geometry" width="480" height="355"></td>
+		<td><code>EC01</code> is the edge curve that is the geometry of edge<code> 
+		E01</code>. It represents <code>PLxy01</code> on the plane <code>Pxy</code> 
+		and <code>PLxz01</code> on the plane <code>Pxz</code>. These two CATPCurve 
+		have the same orientation (1 value) as the orientation of their edge curve.
+		<p>The edge is bounded by two vertices whose geometry are the macro point<code> 
+		MP0</code> and <code>MP1</code>. These macro points are created by concatenation 
+		of points on the edge curves (CATPointOnEdgeCurve or Poec): for example
+		<code>MP1</code> represents <code>Poec13s</code> (start of edge curve
+		<code>EC13</code>), <code>Poec01e</code> (end of edge curve <code>EC01</code>) 
+		and <code>Poec12s</code> (start of edge curve<code> EC12</code> ).</p>
+		<p><code>EC20</code> is the edge curve that is the geometry of edge<code> 
+		E20</code>. It represents <code>PLxy20</code> on the plane <code>Pxy</code> 
+		and <code>PLyz01</code> on the plane <code>Pyz</code>. <code>PLxy20</code> 
+		has the same orientation as the orientation of its edge curve whereas
+		<code>PLyz01</code> has the opposite orientation (-1 value).</p>
+		</td>
+	</tr>
+</table>
+<pre class="code">  // ----------- <a name="Creates the Edge Curves"></a>Creates the Edge Curves, representing several PLines
+  //
+  CATLISTP(CATCurve)     curves;
+  CATLISTP(CATCrvLimits) limits;
+  CATListOfInt           orients;     
+  CATCrvLimits           crvLim1,crvLim2;
+  double resolution = piGeomFactory -&gt;<strong>GetResolution</strong>();
+
+  // Appends the first curve in of the sim curve 
+  curves.Append(piPLinexy01);
+  piPLinexy01-&gt;GetLimits(crvLim1);
+  // Defines its limits
+  limits.Append(&amp;crvLim1);
+  // Defines its relative orientation in the edge curve
+  orients.Append(<strong>1</strong>);   // 1 == same orientation
+
+  // The same for the second pline
+  curves.Append(piPLinexz01);
+  piPLinexy01-&gt;GetLimits(crvLim2);
+  limits.Append(&amp;crvLim2);
+  orients.Append(1);  // 1 == same orientation
+
+  // Now creates the sim curve
+  CATSimCurve * piSimCurve01= piGeomFactory-&gt; <strong>CreateSimCurve</strong>(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);
+
+  // The second sim curve
+  curves[1] = piPLinexy12;
+  curves[1] -&gt;GetLimits(*(limits[1]));
+  curves[2] = piPLinec01;
+  curves[2] -&gt;GetLimits(*(limits[2]));
+  CATSimCurve * piSimCurve12= piGeomFactory-&gt; CreateSimCurve(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);;
+
+  // The third sim curve
+  curves[1] = piPLinexz20;
+  curves[1] -&gt;GetLimits(*(limits[1]));
+  curves[2] = piPLineyz20;
+  curves[2] -&gt;GetLimits(*(limits[2]));
+  CATSimCurve * piSimCurve30= piGeomFactory-&gt; CreateSimCurve(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);
+
+  // The fourth sim curve		
+  curves[1] = piPLineyz12;
+  curves[1] -&gt;GetLimits(*(limits[1]));
+  curves[2] = piPLinec12;
+  curves[2] -&gt;GetLimits(*(limits[2]));
+  CATSimCurve * piSimCurve23= piGeomFactory-&gt; CreateSimCurve(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);
+
+  // The fiveth sim curve
+  curves[1] = piPLinexy20;
+  curves[1] -&gt;GetLimits(*(limits[1]));
+  curves[2] = piPLineyz01;
+  curves[2] -&gt;GetLimits(*(limits[2]));
+  orients[2] = <strong>-1</strong>;  // -1 == opposite orientation
+  CATSimCurve * piSimCurve20= piGeomFactory-&gt; CreateSimCurve(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);
+  // The sixth sim curve
+  curves[1] = piPLinexz12;
+  curves[1] -&gt;GetLimits(*(limits[1]));
+  curves[2] = piPLinec20;
+  curves[2] -&gt;GetLimits(*(limits[2]));
+  CATSimCurve * piSimCurve13= piGeomFactory-&gt; CreateSimCurve(curves,
+                                                             limits,
+                                                             orients,
+                                                             resolution);
+  // is all right?
+  if (NULL==piSimCurve01 || NULL==piSimCurve12 || NULL==piSimCurve20 ||
+      NULL==piSimCurve23 || NULL==piSimCurve30 || NULL==piSimCurve13 )
+  {
+     ::CATCloseCGMContainer(piGeomFactory);
+     return (1);	
+  }</pre>
+<p>Before defining the CATMacroPoint, just create the points on the edge curves. 
+These points on edge curve define the geometry of the start and end of each edge 
+curve. As there are 4 edge curves, 8 points on edge curves are needed (see
+<a href="#Fig. 3">Fig. 3</a>). To compute a point on edge curve, the use case proposes 
+to retrieve the current limits of the curve. Another way is to use a <code>CATICGMIntersectionCrvCrv</code> 
+operator. The <code>CreatePointOnEdgeCurve</code> method of the CATGeoFactory creates 
+the poec, by using a curve of the edge curve. Notice that you can retrieve the corresponding 
+parameter on the other curves of the edge curve by the <code>GetEquivalentParam</code> 
+method of the CATEdgeCurve.</p>
+<pre class="code"> // ----------- <a name="Creates the point on Edge Curves"></a>Creates the point on Edge Curves, limiting the Plines
+ //
+ // Poecs on edge curve 01
+  CATCrvParam  crvParam;
+  CATCrvLimits crvLimit;
+  CATPointOnEdgeCurve *piPoec01Start=NULL,*piPoec01End=NULL;
+  // Gets the limits of the first Pline
+  piPLinexy01-&gt;<strong>GetLimits</strong>(crvLimit);
+  // Defines the point on edge curve corresponding to the low limit
+  crvLimit.GetLow(crvParam);
+  piPoec01Start = piGeomFactory-&gt;<strong>CreatePointOnEdgeCurve</strong>( piPLinexy01,
+                                                         crvParam,
+                                                         piSimCurve01);
+  // Defines the point on edge curve corresponding to the high limit
+  crvLimit.GetHigh(crvParam);
+  piPoec01End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexy01,
+                                                         crvParam,
+                                                         piSimCurve01);
+
+// Poecs on edge curve 12	
+  CATPointOnEdgeCurve *piPoec12Start=NULL,*piPoec12End=NULL;
+  piPLinexy12-&gt;GetLimits(crvLimit);
+  crvLimit.GetLow(crvParam);
+  piPoec12Start = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexy12,
+                                                         crvParam,
+                                                         piSimCurve12);
+  crvLimit.GetHigh(crvParam);
+  piPoec12End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexy12,
+                                                         crvParam,
+                                                         piSimCurve12);
+
+// Poecs on edge curve 20			
+  CATPointOnEdgeCurve *piPoec20Start=NULL,*piPoec20End=NULL;
+  piPLinexy20-&gt;GetLimits(crvLimit);
+  crvLimit.GetLow(crvParam);  
+  piPoec20Start = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexy20,
+                                                         crvParam,
+                                                         piSimCurve20);
+  crvLimit.GetHigh(crvParam);
+  piPoec20End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexy20,
+                                                         crvParam,
+                                                         piSimCurve20);
+		
+// Poecs on edge curve 23
+  CATPointOnEdgeCurve *piPoec23Start=NULL,*piPoec23End=NULL;
+  piPLineyz12-&gt;GetLimits(crvLimit);
+  crvLimit.GetLow(crvParam);
+  piPoec23Start = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLineyz12,
+                                                         crvParam,piSimCurve23);
+  crvLimit.GetHigh(crvParam);
+  piPoec23End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLineyz12,
+                                                         crvParam,
+                                                         piSimCurve23);
+
+// Poecs on edge curve 30		
+  CATPointOnEdgeCurve *piPoec30Start=NULL,*piPoec30End=NULL;
+  piPLineyz20-&gt;GetLimits(crvLimit);
+  crvLimit.GetLow(crvParam);  
+  piPoec30Start = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLineyz20,
+                                                         crvParam,
+                                                         piSimCurve30);
+  crvLimit.GetHigh(crvParam);
+  piPoec30End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLineyz20,
+                                                         crvParam,
+                                                         piSimCurve30);
+		
+// Poecs on edge curve 13
+  CATPointOnEdgeCurve *piPoec13Start=NULL,*piPoec13End=NULL;		
+  piPLinexz12-&gt;GetLimits(crvLimit);
+  crvLimit.GetLow(crvParam);
+  piPoec13Start = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexz12,
+                                                         crvParam,
+                                                         piSimCurve13);
+  crvLimit.GetHigh(crvParam);
+  piPoec13End   = piGeomFactory-&gt;CreatePointOnEdgeCurve( piPLinexz12,
+                                                         crvParam,
+                                                         piSimCurve13);
+ // Is all right?
+  if (NULL==piPoec01Start || NULL==piPoec01End ||
+      NULL==piPoec12Start || NULL==piPoec12End ||
+      NULL==piPoec20Start || NULL==piPoec20End ||
+      NULL==piPoec23Start || NULL==piPoec23End || 
+      NULL==piPoec30Start || NULL==piPoec30End || 
+      NULL==piPoec13Start || NULL==piPoec13End)
+  {
+	 ::CATCloseCGMContainer(piGeomFactory);
+	 return (1);	
+  }</pre>
+<p>Appending the points on the edge curves in the corresponding macro points, and 
+the geometry is completed.</p>
+<pre class="code">  // ----------- <a name="Creates the MacroPoints"></a>Creates the MacroPoints, representing several points
+  //
+  CATMacroPoint *piMacro0=NULL, *piMacro1=NULL, *piMacro2=NULL, *piMacro3=NULL; 
+  CATLISTP(CATPoint) points;
+  // Adds 3 points in edge curve per macro point, because there are 3 incident edges
+  // at each vertex
+  points.Append(piPoec01Start);
+  points.Append(piPoec20End);
+  points.Append(piPoec30End);
+  piMacro0 = piGeomFactory-&gt;<strong>CreateMacroPoint</strong>(points);
+
+  points[1] = piPoec01End;
+  points[2] = piPoec12Start;
+  points[3] = piPoec13Start;
+  piMacro1 = piGeomFactory-&gt;CreateMacroPoint(points);
+		
+  points[1] = piPoec12End;
+  points[2] = piPoec20Start;
+  points[3] = piPoec23Start;
+  piMacro2 = piGeomFactory-&gt;CreateMacroPoint(points);
+		
+  points[1] = piPoec23End;
+  points[2] = piPoec30Start;
+  points[3] = piPoec13End;
+  piMacro3 = piGeomFactory-&gt;CreateMacroPoint(points);
+  // all is right?
+  if (NULL==piMacro0 || NULL==piMacro1 || NULL==piMacro2 || NULL==piMacro3 )
+  {
+    ::CATCloseCGMContainer(piGeomFactory);
+    return (1);	
+  }</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Vertices"></a>Creating the Vertices</h3>
+<p>Before creating any topological entity, you first must create the factory of 
+these entity: this factory is a CATBody, and not the CATGeoFactory. The factory 
+of the CATBody, however, still is the CATGeoFactory.</p>
+<pre class="code">  // ----------- Creates the factory of the cells
+  //
+  CATBody * piTetra = piGeomFactory-&gt;<strong>CreateBody</strong>();
+  // is all right?
+  if (NULL==piTetra)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }</pre>
+<p>Using <code>Tetra</code> as the cell factory, we can now create the vertices, 
+and associate them with their geometry (macro point).</p>
+<pre class="code">  CATVertex *piVertex0=NULL, *piVertex1=NULL, *piVertex2=NULL, *piVertex3=NULL; 
+  piVertex0 = pi<strong>Tetra</strong>-&gt;<strong>CreateVertex</strong>();
+  piVertex1 = piTetra-&gt;CreateVertex();
+  piVertex2 = piTetra-&gt;CreateVertex();
+  piVertex3 = piTetra-&gt;CreateVertex();
+  // is all right?
+  if (NULL==piVertex0 || NULL==piVertex1 ||NULL==piVertex2 ||NULL==piVertex3) 
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }	
+  // Associates with their geometry
+  piVertex0-&gt;<strong>SetPoint</strong>(piMacro0);
+  piVertex1-&gt;SetPoint(piMacro1);
+  piVertex2-&gt;SetPoint(piMacro2);
+  piVertex3-&gt;SetPoint(piMacro3);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Edges"></a>Creating the Edges</h3>
+<p>First create them void.</p>
+<pre class="code">  CATEdge *piEdge01=NULL, *piEdge12=NULL, *piEdge20=NULL, 
+	      *piEdge23=NULL, *piEdge30=NULL, *piEdge13=NULL; 
+  piEdge01 = piTetra-&gt;<strong>CreateEdge</strong>();
+  piEdge12 = piTetra-&gt;CreateEdge();
+  piEdge20 = piTetra-&gt;CreateEdge();
+  piEdge23 = piTetra-&gt;CreateEdge();
+  piEdge30 = piTetra-&gt;CreateEdge();
+  piEdge13 = piTetra-&gt;CreateEdge();
+  // Is all right?
+  if (NULL==piEdge01 || NULL==piEdge12 ||NULL==piEdge20 ||
+	  NULL==piEdge23 || NULL==piEdge30 || NULL==piEdge13)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }</pre>
+<p>Now, for each edge:</p>
+<ul>
+	<li>Set its geometry (<code>SetCurve</code>): the edge curve, and the relative 
+	orientation of the edge curve and the edge. The orientation of the edge is given 
+	by the sense start edge -&gt; end edge.</li>
+	<li>Bound the edge by its start vertex (<code>AddBoundingCell</code>):
+	<ul>
+		<li>The &quot;start&quot; attribute is given by the matter side set to <code>CATSideLeft</code>.</li>
+		<li>The <code>NULL</code> argument states the fact that no domain is associated 
+		with a vertex.</li>
+		<li>The last argument details which poec of the macro point is the end of 
+		the edge curve.</li>
+	</ul>
+	</li>
+	<li>Bound the edge by its end vertex (<code>AddBoundingCell</code>):
+	<ul>
+		<li>The &quot;end&quot; attribute is given by the matter side set to <code>CATSideRight</code>.</li>
+		<li>The <code>NULL</code> argument states the fact that no domain is associated 
+		with a vertex.</li>
+		<li>The last argument states which poec of the macro point is the end of 
+		the edge curve.</li>
+	</ul>
+	</li>
+</ul>
+<pre class="code">  // Sets the geometry of Edge01: the sim curve, and the relative orientation
+  // between the sim curve and the edge
+  piEdge01-&gt;SetCurve(piSimCurve01,CATOrientationPositive);
+  // Bounds Edge01 by Vertex0, 
+  //    Vertex0 is the start vertex (CATSideLeft)
+  //    Vertex0 does not belong to any domain (NULL)
+  //    The corresponding geometry of Vertex0 in the context 
+  //    of the edge Edge01 is Poec01Start
+  piEdge01-&gt;<strong>AddBoundingCell</strong>(piVertex0,<strong>CATSideLeft</strong>,<strong>NULL</strong>,pi<strong>Poec01Start</strong>);
+  // Bounds Edge01 by Vertex1, 
+  //    Vertex1 is the end vertex (CATSideRight)
+  //    Vertex0 does not belong to any domain (NULL)
+  //    The corresponding geometry of Vertex1 in the context 
+  //    of the edge Edge01 is Poec01End
+  piEdge01-&gt;AddBoundingCell(piVertex1,<strong>CATSideRight</strong>,NULL,piPoec01End);
+		
+  piEdge12-&gt;SetCurve(piSimCurve12,CATOrientationPositive);
+  piEdge12-&gt;AddBoundingCell(piVertex1,CATSideLeft,NULL,piPoec12Start);
+  piEdge12-&gt;AddBoundingCell(piVertex2,CATSideRight,NULL,piPoec12End);
+	
+  piEdge20-&gt;SetCurve(piSimCurve20,CATOrientationPositive);
+  piEdge20-&gt;AddBoundingCell(piVertex2,CATSideLeft,NULL,piPoec20Start);
+  piEdge20-&gt;AddBoundingCell(piVertex0,CATSideRight,NULL,piPoec20End);
+
+  piEdge23-&gt;SetCurve(piSimCurve23,CATOrientationPositive);
+  piEdge23-&gt;AddBoundingCell(piVertex2,CATSideLeft,NULL,piPoec23Start);
+  piEdge23-&gt;AddBoundingCell(piVertex3,CATSideRight,NULL,piPoec23End);	
+
+  piEdge30-&gt;SetCurve(piSimCurve30,CATOrientationPositive);
+  piEdge30-&gt;AddBoundingCell(piVertex3,CATSideLeft,NULL,piPoec30Start);
+  piEdge30-&gt;AddBoundingCell(piVertex0,CATSideRight,NULL,piPoec30End);
+
+  piEdge13-&gt;SetCurve(piSimCurve13,CATOrientationPositive);
+  piEdge13-&gt;AddBoundingCell(piVertex1,CATSideLeft,NULL,piPoec13Start);
+  piEdge13-&gt;AddBoundingCell(piVertex3,CATSideRight,NULL,piPoec13End);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Loops and Faces"></a>Creating the Loops and Faces</h3>
+<p>Once again, first create a void topology. For the loop, indicates whether the 
+loop defines an inner (hole) or outer boundary. In the case of the tetrahedron, 
+the faces do not have any holes, all the loops are external.</p>
+<pre class="code">  CATFace *piFacexy=NULL, *piFaceyz=NULL, *piFacexz=NULL, *piFacec=NULL; 
+  piFacexy = piTetra-&gt;<strong>CreateFace</strong>();
+  piFaceyz = piTetra-&gt;CreateFace();
+  piFacexz = piTetra-&gt;CreateFace();
+  piFacec  = piTetra-&gt;CreateFace();
+  CATLoop *piLoopxy=NULL, *piLoopyz=NULL, *piLoopxz=NULL, *piLoopc=NULL; 
+  // The loops define external boundary of the faces (CATLocationOuter)
+  piLoopxy = piTetra-&gt;<strong>CreateLoop</strong>(CATLocationOuter);
+  piLoopyz = piTetra-&gt;CreateLoop(CATLocationOuter);
+  piLoopxz = piTetra-&gt;CreateLoop(CATLocationOuter);
+  piLoopc  = piTetra-&gt;CreateLoop(CATLocationOuter);
+  // is all right?
+  if (NULL==piFacexy || NULL==piFaceyz ||NULL==piFacexz || NULL==piFacec ||
+      NULL==piLoopxy || NULL==piLoopyz ||NULL==piLoopxz || NULL==piLoopc)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }</pre>
+<p>Now, for each face:</p>
+<ul>
+	<li>Declare that the face is bounded by a loop (<code>AddDomain</code>): only 
+	one loop per face can be external.</li>
+	<li>Associate with the surface (<code>SetSurface</code>), and sets the relative 
+	orientation of the face and the surface. The orientation of the face is given 
+	by the walk along its edges, that must be given continuously. The faces of a 
+	volume must point to the <em>INSIDE</em> of the volume. It is the reason why 
+	the face and the surface have opposite orientations (<code>CATOrientationNegative</code>).</li>
+	<li>Bound the face by the edges (<code>AddBoundingCell</code>):
+	<ul>
+		<li>The matter side tells on which side is the matter when standing along 
+		the face normal and looking in the edge direction: so that it depends on 
+		the orientation of the faace and on the orientation of the edge.</li>
+		<li>At the same time, the corresponding loop is updated.</li>
+		<li>The last argument details which PCurve of the edge curve is the geometry 
+		of the boundary.</li>
+	</ul>
+	</li>
+	<li>Declare the completion of the loop (<code>Done</code>).</li>
+</ul>
+<pre class="code">  // Face xy
+  // Defines the external boundary of Facexy
+  piFacexy-&gt;<strong>AddDomain</strong>(piLoopxy); 
+  // Associates with the geometry. 
+  // The orientation of the face and of its geometry are opposite 
+  // (CATOrientationNegative). 
+  piFacexy-&gt;<strong>SetSurface</strong>(piPlanexy,CATOrientationNegative);
+  // The first bounding edge Edge20
+  // The matter is at the right side (CATSideRight)
+  // The edge must be included in the Loopxy loop
+  // The geometry of Edge20 in the context of Facexy is PLinexy20
+  piFacexy-&gt;<strong>AddBoundingCell</strong>(piEdge20,CATSideRight,pi<strong>Loop</strong>xy,piPLinexy20);
+  piFacexy-&gt;AddBoundingCell(piEdge12,CATSideRight,piLoopxy,piPLinexy12);
+  piFacexy-&gt;AddBoundingCell(piEdge01,CATSideRight,piLoopxy,piPLinexy01);
+  // Declares that the loop is finished
+  piLoopxy-&gt;Done();
+		
+  // Faceyz  
+  piFaceyz-&gt;AddDomain(piLoopyz); 
+  // Associates with the geometry and bounds the face
+  piFaceyz-&gt;SetSurface(piPlaneyz,CATOrientationNegative);
+  piFaceyz-&gt;AddBoundingCell(piEdge30,CATSideRight,piLoopyz,piPLineyz20);
+  piFaceyz-&gt;AddBoundingCell(piEdge23,CATSideRight,piLoopyz,piPLineyz12);
+  piFaceyz-&gt;AddBoundingCell(piEdge20,CATSideLeft,piLoopyz,piPLineyz01);
+  piLoopyz-&gt;Done();// <em>The loop is finished!</em>
+		
+  // Facexz	
+  piFacexz-&gt;AddDomain(piLoopxz); 
+  // Associates with the geometry and bounds the face
+  piFacexz-&gt;SetSurface(piPlanexz);
+  piFacexz-&gt;AddBoundingCell(piEdge01,CATSideLeft,piLoopxz,piPLinexz01);
+  piFacexz-&gt;AddBoundingCell(piEdge13,CATSideLeft,piLoopxz,piPLinexz12);
+  piFacexz-&gt;AddBoundingCell(piEdge30,CATSideLeft,piLoopxz,piPLinexz20);					
+  piLoopxz-&gt;Done();// The loop is finished!
+		
+  // Facec
+  piFacec-&gt;AddDomain(piLoopc); 
+  // Associates with the geometry and bounds the face
+  piFacec-&gt;SetSurface(piPlanec);
+  piFacec-&gt;AddBoundingCell(piEdge12,CATSideLeft,piLoopc,piPLinec01);
+  piFacec-&gt;AddBoundingCell(piEdge23,CATSideLeft,piLoopc,piPLinec12);
+  piFacec-&gt;AddBoundingCell(piEdge13,CATSideRight,piLoopc,piPLinec20);
+  piLoopc-&gt;Done();// The loop is finished!</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Shell"></a>Creating the Shell</h3>
+<p>In the use case, the shell is aimed to bound a volume, it is an external boundary 
+of a future volume (CATLocationOuter). To create a skin body, use the CATLocationIn3DSpace 
+value instead, and directly attach the shell to the body (i.e.: go to
+<a href="#Completes the Body">step 9</a> and attach the shell to the body. But you 
+still have to add the face inside the shell with the <code>AddCell</code> method).</p>
+<pre class="code"> CATShell * piShell = NULL;
+  piShell = piTetra-&gt;<strong>CreateShell</strong>(<strong>CATLocationOuter</strong>);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Volume"></a>Creating the Volume</h3>
+<p>After creating a void volume (<code>CreateVolume</code>), add it in the already 
+created shell (<code>AddDomain</code>). As before, bound the volume by the faces 
+by using the <code>AddBoundingCell</code> method:</p>
+<ul>
+	<li>The orientation is right, according to the previously face orientation.</li>
+	<li>The shell is automatically updated.</li>
+	<li>The geometry of the face is detailed.</li>
+</ul>
+<pre class="code"> CATVolume * piVolume = NULL;
+  piVolume = piTetra-&gt;<strong>CreateVolume</strong>();	
+  // is all right?
+  if (NULL==piShell || NULL==piVolume )
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }	
+  // Adds the shell
+  piVolume-&gt;<strong>AddDomain</strong>(piShell);
+
+  // Bounds by the faces and add them in the shell at the same time
+  // To define a volume, the shell orientation points to the volume inside 
+  piVolume-&gt;<strong>AddBoundingCell</strong>(piFacexy, CATSideRight, piShell, piPlanexy);
+  piVolume-&gt;AddBoundingCell(piFacexz, CATSideRight, piShell, piPlanexz);
+  piVolume-&gt;AddBoundingCell(piFaceyz, CATSideRight, piShell, piPlaneyz);
+  piVolume-&gt;AddBoundingCell(piFacec, CATSideRight, piShell, piPlanec);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Lump"></a>Creating the Lump</h3>
+<p>After creating a void lump (<code>CreateLump</code>), add it the already created 
+volume (<code>AddCell</code>).</p>
+<pre class="code"> CATLump * piLump = NULL;
+  piLump = piTetra-&gt;<strong>CreateLump</strong>();
+  if (NULL==piShell || NULL==piVolume )
+  {
+	 ::CATCloseCGMContainer(piGeomFactory);
+		return (1);	
+  }
+  // Adds the volume
+  piLump-&gt;<strong>AddCell</strong>(piVolume);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Completes the Body"></a>Completing and Freezing the Body</h3>
+<p>Adds the lump to the body (<code>AddDomain</code>). The topological structure 
+is finished.</p>
+<p>It remains to declare this completion with the <code>Completed</code> method. 
+As this method can throw errors, these errors are caught and written on the usual 
+output.</p>
+<pre class="code">  piTetra-&gt;<strong>AddDomain</strong>(piLump);
+  CATTry    // to catch an error
+  {
+	piTetra-&gt;Completed();
+        piTetra-&gt;Freeze();
+  }
+  CATCatch(CATError,error)
+  { 
+    cout &lt;&lt; error-&gt;GetMessageText()&lt;&lt;endl;
+    cout &lt;&lt; (error-&gt;GetNLSMessage()).CastToCharPtr()&lt;&lt;endl;
+    rc=4;
+  }
+  CATEndTry</pre>
+<p>The <code>Freeze</code> method declares that the body cannot be modified anymore. 
+Using a frozen body in a topological operation leads to the duplication in the resulting 
+body of the cells and domains that must be modified. The resulting body shares with 
+the initial body the cells and domains that are not touched by the operation.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Scans the Topological Structure"></a>Scanning the Topological Structure</h3>
+<p>To retrieve the number of domains of a body, use the <code>CATBody::GetNbDomains</code> 
+method. In case of the tetrahedron, only one domain is created.</p>
+<p>To retrieve a given domain, use the <code>CATBody::GetDomain</code> method, which 
+argument is the rank (from 1 to <code>GetNbDomains</code>) of the domain to retrieve.</p>
+<p>A body can contain domain of different dimensions.</p>
+<pre class="code">  long nbDomain = piTetra -&gt;<strong>GetNbDomains</strong>();
+  if (1!=nbDomain) 
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (10);
+  }
+  CATDomain * piDomain = NULL;
+  piDomain = piTetra-&gt;<strong>GetDomain</strong>(1);
+  if (NULL==piDomain)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }	</pre>
+<p>Now, to retrieve the number of cells of the lump domain, use <code>CATDomain::GetAllCells</code>. 
+This method fills a list with the founded cells. To have the number of cells, just 
+ask the list (<code>Size</code>). In the tetrahedron case, there is one volume in 
+the lump domain, and the pointer to the volume must not be NULL.</p>
+<pre class="code">  CATLISTP(CATCell) listCells;
+  piDomain -&gt;<strong>GetAllCells</strong>(listCells, 3 );
+  int nbCells = listCells.<strong>Size</strong>();
+  if (1 != nbCells)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (11);
+  }
+
+  CATCell * piVolumeCell = listCells[1];
+  if (NULL==piVolumeCell)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (1);	
+  }	</pre>
+<p>From the volume to the shell: check that the volume is made of faces by retrieving 
+the dimension of the cells of the domain.</p>
+<pre class="code">  nbDomain = piVolumeCell-&gt;GetNbDomains();
+  piDomain = piVolumeCell-&gt;GetDomain(1);
+
+  // It is a shell, because it is made of faces (dimension 2).
+  short dimShell = piDomain-&gt;<strong>GetLowDimension</strong>();
+  if ( 2 != dimShell )
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (12);
+  }</pre>
+<p>From the shell to the faces: first clean the list with <code>RemoveAll</code> 
+that frees the memory of the list, but does not remove the objects. Then, get all 
+the cells (4 faces for the tetrahedron).</p>
+<pre class="code">  listCells.<strong>RemoveAll</strong>();
+  
+  piDomain -&gt;<strong>GetAllCells</strong>(listCells,dimShell);
+  nbCells = listCells.Size();
+  if (4!=nbCells)
+  {
+	::CATCloseCGMContainer(piGeomFactory);
+	return (13);
+  }
+</pre>
+<p>For each face:</p>
+<ul>
+	<li>Recover its geometry: <code>CATCell::GetGeometry</code>.</li>
+	<li>Test the type of geometry (a <code>CATPlane</code> for the tetrahedron).</li>
+	<li>Retrieve the edges of the face: one way is to get the bounding loops (<code>GetDomain</code>) 
+	and the edges of the loops (<code>GetAllCells</code>) as always done, or use 
+	a boundary iterator, that is explained here:
+	<ul>
+		<li>Create it: <code>CATCell::CreateBoundaryIterator</code>.</li>
+		<li>Skip to the <code>CATBoundaryIterator::Next</code> cell until the last 
+		one.</li>
+		<li><code>delete</code> it.<br>
+		Using the boundary iterator, the number of edges is computed (4 for the 
+		tetrahedron).</li>
+	</ul>
+	</li>
+</ul>
+<pre class="code">  for (int i=1;i&lt;=nbCells;i++)
+  {
+     CATOrientation ori;
+     if (NULL==listCells[i])
+     {
+	   ::CATCloseCGMContainer(piGeomFactory);
+	   return (1);	
+     }	
+    // <a name="Recovers the geometry"></a>Recovers the geometry
+    CATGeometry * piGeom = listCells[i]-&gt;<strong>GetGeometry</strong>(&amp;ori);
+    if (NULL==piGeom)
+    {
+	  ::CATCloseCGMContainer(piGeomFactory);
+	  return (1);	
+    }	
+    // Is the geometry of Plane type?
+    if (NULL == (piGeom-&gt;IsATypeOf(<strong>CATPlaneType</strong>)) ) // the geometry is a plane!...
+    {
+	  ::CATCloseCGMContainer(piGeomFactory);
+	  return (14);
+    }
+    // Another way to retrieve the cells: use a <a name="boundary iterator"></a>boundary iterator
+    CATBoundaryIterator  *  pBoundaryIt =  
+                               listCells[i]-&gt;<strong>CreateBoundaryIterator</strong>();
+    if (NULL==pBoundaryIt)
+    {
+	  ::CATCloseCGMContainer(piGeomFactory);
+	  return (1);	
+    }
+
+    CATSide side;
+    CATCell*  piBcell = NULL;
+    int nbEdges=0;
+    while ((piBcell=pBoundaryIt-&gt;<strong>Next</strong>(&amp;side,&amp;piDomain)) != NULL)      
+    {
+       nbEdges = nbEdges+1;      
+    }
+    <strong>delete</strong> pBoundaryIt;
+    pBoundaryIt=NULL;
+    
+    // There must be three edges for each face ...
+    if (3!=nbEdges)
+    {
+	   ::CATCloseCGMContainer(piGeomFactory);
+	   return (15);
+    }
+
+  }
+</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Factory</h3>
+<p>To save the model on a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global method.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This use case creates a tetrahedron from scratch in order to expose the topological 
+model of the geometric modeler. This primitive could also be created by using the 
+topological operators in trimming a box primitive by a plane.</p>
+<p>The topology of the created tetrahedron is investigated to show different means 
+to scan the body.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaTobTopoConcepts.htm">Topology Concepts</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmTaTobTopoModel.htm">The CGM Topological Model</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmTaGobCurves.htm">The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric 
+		Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td><a href="CAACgmUcGobCreation.htm">Creating and Transforming Geometry</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Apr 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

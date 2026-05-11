@@ -1,0 +1,136 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Frequently Asked Questions About Automation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Automation</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Frequently Asked Questions About Automation</h3>
+    </td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The questions below come either from CAA partners or customers, or from
+      the Dassault Systèmes group.</p>
+      <ul>
+        <li><a href="#Q1">Why can't I get the coordinates of my point?</a></li>
+        <li><a href="#Q2">How do I access CATIA V5 from Excel?</a></li>
+        <li><a href="#Q3">How do I know to which document belongs a product?</a></li>
+        <li><a href="#Q4">How do I know which subproducts of a product are
+          parts?</a></li>
+        <li><a href="#Q5">How to delete objects?</a></li>
+        <li><a href="#Q6">How do I modify the extremity point of an HybridShape
+          line?</a></li>
+        <li><a href="#Q7">My macro that creates components does not works any
+          more from V5R4</a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+
+<h4><a name="Q1"></a>Why can't I get the coordinates of my point?</h4>
+<p>First beware to the syntax:</p>
+<pre>Redim aCoord(2)
+oPoint.GetCoordinates aCoord</pre>
+Then, if the point has just been created, as the coordinates are the result of
+the evaluation of the point, they might not be available so compute it first
+either directly using the Compute method or using <code>Part::Update</code>:
+<pre>Set oPoint = oHSFactory.AddNewPointOnCurveFromPercent (...) 
+oHBody1.AppendHybridShape oPoint
+oPart.InWorkObject = oPoint
+
+oPart.Update                     ' --&gt; MANDATORY TO HAVE COORDINATES
+oPoint.GetCoordinates coord1     ' --&gt; OK now ...</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q2"></a>How do I access CATIA V5 from Excel?</h4>
+<p>Use the <code>GetObject</code> or <code>CreateObject</code> global functions.
+For more details, look in <a href="#" onclick="javascript:CAAlinkHtm('../CAAScdInfTechArticles/CAAInfInvoking.htm');return false">Invoking
+CATIA from a Scripting Language</a>.</p>
+<pre>Dim CATIA As Object
+Set CATIA = GetObject (, &quot;CATIA.Application&quot;) ' has to be running
+MsgBox CATIA.ActiveDocument.Name </pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q3"></a>How do I know to which document belongs a product?</h4>
+<p>It's the parent of the reference product:</p>
+<pre>' Print the name of the documebt containing my product
+MsgBox myProduct.ReferenceProduct.Parent.Name</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q4"></a>How do I know which subproducts of a product are parts?</h4>
+<p>Fetch the document to which the product belongs and test its type.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q5"></a>How to delete objects?</h4>
+<p>Except when directly available in the aggregating collection, you generally
+have to put it in the selection (it has to be part of the active document) and
+use the <code>Selection::Delete</code> method:</p>
+<pre>Dim oSel As Selection
+Set oSel = CATIA.ActiveDocument.Selection
+
+oSel.Clear
+oSel.Add(myElement)
+oSel.Delete</pre>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q6"></a>How do I modify the extremity point of an HybridShape line?</h4>
+<p>Get a reference from the target Point and use it to valuate the Origin
+property of the Line</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="Q7"></a>My Macro that creates Components does not works any more
+from V5R4</h4>
+<p>Reference products are nom clearly identified as such. The <code>Products::AddComponent</code>
+methods now needs a reference product that can be obtained from a Product using
+its ReferenceProduct property:</p>
+<pre>dim refProduct As Product
+set refProduct=Funnel1.ReferenceProduct 
+
+Dim Funnel2 As Product 
+Set Funnel2 = TitanicProducts.AddComponent(refProduct)</pre>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Dec 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,397 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MecModInterfaces Interface CATIMfProcReport</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MecModInterfaces.htm" href="../MecModInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MecModInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIMfProcReport"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MecModInterfaces Interface CATIMfProcReport</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIMfProcReport_28446','CATIMfProcReport','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIMfProcReport</b>
+</p>
+<p>
+<b><i> Interface to create a generic naming scope with a procedural report.</i></b><br>
+
+ <b>Role:</b>This advanced interface is useful to create the genering naming scope of
+ a new geometrical feature. 
+ <p>The <b>scope</b> is the link between the geometrical feature and its topology
+ result (<tt>CATBody</tt>). It enables you to name with a stable way the  <tt>CATCell</tt> of the 
+ <tt>CATBody</tt> result. Each scope contains nodes, one for each followed cells. It is the 
+ responsability of the feature to ask the generation of its own 
+ scope. This task is done in the following methods:</p>
+ <ul>
+ <li><script type="text/javascript"> activateLinkAnchor('CATIBuild','Build','CATIBuild.Build') </script> : to build the topology result of the feature</li>  <li>
+<script type="text/javascript"> activateLinkAnchor('CATIBuildShape','BuildShape','CATIBuildShape.BuildShape') </script> : to build the topology associated with the form of the feature.  This method is only useful for the form features (pad, pocket, shaft, groove stiffener,...)</li>
+ </ul>
+ <p>However, the feature has only an indirect control on how its scope is generated. There are two 
+ means to create it wich depends on the type of the geometrical feature:</p>
+ <ul>
+ <li>The feature has no geometrical feature as input specification </li>
+ <p>In this case the feature is a datum, a geometrical feature without historic. 
+ The 
+<script type="text/javascript"> activateLinkAnchor('CATIMfResultManagement','','CATIMfResultManagement') </script> interface must be used.</p> <li>Otherwise</li>
+ <p>The topology of the feature will reuse the topology of the input features. As the geometry
+ is based on the cell reusage, the scope creation will reuse the nodes of the input feature scopes.
+ Once the topological operations have been done, the topological journal will be used to
+ create the feature's scope. This
+ operation is possible thanks to a procedural report. This interface allows you to control
+ the usage of this report.</p>
+ </ul>
+ 
+ Use this interface as follows:
+  <ol>
+  <li>Create the procedural report with a 
+<script type="text/javascript"> activateLinkAnchor('','CreateProcReport','CreateProcReport') </script> call, </li>  <li>Run the topological operator, </li>
+  <li>Store the procedural report with a 
+<script type="text/javascript"> activateLinkAnchor('','StoreProcReport','StoreProcReport') </script> call or if a problem occurs in the <tt>Build/BuildShape</tt> methods use the 
+<script type="text/javascript"> activateLinkAnchor('','DeleteProcReport','DeleteProcReport') </script> call.</li>  </ol>
+ If the feature is deactivated - see 
+<script type="text/javascript"> activateLinkAnchor('CATIMechanicalProperties','IsInactive','CATIMechanicalProperties.IsInactive') </script> - the 
+<script type="text/javascript"> activateLinkAnchor('CATIBuild','Build','CATIBuild.Build') </script> method can be called. In this case, the result must be deactivated by calling the 
+<script type="text/javascript"> activateLinkAnchor('CATIMfProcReport','InactivateResult','CATIMfProcReport.InactivateResult') </script> method.  <p>Refer to the CAA Encyclopedia articles entitled
+ "Integrating a New Geometrical Feature in the Update Mechanism" and 
+ "Generic Naming Overview" for details about the usage of this interface.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateProcReport(CATListValCATBaseUnknown_var&amp;,CATListOfCATUnicodeString&amp;,int,CATISpecObject_var&amp;)"><b>CreateProcReport</b></a>(CATListValCATBaseUnknown_var&amp;,CATListOfCATUnicodeString&amp;,int,CATISpecObject_var&amp;)
+<dd>  Creates a report.
+ <dt> o 
+    <a href="#DeleteProcReport()"><b>DeleteProcReport</b></a>()
+<dd>  Deletes the current report.
+ <dt> o 
+    <a href="#GetCGMJournalList()"><b>GetCGMJournalList</b></a>()
+<dd>  Reads the topological journal.
+ <dt> o 
+    <a href="#GetGeoFactoryFromFeature(CATGeoFactory_var&amp;)"><b>GetGeoFactoryFromFeature</b></a>(CATGeoFactory_var&amp;)
+<dd>  Gets the geometrical factory.
+ <dt> o 
+    <a href="#InactivateResult(int)"><b>InactivateResult</b></a>(int)
+<dd>  Inactivates the result of a geometrical feature.
+ <dt> o 
+    <a href="#InsertCGMJournalList(CATCGMJournalList*)"><b>InsertCGMJournalList</b></a>(CATCGMJournalList*)
+<dd>  Inserts a new topological journal.
+ <dt> o 
+    <a href="#SetProcTranslateRule(CATMfProcTranslateRules)"><b>SetProcTranslateRule</b></a>(CATMfProcTranslateRules)
+<dd>  Adds a rule on the journal.
+ <dt> o 
+    <a href="#StoreProcReport(CATBody_var&amp;,CATMfStoreProcReportType,int)"><b>StoreProcReport</b></a>(CATBody_var&amp;,CATMfStoreProcReportType,int)
+<dd>  Stores the report.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateProcReport"></a><a name="CreateProcReport(CATListValCATBaseUnknown_var&amp;,CATListOfCATUnicodeString&amp;,int,CATISpecObject_var&amp;)"></a> <dt> o <b>CreateProcReport</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>CreateProcReport</b>(<td><script type="text/javascript"> activateLink('CATListValCATBaseUnknown_var','CATListValCATBaseUnknown_var&amp;')</script> <td><tt>iInputSpecificationList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATListOfCATUnicodeString','CATListOfCATUnicodeString&amp;')</script> <td><tt>iKeyList</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iBoolOper</tt><td><tt>=0</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>iReferenceFeature</tt><td><tt>=NULL_var</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Creates a report.
+ <br><b>Role:</b>This method creates the procedural report of the feature.
+ <br>For example, to create the report of a pad built on Sketch.2 with a bottom face until the FSur.1:
+ <pre>
+ <tt>iSpecs[1]=Sketch.2</tt>, <tt>iKeys[1]=MfKeyExtrudedFrom</tt>, 
+ <tt>iSpecs[2]=FSur.1</tt>, <tt>iKeys[2]=MfKeyBottom</tt>.
+ </pre>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInputSpecificationList</tt>
+   <dd> The list of specifications must contain the geometrical features whose scopes are needed to build the
+ scope of the current feature. This list can be empty. 
+ </dd>
+    <dt><tt> iKeyList</tt>
+   <dd> The list of key must have the same count of elements as the list of specifications. The default value is
+ <tt>MfKeyNone</tt>. A different value will tell to the V5 mechanism to replace the historical 
+ relationship of a node with a user info.
+ 
+ <br><b>Legal values</b>: 
+ <ul>
+ <li><tt>MfKeyNone</tt>,</li>
+ <li><tt>MfKeyTop</tt>,</li>
+ <li><tt>MfKeyBottom</tt>,</li> 
+ <li><tt>MfKeyExtrudedFrom</tt>
+ </ul>
+ </dd>
+    <dt><tt> iBoolOper</tt>
+   <dd> The integer value indicates which feature will own the generated scope. It is the same value 
+ as used in the </dd>
+<script type="text/javascript"> activateLinkAnchor('','StoreProcReport','StoreProcReport') </script> method. <br><b>Legal values</b>: 
+ <ul>
+ <li><tt>0</tt>, when the scope should be associated with the feature itself: </li>
+ <br>For the contextual feature inside the <tt>Build</tt> method or the form feature inside 
+ the <tt>BuildShape</tt> method. 
+ Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureProperties','','CATIShapeFeatureProperties') </script> interface for details about form and contextual features.
+ <li><tt>1</tt>, when the scope should be associated with the ResultOUT attribute of a 
+ shape feature.</li>
+ <br>For the form feature inside the <tt>Build</tt> method. Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureBody','','CATIShapeFeatureBody') </script> interface for detail about the ResultOUT attribute.
+ </ul>
+ 
+    <dt><tt> iReferenceFeature</tt>
+   <dd> The reference feature to use only for pattern. Lets the default value, NULL_var.
+ </dd>
+</dl>
+  <dt> <b>Throws:</b> 
+  <dd>  
+<script type="text/javascript"> activateLinkAnchor('CATError','','CATError') </script>
+</dl>
+</dl>
+<a name="DeleteProcReport"></a><a name="DeleteProcReport()"></a> <dt> o <b>DeleteProcReport</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>DeleteProcReport</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Deletes the current report.
+ <br><b>Role:</b>This method enables you to clean the internal data created during the
+ procedural report. You must use this method if an error occurs during the Build/BuildShape
+ method.
+</dl>
+<a name="GetCGMJournalList"></a><a name="GetCGMJournalList()"></a> <dt> o <b>GetCGMJournalList</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList *')</script>  <b>GetCGMJournalList</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Reads the topological journal.
+ <br><b>Role:</b>This method returns the object useful to create the <tt>CATTopData</tt> class instance
+ needed in topological operator.
+ <br><b>Lifecycle rules deviation:</b>Do not release the returned value.
+ 
+<dl>
+  <dt> <b>Throws:</b> 
+  <dd>  
+<script type="text/javascript"> activateLinkAnchor('CATError','','CATError') </script>
+</dl>
+</dl>
+<a name="GetGeoFactoryFromFeature"></a><a name="GetGeoFactoryFromFeature(CATGeoFactory_var&amp;)"></a> <dt> o <b>GetGeoFactoryFromFeature</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetGeoFactoryFromFeature</b>(<td><script type="text/javascript"> activateLink('CATGeoFactory_var','CATGeoFactory_var&amp;')</script> <td><tt>oGeoFactory</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Gets the geometrical factory.
+ <br><b>Role:</b>This method gets the geometrical factory of the feature.
+ <p>It is the factory which allows you to create the topological result of the geometrical feature. 
+ A geometrical feature is a mechanical feature for which a topological object can be associated with its result. This topological object is a 
+<script type="text/javascript"> activateLinkAnchor('CATBody','','CATBody') </script> . </p> 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oGeoFactory</tt>
+   <dd> The geometrical factory which will contain the topological result of the geometrical feature.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>   S_OK when succeeded<br>
+ E_FAIL if the factory has not been found.<br>
+</dl>
+</dl>
+<a name="InactivateResult"></a><a name="InactivateResult(int)"></a> <dt> o <b>InactivateResult</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InactivateResult</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iBoolOper</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Inactivates the result of a geometrical feature.
+ <br><b>Role:</b>This method must be used when the feature is deactivated. In other words when 
+ the 
+<script type="text/javascript"> activateLinkAnchor('CATIMechanicalProperties','IsInactive','CATIMechanicalProperties.IsInactive') </script> returns 1. But you have to take into account of this flag only for a feature deriving either from GSMGeom or from GeometricalElement3D. 
+ In the case of a feature deriving either from the MechanicalFormFeature or from 
+ MechanicalContextualFeature, the Build method in not called.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBoolOper</tt>
+   <dd> The integer value indicates which feature will own the generated scope. It is the same value 
+ as used in the </dd>
+<script type="text/javascript"> activateLinkAnchor('','StoreProcReport','StoreProcReport') </script> method. <br><b>Legal values</b>: 
+ <ul>
+ <li><tt>0</tt>, when the scope should be associated with the feature itself: </li>
+ <br>For the contextual feature inside the <tt>Build</tt> method or the form feature inside 
+ the <tt>BuildShape</tt> method. 
+ Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureProperties','','CATIShapeFeatureProperties') </script> interface for details about form and contextual features.
+ <li><tt>1</tt>, when the scope should be associated with the ResultOUT attribute of a 
+ shape feature.</li>
+ <br>For the form feature inside the <tt>Build</tt> method. Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureBody','','CATIShapeFeatureBody') </script> interface for detail about the ResultOUT attribute.
+ </ul>
+ 
+  <dt> <b>Throws:</b> 
+  <dd>  
+<script type="text/javascript"> activateLinkAnchor('CATError','','CATError') </script>
+</dl>
+</dl>
+</dl>
+<a name="InsertCGMJournalList"></a><a name="InsertCGMJournalList(CATCGMJournalList*)"></a> <dt> o <b>InsertCGMJournalList</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>InsertCGMJournalList</b>(<td><script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script> <td><tt>iNewJournal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Inserts a new topological journal.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewJournal</tt>
+   <dd> New topological journal.
+ </dd>
+</dl>
+  <dt> <b>Throws:</b> 
+  <dd>  
+<script type="text/javascript"> activateLinkAnchor('CATError','','CATError') </script>
+</dl>
+</dl>
+<a name="SetProcTranslateRule"></a><a name="SetProcTranslateRule(CATMfProcTranslateRules)"></a> <dt> o <b>SetProcTranslateRule</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetProcTranslateRule</b>(<td><script type="text/javascript"> activateLink('CATMfProcTranslateRules','CATMfProcTranslateRules')</script> <td><tt>Rule</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Adds a rule on the journal.
+ <br><b>Role:</b>This method must be used to add a rule to be applied when creating the nodes at the end of the build.
+ It should be invoqued before calling the 
+<script type="text/javascript"> activateLinkAnchor('','StoreProcReport','StoreProcReport') </script> method. It allows managing the behavior of the created elements in the selection process. See CAA articles for more information.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> Rule</tt>
+   <dd> The rule to be applied.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  S_OK when succeeded<br>
+ E_FAIL if the rule could not be set.<br>
+</dl>
+</dl>
+<a name="StoreProcReport"></a><a name="StoreProcReport(CATBody_var&amp;,CATMfStoreProcReportType,int)"></a> <dt> o <b>StoreProcReport</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>StoreProcReport</b>(<td> const <script type="text/javascript"> activateLink('CATBody_var','CATBody_var&amp;')</script> <td><tt>iBody</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMfStoreProcReportType','CATMfStoreProcReportType')</script> <td><tt>iType</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iBoolOper</tt><td><tt>=0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Stores the report.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBody</tt>
+   <dd> The result body of the topological operator.
+ </dd>
+    <dt><tt> iType</tt>
+   <dd> <b>Legal values</b>: 
+ <br><tt><b>Copy</b></tt>: the nodes of the previous scope which are not modified by the operation 
+ are copied in the current scope,
+ <br><tt><b>NoCopy</b></tt>: the nodes of the previous scope which are not modified by the operation 
+ are not copied in the current scope.
+ </dd>
+    <dt><tt> iBoolOper</tt>
+   <dd> The integer value indicates which feature will own the generated scope. It is the same value 
+ as used in the </dd>
+<script type="text/javascript"> activateLinkAnchor('','CreateProcReport','CreateProcReport') </script> method. <br><b>Legal values</b>: 
+ <ul>
+ <li><tt><b>0</b></tt> when the scope should be associated with the feature itself: </li>
+ <br>For the contextual feature inside the build method or the form feature inside 
+ the <tt>BuildShape</tt> method. 
+ Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureProperties','','CATIShapeFeatureProperties') </script> interface for details about form and contextual features.
+ <li><tt><b>1</b></tt> when the scope should be associated with the ResultOUT feature of a 
+ shape feature.</li>
+ <br>For the form feature inside the <tt>Build</tt> method. Refer to the 
+<script type="text/javascript"> activateLinkAnchor('CATIShapeFeatureBody','','CATIShapeFeatureBody') </script> interface for detail about the ResultOUT feature.
+ </ul>
+ 
+  <dt> <b>Throws:</b> 
+  <dd>  
+<script type="text/javascript"> activateLinkAnchor('CATError','','CATError') </script>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIMfProcReport.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMecModInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

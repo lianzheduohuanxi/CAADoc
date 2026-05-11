@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+
+<head>
+<meta version="1">
+<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Adding Attribute Links</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<!-- Titre de la page -->
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Functional Tolerancing &amp; Annotation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Adding Attribute Links</h3>
+    </td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+
+<!-- Resume -->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAScdTpiAddAttributeLinks use case. This
+      use case explains how to browse and read tolerances defined in a CATIA V5
+      document.
+      <ol>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#How">How To Add Attribute Link</a></strong>
+      </ol>
+    </td>
+  </tr>
+</table>
+<hr>
+<font size="2">
+<p><a name="Learn"></a><b>What You Will Learn With This Use Case</b><br>
+This use case is intended to help you to add an attribute link on a 3D text..</p>
+<p><a name="How"></a><b><font size="3">How To Add Attribute Link</font></b><br>
+On a text, you must obtain the 2D text on the interface DrawingText. And then
+you must use functions of this interface.<br>
+At the end, you must refresh the screen by the call of the function
+&quot;ModifyVisu&quot;.<br>
+In this example, you add an attribute link on the length of a pad (Pad.1) that
+you have created in a part.</p>
+<table class="code" width="100%" bordercolorlight="#000000" bordercolor="#000000" cellspacing="1" border="0">
+  <tr>
+    <td width="33%" bordercolorlight="#000000"><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;
+      <i><a href="CAAScdTpiBrowseTolerances.htm">###&nbsp; How to get
+      Annotations?&nbsp; ###</a></i><br>
+      <br>
+      Dim Txt As DrawingText<br>
+      Set Txt = annotation.Text.Get2dAnnot<br>
+      Txt.FrameType = catCircle<br>
+      <br>
+      Dim parameters As Parameters<br>
+      Set parameters = part.Parameters<br>
+      Dim lengthParam As RealParam<br>
+      Set lengthParam =
+      parameters.Item(&quot;Part1\PartBody\Pad.1\FirstLimit\Length&quot;)<br>
+      Txt.InsertVariable 26, 0, lengthParam<br>
+      annotation.ModifyVisu</font></td>
+  </tr>
+</table>
+</font>
+<p align="right"><font size="3">[</font><a href="#Top"><font size="3">Top</font></a><font size="3">]</font></p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

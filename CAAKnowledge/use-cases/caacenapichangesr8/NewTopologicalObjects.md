@@ -1,0 +1,16 @@
+---
+title: "NewTopologicalObjects Modifications"
+category: "general"
+module: "CAACenAPIChangesR8"
+tags: []
+source_file: "Doc\online\CAACenAPIChangesR8\NewTopologicalObjects.htm"
+converted: "2026-05-11T17:33:52.649131"
+---
+
+CAA C++ API Modifications|  NewTopologicalObjects  |   
+---|---|---  
+  
+* * *
+
+**Entity|  SP| Modification| To Do** | NewTopologicalObjects/Protected/CATSmartBodyDuplicator.h/CATSmartBodyDuplicator/Run| GA| MHBDM|   
+---|---|---|---

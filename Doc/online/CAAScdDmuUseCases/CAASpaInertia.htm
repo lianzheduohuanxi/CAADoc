@@ -1,0 +1,127 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Computing a Mass and a Center of Gravity's Position</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Space Analysis</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Computing a Mass and a Center of Gravity's Position</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use inertia to compute
+      product's mass and position of the center of gravity. The macro assumes
+      that a CATProduct has been loaded and that one component is selected.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>This image shows the selection state before the use of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaInertia1-sm.gif"></p>
+      <p>&nbsp;</p>
+      <p>This image shows the result of the macro :</p>
+      <p align="center"><img border="0" src="images/CAASpaInertia2-sm.gif"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAASpaInertia is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAASpaInertiaSource.htm" target="Source">CAASpaInertia.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAASpaInertia.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAASpaInertia includes four steps:</p>
+      <ol>
+        <li><a href="#Select">Retrieving the selected component</a></li>
+        <li><a href="#Compute">Compute the inertia</a></li>
+        <li><a href="#Read">Read the inertia data</a></li>
+        <li><a href="#Result">Display the results</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Select"></a>Retrieving the selected component</h4>
+      <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Selection', 'FindObject'); return false;">FindObject</a></code>
+      method is used on the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Selection'); return false;">Selection</a></code>
+      object with the string <code>&quot;CATIAProduct&quot;</code> to retrieve
+      the selected <i>oProduct</i> (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product'); return false;">Product</a></code>
+      ).</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Compute"></a>Compute the inertia</h4>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product', 'GetTechnologicalObject'); return false;">GetTechnologicalObject</a></code>
+      method, with the string <code>&quot;Inertia&quot;</code>, is used to
+      compute the <i>oInertia</i> object (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Inertia'); return false;">Inertia</a></code>
+      ) related to the <i>oProduct</i> component.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Read"></a>Read the inertia data</h4>
+      <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Inertia', 'Mass'); return false;">Mass</a></code>
+      and <code><a href="#" onclick="javascript:CAAlink('IDL', 'SpaceAnalysisInterfaces', 'Inertia', 'GetCOGPosition'); return false;">GetCOGPosition</a></code>
+      methods are used on the <i>oInertia</i> object to read the corresponding
+      inertia data.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Result"></a>Display the results</h4>
+      <p>The results are displayed in a Msgbox.</p>
+      <p align="center"><img border="0" src="images/CAASpaInertia3-sm.gif"></p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use inertia in order to compute mass and
+position of the center of gravity. Specifically, it has illustrated how to :</p>
+<ul>
+  <li>retrieve a selected component</li>
+  <li>compute the inertia of a component</li>
+  <li>read the inertia data of a component</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocSPA.htm">Space
+      Analysis automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

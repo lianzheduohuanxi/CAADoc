@@ -1,0 +1,345 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 6.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Manipulating a Product's Temporary Data</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Manipulating a Product's Temporary Data</H3>
+        <P><EM>Working with the CATIProductInSession Interface</EM></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents&nbsp; the CAAPstProductInSession use case which 
+        illustrates how to work with a product's temporary data.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstProductInSession Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstProductInSession Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstProductInSession</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstProductInSession 
+                Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the CATIProductInSession interface, a product's temporary data can be 
+accessed and modified. Please note that the modifications cannot be saved and 
+are lost once the session is closed.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstProductInSession Use Case</H3>
+<P>CAAPstProductInSession is a use case of the CAAProductStructure.edu framework 
+that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstProductInSession Do</H4>
+<P>The goal of CAAPstProductInSession is to demonstrate the <i>CATIProductInSession</i> 
+interface. It performs the following steps:</P>
+<UL>
+    <LI>Load a  Product document</LI>
+    <LI>Change the active representation of the root product</LI>
+    <LI>Verify that the active representation has been changed</LI>
+    <LI>Get the active representation of the root product</LI>
+</UL>
+<P>Below&nbsp; is the  Product document that will be loaded in the use case. 
+It can be found in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstProductInSessionInput.CATProduct</TT></P>
+<P><A name="document">
+<img border="0" src="images/CAAPstProductInSession01.jpg" width="476" height="402"></A></P>
+<P>Product1 has two possible representations that are listed using the 
+contextual menu Representations -&gt; Manage Representations:</P>
+<P>
+<img border="0" src="images/CAAPstProductInSession03.jpg" width="533" height="221"></P>
+<P>The default representation is a cylinder named &quot;Shape_Cyl&quot;. The other 
+possible representation is a cube named &quot;Shape_Cube&quot; that is activated in the 
+following screen:</P>
+<P>
+<img border="0" src="images/CAAPstProductInSession02.jpg" width="475" height="402"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstProductInSession</H4>
+<P>To launch CAAPstProductInSession:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment and build the 
+    CAAPstProductInSession.m module (see <a href="#[2]">[2]</a>)</LI>
+    <LI>Execute the following command:<BR>
+    <BR>
+    <TT>mkrun -c &quot;CAAPstProductInSession<B> <I>input.CATProduct shape_name</I></B>&quot;</TT></LI>
+</OL>
+<BLOCKQUOTE>
+    <UL>
+        <LI><TT><B><I>input.CATProduct</I>:</B></TT> path to the supplied 
+        document whose path is <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstProductInSessionInput.CATProduct</TT></LI>
+        <LI><TT><B><I>shape_name</I></B></TT>: name of the representation to 
+        change to. <TT>Shape_Cube</TT> can be used with the document provided.</LI>
+    </UL>
+</BLOCKQUOTE>
+<P>The following output will be obtained with the supplied document:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>Session opened
+Document opened
+Working with 'Product1'
+Activated 'Shape_Cube' representation
+Current active representation: 'Shape_Cube'
+Active shape representation retrieved
+Session deleted</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstProductInSession Code</H4>
+<P>CAAPstProductInSession code is located in the CAAPstProductInSession.m module 
+of the CAAProductStructure.edu framework. </P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A><B>Step-by-Step</B></H3>
+<P>There are six logical steps in <I>CAAPstProductInSession</I>:</P>
+<OL>
+    <LI><A href="#Loading">Creating a session to load a  Product document</A></LI>
+    <LI><A href="#RetrievingRoot">Retrieving the document's Root Product</A></LI>
+    <LI><A href="#Changing">Changing the active representation</A></LI>
+    <LI><A href="#Verifying">Verifying that the active representation has been 
+    changed</A></LI>
+    <LI><A href="#Retrieving">Retrieving the current active representation</A></LI>
+    <LI><A href="#Loading">Closing the session</A></LI>
+</OL>
+<P>We will now detail&nbsp; each of those sections:</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Loading"></A>Loading  a Product Document</H4>
+<P>Generally, the first thing that is necessary in a batch program is the 
+creation of a new session. This is done using the <CODE>Create_Session</CODE> 
+global function. It is important not to forget to delete the session when the 
+program terminates. Once the session is created, a  Product document can be 
+loaded with <TT>CATDocumentServices::Open</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        CATSession *pSession = NULL;
+        rc = ::Create_Session(&quot;CAA2_Sample_Session&quot;,pSession );
+...
+        CATDocument *pDoc = NULL;
+        rc = CATDocumentServices::OpenDocument(inputFilename, pDoc);
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="RetrievingRoot"></A>Retrieving the Document's Root Product</H4>
+<P>In order to work with a product structure within the  Product document, it 
+is necessary to access the <B>root product</B>. This is done using the <CODE>
+GiveDocRoots</CODE> method of <I>CATIDocRoots</I> which returns a list of all of 
+the roots within the document, the first one being the root product we are 
+looking for. From this root product, we can get then <I>CATIProduct</I> handle 
+and subsequently the <I>CATIProductInSession</I> handle.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        CATIDocRoots *piDocRootsOnDoc = NULL;
+        rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,(void**) &amp;piDocRootsOnDoc);
+...
+        CATListValCATBaseUnknown_var *pRootProducts =
+        piDocRootsOnDoc-&gt;GiveDocRoots();
+        CATIProduct_var spRootProduct;
+        if (NULL != pRootProducts &amp;&amp; pRootProducts-&gt;Size() &gt; 0) {
+                spRootProduct = (*pRootProducts)[1];
+...
+        } else {
+                cout &lt;&lt; &quot;Failed to find root products&quot;&lt;&lt; endl;
+                return 5;
+        }
+...
+        // Get CATIProduct prointer of the root product.
+        CATIProduct *piProductOnRoot = NULL;
+        rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                           (void**) &amp;piProductOnRoot);
+...
+        CATUnicodeString partNumber = piProductOnRoot-&gt;GetPartNumber();
+        cout &lt;&lt; &quot;Working with '&quot; &lt;&lt; partNumber.ConvertToChar() &lt;&lt; &quot;'&quot; &lt;&lt; endl;</PRE>
+        <PRE>        //Get the ProductInSession Interface pointer
+
+        CATIProductInSession * piProdInSession = NULL;
+        rc = piProductOnRoot-&gt;QueryInterface(IID_CATIProductInSession,
+                                             (void **) &amp;piProdInSession);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+<H4><A name="Changing"></A>Changing the Active Representation</H4>
+<P>First we need to set the active representation by calling <TT>
+SetActiveShapeRep</TT> with the shape name input to the program. As this usecase 
+is non-interactive, there might be no representation active when the product is 
+opened.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>	/* --------------------------------------------------------- */
+	/*  3. Changing the active shape representation.             */
+	/*                                                           */
+	/*  Note: Since this code a non-interactive,                 */
+	/*        SetActiveShapeRep must be called first for the     */
+	/*        subsequent GetActiveShapeRep to work               */
+	/* --------------------------------------------------------- */</PRE>
+        <PRE>	rc = piProdInSession-&gt;SetActiveShapeRep(shapeName, TRUE, FALSE,
+                                                 CATPrd3D, TRUE, FALSE);</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<P><B><A name="Verifying"></A>Verifying the Active Representation</B></P>
+<P>Now that the active representation has changed, we verify that its name has 
+also changed accordingly.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>	/* --------------------------------------------------------- */
+	/*  4. Verifying the active shape representation name.       */
+	/* --------------------------------------------------------- */</PRE>
+        <PRE>	CATUnicodeString activeShapeName;
+	rc = piProdInSession-&gt;GetActiveShapeName(activeShapeName);
+...
+	if (activeShapeName != shapeName) {
+		cout &lt;&lt; &quot;ERROR: the active representation is &quot;
+		     &lt;&lt; activeShapeName.ConvertToChar() &lt;&lt; &quot; instead of &quot;
+		     &lt;&lt; shapeName.ConvertToChar() &lt;&lt; endl;
+		return 11;
+	}
+	cout &lt;&lt; &quot;Current active representation: '&quot;
+	     &lt;&lt; activeShapeName.ConvertToChar() &lt;&lt; &quot;'&quot; &lt;&lt; endl;</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<H4><A name="Retrieving"></A>Retrieving the Active Representation</H4>
+<P>Using the <I>CATIProductInSession</I> handle we can also retrieve the current 
+active representation (a <I>CATILinkabkeObject</I> ) with <TT>GetActiveShapeRep.</TT></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>	/* --------------------------------------------------------- */
+	/*  5. Retrieving the active shape representation.           */
+	/* --------------------------------------------------------- */
+	</PRE>
+        <PRE>	CATILinkableObject_var spLinkedObject;
+	rc = piProdInSession-&gt;GetActiveShapeRep(spLinkedObject);
+...
+	cout &lt;&lt; &quot;Active shape representation retrieved&quot; &lt;&lt; endl;
+</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Closing"></A>Closing the Session</H4>
+<P>Before closing the session, we need to release the <I>CATIProductInSession</I> 
+handle and remove the document from the session.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>        rc = CATDocumentServices::Remove (*pDoc);
+        if (!SUCCEEDED(rc)) return 11; 
+
+        rc = ::Delete_Session(&quot;CAA2_Sample_Session&quot;);
+        cout &lt;&lt; &quot;Session deleted&quot; &lt;&lt; endl;</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how to make a sub-product flexible so that one 
+of its parts can be moved:</P>
+<UL>
+    <LI>Loading a  Product document with <TT>CATDocumentServices::Open</TT></LI>
+    <LI>Retrieving the root product of the document with <TT>
+    CATIDocRoots::GiveDocRoots</TT> </LI>
+    <LI>Modifying the active representation with <TT>
+    CATIProductInSession::SetActiveShapeRep</TT></LI>
+    <LI>Retrieving the active representation with <TT>
+    CATIProductInSession::GetActiveShapeRep</TT> and <TT>GetActiveShapeName</TT></LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD><a href="../CAAPstTechArticles/CAAPstModel.htm">The 
+        Product Structure Model</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><B>Version 2</B> [Aug 2004]</TD>
+        <TD valign="top">SetActiveShapeRep first</TD>
+    </TR>
+    <TR>
+        <TD valign="top"><B>Version </B><STRONG>1</STRONG> [Sep 2003]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2003, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

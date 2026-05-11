@@ -1,0 +1,694 @@
+Option Explicit
+
+' COPYRIGTH DASSAULT SYSTEMES 2003
+
+' ***********************************************************************
+'   Purpose:		Export a material library to a text file
+'
+'   Version:		1.0
+'   Author:			BMB
+'   Languages:		CATScript 
+'   Locales:		English 
+'   CATIA Level:	V5R12 
+' ***********************************************************************
+
+
+' Main 
+Sub CATMain()
+
+	' Get the file system object
+	Dim oFileSys as FileSystem
+	Set oFileSys = CATIA.FileSystem
+
+	' Get the documents collection
+	Dim oCollection As Documents
+	Set oCollection = CATIA.Documents
+
+	' Test if no document is open
+	If 0=oCollection.Count Then 
+		msgbox "A material library document must be active to execute this macro.", vbOKOnly, "Export Material Library"
+		Exit Sub
+	End If
+
+	 ' Get material library
+	Dim oCat As Document
+	Set oCat = CATIA.ActiveDocument
+
+	' Test if the active document is a material library (CATMaterial)
+	If 0=InStr(oCat.Name, ".CATMaterial") Then
+		msgbox "A material library document must be active to execute this macro.", vbOKOnly, "Export Material Library"
+		Exit Sub
+	End If
+
+	' Test if the document has been saved to disc
+	If ""=oCat.Path Then
+		msgbox "A material library saved to disc must be active to execute this macro.", vbOKOnly, "Export Material Library"
+		Exit Sub
+	End If
+
+	' Determine the file separator
+	Dim sSep As String
+	sSep = oFileSys.FileSeparator
+
+	' Get name of the material library
+	Dim sName As String
+	sName = Left(oCat.Name, InStr(oCat.Name, ".CATMaterial")-1)
+
+	' Create folder for outputs
+	Dim sFolderPath As String
+	sFolderPath = oCat.Path & sSep & sName & "_Exported"
+	If oFileSys.FolderExists(sFolderPath) Then
+        MsgBox "WARNING: Directory " & sFolderPath & Chr(10) & Chr(9) & "  already exists and will be recreated", vbOKOnly, "Export Material Library"
+		DeleteFolderRecursive oFileSys, sFolderPath, sSep
+	
+        On Error Resume Next
+        Dim CreatedFolder As Folder
+        Set CreatedFolder = oFileSys.CreateFolder(sFolderPath)
+        Set CreatedFolder = NOTHING
+        Dim erreur As Integer
+        erreur = Err.Number
+	    Err.Clear
+        If (erreur <> 0) Then
+            MsgBox  "ERROR: Impossible to create folder " & sFolderPath & Chr(10)  & Chr(9) & "Folder may be in use", vbOKOnly, "Export Material Library"
+            Err.Raise erreur
+            Exit Sub
+        End If
+    Else
+        oFileSys.CreateFolder(sFolderPath)
+    End If
+   
+    ' Create the name of the output file
+	Dim sFileOutPath As String
+	sFileOutPath = sFolderPath & sSep & sName & ".matlib"
+
+	' Create the material library text file
+	Dim oFileOut As File    
+	Set oFileOut = oFileSys.CreateFile(sFileOutPath, FALSE)
+	Dim oStream As TextStream
+	Set oStream = oFileOut.OpenAsTextStream("ForWriting")
+
+	' Header of the output file
+	oStream.Write "#########################################################################" & Chr(10)
+	oStream.Write "#    " & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & "#" & Chr(10)
+	oStream.Write "#                     MATERIAL LIBRARY TEXT FILE " & Chr(9) & Chr(9) & Chr(9) & Chr(9) & "#" & Chr(10)
+	oStream.Write "#    " & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & Chr(9) & "#" & Chr(10)
+	oStream.Write "#########################################################################" & Chr(10)
+	oStream.Write Chr(10) & Chr(10)
+	oStream.Write "LIBRARY=" & sName & Chr(10)
+
+	' Create the name of the html output file
+	Dim sHtmlFileOutPath As String
+	sHtmlFileOutPath = sFolderPath & sSep & sName & ".html"
+
+	' Create the html output file
+	Dim oHtmlFileOut As File    
+	Set oHtmlFileOut = oFileSys.CreateFile(sHtmlFileOutPath, FALSE)
+	Dim oHtmlStream As TextStream
+	Set oHtmlStream = oHtmlFileOut.OpenAsTextStream("ForWriting")
+
+	' Header of the html output file
+	HtmlHeader oHtmlStream, "MATERIAL LIBRARY '" & sName & "'", "This page presents a material library used for CATIA V5.", sName, 20
+
+	' Declarations
+	Dim oFamilies As MaterialFamilies
+	Dim oFamily As MaterialFamily
+	Dim I As Int, J As Int, K As Int
+	Dim oMaterials As Materials
+	Dim oMaterial As Material
+	Dim oRenderingMaterial As RenderingMaterial
+	Dim oAnalysisMaterial As AnalysisMaterial
+	Dim oTab(3) As CATSafeArrayVariant
+	Dim iNum As Short
+	Dim iNumDouble As Double
+	Dim sTemp As String
+    Dim DefaultValue As Double
+    Dim BooleanDefaultValue As Boolean
+    Dim Is3DTextureLicenseAvailable As Int
+    Dim Is3DTextureAccessible As Int
+
+    Is3DTextureLicenseAvailable = 1
+
+	' Create the html family output file
+	Dim oFamilyHtmlFileOut As File    
+	Dim oFamilyHtmlStream As TextStream
+	Dim oMaterialHtmlFileOut As File    
+	Dim oMaterialHtmlStream As TextStream
+
+	' Init families
+	Set oFamilies = oCat.Families
+
+	' Family loop
+	For I = 1 To oFamilies.Count
+
+		' Init family
+		Set oFamily = oFamilies.Item(I)
+		oStream.Write Chr(9) & "FAMILY=" & oFamily.Name & Chr(10)
+		' Create image folder
+		oFileSys.CreateFolder(sFolderPath & sSep & oFamily.Name)
+
+		' Init materials
+		Set oMaterials = oFamily.Materials
+
+		' Html families table
+		If ((I-1) Mod 3) = 0 Then
+			oHtmlStream.Write "<TR>" & Chr(10)
+		End If
+		oHtmlStream.Write "<TD>"
+		If oMaterials.Count >0 Then
+			oHtmlStream.Write "<A href='" & oFamily.Name & ".html'><IMG src='" & oFamily.Name & sSep & oMaterials.Item(1).Name & ".jpg'></A>"
+		End If
+		oHtmlStream.Write "</TD>" & Chr(10)
+		oHtmlStream.Write "<TD width=200><A href='" & oFamily.Name & ".html' OnMouseOver=''>" & oFamily.Name & "</A></TD>" & Chr(10)
+		If ((I Mod 3) = 0) Or (I=oFamilies.Count) Then
+			oHtmlStream.Write "</TR>" & Chr(10)
+		End If
+
+		' Html family page
+		Set oFamilyHtmlFileOut = oFileSys.CreateFile(sFolderPath & sSep & oFamily.Name & ".html", FALSE)
+		Set oFamilyHtmlStream = oFamilyHtmlFileOut.OpenAsTextStream("ForWriting")
+
+		' Header of the family html output file
+		HtmlHeader oFamilyHtmlStream, "FAMILY '" & oFamily.Name & "' OF THE MATERIAL LIBRARY '" & sName & "'", "This page presents a family of the material library '<A href='" & sName & ".html'>" & sName & "</A>' used for CATIA V5.", oFamily.Name, 20
+
+		' Material loop
+		For J = 1 To oMaterials.Count
+
+			' Init material
+            Is3DTextureAccessible = 1
+			Set oMaterial = oMaterials.Item(J)
+			oStream.Write Chr(9) & Chr(9) & "MATERIAL=" & oMaterial.Name & Chr(10)
+ 
+			' Save icon
+			oMaterial.GetIcon(sFolderPath & sSep & oFamily.Name & sSep) ' & oMaterial.Name & ".jpg")
+
+			' Html materials table
+			If ((J-1) Mod 5) = 0 Then
+				oFamilyHtmlStream.Write "<TR>" & Chr(10)
+			End If
+			oFamilyHtmlStream.Write "<TD width=120 height=120 align='center'>"
+			If oMaterials.Count >0 Then
+				oFamilyHtmlStream.Write "<A href='" & oFamily.Name & sSep & oMaterial.Name & ".html'><IMG src='" & oFamily.Name & sSep & oMaterial.Name & ".jpg'></A><BR>"
+			End If
+			oFamilyHtmlStream.Write "<A href='" & oFamily.Name & sSep & oMaterial.Name & ".html'>" & oMaterial.Name & "</A></TD>" & Chr(10)
+			If ((J Mod 5) = 0) Or (I=oMaterials.Count) Then
+				oFamilyHtmlStream.Write "</TR>" & Chr(10)
+			End If
+
+			' Html material page
+			Set oMaterialHtmlFileOut = oFileSys.CreateFile(sFolderPath & sSep & oFamily.Name & sSep & oMaterial.Name & ".html", FALSE)
+			Set oMaterialHtmlStream = oMaterialHtmlFileOut.OpenAsTextStream("ForWriting")
+
+			' Header of the material html output file
+			HtmlHeader oMaterialHtmlStream, "MATERIAL '" & oMaterial.Name & "' OF THE FAMILY '" & oFamily.Name & "' IN THE MATERIAL LIBRARY '" & sName & "'", "This page presents a material of the family '<A href='.." & sSep & oFamily.Name & ".html'>" & oFamily.Name & "</A>' in the material library '<A href='.." & sSep & sName & ".html'>" & sName & "</A>' used for CATIA V5.", oMaterial.Name, 0
+
+			' Html insert image of the material
+			oMaterialHtmlStream.Write "<TR><TD rowspan=100 valign='top' width=100><IMG src='" & oMaterial.Name & ".jpg'></TD>" & Chr(10)
+			oMaterialHtmlStream.Write "<TD width=150 bgcolor='white'><B>PARAMETER</B></TD><TD bgcolor='white'><B>VALUE</B></TD></TR>" & Chr(10)
+
+ 			' Test if rendering data exist
+			If oMaterial.ExistRenderingData = 1 Then
+				' Init RenderingMaterial
+				Set oRenderingMaterial = oMaterial.RenderingMaterial
+				oStream.Write Chr(9) & Chr(9) & Chr(9) & "PROPERTY=Rendering" & Chr(10)
+				HtmlRowMaterial oMaterialHtmlStream, "PROPERTY", "RENDERING"
+
+				' Rendering properties
+                '
+				' one variable mode
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "MappingType=" & oRenderingMaterial.MappingType & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "AdaptiveCoeff=" & oRenderingMaterial.AdaptiveCoeff & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "PreviewSize=" & oRenderingMaterial.PreviewSize & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "AmbientCoefficient=" & oRenderingMaterial.AmbientCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "DiffuseCoefficient=" & oRenderingMaterial.DiffuseCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SpecularCoefficient=" & oRenderingMaterial.SpecularCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SpecularExponent=" & oRenderingMaterial.SpecularExponent & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TransparencyCoefficient=" & oRenderingMaterial.TransparencyCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "RefractionCoefficient=" & oRenderingMaterial.RefractionCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ReflectivityCoefficient=" & oRenderingMaterial.ReflectivityCoefficient & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "EnvironmentImage=" & oRenderingMaterial.EnvironmentImage & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ReflectionMode=" & oRenderingMaterial.ReflectionMode & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ReflectionHeight=" & oRenderingMaterial.ReflectionHeight & Chr(10) 
+				oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ReflectionLength=" & oRenderingMaterial.ReflectionLength & Chr(10) 
+
+                ' Html one variable mode
+				HtmlRowMaterial oMaterialHtmlStream, "MappingType", oRenderingMaterial.MappingType
+				HtmlRowMaterial oMaterialHtmlStream, "AdaptiveCoeff", oRenderingMaterial.AdaptiveCoeff
+				HtmlRowMaterial oMaterialHtmlStream, "PreviewSize", oRenderingMaterial.PreviewSize
+				HtmlRowMaterial oMaterialHtmlStream, "AmbientCoefficient", oRenderingMaterial.AmbientCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, "DiffuseCoefficient", oRenderingMaterial.DiffuseCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, "SpecularCoefficient", oRenderingMaterial.SpecularCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, "SpecularExponent", oRenderingMaterial.SpecularExponent
+				HtmlRowMaterial oMaterialHtmlStream, "TransparencyCoefficient", oRenderingMaterial.TransparencyCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, "RefractionCoefficient", oRenderingMaterial.RefractionCoefficient
+				HtmlRowMaterial oMaterialHtmlStream, "EnvironmentImage", oRenderingMaterial.EnvironmentImage
+				HtmlRowMaterial oMaterialHtmlStream, "ReflectionMode", oRenderingMaterial.ReflectionMode
+				HtmlRowMaterial oMaterialHtmlStream, "ReflectionHeight", oRenderingMaterial.ReflectionHeight
+				HtmlRowMaterial oMaterialHtmlStream, "ReflectionLength", oRenderingMaterial.ReflectionLength
+
+                '
+                '  Try to read Bump value. If error occurs and error's value is -1, it is because
+                '  required license is not present to access to 3D texture parameters
+                '
+                On Error Resume Next
+                Dim Bump As Int
+                Dim TextureType As Int
+                Bump = oRenderingMaterial.Bump
+                erreur = Err.Number
+                Err.Clear
+                If (erreur = -1) Then
+                    '
+                    '  First time the error is encountered
+                    '
+                    If (Is3DTextureLicenseAvailable <> 0) Then
+                        MsgBox "WARNING: Impossible to read 3D textures properties because required license is not available" & Chr(10) & " 3D texture properties will be set to default values", vbOKOnly, "Export Material Library"
+                        Is3DTextureLicenseAvailable = 0
+                    End if
+                    Err.Raise erreur
+                    Is3DTextureAccessible = 0
+                End if
+                TextureType = oRenderingMaterial.TextureType
+                If (TextureType <> 1) Then
+                   TextureType = 0 
+                End if
+                On Error Goto 0
+                
+                ' Other Rendering properties
+                '
+                ' If licensing is available for 3D textures parameters
+                If (Is3DTextureAccessible <> 0) Then
+                    ' one variable mode
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureType=" & oRenderingMaterial.TextureType & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "Bump=" & oRenderingMaterial.Bump & Chr(10)
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureImage=" & oRenderingMaterial.TextureImage & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "FlipU=" & oRenderingMaterial.FlipU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "FlipV=" & oRenderingMaterial.FlipV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "RepeatU=" & oRenderingMaterial.RepeatU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "RepeatV=" & oRenderingMaterial.RepeatV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ScaleU=" & oRenderingMaterial.ScaleU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ScaleV=" & oRenderingMaterial.ScaleV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "PositionU=" & oRenderingMaterial.PositionU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "PositionV=" & oRenderingMaterial.PositionV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "Orientation=" & oRenderingMaterial.Orientation & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ColorNumber=" & oRenderingMaterial.ColorNumber & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureComplexity=" & oRenderingMaterial.TextureComplexity & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureAmplitude=" & oRenderingMaterial.TextureAmplitude & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureVeinAmplitude=" & oRenderingMaterial.TextureVeinAmplitude & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TexturePerturbation=" & oRenderingMaterial.TexturePerturbation & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureGain=" & oRenderingMaterial.TextureGain & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureTurbulence=" & oRenderingMaterial.TextureTurbulence & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardTileWidth=" & oRenderingMaterial.ChessboardTileWidth & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardTileHeight=" & oRenderingMaterial.ChessboardTileHeight & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardOffset=" & oRenderingMaterial.ChessboardOffset & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardJointWidth=" & oRenderingMaterial.ChessboardJointWidth & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardJointHeight=" & oRenderingMaterial.ChessboardJointHeight & Chr(10) 
+
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureType", oRenderingMaterial.TextureType
+                    HtmlRowMaterial oMaterialHtmlStream, "Bump", oRenderingMaterial.Bump
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureImage", oRenderingMaterial.TextureImage
+				    HtmlRowMaterial oMaterialHtmlStream, "FlipU", oRenderingMaterial.FlipU
+				    HtmlRowMaterial oMaterialHtmlStream, "FlipV", oRenderingMaterial.FlipV
+				    HtmlRowMaterial oMaterialHtmlStream, "RepeatU", oRenderingMaterial.RepeatU
+				    HtmlRowMaterial oMaterialHtmlStream, "RepeatV", oRenderingMaterial.RepeatV
+				    HtmlRowMaterial oMaterialHtmlStream, "ScaleU", oRenderingMaterial.ScaleU
+				    HtmlRowMaterial oMaterialHtmlStream, "ScaleV", oRenderingMaterial.ScaleV
+				    HtmlRowMaterial oMaterialHtmlStream, "PositionU", oRenderingMaterial.PositionU
+				    HtmlRowMaterial oMaterialHtmlStream, "PositionV", oRenderingMaterial.PositionV
+				    HtmlRowMaterial oMaterialHtmlStream, "Orientation", oRenderingMaterial.Orientation
+				    HtmlRowMaterial oMaterialHtmlStream, "ColorNumber", oRenderingMaterial.ColorNumber
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureComplexity", oRenderingMaterial.TextureComplexity
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureAmplitude", oRenderingMaterial.TextureAmplitude
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureVeinAmplitude", oRenderingMaterial.TextureVeinAmplitude
+				    HtmlRowMaterial oMaterialHtmlStream, "TexturePerturbation", oRenderingMaterial.TexturePerturbation
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureGain", oRenderingMaterial.TextureGain
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureTurbulence", oRenderingMaterial.TextureTurbulence
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardTileWidth", oRenderingMaterial.ChessboardTileWidth
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardTileHeight", oRenderingMaterial.ChessboardTileHeight
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardOffset", oRenderingMaterial.ChessboardOffset
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardJointWidth", oRenderingMaterial.ChessboardJointWidth
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardJointHeight", oRenderingMaterial.ChessboardJointHeight
+
+                    ' array mode
+				    oRenderingMaterial.GetAmbientColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "AmbientColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "AmbientColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetDiffuseColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "DiffuseColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "DiffuseColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetSpecularColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SpecularColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "SpecularColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetTransparencyColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TransparencyColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "TransparencyColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.Get3DTextureScale(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureScale=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureScale", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.Get3DTexturePosition(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTexturePosition=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTexturePosition", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.Get3DTextureOrientation(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureOrientation=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureOrientation", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+
+                    ' index mode
+				    sTemp = ""
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureColor="
+				    For K = 0 To oRenderingMaterial.ColorNumber-1
+					    oRenderingMaterial.Get3DTextureColor K, oTab
+					    oStream.Write ":" & K & ":" & oTab(0) & "/" & oTab(1) & "/" & oTab(2)
+					    sTemp = sTemp & oTab(0) & " / " & oTab(1) & " / " & oTab(2) & "<BR>"
+				    Next
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureColor", sTemp
+				    oStream.Write Chr(10) 
+
+				    sTemp = ""
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureColorCoefficient="
+				    For K = 0 To oRenderingMaterial.ColorNumber-1
+					    oRenderingMaterial.Get3DTextureColorCoefficient K, iNumDouble
+					    oStream.Write ":" & K & ":" & iNumDouble
+					    sTemp = sTemp & iNumDouble & " / "
+				    Next
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureColorCoefficient", sTemp
+				    oStream.Write Chr(10)
+
+                   ' If licensing is not available for 3D textures parameters
+                 Else
+                    ' one variable mode
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureType=" & TextureType & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureType", TextureType
+                    DefaultValue = 0
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "Bump=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "Bump", DefaultValue
+
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureImage=" & oRenderingMaterial.TextureImage & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "FlipU=" & oRenderingMaterial.FlipU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "FlipV=" & oRenderingMaterial.FlipV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "RepeatU=" & oRenderingMaterial.RepeatU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "RepeatV=" & oRenderingMaterial.RepeatV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ScaleU=" & oRenderingMaterial.ScaleU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ScaleV=" & oRenderingMaterial.ScaleV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "PositionU=" & oRenderingMaterial.PositionU & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "PositionV=" & oRenderingMaterial.PositionV & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "Orientation=" & oRenderingMaterial.Orientation & Chr(10) 
+
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureImage", oRenderingMaterial.TextureImage
+				    HtmlRowMaterial oMaterialHtmlStream, "FlipU", oRenderingMaterial.FlipU
+				    HtmlRowMaterial oMaterialHtmlStream, "FlipV", oRenderingMaterial.FlipV
+				    HtmlRowMaterial oMaterialHtmlStream, "RepeatU", oRenderingMaterial.RepeatU
+				    HtmlRowMaterial oMaterialHtmlStream, "RepeatV", oRenderingMaterial.RepeatV
+				    HtmlRowMaterial oMaterialHtmlStream, "ScaleU", oRenderingMaterial.ScaleU
+				    HtmlRowMaterial oMaterialHtmlStream, "ScaleV", oRenderingMaterial.ScaleV
+				    HtmlRowMaterial oMaterialHtmlStream, "PositionU", oRenderingMaterial.PositionU
+				    HtmlRowMaterial oMaterialHtmlStream, "PositionV", oRenderingMaterial.PositionV
+				    HtmlRowMaterial oMaterialHtmlStream, "Orientation", oRenderingMaterial.Orientation
+
+                    DefaultValue = 5
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ColorNumber=" & DefaultValue & Chr(10) 
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureComplexity=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "ColorNumber", DefaultValue
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureComplexity", DefaultValue
+
+                    DefaultValue = 0
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureAmplitude=" & DefaultValue & Chr(10)
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureVeinAmplitude=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureAmplitude", DefaultValue
+				    HtmlRowMaterial oMaterialHtmlStream, "TextureVeinAmplitude", DefaultValue
+
+                    DefaultValue = 1
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TexturePerturbation=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "TexturePerturbation", DefaultValue
+
+                    DefaultValue = 0
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureGain=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureGain", DefaultValue
+
+                    BooleanDefaultValue = FALSE
+                    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TextureTurbulence=" & BooleanDefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "TextureTurbulence", BooleanDefaultValue
+
+                    DefaultValue = 5
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardTileWidth=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "ChessboardTileWidth", DefaultValue
+
+                    DefaultValue = 3
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardTileHeight=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "ChessboardTileHeight", DefaultValue
+
+                    DefaultValue = 0.5
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardOffset=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "ChessboardOffset", DefaultValue
+
+                    DefaultValue = 1
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardJointWidth=" & DefaultValue & Chr(10) 
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "ChessboardJointHeight=" & DefaultValue & Chr(10) 
+                    HtmlRowMaterial oMaterialHtmlStream, "ChessboardJointWidth", DefaultValue
+				    HtmlRowMaterial oMaterialHtmlStream, "ChessboardJointHeight", DefaultValue
+
+                    ' array mode
+				    oRenderingMaterial.GetAmbientColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "AmbientColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "AmbientColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetDiffuseColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "DiffuseColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "DiffuseColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetSpecularColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SpecularColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "SpecularColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oRenderingMaterial.GetTransparencyColor(oTab)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "TransparencyColor=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "TransparencyColor", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+
+                    oTab(0) = 1.
+                    oTab(1) = 1.
+                    oTab(2) = 1.
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureScale=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureScale", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+
+                    oTab(0) = 0.
+                    oTab(1) = 0.
+                    oTab(2) = 0.
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTexturePosition=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTexturePosition", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureOrientation=" & oTab(0) & "/" & oTab(1) & "/" & oTab(2) & Chr(10) 
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureOrientation", oTab(0) & " / " & oTab(1) & " / " & oTab(2)
+
+                    ' index mode
+                    oTab(0) = 178.5
+                    oTab(1) = 178.5
+                    oTab(2) = 178.5
+				    sTemp = ""
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureColor="
+				    For K = 0 To 4
+					    oStream.Write ":" & K & ":" & oTab(0) & "/" & oTab(1) & "/" & oTab(2)
+					    sTemp = sTemp & oTab(0) & " / " & oTab(1) & " / " & oTab(2) & "<BR>"
+				    Next
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureColor", sTemp
+				    oStream.Write Chr(10) 
+
+				    sTemp = ""
+                    iNumDouble = 0
+				    oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "3DTextureColorCoefficient="
+				    For K = 0 To 4
+					    oStream.Write ":" & K & ":" & iNumDouble
+					    sTemp = sTemp & iNumDouble & " / "
+				    Next
+				    HtmlRowMaterial oMaterialHtmlStream, "3DTextureColorCoefficient", sTemp
+				    oStream.Write Chr(10)
+                End if
+			 
+			End If
+
+ 			' Test if analysis data exist
+			If oMaterial.ExistAnalysisData = 1 Then
+				' Init AnalysisMaterial
+				Set oAnalysisMaterial = oMaterial.AnalysisMaterial
+
+				' Analysis proporties
+
+				' Isotropic Material
+				If oAnalysisMaterial.GetType = "MATERIAL_ISOTROPIC" Then
+					oStream.Write Chr(9) & Chr(9) & Chr(9) & "PROPERTY=AnalysisIsotropic" & Chr(10)
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMDensity=" & oAnalysisMaterial.GetValue("SAMDensity") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMThermalExpansion=" & oAnalysisMaterial.GetValue("SAMThermalExpansion") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMYoungModulus=" & oAnalysisMaterial.GetValue("SAMYoungModulus") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMPoissonRatio=" & oAnalysisMaterial.GetValue("SAMPoissonRatio") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMShearModulus=" & oAnalysisMaterial.GetValue("SAMShearModulus") & Chr(10) 
+
+					' Html Isotropic Material
+					HtmlRowMaterial oMaterialHtmlStream, "PROPERTY", "ANALYSIS_ISOTROPIC"
+					HtmlRowMaterial oMaterialHtmlStream, "SAMDensity", oAnalysisMaterial.GetValue("SAMDensity")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMThermalExpansion", oAnalysisMaterial.GetValue("SAMThermalExpansion")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMYoungModulus", oAnalysisMaterial.GetValue("SAMYoungModulus")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMPoissonRatio", oAnalysisMaterial.GetValue("SAMPoissonRatio")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMShearModulus", oAnalysisMaterial.GetValue("SAMShearModulus")
+
+				End If
+
+				' Orthotropic Material
+				If oAnalysisMaterial.GetType = "MATERIAL_ORTHOTROPIC" Then
+					oStream.Write Chr(9) & Chr(9) & Chr(9) & "PROPERTY=AnalysisOrthotropic" & Chr(10)
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMDensity=" & oAnalysisMaterial.GetValue("SAMDensity") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMYoungModulus_11=" & oAnalysisMaterial.GetValue("SAMYoungModulus_11") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMYoungModulus_22=" & oAnalysisMaterial.GetValue("SAMYoungModulus_22") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMPoissonRatio_12=" & oAnalysisMaterial.GetValue("SAMPoissonRatio_12") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMShearModulus_12=" & oAnalysisMaterial.GetValue("SAMShearModulus_12") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMShearModulus_1Z=" & oAnalysisMaterial.GetValue("SAMShearModulus_1Z") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMShearModulus_2Z=" & oAnalysisMaterial.GetValue("SAMShearModulus_2Z") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMTensileStressLimit_X=" & oAnalysisMaterial.GetValue("SAMTensileStressLimit_X") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMTensileStressLimit_Y=" & oAnalysisMaterial.GetValue("SAMTensileStressLimit_Y") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMCompressiveStressLimit_X=" & oAnalysisMaterial.GetValue("SAMCompressiveStressLimit_X") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMCompressiveStressLimit_Y=" & oAnalysisMaterial.GetValue("SAMCompressiveStressLimit_Y") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMThermalExpansion_X=" & oAnalysisMaterial.GetValue("SAMThermalExpansion_X") & Chr(10) 
+					oStream.Write Chr(9)&Chr(9)&Chr(9)&Chr(9)& "SAMThermalExpansion_Y=" & oAnalysisMaterial.GetValue("SAMThermalExpansion_Y") & Chr(10) 
+
+					' Html Orthotropic Material
+					HtmlRowMaterial oMaterialHtmlStream, "PROPERTY", "ANALYSIS_ORTHOTROPIC"
+					HtmlRowMaterial oMaterialHtmlStream, "SAMDensity", oAnalysisMaterial.GetValue("SAMDensity")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMYoungModulus_11", oAnalysisMaterial.GetValue("SAMYoungModulus_11")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMYoungModulus_22", oAnalysisMaterial.GetValue("SAMYoungModulus_22")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMPoissonRatio_12", oAnalysisMaterial.GetValue("SAMPoissonRatio_12")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMShearModulus_12", oAnalysisMaterial.GetValue("SAMShearModulus_12")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMShearModulus_1Z", oAnalysisMaterial.GetValue("SAMShearModulus_1Z")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMShearModulus_2Z", oAnalysisMaterial.GetValue("SAMShearModulus_2Z")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMTensileStressLimit_X", oAnalysisMaterial.GetValue("SAMTensileStressLimit_X")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMTensileStressLimit_Y", oAnalysisMaterial.GetValue("SAMTensileStressLimit_Y")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMCompressiveStressLimit_X", oAnalysisMaterial.GetValue("SAMCompressiveStressLimit_X")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMCompressiveStressLimit_Y", oAnalysisMaterial.GetValue("SAMCompressiveStressLimit_Y")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMThermalExpansion_X", oAnalysisMaterial.GetValue("SAMThermalExpansion_X")
+					HtmlRowMaterial oMaterialHtmlStream, "SAMThermalExpansion_Y", oAnalysisMaterial.GetValue("SAMThermalExpansion_Y")
+				End If
+
+			End If
+
+			' End of material html file
+			HtmlEnd oMaterialHtmlStream
+
+			' Close html family stream
+			oMaterialHtmlStream.Close
+
+		Next
+
+		' End of family html file
+		HtmlEnd oFamilyHtmlStream
+
+		' Close html family stream
+		oFamilyHtmlStream.Close
+	Next
+
+	' End of html file
+	HtmlEnd oHtmlStream
+
+	' Close streams
+	oStream.Close
+	oHtmlStream.Close
+
+	' End message
+	msgbox "Operation succeed." & Chr(10) & "The location of the created files is :" & Chr(10) & Chr(10) & sFolderPath & sSep, vbOKOnly, "Export Material Library"	
+
+End Sub
+
+
+'************************************************************************************
+'	Subs and Functions code
+'************************************************************************************
+
+
+'------------------------------------------------------------------------------------
+'	DeleteFolderRecursive
+'	Delete a folder and all the files or folders in it
+'------------------------------------------------------------------------------------
+Public Sub DeleteFolderRecursive(oFileSys, sPath, sSep)
+
+	' Get folder
+	Dim oFolder As Folder
+	Set oFolder = oFileSys.GetFolder(sPath)
+
+	' Get files collection
+	Dim oFiles As Files
+	Set oFiles = oFolder.Files
+
+	' Declarations
+	Dim I As Int
+
+	' Delete all files
+	For I = 1 To oFiles.count
+		oFileSys.DeleteFile(sPath & sSep & oFiles.Item(1).Name)
+	Next
+
+	' Get subfolders collection
+	Dim oSubFolders As CATIAFolders
+	Set oSubFolders = oFolder.SubFolders
+
+	' Delete all folders
+	For I = 1 To oSubFolders.count
+		DeleteFolderRecursive oFileSys, sPath & sSep & oSubFolders.Item(1).Name, sSep
+	Next
+
+	' Delete folder
+	oFileSys.DeleteFolder(sPath)
+
+End Sub
+
+
+'------------------------------------------------------------------------------------
+'	HtmlHeader
+'	Write the header of html files in the specified stream
+'------------------------------------------------------------------------------------
+Public Sub HtmlHeader(oStream, sTitle, sComment, sName, iCellSpacing)
+
+	oStream.Write "<HTML><HEAD><TITLE>" & sTitle & "</TITLE></HEAD>" & Chr(10)
+	oStream.Write "<BODY bgcolor='wheat' alink='red' link='navy' vlink='blueviolet'>" & Chr(10)
+	oStream.Write "<CENTER>" & sComment & "</CENTER><HR>" & Chr(10)
+	oStream.Write "<TABLE border=0 align='center' cellspacing=" & iCellSpacing & "><TR><TD colspan=6 align='center' bgcolor='navy'><DIV style='font-size:30px;color:#FFFFFF'><B>" & UCase(sName) & "</B></DIV></TD></TR>" & Chr(10)
+
+End Sub
+
+
+'------------------------------------------------------------------------------------
+'	HtmlEnd
+'	Write the end of html files in the specified stream
+'------------------------------------------------------------------------------------
+Public Sub HtmlEnd(oStream)
+
+	oStream.Write "</TABLE><BR><BR><BR><CENTER>DASSAULT SYSTEMES - CATIA V5 - Copyright 2003</CENTER>" & Chr(10)
+	oStream.Write "</BODY></HTML>" & Chr(10)
+
+End Sub
+
+
+'------------------------------------------------------------------------------------
+'	HtmlRowMaterial
+'	Write the material row of html files
+'------------------------------------------------------------------------------------
+Dim iBool As Int
+iBool = 0
+Public Sub HtmlRowMaterial(oStream, sParam, sValue)
+
+	oStream.Write "<TR><TD width=250"
+
+	If iBool Then
+		oStream.Write " bgcolor='bisque'"
+	End If
+	
+	oStream.Write ">"
+	If sParam = "PROPERTY" Then
+		oStream.Write "<B>" & sValue & "</B>"
+	Else
+		oStream.Write sParam
+	End If
+	oStream.Write "</TD><TD"
+
+	If iBool Then
+		oStream.Write " bgcolor='bisque'"
+		iBool = 0
+	Else
+		iBool = 1
+	End If
+
+	oStream.Write ">"
+	If sParam <> "PROPERTY" Then
+		oStream.Write "" & sValue
+	End If
+	oStream.Write "</TD></TR>" & Chr(10)
+
+End Sub

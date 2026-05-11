@@ -1,0 +1,242 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Instantiating a Ditto in a Drawing View</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+ </script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Interactive Drafting</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Instantiating a Ditto in a Drawing View</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!--------------------------------------comment----------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="4%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="96%">This macro shows you how to instantiate a ditto into a view
+      from a detail view of the current drawing document, offers to user to
+      define the ditto location and defines the ditto's modifiable text value.
+      This macro open the drawing document containing the view an the detail
+      view.
+      <!--------------------------------------comment----------------------------->
+    </td>
+  </tr>
+  <tr>
+    <td width="4%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="96%"><a name="How"></a>&nbsp;CAADriInstantiateInnerDitto is
+      launched in CATIA [<a href="#References">1</a>]. No open document is
+      needed.
+      <p><a href="CAADriInstantiateInnerDittoSource.htm">CAADriInstantiateInnerDitto</a>
+      is located in the CAADriUseCases module.&nbsp; <a href="macros/CAADriInstantiateInnerDitto.CATScript">Execute
+      macro</a> (Windows only).</td>
+  </tr>
+  <tr>
+    <td width="4%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="96%"><a name="Step"></a>CAADriInstantiateInnerDitto includes
+      seven steps:
+      <ol>
+        <li><a href="#Step1">Prolog</a></li>
+        <li><a href="#Step2">Opening the Drawing Document</a></li>
+        <li><a href="#Step3">Retrieving and Defining the View</a></li>
+        <li><a href="#Step4">Retrieving and Defining the Detail View</a></li>
+        <li><a href="#Step5">Defining the Ditto's Location</a></li>
+        <li><a href="#Step6">Instantiating the Ditto</a></li>
+        <li><a href="#Step7">Retrieving the Ditto's Modifiable Text</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Set the CATIA popup file alerts to False</font>
+    <font color="#008000">' It prevents to stop the macro at each alert during its execution</font>
+    CATIA.DisplayFileAlerts = False
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The CATIA prompts are disabled thanks to the <code>DisplayFileAlerts</code>
+      property of the <i>Application</i> object set to <code>False</code>.</p>
+      <h4><a name="Step2"></a>Opening the Drawing Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Open the drawing document</font>
+<font color="#0000FF">    Dim </font>oDrawing<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawing = CATIA.Documents.Open(sDocPath &amp; _
+             &quot;\online\CAAScdDriUseCases\samples\CAADriInstantiateDittoSource.CATDrawing&quot;)    
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A drawing document is opened, its window is reframed according to the
+      size of the sheet.</p>
+      <h4><a name="Step3"></a>Retrieving and Defining the View</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Retrieve the sheets collection of the drawing document</font>
+<font color="#0000FF">    Dim </font>oSheets<font color="#0000FF"> As </font>DrawingSheets
+<font color="#0000FF">    Set </font>oSheets = oDrawing.Sheets
+    
+    <font color="#008000">' Retrieve the sheet where the detail view will be instantiated</font>
+<font color="#0000FF">    Dim </font>oSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oSheet = oSheets.Item(&quot;Sheet.1&quot;)
+    
+    <font color="#008000">' Retrieve the view where the detail view will be instantiated</font>
+<font color="#0000FF">    Dim </font>oView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oView = oSheet.Views.Item(&quot;View.3&quot;)
+    oView.Activate
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The sheets collection is retrieved from the <code>oDrawing</code>
+      object using the <code>Sheets</code> method.<br>
+      The sheet object is retrieved from the collection using the <code>Item</code>
+      method from its name.<br>
+      The views collection is retrieved from the <code>oSheet</code> object
+      using the <code>Views</code> method.<br>
+      The view object is retrieved from the collection using the <code>Item</code>
+      method from its name.<br>
+      The view is activated.</p>
+      <h4><a name="Step4"></a>Retrieving and Defining the Detail View</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Retrieve the detail sheet containing the detail view to be instantiated</font>
+<font color="#0000FF">    Dim </font>oDetailSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">    Set </font>oDetailSheet = oSheets.Item(&quot;Sheet.2 (Detail)&quot;)
+    
+    <font color="#008000">' Retrieve the detail view to be instantiated</font>
+<font color="#0000FF">    Dim </font>oDetailView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">    Set </font>oDetailView = oDetailSheet.Views.Item(&quot;DrwDetail.1&quot;)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The detail sheet object is retrieved from the collection using the <code>Item</code>
+      method from its name.<br>
+      The detail view object is retrieved from the collection using the <code>Item</code>
+      method from its name.</p>
+      <h4><a name="Step5"></a>Defining the Ditto's Location</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Indicate the ditto location</font>
+<font color="#0000FF">    Dim </font>ReturnStatus<font color="#0000FF"> As </font>String
+<font color="#0000FF">    Dim </font>iDittoCoordinates(1)
+<font color="#0000FF">    Dim </font>oDraw
+<font color="#0000FF">    Set </font>oDraw = oDrawing
+    ReturnStatus = oDraw.Indicate2D(&quot;Indicate the ditto location&quot;, iDittoCoordinates)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The ditto's location is retrieved using the <code>Indicate2D</code>
+      method which allow user to retrieve the <code>x</code> and <code>y</code>
+      coordinates when clicking the mouse. Coordinates are stored&nbsp; in an
+      array <code>iDittoCoordinates</code>. An unspecified object <code>oDraw</code>
+      is used to prevent a signature's method restriction usage.</p>
+      <p><img border="1" src="images/img014.gif" hspace="40" width="524" height="383"></p>
+      <h4><a name="Step6"></a>Instantiating the Ditto</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Retrieve the drawing components collection of the target drawing view</font>
+<font color="#0000FF">    Dim </font>o2DComponents<font color="#0000FF"> As </font>DrawingComponents
+<font color="#0000FF">    Set </font>o2DComponents = oView.Components
+    
+    <font color="#008000">' Create the ditto</font>
+<font color="#0000FF">    Dim </font>o2DComponent<font color="#0000FF"> As </font>DrawingComponent
+<font color="#0000FF">    Set </font>o2DComponent = o2DComponents.Add(oDetailView, iDittoCoordinates(0), iDittoCoordinates(1))
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The components collection is retrieved from the <code>oView</code>
+      object using the <code>Components</code> method.<br>
+      The component object is created in the collection using the <code>Add</code>
+      method from the <code>oDetailView</code> view.</p>
+      <p><img border="1" src="images/img015.gif" hspace="40" width="524" height="383"></p>
+      <h4><a name="Step7"></a>Retrieving the Ditto's Modifiable Text</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+    <font color="#008000">' Retrieve the modifiable text of the ditto</font>
+<font color="#0000FF">    Dim </font>oText<font color="#0000FF"> As </font>DrawingText
+<font color="#0000FF">    Set </font>oText = o2DComponent.GetModifiableObject(1)
+    
+    <font color="#008000">' Modify the modifiable text value</font>
+<font color="#0000FF">    Dim </font>ReturnValue<font color="#0000FF"> As </font>String
+    ReturnValue = InputBox(&quot;Enter a value&quot;, &quot;&quot;, &quot;New Value For Text&quot;)
+    oText.Text = ReturnValue
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The text object is retrieved from the <code>o2DComponent</code> object
+      using the <code>GetModifiableObject</code> method.<br>
+      The text of the text object is returned using the <code>InputBox</code>
+      procedure. Enter 10 and click OK.</p>
+      <p><img border="0" src="images/img016.gif" hspace="40" width="363" height="145"></p>
+      <p><img border="1" src="images/img017.gif" hspace="40" width="524" height="383"></p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!--------------------------------------comment----------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to instantiate a drawing detail view as a ditto
+in a view using the <i>Add </i>method of the <i>Components</i> object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!--------------------------------------comment----------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="../CAAScdDriTechArticles/CAADriObjDrawingDocument.htm">DrawingDocument</a></i>,
+      <i><a href="../CAAScdDriTechArticles/CAADriObjDrawingSheet.htm">DrawingSheet</a>,</i>
+      <a href="../CAAScdDriTechArticles/CAADriObjDrawingSheets.htm"><i>DrawingSheets</i></a><i>,
+      </i><a href="../CAAScdDriTechArticles/CAADriObjDrawingView.htm"><i>DrawingView</i></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!--------------------------------------comment----------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

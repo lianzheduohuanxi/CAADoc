@@ -1,0 +1,166 @@
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
+
+' ***********************************************************************
+'   Purpose:      Create structure objects
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    Dim doc As Document
+
+    Dim StrWorkbench As StrWorkbench
+    Dim strFactory As StrObjectFactory
+
+    Set doc = CATIA.ActiveDocument
+    Dim rootProduct As Product
+    Set rootProduct = doc.Product
+
+    Set StrWorkbench = doc.GetWorkbench("StrWorkbench")
+    Set strFactory = rootProduct.GetTechnologicalObject("StructureObjectFactory")
+
+    Dim documents As Documents
+    Set documents = CATIA.Documents
+
+    '============================================================
+    ' extremities definition for columns
+    '============================================================
+
+    ' column 1
+    Dim reference11 As Reference
+    Set reference11 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.12;(Brp:(GSMPlane.3);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.12)")
+    Dim extremity11 As AnyObject
+    Set extremity11 = strFactory.AddDefExtFromReference(reference11, 0)
+
+    Dim reference12 As Reference
+    Set reference12 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.11;(Brp:(xy-plane);Brp:(GSMIntersect.10;(Brp:(GSMPlane.1);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.11)")
+    Dim extremity12 As AnyObject
+    Set extremity12 = strFactory.AddDefExtFromReference(reference12, 0)
+
+    ' column 2
+    Dim reference21 As Reference
+    Set reference21 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.9;(Brp:(GSMPlane.3);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.9)")
+    Dim extremity21 As AnyObject
+    Set extremity21 = strFactory.AddDefExtFromReference(reference21, 0)
+
+    Dim reference22 As Reference
+    Set reference22 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.8;(Brp:(xy-plane);Brp:(GSMIntersect.7;(Brp:(GSMPlane.1);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.8)")
+    Dim extremity22 As AnyObject
+    Set extremity22 = strFactory.AddDefExtFromReference(reference22, 0)
+
+    ' column 3
+    Dim reference31 As Reference
+    Set reference31 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.5;(Brp:(xy-plane);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.5)")
+    Dim extremity31 As AnyObject
+    Set extremity31 = strFactory.AddDefExtFromReference(reference31, 0)
+
+    Dim reference32 As Reference
+    Set reference32 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.6;(Brp:(GSMPlane.3);Brp:(GSMIntersect.4;(Brp:(yz-plane);Brp:(GSMPlane.2)))));None:(Limits1:();Limits2:()));GSMIntersect.6)")
+    Dim extremity32 As AnyObject
+    Set extremity32 = strFactory.AddDefExtFromReference(reference32, 0)
+
+    ' column 4
+    Dim reference41 As Reference
+    Set reference41 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.3;(Brp:(GSMPlane.3);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.3)")
+    Dim extremity41 As AnyObject
+    Set extremity41 = strFactory.AddDefExtFromReference(reference41, 0)
+
+    Dim reference42 As Reference
+    Set reference42 = rootProduct.CreateReferenceFromName("Produit1/grid/!Selection_BorderFVertex:(BEdge:(Brp:(GSMIntersect.2;(Brp:(xy-plane);Brp:(GSMIntersect.1;(Brp:(yz-plane);Brp:(zx-plane)))));None:(Limits1:();Limits2:()));GSMIntersect.2)")
+    Dim extremity42 As AnyObject
+    Set extremity42 = strFactory.AddDefExtFromReference(reference42, 0)
+
+    '============================================================
+    ' columns creation
+    '============================================================
+
+    dim sectionName as string
+    sectionName = InputBox("Section path","Parameters", "e:\tmp\HEA120.CATPart")
+    
+    ' column 1    
+    Dim docSection1 As Document
+    Set docSection1 = documents.Read(sectionName)
+
+    Dim section1 As StrSection
+    Set section1 = strFactory.AddSection(docSection1)
+
+    dim member1 as StrMember
+    Set member1 = strFactory.AddMember(section1, "catStrCenterCenter", 0, extremity11, extremity12, "Column")
+        
+    ' column 2
+    Dim docSection2 As Document
+    Set docSection2 = documents.Read(sectionName)
+
+    Dim section2 As StrSection
+    Set section2 = strFactory.AddSection(docSection2)
+
+    dim member2 as StrMember
+    Set member2 = strFactory.AddMember(section2, "catStrCenterCenter", 0, extremity21, extremity22, "Column")
+        
+    ' column 3
+    Dim docSection3 As Document
+    Set docSection3 = documents.Read(sectionName)
+
+    Dim section3 As StrSection
+    Set section3 = strFactory.AddSection(docSection3)
+
+    dim member3 as StrMember
+    Set member3 = strFactory.AddMember(section3, "catStrCenterCenter", 0, extremity31, extremity32, "Column")
+        
+    ' column 4
+    Dim docSection4 As Document
+    Set docSection4 = documents.Read(sectionName)
+
+    Dim section4 As StrSection
+    Set section4 = strFactory.AddSection(docSection4)
+
+    dim member4 as StrMember
+    Set member4 = strFactory.AddMember(section4, "catStrCenterCenter", 0, extremity41, extremity42, "Column")
+
+    '============================================================
+    ' end plates creation
+    '============================================================
+
+    Dim plate1 As StrPlate
+    Set plate1 = strFactory.AddRectangularEndPlate(member1, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
+	
+    Dim plate2 As StrPlate
+    Set plate2 = strFactory.AddRectangularEndPlate(member2, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
+	
+    Dim plate3 As StrPlate
+    Set plate3 = strFactory.AddRectangularEndPlate(member3, catStartExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
+	
+    Dim plate4 As StrPlate
+    Set plate4 = strFactory.AddRectangularEndPlate(member4, catEndExtremity, 0.005, 0.2, 0.2, catStrStandardOrientation, "EndPlate")
+
+    '============================================================
+    ' plate creation
+    '============================================================
+
+    Dim contour(3) As Reference
+
+    '============================================================
+    ' NOTE:
+    ' Since this Macro is using Brep information to set contour, it can be run successfully only once in a session
+    ' Please restart session if you want to run it again.
+    '============================================================
+	Set contour(0) = rootProduct.CreateReferenceFromName("Produit1/Column_2/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;9999)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10018)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+	Set contour(1) = rootProduct.CreateReferenceFromName("Produit1/Column_4/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10039)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;2);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10058)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+	Set contour(2) = rootProduct.CreateReferenceFromName("Produit1/Column_5/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10068)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10069)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+	Set contour(3) = rootProduct.CreateReferenceFromName("Produit1/Column_3/!Selection_FVertex:(Vertex:(Neighbours:(Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10029)));None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;1);None:();Cf11:());Face:(Brp:(StrFunRibSweep.1;0:(Brp:(GSMLine.1);Brp:(IntSection.1;10030)));None:();Cf11:()));Cf11:());StrFunRibSweep.1;Z0;G4702)")
+
+    Dim support As Reference
+    Set support = rootProduct.CreateReferenceFromName("Produit1/grid/!Plane.3")
+
+    Dim plate As StrPlate
+    Set plate = strFactory.AddPlate(support, 0.005, catStrStandardOrientation, contour, 0.0, "PlateType")
+
+End Sub
+
+
+

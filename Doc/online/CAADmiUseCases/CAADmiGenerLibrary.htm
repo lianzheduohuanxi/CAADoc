@@ -1,0 +1,277 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Library of Activities</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Process Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Library of Activities</h3>
+      <em>Defining activities</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article accompanies the CAADmiGenerLibrary use case. This use case
+      explains how to create new activities and store them in a special library
+      document used to define processes.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The <i>CAADmiGenerLibrary</i> Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADmiGenerLibrary Do</a></li>
+            <li><a href="#How">How to Launch CAADmiGenerLibrary</a></li>
+            <li><a href="#Where">Where to the Find CAADmiGenerLibrary Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you create a new activities library and
+store new activity types in it. Specifically, you will learn how to:
+<ul>
+  <li>Define a new activities library document</li>
+  <li>Use the methods of the <i>CATISPPActivityTypeFactory</i> interface to
+    create new activities</li>
+  <li>Save the activities library document.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAADmiGenerLibrary Use Case</h3>
+<p>CAADmiGenerLibrary is a use case of the CAADMAPSInterfaces.edu framework that
+illustrates DMAPSInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAADmiGenerLibrary Do</h4>
+<p>The goal of CAADmiGenerLibrary is to illustrate the creation of a new
+activities library. It creates the library as a <code>ProcessLibrary</code> type
+of document, retrieves its root container as a <i>CATISPPActivityTypeFactory</i>
+and creates several new activity types. It then simply saves the new catalog
+document and ends the session.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADmiGenerLibrary</h4>
+<p>To launch CAADmiGenerLibrary, you will need to set up the build time
+environment, then compile CAADmiGenerLibrary along with its prerequisites, set
+up the run time environment, and then execute the sample. This is fully
+described in the referenced article [<a href="#References">1</a>].&nbsp;</p>
+<p> To launch the use case,
+execute the following command:</p>
+<pre>mkrun -c &quot;CAADmiGenerLibrary LibraryName.act&quot;</pre>
+<ul>
+  <li><b>LibraryName.act</b> - is the name of the activities library (with its
+    suffix &quot;.act&quot;) that has been created.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CaaDmiGenerLibrary Code</h4>
+<p>CAADmiGenerLibrary code is located in the CAADmiGenerLibrary.m use case
+module of the CAADMAPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory/CAADMAPSInterfaces.edu/CAADmiGenerLibrary.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory\CAADMAPSInterfaces.edu\CAADmiGenerLibrary.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of a unique source file named CAADmiGenerLibrary.cpp.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three logical steps in CAADmiGenerLibrary:</p>
+<ol>
+  <li><a href="#NewActivities">Creating a New Activities Library Document</a></li>
+  <li><a href="#ActivityTypes">Creating Activity Types</a></li>
+  <li><a href="#SavingCatalog">Saving the Activities Library Document</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="NewActivities"></a>Creating a New Activities Library Document</h4>
+<ol>
+  <li>Create the session
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT rc = E_FAIL;
+...
+CATSession *pSession = NULL;
+rc = <b>::Create_Session</b>(&quot;CAA2_Sample_Session&quot;, pSession );</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Generally, the first thing that is necessary in a batch program is the
+    creation of a new session. This is done using the <code>Create_Session</code>
+    global function. It is important not to forget to delete the session at the
+    end of your batch program.</p>
+  </li>
+  <li>Create activities library
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATDocument *pActDoc = NULL;
+rc = <b>CATDocumentServices::New</b>(&quot;ProcessLibrary&quot;, pActDoc );
+if ( FAILED(rc) || (NULL==pActDoc) )
+   <b>return </b>2;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Now that we have a current session, we can create a new activities
+    library which is simply a new document of type <code>ProcessLibrary</code>.
+    This is done using the <i>CATDocumentServices</i><code>::New</code> method.
+    Note that <code>ProcessLibrary</code> is the name that appears in the list
+    of document types available seen in the <code>File/New</code> menu of an
+    interactive session. The actual suffix of the document is <code>.act</code>.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="ActivityTypes"></a>Creating Activity Types</h4>
+<ol>
+  <li>Retrieve activities library document root container
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATInit *pInitOnDoc = NULL;
+rc = pActDoc -&gt; <b>QueryInterface</b> (IID_CATInit,
+                                (void**) <b>&amp;pInitOnDoc</b>);
+if (FAILED(rc)) <b>return</b> 6;
+
+CATISPPActivityTypeFactory *piRootActivity = (CATISPPActivityTypeFactory* )
+	pInitOnDoc-&gt;<b>GetRootContainer</b>(&quot;CATISPPActivityTypeFactory&quot;);
+if ( NULL == piRootActivity )
+	<b>return</b> 3;
+
+pInitOnDoc -&gt; <b>Release</b>();
+pInitOnDoc = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>We get a <i>CATISPPActivityTypeFactory </i>handle from the root container
+    of the new activities library document using <i>CATInit</i><code>::GetRootContainer</code>.</p>
+  </li>
+  <li>Create activity types
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATISPPActivityType_var spAssemblyActvity =
+	piRootActivity-&gt;<b>CreateActivityType</b>(&quot;CAADmiAssembly&quot;);
+CATISPPActivityType_var spPlaceActivity = 
+	piRootActivity-&gt;<b>CreateActivityType</b>(&quot;CAADmiPlace&quot;);
+piRootActivity -&gt; <b>Release</b>();
+piRootActivity = NULL;</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Using the <i>CATISPPActivityTypeFactory</i> handle, we create two kinds
+    of activities: &quot;CAADmiAssembly&quot; that will be used to assemble
+    objects, and &quot;CAADmiPlace&quot; that will be used to position objects.
+    Generally, try to choose activity names in order to avoid all confusion
+    between activities.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="SavingCatalog"></a>Saving the Activities Library Document</h3>
+<table class="code">
+  <tr>
+    <td>
+      <pre>rc = <b>CATDocumentServices::SaveAs</b>(*pActDoc, argv[1]);
+if ( FAILED(rc) )
+   <b>return </b>4;
+// remove opened document
+rc = <b>CATDocumentServices::Remove</b> (*pActDoc);
+if (!SUCCEEDED(rc)) 
+   <b>return</b> 5;
+
+// delete the session, removes the opened documents also.
+// never forget to delete a creating session after usage.
+rc<b> = ::Delete_Session</b>(&quot;CAA2_Sample_Session&quot;);</pre>
+    </td>
+  </tr>
+</table>
+<p>The activities library document is saved under the name passed as an argument
+to this program, using the <code>SaveAs</code> static method of <i>CATDocumentServices</i>.
+Also, it is a good idea to always remove the document from the session using the
+<code>Remove</code> static method of <i>CATDocumentServices</i>. Do not forget
+to delete the session using the<code> Delete_Session</code> global function.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown you how to:</p>
+<ul>
+  <li>Create a new activities library document of type
+    &quot;ProcessLibrary&quot; using the <code>New</code> static method of <i>CATDocumentServices</i></li>
+  <li>How to define new activity types in this document using the <code>CreateActivityType</code>
+    method of the <i>CATISPPActivityTypeFactory</i> interface, whose handle is
+    retrieved using the <code>GetRootContainer</code> method of <i>CATInit</i></li>
+  <li>How to save and remove the new activities library document using the <code>Save</code>
+    and <code>Remove</code> static methods of <i>CATDocumentServices</i>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

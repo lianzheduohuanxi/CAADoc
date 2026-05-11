@@ -1,0 +1,184 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAAPriChangeHoleForm.frm</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre><font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:      Changes hole description</font>
+<font color="#008000">'   Assumtions:   Looks for CAAPriChangeHoleVBA.htm in the DocView</font>
+<font color="#008000">'   Author:</font>
+<font color="#008000">'   Languages:    MS VBA</font>
+<font color="#008000">'   Locales:      English</font>
+<font color="#008000">'   CATIA Level:  V5R13</font>
+<font color="#008000">' ***********************************************************************</font>
+
+Private oUnit<font color="#0000FF"> As </font>Double
+ 
+Private Sub cmdOk_Click()
+
+<font color="#0000FF">Dim </font>oHole<font color="#0000FF"> As </font>Hole
+<font color="#0000FF">Dim </font>iRow<font color="#0000FF"> As </font>Long
+<font color="#0000FF">Dim </font>iHoleInSelection<font color="#0000FF"> As </font>Boolean
+<font color="#0000FF">Dim </font>oParameters<font color="#0000FF"> As </font>Parameters
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the description you wish, by default pre-select the first description</font>
+<font color="#008000">' ------------</font>
+iRow = mfgDescription.RowSel
+frmCAAPriChangeHole.Hide
+iHoleInSelection = True
+<font color="#008000">' ------------</font>
+<font color="#008000">' Loop on the selection content, we expect to find a hole</font>
+<font color="#008000">' ------------</font>
+Do While iHoleInSelection = True
+    iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, &quot;CATIAHole&quot;, oHole)
+<font color="#0000FF">    If </font>iHoleInSelection = True<font color="#0000FF"> Then</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' There is a hole object in the selection</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Get the hole limit</font>
+        <font color="#008000">' ------------</font>
+        Select Case mfgDescription.TextMatrix(iRow, 5)
+            Case &quot;UpToNext&quot;
+                oHole.BottomLimit.LimitMode = catUpThruNextLimit
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Update the part when set the hole limit to &quot;UpToNext&quot;</font>
+                <font color="#008000">' ------------</font>
+                oPartDocument.Part.Update
+            Case Else
+                oHole.BottomLimit.LimitMode = catOffsetLimit
+                oHole.BottomLimit.Dimension.Value = CDbl(mfgDescription.TextMatrix(iRow, 5)) * oUnit
+<font color="#0000FF">        End Select</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Get the hole diameter and its tolerances</font>
+        <font color="#008000">' ------------</font>
+        oHole.Diameter.Value = CDbl(mfgDescription.TextMatrix(iRow, 2))
+        oHole.Diameter.MaximumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 3)) - CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
+        oHole.Diameter.MinimumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 4)) - CDbl(mfgDescription.TextMatrix(iRow, 2))) * oUnit
+<font color="#0000FF">        Set </font>oParameters = oPartDocument.Part.Parameters.SubList(oHole, True)
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Set the hole description parameter</font>
+        <font color="#008000">' ------------</font>
+<font color="#0000FF">        If </font>ParameterExists(&quot;Hole_Description&quot;, oParameters) = True Then
+            oParameters.Item(&quot;Hole_Description&quot;).ValuateFromString (mfgDescription.TextMatrix(iRow, 0))
+        Else
+            oParameters.CreateString &quot;Hole_Description&quot;, mfgDescription.TextMatrix(iRow, 0)
+<font color="#0000FF">        End If</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Get the hole type</font>
+        <font color="#008000">' ------------</font>
+        Select Case mfgDescription.TextMatrix(iRow, 1)
+            Case &quot;Simple&quot;
+                oHole.Type = catSimpleHole
+            Case &quot;Counterbored&quot;
+                oHole.Type = catCounterboredHole
+                oHole.HeadDiameter.Value = CDbl(mfgDescription.TextMatrix(iRow, 9)) * oUnit
+                oHole.HeadDepth.Value = CDbl(mfgDescription.TextMatrix(iRow, 12)) * oUnit
+                oHole.HeadDiameter.MaximumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 10)) - CDbl(mfgDescription.TextMatrix(iRow, 9))) * oUnit
+                oHole.HeadDiameter.MinimumTolerance = (CDbl(mfgDescription.TextMatrix(iRow, 11)) - CDbl(mfgDescription.TextMatrix(iRow, 9))) * oUnit
+<font color="#0000FF">        End Select</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Get the hole thread definition</font>
+        <font color="#008000">' ------------</font>
+        Select Case mfgDescription.TextMatrix(iRow, 6)
+            Case &quot;Yes&quot;
+<font color="#0000FF">                If </font>oHole.Diameter.Value &lt; oHole.ThreadDiameter.Value And oHole.BottomLimit.Dimension.Value &gt; oHole.ThreadDepth.Value<font color="#0000FF"> Then</font>
+                    <font color="#008000">' ------------</font>
+                    <font color="#008000">' Update the part when hole diameter is smaller than tread diameter</font>
+                    <font color="#008000">' and hole limit is greater than thread depth, before apply new values</font>
+                    <font color="#008000">' -----------</font>
+                    oPartDocument.Part.Update
+<font color="#0000FF">                End If</font>
+                oHole.ThreadingMode = catThreadedHoleThreading
+                oHole.ThreadDiameter.Value = CDbl(mfgDescription.TextMatrix(iRow, 7)) * oUnit
+                oHole.ThreadDepth.Value = CDbl(mfgDescription.TextMatrix(iRow, 8)) * oUnit
+            Case &quot;No&quot;
+                oHole.ThreadingMode = catSmoothHoleThreading
+<font color="#0000FF">        End Select</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' Update the part</font>
+        <font color="#008000">' ------------</font>
+        oPartDocument.Part.Update
+<font color="#0000FF">    End If</font>
+Loop
+
+Unload Me
+    
+<font color="#0000FF">End Sub</font>
+
+Private Sub cmdCancel_Click()
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Unload the form</font>
+<font color="#008000">' ------------</font>
+Unload Me
+
+<font color="#0000FF">End Sub</font>
+
+Private Sub UserForm_Initialize()
+
+<font color="#0000FF">Dim </font>oCATIAFileSys
+<font color="#0000FF">Dim </font>oFile<font color="#0000FF"> As </font>File
+<font color="#0000FF">Dim </font>oTextSteam<font color="#0000FF"> As </font>TextStream
+<font color="#0000FF">Dim </font>oUnit<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>oLine<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>iArray()<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>oRow<font color="#0000FF"> As </font>Long
+<font color="#0000FF">Dim </font>iDelimiter<font color="#0000FF"> As </font>String
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' The string as delimiter between input in the text file</font>
+<font color="#008000">' ------------</font>
+iDelimiter = &quot;\\&quot;
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the CATIA file system</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oCATIAFileSys = CATIA.FileSystem
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the file containing the hole parameters</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oFile = oCATIAFileSys.GetFile(sDocPath &amp; &quot;\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt&quot;)
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the text stream</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oTextSteam = oFile.OpenAsTextStream(&quot;ForReading&quot;)
+oLine = oTextSteam.ReadLine
+Select Case oLine
+    Case &quot;Millimeter&quot;
+        oUnit = 1
+    Case &quot;Inch&quot;
+        oUnit = 25.4
+<font color="#0000FF">End Select</font>
+oRow = 0
+<font color="#008000">' ------------</font>
+<font color="#008000">' Read the hole parameters</font>
+<font color="#008000">' ------------</font>
+Do While oTextSteam.AtEndOfStream = False
+    oLine = oTextSteam.ReadLine
+    iArray = Split(oLine, iDelimiter)
+<font color="#0000FF">    For </font>i = 0<font color="#0000FF"> To </font>12
+        mfgDescription.TextMatrix(oRow, i) = iArray(i)
+    Next i
+    oRow = oRow + 1
+Loop
+oTextSteam.Close
+cmdOk.Enabled = True
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

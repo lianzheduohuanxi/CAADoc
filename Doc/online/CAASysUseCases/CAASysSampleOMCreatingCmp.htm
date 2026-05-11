@@ -1,0 +1,717 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Components</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Components</h3>
+      <em>Making objects that implement interfaces</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create CAA V5 components.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysGeoModelImpl Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysGeoModelImpl Do</a></li>
+            <li><a href="#How">How to Launch CAASysGeoModelImpl</a></li>
+            <li><a href="#Where">Where to Find the CAASysGeoModelImpl Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create CAA V5 components [<a href="#References">1</a>],
+that is, how to bundle several C++ classes that each implements one or several
+interfaces [<a href="#References">2</a>] and make that this set of classes acts
+and behaves as a single application object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysGeoModelImpl Use Case</h3>
+<p>CAASysGeoModelImpl is a use case of the CAASystem.edu framework that
+illustrates the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysGeoModelImpl Do</h4>
+<p>This use case includes the code for a set of components that stand for
+geometric objects. The circle is taken as example.</p>
+<p><img border="0" src="images/CAASysOMCreatingCmp.jpg" width="644" height="424"></p>
+<p>The circle component is made of the <i>CAASysCircle</i> main class, and of
+the <i>CAAESysCreateInstanceForCircle</i>, <i>CAAESysCircle</i>, <i>CAAESysCircleCenterProperties,</i>
+and <i>CAAESysColorProperties</i> extension classes. <i>CAAESysCreateInstanceForCircle</i>
+implements the<i> CATICreateInstance</i> interface to enable the component
+creation. <i>CAAESysCircle </i>implements the <i>CAAISysCircle</i> interface
+that is the circle type interface<i>.</i> <i>CAAESysCircleCenterProperties </i>implements
+the <i>CAAISysCircleCenterProperties</i> interface to manage the marker used to
+represent the circle center. <i>CAAESysColorProperties</i> implements the <i>CAAISysColorProperties</i>
+interface to manage the circle color. <i>CAAESysCircle</i> and <i>CAAISysCircleCenterProperties</i>
+are extension classes of the <i>CAASysCircle</i> class only, while <i>CAAESysColorProperties</i>
+is shared with other geometric components, such as the line, the polyline, and
+the ellipse. Refer to sharing extensions in [<a href="#References">1</a>].</p>
+<p>In addition, the factory for the circle component is also described. The <i>CAASysGeomCont</i>
+main class that represents a container for geometric objects implements the <i>CAAISysGeomFactory</i>
+interface through a code extension class named <i>CAAESysGeomFactoryForGeomCont</i>
+[<a href="#References">3</a>].</p>
+<p><b>Note</b>: Extension links are shown as dashed arrows, and implementation
+to interface links are shown using the realization link symbol, made of a dash
+line ended using a triangle on the interface side.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysGeoModelImpl</h4>
+<p>You first need to build CAASysGeoModelImpl. To do this, you will need to set
+up the build time environment, then compile CAASysGeoModelImpl along with its
+prerequisites as described in [<a href="#References">5</a>]. You cannot launch
+CAASysGeoModelImpl itself. CAASysGeoModelImpl is simply used by the
+CAASysUsingComp [<a href="#References">4</a>] use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysGeoModelImpl Code</h4>
+<p>The CAASysGeoModelImpl use case is made of several classes located in the
+CAASysGeoModelComp.m for the component main classes and extension classes that
+implement <i>CATICreateInstance</i>, and CAASysGeoModelImpl.m module for the
+other extension classes. These modules belong to the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed. The header files of shared classes are located in the
+PrivateInterfaces directory of CAASystem.edu.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a component such as <i>CAASysCircle</i>, there are nine main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the <i>CAASysCircle</i> component main class header
+      file</td>
+    <td valign="top">ProtectedInterfaces\CAASysCircle.h</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the <i>CAASysCircle</i> component main class source
+      file</td>
+    <td valign="top">CAASysGeoModelComp.m\src\CAASysCircle.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the <i>CAAESysCreateInstanceForCircle</i> extension
+      class header file</td>
+    <td valign="top">CAASysGeoModelComp.m\LocaInterfaces\CAAESysCreateInstanceForCircle.h</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create the <i>CAAESysCreateInstanceForCircle</i> extension
+      class source file</td>
+    <td valign="top">CAASysGeoModelComp.m\src\CAAESysCreateInstanceForCircle.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Create the <i>CAAESysCircle</i> extension class header file</td>
+    <td valign="top">CAAESysCircle.h file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Create the <i>CAAESysCircle</i> extension class source file</td>
+    <td valign="top">CAAESysCircle.cpp file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Create the <i>CAAESysCenterProperties</i> extension class
+      header file</td>
+    <td valign="top">CAAESysCircleCenterProperties.h file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step8">8</a></td>
+    <td valign="top">Create the <i>CAAESysCenterProperties</i> extension class
+      source file</td>
+    <td valign="top">CAAESysCircleCenterProperties.cpp file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step9">9</a></td>
+    <td valign="top">Create the <i>CAAESysColorProperties</i> shared extension
+      class header file</td>
+    <td valign="top">CAAESysColorProperties.h file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step10">10</a></td>
+    <td valign="top">Create the <i>CAAESysColorProperties</i> shared extension
+      class source file</td>
+    <td valign="top">CAAESysColorProperties.cpp file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step11">11</a></td>
+    <td valign="top">Update the interface dictionary</td>
+    <td valign="top">CAASystem.edu.dico file</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the CAASysCircle Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;     //Needed to derive from CATBaseUnknown
+#include &quot;CAASysGeoModelComp.h&quot; //To export the class 
+
+class ExportedByCAASysGeoModelComp CAASysCircle : public CATBaseUnknown
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAASysCircle();
+    virtual ~CAASysCircle();
+  private:
+    CAASysCircle(const CAASysCircle &amp;iObjectToCopy);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysCircle</i> class C++-derives from <i>CATBaseUnknown</i>. The <code>CATDeclareClass</code>
+macro declares that the class <i>CAASysCircle</i> belongs to a component. Note
+that the copy constructor is set as private. The class has a constructor and a
+destructor only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating the CAASysCircle Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAASysCircle.h&quot;
+
+<b>CATImplementClass(CAASysCircle, Implementation, CATBaseUnknown, CATNull);</b>
+
+CAASysCircle::CAASysCircle()  {}
+
+CAASysCircle::~CAASysCircle() {}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CATImplementClass</code> macro declares that the <i>CAASysCircle</i>
+class is a component main class thanks the <code>Implementation</code> keyword,
+and OM-derives [<a href="#References">6</a>] from <i>CATBaseUnknown</i>. Any
+component main class declared as an <code>Implementation</code> must C++-derive
+and OM-derive from the same class, that must either be <i>CATBaseUnknown</i> or
+another component main class. The component main class doesn't implement any
+interface, but it could.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the CAAESysCreateInstanceForCircle Extension
+Class Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+class CAAESysCreateInstanceForCircle : public CATBaseUnknown
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAAESysCreateInstanceForCircle();
+    virtual ~CAAESysCreateInstanceForCircle();
+    virtual HRESULT __stdcall <b>CreateInstance</b>(void **oppv);
+
+  private:
+    CAAESysCreateInstanceForCircle(const CAAESysCreateInstanceForCircle &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForCircle</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAESysCreateInstanceForCircle</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the <code>CreateInstance</code> method which is the only method of the <i>CATICreateInstance</i>
+interface. Note that the copy constructor is set as private. This is very
+important for extensions. Since extensions must never be directly instantiated
+by client applications, this prevents the compiler from creating the copy
+constructor as public without you know. This copy constructor is not implemented
+in the source file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the CAAESysCircle Extension Class Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAESysCreateInstanceForCircle.h&quot;
+#include &quot;CAASysCircle.h&quot;
+#include &lt;CATErrorDef.h&gt;
+
+#include &quot;TIE_CATICreateInstance.h&quot;
+TIE_CATICreateInstance(CAAESysCreateInstanceForCircle);
+
+<b>CATImplementClass(CAAESysCreateInstanceForCircle, CodeExtension, CATBaseUnknown, CAASysCircle);
+</b>
+CAAESysCreateInstanceForCircle::CAAESysCreateInstanceForCircle()  {}
+
+CAAESysCreateInstanceForCircle::~CAAESysCreateInstanceForCircle() {}
+
+HRESULT __stdcall CAAESysCreateInstanceForCircle::CreateInstance(void ** oppv)
+{
+   CAASysCircle * pt = new CAASysCircle();
+   if (NULL == pt) return(E_OUTOFMEMORY);
+   *oppv = (void *)pt;
+   return(S_OK);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForCircle</i> class states that it implements the
+<i>CATICreatInstance</i> interface thanks to the <code>TIE_CATICreateInsatnce</code>
+macro. This extension class is dedicated to the circle component, and the <code>CATImplementClass</code>
+macro declares that the <i>CAAESysCreateInstanceForCircle</i> class is code
+extension class, thanks to the <code>CodeExtension</code> keyword, and that it
+extends the component whose main class is <i>CAASysCircle</i>. The third
+parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and is
+unused for extensions. The <code>CreateInstance</code> method instantiates the <i>CAASysCircle</i>
+component main class. This method is called by the <code>CATInstantiateComponent</code>
+global function that is used by client applications to instantiate the component
+[<a href="#References">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating the CAAESysCircle Extension Class Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+// Mathematics Framework
+#include &quot;CATMathPoint.h&quot;     //Needed by SetCenter &amp; GetCenter
+#include &quot;CATMathVector.h&quot;    //Needed by SetPlanar &amp; GetPlanar
+
+class CAAESysCircle : public CATBaseUnknown
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAAESysCircle();
+    virtual ~CAAESysCircle();
+    // <i>CAAISysCircle</i> interface methods
+    virtual  HRESULT  SetCenter(const CATMathPoint  &amp; iCenter) ;
+    virtual  HRESULT  GetCenter(CATMathPoint        &amp; oCenter) const ;
+    virtual  HRESULT  SetRadius(const float           iRadius) ;
+    virtual  HRESULT  GetRadius(float               &amp; oRadius) const ;
+    virtual  HRESULT  SetPlane (const CATMathVector &amp; iNormal ,
+                                const CATMathVector &amp; iAxis );
+    virtual  HRESULT  GetPlane (CATMathVector       &amp; oNormal ,
+                                CATMathVector       &amp; oAxis  ) const;    
+  private:
+    CAAESysCircle(const CAAESysCircle &amp;iObjectToCopy);
+  private:
+    float           _Radius ;
+    CATMathPoint    _Center ;
+    CATMathVector   _Normal ;
+    CATMathVector   _Axis ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCircle</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAESysCircle</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the methods of the <i>CAAISysCircle</i> interface, that set and get the
+circle center, radius, and plane. Note that the copy constructor is set as
+private. This is very important for extensions. Since extensions must never be
+directly instantiated by client applications, this prevents the compiler from
+creating the copy constructor as public without you know. This copy constructor
+is not implemented in the source file. The circle data are its center, its
+radius, the normal to its plane, and an axis of this plane.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Creating the CAAESysCircle Extension Class Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAESysCircle.h&quot;
+
+<b>#include &quot;TIE_CAAISysCircle.h&quot;
+TIE_CAAISysCircle(CAAESysCircle);</b>
+
+<b>CATImplementClass(CAAESysCircle, DataExtension, CATBaseUnknown, CAASysCircle);</b>
+
+CAAESysCircle::CAAESysCircle() : _Radius(0) {}
+
+CAAESysCircle::~CAAESysCircle() {}
+
+HRESULT  CAAESysCircle::SetCenter(const CATMathPoint &amp; iCenter) 
+{
+  _Center = iCenter ;
+  return S_OK;
+}
+
+HRESULT  CAAESysCircle::SetRadius(const float iRadius) 
+{
+  _Radius = iRadius ;
+  return S_OK;
+}
+	
+HRESULT  CAAESysCircle::SetPlanar(const CATMathVector &amp; iNormal, 
+                                  const CATMathVector &amp; iAxis) 
+{
+  _Normal= iNormal ;
+  _Axis = iAxis ;
+  return S_OK;
+}
+ 
+HRESULT CAAESysCircle::GetCenter(CATMathPoint &amp; oCenter) const 
+{
+  oCenter = _Center ;
+  return S_OK;
+}
+	
+HRESULT CAAESysCircle::GetRadius(float &amp; oRadius) const
+{
+  oRadius = _Radius ;
+  return S_OK;
+}
+	
+HRESULT  CAAESysCircle::GetPlanar(CATMathVector &amp; oNormal ,
+                                  CATMathVector &amp; oAxis) const
+{
+  oNormal = _Normal ;
+  oAxis   = _Axis ;  
+  return S_OK;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCircle</i> class states that it implements the <i>CAAISysCircle</i>
+interface thanks to the <code>TIE_CAAISysCircle</code> macro. This extension
+class is dedicated to the circle component, and the <code>CATImplementClass</code>
+macro declares that the <i>CAAESysCircle</i> class is data extension class,
+thanks to the <code>DataExtension</code> keyword, and that it extends the
+component whose main class is <i>CAASysCircle</i>. The third parameter must
+always be set to <i>CATBaseUnknown</i>, makes no sense, and is unused for
+extensions. The <i>CAAISysCircle</i> interface methods are implemented as usual.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Creating the CAAESysCircleCenterProperties Extension
+Class Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;                // Needed to derive from  CATBaseUnknown
+#include &quot;CAAISysCircleCenterProperties.h&quot; // Needed to have the marker type
+
+class CAAESysCircleCenterProperties: public CATBaseUnknown
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAAESysCircleCenterProperties();
+    virtual ~CAAESysCircleCenterProperties();
+
+    virtual HRESULT GetMarkerType(CAAISysCircleCenterProperties::MarkerType &amp; oMarkerType);
+    virtual HRESULT SetMarkerType(const CAAISysCircleCenterProperties::MarkerType iMarkerType);
+  private:
+    CAAESysCircleCenterProperties(const CAAESysCircleCenterProperties &amp;iObjectToCopy);
+  private:
+    CAAISysCircleCenterProperties::MarkerType _MarkerType ;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCircleCenterProperties</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAACAAESysCircleCenterProperties</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the <code>GetMarkerType</code> and <code>SetMarkerType</code> methods
+of the <i>CAAISysCircleCenterProperties</i> interface. The marker type is set as
+a private data member. Note that the copy constructor is set as private. This is
+very important for extensions. Since extensions must never be directly
+instantiated by client applications, this prevents the compiler from creating
+the copy constructor as public without you know. This copy constructor is not
+implemented in the source file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step8"></a>Creating the CAAESysCircleCenterProperties Extension
+Class Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAESysCircleCenterProperties.h&quot;
+
+<b>#include &quot;TIE_CAAISysCircleCenterProperties.h&quot;
+TIE_CAAISysCircleCenterProperties(CAAESysCircleCenterProperties);
+</b>
+<b>CATImplementClass(CAAESysCircleCenterProperties, DataExtension, CATBaseUnknown, CAASysCircle);</b>
+
+CAAESysCircleCenterProperties::CAAESysCircleCenterProperties(): 
+               _MarkerType(CAAISysCircleCenterProperties::Dot)
+{}
+
+CAAESysCircleCenterProperties::~CAAESysCircleCenterProperties()
+{}
+
+HRESULT CAAESysCircleCenterProperties::GetMarkerType(CAAISysCircleCenterProperties::MarkerType &amp; oMarkerType )
+{
+  oMarkerType = _MarkerType ;
+  return (S_OK);
+}
+
+HRESULT CAAESysCircleCenterProperties::SetMarkerType(const CAAISysCircleCenterProperties::MarkerType iMarkerType)
+{
+  _MarkerType = iMarkerType ;
+  return (S_OK);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysColorProperties</i> class states that it implements the <i>CAAISysPointProperties</i>
+interface thanks to the <code>TIE_CAAISysPointProperties</code> macro. This
+extension class is dedicated to the circle components, and the <code>CATImplementClass</code>
+macro declares that the <i>CAAESysPointProperties</i> class is data extension
+class, thanks to the <code>DataExtension</code> keyword, and that it extends the
+component whose main class is <i>CAASysCircle</i>. The third parameter must
+always be set to <i>CATBaseUnknown</i>, makes no sense, and is unused for
+extensions. The <i>CAAISysPointProperties</i> interface methods are implemented
+as usual.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step9"></a>Creating the CAAEColorProperties Shared Extension Class
+Header File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   // to derive from  CATBaseUnknown
+
+class CAAESysColorProperties: public CATBaseUnknown
+{
+  // Used in conjunction with CATImplementClass in the .cpp file
+  <b>CATDeclareClass</b>;
+
+  public:
+    CAAESysColorProperties();
+    virtual ~CAAESysColorProperties();
+
+    virtual HRESULT GetColor(      int &amp;oRed,       int &amp;oGreen,       int &amp;oBlue) const;
+    virtual HRESULT SetColor(const int  iRed, const int  iGreen, const int  iBlue); 
+
+  private:
+    CAAESysColorProperties(const CAAESysColorProperties &amp;iObjectToCopy);
+  private:
+    int _Red, _Green, _Blue,;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysColorProperties</i> extension class derives from <i>CATBaseUnknown</i>.
+The <code>CATDeclareClass</code> macro declares that the class <i>CAAESysColorProperties</i>
+belongs to a component. The class has a constructor and a destructor, and
+declares the <code>GetColor</code> and <code>SetColor</code> methods of the <i>CAAISysColorProperties</i>
+interface. The RGB color components are set as private data members. Note that
+the copy constructor is set as private. This is very important for extensions.
+Since extensions must never be directly instantiated by client applications,
+this prevents the compiler from creating the copy constructor as public. This
+copy constructor is not implemented in the source file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step10"></a>Creating the CAAEColorProperties Shared Extension Class
+Source File</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAESysColorProperties.h&quot;
+
+#include &quot;TIE_CAAISysColorProperties.h&quot;
+<b>TIE_CAAISysColorProperties(CAAESysColorProperties);</b>
+
+<b>CATBeginImplementClass(CAAESysColorProperties, DataExtension, CATBaseUnknown, CAASysCircle);
+CATAddClassExtension(CAASysEllipse) ;
+CATAddClassExtension(CAASysLine) ;
+CATAddClassExtension(CAASysPolyline) ;
+CATEndImplementClass(CAAESysColorProperties);
+</b>
+CAAESysColorProperties::CAAESysColorProperties()
+                      : _Red(255),_Blue(255),_Green(255)
+{}
+
+CAAESysColorProperties::~CAAESysColorProperties() {}
+
+HRESULT CAAESysColorProperties::SetColor(const int iRed, const int iGreen, const int iBlue) 
+{
+    if ( (iRed   &lt; 0) || (iRed   &gt; 255) ) return E_FAIL;
+    if ( (iGreen &lt; 0) || (iGreen &gt; 255) ) return E_FAIL;
+    if ( (iBlue  &lt; 0) || (iBlue  &gt; 255) ) return E_FAIL;
+
+    _Red   = iRed ;
+    _Green = iGreen ;
+    _Blue  = iBlue ;
+
+    return (S_OK);
+}
+
+HRESULT CAAESysColorProperties::GetColor(int &amp; oRed, int &amp; oGreen, int &amp; oBlue) const
+{
+    oRed   = _Red;
+    oGreen = _Green;
+    oBlue  = _Blue;
+
+    return (S_OK);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysColorProperties</i> class states that it implements the <i>CAAISysColorProperties</i>
+interface thanks to the <code>TIE_CAAISysColorProperties</code> macro. This
+extension class is shared by several components, and declares these components
+thanks to the <code>CATBeginImplementClass</code>, <code>CATAddClassExtension</code>,
+and <code>CATEndImplementClass</code> macros:</p>
+<ul>
+  <li><code>CATBeginImplementClass</code> declares that the <i>CAAESysColorProperties</i>
+    class is a component extension class thanks the <code>DataExtension</code>
+    keyword, and that it extends the component whose main class is <i>CAASysCircle</i>.
+    The third parameter must always be set to <i>CATBaseUnknown</i>, makes no
+    sense, and is unused for extensions.</li>
+  <li><code>CATAddClassExtension</code> goes on declaring that <i>CAAESysColorProperties</i>
+    extends as a data extension the components whose main classes are <i>CAASysEllipse</i>,
+    <i>CAASysEllispe</i>, and <i>CAASysPolyline</i>.</li>
+  <li><code>CATEndImplementClass</code> ends the extended component list.</li>
+</ul>
+<p>The <i>CAAISysColorProperties</i> interface methods are implemented as usual.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step11"></a>Updating the Interface Dictionary</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAASysCircle CATICreateInstance            libCAASysGeoModelComp
+CAASysCircle CAAISysCircle                 libCAASysGeoModelImpl
+CAASysCircle CAAISysColorProperties        libCAASysGeoModelImpl
+CAASysCircle CAAISysCircleCenterProperties libCAASysGeoModelImpl
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary declares that the <i>CAASysCircle</i> component
+implements the <i>CAAISysCircle</i>, <i>CAAISysColorProperties</i>, and <i>CAAISysCircleCenterProperties</i>,
+and that the code to load into memory to use these interfaces is located in the
+libCAASysGeoModelImpl shared library or DLL. Note that the component main class
+name is used to refer to the component in the interface dictionary, and never
+the extension class names. Note also that the shared library or DLL to associate
+with the component/interface pair is the one that contains the code created by
+the call to the TIE macro (This is generally the same library than the one that
+contains the interface implementation code, since the TIE macro is usually
+included in the extension class source file.) This is because when a client asks
+a component for an interface pointer, the TIE class is instantiated first, and
+it either retrieves the existing instance of the appropriate extension class, or
+otherwise instantiates it.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a component using a main class and
+extension classes. The main class declares the component inheritance and must
+C++-derive and OM-derive from <i>CATBaseUnknown</i> or from another component
+main class. Extension classes must directly or indirectly C++-derive from <i>CATBaseUnknown</i>,
+while OM-inheritance makes no sense for them. An extension class can be
+dedicated to a component or shared by several components. The interface
+dictionary declares the correspondence between the component, the interfaces it
+implements, and the shared library or DLL to load for each interface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysSampleOMCreatingCmpFact.htm">Creating a Component Factory</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAASysSampleOMUsingCmp.htm">Using Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

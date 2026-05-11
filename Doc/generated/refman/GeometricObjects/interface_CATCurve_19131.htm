@@ -1,0 +1,1076 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATCurve</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATCurve"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATCurve</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATCurve_19131','CATCurve','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATCurve</b>
+</p>
+<p>
+<b><i> Interface representing the base class for all curves.</i></b><br>
+
+ Each point of a curve is identified by a global parameter
+ <tt>CATCrvParam</tt>. A curve portion is defined by <tt>CATCrvLimits</tt>.
+ <b>Curve parameterization</b><br>
+ The geometric modeler optimal behavior requires
+ arc length parameterized
+ (or nearly arc length parameterized) curves. Standard operators generate 
+ arc length parameterized curves and complete properly when their input data
+ are arc length parameterized curves. Non-standard curves (foreign curves)
+ should be created as arc length parameterized curves.<br>
+ <b>Retrieving the CATCrvParam of a 3D point located on a curve</b> <br>
+ To retrieve the curve parameter associated with a
+ 3D point, use a geometric projection operator.
+ <b>Retrieving the point and derivatives from a CATCrvParam</b><br>
+ Multiple evaluations can be performed in one way by defining
+ a <tt>CATCrvCommand</tt> object, evaluating through the <tt>Eval</tt>
+ method and retrieving the results with a <tt>CATCrvEvalResult</tt> object.
+ Example:
+ <pre>
+ CATCrvEvalLocal EvalResult;
+ CATCrvParam Parameter ;
+ Curve->GetStartLimit(Parameter) ;
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalPoint                , EvalResult) ; // Evaluate point
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalFirstDerivative      , EvalResult) ; // Evaluate first  derivative
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalSecondDerivative     , EvalResult) ; // Evaluate second derivative
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalThirdDerivative      , EvalResult) ; // Evaluate third  derivative
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalUpToFirstDerivative  , EvalResult) ; // Evaluate all    derivatives up to first  derivative 
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalUpToSecondDerivative , EvalResult) ; // Evaluate all    derivatives up to second derivative 
+ Curve->Eval(Parameter, CATCrvEvalCommand::EvalUpToThirdDerivative  , EvalResult) ; // Evaluate all    derivatives up to third  derivative 
+ </pre>
+ <br> The first and last arc number can be retrieved with the <tt>GetMaxLimits</tt> method.</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CreateParam(double&amp;)"><b>CreateParam</b></a>(double&amp;)
+<dd>  Sets a global parameter on <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#CreateParam(double,CATCrvParam&amp;)"><b>CreateParam</b></a>(double,CATCrvParam&amp;)
+<dd>  Sets a global parameter on <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#CreateParam(double&amp;,CATLONG32&amp;)"><b>CreateParam</b></a>(double&amp;,CATLONG32&amp;)
+<dd>  Sets a global parameter on a CATCurve from a local parameter and
+ an arc number.
+ <dt> o 
+    <a href="#CreateParam(double,CATLONG32,CATCrvParam&amp;)"><b>CreateParam</b></a>(double,CATLONG32,CATCrvParam&amp;)
+<dd>  Sets a global parameter on a CATCurve from a local parameter and
+ an arc number.
+ <dt> o 
+    <a href="#Eval(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATCrvEvalLocal&amp;)"><b>Eval</b></a>(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATCrvEvalLocal&amp;)
+<dd>  Evaluates <tt>this</tt> CATCurve and its derivatives associated with <tt>this</tt> CATCrvParam.
+ <dt> o 
+    <a href="#Eval(CATCrvLimits&amp;,CATLONG32,CATCrvEvalCommand&amp;,CATCrvEvalResult&amp;)"><b>Eval</b></a>(CATCrvLimits&amp;,CATLONG32,CATCrvEvalCommand&amp;,CATCrvEvalResult&amp;)
+<dd>  Evaluates <tt>this</tt> CATCurve and its derivatives inside a domain.
+ <dt> o 
+    <a href="#Eval(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATMathPoint*,CATMathVector*,CATMathVector*,CATMathVector*)"><b>Eval</b></a>(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATMathPoint*,CATMathVector*,CATMathVector*,CATMathVector*)
+<dd>  Evaluates <tt>this</tt> CATCurve and its derivatives associated with <tt>this</tt> CATCrvParam.
+ <dt> o 
+    <a href="#EvalFirstDeriv(CATCrvParam&amp;)"><b>EvalFirstDeriv</b></a>(CATCrvParam&amp;)
+<dd>   Evaluates <tt>this</tt> CATCurve by computing a first derivative from a CATCrvParam.
+ <dt> o 
+    <a href="#EvalPoint(CATCrvParam&amp;)"><b>EvalPoint</b></a>(CATCrvParam&amp;)
+<dd>   Evaluates <tt>this</tt> CATCurve by computing a CATMathPoint from a CATCrvParam.
+ <dt> o 
+    <a href="#EvalSecondDeriv(CATCrvParam&amp;)"><b>EvalSecondDeriv</b></a>(CATCrvParam&amp;)
+<dd>   Evaluates <tt>this</tt> CATCurve by computing a second derivative from a CATCrvParam.
+ <dt> o 
+    <a href="#EvalThirdDeriv(CATCrvParam&amp;)"><b>EvalThirdDeriv</b></a>(CATCrvParam&amp;)
+<dd>   Evaluates <tt>this</tt> CATCurve by computing a third derivative from a CATCrvParam.
+ <dt> o 
+    <a href="#GetBox(CATCrvLimits&amp;,CATMathBox&amp;)"><b>GetBox</b></a>(CATCrvLimits&amp;,CATMathBox&amp;)
+<dd>  Computes the bounding box of <tt>this</tt> CATCurve trimmed by given Limits.
+ <dt> o 
+    <a href="#GetEndLimit()"><b>GetEndLimit</b></a>()
+<dd>  Returns the high current limitation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetEndLimit(CATCrvParam&amp;)"><b>GetEndLimit</b></a>(CATCrvParam&amp;)
+<dd>  Returns the high current limitation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetEquation(CATLONG32,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)"><b>GetEquation</b></a>(CATLONG32,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)
+<dd>  Retrieves the mathematical equation associated with an arc of
+ <tt>this</tt > CATCurve.
+ <dt> o 
+    <a href="#GetGeometricRep(CATCrvLimits&amp;,short&amp;)"><b>GetGeometricRep</b></a>(CATCrvLimits&amp;,short&amp;)
+<dd>  Returns a pointer to the geometric representation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetGlobalEquation(CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)"><b>GetGlobalEquation</b></a>(CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)
+<dd>  Retrieves the mathematical equation associated with 
+ <tt>this</tt > CATCurve.
+ <dt> o 
+    <a href="#GetInternalBoundingBox(CATLONG32,CATMathBox&amp;)"><b>GetInternalBoundingBox</b></a>(CATLONG32,CATMathBox&amp;)
+<dd>  Retrieves the bounding box including an arc of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetInternalLimits(CATLONG32,CATCrvLimits&amp;)"><b>GetInternalLimits</b></a>(CATLONG32,CATCrvLimits&amp;)
+<dd>  Returns the limitations of an arc of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetInternalMaxBoundingBox(CATLONG32,CATMathBox&amp;)"><b>GetInternalMaxBoundingBox</b></a>(CATLONG32,CATMathBox&amp;)
+<dd>  Retrieves the maximum bounding box including an arc of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetInternalMaxLimits(CATLONG32,CATCrvLimits&amp;)"><b>GetInternalMaxLimits</b></a>(CATLONG32,CATCrvLimits&amp;)
+<dd>  Returns the limitations of an arc of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetKnotVector()"><b>GetKnotVector</b></a>()
+<dd>  Returns the knot vector associated with <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetLimits()"><b>GetLimits</b></a>()
+<dd>  Returns the limitations of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetLimits(CATCrvLimits&amp;)"><b>GetLimits</b></a>(CATCrvLimits&amp;)
+<dd>  Returns the current limits of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetMathCurve()"><b>GetMathCurve</b></a>()
+<dd>  Returns a pointer to the mathematical representation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetMaxLimits()"><b>GetMaxLimits</b></a>()
+<dd>  Returns the maximum limitations of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetMaxLimits(CATCrvLimits&amp;)"><b>GetMaxLimits</b></a>(CATCrvLimits&amp;)
+<dd>  Returns the maximum limitations of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetParam(CATMathPoint&amp;,CATCrvParam&amp;)"><b>GetParam</b></a>(CATMathPoint&amp;,CATCrvParam&amp;)
+<dd>  Retrieves the CATCrvParam on <tt>this</tt> CATCurve corresponding to a given CATMathPoint.
+ <dt> o 
+    <a href="#GetParam(CATMathPoint&amp;,CATCrvParam&amp;,CATCrvLimits&amp;)"><b>GetParam</b></a>(CATMathPoint&amp;,CATCrvParam&amp;,CATCrvLimits&amp;)
+<dd>  Retrieves the CATCrvParam on <tt>this</tt> CATCurve corresponding to a CATMathPoint
+ inside limitations.
+ <dt> o 
+    <a href="#GetStartLimit()"><b>GetStartLimit</b></a>()
+<dd>  Returns the low current limitation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#GetStartLimit(CATCrvParam&amp;)"><b>GetStartLimit</b></a>(CATCrvParam&amp;)
+<dd>  Returns the low current limitation of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#HasMathCurve()"><b>HasMathCurve</b></a>()
+<dd>  Tests whether <tt>this</tt> CATCurve has a mathematical representation.
+ <dt> o 
+    <a href="#IsClosed()"><b>IsClosed</b></a>()
+<dd>  Tests whether <tt>this</tt> CATCurve is periodic.
+ <dt> o 
+    <a href="#IsConfused(CATMathTransformation&amp;,CATCurve*,CATMathTransformation1D*)"><b>IsConfused</b></a>(CATMathTransformation&amp;,CATCurve*,CATMathTransformation1D*)
+<dd>  Tests whether <tt>this</tt> CATCurve is confused with another curve.
+ <dt> o 
+    <a href="#IsContaining(CATCurve*)"><b>IsContaining</b></a>(CATCurve*)
+<dd>  Tests whether <tt>this</tt> CATCurve is containing another one.
+ <dt> o 
+    <a href="#IsInvariant(CATMathTransformation&amp;,CATMathTransformation1D*)"><b>IsInvariant</b></a>(CATMathTransformation&amp;,CATMathTransformation1D*)
+<dd>  Tests whether <tt>this</tt> CATCurve is invariant.
+ <dt> o 
+    <a href="#Lock()"><b>Lock</b></a>()
+<dd>  Locks the equations of <tt>this</tt> CATCurve before read them.
+ <dt> o 
+    <a href="#SetLimits(CATCrvLimits&amp;)"><b>SetLimits</b></a>(CATCrvLimits&amp;)
+<dd>  Modifies the limitations of <tt>this</tt> CATCurve.
+ <dt> o 
+    <a href="#Unlock()"><b>Unlock</b></a>()
+<dd>  Unlocks the equations of <tt>this</tt> CATCurve after read them.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATSolutionDiagnostic"><b>CATSolutionDiagnostic</b></a>
+<dd>  The diagnosis of evaluation.
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateParam"></a><a name="CreateParam(double&amp;)"></a> <dt> o <b>CreateParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam')</script>  <b>CreateParam</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iGlobalParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a global parameter on <tt>this</tt> CATCurve.
+ This API can lead to bad performances when it is used intensively. 
+ <p>The CATCurve::CreateParam signature which returns a void (see above) 
+ should be preferred over the present signature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iGlobalParam</tt>
+   <dd> The value of the global parameter.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  ioParam The corresponding parameter on <tt>this</tt>, valuated with <tt>iGlobalParam</tt>.
+</dl>
+</dl>
+<a name="CreateParam"></a><a name="CreateParam(double,CATCrvParam&amp;)"></a> <dt> o <b>CreateParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>CreateParam</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iGlobalParam</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a global parameter on <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iGlobalParam</tt>
+   <dd> The value of the global parameter.
+ </dd>
+    <dt><tt> ioParam</tt>
+   <dd> The corresponding parameter on <tt>this</tt>, valuated with <tt>iGlobalParam</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CreateParam"></a><a name="CreateParam(double&amp;,CATLONG32&amp;)"></a> <dt> o <b>CreateParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam')</script>  <b>CreateParam</b>(<td> const <script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>iLocal</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iArc</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a global parameter on a CATCurve from a local parameter and
+ an arc number. This API can lead to bad performances when it is used intensively. 
+ <p>The CATCurve::CreateParam signature which returns a void (see above) 
+ should be preferred over the present signature.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLocal</tt>
+   <dd> The value of the local parameter.
+ </dd>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The corresponding parameter on <tt>this</tt>, valuated with <tt>iGlobalParam</tt>.
+</dl>
+</dl>
+<a name="CreateParam"></a><a name="CreateParam(double,CATLONG32,CATCrvParam&amp;)"></a> <dt> o <b>CreateParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>CreateParam</b>(<td> const <script type="text/javascript"> activateLink('double','double')</script> <td><tt>iLocal</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets a global parameter on a CATCurve from a local parameter and
+ an arc number.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLocal</tt>
+   <dd> The value of the local parameter.
+ </dd>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> ioParam</tt>
+   <dd> The corresponding parameter on <tt>this</tt>, valuated with <tt>iGlobalParam</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Eval"></a><a name="Eval(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATCrvEvalLocal&amp;)"></a> <dt> o <b>Eval</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Eval</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iPoint</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvEvalCommand','CATCrvEvalCommand&amp;')</script> <td><tt>iCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvEvalLocal','CATCrvEvalLocal&amp;')</script> <td><tt>ioResult</tt>)<script type="text/javascript"> activateLink('=0',' const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Evaluates <tt>this</tt> CATCurve and its derivatives associated with <tt>this</tt> CATCrvParam.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoint</tt>
+   <dd> The parameter of the point to evaluate.
+ </dd>
+    <dt><tt> iCommand</tt>
+   <dd> The type of evaluation.
+ </dd>
+    <dt><tt> ioResult.</tt>
+   <dd> The object containing the results.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Eval"></a><a name="Eval(CATCrvLimits&amp;,CATLONG32,CATCrvEvalCommand&amp;,CATCrvEvalResult&amp;)"></a> <dt> o <b>Eval</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Eval</b>(<td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iDomainToEvaluate</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iNbOfPoints</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvEvalCommand','CATCrvEvalCommand&amp;')</script> <td><tt>iCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvEvalResult','CATCrvEvalResult&amp;')</script> <td><tt>ioResult</tt>)<script type="text/javascript"> activateLink('=0',' const =0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Evaluates <tt>this</tt> CATCurve and its derivatives inside a domain.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDomainToEvaluate</tt>
+   <dd> The limits inside which the domain is to be evaluated.
+ </dd>
+    <dt><tt> iNbOfPoints</tt>
+   <dd> The number of equally spaced points of <tt>iDomainToEvaluate</tt>.
+ </dd>
+    <dt><tt> iCommand</tt>
+   <dd> The type of evaluation.
+ </dd>
+    <dt><tt> ioResult.</tt>
+   <dd> The object containing the results.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Eval"></a><a name="Eval(CATCrvParam&amp;,CATCrvEvalCommand&amp;,CATMathPoint*,CATMathVector*,CATMathVector*,CATMathVector*)"></a> <dt> o <b>Eval</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Eval</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvEvalCommand','CATCrvEvalCommand&amp;')</script> <td><tt>iCommand</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint*')</script> <td><tt>iPoint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iFirstDeriv</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iSecondDeriv</tt><td><tt>= NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathVector','CATMathVector*')</script> <td><tt>iThirdDeriv</tt><td><tt>= NULL </tt>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Evaluates <tt>this</tt> CATCurve and its derivatives associated with <tt>this</tt> CATCrvParam.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter of the point to evaluate.
+ </dd>
+    <dt><tt> iCommand</tt>
+   <dd> The type of evaluation. The corresponding output pointer must be allocated.
+ </dd>
+    <dt><tt> iPoint</tt>
+   <dd> A pointer to the resulting 3D point.
+ </dd>
+    <dt><tt> iFirstDeriv</tt>
+   <dd>  A pointer to the resulting first derivative.
+ </dd>
+    <dt><tt> iSecondDeriv</tt>
+   <dd>  A pointer to the resulting second derivative.
+ </dd>
+    <dt><tt> iThirdDeriv</tt>
+   <dd>  A pointer to the resulting third derivative.</dd>
+</dl>
+</dl>
+</dl>
+<a name="EvalFirstDeriv"></a><a name="EvalFirstDeriv(CATCrvParam&amp;)"></a> <dt> o <b>EvalFirstDeriv</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMathVector','CATMathVector')</script>  <b>EvalFirstDeriv</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+  Evaluates <tt>this</tt> CATCurve by computing a first derivative from a CATCrvParam.
+ <p>The CATCurve::Eval signature with the CATCrvEvalCommand::EvalFirstDeriv argument
+ should be preferred over CATCurve::EvalFirstDeriv as CATCurve::EvalFirstDeriv
+ can lead to bad performances when it is used intensively. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter of the vector to evaluate.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATMathVector  The CATMathVector which has iParam as its parameter.
+</dl>
+</dl>
+<a name="EvalPoint"></a><a name="EvalPoint(CATCrvParam&amp;)"></a> <dt> o <b>EvalPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint')</script>  <b>EvalPoint</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+  Evaluates <tt>this</tt> CATCurve by computing a CATMathPoint from a CATCrvParam.
+ <p>The CATCurve::Eval signature with the CATCrvEvalCommand::EvalPoint argument
+ should be preferred over CATCurve::EvalPoint as CATCurve::EvalPoint
+ can lead to bad performances when it is used intensively. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter of the point to evaluate.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATMathPoint  The CATMathPoint which has iParam as its parameter.
+</dl>
+</dl>
+<a name="EvalSecondDeriv"></a><a name="EvalSecondDeriv(CATCrvParam&amp;)"></a> <dt> o <b>EvalSecondDeriv</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMathVector','CATMathVector')</script>  <b>EvalSecondDeriv</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+  Evaluates <tt>this</tt> CATCurve by computing a second derivative from a CATCrvParam.
+ <p>The CATCurve::Eval signature with the CATCrvEvalCommand::EvalSecondDeriv argument
+ should be preferred over CATCurve::EvalSecondDeriv as CATCurve::EvalSecondDeriv
+ can lead to bad performances when it is used intensively. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter of the vector to evaluate.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATMathVector  The CATMathVector which has iParam as its parameter.
+</dl>
+</dl>
+<a name="EvalThirdDeriv"></a><a name="EvalThirdDeriv(CATCrvParam&amp;)"></a> <dt> o <b>EvalThirdDeriv</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMathVector','CATMathVector')</script>  <b>EvalThirdDeriv</b>(<td> const <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>iParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+  Evaluates <tt>this</tt> CATCurve by computing a third derivative from a CATCrvParam.
+ <p>The CATCurve::Eval signature with the CATCrvEvalCommand::EvalThirdDeriv argument
+ should be preferred over CATCurve::EvalThirdDeriv as CATCurve::EvalThirdDeriv
+ can lead to bad performances when it is used intensively. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iParam</tt>
+   <dd> The parameter of the vector to evaluate.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  CATMathVector  The CATMathVector which has iParam as its parameter.
+</dl>
+</dl>
+<a name="GetBox"></a><a name="GetBox(CATCrvLimits&amp;,CATMathBox&amp;)"></a> <dt> o <b>GetBox</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetBox</b>(<td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathBox','CATMathBox&amp;')</script> <td><tt>ioBox</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Computes the bounding box of <tt>this</tt> CATCurve trimmed by given Limits.
+<br>This does not take into account the current limitations of the
+ curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLimits</tt>
+   <dd> The domain to take into account.
+ </dd>
+    <dt><tt> ioBox.</tt>
+   <dd> The 3D box.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEndLimit"></a><a name="GetEndLimit()"></a> <dt> o <b>GetEndLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam')</script>  <b>GetEndLimit</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high current limitation of <tt>this</tt> CATCurve.
+ The CATCurve::GetEndLimit signature which returns a void should be preferred 
+ over the present API.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The end limitation.
+</dl>
+</dl>
+<a name="GetEndLimit"></a><a name="GetEndLimit(CATCrvParam&amp;)"></a> <dt> o <b>GetEndLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetEndLimit</b>(<td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioEndParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the high current limitation of <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioEndParam</tt>
+   <dd> The end limitation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetEquation"></a><a name="GetEquation(CATLONG32,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)"></a> <dt> o <b>GetEquation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetEquation</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFx</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFy</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFz</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the mathematical equation associated with an arc of
+ <tt>this</tt > CATCurve.
+ <br>Before retrieving the equations, you must <tt>Lock</tt> the curve.
+ You can then obtained the equations. When you have finished, you <tt>Unlock</tt> the curve.
+ The equations are then automatically deleted. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> oFx</tt>
+   <dd> A pointer to the equation of the first coordinate <tt>X=oFx(w)</tt>.
+ </dd>
+    <dt><tt> oFy</tt>
+   <dd> A pointer to the equation of the second coordinate <tt>Y=oFy(w)</tt>.
+ </dd>
+    <dt><tt> oFz</tt>
+   <dd> A pointer to the equation of the third coordinate <tt>Z=oFy(w)</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetGeometricRep"></a><a name="GetGeometricRep(CATCrvLimits&amp;,short&amp;)"></a> <dt> o <b>GetGeometricRep</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve','const CATCurve *')</script>  <b>GetGeometricRep</b>(<td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioRepLimits</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('short','short&amp;')</script> <td><tt>ioRepOrientation</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the geometric representation of <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioRepLimits</tt>
+   <dd> The limitations of the returned curve.
+ </dd>
+    <dt><tt> ioRepOrientation</tt>
+   <dd> The relative orientation of the returned curve.
+ <br><b>Legal values:</b>:
+ <dl> <dt> <tt>1</tt> <dd> If the returned curve has the same orientation
+      <dt> <tt>-1</tt> <dd> If the returned curve has the opposite orientation.
+</dl>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The canonical underlying geometry.
+<br> This is usefull for CATEdgeCurves suc as CATSimCurves in order to access
+ the underlying canonical geometry (such as CATCircle, CATLine,...).
+  Returns <tt>this</tt> otherwise.
+</dl>
+</dl>
+<a name="GetGlobalEquation"></a><a name="GetGlobalEquation(CATMathFunctionX*&amp;,CATMathFunctionX*&amp;,CATMathFunctionX*&amp;)"></a> <dt> o <b>GetGlobalEquation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetGlobalEquation</b>(<td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFx</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFy</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathFunctionX','CATMathFunctionX*&amp;')</script> <td><tt>oFz</tt>)<script type="text/javascript"> activateLink('const=0',' const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the mathematical equation associated with 
+ <tt>this</tt > CATCurve.
+ <br>Before retrieving the equations, you must <tt>Lock</tt> the curve.
+ You can then obtained the equations. When you have finished, you <tt>Unlock</tt> the curve.
+ The equations are then automatically deleted. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oFx</tt>
+   <dd> A pointer to the equation of the first coordinate <tt>X=oFx(w)</tt>.
+ </dd>
+    <dt><tt> oFy</tt>
+   <dd> A pointer to the equation of the second coordinate <tt>Y=oFy(w)</tt>.
+ </dd>
+    <dt><tt> oFz</tt>
+   <dd> A pointer to the equation of the third coordinate <tt>Z=oFy(w)</tt>.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInternalBoundingBox"></a><a name="GetInternalBoundingBox(CATLONG32,CATMathBox&amp;)"></a> <dt> o <b>GetInternalBoundingBox</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInternalBoundingBox</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathBox','CATMathBox&amp;')</script> <td><tt>ioBox</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the bounding box including an arc of <tt>this</tt> CATCurve.
+<br>This takes into account the current limitations of the
+ curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> ioBox.</tt>
+   <dd> The 3D box.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInternalLimits"></a><a name="GetInternalLimits(CATLONG32,CATCrvLimits&amp;)"></a> <dt> o <b>GetInternalLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInternalLimits</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioInternalMaxLimits</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the limitations of an arc of <tt>this</tt> CATCurve.
+<br>This takes into account the current limitations of the
+ curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> ioInternalMaxLimits</tt>
+   <dd> The corresponding limitations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInternalMaxBoundingBox"></a><a name="GetInternalMaxBoundingBox(CATLONG32,CATMathBox&amp;)"></a> <dt> o <b>GetInternalMaxBoundingBox</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInternalMaxBoundingBox</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathBox','CATMathBox&amp;')</script> <td><tt>ioBox</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the maximum bounding box including an arc of <tt>this</tt> CATCurve.
+ <br>This does not take into account the current limitations of the curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> ioBox.</tt>
+   <dd> The 3D box.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetInternalMaxLimits"></a><a name="GetInternalMaxLimits(CATLONG32,CATCrvLimits&amp;)"></a> <dt> o <b>GetInternalMaxLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetInternalMaxLimits</b>(<td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iArc</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioInternalMaxLimits</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the limitations of an arc of <tt>this</tt> CATCurve.
+<br>This does not take into account the current limitations of the
+ curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iArc</tt>
+   <dd> The arc number.
+ </dd>
+    <dt><tt> ioInternalMaxLimits</tt>
+   <dd> The corresponding limitations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetKnotVector"></a><a name="GetKnotVector()"></a> <dt> o <b>GetKnotVector</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATKnotVector','const CATKnotVector *')</script>  <b>GetKnotVector</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the knot vector associated with <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The knot vector.
+</dl>
+</dl>
+<a name="GetLimits"></a><a name="GetLimits()"></a> <dt> o <b>GetLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits')</script>  <b>GetLimits</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the limitations of <tt>this</tt> CATCurve.
+ The CATCurve::GetLimits signature which returns a void should be preferred 
+ over the present API.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current limitations.
+</dl>
+</dl>
+<a name="GetLimits"></a><a name="GetLimits(CATCrvLimits&amp;)"></a> <dt> o <b>GetLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetLimits</b>(<td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioCurrentLimits</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the current limits of <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCurrentLimits</tt>
+   <dd> The current limits.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetMathCurve"></a><a name="GetMathCurve()"></a> <dt> o <b>GetMathCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATMathCurve','CATMathCurve*')</script>  <b>GetMathCurve</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a pointer to the mathematical representation of <tt>this</tt> CATCurve.
+ The life cycle of the returned CATMathCurve must be managed by the calling application.
+ <pre>
+ CATMathCurve * pMathCurve = hCurve->GetMathCurve();
+ if (pMathCurve)
+   {
+     ...
+     delete pMathCurve; pMathCurve=NULL;
+	 }
+ </pre>
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>   The mathematical curve associated with <tt>this</tt>. If the
+ mathematical representation does not exist, the method returns a
+ <tt>NULL</tt> pointer.
+</dl>
+</dl>
+<a name="GetMaxLimits"></a><a name="GetMaxLimits()"></a> <dt> o <b>GetMaxLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits')</script>  <b>GetMaxLimits</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum limitations of <tt>this</tt> CATCurve.
+ The CATCurve::GetMaxLimits signature which returns a void should be preferred 
+ over the present API.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The current limitations.
+</dl>
+</dl>
+<a name="GetMaxLimits"></a><a name="GetMaxLimits(CATCrvLimits&amp;)"></a> <dt> o <b>GetMaxLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetMaxLimits</b>(<td><script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>ioMaxLimits</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the maximum limitations of <tt>this</tt> CATCurve.
+ <br>This does not take into account the current limitations of the
+ curve. This maximum
+ limits can be the creation limits or the limits that are obtained by 
+ extrapolation, depending on the types of geometric objects.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioMaxLimits</tt>
+   <dd> The maximum limits.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetParam"></a><a name="GetParam(CATMathPoint&amp;,CATCrvParam&amp;)"></a> <dt> o <b>GetParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve::CATSolutionDiagnostic','CATCurve::CATSolutionDiagnostic')</script>  <b>GetParam</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioParam</tt>)<script type="text/javascript"> activateLink('0',' const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the CATCrvParam on <tt>this</tt> CATCurve corresponding to a given CATMathPoint.
+ <br>This transformation is only available
+ on canonical objects such as planes, lines, conics.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoint</tt>
+   <dd> The CATMathPoint which coordinates are to be transformed as CATCrvParam.
+ </dd>
+    <dt><tt> ioParam</tt>
+   <dd> The first corresponding CATCrvParam on the curve. 
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of the number of parameters that can be evaluated on this point.
+</dl>
+</dl>
+<a name="GetParam"></a><a name="GetParam(CATMathPoint&amp;,CATCrvParam&amp;,CATCrvLimits&amp;)"></a> <dt> o <b>GetParam</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCurve::CATSolutionDiagnostic','CATCurve::CATSolutionDiagnostic')</script>  <b>GetParam</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iPoint</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioParam</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iInside</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the CATCrvParam on <tt>this</tt> CATCurve corresponding to a CATMathPoint
+ inside limitations.
+<br>This transformation is only available
+ on canonical objects such as lines and conics.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iPoint</tt>
+   <dd> The CATMathPoint whose coordinates are to be transformed as a CATCrvParam.
+ </dd>
+    <dt><tt> ioParam</tt>
+   <dd> The first corresponding CATCrvParam on the curve.
+ </dd>
+    <dt><tt> iInside</tt>
+   <dd> The CATCrvLimits to take into account for trimming the CATCurve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of the number of parameters that can be evaluated on this point.
+</dl>
+</dl>
+<a name="GetStartLimit"></a><a name="GetStartLimit()"></a> <dt> o <b>GetStartLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam')</script>  <b>GetStartLimit</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low current limitation of <tt>this</tt> CATCurve.
+ The CATCurve::GetStartLimit signature which returns a void should be preferred 
+ over the present API.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The start limitation.
+</dl>
+</dl>
+<a name="GetStartLimit"></a><a name="GetStartLimit(CATCrvParam&amp;)"></a> <dt> o <b>GetStartLimit</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetStartLimit</b>(<td><script type="text/javascript"> activateLink('CATCrvParam','CATCrvParam&amp;')</script> <td><tt>ioStartParam</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the low current limitation of <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioStartParam</tt>
+   <dd> The first limitation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="HasMathCurve"></a><a name="HasMathCurve()"></a> <dt> o <b>HasMathCurve</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>HasMathCurve</b>(<td>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCurve has a mathematical representation.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values:</b>:
+<dl> <dt><tt>1</tt> <dd>If <tt>this</tt> has a mathematical representation.
+     <dt><tt>0</tt> <dd>Otherwise.</dl>
+</dl>
+</dl>
+<a name="IsClosed"></a><a name="IsClosed()"></a> <dt> o <b>IsClosed</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsClosed</b>(<td>)<script type="text/javascript"> activateLink('const=0','const=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCurve is periodic.
+<br>This method does not take into account the current limitations of 
+ the curve.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values:</b>:
+<dl> <dt><tt>0</tt> <dd>If the CATCurve is not periodic.
+     <dt><tt>1</tt> <dd>If the CATCurve is periodic.  </dl>
+</dl>
+</dl>
+<a name="IsConfused"></a><a name="IsConfused(CATMathTransformation&amp;,CATCurve*,CATMathTransformation1D*)"></a> <dt> o <b>IsConfused</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsConfused</b>(<td> const <script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation&amp;')</script> <td><tt>iTransfo</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iTCurve</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation1D','CATMathTransformation1D*')</script> <td><tt>oTransfo1D</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCurve is confused with another curve.
+<br>This method does not take into account the current limitations of 
+ the curves.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTransfo1D</tt>
+   <dd> The 1D-transformation defining the change of parametrization between the transformation of 
+ <tt>this</tt> and <tt>iTCurve</tt>. If <tt>NULL</tt>, this argument is not set.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values:</b>:
+<dl> <dt><tt>1</tt> <dd>If the transformation of <tt>this</tt> is geometrically the same as <tt>iTCurve</tt>.
+     <dt><tt>0</tt> <dd>Otherwise.</dl>
+</dl>
+</dl>
+<a name="IsContaining"></a><a name="IsContaining(CATCurve*)"></a> <dt> o <b>IsContaining</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsContaining</b>(<td> const <script type="text/javascript"> activateLink('CATCurve','CATCurve*')</script> <td><tt>iOther</tt>)<script type="text/javascript"> activateLink('0','const = 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCurve is containing another one.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOther</tt>
+   <dd> The oother curve.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The diagnosis of the test.
+<dl> <dt> FALSE <dd> if the CATCurve does not contain <tt>iOther</tt>
+     <dt> TRUE <dd> if the CATCurve contains <tt>iOther</tt> </dl>
+</dl>
+</dl>
+<a name="IsInvariant"></a><a name="IsInvariant(CATMathTransformation&amp;,CATMathTransformation1D*)"></a> <dt> o <b>IsInvariant</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsInvariant</b>(<td> const <script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation&amp;')</script> <td><tt>iTransfo</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathTransformation1D','CATMathTransformation1D*')</script> <td><tt>oTransfo1D</tt><td><tt>= NULL</tt>)<script type="text/javascript"> activateLink('0',' const = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATCurve is invariant.
+<br>This method does not take into account the current limitations of 
+ the curve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oTransfo1D</tt>
+   <dd> The 1D-transformation defining the change of parametrization between <tt>this</tt> and the transformation of
+ <tt>this</tt>. If <tt>NULL</tt>, this argument is not set.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values:</b>:
+<dl> <dt><tt>1</tt> <dd>If the transformation of <tt>this</tt> is geometrically the same as <tt>this</tt>.
+     <dt><tt>0</tt> <dd>Otherwise.</dl>
+</dl>
+</dl>
+<a name="Lock"></a><a name="Lock()"></a> <dt> o <b>Lock</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Lock</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Locks the equations of <tt>this</tt> CATCurve before read them.
+</dl>
+<a name="SetLimits"></a><a name="SetLimits(CATCrvLimits&amp;)"></a> <dt> o <b>SetLimits</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetLimits</b>(<td> const <script type="text/javascript"> activateLink('CATCrvLimits','CATCrvLimits&amp;')</script> <td><tt>iLimits</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the limitations of <tt>this</tt> CATCurve.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLimits</tt>
+   <dd> The new current limitations.</dd>
+</dl>
+</dl>
+</dl>
+<a name="Unlock"></a><a name="Unlock()"></a> <dt> o <b>Unlock</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Unlock</b>(<td>)<script type="text/javascript"> activateLink('0','= 0 ')</script>  </table></dt>
+<dl>
+  <dd>
+ Unlocks the equations of <tt>this</tt> CATCurve after read them.
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATSolutionDiagnostic"> <dt> o <b>CATSolutionDiagnostic</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATSolutionDiagnostic</b> {
+  NoSolution,
+  SingleSolution,
+  MultipleSolution,
+  InfiniteSolution
+}
+</pre>
+ The diagnosis of evaluation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> NoSolution</tt>
+   <dd> No parameter corresponds to this point
+ </dd>
+    <dt><tt> SingleSolutionOnly</tt>
+   <dd> one parameter corresponds to this point.
+</dd>
+    <dt><tt> MultipleSolutionSeveral</tt>
+   <dd> parameters correspond to this point.
+</dd>
+    <dt><tt> InfiniteSolution</tt>
+   <dd> Infinitely many parameters correspond</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCurve.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

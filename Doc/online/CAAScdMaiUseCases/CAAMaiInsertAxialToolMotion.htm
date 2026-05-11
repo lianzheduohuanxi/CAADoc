@@ -1,0 +1,349 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Inserting Axial Tool Motion in a Point To Point Activity</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Machining</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Inserting Axial Tool Motion in a Point To Point
+      Activity</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro CAAMaiInsertAxialToolMotion shows you
+      how to create a Point To Point activity and insert tool motions inside
+      this activity.</p>
+      <! ---------------------------------comment------------------------------------->
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAMaiInsertAxialToolMotion is launched in CATIA.
+      Open the file 'Part_ToolMotion.CATPart' located in the CAAScdMaiUseCases
+      module, go to the Prismatic Manufacturing Programmer workbench and run the
+      macro.</p>
+      <p><a href="CAAMaiInsertAxialToolMotionSource.htm" target="Source">CAAMaiInsertAxialToolMotion
+      .CATScript</a> is located in the CAAScdMaiUseCases module.&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAMaiInsertAxialToolMotion includes 7 steps:</p>
+      <ol>
+        <li><a href="#Step1">Retrieve the open body of the CATPart</a></li>
+        <li><a href="#Step2">Retrieve the&nbsp; tool motions geometry.</a></li>
+        <li><a href="#Step3">Retrieve the active process and current setup</a></li>
+        <li><a href="#Step4">Retrieve the Manufacturing Program</a></li>
+        <li><a href="#Step5">Insert a Point To Point activity and assign its
+          tool</a></li>
+        <li><a href="#Step6">Insert a Point tool motion and set its geometry</a></li>
+        <li><a href="#Step7">Insert a Position tool motion and assign its
+          geometry</a></li>
+        <li><a href="#Step8">Insert a Delta tool motion and assign an offset and
+          a reference line</a></li>
+      </ol>
+      <h4><a name="Step1"></a>Retrieve the open body of the CATPart</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the Open body of the part</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set documents1 = CATIA.Documents
+	Set partDocument1 = documents1.Item(&quot;Part_ToolMotion.CATPart&quot;)
+
+	Set part1 = partDocument1.Part
+	Set hybridBodies1 = part1.HybridBodies
+	Set hybridBody1 = hybridBodies1.Item(&quot;Open_body.1&quot;)
+	Set hybridShapes1 = hybridBody1.HybridShapes</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Retrieves the open body and sets it in the variable hybridShapes1.</p>
+      <h4><a name="Step2">Retrieve the tool motions geometry</a></h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve the tool motion's geometry</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set Plane1 = hybridShapes1.Item(&quot;Plane.1&quot;)
+	Set Line1 = hybridShapes1.Item(&quot;Line.1&quot;)
+	Set Point1 = hybridShapes1.Item(&quot;Point.1&quot;)
+	Set Point2 = hybridShapes1.Item(&quot;Point.2&quot;)
+	Set Point3 = hybridShapes1.Item(&quot;Point.3&quot;)
+	Set Plane2 = hybridShapes1.Item(&quot;Plane.2&quot;)
+	Set Line2 = hybridShapes1.Item(&quot;Line.2&quot;)
+	Set Line3 = hybridShapes1.Item(&quot;Line.3&quot;)</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#0000FF">...</font></pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Retrieves the geometry used for the tool motions, using their names in
+      the open body.</p>
+      <p><a name="Step3"></a><b>Retrieve the active process and current setup</b></p>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	Set MfgDoc1 = CATIA.ActiveDocument
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Process Root</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Set ActivityRef = MfgDoc1.GetItem(&quot;Process&quot;)
+
+	<font color="#008000">'*** Retrieve current SetUp</font>
+	<font color="#008000">'***</font>
+	If (ActivityRef.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+
+	Set childs = ActivityRef.ChildrenActivities
+	quantity = childs.Count
+
+	if quantity &lt;= 0<font color="#0000FF"> then</font>
+	  Exit Sub
+	End if
+	NumberOfPO = 0
+	For I=1<font color="#0000FF"> To </font>quantity
+		Set child = childs.Item(I)
+		If (child.IsSubTypeOf(&quot;ManufacturingSetup&quot;)) Then
+			Set Setup1 = child
+			NumberOfPO = NumberOfPO +1
+			Exit For
+		End If
+	Next
+     
+	End If</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>&nbsp;Retrieves the Manufacturing Setup and sets it in the variable
+      Setup1 .</p>
+      <h4><a name="Step4"></a>Retrieve the Manufacturing Program</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin-top: 0; margin-bottom: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">'*** Retrieve current Program</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	set ProgramList = Setup1.Programs
+	Set PartMachined = SetUp1.Product
+	Set Program1 = ProgramList.GetElement(1)	
+ ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>.Retrieves the Manufacturing Program and sets&nbsp; it in the variable
+      Program1. Retrieves the product linked to the Setup and sets it in the
+      variable &quot;PartMachined&quot;, the variable will be useful to assign
+      geometry on the activity.</p>
+      <h4><a name="Step5"></a>Insert a Point To Point activity and assign its
+      tool</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation axial sequential operation</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim Mo<font color="#0000FF"> As </font>ManufacturingOperation 	
+	Set Mo = Program1.AppendOperation(&quot;PointToPoint&quot;,1)
+	Mo.SetTool(&quot;T3 End Mill D 10&quot;)
+
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Point To Point sequential operation in the program
+      &quot;Program1&quot; and assigns to it an End Mill tool.</p>
+      <h4><a name="Step6"></a>Insert a Point tool motion and set its geometry</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0">	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of point tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim Tm1<font color="#0000FF"> as </font>ToolMotion
+	Set Tm1 = Mo.InsertToolMotion(&quot;MfgSeqMotionPoint&quot;,1)
+	Call Tm1.SetGeometry(&quot;PointSite&quot;,Point3, PartMachined, 0)
+</pre>
+            <pre style="word-spacing: 0; margin: 0"> </pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Point tool motion (&quot;MfgSeqMotionPoint&quot;) at the
+      first position(&quot;1&quot;) in the tool motion list, use (&quot;0&quot;)
+      as second argument to create a tool motion at the end of the tool motion's
+      list.</p>
+      <p>Assigns the geometry using the SetGeometry method&nbsp; using one point
+      from the geometry we retrieved (Point3) and the product which contains
+      this geometry (PartMachined) as second argument. Use (&quot;0&quot;) as
+      last argument for a Point tool motion.</p>
+      <p>For a Point tool motion, uses the geometry type &quot;PointSite&quot;
+      as first argument.</p>
+      <h4><a name="Step7"></a>Insert a Position tool motion and assign its
+      geometry</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">	'*******************************************************************************************</font>
+	<font color="#008000">' Creation of position tool motion</font>
+	<font color="#008000">'*******************************************************************************************</font>
+
+	Dim Tm2<font color="#0000FF"> as </font>ToolMotion
+	Set Tm2 = Mo.InsertToolMotion(&quot;MfgSeqMotionPosition&quot;,2)
+
+<font color="#0000FF">        Call </font>Tm2.SetGeometry(&quot;Parts&quot;, Plane1, PartMachined, 0)
+   	Call Tm2.SetGeometry(&quot;FirstRelimitingElement&quot;, Line2, PartMachined, 0)
+   	Call Tm2.SetGeometry(&quot;Drives&quot;,Line3 , PartMachined, 0)
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Modification of Position on check parameter</font>
+	<font color="#008000">'*******************************************************************************************</font>
+	Dim CheckMode<font color="#0000FF"> As </font>Variant
+<font color="#0000FF">        Set </font>CheckMode = Tm2.GetAttribute(&quot;MfgCheckStopMode&quot;)
+        CheckMode.ValuateFromString (&quot;MfgPast&quot;)
+</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Position tool motion by using the type
+      &quot;MfgSeqMotionPosition&quot;, creates it at the second position
+      (&quot;2&quot;) of the tool motion's list.</p>
+      <p>To assign the object Plane1 as Part element, use SetGeometry and
+      &quot;Parts&quot; as geometry type, &quot;0&quot; as last argument.</p>
+      <p>To assign a Check element, use &quot;FirstRelimitingElement&quot; as
+      geometry type, to assign a Drive element use &quot;Drives&quot;.</p>
+      <p>Modifies the position on the check element (Past instead of To) by
+      reading the attribute &quot;MfgCheckStopMode&quot; in variable CheckMode,
+      then modifying its value (&quot;MfgPast&quot;).</p>
+      <p>&nbsp;</p>
+      <h4><a name="Step8"></a>Insert a Delta tool motion and assign an offset
+      and a reference line</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+            <pre style="word-spacing: 0; margin: 0">&nbsp;</pre>
+            <pre style="word-spacing: 0; margin: 0"><font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' Creation of delta tool motion </font>
+	<font color="#008000">'*******************************************************************************************</font>
+	Dim Tm3<font color="#0000FF"> as </font>ToolMotion
+	Set Tm3 = Mo.InsertToolMotion(&quot;MfgSeqMotionDelta&quot;,3)
+   	Set CheckMode = Tm3.GetAttribute(&quot;MfgPtDeltaMode&quot;)
+    	CheckMode.ValuateFromString (&quot;MfgPtDeltaParallelLine&quot;)
+<font color="#0000FF">    	Call </font>Tm3.SetGeometry(&quot;GuidingElements&quot;, Line2, PartMachined, 0)
+	Dim OffsetValue<font color="#0000FF"> As </font>Variant
+   	Set OffsetValue = Tm3.GetAttribute(&quot;MfgPtDeltaDistance&quot;)
+    	OffsetValue.Value = 15
+
+	<font color="#008000">'*******************************************************************************************</font>
+	<font color="#008000">' get the list of tool motions and reading each tool motion </font>
+	<font color="#008000">'*******************************************************************************************</font>
+	Dim TMList2<font color="#0000FF"> As </font>MfgToolMotions
+	Set TMList2 = MO.GetListOfToolMotions
+	NbMo = TMList2.Count
+	Dim Test2<font color="#0000FF"> As </font>ManufacturingToolMotion
+	Set Test2 = TMList2.GetElement(1)</pre>
+            <pre style="word-spacing: 0; margin: 0">...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Inserts a Delta tool motion using the type
+      &quot;MfgSeqMotionDelta&quot;.&nbsp; Reads the mode of the tool motion
+      (&quot;MfgPtDeltaMode&quot;) and sets it in variable CheckMode. Sets the
+      mode &quot;Parrallel to line &quot; by valuating CheckMode to
+      &quot;MfgDeltaParallelLine&quot; .</p>
+      <p>To assign Line2 as reference line in a Delta tool motion, use the
+      geometric type &quot;GuidingElements&quot; .</p>
+      <p>Retrieve the offset &quot;MfgPtDeltaDistance&quot; in the variable
+      OffsetValue, and set it to 15 .</p>
+      <p>Retrieves the list of tool motions and set it to the variable TMList2,
+      the method GetElement(number) enables to get the tool motion located at
+      position &quot;number&quot; in a variable of&nbsp;
+      &quot;MfgToolMotions&quot; type (list of tool motion).</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create a Point To Point activity, how to
+insert tool motion inside, and how to assign geometry to these tool motions.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td width="735"><i><a href="../CAAScdMaiTechArticles/CAAMaiTocManufacturingActivity.htm">Machining
+      automation objects</a></i>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<! ---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+<h2>&nbsp;</h2>
+
+</body>
+
+</html>

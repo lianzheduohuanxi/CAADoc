@@ -1,0 +1,273 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Preparing for V6 Feature Modeler - Overview</title>
+<style type="text/css">
+
+pre {
+	color: #000000;
+	font-weight: normal;	
+}
+
+pre { font-family: Courier New, Courier; 
+	font-size: 9pt;
+	font-weight: normal; 
+ 	margin-left: 40px;
+ 	margin-top: 5px;
+ 	margin-bottom: 5px;
+}
+pre { font-family: Courier New, Courier; 
+	font-weight: normal; 
+	}
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Preparing for V6 Feature Modeler - Overview</h3>
+      <p><em>An Overview about V6 Feature Modeler and how are V6 APIs made compatible with V5</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td style="height: 131px">
+		<h2>Abstract</h2>
+		<p>This article is about Backporting V6 Feature Modeler concepts in 
+		V5, while keeping the old V5 concepts as it is. The customers can now 
+		choose to use V6 APIs in V5 and thus benefit from the secured access to 
+		the Features and Catalog creation.<br>
+		This article will give you a brief overview of Feature 
+		modeler concepts in V6, which V6 concepts have been adopted in V5, and 
+		how to distinguish between them.</p>
+		<ul>
+			<li><a href="#Introduction">Introduction</a></li>
+			<li><a href="#V6 concepts backported in V5">V6 concepts backported in V5</a></li>
+			<li><a href="#Frameworks">Frameworks introduced for Backported use-cases</a></li>
+			<li><a href="#V5-V6Compatible_code_Use-Cases">How to make a V5-V6 Compatible Framework</a><br>
+			</li>
+			<li><a href="#Mandatory">Mandatory Steps</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2>Introduction<a name="Introduction"></a></h2>
+<p>The feature modeler concept in V5 is based upon the three main 
+characteristics which we have seen in the Feature Modeler Overview article [<a href="#References">1</a>]. 
+The Feature Modeler in V6 also stands on the same characteristics as that of V5. 
+The difference between these two architectures is that, in V6 there is more 
+secured mechanism provided for the StartUps and Features. By secured 
+mechanism we mean that, here the lifecycle of the features (i.e. creation, 
+instantiation, access and delete) can only be accessed with the right 
+credentials. Credentials can be treated as a password or a key to unlock these 
+lifecycle stages of the features. This will enable us a controlled access to the 
+Feature data model.</p>
+
+<script type="text/javascript">insertLinkToTop()</script>
+<h2><a name="V6 concepts backported in V5"></a>V6 concepts backported in V5</h2>
+<table>
+	<tr>
+		<td style="width: 236px"><strong>Credentials and Facades</strong></td>
+		<td>It mainly secures the access to the StartUps underlying in a feature 
+		catalog</td>
+	</tr>
+	<tr>
+		<td style="width: 236px"><strong>Attribute types</strong></td>
+		<td>Different types of attributes and how to evaluate them</td>
+	</tr>
+	<tr>
+		<td style="width: 236px"><strong>Feature Lifecycle</strong></td>
+		<td>Creation and deletion in V6</td>
+	</tr>
+	<tr>
+		<td style="width: 236px"><strong>Links between features</strong></td>
+		<td>The different types of links that exist between types of features</td>
+	</tr>
+	<tr>
+		<td style="width: 236px"><strong>Update mechanism</strong></td>
+		<td>Update of features upon attribute change etc</td>
+	</tr>
+		<tr>
+		<td style="width: 236px"><strong>Feature Extensions</strong></td>
+		<td>Adding feature extension and accessing their attributes</td>
+	</tr>
+
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<h2>Frameworks introduced for Backported use-cases<a name="Frameworks"></a></h2>
+<p>This preparation for V6 Feature Modeler is all about adding some of the V6 
+Feature Modeler concepts in V5. This will make V5 compatible to both V5 as well 
+as V6 APIs.<br>
+All the Use Cases based upon V6 APIs will be available on V5 since the <em>
+FeatureModelerExt</em> framework has been added. The Use-cases will showcase 
+mainly the capabilities of <em>FeatureModelerExt</em> framework. These use-cases 
+are in the newly introduced framework <em>CAAV5V6FeatureModelerExt.edu.</em></p>
+<p>Two new Frameworks have been introduced in V5 and the backported use cases 
+have been put there</p>
+<ul>
+	<li><strong>CAAV5V6ObjectSpecsModeler.edu </strong><br>
+	This framework contains the V5 Use-case scenarios implemented with V6 APIs. 
+	So the scenarios in these use-cases have been kept constant as of the 
+	earlier use-cases but the APIs have been replaced by V6 APIs</li>
+	<li><strong>CAAV5V6FeatureModelerExt.edu</strong><br>
+	This Framework contains some additional concepts of the V6 Feature Modeler 
+	capabilities. It has been provided to users so that they can see what are 
+	the other possible functionalities that V6 Feature Modeler offers.</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop()</script>
+
+<h2><a name="V5-V6Compatible_code_Use-Cases"></a>How to make a V5-V6 Compatible Framework</h2>
+<p>A V5-V6 compatible framework means, the code has been written such that it 
+will build on both the environments V5 and V6. Such a framework can only be made 
+with the help of some specific macros. It is also equally important to know 
+exactly at which places/files do we use these macros.</p>
+<h4>Modification in IdentityCard</h4>
+<p>Then they will have to modify the IdentityCard of the respective Framework. 
+In IdentityCard.h they will have to add the FeatureModelerExt as prereq 
+component<br>
+AddPrereqComponent ("<strong>FeatureModelerExt</strong>" ,Public);</p>
+<p>Here FeatureModelerExt is the framework which has been backported from V6. It 
+has all the capabilities of V6 Feature Modeler</p>
+<h4>Modifications in Imakefile and Sourcefile</h4>
+<p>First let us see where these macros should be used: It is used in two places 
+of a corresponding module</p>
+<ul>
+	<li><strong>Imakefile.mk</strong> - Here we use the macro such that depending upon the pre-reqs 
+	only a particular set of modules will get linked</li>
+	<li><strong>Sourcefile.cpp</strong> - Here in the xxx.cpp file we can 
+	separate the V5 and V6 
+	code using macros so that the environment specific code is built depending 
+	upon the pre-reqs/environment.</li>
+</ul>
+<p>Now let us see which macros are used and along with the code snippet.</p>
+<p>The Use-cases in the CAAV5V6FeatureModelerExt.edu framework have been written 
+in such manner that they can build satisfactorily on V5 or V6 environment. The 
+code has been made compatible to V5 and V6 environments by using some macros. 
+The macros are used in two places: Imakefile.mk and xxx.cpp file of the 
+corresponding module. Below is the code snippet from the Imakefile.mk</p>
+<table>
+	<caption>Fig. For Imakefile.mk</caption>
+	<tr>
+		<td>
+		<img alt="" src="images/CAAV6FeatureModOverview_Fig1.jpg"></td>
+	</tr>
+</table>
+
+<p>This will make sure that only the required set of modules are linked, depending upon the pre-reqs 
+or the environment i.e. V5 or V6.<br>
+Below code snippet is from the xxx.cpp file of the corresponding module.</p>
+<table>
+	<caption>Fig. For Source file.cpp</caption>
+	<tr>
+		<td>
+		<img alt="" src="images/CAAV6FeatureModOverview_Fig2.jpg"></td>
+	</tr>
+</table>
+
+
+<p>The above macro will enable to distinguish the code between V5 and 
+V6. Thus you will see these macros in every source file and they have been used 
+to use only those functionalities of Feature Modeler which are not common in V5 
+and V6. The rest of the code which is outside these macros is the common code 
+for V5 and V6.</p>
+<p>So in short, in a typical V5-V6 compatible usecase you will see the code 
+written either inside the macro #ifdef or outside of this macro.</p>
+<p>The code written inside the macro is the Version dependent code i.e. it will 
+be executed only when the condition of the macro is satisfied</p>
+<p>The code written outside the macro is the Version-Independent code i.e. 
+common code and it will be executed irrespective of the Version V5 or V6. This 
+common code is the backported concept in every use-case, which the is the main 
+part to be focused upon</p>
+<p>To illustrate the above explanation more clearly, please refer to the 
+following figure 3</p>
+<table>
+	<caption>Fig. A typical V5-V6 compatible Use-Case</caption>
+	<tr>
+		<td>
+		<img alt="" src="images/CAAV6FeatureModOverview_Fig3.jpg"></td>
+	</tr>
+</table>
+
+<p>Here in the above figure you will notice that, depending upon the Version (V5 
+or V6) the respective Session creation &amp; Container creation code will be 
+executed. Whereas the Common Code i.e. the Code with Backported V6 APIs will be 
+executed always.</p>
+<p>The Common Code in all the Use-cases showcases the use of backported V6 APIs. 
+The detailed information on APIs is available in the technical article [<a href="#References">2</a>].</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h3><a name="Mandatory"></a>Mandatory step</h3>
+<p>The catalog file CAAOsmCatalogSU.CATfct, CAAOsmExt1Catalog.CATfct and 
+CAAOsmExt2Catalog.CATfct are present in the CAAOnjectSpecsModeler.edu Framework. 
+So to access these catalogs it is necessary to have this framework in any local 
+workspace of the developer.</p>
+<p>In order to run the Use-Cases of the Backported scenarios, it is mandatory to copy the frameworks 
+CAAObjectSpecsModeler.edu, CAAV5V6ObjectSpecsModeler.edu and 
+CAAV5V6FeatureModelerExt.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get all the relevant catalogs in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>In this article, we have described the backporting of the V6 APIs to V5. The 
+basic overview of the V6 backported concepts. How the V5-V6 compatible 
+framework has been made using macros.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table style="width: 369px">
+  <tr>
+    <td valign="top" style="width: 23px">[1]</td>
+    <td>
+		<a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" style="width: 23px">[2]</td>
+    <td>
+	<a href="CAAV5V6FmExtTaAPIPresentation.htm">Feature Modeler Entities and API Presentation</a></td>
+  </tr>
+  </table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Aug 2012]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+</body>
+
+</html>
+

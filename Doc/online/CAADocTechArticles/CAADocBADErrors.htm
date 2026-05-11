@@ -1,0 +1,456 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="topictype" content="Qr" />
+<meta name="devlang" content="cpp" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Framework Architecture Rules</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Framework Architecture Rules</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article describes the framework architecture and the errors raised 
+		by mkmk in order to improve the architecture description related to framework 
+		dependencies. You will also learn how to deal with such errors and what 
+		are the steps to follow in order to correct them.</p>
+		<ul>
+			<li><a href="#Introduction">Introduction</a></li>
+			<li><a href="#Schemas">How to Read the Schemas</a></li>
+			<li><a href="#IdentityCards">How Does mkmk Deal with Identity Cards</a>
+			<ul>
+				<li><a href="#Prerequisites">Direct vs. Indirect Prerequisites</a></li>
+				<li><a href="#Transitivity">The Prerequisites Transitivity Mechanism</a></li>
+			</ul>
+			</li>
+			<li><a href="#Wrong">What&#8217;s Wrong with Prerequisite Transitivity</a>
+			<ul>
+				<li><a href="#Explicit">The &quot;Explicit Architecture&quot; Principle</a></li>
+				<li><a href="#Explicit2">Why Prerequisite Transitivity Violates 
+				It</a></li>
+			</ul>
+			</li>
+			<li><a href="#Errors">Introducing New mkmk Errors</a></li>
+			<li><a href="#Steps">Steps for an Explicit Architecture</a>
+			<ul>
+				<li><a href="#Step1">Step 1: Complete ID Cards from a Direct Prerequisite 
+				Perspective for their External View</a></li>
+				<li><a href="#Step2">Step 2: Complete ID Cards from a Direct Prerequisite 
+				Perspective for their Internal View</a></li>
+				<li><a href="#Step3">Step 3: Make Framework Encapsulation Rules 
+				Consistent</a></li>
+				<li><a href="#Step4">Step 4: Complete ID Cards from an Indirect 
+				Perspective</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a> </li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>Controlling the resources used by a framework to do its job is a continuous strong 
+necessity. To that end, each framework includes an IdentityCard file to explicitly 
+describe these resources and thus to better control them.</p>
+<p>However, up to now, mkmk is a little too &#8216;friendly&#8217; when processing this information 
+at build time. This certainly creates a short term benefit, but it comes at a very 
+high price: a framework can see its build broken without any modification of its 
+own code.</p>
+<p>To address this issue, it is now time for a come back to more rigor in the framework-to-framework 
+relationships.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Schemas"></a>How to Read the Schemas</h2>
+<p>The diagram below will be used throughout this article</p>
+<p>
+<img alt="Framework Relationship" src="images/CAACppBAD002.gif" width="588" height="366"/></p>
+<p>Note that:</p>
+<ul>
+	<li>The framework to framework dependency explicit prerequisite relation, represented 
+	by a solid arrow, is expressed using the prerequisite tag in the framework IdentityCard.xml 
+	file.</li>
+	<li>The prerequisite framework resource access level is expressed using the 
+	access attribute of the prerequisite tag and can be set to Public, Protected, 
+	or Private.</li>
+	<li>The visibility level of a header in a framework can be Public, Protected, 
+	Private, or Local. It depends on the folder where the header is located. For 
+	example, a header has a Public visibility level if it is located in the PublicInterfaces 
+	folder. Local headers cannot be accessed from outside of their modules and are 
+	thus not discussed here.<br />
+	The header visibility level is strongly related to the prerequisite framework 
+	resource access level. For example, a framework stating a Protected explicit 
+	prerequisite relation to another framework can include the headers that are 
+	located in the PublicInterfaces and ProtectedInterfaces folders of this framework.<br />
+	The following table summarizes the relation between the resource access level 
+	and the header visibility level.
+	<table class="fill">
+		<tr>
+			<th>Resource Access Level</th>
+			<th>Header Visibility Level</th>
+			<th>Header Folder</th>
+		</tr>
+		<tr>
+			<td>Public</td>
+			<td>Public</td>
+			<td>PublicInterfaces</td>
+		</tr>
+		<tr>
+			<td rowspan="2">Protected</td>
+			<td>Public</td>
+			<td>PublicInterfaces</td>
+		</tr>
+		<tr>
+			<td>Protected</td>
+			<td>ProtectedInterfaces</td>
+		</tr>
+		<tr>
+			<td rowspan="3">Private</td>
+			<td>Public</td>
+			<td>PublicInterfaces</td>
+		</tr>
+		<tr>
+			<td>Protected</td>
+			<td>ProtectedInterfaces</td>
+		</tr>
+		<tr>
+			<td>Private</td>
+			<td>PrivateInterfaces</td>
+		</tr>
+	</table>
+	</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="IdentityCards"></a>How Does mkmk Deal with Identity Cards</h2>
+<p>mkmk uses the Identity Card of a framework to know in which frameworks to look 
+for to find out the resources, that is, the header files included by the files of 
+this framework.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Prerequisites"></a>Direct vs. Indirect Prerequisites</h3>
+<p>The frameworks are expected to declare only their direct prerequisites in their 
+Identity Cards. In a situation like the following:</p>
+<p>
+<img alt="Indirect Prerequisites" src="images/CAACppBADX001.gif" width="583" height="170"/></p>
+<p>MyClientFW does not have to mention MyProviderFW as a prerequisite framework 
+in its Identity Card, since it does not directly include any resources from this 
+framework in its own code.</p>
+<p>From a build perspective, however, in order to gather all the lines of code that 
+eventually make up MyClientClass.h, mkmk fetches MyProviderClass.h to expand it 
+into MyClass.h, and then expands in turn the expanded MyClass.h into MyClientClass.h. 
+This is why in that case MyProviderFW is called an indirect prerequisite: it is 
+not mentioned in MyClientFW Identity Card, but it is yet necessary in order for 
+it to build.</p>
+<p>mkmk begins the build process for a given framework by listing all the other 
+frameworks from which resources required by this build process (such as header files) 
+might be located. We refer to a framework in this list as a potential source framework. 
+Once the list of potential source frameworks is determined, all other frameworks 
+in the workspace that mkmk is trying to build are ignored till mkmk begins to build 
+the next framework.</p>
+<p>The list of potential source frameworks is of course built by using the Identity 
+Cards, starting from the one of the framework to build to find its direct prerequisite 
+frameworks, then their own direct prerequisite frameworks, and so on until exhaustion.</p>
+<p>The next step for mkmk consists in listing all directories in the list of potential 
+source frameworks that may contain resources needed during the build process (such 
+as PublicInterfaces) and passing that list to the compiler with the appropriate 
+syntax.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Transitivity"></a>The Prerequisites Transitivity Mechanism</h3>
+<p>The way mkmk builds the list of potential source frameworks is quite simple: 
+it just (silently) adds to the list of direct prerequisites for the framework being 
+built the ones of the direct prerequisites themselves, and in turn their own prerequisites, 
+and so on until no more prerequisites are to be found. In simpler words, mkmk acts 
+by the motto &#8220;The prerequisites of your prerequisites are your prerequisites&#8221;. This 
+is why this mechanism is called prerequisite transitivity.</p>
+<p>In the example provided in the previous figure, for instance, mkmk would add 
+MyProviderFW to the list of (direct) prerequisite frameworks of MyClientFW. That 
+list would then comprise MyFW (normally listed as a direct prerequisite of MyClientFW 
+in its Identity Card) and MyProviderFW (silently added by mkmk during early stages 
+of the build process).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Wrong"></a>What&#8217;s Wrong with Prerequisite Transitivity</h2>
+<p>Although transitivity reaches its basic goal of helping mkmk to be fast, it creates 
+at the same time problems on the architecture front.</p>
+<h3><a name="Explicit"></a>The &quot;Explicit Architecture&quot; Principle</h3>
+<p>Why have Dassault Syst&#232;mes&#39; architects put the Identity Card mechanism in place? 
+Not (only) for optimizing mkmk performance. This comes more as a positive side effect 
+than as a primary goal. After all, we could have designed mkmk so that it fetches 
+required resources without any clue from us. This would have resulted in a higher 
+cost at first build (when mkmk has not idea where the header files might come from), 
+but that could be overcome in the following build with an appropriate caching mechanism 
+(i.e., mkmk remembering where the header files once came from and using that information 
+to relocate them). If this would have resulted in avoiding the pain of having to 
+manage Identity Cards, it could have been tempting. </p>
+<p>But the real answer is that Dassault Syst&#232;mes&#39; designers wanted their architecture 
+to be explicit. What does that mean? Simply that framework owners must remain as 
+aware as possible of the resources they use in the rest of the system for doing 
+their own jobs. If that information is buried deep in the code under the form of 
+#include statements that awareness is lost and control over this aspect of the framework 
+becomes quite impossible. Without control over this, the system flexibility, that 
+is, its ability to be modified to support new requirements is at risk.</p>
+<h3><a name="Explicit2"></a>Why Prerequisite Transitivity Violates It</h3>
+<p>Whenever a Framework owner declares its direct prerequisites in the Identity 
+Card, he/she actually declares these are the only frameworks from which he/she will 
+require resources for building his/she own. This is a kind of a contract. But then 
+mkmk, during the build process, silently adds a few clauses of its own to that contract, 
+by enriching the list of authorized frameworks with all frameworks obtained by applying 
+the prerequisite transitivity. As a result, a situation like this one may occur:</p>
+<p>
+<img alt="Prerequisite Transitivity" src="images/CAACppBAD003.gif" width="658" height="167"/></p>
+<p>This works perfectly from a build standpoint. Although MyProviderClass.h comes 
+from a framework (MyProviderFW) which is not listed as a direct prerequisite of 
+MyClientFW, MyClientFW builds with no error, because mkmk adds on the fly MyProviderFW 
+to the list of MyClientFW direct prerequisites. The contract set forth by MyClientFW 
+Identity Card (not using resources from other sources than MyFW) is breached.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Errors"></a>Introducing New mkmk Errors</h2>
+<p>The objectives and benefits of introducing those new mkmk errors are:</p>
+<ul>
+	<li>Make Identity Cards mention as direct prerequisites each framework exposing 
+	a header file (.h) it #includes in its own code, whether it be in PublicInterfaces, 
+	ProtectedInterfaces, PrivateInterfaces, LocalInterfaces header file (.h) or 
+	implementation source file (.cpp)
+	<ul>
+		<li>Architecture is more explicit</li>
+		<li>Build is safer</li>
+	</ul>
+	</li>
+	<li>Make framework encapsulation consistent: forbid inclusion of PrivateInterfaces 
+	headers into ProtectedInterfaces ones for example. <br />
+	Framework encapsulation is not violated by clients of ProtectedInterfaces headers 
+	any longer </li>
+	<li>Provide flexibility for architecture: allow for temporary relaxing on architecture 
+	rules while framework rework is in progress <br />
+	Architectural operations remain feasible without too much pain.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Steps"></a>Steps for an Explicit Architecture</h2>
+<p>Here are the steps to follow, in order to get an explicit and optimized architecture:</p>
+<table class="border">
+	<tr>
+		<th>Step1: BAD001</th>
+		<th></th>
+		<th>Step2: BAD002</th>
+		<th></th>
+		<th>Step3: BAD003</th>
+		<th></th>
+		<th>Step4: BAD005</th>
+	</tr>
+	<tr>
+		<td>Make ID Cards complete from a <strong>direct</strong> prerequisite perspective 
+		for their <strong>external</strong> view Scope = {Pub/Pro/Pri .h} &amp; {direct 
+		#includes}</td>
+		<td></td>
+		<td>Make ID Cards complete from a <strong>direct</strong> prerequisite perspective 
+		for their <strong>internal</strong> view Scope = {Loc .h + .cpp} &amp; {direct 
+		#includes}</td>
+		<td></td>
+		<td>Make FW encapsulation rules consistent Scope = {Pro .h including Pri 
+		.h}</td>
+		<td></td>
+		<td>Make ID Cards complete from a <strong>direct</strong> + <strong>indirect</strong> 
+		prerequisite perspective for their <strong>internal</strong> view &#8211;
+		<strong>warning</strong> mode (5a) then <strong>error</strong> mode (5b) 
+		Scope = {Loc .h + .cpp} &amp; {direct + indirect #includes}</td>
+	</tr>
+</table>
+<ul>
+	<li><strong>Step1: BAD001</strong>
+	<p>Make ID Cards complete from a direct prerequisite perspective for their external 
+	view Scope = {Pub/Pro/Pri .h} &amp; {direct #includes}</p>
+	</li>
+	<li><strong>Step2: BAD002</strong>
+	<p>Make ID Cards complete from a direct prerequisite perspective for their internal 
+	view Scope = {Loc .h + .cpp} &amp; {direct #includes}</p>
+	</li>
+	<li><strong>Step3: BAD003</strong>
+	<p>Make FW encapsulation rules consistent Scope = {Pro .h including Pri .h}</p>
+	</li>
+	<li><strong>Step4: BAD005</strong>
+	<p>Make ID Cards complete from a direct prerequisite perspective for their internal 
+	view Scope = {Loc .h + .cpp} &amp; {direct #includes}</p>
+	</li>
+</ul>
+<p>Each of these steps is detailed below, associated with the workflow to fix the 
+errors you can get, related to each of these steps.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step1"></a>Step 1: Complete ID Cards from a Direct Prerequisite Perspective 
+for their External View</h3>
+<p>
+<img alt="BAD001 Error" src="images/CAACppBAD004.gif" width="434" height="226"/></p>
+<p>MyFW uses the class MyProviderClass from MyProviderFW in one of his Public, Protected 
+or Private header file, but it has not explicit direct prerequisite relation to 
+MyProviderFW in its Identity Card. However it has an implicit indirect prerequisite 
+relation to MyProviderFW through OtherFW and can thus build without problem, because 
+mkmk silently adds its indirect prerequisite framework (such as MyProviderFW) to 
+the list of its direct ones (such as OtherFW)</p>
+<p>In such a situation, from now on, you will get the following, non blocking, error 
+message:</p>
+<pre class="code">MyClass.h : (BAD001) cannot use MyProviderFW\PublicInterfaces\MyProviderClass.h
+since it belongs to a framework which is not a DIRECT prerequisite</pre>
+<p>All derived objects will be normally generated, but mkmk will warn you that you 
+are using resources from a framework without having explicitly declared this framework.</p>
+<p>A that point, the risk is that MyFW could experience build errors, should OtherFW 
+decides stopping to prereq MyProviderFW.</p>
+<p>You then have two ways to get rid of this warning message:</p>
+<ul>
+	<li>Either by removing the dependency, that is, removing from PublicInterfaces 
+	| ProtectedInterfaces | PrivateInterfaces header files all the #include statements 
+	to header files of MyProviderFW, provided they all are of no use</li>
+	<li>Or by explicitly stating the dependency, that is adding MyProviderFW to 
+	MyFW Identity Card.</li>
+</ul>
+<p>Here is the workflow that needs to be followed to correct such error:</p>
+<p>
+<img alt="Step 1 Workflow" src="images/CAACppBAD005.gif" width="614" height="701"/></p>
+<p>#include MyProviderClass (MyProviderClass provided by MyProviderFW) found in 
+MyClass header (MyClass provided by MyFW)</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step2"></a>Step 2: Complete ID Cards from a Direct Prerequisite Perspective 
+for their Internal View</h3>
+<p>
+<img alt="BAD002 Error" src="images/CAACppBAD007.gif" width="433" height="342"/></p>
+<p>MyFW uses the class MyProviderClass from MyProviderFW in a class local to one 
+of its module (LocalInterfaces header file or .cpp implementation file), but it 
+has not explicit direct prerequisite relation to MyProviderFW in its Identity Card. 
+However it has an implicit indirect prerequisite relation to MyProviderFW through 
+OtherFW and can thus build without problem, because mkmk silently adds its indirect 
+prerequisite framework (such as MyProviderFW) to the list of its direct ones (such 
+as OtherFW)</p>
+<p>In such a situation, from now on, you will get the following, non blocking, error 
+message:</p>
+<pre class="code">MyClass.cpp: (BAD002) cannot use MyProviderFW\PublicInterfaces\MyProviderClass.h
+since it belongs to a framework which is not a DIRECT prerequisite.</pre>
+<p>All derived objects will be normally generated, but mkmk will warn you that you 
+are using resources from a framework without having explicitly declared this framework.</p>
+<p>A that point, the risk is that MyFW could experienced build errors, should OtherFW 
+decides stopping to prereq MyProviderFW.</p>
+<p>You then have two ways to get rid of this warning message:</p>
+<ul>
+	<li>Either by removing the dependency, that is, removing from the LocalInterfaces 
+	header files or the implementation files all the #include statements to header 
+	files of MyProviderFW, provided they all are of no use</li>
+	<li>Or by explicitly stating the dependency, that is adding MyProviderFW to 
+	MyFW Identity Card.</li>
+</ul>
+<p>Here is the workflow that needs to be followed to correct such warning:</p>
+<p>
+<img alt="Step 2 Workflow" src="images/CAACppBAD006.gif" width="629" height="644"/></p>
+<p>#include MyProviderClass (MyProviderClass provided by MyProviderFW) found in 
+MyClass compilation unit / LocalInterfaces (MyClass implemented in MyFW)</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step3"></a>Step 3: Make Framework Encapsulation Rules Consistent</h3>
+<p>
+<img alt="BAD003 Error" src="images/CAACppBAD008.gif" width="659" height="171"/></p>
+<p>MyClass in MyFW has visibility level &#8220;Protected&#8221;. However, it uses (and #includes) 
+another class, MyProviderClass, which is &#8220;Private&#8221; from MyProviderFW, as MyFW pre-reqs 
+MyProviderFW in &#8220;Private&#8221; mode.</p>
+<p>In such a situation, framework resources visibility rules are violated. In addition, 
+a client of MyFW, such as MyClientFW, that #includes MyClass.h inherits from the 
+Private header file from MyProviderFW, although it specified to use its prerequisite 
+framework in the &#8220;Protected&#8221; mode.</p>
+<p>In such a situation, from now on, you will get the following, non blocking, error 
+message:</p>
+<pre class="code">MyClass.h: (BAD003) PROTECTED file cannot use
+MyProviderFW\ProtectedInterfaces\MyProviderClass.h since it is PRIVATE.</pre>
+<p>You then have two ways to get rid of this warning message:</p>
+<ul>
+	<li>Either by removing the dependency, that is, removing from PublicInterfaces 
+	| ProtectedInterfaces | PrivateInterfaces header files all the #include statements 
+	to Private header files of MyProviderFW, provided they all are of no use</li>
+	<li>Or by relocating the Private header file to the appropriate directory, in 
+	order to provide a consistent visibility according to the prerequisites.</li>
+</ul>
+<p>Here is the workflow that needs to be followed to correct such error:</p>
+<p>
+<img alt="Step 3 Workflow" src="images/CAACppBAD009.gif" width="661" height="704"/></p>
+<p>#include PRIVATE MyProviderClass (MyProviderClass provided by MyProviderFW) found 
+in MyClass PROTECTED header (MyClass provided by MyFW) </p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Step4"></a>Step 4: Complete ID Cards from an Indirect Perspective</h3>
+<p>
+<img alt="BAD005 Error" src="images/CAACppBAD011.gif" width="658" height="433"/></p>
+<p>MyClientFW uses the class MyProviderClass from MyProviderFW in a class (Local, 
+Public, Protected or Private header file or .cpp implementation file), but it has 
+not explicit direct prerequisite relation to MyPrereqFW. Moreover, it includes this 
+header file by the inclusion of MyClass.h from MyFW. MyClientFW can build without 
+problem, because mkmk silently adds its indirect prerequisite framework MyProviderFW 
+to the list of its direct ones (such as MyFW).</p>
+<p>In such a situation, from now on, you will get the following, non blocking, error 
+message:</p>
+<pre class="code">AnotherClass.cpp: (BAD005) needs MyProviderFW\PublicInterfaces\MyProviderClass.h
+and it belongs to a framework which is not a DIRECT prerequisite.</pre>
+<p>Please note that, depending upon which source file includes MyClass.h, you can 
+have other error messages referencing MyCLientClass.h or AnotherClass.h, instead 
+of AnotherClass.cpp in the previous error message, according to the schema.</p>
+<p>In this situation, all derived objects will be normally generated, but mkmk will 
+warn you that you are using Framework resources without having declared it them.</p>
+<p>You then have two ways to get rid of this warning message:</p>
+<ul>
+	<li>Either by removing the dependency, that is, removing from the PublicInterfaces 
+	| ProtectedInterfaces | PrivateInterfaces | LocalInterfaces header files or 
+	from the implementation files all the #include statements to header files of 
+	MyProviderFW, provided they all are of no use</li>
+	<li>Or by explicitly stating the dependency, that is adding MyProviderFW to 
+	MyFW Identity Card.</li>
+</ul>
+<p>Here is the workflow that needs to be followed to correct such error:</p>
+<p>
+<img alt="Step 4 Workflow" src="images/CAACppBAD010.png" width="698" height="571"/></p>
+<p>Errors from Step 2 extended to Indirect prerequisites (errors at Step2 were limited 
+to Direct prerequisites) MyClientClass compilation unit (implemented in MyClientFW) 
+depends on MyProviderClass (implemented MyProviderFW) throught MyClass (implemented 
+in MyFW), whereas MyFW is declared in MyClientFW ID Card, but MyProviderFW is not.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>A framework expresses prerequisite dependencies with respect to other frameworks 
+thanks to its IdentityCard.xml file. The indirect prerequisite dependencies should 
+be avoided and an explicit architecture should be preferred to enable the framework 
+owner to be aware of all the framework dependencies.</p>
+<p>mkmk issues errors BAD001 BAD002, BAD003, and BAD005 to trace the failures to 
+the explicit architecture. Correcting these errors in this order enables you to 
+completely manage your dependencies.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <strong>1.0</strong> [Aug 2007]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

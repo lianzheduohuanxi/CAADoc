@@ -1,0 +1,319 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Levels of Details</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Levels of Details</h3>
+      <em>Enabling for multiple tessellations of the same object</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create levels of details.
+      <ul>
+        <li><a href="#Learn"><strong>What Will You Learn in this Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVisBasics Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVisBasics Do</a></li>
+            <li><a href="#How">How to Launch CAAVisBasics</a></li>
+            <li><a href="#Where">Where to Find the CAAVisBasics Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create levels of details, that is
+several representations of the same object that are each displayed in turn with
+respect to the modifications brought to the viewpoint and display
+characteristics.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVisBasics Use Case</h3>
+<p>CAAVisBasics is a set of use cases of the CAAVisualization.edu framework that
+illustrates CATIA Vizualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVisBasics Do</h4>
+<p>CAAVisBasics includes a MDI interactive application that displays viewers in
+its document windows. One of these viewers is displayed when the application is
+launched and contains the representation of a torus. This article focuses on how
+to create levels of details for this torus, that is several tessellations, each
+corresponding to a given sag value, in order to the render to select the most
+appropriate one depending on the viewpoint characteristics and on the object
+size.</p>
+<p>The torus is displayed in a 3D navigation viewer as soon as the application
+is launched. It is displayed brighter blue with a representation that is
+computed with a sag of 1/8. When zooming in, the viewpoint characteristics
+change, and three other representations are successively displayed: a green one
+with a sag of 1/6, a blue one with a sag of 1/4, and a red one with a sag of
+1/2.&nbsp;</p>
+<p><img border="0" src="images/CAAVisSampleTorusLOD1.jpg" width="485" height="463"></p>
+<p><img border="0" src="images/CAAVisSampleTorusLOD2.jpg" width="485" height="463"></p>
+<p><img border="0" src="images/CAAVisSampleTorusLOD3.jpg" width="485" height="463"></p>
+<p><img border="0" src="images/CAAVisSampleTorusLOD4.jpg" width="485" height="463"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAVisBasics</h4>
+<p>To launch CAAVisBasics, you will need to set up the build time environment,
+then compile CAAVisBasics along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>The torus is displayed in a 3D navigation viewer as soon as the application
+is launched. Zoom in and out to show the different levels of details and their
+associated colors.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVisBasics Code?</h4>
+<p>The CAAVisBasics use case is made of several classes located in the
+CAAVisBasics.m module of the CAAVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisBasics.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisBasics.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>This use case deals with the following classes:</p>
+<table>
+  <tr>
+    <td><i>CAAVisBaseApplication</i></td>
+    <td>Class for the interactive application that hosts the viewer</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseDocument</i></td>
+    <td>Class for the document base class</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseDefaultDocument</i></td>
+    <td>Class for the document that creates a representation and four level of
+      details for a torus model</td>
+  </tr>
+  <tr>
+    <td><i>CAAVisBaseView</i></td>
+    <td>Class for the document window containing a viewer to display the
+      document</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create levels of details, there are three main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create a <i>CAT3DLodRep</i></td>
+    <td valign="top"><code>CreateModel</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Loop for each sag value onto the <i>CAT3DFaceGP</i>
+      creation</td>
+    <td valign="top"><code>CreateModel</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Create the bounding sphere for each level of details</td>
+    <td valign="top"><code>AddLOD</code> method of <i>CAAVisBaseDefaultDocument</i></td>
+  </tr>
+</table>
+<p>The torus is displayed when the CAAVisBase application is launched. The torus
+levels of details creation and display is performed in the <i>CAAVisBaseDefaultDocument</i>
+constructor that creates a <i>CAT3DLodRep</i> instance and that loops on calling
+the <code>CreateRep</code> method that creates a <i>CAT3DFaceGP</i> instance
+with the passed sag, and that adds it to the <i>CAT3DLodRep</i> instance. The
+representation is displayed thanks to calling the <code>AddRepToViewer</code>
+method. Only the constructor and the part of <code>CreateRep</code> that deals
+with the <i>CAT3DLodRep </i>management are described below. The remaining parts,
+namely the torus tessellation and the creation of <i>CAT3DLodRep</i> instance
+are already dealt with in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating a CAT3DLodRep</h4>
+<p>The <i>CAAVisBaseDefaultDocument</i> constructor creates the representation
+bag to attach to the viewer, creates a <i>CAT3DLodRep</i> instance for the
+torus, calls <code>CreateRep</code> as many time as there are sag values to the
+corresponding torus representations, adds the resulting 3D Lod representation to
+the representation bag, and calls <code>AddRepToViewer</code> for display.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBaseDefaultDocument::CreateModel()
+{
+  _pRootContainer  = new CAT3DBagRep;
+  _pTorusLodRep = new CAT3DLodRep();
+  float sag = 0.125f;
+  ... // Loop on the torus tessellation
+  //Adding of the CAT3DLodRep to the CAT3DBagRep
+  _pRootContainer-&gt;AddChild(*_pTorusLodRep);
+
+  AddRepToViewer();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>This 3D representation to accommodate the different tessellations of the
+torus is a <i>CAT3DLodRep</i> instance. This representation is dedicated to
+contain several representations of the same object, each being associated with
+the sag value used to create it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Looping for Each Sag Value onto the CAT3DFaceGP Creation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int color[3] = {255, 255, 255}; //White color
+
+  int colors[] = {200, 200, 255, //bright blue
+                  200, 0,   0,   //red
+                  0,   0,   255, //blue
+                  0,   200, 0};  //green
+  for(int i=NLOD; i&gt;0; i--)
+  {
+    sag = float(MAX_SAG)/(float)(2*i);
+    color[0] = colors[3*(i%NLOD)];
+    color[1] = colors[3*(i%NLOD)+1];
+    color[2] = colors[3*(i%NLOD)+2];
+    AddLOD(sag, color);
+  }
+...  </pre>
+    </td>
+  </tr>
+</table>
+<p>The sag values are computed and passed to the <code>AddLOD</code> method as
+well as the associated color.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Adding the CAT3DCustomRep to the CAT3DLodRep</h4>
+<p>The <code>AddLOD</code> method is the same as the one explained in [<a href="#References">2</a>],
+except that it has the sag as argument, and computes the theta and phi angles
+from the sag value. It also update the 3D Lod representation with the created 3D
+custom representation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAVisBaseDefaultDocument::AddLOD(float sag, int *iColor)
+{
+  int R = TORUS_RADIUS;
+  int r = CIRCLE_RADIUS;
+
+  float theta = sqrt(sag/r);
+  float phi   = sqrt(sag/R);
+
+  int nVertexPerCircle = floor(2*PI/theta)+1;
+  int nCircles         = floor(2*PI/phi)+1;
+
+  theta = 2*PI/nVertexPerCircle;
+  phi   = 2*PI/nCircles;
+
+  ... // Refer to [<a href="#References">2</a>] for the 3D graphic primitive and 3D custom representation creation
+
+  _pTorusLodRep-&gt;AddLod(_pTorusCustomRep, sag); 
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The angles theta and phi are computed using the sag value and the rotating
+circle radius and the torus radius respectively. <b>sag/R to be explained</b>.
+The number of vertices per circle and the number of circles are deduced from the
+angle values. Then, these angle values are adjusted to partition the circles.
+The 3D graphic primitive and the 3D custom representation are created&nbsp; as
+described in [<a href="#References">2</a>]. <code>_pTorusCustomRep</code> is the
+pointer to the 3D custom representation. It is added to the 3D Lod
+representation along with the associated sag value</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved when creating several
+representations for a given object and to bind them in a 3D Lod representation.
+This enables the object to provide representations that match the different
+accuracies required when the viewpoint and display characteristics change.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAVisSampleCAT3DFaceGP.htm">Tessallating a Torus</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

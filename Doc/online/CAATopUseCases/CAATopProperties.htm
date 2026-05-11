@@ -1,0 +1,344 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Computing the Area of a CATFace and the Length of a CATEdge</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Topology</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Computing the Area of a CATFace and the Length of a
+      CATEdge</h3>
+      <em>How to calculate the area of a face and the length of an edge</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The CATDynMassProperties3D class provides services whereby you can
+      calculate the properties of a body as well as the properties of the cells
+      making up the body. This use case explains how to calculate the area of a
+      CATFace along with the length of a CATEdge</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAATopProperties Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAATopProperties Do?</a></li>
+            <li><a href="#How">How to Launch CAATopProperties</a></li>
+            <li><a href="#Where">Where to Find the CATopProperties Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>In this use case, you learn how to compute the area of a face as well as the
+length of an edge.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAATopProperties Use Case</h3>
+<p>CAATopProperties is a use case of the CAATopologicalOperators.edu framework
+that illustrates TopologicalOperators framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAATopProperties Do?</h4>
+<p>This use case:</p>
+<ol>
+  <li>creates the geometric factory</li>
+  <li>creates a solid sphere</li>
+  <li>computes the area of each face</li>
+  <li>computes the length of each edge</li>
+  <li>writes the model and closes the container.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAATopProperties</h4>
+<p>To launch CAATopProperties, you will need to set up the build time
+environment, then compile CAATopProperties.m along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<font face="Helv" size="2" color="#000000">
+<p>If you simply type CAATopProperties with no argument, the use case executes,
+but doesn't save the result in an NCGM file. If you want to save this result,
+provide the full pathname of the NCGM file to create. For example:</p>
+</font><font face="Courier New" size="2" color="#000000">
+<p>With Windows <code>CAATopProperties</code><code> e:\Properties.NCGM</code></p>
+<p>With UNIX <code>CAATopProperties</code><code> /u/Properties.NCGM</code></p>
+</font><font face="Helv" size="2" color="#000000">
+<p>This NCGM file can be displayed using the CAAGemBrowser use case.</p>
+</font>
+<p>&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAATopProperties Code</h4>
+<p>The CAATopProperties use case is made of a main named CAATopProperties.cpp
+located in the CAATopProperties.m module of the CAATopologicalOperators.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAATopologicalOperators.edu\CAATopProperties.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAATopologicalOperators.edu/CAATopProperties.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>The program:
+<ol>
+  <li><a href="#Creates the Geometry Factory">Creates the Geometry Factory</a></li>
+  <li><a href="#Creates a Skin Body">Creates the sphere (CATSolidSphere)</a></li>
+  <li><a href="#Creates a Box and a Cylinder Primitives">Computes the area of
+    each face</a></li>
+  <li><a href="#Adds and Subtracts">Computes the length of each edge</a></li>
+  <li><a href="#Writes the Model and Closes the Factory">Writes the Model and
+    Closes the Container</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h4>
+<p>The geometry factory (CATGeoFactory) creates and manages all the <tt>CATICGMObject</tt>
+: it creates the points, curves, surfaces and bodies and remove them.</p>
+<p>The CATGeoFactory creation itself is done by the global function <tt>::CATCreateCGMContainer</tt>.</p>
+<p>Notice that the factory can be defined by reading a NCGM file that was
+previously stored. In that case, the global function <tt>::CATLoadCGMContainer</tt>
+must be used.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creates a Skin Body"></a>Creating a sphere</h4>
+<a name="Creating the Surface">The</a> CATSolidSphere creation follows the
+scheme of all topological operators. You must create the operator by using the
+CATCreateSolidSphere global function, then run it and get the resulting body.
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATMathPoint p1(0,0,0);  <font color="#008000">// the sphere center</font>
+ 
+CATSolidSphere * pSphereOpe = ::CATCreateSolidSphere(piGeomFactory, 
+     &amp;topdata,
+     p1,
+     100.0); <font color="#008000">// the radius</font>
+...   
+pSphereOpe -&gt; Run();
+CATBody * pBodySphere = pSphereOpe -&gt; GetResult();
+...</pre>
+    </td>
+  </tr>
+</table>
+<i><a name="Using CATSkinOperator"></a></i>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Creates a Box and a Cylinder Primitives"></a>Computing the area of
+a CATFace</h4>
+<p>To retrieve a face area, you must:</p>
+<ul>
+  <li>use the CATDynCreateMassProperties3D function and pass as its argument the
+    face whose area is to be calculated</li>
+  <li>apply the GetWetArea method to the returned CATDynMassProperties3D.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>for (int i=1;(i &lt;= nbFaces)  ;i++) 
+ {
+     CATFace * pFace = (CATFace *)listFaces[i];
+     CATDynMassProperties3D * pDynMassOpe0 = 
+         CATDynCreateMassProperties3D(pFace ) ;
+     if (NULL == pDynMassOpe0)
+     {
+      ::CATCloseCGMContainer(piGeomFactory);
+       return (1);
+     }	
+     <font color="#008000">// Expected area 4*PI*(R**2)/4</font>
+     cout &lt;&lt; &quot;Face &quot; &lt;&lt; i &lt;&lt; &quot; area: &quot; &lt;&lt; pDynMassOpe0-&gt;GetWetArea() &lt;&lt; endl;
+     delete pDynMassOpe0; pDynMassOpe0=NULL;
+ }</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Adds and Subtracts"></a>Computing the length of a CATEdge</h4>
+<p>To retrieve a face area, you must:</p>
+<ul>
+  <li>use the CATDynCreateMassProperties3D function and pass as its argument the
+    edge whose length is to be calculated</li>
+  <li>apply the GetLength method to the returned CATDynMassProperties3D.</li>
+</ul>
+<table class="code">
+  <tr>
+    <td>
+      <pre>for (i=1;(i &lt;= nbEdges)  ;i++) 
+ {
+     CATEdge * pEdge = (CATEdge *)listEdges[i];
+     if (pEdge == NULL) return 1;
+     CATDynMassProperties3D * pDynMassOpe1 = 
+         CATDynCreateMassProperties3D(pEdge ) ;
+     if (NULL == pDynMassOpe1)
+     {
+         ::CATCloseCGMContainer(piGeomFactory);
+         return (1);
+     }	
+     
+     cout &lt;&lt; &quot;Edge &quot; &lt;&lt; i &lt;&lt; &quot; length: &quot; &lt;&lt; pDynMassOpe1-&gt;GetLength() &lt;&lt; endl;
+     cout &lt;&lt; pEdge-&gt;GetPersistentTag() &lt;&lt; endl;
+     delete pDynMassOpe1; pDynMassOpe1=NULL;
+ }</pre>
+    </td>
+  </tr>
+</table>
+<p>This is the length with is displayed on the standard output:
+<div align="center">
+  <center>
+  <table border="0" cellspacing="1">
+    <tr>
+      <td>
+        <p align="center"><img border="0" src="images/edge21.gif" width="259" height="231"><br>
+        Edge 3 length: 157.08</td>
+      <td>
+        <p align="center"><img border="0" src="images/edge22.gif" width="252" height="229"><br>
+        Edge 2 length: 157.08</td>
+    </tr>
+    <tr>
+      <td>
+        <p align="center"><img border="0" src="images/edge23.gif" width="263" height="231"><br>
+        Edge 5 length: 157.08</td>
+      <td>
+        <p align="center"><img border="0" src="images/edge24.gif" width="263" height="237"><br>
+        Edge 6 length: 157.08</td>
+    </tr>
+    <tr>
+      <td>
+        <p align="center"><img border="0" src="images/edge25.gif" width="288" height="236"><br>
+        Edge 1 length: 314.159</p>
+      </td>
+      <td>
+        <p align="center"><img border="0" src="images/edge26.gif" width="284" height="234"><br>
+        Edge 4 length: 314.159</p>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Writes the Model and Closes the Factory"></a>Writing the Model and
+Closing the Factory</h4>
+<p>Before ending, we must first release the software configuration.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre><font color="#008000">// Releases the configuration</font>
+    pConfig-&gt;Release();</pre>
+    </td>
+  </tr>
+</table>
+<p>To save the model in a file, the <tt>::CATSaveCGMContainer</tt> global
+function is used. Notice that in the use case, the save is conditioned by an
+input parameter representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <tt>::CATCloseCGMContainer</tt>
+global function.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ <font color="#008000">//
+ // Close the container
+ //</font>
+	
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case explains how to compute the area of a face and the length of an
+edge by using the CATDynMassProperties3D class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

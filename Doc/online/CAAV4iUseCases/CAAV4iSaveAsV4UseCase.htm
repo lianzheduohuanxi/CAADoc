@@ -1,0 +1,274 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating V4 Data from a V5 Geometrical Element</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="TOP">
+      <h2>V4 Access</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Creating V4 Data from a V5 Geometrical Element</h3>
+      Adapt the behavior of saving a CATPart as a V4 Model</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      This article shows how to create V4 data from a V5 geometrical
+      element.&nbsp;
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAV4iEduSaveAsV4 Use Case</a></b>&nbsp;</li>
+        <ul>
+          <li><a href="#What">What Does CAAV4iEduSaveAsV4</a></li>
+          <li><a href="#How">How to Launch CAAV4iEduSaveAsV4</a></li>
+          <li><a href="#Where">Where to Find the CAAV4iEduSaveAsV4 Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+This use case is intended to show you how to create V4 data from a V5
+geometrical element.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAV4iEduSaveAsV4 Use Case</h3>
+CAAV4iEduSaveAsV4 is a use case of the CAACATIAV4Interfaces.edu framework that
+illustrates V5ToV4Geo framework capabilities.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAV4iEduSaveAsV4 Do</h4>
+CAAV4iEduSaveAsV4 is a frame, which implements the CATIV4DataSaver interface.
+This interface is used by CATIA V5, when a CATPart is saved as a V4 model.
+Actually the implementation is restricted to spline curves and nets.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAV4iEduSaveAsV4</h4>
+<i></i>&nbsp; First of all, complete the object methods in order to compute the
+V4 data from the foreign V5 data. Read your V5 data and set the matching V4 data
+in accordance with the V4 CATGEO format. Tell the process that you want to
+compute yourself the V4 data. If you want to let the system do, the generic
+process will be applied and a nurbs element will be computed by approximation.
+If you wish no computation, the V4 element will be omitted if it is not linked
+to a topology.<br>
+<i></i>&nbsp; Then set up the build time environment, compile CAAV4iEduSaveAsV4
+with its prerequisites, set up the run time environment to take into account the
+use case dictionary, and execute the use case [<a href="#References">1</a>].<br>
+<i></i>&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAV4iEduSaveAsV4 Code</h4>
+The CAAV4iEduSaveAsV4 use case is made of two files located in the
+CAAV4iEduSaveAsV4.m module of the CAACATIAV4Interfaces.edu framework:<br>
+&nbsp;
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\</tt>CAACATIAV4Interfaces<tt>.edu\</tt>CAAV4iEduSaveAsV4<tt>.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/</tt>CAACATIAV4Interfaces<tt>.edu/</tt>CAAV4iEduSaveAsV4<tt>.m/</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.<br>
+&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+There are 4 logical steps in CAAV4iEduSaveAsV4 :
+<ol>
+  <li><a href="#Step1">Read the V5 data of the foreign geometry</a></li>
+  <li><a href="#Step2">Make a V4 data block</a></li>
+  <li><a href="#Step3">Change the SaveAsModel behaviour</a></li>
+  <li><a href="#Step4">If necessary, make a V4 spline constraint data</a></li>
+</ol>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Read the V5 data of the foreign geometry</h4>
+<table width="52%" class="code">
+  <tr>
+    <td>
+      <pre> 
+&nbsp; HRESULT CAASurfV4DataSaver::GetData(int &amp; oV4Type, double * &amp; oV4Block) 
+&nbsp; { 
+&nbsp; ...
+&nbsp; CATIForeignSurface_var forSurf = this;
+&nbsp; ...
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>To access the data of the foreign geometry, read your own V5 geometry
+implementation. For a curve, replace CATIForeignSurface_var by
+CATIForeignCurve_var.<br>
+<i></i>&nbsp;
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Make a V4 data block</h4>
+<table width="47%" class="code">
+  <tr>
+    <td>
+      <pre>
+&nbsp;   ...
+&nbsp;   oV4Type = V4CATGEOType;
+&nbsp;   oV4Block = new double[V4Length];
+&nbsp;   for (int i=0; i&lt;V4Length; i++)
+&nbsp;   { 
+&nbsp;     oV4Block[i] = ...;  
+&nbsp;   } 
+&nbsp;   ...   
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>To create the V4 data of the foreign geometry, refer to the V4 CATGEO
+documentation.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3">Change the SaveAsModel behaviour</a></h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+&nbsp; HRESULT CAAGobSurfV4DataSaver::GetUserIntent(int &amp; oIntent)
+&nbsp; {
+&nbsp;   HRESULT rc = S_OK;
+&nbsp;   oIntent = ...;
+&nbsp;   return rc;
+&nbsp; }
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>oIntent is set to
+<ul>
+  <li>0 : forget this V5 geometry in all the computation, do not fill the
+    GetData method.
+  <li>1 : do the generic process, do not fill the GetData method.
+  <li>2 : let the customer do as here before.
+</ul>
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Make a V4 spline constraint data block</h4>
+<table width="47%" class="code">
+  <tr>
+    <td>
+      <pre>
+&nbsp;   ...
+&nbsp;   oV4Type = V4SplineType;
+&nbsp;   oV4BlockLength = V4SplineConstraintLength;
+&nbsp;   oV4SplineConstraintBlock = new double[V4SplineConstraintLength];
+&nbsp;   for (int i=0; i&lt;V4SplineConstraintLength; i++)
+&nbsp;   { 
+&nbsp;     oV4SplineConstraintBlock[i] = ...;  
+&nbsp;   } 
+&nbsp;   ...   
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>To create the V4 data of the foreign geometry, refer to the V4 CATGEO
+documentation.
+<p>To create the V4 spline data of the foreign geometry, refer to the
+CATV4iV4Element documentation. If there is no V4 spline data, set the outputs to
+0 for the integers and to NULL for the pointer.
+<div align="right">
+  [<a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+This use case provides a way to retrieves information of&nbsp; elements of a
+model.
+<div align="right">
+  <i>[</i><a href="#Top">Top</a>]
+</div>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Jul 2003]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

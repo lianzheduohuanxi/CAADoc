@@ -1,0 +1,316 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GMOperatorsInterfaces Interface CATICGMDynTransformation</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GMOperatorsInterfaces.htm" href="../GMOperatorsInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GMOperatorsInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATICGMDynTransformation"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GMOperatorsInterfaces Interface CATICGMDynTransformation</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATICGMDynTransformation_54549','CATICGMDynTransformation','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATICGMDynTransformation</b>
+</p>
+<p>
+<b><i> Class representing the topological operator that transforms a CATBody.</i></b><br>
+
+ <br>
+ It follows the use frame of all operator and satisfies to the smart mechanism: the
+ input body is not modified. A new resulting body is created, 
+ possibly sharing data with the input one.
+<ul>
+ <li>A CATICGMDynTransformation is created with the <tt>CATCGMCreateDynTransformation</tt> global function:
+ It must be
+ directly released with the <tt>Release</tt> method.
+ It is not streamable. 
+<li>Options can be precised with the <tt>SetXxx</tt> methods, before
+ asking for the computation with the <tt>Run</tt> method. In particular, the operator can be re-use to
+ transform the same body with different transformations; in this case, you can precise another journal to
+ be filled, with the <tt>SetNewJournal</tt> method. 
+<li>The result is accessed with the <tt>GetResult</tt> method. 
+</ul>
+ This operator is optimized and simplified with regards to the <script type="text/javascript"> activateLinkAnchor('CATTransfoManager','','CATTransfoManager') </script> : The CATDynTransfomation operator chooses the best way to call the CATTransfoManager. In another way, the CATTransfoManager provides more
+ options.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#SetAffinity(CATMathPlane&amp;,CATLength)"><b>SetAffinity</b></a>(CATMathPlane&amp;,CATLength)
+<dd>  Defines <tt>this</tt> CATICGMDynTransformation as an affinity.
+ <dt> o 
+    <a href="#SetJournalInfo(CATBoolean)"><b>SetJournalInfo</b></a>(CATBoolean)
+<dd>  Defines whether a CATCGMJournalInfo has to be added to the item corresponding to <tt>this</tt> operation.
+ <dt> o 
+    <a href="#SetNewJournal(CATCGMJournalList*)"><b>SetNewJournal</b></a>(CATCGMJournalList*)
+<dd>  Defines another journal to be filled after another run of <tt>this</tt> operator.
+ <dt> o 
+    <a href="#SetReportMode(CATCGMDynTransformationReportMode)"><b>SetReportMode</b></a>(CATCGMDynTransformationReportMode)
+<dd>  Defines the type of follow-up of the modifications to write in the journal.
+ <dt> o 
+    <a href="#SetRotation(CATAngle,CATMathLine&amp;)"><b>SetRotation</b></a>(CATAngle,CATMathLine&amp;)
+<dd>  Defines <tt>this</tt> CATICGMDynTransformation as a rotation.
+ <dt> o 
+    <a href="#SetScaling(CATMathPoint&amp;,CATLength)"><b>SetScaling</b></a>(CATMathPoint&amp;,CATLength)
+<dd>  Defines <tt>this</tt> CATICGMDynTransformation as a scaling.
+ <dt> o 
+    <a href="#SetSymmetry(CATMathPlane&amp;)"><b>SetSymmetry</b></a>(CATMathPlane&amp;)
+<dd>  Defines <tt>this</tt> CATICGMDynTransformation as a symmetry.
+ <dt> o 
+    <a href="#SetTransformation(CATMathTransformation&amp;)"><b>SetTransformation</b></a>(CATMathTransformation&amp;)
+<dd>  Sets to <tt>this</tt> CATICGMDynTransformation the parameters of a given transformation.
+ <dt> o 
+    <a href="#SetTranslation(CATMathVector&amp;)"><b>SetTranslation</b></a>(CATMathVector&amp;)
+<dd>  Defines <tt>this</tt> CATICGMDynTransformation as a translation.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="SetAffinity"></a><a name="SetAffinity(CATMathPlane&amp;,CATLength)"></a> <dt> o <b>SetAffinity</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetAffinity</b>(<td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iReflectPlane</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iRatio</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATICGMDynTransformation as an affinity.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iReflectPlane</tt>
+   <dd> The plane for the reflecting part of the affinity.
+ </dd>
+    <dt><tt> iRatio</tt>
+   <dd> The value of the ratio for the scaling part of the affinity.<br>
+ The value <tt>iRatio=-1</tt> is the only value allowed for the moment.
+ Use better the <tt>SetSymmetry</tt> method.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetJournalInfo"></a><a name="SetJournalInfo(CATBoolean)"></a> <dt> o <b>SetJournalInfo</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetJournalInfo</b>(<td><script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script> <td><tt>iTrueOrFalse</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines whether a CATCGMJournalInfo has to be added to the item corresponding to <tt>this</tt> operation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTrueOrFalse</tt>
+   <dd> <tt>TRUE</tt> if an additional information must be added to the item, <tt>FALSE</tt> otherwise. In case of
+ adding the additional information, this information is put to 0.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetNewJournal"></a><a name="SetNewJournal(CATCGMJournalList*)"></a> <dt> o <b>SetNewJournal</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetNewJournal</b>(<td><script type="text/javascript"> activateLink('CATCGMJournalList','CATCGMJournalList*')</script> <td><tt>iJournal</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines another journal to be filled after another run of <tt>this</tt> operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iJournal</tt>
+   <dd> The pointer to the new journal to be filled in another run. This can be used in case of
+ pattern transformation, if you want that each occurence has a different journal.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetReportMode"></a><a name="SetReportMode(CATCGMDynTransformationReportMode)"></a> <dt> o <b>SetReportMode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetReportMode</b>(<td><script type="text/javascript"> activateLink('CATCGMDynTransformationReportMode','CATCGMDynTransformationReportMode')</script> <td><tt>iTypeOfFollowUp</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines the type of follow-up of the modifications to write in the journal.<br>
+ This information is used by applications, depending on the type of operations they want to 
+ perform after calling the transformation. This information has no impact on the objects of the
+ geometric modeler itself.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTypeOfFollowUp</tt>
+   <dd> The type of report mode.
+ <br><b>Legal values</b>:
+ <dl><dt><tt>CATCGMDynTransformationModification</tt></dt>
+ <dd>The transformation is seen as a modification: the body is always duplicated, but the application
+ wants to mask the input body for showing only the resulting body (case of an applicative
+ transformation). This is the default of a CATICGMDynTransformation.
+ <dt><tt>CATCGMDynTransformationCreation</tt></dt>
+ <dd>The transformation is seen as a creation: The application keeps the input body and
+ the duplicated body, and wants to union them for example:
+ this is a typical case of an applicative operation of mirror.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<a name="SetRotation"></a><a name="SetRotation(CATAngle,CATMathLine&amp;)"></a> <dt> o <b>SetRotation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetRotation</b>(<td> const <script type="text/javascript"> activateLink('CATAngle','CATAngle')</script> <td><tt>iAngle</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathLine','CATMathLine&amp;')</script> <td><tt>iAxis</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATICGMDynTransformation as a rotation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iAngle</tt>
+   <dd> The angle of the rotation (in radians).
+ </dd>
+    <dt><tt> iAxis</tt>
+   <dd> The direction of the rotation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetScaling"></a><a name="SetScaling(CATMathPoint&amp;,CATLength)"></a> <dt> o <b>SetScaling</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetScaling</b>(<td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iOrigin</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLength','CATLength')</script> <td><tt>iRatio</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATICGMDynTransformation as a scaling.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iOrigin</tt>
+   <dd> The origin of the scaling.
+ </dd>
+    <dt><tt> iRatio</tt>
+   <dd> The value of the scaling</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetSymmetry"></a><a name="SetSymmetry(CATMathPlane&amp;)"></a> <dt> o <b>SetSymmetry</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetSymmetry</b>(<td> const <script type="text/javascript"> activateLink('CATMathPlane','CATMathPlane&amp;')</script> <td><tt>iSymmetryPlane</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATICGMDynTransformation as a symmetry.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSymmetryPlane</tt>
+   <dd> The plane of symmetry.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTransformation"></a><a name="SetTransformation(CATMathTransformation&amp;)"></a> <dt> o <b>SetTransformation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTransformation</b>(<td> const <script type="text/javascript"> activateLink('CATMathTransformation','CATMathTransformation&amp;')</script> <td><tt>iTransformation</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Sets to <tt>this</tt> CATICGMDynTransformation the parameters of a given transformation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTransformation</tt>
+   <dd> The mathematical definition of the transformation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetTranslation"></a><a name="SetTranslation(CATMathVector&amp;)"></a> <dt> o <b>SetTranslation</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetTranslation</b>(<td> const <script type="text/javascript"> activateLink('CATMathVector','CATMathVector&amp;')</script> <td><tt>iTranslationVector</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Defines <tt>this</tt> CATICGMDynTransformation as a translation.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iTranslationVector</tt>
+   <dd> The vector of the translation.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATICGMDynTransformation.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMOperatorsInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

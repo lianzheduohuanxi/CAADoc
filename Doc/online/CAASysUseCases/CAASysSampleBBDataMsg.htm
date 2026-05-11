@@ -1,0 +1,726 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Backbone Data Message</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Backbone Data Message</h3>
+      <em>Creating a message that conveys data</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a backbone data message component,
+      that is, a message component that conveys data. This message component can
+      then be used to make two processes or applications communicate.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysBBMessage Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysBBMessage Do</a></li>
+            <li><a href="#How">How to Launch CAASysBBMessage</a></li>
+            <li><a href="#Where">Where to Find the CAASysBBMessage Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case shows you how to create a backbone data message, that is, that
+conveys data. This use case shows how to create a component that derives from
+the base message component <i>CATBBMessage</i>, and that implements, in the
+component main class, the <i>CATIStreamMsg</i> interface with data to stream and
+unstream. In addition, it shows you how to implement <i>CATICreateInstance</i>
+using a code extension class to enable clients to instantiate the message
+component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAASysBBMessage Use Case</h3>
+<p>CAASysBBMessage is a use case of the CAASystem.edu framework that illustrates
+the System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAASysBBMessage Do</h4>
+<p>The message component is named <i>CAASysDataMessage</i> and derives from the <i>CATBBMessage</i>
+component. <i>CAASysDataMessage</i> implements the <i>CATIStreamMsg</i> and <i>CATICreateInstance</i>
+interfaces. It also inherits the implementation of the <i>CATICommMsg</i> and <i>CATIBBStreamer</i>
+interfaces from <i>CATBBMessage</i>. <i>CATICreateInstance</i> is implemented
+using a code extension class.</p>
+<p><img border="0" src="images/CAASysBBDataMsg.jpg" width="459" height="305"></p>
+<p><i>CATIStreamMsg</i> is implemented to convey the data that define a circle.
+To get and set this data, <i>CAASysDataMessage</i> also implements the <i>CAAISysDataRequest</i>
+interface. This data is:</p>
+<table>
+  <tr>
+    <td>The circle radius</td>
+    <td>float</td>
+  </tr>
+  <tr>
+    <td>The circle number</td>
+    <td>int</td>
+  </tr>
+  <tr>
+    <td>The circle color</td>
+    <td>char *</td>
+  </tr>
+  <tr>
+    <td>The circle sags</td>
+    <td>array of floats</td>
+  </tr>
+</table>
+<p>The CAASysBBMessage use case also includes another backbone message component
+that doesn't convey any data [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysBBMessage</h4>
+<p>CAASysBBMessage is launched by other backbone use cases [<a href="#References">2</a>][<a href="#References">3</a>],
+but you need to create the CAASysBBMessage shared library or DLL. To do this,
+you will need to set up the build time environment, and compile CAASysBBMessage
+along with its prerequisites [<a href="#References">4</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysBBMessage Code</h4>
+<p>The CAASysBBMessage use case is made of several classes located in the
+CAASysBBMessage.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysBBMessage.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysBBMessage.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a backbone data message, there are four main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th align="left">Step</th>
+    <th align="left">Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Creating the message component main class</td>
+    <td valign="top">LocalInterfaces\CAASysDataMessage.h<br>
+      src\CAASysDataMessage.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Implementing <i>CATIStreamMsg</i></td>
+    <td>LocalInterfaces\CAASysDataMessage.h<br>
+      src\CAASysDataMessage.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Implementing <i>CAAISysDataRequest</i></td>
+    <td>LocalInterfaces\CAASysDataMessage.h<br>
+      src\CAASysDataMessage.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Creating the message component factory</td>
+    <td>LocalInterfaces\CAAESysCreateInstanceForDataMessage.h<br>
+      src\CAAESysCreateInstanceForDataMessage.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Updating the interface dictionary</td>
+    <td>CNext\code\dictionary\CAASystem.edu.dico</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the Message Component Main Class</h4>
+<p>A backbone message is a component that is made up of a main class. Its header
+file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBBMessage.h&quot;
+
+class  CAASysDataMessage : public <b>CATBBMessage</b>
+{
+  <b>CATDeclareClass</b>;
+
+  public:
+    CAASysDataMessage();
+    virtual ~CAASysDataMessage();
+
+    // CATIStreamMsg interface methods
+    virtual HRESULT StreamData    (void **oBuffer, uint32 *oLen);
+    virtual HRESULT UnstreamData  (void  *iBuffer, uint32  iLen);
+    virtual HRESULT FreeStreamData(void  *iBuffer, uint32  iLen);
+    virtual HRESULT SetMessageSpecifications();
+
+    // CAAISysDataRequest interface methods
+    virtual HRESULT SetData(const float iRadiusOfCircle, 
+                            const int   iNbOfCircle,
+                            char      * iColorOfCircle,
+                            float     * iSagOfCircle);
+      
+    virtual HRESULT GetData(float     &amp; oRadiusOfCircle,
+                            int       &amp; oNbOfCircle,
+                            char     ** oColorOfCircle,
+                            float    ** oSagOfCircle);
+      
+  private:
+    CAASysDataMessage(const CAASysDataMessage &amp;iObjectToCopy);
+
+  private:
+    float   _RadiusOfCircle;
+    int     _NbOfCircle;
+    char  * _ColorOfCircle;
+    float   _SagOfCircle[3];
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysDataMessage</i> class belongs to a component, thanks to the <code>CATDeclareClass</code>
+macro. It C++ derives from <i>CATBBMessage</i>, and implements <i>CATIStreamMsg</i>,
+whose four methods are declared. In addition, it implements an application
+interface to retrieve and set the data of the circle component it is intended to
+convey. Note that the copy constructor is set as private, and is not implemented
+in the source file. This prevents the compiler from creating the copy
+constructor as public without you know. The circle component data are declared
+as private data members.</p>
+<p>The source file of the backbone data message component main class begins as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include  &quot;CAASysDataMessage.h&quot;
+
+#include &lt;CATErrorDef.h&gt;    // for the SUCCEEDED macro
+#include &quot;CATIBBStreamer.h&quot; // To stream 
+#include &quot;CATICommMsg.h&quot;    
+
+#include &quot;TIE_CATIStreamMsg.h&quot;
+<b>TIE_CATIStreamMsg(CAASysDataMessage);</b>
+
+#include &quot;TIE_CAAISysDataRequest.h&quot;
+<b>TIE_CAAISysDataRequest(CAASysDataMessage);</b>
+
+<b>CATImplementClass(CAASysDataMessage, Implementation, CATBBMessage, CATNull);</b>
+
+CAASysDataMessage::CAASysDataMessage()
+                 : _ColorOfCircle(NULL),_NbOfCircle(0),_RadiusOfCircle(0.f)
+{
+  _SagOfCircle[0] = 0.0f;
+  _SagOfCircle[1] = 0.0f;
+  _SagOfCircle[2] = 0.0f;
+}
+
+CAASysDataMessage::~CAASysDataMessage()
+{
+  if ( NULL != _ColorOfCircle ) 
+  {
+    delete [] _ColorOfCircle;
+    _ColorOfCircle = NULL;
+  }
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysDataMessage</i> class states that it implements the <i>CATIStreamMsg</i>
+and <i>CAAISysDataRequest</i> interfaces thanks to the <code>TIE_CATIStreamMsg</code>
+and <code>TIE_CAAISysDataRequest</code> macros respectively. The <code>CATImplementClass</code>
+macro declares that the <i>CAASysDataMessage</i> class is a component main class
+thanks the <code>Implementation</code> keyword, and that the component
+OM-derives [<a href="#References">5</a>] from <i>CATBBMessage</i>. Any component
+main class declared as an <code>Implementation</code> must C++-derive and
+OM-derive from the same class. The constructor and the destructor respectively
+initializes and deletes the data members.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Implementing CATIStreamMsg</h4>
+<p><i>CATIStreamMsg</i> is the interface dedicated to streaming and unstreaming
+the data that the message conveys. Four methods must be implemented:</p>
+<table>
+  <tr>
+    <td><a href="#StreamData"><code>StreamData</code></a></td>
+    <td>Streams a backbone message</td>
+  </tr>
+  <tr>
+    <td><a href="#UnstreamData"><code>UnstreamData</code></a></td>
+    <td>Unstreams a backbone message</td>
+  </tr>
+  <tr>
+    <td><a href="#FreeStreamData"><code>FreeStreamData</code></a></td>
+    <td>Frees the backbone message streaming buffer</td>
+  </tr>
+  <tr>
+    <td><a href="#SetMessageSpecifications"><code>SetMessageSpecifications</code></a></td>
+    <td>Sets backbone message class name and options</td>
+  </tr>
+</table>
+<p>These methods are implemented for the circle object.
+<ol>
+  <li><a name="StreamData"></a>Streaming the backbone message
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAASysDataMessage::<b>StreamData</b>(void **oBuffer, uint32 *oLen)
+{
+  CATIBBStreamer * pICATIBBStreamer = NULL ;
+  HRESULT rc = QueryInterface(<b>IID_CATIBBStreamer</b>, (void**)&amp;pICATIBBStreamer);
+
+  if ( SUCCEEDED(rc) )
+  {
+    pICATIBBStreamer-&gt;<b>BeginStream</b>();
+
+    pICATIBBStreamer-&gt;<b>StreamFloat</b>(_RadiusOfCircle); 
+    pICATIBBStreamer-&gt;<b>StreamInt</b>(_NbOfCircle); 
+    pICATIBBStreamer-&gt;<b>StreamString</b>(_ColorOfCircle); 
+    pICATIBBStreamer-&gt;<b>StreamFixedFloatArray</b>(_SagOfCircle,3); 
+
+    int Len ; 
+    *oBuffer = pICATIBBStreamer-&gt;<b>EndStream</b>(&amp;Len);
+    *oLen = Len ;
+
+    pICATIBBStreamer-&gt;Release();
+    pICATIBBStreamer = NULL;
+  }
+  return rc;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The data to stream for the circle is made up of simple types only. An
+    easy way of implementing such data streaming is to retrieve a pointer to the
+    <i>CATIBBStreamer</i> interface that the component implements thanks to the
+    inheritance of <i>CATBBMessage</i>. <i>CATIBBStreamer</i> provides a set of
+    streaming methods for simple types that just need to be called. First,
+    initialize the streaming operation using <code>BeginStream</code>, and then
+    stream the data:</p>
+    <table cellpadding="2">
+      <tr>
+        <td>The circle radius</td>
+        <td>float</td>
+        <td><code>StreamFloat</code></td>
+      </tr>
+      <tr>
+        <td>The circle number</td>
+        <td>int</td>
+        <td><code>StreamInt</code></td>
+      </tr>
+      <tr>
+        <td>The circle color</td>
+        <td>char *</td>
+        <td><code>StreamString</code></td>
+      </tr>
+      <tr>
+        <td>The circle sags</td>
+        <td>array of floats</td>
+        <td><code>StreamFixedFloatArray</code></td>
+      </tr>
+    </table>
+    <p>Then, close the streaming operation using <code>EndStream</code>, release
+    the <i>CATIBBStreamer</i> pointer and set it to <code>NULL</code>, and
+    that's done.</p>
+  </li>
+  <li><a name="UnstreamData"></a>Unstreaming the backbone message
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAASysDataMessage::<b>UnstreamData</b>(void *iBuffer, uint32 iLen)
+{
+  CATIBBStreamer * pICATIBBStreamer = NULL;
+  HRESULT rc = QueryInterface(<b>IID_CATIBBStreamer</b>, (void**)&amp;pICATIBBStreamer);
+
+  if ( SUCCEEDED(rc) )
+  {
+    pICATIBBStreamer-&gt;<b>BeginUnstream</b>(iBuffer,iLen);
+
+    pICATIBBStreamer-&gt;<b>UnstreamFloat</b>(&amp;_RadiusOfCircle); 
+    pICATIBBStreamer-&gt;<b>UnstreamInt</b>(&amp;_NbOfCircle); 
+
+    int Len;
+    pICATIBBStreamer-&gt;<b>UnstreamNeededStringLength</b>(&amp;Len); 
+    _ColorOfCircle = new char [Len];
+    pICATIBBStreamer-&gt;<b>UnstreamString</b>(_ColorOfCircle); 
+
+    pICATIBBStreamer-&gt;<b>UnstreamFixedFloatArray</b>(_SagOfCircle, 3);
+
+    rc = pICATIBBStreamer-&gt;<b>EndUnstream</b>();
+
+    pICATIBBStreamer-&gt;Release();
+    pICATIBBStreamer = NULL;
+  }
+  return rc;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Unstreaming the circle data streamed is also performed by retrieving a
+    pointer to the <i>CATIBBStreamer</i> interface. <i>CATIBBStreamer</i>
+    provides a set of unstreaming methods for simple types that just need to be
+    called. First, initialize the unstreaming operation using <code>BeginUnstream</code>,
+    and then <b>unstream the data in the same order than when streaming</b>:</p>
+    <table cellpadding="2">
+      <tr>
+        <td>The circle radius</td>
+        <td>float</td>
+        <td><code>UnstreamFloat</code></td>
+      </tr>
+      <tr>
+        <td>The circle number</td>
+        <td>int</td>
+        <td><code>UnstreamInt</code></td>
+      </tr>
+      <tr>
+        <td>The circle color</td>
+        <td>char *</td>
+        <td><code>UnstreamString</code></td>
+      </tr>
+      <tr>
+        <td>The circle sags</td>
+        <td>array of floats</td>
+        <td><code>UnstreamFixedFloatArray</code></td>
+      </tr>
+    </table>
+    <p>Note that prior to unstream a character string, you should retrieve its
+    length thanks to <code>UnstreamNeededStringLength</code>, and allocate the
+    character string. When all data is unstreamed, close the unstreaming
+    operation using <code>EndUnstream</code>, release the <i>CATIBBStreamer</i>
+    pointer and set it to <code>NULL</code>, and that's done.</p>
+  </li>
+  <li><a name="FreeStreamData"></a>Freeing the backbone message
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT CAASysDataMessage::<b>FreeStreamData</b>(void *iBuffer, uint32 iLen)
+{
+  CATIBBStreamer * pICATIBBStreamer = NULL;
+  HRESULT rc = QueryInterface(<b>IID_CATIBBStreamer</b>,(void**)&amp;pICATIBBStreamer);
+
+  if ( SUCCEEDED(rc) )
+  {
+    pICATIBBStreamer-&gt;<b>ResetStreamData</b>();
+
+    pICATIBBStreamer-&gt;Release();
+    pICATIBBStreamer = NULL ;
+  }
+  return rc ;
+}
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>To free the stream buffer when only simple types are streamed and
+    unstreamed, simply retrieve a pointer to the <i>CATIBBStreamer</i> interface
+    and call <code>ResetStreamData</code>.</p>
+  </li>
+  <li><a name="SetMessageSpecifications"></a>Setting the message specifications
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+HRESULT CAASysDataMessage::<b>SetMessageSpecifications</b>()
+{
+  HRESULT rc = E_FAIL;
+  CATICommMsg * pICommMsg = NULL ;
+  rc = QueryInterface(<b>IID_CATICommMsg</b>, (void**)&amp;pICommMsg);
+  if ( SUCCEEDED(rc) )
+  {
+    CATMessageClass MessageClassName= &quot;CAASysDataMessage&quot;;
+    rc = pICommMsg-&gt;<b>SetMessageClass</b>(MessageClassName);
+
+    pICommMsg-&gt;Release();
+    pICommMsg = NULL ;
+
+    rc = S_OK;
+  }
+  return rc;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The message specifications that must be set are at least the name of the
+    message component main class. This is to enable the message component to be
+    instantiated at unstreaming time. This is done by retrieving a pointer to
+    the <i>CATICommMsg</i> interface that the component implements thanks to the
+    inheritance of <i>CATBBMessage</i>. Simply call the <code>SetMessageClass</code>
+    with the message class name as argument.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Implementing CAAISysDataRequest</h4>
+<p><i>CAAISysDataRequest</i> is an interface the component should implement to
+enable the data to be set and retrieved, and is therefore component dependent. <i>CAAISysDataRequest</i>
+has two methods, <code>SetData</code> and <code>GetData</code>.</p>
+<ul>
+  <li><code>SetData</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAASysDataMessage::<b>SetData</b>(const float iRadiusOfCircle,
+                                   const int   iNbOfCircle,
+                                   char       *iColorOfCircle,
+                                   float      *iSagOfCircle)
+{
+  _RadiusOfCircle = iRadiusOfCircle;
+  _NbOfCircle     = iNbOfCircle;
+
+  if ( NULL != iColorOfCircle )
+  {
+    _ColorOfCircle = new char [strlen(iColorOfCircle)+1];
+    strcpy(_ColorOfCircle,iColorOfCircle);
+  }
+
+  _SagOfCircle[0] = iSagOfCircle[0];
+  _SagOfCircle[1] = iSagOfCircle[1];
+  _SagOfCircle[2] = iSagOfCircle[2];
+
+  return S_OK;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>SetData</code> is used by the message sender when the message is
+    created to feed the message with the circle data [<a href="#References">3</a>].</p>
+  </li>
+  <li><code>GetData</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>HRESULT CAASysDataMessage::GetData(float  &amp; oRadiusOfCircle,
+                                   int    &amp; oNbOfCircle,
+                                   char  ** oColorOfCircle,
+                                   float ** oSagOfCircle)
+{
+  HRESULT rc = E_FAIL;
+
+  if ( (NULL != oSagOfCircle) &amp;&amp; ( NULL != oColorOfCircle) )
+  {
+    oRadiusOfCircle = _RadiusOfCircle;
+    oNbOfCircle     = _NbOfCircle;
+
+    if ( NULL != _ColorOfCircle )
+    {
+      *oColorOfCircle = new char [strlen(_ColorOfCircle)+1];
+      strcpy(*oColorOfCircle,_ColorOfCircle);
+    }
+    else 
+    {
+      *oColorOfCircle = NULL;
+    }
+
+    *oSagOfCircle = new float[3] ;
+
+    (*oSagOfCircle)[0] = _SagOfCircle[0];
+    (*oSagOfCircle)[1] = _SagOfCircle[1];
+    (*oSagOfCircle)[2] = _SagOfCircle[2];
+
+    rc = S_OK;
+   }
+   return rc;
+}</pre>
+        </td>
+      </tr>
+    </table>
+    <p><code>GetData</code> is used by the message receiver when the message is
+    received to get the circle data from the message [<a href="#References">3</a>].</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the Message Component Factory</h4>
+<p>As any component, a backbone message should provide a means for any client
+application to instantiate it [<a href="#References">6</a>]. This is made
+possible by making the component implement <i>CATICreateInstance</i> using a
+code extension class. Below is the header file of this class.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATBaseUnknown.h&quot;   //Needed to derive from CATBaseUnknown
+
+class CAAESysCreateInstanceForDataMessage : public CATBaseUnknown
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAAESysCreateInstanceForDataMessage();
+    virtual ~CAAESysCreateInstanceForDataMessage();
+
+    // CATICreateInstance method 
+    virtual HRESULT __stdcall CreateInstance(void **oppv);
+
+  private:
+    CAAESysCreateInstanceForDataMessage(const CAAESysCreateInstanceForDataMessage &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForDataMessage</i> class belongs to a component,
+thanks to the <code>CATDeclareClass</code> macro. It C++ derives from <i>CATBaseUnknown</i>,
+and implements <i>CATICreateInstance</i>, whose unique method <code>CreateInstance</code>
+is declared. Note that the copy constructor is set as private, and is not
+implemented in the source file. This prevents the compiler from creating the
+copy constructor as public without you know.</p>
+<p>The source file of this code extension class is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAESysCreateInstanceForDataMessage.h&quot;
+
+#include &quot;CAASysDataMessage.h&quot;
+
+#include &quot;TIE_CATICreateInstance.h&quot;
+<b>TIE_CATICreateInstance(CAAESysCreateInstanceForDataMessage);
+</b>
+<b>CATImplementClass(CAAESysCreateInstanceForDataMessage,
+                  CodeExtension,
+                  CATBaseUnknown,
+                  CAASysDataMessage);</b>
+
+CAAESysCreateInstanceForDataMessage::CAAESysCreateInstanceForDataMessage() {}
+
+CAAESysCreateInstanceForDataMessage::~CAAESysCreateInstanceForDataMessage() {}
+
+HRESULT __stdcall CAAESysCreateInstanceForDataMessage::<b>CreateInstance</b>(void ** oppv)
+{
+  CAASysDataMessage * pt = new CAASysDataMessage();
+  if (!pt) return(E_OUTOFMEMORY);
+  *oppv = (void *)pt;
+  return(S_OK);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAESysCreateInstanceForDataMessage</i> class states that it
+implements the <i>CATICreateInstance</i> interface thanks to the <code>TIE_CATICreateInstance</code>
+macro. The <code>CATImplementClass</code> macro declares that the <i>CAAESysCreateInstanceForDataMessage</i>
+class is a code extension class, thanks to the <code>CodeExtension</code>
+keyword, and that it extends the component whose main class is <i>CAASysDataMessage</i>.
+The third parameter must always be set to <i>CATBaseUnknown</i>, makes no sense,
+and is unused for extensions. The <code>CreateInstance</code> method
+instantiates and returns the component main class.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Updating the Interface Dictionary</h4>
+<p>The interface dictionary is updated as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAASysDataMessage         CATIStreamMsg           libCAASysBBMessage
+CAASysDataMessage         CATICreateInstance      libCAASysBBMessage
+CAASysDataMessage         CAAISysDataRequest      libCAASysBBMessage</pre>
+    </td>
+  </tr>
+</table>
+<p>The interface dictionary is a file whose name is the framework name suffixed
+by dico, such as CAASystem.edu.dico, and that you should create or update in the
+framework CNext\code\dictionary directory. The interface dictionary declares
+that the <i>CAASysDataMsg</i> component implements <i>CATIStreamMsg</i>, <i>CATICreateInstance</i>,
+and <i>CAAISysDataRequest</i>, and that the shared library or DLL to load to
+query pointers to these interfaces is libCAASysBBMessage.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has shown how to create a backbone data message that can be
+used to communicate between two applications. As any backbone message, the
+message is made up of a component that derives from the supplied <i>CATBBMessage</i>
+component, that itself implements <i>CATIStreamMsg</i> and <i>CATICreateInstance</i>
+interfaces, and that inherits from <i>CATBBMessage</i> the implementation of the
+<i>CATIBBStreamer</i> and <i>CATICommMsg</i> interfaces. Such a message that
+conveys data of simple types can use the streaming and unstreaming methods
+provided by the <i>CATIBBStreamer</i> implementation of <code>CATBBMessage</code>.
+Data must be streamed and unstreamed in the same order. The message is now ready
+to be used by applications [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAASysSampleBBSimpleMsg.htm">Creating a Backbone Simple Message</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAASysSampleBBSendRecSimpleMsg.htm">Sending a Simple Message to
+      an Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysSampleBBSendRecDataMsg.htm">Sending a Data Message to an
+      Application</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingComponent.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jul 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

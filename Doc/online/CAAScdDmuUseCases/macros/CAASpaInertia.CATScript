@@ -1,0 +1,42 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Compute the mass and the center of gravity of a component.
+'   Assumptions : A CATProduct document should be active and a component selected.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' Retrieve the selected component
+    Dim oSelection As Selection
+    Set oSelection = CATIA.ActiveDocument.Selection
+    Dim oProduct As AnyObject
+    On Error Resume Next
+    Set oProduct = oSelection.FindObject("CATIAProduct")
+    If (Err.Number <> 0) Then
+        MsgBox "No selected product"
+    Else
+        On Error Goto 0
+
+        ' Compute the inertia
+        Dim oInertia As AnyObject
+        Set oInertia = oProduct.GetTechnologicalObject("Inertia")
+
+        ' Read the inertia data
+        Dim dMass As Double
+        dMass = oInertia.Mass
+        Dim dCoordinates(2)
+        oInertia.GetCOGPosition dCoordinates
+      
+        ' Display the results
+        MsgBox oProduct.Name & ": Mass = " & Cstr(dMass) & ", Center of gravity : X = " & _
+            Cstr(dCoordinates(0)) & ", Y = "+Cstr(dCoordinates(1)) & ", Z = "+Cstr(dCoordinates(2))
+
+    End If
+
+End Sub

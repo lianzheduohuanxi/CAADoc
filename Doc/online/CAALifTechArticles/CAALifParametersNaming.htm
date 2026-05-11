@@ -1,0 +1,253 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="fr">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Literal Feature Overview</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>3D PLM PPR Hub Open Gateway</h1>
+     </td>
+     <td>
+     <h2>Knowledge Modeler</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Parameters Naming</h3>
+     <p><em>To be clear when using naming methods for parameters</em></td>
+   </tr>
+   <tr>
+     <td class="tech" colspan="2">Technical Article</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>The purpose of this article is to help you to choose the correct method 
+     when you need to manipulate the name of your applicative parameters.</p>
+     <ul>
+       <li><a href="#Introduction"><b>Introduction</b></a></li>
+       <li><b><a href="#Modelisation">Modelisation</a></b></li>
+       <li><b><a href="#What you see in CATIA">What you see in CATIA and what 
+       you can do interactively</a></b>
+       <ul>
+         <li><a href="#F(x)">In F(x)</a></li>
+         <li><a href="#Specification Tree">In the Specification Tree</a></li>
+         <li><a href="#Parameters Explorer">In the Parameters Explorer</a></li>
+       </ul>
+       </li>
+       <li><b><a href="#What to know when developping">What to know when 
+       developping your application</a></b></li>
+       <ul>
+         <li><a href="#Parameter Creation">Parameter Creation</a></li>
+         <li><a href="#CATICkeParm Services">About the CATICkeParm services 
+         manipulating parameter naming</a></li>
+         <li><a href="#CATIAlias">About CATIAlias</a></li>
+         <li><a href="#Internal Role">Where else is used the Internal Role</a></li>
+         <li><a href="#VB">About VB and CATIAParameters</a></li>
+         <li><a href="#UDF">About parameters in User Defined Feature</a></li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Introduction"></a>Introduction</h3>
+ <p>When you manipulate the parameters <a href="#References">[1]</a> of your 
+ object, depending on where you watch them in CATIA (editors or specification 
+ tree), or depending on which API you use in your application, you will have 
+ different names. It may seem complicated, but it especially offers a richness 
+ of treatments. You may want to manipulate the basic name of your parameter, or 
+ to see its path in the model or in a specific context, or you may want to 
+ assign it a nickname ... The aim of this article is to make a status once for 
+ all on the parameter naming.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Modelisation"></a>Modelisation</h3>
+ <p>We distinguish 2 names for a same parameter:</p>
+ <p>&nbsp;&nbsp;&nbsp; - the internal role.</p>
+ <p>&nbsp;&nbsp;&nbsp; - the variable name.</p>
+ <p>The <b>internal role</b> is the name given to the parameter at creation. If 
+ the parameter has been created by an application, generally, it is not modified 
+ afterwards, because the application can use this internal role to recognize 
+ this parameter among the others. But it is possible interactivly through the&nbsp; 
+ Parameters Explorer.</p>
+ <p>The <b>variable name</b> is the name given by the user when he explicitely 
+ renames it in F(x) or in the Parameter's Explorer. In theory, applications 
+ don't use this variable name.</p>
+ <p>In the image below, Point.1 has 3 coordinates parameters. X, Y and Z are 
+ their <b>internal role</b> assigned at their creation. The first coordinate X 
+ has been renamed by the end user in Point1_X: it is the <b>variable name</b> of 
+ the parameter.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="images/CAALifNaming1.gif" width="503" height="500"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="What you see in CATIA"></a><font size="4">What you see in CATIA 
+ and what you can do interactivly?</font></h4>
+ <p><b><a name="F(x)"></a>In F(x):</b></p>
+ <p>&nbsp;&nbsp;&nbsp; - A parameter is seen with its variable name if it exists 
+ and otherwise with its pathname (built on the internal role). </p>
+ <p>&nbsp;&nbsp;&nbsp; - You can rename a parameter. This action modifies its 
+ variable name.</p>
+ <p>&nbsp;&nbsp;&nbsp; - You can delete its variable name by entering an empty 
+ string in the &quot;Name&quot; field. This action re-displays the pathname automatically.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="images/CAALifNaming2.gif" width="640" height="415"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p><b><a name="Specification Tree"></a>In the Specification Tree:</b></p>
+ <p>&nbsp;&nbsp;&nbsp; - A parameter is seen with its variable name if it exists 
+ and otherwise with its internal role.</p>
+ <p><b><a name="Parameters Explorer"></a>In the Parameters Explorer:</b></p>
+ <p>&nbsp;&nbsp;&nbsp; - The &quot;Local Name&quot; field displays the internal role.</p>
+ <p>&nbsp;&nbsp;&nbsp; - The &quot;Name&quot; field displays the variable name.</p>
+ <p>&nbsp;&nbsp;&nbsp; - The internal role can be modied for user parameters. In 
+ the other case, this name can used by the application.</p>
+ <p>&nbsp;&nbsp;&nbsp; - The variable name can be modified and deleted. In this 
+ case the pathname appears automatically.</p>
+ <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <img border="0" src="images/CAALifNaming3.gif" width="468" height="517"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What to know when developping"></a><font size="4">What to know 
+ when developping your application?</font></h4>
+ <p><b><a name="Parameter Creation"></a>About Parameter Creation:</b></p>
+ <p>When you create a parameter with a method of <b><i>CATICkeParmFactory </i>
+ </b>like<i><b> CreateLength(&quot;H&quot;, 47.477mm)</b></i>, the first argument becomes 
+ the internal role of the parameter: here &quot;H&quot;.</p>
+ <p><b><a name="CATICkeParm Services"></a>About the CATICkeParm services 
+ manipulating parameter naming:</b></p>
+ <p><i><font face="Times New Roman" size="2"><b>&nbsp;&nbsp;&nbsp; 
+ CATICkeParm::InternalRole() : </b></font></i></p>
+ <blockquote>
+   <p><font face="Times New Roman" size="2"><b><i>&nbsp;&nbsp; </i></b></font>
+   <font face="Times New Roman">Returns the Internal Role of the parameter.</font></p>
+ </blockquote>
+ <p><i><font face="Times New Roman" size="2"><b>&nbsp;&nbsp;&nbsp; 
+ CATICkeParm::Role() : </b></font></i></p>
+ <blockquote>
+   <p align="justify">In the case of a non user parameter, this method tries to 
+   translate in NLS the Internal Role by searching in the NLS file equivalent to 
+   the startup catalog of the aggregating feature. In other words, the Role of 
+   the parameter H aggregated under a point will be searched as the translation 
+   of &quot;H&quot; in the file CATHybridShapeNLS.CATNls equivalent to the 
+   CATHybridShape.feat catalog containing the point startup.</p>
+ </blockquote>
+ <p>&nbsp;&nbsp;&nbsp; <i><b><font size="2">CATICkeParm::PathName() :</font></b></i>
+ </p>
+ <blockquote>
+   <p align="justify">This pathname is NLS. It is the concatenation of the 
+   CATICkeParm::Role of the parameter, with the CATIAlias::GetAlias of the 
+   father features of the parameter. </p>
+ </blockquote>
+ <p><i><font size="2">&nbsp;&nbsp;&nbsp; <b>CATICkeParm::Name() :</b> </font>
+ </i></p>
+ <blockquote>
+   <p align="justify">&nbsp;Returns the variable name if it exists otherwise it 
+   returns the pathname.</p>
+ </blockquote>
+ <p><i><font size="2">&nbsp;&nbsp;&nbsp; <b>CATICkeParm::Rename</b> <b>:</b>
+ </font></i></p>
+ <blockquote>
+   <p>Modifies the variable name.</p>
+ </blockquote>
+ <p><i><font size="2">&nbsp;&nbsp;&nbsp; <b>CATICkeParm::IsNamed() : </b>&nbsp;</font></i></p>
+ <blockquote>
+   <p>Indicates if the parameter has a variable name.</p>
+ </blockquote>
+ <p><i><font size="2">&nbsp;&nbsp;&nbsp; </font><b><font size="2">
+ CATICkeParm::RelativeName() : </font></b></i></p>
+ <blockquote>
+   <p>Does the same as Name(). But it has a supplementary argument which is the 
+   aggregating object where we stop the naming.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+ </blockquote>
+ <p><b><a name="CATIAlias"></a>About CATIAlias:</b></p>
+ <p>An alias is the name seen by the end user. It can be translated (NLS). For a 
+ parameter, the method CATIAlias::GetAlias returns the value of 
+ CATICkeParm::Name(). The method SetAlias calls CATICkeParm::Rename().</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p><b><a name="Internal Role"></a>Where else is used the internal role?:</b></p>
+ <p align="justify">The internal role is used in the default implementation of 
+ CATIInstance. The methods CATIInstance::GetValue(&quot;H&quot;) and 
+ CATIInstance::SetValue(&quot;H&quot;, 50mm) are scanning&nbsp; parameters with the 
+ CATIParmPublisher::VisitChildren service looking for the one with the Internal 
+ Role &quot;H&quot;.</p>
+ <p align="justify">As a consequence, the method GetAttributeReal(&quot;H&quot;) available 
+ in Knowledge Expert and based on CATIInstance works by comparing its argument 
+ to the Internal Role. The SetAttributeReal method creates the parameter if it 
+ doesn't exist and appends it to the object (It has the same effect as 
+ interactivly through the Parameters Explorer).</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p><b><a name="VB"></a>About VB and CATIAParameters:</b></p>
+ <p>In a macro VB, When you create a parameter through the collection of 
+ parameters CATIAParameters, it is aggregated under the feature on which you get 
+ the collection, and the name to specify in argument is the <b>internal role</b>.
+ </p>
+ <p>The Item method of CATIAParameters works either on the alias (variable name 
+ or pathname) or on the RelativeName with the feature in argument. Item is 
+ sensitive to NLS.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p><b><a name="UDF"></a>About parameters in User Defined Feature:</b></p>
+ <p align="justify">Note the following current limitation: be carefull with User 
+ Defined Feature (UDF) because they have a particular behavior. when you publish 
+ a parameter embedded into a UDF, its variable name is put into its internal 
+ role, and the variable name is then deleted (CATICkeParm::Rename(&quot;&quot;)). The 
+ &quot;Name&quot; field accessible in the &quot;Parameters&quot; tab of a UDF is the internal role.</p>
+ <blockquote>
+   <p align="justify">Before the publication of the parameter Point1_X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   After the publication, by checking the button &quot;Published&quot;.</p>
+ </blockquote>
+ <p><img border="0" src="images/CAALifNaming4.gif" width="493" height="268">&nbsp;&nbsp;&nbsp;
+ <img border="0" src="images/CAALifNaming5.gif" width="493" height="268"></p>
+ <p>As you can see in the Parameters Explorer, the &quot;Name&quot; field displays the 
+ pathname and the variable name has been copied in the internal role.</p>
+ <p><img border="0" src="images/CAALifNaming6.gif" width="725" height="595"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="CAALifOverview.htm">Literal Feature Overview</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+   <caption></caption>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mai 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+   <caption></caption>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+ <p></p>
+
+ </body>
+
+</html>

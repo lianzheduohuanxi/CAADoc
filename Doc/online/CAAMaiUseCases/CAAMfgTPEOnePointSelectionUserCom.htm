@@ -1,0 +1,367 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta name="Author" content="Rimbaud Christian">
+<title>Cutting a Tool Path by a Point</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Cutting a Tool Path by a Point</h3>
+      <i>Manipulating a tool path</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMfgTPEOnePointSelectionUserCom use case.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAMfgTPEOnePointSelectionUserCom Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAMfgTPEOnePointSelectionUserCom Do</a></li>
+          <li><a href="#How">How to Launch CAAMfgTPEOnePointSelectionUserCom</a></li>
+          <li><a href="#Where">Where to Find the
+            CAAMfgTPEOnePointSelectionUserCom Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you manipulate the tool path structure.
+This involves the following:</p>
+<ul>
+  <li>Creating a command which will select a tool path, then a point on the tool
+    path, and then split the selected tool path at the selected point.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMfgTPEOnePointSelectionUserCom Use Case</h3>
+<p>CAAMfgTPEOnePointSelectionUserCom is a use case of the
+CAAToolPathEditorItf.edu framework that illustrates ToolPathEditor framework
+capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAMfgTPEOnePointSelectionUserCom Do</h4>
+<p>CAAMfgTPEOnePointSelectionUserCom runs with the document
+CAAMfgToolPath.CATPart shown on <a href="#Fig1">Fig.1</a></p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: Cutting a tool path by a point</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMfgTPEDisplayDistance00.jpg" width="713" height="727"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMfgTPEOnePointSelectionUserCom</h4>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMfgTPEAddCmdInCutAreaToolBar.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Decomment the dictionary
+    <pre># Decomment this line to run CAAMfgTPEOnePointSelectionUserCom Sample
+#CAAMfgTPEM3xAddin CATISmgProgramAddin libCAAMfgTPEAddToolBar
+#CATM3xAreaModificationAlgoDriver CATIMfgTPECutAreasEditor     libCAAMfgTPEAddCmdInCutAreaToolBar
+#CATM3xAreaModificationAlgoDriver CATIMfgTPECutAreasUserHeader libCAAMfgTPEAddCmdInCutAreaToolBar</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMfgToolPath.CATPart file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CNext\resources\graphic</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CNext/resources/graphic</code></td>
+      </tr>
+    </table>
+  </li>
+  <li>Using the Start menu, select the Surfacic Machining workbench in NC
+    Manufacturing
+    <p><img border="0" src="images/CAAMfgTPEDisplayDistance01.jpg" width="482" height="417"></p>
+    <p><img border="0" src="images/CAAMfgTPEDisplayDistance02.jpg" width="275" height="417"></p>
+  </li>
+  <li>This displays the PPR document:
+    <p><img border="0" src="images/CAAMfgTPEDisplayDistance03.jpg" width="327" height="267"></p>
+  </li>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a sweeping
+    operation using the Sweeping command in the Insert-&gt;Machining
+    Operations-&gt;sweeping</li>
+  <li>Select a body, then do replay to compute the tool path.</li>
+  <li>In the PPR tree, an icon appears under the activity of sweeping.
+    <p><img border="0" src="images/CAAMfgCutByOnePoint1.jpg" width="427" height="124"></p>
+  </li>
+  <li>Then select the action &quot;Area modification&quot; in the contextual
+    menu of the tool path and then choose the icon &quot;Cut tool path by a
+    point&quot;.
+    <p><img border="0" src="images/CAAMfgCutByOnePoint2.jpg" width="607" height="491"></p>
+  </li>
+  <li>Select a point on the tool path.
+    <p><img border="0" src="images/CAAMfgCutByOnePoint3.jpg" width="549" height="572"></p>
+  <li>Then this tool path can be managed in the cut area tool bar. It can be cut
+    or translated.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMfgTPEOnePointSelectionUserCom Code</h4>
+<p>The CAAMfgTPEOnePointSelectionUserCom use case is made of a class named <i>CAAMfgTPEOnePointSelectionUserCom</i>
+located in the CAAMfgTPEAddCmdInCutAreaToolBar.m module of the
+CAAToolPathEditorItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAToolPathEditorItf.edu\CAAMfgTPEAddCmdInCutAreaToolBar.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAToolPathEditorItf.edu/CAAMfgTPEAddCmdInCutAreaToolBar.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are four logical steps in CAAMfgTPEOnePointSelectionUserCom:</p>
+<ol>
+  <li><a href="#Step1">Creating a Command</a></li>
+  <li><a href="#Step2">Selecting a Tool Path</a></li>
+  <li><a href="#Step4">Selecting a Point</a></li>
+  <li><a href="#Step4">Giving the Selected Point to the Tool Path Editor</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating a Command</h4>
+<p>The class that will implement the command is named <i>CAAMfgTPEOnePointSelectionUserCom</i>.<br>
+Create the <i>CAAMfgTPEOnePointSelectionUserCom</i> class header file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class ExportedByCAAMfgTPEAddCmdInCutAreaToolBar CAAMfgTPEOnePointSelectionUserCom : public CATStateCommand
+{
+  public:
+    DeclareResource(CAAMfgTPEOnePointSelectionUserCom,CATStateCommand)
+    CAAMfgTPEOnePointSelectionUserCom (void* ipCutAreasEditor);
+    virtual ~CAAMfgTPEOnePointSelectionUserCom ();
+    void BuildGraph();
+    CATStatusChangeRC Activate (CATCommand*, CATNotification*);
+    CATStatusChangeRC Cancel (CATCommand*, CATNotification*);
+    CATStatusChangeRC Desactivate (CATCommand*, CATNotification*);
+    void PreActivate (CATCommand* c1, CATNotification* c2, CATCommandClientData c3);
+    void Move (CATCommand* c1, CATNotification* c2, CATCommandClientData c3);
+    void EndPreActivate (CATCommand*, CATNotification*, CATCommandClientData);
+    CATBoolean SelectPoint (void*);
+    CATBoolean HasPoint (void*);
+  private:
+    CATIMfgTPECutAreasEditor* _pCutAreasEditor;
+    CATDialogAgent* _PointAgent;
+    CATSelector* _Selector;
+    CATMathPoint _CurrentPoint;
+    CAT3DViewer* _Viewer;
+    CATCallback _PreactivateCB;
+    CATCallback _MoveCB;&nbsp;
+    CATCallback _EndPreactivateCB;
+    CATBoolean _HasPoint;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAMfgTPEOnePointSelectionUserCom</i> class C++-derives from <i>CATStateCommand</i>.
+The <code>DeclareResource</code> macro declares that the ressource file is <i>CAAMfgTPEOnePointSelectionUserCom.CATNls.</i>
+The class has a constructor, a destructor, a <code>SelectPoint</code> method to
+give the selected point to the tool path editor, several methods to manage the
+user's interaction and the representation of the tool path, and a copy
+constructor.</p>
+<p>This command will communicate with the tool path editor by the interface <code>CATIMfgTPECutAreasEditor.</code></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Selecting a Tool Path</h4>
+<p>First you have to create a selector which must work with the representation
+of the tool path. This last one can be retrieved by a call to the method <code>GetToolPathRep</code>
+of the interface <code>CATIMfgTPECutAreasEditor</code>. The first argument of
+the constructor is used to get the interface <code>CATIMfgTPECutAreasEditor</code>.
+This is done in the constructor.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAMfgTPEOnePointSelectionUserCom::CAAMfgTPEOnePointSelectionUserCom (void* ipCutAreasEditor)
+        : CATStateCommand(&quot;TPESelectionUserOnePoint&quot;, NULL, CATCommandModeShared),
+          _Selector(NULL), _Viewer(NULL),
+          _pCutAreasEditor((CATIMfgTPECutAreasEditor*) ipCutAreasEditor),
+          _HasPoint(CATFalse), _PointAgent(NULL),
+          _PreactivateCB(NULL),
+          _MoveCB(NULL),
+          _EndPreactivateCB(NULL)
+{
+  CAT3DViewer* viewer3D = NULL;
+          
+  CATFrmLayout* ptrFrmLayout = CATFrmLayout::GetCurrentLayout();
+  if ( ptrFrmLayout) {
+    const CATFrmWindow * ptrFrmWindow = ptrFrmLayout-&gt;GetCurrentWindow () ;
+    if (ptrFrmWindow &amp;&amp; ptrFrmWindow-&gt;IsAKindOf(CATFrmGraphAnd3DWindow::ClassName()) ) {
+      CATFrmGraphAnd3DWindow* ptr3DWindow = (CATFrmGraphAnd3DWindow*)ptrFrmWindow;
+      CATViewer * viewer = ptr3DWindow-&gt;GetGraphicViewer();
+      if( viewer &amp;&amp; viewer-&gt;IsAKindOf(CAT3DViewer::ClassName()) )
+        _Viewer = (CAT3DViewer*)viewer;
+    }
+  }
+  //Creation of the selector. Tool path can be pointed.
+  CATRep* Rep = NULL;
+  if (NULL != _pCutAreasEditor)
+    Rep = _pCutAreasEditor-&gt;GetToolPathRep();
+  _Selector = new CATSelector(this,&quot;ToolPathSelector&quot;, Rep);
+  _PreactivateCB    = AddAnalyseNotificationCB (_Selector,
+                                                _Selector-&gt;GetCATPreactivate(),
+                                                (CATCommandMethod)&amp;CAAMfgTPEOnePointSelectionUserCom::PreActivate,NULL);
+  _MoveCB           = AddAnalyseNotificationCB (_Selector,
+                                                _Selector-&gt;GetCATMove(),
+                                                (CATCommandMethod)&amp;CAAMfgTPEOnePointSelectionUserCom::Move,NULL);
+  _EndPreactivateCB = AddAnalyseNotificationCB (_Selector,
+                                                _Selector-&gt;GetCATEndPreactivate(),
+                                                (CATCommandMethod)&amp;CAAMfgTPEOnePointSelectionUserCom::EndPreActivate,NULL);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Now the method <code>BuildGraph</code> is implemented. It gets the selected
+point and the double-click to terminate the command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEOnePointSelectionUserCom::BuildGraph()
+{
+  _PointAgent = new CATDialogAgent(&quot;Point&quot;);
+  if (NULL != _Selector)
+    _PointAgent-&gt;AcceptOnNotify(_Selector, _Selector-&gt;GetCATActivate());
+  // Dialog States
+  CATDialogState* InitState = GetInitialState(&quot;OnePointModification&quot;);
+  if (NULL != InitState)
+    InitState-&gt;AddDialogAgent(_PointAgent);
+  // Transitions
+  AddTransition (InitState,NULL,&nbsp;
+  AndCondition ( Condition ( (ConditionMethod) &amp;CAAMfgTPEOnePointSelectionUserCom::HasPoint),
+  IsOutputSetCondition(_PointAgent)),
+  Action((ActionMethod)&amp; CAAMfgTPEOnePointSelectionUserCom::SelectPoint));
+  SetRepeatMode(OFF);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Selecting a Point</h4>
+<p>The method <code>PreActivate</code> selects the point.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAMfgTPEOnePointSelectionUserCom::PreActivate (CATCommand* c1, CATNotification* c2, CATCommandClientData c3)
+{
+  // Erase of the last preview
+  EndPreActivate (c1,c2,c3);
+  // Get the point.
+  CATGraphicElementIntersection* Intersection = NULL;
+  if (NULL != _Selector)
+    Intersection = (CATGraphicElementIntersection*) _Selector-&gt;SendCommandSpecificObject (CATGraphicElementIntersection::ClassName(), c2);
+  if ( Intersection) {
+    CATMathPoint aPoint;
+    aPoint = Intersection-&gt;point;
+    Intersection-&gt;Release();
+    _CurrentPoint = aPoint;
+    _HasPoint = CATTrue;
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Giving the Selected Point to the Tool Path Editor</h4>
+<p>The next step is to give the point to the tool path editor which will manage
+the highlight of the part of the tool path. This is done by a call to the method
+<code>LoadOnePointCuttingPoint</code> of the interface <i>CATIMfgTPECutAreasEditor</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAAMfgTPEOnePointSelectionUserCom::SelectPoint (void* Data)
+{
+  // The point is given to the interface CATIMfgTPECutAreasEditor.
+  if (_pCutAreasEditor != NULL &amp;&amp; HasPoint(NULL) )
+    _pCutAreasEditor-&gt;LoadOneCuttingPoint(_CurrentPoint);
+  return CATTrue;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Then the tool path editor manage this part of the tool path with all the
+actions of the cut area tool bar.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to add and to manage in the cut area
+toolbar a command that cut a tool path by a point.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMfgTPECutAreasUserHeader.htm">Use case
+      CAAMfgTPECutAreasUserHeader</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Jan 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

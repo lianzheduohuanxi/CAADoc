@@ -1,0 +1,172 @@
+<HTML><HEAD><TITLE>Exporting Data on Images</TITLE>
+<meta http-equiv="Content-Language" content="en-us">
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="Microsoft FrontPage 6.0" name=GENERATOR>
+<META content=FrontPage.Editor.Document name=ProgId>
+<link rel="stylesheet" type=text/css href="../CAAScrBase/caav5.css">
+<script language=JavaScript src="../CAAScrJavaScript/submit.js"></script>
+</HEAD>
+<BODY>
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H2>Analysis Modeler</H2></TD>
+    <TD vAlign=top align=right>
+      <H2><A name="Top"></A>Exporting Data on Images</H2></TD></TR></TBODY></TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/atarget.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Learn></A>This use case shows you how to export data on 
+		images 
+		using VB.</P>
+		<p>The macro opens an Analysis document which already contains a computed 
+		Frequency case and images. Data is exported on Material fringe image 
+		which is created under Properties.1 as shown in the figure. Data is 
+		exported with and without mesh part id.</p>
+      <P align=center><img src="images/MaterialFringe.gif" border=2></P>
+      <P>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/ainfo.gif" width=32 border=0></TD>
+    <TD width="93%">
+            <p><a name="How"></a>CAAAniPostProExportData is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</P>
+      <P><a href="CAAAniPostProExportDataSource.htm">
+		CAAAniPostProExportData</A> 
+      is located in the CAAScdAniUseCases module. <b> <a href="macros/CAAAniPostProExportData.catvbs">Execute 
+      macro</A></b> (Windows only).</P>
+      <P align=center>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/ascenari.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Step></A>CAAAniPostProExportData includes the following steps:</P>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Reference">Retrieve Analysis Cases and Analysis Sets from 
+		the Analysis Document</a></li>
+		<li><a href="#Navigate">Generate the report</a></li>
+		<li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <H4><A name=prolog></A>Prolog</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE><font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+  sOut = CATIA.SystemService.Environ(&quot;CATTemp&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">' Open the Analysis document</font> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)</PRE>
+			<PRE>...</PRE></TD></TR></TBODY></TABLE>
+      <p>Open the Analysis document. The Analysis document is fetched in the
+      documentation installation path, this path has already been stored in the <code>sDocPath</code>
+      variable. In the collection of documents, two documents can be retrieved;
+      the Analysis document and the Part document. The CATTemp environment 
+		variable stores temporary data. On windows it points to <FONT SIZE="2">
+		C:\Documents and Settings\user\Local Settings\Application Data\DassaultSystemes\CATTemp and on unix it points 
+		to /CATSettings/CATTemp.</FONT></p>
+		<H4><A name=Reference></A><b>Retrieve Analysis Cases and Analysis Sets 
+		from Analysis Document</b></H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE><font color="#008000">' Retrieve the folder stored in sOut</font>
+<font color="#0000FF">Set </font>fileSystem1 = CATIA.FileSystem
+<font color="#0000FF">Set </font>folder1 = fileSystem1.GetFolder(sOut)
+</PRE>
+			<PRE><font color="#008000">' Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set</font> oAnalysisManager = oAnalysisDocument.Analysis
+			
+<font color="#008000">' Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set</font> oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set</font> oAnalysisModel = oAnalysisModels.Item(1)
+</PRE>
+			<PRE><font color="#008000">' Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)</PRE>
+			<PRE>
+<font color="#008000">' Retrieve the analysis cases and the Frequency case solution</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisCase.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisSets.ItemByType("PropertySet")
+
+<font color="#0000FF">Set </font>oAnalysisImages = oAnalysisSet.AnalysisImages
+<font color="#0000FF">Set </font>oAnalysisImage = oAnalysisImages.Add("Material_Fringe", False, False, True)
+...</pre></TD></TR></TBODY></TABLE>
+		<p>According to the general <a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">Analysis
+      Document</a> structure, this macro uses some standard procedures to
+      navigate or retrieve the required objects. First, from the <b>Document</b>,
+      we find the <b>Analysis Manager Object</b>, and the <b>Analysis Model</b>. </p>
+		<p>Property set is retrieved from the list of analysis sets. From the 
+		property set list of images is retrieved and material fringe image is 
+		added to it.</p>
+      <H4><A name=Navigate></A>Generate the Report</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD>
+			<PRE>...  </PRE>
+			<PRE><font color="#008000">' Retrieve the folder stored in sOut</font>
+<font color="#0000FF">Set </font>fileSystem1 = CATIA.FileSystem
+<font color="#0000FF">Set </font>folder1 = fileSystem1.GetFolder(sout)
+</PRE>
+			<pre>
+<font color="#008000">'export data in exportfile1.txt (format txt)</font>
+oAnalysisImage.ExportData folder1, "exportfile1", "txt"
+</pre>
+			<pre>
+<font color="#008000">'export data in exportfile2.xls (format xls)</font>
+oAnalysisImage.ExportData folder1, "exportfile2", "xls"
+</pre>
+			<pre>
+<font color="#008000">'export data (with mesh part id) in exportfile3.txt (format txt) </font>
+oAnalysisImage.ExportDataWithMeshPartId folder1, "exportfile3", "txt"
+</pre>
+			<pre>
+<font color="#008000">'export data (with mesh part id) in exportfile4.xls (format xls) </font>
+oAnalysisImage.ExportDataWithMeshPartId folder1, "exportfile4", "xls"
+</pre>
+			<PRE>...</PRE></TD></TR></TBODY></TABLE><p>The sOut variable stores 
+		the path of the folder in which the repots is generated. The method <i>
+		ExportData</i> is called on an image and it generates a txt or xls file. 
+		The exported file contains the values at different coordinates. If the 
+		data is exported using the method&nbsp; <i>ExportDataWithMeshPartId </i>
+		then the exported data also contains the name of the mesh corresponding 
+		to each value.</p>
+		<H4><A name=Epilog></A>Epilog</H4><TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...
+End Sub
+...</PRE></TD></TR></TBODY></TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variable must be defined.</TD></TR></TBODY></TABLE><!---------------------------------comment-------------------------------------><P align=center><img height=32 src="../CAAScrBase/images/aendtask.gif" width=64 border=0></P><P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=InShort></A>In Short</H4><p>This use case has shown how to export 
+data in txt and xls format.</p><P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=References></A>References</H4><TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="74">[1]</TD><TD width="93%"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+      a Macro</A></TD></TR><TR>
+    <TD align=right colSpan=2>[<A 
+      href="#Top">Top</A>]</TD></TR></TBODY></TABLE><HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></BODY></HTML>
+
+

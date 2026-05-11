@@ -1,0 +1,207 @@
+<html>
+
+<head>
+<title>mkmk and Java</title>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta content="Microsoft FrontPage 12.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<link href="../CAADocStyleSheets/caav5.css" type="text/css" rel="Stylesheet">
+</head>
+
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top">
+		<h1>RADE</h1>
+		</td>
+		<td valign="top">
+		<h2>Multi-Workspace Application Builder</h2>
+		</td>
+		<td valign="top" align="right" rowspan="2">
+		<h3><a name="Top"></a>mkmk and Java</h3>
+		<p><em>How mkmk organize Java modules</em></p>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+	<tr>
+		<td>
+		<h3>Abstract</h3>
+		<p>Distinction is being made to separate client code from server code inside 
+		the run time view.</p>
+		<p>The proposal idea is to separate client run time view from server run 
+		time view. Java modules will be segregated in three categories: common modules, 
+		client modules and server modules.</p>
+		<ul>
+			<li>Client modules will contain code used only by client applications 
+			(UI specific code for example) </li>
+			<li>Server modules will contain code used only by server application 
+			(JDialog controllers, CATServlet code, etc.) </li>
+			<li>Common modules will contain code used by both the client and server 
+			(Trace tools for example) </li>
+		</ul>
+		<p>The type of Java modules will be specified in the Imakefile.mk by using 
+		the new keyword TYPE. Possible values are CLIENT, SERVER or COMMON. A module 
+		without a TYPE specified will be automatically typed as CLIENT.</p>
+		<p>Java modules are segregated in three categories: Client, Server and Common. 
+		To do this, a new key word TYPE is inserted in JAVA modules Imakefile.mk.</p>
+		<ul>
+			<li>TYPE = CLIENT<b> (default value if TYPE is not specified)</b>
+			</li>
+			<li>TYPE = COMMON </li>
+			<li>TYPE = SERVER </li>
+		</ul>
+		<p>Hence, Mkmk build tools will generate three run time views: a common, 
+		a client and a server run time views. Client applications will have to concatenate 
+		the common and client run time view in their classpath while server applications 
+		will have to concatenate the common and server run time view.</p>
+		<ul>
+			<li><a href="#Architecture rules">Architecture rules</a>
+			<ul>
+				<li><a href="#LINK_WITH directive">LINK_WITH directive</a> </li>
+				<li>
+				<a href="#Additional build rules implied by this architecture">Additional 
+				build rules implied by this architecture</a> </li>
+				<li><a href="#CORBA Modules">CORBA Modules</a> </li>
+			</ul>
+			</li>
+			<li><a href="#Application impacts">Application impacts</a> </li>
+			<li><a href="#Client Common and Server frameworks">Client, Common and 
+			Server frameworks</a> </li>
+			<li><a href="#Support of the Java compiler level 1.3">Support of the 
+			Java compiler</a>
+			<ul>
+				<li><a href="#Specifics compilers options">Specifics compilers options</a>
+				</li>
+				<li><a href="#Compilers access">Compilers access</a> </li>
+			</ul>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Architecture rules"></a>Architecture rules</h3>
+<p>&nbsp;</p>
+<table id="AutoNumber1" height="65" cellspacing="1" width="100%" border="1">
+	<tr>
+		<td width="40%" height="17">BUILT_OBJECT_TYPE = JAVA and TYPE unspecified</td>
+		<td width="60%" height="17">/Workspace/$MkmkOS_Builtime/docs/java</td>
+	</tr>
+	<tr>
+		<td width="40%" height="15">BUILT_OBJECT_TYPE = JAVA CLIENT</td>
+		<td width="60%" height="15">/Workspace/$MkmkOS_Builtime/docs/java</td>
+	</tr>
+	<tr>
+		<td width="40%" height="15">BUILT_OBJECT_TYPE = JAVA and TYPE = CLIENT</td>
+		<td width="60%" height="15">/Workspace/$MkmkOS_Builtime/docs/java</td>
+	</tr>
+	<tr>
+		<td width="40%" height="15">BUILT_OBJECT_TYPE = JAVA COMMON</td>
+		<td width="60%" height="15">/Workspace/$MkmkOS_Builtime/docs/java AND /Workspace/$MkmkOS_Builtime/docs/javaserver</td>
+	</tr>
+	<tr>
+		<td width="40%" height="18">BUILT_OBJECT_TYPE = JAVA and TYPE = COMMON</td>
+		<td width="60%" height="18">/Workspace/$MkmkOS_Builtime/docs/java AND /Workspace/$MkmkOS_Builtime/docs/javaserver</td>
+	</tr>
+	<tr>
+		<td width="40%" height="15">BUILT_OBJECT_TYPE = JAVA SERVER</td>
+		<td width="60%" height="15">/Workspace/$MkmkOS_Builtime/docs/javaserver</td>
+	</tr>
+	<tr>
+		<td width="40%" height="17">BUILT_OBJECT_TYPE = JAVA and TYPE = SERVER</td>
+		<td width="60%" height="17">/Workspace/$MkmkOS_Builtime/docs/javaserver</td>
+	</tr>
+</table>
+<h4><a name="LINK_WITH directive"></a>LINK_WITH directive</h4>
+<p>The Client/Server architecture implies some restrictions to the relations between 
+Java modules at build time. In fact, Server and Client modules cannot be mixed, 
+then mkmk will check the LINK_WITH directives from Imakefile.mk files.</p>
+<p>Here are the authorized and forbidden relations between Java modules:</p>
+<table id="AutoNumber3" height="65" cellspacing="1" width="100%" border="1">
+	<tr>
+		<td width="50%" height="18">Authorized LINK_WITH are:
+		<ul>
+			<li>CLIENT / CLIENT </li>
+			<li>CLIENT / COMMON </li>
+			<li>SERVER / SERVER </li>
+			<li>SERVER / COMMON </li>
+			<li>COMMON / COMMON </li>
+		</ul>
+		</td>
+		<td width="50%" height="18">Forbidden LINK_WITH are:
+		<ul>
+			<li>SERVER / CLIENT </li>
+			<li>CLIENT / SERVER </li>
+			<li>COMMON / CLIENT </li>
+			<li>COMMON / SERVER </li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<h4><a name="Additional build rules implied by this architecture"></a>Additional 
+build rules implied by this architecture</h4>
+<ul>
+	<li>Java modules COMMON will be built into /WS/$MkmkOS_Builtime/docs/<strong>java</strong> 
+	and copied into /WS/$MkmkOS_Builtime/docs/<b>javaserver</b>. </li>
+	<li>Java modules COMMON EXTERNAL (ie: .mjext) will be copied into /WS/$MkmkOS_Builtime/docs/<b>javacommon</b>.
+	</li>
+	<li>Modules where BUILT_OBJECT_TYPE = PACK can only have Java client or Java 
+	common in LINK_WITH. </li>
+</ul>
+<h4><a name="CORBA Modules"></a>CORBA Modules</h4>
+<p>Modules where BUILT_OBJECT_TYPE = CORBA are automatically typed as CLIENT.</p>
+<p>The JAVA part of those modules will be generated in: /Workspace/$MkmkOS_Builtime/docs/<b>java</b>.</p>
+<p>The target directory modification for CORBA modules is managed by mkmk without 
+Imakefile.mk modification. Client/Server paradigm, which already exists for CORBA 
+modules, is not related to the JAVA module TYPE (CORBA client code can be used by 
+a server in order to communication to an out-process CORBA component).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Application impacts"></a>Application impacts</h3>
+<p>Since Java code is now separated in at least two run time views (common+client 
+for client applications and common+server for server applications), application 
+will have to update their classpaths in order to concatenate two run time views 
+instead actually of one.</p>
+<h3><a name="Client Common and Server frameworks"></a>Client, Common and Server 
+frameworks</h3>
+<p>Even if not mandatory by this architecture it should be advised to also have 
+Client frameworks only containing Client JAVA modules, same thing being done for 
+Common and Server framework. This can greatly simplify packaging and avoid having 
+client application CDRom containing server code that will be installed at the same 
+time.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Support of the Java compiler level 1.3"></a>Support of the Java compiler</h3>
+<h4><a name="Specifics compilers options"></a>Specifics compilers options</h4>
+<p>It is possible to set some local Java compiler options in the Imakefile.mk with 
+the keyword LOCAL_JAVA_FLAGS. Those options are used for all compiler levels.</p>
+<h4><a name="Compilers access"></a>Compilers access</h4>
+<p>The profile mkmk will detect the JDK and export the Java6ROOT_PATH environment 
+variable. This variable can be overwritten by setting _Java6ROOT_PATH (note the 
+leading underscore) prior to launch mkmk profile.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tr>
+		<td valign="top">Version: <strong>1</strong> [Jun 2003]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

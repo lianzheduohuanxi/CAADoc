@@ -1,0 +1,162 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Extracting Isoparametric Curves</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Isoparametric Curves</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>When relying on a surface, curves of constant parameter along u or v can be extracted by 
+		using the CATSurface::ExtractIsoParametricCurve method.
+		</font>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To compute the isoparametric curve along u or v passing through a point on a 
+surface, use the CATSurface::ExtractIsoParametricCurve method. The resulting 
+geometry is a curve whose limits do not necessarily fit the topology boundaries. 
+To create a wire with the face boundaries as limits, you have to 
+compute the equivalent limits of the extracted curve on the face. This is done 
+by using the CATCrvLimits::GetEquivalentLimits method.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsExtractIsoPar.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to create a wire representing an isoparametric curve. The curve 
+&quot;equivalent limits&quot;, that is the curve limits on the face are therefore computed. This use case 
+requires the ExtractIsopar.NCGM file as input data. This file is delivered in the FunctionTests/InputData 
+folder of CAAGMOperatorsInterfaces.edu framework.
+</font>
+If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Extract Isoparametric Curve : Input Data</caption>
+  <tr>
+    <td>
+	<img alt="Extract Isopar - Input Data" src="images/CGM_extract_isopar_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>and the code below (given only along U):</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATSurface * mySurface = myFace->GetSurface();
+
+//      Get face limits
+CATSurLimits *FaceLim; 
+FaceLim = (CATSurLimits *)myFace->Get2DBoundingBox();
+CATCrvLimits CurveLimits, IsoParLimit;
+
+//     Extract IsoParU
+CATIsoParameter isoParU = CATIsoParamU;
+CATCurve* pCATCurveU = mySurface->ExtractIsoParametricCurve(isoParU, 
+		surParamPt, piGeomFactory);
+...
+
+//    Reset the boundary to the limits of the face
+pCATCurveU->GetLimits(CurveLimits);
+IsoParLimit = CurveLimits;
+CATSurLimits surLim;
+mySurface->GetLimits(surLim);
+IsoParLimit.GetEquivalentLimits(surLim,*FaceLim,isoParU,CurveLimits);
+
+//   Create the wire along U
+CATSoftwareConfiguration * pConfig = new CATSoftwareConfiguration();
+    CATTopData topdata(pConfig, NULL);
+short orientations[1] = {1};
+CATICGMTopWire* pTopWire = CATCGMCreateTopWire(piImplicitFactory, &topdata,
+		1, &pCATCurveU, &CurveLimits, orientations);
+...
+pTopWire->Run();
+CATBody* pBody = pTopWire->GetResult();
+pTopWire->Release(); pTopWire=NULL;</TD>
+    </TR>
+</TABLE>
+<p>you get this result (along U and V):</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Extract Isoparametric Curve: Result</caption>
+  <tr>
+    <td>
+	<img alt="Extract Isoparametric Curve - Result" src="images/CGM_extract_isopar_1.png" width="250" height="220"></td>
+     </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

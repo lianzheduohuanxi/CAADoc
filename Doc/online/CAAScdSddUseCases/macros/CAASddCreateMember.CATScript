@@ -1,0 +1,127 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create a member.
+'
+' Assumptions:   The Part document CAASddCreateMember.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+
+  'Get the Manager Object
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+  
+ 'RETRIEVING THE SUPERPLATES
+  Dim SuperPlates As References
+  Set SuperPlates = ManagerObj.GetSuperPlates
+  
+  Dim SuperPlate1, SuperPlate2 As SfmSuperPlate
+  Set SuperPlate1 = SuperPlates.Item(1)
+  Set SuperPlate2 = SuperPlates.Item(2)
+  
+  'Creating Member On a Curve
+  Dim Curve1 As AnyObject
+  Set Curve1 = ObjPart.FindObjectByName("Intersect.2")
+  Dim curveRef As Reference
+  Set curveRef = ObjPart.CreateReferenceFromObject(Curve1)
+  
+  Dim MemberCurve As SfmMemberCurve
+  Set MemberCurve = FactoryObj.AddMemberCrv("Beam", "C12x25", curveRef, Nothing)
+  
+  'Creating Member with PointUpToLimit
+  Dim Point1 As AnyObject
+  Set Point1 = ObjPart.FindObjectByName("Point.5")
+  Dim Point1Ref As Reference
+  Set Point1Ref = ObjPart.CreateReferenceFromObject(Point1)
+  
+  Dim Point2 As AnyObject
+  Set Point2 = ObjPart.FindObjectByName("Point.6")
+  Dim Point2Ref As Reference
+  Set Point2Ref = ObjPart.CreateReferenceFromObject(Point2)
+  
+  Dim MemDirection As AnyObject
+  Set MemDirection = ObjPart.FindObjectByName("xy plane")
+  Dim MemDirRef As Reference
+  Set MemDirRef = ObjPart.CreateReferenceFromObject(MemDirection)
+  
+  Dim MemLimit As AnyObject
+  Set MemLimit = ObjPart.FindObjectByName("DECK.5")
+  Dim MemLimitRef As Reference
+  Set MemLimitRef = ObjPart.CreateReferenceFromObject(MemLimit)
+  
+  Dim Member1PtUpToLimit As SfmMemberPointUpToLimit
+  Set Member1PtUpToLimit = FactoryObj.AddMemberPtUpToLimit("Pillar", "C12x25", Point1Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  
+  Dim Member2PtUpToLimit As SfmMemberPointUpToLimit
+  Set Member2PtUpToLimit = FactoryObj.AddMemberPtUpToLimit("Beam", "C12x25", Point2Ref, MemDirRef, MemLimitRef, Nothing)
+  
+  'Applying Limit to Members With DeckPlate
+  Dim PlateRef As Reference
+  Set PlateRef = ObjPart.CreateReferenceFromObject(SuperPlate2)
+  
+  Member1PtUpToLimit.SetProfileLimit 2, PlateRef
+  
+  Member2PtUpToLimit.SetProfileLimit 2, PlateRef
+  
+  'Creating Member with two Beams and a Plane
+  Dim Plane1 As AnyObject
+  Set Plane1 = ObjPart.FindObjectByName("DECK.2")
+  Dim RefPlane As Reference
+  Set RefPlane = ObjPart.CreateReferenceFromObject(Plane1)
+  
+  Dim Member2BeamsandPlane As SfmMemberPlane2Curves
+  Set Member2BeamsandPlane = FactoryObj.AddMemberBeamsAndPlane("Beam", "C12x25", Member1PtUpToLimit, Member2PtUpToLimit, RefPlane, Nothing)
+  
+  'Retrieving the Supports of Members
+  Dim SupportRef1 As Reference
+  Set SupportRef1 = Member1PtUpToLimit.Support
+  
+  Dim SupportRef2 As Reference
+  Set SupportRef2 = Member2PtUpToLimit.Support
+  
+  'Creating Member with Two Curves
+  Dim Member2Points As SfmMember2Points
+  Set Member2Points = FactoryObj.AddMemberPtOnCrvPtOnCrv("Beam", "C12x25", SupportRef1, True, "0.5", SupportRef2, False, "0", Nothing)
+  
+  'Creating Member by AddMemberSurfSurf
+  Dim Surface1 As AnyObject
+  Set Surface1 = ObjPart.FindObjectByName("CROSS.60")
+  Dim SurfaceRef1 As Reference
+  Set SurfaceRef1 = ObjPart.CreateReferenceFromObject(Surface1)
+  
+  Dim Surface2 As AnyObject
+  Set Surface2 = ObjPart.FindObjectByName("LONG.-8")
+  Dim SurfaceRef2 As Reference
+  Set SurfaceRef2 = ObjPart.CreateReferenceFromObject(Surface2)
+  
+  Dim MemberSurfSurf As SfmMemberSurfSurf
+  Set MemberSurfSurf = FactoryObj.AddMemberSurfSurf("Beam", "C12x25", SurfaceRef1, SurfaceRef2, Nothing)
+  
+  'Applying Limits on Infinite MemberSurfSurf
+  Dim ShellPlateRef As Reference
+  Set ShellPlateRef = ObjPart.CreateReferenceFromObject(SuperPlate1)
+  
+  MemberSurfSurf.SetProfileLimit 2, PlateRef
+  MemberSurfSurf.SetProfileLimit 1, ShellPlateRef
+  
+  ObjPart.Update
+End Sub
+

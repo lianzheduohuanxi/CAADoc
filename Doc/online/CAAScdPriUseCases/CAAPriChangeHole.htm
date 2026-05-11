@@ -1,0 +1,397 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Changing the Hole Parameters</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js">
+</script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+    <h2>Part Design</h2>
+    </td>
+    <td align="right" valign="top">
+    <h2><a name="Top"></a>Changing the Hole Parameters</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!null ---------------------------------comment--------->
+<table border="0" width="100%" cellspacing="0" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td valign="top">
+    <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td><a name="Learn"></a>This macro shows you how to change the parameters of 
+    selected holes (diameter, type, thread definition, etc) from data contained 
+    in a text file. Data unit is take into account: Millimeter or Inches.<br>
+    This macro allows you to define:<ul>
+      <li>T<b><span style="font-weight: 400">he limit type: &quot;Up to next&quot; or 
+      &quot;Offset&quot; onl</span></b>y.</li>
+      <li><b><span style="font-weight: 400">Maximum and minimum</span></b> 
+      tolerances of the hole diameter.</li>
+      <li>&quot;Simple&quot; or &quot;Counterbored&quot; as hole type only, m<b><span style="font-weight: 400">aximum 
+      and minimum</span></b> tolerances for the spot facing diameter for 
+      counterbored holes.</li>
+      <li>Whether the hole is threaded or not, and its <b>
+      <span style="font-weight: 400">thread depth</span></b> if threaded.</li>
+      <li>A parameter named &quot;Hole_Description&quot; where its value is a letter 
+      corresponding to the applied parameters.</li>
+    </ul>
+    <p>It modifies the
+    <a href="#" onclick="javascript:CAAlink('IDL', 'PartInterfaces', 'Hole');return false;">
+    <i>Hole</i></a> object from its methods and properties, and updates the 
+    part.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td>
+    <ul>
+      <li><a name="How"></a>Open the <a href="samples/CAAPriChangeHole.CATPart">
+      CAAPriChangeHole.CATPart</a> document.</li>
+      <li>Reference the catscript file
+      <a href="macros/CAAPriChangeHole.CATScript">CAAPriChangeHole.CATScript</a> 
+      in the application </li>
+      <li>The text file <a href="macros/CAAPriChangeHole.txt">
+      CAAPriChangeHole.txt</a> located in the CAAScdPriUseCases module.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td><a name="Step"></a>CAAPriChangeHole includes the following steps:<ol>
+      <li><a href="#Step1">Prolog</a></li>
+      <li><a href="#Step2">Reading the Hole Parameters</a></li>
+      <li><a href="#Step3">Looking for the Hole Object in the Selection</a></li>
+      <li><a href="#Step4">Applying the Hole Parameters</a></li>
+    </ol>
+    <h4>Prolog<a name="Step1"></a></h4>
+    <p>Load the CAAPriChangeHole.CATPart document that contains three holes.</p>
+    <p><img border="1" src="images/CAAPriChangeHole01.gif" hspace="40" width="450" height="300"></p>
+    <p>Select one or several holes as shown. Selection is allowed from the 
+    specification tree or from the geometry.</p>
+    <p><img border="1" src="images/CAAPriChangeHole02.gif" hspace="40" width="450" height="300"></p>
+    <p>Run the macro.</p>
+    <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>  ...
+<font color="#008000">' ------------</font>
+<font color="#008000">' The string as delimiter between input in the text file</font>
+<font color="#008000">' ------------</font>
+iDelimiter = &quot;\\&quot;
+
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the CATIA file system</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oCATIAFileSys <font color="#0000FF">=</font> CATIA.FileSystem
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the file containing the hole parameters</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oFile <font color="#0000FF">=</font> oCATIAFileSys.GetFile(sDocPath &amp; &quot;\online\CAAScdPriUseCases\macros\CAAPriChangeHole.txt&quot;)
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the text stream</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oTextSteam <font color="#0000FF">=</font> oFile.OpenAsTextStream(&quot;ForReading&quot;)
+<font color="#008000">' ------------</font>
+<font color="#008000">' Get the part document</font>
+<font color="#008000">' ------------</font>
+<font color="#0000FF">Set </font>oPartDocument <font color="#0000FF">=</font> CATIA.ActiveDocument
+   ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Once the macro has been started, the <code>oCATIAFileSys</code>, <code>
+    oFile</code>, <code>oTextSteam</code> and <code>oPartDocument </code>
+    variables are declared to receive the instance of the CATIA file system, the 
+    file, the text stream and the CATPart document.</p>
+    <h4>Reading the Hole Parameters<a name="Step2"></a></h4>
+    <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%">
+        <pre>...
+<font color="#0000FF">If </font>oPartDocument.Selection.Count = 0<font color="#0000FF"> Then</font>
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' The selection content is empty, the macro ends</font>
+    <font color="#008000">' ------------</font>
+    MsgBox &quot;Select the holes you wish to transform before running the macro.&quot;, <font color="#0000FF">vbOKOnly</font>, &quot;Warning&quot;
+...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The selection content is tested, if empty a warning message appears and 
+    the macro ends:</p>
+    <p><img border="0" src="images/CAAPriChangeHole06.gif" hspace="40" width="341" height="100"></p>
+    <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%">
+        <pre>...
+<font color="#0000FF">Else</font>
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' The selection content is not empty</font>
+    <font color="#008000">' Read the text file data unit</font>
+    <font color="#008000">' ------------</font>
+    oLine = oTextSteam.ReadLine
+    <font color="#0000FF">Select</font> <font color="#0000FF">Case</font> oLine
+        <font color="#0000FF">Case</font> &quot;Millimeter&quot;
+            oUnit = 1
+        <font color="#0000FF">Case</font> &quot;Inch&quot;
+            oUnit = 25.4
+    <font color="#0000FF">End</font> <font color="#0000FF">Select</font>
+    oRow = 0
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' Read the hole parameters</font>
+    <font color="#008000">' ------------</font>
+    <font color="#0000FF">Do</font> <font color="#0000FF">While</font> oTextSteam.AtEndOfStream = <font color="#0000FF">False</font>
+        oLine = oTextSteam.ReadLine
+<font color="#0000FF">        For </font>i = 0<font color="#0000FF"> To </font>12
+<font color="#0000FF">            If </font>InStr(oLine, iDelimiter) &gt; 0<font color="#0000FF"> Then</font>
+                iArray(oRow, i) = Left(oLine, InStr(oLine, iDelimiter) - 1)
+                oLine = Mid(oLine, InStr(oLine, iDelimiter) + 2)
+            <font color="#0000FF">Else</font>
+                iArray(oRow, i) = oLine
+<font color="#0000FF">            End If</font>
+<font color="#0000FF">        Next</font>
+        iMessage = iMessage &amp; Chr(10) &amp; iArray(oRow, 0) &amp; &quot; &quot; &amp; iArray(oRow, 1)
+        oRow = oRow + 1
+    <font color="#0000FF">Loop</font>
+    oTextSteam.Close
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Otherwise, the macro reads the hole parameters contained in the 
+    CAAPriChangeHole.txt file:</p>
+    <ul>
+      <li>The first line contains the unit name</li>
+      <li>The second line contains the name of each field.</li>
+      <li>Next lines contain a set of hole parameters per line.</li>
+    </ul>
+    <p>The unit ratio is stored in <code>oUnit</code> (macro unit is always 
+    millimeter!). The file is read until its end, the field names and all set of 
+    hole parameters are stored in an array <code>iArray</code>.</p>
+    <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%">
+        <pre>...
+    <font color="#008000">' ------------</font>
+    <font color="#008000">' Get the description you wish, by default pre-select the first description</font>
+    <font color="#008000">' ------------</font>
+    iMessage = &quot;Please select the hole decription you wish to apply:&quot; &amp; iMessage
+    oReturn = InputBox(iMessage, &quot;Hole Parameter&quot;, iArray(1, 0))
+<font color="#0000FF">    If </font>oReturn = &quot;&quot; <font color="#0000FF">Then</font>
+        <font color="#008000">' ------------</font>
+        <font color="#008000">' No selection, the macro ends</font>
+        <font color="#008000">' ------------</font>
+<font color="#0000FF">        Exit Sub</font>
+    <font color="#0000FF">Else</font>
+        <font color="#0000FF">Select</font> <font color="#0000FF">Case</font> oReturn
+            <font color="#0000FF">Case</font> &quot;A&quot;
+                iRow = 1
+            <font color="#0000FF">Case</font> &quot;B&quot;
+                iRow = 2
+            <font color="#0000FF">Case</font> &quot;C&quot;
+                iRow = 3
+            <font color="#0000FF">Case</font> &quot;D&quot;
+                iRow = 4
+            <font color="#008000">' ------------</font>
+            <font color="#008000">' Invalid selection, the macro ends</font>
+            <font color="#008000">' ------------</font>
+            <font color="#0000FF">Case</font> <font color="#0000FF">Else</font>
+<font color="#0000FF">                Exit Sub</font>
+<font color="#0000FF">        End Select</font>
+...
+</pre>
+        </td>
+      </tr>
+    </table>
+    <p>An input box asks you to select the desired hole parameters (letter 
+    description and hole type are displayed).<br>
+    &quot;A&quot; description is selected by default. If a wrong letter is typed (case 
+    sensitive), the macro ends.</p>
+    <p><img border="0" src="images/CAAPriChangeHole05.gif" hspace="40" width="363" height="166"></p>
+    <h4>Looking for the Hole Object in the Selection<a name="Step3"></a></h4>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+        iHoleInSelection = <font color="#0000FF">True</font>
+        <font color="#0000FF">Do</font> <font color="#0000FF">While</font> iHoleInSelection = <font color="#0000FF">True</font>
+            iHoleInSelection = CatObjectExistsInSelection(oPartDocument.Selection, &quot;CATIAHole&quot;, oHole)
+<font color="#0000FF">            If </font>iHoleInSelection = True<font color="#0000FF"> Then</font>
+
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>For each hole object found in the selection, the desired parameters are 
+    applied.</p>
+    <h4>Applying the Hole Parameters<a name="Step4"></a></h4>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Get the hole limit</font>
+                <font color="#008000">' ------------</font>
+                <font color="#0000FF">Select Case</font> iArray(iRow, 5)
+                    <font color="#0000FF">Case</font> &quot;UpToNext&quot;
+                        oHole.BottomLimit.LimitMode = catUpThruNextLimit
+                        <font color="#008000">' ------------</font>
+                        <font color="#008000">' Update the part when set the hole limit to &quot;UpToNext&quot;</font>
+                        <font color="#008000">' ------------</font>
+                        oPartDocument.Part.Update
+                    <font color="#0000FF">Case</font> <font color="#0000FF">Else</font>
+                        oHole.BottomLimit.LimitMode = catOffsetLimit
+                        oHole.BottomLimit.Dimension.Value = CDbl(iArray(iRow, 5)) * oUnit
+<font color="#0000FF">                End Select</font>
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The hole limit is applied.</p>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Get the hole diameter and its tolerances</font>
+                <font color="#008000">' ------------</font>
+                oHole.Diameter.Value = CDbl(iArray(iRow, 2))
+                oHole.Diameter.MaximumTolerance = (CDbl(iArray(iRow, 3)) - CDbl(iArray(iRow, 2))) * oUnit
+                oHole.Diameter.MinimumTolerance = (CDbl(iArray(iRow, 4)) - CDbl(iArray(iRow, 2))) * oUnit
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The hole diameter and its tolerances are applied.</p>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+<font color="#0000FF">                Set </font>oParameters = oPartDocument.Part.Parameters.SubList(oHole, <font color="#0000FF">True</font>)
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Set the hole parameter</font>
+                <font color="#008000">' ------------</font>
+<font color="#0000FF">                If </font>ParameterExists(&quot;Hole_Description&quot;, oParameters) = <font color="#0000FF">True</font> <font color="#0000FF">Then</font>
+                    oParameters.Item(&quot;Hole_Description&quot;).ValuateFromString (iArray(iRow, 0))
+                <font color="#0000FF">Else</font>
+                    oParameters.CreateString &quot;Hole_Description&quot;, iArray(iRow, 0)
+<font color="#0000FF">                End If</font>
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The hole parameter is created if needed, otherwise updated.</p>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Get the hole type</font>
+                <font color="#008000">' ------------</font>
+                <font color="#0000FF">Select</font> <font color="#0000FF">Case</font> iArray(iRow, 1)
+                    <font color="#0000FF">Case</font> &quot;Simple&quot;
+                        oHole.Type = catSimpleHole
+                    <font color="#0000FF">Case</font> &quot;Counterbored&quot;
+                        oHole.Type = catCounterboredHole
+                        oHole.HeadDiameter.Value = CDbl(iArray(iRow, 9)) * oUnit
+                        oHole.HeadDepth.Value = CDbl(iArray(iRow, 12)) * oUnit
+                        oHole.HeadDiameter.MaximumTolerance = (CDbl(iArray(iRow, 10)) - CDbl(iArray(iRow, 9))) * oUnit
+                        oHole.HeadDiameter.MinimumTolerance = (CDbl(iArray(iRow, 11)) - CDbl(iArray(iRow, 9))) * oUnit
+<font color="#0000FF">                End Select</font>
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The hole type is applied. In case of counterbored, tolerances are applied 
+    on the spot facing diameter.</p>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Get the hole thread definition</font>
+                <font color="#008000">' ------------</font>
+                <font color="#0000FF">Select</font> <font color="#0000FF">Case</font> iArray(iRow, 6)
+                    <font color="#0000FF">Case</font> &quot;Yes&quot;
+<font color="#0000FF">                        If </font>oHole.Diameter.Value &lt; oHole.ThreadDiameter.Value <font color="#0000FF">And _
+                           </font>oHole.BottomLimit.Dimension.Value &gt; oHole.ThreadDepth.Value<font color="#0000FF"> Then</font>
+                            <font color="#008000">' ------------</font>
+                            <font color="#008000">' Update the part when hole diameter is smaller than tread diameter </font>
+                            <font color="#008000">' and hole limit is greater than thread depth, before apply new values </font>
+                        <font color="#008000">    ' ------------</font>
+                            oPartDocument.Part.Update
+<font color="#0000FF">                        End If</font>
+                        oHole.ThreadingMode = catThreadedHoleThreading
+                        oHole.ThreadDiameter.Value = CDbl(iArray(iRow, 7)) * oUnit
+                        oHole.ThreadDepth.Value = CDbl(iArray(iRow, 8)) * oUnit
+                    <font color="#0000FF">Case</font> &quot;No&quot;
+                        oHole.ThreadingMode = catSmoothHoleThreading
+<font color="#0000FF">                End Select</font>
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The hole thread definition is applied.</p>
+    <table class="code">
+      <tr>
+        <td>
+        <pre>...
+                <font color="#008000">' ------------</font>
+                <font color="#008000">' Update the part</font>
+                <font color="#008000">' ------------</font>
+                oPartDocument.Part.Update
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The part is updated, the parameter is displayed.</p>
+    <p><img border="1" src="images/CAAPriChangeHole03.gif" hspace="40" width="450" height="300"></p>
+    <p><img border="1" src="images/CAAPriChangeHole04.gif" hspace="40" width="193" height="310"></td>
+  </tr>
+</table>
+<p align="center">
+<img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!null ---------------------------------comment--------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown you how to read data from a file text, find the 
+desired object in a selection, modify hole specifications and add a parameter to 
+an object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!null ---------------------------------comment--------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+    a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!null ---------------------------------comment--------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

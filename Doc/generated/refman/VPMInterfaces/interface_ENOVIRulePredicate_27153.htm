@@ -1,0 +1,210 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>VPMInterfaces Interface ENOVIRulePredicate</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../VPMInterfaces.htm" href="../VPMInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "VPMInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "ENOVIRulePredicate"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>VPMInterfaces Interface ENOVIRulePredicate</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_ENOVIRulePredicate_27153','ENOVIRulePredicate','0');</script>
+<p><b>Usage: you can freely reimplement this interface.</b></p>
+<hr>
+<p>
+ interface <b>ENOVIRulePredicate</b>
+</p>
+<p>
+<b><i> Interface to evaluate a <b>condition</b>.</i></b><br>
+
+ <p>The class implementing this interface should be:
+ <ul>
+   <li>a DataExtension</li>
+   <li>extending the type <b>ENOVRulePredImpl_xxx</b>,
+       where <b>xxx</b> is the user-exit condition referenced in
+   LCA Security DataGroups.</li>
+ </lu>
+ <p><a name=Example><b>Typical extension sample</b></a>:
+ <table bgcolor=#fefedf><tr><td><pre>
+ class myPredExtension_1 : public CATBaseUnknown
+ {
+    CATDeclareClass;
+ public:
+    myPredExtension_1();
+    ~myPredExtension_1();
+    HRESULT eval(CATBaseUnknown_var iInstance);
+    int     setNot()        { _not=1; return _not; }
+    int     isValid()       { return 1; }
+    const char * toString() { return "myPred_1"; }
+ private:
+    int _not;
+ };
+
+ <font color=red>// this user-condition can be referenced as <b>myCond_1</b> in DataGroups</font>
+
+ CATImplementClass(myPredExtension_1,
+                   DataExtension,
+                   CATBaseUnknown,
+                   ENOVRulePredImpl_myCond_1);
+
+ myPredExtension_1::myPredExtension_1() {}
+
+ myPredExtension_1::~myPredExtension_1() {}
+
+ HRESULT myPredExtension_1::eval(CATBaseUnknown_var iInstance)
+ {
+   HRESULT hr = S_OK;
+   ...
+   return hr;
+ }</pre></td></tr></table></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#eval(CATBaseUnknown_var)"><b>eval</b></a>(CATBaseUnknown_var)
+<dd>  Evaluate the condition.
+ <dt> o 
+    <a href="#isValid()"><b>isValid</b></a>()
+<dd>  Returns the condition validity.
+ <dt> o 
+    <a href="#setNot()"><b>setNot</b></a>()
+<dd>  Negates the predicate.
+ <dt> o 
+    <a href="#toString()"><b>toString</b></a>()
+<dd>  Returns the condition under a string format.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="eval"></a><a name="eval(CATBaseUnknown_var)"></a> <dt> o <b>eval</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>eval</b>(<td><script type="text/javascript"> activateLink('CATBaseUnknown','CATBaseUnknown_var')</script> <td><tt>iInstance</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Evaluate the condition.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInstance</tt>
+   <dd>   the instance to evaluate against the condition represented
+   by this interface.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    S_OK    if condition is <b>true</b>
+   S_FALSE if condition is <b>false</b>
+   E_FAIL  if condition is invalid, regarding the given instance
+</dl>
+</dl>
+<a name="isValid"></a><a name="isValid()"></a> <dt> o <b>isValid</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>isValid</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the condition validity.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    0 if the condition is not valid.
+   1 if the condition is valid.
+     <br>Note: "user-exit" conditions are always valid.
+</dl>
+</dl>
+<a name="setNot"></a><a name="setNot()"></a> <dt> o <b>setNot</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('int','int')</script>  <b>setNot</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Negates the predicate.
+ <br>This method is called at predicate build-time when the NOT
+ operator (!) is used with the condition.
+</dl>
+<a name="toString"></a><a name="toString()"></a> <dt> o <b>toString</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('char','const char *')</script>  <b>toString</b>(<td>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the condition under a string format.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     the condition name.
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>ENOVIRulePredicate.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>GUIDVPMInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,274 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 5.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>The Product Structures Model</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Integration with ENOVIA LCA</H3>
+        <P><EM>Optimal CATIA PLM Usability</EM></TD>
+    </TR>
+    <TR>
+        <TD class="tech" colspan="2">Technical Article</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H1><A name="Abstract"></A>Abstract</H1>
+        <P>ENOVIA LCA offers two different storage modes, one of which can be 
+        incompatible when used with CATIA. This article describes a mechanism to 
+        be implemented by the application in order to avoid such pitfalls.</P>
+        <UL>
+            <LI><A href="#ENOVIAStorageModel">The ENOVIA LCA Storage Model</A></LI>
+            <LI><A href="#CATIPrdPLMPersistency">The CATIPrdPLMPersistency 
+            Interface</A></LI>
+            <LI><A href="#Implementation">Implementation Using Command Headers</A></LI>
+            <LI><A href="#InShort">In Short</A></LI>
+            <LI><A href="#References">References</A></LI>
+            <LI><A href="#History">History</A></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H2><A name="ENOVIAStorageModel"></A>The ENOVIA LCA Storage Model</H2>
+<P>ENOVIA LCA allows documents to be stored in two different modes: </P>
+<UL>
+    <LI><I>Workpackage</I> where documents are kept as single objects</LI>
+    <LI><I>Exposed</I> where documents are not kept and all contained 
+    information exposed</LI>
+</UL>
+<P>In <I>Exposed</I> mode, CATIA might not be able to operate properly as it 
+will lose the documents once they are stored. To prevent this from happening, 
+the application must detect the active ENOVIA storage mode and disable commands 
+that lead to incompatible situations. </P>
+<P>One possible way of dealing with this problem is to have the Command Header 
+decides whether the command is available or not depending on the ENOVIA storage 
+mode. In this article we will show an example of how this could be done with the
+<I>CATIPrdPLMPersistency</I> interface.</P>
+<H2><A name="CATIPrdPLMPersistency"></A>The CATIPrdPLMPersistency Interface</H2>
+<P>A document storage mode is available through the <I>CATIPrdPLMPersistency</I> 
+interface whose <TT>get_PersistencyMode</TT> method returns:</P>
+<UL>
+    <LI><TT>WorkpackageOrFile</TT> if the document is stored in ENOVIA LCA in <I>
+    Workpackage</I> mode or if it is stored as a regular file</LI>
+    <LI><TT>VolatileExposed</TT> in when the document is stored in ENOVIA LCA in
+    <I>Exposed</I> mode</LI>
+</UL>
+<P>Thus when the active mode returned is not <TT>WorkpackageOrFile</TT>, CATIA 
+commands that depend on this mode should be disabled.</P>
+<H2><A name="Implementation"></A>Implementation Using Command Header</H2>
+<P>In this example, the purpose of the Command Header is to retrieve the active 
+ENOVIA storage mode and then enable or disable the command accordingly.</P>
+<P>&nbsp;This <TT>CAAPuiPrsConfigAddinHeader</TT> command header class is part of the
+<a href="../CAAPuiUseCases/CAAPuiPrsConfigAddin.htm">
+Adding a Toolbar to the Product Structure Workbench</A> use case. More detailed 
+information on command headers can be found in the
+<a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">
+The Command Headers</A> article.</P>
+<H3>Command Header Class Declaration</H3>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>class CAAPuiPrsConfigAddinHeader : public CATCommandHeader
+{
+CATDeclareKindOf;
+CATDeclareHeaderResources;</PRE>
+        <PRE>public:</PRE>
+        <PRE>	CAAPuiPrsConfigAddinHeader(const CATString &amp; HeaderID,
+				const CATString &amp; loadName,
+				const CATString &amp; classname,
+				void * argument,
+				int state = CATFrmAvailable);  
+	CATCommandHeader *Clone();
+	virtual ~CAAPuiPrsConfigAddinHeader();</PRE>
+        <PRE>protected:</PRE>
+        <PRE>	CAAPuiPrsConfigAddinHeader(CATCommandHeader *header);</PRE>
+        <PRE>	void UpdateAvailability();
+	void AddUIActivatedCallback();
+	void RemoveUIActivatedCallback();
+	void UIActivated(CATCallbackEvent,
+			 void *,
+			 CATNotification *,
+			 CATSubscriberData,
+			 CATCallback);</PRE>
+        <PRE>	CATFrmEditor *_FrmEditor;
+	CATCallback   _UIActivatedCallback;
+};</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P>The <TT>CAAPuiPrsConfigAddinHeader</TT> class derives from the <TT>
+CATCommandHeader</TT>. The main idea is to setup a callback for when the command 
+is about to be activated. This callback with check the ENOVIA LCA storage mode 
+and enable/disable the command accordingly.</P>
+<TABLE border="1" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+    <TR>
+        <TD width="50%" height="16" bgcolor="#FFFFFF">
+        <P align="center"><B>Member</B></TD>
+        <TD width="50%" height="16" bgcolor="#FFFFFF">
+        <P align="center"><B>Purpose</B></TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="16"><TT>CAAPuiPrsConfigAddinHeader</TT> 
+        constructor</TD>
+        <TD width="50%" height="16">Install the callback <BR>
+        Update command availability</TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="16"><TT>CAAPuiPrsConfigAddinHeader</TT> 
+        destructor</TD>
+        <TD width="50%" height="16">Remove the callback </TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="15"><TT>Clone</TT></TD>
+        <TD width="50%" height="15">Needed for command header duplication (see
+        <A href="#[2]">[2]</A>)</TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="15"><TT>UpdateAvailability</TT></TD>
+        <TD width="50%" height="15">Check document storage mode and update 
+        command availability </TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="15"><TT>AddUIActivatedCallback</TT></TD>
+        <TD width="50%" height="15">Install the <TT>UIActivated</TT> callback</TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="15"><TT>RemoveUIActivatedCallback</TT></TD>
+        <TD width="50%" height="15">Remove the <TT>UIActivated</TT> callback</TD>
+    </TR>
+    <TR>
+        <TD width="50%" height="16"><TT>UIActivatedCallback</TT></TD>
+        <TD width="50%" height="16">The callback: update command availability</TD>
+    </TR>
+</TABLE>
+<H3>The UpdateAvailabilty method</H3>
+<P align="left">The goal of this method is to check the storage mode of the 
+active document.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>void CAAPuiPrsConfigAddinHeader::UpdateAvailability()
+{
+	if (NULL == _FrmEditor)
+		return;</PRE>
+        <PRE>	//
+	// Get current active product
+	//
+	CATPathElement activePath = _FrmEditor-&gt;GetUIActiveObject();
+	CATIProduct *activeProduct = (CATIProduct *)
+		activePath.SearchObject(CATIProduct::ClassName());
+	if (NULL == activeProduct) return;</PRE>
+        <PRE>	//
+	// Query its PersistencyMode
+	//
+	CATIProduct_var spRefProd = activeProduct-&gt;GetReferenceProduct();
+	activeProduct-&gt;Release();
+	activeProduct = NULL;
+	if (NULL_var == spRefProd) return;</PRE>
+        <PRE>	CATILinkableObject_var spLink(spRefProd);
+	if (NULL_var == spLink) return;</PRE>
+        <PRE>	CATDocument *pDoc = spLink-&gt;GetDocument();
+	if (NULL == pDoc) return;</PRE>
+        <PRE>	CATIPrdPLMPersistency_var spPrdPLMPers(pDoc);
+	CATIPrdPLMPersistency::PersistencyMode mode;
+...</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">If the storage mode cannot be retrieved or if it is not <TT>
+CATIPrdPLMPersistency::WorkpackageOrFile</TT> then the command is disabled by 
+calling <TT>BecomeUnavailable</TT>. Otherwise the command is enabled with <TT>
+BecomeAvailable</TT>.</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>...</PRE>
+        <PRE>	if (NULL_var != spPrdPLMPers &amp;&amp;
+	    SUCCEEDED(spPrdPLMPers-&gt;get_PersistencyMode(mode)) &amp;&amp;
+	    mode == CATIPrdPLMPersistency::WorkpackageOrFile) {
+		//
+		// Enable only if workpackage/file mode
+		//
+		BecomeAvailable();
+	} else {
+		//
+		// Disable otherwise
+		//
+		BecomeUnavailable();
+	}
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><SPAN style="font-weight: 400"><A name="InShort"><FONT size="3">In Short</FONT></A></SPAN></H3>
+<P>This article has shown how to avoid incompatibilities when CATIA is used with 
+ENOVIA LCA:</P>
+<UL>
+    <LI>Use the <TT>CATIPrdPLMPersistency</TT> interface to query the active 
+    document storage mode</LI>
+    <LI>Have the Command Header Enable/Disable the command according to this 
+    mode</LI>
+</UL>
+<P align="right"><A href="#Top">[Top]</A></P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">[1]</TD>
+        <TD>
+        <a href="../CAAPuiUseCases/CAAPuiPrsConfigAddin.htm">
+        Adding a Toolbar to the Product Structure Workbench</A><a href="CAAPstModel.htm">l</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><A name="[2]">[2]</A></TD>
+        <TD>
+        <a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">
+        The Command Headers</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">Version: <STRONG>1</STRONG> [Feb 2004]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2004, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

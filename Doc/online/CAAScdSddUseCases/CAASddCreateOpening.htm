@@ -1,0 +1,141 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating Openings</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script type="text/javascript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+	<tr>
+		<td>
+		<h2>Structure Detail Design</h2>
+		</td>
+		<td align="right" valign="top">
+		<h2><a name="Top"></a>Creating Openings</h2>
+		</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment----------------------------------->
+<table border="0" width="100%">
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Target Icon" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+		<td width="93%"><a name="Learn"></a>This macro shows you how to create openings 
+		on an SDD Plate. Here we will place openings on a Plate using Sketch Mode 
+		as well as 3DObject Mode.
+		<p>
+		<img alt="Starting Part" src="images/CAASdd001.png" width="558" height="268"></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img alt="Information Icon" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+		<td width="93%"><a name="How"></a>
+		CAASddCreateOpening 
+		is launched in CATIA [<a href="#References">1</a>]. Some documents are needed.
+		<ul>
+			<li><a href="CAASddCreateOpeningSource.htm">CAASddCreateOpening.CATScript</a> 
+			is located in the CAAScdSddUseCases module.
+			<a href="macros/CAASddCreateOpening.CATScript">Execute macro</a> (Windows 
+			only).</li>
+			<li>The document Product1.CATProduct is located in the CAAScdSddUseCases 
+			module in the samples directory. Design_Unit_004.CATPart is linked to 
+			the previous document and contains data required for the macro.</li>
+			<li>The CATPart containing the section is located in the samples directory.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td width="7%" valign="top">
+		<img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+		<td width="93%"><a name="Step"></a>CAASddCreateOpening includes three steps:<ol>
+			<li><a href="#Step1">Prolog</a></li>
+			<li><a href="#Step2">Get the Factory and create Opening using Sketch 
+			Mode</a></li>
+			<li><a href="#Step3">Get the Factory and create Opening using 3DObject 
+			Mode</a></li>
+		</ol>
+		<!---------------------------------comment----------------------------------->
+		<h4><a name="Step1"></a>Prolog</h4>
+		<p>The macro first loads CAASCH_Detail01.CATProduct that contains three 
+		schematic component symbols.</p>
+		<pre class="code"><font color="#0000FF">Set</font> documents1 = CATIA.Documents
+<font color="#0000FF">Set</font> partDocument1 = documents1.Item(&quot;Design_Unit_004.CATPart&quot;)
+
+<font color="#0000FF">Set</font> part1 = partDocument1.Part
+<font color="#0000FF">Set</font> plate = part1.FindObjectByName(&quot;Deck_005&quot;)
+
+<font color="#0000FF">Set</font> plateref= part1.CreateReferenceFromObject(plate)</pre>
+		<!---------------------------------comment----------------------------------->
+		<h4><a name="Step2"></a>Get the Factory and create Opening using Sketch 
+		Mode</h4>
+		<p>This Step describes how to get Sfm Feature Factory. The Factory object 
+		is using GetCustomerFactory Method on Part.</p>
+		<pre class="code"><font color="#008800">&#39;Create Opening Using Sketch Mode</font>
+<font color="#0000FF">Set</font> sketch= part1.FindObjectByName(&quot;Sketch.19&quot;)
+<font color="#0000FF">Set</font> sketchref=part1.CreateReferenceFromObject(sketch)
+
+<font color="#0000FF">Set</font> Factory =  part1.GetCustomerFactory(&quot;SfmFunctionFactory&quot;)
+<font color="#0000FF">Set</font> OpeningUsingSketch =Factory.CreateOpening(&quot;FunctionalOpening&quot;,1,sketchref,plateref)
+
+part1.Update</pre>
+		<!---------------------------------comment----------------------------------->
+		<h4><a name="Step3"></a>Get the Factory and create Opening using 3DObject 
+		Mode</h4>
+		<pre class="code"><font color="#008800">&#8216;Create Opening Using 3D Object Mode</font>
+<font color="#0000FF">Set</font> Object =  part1.FindObjectByName(&quot;Volume Extrude.1&quot;)
+<font color="#0000FF">Set</font> ObjectRef = part1.CreateReferenceFromObject(Object)
+
+<font color="#0000FF">Set</font> OpeningUsing3DObj  = Factory.CreateOpening(&quot;FunctionalOpening&quot;,0,ObjectRef, plateref)
+
+part1.Update</pre>
+		<p>
+		<img alt="Resulting Part with Openings" src="images/CAASdd002.png" width="417" height="251">
+		</p>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td align="center">
+		<img alt="End Icon" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></td>
+	</tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment----------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create openings using Sketch and 3DObject Mode 
+Plate.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment----------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</a></td>
+	</tr>
+	<tr>
+		<td valign="top"></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+	</tr>
+</table>
+<hr>
+<!---------------------------------comment----------------------------------->
+<p><i>Copyright © 2010, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

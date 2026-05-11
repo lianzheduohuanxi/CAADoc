@@ -1,0 +1,487 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Making a Component Displayable With CATI3DGeoVisu</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Visualization</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Making a Component Displayable With CATI3DGeoVisu</h3>
+      <em>Implementing CATI3DGeoVisu and CATIModelEvents to enable a geometric
+      component to be displayed in a viewer</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVisGeoModel use case. This use case
+      explains how geometric components can provide a representation to be
+      displayed in a viewer.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVisGeoModel Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAVisGeoModel Do</a></li>
+            <li><a href="#How">How to Launch CAAVisGeoModel</a></li>
+            <li><a href="#Where">Where to Find the CAAVisGeoModel Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to implement the <i>CATI3DGeoVisu</i>
+interface to make a geometric component displayable in a 3D viewer, and how to
+implement the <i>CATIModelEvents</i> interface to refresh the representation
+according to model updates.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAVisGeoModel Use Case</h3>
+<p>CAAVisGeoModel is a set of use cases of the CAAVisualization.edu framework
+that illustrates Vizualization framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAVisGeoModel Do</h4>
+<p>CAAVisGeoModel contains a series of C++ classes, each of them being an
+extension of a component representing a geometric component, such as a
+point, a line, a circle, or an ellipse. Each extension implements the <i>CATI3DGeoVisu</i>
+interface to make the corresponding component displayable in a 3D viewer. This
+article focuses on the way the circle component implements <i>CATI3DGeoVisu</i>.
+In addition, a single extension class implements the <i>CATIModelEvents</i>
+interface for all the geometric components. It is also described.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the CAAVisGeoModel</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Launch CATIA. When the application is ready, follow scenarios described
+below:</p>
+<ul>
+  <li>In the <b>Start</b> menu choose <b>Infrastructure </b>and click <b>CAA V5:
+    Geometrical Creation</b>.</li>
+  <li>In the <b>Insert</b> menu choose <b>Point</b>.</li>
+  <li>Create three points.</li>
+  <li>In the <b>Insert</b> menu choose <b>Plane</b>.</li>
+  <li>Select the three points.</li>
+  <li>In the <b>Insert</b> menu choose <b>Circle</b>.</li>
+  <li>Select the plane, select or indicate the center point, move the mouse to 
+	obtain the wanted radius and click to end.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVisGeoModel Code</h4>
+<p>CAAVisGeoModel code is located in the CAAVisGeoModel.m use case module of the
+CAAVisualization.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVisualization.edu\CAAVisGeoModel.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVisualization.edu/CAAVisGeoModel.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation.
+<p>CAAVisGeoModel includes the following files for the circle component:</p>
+<table width="100%">
+  <tr>
+    <td><b>LocalInterfaces directory</b></td>
+  </tr>
+  <tr>
+    <td>CAAEVisVisuCircle.h</td>
+    <td>Header file for the circle component extension class that implements <i>CATI3DGeoVisu</i></td>
+  </tr>
+  <tr>
+    <td>CAAEVisModelEvents.h</td>
+    <td>Header file for the common component extension class that implements <i>CATIModelEvents</i></td>
+  </tr>
+  <tr>
+    <td><b>src directory</b></td>
+  </tr>
+  <tr>
+    <td>CAAEVisVisuCircle.cpp</td>
+    <td>Source file for the circle component extension class that implements <i>CATI3DGeoVisu</i></td>
+  </tr>
+  <tr>
+    <td>CAAEVisModelEvents.cpp</td>
+    <td>Source file for the common component extension class that implements <i>CATIModelEvents</i></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To implement <i>CATI3DGeoVisu</i> and <i>CATIModelEvents</i>, there are four
+main steps:</p>
+<ol>
+  <li><a href="#Step1">Creating the Header File of CAAEVisVisuCircle</a></li>
+  <li><a href="#Step2">Creating the Source File of CAAEVisVisuCircle</a></li>
+  <li><a href="#Step3">Implementing the BuildRep Method of CATI3DGeoVisu</a></li>
+  <li><a href="#Step4">Implementing the CATIModelEvents Interface</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Header File of CAAEVisVisuCircle</h4>
+<p>The <i>CAAEVisVisuCircle</i> header file is as follows.
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATExtIVisu.h&quot;
+
+class CAAEVisVisuCircle : public <b>CATExtIVisu</b>
+{
+  <b>CATDeclareClass</b>;
+  public:
+    CAAEVisVisuCircle();
+    virtual ~CAAEVisVisuCircle();
+    <b>virtual  CATRep * BuildRep();</b>
+  private :
+  CAAEVisVisuCircle(const CAAEVisVisuCircle &amp;iObjectToCopy);
+};</pre>
+    </td>
+  </tr>
+</table>
+<p><i>CAAEVisVisuCircle</i> derives from the CATExtIVisu adapter that provides
+code for the <i>CATI3DGeoVisu</i> interface methods. As any class that makes up
+a component, its header file includes the <code>CATDeclareClass</code> macro.
+The <code>BuildRep</code> method is the only one to redefine. Note that the copy
+constructor is declared as private, and is not implemented. This prevents the
+compiler from creating a public one without you know. This is to prevent clients
+from creating instances from an existing one, that they normally should not
+handle, except using interface pointers.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Source File of CAAEVisVisuCircle</h4>
+<p>The <i>CAAEVisVisuCircle</i> source file is as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAEVisVisuCircle.h&quot;
+#include &quot;CAAISysCircle.h&quot;
+
+#include &quot;CAT3DCustomRep.h&quot;
+#include &quot;CAT3DArcCircleGP.h&quot;
+
+#include &quot;TIE_CATI3DGeoVisu.h&quot;
+<b>TIE_CATI3DGeoVisu(CAAEVisVisuCircle);</b>
+
+<b>CATImplementClass</b>(CAAEVisVisuCircle, <b>DataExtension</b>, CATBaseUnknown, <b>CAASysCircle</b>);
+
+CAAEVisVisuCircle::CAAEVisVisuCircle() {}
+
+CAAEVisVisuCircle::~CAAEVisVisuCircle() {}
+
+<b>CATRep *</b> CAAEVisVisuCircle::<b>BuildRep</b>()
+{
+  ...
+} </pre>
+    </td>
+  </tr>
+</table>
+<p>The main points of this source file are:</p>
+<ul>
+  <li><i>CAAEVisVisuCircle</i> implements the <i>CATI3DGeoVisu</i> interface:
+    this is expressed thanks to the <code>TIE_CATI3DGeoVisu</code> macro</li>
+  <li><i>CAAEVisVisuCircle</i> implements the <i>CATI3DGeoVisu</i> interface for
+    the <i>CAASysCircle</i> component as a data extension. This is expressed
+    using the <code>CATImplementClass</code> macro</li>
+  <li>The BuildRep method is the only redefined method of <i>CATI3DGeoVisu</i>.
+    It should return a pointer to the circle representation, that is, a pointer
+    to a <i>CAT3DRep</i></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Implementing the BuildRep Method of CATI3DGeoVisu</h4>
+<p>There are two possibilities for creating the representation of a circle, that
+is, using the <i>CAT3DArcCircleRep</i> class, or using a custom representation.
+This latter is detailed here.</p>
+<ol>
+  <li>Declaring the representation to return
+    <table class="code">
+      <tr>
+        <td>
+          <pre>CATRep * CAAEVisVisuCircle::<b>BuildRep</b>()
+{
+  <b>CAT3DCustomRep</b> *pCircleRep = NULL;
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAT3DCustomRep</i> class can accommodate any kind of
+    representation(s).</p>
+  </li>
+  <li>Retrieving the circle parameters
+    <table class="code">
+      <tr>
+        <td>
+          <pre>  ...
+  CAAISysCircle * piSysCircle = NULL;                
+  HRESULT rc = <b>QueryInterface</b>(IID_CAAISysCircle, (void**)&amp;piSysCircle);
+  if (SUCCEEDED(rc))
+  {
+    CATMathPoint center;
+    float radius;
+    CATMathVector normal, axis;
+
+    piSysCircle-&gt;GetCenter(center);
+    piSysCircle-&gt;GetRadius(radius);
+    piSysCircle-&gt;GetPlane(normal, axis);
+
+    piSysCircle-&gt;<b>Release</b>();
+    ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <table>
+      <tr>
+        <td><img border="0" src="images/CAAVisSampleCircle.gif" width="485" height="401"></td>
+        <td>The circle component implements the <i>CAAISysCircle</i> interface [<a href="#References">1</a>].
+          This is a type interface that enables to set and retrieve the
+          parameters that make this component a circle: its center and radius,
+          and the normal and axis vectors of the plane in which it lies. Once
+          the pointer to <i>CAAISysCircle</i> is not any longer needed, it is
+          released.</td>
+      </tr>
+    </table>
+  </li>
+  <li>Creating the graphic primitive for the circle
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...
+    CAT3DArcCircleGP * pCircleGp = new <b>CAT3DArcCircleGP</b>(center, normal, radius, axis);
+    ... </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The circle graphic primitive is an instance of <i>CAT3DArcCircleGP</i>.
+    Its constructor needs the four parameters retrieved from the circle
+    component.</p>
+  </li>
+  <li>Creating and filling in the representation
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...
+    pCircleRep = new <b>CAT3DCustomRep</b>();
+    <b>CATGraphicAttributeSet</b> circleGa;
+    pCircleRep-&gt;<b>AddGP</b>(pCircleGp,circleGa);
+    ... </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The circle representation is created as a <i>CAT3DCustomRep</i> instance.
+    Is is filled in thanks to the <code>AddRep</code> method with the graphical
+    primitive and a set of graphic attributes featuring their default values.</p>
+  </li>
+  <li>Creating the circle bounding element and assigning it to the
+    representation
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ...
+    <b>CAT3DBoundingSphere</b> circleBe(center,radius);
+    pCircleRep-&gt;<b>SetBoundingElement</b>(circleBe);
+    ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>In order to increase display performance, any representation should have
+    a bounding element that is first asked to determine whether the associated
+    representation should be displayed in the current view port. This bounding
+    element is chosen as a <i>CAT3DBoundingSphere</i> instance defined using the
+    circle center and radius. The <code>SetBoundingElement</code> method assigns
+    it to the circle representation.</p>
+  </li>
+  <li>Returning the created representation
+    <table class="code">
+      <tr>
+        <td>
+          <pre>    ... 
+  }
+  return pCircleRep;
+} </pre>
+        </td>
+      </tr>
+    </table>
+    <p>The circle is now ready for display.</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Implementing the CATIModelEvents Interface</h4>
+<p><i>CAAVisModelEvents</i> implements the <i>CATIModelEvents</i> interface by
+deriving from the <i>CATExtIModelEvents</i> adapter.</p>
+<ol>
+  <li>Creating the header file.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATExtIModelEvents.h&quot;
+
+class CAAEVisModelEvents : public <b>CATExtIModelEvents</b>
+{
+  <b>CATDeclareClass</b>;
+  public :
+    CAAEVisModelEvents();
+    virtual ~CAAEVisModelEvents();
+  private :
+  CAAEVisModelEvents(const CAAEVisModelEvents &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>As any class that makes up a component [<a href="#References">2</a>], its
+    header file includes the <code>CATDeclareClass</code> macro. None of the <i>CATIModelEvents</i>
+    methods needs to be redefined. Note that the copy constructor is declared as
+    private, and is not implemented. This prevents the compiler from creating a
+    public one without you know. This is to prevent clients from creating
+    instances from an existing one, that they normally should not handle, except
+    using interface pointers.</p>
+  </li>
+  <li>Creating the source file.
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CAAEVisModelEvents.h&quot;
+
+#include &quot;TIE_CATIModelEvents.h&quot;
+<b>TIE_CATIModelEvents</b>(CAAEVisModelEvents);
+
+<b>CATBeginImplementClass</b>(CAAEVisModelEvents, DataExtension, CATBaseUnknown, CAASysPoint);
+CATAddClassExtension(CAASysSampRootObj);
+CATAddClassExtension(CAASysGeomRootObj);
+CATAddClassExtension(CAASysLine);
+CATAddClassExtension(CAASysEllipse);
+CATAddClassExtension(CAASysPlane);
+<b>CATAddClassExtension</b>(CAASysCircle);
+CATAddClassExtension(CAASysPolyline);
+<b>CATEndImplementClass</b>(CAAEVisModelEvents); 
+
+CAAEVisModelEvents::CAAEVisModelEvents() {}
+
+CAAEVisModelEvents::~CAAEVisModelEvents() {}</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The main points of this source file are:</p>
+    <ul>
+      <li><i>CAAEVisModelEvents</i> implements the <i>CATIModelEvents</i>
+        interface: this is expressed thanks to the <code>TIE_CATIModelEvents</code>
+        macro</li>
+      <li><i>CAAEVisModelEvents</i> implements the <i>CATIModelEvents</i>
+        interface for several components, among which the <i>CAASysCircle</i>
+        component, as a data extension. Compared to the declaration of a single
+        component extension using <code>CATImplementClass</code>, this is
+        expressed using three macros:
+        <ul>
+          <li><code>CATBeginImplementClass</code>, that has the same signature
+            than <code>CATImplementClass</code>, and that namely declares that <i>CAAEVisModelEvents</i>
+            is a data extension of the <i>CAASysPoint</i> component, and that
+            OM-derives from <i>CATBaseUnknown</i></li>
+          <li><code>CATAddClassExtension</code> to declare each additional
+            extended component, such as <i>CAASysCircle</i></li>
+          <li><code>CATEndImplementClass</code> to close the extended component
+            declaration</li>
+        </ul>
+      </li>
+      <li>Since none of the <i>CAAIModelEvents</i> methods needs to be
+        redefined, the default constructor and the destructor are enough.</li>
+    </ul>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to implement the <i>CATI3DGeoVisu</i> interface to
+display a geometric component in a 3D viewer. <i>CATI3DGeoVisu</i> is
+implemented in an extension class of the geometric component by deriving the
+extension from the <i>CATExtI3DVisu</i> adapter, and redefining the <code>BuildRep</code>
+method. <code>BuildRep</code> creates and returns the 3D representation that
+stands for the geometric component in the visualization world using the
+component geometric parameters.</p>
+<p>To enable the representation of the geometric component to be refreshed when
+the component is modified, the component should implement the <i>CATIModelEvents</i>
+interface. This is done also using an extension, but can be done for a component
+family in a single extension for the whole family. Usually, deriving from the <i>CATExtIModelEvents</i>
+adapter is enough, and no method needs to be redefined.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMCreatingInt.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysUseCases/CAASysSampleOMCreatingCmp.htm">Creating
+      Components</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

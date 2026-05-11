@@ -1,0 +1,461 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing Tool Editor for Drilling Tools</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing Tool Editor for Drilling Tools</h3>
+      <em>Implementing the CATIMfgToolEditorCustom interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiToolEditionCustomization use case and
+      explains how to implement the <i>CATIMfgToolEditorCustom</i> manufacturing
+      interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiToolEditionCustomization Use
+          Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiToolEditionCustomization Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiToolEditionCustomization</a></li>
+            <li><a href="#Where">Where to Find the
+              CAAMaiToolEditionCustomization Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the tool editor of a drilling
+tool by implementing the <i>CATIMfgToolEditorCustom</i> manufacturing interface.
+This involves the following:</p>
+<ul>
+  <li>Creating an extension class to implement <i>CATIMfgToolEditorCustom</i>
+    for a drill tool</li>
+  <li>Implementing all methods of <i>CATIMfgToolEditorCustom</i> to:
+    <ul>
+      <li>Display the tool editor when accessing from the resource list</li>
+      <li>Display the tool editor when accessing from the activity editor (tool
+        tab page)</li>
+      <li>Display the graphic icon for the tool.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiToolEditionCustomization Use Case</h3>
+<p>CAAMaiToolEditionCustomization is a use case of the CAAManufacturingItf.edu
+framework that illustrates ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiToolEditionCustomization Do</h4>
+<p>CAAMaiToolEditionCustomization runs with the Process document that contains
+the Drilling operation to use, the part to be machined, and the tool to use. The
+Drilling tool is accessible from the ResourceList. A double click on the Tool
+will invoke the customized tool editor.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The customized editor of a drilling tool</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool5.jpg" width="458" height="321"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiToolEditionCustomization</h4>
+<p>To launch CAAMaiToolEditionCustomization, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiToolEditionCustomization.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table>
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#'
+    character:</p>
+    <pre>Drilling CATIMfgToolEditorCustom libCAAMaiToolEditionCustomization</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiToolEditionCustomization.CATPart file located in:
+    <table>
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+    <p><a href="images/CAAMaiToolEditionCustomizationDrillTool2.jpg"><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool2.jpg" width="685" height="467"></a></p>
+  </li>
+  <li>Using the Start menu, select the Prismatic Machining workbench in NC
+    Manufacturing
+    <p><img border="0" src="images/CAAMaiDrillingNCWorkbench.jpg" width="397" height="215">
+    <p>This displays the PPR document:</p>
+    <p><img border="0" src="images/CAAMaiDrillingProcessDoc.jpg" width="619" height="421"></p>
+  </li>
+  <li>In the PPR Tree, select Manufacturing Program.1 and create a Drill Tool
+    Change using the command in the Insert-&gt;Auxiliary Operations-&gt;Tool
+    Change-&gt;Drill menu.
+    <p><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool3.jpg" width="870" height="327"></p>
+  </li>
+  <li>The following dialog box appears:
+    <p><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool4.jpg" width="474" height="624"></p>
+    <p><b>Note</b>: at this step, the Drilling Tool Change is completed.</p>
+  </li>
+  <li>The Drill Too created for this Tool change order can also be edited with a
+    double click on the Drill tool created in the ResourceList of the PPR tree.
+    The following window is displayed :
+    <p><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool5.jpg" width="458" height="321"></p>
+  </li>
+  <li>When clicking on the &quot;More&quot; button, more information is
+    available on the Drill Tool feature.
+    <p><img border="0" src="images/CAAMaiToolEditionCustomizationDrillTool6.jpg" width="688" height="321"></p>
+  </li>
+</ul>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiToolEditionCustomization Code</h4>
+<p>The CAAMaiToolEditionCustomization use case is made of a class named <i>CAAEMaiToolEditionCustomizationDrillTool</i>
+located in the CAAMaiToolEditionCustomization.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiToolEditionCustomization.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiToolEditionCustomization.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are four logical steps in CAAMaiToolEditionCustomization:</p>
+<ol>
+  <li><a href="#Step1">Creating an Extension Class to Implement
+    CATIMfgToolEditorCustom for a Drill Tool</a></li>
+  <li><a href="#Step2">Implementing the Method Dedicated to the &quot;Simple
+    View&quot; of the Tool Editor</a></li>
+  <li><a href="#Step3">Implementing the Method Dedicated to Display a List of
+    Tool Parameters</a></li>
+  <li><a href="#Step4">Implementing the Method Dedicated to Display the Graphic
+    Tool Editor</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Extension Class to Implement
+CATIMfgToolEditorCustom for a Drill Tool</h4>
+<p>The extension class that will implement <i>CATIMfgToolEditorCustom</i> is
+named <i>CAAEMaiToolEditionCustomizationDrillTool</i>. Creating this class is
+done is three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiToolEditionCustomizationDrillTool</i> class header
+    file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATDlgInclude.h&quot;
+#include &quot;CATBooleanDef.h&quot;
+
+class CAAEMaiToolEditionCustomizationDrillTool : public CATBaseUnknown
+{
+  CATDeclareClass;
+  public: 
+    CAAEMaiToolEditionCustomizationDrillTool();
+    virtual ~CAAEMaiToolEditionCustomizationDrillTool();
+    virtual CATDlgFrame* GetPanelEditor     (CATDialog   * iFather,
+                                             CATDlgStyle   iStyle=CATDlgFraNoFrame,
+                                             const boolean iEditMode=TRUE);
+    virtual CATDlgFrame* GetMorePanelEditor (CATDialog   * iFather,
+                                             CATDlgStyle   iStyle=CATDlgFraNoFrame,
+                                             const boolean iEditMode=TRUE);
+    virtual CATDlgFrame* GetActivityEditor  (CATDialog   * iFather,
+                                             CATDlgStyle   iStyle=CATDlgFraNoFrame,
+                                             const boolean iEditMode=FALSE);
+    virtual CATDlgFrame* GetGraphicEditor   (CATDialog   * iFather,
+                                             CATDlgStyle   iStyle=CATDlgFraNoFrame,
+                                             const boolean iEditMode=FALSE);
+    virtual void GenerateJPEGImageFromGraphicEditor (CATDialog * iFather,
+                                                     const CATUnicodeString &amp;iImagePathName=&quot;&quot;);
+
+  private:
+    CAAEMaiToolEditionCustomizationDrillTool(const CAAEMaiToolEditionCustomizationDrillTool &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiToolEditionCustomizationDrillTool</i> class C++-derives
+    from <i>CATBaseUnknown</i>. The <code>CATDeclareClass</code> macro declares
+    that the class <i>CAAEMaiToolEditionCustomizationDrillTool</i> belongs to a
+    component. The class has a constructor, a destructor, all the methods for
+    the editor customization, and a copy constructor. Note that the copy
+    constructor is set as private. This is very important for extensions. Since
+    extensions must never be directly instantiated by client applications, this
+    prevents the compiler from creating the copy constructor as public without
+    you know. This copy constructor is not implemented in the source file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiToolEditionCustomizationDrillTool</i> class source
+    file. It begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgToolEditorCustom.h&quot;
+TIE_CATIMfgToolEditorCustom(CAAEMaiToolEditionCustomizationDrillTool);
+CATImplementClass(CAAEMaiToolEditionCustomizationDrillTool,
+                  DataExtension,                  
+                  CATBaseUnknown,
+                  CATEMfgDrillTool);
+...
+CATDlgFrame* CAAEMaiToolEditionCustomizationDrillTool::GetPanelEditor
+		(CATDialog *iFather, CATDlgStyle iStyle, const  boolean iMode)
+{
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiToolEditionCustomizationDrillTool</i> class states that it
+    implements the <i>CATIMfgToolEditorCustom</i> interface thanks to the <code>TIE_CATIMfgToolEditorCustom
+    </code>macro. The <code>CATImplementClass</code> macro declares that the <i>CAAEMaiToolEditionCustomizationDrillTool</i>
+    class is data extension class, thanks to the <code>DataExtension</code>
+    keyword, and that it extends the feature whose type is <i>Drilling</i>. The
+    third parameter must always be set to <i>CATBaseUnknown</i>, makes no sense,
+    and is unused for extensions.</p>
+    <p>Extending the CATEMfg<i>DrillTool</i> feature using the <i>CAAEMaiToolEditionCustomizationDrillTool</i>
+    class that implements <i>CATIMfgToolEditorCustom</i> means fitting this
+    feature with your customized behavior for drill tool editor which will
+    replace the default one. Some implementation methods are shown in the next
+    steps. It has a smart pointer to the Process document manufacturing
+    container as input parameter, and a smart pointer to the created tool editor
+    as output parameter.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>Drilling</i>
+    feature implements the <i>CATIMfgToolEditorCustom</i> interface, and whose
+    code is located in the libCAAMaiToolEditionCustomization shared library or
+    DLL. Pay attention to remove the comment (#) in the supplied dictionary.</p>
+    <pre>Drilling CATIMfgToolEditorCustom libCAAMaiToolEditionCustomization</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:<br>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the Method Dedicated to the &quot;Simple
+View&quot; of the Tool Editor</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDlgFrame *CAAEMaiToolEditionCustomizationDrillTool::GetPanelEditor(CATDialog *iParent,
+               CATDlgStyle iStyle,
+               const CATBoolean iMode)
+{
+  // Create the frame
+  CATDlgFrame *pFr = new CATDlgFrame (iParent, CATString(&quot;theFrame&quot;), iStyle);
+  ...
+
+  // Defines the list of tool parameters (from the CATMfgToolConstant.h declaration file)
+
+  CATListOfCATUnicodeString ListNames;
+  ListNames.Append (MfgName);
+  ListNames.Append (MfgNominalDiameter);
+  ListNames.Append (MfgCuttingLength);
+  ListNames.Append (MfgCuttingAngle);
+  ListNames.Append (MfgOverallLength);
+  ListNames.Append (MfgLength);
+  ListNames.Append (MfgBodyDiameter);
+        
+  // Build the frame for the list of tool parameters
+  CATDlgFrame *pFrAtt = new CATDlgFrame (pFr, CATString(&quot;Frame&quot;), Style);
+  pFrAtt-&gt;SetDefaultOrientation(Vertical);
+  BuildFrame (pFrAtt, ListNames);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Implementing the Method Dedicated to Display a List of
+Tool Parameters</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAEMaiToolEditionCustomizationDrillTool::BuildFrame (CATDlgFrame *iParent,
+                 const CATListOfCATUnicodeString &amp;iAttributesList)
+{
+  // Make Query interface to retrieve the resource object 
+  CATIMfgResource *piMfgResource = NULL;
+  HRESULT Res = this-&gt;QueryInterface(CATIMfgResource::ClassId(), (void **)&amp;piMfgResource);
+  ...
+  // For each parameter, call the standard parameter editor
+  ...
+  for (int i=1; i&lt;=iAttributesList.Size(); i++)
+  {
+    // Read the parameter name
+    CATUnicodeString ParmName = iAttributesList[i];
+
+    // Read the parameter
+    CATBaseUnknown_var Parm;
+    HRESULT res = piMfgResource-&gt;GetValue(ParmName, Parm);
+
+    // Define the label and editor for the tool parameter
+    pFratt = new CATDlgFrame (iParent, CATString(&quot;fr&quot;), CATDlgFraNoFrame);
+    pFratt-&gt;SetDefaultOrientation(Horizontal);
+    CATString name = CATString(ParmName );
+    pLabEdt = new CATDlgLabel (pFratt,name);   
+
+    // Call the standard parameter editor 
+    CATICkeParamFrame *piCkeParamFrame  = NULL;
+    HRESULT Res = Parm-&gt;QueryInterface(CATICkeParamFrame::ClassId(), (void **)&amp;piCkeParamFrame);
+    if (FAILED(res) || NULL != piCkeParamFrame) return;
+
+    pFrEdt = piCkeParamFrame-&gt;GetInPanelEdition(piMfgResource, pFratt, StyleEdit, ParmName);
+    if (NULL != piCkeParamFrame) piCkeParamFrame-&gt;Release();
+  }
+  // Release the smart pointer to the resource object
+  if (NULL != piMfgResource) piMfgResource-&gt;Release();
+  ...
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Implementing the Method Dedicated to Display the Graphic
+Tool Editor</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATDlgFrame* CAAEMaiToolEditionCustomizationDrillTool::GetGraphicEditor
+      (CATDialog *iParent, CATDlgStyle iStyle, const CATBoolean iMode) 
+{
+  ...
+  //Create a Dialog Frame
+  CATDlgFrame *pFr = new CATDlgFrame (iParent, CATString(&quot;theFrame&quot;), iStyle);
+  ...
+  // Add the standard graphic icon
+  CATDlgLabel *pLab = new CATDlgLabel (pFr, CATString(&quot;Lab&quot;));
+  CATString Icon(&quot;F_MfgDrillTool&quot;);
+  pLab-&gt;SetIconName(Icon);
+  ... 
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, and has illustrated them on a drill tool editor customization. It shows
+how to implement the <i>CATIMfgToolEditorCustom</i> interface to edit the drill
+tool in a process document that includes this tool as a resource.</p>
+<p>The CATEMfgDrillTool feature behavior is modified by implementing <i>CATIMfgToolEditorCustom</i>
+in a data extension class. This class allows the end user to display the editor
+relative to this tool feature according to what he wants to see.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

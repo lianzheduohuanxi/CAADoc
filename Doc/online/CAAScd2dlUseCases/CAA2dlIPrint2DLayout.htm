@@ -1,0 +1,278 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+ <title>Printing Part 2D Layouts in an Assembly</title>
+ </head>
+
+ <body>
+
+ <table border="0" width="100%">
+   <tr>
+     <td>
+     <h2>2D Layout for 3D Design</h2>
+     </td>
+     <td align="right" valign="top">
+     <h2><a name="Top"></a>Printing Part 2D Layouts in an Assembly</h2>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!--------------------------------------comment------------------->
+ <table border="0" width="100%">
+   <tr>
+     <td valign="top">
+     <img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+     <td>This macro shows you how to find the parts containing a 2D layout in an 
+     assembly, then to print the 2D layout of each part.<br>
+     This macro is based on an active product document.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+     <td>Define a new printer:
+     <ul>
+       <li>Select <kbd>File -&gt; Printer Setup...</kbd> then double-click <kbd>Add 
+       Printer</kbd> item in the <kbd>Printers</kbd> dialog box that appears.</li>
+       <li>Select <kbd>3D PLM Printer </kbd>in the <kbd>Add Printer Wizard</kbd> 
+       dialog box that appears and click <kbd>OK</kbd>.</li>
+       <li>Define the printer properties:<ul>
+         <li>Name: Printer TIF</li>
+         <li>Driver: Raster<br>
+         <img border="0" src="images/db001NLS.gif" vspace="5" width="522" height="300"></li>
+         <li>Click the <kbd>Advanced Configuration...</kbd> button to define the 
+         advanced configuration:
+         <ul>
+           <li>Format: TIFF</li>
+           <li>Dpi: 150<br>
+           <img border="0" src="images/db002NLS.gif" vspace="5" width="372" height="187"></li>
+         </ul>
+         </li>
+       </ul>
+       </li>
+     </ul>
+     <p><a name="How"></a>Run CAA2dlIPrint2DLayout in CATIA [<a href="#References">1</a>].</p>
+     <p><a href="CAA2dlIPrint2DLayoutSource.htm">CAA2dlIPrint2DLayout</a> is 
+     located in the CAA2dlUseCases module.&nbsp;
+     <a href="macros/CAA2dlIPrint2DLayout.CATScript">Execute macro</a> (Windows 
+     only).</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+     <td><a name="Step"></a>CAA2dlIPrint2DLayout includes seven steps:
+     <ol>
+       <li><a href="#Step1">Prolog</a></li>
+       <li><a href="#Step2">Retrieving the Part</a></li>
+       <li><a href="#Step3">Retrieving the 2D Layout</a></li>
+       <li><a href="#Step4">Retrieving the Sheet</a></li>
+       <li><a href="#Step5">Printing the 2D Layout</a></li>
+       <li><a href="#Step6">Printing in Part Context</a></li>
+       <li><a href="#Step7">Printing in Product Context</a></li>
+       <li><a href="#InShort">In Short</a></li>
+     </ol>
+     <h4><a name="Step1"></a>Prolog</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+  <font color="#008000">' Define the application default printer</font>
+  CATIA.ActivePrinter = CATIA.Printers.Item(&quot;Printer TIF&quot;)
+<font color="#0000FF">  Dim </font>oDocument<font color="#0000FF"> As </font>Document
+  <font color="#008000">' Retrieve the active document</font>
+<font color="#0000FF">  Set </font>oDocument = CATIA.ActiveDocument
+  <font color="#008000">' Look for the document type, if it is not a product document the macro stops</font>
+<font color="#0000FF">  If </font>TypeName(oDocument) = &quot;ProductDocument&quot; Then
+<font color="#0000FF">    Dim </font>oProductDocument<font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">    Set </font>oProductDocument = oDocument
+  <font color="#0000FF">Else</font>
+    <font color="#0000FF">MsgBox</font> &quot;This macro can be run with a product document only.&quot;
+<font color="#0000FF">    Exit Sub</font>
+<font color="#0000FF">  End If</font>
+  <font color="#008000">' Call the procedure to search the parts in document</font>
+<font color="#0000FF">  Call </font>SearchPartsInProduct(oProductDocument.Product)
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The &quot;Printer TIF&quot; printer previously defined is set as active printer in 
+     the application.</p>
+     <p>The active document type is tested. If it is a <code>ProductDocument</code>, 
+     the <code>oProductDocument</code> is retrieved from the <code>oDocument</code>. 
+     Otherwise the macro stops and prompts a warning message.</p>
+     <p>The <code>SearchPartsInProduct</code> procedure is called to search 
+     recursively parts in the product structure.</p>
+     <h4><a name="Step2"></a>Retrieving a Part</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+  <font color="#008000">' Search for the parts in the product structure</font>
+<font color="#0000FF">  For </font>Each oProduct<font color="#0000FF"> In </font>ProductParent.Products
+    <font color="#008000">' Look for product children</font>
+<font color="#0000FF">    If </font>oProduct.Products.Count &lt;&gt; 0<font color="#0000FF"> Then</font>
+      <font color="#008000">' Call the procedure to search the parts in document</font>
+<font color="#0000FF">      Call </font>SearchPartsInProduct(oProduct)
+    <font color="#0000FF">Else</font>
+      <font color="#008000">' Retrieve the reference product</font>
+<font color="#0000FF">      Set </font>oProductReference = oProduct.ReferenceProduct
+      <font color="#008000">' Look for the product existence</font>
+<font color="#0000FF">      If Not</font> oProductReference <font color="#0000FF">Is</font> <font color="#0000FF">Nothing Then</font>
+          <font color="#008000">' Look for the product shape representation</font>
+<font color="#0000FF">          If </font>oProduct.HasAMasterShapeRepresentation<font color="#0000FF"> Then</font>
+            <font color="#008000">' Retrieve the shape representation</font>
+<font color="#0000FF">            Set </font>oShapeRepresentation = oProduct.GetMasterShapeRepresentation(False)
+            <font color="#008000">' Look for the shape representation document type</font>
+<font color="#0000FF">            If </font>Right(oShapeRepresentation.Name, 7) = &quot;CATPart&quot; <font color="#0000FF">Then</font>
+              <font color="#008000">' Retrieve the part</font>
+<font color="#0000FF">              Set </font>oPart = oShapeRepresentation.Part
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>We look for the part according to the product structure, for this we 
+     know that: a part is contained in a product and this product does not 
+     contain any product itself.<br>
+     The <code>oProduct</code><font color="#0000FF"> </font>object is retrieved 
+     from the <code>Products</code> collection of the <code>ProductParent</code> 
+     object.</p>
+     <p>So, when the product collection contains product objects (its <code>
+     Count</code> property differs from zero) this indicates that there is no 
+     part under this product level, otherwise when the product collection is 
+     empty (its <code>Count</code> property equals to zero) this indicates that 
+     we might find a part, but not necessarily.</p>
+     <p>For this, we look for shape representation existence in the product 
+     object and for more security in its product reference.<br>
+     The <code>HasAMasterShapeRepresentation</code> and the <code>
+     GetMasterShapeRepresentation</code> functions are retrieved from the <code>
+     oProduct</code> object.</p>
+     <p>Finally, we have to check that the file extension of the shape 
+     representation is CATPart indicating a part.<br>
+     The file extension is retrieved from the <code>Name</code> property of the
+     <code>oShapeRepresentation</code> object.<br>
+     The <code>oPart</code> object is retrieved from the <code>Part</code> 
+     object of the <code>oShapeRepresentation</code> object.</p>
+     <h4><a name="Step3"></a>Retrieving the 2D Layout</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+
+              <font color="#008000">' Retrieve the 2D Layout</font>
+<font color="#0000FF">              Set </font>oLayout2DRoot = oPart.GetItem(&quot;CATLayoutRoot&quot;)
+
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The <code>oLayout2DRoot</code> object is retrieved from the <code>
+     GetItem</code> function of the <code>oPart</code> object using the <code>
+     CATLayoutRoot</code> string argument.</p>
+     <h4><a name="Step4"></a>Retrieving the Sheet</h4>
+     <table class="code" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+       <tr>
+         <td>
+         <pre>...
+              <font color="#008000">' Look for the 2D Layout existence</font>
+<font color="#0000FF">              If Not</font> oLayout2DRoot <font color="#0000FF">Is</font> <font color="#0000FF">Nothing Then</font>
+                <font color="#008000">' Retrieve the sheet collection</font>
+<font color="#0000FF">                Set </font>oLayout2DSheets = oLayout2DRoot.Sheets
+                <font color="#008000">' Retrieve the sheets contained in the collection</font>
+<font color="#0000FF">                For </font>iSheet = 1<font color="#0000FF"> To </font>oLayout2DSheets.Count
+                  <font color="#008000">' Retrieve the sheet</font>
+<font color="#0000FF">                  Set </font>oLayout2DSheet = oLayout2DSheets.Item(iSheet)
+...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The <code>oLayout2DRoot</code> object is checked: when the object is 
+     empty, there is no layout in the part.<br>
+     The <code>oLayout2DSheet</code> object is retrieved from the <code>Sheets</code> 
+     collection of the <code>oLayout2DRoot</code> object.</p>
+     <h4><a name="Step5"></a>Printing the 2D Layout</h4>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>...
+                  <font color="#008000">' Print the sheet in a TIFF file</font>
+                  oLayout2DSheet.PrintToFile &quot;F:\tmp\2D3DDesign\print\&quot; + oLayout2DSheet.Name + &quot;.tif&quot;, _
+                    catRenderQuickHiddenLinesRemovalWithHiddenEdgesWithOutlinesWithoutVertices<font color="#0000FF">
+</font>...</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The layout is printed using the <code>PrintToFile</code> method from the
+     <code>oLayout2DSheet</code> object with a specified file path and name, and 
+     the <code>
+     catRenderQuickHiddenLinesRemovalWithHiddenEdgesWithOutlinesWithoutVertices</code> 
+     enumerate argument.<h4><a name="Step6"></a>Printing in Part Context</h4><p>Note that the 
+     print context, part or product, depends of the following conditions:<ul>
+       <li>Product context:<ul>
+         <li>a 2D layout window is opened,</li>
+         <li>this 2D layout window is the active window in the application,</li>
+         <li>the sheet displayed in this 2D layout window and the printed sheet belong to the 
+         same layout.</li>
+         </ul>
+         </li>
+         <li>Part context: when one of the previous conditions is not respected.</li>
+         </ul>
+         <ol>
+           <li>Open the product document only:
+           <a href="samples/Assembly-2DL.CATProduct">Assembly-2DL.CATProduct</a></li>
+           <li>Run the macro.</li>
+           <li>The resulting image file looks like this: 
+     <a href="images/Sheet.1-Part-Context.gif">Sheet.1.tif</a></li>
+     </ol>
+     <p>Note that only the part is printed in the backgrounds.</p>
+     <h4><a name="Step7"></a>Printing in Product Context</h4>
+     <ol>
+       <li>Edit the 2D layout by double-clicking the Layout feature in the 
+         product: the 2D layout window appears.</li>
+       <li>Be sure that this 2D layout window is the active window and re-run the 
+         macro.</li>
+       <li>The resulting image file looks like this: 
+         <a href="images/Sheet.1-Product-Context.gif">Sheet.1.tif</a></li>
+       </ol>
+       <p>Note that all the product structure is printed in the backgrounds.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!--------------------------------------comment------------------->
+ <h4><a name="InShort"></a>In Short</h4>
+ <p>This use case has shown how to print the 2D layout of each part contained in 
+ an assembly.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!--------------------------------------comment------------------->
+ <h4><a name="References"></a>References</h4>
+ <table border="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="top">[1]</td>
+     <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">
+     Replaying a Macro</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><i><a href="../CAAScd2dlTechArticles/CAA2dlToc2DLayout.htm">
+     Layout2DLayout</a>,
+     <a href="#" onclick="javascript:CAAlink('IDL', 'Drafting2DLInterfaces', 'Layout2DSheet');return false;">
+     Layout2DSheet</a>,
+     <a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'CatRenderingMode');return false;">
+     Selection</a></i></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!--------------------------------------comment------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i> </p>
+
+ </body>
+
+</html>

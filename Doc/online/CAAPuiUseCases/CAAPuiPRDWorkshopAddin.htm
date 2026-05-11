@@ -1,0 +1,439 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Adding a Toolbar to all Product Workbenches</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+    <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+    <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+    <h3><a name="Top"></a>Adding a Toolbar to all Product Workbenches</h3>
+    <p><em>Implementing the <br>
+    CATIPRDWorkshopAddin Interface</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+    <h3>Abstract</h3>
+    <p>This article presents the CAAPuiPRDWorkshopAddin use case which illustrates 
+    how to create a toolbar that is active in all Product workbenches including 
+    Product Structure workshop&#39;s.</p>
+    <ul>
+      <li><strong><a href="#What You Will Learn With This Use Case">What You Will 
+        Learn With This Use Case</a></strong></li>
+      <li><strong><a href="#The CAAPstContextualProduct Use Case">The CAAPuiPRDWorkshopAddin 
+        Use Case</a></strong>
+        <ul>
+          <li><a href="#What Does CAAPstContextualProduct Do">What Does CAAPuiPRDWorkshopAddin 
+            Do</a></li>
+          <li><a href="#How to Launch CAAPstContextualProduct">How to Launch CAAPuiPRDWorkshopAddin</a></li>
+          <li><a href="#Where to Find the CAAPstContextualProduct Code">Where to 
+            Find the CAAPuiPRDWorkshopAddin Code</a></li>
+        </ul>
+      </li>
+      <li><strong><a href="#Step-by-Step">Step-by-Step</a></strong></li>
+      <li><strong><a href="#InShort">In Short</a></strong></li>
+      <li><strong><a href="#References">References</a></strong></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+<h3><a name="What You Will Learn With This Use Case"><font size="3">What You Will 
+Learn With This Use Case</font></a></h3>
+<p>By implementing the <i>CATIPRDWorkshopAddin</i> interface, a toolbar with its 
+commands can be made active in any Product Structure Workshop. Please see article
+<a href="#[5]">[5]</a> if the toolbar should only be made active in the Product 
+Structure workshop.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The CAAPstContextualProduct Use Case"><font size="3">The CAAPuiPRDWorkshopAddin 
+Use Case</font></a></h3>
+<p>CAAPuiPRDWorkshopAddin is a use case of the CAAProductStructureUI.edu framework 
+that illustrates the ProductStructureUI framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What Does CAAPstContextualProduct Do">What Does CAAPuiPRDWorkshopAddin 
+Do</a></h4>
+<p>The goal of CAAPuiPRDWorkshopAddin is to demonstrate how to implement the <i>
+CATIPRDWorkshopAddin</i> interface. It consists of the following parts:</p>
+<ul>
+  <li>Code to create the toolbar and the layout of the commands</li>
+  <li>Code to be executed when the command is selected</li>
+  <li>Resource definition for the visual aspects of the interface</li>
+</ul>
+<p>
+<img border="0" src="images/CAAPuiPRDWorkshopAddin00.jpg" width="558" height="347"></p>
+<p>Our toolbar appears on top of the CATIA frame and contains a single command represented 
+by the
+<img border="0" src="images/CAAPuiPRDWorkshopAddin_I.gif" width="22" height="22"> 
+icon.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How to Launch CAAPstContextualProduct">How to Launch CAAPuiPRDWorkshopAddin</a></h4>
+<p>To launch CAAPuiPRDWorkshopAddin:</p>
+<ol>
+  <li>Set the current directory to <i>InstallRoot</i><tt>/CAAProductStructureUI.edu</tt></li>
+  <li>Set up&nbsp; the build time environment and build the <tt>CAAPuiPRDWorkshopAddin.m</tt> 
+    module (see reference <a href="#[1]">[1]</a>)</li>
+  <li>Edit the&nbsp; <tt>CNext/code/dictionary/CAAProductStructureUI.edu.dico
+    </tt>dictionary by uncommenting the line containing <tt>CATIPRDWorkshopAddin</tt>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>#CAAPuiPRDWorkshopAddin use case
+CAAPuiPRDWorkshopAddin CATIPRDWorkshopAddin libCAAPuiPRDWorkshopAddin</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>Install the dictionary and other resource files by executing <tt>mkCreateRuntimeView</tt></li>
+  <li>Start CATIA by executing <tt>mkrun</tt></li>
+  <li>Display the toolbar named &quot;Toolbar 1&quot; if necessary:<br>
+    <br>
+    <img border="0" src="images/CAAPuiPRDWorkshopAddin01.jpg" width="612" height="686"><br>
+    <br>
+&nbsp;</li>
+  <li>Click on the command and a dialog box will appear:<br>
+    <br>
+    <img border="0" src="images/CAAPuiPRDWorkshopAddin03.jpg" width="556" height="364"><br>
+&nbsp;</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where to Find the CAAPstContextualProduct Code">Where to Find the CAAPuiPRDWorkshopAddin 
+Code</a></h4>
+<p>CAAPuiPRDWorkshopAddin code is located in the CAAPuiPRDWorkshopAddin.m module 
+of the CAAProductStructureUI.edu framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><b><a name="Step-by-Step"><font size="3">Step-by-Step</font></a></b></h3>
+<p>There are three parts in <i>CAAPuiPRDWorkshopAddin</i>:</p>
+<ol>
+  <li><a href="#Toolbar Creation and Layout">Toolbar Creation and Layout</a></li>
+  <li><a href="#Command Implementation">Command Implementation</a></li>
+  <li><a href="#User Interface">User Interface</a></li>
+</ol>
+<p>We will now detail each of those sections:</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Toolbar Creation and Layout">Toolbar Creation and Layout</a></h4>
+<p>The implementation of <i>CATIPrdWorkshopAddin</i> is provided by our <tt>CAAPuiPRDWorkshopAddin</tt> 
+class. Its purpose is to create the toolbar and to do the layout the commands on 
+it. Only two methods need be defined: <a href="#CreateToolbars"><tt>CreateToolbars</tt></a> 
+and <a href="#CreateCommands"><tt>CreateCommands</tt></a>.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+class CAAPuiPRDWorkshopAddin: public CATBaseUnknown {
+
+CATDeclareClass;
+
+public:
+
+        // Standard constructors and destructors for an implementation class
+        // -----------------------------------------------------------------
+        CAAPuiPRDWorkshopAddin();
+        virtual ~CAAPuiPRDWorkshopAddin();
+
+        /**
+         * @see ApplicationFrame.CATIWorkbenchAddin#CreateToolbars
+         */
+        CATCmdContainer * CreateToolbars();
+
+        /**
+         * @see ApplicationFrame.CATIWorkbenchAddin#CreateCommands
+         */
+        void CreateCommands();
+
+private:
+        // The copy constructor and the equal operator must not be implemented
+        // -------------------------------------------------------------------
+        CAAPuiPRDWorkshopAddin(CAAPuiPRDWorkshopAddin &amp;);
+        CAAPuiPRDWorkshopAddin&amp; operator=(CAAPuiPRDWorkshopAddin&amp;);
+
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The purpose of the <tt>CreateToolbars</tt> method is to create all the command 
+headers of our toolbar. In this case a toolbar named <tt>CAAToolbar</tt> with a 
+command named <tt>CAAPuiPRDWorkshopAddinCmd1</tt> is created.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+CATCmdContainer * CAAPuiPRDWorkshopAddin::CreateToolbars ()<a name="CreateToolbars"></a>
+{
+        CAAPuiPRDWorkshopAddinTRACE(&quot;&gt;&gt; CAAPuiPRDWorkshopAddin::CreateToolbars()&quot;);
+
+        NewAccess(CATCmdContainer, pToolbarContainer, 
+                  CAAPuiPRDWorkshopAddinToolbar);
+        NewAccess(CATCmdStarter, pCommandStarter, 
+                  CAAPuiPRDWorkshopAddinStarter);
+
+        // Arranging the command within the toolbar
+        SetAccessCommand(pCommandStarter, &quot;CAAPuiPRDWorkshopAddinCmd1&quot;);
+        SetAccessChild(pToolbarContainer, pCommandStarter);
+
+        int visibleFlag = 1;
+        AddToolbarView (pToolbarContainer, visibleFlag, Top);
+
+        CAAPuiPRDWorkshopAddinTRACE(&quot;&lt;&lt; CAAPuiPRDWorkshopAddin::CreateToolbars()&quot;);
+        return pToolbarContainer;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The purpose of the <tt>CreateCommands</tt> method is to create all the command 
+headers of our toolbar. Our command header class <tt>CAAPuiPRDWorkshopAddinHeader</tt>, 
+is defined by way of the <tt>MacDeclareHeader</tt> macro. </p>
+<p>Here a command named <tt>CAAPuiPRDWorkshopAddinCmd1</tt> is created. It is located 
+in the <tt>CAAPuiPRDWorkshopAddin</tt> shared library and its class is <tt>CAAPuiPRDWorkshopAddinCmd</tt>. 
+The ShowProduct identifier will be used to locate resources related to this command.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+
+#include &quot;CATCommandHeader.h&quot;
+MacDeclareHeader(CAAPuiPRDWorkshopAddinHeader);
+
+...
+
+void CAAPuiPRDWorkshopAddin::CreateCommands ()<a name="CreateCommands"></a>
+{
+        CAAPuiPRDWorkshopAddinTRACE(&quot;&gt;&gt; CAAPuiPRDWorkshopAddin::CreateCommands()&quot;);
+
+        // Instantiates the command header for the command
+        new CAAPuiPRDWorkshopAddinHeader
+                (&quot;CAAPuiPRDWorkshopAddinCmd1&quot;, // command name
+                 &quot;CAAPuiPRDWorkshopAddin&quot;,     // lib name
+                 &quot;CAAPuiPRDWorkshopAddinCmd&quot;,  // class name
+                 (void*) NULL);
+
+        CAAPuiPRDWorkshopAddinTRACE(&quot;&lt;&lt; CAAPuiPRDWorkshopAddin::CreateCommands()&quot;);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Command Implementation">Command Implementation</a></h4>
+<p>The command that gets executed must be of a class named <tt>CAAPuiPRDWorkshopAddinCmd</tt> 
+as specified by <a href="#CreateCommands"><tt>CAAPuiPRDWorkshopAddin::CreateCommands</tt></a>. 
+This class must also derives from the <tt>CATCommand</tt> class. The only method 
+we need to override is the <tt>Activate</tt> method.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+class CAAPuiPRDWorkshopAddinCmd: public CATCommand {
+
+public:
+
+        CAAPuiPRDWorkshopAddinCmd();
+        virtual ~CAAPuiPRDWorkshopAddinCmd();
+
+        /**
+         * Activates our command.
+         * @param iFromClient 
+         * The command that requests to activate the current one.
+         * @param iEvtDat
+         * The notification sent.
+         */
+        virtual CATStatusChangeRC Activate(CATCommand * iFromClient,
+                                           CATNotification * iEvtDat);
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>In the <tt>Activate</tt> method, we just get the current window and display its 
+title in a dialog box</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>...
+CATStatusChangeRC CAAPuiPRDWorkshopAddinCmd::Activate(CATCommand *iFromClient, 
+                                                      CATNotification *iEvtDat)
+{
+        CAAPuiPRDWorkshopAddinTRACE (&quot;&gt;&gt; CAAPuiPRDWorkshopAddinCmd::Activate&quot;);
+
+        CATApplicationFrame *pApplication = CATApplicationFrame::GetFrame(); 
+        if (NULL != pApplication) { 
+                CATDlgWindow * pMainWindow = pApplication-&gt;GetMainWindow();
+                CATDlgNotify *pNotifyDlg = new CATDlgNotify
+                        (pMainWindow, &quot;CAAPuiPRDWorkshopAddin&quot;, CATDlgNfyOK);
+                if (NULL != pNotifyDlg) {
+                        pNotifyDlg-&gt;DisplayBlocked
+                                (&quot;Hello World!&quot;,
+                                 &quot;CAAPuiPRDWorkshopAddin UseCase&quot;);
+                        pNotifyDlg-&gt;RequestDelayedDestruction(); 
+                }
+        }
+        RequestDelayedDestruction();
+
+        CAAPuiPRDWorkshopAddinTRACE (&quot;&lt;&lt; CAAPuiPRDWorkshopAddinCmd::Activate&quot;);
+        return CATStatusChangeRCCompleted;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Now that we have completed the code implementation, we need to take 
+care of the user interface with the help of resource files.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="User Interface">User Interface</a></h4>
+<p>There are two visible objects: the toolbar and its command.</p>
+<p>The title of the toolbar named <tt>CAAPuiPRDWorkshopAddinToolbar</tt> is defined 
+by the <tt>CAAPuiPRDWorkshopAddin.CATNls</tt> which can be found in <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+directory.</p>
+<table class="code">
+  <tr>
+    <td>
+    <pre>CAAPuiPRDWorkshopAddinToolbar.Title = &quot;Toolbar 1&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">The resources of the <tt>CAAPuiPRDWorkshopAddinCmd1</tt> are defined 
+by three files:</p>
+<ol>
+  <li>
+    <p align="left"><tt>CAAPuiPRDWorkshopAddinHeader.CATNls</tt> (located in the
+    <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+    directory):</p>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>CAAPuiPRDWorkshopAddinHeader.CAAPuiPRDWorkshopAddinCmd1.Title = &quot;cmd1&quot;;
+CAAPuiPRDWorkshopAddinHeader.CAAPuiPRDWorkshopAddinCmd1.Help = &quot;cmd1 long help text&quot;;
+CAAPuiPRDWorkshopAddinHeader.CAAPuiPRDWorkshopAddinCmd1.ShortHelp = &quot;cmd1 info&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="left"><br>
+    These texts correspond to the screen tip, the documentation line and the command 
+    prompt input:<br>
+    <img border="0" src="images/CAAPuiPRDWorkshopAddin02.jpg" width="557" height="365"><br>
+&nbsp;</p>
+  </li>
+  <li>
+    <p align="left"><tt>CAAPuiPRDWorkshopAddinHeader.CATRsc</tt> (located in the
+    <tt><i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/msgcatalog</tt> 
+    directory) defines the bitmap name for the command icon:</p>
+    <table class="code" style="width: 95%; border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+      <tr>
+        <td>
+        <pre>CAAPuiPRDWorkshopAddinHeader.CAAPuiPRDWorkshopAddinCmd1.Icon.Normal=&quot;CAAPuiPRDWorkshopAddin_I&quot;;</pre>
+        </td>
+      </tr>
+    </table>
+    <p align="left">&nbsp;</p>
+  </li>
+  <li>
+    <p align="left"><tt>CAAPuiPRDWorkshopAddin_I.gif</tt> (located in the <tt>
+    <i>install_root</i>/CAAProductStructureUI.edu/CNext/resources/graphic/icons/normal</tt> 
+    directory) contains the bitmap the command icon:
+    <img border="0" src="images/CAAPuiPRDWorkshopAddin_I.gif" width="22" height="22"></p>
+    <p align="left">&nbsp;</p>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="InShort"><font size="3">In Short</font></a></h3>
+<p>This use case has demonstrated how to create a toolbar with a command:</p>
+<ul>
+  <li>Implement the <i>CATIPRDWorkshopAddin</i> interface to create a toolbar and 
+    layout the commands</li>
+  <li>Derive from CATCommand to implement the command action</li>
+  <li>Define resource files for the user interface</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"><font size="3">References</font></a></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="[1]">[1]</a></td>
+    <td>
+    <a href="../CAADocUseCases/CAADocRunSample.htm">
+    Building and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[2]">[2]</a></td>
+    <td>
+    <a href="../CAAAfrTechArticles/CAAAfrOverview.htm">
+    Application Frame Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[3]">[3]</a></td>
+    <td>
+    <a href="../CAADegTechArticles/CAADegCommandModel.htm">
+    The CAA Command Model</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[4]">[4]</a></td>
+    <td>
+    <a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">
+    Creating an Add-in</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="[5]">[5]</a></td>
+    <td><a href="CAAPuiPrsConfigAddin.htm">Adding a toolbar to the Product Structure 
+    Workshop</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"><font size="3">History</font></a></h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><b>Version: </b><strong>1.1</strong><b> [Aug 2004]</b></td>
+    <td valign="top"><b>Document revised</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Version: </b><strong>1</strong><b> [Oct 2003]</b></td>
+    <td valign="top"><b>Document created</b></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

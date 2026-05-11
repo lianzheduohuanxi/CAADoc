@@ -1,0 +1,2167 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>System Class CATUnicodeString</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../System.htm" href="../System.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "System";	}
+		function getCurrentObjectName() { 
+ 	return "CATUnicodeString"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>System <script type="text/javascript" > writeClassCharacteristic(); </script> CATUnicodeString</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATUnicodeString_15212','CATUnicodeString','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATUnicodeString</b>
+</p>
+<p>
+<b><i>  Class to use for NLS character strings.</i></b><br>
+ 
+ <b>Role</b>:
+ CATUnicodeString (to compare to the <script type="text/javascript"> activateLinkAnchor('CATString','','CATString') </script> class) must  be used whenever a character string is
+ needed, and that is either seen, entered, or manipulated by the 
+ end user. In this way, the client application is shielded from 
+ implementation details regarding language, locale, bytecoding
+ of characters, and so forth. Client applications thus become 
+ portable since they can handle character strings expressed in 
+ any language.
+ <p>
+ When NLS support is not required, you can use instead the
+ 
+<script type="text/javascript"> activateLinkAnchor('CATString','','CATString') </script> class from the System framework. It does support  only ISO 646, so that to supress all the problems that arise 
+ with NLS complexity. You should never use the raw char * type.
+ <p>
+ <b>Note</b>: Among the methods to manipulate instances of this class, you will find below some references to the
+ Unicode standard, to UTF-8, and to UTF-16. Unicode is a standard designed and promoted by the unicode consortium, it
+ encodes characters on two bytes. CATIA NLS strings in internalized data are encoded in Unicode 3.0 (see the code
+ charts at http://www.unicode.org ). UTF-8 is a transformation format used as a file code set, in particular for CATIA
+ persistent data. UTF-16 is used in particular by XML processors, in particular by XML parsers. The ISO 10646 standard
+ is built on the top of unicode, it includes several code sets: Unicode, known here as UCS-2 (for Universal 
+ Multiple-Octet Coded Character Set 2-byte form), UTF-8, UTF-16 and so on ...
+ <p><b>Note</b>: You will find also below some references to the STEP Standard. It is descibed in ISO 10133 .
+ <p><b>Note</b>: You will find also below some references to the SBCS acronym. SBCS is for Single Byte Character
+ Set, and MBCS for Multi Byte Character Set. They both correspond to localized character set (specific to a given
+ country langage, at the opposite of Unicode, which describes several country character sets simutaneously). In
+ internationalization history, SBCS and MBCS are anterior to Unicode. For example, the ISO 8859-1 encoding describes
+ several west european languages. It is a SBCS encoding, meaning that a char* in this encoding had to be interpreted
+ at the byte level (each byte corresponding to one and only one character in the Code Page, which could be described 
+ graphically as a 16 per 16 table, ordered trough the 4 first bits horizontally and its 4 last bits vertical, i.e. 
+ hexa code). The IBM-932 Code Page is an example of MBCS encoding, i.e. a  char * having to be interpreted in this
+ Code Page would have to be read the following way: 
+  . read the first byte, if the dedicated columns (see the
+    hexa code graphic representation mentionned above),
+    i.e. the 8,9,E and F column for IBM-932, are set
+    to zero, the byte will be interpreted alone
+    (latin or single-width katakana)
+  . otherwise, i.e. if one of the 8,9,E and F column is set,
+    the byte, to be interpreted, will have to have the next
+    byte read (consequently, it makes two bytes together). This
+    solutions enables to give access to the several thousands
+    of characters that the IBM-932 describes.
+  . and so on ...
+ <p><b>CAUTION</b>: The methods manipulating char* should rarely be used. They may be used:
+ <ul>
+ <li>combined with the use of Unix MOTIF services</li>
+ <li>to display debug traces on the stdout</li>
+ </ul>
+ <p>
+ The best way to manipulate strings is to use the Unicode encoding, the char* has many limitations.
+ <br>Suppose, for example, you call the CATUnicodeString constructor from a "const char*" on Windows, and, during
+ execution, the given char* contains one byte, B1 in hexa, followed by the NULL byte which ends the string. Then, the 
+ constructor from a char* will behave the following way:
+ <ul>
+ <li>if the General\"Settings for the current user" field in the "Control Panel"\"Regional Options" window is set to
+ English, the built CATUnicodeString will contain the "PLUS-MINUS SIGN" character</li>
+ <li>if it set on Japanese, the built CATUnicodeString will contain the "HALFWIDTH KATAKANA LETTER A" character</li>
+ <li>if it set on Korean, the built CATUnicodeString will have the following behavior:
+ <ul>
+ <li>a call to 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','ConvertToUCChar','CATUnicodeString.ConvertToUCChar') </script> onto the CATUnicodeString will give one CATUC2Bytes containing the 003F character  ("QUESTION MARK", which is the default character)</li>
+ <li>a call to 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','ConvertToChar','CATUnicodeString.ConvertToChar') </script> onto the CATUnicodeString will give a char* containing one byte, the B1 byte</li> </ul>
+ Actually, the B1 code belongs to the range of two-bytes code representations</li>
+ </ul>
+ <p><b>CAUTION</b>: This class uses the current locale. If you changed the locale in your applicative code, using
+ the setlocale sytem call for example, you must manage so that, before calling a method of this class, the current
+ locale be the locale which was the current locale when CATIA was run:
+ <ul>
+ <li>a Japanese localized string is in the IBM 932 code page. The characters, in the IBM 932
+ code page, have a code representation on one or two bytes, depending the range of the first character</li>
+ <li>The mblen system call enables, for example when parsing a japanese localized string, to precise if the current
+ string character code representation takes one or two bytes</li>
+ <li>the CATUnicodeString constructor from a const char* calls the mblen system call</li>
+ </ul>
+ Consequently, if your applicative code calls the setlocale method, and you call a CATUnicodeString method without
+ having previously restore the locale to the one which was the current locale when CATIA was run, the
+ CATUnicodeString method will not be able to parse localized strings.
+ <br>More generally, if your applicative code changes the locale, manage so that, before calling any CAA method, the
+ current locale be the locale which was the current locale when CATIA was run.
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATUnicodeString()"><b>CATUnicodeString</b></a>()
+<dd>  Constructs an empty Unicode string.
+ <dt> o 
+    <a href="#CATUnicodeString(char* const)"><b>CATUnicodeString</b></a>(char* const)
+<dd>  Constructs a CATUnicodeString instance from a char *.
+ <dt> o 
+    <a href="#CATUnicodeString(char* const,size_t)"><b>CATUnicodeString</b></a>(char* const,size_t)
+<dd>  Constructs a CATUnicodeString instance from a char * and a 
+ number of characters.
+ <dt> o 
+    <a href="#CATUnicodeString(CATUnicodeString&amp;)"><b>CATUnicodeString</b></a>(CATUnicodeString&amp;)
+<dd>   Copy constructor.
+ <dt> o 
+    <a href="#CATUnicodeString(CATUnicodeString&amp;&amp;)"><b>CATUnicodeString</b></a>(CATUnicodeString&amp;&amp;)
+<dd>  Move constructor.
+ <dt> o 
+    <a href="#CATUnicodeString(CATUnicodeChar&amp;,size_t)"><b>CATUnicodeString</b></a>(CATUnicodeChar&amp;,size_t)
+<dd>  Constructs a CATUnicodeString instance by repeating a given 
+ character.
+ <dt> o 
+    <a href="#CATUnicodeString(CATUnicodeString&amp;,size_t)"><b>CATUnicodeString</b></a>(CATUnicodeString&amp;,size_t)
+<dd>  Constructs a CATUnicodeString instance by repeating a given 
+ character string.
+ <dt> o 
+    <a href="#~CATUnicodeString()"><b>~CATUnicodeString</b></a>()
+<dd> </dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#Append(CATUnicodeString&amp;)"><b>Append</b></a>(CATUnicodeString&amp;)
+<dd>  Concatenates CATUnicodeString instances.
+ <dt> o 
+    <a href="#BuildFromBSTR(CATBSTR&amp;)"><b>BuildFromBSTR</b></a>(CATBSTR&amp;)
+<dd>  Recycles an existing CATUnicodeString instance from a BSTR-encoded character
+ string.
+ <dt> o 
+    <a href="#BuildFromNum(int,char*)"><b>BuildFromNum</b></a>(int,char*)
+<dd>  Converts, formats and stores a specified integer, under control of the format parameter, into the current string.
+ <dt> o 
+    <a href="#BuildFromNum(long,char*)"><b>BuildFromNum</b></a>(long,char*)
+<dd>  Converts, formats and stores a specified long integer, under control of the format parameter, into the current
+ string.
+ <dt> o 
+    <a href="#BuildFromNum(double,char*)"><b>BuildFromNum</b></a>(double,char*)
+<dd>  Converts, formats and stores a specified double, under control of the format parameter, into the current string.
+ <dt> o 
+    <a href="#BuildFromNum(CATLONG64,char*)"><b>BuildFromNum</b></a>(CATLONG64,char*)
+<dd>  Converts, formats and stores a specified 64-bit signed long integer,
+ under control of the format parameter, into the current string.
+ <dt> o 
+    <a href="#BuildFromNum(CATULONG64,char*)"><b>BuildFromNum</b></a>(CATULONG64,char*)
+<dd>  Converts, formats and stores a specified 64-bit unsigned long integer,
+ under control of the format parameter, into the current string.
+ <dt> o 
+    <a href="#BuildFromNum(long double,char*)"><b>BuildFromNum</b></a>(long double,char*)
+<dd>  Converts, formats and stores a specified unsigned long integer, under control of the format parameter, into the
+ current string.
+ <dt> o 
+    <a href="#BuildFromNum(unsigned int,char*)"><b>BuildFromNum</b></a>(unsigned int,char*)
+<dd>  Converts, formats and stores a specified unsigned integer, under control of the format parameter, into the current
+ string.
+ <dt> o 
+    <a href="#BuildFromNum(unsigned long,char*)"><b>BuildFromNum</b></a>(unsigned long,char*)
+<dd>  Converts, formats and stores a specified unsigned long integer, under control of the format parameter, into the
+ current string.
+ <dt> o 
+    <a href="#BuildFromSTEP(char*)"><b>BuildFromSTEP</b></a>(char*)
+<dd>  Converts, formats and stores a specified STEP character string,
+ into the current string.
+ <dt> o 
+    <a href="#BuildFromStream(istream&amp;,int)"><b>BuildFromStream</b></a>(istream&amp;,int)
+<dd>  Converts, formats and stores a specified input stream,
+ into the current string.
+ <dt> o 
+    <a href="#BuildFromUCChar(CATUC2Bytes*,int)"><b>BuildFromUCChar</b></a>(CATUC2Bytes*,int)
+<dd>  Converts an array of Unicode characters into the current 
+ string.
+ <dt> o 
+    <a href="#BuildFromUTF16(unsigned short*,size_t)"><b>BuildFromUTF16</b></a>(unsigned short*,size_t)
+<dd>  Converts, formats and stores a specified UTF-16 encoded
+ character string (about UTF-16, see above), into the current 
+ string.
+ <dt> o 
+    <a href="#BuildFromUTF8(char*,size_t)"><b>BuildFromUTF8</b></a>(char*,size_t)
+<dd>  Converts, formats and stores a specified UTF-8 encoded
+ character string (about UTF-8, see above), into the current 
+ string.
+ <dt> o 
+    <a href="#BuildFromWChar(wchar_t*)"><b>BuildFromWChar</b></a>(wchar_t*)
+<dd>  Converts an array of Unicode characters into the current 
+ string.
+ <dt> o 
+    <a href="#BuildFromWChar(unsigned short const*)"><b>BuildFromWChar</b></a>(unsigned short const*)
+<dd>  <dt> o 
+    <a href="#Compare(CATUnicodeString&amp;)"><b>Compare</b></a>(CATUnicodeString&amp;)
+<dd>  Compares CATUnicodeString instances.
+ <dt> o 
+    <a href="#ConvertToBSTR(CATBSTR*)"><b>ConvertToBSTR</b></a>(CATBSTR*)
+<dd>  Convert the current string into a BSTR (OLE basic string).
+ <dt> o 
+    <a href="#ConvertToChar()"><b>ConvertToChar</b></a>()
+<dd>  Converts the string to a char *.
+ <dt> o 
+    <a href="#ConvertToNum(int*,char*)"><b>ConvertToNum</b></a>(int*,char*)
+<dd>  Read character data, supposed to describe an integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(long*,char*)"><b>ConvertToNum</b></a>(long*,char*)
+<dd>  Read character data, supposed to describe a long integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(double*,char*)"><b>ConvertToNum</b></a>(double*,char*)
+<dd>  Read character data, supposed to describe an double in an 
+ alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(CATLONG64*,char*)"><b>ConvertToNum</b></a>(CATLONG64*,char*)
+<dd>  Read character data, supposed to describe a 64-bit long integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(CATULONG64*,char*)"><b>ConvertToNum</b></a>(CATULONG64*,char*)
+<dd>  Read character data, supposed to describe a 64-bit unsigned long 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(long double*,char*)"><b>ConvertToNum</b></a>(long double*,char*)
+<dd>  Read character data, supposed to describe an long double in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output parameter.
+ <dt> o 
+    <a href="#ConvertToNum(unsigned int*,char*)"><b>ConvertToNum</b></a>(unsigned int*,char*)
+<dd>  Read character data, supposed to describe an unsigned 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToNum(unsigned long*,char*)"><b>ConvertToNum</b></a>(unsigned long*,char*)
+<dd>  Read character data, supposed to describe an unsigned long 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <dt> o 
+    <a href="#ConvertToSTEP(char*)"><b>ConvertToSTEP</b></a>(char*)
+<dd>  Convert the current string into a STEP character string.
+ <dt> o 
+    <a href="#ConvertToUTF16(unsigned short*,size_t*)"><b>ConvertToUTF16</b></a>(unsigned short*,size_t*)
+<dd>  Convert the current string into a UTF-16 character string.
+ <dt> o 
+    <a href="#ConvertToUTF8(char*,size_t*)"><b>ConvertToUTF8</b></a>(char*,size_t*)
+<dd>  Convert the current string into a UTF-8 character string.
+ <dt> o 
+    <a href="#ConvertToWChar(wchar_t*)"><b>ConvertToWChar</b></a>(wchar_t*)
+<dd>  Converts the current string to a wchar_t character encoded 
+ string.
+ <dt> o 
+    <a href="#ConvertToWChar(unsigned short*)"><b>ConvertToWChar</b></a>(unsigned short*)
+<dd>  <dt> o 
+    <a href="#GetLengthInByte()"><b>GetLengthInByte</b></a>()
+<dd>   Get the length of the CATUnicodeString, as byte count.
+ <dt> o 
+    <a href="#GetLengthInChar()"><b>GetLengthInChar</b></a>()
+<dd>   Get the length of the CATUnicodeString, as unicode char count.
+ <dt> o 
+    <a href="#Insert(int,CATUnicodeString&amp;)"><b>Insert</b></a>(int,CATUnicodeString&amp;)
+<dd>  Modify the current CATUnicodeString, inserting a given 
+ substring at the middle of it.
+ <dt> o 
+    <a href="#Remove(int,int)"><b>Remove</b></a>(int,int)
+<dd>  Modify the current CATUnicodeString, supressing a given part 
+ of it.
+ <dt> o 
+    <a href="#ReplaceAll(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>ReplaceAll</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Modify the current CATUnicodeString, replacing all the occurences of the specified substring
+ with another substring.
+ <dt> o 
+    <a href="#ReplaceSubString(int,int,CATUnicodeString&amp;)"><b>ReplaceSubString</b></a>(int,int,CATUnicodeString&amp;)
+<dd>  Modify the current CATUnicodeString, supressing a given part of it
+ and putting instead a given replacement substring.
+ <dt> o 
+    <a href="#ReplaceSubString(int,int,CATUnicodeString&amp;,int)"><b>ReplaceSubString</b></a>(int,int,CATUnicodeString&amp;,int)
+<dd>  Modify the current CATUnicodeString, supressing a given part of it
+ and putting instead a given replacement substring.
+ <dt> o 
+    <a href="#ReplaceSubString(CATUnicodeString&amp;,CATUnicodeString&amp;)"><b>ReplaceSubString</b></a>(CATUnicodeString&amp;,CATUnicodeString&amp;)
+<dd>  Replace the first occurence of the given substring by the
+ other given substring.
+ <dt> o 
+    <a href="#Resize(int)"><b>Resize</b></a>(int)
+<dd>  Extends or truncates the current string.
+ <dt> o 
+    <a href="#Resize(int,CATUnicodeChar&amp;)"><b>Resize</b></a>(int,CATUnicodeChar&amp;)
+<dd>  Extends or truncates the current string.
+ <dt> o 
+    <a href="#Resize(int,CATUnicodeChar&amp;,int)"><b>Resize</b></a>(int,CATUnicodeChar&amp;,int)
+<dd>  Extends or truncates the current string.
+ <dt> o 
+    <a href="#SearchSubString(CATUnicodeString&amp;,int,CATUnicodeString::CATSearchMode)"><b>SearchSubString</b></a>(CATUnicodeString&amp;,int,CATUnicodeString::CATSearchMode)
+<dd>  Search the first occurence of the specified substring in the 
+ current string.
+ <dt> o 
+    <a href="#SortCompare(CATUnicodeString&amp;)"><b>SortCompare</b></a>(CATUnicodeString&amp;)
+<dd>  Compares CATUnicodeString instances in a non locale specific way.
+ <dt> o 
+    <a href="#Strip()"><b>Strip</b></a>()
+<dd>   Returns a new stripped CATUnicodeString.
+ <dt> o 
+    <a href="#Strip(CATUnicodeString::CATStripMode)"><b>Strip</b></a>(CATUnicodeString::CATStripMode)
+<dd>   Returns a new stripped CATUnicodeString.
+ <dt> o 
+    <a href="#Strip(CATUnicodeString::CATStripMode,CATUnicodeChar&amp;)"><b>Strip</b></a>(CATUnicodeString::CATStripMode,CATUnicodeChar&amp;)
+<dd>   Returns a new stripped CATUnicodeString.
+ <dt> o 
+    <a href="#SubString(int,int)"><b>SubString</b></a>(int,int)
+<dd>  Returns a new string that is a substring of this string.
+ <dt> o 
+    <a href="#ToLower()"><b>ToLower</b></a>()
+<dd>  Converts all of the upper characters in this String to lower 
+ case.
+ <dt> o 
+    <a href="#ToUpper()"><b>ToUpper</b></a>()
+<dd>  Converts all of the lower characters in this String to upper 
+ case.
+ <dt> o 
+    <a href="#operator !=(CATUnicodeString&amp;)"><b>operator !=</b></a>(CATUnicodeString&amp;)
+<dd>  Inequality operator.
+ <dt> o 
+    <a href="#operator &gt;(CATUnicodeString&amp;)"><b>operator &gt;</b></a>(CATUnicodeString&amp;)
+<dd>  Greater-than operator.
+ <dt> o 
+    <a href="#operator &gt;=(CATUnicodeString&amp;)"><b>operator &gt;=</b></a>(CATUnicodeString&amp;)
+<dd>  Greater-than or equal operator.
+ <dt> o 
+    <a href="#operator &lt;(CATUnicodeString&amp;)"><b>operator &lt;</b></a>(CATUnicodeString&amp;)
+<dd>  Less-than operator.
+ <dt> o 
+    <a href="#operator &lt;=(CATUnicodeString&amp;)"><b>operator &lt;=</b></a>(CATUnicodeString&amp;)
+<dd>  Less-than or equal operator.
+ <dt> o 
+    <a href="#operator +(char*)"><b>operator +</b></a>(char*)
+<dd>  String concatenation operator.
+ <dt> o 
+    <a href="#operator +=(CATUnicodeChar&amp;)"><b>operator +=</b></a>(CATUnicodeChar&amp;)
+<dd>  Character concatenation assignment operator.
+ <dt> o 
+    <a href="#operator =(char*)"><b>operator =</b></a>(char*)
+<dd>  Assignment operator from a char *.
+ <dt> o 
+    <a href="#operator =(CATUnicodeString&amp;)"><b>operator =</b></a>(CATUnicodeString&amp;)
+<dd>  Assignment operator from a CATUnicodeString instance.
+ <dt> o 
+    <a href="#operator ==(CATUnicodeString&amp;)"><b>operator ==</b></a>(CATUnicodeString&amp;)
+<dd>  Equality operator.
+ <dt> o 
+    <a href="#operator const CATUC2Bytes *()"><b>operator const CATUC2Bytes *</b></a>()
+<dd>  Converts the current string to a CATUC2Bytes character encoded 
+ string.
+ <dt> o 
+    <a href="#operator=(CATUnicodeString&amp;&amp;)"><b>operator=</b></a>(CATUnicodeString&amp;&amp;)
+<dd>  Move assignment operator.
+ <dt> o 
+    <a href="#operator[](size_t)"><b>operator[]</b></a>(size_t)
+<dd>  Returns the character at the specified index.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATSearchMode"><b>CATSearchMode</b></a>
+<dd>   Search mode.
+ <dt> o 
+    <a href="#CATStripMode"><b>CATStripMode</b></a>
+<dd>   Strip mode.
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString()"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an empty Unicode string.
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(char* const)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td> const <script type="text/javascript"> activateLink('char*','char* const')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATUnicodeString instance from a char *.
+ <br><b>CAUTION</b>: The best way to manipulate strings is to use the Unicode encoding. The use of
+ 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUCChar','BuildFromUCChar') </script> is better than the use of the current constructor. In fact, CATIA uses this method for the rare conversions from the thread code page to Unicode, i.e. :
+ <ul>
+ <li>parsing of message catalog strings</li>
+ <li>interactive input of strings on Unix</li>
+ <li>reading strings in databases</li>
+ </ul>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The pointer to the character string</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(char* const,size_t)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td> const <script type="text/javascript"> activateLink('char*','char* const')</script> <td><tt>iString</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iLength</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATUnicodeString instance from a char * and a 
+ number of characters.
+ <br><b>CAUTION</b>: The best way to manipulate strings is to use the Unicode encoding. The use of
+ 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUCChar','BuildFromUCChar') </script> is better than the use of the current constructor. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The pointer to the character string
+ </dd>
+    <dt><tt> iLength</tt>
+   <dd>   The number of characters to be taken into account, starting at 
+   the first character.
+   <b>Legal values</b>: Must be less than or equal to the total 
+   number of characters contained in <tt>iString</tt></dd>
+</dl>
+</dl>
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(CATUnicodeString&amp;)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+  Copy constructor. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>    The Unicode string to copy</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(CATUnicodeString&amp;&amp;)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('inline','inline')</script>  <b>CATUnicodeString</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;&amp;')</script> <td><tt>iRValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Move constructor.
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(CATUnicodeChar&amp;,size_t)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar&amp;')</script> <td><tt>iChar</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iRepeatCount</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATUnicodeString instance by repeating a given 
+ character.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iChar</tt>
+   <dd>   The character to be repeated
+ </dd>
+    <dt><tt> iRepeatCount</tt>
+   <dd>   The number of times <tt>iChar</tt> is to be repeated</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATUnicodeString"></a><a name="CATUnicodeString(CATUnicodeString&amp;,size_t)"></a> <dt> o <b>CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATUnicodeString</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iRepeatCount</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs a CATUnicodeString instance by repeating a given 
+ character string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The character string to be repeated
+ </dd>
+    <dt><tt> iRepeatCount</tt>
+   <dd>   The number of times <tt>iString</tt> is to be repeated</dd>
+</dl>
+</dl>
+</dl>
+<a name="~CATUnicodeString"></a><a name="~CATUnicodeString()"></a> <dt> o <b>~CATUnicodeString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>~CATUnicodeString</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="Append"></a><a name="Append(CATUnicodeString&amp;)"></a> <dt> o <b>Append</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&')</script>  <b>Append</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Concatenates CATUnicodeString instances.
+ The string passed as a parameter is appended to the current string.
+ For example:
+ <pre>
+ CATUnicodeString Hello("Hello");
+ CATUnicodeString Goodbye("Goodbye");
+ Hello.Append(Goodbye);      // Hello now contains "HelloGoodbye"
+ </pre>
+</dl>
+<a name="BuildFromBSTR"></a><a name="BuildFromBSTR(CATBSTR&amp;)"></a> <dt> o <b>BuildFromBSTR</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromBSTR</b>(<td> const <script type="text/javascript"> activateLink('CATBSTR','CATBSTR&amp;')</script> <td><tt>iBSTR</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Recycles an existing CATUnicodeString instance from a BSTR-encoded character
+ string.
+ A BSTR is a Basic string, or binary string, ie a pointer to a wide
+ character string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iBSTR</tt>
+   <dd>   The pointer to the BSTR-wide character string
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion 
+   succeeded, or <tt>negative value</tt> if the conversion did 
+   not succeed.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(int,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%d"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified integer, under control of the format parameter, into the current string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIntegerValue</tt>
+   <dd>   The integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%d", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(long,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('long','long')</script> <td><tt>iLongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%d"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified long integer, under control of the format parameter, into the current
+ string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLongIntegerValue</tt>
+   <dd>   The long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the long integer value, defaulted to "%d", according to the
+   sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(double,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iDoubleValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%g"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified double, under control of the format parameter, into the current string.
+ <br><b>CAUTION</b>: Regarding the decimal symbol, i.e. the character separing the integer whole number portion from
+ its decimal portion, this service consider that it is the one corresponding to the locale. For example, on Windows,
+ if the value for the Numbers\"Decimal symbol" field of the "Control Panel"\"Regional Options" window is equal to
+ the following string:
+ <pre>
+   {
+ </pre>
+ then, a 1.1 number given to this service will create the following 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','','CATUnicodeString') </script> : <pre>
+   1{1
+ </pre>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iDoubleValue</tt>
+   <dd>   The double value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the double value, defaulted to "%g", according 
+   to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(CATLONG64,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('CATLONG64','CATLONG64')</script> <td><tt>iIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>=FMTLONGI64"d"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified 64-bit signed long integer,
+ under control of the format parameter, into the current string.
+ Defined on 64-bits platforms only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLong64Value</tt>
+   <dd>   The 64-bit long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the 64-bit long integer value, defaulted
+   to "%I64d" on 64-bit Windows, 
+   according to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(CATULONG64,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('CATULONG64','CATULONG64')</script> <td><tt>iUnsIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>=FMTLONGI64"u"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified 64-bit unsigned long integer,
+ under control of the format parameter, into the current string.
+ Defined on 64-bits platforms only.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLong64UnsignedValue</tt>
+   <dd>   The 64-bit unsigned long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the 64-bit unsigned long integer value, defaulted  
+   to "%I64u" on 64-bit Windows,
+   according to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(long double,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('long double','long double')</script> <td><tt>iLongDoubleValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%Lg"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified unsigned long integer, under control of the format parameter, into the
+ current string.
+ <br><b>CAUTION</b>: Regarding the decimal symbol, i.e. the character separing the integer whole number portion from
+ its decimal portion, this service consider that it is the one corresponding to the locale, See 
+ 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','BuildFromNum','CATUnicodeString.BuildFromNum') </script> , overloading version with a double. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLongDoubleValue</tt>
+   <dd>   The long double value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the long double value, defaulted to "%Lg", 
+   according to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(unsigned int,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('unsigned int','unsigned int')</script> <td><tt>iIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%u"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified unsigned integer, under control of the format parameter, into the current
+ string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUnsignedIntegerValue</tt>
+   <dd>   The unsigned integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the unsigned integer value, defaulted to "%d", according 
+   to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromNum"></a><a name="BuildFromNum(unsigned long,char*)"></a> <dt> o <b>BuildFromNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromNum</b>(<td><script type="text/javascript"> activateLink('unsigned long','unsigned long')</script> <td><tt>iUnsLongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%u"</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified unsigned long integer, under control of the format parameter, into the
+ current string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUnsLongIntegerValue</tt>
+   <dd>   The unsigned long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the unsigned long integer value, defaulted to 
+   "%u", according to the sprintf library function base 
+   conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Output string length
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>Other</tt> if the conversion did succeed,
+   in which case the value will be the byte count of the
+   char * equivalent to the result string.
+</dl>
+</dl>
+<a name="BuildFromSTEP"></a><a name="BuildFromSTEP(char*)"></a> <dt> o <b>BuildFromSTEP</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromSTEP</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iStepString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified STEP character string,
+ into the current string.
+ <p>
+ Refer to part 21 of STEP for details about string encoding.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iStepString</tt>
+   <dd>   The pointer to the Step-encoded character string
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion 
+   succeeded, or <tt>-1</tt> if the conversion did not succeed.
+</dl>
+</dl>
+<a name="BuildFromStream"></a><a name="BuildFromStream(istream&amp;,int)"></a> <dt> o <b>BuildFromStream</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('istream','istream&')</script>  <b>BuildFromStream</b>(<td><script type="text/javascript"> activateLink('istream','istream&amp;')</script> <td><tt>iInputStream</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSkipWhite</tt><td><tt>= 1</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified input stream,
+ into the current string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInputStream</tt>
+   <dd>   The input stream
+ </dd>
+    <dt><tt> iSkipWhite</tt>
+   <dd>   The flag to indicate whether white lines must be skipped (!=0) or not (=0)
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The input stream.
+</dl>
+</dl>
+<a name="BuildFromUCChar"></a><a name="BuildFromUCChar(CATUC2Bytes*,int)"></a> <dt> o <b>BuildFromUCChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromUCChar</b>(<td> const <script type="text/javascript"> activateLink('CATUC2Bytes','CATUC2Bytes*')</script> <td><tt>iUnicodeString</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iStringLength</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts an array of Unicode characters into the current 
+ string. 
+ <p>About the Unicode standard, see above.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUnicodeString</tt>
+   <dd>   The table of Unicode characters
+ </dd>
+    <dt><tt> iStringLength</tt>
+   <dd>   The string length in unicode characters count
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>1</tt> if the string has been
+   successfully converted, or <tt>-1</tt> if a problem 
+   occured during the conversion.
+</dl>
+</dl>
+<a name="BuildFromUTF16"></a><a name="BuildFromUTF16(unsigned short*,size_t)"></a> <dt> o <b>BuildFromUTF16</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromUTF16</b>(<td> const <script type="text/javascript"> activateLink('unsigned short','unsigned short*')</script> <td><tt>iUTF16Data</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iUnsignedShortCount</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified UTF-16 encoded
+ character string (about UTF-16, see above), into the current 
+ string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUTF16Data</tt>
+   <dd>   The pointer to the UTF-16 encoded character string
+ </dd>
+    <dt><tt> iUnsignedShortCount</tt>
+   <dd>   The length of <tt>iUTF16Data</tt> in byte pairs count
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>1</tt> if the conversion 
+   succeeded, or <tt>negative value</tt> if the conversion did 
+   not succeed.
+</dl>
+</dl>
+<a name="BuildFromUTF8"></a><a name="BuildFromUTF8(char*,size_t)"></a> <dt> o <b>BuildFromUTF8</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromUTF8</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iUTF8Data</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iByteCount</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts, formats and stores a specified UTF-8 encoded
+ character string (about UTF-8, see above), into the current 
+ string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUTF8Data</tt>
+   <dd>   The pointer to the UTF-8 encoded character string
+ </dd>
+    <dt><tt> iByteCount</tt>
+   <dd>   The length of <tt>iUTF8Data</tt> in bytes
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion 
+   succeeded, or <tt>negative value</tt> if the conversion did 
+   not succeed.
+</dl>
+</dl>
+<a name="BuildFromWChar"></a><a name="BuildFromWChar(wchar_t*)"></a> <dt> o <b>BuildFromWChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromWChar</b>(<td> const <script type="text/javascript"> activateLink('wchar_t','wchar_t*')</script> <td><tt>iUnicodeString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts an array of Unicode characters into the current 
+ string. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUnicodeString</tt>
+   <dd>   The table of Unicode characters
+ </dd>
+    <dt><tt> iNbChar</tt>
+   <dd>   The number of Unicode characters in the table
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  
+  <dt> <b>Returns:</b> 
+  <dd>    Integer specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the string has been
+   successfully converted and its length equals to zero,
+   <tt>1</tt> if the string has been successfully converted
+   and its length does not equal to zero, or <tt>-1</tt> 
+   if a problem occured during the conversion.
+</dl>
+</dl>
+<a name="BuildFromWChar"></a><a name="BuildFromWChar(unsigned short const*)"></a> <dt> o <b>BuildFromWChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>BuildFromWChar</b>(<td><script type="text/javascript"> activateLink('unsigned short const','unsigned short const*')</script> <td><tt>iUnicodeString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="Compare"></a><a name="Compare(CATUnicodeString&amp;)"></a> <dt> o <b>Compare</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>Compare</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Compares CATUnicodeString instances.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    2 if the strings are identical, 1 if only case differences are
+   found (<tt>"Hello" == "hello"</tt>), and 0 otherwise.
+</dl>
+</dl>
+<a name="ConvertToBSTR"></a><a name="ConvertToBSTR(CATBSTR*)"></a> <dt> o <b>ConvertToBSTR</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToBSTR</b>(<td><script type="text/javascript"> activateLink('CATBSTR','CATBSTR*')</script> <td><tt>oBSTR</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Convert the current string into a BSTR (OLE basic string).
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oBSTR</tt>
+   <dd>   The resulting BSTR string</dd>
+</dl>
+</dl>
+</dl>
+<a name="ConvertToChar"></a><a name="ConvertToChar()"></a> <dt> o <b>ConvertToChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('char','const char*')</script>  <b>ConvertToChar</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts the string to a char *.</br>
+ <b>Role</b>: Converts the current string to a char* in the thread locale code page. The use of this service
+ corresponds to strings for which all characters belong to the character set of the thread locale code page.
+ <p><b>Note</b>: The length of the returned string is given by 
+<script type="text/javascript"> activateLinkAnchor('','GetLengthInByte','GetLengthInByte') </script>. If the string has been created using 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUCChar','BuildFromUCChar') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromWChar','BuildFromWChar') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUTF8','BuildFromUTF8') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromSTEP','BuildFromSTEP') </script> , 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUTF16','BuildFromUTF16') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromBSTR','BuildFromBSTR') </script> , and a character of the string does not exist in the thread locale code page, the character will be replaced, in the returned C string, by the following
+ coded representation:
+ <pre>
+ +-------------------------+------------+------------+------------+------------+
+ ! thread locale code page !  Windows   !     AIX    !    HP-UX   !    SunOS   !
+ +-------------------------+------------+------------+------------+------------+
+ +-------------------------+------------+------------+------------+------------+
+ !        ISO 8859-1       !     3F     !     1A     !     1A     !     3F     !
+ +-------------------------+------------+------------+------------+------------+
+ !        ISO 8859-2       !     3F     !     1A     !     1A     !     3F     !
+ +-------------------------+------------+------------+------------+------------+
+ !        ISO 8859-5       !     3F     !     1A     !     1A     !     3F     !
+ +-------------------------+------------+------------+------------+------------+
+ !        IBM 943          !     3F     ! 7F or FCFC !     FCFC   !     3F     !
+ +-------------------------+------------+------------+------------+------------+
+ !        EUC KR           !     3F     ! 1A or AFFE !     FFFF   !    3F3F    !
+ +-------------------------+------------+------------+------------+------------+
+ !        EUC TW           !     3F     ! 1A or FDFE !     FEFE   !    3F3F    !
+ +-------------------------+------------+------------+------------+------------+
+ !        EUC CN           !     3F     ! 1A or A1A1 !     FFFF   !    3F3F    !
+ +-------------------------+------------+------------+------------+------------+
+ </pre>
+ <br><b>CAUTION</b>: The best way to manipulate strings is to use the Unicode encoding. The use of the following method: 
+ <pre>  operator const CATUC2Bytes*() const;</pre> is better than the use of the current operator. In fact, CATIA
+ uses the current method for the rare conversions from Unicode to the thread code page, i.e. :
+ <ul>
+ <li>the display of message strings in dialog windows on Unix</li>
+ <li>the edition of strings on Unix</li>
+ <li>output traces</li>
+ <li>storing strings in databases</li>
+ </ul>
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The char*
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(int*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('int','int*')</script> <td><tt>oIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%d"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe an integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oIntegerValue</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%d", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(long*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('long','long*')</script> <td><tt>olongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%d"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe a long integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> olongIntegerValue</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%d", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(double*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('double','double*')</script> <td><tt>oDouble</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%le"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe an double in an 
+ alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ <br><b>CAUTION</b>: Regarding the decimal symbol, i.e. the character separing the integer whole number portion from
+ its decimal portion, this service consider that it is the one corresponding to the locale. For example, on Windows,
+ if the value for the Numbers\"Decimal symbol" field of the "Control Panel"\"Regional Options" window is equal to
+ the following string:
+ <pre>
+   {
+ </pre>
+ then, so that the current method give the correct value, a 1.1 number must be stored the following way in the
+ instance:
+ <pre>
+   1{1
+ </pre>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oDouble</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%le", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(CATLONG64*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('CATLONG64','CATLONG64*')</script> <td><tt>olongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>=FMTLONGI64"d"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe a 64-bit long integer
+ in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> olongIntegerValue</tt>
+   <dd>   The resulting 64-bit long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%I64d" on 64-bit Windows, 
+   according to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(CATULONG64*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('CATULONG64','CATULONG64*')</script> <td><tt>oUnslongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>=FMTLONGI64"u"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe a 64-bit unsigned long 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oUnslongIntegerValue</tt>
+   <dd>   The resulting 64-bit unsigned long integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%I64u" on 64-bit Windows
+   according to the sprintf library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(long double*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('long double','long double*')</script> <td><tt>oLongDouble</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%le"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe an long double in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output parameter.
+ <br><b>CAUTION</b>: Regarding the decimal symbol, i.e. the character separing the integer whole number portion from
+ its decimal portion, this service consider that it is the one corresponding to the locale, See 
+ 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','ConvertToNum','CATUnicodeString.ConvertToNum') </script> , overloading version with a double. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLongDouble</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%le", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(unsigned int*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('unsigned int','unsigned int*')</script> <td><tt>oUnsIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%u"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe an unsigned 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oUnsIntegerValue</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%u", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToNum"></a><a name="ConvertToNum(unsigned long*,char*)"></a> <dt> o <b>ConvertToNum</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ConvertToNum</b>(<td><script type="text/javascript"> activateLink('unsigned long','unsigned long*')</script> <td><tt>oUnslongIntegerValue</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iCFormat</tt><td><tt>="%u"</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Read character data, supposed to describe an unsigned long 
+ integer in an alphanumerical form, interpret it according to
+ a format, and store the converted result into the output 
+ parameter.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oUnslongIntegerValue</tt>
+   <dd>   The resulting integer value
+ </dd>
+    <dt><tt> iCFormat</tt>
+   <dd>   The format of the integer value, defaulted to "%u", according to the sprintf
+   library function base conversions
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    Boolean specifying the success or not of the action
+   <br><b>Legal values</b>: <tt>0</tt> if the conversion didn't
+   succeed, or <tt>1</tt> if the conversion did succeed.
+</dl>
+</dl>
+<a name="ConvertToSTEP"></a><a name="ConvertToSTEP(char*)"></a> <dt> o <b>ConvertToSTEP</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToSTEP</b>(<td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>oStepString</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Convert the current string into a STEP character string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oStepString</tt>
+   <dd>   The resulting STEP string</dd>
+</dl>
+</dl>
+</dl>
+<a name="ConvertToUTF16"></a><a name="ConvertToUTF16(unsigned short*,size_t*)"></a> <dt> o <b>ConvertToUTF16</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToUTF16</b>(<td><script type="text/javascript"> activateLink('unsigned short','unsigned short*')</script> <td><tt>oUTF16String</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t*')</script> <td><tt>oUnsignedShortCount</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Convert the current string into a UTF-16 character string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oUTF16Data</tt>
+   <dd>   The resulting UTF-16 string
+   It should be allocated as a table of 
+   4*(this->GetLengthInChar()) bytes
+ </dd>
+    <dt><tt> oUnsignedShortCount</tt>
+   <dd>   String length in unsigned short count</dd>
+</dl>
+</dl>
+</dl>
+<a name="ConvertToUTF8"></a><a name="ConvertToUTF8(char*,size_t*)"></a> <dt> o <b>ConvertToUTF8</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToUTF8</b>(<td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>oUTF8String</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('size_t','size_t*')</script> <td><tt>oByteCount</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Convert the current string into a UTF-8 character string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oUTF8String</tt>
+   <dd>   The resulting UTF-8 string
+   It should be allocated as a table of 
+   4*(this->GetLengthInChar()) elements
+ </dd>
+    <dt><tt> oByteCount</tt>
+   <dd>   String length in byte count</dd>
+</dl>
+</dl>
+</dl>
+<a name="ConvertToWChar"></a><a name="ConvertToWChar(wchar_t*)"></a> <dt> o <b>ConvertToWChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToWChar</b>(<td><script type="text/javascript"> activateLink('wchar_t','wchar_t*')</script> <td><tt>oString</tt>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts the current string to a wchar_t character encoded 
+ string.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The resulting wchar_t string
+</dl>
+</dl>
+<a name="ConvertToWChar"></a><a name="ConvertToWChar(unsigned short*)"></a> <dt> o <b>ConvertToWChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ConvertToWChar</b>(<td><script type="text/javascript"> activateLink('unsigned short','unsigned short*')</script> <td><tt>oString</tt>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+</dl>
+<a name="GetLengthInByte"></a><a name="GetLengthInByte()"></a> <dt> o <b>GetLengthInByte</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetLengthInByte</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+  Get the length of the CATUnicodeString, as byte count.
+ <b>Role</b>: Get the length as byte count.
+ This method returns the length of the string returned by 
+<script type="text/javascript"> activateLinkAnchor('','ConvertToChar','ConvertToChar') </script>. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Byte count.
+</dl>
+</dl>
+<a name="GetLengthInChar"></a><a name="GetLengthInChar()"></a> <dt> o <b>GetLengthInChar</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>GetLengthInChar</b>(<td>)<script type="text/javascript"> activateLink('const','const')</script>  </table></dt>
+<dl>
+  <dd>
+  Get the length of the CATUnicodeString, as unicode char count.
+ <b>Role</b>: Get the length as unicode char count.
+ This method returns the length of the string returned by 
+<script type="text/javascript"> activateLinkAnchor('','ConvertToUCChar','ConvertToUCChar') </script>. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Character count.
+</dl>
+</dl>
+<a name="Insert"></a><a name="Insert(int,CATUnicodeString&amp;)"></a> <dt> o <b>Insert</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>Insert</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iInsertionStartingPosition</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStringToInsert</tt>)<script type="text/javascript"> activateLink('',' ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modify the current CATUnicodeString, inserting a given 
+ substring at the middle of it.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iInsertionStartingPosition</tt>
+   <dd>   The insertion starting position
+ </dd>
+    <dt><tt> iStringToInsert</tt>
+   <dd>   The string to insert into the current CATString</dd>
+</dl>
+</dl>
+</dl>
+<a name="Remove"></a><a name="Remove(int,int)"></a> <dt> o <b>Remove</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>Remove</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationStartingPosition</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationCharCount</tt><td><tt>=1</tt>)<script type="text/javascript"> activateLink('',' ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modify the current CATUnicodeString, supressing a given part 
+ of it.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iModificationStartingPosition</tt>
+   <dd>   The modification starting position
+ </dd>
+    <dt><tt> iModificationCharCount</tt>
+   <dd>   The modification char count</dd>
+</dl>
+</dl>
+</dl>
+<a name="ReplaceAll"></a><a name="ReplaceAll(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>ReplaceAll</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ReplaceAll</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iToReplace</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iReplacement</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Modify the current CATUnicodeString, replacing all the occurences of the specified substring
+ with another substring.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iToReplace</tt>
+   <dd> The substring to replace
+ </dd>
+    <dt><tt> iReplacement</tt>
+   <dd> The replacement substring</dd>
+</dl>
+</dl>
+</dl>
+<a name="ReplaceSubString"></a><a name="ReplaceSubString(int,int,CATUnicodeString&amp;)"></a> <dt> o <b>ReplaceSubString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ReplaceSubString</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationStartingPosition</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationCharCount</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iReplacementString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Modify the current CATUnicodeString, supressing a given part of it
+ and putting instead a given replacement substring.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iModificationStartingPosition</tt>
+   <dd>   The modification starting position
+ </dd>
+    <dt><tt> iModificationCharCount</tt>
+   <dd>   The modification char count
+ </dd>
+    <dt><tt> iReplacementString</tt>
+   <dd>   The replacement string</dd>
+</dl>
+</dl>
+</dl>
+<a name="ReplaceSubString"></a><a name="ReplaceSubString(int,int,CATUnicodeString&amp;,int)"></a> <dt> o <b>ReplaceSubString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ReplaceSubString</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationStartingPosition</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iModificationCharCount</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iReplacementString</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iReplacementStringParametering</tt>)<script type="text/javascript"> activateLink('',' ')</script>  </table></dt>
+<dl>
+  <dd>
+ Modify the current CATUnicodeString, supressing a given part of it
+ and putting instead a given replacement substring.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iModificationStartingPosition</tt>
+   <dd>   The modification starting position
+ </dd>
+    <dt><tt> iModificationCharCount</tt>
+   <dd>   The modification char count
+ </dd>
+    <dt><tt> iReplacementString</tt>
+   <dd>   The replacement string
+ </dd>
+    <dt><tt> iReplacementStringParametering</tt>
+   <dd>   The replacement string parametering.
+   Enables to specify not to take the replacement string as is, 
+   but transformed first by a resizing action. 
+   This tuning specification is the character count of the
+   real CATUnicodeString that will be used for the substitution, 
+   i.e. the CATUnicodeString resized through the space filling
+   character.</dd>
+</dl>
+</dl>
+</dl>
+<a name="ReplaceSubString"></a><a name="ReplaceSubString(CATUnicodeString&amp;,CATUnicodeString&amp;)"></a> <dt> o <b>ReplaceSubString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>ReplaceSubString</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLookedForString</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iSubstitutionString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Replace the first occurence of the given substring by the
+ other given substring.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLookedForString</tt>
+   <dd>   The substring whose first occurence must be replaced
+ </dd>
+    <dt><tt> iSubstitutionString</tt>
+   <dd>   The string to substitute to the previous one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Location of the input substring occurence.
+   <br><b>Legal values</b>: 
+   <tt>-1: Not found</tt> 
+   <tt>Other: Location index, from 0 to the current CATString
+   length minus 1</tt>
+</dl>
+</dl>
+<a name="Resize"></a><a name="Resize(int)"></a> <dt> o <b>Resize</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','inline void')</script>  <b>Resize</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iCharCountToReach</tt>)</table></dt>
+<dl>
+  <dd>
+ Extends or truncates the current string.
+ Same as the preceeding version, except that the filling
+ character is forced to be set to the space character.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCharCountToReach</tt>
+   <dd>   The number of characters to be assigned to the current string</dd>
+</dl>
+</dl>
+</dl>
+<a name="Resize"></a><a name="Resize(int,CATUnicodeChar&amp;)"></a> <dt> o <b>Resize</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','inline void')</script>  <b>Resize</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iCharCountToReach</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar&amp;')</script> <td><tt>iFillingChar</tt>)</table></dt>
+<dl>
+  <dd>
+ Extends or truncates the current string.
+ Same as the preceeding version, except that truncation is
+ forced to be allowed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCharCountToReach</tt>
+   <dd>   The number of characters to be assigned to the current string
+ </dd>
+    <dt><tt> iFillingChar</tt>
+   <dd>   The character that will be added at the end of the
+   current string so that to map the required length</dd>
+</dl>
+</dl>
+</dl>
+<a name="Resize"></a><a name="Resize(int,CATUnicodeChar&amp;,int)"></a> <dt> o <b>Resize</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>Resize</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iCharCountToReach</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar&amp;')</script> <td><tt>iFillingChar</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iTruncationAllowed</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Extends or truncates the current string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iCharCountToReach</tt>
+   <dd>   The number of characters to be assigned to the current string
+ </dd>
+    <dt><tt> iFillingChar</tt>
+   <dd>   The character that will be added at the end of the
+   current string so that to map the required length
+ </dd>
+    <dt><tt> iTruncationAllowed</tt>
+   <dd>   The flag allowing the truncation or refusing it.
+   <br><b>Legal values</b>: <tt>0</tt> to forbid truncation,
+   or <tt>Other</tt> to allow the possible truncation.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SearchSubString"></a><a name="SearchSubString(CATUnicodeString&amp;,int,CATUnicodeString::CATSearchMode)"></a> <dt> o <b>SearchSubString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SearchSubString</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iLookedForSubString</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSearchBeginning</tt><td><tt>= 0</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATUnicodeString::CATSearchMode','CATUnicodeString::CATSearchMode')</script> <td><tt>iSearchMode</tt><td><tt>= CATSearchModeForward</tt>)<script type="text/javascript"> activateLink('const',' const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Search the first occurence of the specified substring in the 
+ current string.
+ <b>Role</b>: Search the first occurence of the specified 
+ substring in the current string, from a specified character 
+ index, the search following the specified direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLookedForSubString</tt>
+   <dd>   The character string to search for
+ </dd>
+    <dt><tt> iSearchBeginning</tt>
+   <dd>   The character index localizing the search beginning
+ </dd>
+    <dt><tt> iSearchMode</tt>
+   <dd>   Direction to which you search the specified substring in the 
+   current string.
+   <br><b>Legal values</b>: <tt>CATSearchModeForward</tt> if, 
+   starting from the specified current string character index,
+   the search will go forward to search the specified substring,
+   or <tt>CATSearchModeBackward</tt> in the other direction.
+   Note that in CATSearchModeBackward mode, the <tt>
+   iSearchBeginning</tt> index corresponds to a count of characters
+   from the end of the string, not the beginning. 
+   <br>For instance:
+ <pre>
+ CATUnicodeString s = "012345678901test6789";
+ s.SearchSubString("test", 4, CATUnicodeString::CATSearchModeBackward)) returns 12
+ </pre>
+ whereas
+ <pre>
+ s.SearchSubString("test", 5, CATUnicodeString::CATSearchModeBackward)) returns -1
+ </pre>
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     Location of the substring.
+   <br><b>Legal values</b>: 
+   <tt>-1: Not found</tt> 
+   <tt>Other: Location index, from 0 to the current CATString
+   length minus 1</tt> 
+
+</dl>
+</dl>
+<a name="SortCompare"></a><a name="SortCompare(CATUnicodeString&amp;)"></a> <dt> o <b>SortCompare</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>SortCompare</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iStringToCompare</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Compares CATUnicodeString instances in a non locale specific way.
+ The SortCompare method differs from the operators > (and <) in that the comparison is 
+ not affected by locale, whereas the manner of operators > (and <) comparisons is determined
+ by the LC_COLLATE category of the current locale. 
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    < 0 if the current string is less than iStringToCompare.
+   0 if the strings are identical.
+   > 0 if the current string is greater than iStringToCompare.
+</dl>
+</dl>
+<a name="Strip"></a><a name="Strip()"></a> <dt> o <b>Strip</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','inline CATUnicodeString')</script>  <b>Strip</b>(<td>)</table></dt>
+<dl>
+  <dd>
+  Returns a new stripped CATUnicodeString.
+ <b>Role</b>: Removes the space character occurences from a 
+ given string using the CATStripModeLeading mode (see above).
+ Note that this method returns a new stripped string but does
+ not modify the current CATUnicodeString.
+</dl>
+<a name="Strip"></a><a name="Strip(CATUnicodeString::CATStripMode)"></a> <dt> o <b>Strip</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','inline CATUnicodeString')</script>  <b>Strip</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString::CATStripMode','CATUnicodeString::CATStripMode')</script> <td><tt>iMode</tt>)</table></dt>
+<dl>
+  <dd>
+  Returns a new stripped CATUnicodeString.
+ <b>Role</b>: Removes the space character occurences from a 
+ given string. Note that this method returns a new stripped string but does
+ not modify the current CATUnicodeString.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>   See above</dd>
+</dl>
+</dl>
+</dl>
+<a name="Strip"></a><a name="Strip(CATUnicodeString::CATStripMode,CATUnicodeChar&amp;)"></a> <dt> o <b>Strip</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>Strip</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString::CATStripMode','CATUnicodeString::CATStripMode')</script> <td><tt>iMode</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar&amp;')</script> <td><tt>iCharacter</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+  Returns a new stripped CATUnicodeString.
+ <b>Role</b>: Removes the specified character occurences from a 
+ given string. Note that this method returns a new stripped string but does
+ not modify the current CATUnicodeString.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd>   Option parameterizing the action.
+   <br><b>Legal values</b>: 
+   <tt>CATStripModeLeading</tt> Removes all the consecutive 
+   occurences of the given character from the beginning of the 
+   given string (of course it supposes that the first character 
+   of the string is the delivered character, if it is not the 
+   case, nothing is done).
+   <tt>CATStripModeTrailing</tt> Removes all the consecutive 
+   occurences of the given character from the end of the string 
+   (the same way, it means that the first character of the 
+   delivered string is really the delivered character).
+   <tt>CATStripModeBoth</tt> Removes all the consecutive 
+   occurences of the given character both from the beginning 
+   of the string and from the end (this option cumulates the 
+   two preceeding options, it does not affects the intermediate 
+   consecutive occurences).
+   <tt>CATStripModeAll</tt> Removes all the occurences of the 
+   given character from the string. 
+ <p>
+ </dd>
+    <dt><tt> iCharacter</tt>
+   <dd>   The specified character whose occurences are to be removed
+   from the current CATUnicodeString.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SubString"></a><a name="SubString(int,int)"></a> <dt> o <b>SubString</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>SubString</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSubStringFirstIndex</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iSubStringCharCount</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns a new string that is a substring of this string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iSubStringFirstIndex</tt>
+   <dd>   The first character to be extracted
+ </dd>
+    <dt><tt> iNbCharsToExtract</tt>
+   <dd>   The number of characters to be extracted</dd>
+</dl>
+</dl>
+</dl>
+<a name="ToLower"></a><a name="ToLower()"></a> <dt> o <b>ToLower</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ToLower</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts all of the upper characters in this String to lower 
+ case.
+</dl>
+<a name="ToUpper"></a><a name="ToUpper()"></a> <dt> o <b>ToUpper</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('void','void')</script>  <b>ToUpper</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts all of the lower characters in this String to upper 
+ case.
+</dl>
+<a name="operator !="></a><a name="operator !=(CATUnicodeString&amp;)"></a> <dt> o <b>operator !=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator !=</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Inequality operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator &gt;"></a><a name="operator &gt;(CATUnicodeString&amp;)"></a> <dt> o <b>operator &gt;</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator &gt;</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Greater-than operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator &gt;="></a><a name="operator &gt;=(CATUnicodeString&amp;)"></a> <dt> o <b>operator &gt;=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator &gt;=</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Greater-than or equal operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator &lt;"></a><a name="operator &lt;(CATUnicodeString&amp;)"></a> <dt> o <b>operator &lt;</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator &lt;</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Less-than operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator &lt;="></a><a name="operator &lt;=(CATUnicodeString&amp;)"></a> <dt> o <b>operator &lt;=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator &lt;=</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Less-than or equal operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator +"></a><a name="operator +(char*)"></a> <dt> o <b>operator +</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString')</script>  <b>operator +</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const',' const ')</script>  </table></dt>
+<dl>
+  <dd>
+ String concatenation operator.
+ <br><b>CAUTION</b>: The best way to manipulate strings is to use the Unicode encoding. The use of the 
+ 
+<script type="text/javascript"> activateLinkAnchor('CATUnicodeString','Append','CATUnicodeString.Append') </script> method (const CATUnicodeString overriding version) is better than the use of the current operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to append to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The class resulting from the concatenation
+</dl>
+</dl>
+<a name="operator +="></a><a name="operator +=(CATUnicodeChar&amp;)"></a> <dt> o <b>operator +=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString &')</script>  <b>operator +=</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar&amp;')</script> <td><tt>iChar</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Character concatenation assignment operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iChar</tt>
+   <dd>   The character to append to the current string
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     The class resulting from the concatenation
+</dl>
+</dl>
+<a name="operator ="></a><a name="operator =(char*)"></a> <dt> o <b>operator =</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString &')</script>  <b>operator =</b>(<td> const <script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Assignment operator from a char *.
+ <br><b>CAUTION</b>: The best way to manipulate strings is to use the Unicode encoding. The use of the 
+ 
+<script type="text/javascript"> activateLinkAnchor('','BuildFromUCChar','BuildFromUCChar') </script> method is better than the use of the current operator. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to be copied
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      The string resulting from the assignment
+</dl>
+</dl>
+<a name="operator ="></a><a name="operator =(CATUnicodeString&amp;)"></a> <dt> o <b>operator =</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString &')</script>  <b>operator =</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Assignment operator from a CATUnicodeString instance.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The provided string
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>      The string resulting from the assignment
+</dl>
+</dl>
+<a name="operator =="></a><a name="operator ==(CATUnicodeString&amp;)"></a> <dt> o <b>operator ==</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('int','int')</script>  <b>operator ==</b>(<td> const <script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;')</script> <td><tt>iString</tt>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Equality operator.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iString</tt>
+   <dd>   The string to compare to the current one
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     boolean
+   <br><b>Legal values</b>: <tt>0: False</tt> 
+   the condition is not fullfilled, or <tt>Other: True</tt> 
+   if the condition is fullfilled.
+</dl>
+</dl>
+<a name="operator const CATUC2Bytes *"></a><a name="operator const CATUC2Bytes *()"></a> <dt> o <b>operator const CATUC2Bytes *</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>operator const CATUC2Bytes *</b>(<td>)<script type="text/javascript"> activateLink('const','const ')</script>  </table></dt>
+<dl>
+  <dd>
+ Converts the current string to a CATUC2Bytes character encoded 
+ string.
+ The length of the returned string is given by 
+<script type="text/javascript"> activateLinkAnchor('','GetLengthInChar','GetLengthInChar') </script>. 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The resulting CATUC2Bytes string
+</dl>
+</dl>
+<a name="operator="></a><a name="operator=(CATUnicodeString&amp;&amp;)"></a> <dt> o <b>operator=</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeString','inline CATUnicodeString &')</script>  <b>operator=</b>(<td><script type="text/javascript"> activateLink('CATUnicodeString','CATUnicodeString&amp;&amp;')</script> <td><tt>iRValue</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Move assignment operator.
+</dl>
+<a name="operator[]"></a><a name="operator[](size_t)"></a> <dt> o <b>operator[]</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('CATUnicodeChar','CATUnicodeChar')</script>  <b>operator[]</b>(<td><script type="text/javascript"> activateLink('size_t','size_t')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('const',' const')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the character at the specified index.
+ An index ranges from 0 to the string length - 1. 
+ Bound checks are performed.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iIndex</tt>
+   <dd>   The index of the character to extract</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATSearchMode"> <dt> o <b>CATSearchMode</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATSearchMode</b> {
+  CATSearchModeForward,
+  CATSearchModeBackward
+}
+</pre>
+  Search mode.
+ <b>Role</b>: The search mode is the direction to which
+ you search the specified substring in the current string.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> CATSearchModeForward</tt>
+   <dd>   Starting from the specified current string character index,
+   the search will go forward to search the specified substring.
+ </dd>
+    <dt><tt> CATSearchModeBackward</tt>
+   <dd>   Starting from the specified current string character index,
+   the search will go backward to search the specified 
+   substring.</dd>
+</dl>
+</dl>
+</dl>
+<a name="CATStripMode"> <dt> o <b>CATStripMode</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATStripMode</b> {
+  CATStripModeLeading,
+  CATStripModeTrailing,
+  CATStripModeBoth,
+  CATStripModeAll
+}
+</pre>
+  Strip mode.
+ <b>Role</b>: Stripping is the process consisting
+ of removing a given character occurences from a given
+ string. Once the character specified , you can, as you want, 
+ use one of the following options:
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> CATStripModeLeading</tt>
+   <dd>   Remove all the consecutive occurences of the  
+   character from the beginning of the string 
+   (of course it supposes that the first character of the 
+   string is the specified character, if it is not the case, 
+   nothing is done).
+ </dd>
+    <dt><tt> CATStripModeTrailing</tt>
+   <dd>   Remove all the consecutive occurences from the end
+   of the string (It means that the first 
+   character of the string is really the specified 
+   character).
+ </dd>
+    <dt><tt> CATStripModeBoth</tt>
+   <dd>   Remove all the consecutive occurences both from the 
+   beginning of the string and from the end (this option cumulates
+   the two preceeding options, it does not affects the 
+   intermediate consecutive occurences).
+ </dd>
+    <dt><tt> CATStripModeAll</tt>
+   <dd>   Removes all the occurences of the character
+   from the string. 
+ <p>
+ Warning : CATStripMode is also defined in CATInternalString.cpp</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATUnicodeString.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>JS0GROUP</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

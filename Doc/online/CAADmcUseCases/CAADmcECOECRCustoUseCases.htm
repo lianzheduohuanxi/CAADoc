@@ -1,0 +1,404 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Customizing the ECO/ECR Modeler</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>Data Model Customizer for ENOVIA</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Customizing the ECO/ECR Modeler</h3>
+     </td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3><a name="Top"></a>Abstract</h3>
+     <p>This article shows how to create a customization on ENOVIA ECOECR. </p>
+     <ul>
+       <li><a href="#Principle"><b>Principle</b></a></li>
+       <li><b><a href="#Creating a UML Project">Creating a UML 
+       Project</a></b></li>
+       <li><a href="#Creating_a_new_Customization"><b>Creating an &quot;ECOECR&quot; Customization</b></a></li>
+       <li><b><a href="#Creating a Modeler Object">Creating a 
+       Modeler Object</a></b> <u></li>
+       <li><a href="#Generate_the metadata_file"><b>Generating the 
+       Dictionary File</b></a></li>
+       <li><a href="#Publish_Enovia_data"><b>Publishing ENOVIA Data</b></a></li>
+       <li><a href="#Test_In_Enovia"><b>Testing in ENOVIA</b></a></li>
+     </ul>
+     </u></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Principle"></a>Principle</h3>
+ <table width="100%" border="0">
+   <tr>
+     <td width="91%">
+     <table width="100%" border="0">
+       <tr>
+         <td width="91%">The change request process allows various internal 
+         groups to communicate the need for change or to request some type of 
+         work effort.
+         <p>Use a change request to identify the need for change, analyze the 
+         change requirement, and approve the change implementation.&nbsp;Use a 
+         change order for more formal changes such as defining deliverables, 
+         affected objects, and effectivity.</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+ </table>
+ <p>Let's customize a change request (ECR) and a change order (ECO) which 
+ do not necessarily have to be customized together. </p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoECOECREnoviaIntro.jpg" width="877" height="385"></p>
+ <p align="left">You are going to add
+ 2 new fields to each 
+ component:</p>
+ <div align="left">
+   <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table1">
+     <tr>
+       <td width="78" valign="top">
+       <h5>for ECR</h5>
+       </td>
+       <td valign="top">a date Attribute1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+     </tr>
+     <tr>
+       <td width="78" valign="top">&nbsp;</td>
+       <td valign="top">a double Attribute 2</td>
+     </tr>
+     <tr>
+       <td width="78" valign="top">&nbsp;</td>
+       <td valign="top">&nbsp;</td>
+     </tr>
+     <tr>
+       <td width="78" valign="top">
+       <h5>for ECO</h5>
+       </td>
+       <td valign="top">a list of boolean MyFirstAttribute</td>
+     </tr>
+     <tr>
+       <td width="78" valign="top">&nbsp;</td>
+       <td valign="top">a string MySecondAttribute</td>
+     </tr>
+   </table>
+ </div>
+ <p align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<a href="#Top">Top</a>]</p>
+ <h3>Creating a UML Project <a name="Creating a UML Project">
+ </a></h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;UML 
+   Project</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>.
+   </li>
+   <li>Enter the name of the UML project. Click <code>
+   <font color="#008040">Next</font></code>&gt; and <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>In the <code><font color="#008040">Navigator</font></code> 
+   view, right-click your project and select <code><font color="#008040">
+   Open as a DMC Project</font></code>. </li>
+   <li>In the <code><font color="#008040">Open a DMC 
+   Project</font></code> window, select the tool level and click
+   <code><font color="#008040">Next&gt;</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Initializing tools</font></code> 
+   window.</li>
+   <li>Click <code><font color="#008040">Add</font></code> 
+   and select your prerequisite frameworks. Click <code>
+   <font color="#008040">Finish</font></code>.</li>
+   <li>Click <code><font color="#008040">Close</font></code> 
+   in the <code><font color="#008040">Installing Prereqs</font></code> 
+   window.</li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Creating_a_new_Customization"></a>Creating an ECOECR 
+ Customization</h3>
+ <ol>
+   <li>From the <code><font color="#008040">File</font></code> 
+   menu, select <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New LCA Customization</font></code>. Click <code>
+   <font color="#008040">Next&gt;</font></code>. </li>
+   <li>Enter the application name in the <code>
+   <font color="#008040">Application Name</font></code> field.</li>
+   <li>Click <code><font color="#008040">...</font></code> 
+   in the <code><font color="#008040">Customize LCA application</font></code> 
+   field. In the Select a framework window, select <font color="#008040"><code>
+   ECOECR</code></font>.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoECOECRNewApplication.gif"></p>
+ <ol start="4">
+   <li>Click <code><font color="#008040">Finish</font></code>. The wizard 
+   creates a new workspace. </li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3>Creating a Modeler Object
+ <a name="Creating a Modeler Object"></a></h3>
+ <h4>Creating a ECO Modeler Object</h4>
+ <ol>
+   <li>From the <code><font color="#008040">Navigator</font></code> view, go in the <code><font color="#008040">PublicInterfaces</font></code> 
+    directory of the new customization, and open the generated .emx file.
+    Warning: from the <code><font color="#008040">Project Explorer</font></code> view this file may not be displayed, 
+    but it is accessible from the <code><font color="#008040">Navigator</font></code> view. Moreover, the emx file must be opened before 
+    continuing on next steps. 
+	</li>
+     <li>
+   From the <code><font color="#008040">File</font></code> menu, select 
+   <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. </li>
+   <li>
+   Enter the name of the new Modeler Object (MyECO 
+   in this example).</li>
+   <li>Select <code><font color="#008040">ECO</font></code> in the
+   list and click <code><font color="#008040">Next&gt;</font></code>.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoECOECRModele1.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> to add 
+   the 
+   attribute MyFirstAttribute to your <i>MyECO.</i></li>
+   <li>Enter MyFirstAttribute in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">STRING</font></code> in 
+   the <code><font color="#008040">Type</font></code> 
+   list. Click <code><font color="#008040">OK</font></code>.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoECOECRModele2.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> to add 
+   the 
+   attribute MySecondAttribute to your <i>MyECO.</i></li>
+   <li>Enter MySecondAttribute in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">STRING</font></code> in 
+   the <code><font color="#008040">Type</font></code> 
+   list. Click <code><font color="#008040">OK</font></code>.</li>
+   <li>Optionnal: Add a new index using the second <code>
+   <font color="#008040">Insert</font></code> button.</li>
+   <li>Click <code><font color="#008040">Finish</font></code>
+   when done.</li>
+ </ol>
+ <h4>Creating a ECR Modeler Object</h4>
+ <ol>
+   <li>
+   <p align="left">In the <code>
+   <font color="#008040">Navigator</font></code> view, 
+   expand the MyECOECR node and double-click the .emx file.  </li>
+   <li>
+    From the <code><font color="#008040">File</font></code> menu, select 
+   <font color="#008040"><code>New-&gt;Ot</code></font><code><font color="#008040">her-&gt;DMC 
+   Elements-&gt;New Modeler Object</font></code>. Click
+   <code><font color="#008040">Next&gt;</font></code>. </li>
+   <li>
+   Enter the name of the new Modeler Object (MyECR 
+   in this example).</li>
+   <li>Select <code><font color="#008040">ECO</font></code> in the
+   list and click <code><font color="#008040">Next&gt;</font></code>.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table4">
+       <tr>
+         <td><img border="1" src="images/CAADmcCustoECOECRModele3.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> to add 
+   the 
+   attribute Attribute1 to your <i>MyECR.</i></li>
+   <li>Enter Attribute1 in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">DATE</font></code> in the <code>
+   <font color="#008040">Type</font></code> list. Click 
+   <code><font color="#008040">OK</font></code>.<div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table6">
+       <tr>
+         <td>
+         <img border="1" src="images/CAADmcCustoECOECRModele4.gif" width="358" height="249"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>Click <code><font color="#008040">Insert</font></code> to add 
+   the 
+   attribute Attribute2 to your <i>MyECR.</i></li>
+   <li>Enter Attribute2 in the <code>
+   <font color="#008040">Name</font></code> field and select
+   <code><font color="#008040">DOUBLE</font></code> 
+   in the <code><font color="#008040">Type</font></code> 
+   list. Click <code><font color="#008040">OK</font></code>.</li>
+   <li>Optionnal: Add a new index using the second <code>
+   <font color="#008040">Insert</font></code> button.</li>
+   <li>Click <code><font color="#008040">Finish</font></code>
+   when done.</li>
+ </ol>
+ <p>Here is the UML graphic describing&nbsp;your 
+ customization.</p>
+   <div align="left">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table7">
+       <tr>
+         <td align="center">
+         <h4>UML Graphic for ECO</h4>
+         </td>
+         <td align="center">
+         <h4>&nbsp;</h4>
+         </td>
+         <td align="center">
+         <h4>UML Graphic for ECR</h4>
+         </td>
+       </tr>
+       <tr>
+         <td height="715">
+         <img border="0" src="images/CAADmcCustoECOECRUMLSchema2.gif" width="304" height="713"></td>
+         <td height="715">&nbsp;</td>
+         <td height="715">
+         <img border="0" src="images/CAADmcCustoECOECRUMLSchema1.gif" width="313" height="706"></td>
+       </tr>
+     </table>
+   </div>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p>
+ <!---------------------------------comment------------------------------------->
+ </p>
+ <h3><a name="Generate_the metadata_file">
+ <span style="background-color: #FFFF00"></span></a>
+ Generating the 
+ Dictionary File</h3>
+ <ol>
+   <li>Select<code><font color="#008040"> DMC Project-&gt;Generate 
+   VPM Dictionary file</font></code>.</li>
+ </ol>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoECOECRGenMetadata.gif" width="356" height="479"></p>
+ <p>The wizard creates <i>MyECOECR.metadata</i> under the directory MyECOECR/CNext/code/dictionary. 
+ Close <span lang="en-us">IBM </span>Rational <span lang="en-us">Software 
+	Architect or IBM </span>Rational <span lang="en-us">Software Modeler</span>.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Publish_Enovia_data"><span style="background-color: #FFFF00">
+ </span></a>Publishing Enovia Data</h3>
+ <ol>
+   <li>Select<code><font color="#008040"> DMC Project-&gt;Publish 
+   VPM Dictionary file in Database.</font></code><div align="center">
+     <table border="0" cellpadding="0" style="border-collapse: collapse" id="table8">
+       <tr>
+         <td><img border="0" src="images/CAADmcCustoECOECRGenMetadata2.gif"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p>Check if the settings are correctly valuated and click <code>
+ <font color="#008040">OK</font></code> to start the Publish command to finish 
+ the scenario.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h3><a name="Test_In_Enovia"></a>Testing in ENOVIA</h3>
+ <p>Now it is time to test your customization. To use this customization, launch ENOVIA with the environment of 
+ the customization. To do so, indicatethe location where your customization is built 
+ on the server, as follows:</p>
+ <p>On UNIX:</p>
+   <p align="left">$ENOVIA_INSTALLATION_PATH$/$OS$/code/command/enoviastart<i>
+   </i>-direnv $EnvDir$ -env $EnvName$</p>
+   <p align="left"><i>where :</i> </p>
+   <ul type="circle">
+     <li>
+     <p align="left"><b>ENOVIA_INSTALLATION_PATH</b> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li>
+     <p align="left"><b>OS</b> is the operating system tag (eg. solaris_a, aix_a, 
+     hpux_b).</li>
+     <li>
+     <p align="left"><b>EnvDir</b> is the environment folder containing the EnvName.txt file</li>
+     <li>
+     <p align="left"><b>EnvName</b> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b><code> )</code><br>
+&nbsp;</li>
+   </ul>
+ <p>On Windows:</p>
+   <p align="left">$ENOVIA_INSTALL_PATH$/$OS$/code/bin/CATSTART -run &quot;ENOVIA.exe<i>&quot;
+   </i>-direnv $EnvDir$ -env $EnvName$ -object &quot;-senv $sEnvName$ -sdirenv $sEnvDir$&quot;
+   </p>
+   <p align="left"><i>where :</i> </p>
+   <ul type="circle">
+     <li>
+     <p align="left"><b>ENOVIA_INSTALLATION_PATH</b> is the location where you installed the 
+     ENOVIA CD.</li>
+     <li>
+     <p align="left"><b>OS</b> is the operating system tag (eg. intel_a).</li>
+     <li>
+     <p align="left"><b>EnvDir</b> is the environment folder containing the EnvName.txt file</li>
+     <li>
+     <p align="left"><b>EnvName</b> is the name of the ENOVIA environment ( Default is : <b>
+     ENOVIA_LCA.V5R17.B17</b>)</li>
+     <li>
+     <p align="left"><b>sEnvName</b> is the name of server environment contained in your new 
+     customization workspace ( Default is :<b>WorkspaceEnv</b></li>
+     <li>
+     <p align="left"><b>sEnvDir</b> is the server environment folder containing the 
+     sEnvName.txt file<code>&nbsp;</li>
+   </ul>
+ </code>
+ <p>&nbsp;</p>
+ <p>Now, when creating a new CustoECR,</p>
+ <p align="center">
+ <img border="0" src="images/CAADmcCustoECOECREnoviaResult2.jpg" width="605" height="423"></p>
+ <p>&nbsp;</p>
+ <p>and when searching for our new object committed in the
+ database:</p>
+ <p>
+ <img border="0" src="images/CAADmcCustoECOECREnoviaResult1.jpg" width="1192" height="270"></p>
+ <p>The same behavior is expected for MyECO.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Mar 2004]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [March 2006]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

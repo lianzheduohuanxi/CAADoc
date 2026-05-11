@@ -1,0 +1,324 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAASchInsertComponent.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' *****************************************************************************</font>
+<font color="#008000">'   Purpose:      Insert a schematic component into a route.</font>
+
+<font color="#008000">'   Languages:    VBScript</font>
+<font color="#008000">'   Locales:      English </font>
+<font color="#008000">'   CATIA Level:  V5R15 </font>
+<font color="#008000">' *****************************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Optional: allows to find the sample wherever it's installed</font>
+<font color="#0000FF">    dim </font>sDocPath<font color="#0000FF"> As </font>String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,sDocPath,"No Doc Path Defined"
+<font color="#0000FF">    End If</font>
+    <font color="#008000">' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the catalog document </font>
+<font color="#0000FF">    Dim </font>sCtlgFilePath
+    sCtlgFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_Sample.catalog")
+
+<font color="#0000FF">    Dim </font>objSchCtlgDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchCtlgDoc = CATIA.Documents.Open(sCtlgFilePath)
+
+    <font color="#008000">' Open main schematic design document (for new component instances created here)</font>
+<font color="#0000FF">    Dim </font>sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+            "online\CAAScdSchUseCases\samples\CAASCH_RouteForPlacement.CATProduct")
+
+<font color="#0000FF">    Dim </font>objSchDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>objSchDoc = CATIA.Documents.Open(sFilePath)
+
+<font color="#0000FF">    Dim </font>strMessage<font color="#0000FF"> As </font>String
+
+    strMessage = _
+      "--------------------------------------------------------------------" & vbCr
+    strMessage = strMessage & _
+      "Output traces from CAASacInsertComponent.CATScript" & vbCrLf
+
+    <font color="#008000">'</font>
+    <font color="#008000">' Find the top node of the schematic object tree - schematic root.</font>
+<font color="#0000FF">    Dim </font>objPrdRoot<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>objSchRoot<font color="#0000FF"> As </font>SchematicRoot
+<font color="#0000FF">    If </font>( Not ( IsEmpty(objSchDoc)) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPrdRoot = objSchDoc.Product 
+<font color="#0000FF">      If </font>( Not ( IsEmpty(objPrdRoot)) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objSchRoot = objPrdRoot.GetTechnologicalObject("SchematicRoot")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">    Dim </font>objSchGRRCVCtlg<font color="#0000FF"> As </font>SchGRR 
+<font color="#0000FF">    Dim </font>objSchCntblCVRef<font color="#0000FF"> As </font>SchAppConnectable
+<font color="#0000FF">    Dim </font>objSchCompCVRef<font color="#0000FF"> As </font>SchComponent
+<font color="#0000FF">    Dim </font>objSchCompatRoute<font color="#0000FF"> As </font>SchCompatible
+<font color="#0000FF">    Dim </font>objSchCompInst<font color="#0000FF"> As </font>SchComponent
+<font color="#0000FF">    Dim </font>objSchCompInst2<font color="#0000FF"> As </font>SchComponent
+<font color="#0000FF">    Dim </font>objSchRouteInst<font color="#0000FF"> As </font>SchRoute
+<font color="#0000FF">    Dim </font>objSchCntblRouteInst<font color="#0000FF"> As </font>SchAppConnectable
+<font color="#0000FF">    Dim </font>objSchRouteGraph<font color="#0000FF"> As </font>SchRouteGraphic
+
+<font color="#0000FF">    If </font>( Not ( IsEmpty(objSchRoot ) ) )<font color="#0000FF"> Then</font>
+
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+       <font color="#008000">' Get the symbol of a component from the component catalog.</font>
+       <font color="#008000">'-----------------------------------------------------------------------</font>
+<font color="#0000FF">       Set </font>objSchGRRCVCtlg = objSchRoot.GetCompSymbolFromCatalog ("Control Valve",objSchCtlgDoc)
+<font color="#0000FF">       If </font>( Not ( IsEmpty(objSchGRRCVCtlg) ) )<font color="#0000FF"> Then</font>
+         strMessage = strMessage &  "Got the catalog symbol" & vbCr
+
+         <font color="#008000">'---------------------------------------------------------------------</font>
+         <font color="#008000">' Get the owner of the symbol. That is, a reference component,</font>
+         <font color="#008000">' in the catalog.</font>
+         <font color="#008000">'---------------------------------------------------------------------</font>
+<font color="#0000FF">         Set </font>objSchCntblCVRef = objSchGRRCVCtlg.GetSchObjOwner
+<font color="#0000FF">         If </font>( Not ( IsEmpty (objSchCntblCVRef ) ) )<font color="#0000FF"> Then</font>
+           strMessage = strMessage &  "Got catalog connectable of the symbol" & vbCr
+
+<font color="#0000FF">           Dim </font>objCompRefPlaceInfo<font color="#0000FF"> As </font>AnyObject  
+<font color="#0000FF">           Dim </font>objCompatInfo<font color="#0000FF"> As </font>AnyObject  
+<font color="#0000FF">           Dim </font>objFinalInsertInfo<font color="#0000FF"> As </font>AnyObject
+<font color="#0000FF">           Dim </font>bYesCompat<font color="#0000FF"> As </font>Boolean   
+<font color="#0000FF">           Dim </font>bFindAllSolutions<font color="#0000FF"> As </font>Boolean    
+
+<font color="#0000FF">           Set </font>objSchCompCVRef = objSchRoot.GetInterface ("CATIASchComponent",objSchCntblCVRef)
+<font color="#0000FF">           If </font>( Not ( IsEmpty (objSchCompCVRef ) ) )<font color="#0000FF"> Then</font>
+              strMessage = strMessage &  "Got catalog component reference of the symbol" & vbCr
+<font color="#0000FF">              Set </font>objSchCompatRoute = FindARouteInModel (objSchRoot)
+<font color="#0000FF">           End If </font><font color="#008000">'If ( Not ( IsEmpty (objSchCompCVRef ) ) ...</font>
+
+<font color="#0000FF">           If </font>( Not ( IsEmpty (objSchCompCVRef ) ) And _
+                Not ( IsEmpty (objSchCompatRoute )) )<font color="#0000FF"> Then</font>
+
+              <font color="#008000">'----------------------------------------------------------------</font>
+              <font color="#008000">'  Insert a component into a route.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  Approach 1 - with compatibility information.</font>
+              <font color="#008000">'  1- QueryConnectAbility.</font>
+              <font color="#008000">'     Ask the reference of the component for information</font>
+              <font color="#008000">'     to use in compatibility checking. The objCompRefPlaceInfo</font>
+              <font color="#008000">'     is an output and should be used as a "black box". </font>
+              <font color="#008000">'     It is the input to the next call.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  2- IsTargetOKForInsert</font>
+              <font color="#008000">'     Check whether the route is compatible to the component</font>
+              <font color="#008000">'     in making connections.</font>
+              <font color="#008000">'     The route instance is the "target". </font>
+              <font color="#008000">'     objCompatInfo is an output and should be used as </font>
+              <font color="#008000">'     a "black box". It is an input to the next call.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  3- GetBestFitInsertInfo</font>
+              <font color="#008000">'     Input the placement location, close to middle of the route</font>
+              <font color="#008000">'     objFinalInsertInfo is an output and should be used as</font>
+              <font color="#008000">'     a "black box". It is an input to the next call.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  4- InsertIntoRouteWithInfo</font>
+              <font color="#008000">'     Place a new component instance with the black box info.</font>
+              <font color="#008000">'     The route will be broken up into 2 pieces (shorten the</font>
+              <font color="#008000">'     existing route and create a new route instance).</font>
+              <font color="#008000">'     The new component instance will be connected to the</font>
+              <font color="#008000">'     2 routes on each of the 2 sides (left and right).  </font>
+              <font color="#008000">'----------------------------------------------------------------</font>
+
+              <font color="#008000">' -- step 1 </font>
+<font color="#0000FF">              Set </font>objCompRefPlaceInfo = objSchCompCVRef.QueryConnectAbility _
+                (objSchGRRCVCtlg) 
+
+              <font color="#008000">' -- step 2 </font>
+              objSchCompatRoute.IsTargetOKForInsert objCompRefPlaceInfo, _
+                objCompatInfo, bYesCompat
+
+<font color="#0000FF">              Dim </font>db2Pt(2)<font color="#0000FF"> As </font>CATSafeArrayVariant
+
+              <font color="#008000">'-- a point at the middle of the route</font>
+              db2Pt(0) = 80.0
+              db2Pt(1) = 50.0
+
+<font color="#0000FF">              If </font>( bYesCompat )<font color="#0000FF"> Then</font>
+                 strMessage = strMessage &  "Target is compatible" & vbCr
+                 bFindAllSolutions = false
+
+                 <font color="#008000">' -- step 3 </font>
+                 objSchCompatRoute.GetBestFitInsertInfo db2Pt, objCompatInfo, _
+                   objFinalInsertInfo, bFindAllSolutions
+
+<font color="#0000FF">                 If </font>( Not ( IsEmpty (objFinalInsertInfo ) ) )<font color="#0000FF"> Then</font>
+
+                    <font color="#008000">' -- step 4 </font>
+                    objSchCompCVRef.InsertIntoRouteWithInfo objFinalInsertInfo, _
+                      objSchCompInst,objSchRouteInst
+
+<font color="#0000FF">                    If </font>( Not ( IsEmpty (objSchCompInst ) )  And _
+                         Not ( IsEmpty (objSchRouteInst ) ) )<font color="#0000FF"> Then</font>
+                       strMessage = strMessage &  _
+                         "Insert a new component instance into a route is successful" & vbCr
+<font color="#0000FF">                    End If</font>
+
+<font color="#0000FF">                 End If </font>
+
+              Else 
+                 strMessage = strMessage &  "Target is NOT compatible" & vbCr
+<font color="#0000FF">              End If</font>
+
+              <font color="#008000">'----------------------------------------------------------------</font>
+              <font color="#008000">'  Insert a component into a route.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  Approach 2 - without compatibility information.</font>
+              <font color="#008000">'  One step approach.</font>
+              <font color="#008000">'  Is this specific example, we want to place another</font>
+              <font color="#008000">'  instance of the control valve on the middle of the first</font>
+              <font color="#008000">'  segment of the new route we have just created.</font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  1- we need the interface handle on the new route we</font>
+              <font color="#008000">'  have just created </font>
+              <font color="#008000">'</font>
+              <font color="#008000">'  2- we need to figure out the placement point location.</font>
+              <font color="#008000">'  For this we need to extract the x-y coordinates of the route</font>
+              <font color="#008000">'  points.</font>
+              <font color="#008000">'----------------------------------------------------------------</font>
+
+<font color="#0000FF">              Dim </font>objLDbPlace<font color="#0000FF"> As </font>SchListOfDoubles
+
+<font color="#0000FF">              If </font>( Not ( IsEmpty (objSchRouteInst ) ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">                Set </font>objSchCntblRouteInst = objSchRoot.GetInterface ( _
+                  "CATIASchAppConnectable",objSchRouteInst)
+
+<font color="#0000FF">                Set </font>objSchRouteGraph = objSchRoot.GetInterface ( _
+                  "CATIASchRouteGraphic",objSchRouteInst)
+
+<font color="#0000FF">                Set </font>objLDbPlace = FindPlacementPoint (objSchRoot, objSchRouteGraph)
+         
+<font color="#0000FF">              End If</font>
+
+<font color="#0000FF">              If </font>(  Not ( IsEmpty (objSchCntblRouteInst ) ) And _
+                    Not ( IsEmpty (objLDbPlace ) )  )<font color="#0000FF"> Then</font>
+
+                db2Pt(0) = objLDbPlace.Item(1)
+                db2Pt(1) = objLDbPlace.Item(2)
+
+                strMessage = strMessage &  _
+                  "Placement point for PlaceOnObject = (" & db2Pt(0) & "," & db2Pt(1) &")" & vbCr       
+
+<font color="#0000FF">                 Dim </font>db6Matrix(6)<font color="#0000FF"> As </font>CATSafeArrayVariant
+                 db6Matrix(0)=1.0
+                 db6Matrix(1)=0.0
+                 db6Matrix(2)=0.0
+                 db6Matrix(3)=1.0
+                 db6Matrix(4)=db2Pt(0)
+                 db6Matrix(5)=db2Pt(1)
+
+                 objSchCompCVRef.PlaceOnObject objSchGRRCVCtlg, db6Matrix, _
+                   objSchCntblRouteInst, objSchCompInst2
+
+<font color="#0000FF">                 If </font>(  Not ( IsEmpty (objSchCntblRouteInst ) )  )<font color="#0000FF"> Then</font>
+                    strMessage = strMessage &  _
+                      "PlaceOnObject is successful" & vbCr
+<font color="#0000FF">                 End If </font>
+
+<font color="#0000FF">              End If </font><font color="#008000">'---- If ( ( Not ( IsEmpty (objSchCntblRouteInst ) ) ...</font>
+
+<font color="#0000FF">           End If </font><font color="#008000">'----If ( Not ( IsEmpty (objSchCompCVRef ) )...</font>
+
+<font color="#0000FF">         End If </font><font color="#008000">'---- If ( Not ( IsEmpty (objSchCntblCVRef ) )...</font>
+
+<font color="#0000FF">       End If </font><font color="#008000">'----- If ( Not ( IsEmpty (objSchGRRCVCtlg ) )...</font>
+
+<font color="#0000FF">    End If  </font><font color="#008000">'----If ( Not ( IsEmpty (objSchRoot ) )...</font>
+
+    strMessage = strMessage & _
+      "--------------------------------------------------------------------" & vbCr
+    MsgBox strMessage
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find a route instance in the model.</font>
+<font color="#008000">' | Input: objSchCompGraph:  the schematic component </font>
+<font color="#008000">' |        (a CATIASchCompGraphic interface handle).</font>
+<font color="#008000">' | Returns: the component image (the symbol instance)</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Function FindARouteInModel (objSchRootArg<font color="#0000FF"> As </font>SchematicRoot)<font color="#0000FF"> As </font>SchCompatible
+<font color="#0000FF">   Dim </font>objSchLSymbols<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   If </font>( Not ( IsEmpty (objSchRootArg ) ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objSchLSymbols = objSchRootArg.GetRoutes
+<font color="#0000FF">      If </font>( Not ( IsEmpty (objSchLSymbols ) ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">         Set </font>FindARouteInModel = objSchLSymbols.Item (1,"CATIASchCompatible")
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">   End If</font>
+<font color="#0000FF">End Function</font>
+
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+<font color="#008000">' | Find a route instance in the model.</font>
+<font color="#008000">' | Input: objSchRouteArg:  the route </font>
+<font color="#008000">' |        (a CATIASchRoute interface handle).</font>
+<font color="#008000">' | Returns: the mid point of the first segment of the route.</font>
+<font color="#008000">' -----------------------------------------------------------------------------</font>
+Private Function FindPlacementPoint (objSchRootArg<font color="#0000FF"> As </font>SchematicRoot, _ 
+  objSchRouteGraphArg<font color="#0000FF"> As </font>SchRouteGraphic)<font color="#0000FF"> As </font>SchListOfDoubles
+
+<font color="#0000FF">   Dim </font>objSchLGRR<font color="#0000FF"> As </font>SchListOfObjects
+<font color="#0000FF">   Dim </font>objSchLDb<font color="#0000FF"> As </font>SchListOfDoubles
+<font color="#0000FF">   Dim </font>objSchGRRRoute<font color="#0000FF"> As </font>SchGRRRoute
+<font color="#0000FF">   Dim </font>objSchTempListFact<font color="#0000FF"> As </font>SchTempListFactory
+<font color="#0000FF">   Dim </font>intSize<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>intCount<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">   Dim </font>db2Seg1(4)<font color="#0000FF"> As </font>CATSafeArrayVariant
+<font color="#0000FF">   Dim </font>dbXOut<font color="#0000FF"> As </font>Double
+<font color="#0000FF">   Dim </font>dbYOut<font color="#0000FF"> As </font>Double
+
+<font color="#0000FF">   If </font>( Not ( IsEmpty (objSchRootArg ) ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objSchTempListFact = objSchRootArg.GetTemporaryListFactory
+<font color="#0000FF">      If </font>( Not ( IsEmpty (objSchTempListFact ) ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">         Set </font>FindPlacementPoint = objSchTempListFact.CreateListOfDoubles
+<font color="#0000FF">      End If </font>
+<font color="#0000FF">   End If </font>
+
+<font color="#0000FF">   If </font>( Not ( IsEmpty (objSchRouteGraphArg ) ) And _
+        Not ( IsEmpty (FindPlacementPoint ) ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">      Set </font>objSchLGRR = objSchRouteGraphArg.ListGraphicalPrimitives
+
+<font color="#0000FF">      If </font>( Not ( IsEmpty (objSchLGRR ) ) )<font color="#0000FF"> Then</font>
+
+<font color="#0000FF">         Set </font>objSchGRRRoute = objSchLGRR.Item (1,"CATIASchGRRRoute")
+
+<font color="#0000FF">         If </font>( Not ( IsEmpty (objSchGRRRoute ) ) )<font color="#0000FF"> Then</font>
+
+            objSchGRRRoute.GetPath objSchLDb
+
+<font color="#0000FF">            If </font>( Not ( IsEmpty (objSchLDb ) ) )<font color="#0000FF"> Then</font>
+
+               intCount = objSchLDb.Count
+
+<font color="#0000FF">               If </font>( intCount &gt; 3 )<font color="#0000FF"> Then</font>
+
+                  db2Seg1(0) = objSchLDb.Item(1)
+                  db2Seg1(1) = objSchLDb.Item(2)
+                  db2Seg1(2) = objSchLDb.Item(3)
+                  db2Seg1(3) = objSchLDb.Item(4)
+
+                  dbXOut = (db2Seg1(0) + db2Seg1(2)) * 0.5
+                  dbYOut = (db2Seg1(1) + db2Seg1(3)) * 0.5
+
+                  FindPlacementPoint.Append (dbXOut)
+                  FindPlacementPoint.Append (dbYOut)
+
+<font color="#0000FF">               End If</font>
+
+<font color="#0000FF">            End If </font>
+<font color="#0000FF">         End If </font>
+
+<font color="#0000FF">      End If </font><font color="#008000">'--- If ( Not ( IsEmpty (objSchLGRR ) ) ...</font>
+
+<font color="#0000FF">   End If </font><font color="#008000">'--- If ( Not ( IsEmpty (objSchRouteGraphArg ) ) ...</font>
+<font color="#0000FF">End Function</font>
+
+</pre></body></html>

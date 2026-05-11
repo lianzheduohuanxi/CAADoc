@@ -1,0 +1,377 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgSpinner</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgSpinner</h3>
+      <em>Enters numeric values</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgSpinner</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Spinner</caption>
+  <tr>
+    <td><img src="images/CATDlgSpinner.jpg" alt="CATDlgSpinner.jpg (1383 bytes)" width="68" height="19"></td>
+    <td>The spinner allows the end&nbsp; user to select a numerical value among
+      a discrete list of values, ranging from a start value to an end value. The
+      value can be incremented or decremented by clicking the arrows. The up
+      arrow is dedicated to incrementing while the down arrow is for
+      decrementing. You set the start and end values as floats, while you set
+      the step number either as an int or as a float. The step value is the
+      difference between start and end values, divided by the number of steps.
+      The default values ranges from 1 to 10 with 10 steps.</td>
+  </tr>
+</table>
+<p>Use spinner whenever you propose to the end user to enter a numerical value
+selected from a discrete list.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The spinner field cannot be edited.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSpnEntry</td>
+    <td>The spinner field can be edited. If the user keys in a value out of the
+      spinner range, this value is not accepted and the previous valid value is
+      used instead.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSpnUserIncrement</td>
+    <td>Prevents from automatically incrementing or decrementing the displayed
+      value when the user selects the arrows. You need to provide you own
+      methods instead, for example to increment or decrement with a parameter
+      different from the step.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSpnDouble</td>
+    <td>The entered number must be a double precision floating number.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgSpinnerModifyNotification</td>
+    <td><code>GetSpinnerModifyNotification</code></td>
+    <td>Whenever the current value is modified, whatever the means used to
+      modify it, such as arrows or field edition..</td>
+  </tr>
+  <tr>
+    <td colspan="3">Available with CATDlgSpnUserIncrement only:</td>
+  </tr>
+  <tr>
+    <td>CATDlgSpinnerBtnUpNotification</td>
+    <td><code>GetSpinnerBtnDownNotification</code></td>
+    <td>Whenever the down (decrement) arrow&nbsp; is clicked.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSpinnerBtnDownNotification</td>
+    <td><code>GetSpinnerBtnUpNotification</code></td>
+    <td>Whenever the up (increment) arrow&nbsp; is clicked.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The spinner is dedicated to executing a command when it is clicked.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Constructor"></a>Constructing a Spinner</h4>
+<p>These four kinds of spinner can be constructed, according to their different
+styles. Styles can be concatenated using the &quot;|&quot; character.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>Non editable spinner</em></td>
+    <td class="code">
+      <pre>_pNEdSpinner = new CATDlgSpinner (iParent, iName);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Editable spinner</em></td>
+    <td class="code">
+      <pre>_pEdSpinner = new CATDlgSpinner (iParent, iName,
+                                 <strong>CATDlgSpnEntry</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Free increment spinner</em></td>
+    <td class="code">
+      <pre>_pFreeSpinner = new CATDlgSpinner (iParent, iName,
+                                   <strong>CATDlgSpnUserIncrement</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Floating spinner</em></td>
+    <td class="code">
+      <pre>_pFloatSpinner = new CATDlgSpinner (iParent, iName,
+                                    <strong>CATDlgSpnDouble</strong>);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Editable and floating spinner</em></td>
+    <td class="code">
+      <pre>_pEdFloatSpinner = new CATDlgSpinner (iParent, iName,
+                                      <strong>CATDlgSpnEntry</strong>|<strong>CATDlgSpnDouble</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Value Range</h4>
+<p>You can retrieve the value range and step with <code>GetRange</code>, and
+them with <code>SetRange</code>, except with floating and free increment
+spinners:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>float Start, End;
+int Step;
+_pSpinner-&gt;GetRange(Start, End, Step);
+...
+Start = 0;
+End = 100;
+Step = 20;
+_pSpinner-&gt;SetRange(Start, End, Step);</pre>
+    </td>
+  </tr>
+</table>
+<p>For floating spinners, use <code>GetMinMaxStep</code> and <code>SetMinMaxStep</code>
+instead:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>float Start, End, Step;
+_pFloatSpinner -&gt;GetMinMaxStep(Start, End, Step);
+...
+Start = 0.0;
+End = 100.0;
+Step = 20.0;
+_pFloatSpinner -&gt;SetMinMaxStep(Start, End, Step);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Value Display</h4>
+<p>To help manage the value display in the spinner, you can use the following
+methods, except with floating and free increment spinners:
+<ul>
+  <li>managing the format of the value displayed as a character string with the
+    methods <code>GetFormat</code> and <code>SetFormat</code>:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get format</em></td>
+        <td class="code">
+          <pre>char * Format;
+Format = _pSpinner-&gt;GetFormat(); // returns &quot;%f&quot;</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set format</em></td>
+        <td class="code">
+          <pre>Format = &quot;%d&quot;;
+_pSpinner-&gt;SetFormat(Format);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>managing the visible text width with the methods <code>GetVisibleTextWidth</code>
+    and <code>SetVisibleTextWidth</code>:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get text width</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleChar;
+NumberOfVisibleChar = _pSpinner-&gt;GetVisibleTextWidth();</pre>
+        </td>
+      </tr>
+      <tr width="20%">
+        <td><em>set text width</em></td>
+        <td class="code">
+          <pre>NumberOfVisibleChar = 20;
+_pSpinner-&gt;SetVisibleTextWidth(NumberOfVisibleChar);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The visible text width is expressed in number of characters.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog3"></a>Managing the Selection</h4>
+<p>You can manage the the current value with the methods <code>GetCurrentValue</code>
+and <code>SetCurrentValue</code>:</p>
+<table width="100%">
+  <tr>
+    <td width="20%" valign="middle"><em>get value</em></td>
+    <td class="code">
+      <pre>float Value;
+Value = _pSpinner-&gt;GetCurrentValue();
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>set value</em></td>
+    <td class="code">
+      <pre>Value = 20.5;
+_pSpinner-&gt;SetCurrentValue(Value, Notify);</pre>
+    </td>
+  </tr>
+</table>
+<p>The visible text width is expressed in number of characters. Set the
+parameter <code>Notify</code> to a non null value if you want the corresponding
+notification to be sent. Otherwise set to 0, no notification is sent.</p>
+<p>With floating spinners, you can use the methods <code>GetValue</code> and <code>SetValue</code>.
+The value is expressed in MKS units:</p>
+<table width="100%">
+  <tr>
+    <td width="20%" valign="middle"><em>get value</em></td>
+    <td class="code">
+      <pre>double Value = _pFloatSpinner-&gt;GetValue();
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%" valign="middle"><em>set value</em></td>
+    <td class="code">
+      <pre>Value = 156.12;
+_pFloatSpinner-&gt;SetValue(Value, Notify);</pre>
+    </td>
+  </tr>
+</table>
+<p>Set the parameter <code>Notify</code> to a non null value if you want the
+corresponding notification to be sent. Otherwise set to 0, no notification is
+sent.</p>
+<p>With free increment spinners, you can use the methods <code>GetCurrentText</code>
+and <code>SetCurrentText</code>. The text is a CATUnicodeString instances:</p>
+<table width="100%">
+  <tr>
+    <td width="20%" valign="middle"><em>get text</em></td>
+    <td class="code">
+      <pre>CATUnicodeString Text = _pFreeSpinner-&gt;GetCurrentText();
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%" valign="middle"><em>set text</em></td>
+    <td class="code">
+      <pre>Text = &quot;NewText&quot;;
+_pFreeSpinner-&gt;SetCurrentText(Text, Notify);</pre>
+    </td>
+  </tr>
+</table>
+<p>Set the parameter <code>Notify</code> to a non null value if you want the
+corresponding notification to be sent. Otherwise set to 0, no notification is
+sent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog4"></a>Managing the Arrow Sensitivity</h4>
+<p>With free increment spinners, you can manage the sensitivity of each arrow
+with the methods <code>GetButtonUpSensitivity</code> and <code>SetButtonUpSensitivity</code>
+for the up arrow, and using the methods <code>GetButtonDownSensitivity</code>
+and <code>SetButtonDownSensivity</code> for the down arrow. The state of an
+arrow that is sensitive to the user action is <code>CATDlgEnable</code>.
+Otherwise this state is <code>CATDlgDisable</code>. For example for the top
+arrow:</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>get sensitivity</em></td>
+    <td class="code">
+      <pre>if (_pSpinner-&gt;GetButtonUpSensitivity() == CATDlgEnable)
+  ... ;</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>disable</em></td>
+    <td class="code">
+      <pre>_pSpinner-&gt;SetButtonUpSensitivity(CATDlgDisable);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on a Spinner</h4>
+<p>Set a callback on a non editable spinner to be informed whenever the end user
+modifies the spinner value as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pNEdSpinner,                                   // spinner 
+  _pNEdSpinner-&gt;<code>GetSpinnerModifyNotification</code>(),   // notification
+  (CATCommand)&amp;Spinner::MethodToExecute,          // method to execute 
+  CATCommandClientData iUsefulData);              // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to a Spinner</h4>
+<p>The spinner title should be set by the resource file using a key built with
+the identifier you declare as the second parameter of the spinner constructor.
+This title is never displayed. If you want to comment the choice available from
+the spinner in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

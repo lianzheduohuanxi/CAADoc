@@ -1,0 +1,185 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>DMUSpaSectionFlattener.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2002</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Create a CATProduct containing all section curves of the current product in the same plane.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active having some sections.</font>
+<font color="#008000">'                 An environment variable named "EXPORT_DIR" must be set (ex: export EXPORT_DIR=/tmp/).</font>
+<font color="#008000">'                 It refers the directory where models will be stored.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English</font>
+<font color="#008000">'   CATIA Level : V5R8SP1</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Define the inverse of a position matrix.</font>
+<font color="#008000">'</font>
+<font color="#008000">' Inputs :  matrix   Array       array corresponding to the matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' Outputs:  inverse  Array       array corresponding to the inverse of the matrix</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>MatrixInverse ( ByVal matrix, ByRef inverse )
+    
+<font color="#0000FF">    Dim </font>a(11)
+<font color="#0000FF">    Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    For </font>I = 0<font color="#0000FF"> to </font>11
+        a(I) = matrix(I)
+<font color="#0000FF">    Next</font>
+    
+    inverse( 0) = a(4)*a(8) - a(7)*a(5)
+    inverse( 1) = a(2)*a(7) - a(8)*a(1)
+    inverse( 2) = a(1)*a(5) - a(4)*a(2)
+    inverse( 3) = a(5)*a(6) - a(8)*a(3)
+    inverse( 4) = a(0)*a(8) - a(6)*a(2)
+    inverse( 5) = a(2)*a(3) - a(5)*a(0)
+    inverse( 6) = a(3)*a(7) - a(6)*a(4)
+    inverse( 7) = a(1)*a(6) - a(7)*a(0)
+    inverse( 8) = a(0)*a(4) - a(1)*a(3)
+    inverse( 9) = -(a( 9)*inverse(0)+a(10)*inverse(3)+a(11)*inverse(6))
+    inverse(10) = -(a( 9)*inverse(1)+a(10)*inverse(4)+a(11)*inverse(7))
+    inverse(11) = -(a( 9)*inverse(2)+a(10)*inverse(5)+a(11)*inverse(8))
+    
+<font color="#0000FF">End Sub</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'</font>
+<font color="#008000">' Purpose:  Main.</font>
+<font color="#008000">'</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+    
+    CATIA.DisplayFileAlerts = False
+    
+    <font color="#008000">' Retrieve the Sections collection</font>
+<font color="#0000FF">    Dim </font>cSections<font color="#0000FF"> As </font>Sections
+<font color="#0000FF">    Set </font>cSections = CATIA.ActiveDocument.Product.GetTechnologicalObject("Sections")
+    
+    <font color="#008000">' Retrieve the number of Sections</font>
+<font color="#0000FF">    Dim </font>iNbSection<font color="#0000FF"> As </font>Integer
+    iNbSection = cSections.Count
+
+<font color="#0000FF">    If </font>(iNbSection = 0)<font color="#0000FF"> Then</font>
+        Msgbox "No section"
+    Else
+        
+        <font color="#008000">' Initialize file management</font>
+<font color="#0000FF">        Dim </font>sExportDir<font color="#0000FF"> As </font>String
+        sExportDir = CATIA.SystemService.Environ("EXPORT_DIR")
+        
+        <font color="#008000">' Initialize section management</font>
+<font color="#0000FF">        Dim </font>sV4ModelName()
+        ReDim sV4ModelName(iNbSection)
+        sV4ModelName(0) = " "
+<font color="#0000FF">        Dim </font>sV4ModelType<font color="#0000FF"> As </font>String
+        sV4ModelType = "model"
+<font color="#0000FF">        Dim </font>dPosition(11)  <font color="#008000">' Position matrix of a section</font>
+<font color="#0000FF">        Dim </font>dInverse(11)   <font color="#008000">' Inverse of position matrix</font>
+<font color="#0000FF">        Dim </font>dAllPosition() <font color="#008000">' Array of all section position matrices</font>
+        ReDim dAllPosition(iNbSection, 11)
+        
+        <font color="#008000">' Loop on all sections</font>
+<font color="#0000FF">        Dim </font>oSection<font color="#0000FF"> As </font>Section
+<font color="#0000FF">        Dim </font>oExportDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">        Dim </font>iNbExported<font color="#0000FF"> As </font>Integer
+        iNbExported = 0
+<font color="#0000FF">        Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">        Dim </font>J<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">        For </font>I=1<font color="#0000FF"> to </font>iNbSection
+<font color="#0000FF">            Set </font>oSection = cSections.Item(I)
+            
+            <font color="#008000">' Treat only if section is not empty</font>
+<font color="#0000FF">            If </font>(oSection.IsEmpty &lt;&gt; 0)<font color="#0000FF"> Then</font>
+            
+                <font color="#008000">' Export the Section into a V4 model</font>
+<font color="#0000FF">                Set </font>oExportDoc = oSection.Export
+                sV4ModelName(iNbExported)= sExportDir + oSection.Name + ".model"
+                oExportDoc.ExportData sV4ModelName(iNbExported), sV4ModelType
+                
+                <font color="#008000">' Store the position of the section</font>
+                oSection.GetPosition dPosition
+<font color="#0000FF">                For </font>J=0<font color="#0000FF"> to </font>11
+                    dAllPosition(iNbExported, J) = dPosition(J)
+<font color="#0000FF">                Next</font>
+                iNbExported = iNbExported + 1
+                
+                oExportDoc.Close
+<font color="#0000FF">                Set </font>oExportDoc = Nothing
+<font color="#0000FF">            End If</font>
+            
+<font color="#0000FF">            Set </font>oSection = Nothing
+<font color="#0000FF">        Next</font>
+        
+        <font color="#008000">' Create a new CATProduct to receive section curves</font>
+<font color="#0000FF">        Dim </font>oNewDocument<font color="#0000FF"> As </font>Document
+<font color="#0000FF">        Set </font>oNewDocument = CATIA.Documents.Add("Product").Product
+        oNewDocument.Products.AddComponentsFromFiles sV4ModelName , sV4ModelType
+        
+        <font color="#008000">' Move the components to flatten the section</font>
+<font color="#0000FF">        Dim </font>oComponent<font color="#0000FF"> As </font>Product
+<font color="#0000FF">        For </font>I=1<font color="#0000FF"> to </font>iNbExported
+<font color="#0000FF">            Set </font>oComponent = oNewDocument.Products.Item(I)
+            
+            oComponent.ApplyWorkMode DESIGN_MODE
+<font color="#0000FF">            For </font>J=0<font color="#0000FF"> to </font>11
+                dPosition(J) = dAllPosition(I-1, J)
+<font color="#0000FF">            Next</font>
+            MatrixInverse dPosition, dInverse
+            oComponent.Move.Apply dInverse
+            
+<font color="#0000FF">            Set </font>oComponent = Nothing
+<font color="#0000FF">        Next</font>
+        
+        <font color="#008000">' Hide skeletton geometry</font>
+<font color="#0000FF">        Dim </font>oSelection<font color="#0000FF"> As </font>Selection
+<font color="#0000FF">        Set </font>oSelection = CATIA.ActiveDocument.Selection
+        oSelection.Clear
+        oSelection.Search "('CATIA V4'.PLN + 'CATIA V4'.AXS),all"
+        oSelection.VisProperties.SetShow 1
+        oSelection.Clear
+<font color="#0000FF">        Set </font>oSelection = Nothing
+        
+        <font color="#008000">' Modify the viewpoint to 'top view'</font>
+<font color="#0000FF">        Dim </font>oViewer<font color="#0000FF"> As </font>Viewer
+<font color="#0000FF">        Set </font>oViewer = CATIA.ActiveWindow.ActiveViewer
+<font color="#0000FF">        Dim </font>oViewpoint<font color="#0000FF"> As </font>Viewpoint3D
+<font color="#0000FF">        Set </font>oViewpoint = oViewer.Viewpoint3D
+        oViewer.Reframe
+<font color="#0000FF">        Dim </font>StdSightDirection(2)
+        StdSightDirection(0) =  0.
+        StdSightDirection(1) =  0.
+        StdSightDirection(2) = -1.
+<font color="#0000FF">        Dim </font>StdUpDirection(2)
+        StdUpDirection(0) = 0.
+        StdUpDirection(1) = 1.
+        StdUpDirection(2) = 0.
+<font color="#0000FF">        Dim </font>Origin(2)
+        oViewpoint.GetOrigin Origin
+<font color="#0000FF">        Dim </font>SightDirection(2)
+        oViewpoint.GetSightDirection SightDirection
+<font color="#0000FF">        Dim </font>Focus<font color="#0000FF"> As </font>Double
+        Focus = oViewpoint.FocusDistance
+<font color="#0000FF">        For </font>I = 0<font color="#0000FF"> to </font>2
+            Origin(I) = Origin(I) + Focus*(SightDirection(I) - StdSightDirection(I))
+<font color="#0000FF">        Next</font>
+        oViewpoint.PutOrigin Origin
+        oViewpoint.PutSightDirection StdSightDirection
+        oViewpoint.PutUpDirection StdUpDirection
+        oViewpoint.ProjectionMode = catProjectionCylindric
+        oViewer.Update
+<font color="#0000FF">        Set </font>oViewpoint = Nothing
+<font color="#0000FF">        Set </font>oViewer = Nothing
+<font color="#0000FF">    End If</font>
+    
+<font color="#0000FF">    Set </font>cSections = Nothing
+    
+<font color="#0000FF">End Sub</font>
+
+</pre></body></html>
+
+

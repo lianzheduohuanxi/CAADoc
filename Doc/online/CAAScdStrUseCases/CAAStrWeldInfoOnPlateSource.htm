@@ -1,0 +1,76 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAAStrWeldInfoOnPlate.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">'//============================================================================</font>
+<font color="#008000">'// COPYRIGHT DASSAULT SYSTEMES 2013</font>
+<font color="#008000">'//============================================================================</font>
+<font color="#008000">'// Language="VBSCRIPT"</font>
+<font color="#008000">'// Sample of macro for getting weld information on SDD Plates.</font>
+<font color="#008000">'//============================================================================</font>
+<font color="#008000">'// Mar  Creation                                               Bhupendra Mithe</font>
+<font color="#008000">'//============================================================================</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#0000FF">Dim </font>ObjPart<font color="#0000FF"> As </font>Part
+<font color="#0000FF">Set </font>ObjPart = CATIA.ActiveDocument.Part
+
+<font color="#008000">'Get the Factory Object</font>
+<font color="#0000FF">Dim </font>FactoryObj<font color="#0000FF"> As </font>SfmFactory
+<font color="#0000FF">Set </font>FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+
+<font color="#008000">'Get the Manager Object</font>
+<font color="#0000FF">Dim </font>ManagerObj<font color="#0000FF"> As </font>SfmManager
+<font color="#0000FF">Set </font>ManagerObj = FactoryObj.GetManager
+
+<font color="#008000">'Retrieving Super Plates</font>
+<font color="#0000FF">Dim </font>SuperPlates<font color="#0000FF"> As </font>References
+<font color="#0000FF">Set </font>SuperPlates = ManagerObj.GetSuperPlates
+
+<font color="#008000">'Retrieving Operating Super Plate</font>
+<font color="#0000FF">Dim </font>SuperPlate1<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">Set </font>SuperPlate1 = SuperPlates.Item(1)
+
+<font color="#008000">'Retrieving Operated Super Plate</font>
+<font color="#0000FF">Dim </font>SuperPlate2<font color="#0000FF"> As </font>SfmSuperPlate
+<font color="#0000FF">Set </font>SuperPlate2 = SuperPlates.Item(2)
+
+<font color="#008000">'Retrieving the SplitPlates of SuperPlate1</font>
+<font color="#0000FF">Dim </font>OperatingSplitPlateRefs<font color="#0000FF"> As </font>References
+<font color="#0000FF">Set </font>OperatingSplitPlateRefs = SuperPlate1.SplitPlates
+
+<font color="#008000">'Retrieving the SplitPlates of SuperPlate2</font>
+<font color="#0000FF">Dim </font>OperatedSplitPlateRefs<font color="#0000FF"> As </font>SfmSplitPlates
+<font color="#0000FF">Set </font>OperatedSplitPlateRefs = SuperPlate2.SplitPlatesObjects
+
+<font color="#0000FF">Dim </font>OperatingSplitPlate<font color="#0000FF"> As </font>Reference
+<font color="#0000FF">Set </font>OperatingSplitPlate = OperatingSplitPlateRefs.Item(1)
+
+<font color="#0000FF">Dim </font>OperatedSplitPlate<font color="#0000FF"> As </font>SfmSplitPlate
+<font color="#0000FF">Set </font>OperatedSplitPlate = OperatedSplitPlateRefs.Item(1)
+
+<font color="#008000">'Weld Use Case 1 features.</font>
+<font color="#0000FF">Dim </font>ListWeldsUC1<font color="#0000FF"> As </font>SfmWelds
+<font color="#0000FF">Set </font>ListWeldsUC1 = OperatedSplitPlate.GetWelds(OperatingSplitPlate)
+
+<font color="#0000FF">Dim </font>WeldUC1Feature<font color="#0000FF"> As </font>SfmWeld
+<font color="#0000FF">Set </font>WeldUC1Feature = ListWeldsUC1.Item(1)
+
+ustrWeldTypeUC1 = WeldUC1Feature.WeldType
+ustrAddedMaterialUC1 = WeldUC1Feature.AddedMaterial
+ustrFitUpUC1 = WeldUC1Feature.FitUp
+ustrEdgePrepUC1 = WeldUC1Feature.EdgePreparation
+
+<font color="#008000">'Weld Use Case 2 features.</font>
+<font color="#0000FF">Dim </font>ListWeldsUC2<font color="#0000FF"> As </font>SfmWelds
+<font color="#0000FF">Set </font>ListWeldsUC2 = OperatedSplitPlate.GetWelds(Nothing)
+
+<font color="#0000FF">Dim </font>WeldUC2Feature<font color="#0000FF"> As </font>SfmWeld
+<font color="#0000FF">Set </font>WeldUC2Feature = ListWeldsUC2.Item(1)
+
+ustrWeldTypeUC2 = WeldUC2Feature.WeldType
+ustrAddedMaterialUC2 = WeldUC2Feature.AddedMaterial
+ustrFitUpUC2 = WeldUC2Feature.FitUp
+ustrEdgePrepUC2 = WeldUC2Feature.EdgePreparation
+
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

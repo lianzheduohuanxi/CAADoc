@@ -1,0 +1,408 @@
+<html>
+
+<head>
+<title>Checklist for CAA V5 C++ Naming Rules</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td>
+      <h1>Rules and Standards</h1>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Checklist for CAA V5 C++ Naming Rules</h2>
+      <em>Standard name checklist for public CAA V5 C++ entities</em></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a directory"></a>Authorized Characters and
+Name Length</h3>
+<table width="100%">
+  <tr>
+    <th>Entity name</th>
+    <th>Automatic Test Tool</th>
+    <th>Results</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Authorized Characters</strong></td>
+    <td valign="top">mkscc (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Name length</strong></td>
+    <td valign="top">mkscc (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a directory"></a>Entities Associated with a
+Directory</h3>
+<p><strong>Note</strong>: CAT can be replaced by other valid prefixes (such as
+CAA, VPM, ENOV, and DNB) in the patterns below.</p>
+<table width="100%">
+  <tr>
+    <th>Entity Name</th>
+    <th>Entity Nature</th>
+    <th>Directory Naming Rule</th>
+    <th>Automatic Test Tool</th>
+    <th>Results</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Code Framework</strong></td>
+    <td valign="top">Physical grouping of classes, interfaces, macros, functions
+      dedicated to some specific task or domain.</td>
+    <td valign="top"><strong>CAT&lt;FWName&gt;</strong></td>
+    <td valign="top">mkscc (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Test Framework</strong></td>
+    <td valign="top">Physical grouping of classes, interfaces, macros, functions
+      dedicated to some specific task or domain.</td>
+    <td valign="top"><strong>CAT&lt;FWName&gt;.tst</strong></td>
+    <td valign="top">mkscc (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="CAAFrameworks"></a>CAA Frameworks</strong></td>
+    <td valign="top">Special kinds of frameworks that contain sample code and
+      documentation that is intended for delivery to final customer as CAA
+      products</td>
+    <td valign="top"><strong>CAA&lt;FWName&gt;.edu<br>
+      CAA&lt;FWName&gt;Doc.edu<br>
+      CAA&lt;FWName&gt;.tst</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Code Module</strong></td>
+    <td valign="top">Physical grouping of interrelated objects within a
+      framework, which defines the unit of code loading into main memory.</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;ModuleName&gt;.m</strong></td>
+    <td valign="top">mkscc (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="test"></a>Code Module (in test FW)</strong></td>
+    <td valign="top">Physical grouping of interrelated objects within a
+      framework, which defines the unit of code loading into main memory. Used
+      for testing the code delivered by a FW</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Tst&gt;&lt;ModuleName&gt;.m</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Code main module</strong></td>
+    <td valign="top">Utility code module, unique to a FW, that act as the union
+      of all the FW's modules when link editing other FWs modules.</td>
+    <td valign="top"><strong>CAT&lt;FWName&gt;&lt;number&gt;.m</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="DocModuleCAA"><strong></a>Doc Module in CAA Fws</strong></td>
+    <td valign="top">Logical grouping of related documents about a CAA
+      framework.</td>
+    <td valign="top"><strong>CAA&lt;FWAlias&gt;TechArticles.doc<br>
+      CAA&lt;FWAlias&gt;UseCase.doc<br>
+      CAA&lt;FWAlias&gt;QuickRefs.doc<br>
+      CAA&lt;FWAlias&gt;Base.doc</strong></td>
+    <td valign="top">
+      <p>.no</p>
+    </td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Entities associated to a file"></a>Entities Associated with a File</h3>
+<table width="100%">
+  <tr>
+    <th>Entity Name</th>
+    <th>Entity Nature</th>
+    <th>Entity and File Naming Rule</th>
+    <th>Automatic Test Tool</th>
+    <th>Results</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Simple Classes</strong></td>
+    <td valign="top">Standard C++ objects.</td>
+    <td valign="top"><strong>Class: CAT&lt;FWAlias&gt;&lt;ClassName&gt;<br>
+      File: CAT&lt;FWAlias&gt;&lt;ClassName&gt;.h<br>
+      File: CAT&lt;FWAlias&gt;&lt;ClassName&gt;.cpp</strong></td>
+    <td valign="top">mkscc except fwalias(deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Extension Classes</strong></td>
+    <td valign="top">Special implementation classes that extent another class or
+      a late type.</td>
+    <td valign="top"><strong>Class: CATE&lt;FWAlias&gt;&lt;ClassName&gt;<br>
+      File: CATE&lt;FWAlias&gt;&lt;ClassName&gt;.h<br>
+      File: CATE&lt;FWAlias&gt;&lt;ClassName&gt;.cpp</strong></td>
+    <td valign="top">mkscc except fwalias(deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Interfaces</strong></td>
+    <td valign="top">Object Modeler special classes that model an abstract
+      behavior that many classes may implement.</td>
+    <td valign="top"><strong>Interface :CATI&lt;FWAlias&gt;&lt;InterfaceName&gt;<br>
+      File: CATI&lt;FWAlias&gt;&lt;InterfaceName&gt;.h<br>
+      File: CATI&lt;FWAlias&gt;&lt;InterfaceName&gt;.cpp</strong></td>
+    <td valign="top">mkscc except fwalias(deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Automation Interfaces</strong></td>
+    <td valign="top">Special type of interfaces that allows CATIA programmation
+      from scripting environments.</td>
+    <td valign="top"><strong>Interface:
+      CATIA&lt;FWAlias&gt;&lt;InterfaceName&gt;<br>
+      File: CATIA&lt;FWAlias&gt;&lt;InterfaceName&gt;.idl<br>
+      File: CATIA&lt;FWAlias&gt;&lt;InterfaceName&gt;.h<br>
+      File: CATIA&lt;FWAlias&gt;&lt;InterfaceName&gt;.cpp</strong></td>
+    <td valign="top">mkscc except fwalias et idl (deactivated in 5.5)</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Interface Dictionaries</strong></td>
+    <td valign="top">File containing a correspondence table between
+      implementation classes or late types and the interfaces they implement.</td>
+    <td valign="top"><strong>File: CAT&lt;FWName&gt;.dico</strong> for CAA
+      customers<br>
+      <strong>File: CAT&lt;FWName&gt;.dic</strong> for DS</td>
+    <td valign="top">mkcheckarchi</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Factory Dictionaries</strong></td>
+    <td valign="top">File containing a correspondence table between a class, and
+      the factory interface that creates it.</td>
+    <td valign="top"><strong>File: CAT&lt;FWName&gt;.fact</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Global Functions and Variables</strong></td>
+    <td valign="top">C++ functions defined outside any class</td>
+    <td valign="top"><strong>Function/variable:
+      CAT&lt;FWAlias&gt;&lt;FunctionName&gt;<br>
+      File: CAT&lt;FWAlias&gt;&lt;FunctionName&gt;.h<br>
+      File: CAT&lt;FWAlias&gt;&lt;FunctionName&gt;.cpp</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Global <a name="Enumerated"></a>Enumerated Types</strong></td>
+    <td valign="top">Programmer-defined type with value limited to a predefined
+      list of named items.</td>
+    <td valign="top"><strong>Type: CAT&lt;FWAlias&gt;&lt;EnumName&gt;<br>
+      Value: Cat&lt;FWAlias&gt;&lt;EnumItemName&gt;<br>
+      File: CAT&lt;FWAlias&gt;&lt;EnumName&gt;.h</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Macros</strong></td>
+    <td valign="top">Piece of C++ code that is referenced by name is some other
+      code and expanded by compiler at buildl time.</td>
+    <td valign="top"><strong>Macro: CAT&lt;FWAlias&gt;&lt;MacroName&gt;<br>
+      File: CAT&lt;FWAlias&gt;&lt;MacroName&gt;.h</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Typedef</strong></td>
+    <td valign="top">C++ alias that defines a name as a substitute for another
+      name</td>
+    <td valign="top"><strong>Same as substituted name</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="NLS"></a>NLS resources</strong></td>
+    <td valign="top">File containing texts used as resources by code, and
+      subject to translation in foreign language</td>
+    <td valign="top"><strong>File: CAT&lt;FWAlias&gt;Name.CATNls</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong><a name="ResourceCat"></a>Resource catalogs</strong></td>
+    <td valign="top">Files containing non translatable resources</td>
+    <td valign="top"><strong>File: CAT&lt;FWAlias&gt;Name.CATRsc</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Icon files</strong></td>
+    <td valign="top">File containing the graphical definition of an icon.</td>
+    <td valign="top"><strong>File:
+      CAT&lt;FWAlias&gt;&lt;IconName&gt;.&lt;ext&gt;</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Feature catalogs</strong></td>
+    <td valign="top">File containing predefined feature definitions.</td>
+    <td valign="top"><strong>File: CAT&lt;FWAlias&gt;&lt;CatalogName&gt;.CATFct </strong>for
+      CAA customers<br>
+      <strong>File: CAT&lt;FWAlias&gt;&lt;CatalogName&gt;.feat </strong>for DS</td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UserInt"></a>User Interface Entities</h3>
+<table width="100%">
+  <tr>
+    <th>Entity Name</th>
+    <th>Entity Nature</th>
+    <th>Naming Rule</th>
+    <th>Automatic Test Tool</th>
+    <th>Results</th>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Command Header</strong></td>
+    <td valign="top">Proxy for a command in the application frame</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Hdr</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Workshop</strong></td>
+    <td valign="top">Set of workbenches associated with a document</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Wks</strong></td>
+    <td valign="top">.no</td>
+    <td valign="top">.</td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Workbench</strong></td>
+    <td valign="top">A grouping of process-related commands</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Wkb</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Toolbar</strong></td>
+    <td valign="top">A (sub) grouping of related commands</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Tlb</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Command Starter</strong></td>
+    <td valign="top">A command starter</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Str</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Separator</strong></td>
+    <td valign="top">A separator between two commands in a menu or a toolbar</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Sep</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Icon Box</strong></td>
+    <td valign="top">A grouping of icons</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Icb</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>MenuBar</strong></td>
+    <td valign="top">A list of menu accessors</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Mbr</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>Menu</strong></td>
+    <td valign="top">A list of command accessible by name</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Mnu</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><strong>SubMenu</strong></td>
+    <td valign="top">A (sub) list of command accessible by name</td>
+    <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;Name&gt;Snu</strong></td>
+    <td valign="top">no</td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Other entities"></a>Other Entities</h3>
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <th>Entity Name</th>
+      <th>Entity Nature</th>
+      <th>Naming Rule</th>
+      <th>Automatic Test Tool</th>
+      <th>Results</th>
+    </tr>
+    <tr>
+      <td valign="top"><strong>Features and Late Types</strong></td>
+      <td valign="top">Name that federates a number of interfaces as
+        characteristic of a type.</td>
+      <td valign="top"><strong>CAT&lt;FWAlias&gt;&lt;FeatureName&gt;<br>
+        CAT&lt;FWAlias&gt;&lt;LateTypeName&gt;</strong></td>
+      <td valign="top">no</td>
+      <td valign="top"></td>
+    </tr>
+    <tr>
+      <td valign="top"><strong><a name="Data"></a>Data Members</strong></td>
+      <td valign="top">Data associated to a class.</td>
+      <td valign="top"><strong>_&lt;DataName&gt;</strong></td>
+      <td valign="top">no</td>
+      <td valign="top"></td>
+    </tr>
+    <tr>
+      <td valign="top"><strong>Method or Function Arguments</strong></td>
+      <td valign="top">Arguments in function and method signatures.</td>
+      <td valign="top">Use:
+        <ul>
+          <li>The<strong> i</strong> prefix for input parameters
+          <li>The <strong>o</strong> prefix for output parameters
+          <li>The <strong>io</strong> prefix for input/output parameters</li>
+        </ul>
+      </td>
+      <td valign="top">mkscc (deactivated in 5.5)</td>
+      <td valign="top"></td>
+    </tr>
+  </tbody>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" valign="top">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

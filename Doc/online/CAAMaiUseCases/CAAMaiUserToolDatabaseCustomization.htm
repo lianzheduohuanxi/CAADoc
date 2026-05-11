@@ -1,0 +1,563 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Customizing User Tool Database Access</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>NC Review</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Customizing User Tool Database Access</h3>
+      <em>Implementing the CATIMfgResourceQueryUserDatabase interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiUserToolDatabaseCustomization use case
+      and explains how to implement the CATIMfgResourceQueryUserDatabase
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMaiUserToolDatabaseCustomization
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMaiUserToolDatabaseCustomization Do</a></li>
+            <li><a href="#How">How to Launch CAAMaiUserToolDatabaseCustomization</a></li>
+            <li><a href="#Where">Where to Find the
+              CAAMaiUserToolDatabaseCustomization Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you customize the tool database access by
+implementing the CATIMfgResourceQueryUserDatabase manufacturing interface. This
+involves the following:</p>
+<ul>
+  <li>Creating an extension class to implement CATIMfgResourceQueryUserDatabase
+    for CATMfgResourceQuery feature</li>
+  <li>Implementing all methods of CATIMfgResourceQueryUserDatabase to:
+    <ul>
+      <li>Connect and Reset to the user tool database</li>
+      <li>Make query on the user tool database</li>
+      <li>Output results for query on tool database access.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiUserToolDatabaseCustomization Use Case</h3>
+<p>CAAMaiUserToolDatabaseCustomization is a use case of the
+CAAManufacturingItf.edu framework that illustrates ManufacturingInterfaces
+framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiUserToolDatabaseCustomization Do</h4>
+<p>CAAMaiUserToolDatabaseCustomization runs with the Part document
+&quot;CAAMaiUserToolDatabaseCustomization.CATPart&quot;. After selecting the
+PrismaticMachining workbench, access to the Import Tools command and access the
+&quot;My_Tool_Database&quot; in the combo &quot;Look in&quot;, in order to make
+query in this customized Database.</p>
+<table>
+  <caption><a name="Fig1"></a>Fig. 1: The customized Tool Database Access editor</caption>
+  <tr>
+    <td><img border="0" src="images/CAAMaiUserToolDatabaseCustomization1.jpg" width="733" height="478"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMaiUserToolDatabaseCustomization</h4>
+<p>To launch CAAMaiUserToolDatabaseCustomization, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiUserToolDatabaseCustomization.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#'
+    character:</p>
+    <pre>CATMfgResourceQuery CATIMfgResourceQueryUserDatabase  libCAAMaiUserToolDatabaseCustomization</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open the CAAMaiUserToolDatabaseCustomization.CATPart file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\resources\graphic\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/resources/graphic/</code></td>
+      </tr>
+    </table>
+    <p><a><img border="0" src="images/CAAMaiUserToolDatabaseCustomization2.jpg" width="750" height="540"></a></p>
+  </li>
+  <li>Using the Start menu, select the Prismatic Machining workbench in NC
+    Manufacturing
+    <p><img border="0" src="images/CAAMaiDrillingNCWorkbench.jpg" width="397" height="215">
+    <p>This displays the PPR document:</p>
+    <p><img border="0" src="images/CAAMaiDrillingProcessDoc.jpg" width="619" height="421"></p>
+  </li>
+  <li>In the PPR Tree, select Manufacturing Program.1 and select the Import/List
+    Tools command in the Tool bar.</li>
+  <li>The following dialog box appears:
+    <p><img border="0" src="images/CAAMaiUserToolDatabaseCustomization3.jpg" width="458" height="478"></p>
+    <p><b>Note</b>: at this step, there is no result as Tool query as there is
+    no tool in the CATProcess document (default selection is made on current
+    document).</p>
+    <p>Then select the &quot;My_Tool_Database&quot; in the &quot;Look in&quot;
+    combo to invoke the query with no specific constraint on the Drilling tools</p>
+  </li>
+  <li>The simple query result is now available.
+    <p><img border="0" src="images/CAAMaiUserToolDatabaseCustomization1.jpg" width="733" height="478"></p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiUserToolDatabaseCustomization
+Code</h4>
+<p>The CAAMaiUserToolDatabaseCustomization use case is made of a class named <i>CAAEMaiUserToolDatabaseCustomization</i>
+located in the CAAMaiUserToolDatabaseCustomization.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CAAMaiUserToolDatabaseCustomization.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CAAMaiUserToolDatabaseCustomization.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are several steps in CAAMaiUserToolDatabaseCustomization:</p>
+<ol>
+  <li><a href="#Step1">Creating an Extension Class to Implement
+    CATIMfgResourceQueryUserDatabase</a></li>
+  <li><a href="#Step2">Implementing the Method for Displaying Information for
+    the Query Location in the Tool Query Window</a></li>
+  <li><a href="#Step3">Implementing the Methods for Database Connection and
+    Reset Connection</a></li>
+  <li><a href="#Step4">Implementing the Methods for Managing Query Constraints</a></li>
+  <li><a href="#Step5">Implementing the Methods for Execution of Query in
+    Database</a></li>
+  <li><a href="#Step6">Implementing the Methods for the Output of the Query
+    Result to Be Displayed</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating an Extension Class to Implement
+CATIMfgResourceQueryUserDatabase</h4>
+<p>The extension class that will implement <i>CATIMfgResourceQueryUserDatabase</i>
+is named <i>CAAEMaiUserToolDatabaseCustomization</i>. Creating this class is
+done is three sub steps:</p>
+<ol>
+  <li>Create the <i>CAAEMaiUserToolDatabaseCustomization</i> class header file:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATListOfInt.h&quot;
+#include &quot;CATListOfDouble.h&quot;
+#include &quot;CATListOfCATUnicodeString.h&quot;
+
+class CAAEMaiUserToolDatabaseCustomization : public CATBaseUnknown
+{
+  CATDeclareClass;
+  public: 
+    CAAEMaiUserToolDatabaseCustomization();
+    virtual ~CAAEMaiUserToolDatabaseCustomization();
+    virtual HRESULT InitConnection ();
+    virtual HRESULT ResetConnection ();
+    virtual HRESULT GetNamesToDisplay  (CATListOfCATUnicodeString &amp;oListNames);
+    virtual HRESULT Initialize (const CATUnicodeString &amp;iName, 
+                                const CATUnicodeString &amp;iType);
+    virtual HRESULT AddNameLikeConstraint  (const CATUnicodeString   &amp;iValue);
+    virtual HRESULT AddDiameterBetweenConstraint (const double &amp;iMinValue,
+                                                  const double &amp;iMaxValue,
+                                                  const CATUnicodeString   &amp;iUnit);
+    virtual HRESULT AddConstraint  (const CATUnicodeString   &amp;iAttribute, 
+                                    const int                &amp;iOperator,
+                                    const int                &amp;iValue);
+    virtual HRESULT AddConstraint  (const CATUnicodeString   &amp;iAttribute, 
+                                    const int                &amp;iOperator,
+                                    const double             &amp;iValue,
+                                    const CATUnicodeString   &amp;iUnit);
+    virtual HRESULT AddConstraint  (const CATUnicodeString   &amp;iAttribute, 
+                                    const int                &amp;iOperator,
+                                    const CATUnicodeString   &amp;iValue);
+    virtual HRESULT AddConstraints (const CATUnicodeString            &amp;iAttribute, 
+                                    const CATUnicodeString            &amp;iUnit,
+                                    const int                         &amp;iTypeValue,
+                                    const CATListOfInt                &amp;iOperators,
+                                    const CATListOfInt                &amp;iIntValues,
+                                    const CATListOfDouble             &amp;iDblValues,
+                                    const CATListOfCATUnicodeString   &amp;iStrValues,
+                                    const CATListOfInt                &amp;iLogLinks);
+    virtual HRESULT Execute();
+    virtual HRESULT GetResultSize(int &amp;NbElem);
+    virtual HRESULT GetDescription (const int                  &amp;iElem, 
+                                    CATListOfCATUnicodeString  &amp;oAttributes, 
+                                    CATListOfInt               &amp;oTypeValues, 
+                                    CATListOfInt               &amp;oNbValues,
+                                    CATListOfInt               &amp;oIntValues,
+                                    CATListOfDouble            &amp;DblValues, 
+                                    CATListOfCATUnicodeString  &amp;StrValues);
+    virtual HRESULT GetRepresentation (const int         &amp;iElem,
+                                       CATUnicodeString  &amp;oPathName);
+private:
+    CAAEMaiUserToolDatabaseCustomization(const CAAEMaiUserToolDatabaseCustomization &amp;iObjectToCopy);
+};</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserToolDatabaseCustomization</i> class C++-derives from <i>CATBaseUnknown</i>.
+    The <code>CATDeclareClass</code> macro declares that the class <i>CAAEMaiUserToolDatabaseCustomization</i>
+    belongs to a component. The class has a constructor, a destructor, all the
+    methods for the editor customization, and a copy constructor. Note that the
+    copy constructor is set as private. This is very important for extensions.
+    Since extensions must never be directly instantiated by client applications,
+    this prevents the compiler from creating the copy constructor as public
+    without you know. This copy constructor is not implemented in the source
+    file.</p>
+  </li>
+  <li>Create the <i>CAAEMaiUserToolDatabaseCustomization</i> class source file.
+    It begins as follows:<br>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+#include &quot;TIE_CATIMfgResourceQueryUserDatabase.h&quot;
+TIE_CATIMfgResourceQueryUserDatabase(CAAEMaiUserToolDatabaseCustomization);
+CATImplementClass(CAAEMaiUserToolDatabaseCustomization,
+                  DataExtension,                  
+                  CATBaseUnknown,
+                  CATMfgResourceQuery);
+...
+HRESULT CAAEMaiUserToolDatabaseCustomization::InitConnection()
+{
+  ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The <i>CAAEMaiUserToolDatabaseCustomization</i> class states that it
+    implements the <i>CATIMfgResourceQueryUserDatabase</i> interface thanks to
+    the <code>TIE_CATIMfgResourceQueryUserDatabase </code>macro. The <code>CATImplementClass</code>
+    macro declares that the <i>CAAEMaiUserToolDatabaseCustomization</i> class is
+    data extension class, thanks to the <code>DataExtension</code> keyword, and
+    that it extends the feature whose type is <i>Drilling</i>. The third
+    parameter must always be set to <i>CATBaseUnknown</i>, makes no sense, and
+    is unused for extensions.</p>
+    <p>Extending the <i>CATMfgResourceQuery</i> feature using the <i>CAAEMaiUserToolDatabaseCustomization</i>
+    class that implements <i>CATIMfgResourceQueryUserDatabase</i> means fitting
+    this feature with your customized behavior for drill tool editor which will
+    replace the default one. Some implementations method are shown in the next
+    steps. It has a smart pointer to the Process document manufacturing
+    container as input parameter, and a smart pointer to the created Resource
+    Query as output parameter.</p>
+  </li>
+  <li>Update the dictionary
+    <p>Update the interface dictionary, that is a file named, for example in
+    this case, CAAManufacturingItf.edu.dico, whose directory's pathname is
+    concatenated at run time in the CATDictionaryPath environment variable, and
+    containing the following declaration to state that the <i>Drilling</i>
+    feature implements the <i>CATIMfgResourceQueryUserDatabase</i> interface,
+    and whose code is located in the libCAAMaiUserToolDatabaseCustomization
+    shared library or DLL. Pay attention to remove the comment (#) in the
+    supplied dictionary.</p>
+    <pre>CATMfgResourceQuery CATIMfgResourceQueryUserDatabase libCAAMaiUserToolDatabaseCustomization</pre>
+    <p>The CAAManufacturingItf.edu.dico file is located in:</p>
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+      </tr>
+    </table>
+  </li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the Method for Displaying Information for
+the Query Location in the Tool Query Window</h4>
+<p>This method will allow the user to specify what will be the text displayed in
+the combo &quot;Look in&quot; for this user database access.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::GetNamesToDisplay (CATListOfATUnicodeString &amp;oListNames)
+{
+  ...
+  oListNames.Append (&quot;My_Tool_Database&quot;);
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a></h4>
+<h4>Implementing the Methods for Database Connection and Reset Connection</h4>
+<p>In the sample, the implementation of these methods is not complete due to the
+fact that in our example we are not trying to connect to any database but only
+display an hard-coded result.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::InitConnection()
+{
+  // Database Connection (call to Database connection Service)
+  ...
+}
+
+HRESULT CAAEMaiUserToolDatabaseCustomization::ResetConnection()
+{
+  // Reset Database Connection (call to Database reset connection Service)
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Implementing the Methods for Managing Query Constraints</h4>
+<p>In the use case, the implementation of these methods is not complete due to
+the fact that we are not trying to connect to any database but only display an
+hard-coded result.</p>
+<p>The first method is dedicated to initialize query. For example to check that
+searched object type is stored in the current database.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::Initialize()
+{
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The next method is dedicated to manage constraints definition in the query.
+For example, if the user defines through the tool selection panel a query like
+&quot;search the tool with Nominal Diameter greater than 10.00mm&quot;, that
+means the constraints will be defined with this method.</p>
+<p>In such a case the iAttribute argument will be MFG_NOMINAL_DIAM (see
+CATMfgToolConstant.h header file), then the iunit argument will be
+&quot;mm&quot;, iTypeValue will be 2 (for double), iOperators list will contain
+an interger with value 3, iIntValkues list will be empty (double value),
+iDblValues will contains double value 10.0, iStrValues will be empty and
+iLogLinks list will contains integrer value 0.</p>
+<p>For more information about legal values to define the input, please refer to <i>CATIMfgResourceQuery</i>
+interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::AddConstraints (const CATUnicodeString &amp;iAttribute,
+                                                              const CATUnicodeString &amp;iUnit,
+                                                              const int &amp;iTypeValue,
+                                                              const CATListOfInt &amp;iOperators,
+                                                              const CATListOfInt &amp;iIntValues,
+                                                              const CATListOfDouble &amp;iDblValues,
+                                                              const CATListOfCATUnicodeString &amp;iStrValues,
+                                                              const CATListOfInt &amp;iLogLinks)
+{
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Implementing the Methods for Execution of Query in
+Database</h4>
+<p>In the sample, the implementation of these methods is not complete due to the
+fact that in our example we are not trying to connect to any database but only
+display an hard-coded result.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::Execute()
+{
+  // Database query execution (call to Database query Service)
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Implementing the Methods for the Output of the Query
+Result to Be Displayed</h4>
+<p>The first method to implement provides the number of description found in the
+database for the defined query.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::GetResultSize( int &amp;oNbElements )
+{
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The second method to implement provides the output definition for the
+executed query, that means the result to be displayed</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAEMaiUserToolDatabaseCustomization::GetDescription (const int &amp;iNumber,
+                                                              CATListOfCATUnicodeString &amp;oAttributes,
+                                                              CATListOfInt &amp;oTypeValues,
+                                                              CATListOfInt &amp;oNbValues,
+                                                              CATListOfInt &amp;oIntValues,
+                                                              CATListOfDouble &amp;oDblValues,
+                                                              CATListOfCATUnicodeString &amp;oStrValues)
+{
+  ...
+  // Read the description of elements in database
+  // For this example the output is hard-coded for Drill Tool
+  // Length values should be given in mm unit
+  switch (iNumber)
+  {
+    case 1:
+      oAttributes.Append(MfgName);
+      oTypeValues.Append(3);
+      oNbValues.Append(1);
+      oStrValues.Append(&quot;My_Tool_01&quot;);
+
+      oAttributes.Append(MfgNominalDiameter);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(10.0);
+
+      oAttributes.Append(MfgCuttingAngle);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(120.0);
+
+      oAttributes.Append(MfgCuttingLength);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(30.0);
+
+      oAttributes.Append(MfgLength);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(50.0);
+
+      oAttributes.Append(MfgOverallLength);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(100.0);
+
+      oAttributes.Append(MfgBodyDiameter);
+      oTypeValues.Append(2);
+      oNbValues.Append(1);
+      oDblValues.Append(11.0);
+      break;
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to use the manufacturing interface
+classes, and has illustrated them on the customization of Tool Database query.
+It shows how to implement the CATIMfgResourceQueryUserDatabase interface to
+customize query on Tools objects in a User Database.</p>
+<p>The CATMfgResourceQuery feature behavior is modified by implementing
+CATIMfgResourceQueryUserDatabase in a data extension class. This class allows
+the end user to make its own query in an external database.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADmiBase/CAADmiHome.htm">Process
+      Modeler Home Page</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

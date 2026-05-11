@@ -1,0 +1,336 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Workbench Commands Mapping</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>RADE</h1>
+     </td>
+     <td valign="top">
+     <h2>JAVA Interactive Dashboard</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Workbench Commands Mapping</h3>
+     <p><em>Correspondence between Workbench commands and RADE Dashboard or IRAD menus</em></td>
+   </tr>
+   <tr>
+     <td class="quick" colspan="2">Quick Reference</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article has been written for those getting skills using Workbench 
+     commands [<a href="#References">1</a>], with Windows or Unix platforms. 
+     They will find here what are the menus corresponding to these commands and 
+     how command options have been mapped to graphic items such as check or 
+     combo boxes. This article can also be read if you want to work on Unix 
+     platforms where only shell commands are available. It is a way for them to 
+     find the commands hidden behind IBM Rational 
+     Software Development Platform (IRAD).</p>
+     <p>Some conventions are used in this article:</p>
+     <ol>
+       <li>Labels of buttons or menus which are extracted from
+       IRAD are written using <code>
+       <font color="#008040">this format</font></code>.</li>
+       <li>Except for the commands written below in the summary, when command 
+       names appear as hypertext links, they refer to the corresponding command 
+       reference pages.</li>
+     </ol>
+     <p>This article is divided into the following sections:</p>
+     <ul>
+       <li><a href="#Set_up_working_environment"><strong>Setting up the Working 
+       Environment</strong></a></li>
+       <li><a href="#Mkmk_commands"><strong>mkmk Commands</strong></a>
+       <ul>
+         <li><a href="#Run_mkmk">mkmk</a></li>
+         <li><a href="#mkGMake">mkGMake</a></li>
+         <li><a href="#Create_the_Runtime_View">mkCreateRuntimeView</a></li>
+         <li><a href="#Set_workspace_prerequisites">mkGetPreq</a></li>
+         <li><a href="#Set_workspace_prerequisites">mkCopyPreq</a></li>
+         <li><a href="#Copy_framework_s_">mkCopyFw</a></li>
+         <li><a href="#Replay_test_objects">mkodt</a></li>
+       </ul>
+       </li>
+       <li><a href="#Access_commands_having_no_associated_men"><strong>Accessing 
+       Commands Without Associated Menu Item</strong></a></li>
+       <li><strong><a href="#References">References</a></strong></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Set_up_working_environment"></a>Setting up the Working Environment</h3>
+ <table width="100%">
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h4>With Windows platform:</h4>
+     <p>Execute the following commands to access mkmk: </p>
+     <ul>
+       <li>tck_init.bat</li>
+       <li>tck_profile CXR17</li>
+     </ul>
+     <h4>With Unix platform:</h4>
+     <p>Execute the following commands to access mkmk:</p>
+     <ul>
+       <li><b>. </b>tck_init.bat</li>
+       <li>tck_profile CXR17</li>
+     </ul>
+     </td>
+     <td valign="top">
+     <ol>
+       <li>In the <code><font color="#008040">Navigator</font></code> view, 
+       right-click a project and select <font color="#008040"><code>Open 
+       CAAV5 Workspace</font></code>.</li>
+     </ol>
+     <p><img src="images/MsDev6bisirad6.gif" width="489" height="323"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Mkmk_commands"></a>mkmk Commands</h3>
+ <h4><a name="Set_workspace_prerequisites"></a>Setting Workspace Prerequisites</h4>
+ <table width="100%">
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">There are two ways to set prerequisites: you can copy them 
+     into your workspace with mkCopyPreq or register the workspace containing 
+     them:
+     <ol>
+       <li><code>mkCopyPreq</code>: static access</li>
+       <li><code>mkGetPreq</code>: dynamic access</li>
+     </ol>
+     <p>In the window displayed in the right side, the <code>
+     <font color="#008040">Copy prereq ..</font></code>. radio button 
+     corresponds to the <code>mkCopyPreq</code> command and the <code>
+     <font color="#008040">Use Prereq ..</font></code>. radio button corresponds 
+     to the <code>mkGetPreq</code> command. In this example, the corresponding 
+     command is:</p>
+     <pre>mkGetPreq -p
+  H:\BSF;E:\Program Files\Dassault Systemes\B17D04</pre>
+     </td>
+     <td valign="top">
+     <ul>
+       <li>From the <code><font color="#008040">CAA Project</font></code> menu, 
+       select <code><font color="#008040">Get Prerequisites..</font></code>..</li>
+     </ul>
+     <p><img border="0" src="images/MsDev15irad6.gif" width="624" height="579"></p>
+     <p>Note that the first directory you set in the list will be the first 
+     browsed when searching for prerequisites. You can change directories order 
+     by selecting a directory in the list and clicking the arrow Up and Down 
+     buttons.</p>
+     <p>You can specify additional options by clicking the <font color="#008040">
+     <code>Specify other options</font></code> 
+     button, which is especially useful for the <code>mkCopyFw</code> command.</p>
+     <ul>
+       <li><font color="#008040"><code>Access prerequisites from their orgin 
+       location</code></font>: Gives you dynamic access (<code>mkGetPreq</code>).</li>
+       <li><font color="#008040"><code>Copy prerequisites from origin location 
+       to current workspace</code></font>: Gives you static (<code>mkCopyPreq</code>) 
+       access.</li>
+       <li><font color="#008040"><code>Copy prerequisites from origin location 
+       to a local directory and acc</code></font>: Combines both modes by 
+       copying your prerequisites in a directory different from your own (mkCopyPreq 
+       to an other directory, followed by mkGetPreq referencing this directory).</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Copy_framework_s_"></a>Copying a Framework</h4>
+ <table width="100%">
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">The command used to copy framework(s) from a workspace to 
+     another is <code>mkCopyFw</code>. Our sample dialog box corresponds to this 
+     command:
+     <pre>mkCopyFw -update VisualStudio -d</pre>
+     <p>Using the dialog box, you enter the path of the origin workspace(s) in 
+     the top list, then type the name of the framework(s) you want to copy (use 
+     &lt;space&gt; between two framework names), you can filter the modules to copy by 
+     clicking on the Add... button associated with the middle list (at least one 
+     framework name must have been typed in before).</td>
+     <td>
+     <ul>
+       <li>From the <font color="#008040"><code>CAA Project</font></code> menu, 
+       select <code><font color="#008040">Copy Framework..</font></code>.. </li>
+     </ul>
+     <p><img src="images/MsDev16irad6.gif" width="489" height="399"></p>
+     <p>The check boxes in the <code><font color="#008040">Copy Options</font></code> 
+     area correspond, from top to bottom, to the following options: <code>-nm</code>,
+     <code>-no</code>, <code>-d</code>, <code>-f</code>, <code>-update</code> 
+     and -<code>remove</code>. </td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Run_mkmk"></a>Running mkmk</h4>
+ <table width="100%">
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">Run <code>mkmk</code> with appropriate options regarding 
+     the current directory and what you wand to compile. For instance:<pre>$ mkmk -ug EnoviaDMC</pre>
+     <pre>$ cd VisualStudio
+$ mkmk -ug CATVBTDevBase.m</pre>
+     <p>Advanced users can take benefit from the <a name="mkGMake"></a><code>
+     mkGMake</code> tool to compile just one file or to link a library. This is 
+     faster than running mkmk. This feature is available in <em>IRAD</em> 
+     through the usual keyboard shortcuts which have been changed to run the 
+     CAAV5 builders: <code><font color="#008040">Ctrl-F7</font></code> and <code>
+     <font color="#008040">F7</font></code>.</p>
+     <ul>
+       <li>Ctrl-F7 starts the compilation of all source files in the current 
+       active project.</li>
+       <li>F7 starts the link of the project (module) corresponding to the 
+       source file currently active.</li>
+     </ul>
+     </td>
+     <td valign="top">
+     <ul>
+       <li>From the <font color="#008040"><code>CAA Project</font></code> menu, 
+       select <font color="#008040"><code>mkmk</font></code></li>
+       <li>select mkmk options, select the various modules, frameworks or whole 
+       workspace that you wish to compile and type additional options if any.</li>
+     </ul>
+     <p><img border="0" src="images/MsDev13irad6.gif" width="532" height="468"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Create_the_Runtime_View"></a>Create the Runtime View</h4>
+ <table>
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">The command to build a Runtime View from a 
+     workspace is mkrtv
+     <p>The items of the dialog boxes correspond respectively to <code>-c</code>,
+     <code>-d</code>, and <code>-k</code> options of the command.</td>
+     <td>
+     <ul>
+       <li>From the <font color="#008040"><code>CAA Project</font></code> menu, 
+       select <code><font color="#008040">Create/Update Runtime View...</font></code>.</li>
+     </ul>
+     <p><img src="images/MsDev17.gif" width="302" height="287"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Replay_test_objects"></a>Replay test objects</h4>
+ <table width="100%">
+   <tr>
+     <th>In a DOS/shell Window</th>
+     <th>From Interactive Dashboard</th>
+   </tr>
+   <tr>
+     <td valign="top">Test objects that are delivered in a <strong>test</strong> 
+     framework of CAAV5 workspace can be run using <code>mkodt</code> command.
+     <p>The test objects selected in the right side of the dialog box are 
+     specified using <code>-s</code> option on the command line.</td>
+     <td valign="top">
+     <ul>
+       <li>From the <font color="#008040"><code>CAA Project</font></code> menu, 
+       select <code><font color="#008040">Replay test-cases...</font></code>.</li>
+     </ul>
+     <p>The following window appears displaying the test objects found in test 
+     frameworks of your workspace. Select which ones you want to run and click
+     <code><font color="#008040">OK</font></code>.</p>
+     <p>You can also define additional variables, to take them into account only 
+     during the replay.</p>
+     <p><img src="images/MsDev18irad6.gif" width="585" height="613"></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Access_commands_having_no_associated_men"></a>Accessing Commands 
+ without Associated Menu Item</h3>
+ <p>Once a workspace has been opened (for mkmk and/or for Workspace Manager 
+ usage), any command launched from IRAD 
+ inherits environment variables and paths and thus can access mkmk or Workspace 
+ Manager commands. One command that can be run is the DOS interpreter. To do so, 
+ from the <code><font color="#008040">Window</font></code> menu, select <code>
+ <font color="#008040">Open command window</font></code>. In this window, you 
+ are able to access Workspace Manager or mkmk commands and therefore any command 
+ for which no interface is provided in IRAD.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAABtlQuickRefs/CAABtlMANMkThemIx.htm">
+     Summary of Commands around mkmk</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td valign="top"><a href="CAAVBTJavaDashboardirad6.htm">Customizing
+     >IBM Rational Software Development Platform</a> </td>
+   </tr>
+   <tr>
+     <td valign="top">[4]</td>
+     <td valign="top"><a href="CAAVBTMsDevUseirad6.htm">Working with the RADE 
+     Dashboard</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>2</strong> [May 2003]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top">Version: <strong>3</strong> [June 2005]</td>
+     <td valign="top">Document updated</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

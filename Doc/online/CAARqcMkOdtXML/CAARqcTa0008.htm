@@ -1,0 +1,254 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/caav5.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>How to Use a Debugger</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>How to Use a Debugger</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="tech">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This article shows you how to use a debugger with mkodt.</p>
+		<ul>
+			<li><a href="#Start">Starting the Debugger with mkodt</a></li>
+			<li><a href="#Managing">Managing the Debugging Environment with Windows</a></li>
+			<li><a href="#InShort">In Short</a></li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td class="Intro2">
+			<hr class="header" />
+		<span class="run-in">Before you begin</span>, note that:
+		<ul>
+			<li>You should have first set some breakpoints in the source code you 
+				want to debug.</li>
+			<li>You must have build this code using the -g option of mkmk.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Start"></a>Starting the Debugger with mkodt</h2>
+<p>To debug a load module, you must use the -b and -B options:</p>
+<ul>
+	<li>The default debugger the mkodt command uses is:
+		<ul>
+			<li>Windows: devenv (Microsoft Visual Studio)</li>
+			<li>AIX: xldb</li>
+		</ul>
+	</li>
+	<li>You can change this debugger with AIX to dbx, thanks to the -B option.
+		<pre class="code">mkodt -d ... -s MyODT -b Module -B dbx</pre>
+	</li>
+	<li>Debugging on Windows:
+		<p>To use Microsoft Visual Studio (devenv.exe) as debugger type</p>
+		<pre class="code">mkodt -d ... -s MyODT -b Module</pre>
+		<p>Or:</p>
+		<pre class="code">mkodt -d ... -s MyODT -B devenv -b Module</pre>
+		<p>devenv is launched with the module set using the -b option to debug. 
+		By default, when you execute your module, you will have a window to save 
+		your solution. The solution file will contain your debug environment (opened 
+		sources in VC10, breakpoints, etc.). This file could be used for another 
+		debug with mkodt to keep your environment.</p>
+		<p>
+		<img alt="Debugging with Visual Studio" height="286" onclick="showImg('images/CAARqcVS.png', 1124, 766)" onmouseover="this.style.cursor='pointer'" src="images/CAARqcVSS.png" title="Debugging with Visual Studio.
+Click to enlarge" width="420"/></p>
+		<p>The module passed using the -b option is set as a project of the <kbd>
+		Solution Explorer</kbd>.</p>
+		<ol class="task">
+			<li>
+				<p>In the <kbd>Solution Explorer</kbd>, right click the module</p>
+			</li>
+			<li>
+				<p>Point to <kbd>Debug</kbd>, and click <kbd>Step Into new instance</kbd>.</p>
+				<p>The source file containing the module main opens, and the execution 
+				stops at the first instruction.</p>
+			</li>
+			<li>
+				<p>Go on debugging this module. When you have finished and want 
+				to stop debugging, you have three possibilities to manage the debugging 
+				environment. They are detailed below.</p>
+			</li>
+		</ol>
+	</li>
+</ul>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Managing"></a>Managing the Debugging Environment with Windows</h2>
+<p>When you stop debugging, you have three possibilities:</p>
+<ol>
+	<li><strong>You want to save the solution in the default code\bin folder as 
+		suggested by Visual Studio, if this folder is not read-only, to use it later 
+		when launching mkodt again with the -b option. Recommended.</strong>
+		<ol class="task">
+			<li>
+				<p>In the dialog box proposing you to save the solution, click
+				<kbd>Yes</kbd>.</p>
+				<p>The <kbd>Save File As</kbd> dialog box opens.</p>
+			</li>
+			<li>
+				<p>In the <kbd>Save File As</kbd> dialog box, leave the folder and 
+				solution proposed by default.</p>
+				<p>This is the code/bin folder where the debugged module is located 
+				in.</p>
+			</li>
+			<li>
+				<p>Click <kbd>Save</kbd>.</p>
+				<p>The solution is saved in the run time view and Visual Studio 
+				closes.</p>
+			</li>
+		</ol>
+		<p>To load this saved solution again using mkodt and debug it, you just 
+		have to launch:</p>
+		<pre class="code">mkodt -s MyODT -B devenv -b MyModule</pre>
+		<p>Then you can display the source files, add breakpoints, and debug your 
+		module. Since the solution file is found in the same folder than MyModule.exe, 
+		mkodt loads it by default in Visual Studio to get your saved debug environment.
+		</p>
+	</li>
+	<li><strong>You want to save the solution in another folder than the code\bin 
+		default suggestion to be able to load it with mkodt later.</strong>
+		<ol class="task">
+			<li>
+				<p>In the dialog box proposing you to save the solution, click
+				<kbd>Yes</kbd>.</p>
+				<p>The <kbd>Save File As</kbd> dialog box opens.</p>
+			</li>
+			<li>
+				<p>In the <kbd>Save File As</kbd> dialog box, select the folder 
+				to which you want to save the solution, such as C:\Temp\MyModule.sln.</p>
+			</li>
+			<li>
+				<p>Click <kbd>Save</kbd>.</p>
+				<p>The solution is saved in the selected folder. </p>
+			</li>
+		</ol>
+		<p>To load this saved solution again using mkodt and debug it, you just 
+		have to launch:</p>
+		<pre class="code">mkodt -s MyODT -B devenv=C:\Temp\MyModule.sln -b MyModule</pre>
+		<p>Then you can display the source files, add breakpoints, and debug your 
+		module.</p>
+		<p><strong>Note</strong>: By default, if you give a solution file in the 
+		mkodt command line and if another solution with the same name exists in 
+		the code\bin foder, this last one is ignored and the solution designated 
+		on the command line is loaded in Visual Studio.</p>
+		<table class="Remark">
+			<tr>
+				<td class="Remark"><span class="run-in">Warning</span>: If you save 
+				a solution file in the code\bin directory or in another directory, 
+				the executable options given in the ODT are saved. So, if you want 
+				to debug another ODT that launches the same executable, you must 
+				move or remove the solution file to take in account new options 
+				of the executable.</td>
+			</tr>
+		</table>
+	</li>
+	<li><strong>You do not want to save the solution and you do not want to have 
+		this window</strong> each time you launch mkodt in debug mode. Do the following 
+		setting in Visual Studio:
+		<ol class="task">
+			<li>
+				<p>Click <kbd>Cancel</kbd> in the <kbd>Save File As</kbd> dialog 
+				box and your module will run.</p>
+			</li>
+			<li>
+				<p>Modify the setting to prevent the <kbd>Save File As</kbd> dialog 
+				box to be displayed:</p>
+				<ol class="task1">
+					<li>
+						<p>On the <kbd>Tools</kbd> menu, click <kbd>Options</kbd>.</p>
+						<p>The <kbd>Options</kbd> dialog box opens.</p>
+						<p>
+						<img alt="Options Dialog Box" height="440" src="images/CAARqcVC.png" width="757"/></p>
+					</li>
+					<li>
+						<p>In the left pane, click <kbd>Projects and Solutions</kbd>.</p>
+					</li>
+					<li>
+						<p>Click <kbd>Build and Run</kbd>.</p>
+					</li>
+					<li>
+						<p>In the <kbd>Before building</kbd> list, select <kbd>Don't 
+						save any changes</kbd>.</p>
+					</li>
+					<li>
+						<p>Click <kbd>OK</kbd>.</p>
+					</li>
+				</ol>
+			</li>
+			<li>
+				<p>When you close Visual Studio, the following dialog box appears.</p>
+				<p>
+				<img alt="Save Dialog Box" height="329" src="images/CAARqcVCSave.png" width="459"/></p>
+			</li>
+			<li>
+				<p>Click <kbd>No</kbd> to avoid saving the solution file.</p>
+			</li>
+		</ol>
+	</li>
+</ol>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: The solution created 
+		by Visual Studio that you can save according to items 1 or 2 above retrieves 
+		the possible breakpoints that you might have set in the source file to debug 
+		from a 3DS workspace projected as a solution using the C++ Dashboard 
+		[<a href="#References">1</a>]. Once this solution is created, 
+		the projected solution from which it originates keeps no link to it. If 
+		you need to do some code changes to fix the defect, they must be done in 
+		the 3DS workspace projected solution from within the C++ Dashboard, to be able to rebuild this workspace/solution with mkmk.</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>You can debug an executable module from mkodt thanks to its -b and -B option. 
+With Windows, you can save in a temporary solution your debug environment wit the 
+breakpoints you may have added. You can reload from mkodt this temporary solution.
+</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="#" onclick="CAAlinkOutOfPreqs('CAACenWeb/CAACenV5RADECppDashboardHome.htm'); return false;">
+		C++ Dashboard</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2013]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

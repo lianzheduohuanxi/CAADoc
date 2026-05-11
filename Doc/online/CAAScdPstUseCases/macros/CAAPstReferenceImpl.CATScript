@@ -1,0 +1,102 @@
+' COPYRIGHT DASSAULT SYSTEMES 2003
+
+' *****************************************************************************
+'   Purpose:       Use case for the interface reference
+'   Assumtions:    Opens CstOnPublish.CATProduct
+'   Author:
+'   Languages:   VBScript
+'   Locales:     English
+'   CATIA Level: V5R6
+' *****************************************************************************
+
+Sub CATMain()
+    ' -----------------------------------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String
+    sDocPath = CATIA.SystemService.Environ("CATDocView")
+    'MsgBox sDocPath
+    
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999, , "No Doc Path Defined"
+    End If
+    ' ------------------------------------------------------------------------------------------------
+    ' Open the Product document
+    Dim oDoc As Document
+    Set oDoc = CATIA.Documents.Open(sDocPath & _
+                                    "CAAPstPublicationValuation.CATProduct")
+    '
+    ' --------------------------
+    ' Get the different products
+    ' --------------------------
+    Dim oRootProduct As Product
+    Set oRootProduct = CATIA.ActiveDocument.Product
+    
+    Dim oPlate As Product
+    Set oPlate = CATIA.ActiveDocument.Product.Products.Item("Plate.1")
+    
+    Dim oScrew1 As Product
+    Set oScrew1 = CATIA.ActiveDocument.Product.Products.Item("Screw.1")
+    
+    ' --------------------------------------
+    ' Declare variables to handle publications
+    ' --------------------------------------
+    Dim oPlatePub As Publication
+    Dim oPlateRef As Reference
+    
+    Dim oScrewPub As Publication
+    Dim oScrewRef As Reference
+    
+    Dim res As VbMsgBoxResult
+    
+    '  ---> Plate\Top
+    Set oPlatePub = oPlate.Publications.Item("Top")
+    Set oPlateRef = oPlatePub.Valuation
+    res = MyMsgBox(oPlateRef.DisplayName, vbOKOnly, "oPlateRef.DisplayName=")
+   
+    '  ---> Screw1\HeadBottom
+    Set oScrewPub = oScrew1.Publications.Item("HeadBottom")
+    Set oScrewRef = oScrewPub.Valuation
+    
+    '---> Screw1 ref\Display name
+    Dim DisplayName As String
+    DisplayName = oScrewRef.DisplayName
+    res = MyMsgBox(DisplayName, vbOKOnly, "oScrewRef.DisplayName=")
+    
+    '---> Screw1 ref\Application
+    Dim AppName As String
+    AppName = oScrewRef.Application.ActiveDocument.Name
+    res = MyMsgBox(AppName, vbOKOnly, "oScrewRef.Application.ActiveDocument.Name=")
+    
+    '---> Screw1 ref\put_name
+    ''oScrewRef.Name = "screw_test_set_name"
+    
+    '---> Screw1 ref\get_name
+    Dim RefName As String
+    RefName = oScrewRef.Name
+    res = MyMsgBox(RefName, vbOKOnly, "oScrewRef.Name=")
+    
+    '---> Screw1 ref\parent
+    Dim RefParentName As String
+    RefParentName = oScrewRef.Parent.Name
+    res = MyMsgBox(RefParentName, vbOKOnly, "oScrewRef.Parent.Name=")
+    
+    '---> Screw1 ref\GetItem - line.3
+    ''Dim l As Line
+    ''Set l = oScrewRef.GetItem("Line.3")
+    ''res = MyMsgBox(l.Name, vbOKOnly, "l.Name=")
+    
+    '---> Screw1 ref\ComposeWith
+    Dim oCompositeRef As Reference
+    ''Set oCompositeRef = oPlateRef.ComposeWith(oScrewRef)
+    ''res = MyMsgBox(oCompositeRef.DisplayName, vbOKOnly, "oCompositeRef.DisplayName=")
+End Sub
+
+
+Private Function MyMsgBox(ByVal iMessage As String, style As VbMsgBoxStyle, title As String) As VbMsgBoxResult
+    If (CATIA.SystemService.Environ("NoMsgBox") = "") Then
+        MyMsgBox = MsgBox(iMessage, style, title)
+    End If
+End Function
+
+
+

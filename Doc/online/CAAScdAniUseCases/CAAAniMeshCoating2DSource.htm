@@ -1,0 +1,99 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>CAAAniMeshCoating2D.catvbs</TITLE>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</HEAD>
+
+<BODY>
+
+<PRE>
+<FONT COLOR="#008000">'COPYRIGHT DASSAULT SYSTEMES 2000</FONT>
+
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+<FONT COLOR="#008000">'  Purpose:      Open an analysis document</FONT>
+<FONT COLOR="#008000">'                Create coating 2D mesh part</FONT>
+<FONT COLOR="#008000">'                assigning the solid mesh as support</FONT>
+<FONT COLOR="#008000">'                specify the global specifications</FONT>
+<FONT COLOR="#008000">'  Assumptions:   Looks for Cube_R13_Freq.CATAnalysis in the directory and Octree mesh part</FONT>
+<FONT COLOR="#008000">'                mesh part</FONT>
+<FONT COLOR="#008000">'  Author:       bmw</FONT>
+<FONT COLOR="#008000">'  Languages:    VBScript</FONT>
+<FONT COLOR="#008000">'  Locales:      English </FONT>
+<FONT COLOR="#008000">'  CATIA Level:  V5R16</FONT>
+<FONT COLOR="#008000">'***********************************************************************</FONT>
+
+
+<FONT COLOR="#0000FF">Sub </FONT>CATMain()
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">'Optional: allows to find the sample wherever it&#39;s installed</FONT>
+  sDocPath=CATIA.SystemService.Environ("CATDocView")
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,"No Doc Path Defined"
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">'----------------------------------------------------------- </FONT>
+
+
+<FONT COLOR="#008000">'Open the CATAnalysis Document</FONT>
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+
+
+<FONT COLOR="#008000">'Retrieve the analysis Manager </FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisManager = oAnalysisDocument.Analysis
+
+
+<FONT COLOR="#008000">'Retrieve the part document and product</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisLinkedDocuments = oAnalysisManager.LinkedDocuments
+<FONT COLOR="#0000FF">Set </FONT>partDocument = oAnalysisLinkedDocuments.Item(1)
+<FONT COLOR="#0000FF">Set </FONT>product = partDocument.Product
+
+
+<FONT COLOR="#008000">&#39;Retrieve the published face</FONT>
+<FONT COLOR="#0000FF">Set </FONT>publications1 = product.Publications
+<FONT COLOR="#0000FF">Set </FONT>pubFace = publications1.Item("Top")
+
+
+<FONT COLOR="#008000">'Retrieve the analysis model</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisModel = oAnalysisModels.Item(1)
+
+<FONT COLOR="#008000">&#39;Retrieve The mesh manager and the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshManager = oAnalysisModel.MeshManager 
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+
+<FONT COLOR="#008000">&#39;Retrieve the already existing Octree mesh part</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisMeshPart = oAnalysisMeshParts.Item(1)
+
+<FONT COLOR="#008000">&#39;Create reference from the mesh part</FONT>
+<FONT COLOR="#0000FF">Set </FONT>reference1 = oAnalysisManager.CreateReferenceFromObject(oAnalysisMeshPart)
+
+<FONT COLOR="#008000">&#39;Add the coating2D mesh to the list of mesh parts</FONT>
+<FONT COLOR="#0000FF">Set </FONT>coat2D = oAnalysisMeshParts.Add ("MSHPart2DCoating") 
+
+<FONT COLOR="#008000">&#39;Add the reference previously created</FONT>
+coat2D.AddSupportFromReference NOTHING, reference1
+
+<FONT COLOR="#008000">&#39;Set the global specifications</FONT>
+coat2D.SetGlobalSpecification "ExtractionType", 1
+</PRE>
+<PRE>
+<FONT COLOR="#008000">&#39;Add the local specification</FONT>
+<FONT COLOR="#0000FF">Set </FONT>meshSpecs = coat2D.AnalysisMeshLocalSpecifications
+<FONT COLOR="#0000FF">Set </FONT>spec = meshSpecs.Add("MSHCoatingLocalSpecification")
+spec.SetAttribute "LocalExtractionType", 2
+
+spec.AddSupportFromPublication "ConnectorList", product, pubFace
+
+
+<FONT COLOR="#008000">&#39;Update the mesh part</FONT>
+coat2D.Update
+
+<FONT COLOR="#0000FF">End Sub</FONT>
+</PRE>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,475 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>MechanicalModeler Class CATMmrImportComparator</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../MechanicalModeler.htm" href="../MechanicalModeler.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "MechanicalModeler";	}
+		function getCurrentObjectName() { 
+ 	return "CATMmrImportComparator"; } 
+	function getCurrentType() { 
+ 	return "class"; }  
+ function writeClassCharacteristic() { 
+ 	    var objtype = getCurrentType(); 
+ 	    var objname = getCurrentObjectName(); 
+ 	    var objdsCh = getDsCharacteristic(objname, objtype); 
+ 	    if (objdsCh!=null) document.write(objdsCh); 
+ 	} 
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>MechanicalModeler <script type="text/javascript" > writeClassCharacteristic(); </script> CATMmrImportComparator</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('class_CATMmrImportComparator_39571','CATMmrImportComparator','0');</script>
+<p><b>Usage: you must use this class as is. You should never derive it.</b></p>
+<hr>
+<p>
+ public class <b>CATMmrImportComparator</b>
+</p>
+<p>
+<b><i> Class to analyse differences between two mechanical Import.</i></b><br>
+ 
+ <br><b>Role</b>: 
+ This class offers services for retrieving the missing or differently Named Elements between two Inter Part Import Features. 
+ One of this import feature is called <tt>“Main Feature”</tt> and the other <tt>“Feature to Compare”</tt>.
+ <p> A Named Element (see Generic Naming Overview for more details ) is a Face for volumes, a Face or Border Edge for surfaces,
+ an Edge or a Border Vertex for wires.
+ Some Elements may have a geometry which look the same but not have the same naming because they are constructed differently.
+ The naming of an element may be kept even when there is a change of connectivity.
+ Elements on an import feature have their own naming, but to be able to synchronize them
+ ( and keep the stability ) Imports also keep the naming of Elements referenced in the import.</p>
+ So when you compare two import features :<ul>
+ <li>Some Named Elements of the <tt>“Main Feature”</tt> may be missing in the <tt>“Feature to Compare”.</tt></li>
+ <li>Some Named Elements can have the same import naming but a different reference naming (and usually a different geometry).</li>
+ <li>Some Named Elements may have the same naming (import and reference naming) but a change of conectivity.</li></ul>
+
+ <br><b>Usage</b>:<ul>
+ <li>You first need to define the import feature to compare with the methods 
+ <script type="text/javascript"> activateLinkAnchor('','SetMainFeature','SetMainFeature') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','SetFeatureToCompare','SetFeatureToCompare') </script>,</li> <li>You need to chose the mode of comparison 
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script> with the method 
+<script type="text/javascript"> activateLinkAnchor('','SetMode','SetMode') </script>,</li> <li>You run the operator by using the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script>,</li> <li>You get the result by using one of the methods as 
+<script type="text/javascript"> activateLinkAnchor('','GetMissingElements','GetMissingElements') </script>.</li></ul>
+ <br><b>Notes</b>:<ul>
+ <li>You can change at any time the <tt>“Main Feature”</tt> or the <tt>“Feature to Compare”.</tt> <b>but</b>
+ the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> need to be called before any <tt>Get methods</tt>.</li> <li>You also can change the mode at any time <b>but</b>
+ the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> need to be called after, and some <tt>Get methods</tt> may be invalid if the mode is not set on the good level.</li>
+</ul>
+</p>
+<hr>
+ <h2>Constructor and Destructor Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#CATMmrImportComparator()"><b>CATMmrImportComparator</b></a>()
+<dd>  Constructor.
+ <dt> o 
+    <a href="#~CATMmrImportComparator()"><b>~CATMmrImportComparator</b></a>()
+<dd>  Destructor.
+</dl>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetMissingElements(CATLISTV(CATIBRepAccess_var)&amp;)"><b>GetMissingElements</b></a>(CATLISTV(CATIBRepAccess_var)&amp;)
+<dd>  This method gets the Elements from the "Main Feature" Missing in the "Feature to Compare".
+ <dt> o 
+    <a href="#GetModifiedConnectivityElementsInMain(CATLISTV(CATIBRepAccess_var)&amp;)"><b>GetModifiedConnectivityElementsInMain</b></a>(CATLISTV(CATIBRepAccess_var)&amp;)
+<dd>  This method gets the Elements of the "Main Feature" with same naming but a change of connectivity.
+ <dt> o 
+    <a href="#GetModifiedConnectivityElementsInToCompare(CATLISTV(CATIBRepAccess_var)&amp;)"><b>GetModifiedConnectivityElementsInToCompare</b></a>(CATLISTV(CATIBRepAccess_var)&amp;)
+<dd>  This method gets the Elements of the "Feature to Compare" with same naming but a change of connectivity.
+ <dt> o 
+    <a href="#GetModifiedReferenceNamingElementsInMain(CATLISTV(CATIBRepAccess_var)&amp;)"><b>GetModifiedReferenceNamingElementsInMain</b></a>(CATLISTV(CATIBRepAccess_var)&amp;)
+<dd>  This method gets the Elements of the "Main Feature" with same naming in the Import but different naming in the Reference.
+ <dt> o 
+    <a href="#GetModifiedReferenceNamingElementsInToCompare(CATLISTV(CATIBRepAccess_var)&amp;)"><b>GetModifiedReferenceNamingElementsInToCompare</b></a>(CATLISTV(CATIBRepAccess_var)&amp;)
+<dd>  This method gets the Elements of the "Feature to Compare" with same naming in the Import but different naming in the Reference.
+ <dt> o 
+    <a href="#Run()"><b>Run</b></a>()
+<dd>  This method performs the comparison.
+ <dt> o 
+    <a href="#SetFeatureToCompare(CATIMechanicalFeature_var&amp;)"><b>SetFeatureToCompare</b></a>(CATIMechanicalFeature_var&amp;)
+<dd>  This method initializes the Class with the "Feature to Compare".
+ <dt> o 
+    <a href="#SetMainFeature(CATIMechanicalFeature_var&amp;)"><b>SetMainFeature</b></a>(CATIMechanicalFeature_var&amp;)
+<dd>  This method initializes the Class with the "Main Feature".
+ <dt> o 
+    <a href="#SetMode(CATMmrImportComparator::CATMmrComparatorMode)"><b>SetMode</b></a>(CATMmrImportComparator::CATMmrComparatorMode)
+<dd>  This method sets the comparison mode.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#CATMmrComparatorMode"><b>CATMmrComparatorMode</b></a>
+<dd>   The comparison mode between two features.
+</dl>
+<dl>
+</dl>
+ <h2>Constructor and Destructor</h2> <br>
+<a name="CATMmrImportComparator"></a><a name="CATMmrImportComparator()"></a> <dt> o <b>CATMmrImportComparator</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('','')</script>  <b>CATMmrImportComparator</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructor.
+ <br><b>Role:</b> Construct the class of comparison.
+</dl>
+<a name="~CATMmrImportComparator"></a><a name="~CATMmrImportComparator()"></a> <dt> o <b>~CATMmrImportComparator</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('','')</script>  <b>~CATMmrImportComparator</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Destructor.
+ <br><b>Role:</b> Destruct the class of comparison.
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetMissingElements"></a><a name="GetMissingElements(CATLISTV(CATIBRepAccess_var)&amp;)"></a> <dt> o <b>GetMissingElements</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetMissingElements</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIBRepAccess_var)','CATLISTV(CATIBRepAccess_var)&amp;')</script> <td><tt>oLMissingElements</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method gets the Elements from the "Main Feature" Missing in the "Feature to Compare".
+ <br><b>Role:</b>
+ This method gets the Elements from the <tt>"Main Feature"</tt> Missing in the <tt>"Feature to Compare"</tt>.
+ <br><b>Precondition:</b>
+ method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> need to be called first. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLMissingElements</tt>
+   <dd> List of Elements from the <tt>"Main Feature"</tt> Missing in the <tt>"Feature to Compare"</tt>,
+ this output list is emptied at each start of the method.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> had not been called,   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="GetModifiedConnectivityElementsInMain"></a><a name="GetModifiedConnectivityElementsInMain(CATLISTV(CATIBRepAccess_var)&amp;)"></a> <dt> o <b>GetModifiedConnectivityElementsInMain</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetModifiedConnectivityElementsInMain</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIBRepAccess_var)','CATLISTV(CATIBRepAccess_var)&amp;')</script> <td><tt>oLModifiedElementsInMain</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method gets the Elements of the "Main Feature" with same naming but a change of connectivity.
+ <br><b>Role:</b>
+ This method gets the Elements of the <tt>"Main Feature"</tt> with same naming but a change of connectivity.
+ <br><b>Precondition:</b>
+ method 
+<script type="text/javascript"> activateLinkAnchor('','SetMode','SetMode') </script> with ModifiedConnectivity. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLModifiedElementsInMain</tt>
+   <dd> List of Elements from the Main Feature modified in the Compared Features,
+ this output list is emptied at each start of the method.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> had not been called or the 
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script> is not set to ModifiedConnectivity,</li>   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="GetModifiedConnectivityElementsInToCompare"></a><a name="GetModifiedConnectivityElementsInToCompare(CATLISTV(CATIBRepAccess_var)&amp;)"></a> <dt> o <b>GetModifiedConnectivityElementsInToCompare</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetModifiedConnectivityElementsInToCompare</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIBRepAccess_var)','CATLISTV(CATIBRepAccess_var)&amp;')</script> <td><tt>oLModifiedElementsInToCompare</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method gets the Elements of the "Feature to Compare" with same naming but a change of connectivity.
+ <br><b>Role:</b>
+ This method gets the Elements of the <tt>"Feature to Compare"</tt> with same naming but a change of connectivity.
+ <br><b>Precondition:</b>
+ method 
+<script type="text/javascript"> activateLinkAnchor('','Set_Mode','Set_Mode') </script> with MmrModifiedConnectivity. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLModifiedElementsInToCompare</tt>
+   <dd> List of Elements from the To Compared Feature modified in the Compared Features,
+ this output list is emptied at each start of the method.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> had not been called or the 
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script> is not set to ModifiedConnectivity,</li>   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="GetModifiedReferenceNamingElementsInMain"></a><a name="GetModifiedReferenceNamingElementsInMain(CATLISTV(CATIBRepAccess_var)&amp;)"></a> <dt> o <b>GetModifiedReferenceNamingElementsInMain</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetModifiedReferenceNamingElementsInMain</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIBRepAccess_var)','CATLISTV(CATIBRepAccess_var)&amp;')</script> <td><tt>oLModifiedElementsInMain</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method gets the Elements of the "Main Feature" with same naming in the Import but different naming in the Reference.
+ <br><b>Role:</b>
+ This method gets the Elements off the <tt>"Main Feature"</tt> with same naming in the Import but different naming in the Reference.
+ <br><b>Precondition:</b>
+ method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> need to be called first and the method 
+<script type="text/javascript"> activateLinkAnchor('','SetMode','SetMode') </script> with ModifiedReferenceNaming or ModifiedConnectivity. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLModifiedElementsInMain</tt>
+   <dd> List of Elements from the <tt>"Main Feature"</tt> modified in the <tt>"Feature to Compare"</tt>,
+ this output list is emptied at each start of the method.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> had not been called or the 
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script> is set to Missing,</li>   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="GetModifiedReferenceNamingElementsInToCompare"></a><a name="GetModifiedReferenceNamingElementsInToCompare(CATLISTV(CATIBRepAccess_var)&amp;)"></a> <dt> o <b>GetModifiedReferenceNamingElementsInToCompare</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetModifiedReferenceNamingElementsInToCompare</b>(<td><script type="text/javascript"> activateLink('CATLISTV(CATIBRepAccess_var)','CATLISTV(CATIBRepAccess_var)&amp;')</script> <td><tt>oLModifiedElementsInToCompare</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method gets the Elements of the "Feature to Compare" with same naming in the Import but different naming in the Reference.
+ <br><b>Role:</b>
+ This method gets the Elements of the <tt>"Feature to Compare"</tt> with same naming in the Import but different naming in the Reference.
+ <br><b>Precondition:</b>
+ method 
+<script type="text/javascript"> activateLinkAnchor('','SetMode','SetMode') </script> with ModifiedReferenceNaming or ModifiedConnectivity. 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> oLModifiedElementsInCompared</tt>
+   <dd> List of Elements from the <tt>"Feature to Compare"</tt> modified in the <tt>"Main Feature"</tt>,
+ this output list is emptied at each start of the method.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the method 
+<script type="text/javascript"> activateLinkAnchor('','Run','Run') </script> had not been called or the 
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script> is set to Missing,</li>   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="Run"></a><a name="Run()"></a> <dt> o <b>Run</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>Run</b>(<td>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method performs the comparison.
+ <br><b>Role:</b>
+ This method performs the Comparison between the Features Main and To Compare.
+ <br><b>Precondition:</b>
+ methods 
+<script type="text/javascript"> activateLinkAnchor('','Set_MainFeature','Set_MainFeature') </script> and 
+<script type="text/javascript"> activateLinkAnchor('','SetFeatureToCompare','SetFeatureToCompare') </script> need to be called first. Evrery time a <b>Set methods</b> is used you need to run this method.
+ 
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_FAIL</tt>: the methods 
+<script type="text/javascript"> activateLinkAnchor('','SetMainFeature','SetMainFeature') </script> or 
+<script type="text/javascript"> activateLinkAnchor('','SetFeatureToCompare','SetFeatureToCompare') </script> have not been called,   or the features are not import features,</li>
+   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="SetFeatureToCompare"></a><a name="SetFeatureToCompare(CATIMechanicalFeature_var&amp;)"></a> <dt> o <b>SetFeatureToCompare</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetFeatureToCompare</b>(<td> const <script type="text/javascript"> activateLink('CATIMechanicalFeature_var','CATIMechanicalFeature_var&amp;')</script> <td><tt>iFeatureToCompare</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method initializes the Class with the "Feature to Compare".
+ <br><b>Role:</b>
+ This method initializes the Class with the <tt>"Feature to Compare"</tt>.
+ You can change the <tt>"Feature to Compare"</tt> anytime you want <b>but</b> the #Run method must be called after.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFeatureToCompare</tt>
+   <dd> Feature to Compare.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the feature is not an import feature,</li>
+   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="SetMainFeature"></a><a name="SetMainFeature(CATIMechanicalFeature_var&amp;)"></a> <dt> o <b>SetMainFeature</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetMainFeature</b>(<td> const <script type="text/javascript"> activateLink('CATIMechanicalFeature_var','CATIMechanicalFeature_var&amp;')</script> <td><tt>iMainFeature</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method initializes the Class with the "Main Feature".
+ <br><b>Role:</b> 
+ This method initializes the Class with the <tt>"Main Feature"</tt>.
+ You can change the <tt>"Main Feature"</tt> anytime you want <b>but</b> the #Run method must be called after.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMainFeature</tt>
+   <dd> Main Feature Import.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_INVALIDARG</tt>: the feature is not an import feature,</li>
+   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+<a name="SetMode"></a><a name="SetMode(CATMmrImportComparator::CATMmrComparatorMode)"></a> <dt> o <b>SetMode</b>
+
+<dt>  <table><tr><td>  public <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetMode</b>(<td><script type="text/javascript"> activateLink('CATMmrImportComparator::CATMmrComparatorMode','CATMmrImportComparator::CATMmrComparatorMode')</script> <td><tt>iMode</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ This method sets the comparison mode.
+ <br><b>Role:</b>
+ This method sets the comparison mode between the Main Feature and the Feature To Compare.
+ If not used the mode is set to Missing.
+ You can change the mode anytime you want <b>but</b> the #Run method must be called after.
+ With some value of the mode some <tt>Get methods</tt> are invalid.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iMode</tt>
+   <dd> This mode allow the computation of more or less complex Comparison see </dd>
+<script type="text/javascript"> activateLinkAnchor('','CATMmrComparatorMode','CATMmrComparatorMode') </script>. By default this mode is set to Missing.
+ 
+  <dt> <b>Returns:</b> 
+  <dd>    The error code.
+   <br><b>Legal values</b>: <ul>
+   <li><tt>S_OK</tt>: all is correct,</li>
+   <li><tt>E_FAIL</tt>: Error occured.</li></ul>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="CATMmrComparatorMode"> <dt> o <b>CATMmrComparatorMode</b>
+<dl>
+  <dd>
+<pre>
+enum <b>CATMmrComparatorMode</b> {
+  Missing,
+  ModifiedReferenceNaming,
+  ModifiedConnectivity
+}
+</pre>
+  The comparison mode between two features.
+ <br><b>Role:</b> The comparison mode between the <tt>"Main Feature"</tt> and <tt>"Feature to Compare"</tt>.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> Missing</tt>
+   <dd> Allows the computation of only the Named Elements of the <tt>"Main Feature"</tt> which 
+ are missing in the <tt>"Feature to Compare"</tt>.
+ </dd>
+    <dt><tt> ModifiedReferenceNaming</tt>
+   <dd> Allows the computation off the Missing Elements and off the Modified by Reference Naming Element
+ ( the Naming of the Import is the same but the Naming of the reference are different).
+ </dd>
+    <dt><tt> ModifiedConnectivity</tt>
+   <dd> Allows the computation off the Missing Elements, Modified by Reference Naming Element
+ and of Elements with the same naming but a diferent connectivity.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATMmrImportComparator.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATMechanicalModeler</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

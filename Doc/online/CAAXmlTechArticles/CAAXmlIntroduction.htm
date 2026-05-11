@@ -1,0 +1,574 @@
+<html>
+<head>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Introduction to XML</title>
+</head>
+
+<body>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">
+			<h1>3D PLM Enterprise Architecture</h1>
+			</td>
+			<td valign="top">
+			<h2>Middleware Abstraction</h2>
+			</td>
+			<td rowspan="2" align="right" valign="top">
+			<h3><a name="Top"></a>Introduction to XML</h3>
+			<em>Quick overview of XML fundamentals</em></td>
+		</tr>
+		<tr>
+			<td class="tech" colspan="2">Technical Article</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+	<tbody>
+		<tr>
+			<td>
+			<h3>Abstract</h3>
+			<p>This article explains what XML is. It gives an overview of the
+			standards governing the various aspects of XML. It shows how XML can
+			be used from the developer's point of view.</p>
+			<ul>
+				<li><a href="#100000"><strong>What Is XML ?</strong></a></li>
+				<ul>
+					<li><a href="#110000">Anatomy of an XML Document</a></li>
+					<li><a href="#120000">Well-formedness and Validity</a></li>
+				</ul>
+				<li><a href="#200000"><strong>Presentation of the Core XML Standards</strong></a></li>
+				<ul>
+					<li><a href="#210000">De Jure Standards (W3C): XML 1.0, Schemas
+					1.0, DOM</a></li>
+					<li><a href="#220000">De Facto Standards: SAX</a></li>
+				</ul>
+				<li><a href="#300000"><strong>XML for the Developer</strong></a></li>
+				<ul>
+					<li><a href="#310000">A Document-oriented API: DOM</a></li>
+					<li><a href="#320000">An Event-oriented API: SAX</a></li>
+				</ul>
+				<li><a href="#400000"><strong>Choosing the Right API</strong></a></li>
+				<ul>
+					<li><a href="#410000">DOM Versus SAX</a></li>
+					<li><a href="#420000">DTDs Versus Schemas</a></li>
+				</ul>
+			</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>What Is XML ?</h3>
+<p>XML (Extensible Markup Language) is a data description language. XML
+has many strengths, which account for its great popularity and large
+availability:<br>
+</p>
+<ul>
+	<li>It has a simple text syntax based on elements identified by start
+	and end tags. One can read or create XML easily with just a simple text
+	editor.</li>
+	<li>It supports pluggable grammars (called DTDs or XSD schemas), which
+	enable the creation of tag vocabularies for any domain.</li>
+	<li>It is very strictly standardized by the W3C (World Wide Web
+	Consortium), which makes XML the ideal vehicle to exchange data among
+	heterogeneous systems.</li>
+</ul>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="110000"></a>Anatomy of an XML Document</h4>
+<p>XML documents are composed of elements, delimited by a start tag (of
+the form <code><b>&lt;</b>element_name<b>&gt;</b></code>) and an end tag (of
+the form <code><b>&lt;/</b>element_name<b>&gt;</b></code>). Elements can
+contain either other elements or free text. Every XML document has one
+and only one root element, which contains all the other elements. The
+following XML sample is provided to illustrate the anatomy of an XML
+document.</p>
+<p><img src="images/xmlsample.png" alt='xmlsample.png (15916 bytes)' width="630" height="360"></p>
+<p>The following syntactic constructs are the most common in XML
+documents.</p>
+<dl>
+	<dt>The XML declaration</dt>
+	<dd>It identifies the document as XML. Note the mandatory XML version
+	number (1.0) and the description of the encoding (UTF-8) used by the
+	document. XML documents can use any encoding, provided that the XML
+	parser used to process the document knows how to deal with the
+	encoding.</dd>
+	<dt>The document type declaration</dt>
+	<dd>It identifies the DTD (tag vocabulary) used by the XML document and
+	the tag name for the root element ("car"). This vocabulary is stored in
+	an external file with the .dtd extension (automotive.dtd), though it
+	can also be in-lined in the document. The document type declaration is
+	optional and tends to be gradually replaced by another equivalent but
+	more powerful mechanism, called XSD schemas.</dd>
+	<dt>The root element</dt>
+	<dd>An XML has one and only one root element (called "car" here).</dd>
+	<dt>Elements</dt>
+	<dd>An element is identified by a start tag and an end tag. If the
+	element has no sub-elements, the syntax can optionally be abbreviated
+	to just one tag, as for the &quot;wheel&quot; element. Notice the
+	trailing '/' in this case.</dd>
+	<dt>Attributes</dt>
+	<dd>The start tag can contain attributes, which are (name, value) pairs
+	qualifying the element. Attribute names are unique within the tag
+	scope. Attribute values appear within quotes. "body" is the value of
+	the attribute called "name" of the "part" element.</dd>
+	<dt>Characters</dt>
+	<dd>XML elements can also contain free text.</dd>
+	<dt>Entities</dt>
+	<dd>XML use entities to escape reserved characters or specify
+	characters not supported by the document code page. The "&amp;lt;"
+	entity is use here to escape the "&lt;" reserved character.</dd>
+	<dt>Comments</dt>
+	<dd>XML documents can be annotated with comments.</dd>
+</dl>
+<p>Other syntactic constructs (CDATA sections, processing instructions,
+etc.) can occasionally appear in XML documents. For a complete
+description of the XML syntax, please refer to <a href="#Ref1">[1]</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="120000"></a>Well-formedness and Validity</h4>
+<p>XML files follow syntactic rules, some of which were just described
+in the <a href="#100000">previous section</a>: there must be one and
+only one root element; attribute names must be unique within an element
+start tag scope; reserved XML characters such as '&amp;' and '&lt;' must
+be properly escaped, etc. An XML document, which obeys these syntactic
+rules is said to be <b>well formed</b>.</p>
+
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;car>&lt;part name="engine">&lt;/car>&lt;/part>
+                                ^
+                                |
+   Not well-formed XML: the tags are not properly nested.
+          </pre></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<p>The elements, which are allowed to appear in an XML documents and the
+order in which these elements are allowed to appear is described by a
+grammar file, called a DTD or an XSD schema. An XML document, which
+obeys all the rules specified by its associated grammar file is said to
+be <b>valid</b>.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;car>
+ &lt;part name="engine">&lt;/part>
+ &lt;aeroplane name="spitfire"/>
+&lt;/car>     ^
+           |
+           |
+ Well-formed but invalid XML: aeroplane is not defined in the automotive DTD.
+          </pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>Presentation of the Core XML Standards</h3>
+<p>The W3C (World Wide Web Consortium) is the standard body in charge of
+XML. The W3C does not only take care of the standardization of the
+language itself (see <a href="#Ref1">[1]</a>); it also offers
+standardized programming APIs to manipulate XML documents. Aside from
+the W3C, other programming APIs have become very popular to the point of
+becoming de facto standards. Note that though XML is very stable and
+upward compatibility will be assured, the standard keeps evolving with
+revisions of the specifications (XML 1.1, XSD 1.1) or the apparition of
+newer programming paradigms.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="210000"></a>De Jure Standards (W3C): XML 1.0, Schemas 1.0,
+DOM</h4>
+<p>The following list presents the official W3C standards:</p>
+<dl>
+	<dt>XML 1.0</dt>
+	<dd>XML 1.0 specifies the syntax for the XML language. It also
+	specifies the syntax of the historic XML grammar format, known as DTDs
+	(Document Type Definition). For more information, see <a href="#Ref1">[1].</a></dd>
+	<dt>XML namespaces</dt>
+	<dd>XML namespaces are a set of element naming patterns and attribute
+	naming patterns. They enable the creation of documents, which mix
+	elements from several vocabularies. Through the use of a prefix-based
+	syntax and URIs, which uniquely identify vocabularies, namespaces avoid
+	name clashes between identically named elements originating from
+	different vocabularies. For more information, see <a href="#Ref2">[2].</a></dd>
+	<dt>XSD 1.0 schemas</dt>
+	<dd>The XSD specification (XML Schema Definition) was designed as a
+	replacement for DTDs. Schemas represent an improvement over DTDs in
+	several areas. First, XSD schemas are XML files themselves, which
+	provides greater coherency. Second, XSD schemas have a very
+	sophisticated type system and can express constraints using regular
+	expressions or define relational integrity constraints. For more
+	information, see <a href="#Ref3">[3].</a></dd>
+	<dt>DOM 1.0, 2.0 and 3.0</dt>
+	<dd>DOM (Document Object Model) is a programming API to read,
+	manipulate and write XML documents. The core specification explains how
+	to operate on XML documents as if they were trees of typed nodes.
+	Complementary extensions to the specifications cover related utility
+	APIs. For instance, extensions include "DOM traversal" (iterations
+	through a XML document), "DOM range" (definition of selections), "DOM
+	load/save" (persistence). For more information, see <a href="#Ref4">[4].</a></dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="220000"></a>De Facto Standards: SAX</h4>
+<p>Originally invented by David Megginson as a library for the Java
+programming language, the SAX API has become very popular and can be
+considered as a de facto standard. Many vendors provide their own
+implementation of SAX for various languages and the specification has
+already undergone one major evolution (SAX 2.0). For more information,
+see <a href="#Ref6">[6].</a></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>XML for the Developer</h3>
+<p>Developers wanting to create, access or manipulate data stored in XML
+have APIs at their disposal. This section gives an overview of the DOM
+and the SAX APIs, while the <a href="#410000">next section</a> discusses
+the strengths and weaknesses of each API.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>A Document-oriented API: DOM</h4>
+<p>The DOM API uses an object-oriented approach to describe XML
+documents. The DOM API defines interfaces to represent each of the
+constructs available in the XML language: elements, attributes,
+documents, characters, entities, comments, etc. These interfaces have
+inheritance relationship (a &quot;comment&quot; is a specialized form of
+&quot;character data&quot;). The inheritance hierarchy is rooted at the
+abstract &quot;node&quot; class. The following diagram shows the DOM V5
+interface hierarchy.</p>
+<p><img src="images/domhierarchy.png" alt='domhierarchy.png (8328 bytes)' width="640" height="435"></p>
+<p>The DOM API views XML documents as a tree of XML nodes. The root
+element of the XML document corresponds to the root of the DOM tree. The
+sub-elements of the root element are the children of this root node. The
+following sample shows the DOM tree which corresponds to a sample XML
+document.</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0"?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;car>
+ &lt;!--list of parts for a convertible car-->
+ &lt;part name="seat" quantity="2">&lt;/part>
+ &lt;part name="wheel" quantity="4"/>
+ &lt;part name="engine" quantity="1">low consumption engine&lt;/part>
+ &lt;part name="body" quantity="1">weight must be &amp;lt; 1200 kg&lt;/part>
+&lt;/car></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p><img src="images/dominstance.png" alt='dominstance.png (7116 bytes)' width="630" height="280"></p>
+
+<p>The DOM API defines methods to parse documents (build the in-memory
+tree, which corresponds to an XML document), manipulate document (insert
+elements, edit attribute values, copy or delete sub-trees, etc.), and write
+documents (generate XML from an in-memory DOM tree).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="320000"></a>An Event-oriented API: SAX</h4>
+<p>The SAX API uses an event-oriented API to process XML documents. The
+XML SAX parser reads XML documents sequentially and emits one typed
+event for each XML construct it comes across: start of the document,
+start of an element, end of an element, comment, characters, etc.
+Programmers register callback functions with the SAX parser for the
+events they are interested in. Usually, programmers will need to store
+the generated events in a stack in order to keep track of the location
+of the event in the XML tree. The following list shows the SAX events,
+which are generated for a sample document.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+&lt;?xml version="1.0"?>
+&lt;!DOCTYPE car SYSTEM "automotive.dtd">
+&lt;car>
+ &lt;!--list of parts for a convertible car-->
+ &lt;part name="seat" quantity="2">&lt;/part>
+ &lt;part name="wheel" quantity="4"/>
+ &lt;part name="engine" quantity="1">low consumption engine&lt;/part>
+ &lt;part name="body" quantity="1">weight must be &amp;lt; 1200 kg&lt;/part>
+&lt;/car></pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+1. Start document
+2. Start element "car"
+3. Start element "part", attributes {"name=seat", "quantity=2"}
+4. End element "part"
+5. Start element "part", attributes {"name=wheel", "quantity=4"}
+6. End element "part"
+7. Start element "part", attributes {"name=engine", "quantity=1"}
+8. Characters "low consumption engine"
+9. End element "part"
+10. Start element "part", attributes {"name=body", "quantity=1"}
+11. Characters "weight must be &lt; 1200 kg"
+12. End element "part"
+13. End element "car"
+14. End document
+          </pre></td>
+		</tr>
+	</tbody>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="400000"></a>Choosing the Right API</h3>
+<p>XML often provides more than one mechanism to address the same
+problem. Choosing the right mechanism is a matter of understanding its
+trade-offs in terms of performance, ease of development, supported
+features, etc.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="410000"></a>DOM Versus SAX</h4>
+<p>The main advantages of DOM are:</p>
+<ul>
+	<li>DOM is easy to understand.</li>
+	<li>You do not have to create an object model of your own to store the
+	data in memory, since DOM already provides one with its tree model.</li>
+	<li>DOM is very good at document manipulation: removing a sub-tree,
+	changing attribute values or duplicating a portion of one document in
+	another is very easy with DOM.</li>
+	<li>DOM lets you create XML documents, not just read existing ones.</li>
+</ul>
+<p>The main weaknesses of DOM are:</p>
+<ul>
+	<li>DOM uses a lot of memory.</li>
+	<li>DOM cannot work with not well-formed or invalid XML data. If the
+	document is not well-formed, the DOM tree cannot be built.</li>
+	<li>Navigation in the DOM tree can be tricky. For instance, if two
+	elements are separated by white space in an XML document (even a
+	carriage return), a CATIDOMText will be inserted between the two
+	CATIDOMElements, which is not very intuitive (humans have a natural
+	tendency to skip the white space and consider the elements
+	consecutive).</li>
+</ul>
+
+<p>The main advantages of SAX are:</p>
+<ul>
+	<li>SAX can parse arbitrarily big XML files. It does not use a lot of
+	memory and is faster than DOM.</li>
+	<li>SAX can recover from errors (not all of them though) and allow the
+	processing of incorrect XML documents to continue.</li>
+</ul>
+<p>The main weaknesses of SAX are:</p>
+<ul>
+	<li>SAX does not support the creation of XML files. It is designed for
+	parsing only.</li>
+	<li>SAX is not as widespread as DOM and has no standard body backing
+	it. Some platforms (.NET for instance) do not support it.</li>
+</ul>
+
+<p>In summary, <b>use DOM if</b> you need to manipulate files no larger
+than a few megabytes or if your application uses XML itself as the data
+model. Typical candidates would be storing settings in XML, or
+manipulating contents in XHTML. <b>Use SAX if</b> you need to manipulate
+arbitrary large files or if you need to map you own object model to XML.
+Typical candidates would be persistency of an object graph in XML, or
+processing large log files containing events generated by a server.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="420000"></a>DTDs Versus Schemas</h4>
+<p>DTD and schemas address the same problem: defining tag vocabularies
+(grammars) for XML documents. They are to XML documents what the
+description of tables and relationships is to a relational database. The
+following example shows how an XML grammar defined as a DTD. The grammar
+defines two elements (car and part). The part element element can have
+two attributes ("name" and "quantity"). Several "part" elements can be
+nested inside a "car" element. Part elements can contain text.</p>
+
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>
+&lt;!ELEMENT car (part)+>
+&lt;!ELEMENT part (#PCDATA)>
+&lt;!ATTLIST part name ID #REQUIRED
+          quantity CDATA #IMPLIED></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>Here is an equivalent grammar defined as an XSD schema:</p>
+<table class="code">
+	<tbody>
+		<tr>
+			<td><pre>&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ elementFormDefault="qualified" 
+ targetNamespace="urn:com:dassault_systemes:automotive" 
+ xmlns:tns="urn:com:dassault_systemes:automotive">
+ &lt;xsd:element name="car">
+  &lt;xsd:complexType>
+   &lt;xsd:sequence maxOccurs="unbounded">
+    &lt;xsd:element name="part" type="tns:partType"/>
+   &lt;/xsd:sequence>
+  &lt;/xsd:complexType>
+ &lt;/xsd:element>
+ &lt;xsd:complexType name="partType">
+  &lt;xsd:simpleContent>
+   &lt;xsd:extension base="xsd:string">
+    &lt;xsd:attribute name="name" type="xsd:ID" use="required"/>
+    &lt;xsd:attribute name="quantity" type="xsd:positiveInteger"/>
+   &lt;/xsd:extension>
+  &lt;/xsd:simpleContent>
+ &lt;/xsd:complexType>
+&lt;/xsd:schema></pre></td>
+		</tr>
+	</tbody>
+</table>
+<p>The main advantages of DTDs are:</p>
+<ul>
+	<li>DTDs are simple and easy to understand.</li>
+	<li>DTD is the historic grammar format for XML and has thus good
+	diffusion and broad support.</li>
+</ul>
+<p>The main weaknesses of DTDs are:</p>
+<ul>
+	<li>DTDs use yet another syntax.</li>
+	<li>DTDs cannot express complex relationships or type constraints. DTDs
+	do not have the concept of data type so everything is viewed as text.</li>
+</ul>
+<p></p>
+<p>The main advantages of XSD schemas are:</p>
+<ul>
+	<li>Schemas are very powerful. They have a rich type system. They have
+	a relational integrity constraint definition mechanism close to the one
+	of a relational database. They support regular expressions.</li>
+	<li>Schemas are written in XML themselves. All the XML manipulation
+	tools can thus be reused for schemas.</li>
+	<li>Schemas can be created to replace existing DTDs: All the DTD
+	constructs have an equivalent XSD schema construct. Tools exist to do
+	the conversion automatically.</li>
+</ul>
+<p>The main weaknesses of XSD schemas are:</p>
+<ul>
+	<li>XSD is a complex standard. Writing good XSD schemas requires
+	experience and tools. A good introductory text for XSD schemas is
+	referenced here <a href="#Ref5">[5]</a></li>
+</ul>
+<p>In summary, your choice for DTDs or schemas will first depend on what
+is available: make the list of the products you need to integrate and
+choose a grammar language supported by all the systems. <b>Use DTDs if</b>
+if you are new to XML and want to get started quickly; if you need to
+develop a prototype and do not want to spend much time on a grammar; if
+you need to integrate with a system, which only supports DTDs. <b>Use
+schemas if</b> you need a precise definition of your data model; you
+have tools or expertise to help you define the schema.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p></p>
+<p>XML is a data description language. Its simplicity, strict
+standardization, broad availability, and tools support make it a good
+vehicle to exchange data among heterogeneous systems.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+	<tbody>
+		<tr>
+			<td valign="top"><a name="Ref1"></a>[1]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/REC-xml/');return false;">Extensible
+			Markup Language (XML) 1.0 (Third Edition) - W3C Recommendation 04
+			February 2004</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref2"></a>[2]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/REC-xml-names/');return false;">Namespaces
+			in XML</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref3"></a>[3]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/XML/Schema');return false;">XML
+			Schema - W3C schema home page February 2004</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref4"></a>[4]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/DOM/DOMTR');return false;">
+			Document Object Model (DOM) Technical Reports - W3C DOM home page</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref5"></a>[5]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.w3.org/TR/xmlschema-0/');return false;">
+			XML Schema Part 0: Primer Second Edition</a></td>
+		</tr>
+		<tr>
+			<td valign="top"><a name="Ref6"></a>[6]</td>
+			<td><a href="#" onclick="javascript:CAAlinkUrl('http://www.saxproject.org/');return false;">
+			XML SAX (Simple API for XML)</a></td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+	<tbody>
+		<tr>
+			<td valign="top">Version: <strong>1</strong> [Apr 2005]</td>
+			<td valign="top">Document created</td>
+		</tr>
+		<tr>
+			<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+		</tr>
+	</tbody>
+</table>
+<!---------------------------------comment------------------------------------->
+<hr>
+<p><i>Copyright © 2005, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+</html>

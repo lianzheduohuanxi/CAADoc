@@ -1,0 +1,165 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css"/>
+<title>Exception Checks</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>C++ Source Checker</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Exception Checks</h3>
+      <em>Testing source code in the CAA V5 environment</em></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr />
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+  <tr>
+    <td>
+      <h2>Abstract</h2>
+      <p>This article describes the check relative to exceptions. This check is
+      identified by EXCP.</p>
+				  <ul>
+					  <li><a href="#Problematic">Problematic</a></li>
+					  <li><a href="#Checks">Checks</a>
+						  <ul>
+							  <li><a href="#Principle">Principle</a></li>
+							  <li><a href="#EXCP">EXCP</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#Relative">Relative Sections in Setting Files</a>
+						  <ul>
+							  <li><a href="#ThrowMethods"> ExceptionManagement_ThrowMethods</a></li>
+						  </ul>
+					  </li>
+					  <li><a href="#InShort">In Short</a></li>
+					  <li><a href="#References">References</a></li>
+					  <li><a href="#History">History</a></li>
+				  </ul>
+      </td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Problematic"></a>Problematic</h2>
+<p>Some CAA methods can, in some particular cases, throw an exception. If this
+exception is not caught, it will cause the abort of the process.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Checks"></a>Checks</h2>
+<h3><a name="Principle"></a>Principle</h3>
+<p>When a method which can throw an exception is used, CSC checks if this method
+is included in a CATTry / CATCatch block.</p>
+<h3><a name="EXCP"></a>EXCP</h3>
+<p>EXCP stands for EXCePtion not caught.</p>
+<p>An error of type EXCP is reported when</p>
+<ul>
+  <li>a method which can throw an exception is used;</li>
+  <li>this method is not inside a CATTry block followed by a CATCatch block;</li>
+  <li>the method is not used in a method throwing itself an exception.</li>
+</ul>
+<p>If the exception is not caught, it will be send to the caller, until it is
+caught. If nobody catches the exception, the program will abort.</p>
+<h4><a name="EXCP-1"></a>Example EXCP-1</h4>
+<p>Let's assume that the global function CATBindInterface_B can throw an
+exception.</p>
+<p>The following code will report an EXCP error</p>
+<pre class="code">...
+SEQUENCE(octet)     name= ...;
+CATIBindParameters* parameters= ...;
+CATILinkableObject* pointed= NULL;
+pointed= CATBindInterface_B( name, CATILinkableObject::ClassName(), parameters );
+...</pre>
+<p>To correct the error, enclose the method in a CATTry block, followed by a
+CATCatch block dealing with the exception:</p>
+<pre class="code">...
+SEQUENCE(octet)     name= ...;
+CATIBindParameters* parameters= ...;
+CATILinkableObject* pointed= NULL;
+<strong>CATTry
+{</strong>
+  pointed= CATBindInterface_B( name, CATILinkableObject::ClassName(), parameters );
+<strong>}
+CATCatch( CATError, err )
+{
+  pointed= NULL;
+  ...
+  delete err;
+  err= NULL;
+}</strong>
+...</pre>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Relative"></a>Relative Sections in Setting Files</h2>
+<p>For a more complete description of Setting Files, see [<a href="#References">1</a>].</p>
+<h3><a name="ThrowMethods"></a>ExceptionManagement_ThrowMethods</h3>
+<p>This section is located in: SettingsSet &gt; OptionLists &gt;
+ExceptionManagement_OptionLists</p>
+<p><img alt="ExceptionManagement_ThrowMethods" src="images/CAACscTaExceptionThrowMethods.gif" width="611" height="355"/></p>
+<p>This section contains a list of Call. Each Call describes a method or
+function which can throw an exception.</p>
+<dl>
+  <dt>ClassName</dt>
+  <dd>The name of the class (no ClassName means that it is a function)</dd>
+  <dt>MethodOrFunctionSign</dt>
+  <dd>The signature of the method or function</dd>
+</dl>
+<p>Be careful:</p>
+<ul>
+  <li>Every inheriting method will be seen as throwing an exception, too.</li>
+  <li>Avoid describing the type of the arguments (just specify the number of
+    arguments with &quot;?&quot;).</li>
+</ul>
+<p>Example 1</p>
+<pre>ClassName            &lt;none&gt;
+MethodOrFunctionSign CATBindInterface_B(?,?,?)</pre>
+<p>This means that the function CATBindInterface_B with 3 arguments can throw an
+exception.</p>
+<p>Example 2</p>
+<pre>ClassName            CATBrepAccessImpl
+MethodOrFunctionSign GetLastFeature</pre>
+<p>This means that the method GetLastFeature (no matter the number of arguments)
+of the class CATBRepAccessImpl (or an inheriting class) can throw an exception.</p>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>Non-caught exceptions lead directly to an abort of the application. CSC can
+prevent some of these aborts by pointing the basic methods not caught.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+  <tr>
+    <td>[1]</td>
+    <td><a href="CAACscTaSettings.htm">Setting Files</a></td>
+  </tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+  <tr>
+    <td>Version: <strong>1</strong> [Jul 2013]</td>
+    <td>Document created</td>
+  </tr>
+</table>
+<p align="right"> [<a href="#Top">Top</a>]</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><em>Copyright © 2013, Dassault Syst&#232;mes. All rights reserved.</em></p>
+
+</body>
+
+</html>

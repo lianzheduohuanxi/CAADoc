@@ -1,0 +1,67 @@
+' COPYRIGHT DASSAULT SYSTEMES 2003
+
+' *****************************************************************************
+'   Purpose:       Use Valuation on the Publication
+'   Assumtions:    Opens CAAPstPublicationValuation.CATProduct
+'   Author:
+'   Languages:   VBScript
+'   Locales:     English
+'   CATIA Level: V5R6
+' *****************************************************************************
+
+Sub CATMain()
+    ' -----------------------------------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it's installed
+    Dim sDocPath As String
+    sDocPath = CATIA.SystemService.Environ("CATDocView")
+    'MsgBox sDocPath
+    
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999, , "No Doc Path Defined"
+    End If
+    ' ------------------------------------------------------------------------------------------------
+    ' Open the Product document
+    Dim oDoc As Document
+    Set oDoc = CATIA.Documents.Open(sDocPath &_
+	                            "CAAPstPublicationValuation.CATProduct")
+    '
+    ' --------------------------
+    ' Get the different products
+    ' --------------------------
+    Dim oRootProduct As Product
+    Set oRootProduct = CATIA.ActiveDocument.Product
+    
+    Dim oPlate As Product
+    Set oPlate = CATIA.ActiveDocument.Product.Products.Item("Plate.1")
+    
+    Dim oScrew1 As Product
+    Set oScrew1 = CATIA.ActiveDocument.Product.Products.Item("Screw.1")
+    
+    ' --------------------------------------
+    ' Declare variables to handle publications
+    ' --------------------------------------
+    Dim oPlatePub As Publication
+    Dim oPlateRef As Reference
+    Dim oPlateRefName As String
+    
+    Dim oScrewPub As Publication
+    Dim oScrewRef As Reference
+    Dim oScrewRefName As String
+    
+    '  ---> Plate\Top
+    Set oPlatePub = oPlate.Publications.Item("Top")
+    Set oPlateRef = oPlatePub.Valuation
+    MyMsgBox oPlateRef.DisplayName
+
+    '  ---> Screw1\HeadBottom
+    Set oScrewPub = oScrew1.Publications.Item("HeadBottom")
+    Set oScrewRef = oScrewPub.Valuation
+    MyMsgBox oScrewRef.DisplayName
+    
+End Sub
+
+Private Sub MyMsgBox(ByVal iMessage As String)
+    If (CATIA.SystemService.Environ("DisableMsgBox") = "") Then
+	MsgBox iMessage, vbOKOnly, "Publication Valuation"
+    End if
+End Sub 

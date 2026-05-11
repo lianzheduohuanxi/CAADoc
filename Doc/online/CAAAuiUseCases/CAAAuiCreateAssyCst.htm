@@ -1,0 +1,310 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Fix Constraint in an Assembly</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Assembly Design</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Fix Constraint in an Assembly</h3>
+      <em>Set an absolute position to an assembly component</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAACreateCstInAssembly use case. This use
+      case explains how to create an assembly fix constraint in a CATProduct
+      document.
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAAAuiCreateCstInAssy Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAAuiCreateCstInAssy Do</a></li>
+            <li><a href="#How">How to Launch CAAAuiCreateCstInAssy</a></li>
+            <li><a href="#Where">Where to Find the CAAAuiCreateCstInAssy Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------------------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA Assembly Design.<br>
+Its main intent is to create geometrical relations between products. More
+specifically, you will learn how to:</p>
+<ul>
+  <li>Loading document in session</li>
+  <li>Creating a connector</li>
+  <li>Creating a constraint</li>
+</ul>
+<p>Before getting to the use case itself, it is important to get an
+understanding of some of the Product Structure concepts that are at the heart of
+the Assembly Design.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAAuiCreateCstInAssy Use Case</h3>
+<p>CAAAuiCreateCstInAssy is a use case of the CAAAssemblyUI.edu framework that
+illustrates CATAssemblyInterfaces framework capabilities.</p>
+<p>Before discussing the use case, some main concepts have to be introduced:</p>
+<ul>
+  <li>
+    <p>A fix constraint is a geometrical relation created on one component only.</li>
+  <li>
+    <p>Fixing a component means preventing this component from moving from its
+    parent component during the update operation.<br>
+    Note that it means fixing its position according to the geometrical origin
+    of the assembly.</li>
+  <li>
+    <p>The constrained component must be child component of the active
+    component.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><b><a name="What"></a></b>What Does CAAAuiCreateCstInAssy Do</h4>
+<p><a href="#What" onmousedown="FixConstraint.src='images/FixConstraint01.jpg'"><img border="0" src="images/FixConstraint01.jpg" name="FixConstraint" alt="Click the image to reset it" width="600" height="450"></a></p>
+This is a typical CATIA V5 work session with the Assembly Design application. A
+product is currently being edited.<br>
+Click the following links to display the image relative to. Click the image to
+reset it.
+<p>Two components can be seen on the picture, here two mechanical parts:
+<ol>
+  <li><a href="#What" onmousedown="FixConstraint.src='images/FixConstraint03.jpg'">Jack_Frame</a></li>
+  <li><a href="#What" onmousedown="FixConstraint.src='images/FixConstraint04.jpg'">Jack_Branch_3</a></li>
+</ol>
+<p>These components are the child components of the root product <a href="#What" onmousedown="FixConstraint.src='images/FixConstraint02.jpg'">Fix</a>
+which is also the active component. The active component <a href="#What" onmousedown="FixConstraint.src='images/FixConstraint02.jpg'">Fix</a>
+is a selected component currently being edited and it is blue framed in the
+specification tree.</p>
+<p>Constraints can be applied between the child components of the active
+component <a href="#What" onmousedown="FixConstraint.src='images/FixConstraint02.jpg'">Fix</a>.<br>
+<a href="#What" onmousedown="FixConstraint.src='images/FixConstraint05.jpg'">Constraints</a>
+appear in the specification tree at the same level as the child components and
+they are displayed in the geometry.
+<p>These concepts are the counterpart, on the programming side, of what the end
+users sees and manipulates on the screen. So we will start with the end user
+view in order to infer what the program manipulates inside.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAuiCreateCstInAssy</h4>
+<p>To launch CAAAuiCreateCstInAssy, you will need to set up the build time
+environment, then compile CAAAuiCreateCstInAssy along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAAuiCreateCstInAssy InputDirectory\Fix.CATProduct</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table width="90%">
+      <tr>
+        <td>
+          <pre>$ CAAAuiCreateCstInAssy InputDirectory/Fix.CATProduct</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p>where:</p>
+<table>
+  <tr>
+    <td><code>InputDirectory</code></td>
+    <td>The directory into which <code>Fix.CATProduct</code> is stored</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAAuiCreateCstInAssy Code</h4>
+<p>The CAAAuiCreateCstInAssy use case is located in the CAAAuiCreateCstInAssy.m
+module of the CAAAssemblyUI.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAAssemblyUI.edu\CAAAuiCreateCstInAssy.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAAssemblyUI.edu/CAAAuiCreateCstInAssy.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are three main steps in CAAAuiCreateCstInAssy:</p>
+<ol>
+  <li><a href="#Step1">Loading a Product Document in Session</a></li>
+  <li><a href="#Step2">Creating a Connector</a></li>
+  <li><a href="#Step3">Creating a Constraint</a></li>
+</ol>
+<p>We will now comment each of those sections by looking the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Loading a Product Document in Session</h4>
+<p>A CATProduct document is loaded in session. This is described in the Product
+Structure use cases [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a Connector</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>::<b>GetProductConnector</b>(pGeometry,
+                      pInstanceComponent,
+                      pActiveComponent,
+                      0,
+                      pConnector,
+                      iCreation);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>GetProductConnector</code> global function is used to create a
+connector on a component instance.</p>
+<table width="100%">
+  <tr>
+    <td valign="top"><code>pGeometry</code></td>
+    <td width="87%" valign="top">The geometry you want to reference, this
+      geometry must be linkable to ensure its stability during sessions.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pInstanceComponent</code></td>
+    <td valign="top">The component instance containing the geometry above.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pActiveComponent</code></td>
+    <td valign="top">The active component, it allows user to define the
+      reference component document which content the constraints to be created.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>0</code></td>
+    <td valign="top">The searching mode: creates connector if not found</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pConnector</code></td>
+    <td valign="top">The resulting feature</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>iCreation</code></td>
+    <td valign="top">0: the connector already exists and has been found,<br>
+      1: the connector has been created.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating a Constraint</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>rc = ::<b>CreateConstraint</b>(catCstTypeReference,
+                        ConnectorList,
+                        NULL,
+                        pActiveComponent,
+                        pCst);</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>CreateConstraint</code> global function is used to create a
+constraint on/or between component instances.</p>
+<table width="100%">
+  <tr>
+    <td valign="top"><code>catCstTypeReference</code></td>
+    <td valign="top">The constraint's type you want to create: fix constraint.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>ConnectorList</code></td>
+    <td valign="top">The list which contains the connectors involved in the
+      constraint.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>NULL</code></td>
+    <td valign="top">The constraint's value. For angle or offset constraints
+      only.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pActiveComponent</code></td>
+    <td valign="top">The active component.</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>pCst</code></td>
+    <td valign="top">The resulting feature.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to constraint the components of an
+assembly, create a connector and a constraint.</p>
+<hr>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+      a Product Structure</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><font size="2"><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></font></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

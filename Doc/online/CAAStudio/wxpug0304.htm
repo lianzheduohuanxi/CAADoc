@@ -1,0 +1,402 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+<link href="../CAADocStyleSheets/DSDoc.css" rel="stylesheet" type="text/css"/>
+<script src="../CAADocJavaScript/DSDocTocToc.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/DSDocHighlight.js" type="text/javascript">/* */</script>
+<script src="../CAADocJavaScript/submit.js" type="text/javascript">/* */</script>
+<title>Generating Object Modeler Classes</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Generating Object Modeler Classes</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">This task shows you how to generate the source files of 
+		an Object Modeler class.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span><ul>
+			<li>Open a workspace with at least a framework and a module.</li>
+			<li>Display the <kbd>Solution Explorer</kbd>.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<ol class="task">
+	<li>
+		<p>In the <kbd>Solution Explorer</kbd>, right click a module.</p>
+	</li>
+	<li>
+		<p>In the contextual menu, point to <kbd>Add</kbd>, and click
+		<img alt="New Item Icon" height="16" src="images/iconNewItem.png" width="16"/>
+		<kbd>New Item</kbd>.</p>
+		<p>The <kbd>Add New Item</kbd> dialog box opens.</p>
+	</li>
+	<li>
+		<p>In <kbd>Installed</kbd>, click the 
+		<img alt="Arrow Icon" height="8" src="images/iconArrow2.png" width="5"/> 
+		arrow in front of <kbd>3DS Templates</kbd> 
+		to expand its contents, if not yet expanded.</p>
+	</li>
+	<li>
+		<p>Click <kbd>C++</kbd>.</p>
+		<p>The C++ installed templates are displayed in the central pane.</p>
+	</li>
+	<li>
+		<p>In the central pane, click
+		<img alt="Component Icon" height="16" src="images/iconComponent.png" width="16"/>
+		<kbd>Component</kbd>.</p>
+	</li>
+	<li>
+		<p>In the <kbd>Name</kbd> box, type the name you want to assign to the Object 
+		Modeler class. Refer to
+		<a href="#" onclick="CAAlinkOutOfPreqs('CAADocTechArticles/CAADocCppNamingRules.htm');">
+		CAA V5 C++ Naming Rules</a>.</p>
+		<table class="Remark">
+			<tr>
+				<td class="Remark"><span class="run-in">Warning</span>: This name 
+				is also used to create the header and source files. Bear in mind 
+				that:
+				<ul>
+					<li>
+						<p>All the characters are allowed except those listed below:</p>
+						<pre>* ? \ / &lt; &gt; &quot; &#39; | :</pre>
+					</li>
+					<li>
+						<p>With Windows, full path names must not exceed 260 characters.</p>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	</li>
+	<li>
+		<p>Click <kbd>Add</kbd>.</p>
+		<p>The <kbd>3DS - New Object Modeler Component</kbd> dialog box opens.</p>
+	</li>
+	<li>
+		<p>In <kbd>Header exposition</kbd>, select how you want the class header 
+		to be seen from, usually <kbd>Local</kbd> for an Object Modeler class.</p>
+		<table class="fill">
+			<tr>
+				<th>Exposition</th>
+				<th>Description</th>
+				<th>Folder</th>
+			</tr>
+			<tr>
+				<td><kbd>Local</kbd></td>
+				<td>Visibility from this module only.</td>
+				<td>LocalInterfaces</td>
+			</tr>
+			<tr>
+				<td><kbd>Private</kbd></td>
+				<td>Visibility from this framework only.</td>
+				<td>PrivateInterfaces</td>
+			</tr>
+			<tr>
+				<td><kbd>Protected</kbd></td>
+				<td>Visibility from the modeler only</td>
+				<td>ProtectedInterfaces</td>
+			</tr>
+			<tr>
+				<td><kbd>Public</kbd></td>
+				<td>External visibility.</td>
+				<td>PublicInterfaces</td>
+			</tr>
+		</table>
+	</li>
+	<li>
+		<p>Declare the class Object Modeler type. Either:</p>
+		<ul>
+			<li>Check <kbd>The component is an implementation</kbd> if you want 
+				to create an implementation class, that is, the root class of an 
+				Object Modeler component.
+				<ol class="task1">
+					<li>
+						<p>Check <kbd>Class can inherit from an existing interface</kbd> 
+						if you want this class to implement an interface using the 
+						BOA, and type this interface name in the <kbd>Interface 
+						name</kbd> box.</p>
+						<p>The interface name auto-completion helps you select the 
+						appropriate interface.</p>
+						<table class="Remark">
+							<tr>
+								<td class="Remark"><span class="run-in">Warning</span>: 
+								The auto-completion relies on the interface IID 
+								declaration in an iid file. Some interfaces may 
+								not use such a file. They thus do not appear in 
+								the auto-completion list, and their names must thus 
+								be typed integrally. </td>
+							</tr>
+						</table>
+					</li>
+					<li>
+						<p>Click <kbd>Next</kbd>. </p>
+						<p>The dialog box changes to <kbd>Component Implementation 
+						List</kbd>. You should not write in colored boxes.</p>
+					</li>
+					<li>
+						<p>In <kbd>C++ Inheritance</kbd>, type the parent class 
+						name, usually <em>CATBaseUnknown</em>, except if the component 
+						OM-derives from another one. In this case, you must type 
+						the name of this parent component root class or its late 
+						type.</p>
+						<p>If you have checked the <kbd>Class can inherit from an 
+						existing interface</kbd> option above, this parent class 
+						name is automatically added.</p>
+					</li>
+					<li>
+						<p>In <kbd>TIE adhesion</kbd>, for each interface to implement 
+						in this class:</p>
+						<ol class="task">
+							<li>
+								<p>Click
+								<img alt="Plus Button" height="18" src="images/bnPlus.png" width="28"/> 
+								to add an interface.</p>
+								<p>The <kbd>3DS - New Value</kbd> dialog box opens.</p>
+							</li>
+							<li>
+								<p>In <kbd>Add New Interface</kbd>, type the interface 
+								name.</p>
+								<p>The interface name auto-completion helps you 
+								select the appropriate interface.</p>
+								<table class="Remark">
+									<tr>
+										<td class="Remark"><span class="run-in">
+										Warning</span>: The auto-completion relies 
+										on the interface IID declaration in an iid 
+										file. Some interfaces may not use such a 
+										file. They thus do not appear in the auto-completion 
+										list, and their names must thus be typed 
+										integrally.</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<p>Click <kbd>OK</kbd>.</p>
+								<p>The interface is added to the <kbd>TIE adhesion</kbd> 
+								list.</p>
+							</li>
+						</ol>
+						<table class="Remark">
+							<tr>
+								<td class="Remark"><span class="run-in">Note</span>: 
+								To remove an interface from the list, select it 
+								and click
+								<img alt="Minus Button" height="18" src="images/bnMinus.png" width="28"/>.
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li>
+						<p>Click <kbd>Finish</kbd>.</p>
+						<p>The class header file is created where you requested 
+						it to be, the class cpp file is created in the module src 
+						folder. The dico file, if it did not exist in the framework, 
+						is created in the CNext\code\dictionary folder. Otherwise, 
+						it is updated with the declaration of the interface implementations 
+						of the created component.</p>
+					</li>
+				</ol>
+			</li>
+			<li>
+				<p>Check <kbd>The component is an extension</kbd> to create an Object 
+				Modeler extension class.</p>
+				<ol class="task1">
+					<li>
+						<p>In <kbd>Component to Extend</kbd>, type the name of the 
+						root class or late type of the component to extend.</p>
+					</li>
+					<li>
+						<p>Check <kbd>The extension has some data members</kbd> 
+						if you want to have data members in the extension class.</p>
+					</li>
+					<li>
+						<p>Check <kbd>Class can inherit from an existing interface</kbd> 
+						if you want this class to implement an interface using the 
+						BOA, and select this interface in the <kbd>Interface name</kbd> 
+						list.</p>
+					</li>
+					<li>
+						<p>Click <kbd>Next</kbd>.</p>
+						<p>Depending on the checked options, the wizard may asks 
+						new questions:</p>
+						<ul>
+							<li>
+								<p>If no options are checked, the wizard proposes 
+								to create a code extension.</p>
+							</li>
+							<li>
+								<p>If the option <kbd>The extension has some data 
+								members</kbd> is checked, the wizard asks you whether 
+								the data members are easy to re-compute, or in other 
+								words, if the extension class can be deleted and 
+								re-created when required during the component life 
+								time.</p>
+								<ol class="task">
+									<li>
+										<p>Click <kbd>Yes</kbd> to enable the extension 
+										class to be deleted during the component 
+										life time, or <kbd>No</kbd> otherwise.</p>
+									</li>
+									<li>
+										<p>Click <kbd>Next</kbd>.</p>
+									</li>
+								</ol>
+								<p>If you have clicked <kbd>Yes</kbd>, the wizard 
+								proposed the creation of a transient extension. 
+								If you have clicked <kbd>No</kbd>, it asks you whether 
+								the caller, that is, the application using one of 
+								the interface implemented by the class extension, 
+								can control its life cycle, or in other words, is 
+								the application intended to be the only user of 
+								the data extension, and when releasing the pointer 
+								to the interface, is there any need for the extension 
+								to remain accessible.</p>
+								<ol class="task">
+									<li>
+										<p>Click <kbd>Yes</kbd> to enable the extension 
+										class life cycle to be controlled by the 
+										caller, or <kbd>No</kbd> otherwise.</p>
+									</li>
+									<li>
+										<p>Click <kbd>Next</kbd>.</p>
+									</li>
+								</ol>
+								<p>If you have clicked <kbd>Yes</kbd>, the wizard 
+								proposed the creation of a transient extension. 
+								If you have clicked <kbd>No</kbd>, it proposes the 
+								creation of a data extension.</p>
+							</li>
+							<li>
+								<p>If the option <kbd>Extension can inherit from 
+								an existing interface</kbd> is checked alone:</p>
+								<ol class="task">
+									<li>
+										<p>In <kbd>Interface name</kbd>, select the 
+										interface from which the class to create 
+										must derive</p>
+									</li>
+									<li>
+										<p>Click <kbd>Next</kbd>.</p>
+									</li>
+								</ol>
+								<p>The wizard proposes the creation of a cache extension 
+								implementing the interface using the BOA.</p>
+							</li>
+							<li>
+								<p>If both options are checked, the wizard asks 
+								you the same questions as if you had checked
+								<kbd>The extension has some data members</kbd> alone, 
+								with the same results that in addition include the 
+								declared interface implementation using the BOA.</p>
+							</li>
+						</ul>
+						<p>The wizard shows new data to input.</p>
+					</li>
+					<li>
+						<p>In <kbd>C++ Inheritance</kbd>, type the parent class 
+						name, usually <em>CATBaseUnknown</em>, except if you have 
+						derived the class from an interface to implement it using 
+						the BOA.</p>
+					</li>
+					<li>
+						<p>In <kbd>TIE adhesion</kbd>, for each interface to implement 
+						in this class, except the one possibly to implement using 
+						the BOA, which is already displayed in the <kbd>BOA</kbd> 
+						box:</p>
+						<ol class="task">
+							<li>
+								<p>Click
+								<img alt="Plus Button" height="18" src="images/bnPlus.png" width="28"/> 
+								to add an interface.</p>
+								<p>The <kbd>Add New Interface</kbd> dialog box opens.</p>
+							</li>
+							<li>
+								<p>Type the interface 
+								name.</p>
+								<p>The interface name auto-completion helps you 
+								select the appropriate interface.</p>
+								<table class="Remark">
+									<tr>
+										<td class="Remark"><span class="run-in">
+										Warning</span>: The auto-completion relies 
+										on the interface IID declaration in an iid 
+										file. Some interfaces may not use such a 
+										file. They thus do not appear in the auto-completion 
+										list, and their names must thus be typed 
+										integrally. </td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<p>Click <kbd>OK</kbd>.</p>
+								<p>The interface is added to the <kbd>TIE adhesion</kbd> 
+								list.</p>
+							</li>
+						</ol>
+						<table class="Remark">
+							<tr>
+								<td class="Remark"><span class="run-in">Note</span>: To remove 
+								an interface from the list, select it and click
+								<img alt="Minus Button" height="18" src="images/bnMinus.png" width="28"/>.
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li>
+						<p>Click <kbd>Finish</kbd>.</p>
+						<p>The following is created or updated:</p>
+						<ul>
+							<li>The extension class header file in the module LocalInterfaces 
+								folder, and the associated cpp file in the module 
+								src folder. These files are filled with the interface 
+								method signatures and empty bodies respectively.</li>
+							<li>The dico files, if it did not exist in the 
+								framework, is created in the framework CNext\code\dictionary 
+								folder. Otherwise, it is updated with the component, interface, 
+								and library declaration for each implemented interface.</li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+		</ul>
+	</li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

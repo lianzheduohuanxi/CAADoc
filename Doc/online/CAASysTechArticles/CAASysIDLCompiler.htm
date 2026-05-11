@@ -1,0 +1,1920 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The CAA V5 IDL Compiler</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - Object Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The CAA V5 IDL Compiler</h3>
+      <em>Describing the CAA V5 IDL and converting your interfaces to C++
+      abstract classes</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The IDL (Interface Definition Language) used by CAA V5 is a bit
+      different from both OMG IDL of CORBA, and MIDL of Microsoft. This article
+      describes the main types and characteristics of CAA V5 IDL and explains
+      how to compile your interfaces expressed using CAA V5 IDL to generate the
+      corresponding C++ header files of the abstract classes used as interfaces
+      for C++. The IDL language is mosly used to describe CAA V5 interfaces for
+      Automation. Since Automation interfaces are COM interfaces, the IDL
+      compiler also contains some elements that are COM-specific, though of no
+      use to the end user.
+      <ul>
+        <li><a href="#100000"><strong>The CAA V5 IDL</strong></a>
+          <ul>
+            <li><a href="#110000">Types</a></li>
+            <li><a href="#120000">Interface</a></li>
+            <li><a href="#130000">Automation Library or Typelib</a></li>
+            <li><a href="#140000">Enumeration</a></li>
+            <li><a href="#170000">Alias (typedef)</a></li>
+            <li><a href="#180000">String</a></li>
+            <li><a href="#190000">Operation and Operation Arguments</a></li>
+          </ul>
+        </li>
+        <li><a href="#200000"><strong>The CAA V5 IDL Compiler</strong></a>
+          <ul>
+            <li><a href="#210000">How to Invoke the IDL Compiler</a></li>
+            <li><a href="#220000">Openness of the IDL Compiler</a></li>
+            <li><a href="#230000">About the IDL Compiler Behavior and Error
+              Messages</a></li>
+          </ul>
+        </li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>The CAA V5 IDL</h3>
+<p>The CAA V5 IDL (Interface Definition Language) is the language you will use
+to write your interfaces. It is closely derived from the OMG IDL of CORBA and
+allows the declaration of how your interfaces will behave regardless how and
+using which language they will be implemented.</p>
+<p>The CAA V5 IDL uses the following object types (the definitions are those of
+CORBA if they exist):
+<ol>
+  <li>The interfaces: an interface is a set of possible operations that a client
+    may request of an object. It is converted into C++ as a class that contains
+    no data members, but only methods.</li>
+  <li>The types: a type is an identifiable entity with an associated predicate
+    (a single-argument mathematical function with a boolean result) defined over
+    values. Types can be basic types, such as integer or float, and constructed
+    type such as structure or interface.</li>
+  <li>The operations: an operation is an identifiable entity that denotes a
+    service that can be requested</li>
+</ol>
+<p>Some lexical conventions are required by IDL to accommodate mapping for
+several programming languages:
+<ul>
+  <li>Two objects can not have their identifiers which differ only by casing
+    since upper-case and lower-case characters are treated as the same character</li>
+  <li>A object identifier must be consistently spelled as declared, with respect
+    to case</li>
+  <li>The same identifier can not be used for two objects, such as an interface
+    and a constant</li>
+  <li>IDL keywords are not allowed as identifiers</li>
+  <li>Operators, such as =, +, and so forth can not be overloaded</li>
+  <li>An identifier can not begin using the _ character (underscore). This
+    prevents from colliding with C++ names in the generated code. Check that the
+    C++ code you write does not contain such _ characters.</li>
+</ul>
+<p>Remind also that any object declaration must be located <strong>before</strong>
+using it.</p>
+<p>Below is the BNF grammar of all the constructed types available with the CAA
+V5 IDL.</p>
+<table width="100%">
+  <tr>
+    <td align="right" valign="baseline"><a name="prod1">specification</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( <a href="#prod2">comDecl</a> )*
+      &lt;EOF&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod3">preproDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;LINENUM&gt; &lt;DECIMALINT&gt;
+      &lt;STRING&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod2">comDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod4">journalDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod5">disableDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod6">aliasDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod7">comInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod8">libraryDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod9">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod10">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod11">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod12">structDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod3">preproDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod13">libExport</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod4">journalDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod5">disableDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod6">aliasDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod7">comInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod9">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod10">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod11">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod3">preproDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod8">libraryDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;REPID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt; &quot;REPBEGIN&quot; &lt;ID&gt; ( <a href="#prod14">repreqPragma</a>
+      )* ( <a href="#prod13">libExport</a> )* &lt;PRAGMA&gt; &quot;REPEND&quot;
+      &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod10">interfaceFwd</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;interface&quot; &lt;ID&gt;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod7">comInterfaceDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;ID&quot; &lt;ID&gt;
+      &lt;DCEID&gt; &quot;interface&quot; &lt;ID&gt; ( &quot;:&quot; &lt;ID&gt;
+      )? &quot;{&quot; ( <a href="#prod15">comFunctionDecl</a> )* &quot;}&quot;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod15">comFunctionDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod16">comRetType</a>
+      &lt;ID&gt; &quot;(&quot; ( <a href="#prod17">comParamDecl</a> (
+      &lt;COMMA&gt; <a href="#prod17">comParamDecl</a> )* )? &quot;)&quot;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod17">comParamDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod18">comParamAttribute</a> <a href="#prod19">comParamType</a>
+      <a href="#prod20">declarator</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod18">comParamAttribute</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;out&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;inout&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod9">automationInterfaceDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;interface&quot; &lt;ID&gt; (
+      &quot;:&quot; &lt;ID&gt; )? &quot;{&quot; ( <a href="#prod21">automationFunctionDecl</a>
+      )* &quot;}&quot; &lt;SEMICOLON&gt; &lt;PRAGMA&gt; &quot;ID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt; &quot;DUAL&quot; &lt;ID&gt;
+      &lt;PRAGMA&gt; &quot;ID&quot; &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt;
+      &quot;ALIAS&quot; &lt;ID&gt; &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod21">automationFunctionDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( &lt;PRAGMA&gt; &quot;PROPERTY&quot;
+      &lt;ID&gt; )? <a href="#prod22">automationParamType</a> &lt;ID&gt;
+      &quot;(&quot; ( <a href="#prod23">automationParamDecl</a> ( &lt;COMMA&gt; <a href="#prod23">automationParamDecl</a>
+      )* )? &quot;)&quot; &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod23">automationParamDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod24">automationParamAttribute</a>
+      <a href="#prod22">automationParamType</a> &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod24">automationParamAttribute</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;out&quot; ( &lt;IDLRETVAL&gt; )?</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;inout&quot; ( &lt;IDLRETVAL&gt; )?</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod11">enumDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;enum&quot; &lt;ID&gt; &quot;{&quot;
+      &lt;ID&gt; ( &lt;COMMA&gt; &lt;ID&gt; )* &quot;}&quot; &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod12">structDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod25">structType</a>
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod6">aliasDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( &lt;PRAGMA&gt; &quot;ID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; )? &quot;typedef&quot; <a href="#prod26">aliasType</a>
+      <a href="#prod20">declarator</a> &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod16">comRetType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod19">comParamType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;void&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod19">comParamType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod27">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod26">aliasType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod27">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod28">sequenceType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod25">structType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod27">comBaseType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;octet&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;any&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">( &quot;unsigned&quot; (
+      &quot;short&quot; | &quot;long&quot; ) )</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod28">sequenceType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;sequence&quot; &quot;&lt;&quot; <a href="#prod19">comParamType</a>
+      ( &lt;COMMA&gt; &lt;DECIMALINT&gt; )? &quot;&gt;&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod22">automationParamType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod29">automationBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod29">automationBaseType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATBSTR&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATVariant&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATSafeArrayVariant&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod20">declarator</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod30">arrayDeclarator</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod30">arrayDeclarator</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;ID&gt; ( &quot;[&quot;
+      &lt;DECIMALINT&gt; &quot;]&quot; )+</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod25">structType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;struct&quot; &lt;ID&gt;
+      &quot;{&quot; ( <a href="#prod31">member</a> )+ &quot;}&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod31">member</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod19">comParamType</a> <a href="#prod20">declarator</a>
+      ( &lt;COMMA&gt; <a href="#prod20">declarator</a> )* &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod14">repreqPragma</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;REPREQ&quot;
+      &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod4">journalDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;IDLREP&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod5">disableDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;IDLNOGEN&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod32">errorSkipTo</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><i>java code</i></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod1">specification</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( <a href="#prod2">comDecl</a> )*
+      &lt;EOF&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod3">preproDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;LINENUM&gt; &lt;DECIMALINT&gt;
+      &lt;STRING&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod2">comDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod4">journalDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod5">disableDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod6">aliasDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod7">comInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod8">libraryDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod9">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod10">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod11">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod12">structDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod3">preproDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod13">libExport</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod4">journalDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod5">disableDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod6">aliasDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod7">comInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod9">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod10">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod11">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod3">preproDecl</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod8">libraryDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;REPID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt; &quot;REPBEGIN&quot; &lt;ID&gt; ( <a href="#prod14">repreqPragma</a>
+      )* ( <a href="#prod13">libExport</a> )* &lt;PRAGMA&gt; &quot;REPEND&quot;
+      &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod10">interfaceFwd</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;interface&quot; &lt;ID&gt;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod7">comInterfaceDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;ID&quot; &lt;ID&gt;
+      &lt;DCEID&gt; &quot;interface&quot; &lt;ID&gt; ( &quot;:&quot; &lt;ID&gt;
+      )? &quot;{&quot; ( <a href="#prod15">comFunctionDecl</a> )* &quot;}&quot;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod15">comFunctionDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod16">comRetType</a>
+      &lt;ID&gt; &quot;(&quot; ( <a href="#prod17">comParamDecl</a> (
+      &lt;COMMA&gt; <a href="#prod17">comParamDecl</a> )* )? &quot;)&quot;
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod17">comParamDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod18">comParamAttribute</a> <a href="#prod19">comParamType</a>
+      <a href="#prod20">declarator</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod18">comParamAttribute</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;out&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;inout&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod9">automationInterfaceDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;interface&quot; &lt;ID&gt; (
+      &quot;:&quot; &lt;ID&gt; )? &quot;{&quot; ( <a href="#prod21">automationFunctionDecl</a>
+      )* &quot;}&quot; &lt;SEMICOLON&gt; &lt;PRAGMA&gt; &quot;ID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt; &quot;DUAL&quot; &lt;ID&gt;
+      &lt;PRAGMA&gt; &quot;ID&quot; &lt;ID&gt; &lt;DCEID&gt; &lt;PRAGMA&gt;
+      &quot;ALIAS&quot; &lt;ID&gt; &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod21">automationFunctionDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( &lt;PRAGMA&gt; &quot;PROPERTY&quot;
+      &lt;ID&gt; )? <a href="#prod22">automationParamType</a> &lt;ID&gt;
+      &quot;(&quot; ( <a href="#prod23">automationParamDecl</a> ( &lt;COMMA&gt; <a href="#prod23">automationParamDecl</a>
+      )* )? &quot;)&quot; &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod23">automationParamDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod24">automationParamAttribute</a>
+      <a href="#prod22">automationParamType</a> &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod24">automationParamAttribute</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;out&quot; ( &lt;IDLRETVAL&gt; )?</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;inout&quot; ( &lt;IDLRETVAL&gt; )?</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod11">enumDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;enum&quot; &lt;ID&gt; &quot;{&quot;
+      &lt;ID&gt; ( &lt;COMMA&gt; &lt;ID&gt; )* &quot;}&quot; &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod12">structDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod25">structType</a>
+      &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod6">aliasDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">( &lt;PRAGMA&gt; &quot;ID&quot;
+      &lt;ID&gt; &lt;DCEID&gt; )? &quot;typedef&quot; <a href="#prod26">aliasType</a>
+      <a href="#prod20">declarator</a> &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod16">comRetType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod19">comParamType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;void&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod19">comParamType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod27">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod26">aliasType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod27">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod28">sequenceType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline"><a href="#prod25">structType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod27">comBaseType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;octet&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;any&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">( &quot;unsigned&quot; (
+      &quot;short&quot; | &quot;long&quot; ) )</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod28">sequenceType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;sequence&quot; &quot;&lt;&quot; <a href="#prod19">comParamType</a>
+      ( &lt;COMMA&gt; &lt;DECIMALINT&gt; )? &quot;&gt;&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod22">automationParamType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod29">automationBaseType</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod29">automationBaseType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATBSTR&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATVariant&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&quot;CATSafeArrayVariant&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod20">declarator</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod30">arrayDeclarator</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"></td>
+    <td align="middle" valign="baseline">|</td>
+    <td align="left" valign="baseline">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod30">arrayDeclarator</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;ID&gt; ( &quot;[&quot;
+      &lt;DECIMALINT&gt; &quot;]&quot; )+</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod25">structType</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&quot;struct&quot; &lt;ID&gt;
+      &quot;{&quot; ( <a href="#prod31">member</a> )+ &quot;}&quot;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod31">member</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><a href="#prod19">comParamType</a> <a href="#prod20">declarator</a>
+      ( &lt;COMMA&gt; <a href="#prod20">declarator</a> )* &lt;SEMICOLON&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod14">repreqPragma</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;PRAGMA&gt; &quot;REPREQ&quot;
+      &lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod4">journalDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;IDLREP&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod5">disableDecl</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline">&lt;IDLNOGEN&gt;</td>
+  </tr>
+  <tr>
+    <td align="right" valign="baseline"><a name="prod32">errorSkipTo</a></td>
+    <td align="middle" valign="baseline">::=</td>
+    <td align="left" valign="baseline"><i>java code</i></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod1">specification</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">( <a href="#prod2">comDecl</a> | <a href="#prod3">automationDecl</a>
+      )* &lt;EOF&gt;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod2">comDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod4">aliasDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod5">comInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod6">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod7">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod8">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod9">structDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod3">automationDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod10">libraryDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod11">libraryExport</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod11">libraryExport</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod7">interfaceFwd</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod6">automationInterfaceDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod8">enumDecl</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod10">libraryDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod12">repidPragma</a> <a href="#prod13">repbeginPragma</a>
+      ( <a href="#prod11">libraryExport</a> )* <a href="#prod14">rependPragma</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod7">interfaceFwd</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;interface&quot; <a href="#prod15">identifier</a>
+      &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod5">comInterfaceDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod16">idPragma</a>
+      &quot;interface&quot; <a href="#prod15">identifier</a> ( &quot;:&quot; <a href="#prod15">identifier</a>
+      )? &quot;{&quot; ( <a href="#prod17">comFunctionDecl</a> )* &quot;}&quot;
+      &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod17">comFunctionDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod18">comRetType</a> <a href="#prod15">identifier</a>
+      &quot;(&quot; ( <a href="#prod19">comParamDecl</a> ( &quot;,&quot; <a href="#prod19">comParamDecl</a>
+      )* )? &quot;)&quot; &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod19">comParamDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod20">comParamAttribute</a> <a href="#prod21">comParamType</a>
+      <a href="#prod22">declarator</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod20">comParamAttribute</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;out&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;inout&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod6">automationInterfaceDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;interface&quot; <a href="#prod15">identifier</a>
+      ( &quot;:&quot; <a href="#prod15">identifier</a> )? &quot;{&quot; ( <a href="#prod23">automationFunctionDecl</a>
+      )* &quot;}&quot; &quot;;&quot; <a href="#prod16">idPragma</a> <a href="#prod24">dualPragma</a>
+      <a href="#prod16">idPragma</a> <a href="#prod25">aliasPragma</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod23">automationFunctionDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">( <a href="#prod26">propertyPragma</a> )? <a href="#prod27">automationParamType</a>
+      <a href="#prod15">identifier</a> &quot;(&quot; ( <a href="#prod28">automationParamDecl</a>
+      ( &quot;,&quot; <a href="#prod28">automationParamDecl</a> )* )?
+      &quot;)&quot; &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod28">automationParamDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod29">automationParamAttribute</a>
+      <a href="#prod27">automationParamType</a> <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod29">automationParamAttribute</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;in&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;out&quot; ( &quot;/*IDLRETVAL*/&quot;
+      )?</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;inout&quot; (&quot;/*IDLRETVAL*/&quot;
+      )?</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod8">enumDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;enum&quot; <a href="#prod15">identifier</a>
+      &quot;{&quot; <a href="#prod15">identifier</a> ( &quot;,&quot; <a href="#prod15">identifier</a>
+      )* &quot;}&quot; &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod9">structDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod30">structType</a>
+      &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod4">aliasDecl</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">( <a href="#prod16">idPragma</a> )?
+      &quot;typedef&quot; <a href="#prod31">aliasType</a> <a href="#prod22">declarator</a>
+      &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod18">comRetType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod21">comParamType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;void&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod21">comParamType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod32">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod31">aliasType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod32">comBaseType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod33">sequenceType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod30">structType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod32">comBaseType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;any&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;string&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">( &quot;unsigned&quot; ( &quot;short&quot; |
+      &quot;long&quot; ) )</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod33">sequenceType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;sequence&quot; &quot;&lt;&quot; <a href="#prod21">comParamType</a>
+      &quot;&gt;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod27">automationParamType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod34">automationBaseType</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod34">automationBaseType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;float&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;double&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;short&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;long&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;char&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;boolean&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;CATBSTR&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;CATVariant&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;CATSafeArrayVariant&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE">&quot;HRESULT&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod22">declarator</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod35">arrayDeclarator</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE"></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">|</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod35">arrayDeclarator</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod15">identifier</a> (
+      &quot;[&quot; &lt;DECIMALINT&gt; &quot;]&quot; )+</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod30">structType</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;struct&quot; <a href="#prod15">identifier</a>
+      &quot;{&quot; ( <a href="#prod36">member</a> )+ &quot;}&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod36">member</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE"><a href="#prod21">comParamType</a> <a href="#prod22">declarator</a>
+      ( &quot;,&quot; <a href="#prod22">declarator</a> )* &quot;;&quot;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod15">identifier</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&lt;ID&gt;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod12">repidPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;REPID&quot; <a href="#prod15">identifier</a>
+      &lt;DCEID&gt;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod13">repbeginPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;REPBEGIN&quot; <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod14">rependPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;REPEND&quot; <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod37">repreqPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;REPREQ&quot; <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod16">idPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;ID&quot; <a href="#prod15">identifier</a>
+      &lt;DCEID&gt;</td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod24">dualPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;DUAL&quot; <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod25">aliasPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;ALIAS&quot; <a href="#prod15">identifier</a>
+      <a href="#prod15">identifier</a></td>
+  </tr>
+  <tr>
+    <td width="27%" valign="MIDDLE">
+      <p align="RIGHT"><a name="prod26">propertyPragma</a></td>
+    <td width="6%" valign="MIDDLE">
+      <p align="CENTER">::=</td>
+    <td width="67%" valign="MIDDLE">&quot;#pragma&quot; &quot;PROPERTY&quot; <a href="#prod15">identifier</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="110000"></a>Types</h4>
+<p>IDL provides C-language like declarations that associate an identifier with a
+type. A type can be a basic type, such as an integer or a float, that is an
+object whose internal structure is known, or a type can be a constructed type,
+such as a structure, or even an interface, or finally a type can be a template
+type.</p>
+<p>Basic types are:
+<ul>
+  <li>Integer types, declared as short, long, or unsigned short and unsigned
+    long if the value is always positive.</li>
+  <li>Floating-point types, declared as float and double</li>
+  <li>Character type, declared as char</li>
+  <li>Boolean type, declared as boolean. It can only take one of the values TRUE
+    and FALSE</li>
+  <li>Any type, declared as any. It permits the specification of values that can
+    express any IDL type.</li>
+</ul>
+<p>These types are mapped to C++ types as follows:</p>
+<table class="code">
+  <tr>
+    <th>OMG IDL</th>
+    <th>C++</th>
+  </tr>
+  <tr>
+    <td valign="top">short</td>
+    <td valign="top">short</td>
+  </tr>
+  <tr>
+    <td valign="top">long</td>
+    <td valign="top">long</td>
+  </tr>
+  <tr>
+    <td valign="top">float</td>
+    <td valign="top">float</td>
+  </tr>
+  <tr>
+    <td valign="top">double</td>
+    <td valign="top">double</td>
+  </tr>
+  <tr>
+    <td valign="top">char</td>
+    <td valign="top">char</td>
+  </tr>
+  <tr>
+    <td valign="top">boolean</td>
+    <td valign="top">boolean (This is: <code>typedef unsigned char boolean;</code>)</td>
+  </tr>
+  <tr>
+    <td valign="top">any</td>
+    <td valign="top">any (not yet implemented. any will be implemented as a
+      class)</td>
+  </tr>
+</table>
+<p>Constructed types can be constructed from the following basic types:
+<ul>
+  <li>Enumeration declared as enum is a finite ordered list of identifiers</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="120000"></a>Interface</h4>
+<p>The interface gathers a list of operations available for requests on an
+object. The interface is equivalent to the public part of a class in C++, or to
+a list in CATIA. An interface is declared as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// CAA V5 IDL
+#pragma ID A &quot;DCE:00020400-0000-0000-C000000000000046&quot;
+interface A
+{
+...
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>and is converted into C++ as:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// C++
+class A : public CATBaseUnknown
+{
+  CATDeclareInterface;
+  public :
+  ...
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The interfaces support inheritance as in C++. For example, the interface B is
+declared as inheriting from the interface A:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// CAA V5 IDL
+#pragma ID A &quot;DCE:00020400-0000-0000-C000000000000046&quot;
+#pragma DUAL A;
+interface A
+{
+...
+};
+#pragma ID B &quot;DCE:00020400-0000-0000-C000000000000047&quot;
+#pragma DUAL B;
+interface B : A {
+...
+};
+</pre>
+    </td>
+  </tr>
+</table>
+<p>is converted into C++ as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// C++
+class A : public CATIABase
+{
+  CATDeclareInterface;
+  public :
+  ...
+};
+class B : public A
+{
+  CATDeclareInterface;
+  public :
+  ...
+};
+</pre>
+    </td>
+  </tr>
+</table>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+According to CAA V5 Object Model rules, the multi-inheritance is not allowed.</p>
+<p>It is possible to use the forward declaration to declare an interface before
+it is fully declared:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// CAA V5 IDL
+interface A;
+#pragma ID B &quot;DCE:00020400-0000-0000-C000000000000047&quot;
+#pragma DUAL B;
+interface B : A {
+...
+};
+#pragma ID A &quot;DCE:00020400-0000-0000-C000000000000046&quot;
+#pragma DUAL A;
+interface A
+{
+...
+};
+</pre>
+    </td>
+  </tr>
+</table>
+<p>is translated as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+// C++
+class A;
+class B : public A
+{
+  public :
+  ...
+};
+class A : public CATIABase {
+  public :
+  ...
+};
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="130000"></a>Automation Library or Typelib</h4>
+<p>To provide type information at run time for the scripts, Microsoft COM offers
+the type library, which does not exist with CORBA. This makes it possible for
+the interpreted language to access the methods by means of the virtual function
+table of the object and to ensure run time type checking like C++ run time does.
+In addition, it is much faster than the late binding. The type library is a
+compiled version of a set of IDL files. It contains the description of all the
+interfaces, all the method prototypes, properties, and all the parameters they
+require along with their types.</p>
+<p>If you want to take advantage of Automation capabilities, you need to declare
+the interfaces in a type library source file, suffixed by <code>tplib</code>.
+This is an example of such a file:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+#pragma REPID INFITF &quot;DCE:14f197b2-0771-11d1-a5b100a0c9575177&quot;
+#pragma REPBEGIN INFITF
+
+#pragma REPREQ PreReqTypeLib
+
+#include &quot;CATIApplication.idl&quot;
+#include &quot;CATIPageSetup.idl&quot;
+#include &quot;CATIWindow.idl&quot;
+
+#pragma REPEND INFITF
+</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>INFITF</code> is the type library name</li>
+  <li><code>CATIApplication.idl</code>, <code>CATIPageSetup.idl</code> and <code>CATIWindow.idl</code>
+    the files containing the interfaces</li>
+  <li><code>REPID</code>, <code>REPBEGIN</code> and <code>REPEND</code> are
+    keywords to declare respectively the type library name and its GUID, the
+    beginning and the end of the interfaces to include in the type library</li>
+  <li><code>REPREQ</code> declares the prerequisite type libraries.</li>
+</ul>
+<p>The IDL compiler builds the run time type library from such a source file and
+stores it in a shared library with UNIX or a DLL with Windows.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="140000"></a>Enumeration</h4>
+<p>The enumeration consists in a finite ordered list of identifiers. For
+example:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// CAA V5 IDL
+enum color {cyan, yellow, magenta, black};</pre>
+    </td>
+  </tr>
+</table>
+<p>is converted into C++ as:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// C++
+enum color {cyan, yellow, magenta, black};</pre>
+    </td>
+  </tr>
+</table>
+<p>Find the difference!</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="170000"></a>Alias (typedef)</h4>
+<p>You can create aliases for any data types. The <code>typedef</code> keyword
+associates a name with a data type. You should associate a GUID to each created
+alias, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>// CAA V5 IDL
+#pragma ID Name &quot;DCE:00020500-0000-0000-C000000000000046&quot;
+typedef Name String</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="180000"></a>String</h4>
+<p>A string is mapped to the C++ <code>char *</code></p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="190000"></a>Operation and Operation Arguments</h4>
+<p>An operation maps to a C++ function with the same name as the operation.</p>
+<p>The objects that can be declared as operation arguments are the types, the
+constants, the attributes, and the exceptions.</p>
+<p>The parameters passed as operation arguments must be declared along with
+their passing modes belonging to one of the following:
+<ul>
+  <li><code>in</code>: the parameter is passed from the calling application to
+    the called object</li>
+  <li><code>out</code>: the parameter is passed from the called object to the
+    calling application</li>
+  <li><code>inout</code>: the parameter is passed from the calling application
+    to the called object and is passed back from the called object to the
+    calling application when the called method returns.</li>
+</ul>
+<p>Depending on the passing mode chosen, the signature generated will change.
+The following table shows the basic argument types and the passing result:</p>
+<table class="code">
+  <tr>
+    <th>OMG IDL Type</th>
+    <th>In</th>
+    <th>Inout</th>
+    <th>Out</th>
+    <th>Return</th>
+  </tr>
+  <tr>
+    <td valign="top">short</td>
+    <td valign="top">short</td>
+    <td valign="top">short &amp;</td>
+    <td valign="top">short &amp;</td>
+    <td valign="top">short</td>
+  </tr>
+  <tr>
+    <td valign="top">long</td>
+    <td valign="top">long</td>
+    <td valign="top">long &amp;</td>
+    <td valign="top">long &amp;</td>
+    <td valign="top">long</td>
+  </tr>
+  <tr>
+    <td valign="top">float</td>
+    <td valign="top">float</td>
+    <td valign="top">float &amp;</td>
+    <td valign="top">float &amp;</td>
+    <td valign="top">float</td>
+  </tr>
+  <tr>
+    <td valign="top">double</td>
+    <td valign="top">double</td>
+    <td valign="top">double &amp;</td>
+    <td valign="top">double &amp;</td>
+    <td valign="top">double</td>
+  </tr>
+  <tr>
+    <td valign="top">boolean</td>
+    <td valign="top">boolean</td>
+    <td valign="top">boolean &amp;</td>
+    <td valign="top">boolean &amp;</td>
+    <td valign="top">boolean</td>
+  </tr>
+  <tr>
+    <td valign="top">char</td>
+    <td valign="top">char</td>
+    <td valign="top">char &amp;</td>
+    <td valign="top">char &amp;</td>
+    <td valign="top">char</td>
+  </tr>
+  <tr>
+    <td valign="top">enum</td>
+    <td valign="top">enum</td>
+    <td valign="top">enum &amp;</td>
+    <td valign="top">enum &amp;</td>
+    <td valign="top">enum</td>
+  </tr>
+  <tr>
+    <td valign="top">interface reference ptr</td>
+    <td valign="top">intref_ptr</td>
+    <td valign="top">intref_ptr &amp;</td>
+    <td valign="top">intref_ptr &amp;</td>
+    <td valign="top">intref_ptr</td>
+  </tr>
+</table>
+<p>You should pay attention when choosing the passing mode. Mapping <code>in</code>
+arguments leaves the caller deal with memory allocation and deallocation for
+these arguments. Mapping <code>inout</code> and <code>out</code> arguments is
+more difficult. For variable length arguments, the callee must allocate part or
+all of the required storage. For fixed length arguments, the caller allocation
+is preferable. In addition, all storage areas for variable length arguments
+allocated by the callee must be deallocated.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>The IDL Compiler</h3>
+<p>The IDL compiler allows you to generate C++ source code for your interface
+classes from IDL sources which describe the interfaces. The IDL compiler runs in
+three steps:
+<ol>
+  <li>The first step uses the C++ preprocessor to preprocess the IDL sources and
+    to generate an expanded IDL source. The <code>#include</code> and the <code>#define</code>
+    statements are expanded.</li>
+  <li>The second step generates the C++ header file for the class. The C++ <code>#include</code>
+    statements are inserted at the right place. The included files must be
+    generated before by the IDL compiler. The <code>#define</code> statements
+    remain expanded.</li>
+  <li>The third step generates the C++ header file for the TIE class.</li>
+</ol>
+<p>The following figure shows these three IDL compiler steps</p>
+<p><img border="0" src="images/CAASysIDLCompiler.gif" width="676" height="279"></p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="210000"></a>How to Invoke the IDL Compiler</h4>
+<p>The IDL compiler is included into the building tool mkmk. Your C++ abstract
+classes are then automatically created when you use mkmk.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="220000"></a>Openness of the IDL Compiler</h4>
+<p>You may want to use the IDL compiler with the following restrictions or
+specificities:
+<ul>
+  <li>A class that you use in one of your interfaces has no interface declared
+    using IDL, but is declared using C++. Suppose the <code>CATIXX</code>
+    interface needs the <code>CATNeighbor</code> class which has no IDL
+    interface. You just need to include <code>interface CATNeighbor</code> in <code>CATIXX</code>.idl,
+    compile it and add <code>#include &quot;CATNeighbor.h&quot;</code> in the
+    generated <code>CATIXX.h</code> file.
+    <p><img border="0" src="images/CAASysIDLCompiler1.gif" width="516" height="200"></p>
+  </li>
+  <li>You want to use a constructed type, like a structure, a union or a
+    sequence (sequence is the IDL term for list). You declare it in the IDL
+    file, but the compiler generates the corresponding C++ code only for
+    structures and sequences, but not for union. You need then to provide the
+    code for unions. This is a temporary restriction.
+    <p><img border="0" src="images/CAASysIDLCompiler2.gif" width="413" height="251"></p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="230000"></a>About the IDL Compiler Behavior and Error Messages</h4>
+<p>The IDL compiler has the following behavior or generates error messages in
+the following cases:
+<ul>
+  <li>The IDL file name MUST be identical to the class name followed by a dot
+    and the suffix <code>idl</code>. Example: <code>CATIXX.idl</code> where the
+    class name is <code>CATIXX</code></li>
+  <li>The error messages of the C++ preprocessor are not taken into account and
+    this often generates errors in the following steps.</li>
+  <li>The compiler stops in the second step when the first error is encountered</li>
+  <li>The errors detected by the syntactical and lexical analyzer issues always
+    the message <code>syntax error</code>. It provides the file and the number
+    of the line where the error is found</li>
+  <li>Some parts of the compiler are not yet implemented. They can be recognized
+    by means of the character string <code>NYI</code></li>
+  <li>Some of the DS coding rules are checked. They can be recognized by means
+    of the character string <code>DSLIM</code></li>
+  <li>The IDL language does not allow for overloading, and does not allow for
+    default value for method parameters. DO NOT USE THEM</li>
+  <li>The IDL language is not case sensitive. Never use names or identifier that
+    match regardless the case sensitivity. This apply to class names, method
+    names and other names within the common scope limitations</li>
+  <li>The compiler does not generate code for the exceptions and for the
+    contexts (context is an IDL term).</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The CAA V5 IDL (Interface Definition Language) is dedicated to create
+programming language independent interfaces that you can use from both a
+compiled language such as C++, and scripting languages such as Visual Basic and
+JScript with Windows, and Basic Script with UNIX.</p>
+<p>The IDL compiler inntegrated with mkmk generates both the C++ abstract
+classes used as interfaces for C++, and the type library to access these
+interfaces from a scripting languages.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAASysAutomationItf.htm">Creating Interfaces for Automation</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAASysQuickRefs/CAASysHRESULT.htm">What Is
+      HRESULT?</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysIDLCompiler.htm">The CAA V5 IDL Compiler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [May 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

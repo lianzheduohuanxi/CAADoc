@@ -1,0 +1,122 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>PSNInteroperability Global Function CATLoadDocumentFromVPM</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../PSNInteroperability.htm" href="../PSNInteroperability.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "PSNInteroperability";	}
+		function getCurrentObjectName() { 
+ 	return "CATLoadDocumentFromVPM"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>PSNInteroperability Global Function CATLoadDocumentFromVPM</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>CATLoadDocumentFromVPM</b>(<td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iLgId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('char','char*')</script> <td><tt>iDocId</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDocument','CATDocument*&amp;')</script> <td><tt>oDoc</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Loads in session a document stored in an ENOVIAvpm V4 database.
+
+<br><b>Role:</b>This method loads in session a document stored 
+  in Publication Exposed mode in the ENOVIAvpm V4 database and 
+  returns the corresponding CATDocument. 
+<br>The document can be any CATIA V5 type document.
+
+ <p>
+ This method takes as input the document identifier <tt>iDocId</tt>. 
+ Only the 42 first character of the string are relevant and are structured as followed:
+ <ul>
+    <li> the Coid of the document (database binary 8 crc long) </li>
+    <li> the Compid of the document (database binary 8 crc long) </li>
+    <li> the VPM environment name of the root part (8 crc long). 
+           <br>   For instance <tt>"VPMENV  "</tt> </li>
+    <li> the VPM document table name  (18 crc long). 
+           <br>  For instance <tt>"DOCUMENT         "</tt> </li>
+ </ul>
+ <br> The 8 crc long server name might be present in the string but will be ignored.
+ </p>
+
+<p>If needed, your Imakefile.mk should include the module: <b>CATPinServices</b> </p>
+<p>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iLgId</tt>
+   <dd>    length of the string iDocId.
+ </dd>
+    <dt><tt> iDocId</tt>
+   <dd>    ENOVIAvpm document identifier.
+ </dd>
+    <dt><tt> oDoc</tt>
+   <dd>    the new document is session only if the method is successful
+
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>     <ul>
+   <li><tt>S_OK</tt>: The document is successfuly loaded in session</li> 
+   <li><tt>E_FAIL</tt>: ENOVIAvpm server cannot be detected</li>
+   <li><tt>E_FAIL</tt>: The method has failed</li>
+  </ul>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATBatchServices.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

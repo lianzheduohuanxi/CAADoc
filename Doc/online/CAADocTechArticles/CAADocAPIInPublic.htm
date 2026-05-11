@@ -1,0 +1,156 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+ </script>
+ <title>CAA Authorized APIs</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Rules and Standards</h1>
+     </td>
+     <td valign="top">
+     <h2></h2>
+     </td>
+     <td align="right">
+     <h3><a name="Top"></a>CAA Authorized APIs</h3>
+     <p><i>Moving Authorized APIs and Authorized API usage and control</i></td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>CAA Authorized APIs are now located in the PublicInterfaces directory of 
+     each framework. In addition, the former AuthorizedAPI.txt text file is now 
+     supplied encrypted as AuthorizedAPI.script. This article explains these 
+     changes and gives you tips an recommendations to get your applications 
+     going on building on top of these Authorized APIs.</p>
+     <ul>
+       <li><a href="#_Toc45082986"><b>CAA Authorized API Location Changes in 
+       Brief</b></a>
+       <ul>
+         <li><a href="#_Toc45082987">Location of CAA Authorized APIs</a> </li>
+         <li><a href="#_Toc45082988">The AuthorizedAPI File in \tools\config of 
+         the RADE Installation Directory</a></li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="_Toc45082986"></a>CAA Authorized API Location Changes in Brief</h3>
+ <p>Starting from CAA V5R12, the Authorized APIs progressively move to the 
+ PublicInterfaces directory of the frameworks.</p>
+ <h4><a name="_Toc45082987"></a>Location of CAA Authorized APIs</h4>
+ <table width="100%">
+   <tr>
+     <th>Before V5R12</th>
+     <th>During V5R12 Lifetime</th>
+   </tr>
+   <tr>
+     <td><img src="images/CAADocAPILocation1.gif" width="187" height="54"></td>
+     <td><img src="images/CAADocAPILocation2.gif" width="184" height="69"></td>
+   </tr>
+   <tr>
+     <td valign="top">Up to V5R11, the CAA Authorized APIs and the DS Internal 
+     Resources of a framework are mainly located in the framework's 
+     ProtectedInterfaces directory. The Authorized APIs can be differentiated 
+     from the DS Internal Resources by opening the files to locate the CAA 
+     exposition tags or consulting the CAA Encyclopedia.</td>
+     <td valign="top">Starting with V5R12, the CAA Authorized APIs are 
+     progressively moved to the PublicInterfaces directory, while the DS 
+     Internal Resources remain in the ProtectedInterfaces directory.</td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="_Toc45082988"></a>The AuthorizedAPI File in \tools\config of the 
+ RADE Installation Directory</h4>
+ <table border="1" width="100%">
+   <tr>
+     <th>Before V5R12</th>
+     <th>During V5R12 Lifetime</th>
+   </tr>
+   <tr>
+     <td><img src="images/CAADocAPIAuthorized1.gif" width="321" height="201"></td>
+     <td><img src="images/CAADocAPIAuthorized2.gif" width="332" height="194"></td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">Up to V5R11, the AuthorizedAPI.txt file is not secured. 
+     Only with Dassault Systèmes support, this file could be modified to enable 
+     a DS Internal Resource to be used in a CAA application.</td>
+     <td valign="top">Starting with V5R12, the AuthorizedAPI.txt file is 
+     supplied encrypted and changed to AuthorizedAPI.script. It cannot be 
+     modified.</td>
+   </tr>
+ </table>
+ <p>To help developers use only Authorized APIs, mkmk checks that CAA 
+ applications only use Authorized APIs and issues an error if a DS Internal 
+ Resource is used. But this is a corrective check, not a predictive one and 
+ forces CAA developers to review their coding and possibly their design when the 
+ application is ready to be built.</p>
+ <p>Using a DS Internal Resource is stricly prohibited. For this reason:</p>
+ <ul>
+   <li>DS Internal Resources are NOT documented in the CAA Encyclopedia</li>
+   <li>DS Internal Resources in the PublicInterfaces directory are either tagged
+   <ul>
+     <li>@nodoc</li>
+     <li>@CAA2Required: in this case they are referenced indirectly (no explicit 
+     include to be done in CAA application) and must not be used directly</li>
+   </ul>
+   </li>
+   <li>DS Internal Resources in the ProtectedInterfaces folder are not tagged.</li>
+ </ul>
+ <p>You can refer to the CAA Encyclopedia to know about the CAA V5 Authorized 
+ API Usage, Deprecation, and Stability [<a href="#References">2</a>].</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="#" onclick="javascript:linkUrl('http://www.caav5.com/');return false;">
+     CAA Internet Site</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td><a href="CAADocLxUsageRules.htm">CAA V5 Authorized API Exposition, 
+     Usage, Deprecation, and Stability</a></td>
+   </tr>
+ </table>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jul 2003]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 1994-2003, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

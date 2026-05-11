@@ -1,0 +1,132 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Write the name of selected products in a text file.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English
+'   CATIA Level : V5R7SP3
+' ***********************************************************************
+
+' ***********************************************************************
+'
+' Purpose:  Build the complete name of a product.
+'
+' Inputs :  ioProduct Product     the product
+'
+' Outputs:  osName    String      the complete name
+'
+' ***********************************************************************
+Sub BuildName ( ByRef ioProduct, ByRef osName )
+
+  osName = ioProduct.Name
+  Dim oRoot As Product
+  Set oRoot = CATIA.ActiveDocument.Product
+  Dim oCurrent As Product
+  Set oCurrent = ioProduct
+  While (oCurrent.Name <> oRoot.Name)
+      Set oCurrent = oCurrent.Parent.Parent
+      osName = oCurrent.Name+"\"+osName
+  Wend
+
+End Sub
+
+' ***********************************************************************
+'
+' Purpose:  Main.
+'
+' ***********************************************************************
+Sub CATMain()
+
+
+    ' Initialize
+    Dim sTitle As String
+    sTitle = "Write name of selected products"
+    Dim sExtension As String
+    sExtension = "txt"
+
+    ' Create the file environment
+    Dim oFso As FileSystem
+    Set oFso = CATIA.FileSystem
+    Dim oFile As File
+    Dim oTextStream As CATIATextStream
+
+    ' Open the output file
+    Dim iReturnCode As Integer
+    iReturnCode = vbRetry
+    While (iReturnCode = vbRetry)
+
+        ' Retrieve the path from the user
+        Dim sFilePath As String
+        sFilePath = CATIA.FileSelectionBox(sTitle, sExtension, CatFileSelectionModeSave)
+        If (sFilePath = "") Then
+            iReturnCode = vbCancel
+        Else
+           ' Verify the existence of the output file
+            sFilePath = sFilePath+"."+sExtension
+            Dim iOverwrite As Boolean
+            iOverwrite = False
+            If (oFso.FileExists(sFilePath)) Then
+                ' Ask user if output file exists
+                iReturnCode = Msgbox("The file "+sFilePath+" already exists ! Do you want to overwrite it ?", vbQuestion+vbAbortRetryIgnore, sTitle)
+                If (iReturnCode = vbAbort) Then
+                    iReturnCode = vbCancel
+                ElseIf (iReturnCode = vbIgnore) Then
+                    iReturnCode = vbOK
+                    iOverwrite  = True
+                End If
+            else 
+                iReturnCode = vbOK
+            End If
+
+            ' Create the output file
+            If (iReturnCode = vbOK) Then
+                On Error Resume Next
+                Set oFile = oFso.CreateFile(sFilePath, iOverwrite)
+                If (Err.Number <> 0) Then
+                    Err.Clear
+                    iReturnCode = Msgbox("Cannot Create "+sFilePath+" !", vbExclamation+vbRetryCancel, sTitle)
+                Else
+
+                    ' Open the output file
+                    Set oTextStream = oFile.OpenAsTextStream("ForWriting")
+                    If (Err.Number <> 0) Then
+                        iReturnCode = Msgbox("Cannot open "+sFilePath+" as a text file for writting !", vbExclamation+vbRetryCancel, sTitle)
+                    End If
+                End If
+                On Error goto 0
+            End If
+        End If
+    Wend
+
+    ' Write the name of selected products
+    If (iReturnCode = vbOK) Then
+        Dim oSelection As Selection
+        Set oSelection = CATIA.ActiveDocument.Selection
+
+        ' Retrieve the selected products
+        Dim oProduct As AnyObject
+        Dim sCompleteName As String
+        On Error Resume Next
+        While (Err.Number = 0)
+           Set oProduct = oSelection.FindObject("CATIAProduct")
+           If (Err.Number = 0) Then
+
+                ' Write the name
+                BuildName oProduct, sCompleteName
+                oTextStream.Write sCompleteName+vbCrLf
+            End If
+        Wend
+        On Error Goto 0
+
+       ' Clean
+        Set oFile = Nothing
+        Set oFso  = Nothing
+
+        ' Report
+        Msgbox sTitle+" completed !"
+    End If
+
+End Sub

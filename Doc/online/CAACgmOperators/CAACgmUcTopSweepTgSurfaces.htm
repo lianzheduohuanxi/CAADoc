@@ -1,0 +1,175 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Creating a Sweep from a Spine and Two Tangency Surfaces</title>
+<style type="text/css">
+.style2 {
+				border-width: 0;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Creating a Sweep from a Spine and Two Tangency 
+		Surfaces</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The profile to be swept is implicitly defined. The generated sweep 
+		is tangent to the two input surfaces and can be trimmed or not with the 
+		input surfaces. This operator possibly produces several results which 
+		can be scanned.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a sweep tangent to two surfaces and using an implicit linear 
+profile, use the CATICGMTopSweepSkinSkinSegment operator in GMOperatorsInterfaces. 
+This operator has to 
+be created by the CATCGMCreateTopSweepSkinSkinSegment global function.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsSweepTangentSkinSkin.m module in CAAGMOperatorsInterfaces.edu 
+illustrates how to create a sweep tangent to two skins. This use case creates 
+the input data to be passed to the operator. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>With the input data below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Sweep Operation: Input Data (Spine and 
+	Tangency Surfaces)</caption>
+  <tr>
+    <td>
+	<img alt="Sweep: Tangent to Two Surfaces - Implicit Profile" src="images/CGM_sweep_skinskin_0.png"></td>
+  </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+ CATICGMTopSweepSkinSkinSegment * SweepTopOp = 
+        CATCGMCreateTopSweepSkinSkinSegment(iFactory, iTopData, iGuideBody1, iGuideBody2, iSpineBody);
+ ...
+ int orient1 = -1; //solution desired on opposite side of first shell normal
+ int orient2 = 1; //solution desired on same side of second shell normal
+    
+ SweepTopOp->SetFirstShellOrientation( orient1 );
+ SweepTopOp->SetSecondShellOrientation( orient2 );
+ ...
+ CATDynSegmentationMode trim1 = CATDynTrim; //trim the results with first support
+ CATDynSegmentationMode trim2 = CATDynNoTrim; // do not trim the results with second support
+    
+ SweepTopOp->SetFirstShellModeTrim( trim1 );
+ SweepTopOp->SetSecondShellModeTrim( trim2 );    
+ 
+SweepTopOp->Run();
+...
+SweepTopOp->BeginningResult();
+int firstShellOrient = 0, secondShellOrient = 0, firstCoupledOrient = 0, secondCoupledOrient = 0, index = 0;
+CATSoftwareConfiguration * pConfig = iTopData->GetSoftwareConfiguration();
+        
+  while (SweepTopOp->NextResult())
+        {
+            CATCGMJournalList * pTempJournal =  new CATCGMJournalList(pConfig,NULL);//get the journal corresponding to this result
+            
+            CATBody * pTempBody = SweepTopOp->GetResult(pTempJournal);
+            
+            //get the signature of the current result
+            SweepTopOp->GetResultInformation(firstShellOrient
+                ,secondShellOrient
+                ,firstCoupledOrient
+                ,secondCoupledOrient
+                ,index);
+            if( pTempJournal )
+            {
+                delete pTempJournal;
+                pTempJournal = 0;
+            }  
+        }
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.2">Fig.2</a> Result of Sweep Operation: Spine and Two 
+	Tangency Surfaces </caption>
+  <tr>
+    <td>
+	<img alt="Sweep Operation: Tangency Surfaces Result1 " src="images/CGM_sweep_skinskin_1.png" width="250" height="220"></td>
+    <td>
+	<img alt="Sweep Operation Spine and Tangency Surfaces: Result2" src="images/CGM_sweep_skinskin_2.png" width="250" height="220"></td>
+    </tr>
+ </table>
+
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

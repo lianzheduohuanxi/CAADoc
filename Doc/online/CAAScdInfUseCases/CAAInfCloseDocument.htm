@@ -1,0 +1,201 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Closing a CATIA Document</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Closing a CATIA Document</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to close an existing CATIA
+      document that is currently in the session. It details the programming
+      equivalent of the <code>File -&gt; Close</code> command.</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAInfCloseDocument is launched in CATIA [<a href="#References">1</a>].
+      An existing document called &quot;CAAInfReadDocument.CATPart&quot; must be
+      found in the CATDocView.</p>
+      <p><a href="CAAInfCloseDocumentSource.htm" target="Source">CAAInfCloseDocument.CATScript
+      </a>is located in the CAAScdInfUseCases module. <a href="macros/CAAInfCloseDocument.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAInfCloseDocument includes four steps:</p>
+      <ol>
+        <li><a href="#CATDocView">Retrieving the CATDocView Environment Variable
+          and Checking its Valuation</a></li>
+        <li><a href="#CloseActive">Closing the Active CATIA Document</a></li>
+        <li><a href="#CloseVar">Closing the CATIA Document Specified by an
+          Object Variable</a></li>
+        <li><a href="#CloseName">Closing the CATIA Document Specified by its
+          Name</a></li>
+      </ol>
+      <h4><a name="CATDocView"></a>Retrieving the CATDocView Environment
+      Variable and Checking its Valuation</h4>
+      <table class="code">
+        <tr>
+          <td width="100%">
+            <pre><font color="#008000">'Optional: allows to find the sample wherever it's installed</font>
+
+      <font color="#0000FF">Dim</font> sDocPath <font color="#0000FF">As</font> String
+      sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+      <font color="#0000FF">If</font> (<font color="#0000FF">Not</font> CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+          Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+      <font color="#0000FF">End If</font></pre>
+          </td>
+      </table>
+      <p align="left">Define the <code>sDocPath</code> variable to retrieve the
+      CATDocView environment variable value which holds the documentation path
+      where the Part document used below is stored. Also, check that this
+      variable is valuated.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+      <h4><a name="CloseActive"></a>Closing the Active CATIA Document</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...</pre>
+            <pre>    <font color="#008000">'Open the document.</font> 
+     <font color="#0000FF">Dim</font> iPartDoc <font color="#0000FF">As</font> Document
+     <font color="#0000FF">Set</font> iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+    <font color="#008000">'Close the active document which is the document just opened.</font>
+     <b>CATIA.ActiveDocument.Close()</b>
+
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>An existing CATIA document is opened using the <code>Open</code> method
+      of the <i>Documents</i> collection (<i>Documents</i> object). See the
+      CAAInfOpenDocument [<a href="#References">2</a>] sample for a description
+      of how to open a CATIA document. Because the <code>Open</code> method also
+      activates the opened document, you can use the <code>Close</code> method
+      of the <code>ActiveDocument</code> property of the CATIA application in
+      order to close it: the document is thus removed from the <i>Documents</i>
+      collection and all the windows that contain it are also closed and removed
+      from the <i>Windows</i> collection.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="CloseVar"></a>Closing the CATIA Document Specified by an
+      Object Variable</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...</pre>
+            <pre>    <font color="#008000">'Open the same document again.</font>
+     <font color="#0000FF">Set</font> iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+       &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+    <font color="#008000">'Close the document using the variable defined for it.</font>
+     <b>iPartDoc.Close()</b>
+
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>A second way of closing an existing CATIA document is to execute the <code>Close</code>
+      method directly on the object variable already assigned to handle the
+      document: the document is thus removed from the <i>Documents</i>
+      collection and all the windows that contain it are also closed and removed
+      from the <i>Windows</i> collection.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"></td>
+    <td width="93%">
+      <h4><a name="CloseName"></a>Closing the CATIA Document Specified by its
+      Name</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...</pre>
+            <pre>     <font color="#008000">'Open the same document a third time.</font>
+      <font color="#0000FF">Set</font> iPartDoc = CATIA.Documents.<b>Open</b>(sDocPath &amp; _
+        &quot;\online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart&quot;)
+
+     <font color="#008000">'Close the document by specifying its name.</font>
+      <b>CATIA.Documents.Item(&quot;CAAInfReadDocument.CATPart&quot;).Close()</b>
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Finally, the third way of closing a CATIA document is to execute the <code>Close</code>
+      method on the name of the document which is itself retrieved using the <i>Documents</i>
+      collection's <code>Item</code> method: the document is thus removed from
+      the <i>Documents</i> collection and all the windows that contain it are
+      also closed and removed from the <i>Windows</i> collection.</p>
+      <p align="right">[<a href="#Top">Top</a>]</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown the three ways of closing an existing CATIA document
+during an interactive session:</p>
+<ul>
+  <li>Using the <code>ActiveDocument</code> property of the CATIA application</li>
+  <li>Using the variable assigned to handle the document&nbsp;</li>
+  <li>Using the name of the document retrieved from the <i>Documents</i>
+    collection by the <code>Item</code> method</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top" width="40">[1]</td>
+    <td width="735"><a href="CAAInfLauchMacro.htm">Replaying a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="40">[2]</td>
+    <td><a href="CAAInfOpenDocument.htm">Opening an Existing CATIA Document</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

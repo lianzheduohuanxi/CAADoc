@@ -1,0 +1,489 @@
+<!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <title>Generating a Java Client Binding </title>
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top"><h1>CAA Web Services Home</h1>
+      </td>
+      <td valign="top"><h2>  </h2>
+      </td>
+      <td rowspan="2" align="right" valign="top"><h3><a name="Top"
+        id="Top"></a>Generating a Java Client Binding</h3>
+        <em>How to use WSDL and XSD definitions to generate Java client
+        bindings for CAA Web services</em></td>
+    </tr>
+    <tr>
+      <td class="tech" colspan="2">Technical Article</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!-- ========================================================================= -->
+
+<table class="abstract">
+  <tbody>
+    <tr>
+      <td><h3>Abstract</h3>
+
+        <p>This article introduces <strong>Axis</strong> and explains how to
+        use the <strong>WSDL2Java emitter</strong> in order to generate Java
+        client bindings for CAA Web services. These bindings can then later
+        be used to create client applications that consume CAA Web
+        services.</p>
+        <ul>
+          <li><a href="#1"><strong>Axis Overview</strong></a></li>
+          <li><a href="#2"><strong>Officially Certified
+          Releases</strong></a></li>
+          <li><a href="#3"><strong>Step-by-step Using the WSDL2Java Emitter
+            From Command Line</strong></a></li>
+          <li><a href="#InShort"><strong>In Short</strong></a></li>
+          <li><a href="#References"><strong>References</strong></a></li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<!-- ========================================================================= -->
+
+<h3><a name="1"></a>Axis Overview</h3>
+
+<p>Apache Axis is an implementation of the SOAP submission to the W3C. It can
+be used to build and deploy Web services as well as to consume them. In the
+context of CAA Web services, only the client side part of Axis (Java) is
+required:</p>
+<ul>
+  <li><strong>Buildtime</strong>: the WSDL2Java emitter is used to produce a
+    Java client binding (also often referred to as the
+    <strong>proxy</strong>) based on the WSDL definition of a CAA Web
+  service,</li>
+  <li><strong>Runtime</strong>: the Axis SOAP engine (later referred to as
+    the <strong>Axis SOAP runtime</strong>) is invoked using the generated
+    code in order to consume the CAA Web service.</li>
+</ul>
+
+<p>Please refer to the Axis documentation for further details. It is
+recommended that you read the documentation that is shipped with the
+officially certified releases (as listed below) instead of accessing it
+online. The online documentation always matches the most recent release and
+therefore may not be in sync with the downloaded one.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h3><a name="2"></a>Officially Certified Releases</h3>
+
+<p>The term "certified" is intended to describe the fact that a given Axis
+release has been successfully tested and validated in order to consume CAA
+Web services. As of now, the certified release is:</p>
+<ul>
+  <li><strong>Axis Final Version 1.3 - October 5, 2005</strong></li>
+</ul>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30">  It is recommended that you use Axis
+(Java) 1.3 as it is the most advanced release officially certified for now.
+The information given in the rest of this article are based on that specific
+release. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h3><a name="3"></a>Step-by-step Using the WSDL2Java Emitter From Command
+Line</h3>
+
+<p>Before using the WSDL2Java emitter, it is important to get an
+understanding of some of the concepts that are related to the WSDL documents
+describing the available CAA Web services. See [<a href="#References">1</a>]
+for an overview of these concepts.</p>
+
+<p>In order to use the WSDL2Java emitter from a command line prompt, you
+first need to configure your environment by setting up the Axis
+prerequisites, and then you need to invoke the WSDL2Java class using a WSDL
+document as input. These steps are described in the following sections:</p>
+<ol>
+  <li><a href="#3.1">Prerequisites</a></li>
+  <li><a href="#3.2">Configuring the WSDL2Java Emitter Environment</a></li>
+  <li><a href="#3.3">Generating a Java Client Binding</a></li>
+  <li><a href="#3.4">Overview of the Generated Code</a></li>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h4><a name="3.1"></a>Prerequisites</h4>
+
+<p>In order to use the WSDL2Java emitter, you need to download the Axis
+binary release [<a href="#References">2</a>]. The following demonstrates the
+use of the Axis 1.3 release. This release is available from the following
+archives: <code>axis-bin-1_3.zip</code> or <code>axis-bin-1_3.tar.gz</code>.
+It is not required to download one of the source code releases.</p>
+
+<p>The Axis WSDL2Java emitter and the Axis SOAP runtime have the following
+dependencies:</p>
+<ul>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\axis.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\axis-schema.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\jaxrpc.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\saaj.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\commons-discovery-0.2.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\commons-logging-1.0.4.jar</code></li>
+  <li><code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\lib\wsdl4j-1.5.1.jar</code></li>
+  <li>A JAXP-1.1 compliant XML parser such as Xerces [<a
+    href="#References">3</a>] or Crimson (downloading one is not required
+    when using Java 1.4 or higher as it natively includes its own XML
+  parser)</li>
+</ul>
+
+<p>Please note that Axis requires Java 1.3 or later.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h4><a name="3.2"></a>Configuring the WSDL2Java Emitter Environment</h4>
+
+<p>In order to launch the WSDL2Java emitter from the command line, you need
+to make sure that your CLASSPATH includes the required dependencies. A sample
+way to set your CLASSPATH with the appropriate values is given below. It is
+based on the Windows operating system but can be easily modified in order to
+match any other operating system environment. You can open a command line
+prompt and copy/paste the following commands (you can also create a batch
+file for convenience purpose). Please update the values in <em>italic</em>
+below (<code>AXIS_HOME</code>, <code>JDK_HOME</code> and optionally
+<code>XERCES_HOME</code> variables) with the appropriate ones matching your
+environment:</p>
+
+<h5>Using Java 1.3</h5>
+
+<table class="code">
+  <tbody>
+    <tr>
+      <td><code>set AXIS_HOME=<em>C:\bin\axis-1_3</em><br>
+        set XERCES_HOME=<em>C:\bin\xerces-2_6_2</em><br>
+        set JDK_HOME=<em>C:\jdk1.3.1_08</em><br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\axis.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\axis-schema.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\jaxrpc.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\saaj.jar<br>
+        set
+        CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\commons-discovery-0.2.jar<br>
+        set
+        CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\commons-logging-1.0.4.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\wsdl4j-1.5.1.jar<br>
+        set CLASSPATH=%CLASSPATH%;%XERCES_HOME%\xml-apis.jar<br>
+        set CLASSPATH=%CLASSPATH%;%XERCES_HOME%\xmlParserAPIs.jar<br>
+        set CLASSPATH=%CLASSPATH%;%XERCES_HOME%\xercesImpl.jar<br>
+        %JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -h</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note</strong>: this sample assumes the use of Xerces2 Java Parser
+2.6.2. It can be easily updated in order to match the Xerces release you wish
+to use, or if you decide to choose another compliant XML parser.</p>
+
+<h5>Using Java 1.4 or Java 5.0</h5>
+
+<table class="code">
+  <tbody>
+    <tr>
+      <td><code>set AXIS_HOME=<em>C:\bin\axis-1_3</em><br>
+        set JDK_HOME=<em>C:\jdk1.5.0_05</em><br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\axis.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\axis-schema.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\jaxrpc.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\saaj.jar<br>
+        set
+        CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\commons-discovery-0.2.jar<br>
+        set
+        CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\commons-logging-1.0.4.jar<br>
+        set CLASSPATH=%CLASSPATH%;%AXIS_HOME%\lib\wsdl4j-1.5.1.jar<br>
+        %JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -h</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Upon successful invocation, the last command displays the WSDL2Java
+emitter options. You are then ready for the next steps of this article.
+Please keep the command prompt open as it will be used to launch the
+WSDL2Java emitter again.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h4><a name="3.3"></a>Generating a Java Client Binding</h4>
+
+<p>The Axis WSDL2Java emitter can be used to generate the Java client
+bindings required to consume CAA Web services. Such generation is a simple
+and straight-forward process; you only need to provide as input a WSDL
+document describing the CAA Web service you wish to consume. It can either be
+a WSDL interface document or a WSDL implementation document. The WSDL2Java
+emitter generates extra classes when using the latter, but the core generated
+resources remain the same in both cases.</p>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30"> It is strongly recommended that you use
+the WSDL implementation document as input whenever available. In some cases,
+it may not be available when generating the Java client binding, for example
+if the CAA Web service has not yet been deployed to a target application
+server. In such context, the WSDL interface document could be used instead
+since it is accessible from the file system. Nevertheless, the use of the
+WSDL implementation document remains the recommended approach, as the file
+system may not always be accessible from a remote machine based on the
+applied security settings. </p>
+
+<p>From the command prompt configured in the above section, you can invoke
+the WSDL2Java emitter using the following syntax:</p>
+
+<table class="code">
+  <tbody>
+    <tr>
+      <td><code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o
+        <em>&lt;Output-folder&gt;</em> -p <em>&lt;Package-name&gt;</em>
+        <em>&lt;WSDL-URI&gt;</em></code></td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li><code><em>&lt;Output-folder&gt;</em></code>: output folder for the
+    emitted Java resources,</li>
+  <li><code><em>&lt;Package-name&gt;</em></code>: name of the Java package
+    used for the generated Java resources,</li>
+  <li><code><em>&lt;WSDL-URI&gt;</em></code>: URI of the input WSDL document:
+    <ul>
+      <li>When using a WSDL interface document as input, you can either
+        provide a local path value (access from the file system) or a URI
+        value (remote access). See [<a href="#References">4</a>] for
+      details,</li>
+      <li>When using a WSDL implementation document as input, you need to
+        provide a URI value. See [<a href="#References">5</a>] for
+      details.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="../CAAIcons/images/solution.gif" alt="Solution" width="28" height="30"> When the WSDL document is accessed
+from a remote location using the HTTP protocol, it may be required to set
+security settings for the WSDL2Java emitter. This is especially the case when
+the remote server is secured using Basic Authentication. Please note the
+capital "U" and a capital "P" required for these options: </p>
+
+<table class="code">
+  <tbody>
+    <tr>
+      <td><code>%JDK_HOME%\bin\java org.apache.axis.wsdl.WSDL2Java -o
+        <em>&lt;Output-folder&gt;</em> -p <em>&lt;Package-name&gt;</em> -U
+        <em>&lt;Username&gt;</em> -P <em>&lt;Password&gt;</em>
+        <em>&lt;WSDL-URI&gt;</em></code></td>
+    </tr>
+  </tbody>
+</table>
+<ul>
+  <li><code><em>&lt;Username&gt;</em>, <em>&lt;Password&gt;</em></code>:
+    valid set of credentials for Basic Authentication.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+
+<h4><a name="3.4"></a>Overview of the Generated Code</h4>
+
+<p>For any given CAA Web service, the WSDL2Java emitter produces the
+following output:</p>
+<ul>
+  <li><code><strong>XXX.java</strong></code> (Java interface) and
+    <code><strong>XXXBindingStub.java</strong></code> (Java class) where
+    <code><strong>XXX</strong></code> is the name of the <strong>CAA Web
+    service interface</strong>:
+    <ul>
+      <li>The former describes all the methods and parameters available on
+        the remote CAA Web service,</li>
+      <li>The latter acts as the proxy that is instantiated in order to
+        remotely invoke methods through SOAP requests,</li>
+      <li>At generation, the <code>XXX</code> and <code>XXXBinding</code>
+        values are computed from the WSDL interface document content:
+        <code>XXX</code> matches the <code>name</code> attribute value of the
+        <code>&lt;wsdl:portType&gt;</code> element and
+        <code>XXXBinding</code> matches the <code>name</code> attribute value
+        of the <code>&lt;wsdl:binding&gt;</code> element.</li>
+    </ul>
+  </li>
+  <li><code><strong>YYY.java</strong></code> (Java interface) and
+    <code><strong>YYYLocator.java</strong></code> (Java class) where
+    <code><strong>YYY</strong></code> is the name of the <strong>CAA Web
+    service implementation</strong>:
+    <ul>
+      <li>These resources are only emitted when using a WSDL implementation
+        document as input,</li>
+      <li>The <code>YYYLocator</code> class defines <code>getYYYPort()</code>
+        methods that can be used to retrieve an instance of the
+        <code>XXXBindingStub</code> class,</li>
+      <li>The <code>YYYLocator</code> class contains the hard-coded value of
+        the SOAP endpoint URI. It can be used to retrieve an instance of the
+        <code>XXXBindingStub</code> class that automatically bounds to a
+        deployed implementation of the target CAA Web service,</li>
+      <li>At generation, the <code>YYY</code> and <code>YYYPort</code> values
+        are computed from the WSDL implementation document content:
+        <code>YYY</code> matches the <code>name</code> attribute value of the
+        <code> &lt;wsdl:service&gt;</code> element and <code>YYYPort</code>
+        matches the <code>name</code> attribute value of the
+        <code>&lt;wsdl:port&gt;</code> element.</li>
+    </ul>
+  </li>
+  <li>Several <code><strong>ZZZ.java</strong></code> (Java class) and
+    <code><strong>ZZZHolder.java</strong></code> (Java class) where
+    <code><strong>ZZZ</strong></code> is the name of a <strong>type</strong>
+    defined in the <code> &lt;wsdl:types&gt;</code> section of the WSDL
+    interface document:
+    <ul>
+      <li>Holder classes are only generated whenever it is required to
+        emulate out or in/out parameters, based on the operation signatures
+        defined in the input WSDL document. WSDL interface documents for CAA
+        Web services only declare in or in/out parameters,</li>
+      <li>A <code>ZZZHolder</code> class contains a reference to an instance
+        of the <code>ZZZ</code> type, this reference will be set to the
+        appropriate value when returning from the method call.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30"> If using a WSDL interface document as
+input, you need to directly instantiate the <code>XXXBindingStub</code> class
+(that stands for the proxy to the remote CAA Web service). It is not
+considered as the appropriate approach in the Axis User's Guide (yet not
+forbidden). You should rather instantiate the <code>YYYLocator</code> class
+instead. You can then use one of the <code>getYYYPort</code> method
+signatures to retrieve a reference to an instance of the
+<code>XXXBindingStub</code> class through its <code>XXX</code> interface.</p>
+
+<p><img src="../CAAIcons/images/warning.gif" alt="Warning" width="30" height="30"> It is strongly recommended that you use
+the <code>getYYYPort</code> method signature that has the SOAP endpoint URI
+value as parameter. When using the <code>getYYYPort</code> method signature
+that takes no parameter, the SOAP endpoint URI value is retrieved from an
+hard-coded string that is generated inside the <code>YYYLocator</code> class.
+It may create issues to rely on such behavior in your client application. For
+instance, you may use a testing application server at development stage, but
+then deploy the CAA Web service to another application server in a production
+environment. In this scenario, the hard-coded SOAP endpoint URI will no
+longer bound to the right application server.</p>
+
+<p>The recommended approaches are demonstrated in the related use cases
+describing how to consume CAA Web services using the Axis SOAP runtime.</p>
+
+<p>The following UML class diagram depicts the relationships between the
+generated interfaces and classes mentioned above:</p>
+
+<table border="0">
+  <caption><a name="Fig2" id="Fig2"></a>Fig.1: Java Client Binding UML
+  Diagram</caption>
+  <tbody>
+    <tr>
+      <td valign="top"><img border="0" src="images/CAAWSClientUsingAxis_Fig1.png" alt="Java Client Binding UML Diagram"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Please refer to the Axis User's Guide for a detailed description of how
+the content of the WSDL and XSD definitions are mapped to Java resources. The
+Axis 1.3 User's Guide can be accessed at the following location:
+<code><em>&lt;Axis-unzipped-folder&gt;</em>\axis-1_3\docs\index.html</code>.</p>
+
+<p>It contains the following sections that may be useful to the reader:</p>
+<ul>
+  <li>"<em>WSDL2Java: Building stubs, skeletons, and data types from
+    WSDL</em>": describes the generated Java client binding based on each
+    element found in the input WSDL document,</li>
+  <li>"<em>XML &lt;-&gt; Java Data Mapping in Axis</em>": describes how XML
+    types are mapped to Java types.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+<hr>
+
+<h3><a name="InShort" id="InShort"></a>In Short</h3>
+
+<p>A Java client binding can be generated for CAA Web services using the Axis
+WSDL2Java emitter. You can provide as input either a WSDL interface document
+or a WSDL implementation document. The use of the WSDL implementation
+document is recommended as it provides extra generated resources and better
+complies with the Axis User's Guide recommendations. Using the WSDL interface
+document may only be required when the CAA Web services have not yet been
+deployed to a target application server by the time the Java client binding
+must be generated.</p>
+
+<p>The generated Java client bindings can then later be used to consume the
+related CAA Web service implementations that have been deployed on a target
+application server. For more details, please refer to the use cases
+describing how to consume the CAA Web services you wish to use.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!-- ========================================================================= -->
+<hr>
+
+<h3><a name="References" id="References"></a>References</h3>
+
+<table border="0" width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">[1]</td>
+      <td valign="top" align="left"><a href="CAAWSWSDLDefinitions.htm">CAA
+        Web Services and WSDL Definitions</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[2]</td>
+      <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm#3.1">Axis
+      Java</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[3]</td>
+      <td valign="top" align="left"><a href="../CAAWSQuickRefs/CAAWSLinks.htm#3.2">Xerces2 Java
+        Parser</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[4]</td>
+      <td valign="top" align="left"><a href="CAAWSWSDLDefinitions.htm#2">WSDL
+        Interface Documents</a></td>
+    </tr>
+    <tr>
+      <td valign="top">[5]</td>
+      <td valign="top" align="left"><a href="CAAWSWSDLDefinitions.htm#3">WSDL
+        Implementation Documents</a></td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<!-- ========================================================================= -->
+<hr>
+
+<h3>History</h3>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <td valign="top">Version: <strong>1</strong> [Apr 2005]</td>
+      <td valign="top">Document created</td>
+    </tr>
+    <tr>
+      <td valign="top">Version: <strong>2</strong> [Jan 2006]</td>
+      <td valign="top">Document updated</td>
+    </tr>
+    <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+    </tr>
+  </tbody>
+</table>
+<!-- ========================================================================= -->
+<hr>
+
+<p><i>Copyright © 1994-2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

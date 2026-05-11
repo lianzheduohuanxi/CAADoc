@@ -1,0 +1,363 @@
+<HTML>
+
+<HEAD>
+<META http-equiv="Content-Language" content="en-us">
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="GENERATOR" content="Microsoft FrontPage 6.0">
+<META name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<TITLE>Customizing Product's Icons</TITLE>
+</HEAD>
+
+<BODY>
+
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">
+        <H1>3D PLM PPR Hub Open Gateway</H1>
+        </TD>
+        <TD>
+        <H2>Product Modeler</H2>
+        </TD>
+        <TD rowspan="2" align="right" valign="top">
+        <H3><A name="Top"></A>Customizing Product's Icons</H3>
+        <P><em>Implementing the <br>
+        CATICustoIconProduct Interface</em></TD>
+    </TR>
+    <TR>
+        <TD class="use" colspan="2">Use Case</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE class="abstract">
+    <TR>
+        <TD>
+        <H3>Abstract</H3>
+        <P>This article presents the CAAPstProductIcon use case which 
+        illustrates how Product's icons can be customized using the <i>
+        CATICustoIconProduct</i> interface.</P>
+        <UL>
+            <LI><STRONG><A href="#Learn">What You Will Learn With This Use Case</A></STRONG></LI>
+            <LI><STRONG><A href="#UseCase">The CAAPstProductIcon Use Case</A></STRONG>
+            <UL>
+                <LI><A href="#What">What Does CAAPstProductIcon Do</A></LI>
+                <LI><A href="#How">How to Launch CAAPstProductIcon</A></LI>
+                <LI><A href="#Where">Where to Find the CAAPstProductIcon Code</A></LI>
+            </UL>
+            </LI>
+            <LI><STRONG><A href="#Step">Step-by-Step</A></STRONG></LI>
+            <LI><STRONG><A href="#InShort">In Short</A></STRONG></LI>
+            <LI><STRONG><A href="#References">References</A></STRONG></LI>
+        </UL>
+        </TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------------------------------------------------->
+<H3><A name="Learn"></A>What You Will Learn With This Use Case</H3>
+<P>Using the <i>CATICustoIconProduct</i> interface and feature extension,  product's 
+icons and masks can be 
+customized. This use case will focus solely on the <i>CATICustoIconProduct</i> 
+interface implementation. Please refer to the Feature Modeler documentation&nbsp; 
+(<a href="#[2]">[2]</a>) for more information.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="UseCase"></A>The CAAPstProductIcon Use Case</H3>
+<P>CAAPstProductIcon is a use case of the CAAProductStructure.edu framework 
+that illustrates the ProductStructure framework capabilities.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="What"></A>What Does CAAPstProductIcon Do</H4>
+<P>The goal of CAAPstProductIcon is to demonstrate how&nbsp; default Product's 
+icons and masks can be overridden. The code is composed of two parts:</P>
+<ol>
+    <LI>One part is responsible for feature extension initialization</LI>
+    <LI>The other is the implementation of <i>CATICustoIconProduct</i></LI>
+</ol>
+<P>Below&nbsp; is the Product document that will be loaded in the use case where 
+icons are customized. 
+It can be found in</P>
+<P><I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstProductIconDoc.CATProduct</TT></P>
+<P>&nbsp;</P>
+<p>
+<b>Fig. 1: Product document with customized icons</b><br>
+<img border="0" src="images/CAAPstProductIcon00.jpg" width="391" height="283"></p>
+<P>If the Product's icons had not been customized, the same document will look 
+like the following:</P>
+<P>
+<b>Fig. 2: Product document with regular icons</b><br>
+<img border="0" src="images/CAAPstProductIcon01.jpg" width="387" height="279"></P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="How"></A>How to Launch CAAPstProductIcon</H4>
+<P>To launch CAAPstProductIcon:</P>
+<OL>
+    <LI>Set the current directory to <I>InstallRoot</I><TT>/CAAProductStructure.edu</TT></LI>
+    <LI>Set up&nbsp; the build time environment <TT>
+    <font face="Times New Roman">(see reference <a href="#[1]">[1]</a></font></TT><font face="Times New Roman">)
+    </font>and build the following modules:<br>
+    - <tt>CAAPstProductIconInit.m</tt><br>
+    - <tt>CAAPstProductIconImpl.m</tt></LI>
+    <LI>Install the run time environment by executing the command 
+    <tt>mkCreateRuntimeView</tt></LI>
+    <LI>Launch CATIA</LI>
+    <LI>Open the document <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resources/graphic/CAAPstProductIconDoc.CATProduct</TT></LI>
+</OL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="Where"></A>Where to Find the CAAPstProductIcon Code</H4>
+<P>CAAPstProductIcon code is located in the CAAPstProductIconInit.m and 
+CAAPstProductIconImpl.m modules of 
+the CAAProductStructure.edu framework.</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H3><A name="Step"></A><B>Step-by-Step</B></H3>
+<P>There are two separate parts in <I>CAAPstProductIcon</I>:</P>
+<OL>
+    <LI><a href="#LoadingDoc">Initializing Product's Feature Extensions</a></LI>
+    <LI><a href="#RetrievingRootProduct">Implementing the CATICustoIconProduct 
+    Interface</a></LI>
+</OL>
+<P>We will now detail each of those sections:</P>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="LoadingDoc"></A>Initializing Product's Feature Extensions</H4>
+<P>Our CAAPstProductIconDoc document not only contains Products but also a 
+feature extension named &quot;CAAPstProductIconExt&quot;. The <tt>CAAPstProductIconInit::Init</tt> method that 
+does the work is called when the CAAPstProductIconDoc.CATProduct document is opened.</P>
+<P>It is because we have indicated in the CAAProductStructure.edu.dico dictionary (located in <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/dictionary</TT><font face="Times New Roman"><TT>)<font face="Times New Roman"> 
+that&nbsp; the CAAPstProductIconInit module implements the CATInit interface for 
+document initialization:</font></TT></font></P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>CAAPstProductIconCont       CATInit                     libCAAPstProductIconInit</pre>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left"><tt>CAAPstProductIconInit::Init</tt> first retrieves the root 
+product </P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>void CAAPstProductIconInit::Init (CATBoolean iDestroyExistingData)   
+{
+...
+	CATILinkableObject *piLinkableOnCont = NULL;
+	HRESULT rc = QueryInterface(IID_CATILinkableObject,
+                                     (void**) &amp;piLinkableOnCont);
+...
+	CATDocument *pDoc = piLinkableOnCont-&gt;GetDocument();
+...
+	//
+	// Activate the extension on the root product and the first sub-prodoct
+	//
+	CATIDocRoots* piDocRootsOnDoc = NULL;
+	rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,
+                                   (void**) &amp;piDocRootsOnDoc);
+...
+	CATListValCATBaseUnknown_var *pRoots = piDocRootsOnDoc-&gt;GiveDocRoots();
+...
+	CATIProduct_var spRootProduct = NULL_var;
+	// Get CATIProduct handle on the root product.
+	CATIProduct *piProductOnRoot = NULL;
+	rc = spRootProduct-&gt;QueryInterface(IID_CATIProduct,
+                                            (void**) &amp;piProductOnRoot);
+...</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>
+
+
+It then activates the CAAPstProductIconExt extension on it.
+
+</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>...
+	// Activate the extension on the root product
+	CATIExtendable *piExtendableOnRoot = NULL;
+	rc = piProductOnRoot-&gt;QueryInterface(IID_CATIExtendable,
+                                              (void**) &amp;piExtendableOnRoot);
+...
+	const char *extensionName = &quot;CAAPstProductIconExt&quot;;
+	const char *applicationId = &quot;PstProductIconContainer&quot;;
+	rc = piExtendableOnRoot-&gt;ActivateExtension (extensionName,
+                                                     applicationId,
+                                                     TRUE);             
+...</pre>
+        </TD>
+    </TR>
+</TABLE>
+<P align="left">Next, it gets to the first sub-product to  activate the same 
+extension:</P>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>                    
+...
+	// Activate the extension on the first sub-product
+	CATListValCATBaseUnknown_var *pChildren = piProductOnRoot-&gt;GetAllChildren();
+...
+	CATIExtendable_var spExtendableOnSub = (*pChildren)[1];
+...
+	rc = spExtendableOnSub-&gt;ActivateExtension (extensionName,
+                                                    applicationId,
+                                                    TRUE);
+...</pre>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<H4><A name="RetrievingRootProduct"></A>Implementing the CATICustoIconProduct 
+Interface</H4>
+<p>Now that both our products have the CAAPstProductIconExt extension activated, 
+we must indicate that it provides an implementation of the <i>CATICustoIconProduct</i> interface. 
+Again this is done using the CAAProductStructure.edu.dico dictionary:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>CAAPstProductIconExt   	    CATICustoIconProduct	libCAAPstProductIconImpl</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p align="left">The <i>CATICustoIconProduct</i> interface comprises eight methods:</p>
+<ul>
+  <li>
+  <p align="left"><tt>GetIconForProduct</tt> to return the icon name for an external 
+  product</li>
+  <li>
+  <p align="left"><tt>GetIconForComponent</tt> to return the icon name for an internal 
+  product</li>
+  <li>
+  <p align="left"><tt>IsPossibleToAdd...Mask</tt> to indicate whether additional masks 
+  can be 
+  overlaid on the icon or not.</li>
+</ul>
+<p align="left"><tt>GetIconForProduct</tt> and <tt>GetIconForComponent</tt> methods:</p>
+<p align="left">Each method  returns the name of an icon that should be located 
+at run-time in 
+the <i>OS</i><TT>/resource/graphic/icon/normal</tt> directory<br>The two icons used in our 
+implementation are <tt>I_CAAPstProductIcon</tt> and <tt>I_CAAPstComponentIcon</tt>. 
+They can be found in the <I>InstallRoot</I><TT>/CAAProductStructure.edu/CNext/resource/graphic/icon/normal.</TT></p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <PRE>HRESULT CAAPstProductIconImpl::GetIconForProduct(CATUnicodeString&amp; oIcon)
+{
+	oIcon = &quot;I_CAAPstProductIcon&quot;;
+	return S_OK;
+}
+...
+HRESULT CAAPstProductIconImpl::GetIconForComponent(CATUnicodeString&amp; oIcon)
+{
+	oIcon = &quot;I_CAAPstComponentIcon&quot;;
+	return S_OK;
+}</PRE>
+        </TD>
+    </TR>
+</TABLE>
+<p align="left"><tt>IsPossibleToAdd...Mask</tt> methods:</p>
+<p align="left">In our implementation, all masks can be applied. It is up to the 
+application to determine which masks are appropriate.</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>/**
+ * Indicates whether or not the Document mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddDocMask()
+{
+	return S_OK;
+}</pre>
+        <pre>/**
+ * Indicates whether or not the Representation mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddRepMask()
+{
+	return S_OK;
+}</pre>
+        <pre>/**
+ * Indicates whether or not the Central mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddCentralMask()
+{
+	return S_OK;
+}</pre>
+        <pre>/**
+ * Indicates whether or not the Gear mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddGearsMask()
+{
+	return S_OK;
+}</pre>
+        <pre>/**
+ * Indicates whether or not the Contextual Design mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddContextDesignMask()
+{
+	return S_OK;
+}</pre>
+        <pre>/**
+ * Indicates whether or not the Flexible mask can be overlaid
+ */
+HRESULT CAAPstProductIconImpl::IsPossibleToAddFlexibleDesignMask()
+{
+	return S_OK;
+}</pre>
+        </TD>
+    </TR>
+</TABLE>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<!---------------------------------comment------------------------------------->
+<HR>
+<H3><A name="InShort"></A>In Short</H3>
+<P>This use case has demonstrated how Product's icons can be customized by:</P>
+<UL>
+    <LI>Implementing the <i>CATInit</i> interface to initialize extensions when 
+    documents are opened</LI>
+    <LI>Implementing the CATICustoIconProduct to return icon data</LI>
+</UL>
+<P align="right">[<A href="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="References"></A>References</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top"><a name="[1]">[1]</a></TD>
+        <TD>
+        <a href="../CAADocUseCases/CAADocRunSample.htm">
+        Building and Launching a CAA V5 Use Case</A></TD>
+    </TR>
+    <TR>
+        <TD valign="top"><a name="[2]">[2]</a></TD>
+        <TD>
+        <a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview</a></TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H3><A name="History"></A>History</H3>
+<TABLE width="100%">
+    <TR>
+        <TD valign="top">Version: <STRONG>1</STRONG> [Aug 2004]</TD>
+        <TD valign="top">Document created</TD>
+    </TR>
+    <TR>
+        <TD valign="top" align="right" colspan="2">[<A href="#Top">Top</A>]</TD>
+    </TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2004, Dassault Systèmes. All rights reserved.</I></P>
+
+</BODY>
+
+</HTML>

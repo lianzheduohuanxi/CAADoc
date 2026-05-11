@@ -1,0 +1,52 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create standard openings using the HalfHeight-MidDist strategy.
+'
+' Assumptions:   The Product document Product1.CATProduct located in
+'                CAASfdUseCases/samples/CreateOpening should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+  Dim documents1 As Documents
+  Set documents1 = CATIA.Documents
+  Dim partDocument1 As PartDocument
+  Set partDocument1 = documents1.Item("Design_Unit_004.CATPart")
+  dim part1 As Part
+  Set part1 = PartDocument1.Part
+  Dim plate As SuperPlate
+  Set plate = Part1.FindObjectByName("Deck_005")
+  Dim plateref As Reference
+  Set plateref = Part1.CreateReferenceFromObject(plate)
+
+  'Create Opening Using Sketch Mode
+
+  Dim sketch As Sketch
+  Set sketch= part1.FindObjectByName("Sketch.19")
+  Dim sketchref As Reference
+  Set sketchref=part1.CreateReferenceFromObject(sketch)
+  Dim Factory As SfmFunctionFactory
+  Set Factory =  part1.GetCustomerFactory("SfmFunctionFactory")
+  Dim OpeningUsingSketch As SfmOpening
+  Set OpeningUsingSketch =Factory.CreateOpening("FunctionalOpening",1,sketchref, plateref)
+  part1.Update
+
+  ' Create Opening Using 3D Object Mode
+  Dim Object As AnyObject
+  Set Object =  part1.FindObjectByName("Volume Extrude.1")
+  Dim ObjectRef As Reference
+  Set  ObjectRef = part1.CreateReferenceFromObject(Object)
+  Dim OpeningUsing3DObj As SfmOpening
+  Set OpeningUsing3DObj  = Factory.CreateOpening("FunctionalOpening",0,ObjectRef, plateref)
+
+  part1.Update
+End Sub

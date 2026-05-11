@@ -1,0 +1,417 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATDlgEditor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATDlgEditor</h3>
+      <em>Edit single or multiple line text</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<pre><a href="CAADlgCATDialog.htm">CATDialog</a>
+  |
+  +---<a href="CAADlgCATDlgControl.htm">CATDlgControl</a>
+        |
+        +---CATDlgEditor</pre>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption>The Editor</caption>
+  <tr>
+    <td><img src="images/CATDlgEditor.jpg" alt="CATDlgEditor.jpg (6370 bytes)" width="189" height="84"></td>
+    <td>The editor allows the end&nbsp;user to enter a text, numerics, or both,
+      or modify existing ones. The text can extend on one or several lines.
+      Scrollbars can be added if the text is longer than the editor display
+      area.</td>
+  </tr>
+</table>
+<p>Use editors whenever you propose to the end user to edit or modify a text or
+unpredictable numerical values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Styles"></a>Styles</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>default</td>
+    <td>The text extends on a singe line.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtReadOnly</td>
+    <td>The text cannot be edited.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtMultiline</td>
+    <td>The text can extend on several lines.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>For single line editors only</b></td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtPassword</td>
+    <td>The text is hidden.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtInteger</td>
+    <td>The text must be an integer.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtFloat</td>
+    <td>The text must be a float.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtAlphabetical</td>
+    <td>The text must contain only alphabetical characters.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtNumerical</td>
+    <td>The text must contain only numerical characters.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtAlphanumerical</td>
+    <td>The must contain only alphanumerical characters.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtDouble</td>
+    <td>The text must be a double, expressed in the chosen unit.</td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>For multiple line editors only</b></td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtWrap</td>
+    <td>The text automatically skips to the next line.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtNoScrollBar</td>
+    <td>The editor has no scrollbars.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEdtNoCR</td>
+    <td>The text doesn' include carriage return characters.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table width="100%">
+  <caption><a name="Events"></a>Events</caption>
+  <thead>
+    <tr>
+      <th>Notification</th>
+      <th>Method</th>
+      <th>Sent when</th>
+    </tr>
+  </thead>
+  <tr>
+    <td>CATDlgEditModifyNotification</td>
+    <td><code>GetEditModifyNotification</code></td>
+    <td>Whenever the entry field is modified.</td>
+  </tr>
+  <tr>
+    <td>CATDlgSelectionChangeNotification</td>
+    <td><code>GetSelectionChangeNotification</code></td>
+    <td>Whenever a new line is selected.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEditFocusInNotification</td>
+    <td><code>GetEditFocusInNotification</code></td>
+    <td>Whenever the combo gets the keyboard focus.</td>
+  </tr>
+  <tr>
+    <td>CATDlgEditFocusOutNotification</td>
+    <td><code>GetEditFocusOutNotification</code></td>
+    <td>Whenever the combo looses the keyboard focus.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>The editor is dedicated to text or numerical value edition.</p>
+<h4><a name="Constructor"></a>Constructing an Editor</h4>
+<p>These following kinds of multiple list can be constructed.</p>
+<table width="100%">
+  <tr>
+    <td width="20%"><em>default</em></td>
+    <td class="code">
+      <pre>_pEditor  = new CATDlgEditor (iParent, iName);</pre>
+    </td>
+  </tr>
+  <tr>
+    <td width="20%"><em>Multiline</em></td>
+    <td class="code">
+      <pre>_pMEditor = new CATDlgEditor (iParent, iName,
+                          <strong>CATDlgEdtMultiline</strong>);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog1"></a>Managing the Line Content</h4>
+<p>You can manage the line with the following methods:
+<ul>
+  <li>get the number of lines:
+    <table class="code">
+      <tr>
+        <td>
+          <pre>int NumberOfLines = _pEditor-&gt;GetLineCount();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the contents of a given line as a CATUnicodeString:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get a line contents</em></td>
+        <td class="code">
+          <pre>set a line contents
+CATUnicodeString oLineContents;
+int iLineNumber = 2;
+_pEditor-&gt;GetLine(oLineContents, iLineNumber);</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set a line contents</em></td>
+        <td class="code">
+          <pre>...
+iLineNumber = 3;
+CATUnicodeString * _iLineToSet = &quot;Line to set&quot;;
+_pEditor-&gt;SetLine(*iLineContents, iLineNumber);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the whole editor contents as a CATUnicodeString:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get all text</em></td>
+        <td class="code">
+          <pre>CATUnicodeString oAllText, iAllText;
+oAllText = _pEditor-&gt;GetText();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set all text</em></td>
+        <td class="code">
+          <pre>...
+iAllText = ...
+_pEditor-&gt;SetText(iAllText);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get an integer or a float from the contents of a line:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get integer value</em></td>
+        <td class="code">
+          <pre>int IntValue = _pEditor-&gt;GetIntegerValue();</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>get float value</em></td>
+        <td class="code">
+          <pre>float FloatValue = _pEditor-&gt;GetFloatValue();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>delete a given line or all the lines:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>clear line 2</em></td>
+        <td class="code">
+          <pre>int iLineNumber = 2;
+_pEditor-&gt;ClearLine(iLineNumber)</pre>
+        </td>
+      </tr>
+    </table>
+    <p>The default value -1 deletes all the lines.</p>
+  </li>
+  <li>get or set the maximum number of characters that a line can contain:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get max char</em></td>
+        <td class="code">
+          <pre>int MaxCharacter;
+MaxCharacter = _pEditor-&gt;GetMaxCharacterWidth();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set max char</em></td>
+        <td class="code">
+          <pre>MaxCharacter = 20;
+_pEditor-&gt;SetMaxCharacterWidth(MaxCharacter);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>in addition, declare your own function to execute when a key-board entry
+    happens:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>declare a function</em></td>
+        <td class="code">
+          <pre>CATDlgEditorCallback MyFunction;
+_pEditor-&gt;SetVerifyCallback(MyFunction, _iUsefulData);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>MyFunction is the function to execute and _iUsefulData is the contents of
+    the filed casted as a pointer to void.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Prog2"></a>Managing the Line Display</h4>
+<p>You can manage the line display with the following methods:
+<ul>
+  <li>get or set the visible text width:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get number of visible char</em></td>
+        <td class="code">
+          <pre>int NumberOfVisibleChar;
+NumberOfVisibleChar = _pEditor-&gt;GetVisibleTextWidth();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>setnumber of visible char</em></td>
+        <td class="code">
+          <pre>NumberOfVisibleChar = 20:
+_pEditor-&gt;SetVisibleTextWidth(NumberOfVisibleChar);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the visible text height:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get visible height</em></td>
+        <td class="code">
+          <pre>int VisibleTextHeight;
+TextHeight = _pEditor-&gt;GetVisibleTextHeight();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set visible height</em></td>
+        <td class="code">
+          <pre>TextHeight = 8;
+_pEditor-&gt;SetVisibleTextHeight(TextHeight);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the position of the first visible character in the line:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st visible char</em></td>
+        <td class="code">
+          <pre>int FirstVisibleChar;
+FirstVisibleChar = _pEditor-&gt;GetFirstColumn();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set 1st visible char</em></td>
+        <td class="code">
+          <pre>FirstVisibleChar = 5;
+_pEditor-&gt;SetFirstColumn(FirstVisibleChar);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li>get or set the position of the first line:
+    <table width="100%">
+      <tr>
+        <td width="20%"><em>get 1st line position</em></td>
+        <td class="code">
+          <pre>int FirstLine;
+FirstLine = _pEditor-&gt;GetFirstLine();
+...</pre>
+        </td>
+      </tr>
+      <tr>
+        <td width="20%"><em>set 1st line position</em></td>
+        <td class="code">
+          <pre>FirstLine = 3;
+_pEditor-&gt;SetFirstLine(FirstLine);</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Callback"></a>Setting a Callback on an Editor</h4>
+<p>Set a callback on an editor to be informed whenever the end user modify the
+text as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>AddAnalyseNotificationCB(
+  _pEditor,                                   // multiple list 
+  _pEditor-&gt;<code>GetEditModifyNotification</code>(),      // notification
+  (CATCommand)&amp;Editor::MethodToExecute,       // method to execute 
+  CATCommandClientData iUsefulData);          // useful data for this method </pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Resources"></a>Setting a Title to an Editor</h4>
+<p>The editor title should be set by the resource file using a key built with
+the identifier you declare as the second parameter of the editor constructor.
+This title is never displayed. If you want to comment the editable field of the
+editor in your dialog, use a <a href="CAADlgCATDlgLabel.htm">label</a>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

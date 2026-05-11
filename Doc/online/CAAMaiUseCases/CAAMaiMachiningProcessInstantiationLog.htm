@@ -1,0 +1,298 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing (User Defined) Features for Macro Motions</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Machining</h1>
+    </td>
+    <td valign="top">
+      <h2>All Machining Workbenches</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Machining Processes instantiation traces</h3>
+      <em>Implementing the </em><i>CATIMfgMachiningProcessLog</i> <em>interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAMaiMachiningProcessInstantiationLog use case and
+      explains how to implement the <i>CATIMfgMachiningProcessLog</i>
+      manufacturing interface.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><strong><a href="#UseCase">The <u>
+        CAAMaiMachiningProcessInstantiationLog U</u>se
+          Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAAMaiMachiningProcessInstantiationLog Do</a></li>
+            <li><a href="#How">How to Use CAAMaiMachiningProcessInstantiationLog</a></li>
+            <li><a href="#Where">Where to Find the 
+            CAAMaiMachiningProcessInstantiationLog
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you log the different steps of the 
+Machining Process instantiation by implementing the <i>
+CATIMfgMachiningProcessLog</i>
+manufacturing interface. This involves the following:</p>
+<ul>
+  <li>Describing the different steps dedicated to the knowhow of the company.</li>
+  <li>Implementing&nbsp; the method of <i>
+  CATIMfgMachiningProcessLog</i> to trace these different steps</li>
+  <li><a href="#Advise">Advising to well trace the instantiation phase</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAMaiMachiningProcessInstantiationLog Use Case</h3>
+<p>CAAMaiMachiningProcessInstantiationLog is a use case of the CAAManufacturingItf.edu
+framework in the CAAMaiMachiningProcessInstantiationLog.m module that illustrates
+ManufacturingInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMaiMachiningProcessInstantiationLog Do</h4>
+<p>CAAMaiMachiningProcessInstantiationLog illustrates an implementation of
+CATIMfgMachiningProcessLog interface for the Manufacturing 
+Activities
+identified by the ManufacturingActivity type. This implementation enables the 
+customer to trace the different step of the machining process instantiation:</p>
+<ul>
+  <li>Check on the Machining Process</li>
+</ul>
+<p>And, for each manufacturing activity of the machining process:</p>
+<ul>
+  <li>Initial Check (using Part operation, Feature, Machine)</li>
+  <li>Tooling Queries solving</li>
+  <li>Formulas computation</li>
+  <li>Last check (using Tooling Queries and Formulas results)</li>
+</ul>
+<p>An example of traces can be :</p>
+<p><font size="2">Instantiation information on Machining Process.1 maching 
+process <br>
+Tooling Query for Drilling.1<br>
+&lt;CONDITIONS&gt;<br>
+TYPE:Drill<br>
+Nominal diameter=8mm<br>
+&lt;/CONDITIONS&gt;<br>
+&lt;SOLVING&gt;<br>
+MFG_NOMINAL_DIAM==8mm<br>
+&lt;/SOLVING&gt;<br>
+&lt;RESULTS&gt;<br>
+Drill D8<br>
+&lt;/RESULTS&gt;<br>
+End of Tooling Query for Drilling.1<br>
+<br>
+Formulas processing for Drilling.1<br>
+&lt;CONDITIONS&gt;<br>
+Breakthrough=2mm<br>
+&lt;/CONDITIONS&gt;<br>
+&lt;RESULTS&gt;<br>
+Process\Drilling.1\MfgParameter.1\Breakthrough=2mm<br>
+&lt;/RESULTS&gt;<br>
+End of formulas processing for Drilling.1<br>
+<br>
+Checking of operation availabality for Drilling.1<br>
+&lt;CONDITIONS&gt;<br>
+Drilling.Breakthrough&lt;=MyCompareF(Part Operation,1,2,3)<br>
+&lt;/CONDITIONS&gt;<br>
+&lt;SOLVING&gt;<br>
+Process\Drilling.1\MfgParameter.1\Breakthrough&lt;=3mm<br>
+&lt;/SOLVING&gt;<br>
+&lt;RESULTS&gt;<br>
+TRUE<br>
+&lt;/RESULTS&gt;<br>
+End of checking of operation availabality for Drilling.1</font></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Use CAAMaiMachiningProcessInstantiationLog</h4>
+<p>To use CAAMaiMachiningProcessInstantiationLog, you will need to:</p>
+<ul>
+  <li>Set up the build time environment, then compile
+    CAAMaiMachiningProcessInstantiationLog.m module along with its prerequisites [<a href="#References">1</a>]</li>
+  <li>Edit the interface dictionary, that is, the CAAManufacturingItf.edu.dico
+    file located in:
+    <table width="100%">
+      <tr>
+        <td>Windows</td>
+        <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+      </tr>
+      <tr>
+        <td>Unix</td>
+        <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/CNext/code/dictionary/</code></td>
+      </tr>
+    </table>
+    <p>where <code>InstallRootDirectory</code> is the directory where the CAA
+    CD-ROM is installed, and decomment the following line by removing the '#CAA#'
+    character:</p>
+    <pre>ManufacturingActivity CATIMfgMachiningProcessLog libCAAMaiMachiningProcessInstantiationLog</pre>
+  </li>
+  <li>Set up the run time environment</li>
+  <li>Launch a CATIA V5 session</li>
+  <li>Open any Process file containing design holes&nbsp; and load a NC 
+  Machining workbench</li>
+  <li>Select the &quot;Axial Process for Design Holes&quot; command in the &quot;Standard 
+  Machining Processes&quot; toolbar</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAMaiMachiningProcessInstantiationLog Code</h4>
+<p>The CAAMaiMachiningProcessInstantiationLog use case is made of a class named <i>
+CAAMaiMachiningProcessLog</i>
+located in the CAAMaiMachiningProcessInstantiationLog.m module of the
+CAAManufacturingItf.edu framework:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\</code><code>CAAMaiMachiningProcessInstantiationLog.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/</code><code>CAAMaiMachiningProcessInstantiationLog.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step"></a>Step-by-Step</h4>
+<p>There are two logical steps in CAAMaiMachiningProcessInstantiationLog:</p>
+<ol>
+  <li><a href="#Step1">Implementing the CATIMfgMachiningProcessLog Interface
+    for ManufacturingActivity Types</a></li>
+  <li><a href="#Advise">Applying the
+    &quot;Generic Holes&quot; Machining Process on a design hole</a></li>
+</ol>
+<p>We now comment each of those sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Implementing the CATIMfgMachiningProcessLog
+Interface for ManufacturingActivity Type</h4>
+<p style="margin-left: 4">The CAAMaiMachiningProcessLog.cpp file illustrates how 
+to trace the information built when instantiating a machining process</p>
+<p style="margin-left: 4">The Trace method is called at the different steps of 
+the instantiation and receives a list of CATUnicodeString with the integer type 
+of the step: 1 for check, 2 for tooling queries, 3 for formulas</p>
+<p style="margin-left: 4; margin-top: 0">Update the interface dictionary, that is a file named, for example in this
+case, CAAManufacturingItf.edu.dico, whose directory's pathname is concatenated
+at run time in the CATDictionaryPath environment variable, and containing the
+following declaration to state that the <i>ManufacturingActivity</i> feature implements the
+<i>CATIMfgMachiningProcessLog</i> interface, and whose code is located in
+the libCAAMaiMachiningProcessInstantiationLog shared library or DLL. Pay attention to
+remove the comment (#CAA#) in the supplied dictionary.</p>
+<pre>ManufacturingActivity CATIMfgMachiningProcessLog libCAAMaiMachiningProcessInstantiationLog</pre>
+<p>The CAAManufacturingItf.edu.dico file is located in:</p>
+<table width="100%">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAADoc\CAAManufacturingItf.edu\CNext\code\dictionary\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAADoc/CAAManufacturingItf.edu/Cnext/code/dictionary/</code></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Applying the
+&quot;Generic Holes&quot; Machining Process</h4>
+<p>Through the
+<img border="0" src="images/CAAMfgStandardMP.jpg" width="83" height="57"> 
+&quot;Standard machining processes&quot; toolbar,&nbsp; instantiate the
+<img border="0" src="images/CAAMfgGenericHoles.jpg" width="35" height="36"> &quot;Axial 
+Process for Design 
+Holes&quot; machining process on any design hole (counterbored, countersunk, tappered) 
+and look at the output traces. Note that this&nbsp; command is overloaded on 
+&quot;Standard Drilling&quot; one.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Advise"></a>Advise</h4>
+<p>The query to the CATIMfgMachiningProcessLog interface is 
+systematically done on the machining process when instantiating a machining 
+process. It means that you can identify all the manufacturing activities traces 
+dedicated to a given machining process. For example, the implementation of the 
+Machining Process can open a file that will be filled through the Trace method 
+for the Manufacturing Activities</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This article provides an example on how to implement and use the <i>
+CATIMfgMachiningProcessLog</i>
+interface dedicated to give a feedback at the different steps of the instantiation 
+of a machining process. </p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [January 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+<p>&nbsp;</p>
+
+</body>
+
+</html>

@@ -1,0 +1,432 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Combined Curve's Factory Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Combined Curve's Factory Interface</h3>
+      <em>Defining and implementing the Combined Curve's factory interface</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+      a New Geometrical Feature: The Combined Curve</a> <b>&gt; Creating Combined Curve's Factory Interface </b></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create new Combined Curve Instances by
+      instantiating the Combined Curve StartUp.
+      <ul>
+        <li><a href="#Learn"><b>What You Will Learn With This Use Case</b></a></li>
+        <li><a href="#UseCase"><b>The CAAMmrCombinedCurve Use Case</b></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrCombinedCurve Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrCombinedCurve</a></li>
+            <li><a href="#Where">Where to Find the CAAMmrCombinedCurve Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case illustrates how to create new Combined Curve instances.</p>
+<p>To achieve this goal, two steps are necessary:</p>
+<ol>
+  <li>First, defining a Combined Curve Factory Interface and choosing what
+    object will implement it</li>
+  <li>Then, implementing this Interface to instantiate the Combined Curve
+    StartUp into Combined Curve Instances.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrCombinedCurve Use Case</h3>
+<p>CAAMmrCombinedCurve is a use case of the CAAMechanicalModeler.edu framework
+that illustrates MechanicalModeler framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the CAAMmrCombinedCurve Do</h4>
+<p>This use case makes it possible to <b>create run time Instances of Combined
+Curve from the Combined Curve StartUp</b>. Of course, this new skill means a new
+Interface. It will be called <i>CAAIMmrCombinedCurveFactory</i>. Its definition
+is straightforward, it could be translated in &quot;create a Combined Curve from
+its two input curves and its two input directions&quot;.&nbsp;</p>
+<p><i>CAAIMmrCombinedCurveFactory</i> Interface's definition is very simple. A
+single method is enough to create any Combined Curve, whatever its input Curves
+and Directions are:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAIMmrCombinedCurveFactory::CreateCombinedCurve( Curve1,
+                                                  Direction1,
+                                                  Curve2,
+                                                  Direction2 , 
+                                                  Output CombinedCurve )</pre>
+    </td>
+  </tr>
+</table>
+<p>Now that you have defined this new factory Interface, you have to choose a
+good candidate to implement it. As described in the technical article entitled
+&quot;Creating a New StartUp deriving from a Mechanical StartUp&quot; [<a href="#References">1</a>],
+the candidate is <code>CATPrtCont</code> the container of specifications [<a href="#References">2</a>].</p>
+<p>To create Combined Curve instances, <code>CATPrtCont</code> has to implement <i>CAAIMmrCombCrvFactory</i>
+interface and CombinedCurve has to implement an interface of type, <i>CAAIMmrCombinedCurve</i>
+[<a href="#References">3</a>], to valuate the attributes.</p>
+<p><img border="0" src="images/CombinedCurveInstantiation.jpg"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch CAAMmrCombinedCurve</h4>
+<p>See the section entitled &quot;How to Launch the Combined Curve Use
+Case&quot; in the &quot;<a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+a New Geometrical Feature: The Combined Curve</a>&quot; use case for a detailed
+description of how this use case should be launched.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrCombinedCurve Code</h4>
+<p>The CAAMmrCombinedCurve use case is made of a several classes located in the
+CAAMmrCombinedCurve.m module of the CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrCombinedCurve.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrCombinedCurve.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code>  is the directory where the CAA
+CD-ROM is installed.</p>
+<ul>
+  <li>in the src directory
+    <ul>
+      
+      <li>CATIMmrCombCrvFactory.cpp</li>
+      <li>TIE_CATIMmrCombCrvFactory.cpp</li>
+      <li>CATEMmrCombCrvFactory.cpp, the implementation of the <i>
+        CATIMmrCombCrvFactory </i> interface</li>
+    </ul>
+  </li>
+  <li>in the LocalInterfaces directory
+    <ul>
+      <li>CATEMmrCombCrvFactory.h</li>
+    </ul>
+  </li>
+</ul>
+<p>In the ProtectedInterfaces of the CAAMechanicalModeler.edu
+framework there is the CATIMmrCombCrvFactory.h file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>This use case is divided into the following steps:</p>
+<ul>
+  <li><a href="#Step1">Defining the Combined Curve Factory Interface</a></li>
+  <li><a href="#Step2">Implementing the Combined Curve Factory Interface</a>
+    <ul>
+      <li><a href="#Step4">Creating a Combined Curve Instance</a></li>
+		<li><a href="#Step6">Subscribing to repository for Configuration Data 
+		Storage</a></li>
+		<li><a href="#Step7">Getting Feature Type Information for BackUp / 
+		StartUp management</a> </li>
+      <li><a href="#Step5">Setting Default Values for the Instance Attributes</a></li>
+    </ul>
+</ul>
+
+
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Defining the Combined Curve Factory Interface</h4>
+<p>The Combined Curve Factory Interface (<i>CAAIMmrCombCrvFactory</i>)
+is pretty simple: a single method is enough to create a Combined Curve.</p>
+<p>Here is its description. This is the main part of CAAIMmrCombCrvFactory.h:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+class ExportedByCAAMmrCombinedCurve CAAIMmrCombCrvFactory: public CATBaseUnknown
+{
+  CATDeclareInterface;
+  public:
+   virtual HRESULT CreateCombinedCurve ( CATISpecObject *ipCurve1,
+                                         CATISpecObject *ipDirection1,
+                                         CATISpecObject *ipCurve2,
+                                         CATISpecObject *ipDirection2,
+                                         CATISpecObject **opCombinedCurve ) = 0 ;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Do not hesitate to consult the Object Modeler documentation if you have
+trouble defining a new interface [<a href="#References">4</a>] (what to write in
+.h, .cpp and .tsrc files ).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Implementing the Combined Curve Factory Interface</h4>
+<p>The object chosen as Combined Curve Factory extends the &quot;<code>CATPrtCont</code>
+&quot;
+late type. The following code extracted from CATEMmrCombCrvFactory.cpp declares
+that <code>CATPrtCont</code> is extended to implement the Combined Curve factory interface.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATImplementClass ( CAAEMmrCombCrvFactory ,
+                    DataExtension         ,
+                    CATBaseUnknown        ,
+                    <b>CATPrtCont</b> );
+
+// Tie the implementation to its interface
+// ---------------------------------------
+#include &quot;TIE_CAAIMmrCombCrvFactory.h&quot; // needed to tie the implementation to its interface
+TIE_CAAIMmrCombCrvFactory( CAAEMmrCombCrvFactory);</pre>
+    </td>
+  </tr>
+</table>
+<p>As usual, update your dictionary to declare that <code>CATPrtCont</code> implements
+<i>CAAIMmrCombCrvFactory</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating a Combined Curve Instance</h4>
+<p>To create a new Combined Curve Instance, all you need to do is to instantiate
+the Combined Curve StartUp. To do so, you first have to retrieve this StartUp. It has been stored in the
+Combined Curve Catalog file named CAAMmrCombinedCurveCatalog.CATfct [<a href="#References">5</a>].</p>
+<p>Let's look at CATEMmrCombCrvFactory.cpp again to see how to retrieve
+the Combined Curve StartUp.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<b>CATIContainer</b> *piContainerOnThis = NULL;
+HRESULT rc = QueryInterface( IID_CATIContainer , ( void**) &amp;piContainerOnThis );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Then, we construct a <code>CATOsmSUHandler </code>object on the 
+&quot;CombinedCurve&quot; StartUp:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATUnicodeString StartupType = &quot;CombinedCurve&quot;;
+CATUnicodeString ClientId = &quot;SAMPLES&quot;;
+CATUnicodeString StorageName = &quot;CAAMmrCombinedCurveCatalog.CATfct&quot;;
+<b>CATOsmSUHandler</b> ccSUHandler(StartupType, ClientId, StorageName);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Finally we instantiated the Combined Curve StartUp with the <code>Instanciate
+</code>method. Note that we have chosen not to give our instance a specific name 
+by omitting the third argument.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATISpecObject_var spCombinedCurveSU = NULL_var;
+
+rc = ccSUHandler.<b>Instanciate</b>(spCombinedCurveSU, piCBUOnThis);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>You have just created your first Combined Curve instance!</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Subscribing to repository for Configuration Data Storage</h4>
+<p>To define versioning on your mechanical feature [<a href="#References">6</a>], 
+you have to initialize a data needed to store the software configuration on your 
+feature.<br>
+This initialization is done calling the method &quot;CreateConfigurationData&quot; of 
+CATMmrAlgoConfigServices class.</p>
+<table class="code" id="table1">
+  <tr>
+    <td>
+      <pre>...
+
+rc = CATMmrAlgoConfigServices::<b>CreateConfigurationData</b>(*opiSpecOnCombinedCurve);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Your feature can now be versioned! This means that its mechanical behaviors 
+can be fixed for next software generation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h4><a name="Step7"></a>Getting Feature Type Information for BackUp / StartUp 
+management&nbsp; - For Geometrical Features Only</h4>
+<p>BackUp / StartUp is a specific mode which occurs when something goes wrong 
+with the CAAfeature (when startup catalog and code are not longer available on 
+the runtime view) [<a href="#References">7</a>]<br>
+<br>
+As Combined Curve is a geometrical feature deriving from <b>GeometricalElement3D</b>, 
+you need to define and store its type according to <b>CATIInputDescription</b> 
+implementation. This information, stored on the instance, will be useful in <b>
+BackUpStartUp</b> Mode to determine which behaviors are authorized. </p>
+<p>This operation is done after instantiation, calling <b>
+CATMmrFeatureAttributes::SetFeatureType</b>&nbsp; </p>
+<table class="code" id="table2">
+  <tr>
+    <td>
+      <pre>...
+<b>CATIInputDescription</b>* pInputDescriptionOnCombinedCurve = NULL;
+rc = (*opiSpecOnCombinedCurve)-&gt;QueryInterface( IID_CATIInputDescription, (void**) &amp;pInputDescriptionOnCombinedCurve);
+
+...
+
+CATIInputDescription::FeatureType Feature_type = CATIInputDescription::FeatureType_Unset;
+rc = pInputDescriptionOnCombinedCurve -&gt; <b>GetFeatureType</b>(Feature_type);
+
+...
+
+rc = <b>CATMmrFeatureAttributes::SetFeatureType</b>(*opiSpecOnCombinedCurve, Feature_type);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>You have now defined the feature type of your Combined Curve! Let's now 
+valuate this instance!</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step5"></a>Setting Default Values for the Instance Attributes</h4>
+<p>The attributes of this newly Combined Curve Instance are still empty. The interface
+of type for Combined Curve (<i>CAAIMmrCombinedCurve</i>) has
+methods to fill in the Combined Curve instance's attributes.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+
+CAAIMmrCombinedCurve *piCombinedCurve = NULL;
+rc = (*opiSpecOnCombinedCurve)-&gt;QueryInterface( IID_CAAIMmrCombinedCurve, 
+                                                (void**) &amp;piCombinedCurve );
+...
+    
+piCombinedCurve-&gt;SetCurve    ( 1 , ipiSpecOnCurve1     );
+piCombinedCurve-&gt;SetDirection( 1 , ipiSpecOnDirection1 );
+piCombinedCurve-&gt;SetCurve    ( 2 , ipiSpecOnCurve2     );
+piCombinedCurve-&gt;SetDirection( 2 , ipiSpecOnDirection2 );   
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A complete documentation of this Interface is available [<a href="#References">3</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to create Combined Curve Instances by
+instantiating the Combined Curve StartUp retrieved in the Combined Curve StartUp
+Catalog file.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrCreatingNewFeat.htm">Creating a New StartUp deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">The
+      Structure of a Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrCombinedCurveInterface.htm">Creating Combined Curve's Interface
+      of Type</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating
+      Interfaces</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="CAAMmrCombinedCurveFactory.htm">Creating Combined Curve's 
+	Factory Interface</a></td>
+  </tr>
+	<tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrVersioningMechFeat.htm">Configuration and Versioning in Mechanical Modeler</a></td>
+  </tr>
+	<tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrBackupStartUp.htm">
+	Geometrical Backup StartUp - BackUp / StartUp Mode</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Jan 2003]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+	<tr>
+    <td valign="top">Version: <strong>3</strong> [Jan 2007]</td>
+    <td valign="top">Document updated (Algorithm Services and BackUp/StartUp 
+	data)</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

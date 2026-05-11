@@ -1,0 +1,488 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Mechanical Design</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>Structure</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating the Structure Plate and Member Objects</h3>
+      <i>How to create the plate and member objects&nbsp;</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAStrCreateObjects use case.</p>
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><a href="#UseCase"><strong>The CAA</strong><b>StrCreateObjects</b><strong>
+          Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAStrCreateObjects Do</a></li>
+            <li><a href="#How">How to Launch CAAStrCreateObjects</a></li>
+            <li><a href="#Where">Where to Find the CAAStrCreateObjects Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<table width="100%">
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to initialize CATIA session, create
+a new product, get the root product and create the structure plates and members
+under the root, and save the created design document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAStrCreateObjects Use Case</h3>
+<p>CAAStrRetrieveObjectData is a use case of the CAAStructureInterfaces.edu
+framework that illustrates StructureInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAStrCreateObjects Do</h4>
+<p>The goal of&nbsp; CAAStrCreateObjects is to show you how to use the
+StructureInterfaces methods to create the structure plate and member objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAStrCreateObjects</h4>
+<p>To launch CAAStrCreateObjects, you will need to set up the build time
+environment, then compile CAAStrCreateObjects along with its prerequisites, set
+up the run time environment, and then execute the sample. This is fully
+described in the referenced article [<a href="#References">1</a>]. When
+launching the use case, you must pass the following arguments:</p>
+<ul>
+  <li><b>StructureObjectsTarget.CATProduct</b>  - the entire pathname, name and
+    extension (.CATProduct) of the output drawing.&nbsp; This batch generated simple structure design document contains two structure
+    plates and three members, including one curved plate and one curved member
+    object.&nbsp;</li>
+
+</ul>
+<p align="center"><img border="0" src="images/CAAStrCreatedObjects.jpg" width="554" height="345"></p>
+<ul>
+
+  <li><b>L8x6x1.CATPart </b>- the section profile which defines the member. It needs&nbsp; entire pathname, name and
+    extension (.CATPart) of the input drawing. Normally, it should be stored
+    in the CNext/resources/graphic/SectionPath directory of the CAAStructureInterfaces.edu
+    framework.</li>
+
+  <li><b>StructureMaterials.CATMaterial</b> - the material catalog which has a
+    list of material can be selected and used in the design project. Normally, it should be stored
+    in the CNext/resources/graphic/Material directory of the CAAStructureInterfaces.edu
+    framework.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAStrCreateObjects Code</h4>
+<p>CAAStrCreateObjects code is located in the CAAStrCreateObjects.m use case
+module of the CAAStructureInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAStructureInterfaces.edu\CAAStrCreateObjects.m</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAStructureInterfaces.edu/CAAStrCreateObjects.m</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5
+installation. It is made of&nbsp; one unique source files named
+CAAStrCreateStructureObjects.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAAStrCreateObjects :</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Initializing">Initializing the Environment</a></li>
+  <li><a href="#Retrieving PRM">Retrieving the Project Resource Information</a></li>
+  <li><a href="#Retrieving Material">Browse the Material Catalog and Retrieving Material Information</li>
+  <li><a href="#Structure Plate">Creating the Structure Plate Object</a></li>
+  <li><a href="#Structure Member Points">Creating the Structure Member Object from Two
+    Points</a></li>
+  <li><a href="#Structure Member Support">Creating the Structure Member Object from a
+    Support</a></li>
+  <li><a href="#Save the Open Document">Save the Open Document and Delete
+    the CATIA Session</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>In this use case, we create an new document to hold the newly created
+structure plate and member objects.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Initializing"></a>Initializing the Environment</h4>
+<p>The CAAStrCreateObjectsMain is a standalone batch program . The
+initialization of the CATIA session and retrieving pointer of the root product
+involves the following code</p>
+<table class="code" width="782">
+  <tr>
+    <td>
+      <pre>
+CATSession *pSession = NULL;
+	rc = ::Create_Session(&quot;CAA2_Sample_Session&quot;, pSession );</pre>
+      <pre>CATDocument *pDoc = NULL;
+	rc = CATDocumentServices::New(&quot;Product&quot;, pDoc);
+
+CATIDocRoots *piDocRootsOnDoc = NULL;
+	rc = pDoc-&gt;QueryInterface(IID_CATIDocRoots,
+		                 (void**) &amp;piDocRootsOnDoc);
+&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p>This code performs the following functions:</p>
+<ul>
+  <li>Creating a session, named &quot;CAA2_Sample_Session&quot;.</li>
+  <li>Creating the document to hold the structure objects.</li>
+  <li>Retrieving the pointer to the root product.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving PRM"></a>Retrieving the Project Resource Information</h4>
+<p>Retrieving the default or customized project resource setting from the XML
+file.</p>
+<table class="code" width="782">
+  <tr>
+    <td>
+      <pre>
+  // GetRootContainer from the document in the current session
+  CATInit_var spInit = pDoc;
+  CATIContainer *piRootCont = NULL;
+  if (!! spInit)
+  {
+     piRootCont = (CATIContainer *)spInit-&gt;GetRootContainer(CATIContainer::ClassName());
+  }
+
+  CATIPspResource *piResource = NULL;
+  CATObject *piObj = new CATObject(&quot;CATStructureDesign&quot;);
+  if ( NULL != piObj )
+  {
+    // initialize the application 
+    CATIPspApplication *piApplication = NULL;
+    rc = piObj-&gt;QueryInterface(IID_CATIPspApplication,(void **)&amp;piApplication);
+    if (piApplication)
+    {
+      piApplication-&gt;Initialization(piRootCont);
+      piApplication-&gt;Release();
+      piApplication = NULL;	
+    }
+
+    //  Get CATIPspResource interface pointer for your application
+    rc = piObj-&gt;QueryInterface(IID_CATIPspResource,(void **)&amp;piResource);
+    if ( FAILED(rc) ){
+      cout &lt;&lt; &quot;ERROR in getting CATIPspResource pointer&quot; &lt;&lt; endl &lt;&lt; flush;
+      return 3;
+    }
+
+    piObj-&gt;Release();
+    piObj = NULL;
+  }
+
+  if (NULL != piResource)
+  {
+    // retrieve the Structure Materials Catalog path from Project Resource (XML) File
+    CATUnicodeString StructureMaterials = &quot;StructureMaterialsCatalog&quot;;
+    rc = piResource-&gt;GetResourcePath(StructureMaterials, MaterialFilePath);
+    if ( FAILED(rc) ){
+      cout &lt;&lt; &quot;ERROR in getting material catalog path&quot; &lt;&lt; endl &lt;&lt; flush;
+      return 3;
+    }
+  }</pre>
+      <pre>  if (NULL != piRootCont)
+  {
+    piRootCont-&gt;Release();
+    piRootCont = NULL;
+  }
+</pre>
+    </td>
+  </tr>
+</table>
+<p>This code performs the following functions:</p>
+<ul>
+  <li>Get the root container from the document pointer in the current session.</li>
+  <li>Retrieving the application pointer and initializing the application -
+    CATStructureDesign.</li>
+  <li>Retrieving the resource pointer from the same application.</li>
+  <li>Get the project resource from the XML file.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Material"></a>Browse the
+    Material Catalog and Retrieving Material Information</h4>
+<p>Retrieving the material information from a give material catalog path. The
+detail about how to browse the catalog please refer to the catalog modeler
+documentation under the document modeler.&nbsp;</p>
+<table class="code" width="782">
+  <tr>
+    <td >
+      <pre>
+  // Get material feature from catalog
+  CATIMaterialFeature *piMaterialFeature = NULL;
+  CATDocument *pMaterialDocument = NULL ;
+  rc = CATDocumentServices::Open(MaterialFilePath, pMaterialDocument);
+
+  if (pMaterialDocument)
+  {
+    CATIMaterialDocument *pIMaterialDoc = NULL ;
+    rc = pMaterialDocument-&gt;QueryInterface(IID_CATIMaterialDocument,(void **) &amp;pIMaterialDoc);
+	
+    if (pIMaterialDoc)
+    {
+      CATILibraryFeature  *pILibraryFeature = NULL ;
+      rc = pIMaterialDoc-&gt;GetMaterialLibrary(&amp;pILibraryFeature);
+
+      if (pILibraryFeature)
+      {
+	int NbFamily = pILibraryFeature-&gt;GetFamilyCount();
+
+	// Get the first family feature
+	CATIFamilyFeature * pIFamilyFeature = NULL ;
+	if (NbFamily &gt;= 1)
+	  pIFamilyFeature = pILibraryFeature-&gt;GetFamily(1);
+	if (pIFamilyFeature)
+	{
+ 	  // Get the first material of the first family feature
+	  piMaterialFeature = pIFamilyFeature-&gt;GetMaterial(1);
+
+	  pIFamilyFeature-&gt;Release();
+	  pIFamilyFeature = NULL;
+        }
+	pILibraryFeature-&gt;Release();
+	pILibraryFeature = NULL;
+      }
+      pIMaterialDoc-&gt;Release();
+      pIMaterialDoc = NULL;
+    }
+  }
+
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Structure Plate"></a>Creating the Structure Plate Object</h4>
+<p>Creating the structure plate with thickness, orientation and material
+attributes. The same SetSupport, SetThickness, SetInternalOffset and SetMaterial
+methods can be used to edit an existing plate also, and the compute method does not
+needed to use when editing the plate. The compute method is only useful when
+creating an empty plate.</p>
+<table class="code" width="782">
+  <tr>
+    <td >
+      <pre>
+   // --------------------------------------------------------- //
+   //  Get factory pointer from the root product		//
+   // --------------------------------------------------------- //
+  CATIStructureFactory *piFactory = NULL;
+  piProductOnRoot-&gt;QueryInterface(IID_CATIStructureFactory, (void**) &amp;piFactory);
+  if (piFactory)
+  {	
+    CATIStructurePlate *pFlatPlate = NULL;
+
+    //Create empty plate
+    rc= piFactory-&gt;CreatePlate(&amp;pFlatPlate);</pre>
+      <pre>   //Set Support
+   pFlatPlate -&gt;SetSupport(piSupport);
+   //Set Thickness
+   pFlatPlate -&gt;SetThickness(Thickness);
+   //Set Offset
+   pFlatPlate -&gt;SetInternalOffset(Offset);
+   //Set Material
+   pFlatPlate -&gt;SetMaterial(piMaterialFeature);
+   //Compute
+   pFlatPlate -&gt;Compute();
+ }
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Structure Member Points"></a>Creating the Structure Member Object from Two
+Points</h4>
+<p>Creating the structure member form two given points with angle and material
+attributes. The ReplaceMemberSection, SetCurrentSetPoint, SetAngle and SetMaterial methods can be used to edit an
+existing member object, and the compute does not needed to use when editing
+the member. The compute,&nbsp;SetSection, SetStartCoord and SetEndCoord methods are only
+useful when
+creating an empty member.</p>
+<table class="code" width="782">
+  <tr>
+    <td>
+      <pre> CATUnicodeString AnchorName = &quot;catStrTopLeft&quot;;
+ double Angle = 0.0;
+ CATIStructureMember *piStraightMember1 = NULL;
+ CATMathPoint PointStart1(1700.,-400.0,0.0);
+ CATMathPoint PointEnd1(100.0,-400.0,0.0);
+
+ //Create empty straight member
+ rc = piFactory-&gt;CreateMember(&amp;piStraightMember1);
+			
+ if (SUCCEEDED(rc) &amp;&amp; piStraightMember1)
+ {
+   //Set section
+   piStraightMember1-&gt;SetSection(SectionDoc);
+   //Set start point
+   piStraightMember1-&gt;SetStartCoord(PointStart1);
+   //Set end point
+   piStraightMember1-&gt;SetEndCoord(PointEnd1);
+   //Set anchor point
+   piStraightMember1-&gt;SetCurrentSetPoint(AnchorName);
+   //Set Angle
+   piStraightMember1-&gt;SetAngle(Angle);
+   //Set Material
+   piStraightMember1-&gt;SetMaterial(piMaterialFeature);
+   //Compute
+   rc = piStraightMember1-&gt;Compute();
+ }
+&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Structure Member Support"></a>Creating the Structure Member Object from a
+Support</h4>
+<p>Creating the structure member form a given support with angle and material
+attributes. The ReplaceMemberSection, SetCurrentSetPoint, SetAngle, SetMemberSupport and SetMaterial methods can be used to
+edit an existing member object, and the compute does not needed to use when
+editing the member. The compute and SetSection methods are only useful when
+creating an empty member.</p>
+<table class="code" width="782">
+  <tr>
+    <td>
+      <pre> CATUnicodeString AnchorName = &quot;catStrTopLeft&quot;;
+ double Angle = 0.0;
+ CATIStructureMember *piCurvedMember= NULL;
+
+ //Create a curved member
+ rc = piFactory-&gt;CreateMember(&amp;piCurvedMember);
+			
+ CATISpecObject* piSketchMember = NULL;
+
+ rc = spSketchMember -&gt;QueryInterface(IID_CATISpecObject,(void**) &amp;piSketchMember);
+
+ if(piSketchMember)
+ {
+   //Set Support
+   piCurvedMember-&gt;SetMemberSupport(piSketchMember);
+   //Set Section
+   piCurvedMember-&gt;SetSection(SectionDoc);
+   //Set Anchor point 
+   piCurvedMember-&gt;SetCurrentSetPoint(AnchorName);
+   //Set Angle
+   Angle = 6.2831853/4;
+   piCurvedMember-&gt;SetAngle(Angle);
+   //Set Material
+   piCurvedMember-&gt;SetMaterial(piMaterialFeature);
+   //Compute
+   rc = piCurvedMember-&gt;Compute();
+ }
+
+&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Save the Open Document"></a>Saving the Open Document and Delete
+CATIA Session</h4>
+<p>Never forget to delete a created session and save the opened documents
+after the usage .</p>
+<table class="code" width="782">
+  <tr>
+    <td>
+      <pre> // --------------------------------------------------------- //
+ //  Save all the open document and delete the session.	      //
+ // --------------------------------------------------------- //
+
+ rc = CATDocumentServices::SaveAs(*pDoc,TargetFilePath);
+
+ rc = ::Delete_Session(&quot;CAA2_Sample_Session&quot;);
+
+</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to use the Structure interfaces to create the
+structure objects with proper attribute value.&nbsp; Specifically, it
+has illustrated:</p>
+<ul>
+  <li>Initializing a session</li>
+  <li>Creating an new document</li>
+  <li>Retrieving the root product&nbsp;</li>
+  <li>Retrieving the Project Resource Information</li>
+  <li>Browse the
+    Material Catalog and Retrieving Material Information</li>
+  <li>Creating a structure plate object</li>
+  <li>Creating a structure member object from two given points</li>
+  <li>Creating a structure member object from a given support</li>
+  <li>Saving open document and delete session</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1.1</strong> [February 2004]</td>
+    <td valign="top">Retrieving Project Resource Setting Added</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1.0</strong>  [December 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>
+

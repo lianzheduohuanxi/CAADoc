@@ -1,0 +1,1185 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>An Overview of Power Copies and User Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>MechanicalModeler</h1>
+    </td>
+    <td valign="top"></td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>An Overview of Power Copies and User Features</h3>
+      <em>Essential characteristics and mechanisms of Power Copies and User
+      Features</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article details the essential characteristics and mechanisms of
+      Power Copies and User Features. A reading of the technical articles about
+      the Part document [<a href="#References">1</a>][<a href="#References">2</a>][<a href="#References">3</a>]
+      is recommended to take full benefits from this article.</p>
+      <ul>
+        <li><strong><a href="#Part0">Introduction</a></strong></li>
+        <li><strong><a href="#Definitions">Definitions</a></strong></li>
+        <ul>
+          <li><a href="#Components">What is a &quot;Component&quot;?</a></li>
+          <li><a href="#Set">What are the &quot;KnowledgeTemplates&quot; Set and
+            the &quot;PowerCopy&quot; Set?</a></li>
+          <li><a href="#Inputs">What is an &quot;Input&quot;?</a></li>
+          <li><a href="#Parameters">What is a &quot;Published Parameter&quot;?</a></li>
+          <li><a href="#Inputandparameterrole">What is a &quot;Role&quot;?</a></li>
+          <li><a href="#what is a type">What is a &quot;Type&quot;?</a></li>
+        </ul>
+        <li><strong><a href="#Processes explanations">How to Use the Interfaces</a></strong>
+          <ul>
+            <li><a href="#reference creation"><i>Power Copy and User Feature</i>
+              Creation</a></li>
+            <li><a href="#reference instantiation"><i>Power Copy and User Feature</i> Instantiation</a></li>
+            <li><a href="#User Feature edition"><i>User Feature</i>
+              Edition</a></li>
+            <li><a href="#User Feature Icon">Power Copy and User Feature Icon</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Part3">Technologies Used</a></strong>
+          <ul>
+            <li><a href="#CopyPaste mechanism">An example of the Copy/Paste
+              Mechanism</a></li>
+            <li><a href="#Instance/Reference mechanism">An example of the
+              Instance/Reference Mechanism</a></li>
+            <li><a href="#Replace mechanism">The Replace Mechanism</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Part4">Catalog Integration</a></strong></li>
+        <li><strong><a href="#Part5">Useful Tips</a></strong>
+          <ul>
+            <li><a href="#TTipcreation">Power Copy and User Feature Creation</a></li>
+            <li><a href="#TTipInstantiation">Power Copy and User Feature
+              Instantiation</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part0">Introduction</a></h3>
+<p>To design your geometrical models, in most cases, Part and GSD features are
+sufficient. But if these features cannot answer your needs, you must create
+others. One solution is to redefine an existing geometrical feature, but then
+you have to re-implement complex interfaces like <i>CATIBuild</i>, <i>CATIReplace</i>...
+So, an intermediate solution is to create User Features or Power Copies. These
+elements are geometrical features that are composed of other features. With this
+solution you can create new geometrical features with a minimal implementation
+cost.</p>
+<p>Power Copy and User Feature capabilities are used to group features which are
+often repeated and never modified and to create applicative features. With the
+User Feature, the internal features are hidden. This is useful for designers to
+hide complexity and/or for customers to maintain confidentiality.</p>
+<p>This document begins by defining the terms used to describe a User Feature or
+a Power Copy.</p>
+<p>In the next section, <a href="#Processes explanations">How to Use the
+Interfaces</a>, the MechanicalCommands framework's interfaces are described for
+each process: how to create a User Feature (or a Power Copy), how to instantiate
+a User Feature (or a Power Copy) and how to edit a User Feature instance (process not
+available for Power Copy).</p>
+<p>The <a href="#Part4">Technologies Used</a> section gives an internal view
+where the main difference between a Power Copy and a User Feature becomes
+explicit: on the one hand, the Copy/Paste mechanism is used and on the other
+hand, the Reference/Instance mechanism is used. Before reading this section, you
+should already be familiar with the concepts explained in the Feature Modeler
+Overview [<a href="#References">4]</a>, a technical article of the PPR Hub.</p>
+<p>The Power Copy or the User Feature to be instantiated is saved in a Part
+document, and is, in most cases, also referenced in a catalog. The catalog
+integration is explained in the <a href="#Part4">Catalog Integration</a>
+section.</p>
+<p>This document is useful for the CAA developer, but also for the end user who
+may need to use interactive commands to create or instantiate a Power Copy or a
+User Feature. This article also gives a number of <a href="#Part5">Useful Tips</a>
+to enhance the usage of these features.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Definitions"></a>Definitions</h3>
+<p><a name="Components"></a><b>What is a &quot;Component&quot;?</b></p>
+<p><span lang="en-us">A component is a feature that is used to form the User Feature (or the Power
+Copy) reference. This feature can be:</span></p>
+<ul>
+  <li><span lang="en-us">A geometrical feature</span></li>
+  <li><span lang="en-us">A knowledge object (Rules, Formulas, Design Table, Check)</span></li>
+  <li><span lang="en-us">A constraint</span></li>
+  <li><span lang="en-us">Another User Feature</span></li>
+  <li><span lang="en-us">A surfacic set ( Ordered Geometrical Set or Geometrical Set)</span></li>
+  <li><span lang="en-us">A Body (not the PartBody)&nbsp;</span></li>
+</ul>
+<p><span lang="en-us">A User Feature (or a Power Copy) can be made up of any number of components.
+These components must be selected from the same Part document as the one
+containing the User Feature or the Power Copy reference.</span></p>
+<p><span lang="en-us"><b><a name="Set"></a>What are the &quot;KnowledgeTemplates&quot; Set and the
+&quot;PowerCopy&quot; Set?</b></span></p>
+<p><span lang="en-us">User Features and Power Copies that are used to be instantiated are called
+User Feature <b>references </b>and Power Copy <b>references</b> respectively.</span></p>
+<p><span lang="en-us">The &quot;KnowledgeTemplates&quot; and &quot;PowerCopy&quot; sets aggregate
+User Feature references and Power Copy references respectively. These two sets
+are non mechanical features aggregated in the MechanicalPart feature</span></p>
+<p><span lang="en-us"><a name="Inputs"></a><b>What is an &quot;Input&quot;?</b></span></p>
+<p><span lang="en-us">An input is a feature that is not directly selected to form the User Feature
+or the Power Copy, but this feature is pointed at through an external link by a
+component that <b>is</b> part of the UserFeature or Power Copy. Inputs must be
+valuated at the time of instantiation.</span></p>
+<p><span lang="en-us">For example, let's look at the inputs of the User Feature reference created
+in the use case &quot;Creating a User Feature Reference&quot; [<a href="#References">5</a>]</span></p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>:Input's Description</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaInputs.jpg" width="640" height="420"></td>
+  </tr>
+</table>
+<p>This feature has only one component, a Geometrical Set (the green box). It
+contains a loft, Loft.2, defined by two circles, <code>Circle.3</code> and <code>Circle.4</code>.
+These circles are placed on two planes, <code>Plane.1</code> and <code>Plane.2</code>.
+These two planes are perpendicular to a line, <code>Line.2</code>, at each of
+its end points. These end points, Point.1 and Point.2, are not inside the group
+of features defining the components. So these two points are the
+&quot;inputs&quot;.</p>
+<h4><a name="Parameters"></a>What is a &quot;Published Parameter&quot;?</h4>
+<p>The feature can have knowledge parameters which can be published or not.
+Refer to the <i>CATIParmPublisher</i><i> </i>interface of the
+KnowledgeInterfaces Framework. The parameters of the User Feature (or the Power
+Copy) are made up of the set of all knowledge parameters of its components.
+Among these parameters, you can select (publish) those whose values are likely
+to be modified during the instantiation step.</p>
+<p>Let's take the same example that was shown in the <a href="#Inputs">What is
+an &quot;Input&quot;?</a> section:</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>:Parameter's Description</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaParameterSchema.jpg" width="690" height="480"></td>
+  </tr>
+</table>
+<p>The User Feature reference contains only one component, a Geometrical Set
+(the green box) and it contains several features: Line.2, Circle.3, Circle.4,
+Plane.1... In Fig.2 we have only presented the parameters for Line.2 (L. from
+the start point, L. from the end point), Circle.3 (Radius) and Circle.4
+(Radius). These two last radius parameters are outside the green box because
+they have been &quot;published&quot;.</p>
+<p>The published parameters appear in the specification tree only for the User
+Feature; they can be found in the UserFeatures set and under each instance.</p>
+<h4><a name="Inputandparameterrole"></a>What is a &quot;Role&quot;?</h4>
+<p>For each input and published parameter you can give an &quot;external&quot;
+name. This external name is the &quot;role&quot;. The default role of an input
+is the name of the feature and the default role of a parameter is its default
+name. For example, in the case of a parameter, it is easier to understand
+&quot;The Radius of the Top Circle&quot; rather than &quot;Radius&quot;.</p>
+<p>For the input, the role has an extra significance: the role is useful to give
+more meaning to the end user, but it can also be used to automatically look for
+inputs. To valuate the inputs at each instantiation, you can specifically set a
+feature for each input, but you can also use the &quot;Use Identical Name&quot;
+function. This means that the process tries to valuate an input by looking for a
+feature whose name returned through <i>CATIAlias</i> is identical to the role
+name of the input.</p>
+<h4><a name="what is a type"></a>What is a &quot;Type&quot;?</h4>
+<p>The type is a User Feature notion, there is no type for a Power Copy. The
+type is a string whose recommended naming rule is the following: the first
+part is the company prefix and the second part is dependent of the current user
+feature. There is two advantages to associate with a User Feature reference a
+type:</p>
+<ul>
+  <li>Implement the <i>CATIEdit</i> interface on the type to customize the
+    edition panel. Refer to the use case &quot;<i>CATIEdit</i> for a User
+    Feature&quot; [<a href="#References">9</a>] for an example.</li>
+  <li>Benefit from the Search</li>
+</ul>
+<p>You can create a type by code using the <i>CATIUdfFeatureUser</i>
+interface or during the interactive creation. In the two cases, once the type is
+created, if instances already exist, don't change the type.</p>
+<ul>
+  <li><i>CATIUdfFeatureUser</i></li>
+  <ul>
+    <li><code>SetType</code> enables to create a type on the User Feature
+      reference.</li>
+    <li><code>GetType </code>retrieves the type.</li>
+    <p>This interface is available on a User Feature reference and on the
+    instances, but if the <code>GetType</code> method can be used on the two
+    cases, the first method must be only used for the User Feature reference.</p>
+  </ul>
+  <li>&quot;User Feature Creation&quot; command</li>
+  <p>In this interactive command, click the <code>Type</code> tab. The following
+  dialog appears:</p>
+	<table>
+		<caption><i><a name="Fig.9">Fig.9</a>: The &quot;Userfeature
+      Definition&quot; Dialog Box</i></caption>
+		<tr>
+			<td>
+			<img border="0" src="../CAAMcaUseCases/images/CAAMcaUdfEditUserFeatureDefDlg2.jpg" width="568" height="442"></td>
+		</tr>
+	</table>
+	<p>&nbsp;<ul>
+	<li><span lang="en-us">In the Super Type field, click the Auto button. 
+	SkinFeature is displayed in the Super Type field. Note that the Super Type 
+	is automatically displayed by the application. The Super Type can be 
+	MechanicalFeature or SkinFeature.</span></li>
+	<li>In the <span lang="en-us">Type1 field, enter the name of the type that 
+	you want to assign to the User Defined Feature (CAAUdfLoft in the example) 
+	and click Generate. You can notice that you retrieve the naming 
+	recommendation: the company prefix at the beginning and a specific name at 
+	the end.</span></li>
+	</ul>
+</ul>
+<h3><a name="Processes explanations"></a>How to Use the Interfaces</h3>
+<h4><a name="reference creation"></a>Power Copy or User Feature Creation</h4>
+<p>The Power Copy references and the User Feature references are created nearly
+by the same process. Refer to the use case &quot;Creating a User Feature
+Reference&quot; [<a href="#References">5</a>] for a concrete example of creating
+a User Feature.</p>
+<p>The process is the following:</p>
+<ol>
+  <li><a name="Retrieves a CATIUdfFactory interface pointer to the Part container">Retrieve
+    a <i>CATIUdfFactory</i> interface pointer to the Part container</a></li>
+  <p>The Part container, <i>CATPrtContainer</i>, which is the root container of
+  the Part document, implements <i>CATIUdfFactory</i>. This interface enables
+  the creation of a Power Copy reference or a User Feature reference.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATInit</b> *piInitOnPartDocument = NULL ;
+  rc = pPartDocument-&gt;QueryInterface(IID_<b>CATInit</b>,(void **) &amp;piInitOnPartDocument );
+  ...
+  CATIPrtContainer *piPartContainer = NULL ;
+  piPartContainer = (CATIPrtContainer *)piInitOnPartDocument-&gt;<b>GetRootContainer</b>(&quot;CATIPrtContainer&quot;) ;
+  ...
+  <b>CATIUdfFactory </b>*piUdfFactoryOnPartContainer = NULL ;
+  piPartContainer-&gt;QueryInterface(IID_<b>CATIUdfFactory</b>,(void **) &amp;piUdfFactoryOnPartContainer);
+ </pre>
+      </td>
+    </tr>
+  </table>
+  <p>pPartDocument is the CATDocument pointer.</p>
+  <li>Create a new feature reference from the factory on the Part container</li>
+  <p>Creating a User Feature:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATUnicodeString <b>UserFeatureReferenceName</b>= &quot;NameOfTheUserFeatureReference&quot; 
+  <b>CATIUdfFeature</b>_var spiUdfFeature = piUdfFactoryOnPartContainer -&gt;<b>CreateUserFeature</b>(UserFeatureReferenceName);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>CreateUserFeature</code> method returns a new User Feature whose
+  name is the unique argument of the method. This name is used when a User
+  Feature reference is instantiated. If you do not give an explicit name to the
+  instance, its default name is the User Feature reference name to which an
+  index is appended.</p>
+  <p>Creating a Power Copy:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATIUdfFeature</b>_var spiUdfFeature = piUdfFactoryOnPartContainer -&gt;<b>CreatePowerCopy</b>();
+  <b>CATIAlias </b>* piAliasOnPowerCopy = NULL ;
+  spiUdfFeature-&gt;QueryInterface(IID_<b>CATIAlias </b>,(void **) &amp;piAliasOnPowerCopy);
+  ...
+  CATUnicodeString <b>PowerCopyReferenceName</b>= &quot;NameOfThePowerCopyReference&quot; 
+  piAliasOnPowerCopy-&gt;<b>SetAlias</b>(PowerCopyReferenceName);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>For the Power Copy, the method of the factory is <code>CreatePowerCopy</code>.
+  To set a specific name, the <i>CATIAlias</i> interface must be used.</p>
+  <p>It is recommended to create only one User Feature or only one Power Copy by
+  Part document. Refer to <a href="#Part5">Useful Tips</a> for an more detailed
+  explanation.</p>
+  <li>Retrieve the component (s)</li>
+  <p>You need to have one or several features to form your User Feature or Power
+  Copy. See the <a href="#Components">Components</a> section for more details.
+  All these features are grouped together in a list.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  <b>CATListValCATBaseUnknown</b>_var pComponentsList= new CATLISTV(CATBaseUnknown_var);
+  pComponentsList-&gt;<b>Append</b>(spOnMyFirstFeature) ;
+  pComponentsList-&gt;Append(spOnMySecondFeature) ;
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>Note that <code>spOnMyFirstFeature</code> and <code>spOnMySecondFeature </code>are
+  smart pointer on features in the current Part document.</p>
+  <li>Check the component (s)</li>
+  <p>Before valuating the User Feature or the Power Copy with the components, it
+  is mandatory to check the validity of these component (s).</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  rc = spiUdfFeature-&gt;<b>VerifComponents</b>(pComponentsList);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>VerifComponents </code>method mainly verifies that each component
+  implements the <i>CATIReplace</i> interface. If the result of <code>VerifComponents
+  </code>is<code> S_OK, </code>the verification is successful.</p>
+  <p>You can perform the check step after the valuation of the User Feature or
+  the Power Copy (next step), but in this case, if the check fails you must
+  delete the new feature and create a new one. If you perform the check after
+  the valuation, the unique argument of <code>VerifComponents </code>is NULL.</p>
+  <li>Valuate the new feature reference with the components</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  rc = spiUdfFeature-&gt;<b>SetComponents</b>(pComponentsList);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The main role of this method is to determine the inputs from the group of
+  components.</p>
+  <li>Rename the inputs</li>
+  <p>This step is strongly recommended. It allows the end user to have a better
+  understanding of their meaning.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATUnicodeString TheRoleOfThexInput =&quot;....&quot; ;
+  rc = spiUdfFeature-&gt;<b>SetInputRole</b>(<b>x</b>,TheRoleOfThexInput);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>x</code> is the position of the input in the list returned by the <code>GetListInputs</code>
+  method. The value of <code>x</code> is ranged between 1 and the size of this
+  list<code>.</code></p>
+  <li>Publish the useful parameters</li>
+  <p>In the component (s), we have a group of parameters and among them you can
+  select the useful parameters. Refer to the &quot;<a href="#Parameters">Published
+  Parameters</a>&quot; section for a technical explanation.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATBaseUnknown_var spUknOnParameter = ... ;
+  rc = spiUdfFeature-&gt;<b>AddParameter</b>(spUknOnParameter);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The <code>AddParameter</code> method publishes the parameter passed as an
+  argument (the <code>RemoveParameter</code> method does the contrary). The <code>GetInternalParameter</code>s
+  method returns all the parameters of the User Feature or the Power Copy. The <code>GetParameters</code>
+  method returns only the published parameters.</p>
+  <li>Rename the published parameters</li>
+  <p>As for inputs, it is strongly recommended to rename the published
+  parameters.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATUnicodeString TheRoleOfTheParameter =&quot;....&quot; ;
+  rc = spiUdfFeature-&gt;<b>SetParameterRole</b>(spUknOnParameter,TheRoleOfTheParameter);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>Use the <code>SetParameterRole</code> method to rename a published
+  parameter.</p>
+  <li>Put the new feature in the appropriate set</li>
+  <p>For the User Feature:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATIUdfFeatureSet_var spiIdfFeatureSet = piUdfFactoryOnPartContainer-&gt;<b>GetFeatureSet</b>(<b>1</b>);
+  ...
+  spiIdfFeatureSet-&gt;Append(spiUdfFeature);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The new User Feature reference is aggregated in the UserFeatures set. The
+  set is indicated by the index 1.</p>
+  <p>For the Power Copy:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATIUdfFeatureSet_var spiIdfFeatureSet = piUdfFactoryOnPartContainer-&gt;<b>GetFeatureSet</b>(<b>0</b>);
+  ...
+  spiIdfFeatureSet-&gt;Append(spiUdfFeature);
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The new Power Copy reference is aggregated in the PowerCopy set. The set is
+  indicated by the index 0.</p>
+</ol>
+<p><b>Caution</b>: as long as the User Feature or the Power Copy is not yet
+instantiated, you can safely change an input's role, publish a parameter or
+change a parameter's role; afterwards, this is not recommended.</p>
+<h4><a name="reference instantiation"></a>Power Copy or User Feature
+Instantiation</h4>
+<p>The Power Copy references and the User Feature references are instantiated by
+nearly the same process. Refer to the use case &quot;Instantiating a User
+Feature Reference&quot; [<a href="#References">6</a>] for a concrete example of
+instantiating a User Feature.</p>
+<p>The User Feature or the Power Copy reference to be instantiated is found in a
+Part document (*) called the <b>reference</b> Part Document. The instance will
+be created in a <b>destination</b> Part document. These two documents can be the
+same but it is not recommended. Refer to <a href="#Part5">Useful Tips</a> for an
+more detailed explanation.</p>
+<p>(*)The instantiation from a Catalog is not traited.</p>
+<p>The instantiation process is the following:</p>
+<ol>
+  <li>Retrieve the feature to be instantiated</li>
+  <p>For the User Feature list:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATListValCATISpecObject_var *pFeatureList = NULL ;
+  pFeatureList = piUdfFactoryOnPartContainer -&gt;<b>GetUserFeatureList</b>();
+  ...
+  </pre>
+      </td>
+    </tr>
+  </table>
+  <p>For the Power Copy list:</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATListValCATISpecObject_var *pFeatureList = NULL ;
+  pFeatureList = piUdfFactoryOnPartContainer -&gt;<b>GetPowerCopyList</b>();
+  ...</pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>piUdfFactoryOnPartContainer</code> is the <i>CATIUdfFactory</i>
+  pointer on the root container of the reference Part Document, and pFeatureList
+  is a pointer on a CATISpecObject_var list.</p>
+  <p>The list contains the User Feature or the Power Copy references that can be
+  instantiated. These feature references implement the <i>CATIUdfInstantiate</i>
+  interface to enable instantiations.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATISpecObject_var spFeatureReference =  (*pFeatureList)[<b>i</b>] ;   
+  <b>CATIUdfInstantiate</b> *piUdfInstantiateOnFeatRef = NULL ;
+  rc = spFeatureReference-&gt;QueryInterface(IID_CATIUdfInstantiate,(void **) &amp;piUdfInstantiateOnFeatRef);
+  ...
+ </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The value of <code>i</code> is ranged between 1 and the maximum number of
+  references. This number is given by the size of the <code>pFeatureList</code>
+  list.</p>
+  <li><a name="Sets the MechanicalPart destination">Set the 
+    destination</a> location</li><p>An instance of a User Feature will always be located in
+  a Geometrical Features Set of a MechanicalPart. The nature of the
+  feature reference determines the choice between a Body, a Solid Body, a 
+	Geometrical Set or an Ordered Geometrical Set.</p>
+	<p>For Power Copy instantiation, the location of duplicated features depends 
+	on their own nature.</p>
+  <p>There are two different ways to define the destination location of 
+	instantiation:</p>
+	<ul>
+		<li>The old method consists in designating the MechanicalPart as the 
+		destination. If your MechanicalPart contains several Geometrical 
+		Features Sets, the instantiation will occur in the current one. Use the <code>SetCurrentFeature</code>
+  method of the <i>CATIPrtPart</i> (interface of the MecModInterfaces Framework)
+  to change the current tool.</li>
+	</ul>
+	<p><a name="First retrieves a pointer on the MechanicalPart destination:">
+	First retrieve a pointer on the MechanicalPart destination:</a></p>
+  <table class="code" id="table1">
+    <tr>
+      <td>
+        <pre>  ...
+  CATISpecObject_var spSpecObjectOnMechanicalPart = piPartContainer-&gt;<b>GetPart</b>();
+  CATBaseUnknown_var spBuknOnMechanicalPart = spSpecObjectOnMechanicalPart ;
+  CATBaseUnknown * <b>pMechanicalPart</b> = (CATBaseUnknown *)spBuknOnMechanicalPart ;
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>piPartContainer</code> is the root container of the <b>destination</b>
+  Part document. Refer to the first in the section <a href="#reference creation">
+	Power Copy or User Feature Creation</a> to see how to retrieve such a 
+	pointer.</p>
+  <p>Next, set the path of this MechanicalPart to the Feature reference:</p>
+  <table class="code" id="table2">
+    <tr>
+      <td>
+        <pre>  ...
+  CATPathElement PathOfTheMechanicalPart (pMechanicalPart);
+  CATBaseUnknown * pUIActiveObject = NULL ;
+  CATBaseUnknown_var spMechanicalPartDestination;
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>SetDestinationPath</b>(&amp;PathOfTheMechanicalPart,
+                           pUIActiveObject,spMechanicalPartDestination);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>PathOfTheMechanicalPart</code> is a <i>CATPathElement</i> created 
+	from a <i>CATBaseUnknown</i> pointer on the MechanicalPart, and 
+	pUIActiveObject and spMechanicalPartDestination are NULL and NULL_var, 
+	respectively, as returned values of the <code>SetDestinationPath</code>
+  method.</p>
+  <ul>
+	<li>The new method consists in designating a feature as the destination 
+	along with a relative position. You can choose to insert the features 
+	&quot;Inside&quot; a Geometrical Features Set or &quot;After&quot; it. If you choose a geometric 
+	feature as destination, then the only available position is &quot;After&quot;. The 
+	feature you choose as destination is automatically set as the current 
+	feature. </li>
+	</ul>
+	<p>Set the path of the choosen destination feature and the relative position 
+	to the Template reference:</p>
+  <table class="code" id="table6">
+    <tr>
+      <td>
+        <pre>  ...
+  CATPathElement PathOfTheDestinationFeature (pDestinationFeature);
+  CATUnicodeString relativePosition = &quot;After&quot;;
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>SetDestinationPathOfInsertion</b>(&amp;PathOfTheDestinationFeature,
+                           relativePosition);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>PathOfTheDestinationFeature</code> is a <i>CATPathElement</i> created 
+	from a <i>CATBaseUnknown</i> pointer on the geometric feature designated as 
+	the destination (<code>pDestinationFeature</code>), and relativePosition is 
+	a CATUnicodeString whose value can be &quot;Inside&quot; or &quot;After&quot;.</p>
+	<p>If you want to use the current feature as the default destination, you 
+	can retrieve it using the <code>GetDefaultDestinationOfInsertion</code> 
+	method.</p>
+  <table class="code" id="table7">
+    <tr>
+      <td>
+        <pre>  ...
+  CATPathElement PathOfTheMechanicalPart (pMechanicalPart);
+  CATPathElement* PathOfTheDestinationFeature = NULL;
+  CATUnicodeString relativePosition;
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>GetDefaultDestinationOfInsertion</b>(&amp;PathOfTheMechanicalPart,
+                           PathOfTheDestinationFeature,relativePosition);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p><code>PathOfTheMechanicalPart</code> is a <i>CATPathElement</i> created 
+	from a <i>CATBaseUnknown</i> pointer on the MechanicalPart.</p>
+	<p>&nbsp;</p>
+  <li>Valuate all the inputs</li>
+  <p>All the features that valuate the inputs are features from the same
+  MechanicalPart as the MechanicalPart in which the Power Copy or the User
+  Feature is to be instantiated.</p>
+	<p>First solution: use the <code>SetNewInput </code>method for each input.</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>  ...
+  CATPathElement * pPathOnInput (pFeatureInput);
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>SetNewInput</b>(x,pPathOnInput);
+  ... </pre></td>
+		</tr>
+	</table>
+	<p><code>x</code> is the position of the input in the list returned by the 
+	<code>GetOldInputs
+  </code>method and is ranged between 1 and the number of inputs. This number is
+  given by the size of the list. pPathOnInput is the <i>CATPathElement</i> of
+  the feature pointed to by pFeatureInput</p>
+	<p>Second solution: Use the <code>UseIdenticalName</code> method</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>  ...
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>UseIdenticalName</b>(spRoot);
+  ... </pre></td>
+		</tr>
+	</table>
+	<p><code>spRoot</code>, in most cases, is a smart pointer on the
+  MechanicalPart of the destination Part document,
+	<a href="#First retrieves a pointer on the MechanicalPart destination:">spBuknOnMechanicalPart</a></p>
+	<p>The role of this method is to automatically look for a feature for each
+  input. An input is valuated when there exists in the root a feature whose <i>CATIAlias</i>
+  name is identical to the role of the input.</p>
+	<p>Example: The User Feature (or Power Copy) has 4 inputs whose first two have
+  a specific role: MyRole1 and MyRole2 respectively.</p>
+	<div align="justify">
+		<table border="1" width="235">
+			<tr>
+				<td width="91" height="25">Input's Name</td>
+				<td width="78" height="25">Input's Role</td>
+				<td width="165" height="25">Default valuation</td>
+			</tr>
+			<tr>
+				<td width="91" height="25">Point.1</td>
+				<td width="78" height="25">MyRole1</td>
+				<td width="165" height="25">Point.1</td>
+			</tr>
+			<tr>
+				<td width="91" height="25">Point.2</td>
+				<td width="78" height="25">MyRole2</td>
+				<td width="165" height="25">Point.2</td>
+			</tr>
+			<tr>
+				<td width="91" height="25">Line.1</td>
+				<td width="78" height="25">Line.1</td>
+				<td width="165" height="25">Line.1</td>
+			</tr>
+			<tr>
+				<td width="91" height="25">Line.2</td>
+				<td width="78" height="25">Line.2</td>
+				<td width="165" height="25">Line.2</td>
+			</tr>
+		</table></div>
+	<p>The destination Part document, contains the following features: a point
+  called MyRole1, Point.1,Line.1 ....</p>
+	<p>The <code>UseIdenticalName</code> method finds only two features: MyRole1
+  and Line.1 associated to Point.1 and Line.1 respectively. Point.2 and Line.2
+  are not valuated because any feature in the root has MyRole2 or Line.2 as <i>CATIAlias</i>
+  name.</p>
+	<table border="1" width="325">
+		<tr>
+			<td width="110" height="25">Input's Name</td>
+			<td width="114" height="25">Input's Role</td>
+			<td width="187" height="25">Valuation after UseIdenticalName</td>
+		</tr>
+		<tr>
+			<td width="110" height="25">Point.1</td>
+			<td width="114" height="25">MyRole1</td>
+			<td width="187" height="25"><b>MyRole1</b></td>
+		</tr>
+		<tr>
+			<td width="110" height="25">Point.2</td>
+			<td width="114" height="25">MyRole2</td>
+			<td width="187" height="25">Point.2</td>
+		</tr>
+		<tr>
+			<td width="110" height="25">Line.1</td>
+			<td width="114" height="25">Line.1</td>
+			<td width="187" height="25"><b>Line.1</b></td>
+		</tr>
+		<tr>
+			<td width="110" height="25">Line.2</td>
+			<td width="114" height="25">Line.2</td>
+			<td width="187" height="25">Line.2</td>
+		</tr>
+	</table>
+	<p>After the <code>UseIdenticalName</code> method it is important to check
+  that all inputs are valuated.</p>
+	<table class="code">
+		<tr>
+			<td>
+			<pre>  ...
+  CATBoolean Uncomplete = FALSE ;  
+  int i = <b>1</b> ; 
+  int NbInput = .... ; // the size of the list returned by GetOldInputs
+  while ( (FALSE == Uncomplete ) &amp;&amp; ( i &lt;= NbInput) )
+  {
+     CATBaseUnknown_var spOnInput = piUdfInstantiateOnFeatRef-&gt;<b>GetNewInput</b>(i);
+     if ( NULL_var == spOnInput )
+     {
+        Uncomplete = TRUE ; // the current input is not valuated
+     }else i ++ ;
+  } 
+  ...</pre></td>
+		</tr>
+	</table>
+	<p>If one or several inputs are not valuated by the <code>UseIdenticalName</code>
+  method, you can use the <code>S</code><code>etNewInput </code>method to
+  perform the valuation.</p>
+	<p><b>Caution</b>: the <code>UseIdenticalName</code> method returns S_OK even
+  if an input is not valuated.</p>
+  <li>Valuate the published parameters</li>
+  <p>This step is not mandatory, you can keep the default values which are those
+  values on the User Feature or the Power Copy reference. Retrieve the list of
+  all published parameters using the <code>GetParameters</code> method. This
+  method also returns the list of their role. These two lists have the same
+  length.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATListValCATBaseUnknown_var * pParameterList = NULL;
+  CATListOfCATUnicodeString * pParameterRoleList = NULL ;
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>GetParameters</b>(pParameterList,pParameterRoleList);
+  if ( NULL != pParameterList )
+  {
+     int NbPublishedParameters = pParameterList-&gt;<b>Size</b>();
+     for ( int i= <b>1</b> ; i &lt;= NbPublishedParameters ; i++ )
+     {
+         <b>CATICkeParm</b>_var spCkeParmOnParameter = (*pParameterList)[i];
+         if ( NULL_var != spCkeParmOnParameter )
+         {
+             .....
+         }
+     }
+  }
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p>You can modify the parameters using the <i>CATICkeParm</i> interface of the
+  KnowledgeInterfaces framework.</p>
+  <li>Instantiate</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>Instantiate</b>(NULL_var);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The argument of this method must be NULL_var.</p>
+  <p><b>Caution</b>: After this call, it is not possible to change an input or a
+  parameter. In the case of a User Feature, you could change it by using the <i>CATIUdfFeatureInstance</i>
+  interface, but always after the end of the current instantiation.</p>
+  <li>Change the name of the new instantiated feature (for User Features only)</li>
+  <p>You can change the name of a new instantiation by using the <code>SetDisplayName</code>
+  method.</p>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATUnicodeString   NewNameOfTheInstance = &quot;A different name &quot; ;
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>SetDisplayName</b>(NewNameOfTheInstance);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p>The default name of the User Feature instance is the name of its reference,
+  returned by the <code>G</code><code>etDisplayName</code> method with an index
+  appended.</p>
+  <li>End the instantiation process</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  rc = piUdfInstantiateOnFeatRef-&gt;<b>EndInstantiate</b>();
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+  <p>After this call the instantiation is closed, you can make a new
+  instantiation by returning to the second step <a name="Sets the MechanicalPart destination" href="#Sets the MechanicalPart destination">Set
+  the MechanicalPart destination location</a>.</p>
+</ol>
+<h4><a name="User Feature edition"></a>User Feature Edition</h4>
+<p>The User Feature is editable thanks to the <i>CATIUdfFeatureInstance</i>
+interface. Refer to the use case &quot;Editing a User Feature&quot; [<a href="#References">7</a>]
+for two examples of the edition process.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="User Feature Icon"></a>Power Copy and User Feature Icon</h4>
+
+<p>Interactively, you can choose an icon for the newly created reference thanks 
+to the following tab page of the Userfeature Definition dialog box [<a href="#Fig.11">Fig.11</a>] or the PowerCopy Definition dialog box. </p>
+<table >
+<caption><i><a name="Fig.11">Fig.11</a>: Interactively, Choosing an Icon</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMcaIcon.jpg" width="564" height="271"></td>
+  </tr>
+</table>
+
+<p>When you create by CAA a new reference, see the <a href="#reference creation"><i>Power Copy and User Feature</i>
+              Creation</a> section, you can also do that. </p>
+
+  <table class="code">
+    <tr>
+      <td>
+        <pre>  ...
+  CATUnicodeString IconName = "I_CombinedCurve" ;
+  CATIIcon_var spIconOnRef =spiUdfFeature ;
+  spiUdfFeature -><b>SetIconName</b>(IconName);
+  ... </pre>
+      </td>
+    </tr>
+  </table>
+
+<p>where&nbsp; <code>spiUdfFeature</code> is a <i>CATIUdfFeature</i> interface 
+pointer created by the <code>CreateUserFeature</code> or the <code>
+CreatePowerCopy</code> methods of the <i>CATIUdfFactory</i> interface.&nbsp;
+<code>IconName</code> is the name of an icon without the file extension. Such as 
+usual, the icons are bit map files, suffixed by bmp. They should have a size of 
+24 by 24 pixels. The icon files are contained in the CNext\resources\graphic\icons\normal 
+directory of a framework. </p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<h3><a name="Part3"></a>Technologies Used</h3>
+<p>Following is a description of the mechanisms used for the creation and
+instantiation of User Features and Power Copies.</p>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>:Mechanism's Description</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMcaPresGenTechnologiesUsed.jpg" width="667" height="456"></td>
+  </tr>
+</table>
+<p><b>In the case of a Power Copy:</b></p>
+<ul>
+  <li>The Power Copy reference has links to the selected features (Ref
+    Features). These selected features are the components of the Power Copy
+    reference.</li>
+  <li>Each instantiation of a Power Copy reference is a copy of each of its
+    components (Copied Feature)</li>
+  <li>After an instantiation, there is no link between the copied feature and
+    the reference component.</li>
+</ul>
+<p>This is the Copy/Paste mechanism.</p>
+<p><b>In the case of a User Feature:</b></p>
+<ul>
+  <li>The User Feature reference aggregates a copy of each selected feature.</li>
+  <li>Each instantiation of a User Feature reference creates a new feature: an
+    instance of the User Feature reference.</li>
+  <li>After an instantiation, the new User Feature is always editable: you can
+    change the value of its published parameters and/or replace its inputs.</li>
+  <li>There is a link between the User Feature instance and its reference, but
+    this link is not used. So a modification in the reference is not currently
+    propagated to the instances. (The propagation will be done in a next
+    release)</li>
+</ul>
+<p>This is the <b><u></u></b>Instance/Reference mechanism.</p>
+<h4><strong><a name="CopyPaste mechanism"></a>An example of the Copy/Paste
+Mechanism</strong></h4>
+<p>As you have seen, the Copy/Paste mechanism is used for Power Copy
+instantiation. Here is an example showing the created object, the linked object
+during creation and the instantiation.</p>
+<h5>Creation:</h5>
+<p>In a reference Part document we have a line, Line.2. The Power Copy reference
+is created by selecting this line. We publish the &quot;Distance to P2&quot;
+parameter of the line.</p>
+<table>
+  <caption><i><a name="Fig.4">Fig.4</a>: Internal View of a Power Copy Reference</i></caption>
+  <tr>
+    <td>
+      <p><img border="0" src="images/CAAMcaCopyPastePart1.jpg" width="505" height="444"></p>
+    </td>
+  </tr>
+</table>
+<p>Notice that:</p>
+<ul>
+  <li>There is a link between the Power Copy reference and the Line.2 line</li>
+  <li>The Power Copy reference contains the list of published parameters. This
+    list has a link to the published parameter.</li>
+</ul>
+<h5>Instantiation:</h5>
+<p>In a destination Part document, we have four points : Point.1, Point.2,
+Point.3 and Point.4. We choose Point.3 and Point.4 as inputs for the Power Copy.
+After the instantiation, in the destination document we have:</p>
+<table>
+  <caption><i><a name="Fig.5">Fig.5</a>: Internal View of an Instance of a Power
+    Copy Reference</i></caption>
+  <tr>
+    <td>
+      <p><img border="0" src="images/CAAMcaCopyPastePart2.jpg" width="373" height="405"></p>
+    </td>
+  </tr>
+</table>
+<p>Notice that:</p>
+<ul>
+  <li>A new line, Line.1, has been created</li>
+  <li>The new line, Line.1, has links to Point.3 and Point.4</li>
+</ul>
+<h4><strong><a name="Instance/Reference mechanism"></a>An example of the
+Instance/Reference Mechanism</strong></h4>
+<p>As you have seen, the Instance/Reference mechanism is used for User Feature
+instantiation. Here is an example of the created objects, the linked objects
+during creation and the instantiation.</p>
+<h5>Creation</h5>
+<p>In a reference Part document we have a line, Line.2. The user feature
+reference is created by selecting this line. We publish the &quot;Distance to
+P2&quot; parameter of the line.</p>
+<table>
+  <caption><i><a name="Fig.6">Fig.6</a>: Internal View of a User Feature
+    Reference</i></caption>
+  <tr>
+    <td>
+      <p><img border="0" src="images/CAAMcaUserFeaturePart1.jpg" width="653" height="573"></p>
+    </td>
+  </tr>
+</table>
+<p>Notice that:</p>
+<ul>
+  <li>The new User Feature reference, named MyNewUF, is a black box which
+    contains
+    <ul>
+      <li>A line (Line.1), which is a copy of the selected line Line.2</li>
+      <li>A parameter which is not published (Distance to P1)</li>
+      <li>The list of published parameters</li>
+    </ul>
+  </li>
+  <li>The inputs (Point.1 and Point.2) and the published parameter (Distance to
+    P2) are outside to the black box.</li>
+</ul>
+<h5>Instantiation:</h5>
+<p>In a destination Part document, we have four points : Point.1, Point.2,
+Point.3 and Point.4. We choose Point.3 and Point.4 as inputs for the User
+Feature. After the instantiation, in the destination document we have:</p>
+<table>
+  <caption><i><a name="Fig.7">Fig.7</a>: Internal View of an Instance of a User
+    Feature Reference</i></caption>
+  <tr>
+    <td>
+      <p><img border="0" src="images/CAAMcaUserFeaturePart2.jpg" width="653" height="569"></p>
+    </td>
+  </tr>
+</table>
+<p>Notice that:</p>
+<ul>
+  <li>The name of the new User Feature, MyNewUF.1, is the name of the reference
+    indexed by 1.</li>
+  <li>This new feature is editable, which means that the inputs and the
+    published parameter can be modified.</li>
+</ul>
+<h4><a name="Replace mechanism"></a>The Replace Mechanism</h4>
+<p>See the Use case &quot;Performing a Replace on a Mechanical Feature&quot; [<a href="#References">8</a>]
+for a detailed example of the Replace mechanism.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Part4"></a>Catalog Integration</h3>
+<table>
+  <caption><i><a name="Fig.8">Fig.8</a>: Links Between Features and Catalog</i></caption>
+  <tr>
+    <td>
+      <p><img border="0" src="images/CAAMcaCatalog.jpg" width="695" height="408"></p>
+    </td>
+  </tr>
+</table>
+<p>There are no links between the feature and the description in the catalog.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Part5"></a>Useful Tips</h3>
+<h4><a name="TTipcreation"></a>PowerCopy and User Feature Creation</h4>
+<ul>
+  <li>Managing inputs:
+    <ul>
+      <li>Create first your inputs in a dedicated set (Geometrical Set/Ordered
+        Geometrical Set/PartBody/Body)</li>
+      <li>Create your geometry in another set (Geometrical Set/Ordered
+        Geometrical Set/Body) using only these inputs</li>
+      <li>Always rename your inputs to help the end user to understand what he
+        needs to select</li>
+    </ul>
+  </li>
+  <li><a name="Useful Tips-Preview">Preview</a>:
+    <ul>
+      <li>In a Part document, create only one Power Copy reference or only one
+        User Feature reference. It is not a technical restriction, but there are
+        at least two raisons for this:
+        <ul>
+          <li>The cost of an instantiation will be smaller if the Part document
+            is smaller.</li>
+          <li>The end user can more easily understand the feature to be
+            instantiated.</li>
+        </ul>
+      </li>
+      <li>Put in &quot;show&quot; only the input and the result (to help the end
+        user to understand what he needs to select)</li>
+      <li>Use color to differentiate inputs (put transparency on result for
+        example)</li>
+      <li>Choose a pertinent viewpoint before saving the Part document
+        reference, default viewpoint in preview during instantiation will be the
+        same</li>
+    </ul>
+  </li>
+  <li>Geometry:
+    <ul>
+      <li>Create sketches on an axis system, in order to better control the
+        Sketch position</li>
+      <li>Avoid access to sub-elements (forbidden for the User Feature)</li>
+      <li>Measures cannot be used as component of an User Feature or an Power
+        Copy</li>
+      <li>Formulas are automatically included if you select all the parameters</li>
+      <li>Add formulas to manage several parameters from only one external
+        Boolean/Enum with string</li>
+      <li>Design tables could be integrated in User Features or Power Copies</li>
+      <li>For complex design, integrate knowledge rules</li>
+    </ul>
+  </li>
+  <li>User Feature creation:
+    <ul>
+      <li>To create a User Feature, create first a Power Copy, and try it in
+        different contexts. When the instantiation is OK, create the User
+        Feature by selecting the Power Copy. It is easier to understand and
+        modify a Power Copy</li>
+      <li>Provide basic and full User Feature on the same geometry (with or
+        without final Trim for example). If an update error occurs, the user can
+        try the basic User Feature and perform manually the last operations</li>
+    </ul>
+  </li>
+  <li>PartDesign User Feature:
+    <ul>
+      <li>Create your geometry in a separate Tool and assemble it with a boolean
+        (assemble, remove). Put only the boolean operation in the User Feature
+        (better performance and stability)</li>
+    </ul>
+  </li>
+</ul>
+<h4><a name="TTipInstantiation"></a>PowerCopy and User Feature Instantiation</h4>
+<ul>
+  <li>Catalog:
+    <ul>
+      <li>Do not forget<a href="#Part4"> catalog integration</a> if you want to
+        provide several User Features or Power Copies</li>
+    </ul>
+  </li>
+  <li>Inputs:
+    <ul>
+      <li>Always check the orientation for curve and surface</li>
+      <li>If you need to instantiate a Power Copy several time on the same
+        input, rename your inputs and use the &quot;Use Identical Name&quot;
+        option.</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Use the User Feature or Power Copy to create new feature at a minimal cost.
+They are also useful to group features which are often repeated and never
+modified and to create applicative features.</p>
+<p>The Copy/Paste mechanism is used to instantiate a Power Copy with inputs and
+parameters. After instantiation of a Power Copy, the resulting features are all 
+independant features and are
+editable.</p>
+<p>The Instance/Reference mechanism is used to instantiate a User Feature. It is
+more powerful than the Copy/Paste mechanism. The User Feature is a black box
+whose arguments are the inputs and the published parameters. After instantiation
+of a User Feature, the resulting feature is editable.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top" >[1]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrStructurePartDoc.htm">Structure
+      of the Part Document</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[2]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont1.htm">Contents
+      of the Specification Container - Geometrical Features Sets</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[3]</td>
+    <td ><a href="../CAAMmrTechArticles/CAAMmrContentsSpecCont2.htm">Contents
+      of the Specification Container - Geometrical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[4]</td>
+    <td ><a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature
+      Modeler Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[5]</td>
+    <td ><a href="../CAAMcaUseCases/CAAMcaUdfCreation.htm">Creating
+      a User Feature Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[6]</td>
+    <td ><a href="../CAAMcaUseCases/CAAMcaUdfInstantiation.htm">Instantiating
+      a User Feature Reference</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[7]</td>
+    <td ><a href="../CAAMcaUseCases/CAAMcaUdfEdition.htm">Editing
+      a User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[8]</td>
+    <td ><a href="../CAAMcaUseCases/CAAMcaReplace.htm">Performing
+      a Replace on a Mechanical Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" >[9]</td>
+    <td ><a href="../CAAMcaUseCases/CAAMcaUdfEdit.htm">CATIEdit
+      for a User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2" >[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" height="16">Version: <strong>2</strong>  [Feb 2005]</td>
+    <td valign="top" height="16">Document Updated to modify the default icon</td>
+  </tr>
+  <tr>
+    <td valign="top" height="16">Version: <strong>3</strong>  [Apr 2006]</td>
+    <td valign="top" height="16">Document Updated : you can choosen the target 
+	instantiation / new dialog box for user feature type</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+

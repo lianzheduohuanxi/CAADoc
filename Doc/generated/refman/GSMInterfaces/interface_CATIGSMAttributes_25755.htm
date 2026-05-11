@@ -1,0 +1,484 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GSMInterfaces Interface CATIGSMAttributes</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GSMInterfaces.htm" href="../GSMInterfaces.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GSMInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "CATIGSMAttributes"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GSMInterfaces Interface CATIGSMAttributes</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIGSMAttributes_25755','CATIGSMAttributes','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATIGSMAttributes</b>
+</p>
+<p>
+<b><i> Interface to manage attribute settings of type CATISpecObject on feature derivating from GSMGeom.</i></b><br>
+
+ <br><b>Role</b>:  Handle the different rules to set up attributes on GSMGeom late Type Features.
+ <p><b> Following inputs used can be:</b> 
+ <ul>
+ <li>BRep Features  </li>
+ <li>Contextual features   </li>
+ <li>Literal features   </li>
+ <li>Non already aggregated features  </li>
+ </ul>
+ </p>
+ 
+ <p><b> Workflow : Setting attribute strategy  Setting / Remove / Replace :</b>   
+ <pre>
+ - First ( Setting / Remove / Replace) : 
+    --> Identify if attribute was previously setted 
+    If No  ?  Continue 
+    If Yes ?  "Remove previous Input" :   Perform acurate modifications,handling on the previous object if needed 
+ - Second (Setting / Replace) :
+    "Add an input" taking into account different context of the input 
+ </pre>
+ </p> 
+ 
+ <p> <b>Algorithm</b>  
+ <br> When adding a CATISpecObject attributes as input of a GSMGeom type feature, this interface will check the input 
+ and perform data model management that make feature implementation consistant with GSMGeom generic behaviors:
+ <pre> 
+ Check Inputs : 
+ - All input feature should be aggregated somewhere in data model (at list under a  tk_component attributes type) 
+ -> If Input feature is  not already aggregated previously,  the current interface aggregates  it under current feature 
+ -> If Input feature is  a contextual feature and identified as to be re-aggregate: aggregate it under current feature 
+ 
+ GSMGeom generic behaviors  : 
+ 1/  Display/no display  of aggregate features in graph and in 3D (default implemetation of CATINavigateObject, CATIVisuChildren)
+  -> BRep feature are not seen neither in graph nor in 3D 
+  -> Contextual feature are displayed in Graph and in 3D can be selected and reused in other feature 
+  -> Aggregated feature on the fly are not seen neither in graph nor in 3D, considered as private to the current feature 
+ 2/ Management the change of an input if the attribute was previously seted, and replace by new ones
+  -> Old BRep are removed 
+  -> Contextual input are extracted  and reaggregate under the current tool 
+  -> Private feature deleted , if not used elsewhere 
+ </pre> 
+ <br>"Add An Input": 
+ <pre>
+   Case BREP Feature :  
+        BRep feature can be used  as input for GSMGeom derivate type features 
+        BRep feature are automatic generated feature by selection agent CATFeatureImportAgent when a subelement is selected
+        BRep feature are "exclusive" inputs  for the current feature , 
+        - They cannot be re-used elsewhere
+        - They are aggregated to the current feature , not seen in 3D nor in Graph 
+        BREP feature are aggregated to the feature using  GSMGeom private attribut name "Component" name (type tk_list of tk_component)  
+   Case Contextual feature : 
+        Contextual feature are aggregated under feature list , Feature list is the standard attribut for all 
+        mechanical feature and is handle by the CATIDescendant interface 
+        Contextual feature are input identified  as "IsFtrToAggregate" by CATIMmiContextualManager Interfaces when there a setted 
+        At attribute setting, the input feature aggregation is modified : He is re-aggregate under current feature on the feature list 
+   Case of non-already aggregated 
+        It can occured that input feature is not already aggregated 
+        To avoid to reference in "key" a feature non aggregated , and is automatically aggregated when set 
+        using GSMGeom private attribut name "Component" name (type tk_list of tk_component)  
+        Note : Typically this case is reserved to CAA specific design 
+        CAA command may need to have internal feature aggregated not necessary seen in 3D and/or in Graph
+            (Display in graph and 3D is managed by CATINavigateObject and CATIVisuChildren  respectively ) 
+ </pre>
+ <br>"Remove previous Input":  
+ <pre>
+   Case BREP Feature : 
+        Is not and cannot be re- used, thus it is deleted and remove freom "Component" private attribute 
+   Case Contextual feature : 
+        Contextual feature are aggregated under feature list, but can be used in other features  
+        Contextual feature are automatically re-aggregated in the tool of current feature
+        It is re-aggregated tool at a position just before current feature 
+   Case of non aggregated  
+        Either it is already used by another feature :
+             Need to keep it for associativity ,
+             it is then reaggregated under the current tool at a position just before current
+        Or is not used : 
+             it is removed from "component" attribute, and is deleted 
+ </pre>
+ </p>
+ <dl>
+  <dt> Example: </dt>
+  <dd> <pre class="code">  <pre> 
+  CATISpecObject_var spCurrent = ...; 
+  CATISpecAttrAccess_var spCurrentAttrAccess = spCurrent;
+  CATISpecAttrKey_var pInputSpecObjectKey  = NULL_var ;
+  if (!!spCurrentAttrAccess) {
+     pInputSpecObjectKey = spCurrentAttrAccess ->GetAttrKey("MyKeyName");
+     if (!!pInputSpecObjectKey) {
+        CATIGSMAttributes* pGsmSpecAttrMngt  = NULL;
+         rc = spCurrent->QueryInterface(IID_CATIGSMAttributes,(void**) &amp;pGsmSpecAttrMngt );
+         if (NULL!=  pGsmSpecAttrMngt) { 
+           rc = pGsmSpecAttrMngt -> SetAttrSpecObject(pInputSurfaceSpecAttrKey,ispCurveRef);
+           pGsmSpecAttrMngt -> Release () ; pGsmSpecAttrMngt=NULL: 
+         } 
+      }
+   }
+ </pre>
+ </pre></dd>
+  <dt> <b>See also:</b> 
+  <dd> <script type="text/javascript"> activateLinkAnchor('CATINavigateObject','','CATINavigateObject') </script>, <script type="text/javascript"> activateLinkAnchor('CATIVisuChildren','','CATIVisuChildren') </script>, CATIMmiContextualManager, <script type="text/javascript"> activateLinkAnchor('CATIDescendants','','CATIDescendants') </script>
+</dl>
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#ChangeAttrPosition(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>ChangeAttrPosition</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Changes position of an object for a "key" attribute.
+ <dt> o 
+    <a href="#GetAttrListSize(CATISpecAttrKey*,int&amp;)"><b>GetAttrListSize</b></a>(CATISpecAttrKey*,int&amp;)
+<dd>   Gets list Size for a "key" attribute.
+ <dt> o 
+    <a href="#GetAttrPosition(CATISpecAttrKey*,CATISpecObject_var&amp;,int&amp;)"><b>GetAttrPosition</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int&amp;)
+<dd>   Gets object at  a position for a "key" attribute.
+ <dt> o 
+    <a href="#GetAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>GetAttrSpecObject</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Gets an object on a "key" attribute.
+ <dt> o 
+    <a href="#InsertAttrAfterPos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>InsertAttrAfterPos</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Inserts after a position an object for a "key" attribute.
+ <dt> o 
+    <a href="#InsertAttrBeforePos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>InsertAttrBeforePos</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Inserts before a position an object for a "key" attribute.
+ <dt> o 
+    <a href="#RemoveAttrAll(CATISpecAttrKey*)"><b>RemoveAttrAll</b></a>(CATISpecAttrKey*)
+<dd>   Removes all valuated objects of a "key" attribute.
+ <dt> o 
+    <a href="#RemoveAttrPosition(CATISpecAttrKey*,int)"><b>RemoveAttrPosition</b></a>(CATISpecAttrKey*,int)
+<dd>   Removes object  of a "key" attribute at a given position.
+ <dt> o 
+    <a href="#RemoveAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;)"><b>RemoveAttrSpecObject</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;)
+<dd>   Removes object of a "key" attribute.
+ <dt> o 
+    <a href="#ReplaceAttrPos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>ReplaceAttrPos</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Replaces at a position an object for a "key" attribute.
+ <dt> o 
+    <a href="#SetAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"><b>SetAttrSpecObject</b></a>(CATISpecAttrKey*,CATISpecObject_var&amp;,int)
+<dd>   Sets an object on a given "key"  attribute.
+ <dt> o 
+    <a href="#UnsetAttrValue(CATISpecAttrKey*)"><b>UnsetAttrValue</b></a>(CATISpecAttrKey*)
+<dd>   Unsets  object of a "key" attribute.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="ChangeAttrPosition"></a><a name="ChangeAttrPosition(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>ChangeAttrPosition</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ChangeAttrPosition</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iNewPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Changes position of an object for a "key" attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> iNewPos</tt>
+   <dd>       new position</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetAttrListSize"></a><a name="GetAttrListSize(CATISpecAttrKey*,int&amp;)"></a> <dt> o <b>GetAttrListSize</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttrListSize</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oSize</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets list Size for a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt>  oSize</tt>
+   <dd>      list Size</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetAttrPosition"></a><a name="GetAttrPosition(CATISpecAttrKey*,CATISpecObject_var&amp;,int&amp;)"></a> <dt> o <b>GetAttrPosition</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttrPosition</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int&amp;')</script> <td><tt>oIndex</tt>)<script type="text/javascript"> activateLink('0','= 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets object at  a position for a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> oIndex</tt>
+   <dd>     position</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetAttrSpecObject"></a><a name="GetAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>GetAttrSpecObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>GetAttrSpecObject</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ospSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Gets an object on a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ospSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd>   index   of the object (default =0 : insert at first position , or for no list type attribute)</dd>
+</dl>
+</dl>
+</dl>
+<a name="InsertAttrAfterPos"></a><a name="InsertAttrAfterPos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>InsertAttrAfterPos</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InsertAttrAfterPos</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Inserts after a position an object for a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> iPos</tt>
+   <dd>       insert after position</dd>
+</dl>
+</dl>
+</dl>
+<a name="InsertAttrBeforePos"></a><a name="InsertAttrBeforePos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>InsertAttrBeforePos</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>InsertAttrBeforePos</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Inserts before a position an object for a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> iPos</tt>
+   <dd>       last position before inserting</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttrAll"></a><a name="RemoveAttrAll(CATISpecAttrKey*)"></a> <dt> o <b>RemoveAttrAll</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttrAll</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Removes all valuated objects of a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttrPosition"></a><a name="RemoveAttrPosition(CATISpecAttrKey*,int)"></a> <dt> o <b>RemoveAttrPosition</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttrPosition</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Removes object  of a "key" attribute at a given position.  
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> iIndex</tt>
+   <dd>   index  of the object (index =0 : for non list type attribute)</dd>
+</dl>
+</dl>
+</dl>
+<a name="RemoveAttrSpecObject"></a><a name="RemoveAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;)"></a> <dt> o <b>RemoveAttrSpecObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>RemoveAttrSpecObject</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Removes object of a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object</dd>
+</dl>
+</dl>
+</dl>
+<a name="ReplaceAttrPos"></a><a name="ReplaceAttrPos(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>ReplaceAttrPos</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>ReplaceAttrPos</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iPos</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Replaces at a position an object for a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> iPos</tt>
+   <dd>       replace at position</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetAttrSpecObject"></a><a name="SetAttrSpecObject(CATISpecAttrKey*,CATISpecObject_var&amp;,int)"></a> <dt> o <b>SetAttrSpecObject</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>SetAttrSpecObject</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATISpecObject_var','CATISpecObject_var&amp;')</script> <td><tt>ispSpecObj</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('int','int')</script> <td><tt>iIndex</tt><td><tt>= 0</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Sets an object on a given "key"  attribute.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key 
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   Object  
+ </dd>
+    <dt><tt> ispSpecObj</tt>
+   <dd>   index   of the object (default =0 : insert at first position , or for no list type attribute) 
+ </dd>
+</dl>
+  <dt> <b>See also:</b> 
+  <dd> CATIAttrSpecAccess
+</dl>
+</dl>
+<a name="UnsetAttrValue"></a><a name="UnsetAttrValue(CATISpecAttrKey*)"></a> <dt> o <b>UnsetAttrValue</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>UnsetAttrValue</b>(<td> const <script type="text/javascript"> activateLink('CATISpecAttrKey','CATISpecAttrKey*')</script> <td><tt>ikey</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+  Unsets  object of a "key" attribute. 
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ikey</tt>
+   <dd>  Attribut key</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIGSMAttributes.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGitInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

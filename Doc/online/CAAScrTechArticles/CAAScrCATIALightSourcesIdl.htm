@@ -1,0 +1,107 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>LightSources</title>
+</head>
+
+<body>
+
+<pre>#ifndef CATIALightSources_IDL
+#define CATIALightSources_IDL
+/*IDLREP*/
+/**
+ * @CAA2Level L1
+ * @CAA2Usage U3
+ */
+// COPYRIGHT DASSAULT SYSTEMES 1997
+
+#include "CATIACollection.idl"
+#include "CATVariant.idl"
+
+interface CATIALightSource;
+
+
+    /**
+     * A collection of all the LightSource objects.
+     * This collection is currently managed by a @href CATIAViewer3D object.
+     */
+interface CATIALightSources : CATIACollection
+{
+    /**
+     * Returns a light source from its index in the LightSources collection.
+     * @param iIndex
+     *   The index of the light source to retrieve in the collection of
+     *   light sources.
+     *   Compared with other collections, you cannot use the name of the
+     *   light source as argument.
+     * @return The retrieved light source
+     * &lt;/dl&gt;
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * The following example returns in &lt;tt&gt;MyLightSource&lt;/tt&gt; the sixth
+     * light source in the collection.
+     * &lt;pre&gt;
+     * Dim MyLightSource As LightSource
+     * Set MyLightSource = LightSources.&lt;font color="red"&gt;Item&lt;/font&gt;(6)
+     * &lt;/pre&gt;
+     */
+    HRESULT Item(in long iIndex, out /*IDLRETVAL*/ CATIALightSource oLightSource);
+
+    /**
+     * Adds a new light source to the LightSources collection.
+     * &lt;/dl&gt;
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * The following adds a light source to the collection 
+     * attached to the active viewer.
+     * This viewer must be a @see Viewer3D object.
+     * &lt;pre&gt;
+     * Dim MyViewer As Viewer
+     * Set MyViewer = CATIA.ActiveWindow.ActiveViewer
+     * Dim MyLightSource As LightSource
+     * Set MyLightSource = MyViewer.LightSources.&lt;font color="red"&gt;Add&lt;/font&gt;
+     * &lt;/pre&gt;
+     */
+    HRESULT Add(out /*IDLRETVAL*/ CATIALightSource oLightSource);
+
+    /**
+     * Removes a light source from the LightSources collection.
+     * @param iIndex
+     *   The index of the light source to remove.
+     *   Compared with other collections, you cannot use the name of the
+     *   light source as argument.
+     * &lt;/dl&gt;
+     * &lt;dt&gt;&lt;b&gt;Example:&lt;/b&gt;
+     * &lt;dd&gt;
+     * The following example removes the second light source
+     * in the collection attached to the active viewer.
+     * This viewer must be a @href CATIAViewer3D object.
+     * &lt;pre&gt;
+     * Dim MyViewer As Viewer
+     * Set MyViewer = CATIA.ActiveWindow.ActiveViewer
+     * MyViewer.LightSources.&lt;font color="red"&gt;Remove&lt;/font&gt;(2)
+     * &lt;/pre&gt;
+     */
+    HRESULT Remove(in long iIndex);
+};
+
+// Interface Name : CATIALightSources
+#pragma ID CATIALightSources "DCE:80ba6760-fb5e-0000-0280030ba6000000"
+#pragma DUAL CATIALightSources
+
+// VB Object Name : LightSources
+#pragma ID LightSources "DCE:80ba6767-7a7f-0000-0280030ba6000000"
+#pragma ALIAS CATIALightSources LightSources
+
+// Include of forward interfaces
+//#include "CATIALightSource.idl"
+
+#endif</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,327 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>GeometricObjects Interface CATNurbsSurface</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../GeometricObjects.htm" href="../GeometricObjects.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "GeometricObjects";	}
+		function getCurrentObjectName() { 
+ 	return "CATNurbsSurface"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>GeometricObjects Interface CATNurbsSurface</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATNurbsSurface_26986','CATNurbsSurface','0');</script>
+<p><b>Usage: an implementation of this interface is supplied and you must use it as is. You should not reimplement it.</b></p>
+<hr>
+<p>
+ interface <b>CATNurbsSurface</b>
+</p>
+<p>
+<b><i> Interface representing a Nurbs surface.</i></b><br>
+
+ This interface is used to describe:
+ <ul>
+ <li>Bezier surfaces which are single-patch Nurbs
+ <li>NUPBS which are 
+ special cases of Nurbs surfaces where all the weights of the control points equal to 1.
+ </ul>
+ NOTE: Periodic NURBS are not supported.
+ <br> The CATNurbsSurface is created by the <tt>CATCreateNurbsSurface</tt>
+ method of the <tt>CATGeoFactory</tt> interface  
+ and deleted with the <tt>Remove</tt> method. It is defined with:
+ <table>
+ <tr><td>CATKnotVector</td><td><tt> UKnotVector </tt></td>
+                <td> The knot vector for the polynomial basis definition 
+ on the surface first direction</td></tr>
+ <tr><td>CATKnotVector</td><td><tt> VKnotVector </tt></td>
+                <td> The knot vector for the polynomial basis definition 
+ on the surface second direction</td></tr>
+ <tr><td>CATMatSetOfPoints</td><td><tt> Vertices </tt></td>
+                <td> The set of control points </td></tr>
+ <tr><td>CATBoolean</td><td><tt> IsRational </tt></td>
+                <td> 1 if the nurbs is rational, else 0 (NUPBS) </td></tr>
+ <tr><td>double[]</td><td><tt> Weigths </tt></td>
+                <td> The weigths array if <tt>IsRational</tt> </td></tr>
+</table></p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#GetOneControlPoint(CATLONG32,CATLONG32,CATMathPoint&amp;)"><b>GetOneControlPoint</b></a>(CATLONG32,CATLONG32,CATMathPoint&amp;)
+<dd>  Returns the mathematical definition of a control point of <tt>this</tt> CATNurbsSurface.
+ <dt> o 
+    <a href="#GetOneWeight(CATLONG32,CATLONG32)"><b>GetOneWeight</b></a>(CATLONG32,CATLONG32)
+<dd>  Returns the weight associated with a control point of <tt>this</tt> CATNurbsSurface.
+ <dt> o 
+    <a href="#GetOriginalParametrisationDATA(double&amp;,double&amp;,double&amp;,double&amp;)"><b>GetOriginalParametrisationDATA</b></a>(double&amp;,double&amp;,double&amp;,double&amp;)
+<dd>  Retrieves the original parameterization.
+ <dt> o 
+    <a href="#IsRational()"><b>IsRational</b></a>()
+<dd>  Tests whether <tt>this</tt> CATNurbsSurface is rational.
+ <dt> o 
+    <a href="#Set(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"><b>Set</b></a>(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)
+<dd>  
+ <dt> o 
+    <a href="#SetData(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"><b>SetData</b></a>(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)
+<dd> Modifies the characteristics a <tt>this</tt> CATNurbsSurface.
+ <dt> o 
+    <a href="#SetOneControlPoint(CATLONG32,CATLONG32,CATMathPoint&amp;)"><b>SetOneControlPoint</b></a>(CATLONG32,CATLONG32,CATMathPoint&amp;)
+<dd>  Modifies the mathematical definition of a control point of <tt>this</tt> CATNurbsSurface.
+ <dt> o 
+    <a href="#SetOneWeight(CATLONG32,CATLONG32,double)"><b>SetOneWeight</b></a>(CATLONG32,CATLONG32,double)
+<dd>  Modifies the weight associated with a control point of <tt>this</tt> CATNurbsSurface.
+</dl>
+<dl>
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="GetOneControlPoint"></a><a name="GetOneControlPoint(CATLONG32,CATLONG32,CATMathPoint&amp;)"></a> <dt> o <b>GetOneControlPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetOneControlPoint</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iUNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iVNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>ioPoint</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the mathematical definition of a control point of <tt>this</tt> CATNurbsSurface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUNum</tt>
+   <dd> The number (starting at 1) of the control point in the first direction.
+ </dd>
+    <dt><tt> iVNum</tt>
+   <dd> The number (starting at 1) of the control point in the second direction.
+ </dd>
+    <dt><tt> ioPoint</tt>
+   <dd> The corresponding mathematical definition.</dd>
+</dl>
+</dl>
+</dl>
+<a name="GetOneWeight"></a><a name="GetOneWeight(CATLONG32,CATLONG32)"></a> <dt> o <b>GetOneWeight</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('double','double')</script>  <b>GetOneWeight</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iUNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iVNum</tt>)<script type="text/javascript"> activateLink('=0',' const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Returns the weight associated with a control point of <tt>this</tt> CATNurbsSurface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUNum</tt>
+   <dd> The number (starting at 1) of the control point in the first direction.
+ </dd>
+    <dt><tt> iVNum</tt>
+   <dd> The number (starting at 1) of the control point in the second direction.
+ </dd>
+</dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The corresponding weight.
+</dl>
+</dl>
+<a name="GetOriginalParametrisationDATA"></a><a name="GetOriginalParametrisationDATA(double&amp;,double&amp;,double&amp;,double&amp;)"></a> <dt> o <b>GetOriginalParametrisationDATA</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>GetOriginalParametrisationDATA</b>(<td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioCoefficientU</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioShiftU</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioCoefficientV</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double&amp;')</script> <td><tt>ioShiftV</tt>)<script type="text/javascript"> activateLink('=0','=0')</script>  </table></dt>
+<dl>
+  <dd>
+ Retrieves the original parameterization.
+ <br>If created with the <tt>CatAutomaticParameterization</tt> default mode by the factory, the Nurbs
+ is internally re-parameterized. This allows you to recover the coefficient and the shift that
+ correspond to your own parameterization:
+ <br>
+ <tt>ParameterAfterCreation = ioCoefficient*ParameterBeforeCreation + ioShift</tt> in each direction.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> ioCoefficientU</tt>
+   <dd> The multiplicative coefficent in the first direction.
+ </dd>
+    <dt><tt> ioShiftU</tt>
+   <dd> The shift in the first direction.
+ </dd>
+    <dt><tt> ioCoefficientV</tt>
+   <dd> The multiplicative coefficent in the second direction.
+ </dd>
+    <dt><tt> ioShiftV</tt>
+   <dd> The shift in the second direction.</dd>
+</dl>
+</dl>
+</dl>
+<a name="IsRational"></a><a name="IsRational()"></a> <dt> o <b>IsRational</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('CATBoolean','CATBoolean')</script>  <b>IsRational</b>(<td>)<script type="text/javascript"> activateLink('=0','const =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether <tt>this</tt> CATNurbsSurface is rational.
+
+<dl>
+  <dt> <b>Returns:</b> 
+  <dd>  The result of the test.
+ <br><b>Legal values</b>:
+<dl><dt><tt>0</tt><dd>if it is not rational.
+    <dt><tt>1</tt><dd>if it is rational.</dl>
+</dl>
+</dl>
+<a name="Set"></a><a name="Set(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>Set</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>Set</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iNewUKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iNewVKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iNewIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathGridOfPoints','CATMathGridOfPoints&amp;')</script> <td><tt>iNewVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iNewWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ 
+<dl>
+  <dt> <b>Deprecated:</b> 
+  <dd>  V5R14 SetData
+</dl>
+</dl>
+<a name="SetData"></a><a name="SetData(CATKnotVector&amp;,CATKnotVector&amp;,CATLONG32&amp;,CATMathGridOfPoints&amp;,double*,CATParameterizationOption)"></a> <dt> o <b>SetData</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetData</b>(<td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iNewUKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATKnotVector','CATKnotVector&amp;')</script> <td><tt>iNewVKnotVector</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATLONG32','CATLONG32&amp;')</script> <td><tt>iNewIsRational</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathGridOfPoints','CATMathGridOfPoints&amp;')</script> <td><tt>iNewVertices</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('double','double*')</script> <td><tt>iNewWeights</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATParameterizationOption','CATParameterizationOption')</script> <td><tt>iParameterizationOption</tt><td><tt>= CatAutomaticParameterization</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+Modifies the characteristics a <tt>this</tt> CATNurbsSurface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNewUKnotVector</tt>
+   <dd> The new nodal vector in the first direction.
+ </dd>
+    <dt><tt> iNewVKnotVector</tt>
+   <dd> The new nodal vector in the second direction.
+ </dd>
+    <dt><tt> iNewIsRational</tt>
+   <dd> <b>Legal values</b>: 1 if the Nurbs is rational, 0 otherwise.
+ </dd>
+    <dt><tt> iNewVertices</tt>
+   <dd> The grid of the new vertices.
+ </dd>
+    <dt><tt> iNewWeigths</tt>
+   <dd> The array of the new weights.
+ </dd>
+    <dt><tt> iParameterizationOption</tt>
+   <dd> The option of parameterization. By default, the parameterization of the NURBS is modified to better
+ fit internal criteria. In this case, you can recover the initial parameterization 
+ with the </dd>
+<script type="text/javascript"> activateLinkAnchor('CATNurbsSurface','GetOriginalParametrisationDATA','CATNurbsSurface.GetOriginalParametrisationDATA') </script> method.
+</dl>
+</dl>
+</dl>
+<a name="SetOneControlPoint"></a><a name="SetOneControlPoint(CATLONG32,CATLONG32,CATMathPoint&amp;)"></a> <dt> o <b>SetOneControlPoint</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOneControlPoint</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iUNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iVNum</tt>,<tr><td></td><td> const <script type="text/javascript"> activateLink('CATMathPoint','CATMathPoint&amp;')</script> <td><tt>iNewCoord</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the mathematical definition of a control point of <tt>this</tt> CATNurbsSurface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUNum</tt>
+   <dd> The number (starting at 1) of the control point in the first direction.
+ </dd>
+    <dt><tt> iVNum</tt>
+   <dd> The number (starting at 1) of the control point in the second direction.
+ </dd>
+    <dt><tt> iNewCoord</tt>
+   <dd> The new mathematical definition.</dd>
+</dl>
+</dl>
+</dl>
+<a name="SetOneWeight"></a><a name="SetOneWeight(CATLONG32,CATLONG32,double)"></a> <dt> o <b>SetOneWeight</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('void','void')</script>  <b>SetOneWeight</b>(<td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iUNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATLONG32','CATLONG32')</script> <td><tt>iVNum</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('double','double')</script> <td><tt>iNewWeight</tt>)<script type="text/javascript"> activateLink('=0',' =0')</script>  </table></dt>
+<dl>
+  <dd>
+ Modifies the weight associated with a control point of <tt>this</tt> CATNurbsSurface.
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iUNum</tt>
+   <dd> The number (starting at 1) of the control point in the first direction.
+ </dd>
+    <dt><tt> iVNum</tt>
+   <dd> The number (starting at 1) of the control point in the second direction.
+ </dd>
+    <dt><tt> iNewWeight</tt>
+   <dd> The new weight.</dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATNurbsSurface.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATGMGeometricInterfaces</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

@@ -1,0 +1,165 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/DSDoc.css"/>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocTocToc.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js">/* */</script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js">/* */</script>
+<title>Compiling</title>
+</head>
+
+<body>
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Compiling</h1>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="DocHeaderIntro">
+	<tr>
+		<td class="Intro1">
+		<p class="header">Your application is now ready to be built.</p>
+		<hr class="header" /></td>
+	</tr>
+	<tr>
+		<td class="Intro2"><span class="run-in">Before you begin:</span><ul>
+			<li>Open a workspace with at least a framework and a module.</li>
+			<li>Update the framework IdentityCard file.</li>
+			<li>Check that your prerequisites are up-to-date, of update them.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p>Before being able to run the written application, you must build your programs 
+with the appropriate compiler and linker. This is not a simple task especially when 
+you must take into account various locations of source files, multiple operating 
+systems, several languages, multiple compilers with different and numerous options, 
+and so on. Those who have experienced makefiles management know the problem.</p>
+<p>With mkmk, C++ Interactive Dashboard proposes a single tool to compile and 
+link applications wherever you are working and whatever the programming language 
+you use.</p>
+<p>The first time you compile your program, use the mkmk builder which not only 
+compiles your program but also generates information that used afterwards to accelerate 
+compilations or to compile just one file.</p>
+<table class="fill">
+	<tr>
+		<th>Command</th>
+		<th>Description</th>
+		<th>Run mkmk Command</th>
+	</tr>
+	<tr>
+		<td><kbd>Build with mkmk</kbd></td>
+		<td>Opens a dialog box to set mkmk options and then runs mkmk</td>
+		<td>mkmk with options set in the dialog box.</td>
+	</tr>
+	<tr>
+		<td><kbd>Build All with mkmk</kbd></td>
+		<td>Runs mkmk upon the whole selected module, framework, or workspace, keeping 
+		all the previously set option.</td>
+		<td><code>mkmk -a ...</code></td>
+	</tr>
+	<tr>
+		<td><kbd>Link All</kbd></td>
+		<td>Runs mklink upon the whole selected framework or workspace to link-edit 
+		it.</td>
+		<td><code>mklnk</code> or <code>mklnk -a</code></td>
+	</tr>
+	<tr>
+		<td><kbd>Link Module</kbd></td>
+		<td>Runs mklink upon the selected module to link-edit it.</td>
+		<td><code>mklnk</code></td>
+	</tr>
+	<tr>
+		<td><kbd>Build ID Cards</kbd></td>
+		<td>Runs mkCi upon the selected framework or workspace to build the identity 
+		cards.</td>
+		<td><code>mkCi</code> or <code>mkCi -a</code></td>
+	</tr>
+	<tr>
+		<td><kbd>Clean Build</kbd></td>
+		<td>Runs mkRemoveDo upon the selected framework or workspace to remove all 
+		the derived objects.</td>
+		<td><code>mkRemoveDo</code> or <code>mkRemoveDo -a</code></td>
+	</tr>
+</table>
+<p>To set build options:</p>
+<ol class="task">
+	<li>
+	<p>In the <kbd>3DS Workspace Explorer</kbd>, right click the workspace name, 
+	a framework, or a module, possibly point to <kbd>Build</kbd>, and click <kbd>
+	Build with mkmk</kbd>.</p>
+	<p>The <kbd>3DS - Build options</kbd> dialog box opens.</p>
+	</li>
+	<li>
+	<p>Check <kbd>Force mkmk update (-u)</kbd> to force mkmk to rebuild the build 
+	time data, even if it already exists.</p>
+	</li>
+	<li>
+	<p>Check <kbd>Activate debug mode (-g)</kbd> to generate debugging data.</p>
+	</li>
+	<li>
+	<p>Check <kbd>Activate warning detection (-w)</kbd> to issue warning messages.</p>
+	</li>
+	<li>
+	<p>Check <kbd>Activate edit/continue option (32 bits)</kbd> to activate the 
+	edit and continue debug mode while compiling.</p>
+	</li>
+	<li>
+	<p>In <kbd>More options</kbd>, possibly type additional mkmk options.</p>
+	</li>
+	<li>
+	<p>Click <kbd>Build</kbd>.</p>
+	<p>mkmk is run upon the workspace, framework, or module with the declared options.</p>
+	</li>
+</ol>
+<p>The <kbd>Output</kbd> windows opens, if it was not already opened, and displays 
+the mkmk log.</p>
+<p>
+<img alt="Output Window" src="images/wnOutput.png" width="470" height="339"/>
+</p>
+<p>If errors occurred, of if warnings or messages are output, they are displayed 
+in the <kbd>Error List</kbd> window. Click <kbd>Error List</kbd> to display it.</p>
+<p>
+<img alt="Error List Window" src="images/wnErrorList.png" width="473" height="342"/></p>
+<p>To correct the errors, double click the error row. The file in error opens.
+</p>
+<table class="Remark">
+	<tr>
+		<td class="Remark"><span class="run-in">Warning</span>: When mkmk builds 
+		XML Identity Cards, warnings like the following are issued:
+		<p>
+		<img alt="mkmk Warnings" src="images/dbMkmkWarning.png" width="877" height="102"/></p>
+		<p>This is because the path of the Identity Card xsd file is not found. 
+		You can ignore these warnings.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>2</strong> [Jul 2017]</td>
+		<td>Update for V5-6R2018 and Visual Studio 2015</td>
+	</tr>
+	<tr>
+		<td>Version: <strong>1</strong> [Jul 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

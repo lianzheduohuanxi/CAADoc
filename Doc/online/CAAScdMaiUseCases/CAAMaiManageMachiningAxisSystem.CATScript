@@ -1,0 +1,107 @@
+Language="VBSCRIPT"
+
+'*******************************************************************************************
+'*
+'* Main Entry  Point
+'*
+'*******************************************************************************************
+
+Sub CATMain()
+	
+'*******************************************************************************************
+'Declarations
+'*******************************************************************************************
+
+	Dim Count1 As VARIANT
+	Dim MyHole As Hole
+	Dim Rel As Relations
+	Dim Setup1 As ManufacturingSetup
+	Dim Program1 As ManufacturingProgram
+	Dim MachAxis As ManufacturingOperation
+	Dim MfgDoc1 As Document
+	Dim ActivityRef As AnyObject
+	Dim Feature As CATIABase
+	Dim MfgView As ManufacturingView
+	Dim MfgFeatures As ManufacturingFeatures
+
+	Set MfgDoc1 = CATIA.ActiveDocument
+	Set PartDoc1 = CATIA.Documents.Item("Sample_Part.CATPart")
+	'MsgBox PartDoc1.Name
+	Set ActivityRef = MfgDoc1.GetItem("Process")
+	If (ActivityRef.IsSubTypeOf("PhysicalActivity")) Then
+
+		Set childs = ActivityRef.ChildrenActivities
+		quantity = childs.Count
+
+		if quantity <= 0 then
+			Exit Sub
+		End if
+
+		NumberOfPO = 0
+
+		For I=1 To quantity
+			Set child = childs.Item(I)
+			If (child.IsSubTypeOf("ManufacturingSetup")) Then
+				Set Setup1 = child
+				NumberOfPO = NumberOfPO +1
+				Exit For
+			End If
+		Next   
+	End If
+
+	if NumberOfPO <= 0 then
+	  Exit Sub
+	End if
+
+'*** Retrieve current Program
+'***
+
+	Set ProgramList = Setup1.Programs
+	NumberOfProgram = ProgramList.Count
+
+	Set Product = Setup1.GetProductInstance
+
+	Set MfgView = Setup1.GetManufacturingView
+
+	Set MyFeature = MfgView.ManufacturingFeatures.Add("MfgMachiningAxisSystem")
+
+	Set Program1 = ProgramList.GetElement(1)	
+	Set MachAxis = Program1.AppendOperation ("CoordinateSystem",1)
+
+	MachAxis.SetFeature(MyFeature)
+
+	'MsgBox MyFeature.Name
+
+	MyFeature.Origin = 1
+	'MsgBox MyFeature.Origin
+
+	MyFeature.OriginNumber = 2
+	'MsgBox MyFeature.OriginNumber
+
+	MyFeature.OriginGroup = 3
+	'MsgBox MyFeature.OriginGroup
+	
+	MyFeature.Origin = 0
+	'MsgBox MyFeature.Origin
+
+	set part1 = PartDoc1.Part
+	Set axisSystems = part1.AxisSystems
+
+	Set axisSystem = axisSystems.Item(1)
+
+	Call MyFeature.SetPartAxisSystem (axisSystem,Setup1.GetProductInstance)
+
+	Set hybridBodies1 = part1.HybridBodies
+
+	Set hybridBody1 = hybridBodies1.Item("Open_body.1")
+
+	Set hybridShapes1 = hybridBody1.HybridShapes
+
+	Set hybridShapePointCoord2 = hybridShapes1.Item("Point.1")
+
+	Call MyFeature.SetOriginPoint( hybridShapePointCoord2,Setup1.GetProductInstance)
+
+	Call MyFeature.SetOriginXDirection (0.0,0.0,-1.0)
+	Call MyFeature.SetOriginZDirection (-1.0,0.0,0.0)
+
+End Sub

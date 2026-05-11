@@ -1,0 +1,234 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Topological Journal: Creation and Validation (1)</title>
+<style type="text/css">
+.style1 {
+				color: #FF7900;
+				text-decoration: underline;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Topological Journal: Creation and Validation (1)</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>If you create your own operator, you have generally to create also 
+		the associated topological journal. The journal plays a prominent role 
+		in the naming mechanism which is used by applications to differentiate 
+		cells.&nbsp; Any user journal is to be checked by the appropriate tool.</p>
+		<p>This use case creates and validates a journal. The created journal is 
+		basically valid and most applications can successfully use it. However a 
+		warning is issued concerning a naming rule (it is recommended to fix 
+		it).</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To check the validity of a topological journal, you can use the 
+CAAGMCheckForPart operator in CAAGMOperatorsInterfaces.edu/PublicInterfaces. There is no creation 
+function, the operator has to be created by using the provided constructor.</p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsCheckGnKO.m module in CAAGMOperatorsInterfaces.edu 
+creates a new journal which is valid but contains some defects. This use case 
+creates its input topological data, a prism. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>Note: Unlike most Geometric Modeler use cases, CAAGMOperatorsCheckGnKO is to 
+be launched with three arguments: </p>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CAAGMOperatorsCheckGnKO outputfile.NCGM verdictFile.NCGM 
+DetailedErrorFile.NCGM</code>
+<p>With the input and output cells below:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Journal Checking: Extrusion of a Wire</caption>
+   <tr>
+    <td>
+	<img alt="Journal Checking: Input Wire" src="images/CGM_journal_checking_0.png" width="250" height="220"></td>
+    <td>
+	<img alt="Journal Checking: Result Body" src="images/CGM_journal_checking_1.png"></td>
+    </tr>
+    <tr>
+    <td>
+	Input Wire</td>
+    <td>
+	Output Surface</td>
+    </tr>
+</table>
+<p>and the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATCGMJournalList* pJournalNew = new CATCGMJournalList(pConfig,NULL);
+...
+// Prism creation
+...
+// Creation of a new journal
+pJournalNew->ReportCreation( edgeOperand, faceList[1], new CATCGMJournalInfo(1));
+pJournalNew->ReportCreation( edgeOperand, edgeList[4], new CATCGMJournalInfo(1));
+pJournalNew->ReportCreation( edgeOperand, edgeList[2], new CATCGMJournalInfo(2));
+pJournalNew->ReportCreation( vertexOperand1, edgeList[1], new CATCGMJournalInfo(4));
+pJournalNew->ReportCreation( vertexOperand2, edgeList[3], new CATCGMJournalInfo(3));
+...
+// Tass and Dump the New journal
+pJournalNew->Tass();
+CAAGMTopDumpJournal(pJournalNew);
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result on the standard output:</p>
+<p>
+****************************************<br>
+[Edge_26]-&gt;Creation[Face_43] Info = 1<br>
+[Edge_26]-&gt;Creation[Edge_52] Info = 1<br>
+[Edge_26]-&gt;Creation[Edge_51] Info = 2<br>
+[Vertex_24]-&gt;Creation[Edge_45] Info = 4<br>
+[Vertex_25]-&gt;Creation[Edge_48] Info = 3<br>
+****************************************<br>
+</p>
+<p>The code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+ofstream verdictFile(pFileName1, ios::binary ) ;
+ofstream warningFile(pFileName2, ios::binary ) ;
+CATUnicodeString mafeat("MyFeature");
+CAAGMCheckForPart * reportCheck = new CAAGMCheckForPart(pJournalNew,
+        piPrismBody,
+        &mafeat,
+        &verdictFile, &warningFile, TRUE);
+reportCheck->CAAAddInputBody(piCurve, CAATopCheckNoCopy);
+int checkReturn = reportCheck->CAACheck();</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>checks the created journal and generates two output .htm files containing information on the journal.
+<p>
+<strong>Step 1 -</strong>
+Open the first file, you can read something like this. The journal is valid:
+<pre>
+(1) - Mandatory Checking that all cells in result body can be traced back OK 
+(2) - Checking that all reported cells are of CATFace/CATEdge/CATVertex type OK
+(3) - Checking that all reported cells are bording cells OK 
+(4) - Checking that cells with same parents &amp; infos are not of different type (rule not fulfilled)
+TOPOLOGICAL JOURNAL FOR FEATURE MyFeature OK 
+</pre>
+<p>
+The journal is basically valid. However, rule (4) is not fulfilled. If some 
+applications were to use this journal for standard naming, the cell 
+differentiation would not be necessarily guaranteed.
+<p>
+<strong>Step 2 -</strong>
+Open the second .htm file for more information. You can read something like 
+this:<pre>
+* </pre>
+<pre>
+...
+In
+[Edge_26]->Creation[Face_43] Info=1
+and
+[Edge_26]->Creation[Edge_52] Info=1
+Cells with same parents and &quot;info&quot; must not be of different type
+*
+</pre> 
+<p>Note: the correct journal is:
+<pre>
+[Edge_26]->Creation[Edge_51] Info = 1
+[Edge_26]->Creation[Edge_52] Info = 2
+[Vertex_24]->Creation[Edge_45] Info = 0
+[Vertex_25]->Creation[Edge_48] Info = 0
+[Edge_26]->Creation[Face_43] Info = 0
+</pre>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">
+		About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">
+		How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+					<tr>
+		<td>[6]</td>
+		<td>
+		<a href="CAACgmTaTopJournal.htm">Topological 
+		Journal: Principles</a></td>
+	</tr>
+	<tr>
+		<td>[7]</td>
+		<td class="style1">
+		<a href="CAACgmTaTopJournalMethodology.htm">Topological Journal: 
+		Methodology</a></td>
+	</tr>
+	<tr>
+		<td>[8]</td>
+		<td class="style1">
+		<a href="CAACgmUcTopJournal.htm">Using the Topological Journal</a></td>
+					</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

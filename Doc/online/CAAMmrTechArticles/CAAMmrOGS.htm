@@ -1,0 +1,631 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>Ordered Geometrical Set</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Ordered Geometrical Set</h3>
+      <em>Presentation and usage of the Ordered Geometrical Set, a V5R13
+      novelty</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>In V5R13, Mechanical Modeler has renamed Open_Body in Geometrical Set,
+      and introduced the Ordered Geometrical Set. The objective of this article is
+      double: present the differences between them and expose the consequence,
+      in term of code, of this novelty.</p>
+      <ul>
+        <li><a href="#Part1"><b>Ordered Geometrical Set versus Geometrical Set</b></a>
+          <ul>
+            <li><b><a href="#Ordered Set">Ordered Body</a></b></li>
+            <li><b><a href="#Absorbent Feature">Absorbent Feature</a></b></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Part2">What Does it Imply for Applications?</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part1"></a>Ordered Geometrical Set versus Geometrical Set</h3>
+<p>Up to V5R13, the elements structuring [<a href="#References">1</a>] a Part
+document are:</p>
+<ul>
+  <li>The Part object</li>
+  <li>The Body/PartBody objects</li>
+  <li>The Open_Body objects.</li>
+</ul>
+<p>In V5R13, two main modifications appear:</p>
+<ul>
+  <li>The <b>Open_Body</b> is renamed <b>Geometrical Set</b></li>
+  <li>The <b>Ordered Geometrical Set </b>object is created.</li>
+</ul>
+<p>The Geometrical Set (GS) and the Ordered Geometrical Set (OGS) are both GSMTool
+features. This means that both of them are surfacic bodies, and contain surfacic geometrical
+features [<a href="#References">2</a>].</p>
+<p>The GSMTool feature has been &quot;typed&quot; to
+be either a  Geometrical Set or an Ordered  Geometrical Set. This type is materialized by the downwards arrow on the icon
+representing the Ordered Geometrical Set in the specification tree.</p>
+<table border="0">
+<caption><a name="Fig.1">Fig.1</a>  Comparison of Icons Between Geometrical Set
+  and Ordered Geometrical Set</caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrOGSIcon1.jpg" width="225" height="34"></td>
+    <td valign="top"><img border="0" src="images/CAAMmrOGSIcon2.jpg" width="171" height="34"></td>
+  </tr>
+</table>
+<p>In an interactive session, you can create either a Geometrical Set or an
+Ordered Geometrical Set using the Insert menu.</p>
+<p>The
+Ordered Geometrical Set has been introduced to simplify the management of the
+links between features when the Part has a huge historical graph. The Geometrical Set
+staying always adapted for features with few history or without input
+specification (datum [<a href="#References">2</a>]).</p>
+<p>Two main notions have been defined on the GSMTool to
+form an
+Ordered Geometrical Set:</p>
+<ol>
+  <li><a href="#Ordered Set">Ordered Body</a></li>
+  <p>The
+  goal is having a body inside which features are <b> ordered</b> from the basic
+  features (top) to the more complex features (bottom). To reach it, a rule has
+  been defined:
+  &quot;Each feature inside an Ordered Geometrical Set can only have as input
+  specifications features which are above it in the same set&quot;. The
+  introduction of the current feature, which already exists for solid bodies (Part/PartBody), enable us to implement this rule.</p>
+  <li><a href="#Absorbent Feature">Absorbent Feature</a></li>
+  <p>The notion of absorbent feature is a novelty. There are features modifying
+  other features. Their visualization makes useless the visualization of the
+  modified features, since they are superimposed. Consequently, in an Ordered Geometrical Set,
+  the modified features, named further absorbed and which are intermediate features, are not drawn.</p>
+
+</ol>
+<p>These two notions are detailed below.</p>
+<ol><li><b><a name="Ordered Set"></a>Ordered Body</b> </li>
+
+  <p>To force the end user to locate his features in a &quot;logical&quot; order into the
+  ordered surfacic body, a feature can only rely on features (inputs) which are above
+  it in the same body. It is the rule in order to have an ordered body.</p>
+  <table border="0">
+  <caption><a name="Fig.2">Fig.2</a> Input Specification Order</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSOrder.jpg" width="446" height="302"></td>
+    </tr>
+  </table>
+
+  <p> In this above picture, <a href="#Fig.2"> Fig.2</a>, <code>Line.1</code>
+  can have <code>Point.1</code> and <code>Point.5</code> as inputs, but not <code>Point.6</code>,
+  since it is below <code>Line.1</code>.</p>
+
+  <p>Specific behaviors have been implemented to help the end user to respect the
+  previous rule
+  when designing its geometry.</p>
+
+  <ol>
+  <li><a href="#When editing a feature, it becomes the current feature">When editing a feature, it becomes the current feature</a></li>
+  <li><a href="#A new feature is inserted just after the current feature">A new feature is inserted just below
+    the current feature.</a></li>
+  <li><a href="#The input specifications of the current feature can be only features above it in the specification tree">The
+    input specifications of a feature can be only features above it in the specification tree</a></li>
+  <li><a href="#Only the feature above the current feature are visualized in the 3D viewer">Only
+    features above the current feature are visualized in the 3D viewer</a></li>
+  </ol>
+  <p>Here are detailed these four behaviors.</p>
+  <ol>
+  <li><p><a name="When editing a feature, it becomes the current feature"></a>When editing a feature, it becomes the current feature</p></li>
+
+  <table border="0">
+  <caption><a name="Fig.3">Fig.3</a>  Feature Edition </caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSCurrent.jpg" width="537" height="354"></td>
+    </tr>
+  </table>
+  <p>When <code>Line.1</code> is edited, it becomes the current feature such as
+  shown by the above picture <a href="#Fig.3">Fig.3</a>. The name of the current feature is underlined in the specification
+  tree, such as using the &quot;Define in Work
+Object&quot; interactive command.</p>
+ <li><a name="A new feature is inserted just after the current feature">A new
+    feature is inserted just below the current feature</a></li>
+  <p><code>Line.1</code> is the current feature, and you create a point.
+  The new feature will be inserted just below <code>Line.1</code>, as shown on <a href="#Fig.4">
+  Fig.4</a>, and not below <code>Plane.1</code>, the last feature of the Ordered
+  Geometrical Set.</p>
+  
+  <table border="0">
+  <caption><a name="Fig.4">Fig.4 </a>New Feature Inserted Just Below the Current
+    Feature</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSNewFeat.jpg" width="483" height="330"></td>
+    </tr>
+  </table>
+  <p>In a Geometrical Set, <code>Point.7</code>  would have been automatically
+  aggregated at the end of the current body. This behavior enables the end user
+  to locate its new feature into the Ordered Geometrical Set in order to respect
+  the top /down order. </p> 
+ <li><p><a name="The input specifications of the current feature can be only features above it in the specification tree">The
+    input specifications of a feature can be only features above it in
+    the specification tree</a> (if inputs are selected in the same body)</p></li>
+  <p><a name="The CATFeatureImportAgent behavior has been modified"> The <i>CATFeatureImportAgent</i>
+  </a>is an agent of selection mainly use in the Part and Product context. It has been modified to enable the end user selecting only the
+  features above the current feature. </p>
+  <table border="0">
+  <caption><a name="Fig.5">Fig.5</a>  Feature Below the Current Feature are not
+    Selectable</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSnosele.jpg" width="630" height="341"></td>
+    </tr>
+  </table>
+  <p>On this above picture <a href="#Fig.5">Fig.5</a>, <code>Line.1</code> is being edited. When you try to
+  replace <code>
+  Point.5</code> by <code>Point.6,</code> which is below <code>Line.1</code>  in the specification tree,
+  the following tool tip is displayed.</p>
+
+  <p>In the case of the creation of a feature, since the n<a href="#A new feature is inserted just after the current feature">ew
+  feature is inserted just below the current one</a>, the order rule will be
+  kept.</p>
+
+  <p>T<a name="The CATFeatureImportAgent behavior has been modified">he <i>CATFeatureImportAgent</i>  </a>
+  agent can prevent the selection of features inside the same body. But you can always
+  select a feature from another body below or above the current one, i.e. in
+  another body.</p>
+
+  <p>At last, it must be specified that this rule of selection is only an
+  interactive rule. By code, there is no protection on interfaces modifying the
+  inputs of features.</p>
+
+  <li><a name="Only the feature above the current feature are visualized in the 3D viewer">Only
+    the feature above the current feature are visualized in the 3D viewer</a></li>
+  <p>The following <a href="#Fig.6">Fig.6</a> shows the 3D viewer when all the
+  elements of the Ordered Geometrical Set, presented just above, <a href="#Fig.2">Fig.2</a>, are visible.</p>
+  <table border="0">
+  <caption><a name="Fig.6">Fig.6</a>  The Last Feature of the OGS is the Current One</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSAllElt.jpg" width="517" height="317"></td>
+    </tr>
+  </table>
+  <p>It is the last element of the body which is the current feature, so all
+  elements of the surfacic body are drawn.</p>
+  <p>Now, if you observe <a href="#Fig.7">Fig.7</a>
+  where <code>Line.1</code> is the current feature, from <code>Point.1</code> to <code>Line.1</code> the features in the
+  Ordered Geometrical Set are visualized, but not <code>Extrude.1</code>,<code>
+  Point.6 </code> or <code>Plane.1</code>.</p>
+  <table border="0">
+  <caption><a name="Fig.7">Fig.7 </a>Features Below the Current Feature are not
+    Drawn</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSCurrentLine.jpg" width="449" height="304"></td>
+          </tr>
+  </table>
+  <p>So if you are editing <code>Line.1</code>, you are not disturbed by the
+  features located below it, and you cannot select them in the 3D viewer.
+  Consequently, you cannot &quot;break&quot; the order rule by selecting in 3D.</p>
+ 
+   </ol>
+  <p>The current feature enables us to manage the location of features into the
+  surfacic body, to ensure a coherence into the specifications, and avoid to
+  visualize the useless features when editing one. The current feature is managed by <i>CATIPrtPart</i>, an interface
+  implemented by the Part feature [<a href="#References">1</a>].</p>
+  <li><b><a name="Absorbent Feature">Absorbent   
+    Feature</a></b></li>
+  
+  <p>Compare the following two pictures in <a href="#Fig.8">Fig.8</a>. </p>
+  <table border="0">
+  <caption><a name="Fig.8">Fig.8</a> Absorbent Feature</caption>
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSPartwithGS.jpg" width="292" height="259"></td>
+      <td><img border="0" src="images/CAAMmrOGSPartwithOGS.jpg" width="293" height="259"></td>
+    </tr>
+  </table>
+  <p>Both show the split of a
+  surface (<code>Extrude.1) </code>by a plane (<code>Plane.1)</code>- see <a href="#Fig.4">Fig.4</a>. The 3D visualization of the result
+seems equal: you only see <code>Split.1</code>, and <code>Extrude.1</code> is
+  not visible. But if you have a look to the specification tree, you can remark that on the left
+  picture, <code>Extrude.1</code>
+has
+  the hidden icon, and on the right, its icon is
+  normal. It means that if you swap the visible space, <code>Extrude.1</code>
+of the
+  Geometrical Set (on left) will be drawn, while <code>Extrude.1</code> inside the Ordered Geometrical
+  Set
+  will not be.</p>
+  <p>Once <code>Split.1</code> is created, <code>Extrude.1</code> is visually
+  useless for the design. <code>Split.1</code>  is said to be an absorbent feature.
+  It means a feature which modifies one or several features. Conversely, <code>Extrude.1</code>
+  is named an absorbed feature.</p>
+  <p>There are four behaviors to consider:</p>
+  <ul>
+  <li><a href="#The current feature is the absorbent feature or one below it in the specification tree">Absorbed
+    Feature Visualization</a></li>
+  <li><a href="#Absorbed Features Selection">Absorbed
+    Feature Selection</a></li>
+
+  <li><a href="#Absorbent Feature Insertion">Absorbent
+    Feature Insertion</a></li>
+
+  <li><a href="#Result of the Body">Result of the Surfacic Body</a></li>
+
+  </ul>
+  <p>Here are detailed these behaviors.</p>
+  <ul>
+  <li><a name="The current feature is the absorbent feature or one below it in the specification tree"></a>Absorbed
+    Feature Visualization</li>
+  <p>The visualization of the absorbed feature is depending on the current feature position:  </p>
+  <table border="0">
+  <caption><a name="Fig.9">Fig.9</a>  Absorbed
+    Feature Visualization Cases </caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSAbsorbedFeatVisu.jpg" width="218" height="257"></td>
+    </tr>
+  </table>
+  <p><a href="#Fig.9">Fig.9</a>  shows the three cases detailed below:</p>
+  <ul>
+  <li><b>Case 1</b>: The current feature is above the absorbed feature
+    (excluded)&nbsp;</li>
+  <p>It is the general rule which is applied: <a href="#Only the feature above the current feature are visualized in the 3D viewer">Only
+    features above the current feature are visualized in the 3D viewer</a>. Consequently, <code>Extrude.1</code> is not visualized. See <a href="#Fig.2">Fig.2</a>  
+  for an example.</p>
+  
+   <li><b>Case 3</b>: <a name="The current feature is between the absorbed feature and its absorbent feature (except it)">The current feature is between the absorbed feature
+    (included) and its absorbent
+    feature (excluded)</a></li>
+   <p><a href="#Fig.10">Fig.10</a>, shows that <code>Point.6</code>, the point between <code>Extrude.1</code>
+   (absorbed feature) and <code>Split.1 </code>(absorbent feature), is the current feature.</p>
+  <table border="0">
+  <caption><a name="Fig.10">Fig.10</a>  Unique case where an Absorbed Feature is
+    Drawn </caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSBetween.jpg" width="388" height="357"></td>
+    </tr>
+  </table>
+  <p>You can notice that <code>Extrude.1</code>
+  is displayed. At this time (<code>Point.6</code> current) of the history of
+  the OGS, <code>Extrude.1 </code>
+  has not been yet modified by <code>Split.1</code>.&nbsp;</p>
+  <li> <b>Case 2</b>: The current feature is the absorbent feature (<code>Split.1</code>) or one feature below it.</li>
+  <p>The <a href="#Fig.8">Fig.8</a>  shows that <code>Extrude.1</code>   is not
+  drawn.</p>
+</ul>
+   <li><a name="Absorbed Features Selection">Absorbed Features Selection</a></li>
+  <p>Try to create an offset of <code> Extrude.1</code>  just below the Split operation <a href="#Fig.8">Fig.8</a>. It will be
+  impossible to select <code> Extrude.1</code>   whereas <code> Extrude.1</code> is
+  above the new offset.</p>
+    <table border="0">
+<caption><a name="Fig.11">Fig.11</a>  Absorbed Feature Selection</caption>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSPartwithOGSorder.jpg" width="625" height="424"></td>
+    </tr>
+  </table>   <p>The <i>CATFeatureImportAgent</i>   has been modified to prevent the
+  selection of an absorbed feature. Thus, possibility to select in the
+  specification tree is compliant with what is drawn in 3D. See the previous <a href="#The current feature is the absorbent feature or one below it in the specification tree">Absorbed
+    Feature Visualization</a> section.</p>
+
+ <li><a name="Absorbent Feature Insertion">Absorbent Feature Insertion</a></li>
+  <p>Suppose that just after the Split operation of <code>Extrude.1</code> by <code>Plane.1</code>
+  <a href="#Fig.8">Fig.8</a> (after: time notion), you want introduce a
+  modification of <code>Extrude.1</code> to do before the first Split (before:
+  location sense). To do that, first you set current <code>Extrude.1</code> 
+  or <code>Plane.1</code>, and then you create <code>Plane.2</code>
+ and <code> Split.2.</code>
+  Here is the result of this scenario.</p>
+
+  <table border="0">
+  <caption><a name="Fig.12">Fig.12</a>  Absorbent Feature Insertion</caption>
+
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSReroot1.jpg" width="369" height="241"></td>
+    </tr>
+  </table>
+  <p>Since <code>Split.2 </code>is created between <code>Split.1</code> 
+  and <code>Extrude.1</code>, <code>Split.1</code>  relies on <code>Split</code>.<code>2</code>
+  and no more<code>  Extrude.1</code>.<code> </code>Before this operation, the input of <code>Split.1</code> was <code>Extrude.1</code>, but after it is <code>Split.2</code>.
+  The Parent/Children command shows
+  that:</p>
+  <table border="0">
+  <caption><a name="Fig.13">Fig.13</a> Parent-Children&nbsp;</caption>
+
+    <tr>
+      <td>
+        <p align="center">After Insertion of Split.2&nbsp;</td>
+      <td>
+        <p align="center">Before Insertion of Split.2</td>
+    </tr>
+
+    <tr>
+      <td><img border="0" src="images/CAAMmrOGSParentChild1.jpg" width="325" height="254"></td>
+      <td><img border="0" src="images/CAAMmrOGSParentChild2.jpg" width="328" height="256"></td>
+    </tr>
+  </table>
+  <p>
+  This modification of <code>Split.1 </code>is managed by a mechanism of feature <b>insertion</b>
+  in the Ordered Geometrical Set.</p>
+
+  <p>This mechanism is based on the <code>Insert</code> method of the <i>CATMmrLinearBodyServices</i>
+  class. It must be invoked whatever the type of the feature aggregated in the Ordered Geometrical
+  Set is. It must also be invoked if you reorder features inside an OGS, or if
+  you change their inputs.</p>
+
+  <li><a name="Result of the Body">Result of the Surfacic Body</a></li>
+  <p>Absorbed features do not have only visual behaviors. They do not appear in
+  the result of the surfacic body. The <i>CATIBodyRequest </i>[<a href="#References">3</a>]
+  interface which returns the result of a mechanical body will do not include
+  the absorbed (intermediate) features.</p>
+  </ul>
+  <p>Finally to finish with the absorbent features, it is the <i>CATIInputDescription</i>
+  interface which gives the type of the feature, and in case of absorbent
+  feature (feature of modification), this interface specifies the absorbed inputs.</p>
+</ol>
+<p>To sum up, the Ordered Geometrical Set is a kind of surfacic body introduced <b>to channel
+their contents,</b> by imposing the orders of creation of features, and <b>to</b>
+ <b>avoid drawing the intermediate features</b>. It should help the
+designer to create the object to be built.</p>
+
+<p>This section has presented to you the main behaviors of the Ordered Geometrical
+Set. You are encouraged to read the article about the structural elements [<a href="#References">1</a>]
+to find out a more technical information.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part2"></a>What does it Imply for Applications?</h3>
+<p>The introduction of the Ordered Geometrical Set may imply modifications on
+your existing code. This section has been built to resolve all the
+questions that you must you ask according to the kind of application.</p>
+<p>Here are the four kind of applications:</p>
+<ol>
+  <li>Read Part Contents</li>
+  <p>The first level enables you to consult the contents of a Part document in
+  order to perform analysis or to do data transfers. You should know how
+  to <b> retrieve</b> the elements, and their geometrical <b>result</b>, of an Ordered Geometrical Set.</p>
+  <p>The interface to use is obligatorily <b><i>CATIBodyRequest</i></b>. This
+  interface returns all the geometrical features of the Ordered Geometrical Set
+  excepted the absorbed features (see the <a href="#Absorbent Feature">Absorbent Feature</a> section). Nevertheless, if you need all the
+  aggregated geometrical features of the set, you can always use the <code>GetDirectChildren</code>
+  method of <i>CATIDescendants</i> with the <i>CATIGeometricalElement3D</i>
+  interface as filter.</p>
+
+  <p>The referenced article [<a href="#References">3</a>] explains the result of a
+  surfacic body, the usage of the <i>CATIBodyRequest</i> interface, and how to
+  retrieve the topological result (<i>CATBody</i>) of each element contained
+  into the surfacic feature.</p>
+
+  <li><a name="Geometrical Feature Instantiation">Geometrical Feature Instantiation</a>
+    and
+    Usage</li>
+  <p><b>a/ </b> If you are an application instantiating<b>,</b> and not defining, Dassault Systemes
+  (DS) or CAA surfacic features. Your problem is <b> where</b> and <b> how</b>
+  to store a new
+  instantiation.</p>
+  <ul>
+  <li><a name="You do not want store instances in Ordered Geometrical Set.">You do not want
+    to support Ordered Geometrical Set.</a></li>
+  <p>Once you have retrieved a <code>GSMTool</code>, checked it was not an Ordered
+  Geometrical Set, <b>aggregate</b> the new feature in the surfacic body thanks
+  to <i>CATIDescendants.</i></p>
+  <p>If your application uses the <i>CATIGSMProceduralView</i>
+  interface, you should no more use the <code>InsertInProceduralView</code> 
+  method which accepts the insertion of features in Ordered Geometrical
+  Set.</p>
+  <li><a name="You accept to store the newly feature in any kind Geometrical Set (ordered or not)">You
+    choose to benefit of the Ordered Geometrical Set</a></li>
+  <p>This option is possible only if the feature to insert can be stored in an Ordered Geometrical Set.
+  For any surfacic DS feature it is possible, for a CAA feature verify that it
+  implements <i><a href="#CATIInputDescription">CATIInputDescription</a></i>.</p>
+  <p>Once you have retrieved a <code>GSMTool</code>, if it is a Geometrical Set you <b>aggregate</b>
+  the new feature with <i>CATIDescendants</i>,<i> </i>otherwise
+  you <b>insert</b> the
+  new feature in the Ordered Geometrical Set by the following methodology:</p>
+  <ol>
+   <li>Aggregate the feature in the body with the <i>CATIDescendants</i>    interface</li>
+    <ul>
+   <li>At the end of the body, if the current feature is not inside this body
+    (with the <code>Append</code> method)</li>
+   <li>After the current feature otherwise</li>
+   </ul>
+   <li>Update the new instance</li>
+   <li>Call <code>Insert</code>, the static method of the <i>CATMmrLinearBodyServices</i>
+    class</li>
+    </ol>
+    </ul>
+     <ul>
+  <p>If your application uses the <i>CATIGSMProceduralView</i>
+  interface, you can keep the usage of the <code>InsertInProceduralView</code> 
+  method. This method manages the aggregation according to the type of the
+  surfacic body. For an Ordered Geometrical Set, the second (update) step
+  and the third (<code>Insert</code>) step remain your job.</p>
+    </ul>
+  <p>You can you refer to the Combined Curve use case [<a href="#References">4</a>],
+  where the two choices have been implemented.</p>
+
+  
+  
+  <p><b>b/</b> If you are an application modifying the contents of surfacic bodies, you
+  should take care of the <i>CATIDescendants</i> usage. If you aggregate (see
+  just previously), move, or modify features inside an OGS, you should then call the <code>Insert</code> method of the <i>CATMmrLinearBodyServices</i>
+  class to ensure the linearity into the set.</p>
+
+  
+  
+  <li>User Feature and Power Copy Usage [<a href="#References">5</a>]</li>
+  <p>If you have an application instantiating Power Copy or User feature, you
+  have nothing to do since the software of instantiation automatically manages
+  the insertion into a body whatever its type. However, if you have implemented the <i><b>CATIEdit</b></i>
+  interface on your &quot;typed&quot; user feature you should
+  set as current the edited instance, and restore the old current feature
+  once the edition is ended. You can refer to the CAAMcaUdfEdition use case [<a href="#References">10</a>],
+  for a detailed implementation.&nbsp;</p>
+
+  
+  
+  <li>CAA Geometrical Feature Creation</li><p>For those which have
+  created a CAA Geometrical StartUp [<a href="#References">6</a>] or want create
+  a new one, the only one question is <i>&quot;Do I want to store my feature in an Ordered
+  Geometric Set&quot; </i>?</p>
+  <ul>
+  <li>You accept to store your feature in an Ordered Geometrical Set</li>
+  <p><a name="CATIInputDescription"></a>You have to implement the <i><b>CATIInputDescription</b></i>
+  interface on your StartUp. This interface enables you to define the type of
+  the feature, absorbent feature or not, and to define its &quot;absorbed&quot;
+  inputs.</p>
+  <p>On the CAA StartUp you have implemented a set of interfaces to complete or
+  overload behaviors of a geometrical feature [<a href="#References">8</a>], and
+  one of them is the <i><b>CATIEdit</b> </i>interface to edit the feature. You should
+  set as current the edited instance, and restore the old current feature
+  once the edition is ended.</p>
+  <p>In interactive command creating new instance of your CAA StartUp:</p>
+  <ul>
+  <li> First you must check
+  that the storage (aggregation + insertion if necessary) into the set is correct depending on the type of
+  the surfacic body (refer to the second case of the &quot;<a href="#Geometrical Feature Instantiation">Geometrical Feature Instantiation</a>&quot;
+    section) </li>
+  <li>Secondly, do not forget to set as current the new instance.</li>
+  </ul>
+  <p> You can refer to the Combined Curve use case for the implementation of the
+  <i>CATIInputDescription</i> interface [<a href="#References">7</a>] and the
+  creation and edition command [<a href="#References">9</a>].</p>
+  
+  <li>You do not accept to store your feature in an Ordered Geometrical Set</li>
+  <p>You must check that all commands creating new instances do not allow
+  to store new instances in Ordered Geometrical Set. Refer to the first case
+  of the &quot;<a href="#Geometrical Feature Instantiation">Geometrical Feature Instantiation</a>&quot;
+  section.</p>
+  </ul>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Up V5R13, the surfacic body, a mechanical feature deriving from the GSMTool
+StartUp, can be either a Geometrical Set, or an Ordered Geometrical Set. The
+distinction is retrieval by the <code>GetType</code> method of the <i>CATIGSMTool</i>
+interface. An Ordered Geometrical Set is characterized by the two following
+notions:</p>
+<ul>
+  <li><b>Ordered body</b>
+    <p>Each feature can only rely on features aggregated above it in the
+    specification tree; when the input specifications are into the same body.</p>
+  <li><b>Absorbent feature</b>
+    <p>Feature modifying one or more of its input specifications, is named a
+    feature of modification. It is also named an absorbent feature because its
+    modified features are like absorbed since they are not drawn in 3D, they do
+    not appear in the result of the surfacic body.&nbsp;</p>
+  </li>
+</ul>
+<p>For an existing or a new application, the most important things to retain
+are:</p>
+<ul>
+  <li>Use <i>CATIBodyRequest</i> to retrieve the result of a surfacic body,</li>
+  <li>Implement <i>CATIInputDescription</i> on your CAA StartUp to take benefit
+    of the Ordered Geometrical Set possibilities,</li>
+  <li>Invoke the <code>Insert</code> method after each modification on inputs of
+    features aggregated into an OGS,</li>
+  <li>Manage the current feature in your interactive command if you have
+    accepted to integrate your CAA feature into an OGS.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrContentsSpecCont1.htm">The Contents of the Specification Container- Part1</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAMmrContentsSpecCont2.htm">The Contents of the Specification Container- Part2</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAAMmrSpecResultForMechFeat.htm">Specification/Result Mechanism Applied to Mechanical Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInstantiation.htm">Instantiating Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAAMcaTechArticles/CAAMcaPowerCopyAndUserFeatures.htm">An Overview of Power Copies and User Features</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAAMmrCreatingNewFeat.htm">Creating a New StartUp Deriving from a Mechanical StartUp</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveInputDescription.htm">Integrating
+      Combined Curves inside Ordered Geometrical Set</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="CAAMmrFeatureIntegration.htm">Integrating a New Mechanical Feature in V5</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[9]</td>
+    <td><a href="../CAAMmrUseCases/CAAMmrCombinedCurveCATIEdit.htm">Editing Combined Curves</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[10]</td>
+    <td><a href="../CAAMcaUseCases/CAAMcaUdfEdit.htm">Creating a
+      Command to Edit a User Feature</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Oct 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

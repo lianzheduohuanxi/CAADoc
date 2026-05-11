@@ -1,0 +1,425 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Setting up Aggregating Links</title>
+ <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+}
+h4{
+	font-family: Verdana, Helvetica, sans serif;
+	font-size: 8pt; 
+	font-weight: bold; 
+	color:   #828B90;        
+	margin-top: 2pt; 
+	margin-bottom: 0pt; 
+	margin-left: 4px;
+	text-align: left;
+	padding-top: 5px;
+	}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Setting up Aggregating Links</h3>
+      <p><em>How to Aggregate features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6OsmAggregatedAttr</code> use case. This Use 
+		Case illustrates the steps involved to aggregate a feature (child) under 
+		another feature (parent). Aggregation simply involves valuating the
+		<strong>component</strong> attribute of a feature (parent) with another feature 
+		(child). </p>
+		<p>You can first previously read the technical article about the 
+		attribute in general, &quot;Understanding Feature Attributes&quot; [<a href="#References"><span class="style1">1</span></a>], 
+		like the specific one about link attribute " Understanding Feature Links" [<a href="#References"><span class="style1">2</span></a>].</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6OsmAggregatedAttr Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6OsmAggregatedAttr Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6OsmAggregatedAttr</a></li>
+				<li><a href="#Where">Where to Find the CAAV5V6OsmAggregatedAttr Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p> <strong>Note: </strong>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The user learns to aggregate a feature (child) under another feature 
+(parent). In the process user understands the relevance of an attribute of type 
+<strong>component</strong>, which realizes this aggregation.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6OsmAggregatedAttr Use Case</h2>
+<p><code>CAAV5V6OsmAggregatedAttr</code> is a use case of the 
+<code>CAAV5V6ObjectSpecsModeler.edu</code> framework 
+that illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="What"></a>What Does CAAV5V6OsmAggregatedAttr Do</h3>
+<p>The UC illustrates aggregating a child feature under a parent feature, by 
+valuating the latter's attribute of type <strong>component</strong>. The features referred to, 
+in this UC are those defined in the catalog &quot;<strong>CAAOsmCatalogSU</strong>&quot;, 
+generated as by the CATfctEditorAssistant tool.</p>
+<p>The main steps are:</p>
+<ul>
+	<li>Creating three <strong>Chapter </strong>features<strong> </strong>(CAAOsmChapter 
+	Startup)<strong> </strong></li>
+	<li>Checking they are without parent</li>
+	<li>Creating one <strong>Novel </strong>feature<strong> </strong>(CAAOsmNovel 
+	Startup)<strong> </strong></li>
+	<li>Valuating its attribute &quot;<strong>NovelChapter</strong>&quot;, of type <strong>component</strong>, 
+	with the three <strong>Chapter </strong>features 
+instantiated earlier.</li>
+	<li>Checking the parent feature</li>
+	<li>Scans through the three <strong>Chapter </strong>features 
+	aggregated under the<strong> Novel </strong>feature</li>
+</ul>
+<p>&nbsp;The final feature aggregation is depicted in [<a href="#Fig.1">Fig.1</a>] below.</p>
+<table>
+	<caption><a name="Fig.1"></a>Fig. 1 Aggregation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAV5V6FmExtUCAggregatedAttr_Fig1.gif" width="540" height="234"></td>
+	</tr>
+</table>
+<p>The output as depicted in [<a href="#Fig.1">Fig.1</a>] exactly corresponds to the definition of 
+the &quot;<strong>CAAOsmNovel</strong>&quot; feature. An extract of the associated OSM file which contains 
+the definition follows.</p>
+<table class="code" id="table15">
+	<tr>
+		<td>
+		<pre>feature <b>CAAOsmNovel</b> CAAOsmBook #startup #inheritability(caa) {
+    string Author
+    <b>component</b> <b>NovelChapter</b> #list
+}
+</pre>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="How"></a>How to Launch CAAV5V6OsmAggregatedAttr</h3>
+<p>To launch CAAV5V6OsmAggregatedAttr, you will need to set up the build time
+environment, then compile CAAV5V6OsmAggregatedAttr along with its prerequisites, set
+up the run time environment, and then execute the sample.&nbsp;</p>
+<p>mkrun -c &quot;CAAV5V6OsmAggregatedAttr CatalogName DocumentStorageName.CATPart&quot;</p>
+<ul>
+  <li><strong>CatalogName</strong> - Name of the Catalog we wish to refer</li>
+	<li><b>DocumentStorageName.CATPart</b> - the entire pathname, name and
+    extension (.CATPart) under which the new document is to be stored.</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Where"></a>Where to Find the CAAV5V6OsmAggregatedAttr Code</h3>
+<p><code>CAAV5V6OsmAggregatedAttr</code> code is located in the 
+<code>CAAV5V6OsmAggregatedAttr.m</code> use case module 
+of the <code>CAAV5V6ObjectSpecsModeler.edu </code>framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6ObjectSpecsModeler.edu\CACAAV5V6OsmAggregatedAttr.m</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA installation. It is made of a unique source file named 
+<code>CAAV5V6OsmAggregatedAttr.cpp</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are six logical steps in the CAAV5V6OsmAggregatedAttr:</p>
+<ul>
+	<li><a href="#Prolog">Prolog</a></li>
+	<li><a href="#Creating Chapter &amp; Novel Features">Creating Chapter &amp; Novel Features</a></li>
+	<li><a href="#Checking no Parent Feature">Checking no Parent Feature</a></li>
+	<li><a href="#Creating Chapter &amp; Novel Features">Aggregating the Chapter 
+	Under Novel Feature</a></li>
+	<li><a href="#Confirm aggregation">Checking Parent Feature</a></li>
+	<li><a href="#Scan through">Scanning the Chapter feature aggregated under Novel</a></li>
+	<li ><a href="#Epilog">Epilog</a></li>
+</ul>
+<p>An explanation of each of those steps follows:</p>
+<h3>Prolog<a name="Prolog"></a></h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. It further creates the <strong>Credentials</strong> [<a href="#References">3</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Creating Chapter &amp; Novel Features"></a>Creating Chapter &amp; Novel Features</h3>
+<p>This step just shows the creation of one Chapter and the only one Novel 
+features.</p>
+<pre class="code">...
+CATFmStartUpFacade ChapterStartUpFacade(MyCredential,"CAAOsmChapter");
+...
+CATFmFeatureFacade oFeatFacadeOnChptrInst1 (MyCredential);
+rc = ChapterStartUpFacade.<strong>InstantiateIn</strong>(MyContainerFacade,oFeatFacadeOnChptrInst1);
+...
+</pre>
+<p><code>oFeatFacadeOnChptrInst1</code> is the feature facade bound to the first 
+chapter. On the similar way, <code>oFeatFacadeOnChptrInst2</code>, <code>
+oFeatFacadeOnChptrInst3</code> are created for the second and third chapters. 
+The valuation of the chapter's attributes are not detailed here. </p>
+<pre class="code">...
+CATFmStartUpFacade NovelStartUpFacade(MyCredential,"CAAOsmNovel");
+...
+CATFmFeatureFacade oFeatFacadeOnNovel(MyCredential);
+rc = NovelStartUpFacade.<strong>InstantiateIn</strong>(MyContainerFacade,oFeatFacadeOnNovel);
+...
+</pre>
+<p><code>oFeatFacadeOnNovel</code> is the feature facade bound to the Novel feature. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Checking no Parent Feature"></a>Checking Parent Feature Before 
+Aggregation</h3>
+<p>While the Chapters are not aggregated by a feature, the parent doesn't exist. 
+Let's us explain step by step the piece of code</p>
+<pre class="code">...
+rc = oFeatFacadeOnChptrInst1.<strong>GetParentFeature</strong>(AttrAsFmValue);
+if (SUCCEEDED(rc))
+...
+</pre>
+<p>First we call <code>GetParentFeature</code> method of the <em>
+CATFmFeatureFacade</em> class. This method fails if you are not the owner of the 
+catalog defining the StartUp where come from the feature to retrieve its parent, 
+but this method doesn't fail if there is no parent. So here since we are granted 
+to handle <code>oFeatFacadeOnChptrInst1</code>, we must check the result of<code> GetParentFeature</code>. 
+This method returns a <em>CATFmAttributeValue.</em></p>
+<p>From a <em>CATFmAttributeValue</em> containing a feature there is two 
+possibilities to check if there is really a parent feature.</p>
+<p>First test : </p>
+<pre class="code">...
+   CATBaseUnknown_var Parent = AttrAsFmValue.<strong>GetFeature</strong>();
+   if ( NULL_var !=  Parent ) return 1 ;
+...</pre>
+<p>You retrieve as a smart pointer the feature behind the <em>
+CATFmAttributeValue</em> using the <code>GetFeature</code> method.&nbsp; This 
+method returns <code>NULL_var</code>.</p>
+<p>Second test : </p>
+<pre class="code">...
+   CATFmFeatureFacade FeatFacadeOnParent(MyCredential);
+   AttrAsFmValue.<strong>GetFeature</strong>(FeatFacadeOnParent);
+  
+   CATUnicodeString oDisplayName;
+   rc = FeatFacadeOnParent.<strong>GetDisplayName</strong>(oDisplayName);
+   if (SUCCEEDED(rc) ) return 1 ;
+...</pre>
+<p>You convert the <em>CATFmAttributeValue (</em><code>AttrAsFmValue</code>) 
+into a <em>CATFmFeatureFacade</em> (<code>FeatFacadeOnParent</code>). And then 
+you use a <em>CATFmFeatureFacade</em> method, the method will fail because there 
+is no feature bound to the facade. If you are the owner of the catalog defining 
+the parent feature, and you have used the appropriate credential to handle its 
+facade, all method of the <em>CATFmFeatureFacade</em> method will be valid for 
+the test. if you are not the owner, use methods which don't require a credential 
+(<code>GetFeature</code> method for example).</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3>Aggregating the Chapter features under Novel&nbsp; feature</h3>
+<p>Aggregating a feature simply involves valuating its parent feature attribute 
+of type <strong>component</strong>. The &quot;<strong>CAAOsmNovel</strong>&quot; 
+StartUp contains the attribute &quot;<strong>NovelChapter</strong>&quot; a list of<strong> </strong>component. 
+It is this attribute which we valuate with the three chapters.</p>
+<pre class="code">...
+CATFmAttributeName NovelChptrAttrName("NovelChapter");
+...
+AttrAsFmValue.SetFeature(oFeatFacadeOnChptrInst1);
+rc = <strong>oFeatFacadeOnNovel.SetValue(NovelChptrAttrName,1,AttrAsFmValue)</strong>;
+...
+AttrAsFmValue.SetFeature(oFeatFacadeOnChptrInst2);
+rc = <strong>oFeatFacadeOnNovel.AppendValue(NovelChptrAttrName,AttrAsFmValue)</strong>;
+...
+AttrAsFmValue.SetFeature(oFeatFacadeOnChptrInst3);
+rc = <strong>oFeatFacadeOnNovel.AppendValue(NovelChptrAttrName,AttrAsFmValue)</strong>;
+...
+</pre>
+<p>The <code>SetValue</code>() call of the <code>CATFmFeatureFacade</code> class, valuates the feature 
+attribute, to begin with. Subsequently, the <code>AppendValue</code>() call further appends 
+values to the feature attribute. (The first <code>SetValue</code>, could be an <code>AppendValue </code>
+too).</p>
+<p>The calls are invoked on the <strong>Novel</strong> feature (<code>oFeatFacadeOnNovel</code>, a 
+<em>CATFmFeatureFacade</em> type) with inputs</p>
+<ul>
+	<li><code>NovelChptrAttrName</code>, a <i>CATFmAttributeName</i> type 
+	representing the&nbsp; &quot;<strong>NovelChapter</strong>&quot;</li>
+	<li><code>AttrAsFmValue</code>, a <i>CATFmAttributeValue</i> type, set to 
+	each chapter 
+	feature in sequence</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Confirm aggregation"></a>Checking Parent Feature After Aggregation</h3>
+<p>Now the Chapters are aggregated so the parent must exist. 
+Let's us explain step by step the piece of code</p>
+<pre class="code">...
+rc = oFeatFacadeOnChptrInst1.<strong>GetParentFeature</strong>(AttrAsFmValue);
+if (SUCCEEDED(rc))
+...
+</pre>
+<p>First we call <code>GetParentFeature</code> method of the <em>
+CATFmFeatureFacade</em> class. For the same reason as the first test,&nbsp;
+<a href="#Checking no Parent Feature">#before</a> , this method is successful 
+and returns a <em>CATFmAttributeValue.</em></p>
+<p>From a <em>CATFmAttributeValue</em> containing a feature there is two 
+possibilities to check if there is really a parent feature.</p>
+<p>First test : </p>
+<pre class="code">...
+   CATBaseUnknown_var Parent = AttrAsFmValue.<strong>GetFeature</strong>();
+   if ( NULL_var ==  Parent ) return 1 ;
+...</pre>
+<p>You retrieve as a smart pointer the feature behind the <em>
+CATFmAttributeValue</em> using the <code>GetFeature</code> method.&nbsp; Now 
+this method does not return&nbsp; <code>NULL_var</code>.</p>
+<p>Second test : </p>
+<pre class="code">...
+   CATFmFeatureFacade FeatFacadeOnParent(MyCredential);
+   AttrAsFmValue.<strong>GetFeature</strong>(FeatFacadeOnParent);
+  
+   CATUnicodeString oDisplayName;
+   rc = FeatFacadeOnParent.<strong>GetDisplayName</strong>(oDisplayName);
+   
+...</pre>
+<p>You convert the <em>CATFmAttributeValue (</em><code>AttrAsFmValue</code>) 
+into a <em>CATFmFeatureFacade</em> (<code>FeatFacadeOnParent</code>) and then 
+you use a method of <em>CATFmFeatureFacade</em> .</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Scan through"></a>Scanning through the Chapter Features aggregated 
+under Novel</h3>
+<p>Here we check the contents of the NovelChapter attribute after the three 
+aggregation.</p>
+<pre class="code">rc = oFeatFacadeOnNovel<strong>.GetValue</strong>(NovelChptrAttrKey,AttrAsFmValue);
+...</pre>
+<p>The <code>GetValue</code> call of the <em>CATFmFeatureFacade</em> class retrieves a feature 
+attribute value. Here we retrieve the value of the &quot;<strong>NovelChapter</strong>&quot; 
+attribute as a <em>CATFmAttributeValue value (</em><code>AttrAsFmValue</code>)</p>
+<pre class="code">...
+for (int i=1; i&lt;=AttrAsFmValue.<strong>Size</strong>(); i++)
+{
+...</pre>
+<p>Since &quot;<strong>NovelChapter</strong>&quot; is an attribute of type 
+<strong>list of component</strong>, its value 
+represents a list of child features aggregated under the &quot;<strong>CAAOsmNovel</strong>&quot; 
+feature. So we can use the <code>Size</code> method of <em>CATFmAttributeValue</em> 
+to do a loop.&nbsp; (this method <code>Size</code> returns 0 for an attribute 
+which is not a list)</p>
+<p>So for each element of the list, we find a chapter like that:</p>
+
+<pre class="code">...
+    oFmAttrValueOnCurrentChapter = AttrAsFmValue[i];
+
+    CATFmFeatureFacade FeatFacadeOnCurrentChapter(MyCredential);
+    oFmAttrValueOnCurrentChapter.<strong>GetFeature</strong>(FeatFacadeOnCurrentChapter);
+		
+    oAttrValueOnChapterTitle.<strong>Clear</strong>();
+    rc = FeatFacadeOnCurrentChapter.<strong>GetValue</strong>(ChptrTitleAttrName,oAttrValueOnChapterTitle);
+    if (SUCCEEDED(rc))
+    {
+	 CATUnicodeString strTitle;
+	 oAttrValueOnChapterTitle.<strong>GetString</strong>(strTitle);
+...
+</pre>
+<p>&nbsp;</p>
+<p>The <code>GetFeature</code>() call of the <em>CATFmAttributeValue </em>class, 
+retrieves the feature associated with our attribute value as a facade (<code>FeatFacadeOnCurrentChapter)</code></p>
+<p>We next retrieve the&nbsp; &quot;<strong>ChapterTitle</strong>&quot;&nbsp; attribute value of each 
+aggregated &quot;<strong>CAAOsmChapter</strong>&quot; feature. The value is retrieved as a 
+<em>CATFmAttributeValue </em>type (<code>oAttrValueOnChapterTitle</code>). </p>
+<p>The <code>GetString</code>() call of the <em>CATFmAttributeValue </em>class finally returns the 
+Chapter Title as a <code>CATUnicodeString</code> type (strTitle). The titles of the 
+aggregated Chapters are displayed for user to confirm if the &quot;<strong>CAAOsmNovel</strong>&quot; 
+feature indeed aggregates three <strong>Chapter</strong> features.</p>
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>At last the document is saved and session is closed.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+		<p>This Use Case illustrates the steps involved to aggregate a feature 
+		(child) under another feature (parent). It instantiates three 
+		&quot;<strong>CAAOsmChapter</strong>&quot; features and aggregates them under the &quot;<strong>CAAOsmNovel</strong>&quot; 
+		feature. The aggregation is realized by valuating the &quot;<strong>NovelChapter</strong>&quot; 
+		attribute, of type <strong>list of component</strong> of the &quot;<strong>CAAOsmNovel</strong>&quot; feature, with the 
+		&quot;<strong>CAAOsmChapter</strong>&quot; features.</p>
+<p>The UC finally confirms the aggregation by listing the aggregated 
+&quot;<strong>CAAOsmChapter</strong>&quot; features. Additionally it also retrieves the parent of a 
+&quot;<strong>CAAOsmChapter</strong>&quot; feature and confirms it as a &quot;<strong>CAAOsmNovel</strong>&quot; feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+			<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attributes</a>
+		</td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+			<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaLinkingFeatures.htm">
+			Understanding Link Attributes-1 </a>
+		</td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+			<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials 
+			</a>
+		</td>
+	</tr>
+	</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [July 2012]</td>
+		<td valign="top">Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

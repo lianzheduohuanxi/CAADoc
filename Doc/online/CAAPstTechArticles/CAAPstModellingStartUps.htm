@@ -1,0 +1,580 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0014)about:internet -->
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Modelling StartUps</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Product Modeler</h2>
+    </td>
+    <td align="RIGHT" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Modeling StartUps in Catalogs</h3>
+      <i>How to Create and Update Catalogs</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Applications create objects by instantiating startups 
+		stored in catalogs. This article covers the OSM language that is used to define 
+		catalogs and their contents including startups.</p>
+		<ul>
+			<li><a href="#Part2">The OSM Language</a><ul>
+			<li><a href="#document">The document Statement</a></li>
+			<li><a href="#container">The container Statement</a></li>
+			<li><a href="#feature">The feature Statement</a></li>
+			<li><a href="#metadata">The meta_data_definition Statement</a></li>
+			<li><a href="#extlink">The external_link_meta_data Statement</a></li>
+			<li><a href="#example">A Catalog Example</a></li>
+		</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part2"></a>The OSM Language</h2>
+<p>You should be familiar with the fundamentals of the Catalog Lifecycle as 
+outlined in the Managing StartUp Catalogs Lifecycle<a href="#References"></a> [<a href="#References">1</a>] 
+before reading this article.</p>
+<p>The purpose of the OSM language is to describe the contents of catalogs since 
+it is where feature 
+startups get stored and accessed. An OSM statement has the following syntax:</p>
+<table class="code" id="table1">
+	<tr>
+		<td>
+		<pre><i>statement</i> <i>identifier</i> [<i>super_identifier</i>] [<i>facets</i>..] {
+<b>        </b><i>body
+</i><b>        </b><i>/* a comment */
+</i><b>        </b><i>// another comment</i>
+} </pre>
+		</td>
+	</tr>
+</table>
+<p>where </p>
+<ul>
+	<li><i><code>statement </code></i>is one of:<ul>
+		<li><b>document</b> to define the contents of a catalog.</li>
+		<li><b>container</b> to define the contents of a container.</li>
+		<li><b>feature</b> to define a regular feature object with its 
+		attributes. A feature startup or a feature extension also get defined by 
+		this statement since they all share the same structure.</li>
+		<li><b>meta_data_definition</b> to define a group of 
+		external_link_meta_data statements.</li>
+		<li><b>external_link_meta_data</b> to define meta data on en external 
+		link</li>
+	</ul>
+	</li>
+	<li><i><code>identifier</code> </i>names the corresponding object (a 
+	catalog, a container or a feature).<br>
+	Identifiers in OSM is case sensitive and not limited in length. It starts 
+	with a letter, an underscore ('_') or a dollar sign ('$') and contains 
+	alphanumerical characters ('a' to 'z', 'A' to 'Z', '0' to '9'), the 
+	underscore ('_') or the dollar sign ('$'). Identifiers can contain other 
+	characters if they are enclosed with backquotes (`).<br>
+	Note: identifiers can have a suffix of the form <code>#<i>number</i></code>. 
+	These suffixes appear when the OSM is generated from a catalog and should <b>
+	not be altered</b>.</li>
+	<li> <code>[<i>super_identifier</i>]<i> </i> </code>is also an identifier, 
+	designating the feature from which this feature is derived or instantiated. 
+	It is optional and is not present on every statement.</li>
+	<li><i><code>[facets...] </code></i>are optional qualifiers that change the 
+	statement defaults. They are prefixed with the sharp-sign character (#)</li>
+	<li><i><code>body </code></i>represents in turn one or more OSM statements</li>
+	<li><i><code>comments </code></i>follow the C++ convention:<ul>
+	<li>any string enclosed with '/*' and */' and possibly spanning multiple 
+	lines</li>
+	<li>any string from '//' to the end of the line</li>
+</ul>
+	</li>
+</ul>
+<p>To give you a feeling of the OSM language, here is a complete example. It is 
+fully commented in the <a href="#example">A Catalog Example</a> section.</p>
+<table class="code" id="table21">
+	<tr>
+		<td>
+		<pre>document `MyCatalog.CATfct` {
+<b>        </b>container CATFeatCont #root {
+<b>                </b>/* Point2D startup */
+<b>                </b>feature Point2D #startup {
+<b>                        </b>double x
+<b>                        </b>double y
+<b>                </b>}
+<b>                </b>/* Point3D startup deriving from Point2d */
+<b>                </b>feature Point3D Point2D #startup {
+<b>                        </b>double z
+<b>                        </b>double #list coordinates
+<b>                </b>}
+<b>                </b>/* Line3D startup */
+<b>                </b>feature Line3D #startup {
+<b>                        </b>specobject start #in  // start point
+<b>                        </b>specobject end #in    // end point
+<b>                        </b>double length #out    // length
+<b>                </b>}
+<b>        </b>}
+} </pre>
+		</td>
+	</tr>
+</table>
+<h3><a name="document"></a>The document Statement</h3>
+<p>Because an OSM file describes the contents of a catalog, it always consists 
+of one <code><b>document</b> </code>
+statement that names the resulting catalog. The CATfct file extension of the 
+catalog name must be included. Since the identifier rule does not allow a dot (.), catalog names 
+must be enclosed in backquotes (`).</p>
+<p>There is no facet applicable to a document.</p>
+<table class="code" id="table2">
+	<tr>
+		<td>
+		<pre><b>document</b> `MyCatalog.CATFct' {
+<b>        </b>...
+} </pre>
+		</td>
+	</tr>
+</table>
+<p>The name given to the catalog must abide by the CAA Naming Rules, because all 
+the catalogs will share the same directory in the run-time view 
+which is <code>resources/graphic</code>.</p>
+<p>The body of a <code>document </code>is simply a container which is described in the next 
+section.</p>
+<h3><a name="container"></a>The container Statement</h3>
+<p>The <code><b>container</b> </code>statement describes the contents of a 
+container in a catalog. There can only be one root container in each catalog. 
+The only facet that applicable to the container statement is always specified:
+<code>#root</code>.</p>
+<table class="code" id="table3">
+	<tr>
+		<td>
+		<pre><b>container</b> CATFeatCont <b>#root</b> {
+<b>        </b>...
+}</pre>
+		</td>
+	</tr>
+</table>
+<p>&nbsp;The body of the <code>container </code>statement contains 
+one or more 
+<code>feature </code>statments and optionally one or more <code>external_link_meta_data </code>statements.</p>
+<h3><a name="feature"></a>The feature Statement</h3>
+<p>A feature object is described by the <code><b>feature</b> </code>statement. 
+Feature startups and feature extensions are also defined by the same statement 
+but with 
+their specific facets. The format of the <code>feature </code>statement is:</p>
+<table class="code" id="table5">
+	<tr>
+		<td>
+		<pre><b>feature</b> <i>identifier</i> [<i>super_identifier</i>] [<i>facets</i>..] {
+<b>        </b><i>attribute_definitions
+</i><b>        </b>[<i>attribute_initializations</i>]
+}</pre>
+		</td>
+	</tr>
+</table>
+<p>If the name given to the feature <i><code>identifier</code></i>, must be 
+chosen carefully:</p>
+<ul>
+	<li>It is the name of the late type, that is the type with which behavior is 
+	added. You can associate a late type with a different name using the <code>
+	#isa</code> facet (see below), but this is not recommended as this 
+	introduces confusion.</li>
+	<li>As all late types share the same namespace, there is a naming convention 
+	to avoid collision. This convention is described in the various CAA Naming 
+	Rules documents [<a href="#References">5</a>] &amp; [<a href="#References">6</a>].</li>
+	<li>When the feature is displayed, another localized name can be used 
+	instead of its identifier thanks to a CATNls file. This CATNls file must 
+	have the same name as the catalog appended with NLS. For example the CATNls 
+	file of the <code>MyCatalog.CATfct</code> would be <code>MyCatalogNLS.CATNls</code> 
+	and resides in the <code>resources/msgcatalog</code> directory. The contents 
+	of this file are simply lines of the form:<br>
+	<i><code>identifier</i>=&quot;<i>localized name of identifer</i>&quot;;</code></li>
+</ul>
+<p><code><i>super_identifer</i> </code>designates the feature from which this 
+one must be derived or instantiated, like &quot;Point2D&quot; in the following 
+example</p>
+<table class="code" id="table22">
+	<tr>
+		<td>
+		<pre>feature Point3D <b>Point2D</b> #startup {
+<b>        </b>...</pre>
+		</td>
+	</tr>
+</table>
+<p>If the <code> <i>super_identifer</i> </code>resides in another catalog, it 
+must be specified with the <code>@`<i>other_catalog</i>.CATfct`</code> <code>or @`<i>other_catalog</i>.feat` 
+(DS feature) </code>notation:</p>
+<table class="code" id="table23">
+	<tr>
+		<td>
+		<pre>feature Point3D <b>Point2D @`2DCatalog.CATfct`</b> #startup {
+<b>        </b>...</pre>
+		</td>
+	</tr>
+</table>
+<p>Note that catalogs are always specified with only their names, without any 
+directory. This is because they are supposed to be present in a specific 
+directory of the run-time view [<a href="#References">4</a>].</p>
+<p>There are many facets for the feature statement:</p>
+
+	<table class="border1" >
+		<tr>
+			<th>Facet</th>
+			<th>Meaning</th>
+		</tr>
+		<tr>
+			<code>
+			<td><code>#startup</code></td>
+			<td>defines a Feature StartUp from which features can be instantiated</td>
+		</tr>
+		<tr>
+			<td><code>#extension</code></td>
+			<td>defines a Feature Extension, to be used in conjunction with 
+			#startup</td>
+		</tr>
+		<tr>
+			<td nowrap><code>#inheritability(caa)</code></td>
+			<td>indicates a derivable feature, i.e. used as supertype by other feature 
+			definitions</td>
+		</tr>
+		<tr>
+			<td><code>#isa(<i>late_type</i>)</code></td>
+			<td>specifies that the late type is <code><i>late_type</i></code> 
+			instead of the feature identifier. Its usage is not recommended</td>
+		</tr>
+			</code>
+		</table>
+
+<p>The body of a <code>feature </code>statement contains the definition of the 
+feature's attributes and 
+optionally their initial values. We will not cover the attribute definition and 
+initlization.</p>
+<p>&nbsp;</p>
+
+<h4><a name="attrdef"></a>Attribute Definition</h4>
+<p>There is no specific statement to define the attributes. Each attribute definition 
+is of the form:</p>
+<table class="code" id="table7">
+	<tr>
+		<td>
+		<pre><i>attribute_type</i> <i>attribute_name </i>[<i>facets</i>]</pre>
+		</td>
+	</tr>
+</table>
+<p>The following table lists the possible values for an <i><code>attribute_type </code></i>
+(<b>OSM type</b> column ), the corresponding data type in C++ (<b>C++ type</b> 
+column) and the corresponding enum value that is used in the Feature Modeler 
+APIs (<b>CATAttrKind</b> colum):</p>
+	<table class="border1" id="table8">
+	<tr>
+		<th>OSM type</th>
+		<th>C++ type</th>
+		<th>CATAttrKind <br>
+		Enum</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td><code>string</code></td>
+		<td>char *</td>
+		<td><code>tk_string</code></td>
+		<td>character string</td>
+	</tr>
+	<tr>
+		<td><code>double</code></td>
+		<td>double</td>
+		<td><code>tk_double</code></td>
+		<td>double precision floating point</td>
+	</tr>
+	<tr>
+		<td><code>boolean</code></td>
+		<td>CATBoolean</td>
+		<td><code>tk_boolean</code></td>
+		<td>boolean</td>
+	</tr>
+	<tr>
+		<td><code>octet</code></td>
+		<td>unsigned char</td>
+		<td><code>tk_octet</code></td>
+		<td>unsigned 8 bit value</td>
+	</tr>
+	<tr>
+		<td><code>int</code></td>
+		<td>int</td>
+		<td><code>tk_integer</code></td>
+		<td>signed 32 bit integer</td>
+	</tr>
+	<tr>
+		<td><code>specobject</code></td>
+		<td rowspan="3">N/A</td>
+		<td><code>tk_specobject</code></td>
+		<td>&quot;referenced&quot; link</td>
+	</tr>
+	<tr>
+		<td><code>component</code></td>
+		<td><code>tk_component</code></td>
+		<td>&quot;aggregated&quot; link</td>
+	</tr>
+	<tr>
+		<td><code>external</code></td>
+		<td><code>tk_external</code></td>
+		<td>&quot;external&quot; link </td>
+	</tr>
+	</table>
+<p>An attribute definition can have facets:</p>
+
+	<table class="border1" id="table10" >
+		<tr>
+			<th>Facet</th>
+			<th colspan="2">Meaning</th>
+		</tr>
+		<tr>
+			<code>
+			<td><code>#list</code></td>
+			<td colspan="2">the attribute holds not single value but a list (the 
+			corresponding <code>CATAttrKind </code>value is <code>tk_list</code>)</td>
+		</tr>
+		<tr>
+			<td><code>#in</code></td>
+			<td>the attribute is a Spec</td>
+			<td rowspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td><code>#out</code></td>
+			<td>the attribute is a Result</td>
+		</tr>
+		<tr>
+			<td><code>#neutral</code></td>
+			<td>the attribute is neither a Spec or a Result</td>
+		</tr>
+			</code>
+		<tr>
+			<td nowrap><code>#external_link_meta_data(<i>name</i>)</code></td>
+			<td>define link metadata for this <code>external </code>attribute:
+			<code>name </code>refers to an <code><a href="#extlink">
+			external_link_meta_data</a> </code>block where the link metadata is 
+			defined</td>
+		</tr>
+			</table>
+
+<p>The order of the attribute definition is not kept and should be not relied 
+on.</p>
+
+<h4>Attribute Initialization</h4>
+<p>The attribute can be initialized with a value with a statement of the form:</p>
+<table class="code" id="table9">
+	<tr>
+		<td>
+		<pre><i>attribute_name=value</i></pre>
+		</td>
+	</tr>
+</table>
+<p><code><i>value </i> </code>is specified as constants, with list written using 
+square brackets and commas: <code>[1,2,...]</code>:</p>
+	<table class="border1" id="table11">
+	<tr>
+		<th>OSM type</th>
+		<th>Example of Value</th>
+	</tr>
+	<tr>
+		<td><code>string</code></td>
+		<td>&quot;a string&quot;, [&quot;a&quot;, &quot;list&quot;, &quot;of&quot;, &quot;strings&quot;]</td>
+	</tr>
+	<tr>
+		<td><code>double</code></td>
+		<td>314.16e-2, 2.007</td>
+	</tr>
+	<tr>
+		<td><code>boolean</code></td>
+		<td>true, false</td>
+	</tr>
+	<tr>
+		<td><code>octet</code></td>
+		<td>255</td>
+	</tr>
+	<tr>
+		<td><code>int</code></td>
+		<td>1, 2, 3</td>
+	</tr>
+	<tr>
+		<td><code>specobject</code></td>
+		<td rowspan="3"><i><code>feature_identifier</code></i></td>
+	</tr>
+	<tr>
+		<td><code>component</code></td>
+	</tr>
+	<tr>
+		<td><code>external</code></td>
+	</tr>
+	</table>
+<p>The attributes that have feature objects as value (<code>specobject</code>,
+<code>component </code>and <code>external</code>) are initialized using feature 
+object identifiers. The following example shows a &quot;Line3D&quot; feature object being 
+initialized with two &quot;Point3D&quot; feature objects, <code>point0 </code>and <code>
+point1</code>:</p>
+<table class="code" id="table24">
+	<tr>
+		<td>
+		<pre>...
+feature <b>point0</b> Point3D {
+<b>        </b>x=0
+<b>        </b>y=0
+<b>        </b>z=0
+}
+feature <b>point1</b> Point3D {
+<b>        </b>x=1
+<b>        </b>y=1
+<b>        </b>z=1
+}
+feature <b>line</b> Line3D {
+<b>        </b>start=<b>point0</b>
+<b>        </b>end=<b>point0</b>
+}
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>In the above example, all feature objects belong to the same catalog. The <code>@`<i>other_catalog</i>.CATfct`</code> 
+notation can be used if a feature object resides in another catalog.</p>
+<p>The order of the attribute initializations is not important with respect to 
+the attribute definitions.</p>
+<h3><a name="metadata"></a>The meta_data_definition Statement</h3>
+<p>The <code>meta_data_defintion</code> statement appears at the same level as the 
+<code>container </code>statement. It defines a block consisting of only <code>
+external_link_meta_data </code>statements where link metadata are defined and 
+referred to by <code><a href="#attrdef">#external_link_meta_data</a></code> 
+facets in attribute defnitions.</p>
+<table class="code" id="table25">
+	<tr>
+		<td>
+		<pre><b>meta_data_definition</b> {
+<b>        </b>external_link_meta_data <i>name1</i> {
+<b>                </b>...
+<b>        </b>}
+<b>        </b>...
+}</pre>
+		</td>
+	</tr>
+</table>
+<h3><a name="extlink"></a>The external_link_meta_data Statement</h3>
+<p>This statement which can only appear inside a <code><a href="#metadata">meta_data_definition</a> </code>
+block, defines the metadata of an external link. </p>
+<p>meta_data_definition and external_link_meta_data are statement used for next 
+version.</p>
+<h3><a name="example"></a>A Commented Catalog Example</h3>
+<p>Here is an example of a complete catalog definition:</p>
+<table class="code" id="table4">
+	<tr>
+		<td>
+		<pre>document `<b>MyCatalog.CATfct</b>` {
+        container <b>CATFeatCont</b> #root {
+                /* Point2D startup */
+                feature <b>Point2D</b> #startup {
+                        double x
+                        double y
+                }
+                /* Point3D startup deriving from Point2d */
+                feature <b>Point3D</b> Point2D #startup {
+                        double z
+                        double #list coordinates
+                }
+                /* Line3D startup */
+                feature <b>Line3D</b> #startup {
+                        specobject start #in // start point
+                        specobject end #in   // end point
+                        double length #out   // length
+                }
+                /* Create a point at the origin */
+                feature <b>point0</b> Point3D {
+                        x=0.
+                        y=0.
+                        z=0.
+                }
+                /* Create point1 at (1,1,1) */
+                feature <b>point1</b> Point3D {
+                        x=1.
+                        y=1.
+                        z=1.
+                        coordinates=[1.,1.,1.]
+                }
+                feature <b>line</b> Line3D {
+                        start=<b>point0</b>
+                        end=<b>point0</b>
+                }
+        }
+} </pre>
+		</td>
+	</tr>
+</table>
+<ul>
+	<li>The catalog name is <b>MyCatalog.CATfct</b> (document statement)</li>
+	<li>The container name is <b>CATFeatCont</b></li>
+	<li>There are three feature startups defined:<ul>
+		<li><code>Point2D </code>with two attributes: <code>x </code>and <code>y
+		</code>(double)</li>
+		<li><code>Point3D </code>inheriting from <code>Point2D</code>, with two 
+		attribuets: <code>z </code>(double) and <code>coordinates </code>(a 
+		list of double)</li>
+		<li><code>Line3D </code>with 3 attributes: <code>start</code>, <code>end
+		</code>(features) and <code>length </code>(double). <code>start </code>and
+		<code>end </code>are specs while <code>length </code>is a result</li>
+	</ul>
+	</li>
+	<li>There are three feature objects defined:<ul>
+	<li><code>point0 </code>and <code>point1</code>, instantiated from <code>
+	Point3D </code>and initialized to (0.,0.,0). and (1.,1.,1.) respectively</li>
+	<li><code>line </code>instantaited from <code>Line3D </code>and initialized 
+	with <code>point0 </code>and <code>point1</code></li>
+</ul>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>In this article, we have detailed the OSM language that is used to describe 
+catalogs and their contents: feature startups and feature objects.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<tr>
+		<td valign="top">[1]</td>
+		<td><a href="CAAPstTACatalogLifecycle.htm">Managing StartUp Catalogs Lifecycle</a></td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Oct 2013]</td>
+		<td valign="top">Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

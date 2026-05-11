@@ -1,0 +1,96 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      This macro:
+'                 1 - Creates a rule base                                
+'                 2 - Adds the check below to this rulebase 
+'                     (for all) H:Hole   
+'                     H.Diameter>12mm   
+'                 3 - Determines whether the rule base is to be solved or not 
+'                 4 - Solves the rulebase if the rule base is to be solved
+'                 5 - Highlight the failed items 
+'
+'   Assumptions:    
+'                 This macro is intended to be run on the 
+'                 CAAKhwRuleBaseCreate.CATPart document located in
+'                 InstallRootDirectory/CAADoc/Doc/online/CAAScdKhwUseCases/samples/CAAKhwRuleBaseCreate.CATPart
+'                 where InstallRootDirectory is the directory where the CAA CD-ROM is installed
+'   
+'   Author:       Carole ROULLE , Pierre Grignon
+'   Languages:    VBScript
+'   Locales:      English (United States)
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' ----------------------------------------------------------- 
+    ' Optional: allows to find the sample wherever it's installed
+    dim sDocPath As String 
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ----------------------------------------------------------- 
+
+    ' Open the Part document 
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+		"online\CAAScdKhwUseCases\samples\CAAKhwRuleBaseCreate.CATPart")
+    Dim oDoc As Document
+    set oDoc = CATIA.Documents.Open(sFilePath)
+    
+    ' Set the CATIA popup file alerts to False
+    ' It prevents to stop the macro at each alert during its execution
+    CATIA.DisplayFileAlerts = False
+
+
+   Dim oActiveDoc As Document 
+   Set oActiveDoc = CATIA.ActiveDocument
+ 
+   ' Check whether the document is a CATPart
+   If (InStr(oActiveDoc.Name,".CATPart")) <> 0  Then 
+
+   ' Retrieve the Relations collection 
+   Dim oRel As Relations
+   Set oRel = oActiveDoc.Part.Relations 
+  
+   ' Create the RB1 rulebase
+   Dim oRuleBase As Relation
+   Set oRuleBase = oRel.CreateRuleBase("RB1") 
+   
+   ' Create the RuleSet.1 rule set and the HDiaCheck below 
+   ' the created rule set
+   Dim oCheck As Relation
+   Set oCheck= oRuleBase.RuleSet.CreateCheck("HDiaCheck","H:Hole","H.Diameter>12mm","RuleSet.1")
+ 
+   ' The rule base needs to be solved  
+   ' To confirm this, the rule base fingerprint is retrieved 
+   ' if the Fingerprint is 0 - the rule base needs be solved
+   ' otherwise it is solved 
+   if (oRuleBase.Fingerprint = 0) then
+   msgbox "The rule base must be solved - Click OK to solve the rule base"
+
+   ' Solve the rule base 
+   oRuleBase.Deduce()
+
+   else 
+   msgbox "The rule base is solved" 
+   end if
+   
+   ' Highlight the elements not satifying the check criteria
+   ' Reminder: elements are highlighted in the geometry area
+   ' and in the specification tree as well
+   ' Three holes are highlighted after the macro has finished running
+   oCheck.Highlight
+  ' oRuleBase.Report() 
+
+
+   CATIA.ActiveDocument.Part.Update 
+   else MsgBox "The active document must be a CATPart"
+   end if
+
+End Sub

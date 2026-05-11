@@ -1,0 +1,353 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Running Light Expand</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>EBOM Part &amp; Assembly Detailing</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Running Light Expand</h3>
+      <em>Running Light Expand</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to run a Light Expand to get data on objects and delete all the memory used to run that expand.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAADkoLightExpand Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAADkoLightExpand Do</a></li>
+            <li><a href="#How">How to Launch CAADkoLightExpand</a></li>
+            <li><a href="#Where">Where to Find the CAADkoLightExpand Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to run a Light Expand.</p>
+
+<p>An expand is a particular case of query. In the simplest case, a root Product Root Class is expanded to find the structure of Part Instances and Product Instances. Expand consists in finding the
+instances that are attached under the root PRC, ordering them thanks to their children/parent relationships, and finding the documents attached to those parts. Expand is using Query to find those
+instances. Expand has the same problems as Query: it is slow, loads in memory all objects found matching the input predicate, using memory that can't be cleaned after the process, and reads all 
+attributes of the objects even if only few of them are useful.<br>
+After having implemented Light Query to solve those issues, Light Expand has been implemented to take advantage of the improvements provided by Light Query. In particular, the result structure
+of Light Expand has to be deleted at the end in order to free the memory used by the Light Expand, memory that can be reused further.</p>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAADkoLightExpand Use Case</h3>
+<p>CAADkoLightExpand is a use case of the CAAVPMDesktopObjects.edu framework that
+illustrates VPMDesktopObjects, VPMInterfaces and VPMPersistency framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAADkoLightExpand Do</h4>
+
+<p>CAADkoLightExpand is a stand-alone executable that runs a Light Expand to get the product structure made of parts under a root PRC.<p>
+
+The interface ENOVILightExpandable is used to run the Light Expand and get the ordered structure. Each object in the result list is accessed via the interface CATIVpmLightExpandObject.</p>
+
+<ol>
+<li>
+In this use case, we set up the Light Expand to get the instances attached under the root PRC. This example focuses on the structure of parts under a PRC. It is possible to expand different kinds of
+objects and get different kinds of object types in the results.
+</li>
+<li>
+On the results, we print the type, name, out of sync status, lock information of each object.
+</li>
+</ol>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAADkoLightExpand</h4>
+<p>To launch CAADkoLightExpand, you will need to set up the build time environment,
+then compile CAADkoLightExpand along with its prerequisites, set up the run time
+environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAADkoLightExpand Code</h4>
+<p>The CAADkoLightExpand use case is made of a single file located in
+the CAADkoLightExpand.m module of the CAAVPMDesktopObjects.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMDesktopObjects.edu\CAADkoLightExpand.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMDesktopObjects.edu/CAADkoLightExpand.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are five logical steps in CAADkoLightExpand:</p>
+<ol>
+  <li><a href="#Step1">Get the root object to expand</a></li>
+  <li><a href="#Step2">Define the Light Expand parameter</a></li>
+  <li><a href="#Step3">Run the Light Expand</a></li>
+  <li><a href="#Step4">Use the results to print some information</a></li>
+  <li><a href="#Step5">Delete the Light Expand result structure</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step1"></a>Get the root object to expand</h5>
+The object to expand must be loaded in memory in order to access its ENOVILightExpandable interface. In order to do this, in this use case we have used Light Query to get the identifier of the PRC
+we want to expand. See the Light Query use case for more information on how to do that. Then we load this PRC in memory by using the following code.<br>
+Be careful when using the following API (ENOVLightQueryToFullObjectsServices::getFactoryObjects) as this call will load all light objects in input in memory. Doing so negates all the improvements
+brought by Light Query, and loads the objects in memory one by one which is very bad for performances.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      CATListOfInt Indexes;
+      CATLISTV(CATBaseUnknown_var) FactoryObjects;
+      RC = ENOVLightQueryToFullObjectsServices::getFactoryObjects( Indexes, FactoryObjects, oQueryResult );
+      </pre>
+    </td>
+  </tr>
+</table>
+Once we have the object in memory, we can use Query Interface to get the ENOVILightExpandable interface:
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      ENOVILightExpandable_var LightPRC( FactoryObjects[1] );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step2"></a>Define the Light Expand parameter</h5>
+We want to get Generic Components and Instances (Part and Product) under the root PRC.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      int Type = LEX_GenericComponent;
+      </pre>
+    </td>
+  </tr>
+</table>
+We want to expand the tree completely, without stopping at a predefined level. We expand the tree until there is no children parts to be found.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      int ExpandLevel = LEX_MODE_ALL;
+      </pre>
+    </td>
+  </tr>
+</table>
+Light Expand is defining a list of attributes on the instances to be able to do its job. We don't want any additonal attributes. So we define a list and leave it empty.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      CATListOfCATUnicodeString SelectClause;
+      </pre>
+    </td>
+  </tr>
+</table>
+We want to get all kinds of attached document, if any.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      DocumentCriteria DocCriteria = LEX_Document;
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step3"></a>Run the Light Expand</h5>
+This step is easy, it just consists in calling the getLightTree method to execute the expand.<br>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      RC = LightPRC-&gt;getLightTree( ExpandLevel, SelectClause, ExpandResult, Type, DocCriteria );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step4">Use the results to print some information</a></h5>
+For each object in the result structure, we get the type of the object, its name, its out of sync status, its lock status, the number of attached documents and we print everything.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      int nb = ExpandResult-&gt;Size();
+      TRACE &lt;&lt; "There are " &lt;&lt; nb &lt;&lt; " parts and GCo in the result of the expand" &lt;&lt; endl;
+      for( int i=1; i&lt;=nb; i++ )
+      {
+         CATIVpmLightExpandObject * LEXObj = (*ExpandResult)[i];
+         if ( LEXObj != NULL )
+         {
+            // Get the level
+            int level = 0;
+            LEXObj-&gt;getLevel( level );
+
+            // Get the name of the object
+            CATUnicodeString Name;
+            LEXObj-&gt;getName( Name );
+
+            // Get the synchronization status
+            vpmOutOfSync SyncStatus = LEX_Unknown;
+            LEXObj-&gt;getUpToDate( SyncStatus );
+
+            // Get the type of the object
+            vpmTypeNames BasicType = LEX_UnknownType;
+            LEXObj-&gt;getBasicType( BasicType );
+
+            // Get the lock owner on the instance
+            CATUnicodeString LockOwner;
+            LEXObj-&gt;getLockInfo( LockOwner );
+
+            // Get the attached documents
+            // the pointer 'Documents' will be deleted when the global expand results will be deleted.
+            CATListPtrCATIVpmLightExpandObject * Documents = NULL;
+            LEXObj-&gt;getDocuments( Documents, DocCriteria );
+            int nbDocs = 0;
+            if ( Documents != NULL )
+               nbDocs = Documents-&gt;Size();
+
+            TRACE &lt;&lt; "Object at index : " &lt;&lt; i &lt;&lt; " is a ";
+            if ( BasicType == LEX_PartInstance )
+               TRACE &lt;&lt; "Part Instance";
+            else if ( BasicType == LEX_ProductInstance )
+               TRACE &lt;&lt; "Product Instance";
+            else if ( BasicType == LEX_TempoItemInstance )
+               TRACE &lt;&lt; "Tempo Instance";
+            else if ( BasicType == LEX_GCoGenericComponent )
+               TRACE &lt;&lt; "Generic Component";
+            TRACE &lt;&lt; " at level " &lt;&lt; level &lt;&lt; ", named : " &lt;&lt; Name &lt;&lt; ",";
+            if (( BasicType == LEX_PartInstance ) || ( BasicType == LEX_ProductInstance ) || ( BasicType == LEX_TempoItemInstance ))
+            {
+               if ( LockOwner.GetLengthInChar() &gt; 0 )
+                  TRACE &lt;&lt; " locked by " &lt;&lt; LockOwner &lt;&lt; ",";
+               if ( SyncStatus == LEX_UpToDate )
+                  TRACE &lt;&lt; " up to date,";
+               else if ( SyncStatus == LEX_Version )
+                  TRACE &lt;&lt; " out of sync by version,";
+               else if ( SyncStatus == LEX_Reference )
+                  TRACE &lt;&lt; " out of sync by reference,";
+               else if ( SyncStatus == LEX_Quantity )
+                  TRACE &lt;&lt; " out of sync by quantity,";
+               else if ( SyncStatus == LEX_Position )
+                  TRACE &lt;&lt; " out of sync by position,";
+            }
+            TRACE &lt;&lt; " with " &lt;&lt; nbDocs &lt;&lt; " documents." &lt;&lt; endl;
+         }
+      }
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h5><a name="Step5">Delete the Light Expand result structure</a></h5>
+It is very important at the end to delete the structure used by the Light Expand to retrieve the data. No object has been loaded in memory during the Light Expand,
+but all the attribute values and object identifiers are stored in that structure. Deleting the structure will ensure that the server memory at the end of the
+Light Expand is the same as the memory at the start of the Light Expand.<br>
+A macro is available to delete the list of objects and all objects in that list.
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+      CATLIST_APPLY_DELETE_LIGHTEXPAND( ExpandResult );
+      </pre>
+    </td>
+  </tr>
+</table>
+<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+Running Light Expand on the server consists in getting the root object to expand, defining the parameters of the Light Expand, running the Light Expand, reading the results of the Light Expand and
+deleting the result structure to clean all the memory used by the Light Expand.<p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2013]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2013, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

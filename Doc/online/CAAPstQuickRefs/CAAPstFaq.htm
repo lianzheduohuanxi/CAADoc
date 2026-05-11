@@ -1,0 +1,121 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Frequently Asked Questions</title>
+
+</head>
+
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Product Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Frequently Asked Questions</h3>
+      <em></em></td>
+   </tr>
+   <tr>
+      <td class="quick"><b>Quick Reference</b></td>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+   <tr>
+      <td>
+      <h3>Abstract</h3>
+      <p>Here is a quick-access list of FAQs we have received from CAA partners as well as
+      DS internal developers. Whenever possible in the answers, links to
+      pertinent documents or use cases are provided for more detailed information.
+      <p><a href="#DocumentPointer">How can I get a pointer to the document
+      containing my Product?</a></p>
+      <p><a href="#RootProduct">How can I retrieve a pointer to the root product
+      of my Product document?</a></p>
+      <p><a href="#VisuProduct">I am in a CATIA interactive session in a Product document. I add a new
+      product to my product structure using CATIProduct::AddProduct. The
+      visualization and specs tree are not updated automatically. What should I do?</a><a href="#DocumentPointer"><br></a></p>
+   </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><!---------------------------------comment-------------------------------------><b><a name="DocumentPointer"></a>How
+can I get a pointer to the document containing my Product?</b><p>Use the <i>CATILinkableObject</i>
+interface of the ObjectModelerBase framework. Follow these steps:
+<pre>CATIProduct *piProduct = ...
+CATILinkableObject *piLinkableOnProduct = NULL;
+HRESULT rc = piProduct -&gt; <b>QueryInterface</b>(IID_CATILinkableObject,(void**)&amp;piLinkableOnProduct);
+if (SUCCEEDED(rc))
+{
+   CATDocument *pDoc = piLinkableOnProduct -&gt; <b>GetDocument</b>();
+}</pre>
+<p><b><a name="RootProduct"></a>How can I retrieve a pointer to the root product of my Product document?</b></p>
+<p>You need to use the <i> CATIDocRoots</i> interface of the
+ObjectModelerBase framework. Here is the code to do this:
+<pre>
+CATIDocRoots *piDocRootsOnDoc = NULL;
+rc = pDoc -&gt; <b>QueryInterface</b>(IID_CATIDocRoots,(void**)&amp;<b>piDocRootsOnDoc</b>);
+if ( FAILED(rc) ) <b>return</b> 1;
+
+// get the root product which is the first element of the list returned by GiveDocRoots
+CATListValCATBaseUnknown_var* pRootProducts =&nbsp;piDocRootsOnDoc -&gt; <b>GiveDocRoots</b>();
+CATIProduct_var spRootProduct = NULL_var;
+if (pRootProducts-&gt;<b>Size</b>())
+{
+  spRootProduct = <b>(*pRootProducts)[1]</b>;
+  <b>delete</b> pRootProducts;
+  pRootProducts = NULL;
+}
+piDocRootsOnDoc-&gt;<b>Release</b>();</pre>
+
+
+<p>
+In the above code, you can see that a <i>CATIDocRoots</i> pointer is
+first retrieved on the Product document. Using the <code>GiveDocRoots</code>
+method of <i>CATIDocRoots</i>, you can then retrieve a list whose first element
+is the root product. See the &quot;<a href="../CAAPstUseCases/CAAPstBrowse.htm">Browsing
+a Product Structure</a>&quot; use case for more details.
+
+</p>
+
+<p><b><a name="VisuProduct"></a>I am in a CATIA interactive session in a Product document. I add a new
+      product to my product structure using CATIProduct::AddProduct. The
+      visualization and specs tree are not updated automatically. What should I do?</b><p>You must send the visualization and specs tree navigation
+events yourself. Here is the code needed to do this:<p><font size="2" face="Courier New">//Update
+the 3D view<br>CATIModelEvents_var spEvents = RootProduct;<br>CATModify
+ModifyEvent(RootProduct);<br>spEvents -&gt; <b>Dispatch</b> (ModifyEvent);</font><p><font size="2" face="Courier New">//Update the
+graph view<br>CATIRedrawEvent_var
+spRedraw = RootProduct;<br>spRedraw -&gt; <b>Redraw</b>();</font>
+
+<hr>
+         <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+
+<table width="100%">
+   <tr>
+      <td valign="top">Version: <strong>1</strong>  [February 2002]</td>
+      <td valign="top">Document created</td>
+   </tr>
+   <tr>
+      <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+</table>
+
+<hr>
+         <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>

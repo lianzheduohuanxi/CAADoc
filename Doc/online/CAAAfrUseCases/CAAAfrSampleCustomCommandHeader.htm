@@ -1,0 +1,609 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating Customized Command Headers</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating Customized Command Headers</h3>
+      <em>Exposing your commands and managing their availability</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create a customized command header class to
+      expose a command and manage its availability.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAAfrDumpCommandHeader Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAAfrDumpCommandHeader Do</a></li>
+            <li><a href="#How">How to Launch CAAAfrDumpCommandHeader</a></li>
+            <li><a href="#Where">Where to Find the CAAAfrDumpCommandHeader Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create a customized command header
+class to expose a command and manage its availability.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAAfrDumpCommandHeader Use Case</h3>
+<p>CAAAfrDumpCommandHeader is a use case of the CAAApplicationFrame.edu
+framework that illustrates the ApplicationFrame framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAAfrDumpCommandHeader Do</h4>
+<table>
+  <tr>
+    <td><img src="images/CAAAfrDump.jpg" alt="CAAAfrDump.jpg (9085 bytes)" width="237" height="204"></td>
+    <td>The CAAAfrDumpCommandHeader use case creates command header class to
+      manage the availability of the Element Count command. Element Count scans
+      the active CAAGeometry document and prints in a dialog box a bill of the
+      objects contained in the document. This makes sense only if the document
+      is not empty, otherwise the command is made unavailable. The Element Count
+      command availability is managed by its command header.</td>
+  </tr>
+</table>
+<p>The CAAAfrDumpCommandHeader customized command header class plays the
+following roles:
+<ul>
+  <li>It is a command header as those created using the <code>MacDeclareHeader</code>
+    macro. This is possible by deriving the command header class from <em>CATCommandHeader</em></li>
+  <li>It should in addition make the command available when the document
+    contains at least one object, and unavailable otherwise. This is the role of
+    the <code>BecomeAvailable</code> and <code>BecomeUnavailable</code> methods
+    of <em>CATCommandHeader</em>.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAAfrDumpCommandHeader</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched. For the specific scenario :</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>On the <b>File</b> menu, click <b>New</b></li>
+  <li>In the <b>New</b> box, select <b>CAAGeometry</b> and click <b>OK</b></li>
+  <li>Create several geometric objects such as points, lines, planes, and so on,
+    using commands in the <b>Basic Elements</b> toolbar, or using the same
+    commands in the <b>Insert</b> menu.</li>
+  <li>On the <b>Tools</b> menu, click <b>Element Count</b>. A dialog box
+    displays the element count for each element type.<br>
+    Note that if the document is empty, the <b>Element Count</b> command is
+    greyed and cannot be triggerred.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAAfrDumpCommandHeader Code</h4>
+<p>The CAAAfrDumpCommandHeader use case is made of a single class named <i>CAAAfrDumpCommandHeader</i>
+located in the CAAAfrGeometryWshop.m module of the CAAApplicationFrame.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAAApplicationFrame.edu\CAAAfrGeometryWshop.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAAApplicationFrame.edu/CAAAfrGeometryWshop.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>CAAAfrDumpCommandHeader is part of the CAA Geometry Creation workshop where
+it is instantiated.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the command header for the Element Count command of the
+CAAAfrGeometryWshop workshop, there are six steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the command header class header file</td>
+    <td valign="top">LocalInterfaces</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Declare the command header class resources</td>
+    <td valign="top">CAAAfrDumpCommandHeader.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Set the callbacks to appropriate events and initialize the
+      command availability</td>
+    <td valign="top">Constructor</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Create the copy constructor, the Clone method, and the
+      destructor</td>
+    <td valign="top">CAAAfrDumpCommandHeader.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Create the callback methods that manage the command
+      availability</td>
+    <td valign="top">CAAAfrDumpCommandHeader.cpp</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Instantiate the command header class</td>
+    <td valign="top">CAAAfrGeometryWshop.m <code>CreateCommands</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Assign resources to the command header instance</td>
+    <td valign="top">Resource files</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Command Header Class</h4>
+<p>The CAAAfrDumpCommandHeader header file is as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &lt;CATCommandHeader.h&gt;
+...
+class CAAAfrDumpCommandHeader : public <strong>CATCommandHeader</strong>
+{
+  <strong>CATDeclareClass</strong>;
+  <strong>CATDeclareHeaderResources</strong>;
+  public:
+   
+    CAAAfrDumpCommandHeader(const CATString &amp; iHeaderName);
+    virtual ~CAAAfrDumpCommandHeader();
+    CATCommandHeader * <b>Clone</b>();
+      
+  private:
+    <b>CAAAfrDumpCommandHeader</b>(CATCommandHeader *iHeaderToCopy);
+    CAAAfrDumpCommandHeader(const CAAAfrDumpCommandHeader &amp;iObjectToCopy);
+    void <strong>AnalyzeFilledCB</strong>(CATCallbackEvent     iPublishedEvent,		
+                         void              *  ipPublishingObject, 
+                         CATNotification   *  ipPublishNotification,
+                         CATSubscriberData    iUsefulData,
+                         CATCallback          iCallbackId); 
+    void <strong>AnalyzeEmptyCB</strong> (CATCallbackEvent     iPublishedEvent,		
+                         void              *  ipPublishingObject, 
+                         CATNotification   *  ipPublishNotification,
+                         CATSubscriberData    iUsefulData,
+                         CATCallback          iCallbackId);
+  private:
+    CAAISysCollection * _pCollection;
+};</pre>
+    </td>
+  </tr>
+</table>
+<p><em>CAAAfrDumpCommandHeader</em> derives from <em>CATCommandHeader</em>. The <code>CATDeclareClass</code>
+macro declares that it belongs to a CAA component. The <code>CATDeclareHeaderResources</code>
+macro inserts the methods to manage the command header resources.&nbsp;</p>
+<p>About the mandatory public methods:</p>
+<ul>
+  <li>A <code>constructor</code> with a reference to a <nobr><code>const
+    CATString</code></nobr> as parameter,&nbsp;
+  <li>A <code>destructor</code>,
+  <li>The <code>Clone</code> method inherited from <i>CATCommandHeader </i>and
+    used to duplicate the command header instance. Refer to the &quot;Customized
+    Command Header Class Structure&quot; section of the technical article about
+    the command headers [<a href="#References">2</a>]. You will have all the
+    details about the <code>Clone</code> method.&nbsp;</li>
+</ul>
+<p>About the mandatory private methods:</p>
+<ul>
+  <li>A <code>constructor</code> taking a pointer to a <i>CATCommandHeader</i>
+    is dedicated to the <code>Clone</code> method.&nbsp;
+  <li>Two other <code>constructor</code> are declared in the private part, and
+    are not implemented in the source file. This prevents the compiler from
+    creating them as public without you know.</li>
+</ul>
+<p> Two callback
+methods, <code>AnalyzeFilledCB</code> and <code>AnalyzeEmptyCB</code>, are
+declared to be called when the document contains objects or when it is empty
+respectively. <code>_pCollection</code> is a pointer to the collection of
+objects in the document, and is document dependent.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Declaring the Command Header Class Resources</h4>
+<p>The CAAAfrDumpCommandHeader source file contains the resource declaration:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+<strong>CATImplementClass</strong>(CAAAfrDumpCommandHeader,<strong>Implementation</strong>, <strong>CATCommandHeader</strong>, CATNull); 
+<strong>CATImplementHeaderResources</strong>(CAAAfrDumpCommandHeader,
+                            CATCommandHeader,
+                            CAAAfrDumpCommandHeader);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A customized command header is a CAA component. The <code>CATImplementClass</code>
+macro makes the class <em>CAAAfrDumpCommandHeader</em> a component main class (<code>Implementation</code>)
+that OM-derives [<a href="#References">1</a>] from <em>CATCommandHeader</em>. The <code>CATImplementHeaderResources</code>
+macro is used in conjunction with the <code>CATDeclareHeaderResources</code>
+macro in the header file. It states that the <em>CAAAfrDumpCommandHeader</em>
+class derives from <em>CATCommandHeader</em>, and that its associated resource
+file names use the class name: CAAAfrDumpCommandHeader.CATNls and
+CAAAfrDumpCommandHeader.CATRsc respectively. The base class name set as second
+argument helps to use resource concatenation. The third argument could be set to
+the name of another class that is associated with resource files that use its
+class name, or to the name, without suffix, of an already existing resource file
+pair.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Setting the Callbacks to the Appropriate Events and
+Initializing the Command Availability</h4>
+<p>This is done in the <em>CAAAfrDumpCommandHeader</em> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrDumpCommandHeader::CAAAfrDumpCommandHeader(const CATString &amp;iHeaderName)
+                       : CATCommandHeader(iHeaderName,          // Command header id
+                                          &quot;CAAAfrGeoCommands&quot;,  // Command shared lib or DLL
+                                          &quot;CAAAfrDumpCmd&quot;,      // Command class
+                                          (void*) NULL),         // No parameter to pass to the command
+                         _pCollection(NULL)
+{
+ ...  // Get _pCollection
+  if (NULL != _pCollection)
+    ::<strong>AddCallback</strong>(this,
+                  _pCollection,
+                  &quot;CAASysCollectionEmptyNotif&quot;,
+                  (CATSubscriberMethod)&amp;CAAAfrDumpCommandHeader::AnalyzeEmptyCB,
+                  NULL);
+    ::<strong>AddCallback</strong>(this,
+                  _pCollection,
+                  &quot;CAASysCollectionFilledNotif&quot;,
+                  (CATSubscriberMethod)&amp;CAAAfrDumpCommandHeader::AnalyzeFilledCB,
+                  NULL);
+
+    int nbobject = 0;
+    _pCollection-&gt;GetNumberOfObjects(&amp;nbobject);
+
+    if ( nbobject &gt; 1 )
+      <b>BecomeAvailable();</b>
+    else
+      <b>BecomeUnavailable();</b>
+  }
+  else
+    <b>BecomeUnavailable();</b>
+}
+
+CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()                     
+{
+  if ( NULL != _pCollection)
+  {
+     <b>RemoveSubscriberCallbacks</b>(_pCollection);
+     _pCollection-&gt;Release();
+     _pCollection = NULL ;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The constructor first retrieves a pointer to a collection interface that
+manages the objects in the document. This is document implementation dependent.
+When the document is created or becomes empty, the collection sends a <em>CAASysCollectionEmptyNotif</em>
+notification class instance. On the opposite, when the first object is created
+in the document, the collection sends a <em>CAASysCollectionFilledNotif</em>
+notification class instance. A callback is set for each of these notifications
+thanks to the <code>AddCallback</code> global function, whose parameters are
+(for the first function call):</p>
+<table border="0">
+  <tr>
+    <td><code>this</code></td>
+    <td>The object that executes the callback method</td>
+  </tr>
+  <tr>
+    <td><code>_pCollection</code></td>
+    <td>The object that sends the notification</td>
+  </tr>
+  <tr>
+    <td><code>CAASysCollectionEmptyNotif</code></td>
+    <td>The class name of the notification sent</td>
+  </tr>
+  <tr>
+    <td><code>AnalyzeEmptyCB</code></td>
+    <td>The method to call back</td>
+  </tr>
+  <tr>
+    <td><code>NULL</code></td>
+    <td>Possible useful data to pass to the method</td>
+  </tr>
+</table>
+<p>The constructor finally asks the collection interface pointer to know whether
+the document is empty (An empty document contains at least one object: the
+UIactive object.) Depending on the answer, it initializes the command
+availability using the two methods <code>BecomeAvailable</code> and <code>BecomeUnavailable</code>.
+This is valid only at the command header class instantiation, and the callbacks
+will change this availability afterwards if needed.</p>
+<p>Don't forget to remove the subscriptions in the destructor using the <code>RemoveSubscriberCallbacks</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Creating the Copy Constructor, the Clone Method, and the
+Destructor</h4>
+<p>This is done in the <em>CAAAfrDumpCommandHeader</em> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAfrDumpCommandHeader::CAAAfrDumpCommandHeader(CATCommandHeader * iHeaderToCopy)
+                       : CATCommandHeader(iHeaderToCopy),
+                         _pCollection(NULL)
+{}
+					  
+CATCommandHeader * CAAAfrDumpCommandHeader::Clone() 
+{
+  return new CAAAfrDumpCommandHeader(this);
+}
+
+CAAAfrDumpCommandHeader::~CAAAfrDumpCommandHeader()                     
+{
+  if ( NULL != _pCollection)
+  {
+     <b>RemoveSubscriberCallbacks</b>(_pCollection);
+     _pCollection-&gt;Release();
+     _pCollection = NULL;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>Clone</code> method uses the copy constructor.</p>
+<p>Don't forget to remove the subscriptions in the destructor using the <code>RemoveSubscriberCallbacks</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating the Callback Methods that Manage the Command
+Availability</h4>
+<p>This is done in the <em>CAAAfrDumpCommandHeader</em> as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAAAfrDumpCommandHeader::AnalyzeFilledCB(CATCallbackEvent    iPublishedEvent,
+                                              void              * ipPublishingObject, 
+                                              CATNotification   * ipNotif,
+                                              CATSubscriberData   iUsefulData,
+                                              CATCallback         iCallbackId)
+{
+  <strong>BecomeAvailable</strong>();
+} 
+	
+void CAAAfrDumpCommandHeader::AnalyzeEmptyCB (CATCallbackEvent    iPublishedEvent,
+                                              void              * ipPublishingObject, 
+                                              CATNotification   * ipNotif,
+                                              CATSubscriberData   iUsefulData,
+                                              CATCallback         iCallbackId)
+{
+  <strong>BecomeUnavailable</strong>();
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>These two methods have the classical signatures of callback methods.
+Depending on the notification sent, they simply set the command availability
+accordingly.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Instantiating the Command Header Class</h4>
+<p>To instantiate this command header, the <code>CreateCommands</code> method of
+the <i>CAAAfrGeometryWks</i> workshop class should call its constructor with the
+command header identifier as parameter.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAAAfrGeometryWks::<strong>CreateCommands</strong>()
+{
+  ...
+  new <strong>CAAAfrDumpCommandHeader</strong>(&quot;CAAAfrDumpHdr&quot;);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>where <code>CAAAfrDumpHdr</code> is the identifier assigned to the command
+header. It will be used afterwards to associate the command starters defined to
+put the command in a menu and in toolbars with the command header. This
+identifier is also used to build the variables that define the command header
+resources, such as the name seen by the end user in his/her own language in the
+menu, or the icon to display in a toolbar.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Assigning Resources to the Command Header Instance</h4>
+<p>The <em>CAAAfrDumpCommandHeader</em> class is automatically associated with
+two resources files whose names are built using the class name:
+<ul>
+  <li>CAAAfrDumpCommandHeader.CATNls for titles and help message that can be
+    translated</li>
+  <li>CAAAfrDumpCommandHeader.CATRsc for other resources, such as the icons to
+    display in the toolbars</li>
+</ul>
+<p>The resources are designated using a key built as a concatenation of the
+command header class name, the command header instance identifier, and the
+resource keyword, separated by dots. The CAAAfrDumpCommandHeader.CATNls file
+includes the following for the Point command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>Title</b>     = &quot;Element Count...&quot;;
+CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>ShortHelp</b> = &quot;Element Count&quot;;
+CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>Help</b>      = &quot;Contents of the document&quot;;
+CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>LongHelp</b>  = &quot;Element Count (Tools menu)
+This command enables the user to dump document contents&quot;;
+CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>Category</b>  = &quot;Tools&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>These resources are:</p>
+<table>
+  <tr>
+    <td valign="top">Title</td>
+    <td><img border="0" src="images/CAAAfrDumpTitle.jpg" width="106" height="31"></td>
+    <td valign="top">Text displayed in the Tools menu for the command</td>
+  </tr>
+  <tr>
+    <td valign="top">ShortHelp</td>
+    <td><img border="0" src="images/CAAAfrDumpShortHelp.jpg" width="82" height="68"></td>
+    <td valign="top">Text displayed in a balloon as the command short help
+      message when the mouse moves over the command when this command is in a
+      toolbar. This is not applicable to commands located in the menu bar</td>
+  </tr>
+  <tr>
+    <td valign="top">Help</td>
+    <td><img border="0" src="images/CAAAfrDumpHelp.jpg" width="130" height="24"></td>
+    <td valign="top">Text displayed in the status bar as the command help
+      message when the mouse moves over the command. This is not applicable to
+      commands located only in the menu bar, but is applicable for commands
+      located in both the menu bar and a toolbar</td>
+  </tr>
+  <tr>
+    <td valign="top">LongHelp</td>
+    <td><img border="0" src="images/CAAAfrDumpLongHelp.jpg" width="309" height="36"></td>
+    <td valign="top">Text displayed in a balloon when the end user clicks <img src="images/I_WhatsThisP2.gif" alt="I_WhatsThisP2.gif (235 bytes)" width="24" height="24">,
+      which turns the mouse cursor as a question mark, and then clicks on the
+      icon representing the command. This is not applicable to commands located
+      in the menu bar</td>
+  </tr>
+  <tr>
+    <td valign="top">Category</td>
+    <td><img border="0" src="images/CAAAfrDumpCategory.jpg" width="509" height="355"></td>
+    <td valign="middle">An attribute associated with the command and used to
+      sort the commands in the Commands tab page of the Customize window</td>
+  </tr>
+</table>
+<p>The CAAAfrGeometryWksHeader.CATRsc file includes the following for the Point
+command:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>Icon.Normal</b>  = &quot;I_CAAFindP2&quot;;
+CAAAfrDumpCommandHeader.CAAAfrDumpHdr.<b>LongHelpId</b>   = &quot;CAAAfrDumpCommandHeader.CAAAfrDumpHdr&quot;;</pre>
+    </td>
+  </tr>
+</table>
+<p>These are the file names of the icons used to show the Element Count command
+in the toolbar:</p>
+<table>
+  <tr>
+    <td valign="top">Icon.Normal</td>
+    <td><img src="images/CAAAfrDumpIconNormal.jpg" alt="CAAAfrDumpIconNormal.jpg (1056 bytes)" width="31" height="28"></td>
+    <td valign="top">Icon associated with the command and used in toolbars when
+      the command is available. The greyed icon associated with the command when
+      it is unavailable is computed from this one. In a P2 session, the shadowed
+      icon displayed for default state and the Pressed and Focused icons are
+      computed from the Normal one too.</td>
+  </tr>
+  <tr>
+    <td valign="top">LongHelpId</td>
+    <td></td>
+    <td valign="top">Identifier associated with the command and that calls the
+      command help when the F1 key is pressed while the command is active</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>A command header stands for a command and avoids to load the command when the
+end user does not require it. A command header is an instance of a command
+header class. A customized command header created by deriving the <i>CATCommandHeader</i>
+class can manage the command availability with respect to the document contents
+or to any other criterion using the <code>BecomeAvailable</code> and <code>BecomeUnavailable</code>
+methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysOMInheritance.htm">Object
+      Modeler Component and Implementation Inheritances</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrCommandHeaders.htm">The
+      Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [Feb 2004]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

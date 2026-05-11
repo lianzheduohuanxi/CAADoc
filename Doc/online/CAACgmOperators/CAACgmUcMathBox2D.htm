@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Retrieving the CATMathBox2D of An Edge or a Face </title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Retrieving the CATMathBox2D of An Edge or a Face </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CATICGM2DBoxComputation operator allows you to retrieve the 
+		CATMathBox2D of a cell. </p>
+		 <ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>	
+		</td>
+	</tr>
+</table>
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To compute the CATMathBox2D of an edge or a face, use the 
+CATICGM2DBoxComputation operator. This operator has to be created by using the
+CATCGMCreate2DBoxComputation global function.
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperators2DBoxComputation.m module in CAAGMOperatorsInterfaces.edu 
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+creates a CATICGM2DBoxComputation operator, runs it and retrieves the 
+CATMathBox2D associated with an edge and a face.<p>With the input file below:<p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> CATMathBox2D Input </caption>
+   <tr>
+    <td>
+	<img alt="CATMathBox2D input" src="images/CGM_mathBox2D_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+and the code below:
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATFace *iFace = (CATFace *) piGeomFactory->FindObjectFromTag(9);
+CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
+...
+CATICGM2DBoxComputation *pComp2DBoxOp = NULL;
+pComp2DBoxOp = CATCGMCreate2DBoxComputation(piGeomFactory, &topdata, iFace);
+...
+pComp2DBoxOp->Run();
+
+CATSurLimits uvLimitsFace;
+pComp2DBoxOp->Get2DBox(uvLimitsFace);
+CATMathBox2D mathBox2DFace;
+uvLimitsFace.Get2DBox(mathBox2DFace);
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+
+
+<p>
+you retrieve a CATMathBox2D with the properties below:<font FACE="Consolas" SIZE="2"><p>
+Low corner= ( 0 , 0 ) </p>
+<p>High corner= ( 9424.78 , 5000 ) </p>
+</font>
+<p>
+The code below:<p>
+<TABLE class="code">
+    <TR>
+        <TD>
+       <pre>
+CATFace *iFace = (CATFace *) piGeomFactory->FindObjectFromTag(9);
+CATEdge *iEdge = (CATEdge *) piGeomFactory->FindObjectFromTag(13);
+...
+pComp2DBoxOp = CATCGMCreate2DBoxComputation(piGeomFactory, &topdata, iEdge, iFace);
+pComp2DBoxOp->Run();
+
+CATSurLimits uvLimitsEdge;
+pComp2DBoxOp->Get2DBox(uvLimitsEdge);
+CATMathBox2D mathBox2DEdge;
+uvLimitsEdge.Get2DBox(mathBox2DEdge);
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>generates the same result.</p>
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Feb 2014]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

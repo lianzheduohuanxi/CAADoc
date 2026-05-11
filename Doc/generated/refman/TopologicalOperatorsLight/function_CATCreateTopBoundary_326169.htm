@@ -1,0 +1,132 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>TopologicalOperatorsLight Global Function CATCreateTopBoundary</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../TopologicalOperatorsLight.htm" href="../TopologicalOperatorsLight.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "TopologicalOperatorsLight";	}
+		function getCurrentObjectName() { 
+ 	return "CATCreateTopBoundary"; } 
+	function getCurrentType() { 
+ 	return "global function"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>TopologicalOperatorsLight Global Function CATCreateTopBoundary</h1>
+
+<br><dt><table><tr><td>  <script type="text/javascript"> activateLink('CATHybBoundary',' CATHybBoundary *')</script>  <b>CATCreateTopBoundary</b>(<td><script type="text/javascript"> activateLink('CATGeoFactory','CATGeoFactory*')</script> <td><tt>iFactory</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATTopData','CATTopData*')</script> <td><tt>iData</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATBody','CATBody*')</script> <td><tt>inputBody</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATDomain','CATDomain*')</script> <td><tt>inputDomain</tt><td><tt>=NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATCell','CATCell*')</script> <td><tt>initialCell</tt><td><tt>=NULL</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('CATHybPropagateMode','CATHybPropagateMode')</script> <td><tt>iPropagateMode</tt><td><tt>=NO_CONTINUITY</tt>)<script type="text/javascript"> activateLink('','')</script>  </table></dt>
+<dl>
+  <dd>
+ Constructs an operator that creates a piece of boundary of a
+ CATShell or a CATWire.
+ <br>By default, all the boundaries are computed (two vertices for a wire,
+ one or more wire(s) for the shell). To get a partial boundary solution, use an
+ <tt>iInitialCell</tt>.
+ <br><b>Orientation</b>: The orientation of <tt>initialCell</tt>. If <tt>initialCell=null</tt>,
+ the orientation of the loop of the first face of the shell.
+ <br><b>Journal</b>: 
+ <dl><dt>Shell</dt><dd>
+ The edges are written as <tt>CATCGMJournal::Keep</tt>. The first and last vertex of
+ the boundary are written 
+ as <tt>CATCGMJournal::Creation</tt>.
+ <dt>Wire</dt>
+ <dd>The two vertices are written as <tt>CATCGMJournal::Keep</tt>.
+</dl>
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iFactory</tt>
+   <dd> A pointer to the factory of the resulting body.
+ </dd>
+    <dt><tt> iData</tt>
+   <dd> A pointer to the topological data.
+ </dd>
+    <dt><tt> inputBody</tt>
+   <dd> A pointer to the body for which the boundary is asked for. If it contains several
+ domains, use <tt>inputDomain</tt> to specify which one is to be taken into account.
+ </dd>
+    <dt><tt> inputDomain</tt>
+   <dd> The domain on which the boundary is computed. To use if <tt>inputBody</tt> contains several
+ domains.
+ </dd>
+    <dt><tt> iInitialCell</tt>
+   <dd> The initial cell from which the boundary is computed.
+ <ul>
+     <li>for a CATWire: <tt>iInitialCell</tt> is a CATVertex. The boundary begins
+ at <tt>iInitialCell</tt> and ends at the nearest extremity of the CATWire
+     <li>for a CATShell: <tt>iInitialCell</tt> is a CATEdge. The boundary is
+ propagated according to <tt>CATHybPropagateMode</tt>. The boundary is retrieved
+ as one or more CATWire.
+ </ul>
+ </dd>
+    <dt><tt> iPropagateMode</tt>
+   <dd> The rule of propagation of a piece of the boundary of a shell domain.
+ <dl><dt>NO_CONTINUITY</dt>
+ <dd>No restriction is made on the definition of the boundary. In particular, this boundary
+ can be made of several domains (case of inner loops of a shell).
+ <dt> POINT_CONTINUITY</dt>
+ <dd>The boundary stops at the last cell of the bounding domain.
+ <dt> TANGENT_CONTINUITY</dt>
+ <dd>The boundary stops at the first vertex where the boundary is not continuous in tangent.
+ </dl></dd>
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATCreateTopBoundary.h</b><br>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

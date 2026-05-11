@@ -1,0 +1,120 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>switch_ShadowsEnv.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' COPYRIGTH DASSAULT SYSTEMES 2003</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose:		Switch on and off all the environment' shadows of a product</font>
+<font color="#008000">'</font>
+<font color="#008000">'   Version:		1.0</font>
+<font color="#008000">'   Author:			bmb</font>
+<font color="#008000">'   Languages:		VBScript </font>
+<font color="#008000">'   Locales:		English </font>
+<font color="#008000">'   CATIA Level:	V5R12 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+
+<font color="#008000">' Main </font>
+<font color="#0000FF">Sub </font>CATMain()
+
+	<font color="#008000">' Get the documents collection</font>
+	Dim oCollection<font color="#0000FF"> As </font>Documents
+	Set oCollection = CATIA.Documents
+
+	<font color="#008000">' test if no document is open</font>
+	If 0=oCollection.Count<font color="#0000FF"> Then </font>
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch On Lights"
+		Exit Sub
+	End If
+
+	 <font color="#008000">' Get material library</font>
+	Dim oProductDocument<font color="#0000FF"> As </font>Document
+	Set oProductDocument = CATIA.ActiveDocument
+
+	<font color="#008000">' test if the active document is a material library (CATMaterial)</font>
+	If 0=InStr(oProductDocument.Name, ".CATProduct") Then
+		msgbox "A product document must be active to execute this macro.", vbOKOnly, "Switch Off Shadows"
+		Exit Sub
+	End If
+
+	<font color="#008000">' Accessing the Root Product</font>
+	Dim oRootProduct<font color="#0000FF"> As </font>Document
+	Set oRootProduct = oProductDocument.Product
+
+	<font color="#008000">' Accessing the collection of rendering env</font>
+	Dim oRenderingEnvironments<font color="#0000FF"> As </font>RenderingEnvironments
+	Set oRenderingEnvironments = oRootProduct.GetItem("CATRscRenderingEnvironmentVBExt")
+
+	<font color="#008000">' Declarations</font>
+	Dim I<font color="#0000FF"> As </font>Int, J<font color="#0000FF"> As </font>Int
+	Dim oRenderingEnvironment<font color="#0000FF"> As </font>RenderingEnvironment
+	Dim oRenderingEnvironmentWalls<font color="#0000FF"> As </font>RenderingEnvironmentWalls
+	Dim oRenderingEnvironmentWall<font color="#0000FF"> As </font>RenderingEnvironmentWall
+	Dim iTypeEnv<font color="#0000FF"> As </font>Int
+
+	<font color="#008000">' Create the parameter</font>
+	Dim oParams<font color="#0000FF"> As </font>Parameters
+	Dim oReadParam<font color="#0000FF"> As </font>Parameter
+	Dim oParam<font color="#0000FF"> As </font>Parameter
+	Dim sParamValue<font color="#0000FF"> As </font>String
+	Set oParams = oProductDocument.Product.Parameters
+
+	On Error Resume Next
+	Set oParam = oParams.Item("EnvironmentsShadowsStatus")
+
+	If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">''''''''' switch OFF '''''''''</font>
+		<font color="#008000">' Environments loop</font>
+		For I=1<font color="#0000FF"> To </font>oRenderingEnvironments.Count
+			Set oRenderingEnvironment = oRenderingEnvironments.Item(I)
+
+			<font color="#008000">' Select the active env</font>
+			If 1=oRenderingEnvironment.ActiveStatus<font color="#0000FF"> Then</font>
+				iTypeEnv = oRenderingEnvironment.GetType
+				sParamValue = oRenderingEnvironment.Name & "="
+
+				<font color="#008000">' Walls loop</font>
+				For J=1<font color="#0000FF"> To </font>6
+					<font color="#008000">' Adapt to the env type</font>
+					If (J&lt;=2 And iTypeEnv&lt;&gt;2) Or (J&lt;=4 And J&gt;=3 And iTypeEnv=1) Or (J&gt;=5) <font color="#0000FF"> Then</font>
+						Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(J)
+						If 1=oRenderingEnvironmentWall.ShadowsStatus<font color="#0000FF"> Then</font>
+							sParamValue = sParamValue & J
+							oRenderingEnvironmentWall.ShadowsStatus = 0
+						End If
+					End If
+				Next
+				Exit For
+			End If
+		Next
+
+		<font color="#008000">' Create the parameter</font>
+		oParams.CreateString "EnvironmentsShadowsStatus", sParamValue
+		oParams.Item("EnvironmentsShadowsStatus").Hidden = True
+
+
+	Else <font color="#008000">''''''''' switch ON '''''''''</font>
+
+		<font color="#008000">' Parse the parameter value</font>
+		Dim aTab<font color="#0000FF"> As </font>Array
+		sParamValue = oParam.ValueAsString <font color="#008000">' read the parameter value</font>
+		aTab = Split(sParamValue, "=")
+
+		Set oRenderingEnvironment = oRenderingEnvironments.Item(aTab(0))
+		If Err &lt;&gt; 0<font color="#0000FF"> Then </font><font color="#008000">' env not exist</font>
+			msgbox "Impossible to find the environment '" & aTab(0) & "'", vbOKOnly, "Switch On Environmemts' Shadows"
+		Else
+			For I=0<font color="#0000FF"> To </font>Len(aTab(1))
+				Set oRenderingEnvironmentWall = oRenderingEnvironment.GetWall(Mid(aTab(1), I, 1))
+				oRenderingEnvironmentWall.ShadowsStatus = 1
+			Next
+		End If
+
+		<font color="#008000">' Remove parameter</font>
+		oParams.Remove "EnvironmentsShadowsStatus"
+
+	End If
+
+<font color="#0000FF">End Sub</font>
+
+
+</pre></body></html>

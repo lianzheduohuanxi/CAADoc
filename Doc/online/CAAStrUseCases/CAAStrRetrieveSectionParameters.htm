@@ -1,0 +1,515 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+			<title>Mechanical Design</title>
+	</head>
+	<body>
+		<table width="100%">
+			<tr>
+				<td valign="top">
+					<h1>Mechanical Design</h1>
+				</td>
+				<td valign="top">
+					<h2>Structure</h2>
+				</td>
+				<td rowspan="2" align="right" valign="top">
+					<h3><a name="Top"></a>Retrieving the Structure Section Document Parameters</h3>
+					<h3><i><font size="1">How to retrieve the structure section document parameters as computed 
+								attributes</font>&nbsp;</i></h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="use" colspan="2">Use Case</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<table class="abstract">
+			<tr>
+				<td>
+					<h3>Abstract</h3>
+					<p>This article discusses the CAAStrUserProperties  use case.</p>
+					<ul>
+						<li>
+							<strong><a href="#Learn">What You Will Learn With This Use Case</a></strong>
+						<li>
+							<a href="#UseCase"><strong><b>CAAStrUserProperties </b><strong> Use Case</strong></a>
+							<ul>
+								<li>
+									<a href="#What">What Does CAAStrUserProperties  Do</a>
+								<li>
+									<a href="#How">How to Launch CAAStrUserProperties </a>
+								<li>
+									<a href="#Where">Where to Find the CAAStrUserProperties  Code</a></li>
+							</ul>
+						<li>
+							<strong><a href="#Step">Step-by-Step</a></strong>
+						<li>
+							<strong><a href="#InShort">In Short</a></strong>
+						<li>
+							<strong><a href="#References">References</a></strong></li>
+					</ul>
+					</STRONG>
+				</td>
+			</tr>
+		</table>
+		<!---------------------------------comment------------------------------------->
+		<table width="100%">
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+		<p>This use case is intended to show you how to initialize CATIA session, get the 
+			root product and query the structure member section, and retrieve the section 
+			parameters as the computed attributes on the member objects.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="UseCase"></a>The CAAStrUserProperties  Use Case</h3>
+		<p>CAAStrUserProperties  is a use case of the CAAStructureInterfaces.edu 
+			framework that illustrates StructureInterfaces framework capabilities.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="What"></a>What Does CAAStrUserProperties  Do</h4>
+		<p>The goal of&nbsp; CAAStrUserProperties  is to show you how to use the 
+			StructureInterfaces methods to query and obtain structure section document. 
+			Defining the computed (non-persistent, run time) attribute on the profiles, 
+			then implementing the GetValue on the CATIPspKweUserAttr interface to display 
+			the internal section parameters as the profile attributes.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="How"></a>How to Launch CAAStrUserProperties </h4>
+		<p>To launch CAAStrUserProperties , you will need to set up the build time 
+			environment, then compile CAAStrUserProperties  along with its 
+			prerequisites, set up the run time environment, and then execute the sample. 
+			This is fully described in the referenced article [<a href="#References">1</a>]. 
+			When launching the use case, you must pass the following arguments:</p>
+		<ul>
+			<li>
+				<b>CAASDD_Design_Unit.CATPart</b> - the entire pathname, name and extension 
+				(.CATPart) of the input model.&nbsp;It stored in the 
+				CNext/resources/graphic directory of the CAAStructureInterfaces.edu framework.&nbsp;</li>
+		</ul>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to Find the CAAStrUserProperties  Code</h4>
+		<p>CAAStrUserProperties  code is located in the CAAStrUserProperties.m use 
+			case module of the CAAStructureInterfaces.edu framework:</p>
+		<table>
+			<tr>
+				<td>Windows</td>
+				<td><code>InstallRootDirectory\CAAStructureInterfaces.edu\</code><code>CAAStrUserProperties.m</code></td>
+			</tr>
+			<tr>
+				<td>Unix</td>
+				<td><code>InstallRootDirectory/CAAStructureInterfaces.edu/</code><code>CAAStrUserProperties.m</code></td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Where"></a>Where to Find the CAAStrDefineUserProperties Code</h4>
+		<p>CAAStrDefineUserProperties code is located in the CAAStrDefineUserProperties.m 
+			use case module of the CAAStructureInterfaces.edu framework: This code 
+			illustrates how to define the computed attribute on the profile object, and 
+			implement the GetValue method to valuate the added attribute.</p>
+		<table>
+			<tr>
+				<td>Windows</td>
+				<td><code>InstallRootDirectory\CAAStructureInterfaces.edu\</code><code>CAAStrDefineUserProperties.m</code></td>
+			</tr>
+			<tr>
+				<td>Unix</td>
+				<td><code>InstallRootDirectory/CAAStructureInterfaces.edu/</code><code>CAAStrDefineUserProperties.m</code></td>
+			</tr>
+		</table>
+		<p>&nbsp;</p>
+		<p>where <code>InstallRootDirectory</code> is the root directory of your CAA V5 
+			installation. It is made of&nbsp; one unique source files named 
+			CAAStrRetrieveSectionParameter.cpp.</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="Step"></a>Step-by-Step</h3>
+		<p>There are seven logical steps in CAAStrRetrieveSectionParameter :</p>
+		<ol>
+			<li>
+				<a href="#Prolog">Prolog</a>
+			<li>
+				<a href="#Defining Attribute">Defining the user attributes</a>
+			<li>
+				<a href="#Initializing">Initializing the Environment</a>
+			<li>
+				<a href="#Structure Member">Retrieving the Structure Member</a>
+			<li>
+				<a href="#Section Parameter">Retrieving the Member Section Parameters</a>
+			<li>
+				<a href="#Remove the Open Document">Remove the Open Document and Delete the CATIA 
+					Session</a></li>
+		</ol>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Prolog"></a>Prolog</h4>
+		<p>In this use case, we open an input document containing some Structure 
+			objects.&nbsp;</p>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Initializing"></a>Initializing the Environment</h4>
+		<p>The CAAStrUserProperties  is a standalone batch program . The 
+			initialization of the CATIA session and retrieving pointer of the root product 
+			involves the following code</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>	
+CATSession* pSession = NULL;
+rc = ::Create_Session("CAA2_Sample_Session",pSession);
+if (SUCCEEDED(rc))
+	cout &lt;&lt; endl &lt;&lt; " ## CAAStrRetrieveSectionParameter ## " &lt;&lt; endl
+		&lt;&lt; endl &lt;&lt; " Initialize CATIA Session Succeeded " &lt;&lt; endl &lt;&lt; flush;
+cout &lt;&lt; endl &lt;&lt; " Input document path " &lt;&lt; argv[1] &lt;&lt; endl &lt;&lt; flush;
+
+CATDocument* pDoc = NULL;
+rc = CATDocumentServices::OpenDocument(argv[1],pDoc);
+
+if ( FAILED(rc) || (NULL==pDoc)) return 2;
+cout &lt;&lt; endl &lt;&lt; " product document opened : " 
+	&lt;&lt; argv[1] &lt;&lt; endl &lt;&lt; flush;
+</pre>
+				</td>
+			</tr>
+		</table>
+		<p>This code performs the following functions:</p>
+		<ul>
+			<li>
+			Creating a session, named "CAA2_Sample_Session".
+			<li>
+			Loading the input document.
+			<li>
+				Retrieving the pointer to the root product.</li>
+		</ul>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Defining Attribute"></a>Defining the computed attributes on the 
+			structure object and implement the GetValue method</h4>
+		<p>Implement the CATIPspKweUserAttr interface.To define the attribute on an 
+			existing object, user needs to implement the DefineKweUserAttr method. In this 
+			method program can add any attribute type to the input object. To valuate the 
+			added attribute type, user needs to implement the GetValue method. In this 
+			method program can valuate the attribute value.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>
+HRESULT CAAStrDefineUserAttributes::DefineKweUserAttr(const CATString &amp;isTypeName, 
+                                  CATListValCATAttributeInfos &amp;olAttrInfos) 
+{
+
+  HRESULT rc = E_FAIL;
+
+  //
+  // To activate this implementation remove the following "if" conditional block.
+  //
+
+  if (CATGetEnvValue("RunSample",0) != CATLibSuccess)
+  {
+    return rc;
+  }
+
+
+  CATTry 
+  {
+    CATITypeDictionary_var spDico = CATGlobalFunctions::GetTypeDictionary();
+
+    // Get Dictionary of types
+    CATIParmDictionary_var spParmDictionary = CATCkeGlobalFunctions::GetParmDictionary();
+
+    if(!!spDico &amp;&amp; !!spParmDictionary)
+    {
+      if( isTypeName == "CATSfmStiffenerExt" ||
+          isTypeName == "CATSfmBeamExt"      ||
+          isTypeName == "CATSfmStiffenerOnFreeEdgeExt")
+      {   
+        cout&lt;&lt;"Defining computed attribute for " &lt;&lt; isTypeName.CastToCharPtr() &lt;&lt; endl;
+        //
+        // Define Real type computed attribute SectionArea
+        //
+        CATUnicodeString uAttrInternalName(USER_ATTR_SectionArea);
+        CATUnicodeString uAttrNLSName(USER_ATTR_SectionArea_NLS);
+
+        CATICkeType_var spCkeReal = spParmDictionary-&gt;GetRealType();
+        CATIType_var spTypeReal(spCkeReal);         
+
+        CATAttributeInfos infoAttr(spTypeReal, uAttrInternalName, uAttrNLSName);
+        olAttrInfos.Append(infoAttr);       
+      }
+      rc = S_OK;
+    }
+  }
+  CATCatch (CATError, error)
+  {    
+    cout &lt;&lt; "CAAStrDefineUserAttributes::DefineKweUserAttr *** CATRethrow" &lt;&lt; endl;
+    CATRethrow;
+  } 
+  CATEndTry;
+
+  return rc;
+}
+
+CATIValue* CAAStrDefineUserAttributes::GetValue (CATIInstance*  ipiObject, 
+                       const CATUnicodeString&amp; iKey) 
+{
+  HRESULT rc = E_FAIL;
+
+
+  CATIValue * piResultValue = NULL;
+
+  //
+  // To active this implementation remove the following condition
+  //
+  if (CATGetEnvValue("RunSample",0) != CATLibSuccess)
+  {
+    return piResultValue;
+  }
+
+  if( NULL == ipiObject) return piResultValue;
+
+  // Get volatile factory of values
+  CATICkeParmFactory_var spVolFactory = CATCkeGlobalFunctions::GetVolatileFactory();
+
+  CATTry 
+  {
+    CATUnicodeString uAttrInternalName(USER_ATTR_SectionArea);
+    if (iKey == uAttrInternalName)
+    {
+      CATIStructureMember *piStrMember = NULL;
+      ipiObject-&gt;QueryInterface(IID_CATIStructureMember, (void **)&amp;piStrMember);
+      if ( NULL != piStrMember)
+      {
+        CATLISTV(CATISpecObject_var) oListParameters;
+        CATISpecObject_var spSpecObjectPart;
+        CATDocument *piSectionDoc = NULL;
+        piStrMember-&gt;GetSection(piSectionDoc);
+        if (piSectionDoc)
+        {
+          CATInit *pInitOnDoc = NULL ;
+          if (SUCCEEDED(piSectionDoc-&gt;QueryInterface(IID_CATInit,(void **) &amp;pInitOnDoc)) &amp;&amp; pInitOnDoc)
+          {
+            CATIPrtContainer *pIPrtCont = NULL ;
+            pIPrtCont = (CATIPrtContainer*)pInitOnDoc-&gt;GetRootContainer("CATIPrtContainer");
+            if (pIPrtCont)
+            {
+              spSpecObjectPart = pIPrtCont-&gt;GetPart();
+              pIPrtCont-&gt;Release(); pIPrtCont = NULL;
+            }
+            pInitOnDoc-&gt;Release(); pInitOnDoc = NULL;
+          }
+        }
+
+        // Get all the parameters under the part
+        CATIParmPublisher_var spParmPub(spSpecObjectPart);
+        if (!! spParmPub)
+        {
+          spParmPub-&gt;GetAllChildren("CATICkeParm",oListParameters);
+        }
+
+        double SectionArea = 0.;
+        CATICkeParm_var spResultParm;
+
+        // Get the Section Area from Parameter "A"
+        int lSize = oListParameters.Size();
+        for (int i=1; i &lt;= lSize; i++)
+        {
+          CATICkeParm_var spCkeParm(oListParameters[i]);
+          cout &lt;&lt; " Parameter name "  &lt;&lt; (spCkeParm-&gt;Name()).ConvertToChar() &lt;&lt; endl;
+          cout &lt;&lt; " Parameter Role " &lt;&lt; (spCkeParm-&gt;Role()).ConvertToChar() &lt;&lt; endl;
+          cout &lt;&lt; " Parameter value " &lt;&lt; (spCkeParm-&gt;Show()).ConvertToChar() &lt;&lt; endl;
+          if (!! spCkeParm )
+          {
+            CATUnicodeString SectionParameterArea("A");
+            CATUnicodeString ParameterRole = (spCkeParm-&gt;Role()).Strip(CATUnicodeString::CATStripModeBoth);
+            if (ParameterRole == SectionParameterArea )
+            {
+              SectionArea = (spCkeParm-&gt;Value())-&gt;AsReal();
+              break;
+            }
+          }
+        }
+
+        if (!!spVolFactory)
+        {
+          CATUnicodeString iUnit = "AREA";
+          CATIParmDictionary_var spParmDictionary = CATCkeGlobalFunctions::GetParmDictionary();
+          if (!! spParmDictionary)
+          {
+            CATICkeMagnitude_var spMagnitude = spParmDictionary-&gt;FindMagnitude(iUnit);
+            spResultParm = spVolFactory-&gt;CreateDimension(spMagnitude,iKey,SectionArea);
+          }
+        }
+        if (!! spResultParm)
+        {
+          spResultParm-&gt;Valuate(SectionArea);
+			    spResultParm-&gt;QueryInterface(IID_CATIValue, (void **)&amp;piResultValue);
+        }
+        piStrMember-&gt;Release();
+        piStrMember = NULL;
+      }
+    }
+  }
+  CATCatch (CATError, error)
+  {    
+    cout &lt;&lt; "CAAStrDefineUserAttributes::GetValue *** CATRethrow" &lt;&lt; endl;
+    CATRethrow;
+  } 
+  CATEndTry;
+
+  if (piResultValue)
+  {
+    cout &lt;&lt; "Returning value: " &lt;&lt; (piResultValue-&gt;Show()).ConvertToChar() &lt;&lt; endl;    
+  }
+  
+  return piResultValue;
+}
+  </pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Structure Member"></a>Retrieving the Structure member object</h4>
+		<p>Retrieves all the structure member object under the current part document</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>
+  CATIDescendants_var spPartAsDesc = spSpecObjectPart;
+  CATLISTV(CATISpecObject_var) ListMember;
+  if (!! spPartAsDesc)
+    spPartAsDesc-&gt;GetAllChildren("CATIStructureMember", ListMember);
+
+  /* ------------------------------------------- */
+  /* 4. Access member's section area attribute   */
+  /* ------------------------------------------- */
+  int numberOfChildren = ListMember.Size();
+  cout &lt;&lt; endl &lt;&lt; " The number of Children for CATIStructureMember  " &lt;&lt; numberOfChildren &lt;&lt; endl &lt;&lt; flush;
+  for (int i = 1; i &lt;= numberOfChildren; i++)
+  {
+    rc = AccessMemberSectionAttribute( (ListMember)[i]);
+
+    if (!SUCCEEDED(rc)) return 5;
+  }
+  </pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Section Parameter"></a>Retrieving the Member Section Document 
+			Parameters</h4>
+		<p>To retrieve the section document parameters through the GetValue method which 
+			implemented at <code>CAAStrDefineUserProperties.m</code>.</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>
+    CATIValue* piVal = NULL;
+    if ( NULL_var != ispMember )
+    {
+      CATIAlias_var spAlias(ispMember);
+      if (!! spAlias)
+        cout &lt;&lt; "Member " &lt;&lt; (spAlias-&gt;GetAlias()).ConvertToChar() &lt;&lt; endl;
+      CATIInstance *piInstance = NULL;
+	    rc = ispMember-&gt;QueryInterface (IID_CATIInstance,(void **)&amp;piInstance);	 
+      if( SUCCEEDED(rc) &amp;&amp;  piInstance)
+      {
+        piVal = piInstance-&gt;GetValue("SectionArea");
+        if( NULL != piVal )
+        {
+          CATUnicodeString uAttrVal = piVal-&gt;Show();
+          cout &lt;&lt; "SectionArea value is: " &lt;&lt; uAttrVal.ConvertToChar() &lt;&lt; endl;
+        }
+        piInstance-&gt;Release(); piInstance = NULL;
+      }      
+    }    
+    if ( NULL != piVal ) { piVal-&gt;Release(); piVal = NULL; }
+&nbsp;</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<h4><a name="Remove the Open Document"></a>Remove the Open Document and Delete 
+			CATIA Session</h4>
+		<p>Never forget to delete a created session and removes the opened documents after 
+			the usage .</p>
+		<table class="code">
+			<tr>
+				<td>
+					<pre>/* -------------------------------------------- */
+/*     Ends the session                         */
+/* -------------------------------------------- */
+	
+// remove opened document
+rc = CATDocumentServices::Remove (*pDoc);
+if (!SUCCEEDED(rc)) return 6;
+		
+rc = ::Delete_Session("CAA2_Sample_Session");
+if (SUCCEEDED(rc))
+  cout &lt;&lt; " Delete Session Succeeded " &lt;&lt; endl &lt;&lt; flush;
+</pre>
+				</td>
+			</tr>
+		</table>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<!---------------------------------comment------------------------------------->
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="InShort"></a>In Short</h3>
+		<p>This use case has demonstrated how to use the Structure interfaces and 
+			CATIPspKweUserAttr to query section document parameters as computed attribute 
+			on the structure member objects.&nbsp; Specifically, it has illustrated:</p>
+		<ul>
+			<li>
+			Defining the user attributes
+			<li>
+			Initializing the Environment
+			<li>
+			Retrieving the Structure Member
+			<li>
+			Retrieving the Member Section Parameters
+			<li>
+				Remove the Open Document and Delete the CATIA Session</li>
+		</ul>
+		<p align="right">[<a href="#Top">Top</a>]</p>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="References"></a>References</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">[1]</td>
+				<td><a href="../CAADocUseCases/CAADocRunSample.htm">Building 
+						and Launching a CAA V5 Use Case</a></td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<h3><a name="History"></a>History</h3>
+		<table width="100%">
+			<tr>
+				<td valign="top">Version: <strong>1</strong> [June 2006]</td>
+				<td valign="top">Document created</td>
+			</tr>
+			<tr>
+				<td valign="top"></td>
+				<td valign="top"></td>
+			</tr>
+			<tr>
+				<td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+			</tr>
+		</table>
+		<hr>
+		<!---------------------------------comment------------------------------------->
+		<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+	</body>
+</html>

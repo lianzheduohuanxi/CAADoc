@@ -1,0 +1,107 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>How to Use MProc to Tessellate a Multi-Body Model</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>How to Use MProc to Tessellate a Multi-Body Model </h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>Multiprocessing is used to compute particular operations as quickly 
+		as possible. A typical example is the tessellation of a multi-body 
+		model.</p>
+		<ul>
+			<li><a href="#OpeToBeUsed">Classes to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Classes to be Used</a></h2>
+<p>Task management is handled by the CATMProcTaskManagerCGM class.
+This class provides functionality for creating new tasks and for processing completed tasks. 
+Custom implementations derive from this class to add task division and accumulation logic. 
+Task containment, which defines a container to hold operational data,
+is handled by the CATMProcTaskContainerCGM class. It provides functionality to 
+format computational data into buffers that are used for inter-process 
+communication, and to compute tasks. Custom implementations derive from this 
+class to add data in the form of inputs and outputs, and operators to compute 
+the results. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelTesMProcImpl.m CAAGMModelTesMProcMain.m modules in CAAGMModelInterfaces.edu 
+illustrates how to tessellate a multi-body model by using the MProc capabilities 
+of the geometric modeler. This use case uses as input data the plane.NCGM file 
+which is delivered in the FunctionTests/InputData folder of the 
+CAAGMModelInterfaces.edu framework. </p>
+<p>To execute this use case, run the <tt>CAAGMModelTesMProcMain inputFile.NCGM</tt> command.
+<p>If you are not already 
+familiar with geometric modeler use cases, go to <a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<p>This use case:</p>
+<ol>
+				<li>Loads a multi-body model.</li>
+				<li>Instantiate a custom task manager. This custom task manager 
+				takes as input the list of bodies but only tessellate the first 
+				edge of each body (for simplification purpose).</li>
+				<li>Run the parallel transactions.</li>
+</ol>
+<p>Go to
+		<a href="CAACgmTaMultiProcIntro.htm">Introduction to Multiprocessing</a> 
+for more information on the MProc classes and principles.</p>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="CAACgmTaMultiProcIntro.htm">Introduction to Multiprocessing</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History">History</a></h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Oct 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,693 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Consuming the ENOVWSQueryCpp CAA Web Service</title>
+    <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+<body>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">
+                    <h1>CAA Web Services Home</h1>
+                </td>
+                <td valign="top">
+                    <h2>&nbsp;</h2>
+                </td>
+                <td rowspan="2" align="right" valign="top">
+                    <h3><a name="Top"></a>Consuming the ENOVWSQueryCpp CAA Web Service</h3>
+                    <em>Using the ENOVWSQueryCpp CAA Web Service for query</em></td>
+            </tr>
+            <tr>
+                <td class="use" colspan="2">Use Case</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- HEADER --------------------------------------------------------------------------------------- HEADER -->
+    <table class="abstract">
+        <tbody>
+            <tr>
+                <td>
+                    <h3>Abstract</h3>
+                    <p>This article discusses the <strong>CAAENOVWSDotNet1_1Client</strong> use case. It describes how to use
+                        the C# client binding that can be generated using the wsdl.exe utility in order to consume the <strong>ENOVWSQueryCpp
+                            CAA Web service</strong>. It provides a sample usage scenario that demonstrates how to query objects
+                        from ENOVIA LCA V5.</p>
+                    <ul>
+                        <li><a href="#1"><strong>What You Will Learn With This Use Case</strong></a></li>
+                        <li><a href="#2"><strong>The CAAENOVWSDotNet1_1Client Use Case</strong></a>
+                            <ul>
+                                <li><a href="#2.1">What Does CAAENOVWSDotNet1_1Client Do</a></li>
+                                <li><a href="#2.2">Where To Find the CAAENOVWSDotNet1_1Client Code</a></li>
+                                <li><a href="#2.3">How to Launch CAAENOVWSDotNet1_1Client</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#3"><strong>Step-by-step</strong></a></li>
+                        <li><a href="#InShort"><strong>In Short</strong></a></li>
+                        <li><a href="#References"><strong>References</strong></a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <!-- SECTION 1 --------------------------------------------------------------------------------- SECTION 1 -->
+    <h3><a name="1"></a>What You Will Learn With This Use Case</h3>
+    <p>This use case demonstrates how to write a client application that consumes the ENOVWSQueryCpp CAA Web
+        service. It helps you to:</p>
+    <ul>
+        <li>Generate the C# client binding for the ENOVWSQueryCpp CAA Web service,</li>
+        <li>Configure and use the generated proxy,</li>
+        <li>Understand a sample usage scenario of the ENOVWSQueryCpp CAA Web service.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2 --------------------------------------------------------------------------------- SECTION 2 -->
+    <h3><a name="2"></a>The CAAENOVWSDotNet1_1Client Use Case</h3>
+    <p>CAAENOVWSDotNet1_1Client is a use case of the CAAENOVWS.edu framework that illustrates the ENOVWSQueryCpp
+        CAA Web service capabilities.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.1 ----------------------------------------------------------------------------- SECTION 2.1 -->
+    <h4><a name="2.1"></a>What Does CAAENOVWSDotNet1_1Client Do</h4>
+    <p>The sample usage scenario delivered with this use case contains the following steps:</p>
+    <ul>
+        <li>Get a count of the object(s) matching a given select expression,</li>
+        <li>Retrieve the object(s) matching a given select expression.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.2 ----------------------------------------------------------------------------- SECTION 2.2 -->
+    <h4><a name="2.2"></a>Where To Find the CAAENOVWSDotNet1_1Client Code</h4>
+    <p>The CAAENOVWSDotNet1_1Client use case is made of several classes located in both <b>CAAENOVWSDotNet1_1Client.m</b>
+        and <b>CAAENOVWSDotNet1_1ClientBase.m</b> modules of the <b>CAAENOVWS.edu</b> framework:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code><br>
+                    <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p>The CAAENOVWSDotNet1_1ClientBase.m module (library) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSQueryCppProxy.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSQueryCppWrapper.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSQueryCppProxy.cs</b> file contains the C# client binding generated using the wsdl.exe
+        utility. A C# client binding consists of a proxy and several types definitions. The <b>CAAENOVWSQueryCppWrapper.cs</b>
+        file contains a class that describes how to configure the generated proxy and how to invoke its methods.</p>
+    <p>The CAAENOVWSDotNet1_1Client.m module (executable) contains the following resources:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSDotNet1_1Client.cs<br>
+                    <i>&lt;Source&gt;</i>\CAAENOVWSQueryCppUseCase.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1Client.m\src</code>.</li>
+    </ul>
+    <p>The <b>CAAENOVWSDotNet1_1Client.cs</b> file contains the main program. It parses the command line inputs
+        and starts up the use case. The <b>CAAENOVWSQueryCppUseCase.cs</b> file contains the sample use case
+        scenario.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 2.3 ----------------------------------------------------------------------------- SECTION 2.3 -->
+    <h4><a name="2.3"></a>How to Launch CAAENOVWSDotNet1_1Client</h4>
+    <p>There is no prerequisites to running this use case. If there are no ENOVIA_VPMPartVersion (Parts) in
+        the LCA V5 database then this service returns 0. Otherwise, it returns the count of the number of ENOVIA_VPMPartVersion
+        (Parts) in the LCA V5 database.</p>
+    <p>To run the CAAENOVWSDotNet1_1Client use case, you will need to build both CAAENOVWSDotNet1_1ClientBase.m
+        and CAAENOVWSDotNet1_1Client.m modules. The use case code can be built using either the CAA V5 buildtime
+        environment, or Visual Studio .NET 2003 as explained in [<a href="#References">1</a>].</p>
+    <p>You can then execute the command described below:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w <i>&lt;URI&gt;</i> -e <i>&lt;ENOVIA username&gt;</i> -u <i>&lt;Basic
+                    Authentication username&gt;</i> -p <i>&lt;Basic Authentication password&gt;</i> -t ENOVWSQueryCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;URI&gt;</i></code>: is the root URI of the Web application where the ENOVWSQueryCpp CAA
+            Web service is deployed,</li>
+        <li><code><i>&lt;ENOVIA username&gt;</i></code>: is a valid username declared in the ENOVIA P&amp;O database,</li>
+        <li><code><i>&lt;Basic Authentication Username&gt;</i> and <i>&lt;Basic Authentication Password&gt;</i></code>:
+            are a valid set of credentials for authentication on the remote Web server. </li>
+    </ul>
+    <p>Here follows a sample command, to be updated with your own environment configuration:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>CAAENOVWSDotNet1_1Client -w http://stophe1dsy.dsy.ds:9080/B17 -e cjk -u wpsadmin -p wpsadmin -t
+                    ENOVWSQueryCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The same executable is used to launch all of the available ENOVIA CAA Web services use cases. The <code>
+        -t</code> option is used to choose the target use case to run.</p>
+    <p>When building the modules with the CAA V5 buildtime environment, the CAAENOVWSDotNet1_1Client executable
+        can be launched from the following location:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\intel_a\code\clr</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3 --------------------------------------------------------------------------------- SECTION 3 -->
+    <h3><a name="3"></a>Step-by-step</h3>
+    <p>The following section first explains how to generate the C# client binding for the ENOVWSQueryCpp CAA
+        Web service demonstrated. The remaining sections describe how to configure the generated proxy and how
+        to consume the Web service:</p>
+    <ol>
+        <li><a href="#3.1">Creating the C# Client Binding</a></li>
+        <li><a href="#3.2">Instantiating and Configuring the Generated Proxy</a></li>
+        <li><a href="#3.3">Querying Count</a></li>
+        <li><a href="#3.4">Querying Objects</a></li>
+        <li><a href="#3.5">Getting Objects</a></li>
+        <li><a href="#3.6">Sample Usage Scenario</a></li>
+    </ol>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.1 ----------------------------------------------------------------------------- SECTION 3.1 -->
+    <h4><a name="3.1"></a>Creating the C# Client Binding</h4>
+    <p>Please refer to [<a href="#References">2</a>] for details on how to generate the C# client binding using
+        the wsdl.exe utility.</p>
+    <p>Here follows a sample command in order to generate the C# client binding for the ENOVWSQueryCpp CAA Web
+        service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code>wsdl /namespace:com.dassault_systemes.caaenovws.caaenovwsdotnet1_1clientgen.enovwsquerycpp /username:wpsadmin
+                    /password:wpsadmin /out:CAAENOVWSQueryCppProxy.cs http://stophe1dsy.dsy.ds:9080/B17/wsdl?service=urn:com:dassault_systemes:ENOVWSQueryImpl:ENOVWSQueryImpl:ENOVWSQueryCpp</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The server name, port, and context root URI information must be updated to match the server where the
+        ENOVWSQueryCpp CAA Web service has been deployed. The <code>/username</code> and <code>/username</code>
+        options are required to authenticate on the Web server hosting the Web service.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.2 ----------------------------------------------------------------------------- SECTION 3.2 -->
+    <h4><a name="3.2"></a>Instantiating and Configuring the Generated Proxy</h4>
+    <p>In order to consume an implementation of the ENOVWSQueryCpp CAA Web service deployed on a target Web
+        server, you first need to instantiate the proxy generated using the wsdl.exe utility. This proxy must
+        then be configured in order to manage authentication on the remote Web server, timeout, and session
+        management. Maintaining the HTTP session state is mandatory when consuming ENOVIA LCA V5 CAA Web services.</p>
+    <p>The generated proxy class is used in order to marshall method calls and objects to SOAP requests, and
+        to unmarshall SOAP responses to objects. The following code describes how to instantiate and configure
+        it:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because otherwise it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSQueryCppWrapper {<br>
+                    &nbsp; <font color="#0000ff">private const string</font> SERVICE_ID = "urn!com!dassault_systemes!ENOVWSQueryImpl!ENOVWSQueryImpl!ENOVWSQueryCpp";<br>
+                    &nbsp; <font color="#0000ff">private</font> CAAENOVWSQueryCppProxy proxy = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public</font> CAAENOVWSQueryCppWrapper(<br>
+                    &nbsp; &nbsp; CookieContainer container,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> uri,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credUser,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credPwd,<br>
+                    &nbsp; &nbsp; <font color="#0000ff">int</font> timeOut) {<br>
+                    &nbsp; &nbsp; proxy = new CAAENOVWSQueryCppProxy();<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Compute the SOAP endpoint URI value that bounds to the deployed<br>
+                        &nbsp; &nbsp; // implementation of the ENOVWSQueryCpp CAA Web service</font><br>
+                    &nbsp; &nbsp; proxy.Url = uri + "servicerouter?service=" + SERVICE_ID;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Required for HTTP session state management</font><br>
+                    &nbsp; &nbsp; proxy.CookieContainer = container; <strong>(1)</strong>&nbsp;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Required for the Basic Authentication mechanism</font><br>
+                    &nbsp; &nbsp; ICredentials credentials = new NetworkCredential(credUser, credPwd);<br>
+                    &nbsp; &nbsp; proxy.Credentials = credentials; <strong>(2)</strong>&nbsp;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#008000">// Increase the default client time-out</font><br>
+                    &nbsp; &nbsp; proxy.Timeout = timeOut; <strong>(3)</strong>&nbsp;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p><strong>(1)</strong>: in order to maintain the HTTP session state between successive calls performed
+        using either the same or multiple proxy instances, the <code>CookieContainer</code> property must be
+        set on the proxy. This is mandatory in the context of ENOVIA LCA V5 CAA Web services,<br>
+        <strong>(2)</strong>: when security is enabled on the remote Web server, it is mandatory to set the
+        <code>Credentials </code>property on the proxy. The values specified must match a valid set of credentials
+        for the Basic Authentication mechanism,<br>
+        <strong>(3)</strong>: the default timeout value can be increased in order to avoid potential issues
+        at runtime, such as losing the HTTP connection before receiving the SOAP responses. The value specified
+        in the code is in milliseconds.</p>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.3 ----------------------------------------------------------------------------- SECTION 3.3 -->
+    <h4><a name="3.3"></a>Querying Count</h4>
+    <p>Object counts can be queried from ENOVIA LCA V5 based on search criteria. This can be achieved using
+        the following method, which is available through the generated proxy:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="QueryCount"></a><code><font color="#0000ff">public</font> Status QueryCount(SelectExpression
+                    iSelect, <font color="#0000ff">ref int</font> oCount)</code></td>
+            </tr>
+        </tbody>
+        <tbody>
+        </tbody>
+    </table>
+    <p>This method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iSelect</code></td>
+                <td>&nbsp; The SelectExpression for query. See [<a href="#References">3</a>] for details</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oCount</code></td>
+                <td>&nbsp; The count of objects matching the input SelectExpression criteria</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#QueryCount">QueryCount</a></code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSQueryCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">public int</font> QueryCount(<font color="#0000ff">string</font> selectExpression)
+                    {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (selectExpression == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    select expression is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; SelectExpression selectExp = <font color="#0000ff">new</font> SelectExpression();<br>
+                    &nbsp; &nbsp; selectExp.Value = selectExpression;&nbsp;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">int</font> count = -1;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = proxy.QueryCount(selectExp, <font color="#0000ff">ref</font>
+                        count); </strong>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp;&nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to count
+                    objects", e);<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (count == -1) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to count objects");<br>
+                    &nbsp; &nbsp; }&nbsp;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> count;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.4 ----------------------------------------------------------------------------- SECTION 3.4 -->
+    <h4><a name="3.4"></a>Querying Objects</h4>
+    <p>Objects can be queried from ENOVIA LCA V5 based on search criteria. This can be achieved using the following
+        method, which is available through the generated proxy:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="QueryObjects"></a><code><font color="#0000ff">public</font> Status QueryObjects(SelectExpression
+                    iSelect, <font color="#0000ff">ref</font> ENOVIA oResult)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iSelect</code></td>
+                <td>&nbsp; The SelectExpression for query. See [<a href="#References">3</a>] for details</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oResult</code></td>
+                <td>&nbsp; The objects matching the input SelectExpression criteria</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#QueryObjects">QueryObjects</a></code>
+        method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSQueryCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">public</font> ENOVIA QueryObjects(<font color="#0000ff">string</font> selectExpression)
+                    {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (selectExpression == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    select expression is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; SelectExpression selectExp = <font color="#0000ff">new</font> SelectExpression();<br>
+                    &nbsp; &nbsp; selectExp.Value = selectExpression;<br>
+                    &nbsp; &nbsp; ENOVIA resultSet = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <strong>Status status = proxy.QueryObjects(selectExp, <font color="#0000ff">ref</font>
+                        resultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to query objects",
+                    e);<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to query objects");<br>
+                    &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; <font color="#0000ff">return</font> resultSet;<br>
+                    &nbsp; }<br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.5 ----------------------------------------------------------------------------- SECTION 3.5 -->
+    <h4><a name="3.5"></a>Getting Objects</h4>
+    <p>Objects can be retrieved from ENOVIA LCA V5 based on given identifiers. This can be achieved using the
+        following method, which is available through the generated proxy:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><a name="GetObjects"></a><code><font color="#0000ff">public</font> Status GetObjects(Identifier[] iIds,
+                    <font color="#0000ff">ref</font> ENOVIA oResult)</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The method accepts the following parameters:</p>
+    <table>
+        <tbody>
+            <tr>
+                <td><code>[in] iIds</code></td>
+                <td>&nbsp; The object identifiers</td>
+            </tr>
+            <tr>
+                <td><code>[in/out] oResult</code></td>
+                <td>&nbsp; The objects matching the input identifiers</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The following code demonstrates the use of the <code><a href="#GetObjects">GetObjects</a></code> method:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSQueryCppWrapper {<br>
+                    &nbsp; ...<br>
+                    &nbsp; <font color="#0000ff">private</font> Identifier ToIdentifier(<font color="#0000ff">string</font>
+                    id) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">if</font> (id == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    identifier value is null");<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; Identifier identifier = <font color="#0000ff">new</font> Identifier();<br>
+                    &nbsp; &nbsp; identifier.Identifier1 = CAAENOVWSUtils.ConvertFromHexToBinary(id);<br>
+                    &nbsp; &nbsp; return identifier;<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">private</font> Identifier[] ToIdentifierArray(<font color="#0000ff">string</font>[]
+                    ids) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (ids == <font color="#0000ff">null</font>) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    identifiers array is null");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; Identifier[] identifiers = <font color="#0000ff">new</font> Identifier[ids.Length];<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">for</font> (<font color="#0000ff">int</font> i = 0; i &lt;
+                    ids.Length; i++) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; identifiers[i] = ToIdentifier(ids[i]);<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">return</font> identifiers;<br>
+                    &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; <font color="#0000ff">public</font> ENOVIA GetObjects(<br />
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font>[]
+                    objectUUIDs, 
+                    <br />
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">string</font> selectExpression) {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (objectUUIDs == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Illegal argument:
+                    object UUID array is null");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; Identifier[] objectIds = ToIdentifierArray(objectUUIDs);<br>
+                    &nbsp; &nbsp; &nbsp; SelectExpression selectExp = <font color="#0000ff">new</font> SelectExpression();<br>
+                    &nbsp; &nbsp; &nbsp; selectExp.Value = selectExpression;<br>
+                    &nbsp; &nbsp; &nbsp; ENOVIA resultSet = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">try</font> {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <strong>Status status = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; proxy.GetObjects(objectIds, selectExp, <font color="#0000ff">
+                        ref</font> resultSet);</strong><br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Status: {0}", status.Status1);&nbsp;<br>
+                    &nbsp; &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to get
+                    objects", e);<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (resultSet == <font color="#0000ff">null</font>)
+                    {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("Failed to get
+                    objects");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">return</font> resultSet;<br>
+                    &nbsp;&nbsp; }<br>
+                    } </code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The <code>CAAENOVWSUtils.ConvertFromHexToBinary</code> method can be found at:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>,</li>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- SECTION 3.6 ----------------------------------------------------------------------------- SECTION 3.6 -->
+    <h4><a name="3.6"></a>Sample Usage Scenario</h4>
+    <p>The following code depends on:</p>
+    <ul>
+        <li>the CAAENOPosApplicationBinderImplWrapper class to manage a session with ENOVIA LCA V5. See [<a href="#References">4</a>]
+            for details,</li>
+        <li>the CAAENOVWSQueryCppWrapper class for query. See this document.</li>
+    </ul>
+    <p>It demonstrates a sample usage scenario for the ENOVWSQueryCpp CAA Web service:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <!-- Not using <pre></pre> because it doesn't print right -->
+                <td><code><font color="#0000ff">public class</font> CAAENOVWSQueryCppUseCase {<br>
+                    &nbsp; <font color="#0000ff">private string</font> uri = <font color="#0000ff">null</font>;<br>
+                    &nbsp; <font color="#0000ff">private string</font> credUser = <font color="#0000ff">null</font>;<br>
+                    &nbsp; <font color="#0000ff">private string</font> credPwd = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public</font> CAAENOVWSQueryCppUseCase(<br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font>
+                    uri, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credUser, 
+                    <br />
+                    &nbsp; &nbsp; <font color="#0000ff">string</font> credPwd) {<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.uri = uri;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.credUser = credUser;<br>
+                    &nbsp; &nbsp; <font color="#0000ff">this</font>.credPwd = credPwd;<br>
+                    &nbsp; }<br>
+                    <br>
+                    &nbsp; <font color="#0000ff">public void</font> RunSampleUsageScenario(<font color="#0000ff">string</font>
+                    enoviaUser) {<br>
+                    &nbsp; &nbsp; enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper binderWrapper = <font
+                        color="#0000ff">null</font>;<br>
+                    &nbsp; &nbsp; enoposapplicationbinderimpl.SessionToken sessionToken = <font color="#0000ff">null</font>;<br>
+                    <br>
+                    &nbsp; &nbsp; try {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 1 - Instantiate and configure the proxies<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Create a CookieContainer object to maintain the HTTP session
+                        <br />
+                        &nbsp; &nbsp; &nbsp; //
+                        state accross proxies</font>&nbsp;<br>
+                    &nbsp; &nbsp; &nbsp; CookieContainer container = <font color="#0000ff">new</font> CookieContainer();<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Instantiate wrapper client classes</font><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">int</font> timeOut = 360000;<br>
+                    &nbsp; &nbsp; &nbsp; <strong>binderWrapper =
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> enoposapplicationbinderimpl.CAAENOPosApplicationBinderImplWrapper(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, timeOut);<br>
+                        &nbsp; &nbsp;&nbsp; &nbsp;enovwsquerycpp.CAAENOVWSQueryCppWrapper queryWrapper =
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">new</font> enovwsquerycpp.CAAENOVWSQueryCppWrapper(<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; container, uri, credUser, credPwd, timeOut);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 2 - Open session with ENOVIA LCA V5<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Get user contexts</font><br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">string</font>[] userContexts = binderWrapper.GetUserContexts(enoviaUser);</strong>&nbsp;<br>
+                    &nbsp; &nbsp; &nbsp;<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Log in using the first available context</font><br>
+                    &nbsp; &nbsp; &nbsp; <font color="#0000ff">if</font> (userContexts.Length == 0) {<br>
+                    &nbsp; &nbsp; &nbsp; &nbsp; <font color="#0000ff">throw new</font> ApplicationException("No context
+                    found for the user specified");<br>
+                    &nbsp; &nbsp; &nbsp; }<br>
+                    &nbsp; &nbsp; &nbsp; <strong>sessionToken = binderWrapper.Login(userContexts[0]);</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 3 - Count objects and display result<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// Create input XML select expression</font><br>
+                    &nbsp; &nbsp; &nbsp; StringBuilder xmlFilter = <font color="#0000ff">new</font> StringBuilder();<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;FILTER CASESENSITIVE=\"TRUE\"&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;SELECT&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;OBJECT DOMAIN=\"PRODUCT\" NAME=\"VPMBOPartInstance\" /&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/SELECT&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;WHERE&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;FILTER_CONDITION OPERATOR=\"AND\"&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;ATTRIBUTE_FILTER&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;EXPRESSION OP=\"LIKE\" VALUE=\"*\"&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;ATTRIBUTE NAME=\"ENOVIA_VPMPartMaster.V_ID\" /&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/EXPRESSION&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/ATTRIBUTE_FILTER&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/FILTER_CONDITION&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/WHERE&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;ORDERBY&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append(&quot;&lt;ENOVIA_VPMPartMaster.V_ID&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/ORDERBY&gt;");<br>
+                    &nbsp; &nbsp; &nbsp; xmlFilter.Append("&lt;/FILTER&gt;");<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong><font color="#0000ff">int</font> count = queryWrapper.QueryCount(xmlFilter.ToString());</strong><br>
+                    &nbsp; &nbsp; &nbsp; Console.Out.WriteLine("Query returned {0} result(s)", count);<br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 3 - Query objects and display results<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <strong>enovwsquerycpp.ENOVIA resultSet = 
+                        <br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; queryWrapper.QueryObjects(xmlFilter.ToString());</strong><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; CAAENOVWSUtils.DisplayResults(resultSet, 2);&nbsp;<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">catch</font> (Exception e) {<br>
+                    &nbsp; &nbsp; &nbsp; ...&nbsp;<br>
+                    &nbsp; &nbsp; } <font color="#0000ff">finally</font> {<br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// ------------------------------------------------------------<br>
+                        &nbsp; &nbsp; &nbsp; // Step 4 - Terminate opened session&nbsp;<br>
+                        &nbsp; &nbsp; &nbsp; // ------------------------------------------------------------</font><br>
+                    <br>
+                    &nbsp; &nbsp; &nbsp; <font color="#008000">// The session must be closed even if a call to a method on the
+                        ENOVWSQueryCpp<br>
+                        &nbsp; &nbsp; &nbsp; // CAA Web service fails</font><br>
+                    &nbsp; &nbsp; &nbsp; <strong>binderWrapper.Logout(sessionToken);</strong>&nbsp;<br>
+                    &nbsp; &nbsp; }&nbsp;<br>
+                    &nbsp; }
+                    <br>
+                    }</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>The <code>CAAENOVWSUtils.DisplayResults</code> method can be found at:</p>
+    <table class="code">
+        <tbody>
+            <tr>
+                <td><code><i>&lt;Source&gt;</i>\CAAENOVWSUtils.cs</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul>
+        <li><code><i>&lt;Source&gt;</i></code>: <code><i>&lt;Install&gt;</i>\CAAENOVWS.edu\CAAENOVWSDotNet1_1ClientBase.m\src</code>,</li>
+        <li><code><i>&lt;Install&gt;</i></code>: the root directory where the CAA CD-ROM is installed.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- IN SHORT ----------------------------------------------------------------------------------- IN SHORT -->
+    <hr>
+    <h3><a name="InShort"></a>In Short</h3>
+    <p>This use case explains how to use the C# client binding generated using the wsdl.exe utility in order
+        to consume the ENOVWSQueryCppCAA CAA Web service. It also gives an overview of the available methods:</p>
+    <ul>
+        <li><a href="#QueryCount"><code>QueryCount</code></a>: Get a count of the object(s) matching a given select
+            expression,</li>
+        <li><a href="#QueryObjects"><code>QueryObjects</code></a>: Retrieve the object(s) matching a given select
+            expression,</li>
+        <li><a href="#GetObjects"><code>GetObjects</code></a>: Retrieve the object(s) matching a given set of identifiers.</li>
+    </ul>
+    <p align="right">[<a href="#Top">Top</a>]</p>
+    <!-- REFERENCES ------------------------------------------------------------------------------- REFERENCES -->
+    <hr>
+    <h3><a name="References"></a>References</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">[1]</td>
+                <td valign="top" align="left"><a href="#">Building and Launching a CAA Web Service Use Case</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[2]</td>
+                <td><a href="#">Generating a C# Client Binding</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[3]</td>
+                <td><a href="../CAAENOVWSTechArticles/SelectExpression.htm">Using SelectExpression</a></td>
+            </tr>
+            <tr>
+                <td valign="top">[4]</td>
+                <td><a href="../CAAPLMSecUseCases/CAAENOPosAppBinderDotNetClient.htm">
+                    Consuming the ENOPosApplicationBinderImpl CAA Web Service</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- FOOTER ------------------------------------------------------------------------------------- FOOTER -->
+    <hr>
+    <h3><a name="History"></a>History</h3>
+    <table border="0" width="100%">
+        <tbody>
+            <tr>
+                <td valign="top">Version: <strong>1</strong> [Jan 2006]</td>
+                <td valign="top">Document created</td>
+            </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <p><i>Copyright © 2006, Dassault Systèmes. All rights reserved.</i></p>
+</body>
+</html>
+

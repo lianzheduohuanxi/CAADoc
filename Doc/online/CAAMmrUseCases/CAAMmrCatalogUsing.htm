@@ -1,0 +1,1357 @@
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="fr">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <title>Using Catalog Browser</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>&nbsp;Catalog Modeler</h1>
+       </td>
+       <td valign="top">
+       <h2></h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Using Catalog Browser&nbsp;</h3>
+       <p><em>&nbsp;Using&nbsp; CATICatalogBrowserFactory, </em><em>
+       CATICatalogBrowser</em></td>
+     </tr>
+     <tr>
+       <td class="use" colspan="2">Use Case</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This use case shows how to create and use a Catalog Browser.</p>
+       <ul>
+         <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+         <li><a href="#UseCase"><strong>The CAAMmrCatalogBrowser Use Case</strong></a>
+         <ul>
+           <li><a href="#What">What Does CAAMmrCatalogBrowser Do</a></li>
+           <li><a href="#How">How to Launch CAAMmrCatalogBrowser</a></li>
+           <li><a href="#Where">Where to Find the CAAMmrCatalogBrowser Code</a></li>
+         </ul>
+         </li>
+         <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+         <li><a href="#InShort"><strong>In Short</strong></a></li>
+         <li><a href="#References"><strong>References</strong></a></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Learn"></a>What You Will Learn With This Use case</h3>
+   <p>The ComponentsCatalogsInterfaces framework provides a Dialog box to browse 
+   catalogs and instantiate components. This Dialog box is the Catalog Browser 
+   and it implements the <i>CATICatalogBrowser</i><i> </i>interface.</p>
+   <p>The aim of this article is to understand each methods of the <i>
+   CATICatalogBrowser</i><i> </i>interface. A demonstrator allows you</p>
+   <ul>
+     <li>To launch methods and so visualize automatically their effect on the 
+     Catalog browser instance&nbsp;</li>
+     <li>To see how to use the others methods</li>
+   </ul>
+   <p>Before getting to the use case itself, it is important to already be 
+   familiar with the basic notions of Catalog. See the referenced article [<a 
+   href="#References">1</a>] for a detailed overview.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="UseCase"></a>The CAAMmrCatalogBrowser Use Case</h3>
+   <p>CAAMmrCatalogBrowser is a use case of the CAAMechanicalModeler.edu 
+   framework that illustrates ComponentsCatalogsInterfaces framework 
+   capabilities.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="What"></a>What Does CAAMmrCatalogBrowser Do</h4>
+   <p>This use case is a Catalog Browser demonstrator. In an add-in of the <code>
+   Product Structure </code>Workbench, the&nbsp; &quot;<code>Catalog Browser 
+   Demonstrator ...</code>&quot; command is defined. This command is included in the
+   <code>Catalog</code> toolbar as you can see in the next picture:</p>
+   <table>
+     <caption><i><a name="Fig.1">Fig.1</a> The Catalog Toolbar</i></caption>
+     <tr>
+       <td><img border="0" src="images/CAAMmrCatalogBrowserUsingAddin.jpg" width="348" height="217"> </td>
+     </tr>
+   </table>
+   <p>When you launch the <img border="0" src="images/CAAMmr_I_CatalogBrowerDemo1.jpg" width="22" height="22"> command, 
+   the following dialog box appears:</p>
+   <table>
+     <caption><i><a name="Fig.2">Fig.2</a> The Catalog Browser Demonstrator 
+     Dialog Box</i></caption>
+     <tr>
+       <td>
+		<img alt="" src="images/CAAMmrCatalogBrowserUsingDlg.jpg" width="402" height="543"> </td>
+     </tr>
+   </table>
+   <p>This dialog box is made up of two frames at the first level:</p>
+   <ul>
+     <li><b>Catalog Browser Properties&nbsp;frame</b></li>
+     <p>This frame contains all the options to customize the display of the 
+     Catalog Browser. These options are group together by functionality in 
+     several sub-objects<ul>
+       <li><b>Window Options and Display frame&nbsp;</b></li>
+       <p>All the options in this frame are for the Catalog Browser creation. 
+       During the life of the Catalog Browser you cannot change these options. 
+       This frame is unavailable while a Catalog Browser is opened.<ul>
+         <li>Modal, once the Catalog Browser is opened, the end user cannot 
+         select anything else outside the Catalog Browser</li>
+         <li>Window Button: the Catalog Browser can have the Close button or the 
+         Ok and Cancel buttons</li>
+         <li>Tree : the Catalog Browser displays the descriptions with a tree 
+         structure</li>
+       </ul>
+       <p>The third options are exclusives:<ul>
+         <li>Large icons: the preview image of the description are a size of 
+         131x110 pixels</li>
+         <table>
+           <caption><i>Large icons</i></caption>
+           <tr>
+             <td>
+				<img alt="" src="images/CAAMmrCatalogBrowserUsingIcon2.jpg" width="462" height="194"> </td>
+           </tr>
+         </table>
+    
+         <li>Small icons: the preview image of the description are reduced- for 
+         a chapter the icons is &quot;mixed&quot; with the &quot;file&quot; icons:&nbsp;</li>
+         <table>
+           <caption><i>Small icons</i></caption>
+           <tr>
+             <td>
+				<img alt="" src="images/CAAMmrCatalogBrowserUsingIcon1.jpg" width="465" height="161"> </td>
+           </tr>
+         </table>
+   
+         <li>Detail: the visible keywords of the descriptions are displayed</li>
+         <table>
+           <caption><i>Details mode</i></caption>
+           <tr>
+             <td>
+				<img alt="" src="images/CAAMmrCatalogBrowserUsingIcon3.jpg" width="464" height="145"> </td>
+           </tr>
+         </table>
+     
+       </ul>
+       </li>
+       <li><b>In</b><b>stantiation Options frame&nbsp;</b></li>
+       <p>All the options in this frame are for the Catalog Browser creation and 
+       can be changed during the Catalog Browser life.</li>
+       <li><b>Authorize Other Catalog Selection check button</b></li>
+       <p>This option can only be set after the Catalog Browser creation.&nbsp;</li>
+       <li><b>Open button</b></li>
+       <p>Launch the Catalog Browser creation [<a href="#Fig.3">Fig.3</a>]. This 
+       button is unavailable while a Catalog Browser is opened.</li>
+       <li><b>Filtering&nbsp;frame</b></li>
+       <p>This frame is about the filtering and is available while a Catalog 
+       Browser is opened.&nbsp;<ul>
+         <li><b>Query editor</b></li>
+         <p>The query to apply to the current chapter</li>
+         <li><b>User&nbsp;check button</b></li>
+         <p>If the button is checked, the query set in the Query editor is an 
+         user query otherwise it is an &quot;internal&quot; query.&nbsp;</li>
+         <li><b>The filter on the chapter</b></li>
+         <p>It is the real filter applied to the chapter. Three possible cases:<ul>
+           <li>All the queries set in the Query editor are user queries, the 
+           filter is the current expression</li>
+           <li>All the queries set in the Query editor are internal queries, the 
+           filter is the current expression</li>
+           <li>The filter is a AND buildup between the last user query and the 
+           last internal&nbsp; query.</li>
+         </ul>
+         <p>This two levels of filtering enables to fix a query by code (internal 
+         query) and the end user can only make a filtering among the first 
+         filtering thanks to the Filter editor in the Catalog Browser dialog 
+         box. As soon as the chapter is changed, the filtering is lost.&nbsp;</li>
+       </ul>
+       </li>
+     </ul>
+     </li>
+     <li><b>Current Selection frame</b></li>
+     <p>This frame is available while the Catalog Browser is opened. It 
+     comprises the following objects:<ul>
+       <li><b>Catalog editor</b></li>
+       <p>The name of the current opened catalog</li>
+       <li><b>Description editor</b></li>
+       <p>The name of the object pointed by the current selected description</li>
+       <li><b>Launch button</b></li>
+       <p>The Launch button is available only if the current selected 
+       description pointes towards a component and not a chapter. The 
+       CAAMmrCatalogInstantiation [2] explains this part of code.</li>
+     </ul>
+     </li>
+   </ul>
+   <p>The Catalog Browser Dialog box:</p>
+   <table>
+     <caption><i><a name="Fig.3">Fig.3</a> The Catalog Browser Dialog Box</i></caption>
+     <tr>
+       <td>
+		<img alt="" src="images/CAAMmrCatalogOverviewBrowserComment.jpg" width="833" height="464"><br>
+&nbsp;</td>
+     </tr>
+   </table>
+   <p><b>Advice: </b>Once the Catalog Browser is opened, the end user can change 
+   some options about the display or the filter, and because these modifications 
+   are without notifications the Catalog Browser Demonstrator is not updated.&nbsp;&nbsp;</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="How"></a>How to Launch CAAMmrCatalogBrowser</h4>
+   <p>To launch CAAMmrCatalogBrowser , you will need to</p>
+   <ul>
+     <li>Set up the build time environment</li>
+     <li>Compile the following modules of the CAAMechanicalModeler.edu framework 
+     with their prerequisites</li>
+     <ul>
+       <li>CAAMechanicalModelerEduUUID.m</li>
+       <li>CAAMmrCatalogCombCrv.m</li>
+       <li>CAAMmrCatalogProductAddin.m</li>
+       <li>CAAMmrCatalogUI.m</li>
+       <li>CAAMmrCombinedCurve.m</li>
+     </ul>
+     <ul>
+       <li>CAAMmrCombinedCurveUI.m</li>
+     </ul>
+     </li>
+     <li>Set up the run time environment</li>
+     <li>Remove the # character in the CAAMechanicalModeler.edu.dico in front of 
+     the following lines</li>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>CAAMmrCatalogPrdAddin    CATIWorkbenchAddin                 libCAAMmrCatalogProductAddin
+CAAMmrCatalogPrdAddin    CATIPrsConfigurationAddin          libCAAMmrCatalogProductAddin</pre>
+         </td>
+       </tr>
+     </table>
+     </li>
+     <li>Export the <b>CAACatalogFileName</b> variable</li>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>Unix: export  CAACatalogFileName=<code>InstallRootDirectory/CAAComponentsCatalogs.edu/InputData/CAATool.catalog</code>
+Windows: set CAACatalogFileName=<code>InstallRootDirectory\CAAComponentsCatalogs.edu\InputData\CAATool.catalog</code></pre>
+         </td>
+       </tr>
+     </table>
+     <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+     CD-ROM is installed.</li>
+     <li>Launch CATIA</li>
+     <li>&nbsp;When the the application is ready:&nbsp;
+     <ul>
+       <li>On the <b>Start</b> menu click <b>Product Structure</b></li>
+       <li>Launch the <b><img border="0" src="images/CAAMmr_I_CatalogBrowerDemo1.jpg" width="22" height="22">Catalog 
+       Browser Demonstrator</b> ... command</li>
+       <li>In the <b>Catalog Browser Demonstrator</b> dialog box try all the 
+       options described above. </li>
+     </ul>
+     </li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h4><a name="Where"></a>Where to Find the CAAMmrCatalogBrowser Code</h4>
+   <p>The CAAMmrCatalogBrowser use case explains the <i>CAAMmrBrowserCmdDlg</i> 
+   class which defines the <code>Catalog Browser Demonstrator</code> dialog box 
+   [<a href="#Fig.2">Fig.2</a>]. This class is located in the CAAMmrCatalogUI.m 
+   module of the CAAMechanicalModeler.edu framework.</p>
+   <p>&nbsp; </p>
+   <table>
+     <tr>
+       <td>Windows</td>
+       <td><code>InstallRootDirectory\CAAMechanicalModeler</code><code>.edu\CAAMmrCatalogUI.m\</code></td>
+     </tr>
+     <tr>
+       <td>Unix</td>
+       <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrCatalogUI.m/</code></td>
+     </tr>
+   </table>
+   <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+   CD-ROM is installed.</p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Step"></a>Step-by-Step</h3>
+   <p>There are three logical steps in the CAAMmrCatalogBrowser use case:</p>
+   <ol>
+     <li><a href="#hdr pour dlg">The CAAMmrBrowserCmdDlg header file</a></li>
+     <li><a href="#src pour dlg">The CAAMmrBrowserCmdDlg source file</a></li>
+     <li><a href="#resources pour dlg">The CAAMmrBrowserCmdDlg resource file</a></li>
+   </ol>
+   <ol>
+     <li><a name="hdr pour dlg"></a>The header file</li>
+     <table class="code">
+       <tr>
+         <td>
+         <pre>#include &quot;CATDlgDialog.h&quot; 
+class CATDlgEditor; 
+class CATDlgPushButton;
+class CATDlgRadioButton;
+class CATDlgCheckButton;
+class CATDlgFrame;
+class CATDlgPushButton;
+class CATFrmEditor ;
+class CATICatalogBrowser ;
+
+class CAAMmrBrowserCmdDlg : public CATDlgDialog
+{
+  DeclareResource(<b>CAAMmrBrowserCmdDlg</b>,CATDlgDialog) ;
+
+public:
+
+  CAAMmrBrowserCmdDlg(CATDialog * iParent);
+  ~CAAMmrBrowserCmdDlg();
+
+  void Build();
+
+private:
+
+  void CloseCatalog();
+
+  void OKCatalog        (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void CancelCatalog    (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void ChangeChapter    (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void SelectDescription(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  
+  void ChangeCatalogAuthorization (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void InstantiationAuthorization (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void ChangeQuery                (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void LaunchInstantiation        (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+  void CreateBrowser              (CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData);
+
+private:
+
+  CATDlgEditor           * _pDescEditor;
+  CATDlgEditor           * _pCatalogEditor;
+  CATDlgEditor           * _pQueryEditor ;
+  CATDlgEditor           * _pQueryResultEditor  ;
+  CATDlgCheckButton      * _pModalButton ;
+  CATDlgCheckButton      * _pWithTreeButton;
+  CATDlgCheckButton      * _pInstantiateStateButton   ;
+  CATDlgCheckButton      * _pChgtCatalogStateButton  ;
+  CATDlgCheckButton      * _pQueryStateButton  ;
+  CATDlgRadioButton      * _pWithOkButton;
+  CATDlgRadioButton      * _pWithCloseButton;
+  CATDlgRadioButton      * _pWithSmallIconsButton;
+  CATDlgRadioButton      * _pWithLargeIconsButton;
+  CATDlgRadioButton      * _pWithDetailsButton;
+  CATDlgPushButton       * _pInstButton  ;
+  CATDlgPushButton       * _pOpenBrowserButton ;
+  CATDlgFrame            * _pBrowserOptionsFrame ;
+  CATDlgFrame            * _pBrowserQueryFrame ;
+  CATDlgFrame            * _pInstFrame ;
+
+  CATFrmEditor           * _pDocumentEditor ;
+
+  CATBoolean               _FirstOpen ;
+
+  CATICatalogBrowser     * _pICatalogBrowser;
+
+  CATNotification        * _pOKNotif ;
+  CATNotification        * _pCancelNotif;
+  CATNotification        * _pCloseNotif;
+  CATNotification        * _pSelectNotif;
+  CATNotification        * _pChangeNotif;
+  
+};</pre>
+         </td>
+       </tr>
+     </table>
+     <p>The <i>CAAMcaUdfLoftDlg</i> class derives from the <i>CATDlgDialog</i> 
+     class and contains&nbsp;<ul>
+       <li>The following methods:</li>
+       <ul>
+         <li>Methods called once: <code>Build</code>, to construct the dialog 
+         objects </li>
+         <li>Four callback methods executed when a notification comes from the 
+         Catalog Browser (<code>OKCatalog,CancelCatalog,ChangeChapter</code>,
+         <code>SelectDescription</code>) </li>
+         <li>Six&nbsp; callback methods executed when a notification comes from 
+         the current Dialog box (<code>ChangeCatalogAuthorization ,InstantiationAuthorization 
+         ,DrapAndDropAuthorization ,ChangeQuery,LaunchInstantiation,CreateBrowser</code> 
+         )</li>
+       </ul>
+       </li>
+       <li>The following data members:</li>
+       <ul>
+         <li>A set of Dialog objects (<code>_pDescEditor</code> to <code>
+         _pInstFrame</code> ) which makes up the current Dialog box</li>
+         <li>The editor associated with the current document, <code>
+         _pDocumentEditor</code>&nbsp;</li>
+         <li>A boolean, <code>_FirstOpen</code> , which is initialized TRUE in 
+         the constructor and set to FALSE after the first Catalog Browser 
+         creation</li>
+         <li><code>_pICatalogBrowser </code>is the <i>CATICatalogBrowser</i> 
+         interface pointer on the current Catalog Browser instance</li>
+         <li>There are five pointers on a <i>CATNotification</i>&nbsp; class. 
+         These notifications are created by the Catalog Browser instance.</li>
+       </ul>
+       </li>
+     </ul>
+     <p>The <code>DeclareResource</code> macro declares that there is a <i>
+     CAAMmrBrowserCmdDlg.CATNls</i> file - see at the end of the article;</li>
+     <li><a name="src pour dlg"></a>The source file</li>
+     <ul>
+       <li>The<b> includes</b></li>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>#include &quot;CAAMmrBrowserCmdDlg.h&quot;
+#include &quot;CATIAlias.h&quot;
+#include &quot;CATDlgFrame.h&quot;
+#include &quot;CATDlgEditor.h&quot;
+#include &quot;CATDlgLabel.h&quot;
+#include &quot;CATDlgPushButton.h&quot;
+#include &quot;CATDlgCheckButton.h&quot;
+#include &quot;CATDlgRadioButton.h&quot;
+#include &quot;CATDlgGridConstraints.h&quot;
+#include &quot;CATFrmEditor.h&quot;              
+#include &quot;CATICatalogBrowserFactory.h&quot; 
+#include &quot;CATICatalogBrowser.h&quot;        
+#include &quot;CATICatalogDescription.h&quot;    
+#include &quot;CATICatalogChapter.h&quot;        
+#include &quot;CATICatalogQueryResult.h&quot;    
+#include &quot;CATICatalogLink.h&quot;           
+#include &quot;CATICatalogInstantiation.h&quot; 
+#include &quot;CATGetEnvValue.h&quot;      
+#include &quot;iostream.h&quot;
+...</pre>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>The<b> constructor</b></li>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+CAAMmrBrowserCmdDlg::CAAMmrBrowserCmdDlg(CATDialog* iParent)
+ : CATDlgDialog (iParent, &quot;CAAMmrBrowserCmdDlg&quot;, 
+                 <b>CATDlgWndBtnOKCancel</b>|CATDlgWndAutoResize|CATDlgGridLayout)
+ , _pDescEditor       (NULL)
+ , _pCatalogEditor    (NULL)
+ , _pQueryEditor      (NULL)
+ , _pQueryResultEditor(NULL)
+
+ , _pModalButton            (NULL)
+ , _pWithOkButton           (NULL)
+ , _pWithCloseButton        (NULL)
+ , _pWithTreeButton         (NULL)
+ , _pWithSmallIconsButton   (NULL)
+ , _pWithLargeIconsButton   (NULL)
+ , _pWithDetailsButton      (NULL)
+ , _pInstantiateStateButton (NULL)
+ , _pChgtCatalogStateButton (NULL)
+ , _pOpenBrowserButton   (NULL)
+ , _pQueryStateButton    (NULL)
+ , _pInstButton          (NULL)
+
+ , _pBrowserQueryFrame   (NULL)
+ , _pInstFrame           (NULL)
+ , _pBrowserOptionsFrame (NULL)
+
+ , _pOKNotif               (NULL)
+ , _pCancelNotif           (NULL)
+ , _pCloseNotif            (NULL)
+ , _pSelectNotif           (NULL)
+ , _pChangeNotif           (NULL)
+
+ , _pDocumentEditor      (NULL)
+ , _pICatalogBrowser     (NULL)
+ , _FirstOpen            (TRUE) 
+
+{
+  
+  _pDocumentEditor = CATFrmEditor::GetCurrentEditor();
+
+  SetDefaultButton(NULL);
+}
+...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>As usual, all the data members which are pointers are initialized to 
+       NULL.&nbsp;</p>
+       <p>Notice that the <code>_pDocumentEditor</code> is initialized here. It 
+       is strongly recommended to use the static <code>GetCurrentEditor</code> 
+       method at the beginning of the command. At this time the editor is those 
+       which has launched the command.&nbsp;</p>
+       <p>At last, it is set that there is no default button to avoid an 
+       enclosure of the Dialog box when the end user enters &quot;enter&quot; in an 
+       editor.</li>
+       <li>The<b> destructor</b></li>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>CAAMmrBrowserCmdDlg::~CAAMmrBrowserCmdDlg()
+{
+  <b>CloseCatalog</b>();
+
+  _pDescEditor        = NULL;
+  _pCatalogEditor     = NULL ;
+  _pQueryResultEditor = NULL ;
+  _pQueryEditor       = NULL ;
+
+  _pModalButton            = NULL;
+  _pWithOkButton           = NULL;
+  _pWithCloseButton        = NULL;
+  _pWithTreeButton         = NULL;
+  _pWithSmallIconsButton   = NULL;
+  _pWithLargeIconsButton   = NULL;
+  _pWithDetailsButton      = NULL;
+  _pInstantiateStateButton = NULL ;
+  _pChgtCatalogStateButton = NULL ;
+  _pQueryStateButton       = NULL ;
+  _pInstButton             = NULL ;
+  _pOpenBrowserButton      = NULL ;
+ 
+  _pBrowserOptionsFrame = NULL ;
+  _pBrowserQueryFrame   = NULL ;
+  _pInstFrame           = NULL ;
+
+  _pDocumentEditor      = NULL;
+  _pICatalogBrowser     = NULL;
+
+  _pOKNotif             = NULL;
+  _pCancelNotif         = NULL;
+  _pCloseNotif          = NULL;
+  _pSelectNotif         = NULL;
+  _pChangeNotif         = NULL;
+
+}...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>As usual any pointer data members are set NULL. To be sure to close a 
+       possible Catalog Browser instance, the <code>CloseCatalog</code> method 
+       is called.</li>
+       <li>The<b> Build </b>method</li>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::Build()
+{
+
+   <b>//1- Dialog Object Construction</b>
+
+   <b>//1-1 Catalog's browser Properties frame
+</b>
+   CATDlgFrame* pBrowserFrame = new CATDlgFrame (this, &quot;FrameBrowser&quot;, CATDlgGridLayout);
+
+      //1-1-1 Catalog's browser options - options used for open 
+      _pBrowserOptionsFrame = new CATDlgFrame (pBrowserFrame, &quot;FrameBrowserOptions&quot;, CATDlgGridLayout);
+         
+         CATDlgLabel* pBehaviorLabel = new CATDlgLabel (_pBrowserOptionsFrame, &quot;BehaviorLabel&quot;);
+         _pModalButton = new CATDlgCheckButton (_pBrowserOptionsFrame, &quot;ModalCheckButton&quot;);
+
+         CATDlgLabel* pButtonLabel = new CATDlgLabel (_pBrowserOptionsFrame, &quot;ButtonLabel&quot;);
+         CATDlgFrame* pButtonFrame = new CATDlgFrame (_pBrowserOptionsFrame, &quot;ButtonFrame&quot;, CATDlgFraNoFrame|CATDlgGridLayout);
+           _pWithOkButton    = new CATDlgRadioButton (pButtonFrame, &quot;WithOK&quot;);
+           _pWithCloseButton = new CATDlgRadioButton (pButtonFrame, &quot;WithClose&quot;);
+           _pWithCloseButton-&gt;SetState (CATDlgCheck);
+
+         CATDlgLabel* pDisplayOptionsLabel = new CATDlgLabel (_pBrowserOptionsFrame, &quot;DisplayOptionsLabel&quot;);
+         CATDlgFrame* pDisplayOptionsFrame = new CATDlgFrame (_pBrowserOptionsFrame, &quot;DispOpFrame&quot;, CATDlgFraNoFrame|CATDlgGridLayout);
+       
+           _pWithTreeButton       = new CATDlgCheckButton (pDisplayOptionsFrame, &quot;Tree&quot;);
+           
+           _pWithSmallIconsButton = new CATDlgRadioButton (pDisplayOptionsFrame, &quot;Small&quot;);
+           _pWithSmallIconsButton-&gt;SetState (CATDlgCheck);
+           _pWithLargeIconsButton = new CATDlgRadioButton (pDisplayOptionsFrame, &quot;Large&quot;);
+           _pWithDetailsButton    = new CATDlgRadioButton (pDisplayOptionsFrame, &quot;Detail&quot;);
+
+      //1-1-2 Options for Instantiation
+      CATDlgFrame* pBrowserInstMngtFrame = new CATDlgFrame (pBrowserFrame, &quot;FrameBrowserInstMngt&quot;, CATDlgGridLayout);
+         _pInstantiateStateButton = new CATDlgCheckButton (pBrowserInstMngtFrame, &quot;InstantiateState&quot;);
+   
+      //1-1-3 Authorize or not the catalog changement- 
+      _pChgtCatalogStateButton = new CATDlgCheckButton (pBrowserFrame, &quot;ChgtCatalogState&quot;);
+
+      //1-1-4 Button to open the Catalog Browser
+      _pOpenBrowserButton = new CATDlgPushButton (pBrowserFrame, &quot;ButtonOpenBrowser&quot;);
+      
+      //1-1-5 Filtering 
+      _pBrowserQueryFrame = new CATDlgFrame (pBrowserFrame, &quot;FrameBrowserQuery&quot;, CATDlgGridLayout);
+      _pBrowserQueryFrame-&gt;SetSensitivity(CATDlgDisable);
+
+         CATDlgLabel* pQueryLabel = new CATDlgLabel (_pBrowserQueryFrame, &quot;QueryLabel&quot;);
+        _pQueryEditor = new CATDlgEditor (_pBrowserQueryFrame, &quot;EditorQuery&quot;);
+        _pQueryEditor-&gt;SetVisibleTextWidth (25);
+        _pQueryStateButton = new CATDlgCheckButton (_pBrowserQueryFrame, &quot;QueryState&quot;);
+        _pQueryStateButton-&gt;SetState(CATDlgCheck); // Default behavior 
+        CATDlgLabel * pQueryResultLabel = new CATDlgLabel (_pBrowserQueryFrame, &quot;QueryResultLabel&quot;);
+        _pQueryResultEditor = new CATDlgEditor (_pBrowserQueryFrame, &quot;QueryResultEditor&quot;,CATDlgEdtReadOnly);
+              
+   // 1-2 Instantiation Frame 
+   _pInstFrame = new CATDlgFrame (this, &quot;FrameInst&quot;, CATDlgGridLayout);
+   _pInstFrame-&gt;SetSensitivity(CATDlgDisable);
+
+   CATDlgLabel* pCatalogLabel = new CATDlgLabel (_pInstFrame, &quot;CatalogLabel&quot;);
+     _pCatalogEditor = new CATDlgEditor (_pInstFrame, &quot;EditorCatalog&quot;);
+     _pCatalogEditor-&gt;SetVisibleTextWidth (25);
+
+     CATDlgLabel* pDescLabel = new CATDlgLabel (_pInstFrame,&quot;DescLabel&quot;);
+     _pDescEditor = new CATDlgEditor (_pInstFrame,&quot;EditorDesc&quot;);
+     _pDescEditor-&gt;SetVisibleTextWidth (25);
+
+     _pInstButton = new CATDlgPushButton (_pInstFrame,&quot;InstButton&quot;);
+     _pInstButton-&gt;SetSensitivity(CATDlgDisable);
+
+   <b>//2- Dialog Box Layout</b>
+   SetGridRowResizable    (1, 1);
+   SetGridColumnResizable (0, 1);
+   
+   // 2-1 Inside Catalog's browser Properties frame
+   pBrowserFrame-&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   _pInstFrame-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+   _pInstFrame-&gt;SetGridColumnResizable (1, 1);
+
+   // 2-2 Inside Catalog Browser Properties
+   
+   _pBrowserOptionsFrame-&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   pBrowserInstMngtFrame-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+   _pChgtCatalogStateButton-&gt;SetGridConstraints (2, 0, 1, 1, CATGRID_4SIDES);
+   _pOpenBrowserButton-&gt;SetGridConstraints (3, 0, 1, 1, CATGRID_4SIDES);
+   _pBrowserQueryFrame-&gt;SetGridConstraints (4, 0, 1, 1, CATGRID_4SIDES);
+
+   // 2-2-1 Inside Catalog Browser Options frame
+   pBehaviorLabel-&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_LEFT|CATGRID_RIGHT|CATGRID_TOP);
+   _pModalButton-&gt;SetGridConstraints (0, 1, 1, 1, CATGRID_4SIDES);
+
+   pButtonLabel-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_LEFT|CATGRID_RIGHT|CATGRID_TOP);
+   pButtonFrame-&gt;SetGridConstraints (1, 1, 1, 1, CATGRID_4SIDES);
+   pButtonFrame-&gt;SetGridColumnResizable (0, 1);
+
+   pDisplayOptionsLabel-&gt;SetGridConstraints (2, 0, 1, 1, CATGRID_LEFT|CATGRID_RIGHT|CATGRID_TOP);
+   pDisplayOptionsFrame -&gt;SetGridConstraints (2, 1, 1, 1, CATGRID_4SIDES);
+   pDisplayOptionsFrame-&gt;SetGridColumnResizable (0, 1);
+
+   // 2-2-1-a Inside the Button frame
+   _pWithOkButton    -&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   _pWithCloseButton -&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+
+   // 2-2-1-b Inside the Display Option frame
+   _pWithTreeButton      -&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   _pWithSmallIconsButton-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+   _pWithLargeIconsButton-&gt;SetGridConstraints (2, 0, 1, 1, CATGRID_4SIDES);
+   _pWithDetailsButton   -&gt;SetGridConstraints (3, 0, 1, 1, CATGRID_4SIDES);
+   
+   // 2-2-2 Inside the Catalog Browser Managment
+   _pInstantiateStateButton-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+ 
+   // 2-2-2 Inside the Catalog Browser Query
+   pQueryLabel-&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   _pQueryEditor-&gt;SetGridConstraints (0, 1, 1, 1, CATGRID_4SIDES);
+   _pQueryStateButton-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES);
+   pQueryResultLabel-&gt;SetGridConstraints (2, 0, 1, 1, CATGRID_4SIDES);
+   _pQueryResultEditor-&gt;SetGridConstraints (2, 1, 1, 1, CATGRID_4SIDES);
+
+   // 2-2 Inside Instantiation Frame
+   pCatalogLabel-&gt;SetGridConstraints (0, 0, 1, 1, CATGRID_4SIDES);
+   _pCatalogEditor-&gt;SetGridConstraints (0, 1, 1, 1, CATGRID_4SIDES);
+   pDescLabel-&gt;SetGridConstraints (1, 0, 1, 1, CATGRID_4SIDES); 
+   _pDescEditor-&gt;SetGridConstraints (1, 1, 1, 1, CATGRID_4SIDES);
+   _pInstButton -&gt;SetGridConstraints (2, 0, 1, 1, CATGRID_4SIDES);
+
+  <b> //3- Dialog Box Callbacks</b>
+
+   AddAnalyseNotificationCB (_pOpenBrowserButton, _pOpenBrowserButton-&gt;GetPushBActivateNotification(),
+                               (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>CreateBrowser</b>,
+                               (CATCommandClientData) NULL);
+   
+   AddAnalyseNotificationCB (_pInstantiateStateButton, _pInstantiateStateButton-&gt;GetChkBModifyNotification (),
+                               (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>InstantiationAuthorization</b>,
+                               (CATCommandClientData) NULL);
+   
+   AddAnalyseNotificationCB (_pChgtCatalogStateButton, _pChgtCatalogStateButton-&gt;GetChkBModifyNotification (),
+                               (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>ChangeCatalogAuthorization</b>,
+                               (CATCommandClientData) NULL);
+
+   AddAnalyseNotificationCB (_pQueryEditor, _pQueryEditor-&gt;GetEditModifyExtNotification(),
+                               (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>ChangeQuery</b>,
+                               (CATCommandClientData) NULL);
+
+   AddAnalyseNotificationCB (_pInstButton, _pInstButton-&gt;GetPushBActivateNotification (),
+                               (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>LaunchInstantiation</b>,
+                               (CATCommandClientData) NULL);
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p>As usual, the <code>Build</code> method contains three parts:<ul>
+         <li>Dialog Objects construction</li>
+         <li>Dialog Objects arrangement</li>
+         <li>Callback methods definition</li>
+       </ul>
+       </li>
+       <li>The<b> CreateBrowser </b>method</li>
+       <p>This method is a callback method called when the end user clicks on 
+       the &quot;Open&quot; button of the Catalog Browser Demonstrator Dialog box. The 
+       goal of this method is to create a new Catalog Browser instance.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::CreateBrowser(CATCommand* iFrom,CATNotification* iNotif, CATCommandClientData iData)
+{
+   CATCciCatalogBrowserDisplayOptions <b>options</b> = <b>CATCatalogDisplayCombo</b> ;
+   if ( NULL != _pModalButton)
+    options |= (_pModalButton         -&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayWndModal</b>       : NULL;
+   if ( NULL != _pWithOkButton)
+    options |= (_pWithOkButton        -&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayWndBtnOKCancel</b> : NULL;
+   if (NULL != _pWithTreeButton)
+    options |= (_pWithTreeButton      -&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayTree</b>           : NULL;
+   if (NULL != _pWithSmallIconsButton)
+    options |= (_pWithSmallIconsButton-&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayWithSmallIcons</b> : NULL;
+   if (NULL != _pWithLargeIconsButton)
+    options |= (_pWithLargeIconsButton-&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayWithLargeIcons</b> : NULL;
+   if (NULL != _pWithDetailsButton)
+    options |= (_pWithDetailsButton   -&gt;GetState() == CATDlgCheck) ? <b>CATCatalogDisplayWithDetails</b>    : NULL;
+   
+   int DragAndDropAuthorized   = 0 ;
+         
+   int InstantiationAuthorized = 0 ;
+   <b>InstantiationAuthorized</b> = (_pInstantiateStateButton -&gt;GetState() == CATDlgCheck) ? 1: 0;
+         
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The first step consists in to retrieve on the Dialog objects the 
+       options set by the end user.&nbsp;For the <code>options</code> value, notice 
+       that:<ul>
+         <li>It is initialized with the <code>CATCatalogDisplayCombo</code> 
+         value. It enables to have the last three options ( Large icons, Small 
+         icons and detail) in a combo. It is recommended to use this option.
+         </li>
+         <li>The third first options are not exclusive <code>(CATCatalogDisplayWndModal,CATCatalogDisplayWndBtnOKCancel,CATCatalogDisplayTree)</code>
+         </li>
+         <p><code>_pModalButton</code> and <code>_pWithTreeButton</code> are <i>
+         CATDlgCkeckButton</i> and <code>_pWithOkButton</code> is a <i>
+         CATDlgRadioButton</i> independent of the <code>_pModalButton</code> and
+         <code>_pWithTreeButton</code> dialog objects.</li>
+         <li>The third last are exclusive <code>(CATCatalogDisplayWithSmallIcons,CATCatalogDisplayWithLargeIcons,CATCatalogDisplayWithDetails)
+         </code></li>
+         <p><code>_pWithSmallIconsButton, _pWithLargeIconsButton,_pWithDetailsButton</code> 
+         are <i>CATDlgRadioButton</i> class instances&nbsp;</li>
+       </ul>
+       <table class="code">
+         <tr>
+           <td>
+           <pre> ...
+   if ( NULL != _pDocumentEditor)
+   {
+      CATICatalogBrowserFactory * pICatalogBrowserFactory = NULL;
+      HRESULT rc = <b>_pDocumentEditor</b>-&gt;QueryInterface (IID_<b>CATICatalogBrowserFactory</b>, 
+                                              (void**) &amp;pICatalogBrowserFactory);
+      if (SUCCEEDED(rc))
+      {
+         pICatalogBrowserFactory-&gt;<b>OpenCatalogBrowser</b> (_pICatalogBrowser, 
+                                                      options, 
+                                                      DragAndDropAuthorized, 
+                                                      InstantiationAuthorized);
+
+   ...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The editor, a <i>CATFrmEditor</i> class instance, implements the <i>
+       CATICatalogBrowserFactory</i> interface. It enables you to create a 
+       Catalog Browser instance thanks to the <code>OpenCatalogBrowser</code> 
+       method:<ul>
+         <li><code>_pICatalogBrowser</code> is the created instance.</li>
+         <li><code>options</code> is the display options initialized in the 
+         previous step</li>
+         <li><code>DragAndDropAuthorized</code> can only be&nbsp; 0 ( no drag 
+         and drop) in this sample.</li>
+         <p>Drag and drop is only possible if the current command is the Select 
+         command. In this sample, the <i>CAAMmrBrowserCmdDlg</i> command is 
+         undefined, since it is a <i>CATDialog</i> command, but it is launched 
+         by the <i>CAAMmrBrowserCmd</i> command which is an exclusive command. 
+         So the Select command is deleted when the <i>CAAMmrBrowserCmd</i> 
+         command is executed [<a href="#References">3</a>]. The <i>
+         CAAMmrBrowserCmd</i> command is a state command launched from the 
+         Catalog toolbar [<a href="#Fig.1">Fig.1</a>]. It ends when the end user 
+         clicks either on the Ok button, or the Cancel button. This class is 
+         located in the CAAMmrCatalogUI.m module of the CAAMechanicalModeler.edu 
+         framework such as the <i>CAAMmrBrowserCmdDlg</i> command.</li>
+         <li><code>InstantiationAuthorized</code>, initialized in the previous 
+         step, specifies if the instantiations is possible by contextual menu, 
+         and double click.</li>
+       </ul>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+         if ( NULL != _pICatalogBrowser)
+         {
+            CATDlgDialog* window = NULL;
+            rc = _pICatalogBrowser-&gt;<b>GetFatherWindow</b> (window)) ;
+            if (SUCCEEDED (rc) )
+            {
+               window<b>-&gt;SetFather (this);
+               </b>window<b>-&gt;SetVisibility (CATDlgShow);</b>
+   ...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>Once the Catalog browser is created, you must re-parent the Catalog 
+       browser window.&nbsp;The <code>GetFatherWindow</code> method retrieves the 
+       Catalog browser dialog box, <code>window</code>. <code>SetFather</code> a
+       <i>CATCommand</i> method, enables to receive the notifications sent by 
+       the Catalog browser, and so you can set callback on these notifications:</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+               if (SUCCEEDED (<b>_pICatalogBrowser-&gt;GetOKNotification </b>(_pOKNotif))                    &amp;&amp; _pOKNotif)
+                  AddAnalyseNotificationCB (window, _pOKNotif    ,
+                                      (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>OKCatalog</b>,
+                                      NULL);
+               if (SUCCEEDED (_<b>pICatalogBrowser-&gt;GetCancelNotification</b> (_pCancelNotif))            &amp;&amp; _pCancelNotif)
+                  AddAnalyseNotificationCB (window, _pCancelNotif,
+                                      (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>CancelCatalog</b>,
+                                      NULL);
+               if (SUCCEEDED (<b>_pICatalogBrowser-&gt;GetCloseNotification </b>(_pCloseNotif))              &amp;&amp; _pCloseNotif)
+                   AddAnalyseNotificationCB (window, _pCloseNotif ,
+                                      (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>CancelCatalog</b>,
+                                      NULL);
+               if (SUCCEEDED (<b>_pICatalogBrowser-&gt;GetChangeChapterNotification</b> (_pChangeNotif))     &amp;&amp; _pChangeNotif)
+                   AddAnalyseNotificationCB (window, _pChangeNotif ,
+                                      (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>ChangeChapter</b>,
+                                      NULL);
+               if (SUCCEEDED (<b>_pICatalogBrowser-&gt;GetSelectDescriptionNotification</b> (_pSelectNotif)) &amp;&amp; _pSelectNotif)
+                   AddAnalyseNotificationCB (window, _pSelectNotif ,
+                                      (CATCommandMethod) &amp;CAAMmrBrowserCmdDlg::<b>SelectDescription</b>,
+                                      NULL);
+            }
+   ...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The Catalog Browser offers the possibility to initialize the catalog 
+       to browse. The <code>SetCurrentCatalogDocId</code> method enables to give 
+       a specific catalog from its complete path. To transform a file path to a
+       <i>CATIDocId</i> interface pointer, use the <code>RecoverDocId</code> 
+       method of the <i>CATOmDocIdFinder</i> class.
+       <ul>
+         <li>The first argument is always &quot;File&quot; </li>
+         <li>The third is always &quot;catalog&quot; </li>
+       </ul>
+       <p></p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+           if ( TRUE == _FirstOpen )
+            {
+               char * pCAACatalogFileName = NULL ;
+               CATLibStatus result = ::<b>CATGetEnvValue</b>(&quot;CAACatalogFileName&quot;,&amp;pCAACatalogFileName); 
+               
+               if ( (CATLibSuccess == result) &amp;&amp; ( NULL != pCAACatalogFileName) )
+               {   
+                  CATUnicodeString CatalogName = pCAACatalogFileName ;
+                  free (pCAACatalogFileName) ;
+                  pCAACatalogFileName = NULL ;
+                  ...
+                  <b>CATIDocId</b> * pIDocId = NULL ;
+                  rc = <b>CATOmbDocIdFinder::RecoverDocId</b>(&quot;File&quot;,CatalogName,&quot;catalog&quot;,&amp;pIDocId);
+                  _pICatalogBrowser-&gt;<b>SetCurrentCatalogDocId</b>(pIDocId);
+                  
+                  pIDocId-&gt;Release(); pIDocId = NULL ;
+                  ...
+               }
+...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The second method <code>BuildCurrentChapterString</code> add the first 
+       element of the list, in the selectable chapter list. (The combo list just 
+       before the &quot;Current&quot; label )</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+               CATListOfCATUnicodeString * pList = NULL ;
+               rc = _pICatalogBrowser-&gt;<b>BuildCurrentChapterString</b>(pList);
+               if ( SUCCEEDED(rc) &amp;&amp; ( NULL!= pList))
+               {
+                  pList-&gt;Append (&quot;Nuts&quot;);
+                  _pICatalogBrowser-&gt;<b>SetCurrentChapter</b> (pList);
+                  delete pList;
+                  pList = NULL ;
+               }
+
+               _FirstOpen = FALSE ;
+            }
+         }
+
+         pICatalogBrowserFactory-&gt;Release();
+         pICatalogBrowserFactory = NULL ;
+      }
+   }
+   ...</pre>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>The<b> ChangeChapter </b>method</li>
+       <p>This method is a callback method called when the end user changes the 
+       current chapter in the Catalog Browser Dialog box.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::ChangeChapter(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   if ( NULL != _pICatalogBrowser )
+   { 
+      if ( NULL != _pCatalogEditor )
+      {
+         <b>CATIDocId</b> * pIDocId = NULL;
+         HRESULT rc = _pICatalogBrowser-&gt;<b>GetCurrentCatalogDocId</b>(&amp;pIDocId);
+         ...
+         if ( SUCCEEDED(rc) &amp;&amp; (NULL !=pIDocId) )
+         {
+             CATUnicodeString CatalogName ;
+             pIDocId-&gt;<b>GetIdentifier</b>(CatalogName);
+             
+            _pCatalogEditor-&gt;<b>SetText</b>(CatalogName);
+         }else 
+         {
+            _pCatalogEditor-&gt;SetText(&quot;&quot;);
+         }
+         if ( NULL != pIDocId )
+         {
+             pIDocId-&gt;Release();
+             pIDocId = NULL ;
+         }
+      }
+      if ( NULL != _pQueryResultEditor)
+      {
+         CATICatalogQueryResult * pIQueryResult = NULL ;
+         HRESULT rc = _pICatalogBrowser-&gt;<b>GetCurrentQueryResult</b>(pIQueryResult);
+         if ( SUCCEEDED(rc) &amp;&amp; ( NULL!=pIQueryResult))
+         {
+            CATUnicodeString ResultExpression ;
+            ResultExpression = pIQueryResult-&gt;<b>GetQuery</b>();
+          
+            _pQueryResultEditor-&gt;<b>SetText</b>(ResultExpression) ;
+
+            pIQueryResult-&gt;Release();
+            pIQueryResult = NULL ;
+         } 
+      }
+   }
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The path of the current chapter is displayed in the &quot;Catalog&quot; editor 
+       of the Catalog Browser Demonstrator. The &quot;Query&quot; editor is updated 
+       because when a new chapter is selected the current filter is reset. See 
+       the &quot;ChangeQuery&quot; method.&nbsp;</li>
+       <li>The<b> SelectDescription </b>method
+       <p>This method is a callback method called when the end user clicks on a 
+       description in the Catalog Browser Dialog box.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::SelectDescription(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   if ( NULL != _pICatalogBrowser )
+   {
+     CATICatalogDescription* pICatalogDescription = NULL;
+     HRESULT rc = _pICatalogBrowser-&gt;<b>GetSelectedDescription</b> (pICatalogDescription);
+ ...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The current description is retrieved thanks to the <code>
+       GetSelectedDescription</code> method.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+        if (pICatalogDescription-&gt;<b>IsObjectASubchapter</b>())
+        {
+           // Case of a chapter selection
+           CATICatalogChapter* pICatalogChapter = NULL;
+           pICatalogChapter = pICatalogDescription-&gt;<b>GetSubChapter</b>();
+           if ( NULL != pICatalogChapter )
+           {
+              CATUnicodeString chap_name  ;
+
+              chap_name  = pICatalogChapter-&gt;<b>GetChapterName</b>();
+              pICatalogChapter-&gt;Release(); 
+              pICatalogChapter = NULL;
+
+              _pDescEditor-&gt;<b>SetText</b> (chap_name);
+           }
+           ...
+           // The OK button cannot be accessible in the Catalog Browser
+           if (NULL != _pWithOkButton)
+           {
+               if ( CATDlgCheck == _pWithOkButton-&gt;GetState() )
+               {
+                  _pICatalogBrowser-&gt;<b>OKActivationMode</b>(0);
+               }
+           }
+        }...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>If the current description has a link towards a chapter, <code>
+       IsObjectASubchapter</code> returns true, the &quot;Description&quot; editor 
+       displays its name. Since it is not an instantiable object, the OK button 
+       of the Catalog Browser is not activated.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>...
+           CATBaseUnknown * pObject = NULL ;
+           rc = pICatalogDescription-&gt;<b>GetObject</b>(pObject);
+           if ( SUCCEEDED(rc) )
+           {
+              CATIAlias * pIAliasOnObject = NULL ;
+              rc = pObject-&gt;QueryInterface(IID_CATIAlias,(void**) &amp; pIAliasOnObject);
+              {
+                  CATUnicodeString obj_name = pIAliasOnObject-&gt;GetAlias();
+                  
+                  _pDescEditor-&gt;<b>SetText</b> (obj_name); 
+
+                  ...
+                  if (NULL != _pWithOkButton)
+                  {
+                     if ( CATDlgCheck == _pWithOkButton-&gt;GetState() )
+                     {
+                        _pICatalogBrowser-&gt;<b>OKActivationMode</b>(1);
+                     }
+                  }
+             ...
+...</pre>
+           </td>
+         </tr>
+       </table>
+       <p>In the second part of the method it is the case when the description 
+       has a link towards a component (not a chapter). The component is 
+       retrieved thanks to the <code>GetObject</code> method. The &quot;Description&quot; 
+       editor displays the alias name of the component. Since it is an 
+       instantiable object, the OK button of the Catalog Browser is activated.</li>
+       <li>The<b> CancelCatalog </b>method</li>
+       <p>This method is a callback method called when the end user clicks on 
+       the &quot;Cancel&quot; or &quot;Close&quot; buttons of the Catalog Browser Dialog box.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::CancelCatalog(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   <b>CloseCatalog</b>();
+}</pre>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>The<b> OKCatalog </b>method</li>
+       <p>This method is a callback method called when the end user clicks on 
+       the &quot;Ok&quot; button of the Catalog Browser Dialog box.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::OKCatalog(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   <b>CloseCatalog</b>(); 
+}</pre>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>The<b> CloseCatalog </b>method</li>
+       <p>This method enables to close the current Catalog Browser. It is done 
+       by the <code>CloseBrowser</code> method on the <i>CATICatalogBrowser</i> 
+       interface pointer on the Catalog Browser. Before that, it is more safe to 
+       remove the callbacks set at the Catalog Browser opening.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::CloseCatalog()
+{
+  if ( NULL != _pICatalogBrowser )
+  {
+    if ( NULL != _pOKNotif)
+        <b>RemoveAnalyseNotificationCB</b> (this, _pOKNotif     , NULL);
+    if (NULL !=_pCancelNotif)
+        <b>RemoveAnalyseNotificationCB</b> (this, _pCancelNotif , NULL);
+    if (NULL !=_pChangeNotif)
+        <b>RemoveAnalyseNotificationCB</b> (this, _pChangeNotif , NULL);
+    if (NULL !=_pSelectNotif)
+        <b>RemoveAnalyseNotificationCB</b> (this, _pSelectNotif  , NULL);
+    if (NULL !=_pCloseNotif)
+        <b>RemoveAnalyseNotificationCB</b> (this, _pCloseNotif  , NULL);
+
+    _pOKNotif = _pCancelNotif = _pCloseNotif = _pSelectNotif = _pChangeNotif = NULL ;
+
+    _pICatalogBrowser-&gt;<b>CloseBrowser</b>();
+    _pICatalogBrowser-&gt;Release();
+    _pICatalogBrowser = NULL ;
+...</pre>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>The<b> InstantiationAuthorization </b>method</li>
+       <p>This method is a callback method called when the end user clicks on 
+       the &quot;Authorize Instantiation&quot; check button of the Catalog Browser 
+       Demonstrator Dialog box.&nbsp;</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::InstantiationAuthorization(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   if ( (NULL != _pInstantiateStateButton) &amp;&amp; (NULL != _pICatalogBrowser) )
+   {
+      if ( _pInstantiateStateButton-&gt;GetState() == CATDlgCheck )
+      {
+         _pICatalogBrowser-&gt;<b>AuthorizeInstantiation</b>(1) ;
+      }else
+      {
+         _pICatalogBrowser-&gt;<b>AuthorizeInstantiation</b>(0) ;
+      }
+   }     
+}
+</pre>
+           </td>
+         </tr>
+       </table>
+       <p><b>1</b>: the end user can instantiate from the catalog browser&nbsp; 
+       with a double click or the contextual menu.&nbsp;</p>
+       <p><b>0</b>: otherwise</li>
+       <li>The<b> ChangeCatalogAuthorization </b>method</li>
+       <p>This method is a callback method called when the end user clicks on 
+       the &quot;Authorize Other Catalog Selection&quot; check button of the Catalog 
+       Browser Demonstrator Dialog box.&nbsp;</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::ChangeCatalogAuthorization(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+   if ( (NULL != _pChgtCatalogStateButton) &amp;&amp; (NULL != _pICatalogBrowser))
+   {
+      if ( _pChgtCatalogStateButton-&gt;GetState() == CATDlgCheck )
+      {
+         _pICatalogBrowser-&gt;<b>AuthorizeChangeCatalog</b>(1) ;
+      }else
+      {
+         _pICatalogBrowser-&gt;<b>AuthorizeChangeCatalog</b>(0) ;
+      }
+   }   
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p><b>1</b>: The&nbsp; <img border="0" src="images/CAACciCatalogFileOpen.jpg" width="16" height="16"> button is 
+       sensible, the end user can change catalogs.&nbsp;</p>
+       <p><b>0</b>: The <img border="0" src="images/CAACciCatalogFileOpen.jpg" width="16" height="16"> button is not sensible, the end user cannot 
+       change the catalog</p>
+       <p>This option is also available for catalog's modification in the left 
+       editor list.&nbsp;</li>
+       <li>The<b> ChangeQuery </b>method</li>
+       <p>This method is a callback method called when the end user enters a 
+       query&nbsp; in the &quot;Query&quot; editor of the Catalog Browser Demonstrator 
+       Dialog box.&nbsp;</p>
+       <p>The new query is sent to the Catalog Browser thanks to the <code>
+       SetCurrentQuery</code> method. The type of the query: user query or 
+       internal query is retrieved on the <code>_pQueryStateButton</code> check 
+       button.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>void CAAMmrBrowserCmdDlg::ChangeQuery(CATCommand* iFrom, CATNotification* iNotif, CATCommandClientData iData)
+{
+    if ( NULL != _pICatalogBrowser )
+    {
+       CATUnicodeString Query ;
+       Query = _pQueryEditor-&gt;<b>GetText</b>();
+
+       int UserQuery = 1;
+       if (NULL != _pQueryStateButton)
+          <b>UserQuery</b> = (_pQueryStateButton -&gt;GetState() == CATDlgCheck) ? 1: 0;
+
+       HRESULT rc = _pICatalogBrowser-&gt;<b>SetCurrentQuery</b>(Query,UserQuery);
+       ...
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p>The &quot;The filter on the chapter&quot; editor (not editable) allows you to 
+       understand the filter applied to the chapter. The filter value is 
+       retrieved by the <code>GetCurrentQueryResult</code> method.</p>
+       <table class="code">
+         <tr>
+           <td>
+           <pre>       CATICatalogQueryResult * pIQueryResult = NULL ;
+       rc = _pICatalogBrowser-&gt;<b>GetCurrentQueryResult</b>(pIQueryResult);
+       if ( SUCCEEDED(rc) &amp;&amp; ( NULL!=pIQueryResult))
+       {
+          CATUnicodeString ResultExpression ;
+          ResultExpression = pIQueryResult-&gt;<b>GetQuery</b>();
+          
+          _pQueryResultEditor-&gt;<b>SetText</b>(ResultExpression) ;
+
+          pIQueryResult-&gt;Release();
+          pIQueryResult = NULL ;
+       }
+       
+    }
+}</pre>
+           </td>
+         </tr>
+       </table>
+       <p>There are three possibilities for the filter since the chapter has 
+       been chosen<ul>
+         <li>Only an &quot;internal&quot; query has been sent&nbsp;</li>
+         <p>The filter is the current &quot;internal&quot; query</li>
+         <li>Only a &quot;user&quot; query has been sent ( from the &quot;Query&quot; editor of the 
+         Catalog Browser Demonstrator of from the &quot;Filter&quot; editor of the Catalog 
+         Browser )</li>
+       </ul>
+       </li>
+     </ul>
+     <ul>
+       <ul>
+         <p>The filter is the current &quot;user&quot; query</p>
+         <li>At least one &quot;internal&quot; and one &quot;user&quot; queries have been sent</li>
+         <p>The filter is a logical AND between the current &quot;user&quot; and the 
+         current &quot;internal&quot; queries.</li>
+       </ul>
+       <p>As soon as the chapter is left, the filter is reset.&nbsp;</p>
+     </ul>
+     </li>
+     <li><a name="resources pour dlg"></a>The resource file</li>
+   </ol>
+   <table class="code">
+     <tr>
+       <td>
+       <pre><b>// Title of the dialog box</b>
+Title =&quot;Catalog Browser Demonstrator&quot; ;
+
+<b>// Help message displayed in the status bar when you pass over the dialog box</b>
+Help = &quot;Dialog box to understand the Catalog Browser options and to make instantiation&quot;;
+
+<b>// Frames </b>
+FrameBrowser.Title= &quot;Catalog Browser Properties&quot; ;
+
+FrameBrowser.FrameBrowserOptions.Title=&quot;Window Options &amp; Display&quot;;
+FrameBrowser.FrameBrowserOptions.BehaviorLabel.Title =&quot;Behavior&quot;;
+FrameBrowser.FrameBrowserOptions.ModalCheckButton.Title =&quot;Modal&quot;;
+FrameBrowser.FrameBrowserOptions.ButtonLabel.Title=&quot;Window Button&quot;;
+FrameBrowser.FrameBrowserOptions.ButtonFrame.WithOK.Title=&quot;OK&quot;;
+FrameBrowser.FrameBrowserOptions.ButtonFrame.WithClose.Title=&quot;Close&quot;;
+FrameBrowser.FrameBrowserOptions.DisplayOptionsLabel.Title=&quot;Display&quot;;
+FrameBrowser.FrameBrowserOptions.DispOpFrame.Tree.Title=&quot;Tree&quot;;
+FrameBrowser.FrameBrowserOptions.DispOpFrame.Small.Title=&quot;Small&quot;;
+FrameBrowser.FrameBrowserOptions.DispOpFrame.Large.Title=&quot;Large&quot;;
+FrameBrowser.FrameBrowserOptions.DispOpFrame.Detail.Title=&quot;Detail&quot;;
+
+FrameBrowser.FrameBrowserInstMngt.Title=&quot;Instantiation Options&quot;;
+FrameBrowser.FrameBrowserInstMngt.InstantiateState.Title= &quot;Authorize Instantiation&quot; ;
+
+FrameBrowser.ButtonOpenBrowser.Title=&quot;Open&quot;;
+
+FrameBrowser.ChgtCatalogState.Title = &quot;Authorize Other Catalog Selection&quot; ;
+
+FrameBrowser.FrameBrowserQuery.Title=&quot;Filtering&quot;;
+FrameBrowser.FrameBrowserQuery.QueryLabel.Title=&quot;Query&quot;;
+FrameBrowser.FrameBrowserQuery.QueryState.Title=&quot;User&quot;;
+FrameBrowser.FrameBrowserQuery.QueryResultLabel.Title=&quot;The filter on the chapter&quot;;
+
+FrameInst.Title=&quot;Current Selection&quot;;
+FrameInst.CatalogLabel.Title=&quot;Catalog&quot;;
+FrameInst.DescLabel.Title=&quot;Description&quot;;
+FrameInst.InstButton.Title=&quot;Launch&quot;;
+</pre>
+       </td>
+     </tr>
+   </table>
+   <p>This Nls file is not complete. For each Dialog object you can add</p>
+   <ul>
+     <li>The Long help message - displayed in a ballon when you select the 
+     Dialog object with the question mark</li>
+     <p>FrameBrowser.ButtonOpenBrowser.<b>LongHelp</b>=&quot;...&quot;;</li>
+     <li>The Short help message - displayed in a ballon when you passes over the 
+     Dialog object&nbsp;</li>
+     <p>FrameBrowser.ButtonOpenBrowser.<b>ShortHelp</b>=&quot;...&quot;;</li>
+     <li>The help message&nbsp; - displayed in the status bar when you passes 
+     over the Dialog object&nbsp;</li>
+     <p>FrameBrowser.ButtonOpenBrowser.<b>Help</b>=&quot;...&quot;;</li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p>A Catalog Browser instance is created thanks to the <i>
+   CATICatalogBrowserFactory</i><em> </em>interface. Once the instance is 
+   created, you can customize it or retrieve data, enter by the end user, thanks 
+   to the <i>CATICatalogBrowser </i>interface.&nbsp; </p>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="896">
+     <tr>
+       <td valign="top" width="62">[1]</td>
+       <td width="820">
+       <a href="../CAACciTechArticles/CAACciCatalogOverview.htm">
+       Catalog Overview</a></td>
+     </tr>
+     <tr>
+       <td valign="top" width="62">[2]</td>
+       <td width="820"><a href="CAAMmrCatalogCombCrvInst.htm">Instantiating a 
+       Component</a></td>
+     </tr>
+     <tr>
+       <td valign="top" width="62">[3]</td>
+       <td width="820">
+       <a href="../CAADegTechArticles/CAADegCommandModel.htm">
+       The CAA Command Model</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2" width="888">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Jul 2002]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>2</strong> [May 2004]</td>
+       <td valign="top">Drag and Drop impossible</td>
+     </tr>
+     <tr>
+       <td valign="top">Version: <strong>3</strong> [Feb 2005]</td>
+       <td valign="top">SetCurrentCatalogPath and GetCurrentCatalogPath 
+       deprecation</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+  </body>
+
+</html>
+

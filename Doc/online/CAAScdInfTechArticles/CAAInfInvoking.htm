@@ -1,0 +1,214 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Invoking CATIA from a Scripting Language</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Infrastructure</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Invoking CATIA from a Scripting Language</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<p>Access to the CATIA object model is provided using scripts in different ways
+depending on the operating system and on the applications that can share their
+own objects with CATIA. This also applies for ENOVIA DMU and DELMIA products. In 
+the following you can subsitute &quot;DMU&quot; or &quot;DELMIA&quot; to &quot;CATIA&quot; if you need to 
+access or launch another application based on the common V5 platform.</p>
+<p>CATIA is an OLE Automation server for Windows and allows macro record and
+replay for both Windows and UNIX. The following summarizes CATIA scripting
+capabilities.</p>
+<div align="center">
+  <center>
+  <table border="0" width="80%">
+    <tr>
+      <td width="13%" valign="top">With Windows:</td>
+      <td width="87%" valign="top">
+        <ul>
+          <li>In-process access using Visual Basic Scripting Edition or Visual 
+          Basic for Application since CATIA hosts both scripting engines.</li>
+          <li>Out-process access from the following OLE Automation clients:</li>
+          
+          <ul>
+            <li>Visual Basic for Applications via
+            other applications like those of Office</li>
+            <li>Windows Scripting Host and scripting
+            languages such as VB Script or JScript</li>
+            <li>an a html page.</li>
+          </ul>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td width="13%" valign="top">With UNIX:</td>
+      <td width="87%" valign="top">
+        <ul>
+          <li>in-process access using Visual Basic Scripting Edition.</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>The macros recorded from the Tools menu and the Record Macro dialog box 
+can use:</p>
+<ul>
+  <li>the VBScript language,</li>
+  <li>the VBA language</li>
+  <li>the CATScript language. This CATIA specific language 
+  was designed to allow compatibility between the Unix Basic Script engine and 
+  the Windows VBScript engine. As CATIA doesn't anymore hosts the Basic Script 
+  engine on Unix since V5R7, it has only been kept for compatibility purpose. It 
+  is actually processed by a VBScript engine after removal of the typing 
+  information. <br>
+&nbsp;</li>
+</ul>
+<p>In-process access means that the script interpretation is performed in the
+same process as CATIA. You usually run the macros from the Macros window
+triggered from the interactive <b>Tools-&gt;Macros</b> command. In this case,
+the macro is processed by CATIA just like any other command.</p>
+<p>Out-process access means that you run the macro from another application
+running in another process. In this case, the macro should first connect to
+CATIA to then access its data. This connection starts CATIA if no CATIA process
+is being running.</p>
+<p>You can find information about in-process and out-process access in:</p>
+<ul>
+  <li><b><a href="#InProcess">Running In-process Macros</a></b></li>
+  <li><b><a href="#OutProcess">Running Out-process Macros</a></b></li>
+</ul>
+<h3><a name="InProcess"></a>Running In-process Macros</h3>
+<p>In-process access means that the script interpretation is performed in the
+same process as CATIA using the scripting engine(s) hosted by CATIA. You can run
+in-process macros with UNIX and Windows. You have three means to run in-process
+macros:</p>
+<ol>
+  <li>You usually run the macros from the Macros window triggered from the
+    interactive <b>Tools-&gt;Macros</b> command. In this case, the macro is
+    processed by CATIA just like any other command.<br>
+  Note that you can add arguments to the <code>
+  CATMain</code> function:
+  <pre><font color="#0000FF">  Sub</font> CATMain(X, Y)<br>&nbsp;&nbsp;<font color="#008000">  ' Here we expect X as a scalar and Y as an object</font><br>&nbsp;&nbsp;  MsgBox X&nbsp; &amp; TypeName(Y)
+  <font color="#0000FF">End Sub</font></pre>
+  <p>When launching such a macro, a dialog windows will 
+  request valuation of arguments.&nbsp; </p>
+  <p align="center">
+  <img border="0" src="images/CAAScdInfMacArgs.gif" width="314" height="267"></p>
+  <p>Note that even if you use a macro language allowing to type 
+  to those arguments, the types won't be user at runtime, so it is recommended 
+  to give an explicit name to the variable to avoid end-user mystakes:</p>
+  <pre><font color="#0000FF">  Sub</font> CATMain(iThisNumber, oThatObject)</pre>
+</li>
+  <li>You can start CATIA and request that a macro being executed as soon as
+    CATIA is started using the -macro option followed by the full path of the
+    macro you want to run:
+    <pre>CNEXT -macro E:\Users\Macros\MacroToRun.CATScript</pre>
+    This runs the <code>CATMain</code> function defined in the <code>MacroToRun.CATScript</code> file. 
+  Macros can however be stored in other macro libraries like <code>catvba</code> 
+  documents or any other V5 documents like <code>CATPart</code> or <code>
+  CATProduct</code> documents. You can use the following syntax to run the <code>
+  CATMain</code> function defined in the <code>myMacro</code> macro of the <code>
+  myDocument</code> document:<pre>CNEXT -macro myDocument.catvba myMacro 
+CNEXT -macro myDocument.CATPart myMacro</pre>
+    CATIA sessions launched this way will remain active after the end of the 
+  macro unless you explicitly end it in the macro using the <code>CATIA.Quit</code> 
+  method.<br>
+&nbsp;</li>
+  <li>You can start CATIA in batch to execute a macro using the -batch option
+    followed by the full path of the macro you want to run: 
+    <pre>CNEXT -batch -macro E:\Users\Macros\BatchMacro.CATScript</pre>
+    this generally improves performances by avoiding visualization refreshes. 
+  Any syntax of the <code>-macro</code> option can be used with the <code>-batch</code> option. 
+   
+  CATIA sessions launched this way will end by itself after the execution of 
+  the macro.<p>&nbsp;</li>
+</ol>
+<h3><a name="OutProcess"></a>Running Out-process Macros</h3>
+<p>Out-process access means that you run the macro from another application
+running in another process, such as from Visual Basic for Applications
+associated with products such as Excel or Word.
+You can also use the Windows Scripting Host to run VBScript
+or JScript macros by simply double clicking the macro name from the Windows
+desktop or Explorer, or from the command console. You can finally use VBScript
+or JScript macros embedded in html pages.</p>
+<p>The macro should first connect to CATIA to then access its data. This
+connection starts CATIA if no CATIA process is being running. The script is
+interpreted by the scripting engine hosted by the application from which you
+start the macro.</p>
+<p>You can run out-process macros with Windows only.</p>
+<h4>Running Out-process Macros from VBA</h4>
+<p>You can use the following syntax when using  
+or Visual Basic for application</p>
+<ul>
+  <li>If CATIA is already running, the macro should simply connect to CATIA
+    using the <b>GetObject</b> method 
+    <pre><font color="#0000FF">Dim</font> CATIA <font color="#0000FF">As</font> Object<br>
+    <font color="#0000FF">Set</font> CATIA = GetObject(, &quot;CATIA.Application&quot;)</pre>
+    <p>The first argument is left blank.</p>
+  </li>
+  <li>If CATIA is not already running, the macro should start CATIA using the <b>CreateObject</b>
+    method 
+    </li>
+</ul>
+<blockquote>
+    <pre><font color="#0000FF">Dim</font> CATIA <font color="#0000FF">As</font> Object<br>
+    <font color="#0000FF">Set</font> CATIA = CreateObject(&quot;CATIA.Application&quot;)</pre>
+    </blockquote>
+<h4>Running Out-process Macros Using the Windows Scripting 
+Host</h4>
+<p>Another way is to use the Windows Scripting Host. This is a
+language-independent scripting host which enables scripts written in different
+languages such as Visual Basic, JScript, and Perl, to be run from the Windows
+desktop, the Windows Explorer, or the command console.</p>
+With Visual Basic, your script should begin by the connection to CATIA,
+    using either CreateObject or GetObject, as follows: 
+    <blockquote>
+    <pre><font color="#0000FF">Dim</font> CATIA
+<font color="#0000FF">Set</font> CATIA = WScript.CreateObject(&quot;CATIA.Application&quot;)</pre>
+    </blockquote>
+    <p>or</p>
+    <blockquote>
+    <pre><font color="#0000FF">Dim</font> CATIA
+<font color="#0000FF">Set</font> CATIA = WScript.GetObject(&quot;&quot;, &quot;CATIA.Application&quot;)</pre>
+  </blockquote>
+<p>Note that the GetObject method requires that its first 
+argument be blank.</p>
+<p>To run the macros from the Windows desktop, simply double click on the macro
+name. These names are suffixed using vbs for Visual Basic.</p>
+
+<img border="0" src="images/CAAInfExplorer.jpg" width="734" height="484"> 
+<p>To run the macros from the command console, use the <b>cscript</b> command as
+follows:</p>
+<pre>cscript e:\users\psr\Scripting\Sample\CATIA.vbs</pre>
+<h4>Running Out-process Macros from a Dynamic HTML Page</h4>
+<p>You can also run macros VBScript macros embedded in a html 
+page. There are several ways of embedding a macro in a
+html page:</p>
+<ul>
+  <li>The macro is written using the script tag and run when the page is loaded</li>
+  <li>The macro is written using the script tag and is included or referenced by
+    a form, input, body, or a (anchor) tag.</li>
+  <li>The macro is written using the a tag (anchor) and run as an hyperlink.
+    This is possible with JScript only but a VBScript function can be called by 
+  the JScript function.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+
+<p><i>Copyright © 1994-2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

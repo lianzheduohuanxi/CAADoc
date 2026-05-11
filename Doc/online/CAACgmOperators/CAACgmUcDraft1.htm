@@ -1,0 +1,196 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Basic Draft</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Basic Draft</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A basic draft is created by specifying a face to be drafted, an 
+		angle, a neutral element and a pulling direction.&nbsp; All the 
+		operation parameters are gathered in a CATDynDraftDomain which is added 
+		to the CATICGMDynDraft operator prior to running it. <br>
+		<ul>
+			<li><a href="#OpeToBeUsed">Operator to be Used</a></li>
+			<li><a href="#UseCaseDescription">Use Case Description</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">Operator to be Used</a></h2>
+<p>To create a basic draft, use the CATICGMDynDraft operator in 
+GMOperatorsInterfaces. This operator has to be created using the 
+CATCGMCreateDynDraft global function. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMOperatorsDraftCreation.m module in CAAGMOperatorsInterfaces.edu 
+framework illustrates how to create drafts. This use case must be executed with 
+two arguments, the input file DraftTest.NCGM which is delivered in the 
+FunctionTests/InputData folder of the CAAGMOperatorsInterfaces.edu framework and 
+the NCGM file to store the result. This use case is divided into three parts. 
+The part which is dedicated to the creation of a basic draft is in the 
+CreateDraft.cpp code file, more precisely in the CAATopDraft function. This part 
+of the use case creates its own input data. The input file which is required by 
+the global use case execution is related to the creation of advanced drafts. </p>
+<p>If you are not already familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>.</p>
+<h3>Case 1: No Limiting Element (CAATopDraft Function)</h3>
+<p>
+ <table border="0" cellspacing="6">
+  <caption><a name="Fig.1">Fig.1</a> Basic Draft: Input data (face to be drafted 
+	in dark green, neutral face in yellow, pulling direction is normal to the 
+	neutral face )</caption>
+   <tr>
+    <td>
+	<img alt="Basic Draft: Input File" src="images/CGM_basic_draft_0.png" width="250" height="220"></td>
+   </tr>
+</table>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+	<pre>
+// (a) Compute a normal (this is an example)
+CATMathVector  Vector;
+const  CATSurLimits*  pBox2D  =  pNeutralFace->Get2DBoundingBox();  
+CATSurParam  Param  (0.5,  0.5,  *pBox2D);  
+pNeutralFace->EvalNormal(Param,  Vector);  
+CATMathDirection  PullingDirection  =  Vector; 
+
+// (b)Create the CATICGMDynDraft operator
+CATICGMDynDraft* pDraftOpe = CATCGMCreateDynDraft (piGeomFactory, &topdata, pBody, CATDynAutoJoint);
+
+// (c) Create the CATDynDraftAngle, the object which defines
+// which faces are to be drafted with which angle
+CATAngle angle = 10.0;
+CATDynDraftAngle * pdraftAngle    =  new  CATDynDraftAngle(listOfFacesToDraft,angle); 
+CATLISTP(CATDynDraftAngle) facesAndAngles;
+facesAndAngles.Append(pdraftAngle);
+
+// (d) Create the CATDynDraftRibbon and CATDynDraftDomain to define a set of parameters:
+// neutral face and pulling direction.
+CATDynDraftRibbon * pdraftRibbon  =  new  CATDynDraftRibbon(facesAndAngles ); 
+CATLISTP(CATDynDraftRibbon) ribbons;
+ribbons.Append(pdraftRibbon);
+CATDynDraftDomain * pdraftDomain  =  new  CATDynDraftDomain(PullingDirection,  
+    CATDynDraftDomainNeutral, 
+    pNeutralFace, 
+    ribbons);  
+pDraftOpe->Add(pdraftDomain);
+
+// (e) Run the operator
+pDraftOpe->Run();
+
+// (f) Get the result   
+CATBody * pWireBody = pDraftOpe->GetResult();
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.2">Fig.2</a> Basic Draft:&nbsp; Result </caption>
+   <tr>
+    <td>
+	<img alt="Basic Draft: Result" src="images/CGM_basic_draft_1.png" width="250" height="220"></td>
+   </tr>
+   </table>
+<h2>case 2: Limiting Element (CAATopDraftLimitingElement Function)</h2>
+<p>Specifying a plane as limiting element:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+	<pre>
+...  
+pDraftOpe->Add(pdraftDomain);
+pDraftOpe->AddLimiting(piLimitingBody); // limiting element
+// (e) Run the operator
+pDraftOpe->Run();
+
+// (f) Get the result   
+CATBody * pWireBody = pDraftOpe->GetResult();
+...
+</pre>
+        </TD>
+    </TR>
+</TABLE>
+
+<p>restricts the draft creation. The draft is generated only up to the limiting 
+element.</p>
+<table border="0" cellspacing="6">
+  <caption><a name="Fig.3">Fig.3</a> Basic Draft with Limiting Element(in Blue) </caption>
+   <tr>
+    <td>
+	<img alt="Basic Draft With Limiting Element" src="images/CGM_basic_draft_2.png" width="250" height="220"></td>
+   </tr>
+   </table>
+
+<h2><a name="References">References</a></h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="CAACgmTaTopBoolean.htm">Understanding Boolean Operators</a></td>
+	</tr>
+
+<tr>
+		<td>[5]</td>
+		<td>
+		<a href="CAACgmUcTopOverview.htm">Overview of Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2011]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

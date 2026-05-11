@@ -1,0 +1,1110 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Feature Attribute</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding Feature Attribute</h3>
+      <p><em>Gives information about the Types of Attributes, Attribute management modes and Evaluation</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td >
+		<h2>Abstract</h2>
+		<p>This article is intended to give users a gist of the feature 
+		attributes.</p>
+		<ul>
+			<li><a href="#Intro">Introduction</a></li>
+			<li><a href="#Attr specs">Attribute Specifications</a><ul>
+				<li ><a href="#Attr Type">Type</a></li>
+				<li ><a href="#Update behavior">Update Behavior</a></li>
+				<li ><a href="#Pvt vs Public">Private Vs Public Access</a></li>
+			</ul>
+			</li>
+			<li><a href="#Attr Mgt Mode">Attribute Management Mode</a><ul>
+				<li ><a href="#Immediate">Immediate</a></li>
+				<li ><a href="#Redirected">Redirected</a></li>
+				<li ><a href="#Inherited">Inherited</a></li>
+				<li><a href="#Switch mode">Switch Mode</a></li>
+			</ul>
+			</li>
+			<li><a href="#Attr Value">Attribute Value</a><ul>
+				<li ><a href="#SU Value">StartUp Value</a></li>
+				<li ><a href="#Unset value">Unset Value</a></li>
+				<li ><a href="#Non accessible value">A Non Accessible Value</a></li>
+				<li><a href="#Value Retrieval">Value Retrieval</a></li>
+			</ul>
+			</li>
+			<li><a href="#Classes to handle attributes">Classes to Handle Attributes</a><ul>
+				<li ><a href="#Featfacade">CATFmFeatureFacade</a></li>
+				<li ><a href="#Attr Name">CATFmAttributeName</a></li>
+				<li ><a href="#CATFmAttrValue">CATFmAttributeValue</a></li>
+				<li ><a href="#CATFmAttrValueInfo">CATFmAttributeValuationInfo</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+	
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Intro"></a>Introduction</h2>
+<p>As presented in the Feature Modeler Concepts [<a href="#References">1</a>], the data structure of any 
+feature is defined by a StartUp located in a CATfct file [<a href="#References">2</a>]. A StartUp, that 
+you can see as a pattern, contains the definition of each attribute making up 
+the static data model.</p>
+<table>
+	<caption><a name="Fig.1"></a>Fig.1 </caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig1.gif"></td>
+	</tr>
+</table>
+<p>The [<a href="#Fig.1">Fig.1</a>] above depicts the StartUp <strong>CAAFmPoint3D</strong> characterized by three 
+attributes <strong>x, y and z</strong>. This StartUp shown above depicts that an 
+<strong>attribute</strong> is 
+characterized by a <strong>name</strong> (x,y,z) and a <strong>type</strong> (in this case, double). In addition 
+it may also have other specifications, which we will study in the sections 
+ahead.</p>
+<p>Besides an attribute definition, there is also an attribute value. The 
+feature instantiated from our StartUp above, has values associated with these 
+attributes, assigned by an explicit valuation process. If attribute are 
+explicitly valuated, the answer to the question &#8220;<strong>what is the value of x, y or 
+z</strong>?&#8221;, is very simple, but before the explicit valuation, it can be more or less 
+complex based on the feature or StartUp context. <strong>Does the StartUp attribute 
+contain an initial value</strong>? <strong>Is the feature created from another feature</strong>? All these 
+considerations, and some others, as well, impacts the returned value of a 
+feature&#8217;s attribute.</p>
+<p>The aim of this article is to describe the attribute characteristics and the 
+attribute management principles which impact an attribute value.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Attr specs"></a>Attribute Specifications</h2>
+<p>The first thing is to start with the <strong>static</strong> <strong>definition</strong> of an attribute. By
+<strong>static</strong>, we mean the definition as specified in the OSM file. 
+One such definition follows: </p>
+<pre class="code">feature identifier [super_identifier] [facets..] {
+<strong>attribute_type</strong> <strong>attribute_name</strong> [<strong>attribute_facets</strong>]
+&#8230; }&nbsp;</pre>
+<p>The feature statement defines a StartUp which can have from 0 to N attributes. 
+An attribute is defined by its type, its name and a list of facets. The facets, 
+presented in this article, are the update behavior (<strong>#in/#out/#neutra</strong>l), list of 
+or not (<strong>#list</strong>), and the access mode (<strong>#private /#public</strong>). </p>
+<p>There are 
+other 
+attribute facets, as well&nbsp; (<strong>#auto_update</strong> and <strong>#array</strong> [<a href="#References">4</a>]), but 
+those do not directly impact the computation of an attribute value and moreover 
+since these facets are very specific, we prefer to explain their role in 
+dedicated articles.</p>
+<p>In the sections ahead we proceed to explain three aspects of attribute 
+definition namely. <strong>attribute type</strong>, <strong>update mode</strong> 
+and <strong>access mode</strong>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Attr Type"></a>Type</h3>
+<p>The attribute type can be divided in two categories:</p>
+<ul>
+<li><strong>Primitive</strong> - a type that also exists in other 
+programming languages like C++</li>
+<li><strong>Link</strong> &#8211; a type to point or aggregate another object (feature 
+or not). The link concept is detailed in the Technical Article [<a href="#References">5</a>].</li>
+</ul>
+
+<p>The <strong>#list</strong> <strong>OSM facet</strong> used in conjunction with the above types, defines a list 
+as depicted by the [<a href="#Fig.2">Fig.2</a>] that follows.</p>
+<table>
+	<caption><a name="Fig.2"></a>Fig. 2</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig2.gif"></td>
+	</tr>
+</table>
+<p>The attribute &quot;<strong>Author</strong>&quot; is a simple string type, while the 
+attribute &quot;<strong>NovelChapter</strong>&quot; is a list of component. By code, you 
+cannot change an attribute type. It can be only defined inside an OSM file. The table that follows lists the attribute types (OSM types) and&nbsp; their 
+CAA equivalents.</p>
+<table  border="1" table id="table35" class="style15">
+	<caption>Table.1 CAA Type equivalent to OSM</caption>
+	<tr>
+		<th style="width: 88px">Type Category</th>
+		<th style="width: 79px">OSM Type</th>
+		<th style="width: 122px">CAA Type</th>
+		<th style="width: 187px">Description</th>
+	</tr>
+	<tr>
+		<td style="height: 17px; width: 88px;">Primitive</td>
+		<td style="height: 17px; width: 79px;">boolean</td>
+		<td style="height: 17px; width: 122px;">CATBoolean</td>
+		<td style="height: 17px; width: 187px;">boolean</td>
+	</tr>
+	<tr>
+		<td style="width: 88px; height: 16px;">&nbsp;<td style="width: 79px; height: 16px;">
+		double</td>
+		<td style="width: 122px; height: 16px;">double</td>
+		<td style="width: 187px; height: 16px;">double precision floating point</td>
+	</tr>
+	<tr>
+		<td style="width: 88px; height: 16px;">&nbsp;<td style="width: 79px; height: 16px;">
+		int</td>
+		<td style="width: 122px; height: 16px;">int</td>
+		<td style="width: 187px">signed 32 bit integer</td>
+	</tr>
+	<tr>
+		<td style="width: 88px">&nbsp;</td>
+		<td style="width: 79px">octet</td>
+		<td style="width: 122px">unsigned char</td>
+		<td style="width: 187px">unsigned 8 bit value</tr>
+	<tr>
+		<td style="width: 88px">&nbsp;</td>
+		<td style="width: 79px">string</td>
+		<td style="width: 122px">CATUnicodeString<td style="width: 187px">
+		character string</tr>
+	<tr>
+		<td style="width: 88px">Link</td>
+		<td style="width: 79px">component</td>
+		<td style="width: 122px">NA</td>
+		<td style="width: 187px">aggregating link [4]</td>
+	</tr>
+	<tr>
+		<td style="width: 88px">&nbsp;<td style="width: 79px">specobject</td>
+		<td style="width: 122px">NA</td>
+		<td style="width: 187px">referencing link [4]</td>
+	</tr>
+	<tr>
+		<td style="width: 88px">&nbsp;</td>
+		<td style="width: 79px">external</td>
+		<td style="width: 122px">NA</td>
+		<td style="width: 187px">external link [4]</td>
+	</tr>
+</table>
+
+<p><strong>About Link Type Attribute </strong></p>
+<p>When you design your data model, it is not possible to specify the &#8220;<strong>type</strong>&#8221; of 
+the pointed or aggregated feature. Reconsidering the previous example, a Novel 
+StarUp is defined to aggregate Chapters under it. </p>
+<table>
+	<caption><a name="Fig.3"></a>Fig. 3</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig3.jpg"></td>
+	</tr>
+</table>
+<p>So you may initially be prompted to declare an attribute &quot;<strong>NovelChapter</strong>&quot; 
+as a list of <strong>Chapter</strong> objects, as depicted in the [<a href="#Fig.3">Fig.3</a>] 
+above.&nbsp; However it is not possible since a static attribute definition 
+cannot specify the type of an aggregated or a pointed feature. It is the role of 
+the application referring to this data model, to ensure its integrity. In our 
+example, since the application knows that the aggregated feature is a &quot;<strong>Chapter</strong>&quot;, 
+it must do the checks prior to adding a feature to the list.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Update behavior"></a>Update Behavior </h3>
+<p>The update behavior of an attribute is used by the update protocol. To be 
+succinct in this article, there are three kinds of behavior:</p>
+<ul>
+	<li><strong>In</strong>: A modification of the attribute value affects 
+	the update status of its feature </li>
+	<li><strong>Out</strong>: Any modification in this attribute will affect any 
+	other attribute which is linked to this. The other attribute may be of 
+	another feature</li>
+	<li><strong>Neutral</strong>: A modification of the attribute value 
+	does not affect the update status of its feature</li>
+</ul>
+<p>When nothing is specified in the OSM file, the default value is Neutral.</p>
+<p>This behavior can be retrieved using the <em>CATFmAttributeValuationInfo</em> 
+class, and changed by code using the <code>SetUpdateBehaviour</code> method of the <em>
+CATFmFeatureFacade</em> class.
+The update behavior can have an impact on the value management as you will see 
+later. This article does not go further in the update mechanism, since it is too 
+complex and deserves a dedicated article [<a href="#References">6</a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Pvt vs Public"></a>Private Versus Public Access</h3>
+<p>A specific facet of the attribute is the <strong>private/public mode</strong>, the default 
+value being public. This facet is an advanced concept but necessary to present 
+in order to fully understand the process of retrieving the value of an 
+attribute.</p>
+<p>When an attribute is &#8220;<strong>private</strong>&#8221;, its value on an instance 
+cannot be read from its reference&#8217;s attribute, while if it is &quot;<strong>public</strong>&quot;, 
+this is possible. Let us illustrate this with two cases.</p>
+<p>In the first example, the feature is instantiated from a Startup, as depicted 
+in the [<a href="#Fig.4">Fig. 4</a>] that follows.</p>
+<table>
+	<caption><a name="Fig.4"></a>Fig.4</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig4.gif"></td>
+	</tr>
+</table>
+<p>When the X value will be read on the instance <strong>A.1</strong>, the 
+<strong>X</strong> value can never be 
+read from the <strong>Startup</strong>. Since the attribute <strong>X</strong> is defined as
+<strong>private</strong> in the 
+<strong>StartUp</strong>, <strong>X</strong> value retrieved from <strong>A.1</strong> will either be a value explicitly set on 
+<strong>A.1</strong> 
+or if not explicitly set, the retrieve method fails. </p>
+<p>In the second example, the feature is instantiated from another feature, as 
+depicted in the [<a href="#Fig.5">Fig.5</a>] that follows.</p>
+<table>
+	<caption><a name="Fig.5"></a>Fig. 5</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig5.gif"></td>
+	</tr>
+</table>
+<p>When the X value is read from instance <strong>A.2</strong>, the <strong>X</strong> value can never be read 
+from its reference (<strong>A.1 feature</strong>). If <strong>X</strong> is explicitly valuated on 
+<strong>A.2</strong>, the 
+retrieved value will be the one explicitly set, otherwise the retrieve method 
+fails.</p>
+<p>To quote a real life example, imagine a hole pattern . This pattern has some 
+characteristics like a diameter, and a name. When the same pattern is reused N 
+times, on each instantiation you would like to have the same geometrical 
+characteristics, but you would like a unique name for each instance. So if the 
+<strong>Name</strong> <strong>attribute</strong> is declared &#8220;<strong>private</strong>&#8221; in the <strong>StartUp</strong>, you can be assured that the 
+method retrieving the name will return <strong>FAILURE</strong>, if the Name value is not 
+explicitly set on the feature instance.</p>
+<p>This access information (<strong>private/public</strong>) is in the scope of the feature 
+definition (<strong>OSM file</strong>). This implies, that you may retrieve (read) this 
+information from a feature instance, but cannot modify the attribute access.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Attr Mgt Mode"></a>Attribute Management Mode</h2>
+<p>An attribute is defined by its <strong>type</strong>, <strong>update behavior</strong>, 
+<strong>access mode</strong> and has a 
+<strong>value</strong> associated with it. From where an attribute information and its value 
+comes from depends on the type of attribute management namely.&nbsp; <strong>
+Immediate</strong>, <strong>Redirected</strong> and <strong>Inherited</strong>. 
+The objective of this chapter is to explain these three cases.</p>
+<p>But first, let us present a simple data model. It will be used to illustrate 
+our further explanations.</p>
+<table>
+	<caption style="width: 400px"><a name="Fig.6"></a>Fig. 6 Basic Data Model</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttributes_Fig.gif" width="367" height="208">&nbsp;</td>
+	</tr>
+</table>
+<p><strong>StartUp A</strong> and <strong>StartUp B</strong> are two StartUp defined in a <strong>CATfct</strong> 
+file, while <strong>Feature A</strong>,<strong> Feature A&#8217;</strong> and 
+<strong>Feature B</strong> are three instances of these 
+StartUp.</p>
+<p>The <strong>Feature A</strong> is instantiated from <strong>StartUp A</strong>, 
+<strong>Feature A&#8217;</strong> is instantiated 
+from <strong>Feature A</strong>, and <strong>Feature B</strong> is instantiated from 
+<strong>StartUp B.</strong></p>
+<p>Each StartUp (green box) has one attribute:</p>
+<ul>
+	<li>&nbsp;<strong>X</strong>, an integer attribute for StartUp A , without update behavior ( so its UB= 
+neutral)</li>
+	<li>&nbsp;<strong>Y</strong>, an integer attribute for StartUp B, without update behavior ( so its UB= 
+neutral) </li>
+</ul>
+<p>A blue box represents an attribute associated with a feature (really associated 
+with or likewise as you will see later). It contains the value of the attribute, 
+and its update behavior (UB). Let us present the three possible management modes 
+for an attribute.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Immediate"></a>Immediate </h3>
+<p>The &#8220;<strong>Immediate</strong>&#8221; case occurs when you explicitly associate a 
+value with the attribute.</p>
+<p>Here, the X and Y attributes on the <strong>Feature A</strong>, <strong>Feature A&#8217;</strong> and<strong> Feature B</strong> are 
+in the &#8220;<strong>immediate</strong>&#8221; mode since we have explicitly valuated the attributes. In 
+this configuration:</p>
+<ul>
+	<li><strong>X</strong> value of <strong>Feature A</strong> is <strong>3</strong> , Its update behavior is 
+	<strong>In</strong></li>
+	<li><strong>X </strong>value of <strong>Feature A&#8217;</strong> is <strong>4</strong> , Its update behavior is 
+	<strong>Out</strong></li>
+	<li><strong>Y </strong>value of <strong>Feature B</strong> is <strong>5</strong> , Its update behavior is 
+	<strong>Neutral</strong></li>
+</ul>
+<p>In the &#8220;<strong>immediate</strong>&#8221; mode, when you ask for the information and the value of an 
+attribute of one feature, all data come from this feature.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Redirected"></a>Redirected</h3>
+<p>Feature modeler 
+offers the capability to <b style="mso-bidi-font-weight:normal">redirect</b> an 
+attribute for its value on another attribute (usually two attributes from 
+different features). Let us explain the concept by a simple data model, depicted 
+in the [<a href="#Fig.7">Fig. 7</a>] that follows.</p>
+<table>
+	<caption><a name="Fig.7"></a>Fig. 7 Attribute Valuation by Redirection</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttribute_Fig7.gif" width="400" height="187">&nbsp;</td>
+	</tr>
+</table>
+
+<p>On the left the data model as described by 
+an OSM file, and on the right an instantiation of this data model.</p>
+<ul>
+	<li>
+	The <strong>OSM</strong> file contains two StartUp : <strong>CAAOsmAdd</strong> 
+	and <strong>CAAOsmSquare</strong>
+	</li>
+	<li>
+	<strong>MyAddFeat</strong> is an instance of the <strong>CAAOsmAdd</strong> StartUp, and 
+	<strong>MySquareFeat</strong> an instance of <strong>CAAOsmSquare </strong>StartUp</li>
+	<li>
+	The <strong>Num</strong> attribute of <strong>MySquareFeat</strong> is redirected on the 
+	<strong>Sum</strong> attribute of <strong>MyAddFeat</strong>. It means that 
+	the Num value of MySquareFeat will be retrieved from the Sum attribute of 
+	MyAddFeat</li>
+	<li>
+	</li>
+</ul>
+<p>
+<o:p></o:p>
+<o:p>Imagine you set <strong>First = 3</strong> and <strong>Second = 4 </strong>for 
+<strong>MyAddFeat</strong>, the Square value of 
+<strong>MySquareFeat</strong>, after its update, is <strong>49</strong>. Square value is computed using the 
+<strong>Num</strong> 
+value, which is itself retrieved from <strong>Sum</strong> value of another feature. This example 
+is illustrated by a referenced use case [</o:p><o:p><a href="#References">7</a>].</o:p></p>
+<p>
+<o:p>You have noticed that the redirection is done at the instance level, 
+meaning at runtime. If you have 
+two instances of the <strong>CAAOsmSquare</strong> StartUp, and if you want the same kind of 
+behavior, on each instance you must redirect their <strong>Num</strong> attribute on the 
+<strong>Sum</strong> 
+attribute. It means the two following configurations are possible too:</o:p></p>
+<table>
+	<caption><a name="Fig7A"></a>Fig. 7A</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatAttributes_Fig7A.gif">&nbsp;</td>
+	</tr>
+</table>
+<o:p></o:p>
+<p>
+<o:p>On the left, the <strong>Num</strong> attribute is redirected on the 
+<strong>Sum</strong> attribute, and on the 
+right, the same attribute is redirected on the <strong>Second</strong> attribute, at runtime. For the same 
+input values (<strong>First = 3</strong> and <strong>Second = 4</strong>), 
+<strong>Square</strong> value of <strong>MySquareFeat1 = 49</strong>, and 
+<strong>MyMySquareFeat2= 16</strong></o:p><o:p></o:p></p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Limitations</strong></p>
+<p>There are two mains limitations:</p>
+<ul>
+	<li>&nbsp;The two attributes must have the same type</li>
+	<li>&nbsp;The attribute type cannot be a component or a list a component</li>
+</ul>
+<p>Let us demonstrate the second point with the aid of the [<a href="#Fig.8">Fig.8</a>] 
+that follows.</p>
+<table>
+	<caption><a name="Fig.8"></a>Fig. 8 Redirected Component Attribute Valuation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttribute_Fig8.gif">&nbsp;</td>
+	</tr>
+</table>
+<p>On this picture, <strong>Y</strong> attribute&#8217;s value of <strong>Feature B</strong> is redirected on 
+<strong>X</strong> 
+attribute&#8217;s value of <strong>Feature A</strong></p>
+<ul>
+	<li>&nbsp;The value of X (on Feature A) is Feature C &#8211; so it is 
+	applicable as well,&nbsp; for Y ( 
+	on Feature B)</li>
+	<li>&nbsp;It would imply that Feature C is aggregated by two features</li>
+</ul>
+<p>ThThis configuration being impossible (a feature cannot have two parents), it 
+implies a 
+component attribute cannot be redirected</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Advanced concepts</strong></p>
+<p>While the value of an attribute is retrieved from the redirected attribute, 
+the attribute information (update behavior, access mode, type) is nevertheless 
+local.</p>
+<p>Suppose in the data model depicted in [<a href="#Fig.6">Fig.</a>9] below,&nbsp; you redirect the X 
+attribute value of Feature A and Feature A&#8217; on the Y attribute value of Feature 
+B. </p>
+<table>
+	<caption><a name="Fig. 9"></a>Fig. 9</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttribute_Fig9.gif">&nbsp;</td>
+	</tr>
+</table>
+<p>The Y attribute of Feature B is itself immediate (the Y value of B has been 
+explicitly valuated). In this configuration</p>
+<ul>
+	<li>&nbsp;X value of Feature A is 5 , and its update behavior is IN</li>
+	<li>&nbsp;X value of Feature A&#8217; is 5, and its update behavior is OUT</li>
+</ul>
+<p>The value of the attribute on the invoked feature is coming from the 
+redirected attribute. But the attribute information is &#8220;<strong>local</strong>&#8217; to the current 
+feature.&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Inherited"></a>Inherited</h3>
+<p>The &#8220;<strong>Inherited mode</strong>&#8221; refers to a case where a feature attribute value is 
+inherited from its feature reference (StartUp, another feature). In other words, 
+the feature attributes are not locally valuated on the instance. In the &#8220;<strong>inherited</strong>&#8221; configuration, attribute information and value are 
+retrieved from the reference attribute, the mechanism being recursive. This is 
+explained through different examples</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Inherited Only</strong></p>
+<table>
+	<caption><a name="Fig.10"></a>Fig.10</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttribute_Fig10.gif">&nbsp;</td>
+	</tr>
+</table>
+<p>Let us imagine a configuration where the three attributes are in &#8220;<strong>inherited</strong>&#8221; 
+mode. A mode symbolized by a black empty square on the attribute box.</p>
+<ul>
+	<li>When you ask for the value and info for attribute <strong>X</strong> from
+	<strong>Feature A</strong>, value 
+	and info 
+comes from the StartUp A (the reference). Hence <strong>A.X</strong> value is 
+	<strong>unset</strong> (no value in OSM) 
+(<strong>*</strong>) and its <strong>UB</strong> is <strong>neutral</strong> ( the default value)</li>
+	<li>When you ask for the value and info for attribute <strong>X</strong> from
+	<strong>Feature A&#8217;</strong>, value 
+	and 
+info come from Feature A (the reference), which itself is inherited. Hence 
+	<strong>A&#8217;.X</strong> 
+value is <strong>unset</strong> and its <strong>UB</strong> is <strong>neutral</strong></li>
+	<li>When you ask for the value and info for attribute <strong>Y </strong>from
+	<strong>Feature B</strong>, value 
+	and 
+info come from the StartUp B (the reference). Hence <strong>B.Y</strong> value is 
+	<strong>6</strong> and its <strong>UB</strong> is <strong>neutral</strong></li>
+</ul>
+<p>&nbsp;(<strong>*</strong>) ) unset is defined later&nbsp;</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Immediate and Inherited</strong></p>
+<table>
+	<caption><a name="Fig.11"></a>Fig.11</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttributes_Fig11.gif">&nbsp;</td>
+	</tr>
+</table>
+<p>Let us imagine a configuration where some attributes are in &#8220;<strong>inherited</strong>&#8221; mode 
+(empty square inside the attribute box), or in <strong>immediate</strong> mode (full green inside 
+the attribute box)</p>
+<ul>
+	<li>&nbsp;When you ask for the value and info for attribute X from<strong> Feature A</strong> , 
+	<strong>A.X</strong> 
+value is <strong>3</strong> and its <strong>UB</strong> is <strong>IN</strong></li>
+	<li>&nbsp;When you ask for the value and info for attribute X from <strong>Feature A&#8217;</strong> , value 
+	and 
+info come from Feature A, so <strong>A&#8217;.X</strong> value is <strong>3</strong> and its 
+	<strong>UB</strong> is <strong>IN</strong>
+
+&nbsp;</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Immediate, Redirected and Inherited</strong></p>
+<table>
+	<caption><a name="Fig12"></a>Fig. 12</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttributes_Fig12.gif" width="367" height="215">&nbsp;</td>
+	</tr>
+</table>
+<p>Let us imagine a configuration depicted in [<a href="#Fig12">Fig. 12</a>] 
+above, where some instances are in &#8220;inherited&#8221; mode 
+(empty square inside the attribute box), or in immediate mode (full green inside 
+the attribute box), or redirected (red arrow)</p>
+<ul>
+	<li>&nbsp;When you ask the value of Y from <strong>Feature B</strong>, the 
+	<strong>B.Y</strong> value is <strong>5</strong> and its <strong>UB</strong> 
+	is <strong>neutral</strong></li>
+	<li>&nbsp;When you ask for the value and info for attribute X from <strong>Feature A</strong> , 
+	<strong>A.X</strong> value 
+	is <strong>5 </strong>(due to the redirection) and its <strong>UB</strong> is 
+	<strong>IN</strong> (local)</li>
+	<li>&nbsp;When you ask for the value and info for attribute X from <strong>Feature A&#8217;</strong>, the 
+	<strong>A&#8217;.X</strong> 
+value is the value of its reference which is <strong>5 </strong>(A.X, itself B.Y), but its 
+	<strong>UB</strong> is <strong>IN</strong>, the 
+local update behavior of its reference (A.X)<br>
+	</li>
+</ul>
+<p>Another example with the data model depicted in [<a href="#Fig.13">Fig.13</a>] 
+below</p>
+<table>
+	<caption><a name="Fig.13"></a>Fig. 13</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttributes_Fig13.gif">&nbsp;</td>
+	</tr>
+</table>
+<ul>
+	<li>When you ask the value of Y from <strong>Feature B</strong>, the <strong>B.Y</strong> value is 
+	<strong>6</strong> (value 
+	from OSM file), and its <strong>UB</strong> is <strong>neutral</strong> (default osm value)</li>
+	<li>When you ask for the value and info for attribute X from <strong>Feature A</strong> 
+	, <strong>A.X</strong> value is <strong>6</strong> (redirection), and its 
+	<strong>UB</strong> is <strong>IN</strong> (local)</li>
+	<li>When you ask for the value and info for attribute X from <strong>Feature 
+	A&#8217;</strong>, <strong>A&#8217;.X</strong> value is the value of its reference which is 
+	<strong>6</strong> (A.X, itself B.Y 
+	itself StartUpB), but its <strong>UB</strong> is <strong>IN</strong>, the local update behavior of its 
+	reference (A.X)</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<p><strong>Note:</strong></p>
+<p>When a new feature is created, usually its attributes are in inheritance 
+mode, but some of them cannot be in this mode. In that case the attributes are 
+in &#8220;<strong>Immediate</strong>&#8221; mode. The cases where the &#8220;<strong>Inherited</strong>&#8221; mode is impossible are as 
+follows:</p>
+<ul>
+	<li>&nbsp;Some update behavior configuration detailed in the Update article 
+	[<a href="#References">6</a>]</li>
+	<li>&nbsp;The attribute is private</li>
+	<li>&nbsp;The attribute type is a component or a list a component. &nbsp;</li>
+	<li>Redirection is extra-stream (you redirect an attribute on an attribute of 
+	a feature outside the current stream.</li>
+	<li>Redirection  is possible with external attribute, but if the instance is intra component.</li>
+</ul>
+<table>
+	<caption>Fig. 14 </caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttributes_Fig14.gif">&nbsp;</td>
+	</tr>
+</table>
+<p>On this picture Feature A&#8217; is an instance of Feature A, and X Attribute is 
+inherited.</p>
+<ul>
+	<li>&nbsp;The X value of Feature A is Feature C like the X value of Feature A&#8217;</li>
+	<li>&nbsp;It would imply that Feature C is aggregated by two features</li>
+</ul>
+<p>This configuration being impossible (a feature cannot have two parents), a 
+component attribute cannot be inherited.&nbsp;</p>
+ 
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<p><a name="Access to"></a><strong>Access to Feature Defined in OSM</strong></p>
+<p>You have so far learnt that when an attribute is inherited, in the limiting 
+case its value could be the one set in the StartUp definition (catalog&#8217;s 
+contents). For a primitive attribute, that is never an issue, while for a link 
+attribute you must be aware of the case where the catalog contains a feature 
+definition. 
+</p>
+<p>The result of <code>GetValue</code> will be a feature with the same contents as 
+the Catalog&#8217;s, but this feature is not really a data model object. It 
+exists in the scope of the catalog only, and is read-only, which implies, you 
+can read its attribute values, of course if you have the authorization but owing 
+to its read-only characteristics&nbsp; the call to <code>SetValue</code> will always fail, irrespective of the authorization.<br>
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Switch mode"></a>Switch Mode</h3>
+<p>On an attribute you can get its current mode (refer API section), as well as 
+switch between the three modes. Some APIs are explicit (the name of the method 
+is explicit) while others are implicit (what they do imply a switch mode). This 
+diagram shows all the possible transitions, and the methods which realize this 
+switch.</p>
+<table>
+	<caption><a name="Fig.15"></a>Fig. 15 Attribute Valuation Mode Switch</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureAttribute_Fig15.gif"></td>
+	</tr>
+</table>
+<p>You can see that the only one impossible case is to switch from <strong>
+Redirected</strong> to <strong>Immediate</strong>. It means that the <code>SetValue</code> 
+methods fail if the attribute is redirected. The other transitions are possible 
+restricted by the limitations specified in the previous sections.</p>
+<p>As the [<a href="#Fig.15">Fig.15</a>] indicates, it is possible to switch 
+between any two attribute valuation modes.
+</p>
+<p>The call to <code>RemoveRedirectedValuation</code> of the <em>CATFmFeatureFacade</em> 
+class switches the mode from &quot;<strong>Redirected</strong>&quot; to &quot;<strong>Immediate</strong>&quot;. 
+In other words, it removes the indirection set for an attribute value.&nbsp; The 
+method only works if an attribute value was redirected, to begin with.</p>
+<p>At the end of the call the attribute value is as listed below, based on its 
+type</p>
+<ul>
+	<li>Primitive or list of Primitive. The value is Unset</li>
+	<li>Otherwise: NULL (feature) or empty list (list of feature)</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Attr Value"></a>Attribute Value </h2>
+<p>The objective of this chapter is to understand what the value of an attribute 
+is. &#8220;<strong>Where does this value come from</strong>?&#8221; and &#8220;<strong>What is this value when no explicit value 
+has ever been set?</strong>&#8221; are two questions answered in this section. </p>
+<p>The last section that follows titled &quot;<strong>Value Retrieval</strong>&quot; 
+details the algorithm of retrieving an attribute value. But to understand that, 
+some additional information is required. Let's start with that explanation.</p>
+
+<h3><a name="SU Value"></a>StartUp Value</h3>
+<p>When you define an attribute in the OSM file, whatever its type, you can 
+initialize it with a default value.</p>
+<pre class="code">feature <strong>Point2D</strong> #startup {
+			double X 
+			X = -1
+			double Y 
+			int Elements #list 
+			Elements = [3,2] 
+		       }</pre>
+<p>When <strong>Point2D</strong> is instantiated, the X value on the instance is -1. The 
+attribute &quot;Elements&quot; is valuated as a list of 2 integers (3,2).</p>
+<p>But when an attribute is not initially valuated, the &#8220;default value&#8221; is:</p>
+<ul>
+	<li style="height: 9px">For a primitive: a default value which is the value based on 
+	the attribute type 
+	specified in the Unset table [<a href="#Table2">Tab.2</a>]</li>
+	<li>For a list of primitive: an empty list ( i.e. a list of size 0)</li>
+	<li>For a link: NULL pointer</li>
+	<li>FoFor a list of link : an empty list ( i.e. a list of size 0)</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Unset value"></a>Unset Value</h3>
+<p>For an attribute whose type is primitive or a list of primitive, when 
+there is no explicit value, the feature modeler returns the default values listed in 
+the table that follows</p>
+<table  border="1" table id="table36" class="style15">
+	<caption><a name="Table2"></a>Table.2 Unset Values for Attribute Types</caption> 	<tr>
+		<th style="width: 201px">Attribute Type</th>
+		<th style="width: 131px">Unset Value</th>
+	</tr>
+	<tr>
+		<td style="height: 17px; width: 201px;">Boolean </td>
+		<td style="height: 17px; width: 131px;">FALSE</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">Double<td style="width: 131px; height: 16px;">
+		0.0</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">Integer<td style="width: 131px; height: 16px;">
+		0</td>
+	</tr>
+	<tr>
+		<td style="width: 201px">Byte</td>
+		<td style="width: 131px">0</td>
+		<tr>
+		<td style="width: 201px">String</td>
+		<td style="width: 131px">&quot;&quot;</td>
+		<tr>
+		<td style="width: 201px">List of Simple (one of the 5 above)</td>
+		<td style="width: 131px">Empty List</td>
+	</tr>
+	</table>
+<p>These values are used when the attribute is still without an explicit value 
+(inherited), and the StartUp is without a default value.</p>
+<p>But you can explicitly valuate an attribute with the &#8220;<strong>Unset</strong>&#8221; value. There is 
+a method (<code>UnsetValue</code> on the <em>CATFmFeatureFacade</em> class). 
+&#8220;<strong>Unset</strong>&#8221; an attribute, is like setting a specific value on 
+an attribute, but the value is not user specified but that specified in the 
+Unset Values table&nbsp; [<a href="#Table2">Table.2</a>]. On Unset, the 
+attribute mode is switched to &quot;<strong>immediate</strong>&quot;.</p>
+<p>The unset value is not possible for attribute of type link. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Non accessible value"></a>A Non-Accessible Value</h3><p>When an attribute is a link or a list of link, it is possible that the target 
+(or one target of the list) is not accessible:</p>
+<ul>
+	<li>The target has been <strong>deleted</strong>, the method retrieving the 
+	attribute value <strong>does not fail</strong>, but the method to resolve 
+	the returned value (with CATFmAttributeValue ) fails. 
+	<li>The target is <strong>not in session</strong> (Its container is not loaded, or its PLM 
+	Component is not loaded), The method retrieving the attribute value <strong>
+	fails</strong>.
+	 
+	</li>
+</ul>
+<p>The complete information is inside the referenced article &quot;<strong>Understanding Link Attribute-2</strong>&quot; [<a href="#References">4</a>]</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Value Retrieval"></a>Value Retrieval</h3>
+<p>The <code>GetValue</code> method of the <em>CATFmFeatureFacade</em> class returns 
+the value of the attribute. Before analyzing the 
+attribute's value retrieval and its potential errors, the method can fail because</p>
+<ul>
+	<li>The facade is not bound to a valid feature (no feature, or deleted after 
+	to be bound to the current facade) (<code>E_FMINVALIDFEATURE</code>)</li>
+	<li>The facade does not contain the valid credential for this attribute (<code>E_ACCESSDENIED</code>)</li>
+	<li>The atttribute does not exist for this feature (<code>E_FMREDIRECTED</code>)</li>
+</ul>
+<p>Now, let us describe by an UML schema what can be the other HRESULT values 
+according to the different configuration of the attribute (type/current 
+management mode/current value).</p>
+<table>
+	<caption><a name="Fig.16"></a>Fig. 16 Flow diagram for a Feature Attribute 
+	Value Retrieval</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureAttribute_Fig16.jpg"></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Classes to handle attributes"></a>Classes to Handle Attributes</h2>
+<p>The <em>CATFmFeatureFacade</em> class is the one to manage the feature&#8217;s attributes. 
+From the attribute&#8217;s name, managed by the <em>CATFmAttributeName</em> class, you can 
+either retrieve or change the attribute&#8217;s value, thanks the <em>CATFmAttributeValue</em> 
+class, as well you can retrieve the attribute information thanks the 
+<em>CATFmAttributeValuationInfo</em> class. Please refer to the basic scenario getting and retrieving an attribute value [<a href="#References">8</a>] to 
+have a first glance of these APIs.</p>
+<h3><a name="Featfacade"></a>CATFmFeatureFacade</h3>
+<p>The API to manage the attributes can be classified in 5 Catagories:</p>
+<ul>
+	<li><strong>Value Management</strong><ul>
+		<li >GetValue</li>
+		<li >SetValue and UnsetValue, both valuating an attribute</li>
+	</ul>
+	
+	<li><strong>List Management</strong> (to get/set/change value inside a list 
+	attribute)<ul>
+		<li >GetValueAtIndex</li>
+		<li >InsertValue, AppendValue</li>
+		<li >RemovePosition</li>
+		<li >ReplaceValueAtIndex</li>
+		<li >LocateValue</li>
+		<li >MoveInPosition, SwapPositions</li>
+	</ul>
+	</li>
+	<li><strong>Indirection Management</strong><ul>
+		<li >GetRedirectedValuations</li>
+		<li >RemoveRedirectedValuation</li>
+		<li >SetRedirectedValuation</li>
+	</ul>
+	</li>
+	<li><strong>Inheritance Management</strong><ul>
+		<li >RestoreInheritance</li>
+	</ul>
+	</li>
+	<li><strong>Attribute Information Management</strong><ul>
+		<li >GetAttributeValuationInfo</li>
+	</ul>
+	</li>
+</ul>
+<table class="Remark">
+	<tr>
+		<td class="remark">Warning: Any Feature modeler API modifying 
+		an attribute requires that ALL 
+			feature containers of the stream be loaded. The SetValue, 
+		ReplaceValueAtIndex, RemovePosition methods (for example) fail (<code>E_FMLOADINGMODE</code>) if at 
+		least one specification container is missing.</td>
+	</tr>
+</table>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Attr Name"></a>CATFmAttributeName</h3>
+<p>This class is the mean to pass the attribute name in the methods of the 
+<em>CATFmFeatureFacade</em> class. </p>
+<p>The <em>CATFmAttributeName</em> being a class with one string, 
+you may think it is a little bit complex to use a class instead of a simple 
+string in <em>CATFmFeatureFacade</em> methods. The reason for this class is to speed up 
+the attribute access. Indeed, the internal value of a <em>CATFmAttributeName</em> c class 
+is not a string but a key. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="CATFmAttrValue"></a>CATFmAttributeValue</h3>
+
+<p>This class is used to valuate or retrieve the value of an attribute.</p>
+<p>When you have a <em>CATFmAttributeValue</em> class instance from the <code>GetValue</code> method of 
+the <em>CATFmFeatureFacade</em> class, use the <em>CATFmAttributeValue</em> methods to get the 
+value as a C++ type (int, double,..) or as a feature.</p>
+<p>But you must use the appropriate method, if the attribute is a string, the 
+GetInteger method will fail. Indeed, being the owner of an attribute, implies that 
+you should know the type of the handled attribute. Nevertheless the Kind method 
+of the <em>CATFmAttributeValue</em> class exists. If you need a conversion, use in second 
+pass a conversion method.</p>
+<p>When you want to valuate an attribute, first you must have an instance of the 
+<em>CATFmAttributeValue</em> class containing the value. You can use constructor methods 
+(for a limited case of attribute type), or the appropriate <code>Setxxx</code> method.</p>
+<p>Note that for list, you have specific methods to modify and retrieve the 
+values of a list, one at a time.</p>
+<p>The same <em>CATFmAttributeValue</em> class instance can be reused several 
+times like illustrated by the three examples, that follow.</p>
+
+<pre class="code"><strong>CATFmAttributeValue MyValue (3)</strong> ; // here you create an instance whose value is 3, an int
+<strong>MyValue.SetInteger(5)</strong> ; // now the value is 5 ( always an int)<br><strong>MyValue.SetString(&#8220;MyBeautifulValue&#8221;)</strong> ; // the value is now a string</pre>
+<p>On a <em>CATFmAttributeValue</em> class instance if you need to know the type of the 
+current value, there is the <code>Kind</code> method. This method returns an enumerate value 
+, a <em>CATFmAttributeAndValueKind</em>. When the instance contains a value, the 
+enumerate value is one listed in the [<a href="#Table4">Table.4</a>]. But if the 
+attribute is not valuated (using default constructor, or <code>Clear</code> method), the type is
+<strong>CATFmKind_void</strong>.
+.
+<br>
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="CATFmAttrValueInfo"></a>CATFmAttributeValuationInfo</h3>
+<p>This class groups the information to manage the valuation of an 
+attribute. But this class should be only used for advanced scenarios or debug 
+purpose since this information is not really useful for basic attribute use.</p>
+<p>A <em>CATFmAttributeValuationInfo</em> class is like a structure. You 
+retrieve it by the <code>GetAttributeValuationInfo</code> method of the <em>
+CATFmFeatureFacade</em> class. The following table presents the first part of 
+its contents:</p>
+<table  border="1" table id="table38" class="style15">
+	<caption><a name="Table3"></a>Table.3 CATFmAttributeAndValuationInfo data 
+	members</caption>
+	<tr>
+		<th style="width: 201px">Data Member</th>
+		<th style="width: 131px">Type</th>
+		<th style="width: 251px">Explanation</th>
+	</tr>
+	<tr>
+		<td style="height: 17px; width: 201px;">m_Type </td>
+		<td style="height: 17px; width: 131px;">CATFmAttributeAndValueKind</td>
+		<td style="height: 17px; width: 251px;">The type of attribute or  
+		element in the list. The description of each possible type is listed in 
+		the next table</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">m_IsList<td style="width: 131px; height: 16px;">
+		CATBoolean</td>
+		<td style="width: 251px; height: 16px;">
+		TRUE if the attribute is a list, else FALSE</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">m_IsAggregating<td style="width: 131px; height: 16px;">
+		CATBoolean</td>
+		<td style="width: 251px; height: 16px;">
+		This Boolean enables you to separate the component from the specobject.<br>
+		If m_type is CATFmKind_Feature and m_IsAggregating is TRUE, it is 
+		component otherwise it is specobject</td>
+	</tr>
+	<tr>
+		<td style="width: 201px">m_IsPrivate</td>
+		<td style="width: 131px">CATBoolean</td>
+		<td style="width: 251px">TRUE, the attribute is private otherwise public</td>
+		<tr>
+		<td style="width: 201px">m_UpdateBehavior</td>
+		<td style="width: 131px">CATFmAttributeUpdateBehavior</td>
+		<td style="width: 251px">The value is one among : CATFmNeutral, 
+		CATFmIn,CATFmOut</td>
+		</table>
+<p>The [<a href="#Table4">Table.4</a>] that follows links an <strong>OSM</strong> 
+type with its corresponding type defined in the <em>CATFmAttributeAndValueKind</em> 
+enum type. &nbsp;</p>
+<table  border="1" table id="table37" class="style15">
+	<caption><a name="Table4"></a>Table.4 CATFmAttributeAndValueKind meaning</caption>
+	<tr>
+		<th style="width: 201px">OSM Type</th>
+		<th style="width: 131px">CATFmAtttributeAndValueKind</th>
+	</tr>
+	<tr>
+		<td style="height: 17px; width: 201px;">boolean </td>
+		<td style="height: 17px; width: 131px;">CATFmKind_boolean</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">double<td style="width: 131px; height: 16px;">
+		CATFmKind_double</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">integer<td style="width: 131px; height: 16px;">
+		CATFmKind_int</td>
+	</tr>
+	<tr>
+		<td style="width: 201px">octet</td>
+		<td style="width: 131px">CATFmKind_byte</td>
+		<tr>
+		<td style="width: 201px">string</td>
+		<td style="width: 131px">CATFmKind_string</td>
+		<tr>
+		<td style="width: 201px">component</td>
+		<td style="width: 131px">CATFmKind_feature</td>
+	</tr>
+		<tr>
+		<td style="width: 201px">external</td>
+		<td style="width: 131px">CATFmKind_external</td>
+	</tr>
+		<tr>
+		<td style="width: 201px">specobject</td>
+		<td style="width: 131px">CATFmKind_feature</td>
+	</tr>
+	</table>
+<p>The object data member <strong>m_ValuationMode</strong> is an enumerated 
+value {<strong>Immediate, Inherited, Redirected</strong>}. The significance of 
+these values are listed in the [<a href="#Table5">Table.5</a>] that follows.</p>
+<table  border="1" table id="table39" class="style15">
+	<caption><a name="Table5"></a>Table.5 m_ValuationMode meaning</caption>
+	<tr>
+		<th style="width: 201px">Valuation Mode</th>
+		<th style="width: 161px">Where does this information come from?</th>
+	</tr>
+	<tr>
+		<td style="height: 17px; width: 201px;">Immediate </td>
+		<td style="height: 17px; width: 161px;">From this</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">Inherited<td style="width: 161px; height: 16px;">
+		Retrieved from the Reference</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">Redirected<td style="width: 161px; height: 16px;">
+		Retrieved from this</td>
+	</tr>
+	</table>
+<p>This array means that {<strong>m_Type, m_IsList, m_IsAggregating, m_access, 
+m_UpdateBehavior</strong>) are those for the current instance for <strong>
+Immediate</strong> and <strong>Redirected</strong>, while for inheritance, the 
+value is computed from the reference of the feature. If the reference is itself 
+a inherited, it is recursive. At the end we reach the StartUp. </p>
+<p>Finally, let us describe the last two remaining information: <strong>
+m_IsUnset</strong> and <strong>m_ListSize</strong>. These data member must be 
+used carefully:</p>
+<table  border="1" table id="table40" class="style15">
+	<caption><a name="Table6"></a>Table.5 m_Unset and m_ListSize meaning</caption>
+	<tr>
+		<th style="width: 201px" rowspan="2">Attribute Infos</th>
+		<th style="width: 131px" rowspan="2">Never Valid</th>
+		<th colspan="3">When it can be Valid</th>
+	</tr>
+	<tr>
+		<th style="height: 17px; width: 131px;">Immediate</th>
+		<th style="height: 17px; width: 131px;">Redirected</th>
+		<th style="height: 17px; width: 131px;">Inherited</th>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">m_IsUnset<td style="width: 131px; height: 16px;">
+		If the attribute is not a primitive or a list of primitive</td>
+		<td style="width: 131px; height: 16px;">
+		If the Unset method has been applied to an attribute, the value is TRUE. 
+		Otherwise it is FALSE</td>
+		<td style="width: 131px; " rowspan="2">
+		Meaningless</td>
+		<td style="width: 131px; " rowspan="2">
+		Meaningless if in an inheritance chain you reach a redirected 
+		value.Otherwise it is the status of the first non-inherited attribute 
+		(*)</td>
+	</tr>
+	<tr>
+		<td style="width: 201px; height: 16px;">m_ListSize<td style="width: 131px; height: 16px;">
+		If the attribute is not a List</td>
+		<td style="width: 131px; height: 16px;">
+		The size of a list</td>
+	</tr>
+	</table>
+<p>(*) if an attribute is without a value until you reach the StartUp, <strong>m_IsUnset</strong> is 
+TRUE otherwise FALSE.</p>
+<p>So, if you have a doubt , and if you want a safe result, the only means is to use 
+<code>GetValue/GetValueAtIndex</code> methods of&nbsp; <em>CATFmFeatureFacade </em>class.</p>
+<ul>
+	<li><strong>m_ListSize</strong> will be equal to the return of the <code>Size()</code> method of the <em>CATFmAttributeValue</em> 
+	class</li>
+	<li><strong>m_IsUnset</strong> can be deduced from the <strong>HRESULT</strong> returned by 
+<code>GetValue/GetValueAtIndex </code>&nbsp;(*)<ul>
+		<li ><strong>S_FALSE</strong> : the value is Unset</li>
+		<li ><strong>S_OK</strong> : the value is set</li>&nbsp;</ul>
+	</li>
+</ul>
+<p>(*) if the attribute is a primitive or list of primitive type. See [<a href="#Fig.16">Fig.16</a>]</p>
+<p>To conclude, using <strong>m_IsUnset</strong> and <strong>m_ListSize</strong>, can be useful when you need these 
+information without retrieving the value itself. It is much faster than to use 
+<code>GetValue/GetValueAtIndex</code> . But take into account their validity.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>This article delves into the fundamentals of feature attributes. </p>
+<p>A feature attribute is characterized by its type, update behavior and access 
+mode and has a value associated with it, as well. An attribute is managed by one 
+of the three modes namely. <strong>Immediate</strong>, <strong>Redirected</strong> and 
+<strong>Inheritance</strong>. </p>
+<p>In an <strong>immediate</strong> mode, attribute information and value is sought from the 
+current feature. In the <strong>Redirected</strong> mode, an attribute refers to another feature 
+attribute for its value. It thus seeks its value through this redirection. In an
+<strong>Inheritance</strong> mode, the attribute value and information is inherited from the 
+reference feature. </p>
+<p>An attribute value if not explicitly set, is assigned a special value namely. 
+the unset value. Each attribute type has an Unset value associated with it as 
+listed in the <a href="#Table2">table 2</a>. An attribute value can be 
+explicitly set to its <strong>Unset</strong> value, with a call to <code>UnsetValue()</code> of the <em>
+CATFmFeatureFacade</em> class.</p>
+<p>The article finally lists the classes (<em>CATFmAttributeName</em>, <em>
+CATFmAttributeValue</em>, <em>CATFmAttributeValuationInfo</em>, <em>
+CATFmFeatureFacade</em>) and the key APIs for handling feature attributes.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td >
+		<a href="../CAAOsmTechArticles/CAAOsmOverview.htm">Feature Modeler Overview</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td >
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling 
+		StartUps</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAAV5V6FmExtTaLinkingFeatures2.htm">Understanding Link Attribute -2</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td ><a href="CAAV5V6FmExtTaLinkingFeatures.htm">Understanding Link Attribute -1</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td><a href="CAAV5V6FmExtTaUpdateOverview.htm">Update Mechanism Overview</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td >
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcBuildUpdate.htm">The Build-Update 
+		Protocol&nbsp;</a></td>
+	</tr>
+	<tr>
+		<td>[7]</td>
+		<td >
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcSimpleAttr.htm">Accessing Feature 
+		Attributes</a></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td >&nbsp;</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Jun 2010]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create members.
+'
+' Assumptions:   The Part document CAASddCreateStiffer.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+
+  Dim ObjPart As Part
+  Set ObjPart = CATIA.ActiveDocument.Part
+      
+  'Get the Factory Object
+  Dim FactoryObj As SfmFactory
+  Set FactoryObj = ObjPart.GetCustomerFactory("SfmFactory")
+  
+  'Get the Manager Object
+  Dim ManagerObj As SfmManager
+  Set ManagerObj = FactoryObj.GetManager
+
+'RETRIEVING THE SUPERPLATES
+  
+  Dim SuperPlates As References
+  Set SuperPlates = ManagerObj.GetSuperPlates
+  
+  Dim ShellSuperPlate, DeckSuperPlate, TBHSuperPlate As SfmSuperPlate
+  Set ShellSuperPlate = SuperPlates.Item(1)
+  Set DeckSuperPlate = SuperPlates.Item(2)
+  Set TBHSuperPlate = SuperPlates.Item(3)
+  
+'CREATING SHELL STIFFENER
+ 'Defining Support for Stiffener
+  Dim webSupport1 As AnyObject
+  Set webSupport1 = ObjPart.FindObjectByName("LONG.8")
+  Dim webSupportRef1 As Reference
+  Set webSupportRef1 = ObjPart.CreateReferenceFromObject(webSupport1)
+  
+  Dim ShellStiffener1 As SfmStiffener
+  Set ShellStiffener1 = FactoryObj.AddSuperStiffener("ShellStiffener", "WT15x54", ShellSuperPlate, webSupportRef1)
+  
+  Dim webSupport2 As AnyObject
+  Set webSupport2 = ObjPart.FindObjectByName("CROSS.105")
+  Dim webSupportRef2 As Reference
+  Set webSupportRef2 = ObjPart.CreateReferenceFromObject(webSupport2)
+  
+  Dim ShellStiffener2 As SfmStiffener
+  Set ShellStiffener2 = FactoryObj.AddSuperStiffener("ShellStiffener", "C12x25", ShellSuperPlate, webSupportRef2)
+  
+  'Limiting Stiffener2 By Stiffener1
+  
+  Dim StiffenerLimitRef1 As Reference
+  Set StiffenerLimitRef1 = ObjPart.CreateReferenceFromObject(ShellStiffener1)
+  
+  ShellStiffener2.SetProfileLimit 1, StiffenerLimitRef1
+  
+'CREATING DECK STIFFENER
+ 'Defining Support for Stiffener on DeckPlate
+  Dim webSupport3 As AnyObject
+  Set webSupport3 = ObjPart.FindObjectByName("LONG.0")
+  Dim webSupportRef3 As Reference
+  Set webSupportRef3 = ObjPart.CreateReferenceFromObject(webSupport3)
+  
+  Dim DeckStiffener1 As SfmStiffener
+  Set DeckStiffener1 = FactoryObj.AddSuperStiffener("DeckStiffener", "HP12x63", DeckSuperPlate, webSupportRef3)
+  
+'CREATING TRANSVERSE BULKHEAD STIFFENER
+ 'Defining Support
+  Dim webSupport4 As AnyObject
+  Set webSupport4 = ObjPart.FindObjectByName("LONG.-5")
+  Dim webSupportRef4 As Reference
+  Set webSupportRef4 = ObjPart.CreateReferenceFromObject(webSupport4)
+  
+  Dim TBHStiffener1 As SfmStiffener
+  Set TBHStiffener1 = FactoryObj.AddSuperStiffener("TransBulkhdStiffener", "C12x25", TBHSuperPlate, webSupportRef4)
+  
+  Dim webSupport5 As AnyObject
+  Set webSupport5 = ObjPart.FindObjectByName("DECK.2")
+  Dim webSupportRef5 As Reference
+  Set webSupportRef5 = ObjPart.CreateReferenceFromObject(webSupport5)
+  
+  Dim TBHStiffener2 As SfmStiffener
+  Set TBHStiffener2 = FactoryObj.AddSuperStiffener("TransBulkhdHorStiffener", "HP12x63", TBHSuperPlate, webSupportRef5)
+  
+  'Limiting Stiffener2 By Stiffener1
+  
+  Dim StiffenerLimitRef2 As Reference
+  Set StiffenerLimitRef2 = ObjPart.CreateReferenceFromObject(TBHStiffener1)
+  
+  TBHStiffener2.SetProfileLimit 1, StiffenerLimitRef2
+  
+  ObjPart.Update
+End Sub

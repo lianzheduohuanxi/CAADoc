@@ -1,0 +1,716 @@
+<html>
+
+<head>
+<title>Managing Errors Using HRESULT</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Errors Using HRESULT</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Errors Using HRESULT</h3>
+      <em>Creating, analyzing, enriching, and reacting to errors using HRESULT</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to report a failure to calling methods by
+      returning a HRESULT to which an error class and an error message is
+      associated, how to process the errors returned by the methods you call,
+      and how to convert exceptions into HRESULT errors. The error management
+      described here complies with the CAA V5 Error Processing Rules [<a href="#References">1</a>]
+      <ul>
+        <li><a href="#100000"><b>Understanding Error Management Using HRESULT
+          with an Example</b></a></li>
+        <li><a href="#200000"><b>What Is a CAA V5 Error Made Of?</b></a></li>
+        <li><a href="#300000"><b>Returning an HRESULT with an Error</b></a>
+          <ul>
+            <li><a href="#310000">Initializing Error Data</a></li>
+            <li><a href="#340000">Returning the Error</a></li>
+            <li><a href="#350000">Tracing the Error</a></li>
+            <li><a href="#360000">Documenting the Error</a></li>
+          </ul>
+        </li>
+        <li><a href="#500000"><b>Receiving an Error from a Called Method</b></a>
+          <ul>
+            <li><a href="#510000">The Error Comes from a Returned HRESULT</a></li>
+            <li><a href="#540000">Analyzing the Error</a></li>
+            <li><a href="#550000">Enriching the Error</a></li>
+            <li><a href="#560000">Resending the Error</a></li>
+            <li><a href="#570000">Releasing the Error</a></li>
+            <li><a href="#580000">Informing the End User with a Prompt Box</a></li>
+          </ul>
+        </li>
+        <li><a href="#600000"><b>Converting a Caught Exception to a HRESULT</b></a></li>
+        <li><a href="#InShort"><b>In Short</b></a></li>
+        <li><a href="#References"><b>References</b></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="100000"></a>Understanding Error Management Using HRESULT with an
+Example</h3>
+<p>Assume you have to create a method that adds two integers the end user has
+entered in a dialog box and returns their sum. Assume also that the intended
+scope of the method is to work correctly when both integers are greater than or
+equal to zero. Requesting to add negative integers is out of the scope of the
+method, and should then be processed as an error. The code for such a method
+could be:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAAClass::Add(int iFirstOperand, int iSecondOperand, int * oSum)
+{
+  if (iFirstOperand&lt;0 || iSecondOperand&lt;0)     // Out of the method scope
+  { // Instantiate an error class instance with a message
+    CATResourceError * pError = new <b>CATResourceError</b>(&quot;CAAAddingMsgKey&quot;,
+                                                     &quot;CAAAddingErrorCatalog&quot;); 
+    // Prepare parameters for the message
+    CATUnicodeString Param1, Param2;
+    Param1.BuildFromNum(iFirstOperand);
+    Param2.BuildFromNum(iSecondOperand);
+    // Assign parameters to the error
+    pError-&gt;<b>SetNLSParameters</b>(2, &amp;Param1, &amp;Param2);
+    // Inform caller that method fails, and pass the error object
+    return <b>CATReturnError</b>(pError);
+  }
+  if (NULL != oSum)
+  {
+    *oSum = iFirstOperand + iSecondOperand;
+    return <b>CATReturnSuccess</b>;      // Inform caller that method succeeds
+  }
+  else
+    return <b>CATReturnFailure</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>where:
+<ul>
+  <li><code>iFirstOperand</code> and <code>iSecondOperand</code> are the two
+    integers to add</li>
+  <li><code>oSum</code> is the computed sum.</li>
+</ul>
+<p>Note that the method returns a HRESULT, and not the computed sum which is
+passed as an output parameter, and that this HRESULT value is built using the
+macros <code>CATReturnError</code> when the method fails, and <code>CATReturnSuccess</code>
+when the method executes successfully.</p>
+<p>Let's analyze what happens when one or both input parameters are less than
+zero. First, an instance of the <i>CATResourceError</i> class, supplied by the
+System framework, is created. The <i>CATResourceError</i> class constructor has
+two parameters:
+<ul>
+  <li><code>CAAAddingMsgKey</code> is the key of the message associated with
+    this error</li>
+  <li><code>CAAAddingErrorCatalog</code> is the message catalog containing this
+    key and the associated message.</li>
+</ul>
+<p>The message takes the two operands as parameters. According to the message
+processing rules, these parameters must first be converted into <i>CATUnicodeString</i>
+instances, and then attached to the error using the <code>SetNLSParameters</code>
+method, before the error be returned by the <code>CATReturnError</code> macro.
+The message extracted from the CAAAddingErrorCatalog.CATNls file could be:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAAddingMsgKey = &quot;First operand /p1 and//or second operand /p2 is negative.\n Select only positive values&quot;;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Now let's look at the calling method. It should test the returned value to
+know whether the called method executes well or not. If it fails, the error
+class instance associated with the error can be retrieved from the error manager
+thanks to the <code>GetLastError</code> method. Depending on the error class,
+the action to perform can be one of the following:
+<p>When a method you call fails you must try in the following order:
+<ul>
+  <li>If you know how to repair the error repair and go on</li>
+  <li>If it is not a major error, clean up and
+    <ul>
+      <li>Either return CATReturnError with the received CATError and possibly
+        change the CATError message</li>
+      <li>Or return CATReturnError after having deleted the received CATError
+        and created a new CATError (more expensive)</li>
+    </ul>
+    <p>Even if the failure can be fixed, such as just ignoring an item in a
+    loop, there are problems you may want to log because something wrong happens
+    that needs to be investigated. In these cases, use CATSysLogError.</p>
+  </li>
+  <li>If it is a major error, use CATSysLogAbend. (This call will make a core
+    dump at DS and continue after having logged the error in the abend trace at
+    customer’s location.) Because the call doesn't make a core dump at
+    customer’s locations, you need to manage the error as if it were not a
+    major error as described above.</li>
+</ul>
+<p>Note: there is not always a CATError when a method you call fails.You must
+check the CATError availabilty</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  int a, b, aplusb;
+...
+  HRESULT rc = ptr-&gt;Add(a, b, &amp;aplusb);
+  ptr-&gt;Release();
+  ptr = NULL;
+  if (FAILED(rc))
+  {       // Retrieve the last error from the error manager
+    CATError * pOccurringError = <b>CATError::CATGetLastError</b>(rc);
+    if (NULL != pOccurringError)
+    {
+      if (0 != pOccurringError-&gt;IsAKindOf(CATInputError::ClassName()))       // <b>Repair</b>
+      {
+        ... // Repair the error
+        pOccurringError-&gt;Release();
+        pOccurringError = NULL;
+        ... // and go on
+        return CATReturnSuccess;
+      }
+      else if (0 != pOccurringError-&gt;IsAKindOf(CATSystemError::ClassName())) // <b>Return as is</b>
+      {
+        return CATReturnError(pOccurringError);
+      }
+      else if (0 != pOccurringError-&gt;IsAKindOf(CATInternalError::ClassName()))  // <b>Enrich</b>
+      {
+        ... // Analyze the error
+        pOccurringError-&gt;Release();
+        pOccurringError = NULL;
+        CATInternalError * pMyError = new CATInternalError(&quot;MsgKey&quot;, &quot;MsgCatalog&quot;);
+          ... // Add appropriate parameters, if any
+        return CATReturnError(pMyError);
+      }
+      else                                                                   // <b>Log and return</b>
+      {
+        if (NULL == pPointer)
+        {
+          ... // Clean
+          CATSysLogAbend(&quot;This pointer should never be NULL&quot;);
+          return CATReturnedError(pOccurringError);
+        }
+      }
+    }
+  }
+  ... // The Add method succeeds, and the method goes on normally
+  return CATReturnSuccess;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Note that the different processing cases rely on whether the error class
+derives from a given class. Other criteria are available, such as the error
+type, the error message identifier, or the error identifier [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="200000"></a>What Is a CAA V5 Error Made Of?</h3>
+<p>The main characteristics of the error management is that an error detected by
+a method is returned to its caller, and can then be propagated from callee to
+caller upwards in the call stack. An error is built using the following:
+<ul>
+  <li>A macro that returns a failure to the caller as a HRESULT value to
+    indicate that an error occurs</li>
+  <li>Possibly an error class instance [<a href="#References">2</a>] you can
+    associate with the returned value to hold information the caller can
+    retrieve to process the error, with:
+    <ul>
+      <li>A type you can associate with the error to describe its severity</li>
+      <li>An error message you can associate with the error class instance that
+        the caller can recognize thanks to its identifier, and possibly display
+        in a prompt box.</li>
+    </ul>
+  </li>
+</ul>
+<p>Once returned, the error is held by a specific object, called the error
+manager. The caller can retrieve the error from the error manager to analyze it
+and take the appropriate decision. Refer to <a href="#500000">Receiving and
+Error from a Called Method</a>.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="300000"></a>Returning an HRESULT with an Error</h3>
+<p>When developing your objects and client applications, you will need to create
+your own errors. This includes mainly:
+<ul>
+  <li>Initializing the error data</li>
+  <li>Returning HRESULT and the associated error class instance</li>
+  <li>Possibly tracing the error</li>
+  <li>Documenting the error</li>
+</ul>
+<p>The first three items are extensively described in [<a href="#References">2</a>]
+and are just recalled below.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="310000"></a>Initializing the Error Data</h4>
+<p>This includes:</p>
+<ul>
+  <li>Instantiating the error class</li>
+  <li>Filling in the error message with run time parameter values</li>
+  <li>Setting the error type</li>
+</ul>
+<p>This is fully described in [<a href="#References">2</a>].
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="340000"></a>Returning the Error</h4>
+<p>The error must be returned using macros to make the error manager aware of
+it:
+<ul>
+  <li><code>CATReturnSuccess</code> states that no error has occurred, and
+    returns <code>S_OK</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  return CATReturnSuccess; 
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>CATReturnFailure</code> states that an error has occurred, and
+    returns <code>E_UNEXPECTED</code>, but no error class instance is associated
+    with the error
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  return CATReturnFailure; 
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>CATReturnError</code> states that an error has occurred, returns <code>E_FAIL</code>,
+    and enables an error class instance to be associated with the error, along
+    with information such as an error message, an the error type
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+  return CATReturnError(pError); 
+...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>where <code>pError</code> is the pointer to the error class instance
+    created for this error.</p>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="350000"></a>Tracing the Error</h4>
+<p>If the error is a major one, you must trace it. This is fully described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="360000"></a>Documenting the Error</h4>
+<p>Documentation of a method's returned values.</p>
+<ul>
+  <li>Add a <b>Returns</b> section using the <b>@return</b> tag for each value
+  <li>Add an <b>Errors</b> section using the <b>@error</b> tag for each error [<a href="#References">2</a>]
+</ul>
+<pre>
+  /**
+   ...
+   * <b>@return</b> S_OK
+   *   The component is successfully created and the interface pointer is successfully returned
+   * <b>@return</b> E_FAIL
+   *   The component cannot be created, or the interface query failed. The
+   *   following error classes and error identifiers and severity can be
+   *   associated with this error.
+   * <b>@error</b> <b>CATInternalError</b> <b>ComponentERR_1000</b>
+   *   The component cannot be created because no default constructor exists
+   *   for the requested class
+   * <b>@error CATInternalError ComponentERR_1001</b>
+   *   The component cannot be created because the class to instantiate
+   *   doesn't exist
+   * <b>@error CATInternalError ComponentERR_1002</b>
+   *   The component was successfully created, but the interface query fails,
+   *   whether the component doesn't implement the interface, or the IID passed is invalid.
+   *   An IUnknown pointer to the component is returned
+   * <b>@error CATInternalError ComponentERR_1003</b>
+   *   The memory allocation failed for the component
+   ...
+   */
+  virtual HRESULT CreateInstance(IUnknown* iUnkOuter, REFIID iIid, void ** oObject) = 0;</pre>
+<p>which gives after being processed:</p>
+<pre>public virtual HRESULT CreateInstance( IUnknown* iUnkOuter, REFIID iIid, void ** oObject ) = 0;
+...</pre>
+<dl>
+  <dt><b>Returns:</b>
+  <dd>
+    <dl>
+      <dt>S_OK</dt>
+      <dd>The component is successfully created and the interface pointer is
+        successfully returned</dd>
+      <dt>E_FAIL</dt>
+      <dd>The component cannot be created, or the interface query failed. The
+        following error classes and error identifiers and severity can be
+        associated with this error.</dd>
+    </dl>
+  </dd>
+  <dt><b>Returned Errors</b>:
+  <dd>
+    <table class="errtab">
+      <tr>
+        <th class="errth">Error Class</th>
+        <th class="errth">Error Id</th>
+        <th class="errth">Description</th>
+      </tr>
+      <tr>
+        <td class="errtd"><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td class="errtd">ComponentERR_1000</td>
+        <td class="errtd">The component cannot be created because no default
+          constructor exists for the requested class</td>
+      </tr>
+      <tr>
+        <td class="errtd"><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td class="errtd">ComponentERR_1001</td>
+        <td class="errtd">The component cannot be created because the class to
+          instantiate doesn't exist</td>
+      </tr>
+      <tr>
+        <td class="errtd"><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td class="errtd">ComponentERR_1002</td>
+        <td class="errtd">The component was successfully created, but the
+          interface query fails, whether the component doesn't implement the
+          interface, or the IID passed is invalid. An IUnknown pointer to the
+          component is returned</td>
+      </tr>
+      <tr>
+        <td class="errtd"><a href="#" onclick="javascript:CAAlink('CPP', 'System', 'class', 'CATInternalError');return false;">CATInternalError</a></td>
+        <td class="errtd">ComponentERR_1003</td>
+        <td class="errtd">The memory allocation failed for the component</td>
+      </tr>
+    </table>
+  </dd>
+</dl>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="500000"></a>Receiving and Error from a Called Method</h3>
+<p>When you call a method, you should always check the HRESULT value returned.
+To determine whether an error occurred, use always the SUCCEEDED or FAILED
+macros, and never check the returned value directly.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc = ptr-&gt;Method(arg1, arg2, arg3);
+if (SUCCEEDED(rc))
+  ...
+else
+  ...</pre>
+    </td>
+  </tr>
+</table>
+When a method you call fails you must try in the following order:
+<ul>
+  <li>If you know how to repair the error repair and go on</li>
+  <li>If it is not a major error, clean up and
+    <ul>
+      <li>Either return CATReturnError with the received CATError and possibly
+        change the CATError message</li>
+      <li>Or return CATReturnError after having deleted the received CATError
+        and created a new CATError (more expensive)</li>
+    </ul>
+    <p>Even if the failure can be fixed, such as just ignoring an item in a
+    loop, there are problems you may want to log because something wrong happens
+    that needs to be investigated. In these cases, use CATSysLogError.</p>
+  </li>
+  <li>If it is a major error, use CATSysLogAbend. (This call will make a core
+    dump at DS and continue after having logged the error in the abend trace at
+    customer’s location.) Because the call doesn't make a core dump at
+    customer’s locations, you need to manage the error as if it were not a
+    major error as described above.</li>
+</ul>
+<p>Note: there is not always a CATError when a method you call fails.You must
+check the CATError availabilty</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="510000"></a>The Error Comes from a Returned HRESULT</h4>
+<p>This is the most common way you will deal with. An example of such an error
+analysis and process is shown in <a href="#100000">Understanding Error
+Management Through an Example</a>. In this case, you should retrieve the error
+using the <code>CATGetLastError</code> method with one parameter, that is, the
+return code. You can use <code>IsAKindOf</code> and all the other methods to
+analyze the error.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc = ptr-&gt;Method(arg1, arg2, &amp;arg3);
+if (FAILED(rc))
+{       // Retrieve the last error from the error manager
+  CATError * pOccurringError = CATError::CATGetLastError(rc);
+  ptr-&gt;Release();
+  ptr = NULL;
+  ...  // Analyze the error</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="540000"></a>Analyzing the Error</h4>
+<p>This is fully described in [<a href="#References">2</a>]. If the error is a
+major one, you must trace it. This is also described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="550000"></a>Enriching the Error</h4>
+<p>You often can add information about the error that happens because you have a
+better knowledge of what you request from the method you call than this method
+itself. For example, when you ask a method to compute the intersection of two
+surfaces, this method can simply return, in case of error, that the surfaces
+cannot be intersected, or that the intersection operator fails. You can replace
+this error in the calling context, that is for example to create a fillet or a
+chamfer, release the error class instance, and create a new one that better
+explains what really happens and that provide useful information to your own
+caller, or to the end user.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc = ptr-&gt;Intersect(Surf1, Surf2, &amp;Curve);
+ptr-&gt;Release();
+ptr = NULL;
+if (FAILED(rc))
+{       // Retrieve the last error from the error manager
+  CATError * pOccurringError = CATError::CATGetLastError(rc);
+  if (NULL != pOccurringError)
+  {
+    if pOccurringError-&gt;IsAKindOf(CATInputError::ClassName())
+    {
+      if (0 == strcmp(&quot;ERR_1256&quot;, pOccurringError-&gt;GetMsgId()))
+      {
+        ... // Clean
+        pOccurringError-&gt;Release();
+        pOccurringError = NULL;
+        CATInputError * pMyError = new CATInputError(&quot;MyErrorERR_4563&quot;, &quot;CATMyMsgCatalog&quot;);
+        ... // Add appropriate parameters, if any
+        return CATReturnError(pMyError);
+      }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="560000"></a>Resending the Error</h4>
+<p>You can simply resend the error if you cannot do anything else, or if your
+own caller is at the approriate level to process it. You cannot reuse the same
+error class instance while changing the error message. If you want to change the
+error message, you need to release the error, create a new one with the
+appropriate error message as described in <a href="#550000">Enriching the Error</a>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc = ptr-&gt;Method(arg1, arg2, &amp;arg3);
+ptr-&gt;Release();
+ptr = NULL;
+if (FAILED(rc))
+{       // Retrieve the last error from the error manager
+  CATError * pOccurringError = CATError::CATGetLastError(rc);
+  if (NULL != pOccurringError)
+  {
+    if (0 == strcmp(&quot;IdIDontCareAboutERR_1000&quot;, pOccurringError-&gt;GetMsgId()))
+      return CATReturnError(pOccurringError);
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="570000"></a>Releasing the Error</h4>
+<p>You can release the error if it has no meaning for your caller, but
+nevertheless return a failure, or return successfully if its a warning or
+information you take into account, but that is useless or meaningless for your
+caller.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+HRESULT rc = ptr-&gt;Method(arg1, arg2, &amp;arg3);
+if (FAILED(rc))
+{       // Retrieve the last error from the error manager
+  CATError * pOccurringError = CATError::CATGetLastError(rc);
+  ptr-&gt;Release();
+  ptr == NULL;
+  if (NULL != pOccurringError)
+  {
+    if (0 == strcmp(&quot;IdNobodyCaresAboutERR_1000&quot;, pOccurringError-&gt;GetMsgId()))
+    {
+      pOccurringError-&gt;Release();
+      pOccurringError = NULL;
+      return CATReturnFailure;
+    }
+    else if (CATErrorTypeInformation == pOccurringError-&gt;GetType())
+    {
+      pOccurringError-&gt;Release();
+      pOccurringError = NULL;
+      ... // maybe you have something to do in-between
+      return CATReturnSuccess;
+    }
+    else
+      ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="580000"></a>Informing the End User with a Prompt Box</h4>
+<p>This is fully described in [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="600000"></a>Converting a Caught Exception into a HRESULT</h3>
+<p>When your method is located at the framework border, you should use the <code>CATTry</code>
+and <code>CATCatch</code> macros to enclose the code portions respectively
+dedicated to execute your code and to process the errors. You cannot retrieve a
+HRESULT value as a return code of the method in the <code>CATTry</code> section.
+Then you simply must catch this exception and retrieve the error class instance.
+If you can't repair the error, you must stop the exception propagation, convert
+this exception into a HRESULT, and attach the exception error class instance to
+the failing return.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT MyClass::MyMethod()
+{
+  ...
+  <b>CATTry</b>
+  {
+    ...
+    Ptr-&gt;Add(a, b, &amp;aplusb); // Internal method without HRESULT that throws exceptions
+    ...
+  }
+  <b>CATCatch</b> (CATError, pError)
+  {
+    ... // Clean
+    if ( NULL != pError )
+    {
+      const char * pMsgId = pError-&gt;GetMsgId();
+      if     (0 == strcmp(&quot;ErrorICanRepairERR_1000&quot;, pMsgId))      // <b>Repair</b>
+        ...   // Repair the error
+      else if (0 == strcmp(&quot;ErrorIReturnAsIsERR_1000&quot;, pMsgId))    // <b>Return as is</b>
+        return <b>CATReturnError</b>(pError);
+      else if (0 == strcmp(&quot;ErrorIEnrichERR_1000&quot;, pMsgId))        // <b>Enrich</b>
+      {
+        pError-&gt;Release();
+        pError = NULL;
+        CATResourceError * pMyError = CATResourceError(&quot;MsgId&quot;, &quot;MsgCatalog&quot;);
+        ... // Possibly fill in the message with parameters
+        return <b>CATReturnError</b>(pMyError);
+      }
+      else if (0 == strcmp(&quot;MajorErrorILogandReturnAsIsERR_1000&quot;, pMsgId))  // <b>Log and return</b>
+      {
+        ::<b>CATSysLogAbend</b>(&quot;Pertinent Log Message&quot;);
+        return <b>CATReturnError</b>(pError);
+      }
+    }
+    else
+      return <b>CATReturnFailure</b>;                                                 // Return
+  }
+  <b>CATEndTry</b>
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>For example here, and exception can be thrown inside the <code>CATTry</code>
+block of a method located at the border of a framework. The CATCatch block will
+catch this exception. After a possible clean-up, if an non null error instance
+is caught, process as for any returned error, that is try to repair, or return
+as is, enrich, log, or return the failure without error.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Failures in methods or global functions are reported using the HRESULT value
+returned. Using the macro <code>CATReturnError</code>, an error class instance
+can be associated with the returned failure, along with an error identifier and
+a error message that can include parameters values from the method current
+state. Errors can be traced using the <code>CATSysLogAbend</code> and <code>CATSysLogError</code>
+macros.</p>
+<p>Returned errors must be processed by the caller, that is, first analyzed, an
+then repaired, enriched, or resent as is. If the method is located at the
+appropriate level, a prompt can be issued to the end user.</p>
+<p>If a method located at the framework border catches exceptions thrown by its
+callees, it must convert them into HRESULT associated with the same or another
+error class instance.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocTechArticles/CAADocErrorsRules.htm">CAA
+      V5 Error Processing Rules</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAASysCATError.htm">Using an Error Class with HRESULTs or
+      Exceptions</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAASysExceptions.htm">Managing Errors Using Exceptions</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>2</b> [Nov 2001]</td>
+    <td valign="top">Enhanced with new error rules</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1</b> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>CATInteractiveApplication</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Dialogs</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>CATInteractiveApplication</h3>
+      <em>Base class for all interactive applications</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p>The CATInteractiveApplication class is the base class for all interactive
+applications, whether it displays only a single dialog window or it is a
+classical Single Document Interface (SDI) application, or a Multiple Document
+Interface (MDI) application such as CAA Version 5.</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3>Programmer's Guide</h3>
+<p>To create an interactive application, you should:</p>
+<ul>
+  <li>Create a class for your application that derives from
+    CATInteractiveApplication</li>
+  <li>Override at least the methods <code>BeginApplication</code> and <code>EndApplication</code>.</li>
+</ul>
+<p>Refer to <a href="../CAADlgTechArticles/CAADlgInteractiveApplication.htm">Designing
+Your Interactive Application</a>.</p>
+<p>The programming tasks fall into the following topics:</p>
+<ul>
+  <li><a href="#100000">Managing the Interactive Application Lifecycle</a></li>
+  <li><a href="#200000">Retrieving Arguments</a></li>
+  <li><a href="#300000">Managing Resources</a></li>
+  <li><a href="#400000">Managing the Contextual Help</a></li>
+  <li><a href="#500000">Managing the Cursor</a></li>
+  <li><a href="#700000">Managing the Display</a></li>
+  <li><a href="#900000">Retrieving the User Interface Style</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="100000"></a>Managing the Interactive Application Lifecycle</h4>
+<p>Your interactive application constructor should have a single argument: its
+name.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class MyIntApplication : public CATInteractiveApplication
+{
+  MyIntApplication (const CATString &amp; iName);
+  virtual ~MyIntApplication ();
+  void BeginApplication();
+  int EndApplication();
+}
+...
+MyIntApplication ::MyIntApplication (const CATString &amp; iName)
+                 : CATInteractiveApplication(NULL, iName)
+{}
+...
+// Instantiate the application
+CATString sName(&quot;ApplicationName&quot;);
+MyIntApplication IntAppliInstance(sName);</pre>
+    </td>
+  </tr>
+</table>
+<p>The following methods are available to manage the interactive application
+life cycle. They are called in this order after the application constructor and
+before the application destructor:</p>
+<table width="100%">
+  <tr>
+    <td><code>BuildApplicationEnvironment</code></td>
+    <td>Initializes the application environment. Called with UNIX only.</td>
+  </tr>
+  <tr>
+    <td><code>BeginApplication</code></td>
+    <td>Begins or runs the application.</td>
+  </tr>
+  <tr>
+    <td><code>RunApplication</code></td>
+    <td>Runs the application. Called with UNIX only.</td>
+  </tr>
+  <tr>
+    <td><code>EndApplication</code></td>
+    <td>Called when the application ends, after you call Destroy in the callbak
+      method that closes the application</td>
+  </tr>
+</table>
+<p>You need to override the methods <code>BeginApplication</code> and <code>EndApplication</code>.
+Refer to <a href="../CAADlgTechArticles/CAADlgInteractiveApplication.htm">Designing
+Your Interactive Application</a>. Their signatures are as follows:
+<ul>
+  <li><code>BuildApplicationEnvironment</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>virtual void BuildApplicationEnvironment(int     argc,
+                                         char ** argv,
+                                         char ** env);</pre>
+        </td>
+      </tr>
+    </table>
+    <p>where:</p>
+    <table>
+      <tr>
+        <td>argc</td>
+        <td>Number of arguments passed to the application</td>
+      </tr>
+      <tr>
+        <td>argv</td>
+        <td>Argument list</td>
+      </tr>
+      <tr>
+        <td>env</td>
+        <td>Environment variable list</td>
+      </tr>
+    </table>
+  </li>
+  <li><code>BeginApplication</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>virtual void BeginApplication();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>RunApplication</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>virtual void RunApplication();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <li><code>EndApplication</code>
+    <table class="code">
+      <tr>
+        <td>
+          <pre>virtual int EndApplication();</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="200000"></a>Retrieving Arguments</h4>
+<p>You can retrieve the arguments passed to the application using the <code>BuildApplicationEnvironment</code>
+method thanks to the <code>GetArgs</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+int argCount;      // Number of arguments
+char ** argArray;  // Arguments passed as a table of character strings
+IntAppliInstance.GetArgs(&amp;argCount, &amp;argArray);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="300000"></a>Managing Resources</h4>
+<p>You can assign a splash screen using the <code>SetSplashScreen</code> method,
+usually in the <code>BeginApplication</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+MyIntApplication::BeginApplication()
+{
+  ...
+  CATString splash(&quot;MyAppliSplash&quot;);
+  IntAppliInstance.SetSplashScreen(splash);
+  ...
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>MyAppliSplash should be the file name of the MyAppliSplash.bmp file located
+in the splashscreens directory of the graphic directory defined using the
+CATGraphicPath environment variable. For the P2 user interface style, it can be
+an animated image, such as MyAppliSplash.avi, with Windows only.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="400000"></a>Managing the Contextual Help</h4>
+<p>You can request that the contextual help be automatically set to any control
+of any window. This enables the end user to select the What's This command which
+turns the cursor to a question mark, and then click any control to display its
+associated &quot;Long Help&quot; in a balloon. This is done by the <code>SetAutomaticContextualHelp</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IntAppliInstance.SetAutomaticContextualHelp();</pre>
+    </td>
+  </tr>
+</table>
+<h4><a name="500000"></a>Managing the Cursor</h4>
+<p>You can request that the cursor be changed to a busy cursor using the <code>SetBusyCorsor</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IntAppliInstance.SetBusyCursor();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="700000"></a>Managing the Display</h4>
+<p>You can request that the display be updated using the <code>UpdateDisplay</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>IntAppliInstance.UpdateDisplay();</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="900000"></a>Retrieving the User Interface Style</h4>
+<p>You can retrieve the user interface style using the <code>GetUIClass</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>int UserInterfaceStyle;
+UserInterfaceStyle = pIntApplication-&gt;GetUIClass();
+if (UserInterfaceStyle == 1)
+  ... // User Interface Style is P1
+else if (UserInterfaceStyle == 2)
+  ... // User Interface Style is P2
+else
+  ... // Error</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

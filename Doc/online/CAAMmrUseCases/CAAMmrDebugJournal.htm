@@ -1,0 +1,524 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Verifying the Combined Curve's Sub-Element Selectability</title>
+</head>
+
+<body>
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2></h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Verifying the
+      Combined Curve's Sub-Element Selectability</h3>
+      <em>Creating a Part workshop add-in and verifying the Combined Curve's topological result</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="3"><a href="CAAMmrCombinedCurveSamplesOverview.htm">Creating
+      a New Geometrical Feature: The Combined Curve</a> <b>&gt; Verifying the
+      Combined Curve's Sub-Element Selectability </b></td>
+  </tr>
+</table>
+
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create an Add-in of the Part
+document workshop and how to use a mechanical command to verify the cells of the
+      Combined Curve's topological result.&nbsp;
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAMmrDebugPrtWksAddin Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAAMmrDebugPrtWksAddin
+              Do</a></li>
+            <li><a href="#How">How to Launch CAAMmrDebugPrtWksAddin</a>            </li>
+            <li><a href="#Where">Where to Find the CAAMmrDebugPrtWksAddin
+              Code</a></li>
+          </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create an add-in of the Part
+document workshop. This Add-in contains a mechanical command to verify that each
+cell
+of the <i>CATBody</i> associated with the Combined Curve can be selected. This article
+concludes the use case entitled &quot;Building the Combined Curve's Result&quot; [<a href="#References">1</a>].&nbsp;</p>
+<p>Before getting to this use case, it is important to get an
+understanding of some of the concepts used, that is, the add-in [<a href="#References">2</a>]
+on one hand, the procedural reports [<a href="#References">3</a>], the
+generic naming [<a href="#References">4</a>], and the topological journal [<a href="#References">5</a>]
+on the other hand.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAMmrDebugPrtWksAddin Use Case</h3>
+<p>CAAMmrDebugPrtWksAddin is a use case of the CAAMechanicalModeler.edu framework that
+illustrates MechanicalModelerUI framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAMmrDebugPrtWksAddin Do</h4>
+
+<p>The CAAMmrDebugPrtWksAddin use case consists in an add-in of the Part document
+workshop. This Add-in contains only one toolbar, the <b> CAA Debug</b> toolbar,
+which itself contains one command, the <b>Debug Journal</b> command. See <a href="#Fig.1"> Fig.1</a></p>
+<table border="0">
+<caption><i><a name="Fig.1">Fig.1</a>: The Debug Journal Command in the &quot;CAA
+  Debug&quot; Toolbar</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAAMmrDebugJournalToolbar.jpg" width="382" height="274"></td>
+  </tr>
+</table>
+<p>The following image <a href="#Fig.2"> Fig. 2</a> shows the &quot;Debug
+Journal&quot; Dialog box when an edge of the
+Combined Curve has been selected. This Combined Curve is located in the <code>CAACombinedCurveForReplace</code>
+Part document that you will find in the InputData directory of the&nbsp;
+CAAMechanicalModeler.edu framework.</p>
+<table border="0">
+<caption><i><a name="Fig.2">Fig.2</a>: Edge Selection</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrDebugJournalSel1.jpg" width="653" height="503"></td>
+  </tr>
+</table>
+<p>The "Debug Journal" Dialog box consists in:</p>
+<ul>
+  <li>On the right an editor, named &quot;<a name="Dump Result Editor">Dump results
+    editor</a>&quot;&nbsp; which displays information about the selected cell:</li>
+  <p><code><font size="1">[Edge_1842(body_1758)]&lt;-CREATION-[Vertex_1057(body_1048), Edge_1662(body_1652)]  Info=0</font></code>
+  </p>
+  <p>The &quot;Debug Journal&quot; command tries to reconstruct the line that
+  could be found in a topological report and adds some information like the
+  tag's body. The previous line can be generalized as following:
+  </p>
+  <p><code><b>[</b>XXX_tagTopo<b>(body</b>_tagTopo<b>)] &lt;-</b>YYY<b>- [</b>XXX_tagTopo<b>(body</b>_tagTopo<b>),</b>
+  XXX_tagTopo(body_tagTopo<b>)] Info=</b>ZZZ</code>
+  </p>
+  <p>where in the order:
+  </p>
+  <table border="0">
+    <tr>
+      <td><code>XXX_tagTopo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></td>
+      <td>The selected cell. <code>XXX</code>  can be Vertex, Edge or Face. <code>tagtopo</code>
+        is the topological tag of the cell.</td>
+    </tr>
+    <tr>
+      <td><code>body_</code><code>tagTopo&nbsp;</code></td>
+      <td>The body the selected cell comes from. It is not necessarily the current
+        body.&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>YYY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></td>
+      <td>A topological order: CREATION, MODIFICATION, ABSORTION, or
+        SUB-DIVISION</td>
+    </tr>
+    <tr>
+      <td>[]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>Inside the brakets the parent(s) of the selected cell</td>
+    </tr>
+    <tr>
+      <td><code>Info&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code></td>
+      <td>A topological information</td>
+    </tr>
+  </table>
+  <p>If the selected edge is not a followed cell [<a href="#References">4</a>] ,
+  the &quot;<a name="Dump Result Editor">Dump Result
+    Editor</a>&quot;&nbsp; displays :</p>
+  <p><code>No Dump : this Cell is not a followed cell. No info shown in the visu.</code></p>
+    <li><p>The options frame enables you:</p></li>
+    <ul>
+      <li>To keep the graphic representations displayed in the 3D viewer
+        after each selection - <a href="#Fig.3"> Fig.3</a></li>
+      <li><p>To keep the displayed information in the right editor after
+        each selection - <a href="#Fig.3">Fig.3</a></p></li>
+    </ul>
+  <li><p>The Edit editor enables you to enter the topological tag of a cell; the right
+    editor is modified when the Find button is pushed.&nbsp; - <a href="#Fig.4"> Fig.4</a></p></li>
+  
+</ul>
+<p>The next picture - <a href="#Fig.3"> Fig.3</a> - shows the role of the
+options.&nbsp;</p>
+<table border="0">
+<caption><i><a name="Fig.3">Fig.3</a>: Keep Infos in Visu and in Editor </i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrDebugJournalSel2.jpg" width="653" height="524"></td>
+  </tr>
+</table>
+<p>In the picture below you can notice that after two selections, there are two
+graphic representations in the 3D and the &quot;<a href="#Dump Result Editor">Dump
+results editor</a>&quot; contains two lines. The two buttons in the &quot;Options&quot; frame are
+checked.</p>
+<p>The next picture shows the role of the &quot;Edit&quot; editor and the
+&quot;Find&quot; Button.</p>
+<table border="0">
+<caption><i><a name="Fig.4">Fig.4</a>: Selection by a Topological Tag</i></caption>
+
+  <tr>
+    <td><img border="0" src="images/CAAMmrDebugJournalSel3.jpg" width="651" height="521"></td>
+  </tr>
+</table>
+<p>In the Edit editor, the tag <code>1058</code> has been entered. By clicking on
+the &quot;Find&quot; button, a text is displayed in the &quot;<a href="#Dump Result Editor">Dump
+results editor</a>&quot;
+editor. You notice, that an information indicates that there is no 3D graphic
+representation because the cell 1058 comes from an invisible feature. All the
+features of the Part, except the combined curve, have been hidden to simplify
+the pictures.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAMmrDebugPrtWksAddin&nbsp;</h4>
+<p>To launch CAAMmrDebugPrtWksAddin, you will need to set up the build time environment,
+then compile CAAMmrDebugPrtWksAddin along with its prerequisites, set up the run time
+environment, and then launch CATIA [<a href="#References">6</a>].</p>
+<ul>
+  <li>On the <b>File</b> menu click <b>Open</b>
+  <li>In the <b>File Selection</b> dialog box retrieve the <b>CAACombinedCurveForReplace.CATPart</b>
+    (*) document and click <b>Open</b></li>
+  <li>On the <b>View</b> menu select <b>Toolbars</b> and click <b>CAA Debug</b></li>
+  <li>In the <b>CAA Debug</b> toolbar click the<b> <img border="0" src="images/I_CAAMmrDebugJournal.jpg" width="22" height="22">Debug
+    Journal </b>command</li>
+  <li>Select different edges of <b>CombinedCurve.1</b>&nbsp;</li>
+</ul>
+<p>(*) The file is located in the directory <code>CAAMechanicalModeler.edu/InputData</code></p>
+<ul>
+  <li>Unix : <code>InstallRootDirectory/CAAMechanicalModeler.edu/InputData</code>
+  <li>Windows : <code>InstallRootDirectory\CAAMechanicalModeler.edu\InputData</code></li>
+</ul>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAMmrDebugPrtWksAddin Code</h4>
+<p>The CAAMmrDebugPrtWksAddin use case is made of a single class, CAAMmrDebugAdn,&nbsp; located in
+the CAAMmrDebugPrtWksAddin.m module of the CAAMechanicalModeler.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAMechanicalModeler.edu\CAAMmrDebugPrtWksAddin.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAMechanicalModeler.edu/CAAMmrDebugPrtWksAddin</code><code>.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>Implementing the <i>CATIPrtWksAddin</i> can be divided in three steps:</p>
+<ol>
+  <li><a href="#Creating The Add-in Class Header">Creating the Add-in Class Header</a></li>
+  <li><a href="#Creating the Add-in Source File">Creating the Add-in Source File</a></li>
+  <li><a href="#Creating the Add-in Resources">Creating the Resource Files</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating The Add-in Class Header"></a>Creating the Add-in Class
+Header</h4>
+<p>The <i>CAAMmrDebugAdn</i> class is the implementation of the <i>CATIPrtWksAddin</i> 
+addin. The contents of the <i>CAAMmrDebugAdn.h</i> file is the following:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATBaseUnknown.h&quot;
+
+class CATCmdContainer;
+
+class CAAMmrDebugAdn: public CATBaseUnknown
+{
+  CATDeclareClass;
+  
+  public:
+     CAAMmrDebugAdn();
+     virtual CAAMmrDebugAdn();
+ 
+     void <b>CreateCommands</b>();
+
+     CATCmdContainer * <b>CreateToolbars</b>();
+
+  private :
+     CAAMmrDebugAdn(const CAAMmrDebugAdn &amp;iObjectToCopy);
+     CAAMmrDebugAdn&amp; operator = (const CAAMmrDebugAdn &amp;iObjectToCopy);
+};
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Like any Add-in implementation classes, the <i>CAAMmrDebugAdn</i> class contains the <code>CreateCommands</code> 
+method&nbsp; to create the command header instances and the <code>CreateToolbars</code> 
+method to create the toolbars
+and arrange the commands inside them.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Creating the Add-in Source File"></a>Creating
+the Add-in Source File</h4>
+<p>The contents of the CAAMmrDebugAdn.cpp file can be divided in three
+parts:</p>
+<ol>
+  <li><a href="#Declaring the CATIPrtWksAddin implementation">Declaring the <i>CATIPrtWksAddin</i>
+    implementation</a></li>
+  <li><a href="#Creating the CAAMmrDebugAddinHeader command header">Creating the <i>CAAMmrDebugAddinHeader</i><b> </b>command
+    header</a></li>
+  <li><a href="#Creating the CAA Debug toolbar and arranging the command">Creating the
+    CAA Debug toolbar and arranging the command</a></li>
+</ol>
+<ol>
+  <li><a name="Declaring the CATIPrtWksAddin implementation"></a>Declaring the <i>CATIPrtWksAddin</i>
+    implementation</li>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CAAMmrDebugAddin.h&quot;
+#include &quot;CATCreateWorkshop.h&quot;
+
+#include &lt;TIE_CATIPrtWksAddin.h&gt;
+TIE_<b>CATIPrtWksAddin</b>(CAAMmrDebugAdn);
+
+
+CATImplementClass(CAAMmrDebugAdn, DataExtension, 
+                  CATBaseUnknown, <b>CAAMmrDebugAddin</b>);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAAMmrDebugAdn</i> class states that it implements the <i>CATIPrtWksAddin</i>
+interface thanks to the <code>TIE_CATIPrtWksAddin</code>&nbsp;
+macro. The <code>CATImplementClass</code> macro declares that the <i>CAAMmrDebugAdn</i>
+class is a data extension, thanks to the <code>DataExtension</code> keyword,
+that extends <i>CAAMmrDebugAddin</i>. The third argument must always be set as <i>CATBaseUnknown</i>
+or <i>CATNull</i> for any kind of extension.</p>
+  <p align="left">Next, update the interface dictionary, that is a file named, for
+example, CAAMechanicalModeler.edu.dico, whose directory's pathname is
+concatenated at run time in the CATDictionaryPath environment variable, and
+containing the following declaration to state that the <em>CAAMmrDebugAddin</em>
+component implements the <em>CATIPrtWksAddin</em> interface, and whose code is
+located in the libCAAMmrDebugPrtWksAddin shared library or DLL.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAMmrDebugAddin            CATIWorkbenchAddin           libCAAMmrDebugPrtWksAddin
+CAAMmrDebugAddin            CATIPrtWksAddin              libCAAMmrDebugPrtWksAddin
+...</pre>
+    </td>
+  </tr>
+</table>
+<li><a name="Creating the CAAMmrDebugAddinHeader command header"></a>Creating the
+  <i>CAAMmrDebugAddinHeader</i><b> </b> command header </li>
+  <p>The <i>CAAMmrDebugAddinHeader</i><b>  </b>class is created by the MacDeclareHeader macro.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+#include &quot;CATCommandHeader.h&quot;
+<b>MacDeclareHeader</b>(CAAMmrDebugAddinHeader);   
+
+void CAAMmrDebugAdn::CreateCommands()
+{
+  new <b>CAAMmrDebugAddinHeader</b>(&quot;CAAMmrDebugJournalHdr&quot;, 
+                             &quot;CATMmuDebugCAA&quot;, 
+                             &quot;CATMmuDebugCAA&quot;, (void *)NULL);
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>The <code>CreateCommands</code> method contains one instance of the <i>CAAMmrDebugAddinHeader
+  </i>class. The constructor arguments are:</p>
+  <blockquote>
+    <ul>
+      <li><b>CAAMmrDebugJournalHdr</b>: The identifier of the header - It will
+        be used in the <a href="#Creating the Add-in Resources">resources
+        files&nbsp;</a></li>
+      <li><b>CATMmuDebugCAA: </b>The name of the library containing the
+        mechanical command</li>
+      <li><b>CATMmuDebugCAA</b> : The mechanical command</li>
+      <li><b>NULL</b>: The <i>CATMmuDebugCAA</i> command has no argument</li>
+    </ul>
+  </blockquote>
+<li><a name="Creating the CAA Debug toolbar and arranging the command"></a>Creating the
+  CAA Debug toolbar and arranging the command </li>
+  <p>This Part workshop add-in contains only one toolbar, the &quot;CAA
+  Debug&quot; toolbar.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATCmdContainer *CAAMmrDebugAdn::CreateToolbars()
+{
+ 
+  NewAccess(CATCmdContainer, <b>pCAAMmrDebugTlb</b>, CAAMmrDebugTlb);
+  
+  NewAccess(CATCmdStarter, pCAAMmrDebugJournalStr, CAAMmrDebugJournalStr);
+  <b>SetAccessCommand</b>(pCAAMmrDebugJournalStr, &quot;<b>CAAMmrDebugJournalHdr</b>&quot;);
+  SetAccessChild(pCAAMmrDebugTlb, pCAAMmrDebugJournalStr);
+  
+  <b>AddToolbarView</b>(pCAAMmrDebugTlb, -1, Right);  
+  
+  return <b>pCAAMmrDebugTlb</b>;
+}</pre>
+    </td>
+  </tr>
+</table>
+  <p>The identifier of the &quot;CAA Debug&quot; toolbar is <code>CAAMmrDebugTlb</code>.
+  This toolbar is declared invisible thanks to the second argument of the <code>AddToolbarView</code>
+  set to <code>-1</code> ( <code>1</code> would make it visible) at the first add-in loading.&nbsp;<p>This toolbar
+  contains only one starter
+  which is named <code>CAAMmrDebugJournalStr</code>.The <code>CAAMmrDebugJournalHdr</code>
+  header command instance is associated with this starter thanks to the <code>SetAccessCommand</code>
+  macro.
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4 align="left"><a name="Creating the Add-in Resources"></a>Creating the
+Resource Files</h4>
+<p align="left">The resource files are located in the CAAMechanicalModeler.edu\CAAMechanicalModelerEduRscCNext.m\src\CNext\resources
+directory.&nbsp;</p>
+<ul>
+  <li>The <i>CAAMmrDebugAddinHeader </i>header class resources</li>
+  <p>The CAAMmrDebugAddinHeader.CATNls contains the following lines:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAMmrDebugAddinHeader.CAAMmrDebugJournalHdr.Title     = &quot;Debug Journal&quot;;
+CAAMmrDebugAddinHeader.CAAMmrDebugJournalHdr.ShortHelp = &quot;Debug Journal&quot;;
+CAAMmrDebugAddinHeader.CAAMmrDebugJournalHdr.Help      = &quot;Debug Journal&quot; ;
+CAAMmrDebugAddinHeader.CAAMmrDebugJournalHdr.LongHelp  = &quot;Debug Journal&quot; ;
+CAAMmrDebugAddinHeader.CAAMmrDebugJournalHdr.Category  = &quot;Tools&quot; ;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The CAAMmrDebugAddinHeader.CATRsc contains the following lines:</p>
+ <table class="code">
+  <tr>
+    <td>
+      <pre>...
+CAAMmrDebugAddinHeader.<b>CAAMmrDebugJournalHdr</b>.Icon.Normal  = &quot;I_CAAMmrDebugJournal&quot;;
+...</pre>
+    </td>
+  </tr>
+</table>
+  <p>I_CAAMmrDebugJournal ( <img border="0" src="images/I_CAAMmrDebugJournal.jpg" width="22" height="22">
+  ) is the name of the icon representing the Debug Journal command. You retrieve
+  it in the CAAMechanicalModeler.edu\CAAMechanicalModelerEduRscCNext.m\src\CNext\resources\graphic directory.</p>
+  <p>For details about the command header resources, refer to the technical
+  article [<a href="#References">7</a>]</p>
+  <li>The Add-in resources</li>
+  <p>The CAAMmrDebugAdn.CATNls contains the following lines:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CAAMmrDebugTlb.Title = &quot;CAA Debug&quot;;</pre>
+    </td>
+  </tr>
+</table>
+  <p>For details about the toolbar resources, refer to the technical article
+  [<a href="#References">8</a>]</p>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case illustrates how to create a Part workshop Add-in and how to use
+a mechanical command to verify the selection of each cell of the <i>CATBody</i>
+associated with the combined curve.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAMmrCombinedCurveBuild.htm">Building the Combined Curve's
+      Result</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAAfrUseCases/CAAAfrSampleAddin.htm">Creating an Add-In</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td>I<a href="../CAAMmrTechArticles/CAAMmrBuildIntegrating.htm">ntegrating
+      a New Geometrical Feature in the Update Mechanism</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="../CAAMmrTechArticles/CAAMmrGenericNaming.htm">Generic
+      Naming Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAATobTechArticles/TopoConcepts.htm">Topology
+      Concepts</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[7]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrI18NHeader.htm">Creating Resources for Command Headers</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[8]</td>
+    <td><a href="../CAAAfrTechArticles/CAAAfrI18NWorkshop.htm">Creating Resources for Workshops and Workbenches</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong>  [Fev 2003]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

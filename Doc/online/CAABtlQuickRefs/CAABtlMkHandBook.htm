@@ -1,0 +1,252 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>mkmk Handbook</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>RADE</h1>
+    </td>
+    <td valign="top">
+      <h2>Multi-Workspace Application Builder</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>mkmk Handbook</h3>
+      <em>Summary of mkmk capabilities</em></td>
+  </tr>
+  <tr>
+    <td class="quick" colspan="2">Quick Reference</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3>Purpose</h3>
+This page is intended for developers and people getting started with <a href="CAABtlMANMkmk.htm">mkmk</a>
+and <a href="CAABtlMANMkThemIx.htm">related tools</a>.
+<p>The reader will find here how to set up his environment to access commands
+and a brief description on the most useful commands and topics. Note that all
+commands or options are not given here, please refer to the <a href="CAABtlMANMkThemIx.htm">manual
+pages</a> to get them.
+<p>We advice you to add a bookmark to this page or to print it.<br>
+<table cellspacing="3" cellpadding="3" cols="2" width="100%" nosave>
+  <tr>
+    <td valign="top" nosave><a href="#Build">Build objects</a></td>
+    <td valign="top"><a href="#Manage">Manage prerequisites (frameworks)</a></td>
+  </tr>
+  <tr>
+    <td valign="top" nosave><a href="#Run">Run applications</a></td>
+    <td valign="top"><a href="#Main file">Main file suffixes</a></td>
+  </tr>
+</table>
+<hr>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Build"></a>Build objects</h3>
+<table border="1" cellpadding="2" cols="3" width="100%" nosave>
+  <tr>
+    <td valign="top" bgcolor="#66FFFF" nosave><b>Purpose</b></td>
+    <td valign="top" bgcolor="#66FFFF"><b>Commands</b></td>
+    <td valign="top" bgcolor="#66FFFF" nosave><b>Parameter(s)</b></td>
+  </tr>
+  <tr>
+    <td valign="top" nosave>Get a command usage</td>
+    <td valign="top"><i><code>command_name</code></i></td>
+    <td valign="top"><code><i>-h</i></code> (<b>h</b> for <b>h</b>elp)</td>
+  </tr>
+  <tr>
+    <td valign="top">Build a framework</td>
+    <td valign="top"><i><code>cd ws_root_dir/framework</code></i><br>
+      <i><code><a href="CAABtlMANMkmk.htm">mkmk</a></code></i>
+      <p>or
+      <p><i><code>cd ws_root_dir</code></i><br>
+      <i><code>mkmk</code></i></td>
+    <td valign="top">
+      <p><i><code>-a</code></i> (<b>a</b> for <b>a</b>ll)
+      <p>nbsp;<br>
+      &nbsp;
+      <p><i><code>{framework}</code></i></td>
+  </tr>
+  <tr>
+    <td valign="top">Build a module</td>
+    <td valign="top"><i><code>cd ws_root_dir/fw_name/module_name</code></i><br>
+      <i><code>mkmk</code></i>
+      <p>or
+      <p><i><code>cd ws_root_dir/fw_name</code></i><br>
+      <i><code>mkmk module_name</code></i></td>
+    <td valign="top">
+      <p>&nbsp;
+      <p>&nbsp;
+      <p><i><code>{framework/module}</code></i></td>
+  </tr>
+  <tr>
+    <td valign="top">Build an identity card</td>
+    <td valign="top"><i><code>cd ws_root_dir/framework</code></i><br>
+      <i><code>mkmk -idcard</code></i> or<i> <code>mkCI</code></i></td>
+    <td valign="top">
+      <p>&nbsp;</td>
+  </tr>
+</table>
+<p>(*) If you have set the &quot;Workspace Manager&quot; environment, you
+already have access to build commands.</p>
+<p>(**) The given example may not correspond to your local installation, please
+ask your administrator for the location of your own installation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Manage"></a>Manage prerequisites (frameworks)</h3>
+<table border="1" cellpadding="2" width="100%">
+  <tr>
+    <td valign="top" bgcolor="#00FFFF"><b>Purpose</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Commands</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Param</b>eter(s)</td>
+  </tr>
+  <tr>
+    <td valign="top">Specify prerequisites of a framework</td>
+    <td valign="top">Edit file
+      <p><i><code>framework/IdentityCard/IdentityCard.h</code></i></td>
+    <td valign="top">Add following line for each<br>
+      prerequisite framework:
+      <p><i><code>AddPrereqComponent(&quot;framework&quot;, Public);</code></i></td>
+  </tr>
+  <tr>
+    <td>Refer prerequisites for dynamic access</td>
+    <td><i><code><a href="CAABtlMkOthers.htm#mkGetPreq">mkGetPreq</a></code></i></td>
+    <td><i><code>-p ws_root_dir[:ws_root_dir]</code></i><br>
+      <i><code>[-simu]</code></i></td>
+  </tr>
+  <tr>
+    <td>Refer prerequisites for static access</td>
+    <td><i><code><a href="CAABtlMkOthers.htm#mkCopyPreq">mkCopyPreq</a></code></i></td>
+    <td><i><code>-p ws_root_dir[:ws_root_dir]</code></i><br>
+      <code><i>[-f] [-d]</i></code> <code><i>[-copysrc | -copyall] [-simu]</i></code></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Run"></a>Run applications</h3>
+<table border="1" cellpadding="2" width="100%">
+  <tr>
+    <td valign="top" bgcolor="#00FFFF"><b>Purpose</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Commands</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Parameter(s)</b></td>
+  </tr>
+  <tr>
+    <td>Set environment before<br>
+      running a program</td>
+    <td><i><code><a href="CAABtlMkOthers.htm#mkCreateRuntimeView">mkCreateRuntimeView</a></code></i></td>
+    <td><i><code>[-c | -l | -f] [-d]</code></i></td>
+  </tr>
+  <tr>
+    <td>Run &quot;CATIA based&quot; application<br>
+      built in current workspace</td>
+    <td><i><code><a href="CAABtlMkOthers.htm#mkrun">mkrun</a></code></i></td>
+    <td><i><code>-c command_name</code></i><br>
+      <i><code>[{command_parameters}]</code></i></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h3><a name="Main file"></a>Main file suffixes</h3>
+<p>Here are the main file suffixes that are used in CATIA developments and the
+corresponding locations in the file tree.<br>
+Following suffixes must be used in order to let mkmk chooses the right compiler
+for the right file.</p>
+<table border="1" cellpadding="2" width="100%">
+  <tr>
+    <td valign="top" bgcolor="#00FFFF"><b>Suffix</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Location</b></td>
+    <td valign="top" bgcolor="#00FFFF"><b>Meaning</b></td>
+  </tr>
+  <tr>
+    <td>.h</td>
+    <td>framework/PublicInterfaces/</td>
+    <td>C or C++ header file defining the framework services for clients.</td>
+  </tr>
+  <tr>
+    <td valign="top" bordercolor="#FFFFFF">&nbsp;</td>
+    <td>framework/PrivateInterfaces/</td>
+    <td>C or C++ header file providing services from a module to the other
+      modules of the same framework. Such resources are not visible outside the
+      framework.</td>
+  </tr>
+  <tr>
+    <td valign="top" bordercolor="#FFFFFF">&nbsp;</td>
+    <td>framework/ProtectedInterfaces/</td>
+    <td>C or C++ header file defining the framework services for internal
+      clients.</td>
+  </tr>
+  <tr>
+    <td valign="top" bordercolor="#FFFFFF">&nbsp;</td>
+    <td>framework/module.m/LocalInterfaces/</td>
+    <td>C or C++ header file private to the module.</td>
+  </tr>
+  <tr>
+    <td>.cpp</td>
+    <td>framework/module.m/src/</td>
+    <td>C++ source file.</td>
+  </tr>
+  <tr>
+    <td>.c</td>
+    <td>framework/module.m/src/</td>
+    <td>C source file.</td>
+  </tr>
+  <tr>
+    <td><a href="../CAABtlTechArticles/CAABtlMANimakefile.htm">.mk</a></td>
+    <td>framework/module.m/</td>
+    <td>Template for <a href="CAABtlMANMkmk.htm">mkmk</a> and specifying what to
+      produce from this module.</td>
+  </tr>
+  <tr>
+    <td valign="top">.f</td>
+    <td valign="top">framework/module.m/src/</td>
+    <td valign="top">Fortran source file.</td>
+  </tr>
+  <tr>
+    <td valign="top">.l or .lc</td>
+    <td valign="top">framework/module.m/src/</td>
+    <td valign="top">Lex source file, use .l to generate C++ source code and .lc
+      to generate C source code.( only on UNIX plateform)</td>
+  </tr>
+  <tr>
+    <td valign="top">.y or .yc</td>
+    <td valign="top">framework/module.m/src/</td>
+    <td valign="top">Yacc source file, use .y to generate C++ source code and
+      .yc to generate C source code. (only on UNIX plateform)</td>
+  </tr>
+  <tr>
+    <td valign="top">.sh</td>
+    <td valign="top">framework.tst/FunctionTests/TestCases/...<br>
+      framework.tst/FunctionTests/SwitchTestCases/...</td>
+    <td valign="top">Shell program used for tests or for any purpose.</td>
+  </tr>
+  <tr>
+    <td valign="top">.idl</td>
+    <td valign="top">framework/PublicInterfaces/</td>
+    <td valign="top">IDL (Interface Definition Language).</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

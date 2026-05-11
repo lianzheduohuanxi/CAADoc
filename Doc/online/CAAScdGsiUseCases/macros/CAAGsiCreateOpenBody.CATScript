@@ -1,0 +1,36 @@
+Option Explicit
+' COPYRIGTH DASSAULT SYSTEMES 2000
+Dim Language as String
+Language="VBScript"
+
+' ***********************************************************************
+'   Purpose:      Create a Open Bodies 
+'   Assumtions:   
+'   Author: 
+'   Languages:    VBScript
+'   Locales:      English 
+'   CATIA Level:  V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+' Creating  a Part Document 
+  Dim PartDocument1 As Document
+  Set PartDocument1 = CATIA.Documents.Add  ( "Part" ) 
+ 
+' Retrieving a Part HybridBodies collection for attaching OpenBodies     
+  Dim hybridBodies1 As HybridBodies
+  Set hybridBodies1 = PartDocument1.Part.HybridBodies
+
+' Add an first OpenBody  
+  Dim OpenBody1 As HybridBody
+  Set OpenBody1 = hybridBodies1.Add()
+
+' Add a second OpenBody  
+  Dim OpenBody2 As HybridBody
+  Set OpenBody2 = hybridBodies1.Add()
+
+' Updating CATIA PArt 
+  PartDocument1.Part.Update 
+
+End Sub

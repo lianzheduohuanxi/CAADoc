@@ -1,0 +1,49 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>CAACD5UseCase1.CATScript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' Customization: change connection data here</font>
+Const CD5Login = "Test Everything"
+Const CD5Password = ""
+Const CD5SecurityContext = ""
+
+<font color="#0000FF">Sub </font>CATMain()
+    On Error Resume Next
+
+    <font color="#008000">' Get CD5Engine</font>
+<font color="#0000FF">    Dim </font>CD5Engine<font color="#0000FF"> As </font>CD5Engine
+<font color="#0000FF">    Set </font>CD5Engine = CATIA.GetItem("CD5Engine")
+	
+    <font color="#008000">' Connect to ENOVIA V6 (if not already connected)</font>
+    IsAlreadyConnected = CD5Engine.IsConnected	
+<font color="#0000FF">    If </font>(Not IsAlreadyConnected)<font color="#0000FF"> Then</font>
+        CATIA.SystemService.Print "Calling: CD5Engine.Connect"
+        CD5Engine.Connect CD5Login,CD5Password,CD5SecurityContext
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Set Expand Mode of Partial Open to Latest Version</font>
+    CD5Engine.ExpandMode = "LatestVersion"
+
+    <font color="#008000">' Create IDs of Root Product, Sub Product and one Part</font>
+<font color="#0000FF">    Dim </font>RootID, SubID, Part2ID<font color="#0000FF"> As </font>CD5ID
+<font color="#0000FF">    Set </font>RootID = CD5Engine.GetIDFromTNRV("CATProduct", "CD5MyUseCaseRoot", "A", "0")
+<font color="#0000FF">    Set </font>SubID = CD5Engine.GetIDFromTNR("CATProduct", "CD5MyUseCaseSub", "B")
+<font color="#0000FF">    Set </font>Part2ID = CD5Engine.GetIDFromTNRV("CATPart", "CD5MyUseCasePart2", "B", "0")
+	
+    <font color="#008000">' Get Structure of Root Product thanks to the ID</font>
+<font color="#0000FF">    Dim </font>myStructure<font color="#0000FF"> As </font>CD5Structure
+<font color="#0000FF">    Set </font>myStructure = CD5Engine.GetStructure(RootID)
+
+    <font color="#008000">' Include the Sub Product and the Part for Partial Open</font>
+    myStructure.Include(SubID)
+    myStructure.Include(Part2ID)
+	
+    <font color="#008000">' Call the Partial Open on the Structure and display the name of the obtained root document</font>
+<font color="#0000FF">    Dim </font>MyDoc<font color="#0000FF"> As </font>Document
+<font color="#0000FF">    Set </font>MyDoc = CD5Engine.PartialOpen(myStructure)	
+    MsgBox MyDoc.Name
+
+    <font color="#008000">' Disconnect from ENOVIA V6 in case we had to connect at the beginning of the script</font>
+<font color="#0000FF">    If </font>(Not IsAlreadyConnected)<font color="#0000FF"> Then</font>
+        CD5Engine.Disconnect
+<font color="#0000FF">    End If</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>

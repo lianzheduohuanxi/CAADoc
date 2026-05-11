@@ -1,0 +1,344 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Setting an Id to a WFL Object at Creation Time</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="TOP">
+      <h2>Workflow</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>Setting an Id to a WFL Object at Creation Time</h3>
+      <i>Implementing VPMIWflUserExit</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The document is related to the use case CAAVpiWFLUserExit. It describes
+      how to implement a user-exit for constructing and setting an id. to any
+      Workflow entity being created.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiWFLUserExit Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiWFLUserExit Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiWFLUserExit</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiWFLUserExit Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+user-exits. More particularly, it shows how to implement a user-exit that is
+called by the Workflow (WFL) modeler.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiWFLUserExit Use Case</h3>
+<p>CAAVpiWFLUserExit is a use case of the CAAVPMInterfaces.edu framework that
+illustrates VPMInterfaces framework functionalities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiWFLUserExit Do</h4>
+<p>The goal of CAAVpiWFLUserExit use case is to show how to implement a
+particular user-exit that is called by the Workflow modeler whenever a WFL
+entity is created (eg. a Process, an Activity, a Relevant-Data, a Participant,
+etc...). Particularly, this user-exit sample gives the application designer an
+insight on how to set a customized id for the Workflow entities being created.</p>
+<p>To do so, the use case goes through the following steps:</p>
+<ul>
+  <li>Create a Process as the WFL entity which will be used to trigger the
+    user-exit. This step is implemented in the file CAAVpiWFLUserExit.cpp which
+    also includes the main program.&nbsp;</li>
+  <li>Implement the user-exit called &quot;GetId&quot; by performing the
+    following steps:</li>
+  <ul>
+    <li>get the type of WFL entity being created. In our case it is WFProcess.</li>
+    <li>construct an id. by concatenating the type &quot;WFProcess&quot; and the
+      current date.</li>
+    <li>Assign the constructed id. to the new Process.</li>
+  </ul>
+</ul>
+<p>The actual implementation of the user-exit is contained in the file
+CAAVpiWFLUserExit_GetId.cpp.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiWFLUserExit</h4>
+<p>To launch CAAVpiWFLUserExit, you will need to set up the build-time
+environment, next compile CAAVpiWFLUserExit along with its prerequisites, then
+set up the run-time environment, and finally execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:</p>
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiWFLUserExit</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiWFLUserExit</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiWFLUserExit Code</h4>
+<p>The CAAVpiWFLUserExit use case is made of two source files named
+CAAVpiWFLUserExit.cpp and CAAVpiWFLUserExit_GetId.cpp, both located in the
+module CAAVpiWFLUserExit.m of the framework CAAVPMInterfaces.edu.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiWFLUserExit.m\</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiWFLUserExit.m/</tt></td>
+  </tr>
+</table>
+<p>Where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six main steps in CAAVpiWFLUserExit code:</p>
+<ol>
+  <li><a href="#Prolog">Prolog</a></li>
+  <li><a href="#Step2">Getting the WFL creation factory interface</a></li>
+  <li><a href="#Step4">Creating a Process</a></li>
+  <li><a href="#Step5">Implementing the User Exit</a></li>
+  <li>Getting the type of WFL entity being created</li>
+  <li><a href="#Step7">Constructing an Id and Passing it Back to the Modeler</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Prolog"></a>Prolog</h4>
+CAAVpiWFLUserExit.cpp creates first a Process of type &quot;WFProcess&quot;.
+CAAVpiWFLUserExit_GetId implements the user-exit by constructing an id. under
+the form &lt;WflEntityType&gt;_&lt;CurrentDate&gt;. For example, in our
+scenario, the id. will be something like
+&quot;WFProcess_Mar07-10:50:00-2003&quot;.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Getting a WFL Factory Manager</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Get a session
+  VPMSession* session = VPMSession::OpenSession();
+...
+  // Get a factory manager from the session
+  CATIVpmFactoryManager_var factoryMgr;
+  session-&gt;GetVPMObjectFactory(factoryMgr);
+...
+  // Query an interface on VPMIWflCreation
+  VPMIWflCreation_var creationItf(factoryMgr);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Workflow creation interfaces provides functions for creating all exposed
+Workflow objects. Examples are Process, Activity, Participant, and
+Relevant-Data.
+<p>A session is needed to retrieve a smart pointer to the standard
+FactoryManager. An interface query on <i>VPMIWflCreation</i> is then performed
+to retrieve the specific WFL creation manager.<br>
+<table>
+  <tr>
+    <td><i>VPMIWflCreation</i></td>
+    <td>The Workflow creation interface</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating a Process</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  // Create a Process
+  VPMIWflProcess_var process;
+  CATUnicodeString procName = CATUnicodeString(&quot;MyProcess&quot;); 
+  CATUnicodeString procDefName = procName;
+  procDefName.Append(&quot;_Def&quot;);
+  rc = creationItf -&gt; CreateProcess( procDefName, procName, process);
+...</pre>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<p>A Process is created by specifying&nbsp; its name, and the name of the
+Workflow definition which it stems from (Workflow template). However, like for
+any other Workflow object,&nbsp; a Process has a unique id. which may be
+constructed automatically via the user-exit <i>GetId</i> . It is the creation
+function <i>CreateProcess()</i> which will attempt to create the user-exit
+object with late-type &quot;<i>EWFUE_GetId</i>&quot;. In general, for a Workflow
+user-exit named XXX, the corresponding late-type must be called
+&quot;EWFUE_XXX&quot;. Furthermore, this late-type must adhere to interface <i>VPMIWflUserExit</i>.
+An implementation of the user-exit for this late-type must then implement the
+method<i> Run(CATListOfCATUnicodeString)</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Implementing the User Exit</h4>
+<p>As hinted above, to implement the user-exit, an implementation class must be
+defined for the latetype <i>EWFUE</i><i>_GetId.</i><br>
+This class must then adhere to the interface <i>VPMIWflUserExit</i> to implement
+the method <i>Run()</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+//-----------------------------------------------------------------------------
+// Implementation of CAAVpiWFLUserExit_GetId
+//-----------------------------------------------------------------------------
+CATImplementClass (CAAVpiWFLUserExit_GetId, DataExtension, CATBaseUnknown, EWFUE_GetId);
+...
+#include &quot;TIE_VPMIWflUserExit.h&quot;
+TIEchain_VPMIWflUserExit (CAAVpiWFLUserExit_GetId);
+// Implementation of method VPMIWflUserExit::Runt()
+HRESULT  CAAVpiWFLUserExit_GetId::Run(CATListOfCATUnicodeString&amp; ioList)
+{ ...
+  if (ioList[1]==&quot;NEW&quot;)
+  {
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <i>Run()</i> takes one in-out parameter of a list of String. At
+the method call, the first element of the list specifies the reason why the user
+exit is called. In our case case, it must be &quot;NEW&quot; to make sure the
+user-exit code is being executed for creating a WFL object.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  if (ioList[1]==&quot;NEW&quot;)
+  {
+    // Get a session
+    VPMSession* session = VPMSession::OpenSession();
+    ...
+    // Get a factory manager from the session
+    CATIVpmFactoryManager_var factoryMgr;
+    session-&gt;GetVPMObjectFactory(factoryMgr);
+
+    // Query an interface on VPMIWflCreation
+    VPMIWflCreation_var creationItf(factoryMgr);
+    
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Constructing an Id and Passing it Back to the Modeler</h4>
+<p>Since the convention for ids is the concatenation of the object&nbsp; type
+and the current date, the type of the WFL object being created is first
+retrieved from the parameter list. Indeed, the type name is the second element
+of the parameter list. In our scenario it should be &quot;WFProcess&quot;. This
+name is used to initialize the id. to be constructed. A date is then computed
+and appended to the object type. Once the object name is constructed, it must be
+pushed in to the in-out list parameter as first element (after resetting the
+list). It is the method <i>CreateProcess()</i> which after the user-exit returns
+will set the returned id to the Process being created.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // Initialize the id. with the object type being created 
+    CATUnicodeString processId = ioList[2];
+
+    // Get the current date and time and make it &quot;readable&quot;
+    CATTime date = CATTime::GetCurrentLocalTime();
+    CATUnicodeString strDate = date.ConvertToString(&quot;%c&quot;);
+    CATUnicodeString strDay = strDate.SubString(8,2);
+    if (strDay.SubString(0,1)==&quot; &quot;) strDay = &quot;0&quot;+strDay.SubString(1,1);
+
+    // Concatenate the stringefied date to the action type
+    processId = processId + &quot;_&quot; + strDate.SubString(4,3)+ strDay+ &quot;-&quot; +strDate.SubString(11,8)+ &quot;-&quot;+strDate.SubString(20,4);
+
+    // Reset the ioList. The returned list must contain the constructed id that 
+    // the WFL modeler will assign to the object being created
+    ioList.RemoveAll();
+
+    // Push the name into the list to be returned
+    ioList.Append(processId);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case demonstrates how the user-exit technique can be used in the
+Workflow modeler to implement customized behavior.<br>
+As an example, a user-exit for identifying Workflow objects at their creation is
+described.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>1</b> [Mar 2003]</td>
+    <td valign="top">Document created by SDM</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

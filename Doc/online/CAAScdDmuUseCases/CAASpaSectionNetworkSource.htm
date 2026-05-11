@@ -1,0 +1,66 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>caaspasectionnetwork.catscript</title><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Create a network of sections.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+<font color="#0000FF">Dim </font>iNumber <font color="#008000">' Number of sections in the network</font>
+iNumber = 10
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Retrieve the Sections collection</font>
+<font color="#0000FF">    Dim </font>cSections<font color="#0000FF"> As </font>Sections
+<font color="#0000FF">    Set </font>cSections = CATIA.ActiveDocument.Product.GetTechnologicalObject("Sections")
+
+    <font color="#008000">' Create the master section</font>
+<font color="#0000FF">    Dim </font>oMasterSection<font color="#0000FF"> As </font>Section
+<font color="#0000FF">    Set </font>oMasterSection = cSections.Add
+
+    <font color="#008000">' Retrieve data on master section</font>
+<font color="#0000FF">    Dim </font>Position(11)
+    oMasterSection.GetPosition Position
+<font color="#0000FF">    Dim </font>dHeight<font color="#0000FF"> As </font>Double
+    dHeight = oMasterSection.Height
+<font color="#0000FF">    Dim </font>dWidth<font color="#0000FF"> As </font>Double
+    dWidth = oMasterSection.Width
+<font color="#0000FF">    Dim </font>dMin<font color="#0000FF"> As </font>Double
+<font color="#0000FF">    If </font>(dWidth &gt; dHeight)<font color="#0000FF"> Then</font>
+        dMin = dWeight
+    Else
+        dMin = dWidth
+<font color="#0000FF">    End If</font>
+
+    <font color="#008000">' Remove the master section</font>
+    cSections.Remove oMasterSection
+<font color="#0000FF">    Set </font>oMasterSection = Nothing
+
+    <font color="#008000">' Create the network</font>
+<font color="#0000FF">    Dim </font>oSection<font color="#0000FF"> As </font>Section
+    Position(11) = Position(11) - dMin / 2
+<font color="#0000FF">    Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    For </font>I = 1<font color="#0000FF"> To </font>iNumber
+
+        <font color="#008000">' Create section and force type</font>
+<font color="#0000FF">        Set </font>oSection = cSections.Add
+        oSection.Type = catSectionTypePlane
+
+        <font color="#008000">' Modify position</font>
+        Position(11) = Position(11) + dMin / iNumber
+        oSection.SetPosition Position
+
+<font color="#0000FF">        Set </font>oSection = Nothing
+<font color="#0000FF">    Next</font>
+
+<font color="#0000FF">    Set </font>cSections = Nothing
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

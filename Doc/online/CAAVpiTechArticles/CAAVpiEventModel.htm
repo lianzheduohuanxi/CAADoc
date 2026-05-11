@@ -1,0 +1,586 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>The ENOVIA Event Model</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<style>
+<!--
+a.code       { font-family: 'Courier New', Courier; font-size: 9pt; font-weight: normal; 
+               color: #OO0000; text-decoration: none }
+a.code:link  { font-family: 'Courier New', Courier; font-size: 9pt; font-weight: normal; 
+               color: #be0000; text-decoration: underline }
+a.code:visited { font-family: 'Courier New', Courier; font-size: 9pt; font-weight: normal; 
+               color: #be0000; text-decoration: underline }
+a.code:hover { font-family: 'Courier New', Courier; font-size: 9pt; font-weight: normal; 
+               background-color: #de6271; background-repeat: repeat; 
+               background-attachment: scroll; color: #ffffff; 
+               text-decoration: none; background-position: 0% 50% }
+-->
+</style>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="TOP">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="TOP">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="RIGHT" valign="TOP" rowspan="2">
+      <h3><a name="Top"></a>The ENOVIA Event Model</h3>
+      <i>Important concepts about publishing events in ENOVIA V5</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="tech">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3><a name="Abstract"></a>Abstract</h3>
+      <p>This article describes, in the ENOVIA V5 event model context, the
+      methodology to declare and raise events (Publisher side).</p>
+      <ul>
+        <li><b><a href="#EventDef">The Event Declaration</a></b></li>
+        <li><b><a href="#CallBackInterface">The Callback Interface Definition</a></b></li>
+        <li><b><a href="#CppCode">How the Events Are Raised by the Publishing
+          Objects</a></b></li>
+        <li><b><a href="#Subscriptions">The two main ways to subscribe</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="EventDef"></a>The Event Declaration</h3>
+<p>Each domain in ENOVIA (PRODUCT, CONFIG, etc.) declares its data strucutre in
+a XML file,named &quot;DomainName&quot;.metadata.</p>
+<p>In the same way, all the specific events that objects of that domain will
+raise are described in another XML file: &quot;DomainName&quot;.event.</p>
+<p><b>Note</b>: By convention, the name of the event will be the same as the C++
+method name in which the event is really raised.</p>
+<p><b>Examples</b>:</p>
+<ul>
+  <li>VPMOB.event describes events emitted by the VPMObject</li>
+  <li>ADMIN.event describes the event raised by ENOVIA Session and
+    LoginSessions.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="What does  events declaration mean ?"></a>What Does Event
+Declaration Mean?</h4>
+<p>When you want an object to raise event, you have to describe a set of
+attributes:</p>
+<ul>
+  <li>Which (object,methodcouple) is it related to.</li>
+  <li>Visibility:</li>
+  <ul>
+    <li>Public: everywhere outside the domain</li>
+    <li>Protected: access for the deriving domains</li>
+    <li>Private: seen inside the domain only</li>
+  </ul>
+  <li>Persistency: will the ENOVIA Session save those events in database ?</li>
+  <li>Raise type: is event sent when entering the method (before step) and/or
+    exiting it (after step)? The recommended way is to declare before and after.</li>
+  <li>Veto: can a subscriber interrupt the execution of the publisher method by
+    sending a Veto code ?</li>
+  <li>Event Interface: Which <a href="#CallBackInterface">callback interface</a>
+    must be implemented by the client object to be able to subscribe to that
+    event?</li>
+  <li>Data Streams : Are there complementary data carried by the event
+    (streams)?</li>
+</ul>
+<p>Added to those definitions, people may want to transmit additional
+information when an event is raised, or getting information from subscribers :
+this can be done by datastreams. The format of such entities is also described
+in the XML file,before declaration of events.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4><a name="Declaring DataStreams"></a>Declaring Data Streams</h4>
+<p>A data stream is a set of ordered attributes which will be filled before
+raising the event in the C++ code. The declaration consists in a Name, then a
+list of attributes determined by their name and type.</p>
+<p><b>Example</b>: If you define an event &quot;MoveFile&quot;, raised in a
+method MoveFile (moving a file from one directory to another, you want to send
+also 3 data:</p>
+<ul>
+  <li>The file name to be moved</li>
+  <li>The source directory name</li>
+  <li>The target directory name</li>
+</ul>
+<p>This can be done by declaring a stream MoveFileStream which contains 3 string
+arguments FileName,SourceDir,TargetDir to the event the 3 data : name of the
+file to be moved, source directory and target directory, and then referencing
+that stream in the &quot;MoveFile&quot; event declaration.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="XML Structure of event files."></a>Format of XML Event Files</h4>
+<p>An event declaration file generally has the following format:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>&lt;<a class="code" href="#Package">Package</a> Name=&quot;...&quot;&gt;
+  &lt;<a class="code" href="#DataStream">DataStream</a> Name=&quot;...&quot;&gt;
+    &lt;<a class="code" href="#DataStreamArg">DataStreamArg</a> Name=&quot;...&quot;
+                   Type=&quot;...&quot;&gt;
+    &lt;/DataStreamArg&gt;....
+  &lt;/DataStream&gt;
+  &lt;<a class="code" href="#Class">Class</a> Name=&quot;...&quot;
+         Type=&quot;...&quot;&gt;
+    &lt;<a class="code" href="#Event">Event</a> Name=&quot;...&quot; ...&gt;
+      &lt;<a class="code" href="#DataStreamRef">DataStreamRef</a> Name=&quot;...&quot;     &lt;!-- if a stream is associated with the event --&gt;
+                     Type=&quot;...&quot;
+      &lt;/DataStreamRef&gt;
+    &lt;/Event&gt;
+  &lt;/Class&gt;
+&lt;/Package&gt;</pre>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3>Meaning of Tags, Values, and Attribute Values</h3>
+<ul>
+  <li><a name="Package"></a><b>Package</b>:
+    <ul>
+      <li>Domain of the objects will be declared as publishers in the .event
+        file.</li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Domain name</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><a name="DataStream"></a><b>DataStream</b>
+    <ul>
+      <li>a set of complementary data which can be attached to one or more
+        events. A data stream contains an indexed list of <a href="#DataStreamArg">DataStreamArgs</a></li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Name given to the data stream</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><a name="DataStreamArg"></a><b>DataStreamArg</b>
+    <ul>
+      <li>Arguments which will be inserted in the stream sequentially.</li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Name given to the argument</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>mandatory attribute<i><br>
+              Byte</i><br>
+              <i>Short</i><br>
+              <i>Int</i><br>
+              <i>Float</i><br>
+              <i>Double</i><br>
+              <i>String</i><br>
+              <i>ObjRef</i><br>
+              <i>FixedByteArray</i><br>
+              <i>FixedShortArray</i><br>
+              <i>FixedIntArray</i><br>
+              <i>FixedFloatArray</i><br>
+              <i>FixedDoubleArray</i><br>
+              <i>FixedStringArray</i><br>
+              <i>FixedObjRefArray</i></td>
+           <td>Type of the argument.</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><a name="Class"></a><b>Class</b>
+    <ul>
+      <li>Object Type raising events.</li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Type of object raising events</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td><i>Real</i><br>
+              <i>Late [default value]</i></td>
+            <td>Type coming from a true C++ class or from an Enovia Late Type</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><a name="Event"></a><b>Event</b>
+    <ul>
+      <li>Event definition . By default an event is public, persistent and is
+        emitted in before/after steps.</li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Name of event to be raised by the object class.</td>
+          </tr>
+          <tr>
+            <td>Mode</td>
+            <td><br>
+              <i>Private</i><br>
+              <i>Protected</i><br>
+              <i>Public [default]</i></td>
+            <td>This is the visibility of the event towards subscription : Is
+              the event visible:<br>
+              - only inside the domain<br>
+              - by subscribers coming from &quot;inheriting&quot; domains<br>
+              - by any subscriber class</td>
+          </tr>
+          <tr>
+            <td>Before</td>
+            <td><i>Yes [default]</i><br>
+              <i>No</i></td>
+            <td>Is there a step &quot;before&quot; in the event raise (when
+              entering the object's method)?</td>
+          </tr>
+          <tr>
+            <td>After</td>
+            <td><i>Yes [default]</i><br>
+              <i>No</i></td>
+            <td>Is there a step &quot;after&quot; in the event raise (when
+              exiting the object's method)?</td>
+          </tr>
+          <tr>
+            <td>Veto</td>
+            <td>mandatory attribute<br>
+              <i>Yes [implies Before=Yes]</i><br>
+              <i>No</i></td>
+            <td>Can the event be vetoed by a subscriber?</td>
+          </tr>
+          <tr>
+            <td>Persistent</td>
+            <td><i>Yes [defaut]</i><br>
+              <i>No</i></td>
+            <td>Will the event be saved in a database at login session save?</td>
+          </tr>
+          <tr>
+            <td>EventInterface</td>
+            <td>mandatory attribute</td>
+            <td>Name of the callback interface that a client object must
+              implement to be able to subscribe to that event</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li><a name="DataStreamRef"></a><b>DataStreamRef</b>
+    <ul>
+      <li>datastreams attached to the event defined. There can be a Publisher
+        Stream (filled by the publisher) or/and Client Stream ( format is
+        defined by the publisher, but filled by the subscribers). This is a
+        reference to the previous defined streams in the .event files.</li>
+      <li>Attributes
+        <table>
+          <tr>
+            <th>Attribute Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>mandatory attribute</td>
+            <td>Name of the data stream referenced previously in the same XML
+              file</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td><i>Publisher/Client</i></td>
+            <td>Is the stream filled by the publisher or by the clients ?</td>
+          </tr>
+        </table>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CallBackInterface"></a>The Callback Interface Definition.</h3>
+<h4>Basic Principles</h4>
+<p>The subscription of a client is done by calling one of the dedicated methods
+of the event manager associated with each session. The mandatory argument in
+those methods is a pointer on an interface, implemented by the client object.
+When the event occurs, the system calls,for each client which subscribed to that
+event, the right method of the interface associated with that event (see 2.2).
+<h4>The Two Kinds of Callback Interfaces</h4>
+<p>Two kinds of &quot;callback&quot; interfaces are available:
+<ol>
+  <li>The &quot;generic&quot; interface delivered in standard <b>ENOVISubscriberEvent.</b><br>
+    Inside you will find two methods onReceive(..) and onKO(...).<br>
+    A client class may implement this interface only,and use it for all its
+    subscriptions. Each time one of the event it was subscribed to occurs, it
+    will be called back on the onReceive method. then, it will have to decode
+    the arguments to know which event is being emitted.</li>
+  <li>The explicit interfaces, created and delivered by the domains defining
+    events. Here the callback methods are totally explicit:<br>
+    <ul>
+      <li><code>onBefore&quot;EventName&quot;(...)</code></li>
+      <li><code>onAfter&quot;EventName&quot;(...)</code></li>
+    </ul>
+    <p>for an event which has been declared with two steps.</p>
+    <p>So the client object which implements such an interface knows exactly for
+    which event and at which step it is called.</p>
+    <p>The domains design the grouping of their event callback methods. They can
+    choose to group all the methods in one single interface, or create several
+    interfaces with a small number of events concerned with each interface.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h4>Declaring a Callback Interface</h4>
+<p>The rules are the following:</p>
+<ul>
+  <li>When you declare new events in the XML event file, there is a mandatory
+    attribute<i> EventInterface</i>, which value must be the name of the
+    callback interface to implement, in order to be able to explicitly subscribe
+    to that event.</li>
+  <li>If you declare many events for several types of objects,you can choose to
+    group your callback methods in one single interface,or create several
+    interfaces with some callback methods in each.</li>
+  <li>For each new event MyEvent , declared &quot;before/after&quot;, there must
+    be in a callback interface 2 methods:
+    <ul>
+      <li><code>onBeforeMyEvent(const ENOVIEvent_var&amp; iEvent, HRESULT&amp;
+        ioReturnCode)</code></li>
+      <li><code>onAfterMyEvent(const ENOVIEvent_var&amp; iEvent, HRESULT&amp;
+        ioReturnCode)</code></li>
+    </ul>
+    <br>
+    The iEvent argument is passed by the event manager, and contains information
+    of current event being raised.<br>
+    The ioReturnCode must be valued by the subscriber (to put a veto :
+    E_ACCESSDENIED).</li>
+  <li>Each interface must have a <code>onKO(ENOVIEvent_var iEvent, HRESULT
+    ioRetCode)</code>method used for event management: when something wrong
+    occurs during the event emission, the subscriber is called back using this
+    method.</li>
+  <li>For each callback interface you write, you have to create
+    IID_&quot;InterfaceName&quot;.cpp and TIE_&quot;InterfaceName&quot;.tsrc
+    files</li>
+</ul>
+<p><b>Note</b>: A client object will always be able to subscribe to the event by
+implementing the generic interface ENOVISubscriberEvent.&gt;
+<p align="right">[<a href="#Top">Top</a>]
+<!---------------------------------comment------------------------------------->
+<h3><a name="CppCode"></a>How the Events are Raised by the Publishing Objects</h3>
+<p>The emission of events is rather simple to do, and based on Macros delivered
+by the event model. in each cpp file where there are &quot;event&quot; methods,
+you must insert an include :
+<table class="code">
+  <tr>
+    <td>#include ENOVEventFireMacro.h</td>
+  </tr>
+</table>
+<p>Then,in each method which has to raise an event , you insert the macro
+EVENT_FIRE(...) 2 times, one at the beginning of the method, the second one at
+the end of the method.By doing that, at run time, the event will be raised in
+its step before when entering the method, and the step after will be sent when
+exiting the method.</p>
+<p><b>Example</b></p>
+<p>Let's take a class <i><b>SamplePublisher</b></i> which has declared a new
+event <i><b>SampleEvent</b></i>.<br>
+This event is declared before/after and the associated callback interface is <i><b>SampleInterface</b></i>.</p>
+<p>In the cpp code SamplePublisher.cpp, there will be a method <code>SampleEvent</code>.
+The code could as follows.<br>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include ENOVEventFireMacro.h
+...
+<b>HRESULT SamplePublisher::SampleEvent(...)</b>
+{
+  HRESULT rc=S_OK,oNotify=S_OK;
+  ENOVIStream_var spClientStream=NULL_var;
+
+  //event [before step]
+  EVENT_FIRE(SamplePublisher,SampleEvent,IID_SampleInterface,Before,spClientStream,oNotify);
+  // code of the method
+  ...
+  // event [after step]
+  EVENT_FIRE(SamplePublisher,SampleEvent,IID_SampleInterface,After,oStream,oNotify);
+  return rc;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The arguments of the macro are:</p>
+<ul>
+  <li>The object type</li>
+  <li>The event name</li>
+  <li>The callback interface iid</li>
+  <li>The event step</li>
+  <li>The client stream (empty if not declared)</li>
+  <li>The client return code</li>
+</ul>
+<p>If the event is declared with a reference on a publisher data stream, this
+stream must be filled before the first macro EVENT_FIRE insertion.</p>
+<p>To do that , use the DATA_EVENT_INIT macro, which gives back a smart pointer
+on ENOVIStream, already dimensioned according to the data stream definition in
+the XML declaration file. Then, the code fills the stream using the methods of
+the ENOVIStream interface. When the event is raised, the system automatically
+associates the stream and the event.</p>
+<p><b>Example</b></p>
+<p>Let's take the same example as above. The method has 3 string arguments iA iB
+iC, and a stream SamplePStream,declared with 3 string arguments &quot;Arg1&quot;
+&quot;Arg2&quot; &quot;Arg3&quot; was associated with event SampleEvent.</p>
+<p>In the cpp code SamplePublisher.cpp, the code could be as follows.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include ENOVEventFireMacro.h
+...
+<b>HRESULT SamplePublisher::SampleEvent(const CATUnicodeString&amp; iA,
+                                     const CATUnicodeString&amp; iB,
+                                     const CATUnicodeString&amp; iC)</b>
+{
+  HRESULT rc=S_OK,oNotify=S_OK;
+  ENOVIStream_var spPublihStream=NULL_var,spClientStream=NULL_var;
+
+  // instantiation of a well dimensionned stream, according to
+  // the declaration in XML event files...
+
+  EVENT_DATA_INIT(SamplePSStream,spPublishStream);
+
+  ...// checks the smart pointer...
+
+  //fill the stream will the data
+  sPublishStream-&gt;AddArgumentValue(&quot;Arg1&quot;,iA);
+  sPublishStream-&gt;AddArgumentValue(&quot;Arg2&quot;,iB);
+  sPublishStream-&gt;AddArgumentValue(&quot;Arg3&quot;,iC);
+
+  //raise the event. The stream is automatically linked with the event
+  EVENT_FIRE(SamplePublisher,SampleEvent,IID_SampleInterface,Before,spClientStream,oNotify);
+  ...
+}</pre>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Subscriptions"></a>The two main ways to subscribe</h3>
+
+<p>The Event Model use cases accompanying this technical article illustrate the
+2 different mechanisms for automatic subscription at the creation of an ENOVIA login
+session.</p>
+<ol>
+  <li>The first way implies the implementation of ENOVIEventPlugin interface (see details in the 
+  corresponding use
+    case documentation). The ENOVIA session  automatically instantiates it and calls the unique method 
+  (Init) of  ENOVIEventPlugin.
+    In this method, a subscription to event CreateLoginSession step After is
+    performed for a customer-provided listener class that implements ENOVISessionEvent. In 
+  the callback method onAfterCreateLoginSession of this listener class, the 
+  customer is finally free to subscribe to any event of interest.<br>
+  </li>
+  <li>The second way implies the usage of a
+    generic mechanism of the ENOVIA&nbsp; session : each domain of ENOVIA (PRODUCT, ACTION,
+    DOCDIR, ...) is associated with a late type <b>INFO_&lt;&lt;NameOfDomain&gt;&gt;</b>;
+    when such a domain is loaded during the session initialization, the session asks
+    if there is an extension of that late type which implements  ENOVISessionEvent interface, let's call it 
+  the listener, and if so, makes this listener subscribe to event CreateLoginSession 
+  step After. Hence once the login session is created, the  listener is called 
+  back and the customer is finally free to subscribe to any event of interest in 
+  method onAfterCreateLoginSession.</li>
+</ol>
+
+<table>
+  <tr>
+    <td><b><center>Method</center></b></td>
+    <td><b><center>Use case</center></b></td>
+  </tr>
+   <tr>
+    <td align="center">1.</td>
+   <td><a href="../CAAVpiUseCases/CAAVpiAutomaticSubscription.htm">CAAVpiAutomaticSubscription</a></td>
+  </tr>
+   <tr>
+     <td align="center">1.</td>
+   <td><a href="../CAAVpiUseCases/CAAVpiAutomaticSubscription2.htm">CAAVpiAutomaticSubscription2</a></td>
+   </tr>
+   <tr>
+   <td align="center">2.</td>
+    <td><a href="../CAAVpiUseCases/CAAVpiPackageSubscription.htm">CAAVpiPackageSubscription</a></td>
+  </tr>
+</table>
+
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>In this article you have learned how the events are declared and raised, from
+the publisher point of view, and how it's able to subscribe to those events and
+be called back when an event occurs.</p>
+<p align="right">[<a href="#Top">Top</a>]
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="TOP">Version: <b>1</b> [Oct 2001]</td>
+    <td valign="TOP">Document created</td>
+  </tr>
+  <tr>
+    <td align="RIGHT" valign="TOP" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>

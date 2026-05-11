@@ -1,0 +1,370 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Making Referencing Links</title>
+<script language="JavaScript" src="../CAADocJavaScript/submit.js">
+		</script>
+
+<style type="text/css">
+.style1 {
+	font-family: "Courier New", Courier;
+	font-size: 9pt;
+	color: #976970;
+}
+.style2 {
+	list-style-type: circle;
+}
+</style>
+
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Making Referencing Links</h3>
+      <p><em>How to create Referencing links between features</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="use" colspan="2">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article discusses the <code>CAAV5V6FmExtReferencedAttr</code> use case which 
+		explains how to make referencing links to other features by using 
+		attributes of the type <code>specobject</code>. The UC 
+		further illustrates that the&nbsp; lifecycle of the &quot;referenced&quot; feature 
+		is independent of the &quot;referencing&quot; feature.</p>
+		<p>You can first previously read the technical article about the 
+		attribute in general, &quot;Understanding Feature Attributes&quot;
+		<a href="#References">[1]</a>, 
+		like the specific one about link attribute &quot; Understanding Feature 
+		Links&quot; <a href="#References">[2]</a>.</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAV5V6FmExtReferencedAttr Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAV5V6FmExtReferencedAttr Do</a></li>
+				<li><a href="#How">How to Launch CAAV5V6FmExtReferencedAttr</a></li>
+				<li><a href="#Where">Where to Find the 
+				CAAV5V6FmExtReferencedAttr Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>This Use Case primarily teaches an end-user the relevance of the 
+specobject attribute, to create a referencing link between features.</p>
+<p>User thus learns</p>
+<ul>
+	<li>Steps involved to create a referencing link between features</li>
+	<li>Typical characteristics of a referencing link which includes<ul>
+		<li class="style2">Lifecycle of the referenced feature is not bound to 
+		the Referencing feature. This implies the referenced feature continues 
+		to exist and could be referenced in another context, though all 
+		referencing feature may cease to exist</li>
+		<li class="style2">A feature could be referenced by multiple referencing 
+		features</li>
+	</ul>
+	</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAV5V6FmExtReferencedAttr Use Case</h2>
+<p><code>CAAV5V6FmExtReferencedAttr</code> is a use case of the <code>
+CAAV5V6FeatureModelerExt.edu</code> framework 
+that illustrates <code>FeatureModelerExt</code> framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="What"></a>What Does CAAV5V6FmExtReferencedAttr Do</h3>
+<p>The Use Case refers to the features defined in the &quot;<strong>CAAOsmCatalogSU</strong>&quot; 
+Catalog. An extract of the OSM file with 
+those feature definitions relevant to the current UC follows.</p>
+<table class="code" id="table16">
+	<tr>
+		<td>
+		<pre>...
+feature <b>CAAOsmPublisher</b> #startup {
+    string PublisherAddress
+    string PublisherName
+} 
+feature <strong>CAAOsmBook</strong> #startup {
+    <b>specobject</b> <b>BookPublisher</b>
+    string Title
+} 
+feature <b>CAAOsmNovel</b> CAAOsmBook #startup #inheritability(caa) {
+    string Author
+    component NovelChapter #list
+}
+... </pre>
+		</td>
+	</tr>
+</table>
+<p>The &quot;<code>CAAOsmNovel</code>&quot;&nbsp; attribute &quot;<code>BookPublisher</code> &quot; 
+(inherited from the feature &quot;<code>CAAOsmBook</code>&quot;) is of type
+<code>specobject</code>. An attibute of type <code>
+specobject</code> &nbsp;when valuated results in a referencing link. The feature 
+characterized with the attribute of type <code>specobject</code> 
+is termed as a &quot;<strong>referencing</strong>&quot; 
+feature, while the feature assigned to this attribute is the &quot;<strong>referenced</strong>&quot; 
+feature.</p>
+<p>Now let us see the UC execution. The main steps are as listed below:</p>
+<ul>
+	<li>It instantiates a &quot;<code>CAAOsmNovel</code>&quot; StartUp, to 
+	output two features named <code>Novel1</code> and <code>Novel2</code> </li>
+	<li>It also instantiates a &quot;<code>CAAOsmPublisher</code>&quot; 
+	StartUp, to output the feature named <code>Publisher</code>. </li>
+	<li>&nbsp;<code>Novel1</code> and 
+	<code>Novel2</code> pointes to <code>Publisher </code>through their <code>BookPublisher</code> 
+	attribute. It thus illustrates that a feature (referenced) could 
+	be referenced by multiple features (referencing)</li>
+	<li>It checks that <code>Publisher </code>has no parent ( a <code>specobject</code> 
+	link is not an aggregation)</li>
+	<li>The reference to <code>Publisher </code>from the <code>Novel2</code>&nbsp; is deleted 
+	(<code>Publisher </code>is now pointed to by one feature)</li>
+	<li>Then <code>Novel1</code> is deleted . ( <code>Publisher </code>is now 
+	pointed to by zero feature)</li>
+	<li>Finally <code>Novel2</code> pointes to <code>Publisher </code>again&nbsp; 
+	( Publisher is not dead after the last referencing removal)</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="How"></a>How to Launch CAAV5V6FmExtReferencedAttr</h3>
+<p>To launch <code>CAAV5V6FmExtReferencedAttr</code> , you will need to set up the build time environment, 
+then compile <code>CAAV5V6FmExtReferencedAttr</code> along with its 
+prerequisites, set up the run time environment, and then execute the sample.</p>
+<table class="code" id="table15">
+	<tr>
+		<td>
+		<pre>mkrun -c &quot;<em>CAAV5V6FmExtReferencedAttr DocumentStorageName.CATPart</em>&quot;</pre>
+		</td>
+	</tr>
+</table>
+
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Where"></a>Where to Find the CAAV5V6FmExtReferencedAttr Code</h3>
+<p><code>CAAV5V6FmExtReferencedAttr</code> code is located in the 
+<code>CAAV5V6FmExtReferencedAttr.m</code> use case module 
+of the <code>CAAV5V6FeatureModelerExt.edu</code> framework:</p>
+<p><code>InstallRootDirectory\CAAV5V6FeatureModelerExt.edu\CAAV5V6FmExtReferencedAttr.m</code></p>
+<p>where <code>InstallRootDirectory</code> is the 
+root directory of your CAA installation. It is made of a unique source file named 
+<code>CAAV5V6FmExtReferencedAttr.cpp</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Mandatory step</h3>
+<p>In order to access the catalog file 
+CAAOsmCatalogSU.CATfct, it is mandatory to copy the framework 
+CAAObjectSpecsModeler.edu in your local workspace.<br>
+Then build the whole workspace and launch mkrtv to get the catalog in the 
+Run-Time View of the workspace</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>There are seven logical steps in CAAV5V6FmExtReferencedAttr:</p>
+<ul>
+	<li><a href="#Create_Document">Prolog</a></li>
+	<li><a href="#Create a Ref Link">Creating a Referencing Link between features</a></li>
+	<li><a href="#Single feat referred by Multiple feats">Illustrating a single feature could be referenced by multiple features</a></li>
+	<li><a href="#Checking No Parent Link">Checking No Parent Link</a></li>
+	<li><a href="#Checking No Parent Link">Removing a Reference Link</a></li>
+	<li><a href="#illustrate lifecycle feature">Illustrating the Lifecycle of a &quot;referenced&quot; feature is independent of the 
+	&quot;referencing&quot; feature</a></li>
+	<li><a href="#Epilog">Epilog</a></li>
+</ul>
+<p>We will now comment each of these sections by looking at the code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Create_Document"></a>Prolog</h3>
+<p>The steps included inside the #ifdef V5 macro are for Session creation and 
+Document creation. For detailed description on session creation and document 
+creation you may see CAAObjectSpecsModeler.edu 
+V5 UC documentation. It further creates the <strong>Credentials</strong> [<a href="#References">3</a>] to authorize 
+access to the features defined in the <strong>CAAOsmCatalogSU</strong> catalog. 
+It next creates the StartUp facades (with credentials associated) and 
+subsequently instantiates features, retrieved as 
+feature facades in our code. </p>
+<p>It further instantiates twice the &quot;<strong>CAAOsmNovel</strong>&quot; 
+StartUp (<code>oFeatFacadeOnNovel1</code>,
+<code>oFeatFacadeOnNovel2</code> both <i>
+CATFmFeatureFacade</i> class objects). It then instantiates a &quot;<strong>CAAOsmPublisher</strong>&quot; 
+StartUp (<code>oFeatFacadeOnPublishr</code>, a
+<i>
+CATFmFeatureFacade</i> class object). The UC &quot;<strong>Creating Features</strong>&quot; [<a href="#References">4</a>] 
+details the steps to instantiate a feature.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Create a Ref Link"></a>Creating a Referencing Link between features</h3>
+<p>Creating a Referencing Link simply involves valuating the specobject 
+attribute of the <span class="style1">Novel1</span> feature with the
+<span class="style1">Publisher</span>&nbsp; 
+feature. </p>
+<pre class="code">
+CATFmAttributeName BookPublshrAttrName("BookPublisher");
+...
+CATFmAttributeValue AttrAsFmValue;
+AttrAsFmValue.<strong>SetFeature</strong>(oFeatFacadeOnPublisher);
+...</pre>
+<p>To begin with we create <code>AttrAsFmValue</code> (a
+<i>CATFmAttributeValue</i> type) with the <span class="style1">Publisher</span> feature assigned to it. The call to
+<code>SetFeature </code>of the <i>CATFmAttributeValue</i> class sets a feature to an Attribute Value.</p>
+<pre class="code">
+...
+rc = oFeatFacadeOnNovel1.<strong>SetValue</strong>(BookPublshrAttrName,AttrAsFmValue);
+...</pre>
+<p>Next the call to <code>SetValue</code> on <code>
+oFeatFacadeOnNovel1 (a</code>
+<i>CATFmFeatureFacade</i> class) valuates the <code>Novel1 </code>attribute&nbsp; &quot;<code>BookPublisher</code>&quot;&nbsp; of type specobject. Its inputs include</p>
+<ul>
+	<li><code>BookPublshrAttrName</code>, a <i>CATFmAttributeName</i> type representing the 
+	attribute for valuation</li>
+	<li><code>AttrAsFmValue</code>, a <i>CATFmAttributeValue</i> type representing the value to be 
+	set</li>
+</ul>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Single feat referred by Multiple feats"></a>Illustrating a single 
+feature could be referenced by multiple features</h3>
+<p>We now create another reference link, this time from <span class="style1">Novel2</span> 
+feature to the same
+<span class="style1">Publisher</span> feature, that referenced in the earlier 
+case. </p>
+<pre class="code">
+rc = oFeatFacadeOnNovel2.<strong>SetValue</strong>(BookPublshrAttrName,AttrAsFmValue);</pre>
+<p>We invoke <code>SetValue </code>on <code>
+oFeatFacadeOnNovel2</code> (a 
+<i>CATFmFeatureFacade</i> type). This creates a second reference link to the
+<span class="style1">Publisher</span>&nbsp;&nbsp; feature. It thus confirms the fact that a feature 
+could be referenced by multiple features.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Checking No Parent Link"></a>Checking No Parent Link</h3>
+<p>We check that
+<span class="style1">Publisher</span>&nbsp;&nbsp; feature has no parent.</p>
+<pre class="code">
+rc = oFeatFacadeOnPublisher<strong>.GetParentFeature</strong>(AttrAsFmValue);
+if (SUCCEEDED(rc))
+{
+    CATFmFeatureFacade FeatFacadeOnParent;
+    AttrAsFmValue.<strong>GetFeature</strong>(FeatFacadeOnParent);
+ 
+    CATBaseUnknown_var Parent = FeatFacadeOnParent.<strong>GetFeature</strong>();
+    if ( <strong>NULL_var</strong> != Parent ) rc= E_FAIL ; 
+...
+</pre>
+<p>The <code>GetParentFeature</code> method will be successful since the 
+credentials to introspect the Publisher feature are sufficient. So it is why we 
+must check that the returned parent is NULL. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3>Removing a Reference Link</h3>
+<p>We remove the links between
+<span class="style1">Publisher</span> and <span class="style1">Novel2</span> 
+.</p>
+<pre class="code">
+...
+AttrAsFmValue.<strong>SetFeature</strong>(<strong>NULL</strong>);
+rc =  oFeatFacadeOnNovel2.<strong>SetValue</strong>(BookPublshrAttrKey,AttrAsFmValue);
+...
+</pre>
+<p>We just invoke <code>SetValue</code> on <code>
+oFeatFacadeOnNovel2</code> (a 
+<i>CATFmFeatureFacade</i> type) with the NULL value. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="illustrate lifecycle feature"></a>Illustrating Lifecycle of a &quot;Referenced Feature&quot; is independent of its 
+&quot;Referencing Feature&quot;</h3>
+<p>After the deferencing from <span class="style1">Novel2</span>, <code>Publisher</code> 
+feature is pointed by only one feature. Now, we delete <span class="style1">Novel1</span>.</p>
+<pre class="code">
+rc = <strong>oFeatFacadeOnNovel1.DeleteSelf()</strong>;
+</pre>
+<p>The call to <code>DeleteSelf</code> of the 
+<i>CATFmFeatureFacade</i> class destroys <span class="style1">Novel1</span>. </p>
+<pre class="code">
+...
+AttrAsFmValue.SetFeature(oFeatFacadeOnPublisher);
+rc = <strong>oFeatFacadeOnNovel2.SetValue</strong>(BookPublshrAttrName,AttrAsFmValue);</pre>
+<p>But <span class="style1">Novel2 </span> can again pointes <code>to Publisher</code> 
+which is still alive.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Epilog"></a>Epilog</h3>
+<p>Lastly the document is saved and the session is closed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The UC fundamentally explains the steps involved to create a reference link 
+between features. It is realized by valuating the &quot;referencing&quot; feature 
+attribute of type specobject with the &quot;referenced&quot; feature.</p>
+<p>The UC also illustrates that the features related by a &quot;Referencing link&quot;, do 
+not share a father-child relationship. This further implies that the lifecycle 
+of the &quot;referencing&quot; feature is independent of the feature that it refers to.
+</p>
+<p>It also illustrates the steps to delete a referencing link.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table>
+	<colgroup>
+		<col valign="top" span="1">
+	</colgroup>
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attributes</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaLinkingFeatures.htm">Understanding Feature Links</a></td>
+	</tr>
+	<tr>
+		<td style="height: 13px">[3]</td>
+		<td style="height: 13px">
+		<a href="../CAAV5V6FmExtTechArticles/CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAAV5V6FmExtUcInstantiation.htm">Instantiating/Creating 
+		Features</a></td>
+	</tr>
+	</table>
+<h2><a name="History"></a>History</h2>
+<table>
+	<tr>
+		<td>Version: <b>1</b> [Aug 2012]</td>
+		<td>Document created</td>
+	</tr>
+	</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>
+

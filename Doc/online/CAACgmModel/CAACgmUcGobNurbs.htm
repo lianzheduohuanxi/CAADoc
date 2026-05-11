@@ -1,0 +1,452 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Using NURBS</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Using NURBS</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The use case illustrates how to use the CGM classes and interfaces to 
+		create the NURBS curves. The NURBS theory is described in a dedicated technical 
+		article [<a href="#References">1</a>].</p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#General features on Mathematical Classes">The Principle</a></li>
+			<li><a href="#UseCase">The CAAGMModelNurbs Use Case</a>
+			<ul>
+				<li><a href="#What">What Does CAAGMModelNurbs Do</a></li>
+				<li><a href="#How">How to Launch CAAGMModelNurbs</a></li>
+				<li><a href="#Where">Where to Find the CAAGMModelNurbs Code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>The use case explains how to use the CATKnotVector class and the CATNurbsCurve 
+interface to create NURBS curves. The way to use NURBS surface is similar.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="General features on Mathematical Classes"></a>The Principle</h2>
+<p>The NURBS (Non Uniform Rational B-Spline) model defines a curve as a piecewise 
+rational polynomial function of a <strong>parameter</strong> <em>u</em>.</p>
+<p>A NURBS curve is defined by <strong>control points</strong> <em>Pi, i=0..n</em>, 
+whose influence is weighted by <strong>rational polynomial functions</strong>
+<em>Ri, i=0..n</em> (dependent on the parameter) and <strong>weights</strong>
+<em>wi, i=0..n</em> (independent on the parameter). The rational polynomial functions
+<em>Ri</em> are defined by the means of a <strong>basis</strong>, called B-Spline 
+basis, set of piecewise polynomial functions <em>Nik, i=0..n</em>, of same
+<strong>degree</strong> <em>k</em>. The degree of the NURBS curve is the degree 
+of the polynomial functions.</p>
+<p>
+<img src="images/CAACgmGobNurbsEquations1.gif" alt="Nurbs Equations" width="479" height="119"></p>
+<p>The definition of the basis <em>Nik</em> is uniquely determined by a <strong>
+knot vector</strong>, containing the parameters of the limits of pieces of the basis 
+polynomial functions, called <strong>arcs</strong>. They represent an interval for 
+the parameter values to calculate a segment of shape. The first and last knots correspond 
+to the first and last control point.</p>
+<p>In CGM, the CATKnotVector class is used to define the polynomial basis (uniform, 
+periodic, number of arcs, degree) and the CATNurbsCurve is used for the curve definition.</p>
+<p>As any CGM curve [<a href="#References">3</a>], a CATNurbsCurve is created by 
+the CATGeoFactory, using a knot vector, control points and weights. To remove it, 
+use the <code>CATICGMContainer::Remove</code> method, that removes the instance 
+from the memory, except if it is pointed to by another CGM object (such as a CATPCurve 
+or a CATFace). See [<a href="#References">2</a>] to have more detail on the management 
+of the geometric objects.</p>
+<p>In case of NURBS surface, two knot vectors must be defined, one in each surface 
+direction.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMModelNurbs Use Case</h2>
+<p>CAAGMModelNurbs is a use case of the CAAGMModelInterfaces.edu framework that 
+illustrates GeometricObjects framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Does CAAGMModelNurbs Do</h3>
+<p>With this use case, you create a Bézier arc, a Non Uniform Polynomial B-Spline 
+and a Non Uniform Rational B-Spline. Geometric points corresponding to the arc limits 
+are also created.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMModelNurbs</h3>
+<p>To launch CAAGMModelNurbs, you will need to set up the build time environment, 
+then compile CAAGMModelNurbs.m along with its prerequisites, set up the run time 
+environment, and then execute the use case [<a href="#References">4</a>].</p>
+<p>If you simply type CAAGMModelNurbs with no argument, the use case executes, but 
+doesn&#39;t save the result in an NCGM file. If you want to save this result, provide 
+the full pathname of the NCGM file to create. For example:</p>
+<p><code>CAAGMModelNurbs e:\NurbsCreation.NCGM</code></p>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMModelNurbs Code</h3>
+<p>The CAAGMModelNurbs use case is made of a main named CAAGMModelNurbs.cpp located 
+in the CAAGMModelNurbs.m module of the CAAGMModelInterfaces.edu framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMModelInterfaces.edu\CAAGMModelNurbs.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">4</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The main program is divided into the following steps: </p>
+<ol>
+	<li><a href="#Creates the Geometry Factory">Creating the Geometry Factory</a></li>
+	<li><a href="#Creates a Bézier curve">Creating a Bézier Curve</a>; also creating 
+	the geometric points corresponding to the control points to visualize them</li>
+	<li><a href="#Creates Another Curve, Only Differing By a Control Point">Creating 
+	Another Curve, Only Differing by a Control Point</a></li>
+	<li><a href="#Creates a Non Uniform Polynomial B-Spline">Creating a Non Uniform 
+	Polynomial B-Spline</a></li>
+	<li><a href="#Creates the Geometric Points Corresponding To the Arc Limits">
+	Creating the Geometric Points Corresponding to the Arc Limits</a></li>
+	<li><a href="#Creates a General NURBS Curve">Creating a General NURBS Curve</a></li>
+	<li><a href="#Writes the Model and Closes the Factory">Writing the Model And 
+	Closing the Container</a></li>
+</ol>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometry Factory"></a>Creating the Geometry Factory</h3>
+<p>The geometry factory (<code>CATGeoFactory</code>) creates and manages all the 
+CATICGMObject (and the curves and surfaces in particular) [<a href="#References">3</a>]. 
+This creation is done by the global function <code>::CATCreateCGMContainer</code>. 
+Notice that the factory can be defined by reading a NCGM file that was previously 
+stored. In that case, the global function <code>::CATLoadCGMContainer</code> must 
+be used.</p>
+<pre class="code">CATGeoFactory* piGeomFactory = <strong>::CATCreateCGMContainer</strong>() ;
+if (NULL==piGeomFactory) return (1);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates a Bézier curve"></a>Creating a Bézier Curve</h3>
+<p>The Bézier curve is a special type of NURBS curve: the multiplicities of the 
+knots is equal to the degree.</p>
+<p>The default constructor of <code>CATKnotVector</code> defines a basis for a Bézier 
+curve of degree 3 with one arc. To create a curve using this knot vector, one must 
+define four control points, according to the relation between the continuity (<em>k</em>), 
+the number of arcs (<em>l</em>), and the number of control points (n+1):</p>
+<p><em>l = n - k</em></p>
+<pre class="code"> // by default, the constructor builds an appropriate knot vector
+ //             for a Bézier curve
+ <strong>CATKnotVector</strong> bezierKnot;
+ // only polynomial
+ long isRational=0;
+ // hence, no weight
+ double * aWeights=NULL;
+ // <a name="the four control points"></a>the four control points
+ <strong>CATMathSetOfPoints</strong> vertices(4);
+ vertices.SetPoint(CATMathPoint(-20.,0.,0.),0);
+ vertices.SetPoint(CATMathPoint(-20.,5.,0.),1);
+ vertices.SetPoint(CATMathPoint(-10.,5.,0.),2);
+ vertices.SetPoint(CATMathPoint(-10.,0.,0.),3);
+
+ // Creates the NURBS
+ CATNurbsCurve * piFirstCurve = piGeomFactory-&gt;<strong>CreateNurbsCurve</strong>(
+                              bezierKnot,
+                              isRational,
+                              vertices,
+                              aWeights);   <em>// NULL (polynomial)</em>
+ if (NULL==piFirstCurve)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+	
+ // <a name="Creates the geometric points"></a>Creates the geometric points to visualize the control points
+ CATCartesianPoint* piCP1= piGeomFactory-&gt;<strong>CreateCartesianPoint</strong>
+                                             (CATMathPoint(-20.,0.,0.));
+ CATCartesianPoint* piCP2= piGeomFactory-&gt;CreateCartesianPoint
+                                             (CATMathPoint(-20.,5.,0.));
+ CATCartesianPoint* piCP3= piGeomFactory-&gt;CreateCartesianPoint
+                                             (CATMathPoint(-10.,5.,0.));
+ CATCartesianPoint* piCP4= piGeomFactory-&gt;CreateCartesianPoint
+                                             (CATMathPoint(-10.,0.,0.));
+ if (NULL==piCP1 || NULL==piCP2 || NULL==piCP3 || NULL==piCP4)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }</pre>
+<p>The control points of the curves are given as mathematical points to the
+<code>CreateNurbsCurve</code> method of CATGeoFactory that creates the object (<a href="#Fig 1">Fig. 
+1</a> displays the result).</p>
+<p>To visualize the control points, the use case creates them as geometric points, 
+but this is not required in the general use.</p>
+<p>If an error occurs, the program closes the factory and returns an error code.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates Another Curve, Only Differing By a Control Point"></a>Creating 
+Another Curve, Only Differing by a Control Point</h3>
+<p>To see the influence of the control points, another Bézier curve using the same 
+knot vector is created: only one control point is different.</p>
+<table>
+	<caption><a name="Fig 1"></a>Fig. 1: Illustration of the Steps 2 And 3</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmGobNurbs2.gif" alt="Nurbs" width="479" height="359"></td>
+		<td>The green curve has four control points (CP1 to CP4).
+		<p>If you move CP3 to CP3&#39;, the curve is attracted by this new points.</p>
+		<p>Notice two important properties of this kind of NURBS, called Bezier 
+		curve:</p>
+		<ul>
+			<li>The curve is inside the convex hull of the control points.</li>
+			<li>The curve is tangent to the segment joining the first and second 
+			control points at the beginning of the curve, and to the segment joining 
+			the last and next to last control points at its end.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p>To change the control point, directly change the definition in the <code>CATMathSetOfPoint</code>: 
+the position of the point in the <code>CATMathSetOfPoint</code> is an index (beginning 
+at 0).</p>
+<pre class="code"> vertices.<strong>SetPoint</strong>(CATMathPoint(-5,15,0),<strong>2</strong>);
+ CATNurbsCurve * piSecondCurve = piGeomFactory-&gt;CreateNurbsCurve(
+                         bezierKnot,
+                         isRational,
+                         vertices,
+                         aWeights);     <em>// NULL (polynomial)</em>
+ if (NULL==piSecondCurve)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }
+
+ CATCartesianPoint* piCP3bis= piGeomFactory-&gt;CreateCartesianPoint
+                                             (CATMathPoint(-5.,15.,0.));
+ if (NULL==piCP3bis)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }	</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates a Non Uniform Polynomial B-Spline"></a>Creating a Non Uniform 
+Polynomial B-Spline</h3>
+<p>We define here the green curve of <a href="#Fig. 2">Fig. 2</a>. It is non periodic, 
+non uniform, and C2 continuous, with three arcs of degree 3 (the knot vector has 
+four distincts knots). In this case, there are six control points, according to 
+the following relation [<a href="#References">1</a>] between the number of knots 
+(<em>m+1</em>), the degree (<em>k</em>) of <em>Nik</em> and the number of control 
+points (<em>n+1</em>):</p>
+<p><em>m = (n+1) + k</em></p>
+<pre class="code"> const long nbknots=4;
+ double aKnots[nbknots];
+ <strong>aKnots</strong>[0]=0;
+ aKnots[1]=2;
+ aKnots[2]=8;
+ aKnots[3]=9;
+ long isPeriodic=0;   <em>// non periodic</em>
+ long continuity=2;   <em>// C2 continuity</em>
+ CATKnotVector nonUniformKnot(isPeriodic,nbknots,aKnots,continuity);
+	
+ <em>// the six control points</em>
+ CATMathSetOfPoints otherVertices(6);
+ otherVertices.SetPoint(CATMathPoint( 20., 0.,0.),0);
+ otherVertices.SetPoint(CATMathPoint( 22.,10.,0.),1);
+ otherVertices.SetPoint(CATMathPoint( 30.,20.,0.),2);
+ otherVertices.SetPoint(CATMathPoint( 40., 0.,0.),3);
+ otherVertices.SetPoint(CATMathPoint( 43.,15.,0.),4);
+ otherVertices.SetPoint(CATMathPoint( 50.,20.,0.),5);
+	
+	
+ CATNurbsCurve * piThirdCurve = piGeomFactory-&gt;CreateNurbsCurve(
+                                   nonUniformKnot,
+                                   isRational,
+                                   otherVertices,
+                                   <strong>aWeights</strong>);          // NULL (polynomial)
+ if (NULL==piThirdCurve)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ }</pre>
+<p>The knot vector is now non uniform, because its knot values do not increment 
+of 1. The curve is still polynomial, because the pointer to the weight values is 
+NULL. In fact, the weight of each control point is <code>1.</code>.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates the Geometric Points Corresponding To the Arc Limits"></a>Creating 
+the Geometric Points Corresponding to the Arc Limits</h3>
+<p>The arc limits are defined by the knots. By default, the <code>CreateNurbsCurve</code> 
+method adapts the parameterization of the knots according, more or less, to the 
+length of the curve.</p>
+<p>Hence, if you asked for the knot vector of <code>ThirdCurve</code> (<code>GetKnotVector</code>), 
+that was created at the step 4, you find new knots values. If you want the curve 
+to keep its initial parameterization, use the <code>CatKeepParameterization</code> 
+value of the <code>CATParameterizationOption</code> (optional argument). Remember 
+that the first and last knots correspond to the first and last control point, and 
+that the knots are the arc limits.</p>
+<pre class="code">CATCrvParam param;
+CATCrvEvalLocal result;
+CATMathPoint mathPoint;
+// new CATKnotVector 
+const CATKnotVector * pNewKnotVector=piThirdCurve-&gt;<strong>GetKnotVector</strong>();
+if (NULL==pNewKnotVector)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+const double * aNewKnots=NULL;
+pNewKnotVector-&gt;<strong>GetKnots</strong>(aNewKnots);
+if (NULL==aNewKnots)
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}
+
+// <a name="second knot value"></a>second knot value 
+piThirdCurve-&gt;CreateParam(aNewKnots[1] ,param);
+piThirdCurve-&gt;<strong>Eval</strong>(param,CATCrvEvalCommand::EvalPoint,result);
+	
+result.<strong>GetPoint</strong>(mathPoint);
+CATCartesianPoint* piCPAL2= piGeomFactory-&gt;CreateCartesianPoint(mathPoint);
+if (NULL==piCPAL2 )
+{
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+}     </pre>
+<p>To create the 3D geometric point, you have to recover its definition from the 
+parameter (the knot): this is done by using the curve evaluator: </p>
+<ul>
+	<li>The <code>Eval</code> method computes the evaluation: the type of evaluation 
+	is given by a <code>CATCrvEvalCommand</code>: here, only the point evaluation.</li>
+	<li>The <code>GetPoint</code> method returns the result as a mathematical point.</li>
+</ul>
+<p>It just remains to create the corresponding point to be able to visualize the 
+arc limits.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creates a General NURBS Curve"></a>Creating a General NURBS Curve</h3>
+<p>The non uniform vector of the step 5 is kept. The non rational is created by 
+defining weights affected to the control points.</p>
+<pre class="code"> isRational=1;
+ aWeights=new double[6];
+ aWeights[0]=1;
+ aWeights[1]=1;
+ aWeights[2]=10;
+ aWeights[3]=20;
+ aWeights[4]=5;
+ aWeights[5]=1;
+ CATNurbsCurve * piFourthCurve = piGeomFactory-&gt;CreateNurbsCurve(
+                   nonUniformKnot,
+                   isRational,          <em>// Yes</em>
+                   otherVertices,
+                   aWeights);           <em>// Not NULL</em>
+ if (NULL==piFourthCurve)
+ {
+   ::CATCloseCGMContainer(piGeomFactory);
+   return (1);
+ } 
+	
+ delete [] aWeights;
+ aWeights = NULL;</pre>
+<p>Fig. 2 shows the influence of the weights.</p>
+<table>
+	<caption><a name="Fig. 2"></a>Fig. 2: Illustration of Non Uniform Polynomial 
+	and Rational B-Splines</caption>
+	<tr>
+		<td>
+		<img src="images/CAACgmGobNurbs1.gif" alt="Nurbs" width="479" height="359"></td>
+		<td>The green curve is the non uniform polynomial B-Spline curve created 
+		at the step 4. The weight of each control point is 1.
+		<p>If you assign the (1,1,10,20,5,1) weights to the control points, it gives 
+		the red curve. This curve is attracted by the control points CP3 and CP4, 
+		that are more weighted than the others.</p>
+		<p>These curves have three arcs: CP1-K1, K1-K2, K2-CP2.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Writes the Model and Closes the Factory"></a>Writing the Model and 
+Closing the Container</h3>
+<p>To save the model in a file, the <code>::CATSaveCGMContainer</code> global function 
+is used. Notice that in the use case, the save is conditioned by an input parameter 
+representing the file inside which the model must be saved.</p>
+<p>The use case ends with the closure of the geometry factory, done by the <code>
+::CATCloseCGMContainer</code> global function.</p>
+<pre class="code"> if(1==toStore)
+ {
+#ifdef _WINDOWS_SOURCE
+   ofstream filetowrite(pfileName, ios::binary ) ;
+#else
+   ofstream filetowrite(pfileName,ios::out,filebuf::openprot) ;
+#endif
+
+   <strong>::CATSaveCGMContainer</strong>(piGeomFactory,filetowrite);
+   filetowrite.close();
+ }	
+
+ //
+ // Closes the container
+ //
+ <strong>::CATCloseCGMContainer</strong>(piGeomFactory);</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>This use case describes how to use the NURBS curves in CGM, using the CATNurbsCurve 
+interface and the CATKnotVector class. Bézier curve, non uniform polynomial curve 
+and non uniform rational curve are then created.</p>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td><a href="CAACgmTaGobAboutNurbs.htm">About NURBS</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmTaGobGeoObjects.htm">The Objects of CATIA Geometric 
+		Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td><a href="CAACgmTaGobCurves.htm">The Curves of CATIA Geometric Modeler</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Apr 2000]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

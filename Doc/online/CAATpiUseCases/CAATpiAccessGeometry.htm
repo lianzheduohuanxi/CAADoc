@@ -1,0 +1,740 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Accessing Geometry from an Annotation</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Mechanical Design</h1>
+    </td>
+    <td valign="top">
+      <h2>3D Functional Tolerancing &amp; Annotation</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Accessing Geometry from an Annotation</h3>
+      Accessing and manipulating geometry on which annotation is applied</td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAATpiAccessGeometry use case. This use case
+      explains how to access the geometry referenced by a 3D annotation. It also
+      illustrate how to perform some topological evaluation on the accessed
+      geometry .
+      <ul>
+        <li><strong><a href="#Learn">What You Will Learn With This Use Case</a></strong></li>
+        <li><strong><a href="#UseCase">The CAATpiAccessGeometry Use Case</a></strong>
+          <ul>
+            <li><a href="#What">What Does CAATpiAccessGeometry Do</a>
+            <li><a href="#How">How to Launch CAATpiAccessGeometry</a></li>
+            <li><a href="#Where">Where to Find the CAATpiAccessGeometry Code</a>
+          </ul>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you to use Technological Product
+Specifications (TPS) interfaces [<a href="#References">1</a>]. The use case
+demonstrates&nbsp; <i>CATITPS</i> interface usage to retrieve the TTRSs features
+(Technologicaly and Topologicaly Related Surface) referenced by a 3D annotation
+. It also illustrates how to scan the TTRS structure with <i>CATI</i><i>TTRS </i>interfaces
+to retrieve the RGE (Reference Geometrical Elements).&nbsp; <i>CATIRGE</i>&nbsp;
+and <i>CATIRGETopology</i> interfaces are used to retrieve topological cells
+from the geometry. Finally, geometrical and topological evaluations are
+performed to create and display a grid of points with their normal on those
+cells.</p>
+<p>This use case also illustrates how a command can add and manage temporary
+representation in the main 3D viewer.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAATpiAccessGeometry Use Case</h3>
+<p>CAATpiAccessGeometry is a use case of the CAATPSInterfaces.edu framework that
+illustrates CATTPSInterfaces and MecModInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAATpiAccessGeometry Do</h4>
+<p>The use case is an interactive command that prompt the user to select a 3D
+annotation to retrieve and analyse the geometry referenced. The result of the
+analysis is displayed in a panel. It shows the TTRS, RGE and topological cell
+composition of&nbsp; the referenced geometry. When the topological cell is a
+face, a grid of point with their normals is displayed in the 3D viewer. The
+geometry referenced by the selected annotation is highlighted.</p>
+<p><img border="0" src="images/CAATpiAccessGeometryResult.gif" width="721" height="446"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAATpiAccessGeometry</h4>
+<p>The use case command is available in the toolbar &quot;CAA Sample&quot; of
+the workbench Product Functionnal &amp; Tolerancing &amp; Annotation.</p>
+<p>To launch CAATpiAccessGeometry, you will need to set up the build time
+environment, then compile CAATPSInterfaces.edu framework along with its
+prerequisites, set up the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p>Do not type the module name on the command line, but type CNEXT instead. When
+the application is ready, do the following:
+<ul>
+  <li>Load the product CAATpiProduct.CATProduct located under&nbsp;
+    CAATPSInterfaces.edu/FunctionTests/InputData. This product contain a
+    toleranced CATPart, a toleranced V4 model with V4 tolerancing information
+    (FD&amp;T) and there are also some tolerancing informations at the product
+    level.&nbsp;
+  <li>Select Start-&gt;Mechanical Design -&gt; Product Functionnal Tolerancing
+    &amp; Annotation.</li>
+  <li>By default the CAA Sample toolbar is not displayed, right click on a
+    toolbar and select it in the contextual menu to make it appear.
+  <li>Press the Access Geometry&nbsp; icon to start the command.</li>
+</ul>
+<blockquote>
+  <blockquote>
+    <p><img border="0" src="images/CAATpiToolbar.gif" width="107" height="58"></p>
+  </blockquote>
+</blockquote>
+<p>Notice that the toolbar CAA Sample is also available in other workbenches :</p>
+<ul>
+  <li>Mechanical Design / Functionnal Tolerancing &amp; Annotation to use sample
+    commands in part document context.</li>
+  <li>DPM Powertrain / Process Tolerancing &amp; Annotation to use sample
+    commands in process document context.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAATpiAccessGeometry Code</h4>
+<p>The CAATpiAccessGeometry use case is located in the CAATpiAccessGeometry.m
+module of the CAATPSInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAATPSInterfaces.edu\CAATpiAccessGeometry.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAATPSInterfaces.edu/CAATpiAccessGeometry.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are seven logical steps in CAATpiAccessGeometry:
+<ol>
+  <li><a href="#Prolog">Prolog</a>
+  <li><a href="#Retrieving Annotations">Retrieving Annotations from Selection</a>
+  <li><a href="#Retrieving HSO">Iterating on the Annotations List to Retrieve
+    Their Names</a>
+  <li><a href="#Retrieving HSO">Retrieving and Initializing Highlight Set of
+    Object (HSO)</a>
+  <li><a href="#Highlighting HSO">Building CATPathElement for Each Annotation
+    and Place it in HSO</a>
+  <li><a href="#Highlighting HSO">Highlighting HSO</a>
+  <li><a href="#Epilog">Epilog</a></li>
+</ol>
+<p>We will now comment each of these sections by looking at the code.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Prolog"></a>Prolog</h4>
+<p>The use case is the class CAATpiAccessGeometryCmd which is a CATStateCommand
+that implement the following statechart diagram.</p>
+<p><img border="0" src="images/CAATpiAccessGeometryStatechartDiagram.gif" width="595" height="174"></p>
+<p>The Buildgraph method of the command implements this statechart diagram.
+There are 2 agents associated to the state <font face="Courier">SelectState</font>.
+<font face="Courier">SelectionAgent</font> is a <i>CATPathElementAgent</i> that
+accept only 3D annotation, when valuated the transition method <font face="Courier">OnAnnotationSelected</font>
+is called. <font face="Courier">ClosePanelAgent</font> is a <i>CATDialogAgent</i>
+that listen the Close button of the panel to terminate the command.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Retrieving Annotations"></a>Retrieving TTRSs From Selected
+Annotation</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>boolean CAATpiAccessGeometryCmd::<b>OnAnnotationSelected</b> (void * ipData)
+{
+if ( !_pSelectionAgent || !_pPanel ) return (TRUE);
+
+  HRESULT rc = E_FAIL;
+
+  int TTRSNodeCount = 0;
+  int TTRSSupportCount = 0;
+  int RGECount = 0;
+  int FaceCount = 0;
+  int EdgeCount = 0;
+  int VertexCount = 0;
+
+  // Read display parameters from panel
+  _pPanel -&gt; GetRequiredDisplay (&amp;_bDisplay3DGrid, &amp;_bDisplayTTRSRep);
+
+  // Retrieve the path of the selected annotation
+  CATPathElement * <b>pPathTPS</b> = _pSelectionAgent -&gt; <b>GetValue</b> ();
+  if ( pPathTPS )
+  {
+    // Retrieve HSO from editor and empty it
+    CATFrmEditor * pEdt = GetEditor();
+    if ( pEdt ) 
+    {
+      CATHSO * pHSO = pEdt -&gt; GetHSO();
+      if ( pHSO ) 
+      {
+        pHSO -&gt; Empty();
+        // Add selected PathElement in the HSO, it will be highlighted
+        pHSO -&gt; AddElements (<b>pPathTPS</b>);
+
+        CATISO * pISO = pEdt -&gt; GetISO();
+        if ( pISO ) 
+        {
+          // Clean existing element in ISO
+          pISO -&gt; RemoveElement (_pModelObjectForAdditionalRep);
+
+          // Retrieve CATITPS interface on selected 3D annotation
+          <b>CATITPS</b> * <b>piTPS</b> = NULL;
+          rc = <b>pPathTPS</b> -&gt; <b>Search</b> (IID_CATITPS, (void**) &amp;<b>piTPS</b>);
+          if ( SUCCEEDED(rc) )
+          {
+            // Retrieve the list of TTRSs which are directly referenced by
+            // the annotation, most often that list contains only 1 element,
+            // exeptions are Semantics Targets V5 and Default Annotation
+            <b>CATITTRSList</b> * <b>piTTRSList</b> = NULL;
+            rc = <b>piTPS</b> -&gt; <b>GetTTRS</b> (&amp;<b>piTTRSList</b>);
+            if ( SUCCEEDED(rc) )
+            {
+              unsigned int TTRSCount = 0;
+              <b>piTTRSList</b> -&gt; <b>Count</b> (&amp;TTRSCount);
+
+              <b>CATITTRS</b> * <b>piTTRS</b> = NULL;
+
+              // Allocate representation to display surfaces of TTRSs
+              // Points and normals on the TTRSs faces will be
+              // added in that Rep by AnalyseTTRS method.
+              CAT3DBagRep * pRep = new CAT3DBagRep();
+
+              // Iterate on the list TTRS
+              for ( unsigned int Idx = 0 ; Idx &lt; TTRSCount ; Idx ++)
+              {
+                rc = <b>piTTRSList</b> -&gt; <b>Item</b> (Idx, &amp;<b>piTTRS</b>);
+                if ( SUCCEEDED(rc) )
+                {
+                  // Analyse TTRS Composition
+                  <b>AnalyseTTRS</b> (<b>piTTRS</b>, pHSO, pPathTPS,
+                               TTRSNodeCount, TTRSSupportCount, RGECount,
+                               FaceCount, EdgeCount, VertexCount, pRep);
+
+                  // Construct a Rep to visualize TTRS and add it to ISO
+                  AddTTRSGeometryOnRepresentation (piTTRS, pPathTPS, pRep);
+
+                  piTTRS -&gt; Release();
+                  piTTRS = NULL;
+                }
+              }
+              // Add new Rep in ISO
+              _pModelObjectForAdditionalRep -&gt; SetRep (pRep);
+
+              pISO -&gt; AddElement (_pModelObjectForAdditionalRep);
+              pRep = NULL;
+
+              piTTRSList -&gt; Release();
+              piTTRSList = NULL;
+            }
+            piTPS -&gt; Release();
+            piTPS = NULL;
+          }
+          pISO = NULL;
+        }
+        // No more elements to Add in the HSO, notification is send
+        // and HSO content can be highlighted.
+        pHSO -&gt; EndAddElements ();
+        pHSO = NULL;
+      }
+      pEdt = NULL;
+    }
+    pPathTPS = NULL;
+  }
+  ...
+}
+</pre>
+    </td>
+  </tr>
+</table>
+<p>When selection agent is valuated the transition method <font face="Courier">OnAnnotationSelected</font>
+is called. The <i>CATPathElement</i> selected <font face="Courier">pPathTPS</font>
+is retrieved by calling <font face="Courier">GetValue</font> on the selection
+agent.&nbsp; The selected 3D annotation <font face="courrier">piTPS</font> is
+retrieved as a <i>CATITPS</i> interface pointer by using the <font face="Courier">Search</font>
+method of <i>CATPathElement</i> . The method <i>CATITPS</i>::<font face="Courier">GetTTRS</font>
+retrieves the list of TTRS directly referenced by the 3D annotation&nbsp; as a <i>CATITTRSList</i>
+interface pointer. <i>CATITTRSList</i>::<font face="Courier">Count</font> and <i>CATITTRSList</i>::<font face="Courier">Item</font>
+methods allow to iterate on the list. Each element of the list is retrieved as a
+<i>CATITTRS</i> interface pointer and provided to the method <font face="Courier">AnalyseTTRS</font>
+to obtain some informations on its composition.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Iterate On The Annotations List"></a>Analyse TTRS Composition</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAATpiAccessGeometryCmd::<b>AnalyseTTRS</b> (CATITTRS * <b>ipiTTRS</b>,
+                                              CATHSO * ipHSO, 
+                                              CATPathElement * ipPathTPS,
+                                              int &amp; <b>oTTRSNodeCount</b>,
+                                              int &amp; <b>oTTRSSupportCount</b>,
+                                              int &amp; oRGECount,
+                                              int &amp; oFaceCount,
+                                              int &amp; oEdgeCount,
+                                              int &amp; oVertexCount,
+                                              CAT3DBagRep * iopRep)
+{
+  if ( ! ipiTTRS || !ipHSO || !ipPathTPS ) return (E_FAIL);
+
+  HRESULT oRc = E_FAIL;
+
+  // Retrieve TTRS nature: support or node.
+  CATMmrTTRSType TTRSType = <b>ipiTTRS</b> -&gt; <b>GetNature</b> ();
+
+  // Retrieve the components of the TTRS
+  CATLISTV(CATBaseUnknown_var) CompList;
+  HRESULT rc = ipiTTRS -&gt; <b>GetComponents</b> (CompList);
+  if ( SUCCEEDED(rc) )
+  {
+    int ComponentCount = CompList.Size();
+    int AnalyseSuccessCount = 0;
+
+    CATBaseUnknown_var spBaseComp;
+
+    // If TTRS is a node, components are TTRS
+    if ( TTRSType == <b>CATMmrNodeTTRS</b> )
+    {
+      <b>oTTRSNodeCount</b> ++; // Increment node count
+
+      // Iterate on TTRS components and analyse them
+      CATITTRS * <b>piTTRSComp</b> = NULL;
+      for ( int i = 1 ; i &lt;= ComponentCount ; i++ )
+      {
+        spBaseComp = CompList[i];
+        if ( NULL_var != spBaseComp )
+        {
+          rc = spBaseComp -&gt; QueryInterface(IID_CATITTRS, (void**)&amp;piTTRSComp);
+          if ( SUCCEEDED(rc) )
+          {
+            rc = <b>AnalyseTTRS</b> (<b>piTTRSComp</b>, ipHSO, ipPathTPS,
+                              oTTRSNodeCount, oTTRSSupportCount, oRGECount,
+                              oFaceCount, oEdgeCount, oVertexCount, iopRep);
+            if ( SUCCEEDED(rc) )
+            {
+              AnalyseSuccessCount++;
+            }
+            piTTRSComp -&gt; Release();
+            piTTRSComp = NULL;
+          }
+          spBaseComp = NULL_var;
+        }
+      }
+    }
+    else // If TTRS is a support, components are RGE
+    {
+      <b>oTTRSSupportCount</b> ++; // Increment support count
+
+      // Iterate on RGE and analyse them
+      <b>CATIRGE</b> * <b>piRGE</b> = NULL;
+      for ( int i = 1 ; i &lt;= ComponentCount ; i++ )
+      {
+        spBaseComp = CompList[i];
+        if ( NULL_var != spBaseComp )
+        {
+          rc = spBaseComp -&gt; QueryInterface (IID_CATIRGE, (void**)&amp; <b>piRGE</b>);
+          if ( SUCCEEDED(rc) )
+          {
+            rc = <b>AnalyseRGE</b> (<b>piRGE</b>, ipHSO, ipPathTPS,
+                             oRGECount, 
+                             oFaceCount, oEdgeCount, oVertexCount, iopRep);
+            if ( SUCCEEDED(rc) )
+            {
+              AnalyseSuccessCount++;
+            }
+            piRGE -&gt; Release();
+            piRGE = NULL;
+          }
+          spBaseComp = NULL_var;
+        }
+      }
+    }
+    // method return S_OK only if each component is analysed successfuly
+    if ( ComponentCount == AnalyseSuccessCount )
+    {
+      oRc = S_OK;
+    }
+  }
+  return (oRc);
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <font face="Courier">AnalyseTTRS</font> purpose is to identify the
+composition of the input TTRS by scanning recursively the TTRS tree downward.
+There are 2 kinds of TTRS :&nbsp; nodes and supports. For a TTRS node its
+components are other TTRSs, for a support TTRS its components are RGEs. <i>CATITTRS</i>::<font face="Courier">GetNature</font>
+method allow to known if the TTRS is a node or a support. According to the
+nature of the input TTRS the counter <font face="Courier">oTTRSNodeCount</font>
+or <font face="Courier">oTTRSSupportCount</font> is incremented,&nbsp; <i>CATITTRS</i>::<font face="Courier">GetComponents</font>
+is used to retrieved the components of a TTRS. Iteration is performed on the
+component list to analyse each component by calling <font face="Courier">AnalyseTTRS</font>
+or <font face="Courier">AnalyseRGE</font> method.</p>
+<p><img border="0" src="images/CAATpiTTRSTree.gif" width="668" height="308"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Retrieving HSO"></a>Analyse RGE Composition&nbsp;</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAATpiAccessGeometryCmd::<b>AnalyseRGE</b> (CATIRGE * <b>ipiRGE</b>,
+                                             CATHSO * ipHSO, 
+                                             CATPathElement * ipPathTPS,
+                                             int &amp; <b>oRGECount</b>,
+                                             int &amp; <b>oFaceCount</b>,
+                                             int &amp; <b>oEdgeCount</b>,
+                                             int &amp; <b>oVertexCount</b>,
+                                             CAT3DBagRep * iopRep)
+{
+  if ( ! ipiRGE || !ipHSO || !ipPathTPS || !iopRep) return (E_FAIL);
+
+  HRESULT oRc = E_FAIL;
+
+  <b>oRGECount</b> ++; // Increment RGE Count
+  
+  <b>CATIRGETopology</b> * <b>piRGETopo</b> = NULL;
+  HRESULT rc = <b>ipiRGE</b> -&gt; QueryInterface (IID_CATIRGETopology, 
+                                         (void**)&amp; <b>piRGETopo</b>);
+  if ( SUCCEEDED(rc) )
+  {
+    CATLISTP (CATCell) * pCellList = NULL;
+    rc = <b>piRGETopo</b> -&gt; <b>GetCells</b> (&amp;pCellList);
+    if ( SUCCEEDED(rc) )
+    {
+      int CellCount = pCellList -&gt; Size();
+      for (int CellIdx = 1; CellIdx &lt;= CellCount; CellIdx++)
+      {
+        <b>CATCell</b> * pCell = (*pCellList)[CellIdx];
+        if ( pCell ) 
+        {
+          int CellDim = pCell -&gt; <b>GetDimension</b>();
+          switch ( CellDim )
+          {
+          case 0 : <b>oVertexCount</b> ++ ; break;
+          case 1 : <b>oEdgeCount</b> ++ ; break;
+          case 2 : // Cell is a Face
+            {
+              <b>oFaceCount</b> ++;
+              CATFace * pFace = (CATFace*) pCell;
+              <b>CreatePointAndNormalRepresentationOnFace</b> (pFace, piRGETopo,
+                                                        ipPathTPS, iopRep);
+              pFace = NULL;
+            }
+            break;
+          }
+          pCell -&gt; Release();
+          pCell = NULL;
+        }
+      }
+      pCellList -&gt; RemoveAll();
+      delete pCellList;
+      pCellList = NULL;
+    }
+    piRGETopo -&gt; Release();
+    piRGETopo = NULL;
+  }
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <font face="Courier">AnalyseRGE</font> method analyse the topological
+composition of the geometrical element referenced by the RGE. For that the
+interface <i>CATIRGETopology</i> is available on the RGE feature. The method <font face="Courier">GetCells</font>
+allows to&nbsp; retrieve a list of topological cell. According to the dimension
+of each cell given by the <font face="Courier">GetDimension</font> method the
+counters <font face="Courier">oVertexCount</font>, <font face="Courier">oEdgeCount</font>
+and <font face="Courier">oFaceCount</font> are incremented. For each <i>CATFace</i>
+the method <font face="Courier">CreatePointAndNormalRepresentationOnFace</font>
+is called, its behavior is described after.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Building CATPathElement"></a> Highlight the Geometry Referenced by
+the&nbsp; RGE</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  <b>CATIBuildPath</b> * <b>piBuildPath</b> = NULL;
+  rc = <b>ipiRGE</b> -&gt; QueryInterface (IID_CATIBuildPath, (void**)&amp;<b>piBuildPath</b>);  
+  if ( SUCCEEDED(rc) )
+  {
+    CATPathElement * <b>pPath</b> = NULL;
+    rc = <b>piBuildPath</b> -&gt; <b>ExtractPathElement</b> (<b>ipPathTPS</b>, &amp;<b>pPath</b>);
+    if ( SUCCEEDED(rc) )
+    {
+      ipHSO -&gt; <b>AddElements</b> (pPath);
+
+      <b>SpecialTreatementForPathWithSeveralLeaf</b> (pPath, ipHSO);
+
+      pPath -&gt; Release();
+      pPath = NULL;
+    }
+    piBuildPath -&gt; Release();
+    piBuildPath = NULL;
+  }</pre>
+    </td>
+  </tr>
+</table>
+<p>Another action performed by the <font face="Courier">AnalyseRGE</font> method
+is the highlight of the referenced geometry. This is possible thank to the <i>CATIBuildPath</i>
+interface that is available on the RGE feature. The <i>CATIBuildPath</i>::<font face="Courier">ExtractPathElement</font>
+method is used to build the <i>CATPathElement</i> <font face="Courier">pPath</font>
+on the referenced geometry, the <i>CATPathElement</i> <font face="Courier">ipPathTPS</font>
+of the selected&nbsp; TPS is used as context in <font face="Courier">ExtractPathElement</font>.
+pPath is placed in the HSO by using AddElements.&nbsp;</p>
+<p><img border="0" src="images/CAATpiPathElementWithSeveralLeaf.gif" width="603" height="290"></p>
+<p>In some cases the <i>CATPathElement</i> constructed for the referenced
+geometry contains several leafs. When placed in HSO only the first leaf is
+highlighted. To solve this problem the method <font face="Courier">SpecialTreatementForPathWithSeveralLeaf</font>
+creates and adds to HSO an additionnal <i>CATPathElement</i> for each other leaf
+of the constructed <i>CATPathElement</i>.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Highlighting HSO"></a>Create a Mesh of Point With Their Normals on
+The Faces Retrieved From a RGE</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAATpiAccessGeometryCmd::<b>CreatePointAndNormalRepresentationOnFace</b> (
+                                                  CATFace * <b>ipFace</b>,
+                                                  CATIRGETopology * <b>ipiRGETopo</b>,
+                                                  CATPathElement * <b>ipPathTPS</b>,
+                                                  CAT3DBagRep * iopRep)
+{
+  if ( !ipFace || !ipiRGETopo || !ipPathTPS || !iopRep ) return (E_FAIL);
+
+  // If display of grid is not required
+  if ( !_bDisplay3DGrid ) return (S_OK);
+
+  HRESULT oRc = E_FAIL;
+
+  // Retrieve coefficient to direction along outside material side
+  int Coefficient = 0;
+  <b>ipiRGETopo</b> -&gt; <b>GetOutsideMaterialCoefficientOnNormal</b>(&amp;Coefficient);
+
+  // Compute Transformation to take into account product position
+
+  // First retrieve local transformation to apply on cells
+  CATMathTransformation <b>LocalPos</b>;
+  CATMathTransformation * pLocalPos = NULL;
+  HRESULT rc = <b>ipiRGETopo</b> -&gt; <b>GetTransformation</b> (&amp;pLocalPos);
+  if ( SUCCEEDED(rc) )
+  {
+    <b>LocalPos</b> = (*pLocalPos);
+
+    delete pLocalPos;
+    pLocalPos = NULL;
+  }
+
+  // Second retrieve transformation from product structure.
+  CATMathTransformation <b>AbsolutePos</b>;
+  <b>CATIMovable</b> * <b>piMove</b> = NULL;
+  rc = <b>ipPathTPS</b> -&gt; <b>Search</b> (IID_CATIMovable, (void**)&amp; piMove);
+  if ( SUCCEEDED(rc) )
+  {
+    <b>piMove</b> -&gt; <b>GetAbsPosition</b>(<b>AbsolutePos</b>);
+
+    piMove -&gt; Release();
+    piMove = NULL;
+  }
+
+  // Cumulate the two positions
+  CATMathTransformation <b>Position</b> =  <b>AbsolutePos</b> * <b>LocalPos</b>;
+
+  // Allocate a new rep for points and normals of that face
+  CAT3DCustomRep * pPointsAndNormalsRep = new CAT3DCustomRep();
+
+  <b>CATSurface</b> * <b>pSurface</b> = <b>ipFace</b> -&gt; <b>GetSurface</b>();
+  if ( pSurface )
+  {
+    const <b>CATSurLimits</b> * <b>pSurLimits</b> = <b>ipFace</b> -&gt; <b>Get2DBoundingBox</b>();
+    if ( pSurLimits &amp;&amp; ! pSurLimits -&gt;IsEmpty() )
+    {
+      double Umin = 0.0;
+      double Umax = 0.0;
+      double Vmin = 0.0;
+      double Vmax = 0.0;
+      <b>pSurLimits</b> -&gt; <b>GetExtremities</b>(Umin, Vmin, Umax, Vmax);
+
+      double Ucurrent = 0.0;
+      double Vcurrent = 0.0;
+
+      int <b>GridResolution</b> = 10;
+
+      double FractionU = (Umax - Umin) / GridResolution;
+      double FractionV = (Vmax - Vmin) / GridResolution;
+
+      CATMathPoint PointOnSurface;
+      CATMathDirection NormalAtPointOnSurface;
+      CATSurParam InitialParam;
+      CATMathPoint PointOnSurfacePos;
+      CATMathDirection NormalAtPointOnSurfacePos;
+
+      CATGeoFactory * pGeoFact = ipFace -&gt; GetContainer();
+      if ( pGeoFact )
+      {
+        // Create topological operator for checking that points are inside face
+        <b>CATPositionPtFaceOperator</b> * <b>pPosPtFaceOpe</b>
+         = <b>CATCreatePositionPtFaceOperator</b>(pGeoFact, InitialParam, ipFace);
+        if ( pPosPtFaceOpe )
+        {
+          for ( int IdxU = 0 ; IdxU &lt;= GridResolution ; IdxU ++)
+          {
+            Ucurrent = Umin + FractionU * IdxU; // Increment U parameter
+
+            for ( int IdxV = 0 ; IdxV &lt;= GridResolution ; IdxV ++)
+            {
+              Vcurrent = Vmin + FractionV * IdxV; // Increment V parameter
+
+              // Evaluate point and normal on surface              
+              CATSurParam <b>Param</b>;
+              <b>pSurface</b> -&gt; <b>CreateParam</b> (Ucurrent, Vcurrent, <b>Param</b>);
+
+              <b>pSurface</b> -&gt; <b>EvalPoint</b> (Param, PointOnSurface);
+              <b>pSurface</b> -&gt; <b>EvalNormal</b> (Param, NormalAtPointOnSurface);
+
+              // Check that point is inside Face Limits
+              <b>pPosPtFaceOpe</b> -&gt; <b>SetSurParam</b> (<b>Param</b>);
+              <b>pPosPtFaceOpe</b> -&gt; <b>Run</b> ();
+              
+              // If point is inside face limits, keep it for further treatement
+              if ( CATLocationOuter != <b>pPosPtFaceOpe</b>-&gt; <b>GetOneResult</b>() )
+              {
+                // Orient direction along outside material side
+                if ( <b>Coefficient</b> != 0 )
+                {
+                  <b>NormalAtPointOnSurface</b> *= <b>Coefficient</b>;
+                }
+                
+                // Apply Transformation to take into account product position
+                <b>PointOnSurfacePos</b> = <b>Position</b> * <b>PointOnSurface</b>;
+                <b>NormalAtPointOnSurfacePos</b> = <b>Position</b> * <b>NormalAtPointOnSurface</b>;
+
+                // Create Representation of Point and normal and add it
+                // to the representation
+                <b>CreateGraphicalPrimitives</b> (pPointsAndNormalsRep, PointOnSurfacePos,
+                                           NormalAtPointOnSurfacePos);
+              }
+            }
+          }
+          delete pPosPtFaceOpe;
+          pPosPtFaceOpe = NULL;
+        }
+        pGeoFact = NULL;
+      }
+      pSurLimits = NULL;
+    }
+    pSurface = NULL;
+  }
+  iopRep -&gt; AddChild((*pPointsAndNormalsRep));
+
+  return (oRc);
+}
+
+
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The method <font face="Courier">CreatePointAndNormalRepresentationOnFace</font>
+needs as input data :&nbsp;</p>
+<ul>
+  <li>a&nbsp; <i>CATFace</i> pointer that will be used for topological and
+    geometrical evaluations.</li>
+  <li>a <i>CATIRGETopology</i> pointer that will be used to get the local
+    transformation to apply on cells (or on the results computed from cells) to
+    position them in the reference product to which is associated the RGE. The
+    outside material coefficient to apply on normal evaluated is also retrieved
+    from CATIRGETopology.</li>
+  <li>the selected <i>CATPathElement</i> <font face="Courier">ipPathTPS</font>
+    that is used to retrieved the transformation that describe the absolute
+    position of the instance of the product in which the TPS has been selected.</li>
+</ul>
+<p>The first step is to retrieve the coefficient that will be applied on the
+normal vectors computed on surface to orient them in the direction of the
+outside material of the part. This is done with <i>CATIRGETopology</i>::<font face="Courier">GetOutsideMaterialCoefficientOnNormal</font>
+method that returns a multiplicative coefficient equal to 1 or -1. In case of
+problem an error value of 0 is returned.</p>
+<p>Secondly the position matrix of the results computed from cell is calculated.
+The local transformation is retrieved by <i>CATIRGETopology</i>::<font face="Courier">GetTransformation</font>
+and the global position is retrieved by calling <font face="Courier">GetAbsPosition</font>,
+on the <i>CATIMovable</i> interface pointer retrieved on the CATPathElement of
+the selected annotation. The local and global transformation are cumulated to
+obtain the position.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Epilog"></a>Epilog</h4>
+<p>The use case finishes when the command ended by pressing the close button in
+the panel.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated how to access and manipulate 3D Annotations
+geometry.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top"><a name="RefTPSOverview">[1]</a></td>
+    <td><a href="../CAATpiTechArticles/CAATpiTPSOverview.htm">Technological
+      Product Specification Overview</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a name="Ref2">[2]</a></td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table border="0" width="100%">
+  <tr>
+    <td colspan="2"><a name="History"></a><strong><em>History</em></strong></td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+      <p align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,515 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Retrieving the Active Plane</title>
+<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Equipment &amp; Systems Engineering</h1>
+    </td>
+    <td valign="top">
+      <h2>Electrical Harness Flattening</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Flattening a harness</h3>
+      <i>How to flatten a harness</i></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table width="100%">
+  <tr>
+    <td bgcolor="#F0F0FF">
+      <h3>Abstract</h3>
+      <p>This article discusses the ElecFlatteningItf use case. This use case 
+		explains how to flatten a harness</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAEhfFlattenManager Use Case</a></b>
+          <ul>
+            <li><a href="#What">What does CAAEhfFlattenManager do</a></li>
+            <li><a href="#How">How to Launch CAAEhfFlattenManager</a></li>
+            <li><a href="#Where">Where to Find the CAAEhfFlattenManager
+              code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><b>Step-by-Step</b></a></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#history">History</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+with CATIA EHF Interfaces.&nbsp;Its main intent is to allow you to flatten a 
+harness.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAEhfFlattenManager Use Case</h3>
+<p>CAAEhfFlattenManager.m is a use case of the CAAElecFlatteningItf.edu
+framework that illustrates the CATIA EHF Interfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAEhfFlattenManager Do?</h4>
+<p>The goal of CAAEhfFlattenManager use case is to show how to flatten a 
+harness.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEhfFlattenManager ?</h4>
+<ul>
+  <li><span style="font-size: 9.5pt; font-family: Verdana; color: #333333">To 
+	launch CAAEhfFlattenManager , you will need to set up the build time 
+	environment, then compile CAAEhfFlattenManager along with its prerequisites, 
+	set up the run time environment, and then execute the sample.</span><p>
+	<span style="font-size: 9.5pt; font-family: Verdana; color: #333333">To 
+	launch the use case, execute the following command:</span></p>
+	<pre style="tab-stops: 45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt; font-size: 13.0pt; font-family: Courier New; margin-left: 0in; margin-right: 0in; margin-top: 0in; margin-bottom: .0001pt"><span style="font-size:10.5pt;color:#333333">mkrun -c &quot;CAAEhfFlattenManager input.CATProduct&quot;</span></pre>
+&nbsp;</li>
+</ul>
+<ul type="disc" style="margin-bottom: 0in">
+	<li class="MsoNormal" style="color: #333333"><b>
+	<span style="font-size: 9.5pt; font-family: Verdana">input.CATProduct</span></b><span style="font-size: 9.5pt; font-family: Verdana"> 
+	- the path to the existing external CATProduct to be browsed. You may 
+	reference the supplied CATProduct document called &quot;Extracted.CATProduct&quot; 
+	found in the 'WS'/'OS'/resources/graphic/ModelFlattenManager directory if 
+	under Unix. In this case, 'OS' can be any of the following: </span>
+	<ul type="circle" style="margin-bottom: 0in">
+		<li class="MsoNormal" style="color: #333333">
+		<span style="font-size: 9.5pt; font-family: Verdana">aix_a for IBM
+		</span></li>
+		<li class="MsoNormal" style="color: #333333">
+		<span style="font-size: 9.5pt; font-family: Verdana">hpux_a for HP
+		</span></li>
+		<li class="MsoNormal" style="color: #333333">
+		<span style="font-size: 9.5pt; font-family: Verdana">solaris_a for SUN
+		</span></li>
+	</ul>
+	</li>
+</ul>
+<p style="margin-left:.5in">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #333333">Under 
+Windows, the path would indicate: </span></p>
+<p style="margin-left:.5in">
+<span style="font-size: 9.5pt; font-family: Verdana; color: #333333">'WS'\intel_a\resources\graphic\</span><span style="font-size: 9.5pt; font-family: Verdana">ModelFlattenManager</span><span style="font-size: 9.5pt; font-family: Verdana; color: #333333"> directory. </span></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where">&nbsp;</a>Where to Find the CAAEhfFlattenManager Code</h4>
+<p>The CAAEhfFlattenManager&nbsp; sample is made of a single class named
+CAAEhfFlattenManager&nbsp;located in the CAAEhfFlattenManager.m
+module of the CAAElecFlatteningItf.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAElecFlatteningItf.edu\CAAEhfFlattenManager.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAElecFlatteningItf.edu/CAAEhfFlattenManager.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>&nbsp;</p>
+<p>This sample deals with the following classes:</p>
+<p>&nbsp;</p>
+<table width="709" height="387">
+  <tr>
+    <td width="218" height="21"><i>CATSession</i></td>
+    <td width="477" height="21">Class for the session base class</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATDocument</i></td>
+    <td width="477" height="21">Class for the document base class</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATDocumentServices</i></td>
+    <td width="477" height="21">Class for managing document in the session</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATIDocRoots</i></td>
+    <td width="477" height="21">Class for browsing root object in document</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATIProduct</i></td>
+    <td width="477" height="21">Interface dedicated to define product behaviour</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATIEleDocServices</i></td>
+    <td width="477" height="21">Interface dedicated electrical environment
+      initialization</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATIEhfEnvironment</i></td>
+    <td width="477" height="21">Interfaces dedicated to retrieve the flattening
+      parameter</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATIEhfFlatteningParameters</i></td>
+    <td width="477" height="21">Interfaces dedicated to read attribute on
+      flattening parameter</td>
+  </tr>
+  <tr>
+    <td width="218" height="21"><i>CATMathPlane</i></td>
+    <td width="477" height="21">Class representing a mathematical plane in 3D</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>------------------------------------------</p>
+<p>We will now first comment the Electrical environment and it’s components 
+creation by looking at the code of the Main . There are 8 logical steps in Main
+:</p>
+<table width="100%">
+  <tr>
+    <td><b>#</b></td>
+    <td><b>Step</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top"><a href="#Step1">Check the input data</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top"><a href="#Step2">Create a session and open the document</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">3</a></td>
+    <td valign="top"><a href="#Step4">Retrieve the root product of the input document</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">4</a></td>
+    <td valign="top"><a href="#Step3">Initializing Electrical Environment</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step12">5</a></td>
+    <td valign="top"><a href="#Step12">Get the Flattening Parameters</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step13">6</a></td>
+    <td valign="top"><a href="#Step13">Retrieve the list of Geometrical Bundles</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top"><a href="#Step7">Flatten the Geometrical Bundles</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step14">8</a></td>
+    <td valign="top"><a href="#Step14">Epilogue</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Check the input data.</h4>
+<p>&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+if ( 2 &gt; argc ) 
+{
+retCode = 1; 
+goto EscapeWay;
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Create a session and open the document.</h4>
+<p>We need a <i>CATSession</i> pointer to create the Session.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+pSession = CATSession::Create_Session(sessionIdent);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">We need a CATDocument pointer to opening the document.</p>
+<table class="code" height="35">
+  <tr>
+    <td height="31">
+      <pre>...
+CATDocumentServices::Open(argv[1], pDoc, cusInType);
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">&nbsp;</p>
+<p>Once the current session has been created, the CATProduct document can be
+loaded into the session . pDoc is a pointer to this document.</p>
+<p align="right">[<a href="#Top">Top</a>][<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Retrieve the root product of the input document.</h4>
+<p>We need a <i>CATProduct</i> pointer to retrieving the root product.&nbsp;</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>....
+  hr = pDoc-&gt;QueryInterface(IID_CATIDocRoots, (void**)(&amp;pIDocRootsOnDoc));
+if(FAILED(hr))
+{
+retCode = 4;
+goto EscapeWay;
+}
+
+// Get the root product which is the first element of root elements
+pListUnkRootProducts = pIDocRootsOnDoc-&gt;GiveDocRoots();
+if(NULL == pListUnkRootProducts)
+{
+retCode = 5;
+goto EscapeWay;
+}
+
+nProducts = pListUnkRootProducts-&gt;Size();
+if( 0 == nProducts)
+{
+retCode = 6;
+goto EscapeWay;
+}
+
+hUnkRootProd = (*pListUnkRootProducts)[1];
+if(NULL_var == hUnkRootProd)
+{
+retCode = 7;
+goto EscapeWay;
+}
+
+hr = hUnkRootProd-&gt;QueryInterface(IID_CATIProduct, (void**)(&amp;pIRootProduct));
+if(FAILED(hr))
+{
+retCode = 8;
+goto EscapeWay;
+}
+</pre>
+      <pre>....</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<p>&nbsp;</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Initializing Electrical Environment.</h4>
+<p>We initialize the Document by using CATIEleDocServices interface pointer and
+the method Initialize() on it.</p>
+<table class="code" id="table7">
+  <tr>
+    <td>
+      <pre>....
+  // Initialise Electrical Environment
+hr = pDoc-&gt;QueryInterface(IID_CATIEleDocServices,(void**)&amp;pIEleDocServices );
+if ( FAILED(hr) )
+{
+retCode = 9; 
+goto EscapeWay;
+}
+
+hr = pIEleDocServices-&gt;Initialize();
+if ( FAILED(hr) )
+{
+retCode = 10; 
+goto EscapeWay;
+}</pre>
+      <pre>....</pre>
+    </td>
+  </tr>
+</table>
+<p align="left">Initializing the electrical environment is mandatory to enable
+access to electrical object or electrical attributes.</p>
+<p align="right">&nbsp;</p>
+<p align="right">&nbsp;</p>
+<h4><a name="Step12"></a>Get the Flattening parameters.</h4>
+<p>&nbsp;</p>
+<table class="code" id="table5">
+  <tr>
+    <td>
+      <pre>....
+  hr = pIRootProduct-&gt;QueryInterface(IID_CATIEhfEnvironment,(void**)&amp;pIEhfEnvironment);
+if ( FAILED(hr) )
+{
+retCode = 11;
+goto EscapeWay;
+}
+
+hr = pIEhfEnvironment-&gt;GetFlatteningParameters(&amp;phListFlatteningPara);
+if ( ( FAILED(hr) ) || ( NULL == phListFlatteningPara ) )
+{
+retCode = 12;
+goto EscapeWay;
+}
+
+nbFlatteningPara = phListFlatteningPara-&gt;Size();
+if (0 &gt;= nbFlatteningPara)
+{
+retCode = 13;
+goto EscapeWay;
+}
+
+hUnkFlatteningPara = (*phListFlatteningPara)[1];
+if (NULL_var == hUnkFlatteningPara)
+{
+retCode = 14;
+goto EscapeWay;
+}
+
+hr = hUnkFlatteningPara-&gt;QueryInterface(IID_CATIEhfFlatteningParameters, (void **)&amp;pIFlatteningPara);
+if ( FAILED(hr) )
+{
+retCode = 15;
+goto EscapeWay;</pre>
+		<pre>}</pre>
+      <pre>....</pre>
+    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p align="right">&nbsp;</p>
+<h4><a name="Step13"></a>Get the list of geometrial bundles</h4>
+<p>&nbsp;</p>
+<table class="code" id="table6">
+  <tr>
+    <td>
+      <pre>....
+  phUnkListChildren = pIRootProduct-&gt;GetAllChildren(&quot;CATIEhiGeoBundle&quot;);
+if( NULL == phUnkListChildren )
+{
+retCode = 16;
+goto EscapeWay;
+}
+
+numGBN = phUnkListChildren-&gt;Size();
+if( 0 &gt;= numGBN )
+{
+retCode = 17;
+goto EscapeWay; 
+}
+
+hUnkListElem = (*phUnkListChildren)[1] ;
+if( NULL_var == hUnkListElem )
+{
+retCode = 18;
+goto EscapeWay;
+}
+
+hr = hUnkListElem-&gt;QueryInterface(IID_CATBaseUnknown, (void**)&amp;pIUnkGBN) ;
+if( FAILED(hr) )
+{
+retCode = 19;
+goto EscapeWay; 
+}
+
+ListOfGBNs.Append(pIUnkGBN) ;
+</pre>
+      <pre>....</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step7"></a>Flatten the harness</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre> ...</pre>
+      <pre>  hr = pIRootProduct-&gt;QueryInterface(IID_CATIEhfFlattenManager,(void**)&amp;pIFlatten);
+if ( FAILED(hr) )
+{
+retCode = 20;
+goto EscapeWay;
+}
+
+hr = pIFlatten-&gt;FlattenHarness( &amp;ListOfGBNs );
+if (FAILED( hr))
+{
+retCode = 21;
+goto EscapeWay;
+}
+ ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<p align="right">&nbsp;</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step14"></a>Epilogue</h4>
+<p>Removing document from session and closing the session.</p>
+<table class="code" id="table8">
+  <tr>
+    <td>
+      <pre> ...</pre>
+      <pre>  CATDocumentServices::Remove (*pDoc) ;
+
+  if ( NULL != pSession )
+  {
+    pSession-&gt;Delete_Session(sessionIdent);
+  }</pre>
+      <pre>&nbsp;</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">&nbsp;</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to flatten a harness.&nbsp;</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table width="100%">
+  <tr>
+    <td valign="top" align="right">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="history"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>2</strong> [January 2007]</td>
+    <td valign="top">Document updated</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2007, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

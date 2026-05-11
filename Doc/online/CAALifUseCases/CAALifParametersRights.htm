@@ -1,0 +1,213 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Managing Parameter Rights</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Knowledge Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Parameter Rights</h3>
+      <em>How to specify access rights on parameters</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article explains how to manage the parameter access rights.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAALifParameterRights Use Case</a></b>
+          <ul>
+            <li><a href="#What">What Does CAALifParameterRights Do</a></li>
+            <li><a href="#How">How to Launch CAALifParameterRights</a></li>
+            <li><a href="#Where">Where to Find the CAALifParameterRights Code</a></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Step">Step-by-Step</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>The literal feature platform manages the parameter rights in two steps:</p>
+<ol>
+  <li>By specifying access rights on the literal.</li>
+  <li>Then by making the parameter editor process the specified accessed rights.
+    That way, the end-user is only authorized to access parameters according to
+    the rights specified.</li>
+</ol>
+<p>In this use case, you will only learn how to specify access rights on
+parameters.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALifParameterRights Use Case</h3>
+<p>CAALifParameterRights is a use case of the CAALiteralFeatures.edu framework
+that illustrates KnowledgeInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALifParameterRights Do</h4>
+<p>This use case creates two integer type parameters and set their access
+rights.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="25" height="25">
+In a batch program which does not involve any parameter editor, you can specify
+access rights but they are not really active. To test the right access
+effectiveness. you must plug an editor to your application.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALifParameterRights</h4>
+<p>To launch CAALifParameterRights, you will need to set up the build time
+environment, then compile CAALifParameterRights along with its prerequisites,
+set up the run time environment, and then execute the use case which main
+program is CAALifParametersMain. This program encompasses several use cases [<a href="#References">1</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALifParameterRights Code</h4>
+<p>The CAALifParameterRights use case is made of the CAALifParameterRights.cpp
+file located in the CAALifParameters.m module of the CAALiteralFeatures.edu
+framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifParameters.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifParameters.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p>The main program related to this file is CAALifParametersMain.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>CAALifParameterRights is made up of xx steps:</p>
+<ol>
+  <li><a href="#Step1">Creating the Parameters</a></li>
+  <li><a href="#Step2">Retrieving the Default Access Rights</a></li>
+  <li><a href="#Step3">Setting the Access Rights</a></li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating the Parameters</h4>
+<p>The &quot;intParam0&quot; and &quot;intParam1&quot; parameters are created as
+persistent parameters [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Retrieving the Default Access Rights</h4>
+<p>The default parameter rights are retrieved by using the
+CATICkeParm::UserAccess method.<br>
+</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATICkeParm_var spP1 = ... ; 
+cout &lt;&lt; &quot;Default rights (3 expected - readOnly)&quot; &lt;&lt; endl;
+cout &lt;&lt; int(spP1-&gt;UserAccess ()) &lt;&lt; endl;
+cout &lt;&lt; &quot;Default rights (0 expected)&quot; &lt;&lt; endl;
+cout &lt;&lt; int(spP1-&gt;IsReadOnly () ) &lt;&lt; endl;
+</pre>
+    </td>
+  </tr>
+</table>
+<p>By default a parameter is created with ReadWrite access mode. The access
+rights are defined by the enum below:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>enum UserAccessMode
+{
+  NotSeen = 0,
+  ReadOnly = 1,
+  WriteOnly = 2,
+  ReadWrite = 3,
+  User = 4
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>In addition to the usual access rights, the literals support the NotSeen
+access right whereby you can specify that a parameter can only be used by the
+application developer. The NotSeen access right has nothing to do with the
+Hidden properties which is managed by the end-user.</p>
+<p>You can also use the CATICkeParm::IsReadOnly method to determine the
+parameter access rights.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Setting the Access Rights</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+spP1-&gt;SetUserAccess(ReadOnly);
+spP2-&gt;SetUserAccess(ReadOnly);
+...
+</pre>
+    </td>
+  </tr>
+</table>
+<p>The &quot;intParam0&quot; access right is set to ReadOnly by using the
+CATICkeParm::SetUserAccess method which takes as its argument one of the items
+of the UserAccessMode enum.</p>
+<p>The &quot;intParam0&quot; parameter is constrained by the p1 = 3 * p2 - 2
+formula although it is declared as a ReadOnly parameter. The formula is created
+and the &quot;intParam0&quot; parameter is updated according to the formula.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAALifParamPers.htm">Using Persistent Parameters</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

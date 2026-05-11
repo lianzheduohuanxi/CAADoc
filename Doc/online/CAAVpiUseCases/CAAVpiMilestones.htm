@@ -1,0 +1,342 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Using Milestones</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td valign="top">
+      <h2>Configuration Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating and Using Milestones</h3>
+      <em>Working with a program and milestones</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVpiMilestones use case. This use case
+      explains how to create programs and milestones, and how to use them in
+      Configuration Management.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAVpiMilestones Use Case</a>
+          <ul>
+            <li><a href="#What">What Does CAAVpiMilestones Do</a></li>
+            <li><a href="#How">How to Launch CAAVpiMilestones</a></li>
+            <li><a href="#Where">Where to Find the CAAVpiMilestones Code</a></li>
+          </ul>
+          </li>
+          <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+          <li><strong><a href="#InShort">In Short</a></strong></li>
+          <li><strong><a href="#References">References</a></strong></li>
+        </ul>
+      </strong></td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to help you make your first steps in programming
+the ENOVIA Configuration Management. Its main intent is to create a program and
+milestones, and use them in Configuration Management.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiMilestones Use Case</h3>
+<p>CAAVpiMilestones is a use case of the CAAVPMInterfaces.edu framework that
+illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiMilestones Do</h4>
+<p>The goal of CAAVpiMilestones case is to show how to use Configuration
+Management interfaces to create a <i>program</i>, that is, an entity that
+aggregates <i>milestones</i>. Using milestones in Configuration Management is
+then demonstrated. The effects of a milestone value's modification is explained.</p>
+<p>More precisely CAAVpiMilestones:</p>
+<ul>
+  <li>Creates two simple Product Structures</li>
+  <li>Creates basics configuration objects such as configurable roots,
+    configurable views, and modifications</li>
+  <li>Creates a program and a milestone</li>
+  <li>Defines effectivities for modifications using the milestone</li>
+  <li>Perform filter operations to demonstrate milestone values usage.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiMilestones</h4>
+<p>To launch CAAVpiMilestones, you will need to set up the build time
+environment, then compile CAAVpiMilestones along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Launch the use case as follows:
+<ul>
+  <li>With Windows
+    <table class="code">
+      <tr>
+        <td>
+          <pre>e:&gt;CAAVpiMilestones</pre>
+        </td>
+      </tr>
+    </table>
+  <li>With UNIX
+    <table class="code">
+      <tr>
+        <td>
+          <pre>$ CAAVpiMilestones</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAVpiMilestones Code</h4>
+<p>The CAAVpiMilestones use case is made of a single class named
+CAAVpiMilestones located in the CAAVpiMilestones.m module of the
+CAAVPMInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiMilestones.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiMilestones.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>There are six main steps in CAAVpiMilestones Code:</p>
+<ol>
+  <li><a href="#Step1">Prolog</a></li>
+  <li><a href="#Step2">Creating a Program and a Milestone</a></li>
+  <li><a href="#Step3">Initializing a Milestone</a></li>
+  <li><a href="#Step4">Attaching a Program to the Configurable Root</a></li>
+  <li><a href="#Step5">Defining Effectivities for Modification</a></li>
+  <li><a href="#Step6">Modifying a Milestone Value</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Prolog</h4>
+<p>CAAVpiMilestones creates two simple product trees, made of one product root
+class (prefix is uidPRC), and under it, two item instances (prefix is uidII ).
+The creation process won't be detailed here, as it's not the purpose of this use
+case, but a prerequisite. Please refer to Product Structure samples to get more
+explanations about Product Structure management.</p>
+<p>On each of this two product trees, a configurable root and a configurable
+view are created. Please refer to the use case <i>Configuring a Product
+Structure</i> [<a href="#References">2</a>] to get more information.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating a Program and a Milestone</h4>
+<table class="code">
+  <tr>
+    <td width>
+      <pre>...
+//--Create Program   
+  CATICfgProgram_var Program;
+  CATUnicodeString ProgName(&quot;Program1&quot;);
+  ret = CfgManager-&gt;<b>CreateProgram</b>(ProgName,Program);
+  if FAILED(ret) return ret;
+	 
+//--Create MileStone
+  CATICfgMileStone_var MileStone1;
+  CATUnicodeString name_MS1(&quot;MileStone1&quot;);
+
+  ret = Program-&gt;<b>CreateMileStone</b>(name_MS1,MileStone1);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The configuration manager is used to create a program. A program aggregates
+milestones under its unique name.</p>
+<p>To create milestones, a smart pointer to<i> CATICfgProgram</i> is needed.
+Here, a milestone under &quot;Program1&quot; is created.</p>
+<p>A milestone is a label referencing a value used in modification
+effectivities. It is useful to use a milestone instead of a real value, so as to
+quicker modify all the effectivities impacted by a value change.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Initializing a Milestone</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //--Milestones Initialization. Creation of Normal Value is needed.
+  CATICfgNormalValue_var NV1;
+  int Range = 20;
+
+  ret = CfgManager-&gt;<b>CreateNormalValue</b>(Range,Range,NV1);
+  if FAILED(ret) return ret;
+
+  ret = MileStone1-&gt;<b>SetDefaultNV</b>(NV1);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>A milestone is initialized using a normal value and the <code>SetDefaultNV</code>
+method.</p>
+<p>A milestone can take different values, depending on the configurable root to
+which its program is attached.</p>
+<p>It is thus possible to give a default value that will apply when attaching
+the program to the configurable root.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Attaching a Program to the Configurable Root</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //--Program Attachement
+  ret = ConfigurableRootA-&gt;<b>AttachProgram</b>(Program);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This essential step links the<i> </i>program<i> </i>and milestones under it
+to the configurable root.</p>
+<p>A milestone value (of type <i>MilestoneValue</i>) is created, and set with
+the default value defined for the milestone.</p>
+<p>This MilestoneValue is unique for the pair: ConfigurableRoot - Milestone.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Defining Effectivity for Modification</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //--Define Effectivity1 : [MileStone1, 100]
+  int StartRange1 = 20;
+  int EndRange1   = 100;
+
+  CATICfgBasicEffectivity_var BasEff1;
+  ret = CfgManager-&gt;<b>CreateBasicEffectivity</b>(BasEff1);
+  if FAILED(ret) return ret;
+
+  ret = BasEff1-&gt;<b>SetRangeInterval</b>(StartRange1, EndRange1);
+  if FAILED(ret) return ret;
+
+  ret = BasEff1-&gt;<b>SetStartMilestone</b>(MileStone1);
+  if FAILED(ret) return ret;
+
+  CATICfgEffectivity_var Effectivity1;
+  ret = CfgManager-&gt;<b>CreateEffectivity</b>(Effectivity1);
+  if FAILED(ret) return ret;
+
+  ret = Effectivity1-&gt;<b>AddEffectivity</b>(BasEff1);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>Please refer to the use case CAAVpiConfigurateStructure to get more
+information about creation of the <i>basic effectivity</i> and <i>effectivities.</i></p>
+<p>To define a milestone on a basic effectivity, the <code>SetStartMileStone</code>
+(or/and <code>SetEndMilestone</code>) method is used.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step6"></a>Modifying a Milestone Value</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  //-- Create new Normal value
+  CATICfgNormalValue_var NV1bis;
+  int Range1bis = 50;  //new value
+
+  ret = CfgManager-&gt;<b>CreateNormalValue</b>(Range1bis,Range1bis,NV1bis);
+  if FAILED(ret) return ret;
+
+  //-- Query MileStoneValue
+  CATICfgMileStoneValue_var MileStoneValue1;
+  ret = ConfigurableRootA-&gt;<b>QueryMileStoneValueByMileStone</b>(MileStone1,MileStoneValue1);
+  if FAILED(ret) return ret;
+
+  //-- Modify Milestone Value
+  ret = MileStoneValue1-&gt;<b>SetNV</b>(NV1bis);
+  if FAILED(ret) return ret;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>An important advantage of using milestones is the possibility to change their
+value. Thus, each effectivity impacted by these milestones is automatically
+refreshed. In case of large scale engineering project, a date type milestone can
+be used to set a specific value at the end of the design phase. This milestone
+will then be used in a large number of part instances' effectivities. If the
+date changes, there is no need to update each effectivity, but only the
+milestone value.</p>
+<p>First, a normal value must be created with the expected new value for
+milestone.</p>
+<p>Then, the unique milestone value for the pair Configurable Root - Milestones
+is retrieved.</p>
+<p>Finally, this milestone value is modified using the <code>SetNV</code>
+method.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated the way to create a program and milestones and
+use them in Configuration Management.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAVpiConfigurateStructure.htm">Configuring a Product Structure
+      and Using Filters</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Apr 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

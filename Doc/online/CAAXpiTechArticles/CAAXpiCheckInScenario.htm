@@ -1,0 +1,247 @@
+<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+  <script language="JavaScript" src="../CAADocJavaScript/submit.js">
+  </script>
+  <title>Check-In Scenario</title>
+  </head>
+
+  <body>
+
+   <table width="100%">
+     <tr>
+       <td valign="top">
+       <h1>3D PLM PPR Hub Open Gateway</h1>
+       </td>
+       <td valign="top">
+       <h2>File XPDM (PX1)<br>
+       </h2>
+       </td>
+       <td rowspan="2" align="right" valign="top">
+       <h3><a name="Top"></a>Check-In Scenario</h3>
+       <em>Process example for a Check-In scenario</em></td>
+     </tr>
+     <tr>
+       <td class="tech" colspan="2">Technical Article</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <table class="abstract">
+     <tr>
+       <td>
+       <h3>Abstract</h3>
+       <p>This article explains the principles, and gives a step by step 
+       scenario of Check-In operation for a CATIA V5 and an external PDM System 
+       integration [<a href="#References">1</a>].<br>
+       </p>
+       <ul>
+         <li><b><a href="#Check-in Scenario">Check-In Scenario</a></b></li>
+         <li><b><a href="#Check-in_Detailed_Steps_">Check-In Scenario Detailed 
+         Steps</a></b></li>
+         <li><strong><a href="#InShort">In Short</a></strong></li>
+         <li><strong><a href="#References">References</a></strong></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Check-in Scenario"></a>Check-In Scenario</h3>
+   <p>The Check-In is a scenario whereby CATIA session information and 
+   persistent documents are used to create new or modify existing PDM system 
+   data. Check-In enables save a consistent set of documents from CATIA V5 in 
+   the external PDM system with the appropriate document links exposure. These 
+   document links information must be sufficient to compute the right consistent 
+   set of documents to perform the other elementary functions: Check-Out
+   <a href="#References">[2</a>], Rename [<a href="#References">3</a>], and 
+   Derivative Design Copy [<a href="#References">4</a>]. </p>
+   <p></p>
+   <p>This operation is implemented by: </p>
+   <ul>
+     <li>Computing the consistent set of documents the document to Check-In 
+     belongs to</li>
+     <li>Computing the list of document links to expose in PDM</li>
+     <li>Extracting and Updating document internal properties if necessary</li>
+     <li>Invoking in sequence the PDM Check-In operation for each document <br>
+     </li>
+     <ul>
+       <li>Performing the&nbsp; transfer&nbsp; of the persistent documents in 
+       the PDM system</li>
+       <li>Updating documents attributes in the PDM system <br>
+       </li>
+     </ul>
+     </li>
+   </ul>
+   <p>This scenario, developped in the <a href="#Check-in_Detailed_Steps_">
+   Check-In Scenario Detailed Steps</a> section, can be also presented by this 
+   Diagram:</p>
+   <table border="0" style="border-collapse: collapse" bordercolor="#111111" 
+   id="AutoNumber2">
+     <caption>Fig.1: The Check-In Scenario Diagram</caption>
+     <tr>
+       <td><img border="0" src="images/CAAXpiCheckInSchema.jpg" width="615" height="441"></td>
+     </tr>
+   </table>
+   <p>The Check-In scenario must enforce the following rules:</p>
+   <ul>
+     <li>The consistent set of documents is computed from the persistent 
+     documents on disk in the user Work area meaning that the CATIA documents 
+     loaded in session will have to be saved prior the Check-In operation, to 
+     make the modified documents persistent on disk. The Check-In function must 
+     have the ability to force the save of modified document if required. </li>
+   </ul>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="Check-in_Detailed_Steps_"></a>Check-In Scenario Detailed Steps</h3>
+   <p>This section details step by step the Check-In scenario. But, no API will 
+   be given, you should refer to the elementary PX1 use cases, or the 
+   CATxPDMInterfaces framework API documentation, to have implementation 
+   details. </p>
+   <p>The Integration can implement the Check-In scenario as an interactive 
+   CATIA command running within the CATIA session context. This command will 
+   display a Dialog box with the name of the selected document in the current 
+   editor. If no document has been selected first, the name of the editor root 
+   document ( see <i>CATIxPDMSession</i> interface ) will be displayed. The user 
+   starts the Check-In operation by clicking the OK button. </p>
+   <p>A CATIA session is open. It contains CATIA documents.</p>
+   <ol>
+     <li>The user <b>performs</b> Save 
+     management prior to Check-In</li>
+     <li>The user starts the Check-In command after choosing the editor window 
+     he wants to Check-In documents; The Check-In command displays the name of 
+     the selected document in the dialog box </li>
+     <li>User clicks OK button to confirm the selection</li>
+     <li>Integration <b>starts</b> the Check-In operation by <b>performing 
+     preliminary checks</b>:<ol>
+       <li>The selected document doesn’t need to be saved meaning it is 
+       persistent on disk </li>
+       <li>If the document is modified, it must be saved again</li>
+       <li>The physical storage location path of the document is the user Work 
+       area</li>
+       <li>It computes the consistent set of documents this document belongs to 
+       and checks that there is no missing documents</li>
+     </ol>
+     </li>
+     <li>For <b>every documen</b>t belonging to the consistent set of document, 
+     Integration <b>checks</b>:</li>
+     <ol>
+       <li>If the document is loaded in session. If so, it must be already saved
+       </li>
+       <li>The physical storage location path of the document is the user Work 
+       area </li>
+       <li>If the document already exists in PDM system:
+       <ul>
+         <li>It has been checked-out by the user </li>
+         <li>It has been modified since the last Check-Out [<a 
+         href="#References">2</a>]</li>
+         <li>It is not locked in the PDM </li>
+         <li>The new document is compatible with the document stored in the PDM
+         </li>
+       </ul>
+       </li>
+       <li>If the document doesn’t exists in PDM system: Integration must
+       <ul>
+         <li>Perform the reservation of the new document name in the PDM </li>
+         <li>Lock the new document name in the PDM</li>
+       </ul>
+       </li>
+     </ol>
+     </li>
+     <li>Integration <b>updates the properties</b> of the documents of the 
+     consistent set:</li>
+     <ol>
+       <li>The document must be loaded in session</li>
+       <li>The property value of the document is updated in session</li>
+       <li>The document becomes modified in session</li>
+       <li>Integration must save the document in the user Work area again</li>
+     </ol>
+     </li>
+     <li>Integration <b>extracts information</b> on this consistent set of 
+     documents</li>
+     <ol>
+       <li>The Structure links hierarchy</li>
+       <li>The positioning matrices of the instances </li>
+       <li>The Consistent Set links </li>
+       <li>The current documents properties </li>
+       <li>gGenerates preview files </li>
+     </ol>
+     </li>
+     <li>Integration <b>updates PDM</b> system data and information</li>
+     <ol>
+       <li>The document links for the consistent set of document</li>
+       <li>The positioning matrices of the instances in the Product structure</li>
+       <li>Transfers the documents into the PDM repository (only modified 
+       documents)</li>
+       <li>Updates the PDM attributes of every document</li>
+       <ul>
+         <li>Incrementing the revision level of the document</li>
+         <li>Associating with its preview file </li>
+       </ul>
+       </li>
+       <li>Removes PDM lock on documents</li>
+     </ol>
+     </li>
+     <li>Integration <b>stops</b> the Check-In command</li>
+   </ol>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <!---------------------------------comment------------------------------------->
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="InShort"></a>In Short</h3>
+   <p align="right">[<a href="#Top">Top</a>]</p>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="References"></a>References</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">[1]</td>
+       <td><a href="CAAXpiIntegrationOverview.htm">CATIA V5 and an External PDM 
+       System Integration Principles</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[2]</td>
+       <td><a href="CAAXpiCheckOutScenario.htm">Check-Out Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[3]</td>
+       <td><a href="CAAXpiRenameScenario.htm">Rename Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top">[4]</td>
+       <td><a href="CAAXpiDerivativeDesignCopyScenario.htm">Derivative Design 
+       Copy Scenario</a></td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <h3><a name="History"></a>History</h3>
+   <table width="100%">
+     <tr>
+       <td valign="top">Version: <strong>1</strong> [Feb 2005]</td>
+       <td valign="top">Document created</td>
+     </tr>
+     <tr>
+       <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+     </tr>
+   </table>
+   <hr>
+   <!---------------------------------comment------------------------------------->
+   <p><i>Copyright © 1994-2005, Dassault Systèmes. All rights reserved.</i></li>
+   </p>
+   <ol>
+   </ol>
+
+  </body>
+
+</html>
+

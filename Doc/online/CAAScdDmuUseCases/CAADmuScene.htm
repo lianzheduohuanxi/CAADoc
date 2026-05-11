@@ -1,0 +1,124 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Scene</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>DMU Navigator</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating a Scene</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" height="32"></td>
+    <td>
+      <p><a name="Learn"></a>This macro shows you how to use scenes to put a
+      product in a given state. The macro assumes that a CATProduct has been
+      loaded.</p>
+      <!----------------------------------comment------------------------------------->
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" height="32"></td>
+    <td>
+      <p><a name="How"></a>CAADmuScene is launched in CATIA [<a href="#References">1</a>].
+      A previously opened document is needed.</p>
+      <p><a href="CAADmuSceneSource.htm" target="Source">CAADmuScene.CATScript</a>
+      is located in the CAAScdDmuUseCases module. <a href="macros/CAADmuScene.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" height="32"></td>
+    <td>
+      <p><a name="Step"></a>CAADmuScene includes four steps:</p>
+      <ol>
+        <li><a href="#Root">Retrieving the root product</a></li>
+        <li><a href="#Scenes">Retrieving of the scenes collection</a></li>
+        <li><a href="#Scene">Creation of the scene</a></li>
+        <li><a href="#Move">Moving the components</a></li>
+      </ol>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Root"></a>Retrieving the root product</h4>
+      <p>The root product, <i>oRootProduct</i> object, is retrieved using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'ProductDocument', 'Product'); return false;">Product</a></code>
+      method on the active document.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Scenes"></a>Retrieving of the scenes collection</h4>
+      <p>The <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Document', 'GetWorkbench'); return false;">GetWorkbench</a></code>
+      method with the string <code>&quot;SceneWorkbench&quot;</code>, on the
+      active document, gives the <i>oSceneWorkbench</i> object (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'SceneWorkbench'); return false;">SceneWorkbench</a></code>).</p>
+      <p>This <i>oSceneWorkbench</i> object supports the <code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'SceneWorkbench', 'WorkScenes'); return false;">WorkScenes</a></code>
+      method that enables the access to the <i>cScenes</i> collection (see <code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'Scenes'); return false;">Scenes</a></code>)
+      which is the factory of <code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'Scene'); return false;">Scene</a></code>
+      object.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Scene"></a>Creation of the scene</h4>
+      <p>The <i>oScene</i> object is created using the <code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'Scenes', 'AddNewScene'); return false;">AddNewScene</a></code>
+      method on the <i>cScenes</i> collection with the name and the root
+      product.</p>
+      <!----------------------------------comment------------------------------------->
+      <h4><a name="Move"></a>Moving the components</h4>
+      <p><code><a href="#" onclick="javascript:CAAlink('IDL', 'OSMInterfaces', 'Scene', 'GetMove'); return false;">GetMove</a></code>
+      method returns the <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Move'); return false;">Move</a></code>
+      object corresponding to each child of the root product in the scene.</p>
+      <p>The position of each child in the scene is modified using <code><a href="#" onclick="javascript:CAAlink('IDL', 'InfInterfaces', 'Move', 'Apply'); return false;">Apply</a></code>
+      method with the right matrix.</p>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to use marker3Ds in order to label components.
+Specifically, it has illustrated how to :</p>
+<ul>
+  <li>retrieve a selected component</li>
+  <li>read information on a component</li>
+  <li>create a marker3D</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAScdDmuTechArticles/CAADmuTocDMU.htm">DMU
+      Navigator automation objects</a></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<p align="center"><a href="../CAAScdBase/CAADmuScriptHome.htm">DMU
+Navigator Home</a> <a href="../CAAScdBase/CAASpaScriptHome.htm">DMU
+Space Analysis Home</a> <a href="../CAAScdBase/CAAKiiScriptHome.htm">DMU
+Kinematics Simulation Home</a></p>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2001, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>

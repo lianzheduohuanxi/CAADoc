@@ -1,0 +1,332 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script language="JavaScript" src="../CAADocJavaScript/submit.js"></script>
+<title>The Setting Controller</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Frame</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Setting Controller</h3>
+      <em>Encapsulating the access to the setting file</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article illustrates what a setting controller is, and explains how
+      to create one.</p>
+      <ul>
+        <li><strong><a href="#Part1">Introduction</a></strong></li>
+        <li><strong><a href="#Part2">How to Define the Interface Dedicated to
+          the Parameters</a></strong>
+          <ul>
+            <li><strong><a href="#sa versus param">Setting Attributes versus
+              Parameters</a></strong></li>
+            <li><strong><a href="#method to init the sc">Method to Initialize
+              the Setting Controller</a></strong></li>
+            <li><strong><a href="#methods pour le lock">Methods to Manage the
+              States of the Locks</a></strong></li>
+          </ul>
+        </li>
+        <li><strong><a href="#Part3">How to Implement a Setting Controller</a></strong></li>
+        <li><strong><a href="#Part4">The Life Cycle of the Setting Controller</a></strong></li>
+        <li><strong><a href="#factory">Factory for the Setting Controller</a></strong></li>
+        <li><strong><a href="#InShort">In Short</a></strong></li>
+        <li><strong><a href="#References">References</a></strong></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part1"></a>Introduction</h3>
+<p>The setting controller enables several applications to access the parameters
+stored in a setting file, without having to know about the internal storage
+details. Setting controllers ensure a consistent access to settings information
+for applications, the Tools/Options command being the most important of these
+applications.</p>
+<table>
+  <caption><i><a name="Fig.1">Fig.1</a>: Links Between Objects</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAACafSettingControllerOverview.jpg" width="605" height="578"></td>
+  </tr>
+</table>
+<p>As you can see from the above figure, the setting controller is the interface
+between one application and the setting repository [<a href="#References">1</a>],
+the latter being the memory representation of the setting file. The controller
+is a component that implements two interfaces:</p>
+<ul>
+  <li><i>CATIIniSettingManagment</i></li>
+  <p>This interface, defined in the InteractiveInterfaces framework, manages the
+  general methods of the setting repository: <code>Commit, Save, Rollback </code>and<code>
+  ResetToAdminValues.</code></p>
+  <li><i>IParameterAccess</i></li>
+  <p>This interface, whose signature depends on the setting file, enables the
+  access to the parameters.</p>
+</ul>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">
+Applications using a setting controller are commands. If your command modifies
+parameters it must be <b>exclusive</b> (<code>CATCommandModeExclusive</code>)
+like any command which modifies data model.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part2"></a>How to Define the Interface Dedicated to the Parameters</h3>
+<h4><a name="sa versus param"></a>Setting Attributes versus Parameters</h4>
+<p>The setting repository contains setting attributes accessible thanks to the <code>ReadSetting</code>
+and <code>WriteSetting</code> methods. Using these methods ties the code to the
+formats and locations of the attributes. To enable attribute format and location
+modifications while ensuring client code compatibility, it is advised to
+encapsulate the attribute access using an interface which <b>increases the
+semantic</b> in having parameter access.</p>
+<p>For each parameter, you need to provide:</p>
+<ul>
+  <li>A <b>Get</b>xxx method to access to the xxx parameter</li>
+  <p>This method calls one or several <code>ReadSetting</code> methods. This
+  depends on the number of setting attributes that the xxx the parameter
+  represents</p>
+  <li><b>A Set</b>xxx method to modify the xxx parameter</li>
+  <p>This method calls one or several <code>WriteSetting</code> methods. This
+  depends on the number of setting attributes that the xxx the parameter
+  represents</p>
+</ul>
+<h4><a name="method to init the sc"></a>Method to Initialize the Setting
+Controller</h4>
+<p>To ensure a good use of the setting repository, it is necessary to load or to
+create in memory all the setting attributes of the setting file. This operation
+must be done just before the first use of the setting controller, in other words
+just after its creation. It is the role of the <code><b>Initialize</b></code>
+method. Refer to the section &quot;The <a href="#Part4">Life Cycle of the
+Setting Object</a>&quot;, for the use of this method.</p>
+<p>The <code>Initialize</code> method consists in calling <b>all</b> <code>Getxxx</code>
+methods, which contain the call to the appropriate <code>ReadSetting</code>
+method of the <i>CATSettingRepository</i> class.</p>
+<p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">When
+you enrich your setting file with new parameters, you have to modify the <code>Initialize</code>
+method, so that it calls the new Getxxx methods.</p>
+<h4><a name="methods pour le lock"></a>Methods to Manage the State of the Locks</h4>
+<p>In a Property Page of the Tools/Options command, the administrator has the
+possibility to &quot;lock&quot; parameters [<a href="#References">1</a>].</p>
+<table>
+  <caption><i><a name="Fig.2">Fig.2</a>: Locks in a Property Page</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAACafToolsOptionsLock.jpg" width="366" height="354"></td>
+  </tr>
+</table>
+<p>In the above figure, the administrator has locked the &quot;Identifier&quot;
+parameter to the &quot;Show&quot; option and the &quot;Implicit Points&quot;
+parameter to the &quot;Hide&quot; option. The end user is still free to modify
+the value of the maximum points used to discretize a curve, but cannot modify
+the two other parameters.</p>
+<p>The dialog object acting as a lock is an instance of the<i> </i><i>CATDlgLock</i>
+class whose constructor takes one or a list of <i>CATSettingInfo</i> instances
+in input. Each instance of <i>CATSettingInfo</i>, retrieved thanks to the <code>GetInfo</code>
+method of the <i>CATSettingRepository</i> class, represents an attribute for a
+setting repository. If the lock controls only one attribute, the <i>CATDlgLock</i>
+constructor needs one instance of <i>CATSettingInfo</i>. Moreover, if the lock
+controls several attributes the constructor needs several instances of <i>CATSettingInfo</i>.
+Refer to the use case &quot;Creating a Property Page for Application
+Properties&quot; [<a href="#References">2</a>] for an example on how to use <i>CATDlgLock</i>
+and <i>CATSettingInfo</i> classes.</p>
+<p>For each xxx parameter, you need to provide:</p>
+<ul>
+  <li><code>HRESULT <b>GetInfo</b>xxx(CATSettingInfo ** oInfoArray, int
+    iNbSettingInfo) = 0;</code></li>
+  <p>This method calls one or several <code>GetInfo</code> methods. This depends
+  on the number of setting attributes that represent the parameter.
+  <p>Remark: If the parameter is represented by one attribute, and if you are
+  sure this will not change over time, you can simplify the signature of the
+  method: <code>GetInfoxxx(CATSettingInfo * oInfo)</code>
+</ul>
+<!---------------------------------comment------------------------------------->
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Part3"></a>How to Implement a Setting Controller</h3>
+<p>This section describes the classes and the interface needed to create a
+Setting Controller in order to take into account a naming rule. Refer to the use
+case &quot;Creating a Setting Controller&quot; [<a href="#References">3</a>] for
+a concrete example.</p>
+<p>The setting file is named XXXyyyZZZ<b>.CATSetting</b>, where:</p>
+<ul>
+  <li>XXX is the trigram of your company</li>
+  <li>yyy is the trigram of the framework where the setting controller will be
+    created</li>
+  <li>ZZZ is dedicated to your setting file</li>
+</ul>
+<table>
+  <caption><i><a name="Fig.3">Fig.3</a>: Setting Controller Component</i></caption>
+  <tr>
+    <td><img border="0" src="images/CAACafSettingControllerImpl.jpg" width="567" height="364"></td>
+  </tr>
+</table>
+<p>As you can see in the above figure, the controller is a component named
+XXXyyyZZZ<b>SettingCtrl</b> which implements:</p>
+<ul>
+  <li><i>CATIIniSettingManagment</i> through the XXX<b>E</b>yyy<b>SettingManagmentFor</b>ZZZ
+    extension class</li>
+  <li>XXX<b>I</b>yyyZZZ<b>SettingAtt</b> through the XXX<b>E</b>yyyZZZ<b>SettingAtt
+    </b>extension<b> </b>class<b>.</b></li>
+</ul>
+<p>Here are the classes and interfaces needed to be created in your framework:</p>
+<ul>
+  <li>In the ProtectedInterfaces directory:
+    <ul>
+      <li>XXX<b>I</b>yyyZZZ<b>SettingAtt.h</b></li>
+    </ul>
+  </li>
+  <li>In a LocalInterfaces directory of a module:
+    <ul>
+      <li>XXXyyyZZZ<b>SettingCtrl</b>.h</li>
+      <li>XXX<b>E</b>yyyZZZ<b>SettingAtt</b>.h</li>
+      <li>XXX<b>E</b>yyy<b>SettingManagmentFor</b>ZZZ.h</li>
+    </ul>
+  </li>
+  <li>In a src directory of the same module:
+    <ul>
+      <li><b>TIE_</b>XXX<b>I</b>yyyZZZ<b>SettingAtt.h</b></li>
+      <li>XXX<b>I</b>yyyZZZ<b>SettingAtt.</b>cpp</li>
+      <li>XXXyyyZZZ<b>SettingCtrl</b>.cpp</li>
+      <li>XXX<b>E</b>yyyZZZ<b>SettingAtt.</b>cpp</li>
+      <li>XXX<b>E</b>yyy<b>SettingManagmentFor</b>ZZZ.cpp</li>
+    </ul>
+  </li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Part4"></a>The Life Cycle of the Setting Controller</h3>
+<p>In most cases, to access and modify a parameter, the setting controller reads
+and writes data from and to the setting repository. But to enhance performances,
+the setting controller can save values without making an automatic
+synchronization with the setting repository. To ensure the validity of the data,
+the setting controller must be <b>unique</b> during the session. This
+methodology must be used, even if your setting controller modifies directly the
+setting repository since it allows a possible evolution of your code.</p>
+<p>The main component class of the setting controller, named XXXyyyZZZ<b>SettingCtrl
+</b>in the previous section, contains:</p>
+<ul>
+  <li>a public static method, <code><b>GetSettingController</b></code></li>
+</ul>
+<blockquote>
+  <p>This method creates a XXXyyyZZZ<b>SettingCtrl </b>class only if it does not
+  already exist, otherwise the pointer comes from the next static data.</p>
+  <p><img border="0" src="../CAAIcons/images/warning.gif" width="30" height="30">In
+  this method, immediately after the first and unique class creation, you must
+  initialize the setting repository by calling:</p>
+  <ul>
+    <li>the <a href="#method to init the sc"><code>Initialize</code></a> method
+      of the XXX<b>I</b>yyyZZZ<b>SettingAtt </b>interface</li>
+    <li>the <code>Commit</code> method of the <i>CATIIniSettingManagement</i>
+      interface, to save the values that would be used in case a rollback is
+      invoked.</li>
+  </ul>
+</blockquote>
+<ul>
+  <li>a static data member to keep a pointer on the XXXyyyZZZ<b>SettingCtrl </b>class</li>
+</ul>
+<blockquote>
+  <p>This data member is not a XXXyyyZZZ<b>SettingCtrl </b>pointer, it is a <i>CATIniCleanerSettingCtrl</i>
+  instance. This class, defined in the InteractiveInterfaces framework, contains
+  the XXXyyyZZZ<b>SettingCtrl </b>pointer. This encapsulation is the means to
+  delete the unique setting controller pointer at the end of the session. A
+  static instance is already deleted, a pointer is not. So the destructor of the
+  <i>CATIniCleanerSettingCtrl</i> releases the XXXyyyZZZ<b>SettingCtrl </b>pointer<b>.</b></p>
+</blockquote>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="factory"></a>Factory for the Setting Controller</h3>
+<p>For completeness when creating an instance of any component, you should
+implement and use the <i>CATICreateInstance</i> interface (System framework).
+But since your component is unique during the session, you must create a global
+factory function which is a special factory. This public function enables the
+retrieval of an interface pointer on the setting controller. This global
+function is called <b>Get</b>XXXyyyZZZ<b>SettingCtrl.</b></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<hr>
+<h3><a name="InShort"></a>In Short</h3>
+<p>A setting controller enables the encapsulation for the access to the setting
+attributes, and ensures a consistent access through its uniqueness.</p>
+<p>A setting controller is a component which implements:</p>
+<ul>
+  <li>A XXXIyyyZZZSettingAtt interface, whose signature depends on the setting
+    file, that grants the access to the parameters without having to know about
+    the internal storage (the name of the setting file, the format and the
+    location of the attributes). This interface contains</li>
+  <ul>
+    <li>The <code>Initialize</code> method</li>
+    <li>For each parameter, a <code>Getxxx</code> and <code>Setxxx</code> pair
+      of methods, and one <code>GetInfoxxx</code> method</li>
+  </ul>
+  <li><i>CATIniSettingManagement</i> interface, defined in the
+    InteractiveInterfaces framework, that manages general methods on the setting
+    repository: <code>Commit, Save, ResetToAdminValues </code>and<code>
+    Rollback.</code></li>
+</ul>
+<p>A setting controller is accessible through a global function which returns an
+interface pointer to the component.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysSettingRepositories.htm">Setting
+      Repositories and Attributes</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAACafUseCases/CAACafSampleToolsOptions.htm">Creating
+      a Property Page for Application Properties</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAACafUseCases/CAACafSampleSettingController.htm">Creating
+      a Setting Controller</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

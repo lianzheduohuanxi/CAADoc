@@ -1,0 +1,150 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Sphere</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1>Creating a Frustum of a Sphere</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>A frustum is a portion of a sphere intercepted between two parallels 
+		and two meridians.</p>
+		<ul>
+										<li><a href="#OpeToBeUsed">API to be Used</a></li>
+										<li><a href="#UseCaseDescription">Use Case Description</a></li>
+										<li><a href="#References">References</a></li>
+		</ul>
+	
+		
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="OpeToBeUsed">APIs to be Used</a></h2>
+<p style="height: 10px">A frustum of a sphere is defined by:</p>
+<ul>
+				<li>an axis</li>
+				<li>a radius</li>
+				<li>the start and end parallel angles</li>
+				<li>the start and end meridian angles.</li>
+</ul>
+<p style="height: 10px">To create a frustum of a sphere, use the CATGeoFactory::CreateSphere 
+method which takes as arguments the parallel and meridian angles. The 
+CATGeoFactory class is in the GeometricObjects framework. </p>
+<h2><a name="UseCaseDescription">Use Case Description</a></h2>
+<p>The CAAGMModelSphereCreation.m module in CAAGMModelInterfaces.edu 
+illustrates how to create a frustum of a sphere. This use case creates the input data required 
+for the sphere creation. If you are not already 
+familiar with geometric modeler use cases, go to
+<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Uses Cases</a>. </p>
+<p>With the code below:</p>
+<TABLE class="code">
+    <TR>
+        <TD>
+        <pre>
+CATMathAxis  axis;
+CATMathDirection D1(1.,0.,0.);
+CATMathDirection D2(0.,1.,0.);
+CATMathDirection D3(0.,0.,1.);
+CATMathPoint  mathpoint(5.,15.,50.);
+CATCartesianPoint * pCartP = piGeomFactory->CreateCartesianPoint (5.,15.,50.);
+axis.Set(mathpoint,D1,D2,D3); 
+ 
+double startMeridianAngle = -0.2*CAT2PI;  // -72 deg
+double endMeridianAngle = 0.2*CAT2PI;     // 72 deg
+double startParallelAngle = -0.20*CAT2PI; // -72 deg 
+double endParallelAngle = +0.10*CAT2PI;   // 36 deg
+double radius(25.);
+ 
+// ----------------------------------------------
+// 3 -Create a piece of a sphere
+// ----------------------------------------------
+//
+cout &lt;&lt; "Sphere creation" &lt;&lt; endl;
+CATSphere * pSphere =  piGeomFactory->CreateSphere(axis,radius,
+startMeridianAngle, endMeridianAngle, startParallelAngle, endParallelAngle);  
+	</pre>
+        </TD>
+    </TR>
+</TABLE>
+<p>you get this result:</p>
+<table cellspacing="6" class="style2">
+  <caption><a name="Fig.1">Fig.1</a> Sphere: meridian and parallel angles</caption>
+  <tr>
+	 <td>
+	<img alt="Major start and end angles of a torus" src="images/CGM_sphere_0.png" width="250" height="220">
+	</td>
+	 <td>
+	<img alt="Minor start and end angles of a torus" src="images/CGM_sphere_1.png" width="250" height="220">
+	</td>
+	  </tr>
+	  <tr>
+     	<td>
+	Meridian start angle: -72 deg <br>
+	Meridian end angle: + 72 deg
+	<br>
+	Right-hand rule defines positive angles<br>
+	First direction of the sphere axis is the<br>
+	angle reference</td>
+		<td>
+	Parallel start angle: -72 deg <br>
+	Parallel end angle: + 36 deg
+	<br>
+	Positive angles: sphere axis direction.<br>
+	</td>
+	  </tr>
+	</table>
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmUcGMUseCases.htm">About Geometric Modeler Use Cases</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td>
+		<a href="../CAACgmModel/CAACgmTaUseTopoOperators.htm">How to Use Topological Operators</a></td>
+	</tr>
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Sept 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

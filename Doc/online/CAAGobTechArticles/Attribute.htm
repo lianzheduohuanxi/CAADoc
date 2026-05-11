@@ -1,0 +1,646 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Management of Foreign Data</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Geometric Modeler</h1>
+    </td>
+    <td valign="top">
+      <h2>Geometry</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Management of Foreign Data</h3>
+      <em>How to Put Foreign Data on CGM Objects or Create Own Geometric Curves
+      or Surfaces</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>The geometric attributes are a quick way to add data on CGM objects.
+      Moreover, they are used to introduce foreign surfaces into CGM, that this
+      paper precisely details.
+      <ul>
+        <li><b><a href="#CGM attributes">CGM Attributes</a></b>
+          <ul>
+            <li><a href="#Definition">Definition</a></li>
+            <li><a href="#Characterization">Characterization</a></li>
+            <li><a href="#Management">Management</a></li>
+            <li><a href="#Stream and unstream">Stream and Unstream</a></li>
+            <li><a href="#Non Persistent Attribute: Sample">Non Persistent
+              Attribute: Sample</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#The introduction of a foreign surface class">The
+          Introduction of a Foreign Surface Class</a></b>
+          <ul>
+            <li><a href="#Basic principle">Base Principle</a></li>
+            <li><a href="#CATForeignGeometryData">CATForeignGeometryData</a></li>
+            <li><a href="#CATForeignSurfaceData">CATForeignSurfaceData</a></li>
+            <li><a href="#CATMathForeignFunctionXY">CATMathFunctionXY</a></li>
+            <li><a href="#How to proceed">How to Proceed</a></li>
+          </ul>
+        </li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CGM attributes"></a>CGM Attributes</h3>
+<h4><a name="Definition"></a>Definition</h4>
+<p>A CGM attribute (CATCGMAttribute class) is an object that can be pointed to
+by a CGM object (CATICGMObject interface, or its derived interfaces such a
+CATGeometry, CATSurface, CATCurve for example). It contains data that you want
+to add to a CGM object, without deriving from the corresponding interface. This
+is useful:
+<ul>
+  <li>to stamp an object (during a scan process for example),</li>
+  <li>to attach temporary processed data (such as extracted meshing) ,</li>
+  <li>to store foreign data with specific management methods,</li>
+  <li>in particular, this is used to introduce foreign surface into CGM</li>
+</ul>
+<p>Depending on your need, you can create <i>temporary</i> or <i>streamable</i>
+attribute classes, by deriving your own class from the CATCGMAttribute class and
+CATCGMStreamAttribute class respectively:
+<ul>
+  <li>temporary attributes are only living during the time of your program
+    execution,</li>
+  <li>streamable attributes can be translated into a sequence of bytes to be
+    saved on a given media, and read from a sequence of bytes that comes from a
+    previous translation.</li>
+</ul>
+<table>
+  <caption>Fig. 1: The objects involved in the attribute mechanisms</caption>
+  <tr>
+    <td><img src="images/Foreign0.gif" alt="Foreign0.gif (4919 bytes)" width="479" height="359"></td>
+    <td>An attribute is a CATCGMAttribute object that is referenced by a
+      CATICGMObject.
+      <p>It can be temporary or streamable</p>
+      <p>You create your own attribute class by derivation.</p>
+      <p>All derived object from the CATICGMObject interface obviously owns the
+      attributes management mechanism.</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Characterization"></a>Characterization</h4>
+<p>An attribute is characterized by a class name, an application name and a
+version number. The application name is a logical name for the physical load
+module that contains the attribute class. The mapping between the logical and
+physical names is realized through the <i>static query implementation</i> as
+precisely described in the Object Modeler documentation. What you need to know
+here is that you have to create a header that contains the physical name, a
+source that declares the mapping and a line into a dictionary. The header is as
+follows :</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//-----------------------------------------------------------------------------
+//         header XXX.h for the physical load name (XXX)
+//-----------------------------------------------------------------------------
+#ifdef  _WINDOWS_SOURCE
+#ifdef  __XXX
+#define ExportedByXXX   __declspec(dllexport)
+#else
+#define ExportedByXXX   __declspec(dllimport)
+#endif
+#else
+#define ExportedByXXX
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The <a name="source"></a>source is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//-----------------------------------------------------------------------------
+//         source MyApplicationName.cpp for the mapping
+//  logical load name (MyApplicationName) - physical load name (XXX)
+//  through the dictionary
+//-----------------------------------------------------------------------------
+#include &quot;AppDef.h&quot;
+<b>AppDef(MyApplicationName)</b>;</pre>
+    </td>
+  </tr>
+</table>
+<p>The dictionary <a name="MyApplicationName.dico"><tt>MyApplicationName.dico</tt></a>
+contains the following line:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>MyApplicationName        CATICGMDomainBinder        libXXX</pre>
+    </td>
+  </tr>
+</table>
+<p>Now, you have to declare the mapping in your attribute class by the mean of
+the macro <tt>CATCGMDeclareAttribute</tt>, as showed in the header example <tt>MyAttributeClass.h</tt>
+below, and the macro <tt>CATCGMImplAttribute</tt>, as in the code example for a
+persistent (or streamable) <tt>MyAttributeClass.cpp</tt>:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef MyAttributeClass_H
+#define MyAttributeClass_H
+class CATCGMAttributeDef;
+class CATCGMStream;
+class CATICGMObject;
+class CATCGMContainer;
+
+#include &quot;CATCGMStreamAttribute.h&quot;
+#include &quot;XXX.h&quot;
+
+//-----------------------------------------------------------------------------
+// case of a streamable attribute
+class ExportedByXXX MyAttributeClass : public CATCGMStreamAttribute
+{
+  <b>CATCGMDeclareAttribute</b>(MyAttributeClass, CATCGMStreamAttribute);
+  public :
+  virtual void Stream(CATCGMStream &amp; ioStream);
+  virtual void UnStream(CATCGMStream &amp; iStream);
+// own methods..
+  void SetValue(long iVal);
+  void GetValue (long &amp; oVal);
+  protected :
+// useful- returns 1 if TRUE 0 otherwise
+    virtual long Compare(const CATCGMAttribute &amp;iOtherAttribute);
+};
+// useful
+ExportedByXXX void CastTo(CATCGMAttribute * iMyAttribute, MyAttributeClass * &amp; oMyAttribute);
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The corresponding source <tt>MyAttributeClass.cpp</tt> is:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;CATCGMAttrId.h&quot;
+#include &quot;MyAttributeClass.h&quot;
+#include &quot;CATBaseUnknown.h&quot;
+#include &quot;CATCGMStream.h&quot;
+
+void CastTo(CATCGMAttribute * curattr, MyAttributeClass * &amp; retour)
+{
+  retour =NULL;
+  if (curattr -&gt;IsATypeOf(UAIDPtr(MyAttributeClass)))
+    retour = (MyAttributeClass *) curattr;
+}
+// declaration of the class, the application and the version.
+<b>CATCGMImplAttribute</b>(MyAttributeClass,CATCGMStreamAttribute,MyApplication,1);
+
+void MyAttributeClass::Stream(CATCGMStream &amp; Str)
+{Str.WriteLong(streamedvalue);}
+
+void MyAttributeClass::UnStream(CATCGMStream &amp; Str)
+{Str.ReadLong(streamedvalue);}
+
+void MyAttributeClass::SetValue(long val)
+{ streamedvalue=val;}
+
+void MyAttributeClass::GetValue (long &amp; val)
+{ val = streamedvalue;}
+
+long MyAttributeClass::Compare(const CATCGMAttribute &amp; NewAttr)
+{
+  long idef = 0;
+  MyAttributeClass * newattr;
+  CastTo((MyAttributeClass *)&amp;NewAttr, newattr);
+  if (streamedvalue== newattr-&gt;streamedvalue)
+    idef=1;
+  return idef;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Management"></a>Management</h4>
+<p>Once defined, an attribute can be used by a CATICGMObject. Hence, the <tt>CATICGMObject::PutAttribute</tt>
+method allows a CATICGMObject to point to an attribute.</p>
+<p>Now, the attributes can be read (<tt>CATICGMObject::GetAttribute</tt>) or
+released (<tt>CATICGMObject::ReleasedAttribute</tt>). If a CATICGMObject
+releases an attribute that is no more used, the attribute is deleted.</p>
+<p>A CATICGMObject may point several attributes of different classes;
+conversely, an attribute may be pointed by several CATICGMObjects of the same
+container (a container is a set that contains objects). If a CATICGMObject is
+deleted, the attribute(s) that it points is(are) also deleted if this(these)
+attribute(s) is(are) no more pointed by any other CATICGMObjects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Stream and unstream"></a>Stream and Unstream</h4>
+<p>The stream and unstream mechanisms allow you to translate a (persistent)
+object into a sequence of bytes and vice et versa. To unstream a file (at the
+File/Read operation for example), the unstream process uses the mapping between
+the application name and the load module name to load the right physical load
+module. If the load module is not found during the unstream process, the
+attribute is copied and referenced by the the CATICGMObject, but not seen, so
+that the model can be read and the data are not lost, but not usable too.</p>
+<p>To write the stream and unstream methods for your own attribute, take into
+account that:
+<ul>
+  <li>For that purpose, the CATMathStream class offers you methods to stream and
+    unstream data according to their type (&quot;long&quot;, &quot;double&quot;,
+    &quot;string&quot;, &quot;char&quot; for example).</li>
+  <li>These methods take into account the NT/Unix platform type, so you do not
+    have to care with this point, except if you decide to stream your data as a
+    whole buffer. For that reason also, do not use the stream method of a
+    &quot;long&quot; to stream two&quot;int&quot;.</li>
+  <li>You must write and read the data in the same order. If you have arrays of
+    variable length, write the length of the array before the values.</li>
+  <li>The upward and downward compatibility may be managed by using the method
+    that gives you the object data length to unstream, especially if you only
+    add (or suppress) data . If not sufficient, you may use a version number to
+    insure the compatibility of your different versions of attributes.</li>
+  <li>Do not let point your streamable attribute to other objects.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Non Persistent Attribute: Sample"></a>Non Persistent Attribute:
+Sample</h4>
+<p>First described the application name through the <a href="#MyApplicationName.dico">dictionary</a>
+and the corresponding <a href="#source">header file</a>.</p>
+<p>The header of a new attribute class can be as as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#ifndef UserNonPersistentAttr_H_
+#define UserNonPersistentAttr_H_
+#include &quot;XXX.h&quot;
+#include &quot;CATCGMAttribute.h&quot;
+
+class ExportedByXXX UserNonPersistentAttr : public CATCGMAttribute
+{
+public :
+CATCGMDeclareAttribute(UserNonPersistentAttr,CATCGMAttribute);
+UserNonPersistentAttr();
+UserNonPersistentAttr(const UserNonPersistentAttr&amp;);
+UserNonPersistentAttr&amp; operator=(const UserNonPersistentAttr&amp;);
+virtual ~UserNonPersistentAttr();
+
+};
+#endif</pre>
+    </td>
+  </tr>
+</table>
+<p>The source file is then:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>#include &quot;UserNonPersistentAttr.h&quot;
+CATCGMImplAttribute(UserNonPersistentAttr,CATCGMAttribute,NoAppDef,1);
+//
+UserNonPersistentAttr::UserNonPersistentAttr() :
+CATCGMAttribute()
+{
+}
+//
+UserNonPersistentAttr::UserNonPersistentAttr(const UserNonPersistentAttr&amp;)
+{
+}
+//
+UserNonPersistentAttr&amp; UserNonPersistentAttr::operator=(const UserNonPersistentAttr&amp;)
+{
+return *this;
+}
+//
+UserNonPersistentAttr::~UserNonPersistentAttr()
+{
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>To use it:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>//Creates a UserNonPersistentAttr
+UserNonPersistentAttr * pMyAttr=new UserNonPersistentAttr();
+//
+// Puts it on a line
+piLine-&gt;PutAttribute(pMyAttr);
+//
+// Gets it from the line
+UserNonPersistentAttr * pRetrievedAttr=
+    (UserNonPersistentAttr*) piLine-&gt;GetAttribute(UAIDPtr(UserNonPersistentAttr))
+// 
+//Releases it from the line if no more needed
+piLine-&gt;ReleaseAttribute(pRetrievedAttr);</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="The introduction of a foreign surface class"></a>The Introduction
+of a Foreign Surface Class</h3>
+<p>CATIA Geometric Modeler offers a large variety of surfaces (CATSurface
+interface) from elementary surfaces to Nurbs surfaces, and from sampled surfaces
+to procedural surfaces. All the capabilities of these surfaces are described in
+the [<a href="#References">2</a>] paper.</p>
+<p>You may need to introduce your own surface classes, either you want to have a
+special interface for existing CATSurfaces (for example, you want to have a
+class for Bezier surface, that is a specific case of CATNurbsSurface), or you
+have developed own methods that are optimized for a given type of surfaces.</p>
+<p>This section describes the way to introduce foreign surfaces in CGM. Once
+introduced, they can be handled as any CATSurface: thus, they can be used, for
+example, by the geometric operators or as the geometric support of topological
+faces as any CATSurface. All CATSurface must be C2 continuous (at least twice
+differentiable). So does your own surfaces.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Basic principle"></a>Base Principle</h4>
+<p>The base principle is to involve an attribute class called
+CATForeignSurfaceData and the interface CATIForeignSurface in a bi-directional
+relashionship: the CATIForeignSurface is a void shell, that is filled by the
+CATForeignSurfaceData, as attribute of CATIForeignSurface.
+<ul>
+  <li>CATIForeignSurface retrieves the CATForeignSurfaceData attribute through a
+    <tt>GetAttribute</tt> method, called here <tt>GetData</tt>,</li>
+  <li>CATForeignSurfaceData can ask for its reference by the <tt>GetReference</tt>
+    method.</li>
+</ul>
+<p>You only have to derive your own attribute class from CATForeignSurfaceData,
+and overload the pure virtual (at least) methods.</p>
+<table>
+  <caption>Fig. 2: The mechanism of introduction of a foreign surface</caption>
+  <tr>
+    <td><img src="images/Foreign2.gif" alt="Foreign2.gif (5772 bytes)" width="479" height="359"></td>
+    <td>CGM offers two objects that are bi-directionally linked.
+      CATIForeignSurface and CATForeignSurfaceData.
+      <p>To introduce your own surface object, you have to derive
+      CATForeignSurfaceData , and overload the methods to fit the properties of
+      your object.</p>
+      <p>Then, a CATIForeignSurface object that have a MySurfaceData object as
+      data is handled as any CATSurface by CGM, and with the behavior you have
+      given it.</td>
+  </tr>
+</table>
+<p>CATForeignSurfaceData is a CATCGMStreamAttribute. Hence, it globally owns the
+same properties as its father, except that:
+<ul>
+  <li>A CATForeignSurfaceData cannot be pointed by several CATIForeignSurface,
+    and a CATIForeignSurface cannot point several CATForeignSurfaceData
+    (although it can points other CATCGMAttribute that are not
+    CATForeignSurfaceData)</li>
+  <li>If the load module containing the attribute class is not found, the file
+    is not readable.</li>
+</ul>
+<p>Once described the general mechanism, we detail now the methods of
+CATForeignGeometryData and CATForeignSurfaceData, that must or may be written
+for taking into account the properties of your own surface.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATForeignGeometryData"></a>CATForeignGeometryData</h4>
+<p>This class handles the common behavior of all the foreign geometric objects.
+It is the counterpart of the CATGeometry interface. We find here
+<ul>
+  <li>pure virtual methods, that you must overload for your own object:</li>
+  <ul>
+    <li><tt>Stream</tt> and <tt>Unstream</tt> (as previously explained),</li>
+    <li><tt>Clone</tt> duplicates your object,</li>
+    <li><tt>Move3D</tt> transforms your object according to a given mathematical
+      transformation (rotation, symmetry, etc.),</li>
+  </ul>
+  <li>virtual methods, that have a default behavior. You may overload them to
+    increase the performances or to better fit the behavior of your own class:</li>
+  <ul>
+    <li><tt>CloneAndMove3D</tt> duplicates, then transforms your object,</li>
+    <li><tt>GetSize</tt> gives an approximated evaluation of the size of your
+      object, while <tt>Dump</tt> writes information about the object,</li>
+    <li><tt>CheckUp</tt> performs some checks on your objects.</li>
+  </ul>
+</ul>
+<p>If you compare the methods that are requested for your object with the
+CATGeometry and CATICGMObject methods, you can notice that nothing maps the <tt>GetLinks</tt>
+method. Indeed, if your object refers to an other one, that is foreign or CGM,
+this forward linked object would not be taken into account in any CGM processes
+up to now.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATForeignSurfaceData"></a>CATForeignSurfaceData</h4>
+<p>This class handles the behavior of the foreign surfaces. It is the
+counterpart of the CATSurface interface. Let us first remind some important
+CATSurface properties:
+<ul>
+  <li>As a surface is a bi-parameterized geometric element, it may be
+    represented by three functions of two variables, called <b>CATMathFunctionXY</b>
+    (<tt>(FX(u,v), FY(u,v), FZ(u,v))</tt>). <tt>(u,v)</tt> are the parameters of
+    a point on the surface and are managed by the <tt>CATSurParam</tt> class.
+    Each type of surface is responsible for the mapping (called <i>evaluation</i>)
+    between the <tt>(u,v)</tt> parameters and their corresponding coordinates in
+    the 3D space. Hence the evaluation of a point of a surface amounts to the
+    evaluation of the CATMathFunctionXY.</li>
+  <ul>
+    <li>If you do not find the type of function you want in CGM
+      (CATMathFunctionXY or one of its derivated classes), you must derive your
+      own function class.</li>
+  </ul>
+  <li>Surfaces can have several <i>patch</i>es in each direction: a patch is a
+    part of the surface where it is many infinitely deferentiable. At the
+    frontier of the patch the function is only C2 continuous, and the continuity
+    properties are modeled by a nodal vector (the CATKnotVector class). The
+    patches are located with a patch number <tt>iPatchU</tt> in the first
+    direction and a patch number <tt>iPatchV</tt> in the second direction.
+    Hence, you can use a local parameter on a given patch, or a global
+    parameter, that takes in account the whole surface. The patch numbers are
+    not necessarily positive, but their values are consecutive. Notice that the
+    nodal vectors must not be periodic.</li>
+  <li>A surface has a current limitation, and a maximum limitation, outside
+    which it is not defined or cannot be extrapolated and then cannot be
+    evaluated. A surface limitation is defined by two <tt>CATSurParam</tt>
+    objects and managed by a <tt>CATSurLimits</tt> class. The current limitation
+    defines the area of the surface that is useful, visualized and used by
+    default by the geometric operators.</li>
+</ul>
+<p>Hence, the main methods of the CATForeignSurfaceData are:
+<ul>
+  <li>pure virtual methods, that you must overload for your own object:</li>
+  <ul>
+    <li><tt>GetLimits, GetInternalMaxLimits</tt> and <tt>GetMaxLimits</tt>
+      return the current and maximum limitation respectively, <tt>SeLimits</tt>
+      defines a current limitation,</li>
+    <li>Extrapolate must extend the MaxLimits of this surface,</li>
+    <li><tt>GetKnotVector</tt> retrieves the nodal representation if your
+      surface has several patches,</li>
+    <li><tt>GetEquationSize</tt> and <tt>CreateLocalEquation</tt> give the
+      number of patches and the CATMathFunctionXY associated with each patch
+      respectively,</li>
+    <li><tt>IsConfused</tt> tests is the transformation of your surface is
+      globally coincident with another surface,</li>
+    <li><tt>IsCloseU</tt> and <tt>IsClosedV</tt> test is your surface is closed
+      in the first or second direction respectively,</li>
+  </ul>
+  <li>virtual methods, that have a default behavior. You may overload them to
+    increase the performances or to better fit the behavior of your own class:</li>
+  <ul>
+    <li><tt>GetBox</tt> , <tt>GetBoundingBox</tt>, <tt>GetInternalMaxLimits</tt>,
+      <tt>GetInternalMaxBoundingBox</tt> deal with limitations of a part of a
+      surface, and are defined by default, as soon as the evaluators on the
+      corresponding CATMathFunctionXY are available. So do the different <tt>Eval</tt>
+      methods,</li>
+    <li><tt>CreateParam</tt> returns a CATSurParam on the surface,</li>
+    <li><tt>IsInvariant</tt> tests is your surface is geometrically invariant by
+      a mathematical transformation,</li>
+    <li><tt>HasImplicitEquation</tt>, <tt>GetImplicitEquation</tt>, <tt>GetParam</tt>,
+      <tt>GetParamOnIsopar</tt> deal with surfaces that have an implicit
+      equation. In this case, it allows to have directly the mapping from the <tt>(x,y,z)</tt>
+      cartesian coordinates of a point to the <tt>(u,v)</tt> parameters,</li>
+    <li><tt>HasMathCurve</tt>, <tt>GetMathCurve</tt> returns the mathematical
+      representation of an iso-parametric curve of a surface if this
+      mathematical representation exists,</li>
+    <li><tt>CreateOffset</tt> returns the result of the offset of a surface. By
+      default, it creates the procedural CATOffsetSurface.</li>
+  </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="CATMathForeignFunctionXY"></a>CATMathFunctionXY</h4>
+<p>This class manages the evaluators that are used by the surface evaluators.
+There are already CATMathLinearXY, CATMathFunctionXY, CATMathPolynomXY are kind
+of CATMathFunctionXY that are already provided in CGM.</p>
+<p>If needed however, you may derive your own class of function to fit your
+object behavior, and overload at least the evaluator <tt>Eval</tt> of the value
+of the function.</p>
+<p>The evaluation of the first and second derivatives may be approximated by
+default. So do the interval evaluators. It is however strongly recommended to
+overload the first derivatives evaluation, the best being to also write the
+second derivatives evaluation. If you overload the interval evaluators you will
+increase the CPU performances.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How to proceed"></a>How to Proceed</h4>
+<p>This section summarizes the steps for the integration of your own surface
+class.
+<ul>
+  <li>Analyze the need of a new type of CATMathFunctionXY. If needed:</li>
+  <ul>
+    <li>create your own class <tt>MyFunctionXY</tt> of function of two
+      variables, by derivation of CATMathFunctionXY</li>
+    <li>write the evaluators of this new function,</li>
+    <li>optionally, write the evaluation of the first and second derivatives,
+      and the interval evaluators,</li>
+    <li>write the <tt>Stream</tt> and <tt>UnStream</tt> methods for this object</li>
+  </ul>
+  <li>Create your class <tt>MySurfaceData</tt> by derivation of the
+    CATForeignSurfaceData class:</li>
+  <ul>
+    <li>write the mandatory methods (do not forget the methods of the
+      CATCGMStreamAttribute as <tt>Stream</tt> and <tt>UnStream</tt> or the
+      methods of CATForeignGeometryData as <tt>Clone</tt> and <tt>Move</tt>, and
+      the default constructor),</li>
+    <li>optionally, write the other CATForeignSurfaceData methods,</li>
+    <li>possibly write specific methods for this class,</li>
+  </ul>
+  <li>You are ready to use your own surface class and to test it:</li>
+  <ul>
+    <li>Create a <tt>MySurfaceData</tt> object,</li>
+    <li>Create a <tt>CATIForeignSurface</tt> object with the <tt>CATGeoFactory::CreateForeignSurface</tt>
+      method, by giving a pointer to the <tt>MySurfaceData</tt> object,</li>
+    <li>and use the created <tt>CATIForeignSurface</tt> as any surface in CGM.</li>
+  </ul>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<ul>
+  <li>The geometric attributes allow you to put additional data on all object
+    deriving from the CATICGMObject interface.</li>
+  <li>Foreign surfaces are added into CGM by the derivation of the
+    CATForeignSurfaceData (and possibly a CATMathFunctionXY). This
+    CATForeignSurfaceData is the attribute filling the void CATIForeignSurface,
+    that may be then handled as any CATSurface.</li>
+  <li>The following table summarizes the properties of the different attributes:</li>
+</ul>
+<table border="1">
+  <tr>
+    <td>Attribute</td>
+    <td>Pointed by</td>
+    <td>Streamable</td>
+  </tr>
+  <tr>
+    <td>CATCGMAttribute</td>
+    <td>one or more CATICGMObject</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>CATCGMStreamAttribute</td>
+    <td>one or more CATICGMObject of the same container</td>
+    <td>yes<br>
+      A file is readable, even if the attribute class load module is not found</td>
+  </tr>
+  <tr>
+    <td>CATForeignSurfaceData</td>
+    <td>only one CATIForeignSurface, that points only one CATForeignSurfaceData</td>
+    <td>yes<br>
+      A file is not readable if the attribute class load module is not found</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td>[1]</td>
+    <td><a href="Curves.htm">The Curves of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td>[2]</td>
+    <td><a href="Surfaces.htm">The Surfaces of CATIA Geometric Modeler</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

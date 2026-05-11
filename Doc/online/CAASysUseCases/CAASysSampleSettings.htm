@@ -1,0 +1,470 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating and Using Settings</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating and Using Settings</h3>
+      <em>Enabling your clients to save object properties</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create settings and manage them using a
+      setting class.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAASysLineSetting Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does CAASysLineSetting Do</a></li>
+            <li><a href="#How">How to Launch CAASysLineSetting</a></li>
+            <li><a href="#Where">Where to Find the CAASysLineSetting Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create settings [<a href="#References">1</a>]
+to store persistent object properties, and how to encapsulate their management
+in a class that makes your clients independent from the actual setting
+repository management. This is the best way for enabling client applications to
+access you setting repository.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAASysLineSetting Case</h3>
+<p>CAASysLineSetting is a set of use cases of the CAASystem.edu framework that
+illustrates System framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAASysLineSetting Do</h4>
+<p>This use case creates a setting class named CAASysLineSetting to manage line
+object properties: thickness, color, and linestyle. It also shows how a client
+can access these settings.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAASysLineSetting</h4>
+<p>To launch CAASysLineSetting, you will need to set up the build time
+environment, then compile CAASysLineSetting along with its prerequisites, set up
+the run time environment, and then execute the use case [<a href="#References">2</a>].</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAASysLineSetting Code</h4>
+<p>The CAASysLineSetting use case is made of a several classes located in the
+CAASysLineSetting.m module of the CAASystem.edu framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAASystem.edu\CAASysLineSetting.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAASystem.edu/CAASysLineSetting.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>wherwe <code>InstallRootDirectory</code> is the directory where the CAA
+CD-ROM is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create and use settings, there are five main steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Create the setting encapsulating class</td>
+    <td valign="top"><i>CATSysSetting</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Initialize the setting attribute values</td>
+    <td valign="top"><i>CATSysSetting</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Encapsulate the setting attribute access</td>
+    <td valign="top"><i>CATSysSetting</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">4</a></td>
+    <td valign="top">Encapsulate the setting repository management</td>
+    <td valign="top"><i>CATSysSetting</i> class</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">5</a></td>
+    <td valign="top">Use the settings</td>
+    <td valign="top">Client application</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Creating the Setting Encapsulating Class</h4>
+<p>The <i>CAASysLineSetting</i> class manages the three setting attributes and
+the access to the setting repository.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+class CAASysLineSetting
+{
+  public:
+    CAASysLineSetting();
+    virtual ~CAASysLineSetting();
+    // Initializing the setting attributes with hardcoded defaults
+    HRESULT Init();
+  
+    // Managing the Thickness attribute
+    HRESULT SetThickness(int  iThickness);
+    HRESULT GetThickness(int *oThickness);
+
+    // Managing the Color attribute
+    HRESULT SetColor(int  iRed, int  iGreen, int  iBlue);
+    HRESULT GetColor(int *oRed, int *oGreen, int *oBlue);
+
+    // Managing the Name attribute
+    HRESULT SetName(CATUnicodeString *iName);
+    HRESULT GetName(CATUnicodeString *oName);
+
+    // Encapsulating the setting repository access
+    HRESULT Save();
+    HRESULT Commit();
+    HRESULT Rollback();
+
+  private :
+    static CATSettingRepository *_pSetting;
+    CAASysLineSetting(CAASysLineSetting &amp;iCopy);  
+};</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>CAASysLineSetting</i> class methods and data member are:</p>
+<table>
+  <tr>
+    <td valign="top"><code>Init</code></td>
+    <td valign="top">Initializes the setting attribute values with their
+      defaults</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>Setxxx/Getxxx</code></td>
+    <td valign="top">Accessor methods for setting attribute values</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>Save</code></td>
+    <td valign="top">Creates a persistent copy of the memory setting repository
+      in the setting file</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>Commit</code></td>
+    <td valign="top">Commits setting attribute value modifications, that is,
+      saves them in the memory setting repository while keeping a memory copy of
+      the last setting repository</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>Rollback</code></td>
+    <td valign="top">Restores the setting repository from the last memory saved
+      setting repository</td>
+  </tr>
+  <tr>
+    <td valign="top"><code>_pSetting</code></td>
+    <td valign="top">A pointer to the memory setting repository. This pointer
+      must be static to ensure that multiple instances of <i>CAASysLineSetting</i>
+      use the same setting repository, and thus propagate the setting atribute
+      value modifications to any object concerned</td>
+  </tr>
+</table>
+<p>Note that the copy constructor is set as private, and is not implemented in
+the source file. This is to prevent the compiler to implement a public one
+without you knowing.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Initializing the Setting Attribute Values</h4>
+<p>The setting attribute values must be initialized with their defaults if the
+persistent setting repository doesn't exist.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysLineSetting::Init()
+{
+  HRESULT hres = S_OK;
+  if (NULL ==_pSetting)
+  {
+    _pSetting = <b>CATSettingRepository::GetRepository</b>(&quot;CAASysLineSetting&quot;);
+    if (NULL != _pSetting)
+    {
+      long status = 0;
+      int Thickness = 1; 
+      status = _pSetting-&gt;<b>ReadSetting</b>(&quot;Thickness&quot;, &amp;Thickness);
+      if (1 != status)
+        hres = S_FALSE;
+
+      if(SUCCEEDED(hres))
+      {
+        CATUnicodeString Name (&quot;Solid&quot;);
+        status = _pSetting-&gt;ReadSetting(&quot;Name&quot;, &amp;Name);
+        if ((1 != status)
+          hres = S_FALSE;
+      }
+      if(SUCCEEDED(hres))
+      {
+        int  Color[] = {255,0,0};
+        status = _pSetting-&gt;ReadSetting(&quot;Color&quot;, Color, 3);
+        if (3 != status)
+          hres = S_FALSE;
+      }
+    }
+    else
+      hres = S_FALSE;
+  }
+  return hres;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The setting repository is created if it didn't exist previously thanks to the
+static method <code>GetRepository</code>. If a setting file exists, it is read
+to initialize the setting attribute values. Then the three setting attribute
+values are initialized using the <code>ReadSetting</code> method. <code>ReadSetting</code>
+reads the value from the setting repository if this value exists, and otherwise
+creates it with the default. This implies that calling <code>Init</code>
+initializes the setting attribute default values only if these attributes don't
+exist in the setting repository. Otherwise, their current values are read, and
+here unused. This also means that <code>Init</code> can't be used to
+reinitialize the setting attribute values to their defaults.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Encapsulating the Setting Attribute Access</h4>
+<p>The setting attribute access methods <code>WriteSetting</code> and <code>ReadSetting</code>
+are encapsulated for each setting attribute. Below is the couple of methods for
+the Thickness attribute.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysLineSetting::GetThickness(int *oThickness)
+{
+  HRESULT hres = S_OK;
+  if (NULL == _pSetting)
+    hres = Init();
+
+  if (SUCCEEDED(hres))
+  {
+    <b>// Always use the default value to initialize the object before reading</b>
+    *oThickness  = 1;
+    long status = _pSetting-&gt;<b>ReadSetting</b>(&quot;Thickness&quot;,oThickness);
+    if (1 != status)
+      hres = S_FALSE;
+  }
+  return hres;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Methods that access the setting repository should always test the its
+existence, and initialize it with the default value if doesn't exist. Then the <code>ReadSetting</code>
+is called <b>with the setting attribute default value</b>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT CAASysLineSetting::SetThickness(int iThickness)
+{
+  HRESULT hres = S_OK;
+  if (NULL == _pSetting)
+    hres = Init();
+
+  if (SUCCEEDED(hres))
+  {
+    long status = _pSetting-&gt;<b>WriteSetting</b>(&quot;Thickness&quot;, &amp;iThickness);
+    if (1 != status)
+      hres = S_FALSE;
+  }
+  return hres; 
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>Like <code>GetThickness</code>, <code>SetThickness</code> tests the setting
+repository existence, and initializes it with the default value if doesn't
+exist. Then <code>WriteSetting</code> writes the attribute value.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Encapsulating the Setting Repository Management</h4>
+<p>To encapsulate the setting repository management, the three methods <code>Save</code>,
+<code>Commit</code> , and <code>Rollback</code> of <i>CAASysLinesSetting</i>
+call the <code>SaveRepository</code>, <code>Commit</code>, and <code>Rollback</code>
+method of the <i>CATSettingRepository</i> class. This makes client applications
+independent from the actual setting repository, and ensures that all access the
+same instance of the setting repository.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>HRESULT  CAASysLineSetting::Save()
+{
+  HRESULT hres = S_OK;
+  if (NULL ==_pSetting)
+    hres = Init();
+
+  if (SUCCEEDED(hres))
+    hres =_pSetting-&gt;<b>SaveRepository</b>();
+  return hres;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The setting attribute values are initialized if they were not, and then the <code>SaveRepository</code>
+method is called. The <code>Commit</code> and <code>Rollback</code> method are
+identical, except that <code>SaveRepository</code> is replaced by <code>Commit</code>
+and <code>Rollback</code> respectively.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step5"></a>Using the Settings</h4>
+<p>This is a client application that uses the setting class <i>CAASysLineSetting</i>.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+  CAASysLineSetting *pSetting = NULL;
+  pSetting = new <b>CAASysLineSetting</b>();
+  if (NULL == pSetting)
+    exit(-1);
+  int Red = 0, Blue = 0, Green = 0;          // Retrieve stored or default values
+  HRESULT hres = pSetting-&gt;<b>GetColor</b>(&amp;Red, &amp;Green, &amp;Blue);
+  if (FAILED(hres))
+    exit(-1);
+  int Thickness = 0;
+  hres = pSetting-&gt;<b>GetThickness</b>(&amp;Thickness);
+  if (FAILED(hres))
+    exit(-1);
+  CATUnicodeString string;
+  hres = pSetting-&gt;<b>GetName</b>(&amp;string);
+  if (FAILED(hres))
+    exit(-1);
+
+  int NewRed = 127, NewBlue = 127, NewGreen = 127;
+  hres = pSetting -&gt;<b>SetColor</b>(NewRed, NewGreen, NewBlue);
+  if (FAILED (hres))
+    exit(-1);
+  hres = pSetting-&gt;<b>Commit</b>();
+  if (FAILED (hres))
+    exit(-1);
+
+  NewRed   = 100;
+  NewBlue  = 100;
+  NewGreen = 100;
+  hres = pSetting-&gt;<b>SetColor</b>(NewRed, NewGreen, NewBlue);
+
+  int NewThickness = 5;
+  hres = pSetting-&gt;<b>SetThickness</b>(NewThickness);
+  if (FAILED (hres))
+    exit(-1);
+
+  hres = pSetting-&gt;<b>Rollback</b>();
+  if (FAILED (hres))
+    exit(-1);
+
+  hres = pSetting-&gt;<b>Save</b>();
+  if (FAILED (hres))
+    exit(-1);
+
+  delete pSetting;
+  pSetting = NULL;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The application instantiates the setting repository. If it can't be read from
+a file, it is created in memory and initialized with its default values, that
+are then read using the <code>Getxxx</code> methods. Then a new color attribute
+value is set, and the modification is committed, that is stored in a copy of the
+setting repository. Color and thickness attribute values are modified, but are
+overwritten by the <code>Rollback</code> of the saved copy when <code>Commit</code>
+was called. This version of the setting repository is saved to file thanks to
+the <code>Save</code> method.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to create a class that encapsulates the access to a
+setting repository that enables client applications to use a unique instance of
+the setting repository. It also shows how a client application can use this
+class to set and get the setting attribute values.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAASysTechArticles/CAASysSettingRepositories.htm">Setting
+      Repositories and Attributes</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

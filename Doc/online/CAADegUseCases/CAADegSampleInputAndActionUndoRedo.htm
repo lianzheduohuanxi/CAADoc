@@ -1,0 +1,323 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Managing Undo/Redo of Input and Actions</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Undo/Redo of Input and Actions</h3>
+      <em>Enabling the end user to move back and forth in the statechart diagram</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to add undo/redo capabilities to a command to
+      enable the end user to go back and forth inside a state dialog command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Polyline Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Polyline Command Do</a></li>
+            <li><a href="#How">How to Launch the Polyline Command</a></li>
+            <li><a href="#Where">Where to Find the Polyline Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to fit out you command with input and
+action undo/redo capabilities. It deals with a non transactional document model,
+that is a document model that doesn't include document object undo/redo by means
+of the <i> CATIUndoTransaction</i> interface implementation. As a consequence, the
+document object undo/redo must be coded in the undo/redo methods.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The Polyline Command Use Case</h3>
+<p>The Polyline command is a use case of the CAADialogEngine.edu framework that
+illustrates the DialogEngine framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does the Polyline Command Do</h4>
+<p>The Polyline commmand creates a polyline by successively indicating or
+selecting points, or entering their coordinates using a dialog box. A right
+click stops the polyline creation and exits the command. During the polyline
+creation process, the Undo and Redo commands are available to undo each point
+and line segment creation, possibly up to the first point created, and to redo
+each point and line segment creation from this first point to the last one.
+Undoing the first point creation, that is undoing the first input, exits the
+command.</p>
+<p>The Polyline command is a state dialog command that creates a polyline
+according to the following UML statechart diagram [<a href="#References">1</a>].</p>
+<p><img src="images/CAACreatePolylineStatechart.jpg" alt="CAACreatePolylineStatechart.jpg (26086 bytes)" width="496" height="376"></p>
+<p>Each end user input and associated action can be undone and redone, as shown
+by the scenario below:</p>
+<table>
+  <tr>
+    <td><img src="images/CAAInputUndo1.jpg" alt="CAAInputUndo1.jpg (18521 bytes)" width="398" height="328"></td>
+    <td>The end user has already created a polyline with four points and thus
+      three line segments. The fifth point is not yet clicked, but a rubber line
+      segment joins the fourth point and the mouse location. The dialog loops
+      onto the RepeatState.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAAInputUndo2.jpg" alt="CAAInputUndo2.jpg (17132 bytes)" width="397" height="327"></td>
+    <td>The end user has clicked Undo. The rubber segment has disappeared, the
+      fourth point and the third line segment are erased from the document.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAAInputUndo3.jpg" alt="CAAInputUndo3.jpg (17407 bytes)" width="399" height="328"></td>
+    <td>The end user has clicked Undo again. The third point and the second line
+      segment are erased from the document.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAAInputUndo4.jpg" alt="CAAInputUndo4.jpg (17640 bytes)" width="398" height="329"></td>
+    <td>The end user has clicked Redo. The third point and the second line
+      segment are recreated.</td>
+  </tr>
+</table>
+<p>Any created point and line segment of the polyline can be undone as long as
+the command is active. This is a sequential process that enables the end user to
+go back to a previous state by successively going through the states from the
+current one. Redo is the process that recreates what was undone in the undo
+reverse order. This is input undo and action undo, because it is dedicated to
+undo the end user input, and the possible associated action.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch the Polyline Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:
+<ul>
+  <li>Select File-&gt;New
+  <li>In the New box, select CAAGeometry and click OK
+  <li>Select Insert-&gt;Multi Lines-&gt;Polyline</li>
+  <li>Click to create the points that make up the polyline, and right click to
+    end.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the Polyline Command Code</h4>
+<p>The Polyline command is made of a single class named <i>CAADegCreatePolylineCmd</i>
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the CreatePoint, there are three steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Provide an undo behavior to the dialog agents (input undo)</td>
+    <td valign="top"><code>BuildGraph</code> method [<a href="#References">2</a>]</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Create the transition with undo and redo methods (action
+      undo)</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Provide the undo and redo methods</td>
+    <td valign="top">Command member functions</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Providing an Undo Behavior to the Dialog Agents</h4>
+<p>The dialog agent undo behavior is set where they are instantiated, that is in
+the <code>BuildGraph</code> method. For example, for the _daEditor agent:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAADegCreatePolylineCmd::BuildGraph()
+{
+  ...
+  _daEditor = new <strong>CATDialogAgent</strong>(&quot;PointEditorId&quot;);
+  _daEditor-&gt;<strong>SetBehavior</strong>(CATDlgEngRepeat | <strong>CATDlgEngWithUndoStep</strong>); 
+  ...	</pre>
+    </td>
+  </tr>
+</table>
+<p>The character string PointEditorId defined as the argument of the
+CATDialogAgent constructor is the dialog agent identifier. This identifier can
+be used to assign undo/redo prompts replacing the Undo and Redo items in the
+Edit menu.</p>
+<table>
+  <tr>
+    <td><img src="images/CAAInputUndo5.jpg" alt="CAAInputUndo5.jpg (6147 bytes)" width="205" height="100"></td>
+    <td>For example, the active state is the target state of a transition
+      triggered by a point indication that can be undone from this state to
+      reach the previous state. In addition, this active state is the source
+      state of a transition that triggers when the point editor dialog box sends
+      an OK notification and is used to create the point using the entered
+      coordinates.</td>
+  </tr>
+</table>
+<p>The dialog agent behavior is set to <code>CATDlgEngWithUndoStep</code> to
+record an undo step when the dialog agent is valued. This enables this valuation
+step to be undone. This behavior is the default, that is, if <code>CATDlgEngWithUndoStep</code>
+were omitted in the SetBehavior method, an undo step were recorded anyway.</p>
+<p>Changing <code>CATDlgEngWithUndoStep</code> to <code>CATDlgEngWithUndo</code>
+doesn't record an undo step for the dialog agent. This means that clicking Undo
+in the state that follows the one to which the dialog agent is plugged undoes
+the actions up until a state to which a dialog agent with a <code>CATDlgEngWithUndoStep</code>
+behavior is associated is met, and exits the command if none is found.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Creating the Transition with Undo and Redo Methods</h4>
+<p>The transition are created in the <code>BuildGraph</code> method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATDialogTransition *pRepeatTransitionBox = <strong>AddTransition</strong>
+  (
+    stRepeatState,
+    stRepeatState,
+    AndCondition(IsLastModifiedAgentCondition(_daEditor),
+                 Condition((ConditionMethod) &amp; CAADegCreatePolylineCmd::CheckPointByBox)),
+    <strong>Action</strong>(
+           (ActionMethod) &amp; CAADegCreatePolylineCmd::CreateLineByBox,
+           <strong>(ActionMethod) &amp; CAADegCreatePolylineCmd::UndoCreateLine</strong>,
+           <strong>(ActionMethod) &amp; CAADegCreatePolylineCmd::RedoCreateLine</strong> 
+          )
+  ); 
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The second and third parameters of the <code>Action</code> method are the
+undo and redo method declarations respectively. These methods are usually member
+functions of the state dialog command class, as shown here. The <code>UndoCreateLine</code>
+method undoes the line segment craeted by <code>CreateLineByBox</code>, and the <code>RedoCreateLine</code>
+redoes this line segment creation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Providing the Undo and Redo Methods</h4>
+<p>The <code>UndoCreateLine</code> and <code>RedoCreateLine</code> methods have
+the following signatures.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATBoolean CAADegCreatePolylineCmd::UndoCreateLine(void *iUsefulData)
+{
+  ... <em>// Provide ubdo code here</em>  
+}
+
+CATBoolean CAADegCreatePolylineCmd::RedoCreateLine(void *iUsefulData)
+{
+  ... <em>// Provide redo code here</em>
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows how to include input and action undo/redo capabilities to
+a command. Input undo/redo is for dialog agents and set using the dialog agent
+behavior. Action undo/redo is added to transitions to undo and redo what action
+methods do when transition fire.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing
+      State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm">Implementing
+      the Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

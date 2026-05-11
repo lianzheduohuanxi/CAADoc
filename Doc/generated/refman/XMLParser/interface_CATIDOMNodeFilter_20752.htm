@@ -1,0 +1,193 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>XMLParser Interface CATIDOMNodeFilter</title>
+<link href="../_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="../../../caav5.css">
+<script type="text/javascript">var PubDirExist = false; var ProDirExist = false; var PrivDirExist = false;</script> 
+<script type="text/javascript" src="../_index/cdg.js"></script> 
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="../_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="../_index/jsTree.js"></script>  
+</head>
+<body>
+<div class="menu1" id="menuViewPPP" > 
+ 	<a href="javascript:writeIndex('IPublic')" name="viewPPP" id="PublicView"  class="ongletPub" > Public View</a> 
+ 	<a href="javascript:writeIndex('IProtected')" name="viewPPP" id="ProtectedView" class="ongletPro"  > Protected View</a>  
+ 	<a href="javascript:writeIndex('IPrivate')" name="viewPPP" id="PrivateView" class="ongletPriv" > Private View</a> 
+ </div> 
+ <div id="indexView" class="menu1">	 
+ <a name="multiview" class="onglet" rel="../_index/main.htm" href="../_index/main.htm">All Frameworks</a>   
+ <a name="multiview" class="onglet"  rel="../_index/tree.htm" href="../_index/tree.htm">Class Hierarchy</a>   
+ <a name="multiview" class="onglet"  rel="../XMLParser.htm" href="../XMLParser.htm">This Framework</a>
+<a name="multiview" class="onglet"  rel="../_index/HomeIdx.htm" href="../_index/HomeIdx.htm">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "XMLParser";	}
+		function getCurrentObjectName() { 
+ 	return "CATIDOMNodeFilter"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ function callInit() { 
+ 		if (PubDirExist == true || ProDirExist == true || PrivDirExist == true) {  
+ 			var parent = document.getElementById("indexView"); 
+ 			if (parent && (ProDirExist == true || PrivDirExist == true) ) { 
+ 			var elem = document.getElementById("multiviewP"); 
+ 			if(elem) parent.removeChild(elem); 
+ 			elem = document.getElementById("multiviewN"); 
+ 			if(elem) parent.removeChild(elem); }
+ 			initData(); 
+ 		} else { 
+ 			var elem; 
+ 			var parent = document.getElementById("menuViewPPP"); 
+ 			if (parent) { 
+ 				elem = document.getElementById("PublicView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("ProtectedView"); 
+ 				parent.removeChild(elem); 
+ 				elem = document.getElementById("PrivateView"); 
+ 				parent.removeChild(elem); 
+ 			} 
+ if (locateObject(getCurrentObjectName(), getCurrentType(), '0')==0) { 
+ 				elem = document.getElementById("multiviewP"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ 			if (locateObject(getCurrentObjectName(), getCurrentType(), '1')==0) { 
+ 				elem = document.getElementById("multiviewN"); 
+ 				if (elem) { elem.removeAttribute("href"); elem.removeAttribute("onclick"); } 
+ 			} 
+ }	 
+ 	} 
+ 	window.onload = callInit; 
+  </script> 
+ 
+<h1>XMLParser Interface CATIDOMNodeFilter</h1>
+<script type="text/javascript" > 
+ generatedFatherClass('interface_CATIDOMNodeFilter_20752','CATIDOMNodeFilter','0');</script>
+<p><b>Usage: you can freely reimplement this interface.</b></p>
+<hr>
+<p>
+ interface <b>CATIDOMNodeFilter</b>
+</p>
+<p>
+<b><i> Interface for filters objects that know how to "filter out" nodes.</i></b><br>
+ If a 
+ <script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> or 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script> is given a  
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeFilter','','CATIDOMNodeFilter') </script>, it applies the filter before it returns the next  node. If the filter says to accept the node, the traversal logic returns 
+ it; otherwise, traversal looks for the next node and pretends that the 
+ node that was rejected was not there.
+ <p>The DOM does not provide any filters. 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeFilter','','CATIDOMNodeFilter') </script> is just an  interface that users can implement to provide their own filters. 
+ <p>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeFilter','','CATIDOMNodeFilter') </script> instances do not need to know how to traverse from node  to node, nor do they need to know anything about the data structure that 
+ is being traversed. This makes it very easy to write filters, since the 
+ only thing they have to know how to do is evaluate a single node. One 
+ filter may be used with a number of different kinds of traversals, 
+ encouraging code reuse.
+ <p>See also the <a href='http://www.w3.org/TR/2000/REC-DOM-Level-2-Traversal-Range-20001113'>Document Object Model (DOM) Level 2 Traversal and Range Specification</a>.
+</p>
+<hr>
+ <h2>Method Index</h2> <br>
+<dl>
+ <dt> o 
+    <a href="#AcceptNode(CATIDOMNode_var&amp;,FilterAction&amp;)"><b>AcceptNode</b></a>(CATIDOMNode_var&amp;,FilterAction&amp;)
+<dd>  Tests whether a specified node is visible in the logical view of a 
+ <tt>CATIDOMTreeWalker</tt> or <tt>CATIDOMNodeIterator</tt>.
+</dl>
+<dl>
+ <h2>Enumerated Type Index</h2> <br>
+ <dt> o 
+    <a href="#FilterAction"><b>FilterAction</b></a>
+<dd>  Constants returned by 
+</dl>
+<dl>
+</dl>
+ <h2>Methods</h2> <br>
+<a name="AcceptNode"></a><a name="AcceptNode(CATIDOMNode_var&amp;,FilterAction&amp;)"></a> <dt> o <b>AcceptNode</b>
+
+<dt>  <table><tr><td>  public virtual <script type="text/javascript"> activateLink('HRESULT','HRESULT')</script>  <b>AcceptNode</b>(<td> const <script type="text/javascript"> activateLink('CATIDOMNode_var','CATIDOMNode_var&amp;')</script> <td><tt>iNode</tt>,<tr><td></td><td><script type="text/javascript"> activateLink('FilterAction','FilterAction&amp;')</script> <td><tt>oAccepted</tt>)<script type="text/javascript"> activateLink('0',' = 0')</script>  </table></dt>
+<dl>
+  <dd>
+ Tests whether a specified node is visible in the logical view of a 
+ <tt>CATIDOMTreeWalker</tt> or <tt>CATIDOMNodeIterator</tt>. This function 
+ will be called by the implementation of 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script> and  
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> ; it is not normally called directly from  user code. (Though you could do so if you wanted to use the same 
+ filter to guide your own application logic.)
+ 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> iNode</tt>
+   <dd> The node to check to see if it passes the filter or not.
+ </dd>
+    <dt><tt> oAccepted</tt>
+   <dd> a constant to determine whether the node is accepted, 
+   rejected, or skipped, as defined above.</dd>
+</dl>
+</dl>
+</dl>
+ <h2>Enumerated Types</h2> <br>
+<a name="FilterAction"> <dt> o <b>FilterAction</b>
+<dl>
+  <dd>
+<pre>
+enum <b>FilterAction</b> {
+  FILTER_ACCEPT,
+  FILTER_REJECT,
+  FILTER_SKIP
+}
+</pre>
+ Constants returned by 
+<script type="text/javascript"> activateLinkAnchor('','AcceptNode
+','AcceptNode
+') </script> 
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+    <dt><tt> FILTER_ACCEPT</tt>
+   <dd> Accept the node. Navigation methods defined for 
+ </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> or 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script> will return this  node.
+ 
+    <dt><tt> FILTER_REJECT</tt>
+   <dd> Reject the node. Navigation methods defined for 
+ </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> or 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script> will not return  this node. For 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script>, the children of this node  will also be rejected. <tt>NodeIterators</tt> treat this as a 
+ synonym for <tt>FILTER_SKIP</tt>.
+
+ 
+    <dt><tt> FILTER_SKIP</tt>
+   <dd> Skip this single node. Navigation methods defined for 
+ </dd>
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> or 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script> will not return  this node. For both 
+<script type="text/javascript"> activateLinkAnchor('CATIDOMNodeIterator','','CATIDOMNodeIterator') </script> and  
+<script type="text/javascript"> activateLinkAnchor('CATIDOMTreeWalker','','CATIDOMTreeWalker') </script>, the children of this node will still be  considered.
+</dl>
+</dl>
+</dl>
+<hr>
+ This object is included in the file: <b>CATIDOMNodeFilter.h</b><br>
+If needed, your Imakefile.mk should include the module: <b>CATXMLParserItf</b>
+<hr/><p><i>
+Copyright &#169; 1999-2011, Dassault Syst&#232;mes. All rights reserved.</i></p>
+</body>
+
+</html>
+

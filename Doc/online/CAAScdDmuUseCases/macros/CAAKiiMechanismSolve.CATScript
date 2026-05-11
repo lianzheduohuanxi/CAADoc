@@ -1,0 +1,91 @@
+'COPYRIGHT DASSAULT SYSTEMES 2000-2001
+Option Explicit
+Dim Language as String
+Language="VBSCRIPT"
+
+'*****************************************************************************
+' Purpose:      This macro calls the kinematics solver 
+'               and applies the computed motion to a 
+'               part of the mechanism
+'               in a specific product document
+' Assumptions:  The product document used as input is result of the 
+'               CAAKiiMechanismCreation use case
+' Author:       
+' Languages:    VBScript
+' Version:      V5R6
+' Locales:      US English
+'*****************************************************************************
+
+Sub CATMain()
+
+    '==================================================================
+    ' 1-Prolog
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 1.a-Declare required variables: command set, motion matrix
+    '------------------------------------------------------------------
+    Dim dValcmd(1) As Double
+    Dim dMotion(11) As Double
+
+    '------------------------------------------------------------------
+    ' 1.b-Retrieve the root product
+    '------------------------------------------------------------------
+    Dim oRootProduct As AnyObject
+    Set oRootProduct = CATIA.ActiveDocument.Product
+
+    '------------------------------------------------------------------
+    ' 1.c-Retrieve the Mechanisms as a TechnologicalObject of the Product
+    '------------------------------------------------------------------
+    Dim cTheMechanisms As AnyObject
+    Set cTheMechanisms = oRootProduct.GetTechnologicalObject("Mechanisms")
+
+    '------------------------------------------------------------------
+    ' 1.d-Take 1st mechanism found, and first moving part
+    '------------------------------------------------------------------
+    Dim oFirstMechanism As Mechanism
+    Set oFirstMechanism = cTheMechanisms.Item(1)
+
+
+    '==================================================================
+    ' 2-Retrieve number of moving parts, and first one
+    '==================================================================
+    Dim iNbProd As Integer
+    iNbProd = oFirstMechanism.NbProducts
+
+    Dim oMovingPart as Product
+    Set oMovingPart = oFirstMechanism.GetProduct(1)
+
+
+    '==================================================================
+    ' 3-Retrieve current command values
+    '==================================================================
+    oFirstMechanism.GetCommandValues dValcmd
+
+
+    '==================================================================
+    ' 4-Solve for other command values
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 4.a-Create another command set
+    '------------------------------------------------------------------
+    dValcmd(0) = dValcmd(0) + 10
+
+    '------------------------------------------------------------------
+    ' 4.b-Apply the command set 
+    '------------------------------------------------------------------
+    oFirstMechanism.PutCommandValues dValcmd
+
+
+    '==================================================================
+    ' 5-Retrieve motion for a part after solving and apply it
+    '==================================================================
+    '------------------------------------------------------------------
+    ' 5.a-Retrieve motion for a part after solving
+    '------------------------------------------------------------------
+    oFirstMechanism.GetProductMotion oMovingPart,dMotion
+    '------------------------------------------------------------------
+    ' 5.b-Apply the motion to the part 
+    '------------------------------------------------------------------
+    oMovingPart.Move.Apply dMotion
+
+End Sub

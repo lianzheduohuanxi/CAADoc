@@ -1,0 +1,180 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating an ArrangementArea without a Contour</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></script>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Arrangement</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Creating an ArrangementArea without a Contour</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This macro shows you how to create an <i>ArrangementArea</i>
+      object that has no contour associated with it.</p>
+      <p>This macro opens a new Product document and retrieves the <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementAreas');return false;"><i>ArrangementAreas</i></a>
+      collection from the Root <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;"><i>Product</i></a>
+      via the <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementProduct');return false;"><i>ArrangementProduct</i></a>
+      object. It then adds an <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementArea');return false;"><i>ArrangementArea</i></a>
+      object. The <i>ArrangementArea</i> created without a contour will not have
+      any visualization in the 3D viewer as shown in the image below.</p>
+      <p align="center"><img border="2" src="images/CAAArrCreateNoContourArea.jpg" width="433" height="288"></p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAArrCreateNoContourArea is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAArrCreateNoContourAreaSource.htm">CAAArrCreateNoContourArea.CATScript</a>
+      is located in the CAAScdArrUseCases module. <a href="macros/CAAArrCreateNoContourArea.CATScript">Execute
+      macro</a> (Windows only).</p>
+      <p align="center">&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAArrCreateNoContourArea includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Reference">Obtaining the ArrangementProduct Object and the
+          Associated Movable Object from the Root Product</a></li>
+        <li><a href="#Create">Creating the ArrangementArea Object under the
+          ArrangementAreas Collection Object</a></li>
+        <li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <h4><a name="prolog"></a>Prolog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>  ...
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">'Create a new product document</font>
+<font color="#0000FF">   Dim </font>objProdDoc       <font color="#0000FF"> As </font>ProductDocument
+<font color="#0000FF">   Dim </font>objRootProd      <font color="#0000FF"> As </font>Product
+<font color="#0000FF">   Set </font>objProdDoc      = CATIA.Documents.Add(&quot;Product&quot;)
+<font color="#0000FF">   Set </font>objRootProd     = objProdDoc.Product
+   ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>Once the new product document has been created, fetch the <i>ArrangementProduct</i>
+      and the associated movable object from the Root product of the new product
+      document.</p>
+      <h4><a name="Reference"></a>Obtaining the ArrangementProduct Object and
+      the Associated Movable Object from the Root Product</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">'Retrieving Root Product's Relative Axis and Position Information</font>
+<font color="#0000FF">   Dim </font>objMove          <font color="#0000FF"> As </font>Move
+<font color="#0000FF">   Dim </font>objPosition      <font color="#0000FF"> As </font>Position
+<font color="#0000FF">   Set </font>objMove      = objRootProd.Move
+<font color="#0000FF">   Set </font>objPosition  = objRootProd.Position
+
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">' Get ArrangementProduct</font>
+<font color="#0000FF">   Dim </font>objArrProd       <font color="#0000FF"> As </font>ArrangementProduct
+<font color="#0000FF">   Set </font>objArrProd   = objRootProd.GetTechnologicalObject(&quot;ArrangementProduct&quot;)
+...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The <i>ArrangementAreas</i> object is a collection object that manages <i>ArrangementArea</i>
+      object's under a given <i>ArrangementProduct</i>. The movable object
+      serves as the relative axis for the new <i>ArrangementArea</i> object to
+      be created.</p>
+      <h4><a name="Create"></a>Creating the ArrangementArea Object under the
+      ArrangementAreas Collection Object</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+   <font color="#008000">'----------------------------------------------</font>
+   <font color="#008000">' Create Area without a contour under the Root Product</font>
+<font color="#0000FF">   Dim </font>dblAreaPosition(11) <font color="#0000FF"> As </font>Double
+<font color="#0000FF">   Dim </font>objArea    <font color="#0000FF"> As </font>ArrangementArea
+
+   objPosition.GetComponents dblAreaPosition
+   dblAreaPosition(9)    = 300.0
+   dblAreaPosition(10)   = 400.0
+   dblAreaPosition(11)   = 300.0
+<font color="#0000FF">   Set </font>objArea     = objArrProd.ArrangementAreas.AddArea(objMove, dblAreaPosition, 50.0)
+  ...</pre>
+          </td>
+        </tr>
+      </table>
+      <p>The newly created <i>ArrangementArea</i> object does not have a contour
+      and in addition does not display in the 3D viewer. Note that the leaf in
+      the specifications tree for this <i>ArrangementArea</i> object is
+      displayed with a yellow background to distinguish it from an <i>ArrangementArea</i>
+      object that has a contour.</p>
+      <h4><a name="Epilog"></a>Epilog</h4>
+      <table class="code">
+        <tr>
+          <td>
+            <pre>...
+ End Sub</pre>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!----------------------------------comment------------------------------------->
+<p align="center"><img border="0" src="../CAAScrBase/images/aendtask.gif" width="64" height="32"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case has shown how to create an <i>ArrangementArea</i> object within
+a product document.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!----------------------------------comment------------------------------------->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying
+      a Macro</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><i><a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementAreas');return false;">ArrangementAreas</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'ProductStructureInterfaces', 'Product');return false;">Product</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementProduct');return false;">ArrangementProduct</a>,
+      <a href="#" onclick="javascript:CAAlink('IDL', 'CATArrangementInterfaces', 'ArrangementArea');return false;">ArrangementArea</a></i></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right">[<a href="#Top">Top</a>]</td>
+</table>
+<hr>
+<!----------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

@@ -1,0 +1,450 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Managing Indication</title>
+<link rel="stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>User Interface - Commands</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Managing Indication</h3>
+      <em>Retrieving a 3D point from a mouse click</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to retrieve a point in the 3D space from an end
+      user mouse click on the screen in a state dialog command.
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The Circle Command Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does the Circle Command Do</a></li>
+            <li><a href="#How">How to Launch the Circle Command</a></li>
+            <li><a href="#Where">Where to Find the Circle Command Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to retrieve, in a state dialog command,
+a 3D point using its coordinates in the 3D space from a mouse click on the
+screen. This 3D point can be used afterwards as input for any object creation,
+modification, or analysis in the document, such as creating the center of a
+circle in this example.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The Circle Command Use Case</h3>
+<p>CAADegCreateCircleCmd creates a circle in the 3D space. We will focus on the
+circle center creation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does the Circle Command Do</h4>
+<p>The Circle command is a state dialog command that creates a circle in the 3D
+space according to the following UML statechart diagram [<a href="#References">1</a>].</p>
+<p><img src="images/CAACreateCircleStatechart.jpg" alt="CAACreateCircleStatechart.jpg (21192 bytes)" width="561" height="324"></p>
+<p>The dialog is as follows:</p>
+<table>
+  <tr>
+    <td><img src="images/CAACreateCircle1.jpg" width="398" height="328" alt="CAACreateCircle1.jpg (19537 bytes)"></td>
+    <td>Select an existing plane that will be used as the circle plane. The
+      active state becomes GetPlane.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateCircle2.jpg" width="398" height="328" alt="CAACreateCircle2.jpg (19058 bytes)"></td>
+    <td>The viewpoint changes to make the selected plane and the screen plane
+      coincide. The active state is GetCircle.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateCircle3.jpg" width="398" height="328" alt="CAACreateCircle3.jpg (19295 bytes)"></td>
+    <td>Click to indicate a point for the circle center. The active state
+      becomes GetRadius. This image is captured just after the click. The
+      indicated point is shown beside the plane. The mouse has not yet moved.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateCircle4.jpg" width="398" height="328" alt="CAACreateCircle4.jpg (20301 bytes)"></td>
+    <td>Move the mouse from this center. A temporary circle is drawn and
+      increases or decreases to follow the mouse moves. The active state remains
+      GetRadius. The self transition loops onto this state.</td>
+  </tr>
+  <tr>
+    <td><img src="images/CAACreateCircle5.jpg" width="398" height="328" alt="CAACreateCircle5.jpg (20578 bytes)"></td>
+    <td>When the wished circle is obtained,&nbsp;click a point on this circle to
+      actually create the circle. The command is now complete.</td>
+  </tr>
+</table>
+<p>Indicating a point means clicking on the screen at the desired location with
+the left mouse key. The command retrieves from this click a geometric point with
+coordinates expressed in the absolute axis system. This is made possible by
+assigning an indication agent [<a href="#References">2</a>] to the state that
+asks for indication. This indication agent is valued by the mouse click with a
+point computed from the pixel coordinates of the point clicked on the screen.
+This point is the projection of the clicked point in the screen plane onto a
+specific plane associated with the indication point and therefore named the
+projection plane [<a href="#References">2</a>].</p>
+<p>The Circle command uses this means to create the circle center and to
+determine the circle radius. The step by step describes the circle center
+creation.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="How"></a>How to Launch the Circle Command</h4>
+<p>See the section entitled &quot;How to Launch the CAAGeometry Use Case&quot;
+in the &quot;<a href="../CAASysUseCases/CAASysCAAGeometryOverview.htm">The
+CAAGeometry Sample</a>&quot; use case for a detailed description of how this use
+case should be launched.&nbsp;</p>
+<p>Then, in the window where you run the mkrun command, do not type the module
+name on the command line, but type CNEXT instead. When the application is ready,
+do the following:
+<ul>
+  <li>Select File-&gt;New</li>
+  <li>In the New box, select CAAGeometry and click OK</li>
+  <li>Select Insert-&gt;Point</li>
+  <li>Create three points</li>
+  <li>Select Insert-&gt;Plane</li>
+  <li>Successively click the three points to create a plane</li>
+  <li>Select Insert-&gt;Circle</li>
+  <li>Click to create the circle center</liu>
+  <li>Click to create the circle.</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the Circle Command Code</h4>
+<p>The Circle command is made of a single class named <i>CAADegCreateCircleCmd</i>
+located in the CAADegGeoCommands.m module of the CAADialogEngine.edu
+framework:</p>
+<table>
+  <tbody>
+    <tr>
+      <td>Windows</td>
+      <td><code>InstallRootDirectory\CAADialogEngine.edu\CAADegGeoCommands.m\</code></td>
+    </tr>
+    <tr>
+      <td>Unix</td>
+      <td><code>InstallRootDirectory/CAADialogEngine.edu/CAADegGeoCommands.m/</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create the circle center, there are seven steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step1">1</a></td>
+    <td valign="top">Declare the indication agent</td>
+    <td valign="top">Header file</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step2">2</a></td>
+    <td valign="top">Instantiate the indication agent</td>
+    <td valign="top"><code>BuildGraph</code> method [<a href="#References">3</a>]</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step3">3</a></td>
+    <td valign="top">Set the indication agent projection plane</td>
+    <td valign="top">Transition action method <code>SetPlane</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step4">4</a></td>
+    <td valign="top">Assign the indication agent to the GetCenter state</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step5">5</a></td>
+    <td valign="top">Create a transition from the GetCenter state triggered by
+      the indication agent valuation</td>
+    <td valign="top"><code>BuildGraph</code> method</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step6">6</a></td>
+    <td valign="top">Retrieve the indication agent value and convert this value
+      into a 3D point</td>
+    <td valign="top">Transition action method <code>CreateCircleCenter</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="#Step7">7</a></td>
+    <td valign="top">Release the indication agent</td>
+    <td valign="top">Destructor or <code>Cancel</code> method</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Declaring the Indication Agent and its Projection Plane</h4>
+<p>The state command class derives from CATStateCommand.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>class CAADegCreateCircleCmd : public CATStateCommand
+{
+  ...
+  private :
+    CATIndicationAgent * _daIndicCircleCenter;
+    CATMathPlane         _ProjPlane;
+    CATMathPoint         _CircleCenter;
+    ...</pre>
+    </td>
+  </tr>
+</table>
+<p>A pointer to the indication agent, its projection plane, and the temporary
+point to keep the circle center are declared as private data members.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Instantiating the Indication Agent</h4>
+<p>The indication agent is instantiated in the command <code>BuildGraph</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>void CAACreateCircleCmd::BuildGraph()
+{
+  ...
+  _daIndicCircleCenter = <strong>new</strong> <strong>CATIndicationAgent</strong>(&quot;GetCircleCenter&quot;);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The character string GetCircleCenter defined as the argument of the
+CATIndicationAgent constructor is the indication agent identifier. This
+identifier can be used to assign undo/redo prompts replacing the Undo and Redo
+items in the Edit menu.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Setting the Selected Plane as the Indication Agent
+Projection Plane</h4>
+<p>The <code>SetPlane</code> method is the action method associated with the
+transition that retrieves the selected plane and use it to change the viewpoint.
+It is the appropriate place to assign this plane as the indication agent
+projection plane, since the plane selected is not kept as a data member.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAACreateCircleCmd::SetPlane(void *iDummy)
+{
+  ... <em>// Retrieve the origin and axes of the selected document plane</em>
+  CATMathPoint     PlaneOrigin;        
+  CATMathDirection U, V;
+  modelplane-&gt;GetOrigin(PlaneOrigin);
+  modelplane-&gt;GetPlane(U,V);
+          
+  <em>// Set these retrieved origin and axes to the _ProjPlane </em>
+  _ProjPlane.<strong>SetOrigin</strong>(PlaneOrigin);
+  _ProjPlane.<strong>SetDirections</strong>(U,V);
+
+  <em>// Set _ProjPlane as the indiation agent projection plane </em>
+  _daIndicCircleCenter-&gt;<strong>SetMathPlane</strong>(_ProjPlane);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The plane selected in the document is retrieved in <code>modelplane</code>.
+Its origin and directions are retrieved using the methods of this object, and
+are set to <code>_ProjPlane</code> using the <code>SetOrigin</code> and <code>SetDirections</code>
+methods of the CATMathPlane class. Then <code>_ProjPlane</code> is set as the
+indication agent projection plane.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step4"></a>Assigning the Indication Agent to the GetCenter State</h4>
+<p>Still in the <code>BuildGraph</code> method, the GetCenter state is created,
+and the indication agent is added to this state. This makes it possible to value
+the indication agent when this state becomes the active one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATDialogState *stGetCircleCenter = <strong>AddDialogState</strong>(&quot;stGetCircleCenterId&quot;);
+  stGetCircleCenter-&gt;<strong>AddDialogAgent</strong>(_daIndicCircleCenter);
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>AddDialogState</code> method creates a new dialog state and adds it
+to the states managed by the dialog command. The <code>AddDialogAgent</code>
+method adds the indication agent to the state.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step5"></a>Creating a Transition between the GetCenter and
+GetRadius States</h4>
+<p>The transition between these two states is created in the <code>BuildGraph</code>
+method. This transition is triggered when the indication agent is valued, that
+is when the end user clicks a point. The guard condition is checked, and if it
+returns True, the action is performed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>  ...
+  CATDialogTransition *pSecondTransition = <strong>AddTransition</strong>
+  (
+    stGetCircleCenter,
+    stGetRadius,
+    AndCondition(
+      IsOutputSetCondition(_daIndicCircleCenter),
+      Condition((ConditionMethod) &amp; CAACreateCircleCmd::CheckCircleCenter)),			  
+    Action((ActionMethod) &amp; CAACreateCircleCmd::CreateCircleCenter)
+  );
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The <code>AddTransition</code> method creates a transition and adds it to the
+transitions managed by the dialog command. Pointers to the transition's source
+and target states are the first and second arguments respectively. The
+transition trigger is defined in the guard condition as the first condition to
+be checked using the <code>IsOutputSetCondition</code> method applied to the
+indication agent. A second condition that is useless for this use case purpose
+uses the <code>CheckCircleCenter</code> method. Because we use <code>AndCondition</code>
+to create the guard condition, both condition methods must return True to fire
+the transition. In this case, the <code>CreateCircleCenter</code> action method
+is executed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step6"></a>Retrieving the Indicated Point and Converting it to a 3D
+Point</h4>
+<p>When the end user has clicked to indicate a point, the transition between the
+GetCenter and GetRadius states is triggered, and if the guard condition returns
+True, the following action method executes.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>CATBoolean CAACreateCircleCmd::CreateCircleCenter(void * iData)
+{
+  <em>// Get the indicated point from the indication agent</em>
+  CATMathPoint2D point2D = _daIndicCircleCenter-&gt;<strong>GetValue</strong>();
+  <em>// Convert this point to a 3D point for the circle center</em>
+  _ProjPlane.<strong>EvalPoint</strong>(point2D.GetX(), point2D.GetY(), _CircleCenter);
+  <em>// Retrieve the circle center coordinates</em>
+  float x = (float) _CircleCenter.GetX(); 
+  float y = (float) _CircleCenter.GetY();
+  float z = (float) _CircleCenter.GetZ();
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p>The indication agent is valued by the end user click. Its value is a 2D point
+located on the indication agent projection plane, obtained by the projection of
+the point corresponding to the mouse location on the screen when the click
+happens along a line passing through the viewpoint eye and the point clicked
+onto the projection plane. The indication agent <code>GetValue</code> method
+retrieves this 2D point whose coordinates are expressed according to the
+projection plane axis system. Then the CATMathPlane <code>EvalPoint</code>
+method creates a 3D point from these coordinates. Then you can use the 3D point
+as you wish, for example retrieve its coordinates expressed with respect of the
+3D global axis system.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step7"></a>Releasing the Indication Agent</h4>
+<p>A pointer to the indication agent was created in the command <code>BuildGraph</code>
+method as a data member to be accessed and used in different methods.&nbsp;It
+should be released when it becomes useless. This can be done in the command
+destructor, as shown here. This could also be done in the <code>Cancel</code>
+method called just before the destructor.</p>
+<table class="code" width="694">
+  <tr>
+    <td width="690">
+      <pre>CAACreateCircleCmd::~CAACreateCircleCmd()
+{
+  ...
+  if (NULL != _daIndicCircleCenter) _daIndicCircleCenter-&gt;<b>RequestDelayedDestruction</b>();
+  daIndicCircleCenter = NULL ;
+  ...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects involved in an end user indication: the state
+dialog command, the statechart and its implementation in the <code>BuildGraph</code>
+method, the states, the indication dialog agent and its projection
+plane,&nbsp;the transition along with its composite condition and action, and
+the way to retrieve a usable 3D point from the pixel clicked on the screen by
+the end user.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADegTechArticles/CAADegUMLDescription.htm">Describing
+      State Dialog Commands Using UML</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm#510000">Managing
+      Indication</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAADegTechArticles/CAADegGraph.htm">Implementing
+      the Statechart Diagram</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

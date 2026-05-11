@@ -1,0 +1,636 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Programming Commands and Headers in the Portal</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Programming Commands and Headers in the Portal</h3>
+      <em>The declaration of commands in the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="tech" colspan="2">Technical Article</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article presents the Command architecture and how to program
+      Command and Header in the Portal.
+      <ul>
+        <li><a href="#Header"><strong>A Command is a Mini MVC</strong></a></li>
+        <li><a href="#Header"><strong>The Header, a Memory and Time Saver</strong></a></li>
+        <li><a href="#CommandClass"><strong>Identity Card of the Command Class</strong></a></li>
+        <li><a href="#HeaderClass"><strong>Identity Card of the CmdHeader Class</strong></a></li>
+        <li><a href="#FAQ"><strong>Frequently Asked Questions</strong></a></li>
+      </ul>
+      <p>Commands are essential for CATlets. They provide a unique way to add
+      dynamically functionalities to a CATlet. But understanding commands and
+      programming them can be somewhat difficult.</p>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="MVC"></a>A Command is a Mini MVC</h3>
+<p>A command can be considered as an extension of the CATlet. The CATlet manages
+its data inside its model, the representation of its data inside its view and
+has some basic functionalities inside its controller. Commands are here to add
+functionalities to the CATlet and as such have also a MVC structure. The command
+has its own controller and may have views and models, sharing some of them with
+the CATlet it extends.<br>
+Relations between models - views - controller are of the same kind as those for
+a CATlet, even with models and views shared with the CATlet. That is to say that
+communication from controller to models and controller to views are made by
+function calls and communication from models to views, views to controller and
+models to controller are made by java events.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Header"></a>The Header, a Memory and Time Saver</h3>
+<p>Users can write a lot of complex commands around a CATlet. Instantiating all
+these commands when starting the CATlet can be very costly in term of resources
+(memory and time). Also, most of these commands have the same kind of
+representation, this may cause code duplication between commands.<br>
+To avoid all of that, a Command Header has been created. It is a lightweight
+class that handles a basic representation for Commands. It also manages the
+Command life cycle: the command is instantiated when needed (i.e. when started),
+and destroyed when its task is finished (i.e. when stopped). This way, resources
+can be optimized.<br>
+Note: When the command is suspended, it is not destroyed as it may be resumed
+later.<br>
+The Header is completely configurable through the CATlet's workshop file (see
+... for more details). However, if it is not sufficient, users can still create
+their own Header class.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="CommandClass"></a>Identity Card of the Command class</h3>
+<p>The command class is an abstract class located inside the <i><code>com.dassault_systemes.catweb.base.catlet.command</code></i>
+package. As an abstract class, it has methods that you must implement and other
+that have a basic implementation. Here is a description of these methods and
+attributes:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>protected ViewInterface[] views;</pre>
+    </td>
+  </tr>
+</table>
+<p>This attribute represents the views of this command. You can store inside
+this array the command's own views or the views the command shares with the
+CATlet.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>protected Model temporaryModel;</pre>
+    </td>
+  </tr>
+</table>
+<p>This attribute represents the models of this command. You can store inside
+this array the command's own models or the models the command shares with the
+CATlet.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public abstract void initialize();</pre>
+    </td>
+  </tr>
+</table>
+<p>This method is the first one called after the constructor. It is called by
+the Portal desktop when the context for the command has been fully created
+(CATlet creation, GUI realization ...). The <i><code>setMasterCATlet() </code></i>method
+has already been called. It is advised to place inside this method subscription
+on Hookup events and some subscription on models or views shared with the
+CATlet.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public abstract void start();
+
+public abstract void stop();
+
+public abstract void resume();
+
+public abstract void suspend();
+
+public abstract void cleanup();</pre>
+    </td>
+  </tr>
+</table>
+<p>These methods define the life cycle of the command. The command is always
+start at first, then it may be suspended then resumed during its activation,
+then it is stopped to be eventually cleaned-up when the command is destroyed.
+All these methods are called by the Command Selector. You should never call
+them. It is advised to put in these methods subscription and un-subscription to
+models and views for event that you just need to listen during the activation of
+the command. It is also advised to put there selection or un-selection of
+command's representation.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void addCommandListener(CommandListener list);
+
+public void removeCommandListener(CommandListener list);</pre>
+    </td>
+  </tr>
+</table>
+<p>These methods are used by the command selector to subscribe or unsubscribe to
+command events fired by the command. You shouldn't have to use them.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void fireCommandEvent(CommandEvent evt);</pre>
+    </td>
+  </tr>
+</table>
+<p>When the command wants to be started or stopped, it should fire a command
+event using this method. As the CommandSelector has previously subscribed to
+this event, it will receive it and therefore start or stop the command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void setMasterCATlet(CATlet catlet);
+
+public CATlet getMasterCATlet();</pre>
+    </td>
+  </tr>
+</table>
+<p>Each command is an extension of a instantiated CATlet. This CATlet is set
+with the <i><code>setMasterCATlet</code></i> method. Using the <i><code>getMasterCATlet
+</code></i>method you will be able to access models or views of this CATlet.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public String getName();</pre>
+    </td>
+  </tr>
+</table>
+<p>This method return the name of this command. It is instantiated in the
+Command class so that name is directly fetched from bean info using
+introspection mechanism. Users should overload it.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public int getActivationMode()
+
+public void setActivationMode(int mode)</pre>
+    </td>
+  </tr>
+</table>
+<p>Each command runs with an activation mode, shared or exclusive. This means
+that when starting, a shared command will suspend the currently running command
+while an exclusive command will stop it. Commands are shared by default, but it
+can be useful to make a command exclusive if it changes dramatically data so
+that old suspended command have no meaning in being resumed.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public boolean isDeletable()</pre>
+    </td>
+  </tr>
+</table>
+<p>As the Command life cycle is handled by its Header, most Command are
+destroyed after being stopped. But for some reasons, you may want your Command
+not to be destroyed (long creation time ...). For that, overload the <i>isDeletable</i>
+method so that it returns false. By default, <i>isDeletable</i> returns true.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="HeaderClass"></a>Identity Card of the CmdHeader Class</h3>
+<p>As the Command class, the CmdHeader class is defined in the <i><code>com.dassault-systemes.catweb.base.catlet.command</code></i>
+package.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>protected Class commandClass;</pre>
+    </td>
+  </tr>
+</table>
+<p>When the Header has to instantiate the Command, it used its Class, specified
+during the reading of the CATlet's workshop description file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>protected Command command;</pre>
+    </td>
+  </tr>
+</table>
+<p>This field is the current instance of the Command object the Header handles.
+Be careful that most of the time this field is null as the Command is destroyed
+when stopped.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>protected Vector repList;
+
+protected Vector repPool;</pre>
+    </td>
+  </tr>
+</table>
+<p>When handling the Command's representations, the Header as a sort of cache.
+The repList field stores reps that have instantiated and which are being
+displayed whereas repPool stores reps that have been instantiated but that are
+not displayed. When the Header is asked to create a rep, it first looks into
+repPool if there is a rep of this type. If this is the case, it removes the rep
+from repPool and adds it in repList. Otherwise it creates the rep and add it in
+repList. On the contrary, when the Header is asked to delete a rep, it removes
+it from repList and adds it into repPool.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void cleanup();</pre>
+    </td>
+  </tr>
+</table>
+<p>Called when the Header is destroyed (usually when the CATlet is destroyed).</p>
+<table class="code">
+  <tbody>
+    <tr>
+      <td>
+        <pre>public boolean isSelected();
+
+public void setSelected(boolean flag);</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The Header handles the command representation. When a Command is started or
+resumed, its reps must be selected.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public boolean isEnabled();
+
+public void setEnabled(boolean flag);</pre>
+    </td>
+  </tr>
+</table>
+<p>Given the context, a Command may be available or not. To make a Command
+unavailable, the Header must disable its rep.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public boolean isVisible();
+
+public void setVisible(boolean flag);</pre>
+    </td>
+  </tr>
+</table>
+<p>Some Commands may have no representations and as such are invisible. The <i>setVisible</i>
+method shouldn't be called by users as it is set during the reading of the
+CATlet's workshop description file, where Headers are declared visible or
+invisible.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public CATlet getMasterCATlet();
+
+public void setMasterCATlet(CATlet catlet);</pre>
+    </td>
+  </tr>
+</table>
+<p>Most of the Commands are attached to a CATlet (except Frame's Commands).
+Using the master CATlet, the Header can retrieve the CATlet's CommandSelector
+object to subscribe it to its Command.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public CommandSelector getCommandSelector();
+
+public void setCommandSelector(CommandSelector selector);</pre>
+    </td>
+  </tr>
+</table>
+<p>Some Headers are not attached to a CATlet, but still need a CommandSelector.
+They can use the <i>getCommandSelector</i> to get one.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public Class getCommandClass();
+
+public String getCommandClassName();
+
+public void setCommandClassName();</pre>
+    </td>
+  </tr>
+</table>
+<p>The Header instantiate dynamically the Command it handles. For that, it needs
+the Command's class name to create a Class object and later instances of this
+Command. The <i>setCommandClassName</i> method is called during the reading of
+the CATlet's workshop description file where it is specified which Command the
+Header will instantiate.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void setMenuRepClassName(String name);
+
+public void setToolbarRepClassName(String name);
+
+public void setCtxMenuRepClassName(String name);</pre>
+    </td>
+  </tr>
+</table>
+<p>The Header instantiate dynamically its representations as they can be
+configured in the CATlet's workshop description file.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public boolean isValid();
+
+public void setValid(boolean flag);</pre>
+    </td>
+  </tr>
+</table>
+<p>These methods are remapped on isEnabled() and setEnabled()</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public CmdRep createToolbarRep(JComponent parent);
+
+public void destroyToolbarRep(CmdRep rep);
+
+public CmdRep createMenuRep(JComponent parent);
+
+public void destroyMenuRep(CmdRep rep);
+
+public CmdRep createCtxMenuRep(JComponent parent);
+
+public void destroyCtxMenuRep(CmdRep rep);</pre>
+    </td>
+  </tr>
+</table>
+<p>As the Header manages the Command's representations, it must create them but
+also destroy them. See the repList and repPool fields description for an
+explanation of the cache mechanism. When created, the rep is given the Command's
+name and icon as described in the Command's BeanInfo.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void actionPerformed(ActionEvent evt);</pre>
+    </td>
+  </tr>
+</table>
+<p>As the Header manages the Command's representations, it listens these reps
+events to be warned when a rep has been selected. The <i>startCommand</i> method
+is then called.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void startCommand();</pre>
+    </td>
+  </tr>
+</table>
+<p>This method is called when the Header must start its Command. In order, the
+Command is created (if necessary), the master CATlet is given to this Command,
+the CommandSelector is subscribed to CommandEvent from this Command, the Command
+is initialized, and finally the Header ask the Command to send a <i>CommandEvent</i>
+to the CommandSelector to be really started.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void propertyChange(PropertyChangeEvent evt);</pre>
+    </td>
+  </tr>
+</table>
+<p>As the Command can be started, suspended, resumed or stopped, the
+representations must reflect these state (selected when started or resumed and
+unselected when stopped or suspended). Each time the Command state changes, it
+fires a PropertyChangeEvent which is listened by the Header which changed the
+representations state accordingly.</p>
+<p>Now that the command has been introduced, some topics on how to implement a
+command will be presented in a sort of FAQ.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="FAQ"></a>Frequently Asked Questions</h3>
+<p><i><b>What do I put inside the start, stop, suspend and resume methods?</b></i>
+<p>These methods are called during the life cycle of the command. You can put
+inside these methods subscription and un-subscription to events. For example, if
+your command is a manipulator command, it will listen mouse event fired by your
+view and then take action depending on the position of the mouse. You just want
+it to take action when it is active, so subscribe to mouse events in your start
+and resume methods and unsubscribe in your stop and suspend methods.
+<p><i><b>What is the difference between start and resumed, stop and suspended?</b></i>
+<p>Start is called when a Command's representation has been selected. The
+Command has just been created and has no context and must begin from nothing.
+When resumed is called, the Command has already been started and suspended, so
+there is already an existing context for this Command from which the Command
+must continue its task.<br>
+Stop is called when the Command has really ended its task or when a exclusive
+Command has been started. Just after being stopped, the Command is destroyed, so
+its existing context won't be reusable. Suspended is called when a shared
+command has been started. The Command is temporary interrupted but its context
+must be saved so that when it is resumed it can use this context to continue its
+task.
+<p><i><b>How do I get a reference on the models and views of the CATlet my
+command extends?</b></i>
+<p>When your command is created and before it is initialized, the Header will
+call the <i>setMasterCATlet</i> method on it. By calling the <i>getMasterCATlet</i>
+method your will get a reference on your CATlet and then you can call the <i>getView()</i>
+and <i>getModel() </i>methods on this CATlet to get what you need.
+<p><b><i>How do I declare my command?</i></b>
+<p>Commands are declared in the *.workshop file of your CATlet. ([2] See how to
+specify a Workshop organization).<br>
+Even if the command is declared multiple times in this file, it will be
+instantiated only once and will be differentiated with its representation. But
+be careful that a command can only be declared once in all the menu bar and once
+in all the toolbars.
+<p><i><b>I have declared my command inside the workshop file but it doesn't
+appears inside the frame</b></i>
+<p>There can be different explanations. The most current is that you didn't
+provide a bean info for your command or it is unobtainable. If it is the case,
+the command's name and icon can't be found a no representation will be
+constructed for your command.<br>
+Don't providing a bean info can also be a way to have a command without
+representation. This can be useful for some commands (like the load models
+commands which don't need any representations).
+<p><i><b>What must I put in the bean info of my command?</b></i>
+<p>Commands bean info are used for its representation. This is where the name
+and icon are fetched. Here is a small example of a bean info:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public class LookAtCommandBeanInfo extends CommandBeanInfo
+{
+  public EventSetDescriptor[] getPublishedEventDescriptors()
+  {
+    return null;
+  }
+
+  public PropertyDescriptor[] getPropertyDescriptors()
+  {
+    return null;
+  }
+
+  public BeanDescriptor getBeanDescriptor()
+  {
+    String COMMAND_TITLE = BaseV4Language.widgetsRB.getString(&quot;LookAt_Command_Title&quot;);
+    BeanDescriptor desc=super.getBeanDescriptor();
+    desc.setDisplayName(COMMAND_TITLE);
+    return desc;
+  }
+
+  public Image[] getIcons(int iconKind)
+  {
+    if(iconKind != CommandBeanInfo.ICON_COLOR_30x30) return null;
+    Image image = ImageLoader.loadImagefromClassRoot(&quot;Resources/I_LookAt.gif&quot;);
+    Image[] icons = {image};
+    return icons;
+  }
+
+  public Image getIcon(int iconKind)
+  {
+    return getIcons(iconKind)[0];
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><i><b>I don't like the standard representation of my command. How can I
+change it?</b></i>
+<p>You have two possibilities. First is to defined an other RepClassName for
+this Header that manages this Command. This can work if the new CmdRep has the
+same kind of behavior as default CmdRep. Otherwise, you have to write your own
+CmdHeader and handle your rep inside by overloading a createXXXRep method. Here
+a sample code of a command which representation inside a menu is not a menu item
+but a submenu:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>public CmdRep createMenuRep(JComponent parent)
+{
+  // --- first check if the rep hasn't already been instantiated
+  if(menuRep != null)
+  {
+    JComponent ui = menuRep.getUI();
+
+    // --- sometimes commands don't have ui
+    if(ui != null)
+    {
+      if(ui.getParent() != null)
+      ui.getParent().remove(ui);
+      parent.add(ui);
+    }
+    return menuRep;
+  }
+
+  menuRep = new CmdSubmenuRep(getName());
+  if(parent != null &amp;&amp; menuRep.getUI() != null)
+  {
+    // --- creates menu items for installed look and feel
+    UIManager.LookAndFeelInfo[] lfList = UIManager.getInstalledLookAndFeels();
+    ButtonGroup buttonGroup = new ButtonGroup();
+    
+    for(int i=0;i&lt;lfList.length;i++)
+    {
+      JCheckBoxMenuItem item = new JCheckBoxMenuItem(lfList[i].getName());
+      
+      // --- subscribes to Item Event
+      item.addItemListener(this);
+
+      // --- adds the item
+      menuRep.getUI().add(item);
+      buttonGroup.add(item);
+      
+      // --- if this is the current look and feel, select item
+      if(lfList[i].getClassName().compareTo(UIManager.getLookAndFeel().getClass().getName()) == 0)
+      {
+        item.setState(true);
+      }
+    }
+    parent.add(menuRep.getUI());
+    parent.validate();
+  }
+
+  // --- subscribes to action events from this cmdRep
+  menuRep.addActionListener(this);
+  return menuRep;
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><i><b>Sometimes, I want my command's representations to appears disabled. How
+must I proceed?</b></i>
+<p>Given the data contained inside the CATlet model, you may want your command
+disabled. For that, you must write your own CmdHeader and given the context call
+the setValid method with the right flag. This method will then enable or disable
+all the representations this Header manages. Here is a sample code of the
+SelectionHeader that is enabled only when there is a selection inside the model.
+The header subscribe to itemEvent form the CATlet's model and is called on the
+itemStateChange method when the selection has changed:
+<table class="code">
+  <tr>
+    <td>
+      <pre>public void itemStateChanged(ItemEvent evt)
+{
+  if(evt.getSource() == models[0])
+  {
+    boolean valid = isValid();
+    setValid(valid);
+  }
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><i><b>I'm done with my command and now I want it to be stopped. What must I
+do?</b></i>
+<p>You've just to send a CommandEvent with the right flag in it:<br>
+<i><code>fireCommandEvent(new CommandEvent(this,this,CommandEvent.UNSELECTED));</code></i>
+<p><i><b>I want my command to be exclusive. How can I change the default
+setting?</b></i>
+<p>In your command constructor, call the <i><code>setActivationMode(Command.EXCLUSIVE_MODE)</code></i>
+method. This way, your command will stop the current running command instead of
+suspending it. If you want to reverse to the shared mode, call the <i><code>setActivationMode(Command.SHARED_MODE)</code></i>
+method.
+<p><i><b>I want my command to listen Bus events.</b></i>
+<p>Sometimes, Command can be started non-interactively by an event published on
+the Bus. For that, the Command must always be instantiated and not only when
+started. To achieve this, specify in the CATlet's workshop description file that
+the header to use for your Command is a <i>com.dassault-systemes.catweb.base.catlet.command.PermanentCommandHeader</i>.
+<p><i><b>I've written my own header and my command's rep are not selected when
+started, or they are still selected when stopped. What happens?</b></i>
+<p>The <i>CmdHeader</i> class implements the PropertyChangeListener interface to
+be aware when the Command's state has changed and so modify the reps
+accordingly. If your own CmdHeader implements <i>PropertyChangeListener</i>, you
+must not forget to call <i>super.propertyChange(evt)</i> in your own <i>propertyChange</i>
+method, otherwise reps won't reflect the Command's real state.
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Mar 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

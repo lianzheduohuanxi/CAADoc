@@ -1,0 +1,225 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- saved from url=(0014)about:internet -->
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Getting Started with Your Own Features</title>
+</head>
+
+<body>
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Getting Started with Your Own Features</h3>
+      <p><em>What to know before creating a new feature?</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article will give the major guidelines on how to get started 
+		with your own features: starting from the design of the StartUps and 
+		ending with their instantiation.</p>
+		<ul>
+			<li><a href="#Part1">Introduction</a></li>
+			<li><a href="#Part2">Designing Your StartUps</a><ul>
+			<li><a href="#Part21">Data Model</a></li>
+			<li><a href="#Part22">Behavior Model</a></li>
+		</ul>
+			</li>
+			<li><a href="#Part3">Creating, Storing and Activating Your Features</a><ul>
+			<li><a href="#Part31">Applicative Container</a></li>
+			<li><a href="#part32">Feature Creation</a></li>
+			<li><a href="#part33">Feature Loading</a></li>
+		</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part1"></a>Introduction</h2>
+<p>You have already read the &quot;Feature Modeler Concepts&quot; [<a href="#References">1</a>], know how to use 
+Dassault Systemes supplied features [<a href="#References">2</a>] but decided to create your own features 
+from scratch. This article will present an overview of the essential steps.</p>
+<p>We will first start with the design of the StartUps by explaining how the 
+data model is created and how behavior is attached. Next we will show how these 
+StartUps are instantiated into features, ready for use by run-time code.</p>
+<script type="text/javascript">insertLinkToTop()</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Part2"></a>Designing Your StartUps</h2>
+<p>In the &quot;Feature Modeler Concepts&quot; article [<a href="#References">1</a>], 
+we have explained how features are created: by instantiating their templates 
+called StartUps. A StartUp is defined by its data model and its behavior model. 
+The data model consists of its attributes while the behavoir model is the set of 
+interfaces implemented.</p>
+<h3><a name="Part21"></a>Data Model</h3>
+<p>The data model of the StartUps is defined using the OSM language [<a href="#References">3</a>]. 
+Suppose that we want to model a point:</p>
+<p>
+<img border="0" src="images/CAAOsmCreatingOwnFeatures-1.png" width="93" height="92"></p>
+<p>It can be defined in OSM as:</p>
+<table class="code" id="table4">
+	<tr>
+		<td>
+		<pre>...
+feature <b>CAAPoint</b> #startup {
+        double x
+        double y
+        double z
+}
+...</pre>
+		</td>
+	</tr>
+</table>
+<p>Things that you should keep in mind when designing your StartUps:</p>
+<ul>
+	<li>The names must comply with the CAA naming rules [<a href="#References">4</a>] because their scope is 
+	global. These names also serve as late types on which <a href="#Part22">behavior</a> will 
+	be attached to. When a feature is displayed on screen however, another name 
+	can be used thanks to NLS 
+	catalogs [<a href="#References">5</a>].</li>
+	<li>StartUp derivation is protected: only the StartUp creator can derive it. If your StartUps should be derived by others, do not forget to indicate 
+	so with the <code>#inheritability(caa)</code> facet [<a href="#References">3</a>] 
+	in OSM:<br>
+&nbsp;<table class="code" id="table6">
+	<tr>
+		<td><pre>feature <b>CAAPoint</b> #startup <b>#inheritability(caa)</b> {</pre></td></tr></table></li>
+	<li>Your StartUp can also derive from DS features (if allowed to). For 
+	instance, the <code>CAAPoint </code>feature could be derived from the 
+	GeometricalElement3D as:<br>
+&nbsp;<table class="code" id="table7">
+	<tr>
+		<td><pre>feature <b>CAAPoint</b> #startup <b>GeometricalElement3D</b>@`MechMod.feat` {</pre></td></tr></table>
+	</li>
+</ul><p>You can define any number of features in an OSM file to suit your application 
+needs. Once this OSM file is deemed complete, it can be used to create/update a StartUp catalog [<a href="#References">5</a>]. 
+</p>
+<p>Each catalog is created with a client ID supplied by you. This client ID is required whenever the catalog is updated and 
+specified in the 
+code to access the StartUps.</p><p>The newly created/updated catalog must then be put in the run-time view where 
+the Feature Modeler expects it to be. We now have StartUps with their data fully 
+defined, it is time to attach behavior to it.</p><h3><a name="Part22"></a>Behavior Model</h3><p>Interfaces are implemented on StartUps via its late type which happens to be 
+its name. There exists a set of interfaces that are inherited by all features: <i>
+<code>CATISpecObject</code></i>, <i><code>CATISpecAttrAccess </code></i>to name 
+a few. Depending on your application, new interfaces can be added and/or 
+existing interfaces can be reimplemented.</p>
+<p>
+<img border="0" src="images/CAAOsmCreatingOwnFeatures-2.png" width="421" height="219"></p><p>Suppose that we would like to implement the <i><code>CAAIPoint</i> </code>interface 
+on our <code>CAAPoint </code>StartUp, with the implementation class <code>
+CAAEPoint</code>. The source file of the <code>CAAEPoint</code> class must 
+contain the following code [<a href="#References">8</a>]:</p><table class="code" id="table3">
+	<tr>
+		<td>
+		<pre>...
+<b>TIE_CAAIPoint</b>(<b>CAAEPoint</b>);
+CATImplementClass(<b>CAAEPoint</b>,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DataExtension,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATBaseUnknown,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  <b>CAAPoint</b>);
+...</pre></td></tr></table><p>The <i><code>CAAIPoint</i> </code>interface has a <code>GetCoordinate
+</code>method to retrieve the point location, it would be implemented as:</p><table class="code" id="table5">
+	<tr>
+		<td>
+		<pre>...
+HRESULT CAAEPoint::<b>GetCoordinate</b>(double&amp; oX, double&amp; oY, double&amp; oZ)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATISpecAttrAccess *piAttrAccs = NULL;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HRESULT rc = QueryInterface(IID_CATISpecAttrAccess, &amp;piAttrAccs);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATISpecAttrKey *piXkey = piAttrAccs-&gt;<b>GetAttrKey</b>(&quot;x&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; oX = piAttrAccess-&gt;<b>GetDouble</b>(piXkey);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</pre></td></tr></table><p>The above example shows how the <code>x</code>, <code>y</code> and <code>z</code> attributes of the <code>
+CAAPoint </code>feature is retrieved with the <i><code>CATISpecAttrAccess </code>
+</i>interface. You might notice that the attribute is not specified by name 
+but with the <i><code>CATISpecAttrKey </code></i>interface.</p><p>To make your features fully integrated in CATIA, you need to implement 
+several interfaces. The whole process is described in the &quot;Integrating 
+Applicative Features in a Product Structure&quot; article [<a href="#References">8</a>]</p><p>Now you that you have a StartUp complete with its data and behavior, let's 
+see what needs to be done before it can be instantiated.</p><script type="text/javascript">insertLinkToTop()</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><h2><a name="Part3"></a>Creating, Storing and Activating Features</h2><p>When a StartUp is instantiated into a feature, a container must 
+be specfied for its storage. Derived features get stored in the same container 
+as the features they are derived from. For a DS derived feature, there is no 
+need to create/set up the container. If your feature derives from nothing, then 
+an applicative container must be created/set up.</p>
+<p>In this section, we will introduce the applicative 
+container and the interfaces that can be implemented on it.</p><h3><a name="Part31"></a>Applicative Container</h3><p>Applicative containers [<a href="#References">6</a>] are created in 
+CATDocument and are identified by its name. This name also happens 
+to be the late type on which interfaces are implemented. The CAA naming rules [<a href="#References">4</a>] 
+therefore apply.</p><p>The most important point for an applicative container is 
+that its super type must be <b><code>CATFeatCont</code></b>. 
+Failing that, the container will not behave as expected.</p><p>The features of an applicative container can only retrieved if the correct 
+client ID is supplied. The one that was specified when the StartUp catalog was
+<a href="#Part21">created</a>.</p><h3><a name="part32"></a>Feature Creation</h3><p>Even though StartUps can be instantiated thanks to the <code>CATOsmSUHandler
+</code>class, a more appropriate way to do this is to implement a factory 
+interface on the container. This would hide implementation details from the 
+final feature user.</p><p>Suppose that we have defined the <i><code>CAAIPointFactory </code></i>
+interface to create our <code>CAAPoint<i> </i></code>features. The <code>Create
+</code>method of the <code>CAAEPointFactory </code>implementation class could be 
+defined as follow:</p><table class="code" id="table2">
+	<tr>
+		<td>
+		<pre>...
+HRESULT <b>CAAEPointFactory</b>::<b>Create</b>(CAAIPoint **oPoint)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATBaseUnknown *piContainer = NULL;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rc = QueryInterface(IID_CATBaseUnknown, &amp;piContainer);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATOsmSUHandler pointSU(&quot;CAAPoint&quot;, &quot;CAAClientID&quot;);
+        CATISpecObject_var spPoint;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HRESULT rc = pointSU.Instantiate(spPoint, piContainer);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+        rc = spPoint-&gt;QueryInterface(IID_CAAIPoint, (void **) oPoint);
+        return rc;
+}
+...</pre></td></tr></table><p>Note:</p><ul>
+	<li>As the factory is implemented on the container, it also implements 
+	the <i><code>CATBaseUnknown </code></i>interface which is required by the 
+	StartUp instantiation.</li></ul><h3><a name="part33"></a>Feature Loading</h3><p>
+Now that your features are created and stored inside containers, there is one 
+thing left to be handled: their loading. This is done by implementing the <i>
+<code>CATInit </code></i>interface on the container. This is normally taken care 
+by the container's owner. Which means that unless your features are derived from 
+the DS ones, you will need to implement <i><code>CATInit </code></i>[<a href="#References">6</a>].</p><script type="text/javascript">insertLinkToTop()</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><h2><a name="InShort"></a>In Short</h2><p>In this article, we have outlined the essential steps to define your own 
+features: design the StartUps, implement their behavior, implement interfaces on 
+the container that will hold the features.</p><script type="text/javascript">insertLinkToTop()</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><h2><a name="References"></a>References</h2><table>
+	<tr>
+		<td valign="top">[1]</td><td>
+		<a href="CAAOsmOverview.htm">
+		Feature Modeler Concepts</a></td></tr><tr>
+		<td valign="top">[2]</td><td>Getting Started with DS Features</td></tr><tr>
+		<td valign="top">[3]</td><td><a href="CAAOsmTaModelingStartUps.htm">Modeling StartUps</a></td></tr><tr>
+		<td valign="top">[4]</td><td>
+		<a href="../CAADocTechArticles/CAADocCppNamingRules.htm">CAA C++ Naming Rules</a></td></tr><tr>
+		<td valign="top">[5]</td><td><a href="CAAOsmTaMaintainingCatalogs.htm">Managing StartUp Catalogs</a></td></tr><tr>
+		<td valign="top">[6]</td><td><a href="CAAOsmTaApplicativeContainer.htm">Understanding Applicative 
+		Container</a></td></tr><tr>
+		<td valign="top">[7]</td><td>
+		<a href="../CAASysTechArticles/CAASysCreatingInterfaces.htm">Creating Interfaces</a></td></tr><tr>
+		<td valign="top">[8]</td><td>Integrating Applicative Features in a Product Structure</td></tr></table><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><h2><a name="History"></a>History</h2><table>
+	<tr>
+		<td valign="top">Version: <b>1</b> [Nov 2007]</td><td valign="top">Document created</td></tr></table><script type="text/javascript">insertLinkToTop()</script><!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= --><script type="text/javascript">insertCopyright();</script></body></html>
+
+
+

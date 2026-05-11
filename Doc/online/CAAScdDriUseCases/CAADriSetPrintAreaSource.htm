@@ -1,0 +1,149 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>CAADriSetPrintArea.CATScript</title>
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+</head>
+
+<body>
+
+<pre><font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2004</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : This macro allows you to set the drafting print area</font>
+<font color="#008000">'                 from the mouse selection, then to visualize it.</font>
+<font color="#008000">'   Author      : TBU</font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R14</font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+<font color="#008000">' Retrieve the active document</font>
+<font color="#0000FF">Dim </font>oDocument<font color="#0000FF"> As </font>Document
+<font color="#0000FF">Set </font>oDocument = CATIA.ActiveDocument
+
+<font color="#008000">' Test the document's type, if it is not a drawing document the macro stops</font>
+<font color="#0000FF">If </font>TypeName(oDocument) = &quot;DrawingDocument&quot; Then
+<font color="#0000FF">    Dim </font>oDrawingDocument<font color="#0000FF"> As </font>DrawingDocument
+<font color="#0000FF">    Set </font>oDrawingDocument = oDocument
+<font color="#0000FF">Else</font>
+    <font color="#0000FF">MsgBox</font> &quot;This macro can be run with a drawing document only.&quot;
+<font color="#0000FF">    Exit Sub</font>
+<font color="#0000FF">End If</font>
+
+<font color="#008000">' Retrieve the active sheet of the document</font>
+<font color="#0000FF">Dim </font>oSheet<font color="#0000FF"> As </font>DrawingSheet
+<font color="#0000FF">Set </font>oSheet <font color="#0000FF">=</font> oDrawingDocument.Sheets.ActiveSheet
+
+<font color="#008000">' Retrieve the selection of the document</font>
+<font color="#0000FF">Dim </font>oSelection <font color="#008000">'As Selection</font>
+<font color="#0000FF">Set </font>oSelection <font color="#0000FF">=</font> oDrawingDocument.Selection
+<font color="#008000">' Clear the selection</font>
+oSelection.Clear
+
+<font color="#008000">' Define the object type allowed to be selected, here a drawing point</font>
+<font color="#0000FF">Dim </font>InputObjectType(0)
+InputObjectType(0) <font color="#0000FF">=</font> &quot;Point2D&quot;
+<font color="#0000FF">Dim </font>ReturnStatus<font color="#0000FF"> As </font>String
+<font color="#0000FF">Dim </font>oView<font color="#0000FF"> As </font>DrawingView
+<font color="#0000FF">Dim </font>ObjectSelected<font color="#0000FF"> As </font>Boolean
+
+<font color="#0000FF">Dim </font>iFirstPoint <font color="#008000">'As Point 2D
+</font><font color="#0000FF">Dim </font>oFirstPointRelative(1)
+<font color="#0000FF">Dim </font>oFirstPointAbsolute(1)
+
+<font color="#008000">' Retrieve the first point location to set the print area from the mouse selection</font>
+ReturnStatus <font color="#0000FF">= </font>oSelection.IndicateOrSelectElement2D(&quot;Select the first point&quot;, InputObjectType, True, True, False, ObjectSelected, oFirstPointAbsolute)
+
+<font color="#008000">' Test of the selection content from the ObjectSelected value</font>
+<font color="#0000FF">If </font>ObjectSelected <font color="#0000FF"> Then</font>
+    <font color="#008000">' A drawing point has been selected</font>
+    <font color="#008000">' Retrieve the drawing point object</font>
+<font color="#0000FF">    Set </font>iFirstPoint = oSelection.Item(1).Value
+    <font color="#008000">' Retrieve the drawing point's view form the FindObject method of the selection</font>
+<font color="#0000FF">    Set </font>oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
+    <font color="#008000">' Retrieve the drawing point's coordinates,</font>
+    <font color="#008000">' these coordinates are defined from the view's reference axis</font>
+    iFirstPoint.GetCoordinates oFirstPointRelative
+    <font color="#008000">' Compute the drawing point's coordinates according to the sheet's reference axis</font>
+    CatAbsoluteCoordinates oView, oFirstPointAbsolute, oFirstPointRelative
+<font color="#0000FF">End If</font>
+oSelection.Clear
+
+<font color="#0000FF">Dim </font>iSecondPoint <font color="#008000">'As Point2D
+</font><font color="#0000FF">Dim </font>oSecondPointRelative(1)<font color="#008000">
+</font><font color="#0000FF">Dim </font>oSecondPointAbsolute(1)
+
+<font color="#008000">' Retrieve the second point location to set the print area from the mouse selection</font>
+ReturnStatus = oSelection.IndicateOrSelectElement2D(&quot;Select the second point&quot;, InputObjectType, True, True, False, ObjectSelected, oSecondPointAbsolute)
+
+<font color="#0000FF">If </font>ObjectSelected <font color="#0000FF"> Then</font>
+    <font color="#008000">' A drawing point has been selected</font>
+    <font color="#008000">' Retrieve the drawing point object</font>
+<font color="#0000FF">    Set </font>iSecondPoint = oSelection.Item(1).Value
+    <font color="#008000">' Retrieve the drawing point's view form the FindObject method of the selection</font>
+<font color="#0000FF">    Set </font>oView = oSelection.FindObject(&quot;CATIADrawingView&quot;)
+    <font color="#008000">' Retrieve the drawing point's coordinates,</font>
+    <font color="#008000">' these coordinates are defined from the view's reference axis</font>
+    iSecondPoint.GetCoordinates oSecondPointRelative
+    <font color="#008000">' Compute the drawing point's coordinates according to the sheet's reference axis</font>
+    CatAbsoluteCoordinates oView, oSecondPointAbsolute, oSecondPointRelative
+<font color="#0000FF">End If</font>
+oSelection.Clear
+
+<font color="#008000">' Define the coordinates of the print area's point</font>
+<font color="#0000FF">Dim </font>XPrintArea<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>YPrintArea<font color="#0000FF"> As </font>Double
+
+<font color="#0000FF">If </font>oFirstPointAbsolute(0) &gt; oSecondPointAbsolute(0)<font color="#0000FF"> Then</font>
+    XPrintArea = oSecondPointAbsolute(0)
+<font color="#0000FF">Else</font>
+    XPrintArea = oFirstPointAbsolute(0)
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">If </font>oFirstPointAbsolute(1) &gt; oSecondPointAbsolute(1)<font color="#0000FF"> Then</font>
+    YPrintArea = oSecondPointAbsolute(1)
+<font color="#0000FF">Else</font>
+    YPrintArea = oFirstPointAbsolute(1)
+<font color="#0000FF">End If</font>
+
+<font color="#0000FF">Dim </font>WidthPrintArea<font color="#0000FF"> As </font>Double
+<font color="#0000FF">Dim </font>HeightPrintArea<font color="#0000FF"> As </font>Double
+
+<font color="#008000">' Define the width and height of the print area</font>
+WidthPrintArea = Abs(oSecondPointAbsolute(0) - oFirstPointAbsolute(0))
+HeightPrintArea = Abs(oSecondPointAbsolute(1) - oFirstPointAbsolute(1))
+
+<font color="#008000">' Define and activate the print area of the drawing document</font>
+<font color="#0000FF">Dim </font>oPrintArea<font color="#0000FF"> As </font>PrintArea
+<font color="#0000FF">Set </font>oPrintArea = oSheet.PrintArea
+
+oPrintArea.SetArea XPrintArea, YPrintArea, WidthPrintArea, HeightPrintArea
+oPrintArea.ActivationState = True
+
+<font color="#008000">' Run the &quot;Visualize Print Area&quot; command from its id, the sheet must be selected before !</font>
+oSelection.Add oSheet
+CATIA.StartCommand &quot;CATDrwVisualizePrintAreaHdr&quot;
+oSelection.Clear
+
+<font color="#0000FF">End Sub</font>
+
+<font color="#0000FF">Private Sub</font> CatAbsoluteCoordinates(CatDrawingView<font color="#0000FF"> As </font>Object, AbsoluteCoordinates(), RelativeCoordinates())
+
+<font color="#008000">' Compute the coordinates of a point in a view according to the sheet's reference axis</font>
+<font color="#008000">' Location, Angle and Scale factor of the view are take into account</font>
+AbsoluteCoordinates(0) = CatDrawingView.xAxisData + (RelativeCoordinates(0) * Cos(CatDrawingView.Angle) - RelativeCoordinates(1) * Sin(CatDrawingView.Angle)) * CatDrawingView.Scale2
+AbsoluteCoordinates(1) = CatDrawingView.yAxisData + (RelativeCoordinates(0) * Sin(CatDrawingView.Angle) + RelativeCoordinates(1) * Cos(CatDrawingView.Angle)) * CatDrawingView.Scale2
+
+<font color="#0000FF">End Sub</font>
+</pre>
+
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<HTML>
+
+<HEAD>
+<TITLE>Specifying Occurrences for Images</TITLE>
+<META HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Microsoft FrontPage 6.0" NAME="GENERATOR">
+<META CONTENT="FrontPage.Editor.Document" NAME="ProgId">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<script language="JavaScript" src="../CAAScrJavaScript/submit.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD>
+		<H2>Analysis Modeler</H2>
+		</TD>
+		<TD VALIGN="top" ALIGN="right">
+		<H2><A NAME="Top"></A>Specifying Occurrences for Images</H2>
+		</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/atarget.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Learn"></A>This use case shows you how to change the occurrence 
+		of an image, created under frequency case.</P>
+		<P>The macro opens an Analysis document which already contains a computed 
+		frequency case and images. The occurrence of the image is changed and the 
+		image is updated.</P>
+		<P>&nbsp;</P>
+		<P ALIGN="center"><img src="images/ActivateDeactivate.gif" border="2"></P>
+		<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ainfo.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="How"></A>CAAAniPostProOccurrence is launched in CATIA [<A HREF="#References">1</A>]. 
+		No open document is needed.</P>
+		<P><a href="CAAAniPostProOccurrenceSource.htm">CAAAniPostProOccurrence.catvbs</A> 
+		is located in the CAAScdAniUseCases module.
+		<a href="macros/CAAAniPostProOccurrence.catvbs">Execute macro</A> (Windows 
+		only).</P>
+		<P ALIGN="center">&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN="top" WIDTH="7%">
+		<img height="32" src="../CAAScrBase/images/ascenari.gif" width="32" border="0"></TD>
+		<TD WIDTH="93%">
+		<P><A NAME="Step"></A>CAAAniPostProOccurrence includes the following steps:</P>
+		<OL>
+			<LI><A HREF="#prolog">Prolog</A></LI>
+			<LI><A HREF="#Reference">Retrieve Analysis Cases and Analysis Sets from 
+			the Analysis Document</A></LI>
+			<LI><A HREF="#Navigate">Setting the occurrence</A></LI>
+			<LI><A HREF="#Epilog">Epilog</A></LI>
+		</OL>
+		<H4><A NAME="prolog"></A>Prolog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE><FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</FONT>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<FONT COLOR="#0000FF">    If </FONT>(Not CATIA.FileSystem.FolderExists(sDocPath))<FONT COLOR="#0000FF"> Then</FONT>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<FONT COLOR="#0000FF">    End If</FONT>
+<FONT COLOR="#008000">&#39; ----------------------------------------------------------- </FONT>
+<FONT COLOR="#008000">&#39; Open the Analysis document</FONT> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>Open the Analysis document. The Analysis document is retrieved in the 
+		documentation installation path, this path has already been stored in the
+		<CODE>sDocPath</CODE> variable. In the collection of documents, two documents 
+		can be retrieved; the Analysis document and the Part document. </P>
+		<H4><A NAME="Reference"></A><B>Retrieve Analysis Cases and Analysis Sets 
+		from Analysis Document</B></H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39; Retrieve the Analysis Manager</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisManager = oAnalysisDocument.Analysis
+			
+<FONT COLOR="#008000">&#39; Retrieve the analysis model from the list of models</FONT>
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModels = oAnalysisManager.AnalysisModels
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisModel = oAnalysisModels.Item(1)
+</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39; Retrieve the analysis cases and the first analysis case</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisCases = oAnalysisModel.AnalysisCases
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisCase = oAnalysisCases.Item(1)</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39; Retrieve the analysis cases and the first analysis case</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisSets = oAnalysisCase.AnalysisSets
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisSet = oAnalysisSets.Item(&quot;Frequency Case Solution.1&quot;, catAnalysisSetSearchAll)
+</PRE>
+				<PRE>
+<FONT COLOR="#008000">&#39; Get the list of image and retrieve the Von Mises Stress image by its name</FONT>
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisImages = oAnalysisSet.AnalysisImages
+<FONT COLOR="#0000FF">Set </FONT>oAnalysisImage = oAnalysisImages.Item(&quot;Von Mises Stress (nodal values).1&quot;)
+
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</A> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <B>Document</B>, 
+		we find the <B>Analysis Manager Object</B>, the <B>Analysis Models</B>.
+		</P>
+		<P>The Analysis case is retrieved from list of cases by its index. The model 
+		contains only one analysis case hence we pass 1 to the method <I>Item.
+		</I>Otherwise we pass the appropriate index of the Frequency case if there 
+		are more Analysis cases. The analysis image is retrieved from the list of 
+		images by its name. The name is same as that appears in the tree, in the 
+		interactive environment.</P>
+		<H4><A NAME="Navigate"></A>Setting the Occurrence</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...  </PRE>
+				<PRE><FONT COLOR="#008000">&#39;Modify current occurrence of Image Von Mises Stress (nodal values)</FONT>
+<FONT COLOR="#008000">&#39;==================================================================</FONT>
+oAnalysisImage.SetCurrentOccurrence 4
+oAnalysisImage.Update
+...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<H4><A NAME="Epilog"></A>Epilog</H4>
+		<TABLE CLASS="code">
+			<TR>
+				<TD>
+				<PRE>...</PRE>
+				End Sub
+				<PRE>...</PRE>
+				</TD>
+			</TR>
+		</TABLE>
+		<P>To run the macro interactively CATDocView environment 
+		variable must be defined.</P>
+		</TD>
+	</TR>
+</TABLE>
+<!---------------------------------comment------------------------------------->
+<P ALIGN="center">
+<img height="32" src="../CAAScrBase/images/aendtask.gif" width="64" border="0"></P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="InShort"></A>In Short</H4>
+<P>This use case has shown how to specify occurrences for images.</P>
+<P ALIGN="right">[<A HREF="#Top">Top</A>]</P>
+<HR>
+<!---------------------------------comment------------------------------------->
+<H4><A NAME="References"></A>References</H4>
+<TABLE WIDTH="100%" BORDER="0">
+	<TR>
+		<TD VALIGN="top" WIDTH="74">[1]</TD>
+		<TD WIDTH="93%">
+		<a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+		a Macro</A></TD>
+	</TR>
+	<TR>
+		<TD ALIGN="right" COLSPAN="2">[<A HREF="#Top">Top</A>]</TD>
+	</TR>
+</TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+
+</BODY>
+
+</HTML>

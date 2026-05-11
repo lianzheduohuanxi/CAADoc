@@ -1,0 +1,56 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css"></head><body><pre>
+<font color="#008000">' COPYRIGHT DASSAULT SYSTEMES 2001</font>
+<font color="#0000FF">Option Explicit</font>
+
+<font color="#008000">' ***********************************************************************</font>
+<font color="#008000">'   Purpose     : Create a scene that keeps all the component's position of a product.</font>
+<font color="#008000">'   Assumptions : A CATProduct document should be active.</font>
+<font color="#008000">'   Author      : </font>
+<font color="#008000">'   Languages   : VBScript</font>
+<font color="#008000">'   Locales     : English </font>
+<font color="#008000">'   CATIA Level : V5R6 </font>
+<font color="#008000">' ***********************************************************************</font>
+
+<font color="#0000FF">Sub </font>CATMain()
+
+    <font color="#008000">' Get the root of the CATProduct</font>
+<font color="#0000FF">    Dim </font>oRootProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Set </font>oRootProduct = CATIA.ActiveDocument.Product
+
+    <font color="#008000">' Retrieve the scenes collection</font>
+<font color="#0000FF">    Dim </font>oSceneWorkbench<font color="#0000FF"> As </font>Workbench
+<font color="#0000FF">    Set </font>oSceneWorkbench = CATIA.ActiveDocument.GetWorkbench("SceneWorkbench")
+<font color="#0000FF">    Dim </font>cScenes<font color="#0000FF"> As </font>Scenes
+<font color="#0000FF">    Set </font>cScenes = oSceneWorkbench.WorkScenes
+
+    <font color="#008000">' Create the scene</font>
+<font color="#0000FF">    Dim </font>oScene<font color="#0000FF"> As </font>Scene
+<font color="#0000FF">    Set </font>oScene = cScenes.AddNewScene("MyScene", oRootProduct)
+
+    <font color="#008000">' Move the components of the scene corresponding to the children of the rootproduct</font>
+<font color="#0000FF">    Dim </font>I<font color="#0000FF"> As </font>Integer
+<font color="#0000FF">    Dim </font>oChildProduct<font color="#0000FF"> As </font>Product
+<font color="#0000FF">    Dim </font>oMove<font color="#0000FF"> As </font>Move
+<font color="#0000FF">    Dim </font>dIdentityMatrix (11)
+    dIdentityMatrix( 0) = 1.0
+    dIdentityMatrix( 1) = 0.0
+    dIdentityMatrix( 2) = 0.0
+    dIdentityMatrix( 3) = 0.0
+    dIdentityMatrix( 4) = 1.0
+    dIdentityMatrix( 5) = 0.0
+    dIdentityMatrix( 6) = 0.0
+    dIdentityMatrix( 7) = 0.0
+    dIdentityMatrix( 8) = 1.0
+    dIdentityMatrix( 9) = 0.0
+    dIdentityMatrix(10) = 0.0
+    dIdentityMatrix(11) = 0.0
+<font color="#0000FF">    For </font>I = 1<font color="#0000FF"> to </font>oRootProduct.Products.Count
+<font color="#0000FF">        Set </font>oChildProduct = oRootProduct.Products.Item(I)
+<font color="#0000FF">        Set </font>oMove = oScene.GetMove(oChildProduct)
+        oMove.Apply dIdentityMatrix
+<font color="#0000FF">    Next</font>
+
+<font color="#0000FF">End Sub</font>
+</pre></body></html>
+
+

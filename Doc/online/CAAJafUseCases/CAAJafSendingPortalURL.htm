@@ -1,0 +1,381 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Sending a PortalURL</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Webtop</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Sending a PortalURL</h3>
+      <em>Sending a PortalURL to the Portal</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to create and send a PortalURL
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The PublishBillCommand Use Case</strong></a>
+          <ul>
+            <li><a href="#What">What Does PublishBillCommand Do</a></li>
+            <li><a href="#How">How to Launch PublishBillCommand</a></li>
+            <li><a href="#Where">Where to Find the PublishBillCommand Code</a></li>
+          </ul>
+        </li>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show how to create and send PortalURL to the
+Portal.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The PublishBillCommand Use Case</h3>
+<p>The PublishBillCommand is a use case of the CAAJApplicationFrame.edu
+framework that illustrates the creation of a PortalURL and the sending to the
+Portal applications. This use case use the Command and PortalURL classes from
+the PortalBase framework.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does PublishBillCommand Do</h4>
+<p>The PublishBillCommand use case creates a file which contains the bill of the
+food store, and send the URL bill file in order to visualize it in the embedded
+browser (the default text file viewer in this use case).
+<p>&nbsp;
+<p>The Command creates the bill file and writes it on the temporary directory of
+the local disk. It creates a PortalURL on the file (as &quot;<font color="#0000FF"><u>file://c:\tmp\StoreFoodBill.txt</u></font>&quot;),
+and sends a PortalURLEvent (which encapsulates the created PortalURL) to the
+Portal desktop. The Portal desktop receives this event and searches in the
+PortalRegistry (See how to use the Portal Registry [<a href="#References">3</a>])
+the bean able to receive this type of file document. When the viewer bean is
+found, the Portal desktop gives to it the PortalURL to the file document.</p>
+<p>The PortalURL is the most important file access exchange between Portal
+applications (See how to receive PortalURLs [<a href="#References">2</a>]).
+PortalURL contains the access file of the document, and parameters (in the query
+part) interpreted by the Portal or by the url receiver application.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch PublishBillCommand</h4>
+<p>To launch the PublishBillCommand, you will need to set up the build time
+environment, then compile PublishBillCommand and FoodStoreCATlet along with
+their prerequisites, set up the run time environment, and then execute the use
+case [<a href="#References">1</a>].</p>
+<p>Specify the FilePrefix CAAGw0 in the Portal launching command, logon to the
+Portal and do the following steps:</p>
+<ul>
+  <li>Select the CATlet list Workbook. (If you already have a personal Workbook
+    list customization and the CATlet list Workbook does not appear, then
+    customize your personal Workbook list and add the CATlet list Workbook)</li>
+  <li>In the WebInfo part, double click on the FoodStore CATlet item which will
+    add the CATlet in the WebSpace part. (The FoodStoreSelectionCommand is
+    selected, and the PublishBill command is disabled.)</li>
+  <li>Select some food items. Then the PublishBill command is switched to
+    enable.</li>
+  <li>Select the PublishBill command</li>
+  <li>Fill in the client information in the dialog box and click on the Ok
+    button.</li>
+</ul>
+<table width="100%">
+  <tr>
+    <td><b>Publish Bill</b></td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/FoodStorePublishBill.jpg" alt="FoodStorePublishBill.jpg" width="727" height="458"></td>
+  </tr>
+  <tr>
+    <td><b>Display published bill</b></td>
+  </tr>
+  <tr>
+    <td><img border="0" src="images/FoodStorePublishedBill.jpg" alt="FoodStorePublishedBill.jpg" width="728" height="457"></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the PublishBillCommand Code</h4>
+<p>The PublishBillCommand use case is one part of the Food Store use case. The
+PublishBillCommand class is located in the CAAGw0FoodStore.mj module of the
+CAAJApplicationFrame.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAJApplicationFrame.edu\CAAGw0FoodStore.mj\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAJApplicationFrame.edu/CAAGw0FoodStore.mj/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right"><a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>To create a PortalURL from a bean and to send it to the Portal, there are 3
+steps:</p>
+<table width="100%">
+  <tr>
+    <th>#</th>
+    <th>Step</th>
+    <th>Where</th>
+  </tr>
+  <tr>
+    <td><a href="#Step1">1</a></td>
+    <td>Declare the bean as a PortalURL publisher to the Hookup</td>
+    <td>PublishBillCommand.java</td>
+  </tr>
+  <tr>
+    <td><a href="#Step2">2</a></td>
+    <td>Declare the PortalURLEvent as a published event of the bean</td>
+    <td>PublishBillCommandBeanInfo.java</td>
+  </tr>
+  <tr>
+    <td><a href="#Step3">3</a></td>
+    <td>Create the PortalURL and send it</td>
+    <td>PublishBillCommand.java</td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Declaring the bean as a PortalURL Publisher</h4>
+<p>The PublishBillCommand class declares itself to the Hookup as an event
+publisher, as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class PublishBillCommand extends <b>Command</b>
+                                implements ActionListener
+{
+  ...
+  public PublishBillCommand()
+  {
+    // --- creates a vector for the PortalURLListener storage
+    <b>portalListeners</b> = new Vector();
+  }
+
+  public void initialize()
+  {
+    // --- declares itself as an event publisher
+    <b>Hookup.addPublisher(this);</b>
+  }
+  ...
+  public void <b>addPortalURLListener(PortalURLListener listener)</b>
+  {
+    portalListeners.addElement(listener);
+  }
+
+  public void <b>removePortalURLListener(PortalURLListener listener)</b>
+  {
+    portalListeners.removeElement(listener);
+  }
+
+  private void <b>firePortalURLEvent(PortalURLEvent evt)</b>
+  {
+    Vector clone;
+    synchronized(this) 
+    {
+      clone = (Vector) portalListeners.clone();
+    } 
+    for (int i=0; i&lt;clone.size(); i++)
+	<b>((PortalURLListener)clone.elementAt(i)).portalURLSelected(evt)</b>;
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p><em>The PublishBillCommand</em> class declares itself as an event Publisher
+in its <i>initialize</i> method. The command implements 2 methods for the
+subscriptions of the <i>PortalURLListener</i> (<i>addPortalURLListener</i> and <i>removePortalURLListener</i>),
+and a method for sending <i>PortalURLEvents</i> to each listener registered to
+the <i>PublishBillCommand</i> (in this use case, there is only one listener, the
+Portal desktop).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step2"></a>Declaring the PortalURLEvent as a Published Event of the
+bean</h4>
+<p>The PublishBillCommandBeanInfo defines its list of published events as
+follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class PublishBillCommandBeanInfo extends <b>CommandBeanInfo</b>
+{
+  private Class beanClass;
+
+  public PublishBillCommandBeanInfo()
+  {
+    beanClass = getClass(&quot;com.dassault_systemes.japplicationframe.caa.catlet.command.PublishBillCommand&quot;);
+  }
+
+  protected EventSetDescriptor[] <b>getPublishedEventDescriptors()</b>
+  { 
+    try
+    {
+      // --- listener interface class of the published event PortalURLEvent
+      Class urlListenerClass=getClass(&quot;<b>com.dassault_systemes.catweb.base.net.url.event.PortalURLListener</b>&quot;);
+
+      // --- methods of the PortalURLListener interface
+      String[] methods = {<b>&quot;portalURLSelected&quot;</b>};
+
+      // --- descriptor for the PortalURLEvent
+      EventSetDescriptor eventSetDescriptor = new EventSetDescriptor( beanClass, &quot;PortalURL&quot;, urlListenerClass, methods, 
+                                                                      &quot;<b>addPortalURLListener</b>&quot;, &quot;<b>removePortalURLListener</b>&quot; );
+      eventSetDescriptor.setDisplayName(&quot;PortalURL Selected&quot;);
+
+      EventSetDescriptor[] eventSetDescriptors = { eventSetDescriptor };
+      return eventSetDescriptors;
+    }
+    catch (IntrospectionException e)
+    {
+      throw new Error(e.toString());
+    }
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>PublishBillCommandBeanInfo</i> extends the <i>CommandBeanInfo</i>
+class. It overrides the <i>getPublishEventDesciptor</i> method , in order to
+specify the list of events than the PublishBillCommand is able to publish, in
+this use case the <i>PortalURLEvent</i>. This method is called by the Hookup,
+when the PublishBillCommand defines itself as an event publisher to it.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step3"></a>Creating the PortalURL and Sending the PortalURLEvent</h4>
+<p>The PublishBillCommand creates a file on the local disk in the temporary
+directory, creates a file URL and sends it as follows:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>package com.dassault_systemes.japplicationframe.caa.catlet.command;
+...
+public class PublishBillCommand extends <b>Command</b>
+                                implements ActionListener
+{
+  ...
+  protected void sendPortalURL(String filePath)
+  {
+    try
+    {
+      // --- creates a PortalURL for the bill file created
+      PortalURL <b>portalURL =</b> <b>new PortalURL(&quot;file://&quot;+filePath);</b>
+       
+      // --- creates the PortalURLEvent
+      PortalURL[] urls = {portalURL};
+      PortalURLEvent <b>event =</b> <b>new PortalURLEvent(this, urls, PortalURLEvent.PORTAL_URL_SELECTED, getMasterCATlet())</b>;
+
+      // --- sends the PortalURL in order to open the file in the default text editor defined in the MIMETypes file
+      <b>firePortalURLEvent(event);</b>
+    }     
+    catch(MalformedURLException ex)
+    {
+      System.out.println(&quot;Can't publish File &quot;+filePath);
+    }
+  }
+  ...
+}</pre>
+    </td>
+  </tr>
+</table>
+<p>The <i>PublishBillCommand </i>has created a file (<i>filePath</i>) on the
+local disk. In the <i>sendPortalURL</i> method, it creates an URL with the file
+protocol and with the file path of the bill file. In order to send this URL to
+the Portal desktop, the command creates a <i>PortalURLEvent</i> with the created
+<i>PortalURL</i>, and send it to all the <i>PortalURLListener</i> registered to
+the command (in this use case, the Portal desktop). The Portal desktop receives
+this event and extracts the <i>PortalURL</i>. The Portal desktop gets the MIME
+Type of the <i>PortalURL</i>, and gets the default application associated with
+it in the <i>PortalRegistry</i>. It launches this application and gives it to
+the <i>PortalURL</i> for display purpose.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="InShort"></a>In Short</h3>
+<p>The PublishBillCommand shows all necessary step for creating a PortalURL and
+sending it to a default viewer. The PortalURL is created with a simple URL
+string as &quot;<font color="#0000FF"><u>file://c:\tmp\StoreFoodBill.txt</u></font>&quot;,
+the PortalURLEvent is sent without directly knowing the PortalURLListener and
+the PublishBillCommand allows to view the StoreFoodFile in the default text
+viewer without knowing it. The PortalURL is the most important file access
+exchange between Portal applications (See how to receive PortalURLs [<a href="#References">2</a>])</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td>Building and Launching a CAA Enovia V5 Use Case</td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAAJafReceivingPortalURL.htm">Receiving PortalURL</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="../CAAPlbUseCases/CAAPlbPortalRegistryUse.htm">Using
+      the PortalRegistry</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Sep 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

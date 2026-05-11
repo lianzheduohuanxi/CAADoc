@@ -1,0 +1,36 @@
+Option Explicit
+' COPYRIGHT DASSAULT SYSTEMES 2001
+
+' *****************************************************************************
+'   Purpose:       Open an Existing Document.
+'   Assumtions:   Looks for CAAInfReadDocument.CATPart
+'                         in the CATDocView   
+'   Author: 
+'   Languages:   VBScript
+'   Locales:        English 
+'   CATIA Level:  V5R7 
+' *****************************************************************************
+
+
+Sub CATMain()
+
+    ' -----------------------------------------------------------------------------------------------
+    ' Optional: allows to find the sample wherever it may be installed
+    Dim sDocPath As String
+    sDocPath=CATIA.SystemService.Environ("CATDocView")
+    If (Not CATIA.FileSystem.FolderExists(sDocPath)) Then
+      Err.Raise 9999,,"No Doc Path Defined"
+    End If
+    ' ------------------------------------------------------------------------------------------------ 
+   
+    'Open the document and add it as the last item of the collection of documents.
+    'Create and display a new window for the document.
+    'Activate the document and its window.
+    Dim sFilePath
+    sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _
+       "online\CAAScdInfUseCases\samples\CAAInfReadDocument.CATPart")
+    Dim iPartDoc As Document
+    Set iPartDoc = CATIA.Documents.Open(sFilePath)
+   
+End Sub
+

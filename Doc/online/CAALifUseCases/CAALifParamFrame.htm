@@ -1,0 +1,431 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>Creating a Parameter Editor</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+    </td>
+    <td>
+      <h2>Knowledge Modeler</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Creating a Parameter Editor</h3>
+      <em>How to build a basic parameter editor</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAALifParamFrame use case. This use case
+      shows how to create a parameter, associate a manipulator with it and
+      provide an editor to modify the value of this parameter.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAALifParamFrame Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAALifParamFrame Do</a></li>
+          <li><a href="#How">How to Launch CAALifParamFrame</a></li>
+          <li><a href="#Where">Where to Find the CAALifParamFrame Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to create a parameter manipulator
+and build an editor allowing you to modify interactively a parameter value by
+using a spinner. The spinner operates according to the manipulator
+specifications (range, bounds and increment/decrement value).</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAALifParamFrame Use Case</h3>
+<p>CAALifParamFrame is a use case of the CAALiteralFeatures.edu framework that
+illustrates KnowledgeInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAALifParamFrame Do?</h4>
+<p>CAALifParamFrame explains how to associate a manipulator with a length type
+parameter and create an editor whereby the parameter can be modified according
+to an increment/decrement amount and within a value range specified in the
+manipulator definition. The interactive tool which is used to increment or
+decrement the parameter value is a <i>spinner</i>. This spinner is an option of
+the editor object which is created.</p>
+<p>In addition, this use case illustrates how to subscribe to a parameter
+&quot;ChangeValue&quot; notification. Each time the spinner is operated, the
+parameter value changes (except if either bound is reached) and an information
+box displays the new parameter value.</p>
+<p>This use case can be worked through in three ways:</p>
+<ol>
+  <li>The parameter to be edited (&quot;Length1&quot;) is constrained by a
+    formula (<nobr>&quot;Length1 = Length2 * 2&quot;</nobr>) which is <u>de</u>activated.
+    This is the use case which is provided by default.</li>
+  <table>
+    <tr>
+      <td><img border="0" src="images/CAALifParamFrame0.gif" vspace="8" width="227" height="77"></td>
+      <td valign="top">
+        <p style="margin-top: 8">To the end-user, the parameter is displayed as
+        an editable data. No <i>f(x)</i> push-button is displayed opposite the
+        editor value field.</td>
+    </tr>
+  </table>
+  <li>The formula which constrains the parameter to be edited is activated (see
+    [<a href="#References">1</a>] for more information on how to manage the
+    activity of a knowledgeware relation) and you specify that the <i>f(x)</i>
+    push button can be clicked to display a formula editor (this is done by
+    passing the container root object as the first argument of the <code>GetInPanelEdition</code>
+    method of the <i>CATICkeParamFrame</i> interface (see [<a href="#References">2</a>]).</li>
+  <table>
+    <tr>
+      <td valign="top"><img border="0" src="images/CAALifParamFrame1.gif" vspace="8" width="229" height="79"></td>
+      <td valign="top">
+        <p style="margin-left: 0; margin-top: 8; margin-bottom: 8">To the
+        end-user, the value field of the editor is grayed-out, the parameter
+        value is not editable because it is constrained by a formula which is
+        active. You can click <i>f(x)</i> but be aware that this use case does
+        not provide any formula editor behind the <i>f(x)</i> icon. Clicking <i>f(x)</i>
+        results in a crash.</td>
+    </tr>
+  </table>
+  <li>The formula which constrains the parameter to be edited is activated and
+    you make the <i>f(x)</i> push inactive by specifying a <code>NULL_var</code>
+    handler in the first argument of the <code>GetInPanelEdition</code> method
+    of the <i>CATICkeParamFrame</i> interface (see [<a href="#References">2</a>]).</li>
+  <table>
+    <tr>
+      <td valign="top"><img border="0" src="images/CAALifParamFrame2.gif" width="229" height="79" vspace="8"></td>
+      <td valign="top">
+        <p style="margin-top: 8; margin-bottom: 8">To the end-user, the value
+        field of the editor is grayed-out, the parameter value is not editable
+        because it is constrained by a formula which is active. The<i> f(x)</i>
+        push button is inactive.</td>
+    </tr>
+  </table>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAALifParamFrame</h4>
+<p>To launch CAALifParamFrame, you will need to set up the build time
+environment, then compile CAALifGettingStarted along with its prerequisites, set
+up the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>Once you have displayed the parameter editor as it is delivered by default,
+you can use the down arrow of the spinner to decrement the &quot;Length1&quot;
+parameter value. Here is the information box you get:</p>
+<p><img border="0" src="images/CAALifParamFrame3.gif" width="182" height="119"></p>
+<p>Note that you cannot use the up arrow of the spinner to increment the
+parameter value as the upper bound of the manipulator has been set to 5mm.
+Likewise, if you keep on decrementing the parameter value, you won't be able to
+reach a value less than 0.5 mm.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAALifParamFrame Code</h4>
+<p>The CAALifParamFrame use case is made of three files : two source files named 
+CAALifApplication.cpp and CAALifWindow.cpp, both located in the 
+CAALifParamFrame.m module of the CAALiteralFeatures.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CAALifParamFrame.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CAALifParamFrame.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM 
+is installed, and one resource file named CAALifWindow.CATNls, located in :</p>
+<table id="table1">
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAALiteralFeatures.edu\CNext\resources\msgcatalog\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAALiteralFeatures.edu/CNext/resources/msgcatalog/</code></td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>Here are the programming steps to create a parameter editor in a dialog
+window:</p>
+<ol>
+  <li><a href="#Step1">Creating an interactive application</a><br>
+    This step creates an interactive application so that the window which
+    contains the objects to be created can be displayed and run as a standalone
+    application.</li>
+  <li><a href="#Step2">Creating the knowledgeware features</a><br>
+    Two length parameters as well as a formula are created.</li>
+  <li><a href="#Step3">Creating the &quot;Length1&quot; manipulator</a><br>
+    The parameter to be associated with a manipulator and displayed in an editor
+    is created.</li>
+  <li><a href="#Step4">Creating the &quot;Length1&quot; parameter editor</a><br>
+    A parameter editor with a spinner is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step1"></a>Creating an Interactive Application</h4>
+<p>The interactive application is made of the class <i>CAALifApplication</i>
+that derives from <i>CATInteractiveApplication</i>. In addition to the
+constructor and destructor, this interactive application class redefines two
+methods of <i>CATInteractiveApplication</i>:</p>
+<ol>
+  <li><code>BeginApplication</code>, called just after the application
+    constructor. This method creates the different objects managed by the
+    application, namely here the window to contain the parameters, the formula
+    and the parameter editor. None of these objects can be created without a
+    document. The preliminary declarations required to create a document and
+    initialize the environment are also done by this method.</li>
+  <li><code>EndApplication</code>, called when the application destruction is
+    requested. This method is dedicated to deallocate objects or close files.
+    Note that the application window declared as the application class data
+    member is automatically deleted. The environment initialization is performed
+    in the <code>BeginApplication</code> method as well as the parameter editor
+    creation, and the <code>EndApplication</code> method removes the document
+    created and closes the session.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+void CAALifApplication::BeginApplication()
+{
+  ...
+  CAALifWindow * pMainWindow ;
+  pMainWindow = new CAALifWindow(this);
+  ...
+  pMainWindow-&gt;Build();
+
+  pMainWindow-&gt;SetVisibility(CATDlgShow);
+}
+
+int CAALifApplication::EndApplication()
+{              
+  ...
+  CAALifClose ();
+  ... 
+  return 0;
+}
+...
+CAALifApplication ApplicationInstance(&quot;CAALifAppplicationInstance&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step2"></a>Creating the Knowledgeware Features</h4>
+<p>All the objects manipulated in this use case are created in the <code>CAALifWindow::Build</code>
+method. Prior to creating a knowledgeware objects you must initialize the
+environment and retrieve the <i>CATICkeParmFactory</i> smart pointer from the
+document root container. See [<a href="#References">2</a>] for more information
+on how to initialize the environment.</p>
+<ol>
+  <li>Creating two length type parameters
+    <table class="code">
+      <tr>
+        <td>
+          <pre> ...
+ _spParam1 = spFact-&gt;CreateLength(&quot;Length1&quot;,0);
+ ...
+ CATICkeParm_var spParam2 = NULL_var;
+ spParam2 = spFact-&gt;CreateLength(&quot;Length2&quot;, 2.5/1000);
+ ...</pre>
+        </td>
+      </tr>
+    </table>
+    <p>Let's remind you that the second argument of the <code>CreateLength</code>
+    method must be expressed according to the International System of Units
+    (SI), that is, in meters. The initial value of &quot;Length2&quot; is 2.5mm.
+    See [<a href="#References">3</a>] for more information on how to create
+    parameters.</li>
+  <li>Creating a formula constraining &quot;Length1&quot;
+    <table class="code">
+      <tr>
+        <td>
+          <pre>...
+CATCkeListOf(Parm) pParamList;
+pParamList.Append (_spParam1);
+pParamList.Append (spParam2);
+...
+CATICkeRelation_var
+     spFormula = spFact-&gt;CreateFormula (&quot;Formula1&quot;,
+                                                &quot;&quot;,
+                                                &quot;&quot;, 
+                                          _spParam1,
+                                       &amp;pParamList,
+                                            &quot;a2*2&quot;,
+                                          NULL_var,
+                                    CATCke::False); 
+...</pre>
+        </td>
+      </tr>
+    </table>
+  </li>
+  <p>See [<a href="#References">4</a>] for information on formulas. The formula
+  which is created specifies that <nobr>&quot;Length1=Length2 * 2&quot;</nobr>.
+  Right after the formula is created, the &quot;Length1&quot; value becomes 5
+  mm.
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step3"></a>Creating the &quot;Length1&quot; Manipulator</h4>
+<p>The manipulator which is created defines:</p>
+<ol>
+  <li>a minimum value of 0.5 in model units i.e. in mm. This lower bound can be
+    included in the &quot;Length1&quot; range of possible values. See [<a href="#References">5</a>]
+    for information on units.</li>
+  <li>a maximum value of 5.0 mm. This upper bound can be included in the
+    &quot;Length1&quot; value range.</li>
+  <li>a increment/decrement amount (step) of 0.5 mm.</li>
+</ol>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATIParmManipulator_var spParmManip = NULL_var;
+spParmManip = spFact-&gt;CreateParmManipulator();
+...
+spParmManip-&gt;SetAccurateRange (0.5,1,5,1);
+
+  // Set the manipulator increment/decrement value
+  //
+spParmManip-&gt;SetStep (0.5);
+
+  // Associate the manipulator with &quot;Length1&quot;
+  //
+_spParam1-&gt;SetManipulator (spParmManip);
+   ...</pre>
+    </td>
+  </tr>
+</table>
+<p>After it is created, the manipulator is associated with the
+&quot;Length1&quot; parameter. See [<a href="#References">6</a>] for information
+on manipulators.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+<h4><a name="Step4"></a>Creating the &quot;Length1&quot; Parameter Editor</h4>
+<p>A parameter which is created by using any of the relations provided by the <i>CATICkeParmFactory</i>
+factory supports the <i>CATICkeParamFrame</i> interface. From this interface you
+can create a <i>CATDlgFrame</i> object by using the <code>GetInPanelEdition</code>
+method.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+CATICkeParamFrame_var spParamFrame1 = _spParam1;
+CATDlgFrame *pFrame1  =  NULL;
+pFrame1 = spParamFrame1-&gt;GetInPanelEdition(NULL_var, this,
+	                                  CATCkeLabel|CATCkeWithSpinner, &quot;MySpinner&quot;);
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>What the displayed editor looks like depends on the values passed as the
+arguments.</p>
+<ol>
+  <li>the <i>CATIParmPublisher</i> object which is passed as the first argument
+    allows you to plug an editor whenever the parameter is constrained by a
+    relation. This object must be the root of the literals created in your
+    document. If <code>NULL_var</code> is specified, you will get a push button
+    opposite the parameter value field, but you won't be able to activate this
+    button. This is what happens with this use case when the formula is
+    activated.</li>
+  <li>the second argument refers to the window where the parameter editor is to
+    be created</li>
+  <li>the third argument is made up of a list of style identifiers. Refer to the
+    KnowledgeInterfaces framework interface documentation for more information.
+    Note that specifying the <code>CATCkeNoFormula</code> identifier prevents
+    from displaying the formula push button.</li>
+	<li>the fourth argument is the name of the returned frame (used in the 
+	resource file).</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case shows the objects and interfaces used when creating a parameter
+editor. There are two important points to remember about:</p>
+<ol>
+  <li>a parameter supports by default the <i>CATICkeParmFrame</i> interface.</li>
+  <li>through this interface, you can access to the creation of a parameter
+    editor. The <code>GetInPanelEdition</code> method allows you to create a
+    parameter editor with a specified style.</li>
+  <li>depending on whether the parameter is constrained and depending on the
+    editor style, you may display or not a button opposite the editor value
+    field.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching CAA V5 Samples</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="CAALifFirstApplication.htm">Getting Started with
+      LiteralFeatures</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[3]</td>
+    <td><a href="CAALifParamPers.htm">Using Persistent Parameters</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[4]</td>
+    <td><a href="CAALifFormulas.htm">Creating and Manipulating Formulas</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[5]</td>
+    <td><a href="../CAALifTechArticles/CAALifUnits.htm">About Units</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[6]</td>
+    <td><a href="CAALifParamManip.htm">Using Manipulators</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+ <!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

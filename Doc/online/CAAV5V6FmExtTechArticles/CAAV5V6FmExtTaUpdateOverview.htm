@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Update Mechanism</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Update Mechanism Overview</h3>
+      <p><em>Explains the need to update a feature, and their Capabilities & Limitations</em></p>
+      </td>
+    </tr>
+	<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article presents the main concepts of the feature update 
+		mechanism.</p>
+		<ul>
+			<li><a href="#BasicConcept">Basic Concepts</a></li>
+			<ul>
+			  <li><a href="#Spec-Result Model">Spec-Result Model</a></li>
+			   <li><a href="#Build">Build</a></li>
+         <li><a href="#Update">Update</a></li>
+         <li><a href="#Update Status">Update Status</a></li>
+			</ul>
+			<li><a href="#Update Mechanism">Update Mechanism</a></li>
+			<ul>
+			<li><a href="#Capabilities and Limitations">Capabilities and Limitations</a></li>
+			<li><a href="#Update Algorithms">Update Algorithms</a></li>
+			</ul>
+			<li><a href="#Integration">Integration with other Feature Modeler Mechanisms</a></li>
+			<ul>
+			<li><a href="#Persistency">Persistency</a></li>
+			<li><a href="#Undo/redo">Undo/Redo</a></li>
+			<li><a href="#Instantiation">Instantiation</a></li>
+	    <li><a href="#Data exchange (CCP/Collaboration)">Data Exchange</a></li>
+			</ul>
+
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="BasicConcept"></a>Basic Concepts</h2>
+<h3><a name="Spec-Result Model"></a>Spec-Result Model</h3>
+<p>In the "Spec-Result" paradigm (where spec is a contraction for specification), a feature is fully defined by its 
+<strong>specifications</strong> and is able to compute its <strong>result</strong> at any moment. </p>
+<p>For example, a circle can have a center and a radius value as specifications, while its result is its outline as depicted by the next picture:</p>
+<table>
+	<caption>Fig.1 Specs/Result</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUpdateOverview1.png"></td>
+	</tr>
+</table>
+<p>Specifications can also be called inputs and results can also be called outputs. </p>
+     
+<p>
+The <strong>specifications</strong> of a feature can be:</p>
+<ul>
+	<li>primitive attribute (boolean, integer,..) </li>
+	<li> other features</li>
+	<li>other features attributes </li>
+	<li>the "result"  of other features</li>
+</ul>
+<p>The <strong>result</strong> of a feature is a vague notion:</p>
+<ul>
+ <li> For a Mechanical feature it is the geometric data it generates.</li> 
+<li> For a Knowledge formula it is its output parameters.</li> 
+	<li> For a Knowledge Rule it is the actions performed during the run of a script</li> 
+	<li> For a lot of "structural" features: nothing</li> 
+	</ul>
+<p>As the result of a feature is an intrinsic notion of the application defining this feature, it is not formalized or managed by feature modeler.
+This segregation allows viewing a Spec-Result model as a parametric system which result can be computed asynchronously.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Build"></a>Build</h3>
+<p>The build is the procedure through which a feature computes the result corresponding to its specifications. This procedure can only be implemented by
+ the application owning the feature, and moreover, it cannot be called directly.  For more information read the article &#8220;Building a Feature&#8221; [<a href="#References">1</a>] </p>
+<p>The specifications used by a feature during its build procedure can also be the result computed by the build of another features. 
+For instance a circle could be composed of a length and of a point, this point being itself a feature with its coordinates as input. 
+In first, the point must be built, and then the circle can be updated with a valid point as input. This recursivity is managed by the update engine.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Update"></a>Update</h3>
+
+<p>The aim of the update procedure is to ensure that the specifications of a feature are valid before their use in the build procedure. 
+Therefore the update engine can be seen as a build scheduler able to launch the build procedure of a network of features in 
+the correct order.</p>
+<p>The next picture is an illustration of this order with a cylinder. The cylinder (a feature) is 
+defined by a height (real value) 
+and a circle. In turn, the circle (a feature) is defined by a radius (real value) and a point ( a feature).</p>
+<table>
+	<caption>Fig.2 Build Order</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtUpdateOverview2.png"></td>
+	</tr>
+</table>
+
+<p>When you request the update of the cylinder, first the point is updated, then the circle is updated, and finally the cylinder. </p>
+<p>As supposed to the build procedure, the update cannot be customized but it can be called directly by applications.</p>
+
+
+<h3><a name="Update Status"></a>Update Status</h3>
+ 
+<p>A feature which is said "up to date" by the update engine has a result consistent with its specifications. The opposite state is "out of date".</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Update Mechanism"></a>Update Mechanism</h2>
+
+<h3><a name="Capabilities and Limitations"></a>Capabilities and Limitations</h3>
+
+
+<p>The Update engine is implemented on top of the feature modeler, so all features, even those created from scratch, benefit 
+from this engine. </p>
+<p>The update engine creates a dependency graph between all the features connected through their Feature modeler links. 
+Therefore the dependency graph introspection is totally centralized, robust and resistant to application software/model modifications.</p>
+<p>The update procedure is not contextual, it will work in the same way in commands or in batch processes as long as applications build procedures do.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<h3><a name="Update Algorithms"></a>Update Algorithms</h3>
+
+<p>
+The update engine can be summarized by the following sentence: &#8220;A feature is up to date if all its inputs are up to date and if its build procedure succeeds&#8221;. 
+This leads to the three following algorithms:</p>
+<ul> 
+<li><a href="#IsUpToDate">IsUpToDate</a></li>
+<li>	<a href="#Update algo">Update</a></li>
+<li><a href="#Impact Propagation">Impact Propagation</a></li>
+ </ul>
+
+ 
+ <h4><a name="IsUpToDate"></a>IsUpToDate </h4>
+<p>The IsUpToDate algorithm retrieves the update status of a feature. </p>
+<p>"up to date"  means that the result of a feature is consistent with its specifications. Thus it is useless to build an &#8220;up to date&#8221; feature 
+because its build procedure would produce exactly the same result. </p>
+<p>A feature is in the up to date state if:</p>
+<ul>
+<li>Its specifications  are up to date</li>
+<li>It has been successfully built</li>
+<li>Its specifications have not been changed since this last build</li>
+</ul>
+<p>The  "up to date" state can be retrieved through the following methods :</p>
+<ul> 
+<li>CATFmFeatureFacade::IsUpToDate         (framework FeatureModelerExt </li>
+<li>DataCommonProtocolServices::IsUpToDate (framework DataCommonProtocolUse ) </li>
+</ul>
+ 
+<h4><a name="Update algo"></a>Update</h4>
+<p>The Update algorithm allows computing the result of a feature. It does nothing if the feature is up to date. It is the only way to 
+change the update state of a feature from "out of date" to "up to date".</p>
+<p>The Update algorithm consist in:</p>
+<ul>
+<li>Step1: Updating recursively all specifications</li>
+<li> Step2: Calling the build procedure</li>
+<li>Step3: Changing the feature state to up to date</li>
+</ul>
+<p>Obviously if one step fails the feature remains &#8220;out of date&#8221;.</p>
+<p>The Update can be called through the following methods:</p>
+<ul>
+<li>CATFmFeatureFacade::Update         (framework FeatureModelerExt)</li>
+<li>DataCommonProtocolServices::Update (framework DataCommonProtocolUse)</li>
+</ul>
+
+<h4><a name="Impact Propagation"></a>Impact Propagation</h4>
+<p>When a feature specification is modified, the feature goes out of date. </p>
+<p>Recursively all the features for which this first feature is a specification should go out of date.</p>
+<p>The Impact propagation algorithm is:</p>
+<ul>
+<li>Step1: change feature update state to out of date</li>
+<li>Step2: recursively change impacts update state to out of date</li>
+</ul>
+<p>This work is performed synchronously by the impact propagation mechanism, and avoids a deep graph traversal each time 
+the update state is retrieved.</p>
+<p>In the example [Fig.2], imagine you modify one coordinate of the point. Immediately the circle goes &#8220;out of date&#8221;, and recursively the cylinder too.</p>
+<p>Notice that even if a specification modification has no incidence on the feature's result, the whole impact graph will become out of date.  For example, [Fig.2],
+ you replace one coordinate of the point, by the same value.  But although their respective results are still valid, the circle and the cylinder go &#8220;out of date&#8221;. 
+ Feature modeler doesn&#8217;t know the semantic of the application. </p>
+
+<p>There is no way to call explicitly the impact propagation. It will be automatically launched by 
+the feature modeler when modifying an attribute visible to update engine.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Integration"></a>Integration with other Feature Modeler Mechanisms</h2>
+<h3><a name="Persistency"></a>Persistency</h3>
+ <p>The Update status is persistent, this means you can save out of date data (and update them in another session).</p>
+<h3><a name="Undo/redo"></a>Undo/Redo</h3>
+ <p>Update is undoable.</p>
+ <p>In the case the feature result is not related to feature modeler attributes (which are also undoable), it is up to the application to manage undoability .</p>
+
+<h3><a name="Instantiation"></a>Instantiation</h3>
+ <p>A feature is not up to date after creation (instantiation) as it has never been built/updated.</p>
+
+<h3><a name="Data exchange (CCP/Collaboration)"></a>Data exchange 
+(CCP/Collaboration)</h3>
+ <p>Native feature modeler CCP/collaboration implementations create (as instantiation) out of date features.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>The article presents the fundamentals of feature update mechanism.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcBuildUpdate.htm">Build Example 
+		</a></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [June 2010]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

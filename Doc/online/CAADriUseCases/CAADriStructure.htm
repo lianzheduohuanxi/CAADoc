@@ -1,0 +1,511 @@
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-gb">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <title>Creating Sheets and Views in a CATDrawing Document</title>
+ </head>
+
+ <body>
+
+ <table width="100%">
+   <tr>
+     <td valign="top">
+     <h1>Mechanical Design</h1>
+     </td>
+     <td valign="top">
+     <h2>Drafting</h2>
+     </td>
+     <td rowspan="2" align="right" valign="top">
+     <h3><a name="Top"></a>Creating Sheets and Views in a CATDrawing Document</h3>
+     <p><em>How to structure a CATDrawing document</em></td>
+   </tr>
+   <tr>
+     <td class="use" colspan="2">Use Case</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <table class="abstract">
+   <tr>
+     <td>
+     <h3>Abstract</h3>
+     <p>This article discusses the CAADrwStructure use case. This use case 
+     explains how to create sheets and interactive views in a drawing document.</p>
+     <ul>
+       <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+       <li><a href="#UseCase"><strong>The CAADrwStructure Use Case</strong></a></li>
+       <ul>
+         <li><a href="#What">What Does CAADrwStructure Do</a></li>
+         <li><a href="#How">How to Launch CAADrwStructure</a></li>
+         <li><a href="#Where">Where to Find the CAADrwStructure Code</a></li>
+       </ul>
+       </li>
+       <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+       <li><a href="#InShort"><strong>In Short</strong></a></li>
+       <li><a href="#References"><strong>References</strong></a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+ <p>In this use case you will learn how to deal with the structure of a drawing 
+ document. Thus you will be able to create sheets and interactive views.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="UseCase"></a>The CAADrwStructure Use Case</h3>
+ <p>CAADrwStructure is a use case of the CAADraftingInterfaces.edu framework 
+ that illustrates DraftingInterfaces framework capabilities.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="What"></a>What Does CAADrwStructure Do</h4>
+ <table>
+   <caption>&nbsp;</caption>
+   <tr>
+     <td align="center">Fig. 1: The Document Created by the Use Case<p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td align="center">
+     <img border="0" src="images/CAADrwStructure1.jpg" width="495" height="302"></td>
+   </tr>
+ </table>
+ <p>This picture represents a CATDrawing document created by the use case 
+ program. The program first creates a basic drafting structure composed of a 
+ drawing, a sheet and two views (these views are not displayed in the graph). 
+ Then the second sheet is created with an additional view.</p>
+ <p><b>Remark</b>: A sheet always contains: </p>
+ <ul>
+   <li>A main view which contains the elements directly created in the sheet</li>
+   <li>A background view, which is dedicated to the frames and title blocks.</li>
+ </ul>
+ <p>These two views are created by the sheet factory. They are part of the sheet 
+ and so they cannot be deleted and they are not showed in the graph.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="How"></a>How to Launch CAADrwStructure</h4>
+ <p>To launch CAADrwStructure, you will need to set up the build time 
+ environment, then compile CAADrwStructure along with its prerequisites, set up 
+ the run time environment, and then execute the use case [<a href="#References">1</a>].</p>
+ <p>When you launch the use case, pass the full pathname of the file into which 
+ you you want to store the created document as argument. </p>
+ <ul>
+   <li>With Windows
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>e:&gt; CAADrwStructure DrawingTest.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>With UNIX
+   <table width="90%">
+     <tr>
+       <td>
+       <pre>$ CAADrwStructure /u/users/DrawingTest.CATDrawing</pre>
+       </td>
+     </tr>
+   </table>
+   </li>
+ </ul>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Where"></a>Where to Find the CAADrwStructure Code</h4>
+ <p>The CAADrwStructure use case is made of a single source file named 
+ CAADrwStructure.cpp located in the CAADrwStructure.m module of the 
+ CAADraftingInterfaces.edu framework:</p>
+ <table>
+   <tr>
+     <td>Windows</td>
+     <td><code>InstallRootDirectory\CAADraftingInterfaces.edu\CAADrwStructure.m\</code></td>
+   </tr>
+   <tr>
+     <td>Unix</td>
+     <td><code>InstallRootDirectory/CAADraftingInterfaces.edu/CAADrwStructure.m/</code></td>
+   </tr>
+ </table>
+ <p>where <code>InstallRootDirectory</code> is the directory where the CAA 
+ CD-ROM is installed.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="Step"></a>Step-by-Step</h3>
+ <p>There are five steps in CAADrwStructure:</p>
+ <ol>
+   <li><a href="#Step1">Creating and Initializing the document</a></li>
+   <li><a href="#Step2">Accessing the drawing feature and drawing container&nbsp; 
+   in the document</a>&nbsp; </li>
+   <li><a href="#Step3">Creating standard in the drawing document</a>&nbsp; </li>
+   <li><a href="#Step4">Appending format to the current sheet in the drawing 
+   document</a>&nbsp; </li>
+   <li><a href="#Step5">Creating an Additional Sheet and Adding it to the 
+   drawing feature</a> </li>
+   <li><a href="#Step6">Creating a view and adding it to the just created sheet</a>
+   </li>
+   <li><a href="#Step7">Creating a geometric element in this view</a> </li>
+   <li><a href="#Step8">Saving the document and exiting</a></li>
+ </ol>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step1"></a>Creating and Initializing the Document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>int main(int    iArgc,   // Number of arguments (1) 
+         char** iArgv)   // Path to the new *.CATDrawing document
+{
+  // Check arguments
+  if(2 != iArgc) return 1;
+  const char *fileName = iArgv[1];
+
+  // DRAWING DOCUMENT CREATION
+  // =========================
+
+  // creates a session
+  CATSession *pSampleSession = NULL;
+  HRESULT hr = <b>::Create_Session</b>(&quot;SampleSession&quot;,pSampleSession);
+  if (FAILED(hr)) return 1;
+
+  CATDocument* pDoc = NULL;
+  hr = <b>CATDocumentServices::New</b>(&quot;CATDrawing&quot;, pDoc);
+  if (FAILED(hr)) return 2;
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for creating a CATIA document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step2"></a>Accessing the drawing feature and drawing container in 
+ the document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre> ...</pre>
+     <pre>// Gets the drawing feature.
+CATIDftDrawing *piDftDrawing = NULL;
+CATIDftDocumentServices *piDftDocServices = NULL;
+CATIContainer_var spDrwCont;
+if (SUCCEEDED(pDoc-&gt;QueryInterface(IID_CATIDftDocumentServices, (void **)&amp;piDftDocServices)))
+{
+  if (SUCCEEDED(piDftDocServices-&gt;<b>GetDrawing</b>(IID_CATIDftDrawing, (void **)&amp;piDftDrawing)))
+  {
+    if (piDftDrawing)
+    {
+      // Gets the drawing container.
+      CATISpecObject *piSpecObj=NULL;
+      if (SUCCEEDED(piDftDrawing-&gt;QueryInterface(IID_CATISpecObject,(void **)&amp;piSpecObj)))
+      {
+        spDrwCont = piSpecObj-&gt;<b>GetFeatContainer</b>();
+        piSpecObj-&gt;Release();
+        piSpecObj=NULL;
+      }
+    }
+  }
+  piDftDocServices-&gt;Release();
+  piDftDocServices=NULL;
+}
+...</pre>
+     <pre>&nbsp;</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The root feature of a drawing document is the Drawing that is the feature 
+ that implements the CATIDrawing interface. We can get a pointer to CATIDrawing 
+ using the CATIDftDocumentServices interface, which is implemented by the 
+ document. The GetDrawing method first argument is the interface you want to get 
+ on the drawing.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4>&nbsp;</h4>
+ <h4><a name="Step3"></a>Creating drawing standard in the drawing document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+// Gets standard manager from the drawing container.
+CATIDftStandardManager *piStdmgr = NULL;
+
+if (SUCCEEDED(spDrwCont-&gt;QueryInterface(IID_CATIDftStandardManager,(void**)&amp;piStdmgr)))
+{
+  // Find a standard in the list of allowed standards (ie. the list of xml files in the resources/standard/drafting directory)  
+  CATIStringList *piListstd = NULL;
+  if ( SUCCEEDED(piStdmgr-&gt;<b>GetAvailableStandards</b>(&amp;piListstd)) &amp;&amp; piListstd )
+  {
+    unsigned int nbrstd = 0;
+    piListstd-&gt;Count(&amp;nbrstd);
+    for (unsigned int indice = 0; indice &lt; nbrstd; indice ++)
+    {
+      wchar_t *wstd = NULL;
+      if ( SUCCEEDED ( piListstd-&gt;Item ( indice, &amp;wstd ) ) &amp;&amp; wstd )
+      {
+ 	const CATUnicodeString ANSI_UncS = &quot;ANSI&quot;;
+	CATUnicodeString stdname;
+	stdname.BuildFromWChar(wstd);
+	if ( stdname == ANSI_UncS ) 
+	{
+	  // Import the ANSI standard in the document
+          piStdmgr-&gt;<b>ImportStandard</b> (wstd);
+          break;
+        }
+        delete[] wstd; wstd = NULL;
+      }
+    }
+    piListstd-&gt;Release(); piListstd=NULL; 
+  }
+  piStdmgr-&gt;Release (); piStdmgr=NULL;
+}
+...</td>
+   </tr>
+ </table>
+ <p>CATIDftStandardManager interface is implemented on applicative container of 
+ drawing application. GetAvailableStandards method returns the list of available 
+ standards. ImportStandard method allows to apply a standard on the drawing 
+ document. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <h4><a name="Step4"></a>Appending format to the current sheet in the drawing 
+ drawing document</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+ // Get available formats from drawing
+CATIDftDrawingFormats *piDftFormats = NULL;
+CATUnicodeString myFormatName;
+if (SUCCEEDED(piDftDrawing-&gt;QueryInterface(IID_CATIDftDrawingFormats,(void **)&amp;piDftFormats)))
+{
+  CATLISTV(CATISpecObject_var) spListFormat;
+  if (SUCCEEDED(piDftFormats-&gt;<b>GetAvailableFormats</b>(spListFormat)))
+  {
+    int nbformats= spListFormat.Size();
+    // Gets the first format in the list.
+    if (nbformats &gt;= 1)
+    {
+      CATIDftFormat_var spFormat = spListFormat[1];
+      if (FAILED(spFormat-&gt;<b>GetFormatName</b>(myFormatName)))
+      {
+        // Memory clean.
+        piDftFormats-&gt;Release();
+        piDftFormats=NULL;
+        piDftDrawing-&gt;Release();
+        piDftDrawing=NULL;
+        CATDocumentServices::Remove (*pDoc);
+        ::Delete_Session(&quot;SampleSession&quot;);
+        return 4;
+      }
+    }
+  }
+  piDftFormats-&gt;Release();
+  piDftFormats=NULL;
+}
+
+// Adds the format to the current sheet.
+CATIUnknownList *piListOfSheet=NULL;
+CATIDftSheetFormat *piDftSheetFormat=NULL;
+if (SUCCEEDED(piDftDrawing-&gt;<b>GetSheets</b>(&amp;piListOfSheet)))
+{
+  IUnknown * item = NULL;
+  unsigned int nbSheet = 0;
+  piListOfSheet-&gt;Count(&amp;nbSheet);
+
+  // Loop on all Generated Geometry of the view.
+  for(unsigned int i=0 ; i&lt;nbSheet ; i++)
+  {
+    if( SUCCEEDED( piListOfSheet-&gt;Item(i, &amp;item) ) )
+    {
+      if (item)
+      {
+        if (SUCCEEDED(item-&gt;QueryInterface (IID_CATIDftSheetFormat,(void **)&amp;piDftSheetFormat)))
+        {
+          if (FAILED(piDftSheetFormat-&gt;<b>SetSheetFormat</b>(myFormatName)))
+          {
+            // Memory clean.
+            item-&gt;Release();
+            item=NULL;
+            piDftSheetFormat-&gt;Release();
+            piDftSheetFormat=NULL;
+            piDftDrawing-&gt;Release();
+            piDftDrawing=NULL;
+            CATDocumentServices::Remove (*pDoc);
+            ::Delete_Session(&quot;SampleSession&quot;);
+            return 5;
+          }
+          piDftSheetFormat-&gt;Release();
+          piDftSheetFormat=NULL;
+        }
+        item-&gt;Release();
+        item=NULL;
+      }
+    }
+  }
+}
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>CATIDftDrawingFormat interface is implemented on drawing root. 
+ GetAvailableFormats method returns the list of available formats. 
+ SetSheetFormat method initializes the format on the sheet. </p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <p align="right">&nbsp;</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step5"></a>Creating an Additional Sheet and Adding it to the 
+ Drawing Feature</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+CATIDftSheet *piDftNewSheet = NULL;
+wchar_t *pSheetName= L&quot;MyNewSheet&quot;;
+if (SUCCEEDED(piDftDrawing-&gt;<b>AddSheet</b>(&amp;piDftNewSheet,pSheetName)))
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>AddSheet method on CATIDftDrawing interface creates the sheet and add it to 
+ the drawing root. If this method is called in interactive context, sheet tab 
+ page will be updated.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step6"></a>Creating a View and Adding it to the Just Created Sheet</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+// The drawing factory is implemented on the drawing container
+CATIDrwFactory_var spDrwFact = spDrwCont;
+
+// Create a view with Make Up
+CATIDftViewMakeUp *piNewViewMU = NULL;
+if (NULL_var != spDrwFact &amp;&amp; SUCCEEDED(spDrwFact -&gt; <b>CreateViewWithMakeUp</b>(IID_CATIDftViewMakeUp, (void **)&amp;piNewViewMU)))
+{
+  if (piNewViewMU)
+  {
+    // Get the view from the MakeUp
+    CATIView *piNewView = NULL; 
+    if (SUCCEEDED(piNewViewMU-&gt;<b>GetView</b>(&amp;piNewView)))
+    {
+      if (piNewView)
+      {
+        // The view has to be typed: FrontView for Interactive view. 
+        piNewView-&gt;<b>SetViewType</b>(FrontView);
+        piNewViewMU-&gt;<b>SetAxisData</b>(100.0,50.0);
+
+       // At last, add the view to the sheet
+       if (piDftNewSheet) piDftNewSheet-&gt;<b>AddView</b>(piNewViewMU);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>The CATIDrwFactory is implemented by the drawing container. A MakeUp object 
+ is associated to the view. So we create the two objects by using 
+ CreateViewWithMakeUp method.The view has to be typed and added to the sheet.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step7"></a>Creating a Geometric Element in this View</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+// Activate this new view in the new sheet
+CATIDftView *piDftNewView=NULL;
+if (SUCCEEDED(piNewView-&gt;QueryInterface(IID_CATIDftView,(void **)&amp;piDftNewView)))
+{
+  piDftNewSheet-&gt;<b>SetDefaultActiveView</b>(piDftNewView);
+  piDftNewView-&gt;Release();
+  piDftNewView=NULL;
+}
+
+// Get the Wire frame factory to create geometry.
+CATI2DWFFactory_var spGeomFactory(piNewView);
+
+// Creation of a circle:
+double center[2];
+center[0]=50.0;
+center[1]=60.0;
+double radius = 50.0;
+CATISpecObject_var spCercle;
+if (NULL_var != spGeomFactory) 
+{
+  spCercle = spGeomFactory-&gt;<b>CreateCircle</b>(center,radius);
+...</pre>
+     </td>
+   </tr>
+ </table>
+ <p>To create geometric elements in a view, the view has to be current. Wire 
+ frame factory is obtained from the current view.</p>
+ <p>&nbsp;</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <!---------------------------------comment------------------------------------->
+ <h4><a name="Step8"></a>Saving the Document and Exiting</h4>
+ <table class="code">
+   <tr>
+     <td>
+     <pre>...   
+  // Save the result
+  hr = <b>CATDocumentServices::SaveAs</b>(*pDoc, (char *)fileName);
+  if (FAILED(hr)) return 6;
+
+  // Ends session and drops document	
+  <b>CATDocumentServices::Remove</b> (*pDoc);
+  <b>::Delete_Session</b>(&quot;SampleSession&quot;);
+
+  return 0;
+}</pre>
+     </td>
+   </tr>
+ </table>
+ <p>This section represents the usual sequence for saving a newly created CATIA 
+ document.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="InShort"></a>In Short</h3>
+ <p>This use case shows the objects and interfaces used when creating sheets and 
+ views in a CATDrawing document. Sheets are created by using AddSheet method 
+ defined in CATIDftDrawing interface, thus sheet tab page may be updated in 
+ interactive context. View features are created by using CreateViewWithMakeUp 
+ defined in CATIDrwFactory interface implemented by the drawing container.</p>
+ <p align="right">[<a href="#Top">Top</a>]</p>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="References"></a>References</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">[1]</td>
+     <td>
+     <a href="../CAADocUseCases/CAADocRunSample.htm">
+     Building and Lauching CAA V5 Samples</a></td>
+   </tr>
+   <tr>
+     <td valign="top">[2]</td>
+     <td>
+     <a href="../CAAOmbUseCases/CAAOmbNewDoc.htm">
+     Creating a New Document</a></td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <h3><a name="History"></a>History</h3>
+ <table width="100%">
+   <tr>
+     <td valign="top">Version: <strong>1</strong> [Jan 2000]</td>
+     <td valign="top">Document created</td>
+   </tr>
+   <tr>
+     <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+   </tr>
+ </table>
+ <hr>
+ <!---------------------------------comment------------------------------------->
+ <p><i>Copyright © 2000, Dassault Systèmes. All rights reserved.</i></p>
+
+ </body>
+
+</html>

@@ -1,0 +1,110 @@
+Option Explicit
+'---------------------------------------------------------------------------
+'COPYRIGHT DASSAULT SYSTEMES 2011
+
+' ****************************************************************************
+'
+' Purpose:       To create standard openings using the HalfHeight-Offset strategy.
+'
+' Assumptions:   The Part document CAASfmCreateStdOpening.CATPart should be active
+'
+' Author:
+' Languages:     VBScript
+' Version:       V5R21
+' Locales:       English
+' CATIA Level:   V5R21
+'
+' ****************************************************************************
+Sub CATMain()
+  Dim Part1 As Part
+  Set Part1 = CATIA.ActiveDocument.Part
+  Dim plate As SfmSuperPlate
+  Set plate = Part1.FindObjectByName("Deck_002")
+  Dim plateref As Reference
+  Set plateref = Part1.CreateReferenceFromObject(plate)
+  Dim Factory As SfmFunctionFactory
+  Set Factory = Part1.GetCustomerFactory("SfmFunctionFactory")
+
+  Dim ObjSfmContourMgr As SfmOpeningContoursMgr
+  Set ObjSfmContourMgr = Factory.GetOpeningMgr(Part1, "SfmOpeningContoursMgr")
+ 
+  Dim ObjSfmPosStrategyMgr As SfmPositioningStrategyManager
+  Set ObjSfmPosStrategyMgr = Factory.GetOpeningMgr(Part1, "SfmPositioningStrategyManager")
+
+  'Prepare a List of U & V Reference
+  Dim UrefList As SfmReferences
+  Dim Uref1, Uref2, Uref3, Uref4 As Reference
+  Set Uref1 = Part1.FindObjectByName("CROSS.95")
+  Set Uref2 = Part1.FindObjectByName("CROSS.50")
+  Set Uref3 = Part1.FindObjectByName("CROSS.25")
+  Set Uref4 = Part1.FindObjectByName("CROSS.40")
+  Set UrefList = Factory.SfmReferences
+  UrefList.Add Uref1
+  UrefList.Add Uref2
+  UrefList.Add Uref3
+  UrefList.Add Uref4
+ 
+  Dim VrefList As SfmReferences
+  Dim Vref1 As Reference
+  Set Vref1 = Part1.FindObjectByName("LONG.0")
+  Set VrefList = Factory.SfmReferences
+  VrefList.Add Vref1
+
+  Dim NbofURef As Long
+  NbofURef = UrefList.Count
+ 
+  'Dim NbofVRef As Long
+  'NbofVRef = VrefList.Count
+
+  'Define The Contour
+  Dim oListContourNames() As Variant
+  ObjSfmContourMgr.GetAvailableStdOpeningContours oListContourNames
+  Dim NbOfContour As Long
+  NbOfContour = UBound(oListContourNames)
+  'Display List of contours
+  Dim i As Integer
+  'For i = 0 To NbOfContour
+    'MsgBox oListContourNames(i)
+  'Next
+  'Select Contour from List
+  Dim oListCkeParms As SfmStandardContourParameters
+  Set oListCkeParms = ObjSfmContourMgr.GetStdOpeningContourParams("Sfm_Rect")
+  'Display List of Parameters for Selected Contour
+  Dim NbOfParam As Long
+  NbOfParam = oListCkeParms.Count
+  Dim ContourParam As Parameter
+  Dim ContourParamName As String
+  For i = 1 To NbOfParam
+    Set ContourParam = oListCkeParms.Item(i)
+    ContourParamName = oListCkeParms.Item(i).Name
+    'MsgBox ContourParamName
+    'Set Contour Parameter Values
+    If ContourParamName = "Sfm_Width" Then
+      ContourParam.ValuateFromString ("1000mm")
+    End If
+    If ContourParamName = "Sfm_Height" Then
+      ContourParam.ValuateFromString ("2000mm")
+    End If
+    If ContourParamName = "Sfm_CornerRadius" Then
+      ContourParam.ValuateFromString ("10mm")
+    End If
+  Next
+ 
+  'Define The Postition Strategy
+  Dim PositionStrategyParms As SfmStandardPosStrategyParameters
+  Set PositionStrategyParms = ObjSfmPosStrategyMgr.GetPositioningStrategyParams("CATSfmPosHalfHeightOffset")
+
+  Dim StdOpening As SfmStandardOpening
+  Dim URefListint As SfmReferences
+  Set URefListint = Factory.SfmReferences
+
+  Dim nUrefCnt As Integer
+  For nUrefCnt = 1 To NbofURef
+    URefListint.Add UrefList.Item(nUrefCnt)
+    PositionStrategyParms.SetPosParamData  "CATSfmPosHalfHeightOffset", 20, URefListint, 1, VrefList, 2
+    Set StdOpening = Factory.CreateStandardOpening("FunctionalOpening", "Sfm_Rect", oListCkeParms, "CATSfmPosHalfHeightOffset", PositionStrategyParms, plateref)
+    URefListint.ClearList
+    Part1.Update
+  Next
+
+End Sub

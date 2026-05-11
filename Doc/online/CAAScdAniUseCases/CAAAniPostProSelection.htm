@@ -1,0 +1,191 @@
+<HTML><HEAD><TITLE>Selecting Groups for Visualization of Images</TITLE>
+<meta http-equiv="Content-Language" content="en-us">
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="Microsoft FrontPage 6.0" name=GENERATOR>
+<META content=FrontPage.Editor.Document name=ProgId>
+<link rel="stylesheet" type=text/css href="../CAAScrBase/caav5.css">
+<script language=JavaScript src="../CAAScrJavaScript/submit.js"></script>
+</HEAD>
+<BODY>
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD>
+      <H2>Analysis Modeler</H2></TD>
+    <TD vAlign=top align=right>
+      <H2><A name="Top"></A>Selecting Groups for Visualization of Images</H2></TD></TR></TBODY></TABLE>
+<HR>
+<!---------------------------------comment------------------------------------->
+<TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/atarget.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Learn></A>This use case shows how groups are selected image 
+		visualization.</P>
+		<p>The macro opens an Analysis document which already contains a computed 
+		frequency case and images. Selections are set for the Von Mises Stress image 
+		which already exists in the document. Different groups such as 
+		mesh parts, clamps and groups are selected.</p>
+		<P>&nbsp;</P>
+      <P align=center><img src="images/ImageSelection.gif" border=2></P>
+      <P>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/ainfo.gif" width=32 border=0></TD>
+    <TD width="93%">
+            <p><a name="How"></a>CAAAniPostProSelection is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</P>
+      <P><a href="CAAAniPostProSelectionSource.htm">
+		CAAAniPostProSelection.catvbs</A> 
+      is located in the CAAScdAniUseCases module. <a href="macros/CAAAniPostProSelection.catvbs">Execute 
+      macro</A> (Windows only).</P>
+      <P align=center>&nbsp;</P></TD></TR>
+  <TR>
+    <TD vAlign=top width="7%"><img height=32 src="../CAAScrBase/images/ascenari.gif" width=32 border=0></TD>
+    <TD width="93%">
+      <P><A name=Step></A>CAAAniPostProSelection includes the following steps:</P>
+      <ol>
+        <li><a href="#prolog">Prolog</a></li>
+        <li><a href="#Reference">Retrieve Analysis Cases and Analysis Sets from 
+		the Analysis Document</a></li>
+		<li><a href="#Navigate">Create References from different Groups and set 
+		them as Selection</a></li>
+		<li><a href="#Epilog">Epilog</a></li>
+      </ol>
+      <H4><A name=prolog></A>Prolog</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE><font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">&#39; Optional: allows to find the sample wherever it&#39;s installed</font>
+  sDocPath=CATIA.SystemService.Environ(&quot;CATDocView&quot;)
+
+<font color="#0000FF">    If </font>(Not CATIA.FileSystem.FolderExists(sDocPath))<font color="#0000FF"> Then</font>
+      Err.Raise 9999,,&quot;No Doc Path Defined&quot;
+<font color="#0000FF">    End If</font>
+<font color="#008000">&#39; ----------------------------------------------------------- </font>
+<font color="#008000">' Open the Analysis document</font> 
+sFilePath = CATIA.FileSystem.ConcatenatePaths(sDocPath, &quot;online\CAAScdAniUseCases\samples\Cube_R13_Freq.CATAnalysis&quot;)
+<FONT COLOR="#0000FF">Set</FONT> oAnalysisDocument = CATIA.Documents.Open(sFilePath)
+...</PRE></TD></TR></TBODY></TABLE>
+      <p>Open the Analysis document. The Analysis document is fetched in the documentation 
+		installation path, this path has already been stored in the <code>sDocPath</code> 
+		variable. In the collection of documents, two documents can be retrieved; 
+		the Analysis document and the Part document. </p>
+		<H4><A name=Reference></A><b>Retrieve Analysis Cases and Analysis Sets 
+		from Analysis Document</b></H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...</PRE>
+			<PRE>
+<font color="#008000">' Retrieve the Analysis Manager</font>
+<font color="#0000FF">Set</font> oAnalysisManager = oAnalysisDocument.Analysis
+			
+<font color="#008000">' Retrieve the analysis model from the list of models</font>
+<font color="#0000FF">Set</font> oAnalysisModels = oAnalysisManager.AnalysisModels
+<font color="#0000FF">Set</font> oAnalysisModel = oAnalysisModels.Item(1)
+</pre>
+			<PRE>
+<font color="#008000">' Retrieve the analysis cases and the first analysis case</font>
+<font color="#0000FF">Set </font>oAnalysisCases = oAnalysisModel.AnalysisCases
+<font color="#0000FF">Set </font>oAnalysisCase = oAnalysisCases.Item(1)</pre>
+			<PRE>
+<font color="#008000">' Retrieve the analysis sets and analysis set by its name</font>
+<font color="#0000FF">Set </font>oAnalysisSets = oAnalysisCase.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet2 = oAnalysisSets.Item("Frequency Case Solution.1", catAnalysisSetSearchAll)
+</pre>
+			<PRE>
+<font color="#008000">' Retrieve the analysis Entity and create a reference</font>
+<font color="#0000FF">Set </font>analysisEntities1 = oAnalysisSet.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity1 = analysisEntities1.Item(1)
+<font color="#0000FF">Set </font>reference1 = oAnalysisManager.CreateReferenceFromObject(analysisEntity1)
+
+
+...</pre></TD></TR></TBODY></TABLE>
+		<p>According to the general
+		<a href="../CAAScdAniTechArticles/CAAAniTocAnalysisDocument.htm">
+		Analysis Document</a> structure, this macro uses some standard procedures 
+		to navigate or retrieve the required objects. First, from the <b>Document</b>, 
+		we find the <b>Analysis Manager Object</b>, and the <b>Analysis Model</b>.
+		</p>
+		<p>The Analysis case is retrieved from list of cases by its index. The model 
+		contains only one analysis case hence we pass 1 to the method <i>Item.
+		</i>Otherwise we pass the appropriate index of the frequency case if there 
+		are more Analysis cases. The Analysis Case is retrieved from the list of 
+		image by its name. The name is same as that appears in the interactive 
+		application.</p>
+      <H4><A name=Navigate></A>Create References from 
+		different Groups and set them as Selection</H4>
+      <TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...  </PRE>
+			<pre><font color="#008000">' Retrieve the image from Frequency Case Solution and set selection </font>
+<font color="#0000FF">Set </font>analysisImages1 = analysisSet2.AnalysisImages
+<font color="#0000FF">Set </font>analysisImage1 = analysisImages1.Item("Von Mises Stress (nodal values).1")
+analysisImage1.SetSelection reference1, True
+analysisImage1.Update </pre>
+			<pre><font color="#008000">' Get the list of groups and create reference from first group</font>
+<font color="#0000FF">Set </font>oAnalysisSet = oAnalysisModel.AnalysisSets
+<font color="#0000FF">Set </font>analysisSet3 = analysisSets2.ItemByType("GroupSet")
+<font color="#0000FF">Set </font>analysisEntities2 = analysisSet3.AnalysisEntities
+<font color="#0000FF">Set </font>analysisEntity2 = analysisEntities2.Item(1)
+<font color="#0000FF">Set </font>reference2 = oAnalysisManager.CreateReferenceFromObject(analysisEntity2)
+
+<font color="#008000">' Set the created reference for Selection in Von Mises Stress Image</font>
+analysisImage1.SetSelection reference2, False
+analysisImage1.Update 
+</pre>
+			<pre><font color="#008000">' Remove all the selections and update</font>
+analysisImage1.ResetSelection 
+analysisImage1.Update 
+</pre>
+			<pre><font color="#008000">' Retrieve the mesh part OCTREE Tetrahedron Filler</font>
+<font color="#0000FF">Set </font>analysisSets3 = oAnalysisModel.AnalysisSets
+<font color="#0000FF">Set </font>oAnalysisMeshManager = analysisSets3.ItemByType("MSHMeshSet")
+<font color="#0000FF">Set </font>oAnalysisMeshParts = oAnalysisMeshManager.AnalysisMeshParts
+<font color="#0000FF">Set </font>analysisMeshPart1 = oAnalysisMeshParts.Item("OCTREE Tetrahedron Mesh.1 : Part1")
+
+<font color="#008000">'Create reference from the mesh part and set the selection</font>
+<font color="#0000FF">Set </font>reference3 = oAnalysisManager.CreateReferenceFromObject(analysisMeshPart1)
+analysisImage1.SetSelection reference3, True
+analysisImage1.Update 
+
+...</pre></TD></TR></TBODY></TABLE>
+		<p>Creating reference from objects and setting them is achieved by Reference 
+		interface. This is equivalent to selecting objects in the view using mouse. 
+		The type of entities contained in the selection may be different from a 
+		specification to another. For example a <i>Clamp </i>symbolizes a set of 
+		nodes, a <i>Lineic Force </i>symbolizes a set of edges and a <i>Pressure
+		</i>symbolizes a set of faces.</p>
+		<H4><A name=Epilog></A>Epilog</H4><TABLE class=code>
+        <TBODY>
+        <TR>
+          <TD><PRE>...
+End Sub
+...</PRE></TD></TR></TBODY></TABLE>
+		<P>To run the macro interactively CATDocView 
+		environment variable must be defined.</TD></TR>
+  <TR>
+    <TD vAlign=top width="7%">&nbsp;</TD>
+    <TD width="93%">
+      &nbsp;</TD></TR></TBODY></TABLE><!---------------------------------comment-------------------------------------><P align=center><img height=32 src="../CAAScrBase/images/aendtask.gif" width=64 border=0></P><P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=InShort></A>In Short</H4>
+<p>This use case has shown how to assign groups to images for visualization.</p>
+<P align=right>[<A 
+href="#Top">Top</A>]</P><HR>
+<!---------------------------------comment------------------------------------->
+<H4><A name=References></A>References</H4><TABLE width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="74">[1]</TD><TD width="93%"><a href="../CAAScdInfUseCases/CAAInfLauchMacro.htm">Replaying 
+      a Macro</A></TD></TR><TR>
+    <TD align=right colSpan=2>[<A 
+      href="#Top">Top</A>]</TD></TR></TBODY></TABLE><HR>
+<!---------------------------------comment------------------------------------->
+<P><I>Copyright © 2001, Dassault Systèmes. All rights reserved.</I></P><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></BODY></HTML>
+

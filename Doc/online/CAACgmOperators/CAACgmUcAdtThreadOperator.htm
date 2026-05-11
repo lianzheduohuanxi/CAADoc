@@ -1,0 +1,334 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Threading a Rod</title>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table class="DocHeader">
+	<tr>
+		<td class="DocHeader1">
+		<h1><a name="Top"></a>Threading a Rod</h1>
+		</td>
+	</tr>
+	<tr>
+		<td class="use">Use Case</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>The CAAGMOperatorsJournalThreadOpMain use case provides you with a way 
+		to create an operator that threads a rod. To achieve the threading, an appropriate 
+		profile is swept along an helix, then after being closed, the resulting 
+		body is removed from the rod to be threaded. </p>
+		<p>This use case also illustrate how to check a journal by using the 
+		CAAGMCheckForPart.h operator. </p>
+		<ul>
+			<li><a href="#Learn">What You Will Learn With This Use Case</a></li>
+			<li><a href="#UseCase">The CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility 
+			Use Cases</a>
+			<ul>
+				<li><a href="#What">What Do CAAGMOperatorsJournalThreadOpMain and 
+				CAAGMOperatorsJournalThreadUtility do?</a></li>
+				<li><a href="#How">How to Launch CAAGMOperatorsJournalThreadOpMain</a></li>
+				<li><a href="#Where">Where to Find the CAAGMOperatorsJournalThreadOpMain 
+				and CAAGMOperatorsJournalThreadUtility code</a></li>
+			</ul>
+			</li>
+			<li><a href="#Step">Step-by-Step</a></li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Learn"></a>What You Will Learn With This Use Case</h2>
+<p>In this use case, you learn how to create a sweep, close it and remove the resulting 
+body from the rod to be threaded. You also learn the basics about how to create 
+a user operator.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="UseCase"></a>The CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility 
+Use Cases</h2>
+<p>CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility are 
+use cases of the CAAGMOperatorsInterfaces.edu framework that illustrate the GMOperatorsInterfaces 
+framework capabilities.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="What"></a>What Do CAAGMOperatorsJournalThreadOpMain and CAAGMOperatorsJournalThreadUtility 
+Do?</h3>
+<table>
+	<tr>
+		<td>
+		<img alt="Threaded Rod" src="images/CAACgmAdtresultthread.gif" width="280" height="291"></td>
+		<td>The CAAGMOperatorsJournalThreadUtility use case defines the CAAAdtJournalThread 
+		operator. Like any other operator, it must specify
+		<ul>
+			<li>A constructor as well as a destructor.</li>
+			<li>A Run method.</li>
+			<li>A GetResult method.</li>
+		</ul>
+		<p>In addition, two global functions which are discussed later on are defined 
+		in the CAAGMOperatorsJournalThreadUtility use case.</p>
+		<p>The CAAGMOperatorsJournalThreadOpMain use case contains the main program 
+		that creates the cylinder to be threaded and call the CAAAdtJournalThread 
+		operator. </p>
+		<p>This is the solid you obtain when you execute the CAAGMOperatorsJournalThreadOpMain 
+		use case.</p>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="How"></a>How to Launch CAAGMOperatorsJournalThreadOpMain</h3>
+<p>You must compile CAAGMOperatorsJournalThreadUtility prior to launching CAAGMOperatorsJournalThreadOpMain. 
+CAAGMOperatorsJournalThreadOpMain requires CAAGMOperatorsJournalThreadUtility as 
+a module to be linked with in its Imakefile.mk file.</p>
+<p>To launch CAAGMOperatorsJournalThreadOpMain, you will need to set up the build 
+time environment, then compile CAAGMOperatorsJournalThreadOpMain.m, set up the run 
+time environment, and then execute the use case [<a href="#References">1</a>].</p>
+<p>This use case creates its own input data. It must be executed with three 
+arguments which are output files:</p>
+<p><code>CAAGMOperatorsJournalThreadOpMain resultFile.NCGM verdictFile.htm warningFile.htm</code></p>
+<ul>
+<li>The first argument is the resulting NCGM file.</li>
+<li>The second argument is a &quot;verdict&quot; file in .htm format. This file tells 
+you whether the rules a journal has to comply with to be valid are fulfilled.</li>
+<li>The third argument is a &quot;warning&quot; or detailed file also in .htm format. 
+This file tells you why the journal is not valid and which statements are to be 
+investigated to fix the journal. It also reminds the input data which have be 
+passed to the journal checker.</li>
+</ul>
+<p>For information on journal checking, refer to:</p>
+<ul>
+				<li><a href="CAACgmTaTopJournalMethodology.htm">Topological 
+				Journal: Methodology</a></li>
+				<li><a href="CAACgmUcJournalChecking3.htm">Topological Journal: Writing a Validation 
+								Tool</a></li>
+				<li><a href="CAACgmUcJournalChecking1.htm">Topological 
+								Journal: Creation and Validation (1)</a></li>
+				<li><a href="CAACgmUcJournalChecking2.htm">Topological 
+								Journal: Creation and Validation (2)</a></li>
+</ul>
+<p>This NCGM file can be displayed using the CAAGMModelGemBrowser use case.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Where"></a>Where to Find the CAAGMOperatorsJournalThreadOpMain and 
+CAAGMOperatorsJournalThreadUtility Code</h3>
+<p>The CAAGMOperatorsJournalThreadOpMain use case is made of a main named CAAAdtJournalCreateThread.cpp 
+located in the CAAGMOperatorsJournalThreadOpMain.m module of the CAAGMOperatorsInterfaces.edu 
+framework:</p>
+<p><code>InstallRootFolder\CAADoc\CAAGMOperatorsInterfaces.edu\CAAGMOperatorsJournalThreadOpMain.m\</code></p>
+<p>where <code>InstallRootFolder</code> [<a href="#References">1</a>] is the folder 
+where the API CD-ROM is installed.</p>
+<p>This use case uses the CAAAdtJournalThread class which is defined in the CAAGMOperatorsJournalThreadUtility.m 
+module.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Step"></a>Step-by-Step</h2>
+<p>The CAAGMOperatorsJournalThreadOpMain use case is divided into the following 
+main steps:</p>
+<ul>
+	<li>Creation of the geometry factory (not discussed below - see for example 
+	[<a href="#References">2</a>]).</li>
+	<li>Creation of a CATSolidCylinder (see [<a href="#References">2</a>]).</li>
+	<li>Creation of the thread operator by using the CAAAdtJournalThread operator 
+	defined in the CAAGMOperatorsJournalThreadUtility.m module. This is the most 
+	interesting part of the use case. In this part, we must define:
+	<ul>
+		<li>The constructor and the destructor of the operator.</li>
+		<li>The Run() method whose operations are going to be reviewed below:
+		<ol>
+			<li>Creation of a first sweep.</li>
+			<li>Boolean remove from the initial rod.</li>
+			<li>Creation of a second sweep.</li>
+			<li>Boolean remove from the body resulting from the first remove.</li>
+		</ol>
+		</li>
+		<li>The GetResult() method.</li>
+	</ul>
+	</li>
+	<li>Running the CAAAdtJournalThread operator and retrieving the resulting body 
+	in the main program.</li>
+</ul>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3><a name="Creating the curves making up the wire"></a>The Methodology</h3>
+<p>At first sight, the methodology to thread this rod would consist in removing a 
+single triangular sweep from the cylindrical rod as indicated below:</p>
+<table>
+	<tr>
+		<th>Step 1: Creating a cylindrical rod</th>
+		<th>Step 2: Sweeping a triangular profile<br>
+		along an helix</th>
+		<th>Step 3: Boolean remove</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Step 1" src="images/CAACgmAdtthread7.gif" width="207" height="189"></td>
+		<td>
+		<img alt="Step 2" src="images/CAACgmAdtthread6.gif" width="228" height="190"></td>
+		<td>
+		<img alt="Step 3" src="images/CAACgmAdtthread8.gif" width="220" height="191"></td>
+	</tr>
+</table>
+<p>However, a usual source of problems when performing boolean operations is tangent 
+or near-tangent surfaces. In the sequence of operations above, removing the sweep 
+from the rod would result in a crash because the cylindrical surfaces of both operands 
+are coincident. This problem can be worked around by creating extensions so that 
+the sweep to be subtracted out has a diameter slightly larger that the rod diameter. 
+Another source of problem is when one operand auto-intersects. If we make the sweep 
+jut out from the rod, unless the sweep auto-intersects, parasite cylindrical faces 
+will be generated in place of the outer edge of the thread. This is not what we 
+want to obtain.</p>
+<p>To get over these two restrictions, we decided to proceed in two phases:</p>
+<p><strong>Phase 1</strong>: a first sweep is created. The profile for this first 
+sweep is a rectangular triangle as described below. This sweep is removed from the 
+rod.</p>
+<table>
+	<tr>
+		<th>Phase 1 (a): Initial rod</th>
+		<th>Phase 1 (b): First sweep</th>
+		<th>Phase 1 (c): First Boolean remove</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Initial Rod" src="images/CAACgmAdtthread7.gif" width="207" height="189"></td>
+		<td>
+		<img alt="First Sweep" src="images/CAACgmAdtthread0.gif" width="230" height="191"></td>
+		<td>
+		<img alt="First Boolean Remove" src="images/CAACgmAdtthread2.gif" width="223" height="189"></td>
+	</tr>
+</table>
+<p><strong>Phase 2</strong>: a second sweep is created. A symmetrical profile is 
+used for this second sweep. This second sweep is removed from the solid resulting 
+from the first boolean remove.</p>
+<table>
+	<tr>
+		<th>Phase 2 (a): Intermediary solid</th>
+		<th>Phase 2 (b): Second sweep</th>
+		<th>Phase 2 (c): Second Boolean remove</th>
+	</tr>
+	<tr>
+		<td>
+		<img alt="Intermediary Solid" src="images/CAACgmAdtthread2.gif" width="223" height="189"></td>
+		<td>
+		<img alt="Second Sweep" src="images/CAACgmAdtthread1.gif" width="232" height="191"></td>
+		<td>
+		<img alt="Second Boolean Remove" src="images/CAACgmAdtthread8.gif" width="220" height="191"></td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h3>Creating the Sweeps</h3>
+<p>The sweeps are created in the CAASweepCreate function. The CATICGMFrFTopologicalSweep 
+operator is created by the CATCGMCreateFrFTopologicalSweep global function requires 
+a guide and a profile as arguments.</p>
+<pre class="code">
+// a - Create the sweep operator
+//
+CATICGMFrFTopologicalSweep * pSweepOperator = CATCGMCreateFrFTopologicalSweep(
+        myFactory,
+        myTopdata,
+        iHelix,     //  guide
+        iSection);  //  profile</pre>
+<p>Other parameters are tuned by using the Setxxx methods.</p>
+<h4>Specifying the Guide</h4>
+<p>The guide is an helix which is created by the CATCGMCreateTopHelix global function.</p>
+<pre class="code">
+// b - Helix creation
+//
+CATBody* piHelix = CATCGMCreateTopHelix(
+        _factory,
+        _topData,
+        piHelixAxis,                     // axis
+        1,                               // orientation
+        piBPOrigin,                      // origin
+        CATAngle (0),                    // start angle
+        CATAngle (helixAngleInt*CATPI),  // end angle 
+        CATLength (pitch),               // pitch
+        1);                              // orientation of the rotation about the axis</pre>
+<p>The helix parameters are:</p>
+<ul>
+	<li>The axis is defined by the P1 and P2 CATMathPoint.</li>
+	<li>The origin which is not located on the rod cylindrical surface so that the 
+	sweep to be created later on protrude off the rod.
+	<pre class="code">CATBody * piBPOrigin = CATCGMCreateTopPointXYZ ( 
+  _factory,
+  _topData,
+  P1.GetX() + (cylRadius + <strong>0.001</strong>),
+  P1.GetY(),
+  P1.GetZ());</pre>
+	</li>
+	<li>The start and end angle. The end angle (the number of helix turns) is roughly 
+	determined so that the portion of the rod to be threaded goes until an extremity 
+	of the rod. The distance where the thread starts is passed as the argument of 
+	the CAAAdtJournalThread constructor in the form of a length.</li>
+</ul>
+<h4>Specifying the Profile</h4>
+<p>The profiles are defined in the CAASweepProfile function. They are originally 
+created in the XOY plane but their positioning is moved to the beginning of the 
+helix.</p>
+<pre class="code">
+CATMathAxis Ref; // the canonical math axis
+pSweepOperator-&gt;SetProfilePositionType(1);
+pSweepOperator-&gt;SetProfilePosition(&amp;Ref); // set profile axis system</pre>
+<script type="text/javascript">insertLinkToTop();</script>
+<h4>Specifying the reference element</h4>
+<p>In order to avoid a twisted sweep, the XOY plane must be specified as the reference 
+element.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="InShort"></a>In Short</h2>
+<p>When writing an operator such as CAAAdtJournalThread, the steps requiring attention 
+are:</p>
+<ul>
+	<li>The definition of the sweep(s). An important parameter is the reference 
+	plane. If it is not properly specified, the resulting sweep can be twisted.</li>
+	<li>The boolean operations: a boolean remove operation cannot complete when 
+	there are tangent or near-tangent surfaces in both operands. You must design 
+	the operand to be extracted so that it protrudes off the operand it is to be 
+	extracted from.</li>
+</ul>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td>
+		<a href="../CAADocUseCases/CAADocRunSample.htm">
+		Building and Launching a Use Case</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td><a href="CAACgmUcTopOverview.htm">Overview of the Topological Operators</a></td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Mar 2002]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+</body>
+
+</html>

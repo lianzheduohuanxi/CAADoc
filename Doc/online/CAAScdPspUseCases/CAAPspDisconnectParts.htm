@@ -1,0 +1,216 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="../CAAScrBase/caav5.css">
+<title>Disconnecting Parts</title>
+</head>
+
+<body>
+
+<table border="0" width="100%">
+  <tr>
+    <td>
+      <h2>Distributive Systems</h2>
+    </td>
+    <td align="right" valign="top">
+      <h2><a name="Top"></a>Disconnecting Parts</h2>
+    </td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<table border="0" width="100%">
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/atarget.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Learn"></a>This use case is intended to shows how to check
+      connection of two parts using a macro.</p>
+      <p>This macro opens the document CAAPspEduIn.CATProduct. From the
+      root object of this document, the macro obtains a handle to two objects
+      and checks if they are connected . Furthermore, if the parts are connected
+      they are disconnected.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ainfo.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="How"></a>CAAPspDisconnectParts is launched in CATIA [<a href="#References">1</a>].
+      No open document is needed.</p>
+      <p><a href="CAAPspDisconnectPartsSource.htm">CAAPspDisconnectParts.CATScript</a>
+      is located in the CAAScdPspUseCases module. <a href="macros/CAAPspDisconnectParts.CATScript">Execute
+      macro </a> (windows only).</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="7%" valign="top"><img border="0" src="../CAAScrBase/images/ascenari.gif" width="32" height="32"></td>
+    <td width="93%">
+      <p><a name="Step"></a>CAAPspDisconnectParts includes the following
+      steps:</p>
+      <ol>
+        <li><a href="#Prolog">Prolog</a></li>
+        <li><a href="#Get a List of Physical (3D) piping objects">Get a List of
+          physical (3D) Piping Objects</a></li>
+        <li><a href="#Get PspConnectable objects">Get PspConnectable Objects
+          Corresponding to Two Parts</a></li>
+        <li><a href="#Check if parts are connected">Check if Two Parts Are Connected</a></li>
+        <li><a href="#Disconnect two parts">Disconnect Two Connected Parts</a></li>
+      </ol>
+      <h4><a name="Prolog"></a>Prolog</h4>
+      <p>The macro first loads CAAPspEduIn.CATProduct.</p>
+      <p><i>Note</i>: To open a different document, modify the variable <i>sDocPath</i>
+      to point to the directory and <i>sDocFullPath</i> to point to full path
+      name of the document.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">    ' ------------------------------------------------------------------------- </font>
+    <font color="#008000">' Open the Distributive system document </font>
+<font color="#0000FF">    Dim </font>objPspDoc<font color="#0000FF"> As </font>Document
+
+    sDocFullPath = CATIA.FileSystem.ConcatenatePaths(sDocPath, _    
+       &quot;\online\CAAScdPspUseCases\samples\CAAPspEduIn.CATProduct&quot; )
+
+<font color="#0000FF">    Set </font>objPspDoc = CATIA.Documents.Open(sDocFullPath)    <font color="#008000">...</font></pre>
+      <p>Next, the macro acquires the <i> PspWorkbench</i> object from the document
+      using the top node (objPrdRoot) of the object tree.</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' ---------------</font>
+    <font color="#008000">' Find the top node of the Distributive System object tree - .  </font>
+    
+<font color="#0000FF">    If </font>( Not ( objPspDoc Is Nothing ) )<font color="#0000FF"> Then</font>
+      <font color="#008000">'Set objPrdRoot = objPspDoc.Product </font>
+<font color="#0000FF">      Set </font>objPrdRoot = CATIA.ActiveDocument.Product
+<font color="#0000FF">      If </font>( Not ( objPrdRoot Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">        Set </font>objPspWorkbench = objPrdRoot.GetTechnologicalObject (&quot;PspWorkbench&quot;)
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If</font>
+    <font color="#008000">...</font></pre>
+      <p>Then it uses <i> PspWorkbench</i> get application corresponding to &quot;Piping
+      Design&quot; and initialize it.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspApplication = objPspWorkbench.GetApplication(catPspIDLCATPiping)
+
+<font color="#0000FF">      If </font>( Not( objPspApplication Is Nothing )  )<font color="#0000FF"> Then        </font>
+        strMessage_g = strMessage_g &amp; &quot;Success in getthing objPspApplication&quot; &amp; vbCr      
+        objPspApplication.Initialization()             
+<font color="#0000FF">      End If</font>
+<font color="#0000FF">    End If </font><font color="#008000">'--- If ( Not ( objPspWorkbench Is Nothing )...</font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get a List of Physical (3D) piping objects"></a>Get a List of
+      Physical (3D) Piping Objects</h4>
+      <p>Macro then gets Get <i> PspAppFactory</i> object handler from the <i>
+      objPspApplication</i> object and get a list of physical (3D) piping
+      objects in the root product.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#008000">    '-----------------------------------------------------------------------</font>
+    <font color="#008000">' Get list of physical (3D) objects in the Piping domain</font>
+    <font color="#008000">'-----------------------------------------------------------------------</font>
+<font color="#0000FF">    Dim </font>objLPhysicals    <font color="#0000FF"> As </font>PspListOfObjects
+<font color="#0000FF">    If </font>( Not ( objPspWorkbench Is Nothing ) And _
+         Not ( objPspApplication Is Nothing ) )<font color="#0000FF"> Then</font>
+<font color="#0000FF">      Set </font>objPspAppFactory = objPspWorkbench.Ge<font color="#0000FF">tInt</font>erface(&quot;CATIAPspAppFactory&quot;, _
+                                                objPspApplication )      
+      
+<font color="#0000FF">      If </font>( Not ( objPspAppFactory Is Nothing ) )<font color="#0000FF"> Then      </font>
+        
+<font color="#0000FF">        Set </font>objLPhysicals = objPspAppFactory.ListPhysicals( objPrdRoot, catPspIDLCATPIP)
+        
+<font color="#0000FF">      End If</font>
+    <font color="#008000">...</font></pre>
+      <h4><a name="Get PspConnectable objects"></a>Get
+      PspConnectable Objects Corresponding to Two Parts</h4>
+      <p>It then gets PspConnectable objects corresponding to Valve whose
+      ID is &quot;V-117&quot; and a gasket object whose ID is &quot;Gasket-012&quot; using the private
+      Function <i> FindPipingPartByID</i> by passing input list of Physical
+      objects (<i>objLPhysicals</i>).</p>
+      <pre>    <font color="#008000">...</font>
+    <font color="#008000">' --------------------------------------------------------------</font>
+    <font color="#008000">' Get PspConnectable object corresponding to  Valve with ID=V-117 </font>
+    <font color="#008000">' and Gasket whose ID = Gasket-012    </font>
+    <font color="#008000">' ---------------------------------------------------------------</font>
+
+<font color="#0000FF">    Dim </font>objValveCtbl   <font color="#0000FF"> As </font> PspConnectable
+<font color="#0000FF">    Dim </font>objGasketCtbl  <font color="#0000FF"> As </font> PspConnectable
+    
+<font color="#0000FF">    If </font>( Not ( objLPhysicals Is Nothing ) And _
+       ( objLPhysicals.Count &gt; 0 ) )<font color="#0000FF"> Then      </font>
+<font color="#0000FF">      Set </font>objValveCtbl  = FindPipingPartByID (objLPhysicals, &quot;V-117&quot;)
+<font color="#0000FF">      Set </font>objGasketCtbl = FindPipingPartByID (objLPhysicals,&quot;Gasket-012&quot;)
+
+<font color="#0000FF">    End If</font>
+<font color="#0000FF"> </font>   <font color="#008000">...</font></pre>
+      <h4><a name="Check if parts are connected"></a>Check if
+      Two Parts Are Connected</h4>
+      <p>It then calls <i> ListConnectables</i> on objValveCtbl ( corresponding to
+      V-117) to get a list of connected objects (objLCntbles) to it. Then it
+      checks ID of all the connected objects to see if any of them match
+      with &quot;Gasket-012&quot;.</p>
+      <pre>      <font color="#008000">...</font>
+     <font color="#0000FF">Set </font>objLClassFilter = Nothing
+      objValveCtbl.ListConnectables objLClassFilter, objLCntbles, _
+                           objLCntrsOnThisObj,  objLCntrsOnConnected 
+
+<font color="#0000FF">      If </font>( Not ( objLCntbles Is Nothing ) )<font color="#0000FF"> Then       </font>
+<font color="#0000FF">        Dim </font>objAIDCntbl           <font color="#0000FF"> As </font>PspID
+        strMessage_g = strMessage_g &amp; _
+          &quot;Number of Connected objects= &quot; &amp;  objLCntbles.Count &amp; vbCr          
+
+<font color="#0000FF">        For </font>iIdx = 1<font color="#0000FF"> To </font>objLCntbles.Count 
+<font color="#0000FF">          Set </font>objAIDCntbl = objLCntbles.Item (iIdx, &quot;CATIAPspID&quot;)          
+<font color="#0000FF">          Dim </font>strCntdID<font color="#0000FF"> As </font>String
+<font color="#0000FF">          If </font>( Not (objAIDCntbl Is Nothing) )<font color="#0000FF"> Then</font>
+            strCntdID = objAIDCntbl.GetID
+<font color="#0000FF">            If </font>( strCntdID = &quot;Gasket-012&quot; ) Then
+              iIdxOfGasket = iIdx
+<font color="#0000FF">              Exit For          </font><font color="#008000">' Exit out of the for loop</font>
+<font color="#0000FF">            End If             </font>
+<font color="#0000FF">          End If           </font>
+    <font color="#008000">...</font></pre>
+      <h4> <a name="Disconnect two parts"></a>Disconnect Two Parts</h4>
+      <p>To get corresponding connectors on the two objects, use the index of
+      the Gasket-012 object in the list <i> objLCntbles</i> and obtain the
+      corresponding <i>PspConnector</i>
+      objects from List of connectors <i> objLCntrsOnThisObj</i> and <i>objLCntrsOnConnected</i>.</p>
+      <p>Connector on the Valve is obtained as <i>objPspCntrValve</i>
+      while on the gasket it is <i>objPspCntrGasket</i>.</p>
+      <pre>    <font color="#008000">...</font>
+<font color="#0000FF">        Set </font>objPspCntrValve = objLCntrsOnThisObj.Item (iIdxOfGasket, &quot;CATIAPspConnector&quot;)          
+<font color="#0000FF">        Set </font>objPspCntrGasket = objLCntrsOnConnected.Item (iIdxOfGasket, &quot;CATIAPspConnector&quot;)          
+    <font color="#008000">...</font></pre>
+      <p>To disconnect the Valve and gasket the macros calls <i>Disconnect</i>
+      on <i>objPspCntrValve</i> by passing in the argument <i>objPspCntrGasket</i>.</p>
+      <pre>    <font color="#008000">...</font>
+         objPspCntrValve.Disconnect objPspCntrGasket
+    <font color="#008000">...</font></pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="InShort"></a>In Short</h4>
+<p>This use case shows how to check connection of two parts in a document. A message logging the status of the critical steps is
+displayed at the end of the use case.</p>
+<p><img border="0" src="images/CAAPspDisconnectParts.jpg" width="748" height="425"></p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<h4><a name="References"></a>References</h4>
+<table border="0" width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="CAAPspDisconnectParts.htm">Replaying a macro</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="right" width="100%">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!-- ------------------------------comment---------------------------- -->
+<p><i>Copyright © 2004, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

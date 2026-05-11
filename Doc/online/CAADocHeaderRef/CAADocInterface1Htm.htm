@@ -1,0 +1,118 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+ <meta name="Generator" content="CppGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>Class System.IClassFactory</title>
+</head>
+<body bgcolor=white>
+<pre><font color="blue"><u>All Frameworks</u>  <u>Class Hierarchy</u>  <u>This Framework</u>  <u>Previous</u>  <u>Next</u>  <u>Index</u></font></pre>
+<hr>
+<h1>Class System.IClassFactory</h1>
+<pre>
+IClassFactory
+ </pre>
+<hr><br>
+<dl>
+ <dt>public class <b>IClassFactory</b></dt>
+</dl>
+ 
+<p>
+<b><i> Interface to component factories.</i></b><br>
+<b>Role</b>: Objects that implement IClassFactory instantiate components using their CLSIDs as input,
+and return to the client a pointer to the requested interface.
+<hr>
+<dl>
+</dl>
+<dl>
+ <h2>Method Index</h2> <br>
+ <dt> o 
+    <a href="#CreateInstance(IUnknown*,REFIID,void**)"><b>CreateInstance</b></a>
+<dd>  Creates an uninitialized component of a given CLSID.
+
+ <dt> o 
+    <a href="#LockServer(BOOL)"><b>LockServer</b></a>
+<dd>  Keeps an out-process server in memory.
+</dl>
+ <h2>Methods</h2> <br>
+<a name="CreateInstance"><a name="CreateInstance(IUnknown*,REFIID,void**)"> <dt> o <b>CreateInstance</b>
+<pre>
+  public HRESULT __stdcall CreateInstance(IUnknown * iUnkOuter,
+                                          REFIID     iIid,
+                                          void    ** oObject )=0</dt>
+</pre>
+<dl>
+  <dd>
+ Creates an uninitialized object of a specified CLSID.
+Objects that implement IClassFactory instantiate components using their CLSIDs as input,
+and retrieve a pointer to the requested interface passed as an output argument to the client.
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+      <dt><tt> iUnkOuter</tt>
+      <dd>A pointer to the aggregating component IUnknown interface.
+	  <br><b>Legal values</b>: NULL if the client is not an aggregating component,
+	  and a pointer to its IUnknwon interface otherwise.
+    </dl>
+    <dl>
+      <dt><tt> iIid</tt>
+      <dd>A reference to the identifier to an interface that the component implements
+	  and for which the client request a pointer to be retrieved.
+         <br><b>Legal values</b>: Should be expressed as IID_CATIXX,
+	  where CATIXX is the interface to which a pointer is requested
+    </dl>
+    <dl>
+      <dt><tt> oObject</tt>
+      <dd>The address of the pointer to the requested interface
+    </dl>
+
+  <dt><b>Returns:</b>
+  <dd>An HRESULT value. 
+      <br><b>Legal values</b>:
+      <dl>
+        <dt>S_OK</dt>
+        <dd>The component is successfully created and the interface pointer is successfully returned</dd>
+        <dt>E_FAIL </dt>
+        <dd>The component was successfully created, but the interface query failed</dd>
+        <dt>E_NOINTERFACE </dt>
+        <dd>The component was successfully created, but the it doesn't implement the requested interface</dd>
+        <dt>E_OUTOFMEMORY </dt>
+        <dd><dd>The component allocation failed</dd>
+      </dl>
+</dl>
+
+</dl>
+<a name="LockServer"><a name="LockServer(BOOL)"> <dt> o <b>LockServer</b>
+<pre>
+  public HRESULT __stdcall LockServer(BOOL iLock )=0</dt>
+</pre>
+<dl>
+  <dd>
+ Keeps an out-process server in memory.
+<dl>
+  <dt> <b>Parameters:</b>
+  <dd>
+    <dl>
+      <dt><tt> iLock</tt>
+      <dd>Locking flag.
+  <br><b>Legal values</b>: TRUE to keep the server in memory,
+  and FALSE otherwise
+    </dl>
+
+
+  <dt><b>Returns:</b>
+  <dd>An HRESULT value. 
+      <br><b>Legal values</b>:
+<dl>
+      <dt>S_OK</dt>
+    <dd>The server is successfully locked or unlocked</dd>
+     <dt>E_FAIL </dt>
+     <dd>The server cannot be accessed</dd>
+   </dl>
+</dl>
+
+</dl>
+
+</body>
+</html>

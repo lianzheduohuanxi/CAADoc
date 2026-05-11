@@ -1,0 +1,525 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<script type="text/javascript" src="../CAADocJavaScript/DSDocHighlight.js"></script>
+<script type="text/javascript" src="../CAADocJavaScript/submit.js"></script>
+<title>Understanding Feature LifeCycle</title>
+<style type="text/css">
+.style1 {
+	margin-bottom: 0px;
+}
+.style2 {
+	color: #FF7900;
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<body onload="highlightSearchTerms();">
+
+<table width="100%">
+    <tr>
+      <td valign="top">
+      <h1>3D PLM PPR Hub Open Gateway</h1>
+      </td>
+      <td valign="top">
+      <h2>Feature Modeler</h2>
+      </td>
+      <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>Understanding Feature Lifecycle</h3>
+      <p><em>How to create or delete features</em></p>
+      </td>
+    </tr>
+		<tr>
+		<td class="tech" colspan="2">Technical Article</td>
+	</tr>
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<table class="abstract">
+	<tr>
+		<td>
+		<h2>Abstract</h2>
+		<p>This article deals with the feature life cycle, in other words it 
+		concerns feature creation and deletion. You will learn the main 
+		characteristics of these two operations as well as some interesting 
+		information about the involved API.
+<table class="Remark">
+	<tr>
+		<td class="remark"><span class="run-in">Warning</span>: Any Feature modeler API modifying 
+		the data model requires that ALL feature containers of the stream be 
+		loaded. Creating, Deleting or Modifying a feature fail if at 
+		least one specification container is missing.</td>
+	</tr>
+</table>
+</p>
+		<ul>
+			<li><a href="#Feature Creation">Feature Creation</a><ul>
+				<li><a href="#From StartUp or Feature">From StartUp or Feature</a></li>
+				<li><a href="#StandAlone or Aggregated">StandAlone or Aggregated</a></li>
+				<li><a href="#Stored in Container">Stored in Container</a></li>
+				<li><a href="#About Aggregated feats">About Aggregated Features</a></li>
+			</ul>
+			</li>
+			<li><a href="#Feat deletion">Feature Deletion</a><ul>
+				<li><a href="#How to delete a feature">How to Delete a Feature</a></li>
+				<li><a href="#Impact of feat deletion">What does a Feature Deletion Imply?</a></li>
+			</ul>
+			</li>
+			<li><a href="#InShort">In Short</a></li>
+			<li><a href="#References">References</a></li>
+		</ul>
+		</td>
+	</tr>	
+</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="Feature Creation"></a>Feature Creation</h2>
+<p>This first chapter describes how features are created, and where they are 
+stored. Some additional information about the aggregation principles are 
+integrated.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="From StartUp or Feature"></a>From StartUp or Feature</h3>
+<p>A feature is usually created (or instantiated) from a <strong>StartUp</strong>, a feature&#8217;s 
+&#8220;<strong>template</strong>&#8221; stored inside a <strong>feature catalog</strong> [<a href="#References">1</a>]. 
+But, a feature can also be created from another for specific, but rare scenarios. In both cases, in order to do the creation you have to 
+be the owner of the feature catalog containing the StartUp to instantiate 
+(directly or not). Indeed, as usual, this operation is protected as described by 
+the technical article &#8220;<strong>Understanding Credentials</strong>&#8221; [<a href="#References"><span >2</span></a>].</p>
+<table>
+	<caption><a name="Fig1"></a>Fig. 1 Feature Creation</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureLC_Fig1.gif"></td>
+	</tr>
+</table>
+<p>[<a href="#Fig1">Fig. 1</a>] depicts</p>
+<ul>
+	<li><code>Feature A</code> is created from its <strong>StartUp</strong></li>
+	<li><code>Feature A'</code> (*) is created from <strong>Feature A</strong></li>
+</ul>
+<p>(*) by 
+	convention, in this article, <code>&nbsp;X'</code> means an instance of
+	<code>X</code>, <code>X&quot;</code> and instance of <code>&nbsp;X'</code> 
+and so one. </p>
+<p>When a feature is created from another one, the latter is named the<strong> 
+Reference</strong> feature. <code>Feature A</code> is the reference of <code>Feature A', 
+</code>but there is no Reference feature for <code>Feature A.</code> </p>
+<p><strong>About API</strong></p>
+<p>The<strong> </strong>instantiation methods are available on the <em>CATFmStartUpFacade</em> 
+class for a StartUp's instantiation, and on the <em>CATFmFeatureFacade</em> 
+class for a feature's instantiation. Since an initial introduction to these APIs 
+is required, their names are unveiled in the next section only. Nevertheless, we can 
+already say whatever the API, the newly created feature is returned as a <em>
+CATFmFeatureFacade</em> class instance.</p>
+<p>The reference feature can be retrieved thanks to the <code>GetReference </code> 
+method of the <em>CATFmFeatureFacade </em>
+class. This method returns the feature as a <em>CATFmAttributeValue </em>class. </p>
+<p>The StartUp of any feature can be retrieved thanks to the <code>GetStartUpFacade</code> 
+method of the <em>CATFmFeatureFacade.</em> It returns the StartUp as a <em>CATFmStartUpFacade
+</em>class. It returns the StartUp used to directly instantiate the feature (<code>StartUpA </code>for<code> Feature A)</code>, like the initial StartUp 
+for a recursive 
+instantiation. (<code>StartUpA</code> for <code>Feature A'</code>).</p>
+<p>Have a look to the use case &quot;Working with Feature Facade&quot; [<a href="#References"><span >3</span></a>]<em>
+</em>for more implementation details.</p>
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="StandAlone or Aggregated"></a>Stand-Alone or Aggregated</h3>
+<p>First reminder. A feature is either stand-alone (pointed or not), or 
+aggregated under another feature. The concept of 
+aggregation is dealt in the technical article [<a href="#References"><span class="style1">4</span></a>]. [<a href="#Fig2">Fig.2</a>], 
+just below, shows Feature B aggregated by feature A through the component attribute
+<code>Attr1</code> of feature A.</p>
+<table style="width: 329px">
+	<caption><a name="Fig2"></a>Fig. 2 Aggregation using Component Attribute</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureLC_Fig2.gif"></td>
+	</tr>
+</table>
+<p>To create a feature, the first method is <code>InstantiateIn. </code>It is available on the <em>
+CATFmFeatureFacade</em> class (for a creation from a <strong>feature</strong>), and 
+on the <em>
+CATFmStartUpFacade</em> class (for a creation from a <strong>StartUp</strong>). This method creates a 
+new feature as a stand-alone one.</p>
+<p>If the new feature must be aggregated (<code>feature B</code> of [<a href="#Fig2">Fig.2</a>] 
+for example), 
+you can use this API, but you will have to do the aggregation in a second step. </p>
+<p>We propose another method, <code>InstantiateUnder</code>, also 
+available on the two façade classes ( <em>CATFmFeatureFacade</em>, <em>
+CATFmStartUpFacade</em> ). This method creates the new feature, also do the aggregation. This method requires as input the aggregating feature (<strong><code>feature A</code></strong>) and its 
+component attribute (<code>attr1</code>) realizing the aggregation.</p>
+<p>This method which does both the creation and aggregation simultaneously 
+reduces lines of code. Indeed, this method is a concatenation of several calls:</p>
+<ul>
+	<li>Creation of a stand-alone new feature</li>
+	<li>Creation of a <em>CATFmAttributeValue</em> equivalent of the new feature</li>
+	<li>Valuating the component attribute of the aggregating feature with the 
+	<em>CATFmAttributeValue</em> equivalent of the new feature B, the one 
+	aggregated.&nbsp; </li>
+</ul>
+<p>To finish, a last word about the <code>InstantiateUnder</code> method. When the attribute is 
+a list of component, the newly created feature is inserted at the end of list.<br>
+</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Stored in Container"></a>Stored in Container</h3>
+<p>A feature is stored, or saved, in a container. Let us present this.</p>
+<table>
+	<caption><a name="Fig. 3"></a>Fig. 3 Container, the Persistency Structure</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatureLC_Fig3.gif"></td>
+	</tr>
+</table>
+<p>A container is part of a streamed entity aggregated by a <strong>PLM Representation 
+Reference </strong>(<strong>Rep Ref</strong>), as depicted by [<a href="#Fig. 3">Fig.3</a>] above. A container is an 
+object modeler base (<strong>OMB</strong>) structure, so it can contain features 
+as any kind object implementing a protocol recognizable by OMB. But in CAA 
+context, you only handle container for features. According to the Rep Ref, containers in the streamed structure can be 
+DS containers, or and CAA containers. We recommend users to study the article &#8220;<strong>Understanding 
+Applicative Container</strong>&#8221; [<a href="#References"><span class="style1">5</span></a>] to gain a better 
+insight on concepts of a container, on the way to retrieve or create one, and where to store your feature according to 
+type of application.</p>
+<p><strong>Note:</strong> As of now, the Applicative Container creation part is 
+different in V5 and V6. Since the container creation and handling part is 
+different, V6 Applicative container concepts are not documented in V5 
+encyclopedia. The part exposed in V5 is <em>CATFmContainerServices</em> and <em>
+CATFmContainerFacade </em>classes.</p>
+<p><strong>About the API</strong></p>
+<p>Just a word about the container access- in the Feature modeler context, a 
+container is handled through a <em>CATFmContainerFacade</em> class, since its 
+access is also secured by credential [<a href="#References">2</a>]. In Feature 
+modeler, there is no API to freely handle a container, but you can have DS 
+application/ DS modeler API to handle&nbsp; their respective containers.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="About Aggregated feats"></a>About Aggregated Features</h3>
+<p>The case of the aggregated features is interesting for many reasons detailed 
+in this section.</p>
+<h4>
+<a name="Lifecycle"><strong></strong></a><strong>Life Cycle</strong></h4>
+<p>Once a feature is aggregated, it cannot be aggregated by another one 
+	(methods doing the aggregation do the check). Nevertheless, once aggregated, 
+	a feature can always be &#8220;<strong>detached</strong>&#8221;, and thus become 
+<strong>stand-alone</strong> again. (<code>DetachComponent</code> method of the 
+<em>CATFmFeatureFacade</em> class)<p>
+	The lifecycle of an aggregated feature is governed by the feature that 
+	aggregates it. In other words, an aggregated feature lasts only as long as 
+	the feature that aggregates it. This will be shown in the 
+	<a href="#Feat deletion">delete</a> section 
+	hereafter</p>
+	<script type="text/javascript">insertLinkToTop();</script>
+	
+<a name="Parent root parent"><strong></strong></a>
+<h4><strong>Parent/ Root Parent</strong></h4>
+<p>We refer to an aggregating feature as a <strong>Parent</strong> of the 
+feature that it directly aggregates. The <strong>root parent</strong> is the last feature without 
+a parent feature itself following a bottom up approach on the parent's 
+hierarchy. The two terms are better understood, by studying the picture that follows:</p>
+<table>
+	<caption class="style18"><a name="Fig.4"></a>Fig. 4 </caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureLC_Fig4.gif" width="302" height="160"></td>
+	</tr>
+</table>
+	<p>Feature <code>A</code> is the &#8220;<strong>root parent</strong>&#8221; of 
+	<code>B</code> and <code>C</code>. Feature <code>B</code> is the &#8220;<strong>Parent</strong>&#8221; of Feature
+	<code>C</code>, and Feature <code>A</code> is the &#8220;<strong>Parent</strong>&#8221; (and 
+	<strong>root</strong>) of Feature <code>B</code>.&nbsp; </p>
+<p>
+	<strong>
+<b>About API</b></strong> </p>
+<p>
+	The <code>GetParentFeature()</code> method of the 
+<em>CATFmFeatureFacade</em> class, returns the parent of a feature. The <code>GetRootParentFeature()</code> 
+method of the same class, returns the root parent of a feature</p>
+<h4>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<a name="Instantiation"><strong></strong></a><strong>Instantiation</strong></h4>
+<p>When a feature (or a StartUp) is instantiated all its component attributes 
+with a value are instantiated also.</p>
+<table>
+	<caption class="style18"><a name="Fig.5"></a>Fig. 5 Component Instantiation</caption>
+
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatureLC_Fig5.gif" width="620" height="126"></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<ul>
+	<li>(<strong>1</strong>): The startUp <code>SUA</code> has three components, one is valuated with a 
+	default feature (<code>Attr3=FeatU</code>), one is a list (<code>Attr2</code>), and one a simple value 
+	(<code>Attr1</code>)</li>
+	<li>(<strong>2</strong>): For feature <code>A</code>, created from SUA, you can see that 
+	its <code>Attr3 </code>value 
+	is <code>FeatU</code>', an instance of <code>FeatU</code>.</li>
+	<li>(<strong>3</strong>): For feature <code>A&#8217;</code>, created from feature
+	<code>A</code> , you can see that its Attr3 
+	value is <code>FeatU&#8217;&#8217;</code>, and instance of <code>FeatU</code>'.</li>
+	<li>(<strong>4</strong>): Feature <code>A&#8217;</code> is modified. Its 
+	attribute <code>Attr1 </code>contains a feature (<code>FeatB</code>), and 
+	its attribute <code>Attr2 </code>is now a list with feature <code>FeatC</code></li>
+	<li>(<strong>5</strong>): For feature <code>A&#8217;&#8217;</code>, created from feature&nbsp; <code>A&#8217;</code>, 
+	you can see that&nbsp; <code>Attr3 </code>value is 
+	<code>FeatU&#8217;&#8217;&#8217;</code> an<strong> </strong>instance of <code>FeatU&#8217;&#8217;</code>, and for the 
+	other attributes you have new values coming from the instantiation of the 
+	respective value on the reference.<br>
+	</li>
+</ul>
+<p>This process of component instantiation is recursive, and due to the fact that an aggregated feature cannot have two parents. 
+[<a href="#References">8</a>]</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="Feat deletion"></a>Feature Deletion</h2>
+<p>This second chapter describes the methods to delete a feature, and the impact 
+of this deletion.</p>
+
+<h3><a name="How to delete a feature"></a>How to Delete a Feature?</h3>
+<p>The basic method to delete a feature is the <code>DeleteSelf</code> method of the <em>
+CATFmFeatureFacade. </em>This method requires that you are owner of the StartUp 
+defining the feature to delete, but that you be the owner of the StartUp of 
+the feature aggregating it, when the feature to delete is aggregated. </p>
+<ul>
+	<li>For some DS feature the <code>Delete</code> method is based on the Cut, 
+	Copy and Paste protocols </li>
+</ul>
+<p>Another kind of call can imply a feature deletion, it is <code>RemovePosition</code> or 
+<code>SetValue</code>(NULL) (<em>CATFmFeatureFacade class) </em>on an component 
+attribute. The aggregated feature attached with the component link, will be deleted by such 
+calls while it is not the case for a specobject link. We have fully developed 
+this in 
+another article about link&#8217;s attribute [<a href="#References"><span class="style1">6</span></a>].</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h3><a name="Impact of feat deletion"></a>What does a Feature Deletion&nbsp;Imply?</h3>
+<p>When a feature is deleted by the Feature Modeler engine (whatever the order of 
+deletion provided), what are the consequences for:</p>
+<ul>
+	<li><a href="#Impact on itself">Itself</a></li>
+	<li><a href="#Impact on the Features pointing to the Deleted Feature">Its Pointing to Features (if exist)</a></li>
+	<li><a href="#Impact on the Feature aggregating the Deleted Feature">Its Aggregating Feature (if exists)</a></li>
+	<li><a href="#Impact on Features Instantiated from Deleted Features">Its Instantiated Features (if exists)</a></li>
+</ul>
+<h4>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<strong><a name="Impact on itself"></a>Impact on itself</strong></h4>
+<p>The feature is destroyed from its container. Its deletion implies 
+its own destruction, as the destruction of all its aggregated features, and all its extensions, 
+and those recursively. Only, the features/objects that it points to are not impacted. We 
+illustrate this with the schema that follows:</p>
+<table>
+	<caption><a name="Fig.6"></a>Fig. 6 Data Model Before/After Deletion</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatLC_Fig6.jpg" width="510" height="279"></td>
+	</tr>
+</table>
+
+<p>The feature to delete is named &#8220;<strong>FeatureToDelete</strong>&#8221;. This 
+feature aggregates and points to some other features. Its deletion implies:</p>
+<ul>
+	<li>&nbsp;The feature A, B are still alive since they are just pointed to by 
+	the feature to delete ( attr1)</li>
+	<li>&nbsp;The feature G, aggregated by B, is alive, because its aggregating 
+	feature (B) is not impacted</li>
+	<li>&nbsp;The external object is still alive &#8211; (attr2)</li>
+	<li>&nbsp;The Feature E, C, D are deleted because they are aggregated by the 
+	feature to delete (attr3, attr4)</li>
+	<li>&nbsp;The feature H is deleted too, because even if it is pointed by the 
+	feature to delete (by attr5), it is also aggregated by the feature to delete 
+	(attr 4)</li>
+	<li>&nbsp;The feature F , aggregated by C is deleted, because feature C is 
+	deleted (recursive process)</li>
+	<li>&nbsp;The extension of the feature to delete are deleted, like the one 
+	of its deleted features ( feature C, and Feature F). But the extensions of 
+	feature A, a feature still alive, are alive too</li>
+</ul>
+
+
+<p>This description is the default behavior of a feature&#8217;s deletion. This 
+	behavior can nevertheless be customized as explained in another article [<a href="#References"><span class="style1">1</span><span class="style2">2</span></a>]. </p>
+<p><strong>Note</strong>: When the feature modeler is deleting a feature, the 
+credentials are not checked. The deletion of the aggregated/extensions feature does 
+not check the credential.&nbsp; </p>
+<h4>
+
+
+<script type="text/javascript">insertLinkToTop();</script>
+
+
+<strong><a name="Impact on the Features pointing to the Deleted Feature"></a>Impact 
+On Pointing to Features</strong></h4>
+<p>When the feature modeler is deleting a feature pointed by other ones, what are 
+the impacts for these features.</p>
+<p>The next 
+picture [<a href="#References">Fig.7</a>] displays the two kinds of attributes 
+which can point to a feature: a <strong>specobject</strong> and a <strong>list 
+of specobject</strong>. Both cases are interesting to consider.</p>
+<table>
+	<caption><a name="Fig.7"></a>Fig. 7 Pointing Features</caption>
+	<tr>
+		<td>
+		<img src="images/CAAFmExtTaFeatLC_Fig7.gif" width="289" height="110"></td>
+	</tr>
+</table>
+<p><code>Feature A</code> points to the feature to delete through <code>attr2</code> a simple attribute, and 
+<code>Feature B</code> points to the 
+same feature through <code>attr1</code> a list of features.</p>
+<p>If the feature to delete is pointed to by other features, the value of their 
+attribute is:</p>
+<ul>
+	<li>&nbsp;For a single attribute (<code>attr2</code>) : a NULL value </li>
+	<li>&nbsp;For a list (<code>attr1</code>): 
+	<ul>
+		<li>The attribute hasn't the array facet, the list is reduced by one 
+	element</li>
+		<li>The attribute has the array facet,&nbsp; a NULL value is replaced in 
+		place of the deleted feature.&nbsp; </li>
+	</ul>
+	</li>
+</ul>
+<p>
+
+It is suggested that you have a look at the referenced article about link&#8217;s attribute 
+[<a href="#References">6</a>] for a deeper understanding of the topic.</p>
+<h4>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<strong><a name="Impact on the Feature aggregating the Deleted Feature"></a>Impact 
+On the Aggregating Feature</strong></h4>
+<p>When feature modeler is deleting a feature aggregated by another one, what 
+are the impacts for the parent feature?</p>
+<table>
+	<caption><a name="Fig.8"></a>Fig.8 Aggregating Feature</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatLC_Fig8.gif"></td>
+	</tr>
+</table>
+<p>First you must be aware that conversely to a pointed feature, an aggregated 
+feature cannot be deleted if its aggregating feature is not in session.</p>
+<p>But otherwise the behavior is the same as for a spec-object attribute 
+link. When an aggregated feature is deleted, the value of attribute aggregating 
+the deleted feature becomes :</p>
+<ul>
+	 
+	<li>For a single attribute : a NULL value </li>
+	<li>For a list : </li>
+	<li>
+	<ul>
+		<li>The attribute hasn't the array facet, the list is reduced from one 
+	element</li>
+		<li>The attribute has the array facet,&nbsp; a NULL value is replaced in 
+		place of the deleted feature.&nbsp; </li>
+	</ul>
+	</li>
+</ul>
+
+<p>It is suggested that you have a look at the referenced article about link&#8217;s attribute [<a href="#References"><span class="style1">6</span></a>] 
+for a deeper understanding of the topic.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h4><a name="Impact on Features Instantiated from Deleted Features"></a>Impact on Instantiated 
+Features</h4>
+
+<p>When feature modeler is deleting a feature used as reference for another 
+ones, what are the impacts for on these features. <table>
+	<caption><a name="Fig.9"></a>Fig.9 Reference Feature Deletion</caption>
+	<tr>
+		<td><img src="images/CAAFmExtTaFeatLC_Fig9.gif"></td>
+	</tr>
+</table>
+
+<p>In this situation, the data model can be corrupted. For example, if 
+the value of an attribute of an instantiated feature had to be read from its 
+reference (inherited mode), the algorithm to retrieve the value will fail. </p>
+<script type="text/javascript">insertLinkToTop();</script>
+
+<h2><a name="InShort"></a>In Short</h2>
+<p>We encourage the reader to pursue with the use cases &#8220;<strong>Instantiating 
+Features</strong>&#8221; [<a href="#References"><span class="style1">9</span></a>], and &#8220;<strong>Deleting 
+Features</strong>&#8221; [<a href="#References"><span class="style1">10</span></a>]. 
+With these two use cases, and the use case &#8220;<strong>Working with Feature Façade</strong>&#8221; 
+[<a href="#References">3</a>], you will have a good understanding of the APIs 
+involved in this article.</p>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="References"></a>References</h2>
+<table class="reference">
+	<tr>
+		<td>[1]</td>
+		<td >
+		<a href="../CAAOsmTechArticles/CAAOsmTaModelingStartUps.htm">Modeling StartUps</a></td>
+	</tr>
+	<tr>
+		<td>[2]</td>
+		<td ><a href="CAAV5V6FmExtTaUnderstandingCredentials.htm">Understanding Credentials</a></td>
+	</tr>
+	<tr>
+		<td>[3]</td>
+		<td >
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcWorkingWithFeatureFacade.htm">Working with Feature Facade</a></td>
+	</tr>
+	<tr>
+		<td>[4]</td>
+		<td><a href="CAAV5V6FmExtTaLinkingFeatures.htm">Understanding Link 
+		Attributes - 1</a></td>
+	</tr>
+	<tr>
+		<td>[5]</td>
+		<td>
+		<a href="../CAAOsmTechArticles/CAAOsmTaApplicativeContainer.htm">Understanding 
+		Applicative Containers</a></td>
+	</tr>
+	<tr>
+		<td>[6]</td>
+		<td ><a href="CAAV5V6FmExtTaLinkingFeatures2.htm">Understanding Link Attribute - 
+		2</a></td>
+	</tr>
+	<tr>
+		<td>[8]</td>
+		<td ><a href="CAAV5V6FmExtTaFeatureAttribute.htm">Understanding Feature Attribute</a></td>
+	</tr>
+
+	<tr>
+		<td>[9]</td>
+		<td >
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcInstantiation.htm">Instantiating 
+		Features</a></td>
+	</tr>
+	<tr>
+		<td>[10]</td>
+		<td>
+		<a href="../CAAV5V6FmExtUseCases/CAAV5V6FmExtUcFeatDeletion.htm">Deleting Features</a></td>
+	</tr>
+	
+	</table>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<h2><a name="History"></a>History</h2>
+<table class="history">
+	<tr>
+		<td>Version: <strong>1</strong> [Aug 2012]</td>
+		<td>Document created</td>
+	</tr>
+</table>
+<script type="text/javascript">insertLinkToTop();</script>
+<!-- -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-comment-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script type="text/javascript">insertCopyright();</script>
+
+
+</body>
+
+</html>

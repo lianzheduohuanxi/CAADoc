@@ -1,0 +1,278 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+<title>The Affected Objects Interface</title>
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>Lifecycle Applications</h1>
+    </td>
+    <td valign="top">
+      <h2>Engineering Change Management</h2>
+    </td>
+    <td rowspan="2" align="right" valign="top">
+      <h3><a name="Top"></a>The Affected Objects Interface</h3>
+      <em>Adding and Removing Affected Objects</em></td>
+  </tr>
+  <tr>
+    <td class="use" colspan="2">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article shows how to use the ENOVICWAffectedObjects interface of
+      the ENOVInterfaces framework to add and remove an existing object as an
+      Affected Object for a Change Management object, i.e., Action, Engineering
+      Change Order, or Engineering Change Request.</p>
+      <ul>
+        <li><a href="#Learn"><strong>What You Will Learn With This Use Case</strong></a></li>
+        <li><a href="#UseCase"><strong>The CAAEviAffectedObjects Use Case</strong></a></li>
+        <ul>
+          <li><a href="#What">What Does CAAEviAffectedObjects Do?</a></li>
+          <li><a href="#How">How to Launch CAAEviAffectedObjects</a></li>
+          <li><a href="#Where">Where to Find the CAAEviAffectedObjects Code</a></li>
+        </ul>
+        <li><a href="#Step"><strong>Step-by-Step</strong></a></li>
+        <li><a href="#InShort"><strong>In Short</strong></a></li>
+        <li><a href="#References"><strong>References</strong></a></li>
+      </ul>
+      </td>
+      </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you how to add an existing object, in this
+case a part version, to an existing Engineering Change Order as an affected
+object. You will then see how to remove the affected object from the ECO. This
+example uses an ECO but the technique is the same for Actions, and Engineering
+Change Requests. You would use this operation if for example you would like to
+direct the modification of a certain part version. The part version is attached
+to the ECO as an affected object and the ECO controls the modification of the
+part. The ECO cannot be released until the work on the part is completed. Other
+affected objects include documents and tables of content. The ENOVInterfaces
+framework contains the interface ENOVICWAffectedObjects which allows you to
+directly add and remove affected objects for Change Management objects.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="UseCase"></a>The CAAEviAffectedObjects Use Case</h3>
+<p>CAAEviAffectedObjects is a use case of the CAAENOVInterfaces.edu framework
+that illustrates how you use the ENOVICWAffectedObjects interface to add and
+remove an affected object for to an existing Change Management object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="What"></a>What Does CAAEviAffectedObjects Do?</h4>
+<p>CAAEviAffectedObjects begins by opening a VPM session and creating a login a
+session. Then the Eco Manager is retrieved. To set up the demonstration, an ECO
+is created with the necessary parameters as well as a part version. For more
+information on how to create an ECO, refer to use case CAAEviEcoManager and
+refer to CAAEviActionManager to see how Actions and ECRs are created. After the
+necessary objects are created, the subject interface is used to add the part
+version to the ECO as an affected object and subsequently remove it.
+<p>The ENOVInterfaces interface/methods shown here are:</p>
+<ul>
+  <li><b>ENOVICWAffectedObjects.h - AddAffectedObject</b></li>
+  <li><b>ENOVICWAffectedObjects.h - RemoveAffectedObject</b></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAEviAffectedObjects</h4>
+
+<p>To launch CAAEviAffectedObjects, you will need to set up the build time
+environment, then compile CAAEviAffectedObjects.cpp along with its prerequisites,
+set up the run time environment, and then execute the use case [<a href="#References">1</a>]. The required
+interfaces can be found in the ENOVInterfaces, VPMInterfaces, VPMPersistency,
+System, and VPMTpManager frameworks.</p>
+<p>When the use case is built and the run time environment set, from the directory where the executable file is stored, 
+type the following to execute the use case:</p>
+<p><code>CAAEviAffectedObjects EnoviaUserLoginId EnoviaUserPasswd Role</code></p>
+<p>Where:</p>
+<ul>
+	<li><code>CAAEviAffectedObjects</code> is the use case executable name.</li>
+	<li><code>EnoviaUserLoginId</code> is the login identifier of the 
+		ENOVIA user you intend use to run the use case.</li>
+	<li><code>EnoviaUserPasswd</code> is the password of this user.</li>
+	<li><code>Role</code> is the role of this user, such as 
+		VPMADMIN.ADMIN.DEFAULT.</li>
+</ul>
+
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Where"></a>Where to Find the CAAEviAffectedObjects Code</h4>
+<p>The CAAEviAffectedObjects use case is made of a single file located in the
+CAAEviAffectedObjects.m module of the CAAENOVInterfaces.edu framework:</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><code>InstallRootDirectory\CAAENOVInterfaces.edu\CAAEviAffectedObjects.m\</code></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><code>InstallRootDirectory/CAAENOVInterfaces.edu/CAAEviAffectedObjects.m/</code></td>
+  </tr>
+</table>
+<p>where <code>InstallRootDirectory</code> is the directory where the CAA CD-ROM
+is installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>For demonstration purposes, the code from the CAAEviAffectedObjects use case
+is shown here. After the preliminary set up of creating the ECO and part
+version, there are two logical steps:</p>
+<ul>
+  <li><a href="#Step1">Add affected object to an ECO</a></li>
+  <li><a href="#Step2">Remove affected object from ECO</a></li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<!---------------------------------comment------------------------------------->
+
+<h4><a name="Step1"></a>Add affected object to an ECO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWAffectedObjects.h&quot;
+    #include &quot;CATIVpmAFLAffectedObject.h&quot;
+    #include &quot;CATUnicodeString.h&quot;
+    </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements give access to the interfaces demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Add a Part Version as an Affected Object to ECO
+  
+    CATUnicodeString AOType(&quot;ENOVIA_CMAFFECTED_OBJECT&quot;);
+    CATIVpmAFLAffectedObject_var AffObj = NULL_var;
+    ENOVICWAffectedObjects_var spAffObj(Eco);
+        
+    rc = spAffObj-&gt;AddAffectedObject(partVersion, 
+    				    AOType,
+    				    AffObj);
+    
+    if (AffObj==NULL_var||rc!=S_OK)
+    {
+    	cout &lt;&lt; &quot;Failed to Add Affected Object.&quot; &lt;&lt; endl;    
+    	VPMSession::CloseSession();
+    	return 7;
+    }
+
+    cout &lt;&lt; &quot;Added Affected Object succesfully.&quot; &lt;&lt; endl;    
+      </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>After the VPM session is opened, and the ECO and part version created, you
+    can use the ENOVICWAffectedObjects interface to add the affected object to
+    the ECO.</li>
+  <li>First, the ECO object, <b>Eco</b>, is cast as a ENOVICWAffectedObject type
+    - <b>spAffObj</b>.</li>
+  <li>With the type <b>AOType</b> set as &quot;ENOVIA_CMAFFECTED_OBJECT&quot;, <b>spAffObj</b>
+    calls method <b>AddAffectedObject</b>.</li>
+  <li>The method returns S_OK if successful and the affected object <b>AffObj</b>
+    is created.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<h4><a name="Step2"></a>Remove affected object from ECO</h4>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+    #include &quot;ENOVICWAffectedObjects.h&quot;
+    #include &quot;CATIVpmAFLAffectedObject.h&quot;
+        </pre>
+    </td>
+  </tr>
+</table>
+<p>These include statements gives access to the operations demonstrated here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>
+//--- Remove Affected Object from ECO
+  
+    rc = spAffObj-&gt;RemoveAffectedObject(AffObj);
+    
+    if (!SUCCEEDED(rc))
+    {
+    	cout &lt;&lt; &quot;ERROR in Removing Affected Object.&quot; &lt;&lt; endl &lt;&lt; flush;    
+    	VPMSession::CloseSession();
+    	return 8;
+    }
+
+    cout &lt;&lt; &quot;Removed Affected Object succesfully.&quot; &lt;&lt; endl &lt;&lt; flush;  
+      </pre>
+    </td>
+  </tr>
+</table>
+<ol>
+  <li>With the ECO object cast as a ENOVICWAffectedObject type - <b>spAffObj</b>,
+    a call is made to method <b>RemoveAffectedObject</b> with the the affected
+    object, <b>AffObj</b>, as a parameter.</li>
+  <li>The method returns S_OK if successful and the affected object <b>AffObj</b>
+    is removed from the ECO.</li>
+</ol>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>Use the ENOVICWAffectedObjects interface available in the ENOVInterfaces
+framework to add and remove an existing object as an affected object for a
+Change Management object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <strong>1</strong> [Feb 2002]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td valign="top" align="right" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 1994-2002, Dassault Systèmes. All rights reserved.</i></p>
+
+</body>
+
+</html>

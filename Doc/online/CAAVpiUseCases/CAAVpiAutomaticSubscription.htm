@@ -1,0 +1,671 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Subscribing Automatically to Events</title>
+<link rel="Stylesheet" type="text/css" href="../CAADocStyleSheets/caav5.css">
+</head>
+
+<body>
+
+<table width="100%">
+  <tr>
+    <td valign="top">
+      <h1>3D PLM Enterprise Architecture</h1>
+    </td>
+    <td valign="top">
+      <h2>Middleware Abstraction - ENOVIA Event Model</h2>
+    </td>
+    <td align="right" valign="top" rowspan="2">
+      <h3><a name="Top"></a>Subscribing Automatically to Events</h3>
+      <i>Working with events and subscribers</i></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="use">Use Case</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<table class="abstract">
+  <tr>
+    <td>
+      <h3>Abstract</h3>
+      <p>This article discusses the CAAVpiAutomaticSubscription use case. This
+      use case explains how to subscribe automatically to events at the opening
+      of the Login Session, via the ENOVIEventPlugin interface, taking the
+      example of events fired by the File Manager object described in the
+      CAAVpiPublishEvents use case.</p>
+      <ul>
+        <li><b><a href="#Learn">What You Will Learn With This Use Case</a></b></li>
+        <li><b><a href="#UseCase">The CAAVpiAutomaticSubscription Use Case</a></b></li>
+        <ul>
+          <li><a href="#What">What Does CAAVpiAutomaticSubscription Do</a></li>
+          <li><a href="#How">How to Launch CAAVpiAutomaticSubscription</a></li>
+          <li><a href="#Where">Where to Find the CAAVpiAutomaticSubscription
+            Code</a></li>
+        </ul>
+        <li><b><a href="#Step">Step-by-Step</a></b></li>
+        <li><b><a href="#InShort">In Short</a></b></li>
+        <li><b><a href="#References">References</a></b></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="Learn"></a>What You Will Learn With This Use Case</h3>
+<p>This use case is intended to show you one of the two ways that can be used to
+automatically subscribe to events and how to implement the dedicated callback
+interfaces to handle these events when they are raised. The second way is
+illustrated in the CAAVpiPackageSubscription use case.
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="UseCase"></a>The CAAVpiAutomaticSubscription Use Case</h3>
+<p>CAAVpiAutomaticSubscription is a use case of the CAAVPMInterfaces.edu
+framework that illustrates VPMInterfaces framework capabilities.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="What"></a>What Does CAAVpiAutomaticSubscription Do</h4>
+<p>The CAAVpiAutomaticSubscription use case processes to a subscription at the
+opening of the Login Session through a dedicated plug-in functionality, then
+raises the events that have been subscribed to, and finally calls the
+corresponding subscribers back. The events that are subscribed to in this sample
+are fired by the File Manager object of the CAAVpiPublishEvents use case.</p>
+<p>The CAAVpiAutomaticSubscription use case is related to the
+CAAVpiEventObjects.m module where the following classes are defined:</p>
+<ul>
+  <li>CAAVpiFileManager: the object that raises the events</li>
+  <li>CAAVpiFileManagerListener: the object that implements the associated
+    callback interface, i.e. CAAIVpiFMEventCallBacks, which is called whenever
+    any corresponding event is raised</li>
+  <li>CAAVpiPlugin: the object implementing the ENOVIEventPlugin interface</li>
+  <li>CAAVpiPluginListener: the object that actually does the subscription to
+    the File Manager events, just after the creation of the Login Session</li>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="How"></a>How to Launch CAAVpiAutomaticSubscription</h4>
+<p>To launch CAAVpiAutomaticSubscription, you will need to set up the build time
+environment, then to compile CAAVpiAutomaticSubscription along with its
+prerequisites, to set up the run time environment, and then to execute the use
+case [<a href="#References">1</a>].</p>
+Launch the use case as follows:
+<ul>
+  <li>With Windows</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>e:&gt;CAAVpiAutomaticSubscription</pre>
+      </td>
+    </tr>
+  </table>
+  <li>With UNIX</li>
+  <table class="code">
+    <tr>
+      <td>
+        <pre>$ CAAVpiAutomaticSubscription</pre>
+      </td>
+    </tr>
+  </table>
+</ul>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Where"></a>Where to Find the CAAVpiAutomaticSubscription Code</h4>
+<p>The CAAVpiAutomaticSubscription use case is made of a main named
+CAAVpiAutomaticSubscription.cpp located in the CAAVpiAutomaticSubscription.m
+module and three classes named CAAVpiFileManagerListener, CAAVpiPlugin, and
+CAAVpiPluginListener located in the CAAVpiEventObjects.m module of the
+CAAVPMInterfaces.edu framework.</p>
+<table>
+  <tr>
+    <td>Windows</td>
+    <td><tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiAutomaticSubscription.m\(main)</tt><br>
+      <tt>InstallRootDirectory\CAAVPMInterfaces.edu\CAAVpiEventObjects.m\(plugin+listeners
+      classes)</tt></td>
+  </tr>
+  <tr>
+    <td>Unix</td>
+    <td><tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiAutomaticSubscription.m/(main)</tt><br>
+      <tt>InstallRootDirectory/CAAVPMInterfaces.edu/CAAVpiEventObjects.m/(plugin+listeners
+      classes)</tt></td>
+  </tr>
+</table>
+<p>where <tt>InstallRootDirectory</tt> is the directory where the CAA CD-ROM is
+installed.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="Step"></a>Step-by-Step</h3>
+<p>We can divide this use case in two distinct main parts:</p>
+<ol>
+  <li>Implementation of the classes CAAVpiFileManagerListener, CAAVpiPlugin, and
+    CAAVpiPluginListener</li>
+  <li>Implementation of the main CAAVpiAutomaticSubscription.cpp</li>
+</ol>
+<p>There are seven steps in the first part of the CAAVpiAutomaticSubscription
+Use Case:</p>
+<ol>
+  <li><a href="#CBImpl">Implement CAAIVpiFMEventCallbacks</a></li>
+  <li><a href="#PluginImpl">Implement ENOVIEventPlugin</a></li>
+  <li><a href="#GetSession">Get the current Login Session</a></li>
+  <li><a href="#EventMgr">Get the Event Manager</a></li>
+  <li><a href="#CreateSubscriber">Create an instance of
+    CAAVpiFileManagerListener class</a></li>
+  <li><a href="#Subscribe">Subscribe to the events raised by instances of
+    FileManager type</a></li>
+  <li><a href="#Resource">Create a resource file to declare the plug-in</a></li>
+</ol>
+<p>There are five main steps in the second part of the
+CAAVpiAutomaticSubscription Use Case:</p>
+<ol>
+  <li><a href="#CreateSession">Create a Session</a></li>
+  <li><a href="#CreateLoginSession">Create a Login Session</a></li>
+  <li><a href="#CreatePublisher">Create a publisher instance of class
+    FileManager</a></li>
+  <li><a href="#FireEvent">Raise some FileManager events</a></li>
+  <li><a href="#CloseSession">Close the Sessions</a></li>
+</ol>
+<p>We will now comment each of these sections in detail.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CBImpl"></a>Implement CAAIVpiFMEventCallbacks</h4>
+<p>The CAAVpiFileManagerListener class is an <b>early</b> subscriber that
+implements the specific callback interface provided by the publisher of the
+events of interest. For this use case, we are interested in the events emitted
+by the FileManager. Hence the early Subscriber will implement the
+CAAIVpiFMEventCallbacks interface.</p>
+<p>Our implementation of this interface follows the CAA Object Modeler rules
+applied to all interface implementations.</p>
+<p>Here is a sample of the important steps.</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+// Object modeler declarations
+CATImplementClass( CAAVpiFileManagerListener, Implementation, CATBaseUnknown, CATNull );
+#include &quot;TIE_CAAIVpiFMEventCallBacks.h&quot;
+TIE_CAAIVpiFMEventCallBacks( CAAVpiFileManagerListener );
+
+// Actual implementation
+HRESULT CAAVpiFileManagerListener::onKo( const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode )
+{
+	//code...
+}
+HRESULT CAAVpiFileManagerListener::onBeforeCAACreateFile( const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode )
+{
+	//code...
+}
+HRESULT CAAVpiFileManagerListener::onAfterCAACreateFile( const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode )
+{
+	//code...
+}
+
+// Idem for Move and Delete File events...
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To finalize the implementation of the callback interface, we do not forget to
+complete the object modeler dictionary properly by adding the line:<br>
+<tt>CAAVpiFileManagerListener CAAIVpiFMEventCallBacks libCAAVpiEventObjects</tt><br>
+to the file CAAVPMInterfaces.edu.dic located in the directory
+CAAVPMInterfaces.edu/CNext/code/dictionary.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="PluginImpl"></a>Implement ENOVIEventPlugin</h4>
+<p>In this use case, the automatic subscription is made through a plug-in
+functionality. To turn this functionality on, the class CAAVpiPlugin will
+implement the ENOVIEventPlugin interface which declares a unique method : Init.</p>
+<p>The whole mechanism is as follows:</p>
+<ul>
+  <li>during the creation of the Login Session, each implementation of the
+    ENOVIEventPlugin interface is called on the method Init</li>
+  <li>in this method, the code performs a subscription to the event
+    CreateLoginSession step After</li>
+  <li>the class subscribing to the event CreateLoginSession step After has to
+    derive from the adapter class ENOVPackageListener and to implement the
+    method onAfterCreateLoginSession of ENOVISessionEvent</li>
+  <li>in this callback method, the code finally performs all other necessary
+    subscriptions</li>
+</ul>
+<p>Notes:</p>
+<ol>
+  <li>in the Init method, the only allowed code is the subscription to the event
+    CreateLoginSession step After</li>
+  <li>the class that implements onAfterCreateLoginSession can be the same that
+    the class implementing Init; for clarity purpose, we will have two distinct
+    classes in the present use case</li>
+  <li>this two-phase mechanism ensures that the subscriptions occur when the
+    Login Session context is in a coherent state; this is not the case in the
+    body of the Init method</li>
+</ol>
+<p>Now comes the sample code that implements ENOVIEventPlugin according to this
+rules:</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+// Object modeler declarations
+CATImplementClass( CAAVpiPlugin, DataExtension, CATBaseUnknown, T_CAAVpiPlugin );
+#include &quot;TIE_ENOVIEventPlugin.h&quot;
+TIE_ENOVIEventPlugin( CAAVpiPlugin );
+
+// Init implementation
+HRESULT CAAVpiPlugin::Init( const ENOVIEventManager_var &amp;spEventManager )
+{
+	// (see source file for details...)
+	// --&gt; 1. Create an instance of CAAVpiPluginListener
+	// --&gt; 2. Check that the listener implements ENOVISessionEvent interface
+	// --&gt; 3. Retrieve a smart pointer on type CATBaseUnknown, required by the Subscribe method
+	// --&gt; 4. Subscribe to the event CreateLoginSession step After (early mode, on type)
+}
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To finalize the implementation of the ENOVIEventPlugin interface, we do not
+forget to complete the object modeler dictionary properly by adding the line:</p>
+<p><tt>T_CAAVpiPlugin ENOVIEventPlugin libCAAVpiEventObjects</tt></p>
+<p>to the file CAAVPMInterfaces.edu.dic located in the directory
+CAAVPMInterfaces.edu/CNext/code/dictionary</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="GetSession"></a>Get the current Login Session</h4>
+<p>After the implementation of the ENOVIEventPlugin interface, we turn on to the
+code responsible of the subscriptions of interest.</p>
+<p>This is done in the class CAAVpiPluginListener, that derives of the adapter
+class ENOVPackageListener and implements ENOVISessionEvent, in the callback
+method onAfterCreateLoginSession.</p>
+<p>The first step in the onAfterCreateLoginSession method is to retrieve the VPM
+Login Session object as in the following code:</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+
+// Object modeler declarations
+CATImplementClass( CAAVpiPluginListener, Implementation, CATBaseUnknown, CATNull );
+#include &quot;TIE_ENOVISessionEvent.h&quot;
+TIE_ENOVISessionEvent( CAAVpiPluginListener );
+
+HRESULT CAAVpiPluginListener::onAfterCreateLoginSession( const ENOVIEvent_var&amp; iRaisedEvent, HRESULT&amp; ioNotifyReturnCode  )
+{
+    HRESULT Rc = S_OK;
+    //
+    // ----------------------------
+    // --&gt; 1. Get the VPM Session
+    // ----------------------------
+    //
+    VPMSession *pSession= VPMSession::OpenSession();
+    if ( NULL == pSession ) 
+    {
+        cout &lt;&lt; &quot;Unable to Get the VPM Session&quot; &lt;&lt; endl;
+        return E_FAIL;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Get VPM Session done &quot; &lt;&lt; endl;
+    //
+    // ------------------------------
+    // --&gt; 1bis. Get the Login Session                                 
+    // ------------------------------
+    //
+    CATIVpmLoginSession_var spLoginSession;
+    Rc = pSession-&gt;GetLoginSession( spLoginSession );
+    if ( FAILED(Rc) || !spLoginSession )
+    {
+	cout &lt;&lt; &quot;Unable to get the Login Session from the Session&quot; &lt;&lt; endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Get Login Session done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>To finalize the implementation of the ENOVISessionEvent interface, we do not
+forget to complete the object modeler dictionary properly by adding the line:</p>
+<p><tt>CAAVpiPluginListener ENOVISessionEvent libCAAVpiEventObjects</tt></p>
+<p>to the file CAAVPMInterfaces.edu.dic located in the directory
+CAAVPMInterfaces.edu/CNext/code/dictionary</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="EventMgr"></a>Get the Event Manager</h4>
+<p>Here is the code to do it.</p>
+<table class="code">
+  <tr>
+    <td width="0">
+      <pre>...
+    //
+    // ------------------------------
+    // --&gt; 2. Get the Event Manager                                   
+    // ------------------------------
+    //
+    ENOVIEventManager_var spEventManager;
+    Rc = spLoginSession-&gt;get_ENOVEventManager( spEventManager );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to get the Event Manager from the Session&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Get Event Manager done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>The Event Manager is used to subscribe to events on object types or
+instances. By implementing appropriate callback interfaces declared by the
+ENOVIA domains (referred to as <i>early</i> subscribing) or a generic callback
+interface named ENOVISubscriberEvent (referred to as <i>late</i> subscribing),
+clients can do some actions when events are raised by a given type or a given
+instance of object.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSubscriber"></a>Create an instance of
+CAAVpiFileManagerListener class</h4>
+<p>In this step as soon as the subscriber is created, a query interface is
+carried out to retrieve the appropriate smart pointers the Subscribe method is
+waiting for.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // -----------------------------------
+    // --&gt; 3. Plugin Subscriber creation
+    // -----------------------------------
+    //
+    CAAVpiFileManagerListener* pCAAVpiFileManagerListener = new CAAVpiFileManagerListener( &quot;FileManager Subscriber&quot; );
+
+    CAAIVpiFMEventCallBacks* piCAAIVpiFMEventCallBacks = NULL;
+    Rc = pCAAVpiFileManagerListener-&gt;QueryInterface( IID_CAAIVpiFMEventCallBacks, (void**)&amp; piCAAIVpiFMEventCallBacks );
+    pCAAVpiFileManagerListener-&gt;Release();
+    pCAAVpiFileManagerListener = NULL;
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to get a CAAIVpiFMEventCallBacks handler on FileManager Subscriber&quot;&lt;&lt;endl;
+	return Rc;
+    }
+
+    CATBaseUnknown_var spPluginSubscriber = piCAAIVpiFMEventCallBacks;
+    piCAAIVpiFMEventCallBacks-&gt;Release();
+    piCAAIVpiFMEventCallBacks = NULL;
+    if ( NULL_var == spPluginSubscriber )
+    {
+	cout&lt;&lt;&quot;Unable to get a CATBaseUnknown handler on FileManager Subscriber&quot;&lt;&lt;endl;
+        return Rc;
+    }
+
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Subscribe"></a>Subscribe to the events raised by instances of
+FileManager type</h4>
+<p>This step is the subscription itself thanks to the Event Manager. It is
+referred to as a type subscription as the argument for the publisher is the
+string representing its type i.e. FileManager here.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ----------------------------------------
+    // --&gt; 4. Subscribe on Create File
+    //      (EARLY MODE Subscription on TYPE)
+    // ----------------------------------------
+    //
+    CATUnicodeString EventName ( &quot;CAACreateFile&quot; );
+    CATUnicodeString EventPublisherType ( &quot;CAAVpiFileManager&quot; );
+    unsigned long cookie = 0;
+    Rc = spEventManager-&gt;Subscribe( EventName, EventPublisherType, spPluginSubscriber, IID_CAAIVpiFMEventCallBacks, &amp;cookie, ENOVIEvent::EventFireBefore );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to subscribe on CreateFile&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Subscribe on CreateFile (before) done &quot; &lt;&lt; endl;
+
+    Rc = spEventManager-&gt;Subscribe( EventName, EventPublisherType, spPluginSubscriber, IID_CAAIVpiFMEventCallBacks, &amp;cookie, ENOVIEvent::EventFireAfter );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to subscribe on CreateFile&quot;&lt;&lt;endl;
+	return Rc;
+    }
+    cout &lt;&lt; &quot;&gt;&gt;plugin listener: Subscribe on CreateFile (after) done &quot; &lt;&lt; endl;
+    //
+    // Etc. Idem for Move and Delete File events
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="Resource"></a>Create a resource file to declare the plug-in</h4>
+<p>Finally the last step of this first part is to declare our plug-in
+implementation through the creation of a resource file. To do this, in the
+directory CAAVPMInterfaces.edu/CNext/resources/msgcatalog, a file named
+CAAVpiPluginList.CATRsc has been created and just contains the line:</p>
+<pre>T_CAAVpiPlugin = &quot;0&quot;;</pre>
+<p>which simply states that the late type <it>T_CAAVpiPlugin</it>    implements
+the ENOVIEventPlugin interface and has to be called at the end of the Login
+Session creation.</p>
+<p>However, at runtime, a new step is also required to declare the resource file
+name to be looked for, i.e.</p>
+<pre>export VPM_PLUGIN_OBJECTS_LIST=CAAVpiPluginList</pre>
+<p>This completes the first part of the CAAVpiAutomaticSubscription use case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateSession"></a>Create a Session</h4>
+<p>Now begins the second part of this use case, which describes the main
+program.<br>
+The first thing to do in any Enovia program is to create the VPM Session. Here
+is the code to do it:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ---------------------------
+    // --&gt; 1. Open a VPM Session
+    // ---------------------------
+    //
+    cout &lt;&lt; &quot;main: Open VPM Session ... &quot; &lt;&lt; endl;
+    VPMSession* pSession = VPMSession::OpenSession();
+    if ( NULL == pSession ) 
+    {
+        cout &lt;&lt; &quot;Unable to Open a VPM Session&quot; &lt;&lt; endl;
+        return 1;
+    }
+    cout &lt;&lt; &quot;main: Open VPM Session done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreateLoginSession"></a>Create a Login Session</h4>
+<p>Then we have to create the Login Session. During its creation the plug-in
+implementation will be called and just after its creation our subscriptions will
+be made.<br>
+The interest of this step is hence to see the traces at execution time: you
+should see the plug-in implementation being called, subscribing to event
+CreateLoginSession step After, and then the listener being called back and doing
+the subscriptions to the File Manager events.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // -------------------------------
+    // --&gt; 2. Login Session creation
+    // -------------------------------
+    //
+    cout &lt;&lt; &quot;main: Create LoginSession ... &quot; &lt;&lt; endl;
+    const int NetWorkCommunication = 0;
+    CATIVpmLoginSession_var spLoginSession;
+    Rc = pSession-&gt;CreateLoginSession( &quot;MyUserID&quot;, &quot;MyPassword&quot;, &quot;MyRoleName&quot;, NetWorkCommunication, spLoginSession );
+    if ( FAILED(Rc) )
+    {
+        cout&lt;&lt;&quot;Unable to Create Login Session&quot;&lt;&lt;endl;
+        return 2;
+    }
+    cout &lt;&lt; &quot;main: Create LoginSession done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CreatePublisher"></a>Create a publisher instance of class
+FileManager</h4>
+<p>To fire the events we have subscribed to, we need an instance of the
+CAAVpiFileManager class.</p>
+<p>Here is the corresponding code:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // -------------------------------
+    // --&gt; 3. File Manager creation
+    // -------------------------------
+    //
+    cout &lt;&lt; &quot;main: Create File Manager ... &quot; &lt;&lt; endl;
+    CAAVpiFileManager* pFileManager = new CAAVpiFileManager( &quot;File Manager&quot; );
+    if ( NULL == pFileManager )
+    {
+        cout&lt;&lt;&quot;Unable to Create File Manager&quot;&lt;&lt;endl;
+        return 3;
+    }
+    cout &lt;&lt; &quot;main: Create File Manager done &quot; &lt;&lt; endl &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="FireEvent"></a>Raise some FileManager events</h4>
+<p>Now we are ready to fire Create, Move and Delete File events and to look at
+the traces to see if our subscriber is actually called back.</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    //
+    // ---------------------------------------
+    // --&gt; 4. Fire Create, Move, Delete File
+    // ---------------------------------------
+    //
+    CATUnicodeString FileName ( &quot;CAAVpiUseCase.h&quot; );
+    CATUnicodeString FirstDirectory ( &quot;PublicInterfaces&quot; );
+
+    Rc = pFileManager-&gt;CAACreateFile( FileName, FirstDirectory );
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Create File&quot;&lt;&lt;endl;
+	return 4;
+    }
+    cout &lt;&lt; &quot;main: Create File done &quot; &lt;&lt; endl &lt;&lt; endl;
+    //
+    // Etc. Same code for Move and Delete File...
+...</pre>
+    </td>
+  </tr>
+</table>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h4><a name="CloseSession"></a>Close the Sessions</h4>
+<p>Each opened session must be closed as followed:</p>
+<table class="code">
+  <tr>
+    <td>
+      <pre>...
+    // --------------------------------------------
+    // --&gt; 7. Close Login Session and VPM Session
+    // --------------------------------------------
+    //
+    Rc = spLoginSession-&gt;Close();
+    if ( FAILED(Rc) )
+    {
+	cout&lt;&lt;&quot;Unable to Close Login Session&quot;&lt;&lt;endl;
+	return 7;
+    }
+    cout &lt;&lt; &quot;main: Close Login Session done &quot; &lt;&lt; endl;
+
+    VPMSession::CloseSession();
+    cout &lt;&lt; &quot;main: Close VPM Session done &quot; &lt;&lt; endl;
+...</pre>
+    </td>
+  </tr>
+</table>
+<p>This step concludes the second part of the CAAVpiAutomaticSubscription use
+case.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+
+<!---------------------------------comment------------------------------------->
+<h3><a name="InShort"></a>In Short</h3>
+<p>This use case has demonstrated one way to automatically subscribe to events
+via the ENOVIEventPlugin interface and how to be called back when they are
+raised.</p>
+<p align="right">[<a href="#Top">Top</a>]</p>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="References"></a>References</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">[1]</td>
+    <td><a href="../CAADocUseCases/CAADocRunSample.htm">Building
+      and Launching a CAA V5 Use Case</a></td>
+  </tr>
+  <tr>
+    <td valign="top">[2]</td>
+    <td><a href="../CAAVpiTechArticles/CAAVpiEventModel.htm">The
+      ENOVIA Event Model</a></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<h3><a name="History"></a>History</h3>
+<table width="100%">
+  <tr>
+    <td valign="top">Version: <b>2</b> [Oct 2003]</td>
+    <td valign="top">Document updated for new interface ENOVIEventPlugin</td>
+  </tr>
+  <tr>
+    <td valign="top">Version: <b>1</b> [Oct 2001]</td>
+    <td valign="top">Document created</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top" colspan="2">[<a href="#Top">Top</a>]</td>
+  </tr>
+</table>
+<hr>
+<!---------------------------------comment------------------------------------->
+<p><i>Copyright © 2003, Dassault Systèmes. All rights reserved.</i>
+
+</body>
+
+</html>
+

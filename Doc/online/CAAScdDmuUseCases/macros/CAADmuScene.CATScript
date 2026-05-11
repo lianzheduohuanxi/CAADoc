@@ -1,0 +1,52 @@
+' COPYRIGHT DASSAULT SYSTEMES 2001
+Option Explicit
+
+' ***********************************************************************
+'   Purpose     : Create a scene that keeps all the component's position of a product.
+'   Assumptions : A CATProduct document should be active.
+'   Author      : 
+'   Languages   : VBScript
+'   Locales     : English 
+'   CATIA Level : V5R6 
+' ***********************************************************************
+
+Sub CATMain()
+
+    ' Get the root of the CATProduct
+    Dim oRootProduct As Product
+    Set oRootProduct = CATIA.ActiveDocument.Product
+
+    ' Retrieve the scenes collection
+    Dim oSceneWorkbench As Workbench
+    Set oSceneWorkbench = CATIA.ActiveDocument.GetWorkbench("SceneWorkbench")
+    Dim cScenes As Scenes
+    Set cScenes = oSceneWorkbench.WorkScenes
+
+    ' Create the scene
+    Dim oScene As Scene
+    Set oScene = cScenes.AddNewScene("MyScene", oRootProduct)
+
+    ' Move the components of the scene corresponding to the children of the rootproduct
+    Dim I As Integer
+    Dim oChildProduct As Product
+    Dim oMove As Move
+    Dim dIdentityMatrix (11)
+    dIdentityMatrix( 0) = 1.0
+    dIdentityMatrix( 1) = 0.0
+    dIdentityMatrix( 2) = 0.0
+    dIdentityMatrix( 3) = 0.0
+    dIdentityMatrix( 4) = 1.0
+    dIdentityMatrix( 5) = 0.0
+    dIdentityMatrix( 6) = 0.0
+    dIdentityMatrix( 7) = 0.0
+    dIdentityMatrix( 8) = 1.0
+    dIdentityMatrix( 9) = 0.0
+    dIdentityMatrix(10) = 0.0
+    dIdentityMatrix(11) = 0.0
+    For I = 1 to oRootProduct.Products.Count
+        Set oChildProduct = oRootProduct.Products.Item(I)
+        Set oMove = oScene.GetMove(oChildProduct)
+        oMove.Apply dIdentityMatrix
+    Next
+
+End Sub
